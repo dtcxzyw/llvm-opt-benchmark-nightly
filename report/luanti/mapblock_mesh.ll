@@ -205,12 +205,13 @@ bb.k:                                             ; preds = %bb.j
   %i.cw = call align 4 ptr @llvm.threadlocal.address.p0(ptr align 4 @_ZZL22getSmoothLightCombinedRKN4core8vector3dIsEERKSt5arrayIS1_Lm8EEP12MeshMakeDataE12light_amount)
   %i.cx = insertelement <2 x float> poison, float %i.cv, i64 0
   %i.cy = shufflevector <2 x float> %i.cx, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.cz = fdiv nsz <2 x float> <float -1.000000e+00, float 1.000000e+00>, %i.cy ; 2 uses
+  %i.cz = fdiv nsz <2 x float> <float -1.000000e+00, float 1.000000e+00>, %i.cy ; 3 uses
   %i.da = extractelement <2 x float> %i.cz, i64 1
   %i.db = call nsz float @llvm.pow.f32(float 7.500000e-01, float %i.da)
   store float %i.db, ptr %i.cw, align 4, !tbaa !75
-  %i.dc = fmul nsz <2 x float> %i.cz, <float 1.000000e+00, float -2.000000e+00>
-  %i.dd = call nsz <2 x float> @llvm.exp2.v2f32(<2 x float> %i.dc)
+  %i.dc = fmul nsz <2 x float> %i.cz, <float poison, float -2.000000e+00>
+  %7 = shufflevector <2 x float> %i.cz, <2 x float> %i.dc, <2 x i32> <i32 0, i32 3>
+  %i.dd = call nsz <2 x float> @llvm.exp2.v2f32(<2 x float> %7)
   store <2 x float> %i.dd, ptr getelementptr inbounds nuw (i8, ptr @_ZZL22getSmoothLightCombinedRKN4core8vector3dIsEERKSt5arrayIS1_Lm8EEP12MeshMakeDataE12light_amount, i64 4), align 4, !tbaa !75
   %i.de = call ptr @llvm.invariant.start.p0(i64 12, ptr nonnull @_ZZL22getSmoothLightCombinedRKN4core8vector3dIsEERKSt5arrayIS1_Lm8EEP12MeshMakeDataE12light_amount) ; 0 uses
   store i1 true, ptr @_ZGVZL22getSmoothLightCombinedRKN4core8vector3dIsEERKSt5arrayIS1_Lm8EEP12MeshMakeDataE12light_amount, align 1

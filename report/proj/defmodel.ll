@@ -205,11 +205,11 @@ bb.af:                                            ; preds = %bb.ae
 bb.ag:                                            ; preds = %bb.af
   %i.by = load double, ptr %i.a, align 8, !tbaa !59 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #37
-  %i.bz = insertelement <4 x double> poison, double %i.by, i64 0
-  %i.ca = insertelement <4 x double> %i.bz, double %i.bs, i64 1
-  %i.cb = insertelement <4 x double> %i.ca, double %i.bu, i64 2
-  %11 = insertelement <4 x double> %i.cb, double %i.bw, i64 3
-  %12 = fmul <4 x double> %11, <double 1.000000e+00, double f0x3F91DF46A2529D39, double f0x3F91DF46A2529D39, double f0x3F91DF46A2529D39>
+  %i.bz = insertelement <4 x double> poison, double %i.bs, i64 1
+  %i.ca = insertelement <4 x double> %i.bz, double %i.bu, i64 2
+  %i.cb = insertelement <4 x double> %i.ca, double %i.bw, i64 3
+  %11 = fmul <4 x double> %i.cb, <double poison, double f0x3F91DF46A2529D39, double f0x3F91DF46A2529D39, double f0x3F91DF46A2529D39>
+  %12 = insertelement <4 x double> %11, double %i.by, i64 0
   store <4 x double> %12, ptr %i.g, align 8, !tbaa !59
   %i.cc = fmul double %i.by, f0x3F91DF46A2529D39
   store double %i.cc, ptr %i.j, align 8, !tbaa !347

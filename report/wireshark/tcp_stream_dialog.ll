@@ -205,10 +205,10 @@ define void @_ZNK25QCPErrorBarsNotSelectable14drawLegendIconEP10QCPPainterRK6QRe
 bb.a:
   %3 = alloca %class.QLineF, align 16             ; 6 uses
   %4 = alloca %class.QLineF, align 8              ; 4 uses
-  %5 = alloca %class.QLineF, align 16             ; 5 uses
+  %5 = alloca %class.QLineF, align 16             ; 6 uses
   %6 = alloca %class.QLineF, align 16             ; 6 uses
   %7 = alloca %class.QLineF, align 8              ; 4 uses
-  %8 = alloca %class.QLineF, align 16             ; 5 uses
+  %8 = alloca %class.QLineF, align 16             ; 6 uses
   %i.a = load ptr, ptr %0, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 128
   %i.c = load ptr, ptr %i.b, align 8
@@ -294,11 +294,14 @@ bb.e:                                             ; preds = %bb.d
   %i.ax = fmul <2 x double> %i.aw, <double 5.000000e-01, double 1.000000e+00>
   %i.ay = fadd <2 x double> %i.av, %i.ax          ; 2 uses
   %i.az = fadd <2 x double> %i.ay, <double -4.000000e+00, double -2.000000e+00> ; 2 uses
+  %9 = extractelement <2 x double> %i.ay, i64 0
+  %10 = fadd double %9, 4.000000e+00
   store <2 x double> %i.az, ptr %5, align 16
   %i.ba = getelementptr inbounds nuw i8, ptr %5, i64 16
-  %9 = shufflevector <2 x double> %i.ay, <2 x double> %i.az, <2 x i32> <i32 0, i32 3>
-  %10 = fadd <2 x double> %9, <double 4.000000e+00, double -0.000000e+00>
-  store <2 x double> %10, ptr %i.ba, align 16
+  store double %10, ptr %i.ba, align 16
+  %11 = getelementptr inbounds nuw i8, ptr %5, i64 24
+  %12 = extractelement <2 x double> %i.az, i64 1
+  store double %12, ptr %11, align 8
   call void @_ZN10QCPPainter8drawLineERK6QLineF(ptr noundef align 8 dereferenceable_or_null(40) %1, ptr noundef nonnull align 8 dereferenceable(32) %5)
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #28
   br label %bb.g
@@ -350,11 +353,14 @@ bb.f:                                             ; preds = %_ZNK8QPointerI7QCPA
   %i.ce = fmul <2 x double> %i.cd, <double 1.000000e+00, double 5.000000e-01>
   %i.cf = fadd <2 x double> %i.cc, %i.ce          ; 2 uses
   %i.cg = fadd <2 x double> %i.cf, <double -2.000000e+00, double -4.000000e+00> ; 2 uses
+  %13 = extractelement <2 x double> %i.cf, i64 1
+  %14 = fadd double %13, 4.000000e+00
   store <2 x double> %i.cg, ptr %8, align 16
   %i.ch = getelementptr inbounds nuw i8, ptr %8, i64 16
-  %11 = shufflevector <2 x double> %i.cg, <2 x double> %i.cf, <2 x i32> <i32 0, i32 3>
-  %12 = fadd <2 x double> %11, <double -0.000000e+00, double 4.000000e+00>
-  store <2 x double> %12, ptr %i.ch, align 16
+  %15 = extractelement <2 x double> %i.cg, i64 0
+  store double %15, ptr %i.ch, align 16
+  %16 = getelementptr inbounds nuw i8, ptr %8, i64 24
+  store double %14, ptr %16, align 8
   call void @_ZN10QCPPainter8drawLineERK6QLineF(ptr noundef align 8 dereferenceable_or_null(40) %1, ptr noundef nonnull align 8 dereferenceable(32) %8)
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #28
   br label %bb.g

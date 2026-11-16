@@ -204,12 +204,11 @@ bb.k:                                             ; preds = %_ZN3jxl23DequantMat
   %i.bf = load float, ptr %i.be, align 4, !tbaa !49
   %i.bg = load float, ptr %2, align 4, !tbaa !49
   %i.bh = load <2 x float>, ptr %2, align 4, !tbaa !49
-  %6 = insertelement <4 x float> <float 1.000000e+00, float 1.000000e+00, float 1.000000e+00, float poison>, float %i.bg, i64 3
-  %i.bi = insertelement <4 x float> <float poison, float poison, float poison, float 1.000000e+00>, float %i.bf, i64 2
-  %7 = shufflevector <2 x float> %i.bh, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %8 = shufflevector <4 x float> %7, <4 x float> %i.bi, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %9 = fdiv <4 x float> %6, %8                    ; 4 uses
-  store <4 x float> %9, ptr %i.bb, align 4, !tbaa !49
+  %6 = shufflevector <2 x float> %i.bh, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %i.bi = insertelement <4 x float> %6, float %i.bf, i64 2
+  %7 = fdiv <4 x float> <float 1.000000e+00, float 1.000000e+00, float 1.000000e+00, float poison>, %i.bi ; 4 uses
+  %8 = insertelement <4 x float> %7, float %i.bg, i64 3
+  store <4 x float> %8, ptr %i.bb, align 4, !tbaa !49
   %i.bj = load <2 x float>, ptr %i.bc, align 4, !tbaa !49
   store <2 x float> %i.bj, ptr %i.bd, align 4, !tbaa !49
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #14
@@ -223,11 +222,11 @@ bb.k:                                             ; preds = %_ZN3jxl23DequantMat
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #14
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #14
   store ptr %i.bb, ptr %i.h, align 8, !tbaa !47
-  %i.bm = extractelement <4 x float> %9, i64 0
+  %i.bm = extractelement <4 x float> %7, i64 0
   %i.bn = fcmp oeq float %i.bm, f0x39800000
-  %i.bo = extractelement <4 x float> %9, i64 1
+  %i.bo = extractelement <4 x float> %7, i64 1
   %i.bp = fcmp oeq float %i.bo, f0x3B000000
-  %i.bq = extractelement <4 x float> %9, i64 2
+  %i.bq = extractelement <4 x float> %7, i64 2
   %i.br = fcmp oeq float %i.bq, 3.906250e-03
   %i.bs = select i1 %i.br, i1 %i.bp, i1 false
   %narrow8.i = select i1 %i.bs, i1 %i.bn, i1 false

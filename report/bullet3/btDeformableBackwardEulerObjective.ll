@@ -205,20 +205,20 @@ bb.h:                                             ; preds = %.lr.ph43, %bb.j
   br i1 %i.ar, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
+  %i.as = fdiv float 1.000000e+00, %i.aq          ; 4 uses
   %4 = getelementptr inbounds nuw i8, ptr %i.ao, i64 156
-  %i.as = fdiv float 1.000000e+00, %i.aq          ; 3 uses
-  %5 = insertelement <4 x float> <float poison, float poison, float poison, float 1.000000e+00>, float %i.as, i64 0
-  %6 = shufflevector <4 x float> %5, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 3>
-  %7 = fmul <4 x float> %6, <float 1.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00> ; 3 uses
-  store <4 x float> %7, ptr %4, align 4
-  %8 = getelementptr inbounds nuw i8, ptr %i.ao, i64 172
-  %9 = extractelement <4 x float> %7, i64 1
-  store float %9, ptr %8, align 4
+  store float %i.as, ptr %4, align 4
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ao, i64 160
+  %.scalar = fmul float %i.as, 0.000000e+00
+  %5 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %.scalar, i64 0 ; 2 uses
+  %6 = shufflevector <2 x float> %5, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 0>
+  store <4 x float> %6, ptr %.sroa.5.0..sroa_idx, align 8
   %.sroa.10.16..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ao, i64 176
   store float %i.as, ptr %.sroa.10.16..sroa_idx, align 8
   %.sroa.11.16..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ao, i64 180
-  %10 = shufflevector <4 x float> %7, <4 x float> <float poison, float 0.000000e+00, float poison, float poison>, <4 x i32> <i32 1, i32 5, i32 1, i32 1>
-  store <4 x float> %10, ptr %.sroa.11.16..sroa_idx, align 4
+  %7 = shufflevector <2 x float> %5, <2 x float> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
+  %8 = shufflevector <4 x float> %7, <4 x float> <float poison, float 0.000000e+00, float poison, float poison>, <4 x i32> <i32 0, i32 5, i32 0, i32 0>
+  store <4 x float> %8, ptr %.sroa.11.16..sroa_idx, align 4
   %.sroa.16.32..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ao, i64 196
   %i.at = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.as, i64 0
   store <2 x float> %i.at, ptr %.sroa.16.32..sroa_idx, align 4

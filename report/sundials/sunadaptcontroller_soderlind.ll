@@ -202,13 +202,15 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define noundef i32 @SUNAdaptController_UpdateH_Soderlind(ptr nofree noundef readonly captures(none) %0, double noundef %1, double noundef %2) #6 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !23     ; 6 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 48
-  %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 40
-  %3 = load <2 x double>, ptr %i.c, align 8, !tbaa !25
-  %4 = insertelement <2 x double> <double poison, double 1.000000e+00>, double %2, i64 0
-  %5 = fmul <2 x double> %4, %3
-  store <2 x double> %5, ptr %i.b, align 8, !tbaa !25
+  %i.a = load ptr, ptr %0, align 8, !tbaa !23     ; 7 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 48 ; 2 uses
+  %3 = load double, ptr %i.b, align 8, !tbaa !33
+  %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 56
+  store double %3, ptr %i.c, align 8, !tbaa !37
+  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 40
+  %5 = load double, ptr %4, align 8, !tbaa !29
+  %6 = fmul double %2, %5
+  store double %6, ptr %i.b, align 8, !tbaa !33
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 64 ; 2 uses
   %i.e = load double, ptr %i.d, align 8, !tbaa !32
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 72

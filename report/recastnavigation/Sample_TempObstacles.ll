@@ -205,7 +205,7 @@ declare void @_ZNK6Sample14initToolStatesEPS_(ptr noundef nonnull align 8 derefe
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local void @_ZNK20Sample_TempObstacles15addTempObstacleEPKf(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(276) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = alloca [3 x float], align 8              ; 5 uses
+  %i.a = alloca [3 x float], align 4              ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 232
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !105  ; 2 uses
   %.not = icmp eq ptr %i.c, null
@@ -213,13 +213,17 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
+  %2 = load float, ptr %1, align 4, !tbaa !41
+  store float %2, ptr %i.a, align 4, !tbaa !41
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 4
+  %4 = load float, ptr %3, align 4, !tbaa !41
+  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.e = load float, ptr %i.d, align 4, !tbaa !41
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store float %i.e, ptr %i.f, align 8, !tbaa !41
-  %2 = load <2 x float>, ptr %1, align 4, !tbaa !41
-  %3 = fadd <2 x float> %2, <float -0.000000e+00, float -5.000000e-01>
-  store <2 x float> %3, ptr %i.a, align 8, !tbaa !41
+  store float %i.e, ptr %i.f, align 4, !tbaa !41
+  %6 = fadd float %4, -5.000000e-01
+  store float %6, ptr %5, align 4, !tbaa !41
   %i.g = call noundef i32 @_ZN11dtTileCache11addObstacleEPKfffPj(ptr noundef nonnull align 8 dereferenceable(912) %i.c, ptr noundef nonnull %i.a, float noundef 1.000000e+00, float noundef 2.000000e+00, ptr noundef null) #12 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   br label %bb.c
@@ -622,7 +626,7 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr dso_local void @_ZN22TempObstacleCreateTool7onClickEPKfS1_b(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef %1, ptr noundef %2, i1 noundef zeroext %3) unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = alloca [3 x float], align 8              ; 5 uses
+  %i.a = alloca [3 x float], align 4              ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !103  ; 3 uses
   %.not = icmp eq ptr %i.c, null
@@ -643,13 +647,17 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
+  %4 = load float, ptr %2, align 4, !tbaa !41
+  store float %4, ptr %i.a, align 4, !tbaa !41
+  %5 = getelementptr inbounds nuw i8, ptr %2, i64 4
+  %6 = load float, ptr %5, align 4, !tbaa !41
+  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.g = load float, ptr %i.f, align 4, !tbaa !41
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store float %i.g, ptr %i.h, align 8, !tbaa !41
-  %4 = load <2 x float>, ptr %2, align 4, !tbaa !41
-  %5 = fadd <2 x float> %4, <float -0.000000e+00, float -5.000000e-01>
-  store <2 x float> %5, ptr %i.a, align 8, !tbaa !41
+  store float %i.g, ptr %i.h, align 4, !tbaa !41
+  %8 = fadd float %6, -5.000000e-01
+  store float %8, ptr %7, align 4, !tbaa !41
   %i.i = call noundef i32 @_ZN11dtTileCache11addObstacleEPKfffPj(ptr noundef nonnull align 8 dereferenceable(912) %i.e, ptr noundef nonnull %i.a, float noundef 1.000000e+00, float noundef 2.000000e+00, ptr noundef null) #12 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   br label %_ZNK20Sample_TempObstacles15addTempObstacleEPKf.exit

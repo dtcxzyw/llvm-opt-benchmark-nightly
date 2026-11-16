@@ -205,12 +205,14 @@ bb.g:                                             ; preds = %bb.f
   %i.hd = shufflevector <4 x float> %i.hc, <4 x float> %i.hb, <4 x i32> <i32 0, i32 1, i32 6, i32 7> ; 3 uses
   %i.he = fcmp reassoc nsz arcp contract afn ogt <4 x float> %i.hd, splat (float 1.000000e+00)
   %i.hf = fcmp reassoc nsz arcp contract afn olt <4 x float> %i.hd, zeroinitializer
-  %i.hg = select <4 x i1> %i.hf, <4 x float> zeroinitializer, <4 x float> %i.hd
-  %i.hh = fmul reassoc nsz arcp contract afn <4 x float> %i.hg, <float 6.553600e+04, float 1.000000e+00, float 1.000000e+00, float 1.000000e+00>
-  %i.hi = select <4 x i1> %i.he, <4 x float> <float 6.553600e+04, float 1.000000e+00, float 1.000000e+00, float 1.000000e+00>, <4 x float> %i.hh ; 4 uses
+  %i.hg = select <4 x i1> %i.hf, <4 x float> zeroinitializer, <4 x float> %i.hd ; 2 uses
+  %i.hh = fmul reassoc nsz arcp contract afn <4 x float> %i.hg, <float 6.553600e+04, float poison, float poison, float poison>
+  %6 = shufflevector <4 x float> %i.hh, <4 x float> %i.hg, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
+  %i.hi = select <4 x i1> %i.he, <4 x float> <float 6.553600e+04, float 1.000000e+00, float 1.000000e+00, float 1.000000e+00>, <4 x float> %6 ; 5 uses
   %i.hj = fmul <4 x float> %i.hi, <float 1.000000e+00, float 6.553600e+04, float 6.553600e+04, float 6.553600e+04> ; 2 uses
   %i.hk = fcmp reassoc nsz arcp contract afn oge <4 x float> %i.hj, splat (float 6.553500e+04)
-  %i.hl = select <4 x i1> %i.hk, <4 x float> splat (float 6.553500e+04), <4 x float> %i.hj
+  %7 = shufflevector <4 x float> %i.hi, <4 x float> %i.hj, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
+  %i.hl = select <4 x i1> %i.hk, <4 x float> splat (float 6.553500e+04), <4 x float> %7
   %i.hm = fptoui <4 x float> %i.hl to <4 x i64>
   %i.hn = extractelement <4 x float> %i.hi, i64 3
   %.reass = fmul reassoc nsz arcp contract afn float %i.hn, f0x46937A01
@@ -403,12 +405,12 @@ _process_pixel.exit:                              ; preds = %bb.r, %bb.s
   %i.mv = fadd reassoc nsz arcp contract afn float %i.mu, -1.600000e+01
   %i.mw = fsub reassoc nsz arcp contract afn float %i.md, %i.mi
   %i.mx = fsub reassoc nsz arcp contract afn float %i.mo, %i.mi
-  %i.my = insertelement <4 x float> poison, float %i.mv, i64 0
-  %i.mz = insertelement <4 x float> %i.my, float %i.mw, i64 1
-  %i.na = insertelement <4 x float> %i.mz, float %i.mx, i64 2
-  %6 = insertelement <4 x float> %i.na, float %i.mt, i64 3
-  %7 = fmul reassoc nsz arcp contract afn <4 x float> %6, <float 1.000000e+00, float 5.000000e+02, float -2.000000e+02, float 0.000000e+00>
-  store <4 x float> %7, ptr %i.as, align 16, !tbaa !49, !alias.scope !165, !nontemporal !166
+  %i.my = insertelement <4 x float> poison, float %i.mw, i64 1
+  %i.mz = insertelement <4 x float> %i.my, float %i.mx, i64 2
+  %i.na = insertelement <4 x float> %i.mz, float %i.mt, i64 3
+  %8 = fmul reassoc nsz arcp contract afn <4 x float> %i.na, <float poison, float 5.000000e+02, float -2.000000e+02, float 0.000000e+00>
+  %9 = insertelement <4 x float> %8, float %i.mv, i64 0
+  store <4 x float> %9, ptr %i.as, align 16, !tbaa !49, !alias.scope !165, !nontemporal !166
   %i.nb = add nuw i64 %.037, 4                    ; 2 uses
   %i.nc = icmp ult i64 %i.nb, %i.u
   br i1 %i.nc, label %.loopexit.i, label %._crit_edge

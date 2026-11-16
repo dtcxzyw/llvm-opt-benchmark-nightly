@@ -205,15 +205,18 @@ bb.x:                                             ; preds = %._crit_edge.thread3
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.x, %._crit_edge.thread302.i
-  %.pre287.pre300.i = phi ptr [ %.pre287.pre301.i, %bb.x ], [ %.pre287.pre306.i, %._crit_edge.thread302.i ] ; 3 uses
+  %.pre287.pre300.i = phi ptr [ %.pre287.pre301.i, %bb.x ], [ %.pre287.pre306.i, %._crit_edge.thread302.i ] ; 5 uses
   %.0225.i = phi i32 [ %i.hl, %bb.x ], [ %.2262, %._crit_edge.thread302.i ] ; 2 uses
   %i.hm = getelementptr inbounds nuw i8, ptr %.pre287.pre300.i, i64 64
+  %1 = load double, ptr %i.hm, align 8, !tbaa !56
   %i.hn = getelementptr inbounds nuw i8, ptr %i.gi, i64 32
   %i.ho = load double, ptr %i.hn, align 8, !tbaa !123
-  %1 = load <2 x double>, ptr %i.hm, align 8, !tbaa !48
-  %2 = insertelement <2 x double> <double poison, double -0.000000e+00>, double %i.ho, i64 0
-  %3 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %2, <2 x double> <double -2.000000e+00, double 0.000000e+00>, <2 x double> %1)
-  store <2 x double> %3, ptr %.pre287.pre300.i, align 8, !tbaa !48
+  %2 = call nsz double @llvm.fmuladd.f64(double %i.ho, double -2.000000e+00, double %1)
+  store double %2, ptr %.pre287.pre300.i, align 8, !tbaa !56
+  %3 = getelementptr inbounds nuw i8, ptr %.pre287.pre300.i, i64 72
+  %4 = load double, ptr %3, align 8, !tbaa !57
+  %5 = getelementptr inbounds nuw i8, ptr %.pre287.pre300.i, i64 8
+  store double %4, ptr %5, align 8, !tbaa !57
   %i.hp = icmp sgt i32 %.0225.i, 1
   br i1 %i.hp, label %.lr.ph253.preheader.i, label %.preheader241.i
 

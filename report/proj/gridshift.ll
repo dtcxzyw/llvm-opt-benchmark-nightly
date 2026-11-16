@@ -204,7 +204,7 @@ bb.v:                                             ; preds = %bb.u
   %i.ci = getelementptr inbounds nuw i8, ptr %i.by, i64 8
   %i.cj = load ptr, ptr %i.ci, align 8, !tbaa !60
   tail call void (ptr, i32, ptr, ...) @_Z6pj_logP6pj_ctxiPKcz(ptr noundef %2, i32 noundef 3, ptr noundef nonnull @.str.21, ptr noundef %i.ch, ptr noundef %i.cj)
-  %i.ck = load <2 x double>, ptr %5, align 8, !tbaa !86 ; 5 uses
+  %i.ck = load <2 x double>, ptr %5, align 8, !tbaa !86 ; 7 uses
   %i.cl = getelementptr inbounds nuw i8, ptr %i.by, i64 48 ; 5 uses
   %i.cm = load i8, ptr %i.cl, align 8, !tbaa !97, !range !57, !noundef !58
   %i.cn = trunc nuw i8 %i.cm to i1
@@ -223,7 +223,8 @@ bb.w:                                             ; preds = %bb.v
   br i1 %i.cw, label %bb.x, label %bb.y
 
 bb.x:                                             ; preds = %bb.w
-  %i.cx = fadd <2 x double> %i.ck, <double f0x401921FB54442D18, double -0.000000e+00>
+  %i.cx = fadd <2 x double> %i.ck, <double f0x401921FB54442D18, double poison>
+  %11 = shufflevector <2 x double> %i.cx, <2 x double> %i.ck, <2 x i32> <i32 0, i32 3>
   br label %bb.ab
 
 bb.y:                                             ; preds = %bb.w
@@ -234,7 +235,8 @@ bb.y:                                             ; preds = %bb.w
   br i1 %i.db, label %bb.z, label %bb.ab
 
 bb.z:                                             ; preds = %bb.y
-  %i.dc = fadd <2 x double> %i.ck, <double f0xC01921FB54442D18, double -0.000000e+00>
+  %i.dc = fadd <2 x double> %i.ck, <double f0xC01921FB54442D18, double poison>
+  %12 = shufflevector <2 x double> %i.dc, <2 x double> %i.ck, <2 x i32> <i32 0, i32 3>
   br label %bb.ab
 
 bb.aa:                                            ; preds = %bb.r
@@ -255,7 +257,7 @@ bb.ab:                                            ; preds = %bb.v, %bb.x, %bb.y,
   %.sroa.06.2 = phi i1 [ %i.dk, %bb.aa ], [ true, %bb.z ], [ true, %bb.y ], [ true, %bb.x ], [ true, %bb.v ]
   %.2 = phi ptr [ %.0, %bb.aa ], [ %i.by, %bb.z ], [ %i.by, %bb.y ], [ %i.by, %bb.x ], [ %i.by, %bb.v ]
   %i.dl = phi <2 x double> [ %i.dg, %bb.aa ], [ %i.bh, %bb.z ], [ %i.bh, %bb.y ], [ %i.bh, %bb.x ], [ %i.bh, %bb.v ] ; 3 uses
-  %i.dm = phi <2 x double> [ %i.bi, %bb.aa ], [ %i.dc, %bb.z ], [ %i.ck, %bb.y ], [ %i.cx, %bb.x ], [ %i.ck, %bb.v ]
+  %i.dm = phi <2 x double> [ %i.bi, %bb.aa ], [ %12, %bb.z ], [ %i.ck, %bb.y ], [ %11, %bb.x ], [ %i.ck, %bb.v ]
   %i.dn = add nsw i32 %.055, -1                   ; 2 uses
   %.not = icmp eq i32 %i.dn, 0
   br i1 %.not, label %.critedge64, label %bb.ac

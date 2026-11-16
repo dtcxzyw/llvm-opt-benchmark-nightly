@@ -205,9 +205,10 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.z = fcmp olt <4 x float> %i.y, %i.s
   %i.aa = select <4 x i1> %i.z, <4 x float> %i.s, <4 x float> %i.y ; 2 uses
   %i.ab = fcmp olt <4 x float> %i.aa, %i.v
-  %i.ac = select <4 x i1> %i.ab, <4 x float> %i.v, <4 x float> %i.aa
-  %i.ad = fadd <4 x float> %i.ac, <float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float -0.000000e+00>
-  store <4 x float> %i.ad, ptr %i.f, align 16, !tbaa !229, !alias.scope !683
+  %i.ac = select <4 x i1> %i.ab, <4 x float> %i.v, <4 x float> %i.aa ; 2 uses
+  %i.ad = fadd <4 x float> %i.ac, <float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float poison>
+  %2 = shufflevector <4 x float> %i.ad, <4 x float> %i.ac, <4 x i32> <i32 0, i32 1, i32 2, i32 7>
+  store <4 x float> %2, ptr %i.f, align 16, !tbaa !229, !alias.scope !683
   %i.ae = call noundef ptr @_ZN6btDbvt6insertERK12btDbvtAabbMmPv(ptr noundef nonnull align 8 dereferenceable(64) %i.a, ptr noundef nonnull align 4 dereferenceable(32) %1, ptr noundef nonnull %i.h)
   %i.af = getelementptr inbounds nuw i8, ptr %i.h, i64 64
   store ptr %i.ae, ptr %i.af, align 8, !tbaa !281
@@ -610,7 +611,7 @@ bb.a:
   %i.bk = insertelement <2 x float> %i.bj, float 0.000000e+00, i64 1
   %i.bl = insertelement <2 x float> %i.az, float %i.c, i64 0
   %i.bm = insertelement <2 x float> <float poison, float 0.000000e+00>, float %3, i64 0
-  %i.bn = insertelement <2 x float> <float poison, float -0.000000e+00>, float %2, i64 0
+  %i.bn = insertelement <2 x float> poison, float %2, i64 0
   %i.bo = shufflevector <2 x float> %i.be, <2 x float> poison, <3 x i32> <i32 0, i32 poison, i32 poison>
   %i.bp = shufflevector <3 x float> %i.m, <3 x float> %i.bo, <4 x i32> <i32 2, i32 2, i32 0, i32 3>
   %i.bq = insertelement <4 x float> <float 0.000000e+00, float poison, float poison, float poison>, float %i.c, i64 1
@@ -637,8 +638,9 @@ bb.a:
   %i.cl = shufflevector <4 x float> %i.cf, <4 x float> poison, <2 x i32> <i32 poison, i32 0>
   %i.cm = insertelement <2 x float> %i.cl, float %i.cd, i64 0
   %i.cn = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.bl, <2 x float> %i.cm, <2 x float> %i.ck)
-  %i.co = fsub <2 x float> %i.bm, %i.cn           ; 2 uses
+  %i.co = fsub <2 x float> %i.bm, %i.cn           ; 3 uses
   %i.cp = fadd <2 x float> %i.bn, %i.co           ; 3 uses
+  %6 = shufflevector <2 x float> %i.cp, <2 x float> %i.co, <2 x i32> <i32 0, i32 3>
   %i.cq = extractelement <2 x float> %i.cp, i64 0 ; 2 uses
   %i.cr = fneg float %i.cq
   %i.cs = insertelement <2 x float> poison, float %i.cd, i64 0
@@ -688,7 +690,7 @@ bb.a:
   %i.ek = insertelement <4 x float> <float poison, float poison, float poison, float 1.000000e+00>, float %i.ds, i64 2
   %i.el = shufflevector <4 x float> %i.dk, <4 x float> %i.ek, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.em = shufflevector <4 x float> %i.dv, <4 x float> poison, <4 x i32> <i32 3, i32 1, i32 2, i32 3>
-  %i.en = shufflevector <2 x float> %i.df, <2 x float> %i.cp, <4 x i32> <i32 1, i32 2, i32 3, i32 poison>
+  %i.en = shufflevector <2 x float> %i.df, <2 x float> %6, <4 x i32> <i32 1, i32 2, i32 3, i32 poison>
   %i.eo = insertelement <4 x float> %i.en, float %i.ed, i64 3
   %i.ep = insertelement <4 x float> poison, float %i.ee, i64 0
   %i.eq = insertelement <4 x float> poison, float %i.ed, i64 0

@@ -204,9 +204,10 @@ bb.a:
   %i.q = tail call float @llvm.fmuladd.f32(float %i.p, float 5.000000e-01, float %i.o)
   %i.r = getelementptr inbounds nuw i8, ptr %.030, i64 16
   store float %i.q, ptr %i.r, align 4
-  %i.s = load <4 x float>, ptr %.02529, align 4
-  %i.t = fmul <4 x float> %i.s, <float f0x3F70A3D7, float f0x3F70A3D7, float f0x3F70A3D7, float 1.000000e+00>
-  store <4 x float> %i.t, ptr %.030, align 4
+  %i.s = load <4 x float>, ptr %.02529, align 4   ; 2 uses
+  %i.t = fmul <4 x float> %i.s, <float f0x3F70A3D7, float f0x3F70A3D7, float f0x3F70A3D7, float poison>
+  %3 = shufflevector <4 x float> %i.t, <4 x float> %i.s, <4 x i32> <i32 0, i32 1, i32 2, i32 7>
+  store <4 x float> %3, ptr %.030, align 4
   br label %.lr.ph.rtcont
 
 .lr.ph.rtscalar:                                  ; preds = %.lr.ph

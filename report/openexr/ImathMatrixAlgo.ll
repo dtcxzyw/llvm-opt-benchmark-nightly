@@ -205,27 +205,19 @@ bb.c:                                             ; preds = %bb.b
   %i.bp = fcmp olt double %i.bm, 0.000000e+00
   %i.bq = fneg double %i.bo
   %.0122.i.i = select i1 %i.bp, double %i.bq, double %i.bo ; 5 uses
-  %6 = fsub double %i.bf, %.sroa.0.1
-  %7 = fneg double %i.bf
   %i.br = fmul double %i.bm, %.0122.i.i           ; 4 uses
   %i.bs = fadd double %i.ba, %i.bb
-  %8 = fmul double %6, %i.br
-  %i.bt = fmul double %.0122.i.i, %7
-  %9 = insertelement <2 x double> poison, double %i.bs, i64 0
-  %10 = insertelement <2 x double> %9, double %i.br, i64 1
-  %11 = insertelement <2 x double> poison, double %.0122.i.i, i64 0
-  %12 = insertelement <2 x double> %11, double %i.bb, i64 1
-  %13 = insertelement <2 x double> poison, double %8, i64 0
-  %14 = insertelement <2 x double> %13, double %i.bt, i64 1
-  %15 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %10, <2 x double> %12, <2 x double> %14) ; 2 uses
-  %16 = fmul <2 x double> %15, <double 1.000000e+00, double 2.000000e+00> ; 2 uses
-  %17 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %16) ; 2 uses
-  %18 = extractelement <2 x double> %17, i64 0
-  %i.bu = fmul double %4, %18
-  %19 = extractelement <2 x double> %17, i64 1
-  %i.bv = fcmp ugt double %19, %i.bu
-  %20 = extractelement <2 x double> %16, i64 1
-  %21 = extractelement <2 x double> %15, i64 0
+  %6 = fsub double %i.bf, %.sroa.0.1
+  %i.bt = fmul double %6, %i.br
+  %7 = tail call double @llvm.fmuladd.f64(double %.0122.i.i, double %i.bs, double %i.bt) ; 2 uses
+  %8 = fneg double %i.bf
+  %9 = fmul double %.0122.i.i, %8
+  %10 = tail call double @llvm.fmuladd.f64(double %i.br, double %i.bb, double %9)
+  %11 = fmul double %10, 2.000000e+00             ; 2 uses
+  %12 = tail call noundef double @llvm.fabs.f64(double %11)
+  %13 = tail call noundef double @llvm.fabs.f64(double %7)
+  %i.bu = fmul double %4, %13
+  %i.bv = fcmp ugt double %12, %i.bu
   br i1 %i.bv, label %.thread.i.i, label %bb.d
 
 .thread134.i.i:                                   ; preds = %bb.b
@@ -238,8 +230,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.cb, label %.thread.i.i, label %_ZN9Imath_3_212_GLOBAL__N_122twoSidedJacobiRotationIdLi0ELi1ELi2EEEbRNS_8Matrix33IT_EES5_S5_S3_.exit.i
 
 .thread.i.i:                                      ; preds = %.thread134.i.i, %bb.c
-  %.0120146.i.i = phi double [ %i.bw, %.thread134.i.i ], [ %21, %bb.c ]
-  %.0121145.i.i = phi double [ %i.bx, %.thread134.i.i ], [ %20, %bb.c ]
+  %.0120146.i.i = phi double [ %i.bw, %.thread134.i.i ], [ %7, %bb.c ]
+  %.0121145.i.i = phi double [ %i.bx, %.thread134.i.i ], [ %11, %bb.c ]
   %.1123144.i.i = phi double [ 0.000000e+00, %.thread134.i.i ], [ %.0122.i.i, %bb.c ]
   %.0124141.i.i = phi double [ 1.000000e+00, %.thread134.i.i ], [ %i.br, %bb.c ]
   %i.cc = fdiv double %.0120146.i.i, %.0121145.i.i ; 4 uses
@@ -403,27 +395,19 @@ bb.e:                                             ; preds = %_ZN9Imath_3_212_GLO
   %i.hc = fcmp olt double %i.gz, 0.000000e+00
   %i.hd = fneg double %i.hb
   %.0122.i101.i = select i1 %i.hc, double %i.hd, double %i.hb ; 5 uses
-  %22 = fsub double %.sroa.66.1, %.sroa.0.2
-  %23 = fneg double %.sroa.66.1
   %i.he = fmul double %i.gz, %.0122.i101.i        ; 4 uses
   %i.hf = fadd double %i.gr, %i.gs
-  %24 = fmul double %22, %i.he
-  %i.hg = fmul double %.0122.i101.i, %23
-  %25 = insertelement <2 x double> poison, double %i.hf, i64 0
-  %26 = insertelement <2 x double> %25, double %i.he, i64 1
-  %27 = insertelement <2 x double> poison, double %.0122.i101.i, i64 0
-  %28 = insertelement <2 x double> %27, double %i.gs, i64 1
-  %29 = insertelement <2 x double> poison, double %24, i64 0
-  %30 = insertelement <2 x double> %29, double %i.hg, i64 1
-  %31 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %26, <2 x double> %28, <2 x double> %30) ; 2 uses
-  %32 = fmul <2 x double> %31, <double 1.000000e+00, double 2.000000e+00> ; 2 uses
-  %33 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %32) ; 2 uses
-  %34 = extractelement <2 x double> %33, i64 0
-  %i.hh = fmul double %4, %34
-  %35 = extractelement <2 x double> %33, i64 1
-  %i.hi = fcmp ugt double %35, %i.hh
-  %36 = extractelement <2 x double> %32, i64 1
-  %37 = extractelement <2 x double> %31, i64 0
+  %14 = fsub double %.sroa.66.1, %.sroa.0.2
+  %i.hg = fmul double %14, %i.he
+  %15 = tail call double @llvm.fmuladd.f64(double %.0122.i101.i, double %i.hf, double %i.hg) ; 2 uses
+  %16 = fneg double %.sroa.66.1
+  %17 = fmul double %.0122.i101.i, %16
+  %18 = tail call double @llvm.fmuladd.f64(double %i.he, double %i.gs, double %17)
+  %19 = fmul double %18, 2.000000e+00             ; 2 uses
+  %20 = tail call noundef double @llvm.fabs.f64(double %19)
+  %21 = tail call noundef double @llvm.fabs.f64(double %15)
+  %i.hh = fmul double %4, %21
+  %i.hi = fcmp ugt double %20, %i.hh
   br i1 %i.hi, label %.thread.i88.i, label %bb.f
 
 .thread134.i85.i:                                 ; preds = %_ZN9Imath_3_212_GLOBAL__N_122twoSidedJacobiRotationIdLi0ELi1ELi2EEEbRNS_8Matrix33IT_EES5_S5_S3_.exit.i
@@ -438,8 +422,8 @@ bb.e:                                             ; preds = %_ZN9Imath_3_212_GLO
   br i1 %i.ho, label %.thread.i88.i, label %_ZN9Imath_3_212_GLOBAL__N_122twoSidedJacobiRotationIdLi0ELi2ELi1EEEbRNS_8Matrix33IT_EES5_S5_S3_.exit.i
 
 .thread.i88.i:                                    ; preds = %.thread134.i85.i, %bb.e
-  %.0120146.i89.i = phi double [ %i.hj, %.thread134.i85.i ], [ %37, %bb.e ]
-  %.0121145.i90.i = phi double [ %i.hk, %.thread134.i85.i ], [ %36, %bb.e ]
+  %.0120146.i89.i = phi double [ %i.hj, %.thread134.i85.i ], [ %15, %bb.e ]
+  %.0121145.i90.i = phi double [ %i.hk, %.thread134.i85.i ], [ %19, %bb.e ]
   %.1123144.i91.i = phi double [ 0.000000e+00, %.thread134.i85.i ], [ %.0122.i101.i, %bb.e ]
   %.0124141.i92.i = phi double [ 1.000000e+00, %.thread134.i85.i ], [ %i.he, %bb.e ]
   %i.hr = fdiv double %.0120146.i89.i, %.0121145.i90.i ; 4 uses
@@ -598,27 +582,19 @@ bb.g:                                             ; preds = %_ZN9Imath_3_212_GLO
   %i.mm = fcmp olt double %i.mj, 0.000000e+00
   %i.mn = fneg double %i.ml
   %.0122.i118.i = select i1 %i.mm, double %i.mn, double %i.ml ; 5 uses
-  %38 = fsub double %i.mc, %.sroa.33.2
-  %39 = fneg double %i.mc
   %i.mo = fmul double %i.mj, %.0122.i118.i        ; 4 uses
   %i.mp = fadd double %.sroa.57.2, %.sroa.39.2
-  %40 = fmul double %38, %i.mo
-  %i.mq = fmul double %.0122.i118.i, %39
-  %41 = insertelement <2 x double> poison, double %i.mp, i64 0
-  %42 = insertelement <2 x double> %41, double %i.mo, i64 1
-  %43 = insertelement <2 x double> poison, double %.0122.i118.i, i64 0
-  %44 = insertelement <2 x double> %43, double %.sroa.39.2, i64 1
-  %45 = insertelement <2 x double> poison, double %40, i64 0
-  %46 = insertelement <2 x double> %45, double %i.mq, i64 1
-  %47 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %42, <2 x double> %44, <2 x double> %46) ; 2 uses
-  %48 = fmul <2 x double> %47, <double 1.000000e+00, double 2.000000e+00> ; 2 uses
-  %49 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %48) ; 2 uses
-  %50 = extractelement <2 x double> %49, i64 0
-  %i.mr = fmul double %4, %50
-  %51 = extractelement <2 x double> %49, i64 1
-  %i.ms = fcmp ugt double %51, %i.mr
-  %52 = extractelement <2 x double> %48, i64 1
-  %53 = extractelement <2 x double> %47, i64 0
+  %22 = fsub double %i.mc, %.sroa.33.2
+  %i.mq = fmul double %22, %i.mo
+  %23 = tail call double @llvm.fmuladd.f64(double %.0122.i118.i, double %i.mp, double %i.mq) ; 2 uses
+  %24 = fneg double %i.mc
+  %25 = fmul double %.0122.i118.i, %24
+  %26 = tail call double @llvm.fmuladd.f64(double %i.mo, double %.sroa.39.2, double %25)
+  %27 = fmul double %26, 2.000000e+00             ; 2 uses
+  %28 = tail call noundef double @llvm.fabs.f64(double %27)
+  %29 = tail call noundef double @llvm.fabs.f64(double %23)
+  %i.mr = fmul double %4, %29
+  %i.ms = fcmp ugt double %28, %i.mr
   br i1 %i.ms, label %.thread.i105.i, label %_ZN9Imath_3_212_GLOBAL__N_122twoSidedJacobiRotationIdLi1ELi2ELi0EEEbRNS_8Matrix33IT_EES5_S5_S3_.exit.thread.i
 
 .thread134.i102.i:                                ; preds = %_ZN9Imath_3_212_GLOBAL__N_122twoSidedJacobiRotationIdLi0ELi2ELi1EEEbRNS_8Matrix33IT_EES5_S5_S3_.exit.i
@@ -631,8 +607,8 @@ bb.g:                                             ; preds = %_ZN9Imath_3_212_GLO
   br i1 %i.my, label %.thread.i105.i, label %_ZN9Imath_3_212_GLOBAL__N_122twoSidedJacobiRotationIdLi1ELi2ELi0EEEbRNS_8Matrix33IT_EES5_S5_S3_.exit.i
 
 .thread.i105.i:                                   ; preds = %.thread134.i102.i, %bb.g
-  %.0120146.i106.i = phi double [ %i.mt, %.thread134.i102.i ], [ %53, %bb.g ]
-  %.0121145.i107.i = phi double [ %i.mu, %.thread134.i102.i ], [ %52, %bb.g ]
+  %.0120146.i106.i = phi double [ %i.mt, %.thread134.i102.i ], [ %23, %bb.g ]
+  %.0121145.i107.i = phi double [ %i.mu, %.thread134.i102.i ], [ %27, %bb.g ]
   %.1123144.i108.i = phi double [ 0.000000e+00, %.thread134.i102.i ], [ %.0122.i118.i, %bb.g ]
   %.0124141.i109.i = phi double [ 1.000000e+00, %.thread134.i102.i ], [ %i.mo, %bb.g ]
   %i.mz = fdiv double %.0120146.i106.i, %.0121145.i107.i ; 4 uses
@@ -1035,9 +1011,6 @@ declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double
 declare void @llvm.assume(i1 noundef) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x double> @llvm.fabs.v2f64(<2 x double>) #2
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -1045,6 +1018,9 @@ declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fabs.v2f32(<2 x float>) #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x double> @llvm.fabs.v2f64(<2 x double>) #2
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

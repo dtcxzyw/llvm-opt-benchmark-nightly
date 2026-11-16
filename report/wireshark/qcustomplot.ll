@@ -204,7 +204,7 @@ bb.a:
   %28 = alloca %class.QLine, align 16             ; 4 uses
   %29 = alloca %class.QLine, align 16             ; 4 uses
   %30 = alloca %class.QLine, align 16             ; 4 uses
-  %31 = alloca %class.QLine, align 16             ; 4 uses
+  %31 = alloca %class.QLine, align 8              ; 5 uses
   %32 = alloca %class.QLineF, align 8             ; 7 uses
   %33 = alloca %class.QLineF, align 8             ; 7 uses
   %34 = alloca %class.QLineF, align 8             ; 7 uses
@@ -262,16 +262,13 @@ bb.a:
   ]
 
 bb.b:                                             ; preds = %bb.a
-  %64 = insertelement <2 x double> poison, double %2, i64 0
-  %65 = shufflevector <2 x double> %64, <2 x double> poison, <2 x i32> zeroinitializer
-  %66 = fadd <2 x double> %65, <double -0.000000e+00, double 1.000000e-04> ; 3 uses
+  %64 = fadd double %2, 1.000000e-04              ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %32) #49
   store double %2, ptr %32, align 8
   %.sroa.4451.0..sroa_idx = getelementptr inbounds nuw i8, ptr %32, i64 8
   store double %3, ptr %.sroa.4451.0..sroa_idx, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %32, i64 16
-  %67 = extractelement <2 x double> %66, i64 1
-  store double %67, ptr %i.e, align 8
+  store double %64, ptr %i.e, align 8
   %.sroa.4449.0..sroa_idx = getelementptr inbounds nuw i8, ptr %32, i64 24
   store double %3, ptr %.sroa.4449.0..sroa_idx, align 8
   %i.f = getelementptr i8, ptr %1, i64 12
@@ -292,19 +289,24 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 
 bb.e:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %31) #49
-  %68 = tail call <2 x double> @llvm.copysign.v2f64(<2 x double> splat (double 5.000000e-01), <2 x double> %66)
+  %65 = tail call double @llvm.copysign.f64(double 5.000000e-01, double %2)
+  %66 = fadd double %2, %65
+  %67 = fptosi double %66 to i32
   %i.l = tail call double @llvm.copysign.f64(double 5.000000e-01, double %3)
   %i.m = fadd double %3, %i.l
   %i.n = fptosi double %i.m to i32
   %.sroa.2.0.insert.ext.i.i.i.i = zext i32 %i.n to i64
-  %.sroa.2.0.insert.shift.i.i.i.i = shl nuw i64 %.sroa.2.0.insert.ext.i.i.i.i, 32
-  %69 = fadd <2 x double> %66, %68
-  %70 = fptosi <2 x double> %69 to <2 x i32>
-  %71 = zext <2 x i32> %70 to <2 x i64>
-  %72 = insertelement <2 x i64> poison, i64 %.sroa.2.0.insert.shift.i.i.i.i, i64 0
-  %73 = shufflevector <2 x i64> %72, <2 x i64> poison, <2 x i32> zeroinitializer
-  %74 = or disjoint <2 x i64> %73, %71
-  store <2 x i64> %74, ptr %31, align 16
+  %.sroa.2.0.insert.shift.i.i.i.i = shl nuw i64 %.sroa.2.0.insert.ext.i.i.i.i, 32 ; 2 uses
+  %.sroa.0.0.insert.ext.i.i.i.i = zext i32 %67 to i64
+  %.sroa.0.0.insert.insert.i.i.i.i = or disjoint i64 %.sroa.2.0.insert.shift.i.i.i.i, %.sroa.0.0.insert.ext.i.i.i.i
+  %68 = tail call double @llvm.copysign.f64(double 5.000000e-01, double %64)
+  %69 = fadd double %64, %68
+  %70 = fptosi double %69 to i32
+  %.sroa.0.0.insert.ext.i3.i.i.i = zext i32 %70 to i64
+  %.sroa.0.0.insert.insert.i4.i.i.i = or disjoint i64 %.sroa.2.0.insert.shift.i.i.i.i, %.sroa.0.0.insert.ext.i3.i.i.i
+  store i64 %.sroa.0.0.insert.insert.i.i.i.i, ptr %31, align 8
+  %71 = getelementptr inbounds nuw i8, ptr %31, i64 8
+  store i64 %.sroa.0.0.insert.insert.i4.i.i.i, ptr %71, align 8
   call void @_ZN8QPainter9drawLinesEPK5QLinei(ptr noundef align 8 dereferenceable_or_null(40) %1, ptr noundef nonnull align 4 dereferenceable(16) %31, i32 noundef 1)
   call void @llvm.lifetime.end.p0(ptr nonnull %31) #49
   br label %_ZN10QCPPainter8drawLineERK7QPointFS2_.exit

@@ -202,7 +202,7 @@ scalar.ph206:                                     ; preds = %scalar.ph206.prehea
   %.idx312.us.i.us = mul nuw nsw i64 %i.ey, 36
   %i.fi = getelementptr inbounds nuw i8, ptr %i.dt, i64 %.idx312.us.i.us ; 2 uses
   %i.fj = load <2 x float>, ptr %i.fb, align 4, !tbaa !36
-  %i.fk = load float, ptr %i.fe, align 4, !tbaa !36 ; 2 uses
+  %i.fk = load float, ptr %i.fe, align 4, !tbaa !36 ; 3 uses
   %i.fl = insertelement <4 x float> poison, float %i.fk, i64 0
   %i.fm = insertelement <4 x float> %i.fl, float %i.fd, i64 1
   %i.fn = shufflevector <2 x float> %i.fj, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
@@ -214,8 +214,10 @@ scalar.ph206:                                     ; preds = %scalar.ph206.prehea
   %i.fs = shufflevector <4 x float> %i.fp, <4 x float> poison, <2 x i32> <i32 2, i32 3>
   store <2 x float> %i.fs, ptr %i.fg, align 4, !tbaa !36
   store float %i.fr, ptr %i.fh, align 4, !tbaa !36
-  %11 = shufflevector <4 x float> %i.fp, <4 x float> poison, <8 x i32> <i32 2, i32 3, i32 0, i32 2, i32 2, i32 2, i32 3, i32 3>
-  %i.ft = fmul reassoc nsz arcp contract afn <8 x float> %i.fq, %11
+  %11 = shufflevector <4 x float> %i.fp, <4 x float> poison, <8 x i32> <i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %12 = insertelement <8 x float> %11, float %i.fk, i64 2
+  %13 = shufflevector <8 x float> %12, <8 x float> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 0, i32 0, i32 0, i32 1, i32 1>
+  %i.ft = fmul reassoc nsz arcp contract afn <8 x float> %i.fq, %13
   store <8 x float> %i.ft, ptr %i.fi, align 4, !tbaa !36
   %i.fu = fmul reassoc nsz arcp contract afn float %i.fr, %i.fr
   %i.fv = getelementptr i8, ptr %i.fi, i64 32

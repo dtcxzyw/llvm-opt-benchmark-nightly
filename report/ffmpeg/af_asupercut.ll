@@ -204,31 +204,35 @@ scalar.ph82.preheader:                            ; preds = %.lr.ph254, %middle.
   %indvars.iv270.ph = phi i64 [ %i.br, %.lr.ph254 ], [ %i.bx, %middle.block95 ]
   %i.cr = insertelement <2 x double> poison, double %i.n, i64 0
   %i.cs = shufflevector <2 x double> %i.cr, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
-  %1 = insertelement <4 x double> <double poison, double poison, double 1.000000e+00, double -2.000000e+00>, double %i.bp, i64 0
   br label %scalar.ph82
 
 scalar.ph82:                                      ; preds = %scalar.ph82.preheader, %scalar.ph82
   %indvars.iv270 = phi i64 [ %indvars.iv.next271, %scalar.ph82 ], [ %indvars.iv270.ph, %scalar.ph82.preheader ] ; 3 uses
-  %i.ct = getelementptr inbounds nuw [40 x i8], ptr %i.bn, i64 %indvars.iv270 ; 2 uses
+  %i.ct = getelementptr inbounds nuw [40 x i8], ptr %i.bn, i64 %indvars.iv270 ; 5 uses
   %i.cu = sub nuw nsw i64 %indvars.iv270, %i.bs
   %i.cv = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.cu
   %i.cw = load double, ptr %i.cv, align 8, !tbaa !52
   %i.cx = fdiv nsz double %i.n, %i.cw             ; 2 uses
+  %1 = getelementptr inbounds nuw i8, ptr %i.ct, i64 16
+  %2 = getelementptr inbounds nuw i8, ptr %i.ct, i64 24
   %i.cy = getelementptr inbounds nuw i8, ptr %i.ct, i64 32
   %i.cz = insertelement <2 x double> <double poison, double 1.000000e+00>, double %i.cx, i64 0
   %i.da = insertelement <2 x double> <double -1.000000e+00, double poison>, double %i.cx, i64 1
   %i.db = fsub nsz <2 x double> %i.cz, %i.da
   %i.dc = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.cs, <2 x double> %i.cs, <2 x double> %i.db) ; 2 uses
   %i.dd = extractelement <2 x double> %i.dc, i64 0
-  %i.de = fdiv nsz double 1.000000e+00, %i.dd     ; 2 uses
+  %i.de = fdiv nsz double 1.000000e+00, %i.dd     ; 5 uses
+  store double %i.de, ptr %1, align 8, !tbaa !90
+  %3 = fmul nsz double %i.de, -2.000000e+00
+  store double %3, ptr %2, align 8, !tbaa !91
   store double %i.de, ptr %i.cy, align 8, !tbaa !55
-  %2 = fneg nsz <2 x double> %i.dc
-  %3 = shufflevector <2 x double> %2, <2 x double> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
-  %4 = shufflevector <4 x double> %1, <4 x double> %3, <4 x i32> <i32 0, i32 5, i32 2, i32 3>
-  %5 = insertelement <4 x double> poison, double %i.de, i64 0
-  %6 = shufflevector <4 x double> %5, <4 x double> poison, <4 x i32> zeroinitializer
-  %7 = fmul nsz <4 x double> %4, %6
-  store <4 x double> %7, ptr %i.ct, align 8, !tbaa !52
+  %4 = fmul nsz double %i.bp, %i.de
+  store double %4, ptr %i.ct, align 8, !tbaa !56
+  %5 = extractelement <2 x double> %i.dc, i64 1
+  %6 = fneg nsz double %5
+  %7 = fmul nsz double %i.de, %6
+  %8 = getelementptr inbounds nuw i8, ptr %i.ct, i64 8
+  store double %7, ptr %8, align 8, !tbaa !54
   %indvars.iv.next271 = add nuw nsw i64 %indvars.iv270, 1 ; 2 uses
   %i.df = icmp samesign ult i64 %indvars.iv.next271, %i.bt
   br i1 %i.df, label %scalar.ph82, label %.loopexit, !llvm.loop !72

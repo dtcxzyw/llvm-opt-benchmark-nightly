@@ -205,9 +205,10 @@ bb.c:                                             ; preds = %_ZNKSt14default_del
 ; Function Attrs: mustprogress uwtable
 define void @_ZNK6duckdb23FullSortGlobalSinkState15GetSinkProgressERNS_13ClientContextENS_12ProgressDataE(ptr dead_on_unwind noalias nofree writable sret(%"struct.duckdb::ProgressData") align 8 captures(none) initializes((0, 17)) %0, ptr noundef nonnull align 8 dereferenceable(160) %1, ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(512) %2, ptr nofree noundef readonly byval(%"struct.duckdb::ProgressData") align 8 captures(none) %3) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 !guid !1484 {
 bb.a:
-  %i.a = load <2 x double>, ptr %3, align 8, !tbaa !412
-  %i.b = fmul <2 x double> %i.a, <double 5.000000e-01, double 1.000000e+00>
-  store <2 x double> %i.b, ptr %0, align 8, !tbaa !412
+  %i.a = load <2 x double>, ptr %3, align 8, !tbaa !412 ; 2 uses
+  %i.b = fmul <2 x double> %i.a, <double 5.000000e-01, double poison>
+  %4 = shufflevector <2 x double> %i.b, <2 x double> %i.a, <2 x i32> <i32 0, i32 3>
+  store <2 x double> %4, ptr %0, align 8, !tbaa !412
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.d = load i8, ptr %i.c, align 8, !tbaa !414, !range !415, !noundef !416
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -610,9 +611,10 @@ bb.a:
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 16
   %.sroa.3.0.copyload = load i8, ptr %.sroa.3.0..sroa_idx, align 8, !tbaa !552
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1508)
-  %i.a = load <2 x double>, ptr %4, align 8, !tbaa !412
-  %i.b = fmul <2 x double> %i.a, <double 5.000000e-01, double 1.000000e+00>
-  store <2 x double> %i.b, ptr %0, align 8, !tbaa !412, !alias.scope !1508
+  %i.a = load <2 x double>, ptr %4, align 8, !tbaa !412 ; 2 uses
+  %i.b = fmul <2 x double> %i.a, <double 5.000000e-01, double poison>
+  %5 = shufflevector <2 x double> %i.b, <2 x double> %i.a, <2 x i32> <i32 0, i32 3>
+  store <2 x double> %5, ptr %0, align 8, !tbaa !412, !alias.scope !1508
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i8 %.sroa.3.0.copyload, ptr %i.c, align 8, !tbaa !414, !alias.scope !1508
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 104 ; 3 uses
@@ -1015,9 +1017,10 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define void @_ZNK6duckdb26NaturalSortGlobalSinkState15GetSinkProgressERNS_13ClientContextENS_12ProgressDataE(ptr dead_on_unwind noalias nofree writable writeonly sret(%"struct.duckdb::ProgressData") align 8 captures(none) initializes((0, 17)) %0, ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(152) %1, ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(512) %2, ptr nofree noundef readonly byval(%"struct.duckdb::ProgressData") align 8 captures(none) %3) local_unnamed_addr #10 align 2 !guid !1847 {
 bb.a:
-  %i.a = load <2 x double>, ptr %3, align 8, !tbaa !412
-  %i.b = fmul <2 x double> %i.a, <double 5.000000e-01, double 1.000000e+00>
-  store <2 x double> %i.b, ptr %0, align 8, !tbaa !412
+  %i.a = load <2 x double>, ptr %3, align 8, !tbaa !412 ; 2 uses
+  %i.b = fmul <2 x double> %i.a, <double 5.000000e-01, double poison>
+  %4 = shufflevector <2 x double> %i.b, <2 x double> %i.a, <2 x i32> <i32 0, i32 3>
+  store <2 x double> %4, ptr %0, align 8, !tbaa !412
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.d = load i8, ptr %i.c, align 8, !tbaa !414, !range !415, !noundef !416
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -1041,9 +1044,10 @@ define void @_ZNK6duckdb11NaturalSort15GetSinkProgressERNS_13ClientContextERNS_1
 bb.a:
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 16
   %.sroa.3.0.copyload = load i8, ptr %.sroa.3.0..sroa_idx, align 8, !tbaa !552
-  %i.a = load <2 x double>, ptr %4, align 8, !tbaa !412
-  %i.b = fmul <2 x double> %i.a, <double 5.000000e-01, double 1.000000e+00>
-  store <2 x double> %i.b, ptr %0, align 8, !tbaa !412, !alias.scope !1852
+  %i.a = load <2 x double>, ptr %4, align 8, !tbaa !412 ; 2 uses
+  %i.b = fmul <2 x double> %i.a, <double 5.000000e-01, double poison>
+  %5 = shufflevector <2 x double> %i.b, <2 x double> %i.a, <2 x i32> <i32 0, i32 3>
+  store <2 x double> %5, ptr %0, align 8, !tbaa !412, !alias.scope !1852
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i8 %.sroa.3.0.copyload, ptr %i.c, align 8, !tbaa !414, !alias.scope !1852
   ret void

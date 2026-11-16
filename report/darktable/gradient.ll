@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b, %dt_masks_get
   %.044 = phi nsz float [ %5, %bb.c ], [ %i.n, %bb.b ], [ %i.n, %bb.a ]
   %.043 = phi nsz float [ %i.v, %bb.c ], [ %4, %bb.b ], [ %4, %bb.a ]
   %i.y = phi <2 x float> [ %i.x, %bb.c ], [ %i.m, %bb.b ], [ %i.m, %bb.a ]
-  %i.z = shufflevector <2 x float> %i.y, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %i.z = shufflevector <2 x float> %i.y, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   store float %.045, ptr %i.a, align 16, !tbaa !29
   %i.aa = getelementptr inbounds nuw i8, ptr %i.a, i64 4
@@ -218,8 +218,9 @@ bb.c:                                             ; preds = %bb.b, %dt_masks_get
   %i.ae = getelementptr inbounds nuw i8, ptr %i.a, i64 20
   %i.af = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %i.ag = getelementptr inbounds nuw i8, ptr %i.a, i64 28
-  %i.ah = fadd nsz <4 x float> %i.z, <float 1.000000e+01, float -0.000000e+00, float -0.000000e+00, float 1.000000e+01>
-  store <4 x float> %i.ah, ptr %i.ad, align 16, !tbaa !29
+  %i.ah = fadd nsz <4 x float> %i.z, <float 1.000000e+01, float poison, float poison, float 1.000000e+01>
+  %11 = shufflevector <4 x float> %i.ah, <4 x float> %i.z, <4 x i32> <i32 0, i32 5, i32 6, i32 3>
+  store <4 x float> %11, ptr %i.ad, align 16, !tbaa !29
   %i.ai = call i32 @dt_dev_distort_backtransform(ptr noundef nonnull %i.b, ptr noundef nonnull %i.a, i64 noundef 4) #12 ; 0 uses
   %i.aj = load <2 x float>, ptr %i.a, align 16, !tbaa !29 ; 3 uses
   %i.ak = fdiv reassoc nsz arcp contract afn <2 x float> %i.aj, %i.g ; 2 uses

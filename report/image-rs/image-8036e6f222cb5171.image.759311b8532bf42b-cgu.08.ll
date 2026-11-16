@@ -204,14 +204,14 @@ bb.a:
   store <4 x float> %i.g, ptr %.sroa.42.0..sroa_idx, align 4
   %.sroa.6.sroa.5.0..sroa.6.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 20
   %i.h = load float, ptr %i.e, align 4, !noundef !5 ; 2 uses
-  %4 = insertelement <4 x float> <float poison, float 1.000000e+00, float 1.000000e+00, float 1.000000e+00>, float %i.h, i64 0
-  %5 = shufflevector <4 x float> %i.f, <4 x float> <float 0.000000e+00, float poison, float poison, float poison>, <4 x i32> <i32 4, i32 poison, i32 1, i32 3>
-  %i.i = insertelement <4 x float> %5, float %i.c, i64 1
-  %i.j = fsub <4 x float> %4, %i.i
-  %6 = shufflevector <4 x float> %i.f, <4 x float> <float 0.000000e+00, float poison, float poison, float poison>, <4 x i32> <i32 4, i32 0, i32 2, i32 poison>
-  %i.k = insertelement <4 x float> %6, float %i.h, i64 3
+  %4 = shufflevector <4 x float> %i.f, <4 x float> poison, <4 x i32> <i32 poison, i32 poison, i32 1, i32 3>
+  %i.i = insertelement <4 x float> %4, float %i.c, i64 1
+  %i.j = fsub <4 x float> <float poison, float 1.000000e+00, float 1.000000e+00, float 1.000000e+00>, %i.i
+  %5 = shufflevector <4 x float> %i.f, <4 x float> poison, <4 x i32> <i32 poison, i32 0, i32 2, i32 poison>
+  %i.k = insertelement <4 x float> %5, float %i.h, i64 3
   %i.l = fsub <4 x float> %i.j, %i.k
-  store <4 x float> %i.l, ptr %.sroa.6.sroa.5.0..sroa.6.0..sroa_idx.sroa_idx, align 4
+  %6 = insertelement <4 x float> %i.l, float %i.h, i64 0
+  store <4 x float> %6, ptr %.sroa.6.sroa.5.0..sroa.6.0..sroa_idx.sroa_idx, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.m = fpext float %2 to double                 ; 2 uses
   %i.n = fpext float %3 to double                 ; 2 uses

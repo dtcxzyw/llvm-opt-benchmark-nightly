@@ -205,7 +205,7 @@ bb.aqd:                                           ; preds = %bb.aqa, %_ZNSt7__cx
   %i.ihm = getelementptr inbounds nuw i8, ptr %246, i64 8
   %i.ihn = getelementptr inbounds nuw i8, ptr %247, i64 16
   %i.iho = getelementptr inbounds nuw i8, ptr %247, i64 20
-  %i.ihp = getelementptr inbounds nuw i8, ptr %247, i64 36
+  %i.ihp = getelementptr inbounds nuw i8, ptr %247, i64 24
   %i.ihq = getelementptr inbounds nuw i8, ptr %247, i64 40
   %i.ihr = getelementptr inbounds nuw i8, ptr %247, i64 44
   %i.ihs = getelementptr inbounds nuw i8, ptr %247, i64 60
@@ -608,55 +608,53 @@ _ZNSt6vectorIlSaIlEE9push_backEOl.exit4112:       ; preds = %_ZNSt6vectorIlSaIlE
   call void @llvm.lifetime.start.p0(ptr nonnull %247) #31
   %i.jga = getelementptr inbounds nuw i8, ptr %i.jes, i64 8
   %i.jgb = getelementptr inbounds nuw i8, ptr %i.jes, i64 12 ; 2 uses
-  %257 = load float, ptr %i.jga, align 8, !noalias !794 ; 3 uses
-  %258 = fneg float %257                          ; 2 uses
-  %i.jgc = load <3 x float>, ptr %i.jgb, align 4, !noalias !794 ; 7 uses
+  %i.jgc = load <3 x float>, ptr %i.jgb, align 4, !noalias !794 ; 4 uses
   %i.jgd = shufflevector <3 x float> %i.jgc, <3 x float> poison, <4 x i32> <i32 1, i32 0, i32 2, i32 0> ; 3 uses
-  %259 = load float, ptr %i.jgb, align 4, !noalias !794 ; 7 uses
   %i.jge = shufflevector <3 x float> %i.jgc, <3 x float> poison, <4 x i32> <i32 2, i32 2, i32 1, i32 2> ; 2 uses
-  %260 = insertelement <4 x float> %i.jge, float %258, i64 1
-  %261 = insertelement <4 x float> %260, float %257, i64 2
-  %262 = shufflevector <4 x float> %261, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 2>
-  %263 = fmul <4 x float> %i.jge, %262            ; 2 uses
-  %264 = shufflevector <3 x float> %i.jgc, <3 x float> poison, <4 x i32> <i32 1, i32 1, i32 0, i32 1>
-  %265 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.jgd, <4 x float> %264, <4 x float> %263) ; 3 uses
-  %266 = extractelement <4 x float> %265, i64 0
-  %267 = extractelement <4 x float> %265, i64 3
-  %268 = fmul float %267, 2.000000e+00
-  %269 = extractelement <4 x float> %263, i64 0
-  %270 = call float @llvm.fmuladd.f32(float %259, float %259, float %269)
-  %271 = extractelement <3 x float> %i.jgc, i64 1
-  %i.jgf = extractelement <3 x float> %i.jgc, i64 2
-  %272 = shufflevector <3 x float> %i.jgc, <3 x float> poison, <2 x i32> <i32 poison, i32 1>
-  %273 = insertelement <2 x float> %272, float %259, i64 0
-  %274 = insertelement <2 x float> poison, float %258, i64 0
-  %275 = fmul float %259, %257
-  %276 = call float @llvm.fmuladd.f32(float %271, float %i.jgf, float %275)
-  %277 = fmul float %276, 2.000000e+00
+  %257 = shufflevector <3 x float> %i.jgc, <3 x float> poison, <4 x i32> <i32 1, i32 1, i32 0, i32 1>
   %foldExtExtBinop = fmul <4 x float> %i.jgd, %i.jgd
-  %278 = extractelement <4 x float> %foldExtExtBinop, i64 0
-  %279 = call float @llvm.fmuladd.f32(float %259, float %259, float %278)
-  %280 = call float @llvm.fmuladd.f32(float %279, float -2.000000e+00, float 1.000000e+00)
-  %281 = call float @llvm.fmuladd.f32(float %266, float -2.000000e+00, float 1.000000e+00)
-  %282 = insertelement <4 x float> %265, float 1.000000e+00, i64 3
-  %283 = insertelement <4 x float> %282, float %281, i64 0
-  %284 = fmul <4 x float> %283, <float 1.000000e+00, float 2.000000e+00, float 2.000000e+00, float 0.000000e+00>
-  store <4 x float> %284, ptr %247, align 16
+  %258 = extractelement <4 x float> %foldExtExtBinop, i64 0
+  %259 = load <2 x float>, ptr %i.jga, align 8, !noalias !794 ; 3 uses
+  %260 = load float, ptr %i.jgb, align 4, !noalias !794 ; 4 uses
+  %261 = extractelement <2 x float> %259, i64 0
+  %262 = fneg float %261                          ; 2 uses
+  %263 = insertelement <4 x float> %i.jge, float %262, i64 1
+  %264 = shufflevector <2 x float> %259, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison> ; 3 uses
+  %265 = shufflevector <4 x float> %263, <4 x float> %264, <4 x i32> <i32 0, i32 1, i32 4, i32 4>
+  %266 = fmul <4 x float> %i.jge, %265            ; 2 uses
+  %267 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.jgd, <4 x float> %257, <4 x float> %266) ; 3 uses
+  %i.jgf = extractelement <4 x float> %267, i64 3
+  %268 = fmul float %i.jgf, 2.000000e+00
+  %269 = extractelement <4 x float> %266, i64 0
+  %270 = call float @llvm.fmuladd.f32(float %260, float %260, float %269)
+  %271 = call float @llvm.fmuladd.f32(float %270, float -2.000000e+00, float 1.000000e+00)
+  %272 = shufflevector <2 x float> %259, <2 x float> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 1>
+  %273 = shufflevector <3 x float> %i.jgc, <3 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 poison> ; 3 uses
+  %274 = shufflevector <4 x float> %273, <4 x float> %272, <4 x i32> <i32 4, i32 poison, i32 1, i32 7>
+  %275 = insertelement <4 x float> %274, float 1.000000e+00, i64 1
+  %276 = insertelement <4 x float> <float poison, float 1.000000e+00, float poison, float poison>, float %262, i64 0
+  %277 = shufflevector <4 x float> %276, <4 x float> %264, <4 x i32> <i32 0, i32 1, i32 0, i32 4>
+  %278 = fmul <4 x float> %275, %277
+  %279 = shufflevector <4 x float> %273, <4 x float> <float poison, float 0.000000e+00, float poison, float poison>, <4 x i32> <i32 1, i32 5, i32 poison, i32 1>
+  %280 = shufflevector <4 x float> %279, <4 x float> %264, <4 x i32> <i32 0, i32 1, i32 5, i32 3>
+  %281 = shufflevector <4 x float> %273, <4 x float> <float poison, float -0.000000e+00, float poison, float poison>, <4 x i32> <i32 2, i32 5, i32 2, i32 2>
+  %282 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %280, <4 x float> %281, <4 x float> %278)
+  %283 = fmul <4 x float> %282, <float 2.000000e+00, float 0.000000e+00, float 2.000000e+00, float 2.000000e+00>
+  %284 = call float @llvm.fmuladd.f32(float %260, float %260, float %258)
+  %285 = shufflevector <4 x float> %267, <4 x float> poison, <2 x i32> <i32 poison, i32 0>
+  %286 = insertelement <2 x float> %285, float %284, i64 0
+  %287 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %286, <2 x float> splat (float -2.000000e+00), <2 x float> splat (float 1.000000e+00)) ; 2 uses
+  %i.jgg = insertelement <4 x float> %267, float 1.000000e+00, i64 3
+  %288 = shufflevector <2 x float> %287, <2 x float> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
+  %289 = shufflevector <4 x float> %i.jgg, <4 x float> %288, <4 x i32> <i32 5, i32 1, i32 2, i32 3> ; 2 uses
+  %i.jgh = fmul <4 x float> %289, <float poison, float 2.000000e+00, float 2.000000e+00, float 0.000000e+00>
+  %290 = shufflevector <4 x float> %289, <4 x float> %i.jgh, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
+  store <4 x float> %290, ptr %247, align 16
   store float %268, ptr %i.ihn, align 16
-  %285 = shufflevector <3 x float> %i.jgc, <3 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 poison> ; 2 uses
-  %286 = shufflevector <4 x float> <float -2.000000e+00, float poison, float 0.000000e+00, float poison>, <4 x float> %285, <4 x i32> <i32 0, i32 5, i32 2, i32 poison>
-  %287 = insertelement <4 x float> %286, float %259, i64 3
-  %288 = shufflevector <4 x float> %285, <4 x float> <float poison, float poison, float -0.000000e+00, float poison>, <4 x i32> <i32 poison, i32 2, i32 6, i32 2>
-  %i.jgg = insertelement <4 x float> %288, float %270, i64 0
-  %289 = shufflevector <2 x float> %273, <2 x float> poison, <4 x i32> <i32 0, i32 poison, i32 1, i32 poison>
-  %290 = shufflevector <2 x float> %274, <2 x float> poison, <4 x i32> <i32 0, i32 poison, i32 0, i32 poison>
-  %i.jgh = fmul <4 x float> %289, %290
-  %291 = shufflevector <4 x float> <float 1.000000e+00, float poison, float 1.000000e+00, float poison>, <4 x float> %i.jgh, <4 x i32> <i32 0, i32 4, i32 2, i32 6>
-  %292 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %287, <4 x float> %i.jgg, <4 x float> %291)
-  %293 = fmul <4 x float> %292, <float 1.000000e+00, float 2.000000e+00, float 0.000000e+00, float 2.000000e+00>
-  store <4 x float> %293, ptr %i.iho, align 4
-  store float %277, ptr %i.ihp, align 4
-  store float %280, ptr %i.ihq, align 8
+  store float %271, ptr %i.iho, align 4
+  store <4 x float> %283, ptr %i.ihp, align 8
+  %291 = extractelement <2 x float> %287, i64 0
+  store float %291, ptr %i.ihq, align 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.ihr, i8 0, i64 16, i1 false)
   store float 1.000000e+00, ptr %i.ihs, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %248) #31

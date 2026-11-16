@@ -205,12 +205,11 @@ _ZN11hb_vector_tI14hb_transform_tIfELb0EE4tailEv.exit: ; preds = %bb.b, %bb.c
   br i1 %i.aa, label %_ZN12hb_extents_tIfE9add_pointEff.exit.2.i.thread, label %_ZN12hb_extents_tIfE9add_pointEff.exit.2.i, !prof !265
 
 _ZN12hb_extents_tIfE9add_pointEff.exit.2.i.thread: ; preds = %_ZN11hb_vector_tI14hb_transform_tIfELb0EE4tailEv.exit
-  %3 = shufflevector <2 x float> %i.k, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %4 = shufflevector <4 x float> %3, <4 x float> <float 0.000000e+00, float 0.000000e+00, float poison, float poison>, <4 x i32> <i32 4, i32 5, i32 0, i32 1>
+  %3 = shufflevector <2 x float> %i.k, <2 x float> poison, <4 x i32> <i32 poison, i32 poison, i32 0, i32 1>
   %i.ab = shufflevector <2 x float> %2, <2 x float> poison, <4 x i32> <i32 poison, i32 poison, i32 1, i32 1>
-  %5 = shufflevector <4 x float> %i.ab, <4 x float> <float -0.000000e+00, float -0.000000e+00, float poison, float poison>, <4 x i32> <i32 4, i32 5, i32 2, i32 3>
-  %i.ac = shufflevector <2 x float> %i.y, <2 x float> %i.w, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %i.ad = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %4, <4 x float> %5, <4 x float> %i.ac) ; 2 uses
+  %i.ac = shufflevector <2 x float> %i.y, <2 x float> %i.w, <4 x i32> <i32 0, i32 1, i32 2, i32 3> ; 2 uses
+  %i.ad = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %3, <4 x float> %i.ab, <4 x float> %i.ac)
+  %4 = shufflevector <4 x float> %i.ac, <4 x float> %i.ad, <4 x i32> <i32 0, i32 1, i32 6, i32 7> ; 2 uses
   br label %bb.d
 
 _ZN12hb_extents_tIfE9add_pointEff.exit.2.i:       ; preds = %_ZN11hb_vector_tI14hb_transform_tIfELb0EE4tailEv.exit
@@ -243,8 +242,8 @@ _ZN12hb_extents_tIfE9add_pointEff.exit.2.i:       ; preds = %_ZN11hb_vector_tI14
   br i1 %i.az, label %_ZNK14hb_transform_tIfE17transform_extentsER12hb_extents_tIfE.exit, label %bb.d, !prof !2049
 
 bb.d:                                             ; preds = %_ZN12hb_extents_tIfE9add_pointEff.exit.2.i.thread, %_ZN12hb_extents_tIfE9add_pointEff.exit.2.i
-  %i.bc = phi <4 x float> [ %i.ad, %_ZN12hb_extents_tIfE9add_pointEff.exit.2.i.thread ], [ %i.ba, %_ZN12hb_extents_tIfE9add_pointEff.exit.2.i ] ; 2 uses
-  %i.bd = phi <4 x float> [ %i.ad, %_ZN12hb_extents_tIfE9add_pointEff.exit.2.i.thread ], [ %i.bb, %_ZN12hb_extents_tIfE9add_pointEff.exit.2.i ]
+  %i.bc = phi <4 x float> [ %4, %_ZN12hb_extents_tIfE9add_pointEff.exit.2.i.thread ], [ %i.ba, %_ZN12hb_extents_tIfE9add_pointEff.exit.2.i ] ; 2 uses
+  %i.bd = phi <4 x float> [ %4, %_ZN12hb_extents_tIfE9add_pointEff.exit.2.i.thread ], [ %i.bb, %_ZN12hb_extents_tIfE9add_pointEff.exit.2.i ]
   %i.be = phi <4 x float> [ %i.z, %_ZN12hb_extents_tIfE9add_pointEff.exit.2.i.thread ], [ %i.at, %_ZN12hb_extents_tIfE9add_pointEff.exit.2.i ]
   %i.bf = shufflevector <4 x float> %i.bd, <4 x float> poison, <4 x i32> <i32 2, i32 3, i32 0, i32 1>
   %i.bg = fcmp ole <4 x float> %i.bc, %i.bf

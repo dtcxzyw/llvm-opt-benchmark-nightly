@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.b
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %i.k = phi float [ %i.h, %bb.c ], [ %i.j, %bb.d ] ; 13 uses
+  %i.k = phi float [ %i.h, %bb.c ], [ %i.j, %bb.d ] ; 14 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 832
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 836 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 840 ; 3 uses
@@ -221,29 +221,23 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.w = tail call float @llvm.fmuladd.f32(float %i.v, float 2.500000e-01, float %4) ; 5 uses
   store float %i.w, ptr %i.p, align 8, !tbaa !19
   store float %i.k, ptr %i.t, align 8, !tbaa !19
-  %5 = fsub float %i.w, %4
-  %i.x = fsub float %2, %i.w                      ; 2 uses
-  %6 = insertelement <2 x float> <float 1.000000e+00, float poison>, float %5, i64 1
-  %7 = insertelement <2 x float> poison, float %i.k, i64 0
-  %8 = shufflevector <2 x float> %7, <2 x float> poison, <2 x i32> zeroinitializer
-  %9 = fdiv <2 x float> %6, %8                    ; 2 uses
-  %10 = extractelement <2 x float> %9, i64 0      ; 9 uses
-  %11 = insertelement <2 x float> <float -0.000000e+00, float poison>, float %4, i64 1
-  %12 = fadd <2 x float> %9, %11                  ; 2 uses
-  %13 = extractelement <2 x float> %12, i64 1     ; 10 uses
-  store float %13, ptr %i.l, align 8, !tbaa !19
-  %i.y = fsub float %2, %13
+  %i.x = fsub float %i.w, %4
+  %5 = fdiv float %i.x, %i.k
+  %6 = fadd float %4, %5                          ; 11 uses
+  store float %6, ptr %i.l, align 8, !tbaa !19
+  %i.y = fsub float %2, %6
   %i.z = fmul float %i.y, 3.000000e-01            ; 2 uses
-  store float %10, ptr %i.u, align 4, !tbaa !19
-  %14 = fneg <2 x float> %12                      ; 2 uses
-  %15 = extractelement <2 x float> %14, i64 0
-  %i.aa = tail call float @llvm.fmuladd.f32(float %15, float %2, float %i.x)
-  %i.ab = tail call float @llvm.fmuladd.f32(float %i.k, float %13, float %i.aa)
-  %i.ac = fsub float %i.k, %10
+  %7 = fdiv float 1.000000e+00, %i.k              ; 10 uses
+  store float %7, ptr %i.u, align 4, !tbaa !19
+  %8 = fsub float %2, %i.w                        ; 2 uses
+  %9 = fneg float %7
+  %i.aa = tail call float @llvm.fmuladd.f32(float %9, float %2, float %8)
+  %i.ab = tail call float @llvm.fmuladd.f32(float %i.k, float %6, float %i.aa)
+  %i.ac = fsub float %i.k, %7
   %i.ad = fdiv float %i.ab, %i.ac                 ; 2 uses
-  store float %13, ptr %i.m, align 4, !tbaa !19
-  %16 = extractelement <2 x float> %14, i64 1
-  %i.ae = tail call float @llvm.fmuladd.f32(float %i.ad, float 2.000000e+00, float %16) ; 4 uses
+  store float %6, ptr %i.m, align 4, !tbaa !19
+  %10 = fneg float %6
+  %i.ae = tail call float @llvm.fmuladd.f32(float %i.ad, float 2.000000e+00, float %10) ; 4 uses
   store float %i.ae, ptr %i.n, align 8, !tbaa !19
   %i.af = fcmp ogt float %i.ae, %2
   br i1 %i.af, label %bb.f, label %bb.g
@@ -256,16 +250,16 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.i
 
 bb.g:                                             ; preds = %bb.e
-  %i.ai = fsub float %i.ae, %13
+  %i.ai = fsub float %i.ae, %6
   %i.aj = fcmp olt float %i.ai, %i.z
   br i1 %i.aj, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  %i.ak = fadd float %13, %i.z                    ; 3 uses
+  %i.ak = fadd float %6, %i.z                     ; 3 uses
   store float %i.ak, ptr %i.n, align 8, !tbaa !19
-  %i.al = fadd float %13, %i.ak
+  %i.al = fadd float %6, %i.ak
   %i.am = fmul float %i.al, 5.000000e-01          ; 2 uses
-  %i.an = tail call float @llvm.fmuladd.f32(float %i.k, float %13, float %i.x)
+  %i.an = tail call float @llvm.fmuladd.f32(float %i.k, float %6, float %8)
   %i.ao = fneg float %i.am
   %i.ap = tail call float @llvm.fmuladd.f32(float %i.ao, float %i.k, float %i.an)
   %i.aq = fsub float %2, %i.am
@@ -274,9 +268,9 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.g, %bb.h, %bb.f
-  %i.as = phi float [ %13, %bb.g ], [ %13, %bb.h ], [ %i.ah, %bb.f ]
+  %i.as = phi float [ %6, %bb.g ], [ %6, %bb.h ], [ %i.ah, %bb.f ]
   %i.at = phi float [ %i.ae, %bb.g ], [ %i.ak, %bb.h ], [ %2, %bb.f ]
-  %i.au = phi float [ %10, %bb.g ], [ %i.ar, %bb.h ], [ %10, %bb.f ]
+  %i.au = phi float [ %7, %bb.g ], [ %i.ar, %bb.h ], [ %7, %bb.f ]
   store float %i.w, ptr %i.q, align 4, !tbaa !19
   %i.av = fadd float %i.k, %i.au
   %i.aw = fsub float %i.at, %i.as
@@ -306,12 +300,12 @@ bb.i:                                             ; preds = %bb.g, %bb.h, %bb.f
   store float %i.bo, ptr %i.bc, align 4, !tbaa !19
   %i.bp = fsub float %i.bo, %3
   %i.bq = fmul float %i.bp, 3.000000e-01          ; 2 uses
-  store float %10, ptr %i.bh, align 8, !tbaa !19
+  store float %7, ptr %i.bh, align 8, !tbaa !19
   %i.br = fsub float %i.bl, %3
   %i.bs = fneg float %i.k
   %i.bt = tail call float @llvm.fmuladd.f32(float %i.bs, float %i.bo, float %i.br) ; 2 uses
-  %i.bu = tail call float @llvm.fmuladd.f32(float %10, float %3, float %i.bt)
-  %i.bv = fsub float %10, %i.k
+  %i.bu = tail call float @llvm.fmuladd.f32(float %7, float %3, float %i.bt)
+  %i.bv = fsub float %7, %i.k
   %i.bw = fdiv float %i.bu, %i.bv                 ; 2 uses
   store float %i.bo, ptr %i.bb, align 8, !tbaa !19
   %i.bx = fneg float %i.bo
@@ -346,7 +340,7 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %bb.k, %bb.l, %bb.j
   %i.ck = phi float [ %i.by, %bb.k ], [ %i.ce, %bb.l ], [ %3, %bb.j ]
   %i.cl = phi float [ %i.bo, %bb.k ], [ %i.bo, %bb.l ], [ %i.cb, %bb.j ]
-  %i.cm = phi float [ %10, %bb.k ], [ %i.cj, %bb.l ], [ %10, %bb.j ]
+  %i.cm = phi float [ %7, %bb.k ], [ %i.cj, %bb.l ], [ %7, %bb.j ]
   store float %i.bl, ptr %i.bf, align 8, !tbaa !19
   %i.cn = fadd float %i.k, %i.cm
   %i.co = fsub float %i.cl, %i.ck

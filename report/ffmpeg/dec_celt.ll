@@ -205,8 +205,7 @@ bb.a:
 
 scalar.ph.preheader:                              ; preds = %._crit_edge
   %i.bm = shufflevector <2 x float> %i.p, <2 x float> poison, <4 x i32> <i32 poison, i32 0, i32 1, i32 poison>
-  %2 = insertelement <4 x float> %i.bm, float 1.000000e+00, i64 3
-  %i.bn = insertelement <4 x float> %2, float %i.b, i64 0
+  %i.bn = insertelement <4 x float> %i.bm, float %i.b, i64 0
   br label %scalar.ph
 
 vector.ph:                                        ; preds = %._crit_edge
@@ -326,16 +325,16 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.ej = fadd nsz float %.06465, %.06267
   %i.ek = fadd nsz float %.06168, %i.dn
   %i.el = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv ; 2 uses
-  %i.em = insertelement <4 x float> <float poison, float 1.000000e+00, float poison, float poison>, float %i.dj, i64 0
-  %3 = shufflevector <4 x float> %i.em, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
-  %i.en = fmul nsz <4 x float> %3, %i.bn
+  %i.em = insertelement <4 x float> poison, float %i.dj, i64 0
+  %2 = shufflevector <4 x float> %i.em, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 poison>
+  %i.en = fmul nsz <4 x float> %2, %i.bn
   %i.eo = load float, ptr %i.el, align 4, !tbaa !20
   %i.ep = insertelement <4 x float> poison, float %.06366, i64 0
   %i.eq = insertelement <4 x float> %i.ep, float %i.ej, i64 1
   %i.er = insertelement <4 x float> %i.eq, float %i.ek, i64 2
-  %4 = insertelement <4 x float> %i.er, float %i.eo, i64 3
-  %5 = fmul <4 x float> %4, %i.en
-  %i.es = fpext nsz <4 x float> %5 to <4 x double> ; 4 uses
+  %3 = fmul <4 x float> %i.er, %i.en
+  %4 = insertelement <4 x float> %3, float %i.eo, i64 3
+  %i.es = fpext nsz <4 x float> %4 to <4 x double> ; 4 uses
   %i.et = extractelement <4 x double> %i.es, i64 0
   %i.eu = fadd nsz double %i.ei, %i.et
   %i.ev = extractelement <4 x double> %i.es, i64 1

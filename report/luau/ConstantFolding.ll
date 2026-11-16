@@ -204,13 +204,11 @@ _ZNK4Luau7Compile8Constant10isTruthfulEv.exit627.thread637: ; preds = %bb.de, %_
   %i.acb = load float, ptr %i.aca, align 8, !tbaa !70
   %i.acc = load <4 x float>, ptr %i.abv, align 8
   %i.acd = load <4 x float>, ptr %i.abw, align 8
-  %i.ace = insertelement <4 x float> poison, float %i.abz, i64 2
-  %i.acf = insertelement <4 x float> %i.ace, float %i.lg, i64 3
-  %6 = shufflevector <4 x float> %i.acc, <4 x float> %i.acf, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %i.acg = insertelement <4 x float> <float poison, float poison, float poison, float 1.000000e+00>, float %i.acb, i64 2
-  %7 = shufflevector <4 x float> %i.acd, <4 x float> %i.acg, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %8 = fdiv <4 x float> %6, %7
-  store <4 x float> %8, ptr %i.abx, align 8, !tbaa !70
+  %i.ace = insertelement <4 x float> %i.acc, float %i.abz, i64 2
+  %i.acf = insertelement <4 x float> %i.acd, float %i.acb, i64 2
+  %6 = fdiv <4 x float> %i.ace, %i.acf
+  %i.acg = insertelement <4 x float> %6, float %i.lg, i64 3
+  store <4 x float> %i.acg, ptr %i.abx, align 8, !tbaa !70
   br label %.thread629
 
 .rtscalar:                                        ; preds = %bb.an
@@ -251,14 +249,13 @@ _ZNK4Luau7Compile8Constant10isTruthfulEv.exit627.thread637: ; preds = %bb.de, %_
   %i.adg = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.adh = load float, ptr %i.adg, align 8, !tbaa !70
   %i.adi = load <4 x float>, ptr %i.ada, align 8
-  %9 = insertelement <4 x float> poison, float %i.adc, i64 0
-  %i.adj = insertelement <4 x float> %9, float %i.ade, i64 1
-  %i.adk = insertelement <4 x float> %i.adj, float %i.adf, i64 2
-  %i.adl = insertelement <4 x float> %i.adk, float %i.lt, i64 3
-  %i.adm = insertelement <4 x float> <float poison, float poison, float poison, float 1.000000e+00>, float %i.adh, i64 2
-  %10 = shufflevector <4 x float> %i.adi, <4 x float> %i.adm, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %11 = fdiv <4 x float> %i.adl, %10
-  store <4 x float> %11, ptr %i.add, align 8, !tbaa !70
+  %i.adj = insertelement <4 x float> poison, float %i.adc, i64 0
+  %i.adk = insertelement <4 x float> %i.adj, float %i.ade, i64 1
+  %i.adl = insertelement <4 x float> %i.adk, float %i.adf, i64 2
+  %i.adm = insertelement <4 x float> %i.adi, float %i.adh, i64 2
+  %7 = fdiv <4 x float> %i.adl, %i.adm
+  %8 = insertelement <4 x float> %7, float %i.lt, i64 3
+  store <4 x float> %8, ptr %i.add, align 8, !tbaa !70
   br label %.thread629
 
 .rtscalar660:                                     ; preds = %bb.aq
@@ -299,14 +296,13 @@ _ZNK4Luau7Compile8Constant10isTruthfulEv.exit627.thread637: ; preds = %bb.de, %_
   %i.aem = load float, ptr %i.ael, align 8, !tbaa !70
   %i.aen = fptrunc double %i.aeh to float
   %i.aeo = load <4 x float>, ptr %i.aeg, align 8
-  %i.aep = insertelement <4 x float> poison, float %i.aem, i64 2
-  %i.aeq = insertelement <4 x float> %i.aep, float %i.mg, i64 3
-  %12 = shufflevector <4 x float> %i.aeo, <4 x float> %i.aeq, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %i.aer = insertelement <4 x float> <float poison, float poison, float poison, float 1.000000e+00>, float %i.aei, i64 0
-  %i.aes = insertelement <4 x float> %i.aer, float %i.aek, i64 1
-  %13 = insertelement <4 x float> %i.aes, float %i.aen, i64 2
-  %14 = fdiv <4 x float> %12, %13
-  store <4 x float> %14, ptr %i.aej, align 8, !tbaa !70
+  %i.aep = insertelement <4 x float> %i.aeo, float %i.aem, i64 2
+  %i.aeq = insertelement <4 x float> poison, float %i.aei, i64 0
+  %i.aer = insertelement <4 x float> %i.aeq, float %i.aek, i64 1
+  %i.aes = insertelement <4 x float> %i.aer, float %i.aen, i64 2
+  %9 = fdiv <4 x float> %i.aep, %i.aes
+  %10 = insertelement <4 x float> %9, float %i.mg, i64 3
+  store <4 x float> %10, ptr %i.aej, align 8, !tbaa !70
   br label %.thread629
 
 .rtscalar671:                                     ; preds = %bb.at

@@ -204,18 +204,23 @@ bb.r:                                             ; preds = %bb.d, %bb.d, %bb.d
   %i.di = fmul double %i.dh, %i.dg                ; 5 uses
   %i.dj = fmul double %i.di, %i.di
   %i.dk = fmul double %i.di, %i.dj                ; 2 uses
-  %i.dl = fmul double %i.dk, 9.000000e+00
-  %6 = insertelement <2 x double> poison, double %i.di, i64 0
-  %7 = insertelement <2 x double> %6, double %i.dk, i64 1
-  %8 = fmul <2 x double> %7, splat (double 3.000000e+00)
-  %9 = fdiv <2 x double> <double f0x402921FB54442D18, double f0x404921FB54442D18>, %8
-  %10 = shufflevector <2 x double> %9, <2 x double> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 1>
-  %i.dm = insertelement <4 x double> %10, double %i.dl, i64 1
-  %i.dn = insertelement <4 x double> %i.dm, double %i.di, i64 2 ; 2 uses
-  %i.do = fsub <4 x double> <double 0.000000e+00, double poison, double poison, double 0.000000e+00>, %i.dn
-  %11 = fdiv <4 x double> <double poison, double f0x402921FB54442D18, double f0x403921FB54442D18, double poison>, %i.dn
-  %12 = shufflevector <4 x double> %i.do, <4 x double> %11, <4 x i32> <i32 0, i32 5, i32 6, i32 3>
-  %13 = fadd <4 x double> %12, <double -0.000000e+00, double 0.000000e+00, double 0.000000e+00, double -0.000000e+00>
+  %i.dl = fmul double %i.di, 3.000000e+00
+  %6 = fmul double %i.dk, 9.000000e+00
+  %7 = fmul double %i.dk, 3.000000e+00
+  %8 = insertelement <4 x double> poison, double %i.dl, i64 0
+  %9 = insertelement <4 x double> %8, double %6, i64 1
+  %10 = insertelement <4 x double> %9, double %i.di, i64 2
+  %i.dm = insertelement <4 x double> %10, double %7, i64 3
+  %11 = fdiv <4 x double> <double f0x402921FB54442D18, double f0x402921FB54442D18, double f0x403921FB54442D18, double f0x404921FB54442D18>, %i.dm ; 3 uses
+  %12 = shufflevector <4 x double> %11, <4 x double> poison, <2 x i32> <i32 0, i32 poison>
+  %13 = shufflevector <4 x double> %11, <4 x double> poison, <2 x i32> <i32 2, i32 3> ; 2 uses
+  %i.dn = insertelement <4 x double> %11, double 0.000000e+00, i64 0
+  %14 = shufflevector <2 x double> %12, <2 x double> <double poison, double -0.000000e+00>, <4 x i32> <i32 0, i32 3, i32 poison, i32 poison>
+  %i.do = fsub <4 x double> %i.dn, %14
+  %15 = shufflevector <2 x double> %13, <2 x double> <double poison, double 0.000000e+00>, <4 x i32> <i32 0, i32 3, i32 poison, i32 poison>
+  %16 = shufflevector <2 x double> %13, <2 x double> <double -0.000000e+00, double poison>, <4 x i32> <i32 2, i32 1, i32 poison, i32 poison>
+  %17 = fsub <4 x double> %15, %16
+  %18 = shufflevector <4 x double> %i.do, <4 x double> %17, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   br label %bb.w
 
 bb.s:                                             ; preds = %bb.d
@@ -240,11 +245,12 @@ bb.v:                                             ; preds = %bb.t, %bb.s
   br label %bb.x
 
 bb.w:                                             ; preds = %bb.r, %bb.q
-  %i.ds = phi <4 x double> [ %13, %bb.r ], [ %i.de, %bb.q ]
-  %i.dt = fptrunc <4 x double> %i.ds to <4 x float>
+  %i.ds = phi <4 x double> [ %18, %bb.r ], [ %i.de, %bb.q ]
+  %i.dt = fptrunc <4 x double> %i.ds to <4 x float> ; 2 uses
   %i.du = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.dv = fmul <4 x float> %i.dt, <float 1.000000e+00, float 1.000000e+00, float 5.000000e-01, float 5.000000e-01>
-  store <4 x float> %i.dv, ptr %i.du, align 8, !tbaa !111
+  %i.dv = fmul <4 x float> %i.dt, <float poison, float poison, float 5.000000e-01, float 5.000000e-01>
+  %19 = shufflevector <4 x float> %i.dt, <4 x float> %i.dv, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  store <4 x float> %19, ptr %i.du, align 8, !tbaa !111
   ret void
 
 bb.x:                                             ; preds = %bb.v, %bb.k

@@ -157,13 +157,14 @@ bb.d:                                             ; preds = %.lr.ph, %bb.d
   %i.aj = load <2 x float>, ptr %i.o, align 4, !tbaa !50
   %i.ak = insertelement <2 x float> poison, float %i.af, i64 0
   %i.al = insertelement <2 x float> %i.ak, float %i.ai, i64 1
-  %i.am = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.al, <2 x float> %i.j, <2 x float> %i.aj)
-  %2 = fpext float %i.aa to double
-  %3 = fadd <2 x float> %i.am, <float 1.000000e-01, float -0.000000e+00>
-  %4 = fpext <2 x float> %3 to <2 x double>       ; 2 uses
-  %5 = extractelement <2 x double> %4, i64 0
-  %6 = extractelement <2 x double> %4, i64 1
-  tail call void (ptr, ptr, ...) @_ZL8ioprintfP8duFileIOPKcz(ptr noundef %1, ptr noundef nonnull @.str.5, double noundef %2, double noundef %5, double noundef %6)
+  %i.am = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.al, <2 x float> %i.j, <2 x float> %i.aj) ; 2 uses
+  %2 = extractelement <2 x float> %i.am, i64 0
+  %3 = fadd float %2, 1.000000e-01
+  %4 = fpext float %i.aa to double
+  %5 = fpext float %3 to double
+  %6 = extractelement <2 x float> %i.am, i64 1
+  %7 = fpext float %6 to double
+  tail call void (ptr, ptr, ...) @_ZL8ioprintfP8duFileIOPKcz(ptr noundef %1, ptr noundef nonnull @.str.5, double noundef %4, double noundef %5, double noundef %7)
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.an = load i32, ptr %i.l, align 8, !tbaa !76
   %i.ao = sext i32 %i.an to i64

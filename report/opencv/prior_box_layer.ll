@@ -205,9 +205,10 @@ _ZN2cv3dnn17PriorBoxLayerImpl8addPriorEffffffbPf.exit.us157.us.us.us.us: ; preds
   %i.fr = load <2 x float>, ptr %i.bb, align 8, !tbaa !67
   %i.fs = fmul <2 x float> %i.fq, %i.fr
   %i.ft = shufflevector <2 x float> %i.fs, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  %i.fu = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.fj, <4 x float> splat (float 5.000000e-01), <4 x float> %i.ft)
-  %i.fv = fadd <4 x float> %i.fu, <float -0.000000e+00, float -0.000000e+00, float -1.000000e+00, float -1.000000e+00>
-  store <4 x float> %i.fv, ptr %.380149.us159.us.us.us.us, align 4, !tbaa !67
+  %i.fu = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.fj, <4 x float> splat (float 5.000000e-01), <4 x float> %i.ft) ; 2 uses
+  %i.fv = fadd <4 x float> %i.fu, <float poison, float poison, float -1.000000e+00, float -1.000000e+00>
+  %18 = shufflevector <4 x float> %i.fu, <4 x float> %i.fv, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  store <4 x float> %18, ptr %.380149.us159.us.us.us.us, align 4, !tbaa !67
   %i.fw = getelementptr inbounds nuw i8, ptr %.380149.us159.us.us.us.us, i64 16 ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %i.bw

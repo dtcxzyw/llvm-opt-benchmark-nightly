@@ -139,9 +139,10 @@ bb.b:                                             ; preds = %bb.a
   store float %i.e, ptr %i.f, align 4, !tbaa !52
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %i.i = load <4 x float>, ptr %i.g, align 4, !tbaa !12
-  %i.j = fmul reassoc arcp contract afn <4 x float> %i.i, <float 5.000000e-01, float 1.000000e+00, float -5.000000e-01, float 1.000000e+00>
-  store <4 x float> %i.j, ptr %i.h, align 4, !tbaa !12
+  %i.i = load <4 x float>, ptr %i.g, align 4, !tbaa !12 ; 2 uses
+  %i.j = fmul reassoc arcp contract afn <4 x float> %i.i, <float 5.000000e-01, float poison, float -5.000000e-01, float poison>
+  %6 = shufflevector <4 x float> %i.j, <4 x float> %i.i, <4 x i32> <i32 0, i32 5, i32 2, i32 7>
+  store <4 x float> %6, ptr %i.h, align 4, !tbaa !12
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 36
   store i32 0, ptr %i.k, align 4, !tbaa !53
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -298,9 +299,10 @@ bb.b:                                             ; preds = %bb.a
   %i.aa = fsub reassoc nsz arcp contract afn float 1.000000e+00, %i.z
   %i.ab = tail call reassoc nsz arcp contract afn float @llvm.maxnum.f32(float %i.aa, float f0x3C23D70A) ; 2 uses
   %i.ac = tail call <7 x float> @llvm.masked.load.v7f32.p0(ptr nonnull align 4 %i.m, <7 x i1> <i1 true, i1 false, i1 false, i1 false, i1 true, i1 true, i1 true>, <7 x float> poison), !tbaa !12
-  %i.ad = shufflevector <7 x float> %i.ac, <7 x float> poison, <4 x i32> <i32 0, i32 4, i32 5, i32 6>
-  %i.ae = fmul reassoc arcp contract afn <4 x float> %i.ad, <float 1.000000e+00, float f0x3C23D70A, float f0x3C23D70A, float f0x3C23D70A>
-  %i.af = tail call reassoc nsz arcp contract afn <4 x float> @llvm.maxnum.v4f32(<4 x float> %i.ae, <4 x float> <float 1.000000e-01, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>) ; 3 uses
+  %i.ad = shufflevector <7 x float> %i.ac, <7 x float> poison, <4 x i32> <i32 0, i32 4, i32 5, i32 6> ; 2 uses
+  %i.ae = fmul reassoc arcp contract afn <4 x float> %i.ad, <float poison, float f0x3C23D70A, float f0x3C23D70A, float f0x3C23D70A>
+  %6 = shufflevector <4 x float> %i.ad, <4 x float> %i.ae, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
+  %i.af = tail call reassoc nsz arcp contract afn <4 x float> @llvm.maxnum.v4f32(<4 x float> %6, <4 x float> <float 1.000000e-01, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>) ; 3 uses
   %i.ag = extractelement <4 x float> %i.af, i64 0
   %i.ah = fmul reassoc nsz arcp contract afn float %i.ag, %i.o
   %i.ai = fdiv reassoc nsz arcp contract afn float %i.ah, %i.q ; 2 uses

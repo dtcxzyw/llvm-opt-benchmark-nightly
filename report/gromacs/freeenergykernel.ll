@@ -204,11 +204,11 @@ bb.b:                                             ; preds = %bb.a
 
 .thread.split.preheader:                          ; preds = %.thread
   %i.br = fsub float 1.000000e+00, %.scalar
-  %i.bs = insertelement <4 x float> poison, float %i.br, i64 0
-  %21 = insertelement <4 x float> %i.bs, float %i.x, i64 1
-  %22 = shufflevector <4 x float> %21, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
-  %23 = fdiv <4 x float> %22, <float 1.000000e+00, float -6.000000e+00, float 6.000000e+00, float 6.000000e+00> ; 2 uses
-  %i.bt = extractelement <4 x float> %23, i64 1
+  %i.bs = insertelement <4 x float> poison, float %i.x, i64 0
+  %21 = shufflevector <4 x float> %i.bs, <4 x float> poison, <4 x i32> <i32 poison, i32 0, i32 0, i32 0>
+  %22 = fdiv <4 x float> %21, <float poison, float -6.000000e+00, float 6.000000e+00, float 6.000000e+00> ; 2 uses
+  %23 = insertelement <4 x float> %22, float %i.br, i64 0
+  %i.bt = extractelement <4 x float> %22, i64 1
   br label %.split.us
 
 .thread.split.us.preheader:                       ; preds = %.thread
@@ -611,11 +611,11 @@ _ZL7usingRFRK22CoulombInteractionType.exit:       ; preds = %bb.b, %bb.a
 
 _ZL7usingRFRK22CoulombInteractionType.exit.split.preheader: ; preds = %_ZL7usingRFRK22CoulombInteractionType.exit
   %i.bn = fsub float 1.000000e+00, %.scalar
-  %i.bo = insertelement <4 x float> poison, float %i.bn, i64 0
-  %21 = insertelement <4 x float> %i.bo, float %i.x, i64 1
-  %22 = shufflevector <4 x float> %21, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
-  %23 = fdiv <4 x float> %22, <float 1.000000e+00, float -6.000000e+00, float 6.000000e+00, float 6.000000e+00> ; 2 uses
-  %i.bp = extractelement <4 x float> %23, i64 1
+  %i.bo = insertelement <4 x float> poison, float %i.x, i64 0
+  %21 = shufflevector <4 x float> %i.bo, <4 x float> poison, <4 x i32> <i32 poison, i32 0, i32 0, i32 0>
+  %22 = fdiv <4 x float> %21, <float poison, float -6.000000e+00, float 6.000000e+00, float 6.000000e+00> ; 2 uses
+  %23 = insertelement <4 x float> %22, float %i.bn, i64 0
+  %i.bp = extractelement <4 x float> %22, i64 1
   br label %.split.us
 
 _ZL7usingRFRK22CoulombInteractionType.exit.split.us.preheader: ; preds = %_ZL7usingRFRK22CoulombInteractionType.exit
@@ -1018,11 +1018,12 @@ bb.b:                                             ; preds = %bb.a
   %i.bi = insertelement <4 x float> <float poison, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, float %.scalar, i64 0 ; 3 uses
   %i.bj = insertelement <4 x float> <float 1.000000e+00, float poison, float poison, float poison>, float %i.w, i64 1
   %i.bk = shufflevector <4 x float> %i.bj, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
-  %i.bl = fsub <4 x float> %i.bk, %i.bi           ; 3 uses
+  %i.bl = fsub <4 x float> %i.bk, %i.bi           ; 4 uses
   br i1 %i.bh, label %.thread.split.us.preheader, label %.thread.split.preheader
 
 .thread.split.preheader:                          ; preds = %.thread
-  %i.bm = fdiv <4 x float> %i.bl, <float 1.000000e+00, float -6.000000e+00, float 6.000000e+00, float 6.000000e+00> ; 2 uses
+  %i.bm = fdiv <4 x float> %i.bl, <float poison, float -6.000000e+00, float 6.000000e+00, float 6.000000e+00> ; 2 uses
+  %21 = shufflevector <4 x float> %i.bl, <4 x float> %i.bm, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
   %i.bn = extractelement <4 x float> %i.bm, i64 1
   br label %.split.us
 
@@ -1040,7 +1041,7 @@ bb.b:                                             ; preds = %bb.a
 .split.us:                                        ; preds = %.thread.split.preheader, %.thread.split.us.preheader
   %.sroa.5970.0 = phi float [ %i.bp, %.thread.split.us.preheader ], [ %.scalar, %.thread.split.preheader ]
   %.sroa.0965.0 = phi float [ %i.bs, %.thread.split.us.preheader ], [ %i.bn, %.thread.split.preheader ]
-  %i.bw = phi <4 x float> [ %i.bv, %.thread.split.us.preheader ], [ %i.bm, %.thread.split.preheader ] ; 4 uses
+  %i.bw = phi <4 x float> [ %i.bv, %.thread.split.us.preheader ], [ %21, %.thread.split.preheader ] ; 4 uses
   %i.bx = load ptr, ptr %1, align 8, !tbaa !73    ; 4 uses
   %i.by = load ptr, ptr %16, align 8, !tbaa !74   ; 32 uses
   %i.bz = ptrtoint ptr %i.k to i64
@@ -1443,11 +1444,12 @@ _ZL7usingRFRK22CoulombInteractionType.exit:       ; preds = %bb.b, %bb.a
   %i.be = insertelement <4 x float> <float poison, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, float %.scalar, i64 0 ; 3 uses
   %i.bf = insertelement <4 x float> <float 1.000000e+00, float poison, float poison, float poison>, float %i.w, i64 1
   %i.bg = shufflevector <4 x float> %i.bf, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
-  %i.bh = fsub <4 x float> %i.bg, %i.be           ; 3 uses
+  %i.bh = fsub <4 x float> %i.bg, %i.be           ; 4 uses
   br i1 %i.bd, label %_ZL7usingRFRK22CoulombInteractionType.exit.split.us.preheader, label %_ZL7usingRFRK22CoulombInteractionType.exit.split.preheader
 
 _ZL7usingRFRK22CoulombInteractionType.exit.split.preheader: ; preds = %_ZL7usingRFRK22CoulombInteractionType.exit
-  %i.bi = fdiv <4 x float> %i.bh, <float 1.000000e+00, float -6.000000e+00, float 6.000000e+00, float 6.000000e+00> ; 2 uses
+  %i.bi = fdiv <4 x float> %i.bh, <float poison, float -6.000000e+00, float 6.000000e+00, float 6.000000e+00> ; 2 uses
+  %21 = shufflevector <4 x float> %i.bh, <4 x float> %i.bi, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
   %i.bj = extractelement <4 x float> %i.bi, i64 1
   br label %.split.us
 
@@ -1465,7 +1467,7 @@ _ZL7usingRFRK22CoulombInteractionType.exit.split.us.preheader: ; preds = %_ZL7us
 .split.us:                                        ; preds = %_ZL7usingRFRK22CoulombInteractionType.exit.split.preheader, %_ZL7usingRFRK22CoulombInteractionType.exit.split.us.preheader
   %.sroa.5826.0 = phi float [ %i.bl, %_ZL7usingRFRK22CoulombInteractionType.exit.split.us.preheader ], [ %.scalar, %_ZL7usingRFRK22CoulombInteractionType.exit.split.preheader ]
   %.sroa.0821.0 = phi float [ %i.bo, %_ZL7usingRFRK22CoulombInteractionType.exit.split.us.preheader ], [ %i.bj, %_ZL7usingRFRK22CoulombInteractionType.exit.split.preheader ]
-  %i.bs = phi <4 x float> [ %i.br, %_ZL7usingRFRK22CoulombInteractionType.exit.split.us.preheader ], [ %i.bi, %_ZL7usingRFRK22CoulombInteractionType.exit.split.preheader ] ; 4 uses
+  %i.bs = phi <4 x float> [ %i.br, %_ZL7usingRFRK22CoulombInteractionType.exit.split.us.preheader ], [ %21, %_ZL7usingRFRK22CoulombInteractionType.exit.split.preheader ] ; 4 uses
   %i.bt = load ptr, ptr %1, align 8, !tbaa !73    ; 4 uses
   %i.bu = ptrtoint ptr %i.k to i64
   %i.bv = sub i64 %i.bu, %i.l                     ; 3 uses
@@ -1868,11 +1870,12 @@ bb.b:                                             ; preds = %bb.a
   %i.bp = insertelement <4 x float> <float poison, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, float %.scalar, i64 0 ; 3 uses
   %i.bq = insertelement <4 x float> <float 1.000000e+00, float poison, float poison, float poison>, float %i.x, i64 1
   %i.br = shufflevector <4 x float> %i.bq, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
-  %i.bs = fsub <4 x float> %i.br, %i.bp           ; 3 uses
+  %i.bs = fsub <4 x float> %i.br, %i.bp           ; 4 uses
   br i1 %i.bo, label %.thread.split.us.preheader, label %.thread.split.preheader
 
 .thread.split.preheader:                          ; preds = %.thread
-  %i.bt = fdiv <4 x float> %i.bs, <float 1.000000e+00, float -6.000000e+00, float 6.000000e+00, float 6.000000e+00> ; 2 uses
+  %i.bt = fdiv <4 x float> %i.bs, <float poison, float -6.000000e+00, float 6.000000e+00, float 6.000000e+00> ; 2 uses
+  %21 = shufflevector <4 x float> %i.bs, <4 x float> %i.bt, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
   %i.bu = extractelement <4 x float> %i.bt, i64 1
   br label %.split.us
 
@@ -1890,7 +1893,7 @@ bb.b:                                             ; preds = %bb.a
 .split.us:                                        ; preds = %.thread.split.preheader, %.thread.split.us.preheader
   %.sroa.51069.0 = phi float [ %i.bw, %.thread.split.us.preheader ], [ %.scalar, %.thread.split.preheader ]
   %.sroa.01064.0 = phi float [ %i.bz, %.thread.split.us.preheader ], [ %i.bu, %.thread.split.preheader ]
-  %i.cd = phi <4 x float> [ %i.cc, %.thread.split.us.preheader ], [ %i.bt, %.thread.split.preheader ] ; 4 uses
+  %i.cd = phi <4 x float> [ %i.cc, %.thread.split.us.preheader ], [ %21, %.thread.split.preheader ] ; 4 uses
   %i.ce = load ptr, ptr %1, align 8, !tbaa !73    ; 4 uses
   %i.cf = load ptr, ptr %16, align 8, !tbaa !74   ; 32 uses
   %i.cg = ptrtoint ptr %i.l to i64
@@ -2293,11 +2296,12 @@ _ZL7usingRFRK22CoulombInteractionType.exit:       ; preds = %bb.b, %bb.a
   %i.bl = insertelement <4 x float> <float poison, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, float %.scalar, i64 0 ; 3 uses
   %i.bm = insertelement <4 x float> <float 1.000000e+00, float poison, float poison, float poison>, float %i.x, i64 1
   %i.bn = shufflevector <4 x float> %i.bm, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
-  %i.bo = fsub <4 x float> %i.bn, %i.bl           ; 3 uses
+  %i.bo = fsub <4 x float> %i.bn, %i.bl           ; 4 uses
   br i1 %i.bk, label %_ZL7usingRFRK22CoulombInteractionType.exit.split.us.preheader, label %_ZL7usingRFRK22CoulombInteractionType.exit.split.preheader
 
 _ZL7usingRFRK22CoulombInteractionType.exit.split.preheader: ; preds = %_ZL7usingRFRK22CoulombInteractionType.exit
-  %i.bp = fdiv <4 x float> %i.bo, <float 1.000000e+00, float -6.000000e+00, float 6.000000e+00, float 6.000000e+00> ; 2 uses
+  %i.bp = fdiv <4 x float> %i.bo, <float poison, float -6.000000e+00, float 6.000000e+00, float 6.000000e+00> ; 2 uses
+  %21 = shufflevector <4 x float> %i.bo, <4 x float> %i.bp, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
   %i.bq = extractelement <4 x float> %i.bp, i64 1
   br label %.split.us
 
@@ -2315,7 +2319,7 @@ _ZL7usingRFRK22CoulombInteractionType.exit.split.us.preheader: ; preds = %_ZL7us
 .split.us:                                        ; preds = %_ZL7usingRFRK22CoulombInteractionType.exit.split.preheader, %_ZL7usingRFRK22CoulombInteractionType.exit.split.us.preheader
   %.sroa.5909.0 = phi float [ %i.bs, %_ZL7usingRFRK22CoulombInteractionType.exit.split.us.preheader ], [ %.scalar, %_ZL7usingRFRK22CoulombInteractionType.exit.split.preheader ]
   %.sroa.0904.0 = phi float [ %i.bv, %_ZL7usingRFRK22CoulombInteractionType.exit.split.us.preheader ], [ %i.bq, %_ZL7usingRFRK22CoulombInteractionType.exit.split.preheader ]
-  %i.bz = phi <4 x float> [ %i.by, %_ZL7usingRFRK22CoulombInteractionType.exit.split.us.preheader ], [ %i.bp, %_ZL7usingRFRK22CoulombInteractionType.exit.split.preheader ] ; 4 uses
+  %i.bz = phi <4 x float> [ %i.by, %_ZL7usingRFRK22CoulombInteractionType.exit.split.us.preheader ], [ %21, %_ZL7usingRFRK22CoulombInteractionType.exit.split.preheader ] ; 4 uses
   %i.ca = load ptr, ptr %1, align 8, !tbaa !73    ; 4 uses
   %i.cb = ptrtoint ptr %i.l to i64
   %i.cc = sub i64 %i.cb, %i.m                     ; 3 uses
@@ -2718,11 +2722,12 @@ bb.b:                                             ; preds = %bb.a
   %i.bi = insertelement <4 x float> <float poison, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, float %.scalar, i64 0 ; 3 uses
   %i.bj = insertelement <4 x float> <float 1.000000e+00, float poison, float poison, float poison>, float %i.w, i64 1
   %i.bk = shufflevector <4 x float> %i.bj, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
-  %i.bl = fsub <4 x float> %i.bk, %i.bi           ; 3 uses
+  %i.bl = fsub <4 x float> %i.bk, %i.bi           ; 4 uses
   br i1 %i.bh, label %_ZL7usingRFRK22CoulombInteractionType.exit.split.us.preheader, label %_ZL7usingRFRK22CoulombInteractionType.exit.split.preheader
 
 _ZL7usingRFRK22CoulombInteractionType.exit.split.preheader: ; preds = %.thread
-  %i.bm = fdiv <4 x float> %i.bl, <float 1.000000e+00, float -6.000000e+00, float 6.000000e+00, float 6.000000e+00> ; 2 uses
+  %i.bm = fdiv <4 x float> %i.bl, <float poison, float -6.000000e+00, float 6.000000e+00, float 6.000000e+00> ; 2 uses
+  %24 = shufflevector <4 x float> %i.bl, <4 x float> %i.bm, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
   %i.bn = extractelement <4 x float> %i.bm, i64 1
   br label %.split.us
 
@@ -2740,7 +2745,7 @@ _ZL7usingRFRK22CoulombInteractionType.exit.split.us.preheader: ; preds = %.threa
 .split.us:                                        ; preds = %_ZL7usingRFRK22CoulombInteractionType.exit.split.preheader, %_ZL7usingRFRK22CoulombInteractionType.exit.split.us.preheader
   %.sroa.61000.0 = phi float [ %i.bp, %_ZL7usingRFRK22CoulombInteractionType.exit.split.us.preheader ], [ %.scalar, %_ZL7usingRFRK22CoulombInteractionType.exit.split.preheader ]
   %.sroa.0995.0 = phi float [ %i.bs, %_ZL7usingRFRK22CoulombInteractionType.exit.split.us.preheader ], [ %i.bn, %_ZL7usingRFRK22CoulombInteractionType.exit.split.preheader ]
-  %i.bw = phi <4 x float> [ %i.bv, %_ZL7usingRFRK22CoulombInteractionType.exit.split.us.preheader ], [ %i.bm, %_ZL7usingRFRK22CoulombInteractionType.exit.split.preheader ] ; 4 uses
+  %i.bw = phi <4 x float> [ %i.bv, %_ZL7usingRFRK22CoulombInteractionType.exit.split.us.preheader ], [ %24, %_ZL7usingRFRK22CoulombInteractionType.exit.split.preheader ] ; 4 uses
   %i.bx = load ptr, ptr %1, align 8, !tbaa !73    ; 4 uses
   %i.by = load ptr, ptr %16, align 8, !tbaa !74   ; 32 uses
   %i.bz = ptrtoint ptr %i.k to i64
@@ -3143,11 +3148,12 @@ _ZL7usingRFRK22CoulombInteractionType.exit:       ; preds = %bb.b, %bb.a
   %i.be = insertelement <4 x float> <float poison, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, float %.scalar, i64 0 ; 3 uses
   %i.bf = insertelement <4 x float> <float 1.000000e+00, float poison, float poison, float poison>, float %i.w, i64 1
   %i.bg = shufflevector <4 x float> %i.bf, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
-  %i.bh = fsub <4 x float> %i.bg, %i.be           ; 3 uses
+  %i.bh = fsub <4 x float> %i.bg, %i.be           ; 4 uses
   br i1 %i.bd, label %_ZL7usingRFRK22CoulombInteractionType.exit.split.us.preheader, label %_ZL7usingRFRK22CoulombInteractionType.exit.split.preheader
 
 _ZL7usingRFRK22CoulombInteractionType.exit.split.preheader: ; preds = %_ZL7usingRFRK22CoulombInteractionType.exit
-  %i.bi = fdiv <4 x float> %i.bh, <float 1.000000e+00, float -6.000000e+00, float 6.000000e+00, float 6.000000e+00> ; 2 uses
+  %i.bi = fdiv <4 x float> %i.bh, <float poison, float -6.000000e+00, float 6.000000e+00, float 6.000000e+00> ; 2 uses
+  %24 = shufflevector <4 x float> %i.bh, <4 x float> %i.bi, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
   %i.bj = extractelement <4 x float> %i.bi, i64 1
   br label %.split.us
 
@@ -3165,7 +3171,7 @@ _ZL7usingRFRK22CoulombInteractionType.exit.split.us.preheader: ; preds = %_ZL7us
 .split.us:                                        ; preds = %_ZL7usingRFRK22CoulombInteractionType.exit.split.preheader, %_ZL7usingRFRK22CoulombInteractionType.exit.split.us.preheader
   %.sroa.6875.0 = phi float [ %i.bl, %_ZL7usingRFRK22CoulombInteractionType.exit.split.us.preheader ], [ %.scalar, %_ZL7usingRFRK22CoulombInteractionType.exit.split.preheader ]
   %.sroa.0870.0 = phi float [ %i.bo, %_ZL7usingRFRK22CoulombInteractionType.exit.split.us.preheader ], [ %i.bj, %_ZL7usingRFRK22CoulombInteractionType.exit.split.preheader ]
-  %i.bs = phi <4 x float> [ %i.br, %_ZL7usingRFRK22CoulombInteractionType.exit.split.us.preheader ], [ %i.bi, %_ZL7usingRFRK22CoulombInteractionType.exit.split.preheader ] ; 4 uses
+  %i.bs = phi <4 x float> [ %i.br, %_ZL7usingRFRK22CoulombInteractionType.exit.split.us.preheader ], [ %24, %_ZL7usingRFRK22CoulombInteractionType.exit.split.preheader ] ; 4 uses
   %i.bt = load ptr, ptr %1, align 8, !tbaa !73    ; 4 uses
   %i.bu = ptrtoint ptr %i.k to i64
   %i.bv = sub i64 %i.bu, %i.l                     ; 3 uses
@@ -3568,11 +3574,12 @@ bb.b:                                             ; preds = %bb.a
   %i.bp = insertelement <4 x float> <float poison, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, float %.scalar, i64 0 ; 3 uses
   %i.bq = insertelement <4 x float> <float 1.000000e+00, float poison, float poison, float poison>, float %i.x, i64 1
   %i.br = shufflevector <4 x float> %i.bq, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
-  %i.bs = fsub <4 x float> %i.br, %i.bp           ; 3 uses
+  %i.bs = fsub <4 x float> %i.br, %i.bp           ; 4 uses
   br i1 %i.bo, label %_ZL7usingRFRK22CoulombInteractionType.exit.split.us.preheader, label %_ZL7usingRFRK22CoulombInteractionType.exit.split.preheader
 
 _ZL7usingRFRK22CoulombInteractionType.exit.split.preheader: ; preds = %.thread
-  %i.bt = fdiv <4 x float> %i.bs, <float 1.000000e+00, float -6.000000e+00, float 6.000000e+00, float 6.000000e+00> ; 2 uses
+  %i.bt = fdiv <4 x float> %i.bs, <float poison, float -6.000000e+00, float 6.000000e+00, float 6.000000e+00> ; 2 uses
+  %24 = shufflevector <4 x float> %i.bs, <4 x float> %i.bt, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
   %i.bu = extractelement <4 x float> %i.bt, i64 1
   br label %.split.us
 
@@ -3590,7 +3597,7 @@ _ZL7usingRFRK22CoulombInteractionType.exit.split.us.preheader: ; preds = %.threa
 .split.us:                                        ; preds = %_ZL7usingRFRK22CoulombInteractionType.exit.split.preheader, %_ZL7usingRFRK22CoulombInteractionType.exit.split.us.preheader
   %.sroa.61099.0 = phi float [ %i.bw, %_ZL7usingRFRK22CoulombInteractionType.exit.split.us.preheader ], [ %.scalar, %_ZL7usingRFRK22CoulombInteractionType.exit.split.preheader ]
   %.sroa.01094.0 = phi float [ %i.bz, %_ZL7usingRFRK22CoulombInteractionType.exit.split.us.preheader ], [ %i.bu, %_ZL7usingRFRK22CoulombInteractionType.exit.split.preheader ]
-  %i.cd = phi <4 x float> [ %i.cc, %_ZL7usingRFRK22CoulombInteractionType.exit.split.us.preheader ], [ %i.bt, %_ZL7usingRFRK22CoulombInteractionType.exit.split.preheader ] ; 4 uses
+  %i.cd = phi <4 x float> [ %i.cc, %_ZL7usingRFRK22CoulombInteractionType.exit.split.us.preheader ], [ %24, %_ZL7usingRFRK22CoulombInteractionType.exit.split.preheader ] ; 4 uses
   %i.ce = load ptr, ptr %1, align 8, !tbaa !73    ; 4 uses
   %i.cf = load ptr, ptr %16, align 8, !tbaa !74   ; 32 uses
   %i.cg = ptrtoint ptr %i.l to i64
@@ -3993,11 +4000,12 @@ _ZL7usingRFRK22CoulombInteractionType.exit:       ; preds = %bb.b, %bb.a
   %i.bl = insertelement <4 x float> <float poison, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, float %.scalar, i64 0 ; 3 uses
   %i.bm = insertelement <4 x float> <float 1.000000e+00, float poison, float poison, float poison>, float %i.x, i64 1
   %i.bn = shufflevector <4 x float> %i.bm, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
-  %i.bo = fsub <4 x float> %i.bn, %i.bl           ; 3 uses
+  %i.bo = fsub <4 x float> %i.bn, %i.bl           ; 4 uses
   br i1 %i.bk, label %_ZL7usingRFRK22CoulombInteractionType.exit.split.us.preheader, label %_ZL7usingRFRK22CoulombInteractionType.exit.split.preheader
 
 _ZL7usingRFRK22CoulombInteractionType.exit.split.preheader: ; preds = %_ZL7usingRFRK22CoulombInteractionType.exit
-  %i.bp = fdiv <4 x float> %i.bo, <float 1.000000e+00, float -6.000000e+00, float 6.000000e+00, float 6.000000e+00> ; 2 uses
+  %i.bp = fdiv <4 x float> %i.bo, <float poison, float -6.000000e+00, float 6.000000e+00, float 6.000000e+00> ; 2 uses
+  %24 = shufflevector <4 x float> %i.bo, <4 x float> %i.bp, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
   %i.bq = extractelement <4 x float> %i.bp, i64 1
   br label %.split.us
 
@@ -4015,7 +4023,7 @@ _ZL7usingRFRK22CoulombInteractionType.exit.split.us.preheader: ; preds = %_ZL7us
 .split.us:                                        ; preds = %_ZL7usingRFRK22CoulombInteractionType.exit.split.preheader, %_ZL7usingRFRK22CoulombInteractionType.exit.split.us.preheader
   %.sroa.6959.0 = phi float [ %i.bs, %_ZL7usingRFRK22CoulombInteractionType.exit.split.us.preheader ], [ %.scalar, %_ZL7usingRFRK22CoulombInteractionType.exit.split.preheader ]
   %.sroa.0954.0 = phi float [ %i.bv, %_ZL7usingRFRK22CoulombInteractionType.exit.split.us.preheader ], [ %i.bq, %_ZL7usingRFRK22CoulombInteractionType.exit.split.preheader ]
-  %i.bz = phi <4 x float> [ %i.by, %_ZL7usingRFRK22CoulombInteractionType.exit.split.us.preheader ], [ %i.bp, %_ZL7usingRFRK22CoulombInteractionType.exit.split.preheader ] ; 4 uses
+  %i.bz = phi <4 x float> [ %i.by, %_ZL7usingRFRK22CoulombInteractionType.exit.split.us.preheader ], [ %24, %_ZL7usingRFRK22CoulombInteractionType.exit.split.preheader ] ; 4 uses
   %i.ca = load ptr, ptr %1, align 8, !tbaa !73    ; 4 uses
   %i.cb = ptrtoint ptr %i.l to i64
   %i.cc = sub i64 %i.cb, %i.m                     ; 3 uses

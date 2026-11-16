@@ -75,9 +75,10 @@ bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !17   ; 2 uses
   %i.c = load <2 x double>, ptr %1, align 8, !tbaa !19
-  %i.d = fptrunc <2 x double> %i.c to <2 x float>
-  %i.e = fmul <2 x float> %i.d, <float 3.600000e+02, float 1.000000e+00>
-  store <2 x float> %i.e, ptr %i.b, align 4, !tbaa !21
+  %i.d = fptrunc <2 x double> %i.c to <2 x float> ; 2 uses
+  %i.e = fmul <2 x float> %i.d, <float 3.600000e+02, float poison>
+  %6 = shufflevector <2 x float> %i.e, <2 x float> %i.d, <2 x i32> <i32 0, i32 3>
+  store <2 x float> %6, ptr %i.b, align 4, !tbaa !21
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.g = load double, ptr %i.f, align 8, !tbaa !19
   %i.h = fptrunc double %i.g to float

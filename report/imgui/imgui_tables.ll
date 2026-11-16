@@ -205,7 +205,7 @@ bb.a:
   %6 = alloca %struct.ImVec2, align 4             ; 5 uses
   %7 = alloca %struct.ImVec2, align 4             ; 5 uses
   %8 = alloca %struct.ImVec2, align 4             ; 5 uses
-  %9 = alloca [4 x %struct.ImVec2], align 16      ; 12 uses
+  %9 = alloca [4 x %struct.ImVec2], align 16      ; 13 uses
   %10 = alloca %struct.ImVec2, align 8            ; 6 uses
   %11 = alloca %struct.ImRect, align 8            ; 5 uses
   %12 = alloca %struct.ImVec2, align 4            ; 5 uses
@@ -526,7 +526,7 @@ _ZN5ImGui15TableSetBgColorEiji.exit:              ; preds = %bb.t, %bb.u, %bb.v
   %.sroa.4.0.copyload = load float, ptr %.sroa.4.0..sroa_idx, align 4, !tbaa !177
   %i.fy = icmp sgt i32 %4, 0
   %i.fz = getelementptr inbounds nuw i8, ptr %i.c, i64 24 ; 3 uses
-  %.sroa_idx210 = getelementptr inbounds nuw i8, ptr %9, i64 4
+  %.sroa_idx210 = getelementptr inbounds nuw i8, ptr %9, i64 4 ; 2 uses
   %i.ga = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 3 uses
   %.sroa_idx207 = getelementptr inbounds nuw i8, ptr %9, i64 12
   %i.gb = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 3 uses
@@ -553,6 +553,7 @@ _ZN5ImGui15TableSetBgColorEiji.exit:              ; preds = %bb.t, %bb.u, %bb.v
   %i.gw = extractelement <2 x float> %i.gv, i64 0
   %i.gx = call float @llvm.fabs.f32(float %i.gw)
   %i.gy = fneg float %i.gx
+  %16 = getelementptr inbounds nuw i8, ptr %9, i64 28
   %i.gz = getelementptr inbounds nuw i8, ptr %i.c, i64 524
   %i.ha = getelementptr inbounds nuw i8, ptr %i.c, i64 530
   %i.hb = getelementptr inbounds nuw i8, ptr %i.c, i64 122
@@ -762,13 +763,19 @@ bb.ad:                                            ; preds = %bb.ac, %bb.ab
 
 bb.ae:                                            ; preds = %.loopexit.us
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #4
-  %16 = load <2 x float>, ptr %9, align 16, !tbaa !177
-  %17 = fadd <2 x float> %16, <float -5.000000e-01, float -0.000000e+00>
-  store <2 x float> %17, ptr %14, align 8
+  %17 = load float, ptr %9, align 16, !tbaa !228
+  %18 = fadd float %17, -5.000000e-01
+  %19 = load float, ptr %.sroa_idx210, align 4, !tbaa !229
+  %.sroa.0.0.vec.insert.i195.us = insertelement <2 x float> poison, float %18, i64 0
+  %.sroa.0.4.vec.insert.i196.us = insertelement <2 x float> %.sroa.0.0.vec.insert.i195.us, float %19, i64 1
+  store <2 x float> %.sroa.0.4.vec.insert.i196.us, ptr %14, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #4
-  %18 = load <2 x float>, ptr %i.gc, align 8, !tbaa !177
-  %19 = fadd <2 x float> %18, <float -5.000000e-01, float -0.000000e+00>
-  store <2 x float> %19, ptr %15, align 8
+  %20 = load float, ptr %i.gc, align 8, !tbaa !228
+  %21 = fadd float %20, -5.000000e-01
+  %22 = load float, ptr %16, align 4, !tbaa !229
+  %.sroa.0.0.vec.insert.i197.us = insertelement <2 x float> poison, float %21, i64 0
+  %.sroa.0.4.vec.insert.i198.us = insertelement <2 x float> %.sroa.0.0.vec.insert.i197.us, float %22, i64 1
+  store <2 x float> %.sroa.0.4.vec.insert.i198.us, ptr %15, align 8
   %i.lw = load i16, ptr %i.gz, align 4, !tbaa !297
   %i.lx = icmp eq i16 %i.hl, %i.lw
   %i.ly = load i16, ptr %i.ha, align 2, !tbaa !293

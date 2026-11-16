@@ -204,11 +204,12 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   %i.jz = sitofp nsz i32 %i.jy to double
   %i.ka = fmul nsz double %i.ju, %i.jz
   %i.kb = fdiv nsz double %i.ka, 2.550000e+02
-  %i.kc = fptrunc nsz double %i.kb to float
+  %i.kc = fptrunc nsz double %i.kb to float       ; 2 uses
   %i.kd = insertelement <4 x float> poison, float %i.kc, i64 0
-  %9 = shufflevector <4 x float> %i.kd, <4 x float> poison, <4 x i32> zeroinitializer
-  %i.ke = fmul nsz <4 x float> %9, <float 1.000000e+00, float f0x3FB504F3, float 2.000000e+00, float f0x403504F3>
-  store <4 x float> %i.ke, ptr %i.a, align 16, !tbaa !89
+  %9 = shufflevector <4 x float> %i.kd, <4 x float> poison, <4 x i32> <i32 poison, i32 0, i32 0, i32 0>
+  %i.ke = fmul nsz <4 x float> %9, <float poison, float f0x3FB504F3, float 2.000000e+00, float f0x403504F3>
+  %10 = insertelement <4 x float> %i.ke, float %i.kc, i64 0
+  store <4 x float> %10, ptr %i.a, align 16, !tbaa !89
   %i.kf = load ptr, ptr %i.ad, align 8, !tbaa !88 ; 4 uses
   br i1 %i.jj, label %.preheader254.lr.ph, label %._crit_edge336.split.thread
 

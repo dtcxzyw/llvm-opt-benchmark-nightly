@@ -205,13 +205,14 @@ bb.a:
   %.val4 = load float, ptr %2, align 4, !tbaa !22 ; 2 uses
   %.val.val = load ptr, ptr %.val, align 8, !tbaa !84
   %.val3 = load float, ptr %1, align 4, !tbaa !22
-  %i.a = insertelement <4 x float> <float 1.000000e+00, float 1.000000e+00, float 1.000000e+00, float poison>, float %.val3, i64 3 ; 2 uses
+  %i.a = insertelement <4 x float> <float 1.000000e+00, float 1.000000e+00, float 1.000000e+00, float poison>, float %.val3, i64 3 ; 3 uses
   %i.b = shufflevector <4 x float> %i.a, <4 x float> <float poison, float poison, float poison, float 0.000000e+00>, <4 x i32> <i32 3, i32 poison, i32 3, i32 7>
   %i.c = insertelement <4 x float> poison, float %.val4, i64 0
   %i.d = insertelement <4 x float> %i.b, float %.val4, i64 1
   %i.e = fsub <4 x float> %i.a, %i.d              ; 2 uses
-  %3 = shufflevector <4 x float> %i.e, <4 x float> %i.c, <4 x i32> <i32 1, i32 3, i32 4, i32 4>
-  %i.f = fmul <4 x float> %3, %i.e
+  %3 = shufflevector <4 x float> %i.a, <4 x float> %i.c, <4 x i32> <i32 poison, i32 3, i32 4, i32 4>
+  %4 = shufflevector <4 x float> %3, <4 x float> %i.e, <4 x i32> <i32 5, i32 1, i32 2, i32 3>
+  %i.f = fmul <4 x float> %4, %i.e
   %i.g = load <4 x float>, ptr %.val.val, align 4, !tbaa !22
   %i.h = fmul <4 x float> %i.f, %i.g              ; 4 uses
   %shift = shufflevector <4 x float> %i.h, <4 x float> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>

@@ -205,10 +205,11 @@ bb.z:                                             ; preds = %._crit_edge103.i101
   %i.abs = getelementptr inbounds nuw [4 x i8], ptr %i.abc, i64 %i.aae ; 3 uses
   %i.abt = getelementptr inbounds i8, ptr %i.abs, i64 -8
   %i.abu = load <2 x float>, ptr %i.abt, align 4, !tbaa !91
-  %i.abv = fpext <2 x float> %i.abu to <2 x double> ; 2 uses
-  %12 = shufflevector <2 x double> %i.abv, <2 x double> <double poison, double 0.000000e+00>, <2 x i32> <i32 1, i32 3>
+  %i.abv = fpext <2 x float> %i.abu to <2 x double> ; 3 uses
+  %12 = shufflevector <2 x double> %i.abv, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %i.abw = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.aar, <2 x double> %12, <2 x double> %i.abv)
-  store <2 x double> %i.abw, ptr %i.aag, align 8, !tbaa !89
+  %13 = shufflevector <2 x double> %i.abw, <2 x double> %i.abv, <2 x i32> <i32 0, i32 3>
+  store <2 x double> %13, ptr %i.aag, align 8, !tbaa !89
   %i.abx = getelementptr inbounds i8, ptr %i.abs, i64 -12 ; 2 uses
   %load_initial233 = load double, ptr %scevgep232, align 8 ; 2 uses
   br i1 %lcmp.mod237.not.not, label %.lr.ph97.i117.prol, label %.lr.ph97.i117.prol.loopexit
@@ -262,10 +263,11 @@ bb.z:                                             ; preds = %._crit_edge103.i101
   %i.acv = getelementptr inbounds [4 x i8], ptr %i.abc, i64 %i.aae
   %i.acw = getelementptr inbounds i8, ptr %i.acv, i64 -8
   %i.acx = load <2 x float>, ptr %i.acw, align 4, !tbaa !91
-  %i.acy = fpext <2 x float> %i.acx to <2 x double> ; 2 uses
-  %13 = shufflevector <2 x double> %i.acy, <2 x double> <double poison, double 0.000000e+00>, <2 x i32> <i32 1, i32 3>
-  %i.acz = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.aar, <2 x double> %13, <2 x double> %i.acy)
-  store <2 x double> %i.acz, ptr %i.aag, align 8, !tbaa !89
+  %i.acy = fpext <2 x float> %i.acx to <2 x double> ; 3 uses
+  %14 = shufflevector <2 x double> %i.acy, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %i.acz = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.aar, <2 x double> %14, <2 x double> %i.acy)
+  %15 = shufflevector <2 x double> %i.acz, <2 x double> %i.acy, <2 x i32> <i32 0, i32 3>
+  store <2 x double> %15, ptr %i.aag, align 8, !tbaa !89
   br i1 %i.aam, label %.lr.ph102.preheader.i104, label %._crit_edge103.i101
 
 .lr.ph102.preheader.i104:                         ; preds = %.lr.ph97.i117.prol.loopexit, %.lr.ph97.i117, %._crit_edge98.critedge.i100

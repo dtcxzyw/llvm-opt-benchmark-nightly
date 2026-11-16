@@ -204,12 +204,13 @@ bb.e:                                             ; preds = %.preheader.i
   %i.bm = insertelement <2 x double> %i.bl, double %i.bk, i64 1
   %i.bn = insertelement <2 x double> poison, double %i.v, i64 0
   %i.bo = shufflevector <2 x double> %i.bn, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.bp = fdiv <2 x double> %i.bm, %i.bo
-  %i.bq = fadd <2 x double> %i.bp, <double -0.000000e+00, double -3.000000e+00>
+  %i.bp = fdiv <2 x double> %i.bm, %i.bo          ; 2 uses
+  %i.bq = fadd <2 x double> %i.bp, <double poison, double -3.000000e+00>
+  %8 = shufflevector <2 x double> %i.bp, <2 x double> %i.bq, <2 x i32> <i32 0, i32 3>
   %i.br = extractelement <2 x double> %i.bi, i64 0
   %i.bs = fptrunc double %i.br to float
   %i.bt = fptrunc double %i.bc to float
-  %i.bu = fptrunc <2 x double> %i.bq to <2 x float> ; 2 uses
+  %i.bu = fptrunc <2 x double> %8 to <2 x float>  ; 2 uses
   %i.bv = extractelement <2 x float> %i.bu, i64 0
   %i.bw = extractelement <2 x float> %i.bu, i64 1
   br label %calcMoments_uint8.exit

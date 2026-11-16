@@ -205,9 +205,10 @@ bb.b:                                             ; preds = %bb.a
   %i.ac = shufflevector <2 x double> %i.g, <2 x double> %i.ab, <4 x i32> <i32 3, i32 1, i32 poison, i32 1>
   %i.ad = shufflevector <2 x double> %i.i, <2 x double> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
   %i.ae = shufflevector <4 x double> %i.ac, <4 x double> %i.ad, <4 x i32> <i32 0, i32 1, i32 4, i32 3>
-  %i.af = tail call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %i.h, <4 x double> %i.ae, <4 x double> %i.s)
-  %i.ag = fmul <4 x double> %i.af, <double 1.000000e+00, double 2.000000e+00, double 2.000000e+00, double 2.000000e+00>
-  store <4 x double> %i.ag, ptr %0, align 8, !tbaa !595
+  %i.af = tail call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %i.h, <4 x double> %i.ae, <4 x double> %i.s) ; 2 uses
+  %i.ag = fmul <4 x double> %i.af, <double poison, double 2.000000e+00, double 2.000000e+00, double 2.000000e+00>
+  %2 = shufflevector <4 x double> %i.af, <4 x double> %i.ag, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
+  store <4 x double> %2, ptr %0, align 8, !tbaa !595
   %i.ah = shufflevector <2 x double> %i.aa, <2 x double> %i.n, <2 x i32> <i32 1, i32 3>
   %i.ai = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.g, <2 x double> %i.t, <2 x double> %i.ah)
   %i.aj = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ai, <2 x double> <double -2.000000e+00, double 2.000000e+00>, <2 x double> <double 1.000000e+00, double -0.000000e+00>)

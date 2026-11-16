@@ -205,13 +205,13 @@ bb.a:
   %i.s = shufflevector <2 x i1> %i.r, <2 x i1> poison, <2 x i32> zeroinitializer
   %i.t = select <2 x i1> %i.s, <2 x double> %i.q, <2 x double> zeroinitializer
   %i.u = tail call noundef double @cos(double noundef %i.f) #18
-  %i.v = insertelement <4 x double> <double 1.000000e+00, double poison, double poison, double poison>, double %i.g, i64 1
-  %3 = shufflevector <4 x double> %i.v, <4 x double> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
-  %i.w = insertelement <4 x double> poison, double %i.u, i64 0
-  %4 = insertelement <4 x double> %i.w, double %.sink4.i, i64 1
-  %5 = shufflevector <2 x double> %i.t, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %6 = shufflevector <4 x double> %4, <4 x double> %5, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
-  %7 = fmul <4 x double> %3, %6
+  %i.v = insertelement <4 x double> poison, double %i.g, i64 0
+  %3 = shufflevector <4 x double> %i.v, <4 x double> poison, <4 x i32> <i32 poison, i32 0, i32 0, i32 0>
+  %i.w = insertelement <4 x double> poison, double %.sink4.i, i64 1
+  %4 = shufflevector <2 x double> %i.t, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %5 = shufflevector <4 x double> %i.w, <4 x double> %4, <4 x i32> <i32 poison, i32 1, i32 4, i32 5>
+  %6 = fmul <4 x double> %3, %5
+  %7 = insertelement <4 x double> %6, double %i.u, i64 0
   store <4 x double> %7, ptr %i.a, align 8, !tbaa !55
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 560
   store ptr null, ptr %i.x, align 8, !tbaa !54

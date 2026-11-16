@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 bb.e:                                             ; preds = %.preheader169.us, %preserve_color.exit.thread.us
   %indvars.iv = phi i64 [ 0, %.preheader169.us ], [ %indvars.iv.next, %preserve_color.exit.thread.us ] ; 7 uses
   %i.ea = getelementptr inbounds [4 x i8], ptr %.0155174.us, i64 %indvars.iv
-  %i.eb = load float, ptr %i.ea, align 4, !tbaa !47 ; 3 uses
+  %i.eb = load float, ptr %i.ea, align 4, !tbaa !47 ; 8 uses
   %i.ec = getelementptr inbounds [4 x i8], ptr %.0154175.us, i64 %indvars.iv
   %i.ed = load float, ptr %i.ec, align 4, !tbaa !47 ; 7 uses
   %i.ee = getelementptr inbounds [4 x i8], ptr %.0153176.us, i64 %indvars.iv
@@ -219,7 +219,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.ej = fsub nsz float %i.eb, %i.cg
   %i.ek = insertelement <2 x float> <float 0.000000e+00, float poison>, float %i.ej, i64 1
   %i.el = insertelement <2 x float> %i.dm, float %i.eb, i64 0
-  %i.em = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ek, <2 x float> %i.dl, <2 x float> %i.el) ; 10 uses
+  %i.em = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ek, <2 x float> %i.dl, <2 x float> %i.el) ; 8 uses
   %i.en = insertelement <2 x float> poison, float %i.ed, i64 0
   %i.eo = insertelement <2 x float> %i.en, float %i.ef, i64 1
   %i.ep = fsub nsz <2 x float> %i.eo, %i.cj
@@ -259,9 +259,10 @@ bb.h:                                             ; preds = %bb.g
   br label %preserve_color.exit.us
 
 bb.i:                                             ; preds = %bb.g
+  %4 = insertelement <2 x float> %i.em, float %i.eb, i64 0
   %i.fn = insertelement <2 x float> poison, float %i.ei, i64 0
   %i.fo = shufflevector <2 x float> %i.fn, <2 x float> poison, <2 x i32> zeroinitializer ; 3 uses
-  %i.fp = fdiv nsz <2 x float> %i.em, %i.fo       ; 2 uses
+  %i.fp = fdiv nsz <2 x float> %4, %i.fo          ; 2 uses
   %i.fq = shufflevector <2 x float> %i.eq, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
   %i.fr = insertelement <2 x float> %i.fq, float %i.ed, i64 0
   %i.fs = fdiv nsz <2 x float> %i.fr, %i.fo       ; 2 uses
@@ -274,17 +275,19 @@ bb.i:                                             ; preds = %bb.g
   br label %preserve_color.exit.us
 
 bb.j:                                             ; preds = %bb.g
+  %5 = insertelement <2 x float> %i.em, float %i.eb, i64 0
   %i.fz = shufflevector <2 x float> %i.eq, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
   %i.ga = insertelement <2 x float> %i.fz, float %i.ed, i64 0
-  %i.gb = fadd nsz <2 x float> %i.em, %i.ga
+  %i.gb = fadd nsz <2 x float> %5, %i.ga
   %i.gc = insertelement <2 x float> %i.eq, float %i.ef, i64 0
   %i.gd = fadd nsz <2 x float> %i.gb, %i.gc
   br label %preserve_color.exit.us
 
 bb.k:                                             ; preds = %bb.g
+  %6 = insertelement <2 x float> %i.em, float %i.eb, i64 0
   %i.ge = shufflevector <2 x float> %i.eq, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
   %i.gf = insertelement <2 x float> %i.ge, float %i.ed, i64 0
-  %i.gg = fadd nsz <2 x float> %i.em, %i.gf
+  %i.gg = fadd nsz <2 x float> %6, %i.gf
   %i.gh = insertelement <2 x float> %i.eq, float %i.ef, i64 0
   %i.gi = fadd nsz <2 x float> %i.gg, %i.gh
   %i.gj = fadd nsz <2 x float> %i.gi, splat (float 1.000000e+00)
@@ -292,10 +295,11 @@ bb.k:                                             ; preds = %bb.g
   br label %preserve_color.exit.us
 
 bb.l:                                             ; preds = %bb.g
+  %7 = insertelement <2 x float> %i.em, float %i.eb, i64 0 ; 2 uses
   %i.gl = shufflevector <2 x float> %i.eq, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
   %i.gm = insertelement <2 x float> %i.gl, float %i.ed, i64 0 ; 2 uses
-  %i.gn = fcmp nsz ogt <2 x float> %i.em, %i.gm
-  %i.go = select <2 x i1> %i.gn, <2 x float> %i.em, <2 x float> %i.gm ; 2 uses
+  %i.gn = fcmp nsz ogt <2 x float> %7, %i.gm
+  %i.go = select <2 x i1> %i.gn, <2 x float> %7, <2 x float> %i.gm ; 2 uses
   %i.gp = insertelement <2 x float> %i.eq, float %i.ef, i64 0 ; 2 uses
   %i.gq = fcmp nsz ogt <2 x float> %i.go, %i.gp
   %i.gr = select <2 x i1> %i.gq, <2 x float> %i.go, <2 x float> %i.gp
@@ -305,11 +309,12 @@ bb.m:                                             ; preds = %bb.g
   %i.gs = shufflevector <2 x float> %i.eq, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
   %i.gt = insertelement <2 x float> %i.gs, float %i.ed, i64 0 ; 3 uses
   %i.gu = fcmp nsz ogt <2 x float> %i.em, %i.gt   ; 2 uses
-  %i.gv = select <2 x i1> %i.gu, <2 x float> %i.em, <2 x float> %i.gt ; 2 uses
+  %8 = insertelement <2 x float> %i.em, float %i.eb, i64 0 ; 2 uses
+  %i.gv = select <2 x i1> %i.gu, <2 x float> %8, <2 x float> %i.gt ; 2 uses
   %i.gw = insertelement <2 x float> %i.eq, float %i.ef, i64 0 ; 4 uses
   %i.gx = fcmp nsz ogt <2 x float> %i.gv, %i.gw
   %i.gy = select <2 x i1> %i.gx, <2 x float> %i.gv, <2 x float> %i.gw
-  %i.gz = select <2 x i1> %i.gu, <2 x float> %i.gt, <2 x float> %i.em ; 2 uses
+  %i.gz = select <2 x i1> %i.gu, <2 x float> %i.gt, <2 x float> %8 ; 2 uses
   %i.ha = fcmp nsz ogt <2 x float> %i.gz, %i.gw
   %i.hb = select <2 x i1> %i.ha, <2 x float> %i.gw, <2 x float> %i.gz
   %i.hc = fadd nsz <2 x float> %i.gy, %i.hb

@@ -204,19 +204,24 @@ declare void @_ZdlPvm(ptr noundef, i64 noundef) local_unnamed_addr #7
 ; Function Attrs: mustprogress uwtable
 define hidden void @_ZN4ncnn28warpaffine_bilinear_yuv420spEPKhiiPhiiPKfij(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, i32 noundef %2, ptr nofree noundef captures(none) %3, i32 noundef %4, i32 noundef %5, ptr nofree noundef readonly captures(none) %6, i32 noundef %7, i32 noundef %8) local_unnamed_addr #4 {
 bb.a:
-  %i.a = alloca [6 x float], align 16             ; 5 uses
+  %i.a = alloca [6 x float], align 16             ; 6 uses
   %.sroa.2.0.extract.shift = lshr i32 %8, 8
   %.sroa.034.0.insert.ext = and i32 %8, 255
   tail call void @_ZN4ncnn22warpaffine_bilinear_c1EPKhiiiPhiiiPKfij(ptr noundef readonly %0, i32 noundef %1, i32 noundef %2, i32 noundef %1, ptr noundef %3, i32 noundef %4, i32 noundef %5, i32 noundef %4, ptr noundef readonly %6, i32 noundef %7, i32 noundef %.sroa.034.0.insert.ext)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
-  %i.b = load <4 x float>, ptr %6, align 4, !tbaa !10
-  %i.c = fmul reassoc arcp contract afn <4 x float> %i.b, <float 1.000000e+00, float 1.000000e+00, float 5.000000e-01, float 1.000000e+00>
-  store <4 x float> %i.c, ptr %i.a, align 16, !tbaa !10
+  %i.b = load <4 x float>, ptr %6, align 4, !tbaa !10 ; 2 uses
+  %i.c = fmul reassoc arcp contract afn <4 x float> %i.b, <float poison, float poison, float 5.000000e-01, float poison>
+  %9 = shufflevector <4 x float> %i.b, <4 x float> %i.c, <4 x i32> <i32 0, i32 1, i32 6, i32 3>
+  store <4 x float> %9, ptr %i.a, align 16, !tbaa !10
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.e = getelementptr inbounds nuw i8, ptr %6, i64 16
-  %9 = load <2 x float>, ptr %i.e, align 4, !tbaa !10
-  %10 = fmul reassoc arcp contract afn <2 x float> %9, <float 1.000000e+00, float 5.000000e-01>
-  store <2 x float> %10, ptr %i.d, align 16, !tbaa !10
+  %10 = load float, ptr %i.e, align 4, !tbaa !10
+  store float %10, ptr %i.d, align 16, !tbaa !10
+  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 20
+  %12 = getelementptr inbounds nuw i8, ptr %6, i64 20
+  %13 = load float, ptr %12, align 4, !tbaa !10
+  %14 = fmul fast float %13, 5.000000e-01
+  store float %14, ptr %11, align 4, !tbaa !10
   %i.f = mul nsw i32 %2, %1
   %i.g = sext i32 %i.f to i64
   %i.h = getelementptr inbounds i8, ptr %0, i64 %i.g

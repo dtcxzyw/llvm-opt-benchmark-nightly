@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   %i.y = insertelement <4 x float> poison, float %3, i64 0
   %i.z = insertelement <4 x float> %i.y, float %4, i64 1
   %i.aa = shufflevector <4 x float> %i.z, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 5 uses
-  %i.ab = insertelement <4 x float> <float poison, float poison, float -0.000000e+00, float -0.000000e+00>, float %1, i64 0
+  %i.ab = insertelement <4 x float> poison, float %1, i64 0
   %i.ac = insertelement <4 x float> %i.ab, float %2, i64 1 ; 5 uses
   %xtraiter = and i64 %wide.trip.count, 3         ; 3 uses
   %i.ad = icmp ult i32 %i.v, 4
@@ -237,9 +237,10 @@ bb.d:                                             ; preds = %bb.f, %.epil.prehea
 bb.e:                                             ; preds = %bb.d
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ae, i64 56
   %i.aj = load <4 x float>, ptr %i.af, align 8, !tbaa !24
-  %i.ak = fmul reassoc nsz arcp contract afn <4 x float> %i.aj, %i.aa
+  %i.ak = fmul reassoc nsz arcp contract afn <4 x float> %i.aj, %i.aa ; 2 uses
   %i.al = fadd reassoc nsz arcp contract afn <4 x float> %i.ak, %i.ac
-  store <4 x float> %i.al, ptr %i.ai, align 8, !tbaa !24
+  %10 = shufflevector <4 x float> %i.al, <4 x float> %i.ak, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  store <4 x float> %10, ptr %i.ai, align 8, !tbaa !24
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
@@ -263,9 +264,10 @@ bb.g:                                             ; preds = %bb.o, %.lr.ph.new
 bb.h:                                             ; preds = %bb.g
   %i.aq = getelementptr inbounds nuw i8, ptr %i.am, i64 56
   %i.ar = load <4 x float>, ptr %i.an, align 8, !tbaa !24
-  %i.as = fmul reassoc nsz arcp contract afn <4 x float> %i.ar, %i.aa
+  %i.as = fmul reassoc nsz arcp contract afn <4 x float> %i.ar, %i.aa ; 2 uses
   %i.at = fadd reassoc nsz arcp contract afn <4 x float> %i.as, %i.ac
-  store <4 x float> %i.at, ptr %i.aq, align 8, !tbaa !24
+  %11 = shufflevector <4 x float> %i.at, <4 x float> %i.as, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  store <4 x float> %11, ptr %i.aq, align 8, !tbaa !24
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
@@ -278,9 +280,10 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 bb.j:                                             ; preds = %bb.i
   %i.ay = getelementptr inbounds nuw i8, ptr %i.au, i64 152
   %i.az = load <4 x float>, ptr %i.av, align 8, !tbaa !24
-  %i.ba = fmul reassoc nsz arcp contract afn <4 x float> %i.az, %i.aa
+  %i.ba = fmul reassoc nsz arcp contract afn <4 x float> %i.az, %i.aa ; 2 uses
   %i.bb = fadd reassoc nsz arcp contract afn <4 x float> %i.ba, %i.ac
-  store <4 x float> %i.bb, ptr %i.ay, align 8, !tbaa !24
+  %12 = shufflevector <4 x float> %i.bb, <4 x float> %i.ba, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  store <4 x float> %12, ptr %i.ay, align 8, !tbaa !24
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i
@@ -293,9 +296,10 @@ bb.k:                                             ; preds = %bb.j, %bb.i
 bb.l:                                             ; preds = %bb.k
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bc, i64 248
   %i.bh = load <4 x float>, ptr %i.bd, align 8, !tbaa !24
-  %i.bi = fmul reassoc nsz arcp contract afn <4 x float> %i.bh, %i.aa
+  %i.bi = fmul reassoc nsz arcp contract afn <4 x float> %i.bh, %i.aa ; 2 uses
   %i.bj = fadd reassoc nsz arcp contract afn <4 x float> %i.bi, %i.ac
-  store <4 x float> %i.bj, ptr %i.bg, align 8, !tbaa !24
+  %13 = shufflevector <4 x float> %i.bj, <4 x float> %i.bi, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  store <4 x float> %13, ptr %i.bg, align 8, !tbaa !24
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
@@ -308,9 +312,10 @@ bb.m:                                             ; preds = %bb.l, %bb.k
 bb.n:                                             ; preds = %bb.m
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bk, i64 344
   %i.bp = load <4 x float>, ptr %i.bl, align 8, !tbaa !24
-  %i.bq = fmul reassoc nsz arcp contract afn <4 x float> %i.bp, %i.aa
+  %i.bq = fmul reassoc nsz arcp contract afn <4 x float> %i.bp, %i.aa ; 2 uses
   %i.br = fadd reassoc nsz arcp contract afn <4 x float> %i.bq, %i.ac
-  store <4 x float> %i.br, ptr %i.bo, align 8, !tbaa !24
+  %14 = shufflevector <4 x float> %i.br, <4 x float> %i.bq, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  store <4 x float> %14, ptr %i.bo, align 8, !tbaa !24
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m

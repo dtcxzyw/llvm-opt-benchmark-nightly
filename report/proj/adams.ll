@@ -204,7 +204,7 @@ bb.z:                                             ; preds = %bb.v
   %i.hc = fcmp olt double %1, 0.000000e+00
   %i.hd = fsub double f0x400DAA4A35759E4B, %i.gd
   %.sroa.28.4 = select i1 %i.hc, double %i.hd, double %i.gd
-  %i.he = fadd double %.sroa.28.4, f0xBFFDAA4A35759E4B
+  %i.he = fadd double %.sroa.28.4, f0xBFFDAA4A35759E4B ; 2 uses
   %i.hf = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.hg = load double, ptr %i.hf, align 8, !tbaa !51 ; 2 uses
   %i.hh = fcmp une double %i.hg, 0.000000e+00
@@ -212,23 +212,22 @@ bb.z:                                             ; preds = %bb.v
   br i1 %i.hh, label %bb.aa, label %.thread227
 
 bb.aa:                                            ; preds = %bb.z
-  %7 = insertelement <2 x double> <double poison, double -0.000000e+00>, double %i.hg, i64 0
-  %8 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %7, <2 x double> <double f0x401DAA4A35759E4B, double 0.000000e+00>, <2 x double> %i.hi) ; 2 uses
-  %9 = extractelement <2 x double> %8, i64 0      ; 4 uses
-  %i.hj = fcmp ult double %9, f0x400DAA4A35759E4B
+  %7 = tail call double @llvm.fmuladd.f64(double %i.hg, double f0x401DAA4A35759E4B, double %i.he) ; 5 uses
+  %i.hj = fcmp ult double %7, f0x400DAA4A35759E4B
   br i1 %i.hj, label %bb.ac, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
-  %i.hk = fadd double %9, f0xC01DAA4A35759E4B
+  %i.hk = fadd double %7, f0xC01DAA4A35759E4B
   %i.hl = insertelement <2 x double> %i.hi, double %i.hk, i64 0
   br label %.thread227
 
 bb.ac:                                            ; preds = %bb.aa
-  %i.hm = fcmp olt double %9, f0xC00DAA4A35759E4B
+  %i.hm = fcmp olt double %7, f0xC00DAA4A35759E4B
+  %8 = insertelement <2 x double> %i.hi, double %7, i64 0
   br i1 %i.hm, label %bb.ad, label %.thread227
 
 bb.ad:                                            ; preds = %bb.ac
-  %i.hn = fadd double %9, f0x401DAA4A35759E4B
+  %i.hn = fadd double %7, f0x401DAA4A35759E4B
   %i.ho = insertelement <2 x double> %i.hi, double %i.hn, i64 0
   br label %.thread227
 

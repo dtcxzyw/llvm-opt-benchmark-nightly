@@ -205,16 +205,18 @@ bb.k:                                             ; preds = %bb.j
   %i.jz = fpext <4 x float> %i.jy to <4 x double>
   %i.ka = shufflevector <2 x double> %i.jk, <2 x double> poison, <4 x i32> zeroinitializer
   %i.kb = tail call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %i.ka, <4 x double> %i.jz, <4 x double> %i.jw)
-  %i.kc = fptrunc <4 x double> %i.kb to <4 x float> ; 3 uses
+  %i.kc = fptrunc <4 x double> %i.kb to <4 x float> ; 4 uses
   %i.kd = fmul <4 x float> %i.im, %i.kc
-  store <4 x float> %i.kd, ptr %0, align 4, !tbaa !58
+  %5 = shufflevector <4 x float> %i.kd, <4 x float> %i.kc, <4 x i32> <i32 0, i32 1, i32 2, i32 7>
+  store <4 x float> %5, ptr %0, align 4, !tbaa !58
   %i.ke = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.kf = extractelement <4 x float> %i.kc, i64 1
   store float %i.kf, ptr %i.ke, align 4, !tbaa !58
   %i.kg = getelementptr inbounds nuw i8, ptr %0, i64 20
-  %i.kh = shufflevector <4 x float> %i.kc, <4 x float> poison, <4 x i32> <i32 2, i32 0, i32 1, i32 2>
+  %i.kh = shufflevector <4 x float> %i.kc, <4 x float> poison, <4 x i32> <i32 2, i32 0, i32 1, i32 2> ; 2 uses
   %i.ki = fmul <4 x float> %i.is, %i.kh
-  store <4 x float> %i.ki, ptr %i.kg, align 4, !tbaa !58
+  %6 = shufflevector <4 x float> %i.kh, <4 x float> %i.ki, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
+  store <4 x float> %6, ptr %i.kg, align 4, !tbaa !58
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #28
   %i.kj = extractelement <2 x float> %i.jj, i64 1
   store float %i.kj, ptr %1, align 4, !tbaa !58

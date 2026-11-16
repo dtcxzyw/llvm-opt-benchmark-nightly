@@ -205,9 +205,10 @@ bb.ay:                                            ; preds = %bb.aw
   %i.aug = load i32, ptr %i.auf, align 16, !tbaa !185 ; 5 uses
   %i.auh = sext i32 %i.aug to i64
   %i.aui = getelementptr [88 x i8], ptr %i.aue, i64 %i.auh ; 8 uses
-  %i.auj = load <4 x float>, ptr %i.y, align 16, !tbaa !26 ; 3 uses
+  %i.auj = load <4 x float>, ptr %i.y, align 16, !tbaa !26 ; 4 uses
   %i.auk = fadd <4 x float> %i.auj, <float -1.200000e+01, float -4.000000e+00, float -0.000000e+00, float -0.000000e+00> ; 3 uses
-  store <4 x float> %i.auk, ptr %i.aui, align 4, !tbaa !26
+  %12 = shufflevector <4 x float> %i.auk, <4 x float> %i.auj, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  store <4 x float> %12, ptr %i.aui, align 4, !tbaa !26
   %i.aul = getelementptr inbounds nuw i8, ptr %i.aui, i64 16
   %i.aum = load <4 x float>, ptr %i.cf, align 16, !tbaa !26 ; 4 uses
   store <4 x float> %i.aum, ptr %i.aul, align 4, !tbaa !26
@@ -610,9 +611,10 @@ bb.bg:                                            ; preds = %bb.bg, %.lr.ph.i63.
   br i1 %exitcond.not.i69.i.i, label %..loopexit_crit_edge.i.i53.i, label %bb.bg, !llvm.loop !133
 
 compute_band_energy.exit.i50.i:                   ; preds = %.loopexit.i62.i.i
-  %i.bmg = load <4 x float>, ptr %i.b, align 16, !tbaa !26
-  %i.bmh = fmul <4 x float> %i.bmg, <float 2.000000e+00, float 1.000000e+00, float 1.000000e+00, float 1.000000e+00>
-  %i.bmi = fpext nsz <4 x float> %i.bmh to <4 x double>
+  %i.bmg = load <4 x float>, ptr %i.b, align 16, !tbaa !26 ; 2 uses
+  %i.bmh = fmul <4 x float> %i.bmg, <float 2.000000e+00, float poison, float poison, float poison>
+  %13 = shufflevector <4 x float> %i.bmh, <4 x float> %i.bmg, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
+  %i.bmi = fpext nsz <4 x float> %13 to <4 x double>
   %i.bmj = fadd nsz <4 x double> %i.bmi, splat (double 1.000000e-08)
   %i.bmk = load <4 x float>, ptr %.sroa.7.0..sroa_idx.i.i, align 16, !tbaa !26
   %i.bml = fpext nsz <4 x float> %i.bmk to <4 x double>
@@ -626,8 +628,9 @@ compute_band_energy.exit.i50.i:                   ; preds = %.loopexit.i62.i.i
   %i.bmt = load <4 x float>, ptr %.sroa.19.0..sroa_idx.i.i, align 16, !tbaa !26
   %i.bmu = fpext nsz <4 x float> %i.bmt to <4 x double>
   %i.bmv = fadd nsz <4 x double> %i.bmu, splat (double 1.000000e-08)
-  %i.bmw = load <2 x float>, ptr %.sroa.23.0..sroa_idx.i.i, align 16, !tbaa !26
-  %i.bmx = fmul <2 x float> %i.bmw, <float 1.000000e+00, float 2.000000e+00>
+  %i.bmw = load <2 x float>, ptr %.sroa.23.0..sroa_idx.i.i, align 16, !tbaa !26 ; 2 uses
+  %i.bmx = fmul <2 x float> %i.bmw, <float poison, float 2.000000e+00>
+  %14 = shufflevector <2 x float> %i.bmw, <2 x float> %i.bmx, <2 x i32> <i32 0, i32 3>
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #11
   %i.bmy = load <4 x float>, ptr %i.w, align 16, !tbaa !26
   %i.bmz = fpext nsz <4 x float> %i.bmy to <4 x double>
@@ -661,7 +664,7 @@ compute_band_energy.exit.i50.i:                   ; preds = %.loopexit.i62.i.i
   store <4 x float> %i.bnw, ptr %i.cr, align 16, !tbaa !26
   %i.bnx = load <2 x float>, ptr %i.cb, align 16, !tbaa !26
   %i.bny = fpext nsz <2 x float> %i.bnx to <2 x double>
-  %i.bnz = fpext nsz <2 x float> %i.bmx to <2 x double>
+  %i.bnz = fpext nsz <2 x float> %14 to <2 x double>
   %i.boa = fadd nsz <2 x double> %i.bnz, splat (double 1.000000e-08)
   %i.bob = fdiv nsz <2 x double> %i.bny, %i.boa
   %i.boc = fptrunc nsz <2 x double> %i.bob to <2 x float>

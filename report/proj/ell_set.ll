@@ -204,9 +204,10 @@ bb.i:                                             ; preds = %bb.g
   %i.ao = insertelement <2 x double> poison, double %i.ah, i64 0
   %i.ap = insertelement <2 x double> %i.ao, double %i.am, i64 1 ; 2 uses
   %i.aq = fcmp une <2 x double> %i.ap, zeroinitializer
-  %i.ar = fdiv <2 x double> splat (double 1.000000e+00), %i.ap
-  %i.as = fadd <2 x double> %i.ar, <double -1.000000e+00, double -0.000000e+00>
-  %i.at = select <2 x i1> %i.aq, <2 x double> %i.as, <2 x double> <double 0.000000e+00, double +inf> ; 3 uses
+  %i.ar = fdiv <2 x double> splat (double 1.000000e+00), %i.ap ; 2 uses
+  %i.as = fadd <2 x double> %i.ar, <double -1.000000e+00, double poison>
+  %3 = shufflevector <2 x double> %i.as, <2 x double> %i.ar, <2 x i32> <i32 0, i32 3>
+  %i.at = select <2 x i1> %i.aq, <2 x double> %3, <2 x double> <double 0.000000e+00, double +inf> ; 3 uses
   %i.au = extractelement <2 x double> %i.at, i64 0
   store double %i.au, ptr %i.ai, align 8, !tbaa !68
   %i.av = shufflevector <2 x double> %i.aj, <2 x double> %i.at, <2 x i32> <i32 0, i32 2> ; 2 uses

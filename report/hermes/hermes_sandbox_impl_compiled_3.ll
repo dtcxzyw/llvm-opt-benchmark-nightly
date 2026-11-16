@@ -202,10 +202,14 @@ bb.ae:                                            ; preds = %bb.ae, %bb.ad
   %i.gr = getelementptr inbounds nuw i8, ptr %.val747, i64 %i.gq
   store i64 %.0.copyload.i802, ptr %i.gr, align 1
   %.not684 = icmp eq i32 %i.fb, %indvars827
-  br i1 %.not684, label %.loopexit825, label %bb.ae
+  br i1 %.not684, label %.loopexit825.loopexit, label %bb.ae
 
-.loopexit825:                                     ; preds = %bb.ae, %bb.ac
-  %.3 = phi i32 [ 0, %bb.ac ], [ %i.fb, %bb.ae ]
+.loopexit825.loopexit:                            ; preds = %bb.ae
+  %6 = zext i32 %i.fb to i64
+  br label %.loopexit825
+
+.loopexit825:                                     ; preds = %.loopexit825.loopexit, %bb.ac
+  %.3 = phi i64 [ 0, %bb.ac ], [ %6, %.loopexit825.loopexit ]
   %i.gs = and i32 %.0.copyload.i786, 3            ; 2 uses
   %.not685 = icmp eq i32 %i.gs, 0
   br i1 %.not685, label %.loopexit, label %.preheader
@@ -215,16 +219,18 @@ bb.ae:                                            ; preds = %bb.ae, %bb.ad
   br label %bb.af
 
 bb.af:                                            ; preds = %.preheader, %bb.af
-  %.4 = phi i32 [ %6, %bb.af ], [ %.3, %.preheader ] ; 2 uses
-  %.0672 = phi i32 [ %i.he, %bb.af ], [ 0, %.preheader ]
-  %i.gu = shl i32 %.4, 3
+  %indvars.iv829 = phi i64 [ %.3, %.preheader ], [ %indvars.iv.next830, %bb.af ] ; 2 uses
+  %.4 = phi i32 [ 0, %.preheader ], [ %i.he, %bb.af ]
+  %7 = trunc nuw i64 %indvars.iv829 to i32
+  %i.gu = shl i32 %7, 3
   %i.gv = sub i32 %i.ez, %i.gu
   %.val710 = load ptr, ptr %i.d, align 8, !tbaa !12
   %i.gw = getelementptr inbounds nuw i8, ptr %.val710, i64 %i.gt
   %.0.copyload.i803 = load i32, ptr %i.gw, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i803) #8, !srcloc !13
-  %6 = add nsw i32 %.4, 1                         ; 2 uses
-  %i.gx = shl i32 %6, 3
+  %indvars.iv.next830 = add nuw nsw i64 %indvars.iv829, 1 ; 2 uses
+  %8 = trunc nuw i64 %indvars.iv.next830 to i32
+  %i.gx = shl i32 %8, 3
   %i.gy = add i32 %.0.copyload.i803, %i.gx
   %i.gz = zext i32 %i.gy to i64
   %.val761 = load ptr, ptr %i.d, align 8, !tbaa !12
@@ -236,7 +242,7 @@ bb.af:                                            ; preds = %.preheader, %bb.af
   %.val746 = load ptr, ptr %i.d, align 8, !tbaa !12
   %i.hd = getelementptr inbounds nuw i8, ptr %.val746, i64 %i.hc
   store i64 %.0.copyload.i804, ptr %i.hd, align 1
-  %i.he = add nuw nsw i32 %.0672, 1               ; 2 uses
+  %i.he = add nuw nsw i32 %.4, 1                  ; 2 uses
   %.not686 = icmp eq i32 %i.he, %i.gs
   br i1 %.not686, label %.loopexit, label %bb.af
 

@@ -204,8 +204,8 @@ bb.d:                                             ; preds = %bb.c
     #dbg_value(i64 1, !32775, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !32529)
     #dbg_value(i64 %.sroa.8.0.i.i.i.i, !32775, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !32529)
   %i.z = add nuw nsw i64 %.sroa.8.0.i.i.i.i, %.sroa.7.0.i.i.i.i, !dbg !32980 ; 2 uses
-    #dbg_value(i64 %i.z, !32776, !DIExpression(), !32530)
-    #dbg_value(i64 %i.z, !32831, !DIExpression(), !32532)
+    #dbg_value(i64 poison, !32776, !DIExpression(), !32530)
+    #dbg_value(i64 poison, !32831, !DIExpression(), !32532)
     #dbg_value(ptr %1, !32834, !DIExpression(), !32537)
   %i.aa = load i64, ptr %1, align 8, !dbg !32981, !range !5929, !alias.scope !32815, !noundef !3895
   %.not85.i.i.i.i = icmp eq i64 %i.aa, -1, !dbg !32981
@@ -272,7 +272,7 @@ bb.j:                                             ; preds = %bb.f, %bb.e
     #dbg_value(i64 %i.z, !32744, !DIExpression(), !32575)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5.i), !dbg !32999
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.i), !dbg !32999
-    #dbg_value(i64 %i.z, !32749, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value), !32467)
+    #dbg_value(i64 poison, !32749, !DIExpression(), !32467)
     #dbg_value(ptr undef, !13098, !DIExpression(DW_OP_deref), !32577)
     #dbg_value(ptr undef, !13100, !DIExpression(DW_OP_deref), !32577)
   %i.al = tail call i64 @llvm.umax.i64(i64 %i.z, i64 3), !dbg !33000 ; 2 uses
@@ -442,8 +442,8 @@ bb.q:                                             ; preds = %bb.p
     #dbg_value(i64 1, !32775, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !32674)
     #dbg_value(i64 %.sroa.8.0.i.i.i.i.i.i, !32775, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !32674)
   %i.bs = add nuw nsw i64 %.sroa.8.0.i.i.i.i.i.i, %.sroa.7.0.i.i.i.i.i.i, !dbg !33034 ; 2 uses
-    #dbg_value(i64 %i.bs, !32776, !DIExpression(), !32675)
-    #dbg_value(i64 %i.bs, !32831, !DIExpression(), !32677)
+    #dbg_value(i64 poison, !32776, !DIExpression(), !32675)
+    #dbg_value(i64 poison, !32831, !DIExpression(), !32677)
     #dbg_value(ptr %i.d, !32834, !DIExpression(), !32679)
   %i.bt = load i64, ptr %i.d, align 8, !dbg !33035, !range !5929, !alias.scope !32933, !noalias !32751, !noundef !3895
   %.not85.i.i.i.i.i.i = icmp eq i64 %i.bt, -1, !dbg !33035
@@ -511,9 +511,9 @@ bb.v:                                             ; preds = %bb.s, %bb.r
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5.i.i.i), !dbg !33055
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.i.i.i), !dbg !33055
     #dbg_value(ptr %i.g, !32950, !DIExpression(), !32724)
-    #dbg_value(i64 %i.bs, !32952, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value), !32724)
-    #dbg_value(i64 %i.bs, !32954, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value), !32727)
-    #dbg_value(i64 %i.bs, !32961, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value), !32730)
+    #dbg_value(i64 poison, !32952, !DIExpression(), !32724)
+    #dbg_value(i64 poison, !32954, !DIExpression(), !32727)
+    #dbg_value(i64 poison, !32961, !DIExpression(), !32730)
     #dbg_value(ptr %i.g, !32958, !DIExpression(), !32731)
     #dbg_value(i64 %i.be, !32959, !DIExpression(), !32727)
     #dbg_value(i64 %i.be, !32963, !DIExpression(), !32730)
@@ -521,9 +521,6 @@ bb.v:                                             ; preds = %bb.s, %bb.r
     #dbg_value(i64 8, !32964, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !32730)
     #dbg_value(i64 32, !32964, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !32730)
   %i.cd = add nuw nsw i64 %i.bs, 1, !dbg !33056
-    #dbg_value(i64 %i.cd, !32952, !DIExpression(), !32724)
-    #dbg_value(i64 %i.cd, !32954, !DIExpression(), !32727)
-    #dbg_value(i64 %i.cd, !32961, !DIExpression(), !32730)
   invoke void @_RINvNvMs2_NtCsexYYUdYSQU6_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsaTqK2fWTXJW_11qlog_dancer(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.g, i64 noundef %i.be, i64 noundef range(i64 1, 0) %i.cd, i64 noundef 8, i64 noundef 32)
           to label %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VecINtNtNtCs4bweDUTR8gt_8plotters7drawing4area11DrawingAreaNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtBL_5coord5ShiftEE7reserveCsaTqK2fWTXJW_11qlog_dancer.exit.i.i.i unwind label %bb.t, !dbg !33057, !noalias !32739
 
@@ -926,7 +923,7 @@ bb.d:                                             ; preds = %_RNvXsi_NtCsG258MDv
   %i.q = sub nuw i64 %i.o, %i.p, !dbg !34207
   %i.r = udiv exact i64 %i.q, 24, !dbg !34207
     #dbg_value(i64 %i.r, !33982, !DIExpression(), !33781)
-    #dbg_value(i64 %i.r, !33987, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value), !33690)
+    #dbg_value(i64 poison, !33987, !DIExpression(), !33690)
     #dbg_value(ptr undef, !13098, !DIExpression(DW_OP_deref), !33783)
     #dbg_value(ptr undef, !13100, !DIExpression(DW_OP_deref), !33783)
   %i.s = tail call i64 @llvm.umax.i64(i64 %i.r, i64 3), !dbg !34208 ; 2 uses
@@ -1098,9 +1095,9 @@ bb.i:                                             ; preds = %bb.g
     #dbg_value(i64 poison, !34150, !DIExpression(), !33923)
     #dbg_value(i64 poison, !34171, !DIExpression(), !33843)
     #dbg_value(ptr %i.e, !13235, !DIExpression(), !33925)
-    #dbg_value(i64 poison, !13237, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value), !33925)
-    #dbg_value(i64 poison, !13239, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value), !33927)
-    #dbg_value(i64 poison, !13246, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value), !33929)
+    #dbg_value(i64 poison, !13237, !DIExpression(), !33925)
+    #dbg_value(i64 poison, !13239, !DIExpression(), !33927)
+    #dbg_value(i64 poison, !13246, !DIExpression(), !33929)
     #dbg_value(ptr %i.e, !13243, !DIExpression(), !33930)
     #dbg_value(i64 %i.ah, !13244, !DIExpression(), !33927)
     #dbg_value(i64 %i.ah, !13248, !DIExpression(), !33929)
@@ -1115,13 +1112,7 @@ bb.i:                                             ; preds = %bb.g
   %i.au = udiv exact i64 %i.at, 24, !dbg !34249
     #dbg_value(i64 %i.au, !34150, !DIExpression(), !33923)
     #dbg_value(i64 %i.au, !34171, !DIExpression(), !33843)
-    #dbg_value(i64 %i.au, !13246, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value), !33929)
-    #dbg_value(i64 %i.au, !13239, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value), !33927)
-    #dbg_value(i64 %i.au, !13237, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value), !33925)
   %i.av = add nuw nsw i64 %i.au, 1, !dbg !34250
-    #dbg_value(i64 %i.av, !13237, !DIExpression(), !33925)
-    #dbg_value(i64 %i.av, !13239, !DIExpression(), !33927)
-    #dbg_value(i64 %i.av, !13246, !DIExpression(), !33929)
   invoke void @_RINvNvMs2_NtCsexYYUdYSQU6_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsaTqK2fWTXJW_11qlog_dancer(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.e, i64 noundef %i.ah, i64 noundef %i.av, i64 noundef 8, i64 noundef 24)
           to label %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VecNtNtNtCsG258MDvU3F_3std3ffi6os_str8OsStringE7reserveCsaTqK2fWTXJW_11qlog_dancer.exit.i.i.i unwind label %bb.h, !dbg !34251, !noalias !34181
 

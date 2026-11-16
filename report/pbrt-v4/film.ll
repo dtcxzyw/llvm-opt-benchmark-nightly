@@ -205,11 +205,11 @@ _ZN4pbrt3RGBixEi.exit348.2:                       ; preds = %bb.h, %bb.g, %bb.i
 
 _ZN4pbrt3RGBixEi.exit350.2:                       ; preds = %.lr.ph.i.i, %bb.a, %_ZN4pbrt3RGBixEi.exit348.2
   %i.nz = insertelement <4 x float> poison, float %6, i64 0
-  %12 = shufflevector <4 x float> %i.nz, <4 x float> poison, <4 x i32> zeroinitializer
+  %12 = shufflevector <4 x float> %i.nz, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 poison>
   %i.oa = shufflevector <2 x float> %.sroa.0355.0, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %i.ob = insertelement <4 x float> %i.oa, float 1.000000e+00, i64 3
-  %13 = insertelement <4 x float> %i.ob, float %.sroa.13.0, i64 2
-  %14 = fmul <4 x float> %12, %13
+  %i.ob = insertelement <4 x float> %i.oa, float %.sroa.13.0, i64 2
+  %13 = fmul <4 x float> %12, %i.ob
+  %14 = insertelement <4 x float> %13, float %6, i64 3
   %i.oc = fpext <4 x float> %14 to <4 x double>
   %i.od = load <4 x double>, ptr %i.by, align 8, !tbaa !167
   %i.oe = fadd <4 x double> %i.od, %i.oc

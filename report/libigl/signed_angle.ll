@@ -204,12 +204,13 @@ bb.a:
 .split.us.split.us.preheader:                     ; preds = %.split.us
   %i.an = insertelement <4 x float> poison, float %i.ah, i64 0
   %i.ao = shufflevector <2 x float> %i.v, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %i.ap = shufflevector <4 x float> %i.an, <4 x float> %i.ao, <4 x i32> <i32 0, i32 5, i32 4, i32 poison>
+  %i.ap = shufflevector <4 x float> %i.an, <4 x float> %i.ao, <4 x i32> <i32 0, i32 5, i32 4, i32 poison> ; 2 uses
   %i.aq = insertelement <4 x float> %i.ap, float %i.x, i64 3
-  %i.ar = insertelement <4 x float> <float 1.000000e+00, float poison, float poison, float poison>, float %sqrtf32, i64 1
+  %i.ar = insertelement <4 x float> poison, float %sqrtf32, i64 1
   %i.as = insertelement <4 x float> %i.ar, float %sqrtf, i64 3
-  %3 = shufflevector <4 x float> %i.as, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 3>
+  %3 = shufflevector <4 x float> %i.as, <4 x float> poison, <4 x i32> <i32 poison, i32 1, i32 1, i32 3>
   %i.at = fdiv <4 x float> %i.aq, %3
+  %4 = shufflevector <4 x float> %i.ap, <4 x float> %i.at, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
   br label %.split38.us
 
 .split:                                           ; preds = %bb.a
@@ -228,7 +229,7 @@ bb.a:
   br label %.split38.us
 
 .split38.us:                                      ; preds = %.split.split.preheader, %.split.us.split.preheader, %.split.us.split.us.preheader, %.split
-  %i.bd = phi <4 x float> [ %i.at, %.split.us.split.us.preheader ], [ %i.am, %.split.us.split.preheader ], [ %i.bc, %.split.split.preheader ], [ %i.ax, %.split ] ; 5 uses
+  %i.bd = phi <4 x float> [ %4, %.split.us.split.us.preheader ], [ %i.am, %.split.us.split.preheader ], [ %i.bc, %.split.split.preheader ], [ %i.ax, %.split ] ; 5 uses
   %i.be = extractelement <4 x float> %i.bd, i64 0
   %i.bf = fneg float %i.be
   %i.bg = shufflevector <4 x float> %i.bd, <4 x float> poison, <2 x i32> <i32 1, i32 1>
@@ -290,12 +291,13 @@ bb.a:
 .split.us.split.us.preheader:                     ; preds = %.split.us
   %i.ab = insertelement <4 x float> poison, float %i.v, i64 0
   %i.ac = shufflevector <2 x float> %i.j, <2 x float> poison, <4 x i32> <i32 1, i32 0, i32 poison, i32 poison>
-  %i.ad = shufflevector <4 x float> %i.ab, <4 x float> %i.ac, <4 x i32> <i32 0, i32 4, i32 5, i32 poison>
+  %i.ad = shufflevector <4 x float> %i.ab, <4 x float> %i.ac, <4 x i32> <i32 0, i32 4, i32 5, i32 poison> ; 2 uses
   %i.ae = insertelement <4 x float> %i.ad, float %i.l, i64 3
-  %i.af = insertelement <4 x float> <float 1.000000e+00, float poison, float poison, float poison>, float %sqrtf32, i64 1
+  %i.af = insertelement <4 x float> poison, float %sqrtf32, i64 1
   %i.ag = insertelement <4 x float> %i.af, float %sqrtf, i64 3
-  %3 = shufflevector <4 x float> %i.ag, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 3>
+  %3 = shufflevector <4 x float> %i.ag, <4 x float> poison, <4 x i32> <i32 poison, i32 1, i32 1, i32 3>
   %i.ah = fdiv <4 x float> %i.ae, %3
+  %4 = shufflevector <4 x float> %i.ad, <4 x float> %i.ah, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
   br label %.split38.us
 
 .split:                                           ; preds = %bb.a
@@ -314,7 +316,7 @@ bb.a:
   br label %.split38.us
 
 .split38.us:                                      ; preds = %.split.split.preheader, %.split.us.split.preheader, %.split.us.split.us.preheader, %.split
-  %i.ar = phi <4 x float> [ %i.ah, %.split.us.split.us.preheader ], [ %i.aa, %.split.us.split.preheader ], [ %i.aq, %.split.split.preheader ], [ %i.al, %.split ] ; 5 uses
+  %i.ar = phi <4 x float> [ %4, %.split.us.split.us.preheader ], [ %i.aa, %.split.us.split.preheader ], [ %i.aq, %.split.split.preheader ], [ %i.al, %.split ] ; 5 uses
   %i.as = extractelement <4 x float> %i.ar, i64 0
   %i.at = fneg float %i.as
   %i.au = shufflevector <4 x float> %i.ar, <4 x float> poison, <2 x i32> <i32 1, i32 1>
@@ -388,12 +390,13 @@ bb.a:
 .split.us.split.us.preheader:                     ; preds = %.split.us
   %i.an = insertelement <4 x float> poison, float %i.ah, i64 0
   %i.ao = shufflevector <2 x float> %i.v, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %i.ap = shufflevector <4 x float> %i.an, <4 x float> %i.ao, <4 x i32> <i32 0, i32 5, i32 4, i32 poison>
+  %i.ap = shufflevector <4 x float> %i.an, <4 x float> %i.ao, <4 x i32> <i32 0, i32 5, i32 4, i32 poison> ; 2 uses
   %i.aq = insertelement <4 x float> %i.ap, float %i.x, i64 3
-  %i.ar = insertelement <4 x float> <float 1.000000e+00, float poison, float poison, float poison>, float %sqrtf32, i64 1
+  %i.ar = insertelement <4 x float> poison, float %sqrtf32, i64 1
   %i.as = insertelement <4 x float> %i.ar, float %sqrtf, i64 3
-  %3 = shufflevector <4 x float> %i.as, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 3>
+  %3 = shufflevector <4 x float> %i.as, <4 x float> poison, <4 x i32> <i32 poison, i32 1, i32 1, i32 3>
   %i.at = fdiv <4 x float> %i.aq, %3
+  %4 = shufflevector <4 x float> %i.ap, <4 x float> %i.at, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
   br label %.split38.us
 
 .split:                                           ; preds = %bb.a
@@ -412,7 +415,7 @@ bb.a:
   br label %.split38.us
 
 .split38.us:                                      ; preds = %.split.split.preheader, %.split.us.split.preheader, %.split.us.split.us.preheader, %.split
-  %i.bd = phi <4 x float> [ %i.at, %.split.us.split.us.preheader ], [ %i.am, %.split.us.split.preheader ], [ %i.bc, %.split.split.preheader ], [ %i.ax, %.split ] ; 5 uses
+  %i.bd = phi <4 x float> [ %4, %.split.us.split.us.preheader ], [ %i.am, %.split.us.split.preheader ], [ %i.bc, %.split.split.preheader ], [ %i.ax, %.split ] ; 5 uses
   %i.be = extractelement <4 x float> %i.bd, i64 0
   %i.bf = fneg float %i.be
   %i.bg = shufflevector <4 x float> %i.bd, <4 x float> poison, <2 x i32> <i32 1, i32 1>
@@ -815,12 +818,13 @@ bb.a:
 .split.us.split.us.preheader:                     ; preds = %.split.us
   %i.an = insertelement <4 x float> poison, float %i.ah, i64 0
   %i.ao = shufflevector <2 x float> %i.v, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %i.ap = shufflevector <4 x float> %i.an, <4 x float> %i.ao, <4 x i32> <i32 0, i32 5, i32 4, i32 poison>
+  %i.ap = shufflevector <4 x float> %i.an, <4 x float> %i.ao, <4 x i32> <i32 0, i32 5, i32 4, i32 poison> ; 2 uses
   %i.aq = insertelement <4 x float> %i.ap, float %i.x, i64 3
-  %i.ar = insertelement <4 x float> <float 1.000000e+00, float poison, float poison, float poison>, float %sqrtf32, i64 1
+  %i.ar = insertelement <4 x float> poison, float %sqrtf32, i64 1
   %i.as = insertelement <4 x float> %i.ar, float %sqrtf, i64 3
-  %3 = shufflevector <4 x float> %i.as, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 3>
+  %3 = shufflevector <4 x float> %i.as, <4 x float> poison, <4 x i32> <i32 poison, i32 1, i32 1, i32 3>
   %i.at = fdiv <4 x float> %i.aq, %3
+  %4 = shufflevector <4 x float> %i.ap, <4 x float> %i.at, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
   br label %.split38.us
 
 .split:                                           ; preds = %bb.a
@@ -839,7 +843,7 @@ bb.a:
   br label %.split38.us
 
 .split38.us:                                      ; preds = %.split.split.preheader, %.split.us.split.preheader, %.split.us.split.us.preheader, %.split
-  %i.bd = phi <4 x float> [ %i.at, %.split.us.split.us.preheader ], [ %i.am, %.split.us.split.preheader ], [ %i.bc, %.split.split.preheader ], [ %i.ax, %.split ] ; 5 uses
+  %i.bd = phi <4 x float> [ %4, %.split.us.split.us.preheader ], [ %i.am, %.split.us.split.preheader ], [ %i.bc, %.split.split.preheader ], [ %i.ax, %.split ] ; 5 uses
   %i.be = extractelement <4 x float> %i.bd, i64 0
   %i.bf = fneg float %i.be
   %i.bg = shufflevector <4 x float> %i.bd, <4 x float> poison, <2 x i32> <i32 1, i32 1>
@@ -901,12 +905,13 @@ bb.a:
 .split.us.split.us.preheader:                     ; preds = %.split.us
   %i.ab = insertelement <4 x float> poison, float %i.v, i64 0
   %i.ac = shufflevector <2 x float> %i.j, <2 x float> poison, <4 x i32> <i32 1, i32 0, i32 poison, i32 poison>
-  %i.ad = shufflevector <4 x float> %i.ab, <4 x float> %i.ac, <4 x i32> <i32 0, i32 4, i32 5, i32 poison>
+  %i.ad = shufflevector <4 x float> %i.ab, <4 x float> %i.ac, <4 x i32> <i32 0, i32 4, i32 5, i32 poison> ; 2 uses
   %i.ae = insertelement <4 x float> %i.ad, float %i.l, i64 3
-  %i.af = insertelement <4 x float> <float 1.000000e+00, float poison, float poison, float poison>, float %sqrtf32, i64 1
+  %i.af = insertelement <4 x float> poison, float %sqrtf32, i64 1
   %i.ag = insertelement <4 x float> %i.af, float %sqrtf, i64 3
-  %3 = shufflevector <4 x float> %i.ag, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 3>
+  %3 = shufflevector <4 x float> %i.ag, <4 x float> poison, <4 x i32> <i32 poison, i32 1, i32 1, i32 3>
   %i.ah = fdiv <4 x float> %i.ae, %3
+  %4 = shufflevector <4 x float> %i.ad, <4 x float> %i.ah, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
   br label %.split38.us
 
 .split:                                           ; preds = %bb.a
@@ -925,7 +930,7 @@ bb.a:
   br label %.split38.us
 
 .split38.us:                                      ; preds = %.split.split.preheader, %.split.us.split.preheader, %.split.us.split.us.preheader, %.split
-  %i.ar = phi <4 x float> [ %i.ah, %.split.us.split.us.preheader ], [ %i.aa, %.split.us.split.preheader ], [ %i.aq, %.split.split.preheader ], [ %i.al, %.split ] ; 5 uses
+  %i.ar = phi <4 x float> [ %4, %.split.us.split.us.preheader ], [ %i.aa, %.split.us.split.preheader ], [ %i.aq, %.split.split.preheader ], [ %i.al, %.split ] ; 5 uses
   %i.as = extractelement <4 x float> %i.ar, i64 0
   %i.at = fneg float %i.as
   %i.au = shufflevector <4 x float> %i.ar, <4 x float> poison, <2 x i32> <i32 1, i32 1>

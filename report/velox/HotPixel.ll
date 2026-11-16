@@ -204,7 +204,7 @@ declare noundef i32 @_ZN4geos9algorithm14CGAlgorithmsDD16orientationIndexEdddddd
 define noundef zeroext i1 @_ZNK4geos6noding9snapround8HotPixel22intersectsPixelClosureERKNS_4geom10CoordinateES6_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(56) %0, ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %2) local_unnamed_addr #0 align 2 !guid !50 {
 bb.a:
   %3 = alloca %"class.geos::algorithm::LineIntersector", align 8 ; 13 uses
-  %4 = alloca %"struct.std::array", align 8       ; 14 uses
+  %4 = alloca %"struct.std::array", align 8       ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #14
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
   %.ptr.i = getelementptr inbounds nuw i8, ptr %3, i64 48
@@ -219,54 +219,38 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 128
   store i8 0, ptr %i.d, align 8, !tbaa !54
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #14
-  %.ptr.1.i18 = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 40
-  %.ptr.2.i = getelementptr inbounds nuw i8, ptr %4, i64 48 ; 3 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %4, i64 64
-  %.ptr.3.i.a = getelementptr inbounds nuw i8, ptr %4, i64 72 ; 3 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %4, i64 88
+  %i.e = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 2 uses
+  %.ptr.3.i.a = getelementptr inbounds nuw i8, ptr %4, i64 48 ; 2 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %4, i64 72 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %.sroa.426.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.h = load <2 x double>, ptr %i.g, align 8, !tbaa !21 ; 2 uses
-  %7 = extractelement <2 x double> %i.h, i64 0    ; 2 uses
-  %8 = load double, ptr %6, align 8, !tbaa !34
-  %9 = fadd double %7, 5.000000e-01               ; 2 uses
-  %10 = fadd double %8, -5.000000e-01             ; 2 uses
-  %11 = fadd double %7, -5.000000e-01
-  %12 = shufflevector <2 x double> %i.h, <2 x double> poison, <4 x i32> <i32 1, i32 poison, i32 0, i32 1>
-  %13 = insertelement <4 x double> %12, double -0.000000e+00, i64 1
-  %14 = fadd <4 x double> %13, <double 5.000000e-01, double +qnan, double -5.000000e-01, double 5.000000e-01>
-  store double %9, ptr %4, align 8, !tbaa !21
-  store <4 x double> %14, ptr %.sroa.426.0..sroa_idx, align 8, !tbaa !21
-  store double +qnan, ptr %5, align 8, !tbaa !21
-  store double %11, ptr %.ptr.2.i, align 8, !tbaa !21
-  %.sroa.420.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 56
-  store double %10, ptr %.sroa.420.0..sroa_idx, align 8, !tbaa !21
-  store double +qnan, ptr %i.e, align 8, !tbaa !21
-  store double %9, ptr %.ptr.3.i.a, align 8, !tbaa !21
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 80
-  store double %10, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !21
-  store double +qnan, ptr %i.f, align 8, !tbaa !21
-  call void @_ZN4geos9algorithm15LineIntersector19computeIntersectionERKNS_4geom10CoordinateES5_S5_S5_(ptr noundef nonnull align 8 dereferenceable(129) %3, ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(24) %.ptr.1.i18)
+  %5 = shufflevector <2 x double> %i.h, <2 x double> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 1, i32 poison, i32 poison> ; 2 uses
+  %6 = shufflevector <2 x double> %i.h, <2 x double> poison, <8 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 1, i32 poison, i32 poison>
+  %7 = shufflevector <8 x double> %6, <8 x double> %5, <8 x i32> <i32 poison, i32 poison, i32 poison, i32 8, i32 poison, i32 5, i32 poison, i32 poison>
+  %8 = shufflevector <8 x double> %5, <8 x double> %7, <8 x i32> <i32 0, i32 1, i32 poison, i32 11, i32 poison, i32 13, i32 poison, i32 poison>
+  %9 = fadd <8 x double> %8, <double 5.000000e-01, double 5.000000e-01, double poison, double -5.000000e-01, double poison, double -5.000000e-01, double poison, double poison>
+  %10 = shufflevector <8 x double> %9, <8 x double> <double poison, double poison, double +qnan, double poison, double +qnan, double poison, double +qnan, double +qnan>, <8 x i32> <i32 0, i32 1, i32 10, i32 3, i32 12, i32 5, i32 14, i32 15>
+  %11 = shufflevector <8 x double> %10, <8 x double> poison, <12 x i32> <i32 0, i32 1, i32 2, i32 3, i32 1, i32 4, i32 3, i32 5, i32 6, i32 0, i32 5, i32 7>
+  store <12 x double> %11, ptr %4, align 8, !tbaa !21
+  call void @_ZN4geos9algorithm15LineIntersector19computeIntersectionERKNS_4geom10CoordinateES5_S5_S5_(ptr noundef nonnull align 8 dereferenceable(129) %3, ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(24) %i.e)
   %i.i = load i64, ptr %i.a, align 8, !tbaa !55
   %.not = icmp eq i64 %i.i, 0
   br i1 %.not, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
-  call void @_ZN4geos9algorithm15LineIntersector19computeIntersectionERKNS_4geom10CoordinateES5_S5_S5_(ptr noundef nonnull align 8 dereferenceable(129) %3, ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %.ptr.1.i18, ptr noundef nonnull align 8 dereferenceable(24) %.ptr.2.i)
+  call void @_ZN4geos9algorithm15LineIntersector19computeIntersectionERKNS_4geom10CoordinateES5_S5_S5_(ptr noundef nonnull align 8 dereferenceable(129) %3, ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %i.e, ptr noundef nonnull align 8 dereferenceable(24) %.ptr.3.i.a)
   %i.j = load i64, ptr %i.a, align 8, !tbaa !55
   %.not28 = icmp eq i64 %i.j, 0
   br i1 %.not28, label %bb.c, label %bb.e
 
 bb.c:                                             ; preds = %bb.b
-  call void @_ZN4geos9algorithm15LineIntersector19computeIntersectionERKNS_4geom10CoordinateES5_S5_S5_(ptr noundef nonnull align 8 dereferenceable(129) %3, ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %.ptr.2.i, ptr noundef nonnull align 8 dereferenceable(24) %.ptr.3.i.a)
+  call void @_ZN4geos9algorithm15LineIntersector19computeIntersectionERKNS_4geom10CoordinateES5_S5_S5_(ptr noundef nonnull align 8 dereferenceable(129) %3, ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %.ptr.3.i.a, ptr noundef nonnull align 8 dereferenceable(24) %i.f)
   %i.k = load i64, ptr %i.a, align 8, !tbaa !55
   %.not29 = icmp eq i64 %i.k, 0
   br i1 %.not29, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  call void @_ZN4geos9algorithm15LineIntersector19computeIntersectionERKNS_4geom10CoordinateES5_S5_S5_(ptr noundef nonnull align 8 dereferenceable(129) %3, ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %.ptr.3.i.a, ptr noundef nonnull align 8 dereferenceable(24) %4)
+  call void @_ZN4geos9algorithm15LineIntersector19computeIntersectionERKNS_4geom10CoordinateES5_S5_S5_(ptr noundef nonnull align 8 dereferenceable(129) %3, ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %i.f, ptr noundef nonnull align 8 dereferenceable(24) %4)
   %i.l = load i64, ptr %i.a, align 8, !tbaa !55
   %i.m = icmp ne i64 %i.l, 0
   br label %bb.e

@@ -165,8 +165,8 @@ bb.a:
   %i.dj = getelementptr inbounds nuw i8, ptr @stb__perlin_randtab_grad_idx, i64 %i.di
   %i.dk = load i8, ptr %i.dj, align 1, !tbaa !10
   %i.dl = insertelement <2 x float> poison, float %i.af, i64 0
-  %i.dm = shufflevector <2 x float> %i.dl, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.dn = fadd <2 x float> %i.dm, <float -1.000000e+00, float -0.000000e+00> ; 4 uses
+  %i.dm = shufflevector <2 x float> %i.dl, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.dn = fadd <2 x float> %i.dm, <float -1.000000e+00, float -0.000000e+00> ; 2 uses
   %i.do = zext i8 %i.dk to i64
   %i.dp = getelementptr inbounds nuw [16 x i8], ptr @__const.stb__perlin_grad.basis, i64 %i.do ; 2 uses
   %i.dq = load <2 x float>, ptr %i.dp, align 16, !tbaa !9 ; 2 uses
@@ -174,7 +174,8 @@ bb.a:
   %i.ds = shufflevector <2 x float> %i.dq, <2 x float> %i.cc, <2 x i32> <i32 1, i32 3>
   %i.dt = fmul <2 x float> %i.dr, %i.ds
   %i.du = shufflevector <2 x float> %i.dq, <2 x float> %i.cc, <2 x i32> <i32 0, i32 2>
-  %i.dv = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.du, <2 x float> %i.dn, <2 x float> %i.dt)
+  %7 = shufflevector <2 x float> %i.dn, <2 x float> %i.dm, <2 x i32> <i32 0, i32 3> ; 3 uses
+  %i.dv = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.du, <2 x float> %7, <2 x float> %i.dt)
   %i.dw = getelementptr inbounds nuw i8, ptr %i.dp, i64 8
   %i.dx = load float, ptr %i.dw, align 8, !tbaa !9
   %i.dy = insertelement <2 x float> poison, float %i.dx, i64 0
@@ -191,7 +192,7 @@ bb.a:
   %i.ej = shufflevector <2 x float> %i.ei, <2 x float> %i.cl, <2 x i32> <i32 1, i32 3>
   %i.ek = fmul <2 x float> %i.dr, %i.ej
   %i.el = shufflevector <2 x float> %i.ei, <2 x float> %i.cl, <2 x i32> <i32 0, i32 2>
-  %i.em = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.el, <2 x float> %i.dn, <2 x float> %i.ek)
+  %i.em = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.el, <2 x float> %7, <2 x float> %i.ek)
   %i.en = getelementptr inbounds nuw i8, ptr %i.eh, i64 8
   %i.eo = load float, ptr %i.en, align 8, !tbaa !9
   %i.ep = insertelement <2 x float> poison, float %i.eo, i64 0
@@ -209,7 +210,7 @@ bb.a:
   %i.fb = shufflevector <2 x float> %i.ez, <2 x float> %i.cv, <2 x i32> <i32 1, i32 3>
   %i.fc = fmul <2 x float> %i.fa, %i.fb
   %i.fd = shufflevector <2 x float> %i.ez, <2 x float> %i.cv, <2 x i32> <i32 0, i32 2>
-  %i.fe = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.fd, <2 x float> %i.dn, <2 x float> %i.fc)
+  %i.fe = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.fd, <2 x float> %7, <2 x float> %i.fc)
   %i.ff = getelementptr inbounds nuw i8, ptr %i.ey, i64 8
   %i.fg = load float, ptr %i.ff, align 8, !tbaa !9
   %i.fh = insertelement <2 x float> poison, float %i.fg, i64 0
@@ -494,8 +495,8 @@ bb.a:
   %i.du = getelementptr inbounds i8, ptr @stb__perlin_randtab_grad_idx, i64 %i.dt
   %i.dv = load i8, ptr %i.du, align 1, !tbaa !10
   %i.dw = insertelement <2 x float> poison, float %i.ae, i64 0
-  %i.dx = shufflevector <2 x float> %i.dw, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.dy = fadd <2 x float> %i.dx, <float -1.000000e+00, float -0.000000e+00> ; 4 uses
+  %i.dx = shufflevector <2 x float> %i.dw, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.dy = fadd <2 x float> %i.dx, <float -1.000000e+00, float -0.000000e+00> ; 2 uses
   %i.dz = zext i8 %i.dv to i64
   %i.ea = getelementptr inbounds nuw [16 x i8], ptr @__const.stb__perlin_grad.basis, i64 %i.dz ; 2 uses
   %i.eb = load <2 x float>, ptr %i.ea, align 16, !tbaa !9 ; 2 uses
@@ -503,7 +504,8 @@ bb.a:
   %i.ed = shufflevector <2 x float> %i.eb, <2 x float> %i.cm, <2 x i32> <i32 1, i32 3>
   %i.ee = fmul <2 x float> %i.ec, %i.ed
   %i.ef = shufflevector <2 x float> %i.eb, <2 x float> %i.cm, <2 x i32> <i32 0, i32 2>
-  %i.eg = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ef, <2 x float> %i.dy, <2 x float> %i.ee)
+  %7 = shufflevector <2 x float> %i.dy, <2 x float> %i.dx, <2 x i32> <i32 0, i32 3> ; 3 uses
+  %i.eg = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ef, <2 x float> %7, <2 x float> %i.ee)
   %i.eh = getelementptr inbounds nuw i8, ptr %i.ea, i64 8
   %i.ei = load float, ptr %i.eh, align 8, !tbaa !9
   %i.ej = insertelement <2 x float> poison, float %i.ei, i64 0
@@ -520,7 +522,7 @@ bb.a:
   %i.eu = shufflevector <2 x float> %i.et, <2 x float> %i.cw, <2 x i32> <i32 1, i32 3>
   %i.ev = fmul <2 x float> %i.ec, %i.eu
   %i.ew = shufflevector <2 x float> %i.et, <2 x float> %i.cw, <2 x i32> <i32 0, i32 2>
-  %i.ex = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ew, <2 x float> %i.dy, <2 x float> %i.ev)
+  %i.ex = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ew, <2 x float> %7, <2 x float> %i.ev)
   %i.ey = getelementptr inbounds nuw i8, ptr %i.es, i64 8
   %i.ez = load float, ptr %i.ey, align 8, !tbaa !9
   %i.fa = insertelement <2 x float> poison, float %i.ez, i64 0
@@ -538,7 +540,7 @@ bb.a:
   %i.fm = shufflevector <2 x float> %i.fk, <2 x float> %i.dg, <2 x i32> <i32 1, i32 3>
   %i.fn = fmul <2 x float> %i.fl, %i.fm
   %i.fo = shufflevector <2 x float> %i.fk, <2 x float> %i.dg, <2 x i32> <i32 0, i32 2>
-  %i.fp = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.fo, <2 x float> %i.dy, <2 x float> %i.fn)
+  %i.fp = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.fo, <2 x float> %7, <2 x float> %i.fn)
   %i.fq = getelementptr inbounds nuw i8, ptr %i.fj, i64 8
   %i.fr = load float, ptr %i.fq, align 8, !tbaa !9
   %i.fs = insertelement <2 x float> poison, float %i.fr, i64 0
