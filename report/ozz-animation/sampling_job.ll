@@ -204,6 +204,9 @@ _ZN3ozz9animation12_GLOBAL__N_19KeysRatioERKNS_4spanIKfEERKNS2_IKhEERKNS2_IKjEE.
   %i.vh = insertelement <4 x i16> %i.vg, i16 %i.tj, i64 1
   %i.vi = insertelement <4 x i16> %i.vh, i16 %i.ub, i64 2
   %i.vj = insertelement <4 x i16> %i.vi, i16 %i.ut, i64 3
+  %4 = lshr <4 x i16> %i.vj, splat (i16 2)
+  %5 = and <4 x i16> %4, splat (i16 1)
+  %6 = zext nneg <4 x i16> %5 to <4 x i32>
   %.masked.i50.i151 = and i32 %i.uz, 24576
   %i.vk = or disjoint i32 %.masked.i50.i151, %i.uv ; 2 uses
   store i32 %i.vk, ptr %i.ox, align 4, !tbaa !58
@@ -337,10 +340,7 @@ _ZN3ozz9animation12_GLOBAL__N_19KeysRatioERKNS_4spanIKfEERKNS2_IKhEERKNS2_IKjEE.
   %i.zh = fsub <4 x float> splat (float 1.000000e+00), %i.zg ; 2 uses
   %i.zi = tail call noundef <4 x float> @llvm.x86.sse.rsqrt.ps(<4 x float> %i.zh)
   %i.zj = fmul <4 x float> %i.zi, %i.zh
-  %4 = lshr <4 x i16> %i.vj, splat (i16 2)
-  %.lobit = and <4 x i16> %4, splat (i16 1)
-  %5 = zext nneg <4 x i16> %.lobit to <4 x i32>
-  %i.zk = shl nuw <4 x i32> %5, splat (i32 31)
+  %i.zk = shl nuw <4 x i32> %6, splat (i32 31)
   %i.zl = bitcast <4 x float> %i.zj to <4 x i32>
   %i.zm = or <4 x i32> %i.zk, %i.zl               ; 4 uses
   %i.zn = load <4 x i32>, ptr %i.yn, align 16, !tbaa !56
@@ -524,6 +524,9 @@ _ZN3ozz9animation12_GLOBAL__N_19KeysRatioERKNS_4spanIKfEERKNS2_IKhEERKNS2_IKjEE.
   %i.aes = insertelement <4 x i16> %i.aer, i16 %i.acu, i64 1
   %i.aet = insertelement <4 x i16> %i.aes, i16 %i.adm, i64 2
   %i.aeu = insertelement <4 x i16> %i.aet, i16 %i.aee, i64 3
+  %7 = lshr <4 x i16> %i.aeu, splat (i16 2)
+  %8 = and <4 x i16> %7, splat (i16 1)
+  %9 = zext nneg <4 x i16> %8 to <4 x i32>
   %.masked.i50.i = and i32 %i.aek, 24576
   %i.aev = or disjoint i32 %.masked.i50.i, %i.aeg ; 2 uses
   store i32 %i.aev, ptr %i.pl, align 4, !tbaa !58
@@ -657,10 +660,7 @@ _ZN3ozz9animation12_GLOBAL__N_19KeysRatioERKNS_4spanIKfEERKNS2_IKhEERKNS2_IKjEE.
   %i.ais = fsub <4 x float> splat (float 1.000000e+00), %i.air ; 2 uses
   %i.ait = tail call noundef <4 x float> @llvm.x86.sse.rsqrt.ps(<4 x float> %i.ais)
   %i.aiu = fmul <4 x float> %i.ait, %i.ais
-  %6 = lshr <4 x i16> %i.aeu, splat (i16 2)
-  %.lobit212 = and <4 x i16> %6, splat (i16 1)
-  %7 = zext nneg <4 x i16> %.lobit212 to <4 x i32>
-  %i.aiv = shl nuw <4 x i32> %7, splat (i32 31)
+  %i.aiv = shl nuw <4 x i32> %9, splat (i32 31)
   %i.aiw = bitcast <4 x float> %i.aiu to <4 x i32>
   %i.aix = or <4 x i32> %i.aiv, %i.aiw            ; 4 uses
   %i.aiy = load <4 x i32>, ptr %i.ahy, align 16, !tbaa !56
