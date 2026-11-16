@@ -1,0 +1,56 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineSimplifyDemanded.cpp b/llvm/lib/Transforms/InstCombine/InstCombineSimplifyDemanded.cpp
+index b1e23277d67db2..da53cb13c5a800 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineSimplifyDemanded.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineSimplifyDemanded.cpp
+@@ -619,6 +619,11 @@ Value *InstCombinerImpl::SimplifyDemandedUseBits(Instruction *I,
+     if (DemandedFromOps.isSubsetOf(LHSKnown.Zero))
+       return I->getOperand(1);
+ 
++    // (add X, -1) --> X if bit 0 isn't demanded and X is known odd
++    if (!DemandedMask[0] && match(I->getOperand(1), m_AllOnes()) &&
++        LHSKnown.One[0])
++      return I->getOperand(0);
++
+     // (add X, C) --> (xor X, C) IFF C is equal to the top bit of the DemandMask
+     {
+       const APInt *C;
+diff --git a/llvm/test/Transforms/InstCombine/sdiv-exact-by-power-of-two.ll b/llvm/test/Transforms/InstCombine/sdiv-exact-by-power-of-two.ll
+index f463f27acc882f..22dc0c4589973a 100644
+--- a/llvm/test/Transforms/InstCombine/sdiv-exact-by-power-of-two.ll
++++ b/llvm/test/Transforms/InstCombine/sdiv-exact-by-power-of-two.ll
+@@ -165,3 +165,35 @@ define <2 x i8> @prove_exact_with_high_mask_vec(<2 x i8> %x, <2 x i8> %y) {
+   %d = sdiv <2 x i8> %a, <i8 8, i8 4>
+   ret <2 x i8> %d
+ }
++
++define i32 @odd_minus_one_div_by_two(i32 noundef %n) {
++; CHECK-LABEL: @odd_minus_one_div_by_two(
++; CHECK-NEXT:    [[CMP:%.*]] = trunc i32 [[N:%.*]] to i1
++; CHECK-NEXT:    tail call void @llvm.assume(i1 [[CMP]])
++; CHECK-NEXT:    [[DIV_BY_TWO:%.*]] = lshr i32 [[N]], 1
++; CHECK-NEXT:    ret i32 [[DIV_BY_TWO]]
++;
++  %a = and i32 %n, 1
++  %cmp = icmp ne i32 %a, 0
++  tail call void @llvm.assume(i1 %cmp)
++  %minus_one = add i32 %n, -1
++  %div_by_two = lshr exact i32 %minus_one, 1
++  ret i32 %div_by_two
++}
++
++define i32 @even_minus_one_div_by_two(i32 noundef %n) {
++; CHECK-LABEL: @even_minus_one_div_by_two(
++; CHECK-NEXT:    [[A:%.*]] = and i32 [[N:%.*]], 1
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i32 [[A]], 0
++; CHECK-NEXT:    tail call void @llvm.assume(i1 [[CMP]])
++; CHECK-NEXT:    [[MINUS_ONE:%.*]] = add i32 [[N]], -2
++; CHECK-NEXT:    [[DIV_BY_TWO:%.*]] = lshr exact i32 [[MINUS_ONE]], 1
++; CHECK-NEXT:    ret i32 [[DIV_BY_TWO]]
++;
++  %a = and i32 %n, 1
++  %cmp = icmp ne i32 %a, 1
++  tail call void @llvm.assume(i1 %cmp)
++  %minus_one = add i32 %n, -1
++  %div_by_two = lshr i32 %minus_one, 1
++  ret i32 %div_by_two
++}
