@@ -205,32 +205,28 @@ vec.epilog.middle.block1707:                      ; preds = %vec.epilog.vector.b
   %i.bdc = getelementptr inbounds nuw i8, ptr %i.bdb, i64 1
   %i.bdd = getelementptr inbounds nuw i8, ptr %i.mn, i64 %i.bco
   %i.bde = load <2 x i8>, ptr %i.bcn, align 1, !tbaa !29
-  %i.bdf = load <4 x i8>, ptr %i.bct, align 1, !tbaa !29 ; 3 uses
+  %i.bdf = load <4 x i8>, ptr %i.bct, align 1, !tbaa !29 ; 2 uses
   %i.bdg = load <2 x i8>, ptr %i.bcu, align 1, !tbaa !29
-  %i.bdh = load <4 x i8>, ptr %i.bcz, align 1, !tbaa !29 ; 3 uses
+  %i.bdh = load <4 x i8>, ptr %i.bcz, align 1, !tbaa !29 ; 2 uses
   %i.bdi = shufflevector <2 x i8> %i.bdg, <2 x i8> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.bdj = insertelement <4 x i8> %i.bdi, i8 %i.bcw, i64 2
-  %i.bdk = insertelement <4 x i8> %i.bdj, i8 %i.bcy, i64 3 ; 3 uses
-  %5 = zext <4 x i8> %i.bdk to <4 x i16>
-  %6 = zext <4 x i8> %i.bdh to <4 x i16>
-  %i.bdl = zext <4 x i8> %i.bdk to <4 x i32>
-  %i.bdm = zext <4 x i8> %i.bdh to <4 x i32>      ; 2 uses
+  %i.bdk = insertelement <4 x i8> %i.bdj, i8 %i.bcy, i64 3 ; 2 uses
+  %i.bdl = zext <4 x i8> %i.bdk to <4 x i32>      ; 2 uses
+  %i.bdm = zext <4 x i8> %i.bdh to <4 x i32>      ; 3 uses
   %i.bdn = sub nsw <4 x i32> %i.bdl, %i.bdm
   %i.bdo = tail call <4 x i32> @llvm.abs.v4i32(<4 x i32> %i.bdn, i1 true) ; 2 uses
-  %7 = zext <4 x i8> %i.bdf to <4 x i16>
-  %i.bdp = zext <4 x i8> %i.bdf to <4 x i32>
+  %i.bdp = zext <4 x i8> %i.bdf to <4 x i32>      ; 2 uses
   %i.bdq = sub nsw <4 x i32> %i.bdp, %i.bdm
   %i.bdr = tail call <4 x i32> @llvm.abs.v4i32(<4 x i32> %i.bdq, i1 true) ; 2 uses
-  %8 = add nuw nsw <4 x i16> %5, %7
-  %9 = shl nuw nsw <4 x i16> %6, splat (i16 1)
-  %10 = sub nsw <4 x i16> %8, %9
-  %11 = tail call <4 x i16> @llvm.abs.v4i16(<4 x i16> %10, i1 false)
+  %5 = add nuw nsw <4 x i32> %i.bdl, %i.bdp
+  %6 = shl nuw nsw <4 x i32> %i.bdm, splat (i32 1)
+  %7 = sub nsw <4 x i32> %5, %6
+  %8 = tail call <4 x i32> @llvm.abs.v4i32(<4 x i32> %7, i1 true)
   %i.bds = icmp samesign ult <4 x i32> %i.bdr, %i.bdo
   %i.bdt = select <4 x i1> %i.bds, <4 x i8> %i.bdk, <4 x i8> %i.bdf
   %i.bdu = tail call <4 x i32> @llvm.umin.v4i32(<4 x i32> %i.bdr, <4 x i32> %i.bdo)
-  %12 = zext <4 x i16> %11 to <4 x i32>
-  %13 = icmp samesign ugt <4 x i32> %i.bdu, %12
-  %i.bdv = select <4 x i1> %13, <4 x i8> %i.bdh, <4 x i8> %i.bdt
+  %9 = icmp samesign ult <4 x i32> %8, %i.bdu
+  %i.bdv = select <4 x i1> %9, <4 x i8> %i.bdh, <4 x i8> %i.bdt
   %i.bdw = shufflevector <2 x i8> %i.bde, <2 x i8> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.bdx = insertelement <4 x i8> %i.bdw, i8 %i.bcq, i64 2
   %i.bdy = insertelement <4 x i8> %i.bdx, i8 %i.bcs, i64 3
@@ -294,30 +290,26 @@ bb.h:                                             ; preds = %._crit_edge.i
   %i.bfm = getelementptr inbounds nuw i8, ptr %i.mn, i64 %.15497.i
   %i.bfn = getelementptr inbounds nuw i8, ptr %i.mn, i64 %i.bem
   %i.bfo = load <2 x i8>, ptr %i.ben, align 1, !tbaa !29
-  %i.bfp = load <2 x i8>, ptr %i.ber, align 1, !tbaa !29 ; 3 uses
-  %i.bfq = load <2 x i8>, ptr %i.beu, align 1, !tbaa !29 ; 3 uses
-  %i.bfr = load <2 x i8>, ptr %i.bex, align 1, !tbaa !29 ; 3 uses
+  %i.bfp = load <2 x i8>, ptr %i.ber, align 1, !tbaa !29 ; 2 uses
+  %i.bfq = load <2 x i8>, ptr %i.beu, align 1, !tbaa !29 ; 2 uses
+  %i.bfr = load <2 x i8>, ptr %i.bex, align 1, !tbaa !29 ; 2 uses
   store i8 %i.bfl, ptr %i.bfm, align 1, !tbaa !29
-  %14 = zext <2 x i8> %i.bfq to <2 x i16>
-  %15 = zext <2 x i8> %i.bfr to <2 x i16>
-  %i.bfs = zext <2 x i8> %i.bfq to <2 x i32>
-  %i.bft = zext <2 x i8> %i.bfr to <2 x i32>      ; 2 uses
+  %i.bfs = zext <2 x i8> %i.bfq to <2 x i32>      ; 2 uses
+  %i.bft = zext <2 x i8> %i.bfr to <2 x i32>      ; 3 uses
   %i.bfu = sub nsw <2 x i32> %i.bfs, %i.bft
   %i.bfv = tail call <2 x i32> @llvm.abs.v2i32(<2 x i32> %i.bfu, i1 true) ; 2 uses
-  %16 = zext <2 x i8> %i.bfp to <2 x i16>
-  %i.bfw = zext <2 x i8> %i.bfp to <2 x i32>
+  %i.bfw = zext <2 x i8> %i.bfp to <2 x i32>      ; 2 uses
   %i.bfx = sub nsw <2 x i32> %i.bfw, %i.bft
   %i.bfy = tail call <2 x i32> @llvm.abs.v2i32(<2 x i32> %i.bfx, i1 true) ; 2 uses
-  %17 = add nuw nsw <2 x i16> %14, %16
-  %18 = shl nuw nsw <2 x i16> %15, splat (i16 1)
-  %19 = sub nsw <2 x i16> %17, %18
-  %20 = tail call <2 x i16> @llvm.abs.v2i16(<2 x i16> %19, i1 false)
+  %10 = add nuw nsw <2 x i32> %i.bfs, %i.bfw
+  %11 = shl nuw nsw <2 x i32> %i.bft, splat (i32 1)
+  %12 = sub nsw <2 x i32> %10, %11
+  %13 = tail call <2 x i32> @llvm.abs.v2i32(<2 x i32> %12, i1 true)
   %i.bfz = icmp samesign ult <2 x i32> %i.bfy, %i.bfv
   %i.bga = select <2 x i1> %i.bfz, <2 x i8> %i.bfq, <2 x i8> %i.bfp
   %i.bgb = tail call <2 x i32> @llvm.umin.v2i32(<2 x i32> %i.bfy, <2 x i32> %i.bfv)
-  %21 = zext <2 x i16> %20 to <2 x i32>
-  %22 = icmp samesign ugt <2 x i32> %i.bgb, %21
-  %i.bgc = select <2 x i1> %22, <2 x i8> %i.bfr, <2 x i8> %i.bga
+  %14 = icmp samesign ult <2 x i32> %13, %i.bgb
+  %i.bgc = select <2 x i1> %14, <2 x i8> %i.bfr, <2 x i8> %i.bga
   %i.bgd = add <2 x i8> %i.bgc, %i.bfo            ; 2 uses
   %i.bge = extractelement <2 x i8> %i.bgd, i64 0
   store i8 %i.bge, ptr %i.bfn, align 1, !tbaa !29
@@ -343,29 +335,25 @@ bb.i:                                             ; preds = %bb.h
   %i.bgp = getelementptr inbounds nuw i8, ptr %.02771, i64 %.2392491.i
   %i.bgq = getelementptr inbounds nuw i8, ptr %i.mn, i64 %.16492.i
   %i.bgr = load <2 x i8>, ptr %i.bgm, align 1, !tbaa !29
-  %i.bgs = load <2 x i8>, ptr %i.bgn, align 1, !tbaa !29 ; 3 uses
-  %i.bgt = load <2 x i8>, ptr %i.bgo, align 1, !tbaa !29 ; 3 uses
-  %i.bgu = load <2 x i8>, ptr %i.bgp, align 1, !tbaa !29 ; 3 uses
-  %23 = zext <2 x i8> %i.bgt to <2 x i16>
-  %24 = zext <2 x i8> %i.bgu to <2 x i16>
-  %i.bgv = zext <2 x i8> %i.bgt to <2 x i32>
-  %i.bgw = zext <2 x i8> %i.bgu to <2 x i32>      ; 2 uses
+  %i.bgs = load <2 x i8>, ptr %i.bgn, align 1, !tbaa !29 ; 2 uses
+  %i.bgt = load <2 x i8>, ptr %i.bgo, align 1, !tbaa !29 ; 2 uses
+  %i.bgu = load <2 x i8>, ptr %i.bgp, align 1, !tbaa !29 ; 2 uses
+  %i.bgv = zext <2 x i8> %i.bgt to <2 x i32>      ; 2 uses
+  %i.bgw = zext <2 x i8> %i.bgu to <2 x i32>      ; 3 uses
   %i.bgx = sub nsw <2 x i32> %i.bgv, %i.bgw
   %i.bgy = tail call <2 x i32> @llvm.abs.v2i32(<2 x i32> %i.bgx, i1 true) ; 2 uses
-  %25 = zext <2 x i8> %i.bgs to <2 x i16>
-  %i.bgz = zext <2 x i8> %i.bgs to <2 x i32>
+  %i.bgz = zext <2 x i8> %i.bgs to <2 x i32>      ; 2 uses
   %i.bha = sub nsw <2 x i32> %i.bgz, %i.bgw
   %i.bhb = tail call <2 x i32> @llvm.abs.v2i32(<2 x i32> %i.bha, i1 true) ; 2 uses
-  %26 = add nuw nsw <2 x i16> %23, %25
-  %27 = shl nuw nsw <2 x i16> %24, splat (i16 1)
-  %28 = sub nsw <2 x i16> %26, %27
-  %29 = tail call <2 x i16> @llvm.abs.v2i16(<2 x i16> %28, i1 false)
+  %15 = add nuw nsw <2 x i32> %i.bgv, %i.bgz
+  %16 = shl nuw nsw <2 x i32> %i.bgw, splat (i32 1)
+  %17 = sub nsw <2 x i32> %15, %16
+  %18 = tail call <2 x i32> @llvm.abs.v2i32(<2 x i32> %17, i1 true)
   %i.bhc = icmp samesign ult <2 x i32> %i.bhb, %i.bgy
   %i.bhd = select <2 x i1> %i.bhc, <2 x i8> %i.bgt, <2 x i8> %i.bgs
   %i.bhe = tail call <2 x i32> @llvm.umin.v2i32(<2 x i32> %i.bhb, <2 x i32> %i.bgy)
-  %30 = zext <2 x i16> %29 to <2 x i32>
-  %31 = icmp samesign ugt <2 x i32> %i.bhe, %30
-  %i.bhf = select <2 x i1> %31, <2 x i8> %i.bgu, <2 x i8> %i.bhd
+  %19 = icmp samesign ult <2 x i32> %18, %i.bhe
+  %i.bhf = select <2 x i1> %19, <2 x i8> %i.bgu, <2 x i8> %i.bhd
   %i.bhg = add <2 x i8> %i.bhf, %i.bgr            ; 2 uses
   %i.bhh = extractelement <2 x i8> %i.bhg, i64 0
   store i8 %i.bhh, ptr %i.bgq, align 1, !tbaa !29
@@ -766,12 +754,6 @@ declare <4 x i32> @llvm.abs.v4i32(<4 x i32>, i1 immarg) #29
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i32> @llvm.umin.v4i32(<4 x i32>, <4 x i32>) #25
-
-; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
-declare <4 x i16> @llvm.abs.v4i16(<4 x i16>, i1 immarg) #29
-
-; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x i16> @llvm.abs.v2i16(<2 x i16>, i1 immarg) #29
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i32> @llvm.abs.v2i32(<2 x i32>, i1 immarg) #29

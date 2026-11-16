@@ -205,34 +205,29 @@ vec.epilog.middle.block756:                       ; preds = %vec.epilog.vector.b
 
 .lr.ph812.i:                                      ; preds = %.preheader737.i, %.lr.ph812.i
   %.13795.i = phi i64 [ %i.aad, %.lr.ph812.i ], [ 0, %.preheader737.i ] ; 4 uses
-  %i.zp = phi <8 x i8> [ %i.aac, %.lr.ph812.i ], [ zeroinitializer, %.preheader737.i ] ; 3 uses
-  %i.zq = phi <8 x i8> [ %i.zu, %.lr.ph812.i ], [ zeroinitializer, %.preheader737.i ] ; 3 uses
+  %i.zp = phi <8 x i8> [ %i.aac, %.lr.ph812.i ], [ zeroinitializer, %.preheader737.i ] ; 2 uses
+  %i.zq = phi <8 x i8> [ %i.zu, %.lr.ph812.i ], [ zeroinitializer, %.preheader737.i ] ; 2 uses
   %i.zr = getelementptr inbounds nuw i8, ptr %.02789, i64 %.13795.i
   %i.zs = getelementptr inbounds nuw i8, ptr %i.fg, i64 %.13795.i
-  %5 = zext <8 x i8> %i.zq to <8 x i16>           ; 2 uses
-  %6 = zext <8 x i8> %i.zp to <8 x i16>
+  %5 = zext <8 x i8> %i.zq to <8 x i32>           ; 3 uses
+  %6 = zext <8 x i8> %i.zp to <8 x i32>           ; 2 uses
   %i.zt = getelementptr inbounds nuw i8, ptr %i.ff, i64 %.13795.i
   %i.zu = load <8 x i8>, ptr %i.zr, align 1, !tbaa !35 ; 3 uses
   %i.zv = load <8 x i8>, ptr %i.zs, align 1, !tbaa !35
-  %7 = zext <8 x i8> %i.zu to <8 x i16>           ; 2 uses
-  %8 = sub nsw <8 x i16> %7, %5
-  %9 = tail call <8 x i16> @llvm.abs.v8i16(<8 x i16> %8, i1 false) ; 2 uses
-  %10 = zext <8 x i8> %i.zp to <8 x i32>
-  %11 = zext <8 x i8> %i.zq to <8 x i32>
-  %i.zw = sub nsw <8 x i32> %10, %11
+  %7 = zext <8 x i8> %i.zu to <8 x i32>           ; 2 uses
+  %8 = sub nsw <8 x i32> %7, %5
+  %9 = tail call <8 x i32> @llvm.abs.v8i32(<8 x i32> %8, i1 true) ; 2 uses
+  %i.zw = sub nsw <8 x i32> %6, %5
   %i.zx = tail call <8 x i32> @llvm.abs.v8i32(<8 x i32> %i.zw, i1 true) ; 2 uses
-  %12 = shl nuw nsw <8 x i16> %5, splat (i16 1)
-  %13 = sub nsw <8 x i16> %6, %12
-  %14 = add nsw <8 x i16> %13, %7
-  %15 = tail call <8 x i16> @llvm.abs.v8i16(<8 x i16> %14, i1 false)
-  %16 = zext <8 x i16> %9 to <8 x i32>
-  %i.zy = icmp samesign ult <8 x i32> %i.zx, %16
+  %10 = shl nuw nsw <8 x i32> %5, splat (i32 1)
+  %11 = sub nsw <8 x i32> %6, %10
+  %12 = add nsw <8 x i32> %11, %7
+  %13 = tail call <8 x i32> @llvm.abs.v8i32(<8 x i32> %12, i1 true)
+  %i.zy = icmp samesign ult <8 x i32> %i.zx, %9
   %i.zz = select <8 x i1> %i.zy, <8 x i8> %i.zu, <8 x i8> %i.zp
-  %17 = zext <8 x i16> %9 to <8 x i32>
-  %i.aaa = tail call <8 x i32> @llvm.umin.v8i32(<8 x i32> %i.zx, <8 x i32> %17)
-  %18 = zext <8 x i16> %15 to <8 x i32>
-  %19 = icmp samesign ugt <8 x i32> %i.aaa, %18
-  %i.aab = select <8 x i1> %19, <8 x i8> %i.zq, <8 x i8> %i.zz
+  %i.aaa = tail call <8 x i32> @llvm.umin.v8i32(<8 x i32> %i.zx, <8 x i32> %9)
+  %14 = icmp samesign ult <8 x i32> %13, %i.aaa
+  %i.aab = select <8 x i1> %14, <8 x i8> %i.zq, <8 x i8> %i.zz
   %i.aac = add <8 x i8> %i.zv, %i.aab             ; 2 uses
   store <8 x i8> %i.aac, ptr %i.zt, align 1, !tbaa !35
   %i.aad = add nuw nsw i64 %.13795.i, 8           ; 3 uses
@@ -242,16 +237,16 @@ vec.epilog.middle.block756:                       ; preds = %vec.epilog.vector.b
 
 .lr.ph793.i:                                      ; preds = %.preheader739.i, %.lr.ph793.i
   %.14780.i = phi i64 [ %i.aca, %.lr.ph793.i ], [ 0, %.preheader739.i ] ; 7 uses
-  %i.aag = phi <4 x i8> [ %i.abu, %.lr.ph793.i ], [ zeroinitializer, %.preheader739.i ] ; 3 uses
-  %i.aah = phi <4 x i8> [ %i.abj, %.lr.ph793.i ], [ zeroinitializer, %.preheader739.i ] ; 3 uses
+  %i.aag = phi <4 x i8> [ %i.abu, %.lr.ph793.i ], [ zeroinitializer, %.preheader739.i ] ; 2 uses
+  %i.aah = phi <4 x i8> [ %i.abj, %.lr.ph793.i ], [ zeroinitializer, %.preheader739.i ] ; 2 uses
   %i.aai = phi <2 x i8> [ %i.abh, %.lr.ph793.i ], [ zeroinitializer, %.preheader739.i ] ; 2 uses
   %i.aaj = phi <2 x i8> [ %i.aar, %.lr.ph793.i ], [ zeroinitializer, %.preheader739.i ] ; 2 uses
   %i.aak = getelementptr inbounds nuw i8, ptr %.02789, i64 %.14780.i
   %i.aal = add nuw nsw i64 %.14780.i, 4           ; 3 uses
   %i.aam = getelementptr inbounds nuw i8, ptr %.02789, i64 %i.aal
   %i.aan = getelementptr inbounds nuw i8, ptr %i.fg, i64 %.14780.i
-  %20 = zext <4 x i8> %i.aah to <4 x i16>
-  %21 = zext <4 x i8> %i.aag to <4 x i16>
+  %15 = zext <4 x i8> %i.aah to <4 x i32>         ; 3 uses
+  %16 = zext <4 x i8> %i.aag to <4 x i32>         ; 2 uses
   %i.aao = getelementptr inbounds nuw i8, ptr %i.fg, i64 %i.aal
   %i.aap = zext <2 x i8> %i.aaj to <2 x i32>      ; 3 uses
   %i.aaq = zext <2 x i8> %i.aai to <2 x i32>      ; 2 uses
@@ -273,26 +268,22 @@ vec.epilog.middle.block756:                       ; preds = %vec.epilog.vector.b
   %i.abg = select <2 x i1> %i.abf, <2 x i8> %i.aaj, <2 x i8> %i.abd
   %i.abh = add <2 x i8> %i.aas, %i.abg            ; 3 uses
   %i.abi = getelementptr inbounds nuw i8, ptr %i.ff, i64 %.14780.i
-  %i.abj = load <4 x i8>, ptr %i.aak, align 1, !tbaa !35 ; 4 uses
+  %i.abj = load <4 x i8>, ptr %i.aak, align 1, !tbaa !35 ; 3 uses
   %i.abk = load <4 x i8>, ptr %i.aan, align 1, !tbaa !35
-  %22 = zext <4 x i8> %i.abj to <4 x i16>
-  %23 = zext <4 x i8> %i.abj to <4 x i32>
-  %i.abl = zext <4 x i8> %i.aah to <4 x i32>      ; 2 uses
-  %i.abm = sub nsw <4 x i32> %23, %i.abl
+  %i.abl = zext <4 x i8> %i.abj to <4 x i32>      ; 2 uses
+  %i.abm = sub nsw <4 x i32> %i.abl, %15
   %i.abn = tail call <4 x i32> @llvm.abs.v4i32(<4 x i32> %i.abm, i1 true) ; 2 uses
-  %24 = zext <4 x i8> %i.aag to <4 x i32>
-  %i.abo = sub nsw <4 x i32> %24, %i.abl
+  %i.abo = sub nsw <4 x i32> %16, %15
   %i.abp = tail call <4 x i32> @llvm.abs.v4i32(<4 x i32> %i.abo, i1 true) ; 2 uses
-  %25 = shl nuw nsw <4 x i16> %20, splat (i16 1)
-  %26 = sub nsw <4 x i16> %21, %25
-  %27 = add nsw <4 x i16> %26, %22
-  %28 = tail call <4 x i16> @llvm.abs.v4i16(<4 x i16> %27, i1 false)
+  %17 = shl nuw nsw <4 x i32> %15, splat (i32 1)
+  %18 = sub nsw <4 x i32> %16, %17
+  %19 = add nsw <4 x i32> %18, %i.abl
+  %20 = tail call <4 x i32> @llvm.abs.v4i32(<4 x i32> %19, i1 true)
   %i.abq = icmp samesign ult <4 x i32> %i.abp, %i.abn
   %i.abr = select <4 x i1> %i.abq, <4 x i8> %i.abj, <4 x i8> %i.aag
   %i.abs = tail call <4 x i32> @llvm.umin.v4i32(<4 x i32> %i.abp, <4 x i32> %i.abn)
-  %29 = zext <4 x i16> %28 to <4 x i32>
-  %30 = icmp samesign ugt <4 x i32> %i.abs, %29
-  %i.abt = select <4 x i1> %30, <4 x i8> %i.aah, <4 x i8> %i.abr
+  %21 = icmp samesign ult <4 x i32> %20, %i.abs
+  %i.abt = select <4 x i1> %21, <4 x i8> %i.aah, <4 x i8> %i.abr
   %i.abu = add <4 x i8> %i.abk, %i.abt            ; 2 uses
   store <4 x i8> %i.abu, ptr %i.abi, align 1, !tbaa !35
   %i.abv = getelementptr inbounds nuw i8, ptr %i.ff, i64 %i.aal
@@ -309,33 +300,29 @@ vec.epilog.middle.block756:                       ; preds = %vec.epilog.vector.b
 
 .lr.ph778.i:                                      ; preds = %.preheader741.i, %.lr.ph778.i
   %.15769.i = phi i64 [ %i.acu, %.lr.ph778.i ], [ 0, %.preheader741.i ] ; 4 uses
-  %i.acd = phi <4 x i8> [ %i.act, %.lr.ph778.i ], [ zeroinitializer, %.preheader741.i ] ; 3 uses
-  %i.ace = phi <4 x i8> [ %i.aci, %.lr.ph778.i ], [ zeroinitializer, %.preheader741.i ] ; 3 uses
+  %i.acd = phi <4 x i8> [ %i.act, %.lr.ph778.i ], [ zeroinitializer, %.preheader741.i ] ; 2 uses
+  %i.ace = phi <4 x i8> [ %i.aci, %.lr.ph778.i ], [ zeroinitializer, %.preheader741.i ] ; 2 uses
   %i.acf = getelementptr inbounds nuw i8, ptr %.02789, i64 %.15769.i
   %i.acg = getelementptr inbounds nuw i8, ptr %i.fg, i64 %.15769.i
-  %31 = zext <4 x i8> %i.ace to <4 x i16>
-  %32 = zext <4 x i8> %i.acd to <4 x i16>
+  %22 = zext <4 x i8> %i.ace to <4 x i32>         ; 3 uses
+  %23 = zext <4 x i8> %i.acd to <4 x i32>         ; 2 uses
   %i.ach = getelementptr inbounds nuw i8, ptr %i.ff, i64 %.15769.i
-  %i.aci = load <4 x i8>, ptr %i.acf, align 1, !tbaa !35 ; 4 uses
+  %i.aci = load <4 x i8>, ptr %i.acf, align 1, !tbaa !35 ; 3 uses
   %i.acj = load <4 x i8>, ptr %i.acg, align 1, !tbaa !35
-  %33 = zext <4 x i8> %i.aci to <4 x i16>
-  %34 = zext <4 x i8> %i.aci to <4 x i32>
-  %i.ack = zext <4 x i8> %i.ace to <4 x i32>      ; 2 uses
-  %i.acl = sub nsw <4 x i32> %34, %i.ack
+  %i.ack = zext <4 x i8> %i.aci to <4 x i32>      ; 2 uses
+  %i.acl = sub nsw <4 x i32> %i.ack, %22
   %i.acm = tail call <4 x i32> @llvm.abs.v4i32(<4 x i32> %i.acl, i1 true) ; 2 uses
-  %35 = zext <4 x i8> %i.acd to <4 x i32>
-  %i.acn = sub nsw <4 x i32> %35, %i.ack
+  %i.acn = sub nsw <4 x i32> %23, %22
   %i.aco = tail call <4 x i32> @llvm.abs.v4i32(<4 x i32> %i.acn, i1 true) ; 2 uses
-  %36 = shl nuw nsw <4 x i16> %31, splat (i16 1)
-  %37 = sub nsw <4 x i16> %32, %36
-  %38 = add nsw <4 x i16> %37, %33
-  %39 = tail call <4 x i16> @llvm.abs.v4i16(<4 x i16> %38, i1 false)
+  %24 = shl nuw nsw <4 x i32> %22, splat (i32 1)
+  %25 = sub nsw <4 x i32> %23, %24
+  %26 = add nsw <4 x i32> %25, %i.ack
+  %27 = tail call <4 x i32> @llvm.abs.v4i32(<4 x i32> %26, i1 true)
   %i.acp = icmp samesign ult <4 x i32> %i.aco, %i.acm
   %i.acq = select <4 x i1> %i.acp, <4 x i8> %i.aci, <4 x i8> %i.acd
   %i.acr = tail call <4 x i32> @llvm.umin.v4i32(<4 x i32> %i.aco, <4 x i32> %i.acm)
-  %40 = zext <4 x i16> %39 to <4 x i32>
-  %41 = icmp samesign ugt <4 x i32> %i.acr, %40
-  %i.acs = select <4 x i1> %41, <4 x i8> %i.ace, <4 x i8> %i.acq
+  %28 = icmp samesign ult <4 x i32> %27, %i.acr
+  %i.acs = select <4 x i1> %28, <4 x i8> %i.ace, <4 x i8> %i.acq
   %i.act = add <4 x i8> %i.acs, %i.acj            ; 2 uses
   store <4 x i8> %i.act, ptr %i.ach, align 1, !tbaa !35
   %i.acu = add nuw nsw i64 %.15769.i, 4           ; 3 uses
@@ -347,35 +334,31 @@ vec.epilog.middle.block756:                       ; preds = %vec.epilog.vector.b
   %.0558766.i = phi i8 [ %i.aeg, %.lr.ph767.i ], [ 0, %.preheader743.i ] ; 2 uses
   %.0559765.i = phi i8 [ %i.adc, %.lr.ph767.i ], [ 0, %.preheader743.i ] ; 2 uses
   %.16760.i = phi i64 [ %i.aen, %.lr.ph767.i ], [ 0, %.preheader743.i ] ; 7 uses
-  %i.acx = phi <2 x i8> [ %i.adp, %.lr.ph767.i ], [ zeroinitializer, %.preheader743.i ] ; 3 uses
-  %i.acy = phi <2 x i8> [ %i.ade, %.lr.ph767.i ], [ zeroinitializer, %.preheader743.i ] ; 3 uses
+  %i.acx = phi <2 x i8> [ %i.adp, %.lr.ph767.i ], [ zeroinitializer, %.preheader743.i ] ; 2 uses
+  %i.acy = phi <2 x i8> [ %i.ade, %.lr.ph767.i ], [ zeroinitializer, %.preheader743.i ] ; 2 uses
   %i.acz = add nuw nsw i64 %.16760.i, 2           ; 3 uses
   %i.ada = getelementptr inbounds nuw i8, ptr %.02789, i64 %.16760.i
   %i.adb = getelementptr inbounds nuw i8, ptr %.02789, i64 %i.acz
   %i.adc = load i8, ptr %i.adb, align 1, !tbaa !35 ; 3 uses
   %i.add = getelementptr inbounds nuw i8, ptr %i.fg, i64 %.16760.i
-  %42 = zext <2 x i8> %i.acy to <2 x i16>
-  %43 = zext <2 x i8> %i.acx to <2 x i16>
-  %i.ade = load <2 x i8>, ptr %i.ada, align 1, !tbaa !35 ; 4 uses
+  %29 = zext <2 x i8> %i.acy to <2 x i32>         ; 3 uses
+  %30 = zext <2 x i8> %i.acx to <2 x i32>         ; 2 uses
+  %i.ade = load <2 x i8>, ptr %i.ada, align 1, !tbaa !35 ; 3 uses
   %i.adf = load <2 x i8>, ptr %i.add, align 1, !tbaa !35
-  %44 = zext <2 x i8> %i.ade to <2 x i16>
-  %45 = zext <2 x i8> %i.ade to <2 x i32>
-  %i.adg = zext <2 x i8> %i.acy to <2 x i32>      ; 2 uses
-  %i.adh = sub nsw <2 x i32> %45, %i.adg
+  %i.adg = zext <2 x i8> %i.ade to <2 x i32>      ; 2 uses
+  %i.adh = sub nsw <2 x i32> %i.adg, %29
   %i.adi = tail call <2 x i32> @llvm.abs.v2i32(<2 x i32> %i.adh, i1 true) ; 2 uses
-  %46 = zext <2 x i8> %i.acx to <2 x i32>
-  %i.adj = sub nsw <2 x i32> %46, %i.adg
+  %i.adj = sub nsw <2 x i32> %30, %29
   %i.adk = tail call <2 x i32> @llvm.abs.v2i32(<2 x i32> %i.adj, i1 true) ; 2 uses
-  %47 = shl nuw nsw <2 x i16> %42, splat (i16 1)
-  %48 = sub nsw <2 x i16> %43, %47
-  %49 = add nsw <2 x i16> %48, %44
-  %50 = tail call <2 x i16> @llvm.abs.v2i16(<2 x i16> %49, i1 false)
+  %31 = shl nuw nsw <2 x i32> %29, splat (i32 1)
+  %32 = sub nsw <2 x i32> %30, %31
+  %33 = add nsw <2 x i32> %32, %i.adg
+  %34 = tail call <2 x i32> @llvm.abs.v2i32(<2 x i32> %33, i1 true)
   %i.adl = icmp samesign ult <2 x i32> %i.adk, %i.adi
   %i.adm = select <2 x i1> %i.adl, <2 x i8> %i.ade, <2 x i8> %i.acx
   %i.adn = tail call <2 x i32> @llvm.umin.v2i32(<2 x i32> %i.adk, <2 x i32> %i.adi)
-  %51 = zext <2 x i16> %50 to <2 x i32>
-  %52 = icmp samesign ugt <2 x i32> %i.adn, %51
-  %i.ado = select <2 x i1> %52, <2 x i8> %i.acy, <2 x i8> %i.adm
+  %35 = icmp samesign ult <2 x i32> %34, %i.adn
+  %i.ado = select <2 x i1> %35, <2 x i8> %i.acy, <2 x i8> %i.adm
   %i.adp = add <2 x i8> %i.ado, %i.adf            ; 3 uses
   %i.adq = getelementptr inbounds nuw i8, ptr %i.fg, i64 %i.acz
   %i.adr = load i8, ptr %i.adq, align 1, !tbaa !35
@@ -412,32 +395,28 @@ vec.epilog.middle.block756:                       ; preds = %vec.epilog.vector.b
 
 .lr.ph758.i:                                      ; preds = %.preheader745.i, %.lr.ph758.i
   %.17753.i = phi i64 [ %i.afl, %.lr.ph758.i ], [ 0, %.preheader745.i ] ; 5 uses
-  %i.aeq = phi <2 x i8> [ %i.aff, %.lr.ph758.i ], [ zeroinitializer, %.preheader745.i ] ; 3 uses
-  %i.aer = phi <2 x i8> [ %i.aeu, %.lr.ph758.i ], [ zeroinitializer, %.preheader745.i ] ; 3 uses
+  %i.aeq = phi <2 x i8> [ %i.aff, %.lr.ph758.i ], [ zeroinitializer, %.preheader745.i ] ; 2 uses
+  %i.aer = phi <2 x i8> [ %i.aeu, %.lr.ph758.i ], [ zeroinitializer, %.preheader745.i ] ; 2 uses
   %i.aes = getelementptr inbounds nuw i8, ptr %.02789, i64 %.17753.i
   %i.aet = getelementptr inbounds nuw i8, ptr %i.fg, i64 %.17753.i
-  %53 = zext <2 x i8> %i.aer to <2 x i16>
-  %54 = zext <2 x i8> %i.aeq to <2 x i16>
-  %i.aeu = load <2 x i8>, ptr %i.aes, align 1, !tbaa !35 ; 4 uses
+  %36 = zext <2 x i8> %i.aer to <2 x i32>         ; 3 uses
+  %37 = zext <2 x i8> %i.aeq to <2 x i32>         ; 2 uses
+  %i.aeu = load <2 x i8>, ptr %i.aes, align 1, !tbaa !35 ; 3 uses
   %i.aev = load <2 x i8>, ptr %i.aet, align 1, !tbaa !35
-  %55 = zext <2 x i8> %i.aeu to <2 x i16>
-  %56 = zext <2 x i8> %i.aeu to <2 x i32>
-  %i.aew = zext <2 x i8> %i.aer to <2 x i32>      ; 2 uses
-  %i.aex = sub nsw <2 x i32> %56, %i.aew
+  %i.aew = zext <2 x i8> %i.aeu to <2 x i32>      ; 2 uses
+  %i.aex = sub nsw <2 x i32> %i.aew, %36
   %i.aey = tail call <2 x i32> @llvm.abs.v2i32(<2 x i32> %i.aex, i1 true) ; 2 uses
-  %57 = zext <2 x i8> %i.aeq to <2 x i32>
-  %i.aez = sub nsw <2 x i32> %57, %i.aew
+  %i.aez = sub nsw <2 x i32> %37, %36
   %i.afa = tail call <2 x i32> @llvm.abs.v2i32(<2 x i32> %i.aez, i1 true) ; 2 uses
-  %58 = shl nuw nsw <2 x i16> %53, splat (i16 1)
-  %59 = sub nsw <2 x i16> %54, %58
-  %60 = add nsw <2 x i16> %59, %55
-  %61 = tail call <2 x i16> @llvm.abs.v2i16(<2 x i16> %60, i1 false)
+  %38 = shl nuw nsw <2 x i32> %36, splat (i32 1)
+  %39 = sub nsw <2 x i32> %37, %38
+  %40 = add nsw <2 x i32> %39, %i.aew
+  %41 = tail call <2 x i32> @llvm.abs.v2i32(<2 x i32> %40, i1 true)
   %i.afb = icmp samesign ult <2 x i32> %i.afa, %i.aey
   %i.afc = select <2 x i1> %i.afb, <2 x i8> %i.aeu, <2 x i8> %i.aeq
   %i.afd = tail call <2 x i32> @llvm.umin.v2i32(<2 x i32> %i.afa, <2 x i32> %i.aey)
-  %62 = zext <2 x i16> %61 to <2 x i32>
-  %63 = icmp samesign ugt <2 x i32> %i.afd, %62
-  %i.afe = select <2 x i1> %63, <2 x i8> %i.aer, <2 x i8> %i.afc
+  %42 = icmp samesign ult <2 x i32> %41, %i.afd
+  %i.afe = select <2 x i1> %42, <2 x i8> %i.aer, <2 x i8> %i.afc
   %i.aff = add <2 x i8> %i.afe, %i.aev            ; 3 uses
   %i.afg = getelementptr inbounds nuw i8, ptr %i.ff, i64 %.17753.i
   %i.afh = extractelement <2 x i8> %i.aff, i64 0
@@ -840,25 +819,16 @@ declare <4 x i32> @llvm.abs.v4i32(<4 x i32>, i1 immarg) #29
 declare <4 x i32> @llvm.umin.v4i32(<4 x i32>, <4 x i32>) #25
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
-declare <8 x i16> @llvm.abs.v8i16(<8 x i16>, i1 immarg) #29
-
-; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x i32> @llvm.abs.v8i32(<8 x i32>, i1 immarg) #29
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x i32> @llvm.umin.v8i32(<8 x i32>, <8 x i32>) #25
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
-declare <4 x i16> @llvm.abs.v4i16(<4 x i16>, i1 immarg) #29
-
-; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i32> @llvm.abs.v2i32(<2 x i32>, i1 immarg) #29
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i32> @llvm.umin.v2i32(<2 x i32>, <2 x i32>) #25
-
-; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x i16> @llvm.abs.v2i16(<2 x i16>, i1 immarg) #29
 
 attributes #0 = { mustprogress nofree nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

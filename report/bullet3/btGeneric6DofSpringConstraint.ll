@@ -204,8 +204,7 @@ begin_hunk_0_@_ZNK29btGeneric6DofSpringConstraint9serializeEPvP12btSerializer:bb
   %i.ft = getelementptr inbounds nuw i8, ptr %1, i64 348
   store float %i.fs, ptr %i.ft, align 4, !tbaa !16
   %i.fu = load <4 x i8>, ptr %i.ep, align 1, !tbaa !14
-  %.mask = and <4 x i8> %i.fu, splat (i8 1)
-  %i.fv = zext nneg <4 x i8> %.mask to <4 x i32>
+  %i.fv = zext nneg <4 x i8> %i.fu to <4 x i32>
   store <4 x i32> %i.fv, ptr %i.eq, align 8, !tbaa !65
   %i.fw = getelementptr inbounds nuw i8, ptr %0, i64 1376
   %i.fx = load float, ptr %i.fw, align 8, !tbaa !16

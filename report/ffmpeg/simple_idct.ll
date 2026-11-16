@@ -204,111 +204,162 @@ vector.body:                                      ; preds = %idctRowCondDC_int32
   %i.ado = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv ; 8 uses
   %i.adp = load i32, ptr %i.ado, align 4, !tbaa !20
   %i.adq = shl i32 %i.adp, 14
-  %i.adr = add i32 %i.adq, 1048576
+  %i.adr = add i32 %i.adq, 1048576                ; 4 uses
   %i.ads = getelementptr inbounds nuw i8, ptr %i.ado, i64 64
-  %i.adt = load i32, ptr %i.ads, align 4, !tbaa !20
-  %3 = getelementptr inbounds nuw i8, ptr %i.ado, i64 32
-  %4 = load i32, ptr %3, align 4, !tbaa !20
-  %i.adu = getelementptr inbounds nuw i8, ptr %i.ado, i64 96
-  %i.adv = load i32, ptr %i.adu, align 4, !tbaa !20
-  %5 = insertelement <4 x i32> poison, i32 %i.adt, i64 0
-  %6 = shufflevector <4 x i32> %5, <4 x i32> poison, <4 x i32> zeroinitializer
-  %7 = mul <4 x i32> %6, <i32 -21407, i32 -8867, i32 8867, i32 21407>
-  %8 = insertelement <4 x i32> poison, i32 %i.adr, i64 0
-  %9 = shufflevector <4 x i32> %8, <4 x i32> poison, <4 x i32> zeroinitializer
-  %10 = add <4 x i32> %9, %7                      ; 2 uses
-  %11 = insertelement <4 x i32> poison, i32 %4, i64 0
-  %12 = shufflevector <4 x i32> %11, <4 x i32> poison, <4 x i32> zeroinitializer
-  %13 = mul <4 x i32> %12, <i32 4520, i32 12873, i32 19265, i32 22725>
-  %14 = insertelement <4 x i32> poison, i32 %i.adv, i64 0
-  %15 = shufflevector <4 x i32> %14, <4 x i32> poison, <4 x i32> zeroinitializer
-  %16 = mul <4 x i32> %15, <i32 -12873, i32 -22725, i32 -4520, i32 19265>
-  %17 = add <4 x i32> %16, %13                    ; 2 uses
+  %i.adt = load i32, ptr %i.ads, align 4, !tbaa !20 ; 4 uses
+  %3 = mul i32 %i.adt, 21407
+  %4 = add i32 %i.adr, %3                         ; 2 uses
+  %5 = mul i32 %i.adt, 8867
+  %6 = add i32 %i.adr, %5                         ; 2 uses
+  %7 = mul i32 %i.adt, -8867
+  %8 = add i32 %i.adr, %7                         ; 2 uses
+  %9 = mul i32 %i.adt, -21407
+  %10 = add i32 %i.adr, %9                        ; 2 uses
+  %i.adu = getelementptr inbounds nuw i8, ptr %i.ado, i64 32
+  %i.adv = load i32, ptr %i.adu, align 4, !tbaa !20 ; 4 uses
+  %11 = mul i32 %i.adv, 22725
+  %12 = mul i32 %i.adv, 19265
+  %13 = mul i32 %i.adv, 12873
+  %14 = mul i32 %i.adv, 4520
+  %15 = getelementptr inbounds nuw i8, ptr %i.ado, i64 96
+  %16 = load i32, ptr %15, align 4, !tbaa !20     ; 4 uses
+  %17 = mul i32 %16, 19265
+  %18 = add i32 %17, %11                          ; 2 uses
+  %19 = mul i32 %16, -4520
+  %20 = add i32 %19, %12                          ; 2 uses
+  %21 = mul i32 %16, -22725
+  %22 = add i32 %21, %13                          ; 2 uses
+  %23 = mul i32 %16, -12873
+  %24 = add i32 %23, %14                          ; 2 uses
   %i.adw = getelementptr inbounds nuw i8, ptr %i.ado, i64 128
-  %i.adx = load i32, ptr %i.adw, align 4, !tbaa !20 ; 2 uses
+  %i.adx = load i32, ptr %i.adw, align 4, !tbaa !20 ; 3 uses
   %.not.i13 = icmp eq i32 %i.adx, 0
   br i1 %.not.i13, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %.preheader
-  %18 = insertelement <4 x i32> poison, i32 %i.adx, i64 0
-  %19 = shufflevector <4 x i32> %18, <4 x i32> poison, <4 x i32> zeroinitializer
-  %20 = mul <4 x i32> %19, <i32 16384, i32 -16384, i32 -16384, i32 16384>
-  %21 = add <4 x i32> %20, %10
+  %25 = shl i32 %i.adx, 14                        ; 2 uses
+  %26 = add i32 %25, %4
+  %27 = mul i32 %i.adx, -16384                    ; 2 uses
+  %28 = add i32 %27, %6
+  %29 = add i32 %27, %8
+  %30 = add i32 %25, %10
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %.preheader
-  %22 = phi <4 x i32> [ %21, %bb.j ], [ %10, %.preheader ] ; 2 uses
+  %.0109.i = phi i32 [ %26, %bb.j ], [ %4, %.preheader ] ; 2 uses
+  %.0107.i = phi i32 [ %28, %bb.j ], [ %6, %.preheader ] ; 2 uses
+  %.0105.i = phi i32 [ %29, %bb.j ], [ %8, %.preheader ] ; 2 uses
+  %.0103.i = phi i32 [ %30, %bb.j ], [ %10, %.preheader ] ; 2 uses
   %i.ady = getelementptr inbounds nuw i8, ptr %i.ado, i64 160
-  %i.adz = load i32, ptr %i.ady, align 4, !tbaa !20 ; 2 uses
+  %i.adz = load i32, ptr %i.ady, align 4, !tbaa !20 ; 5 uses
   %.not115.i = icmp eq i32 %i.adz, 0
   br i1 %.not115.i, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %23 = insertelement <4 x i32> poison, i32 %i.adz, i64 0
-  %24 = shufflevector <4 x i32> %23, <4 x i32> poison, <4 x i32> zeroinitializer
-  %25 = mul <4 x i32> %24, <i32 19265, i32 4520, i32 -22725, i32 12873>
-  %26 = add <4 x i32> %25, %17
+  %31 = mul i32 %i.adz, 12873
+  %32 = add i32 %31, %18
+  %33 = mul i32 %i.adz, -22725
+  %34 = add i32 %33, %20
+  %35 = mul i32 %i.adz, 4520
+  %36 = add i32 %35, %22
+  %37 = mul i32 %i.adz, 19265
+  %38 = add i32 %37, %24
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
-  %27 = phi <4 x i32> [ %26, %bb.l ], [ %17, %bb.k ] ; 2 uses
+  %.0101.i = phi i32 [ %32, %bb.l ], [ %18, %bb.k ] ; 2 uses
+  %.099.i = phi i32 [ %34, %bb.l ], [ %20, %bb.k ] ; 2 uses
+  %.097.i = phi i32 [ %36, %bb.l ], [ %22, %bb.k ] ; 2 uses
+  %.0.i14 = phi i32 [ %38, %bb.l ], [ %24, %bb.k ] ; 2 uses
   %i.aea = getelementptr inbounds nuw i8, ptr %i.ado, i64 192
-  %i.aeb = load i32, ptr %i.aea, align 4, !tbaa !20 ; 2 uses
+  %i.aeb = load i32, ptr %i.aea, align 4, !tbaa !20 ; 5 uses
   %.not116.i = icmp eq i32 %i.aeb, 0
   br i1 %.not116.i, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %28 = insertelement <4 x i32> poison, i32 %i.aeb, i64 0
-  %29 = shufflevector <4 x i32> %28, <4 x i32> poison, <4 x i32> zeroinitializer
-  %30 = mul <4 x i32> %29, <i32 -8867, i32 21407, i32 -21407, i32 8867>
-  %31 = add <4 x i32> %30, %22
+  %39 = mul i32 %i.aeb, 8867
+  %40 = add i32 %39, %.0109.i
+  %41 = mul i32 %i.aeb, -21407
+  %42 = add i32 %41, %.0107.i
+  %43 = mul i32 %i.aeb, 21407
+  %44 = add i32 %43, %.0105.i
+  %45 = mul i32 %i.aeb, -8867
+  %46 = add i32 %45, %.0103.i
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m
-  %32 = phi <4 x i32> [ %31, %bb.n ], [ %22, %bb.m ] ; 2 uses
+  %.1110.i = phi i32 [ %40, %bb.n ], [ %.0109.i, %bb.m ] ; 2 uses
+  %.1108.i = phi i32 [ %42, %bb.n ], [ %.0107.i, %bb.m ] ; 2 uses
+  %.1106.i = phi i32 [ %44, %bb.n ], [ %.0105.i, %bb.m ] ; 2 uses
+  %.1104.i = phi i32 [ %46, %bb.n ], [ %.0103.i, %bb.m ] ; 2 uses
   %i.aec = getelementptr inbounds nuw i8, ptr %i.ado, i64 224
-  %i.aed = load i32, ptr %i.aec, align 4, !tbaa !20 ; 2 uses
+  %i.aed = load i32, ptr %i.aec, align 4, !tbaa !20 ; 5 uses
   %.not117.i = icmp eq i32 %i.aed, 0
   br i1 %.not117.i, label %idctSparseColPut_int32_10bit.exit, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %33 = insertelement <4 x i32> poison, i32 %i.aed, i64 0
-  %34 = shufflevector <4 x i32> %33, <4 x i32> poison, <4 x i32> zeroinitializer
-  %35 = mul <4 x i32> %34, <i32 -22725, i32 19265, i32 -12873, i32 4520>
-  %36 = add <4 x i32> %35, %27
+  %47 = mul i32 %i.aed, 4520
+  %48 = add i32 %47, %.0101.i
+  %49 = mul i32 %i.aed, -12873
+  %50 = add i32 %49, %.099.i
+  %51 = mul i32 %i.aed, 19265
+  %52 = add i32 %51, %.097.i
+  %53 = mul i32 %i.aed, -22725
+  %54 = add i32 %53, %.0.i14
   br label %idctSparseColPut_int32_10bit.exit
 
 idctSparseColPut_int32_10bit.exit:                ; preds = %bb.o, %bb.p
-  %37 = phi <4 x i32> [ %36, %bb.p ], [ %27, %bb.o ] ; 2 uses
-  %38 = add <4 x i32> %37, %32
+  %.1102.i = phi i32 [ %48, %bb.p ], [ %.0101.i, %bb.o ] ; 2 uses
+  %.1100.i = phi i32 [ %50, %bb.p ], [ %.099.i, %bb.o ] ; 2 uses
+  %.198.i = phi i32 [ %52, %bb.p ], [ %.097.i, %bb.o ] ; 2 uses
+  %.1.i = phi i32 [ %54, %bb.p ], [ %.0.i14, %bb.o ] ; 2 uses
+  %55 = add i32 %.1102.i, %.1110.i
+  %56 = ashr i32 %55, 21
+  %57 = tail call i32 @llvm.smax.i32(i32 %56, i32 0)
+  %58 = trunc nuw nsw i32 %57 to i16
+  store i16 %58, ptr %i.adn, align 2, !tbaa !10
   %i.aee = getelementptr inbounds nuw [2 x i8], ptr %i.adn, i64 %i.zd ; 2 uses
+  %59 = add i32 %.1100.i, %.1108.i
+  %60 = ashr i32 %59, 21
+  %61 = tail call i32 @llvm.smax.i32(i32 %60, i32 0)
+  %62 = trunc nuw nsw i32 %61 to i16
+  store i16 %62, ptr %i.aee, align 2, !tbaa !10
   %i.aef = getelementptr inbounds nuw [2 x i8], ptr %i.aee, i64 %i.zd ; 2 uses
+  %63 = add i32 %.198.i, %.1106.i
+  %64 = ashr i32 %63, 21
+  %65 = tail call i32 @llvm.smax.i32(i32 %64, i32 0)
+  %66 = trunc nuw nsw i32 %65 to i16
+  store i16 %66, ptr %i.aef, align 2, !tbaa !10
   %i.aeg = getelementptr inbounds nuw [2 x i8], ptr %i.aef, i64 %i.zd ; 2 uses
-  %39 = getelementptr inbounds nuw [2 x i8], ptr %i.aeg, i64 %i.zd ; 2 uses
-  %40 = sub <4 x i32> %32, %37
-  %i.aeh = getelementptr inbounds nuw [2 x i8], ptr %39, i64 %i.zd ; 2 uses
-  %41 = getelementptr inbounds nuw [2 x i8], ptr %i.aeh, i64 %i.zd ; 2 uses
-  %42 = getelementptr inbounds nuw [2 x i8], ptr %41, i64 %i.zd
-  %43 = shufflevector <4 x i32> %38, <4 x i32> %40, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %44 = ashr <8 x i32> %43, splat (i32 21)
-  %45 = trunc nsw <8 x i32> %44 to <8 x i16>
-  %46 = tail call <8 x i16> @llvm.smax.v8i16(<8 x i16> %45, <8 x i16> zeroinitializer) ; 8 uses
-  %47 = extractelement <8 x i16> %46, i64 3
-  store i16 %47, ptr %i.adn, align 2, !tbaa !10
-  %48 = extractelement <8 x i16> %46, i64 2
-  store i16 %48, ptr %i.aee, align 2, !tbaa !10
-  %49 = extractelement <8 x i16> %46, i64 1
-  store i16 %49, ptr %i.aef, align 2, !tbaa !10
-  %50 = extractelement <8 x i16> %46, i64 0
-  store i16 %50, ptr %i.aeg, align 2, !tbaa !10
-  %51 = extractelement <8 x i16> %46, i64 4
-  store i16 %51, ptr %39, align 2, !tbaa !10
-  %52 = extractelement <8 x i16> %46, i64 5
-  store i16 %52, ptr %i.aeh, align 2, !tbaa !10
-  %53 = extractelement <8 x i16> %46, i64 6
-  store i16 %53, ptr %41, align 2, !tbaa !10
-  %54 = extractelement <8 x i16> %46, i64 7
-  store i16 %54, ptr %42, align 2, !tbaa !10
+  %67 = add i32 %.1.i, %.1104.i
+  %68 = ashr i32 %67, 21
+  %69 = tail call i32 @llvm.smax.i32(i32 %68, i32 0)
+  %70 = trunc nuw nsw i32 %69 to i16
+  store i16 %70, ptr %i.aeg, align 2, !tbaa !10
+  %i.aeh = getelementptr inbounds nuw [2 x i8], ptr %i.aeg, i64 %i.zd ; 2 uses
+  %71 = sub i32 %.1104.i, %.1.i
+  %72 = ashr i32 %71, 21
+  %73 = tail call i32 @llvm.smax.i32(i32 %72, i32 0)
+  %74 = trunc nuw nsw i32 %73 to i16
+  store i16 %74, ptr %i.aeh, align 2, !tbaa !10
+  %75 = getelementptr inbounds nuw [2 x i8], ptr %i.aeh, i64 %i.zd ; 2 uses
+  %76 = sub i32 %.1106.i, %.198.i
+  %77 = ashr i32 %76, 21
+  %78 = tail call i32 @llvm.smax.i32(i32 %77, i32 0)
+  %79 = trunc nuw nsw i32 %78 to i16
+  store i16 %79, ptr %75, align 2, !tbaa !10
+  %80 = getelementptr inbounds nuw [2 x i8], ptr %75, i64 %i.zd ; 2 uses
+  %81 = sub i32 %.1108.i, %.1100.i
+  %82 = ashr i32 %81, 21
+  %83 = tail call i32 @llvm.smax.i32(i32 %82, i32 0)
+  %84 = trunc nuw nsw i32 %83 to i16
+  store i16 %84, ptr %80, align 2, !tbaa !10
+  %85 = getelementptr inbounds nuw [2 x i8], ptr %80, i64 %i.zd
+  %86 = sub i32 %.1110.i, %.1102.i
+  %87 = ashr i32 %86, 21
+  %88 = tail call i32 @llvm.smax.i32(i32 %87, i32 0)
+  %89 = trunc nuw nsw i32 %88 to i16
+  store i16 %89, ptr %85, align 2, !tbaa !10
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 8
   br i1 %exitcond.not, label %middle.block, label %.preheader, !llvm.loop !19
@@ -710,9 +761,6 @@ declare i32 @llvm.umin.i32(i32, i32) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i32> @llvm.smax.v4i32(<4 x i32>, <4 x i32>) #3
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <8 x i16> @llvm.smax.v8i16(<8 x i16>, <8 x i16>) #3
 
 attributes #0 = { nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { inlinehint mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

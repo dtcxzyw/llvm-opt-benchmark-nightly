@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %.034 = phi i32 [ %i.e, %bb.b ], [ %i.i, %bb.c ] ; 10 uses
+  %.034 = phi i32 [ %i.e, %bb.b ], [ %i.i, %bb.c ] ; 12 uses
   %.0 = phi i32 [ %i.h, %bb.b ], [ %i.l, %bb.c ]  ; 10 uses
   store i32 %.034, ptr %i.a, align 16, !tbaa !15
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 4
@@ -215,32 +215,33 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %i.n, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %7 = trunc nsw i32 %.034 to i16
-  %8 = insertelement <4 x i16> poison, i16 %7, i64 0
-  %9 = trunc nsw i32 %.0 to i16
-  %10 = insertelement <4 x i16> %8, i16 %9, i64 1
-  %11 = shufflevector <4 x i16> %10, <4 x i16> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
-  %12 = mul <4 x i16> %11, <i16 6, i16 5, i16 4, i16 4>
-  %i.q = trunc nsw i32 %.0 to i16
-  %13 = insertelement <4 x i16> poison, i16 %i.q, i64 0
-  %i.r = trunc nsw i32 %i.o to i16
-  %14 = insertelement <4 x i16> %13, i16 %i.r, i64 1
-  %i.s = trunc nsw i32 %i.p to i16
-  %15 = insertelement <4 x i16> %14, i16 %i.s, i64 2
-  %i.t = trunc nsw i32 %.034 to i16
-  %16 = mul nsw i16 %i.t, 3
-  %i.u = insertelement <4 x i16> %15, i16 %16, i64 3
-  %17 = add <4 x i16> %12, %i.u
-  %i.v = udiv <4 x i16> %17, splat (i16 7)
+  %7 = mul nuw nsw i32 %.034, 6
+  %8 = mul nuw nsw i32 %.034, 5
+  %9 = shl nuw nsw i32 %.034, 2
+  %10 = mul nuw nsw i32 %.034, 3
+  %11 = shl nuw nsw i32 %.0, 2
+  %12 = add nuw nsw i32 %7, %.0
+  %i.q = trunc nsw i32 %12 to i16
+  %13 = add nuw nsw i32 %i.o, %8
+  %i.r = trunc nsw i32 %13 to i16
+  %14 = add nuw nsw i32 %i.p, %9
+  %i.s = trunc nsw i32 %14 to i16
+  %15 = add nuw nsw i32 %11, %10
+  %i.t = trunc nsw i32 %15 to i16
+  %16 = insertelement <4 x i16> poison, i16 %i.q, i64 0
+  %17 = insertelement <4 x i16> %16, i16 %i.r, i64 1
+  %i.u = insertelement <4 x i16> %17, i16 %i.s, i64 2
+  %18 = insertelement <4 x i16> %i.u, i16 %i.t, i64 3
+  %i.v = udiv <4 x i16> %18, splat (i16 7)
   %i.w = shl nuw nsw i32 %.034, 1
   %i.x = mul nuw nsw i32 %.0, 5
   %i.y = mul nuw nsw i32 %.0, 6
   %i.z = add nuw nsw i32 %i.x, %i.w
+  %.lhs.trunc41 = trunc nsw i32 %i.z to i16
   %i.aa = add nuw nsw i32 %i.y, %.034
-  %i.ab = trunc nsw i32 %i.z to i16
-  %i.ac = insertelement <2 x i16> poison, i16 %i.ab, i64 0
-  %18 = trunc nsw i32 %i.aa to i16
-  %i.ad = insertelement <2 x i16> %i.ac, i16 %18, i64 1
+  %i.ab = trunc nsw i32 %i.aa to i16
+  %i.ac = insertelement <2 x i16> poison, i16 %.lhs.trunc41, i64 0
+  %i.ad = insertelement <2 x i16> %i.ac, i16 %i.ab, i64 1
   %i.ae = udiv <2 x i16> %i.ad, splat (i16 7)
   %i.af = zext nneg <2 x i16> %i.ae to <2 x i32>
   br label %bb.g
