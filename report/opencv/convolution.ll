@@ -205,9 +205,8 @@ bb.ap:                                            ; preds = %bb.ao, %bb.an
   br i1 %i.ts, label %.lr.ph314.i.i.i, label %.loopexit299.i.i.i
 
 .lr.ph314.i.i.i:                                  ; preds = %bb.ap
-  %i.wk = sub nsw i32 %.252.i.i.i, %.0198315.i.i.i ; 2 uses
+  %i.wk = sub nsw i32 %.252.i.i.i, %.0198315.i.i.i
   %i.wl = icmp eq i32 %.0198315.i.i.i, 0
-  %8 = icmp slt i32 %i.wk, 1
   %wide.trip.count97.i.i.i.i.i = zext nneg i32 %i.wk to i64
   br i1 %i.ui, label %.lr.ph.preheader.i.i.i, label %.loopexit299.i.i.i
 
@@ -247,7 +246,6 @@ bb.ap:                                            ; preds = %bb.ao, %bb.an
   %i.xk = zext i32 %.sroa.speculated.i.i.i to i64 ; 15 uses
   %i.xl = icmp sgt i32 %.sroa.speculated.i.i.i, 0
   %i.xm = shl nuw nsw i64 %i.xk, 2                ; 8 uses
-  %invariant.op.i.i.i = or i1 %8, %i.xj
   %i.xn = shl nuw nsw i64 %i.xk, 2
   %i.xo = shl nuw nsw i64 %i.xk, 2
   %i.xp = getelementptr i8, ptr %.0197311.i.i.i, i64 %i.xm
@@ -306,7 +304,7 @@ _ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit.i.i270.i.i.i: ; preds = %.noexc62.i.i.i.i.
   %.sroa.9.0.i.i.i.i.i = phi i64 [ 0, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i.i.i269.i.i.i ], [ %i.yg, %.noexc62.i.i.i.i.i ]
   %.sroa.063.0.i.i.i.i.i = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i.i.i269.i.i.i ], [ %i.ye, %.noexc62.i.i.i.i.i ] ; 12 uses
   %i.yh = icmp slt i32 %i.xx, 1
-  %or.cond.reass.i.i.i = or i1 %invariant.op.i.i.i, %i.yh
+  %or.cond.reass.i.i.i = or i1 %i.xj, %i.yh
   br i1 %or.cond.reass.i.i.i, label %._crit_edge75.split.i.i.i.i.i, label %.preheader69.preheader.i.i.i.i.i
 
 .preheader69.preheader.i.i.i.i.i:                 ; preds = %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit.i.i270.i.i.i
