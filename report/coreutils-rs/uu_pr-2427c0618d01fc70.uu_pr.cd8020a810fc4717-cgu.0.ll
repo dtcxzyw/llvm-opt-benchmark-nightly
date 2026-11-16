@@ -205,7 +205,7 @@ _RINvMNtCs6JMX4GRUq9U_4core6optionINtB3_6OptionNtCshDScVpnq8df_5uu_pr13Numbering
   %.sroa.12815.0 = phi i64 [ 1, %_RNvXs0_CshDScVpnq8df_5uu_prNtB5_13NumberingModeNtNtCs6JMX4GRUq9U_4core7default7Default7default.exit.i.i ], [ %.sroa.7.01048, %bb.bd ], [ undef, %bb.be ]
   %.sroa.11812.0 = phi i64 [ 5, %_RNvXs0_CshDScVpnq8df_5uu_prNtB5_13NumberingModeNtNtCs6JMX4GRUq9U_4core7default7Default7default.exit.i.i ], [ %.sroa.06.0.i, %bb.bd ], [ undef, %bb.be ]
   %.sroa.8806.0 = phi ptr [ %i.lb, %_RNvXs0_CshDScVpnq8df_5uu_prNtB5_13NumberingModeNtNtCs6JMX4GRUq9U_4core7default7Default7default.exit.i.i ], [ %.sroa.316.034.i, %bb.bd ], [ undef, %bb.be ] ; 3 uses
-  %switch.i793.not = phi i1 [ false, %_RNvXs0_CshDScVpnq8df_5uu_prNtB5_13NumberingModeNtNtCs6JMX4GRUq9U_4core7default7Default7default.exit.i.i ], [ false, %bb.bd ], [ true, %bb.be ]
+  %switch.i793.not = phi i1 [ true, %_RNvXs0_CshDScVpnq8df_5uu_prNtB5_13NumberingModeNtNtCs6JMX4GRUq9U_4core7default7Default7default.exit.i.i ], [ true, %bb.bd ], [ false, %bb.be ]
   %.sroa.0804.0 = phi i64 [ 1, %_RNvXs0_CshDScVpnq8df_5uu_prNtB5_13NumberingModeNtNtCs6JMX4GRUq9U_4core7default7Default7default.exit.i.i ], [ 1, %bb.bd ], [ -1, %bb.be ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cq)
   call fastcc void @_RINvMs0_NtNtNtCsgNwXemyrBWj_12clap_builder6parser7matches11arg_matchesNtB6_10ArgMatches11try_get_oneNtNtCs7tKScEop1B6_5alloc6string6StringECshDScVpnq8df_5uu_pr(ptr noalias nofree noundef align 8 captures(none) dereferenceable(40) %i.cq, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(56) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @56, i64 noundef 11) #30
@@ -608,7 +608,7 @@ _RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCs7tKScEop1B6_5alloc6string6StringEC
   br label %bb.mm
 
 bb.mm:                                            ; preds = %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCs7tKScEop1B6_5alloc6string6StringECshDScVpnq8df_5uu_pr.exit791, %bb.de
-  br i1 %switch.i793.not, label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtB4_6option6OptionNtCshDScVpnq8df_5uu_pr13NumberingModeEEBZ_.exit, label %bb.mn
+  br i1 %switch.i793.not, label %bb.mn, label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtB4_6option6OptionNtCshDScVpnq8df_5uu_pr13NumberingModeEEBZ_.exit
 
 bb.mn:                                            ; preds = %bb.mm
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8806.0) ]
