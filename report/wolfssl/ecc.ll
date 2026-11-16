@@ -204,9 +204,8 @@ bb.d:                                             ; preds = %bb.c
   %i.k = and i8 %i.i, -2
   %or.cond12 = icmp eq i8 %i.k, 2
   %.1 = select i1 %or.cond12, i32 -174, i32 %spec.select ; 2 uses
-  %5 = add nsw i32 %1, -1
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 2 uses
-  %i.m = lshr exact i32 %5, 1                     ; 4 uses
+  %i.m = lshr i32 %1, 1                           ; 4 uses
   %i.n = icmp eq i32 %.1, 0
   br i1 %i.n, label %bb.e, label %.thread69
 
@@ -609,15 +608,14 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.m, label %bb.d, label %.thread93
 
 bb.d:                                             ; preds = %bb.c
-  %5 = add nsw i32 %1, -1                         ; 3 uses
-  %i.n = lshr exact i32 %5, 1                     ; 3 uses
-  %i.o = icmp eq i32 %5, 0
+  %i.n = lshr i32 %1, 1                           ; 4 uses
+  %i.o = icmp eq i32 %i.n, 0
   %i.p = icmp slt i32 %3, 0
   %or.cond.i = and i1 %i.o, %i.p
   br i1 %or.cond.i, label %.thread72, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.q = icmp ugt i32 %5, 132
+  %i.q = icmp ugt i32 %1, 133
   br i1 %i.q, label %.thread72, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
@@ -643,19 +641,19 @@ bb.g:                                             ; preds = %bb.f
   br i1 %or.cond, label %switch.lookup, label %.thread72
 
 .split.i:                                         ; preds = %bb.g
-  %.not2836.i = icmp sgt i32 %1, 57
+  %.not2836.i = icmp samesign ugt i32 %1, 57
   br i1 %.not2836.i, label %.lr.ph.preheader.i, label %.thread29.i
 
 .lr.ph.preheader.i:                               ; preds = %.split.i
-  %.not28.i = icmp sgt i32 %1, 61
+  %.not28.i = icmp samesign ugt i32 %1, 61
   br i1 %.not28.i, label %.lr.ph.1.i, label %.thread29.i
 
 .lr.ph.1.i:                                       ; preds = %.lr.ph.preheader.i
-  %.not28.1.i = icmp sgt i32 %1, 65
+  %.not28.1.i = icmp samesign ugt i32 %1, 65
   br i1 %.not28.1.i, label %.lr.ph.2.i, label %.thread29.i
 
 .lr.ph.2.i:                                       ; preds = %.lr.ph.1.i
-  %.not28.2.i = icmp sgt i32 %1, 97               ; 2 uses
+  %.not28.2.i = icmp samesign ugt i32 %1, 97      ; 2 uses
   %spec.select.i = select i1 %.not28.2.i, i32 4, i32 3
   %spec.select53.i = select i1 %.not28.2.i, ptr getelementptr inbounds nuw (i8, ptr @ecc_sets, i64 352), ptr getelementptr inbounds nuw (i8, ptr @ecc_sets, i64 264)
   br label %.thread29.i

@@ -205,8 +205,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit123: ; preds = %bb
   br label %common.resume
 
 bb.ar:                                            ; preds = %bb.al
-  %35 = add nsw i32 %2, -1
-  %i.cr = ashr exact i32 %35, 1                   ; 4 uses
+  %i.cr = ashr i32 %2, 1                          ; 4 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.ct = load ptr, ptr %i.cs, align 8, !tbaa !26 ; 2 uses
   %i.cu = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -609,8 +608,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit95: ; preds = %bb.
   br label %common.resume
 
 bb.aq:                                            ; preds = %bb.ak
-  %28 = add nsw i32 %1, -1
-  %i.co = ashr exact i32 %28, 1                   ; 4 uses
+  %i.co = ashr i32 %1, 1                          ; 4 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.cq = load ptr, ptr %i.cp, align 8, !tbaa !26 ; 2 uses
   %i.cr = getelementptr inbounds nuw i8, ptr %2, i64 24

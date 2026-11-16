@@ -161,7 +161,7 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 48
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !29   ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 64
-  %i.i = load ptr, ptr %i.h, align 8, !tbaa !26   ; 2 uses
+  %i.i = load ptr, ptr %i.h, align 8, !tbaa !26
   %i.j = getelementptr inbounds nuw i8, ptr %i.e, i64 48
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !25
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 160
@@ -190,7 +190,7 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph:                                           ; preds = %bb.b, %bb.f
   %.066 = phi i32 [ %i.ad, %bb.f ], [ 0, %bb.b ]
-  %.05565 = phi i32 [ %.1, %bb.f ], [ %1, %bb.b ] ; 3 uses
+  %.05565 = phi i32 [ %8, %bb.f ], [ %1, %bb.b ]  ; 2 uses
   %.val.i.i = load i64, ptr %i.y, align 8, !tbaa !41 ; 2 uses
   %i.z = icmp ult i64 %.val.i.i, %i.p
   br i1 %i.z, label %PACKET_get_bytes.exit.thread, label %bb.c
@@ -205,25 +205,21 @@ bb.c:                                             ; preds = %.lr.ph
   tail call void %i.k(ptr noundef %5, i32 noundef %i.ad) #3
   %i.ae = and i32 %.05565, 1
   %i.af = icmp eq i32 %i.ae, 0
+  %8 = lshr i32 %.05565, 1                        ; 2 uses
+  tail call void %i.i(ptr noundef %5, i32 noundef %8) #3
   br i1 %i.af, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %8 = lshr exact i32 %.05565, 1                  ; 2 uses
-  tail call void %i.i(ptr noundef %5, i32 noundef %8) #3
   %i.ag = tail call i32 %i.g(ptr noundef nonnull %0, ptr noundef %4, ptr noundef %5, ptr noundef %6, ptr noundef %i.aa, ptr noundef %6, i64 noundef %7) #3
   %.not58 = icmp eq i32 %i.ag, 0
   br i1 %.not58, label %PACKET_get_bytes.exit.thread, label %bb.f
 
 bb.e:                                             ; preds = %bb.c
-  %9 = add nsw i32 %.05565, -1
-  %10 = lshr exact i32 %9, 1                      ; 2 uses
-  tail call void %i.i(ptr noundef %5, i32 noundef %10) #3
   %i.ah = tail call i32 %i.g(ptr noundef nonnull %0, ptr noundef %4, ptr noundef %5, ptr noundef %i.aa, ptr noundef %6, ptr noundef %6, i64 noundef %7) #3
   %.not57 = icmp eq i32 %i.ah, 0
   br i1 %.not57, label %PACKET_get_bytes.exit.thread, label %bb.f
 
 bb.f:                                             ; preds = %bb.d, %bb.e
-  %.1 = phi i32 [ %8, %bb.d ], [ %10, %bb.e ]
   %exitcond.not = icmp eq i32 %i.ad, %i.r
   br i1 %exitcond.not, label %PACKET_get_bytes.exit.thread, label %.lr.ph, !llvm.loop !39
 

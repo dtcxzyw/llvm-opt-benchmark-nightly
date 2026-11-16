@@ -204,7 +204,7 @@ _ZNK7QCPBars8barBelowEv.exit63:                   ; preds = %_ZNK7QCPBars8barBel
 _ZNK7QCPBars8barBelowEv.exit62.thread:            ; preds = %_ZNK7QCPBars8barBelowEv.exit62, %.lr.ph101, %_ZNK7QCPBars8barBelowEv.exit63, %_ZN9QtPrivate17QForeachContainerI5QListIP7QCPBarsEED2Ev.exit
   %storemerge.lcssa = phi ptr [ %1, %_ZN9QtPrivate17QForeachContainerI5QListIP7QCPBarsEED2Ev.exit ], [ %spec.select149, %_ZNK7QCPBars8barBelowEv.exit63 ], [ %storemerge100, %.lr.ph101 ], [ %storemerge100, %_ZNK7QCPBars8barBelowEv.exit62 ] ; 3 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
-  %i.bj = load i64, ptr %i.bi, align 8            ; 6 uses
+  %i.bj = load i64, ptr %i.bi, align 8            ; 8 uses
   %i.bk = icmp sgt i64 %i.bj, 0
   br i1 %i.bk, label %bb.j, label %_ZNK23QListSpecialMethodsBaseIPK7QCPBarsE7indexOfIS2_EExRKT_x.exit.thread
 
@@ -240,18 +240,18 @@ bb.l:                                             ; preds = %_ZNK23QListSpecialM
   %i.by = and i64 %i.bj, 1
   %.not88 = icmp eq i64 %i.by, 0
   %.pre = and i64 %i.bv, 2147483647               ; 4 uses
-  %.pre119 = add nsw i64 %i.bj, -1                ; 3 uses
   br i1 %.not88, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.bz = lshr exact i64 %.pre119, 1
+  %i.bz = lshr i64 %i.bj, 1
   %i.ca = icmp eq i64 %.pre, %i.bz
   br i1 %i.ca, label %_ZNK23QListSpecialMethodsBaseIPK7QCPBarsE7indexOfIS2_EExRKT_x.exit.thread, label %bb.o
 
 bb.n:                                             ; preds = %bb.l
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #49
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #49
-  %i.cb = lshr i64 %.pre119, 1
+  %4 = add nsw i64 %i.bj, -2
+  %i.cb = lshr exact i64 %4, 1
   %.not45141 = icmp samesign ule i64 %.pre, %i.cb ; 2 uses
   %i.cc = select i1 %.not45141, i32 -1, i32 1
   %i.cd = trunc i64 %i.bj to i32
@@ -268,7 +268,7 @@ bb.n:                                             ; preds = %bb.l
 bb.o:                                             ; preds = %bb.m
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #49
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #49
-  %i.cm = lshr exact i64 %.pre119, 1              ; 2 uses
+  %i.cm = lshr i64 %i.bj, 1                       ; 2 uses
   %i.cn = getelementptr [8 x i8], ptr %i.bm, i64 %i.cm
   %i.co = load ptr, ptr %i.cn, align 8
   invoke void @_ZNK7QCPBars13getPixelWidthEdRdS0_(ptr noundef align 8 dereferenceable_or_null(280) %i.co, double noundef %2, ptr noundef nonnull align 8 dereferenceable(8) %i.b, ptr noundef nonnull align 8 dereferenceable(8) %i.c)
@@ -278,8 +278,7 @@ bb.p:                                             ; preds = %bb.o
   %.not45.not = icmp samesign ugt i64 %.pre, %i.cm
   %i.cp = select i1 %.not45.not, i32 1, i32 -1    ; 2 uses
   %i.cq = trunc i64 %i.bj to i32
-  %4 = add nsw i32 %i.cq, -1
-  %i.cr = ashr exact i32 %4, 1
+  %i.cr = ashr i32 %i.cq, 1
   %i.cs = add nsw i32 %i.cp, %i.cr
   %i.ct = load double, ptr %i.c, align 8
   %i.cu = load double, ptr %i.b, align 8

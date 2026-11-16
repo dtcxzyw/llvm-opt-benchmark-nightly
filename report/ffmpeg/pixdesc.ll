@@ -205,7 +205,7 @@ bb.a:
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
-  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader.new ], [ %indvars.iv.next.1, %.lr.ph ] ; 4 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader.new ], [ %indvars.iv.next.1, %.lr.ph ] ; 5 uses
   %.01415 = phi i32 [ 0, %.lr.ph.preheader.new ], [ %i.x, %.lr.ph ]
   %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.1, %.lr.ph ]
   %i.k = and i64 %indvars.iv, 4294967294
@@ -216,12 +216,11 @@ bb.a:
   %i.o = load i32, ptr %i.n, align 4, !tbaa !32
   %i.p = shl i32 %i.o, %i.l
   %i.q = add nsw i32 %i.p, %.01415
-  %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
-  %i.r = and i64 %indvars.iv.next, 4294967295
-  %or.cond.1 = icmp eq i64 %i.r, 1
+  %i.r = and i64 %indvars.iv, 4294967294
+  %or.cond.1 = icmp eq i64 %i.r, 0
   %i.s = select i1 %or.cond.1, i32 0, i32 %i.g
-  %i.t = getelementptr inbounds nuw [20 x i8], ptr %0, i64 %indvars.iv.next
-  %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 40
+  %i.t = getelementptr inbounds nuw [20 x i8], ptr %0, i64 %indvars.iv
+  %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 60
   %i.v = load i32, ptr %i.u, align 4, !tbaa !32
   %i.w = shl i32 %i.v, %i.s
   %i.x = add nsw i32 %i.w, %i.q                   ; 3 uses
@@ -325,7 +324,7 @@ bb.a:
   ret i32 %i.ad
 
 bb.b:                                             ; preds = %bb.b, %.lr.ph.new
-  %indvars.iv = phi i64 [ 0, %.lr.ph.new ], [ %indvars.iv.next.1, %bb.b ] ; 4 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph.new ], [ %indvars.iv.next.1, %bb.b ] ; 5 uses
   %niter = phi i64 [ 0, %.lr.ph.new ], [ %niter.next.1, %bb.b ]
   %i.ae = getelementptr inbounds nuw [20 x i8], ptr %i.k, i64 %indvars.iv ; 2 uses
   %i.af = and i64 %indvars.iv, 4294967294
@@ -338,15 +337,15 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   %i.al = sext i32 %i.ak to i64
   %i.am = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.al
   store i32 %i.aj, ptr %i.am, align 4, !tbaa !12
-  %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
-  %1 = getelementptr inbounds nuw [20 x i8], ptr %i.k, i64 %indvars.iv.next ; 2 uses
-  %i.an = and i64 %indvars.iv.next, 4294967295
-  %or.cond.1 = icmp eq i64 %i.an, 1
+  %1 = getelementptr inbounds nuw [20 x i8], ptr %i.k, i64 %indvars.iv ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 20
+  %i.an = and i64 %indvars.iv, 4294967294
+  %or.cond.1 = icmp eq i64 %i.an, 0
   %i.ao = select i1 %or.cond.1, i32 0, i32 %i.h
-  %i.ap = getelementptr inbounds nuw i8, ptr %1, i64 4
+  %i.ap = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.aq = load i32, ptr %i.ap, align 4, !tbaa !33
   %i.ar = shl i32 %i.aq, %i.ao
-  %i.as = load i32, ptr %1, align 4, !tbaa !34
+  %i.as = load i32, ptr %2, align 4, !tbaa !34
   %i.at = sext i32 %i.as to i64
   %i.au = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.at
   store i32 %i.ar, ptr %i.au, align 4, !tbaa !12
@@ -399,7 +398,7 @@ bb.c:                                             ; preds = %bb.a
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i.new
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i.new ], [ %indvars.iv.next.i.1, %.lr.ph.i ] ; 4 uses
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i.new ], [ %indvars.iv.next.i.1, %.lr.ph.i ] ; 5 uses
   %.01415.i = phi i32 [ 0, %.lr.ph.preheader.i.new ], [ %i.af, %.lr.ph.i ]
   %niter = phi i64 [ 0, %.lr.ph.preheader.i.new ], [ %niter.next.1, %.lr.ph.i ]
   %i.s = and i64 %indvars.iv.i, 4294967294
@@ -410,12 +409,11 @@ bb.c:                                             ; preds = %bb.a
   %i.w = load i32, ptr %i.v, align 8, !tbaa !32
   %i.x = shl i32 %i.w, %i.t
   %i.y = add nsw i32 %i.x, %.01415.i
-  %indvars.iv.next.i = or disjoint i64 %indvars.iv.i, 1 ; 2 uses
-  %i.z = and i64 %indvars.iv.next.i, 4294967295
-  %or.cond.i.1 = icmp eq i64 %i.z, 1
+  %i.z = and i64 %indvars.iv.i, 4294967294
+  %or.cond.i.1 = icmp eq i64 %i.z, 0
   %i.aa = select i1 %or.cond.i.1, i32 0, i32 %i.q
-  %i.ab = getelementptr inbounds nuw [20 x i8], ptr %i.e, i64 %indvars.iv.next.i
-  %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 40
+  %i.ab = getelementptr inbounds nuw [20 x i8], ptr %i.e, i64 %indvars.iv.i
+  %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 60
   %i.ad = load i32, ptr %i.ac, align 4, !tbaa !32
   %i.ae = shl i32 %i.ad, %i.aa
   %i.af = add nsw i32 %i.ae, %i.y                 ; 3 uses
@@ -818,7 +816,7 @@ bb.e:                                             ; preds = %bb.d
   br label %av_get_padded_bits_per_pixel.exit
 
 bb.f:                                             ; preds = %bb.f, %.lr.ph.i.new
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i.new ], [ %indvars.iv.next.i.1, %bb.f ] ; 4 uses
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i.new ], [ %indvars.iv.next.i.1, %bb.f ] ; 5 uses
   %niter = phi i64 [ 0, %.lr.ph.i.new ], [ %niter.next.1, %bb.f ]
   %i.ap = getelementptr inbounds nuw [20 x i8], ptr %i.ab, i64 %indvars.iv.i ; 2 uses
   %i.aq = and i64 %indvars.iv.i, 4294967294
@@ -831,15 +829,15 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph.i.new
   %i.aw = sext i32 %i.av to i64
   %i.ax = getelementptr inbounds [4 x i8], ptr %i.e, i64 %i.aw
   store i32 %i.au, ptr %i.ax, align 4, !tbaa !12
-  %indvars.iv.next.i = or disjoint i64 %indvars.iv.i, 1 ; 2 uses
-  %5 = getelementptr inbounds nuw [20 x i8], ptr %i.ab, i64 %indvars.iv.next.i ; 2 uses
-  %i.ay = and i64 %indvars.iv.next.i, 4294967295
-  %or.cond.i50.1 = icmp eq i64 %i.ay, 1
+  %5 = getelementptr inbounds nuw [20 x i8], ptr %i.ab, i64 %indvars.iv.i ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 20
+  %i.ay = and i64 %indvars.iv.i, 4294967294
+  %or.cond.i50.1 = icmp eq i64 %i.ay, 0
   %i.az = select i1 %or.cond.i50.1, i32 0, i32 %i.y
-  %i.ba = getelementptr inbounds nuw i8, ptr %5, i64 4
+  %i.ba = getelementptr inbounds nuw i8, ptr %5, i64 24
   %i.bb = load i32, ptr %i.ba, align 8, !tbaa !33
   %i.bc = shl i32 %i.bb, %i.az
-  %i.bd = load i32, ptr %5, align 4, !tbaa !34
+  %i.bd = load i32, ptr %6, align 4, !tbaa !34
   %i.be = sext i32 %i.bd to i64
   %i.bf = getelementptr inbounds [4 x i8], ptr %i.e, i64 %i.be
   store i32 %i.bc, ptr %i.bf, align 4, !tbaa !12
@@ -911,7 +909,7 @@ av_get_padded_bits_per_pixel.exit:                ; preds = %bb.e, %.preheader.l
   br label %av_get_padded_bits_per_pixel.exit68
 
 bb.g:                                             ; preds = %bb.g, %.lr.ph.i52.new
-  %indvars.iv.i54 = phi i64 [ 0, %.lr.ph.i52.new ], [ %indvars.iv.next.i56.1, %bb.g ] ; 4 uses
+  %indvars.iv.i54 = phi i64 [ 0, %.lr.ph.i52.new ], [ %indvars.iv.next.i56.1, %bb.g ] ; 5 uses
   %niter121 = phi i64 [ 0, %.lr.ph.i52.new ], [ %niter121.next.1, %bb.g ]
   %i.cj = getelementptr inbounds nuw [20 x i8], ptr %i.bv, i64 %indvars.iv.i54 ; 2 uses
   %i.ck = and i64 %indvars.iv.i54, 4294967294
@@ -924,15 +922,15 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph.i52.n
   %i.cq = sext i32 %i.cp to i64
   %i.cr = getelementptr inbounds [4 x i8], ptr %i.d, i64 %i.cq
   store i32 %i.co, ptr %i.cr, align 4, !tbaa !12
-  %indvars.iv.next.i56 = or disjoint i64 %indvars.iv.i54, 1 ; 2 uses
-  %6 = getelementptr inbounds nuw [20 x i8], ptr %i.bv, i64 %indvars.iv.next.i56 ; 2 uses
-  %i.cs = and i64 %indvars.iv.next.i56, 4294967295
-  %or.cond.i55.1 = icmp eq i64 %i.cs, 1
+  %7 = getelementptr inbounds nuw [20 x i8], ptr %i.bv, i64 %indvars.iv.i54 ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %7, i64 20
+  %i.cs = and i64 %indvars.iv.i54, 4294967294
+  %or.cond.i55.1 = icmp eq i64 %i.cs, 0
   %i.ct = select i1 %or.cond.i55.1, i32 0, i32 %i.bs
-  %i.cu = getelementptr inbounds nuw i8, ptr %6, i64 4
+  %i.cu = getelementptr inbounds nuw i8, ptr %7, i64 24
   %i.cv = load i32, ptr %i.cu, align 8, !tbaa !33
   %i.cw = shl i32 %i.cv, %i.ct
-  %i.cx = load i32, ptr %6, align 4, !tbaa !34
+  %i.cx = load i32, ptr %8, align 4, !tbaa !34
   %i.cy = sext i32 %i.cx to i64
   %i.cz = getelementptr inbounds [4 x i8], ptr %i.d, i64 %i.cy
   store i32 %i.cw, ptr %i.cz, align 4, !tbaa !12
@@ -998,7 +996,7 @@ bb.h:                                             ; preds = %av_get_padded_bits_
   br label %av_get_padded_bits_per_pixel.exit86
 
 bb.i:                                             ; preds = %bb.i, %.lr.ph.i70.new
-  %indvars.iv.i72 = phi i64 [ 0, %.lr.ph.i70.new ], [ %indvars.iv.next.i74.1, %bb.i ] ; 4 uses
+  %indvars.iv.i72 = phi i64 [ 0, %.lr.ph.i70.new ], [ %indvars.iv.next.i74.1, %bb.i ] ; 5 uses
   %niter127 = phi i64 [ 0, %.lr.ph.i70.new ], [ %niter127.next.1, %bb.i ]
   %i.du = getelementptr inbounds nuw [20 x i8], ptr %i.dg, i64 %indvars.iv.i72 ; 2 uses
   %i.dv = and i64 %indvars.iv.i72, 4294967294
@@ -1011,15 +1009,15 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph.i70.n
   %i.eb = sext i32 %i.ea to i64
   %i.ec = getelementptr inbounds [4 x i8], ptr %i.c, i64 %i.eb
   store i32 %i.dz, ptr %i.ec, align 4, !tbaa !12
-  %indvars.iv.next.i74 = or disjoint i64 %indvars.iv.i72, 1 ; 2 uses
-  %7 = getelementptr inbounds nuw [20 x i8], ptr %i.dg, i64 %indvars.iv.next.i74 ; 2 uses
-  %i.ed = and i64 %indvars.iv.next.i74, 4294967295
-  %or.cond.i73.1 = icmp eq i64 %i.ed, 1
+  %9 = getelementptr inbounds nuw [20 x i8], ptr %i.dg, i64 %indvars.iv.i72 ; 2 uses
+  %10 = getelementptr inbounds nuw i8, ptr %9, i64 20
+  %i.ed = and i64 %indvars.iv.i72, 4294967294
+  %or.cond.i73.1 = icmp eq i64 %i.ed, 0
   %i.ee = select i1 %or.cond.i73.1, i32 0, i32 %i.y
-  %i.ef = getelementptr inbounds nuw i8, ptr %7, i64 4
+  %i.ef = getelementptr inbounds nuw i8, ptr %9, i64 24
   %i.eg = load i32, ptr %i.ef, align 8, !tbaa !33
   %i.eh = shl i32 %i.eg, %i.ee
-  %i.ei = load i32, ptr %7, align 4, !tbaa !34
+  %i.ei = load i32, ptr %10, align 4, !tbaa !34
   %i.ej = sext i32 %i.ei to i64
   %i.ek = getelementptr inbounds [4 x i8], ptr %i.c, i64 %i.ej
   store i32 %i.eh, ptr %i.ek, align 4, !tbaa !12
@@ -1077,7 +1075,7 @@ av_get_padded_bits_per_pixel.exit86:              ; preds = %bb.h, %.preheader.l
   br label %av_get_padded_bits_per_pixel.exit104
 
 bb.j:                                             ; preds = %bb.j, %.lr.ph.i88.new
-  %indvars.iv.i90 = phi i64 [ 0, %.lr.ph.i88.new ], [ %indvars.iv.next.i92.1, %bb.j ] ; 4 uses
+  %indvars.iv.i90 = phi i64 [ 0, %.lr.ph.i88.new ], [ %indvars.iv.next.i92.1, %bb.j ] ; 5 uses
   %niter133 = phi i64 [ 0, %.lr.ph.i88.new ], [ %niter133.next.1, %bb.j ]
   %i.fc = getelementptr inbounds nuw [20 x i8], ptr %i.eo, i64 %indvars.iv.i90 ; 2 uses
   %i.fd = and i64 %indvars.iv.i90, 4294967294
@@ -1090,15 +1088,15 @@ bb.j:                                             ; preds = %bb.j, %.lr.ph.i88.n
   %i.fj = sext i32 %i.fi to i64
   %i.fk = getelementptr inbounds [4 x i8], ptr %i.b, i64 %i.fj
   store i32 %i.fh, ptr %i.fk, align 4, !tbaa !12
-  %indvars.iv.next.i92 = or disjoint i64 %indvars.iv.i90, 1 ; 2 uses
-  %8 = getelementptr inbounds nuw [20 x i8], ptr %i.eo, i64 %indvars.iv.next.i92 ; 2 uses
-  %i.fl = and i64 %indvars.iv.next.i92, 4294967295
-  %or.cond.i91.1 = icmp eq i64 %i.fl, 1
+  %11 = getelementptr inbounds nuw [20 x i8], ptr %i.eo, i64 %indvars.iv.i90 ; 2 uses
+  %12 = getelementptr inbounds nuw i8, ptr %11, i64 20
+  %i.fl = and i64 %indvars.iv.i90, 4294967294
+  %or.cond.i91.1 = icmp eq i64 %i.fl, 0
   %i.fm = select i1 %or.cond.i91.1, i32 0, i32 %i.bs
-  %i.fn = getelementptr inbounds nuw i8, ptr %8, i64 4
+  %i.fn = getelementptr inbounds nuw i8, ptr %11, i64 24
   %i.fo = load i32, ptr %i.fn, align 8, !tbaa !33
   %i.fp = shl i32 %i.fo, %i.fm
-  %i.fq = load i32, ptr %8, align 4, !tbaa !34
+  %i.fq = load i32, ptr %12, align 4, !tbaa !34
   %i.fr = sext i32 %i.fq to i64
   %i.fs = getelementptr inbounds [4 x i8], ptr %i.b, i64 %i.fr
   store i32 %i.fp, ptr %i.fs, align 4, !tbaa !12

@@ -204,28 +204,25 @@ bb.ad:                                            ; preds = %bb.j
   br i1 %i.cg, label %bb.ae, label %bb.ah
 
 bb.ae:                                            ; preds = %bb.ad
-  %12 = add nsw i32 %3, -1
-  %i.ch = lshr exact i32 %12, 1
-  %i.ci = zext nneg i32 %i.ch to i64
+  %i.ch = lshr i32 %3, 1                          ; 2 uses
+  %i.ci = zext nneg i32 %i.ch to i64              ; 2 uses
   %i.cj = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %i.ci
   %i.ck = load i16, ptr %i.cj, align 2, !tbaa !46
   %i.cl = icmp eq i16 %i.ck, 256
   %spec.select.i.i = select i1 %i.cl, ptr @_ZN2cv12cpu_baseline12_GLOBAL__N_114hlineSmooth1N1IhNS_12_GLOBAL__N_113ufixedpoint16EEEvPKT_iPKT0_iPS8_iib, ptr @_ZN2cv12cpu_baseline12_GLOBAL__N_120hlineSmoothONa_yzy_aIhNS_12_GLOBAL__N_113ufixedpoint16EEEvPKT_iPKT0_iPS8_iib
   %i.cm = getelementptr inbounds nuw i8, ptr %10, i64 88 ; 2 uses
   store ptr %spec.select.i.i, ptr %i.cm, align 8, !tbaa !47
-  %13 = lshr i32 %3, 1                            ; 2 uses
-  %.not163.i.i = icmp eq i32 %13, 0
+  %.not163.i.i = icmp eq i32 %i.ch, 0
   br i1 %.not163.i.i, label %.loopexit159.i.i, label %.lr.ph.preheader.i.i
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.ae
   %i.cn = zext nneg i32 %3 to i64
-  %wide.trip.count.i.i = zext nneg i32 %13 to i64
   %i.co = getelementptr [2 x i8], ptr %2, i64 %i.cn
   br label %.lr.ph.i.i
 
 bb.af:                                            ; preds = %.lr.ph.i.i
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
-  %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %wide.trip.count.i.i
+  %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %i.ci
   br i1 %exitcond.not.i.i, label %.loopexit159.i.i, label %.lr.ph.i.i, !llvm.loop !124
 
 .lr.ph.i.i:                                       ; preds = %bb.af, %.lr.ph.preheader.i.i
@@ -628,28 +625,25 @@ bb.ad:                                            ; preds = %bb.j
   br i1 %i.cg, label %bb.ae, label %bb.ah
 
 bb.ae:                                            ; preds = %bb.ad
-  %12 = add nsw i32 %3, -1
-  %i.ch = lshr exact i32 %12, 1
-  %i.ci = zext nneg i32 %i.ch to i64
+  %i.ch = lshr i32 %3, 1                          ; 2 uses
+  %i.ci = zext nneg i32 %i.ch to i64              ; 2 uses
   %i.cj = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.ci
   %i.ck = load i32, ptr %i.cj, align 4, !tbaa !73
   %i.cl = icmp eq i32 %i.ck, 65536
   %spec.select.i.i = select i1 %i.cl, ptr @_ZN2cv12cpu_baseline12_GLOBAL__N_114hlineSmooth1N1ItNS_12_GLOBAL__N_113ufixedpoint32EEEvPKT_iPKT0_iPS8_iib, ptr @_ZN2cv12cpu_baseline12_GLOBAL__N_120hlineSmoothONa_yzy_aItNS_12_GLOBAL__N_113ufixedpoint32EEEvPKT_iPKT0_iPS8_iib
   %i.cm = getelementptr inbounds nuw i8, ptr %10, i64 88 ; 2 uses
   store ptr %spec.select.i.i, ptr %i.cm, align 8, !tbaa !74
-  %13 = lshr i32 %3, 1                            ; 2 uses
-  %.not161.i.i = icmp eq i32 %13, 0
+  %.not161.i.i = icmp eq i32 %i.ch, 0
   br i1 %.not161.i.i, label %.loopexit157.i.i, label %.lr.ph.preheader.i.i
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.ae
   %i.cn = zext nneg i32 %3 to i64
-  %wide.trip.count.i.i = zext nneg i32 %13 to i64
   %i.co = getelementptr [4 x i8], ptr %2, i64 %i.cn
   br label %.lr.ph.i.i
 
 bb.af:                                            ; preds = %.lr.ph.i.i
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
-  %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %wide.trip.count.i.i
+  %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %i.ci
   br i1 %exitcond.not.i.i, label %.loopexit157.i.i, label %.lr.ph.i.i, !llvm.loop !130
 
 .lr.ph.i.i:                                       ; preds = %bb.af, %.lr.ph.preheader.i.i
