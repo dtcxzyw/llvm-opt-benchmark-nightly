@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.b
   br i1 %i.j, label %_ZN6icu_7814MessagePattern7addPartE23UMessagePatternPartTypeiiiR10UErrorCode.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.k = shl nuw nsw i32 %i.e, 1                  ; 3 uses
+  %i.k = shl nuw nsw i32 %i.e, 1                  ; 2 uses
   %i.l = icmp sgt i32 %i.e, 0
   br i1 %i.l, label %bb.f, label %_ZN6icu_7814MessagePattern7addPartE23UMessagePatternPartTypeiiiR10UErrorCode.exit.thread
 
@@ -217,8 +217,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f
   %i.p = load i32, ptr %i.h, align 8, !tbaa !28
-  %spec.select.i.i.i = tail call i32 @llvm.smin.i32(i32 %i.e, i32 %i.p)
-  %.1.i.i.i = tail call i32 @llvm.smin.i32(i32 %spec.select.i.i.i, i32 %i.k)
+  %.1.i.i.i = tail call i32 @llvm.smin.i32(i32 %i.e, i32 %i.p)
   %i.q = load ptr, ptr %i.g, align 8, !tbaa !27   ; 2 uses
   %i.r = sext i32 %.1.i.i.i to i64
   %i.s = shl nsw i64 %i.r, 4
@@ -324,7 +323,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.bo, label %_ZN6icu_7818MessagePatternListINS_14MessagePattern4PartELi32EE24ensureCapacityForOneMoreEiR10UErrorCode.exit.i122, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.bp = shl nuw nsw i32 %i.bl, 1                ; 3 uses
+  %i.bp = shl nuw nsw i32 %i.bl, 1                ; 2 uses
   %i.bq = icmp sgt i32 %i.bl, 0
   br i1 %i.bq, label %bb.n, label %bb.q
 
@@ -337,8 +336,7 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.n
   %i.bu = load i32, ptr %i.bm, align 8, !tbaa !28
-  %spec.select.i.i.i116 = tail call i32 @llvm.smin.i32(i32 %i.bl, i32 %i.bu)
-  %.1.i.i.i117 = tail call i32 @llvm.smin.i32(i32 %spec.select.i.i.i116, i32 %i.bp)
+  %.1.i.i.i117 = tail call i32 @llvm.smin.i32(i32 %i.bl, i32 %i.bu)
   %i.bv = load ptr, ptr %i.bk, align 8, !tbaa !27 ; 2 uses
   %i.bw = sext i32 %.1.i.i.i117 to i64
   %i.bx = shl nsw i64 %i.bw, 4
@@ -404,7 +402,7 @@ bb.r:                                             ; preds = %_ZNK6icu_7813Unicod
   br i1 %i.ct, label %_ZN6icu_7818MessagePatternListINS_14MessagePattern4PartELi32EE24ensureCapacityForOneMoreEiR10UErrorCode.exit.i134, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.cu = shl nuw nsw i32 %i.cq, 1                ; 3 uses
+  %i.cu = shl nuw nsw i32 %i.cq, 1                ; 2 uses
   %i.cv = icmp sgt i32 %i.cq, 0
   br i1 %i.cv, label %bb.t, label %bb.w
 
@@ -417,8 +415,7 @@ bb.t:                                             ; preds = %bb.s
 
 bb.u:                                             ; preds = %bb.t
   %i.cz = load i32, ptr %i.cr, align 8, !tbaa !28
-  %spec.select.i.i.i128 = tail call i32 @llvm.smin.i32(i32 %i.cq, i32 %i.cz)
-  %.1.i.i.i129 = tail call i32 @llvm.smin.i32(i32 %spec.select.i.i.i128, i32 %i.cu)
+  %.1.i.i.i129 = tail call i32 @llvm.smin.i32(i32 %i.cq, i32 %i.cz)
   %i.da = load ptr, ptr %i.cp, align 8, !tbaa !27 ; 2 uses
   %i.db = sext i32 %.1.i.i.i129 to i64
   %i.dc = shl nsw i64 %i.db, 4
@@ -492,7 +489,7 @@ bb.y:                                             ; preds = %switch.early.test, 
   br i1 %i.dx, label %_ZN6icu_7818MessagePatternListINS_14MessagePattern4PartELi32EE24ensureCapacityForOneMoreEiR10UErrorCode.exit.i143, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
-  %i.dy = shl nuw nsw i32 %i.du, 1                ; 3 uses
+  %i.dy = shl nuw nsw i32 %i.du, 1                ; 2 uses
   %i.dz = icmp sgt i32 %i.du, 0
   br i1 %i.dz, label %bb.aa, label %bb.ad
 
@@ -505,8 +502,7 @@ bb.aa:                                            ; preds = %bb.z
 
 bb.ab:                                            ; preds = %bb.aa
   %i.ed = load i32, ptr %i.dv, align 8, !tbaa !28
-  %spec.select.i.i.i137 = tail call i32 @llvm.smin.i32(i32 %i.du, i32 %i.ed)
-  %.1.i.i.i138 = tail call i32 @llvm.smin.i32(i32 %spec.select.i.i.i137, i32 %i.dy)
+  %.1.i.i.i138 = tail call i32 @llvm.smin.i32(i32 %i.du, i32 %i.ed)
   %i.ee = load ptr, ptr %i.dt, align 8, !tbaa !27 ; 2 uses
   %i.ef = sext i32 %.1.i.i.i138 to i64
   %i.eg = shl nsw i64 %i.ef, 4
@@ -626,7 +622,7 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %i.gb, label %_ZN6icu_7818MessagePatternListINS_14MessagePattern4PartELi32EE24ensureCapacityForOneMoreEiR10UErrorCode.exit.i156, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah
-  %i.gc = shl nuw nsw i32 %i.fw, 1                ; 3 uses
+  %i.gc = shl nuw nsw i32 %i.fw, 1                ; 2 uses
   %i.gd = icmp sgt i32 %i.fw, 0
   br i1 %i.gd, label %bb.aj, label %bb.am
 
@@ -639,8 +635,7 @@ bb.aj:                                            ; preds = %bb.ai
 
 bb.ak:                                            ; preds = %bb.aj
   %i.gh = load i32, ptr %i.fz, align 8, !tbaa !28
-  %spec.select.i.i.i150 = tail call i32 @llvm.smin.i32(i32 %i.fw, i32 %i.gh)
-  %.1.i.i.i151 = tail call i32 @llvm.smin.i32(i32 %spec.select.i.i.i150, i32 %i.gc)
+  %.1.i.i.i151 = tail call i32 @llvm.smin.i32(i32 %i.fw, i32 %i.gh)
   %i.gi = load ptr, ptr %i.fv, align 8, !tbaa !27 ; 2 uses
   %i.gj = sext i32 %.1.i.i.i151 to i64
   %i.gk = shl nsw i64 %i.gj, 4
@@ -699,7 +694,7 @@ bb.an:                                            ; preds = %_ZNK6icu_7813Unicod
   br i1 %i.hd, label %_ZN6icu_7818MessagePatternListINS_14MessagePattern4PartELi32EE24ensureCapacityForOneMoreEiR10UErrorCode.exit.i165, label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an
-  %i.he = shl nuw nsw i32 %i.gy, 1                ; 3 uses
+  %i.he = shl nuw nsw i32 %i.gy, 1                ; 2 uses
   %i.hf = icmp sgt i32 %i.gy, 0
   br i1 %i.hf, label %bb.ap, label %bb.as
 
@@ -712,8 +707,7 @@ bb.ap:                                            ; preds = %bb.ao
 
 bb.aq:                                            ; preds = %bb.ap
   %i.hj = load i32, ptr %i.hb, align 8, !tbaa !28
-  %spec.select.i.i.i159 = tail call i32 @llvm.smin.i32(i32 %i.gy, i32 %i.hj)
-  %.1.i.i.i160 = tail call i32 @llvm.smin.i32(i32 %spec.select.i.i.i159, i32 %i.he)
+  %.1.i.i.i160 = tail call i32 @llvm.smin.i32(i32 %i.gy, i32 %i.hj)
   %i.hk = load ptr, ptr %i.gx, align 8, !tbaa !27 ; 2 uses
   %i.hl = sext i32 %.1.i.i.i160 to i64
   %i.hm = shl nsw i64 %i.hl, 4
@@ -778,7 +772,7 @@ bb.au:                                            ; preds = %bb.at
   br i1 %i.il, label %_ZN6icu_7818MessagePatternListINS_14MessagePattern4PartELi32EE24ensureCapacityForOneMoreEiR10UErrorCode.exit.i174, label %bb.av
 
 bb.av:                                            ; preds = %bb.au
-  %i.im = shl nuw nsw i32 %i.ig, 1                ; 3 uses
+  %i.im = shl nuw nsw i32 %i.ig, 1                ; 2 uses
   %i.in = icmp sgt i32 %i.ig, 0
   br i1 %i.in, label %bb.aw, label %bb.az
 
@@ -791,8 +785,7 @@ bb.aw:                                            ; preds = %bb.av
 
 bb.ax:                                            ; preds = %bb.aw
   %i.ir = load i32, ptr %i.ij, align 8, !tbaa !28
-  %spec.select.i.i.i168 = tail call i32 @llvm.smin.i32(i32 %i.ig, i32 %i.ir)
-  %.1.i.i.i169 = tail call i32 @llvm.smin.i32(i32 %spec.select.i.i.i168, i32 %i.im)
+  %.1.i.i.i169 = tail call i32 @llvm.smin.i32(i32 %i.ig, i32 %i.ir)
   %i.is = load ptr, ptr %i.if, align 8, !tbaa !27 ; 2 uses
   %i.it = sext i32 %.1.i.i.i169 to i64
   %i.iu = shl nsw i64 %i.it, 4
@@ -860,7 +853,7 @@ bb.bc:                                            ; preds = %bb.bb
   br i1 %i.jm, label %_ZN6icu_7818MessagePatternListINS_14MessagePattern4PartELi32EE24ensureCapacityForOneMoreEiR10UErrorCode.exit.i183, label %bb.bd
 
 bb.bd:                                            ; preds = %bb.bc
-  %i.jn = shl nuw nsw i32 %i.jj, 1                ; 3 uses
+  %i.jn = shl nuw nsw i32 %i.jj, 1                ; 2 uses
   %i.jo = icmp sgt i32 %i.jj, 0
   br i1 %i.jo, label %bb.be, label %bb.bh
 
@@ -873,8 +866,7 @@ bb.be:                                            ; preds = %bb.bd
 
 bb.bf:                                            ; preds = %bb.be
   %i.js = load i32, ptr %i.jk, align 8, !tbaa !28
-  %spec.select.i.i.i177 = tail call i32 @llvm.smin.i32(i32 %i.jj, i32 %i.js)
-  %.1.i.i.i178 = tail call i32 @llvm.smin.i32(i32 %spec.select.i.i.i177, i32 %i.jn)
+  %.1.i.i.i178 = tail call i32 @llvm.smin.i32(i32 %i.jj, i32 %i.js)
   %i.jt = load ptr, ptr %i.ji, align 8, !tbaa !27 ; 2 uses
   %i.ju = sext i32 %.1.i.i.i178 to i64
   %i.jv = shl nsw i64 %i.ju, 4
@@ -951,7 +943,7 @@ bb.bl:                                            ; preds = %bb.bk
   br i1 %i.kv, label %_ZN6icu_7818MessagePatternListINS_14MessagePattern4PartELi32EE24ensureCapacityForOneMoreEiR10UErrorCode.exit.i.i, label %bb.bm
 
 bb.bm:                                            ; preds = %bb.bl
-  %i.kw = shl nuw nsw i32 %i.kn, 1                ; 3 uses
+  %i.kw = shl nuw nsw i32 %i.kn, 1                ; 2 uses
   %i.kx = icmp sgt i32 %i.kn, 0
   br i1 %i.kx, label %bb.bn, label %bb.bq
 
@@ -964,8 +956,7 @@ bb.bn:                                            ; preds = %bb.bm
 
 bb.bo:                                            ; preds = %bb.bn
   %i.lb = load i32, ptr %i.kt, align 8, !tbaa !28
-  %spec.select.i.i.i.i = tail call i32 @llvm.smin.i32(i32 %i.kn, i32 %i.lb)
-  %.1.i.i.i.i = tail call i32 @llvm.smin.i32(i32 %spec.select.i.i.i.i, i32 %i.kw)
+  %.1.i.i.i.i = tail call i32 @llvm.smin.i32(i32 %i.kn, i32 %i.lb)
   %i.lc = load ptr, ptr %i.ko, align 8, !tbaa !27 ; 2 uses
   %i.ld = sext i32 %.1.i.i.i.i to i64
   %i.le = shl nsw i64 %i.ld, 4
@@ -1061,7 +1052,7 @@ bb.bt:                                            ; preds = %._crit_edge, %_ZN6i
   br i1 %i.mf, label %_ZN6icu_7818MessagePatternListINS_14MessagePattern4PartELi32EE24ensureCapacityForOneMoreEiR10UErrorCode.exit.i.i195, label %bb.bu
 
 bb.bu:                                            ; preds = %bb.bt
-  %i.mg = shl nuw nsw i32 %i.lz, 1                ; 3 uses
+  %i.mg = shl nuw nsw i32 %i.lz, 1                ; 2 uses
   %i.mh = icmp sgt i32 %i.lz, 0
   br i1 %i.mh, label %bb.bv, label %bb.by
 
@@ -1074,8 +1065,7 @@ bb.bv:                                            ; preds = %bb.bu
 
 bb.bw:                                            ; preds = %bb.bv
   %i.ml = load i32, ptr %i.md, align 8, !tbaa !28
-  %spec.select.i.i.i.i188 = tail call i32 @llvm.smin.i32(i32 %i.lz, i32 %i.ml)
-  %.1.i.i.i.i189 = tail call i32 @llvm.smin.i32(i32 %spec.select.i.i.i.i188, i32 %i.mg)
+  %.1.i.i.i.i189 = tail call i32 @llvm.smin.i32(i32 %i.lz, i32 %i.ml)
   %i.mm = load ptr, ptr %i.ly, align 8, !tbaa !27 ; 2 uses
   %i.mn = sext i32 %.1.i.i.i.i189 to i64
   %i.mo = shl nsw i64 %i.mn, 4
@@ -1478,7 +1468,7 @@ bb.w:                                             ; preds = %bb.v
   br i1 %i.ec, label %_ZN6icu_7818MessagePatternListINS_14MessagePattern4PartELi32EE24ensureCapacityForOneMoreEiR10UErrorCode.exit.i, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  %i.ed = shl nuw nsw i32 %i.dx, 1                ; 3 uses
+  %i.ed = shl nuw nsw i32 %i.dx, 1                ; 2 uses
   %i.ee = icmp sgt i32 %i.dx, 0
   br i1 %i.ee, label %bb.y, label %bb.ab
 
@@ -1491,8 +1481,7 @@ bb.y:                                             ; preds = %bb.x
 
 bb.z:                                             ; preds = %bb.y
   %i.ei = load i32, ptr %i.ea, align 8, !tbaa !28
-  %spec.select.i.i.i = tail call i32 @llvm.smin.i32(i32 %i.dx, i32 %i.ei)
-  %.1.i.i.i = tail call i32 @llvm.smin.i32(i32 %spec.select.i.i.i, i32 %i.ed)
+  %.1.i.i.i = tail call i32 @llvm.smin.i32(i32 %i.dx, i32 %i.ei)
   %i.ej = load ptr, ptr %i.dw, align 8, !tbaa !27 ; 2 uses
   %i.ek = sext i32 %.1.i.i.i to i64
   %i.el = shl nsw i64 %i.ek, 4
@@ -1895,7 +1884,7 @@ bb.v:                                             ; preds = %bb.u
   br i1 %i.dd, label %_ZN6icu_7818MessagePatternListINS_14MessagePattern4PartELi32EE24ensureCapacityForOneMoreEiR10UErrorCode.exit.i, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  %i.de = shl nuw nsw i32 %i.cy, 1                ; 3 uses
+  %i.de = shl nuw nsw i32 %i.cy, 1                ; 2 uses
   %i.df = icmp sgt i32 %i.cy, 0
   br i1 %i.df, label %bb.x, label %bb.aa
 
@@ -1908,8 +1897,7 @@ bb.x:                                             ; preds = %bb.w
 
 bb.y:                                             ; preds = %bb.x
   %i.dj = load i32, ptr %i.db, align 8, !tbaa !28
-  %spec.select.i.i.i = tail call i32 @llvm.smin.i32(i32 %i.cy, i32 %i.dj)
-  %.1.i.i.i = tail call i32 @llvm.smin.i32(i32 %spec.select.i.i.i, i32 %i.de)
+  %.1.i.i.i = tail call i32 @llvm.smin.i32(i32 %i.cy, i32 %i.dj)
   %i.dk = load ptr, ptr %i.cx, align 8, !tbaa !27 ; 2 uses
   %i.dl = sext i32 %.1.i.i.i to i64
   %i.dm = shl nsw i64 %i.dl, 4
@@ -2160,7 +2148,7 @@ bb.at:                                            ; preds = %.thread189
   br i1 %i.gz, label %_ZN6icu_7818MessagePatternListINS_14MessagePattern4PartELi32EE24ensureCapacityForOneMoreEiR10UErrorCode.exit.i173, label %bb.au
 
 bb.au:                                            ; preds = %bb.at
-  %i.ha = shl nuw nsw i32 %i.gu, 1                ; 3 uses
+  %i.ha = shl nuw nsw i32 %i.gu, 1                ; 2 uses
   %i.hb = icmp sgt i32 %i.gu, 0
   br i1 %i.hb, label %bb.av, label %bb.ay
 
@@ -2173,8 +2161,7 @@ bb.av:                                            ; preds = %bb.au
 
 bb.aw:                                            ; preds = %bb.av
   %i.hf = load i32, ptr %i.gx, align 8, !tbaa !28
-  %spec.select.i.i.i167 = tail call i32 @llvm.smin.i32(i32 %i.gu, i32 %i.hf)
-  %.1.i.i.i168 = tail call i32 @llvm.smin.i32(i32 %spec.select.i.i.i167, i32 %i.ha)
+  %.1.i.i.i168 = tail call i32 @llvm.smin.i32(i32 %i.gu, i32 %i.hf)
   %i.hg = load ptr, ptr %i.gt, align 8, !tbaa !27 ; 2 uses
   %i.hh = sext i32 %.1.i.i.i168 to i64
   %i.hi = shl nsw i64 %i.hh, 4
@@ -2577,7 +2564,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.i, label %_ZN6icu_7818MessagePatternListINS_14MessagePattern4PartELi32EE24ensureCapacityForOneMoreEiR10UErrorCode.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.j = shl nuw nsw i32 %i.d, 1                  ; 3 uses
+  %i.j = shl nuw nsw i32 %i.d, 1                  ; 2 uses
   %i.k = icmp sgt i32 %i.d, 0
   br i1 %i.k, label %bb.d, label %bb.g
 
@@ -2590,8 +2577,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.o = load i32, ptr %i.g, align 8, !tbaa !28
-  %spec.select.i.i = tail call i32 @llvm.smin.i32(i32 %i.d, i32 %i.o)
-  %.1.i.i = tail call i32 @llvm.smin.i32(i32 %spec.select.i.i, i32 %i.j)
+  %.1.i.i = tail call i32 @llvm.smin.i32(i32 %i.d, i32 %i.o)
   %i.p = load ptr, ptr %i.b, align 8, !tbaa !27   ; 2 uses
   %i.q = sext i32 %.1.i.i to i64
   %i.r = shl nsw i64 %i.q, 4
@@ -2660,7 +2646,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.i, label %_ZN6icu_7814MessagePattern7addPartE23UMessagePatternPartTypeiiiR10UErrorCode.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.j = shl nuw nsw i32 %i.b, 1                  ; 3 uses
+  %i.j = shl nuw nsw i32 %i.b, 1                  ; 2 uses
   %i.k = icmp sgt i32 %i.b, 0
   br i1 %i.k, label %bb.d, label %bb.g
 
@@ -2673,8 +2659,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.o = load i32, ptr %i.g, align 8, !tbaa !28
-  %spec.select.i.i.i = tail call i32 @llvm.smin.i32(i32 %i.b, i32 %i.o)
-  %.1.i.i.i = tail call i32 @llvm.smin.i32(i32 %spec.select.i.i.i, i32 %i.j)
+  %.1.i.i.i = tail call i32 @llvm.smin.i32(i32 %i.b, i32 %i.o)
   %i.p = load ptr, ptr %i.d, align 8, !tbaa !27   ; 2 uses
   %i.q = sext i32 %.1.i.i.i to i64
   %i.r = shl nsw i64 %i.q, 4
@@ -2900,7 +2885,7 @@ bb.w:                                             ; preds = %bb.v
   br i1 %i.dk, label %_ZN6icu_7818MessagePatternListINS_14MessagePattern4PartELi32EE24ensureCapacityForOneMoreEiR10UErrorCode.exit.i161, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  %i.dl = shl nuw nsw i32 %i.df, 1                ; 3 uses
+  %i.dl = shl nuw nsw i32 %i.df, 1                ; 2 uses
   %i.dm = icmp sgt i32 %i.df, 0
   br i1 %i.dm, label %bb.y, label %bb.ab
 
@@ -2913,8 +2898,7 @@ bb.y:                                             ; preds = %bb.x
 
 bb.z:                                             ; preds = %bb.y
   %i.dq = load i32, ptr %i.di, align 8, !tbaa !28
-  %spec.select.i.i.i155 = tail call i32 @llvm.smin.i32(i32 %i.df, i32 %i.dq)
-  %.1.i.i.i156 = tail call i32 @llvm.smin.i32(i32 %spec.select.i.i.i155, i32 %i.dl)
+  %.1.i.i.i156 = tail call i32 @llvm.smin.i32(i32 %i.df, i32 %i.dq)
   %i.dr = load ptr, ptr %i.de, align 8, !tbaa !27 ; 2 uses
   %i.ds = sext i32 %.1.i.i.i156 to i64
   %i.dt = shl nsw i64 %i.ds, 4
@@ -3317,7 +3301,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.m, label %_ZN6icu_7818MessagePatternListINS_14MessagePattern4PartELi32EE24ensureCapacityForOneMoreEiR10UErrorCode.exit.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.n = shl nuw nsw i32 %i.b, 1                  ; 3 uses
+  %i.n = shl nuw nsw i32 %i.b, 1                  ; 2 uses
   %i.o = icmp sgt i32 %i.b, 0
   br i1 %i.o, label %bb.d, label %bb.g
 
@@ -3330,8 +3314,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.s = load i32, ptr %i.k, align 8, !tbaa !28
-  %spec.select.i.i.i = tail call i32 @llvm.smin.i32(i32 %i.b, i32 %i.s)
-  %.1.i.i.i = tail call i32 @llvm.smin.i32(i32 %spec.select.i.i.i, i32 %i.n)
+  %.1.i.i.i = tail call i32 @llvm.smin.i32(i32 %i.b, i32 %i.s)
   %i.t = load ptr, ptr %i.d, align 8, !tbaa !27   ; 2 uses
   %i.u = sext i32 %.1.i.i.i to i64
   %i.v = shl nsw i64 %i.u, 4
@@ -3734,7 +3717,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.au, label %_ZN6icu_7818MessagePatternListINS_14MessagePattern4PartELi32EE24ensureCapacityForOneMoreEiR10UErrorCode.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.av = shl nuw nsw i32 %i.ap, 1                ; 3 uses
+  %i.av = shl nuw nsw i32 %i.ap, 1                ; 2 uses
   %i.aw = icmp sgt i32 %i.ap, 0
   br i1 %i.aw, label %bb.m, label %bb.p
 
@@ -3747,8 +3730,7 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m
   %i.ba = load i32, ptr %i.as, align 8, !tbaa !28
-  %spec.select.i.i.i = tail call i32 @llvm.smin.i32(i32 %i.ap, i32 %i.ba)
-  %.1.i.i.i = tail call i32 @llvm.smin.i32(i32 %spec.select.i.i.i, i32 %i.av)
+  %.1.i.i.i = tail call i32 @llvm.smin.i32(i32 %i.ap, i32 %i.ba)
   %i.bb = load ptr, ptr %i.an, align 8, !tbaa !27 ; 2 uses
   %i.bc = sext i32 %.1.i.i.i to i64
   %i.bd = shl nsw i64 %i.bc, 4
@@ -4113,7 +4095,7 @@ bb.k:                                             ; preds = %.lr.ph.split
   br i1 %i.bs, label %_ZN6icu_7818MessagePatternListINS_14MessagePattern4PartELi32EE24ensureCapacityForOneMoreEiR10UErrorCode.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.split.us
-  %i.bt = shl nuw nsw i32 %i.bp, 1                ; 3 uses
+  %i.bt = shl nuw nsw i32 %i.bp, 1                ; 2 uses
   %i.bu = icmp sgt i32 %i.bp, 0
   br i1 %i.bu, label %bb.m, label %bb.p
 
@@ -4126,8 +4108,7 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m
   %i.by = load i32, ptr %i.bq, align 8, !tbaa !28
-  %spec.select.i.i.i = tail call i32 @llvm.smin.i32(i32 %i.bp, i32 %i.by)
-  %.1.i.i.i = tail call i32 @llvm.smin.i32(i32 %spec.select.i.i.i, i32 %i.bt)
+  %.1.i.i.i = tail call i32 @llvm.smin.i32(i32 %i.bp, i32 %i.by)
   %i.bz = load ptr, ptr %i.bn, align 8, !tbaa !27 ; 2 uses
   %i.ca = sext i32 %.1.i.i.i to i64
   %i.cb = shl nsw i64 %i.ca, 4
@@ -4296,7 +4277,7 @@ bb.f:                                             ; preds = %bb.b
   br i1 %i.o, label %_ZN6icu_7818MessagePatternListIdLi8EE24ensureCapacityForOneMoreEiR10UErrorCode.exit, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.p = shl nuw nsw i32 %i.d, 1                  ; 3 uses
+  %i.p = shl nuw nsw i32 %i.d, 1                  ; 2 uses
   %i.q = icmp sgt i32 %i.d, 0
   br i1 %i.q, label %bb.h, label %bb.k
 
@@ -4309,8 +4290,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.u = load i32, ptr %i.m, align 8, !tbaa !45
-  %spec.select.i.i = tail call i32 @llvm.smin.i32(i32 %i.d, i32 %i.u)
-  %.1.i.i = tail call i32 @llvm.smin.i32(i32 %spec.select.i.i, i32 %i.p)
+  %.1.i.i = tail call i32 @llvm.smin.i32(i32 %i.d, i32 %i.u)
   %i.v = load ptr, ptr %i.f, align 8, !tbaa !38   ; 2 uses
   %i.w = sext i32 %.1.i.i to i64
   %i.x = shl nsw i64 %i.w, 3
@@ -4370,7 +4350,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.ao, label %_ZN6icu_7818MessagePatternListINS_14MessagePattern4PartELi32EE24ensureCapacityForOneMoreEiR10UErrorCode.exit.i, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.ap = shl nuw nsw i32 %i.aj, 1                ; 3 uses
+  %i.ap = shl nuw nsw i32 %i.aj, 1                ; 2 uses
   %i.aq = icmp sgt i32 %i.aj, 0
   br i1 %i.aq, label %bb.p, label %bb.s
 
@@ -4383,8 +4363,7 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.p
   %i.au = load i32, ptr %i.am, align 8, !tbaa !28
-  %spec.select.i.i.i = tail call i32 @llvm.smin.i32(i32 %i.aj, i32 %i.au)
-  %.1.i.i.i = tail call i32 @llvm.smin.i32(i32 %spec.select.i.i.i, i32 %i.ap)
+  %.1.i.i.i = tail call i32 @llvm.smin.i32(i32 %i.aj, i32 %i.au)
   %i.av = load ptr, ptr %i.ah, align 8, !tbaa !27 ; 2 uses
   %i.aw = sext i32 %.1.i.i.i to i64
   %i.ax = shl nsw i64 %i.aw, 4

@@ -201,7 +201,7 @@ ApplyGivens.exit.loopexit:                        ; preds = %.lr.ph53.i
   %indvar99 = phi i64 [ %indvar.next100.a, %ApplyGivens.exit72 ], [ 0, %.lr.ph.preheader ] ; 3 uses
   %indvars.iv80 = phi i64 [ %indvars.iv.next81, %ApplyGivens.exit72 ], [ %indvars.iv78, %.lr.ph.preheader ] ; 3 uses
   %i.dc = trunc i64 %indvar99 to i32              ; 2 uses
-  %i.dd = add nsw i64 %indvars.iv80, -1           ; 7 uses
+  %i.dd = add nsw i64 %indvars.iv80, -1           ; 6 uses
   %i.de = getelementptr inbounds [8 x i8], ptr %0, i64 %i.dd
   %i.df = load ptr, ptr %i.de, align 8, !tbaa !11 ; 2 uses
   %indvars.iv.next81 = add nuw nsw i64 %indvars.iv80, %indvars.iv ; 7 uses
@@ -213,33 +213,28 @@ ApplyGivens.exit.loopexit:                        ; preds = %.lr.ph53.i
   %i.dk = getelementptr inbounds nuw [8 x i8], ptr %i.df, i64 %indvars.iv.next81
   %i.dl = load double, ptr %i.dk, align 8, !tbaa !13
   call void @Givens(double noundef %i.dj, double noundef %i.dl, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #5
-  %i.dm = load double, ptr %i.a, align 8, !tbaa !13 ; 6 uses
-  %i.dn = load double, ptr %i.b, align 8, !tbaa !13 ; 6 uses
+  %i.dm = load double, ptr %i.a, align 8, !tbaa !13 ; 5 uses
+  %i.dn = load double, ptr %i.b, align 8, !tbaa !13 ; 5 uses
   %i.do = add nuw nsw i64 %indvars.iv80, %i.q
   %i.dp = trunc nsw i64 %i.do to i32
-  %i.dq = call i32 @llvm.smin.i32(i32 %i.dp, i32 50) ; 4 uses
-  %2 = sext i32 %i.dq to i64
-  %.not49.i61 = icmp sgt i64 %i.dd, %2
-  br i1 %.not49.i61, label %ApplyGivens.exit72, label %.lr.ph.i62
-
-.lr.ph.i62:                                       ; preds = %.lr.ph
-  %3 = getelementptr inbounds [8 x i8], ptr %0, i64 %i.dg
-  %4 = load ptr, ptr %3, align 8, !tbaa !11       ; 4 uses
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv.next81
-  %6 = load ptr, ptr %5, align 8, !tbaa !11       ; 4 uses
-  %7 = add nuw nsw i32 %i.dq, 1                   ; 2 uses
-  %8 = mul i32 %i.t, %i.dc
-  %9 = add i32 %i.db, %8
-  %10 = add i32 %i.dq, %9                         ; 2 uses
-  %11 = zext i32 %10 to i64
-  %12 = add nuw nsw i64 %11, 1                    ; 2 uses
-  %min.iters.check = icmp eq i32 %10, 0
+  %i.dq = call i32 @llvm.smin.i32(i32 %i.dp, i32 50) ; 3 uses
+  %2 = getelementptr inbounds [8 x i8], ptr %0, i64 %i.dg
+  %3 = load ptr, ptr %2, align 8, !tbaa !11       ; 4 uses
+  %4 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv.next81
+  %5 = load ptr, ptr %4, align 8, !tbaa !11       ; 4 uses
+  %6 = add nuw nsw i32 %i.dq, 1                   ; 2 uses
+  %7 = mul i32 %i.t, %i.dc
+  %8 = add i32 %i.db, %7
+  %9 = add i32 %i.dq, %8                          ; 2 uses
+  %10 = zext i32 %9 to i64
+  %11 = add nuw nsw i64 %10, 1                    ; 2 uses
+  %min.iters.check = icmp eq i32 %9, 0
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
-vector.memcheck:                                  ; preds = %.lr.ph.i62
+vector.memcheck:                                  ; preds = %.lr.ph
   %i.dr = mul i64 %indvar99, %i.m                 ; 2 uses
   %i.ds = add i64 %i.z, %i.dr                     ; 2 uses
-  %i.dt = getelementptr i8, ptr %4, i64 %i.ds
+  %i.dt = getelementptr i8, ptr %3, i64 %i.ds
   %i.du = add i64 %i.y, %i.dr
   %i.dv = mul i32 %i.j, %i.dc
   %i.dw = add i32 %i.dv, %i.w
@@ -247,16 +242,16 @@ vector.memcheck:                                  ; preds = %.lr.ph.i62
   %i.dy = zext i32 %i.dx to i64
   %i.dz = shl nuw nsw i64 %i.dy, 3
   %i.ea = add i64 %i.du, %i.dz                    ; 2 uses
-  %i.eb = getelementptr i8, ptr %4, i64 %i.ea
-  %i.ec = getelementptr i8, ptr %6, i64 %i.ds
-  %i.ed = getelementptr i8, ptr %6, i64 %i.ea
+  %i.eb = getelementptr i8, ptr %3, i64 %i.ea
+  %i.ec = getelementptr i8, ptr %5, i64 %i.ds
+  %i.ed = getelementptr i8, ptr %5, i64 %i.ea
   %bound0 = icmp ult ptr %i.dt, %i.ed
   %bound1 = icmp ult ptr %i.ec, %i.eb
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %12, 8589934590                ; 3 uses
+  %n.vec = and i64 %11, 8589934590                ; 3 uses
   %i.ee = add i64 %i.dd, %n.vec
   %broadcast.splatinsert = insertelement <2 x double> poison, double %i.dm, i64 0
   %broadcast.splat = shufflevector <2 x double> %broadcast.splatinsert, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
@@ -267,9 +262,9 @@ vector.ph:                                        ; preds = %vector.memcheck
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ef = add i64 %i.dd, %index                   ; 2 uses
-  %i.eg = getelementptr inbounds [8 x i8], ptr %4, i64 %i.ef ; 2 uses
+  %i.eg = getelementptr inbounds [8 x i8], ptr %3, i64 %i.ef ; 2 uses
   %wide.load = load <2 x double>, ptr %i.eg, align 8, !tbaa !13, !alias.scope !41, !noalias !42 ; 2 uses
-  %i.eh = getelementptr inbounds [8 x i8], ptr %6, i64 %i.ef ; 2 uses
+  %i.eh = getelementptr inbounds [8 x i8], ptr %5, i64 %i.ef ; 2 uses
   %wide.load105 = load <2 x double>, ptr %i.eh, align 8, !tbaa !13, !alias.scope !42 ; 2 uses
   %i.ei = fneg <2 x double> %wide.load105
   %i.ej = fmul <2 x double> %broadcast.splat, %i.ei
@@ -283,11 +278,11 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.en, label %middle.block, label %vector.body, !llvm.loop !33
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %12, %n.vec
+  %cmp.n = icmp eq i64 %11, %n.vec
   br i1 %cmp.n, label %.lr.ph53.i67.preheader, label %scalar.ph.preheader
 
-scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph.i62, %middle.block
-  %indvars.iv.i63.ph = phi i64 [ %i.dd, %vector.memcheck ], [ %i.dd, %.lr.ph.i62 ], [ %i.ee, %middle.block ]
+scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph, %middle.block
+  %indvars.iv.i63.ph = phi i64 [ %i.dd, %vector.memcheck ], [ %i.dd, %.lr.ph ], [ %i.ee, %middle.block ]
   %i.eo = insertelement <2 x double> poison, double %i.dn, i64 0
   %i.ep = insertelement <2 x double> %i.eo, double %i.dm, i64 1
   %i.eq = insertelement <2 x double> poison, double %i.dm, i64 0
@@ -296,9 +291,9 @@ scalar.ph.preheader:                              ; preds = %vector.memcheck, %.
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
   %indvars.iv.i63 = phi i64 [ %indvars.iv.next.i64, %scalar.ph ], [ %indvars.iv.i63.ph, %scalar.ph.preheader ] ; 3 uses
-  %i.es = getelementptr inbounds [8 x i8], ptr %4, i64 %indvars.iv.i63 ; 2 uses
+  %i.es = getelementptr inbounds [8 x i8], ptr %3, i64 %indvars.iv.i63 ; 2 uses
   %i.et = load double, ptr %i.es, align 8, !tbaa !13
-  %i.eu = getelementptr inbounds [8 x i8], ptr %6, i64 %indvars.iv.i63 ; 2 uses
+  %i.eu = getelementptr inbounds [8 x i8], ptr %5, i64 %indvars.iv.i63 ; 2 uses
   %i.ev = load double, ptr %i.eu, align 8, !tbaa !13 ; 2 uses
   %i.ew = fneg double %i.ev
   %i.ex = insertelement <2 x double> poison, double %i.ev, i64 0
@@ -313,7 +308,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   store double %i.fe, ptr %i.eu, align 8, !tbaa !13
   %indvars.iv.next.i64 = add nsw i64 %indvars.iv.i63, 1 ; 2 uses
   %lftr.wideiv.i65 = trunc i64 %indvars.iv.next.i64 to i32
-  %exitcond.not.i66 = icmp eq i32 %7, %lftr.wideiv.i65
+  %exitcond.not.i66 = icmp eq i32 %6, %lftr.wideiv.i65
   br i1 %exitcond.not.i66, label %.lr.ph53.i67.preheader, label %scalar.ph, !llvm.loop !34
 
 .lr.ph53.i67.preheader:                           ; preds = %scalar.ph, %middle.block
@@ -341,18 +336,13 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   store <2 x double> %i.fv, ptr %i.fl, align 8, !tbaa !13
   %indvars.iv.next56.i69 = add nsw i64 %indvars.iv55.i68, 1 ; 2 uses
   %lftr.wideiv58.i70 = trunc i64 %indvars.iv.next56.i69 to i32
-  %exitcond59.not.i71 = icmp eq i32 %7, %lftr.wideiv58.i70
-  br i1 %exitcond59.not.i71, label %ApplyGivens.exit72.loopexit, label %.lr.ph53.i67, !llvm.loop !0
+  %exitcond59.not.i71 = icmp eq i32 %6, %lftr.wideiv58.i70
+  br i1 %exitcond59.not.i71, label %ApplyGivens.exit72, label %.lr.ph53.i67, !llvm.loop !0
 
-ApplyGivens.exit72.loopexit:                      ; preds = %.lr.ph53.i67
-  %.pre = load double, ptr %i.a, align 8, !tbaa !13
-  %.pre89 = load double, ptr %i.b, align 8, !tbaa !13
-  br label %ApplyGivens.exit72
-
-ApplyGivens.exit72:                               ; preds = %ApplyGivens.exit72.loopexit, %.lr.ph
-  %13 = phi double [ %.pre89, %ApplyGivens.exit72.loopexit ], [ %i.dn, %.lr.ph ]
-  %14 = phi double [ %.pre, %ApplyGivens.exit72.loopexit ], [ %i.dm, %.lr.ph ]
-  call void @ApplyRGivens(ptr noundef %i.c, double noundef %14, double noundef %13, i32 noundef %i.dh, i32 noundef %indvars) #5
+ApplyGivens.exit72:                               ; preds = %.lr.ph53.i67
+  %12 = load double, ptr %i.a, align 8, !tbaa !13
+  %13 = load double, ptr %i.b, align 8, !tbaa !13
+  call void @ApplyRGivens(ptr noundef %i.c, double noundef %12, double noundef %13, i32 noundef %i.dh, i32 noundef %indvars) #5
   %i.fw = icmp slt i64 %indvars.iv.next81, %i.o
   %indvar.next100.a = add i64 %indvar99, 1
   br i1 %i.fw, label %.lr.ph, label %._crit_edge, !llvm.loop !35

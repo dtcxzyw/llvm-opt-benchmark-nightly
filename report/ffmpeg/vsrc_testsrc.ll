@@ -130,7 +130,6 @@ target triple = "x86_64-pc-linux-gnu"
 @white = internal constant [4 x i8] c"\EB\80\80\FF", align 1
 @rainbow = internal constant [7 x [4 x i8]] [[4 x i8] c"\B4\80\80\FF", [4 x i8] c"\A2,\8E\FF", [4 x i8] c"\83\9C,\FF", [4 x i8] c"pH:\FF", [4 x i8] c"T\B8\C6\FF", [4 x i8] c"Ad\D4\FF", [4 x i8] c"#\D4r\FF"], align 16
 @black0 = internal constant [4 x i8] c"\10\80\80\FF", align 1
-@.str.81 = private unnamed_addr constant [17 x i8] c"x + w <= test->w\00", align 1
 @.str.82 = private unnamed_addr constant [17 x i8] c"y + h <= test->h\00", align 1
 @smptebars_pix_fmts = internal constant [7 x i32] [i32 0, i32 4, i32 31, i32 5, i32 6, i32 7, i32 -1], align 16
 @rainbow100 = internal constant [7 x [4 x i8]] [[4 x i8] c"\EB\80\80\FF", [4 x i8] c"\D2\10\92\FF", [4 x i8] c"\AA\A6\10\FF", [4 x i8] c"\916\22\FF", [4 x i8] c"j\CA\DE\FF", [4 x i8] c"QZ\F0\FF", [4 x i8] c")\F0n\FF"], align 16
@@ -533,34 +532,24 @@ bb.a:
   %i.b = load i32, ptr %i.a, align 4, !tbaa !57
   %i.c = tail call ptr @av_pix_fmt_desc_get(i32 noundef %i.b) #19 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.e = load i32, ptr %i.d, align 8, !tbaa !35   ; 3 uses
+  %i.e = load i32, ptr %i.d, align 8, !tbaa !35   ; 2 uses
   %i.f = add nsw i32 %i.e, -1
-  %i.g = tail call i32 @llvm.smin.i32(i32 %2, i32 %i.f) ; 4 uses
+  %i.g = tail call i32 @llvm.smin.i32(i32 %2, i32 %i.f) ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.i = load i32, ptr %i.h, align 4, !tbaa !36   ; 3 uses
   %i.j = add nsw i32 %i.i, -1
   %i.k = tail call i32 @llvm.smin.i32(i32 %3, i32 %i.j) ; 4 uses
   %i.l = sub nsw i32 %i.e, %i.g
   %i.m = tail call i32 @llvm.smin.i32(i32 %4, i32 %i.l)
-  %spec.select = tail call i32 @llvm.smax.i32(i32 %i.m, i32 0) ; 3 uses
+  %spec.select = tail call i32 @llvm.smax.i32(i32 %i.m, i32 0) ; 2 uses
   %i.n = sub nsw i32 %i.i, %i.k
   %.107 = tail call i32 @llvm.smin.i32(i32 %5, i32 %i.n)
   %i.o = tail call i32 @llvm.smax.i32(i32 %.107, i32 0) ; 3 uses
-  %i.p = add nsw i32 %spec.select, %i.g
-  %.not104 = icmp sgt i32 %i.p, %i.e
-  br i1 %.not104, label %7, label %8
+  %i.p = add nsw i32 %i.o, %i.k
+  %.not104 = icmp sgt i32 %i.p, %i.i
+  br i1 %.not104, label %bb.b, label %.preheader
 
-7:                                                ; preds = %bb.a
-  tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef null, i32 noundef 0, ptr noundef nonnull @.str.56, ptr noundef nonnull @.str.81, ptr noundef nonnull @.str.58, i32 noundef 1443) #19
-  tail call void @abort() #22
-  unreachable
-
-8:                                                ; preds = %bb.a
-  %9 = add nsw i32 %i.o, %i.k
-  %.not105 = icmp sgt i32 %9, %i.i
-  br i1 %.not105, label %bb.b, label %.preheader
-
-.preheader:                                       ; preds = %8
+.preheader:                                       ; preds = %bb.a
   %i.q = load ptr, ptr %6, align 8, !tbaa !56     ; 2 uses
   %.not106111 = icmp eq ptr %i.q, null
   br i1 %.not106111, label %._crit_edge114, label %.lr.ph113
@@ -573,7 +562,7 @@ bb.a:
   %i.v = sub nsw i32 0, %i.o
   br label %bb.c
 
-bb.b:                                             ; preds = %8
+bb.b:                                             ; preds = %bb.a
   tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef null, i32 noundef 0, ptr noundef nonnull @.str.56, ptr noundef nonnull @.str.82, ptr noundef nonnull @.str.58, i32 noundef 1444) #19
   tail call void @abort() #22
   unreachable
