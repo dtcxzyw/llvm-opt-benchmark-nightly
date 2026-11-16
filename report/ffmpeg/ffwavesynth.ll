@@ -204,39 +204,26 @@ bb.o:                                             ; preds = %frac64.exit115.i
   %i.dk = and i32 %i.be, 2147483647
   %i.dl = zext nneg i32 %i.dk to i64              ; 2 uses
   %.not99.i = icmp samesign ugt i64 %indvars.iv.i, %i.dl
-  br i1 %.not99.i, label %1, label %.loopexit
+  br i1 %.not99.i, label %phi_at.exit.i, label %.loopexit
 
-1:                                                ; preds = %bb.o
-  %2 = getelementptr inbounds nuw [96 x i8], ptr %i.u, i64 %i.dl ; 4 uses
-  %3 = load i64, ptr %2, align 8, !tbaa !36
-  %4 = sub i64 %i.ad, %3                          ; 6 uses
-  %5 = and i64 %4, 1
-  %.not.i116.i = icmp eq i64 %5, 0
-  br i1 %.not.i116.i, label %10, label %6
-
-6:                                                ; preds = %1
-  %7 = add nsw i64 %4, -1
-  %8 = lshr exact i64 %7, 1
-  %9 = mul i64 %8, %4
-  br label %phi_at.exit.i
-
-10:                                               ; preds = %1
-  %11 = lshr exact i64 %4, 1
-  %12 = add i64 %4, -1
-  %13 = mul i64 %11, %12
-  br label %phi_at.exit.i
-
-phi_at.exit.i:                                    ; preds = %10, %6
-  %14 = phi i64 [ %9, %6 ], [ %13, %10 ]
-  %i.dm = getelementptr inbounds nuw i8, ptr %2, i64 16
+phi_at.exit.i:                                    ; preds = %bb.o
+  %1 = getelementptr inbounds nuw [96 x i8], ptr %i.u, i64 %i.dl ; 4 uses
+  %2 = load i64, ptr %1, align 8, !tbaa !36
+  %3 = sub i64 %i.ad, %2                          ; 4 uses
+  %4 = and i64 %3, 1
+  %5 = lshr i64 %3, 1
+  %sext.i.i = add i64 %3, -1
+  %.sink.i.i = add i64 %sext.i.i, %4
+  %i.dm = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.dn = load i64, ptr %i.dm, align 8, !tbaa !42
-  %i.do = getelementptr inbounds nuw i8, ptr %2, i64 24
+  %i.do = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.dp = load i64, ptr %i.do, align 8, !tbaa !40
-  %i.dq = mul i64 %i.dp, %4
+  %i.dq = mul i64 %i.dp, %3
   %i.dr = add i64 %i.dq, %i.dn
-  %i.ds = getelementptr inbounds nuw i8, ptr %2, i64 32
+  %i.ds = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.dt = load i64, ptr %i.ds, align 8, !tbaa !41
-  %i.du = mul i64 %i.dt, %14
+  %6 = mul i64 %i.dt, %5
+  %i.du = mul i64 %6, %.sink.i.i
   %i.dv = add i64 %i.dr, %i.du
   %i.dw = getelementptr inbounds nuw i8, ptr %i.z, i64 16
   store i64 %i.dv, ptr %i.dw, align 8, !tbaa !42
@@ -639,44 +626,31 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %i.l = load i64, ptr %i.k, align 8, !tbaa !37
   %.not = icmp slt i64 %1, %i.l
-  br i1 %.not, label %2, label %bb.d
+  br i1 %.not, label %phi_at.exit, label %bb.d
 
-2:                                                ; preds = %bb.c
-  %3 = trunc nuw nsw i64 %indvars.iv to i32
-  store i32 %3, ptr %.05070, align 4, !tbaa !47
-  %4 = getelementptr inbounds nuw i8, ptr %i.h, i64 88
-  %5 = sub i64 %1, %i.i                           ; 8 uses
-  %6 = and i64 %5, 1
-  %.not.i = icmp eq i64 %6, 0
-  br i1 %.not.i, label %11, label %7
-
-7:                                                ; preds = %2
-  %8 = add nsw i64 %5, -1
-  %9 = lshr exact i64 %8, 1
-  %10 = mul i64 %9, %5
-  br label %phi_at.exit
-
-11:                                               ; preds = %2
-  %12 = lshr exact i64 %5, 1
-  %13 = add i64 %5, -1
-  %14 = mul i64 %12, %13
-  br label %phi_at.exit
-
-phi_at.exit:                                      ; preds = %7, %11
-  %15 = phi i64 [ %10, %7 ], [ %14, %11 ]
+phi_at.exit:                                      ; preds = %bb.c
+  %2 = trunc nuw nsw i64 %indvars.iv to i32
+  store i32 %2, ptr %.05070, align 4, !tbaa !47
+  %3 = getelementptr inbounds nuw i8, ptr %i.h, i64 88
+  %4 = sub i64 %1, %i.i                           ; 6 uses
+  %5 = and i64 %4, 1
+  %6 = lshr i64 %4, 1
+  %sext.i = add i64 %4, -1
+  %.sink.i = add i64 %sext.i, %5
+  %7 = mul i64 %.sink.i, %6
   %i.m = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   %i.n = load i64, ptr %i.m, align 8, !tbaa !42
   %i.o = getelementptr inbounds nuw i8, ptr %i.h, i64 24
   %i.p = load i64, ptr %i.o, align 8, !tbaa !40   ; 2 uses
-  %i.q = mul i64 %i.p, %5
+  %i.q = mul i64 %i.p, %4
   %i.r = add i64 %i.q, %i.n
   %i.s = getelementptr inbounds nuw i8, ptr %i.h, i64 32
   %i.t = load i64, ptr %i.s, align 8, !tbaa !41   ; 2 uses
-  %i.u = mul i64 %i.t, %15
+  %i.u = mul i64 %7, %i.t
   %i.v = add i64 %i.r, %i.u
   %i.w = getelementptr inbounds nuw i8, ptr %i.h, i64 56
   store i64 %i.v, ptr %i.w, align 8, !tbaa !56
-  %i.x = mul i64 %i.t, %5
+  %i.x = mul i64 %i.t, %4
   %i.y = add i64 %i.x, %i.p
   %i.z = getelementptr inbounds nuw i8, ptr %i.h, i64 64
   store i64 %i.y, ptr %i.z, align 8, !tbaa !57
@@ -684,7 +658,7 @@ phi_at.exit:                                      ; preds = %7, %11
   %i.ab = load i64, ptr %i.aa, align 8, !tbaa !43
   %i.ac = getelementptr inbounds nuw i8, ptr %i.h, i64 48
   %i.ad = load i64, ptr %i.ac, align 8, !tbaa !44
-  %i.ae = mul i64 %i.ad, %5
+  %i.ae = mul i64 %i.ad, %4
   %i.af = add i64 %i.ae, %i.ab
   %i.ag = getelementptr inbounds nuw i8, ptr %i.h, i64 72
   store i64 %i.af, ptr %i.ag, align 8, !tbaa !55
@@ -693,7 +667,7 @@ phi_at.exit:                                      ; preds = %7, %11
 
 bb.d:                                             ; preds = %bb.c, %phi_at.exit
   %i.ah = phi i32 [ %i.g, %bb.c ], [ %.pre, %phi_at.exit ] ; 2 uses
-  %.1 = phi ptr [ %.05070, %bb.c ], [ %4, %phi_at.exit ] ; 2 uses
+  %.1 = phi ptr [ %.05070, %bb.c ], [ %3, %phi_at.exit ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
   %i.ai = sext i32 %i.ah to i64
   %i.aj = icmp slt i64 %indvars.iv.next, %i.ai

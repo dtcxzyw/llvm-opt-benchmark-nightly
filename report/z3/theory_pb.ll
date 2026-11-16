@@ -205,8 +205,7 @@ bb.y:                                             ; preds = %bb.x
 bb.z:                                             ; preds = %bb.x
   %i.bz = add nuw i32 %1, 1
   %i.ca = lshr exact i32 %i.bz, 1
-  %21 = add nsw i32 %1, -1
-  %i.cb = lshr exact i32 %21, 1
+  %i.cb = lshr i32 %1, 1
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z, %bb.y

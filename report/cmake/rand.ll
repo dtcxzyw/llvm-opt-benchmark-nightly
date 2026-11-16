@@ -120,23 +120,21 @@ bb.a:
   br i1 %or.cond.not, label %bb.b, label %Curl_rand_bytes.exit.thread
 
 bb.b:                                             ; preds = %bb.a
-  %3 = add nsw i64 %2, -1                         ; 2 uses
-  %i.d = lshr exact i64 %3, 1                     ; 2 uses
-  %.not31.i = icmp eq i64 %3, 0
+  %i.d = lshr i64 %2, 1                           ; 3 uses
+  %.not31.i = icmp eq i64 %i.d, 0
   br i1 %.not31.i, label %Curl_rand_bytes.exit.thread, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.b, %.unr-lcssa
-  %.01433.i = phi i64 [ %i.af, %.unr-lcssa ], [ %i.d, %bb.b ] ; 2 uses
+  %.01433.i = phi i64 [ %i.af, %.unr-lcssa ], [ %i.d, %bb.b ] ; 3 uses
   %.01532.i = phi ptr [ %.lcssa, %.unr-lcssa ], [ %i.b, %bb.b ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
-  %i.e = call i64 @llvm.umin.i64(i64 %.01433.i, i64 4) ; 5 uses
+  %i.e = call i64 @llvm.umin.i64(i64 %.01433.i, i64 4) ; 4 uses
   %i.f = call i32 @Curl_ssl_random(ptr noundef %0, ptr noundef nonnull %i.a, i64 noundef 4) #4 ; 2 uses
   %.not22.i = icmp eq i32 %i.f, 0
   br i1 %.not22.i, label %.preheader.preheader.i, label %.thread.i
 
 .preheader.preheader.i:                           ; preds = %.lr.ph.i
   %.pre.i = load i32, ptr %i.a, align 4, !tbaa !11 ; 2 uses
-  %4 = add nsw i64 %i.e, -1
   %xtraiter = and i64 %i.e, 3                     ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.preheader.i.prol.loopexit, label %.preheader.i.prol
@@ -162,7 +160,7 @@ bb.b:                                             ; preds = %bb.a
   %.unr = phi i32 [ %.pre.i, %.preheader.preheader.i ], [ %i.k, %.preheader.i.prol ]
   %.01230.i.unr = phi i64 [ %i.e, %.preheader.preheader.i ], [ %i.l, %.preheader.i.prol ]
   %.11628.i.unr = phi ptr [ %.01532.i, %.preheader.preheader.i ], [ %i.i, %.preheader.i.prol ]
-  %i.m = icmp ult i64 %4, 3
+  %i.m = icmp ult i64 %.01433.i, 4
   br i1 %i.m, label %.unr-lcssa, label %.preheader.i
 
 .thread.i:                                        ; preds = %.lr.ph.i
@@ -203,7 +201,7 @@ bb.b:                                             ; preds = %bb.a
 
 .unr-lcssa:                                       ; preds = %.preheader.i, %.preheader.i.prol.loopexit
   %.lcssa = phi ptr [ %.lcssa.unr, %.preheader.i.prol.loopexit ], [ %i.ab, %.preheader.i ]
-  %i.af = sub i64 %.01433.i, %i.e                 ; 2 uses
+  %i.af = sub nuw nsw i64 %.01433.i, %i.e         ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
   %.not.i = icmp eq i64 %i.af, 0
   br i1 %.not.i, label %Curl_rand_bytes.exit, label %.lr.ph.i, !llvm.loop !1

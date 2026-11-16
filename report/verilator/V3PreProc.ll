@@ -205,8 +205,7 @@ _ZN8V3PreLex12curFilelinepEv.exit437:             ; preds = %_ZN8V3PreLex12curFi
   br i1 %or.cond, label %bb.gg, label %bb.gh
 
 bb.gg:                                            ; preds = %_ZN8V3PreLex12curFilelinepEv.exit437
-  %23 = add nsw i32 %i.asa, -1
-  %i.asi = ashr exact i32 %23, 2
+  %i.asi = ashr i32 %i.asa, 2
   %.neg = mul nsw i32 %i.asi, -3
   %i.asj = getelementptr inbounds nuw i8, ptr %i.aqz, i64 256 ; 2 uses
   %i.ask = load i32, ptr %i.asj, align 8, !tbaa !818

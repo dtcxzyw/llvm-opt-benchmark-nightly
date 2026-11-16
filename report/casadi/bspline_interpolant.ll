@@ -205,8 +205,7 @@ bb.a:
   br i1 %.not, label %bb.ak, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %22 = add nsw i64 %2, -1
-  %i.b = ashr exact i64 %22, 1
+  %i.b = ashr i64 %2, 1
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !57   ; 2 uses
   %i.e = load ptr, ptr %1, align 8, !tbaa !58     ; 2 uses
@@ -214,7 +213,8 @@ bb.b:                                             ; preds = %bb.a
   %i.g = ptrtoint ptr %i.e to i64
   %i.h = sub i64 %i.f, %i.g
   %i.i = ashr exact i64 %i.h, 3                   ; 2 uses
-  %i.j = add i64 %2, 1                            ; 2 uses
+  %22 = and i64 %2, -2                            ; 2 uses
+  %i.j = add nsw i64 %22, 2
   %.not64 = icmp ult i64 %i.i, %i.j
   br i1 %.not64, label %bb.c, label %.preheader168
 
@@ -466,8 +466,9 @@ bb.r:                                             ; preds = %.sink.split, %_ZNKS
   %i.bm = phi ptr [ %.pre, %.preheader164.loopexit ], [ %i.d, %.preheader168 ]
   %.lcssa = phi ptr [ %i.cn, %.preheader164.loopexit ], [ null, %.preheader168 ] ; 3 uses
   store ptr %.lcssa, ptr %0, align 8
-  %23 = xor i64 %2, -1
-  %.not190 = icmp eq i64 %.pre-phi213, %i.j
+  %23 = sub nuw nsw i64 -2, %22                   ; 2 uses
+  %24 = sub nsw i64 0, %.pre-phi213
+  %.not190 = icmp eq i64 %23, %24
   br i1 %.not190, label %.preheader, label %.lr.ph180
 
 .lr.ph180:                                        ; preds = %.preheader164
@@ -652,7 +653,7 @@ _ZNSt6vectorIdSaIdEE9push_backERKd.exit106:       ; preds = %_ZNSt6vectorIdSaIdE
   %i.ea = ptrtoint ptr %i.dt to i64
   %i.eb = sub i64 %i.dz, %i.ea
   %i.ec = ashr exact i64 %i.eb, 3
-  %i.ed = add i64 %i.ec, %23
+  %i.ed = add i64 %23, %i.ec
   %i.ee = icmp ult i64 %i.dy, %i.ed
   br i1 %i.ee, label %bb.y, label %.preheader, !llvm.loop !205
 

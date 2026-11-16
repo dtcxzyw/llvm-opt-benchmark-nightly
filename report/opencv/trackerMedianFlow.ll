@@ -204,30 +204,30 @@ bb.q:                                             ; preds = %_ZNSt6vectorIfSaIfE
 define linkonce_odr hidden noundef float @_ZN2cv17tracking_internal23getMedianAndDoPartitionIfEET_RSt6vectorIS2_SaIS2_EE(ptr noundef nonnull align 8 dereferenceable(24) %0) local_unnamed_addr #0 comdat {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !100  ; 7 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !100  ; 8 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !98     ; 8 uses
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
-  %i.g = ashr exact i64 %i.f, 2                   ; 4 uses
+  %i.g = ashr exact i64 %i.f, 2                   ; 3 uses
   %i.h = and i64 %i.f, 4
   %i.i = icmp eq i64 %i.h, 0
-  %1 = icmp eq ptr %i.c, %i.b                     ; 2 uses
+  %1 = lshr i64 %i.g, 1                           ; 4 uses
+  %2 = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %1 ; 3 uses
   br i1 %i.i, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
-  %2 = lshr exact i64 %i.g, 1                     ; 3 uses
-  %3 = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %2
-  %4 = getelementptr inbounds i8, ptr %3, i64 -4  ; 2 uses
-  %i.j = icmp eq ptr %4, %i.b
-  %or.cond.i = select i1 %1, i1 true, i1 %i.j
+  %3 = getelementptr inbounds i8, ptr %2, i64 -4  ; 2 uses
+  %4 = icmp eq ptr %i.c, %i.b
+  %i.j = icmp eq ptr %3, %i.b
+  %or.cond.i = select i1 %4, i1 true, i1 %i.j
   br i1 %or.cond.i, label %_ZSt11nth_elementIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEEEEvT_S7_S7_.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.k = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.g, i1 true)
   %i.l = shl nuw nsw i64 %i.k, 1
   %i.m = xor i64 %i.l, 126
-  tail call void @_ZSt13__introselectIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_S9_T0_T1_(ptr %i.c, ptr nonnull %4, ptr %i.b, i64 noundef %i.m)
+  tail call void @_ZSt13__introselectIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_S9_T0_T1_(ptr %i.c, ptr nonnull %3, ptr %i.b, i64 noundef %i.m)
   %.pre38 = load ptr, ptr %0, align 8, !tbaa !98
   %.pre39 = load ptr, ptr %i.a, align 8, !tbaa !123
   br label %_ZSt11nth_elementIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEEEEvT_S7_S7_.exit
@@ -235,7 +235,7 @@ bb.c:                                             ; preds = %bb.b
 _ZSt11nth_elementIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEEEEvT_S7_S7_.exit: ; preds = %bb.b, %bb.c
   %i.n = phi ptr [ %i.b, %bb.b ], [ %.pre39, %bb.c ] ; 4 uses
   %i.o = phi ptr [ %i.c, %bb.b ], [ %.pre38, %bb.c ] ; 5 uses
-  %i.p = getelementptr [4 x i8], ptr %i.o, i64 %2 ; 3 uses
+  %i.p = getelementptr [4 x i8], ptr %i.o, i64 %1 ; 3 uses
   %i.q = getelementptr i8, ptr %i.p, i64 -4
   %i.r = load float, ptr %i.q, align 4, !tbaa !92
   %i.s = icmp eq ptr %i.o, %i.n
@@ -257,31 +257,29 @@ bb.d:                                             ; preds = %_ZSt11nth_elementIN
 
 _ZSt11nth_elementIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEEEEvT_S7_S7_.exit32: ; preds = %_ZSt11nth_elementIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEEEEvT_S7_S7_.exit, %bb.d
   %i.ab = phi ptr [ %i.o, %_ZSt11nth_elementIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEEEEvT_S7_S7_.exit ], [ %.pre40, %bb.d ]
-  %i.ac = getelementptr inbounds nuw [4 x i8], ptr %i.ab, i64 %2
+  %i.ac = getelementptr inbounds nuw [4 x i8], ptr %i.ab, i64 %1
   %i.ad = load float, ptr %i.ac, align 4, !tbaa !92
   %i.ae = fadd float %i.r, %i.ad
   %i.af = fmul float %i.ae, 5.000000e-01
   br label %bb.g
 
 bb.e:                                             ; preds = %bb.a
-  %5 = add nsw i64 %i.g, -1
-  %6 = lshr exact i64 %5, 1                       ; 2 uses
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %6 ; 2 uses
-  %i.ag = icmp eq ptr %7, %i.b
-  %or.cond.i33 = select i1 %1, i1 true, i1 %i.ag
+  %5 = icmp eq ptr %i.c, %i.b
+  %i.ag = icmp eq ptr %2, %i.b
+  %or.cond.i33 = select i1 %5, i1 true, i1 %i.ag
   br i1 %or.cond.i33, label %_ZSt11nth_elementIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEEEEvT_S7_S7_.exit34, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.ah = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.g, i1 true)
   %i.ai = shl nuw nsw i64 %i.ah, 1
   %i.aj = xor i64 %i.ai, 126
-  tail call void @_ZSt13__introselectIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_S9_T0_T1_(ptr %i.c, ptr %7, ptr %i.b, i64 noundef %i.aj)
+  tail call void @_ZSt13__introselectIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_S9_T0_T1_(ptr %i.c, ptr %2, ptr %i.b, i64 noundef %i.aj)
   %.pre = load ptr, ptr %0, align 8, !tbaa !98
   br label %_ZSt11nth_elementIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEEEEvT_S7_S7_.exit34
 
 _ZSt11nth_elementIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEEEEvT_S7_S7_.exit34: ; preds = %bb.e, %bb.f
   %i.ak = phi ptr [ %i.c, %bb.e ], [ %.pre, %bb.f ]
-  %i.al = getelementptr inbounds nuw [4 x i8], ptr %i.ak, i64 %6
+  %i.al = getelementptr inbounds nuw [4 x i8], ptr %i.ak, i64 %1
   %i.am = load float, ptr %i.al, align 4, !tbaa !92
   br label %bb.g
 
@@ -332,30 +330,30 @@ _ZNSt12_Vector_baseIN2cv3MatESaIS1_EED2Ev.exit:   ; preds = %_ZSt8_DestroyIPN2cv
 define linkonce_odr hidden noundef double @_ZN2cv17tracking_internal23getMedianAndDoPartitionIdEET_RSt6vectorIS2_SaIS2_EE(ptr noundef nonnull align 8 dereferenceable(24) %0) local_unnamed_addr #0 comdat {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !122  ; 7 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !122  ; 8 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !121    ; 8 uses
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
-  %i.g = ashr exact i64 %i.f, 3                   ; 4 uses
+  %i.g = ashr exact i64 %i.f, 3                   ; 3 uses
   %i.h = and i64 %i.f, 8
   %i.i = icmp eq i64 %i.h, 0
-  %1 = icmp eq ptr %i.c, %i.b                     ; 2 uses
+  %1 = lshr i64 %i.g, 1                           ; 4 uses
+  %2 = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %1 ; 3 uses
   br i1 %i.i, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
-  %2 = lshr exact i64 %i.g, 1                     ; 3 uses
-  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %2
-  %4 = getelementptr inbounds i8, ptr %3, i64 -8  ; 2 uses
-  %i.j = icmp eq ptr %4, %i.b
-  %or.cond.i = select i1 %1, i1 true, i1 %i.j
+  %3 = getelementptr inbounds i8, ptr %2, i64 -8  ; 2 uses
+  %4 = icmp eq ptr %i.c, %i.b
+  %i.j = icmp eq ptr %3, %i.b
+  %or.cond.i = select i1 %4, i1 true, i1 %i.j
   br i1 %or.cond.i, label %_ZSt11nth_elementIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEvT_S7_S7_.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.k = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.g, i1 true)
   %i.l = shl nuw nsw i64 %i.k, 1
   %i.m = xor i64 %i.l, 126
-  tail call void @_ZSt13__introselectIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_S9_T0_T1_(ptr %i.c, ptr nonnull %4, ptr %i.b, i64 noundef %i.m)
+  tail call void @_ZSt13__introselectIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_S9_T0_T1_(ptr %i.c, ptr nonnull %3, ptr %i.b, i64 noundef %i.m)
   %.pre38 = load ptr, ptr %0, align 8, !tbaa !121
   %.pre39 = load ptr, ptr %i.a, align 8, !tbaa !197
   br label %_ZSt11nth_elementIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEvT_S7_S7_.exit
@@ -363,7 +361,7 @@ bb.c:                                             ; preds = %bb.b
 _ZSt11nth_elementIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEvT_S7_S7_.exit: ; preds = %bb.b, %bb.c
   %i.n = phi ptr [ %i.b, %bb.b ], [ %.pre39, %bb.c ] ; 4 uses
   %i.o = phi ptr [ %i.c, %bb.b ], [ %.pre38, %bb.c ] ; 5 uses
-  %i.p = getelementptr [8 x i8], ptr %i.o, i64 %2 ; 3 uses
+  %i.p = getelementptr [8 x i8], ptr %i.o, i64 %1 ; 3 uses
   %i.q = getelementptr i8, ptr %i.p, i64 -8
   %i.r = load double, ptr %i.q, align 8, !tbaa !15
   %i.s = icmp eq ptr %i.o, %i.n
@@ -385,31 +383,29 @@ bb.d:                                             ; preds = %_ZSt11nth_elementIN
 
 _ZSt11nth_elementIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEvT_S7_S7_.exit32: ; preds = %_ZSt11nth_elementIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEvT_S7_S7_.exit, %bb.d
   %i.ab = phi ptr [ %i.o, %_ZSt11nth_elementIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEvT_S7_S7_.exit ], [ %.pre40, %bb.d ]
-  %i.ac = getelementptr inbounds nuw [8 x i8], ptr %i.ab, i64 %2
+  %i.ac = getelementptr inbounds nuw [8 x i8], ptr %i.ab, i64 %1
   %i.ad = load double, ptr %i.ac, align 8, !tbaa !15
   %i.ae = fadd double %i.r, %i.ad
   %i.af = fmul double %i.ae, 5.000000e-01
   br label %bb.g
 
 bb.e:                                             ; preds = %bb.a
-  %5 = add nsw i64 %i.g, -1
-  %6 = lshr exact i64 %5, 1                       ; 2 uses
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %6 ; 2 uses
-  %i.ag = icmp eq ptr %7, %i.b
-  %or.cond.i33 = select i1 %1, i1 true, i1 %i.ag
+  %5 = icmp eq ptr %i.c, %i.b
+  %i.ag = icmp eq ptr %2, %i.b
+  %or.cond.i33 = select i1 %5, i1 true, i1 %i.ag
   br i1 %or.cond.i33, label %_ZSt11nth_elementIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEvT_S7_S7_.exit34, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.ah = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.g, i1 true)
   %i.ai = shl nuw nsw i64 %i.ah, 1
   %i.aj = xor i64 %i.ai, 126
-  tail call void @_ZSt13__introselectIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_S9_T0_T1_(ptr %i.c, ptr %7, ptr %i.b, i64 noundef %i.aj)
+  tail call void @_ZSt13__introselectIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_S9_T0_T1_(ptr %i.c, ptr %2, ptr %i.b, i64 noundef %i.aj)
   %.pre = load ptr, ptr %0, align 8, !tbaa !121
   br label %_ZSt11nth_elementIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEvT_S7_S7_.exit34
 
 _ZSt11nth_elementIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEvT_S7_S7_.exit34: ; preds = %bb.e, %bb.f
   %i.ak = phi ptr [ %i.c, %bb.e ], [ %.pre, %bb.f ]
-  %i.al = getelementptr inbounds nuw [8 x i8], ptr %i.ak, i64 %6
+  %i.al = getelementptr inbounds nuw [8 x i8], ptr %i.ak, i64 %1
   %i.am = load double, ptr %i.al, align 8, !tbaa !15
   br label %bb.g
 
