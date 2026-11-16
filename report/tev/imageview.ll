@@ -204,12 +204,11 @@ bb.e:                                             ; preds = %bb.d
   %.sroa.20137.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 32
   %.sroa.28.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.dp = extractelement <2 x float> %i.cq, i64 1
-  %i.dq = tail call float @llvm.fmuladd.f32(float %i.bl, float 0.000000e+00, float %i.dp) ; 3 uses
-  %3 = insertelement <2 x float> poison, float %i.dq, i64 0
-  %4 = shufflevector <2 x float> %3, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 poison, i32 poison>
-  %5 = fadd <4 x float> %4, <float -0.000000e+00, float 0.000000e+00, float poison, float poison>
-  %6 = shufflevector <4 x float> %i.cc, <4 x float> %5, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
-  %i.dr = fadd <4 x float> %6, %i.cx              ; 4 uses
+  %i.dq = tail call float @llvm.fmuladd.f32(float %i.bl, float 0.000000e+00, float %i.dp) ; 4 uses
+  %3 = fadd float %i.dq, 0.000000e+00
+  %4 = insertelement <4 x float> %i.cc, float %i.dq, i64 2
+  %5 = insertelement <4 x float> %4, float %3, i64 3
+  %i.dr = fadd <4 x float> %5, %i.cx              ; 4 uses
   %i.ds = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.dr, <4 x float> zeroinitializer, <4 x float> %i.df)
   %i.dt = insertelement <4 x float> %i.dr, float %i.dq, i64 2 ; 2 uses
   %i.du = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.dt, <4 x float> zeroinitializer, <4 x float> %i.do)
@@ -218,18 +217,18 @@ bb.e:                                             ; preds = %bb.d
   %i.dx = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.dv, <2 x float> zeroinitializer, <2 x float> %i.dw) ; 2 uses
   %i.dy = fadd <2 x float> %i.cn, %i.dx
   %i.dz = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.cn, <2 x float> zeroinitializer, <2 x float> %i.dx)
-  %7 = insertelement <4 x float> %i.dr, float %i.dq, i64 2
-  %8 = shufflevector <2 x float> %i.dz, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %9 = shufflevector <4 x float> %8, <4 x float> %7, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %10 = shufflevector <4 x float> %i.dr, <4 x float> <float poison, float poison, float 0.000000e+00, float -0.000000e+00>, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %11 = fadd <4 x float> %9, %10
+  %6 = shufflevector <2 x float> %i.dz, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %7 = insertelement <4 x float> %6, float %i.dq, i64 2
+  %8 = insertelement <4 x float> %i.dr, float 0.000000e+00, i64 2
+  %9 = fadd <4 x float> %7, %8
+  %10 = shufflevector <4 x float> %9, <4 x float> %i.dr, <4 x i32> <i32 0, i32 1, i32 2, i32 7>
   store <4 x float> %i.ds, ptr %1, align 16
   store <4 x float> %i.du, ptr %.sroa.12133.0..sroa_idx, align 16
   %i.ea = shufflevector <2 x float> %i.dy, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.eb = shufflevector <4 x float> %i.ea, <4 x float> <float poison, float poison, float -1.000000e+00, float 0.000000e+00>, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.ec = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.dt, <4 x float> zeroinitializer, <4 x float> %i.eb)
   store <4 x float> %i.ec, ptr %.sroa.20137.0..sroa_idx, align 16
-  store <4 x float> %11, ptr %.sroa.28.0..sroa_idx, align 16
+  store <4 x float> %10, ptr %.sroa.28.0..sroa_idx, align 16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #15
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.c, ptr noundef nonnull align 16 dereferenceable(24) @__const._ZN7nanogui6Shader11set_uniformINS_5ColorEEEvNSt3__117basic_string_viewIcNS3_11char_traitsIcEEEERKT_.shape, i64 24, i1 false)
   store i64 4, ptr %i.c, align 16, !tbaa !26

@@ -204,15 +204,16 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #3
 define void @_ZN4geos9operation6buffer22OffsetSegmentGenerator13addLineEndCapERKNS_4geom10CoordinateES6_(ptr noundef nonnull align 8 dereferenceable(484) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %2) local_unnamed_addr #0 align 2 !guid !72 {
 bb.a:
   %3 = alloca %"class.geos::geom::Coordinate", align 16 ; 5 uses
-  %4 = alloca %"class.geos::geom::LineSegment", align 8 ; 5 uses
-  %5 = alloca %"class.geos::geom::LineSegment", align 8 ; 5 uses
+  %4 = alloca %"class.geos::geom::LineSegment", align 16 ; 5 uses
+  %5 = alloca %"class.geos::geom::LineSegment", align 16 ; 5 uses
   %6 = alloca %"class.geos::geom::Coordinate", align 16 ; 5 uses
   %7 = alloca %"class.geos::geom::Coordinate", align 16 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #11
+  %8 = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.a = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.c = load double, ptr %i.b, align 8, !tbaa !32 ; 3 uses
-  %i.d = load <2 x double>, ptr %1, align 8, !tbaa !47 ; 3 uses
+  %i.d = load <2 x double>, ptr %1, align 8, !tbaa !47 ; 5 uses
   %i.e = load <2 x double>, ptr %2, align 8, !tbaa !47 ; 5 uses
   %i.f = fsub <2 x double> %i.e, %i.d             ; 6 uses
   %i.g = extractelement <2 x double> %i.f, i64 0
@@ -227,43 +228,35 @@ bb.a:
   %i.n = fmul <2 x double> %i.f, %i.m
   %i.o = insertelement <2 x double> poison, double %sqrt.i, i64 0
   %i.p = shufflevector <2 x double> %i.o, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.q = fdiv <2 x double> %i.n, %i.p             ; 3 uses
-  %i.r = shufflevector <2 x double> %i.q, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
-  %i.s = fsub <2 x double> %i.e, %i.r             ; 2 uses
-  %i.t = fadd <2 x double> %i.e, %i.r             ; 2 uses
-  %8 = shufflevector <2 x double> %i.d, <2 x double> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
-  %9 = shufflevector <4 x double> <double -0.000000e+00, double poison, double +qnan, double -0.000000e+00>, <4 x double> %8, <4 x i32> <i32 0, i32 5, i32 2, i32 3> ; 2 uses
-  %10 = shufflevector <2 x double> %i.q, <2 x double> %i.s, <4 x i32> <i32 poison, i32 0, i32 poison, i32 2>
-  %11 = insertelement <4 x double> %10, double -0.000000e+00, i64 2
-  %12 = getelementptr inbounds nuw i8, ptr %4, i64 32
-  %13 = shufflevector <2 x double> %i.t, <2 x double> <double poison, double +qnan>, <2 x i32> <i32 1, i32 3>
-  store <2 x double> %13, ptr %12, align 8, !tbaa !47
+  %i.q = fdiv <2 x double> %i.n, %i.p
+  %i.r = shufflevector <2 x double> %i.q, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 4 uses
+  %i.s = fsub <2 x double> %i.d, %i.r
+  %i.t = fadd <2 x double> %i.d, %i.r
+  %9 = shufflevector <2 x double> %i.s, <2 x double> %i.t, <2 x i32> <i32 0, i32 3>
+  store <2 x double> %9, ptr %4, align 16, !tbaa !47
+  %10 = fsub <2 x double> %i.e, %i.r              ; 2 uses
+  %11 = fadd <2 x double> %i.e, %i.r              ; 2 uses
+  %12 = shufflevector <2 x double> %10, <2 x double> %11, <4 x i32> <i32 poison, i32 0, i32 3, i32 poison>
+  %13 = shufflevector <4 x double> <double +qnan, double poison, double poison, double +qnan>, <4 x double> %12, <4 x i32> <i32 0, i32 5, i32 6, i32 3>
+  store <4 x double> %13, ptr %8, align 16, !tbaa !47
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #11
+  %14 = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.u = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
   %i.v = fneg double %i.c
   %i.w = insertelement <2 x double> poison, double %i.v, i64 0
   %i.x = shufflevector <2 x double> %i.w, <2 x double> poison, <2 x i32> zeroinitializer
   %i.y = fmul <2 x double> %i.f, %i.x
-  %i.z = fdiv <2 x double> %i.y, %i.p             ; 3 uses
-  %i.aa = shufflevector <2 x double> %i.z, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
-  %i.ab = fsub <2 x double> %i.e, %i.aa           ; 2 uses
-  %i.ac = fadd <2 x double> %i.e, %i.aa           ; 2 uses
-  %14 = shufflevector <2 x double> %i.d, <2 x double> poison, <2 x i32> zeroinitializer
-  %15 = shufflevector <2 x double> %i.q, <2 x double> %i.z, <2 x i32> <i32 1, i32 3>
-  %16 = fsub <2 x double> %14, %15                ; 2 uses
-  %17 = shufflevector <2 x double> %16, <2 x double> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
-  %18 = shufflevector <4 x double> %17, <4 x double> %11, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
-  %19 = fadd <4 x double> %9, %18
-  store <4 x double> %19, ptr %4, align 8, !tbaa !47
-  %20 = shufflevector <2 x double> %i.z, <2 x double> %i.ab, <4 x i32> <i32 poison, i32 0, i32 poison, i32 2>
-  %21 = insertelement <4 x double> %20, double -0.000000e+00, i64 2
-  %22 = shufflevector <2 x double> %16, <2 x double> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %23 = shufflevector <4 x double> %22, <4 x double> %21, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
-  %24 = fadd <4 x double> %9, %23
-  store <4 x double> %24, ptr %5, align 8, !tbaa !47
-  %25 = getelementptr inbounds nuw i8, ptr %5, i64 32
-  %26 = shufflevector <2 x double> %i.ac, <2 x double> <double poison, double +qnan>, <2 x i32> <i32 1, i32 3>
-  store <2 x double> %26, ptr %25, align 8, !tbaa !47
+  %i.z = fdiv <2 x double> %i.y, %i.p
+  %i.aa = shufflevector <2 x double> %i.z, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 4 uses
+  %i.ab = fsub <2 x double> %i.d, %i.aa
+  %i.ac = fadd <2 x double> %i.d, %i.aa
+  %15 = shufflevector <2 x double> %i.ab, <2 x double> %i.ac, <2 x i32> <i32 0, i32 3>
+  store <2 x double> %15, ptr %5, align 16, !tbaa !47
+  %16 = fsub <2 x double> %i.e, %i.aa             ; 2 uses
+  %17 = fadd <2 x double> %i.e, %i.aa             ; 2 uses
+  %18 = shufflevector <2 x double> %16, <2 x double> %17, <4 x i32> <i32 poison, i32 0, i32 3, i32 poison>
+  %19 = shufflevector <4 x double> <double +qnan, double poison, double poison, double +qnan>, <4 x double> %18, <4 x i32> <i32 0, i32 5, i32 6, i32 3>
+  store <4 x double> %19, ptr %14, align 16, !tbaa !47
   %i.ad = tail call double @atan2(double noundef %i.i, double noundef %i.g) #11 ; 4 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !50, !nonnull !51, !align !52
@@ -334,8 +327,8 @@ bb.d:                                             ; preds = %bb.a
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.a
-  %i.bl = shufflevector <2 x double> %i.ab, <2 x double> %i.ac, <2 x i32> <i32 0, i32 3>
-  %i.bm = shufflevector <2 x double> %i.s, <2 x double> %i.t, <2 x i32> <i32 0, i32 3>
+  %i.bl = shufflevector <2 x double> %16, <2 x double> %17, <2 x i32> <i32 0, i32 3>
+  %i.bm = shufflevector <2 x double> %10, <2 x double> %11, <2 x i32> <i32 0, i32 3>
   %i.bn = tail call double @llvm.fabs.f64(double %i.c)
   %i.bo = tail call double @cos(double noundef %i.ad) #11
   %i.bp = tail call double @sin(double noundef %i.ad) #11
@@ -557,14 +550,16 @@ bb.a:
 define void @_ZN4geos9operation6buffer22OffsetSegmentGenerator12createCircleERKNS_4geom10CoordinateEd(ptr noundef nonnull align 8 dereferenceable(484) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1, double noundef %2) local_unnamed_addr #0 align 2 !guid !83 {
 bb.a:
   %3 = alloca %"class.geos::geom::Coordinate", align 16 ; 5 uses
-  %4 = alloca %"class.geos::geom::Coordinate", align 16 ; 5 uses
+  %4 = alloca %"class.geos::geom::Coordinate", align 8 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #11
-  %5 = load <2 x double>, ptr %1, align 8, !tbaa !47
-  %6 = insertelement <2 x double> <double poison, double -0.000000e+00>, double %2, i64 0
-  %7 = fadd <2 x double> %6, %5
-  store <2 x double> %7, ptr %4, align 16, !tbaa !47
-  %i.a = getelementptr inbounds nuw i8, ptr %4, i64 16
-  store double +qnan, ptr %i.a, align 16, !tbaa !34
+  %5 = load double, ptr %1, align 8, !tbaa !53
+  %6 = fadd double %2, %5
+  %7 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %8 = load double, ptr %7, align 8, !tbaa !54
+  store double %6, ptr %4, align 8, !tbaa !53
+  %i.a = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %9 = insertelement <2 x double> <double poison, double +qnan>, double %8, i64 0
+  store <2 x double> %9, ptr %i.a, align 8, !tbaa !47
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 6 uses
   call void @_ZN4geos9operation6buffer19OffsetSegmentString5addPtERKNS_4geom10CoordinateE(ptr noundef nonnull align 8 dereferenceable(24) %i.b, ptr noundef nonnull align 8 dereferenceable(24) %4)
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8

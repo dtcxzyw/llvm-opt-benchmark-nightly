@@ -129,10 +129,7 @@ bb.a:
   %i.n = add nsw i32 %3, %i.j
   %i.o = sitofp i32 %i.n to float
   %i.p = fsub contract float %i.o, %i.h           ; 2 uses
-  %i.q = fmul contract float %i.p, %i.p
-  %4 = insertelement <4 x float> <float -0.000000e+00, float poison, float poison, float poison>, float %i.q, i64 1
-  %5 = insertelement <4 x float> %4, float %i.m, i64 2
-  %6 = shufflevector <4 x float> %5, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 1>
+  %i.q = fmul contract float %i.p, %i.p           ; 2 uses
   br label %bb.b
 
 ._crit_edge71.split:                              ; preds = %._crit_edge, %bb.a
@@ -172,13 +169,15 @@ bb.d:                                             ; preds = %bb.b
   %i.ah = add nsw i32 %2, %i.v
   %i.ai = sitofp i32 %i.ah to float
   %i.aj = fsub contract float %i.ai, %i.t         ; 2 uses
-  %i.ak = fmul contract float %i.aj, %i.aj
-  %7 = insertelement <4 x float> poison, float %i.z, i64 0
-  %i.al = insertelement <4 x float> %7, float %i.y, i64 1
-  %i.am = insertelement <4 x float> %i.al, float %i.ak, i64 2
-  %8 = shufflevector <4 x float> %i.am, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 2>
-  %9 = fadd contract <4 x float> %6, %8
-  %i.an = tail call contract <4 x float> @llvm.sqrt.v4f32(<4 x float> %9)
+  %i.ak = fmul contract float %i.aj, %i.aj        ; 2 uses
+  %4 = fadd contract float %i.q, %i.y
+  %5 = fadd contract float %i.m, %i.ak
+  %6 = fadd contract float %i.q, %i.ak
+  %i.al = insertelement <4 x float> poison, float %i.z, i64 0
+  %i.am = insertelement <4 x float> %i.al, float %4, i64 1
+  %7 = insertelement <4 x float> %i.am, float %5, i64 2
+  %8 = insertelement <4 x float> %7, float %6, i64 3
+  %i.an = tail call contract <4 x float> @llvm.sqrt.v4f32(<4 x float> %8)
   %i.ao = fdiv contract <4 x float> splat (float 1.000000e+00), %i.an ; 5 uses
   %i.ap = sext i32 %i.ac to i64                   ; 2 uses
   %i.aq = getelementptr inbounds [4 x i8], ptr %1, i64 %i.ap ; 2 uses

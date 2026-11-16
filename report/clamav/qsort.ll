@@ -202,7 +202,7 @@ bb.bj:                                            ; preds = %.critedge2._crit_ed
   br i1 %i.yr, label %bb.bk, label %swapfunc.exit443
 
 bb.bk:                                            ; preds = %bb.bj
-  %i.ys = and i64 %.397, 2147483647               ; 13 uses
+  %i.ys = and i64 %.397, 2147483647               ; 14 uses
   %i.yt = sub nsw i64 0, %i.ys
   %i.yu = getelementptr i8, ptr %.1339.lcssa, i64 %i.yt ; 12 uses
   br i1 %or.cond536, label %bb.bl, label %iter.check887
@@ -288,17 +288,14 @@ vec.epilog.middle.block901:                       ; preds = %vec.epilog.vector.b
   br label %.preheader486
 
 bb.bl:                                            ; preds = %bb.bk
-  %i.zi = lshr i64 %i.ys, 3                       ; 5 uses
-  %4 = icmp ne i64 %i.zi, 0                       ; 2 uses
-  %.neg = sext i1 %4 to i64
-  %5 = add nuw nsw i64 %i.zi, 1
-  %6 = add nsw i64 %5, %.neg                      ; 3 uses
-  %min.iters.check836 = icmp samesign ult i64 %6, 8
+  %i.zi = lshr i64 %i.ys, 3                       ; 6 uses
+  %min.iters.check836 = icmp samesign ult i64 %i.ys, 64
   br i1 %min.iters.check836, label %scalar.ph835.preheader, label %vector.memcheck837
 
 vector.memcheck837:                               ; preds = %bb.bl
+  %.not1573 = icmp eq i64 %i.zi, 0
   %i.zj = and i64 %.397, 2147483640
-  %i.zk = select i1 %4, i64 8, i64 0              ; 2 uses
+  %i.zk = select i1 %.not1573, i64 0, i64 8       ; 2 uses
   %i.zl = add nuw nsw i64 %i.zj, 8                ; 2 uses
   %i.zm = sub nuw nsw i64 %i.zl, %i.zk
   %i.zn = getelementptr i8, ptr %.0535, i64 %i.zm
@@ -311,11 +308,11 @@ vector.memcheck837:                               ; preds = %bb.bl
   br i1 %found.conflict840, label %scalar.ph835.preheader, label %vector.ph841
 
 vector.ph841:                                     ; preds = %vector.memcheck837
-  %n.vec842 = and i64 %6, -4                      ; 4 uses
-  %i.zr = shl nsw i64 %n.vec842, 3                ; 2 uses
+  %n.vec842 = and i64 %i.zi, 268435452            ; 3 uses
+  %i.zr = shl nuw nsw i64 %n.vec842, 3            ; 2 uses
   %i.zs = getelementptr i8, ptr %i.yu, i64 %i.zr
   %i.zt = getelementptr i8, ptr %.0535, i64 %i.zr
-  %7 = sub nsw i64 %i.zi, %n.vec842
+  %4 = and i64 %i.zi, 3
   br label %vector.body843
 
 vector.body843:                                   ; preds = %vector.body843, %vector.ph841
@@ -338,13 +335,13 @@ vector.body843:                                   ; preds = %vector.body843, %ve
   br i1 %i.zx, label %middle.block852, label %vector.body843, !llvm.loop !112
 
 middle.block852:                                  ; preds = %vector.body843
-  %cmp.n853 = icmp eq i64 %6, %n.vec842
+  %cmp.n853 = icmp eq i64 %i.zi, %n.vec842
   br i1 %cmp.n853, label %swapfunc.exit443, label %scalar.ph835.preheader
 
 scalar.ph835.preheader:                           ; preds = %vector.memcheck837, %bb.bl, %middle.block852
   %.022.i440.ph = phi ptr [ %i.yu, %vector.memcheck837 ], [ %i.yu, %bb.bl ], [ %i.zs, %middle.block852 ]
   %.021.i441.ph = phi ptr [ %.0535, %vector.memcheck837 ], [ %.0535, %bb.bl ], [ %i.zt, %middle.block852 ]
-  %.0.i442.ph = phi i64 [ %i.zi, %vector.memcheck837 ], [ %i.zi, %bb.bl ], [ %7, %middle.block852 ]
+  %.0.i442.ph = phi i64 [ %i.zi, %vector.memcheck837 ], [ %i.zi, %bb.bl ], [ %4, %middle.block852 ]
   br label %scalar.ph835
 
 scalar.ph835:                                     ; preds = %scalar.ph835.preheader, %scalar.ph835
@@ -388,7 +385,7 @@ swapfunc.exit443:                                 ; preds = %.preheader486, %sca
   br i1 %i.aar, label %bb.bm, label %swapfunc.exit450
 
 bb.bm:                                            ; preds = %swapfunc.exit443
-  %i.aas = and i64 %.398, 2147483647              ; 13 uses
+  %i.aas = and i64 %.398, 2147483647              ; 14 uses
   %i.aat = sub nsw i64 0, %i.aas
   %i.aau = getelementptr i8, ptr %i.sj, i64 %i.aat ; 12 uses
   br i1 %or.cond536, label %bb.bn, label %iter.check
@@ -475,17 +472,14 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br label %.preheader484
 
 bb.bn:                                            ; preds = %bb.bm
-  %i.abj = lshr i64 %i.aas, 3                     ; 5 uses
-  %8 = icmp ne i64 %i.abj, 0                      ; 2 uses
-  %.neg1573 = sext i1 %8 to i64
-  %9 = add nuw nsw i64 %i.abj, 1
-  %10 = add nsw i64 %9, %.neg1573                 ; 3 uses
-  %min.iters.check = icmp samesign ult i64 %10, 10
+  %i.abj = lshr i64 %i.aas, 3                     ; 6 uses
+  %min.iters.check = icmp samesign ult i64 %i.aas, 80
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %bb.bn
+  %.not1574 = icmp eq i64 %i.abj, 0
   %i.abk = and i64 %.398, 2147483640              ; 2 uses
-  %i.abl = select i1 %8, i64 8, i64 0             ; 2 uses
+  %i.abl = select i1 %.not1574, i64 0, i64 8      ; 2 uses
   %i.abm = add nuw nsw i64 %i.abk, 8
   %i.abn = sub nuw nsw i64 %i.abm, %i.abl
   %i.abo = getelementptr i8, ptr %.1339.lcssa, i64 %i.abn
@@ -500,11 +494,11 @@ vector.memcheck:                                  ; preds = %bb.bn
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %10, -4                        ; 4 uses
-  %i.abu = shl nsw i64 %n.vec, 3                  ; 2 uses
+  %n.vec = and i64 %i.abj, 268435452              ; 3 uses
+  %i.abu = shl nuw nsw i64 %n.vec, 3              ; 2 uses
   %i.abv = getelementptr i8, ptr %i.aau, i64 %i.abu
   %i.abw = getelementptr i8, ptr %.1339.lcssa, i64 %i.abu
-  %11 = sub nsw i64 %i.abj, %n.vec
+  %5 = and i64 %i.abj, 3
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -527,13 +521,13 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.aca, label %middle.block, label %vector.body, !llvm.loop !123
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %10, %n.vec
+  %cmp.n = icmp eq i64 %i.abj, %n.vec
   br i1 %cmp.n, label %swapfunc.exit450, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %bb.bn, %middle.block
   %.022.i447.ph = phi ptr [ %i.aau, %vector.memcheck ], [ %i.aau, %bb.bn ], [ %i.abv, %middle.block ]
   %.021.i448.ph = phi ptr [ %.1339.lcssa, %vector.memcheck ], [ %.1339.lcssa, %bb.bn ], [ %i.abw, %middle.block ]
-  %.0.i449.ph = phi i64 [ %i.abj, %vector.memcheck ], [ %i.abj, %bb.bn ], [ %11, %middle.block ]
+  %.0.i449.ph = phi i64 [ %i.abj, %vector.memcheck ], [ %i.abj, %bb.bn ], [ %5, %middle.block ]
   br label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
@@ -936,7 +930,7 @@ bb.bj:                                            ; preds = %.critedge2._crit_ed
   br i1 %i.yr, label %bb.bk, label %swapfunc.exit452
 
 bb.bk:                                            ; preds = %bb.bj
-  %i.ys = and i64 %.406, 2147483647               ; 13 uses
+  %i.ys = and i64 %.406, 2147483647               ; 14 uses
   %i.yt = sub nsw i64 0, %i.ys
   %i.yu = getelementptr i8, ptr %.1348.lcssa, i64 %i.yt ; 12 uses
   br i1 %or.cond545, label %bb.bl, label %iter.check896
@@ -1022,17 +1016,14 @@ vec.epilog.middle.block910:                       ; preds = %vec.epilog.vector.b
   br label %.preheader495
 
 bb.bl:                                            ; preds = %bb.bk
-  %i.zi = lshr i64 %i.ys, 3                       ; 5 uses
-  %5 = icmp ne i64 %i.zi, 0                       ; 2 uses
-  %.neg = sext i1 %5 to i64
-  %6 = add nuw nsw i64 %i.zi, 1
-  %7 = add nsw i64 %6, %.neg                      ; 3 uses
-  %min.iters.check845 = icmp samesign ult i64 %7, 8
+  %i.zi = lshr i64 %i.ys, 3                       ; 6 uses
+  %min.iters.check845 = icmp samesign ult i64 %i.ys, 64
   br i1 %min.iters.check845, label %scalar.ph844.preheader, label %vector.memcheck846
 
 vector.memcheck846:                               ; preds = %bb.bl
+  %.not1582 = icmp eq i64 %i.zi, 0
   %i.zj = and i64 %.406, 2147483640
-  %i.zk = select i1 %5, i64 8, i64 0              ; 2 uses
+  %i.zk = select i1 %.not1582, i64 0, i64 8       ; 2 uses
   %i.zl = add nuw nsw i64 %i.zj, 8                ; 2 uses
   %i.zm = sub nuw nsw i64 %i.zl, %i.zk
   %i.zn = getelementptr i8, ptr %.0544, i64 %i.zm
@@ -1045,11 +1036,11 @@ vector.memcheck846:                               ; preds = %bb.bl
   br i1 %found.conflict849, label %scalar.ph844.preheader, label %vector.ph850
 
 vector.ph850:                                     ; preds = %vector.memcheck846
-  %n.vec851 = and i64 %7, -4                      ; 4 uses
-  %i.zr = shl nsw i64 %n.vec851, 3                ; 2 uses
+  %n.vec851 = and i64 %i.zi, 268435452            ; 3 uses
+  %i.zr = shl nuw nsw i64 %n.vec851, 3            ; 2 uses
   %i.zs = getelementptr i8, ptr %i.yu, i64 %i.zr
   %i.zt = getelementptr i8, ptr %.0544, i64 %i.zr
-  %8 = sub nsw i64 %i.zi, %n.vec851
+  %5 = and i64 %i.zi, 3
   br label %vector.body852
 
 vector.body852:                                   ; preds = %vector.body852, %vector.ph850
@@ -1072,13 +1063,13 @@ vector.body852:                                   ; preds = %vector.body852, %ve
   br i1 %i.zx, label %middle.block861, label %vector.body852, !llvm.loop !263
 
 middle.block861:                                  ; preds = %vector.body852
-  %cmp.n862 = icmp eq i64 %7, %n.vec851
+  %cmp.n862 = icmp eq i64 %i.zi, %n.vec851
   br i1 %cmp.n862, label %swapfunc.exit452, label %scalar.ph844.preheader
 
 scalar.ph844.preheader:                           ; preds = %vector.memcheck846, %bb.bl, %middle.block861
   %.022.i449.ph = phi ptr [ %i.yu, %vector.memcheck846 ], [ %i.yu, %bb.bl ], [ %i.zs, %middle.block861 ]
   %.021.i450.ph = phi ptr [ %.0544, %vector.memcheck846 ], [ %.0544, %bb.bl ], [ %i.zt, %middle.block861 ]
-  %.0.i451.ph = phi i64 [ %i.zi, %vector.memcheck846 ], [ %i.zi, %bb.bl ], [ %8, %middle.block861 ]
+  %.0.i451.ph = phi i64 [ %i.zi, %vector.memcheck846 ], [ %i.zi, %bb.bl ], [ %5, %middle.block861 ]
   br label %scalar.ph844
 
 scalar.ph844:                                     ; preds = %scalar.ph844.preheader, %scalar.ph844
@@ -1122,7 +1113,7 @@ swapfunc.exit452:                                 ; preds = %.preheader495, %sca
   br i1 %i.aar, label %bb.bm, label %swapfunc.exit459
 
 bb.bm:                                            ; preds = %swapfunc.exit452
-  %i.aas = and i64 %.407, 2147483647              ; 13 uses
+  %i.aas = and i64 %.407, 2147483647              ; 14 uses
   %i.aat = sub nsw i64 0, %i.aas
   %i.aau = getelementptr i8, ptr %i.sj, i64 %i.aat ; 12 uses
   br i1 %or.cond545, label %bb.bn, label %iter.check
@@ -1209,17 +1200,14 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br label %.preheader493
 
 bb.bn:                                            ; preds = %bb.bm
-  %i.abj = lshr i64 %i.aas, 3                     ; 5 uses
-  %9 = icmp ne i64 %i.abj, 0                      ; 2 uses
-  %.neg1582 = sext i1 %9 to i64
-  %10 = add nuw nsw i64 %i.abj, 1
-  %11 = add nsw i64 %10, %.neg1582                ; 3 uses
-  %min.iters.check = icmp samesign ult i64 %11, 10
+  %i.abj = lshr i64 %i.aas, 3                     ; 6 uses
+  %min.iters.check = icmp samesign ult i64 %i.aas, 80
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %bb.bn
+  %.not1583 = icmp eq i64 %i.abj, 0
   %i.abk = and i64 %.407, 2147483640              ; 2 uses
-  %i.abl = select i1 %9, i64 8, i64 0             ; 2 uses
+  %i.abl = select i1 %.not1583, i64 0, i64 8      ; 2 uses
   %i.abm = add nuw nsw i64 %i.abk, 8
   %i.abn = sub nuw nsw i64 %i.abm, %i.abl
   %i.abo = getelementptr i8, ptr %.1348.lcssa, i64 %i.abn
@@ -1234,11 +1222,11 @@ vector.memcheck:                                  ; preds = %bb.bn
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %11, -4                        ; 4 uses
-  %i.abu = shl nsw i64 %n.vec, 3                  ; 2 uses
+  %n.vec = and i64 %i.abj, 268435452              ; 3 uses
+  %i.abu = shl nuw nsw i64 %n.vec, 3              ; 2 uses
   %i.abv = getelementptr i8, ptr %i.aau, i64 %i.abu
   %i.abw = getelementptr i8, ptr %.1348.lcssa, i64 %i.abu
-  %12 = sub nsw i64 %i.abj, %n.vec
+  %6 = and i64 %i.abj, 3
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -1261,13 +1249,13 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.aca, label %middle.block, label %vector.body, !llvm.loop !274
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %11, %n.vec
+  %cmp.n = icmp eq i64 %i.abj, %n.vec
   br i1 %cmp.n, label %swapfunc.exit459, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %bb.bn, %middle.block
   %.022.i456.ph = phi ptr [ %i.aau, %vector.memcheck ], [ %i.aau, %bb.bn ], [ %i.abv, %middle.block ]
   %.021.i457.ph = phi ptr [ %.1348.lcssa, %vector.memcheck ], [ %.1348.lcssa, %bb.bn ], [ %i.abw, %middle.block ]
-  %.0.i458.ph = phi i64 [ %i.abj, %vector.memcheck ], [ %i.abj, %bb.bn ], [ %12, %middle.block ]
+  %.0.i458.ph = phi i64 [ %i.abj, %vector.memcheck ], [ %i.abj, %bb.bn ], [ %6, %middle.block ]
   br label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph

@@ -205,6 +205,7 @@ bb.a:
   %.sroa.25.8.vec.extract.i = extractelement <2 x float> %4, i64 0 ; 3 uses
   %i.o = shufflevector <2 x float> %5, <2 x float> %4, <4 x i32> <i32 0, i32 0, i32 2, i32 1>
   %i.p = fmul <4 x float> %i.o, <float 0.000000e+00, float 1.000000e+00, float 1.000000e+00, float 0.000000e+00> ; 6 uses
+  %7 = shufflevector <4 x float> %i.p, <4 x float> %i.f, <4 x i32> <i32 0, i32 poison, i32 poison, i32 7>
   %i.q = fneg float %.sroa.25.8.vec.extract.i     ; 3 uses
   %i.r = tail call float @llvm.fmuladd.f32(float %i.q, float %.sroa.25.8.vec.extract.i, float %i.i) ; 3 uses
   %i.s = insertelement <4 x float> %i.d, float %i.r, i64 0
@@ -212,8 +213,7 @@ bb.a:
   %i.u = extractelement <4 x float> %i.t, i64 2
   %i.v = fmul float %i.u, %i.q
   %i.w = extractelement <4 x float> %i.t, i64 1
-  %7 = shufflevector <4 x float> %i.f, <4 x float> %i.t, <4 x i32> <i32 poison, i32 6, i32 5, i32 3>
-  %8 = shufflevector <4 x float> %i.p, <4 x float> %7, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
+  %8 = shufflevector <4 x float> %7, <4 x float> %i.t, <4 x i32> <i32 0, i32 6, i32 5, i32 3>
   %i.x = extractelement <4 x float> %i.p, i64 0   ; 2 uses
   %i.y = shufflevector <4 x float> %i.j, <4 x float> %i.t, <4 x i32> <i32 1, i32 1, i32 6, i32 poison>
   %i.z = insertelement <4 x float> %i.y, float %i.h, i64 3
@@ -616,8 +616,9 @@ bb.a:
   %i.ch = fmul <4 x float> %i.cg, <float 0.000000e+00, float -0.000000e+00, float 0.000000e+00, float -0.000000e+00> ; 2 uses
   %i.ci = shufflevector <4 x float> %i.ch, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
   %i.cj = insertelement <2 x float> %i.ci, float %i.be, i64 1
-  %i.ck = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.cd, <2 x float> zeroinitializer, <2 x float> %i.cj)
-  %i.cl = fadd <2 x float> %i.ck, <float -0.000000e+00, float 0.000000e+00> ; 3 uses
+  %i.ck = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.cd, <2 x float> zeroinitializer, <2 x float> %i.cj) ; 2 uses
+  %i.cl = fadd <2 x float> %i.ck, <float poison, float 0.000000e+00> ; 3 uses
+  %2 = shufflevector <2 x float> %i.ck, <2 x float> %i.cl, <2 x i32> <i32 0, i32 3>
   %i.cm = extractelement <2 x float> %i.cl, i64 1
   %i.cn = shufflevector <2 x float> %i.ax, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
   %i.co = insertelement <2 x float> %i.cn, float %i.bd, i64 0
@@ -664,21 +665,21 @@ bb.a:
   %i.ed = extractelement <2 x float> %i.ce, i64 0
   %i.ee = fmul float %i.ed, %i.f
   %i.ef = tail call float @llvm.fmuladd.f32(float %i.c, float %i.dq, float %i.ee)
-  %i.eg = shufflevector <2 x float> %i.cl, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison> ; 2 uses
+  %i.eg = shufflevector <2 x float> %2, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison> ; 2 uses
   %i.eh = shufflevector <4 x float> %i.eg, <4 x float> %i.ec, <2 x i32> <i32 1, i32 6>
   %i.ei = insertelement <2 x float> %i.dd, float %i.ef, i64 1
   %i.ej = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.eh, <2 x float> zeroinitializer, <2 x float> %i.ei)
   %i.ek = shufflevector <4 x float> %i.dm, <4 x float> poison, <2 x i32> <i32 3, i32 0>
-  %i.el = fadd <2 x float> %i.ek, %i.ej           ; 2 uses
-  %i.em = fmul <2 x float> %i.el, <float 1.000000e+00, float 0.000000e+00>
+  %i.el = fadd <2 x float> %i.ek, %i.ej           ; 3 uses
+  %i.em = fmul <2 x float> %i.el, <float poison, float 0.000000e+00>
   %i.en = shufflevector <4 x float> %i.dm, <4 x float> <float poison, float poison, float -0.000000e+00, float -0.000000e+00>, <4 x i32> <i32 3, i32 3, i32 6, i32 7>
-  %2 = shufflevector <2 x float> %i.em, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison> ; 2 uses
-  %i.eo = shufflevector <4 x float> %i.di, <4 x float> %2, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  %3 = shufflevector <2 x float> %i.el, <2 x float> %i.em, <4 x i32> <i32 0, i32 3, i32 poison, i32 poison> ; 2 uses
+  %i.eo = shufflevector <4 x float> %i.di, <4 x float> %3, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   %i.ep = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.en, <4 x float> zeroinitializer, <4 x float> %i.eo)
   %i.eq = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.bz, <4 x float> zeroinitializer, <4 x float> %i.ep) ; 2 uses
-  %3 = shufflevector <4 x float> %i.ec, <4 x float> poison, <4 x i32> <i32 2, i32 2, i32 poison, i32 poison>
-  %4 = shufflevector <4 x float> %3, <4 x float> %i.eg, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
-  %i.er = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.ae, <4 x float> %4, <4 x float> %i.ec)
+  %4 = shufflevector <4 x float> %i.ec, <4 x float> poison, <4 x i32> <i32 2, i32 poison, i32 poison, i32 poison>
+  %5 = shufflevector <4 x float> %4, <4 x float> %i.eg, <4 x i32> <i32 0, i32 0, i32 4, i32 5>
+  %i.er = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.ae, <4 x float> %5, <4 x float> %i.ec)
   %i.es = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.dm, <4 x float> zeroinitializer, <4 x float> %i.er) ; 3 uses
   %i.et = fmul float %i.dt, %i.f
   %i.eu = tail call float @llvm.fmuladd.f32(float %i.c, float %i.de, float %i.et)
@@ -709,7 +710,7 @@ bb.a:
   store <4 x float> %i.fl, ptr %0, align 4
   store <4 x float> %i.fs, ptr %.sroa.723.0..sroa_idx, align 4
   %.sroa.1127.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.ft = shufflevector <4 x float> %i.fh, <4 x float> %2, <4 x i32> <i32 0, i32 1, i32 2, i32 5>
+  %i.ft = shufflevector <4 x float> %i.fh, <4 x float> %3, <4 x i32> <i32 0, i32 1, i32 2, i32 5>
   %i.fu = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.fm, <4 x float> zeroinitializer, <4 x float> %i.ft) ; 2 uses
   %i.fv = fadd <4 x float> %i.fj, %i.fu
   %i.fw = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.am, <4 x float> zeroinitializer, <4 x float> %i.fv)
@@ -1112,23 +1113,18 @@ bb.a:
   %i.h = load float, ptr %i.g, align 8            ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 20
   %i.j = load float, ptr %i.i, align 4
-  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 264
-  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 280
-  store <2 x float> <float 7.500000e-01, float 5.000000e-01>, ptr %i.l, align 4
+  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 256
+  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 260
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 276
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 28
-  %2 = load float, ptr %i.m, align 4
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %3 = load float, ptr %i.n, align 8
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 36
-  %4 = load float, ptr %i.o, align 4
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %5 = load float, ptr %i.p, align 8
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 296
   store float 4.000000e+00, ptr %i.q, align 4
   %i.r = fdiv float 2.000000e+00, %i.f
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 300
   store float %i.r, ptr %i.s, align 4
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 288
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 292
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 12
   %i.v = load float, ptr %i.u, align 4
@@ -1138,50 +1134,35 @@ bb.a:
   %i.z = fpext float %i.f to double
   %i.aa = insertelement <4 x float> poison, float %i.f, i64 0
   %.sroa.791.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %.sroa.1195.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %.sroa.1296.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 36
-  %.sroa.1397.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %.sroa.1599.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %.sroa.16100.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 52
-  %.sroa.17101.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %.sroa.18102.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 60
-  %.sroa.456.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 68
-  %.sroa.557.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %.sroa.658.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 76
-  %.sroa.759.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %.sroa.1163.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 96
-  %.sroa.1264.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 100
-  %.sroa.1365.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 104
-  %.sroa.1567.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 112
-  %.sroa.1668.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 116
-  %.sroa.1769.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 120
-  %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %.sroa.527.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 136
-  %.sroa.931.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 152
-  %.sroa.1335.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 168
-  %.sroa.1739.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 184
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 200
-  %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 216
-  %.sroa.13.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 232
-  %.sroa.17.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 248
+  %.sroa.1769.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 20
+  %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %.sroa.527.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 28
+  %.sroa.931.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %.sroa.1335.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 48
+  %.sroa.1739.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 64
+  %3 = load float, ptr %i.m, align 4
+  %4 = load float, ptr %i.n, align 8
+  %5 = load float, ptr %i.o, align 4
+  %6 = load float, ptr %i.p, align 8
   %i.ac = fmul float %i.j, -5.000000e-01
   %i.ad = tail call float @llvm.fmuladd.f32(float %i.h, float 2.500000e-01, float %i.ac)
   %i.ae = fdiv float %i.ad, %i.h                  ; 4 uses
   %.scalar.a = fadd float %i.ae, 2.500000e-01
-  %7 = insertelement <4 x float> <float 0.000000e+00, float 1.000000e+00, float poison, float 5.000000e-01>, float %.scalar.a, i64 2
+  store float %.scalar.a, ptr %i.k, align 4
   %.scalar188 = fsub float 7.500000e-01, %i.ae
-  %i.af = insertelement <4 x float> <float poison, float 5.000000e-01, float 2.500000e-01, float 5.000000e-01>, float %.scalar188, i64 0
-  store <4 x float> %i.af, ptr %i.k, align 4
+  %i.af = insertelement <4 x float> <float 5.000000e-01, float poison, float 5.000000e-01, float 2.500000e-01>, float %.scalar188, i64 1
+  store <4 x float> %i.af, ptr %i.l, align 4
   %i.ag = tail call float @llvm.fmuladd.f32(float %i.ae, float -4.000000e+00, float -1.000000e+00) ; 2 uses
   %i.ah = fmul float %i.ag, %i.ag                 ; 6 uses
-  %i.ai = tail call float @llvm.fmuladd.f32(float %3, float %i.ah, float %2)
-  %i.aj = fmul float %i.ah, %4
+  %i.ai = tail call float @llvm.fmuladd.f32(float %4, float %i.ah, float %3)
+  %i.aj = fmul float %i.ah, %5
   %i.ak = tail call float @llvm.fmuladd.f32(float %i.aj, float %i.ah, float %i.ai)
-  %i.al = fmul float %i.ah, %5
+  %i.al = fmul float %i.ah, %6
   %i.am = fmul float %i.ah, %i.al
   %i.an = tail call float @llvm.fmuladd.f32(float %i.am, float %i.ah, float %i.ak) ; 3 uses
   %i.ao = fdiv float 2.500000e-01, %i.an
-  store float %i.ao, ptr %6, align 4
+  %7 = insertelement <4 x float> <float 5.000000e-01, float 7.500000e-01, float 5.000000e-01, float poison>, float %i.ao, i64 3
+  store <4 x float> %7, ptr %2, align 4
   %i.ap = fmul float %i.an, %i.w
   %i.aq = tail call float @atan2f(float noundef %i.ap, float noundef %i.y) #56
   %i.ar = fmul float %i.aq, 2.000000e+00
@@ -1214,23 +1195,17 @@ bb.a:
   %i.bs = extractelement <4 x float> %i.br, i64 0
   store float %i.bs, ptr %i.t, align 4
   %i.bt = fptrunc double %i.ay to float           ; 2 uses
-  %8 = fsub float %i.bt, %i.bt
-  %9 = fdiv float %8, %i.bd                       ; 2 uses
   %i.bu = fptrunc double %i.av to float           ; 2 uses
   %i.bv = fadd float %i.bg, %i.bu
   %i.bw = fneg float %i.bv
   %i.bx = fmul float %i.bg, %i.bu
   %i.by = fmul float %i.bx, -2.000000e+00
-  %10 = shufflevector <4 x float> %i.br, <4 x float> poison, <2 x i32> <i32 1, i32 2>
-  %11 = fmul <2 x float> %10, <float 1.000000e+00, float 0.000000e+00>
-  %12 = fadd <2 x float> %11, zeroinitializer     ; 3 uses
-  %13 = shufflevector <2 x float> %12, <2 x float> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
-  %i.bz = extractelement <2 x float> %12, i64 1   ; 4 uses
-  %14 = fmul float %9, 0.000000e+00               ; 2 uses
-  %i.ca = extractelement <4 x float> %i.br, i64 3 ; 3 uses
-  %i.cb = fadd float %i.ca, %14
-  store float %i.bz, ptr %.sroa.1296.0..sroa_idx, align 4
-  store float %i.bz, ptr %.sroa.16100.0..sroa_idx, align 4
+  %i.bz = extractelement <4 x float> %i.br, i64 1
+  %8 = fadd float %i.bz, 0.000000e+00             ; 2 uses
+  %i.ca = extractelement <4 x float> %i.br, i64 2
+  %i.cb = fadd float %i.ca, 0.000000e+00          ; 2 uses
+  %9 = extractelement <4 x float> %i.br, i64 3    ; 3 uses
+  store float %i.cb, ptr %.sroa.1769.0..sroa_idx, align 4
   %i.cc = fneg float %i.as                        ; 2 uses
   %i.cd = insertelement <2 x float> poison, float %i.bw, i64 0
   %i.ce = insertelement <2 x float> %i.cd, float %i.by, i64 1
@@ -1238,74 +1213,94 @@ bb.a:
   %i.cg = shufflevector <2 x float> %i.cf, <2 x float> poison, <2 x i32> zeroinitializer
   %i.ch = fdiv <2 x float> %i.ce, %i.cg           ; 3 uses
   %i.ci = extractelement <2 x float> %i.ch, i64 0
-  %15 = tail call float @llvm.fmuladd.f32(float %i.ci, float 0.000000e+00, float %i.cb) ; 2 uses
-  %16 = fsub float %15, %i.as
-  %i.cj = insertelement <4 x float> poison, float %i.cc, i64 0
-  %17 = shufflevector <4 x float> %i.cj, <4 x float> poison, <4 x i32> <i32 poison, i32 poison, i32 0, i32 0>
-  %18 = shufflevector <2 x float> %i.ch, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison> ; 2 uses
-  %19 = shufflevector <4 x float> %18, <4 x float> %17, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %20 = insertelement <4 x float> <float poison, float poison, float -0.000000e+00, float poison>, float %i.as, i64 0
-  %21 = shufflevector <4 x float> %20, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 2, i32 0>
-  %i.ck = tail call float @llvm.fmuladd.f32(float %i.ca, float 0.000000e+00, float %9)
-  %22 = shufflevector <4 x float> %i.br, <4 x float> %18, <2 x i32> <i32 1, i32 4>
-  %23 = insertelement <2 x float> <float 0.000000e+00, float poison>, float %i.ck, i64 1
-  %24 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %22, <2 x float> zeroinitializer, <2 x float> %23)
-  %25 = tail call float @llvm.fmuladd.f32(float %i.ca, float 0.000000e+00, float %14) ; 2 uses
-  %i.cl = insertelement <4 x float> <float poison, float 0.000000e+00, float poison, float poison>, float %25, i64 0
-  %26 = shufflevector <2 x float> %12, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison> ; 2 uses
-  %27 = shufflevector <4 x float> %i.cl, <4 x float> %26, <4 x i32> <i32 0, i32 1, i32 4, i32 poison>
-  %28 = shufflevector <4 x float> %27, <4 x float> %13, <4 x i32> <i32 0, i32 1, i32 2, i32 5>
-  %29 = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %19, <4 x float> zeroinitializer, <4 x float> %28) ; 6 uses
-  %30 = extractelement <4 x float> %29, i64 1
+  %10 = insertelement <4 x float> poison, float %i.cc, i64 0
+  %11 = shufflevector <4 x float> %10, <4 x float> poison, <4 x i32> <i32 poison, i32 poison, i32 0, i32 0>
+  %12 = shufflevector <2 x float> %i.ch, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 2 uses
+  %13 = shufflevector <4 x float> %12, <4 x float> %11, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %i.cj = insertelement <4 x float> poison, float %i.as, i64 0
+  %14 = shufflevector <4 x float> %i.cj, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 poison, i32 0>
+  %15 = fsub float %i.bt, %i.bt
+  %16 = fdiv float %15, %i.bd                     ; 2 uses
+  %17 = fmul float %16, 0.000000e+00              ; 2 uses
+  %18 = fadd float %9, %17
+  %i.ck = tail call float @llvm.fmuladd.f32(float %9, float 0.000000e+00, float %16)
+  %19 = tail call float @llvm.fmuladd.f32(float %9, float 0.000000e+00, float %17) ; 2 uses
+  %20 = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.br, <4 x float> <float poison, float 0.000000e+00, float 0.000000e+00, float poison>, <4 x float> <float poison, float 0.000000e+00, float -0.000000e+00, float poison>)
+  %21 = shufflevector <4 x float> %20, <4 x float> poison, <4 x i32> <i32 1, i32 2, i32 poison, i32 poison>
+  %22 = shufflevector <4 x float> %21, <4 x float> %12, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %i.cl = insertelement <4 x float> <float 0.000000e+00, float 0.000000e+00, float poison, float 0.000000e+00>, float %19, i64 2
+  %23 = fadd <4 x float> %22, %i.cl               ; 7 uses
+  %24 = tail call float @llvm.fmuladd.f32(float %i.ci, float 0.000000e+00, float %18) ; 2 uses
+  %25 = fsub float %24, %i.as
+  %26 = insertelement <4 x float> <float poison, float 0.000000e+00, float poison, float poison>, float %19, i64 0
+  %27 = insertelement <4 x float> %26, float %8, i64 2
+  %28 = shufflevector <4 x float> %27, <4 x float> %23, <4 x i32> <i32 0, i32 1, i32 2, i32 5>
+  %29 = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %13, <4 x float> zeroinitializer, <4 x float> %28) ; 4 uses
   %i.cm = shufflevector <4 x float> %29, <4 x float> poison, <4 x i32> <i32 poison, i32 poison, i32 poison, i32 1>
-  %31 = shufflevector <4 x float> %26, <4 x float> %i.cm, <4 x i32> <i32 0, i32 1, i32 poison, i32 7>
-  %32 = insertelement <4 x float> %31, float %16, i64 2
-  %i.cn = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %21, <4 x float> zeroinitializer, <4 x float> %32)
-  %33 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %25, i64 0
-  %34 = fadd <2 x float> %i.ch, %33               ; 2 uses
-  store <4 x float> %i.cn, ptr %0, align 4
-  %35 = shufflevector <4 x float> %i.br, <4 x float> %29, <4 x i32> <i32 poison, i32 2, i32 poison, i32 5>
-  %36 = shufflevector <2 x float> %24, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 poison> ; 2 uses
-  %37 = shufflevector <4 x float> %36, <4 x float> %35, <4 x i32> <i32 0, i32 5, i32 2, i32 7>
-  %38 = fadd <4 x float> %37, <float 0.000000e+00, float 0.000000e+00, float -0.000000e+00, float 0.000000e+00> ; 5 uses
-  %i.co = extractelement <4 x float> %38, i64 0   ; 4 uses
-  store float %i.co, ptr %.sroa.1195.0..sroa_idx, align 4
-  store float %i.co, ptr %.sroa.1599.0..sroa_idx, align 4
-  store <4 x float> %38, ptr %.sroa.791.0..sroa_idx, align 4
-  store <2 x float> %34, ptr %.sroa.1397.0..sroa_idx, align 4
-  %39 = fadd float %i.as, %15
-  %40 = tail call float @llvm.fmuladd.f32(float %i.cc, float 0.000000e+00, float %30)
-  %i.cp = extractelement <4 x float> %29, i64 3
-  store float %i.cp, ptr %.sroa.456.0..sroa_idx, align 4
-  store float %39, ptr %.sroa.557.0..sroa_idx, align 4
-  store float %40, ptr %.sroa.658.0..sroa_idx, align 4
-  %41 = shufflevector <4 x float> %38, <4 x float> %36, <4 x i32> <i32 0, i32 1, i32 5, i32 3>
-  store <4 x float> %41, ptr %.sroa.759.0..sroa_idx, align 4
-  store float %i.co, ptr %.sroa.1163.0..sroa_idx, align 4
-  store float %i.bz, ptr %.sroa.1264.0..sroa_idx, align 4
-  store <2 x float> %34, ptr %.sroa.1365.0..sroa_idx, align 4
-  store float %i.co, ptr %.sroa.1567.0..sroa_idx, align 4
-  store float %i.bz, ptr %.sroa.1668.0..sroa_idx, align 4
-  %42 = load float, ptr %i.ab, align 8
-  %43 = shufflevector <4 x float> %29, <4 x float> %38, <4 x i32> <i32 0, i32 7, i32 poison, i32 poison>
-  %44 = shufflevector <4 x float> %43, <4 x float> <float poison, float poison, float -0.000000e+00, float -0.000000e+00>, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %45 = fadd <4 x float> %44, <float -1.000000e+00, float -0.000000e+00, float 1.000000e+00, float 0.000000e+00> ; 2 uses
-  %46 = extractelement <4 x float> %45, i64 0
-  store float %46, ptr %.sroa.17101.0..sroa_idx, align 4
-  %47 = shufflevector <4 x float> %38, <4 x float> %29, <2 x i32> <i32 3, i32 6>
-  store <2 x float> %47, ptr %.sroa.18102.0..sroa_idx, align 4
-  store <4 x float> %45, ptr %.sroa.1769.0..sroa_idx, align 4
-  %i.cq = insertelement <4 x float> <float 1.000000e+00, float poison, float 1.000000e+00, float 1.000000e+00>, float %42, i64 1 ; 2 uses
-  %i.cr = fmul <4 x float> %i.cq, <float 0.000000e+00, float 5.000000e-01, float 0.000000e+00, float 1.000000e+00>
-  store <4 x float> %i.cr, ptr %.sroa.527.0..sroa_idx, align 4
-  store <4 x float> <float 0.000000e+00, float 7.500000e-02, float 0.000000e+00, float 0.000000e+00>, ptr %.sroa.931.0..sroa_idx, align 4
-  store <4 x float> <float 1.000000e+00, float 4.500000e-02, float 0.000000e+00, float 0.000000e+00>, ptr %.sroa.1335.0..sroa_idx, align 4
-  store <4 x float> <float 0.000000e+00, float 1.000000e+00, float 1.000000e+00, float 0.000000e+00>, ptr %.sroa.1739.0..sroa_idx, align 4
-  %i.cs = fmul <4 x float> %i.cq, <float 0.000000e+00, float -5.000000e-01, float 0.000000e+00, float 1.000000e+00>
-  store <4 x float> %i.cs, ptr %.sroa.5.0..sroa_idx, align 4
-  store <4 x float> <float 0.000000e+00, float 7.500000e-02, float 0.000000e+00, float 0.000000e+00>, ptr %.sroa.9.0..sroa_idx, align 4
-  store <4 x float> <float 1.000000e+00, float 4.500000e-02, float 0.000000e+00, float 0.000000e+00>, ptr %.sroa.13.0..sroa_idx, align 4
-  store <4 x float> %7, ptr %.sroa.17.0..sroa_idx, align 4
+  %30 = insertelement <4 x float> %i.cm, float %8, i64 0
+  %31 = shufflevector <4 x float> %30, <4 x float> %23, <4 x i32> <i32 0, i32 5, i32 poison, i32 3>
+  %i.cn = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %14, <4 x float> <float 0.000000e+00, float 0.000000e+00, float poison, float 0.000000e+00>, <4 x float> %31)
+  %32 = insertelement <4 x float> %i.cn, float %25, i64 2
+  store <4 x float> %32, ptr %0, align 4
+  store <4 x float> %23, ptr %.sroa.931.0..sroa_idx, align 4
+  %33 = extractelement <4 x float> %23, i64 0     ; 2 uses
+  store float %33, ptr %.sroa.791.0..sroa_idx, align 4
+  %34 = fadd <4 x float> %29, <float -1.000000e+00, float 0.000000e+00, float poison, float poison> ; 2 uses
+  %35 = shufflevector <4 x float> %34, <4 x float> poison, <4 x i32> <i32 poison, i32 poison, i32 0, i32 1> ; 4 uses
+  %36 = shufflevector <4 x float> %23, <4 x float> %35, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %i.co = extractelement <4 x float> %34, i64 1
+  store float %i.co, ptr %.sroa.527.0..sroa_idx, align 4
+  store <4 x float> %36, ptr %.sroa.1335.0..sroa_idx, align 4
+  %37 = fadd float %i.as, %24
+  %38 = insertelement <2 x float> %i.ch, float %i.cc, i64 1
+  %39 = shufflevector <4 x float> %29, <4 x float> poison, <2 x i32> <i32 poison, i32 1>
+  %40 = insertelement <2 x float> %39, float %i.ck, i64 0
+  %41 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %38, <2 x float> zeroinitializer, <2 x float> %40) ; 2 uses
+  %i.cp = extractelement <2 x float> %41, i64 0   ; 2 uses
+  store float %i.cp, ptr %i.ab, align 4
+  %42 = shufflevector <4 x float> %29, <4 x float> poison, <2 x i32> <i32 2, i32 3>
+  store <2 x float> %42, ptr %.sroa.1739.0..sroa_idx, align 4
+  %.sroa.557.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 72
+  store float %37, ptr %.sroa.557.0..sroa_idx, align 4
+  %.sroa.658.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 76
+  %43 = extractelement <2 x float> %41, i64 1
+  store float %43, ptr %.sroa.658.0..sroa_idx, align 4
+  %.sroa.759.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 80
+  store float %33, ptr %.sroa.759.0..sroa_idx, align 4
+  %.sroa.860.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 84
+  store float %i.cb, ptr %.sroa.860.0..sroa_idx, align 4
+  %.sroa.961.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 88
+  store float %i.cp, ptr %.sroa.961.0..sroa_idx, align 4
+  %.sroa.1062.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 92
+  %44 = shufflevector <4 x float> %35, <4 x float> %23, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  store <4 x float> %44, ptr %.sroa.1062.0..sroa_idx, align 4
+  %.sroa.1466.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 108
+  %45 = shufflevector <4 x float> %23, <4 x float> %35, <4 x i32> <i32 3, i32 0, i32 1, i32 6>
+  store <4 x float> %45, ptr %.sroa.1466.0..sroa_idx, align 4
+  %.sroa.1870.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 124
+  %46 = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %47 = load float, ptr %46, align 8
+  %48 = shufflevector <4 x float> %35, <4 x float> <float poison, float 1.000000e+00, float 0.000000e+00, float 0.000000e+00>, <4 x i32> <i32 3, i32 5, i32 6, i32 7>
+  store <4 x float> %48, ptr %.sroa.1870.0..sroa_idx, align 4
+  %.sroa.628.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 140
+  %i.cq = insertelement <4 x float> <float poison, float 1.000000e+00, float 1.000000e+00, float 1.000000e+00>, float %47, i64 0 ; 2 uses
+  %i.cr = fmul <4 x float> %i.cq, <float 5.000000e-01, float 0.000000e+00, float 1.000000e+00, float 0.000000e+00>
+  store <4 x float> %i.cr, ptr %.sroa.628.0..sroa_idx, align 4
+  %.sroa.1032.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 156
+  store <4 x float> <float 7.500000e-02, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>, ptr %.sroa.1032.0..sroa_idx, align 4
+  %.sroa.1436.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 172
+  store <4 x float> <float 4.500000e-02, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, ptr %.sroa.1436.0..sroa_idx, align 4
+  %.sroa.1840.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 188
+  store <4 x float> <float 1.000000e+00, float 1.000000e+00, float 0.000000e+00, float 0.000000e+00>, ptr %.sroa.1840.0..sroa_idx, align 4
+  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 204
+  %i.cs = fmul <4 x float> %i.cq, <float -5.000000e-01, float 0.000000e+00, float 1.000000e+00, float 0.000000e+00>
+  store <4 x float> %i.cs, ptr %.sroa.6.0..sroa_idx, align 4
+  %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 220
+  store <4 x float> <float 7.500000e-02, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>, ptr %.sroa.10.0..sroa_idx, align 4
+  %.sroa.14.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 236
+  store <4 x float> <float 4.500000e-02, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, ptr %.sroa.14.0..sroa_idx, align 4
+  %.sroa.18.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 252
+  store float 1.000000e+00, ptr %.sroa.18.0..sroa_idx, align 4
   ret void
 }
 

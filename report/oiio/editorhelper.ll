@@ -205,27 +205,23 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define noundef double @_ZN8ultrahdr19bicubic_interpolateEddddd(double noundef %0, double noundef %1, double noundef %2, double noundef %3, double noundef %4) local_unnamed_addr #2 !guid !239 {
 bb.a:
-  %5 = insertelement <2 x double> <double 1.000000e+00, double poison>, double %4, i64 1
-  %6 = insertelement <2 x double> <double poison, double 0.000000e+00>, double %4, i64 0
-  %7 = fsub contract <2 x double> %5, %6          ; 2 uses
-  %8 = shufflevector <2 x double> %7, <2 x double> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
-  %9 = shufflevector <2 x double> %7, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1> ; 2 uses
-  %10 = fmul contract <4 x double> %9, <double 1.000000e+00, double 3.000000e+00, double 1.000000e+00, double 1.000000e+00> ; 2 uses
-  %11 = shufflevector <4 x double> %9, <4 x double> %10, <4 x i32> <i32 0, i32 0, i32 5, i32 6>
-  %12 = fmul contract <4 x double> %10, %11
-  %13 = fmul contract <4 x double> %8, %12
-  %14 = insertelement <4 x double> poison, double %0, i64 0
-  %15 = insertelement <4 x double> %14, double %1, i64 1
-  %16 = insertelement <4 x double> %15, double %2, i64 2
-  %17 = insertelement <4 x double> %16, double %3, i64 3
-  %18 = fmul contract <4 x double> %17, %13       ; 4 uses
-  %19 = extractelement <4 x double> %18, i64 0
-  %20 = extractelement <4 x double> %18, i64 1
-  %i.a = fadd contract double %19, %20
-  %21 = extractelement <4 x double> %18, i64 2
-  %i.b = fadd contract double %21, %i.a
-  %22 = extractelement <4 x double> %18, i64 3
-  %i.c = fadd contract double %22, %i.b
+  %5 = fsub contract double 1.000000e+00, %4      ; 6 uses
+  %6 = fmul contract double %5, %5
+  %7 = fmul contract double %5, %6
+  %8 = fmul contract double %4, 3.000000e+00      ; 2 uses
+  %9 = fmul contract double %8, %5
+  %10 = fmul contract double %5, %9
+  %11 = fmul contract double %4, %8
+  %12 = fmul contract double %5, %11
+  %13 = fmul contract double %4, %4
+  %14 = fmul contract double %4, %13
+  %15 = fmul contract double %0, %7
+  %16 = fmul contract double %1, %10
+  %i.a = fadd contract double %15, %16
+  %17 = fmul contract double %2, %12
+  %i.b = fadd contract double %17, %i.a
+  %18 = fmul contract double %3, %14
+  %i.c = fadd contract double %18, %i.b
   ret double %i.c
 }
 

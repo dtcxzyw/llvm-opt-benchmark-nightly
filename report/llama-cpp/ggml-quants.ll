@@ -205,40 +205,28 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   %.sink.i.us = phi float [ %i.ju, %bb.j ], [ %i.kj, %bb.k ]
   %i.kl = phi float [ %i.jq, %bb.j ], [ %i.kk, %bb.k ] ; 2 uses
   %i.km = phi <4 x float> [ %i.jt, %bb.j ], [ %i.ki, %bb.k ] ; 2 uses
-  %i.kn = phi <2 x float> [ %i.jp, %bb.j ], [ %i.kf, %bb.k ] ; 3 uses
+  %i.kn = phi <2 x float> [ %i.jp, %bb.j ], [ %i.kf, %bb.k ] ; 2 uses
   %i.ko = call float @llvm.fmuladd.f32(float %.sink.i.us, float -1.125000e+00, float %i.ix) ; 2 uses
   %indvars.iv.next758.i.us = add nuw nsw i64 %indvars.iv757.i.us, 1 ; 2 uses
   %exitcond760.not.i.us = icmp eq i64 %indvars.iv.next758.i.us, %indvars.iv761.i.us
-  br i1 %exitcond760.not.i.us, label %.preheader577.i.us.loopexit, label %.lr.ph.i.us, !llvm.loop !677
+  br i1 %exitcond760.not.i.us, label %.preheader577.i.us, label %.lr.ph.i.us, !llvm.loop !677
 
-.preheader577.i.us.loopexit:                      ; preds = %bb.l
-  %5 = extractelement <2 x float> %i.kn, i64 1
-  %6 = extractelement <2 x float> %i.kn, i64 0
-  br label %.preheader577.i.us
+.preheader577.i.us:                               ; preds = %bb.l, %bb.i
+  %.sroa.14.0.i.us = phi float [ 0.000000e+00, %bb.i ], [ %i.kl, %bb.l ] ; 2 uses
+  %.sroa.21.0.i.us = phi float [ 0.000000e+00, %bb.i ], [ %i.ko, %bb.l ] ; 2 uses
+  %i.kp = phi <4 x float> [ zeroinitializer, %bb.i ], [ %i.km, %bb.l ] ; 2 uses
+  %5 = phi <2 x float> [ zeroinitializer, %bb.i ], [ %i.kn, %bb.l ] ; 3 uses
+  %6 = icmp samesign ult i64 %indvars.iv761.i.us, %indvars.iv768.i.us
+  %7 = extractelement <2 x float> %5, i64 0
+  %8 = extractelement <2 x float> %5, i64 1
+  br i1 %6, label %.lr.ph619.i.us, label %.preheader576.i.us
 
-.preheader577.i.us:                               ; preds = %.preheader577.i.us.loopexit, %bb.i
-  %.sroa.14.0.i.us = phi float [ 0.000000e+00, %bb.i ], [ %i.kl, %.preheader577.i.us.loopexit ] ; 3 uses
-  %.sroa.21.0.i.us = phi float [ 0.000000e+00, %bb.i ], [ %i.ko, %.preheader577.i.us.loopexit ] ; 2 uses
-  %.lcssa599.i.us = phi float [ 0.000000e+00, %bb.i ], [ %6, %.preheader577.i.us.loopexit ]
-  %.lcssa.i.us = phi float [ 0.000000e+00, %bb.i ], [ %5, %.preheader577.i.us.loopexit ] ; 2 uses
-  %i.kp = phi <4 x float> [ zeroinitializer, %bb.i ], [ %i.km, %.preheader577.i.us.loopexit ] ; 4 uses
-  %7 = icmp samesign ult i64 %indvars.iv761.i.us, %indvars.iv768.i.us
-  %8 = insertelement <4 x float> %i.kp, float %.sroa.14.0.i.us, i64 2
-  %9 = shufflevector <4 x float> %i.kp, <4 x float> poison, <2 x i32> <i32 2, i32 poison>
-  %10 = insertelement <2 x float> %9, float %.lcssa599.i.us, i64 1 ; 2 uses
-  br i1 %7, label %.lr.ph619.i.us.preheader, label %.preheader576.i.us
-
-.lr.ph619.i.us.preheader:                         ; preds = %.preheader577.i.us
-  %11 = shufflevector <4 x float> %i.kp, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 3, i32 poison>
-  %12 = insertelement <4 x float> %11, float %.sroa.14.0.i.us, i64 3
-  br label %.lr.ph619.i.us
-
-.lr.ph619.i.us:                                   ; preds = %.lr.ph619.i.us.preheader, %bb.o
-  %indvars.iv763.i.us = phi i64 [ %indvars.iv.next764.i.us, %bb.o ], [ %indvars.iv761.i.us, %.lr.ph619.i.us.preheader ] ; 2 uses
-  %i.kq = phi float [ %i.lj, %bb.o ], [ %.sroa.21.0.i.us, %.lr.ph619.i.us.preheader ]
-  %i.kr = phi float [ %i.li, %bb.o ], [ %.lcssa.i.us, %.lr.ph619.i.us.preheader ] ; 2 uses
-  %13 = phi <2 x float> [ %36, %bb.o ], [ %10, %.lr.ph619.i.us.preheader ] ; 2 uses
-  %14 = phi <4 x float> [ %37, %bb.o ], [ %12, %.lr.ph619.i.us.preheader ] ; 2 uses
+.lr.ph619.i.us:                                   ; preds = %.preheader577.i.us, %bb.o
+  %indvars.iv763.i.us = phi i64 [ %indvars.iv.next764.i.us, %bb.o ], [ %indvars.iv761.i.us, %.preheader577.i.us ] ; 2 uses
+  %i.kq = phi float [ %i.lj, %bb.o ], [ %.sroa.21.0.i.us, %.preheader577.i.us ]
+  %i.kr = phi float [ %i.li, %bb.o ], [ %.sroa.14.0.i.us, %.preheader577.i.us ] ; 2 uses
+  %9 = phi <4 x float> [ %31, %bb.o ], [ %i.kp, %.preheader577.i.us ] ; 2 uses
+  %10 = phi <2 x float> [ %32, %bb.o ], [ %5, %.preheader577.i.us ] ; 2 uses
   %.idx882.i.us = shl nuw nsw i64 %indvars.iv763.i.us, 3
   %i.ks = getelementptr inbounds nuw i8, ptr %i.j, i64 %.idx882.i.us
   %i.kt = load i32, ptr %i.ks, align 4, !tbaa !47, !noalias !695 ; 3 uses
@@ -250,19 +238,19 @@ bb.m:                                             ; preds = %.lr.ph619.i.us
   %i.kw = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.kv
   %i.kx = load float, ptr %i.kw, align 4, !tbaa !36, !noalias !695
   %i.ky = getelementptr inbounds nuw [4 x i8], ptr %i.bx, i64 %i.kv
-  %i.kz = load float, ptr %i.ky, align 4, !tbaa !36, !alias.scope !692 ; 3 uses
+  %i.kz = load float, ptr %i.ky, align 4, !tbaa !36, !alias.scope !692 ; 2 uses
   %i.la = insertelement <4 x float> poison, float %i.kx, i64 0
-  %15 = insertelement <4 x float> %i.la, float %i.kz, i64 1
-  %16 = shufflevector <4 x float> %15, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 0>
-  %17 = fmul <4 x float> %16, <float -1.250000e-01, float 1.000000e+00, float 1.000000e+00, float 1.250000e-01> ; 5 uses
-  %18 = extractelement <4 x float> %17, i64 3
-  %19 = call float @llvm.fmuladd.f32(float %18, float %i.kz, float %i.kr)
-  %20 = shufflevector <4 x float> %17, <4 x float> poison, <2 x i32> <i32 3, i32 3>
-  %21 = insertelement <2 x float> <float poison, float 1.250000e-01>, float %i.kz, i64 0
-  %22 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %20, <2 x float> %21, <2 x float> %13)
-  %23 = shufflevector <4 x float> %17, <4 x float> <float -1.250000e-01, float poison, float poison, float 1.250000e-01>, <4 x i32> <i32 4, i32 0, i32 0, i32 7>
-  %i.lb = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %23, <4 x float> %17, <4 x float> %14)
-  %i.lc = extractelement <4 x float> %17, i64 0
+  %11 = shufflevector <4 x float> %i.la, <4 x float> poison, <4 x i32> zeroinitializer
+  %12 = fmul <4 x float> %11, <float -1.250000e-01, float -1.250000e-01, float 1.250000e-01, float -1.250000e-01> ; 4 uses
+  %13 = extractelement <4 x float> %12, i64 2
+  %14 = shufflevector <4 x float> %12, <4 x float> poison, <2 x i32> <i32 2, i32 2>
+  %15 = insertelement <2 x float> <float 1.250000e-01, float poison>, float %i.kz, i64 1
+  %16 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %14, <2 x float> %15, <2 x float> %10)
+  %17 = call float @llvm.fmuladd.f32(float %13, float 1.250000e-01, float %i.kr)
+  %18 = insertelement <4 x float> <float -1.250000e-01, float poison, float poison, float poison>, float %i.kz, i64 1
+  %19 = shufflevector <4 x float> %18, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
+  %i.lb = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %12, <4 x float> %19, <4 x float> %9)
+  %i.lc = extractelement <4 x float> %12, i64 0
   br label %bb.o
 
 bb.n:                                             ; preds = %.lr.ph619.i.us
@@ -270,59 +258,57 @@ bb.n:                                             ; preds = %.lr.ph619.i.us
   %i.le = getelementptr inbounds [4 x i8], ptr %i.b, i64 %i.ld
   %i.lf = load float, ptr %i.le, align 4, !tbaa !36, !noalias !695
   %i.lg = getelementptr inbounds [4 x i8], ptr %i.bx, i64 %i.ld
-  %i.lh = load float, ptr %i.lg, align 4, !tbaa !36, !alias.scope !692 ; 3 uses
-  %24 = insertelement <2 x float> poison, float %i.lf, i64 0
-  %25 = shufflevector <2 x float> %24, <2 x float> poison, <2 x i32> zeroinitializer
-  %26 = fmul <2 x float> %25, <float -1.250000e-01, float 1.250000e-01> ; 4 uses
-  %27 = shufflevector <2 x float> %26, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 0, i32 0>
-  %28 = extractelement <2 x float> %26, i64 1
-  %29 = call float @llvm.fmuladd.f32(float %28, float %i.lh, float %i.kr)
-  %30 = extractelement <2 x float> %26, i64 0
-  %31 = insertelement <2 x float> <float poison, float 1.250000e-01>, float %i.lh, i64 0
-  %32 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %26, <2 x float> %31, <2 x float> %13)
-  %33 = insertelement <4 x float> <float 1.250000e-01, float poison, float poison, float -1.250000e-01>, float %i.lh, i64 1
-  %34 = shufflevector <4 x float> %33, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 3>
-  %35 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %27, <4 x float> %34, <4 x float> %14)
+  %i.lh = load float, ptr %i.lg, align 4, !tbaa !36, !alias.scope !692 ; 2 uses
+  %20 = insertelement <4 x float> poison, float %i.lf, i64 0
+  %21 = shufflevector <4 x float> %20, <4 x float> poison, <4 x i32> zeroinitializer
+  %22 = fmul <4 x float> %21, <float 1.250000e-01, float 1.250000e-01, float -1.250000e-01, float -1.250000e-01> ; 3 uses
+  %23 = shufflevector <4 x float> %22, <4 x float> poison, <2 x i32> zeroinitializer
+  %24 = insertelement <2 x float> <float 1.250000e-01, float poison>, float %i.lh, i64 1
+  %25 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %23, <2 x float> %24, <2 x float> %10)
+  %26 = insertelement <4 x float> <float 1.250000e-01, float poison, float poison, float poison>, float %i.lh, i64 1
+  %27 = shufflevector <4 x float> %26, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
+  %28 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %22, <4 x float> %27, <4 x float> %9)
+  %29 = extractelement <4 x float> %22, i64 2     ; 2 uses
+  %30 = call float @llvm.fmuladd.f32(float %29, float -1.250000e-01, float %i.kr)
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m
-  %.sink918.i.us = phi float [ %i.lc, %bb.m ], [ %30, %bb.n ]
-  %i.li = phi float [ %19, %bb.m ], [ %29, %bb.n ] ; 2 uses
-  %36 = phi <2 x float> [ %22, %bb.m ], [ %32, %bb.n ] ; 3 uses
-  %37 = phi <4 x float> [ %i.lb, %bb.m ], [ %35, %bb.n ] ; 4 uses
+  %.sink918.i.us = phi float [ %i.lc, %bb.m ], [ %29, %bb.n ]
+  %i.li = phi float [ %17, %bb.m ], [ %30, %bb.n ] ; 2 uses
+  %31 = phi <4 x float> [ %i.lb, %bb.m ], [ %28, %bb.n ] ; 2 uses
+  %32 = phi <2 x float> [ %16, %bb.m ], [ %25, %bb.n ] ; 3 uses
   %i.lj = call float @llvm.fmuladd.f32(float %.sink918.i.us, float -1.250000e-01, float %i.kq) ; 2 uses
   %indvars.iv.next764.i.us = add nuw nsw i64 %indvars.iv763.i.us, 1 ; 2 uses
   %exitcond767.not.i.us = icmp eq i64 %indvars.iv.next764.i.us, %indvars.iv768.i.us
   br i1 %exitcond767.not.i.us, label %.preheader576.i.us.loopexit, label %.lr.ph619.i.us, !llvm.loop !678
 
 .preheader576.i.us.loopexit:                      ; preds = %bb.o
-  %i.lk = extractelement <4 x float> %37, i64 3
-  %38 = shufflevector <4 x float> %37, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 3, i32 2>
-  %39 = shufflevector <2 x float> %36, <2 x float> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
-  %40 = shufflevector <4 x float> %37, <4 x float> %39, <4 x i32> <i32 0, i32 1, i32 4, i32 2>
+  %i.lk = extractelement <2 x float> %32, i64 1
+  %33 = extractelement <2 x float> %32, i64 0
   br label %.preheader576.i.us
 
 .preheader576.i.us:                               ; preds = %.preheader576.i.us.loopexit, %.preheader577.i.us
-  %.sroa.14.1.i.us = phi float [ %.sroa.14.0.i.us, %.preheader577.i.us ], [ %i.lk, %.preheader576.i.us.loopexit ]
+  %.sroa.14.1.i.us = phi float [ %.sroa.14.0.i.us, %.preheader577.i.us ], [ %i.li, %.preheader576.i.us.loopexit ] ; 2 uses
   %.sroa.21.1.i.us = phi float [ %.sroa.21.0.i.us, %.preheader577.i.us ], [ %i.lj, %.preheader576.i.us.loopexit ] ; 2 uses
-  %.lcssa615.i.us.a = phi float [ %.lcssa.i.us, %.preheader577.i.us ], [ %i.li, %.preheader576.i.us.loopexit ] ; 2 uses
-  %41 = phi <4 x float> [ %i.kp, %.preheader577.i.us ], [ %40, %.preheader576.i.us.loopexit ]
-  %i.ll = phi <4 x float> [ %8, %.preheader577.i.us ], [ %38, %.preheader576.i.us.loopexit ]
-  %42 = phi <2 x float> [ %10, %.preheader577.i.us ], [ %36, %.preheader576.i.us.loopexit ] ; 2 uses
+  %.lcssa615.i.us.a = phi float [ %7, %.preheader577.i.us ], [ %33, %.preheader576.i.us.loopexit ] ; 2 uses
+  %.lcssa615.i.us = phi float [ %8, %.preheader577.i.us ], [ %i.lk, %.preheader576.i.us.loopexit ] ; 2 uses
+  %i.ll = phi <4 x float> [ %i.kp, %.preheader577.i.us ], [ %31, %.preheader576.i.us.loopexit ] ; 3 uses
   %i.lm = icmp samesign ult i64 %indvars.iv768.i.us, 16
-  %43 = extractelement <2 x float> %42, i64 1
   br i1 %i.lm, label %.lr.ph639.i.us.preheader, label %.preheader.i.us
 
 .lr.ph639.i.us.preheader:                         ; preds = %.preheader576.i.us
-  %44 = shufflevector <4 x float> %i.ll, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 3, i32 2>
+  %34 = shufflevector <4 x float> %i.ll, <4 x float> poison, <2 x i32> <i32 2, i32 poison>
+  %35 = insertelement <2 x float> %34, float %.lcssa615.i.us.a, i64 1
+  %36 = shufflevector <4 x float> %i.ll, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 3, i32 poison>
+  %37 = insertelement <4 x float> %36, float %.sroa.14.1.i.us, i64 3
   br label %.lr.ph639.i.us
 
 .lr.ph639.i.us:                                   ; preds = %.lr.ph639.i.us.preheader, %bb.r
   %indvars.iv770.i.us = phi i64 [ %indvars.iv.next771.i.us, %bb.r ], [ %indvars.iv768.i.us, %.lr.ph639.i.us.preheader ] ; 2 uses
   %i.ln = phi float [ %i.mt, %bb.r ], [ %.sroa.21.1.i.us, %.lr.ph639.i.us.preheader ]
-  %i.lo = phi float [ %i.mq, %bb.r ], [ %.lcssa615.i.us.a, %.lr.ph639.i.us.preheader ] ; 2 uses
-  %i.lp = phi <4 x float> [ %i.mr, %bb.r ], [ %44, %.lr.ph639.i.us.preheader ] ; 2 uses
-  %i.lq = phi <2 x float> [ %i.ms, %bb.r ], [ %42, %.lr.ph639.i.us.preheader ] ; 2 uses
+  %i.lo = phi float [ %i.mq, %bb.r ], [ %.lcssa615.i.us, %.lr.ph639.i.us.preheader ] ; 2 uses
+  %i.lp = phi <4 x float> [ %i.mr, %bb.r ], [ %37, %.lr.ph639.i.us.preheader ] ; 2 uses
+  %i.lq = phi <2 x float> [ %i.ms, %bb.r ], [ %35, %.lr.ph639.i.us.preheader ] ; 2 uses
   %.idx883.i.us = shl nuw nsw i64 %indvars.iv770.i.us, 3
   %i.lr = getelementptr inbounds nuw i8, ptr %i.j, i64 %.idx883.i.us
   %i.ls = load i32, ptr %i.lr, align 4, !tbaa !47, !noalias !695 ; 3 uses
@@ -332,21 +318,23 @@ bb.o:                                             ; preds = %bb.n, %bb.m
 bb.p:                                             ; preds = %.lr.ph639.i.us
   %i.lu = zext nneg i32 %i.ls to i64              ; 2 uses
   %i.lv = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.lu
-  %i.lw = load float, ptr %i.lv, align 4, !tbaa !36, !noalias !695
+  %i.lw = load float, ptr %i.lv, align 4, !tbaa !36, !noalias !695 ; 2 uses
   %i.lx = getelementptr inbounds nuw [4 x i8], ptr %i.bx, i64 %i.lu
+  %38 = fmul float %i.lw, 1.125000e+00            ; 3 uses
   %i.ly = load float, ptr %i.lx, align 4, !tbaa !36, !alias.scope !692 ; 3 uses
-  %45 = insertelement <4 x float> poison, float %i.lw, i64 0
-  %46 = insertelement <4 x float> %45, float %i.ly, i64 1
-  %47 = shufflevector <4 x float> %46, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 0>
-  %48 = fmul <4 x float> %47, <float 8.750000e-01, float 1.000000e+00, float 1.000000e+00, float 1.125000e+00> ; 5 uses
-  %49 = extractelement <4 x float> %48, i64 3
-  %50 = call float @llvm.fmuladd.f32(float %49, float %i.ly, float %i.lo)
-  %51 = shufflevector <4 x float> %48, <4 x float> poison, <2 x i32> <i32 3, i32 3>
-  %52 = insertelement <2 x float> <float poison, float 1.125000e+00>, float %i.ly, i64 0
-  %53 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %51, <2 x float> %52, <2 x float> %i.lq)
-  %54 = shufflevector <4 x float> %48, <4 x float> <float 8.750000e-01, float poison, float poison, float 1.125000e+00>, <4 x i32> <i32 4, i32 0, i32 0, i32 7>
-  %55 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %54, <4 x float> %48, <4 x float> %i.lp)
-  %56 = extractelement <4 x float> %48, i64 0
+  %39 = call float @llvm.fmuladd.f32(float %38, float %i.ly, float %i.lo)
+  %40 = fmul float %i.lw, 8.750000e-01            ; 3 uses
+  %41 = insertelement <2 x float> poison, float %38, i64 0
+  %42 = shufflevector <2 x float> %41, <2 x float> poison, <2 x i32> zeroinitializer
+  %43 = insertelement <2 x float> <float poison, float 1.125000e+00>, float %i.ly, i64 0
+  %44 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %42, <2 x float> %43, <2 x float> %i.lq)
+  %45 = insertelement <4 x float> <float 8.750000e-01, float poison, float poison, float 1.125000e+00>, float %40, i64 1
+  %46 = shufflevector <4 x float> %45, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 3>
+  %47 = insertelement <4 x float> poison, float %40, i64 0
+  %48 = insertelement <4 x float> %47, float %i.ly, i64 1
+  %49 = insertelement <4 x float> %48, float %38, i64 3
+  %50 = shufflevector <4 x float> %49, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 3>
+  %51 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %46, <4 x float> %50, <4 x float> %i.lp)
   br label %bb.r
 
 bb.q:                                             ; preds = %.lr.ph639.i.us
@@ -370,10 +358,10 @@ bb.q:                                             ; preds = %.lr.ph639.i.us
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %bb.p
-  %.sink919.i.us = phi float [ %56, %bb.p ], [ %i.mj, %bb.q ]
-  %i.mq = phi float [ %50, %bb.p ], [ %i.mi, %bb.q ] ; 2 uses
-  %i.mr = phi <4 x float> [ %55, %bb.p ], [ %i.mp, %bb.q ] ; 3 uses
-  %i.ms = phi <2 x float> [ %53, %bb.p ], [ %i.mm, %bb.q ] ; 3 uses
+  %.sink919.i.us = phi float [ %40, %bb.p ], [ %i.mj, %bb.q ]
+  %i.mq = phi float [ %39, %bb.p ], [ %i.mi, %bb.q ] ; 2 uses
+  %i.mr = phi <4 x float> [ %51, %bb.p ], [ %i.mp, %bb.q ] ; 3 uses
+  %i.ms = phi <2 x float> [ %44, %bb.p ], [ %i.mm, %bb.q ] ; 3 uses
   %i.mt = call float @llvm.fmuladd.f32(float %.sink919.i.us, float 8.750000e-01, float %i.ln) ; 2 uses
   %indvars.iv.next771.i.us = add nuw nsw i64 %indvars.iv770.i.us, 1 ; 2 uses
   %exitcond773.not.i.us = icmp eq i64 %indvars.iv.next771.i.us, 16
@@ -390,9 +378,9 @@ bb.r:                                             ; preds = %bb.q, %bb.p
 .preheader.i.us:                                  ; preds = %.preheader.i.us.loopexit, %.preheader576.i.us
   %.sroa.14.2.i.us = phi float [ %.sroa.14.1.i.us, %.preheader576.i.us ], [ %i.mv, %.preheader.i.us.loopexit ] ; 3 uses
   %.sroa.21.2.i.us = phi float [ %.sroa.21.1.i.us, %.preheader576.i.us ], [ %i.mt, %.preheader.i.us.loopexit ] ; 3 uses
-  %.lcssa637.i.us = phi float [ %43, %.preheader576.i.us ], [ %i.mu, %.preheader.i.us.loopexit ] ; 3 uses
-  %.lcssa635.i.us = phi float [ %.lcssa615.i.us.a, %.preheader576.i.us ], [ %i.mq, %.preheader.i.us.loopexit ] ; 4 uses
-  %i.mz = phi <4 x float> [ %41, %.preheader576.i.us ], [ %i.my, %.preheader.i.us.loopexit ] ; 4 uses
+  %.lcssa637.i.us = phi float [ %.lcssa615.i.us.a, %.preheader576.i.us ], [ %i.mu, %.preheader.i.us.loopexit ] ; 3 uses
+  %.lcssa635.i.us = phi float [ %.lcssa615.i.us, %.preheader576.i.us ], [ %i.mq, %.preheader.i.us.loopexit ] ; 4 uses
+  %i.mz = phi <4 x float> [ %i.ll, %.preheader576.i.us ], [ %i.my, %.preheader.i.us.loopexit ] ; 4 uses
   %i.na = fcmp ogt float %.lcssa637.i.us, 0.000000e+00
   br i1 %i.na, label %bb.s, label %bb.u
 

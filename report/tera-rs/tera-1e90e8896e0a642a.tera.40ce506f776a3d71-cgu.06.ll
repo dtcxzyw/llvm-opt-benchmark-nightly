@@ -204,9 +204,6 @@ bb.e:                                             ; preds = %bb.d
     #dbg_value(i64 %i.e, !19110, !DIExpression(), !18948)
     #dbg_value(i64 %i.e, !19106, !DIExpression(), !18941)
   %i.f = add nsw i64 %i.e, -1, !dbg !19208
-    #dbg_value(i64 %i.f, !19111, !DIExpression(), !18949)
-    #dbg_value(i64 %i.f, !19121, !DIExpression(), !18952)
-    #dbg_value(i64 %i.f, !19125, !DIExpression(), !18955)
   %i.g = tail call range(i64 2, 65) i64 @llvm.ctlz.i64(i64 %i.f, i1 false), !dbg !19209
   %i.h = sub nuw nsw i64 64, %i.g, !dbg !19210
     #dbg_value(i64 %i.h, !19112, !DIExpression(), !18956)
