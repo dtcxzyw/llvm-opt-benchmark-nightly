@@ -204,7 +204,7 @@ alloc_packed_git.exit:                            ; preds = %st_add.exit41
   %i.u = getelementptr inbounds nuw i8, ptr %i.r, i64 208 ; 6 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.u, ptr nonnull align 1 %1, i64 %i.b, i1 false)
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 %i.b ; 4 uses
-  %i.w = sub i64 %i.l, %i.b                       ; 4 uses
+  %i.w = sub nuw i64 %i.l, %i.b                   ; 4 uses
   %i.x = tail call i32 (ptr, i64, ptr, ...) @xsnprintf(ptr noundef nonnull %i.v, i64 noundef %i.w, ptr noundef nonnull @.str.17) #20 ; 0 uses
   %i.y = tail call i32 @access(ptr noundef nonnull %i.u, i32 noundef 0) #20
   %.not = icmp eq i32 %i.y, 0

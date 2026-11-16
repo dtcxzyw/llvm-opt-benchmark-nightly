@@ -205,14 +205,14 @@ bb.e:                                             ; preds = %_ZN11OpenImageIO4v3
   %i.bc = fmul double %i.j, %i.j
   %i.bd = fmul double %i.bc, -2.500000e-01
   %i.be = tail call double @llvm.fmuladd.f64(double %i.f, double %i.l, double %i.bd) ; 2 uses
-  %i.bf = fdiv double 1.000000e+00, %i.be
-  %8 = insertelement <4 x double> poison, double %i.f, i64 0
-  %9 = insertelement <4 x double> %8, double %i.j, i64 1
-  %10 = insertelement <4 x double> %9, double %i.l, i64 2
-  %i.bg = insertelement <4 x double> %10, double %i.be, i64 3
-  %i.bh = insertelement <4 x double> <double poison, double 1.000000e+00, double poison, double poison>, double %i.bf, i64 0
-  %11 = shufflevector <4 x double> %i.bh, <4 x double> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
-  %12 = fmul <4 x double> %i.bg, %11
+  %i.bf = fdiv double 1.000000e+00, %i.be         ; 3 uses
+  %8 = fmul double %i.bf, %i.f
+  %9 = fmul double %i.j, %i.bf
+  %10 = fmul double %i.bf, %i.l
+  %i.bg = insertelement <4 x double> poison, double %8, i64 0
+  %i.bh = insertelement <4 x double> %i.bg, double %9, i64 1
+  %11 = insertelement <4 x double> %i.bh, double %10, i64 2
+  %12 = insertelement <4 x double> %11, double %i.be, i64 3
   %i.bi = fptrunc <4 x double> %12 to <4 x float>
   store <4 x float> %i.bi, ptr %7, align 4, !tbaa !266
   br label %bb.f

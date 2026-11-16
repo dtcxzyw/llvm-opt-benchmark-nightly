@@ -204,8 +204,8 @@ bb.a:
   %i.ay = getelementptr inbounds nuw i8, ptr %i.b, i64 144
   %i.az = tail call double @llvm.fmuladd.f64(double %i.ab, double %i.aa, double %i.u)
   %i.ba = shufflevector <2 x double> %i.t, <2 x double> %i.y, <4 x i32> <i32 poison, i32 1, i32 2, i32 3>
-  %3 = insertelement <4 x double> %i.ba, double %i.az, i64 0
-  %4 = fadd <4 x double> %3, <double -0.000000e+00, double 3.461000e-01, double -1.000000e+00, double -1.000000e+00>
+  %3 = fadd <4 x double> %i.ba, <double poison, double 3.461000e-01, double -1.000000e+00, double -1.000000e+00>
+  %4 = insertelement <4 x double> %3, double %i.az, i64 0
   %i.bb = getelementptr inbounds nuw i8, ptr %i.b, i64 48
   %i.bc = getelementptr inbounds nuw i8, ptr %i.b, i64 112
   %i.bd = getelementptr inbounds nuw i8, ptr %i.b, i64 176

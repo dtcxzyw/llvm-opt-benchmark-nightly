@@ -204,8 +204,8 @@ bb.ai:                                            ; preds = %bb.ag
 
 bb.aj:                                            ; preds = %bb.ah
   %i.cs = add i32 %.sroa.04.0.i246418, -1, !dbg !14624 ; 3 uses
-    #dbg_value(i32 %i.cs, !14029, !DIExpression(), !13360)
-    #dbg_value(i32 %i.cs, !14140, !DIExpression(), !13335)
+    #dbg_value(i32 poison, !14029, !DIExpression(), !13360)
+    #dbg_value(i32 poison, !14140, !DIExpression(), !13335)
   %i.ct = call i32 @llvm.usub.sat.i32(i32 %.sroa.510.0.i245419, i32 1), !dbg !14625
   %.sroa.510.1.i = select i1 %i.ao, i32 %i.ct, i32 undef, !dbg !14625 ; 2 uses
     #dbg_value(i32 %i.ai, !14152, !DIExpression(DW_OP_LLVM_fragment, 0, 32), !13362)

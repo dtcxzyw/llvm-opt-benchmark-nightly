@@ -204,12 +204,12 @@ _ZN8aiString3SetERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit217:
   %i.nh = getelementptr inbounds nuw i8, ptr %i.mj, i64 1080
   store float %i.nc, ptr %i.nh, align 4
   %i.ni = getelementptr inbounds nuw i8, ptr %i.mj, i64 1084
-  %i.nj = load <4 x float>, ptr %i.nd, align 8    ; 2 uses
+  %i.nj = load <4 x float>, ptr %i.nd, align 8    ; 3 uses
   %i.nk = shufflevector <4 x float> %i.nj, <4 x float> poison, <2 x i32> <i32 0, i32 1> ; 2 uses
   store <2 x float> %i.nk, ptr %i.ne, align 4
   store <2 x float> %i.nk, ptr %i.ni, align 4
-  %i.nl = fmul <4 x float> %i.nj, <float 1.000000e+00, float 1.000000e+00, float f0x3C8EFA35, float f0x3C8EFA35>
-  %12 = shufflevector <4 x float> %i.nl, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 3, i32 2>
+  %i.nl = fmul <4 x float> %i.nj, <float poison, float poison, float f0x3C8EFA35, float f0x3C8EFA35>
+  %12 = shufflevector <4 x float> %i.nj, <4 x float> %i.nl, <4 x i32> <i32 0, i32 1, i32 7, i32 6>
   store <4 x float> %12, ptr %i.ng, align 4
   %i.nm = getelementptr inbounds nuw i8, ptr %1, i64 232
   %i.nn = load i32, ptr %i.nm, align 8

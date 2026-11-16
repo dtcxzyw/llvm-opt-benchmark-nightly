@@ -205,10 +205,10 @@ bb.ai:                                            ; preds = %bb.m
   %i.bbx = insertelement <2 x double> %i.bbu, double %i.bbt, i64 1
   %i.bby = fsub <2 x double> %i.bbw, %i.bbx
   %i.bbz = fmul <2 x double> %i.bby, splat (double 5.000000e-01) ; 3 uses
-  %i.bca = shufflevector <2 x double> %i.bbv, <2 x double> %i.bbu, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %8 = shufflevector <2 x double> %i.bbz, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %9 = shufflevector <4 x double> %8, <4 x double> <double poison, double poison, double 0.000000e+00, double poison>, <4 x i32> <i32 0, i32 1, i32 6, i32 1>
-  %10 = fsub <4 x double> %i.bca, %9              ; 2 uses
+  %i.bca = shufflevector <2 x double> %i.bbv, <2 x double> %i.bbu, <4 x i32> <i32 0, i32 1, i32 2, i32 3> ; 2 uses
+  %8 = shufflevector <2 x double> %i.bbz, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 1>
+  %9 = fsub <4 x double> %i.bca, %8               ; 2 uses
+  %10 = shufflevector <4 x double> %9, <4 x double> %i.bca, <4 x i32> <i32 0, i32 1, i32 6, i32 3>
   store <4 x double> %10, ptr %i.bbn, align 8, !tbaa !10
   %i.bcb = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.bcc = getelementptr inbounds nuw i8, ptr %i.bbn, i64 32
@@ -229,7 +229,7 @@ bb.ai:                                            ; preds = %bb.m
   %i.bcn = getelementptr inbounds nuw i8, ptr %i.bbn, i64 72
   store double %i.bcm, ptr %i.bcn, align 8, !tbaa !17
   %i.bco = getelementptr inbounds nuw i8, ptr %i.bbn, i64 80
-  %i.bcp = extractelement <4 x double> %10, i64 0 ; 3 uses
+  %i.bcp = extractelement <4 x double> %9, i64 0  ; 3 uses
   store double %i.bcp, ptr %i.bco, align 8, !tbaa !18
   %i.bcq = getelementptr inbounds nuw i8, ptr %i.bbn, i64 88
   store double %i.bcm, ptr %i.bcq, align 8, !tbaa !17
@@ -272,10 +272,10 @@ bb.aj:                                            ; preds = %bb.m
   %i.bdq = insertelement <2 x double> %i.bdn, double %i.bdm, i64 1
   %i.bdr = fsub <2 x double> %i.bdp, %i.bdq
   %i.bds = fmul <2 x double> %i.bdr, splat (double 5.000000e-01) ; 2 uses
-  %i.bdt = shufflevector <2 x double> %i.bdo, <2 x double> %i.bdn, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %11 = shufflevector <2 x double> %i.bds, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %12 = shufflevector <4 x double> %11, <4 x double> <double poison, double poison, double 0.000000e+00, double poison>, <4 x i32> <i32 0, i32 1, i32 6, i32 1>
-  %13 = fsub <4 x double> %i.bdt, %12             ; 2 uses
+  %i.bdt = shufflevector <2 x double> %i.bdo, <2 x double> %i.bdn, <4 x i32> <i32 0, i32 1, i32 2, i32 3> ; 2 uses
+  %11 = shufflevector <2 x double> %i.bds, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 1>
+  %12 = fsub <4 x double> %i.bdt, %11             ; 2 uses
+  %13 = shufflevector <4 x double> %12, <4 x double> %i.bdt, <4 x i32> <i32 0, i32 1, i32 6, i32 3>
   store <4 x double> %13, ptr %i.bdg, align 8, !tbaa !10
   %i.bdu = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.bdv = load double, ptr %i.bdu, align 8, !tbaa !18
@@ -288,7 +288,7 @@ bb.aj:                                            ; preds = %bb.m
   %i.beb = getelementptr inbounds nuw i8, ptr %i.bdg, i64 40
   store double %i.bea, ptr %i.beb, align 8, !tbaa !17
   %i.bec = getelementptr inbounds nuw i8, ptr %i.bdg, i64 48
-  %i.bed = extractelement <4 x double> %13, i64 0 ; 3 uses
+  %i.bed = extractelement <4 x double> %12, i64 0 ; 3 uses
   store double %i.bed, ptr %i.bec, align 8, !tbaa !18
   %i.bee = getelementptr inbounds nuw i8, ptr %i.bdg, i64 56
   store double %i.bea, ptr %i.bee, align 8, !tbaa !17

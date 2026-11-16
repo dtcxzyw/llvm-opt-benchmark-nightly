@@ -205,20 +205,20 @@ bb.bh:                                            ; preds = %bb.bg, %bb.bb
   %i.gu = fmul <2 x double> %i.gt, %i.gc          ; 4 uses
   %i.gv = shufflevector <2 x double> %i.gu, <2 x double> poison, <2 x i32> <i32 poison, i32 0>
   %i.gw = insertelement <2 x double> %i.gv, double %i.gg, i64 0
-  %i.gx = shufflevector <2 x double> %i.gw, <2 x double> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
+  %i.gx = shufflevector <2 x double> %i.gw, <2 x double> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1> ; 2 uses
   %i.gy = shufflevector <2 x double> %i.gf, <2 x double> poison, <4 x i32> <i32 poison, i32 poison, i32 0, i32 poison>
-  %4 = insertelement <4 x double> %i.gy, double 1.000000e+00, i64 3
-  %5 = shufflevector <2 x double> %i.gr, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %6 = shufflevector <4 x double> %5, <4 x double> %4, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %7 = fmul <4 x double> %i.gx, %6                ; 6 uses
+  %4 = shufflevector <2 x double> %i.gr, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %5 = shufflevector <4 x double> %4, <4 x double> %i.gy, <4 x i32> <i32 0, i32 1, i32 6, i32 poison>
+  %6 = fmul <4 x double> %i.gx, %5                ; 6 uses
+  %7 = shufflevector <4 x double> %6, <4 x double> %i.gx, <4 x i32> <i32 0, i32 1, i32 2, i32 7>
   store <4 x double> %7, ptr %i.fz, align 8, !tbaa !51
   %i.gz = extractelement <2 x double> %i.gu, i64 1 ; 2 uses
   store double %i.gz, ptr %i.fw, align 8, !tbaa !240
   %i.ha = fdiv <2 x double> splat (double 1.000000e+00), %i.gu
   store <2 x double> %i.ha, ptr %i.ga, align 8, !tbaa !51
   %i.hb = fcmp olt double %i.fu, 0.000000e+00     ; 2 uses
-  %i.hc = extractelement <4 x double> %7, i64 0   ; 3 uses
-  %i.hd = extractelement <4 x double> %7, i64 2   ; 3 uses
+  %i.hc = extractelement <4 x double> %6, i64 0   ; 3 uses
+  %i.hd = extractelement <4 x double> %6, i64 2   ; 3 uses
   br i1 %i.hb, label %bb.bi, label %bb.bj
 
 bb.bi:                                            ; preds = %bb.bh
@@ -233,12 +233,12 @@ bb.bj:                                            ; preds = %bb.bi, %bb.bh
   br i1 %i.dr, label %bb.bk, label %bb.bl
 
 bb.bk:                                            ; preds = %bb.bj
-  %i.hh = insertelement <4 x double> %7, double %i.gi, i64 0
+  %i.hh = insertelement <4 x double> %6, double %i.gi, i64 0
   %i.hi = insertelement <4 x double> %i.hh, double %i.hf, i64 2
   %i.hj = insertelement <4 x double> %i.hi, double %i.hg, i64 3
   %.fr194 = freeze <4 x double> %i.hj
   %i.hk = call <4 x double> @llvm.fabs.v4f64(<4 x double> %.fr194)
-  %i.hl = extractelement <4 x double> %7, i64 1
+  %i.hl = extractelement <4 x double> %6, i64 1
   %i.hm = fcmp olt double %i.gi, %i.hl
   %i.hn = fcmp ugt <4 x double> %i.hk, <double f0x402921FB54442D18, double f0x402921FB54442D18, double f0x4009220092718F51, double f0x4009220092718F51>
   %i.ho = bitcast <4 x i1> %i.hn to i4
@@ -247,7 +247,7 @@ bb.bk:                                            ; preds = %bb.bj
   br i1 %op.rdx, label %bb.bm, label %bb.bn
 
 bb.bl:                                            ; preds = %bb.bj
-  %i.hq = extractelement <4 x double> %7, i64 1
+  %i.hq = extractelement <4 x double> %6, i64 1
   %.old = fcmp olt double %i.gi, %i.hq
   br i1 %.old, label %bb.bm, label %bb.bn
 

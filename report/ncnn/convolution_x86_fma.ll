@@ -205,7 +205,6 @@ middle.block191:                                  ; preds = %vector.body184
   %i.aha = shufflevector <4 x float> %i.agy, <4 x float> %i.agz, <4 x i32> <i32 0, i32 5, i32 2, i32 7>
   %i.ahb = shufflevector <4 x float> %i.aha, <4 x float> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.ahc = shufflevector <8 x float> %i.agh, <8 x float> %i.ahb, <8 x i32> <i32 0, i32 1, i32 8, i32 9, i32 10, i32 11, i32 poison, i32 poison>
-  %11 = insertelement <8 x float> %i.ahc, float %i.acv, i64 6
   %i.ahd = fadd fast <2 x float> %i.agt, %i.afu   ; 3 uses
   %i.ahe = shufflevector <2 x float> %i.ahd, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 0>
   %i.ahf = extractelement <2 x float> %i.ahd, i64 1
@@ -323,9 +322,10 @@ middle.block191:                                  ; preds = %vector.body184
   %i.alc = extractelement <2 x float> %i.alb, i64 1
   %i.ald = fmul fast float %i.alc, f0x3C360B61    ; 2 uses
   %i.ale = shufflevector <2 x float> %i.ala, <2 x float> poison, <8 x i32> <i32 0, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %12 = shufflevector <8 x float> %11, <8 x float> %i.ale, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 8>
-  %i.alf = fadd reassoc arcp contract afn <8 x float> %12, %i.afd
-  store <8 x float> %i.alf, ptr %i.acu, align 4, !tbaa !56
+  %11 = shufflevector <8 x float> %i.ahc, <8 x float> %i.ale, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 poison, i32 8>
+  %i.alf = fadd reassoc arcp contract afn <8 x float> %11, %i.afd
+  %12 = insertelement <8 x float> %i.alf, float %i.acv, i64 6
+  store <8 x float> %12, ptr %i.acu, align 4, !tbaa !56
   %i.alg = fmul fast <2 x float> %i.alb, <float f0xBE638E39, float f0x3CB60B61> ; 3 uses
   %i.alh = fmul fast <2 x float> %i.alb, <float f0x3C360B61, float f0x3E638E39>
   %i.ali = shufflevector <2 x float> %i.alh, <2 x float> poison, <2 x i32> <i32 1, i32 0> ; 3 uses

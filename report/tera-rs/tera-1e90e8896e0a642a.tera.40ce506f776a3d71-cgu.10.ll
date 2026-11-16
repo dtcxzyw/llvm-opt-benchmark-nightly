@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.a
   %.not.i = icmp sgt i128 %storemerge, -1, !dbg !21139
   %i.z = icmp samesign ult i128 %storemerge, %i.x, !dbg !21140
   %.sroa.0.0.i = select i1 %.not.i, i1 %i.z, i1 false, !dbg !21140
-    #dbg_value(i1 %.sroa.0.0.i, !21111, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !21119)
+    #dbg_value(i1 poison, !21111, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !21119)
     #dbg_value(i128 %storemerge, !21116, !DIExpression(DW_OP_LLVM_convert, 128, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_stack_value), !21119)
   %i.aa = trunc i128 %storemerge to i64, !dbg !21141
   %.sroa.0.0 = zext i1 %.sroa.0.0.i to i64, !dbg !21141

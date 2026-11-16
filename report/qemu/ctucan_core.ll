@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph
   store i8 %i.co, ptr %i.cs, align 1
   %i.ct = add i32 %i.ce, 2                        ; 4 uses
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %bb.f, !llvm.loop !8
 

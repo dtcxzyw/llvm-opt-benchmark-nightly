@@ -205,12 +205,12 @@ bb.vk:                                            ; preds = %bb.vk, %.epil.prehe
 .thread245.i.loopexit:                            ; preds = %.noexc550
   %i.enf = insertelement <4 x double> poison, double %i.ean, i64 0
   %i.eng = shufflevector <2 x double> %i.eag, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %i.enh = shufflevector <4 x double> %i.enf, <4 x double> %i.eng, <4 x i32> <i32 0, i32 4, i32 5, i32 poison>
+  %i.enh = shufflevector <4 x double> %i.enf, <4 x double> %i.eng, <4 x i32> <i32 0, i32 4, i32 5, i32 poison> ; 2 uses
   %i.eni = insertelement <4 x double> %i.enh, double %.0173328.i, i64 3
-  %67 = shufflevector <2 x double> %i.enc, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %68 = shufflevector <4 x double> %67, <4 x double> <double -0.000000e+00, double poison, double poison, double poison>, <4 x i32> <i32 4, i32 0, i32 1, i32 poison>
-  %69 = insertelement <4 x double> %68, double %i.emq, i64 3
-  %70 = fadd <4 x double> %i.eni, %69
+  %67 = shufflevector <2 x double> %i.enc, <2 x double> poison, <4 x i32> <i32 poison, i32 0, i32 1, i32 poison>
+  %68 = insertelement <4 x double> %67, double %i.emq, i64 3
+  %69 = fadd <4 x double> %i.eni, %68
+  %70 = shufflevector <4 x double> %i.enh, <4 x double> %69, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
   %i.enj = shufflevector <2 x double> %i.end, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   br label %.thread245.i
 
