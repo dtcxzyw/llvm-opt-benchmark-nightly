@@ -77,14 +77,14 @@ _ZNSt3__110unique_ptrIN3jxl6N_SSE413GaborishStageENS_14default_deleteIS3_EEED2B8
   %i.s = fadd <2 x float> %i.q, %i.r
   %i.t = shufflevector <2 x float> %i.s, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
   %i.u = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.t, <4 x float> splat (float 4.000000e+00), <4 x float> splat (float 1.000000e+00))
-  %i.v = fdiv <4 x float> splat (float 1.000000e+00), %i.u ; 3 uses
+  %i.v = fdiv <4 x float> splat (float 1.000000e+00), %i.u ; 4 uses
   %i.w = extractelement <4 x float> %i.v, i64 0
   store float %i.w, ptr %i.c, align 8, !tbaa !20, !noalias !46
-  %2 = shufflevector <2 x float> %i.q, <2 x float> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
-  %3 = shufflevector <4 x float> <float poison, float poison, float 1.000000e+00, float poison>, <4 x float> %2, <4 x i32> <i32 poison, i32 poison, i32 2, i32 5>
-  %4 = shufflevector <2 x float> %i.p, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %5 = shufflevector <4 x float> %4, <4 x float> %3, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %6 = fmul <4 x float> %5, %i.v
+  %2 = shufflevector <2 x float> %i.q, <2 x float> poison, <4 x i32> <i32 poison, i32 poison, i32 poison, i32 1>
+  %3 = shufflevector <2 x float> %i.p, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %4 = shufflevector <4 x float> %3, <4 x float> %2, <4 x i32> <i32 0, i32 1, i32 poison, i32 7>
+  %5 = fmul <4 x float> %4, %i.v
+  %6 = shufflevector <4 x float> %5, <4 x float> %i.v, <4 x i32> <i32 0, i32 1, i32 6, i32 3>
   store <4 x float> %6, ptr %i.e, align 4, !tbaa !20, !noalias !46
   %i.x = extractelement <4 x float> %i.v, i64 2
   %i.y = fmul float %i.h, %i.x
@@ -139,16 +139,17 @@ _ZNSt3__110unique_ptrIN3jxl6N_AVX213GaborishStageENS_14default_deleteIS3_EEED2B8
   %i.x = insertelement <4 x float> %i.w, float %i.s, i64 2
   %i.y = insertelement <4 x float> %i.x, float %i.v, i64 3
   %i.z = fdiv <4 x float> splat (float 1.000000e+00), %i.y ; 3 uses
-  %i.aa = shufflevector <4 x float> %i.z, <4 x float> poison, <8 x i32> <i32 0, i32 1, i32 1, i32 2, i32 2, i32 2, i32 3, i32 3>
+  %i.aa = shufflevector <4 x float> %i.z, <4 x float> poison, <8 x i32> <i32 0, i32 1, i32 1, i32 2, i32 2, i32 2, i32 3, i32 3> ; 2 uses
   %i.ab = shufflevector <2 x float> %i.j, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %i.ac = shufflevector <4 x float> %i.z, <4 x float> %i.ab, <8 x i32> <i32 1, i32 4, i32 5, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %2 = shufflevector <8 x float> %i.ac, <8 x float> <float poison, float poison, float poison, float 1.000000e+00, float poison, float poison, float 1.000000e+00, float poison>, <8 x i32> <i32 0, i32 1, i32 2, i32 11, i32 poison, i32 poison, i32 14, i32 poison>
+  %i.ac = shufflevector <4 x float> %i.z, <4 x float> %i.ab, <8 x i32> <i32 1, i32 4, i32 5, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison> ; 2 uses
   %i.ad = shufflevector <2 x float> %i.m, <2 x float> poison, <8 x i32> <i32 0, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %3 = shufflevector <8 x float> %2, <8 x float> %i.ad, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 6, i32 8>
+  %2 = shufflevector <8 x float> %i.ac, <8 x float> %i.ad, <8 x i32> <i32 poison, i32 1, i32 2, i32 poison, i32 poison, i32 poison, i32 poison, i32 8>
   %i.ae = shufflevector <2 x float> %i.l, <2 x float> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %4 = shufflevector <8 x float> %3, <8 x float> %i.ae, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 6, i32 7>
-  %i.af = fmul <8 x float> %4, %i.aa
-  store <8 x float> %i.af, ptr %i.c, align 8, !tbaa !20, !noalias !49
+  %3 = shufflevector <8 x float> %2, <8 x float> %i.ae, <8 x i32> <i32 poison, i32 1, i32 2, i32 poison, i32 8, i32 9, i32 poison, i32 7>
+  %i.af = fmul <8 x float> %3, %i.aa
+  %4 = shufflevector <8 x float> %i.ac, <8 x float> %i.af, <8 x i32> <i32 0, i32 9, i32 10, i32 poison, i32 12, i32 13, i32 poison, i32 15>
+  %5 = shufflevector <8 x float> %4, <8 x float> %i.aa, <8 x i32> <i32 0, i32 1, i32 2, i32 11, i32 4, i32 5, i32 14, i32 7>
+  store <8 x float> %5, ptr %i.c, align 8, !tbaa !20, !noalias !49
   %i.ag = extractelement <4 x float> %i.z, i64 3
   %i.ah = fmul float %i.n, %i.ag
   store float %i.ah, ptr %i.i, align 8, !tbaa !20, !noalias !49
@@ -186,14 +187,14 @@ _ZNSt3__110unique_ptrIN3jxl6N_SSE213GaborishStageENS_14default_deleteIS3_EEED2B8
   %i.s = fadd <2 x float> %i.q, %i.r
   %i.t = shufflevector <2 x float> %i.s, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
   %i.u = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.t, <4 x float> splat (float 4.000000e+00), <4 x float> splat (float 1.000000e+00))
-  %i.v = fdiv <4 x float> splat (float 1.000000e+00), %i.u ; 3 uses
+  %i.v = fdiv <4 x float> splat (float 1.000000e+00), %i.u ; 4 uses
   %i.w = extractelement <4 x float> %i.v, i64 0
   store float %i.w, ptr %i.c, align 8, !tbaa !20, !noalias !53
-  %2 = shufflevector <2 x float> %i.q, <2 x float> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
-  %3 = shufflevector <4 x float> <float poison, float poison, float 1.000000e+00, float poison>, <4 x float> %2, <4 x i32> <i32 poison, i32 poison, i32 2, i32 5>
-  %4 = shufflevector <2 x float> %i.p, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %5 = shufflevector <4 x float> %4, <4 x float> %3, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %6 = fmul <4 x float> %5, %i.v
+  %2 = shufflevector <2 x float> %i.q, <2 x float> poison, <4 x i32> <i32 poison, i32 poison, i32 poison, i32 1>
+  %3 = shufflevector <2 x float> %i.p, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %4 = shufflevector <4 x float> %3, <4 x float> %2, <4 x i32> <i32 0, i32 1, i32 poison, i32 7>
+  %5 = fmul <4 x float> %4, %i.v
+  %6 = shufflevector <4 x float> %5, <4 x float> %i.v, <4 x i32> <i32 0, i32 1, i32 6, i32 3>
   store <4 x float> %6, ptr %i.e, align 4, !tbaa !20, !noalias !53
   %i.x = extractelement <4 x float> %i.v, i64 2
   %i.y = fmul float %i.h, %i.x

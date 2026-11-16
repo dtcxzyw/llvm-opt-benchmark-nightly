@@ -204,7 +204,7 @@ bb.a:
   %i.b = alloca float, align 4                    ; 16 uses
   %i.c = alloca float, align 4                    ; 13 uses
   %i.d = alloca [4 x float], align 16             ; 7 uses
-  %i.e = alloca [4 x float], align 16             ; 4 uses
+  %i.e = alloca [4 x float], align 16             ; 7 uses
   %i.f = alloca [4 x float], align 16             ; 10 uses
   %i.g = alloca [8 x float], align 16             ; 4 uses
   %i.h = alloca float, align 4                    ; 4 uses
@@ -332,7 +332,7 @@ bb.m:                                             ; preds = %_get_zoom_pos.exit1
   %i.bf = load float, ptr %i.c, align 4, !tbaa !148 ; 2 uses
   %i.bg = fmul reassoc nsz arcp contract afn float %i.bf, %i.be
   %i.bh = fdiv reassoc nsz arcp contract afn float 6.000000e+00, %i.bg
-  %i.bi = load float, ptr %i.a, align 4, !tbaa !148 ; 3 uses
+  %i.bi = load float, ptr %i.a, align 4, !tbaa !148 ; 4 uses
   %i.bj = load float, ptr %i.d, align 16, !tbaa !148 ; 2 uses
   %i.bk = fsub reassoc nsz arcp contract afn float %i.bi, %i.bj
   %i.bl = call reassoc nsz arcp contract afn float @llvm.fabs.f32(float %i.bk) ; 2 uses
@@ -376,19 +376,22 @@ bb.p:                                             ; preds = %bb.n, %bb.m
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ck, i64 156
   %i.cm = load <2 x i32>, ptr %i.cl, align 4, !tbaa !86
   %i.cn = sitofp reassoc nsz arcp contract afn <2 x i32> %i.cm to <2 x float> ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #16
   %i.co = extractelement <2 x float> %i.cn, i64 0
   %i.cp = fmul reassoc nnan nsz arcp contract afn float %i.co, 2.000000e-02
   %i.cq = extractelement <2 x float> %i.cn, i64 1
   %i.cr = fdiv reassoc nsz arcp contract afn float %i.cp, %i.cq ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #16
+  %7 = fadd reassoc nsz arcp contract afn float %i.bi, -2.000000e-02
+  store float %7, ptr %i.e, align 16, !tbaa !148
+  %8 = getelementptr inbounds nuw i8, ptr %i.e, i64 4
   %i.cs = fsub reassoc nsz arcp contract afn float %.pre223, %i.cr
-  %7 = insertelement <4 x float> poison, float %i.bi, i64 0
-  %8 = insertelement <4 x float> %7, float %i.cs, i64 1
-  %9 = insertelement <4 x float> %8, float %.pre223, i64 3
-  %10 = shufflevector <4 x float> %9, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 3>
-  %11 = insertelement <4 x float> <float -2.000000e-02, float -0.000000e+00, float 2.000000e-02, float poison>, float %i.cr, i64 3
-  %12 = fadd reassoc nsz arcp contract afn <4 x float> %10, %11
-  store <4 x float> %12, ptr %i.e, align 16, !tbaa !148
+  store float %i.cs, ptr %8, align 4, !tbaa !148
+  %9 = getelementptr inbounds nuw i8, ptr %i.e, i64 8
+  %10 = fadd reassoc nsz arcp contract afn float %i.bi, 2.000000e-02
+  store float %10, ptr %9, align 8, !tbaa !148
+  %11 = getelementptr inbounds nuw i8, ptr %i.e, i64 12
+  %12 = fadd reassoc nsz arcp contract afn float %.pre223, %i.cr
+  store float %12, ptr %11, align 4, !tbaa !148
   call void @dt_color_picker_backtransform_box(ptr noundef nonnull %i.k, i32 noundef 2, ptr noundef nonnull %i.e, ptr noundef nonnull %i.bd) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #16
   br label %bb.q

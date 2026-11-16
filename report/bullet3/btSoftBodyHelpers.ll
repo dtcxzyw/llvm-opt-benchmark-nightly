@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %.lr.ph1369, %bb.m
   %i.ev = phi i32 [ %i.em, %.lr.ph1369 ], [ %i.gg, %bb.m ]
   %indvars.iv1408 = phi i64 [ 0, %.lr.ph1369 ], [ %indvars.iv.next1409, %bb.m ] ; 2 uses
   %i.ew = load ptr, ptr %i.eo, align 8, !tbaa !65
-  %i.ex = getelementptr inbounds nuw [256 x i8], ptr %i.ew, i64 %indvars.iv1408 ; 3 uses
+  %i.ex = getelementptr inbounds nuw [256 x i8], ptr %i.ew, i64 %indvars.iv1408 ; 4 uses
   %i.ey = getelementptr inbounds nuw i8, ptr %i.ex, i64 8
   %i.ez = load ptr, ptr %i.ey, align 8, !tbaa !282
   %i.fa = getelementptr inbounds nuw i8, ptr %i.ez, i64 20
@@ -217,12 +217,16 @@ bb.k:                                             ; preds = %.lr.ph1369, %bb.m
 bb.l:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %45) #25
   %i.fe = getelementptr inbounds nuw i8, ptr %i.ex, i64 16 ; 6 uses
-  %103 = load <2 x float>, ptr %i.fe, align 8, !tbaa !19
-  %104 = fadd <2 x float> %103, <float -1.000000e-01, float -0.000000e+00>
+  %103 = load float, ptr %i.fe, align 8, !tbaa !19
+  %104 = fadd float %103, -1.000000e-01
+  %105 = getelementptr inbounds nuw i8, ptr %i.ex, i64 20 ; 2 uses
+  %106 = load float, ptr %105, align 4, !tbaa !19
   %i.ff = getelementptr inbounds nuw i8, ptr %i.ex, i64 24 ; 6 uses
   %i.fg = load float, ptr %i.ff, align 8, !tbaa !19
+  %.sroa.0.0.vec.insert.i238 = insertelement <2 x float> poison, float %104, i64 0
+  %.sroa.0.4.vec.insert.i239 = insertelement <2 x float> %.sroa.0.0.vec.insert.i238, float %106, i64 1
   %.sroa.3.12.vec.insert.i240 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.fg, i64 0
-  store <2 x float> %104, ptr %45, align 8
+  store <2 x float> %.sroa.0.4.vec.insert.i239, ptr %45, align 8
   store <2 x float> %.sroa.3.12.vec.insert.i240, ptr %i.ep, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %46) #25
   %i.fh = load <2 x float>, ptr %i.fe, align 8, !tbaa !19
@@ -242,11 +246,14 @@ bb.l:                                             ; preds = %bb.k
   call void @llvm.lifetime.end.p0(ptr nonnull %46) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %45) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %48) #25
-  %105 = load <2 x float>, ptr %i.fe, align 8, !tbaa !19
-  %106 = fadd <2 x float> %105, <float -0.000000e+00, float -1.000000e-01>
+  %107 = load float, ptr %i.fe, align 8, !tbaa !19
+  %108 = load float, ptr %105, align 4, !tbaa !19
+  %109 = fadd float %108, -1.000000e-01
   %i.fo = load float, ptr %i.ff, align 8, !tbaa !19
+  %.sroa.0.0.vec.insert.i248 = insertelement <2 x float> poison, float %107, i64 0
+  %.sroa.0.4.vec.insert.i249 = insertelement <2 x float> %.sroa.0.0.vec.insert.i248, float %109, i64 1
   %.sroa.3.12.vec.insert.i250 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.fo, i64 0
-  store <2 x float> %106, ptr %48, align 8
+  store <2 x float> %.sroa.0.4.vec.insert.i249, ptr %48, align 8
   store <2 x float> %.sroa.3.12.vec.insert.i250, ptr %i.er, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %49) #25
   %i.fp = load <2 x float>, ptr %i.fe, align 8, !tbaa !19
@@ -649,16 +656,18 @@ bb.ah:                                            ; preds = %.lr.ph1386, %bb.ah
   call void @llvm.lifetime.start.p0(ptr nonnull %82) #25
   store <4 x float> <float 1.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, ptr %82, align 16, !tbaa !19
   call void @llvm.lifetime.start.p0(ptr nonnull %33) #25
-  %107 = load <2 x float>, ptr %i.ww, align 4, !tbaa !19 ; 2 uses
-  %108 = fadd <2 x float> %107, <float -2.500000e-01, float -0.000000e+00>
-  %109 = getelementptr inbounds nuw i8, ptr %i.wv, i64 24 ; 3 uses
-  %110 = load float, ptr %109, align 4, !tbaa !19 ; 2 uses
-  %.sroa.3.12.vec.insert.i.i644 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %110, i64 0
-  store <2 x float> %108, ptr %33, align 8
+  %110 = getelementptr inbounds nuw i8, ptr %i.wv, i64 24 ; 3 uses
+  %111 = load float, ptr %110, align 4, !tbaa !19 ; 2 uses
+  %.sroa.3.12.vec.insert.i.i644 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %111, i64 0
   store <2 x float> %.sroa.3.12.vec.insert.i.i644, ptr %i.uf, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %34) #25
-  %i.wx = fadd <2 x float> %107, <float 2.500000e-01, float 0.000000e+00>
-  %i.wy = fadd float %110, 0.000000e+00
+  %112 = load <2 x float>, ptr %i.ww, align 4, !tbaa !19 ; 3 uses
+  %113 = extractelement <2 x float> %112, i64 0
+  %114 = fadd float %113, -2.500000e-01
+  %115 = insertelement <2 x float> %112, float %114, i64 0
+  store <2 x float> %115, ptr %33, align 8
+  %i.wx = fadd <2 x float> %112, <float 2.500000e-01, float 0.000000e+00>
+  %i.wy = fadd float %111, 0.000000e+00
   %.sroa.3.12.vec.insert.i14.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.wy, i64 0
   store <2 x float> %i.wx, ptr %34, align 8
   store <2 x float> %.sroa.3.12.vec.insert.i14.i, ptr %i.ug, align 8
@@ -669,15 +678,17 @@ bb.ah:                                            ; preds = %.lr.ph1386, %bb.ah
   call void @llvm.lifetime.end.p0(ptr nonnull %34) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %33) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %35) #25
-  %111 = load <2 x float>, ptr %i.ww, align 4, !tbaa !19 ; 2 uses
-  %112 = fadd <2 x float> %111, <float -0.000000e+00, float -2.500000e-01>
-  %113 = load float, ptr %109, align 4, !tbaa !19 ; 2 uses
-  %.sroa.3.12.vec.insert.i19.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %113, i64 0
-  store <2 x float> %112, ptr %35, align 8
+  %116 = load float, ptr %110, align 4, !tbaa !19 ; 2 uses
+  %.sroa.3.12.vec.insert.i19.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %116, i64 0
   store <2 x float> %.sroa.3.12.vec.insert.i19.i, ptr %i.uh, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %36) #25
-  %i.xc = fadd <2 x float> %111, <float 0.000000e+00, float 2.500000e-01>
-  %i.xd = fadd float %113, 0.000000e+00
+  %117 = load <2 x float>, ptr %i.ww, align 4, !tbaa !19 ; 3 uses
+  %118 = extractelement <2 x float> %117, i64 1
+  %119 = fadd float %118, -2.500000e-01
+  %.sroa.0.4.vec.insert.i18.i = insertelement <2 x float> %117, float %119, i64 1
+  store <2 x float> %.sroa.0.4.vec.insert.i18.i, ptr %35, align 8
+  %i.xc = fadd <2 x float> %117, <float 0.000000e+00, float 2.500000e-01>
+  %i.xd = fadd float %116, 0.000000e+00
   %.sroa.3.12.vec.insert.i24.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.xd, i64 0
   store <2 x float> %i.xc, ptr %36, align 8
   store <2 x float> %.sroa.3.12.vec.insert.i24.i, ptr %i.ui, align 8
@@ -689,7 +700,7 @@ bb.ah:                                            ; preds = %.lr.ph1386, %bb.ah
   call void @llvm.lifetime.end.p0(ptr nonnull %35) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %37) #25
   %i.xh = load <2 x float>, ptr %i.ww, align 4, !tbaa !19 ; 2 uses
-  %i.xi = load float, ptr %109, align 4, !tbaa !19 ; 2 uses
+  %i.xi = load float, ptr %110, align 4, !tbaa !19 ; 2 uses
   %i.xj = fadd float %i.xi, -2.500000e-01
   %.sroa.3.12.vec.insert.i29.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.xj, i64 0
   store <2 x float> %i.xh, ptr %37, align 8
@@ -710,15 +721,17 @@ bb.ah:                                            ; preds = %.lr.ph1386, %bb.ah
   call void @llvm.lifetime.start.p0(ptr nonnull %83) #25
   store <4 x float> <float 0.000000e+00, float 1.000000e+00, float 0.000000e+00, float 0.000000e+00>, ptr %83, align 16, !tbaa !19
   call void @llvm.lifetime.start.p0(ptr nonnull %27) #25
-  %114 = load <2 x float>, ptr %81, align 8, !tbaa !19 ; 2 uses
-  %115 = fadd <2 x float> %114, <float -2.500000e-01, float -0.000000e+00>
-  %116 = load float, ptr %i.ue, align 8, !tbaa !19 ; 2 uses
-  %.sroa.3.12.vec.insert.i.i647 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %116, i64 0
-  store <2 x float> %115, ptr %27, align 8
+  %120 = load float, ptr %i.ue, align 8, !tbaa !19 ; 2 uses
+  %.sroa.3.12.vec.insert.i.i647 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %120, i64 0
   store <2 x float> %.sroa.3.12.vec.insert.i.i647, ptr %i.ul, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %28) #25
-  %i.xp = fadd <2 x float> %114, <float 2.500000e-01, float 0.000000e+00>
-  %i.xq = fadd float %116, 0.000000e+00
+  %121 = load <2 x float>, ptr %81, align 8, !tbaa !19 ; 3 uses
+  %122 = extractelement <2 x float> %121, i64 0
+  %123 = fadd float %122, -2.500000e-01
+  %124 = insertelement <2 x float> %121, float %123, i64 0
+  store <2 x float> %124, ptr %27, align 8
+  %i.xp = fadd <2 x float> %121, <float 2.500000e-01, float 0.000000e+00>
+  %i.xq = fadd float %120, 0.000000e+00
   %.sroa.3.12.vec.insert.i14.i650 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.xq, i64 0
   store <2 x float> %i.xp, ptr %28, align 8
   store <2 x float> %.sroa.3.12.vec.insert.i14.i650, ptr %i.um, align 8
@@ -729,15 +742,17 @@ bb.ah:                                            ; preds = %.lr.ph1386, %bb.ah
   call void @llvm.lifetime.end.p0(ptr nonnull %28) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %27) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %29) #25
-  %117 = load <2 x float>, ptr %81, align 8, !tbaa !19 ; 2 uses
-  %118 = fadd <2 x float> %117, <float -0.000000e+00, float -2.500000e-01>
-  %119 = load float, ptr %i.ue, align 8, !tbaa !19 ; 2 uses
-  %.sroa.3.12.vec.insert.i19.i653 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %119, i64 0
-  store <2 x float> %118, ptr %29, align 8
+  %125 = load float, ptr %i.ue, align 8, !tbaa !19 ; 2 uses
+  %.sroa.3.12.vec.insert.i19.i653 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %125, i64 0
   store <2 x float> %.sroa.3.12.vec.insert.i19.i653, ptr %i.un, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %30) #25
-  %i.xu = fadd <2 x float> %117, <float 0.000000e+00, float 2.500000e-01>
-  %i.xv = fadd float %119, 0.000000e+00
+  %126 = load <2 x float>, ptr %81, align 8, !tbaa !19 ; 3 uses
+  %127 = extractelement <2 x float> %126, i64 1
+  %128 = fadd float %127, -2.500000e-01
+  %.sroa.0.4.vec.insert.i18.i652 = insertelement <2 x float> %126, float %128, i64 1
+  store <2 x float> %.sroa.0.4.vec.insert.i18.i652, ptr %29, align 8
+  %i.xu = fadd <2 x float> %126, <float 0.000000e+00, float 2.500000e-01>
+  %i.xv = fadd float %125, 0.000000e+00
   %.sroa.3.12.vec.insert.i24.i656 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.xv, i64 0
   store <2 x float> %i.xu, ptr %30, align 8
   store <2 x float> %.sroa.3.12.vec.insert.i24.i656, ptr %i.uo, align 8
@@ -805,16 +820,18 @@ bb.aj:                                            ; preds = %bb.ai
   call void @llvm.lifetime.start.p0(ptr nonnull %85) #25
   store <4 x float> <float 1.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, ptr %85, align 16, !tbaa !19
   call void @llvm.lifetime.start.p0(ptr nonnull %21) #25
-  %120 = load <2 x float>, ptr %i.zb, align 8, !tbaa !19 ; 2 uses
-  %121 = fadd <2 x float> %120, <float -2.500000e-01, float -0.000000e+00>
-  %122 = getelementptr inbounds nuw i8, ptr %i.yr, i64 24 ; 3 uses
-  %123 = load float, ptr %122, align 8, !tbaa !19 ; 2 uses
-  %.sroa.3.12.vec.insert.i.i665.a = insertelement <2 x float> <float poison, float 0.000000e+00>, float %123, i64 0
-  store <2 x float> %121, ptr %21, align 8
-  store <2 x float> %.sroa.3.12.vec.insert.i.i665.a, ptr %i.uv, align 8
+  %129 = getelementptr inbounds nuw i8, ptr %i.yr, i64 24 ; 3 uses
+  %130 = load float, ptr %129, align 8, !tbaa !19 ; 2 uses
+  %.sroa.3.12.vec.insert.i.i665 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %130, i64 0
+  %131 = load <2 x float>, ptr %i.zb, align 8, !tbaa !19 ; 3 uses
+  %132 = extractelement <2 x float> %131, i64 0
+  %133 = fadd float %132, -2.500000e-01
+  %.sroa.3.12.vec.insert.i.i665.a = insertelement <2 x float> %131, float %133, i64 0
+  store <2 x float> %.sroa.3.12.vec.insert.i.i665.a, ptr %21, align 8
+  store <2 x float> %.sroa.3.12.vec.insert.i.i665, ptr %i.uv, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %22) #25
-  %i.zc = fadd <2 x float> %120, <float 2.500000e-01, float 0.000000e+00>
-  %i.zd = fadd float %123, 0.000000e+00
+  %i.zc = fadd <2 x float> %131, <float 2.500000e-01, float 0.000000e+00>
+  %i.zd = fadd float %130, 0.000000e+00
   %.sroa.3.12.vec.insert.i14.i668 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.zd, i64 0
   store <2 x float> %i.zc, ptr %22, align 8
   store <2 x float> %.sroa.3.12.vec.insert.i14.i668, ptr %i.uw, align 8
@@ -825,15 +842,17 @@ bb.aj:                                            ; preds = %bb.ai
   call void @llvm.lifetime.end.p0(ptr nonnull %22) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %21) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %23) #25
-  %i.zh = load <2 x float>, ptr %i.zb, align 8, !tbaa !19 ; 2 uses
-  %124 = fadd <2 x float> %i.zh, <float -0.000000e+00, float -2.500000e-01>
-  %125 = load float, ptr %122, align 8, !tbaa !19 ; 2 uses
-  %.sroa.3.12.vec.insert.i19.i671.a = insertelement <2 x float> <float poison, float 0.000000e+00>, float %125, i64 0
-  store <2 x float> %124, ptr %23, align 8
-  store <2 x float> %.sroa.3.12.vec.insert.i19.i671.a, ptr %i.ux, align 8
+  %134 = load float, ptr %129, align 8, !tbaa !19 ; 2 uses
+  %.sroa.3.12.vec.insert.i19.i671 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %134, i64 0
+  %i.zh = load <2 x float>, ptr %i.zb, align 8, !tbaa !19 ; 3 uses
+  %135 = extractelement <2 x float> %i.zh, i64 1
+  %136 = fadd float %135, -2.500000e-01
+  %.sroa.3.12.vec.insert.i19.i671.a = insertelement <2 x float> %i.zh, float %136, i64 1
+  store <2 x float> %.sroa.3.12.vec.insert.i19.i671.a, ptr %23, align 8
+  store <2 x float> %.sroa.3.12.vec.insert.i19.i671, ptr %i.ux, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %24) #25
   %i.zi = fadd <2 x float> %i.zh, <float 0.000000e+00, float 2.500000e-01>
-  %i.zj = fadd float %125, 0.000000e+00
+  %i.zj = fadd float %134, 0.000000e+00
   %.sroa.3.12.vec.insert.i24.i674 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.zj, i64 0
   store <2 x float> %i.zi, ptr %24, align 8
   store <2 x float> %.sroa.3.12.vec.insert.i24.i674, ptr %i.uy, align 8
@@ -845,7 +864,7 @@ bb.aj:                                            ; preds = %bb.ai
   call void @llvm.lifetime.end.p0(ptr nonnull %23) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %25) #25
   %i.zn = load <2 x float>, ptr %i.zb, align 8, !tbaa !19 ; 2 uses
-  %i.zo = load float, ptr %122, align 8, !tbaa !19 ; 2 uses
+  %i.zo = load float, ptr %129, align 8, !tbaa !19 ; 2 uses
   %i.zp = fadd float %i.zo, -2.500000e-01
   %.sroa.3.12.vec.insert.i29.i677 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.zp, i64 0
   store <2 x float> %i.zn, ptr %25, align 8
@@ -1248,15 +1267,17 @@ _ZNK10btSoftBody4Body5xformEv.exit713:            ; preds = %bb.bu, %bb.bw
   call void @llvm.lifetime.start.p0(ptr nonnull %91) #25
   store <4 x float> <float 1.000000e+00, float 1.000000e+00, float 0.000000e+00, float 0.000000e+00>, ptr %91, align 16, !tbaa !19
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #25
-  %126 = load <2 x float>, ptr %87, align 8, !tbaa !19 ; 2 uses
-  %127 = fadd <2 x float> %126, <float -2.500000e-01, float -0.000000e+00>
-  %128 = load float, ptr %i.adi, align 8, !tbaa !19 ; 2 uses
-  %.sroa.3.12.vec.insert.i.i716 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %128, i64 0
-  store <2 x float> %127, ptr %9, align 8
+  %137 = load float, ptr %i.adi, align 8, !tbaa !19 ; 2 uses
+  %.sroa.3.12.vec.insert.i.i716 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %137, i64 0
   store <2 x float> %.sroa.3.12.vec.insert.i.i716, ptr %i.adk, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #25
-  %i.ajt = fadd <2 x float> %126, <float 2.500000e-01, float 0.000000e+00>
-  %i.aju = fadd float %128, 0.000000e+00
+  %138 = load <2 x float>, ptr %87, align 8, !tbaa !19 ; 3 uses
+  %139 = extractelement <2 x float> %138, i64 0
+  %140 = fadd float %139, -2.500000e-01
+  %141 = insertelement <2 x float> %138, float %140, i64 0
+  store <2 x float> %141, ptr %9, align 8
+  %i.ajt = fadd <2 x float> %138, <float 2.500000e-01, float 0.000000e+00>
+  %i.aju = fadd float %137, 0.000000e+00
   %.sroa.3.12.vec.insert.i14.i719 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.aju, i64 0
   store <2 x float> %i.ajt, ptr %10, align 8
   store <2 x float> %.sroa.3.12.vec.insert.i14.i719, ptr %i.adl, align 8
@@ -1267,15 +1288,17 @@ _ZNK10btSoftBody4Body5xformEv.exit713:            ; preds = %bb.bu, %bb.bw
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #25
-  %129 = load <2 x float>, ptr %87, align 8, !tbaa !19 ; 2 uses
-  %130 = fadd <2 x float> %129, <float -0.000000e+00, float -2.500000e-01>
-  %131 = load float, ptr %i.adi, align 8, !tbaa !19 ; 2 uses
-  %.sroa.3.12.vec.insert.i19.i722 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %131, i64 0
-  store <2 x float> %130, ptr %11, align 8
+  %142 = load float, ptr %i.adi, align 8, !tbaa !19 ; 2 uses
+  %.sroa.3.12.vec.insert.i19.i722 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %142, i64 0
   store <2 x float> %.sroa.3.12.vec.insert.i19.i722, ptr %i.adm, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #25
-  %i.ajy = fadd <2 x float> %129, <float 0.000000e+00, float 2.500000e-01>
-  %i.ajz = fadd float %131, 0.000000e+00
+  %143 = load <2 x float>, ptr %87, align 8, !tbaa !19 ; 3 uses
+  %144 = extractelement <2 x float> %143, i64 1
+  %145 = fadd float %144, -2.500000e-01
+  %.sroa.0.4.vec.insert.i18.i721 = insertelement <2 x float> %143, float %145, i64 1
+  store <2 x float> %.sroa.0.4.vec.insert.i18.i721, ptr %11, align 8
+  %i.ajy = fadd <2 x float> %143, <float 0.000000e+00, float 2.500000e-01>
+  %i.ajz = fadd float %142, 0.000000e+00
   %.sroa.3.12.vec.insert.i24.i725 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.ajz, i64 0
   store <2 x float> %i.ajy, ptr %12, align 8
   store <2 x float> %.sroa.3.12.vec.insert.i24.i725, ptr %i.adn, align 8
@@ -1308,15 +1331,17 @@ _ZNK10btSoftBody4Body5xformEv.exit713:            ; preds = %bb.bu, %bb.bw
   call void @llvm.lifetime.start.p0(ptr nonnull %92) #25
   store <4 x float> <float 0.000000e+00, float 1.000000e+00, float 1.000000e+00, float 0.000000e+00>, ptr %92, align 16, !tbaa !19
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #25
-  %132 = load <2 x float>, ptr %88, align 8, !tbaa !19 ; 2 uses
-  %133 = fadd <2 x float> %132, <float -2.500000e-01, float -0.000000e+00>
-  %134 = load float, ptr %i.adj, align 8, !tbaa !19 ; 2 uses
-  %.sroa.3.12.vec.insert.i.i734 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %134, i64 0
-  store <2 x float> %133, ptr %3, align 8
+  %146 = load float, ptr %i.adj, align 8, !tbaa !19 ; 2 uses
+  %.sroa.3.12.vec.insert.i.i734 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %146, i64 0
   store <2 x float> %.sroa.3.12.vec.insert.i.i734, ptr %i.adq, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #25
-  %i.akl = fadd <2 x float> %132, <float 2.500000e-01, float 0.000000e+00>
-  %i.akm = fadd float %134, 0.000000e+00
+  %147 = load <2 x float>, ptr %88, align 8, !tbaa !19 ; 3 uses
+  %148 = extractelement <2 x float> %147, i64 0
+  %149 = fadd float %148, -2.500000e-01
+  %150 = insertelement <2 x float> %147, float %149, i64 0
+  store <2 x float> %150, ptr %3, align 8
+  %i.akl = fadd <2 x float> %147, <float 2.500000e-01, float 0.000000e+00>
+  %i.akm = fadd float %146, 0.000000e+00
   %.sroa.3.12.vec.insert.i14.i737 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.akm, i64 0
   store <2 x float> %i.akl, ptr %4, align 8
   store <2 x float> %.sroa.3.12.vec.insert.i14.i737, ptr %i.adr, align 8
@@ -1327,15 +1352,17 @@ _ZNK10btSoftBody4Body5xformEv.exit713:            ; preds = %bb.bu, %bb.bw
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #25
-  %135 = load <2 x float>, ptr %88, align 8, !tbaa !19 ; 2 uses
-  %136 = fadd <2 x float> %135, <float -0.000000e+00, float -2.500000e-01>
-  %137 = load float, ptr %i.adj, align 8, !tbaa !19 ; 2 uses
-  %.sroa.3.12.vec.insert.i19.i740 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %137, i64 0
-  store <2 x float> %136, ptr %5, align 8
+  %151 = load float, ptr %i.adj, align 8, !tbaa !19 ; 2 uses
+  %.sroa.3.12.vec.insert.i19.i740 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %151, i64 0
   store <2 x float> %.sroa.3.12.vec.insert.i19.i740, ptr %i.ads, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #25
-  %i.akq = fadd <2 x float> %135, <float 0.000000e+00, float 2.500000e-01>
-  %i.akr = fadd float %137, 0.000000e+00
+  %152 = load <2 x float>, ptr %88, align 8, !tbaa !19 ; 3 uses
+  %153 = extractelement <2 x float> %152, i64 1
+  %154 = fadd float %153, -2.500000e-01
+  %.sroa.0.4.vec.insert.i18.i739 = insertelement <2 x float> %152, float %154, i64 1
+  store <2 x float> %.sroa.0.4.vec.insert.i18.i739, ptr %5, align 8
+  %i.akq = fadd <2 x float> %152, <float 0.000000e+00, float 2.500000e-01>
+  %i.akr = fadd float %151, 0.000000e+00
   %.sroa.3.12.vec.insert.i24.i743 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.akr, i64 0
   store <2 x float> %i.akq, ptr %6, align 8
   store <2 x float> %.sroa.3.12.vec.insert.i24.i743, ptr %i.adt, align 8

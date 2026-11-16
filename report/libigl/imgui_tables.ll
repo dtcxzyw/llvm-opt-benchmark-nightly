@@ -205,7 +205,7 @@ declare void @_ZN5ImGui12PopItemWidthEv() local_unnamed_addr #2
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZN5ImGui10EndColumnsEv() local_unnamed_addr #0 {
 bb.a:
-  %0 = alloca %struct.ImRect, align 16            ; 5 uses
+  %0 = alloca %struct.ImRect, align 4             ; 8 uses
   %i.a = alloca i8, align 1                       ; 5 uses
   %i.b = alloca i8, align 1                       ; 5 uses
   %1 = alloca %struct.ImVec2, align 4             ; 5 uses
@@ -265,6 +265,12 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.ad, label %._crit_edge.thread, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
+  %3 = getelementptr inbounds nuw i8, ptr %i.h, i64 36
+  %4 = load float, ptr %3, align 4, !tbaa !376    ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %i.e, i64 524
+  %6 = load float, ptr %5, align 4, !tbaa !542    ; 2 uses
+  %7 = fcmp oge float %4, %6
+  %8 = select i1 %7, float %4, float %6           ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.e, i64 532
   %i.af = load float, ptr %i.ae, align 4, !tbaa !182 ; 2 uses
   %i.ag = fcmp olt float %i.v, %i.af
@@ -274,23 +280,18 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.aj, label %.lr.ph, label %._crit_edge.thread
 
 .lr.ph:                                           ; preds = %bb.g
-  %i.ak = getelementptr inbounds nuw i8, ptr %i.h, i64 36
-  %3 = load float, ptr %i.ak, align 4, !tbaa !376 ; 2 uses
-  %i.al = getelementptr inbounds nuw i8, ptr %i.e, i64 524
-  %4 = load float, ptr %i.al, align 4, !tbaa !542 ; 2 uses
-  %5 = fcmp oge float %3, %4
-  %6 = select i1 %5, float %3, float %4           ; 2 uses
-  %i.am = getelementptr inbounds nuw i8, ptr %i.h, i64 104
-  %i.an = getelementptr inbounds nuw i8, ptr %i.e, i64 16
+  %i.ak = getelementptr inbounds nuw i8, ptr %i.h, i64 104
+  %i.al = getelementptr inbounds nuw i8, ptr %i.e, i64 16
+  %.sroa_idx83 = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %i.am = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %i.an = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.ao = and i32 %i.p, 2
   %.not79 = icmp eq i32 %i.ao, 0
   %i.ap = getelementptr inbounds nuw i8, ptr %i.c, i64 8056
   %i.aq = getelementptr inbounds nuw i8, ptr %i.e, i64 616
-  %i.ar = fadd float %6, 1.000000e+00
+  %i.ar = fadd float %8, 1.000000e+00
   %i.as = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.at = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %7 = insertelement <4 x float> poison, float %6, i64 1
-  %8 = insertelement <4 x float> %7, float %i.ah, i64 3
   br label %bb.h
 
 ._crit_edge:                                      ; preds = %bb.o
@@ -300,9 +301,9 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %.lr.ph, %bb.o
   %indvars.iv = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next, %bb.o ] ; 4 uses
   %.07386 = phi i32 [ -1, %.lr.ph ], [ %.2, %bb.o ] ; 3 uses
-  %i.au = load ptr, ptr %i.am, align 8, !tbaa !368
+  %i.au = load ptr, ptr %i.ak, align 8, !tbaa !368
   %i.av = getelementptr inbounds nuw [28 x i8], ptr %i.au, i64 %indvars.iv
-  %i.aw = load float, ptr %i.an, align 8, !tbaa !331
+  %i.aw = load float, ptr %i.al, align 8, !tbaa !331
   %i.ax = load ptr, ptr @GImGui, align 8, !tbaa !15
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 7184
   %i.az = load ptr, ptr %i.ay, align 8, !tbaa !105
@@ -326,15 +327,17 @@ bb.i:                                             ; preds = %bb.h
 
 _ZN5ImGui15GetColumnOffsetEi.exit:                ; preds = %bb.h, %bb.i
   %.0.i = phi float [ %i.bm, %bb.i ], [ 0.000000e+00, %bb.h ]
-  %i.bn = fadd float %i.aw, %.0.i                 ; 2 uses
+  %i.bn = fadd float %i.aw, %.0.i                 ; 3 uses
   %i.bo = load i32, ptr %i.h, align 8, !tbaa !375
   %i.bp = trunc nuw nsw i64 %indvars.iv to i32    ; 2 uses
   %i.bq = add i32 %i.bo, %i.bp                    ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %0) #20
-  %9 = insertelement <4 x float> %8, float %i.bn, i64 0
-  %10 = shufflevector <4 x float> %9, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 3>
-  %11 = fadd <4 x float> %10, <float -4.000000e+00, float -0.000000e+00, float 4.000000e+00, float -0.000000e+00>
-  store <4 x float> %11, ptr %0, align 16, !tbaa !131
+  %9 = fadd float %i.bn, -4.000000e+00
+  %10 = fadd float %i.bn, 4.000000e+00
+  store float %9, ptr %0, align 4, !tbaa !131
+  store float %8, ptr %.sroa_idx83, align 4, !tbaa !131
+  store float %10, ptr %i.am, align 4, !tbaa !131
+  store float %i.ah, ptr %i.an, align 4, !tbaa !131
   call void @_ZN5ImGui11KeepAliveIDEj(i32 noundef %i.bq)
   %i.br = call noundef zeroext i1 @_ZN5ImGui11IsClippedExERK6ImRectj(ptr noundef nonnull align 4 dereferenceable(16) %0, i32 noundef %i.bq)
   br i1 %i.br, label %bb.o, label %bb.j

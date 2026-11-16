@@ -205,9 +205,10 @@ bb.m:                                             ; preds = %.lr.ph, %bb.m
   %i.eu = getelementptr inbounds nuw i8, ptr %i.el, i64 24
   %i.ev = shufflevector <4 x float> %i.et, <4 x float> poison, <2 x i32> <i32 2, i32 3>
   %i.ew = shufflevector <4 x float> %i.et, <4 x float> poison, <2 x i32> <i32 0, i32 1>
-  %i.ex = fsub <2 x float> %i.ev, %i.ew
-  %i.ey = fadd <2 x float> %i.ex, <float 5.000000e-01, float -0.000000e+00>
-  store <2 x float> %i.ey, ptr %i.eu, align 4, !tbaa !54
+  %i.ex = fsub <2 x float> %i.ev, %i.ew           ; 2 uses
+  %i.ey = fadd <2 x float> %i.ex, <float 5.000000e-01, float poison>
+  %8 = shufflevector <2 x float> %i.ey, <2 x float> %i.ex, <2 x i32> <i32 0, i32 3>
+  store <2 x float> %8, ptr %i.eu, align 4, !tbaa !54
   %i.ez = fmul <4 x float> %i.ej, %i.bk
   %i.fa = select i1 %i.dz, <4 x float> %i.ez, <4 x float> %i.ej
   %i.fb = getelementptr inbounds nuw i8, ptr %i.el, i64 32

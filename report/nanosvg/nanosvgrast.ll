@@ -205,15 +205,17 @@ bb.q:                                             ; preds = %bb.q, %.lr.ph203.ne
   %niter372 = phi i64 [ 0, %.lr.ph203.new ], [ %niter372.next.1, %bb.q ]
   %i.gr = getelementptr inbounds nuw [32 x i8], ptr %i.gp, i64 %indvars.iv229 ; 2 uses
   %i.gs = load <4 x float>, ptr %i.gr, align 8, !tbaa !30
-  %i.gt = fadd <4 x float> %i.bj, %i.gs
-  %i.gu = fmul <4 x float> %i.gt, <float 1.000000e+00, float 5.000000e+00, float 1.000000e+00, float 5.000000e+00>
-  store <4 x float> %i.gu, ptr %i.gr, align 8, !tbaa !30
+  %i.gt = fadd <4 x float> %i.bj, %i.gs           ; 2 uses
+  %i.gu = fmul <4 x float> %i.gt, <float poison, float 5.000000e+00, float poison, float 5.000000e+00>
+  %11 = shufflevector <4 x float> %i.gt, <4 x float> %i.gu, <4 x i32> <i32 0, i32 5, i32 2, i32 7>
+  store <4 x float> %11, ptr %i.gr, align 8, !tbaa !30
   %i.gv = getelementptr inbounds nuw [32 x i8], ptr %i.gp, i64 %indvars.iv229
   %i.gw = getelementptr inbounds nuw i8, ptr %i.gv, i64 32 ; 2 uses
   %i.gx = load <4 x float>, ptr %i.gw, align 8, !tbaa !30
-  %i.gy = fadd <4 x float> %i.bj, %i.gx
-  %i.gz = fmul <4 x float> %i.gy, <float 1.000000e+00, float 5.000000e+00, float 1.000000e+00, float 5.000000e+00>
-  store <4 x float> %i.gz, ptr %i.gw, align 8, !tbaa !30
+  %i.gy = fadd <4 x float> %i.bj, %i.gx           ; 2 uses
+  %i.gz = fmul <4 x float> %i.gy, <float poison, float 5.000000e+00, float poison, float 5.000000e+00>
+  %12 = shufflevector <4 x float> %i.gy, <4 x float> %i.gz, <4 x i32> <i32 0, i32 5, i32 2, i32 7>
+  store <4 x float> %12, ptr %i.gw, align 8, !tbaa !30
   %indvars.iv.next230.1 = add nuw nsw i64 %indvars.iv229, 2 ; 2 uses
   %niter372.next.1 = add i64 %niter372, 2         ; 2 uses
   %niter372.ncmp.1 = icmp eq i64 %niter372.next.1, %unroll_iter371
@@ -233,9 +235,10 @@ bb.q:                                             ; preds = %bb.q, %.lr.ph203.ne
   tail call void @llvm.assume(i1 %lcmp.mod370)
   %i.ha = getelementptr inbounds nuw [32 x i8], ptr %i.gp, i64 %indvars.iv229.epil.init ; 2 uses
   %i.hb = load <4 x float>, ptr %i.ha, align 8, !tbaa !30
-  %i.hc = fadd <4 x float> %i.bj, %i.hb
-  %i.hd = fmul <4 x float> %i.hc, <float 1.000000e+00, float 5.000000e+00, float 1.000000e+00, float 5.000000e+00>
-  store <4 x float> %i.hd, ptr %i.ha, align 8, !tbaa !30
+  %i.hc = fadd <4 x float> %i.bj, %i.hb           ; 2 uses
+  %i.hd = fmul <4 x float> %i.hc, <float poison, float 5.000000e+00, float poison, float 5.000000e+00>
+  %13 = shufflevector <4 x float> %i.hc, <4 x float> %i.hd, <4 x i32> <i32 0, i32 5, i32 2, i32 7>
+  store <4 x float> %13, ptr %i.ha, align 8, !tbaa !30
   br label %._crit_edge204.thread298
 
 ._crit_edge204.thread298:                         ; preds = %.epil.preheader366, %._crit_edge204.thread298.loopexit.unr-lcssa, %._crit_edge204
@@ -638,15 +641,17 @@ bb.bl:                                            ; preds = %bb.bl, %.lr.ph206.n
   %niter365 = phi i64 [ 0, %.lr.ph206.new ], [ %niter365.next.1, %bb.bl ]
   %i.abv = getelementptr inbounds nuw [32 x i8], ptr %i.abt, i64 %indvars.iv224 ; 2 uses
   %i.abw = load <4 x float>, ptr %i.abv, align 8, !tbaa !30
-  %i.abx = fadd <4 x float> %i.bc, %i.abw
-  %i.aby = fmul <4 x float> %i.abx, <float 1.000000e+00, float 5.000000e+00, float 1.000000e+00, float 5.000000e+00>
-  store <4 x float> %i.aby, ptr %i.abv, align 8, !tbaa !30
+  %i.abx = fadd <4 x float> %i.bc, %i.abw         ; 2 uses
+  %i.aby = fmul <4 x float> %i.abx, <float poison, float 5.000000e+00, float poison, float 5.000000e+00>
+  %14 = shufflevector <4 x float> %i.abx, <4 x float> %i.aby, <4 x i32> <i32 0, i32 5, i32 2, i32 7>
+  store <4 x float> %14, ptr %i.abv, align 8, !tbaa !30
   %i.abz = getelementptr inbounds nuw [32 x i8], ptr %i.abt, i64 %indvars.iv224
   %i.aca = getelementptr inbounds nuw i8, ptr %i.abz, i64 32 ; 2 uses
   %i.acb = load <4 x float>, ptr %i.aca, align 8, !tbaa !30
-  %i.acc = fadd <4 x float> %i.bc, %i.acb
-  %i.acd = fmul <4 x float> %i.acc, <float 1.000000e+00, float 5.000000e+00, float 1.000000e+00, float 5.000000e+00>
-  store <4 x float> %i.acd, ptr %i.aca, align 8, !tbaa !30
+  %i.acc = fadd <4 x float> %i.bc, %i.acb         ; 2 uses
+  %i.acd = fmul <4 x float> %i.acc, <float poison, float 5.000000e+00, float poison, float 5.000000e+00>
+  %15 = shufflevector <4 x float> %i.acc, <4 x float> %i.acd, <4 x i32> <i32 0, i32 5, i32 2, i32 7>
+  store <4 x float> %15, ptr %i.aca, align 8, !tbaa !30
   %indvars.iv.next225.1 = add nuw nsw i64 %indvars.iv224, 2 ; 2 uses
   %niter365.next.1 = add i64 %niter365, 2         ; 2 uses
   %niter365.ncmp.1 = icmp eq i64 %niter365.next.1, %unroll_iter364
@@ -666,9 +671,10 @@ bb.bl:                                            ; preds = %bb.bl, %.lr.ph206.n
   tail call void @llvm.assume(i1 %lcmp.mod363)
   %i.ace = getelementptr inbounds nuw [32 x i8], ptr %i.abt, i64 %indvars.iv224.epil.init ; 2 uses
   %i.acf = load <4 x float>, ptr %i.ace, align 8, !tbaa !30
-  %i.acg = fadd <4 x float> %i.bc, %i.acf
-  %i.ach = fmul <4 x float> %i.acg, <float 1.000000e+00, float 5.000000e+00, float 1.000000e+00, float 5.000000e+00>
-  store <4 x float> %i.ach, ptr %i.ace, align 8, !tbaa !30
+  %i.acg = fadd <4 x float> %i.bc, %i.acf         ; 2 uses
+  %i.ach = fmul <4 x float> %i.acg, <float poison, float 5.000000e+00, float poison, float 5.000000e+00>
+  %16 = shufflevector <4 x float> %i.acg, <4 x float> %i.ach, <4 x i32> <i32 0, i32 5, i32 2, i32 7>
+  store <4 x float> %16, ptr %i.ace, align 8, !tbaa !30
   br label %._crit_edge207.thread301
 
 ._crit_edge207.thread301:                         ; preds = %.epil.preheader359, %._crit_edge207.thread301.loopexit.unr-lcssa, %._crit_edge207

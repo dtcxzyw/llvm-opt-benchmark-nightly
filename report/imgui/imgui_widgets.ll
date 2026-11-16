@@ -205,13 +205,14 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.ae = fneg float %0
   %i.af = call float @fmodf(float noundef %i.ae, float noundef 1.000000e+00) #41
-  %i.ag = call float @llvm.fmuladd.f32(float %i.af, float 1.200000e+00, float -2.000000e-01)
+  %i.ag = call float @llvm.fmuladd.f32(float %i.af, float 1.200000e+00, float -2.000000e-01) ; 2 uses
   %i.ah = insertelement <2 x float> poison, float %i.ag, i64 0
   %i.ai = shufflevector <2 x float> %i.ah, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.aj = fadd <2 x float> %i.ai, <float -0.000000e+00, float 2.000000e-01> ; 3 uses
+  %i.aj = fadd <2 x float> %i.ai, <float -0.000000e+00, float 2.000000e-01> ; 2 uses
   %i.ak = fcmp olt <2 x float> %i.aj, zeroinitializer
-  %i.al = fcmp ogt <2 x float> %i.aj, splat (float 1.000000e+00)
-  %i.am = select <2 x i1> %i.al, <2 x float> splat (float 1.000000e+00), <2 x float> %i.aj
+  %8 = insertelement <2 x float> %i.aj, float %i.ag, i64 0 ; 2 uses
+  %i.al = fcmp ogt <2 x float> %8, splat (float 1.000000e+00)
+  %i.am = select <2 x i1> %i.al, <2 x float> splat (float 1.000000e+00), <2 x float> %8
   %i.an = select <2 x i1> %i.ak, <2 x float> zeroinitializer, <2 x float> %i.am
   br label %bb.e
 
@@ -614,7 +615,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 ; Function Attrs: mustprogress uwtable
 define void @_ZN5ImGui11SeparatorExEif(i32 noundef %0, float noundef %1) local_unnamed_addr #5 {
 bb.a:
-  %2 = alloca %struct.ImRect, align 16            ; 7 uses
+  %2 = alloca %struct.ImRect, align 8             ; 7 uses
   %3 = alloca %struct.ImVec2, align 8             ; 4 uses
   %4 = alloca %struct.ImRect, align 4             ; 9 uses
   %5 = alloca %struct.ImVec2, align 4             ; 5 uses
@@ -638,12 +639,13 @@ bb.c:                                             ; preds = %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %i.c, i64 324
   %i.k = load float, ptr %i.j, align 4, !tbaa !309
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #41
-  %i.l = load <2 x float>, ptr %i.i, align 8, !tbaa !190
-  %6 = shufflevector <2 x float> %i.l, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  %7 = insertelement <4 x float> <float -0.000000e+00, float -0.000000e+00, float poison, float poison>, float %1, i64 2
-  %8 = insertelement <4 x float> %7, float %i.k, i64 3
-  %9 = fadd <4 x float> %6, %8
-  store <4 x float> %9, ptr %2, align 16, !tbaa !190
+  %i.l = load <2 x float>, ptr %i.i, align 8, !tbaa !190 ; 2 uses
+  store <2 x float> %i.l, ptr %2, align 8, !tbaa !190
+  %6 = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
+  %7 = insertelement <2 x float> poison, float %1, i64 0
+  %8 = insertelement <2 x float> %7, float %i.k, i64 1
+  %9 = fadd <2 x float> %i.l, %8
+  store <2 x float> %9, ptr %6, align 8, !tbaa !190
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #41
   %i.m = insertelement <2 x float> <float poison, float 0.000000e+00>, float %1, i64 0
   store <2 x float> %i.m, ptr %3, align 8, !tbaa !190
@@ -653,11 +655,10 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.n, label %bb.d, label %.critedge
 
 bb.d:                                             ; preds = %bb.c
-  %10 = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.o = getelementptr inbounds nuw i8, ptr %i.c, i64 712
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !202
   %i.q = call noundef i32 @_ZN5ImGui11GetColorU32Eif(i32 noundef 28, float noundef 1.000000e+00)
-  call void @_ZN10ImDrawList13AddRectFilledERK6ImVec2S2_jfi(ptr noundef nonnull align 8 dereferenceable(224) %i.p, ptr noundef nonnull align 4 dereferenceable(8) %2, ptr noundef nonnull align 4 dereferenceable(8) %10, i32 noundef %i.q, float noundef 0.000000e+00, i32 noundef 0)
+  call void @_ZN10ImDrawList13AddRectFilledERK6ImVec2S2_jfi(ptr noundef nonnull align 8 dereferenceable(224) %i.p, ptr noundef nonnull align 4 dereferenceable(8) %2, ptr noundef nonnull align 4 dereferenceable(8) %6, i32 noundef %i.q, float noundef 0.000000e+00, i32 noundef 0)
   %i.r = getelementptr inbounds nuw i8, ptr %i.a, i64 10264
   %i.s = load i8, ptr %i.r, align 8, !tbaa !191, !range !184, !noundef !185
   %i.t = trunc nuw i8 %i.s to i1

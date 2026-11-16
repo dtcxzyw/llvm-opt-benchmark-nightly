@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %bb.j
   br label %_ZNSt6vectorI9aiQuatKeySaIS0_EE12emplace_backIJEEERS0_DpOT_.exit
 
 _ZNSt6vectorI9aiQuatKeySaIS0_EE12emplace_backIJEEERS0_DpOT_.exit: ; preds = %bb.k, %bb.l
-  %i.ai = phi ptr [ %i.ah, %bb.k ], [ %.pre43, %bb.l ] ; 2 uses
+  %i.ai = phi ptr [ %i.ah, %bb.k ], [ %.pre43, %bb.l ] ; 4 uses
   %i.aj = getelementptr inbounds i8, ptr %i.ai, i64 -32
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #27
   store <2 x float> zeroinitializer, ptr %2, align 8
@@ -294,17 +294,18 @@ _ZN10aiVector3tIfEdVEf.exit.i.i:                  ; preds = %_ZN6Assimp3ASE6Pars
 _ZN13aiQuaterniontIfEC2E10aiVector3tIfEf.exit:    ; preds = %_ZN6Assimp3ASE6Parser16ParseLV4MeshRealERf.exit, %_ZN10aiVector3tIfEdVEf.exit.i.i
   %.sroa.7.0.i = phi float [ %.sroa.22.0.copyload, %_ZN6Assimp3ASE6Parser16ParseLV4MeshRealERf.exit ], [ %i.bk, %_ZN10aiVector3tIfEdVEf.exit.i.i ]
   %i.bl = phi <2 x float> [ %.sroa.01.0.copyload, %_ZN6Assimp3ASE6Parser16ParseLV4MeshRealERf.exit ], [ %i.bj, %_ZN10aiVector3tIfEdVEf.exit.i.i ]
-  %i.bm = call noundef float @sinf(float noundef %i.az) #27
-  %3 = getelementptr inbounds i8, ptr %i.ai, i64 -24
-  %4 = call noundef float @cosf(float noundef %i.az) #27
-  %5 = insertelement <4 x float> poison, float %4, i64 0
-  %6 = shufflevector <2 x float> %i.bl, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %7 = shufflevector <4 x float> %5, <4 x float> %6, <4 x i32> <i32 0, i32 4, i32 5, i32 poison>
-  %8 = insertelement <4 x float> %7, float %.sroa.7.0.i, i64 3
-  %9 = insertelement <4 x float> <float 1.000000e+00, float poison, float poison, float poison>, float %i.bm, i64 1
-  %10 = shufflevector <4 x float> %9, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
-  %11 = fmul <4 x float> %8, %10
-  store <4 x float> %11, ptr %3, align 8
+  %i.bm = call noundef float @sinf(float noundef %i.az) #27 ; 2 uses
+  %3 = call noundef float @cosf(float noundef %i.az) #27
+  %4 = fmul float %.sroa.7.0.i, %i.bm
+  %5 = getelementptr inbounds i8, ptr %i.ai, i64 -24
+  store float %3, ptr %5, align 8
+  %.sroa.4.0..sroa_idx = getelementptr inbounds i8, ptr %i.ai, i64 -20
+  %6 = insertelement <2 x float> poison, float %i.bm, i64 0
+  %7 = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> zeroinitializer
+  %8 = fmul <2 x float> %i.bl, %7
+  store <2 x float> %8, ptr %.sroa.4.0..sroa_idx, align 4
+  %.sroa.6.0..sroa_idx = getelementptr inbounds i8, ptr %i.ai, i64 -12
+  store float %4, ptr %.sroa.6.0..sroa_idx, align 4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #27
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #27
   %.pre45 = load ptr, ptr %0, align 8

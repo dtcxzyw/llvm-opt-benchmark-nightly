@@ -204,15 +204,16 @@ bb.x:                                             ; preds = %bb.u, %bb.u
   %i.fv = load float, ptr %i.ft, align 4
   %i.fw = getelementptr inbounds nuw i8, ptr %.03138.i, i64 16
   %i.fx = getelementptr inbounds nuw i8, ptr %.03039.i, i64 16
-  %i.fy = load float, ptr %.03138.i, align 4
+  %i.fy = load float, ptr %.03138.i, align 4      ; 2 uses
   %i.fz = load <2 x float>, ptr %i.fu, align 4
   %i.ga = insertelement <4 x float> poison, float %i.fy, i64 0
-  %13 = shufflevector <4 x float> %i.ga, <4 x float> poison, <4 x i32> zeroinitializer
-  %i.gb = insertelement <4 x float> <float 1.000000e+00, float poison, float poison, float poison>, float %i.fv, i64 1
+  %13 = shufflevector <4 x float> %i.ga, <4 x float> poison, <4 x i32> <i32 poison, i32 0, i32 0, i32 0>
+  %i.gb = insertelement <4 x float> poison, float %i.fv, i64 1
   %i.gc = shufflevector <2 x float> %i.fz, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %14 = shufflevector <4 x float> %i.gb, <4 x float> %i.gc, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  %14 = shufflevector <4 x float> %i.gb, <4 x float> %i.gc, <4 x i32> <i32 poison, i32 1, i32 4, i32 5>
   %i.gd = fmul <4 x float> %13, %14
-  store <4 x float> %i.gd, ptr %.03039.i, align 4
+  %15 = insertelement <4 x float> %i.gd, float %i.fy, i64 0
+  store <4 x float> %15, ptr %.03039.i, align 4
   br label %.prol.loopexit
 
 .prol.loopexit:                                   ; preds = %.prol.loopexit.unr-lcssa, %.preheader.i186
@@ -230,29 +231,31 @@ bb.x:                                             ; preds = %bb.u, %bb.u
   %i.gg = load float, ptr %i.ge, align 4
   %i.gh = getelementptr inbounds nuw i8, ptr %.02735.i, i64 16
   %i.gi = getelementptr inbounds nuw i8, ptr %.036.i, i64 16
-  %i.gj = load float, ptr %.02735.i, align 4
+  %i.gj = load float, ptr %.02735.i, align 4      ; 2 uses
   %i.gk = load <2 x float>, ptr %i.gf, align 4
   %i.gl = insertelement <4 x float> poison, float %i.gj, i64 0
-  %15 = shufflevector <4 x float> %i.gl, <4 x float> poison, <4 x i32> zeroinitializer
-  %i.gm = insertelement <4 x float> <float 1.000000e+00, float poison, float poison, float poison>, float %i.gg, i64 1
+  %16 = shufflevector <4 x float> %i.gl, <4 x float> poison, <4 x i32> <i32 poison, i32 0, i32 0, i32 0>
+  %i.gm = insertelement <4 x float> poison, float %i.gg, i64 1
   %i.gn = shufflevector <2 x float> %i.gk, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %16 = shufflevector <4 x float> %i.gm, <4 x float> %i.gn, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
-  %i.go = fmul <4 x float> %15, %16
-  store <4 x float> %i.go, ptr %.036.i, align 4
+  %17 = shufflevector <4 x float> %i.gm, <4 x float> %i.gn, <4 x i32> <i32 poison, i32 1, i32 4, i32 5>
+  %i.go = fmul <4 x float> %16, %17
+  %18 = insertelement <4 x float> %i.go, float %i.gj, i64 0
+  store <4 x float> %18, ptr %.036.i, align 4
   %i.gp = getelementptr inbounds nuw i8, ptr %.02735.i, i64 20
   %i.gq = getelementptr inbounds nuw i8, ptr %.02735.i, i64 24
   %i.gr = load float, ptr %i.gp, align 4
   %i.gs = getelementptr inbounds nuw i8, ptr %.02735.i, i64 32
   %i.gt = getelementptr inbounds nuw i8, ptr %.036.i, i64 32
-  %i.gu = load float, ptr %i.gh, align 4
+  %i.gu = load float, ptr %i.gh, align 4          ; 2 uses
   %i.gv = load <2 x float>, ptr %i.gq, align 4
   %i.gw = insertelement <4 x float> poison, float %i.gu, i64 0
-  %17 = shufflevector <4 x float> %i.gw, <4 x float> poison, <4 x i32> zeroinitializer
-  %i.gx = insertelement <4 x float> <float 1.000000e+00, float poison, float poison, float poison>, float %i.gr, i64 1
+  %19 = shufflevector <4 x float> %i.gw, <4 x float> poison, <4 x i32> <i32 poison, i32 0, i32 0, i32 0>
+  %i.gx = insertelement <4 x float> poison, float %i.gr, i64 1
   %i.gy = shufflevector <2 x float> %i.gv, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %18 = shufflevector <4 x float> %i.gx, <4 x float> %i.gy, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
-  %i.gz = fmul <4 x float> %17, %18
-  store <4 x float> %i.gz, ptr %i.gi, align 4
+  %20 = shufflevector <4 x float> %i.gx, <4 x float> %i.gy, <4 x i32> <i32 poison, i32 1, i32 4, i32 5>
+  %i.gz = fmul <4 x float> %19, %20
+  %21 = insertelement <4 x float> %i.gz, float %i.gu, i64 0
+  store <4 x float> %21, ptr %i.gi, align 4
   %i.ha = add nsw i32 %.02834.i, -2               ; 2 uses
   %.not32.i188.1 = icmp eq i32 %i.ha, 0
   br i1 %.not32.i188.1, label %._crit_edge.i189, label %.preheader.i186.new, !llvm.loop !44

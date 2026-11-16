@@ -205,7 +205,7 @@ bb.a:
   %i.cu = fsub <2 x float> %i.cr, %i.ct           ; 3 uses
   %i.cv = insertelement <2 x float> poison, float %i.cn, i64 0
   %i.cw = insertelement <2 x float> %i.cv, float %i.co, i64 1 ; 2 uses
-  %i.cx = fsub <2 x float> %i.ct, %i.cw           ; 4 uses
+  %i.cx = fsub <2 x float> %i.ct, %i.cw           ; 5 uses
   %i.cy = insertelement <2 x float> %i.j, float %i.cp, i64 1
   %i.cz = fsub <2 x float> %i.cw, %i.cy           ; 4 uses
   %i.da = extractelement <2 x float> %i.cu, i64 0
@@ -227,8 +227,9 @@ bb.a:
   %i.dq = fmul float %i.dp, %i.dp
   %i.dr = fpext float %i.dq to double
   %i.ds = fmul double %i.dr, 2.500000e-01
-  %i.dt = fmul <2 x float> %i.cx, <float 1.000000e+00, float 4.000000e+00>
-  %i.du = fpext <2 x float> %i.dt to <2 x double> ; 2 uses
+  %i.dt = fmul <2 x float> %i.cx, <float poison, float 4.000000e+00>
+  %1 = shufflevector <2 x float> %i.cx, <2 x float> %i.dt, <2 x i32> <i32 0, i32 3>
+  %i.du = fpext <2 x float> %1 to <2 x double>    ; 2 uses
   %i.dv = extractelement <2 x double> %i.du, i64 0
   %i.dw = fmul double %i.dv, -7.000000e+00
   %i.dx = fmul float %i.do, %i.do
@@ -387,7 +388,7 @@ bb.a:
   %i.cv = fsub <2 x float> %i.cs, %i.cu           ; 3 uses
   %i.cw = insertelement <2 x float> poison, float %i.cm, i64 0
   %i.cx = insertelement <2 x float> %i.cw, float %i.co, i64 1 ; 2 uses
-  %i.cy = fsub <2 x float> %i.cu, %i.cx           ; 4 uses
+  %i.cy = fsub <2 x float> %i.cu, %i.cx           ; 5 uses
   %i.cz = insertelement <2 x float> %i.n, float %i.cq, i64 1
   %i.da = fsub <2 x float> %i.cx, %i.cz           ; 4 uses
   %i.db = extractelement <2 x float> %i.cv, i64 0
@@ -409,8 +410,9 @@ bb.a:
   %i.dr = fmul float %i.dq, %i.dq
   %i.ds = fpext float %i.dr to double
   %i.dt = fmul double %i.ds, 2.500000e-01
-  %i.du = fmul <2 x float> %i.cy, <float 1.000000e+00, float 4.000000e+00>
-  %i.dv = fpext <2 x float> %i.du to <2 x double> ; 2 uses
+  %i.du = fmul <2 x float> %i.cy, <float poison, float 4.000000e+00>
+  %1 = shufflevector <2 x float> %i.cy, <2 x float> %i.du, <2 x i32> <i32 0, i32 3>
+  %i.dv = fpext <2 x float> %1 to <2 x double>    ; 2 uses
   %i.dw = extractelement <2 x double> %i.dv, i64 0
   %i.dx = fmul double %i.dw, -7.000000e+00
   %i.dy = fmul float %i.dp, %i.dp

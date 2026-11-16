@@ -205,9 +205,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.l,
   %i.er = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.eo, <4 x float> %i.eq, <4 x float> %i.ec) ; 3 uses
   %i.es = extractelement <4 x float> %i.er, i64 0
   %i.et = fsub float %i.es, %i.cv
-  %8 = shufflevector <4 x float> %i.dp, <4 x float> <float poison, float poison, float -0.000000e+00, float -0.000000e+00>, <4 x i32> <i32 0, i32 2, i32 6, i32 7>
+  %8 = shufflevector <4 x float> %i.dp, <4 x float> poison, <4 x i32> <i32 0, i32 2, i32 poison, i32 poison>
   %i.eu = shufflevector <4 x float> %i.dp, <4 x float> poison, <4 x i32> <i32 1, i32 3, i32 poison, i32 poison>
-  %9 = shufflevector <4 x float> %i.dz, <4 x float> <float poison, float poison, float -0.000000e+00, float -0.000000e+00>, <4 x i32> <i32 1, i32 2, i32 6, i32 7>
+  %9 = shufflevector <4 x float> %i.dz, <4 x float> poison, <4 x i32> <i32 1, i32 2, i32 poison, i32 poison>
   %i.ev = load float, ptr %i.u, align 4           ; 2 uses
   %i.ew = extractelement <4 x float> %i.ej, i64 0
   %i.ex = shufflevector <4 x float> %i.dz, <4 x float> %i.ej, <4 x i32> <i32 poison, i32 1, i32 2, i32 4>
@@ -218,19 +218,21 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.l,
   %i.fc = shufflevector <4 x float> %i.fb, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 2, i32 3>
   %i.fd = shufflevector <4 x float> %i.fa, <4 x float> poison, <4 x i32> <i32 3, i32 poison, i32 poison, i32 poison>
   %i.fe = insertelement <4 x float> poison, float %i.cr, i64 0
-  %i.ff = shufflevector <4 x float> %i.fe, <4 x float> %i.fa, <4 x i32> <i32 poison, i32 poison, i32 0, i32 4>
+  %i.ff = shufflevector <4 x float> %i.fe, <4 x float> %i.fa, <4 x i32> <i32 poison, i32 poison, i32 0, i32 4> ; 2 uses
   %i.fg = fadd <4 x float> %i.dz, %i.er
   %i.fh = shufflevector <4 x float> %i.fg, <4 x float> poison, <4 x i32> <i32 1, i32 2, i32 poison, i32 poison>
   %i.fi = shufflevector <4 x float> %i.fh, <4 x float> %i.ff, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %i.fj = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.fc, <4 x float> zeroinitializer, <4 x float> %i.fi) ; 2 uses
-  %i.fk = fadd <4 x float> %i.fj, <float -0.000000e+00, float -0.000000e+00, float 0.000000e+00, float 0.000000e+00> ; 4 uses
+  %i.fj = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.fc, <4 x float> zeroinitializer, <4 x float> %i.fi) ; 3 uses
+  %10 = shufflevector <4 x float> %i.fj, <4 x float> %i.ff, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %i.fk = fadd <4 x float> %10, <float -0.000000e+00, float -0.000000e+00, float 0.000000e+00, float 0.000000e+00> ; 3 uses
+  %11 = shufflevector <4 x float> %i.fj, <4 x float> %i.fk, <4 x i32> <i32 0, i32 1, i32 6, i32 7> ; 2 uses
   store float %i.ew, ptr %i.cm, align 4
   %i.fl = extractelement <4 x float> %i.ej, i64 1 ; 2 uses
   store float %i.fl, ptr %.sroa.6114.0..sroa_idx, align 8
   %i.fm = extractelement <4 x float> %i.ej, i64 2
   store float %i.fm, ptr %.sroa.9115.0..sroa_idx, align 4
   store float %i.el, ptr %.sroa.14117.0..sroa_idx, align 4
-  store <4 x float> %i.fk, ptr %.sroa.29119.0..sroa_idx, align 8
+  store <4 x float> %11, ptr %.sroa.29119.0..sroa_idx, align 8
   %i.fn = extractelement <2 x float> %i.em, i64 0
   %i.fo = shufflevector <4 x float> %i.fk, <4 x float> %i.fa, <4 x i32> <i32 3, i32 5, i32 6, i32 poison>
   %i.fp = insertelement <4 x float> %i.fo, float -0.000000e+00, i64 3
@@ -241,13 +243,15 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.l,
   store float %i.fs, ptr %.sroa.42.0..sroa_idx, align 4
   %i.ft = load <1 x float>, ptr %i.v, align 8
   %i.fu = load <1 x float>, ptr %i.w, align 4
-  %i.fv = fadd float %i.co, 0.000000e+00          ; 3 uses
+  %i.fv = fadd float %i.co, 0.000000e+00          ; 4 uses
   %i.fw = insertelement <4 x float> %i.eu, float %i.fv, i64 2
-  %i.fx = insertelement <4 x float> %i.fw, float %i.et, i64 3
-  %i.fy = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %8, <4 x float> zeroinitializer, <4 x float> %i.fx)
-  %i.fz = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %9, <4 x float> zeroinitializer, <4 x float> %i.fy)
-  %i.ga = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.cq, <4 x float> zeroinitializer, <4 x float> %i.fz) ; 5 uses
-  store <4 x float> %i.ga, ptr %.sroa.17.0..sroa_idx, align 8
+  %i.fx = insertelement <4 x float> %i.fw, float %i.et, i64 3 ; 2 uses
+  %i.fy = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %8, <4 x float> <float 0.000000e+00, float 0.000000e+00, float poison, float poison>, <4 x float> %i.fx)
+  %i.fz = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %9, <4 x float> <float 0.000000e+00, float 0.000000e+00, float poison, float poison>, <4 x float> %i.fy)
+  %12 = shufflevector <4 x float> %i.fz, <4 x float> %i.fx, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %i.ga = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.cq, <4 x float> zeroinitializer, <4 x float> %12) ; 5 uses
+  %13 = insertelement <4 x float> %i.ga, float %i.fv, i64 2
+  store <4 x float> %13, ptr %.sroa.17.0..sroa_idx, align 8
   %i.gb = extractelement <4 x float> %i.ga, i64 0
   %i.gc = fmul float %i.gb, %i.ev
   %i.gd = call float @llvm.fmuladd.f32(float %i.fl, float %i.fn, float %i.gc)
@@ -261,7 +265,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.l,
   %i.gl = shufflevector <2 x float> %i.em, <2 x float> poison, <2 x i32> zeroinitializer
   %i.gm = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.gk, <2 x float> %i.gl, <2 x float> %i.gi)
   %i.gn = shufflevector <4 x float> %i.ga, <4 x float> %i.fj, <4 x i32> <i32 3, i32 4, i32 5, i32 poison>
-  %i.go = shufflevector <4 x float> %i.gn, <4 x float> %i.fk, <4 x i32> <i32 0, i32 1, i32 2, i32 6> ; 4 uses
+  %i.go = shufflevector <4 x float> %i.gn, <4 x float> %11, <4 x i32> <i32 0, i32 1, i32 2, i32 6> ; 4 uses
   %i.gp = shufflevector <1 x float> %i.ft, <1 x float> poison, <4 x i32> zeroinitializer
   %i.gq = insertelement <4 x float> %i.fd, float %i.gd, i64 1
   %i.gr = shufflevector <2 x float> %i.gm, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>

@@ -204,9 +204,10 @@ bb.gp:                                            ; preds = %bb.go, %.noexc608
   %i.wy = shufflevector <1 x double> %i.sl, <1 x double> poison, <2 x i32> zeroinitializer ; 4 uses
   %i.wz = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.uy, <2 x double> %i.wy, <2 x double> %i.wx)
   %i.xa = shufflevector <1 x double> %i.sx, <1 x double> poison, <2 x i32> zeroinitializer ; 4 uses
-  %i.xb = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ux, <2 x double> %i.xa, <2 x double> %i.wz)
-  %i.xc = fadd <2 x double> %i.xb, <double 1.000000e+00, double -0.000000e+00>
-  store <2 x double> %i.xc, ptr %287, align 16, !tbaa !102
+  %i.xb = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ux, <2 x double> %i.xa, <2 x double> %i.wz) ; 2 uses
+  %i.xc = fadd <2 x double> %i.xb, <double 1.000000e+00, double poison>
+  %294 = shufflevector <2 x double> %i.xc, <2 x double> %i.xb, <2 x i32> <i32 0, i32 3>
+  store <2 x double> %294, ptr %287, align 16, !tbaa !102
   %i.xd = getelementptr inbounds nuw i8, ptr %287, i64 16
   %i.xe = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.vl, <2 x double> %i.wk, <2 x double> %i.wg)
   %i.xf = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.vk, <2 x double> %i.wn, <2 x double> %i.xe)
@@ -223,9 +224,10 @@ bb.gp:                                            ; preds = %bb.go, %.noexc608
   %i.xp = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.vq, <2 x double> %i.wt, <2 x double> %i.xo)
   %i.xq = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.vp, <2 x double> %i.ww, <2 x double> %i.xp)
   %i.xr = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.vo, <2 x double> %i.wy, <2 x double> %i.xq)
-  %i.xs = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.vn, <2 x double> %i.xa, <2 x double> %i.xr)
-  %i.xt = fadd <2 x double> %i.xs, <double 1.000000e+00, double -0.000000e+00>
-  store <2 x double> %i.xt, ptr %i.xl, align 16, !tbaa !102
+  %i.xs = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.vn, <2 x double> %i.xa, <2 x double> %i.xr) ; 2 uses
+  %i.xt = fadd <2 x double> %i.xs, <double 1.000000e+00, double poison>
+  %295 = shufflevector <2 x double> %i.xt, <2 x double> %i.xs, <2 x i32> <i32 0, i32 3>
+  store <2 x double> %295, ptr %i.xl, align 16, !tbaa !102
   %i.xu = getelementptr inbounds nuw i8, ptr %287, i64 48
   %i.xv = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.wb, <2 x double> %i.wk, <2 x double> %i.wi)
   %i.xw = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.wa, <2 x double> %i.wn, <2 x double> %i.xv)

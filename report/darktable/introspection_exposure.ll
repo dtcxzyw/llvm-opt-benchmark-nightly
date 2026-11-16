@@ -205,9 +205,10 @@ dt_XYZ_to_Lab.exit:                               ; preds = %bb.e, %bb.d
   %i.as = fmul reassoc nsz arcp contract afn <2 x float> %i.ar, %i.ap
   %i.at = fadd reassoc nsz arcp contract afn <2 x float> %i.ao, splat (float f0xBC911AA6)
   %i.au = select <2 x i1> %i.aq, <2 x float> %i.as, <2 x float> %i.at ; 3 uses
-  %i.av = shufflevector <2 x float> %i.au, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
-  %i.aw = fmul reassoc nsz arcp contract afn <4 x float> %i.av, <float 9.642000e-01, float 1.000000e+00, float f0x3F532CA5, float 0.000000e+00>
-  store <4 x float> %i.aw, ptr %i.a, align 16, !tbaa !13
+  %i.av = shufflevector <2 x float> %i.au, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1> ; 2 uses
+  %i.aw = fmul reassoc nsz arcp contract afn <4 x float> %i.av, <float 9.642000e-01, float poison, float f0x3F532CA5, float 0.000000e+00>
+  %2 = shufflevector <4 x float> %i.aw, <4 x float> %i.av, <4 x i32> <i32 0, i32 5, i32 2, i32 3>
+  store <4 x float> %2, ptr %i.a, align 16, !tbaa !13
   %i.ax = getelementptr inbounds nuw i8, ptr %i.c, i64 208
   call fastcc void @dt_XYZ_to_sRGB(ptr noundef %i.a, ptr noundef nonnull %i.ax)
   %i.ay = tail call ptr @dcgettext(ptr noundef null, ptr noundef nonnull @.str.54, i32 noundef 5) #22
@@ -610,9 +611,10 @@ bb.a:
   %i.as = fmul reassoc nsz arcp contract afn <2 x float> %i.ar, %i.ap
   %i.at = fadd reassoc nsz arcp contract afn <2 x float> %i.ao, splat (float f0xBC911AA6)
   %i.au = select <2 x i1> %i.aq, <2 x float> %i.as, <2 x float> %i.at
-  %i.av = shufflevector <2 x float> %i.au, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
-  %i.aw = fmul reassoc nsz arcp contract afn <4 x float> %i.av, <float 9.642000e-01, float 1.000000e+00, float f0x3F532CA5, float 0.000000e+00>
-  store <4 x float> %i.aw, ptr %i.b, align 16, !tbaa !13
+  %i.av = shufflevector <2 x float> %i.au, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1> ; 2 uses
+  %i.aw = fmul reassoc nsz arcp contract afn <4 x float> %i.av, <float 9.642000e-01, float poison, float f0x3F532CA5, float 0.000000e+00>
+  %4 = shufflevector <4 x float> %i.aw, <4 x float> %i.av, <4 x i32> <i32 0, i32 5, i32 2, i32 3>
+  store <4 x float> %4, ptr %i.b, align 16, !tbaa !13
   call fastcc void @dt_XYZ_to_sRGB(ptr noundef %i.b, ptr noundef nonnull %i.a)
   %i.ax = load float, ptr %i.a, align 16, !tbaa !13
   %i.ay = fpext reassoc nsz arcp contract afn float %i.ax to double
@@ -1015,9 +1017,10 @@ bb.c:                                             ; preds = %bb.a, %bb.c
   %i.y = fmul reassoc nsz arcp contract afn <2 x float> %i.x, %i.v
   %i.z = fadd reassoc nsz arcp contract afn <2 x float> %i.u, splat (float f0xBC911AA6)
   %i.aa = select <2 x i1> %i.w, <2 x float> %i.y, <2 x float> %i.z
-  %i.ab = shufflevector <2 x float> %i.aa, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
-  %i.ac = fmul reassoc nsz arcp contract afn <4 x float> %i.ab, <float 9.642000e-01, float 1.000000e+00, float f0x3F532CA5, float 0.000000e+00>
-  store <4 x float> %i.ac, ptr %i.b, align 16, !tbaa !13
+  %i.ab = shufflevector <2 x float> %i.aa, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1> ; 2 uses
+  %i.ac = fmul reassoc nsz arcp contract afn <4 x float> %i.ab, <float 9.642000e-01, float poison, float f0x3F532CA5, float 0.000000e+00>
+  %0 = shufflevector <4 x float> %i.ac, <4 x float> %i.ab, <4 x i32> <i32 0, i32 5, i32 2, i32 3>
+  store <4 x float> %0, ptr %i.b, align 16, !tbaa !13
   call fastcc void @dt_XYZ_to_sRGB(ptr noundef %i.b, ptr noundef nonnull %i.a)
   %i.ad = load ptr, ptr %i.c, align 8, !tbaa !137
   %i.ae = load float, ptr %i.a, align 16, !tbaa !13

@@ -196,7 +196,7 @@ bb.c:                                             ; preds = %.lr.ph61, %bb.ad
 
 bb.d:                                             ; preds = %bb.c
   %i.af = load ptr, ptr %i.d, align 8, !tbaa !55  ; 15 uses
-  %i.ag = load ptr, ptr %i.g, align 8, !tbaa !19  ; 27 uses
+  %i.ag = load ptr, ptr %i.g, align 8, !tbaa !19  ; 28 uses
   %i.ah = load ptr, ptr %i.i, align 8, !tbaa !50
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !52 ; 5 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ag, i64 24
@@ -565,15 +565,17 @@ bb.y:                                             ; preds = %bb.x, %bb.w, %bb.v
   br i1 %i.hp, label %bb.z, label %select_frame.exit
 
 bb.z:                                             ; preds = %bb.y
+  %1 = load double, ptr %i.bi, align 8, !tbaa !27
+  %2 = getelementptr inbounds nuw i8, ptr %i.ag, i64 288
+  store double %1, ptr %2, align 8, !tbaa !27
   %i.ib = getelementptr inbounds nuw i8, ptr %i.ag, i64 56
   store double %.pre117.i, ptr %i.ib, align 8, !tbaa !27
   %i.ic = getelementptr inbounds nuw i8, ptr %i.ag, i64 88
   store double %.pre118.i, ptr %i.ic, align 8, !tbaa !27
-  %i.id = getelementptr inbounds nuw i8, ptr %i.ag, i64 280
-  %1 = load <2 x double>, ptr %i.bi, align 8, !tbaa !27
-  %2 = fadd <2 x double> %1, <double -0.000000e+00, double 1.000000e+00>
-  %3 = shufflevector <2 x double> %2, <2 x double> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x double> %3, ptr %i.id, align 8, !tbaa !27
+  %i.id = getelementptr inbounds nuw i8, ptr %i.ag, i64 280 ; 2 uses
+  %3 = load double, ptr %i.id, align 8, !tbaa !27
+  %4 = fadd nsz double %3, 1.000000e+00
+  store double %4, ptr %i.id, align 8, !tbaa !27
   %i.ie = load i32, ptr %i.cm, align 8, !tbaa !37
   %i.if = icmp eq i32 %i.ie, 1
   br i1 %i.if, label %bb.aa, label %select_frame.exit

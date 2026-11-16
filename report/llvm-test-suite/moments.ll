@@ -204,9 +204,10 @@ bb.c:                                             ; preds = %._crit_edge
   %i.be = fmul <2 x double> %i.bc, %i.bd
   %i.bf = insertelement <2 x double> poison, double %i.z, i64 0
   %i.bg = insertelement <2 x double> %i.bf, double %i.y, i64 1
-  %i.bh = fdiv <2 x double> %i.bg, %i.be
-  %i.bi = fadd <2 x double> %i.bh, <double -0.000000e+00, double -3.000000e+00>
-  store <2 x double> %i.bi, ptr %i.e, align 8, !tbaa !20
+  %i.bh = fdiv <2 x double> %i.bg, %i.be          ; 2 uses
+  %i.bi = fadd <2 x double> %i.bh, <double poison, double -3.000000e+00>
+  %3 = shufflevector <2 x double> %i.bh, <2 x double> %i.bi, <2 x i32> <i32 0, i32 3>
+  store <2 x double> %3, ptr %i.e, align 8, !tbaa !20
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %._crit_edge

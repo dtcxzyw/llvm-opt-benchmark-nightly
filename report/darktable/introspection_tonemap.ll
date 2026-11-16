@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.g, %bb.d
   %i.fq = fmul reassoc nsz arcp contract afn float %i.fp, %i.bv
   %i.fr = fsub reassoc nsz arcp contract afn float -1.000000e+00, %i.fp
   %i.fs = fadd reassoc nsz arcp contract afn float %i.fr, %i.fq
-  %i.ft = load <4 x float>, ptr %.0106125, align 4, !tbaa !35 ; 2 uses
+  %i.ft = load <4 x float>, ptr %.0106125, align 4, !tbaa !35 ; 3 uses
   %i.fu = extractelement <4 x float> %i.ft, i64 0
   %i.fv = fpext reassoc nsz arcp contract afn float %i.fu to double
   %i.fw = fmul reassoc nsz arcp contract afn double %i.fv, 2.126000e-01
@@ -217,10 +217,11 @@ bb.i:                                             ; preds = %bb.g, %bb.d
   %i.gc = select i1 %i.ga, float f0xC15D0C55, float %i.gb
   %i.gd = fadd reassoc nsz arcp contract afn float %i.fs, %i.gc
   %i.ge = call reassoc nsz arcp contract afn float @llvm.exp.f32(float %i.gd)
-  %i.gf = insertelement <4 x float> <float poison, float 1.000000e+00, float poison, float poison>, float %i.ge, i64 0
-  %7 = shufflevector <4 x float> %i.gf, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
+  %i.gf = insertelement <4 x float> poison, float %i.ge, i64 0
+  %7 = shufflevector <4 x float> %i.gf, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 poison>
   %i.gg = fmul reassoc arcp contract afn <4 x float> %i.ft, %7
-  store <4 x float> %i.gg, ptr %.0105126, align 4, !tbaa !35
+  %8 = shufflevector <4 x float> %i.gg, <4 x float> %i.ft, <4 x i32> <i32 0, i32 1, i32 2, i32 7>
+  store <4 x float> %8, ptr %.0105126, align 4, !tbaa !35
   br label %.rtcont
 
 .rtscalar:                                        ; preds = %bb.h
@@ -467,11 +468,11 @@ define linkonce_odr hidden void @_ZNK20PermutohedralLatticeILi3ELi2EE5splatEPfS1
   %i.v = insertelement <2 x float> poison, float %i.g, i64 0
   %i.w = fmul reassoc nsz arcp contract afn <2 x float> %i.v, %i.u
   %i.x = shufflevector <2 x float> %i.w, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.y = fmul reassoc nsz arcp contract afn <2 x float> %i.x, <float 4.000000e+00, float -3.000000e+00> ; 3 uses
+  %i.y = fmul reassoc nsz arcp contract afn <2 x float> %i.x, <float 4.000000e+00, float -3.000000e+00> ; 4 uses
   %i.z = extractelement <2 x float> %i.y, i64 1
   %i.aa = fsub reassoc nsz arcp contract afn float %i.z, %i.m
   %i.ab = insertelement <2 x float> <float poison, float -0.000000e+00>, float %i.aa, i64 0
-  %i.ac = fadd reassoc nsz arcp contract afn <2 x float> %i.y, %i.ab ; 6 uses
+  %i.ac = fadd reassoc nsz arcp contract afn <2 x float> %i.y, %i.ab ; 4 uses
   %i.ad = shufflevector <2 x float> %i.ac, <2 x float> poison, <4 x i32> <i32 1, i32 0, i32 0, i32 0> ; 2 uses
   %i.ae = extractelement <2 x float> %i.ac, i64 0
   %i.af = fsub reassoc nsz arcp contract afn float %i.ae, %i.p
@@ -489,13 +490,14 @@ define linkonce_odr hidden void @_ZNK20PermutohedralLatticeILi3ELi2EE5splatEPfS1
   %i.ar = fcmp reassoc nsz arcp contract afn olt <2 x float> %i.ap, %i.aq
   %i.as = select <2 x i1> %i.ar, <2 x float> %i.am, <2 x float> %i.ao
   %i.at = fptosi <2 x float> %i.as to <2 x i32>   ; 3 uses
-  %i.au = fmul reassoc nsz arcp contract afn <2 x float> %i.ac, splat (float 2.500000e-01) ; 2 uses
+  %6 = shufflevector <2 x float> %i.ac, <2 x float> %i.y, <2 x i32> <i32 0, i32 3> ; 3 uses
+  %i.au = fmul reassoc nsz arcp contract afn <2 x float> %6, splat (float 2.500000e-01) ; 2 uses
   %i.av = tail call reassoc nsz arcp contract afn <2 x float> @llvm.ceil.v2f32(<2 x float> %i.au)
   %i.aw = fmul reassoc nsz arcp contract afn <2 x float> %i.av, splat (float 4.000000e+00) ; 2 uses
   %i.ax = tail call reassoc nsz arcp contract afn <2 x float> @llvm.floor.v2f32(<2 x float> %i.au)
   %i.ay = fmul reassoc nsz arcp contract afn <2 x float> %i.ax, splat (float 4.000000e+00) ; 2 uses
-  %i.az = fsub reassoc nsz arcp contract afn <2 x float> %i.aw, %i.ac
-  %i.ba = fsub reassoc nsz arcp contract afn <2 x float> %i.ac, %i.ay
+  %i.az = fsub reassoc nsz arcp contract afn <2 x float> %i.aw, %6
+  %i.ba = fsub reassoc nsz arcp contract afn <2 x float> %6, %i.ay
   %i.bb = fcmp reassoc nsz arcp contract afn olt <2 x float> %i.az, %i.ba
   %i.bc = select <2 x i1> %i.bb, <2 x float> %i.aw, <2 x float> %i.ay
   %i.bd = shufflevector <2 x float> %i.bc, <2 x float> poison, <4 x i32> <i32 1, i32 0, i32 0, i32 0>

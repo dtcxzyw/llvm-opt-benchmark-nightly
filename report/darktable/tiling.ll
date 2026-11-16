@@ -205,28 +205,35 @@ _fit_output_to_input_roi.exit.thread.i:           ; preds = %.critedge.i.i
   %i.sa = call noalias dereferenceable_or_null(32) ptr @malloc(i64 noundef 32) #12 ; 2 uses
   %i.sb = getelementptr inbounds nuw i8, ptr %i.rs, i64 16 ; 7 uses
   store ptr %i.sa, ptr %i.sb, align 8, !tbaa !126
-  %i.sc = call noalias dereferenceable_or_null(32) ptr @malloc(i64 noundef 32) #12 ; 2 uses
+  %i.sc = call noalias dereferenceable_or_null(32) ptr @malloc(i64 noundef 32) #12 ; 4 uses
   %i.sd = getelementptr inbounds nuw i8, ptr %i.rs, i64 24 ; 7 uses
   store ptr %i.sc, ptr %i.sd, align 8, !tbaa !126
-  %i.se = call noalias dereferenceable_or_null(32) ptr @malloc(i64 noundef 32) #12 ; 3 uses
+  %i.se = call noalias dereferenceable_or_null(32) ptr @malloc(i64 noundef 32) #12 ; 4 uses
   %i.sf = getelementptr inbounds nuw i8, ptr %i.rs, i64 32 ; 7 uses
   store ptr %i.se, ptr %i.sf, align 8, !tbaa !126
   store <4 x double> %i.rr, ptr %i.rx, align 8, !tbaa !127
-  %i.sg = fadd reassoc nsz arcp contract afn <4 x double> %i.rr, <double f0x3FED9EA2EA4C9A82, double f0x3FCBF8120F357AD9, double f0x3FCBF8120F357AD9, double f0x3FCBF8120F357AD9> ; 4 uses
+  %i.sg = fadd reassoc nsz arcp contract afn <4 x double> %i.rr, <double f0x3FED9EA2EA4C9A82, double f0x3FCBF8120F357AD9, double f0x3FCBF8120F357AD9, double f0x3FCBF8120F357AD9> ; 3 uses
   store <4 x double> %i.sg, ptr %i.ry, align 8, !tbaa !127
-  %33 = shufflevector <4 x double> %i.rr, <4 x double> %i.sg, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %i.sh = fadd reassoc arcp contract afn <4 x double> %33, <double f0x3FCBF8120F357AD9, double f0x3FED9EA2EA4C9A82, double -0.000000e+00, double -0.000000e+00> ; 3 uses
+  %33 = extractelement <4 x double> %i.sg, i64 3
+  %i.sh = fadd reassoc arcp contract afn <4 x double> %i.rr, <double f0x3FCBF8120F357AD9, double f0x3FED9EA2EA4C9A82, double f0x3FCBF8120F357AD9, double f0x3FCBF8120F357AD9> ; 2 uses
   store <4 x double> %i.sh, ptr %i.sa, align 8, !tbaa !127
-  %34 = shufflevector <4 x double> %i.sh, <4 x double> %i.rr, <4 x i32> <i32 0, i32 5, i32 6, i32 poison>
-  %35 = shufflevector <4 x double> %34, <4 x double> %i.sg, <4 x i32> <i32 0, i32 1, i32 2, i32 7>
-  %36 = fadd reassoc arcp contract afn <4 x double> %35, <double -0.000000e+00, double f0x3FCBF8120F357AD9, double f0x3FED9EA2EA4C9A82, double -0.000000e+00> ; 2 uses
-  store <4 x double> %36, ptr %i.sc, align 8, !tbaa !127
-  %37 = shufflevector <4 x double> %i.sh, <4 x double> %36, <2 x i32> <i32 0, i32 5>
-  store <2 x double> %37, ptr %i.se, align 8, !tbaa !127
-  %i.si = getelementptr inbounds nuw i8, ptr %i.se, i64 16
-  %38 = shufflevector <4 x double> %i.sg, <4 x double> %i.rr, <2 x i32> <i32 2, i32 7>
-  %39 = fadd reassoc arcp contract afn <2 x double> %38, <double -0.000000e+00, double f0x3FED9EA2EA4C9A82>
-  store <2 x double> %39, ptr %i.si, align 8, !tbaa !127
+  %34 = extractelement <4 x double> %i.sh, i64 0  ; 2 uses
+  store double %34, ptr %i.sc, align 8, !tbaa !127
+  %35 = getelementptr inbounds nuw i8, ptr %i.sc, i64 8
+  %36 = shufflevector <4 x double> %i.rr, <4 x double> poison, <2 x i32> <i32 1, i32 2>
+  %37 = fadd reassoc nsz arcp contract afn <2 x double> %36, <double f0x3FCBF8120F357AD9, double f0x3FED9EA2EA4C9A82> ; 2 uses
+  store <2 x double> %37, ptr %35, align 8, !tbaa !127
+  %38 = getelementptr inbounds nuw i8, ptr %i.sc, i64 24
+  store double %33, ptr %38, align 8, !tbaa !127
+  store double %34, ptr %i.se, align 8, !tbaa !127
+  %i.si = getelementptr inbounds nuw i8, ptr %i.se, i64 8
+  %39 = shufflevector <2 x double> %37, <2 x double> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
+  %40 = shufflevector <4 x double> %39, <4 x double> %i.sg, <2 x i32> <i32 0, i32 6>
+  store <2 x double> %40, ptr %i.si, align 8, !tbaa !127
+  %41 = extractelement <4 x double> %i.rr, i64 3
+  %42 = fadd reassoc nsz arcp contract afn double %41, f0x3FED9EA2EA4C9A82
+  %43 = getelementptr inbounds nuw i8, ptr %i.se, i64 24
+  store double %42, ptr %43, align 8, !tbaa !127
   %i.sj = load ptr, ptr %i.rs, align 8, !tbaa !126
   call void @llvm.lifetime.start.p0(ptr nonnull %23) #11
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(20) %23, ptr noundef nonnull align 16 dereferenceable(20) %32, i64 20, i1 false), !tbaa.struct !124

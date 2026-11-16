@@ -205,11 +205,12 @@ bb.e:                                             ; preds = %bb.d
   %i.s = load ptr, ptr %i.k, align 8
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 144
   %i.u = load <2 x float>, ptr %i.t, align 4
-  %i.v = shufflevector <2 x float> %i.u, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  %i.w = insertelement <4 x float> <float poison, float poison, float 1.000000e+00, float 1.000000e+00>, float %1, i64 0
+  %i.v = shufflevector <2 x float> %i.u, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 2 uses
+  %i.w = insertelement <4 x float> poison, float %1, i64 0
   %i.x = insertelement <4 x float> %i.w, float %2, i64 1
   %i.y = fmul <4 x float> %i.v, %i.x
-  store <4 x float> %i.y, ptr %i.a, align 16
+  %4 = shufflevector <4 x float> %i.y, <4 x float> %i.v, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  store <4 x float> %4, ptr %i.a, align 16
   %i.z = call fastcc zeroext i1 @QueueCmdFillRects(ptr noundef nonnull %0, ptr noundef %i.a, i32 noundef 1)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.stackrestore.p0(ptr %savedstack)
@@ -612,10 +613,11 @@ bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
 define internal fastcc zeroext i1 @RenderLinesWithRectsF(ptr noundef %0, ptr nofree noundef nonnull readonly captures(none) %1, i32 noundef range(i32 2, -2147483648) %2) unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 312
-  %i.b = load ptr, ptr %i.a, align 8
+  %i.b = load ptr, ptr %i.a, align 8              ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 144
-  %3 = load <2 x float>, ptr %i.c, align 4
-  %4 = shufflevector <2 x float> %3, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 4 uses
+  %3 = load float, ptr %i.c, align 4              ; 5 uses
+  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 148
+  %5 = load float, ptr %4, align 4                ; 5 uses
   %i.d = add nsw i32 %2, -1
   %i.e = zext nneg i32 %i.d to i64                ; 2 uses
   %i.f = shl nuw nsw i64 %i.e, 4                  ; 2 uses
@@ -689,26 +691,29 @@ bb.j:                                             ; preds = %bb.i
   %i.ae = select i1 %i.ad, float %i.t, float %i.v
   %i.af = add nsw i32 %.0135155, 1                ; 3 uses
   %i.ag = sext i32 %.0135155 to i64
-  %i.ah = getelementptr inbounds [16 x i8], ptr %i.j, i64 %i.ag ; 2 uses
-  %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 4
+  %i.ah = getelementptr inbounds [16 x i8], ptr %i.j, i64 %i.ag ; 4 uses
+  %6 = fmul float %3, %i.o
+  store float %6, ptr %i.ah, align 4
+  %7 = fmul float %5, %.                          ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %i.ah, i64 4 ; 2 uses
+  store float %7, ptr %8, align 4
+  %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 8
+  store float %3, ptr %i.ai, align 4
   %i.aj = fsub float %i.ae, %.
   %i.ak = trunc nuw i8 %.1 to i1
   %i.al = uitofp nneg i8 %.1 to float
   %i.am = fadd float %i.aj, %i.al
-  %5 = insertelement <4 x float> <float poison, float poison, float 1.000000e+00, float poison>, float %i.o, i64 0
-  %6 = insertelement <4 x float> %5, float %., i64 1
-  %7 = insertelement <4 x float> %6, float %i.am, i64 3
-  %8 = fmul <4 x float> %4, %7                    ; 2 uses
-  store <4 x float> %8, ptr %i.ah, align 4
+  %9 = fmul float %5, %i.am
+  %10 = getelementptr inbounds nuw i8, ptr %i.ah, i64 12
+  store float %9, ptr %10, align 4
   br i1 %i.ak, label %bb.r, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   br i1 %i.ad, label %bb.l, label %bb.r
 
 bb.l:                                             ; preds = %bb.k
-  %foldExtExtBinop = fadd <4 x float> %4, %8
-  %9 = extractelement <4 x float> %foldExtExtBinop, i64 1
-  store float %9, ptr %i.ai, align 4
+  %11 = fadd float %5, %7
+  store float %11, ptr %8, align 4
   br label %bb.r
 
 bb.m:                                             ; preds = %bb.i
@@ -721,25 +726,29 @@ bb.n:                                             ; preds = %bb.m
   %i.ap = select i1 %i.ao, float %i.o, float %i.q
   %i.aq = add nsw i32 %.0135155, 1                ; 3 uses
   %i.ar = sext i32 %.0135155 to i64
-  %i.as = getelementptr inbounds [16 x i8], ptr %i.j, i64 %i.ar ; 2 uses
+  %i.as = getelementptr inbounds [16 x i8], ptr %i.j, i64 %i.ar ; 5 uses
+  %12 = fmul float %3, %.153                      ; 2 uses
+  store float %12, ptr %i.as, align 4
+  %13 = fmul float %5, %i.t
+  %14 = getelementptr inbounds nuw i8, ptr %i.as, i64 4
+  store float %13, ptr %14, align 4
   %i.at = fsub float %i.ap, %.153
   %i.au = trunc nuw i8 %.1 to i1
   %i.av = uitofp nneg i8 %.1 to float
   %i.aw = fadd float %i.at, %i.av
-  %10 = insertelement <4 x float> <float poison, float poison, float poison, float 1.000000e+00>, float %.153, i64 0
-  %11 = insertelement <4 x float> %10, float %i.t, i64 1
-  %12 = insertelement <4 x float> %11, float %i.aw, i64 2
-  %13 = fmul <4 x float> %4, %12                  ; 2 uses
-  store <4 x float> %13, ptr %i.as, align 4
+  %15 = fmul float %3, %i.aw
+  %16 = getelementptr inbounds nuw i8, ptr %i.as, i64 8
+  store float %15, ptr %16, align 4
+  %17 = getelementptr inbounds nuw i8, ptr %i.as, i64 12
+  store float %5, ptr %17, align 4
   br i1 %i.au, label %bb.r, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
   br i1 %i.ao, label %bb.p, label %bb.r
 
 bb.p:                                             ; preds = %bb.o
-  %foldExtExtBinop166 = fadd <4 x float> %4, %13
-  %14 = extractelement <4 x float> %foldExtExtBinop166, i64 0
-  store float %14, ptr %i.as, align 4
+  %18 = fadd float %3, %12
+  store float %18, ptr %i.as, align 4
   br label %bb.r
 
 bb.q:                                             ; preds = %bb.m
@@ -814,7 +823,7 @@ bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
 ; Function Attrs: nounwind uwtable
 define hidden zeroext i1 @SDL_RenderRect_REAL(ptr noundef %0, ptr nofree noundef readonly captures(address_is_null) %1) local_unnamed_addr #0 {
 bb.a:
-  %2 = alloca [5 x %struct.SDL_FPoint], align 16  ; 7 uses
+  %2 = alloca [5 x %struct.SDL_FPoint], align 16  ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #14
   %.not.i = icmp eq ptr %0, null
   br i1 %.not.i, label %SDL_ObjectValid.exit.thread68, label %bb.b
@@ -849,9 +858,7 @@ bb.d:                                             ; preds = %SDL_ObjectValid.exi
 ._crit_edge:                                      ; preds = %bb.d
   %.0.sroa.gep4467 = getelementptr inbounds nuw i8, ptr %1, i64 12
   %.0.sroa.gep2966 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.0.sroa.gep2365 = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %.pre = load float, ptr %1, align 4
-  %.pre73 = load float, ptr %.0.sroa.gep2365, align 4
+  %3 = load <2 x float>, ptr %1, align 4
   %.pre74 = load float, ptr %.0.sroa.gep2966, align 4
   %.pre75 = load float, ptr %.0.sroa.gep4467, align 4
   br label %GetRenderViewportSize.exit
@@ -899,25 +906,30 @@ bb.j:                                             ; preds = %bb.h
 GetRenderViewportSize.exit:                       ; preds = %bb.j, %bb.i, %._crit_edge
   %i.ac = phi float [ %.pre75, %._crit_edge ], [ %i.x, %bb.i ], [ %i.ab, %bb.j ]
   %i.ad = phi float [ %.pre74, %._crit_edge ], [ %.sink.i, %bb.i ], [ %.sink.i, %bb.j ]
-  %3 = phi float [ %.pre73, %._crit_edge ], [ 0.000000e+00, %bb.i ], [ 0.000000e+00, %bb.j ] ; 3 uses
-  %4 = phi float [ %.pre, %._crit_edge ], [ 0.000000e+00, %bb.i ], [ 0.000000e+00, %bb.j ] ; 3 uses
-  store float %4, ptr %2, align 16
-  %i.ae = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %5 = fadd float %4, %i.ad
-  %6 = insertelement <2 x float> poison, float %3, i64 0
-  %7 = insertelement <2 x float> %6, float %5, i64 1
-  %8 = fadd <2 x float> %7, <float -0.000000e+00, float -1.000000e+00>
-  %9 = shufflevector <2 x float> %8, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  store <4 x float> %9, ptr %i.ae, align 4
-  %i.af = fadd float %3, %i.ac
-  %i.ag = getelementptr inbounds nuw i8, ptr %2, i64 20
-  %10 = insertelement <2 x float> poison, float %i.af, i64 0
-  %11 = insertelement <2 x float> %10, float %4, i64 1
-  %12 = fadd <2 x float> %11, <float -1.000000e+00, float -0.000000e+00>
-  %13 = shufflevector <2 x float> %12, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  store <4 x float> %13, ptr %i.ag, align 4
+  %4 = phi <2 x float> [ %3, %._crit_edge ], [ zeroinitializer, %bb.i ], [ zeroinitializer, %bb.j ] ; 3 uses
+  store <2 x float> %4, ptr %2, align 16
+  %5 = extractelement <2 x float> %4, i64 0       ; 3 uses
+  %6 = fadd float %5, %i.ad
+  %7 = fadd float %6, -1.000000e+00               ; 2 uses
+  %i.ae = getelementptr inbounds nuw i8, ptr %2, i64 8
+  store float %7, ptr %i.ae, align 8
+  %8 = getelementptr inbounds nuw i8, ptr %2, i64 12
+  %9 = extractelement <2 x float> %4, i64 1       ; 3 uses
+  store float %9, ptr %8, align 4
+  %10 = getelementptr inbounds nuw i8, ptr %2, i64 16
+  store float %7, ptr %10, align 16
+  %11 = fadd float %9, %i.ac
+  %i.af = fadd float %11, -1.000000e+00           ; 2 uses
+  %12 = getelementptr inbounds nuw i8, ptr %2, i64 20
+  store float %i.af, ptr %12, align 4
+  %i.ag = getelementptr inbounds nuw i8, ptr %2, i64 24
+  store float %5, ptr %i.ag, align 8
+  %13 = getelementptr inbounds nuw i8, ptr %2, i64 28
+  store float %i.af, ptr %13, align 4
+  %14 = getelementptr inbounds nuw i8, ptr %2, i64 32
+  store float %5, ptr %14, align 16
   %i.ah = getelementptr inbounds nuw i8, ptr %2, i64 36
-  store float %3, ptr %i.ah, align 4
+  store float %9, ptr %i.ah, align 4
   %i.ai = call zeroext i1 @SDL_RenderLines_REAL(ptr noundef nonnull %0, ptr noundef nonnull %2, i32 noundef 5)
   br label %bb.k
 

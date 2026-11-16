@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %bb.g
   %i.bb = getelementptr inbounds nuw i8, ptr %8, i64 28
   %i.bc = getelementptr inbounds nuw i8, ptr %8, i64 44
   %i.bd = load float, ptr %i.av, align 4          ; 2 uses
-  %i.be = load <4 x float>, ptr %i.at, align 8
+  %i.be = load <4 x float>, ptr %i.at, align 8    ; 2 uses
   %i.bf = load float, ptr %i.aw, align 8          ; 3 uses
   %i.bg = load float, ptr %i.ax, align 4          ; 3 uses
   %i.bh = fmul float %i.bf, %i.bf
@@ -221,15 +221,16 @@ bb.h:                                             ; preds = %bb.g
   %i.br = extractelement <4 x float> %foldExtExtBinop, i64 0
   %i.bs = fmul float %i.br, %i.bq
   %i.bt = fsub float %i.bo, %i.bs                 ; 4 uses
-  %i.bu = insertelement <4 x float> <float 1.000000e+00, float 1.000000e+00, float 1.000000e+00, float poison>, float %i.bt, i64 3
+  %i.bu = insertelement <4 x float> poison, float %i.bt, i64 3
   %i.bv = fmul <4 x float> %i.be, %i.bu
+  %9 = shufflevector <4 x float> %i.be, <4 x float> %i.bv, <4 x i32> <i32 0, i32 1, i32 2, i32 7>
   %i.bw = fmul float %i.bf, %i.bt
   %i.bx = fmul float %i.bg, %i.bt
   %i.by = fmul float %i.az, %i.bt
   store float %i.bw, ptr %i.ba, align 4
   store float %i.bx, ptr %i.bb, align 4
   store float %i.by, ptr %i.bc, align 4
-  store <4 x float> %i.bv, ptr %i.au, align 16
+  store <4 x float> %9, ptr %i.au, align 16
   %i.bz = load ptr, ptr %0, align 16
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bz, i64 312
   %i.cb = load ptr, ptr %i.ca, align 8

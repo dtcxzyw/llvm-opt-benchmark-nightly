@@ -204,7 +204,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.m = fdiv double 1.000000e+00, %sqrt.i
-  %i.n = tail call double @cos(double noundef %sqrt.i) #37 ; 2 uses
+  %i.n = tail call double @cos(double noundef %sqrt.i) #37 ; 3 uses
   %i.o = tail call double @sin(double noundef %sqrt.i) #37
   %i.p = fsub double 1.000000e+00, %i.n           ; 4 uses
   %i.q = insertelement <2 x double> poison, double %i.m, i64 0
@@ -225,11 +225,12 @@ bb.b:                                             ; preds = %bb.a
   %i.af = fpext <2 x float> %i.x to <2 x double>
   %i.ag = insertelement <4 x double> poison, double %i.n, i64 0
   %i.ah = insertelement <4 x double> %i.ag, double %i.p, i64 2
-  %2 = shufflevector <4 x double> %i.ah, <4 x double> poison, <4 x i32> <i32 0, i32 0, i32 2, i32 2>
+  %2 = shufflevector <4 x double> %i.ah, <4 x double> poison, <4 x i32> <i32 poison, i32 0, i32 2, i32 2>
   %i.ai = shufflevector <2 x double> %i.af, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %3 = shufflevector <4 x double> <double 1.000000e+00, double 0.000000e+00, double poison, double poison>, <4 x double> %i.ai, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  %3 = shufflevector <4 x double> %i.ai, <4 x double> <double poison, double 0.000000e+00, double poison, double poison>, <4 x i32> <i32 poison, i32 5, i32 0, i32 1>
   %i.aj = fmul <4 x double> %2, %3
-  %i.ak = fptrunc <4 x double> %i.aj to <4 x float> ; 3 uses
+  %4 = insertelement <4 x double> %i.aj, double %i.n, i64 0
+  %i.ak = fptrunc <4 x double> %4 to <4 x float>  ; 3 uses
   %i.al = shufflevector <4 x float> %i.ak, <4 x float> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 1, i32 0, i32 3, i32 2, i32 1>
   %i.am = shufflevector <2 x double> %i.s, <2 x double> %i.t, <2 x i32> <i32 1, i32 3>
   %i.an = fptrunc <2 x double> %i.am to <2 x float> ; 2 uses

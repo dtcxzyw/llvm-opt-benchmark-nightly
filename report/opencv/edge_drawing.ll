@@ -205,11 +205,11 @@ _ZN2cv8ximgproc15EdgeDrawingImpl14AllocateMatrixEii.exit:
   %i.bg = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znam(i64 noundef 24) #41 ; 3 uses
   store ptr %i.bg, ptr %i.bf, align 8, !tbaa !277
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bg, i8 0, i64 24, i1 false)
-  %i.bh = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znam(i64 noundef 24) #41 ; 4 uses
+  %i.bh = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znam(i64 noundef 24) #41 ; 5 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bf, i64 8
   store ptr %i.bh, ptr %i.bi, align 8, !tbaa !277
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bh, i8 0, i64 24, i1 false)
-  %i.bj = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znam(i64 noundef 24) #41 ; 5 uses
+  %i.bj = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znam(i64 noundef 24) #41 ; 4 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bf, i64 16
   store ptr %i.bj, ptr %i.bk, align 8, !tbaa !277
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bj, i8 0, i64 24, i1 false)
@@ -239,17 +239,18 @@ _ZN2cv8ximgproc15EdgeDrawingImpl14AllocateMatrixEii.exit:
   %i.by = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.bz = load double, ptr %i.by, align 8, !tbaa !44
   %i.ca = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.cb = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %4 = load double, ptr %i.cb, align 8, !tbaa !44
-  %i.cc = getelementptr inbounds nuw i8, ptr %i.bh, i64 8
-  %5 = load <2 x double>, ptr %i.ca, align 8, !tbaa !44
-  %6 = fmul <2 x double> %5, <double 1.000000e+00, double 5.000000e-01> ; 2 uses
-  store <2 x double> %6, ptr %i.cc, align 8, !tbaa !44
-  %7 = getelementptr inbounds nuw i8, ptr %i.bj, i64 8
-  %i.cd = extractelement <2 x double> %6, i64 1
-  store double %i.cd, ptr %7, align 8, !tbaa !44
-  %8 = getelementptr inbounds nuw i8, ptr %i.bj, i64 16
-  store double %4, ptr %8, align 8, !tbaa !44
+  %4 = load double, ptr %i.ca, align 8, !tbaa !44
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %i.cb = getelementptr inbounds nuw i8, ptr %i.bh, i64 8
+  store double %4, ptr %i.cb, align 8, !tbaa !44
+  %i.cc = getelementptr inbounds nuw i8, ptr %i.bh, i64 16
+  %6 = getelementptr inbounds nuw i8, ptr %i.bj, i64 8
+  %7 = load <2 x double>, ptr %5, align 8, !tbaa !44 ; 2 uses
+  %8 = fmul <2 x double> %7, <double 5.000000e-01, double poison> ; 2 uses
+  %9 = shufflevector <2 x double> %8, <2 x double> %7, <2 x i32> <i32 0, i32 3>
+  %i.cd = extractelement <2 x double> %8, i64 0
+  store double %i.cd, ptr %i.cc, align 8, !tbaa !44
+  store <2 x double> %9, ptr %6, align 8, !tbaa !44
   %i.ce = getelementptr inbounds nuw i8, ptr %i.br, i64 8 ; 5 uses
   store double %i.bx, ptr %i.ce, align 8, !tbaa !44
   %i.cf = getelementptr inbounds nuw i8, ptr %i.bs, i64 8 ; 5 uses

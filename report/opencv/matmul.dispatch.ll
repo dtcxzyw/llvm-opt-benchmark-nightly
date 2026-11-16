@@ -205,7 +205,7 @@ bb.af:                                            ; preds = %.thread.i
   %brmerge577.i = select i1 %.not406.i, i1 true, i1 %i.jy
   %wide.trip.count644.i = zext i32 %.0368454.i to i64 ; 9 uses
   %wide.trip.count662.i = and i64 %9, 4294967295  ; 3 uses
-  %i.kb = insertelement <4 x double> <double poison, double 1.000000e+00, double 1.000000e+00, double 1.000000e+00>, double %10, i64 0
+  %i.kb = insertelement <4 x double> poison, double %10, i64 0
   %.scalar = fmul double %10, 0.000000e+00        ; 7 uses
   %i.kc = insertelement <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, double %.scalar, i64 0
   %i.kd = add nsw i64 %wide.trip.count644.i, -1   ; 3 uses
@@ -486,12 +486,13 @@ bb.aj:                                            ; preds = %bb.ai, %._crit_edge
   br label %._crit_edge526.i.loopexit
 
 ._crit_edge526.i.loopexit:                        ; preds = %._crit_edge526.i.loopexit.unr-lcssa, %.lr.ph525.i.epil.preheader
-  %.lcssa172 = phi <4 x double> [ %i.no, %._crit_edge526.i.loopexit.unr-lcssa ], [ %i.nx, %.lr.ph525.i.epil.preheader ]
+  %.lcssa172 = phi <4 x double> [ %i.no, %._crit_edge526.i.loopexit.unr-lcssa ], [ %i.nx, %.lr.ph525.i.epil.preheader ] ; 2 uses
   %i.ny = fmul <4 x double> %i.kb, %.lcssa172
+  %16 = shufflevector <4 x double> %i.ny, <4 x double> %.lcssa172, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
   br label %._crit_edge526.i
 
 ._crit_edge526.i:                                 ; preds = %._crit_edge526.i.loopexit, %.lr.ph534.i
-  %i.nz = phi <4 x double> [ %i.ny, %._crit_edge526.i.loopexit ], [ %i.kc, %.lr.ph534.i ] ; 7 uses
+  %i.nz = phi <4 x double> [ %16, %._crit_edge526.i.loopexit ], [ %i.kc, %.lr.ph534.i ] ; 7 uses
   %.not409.i = icmp eq ptr %.3391531.i, null
   br i1 %.not409.i, label %bb.ak, label %bb.al
 
@@ -894,13 +895,14 @@ bb.an:                                            ; preds = %bb.an, %.epil.prehe
 
 ._crit_edge528.i.loopexit:                        ; preds = %._crit_edge528.i.loopexit.unr-lcssa, %.lr.ph527.i.epil.preheader
   %.lcssa151 = phi <2 x double> [ %i.nc, %._crit_edge528.i.loopexit.unr-lcssa ], [ %i.nq, %.lr.ph527.i.epil.preheader ]
-  %.lcssa150 = phi <2 x double> [ %i.nh, %._crit_edge528.i.loopexit.unr-lcssa ], [ %i.nv, %.lr.ph527.i.epil.preheader ]
+  %.lcssa150 = phi <2 x double> [ %i.nh, %._crit_edge528.i.loopexit.unr-lcssa ], [ %i.nv, %.lr.ph527.i.epil.preheader ] ; 2 uses
   %i.nw = fmul <2 x double> %.lcssa150, %i.iy
+  %16 = shufflevector <2 x double> %.lcssa150, <2 x double> %i.nw, <2 x i32> <i32 0, i32 3>
   br label %._crit_edge528.i
 
 ._crit_edge528.i:                                 ; preds = %._crit_edge528.i.loopexit, %.lr.ph536.i
   %i.nx = phi <2 x double> [ %.lcssa151, %._crit_edge528.i.loopexit ], [ zeroinitializer, %.lr.ph536.i ] ; 2 uses
-  %i.ny = phi <2 x double> [ %i.nw, %._crit_edge528.i.loopexit ], [ %i.iz, %.lr.ph536.i ] ; 4 uses
+  %i.ny = phi <2 x double> [ %16, %._crit_edge528.i.loopexit ], [ %i.iz, %.lr.ph536.i ] ; 4 uses
   %.not409.i = icmp eq ptr %.3391533.i, null
   br i1 %.not409.i, label %bb.ao, label %bb.ap
 

@@ -205,12 +205,13 @@ bb.kx:                                            ; preds = %_ZL14gmx_sfree_impl
   br label %._crit_edge.loopexit.i
 
 ._crit_edge.loopexit.i:                           ; preds = %._crit_edge.loopexit.i.unr-lcssa, %.lr.ph.i499.epil.preheader
-  %.lcssa1263 = phi <2 x float> [ %i.bzw, %._crit_edge.loopexit.i.unr-lcssa ], [ %i.cai, %.lr.ph.i499.epil.preheader ]
+  %.lcssa1263 = phi <2 x float> [ %i.bzw, %._crit_edge.loopexit.i.unr-lcssa ], [ %i.cai, %.lr.ph.i499.epil.preheader ] ; 2 uses
   %.sroa.speculated.i.lcssa = phi float [ %.sroa.speculated.i.1, %._crit_edge.loopexit.i.unr-lcssa ], [ %.sroa.speculated.i.epil, %.lr.ph.i499.epil.preheader ]
   %.sroa.speculated21.i.lcssa = phi float [ %.sroa.speculated21.i.1, %._crit_edge.loopexit.i.unr-lcssa ], [ %.sroa.speculated21.i.epil, %.lr.ph.i499.epil.preheader ]
   %.sroa.speculated15.i.lcssa = phi float [ %.sroa.speculated15.i.1, %._crit_edge.loopexit.i.unr-lcssa ], [ %.sroa.speculated15.i.epil, %.lr.ph.i499.epil.preheader ]
-  %i.car = fmul <2 x float> %.lcssa1263, <float 1.000000e+00, float 1.000000e+01>
-  %i.cas = fpext <2 x float> %i.car to <2 x double>
+  %i.car = fmul <2 x float> %.lcssa1263, <float poison, float 1.000000e+01>
+  %32 = shufflevector <2 x float> %.lcssa1263, <2 x float> %i.car, <2 x i32> <i32 0, i32 3>
+  %i.cas = fpext <2 x float> %32 to <2 x double>
   %i.cat = fmul float %.sroa.speculated.i.lcssa, 1.000000e+01
   %i.cau = fpext float %i.cat to double
   br label %_ZL10pdb_legendP8_IO_FILEiiP7t_atomsPA3_f.exit

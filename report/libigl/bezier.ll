@@ -204,7 +204,8 @@ bb.a:
 .preheader.lr.ph:                                 ; preds = %bb.a
   %i.e = insertelement <2 x double> <double 1.000000e+00, double poison>, double %1, i64 1
   %i.f = insertelement <2 x double> <double poison, double 0.000000e+00>, double %1, i64 0
-  %i.g = fsub <2 x double> %i.e, %i.f             ; 4 uses
+  %i.g = fsub <2 x double> %i.e, %i.f             ; 2 uses
+  %4 = insertelement <2 x double> %i.g, double %1, i64 1 ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.i = load i64, ptr %i.h, align 8, !tbaa !16, !noalias !82 ; 19 uses
   %.not8.i.i.i.i.i.i.i.i = icmp eq i64 %i.i, 0
@@ -302,7 +303,7 @@ middle.block138:                                  ; preds = %vector.body131
   %i.ai = mul nsw i64 %.05.i.i.i.i.i.i.i.i.us.us.ph, %i.b
   %i.aj = getelementptr inbounds [8 x i8], ptr %i.q, i64 %i.ai
   %i.ak = load <2 x double>, ptr %i.aj, align 8, !tbaa !38
-  %i.al = fmul <2 x double> %i.g, %i.ak
+  %i.al = fmul <2 x double> %4, %i.ak
   %i.am = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.al)
   store double %i.am, ptr %i.ah, align 8, !tbaa !38
   %i.an = or disjoint i64 %.05.i.i.i.i.i.i.i.i.us.us.ph, 1
@@ -319,7 +320,7 @@ middle.block138:                                  ; preds = %vector.body131
   %i.aq = mul nsw i64 %.05.i.i.i.i.i.i.i.i.us.us, %i.b
   %i.ar = getelementptr inbounds [8 x i8], ptr %i.q, i64 %i.aq
   %i.as = load <2 x double>, ptr %i.ar, align 8, !tbaa !38
-  %i.at = fmul <2 x double> %i.g, %i.as
+  %i.at = fmul <2 x double> %4, %i.as
   %i.au = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.at)
   store double %i.au, ptr %i.ap, align 8, !tbaa !38
   %i.av = add nuw nsw i64 %.05.i.i.i.i.i.i.i.i.us.us, 1 ; 2 uses
@@ -327,7 +328,7 @@ middle.block138:                                  ; preds = %vector.body131
   %i.ax = mul nsw i64 %i.av, %i.b
   %i.ay = getelementptr inbounds [8 x i8], ptr %i.q, i64 %i.ax
   %i.az = load <2 x double>, ptr %i.ay, align 8, !tbaa !38
-  %i.ba = fmul <2 x double> %i.g, %i.az
+  %i.ba = fmul <2 x double> %4, %i.az
   %i.bb = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.ba)
   store double %i.bb, ptr %i.aw, align 8, !tbaa !38
   %i.bc = add nuw nsw i64 %.05.i.i.i.i.i.i.i.i.us.us, 2 ; 2 uses

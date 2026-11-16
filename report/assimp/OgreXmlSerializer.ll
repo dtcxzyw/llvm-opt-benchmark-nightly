@@ -202,7 +202,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
   %i.dc = invoke noalias noundef nonnull dereferenceable(248) ptr @_Znwm(i64 noundef 248) #32
-          to label %bb.s unwind label %.loopexit.split-lp201.loopexit.split-lp.loopexit.split-lp ; 18 uses
+          to label %bb.s unwind label %.loopexit.split-lp201.loopexit.split-lp.loopexit.split-lp ; 21 uses
 
 bb.s:                                             ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread
   invoke void @_ZN6Assimp4Ogre4BoneC1Ev(ptr noundef nonnull align 8 dereferenceable(248) %i.dc)
@@ -317,6 +317,9 @@ bb.ab:                                            ; preds = %_ZNSt7__cxx1112basi
   %i.ee = getelementptr inbounds nuw i8, ptr %i.dc, i64 112 ; 2 uses
   %i.ef = getelementptr inbounds nuw i8, ptr %i.dc, i64 116 ; 2 uses
   %i.eg = getelementptr inbounds nuw i8, ptr %i.dc, i64 92
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.dc, i64 96
+  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.dc, i64 100
+  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.dc, i64 104
   %i.eh = getelementptr inbounds nuw i8, ptr %i.dc, i64 80
   %i.ei = getelementptr inbounds nuw i8, ptr %i.dc, i64 84
   %i.ej = getelementptr inbounds nuw i8, ptr %i.dc, i64 88
@@ -683,16 +686,15 @@ bb.bq:                                            ; preds = %_ZN10aiVector3tIfEd
   %.sroa.0.4.vec.extract.pre-phi.i = phi float [ %i.hm, %bb.bp ], [ %i.hu, %_ZN10aiVector3tIfEdVEf.exit.i.i ]
   %.sroa.0.0.vec.extract.pre-phi.i = phi float [ %i.hl, %bb.bp ], [ %i.ht, %_ZN10aiVector3tIfEdVEf.exit.i.i ]
   %.sroa.7.0.i = phi float [ %i.hn, %bb.bp ], [ %i.hv, %_ZN10aiVector3tIfEdVEf.exit.i.i ]
-  %i.hw = call noundef float @sinf(float noundef %i.gn) #28
+  %i.hw = call noundef float @sinf(float noundef %i.gn) #28 ; 3 uses
   %i.hx = call noundef float @cosf(float noundef %i.gn) #28
-  %21 = insertelement <4 x float> poison, float %i.hx, i64 0
-  %22 = insertelement <4 x float> %21, float %.sroa.0.0.vec.extract.pre-phi.i, i64 1
-  %23 = insertelement <4 x float> %22, float %.sroa.0.4.vec.extract.pre-phi.i, i64 2
-  %24 = insertelement <4 x float> %23, float %.sroa.7.0.i, i64 3
-  %25 = insertelement <4 x float> <float 1.000000e+00, float poison, float poison, float poison>, float %i.hw, i64 1
-  %26 = shufflevector <4 x float> %25, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
-  %27 = fmul <4 x float> %24, %26
-  store <4 x float> %27, ptr %i.eg, align 4
+  %21 = fmul float %.sroa.0.0.vec.extract.pre-phi.i, %i.hw
+  %22 = fmul float %.sroa.0.4.vec.extract.pre-phi.i, %i.hw
+  %23 = fmul float %.sroa.7.0.i, %i.hw
+  store float %i.hx, ptr %i.eg, align 4
+  store float %21, ptr %.sroa.5.0..sroa_idx, align 8
+  store float %22, ptr %.sroa.6.0..sroa_idx, align 4
+  store float %23, ptr %.sroa.7.0..sroa_idx, align 8
   %i.hy = load ptr, ptr %20, align 8              ; 2 uses
   %i.hz = icmp eq ptr %i.hy, %i.r
   br i1 %i.hz, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit128, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i126
@@ -1095,7 +1097,7 @@ bb.a:
   %4 = alloca %"class.pugi::xml_object_range", align 16 ; 6 uses
   %5 = alloca %"class.pugi::xml_node_iterator", align 16 ; 8 uses
   %6 = alloca %"class.pugi::xml_node_iterator", align 16 ; 6 uses
-  %7 = alloca %"struct.Assimp::Ogre::TransformKeyFrame", align 4 ; 14 uses
+  %7 = alloca %"struct.Assimp::Ogre::TransformKeyFrame", align 4 ; 16 uses
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   %9 = alloca %"class.pugi::xml_object_range", align 16 ; 6 uses
   %10 = alloca %"class.pugi::xml_node_iterator", align 16 ; 7 uses
@@ -1130,7 +1132,9 @@ bb.a:
   %i.q = getelementptr inbounds nuw i8, ptr %16, i64 16 ; 7 uses
   %i.r = getelementptr inbounds nuw i8, ptr %16, i64 8 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %i.t = getelementptr inbounds nuw i8, ptr %7, i64 4
+  %17 = getelementptr inbounds nuw i8, ptr %7, i64 4
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %i.t = getelementptr inbounds nuw i8, ptr %7, i64 16
   %i.u = getelementptr inbounds nuw i8, ptr %7, i64 20
   %i.v = getelementptr inbounds nuw i8, ptr %7, i64 24
   %i.w = getelementptr inbounds nuw i8, ptr %7, i64 28
@@ -1533,16 +1537,15 @@ _ZN10aiVector3tIfEdVEf.exit.i.i:                  ; preds = %_ZNK10aiVector3tIfE
 bb.at:                                            ; preds = %_ZN10aiVector3tIfEdVEf.exit.i.i, %_ZNK10aiVector3tIfE5EqualERKS0_f.exit.thread
   %.sroa.7.0.i = phi float [ %i.db, %_ZNK10aiVector3tIfE5EqualERKS0_f.exit.thread ], [ %i.dv, %_ZN10aiVector3tIfEdVEf.exit.i.i ]
   %i.dw = phi <2 x float> [ %.sroa.0123.0, %_ZNK10aiVector3tIfE5EqualERKS0_f.exit.thread ], [ %i.du, %_ZN10aiVector3tIfEdVEf.exit.i.i ]
-  %i.dx = call noundef float @sinf(float noundef %i.ce) #28
+  %i.dx = call noundef float @sinf(float noundef %i.ce) #28 ; 2 uses
   %i.dy = call noundef float @cosf(float noundef %i.ce) #28
-  %17 = insertelement <4 x float> poison, float %i.dy, i64 0
-  %18 = shufflevector <2 x float> %i.dw, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %19 = shufflevector <4 x float> %17, <4 x float> %18, <4 x i32> <i32 0, i32 4, i32 5, i32 poison>
-  %20 = insertelement <4 x float> %19, float %.sroa.7.0.i, i64 3
-  %21 = insertelement <4 x float> <float 1.000000e+00, float poison, float poison, float poison>, float %i.dx, i64 1
-  %22 = shufflevector <4 x float> %21, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
-  %23 = fmul <4 x float> %20, %22
-  store <4 x float> %23, ptr %i.t, align 4
+  %18 = fmul float %.sroa.7.0.i, %i.dx
+  store float %i.dy, ptr %17, align 4
+  %19 = insertelement <2 x float> poison, float %i.dx, i64 0
+  %20 = shufflevector <2 x float> %19, <2 x float> poison, <2 x i32> zeroinitializer
+  %21 = fmul <2 x float> %i.dw, %20
+  store <2 x float> %21, ptr %.sroa.5.0..sroa_idx, align 4
+  store float %18, ptr %i.t, align 4
   %.pre193 = load ptr, ptr %16, align 8
   br label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit103.thread142
 

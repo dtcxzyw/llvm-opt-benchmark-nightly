@@ -204,11 +204,12 @@ _ZN11hb_vector_tIsLb0EEixEi.exit83.i:             ; preds = %.preheader.i.i
   %i.ck = shufflevector <4 x float> %i.ci, <4 x float> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.cl = shufflevector <8 x float> %i.cj, <8 x float> %i.ck, <8 x i32> <i32 poison, i32 poison, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
   %i.cm = shufflevector <2 x float> %i.br, <2 x float> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %i.cn = shufflevector <8 x float> %i.cm, <8 x float> %i.cl, <8 x i32> <i32 0, i32 1, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
-  %i.co = fmul <8 x float> %i.cn, <float 1.000000e+00, float 1.000000e+00, float 1.000000e+00, float 1.000000e+00, float 1.024000e+03, float 1.024000e+03, float 1.024000e+03, float 1.024000e+03> ; 3 uses
+  %i.cn = shufflevector <8 x float> %i.cm, <8 x float> %i.cl, <8 x i32> <i32 0, i32 1, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15> ; 2 uses
+  %i.co = fmul <8 x float> %i.cn, <float 1.000000e+00, float 1.000000e+00, float 1.000000e+00, float 1.000000e+00, float 1.024000e+03, float 1.024000e+03, float 1.024000e+03, float 1.024000e+03> ; 2 uses
   %i.cp = fcmp ugt <8 x float> %i.co, splat (float -3.276800e+04)
-  %i.cq = fcmp oge <8 x float> %i.co, splat (float 3.276700e+04)
-  %i.cr = select <8 x i1> %i.cq, <8 x float> splat (float 3.276700e+04), <8 x float> %i.co
+  %11 = shufflevector <8 x float> %i.cn, <8 x float> %i.co, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 12, i32 13, i32 14, i32 15> ; 2 uses
+  %i.cq = fcmp oge <8 x float> %11, splat (float 3.276700e+04)
+  %i.cr = select <8 x i1> %i.cq, <8 x float> splat (float 3.276700e+04), <8 x float> %11
   %i.cs = fptosi <8 x float> %i.cr to <8 x i16>
   %i.ct = select <8 x i1> %i.cp, <8 x i16> %i.cs, <8 x i16> splat (i16 -32768)
   store <8 x i16> %i.ct, ptr %i.ao, align 2, !tbaa !80

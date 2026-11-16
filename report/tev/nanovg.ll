@@ -205,9 +205,10 @@ define dso_local void @nvgSetDevicePixelRatio(ptr nofree noundef writeonly captu
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8856
   %i.b = insertelement <4 x float> <float 2.500000e-01, float f0x3C23D70A, float 1.000000e+00, float poison>, float %1, i64 3 ; 2 uses
-  %2 = shufflevector <4 x float> %i.b, <4 x float> <float poison, float 1.000000e+00, float poison, float poison>, <4 x i32> <i32 3, i32 3, i32 3, i32 5>
+  %2 = shufflevector <4 x float> %i.b, <4 x float> poison, <4 x i32> <i32 3, i32 3, i32 3, i32 poison>
   %i.c = fdiv <4 x float> %i.b, %2
-  store <4 x float> %i.c, ptr %i.a, align 8, !tbaa !81
+  %3 = insertelement <4 x float> %i.c, float %1, i64 3
+  store <4 x float> %3, ptr %i.a, align 8, !tbaa !81
   ret void
 }
 
@@ -610,6 +611,7 @@ declare float @sqrtf(float noundef) local_unnamed_addr #14
 define dso_local void @nvgRadialGradient(ptr dead_on_unwind noalias nofree writable writeonly sret(%struct.NVGpaint) align 4 captures(none) initializes((0, 76)) %0, ptr nofree noundef readnone captures(none) %1, float noundef %2, float noundef %3, float noundef %4, float noundef %5, <2 x float> %6, <2 x float> %7, <2 x float> %8, <2 x float> %9) local_unnamed_addr #32 {
 bb.a:
   %i.a = fadd float %4, %5
+  %10 = fmul float %i.a, 5.000000e-01             ; 3 uses
   %i.b = fsub float %5, %4                        ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 72
   store i32 0, ptr %i.c, align 4
@@ -619,13 +621,15 @@ bb.a:
   store float %2, ptr %i.d, align 4, !tbaa !81
   store float %3, ptr %i.e, align 4, !tbaa !81
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %10 = fcmp olt float %i.b, 1.000000e+00
-  %11 = select i1 %10, float 1.000000e+00, float %i.b
-  %12 = insertelement <2 x float> poison, float %i.a, i64 0
-  %13 = insertelement <2 x float> %12, float %11, i64 1
-  %14 = fmul <2 x float> %13, <float 5.000000e-01, float 1.000000e+00>
-  %15 = shufflevector <2 x float> %14, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
-  store <4 x float> %15, ptr %i.f, align 4, !tbaa !81
+  store float %10, ptr %i.f, align 4, !tbaa !81
+  %11 = getelementptr inbounds nuw i8, ptr %0, i64 28
+  store float %10, ptr %11, align 4, !tbaa !81
+  %12 = getelementptr inbounds nuw i8, ptr %0, i64 32
+  store float %10, ptr %12, align 4, !tbaa !252
+  %13 = fcmp olt float %i.b, 1.000000e+00
+  %14 = select i1 %13, float 1.000000e+00, float %i.b
+  %15 = getelementptr inbounds nuw i8, ptr %0, i64 36
+  store float %14, ptr %15, align 4, !tbaa !227
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 40
   store <2 x float> %6, ptr %i.g, align 4
   %.sroa.211.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 48

@@ -205,7 +205,7 @@ convolve.exit.i.i92.preheader.i:                  ; preds = %compute_lpc_coefs.e
   store <4 x float> %i.oe, ptr %i.bb, align 4, !tbaa !32
   %i.ol = load float, ptr %i.bf, align 4, !tbaa !32
   %i.om = load <2 x float>, ptr %i.bd, align 4, !tbaa !32
-  %i.on = fmul nsz float %i.ny, f0x3F808000       ; 2 uses
+  %i.on = fmul nsz float %i.ny, f0x3F808000       ; 3 uses
   %i.oo = insertelement <4 x float> <float poison, float poison, float poison, float -0.000000e+00>, float %i.ol, i64 2
   %i.op = shufflevector <2 x float> %i.om, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.oq = shufflevector <4 x float> %i.op, <4 x float> %i.oo, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
@@ -214,6 +214,7 @@ convolve.exit.i.i92.preheader.i:                  ; preds = %compute_lpc_coefs.e
   %i.ot = insertelement <4 x float> %i.os, float %i.mv, i64 2
   %i.ou = insertelement <4 x float> %i.ot, float %i.on, i64 3
   %i.ov = call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.oq, <4 x float> <float 7.500000e-01, float 7.500000e-01, float 7.500000e-01, float 0.000000e+00>, <4 x float> %i.ou) ; 3 uses
+  %4 = insertelement <4 x float> %i.ov, float %i.on, i64 3
   %i.ow = insertelement <4 x float> poison, float %i.nl, i64 0
   %i.ox = insertelement <4 x float> %i.ow, float %i.nk, i64 1
   %i.oy = insertelement <4 x float> %i.ox, float %i.nj, i64 2
@@ -226,7 +227,7 @@ convolve.exit.i.i92.preheader.i:                  ; preds = %compute_lpc_coefs.e
   %i.pe = shufflevector <4 x float> %i.ov, <4 x float> poison, <2 x i32> <i32 1, i32 2>
   %i.pf = fadd nsz <2 x float> %i.pd, %i.pe       ; 2 uses
   store <2 x float> %i.pf, ptr %i.be, align 4, !tbaa !32
-  store <4 x float> %i.ov, ptr %i.bd, align 4, !tbaa !32
+  store <4 x float> %4, ptr %i.bd, align 4, !tbaa !32
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   %i.pg = extractelement <2 x float> %i.pf, i64 1
   %i.ph = fcmp nsz oeq float %i.pg, 0.000000e+00

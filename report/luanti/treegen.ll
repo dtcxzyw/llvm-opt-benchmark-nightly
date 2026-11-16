@@ -204,8 +204,8 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   store float 0.000000e+00, ptr %i.at, align 16, !tbaa !106
   store float f0x3F7FFFFF, ptr %i.ap, align 8, !tbaa !106
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #22
-  %i.au = getelementptr inbounds nuw i8, ptr %5, i64 4 ; 5 uses
-  %i.av = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 37 uses
+  %i.au = getelementptr inbounds nuw i8, ptr %5, i64 4 ; 13 uses
+  %i.av = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 36 uses
   %i.aw = bitcast i48 %1 to <3 x i16>
   %i.ax = shufflevector <3 x i16> %i.aw, <3 x i16> poison, <2 x i32> <i32 0, i32 1>
   %i.ay = sitofp nsz <2 x i16> %i.ax to <2 x float>
@@ -566,11 +566,14 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   %i.gk = fadd nsz <2 x float> %i.gj, <float 1.000000e+00, float -1.000000e+00>
   %i.gl = load float, ptr %i.av, align 8, !tbaa !175
   call fastcc void @_ZN7treegenL20tree_trunk_placementER8MMVManipN4core8vector3dIfEERKNS_7TreeDefE(ptr noundef nonnull align 8 dereferenceable(88) %0, <2 x float> %i.gk, float %i.gl, ptr noundef nonnull align 8 dereferenceable(321) %2)
-  %10 = load <2 x float>, ptr %5, align 8, !tbaa !106
-  %11 = fadd <2 x float> %10, <float -0.000000e+00, float -1.000000e+00>
+  %10 = load float, ptr %5, align 8, !tbaa !176
+  %11 = load float, ptr %i.au, align 4, !tbaa !177
+  %12 = fadd nsz float %11, -1.000000e+00
   %i.gm = load float, ptr %i.av, align 8, !tbaa !175
   %i.gn = fadd nsz float %i.gm, 1.000000e+00
-  call fastcc void @_ZN7treegenL20tree_trunk_placementER8MMVManipN4core8vector3dIfEERKNS_7TreeDefE(ptr noundef nonnull align 8 dereferenceable(88) %0, <2 x float> %11, float %i.gn, ptr noundef nonnull align 8 dereferenceable(321) %2)
+  %.sroa.01102.0.vec.insert = insertelement <2 x float> poison, float %10, i64 0
+  %.sroa.01102.4.vec.insert = insertelement <2 x float> %.sroa.01102.0.vec.insert, float %12, i64 1
+  call fastcc void @_ZN7treegenL20tree_trunk_placementER8MMVManipN4core8vector3dIfEERKNS_7TreeDefE(ptr noundef nonnull align 8 dereferenceable(88) %0, <2 x float> %.sroa.01102.4.vec.insert, float %i.gn, ptr noundef nonnull align 8 dereferenceable(321) %2)
   %i.go = load float, ptr %5, align 8, !tbaa !176
   %i.gp = fadd nsz float %i.go, 1.000000e+00
   br label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit348.thread1481.sink.split
@@ -597,11 +600,13 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   %i.he = fadd nsz <2 x float> %i.hd, splat (float -1.000000e+00)
   %i.hf = load float, ptr %i.av, align 8, !tbaa !175
   call fastcc void @_ZN7treegenL20tree_trunk_placementER8MMVManipN4core8vector3dIfEERKNS_7TreeDefE(ptr noundef nonnull align 8 dereferenceable(88) %0, <2 x float> %i.he, float %i.hf, ptr noundef nonnull align 8 dereferenceable(321) %2)
-  %i.hg = load <2 x float>, ptr %5, align 8, !tbaa !106
-  %i.hh = fadd <2 x float> %i.hg, <float -0.000000e+00, float -1.000000e+00>
-  %12 = load float, ptr %i.av, align 8, !tbaa !175
-  %13 = fadd nsz float %12, 1.000000e+00
-  call fastcc void @_ZN7treegenL20tree_trunk_placementER8MMVManipN4core8vector3dIfEERKNS_7TreeDefE(ptr noundef nonnull align 8 dereferenceable(88) %0, <2 x float> %i.hh, float %13, ptr noundef nonnull align 8 dereferenceable(321) %2)
+  %13 = load float, ptr %5, align 8, !tbaa !176
+  %i.hg = load <2 x float>, ptr %i.au, align 4, !tbaa !106
+  %i.hh = fadd nsz <2 x float> %i.hg, <float -1.000000e+00, float 1.000000e+00> ; 2 uses
+  %.sroa.01090.0.vec.insert = insertelement <2 x float> poison, float %13, i64 0
+  %14 = shufflevector <2 x float> %.sroa.01090.0.vec.insert, <2 x float> %i.hh, <2 x i32> <i32 0, i32 2>
+  %15 = extractelement <2 x float> %i.hh, i64 1
+  call fastcc void @_ZN7treegenL20tree_trunk_placementER8MMVManipN4core8vector3dIfEERKNS_7TreeDefE(ptr noundef nonnull align 8 dereferenceable(88) %0, <2 x float> %14, float %15, ptr noundef nonnull align 8 dereferenceable(321) %2)
   %i.hi = load float, ptr %5, align 8, !tbaa !176
   br label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit348.thread1481.sink.split
 
@@ -633,33 +638,32 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   %i.ht = extractvalue { <2 x float>, <2 x float> } %i.hs, 0 ; 5 uses
   %i.hu = extractvalue { <2 x float>, <2 x float> } %i.hs, 1 ; 5 uses
   %i.hv = fsub nsz <2 x float> splat (float 1.000000e+00), %i.hu ; 6 uses
+  %16 = extractelement <2 x float> %i.ht, i64 0
+  %17 = fmul nsz float %16, 0.000000e+00          ; 5 uses
   %foldExtExtBinop = fadd nsz <2 x float> %i.hu, %i.hv
-  %14 = fmul nsz <2 x float> %i.hv, zeroinitializer ; 8 uses
-  %15 = extractelement <2 x float> %14, i64 0
-  %16 = shufflevector <2 x float> %i.ht, <2 x float> %14, <2 x i32> <i32 0, i32 2>
-  %17 = fmul <2 x float> %16, <float 0.000000e+00, float 1.000000e+00> ; 5 uses
-  %18 = extractelement <2 x float> %17, i64 0
-  %19 = fneg nsz float %18                        ; 2 uses
-  %20 = insertelement <2 x float> poison, float %19, i64 0
-  %21 = shufflevector <2 x float> %20, <2 x float> %17, <2 x i32> <i32 0, i32 2> ; 2 uses
-  %22 = fsub nsz float %19, %15
-  %23 = fneg nsz <2 x float> %i.ht
-  %i.hw = shufflevector <2 x float> %14, <2 x float> poison, <2 x i32> zeroinitializer
+  %18 = fneg nsz float %17                        ; 2 uses
+  %19 = insertelement <2 x float> poison, float %18, i64 0
+  %20 = insertelement <2 x float> %19, float %17, i64 1 ; 2 uses
+  %21 = fmul nsz <2 x float> %i.hv, zeroinitializer ; 5 uses
+  %22 = extractelement <2 x float> %21, i64 0     ; 4 uses
+  %23 = fsub nsz float %18, %22
+  %24 = fneg nsz <2 x float> %i.ht
+  %25 = fsub nsz float %17, %22
+  %i.hw = shufflevector <2 x float> %21, <2 x float> poison, <2 x i32> zeroinitializer
   %i.hx = shufflevector <2 x float> %i.hu, <2 x float> %i.ht, <2 x i32> <i32 2, i32 0>
   %i.hy = call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.hw, <2 x float> zeroinitializer, <2 x float> %i.hx) ; 2 uses
   %i.hz = shufflevector <2 x float> %i.hv, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.ia = call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.hz, <2 x float> zeroinitializer, <2 x float> %21) ; 2 uses
-  %24 = shufflevector <2 x float> %14, <2 x float> %17, <2 x i32> <i32 0, i32 2>
-  %25 = fsub nsz <2 x float> %17, %24             ; 2 uses
-  %foldExtExtBinop1740 = fadd nsz <2 x float> %17, %14
+  %i.ia = call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.hz, <2 x float> zeroinitializer, <2 x float> %20) ; 2 uses
+  %26 = fsub nsz float %22, %17
+  %27 = fadd nsz float %17, %22
   %i.ib = fneg nsz <2 x float> %i.hv              ; 2 uses
   %i.ic = shufflevector <2 x float> %i.ib, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.id = call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ic, <2 x float> zeroinitializer, <2 x float> %21) ; 2 uses
+  %i.id = call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ic, <2 x float> zeroinitializer, <2 x float> %20) ; 2 uses
   %i.ie = extractelement <2 x float> %i.ht, i64 1
   %i.if = fmul nsz float %i.ie, 0.000000e+00      ; 5 uses
-  %i.ig = extractelement <2 x float> %14, i64 1   ; 4 uses
+  %i.ig = extractelement <2 x float> %21, i64 1   ; 4 uses
   %i.ih = fsub nsz float %i.if, %i.ig
-  %i.ii = shufflevector <2 x float> %14, <2 x float> poison, <2 x i32> <i32 1, i32 1>
+  %i.ii = shufflevector <2 x float> %21, <2 x float> poison, <2 x i32> <i32 1, i32 1>
   %i.ij = shufflevector <2 x float> %i.hu, <2 x float> %i.ht, <2 x i32> <i32 1, i32 3>
   %i.ik = call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ii, <2 x float> zeroinitializer, <2 x float> %i.ij) ; 2 uses
   %i.il = fneg nsz float %i.if                    ; 2 uses
@@ -668,7 +672,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   %i.in = insertelement <2 x float> poison, float %i.if, i64 0
   %i.io = insertelement <2 x float> %i.in, float %i.il, i64 1 ; 2 uses
   %i.ip = call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.im, <2 x float> zeroinitializer, <2 x float> %i.io) ; 2 uses
-  %i.iq = call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %14, <2 x float> zeroinitializer, <2 x float> %23) ; 6 uses
+  %i.iq = call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %21, <2 x float> zeroinitializer, <2 x float> %24) ; 6 uses
   %i.ir = fsub nsz float %i.il, %i.ig
   %i.is = fadd nsz float %i.if, %i.ig
   %i.it = shufflevector <2 x float> %i.hv, <2 x float> poison, <2 x i32> <i32 1, i32 1>
@@ -715,16 +719,19 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   %i.ki = shufflevector <2 x float> %i.ia, <2 x float> poison, <4 x i32> zeroinitializer
   %i.kj = shufflevector <2 x float> %foldExtExtBinop, <2 x float> poison, <4 x i32> zeroinitializer ; 2 uses
   %i.kk = shufflevector <2 x float> %i.ia, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
-  %i.kl = shufflevector <2 x float> %i.hy, <2 x float> poison, <4 x i32> zeroinitializer ; 2 uses
+  %28 = shufflevector <2 x float> %i.hy, <2 x float> poison, <4 x i32> zeroinitializer ; 2 uses
+  %29 = insertelement <4 x float> poison, float %26, i64 0
+  %i.kl = shufflevector <4 x float> %29, <4 x float> poison, <4 x i32> zeroinitializer
   %i.km = shufflevector <2 x float> %i.hy, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1> ; 4 uses
-  %i.kn = shufflevector <2 x float> %foldExtExtBinop1740, <2 x float> poison, <4 x i32> zeroinitializer
+  %30 = insertelement <4 x float> poison, float %27, i64 0
+  %i.kn = shufflevector <4 x float> %30, <4 x float> poison, <4 x i32> zeroinitializer
   %i.ko = shufflevector <2 x float> %i.id, <2 x float> poison, <4 x i32> zeroinitializer
   %i.kp = shufflevector <2 x float> %i.id, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
-  %i.kq = insertelement <4 x float> poison, float %22, i64 0
+  %i.kq = insertelement <4 x float> poison, float %23, i64 0
   %i.kr = shufflevector <4 x float> %i.kq, <4 x float> poison, <4 x i32> zeroinitializer
-  %26 = shufflevector <2 x float> %i.iq, <2 x float> poison, <4 x i32> zeroinitializer
-  %i.ks = shufflevector <2 x float> %25, <2 x float> poison, <4 x i32> zeroinitializer
-  %27 = shufflevector <2 x float> %25, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
+  %31 = insertelement <4 x float> poison, float %25, i64 0
+  %i.ks = shufflevector <4 x float> %31, <4 x float> poison, <4 x i32> zeroinitializer
+  %32 = shufflevector <2 x float> %i.iq, <2 x float> poison, <4 x i32> zeroinitializer
   %i.kt = shufflevector <2 x float> %i.iq, <2 x float> poison, <4 x i32> zeroinitializer
   %i.ku = shufflevector <2 x float> %i.iq, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
   %i.kv = shufflevector <2 x float> %i.iq, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
@@ -820,10 +827,13 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   br i1 %i.ml, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit355.thread1483, label %bb.ag
 
 bb.ag:                                            ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit353.thread
-  %28 = load <2 x float>, ptr %5, align 8, !tbaa !106
-  %29 = fadd <2 x float> %28, <float 1.000000e+00, float -0.000000e+00>
+  %33 = load float, ptr %5, align 8, !tbaa !176
+  %34 = fadd nsz float %33, 1.000000e+00
+  %35 = load float, ptr %i.au, align 4, !tbaa !177
   %i.mm = load float, ptr %i.av, align 8, !tbaa !175
-  call fastcc void @_ZN7treegenL20tree_trunk_placementER8MMVManipN4core8vector3dIfEERKNS_7TreeDefE(ptr noundef nonnull align 8 dereferenceable(88) %0, <2 x float> %29, float %i.mm, ptr noundef nonnull align 8 dereferenceable(321) %2)
+  %.sroa.0661.0.vec.insert = insertelement <2 x float> poison, float %34, i64 0
+  %.sroa.0661.4.vec.insert = insertelement <2 x float> %.sroa.0661.0.vec.insert, float %35, i64 1
+  call fastcc void @_ZN7treegenL20tree_trunk_placementER8MMVManipN4core8vector3dIfEERKNS_7TreeDefE(ptr noundef nonnull align 8 dereferenceable(88) %0, <2 x float> %.sroa.0661.4.vec.insert, float %i.mm, ptr noundef nonnull align 8 dereferenceable(321) %2)
   %i.mn = load <2 x float>, ptr %5, align 8, !tbaa !106
   %i.mo = load float, ptr %i.av, align 8, !tbaa !175
   %i.mp = fadd nsz float %i.mo, 1.000000e+00
@@ -851,14 +861,20 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   br i1 %i.nd, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit355.thread1483, label %bb.ah
 
 bb.ah:                                            ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit355.thread
-  %30 = load <2 x float>, ptr %5, align 8, !tbaa !106
-  %31 = fadd <2 x float> %30, <float 1.000000e+00, float -0.000000e+00>
+  %36 = load float, ptr %5, align 8, !tbaa !176
+  %37 = fadd nsz float %36, 1.000000e+00
+  %38 = load float, ptr %i.au, align 4, !tbaa !177
   %i.ne = load float, ptr %i.av, align 8, !tbaa !175
-  call fastcc void @_ZN7treegenL20tree_trunk_placementER8MMVManipN4core8vector3dIfEERKNS_7TreeDefE(ptr noundef nonnull align 8 dereferenceable(88) %0, <2 x float> %31, float %i.ne, ptr noundef nonnull align 8 dereferenceable(321) %2)
-  %32 = load <2 x float>, ptr %5, align 8, !tbaa !106
-  %33 = fadd <2 x float> %32, <float -1.000000e+00, float -0.000000e+00>
+  %.sroa.0652.0.vec.insert = insertelement <2 x float> poison, float %37, i64 0
+  %.sroa.0652.4.vec.insert = insertelement <2 x float> %.sroa.0652.0.vec.insert, float %38, i64 1
+  call fastcc void @_ZN7treegenL20tree_trunk_placementER8MMVManipN4core8vector3dIfEERKNS_7TreeDefE(ptr noundef nonnull align 8 dereferenceable(88) %0, <2 x float> %.sroa.0652.4.vec.insert, float %i.ne, ptr noundef nonnull align 8 dereferenceable(321) %2)
+  %39 = load float, ptr %5, align 8, !tbaa !176
+  %40 = fadd nsz float %39, -1.000000e+00
+  %41 = load float, ptr %i.au, align 4, !tbaa !177
   %i.nf = load float, ptr %i.av, align 8, !tbaa !175
-  call fastcc void @_ZN7treegenL20tree_trunk_placementER8MMVManipN4core8vector3dIfEERKNS_7TreeDefE(ptr noundef nonnull align 8 dereferenceable(88) %0, <2 x float> %33, float %i.nf, ptr noundef nonnull align 8 dereferenceable(321) %2)
+  %.sroa.0649.0.vec.insert = insertelement <2 x float> poison, float %40, i64 0
+  %.sroa.0649.4.vec.insert = insertelement <2 x float> %.sroa.0649.0.vec.insert, float %41, i64 1
+  call fastcc void @_ZN7treegenL20tree_trunk_placementER8MMVManipN4core8vector3dIfEERKNS_7TreeDefE(ptr noundef nonnull align 8 dereferenceable(88) %0, <2 x float> %.sroa.0649.4.vec.insert, float %i.nf, ptr noundef nonnull align 8 dereferenceable(321) %2)
   %i.ng = load <2 x float>, ptr %5, align 8, !tbaa !106
   %i.nh = load float, ptr %i.av, align 8, !tbaa !175
   %i.ni = fadd nsz float %i.nh, 1.000000e+00
@@ -953,10 +969,13 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   br i1 %i.pl, label %.thread1490, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit363.thread
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit363.thread: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit365.thread, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit363
-  %34 = load <2 x float>, ptr %5, align 8, !tbaa !106
-  %35 = fadd <2 x float> %34, <float 1.000000e+00, float -0.000000e+00>
+  %42 = load float, ptr %5, align 8, !tbaa !176
+  %43 = fadd nsz float %42, 1.000000e+00
+  %44 = load float, ptr %i.au, align 4, !tbaa !177
   %i.pm = load float, ptr %i.av, align 8, !tbaa !175
-  call fastcc void @_ZN7treegenL20tree_trunk_placementER8MMVManipN4core8vector3dIfEERKNS_7TreeDefE(ptr noundef nonnull align 8 dereferenceable(88) %0, <2 x float> %35, float %i.pm, ptr noundef nonnull align 8 dereferenceable(321) %2)
+  %.sroa.0634.0.vec.insert = insertelement <2 x float> poison, float %43, i64 0
+  %.sroa.0634.4.vec.insert = insertelement <2 x float> %.sroa.0634.0.vec.insert, float %44, i64 1
+  call fastcc void @_ZN7treegenL20tree_trunk_placementER8MMVManipN4core8vector3dIfEERKNS_7TreeDefE(ptr noundef nonnull align 8 dereferenceable(88) %0, <2 x float> %.sroa.0634.4.vec.insert, float %i.pm, ptr noundef nonnull align 8 dereferenceable(321) %2)
   %i.pn = load <2 x float>, ptr %5, align 8, !tbaa !106
   %i.po = load float, ptr %i.av, align 8, !tbaa !175
   %i.pp = fadd nsz float %i.po, 1.000000e+00
@@ -1005,14 +1024,20 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   br i1 %i.qp, label %.thread1490, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit367.thread
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit367.thread: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit369.thread, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit367
-  %36 = load <2 x float>, ptr %5, align 8, !tbaa !106
-  %37 = fadd <2 x float> %36, <float 1.000000e+00, float -0.000000e+00>
+  %45 = load float, ptr %5, align 8, !tbaa !176
+  %46 = fadd nsz float %45, 1.000000e+00
+  %47 = load float, ptr %i.au, align 4, !tbaa !177
   %i.qq = load float, ptr %i.av, align 8, !tbaa !175
-  call fastcc void @_ZN7treegenL20tree_trunk_placementER8MMVManipN4core8vector3dIfEERKNS_7TreeDefE(ptr noundef nonnull align 8 dereferenceable(88) %0, <2 x float> %37, float %i.qq, ptr noundef nonnull align 8 dereferenceable(321) %2)
-  %38 = load <2 x float>, ptr %5, align 8, !tbaa !106
-  %39 = fadd <2 x float> %38, <float -1.000000e+00, float -0.000000e+00>
+  %.sroa.0625.0.vec.insert = insertelement <2 x float> poison, float %46, i64 0
+  %.sroa.0625.4.vec.insert = insertelement <2 x float> %.sroa.0625.0.vec.insert, float %47, i64 1
+  call fastcc void @_ZN7treegenL20tree_trunk_placementER8MMVManipN4core8vector3dIfEERKNS_7TreeDefE(ptr noundef nonnull align 8 dereferenceable(88) %0, <2 x float> %.sroa.0625.4.vec.insert, float %i.qq, ptr noundef nonnull align 8 dereferenceable(321) %2)
+  %48 = load float, ptr %5, align 8, !tbaa !176
+  %49 = fadd nsz float %48, -1.000000e+00
+  %50 = load float, ptr %i.au, align 4, !tbaa !177
   %i.qr = load float, ptr %i.av, align 8, !tbaa !175
-  call fastcc void @_ZN7treegenL20tree_trunk_placementER8MMVManipN4core8vector3dIfEERKNS_7TreeDefE(ptr noundef nonnull align 8 dereferenceable(88) %0, <2 x float> %39, float %i.qr, ptr noundef nonnull align 8 dereferenceable(321) %2)
+  %.sroa.0622.0.vec.insert = insertelement <2 x float> poison, float %49, i64 0
+  %.sroa.0622.4.vec.insert = insertelement <2 x float> %.sroa.0622.0.vec.insert, float %50, i64 1
+  call fastcc void @_ZN7treegenL20tree_trunk_placementER8MMVManipN4core8vector3dIfEERKNS_7TreeDefE(ptr noundef nonnull align 8 dereferenceable(88) %0, <2 x float> %.sroa.0622.4.vec.insert, float %i.qr, ptr noundef nonnull align 8 dereferenceable(321) %2)
   %i.qs = load <2 x float>, ptr %5, align 8, !tbaa !106
   %i.qt = load float, ptr %i.av, align 8, !tbaa !175
   %i.qu = fadd nsz float %i.qt, 1.000000e+00
@@ -1415,8 +1440,8 @@ bb.cv:                                            ; preds = %bb.ad
   %i.aqc = call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.apy, <4 x float> zeroinitializer, <4 x float> %i.aqb)
   store <4 x float> %i.aqc, ptr %4, align 16, !tbaa !106
   %i.aqd = fmul nsz <4 x float> %i.km, %i.apw
-  %i.aqe = call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.apv, <4 x float> %27, <4 x float> %i.aqd)
-  %i.aqf = call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.apx, <4 x float> %i.kl, <4 x float> %i.aqe)
+  %i.aqe = call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.apv, <4 x float> %i.kl, <4 x float> %i.aqd)
+  %i.aqf = call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.apx, <4 x float> %28, <4 x float> %i.aqe)
   %i.aqg = call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.apy, <4 x float> zeroinitializer, <4 x float> %i.aqf)
   store <4 x float> %i.aqg, ptr %i.ar, align 16, !tbaa !106
   %i.aqh = fmul nsz <4 x float> %i.kt, %i.apw
@@ -1443,10 +1468,10 @@ bb.cw:                                            ; preds = %bb.ad
   store <4 x float> %i.aqw, ptr %4, align 16, !tbaa !106
   %i.aqx = fmul nsz <4 x float> %i.km, %i.aqq
   %i.aqy = call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.aqp, <4 x float> %i.kr, <4 x float> %i.aqx)
-  %i.aqz = call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.aqr, <4 x float> %26, <4 x float> %i.aqy)
+  %i.aqz = call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.aqr, <4 x float> %32, <4 x float> %i.aqy)
   %i.ara = call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.aqs, <4 x float> zeroinitializer, <4 x float> %i.aqz)
   store <4 x float> %i.ara, ptr %i.ar, align 16, !tbaa !106
-  %i.arb = fmul nsz <4 x float> %i.kl, %i.aqq
+  %i.arb = fmul nsz <4 x float> %28, %i.aqq
   %i.arc = call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.aqp, <4 x float> %i.ks, <4 x float> %i.arb)
   %i.ard = call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.aqr, <4 x float> %i.km, <4 x float> %i.arc)
   %i.are = call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.aqs, <4 x float> zeroinitializer, <4 x float> %i.ard)

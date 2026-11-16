@@ -205,10 +205,10 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %i.ad = phi <4 x float> [ %i.ac, %bb.c ], [ %i.k, %bb.b ]
+  %i.ad = phi <4 x float> [ %i.ac, %bb.c ], [ %i.k, %bb.b ] ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 328
-  %i.af = fadd nsz <4 x float> %i.ad, <float -0.000000e+00, float -0.000000e+00, float -1.000000e+01, float -1.000000e+01>
-  %3 = shufflevector <4 x float> %i.af, <4 x float> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 1, i32 2, i32 3, i32 0, i32 3>
+  %i.af = fadd nsz <4 x float> %i.ad, <float poison, float poison, float -1.000000e+01, float -1.000000e+01>
+  %3 = shufflevector <4 x float> %i.ad, <4 x float> %i.af, <8 x i32> <i32 0, i32 1, i32 6, i32 1, i32 6, i32 7, i32 0, i32 7>
   store <8 x float> %3, ptr %i.ae, align 8, !tbaa !12
   store i32 1, ptr %i.e, align 4, !tbaa !176
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #31
@@ -611,9 +611,10 @@ bb.a:
   %i.bg = fmul reassoc nsz arcp contract afn <4 x float> %i.be, %i.be
   %i.bh = fmul reassoc nsz arcp contract afn <4 x float> %i.bg, %i.be
   %i.bi = fadd reassoc nsz arcp contract afn <4 x float> %i.bd, splat (float f0xBC911AA6)
-  %i.bj = select <4 x i1> %i.bf, <4 x float> %i.bh, <4 x float> %i.bi
-  %i.bk = fmul reassoc nsz arcp contract afn <4 x float> %i.bj, <float 9.642000e-01, float 1.000000e+00, float f0x3F532CA5, float 0.000000e+00>
-  store <4 x float> %i.bk, ptr %i.b, align 16, !tbaa !12
+  %i.bj = select <4 x i1> %i.bf, <4 x float> %i.bh, <4 x float> %i.bi ; 2 uses
+  %i.bk = fmul reassoc nsz arcp contract afn <4 x float> %i.bj, <float 9.642000e-01, float poison, float f0x3F532CA5, float 0.000000e+00>
+  %4 = shufflevector <4 x float> %i.bk, <4 x float> %i.bj, <4 x i32> <i32 0, i32 5, i32 2, i32 3>
+  store <4 x float> %4, ptr %i.b, align 16, !tbaa !12
   call fastcc void @dt_XYZ_to_sRGB(ptr noundef %i.b, ptr noundef nonnull %i.a)
   %i.bl = load float, ptr %i.a, align 16, !tbaa !12
   %i.bm = fpext reassoc nsz arcp contract afn float %i.bl to double

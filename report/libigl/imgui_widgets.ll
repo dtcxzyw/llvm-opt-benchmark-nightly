@@ -205,10 +205,11 @@ bb.c:                                             ; preds = %bb.b
   %i.k = load float, ptr %i.j, align 4, !tbaa !193
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #36
   %i.l = load <2 x float>, ptr %i.i, align 8, !tbaa !141
-  %i.m = shufflevector <2 x float> %i.l, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  %i.n = insertelement <4 x float> <float -0.000000e+00, float -0.000000e+00, float 1.000000e+00, float poison>, float %i.k, i64 3
+  %i.m = shufflevector <2 x float> %i.l, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 2 uses
+  %i.n = insertelement <4 x float> <float poison, float poison, float 1.000000e+00, float poison>, float %i.k, i64 3
   %i.o = fadd <4 x float> %i.m, %i.n
-  store <4 x float> %i.o, ptr %1, align 16, !tbaa !141
+  %8 = shufflevector <4 x float> %i.m, <4 x float> %i.o, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  store <4 x float> %8, ptr %1, align 16, !tbaa !141
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #36
   store <2 x float> zeroinitializer, ptr %2, align 8, !tbaa !141
   call void @_ZN5ImGui8ItemSizeERK6ImVec2f(ptr noundef nonnull align 4 dereferenceable(8) %2, float noundef -1.000000e+00)
@@ -611,10 +612,10 @@ bb.h:                                             ; preds = %bb.d, %bb.e, %bb.f,
 ; Function Attrs: mustprogress uwtable
 define dso_local noundef zeroext i1 @_ZN5ImGui10MenuItemExEPKcS1_S1_bb(ptr noundef %0, ptr noundef %1, ptr noundef %2, i1 noundef zeroext %3, i1 noundef zeroext %4) local_unnamed_addr #0 {
 bb.a:
-  %5 = alloca %struct.ImVec2, align 8             ; 4 uses
+  %5 = alloca %struct.ImVec2, align 4             ; 5 uses
   %6 = alloca %struct.ImVec2, align 4             ; 5 uses
   %7 = alloca %struct.ImVec2, align 4             ; 5 uses
-  %i.a = load ptr, ptr @GImGui, align 8, !tbaa !22 ; 4 uses
+  %i.a = load ptr, ptr @GImGui, align 8, !tbaa !22 ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 7184
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !111  ; 16 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 144
@@ -646,27 +647,30 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 bb.e:                                             ; preds = %bb.d
   %.sroa.022.0.vec.extract = extractelement <2 x float> %i.j, i64 0
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 5548 ; 2 uses
+  %8 = load float, ptr %i.o, align 4, !tbaa !192  ; 2 uses
+  %9 = fmul float %8, 5.000000e-01
+  %10 = fptosi float %9 to i32
+  %11 = sitofp i32 %10 to float
   %i.p = load float, ptr %i.h, align 8, !tbaa !137
+  %12 = fadd float %i.p, %11                      ; 2 uses
+  store float %12, ptr %i.h, align 8, !tbaa !137
   %i.q = getelementptr inbounds nuw i8, ptr %i.c, i64 328
   %i.r = load i16, ptr %i.q, align 8, !tbaa !326
   %i.s = uitofp i16 %i.r to float
+  %13 = fadd float %12, %i.s
   %i.t = load float, ptr %.sroa_idx, align 4, !tbaa !138
   %i.u = getelementptr inbounds nuw i8, ptr %i.c, i64 272
   %i.v = load float, ptr %i.u, align 8, !tbaa !139
   %i.w = fadd float %i.t, %i.v
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #36
-  %8 = load <2 x float>, ptr %i.o, align 4, !tbaa !141 ; 2 uses
-  %9 = extractelement <2 x float> %8, i64 0
-  %i.x = fmul float %9, 5.000000e-01
-  %10 = fptosi float %i.x to i32
-  %11 = sitofp i32 %10 to float
-  %12 = fadd float %i.p, %11                      ; 2 uses
-  store float %12, ptr %i.h, align 8, !tbaa !137
-  %13 = fadd float %12, %i.s
   %.sroa.096.0.vec.insert = insertelement <2 x float> poison, float %13, i64 0
   %.sroa.096.4.vec.insert = insertelement <2 x float> %.sroa.096.0.vec.insert, float %i.w, i64 1
-  %14 = fmul <2 x float> %8, <float 2.000000e+00, float 1.000000e+00>
-  store <2 x float> %14, ptr %5, align 8, !tbaa !141
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #36
+  %i.x = fmul float %8, 2.000000e+00
+  %14 = getelementptr inbounds nuw i8, ptr %i.a, i64 5552
+  %15 = load float, ptr %14, align 8, !tbaa !214
+  store float %i.x, ptr %5, align 4, !tbaa !144
+  %16 = getelementptr inbounds nuw i8, ptr %5, i64 4
+  store float %15, ptr %16, align 4, !tbaa !147
   call void @_ZN5ImGui12PushStyleVarEiRK6ImVec2(i32 noundef 14, ptr noundef nonnull align 4 dereferenceable(8) %5)
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #36
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #36
