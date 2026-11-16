@@ -205,9 +205,9 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.d
-  %i.n = phi ptr [ %.promoted, %.lr.ph ], [ %i.bk, %bb.d ] ; 9 uses
+  %i.n = phi ptr [ %.promoted, %.lr.ph ], [ %i.bk, %bb.d ] ; 8 uses
   %.in = phi i32 [ %1, %.lr.ph ], [ %i.o, %bb.d ]
-  %.062 = phi i32 [ %i.f, %.lr.ph ], [ %2, %bb.d ] ; 3 uses
+  %.062 = phi i32 [ %i.f, %.lr.ph ], [ %i.am, %bb.d ] ; 2 uses
   %.05361 = phi ptr [ %i.c, %.lr.ph ], [ %i.br, %bb.d ] ; 3 uses
   %i.o = add nsw i32 %.in, -1                     ; 2 uses
   %i.p = load i32, ptr %.05361, align 4, !tbaa !59 ; 3 uses
@@ -235,32 +235,28 @@ bb.b:                                             ; preds = %.lr.ph, %bb.d
   %i.aj = add i64 %i.ae, %i.ai
   %i.ak = trunc i64 %i.aj to i32
   %i.al = ashr i32 %i.ak, 10
-  %2 = add i32 %i.al, %i.p                        ; 2 uses
-  %.lobit.i = lshr i32 %.062, 31
-  %3 = icmp sgt i32 %.062, 0
-  %.neg.i = sext i1 %3 to i32
-  %i.am = add nsw i32 %.lobit.i, %.neg.i
-  %4 = sext i32 %i.am to i64                      ; 2 uses
-  %i.an = getelementptr inbounds nuw i8, ptr %i.n, i64 144
-  store i64 %4, ptr %i.an, align 8, !tbaa !81
-  %5 = trunc i64 %i.u to i32                      ; 2 uses
-  %.lobit.i56 = lshr i32 %5, 31
-  %6 = icmp sgt i32 %5, 0
-  %.neg.i57 = sext i1 %6 to i32
-  %7 = add nsw i32 %.lobit.i56, %.neg.i57
-  %8 = sext i32 %7 to i64
-  %9 = getelementptr inbounds nuw i8, ptr %i.n, i64 136 ; 2 uses
-  store i64 %8, ptr %9, align 8, !tbaa !81
+  %i.am = add i32 %i.al, %i.p                     ; 2 uses
+  %2 = trunc i64 %i.u to i32
+  %i.an = getelementptr inbounds nuw i8, ptr %i.n, i64 136 ; 2 uses
+  %3 = insertelement <2 x i32> poison, i32 %2, i64 0
+  %4 = insertelement <2 x i32> %3, i32 %.062, i64 1 ; 2 uses
+  %5 = lshr <2 x i32> %4, splat (i32 31)
+  %6 = icmp sgt <2 x i32> %4, zeroinitializer
+  %7 = sext <2 x i1> %6 to <2 x i32>
+  %8 = add nsw <2 x i32> %5, %7
+  %9 = sext <2 x i32> %8 to <2 x i64>             ; 2 uses
+  store <2 x i64> %9, ptr %i.an, align 8, !tbaa !81
   %.lobit.i58 = lshr i32 %i.p, 31
   %i.ao = icmp sgt i32 %i.p, 0
   %.neg.i59 = sext i1 %i.ao to i32
   %i.ap = add nsw i32 %.lobit.i58, %.neg.i59
   %i.aq = sext i32 %i.ap to i64                   ; 4 uses
-  %i.ar = mul nsw i64 %i.aq, %4
+  %10 = extractelement <2 x i64> %9, i64 1
+  %i.ar = mul nsw i64 %10, %i.aq
   %i.as = load i64, ptr %i.g, align 8, !tbaa !81
   %i.at = add i64 %i.as, %i.ar
   store i64 %i.at, ptr %i.g, align 8, !tbaa !81
-  %i.au = load i64, ptr %9, align 8, !tbaa !81
+  %i.au = load i64, ptr %i.an, align 8, !tbaa !81
   %i.av = mul nsw i64 %i.au, %i.aq
   %i.aw = load i64, ptr %i.h, align 8, !tbaa !81
   %i.ax = add i64 %i.aw, %i.av
@@ -289,7 +285,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c, %bb.b
   %i.bk = phi ptr [ %i.l, %bb.c ], [ %i.bi, %bb.b ]
-  %i.bl = sext i32 %2 to i64                      ; 2 uses
+  %i.bl = sext i32 %i.am to i64                   ; 2 uses
   %i.bm = load i64, ptr %i.m, align 8, !tbaa !81
   %i.bn = mul nsw i64 %i.bm, 31
   %i.bo = ashr i64 %i.bn, 5

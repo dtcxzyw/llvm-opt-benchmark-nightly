@@ -205,9 +205,8 @@ middle.block648:                                  ; preds = %vector.body640
   %i.aqy = insertelement <2 x i16> poison, i16 %.lhs.trunc473, i64 0
   %i.aqz = insertelement <2 x i16> %i.aqy, i16 %.lhs.trunc471, i64 1
   %i.ara = urem <2 x i16> %i.aqz, splat (i16 10)
-  %5 = trunc nuw nsw <2 x i16> %i.ara to <2 x i8>
-  %6 = or disjoint <2 x i8> %5, splat (i8 48)
-  %i.arb = zext nneg <2 x i8> %6 to <2 x i32>
+  %5 = or disjoint <2 x i16> %i.ara, splat (i16 48)
+  %i.arb = zext nneg <2 x i16> %5 to <2 x i32>
   store <2 x i32> %i.arb, ptr %i.aqv, align 4, !tbaa !26
   %i.arc = udiv i32 %i.aqg, 100000000
   %.lhs.trunc475 = trunc nuw nsw i32 %i.arc to i8
