@@ -202,9 +202,9 @@ declare void @CacheInvalidateRelSync(i32 noundef) local_unnamed_addr #2
 define dso_local { i64, i32 } @CreatePublication(ptr noundef %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca [11 x i8], align 1                ; 4 uses
-  %i.b = alloca [11 x i64], align 16              ; 9 uses
+  %i.b = alloca [11 x i64], align 16              ; 14 uses
   %i.c = alloca i8, align 1                       ; 4 uses
-  %2 = alloca %struct.PublicationActions, align 4 ; 4 uses
+  %2 = alloca %struct.PublicationActions, align 1 ; 7 uses
   %i.d = alloca i8, align 1                       ; 4 uses
   %i.e = alloca i8, align 1                       ; 4 uses
   %i.f = alloca i8, align 1                       ; 4 uses
@@ -292,7 +292,7 @@ bb.i:                                             ; preds = %bb.g
   %i.ap = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.aq = load ptr, ptr %i.ap, align 8
   call fastcc void @parse_publication_options(ptr noundef %0, ptr noundef %i.aq, ptr noundef %i.c, ptr noundef %2, ptr noundef %i.d, ptr noundef %i.e, ptr noundef %i.f, ptr noundef %i.g)
-  %i.ar = getelementptr inbounds nuw i8, ptr %1, i64 33 ; 2 uses
+  %i.ar = getelementptr inbounds nuw i8, ptr %1, i64 33 ; 3 uses
   %i.as = load i8, ptr %i.ar, align 1, !range !4, !noundef !5
   %i.at = trunc nuw i8 %i.as to i1
   br i1 %i.at, label %bb.j, label %bb.m
@@ -323,14 +323,33 @@ bb.m:                                             ; preds = %bb.k, %bb.l, %bb.j,
   %i.be = zext i32 %i.bd to i64                   ; 2 uses
   store i64 %i.be, ptr %i.b, align 16
   %i.bf = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
+  %3 = load i8, ptr %i.bf, align 8, !range !4, !noundef !5
+  %4 = zext nneg i8 %3 to i64
   %i.bg = getelementptr inbounds nuw i8, ptr %i.b, i64 24
-  %3 = load <2 x i8>, ptr %i.bf, align 8
-  %4 = load <4 x i8>, ptr %2, align 4
-  %5 = shufflevector <2 x i8> %3, <2 x i8> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %6 = shufflevector <4 x i8> %5, <4 x i8> %4, <6 x i32> <i32 0, i32 1, i32 4, i32 5, i32 6, i32 7>
-  %.mask = and <6 x i8> %6, splat (i8 1)
-  %7 = zext nneg <6 x i8> %.mask to <6 x i64>
-  store <6 x i64> %7, ptr %i.bg, align 8
+  store i64 %4, ptr %i.bg, align 8
+  %5 = load i8, ptr %i.ar, align 1, !range !4, !noundef !5
+  %6 = zext nneg i8 %5 to i64
+  %7 = getelementptr inbounds nuw i8, ptr %i.b, i64 32
+  store i64 %6, ptr %7, align 16
+  %8 = load i8, ptr %2, align 1, !range !4, !noundef !5
+  %9 = zext nneg i8 %8 to i64
+  %10 = getelementptr inbounds nuw i8, ptr %i.b, i64 40
+  store i64 %9, ptr %10, align 8
+  %11 = getelementptr inbounds nuw i8, ptr %2, i64 1
+  %12 = load i8, ptr %11, align 1, !range !4, !noundef !5
+  %13 = zext nneg i8 %12 to i64
+  %14 = getelementptr inbounds nuw i8, ptr %i.b, i64 48
+  store i64 %13, ptr %14, align 16
+  %15 = getelementptr inbounds nuw i8, ptr %2, i64 2
+  %16 = load i8, ptr %15, align 1, !range !4, !noundef !5
+  %17 = zext nneg i8 %16 to i64
+  %18 = getelementptr inbounds nuw i8, ptr %i.b, i64 56
+  store i64 %17, ptr %18, align 8
+  %19 = getelementptr inbounds nuw i8, ptr %2, i64 3
+  %20 = load i8, ptr %19, align 1, !range !4, !noundef !5
+  %21 = zext nneg i8 %20 to i64
+  %22 = getelementptr inbounds nuw i8, ptr %i.b, i64 64
+  store i64 %21, ptr %22, align 16
   %i.bh = load i8, ptr %i.e, align 1, !range !4, !noundef !5 ; 2 uses
   %i.bi = trunc nuw i8 %i.bh to i1                ; 2 uses
   %i.bj = zext nneg i8 %i.bh to i64
@@ -733,9 +752,9 @@ bb.a:
   %i.d = alloca i8, align 1                       ; 7 uses
   %i.e = alloca [11 x i8], align 1                ; 4 uses
   %i.f = alloca [11 x i8], align 1                ; 7 uses
-  %i.g = alloca [11 x i64], align 16              ; 7 uses
+  %i.g = alloca [11 x i64], align 16              ; 10 uses
   %i.h = alloca i8, align 1                       ; 5 uses
-  %4 = alloca %struct.PublicationActions, align 4 ; 4 uses
+  %4 = alloca %struct.PublicationActions, align 1 ; 7 uses
   %i.i = alloca i8, align 1                       ; 4 uses
   %i.j = alloca i8, align 1                       ; 5 uses
   %i.k = alloca i8, align 1                       ; 5 uses
@@ -927,12 +946,26 @@ bb.q:                                             ; preds = %.sink.split.i, %.lr
   br i1 %i.cj, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %.critedge.i
+  %5 = load i8, ptr %4, align 1, !range !4, !noundef !5
+  %6 = zext nneg i8 %5 to i64
   %i.ck = getelementptr inbounds nuw i8, ptr %i.g, i64 40
+  store i64 %6, ptr %i.ck, align 8
   %i.cl = getelementptr inbounds nuw i8, ptr %i.f, i64 5
-  %5 = load <4 x i8>, ptr %4, align 4
-  %.mask = and <4 x i8> %5, splat (i8 1)
-  %6 = zext nneg <4 x i8> %.mask to <4 x i64>
-  store <4 x i64> %6, ptr %i.ck, align 8
+  %7 = getelementptr inbounds nuw i8, ptr %4, i64 1
+  %8 = load i8, ptr %7, align 1, !range !4, !noundef !5
+  %9 = zext nneg i8 %8 to i64
+  %10 = getelementptr inbounds nuw i8, ptr %i.g, i64 48
+  store i64 %9, ptr %10, align 16
+  %11 = getelementptr inbounds nuw i8, ptr %4, i64 2
+  %12 = load i8, ptr %11, align 1, !range !4, !noundef !5
+  %13 = zext nneg i8 %12 to i64
+  %14 = getelementptr inbounds nuw i8, ptr %i.g, i64 56
+  store i64 %13, ptr %14, align 8
+  %15 = getelementptr inbounds nuw i8, ptr %4, i64 3
+  %16 = load i8, ptr %15, align 1, !range !4, !noundef !5
+  %17 = zext nneg i8 %16 to i64
+  %18 = getelementptr inbounds nuw i8, ptr %i.g, i64 64
+  store i64 %17, ptr %18, align 16
   store <4 x i8> splat (i8 1), ptr %i.cl, align 1
   br label %bb.s
 
