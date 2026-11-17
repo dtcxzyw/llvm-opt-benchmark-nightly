@@ -204,12 +204,12 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = zext i8 %9 to i32                        ; 4 uses
+  %11 = zext i8 %7 to i32
   %i.d = mul nuw nsw i32 %i.c, %i.b
   %.lhs.trunc = trunc nuw i32 %i.d to i16
   %i.e = udiv i16 %.lhs.trunc, 255
-  %.zext = zext nneg i16 %i.e to i32
-  %i.f = zext i8 %7 to i32
-  %i.g = mul nuw nsw i32 %i.c, %i.f
+  %i.f = zext nneg i16 %i.e to i32
+  %i.g = mul nuw nsw i32 %i.c, %11
   %.lhs.trunc1726 = trunc nuw i32 %i.g to i16
   %i.h = udiv i16 %.lhs.trunc1726, 255
   %.zext1727 = zext nneg i16 %i.h to i32
@@ -230,7 +230,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %.01346 = phi i32 [ %i.c, %bb.b ], [ %i.n, %bb.c ]
   %.01345 = phi i32 [ %.zext1729, %bb.b ], [ %i.m, %bb.c ] ; 29 uses
   %.01344 = phi i32 [ %.zext1727, %bb.b ], [ %i.l, %bb.c ] ; 29 uses
-  %.0 = phi i32 [ %.zext, %bb.b ], [ %i.b, %bb.c ] ; 29 uses
+  %.0 = phi i32 [ %i.f, %bb.b ], [ %i.b, %bb.c ]  ; 29 uses
   %i.o = xor i32 %.01346, 255                     ; 39 uses
   %i.p = icmp eq i32 %2, %4
   br i1 %i.p, label %bb.e, label %bb.ad

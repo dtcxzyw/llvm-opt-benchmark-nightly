@@ -205,8 +205,8 @@ bb.x:                                             ; preds = %bb.w
   %i.fa = getelementptr inbounds nuw i8, ptr %i.eq, i64 %i.en ; 3 uses
   %i.fb = load ptr, ptr %i.aa, align 8            ; 2 uses
   %i.fc = icmp ugt ptr %i.fa, %i.fb
-  %or.cond35.i = select i1 %i.ev, i1 true, i1 %i.fc, !prof !125
-  br i1 %or.cond35.i, label %_ZN13duckdb_snappy21SnappyScatteredWriterINS_19SnappySinkAllocatorEE14AppendFromSelfEmmPPc.exit, label %bb.y, !prof !125
+  %or.cond35.i = select i1 %i.ev, i1 true, i1 %i.fc, !prof !32
+  br i1 %or.cond35.i, label %_ZN13duckdb_snappy21SnappyScatteredWriterINS_19SnappySinkAllocatorEE14AppendFromSelfEmmPPc.exit, label %bb.y, !prof !32
 
 bb.y:                                             ; preds = %bb.x
   %i.fd = sub nsw i64 0, %i.ep
@@ -305,8 +305,8 @@ bb.c:                                             ; preds = %bb.b
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.o = load ptr, ptr %i.n, align 8              ; 2 uses
   %i.p = icmp ugt ptr %i.m, %i.o
-  %or.cond35 = select i1 %i.g, i1 true, i1 %i.p, !prof !125
-  br i1 %or.cond35, label %.critedge, label %bb.d, !prof !125
+  %or.cond35 = select i1 %i.g, i1 true, i1 %i.p, !prof !32
+  br i1 %or.cond35, label %.critedge, label %bb.d, !prof !32
 
 .critedge:                                        ; preds = %bb.c
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
