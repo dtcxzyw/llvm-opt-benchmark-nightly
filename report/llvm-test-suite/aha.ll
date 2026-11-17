@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
   %i.d = add nsw i32 %.0, 1                       ; 2 uses
   %i.e = load i32, ptr @numi, align 4, !tbaa !7
   %i.f = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.39, i32 noundef %i.e) ; 0 uses
-  tail call void @print_pgm()
+  tail call void (i32, ...) @print_pgm(i32 noundef 3)
   %i.g = icmp eq i32 %i.d, 5
   br i1 %i.g, label %increment.exit.thread, label %bb.d
 
