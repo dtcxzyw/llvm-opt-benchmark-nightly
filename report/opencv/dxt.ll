@@ -205,32 +205,26 @@ bb.a:
   %i.j = load i32, ptr %i.i, align 8, !tbaa !79   ; 2 uses
   %i.k = mul nsw i32 %.0, %i.j                    ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
-  %i.m = load i8, ptr %i.l, align 8, !tbaa !62, !range !44, !noundef !45
-  %i.n = trunc nuw i8 %i.m to i1
-  br i1 %i.n, label %7, label %14
-
-7:                                                ; preds = %bb.a
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 52
-  %9 = load i32, ptr %8, align 4, !tbaa !77
-  %10 = icmp eq i32 %9, 1
-  %11 = trunc i32 %.0 to i1
-  %12 = icmp sgt i32 %.0, 1
-  %or.cond = and i1 %12, %11
-  %or.cond55 = select i1 %10, i1 %or.cond, i1 false
-  %13 = sext i32 %i.j to i64
-  %spec.select = select i1 %or.cond55, i64 %13, i64 0
-  br label %14
-
-14:                                               ; preds = %7, %bb.a
-  %.046 = phi i64 [ %spec.select, %7 ], [ 0, %bb.a ]
+  %7 = load i8, ptr %i.l, align 8, !tbaa !62, !range !44, !noundef !45
+  %8 = trunc nuw i8 %7 to i1
+  %9 = getelementptr inbounds nuw i8, ptr %0, i64 52 ; 2 uses
+  %10 = load i32, ptr %9, align 4
+  %11 = icmp eq i32 %10, 1
+  %or.cond56 = select i1 %8, i1 %11, i1 false
+  %12 = trunc i32 %.0 to i1
+  %13 = icmp sgt i32 %.0, 1
+  %or.cond = and i1 %13, %12
+  %or.cond58 = select i1 %or.cond56, i1 %or.cond, i1 false
+  %14 = sext i32 %i.j to i64
+  %.046 = select i1 %or.cond58, i64 %14, i64 0
   %15 = getelementptr inbounds nuw i8, ptr %0, i64 42
-  %16 = load i8, ptr %15, align 2, !tbaa !64, !range !44, !noundef !45
-  %17 = trunc nuw i8 %16 to i1
-  %.not = xor i1 %17, true
+  %i.m = load i8, ptr %15, align 2, !tbaa !64, !range !44, !noundef !45
+  %i.n = trunc nuw i8 %i.m to i1
+  %.not = xor i1 %i.n, true
   %or.cond3 = and i1 %5, %.not
   br i1 %or.cond3, label %bb.b, label %bb.c
 
-bb.b:                                             ; preds = %14
+bb.b:                                             ; preds = %bb.a
   %i.o = and i32 %.0, 1
   %.not50 = icmp eq i32 %i.o, 0
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 60
@@ -239,8 +233,8 @@ bb.b:                                             ; preds = %14
   %i.r = add nsw i32 %i.q, %i.k
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.b, %14
-  %.045 = phi i32 [ %i.r, %bb.b ], [ %i.k, %14 ]  ; 2 uses
+bb.c:                                             ; preds = %bb.b, %bb.a
+  %.045 = phi i32 [ %i.r, %bb.b ], [ %i.k, %bb.a ] ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.t = load i32, ptr %i.s, align 8, !tbaa !65   ; 2 uses
   %i.u = icmp slt i32 %i.t, 1
@@ -362,8 +356,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   br i1 %6, label %bb.i, label %_ZN2cvL23complementComplexOutputEiPhmiii.exit
 
 bb.i:                                             ; preds = %._crit_edge
-  %18 = getelementptr inbounds nuw i8, ptr %0, i64 52
-  %i.bl = load i32, ptr %18, align 4, !tbaa !77
+  %i.bl = load i32, ptr %9, align 4, !tbaa !77
   %i.bm = icmp eq i32 %i.bl, 2
   br i1 %i.bm, label %bb.j, label %_ZN2cvL23complementComplexOutputEiPhmiii.exit
 

@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.d, %bb.c
-  %i.bh = getelementptr inbounds nuw i8, ptr %22, i64 40 ; 14 uses
+  %i.bh = getelementptr inbounds nuw i8, ptr %22, i64 40 ; 13 uses
   %i.bi = load i8, ptr %i.bh, align 1, !tbaa !303, !range !141, !noundef !142
   %i.bj = trunc nuw i8 %i.bi to i1
   br i1 %i.bj, label %bb.i, label %_ZNK22DDBalanceRegionHandler29openBeforeForceComputationCpuE26DdAllowBalanceRegionReopen.exit
@@ -608,44 +608,40 @@ bb.dc:                                            ; preds = %bb.db, %bb.da
 bb.dd:                                            ; preds = %bb.dc
   %spec.select.i = zext i1 %i.x to i32
   %i.yh = select i1 %i.x, i32 2, i32 1
-  %.1.i = select i1 %i.xy, i32 %i.yh, i32 %spec.select.i ; 2 uses
+  %.1.i = select i1 %i.xy, i32 %i.yh, i32 %spec.select.i
   %i.yi = getelementptr inbounds nuw i8, ptr %22, i64 46
   %i.yj = load i8, ptr %i.yi, align 1, !tbaa !216, !range !141, !noundef !142
   %i.yk = trunc nuw i8 %i.yj to i1
-  br i1 %i.yk, label %82, label %bb.de
-
-82:                                               ; preds = %bb.dd
-  %83 = getelementptr inbounds nuw i8, ptr %22, i64 49
-  %84 = load i8, ptr %83, align 1, !tbaa !373, !range !141, !noundef !142
-  %85 = zext nneg i8 %84 to i32
-  %spec.select22.i = add nuw nsw i32 %.1.i, %85
+  %82 = getelementptr inbounds nuw i8, ptr %22, i64 49
+  %83 = load i8, ptr %82, align 1, !range !141
+  %narrow.i = select i1 %i.yk, i8 %83, i8 0
+  %or.cond24.i = zext nneg i8 %narrow.i to i32
+  %spec.select30.i = add nuw nsw i32 %.1.i, %or.cond24.i
   br label %bb.de
 
-bb.de:                                            ; preds = %82, %bb.dd, %bb.dc
-  %.2.i = phi i32 [ 0, %bb.dc ], [ %spec.select22.i, %82 ], [ %.1.i, %bb.dd ]
+bb.de:                                            ; preds = %bb.dd, %bb.dc
+  %.2.i = phi i32 [ %spec.select30.i, %bb.dd ], [ 0, %bb.dc ]
   %i.yl = getelementptr inbounds nuw i8, ptr %22, i64 52
   %i.ym = load i8, ptr %i.yl, align 1, !tbaa !382, !range !141, !noundef !142
   %i.yn = shl nuw nsw i8 %i.ym, 1
   %i.yo = zext nneg i8 %i.yn to i32
   %spec.select23.i = add nuw nsw i32 %.2.i, %i.yo
   %i.yp = load i8, ptr %i.vs, align 1, !tbaa !375, !range !141, !noundef !142
-  %86 = trunc nuw i8 %i.yp to i1
   %i.yq = trunc nuw i8 %.val826 to i1             ; 2 uses
-  %narrow.i = select i1 %86, i8 %.val826, i8 0
-  %spec.select24.i = zext i8 %narrow.i to i32
+  %84 = and i8 %i.yp, %.val826
+  %spec.select24.i = zext nneg i8 %84 to i32
   %.4.i = add nuw nsw i32 %spec.select23.i, %spec.select24.i ; 3 uses
   %i.yr = trunc nuw i8 %.val828 to i1
-  %or.cond1.i.a = select i1 %i.yq, i1 %i.yr, i1 false
-  br i1 %or.cond1.i.a, label %87, label %_ZN3gmxL46getExpectedLocalXReadyOnDeviceConsumptionCountERKNS_18SimulationWorkloadERKNS_12StepWorkloadERKNS_22DomainLifetimeWorkloadEb.exit
+  %or.cond1.i = select i1 %i.yq, i1 %i.yr, i1 false
+  %or.cond1.not.i = xor i1 %or.cond1.i, true
+  %85 = load i8, ptr %i.bh, align 1, !range !141
+  %86 = trunc nuw i8 %85 to i1                    ; 2 uses
+  %87 = trunc nuw i8 %.val827 to i1
+  %88 = select i1 %or.cond1.not.i, i1 true, i1 %86
+  %or.cond1.i.a = select i1 %88, i1 true, i1 %87
+  br i1 %or.cond1.i.a, label %_ZN3gmxL46getExpectedLocalXReadyOnDeviceConsumptionCountERKNS_18SimulationWorkloadERKNS_12StepWorkloadERKNS_22DomainLifetimeWorkloadEb.exit.thread, label %_ZN3gmxL46getExpectedLocalXReadyOnDeviceConsumptionCountERKNS_18SimulationWorkloadERKNS_12StepWorkloadERKNS_22DomainLifetimeWorkloadEb.exit.thread.thread
 
-87:                                               ; preds = %bb.de
-  %88 = load i8, ptr %i.bh, align 1, !tbaa !303, !range !141, !noundef !142 ; 2 uses
-  %89 = trunc nuw i8 %88 to i1
-  %90 = trunc nuw i8 %.val827 to i1
-  %or.cond2.i = select i1 %89, i1 true, i1 %90
-  br i1 %or.cond2.i, label %_ZN3gmxL46getExpectedLocalXReadyOnDeviceConsumptionCountERKNS_18SimulationWorkloadERKNS_12StepWorkloadERKNS_22DomainLifetimeWorkloadEb.exit.thread, label %_ZN3gmxL46getExpectedLocalXReadyOnDeviceConsumptionCountERKNS_18SimulationWorkloadERKNS_12StepWorkloadERKNS_22DomainLifetimeWorkloadEb.exit.thread.thread
-
-_ZN3gmxL46getExpectedLocalXReadyOnDeviceConsumptionCountERKNS_18SimulationWorkloadERKNS_12StepWorkloadERKNS_22DomainLifetimeWorkloadEb.exit.thread.thread: ; preds = %87
+_ZN3gmxL46getExpectedLocalXReadyOnDeviceConsumptionCountERKNS_18SimulationWorkloadERKNS_12StepWorkloadERKNS_22DomainLifetimeWorkloadEb.exit.thread.thread: ; preds = %bb.de
   %i.ys = load i8, ptr %i.z, align 1, !tbaa !304, !range !141, !noundef !142
   %i.yt = trunc nuw i8 %i.ys to i1
   %.not.i844 = xor i1 %i.yt, true
@@ -654,19 +650,12 @@ _ZN3gmxL46getExpectedLocalXReadyOnDeviceConsumptionCountERKNS_18SimulationWorklo
   %spec.select25.i = add nuw nsw i32 %.4.i, %i.yu
   br label %bb.dg
 
-_ZN3gmxL46getExpectedLocalXReadyOnDeviceConsumptionCountERKNS_18SimulationWorkloadERKNS_12StepWorkloadERKNS_22DomainLifetimeWorkloadEb.exit: ; preds = %bb.de
-  br i1 %i.yq, label %_ZN3gmxL46getExpectedLocalXReadyOnDeviceConsumptionCountERKNS_18SimulationWorkloadERKNS_12StepWorkloadERKNS_22DomainLifetimeWorkloadEb.exit._ZN3gmxL46getExpectedLocalXReadyOnDeviceConsumptionCountERKNS_18SimulationWorkloadERKNS_12StepWorkloadERKNS_22DomainLifetimeWorkloadEb.exit.thread_crit_edge, label %bb.df
+_ZN3gmxL46getExpectedLocalXReadyOnDeviceConsumptionCountERKNS_18SimulationWorkloadERKNS_12StepWorkloadERKNS_22DomainLifetimeWorkloadEb.exit.thread: ; preds = %bb.de
+  %.not1435 = xor i1 %i.yq, true
+  %brmerge = select i1 %.not1435, i1 true, i1 %86
+  br i1 %brmerge, label %bb.df, label %bb.dg
 
-_ZN3gmxL46getExpectedLocalXReadyOnDeviceConsumptionCountERKNS_18SimulationWorkloadERKNS_12StepWorkloadERKNS_22DomainLifetimeWorkloadEb.exit._ZN3gmxL46getExpectedLocalXReadyOnDeviceConsumptionCountERKNS_18SimulationWorkloadERKNS_12StepWorkloadERKNS_22DomainLifetimeWorkloadEb.exit.thread_crit_edge: ; preds = %_ZN3gmxL46getExpectedLocalXReadyOnDeviceConsumptionCountERKNS_18SimulationWorkloadERKNS_12StepWorkloadERKNS_22DomainLifetimeWorkloadEb.exit
-  %.pre = load i8, ptr %i.bh, align 1, !tbaa !303, !range !141
-  br label %_ZN3gmxL46getExpectedLocalXReadyOnDeviceConsumptionCountERKNS_18SimulationWorkloadERKNS_12StepWorkloadERKNS_22DomainLifetimeWorkloadEb.exit.thread
-
-_ZN3gmxL46getExpectedLocalXReadyOnDeviceConsumptionCountERKNS_18SimulationWorkloadERKNS_12StepWorkloadERKNS_22DomainLifetimeWorkloadEb.exit.thread: ; preds = %_ZN3gmxL46getExpectedLocalXReadyOnDeviceConsumptionCountERKNS_18SimulationWorkloadERKNS_12StepWorkloadERKNS_22DomainLifetimeWorkloadEb.exit._ZN3gmxL46getExpectedLocalXReadyOnDeviceConsumptionCountERKNS_18SimulationWorkloadERKNS_12StepWorkloadERKNS_22DomainLifetimeWorkloadEb.exit.thread_crit_edge, %87
-  %91 = phi i8 [ %.pre, %_ZN3gmxL46getExpectedLocalXReadyOnDeviceConsumptionCountERKNS_18SimulationWorkloadERKNS_12StepWorkloadERKNS_22DomainLifetimeWorkloadEb.exit._ZN3gmxL46getExpectedLocalXReadyOnDeviceConsumptionCountERKNS_18SimulationWorkloadERKNS_12StepWorkloadERKNS_22DomainLifetimeWorkloadEb.exit.thread_crit_edge ], [ %88, %87 ]
-  %92 = trunc nuw i8 %91 to i1
-  br i1 %92, label %bb.df, label %bb.dg
-
-bb.df:                                            ; preds = %_ZN3gmxL46getExpectedLocalXReadyOnDeviceConsumptionCountERKNS_18SimulationWorkloadERKNS_12StepWorkloadERKNS_22DomainLifetimeWorkloadEb.exit.thread, %_ZN3gmxL46getExpectedLocalXReadyOnDeviceConsumptionCountERKNS_18SimulationWorkloadERKNS_12StepWorkloadERKNS_22DomainLifetimeWorkloadEb.exit
+bb.df:                                            ; preds = %_ZN3gmxL46getExpectedLocalXReadyOnDeviceConsumptionCountERKNS_18SimulationWorkloadERKNS_12StepWorkloadERKNS_22DomainLifetimeWorkloadEb.exit.thread
   %i.yv = load ptr, ptr %13, align 8, !tbaa !18   ; 3 uses
   %i.yw = getelementptr inbounds nuw i8, ptr %13, i64 8
   %i.yx = load ptr, ptr %i.yw, align 8, !tbaa !20
@@ -677,7 +666,7 @@ bb.df:                                            ; preds = %_ZN3gmxL46getExpect
   call void @_ZN3gmx22StatePropagatorDataGpu20copyCoordinatesToGpuENS_8ArrayRefIKNS_11BasicVectorIfEEEENS_12AtomLocalityEi(ptr noundef nonnull align 8 dereferenceable(8) %i.n, ptr %i.yv, ptr %i.zb, i32 noundef 0, i32 noundef %.4.i)
   br label %bb.dh
 
-bb.dg:                                            ; preds = %_ZN3gmxL46getExpectedLocalXReadyOnDeviceConsumptionCountERKNS_18SimulationWorkloadERKNS_12StepWorkloadERKNS_22DomainLifetimeWorkloadEb.exit.thread.thread, %_ZN3gmxL46getExpectedLocalXReadyOnDeviceConsumptionCountERKNS_18SimulationWorkloadERKNS_12StepWorkloadERKNS_22DomainLifetimeWorkloadEb.exit.thread
+bb.dg:                                            ; preds = %_ZN3gmxL46getExpectedLocalXReadyOnDeviceConsumptionCountERKNS_18SimulationWorkloadERKNS_12StepWorkloadERKNS_22DomainLifetimeWorkloadEb.exit.thread, %_ZN3gmxL46getExpectedLocalXReadyOnDeviceConsumptionCountERKNS_18SimulationWorkloadERKNS_12StepWorkloadERKNS_22DomainLifetimeWorkloadEb.exit.thread.thread
   %.5.i12371432 = phi i32 [ %spec.select25.i, %_ZN3gmxL46getExpectedLocalXReadyOnDeviceConsumptionCountERKNS_18SimulationWorkloadERKNS_12StepWorkloadERKNS_22DomainLifetimeWorkloadEb.exit.thread.thread ], [ %.4.i, %_ZN3gmxL46getExpectedLocalXReadyOnDeviceConsumptionCountERKNS_18SimulationWorkloadERKNS_12StepWorkloadERKNS_22DomainLifetimeWorkloadEb.exit.thread ]
   call void @_ZN3gmx22StatePropagatorDataGpu48setXUpdatedOnDeviceEventExpectedConsumptionCountEi(ptr noundef nonnull align 8 dereferenceable(8) %i.n, i32 noundef %.5.i12371432)
   br label %bb.dh

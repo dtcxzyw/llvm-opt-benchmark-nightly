@@ -1,0 +1,12 @@
+Delta,Added Lines,Removed Lines,Download URL
+0,1,1,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/assimp/original/clipper.bc?download=true
+0,4,4,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/duckdb/original/snappy.bc?download=true
+0,4,4,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/snappy/original/snappy.bc?download=true
+0,4,4,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/snappy.bc?download=true
+0,2389,2389,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/tev/original/dec_jpeg_data_writer.bc?download=true
+-1,16,17,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/tev/original/decoders_libraw.bc?download=true
+-1,16,17,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/darktable/original/decoders_libraw.bc?download=true
+-2,7,9,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/Filter.bc?download=true
+-7,19,26,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/opencv/original/dxt.bc?download=true
+-7,97,104,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/folly/original/TcpInfo.bc?download=true
+-11,28,39,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/gromacs/original/sim_util.bc?download=true
