@@ -205,7 +205,7 @@ read_planar_U8.exit:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal void @u8_read_planar_xyz_c(ptr noalias noundef %0, ptr noalias noundef %1, ptr noalias noundef %2, ptr noalias noundef %3, ptr noalias noundef %4, ptr noalias noundef %5) #0 {
+define internal void @u8_read_planar_xyz_c(ptr noalias noundef %0, ptr noalias noundef %1, ptr noalias noundef initializes((0, 32)) %2, ptr noalias noundef initializes((0, 32)) %3, ptr noalias noundef initializes((0, 32)) %4, ptr noalias noundef %5) #0 {
 vector.ph:
   %i.a = load i64, ptr %0, align 8, !tbaa !109    ; 2 uses
   %i.b = inttoptr i64 %i.a to ptr                 ; 2 uses
@@ -254,7 +254,7 @@ vector.ph:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal void @u8_read_planar_xyzw_c(ptr noalias noundef %0, ptr noalias noundef %1, ptr noalias noundef %2, ptr noalias noundef %3, ptr noalias noundef %4, ptr noalias noundef %5) #0 {
+define internal void @u8_read_planar_xyzw_c(ptr noalias noundef %0, ptr noalias noundef %1, ptr noalias noundef initializes((0, 32)) %2, ptr noalias noundef initializes((0, 32)) %3, ptr noalias noundef initializes((0, 32)) %4, ptr noalias noundef initializes((0, 32)) %5) #0 {
 vector.ph:
   %i.a = load i64, ptr %0, align 8, !tbaa !109    ; 2 uses
   %i.b = inttoptr i64 %i.a to ptr                 ; 2 uses
@@ -657,7 +657,7 @@ begin_hunk_1_@u8_read_packed_xy_c:read_packed_U8.exit
 }
 
 ; Function Attrs: nounwind uwtable
-define internal void @u8_read_packed_xyz_c(ptr noalias noundef %0, ptr noalias noundef %1, ptr noalias noundef %2, ptr noalias noundef %3, ptr noalias noundef %4, ptr noalias noundef %5) #0 {
+define internal void @u8_read_packed_xyz_c(ptr noalias noundef %0, ptr noalias noundef %1, ptr noalias noundef initializes((0, 32)) %2, ptr noalias noundef initializes((0, 32)) %3, ptr noalias noundef initializes((0, 32)) %4, ptr noalias noundef %5) #0 {
 vector.ph:
   %i.a = load i64, ptr %0, align 8, !tbaa !109    ; 2 uses
   %i.b = inttoptr i64 %i.a to ptr                 ; 16 uses
@@ -866,7 +866,7 @@ read_packed_U8.exit:                              ; preds = %vector.body
 }
 
 ; Function Attrs: nounwind uwtable
-define internal void @u8_read_packed_xyzw_c(ptr noalias noundef %0, ptr noalias noundef %1, ptr noalias noundef %2, ptr noalias noundef %3, ptr noalias noundef %4, ptr noalias noundef %5) #0 {
+define internal void @u8_read_packed_xyzw_c(ptr noalias noundef %0, ptr noalias noundef %1, ptr noalias noundef initializes((0, 32)) %2, ptr noalias noundef initializes((0, 32)) %3, ptr noalias noundef initializes((0, 32)) %4, ptr noalias noundef initializes((0, 32)) %5) #0 {
 vector.ph:
   %i.a = load i64, ptr %0, align 8, !tbaa !109    ; 2 uses
   %i.b = inttoptr i64 %i.a to ptr                 ; 16 uses
@@ -1186,7 +1186,7 @@ read_bit_U8.exit:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal void @u8_read_palette_xyzw_c(ptr noalias noundef %0, ptr noalias noundef %1, ptr noalias noundef %2, ptr noalias noundef %3, ptr noalias noundef %4, ptr noalias noundef %5) #0 {
+define internal void @u8_read_palette_xyzw_c(ptr noalias noundef %0, ptr noalias noundef %1, ptr noalias noundef initializes((0, 32)) %2, ptr noalias noundef initializes((0, 32)) %3, ptr noalias noundef initializes((0, 32)) %4, ptr noalias noundef initializes((0, 32)) %5) #0 {
 vector.ph:
   %i.a = load i64, ptr %0, align 8, !tbaa !109    ; 2 uses
   %i.b = inttoptr i64 %i.a to ptr                 ; 16 uses
@@ -1589,7 +1589,7 @@ vector.ph:
 declare i32 @ff_sws_setup_scalar(ptr noundef, ptr noundef) #2
 
 ; Function Attrs: nounwind uwtable
-define internal void @u8_unpack_xyz_121_c(ptr noalias noundef %0, ptr noalias noundef %1, ptr noalias noundef %2, ptr noalias noundef %3, ptr noalias noundef %4, ptr noalias noundef %5) #0 {
+define internal void @u8_unpack_xyz_121_c(ptr noalias noundef %0, ptr noalias noundef %1, ptr noalias noundef %2, ptr noalias noundef initializes((0, 32)) %3, ptr noalias noundef initializes((0, 32)) %4, ptr noalias noundef %5) #0 {
 vector.ph:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !753)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !754)
@@ -1623,7 +1623,7 @@ vector.ph:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal void @u8_unpack_xyz_233_c(ptr noalias noundef %0, ptr noalias noundef %1, ptr noalias noundef %2, ptr noalias noundef %3, ptr noalias noundef %4, ptr noalias noundef %5) #0 {
+define internal void @u8_unpack_xyz_233_c(ptr noalias noundef %0, ptr noalias noundef %1, ptr noalias noundef %2, ptr noalias noundef initializes((0, 32)) %3, ptr noalias noundef initializes((0, 32)) %4, ptr noalias noundef %5) #0 {
 vector.ph:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !762)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !763)
@@ -1655,7 +1655,7 @@ vector.ph:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal void @u8_unpack_xyz_332_c(ptr noalias noundef %0, ptr noalias noundef %1, ptr noalias noundef %2, ptr noalias noundef %3, ptr noalias noundef %4, ptr noalias noundef %5) #0 {
+define internal void @u8_unpack_xyz_332_c(ptr noalias noundef %0, ptr noalias noundef %1, ptr noalias noundef %2, ptr noalias noundef initializes((0, 32)) %3, ptr noalias noundef initializes((0, 32)) %4, ptr noalias noundef %5) #0 {
 vector.ph:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !771)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !772)
@@ -2058,7 +2058,7 @@ read_planar_U16.exit:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal void @u16_read_planar_xyz_c(ptr noalias noundef %0, ptr noalias noundef %1, ptr noalias noundef %2, ptr noalias noundef %3, ptr noalias noundef %4, ptr noalias noundef %5) #0 {
+define internal void @u16_read_planar_xyz_c(ptr noalias noundef %0, ptr noalias noundef %1, ptr noalias noundef initializes((0, 64)) %2, ptr noalias noundef initializes((0, 64)) %3, ptr noalias noundef initializes((0, 64)) %4, ptr noalias noundef %5) #0 {
 vector.ph:
   %i.a = load i64, ptr %0, align 8, !tbaa !109    ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -2131,7 +2131,7 @@ vector.ph:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal void @u16_read_planar_xyzw_c(ptr noalias noundef %0, ptr noalias noundef %1, ptr noalias noundef %2, ptr noalias noundef %3, ptr noalias noundef %4, ptr noalias noundef %5) #0 {
+define internal void @u16_read_planar_xyzw_c(ptr noalias noundef %0, ptr noalias noundef %1, ptr noalias noundef initializes((0, 64)) %2, ptr noalias noundef initializes((0, 64)) %3, ptr noalias noundef initializes((0, 64)) %4, ptr noalias noundef initializes((0, 64)) %5) #0 {
 vector.ph:
   %i.a = load i64, ptr %0, align 8, !tbaa !109    ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -2534,7 +2534,7 @@ begin_hunk_4_@u16_read_packed_xy_c:read_packed_U16.exit
 }
 
 ; Function Attrs: nounwind uwtable
-define internal void @u16_read_packed_xyz_c(ptr noalias noundef %0, ptr noalias noundef %1, ptr noalias noundef %2, ptr noalias noundef %3, ptr noalias noundef %4, ptr noalias noundef %5) #0 {
+define internal void @u16_read_packed_xyz_c(ptr noalias noundef %0, ptr noalias noundef %1, ptr noalias noundef initializes((0, 64)) %2, ptr noalias noundef initializes((0, 64)) %3, ptr noalias noundef initializes((0, 64)) %4, ptr noalias noundef %5) #0 {
 vector.ph:
   %i.a = load i64, ptr %0, align 8, !tbaa !109    ; 2 uses
   %i.b = inttoptr i64 %i.a to ptr                 ; 96 uses
@@ -2861,7 +2861,7 @@ vector.ph:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal void @u16_read_packed_xyzw_c(ptr noalias noundef %0, ptr noalias noundef %1, ptr noalias noundef %2, ptr noalias noundef %3, ptr noalias noundef %4, ptr noalias noundef %5) #0 {
+define internal void @u16_read_packed_xyzw_c(ptr noalias noundef %0, ptr noalias noundef %1, ptr noalias noundef initializes((0, 64)) %2, ptr noalias noundef initializes((0, 64)) %3, ptr noalias noundef initializes((0, 64)) %4, ptr noalias noundef initializes((0, 64)) %5) #0 {
 vector.ph:
   %i.a = load i64, ptr %0, align 8, !tbaa !109    ; 2 uses
   %i.b = inttoptr i64 %i.a to ptr                 ; 128 uses
@@ -3264,7 +3264,7 @@ vector.ph:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal void @u16_unpack_xyz_444_c(ptr noalias noundef %0, ptr noalias noundef %1, ptr noalias noundef %2, ptr noalias noundef %3, ptr noalias noundef %4, ptr noalias noundef %5) #0 {
+define internal void @u16_unpack_xyz_444_c(ptr noalias noundef %0, ptr noalias noundef %1, ptr noalias noundef %2, ptr noalias noundef initializes((0, 64)) %3, ptr noalias noundef initializes((0, 64)) %4, ptr noalias noundef %5) #0 {
 vector.ph:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1378)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1379)
@@ -3322,7 +3322,7 @@ vector.ph:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal void @u16_unpack_xyz_555_c(ptr noalias noundef %0, ptr noalias noundef %1, ptr noalias noundef %2, ptr noalias noundef %3, ptr noalias noundef %4, ptr noalias noundef %5) #0 {
+define internal void @u16_unpack_xyz_555_c(ptr noalias noundef %0, ptr noalias noundef %1, ptr noalias noundef %2, ptr noalias noundef initializes((0, 64)) %3, ptr noalias noundef initializes((0, 64)) %4, ptr noalias noundef %5) #0 {
 vector.ph:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1387)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1388)
@@ -3380,7 +3380,7 @@ vector.ph:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal void @u16_unpack_xyz_565_c(ptr noalias noundef %0, ptr noalias noundef %1, ptr noalias noundef %2, ptr noalias noundef %3, ptr noalias noundef %4, ptr noalias noundef %5) #0 {
+define internal void @u16_unpack_xyz_565_c(ptr noalias noundef %0, ptr noalias noundef %1, ptr noalias noundef %2, ptr noalias noundef initializes((0, 64)) %3, ptr noalias noundef initializes((0, 64)) %4, ptr noalias noundef %5) #0 {
 vector.ph:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1396)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1397)
@@ -3783,7 +3783,7 @@ read_planar_U32.exit:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal void @u32_read_planar_xyz_c(ptr noalias noundef %0, ptr noalias noundef %1, ptr noalias noundef %2, ptr noalias noundef %3, ptr noalias noundef %4, ptr noalias noundef %5) #0 {
+define internal void @u32_read_planar_xyz_c(ptr noalias noundef %0, ptr noalias noundef %1, ptr noalias noundef initializes((0, 128)) %2, ptr noalias noundef initializes((0, 128)) %3, ptr noalias noundef initializes((0, 128)) %4, ptr noalias noundef %5) #0 {
 vector.ph:
   %i.a = load i64, ptr %0, align 8, !tbaa !109    ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -3904,7 +3904,7 @@ vector.ph:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal void @u32_read_planar_xyzw_c(ptr noalias noundef %0, ptr noalias noundef %1, ptr noalias noundef %2, ptr noalias noundef %3, ptr noalias noundef %4, ptr noalias noundef %5) #0 {
+define internal void @u32_read_planar_xyzw_c(ptr noalias noundef %0, ptr noalias noundef %1, ptr noalias noundef initializes((0, 128)) %2, ptr noalias noundef initializes((0, 128)) %3, ptr noalias noundef initializes((0, 128)) %4, ptr noalias noundef initializes((0, 128)) %5) #0 {
 vector.ph:
   %i.a = load i64, ptr %0, align 8, !tbaa !109    ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -4307,7 +4307,7 @@ begin_hunk_7_@u32_read_packed_xy_c:read_packed_U32.exit
 }
 
 ; Function Attrs: nounwind uwtable
-define internal void @u32_read_packed_xyz_c(ptr noalias noundef %0, ptr noalias noundef %1, ptr noalias noundef %2, ptr noalias noundef %3, ptr noalias noundef %4, ptr noalias noundef %5) #0 {
+define internal void @u32_read_packed_xyz_c(ptr noalias noundef %0, ptr noalias noundef %1, ptr noalias noundef initializes((0, 128)) %2, ptr noalias noundef initializes((0, 128)) %3, ptr noalias noundef initializes((0, 128)) %4, ptr noalias noundef %5) #0 {
 vector.ph:
   %i.a = load i64, ptr %0, align 8, !tbaa !109    ; 2 uses
   %i.b = inttoptr i64 %i.a to ptr                 ; 96 uses
@@ -4658,7 +4658,7 @@ vector.ph:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal void @u32_read_packed_xyzw_c(ptr noalias noundef %0, ptr noalias noundef %1, ptr noalias noundef %2, ptr noalias noundef %3, ptr noalias noundef %4, ptr noalias noundef %5) #0 {
+define internal void @u32_read_packed_xyzw_c(ptr noalias noundef %0, ptr noalias noundef %1, ptr noalias noundef initializes((0, 128)) %2, ptr noalias noundef initializes((0, 128)) %3, ptr noalias noundef initializes((0, 128)) %4, ptr noalias noundef initializes((0, 128)) %5) #0 {
 vector.ph:
   %i.a = load i64, ptr %0, align 8, !tbaa !109    ; 2 uses
   %i.b = inttoptr i64 %i.a to ptr                 ; 4 uses
@@ -5061,7 +5061,7 @@ vector.ph:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal void @u32_unpack_xyzw_2aaa_c(ptr noalias noundef %0, ptr noalias noundef %1, ptr noalias noundef %2, ptr noalias noundef %3, ptr noalias noundef %4, ptr noalias noundef %5) #0 {
+define internal void @u32_unpack_xyzw_2aaa_c(ptr noalias noundef %0, ptr noalias noundef %1, ptr noalias noundef %2, ptr noalias noundef initializes((0, 128)) %3, ptr noalias noundef initializes((0, 128)) %4, ptr noalias noundef initializes((0, 128)) %5) #0 {
 vector.ph:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2031)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2032)
@@ -5191,7 +5191,7 @@ vector.ph:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal void @u32_unpack_xyzw_aaa2_c(ptr noalias noundef %0, ptr noalias noundef %1, ptr noalias noundef %2, ptr noalias noundef %3, ptr noalias noundef %4, ptr noalias noundef %5) #0 {
+define internal void @u32_unpack_xyzw_aaa2_c(ptr noalias noundef %0, ptr noalias noundef %1, ptr noalias noundef %2, ptr noalias noundef initializes((0, 128)) %3, ptr noalias noundef initializes((0, 128)) %4, ptr noalias noundef initializes((0, 128)) %5) #0 {
 vector.ph:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2042)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2043)

@@ -204,7 +204,7 @@ mlkem_compress_5_c.exit:                          ; preds = %bb.b
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define void @mlkem_decompress_4(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #1 {
+define void @mlkem_decompress_4(ptr nofree noundef writeonly captures(none) initializes((0, 508)) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #1 {
 vector.memcheck:
   %i.a = getelementptr i8, ptr %0, i64 512
   %i.b = getelementptr i8, ptr %1, i64 128
@@ -265,7 +265,7 @@ mlkem_decompress_4_c.exit:                        ; preds = %vector.body, %scala
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define void @mlkem_decompress_5(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #1 {
+define void @mlkem_decompress_5(ptr nofree noundef writeonly captures(none) initializes((0, 496)) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #1 {
 vector.memcheck:
   %i.a = getelementptr i8, ptr %0, i64 512
   %i.b = getelementptr i8, ptr %1, i64 160
@@ -599,7 +599,7 @@ mlkem_from_msg_c.exit:                            ; preds = %bb.b
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define void @mlkem_to_msg(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef captures(none) %1) local_unnamed_addr #1 {
+define void @mlkem_to_msg(ptr nofree noundef writeonly captures(none) initializes((0, 32)) %0, ptr nofree noundef captures(none) %1) local_unnamed_addr #1 {
 vector.memcheck:
   tail call fastcc void @mlkem_csubq_c(ptr noundef %1)
   %i.a = getelementptr i8, ptr %0, i64 32
@@ -1002,7 +1002,7 @@ middle.block499:                                  ; preds = %vector.body495, %.p
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define internal fastcc void @mlkem_pointwise_acc_mont(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, i32 noundef %3) unnamed_addr #1 {
+define internal fastcc void @mlkem_pointwise_acc_mont(ptr nofree noundef captures(none) initializes((0, 480)) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, i32 noundef %3) unnamed_addr #1 {
 bb.a:
   br label %bb.b
 
@@ -1405,7 +1405,7 @@ bb.e:                                             ; preds = %mlkem_prf.exit10.th
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define internal fastcc void @mlkem_cbd_eta2(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef nonnull readonly captures(none) %1) unnamed_addr #1 {
+define internal fastcc void @mlkem_cbd_eta2(ptr nofree noundef writeonly captures(none) initializes((0, 480)) %0, ptr nofree noundef nonnull readonly captures(none) %1) unnamed_addr #1 {
 bb.a:
   br label %bb.b
 

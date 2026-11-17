@@ -204,7 +204,7 @@ declare noundef i64 @read(i32 noundef, ptr noundef captures(none), i64 noundef) 
 declare i32 @close(i32 noundef) local_unnamed_addr #1
 
 ; Function Attrs: nofree norecurse nosync nounwind sspstrong memory(argmem: readwrite) uwtable
-define internal void @rand_mt_init(ptr noundef initializes((8, 12)) %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2) #14 !guid !192 {
+define internal void @rand_mt_init(ptr noundef initializes((8, 12), (2500, 2504)) %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2) #14 !guid !192 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 8          ; 10 uses
   store i32 19650218, ptr %i.a, align 8, !tbaa !19
@@ -321,7 +321,7 @@ init_by_array.exit:                               ; preds = %bb.h
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind sspstrong memory(argmem: readwrite) uwtable
-define internal void @rand_mt_init_int32(ptr noundef initializes((8, 12)) %0, i32 noundef %1) #14 !guid !193 {
+define internal void @rand_mt_init_int32(ptr noundef initializes((8, 12), (2500, 2504)) %0, i32 noundef %1) #14 !guid !193 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 8          ; 3 uses
   store i32 %1, ptr %i.a, align 8, !tbaa !19

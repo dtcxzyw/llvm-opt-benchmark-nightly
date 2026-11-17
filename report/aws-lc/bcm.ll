@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 }
 
 ; Function Attrs: nounwind uwtable
-define noundef range(i32 0, 2) i32 @ml_dsa_65_keypair(ptr nofree noundef captures(none) %0, ptr nofree noundef writeonly captures(none) %1, ptr noundef %2) #0 {
+define noundef range(i32 0, 2) i32 @ml_dsa_65_keypair(ptr nofree noundef captures(none) %0, ptr nofree noundef writeonly captures(none) initializes((128, 256)) %1, ptr noundef %2) #0 {
 .split6:
   tail call fastcc void @rand_bytes_impl(i32 noundef 5, ptr noundef %2, i64 noundef 32, ptr noundef nonnull @RAND_bytes.kZeroPredResistance, i32 noundef 0)
   tail call fastcc void @mldsa65_keypair_internal(ptr noundef %0, ptr noundef %1, ptr noundef %2)
@@ -213,7 +213,7 @@ define noundef range(i32 0, 2) i32 @ml_dsa_65_keypair(ptr nofree noundef capture
 }
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc void @mldsa65_keypair_internal(ptr nofree noundef captures(none) %0, ptr nofree noundef writeonly captures(none) %1, ptr nofree noundef readonly captures(none) %2) unnamed_addr #0 {
+define internal fastcc void @mldsa65_keypair_internal(ptr nofree noundef captures(none) %0, ptr nofree noundef writeonly captures(none) initializes((128, 256)) %1, ptr nofree noundef readonly captures(none) %2) unnamed_addr #0 {
 bb.a:
   %3 = alloca %struct.keccak_ctx_st, align 8      ; 11 uses
   %4 = alloca %struct.keccak_ctx_st, align 8      ; 11 uses
@@ -616,7 +616,7 @@ mldsa65_pk_from_sk.exit:                          ; preds = %mld_shake256.exit.i
 }
 
 ; Function Attrs: nounwind uwtable
-define noundef range(i32 0, 2) i32 @ml_dsa_65_keypair_internal(ptr nofree noundef captures(none) %0, ptr nofree noundef writeonly captures(none) %1, ptr nofree noundef readonly captures(none) %2) #0 {
+define noundef range(i32 0, 2) i32 @ml_dsa_65_keypair_internal(ptr nofree noundef captures(none) %0, ptr nofree noundef writeonly captures(none) initializes((128, 256)) %1, ptr nofree noundef readonly captures(none) %2) #0 {
 bb.a:
   tail call fastcc void @mldsa65_keypair_internal(ptr noundef %0, ptr noundef %1, ptr noundef %2)
   ret i32 1
@@ -1019,7 +1019,7 @@ mlk_poly_compress_d4_c.exit:                      ; preds = %mlk_poly_compress_d
 declare void @mlkem_poly_compress_d4_avx2_asm(ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #1
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define internal fastcc void @mlkem_poly_tomsg(ptr nofree noundef nonnull writeonly captures(none) %0, ptr nofree noundef nonnull readonly captures(none) %1) unnamed_addr #3 {
+define internal fastcc void @mlkem_poly_tomsg(ptr nofree noundef nonnull writeonly captures(none) initializes((0, 32)) %0, ptr nofree noundef nonnull readonly captures(none) %1) unnamed_addr #3 {
 vector.memcheck:
   %i.a = getelementptr i8, ptr %0, i64 32
   %i.b = getelementptr i8, ptr %1, i64 512
