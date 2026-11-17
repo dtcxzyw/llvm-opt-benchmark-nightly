@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   store i32 %6, ptr %i.n, align 4, !tbaa !76
   %i.o = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 2 uses
   store i32 %7, ptr %i.o, align 8, !tbaa !77
-  %i.p = getelementptr inbounds nuw i8, ptr %i.c, i64 20 ; 4 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %i.c, i64 20 ; 2 uses
   store i32 0, ptr %i.p, align 4, !tbaa !271
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 112
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 120
@@ -296,10 +296,9 @@ middle.block:                                     ; preds = %vector.body
   %rdx.minmax = tail call <8 x i32> @llvm.smax.v8i32(<8 x i32> %i.aw, <8 x i32> %i.ax)
   %rdx.minmax160 = tail call <8 x i32> @llvm.smax.v8i32(<8 x i32> %rdx.minmax, <8 x i32> %i.ay)
   %rdx.minmax161 = tail call <8 x i32> @llvm.smax.v8i32(<8 x i32> %rdx.minmax160, <8 x i32> %i.az)
-  %i.bb = tail call i32 @llvm.vector.reduce.smax.v8i32(<8 x i32> %rdx.minmax161) ; 4 uses
-  store i32 %i.bb, ptr %i.p, align 4, !tbaa !271
+  %i.bb = tail call i32 @llvm.vector.reduce.smax.v8i32(<8 x i32> %rdx.minmax161) ; 3 uses
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
-  br i1 %cmp.n, label %._crit_edge.a, label %vec.epilog.iter.check
+  br i1 %cmp.n, label %._crit_edge, label %vec.epilog.iter.check
 
 vec.epilog.iter.check:                            ; preds = %middle.block
   %min.epilog.iters.check = icmp eq i64 %i.aj, 0
@@ -327,18 +326,22 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   br i1 %i.bg, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !266
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
-  %i.bh = tail call i32 @llvm.vector.reduce.smax.v4i32(<4 x i32> %i.bf) ; 3 uses
-  store i32 %i.bh, ptr %i.p, align 4, !tbaa !271
+  %i.bh = tail call i32 @llvm.vector.reduce.smax.v4i32(<4 x i32> %i.bf) ; 2 uses
   %cmp.n170 = icmp eq i64 %n.vec162, %wide.trip.count
-  br i1 %cmp.n170, label %._crit_edge.a, label %vec.epilog.scalar.ph.preheader
+  br i1 %cmp.n170, label %._crit_edge, label %vec.epilog.scalar.ph.preheader
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %indvars.iv.ph = phi i64 [ 0, %iter.check ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec162, %vec.epilog.middle.block ]
   %.ph = phi i32 [ %.promoted, %iter.check ], [ %i.bb, %vec.epilog.iter.check ], [ %i.bh, %vec.epilog.middle.block ]
   br label %vec.epilog.scalar.ph
 
-._crit_edge.a:                                    ; preds = %vec.epilog.scalar.ph, %middle.block, %vec.epilog.middle.block, %.lr.ph117
-  %.promoted130 = phi i32 [ %.promoted, %.lr.ph117 ], [ %i.bh, %vec.epilog.middle.block ], [ %i.bb, %middle.block ], [ %.sroa.speculated, %vec.epilog.scalar.ph ]
+._crit_edge:                                      ; preds = %vec.epilog.scalar.ph, %vec.epilog.middle.block, %middle.block
+  %.sroa.speculated.lcssa = phi i32 [ %i.bh, %vec.epilog.middle.block ], [ %i.bb, %middle.block ], [ %.sroa.speculated, %vec.epilog.scalar.ph ] ; 2 uses
+  store i32 %.sroa.speculated.lcssa, ptr %i.p, align 4, !tbaa !25
+  br label %._crit_edge.a
+
+._crit_edge.a:                                    ; preds = %._crit_edge, %.lr.ph117
+  %.promoted130 = phi i32 [ %.sroa.speculated.lcssa, %._crit_edge ], [ %.promoted, %.lr.ph117 ]
   %i.bi = add nuw i64 %.075115, 1                 ; 2 uses
   %exitcond129.not = icmp eq i64 %i.bi, %i.x
   br i1 %exitcond129.not, label %._crit_edge118, label %.lr.ph117, !llvm.loop !267
@@ -351,13 +354,13 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.bm = getelementptr i8, ptr %i.bk, i64 4
   %i.bn = load i32, ptr %i.bm, align 4, !tbaa !25
   %i.bo = sub i32 %i.bn, %i.bl
-  %.sroa.speculated = tail call i32 @llvm.smax.i32(i32 %i.bj, i32 %i.bo) ; 3 uses
-  store i32 %.sroa.speculated, ptr %i.p, align 4, !tbaa !271
+  %.sroa.speculated = tail call i32 @llvm.smax.i32(i32 %i.bj, i32 %i.bo) ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge.a, label %vec.epilog.scalar.ph, !llvm.loop !268
+  br i1 %exitcond.not, label %._crit_edge, label %vec.epilog.scalar.ph, !llvm.loop !268
 
 ._crit_edge124.loopexit:                          ; preds = %_ZN3gmxL36more_than_two_sequential_constraintsERKNS_16EnumerationArrayI19InteractionFunction15InteractionListLS1_95EEERKNS_11ListOfListsIiEE.exit
+  store i32 %i.cb, ptr %i.y, align 8, !tbaa !78
   %i.bp = trunc nuw i8 %.1 to i1
   br label %._crit_edge124
 
@@ -384,7 +387,6 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.bz = tail call noundef i32 @_ZN3gmx26count_triangle_constraintsERKNS_16EnumerationArrayI19InteractionFunction15InteractionListLS1_95EEERKNS_11ListOfListsIiEE(ptr noundef nonnull align 8 dereferenceable(2280) %i.by, ptr noundef nonnull align 8 dereferenceable(48) %i.bv)
   %i.ca = mul nsw i32 %i.bz, %i.bx
   %i.cb = add nsw i32 %i.br, %i.ca                ; 2 uses
-  store i32 %i.cb, ptr %i.y, align 8, !tbaa !78
   %i.cc = trunc nuw i8 %.078121 to i1
   br i1 %i.cc, label %_ZN3gmxL36more_than_two_sequential_constraintsERKNS_16EnumerationArrayI19InteractionFunction15InteractionListLS1_95EEERKNS_11ListOfListsIiEE.exit, label %bb.d
 

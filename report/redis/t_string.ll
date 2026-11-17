@@ -202,7 +202,11 @@ bb.am:                                            ; preds = %.preheader
   %i.dp = zext i32 %i.do to i64
   %i.dq = getelementptr inbounds nuw [4 x i8], ptr %i.df, i64 %i.dp
   store i32 0, ptr %i.dq, align 4, !tbaa !12
-  br i1 %exitcond.peel, label %.split.us, label %.preheader.split.peel.next.a
+  br i1 %exitcond.peel, label %.split.us, label %.preheader.split.peel.next
+
+.preheader.split.peel.next:                       ; preds = %bb.am
+  %1 = load i8, ptr %i.dm, align 1, !tbaa !116
+  br label %.preheader.split.peel.next.a
 
 .preheader.split.us.preheader:                    ; preds = %.preheader
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.df, i8 0, i64 %i.dg, i1 false), !tbaa !12
@@ -223,9 +227,8 @@ bb.an:                                            ; preds = %.split.us
   %exitcond382 = icmp eq i64 %indvars.iv.next378, %wide.trip.count381
   br i1 %exitcond382, label %bb.an, label %.preheader, !llvm.loop !187
 
-.preheader.split.peel.next.a:                     ; preds = %bb.am, %bb.aq
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.aq ], [ 1, %bb.am ] ; 2 uses
-  %1 = load i8, ptr %i.dm, align 1, !tbaa !116
+.preheader.split.peel.next.a:                     ; preds = %bb.aq, %.preheader.split.peel.next
+  %indvars.iv = phi i64 [ 1, %.preheader.split.peel.next ], [ %indvars.iv.next, %bb.aq ] ; 2 uses
   %i.dx = trunc nuw i64 %indvars.iv to i32        ; 3 uses
   %i.dy = add i32 %i.dx, -1                       ; 3 uses
   %i.dz = zext i32 %i.dy to i64

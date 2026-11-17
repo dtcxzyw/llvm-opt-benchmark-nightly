@@ -205,7 +205,7 @@ define i64 @ma_convert_frames_ex(ptr noundef %0, i64 noundef %1, ptr noundef %2,
 bb.a:
   %5 = alloca %struct.ma_data_converter_heap_layout, align 8 ; 5 uses
   %i.a = alloca i64, align 8                      ; 8 uses
-  %i.b = alloca i64, align 8                      ; 3 uses
+  %i.b = alloca i64, align 8                      ; 4 uses
   %6 = alloca %struct.ma_data_converter, align 8  ; 20 uses
   %i.c = alloca i64, align 8                      ; 6 uses
   %i.d = alloca i64, align 8                      ; 5 uses
@@ -295,7 +295,7 @@ ma_data_converter_get_expected_output_frame_count.exit: ; preds = %bb.j
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %bb.k
-  %i.ac = phi i64 [ %3, %.preheader.preheader ], [ %i.af, %bb.k ] ; 3 uses
+  %i.ac = phi i64 [ %3, %.preheader.preheader ], [ %i.af, %bb.k ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #55
   store i64 %i.ac, ptr %i.c, align 8, !tbaa !164
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #55
@@ -305,6 +305,7 @@ ma_data_converter_get_expected_output_frame_count.exit: ; preds = %bb.j
   br i1 %.not20, label %bb.k, label %.thread
 
 .thread:                                          ; preds = %.preheader
+  store i64 %i.ac, ptr %i.b, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #55
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #55
   br label %.loopexit
@@ -312,22 +313,25 @@ ma_data_converter_get_expected_output_frame_count.exit: ; preds = %bb.j
 bb.k:                                             ; preds = %.preheader
   %i.ae = load i64, ptr %i.c, align 8, !tbaa !164 ; 2 uses
   %i.af = sub i64 %i.ac, %i.ae                    ; 2 uses
-  store i64 %i.af, ptr %i.b, align 8, !tbaa !164
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #55
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #55
   %.not19 = icmp eq i64 %i.ac, %i.ae
-  br i1 %.not19, label %.loopexit, label %.preheader
+  br i1 %.not19, label %bb.m, label %.preheader
 
 bb.l:                                             ; preds = %bb.g
   %i.ag = call i32 @ma_data_converter_process_pcm_frames(ptr noundef nonnull %6, ptr noundef %2, ptr noundef nonnull %i.b, ptr noundef nonnull %0, ptr noundef nonnull %i.a)
   %.not18 = icmp eq i32 %i.ag, 0
-  br i1 %.not18, label %.loopexit, label %bb.m
+  br i1 %.not18, label %.loopexit, label %7
 
-bb.m:                                             ; preds = %bb.l
+7:                                                ; preds = %bb.l
   store i64 0, ptr %i.a, align 8, !tbaa !164
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.k, %.thread, %ma_data_converter_get_expected_output_frame_count.exit.thread27, %bb.l, %bb.m, %ma_data_converter_get_expected_output_frame_count.exit
+bb.m:                                             ; preds = %bb.k
+  store i64 %i.af, ptr %i.b, align 8
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %bb.m, %.thread, %ma_data_converter_get_expected_output_frame_count.exit.thread27, %bb.l, %7, %ma_data_converter_get_expected_output_frame_count.exit
   %i.ah = getelementptr inbounds nuw i8, ptr %6, i64 299
   %i.ai = load i8, ptr %i.ah, align 1, !tbaa !246
   %.not.i22 = icmp eq i8 %i.ai, 0

@@ -205,7 +205,7 @@ bb.a:
   %i.f = alloca [272 x i8], align 8               ; 9 uses
   %i.g = alloca [280 x i8], align 8               ; 9 uses
   %i.h = alloca [280 x i8], align 8               ; 6 uses
-  %i.i = alloca [8 x i8], align 8                 ; 6 uses
+  %i.i = alloca [8 x i8], align 8                 ; 9 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 5 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 280 ; 5 uses
   %i.l = load i64, ptr %i.k, align 8, !noundef !19 ; 3 uses
@@ -278,7 +278,8 @@ bb.d:                                             ; preds = %.lr.ph, %"_ZN4core3
   br label %bb.h
 
 ._crit_edge90:                                    ; preds = %bb.al, %"_ZN17imbl_sized_chunks11sized_chunk18Chunk$LT$A$C$_$GT$9pop_front17he533bad8d227d15eE.exit"
-  %i.ar = phi ptr [ %i.ak, %"_ZN17imbl_sized_chunks11sized_chunk18Chunk$LT$A$C$_$GT$9pop_front17he533bad8d227d15eE.exit" ], [ %i.cy, %bb.al ] ; 9 uses
+  %i.ar = phi ptr [ %i.ak, %"_ZN17imbl_sized_chunks11sized_chunk18Chunk$LT$A$C$_$GT$9pop_front17he533bad8d227d15eE.exit" ], [ %i.cy, %bb.al ] ; 10 uses
+  store ptr %i.ar, ptr %i.i, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.845)
   %i.as = load i64, ptr %i.ar, align 8, !noalias !2168, !noundef !19
@@ -309,9 +310,9 @@ bb.g:                                             ; preds = %bb.f
   br label %"_ZN5alloc2rc15Rc$LT$T$C$A$GT$10try_unwrap17h6da4497eac282c68E.exit"
 
 bb.h:                                             ; preds = %.lr.ph89, %bb.al
-  %1 = phi ptr [ %i.ak, %.lr.ph89 ], [ %i.cy, %bb.al ] ; 9 uses
-  %.sroa.011.088 = phi i64 [ %i.am, %.lr.ph89 ], [ %i.ba, %bb.al ]
-  %i.ba = add nuw nsw i64 %.sroa.011.088, 1       ; 2 uses
+  %.sroa.011.093 = phi i64 [ %i.am, %.lr.ph89 ], [ %i.ba, %bb.al ]
+  %1 = phi ptr [ %i.ak, %.lr.ph89 ], [ %i.cy, %bb.al ] ; 11 uses
+  %i.ba = add nuw nsw i64 %.sroa.011.093, 1       ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.8)
   %i.bb = load i64, ptr %1, align 8, !noalias !2169, !noundef !19
@@ -472,6 +473,7 @@ bb.x:                                             ; preds = %bb.ak
 bb.y:                                             ; preds = %"_ZN5alloc2rc15Rc$LT$T$C$A$GT$10try_unwrap17h6da4497eac282c68E.exit20.thread"
   %i.ck = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
+  store ptr %1, ptr %i.i, align 8
   %i.cl = load i64, ptr %.sroa.6.059, align 8, !noalias !2176, !noundef !19
   %i.cm = add i64 %i.cl, -1                       ; 2 uses
   store i64 %i.cm, ptr %.sroa.6.059, align 8, !noalias !2176
@@ -530,7 +532,6 @@ bb.ag:                                            ; preds = %bb.af
   %i.cy = load ptr, ptr %i.cx, align 8, !alias.scope !2178, !nonnull !19, !noundef !19 ; 5 uses
   %i.cz = add nuw nsw i64 %i.cu, 1
   store i64 %i.cz, ptr %i.ap, align 8, !alias.scope !2178
-  store ptr %i.cy, ptr %i.i, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(272) %i.e, ptr noundef nonnull align 8 dereferenceable(272) %i.f, i64 272, i1 false)
   %i.da = load i64, ptr %i.s, align 8, !alias.scope !2179, !noundef !19 ; 3 uses
@@ -545,6 +546,7 @@ bb.ah:                                            ; preds = %bb.ag
 bb.ai:                                            ; preds = %bb.ah
   %i.dd = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
+  store ptr %i.cy, ptr %i.i, align 8
   invoke fastcc void @"_ZN4core3ptr196drop_in_place$LT$imbl_sized_chunks..sized_chunk..iter..Iter$LT$alloc..rc..Rc$LT$nickel_lang_vector..vector..Node$LT$nickel_lang_core..eval..value..NickelValue$C$32_usize$GT$$GT$$C$32_usize$GT$$GT$17h0bf08aee072fd60cE"(ptr noalias noundef nonnull align 8 dereferenceable(272) %i.e) #46
           to label %.thread75 unwind label %bb.aj
 
@@ -555,6 +557,7 @@ bb.aj:                                            ; preds = %bb.ai
   unreachable
 
 bb.ak:                                            ; preds = %bb.af
+  store ptr %1, ptr %i.i, align 8
   invoke void @_ZN4core6option13expect_failed17h1729d0bd73171c50E(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @13, i64 noundef 19, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @20) #45
           to label %bb.x unwind label %bb.am
 

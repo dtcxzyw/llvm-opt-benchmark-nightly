@@ -204,7 +204,7 @@ bb.a:
 define internal void @_ZN12_GLOBAL__N_135HashValueTest_PointerAlignment_Test8TestBodyEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
-  %i.b = alloca i64, align 8                      ; 6 uses
+  %i.b = alloca i64, align 8                      ; 12 uses
   %i.c = alloca i64, align 8                      ; 10 uses
   %1 = alloca %"class.testing::ScopedTrace", align 1 ; 8 uses
   %2 = alloca %"class.testing::AssertionResult", align 8 ; 9 uses
@@ -224,7 +224,6 @@ bb.a:
   store i64 1048576, ptr %i.a, align 8, !tbaa !185
   %i.h = tail call noalias noundef nonnull dereferenceable(1048576) ptr @_Znam(i64 noundef 1048576) #39 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #34
-  store i64 0, ptr %i.b, align 8, !tbaa !185
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #34
   store i64 1, ptr %i.c, align 8, !tbaa !185
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
@@ -232,6 +231,7 @@ bb.a:
   br label %bb.b
 
 .thread112:                                       ; preds = %bb.an
+  store i64 %i.do, ptr %i.b, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #34
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #34
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #34
@@ -243,8 +243,8 @@ bb.a:
   br i1 %i.n, label %bb.as, label %bb.ar
 
 bb.b:                                             ; preds = %bb.a, %bb.an
-  %i.o = phi i64 [ 0, %bb.a ], [ %i.do, %bb.an ]
-  %.037128 = phi i64 [ 0, %bb.a ], [ %i.dp, %bb.an ]
+  %i.o = phi i64 [ 0, %bb.a ], [ %i.dp, %bb.an ]
+  %.037128 = phi i64 [ 0, %bb.a ], [ %i.do, %bb.an ] ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #34
   invoke void @_ZN7testing11ScopedTraceC2ImEEPKciRKT_(ptr noundef nonnull align 1 dereferenceable(1) %1, ptr noundef nonnull @.str, i32 noundef 179, ptr noundef nonnull align 8 dereferenceable(8) %i.c)
           to label %bb.c unwind label %bb.f
@@ -281,10 +281,12 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.e, %bb.d
   %i.v = landingpad { ptr, i32 }
           cleanup
+  store i64 %.037128, ptr %i.b, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #34
   br label %bb.w
 
 bb.h:                                             ; preds = %_ZN7testing8internal11CmpHelperLEImmEENS_15AssertionResultEPKcS4_RKT_RKT0_.exit
+  store i64 %.037128, ptr %i.b, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #34
   invoke void @_ZN7testing7MessageC1Ev(ptr noundef nonnull align 8 dereferenceable(8) %3)
           to label %bb.i unwind label %bb.n
@@ -479,6 +481,7 @@ _ZN7testing8internal11CmpHelperLEIimEENS_15AssertionResultEPKcS4_RKT_RKT0_.exit:
 bb.y:                                             ; preds = %bb.v, %bb.u
   %i.cc = landingpad { ptr, i32 }
           cleanup
+  store i64 %.037128, ptr %i.b, align 8
   br label %bb.ao
 
 bb.z:                                             ; preds = %_ZN7testing8internal11CmpHelperLEIimEENS_15AssertionResultEPKcS4_RKT_RKT0_.exit
@@ -547,21 +550,25 @@ _ZN7testing7MessageD2Ev.exit80:                   ; preds = %bb.ae, %_ZNKSt14def
 bb.af:                                            ; preds = %bb.z
   %i.cy = landingpad { ptr, i32 }
           cleanup
+  store i64 %.037128, ptr %i.b, align 8
   br label %_ZN7testing7MessageD2Ev.exit83
 
 bb.ag:                                            ; preds = %bb.ab, %bb.aa
   %i.cz = landingpad { ptr, i32 }
           cleanup
+  store i64 %.037128, ptr %i.b, align 8
   br label %bb.ak
 
 bb.ah:                                            ; preds = %_ZNK7testing15AssertionResult15failure_messageEv.exit77
   %i.da = landingpad { ptr, i32 }
           cleanup
+  store i64 %.037128, ptr %i.b, align 8
   br label %bb.aj
 
 bb.ai:                                            ; preds = %bb.ad
   %i.db = landingpad { ptr, i32 }
           cleanup
+  store i64 %.037128, ptr %i.b, align 8
   call void @_ZN7testing8internal12AssertHelperD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %7) #34
   br label %bb.aj
 
@@ -614,9 +621,8 @@ bb.an:                                            ; preds = %_ZNKSt14default_del
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #34
   %i.dm = load i32, ptr %i.e, align 4, !tbaa !254
   %i.dn = sext i32 %i.dm to i64
-  %i.do = add nsw i64 %i.o, %i.dn                 ; 3 uses
-  store i64 %i.do, ptr %i.b, align 8, !tbaa !185
-  %i.dp = add nuw nsw i64 %.037128, 1             ; 2 uses
+  %i.do = add nsw i64 %.037128, %i.dn             ; 3 uses
+  %i.dp = add nuw nsw i64 %i.o, 1                 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #34
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #34
   call void @_ZN7testing11ScopedTraceD1Ev(ptr noundef nonnull align 1 dereferenceable(1) %1) #34

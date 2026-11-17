@@ -202,9 +202,11 @@ bb.a:
   %i.i = getelementptr inbounds nuw i8, ptr %7, i64 2
   %i.j = getelementptr inbounds nuw i8, ptr %7, i64 4
   %i.k = getelementptr inbounds nuw i8, ptr %7, i64 5
+  %.promoted = load ptr, ptr %0, align 8
   br label %.critedge
 
 .critedge:                                        ; preds = %_ZN5arrow6StatusD2Ev.exit111, %bb.a
+  %18 = phi ptr [ %.promoted, %bb.a ], [ %19, %_ZN5arrow6StatusD2Ev.exit111 ] ; 4 uses
   %.056 = phi i64 [ %2, %bb.a ], [ %i.dc, %_ZN5arrow6StatusD2Ev.exit111 ] ; 8 uses
   %.053 = phi i64 [ 0, %bb.a ], [ %i.cz, %_ZN5arrow6StatusD2Ev.exit111 ] ; 3 uses
   %.0 = phi i64 [ 0, %bb.a ], [ %i.dm, %_ZN5arrow6StatusD2Ev.exit111 ] ; 3 uses
@@ -230,6 +232,7 @@ bb.a:
   br i1 %i.t, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %.lr.ph
+  store ptr %18, ptr %0, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #15, !noalias !170
   %i.u = load <2 x i16>, ptr %i.m, align 2, !tbaa !52, !noalias !170
   store <2 x i16> %i.u, ptr %15, align 4, !tbaa !52, !noalias !170
@@ -305,6 +308,7 @@ bb.d:                                             ; preds = %.lr.ph
   br i1 %.not, label %bb.h, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
+  store ptr %18, ptr %0, align 8
   %i.ap = getelementptr inbounds nuw i8, ptr %3, i64 %.154173
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #15, !noalias !172
   %i.aq = load <2 x i16>, ptr %i.m, align 2, !tbaa !52, !noalias !172
@@ -467,6 +471,7 @@ bb.h:                                             ; preds = %bb.d
   br i1 %i.ch, label %bb.i, label %bb.n
 
 bb.i:                                             ; preds = %.critedge.thread123
+  store ptr %18, ptr %0, align 8
   %i.ci = load i16, ptr %i.m, align 2, !tbaa !50
   %i.cj = icmp sgt i16 %i.ci, -1
   br i1 %i.cj, label %bb.j, label %bb.m
@@ -479,7 +484,7 @@ bb.k:                                             ; preds = %bb.j
   br label %.critedge79
 
 bb.l:                                             ; preds = %bb.j
-  call void @_ZN5arrow6Status8FromArgsIJRA24_KcEEES0_NS_10StatusCodeEDpOT_(ptr dead_on_unwind writable sret(%"class.arrow::Status") align 8 %0, i8 noundef signext 4, ptr noundef nonnull align 1 dereferenceable(24) @.str.17)
+  call void @_ZN5arrow6Status8FromArgsIJRA24_KcEEES0_NS_10StatusCodeEDpOT_(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Status") align 8 %0, i8 noundef signext 4, ptr noundef nonnull align 1 dereferenceable(24) @.str.17)
   br label %.critedge79
 
 bb.m:                                             ; preds = %bb.i
@@ -515,19 +520,18 @@ _ZN5arrow6StatusD2Ev.exit107.thread:              ; preds = %bb.o
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #15, !noalias !179
   %i.cx = trunc nuw nsw i64 %i.cw to i16
   store i16 %i.cx, ptr %i.cm, align 2, !tbaa !52, !noalias !179
-  store ptr null, ptr %0, align 8, !tbaa !55
   call void @llvm.lifetime.end.p0(ptr nonnull %17) #15
   br label %_ZN5arrow6StatusD2Ev.exit111
 
 _ZN5arrow6StatusD2Ev.exit107:                     ; preds = %bb.o
   call void @_ZN5arrow6Status8FromArgsIJRA47_KcEEES0_NS_10StatusCodeEDpOT_(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Status") align 8 %17, i8 noundef signext 6, ptr noundef nonnull align 1 dereferenceable(47) @.str.16)
-  %.pr = load ptr, ptr %17, align 8, !tbaa !55    ; 2 uses
-  store ptr %.pr, ptr %0, align 8, !tbaa !55
+  %.pr = load ptr, ptr %17, align 8, !tbaa !55    ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %17) #15
   %i.cy = icmp eq ptr %.pr, null
-  br i1 %i.cy, label %_ZN5arrow6StatusD2Ev.exit111, label %.critedge79
+  br i1 %i.cy, label %_ZN5arrow6StatusD2Ev.exit111, label %.critedge79.loopexit
 
 _ZN5arrow6StatusD2Ev.exit111:                     ; preds = %_ZN5arrow6StatusD2Ev.exit107.thread, %_ZN5arrow6StatusD2Ev.exit107, %bb.n
+  %19 = phi ptr [ null, %_ZN5arrow6StatusD2Ev.exit107.thread ], [ %.pr, %_ZN5arrow6StatusD2Ev.exit107 ], [ %18, %bb.n ] ; 2 uses
   %i.cz = add nsw i64 %.154.lcssa, 1              ; 5 uses
   %i.da = getelementptr inbounds nuw i8, ptr %3, i64 %.154.lcssa
   %i.db = load i8, ptr %i.da, align 1, !tbaa !63  ; 3 uses
@@ -546,6 +550,7 @@ _ZN5arrow6StatusD2Ev.exit111:                     ; preds = %_ZN5arrow6StatusD2E
   br i1 %.not127, label %bb.p, label %.critedge
 
 bb.p:                                             ; preds = %_ZN5arrow6StatusD2Ev.exit111
+  store ptr %19, ptr %0, align 8
   %i.dn = icmp ugt i64 %i.cz, %2
   br i1 %i.dn, label %bb.q, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit114
 
@@ -624,7 +629,11 @@ _ZN5arrow6StatusD2Ev.exit40.i:                    ; preds = %_ZN5arrow6StatusD2E
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #15, !noalias !180
   br label %.critedge79
 
-.critedge79:                                      ; preds = %_ZN5arrow6StatusD2Ev.exit107, %.critedge22.i, %.critedge24.i, %.critedge24.i.i, %.critedge22.i.i, %_ZN5arrow6StatusD2Ev.exit83, %_ZN5arrow6StatusD2Ev.exit, %_ZN5arrow6StatusD2Ev.exit101, %bb.k, %bb.l, %bb.m
+.critedge79.loopexit:                             ; preds = %_ZN5arrow6StatusD2Ev.exit107
+  store ptr %.pr, ptr %0, align 8
+  br label %.critedge79
+
+.critedge79:                                      ; preds = %.critedge79.loopexit, %.critedge22.i, %.critedge24.i, %.critedge24.i.i, %.critedge22.i.i, %_ZN5arrow6StatusD2Ev.exit83, %_ZN5arrow6StatusD2Ev.exit, %_ZN5arrow6StatusD2Ev.exit101, %bb.k, %bb.l, %bb.m
   ret void
 }
 

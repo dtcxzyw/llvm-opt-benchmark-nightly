@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %bb.b
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.d, ptr noundef nonnull align 8 dereferenceable(32) %i.f, i64 32, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   %i.j = getelementptr inbounds nuw i8, ptr %i.d, i64 24
-  %i.k = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 3 uses
   %i.l = load ptr, ptr %i.j, align 8              ; 2 uses
   %i.m = load ptr, ptr %i.k, align 8              ; 2 uses
   %.not.not8.i.i.i.i = icmp eq ptr %i.m, %i.l
@@ -212,8 +212,7 @@ bb.c:                                             ; preds = %bb.b
   %i.n = phi ptr [ %i.o, %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator8for_each4callNtCsghEUimwObfx_11proc_macro29TokenTreeNCINvXsa_NtB1h_8fallbackNtB21_11TokenStreamINtNtBa_7collect6ExtendB1f_E6extendINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterB1f_EE0E0CskXLhsuIG0ok_14thiserror_impl.exit.i.i.i.i ], [ %i.m, %bb.c ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.b, ptr noundef nonnull align 8 dereferenceable(32) %i.n, i64 32, i1 false)
-  %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 32 ; 3 uses
-  store ptr %i.o, ptr %i.k, align 8
+  %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 32 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.p = invoke align 8 ptr @_RNvMs0_NtCsghEUimwObfx_11proc_macro25rcvecINtB5_8RcVecMutNtB7_9TokenTreeE6as_mutCsdQT5ZjIgVrW_5quote(ptr nonnull align 8 %i.e)
           to label %_RNCINvXsa_NtCsghEUimwObfx_11proc_macro28fallbackNtB8_11TokenStreamINtNtNtNtCs4NRVxsYgnAr_4core4iter6traits7collect6ExtendNtBa_9TokenTreeE6extendINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterB1V_EE0CskXLhsuIG0ok_14thiserror_impl.exit.i.i.i.i.i unwind label %bb.d
@@ -221,6 +220,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %.lr.ph.i.i.i.i
   %i.q = landingpad { ptr, i32 }
           cleanup
+  store ptr %i.o, ptr %i.k, align 8
   invoke void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtCsghEUimwObfx_11proc_macro29TokenTreeEBD_(ptr nonnull align 8 %i.b) #23
           to label %.body.thread.i.i.i.i unwind label %bb.e
 
@@ -244,6 +244,7 @@ _RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator8for_each4call
 .body.i.i.i.i:                                    ; preds = %_RNCINvXsa_NtCsghEUimwObfx_11proc_macro28fallbackNtB8_11TokenStreamINtNtNtNtCs4NRVxsYgnAr_4core4iter6traits7collect6ExtendNtBa_9TokenTreeE6extendINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterB1V_EE0CskXLhsuIG0ok_14thiserror_impl.exit.i.i.i.i.i
   %i.s = landingpad { ptr, i32 }
           cleanup
+  store ptr %i.o, ptr %i.k, align 8
   br label %.body.thread.i.i.i.i
 
 .body.thread.i.i.i.i:                             ; preds = %.body.i.i.i.i, %bb.d

@@ -205,6 +205,7 @@ _RINvMsa_NtCscPfSGRvVnao_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capac
   br label %_RINvMsa_NtCscPfSGRvVnao_9hashbrown3rawNtB6_13RawTableInner20reserve_rehash_innerNtNtCsbqH9stoieM8_5alloc5alloc6GlobalECsadSKrpJ73hd_12iox2_service.exit
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %_RNvMsa_NtCscPfSGRvVnao_9hashbrown3rawNtB5_13RawTableInner17find_insert_index.exit
+  %3 = phi ptr [ %i.at, %.preheader.lr.ph ], [ %i.cl, %_RNvMsa_NtCscPfSGRvVnao_9hashbrown3rawNtB5_13RawTableInner17find_insert_index.exit ]
   %.sroa.014.044 = phi ptr [ %i.at, %.preheader.lr.ph ], [ %.sroa.014.1.lcssa, %_RNvMsa_NtCscPfSGRvVnao_9hashbrown3rawNtB5_13RawTableInner17find_insert_index.exit ] ; 2 uses
   %.sroa.5.043 = phi i64 [ 0, %.preheader.lr.ph ], [ %.sroa.5.1.lcssa, %_RNvMsa_NtCscPfSGRvVnao_9hashbrown3rawNtB5_13RawTableInner17find_insert_index.exit ] ; 2 uses
   %.sroa.9.042 = phi i64 [ %i.d, %.preheader.lr.ph ], [ %i.bf, %_RNvMsa_NtCscPfSGRvVnao_9hashbrown3rawNtB5_13RawTableInner17find_insert_index.exit ]
@@ -235,7 +236,7 @@ _RNvMsv_NtCscPfSGRvVnao_9hashbrown3rawNtB5_18FullBucketsIndices9next_impl.exit: 
   %i.be = add i64 %.sroa.5.1.lcssa, %i.bc         ; 2 uses
   %i.bf = add i64 %.sroa.9.042, -1                ; 2 uses
   %i.bg = sub nsw i64 0, %i.be
-  %i.bh = getelementptr inbounds [96 x i8], ptr %i.at, i64 %i.bg
+  %i.bh = getelementptr inbounds [96 x i8], ptr %3, i64 %i.bg
   %i.bi = getelementptr inbounds i8, ptr %i.bh, i64 -96
   %i.bj = tail call noundef i64 @_RINvYNtNtNtCsigunbJSLHCW_3std4hash6random11RandomStateNtNtCs8Chj7Szqq0n_4core4hash11BuildHasher8hash_oneRNtNtCsbqH9stoieM8_5alloc6string6StringECsadSKrpJ73hd_12iox2_service(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %2, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(96) %i.bi) #26, !noalias !102 ; 2 uses
   %.sroa.0.07.i = and i64 %i.ap, %i.bj            ; 3 uses
@@ -292,7 +293,7 @@ _RNvMsa_NtCscPfSGRvVnao_9hashbrown3rawNtB5_13RawTableInner17find_insert_index.ex
   %i.cj = getelementptr i8, ptr %i.an, i64 %i.ci
   %i.ck = getelementptr i8, ptr %i.cj, i64 16
   store i8 %i.cg, ptr %i.ck, align 1
-  %i.cl = load ptr, ptr %0, align 8, !alias.scope !101, !nonnull !5, !noundef !5
+  %i.cl = load ptr, ptr %0, align 8, !alias.scope !101, !nonnull !5, !noundef !5 ; 2 uses
   %.neg.i.i = mul i64 %i.be, -96
   %i.cm = getelementptr i8, ptr %i.cl, i64 %.neg.i.i
   %i.cn = getelementptr i8, ptr %i.cm, i64 -96

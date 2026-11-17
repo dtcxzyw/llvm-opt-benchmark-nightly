@@ -101,7 +101,7 @@ bb.a:
   %i.c = alloca ptr, align 8                      ; 6 uses
   %i.d = alloca i32, align 4                      ; 6 uses
   %i.e = alloca i32, align 4                      ; 9 uses
-  %i.f = alloca i32, align 4                      ; 5 uses
+  %i.f = alloca i32, align 4                      ; 7 uses
   %i.g = alloca ptr, align 8                      ; 6 uses
   %2 = alloca [2 x %struct.ossl_param_st], align 16 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
@@ -115,12 +115,12 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #6
   store i32 32773, ptr %i.e, align 4, !tbaa !15
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #6
-  store i32 2, ptr %i.f, align 4, !tbaa !15
   tail call void @opt_set_unknown_name(ptr noundef nonnull @.str.53) #6
   %i.h = tail call ptr @opt_init(i32 noundef %0, ptr noundef %1, ptr noundef nonnull @rsa_options) #6
   br label %bb.b
 
 bb.b:                                             ; preds = %.backedge, %bb.a
+  %3 = phi i32 [ 2, %bb.a ], [ %.be, %.backedge ] ; 22 uses
   %.0120 = phi ptr [ null, %bb.a ], [ %.0120.be, %.backedge ] ; 20 uses
   %.0118 = phi ptr [ null, %bb.a ], [ %.0118.be, %.backedge ] ; 20 uses
   %.0116 = phi ptr [ null, %bb.a ], [ %.0116.be, %.backedge ] ; 19 uses
@@ -137,7 +137,7 @@ bb.b:                                             ; preds = %.backedge, %bb.a
   switch i32 %i.i, label %.backedge [
     i32 0, label %bb.v
     i32 1604, label %bb.t
-    i32 -1, label %.loopexit.a
+    i32 -1, label %.loopexit
     i32 1, label %bb.c
     i32 2, label %bb.d
     i32 4, label %bb.e
@@ -164,6 +164,7 @@ bb.b:                                             ; preds = %.backedge, %bb.a
   ]
 
 .backedge:                                        ; preds = %bb.b, %bb.t, %bb.f, %bb.d, %bb.u, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.e
+  %.be = phi i32 [ %3, %bb.b ], [ %3, %bb.d ], [ %3, %bb.e ], [ %3, %bb.f ], [ %3, %bb.g ], [ %3, %bb.h ], [ %3, %bb.i ], [ %3, %bb.j ], [ %3, %bb.k ], [ %3, %bb.l ], [ %3, %bb.m ], [ %i.t, %bb.n ], [ %3, %bb.o ], [ %3, %bb.p ], [ %3, %bb.q ], [ %3, %bb.r ], [ %3, %bb.s ], [ %3, %bb.u ], [ %3, %bb.t ]
   %.0120.be = phi ptr [ %.0120, %bb.b ], [ %.0120, %bb.d ], [ %i.n, %bb.e ], [ %.0120, %bb.f ], [ %.0120, %bb.g ], [ %.0120, %bb.h ], [ %.0120, %bb.i ], [ %.0120, %bb.j ], [ %.0120, %bb.k ], [ %.0120, %bb.l ], [ %.0120, %bb.m ], [ %.0120, %bb.n ], [ %.0120, %bb.o ], [ %.0120, %bb.p ], [ %.0120, %bb.q ], [ %.0120, %bb.r ], [ %.0120, %bb.s ], [ %.0120, %bb.u ], [ %.0120, %bb.t ]
   %.0118.be = phi ptr [ %.0118, %bb.b ], [ %.0118, %bb.d ], [ %.0118, %bb.e ], [ %.0118, %bb.f ], [ %i.q, %bb.g ], [ %.0118, %bb.h ], [ %.0118, %bb.i ], [ %.0118, %bb.j ], [ %.0118, %bb.k ], [ %.0118, %bb.l ], [ %.0118, %bb.m ], [ %.0118, %bb.n ], [ %.0118, %bb.o ], [ %.0118, %bb.p ], [ %.0118, %bb.q ], [ %.0118, %bb.r ], [ %.0118, %bb.s ], [ %.0118, %bb.u ], [ %.0118, %bb.t ]
   %.0116.be = phi ptr [ %.0116, %bb.b ], [ %.0116, %bb.d ], [ %.0116, %bb.e ], [ %.0116, %bb.f ], [ %.0116, %bb.g ], [ %.0116, %bb.h ], [ %.0116, %bb.i ], [ %.0116, %bb.j ], [ %.0116, %bb.k ], [ %.0116, %bb.l ], [ %.0116, %bb.m ], [ %.0116, %bb.n ], [ %.0116, %bb.o ], [ %.0116, %bb.p ], [ %.0116, %bb.q ], [ %.0116, %bb.r ], [ %i.u, %bb.s ], [ %.0116, %bb.u ], [ %.0116, %bb.t ]
@@ -178,12 +179,17 @@ bb.b:                                             ; preds = %.backedge, %bb.a
   %.097.be = phi i32 [ %.097, %bb.b ], [ %.097, %bb.d ], [ %.097, %bb.e ], [ %.097, %bb.f ], [ %.097, %bb.g ], [ %.097, %bb.h ], [ %.097, %bb.i ], [ %.097, %bb.j ], [ %.097, %bb.k ], [ %.097, %bb.l ], [ %.097, %bb.m ], [ %.097, %bb.n ], [ %.097, %bb.o ], [ %.097, %bb.p ], [ %.097, %bb.q ], [ %.097, %bb.r ], [ %.097, %bb.s ], [ 1, %bb.u ], [ %.097, %bb.t ]
   br label %bb.b, !llvm.loop !9
 
-.loopexit.a:                                      ; preds = %bb.b, %bb.f, %bb.d, %bb.w, %bb.v
+.loopexit:                                        ; preds = %bb.d, %bb.f, %bb.b
+  store i32 %3, ptr %i.f, align 4
+  br label %.loopexit.a
+
+.loopexit.a:                                      ; preds = %.loopexit, %bb.w, %bb.v
   %i.j = load ptr, ptr @bio_err, align 8, !tbaa !18
   %i.k = call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.j, ptr noundef nonnull @.str.54, ptr noundef %i.h) #6 ; 0 uses
   br label %.loopexit169.a
 
 bb.c:                                             ; preds = %bb.b
+  store i32 %3, ptr %i.f, align 4
   call void @opt_help(ptr noundef nonnull @rsa_options) #6
   br label %.loopexit169.a
 
@@ -191,7 +197,7 @@ bb.d:                                             ; preds = %bb.b
   %i.l = call ptr @opt_arg() #6
   %i.m = call i32 @opt_format(ptr noundef %i.l, i64 noundef 4030, ptr noundef nonnull %i.d) #6
   %.not153 = icmp eq i32 %i.m, 0
-  br i1 %.not153, label %.loopexit.a, label %.backedge
+  br i1 %.not153, label %.loopexit, label %.backedge
 
 bb.e:                                             ; preds = %bb.b
   %i.n = call ptr @opt_arg() #6
@@ -201,7 +207,7 @@ bb.f:                                             ; preds = %bb.b
   %i.o = call ptr @opt_arg() #6
   %i.p = call i32 @opt_format(ptr noundef %i.o, i64 noundef 4030, ptr noundef nonnull %i.e) #6
   %.not152 = icmp eq i32 %i.p, 0
-  br i1 %.not152, label %.loopexit.a, label %.backedge
+  br i1 %.not152, label %.loopexit, label %.backedge
 
 bb.g:                                             ; preds = %bb.b
   %i.q = call ptr @opt_arg() #6
@@ -229,7 +235,6 @@ bb.m:                                             ; preds = %bb.b
 
 bb.n:                                             ; preds = %bb.b, %bb.b, %bb.b
   %i.t = add nsw i32 %i.i, -12
-  store i32 %i.t, ptr %i.f, align 4, !tbaa !15
   br label %.backedge
 
 bb.o:                                             ; preds = %bb.b
@@ -251,12 +256,13 @@ bb.s:                                             ; preds = %bb.b
 bb.t:                                             ; preds = %bb.b, %bb.b, %bb.b, %bb.b
   %i.v = call i32 @opt_provider(i32 noundef %i.i) #6
   %.not151 = icmp eq i32 %i.v, 0
-  br i1 %.not151, label %.loopexit169.a, label %.backedge
+  br i1 %.not151, label %.loopexit169, label %.backedge
 
 bb.u:                                             ; preds = %bb.b
   br label %.backedge
 
 bb.v:                                             ; preds = %bb.b
+  store i32 %3, ptr %i.f, align 4
   %i.w = call i32 @opt_check_rest_arg(ptr noundef null) #6
   %.not135 = icmp eq i32 %i.w, 0
   br i1 %.not135, label %.loopexit.a, label %bb.w
@@ -572,11 +578,15 @@ bb.bs:                                            ; preds = %.thread166
   call void @ERR_print_errors(ptr noundef %i.dg) #6
   br label %.loopexit169.a
 
-.loopexit169.a:                                   ; preds = %bb.t, %bb.br, %bb.as, %bb.ax, %.thread166, %bb.bi, %.thread, %bb.bj, %bb.aj, %bb.bs, %bb.bc, %bb.bb, %bb.an, %bb.ai, %bb.af, %bb.aa, %bb.y, %bb.c, %.loopexit.a
-  %.0124 = phi ptr [ null, %.loopexit.a ], [ null, %bb.c ], [ %i.aw, %bb.as ], [ null, %bb.aa ], [ null, %bb.af ], [ null, %bb.aj ], [ %i.aw, %bb.an ], [ null, %bb.y ], [ %i.aw, %.thread ], [ %i.aw, %bb.bj ], [ %i.aw, %bb.bi ], [ %i.aw, %bb.bs ], [ %i.aw, %bb.br ], [ %i.aw, %bb.bb ], [ %i.aw, %bb.bc ], [ %i.aw, %.thread166 ], [ null, %bb.ai ], [ %i.aw, %bb.ax ], [ null, %bb.t ]
-  %.1123 = phi ptr [ null, %.loopexit.a ], [ null, %bb.c ], [ %.0122, %bb.as ], [ null, %bb.aa ], [ null, %bb.af ], [ %.0122, %bb.aj ], [ %.0122, %bb.an ], [ null, %bb.y ], [ %.0122, %.thread ], [ %.0122, %bb.bj ], [ %.0122, %bb.bi ], [ %.0122, %bb.bs ], [ %.0122, %bb.br ], [ %.0122, %bb.bb ], [ %.0122, %bb.bc ], [ %.0122, %.thread166 ], [ %.0122, %bb.ai ], [ %.0122, %bb.ax ], [ null, %bb.t ]
-  %.099 = phi i32 [ 1, %.loopexit.a ], [ 0, %bb.c ], [ 1, %bb.as ], [ 1, %bb.aa ], [ 1, %bb.af ], [ 1, %bb.aj ], [ 1, %bb.an ], [ 1, %bb.y ], [ 0, %.thread ], [ 1, %bb.bj ], [ 0, %bb.bi ], [ 1, %bb.bs ], [ 1, %bb.br ], [ 1, %bb.bb ], [ 1, %bb.bc ], [ 0, %.thread166 ], [ 1, %bb.ai ], [ 1, %bb.ax ], [ 1, %bb.t ]
-  %.093 = phi ptr [ null, %.loopexit.a ], [ null, %bb.c ], [ null, %bb.as ], [ null, %bb.aa ], [ null, %bb.af ], [ null, %bb.aj ], [ null, %bb.an ], [ null, %bb.y ], [ null, %.thread ], [ %i.cf, %bb.bj ], [ %i.cf, %bb.bi ], [ %i.cf, %bb.bs ], [ %i.cf, %bb.br ], [ null, %bb.bb ], [ null, %bb.bc ], [ %i.cf, %.thread166 ], [ null, %bb.ai ], [ null, %bb.ax ], [ null, %bb.t ]
+.loopexit169:                                     ; preds = %bb.t
+  store i32 %3, ptr %i.f, align 4
+  br label %.loopexit169.a
+
+.loopexit169.a:                                   ; preds = %.loopexit169, %bb.br, %bb.as, %bb.ax, %.thread166, %bb.bi, %.thread, %bb.bj, %bb.aj, %bb.bs, %bb.bc, %bb.bb, %bb.an, %bb.ai, %bb.af, %bb.aa, %bb.y, %bb.c, %.loopexit.a
+  %.0124 = phi ptr [ null, %.loopexit.a ], [ null, %bb.c ], [ %i.aw, %bb.as ], [ null, %bb.aa ], [ null, %bb.af ], [ null, %bb.aj ], [ %i.aw, %bb.an ], [ null, %bb.y ], [ %i.aw, %.thread ], [ %i.aw, %bb.bj ], [ %i.aw, %bb.bi ], [ %i.aw, %bb.bs ], [ %i.aw, %bb.br ], [ %i.aw, %bb.bb ], [ %i.aw, %bb.bc ], [ %i.aw, %.thread166 ], [ null, %bb.ai ], [ %i.aw, %bb.ax ], [ null, %.loopexit169 ]
+  %.1123 = phi ptr [ null, %.loopexit.a ], [ null, %bb.c ], [ %.0122, %bb.as ], [ null, %bb.aa ], [ null, %bb.af ], [ %.0122, %bb.aj ], [ %.0122, %bb.an ], [ null, %bb.y ], [ %.0122, %.thread ], [ %.0122, %bb.bj ], [ %.0122, %bb.bi ], [ %.0122, %bb.bs ], [ %.0122, %bb.br ], [ %.0122, %bb.bb ], [ %.0122, %bb.bc ], [ %.0122, %.thread166 ], [ %.0122, %bb.ai ], [ %.0122, %bb.ax ], [ null, %.loopexit169 ]
+  %.099 = phi i32 [ 1, %.loopexit.a ], [ 0, %bb.c ], [ 1, %bb.as ], [ 1, %bb.aa ], [ 1, %bb.af ], [ 1, %bb.aj ], [ 1, %bb.an ], [ 1, %bb.y ], [ 0, %.thread ], [ 1, %bb.bj ], [ 0, %bb.bi ], [ 1, %bb.bs ], [ 1, %bb.br ], [ 1, %bb.bb ], [ 1, %bb.bc ], [ 0, %.thread166 ], [ 1, %bb.ai ], [ 1, %bb.ax ], [ 1, %.loopexit169 ]
+  %.093 = phi ptr [ null, %.loopexit.a ], [ null, %bb.c ], [ null, %bb.as ], [ null, %bb.aa ], [ null, %bb.af ], [ null, %bb.aj ], [ null, %bb.an ], [ null, %bb.y ], [ null, %.thread ], [ %i.cf, %bb.bj ], [ %i.cf, %bb.bi ], [ %i.cf, %bb.bs ], [ %i.cf, %bb.br ], [ null, %bb.bb ], [ null, %bb.bc ], [ %i.cf, %.thread166 ], [ null, %bb.ai ], [ null, %bb.ax ], [ null, %.loopexit169 ]
   call void @OSSL_ENCODER_CTX_free(ptr noundef %.093) #6
   call void @BIO_free_all(ptr noundef %.0124) #6
   call void @EVP_PKEY_free(ptr noundef %.1123) #6

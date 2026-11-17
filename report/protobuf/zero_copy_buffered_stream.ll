@@ -202,7 +202,6 @@ bb.a:
   %3 = alloca %"class.google::protobuf::json_internal::BufferingGuard", align 8 ; 7 uses
   %4 = alloca %"class.absl::lts_20250512::Status", align 8 ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #16
-  store ptr null, ptr %3, align 8, !tbaa !39
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 9 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 6 uses
@@ -214,7 +213,7 @@ bb.a:
   br label %_ZN6google8protobuf13json_internal14BufferingGuardD2Ev.exit48
 
 _ZN6google8protobuf13json_internal14BufferingGuardD2Ev.exit48: ; preds = %_ZN6google8protobuf13json_internal14BufferingGuardD2Ev.exit48.backedge, %bb.a
-  %i.i = phi ptr [ null, %bb.a ], [ %1, %_ZN6google8protobuf13json_internal14BufferingGuardD2Ev.exit48.backedge ] ; 14 uses
+  %i.i = phi ptr [ null, %bb.a ], [ %1, %_ZN6google8protobuf13json_internal14BufferingGuardD2Ev.exit48.backedge ] ; 15 uses
   %i.j = load i64, ptr %i.a, align 8, !tbaa !23   ; 8 uses
   %.sroa.010.0.copyload.i.i = load i64, ptr %i.b, align 8, !tbaa !24 ; 4 uses
   %i.k = load i8, ptr %i.c, align 8, !tbaa !25, !range !26, !noundef !33
@@ -236,6 +235,16 @@ bb.c:                                             ; preds = %bb.b, %_ZN6google8p
   %.0.i.i = phi i64 [ %i.n, %bb.b ], [ %i.j, %_ZN6google8protobuf13json_internal14BufferingGuardD2Ev.exit48 ] ; 3 uses
   %i.t = icmp ugt i64 %.0.i.i, %.sroa.010.0.i.i
   br i1 %i.t, label %.invoke, label %bb.d
+
+.invoke:                                          ; preds = %bb.c, %bb.g
+  %5 = phi i64 [ %.0.i.i21, %bb.g ], [ %.0.i.i, %bb.c ]
+  %6 = phi i64 [ %.sroa.010.0.i.i19, %bb.g ], [ %.sroa.010.0.i.i, %bb.c ]
+  store ptr %i.i, ptr %3, align 8
+  invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.2, i64 noundef %5, i64 noundef %6) #13
+          to label %.cont unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+
+.cont:                                            ; preds = %.invoke
+  unreachable
 
 bb.d:                                             ; preds = %bb.c
   %i.u = sub nuw i64 %.sroa.010.0.i.i, %.0.i.i
@@ -260,15 +269,6 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %.0.i.i21 = phi i64 [ %i.x, %bb.f ], [ %i.j, %bb.e ] ; 3 uses
   %i.ad = icmp ugt i64 %.0.i.i21, %.sroa.010.0.i.i19
   br i1 %i.ad, label %.invoke, label %bb.h
-
-.invoke:                                          ; preds = %bb.g, %bb.c
-  %5 = phi i64 [ %.0.i.i, %bb.c ], [ %.0.i.i21, %bb.g ]
-  %6 = phi i64 [ %.sroa.010.0.i.i, %bb.c ], [ %.sroa.010.0.i.i19, %bb.g ]
-  invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.2, i64 noundef %5, i64 noundef %6) #13
-          to label %.cont unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
-
-.cont:                                            ; preds = %.invoke
-  unreachable
 
 bb.h:                                             ; preds = %bb.g
   %i.ae = icmp eq i64 %.sroa.010.0.i.i19, %.0.i.i21
@@ -318,7 +318,7 @@ bb.m:                                             ; preds = %bb.l
   %i.ay = getelementptr inbounds nuw i8, ptr %i.i, i64 64
   %i.az = load i64, ptr %i.ay, align 8, !tbaa !27
   %i.ba = getelementptr inbounds nuw i8, ptr %i.i, i64 8
-  %i.bb = load i64, ptr %i.ba, align 8, !tbaa !40
+  %i.bb = load i64, ptr %i.ba, align 8, !tbaa !37
   %.neg79 = add i64 %i.az, %i.aw
   %i.bc = add i64 %i.bb, %i.ax
   %i.bd = sub i64 %.neg79, %i.bc
@@ -338,7 +338,6 @@ _ZNSt6vectorIcSaIcEE5clearEv.exit.i.i.i:          ; preds = %_ZSt8_DestroyIPccEv
   br label %bb.n
 
 bb.n:                                             ; preds = %_ZN6google8protobuf13json_internal14BufferingGuardC2EPNS1_22ZeroCopyBufferedStreamE.exit, %bb.k, %bb.l, %_ZNSt6vectorIcSaIcEE5clearEv.exit.i.i.i
-  store ptr %1, ptr %3, align 8, !tbaa !39
   %i.bg = load i32, ptr %i.g, align 4, !tbaa !34  ; 5 uses
   %i.bh = add nsw i32 %i.bg, 1
   store i32 %i.bh, ptr %i.g, align 4, !tbaa !34
@@ -389,14 +388,15 @@ _ZNSt6vectorIcSaIcEE5clearEv.exit.i.i:            ; preds = %_ZSt8_DestroyIPccEv
   br label %_ZN6google8protobuf13json_internal14BufferingGuardD2Ev.exit
 
 _ZN6google8protobuf13json_internal14BufferingGuardD2Ev.exit: ; preds = %_ZNSt6vectorIcSaIcEE5clearEv.exit.i.i, %bb.o, %_ZN6google8protobuf13json_internal14BufferingGuardaSERKS2_.exit, %bb.h
-  %i.by = phi ptr [ %1, %_ZNSt6vectorIcSaIcEE5clearEv.exit.i.i ], [ %1, %bb.o ], [ %1, %_ZN6google8protobuf13json_internal14BufferingGuardaSERKS2_.exit ], [ %i.i, %bb.h ] ; 10 uses
+  %i.by = phi ptr [ %1, %_ZNSt6vectorIcSaIcEE5clearEv.exit.i.i ], [ %1, %bb.o ], [ %1, %_ZN6google8protobuf13json_internal14BufferingGuardaSERKS2_.exit ], [ %i.i, %bb.h ] ; 12 uses
   %i.bz = invoke noundef zeroext i1 @_ZN6google8protobuf13json_internal22ZeroCopyBufferedStream9ReadChunkEv(ptr noundef nonnull align 8 dereferenceable(80) %1)
-          to label %bb.q unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %bb.q unwind label %.loopexit
 
 bb.q:                                             ; preds = %_ZN6google8protobuf13json_internal14BufferingGuardD2Ev.exit
   br i1 %i.bz, label %bb.y, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
+  store ptr %i.by, ptr %3, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #16
   invoke void @_ZN4absl12lts_2025051220InvalidArgumentErrorESt17basic_string_viewIcSt11char_traitsIcEE(ptr dead_on_unwind nonnull writable sret(%"class.absl::lts_20250512::Status") align 8 %4, i64 14, ptr nonnull @.str)
           to label %bb.s unwind label %bb.w
@@ -440,7 +440,13 @@ _ZN4absl12lts_202505126StatusD2Ev.exit:           ; preds = %bb.s, %_ZN4absl12lt
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #16
   br label %_ZN6google8protobuf13json_internal14BufferingGuardD2Ev.exit60
 
-.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %_ZN6google8protobuf13json_internal14BufferingGuardD2Ev.exit, %.invoke
+.loopexit:                                        ; preds = %_ZN6google8protobuf13json_internal14BufferingGuardD2Ev.exit
+  %lpad.loopexit = landingpad { ptr, i32 }
+          cleanup
+  store ptr %i.by, ptr %3, align 8
+  br label %.loopexit.split-lp
+
+.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %.invoke
   %lpad.loopexit.split-lp210 = landingpad { ptr, i32 }
           cleanup
   br label %.loopexit.split-lp
@@ -500,7 +506,7 @@ bb.ac:                                            ; preds = %bb.ab
   %i.dc = getelementptr inbounds nuw i8, ptr %i.by, i64 64
   %i.dd = load i64, ptr %i.dc, align 8, !tbaa !27
   %i.de = getelementptr inbounds nuw i8, ptr %i.by, i64 8
-  %i.df = load i64, ptr %i.de, align 8, !tbaa !40
+  %i.df = load i64, ptr %i.de, align 8, !tbaa !37
   %.neg87 = add i64 %i.dd, %i.da
   %i.dg = add i64 %i.df, %i.db
   %i.dh = sub i64 %.neg87, %i.dg
@@ -520,7 +526,6 @@ _ZNSt6vectorIcSaIcEE5clearEv.exit.i.i.i36:        ; preds = %_ZSt8_DestroyIPccEv
   br label %bb.ad
 
 bb.ad:                                            ; preds = %_ZN6google8protobuf13json_internal14BufferingGuardC2EPNS1_22ZeroCopyBufferedStreamE.exit28, %bb.aa, %bb.ab, %_ZNSt6vectorIcSaIcEE5clearEv.exit.i.i.i36
-  store ptr %1, ptr %3, align 8, !tbaa !39
   %i.dk = load i32, ptr %i.g, align 4, !tbaa !34  ; 5 uses
   %i.dl = add nsw i32 %i.dk, 1
   store i32 %i.dl, ptr %i.g, align 4, !tbaa !34
@@ -556,7 +561,7 @@ bb.af:                                            ; preds = %bb.ae
   %i.dv = ptrtoint ptr %i.dt to i64
   %i.dw = ptrtoint ptr %i.du to i64
   %i.dx = load i64, ptr %i.d, align 8, !tbaa !27
-  %i.dy = load i64, ptr %i.b, align 8, !tbaa !40
+  %i.dy = load i64, ptr %i.b, align 8, !tbaa !37
   %.neg90 = add i64 %i.dx, %i.dv
   %i.dz = add i64 %i.dy, %i.dw
   %i.ea = sub i64 %.neg90, %i.dz
@@ -584,14 +589,14 @@ bb.ag:                                            ; preds = %bb.d
 .thread74:                                        ; preds = %bb.ag
   store i64 %i.j, ptr %i.d, align 8, !tbaa !27
   %i.ef = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %1, ptr %i.ef, align 8, !tbaa !39
+  store ptr %1, ptr %i.ef, align 8, !tbaa !40
   store i64 1, ptr %0, align 8, !tbaa !32
   store i32 %i.ed, ptr %i.g, align 4, !tbaa !34
   br label %_ZN6google8protobuf13json_internal14BufferingGuardD2Ev.exit60
 
 bb.ah:                                            ; preds = %bb.ag
   %i.eg = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %1, ptr %i.eg, align 8, !tbaa !39
+  store ptr %1, ptr %i.eg, align 8, !tbaa !40
   %i.eh = add nsw i32 %i.ec, 2
   store i32 %i.eh, ptr %i.g, align 4, !tbaa !34
   %i.ei = icmp eq i32 %i.ed, 0
@@ -672,7 +677,7 @@ bb.an:                                            ; preds = %bb.am
   %i.fl = getelementptr inbounds nuw i8, ptr %i.eu, i64 64
   %i.fm = load i64, ptr %i.fl, align 8, !tbaa !27
   %i.fn = getelementptr inbounds nuw i8, ptr %i.eu, i64 8
-  %i.fo = load i64, ptr %i.fn, align 8, !tbaa !40
+  %i.fo = load i64, ptr %i.fn, align 8, !tbaa !37
   %.neg84 = add i64 %i.fm, %i.fj
   %i.fp = add i64 %i.fo, %i.fk
   %i.fq = sub i64 %.neg84, %i.fp
@@ -695,8 +700,8 @@ _ZN6google8protobuf13json_internal14BufferingGuardD2Ev.exit69: ; preds = %_ZN6go
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #16
   ret void
 
-.loopexit.split-lp:                               ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.x
-  %.pn13.pn = phi { ptr, i32 } [ %.pn11, %bb.x ], [ %lpad.loopexit.split-lp210, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+.loopexit.split-lp:                               ; preds = %.loopexit, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.x
+  %.pn13.pn = phi { ptr, i32 } [ %.pn11, %bb.x ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp210, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
   call void @_ZN6google8protobuf13json_internal14BufferingGuardD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %3) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #16
   resume { ptr, i32 } %.pn13.pn
@@ -707,7 +712,7 @@ declare i32 @__gxx_personality_v0(...)
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZN6google8protobuf13json_internal14BufferingGuardD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %0) unnamed_addr #3 comdat align 2 personality ptr @__gxx_personality_v0 !guid !56 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !39     ; 9 uses
+  %i.a = load ptr, ptr %0, align 8, !tbaa !40     ; 9 uses
   %.not = icmp eq ptr %i.a, null
   br i1 %.not, label %_ZN6google8protobuf13json_internal22ZeroCopyBufferedStream13DownRefBufferEv.exit, label %bb.b
 
@@ -740,7 +745,7 @@ bb.d:                                             ; preds = %bb.c
   %i.r = getelementptr inbounds nuw i8, ptr %i.a, i64 64
   %i.s = load i64, ptr %i.r, align 8, !tbaa !27
   %i.t = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %i.u = load i64, ptr %i.t, align 8, !tbaa !40
+  %i.u = load i64, ptr %i.t, align 8, !tbaa !37
   %.neg2 = add i64 %i.s, %i.p
   %i.v = add i64 %i.u, %i.q
   %i.w = sub i64 %.neg2, %i.v
@@ -875,7 +880,7 @@ bb.c:                                             ; preds = %bb.b
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.r = load i64, ptr %i.q, align 8, !tbaa !27
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.t = load i64, ptr %i.s, align 8, !tbaa !40
+  %i.t = load i64, ptr %i.s, align 8, !tbaa !37
   %.neg8 = add i64 %i.r, %i.o
   %i.u = add i64 %i.t, %i.p
   %i.v = sub i64 %.neg8, %i.u
@@ -901,7 +906,7 @@ bb.d:                                             ; preds = %bb.a, %bb.b, %_ZNSt
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden ptr @_ZN4absl12lts_202505126c_copyISt17basic_string_viewIcSt11char_traitsIcEESt20back_insert_iteratorISt6vectorIcSaIcEEEEET0_RKT_SB_(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr %1) local_unnamed_addr #0 comdat !guid !64 {
 bb.a:
-  %i.a = load i64, ptr %0, align 8, !tbaa !40     ; 2 uses
+  %i.a = load i64, ptr %0, align 8, !tbaa !37     ; 2 uses
   %i.b = icmp sgt i64 %i.a, 0
   br i1 %i.b, label %.lr.ph.i.i.i.i.i, label %_ZSt4copyIPKcSt20back_insert_iteratorISt6vectorIcSaIcEEEET0_T_S8_S7_.exit
 
@@ -1100,10 +1105,10 @@ attributes #17 = { noreturn nounwind }
 !34 = !{!22, !6, i64 76}
 !35 = !{!17, !15, i64 16}
 !36 = !{!5, !5, i64 0}
-!37 = !{!"p1 _ZTSN6google8protobuf13json_internal22ZeroCopyBufferedStreamE", !12, i64 0}
-!38 = !{!"_ZTSN6google8protobuf13json_internal14BufferingGuardE", !37, i64 0}
-!39 = !{!38, !37, i64 0}
-!40 = !{!16, !14, i64 0}
+!37 = !{!16, !14, i64 0}
+!38 = !{!"p1 _ZTSN6google8protobuf13json_internal22ZeroCopyBufferedStreamE", !12, i64 0}
+!39 = !{!"_ZTSN6google8protobuf13json_internal14BufferingGuardE", !38, i64 0}
+!40 = !{!39, !38, i64 0}
 !41 = distinct !{!41, !30}
 !42 = distinct !{!42, i1 true, !"_ZN4absl12lts_202505128OkStatusEv"}
 !43 = distinct !{!43, !42, !"_ZN4absl12lts_202505128OkStatusEv: argument 0"}

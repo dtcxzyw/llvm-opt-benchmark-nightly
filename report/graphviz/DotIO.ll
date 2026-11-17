@@ -202,7 +202,6 @@ gv_calloc.exit96:                                 ; preds = %.thread.i95, %gv_ca
   %i.bd = load i32, ptr %i.bc, align 8, !tbaa !23
   %i.be = getelementptr inbounds [4 x i8], ptr %i.ah, i64 %indvars.iv130
   store i32 %i.bd, ptr %i.be, align 4, !tbaa !33
-  store double 1.000000e+00, ptr %i.b, align 8, !tbaa !29
   %i.bf = getelementptr inbounds [8 x i8], ptr %i.aj, i64 %indvars.iv130
   store double 1.000000e+00, ptr %i.bf, align 8, !tbaa !29
   %indvars.iv.next131 = add nsw i64 %indvars.iv130, 1 ; 2 uses
@@ -218,7 +217,11 @@ gv_calloc.exit96:                                 ; preds = %.thread.i95, %gv_ca
   %.2.lcssa.us = phi i32 [ %.1115.us, %.lr.ph116.split.us ], [ %i.bh, %._crit_edge112.split.us.us.loopexit ]
   %i.bi = tail call ptr @agnxtnode(ptr noundef nonnull %0, ptr noundef nonnull %.173114.us) #19 ; 2 uses
   %.not80.us = icmp eq ptr %i.bi, null
-  br i1 %.not80.us, label %._crit_edge117, label %.lr.ph116.split.us, !llvm.loop !78
+  br i1 %.not80.us, label %._crit_edge117.split.us, label %.lr.ph116.split.us, !llvm.loop !78
+
+._crit_edge117.split.us:                          ; preds = %._crit_edge112.split.us.us
+  store double 1.000000e+00, ptr %i.b, align 8
+  br label %._crit_edge117
 
 .lr.ph116.split:                                  ; preds = %.lr.ph116, %._crit_edge112.split
   %.1115 = phi i32 [ %.2.lcssa, %._crit_edge112.split ], [ 0, %.lr.ph116 ] ; 2 uses
@@ -284,7 +287,7 @@ bb.j:                                             ; preds = %.lr.ph111._crit_edg
   %.not80 = icmp eq ptr %i.ch, null
   br i1 %.not80, label %._crit_edge117, label %.lr.ph116.split, !llvm.loop !78
 
-._crit_edge117:                                   ; preds = %._crit_edge112.split, %._crit_edge112.split.us.us, %gv_calloc.exit96
+._crit_edge117:                                   ; preds = %._crit_edge112.split, %._crit_edge117.split.us, %gv_calloc.exit96
   %i.ci = call ptr @SparseMatrix_from_coordinate_arrays(i64 noundef %i.m, i32 noundef %i.e, i32 noundef %i.e, ptr noundef %i.ai, ptr noundef %i.ah, ptr noundef %i.aj, i32 noundef 1, i64 noundef 8) #19 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #19
   %i.cj = sext i32 %i.e to i64                    ; 3 uses

@@ -204,7 +204,7 @@ bb.a:
 define hidden void @_RNvXsy_NtNtNtCscdodAO9FK5_5alloc11collections5btree3mapINtB5_8IntoIterNtNtNtCs2AWtUsOyxgP_3std3ffi6os_str8OsStringINtNtCs4NRVxsYgnAr_4core6option6OptionB16_EENtNtNtB1T_3ops4drop4Drop4dropCs3xYsW1bxxfS_18build_script_build(ptr align 8 %0) unnamed_addr #0 personality ptr @rust_eh_personality !guid !134 {
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 5 uses
-  %i.b = alloca [8 x i8], align 8                 ; 2 uses
+  %i.b = alloca [8 x i8], align 8                 ; 3 uses
   %i.c = alloca [24 x i8], align 8                ; 5 uses
   call fastcc void @_RNvMsz_NtNtNtCscdodAO9FK5_5alloc11collections5btree3mapINtB5_8IntoIterNtNtNtCs2AWtUsOyxgP_3std3ffi6os_str8OsStringINtNtCs4NRVxsYgnAr_4core6option6OptionB16_EE10dying_nextCs3xYsW1bxxfS_18build_script_build(ptr noalias align 8 %i.c, ptr align 8 %0)
   %i.d = load ptr, ptr %i.c, align 8              ; 2 uses
@@ -218,7 +218,6 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %_RNvMsT_NtNtNtCscdodAO9FK5_5alloc11collections5btree4nodeINtB5_6HandleINtB5_7NodeRefNtNtB5_6marker5DyingNtNtNtCs2AWtUsOyxgP_3std3ffi6os_str8OsStringINtNtCs4NRVxsYgnAr_4core6option6OptionB1D_ENtB1l_14LeafOrInternalENtB1l_2KVE12drop_key_valCs3xYsW1bxxfS_18build_script_build.exit
   %i.e = phi ptr [ %i.d, %.lr.ph ], [ %i.l, %_RNvMsT_NtNtNtCscdodAO9FK5_5alloc11collections5btree4nodeINtB5_6HandleINtB5_7NodeRefNtNtB5_6marker5DyingNtNtNtCs2AWtUsOyxgP_3std3ffi6os_str8OsStringINtNtCs4NRVxsYgnAr_4core6option6OptionB1D_ENtB1l_14LeafOrInternalENtB1l_2KVE12drop_key_valCs3xYsW1bxxfS_18build_script_build.exit ] ; 2 uses
   %.sroa.22.0.copyload = load i64, ptr %.sroa.22.0..sroa_idx, align 8 ; 2 uses
-  store ptr %0, ptr %i.b, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.g = getelementptr inbounds nuw [24 x i8], ptr %i.f, i64 %.sroa.22.0.copyload
@@ -231,6 +230,7 @@ bb.b:                                             ; preds = %.lr.ph, %_RNvMsT_Nt
 bb.c:                                             ; preds = %bb.b
   %i.j = landingpad { ptr, i32 }
           cleanup
+  store ptr %0, ptr %i.b, align 8
   invoke void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNvMsT_NtNtNtCscdodAO9FK5_5alloc11collections5btree4nodeINtBK_6HandleINtBK_7NodeRefNtNtBK_6marker5DyingpppENtB20_2KVE12drop_key_val7DropperINtNtB4_6option6OptionNtNtNtCs2AWtUsOyxgP_3std3ffi6os_str8OsStringEEECs3xYsW1bxxfS_18build_script_build(ptr nonnull align 8 %i.a) #24
           to label %.body unwind label %bb.e
 
@@ -257,6 +257,7 @@ _RNvMsT_NtNtNtCscdodAO9FK5_5alloc11collections5btree4nodeINtB5_6HandleINtB5_7Nod
 bb.f:                                             ; preds = %bb.d
   %i.m = landingpad { ptr, i32 }
           cleanup
+  store ptr %0, ptr %i.b, align 8
   br label %.body
 
 .body:                                            ; preds = %bb.c, %bb.f

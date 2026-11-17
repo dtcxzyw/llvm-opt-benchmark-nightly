@@ -204,7 +204,7 @@ bb.a:
   %i.z = alloca [24 x i8], align 8                ; 4 uses
   %i.aa = alloca [24 x i8], align 8               ; 7 uses
   %i.ab = alloca [24 x i8], align 8               ; 7 uses
-  %i.ac = alloca [8 x i8], align 8                ; 5 uses
+  %i.ac = alloca [8 x i8], align 8                ; 13 uses
   %i.ad = alloca [24 x i8], align 8               ; 13 uses
   %i.ae = alloca [40 x i8], align 8               ; 8 uses
   %i.af = alloca [24 x i8], align 8               ; 6 uses
@@ -607,6 +607,7 @@ bb.dt:                                            ; preds = %_RINvXs2J_NtNtCsf3T
   store i64 0, ptr %i.lc, align 8, !noalias !1065
   %.idx191.i.i.i.i = mul nuw nsw i64 %.pre213.i.i.i.i, 24
   %i.ld = getelementptr inbounds nuw i8, ptr %.pre211.i.i.i.i, i64 %.idx191.i.i.i.i
+  %.promoted.i.i.i.i = load ptr, ptr %i.ac, align 8, !noalias !1065
   %i.le = icmp eq i64 %.pre213.i.i.i.i, 0
   br i1 %i.le, label %._crit_edge.i.i.i.i, label %.lr.ph.i.i.i.i
 
@@ -619,9 +620,8 @@ bb.dt:                                            ; preds = %_RINvXs2J_NtNtCsf3T
   br label %bb.du
 
 bb.du:                                            ; preds = %bb.fo, %.lr.ph.i.i.i.i
-  %i.lj = phi ptr [ %.pre211.i.i.i.i, %.lr.ph.i.i.i.i ], [ %i.lk, %bb.fo ] ; 27 uses
+  %i.lj = phi ptr [ %.pre211.i.i.i.i, %.lr.ph.i.i.i.i ], [ %i.lk, %bb.fo ] ; 34 uses
   %i.lk = getelementptr inbounds nuw i8, ptr %i.lj, i64 24 ; 2 uses
-  store ptr %i.lj, ptr %i.ac, align 8, !noalias !1065, !captures !24
   %i.ll = load i8, ptr %i.lj, align 8, !range !13, !noalias !1088, !noundef !5 ; 2 uses
   %i.lm = icmp samesign ugt i8 %i.ll, 23
   %i.ln = zext nneg i8 %i.ll to i64               ; 2 uses
@@ -634,6 +634,8 @@ bb.du:                                            ; preds = %bb.fo, %.lr.ph.i.i.
   ]
 
 ._crit_edge.i.i.i.i:                              ; preds = %bb.fo, %bb.dt
+  %.lcssa.i.i.i.i = phi ptr [ %.promoted.i.i.i.i, %bb.dt ], [ %i.lj, %bb.fo ]
+  store ptr %.lcssa.i.i.i.i, ptr %i.ac, align 8, !noalias !1065
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u), !noalias !1065
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !noalias !1065
   invoke void @_RNvMs5_NtCsgCecv3eZDcN_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs1qcNTItuk7F_13glyphs_reader(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.o, i64 noundef 3, i1 noundef zeroext false, i64 noundef 1, i64 noundef 1)
@@ -665,9 +667,15 @@ bb.dz:                                            ; preds = %bb.dy, %bb.dx, %bb.
   %.sroa.68.0.i.i.i.i = phi i64 [ %i.ln, %bb.dw ], [ %i.lu, %bb.dx ], [ %i.ly, %bb.dy ] ; 2 uses
   %.sroa.05.0.i.i.i.i = phi ptr [ %i.lq, %bb.dw ], [ %i.ls, %bb.dx ], [ %i.lz, %bb.dy ] ; 2 uses
   %i.ma = invoke noundef zeroext i1 @_RNvMNtCsf3Ta7LF998c_4core5sliceSh11starts_withCs1qcNTItuk7F_13glyphs_reader(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.05.0.i.i.i.i, i64 noundef %.sroa.68.0.i.i.i.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @3, i64 noundef 3)
-          to label %bb.ea unwind label %.thread167.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !1088
+          to label %bb.ea unwind label %.thread167.loopexit.i.i.i.i, !noalias !1088
 
-.thread167.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.ew, %bb.eu, %bb.el, %bb.dz, %bb.fr, %bb.fm, %bb.ex, %bb.eq, %._crit_edge.i.i.i.i
+.thread167.loopexit.i.i.i.i:                      ; preds = %bb.ew, %bb.eu, %bb.el, %bb.dz
+  %lpad.loopexit.i.i.i.i = landingpad { ptr, i32 }
+          cleanup
+  store ptr %i.lj, ptr %i.ac, align 8, !noalias !1065
+  br label %.thread154.i.i.i.i
+
+.thread167.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.fr, %bb.fm, %bb.ex, %bb.eq, %._crit_edge.i.i.i.i
   %lpad.loopexit.split-lp99 = landingpad { ptr, i32 }
           cleanup
   br label %.thread154.i.i.i.i
@@ -708,6 +716,7 @@ bb.ed:                                            ; preds = %bb.ec
 bb.ee:                                            ; preds = %bb.ed
   %i.mm = landingpad { ptr, i32 }
           cleanup
+  store ptr %i.lj, ptr %i.ac, align 8, !noalias !1065
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc6borrow3CoweEECs1qcNTItuk7F_13glyphs_reader(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.ab) #20
           to label %.thread154.i.i.i.i unwind label %bb.ef, !noalias !1088
 
@@ -769,7 +778,7 @@ bb.el:                                            ; preds = %bb.ek, %bb.ej, %bb.
   %.sroa.413.0.i.i.i.i = phi i64 [ %i.md, %bb.ei ], [ %i.na, %bb.ej ], [ %i.ne, %bb.ek ] ; 7 uses
   %.sroa.012.0.i.i.i.i = phi ptr [ %i.mw, %bb.ei ], [ %i.my, %bb.ej ], [ %i.nf, %bb.ek ] ; 5 uses
   %i.ng = invoke noundef zeroext i1 @_RNvMNtCsf3Ta7LF998c_4core5sliceSh11starts_withCs1qcNTItuk7F_13glyphs_reader(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.012.0.i.i.i.i, i64 noundef %.sroa.413.0.i.i.i.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @33, i64 noundef 1)
-          to label %.noexc75.i.i.i.i unwind label %.thread167.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !1088
+          to label %.noexc75.i.i.i.i unwind label %.thread167.loopexit.i.i.i.i, !noalias !1088
 
 .noexc75.i.i.i.i:                                 ; preds = %bb.el
   br i1 %i.ng, label %bb.em, label %_RNvNvMs4_NtCs1qcNTItuk7F_13glyphs_reader9glyphdataNtB7_9GlyphData25construct_production_name9is_u_name.exit.thread.i.i.i.i
@@ -816,6 +825,7 @@ bb.ep:                                            ; preds = %.lr.ph98, %bb.eo
   br i1 %.sroa.0.0.i.i.i.i.i23.i.i.i, label %_RNvNvMs4_NtCs1qcNTItuk7F_13glyphs_reader9glyphdataNtB7_9GlyphData25construct_production_name9is_u_name.exit.thread.i.i.i.i, label %bb.eo
 
 bb.eq:                                            ; preds = %_RNvXs9_NtNtCsf3Ta7LF998c_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.i.i.i.i.i, %.split.i.i.i.i.i
+  store ptr %i.lj, ptr %i.ac, align 8, !noalias !1065
   invoke void @_RNvNtCsf3Ta7LF998c_4core3str16slice_error_fail(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.012.0.i.i.i.i, i64 noundef %.sroa.413.0.i.i.i.i, i64 noundef 1, i64 noundef %.sroa.413.0.i.i.i.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @34) #22
           to label %.noexc76.i.i.i.i unwind label %.thread167.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !1088
 
@@ -858,7 +868,7 @@ bb.eu:                                            ; preds = %bb.et, %bb.es, %bb.
   %.sroa.423.0.i.i.i.i = phi i64 [ %i.mt, %bb.er ], [ %i.of, %bb.es ], [ %i.oj, %bb.et ]
   %.sroa.022.0.i.i.i.i = phi ptr [ %i.ob, %bb.er ], [ %i.od, %bb.es ], [ %i.ok, %bb.et ]
   %i.ol = invoke noundef i32 @_RNvNtCsgdm2QMcbaeA_10fontdrasil3agl17char_for_agl_name(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.022.0.i.i.i.i, i64 noundef %.sroa.423.0.i.i.i.i)
-          to label %bb.ev unwind label %.thread167.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !1088 ; 2 uses
+          to label %bb.ev unwind label %.thread167.loopexit.i.i.i.i, !noalias !1088 ; 2 uses
 
 bb.ev:                                            ; preds = %bb.eu
   %.not53.i.i.i.i = icmp eq i32 %i.ol, -1
@@ -872,9 +882,10 @@ bb.ew:                                            ; preds = %bb.ev
   store ptr %i.x, ptr %i.w, align 8, !noalias !1065
   store ptr @_RNvXsw_NtNtCsf3Ta7LF998c_4core3fmt3nummNtB7_8UpperHex3fmt, ptr %.sroa.441.0..sroa_idx.i.i.i.i, align 8, !noalias !1065
   invoke void @_RNvNvNtCsgCecv3eZDcN_5alloc3fmt6format12format_inner(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.y, ptr noundef nonnull @16, ptr noundef nonnull %i.w)
-          to label %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionReE11map_or_elseNtNtCsgCecv3eZDcN_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECs1qcNTItuk7F_13glyphs_reader.exit.i.i.i.i unwind label %.thread167.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !1088
+          to label %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionReE11map_or_elseNtNtCsgCecv3eZDcN_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECs1qcNTItuk7F_13glyphs_reader.exit.i.i.i.i unwind label %.thread167.loopexit.i.i.i.i, !noalias !1088
 
 bb.ex:                                            ; preds = %bb.ev
+  store ptr %i.lj, ptr %i.ac, align 8, !noalias !1065
   call void @llvm.lifetime.start.p0(ptr nonnull %i.v), !noalias !1065
   store ptr %i.ac, ptr %i.v, align 8, !noalias !1065
   %.sroa.447.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.v, i64 8
@@ -898,6 +909,7 @@ bb.ey:                                            ; preds = %_RINvMNtCsf3Ta7LF99
 bb.ez:                                            ; preds = %bb.ey
   %i.op = landingpad { ptr, i32 }
           cleanup
+  store ptr %i.lj, ptr %i.ac, align 8, !noalias !1065
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc6borrow3CoweEECs1qcNTItuk7F_13glyphs_reader(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.z) #20
           to label %.thread154.i.i.i.i unwind label %bb.fa, !noalias !1088
 
@@ -972,6 +984,7 @@ bb.fj:                                            ; preds = %bb.fi
 bb.fk:                                            ; preds = %bb.fj
   %i.pn = landingpad { ptr, i32 }
           cleanup
+  store ptr %i.lj, ptr %i.ac, align 8, !noalias !1065
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc6borrow3CoweEECs1qcNTItuk7F_13glyphs_reader(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.aa) #20
           to label %.thread154.i.i.i.i unwind label %bb.fl, !noalias !1088
 
@@ -982,6 +995,7 @@ bb.fl:                                            ; preds = %bb.fk
   unreachable
 
 bb.fm:                                            ; preds = %bb.fh, %.split.i.i.i.i
+  store ptr %i.lj, ptr %i.ac, align 8, !noalias !1065
   invoke void @_RNvNtCsf3Ta7LF998c_4core3str16slice_error_fail(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.014.0.i.i.i.i, i64 noundef %.sroa.617.0.i.i.i.i, i64 noundef 1, i64 noundef %.sroa.617.0.i.i.i.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @19) #21
           to label %bb.fc unwind label %.thread167.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !1088
 
@@ -1256,8 +1270,8 @@ bb.gk:                                            ; preds = %bb.go, %.thread154.
   call void @_RNvNtCsf3Ta7LF998c_4core9panicking16panic_in_cleanup() #18, !noalias !1088
   unreachable
 
-.thread154.i.i.i.i:                               ; preds = %.thread167.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.fk, %bb.ez, %bb.ee
-  %eh.lpad-body74157.i.i.i.i = phi { ptr, i32 } [ %i.op, %bb.ez ], [ %i.pn, %bb.fk ], [ %i.mm, %bb.ee ], [ %lpad.loopexit.split-lp99, %.thread167.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+.thread154.i.i.i.i:                               ; preds = %bb.fk, %bb.ez, %bb.ee, %.thread167.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %.thread167.loopexit.i.i.i.i
+  %eh.lpad-body74157.i.i.i.i = phi { ptr, i32 } [ %i.op, %bb.ez ], [ %i.pn, %bb.fk ], [ %i.mm, %bb.ee ], [ %lpad.loopexit.i.i.i.i, %.thread167.loopexit.i.i.i.i ], [ %lpad.loopexit.split-lp99, %.thread167.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecINtNtBG_6borrow3CoweEEECs1qcNTItuk7F_13glyphs_reader(ptr noalias nofree noundef align 8 dereferenceable(24) %i.ad) #20
           to label %.body117.i.i.i.i unwind label %bb.gk, !noalias !1088
 

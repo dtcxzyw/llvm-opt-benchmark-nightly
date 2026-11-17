@@ -202,10 +202,9 @@ _ZN4lean4exprC2ERKS0_.exit:                       ; preds = %bb.a, %bb.c, %bb.d,
 }
 
 ; Function Attrs: mustprogress uwtable
-define hidden void @_ZN4lean6mk_appERKNS_4exprEjPS1_(ptr dead_on_unwind noalias writable sret(%"class.lean::expr") align 8 initializes((0, 8)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %1, i32 noundef %2, ptr nofree noundef readonly captures(none) %3) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
+define hidden void @_ZN4lean6mk_appERKNS_4exprEjPS1_(ptr dead_on_unwind noalias writable sret(%"class.lean::expr") align 8 %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %1, i32 noundef %2, ptr nofree noundef readonly captures(none) %3) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = load ptr, ptr %1, align 8, !tbaa !13     ; 6 uses
-  store ptr %i.a, ptr %0, align 8, !tbaa !13
   %i.b = ptrtoint ptr %i.a to i64
   %i.c = and i64 %i.b, 1
   %.not.i.i.i.i = icmp eq i64 %i.c, 0
@@ -238,8 +237,8 @@ _ZN4lean4exprC2ERKS0_.exit:                       ; preds = %bb.a, %bb.c, %bb.d,
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZN4lean10object_refD2Ev.exit
-  %4 = phi ptr [ %i.a, %.lr.ph.preheader ], [ %i.t, %_ZN4lean10object_refD2Ev.exit ] ; 8 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %_ZN4lean10object_refD2Ev.exit ] ; 2 uses
+  %4 = phi ptr [ %i.a, %.lr.ph.preheader ], [ %i.t, %_ZN4lean10object_refD2Ev.exit ] ; 10 uses
   %i.g = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv ; 2 uses
   %i.h = ptrtoint ptr %4 to i64
   %i.i = and i64 %i.h, 1
@@ -319,12 +318,12 @@ bb.q:                                             ; preds = %bb.p
 bb.r:                                             ; preds = %bb.q
   %i.x = landingpad { ptr, i32 }
           catch ptr null
+  store ptr %4, ptr %0, align 8
   %i.y = extractvalue { ptr, i32 } %i.x, 0
   tail call void @__clang_call_terminate(ptr %i.y) #22
   unreachable
 
 _ZN4lean10object_refD2Ev.exit:                    ; preds = %bb.q, %bb.p, %bb.o, %_ZN4lean6mk_appERKNS_4exprES2_.exit
-  store ptr %i.t, ptr %0, align 8, !tbaa !13
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !84
@@ -332,15 +331,18 @@ _ZN4lean10object_refD2Ev.exit:                    ; preds = %bb.q, %bb.p, %bb.o,
 bb.s:                                             ; preds = %_ZNK4lean10object_ref10to_obj_argEv.exit6.i
   %i.z = landingpad { ptr, i32 }
           cleanup
+  store ptr %4, ptr %0, align 8
   tail call void @_ZN4lean10object_refD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %0) #19
   resume { ptr, i32 } %i.z
 
 ._crit_edge:                                      ; preds = %_ZN4lean10object_refD2Ev.exit, %_ZN4lean4exprC2ERKS0_.exit
+  %.lcssa = phi ptr [ %i.a, %_ZN4lean4exprC2ERKS0_.exit ], [ %i.t, %_ZN4lean10object_refD2Ev.exit ]
+  store ptr %.lcssa, ptr %0, align 8
   ret void
 }
 
 ; Function Attrs: mustprogress uwtable
-define hidden void @_ZN4lean6mk_appEjPKNS_4exprE(ptr dead_on_unwind noalias writable sret(%"class.lean::expr") align 8 initializes((0, 8)) %0, i32 noundef %1, ptr nofree noundef readonly captures(none) %2) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
+define hidden void @_ZN4lean6mk_appEjPKNS_4exprE(ptr dead_on_unwind noalias writable sret(%"class.lean::expr") align 8 %0, i32 noundef %1, ptr nofree noundef readonly captures(none) %2) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %"class.lean::expr", align 8        ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #19
@@ -676,10 +678,9 @@ _ZN4lean6bufferINS_4exprELm16EE7destroyEv.exit:   ; preds = %bb.g, %_ZN4lean6buf
 }
 
 ; Function Attrs: mustprogress uwtable
-define hidden void @_ZN4lean10mk_rev_appERKNS_4exprEjPS1_(ptr dead_on_unwind noalias writable sret(%"class.lean::expr") align 8 initializes((0, 8)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %1, i32 noundef %2, ptr nofree noundef readonly captures(none) %3) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
+define hidden void @_ZN4lean10mk_rev_appERKNS_4exprEjPS1_(ptr dead_on_unwind noalias writable sret(%"class.lean::expr") align 8 %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %1, i32 noundef %2, ptr nofree noundef readonly captures(none) %3) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = load ptr, ptr %1, align 8, !tbaa !13     ; 6 uses
-  store ptr %i.a, ptr %0, align 8, !tbaa !13
   %i.b = ptrtoint ptr %i.a to i64
   %i.c = and i64 %i.b, 1
   %.not.i.i.i.i = icmp eq i64 %i.c, 0
@@ -712,8 +713,8 @@ _ZN4lean4exprC2ERKS0_.exit:                       ; preds = %bb.a, %bb.c, %bb.d,
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZN4lean10object_refD2Ev.exit
-  %4 = phi ptr [ %i.a, %.lr.ph.preheader ], [ %i.v, %_ZN4lean10object_refD2Ev.exit ] ; 8 uses
   %indvars.iv = phi i64 [ %i.g, %.lr.ph.preheader ], [ %i.h, %_ZN4lean10object_refD2Ev.exit ]
+  %4 = phi ptr [ %i.a, %.lr.ph.preheader ], [ %i.v, %_ZN4lean10object_refD2Ev.exit ] ; 10 uses
   %i.h = add nsw i64 %indvars.iv, -1              ; 3 uses
   %i.i = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.h ; 2 uses
   %i.j = ptrtoint ptr %4 to i64
@@ -794,27 +795,30 @@ bb.q:                                             ; preds = %bb.p
 bb.r:                                             ; preds = %bb.q
   %i.z = landingpad { ptr, i32 }
           catch ptr null
+  store ptr %4, ptr %0, align 8
   %i.aa = extractvalue { ptr, i32 } %i.z, 0
   tail call void @__clang_call_terminate(ptr %i.aa) #22
   unreachable
 
 _ZN4lean10object_refD2Ev.exit:                    ; preds = %bb.q, %bb.p, %bb.o, %_ZN4lean6mk_appERKNS_4exprES2_.exit
-  store ptr %i.v, ptr %0, align 8, !tbaa !13
   %.not.wide = icmp eq i64 %i.h, 0
   br i1 %.not.wide, label %._crit_edge, label %.lr.ph, !llvm.loop !97
 
 bb.s:                                             ; preds = %_ZNK4lean10object_ref10to_obj_argEv.exit6.i
   %i.ab = landingpad { ptr, i32 }
           cleanup
+  store ptr %4, ptr %0, align 8
   tail call void @_ZN4lean10object_refD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %0) #19
   resume { ptr, i32 } %i.ab
 
 ._crit_edge:                                      ; preds = %_ZN4lean10object_refD2Ev.exit, %_ZN4lean4exprC2ERKS0_.exit
+  %.lcssa = phi ptr [ %i.a, %_ZN4lean4exprC2ERKS0_.exit ], [ %i.v, %_ZN4lean10object_refD2Ev.exit ]
+  store ptr %.lcssa, ptr %0, align 8
   ret void
 }
 
 ; Function Attrs: mustprogress uwtable
-define hidden void @_ZN4lean10mk_rev_appEjPKNS_4exprE(ptr dead_on_unwind noalias writable sret(%"class.lean::expr") align 8 initializes((0, 8)) %0, i32 noundef %1, ptr nofree noundef readonly captures(none) %2) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
+define hidden void @_ZN4lean10mk_rev_appEjPKNS_4exprE(ptr dead_on_unwind noalias writable sret(%"class.lean::expr") align 8 %0, i32 noundef %1, ptr nofree noundef readonly captures(none) %2) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %"class.lean::expr", align 8        ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #19

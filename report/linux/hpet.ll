@@ -202,12 +202,13 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.j = load ptr, ptr @hpet_base.3, align 8
-  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 2 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 20
   %wide.trip.count = zext i32 %i.e to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.g
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.g ] ; 4 uses
+  %1 = phi i32 [ 0, %.lr.ph ], [ %2, %bb.g ]      ; 3 uses
   %i.l = getelementptr [320 x i8], ptr %i.j, i64 %indvars.iv ; 3 uses
   %i.m = icmp samesign ugt i64 %indvars.iv, 1
   br i1 %i.m, label %bb.c, label %bb.d
@@ -237,17 +238,20 @@ bb.f:                                             ; preds = %bb.d, %bb.d
   %i.s = getelementptr i8, ptr %i.l, i64 256
   %i.t = load i32, ptr %i.s, align 64
   %i.u = shl nuw i32 1, %i.t
-  %1 = load i32, ptr %i.k, align 4
   %i.v = or i32 %1, %i.u
-  store i32 %i.v, ptr %i.k, align 4
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d
+  %2 = phi i32 [ %i.v, %bb.f ], [ %1, %bb.e ], [ %1, %bb.d ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge.a, label %bb.b, !llvm.loop !54
+  br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !54
 
-._crit_edge.a:                                    ; preds = %bb.g, %bb.a
+._crit_edge:                                      ; preds = %bb.g
+  store i32 %2, ptr %i.k, align 4
+  br label %._crit_edge.a
+
+._crit_edge.a:                                    ; preds = %._crit_edge, %bb.a
   %i.w = call i32 @hpet_alloc(ptr noundef nonnull %0) #20 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %0) #19
   ret void

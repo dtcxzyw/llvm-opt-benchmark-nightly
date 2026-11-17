@@ -204,7 +204,6 @@ bb.ce:                                            ; preds = %.lr.ph280, %proto_i
   %.0226279 = phi i32 [ 0, %.lr.ph280 ], [ %i.lj, %proto_item_set_generated.exit ] ; 2 uses
   %i.ku = call ptr @wmem_array_index(ptr noundef %.0, i32 noundef %.0226279)
   %i.kv = load ptr, ptr %i.ku, align 8            ; 3 uses
-  store ptr %i.kv, ptr %i.d, align 8
   %i.kw = getelementptr i8, ptr %i.kv, i64 4
   %i.kx = load i32, ptr %i.kw, align 4
   %i.ky = load i32, ptr %i.kj, align 4
@@ -240,9 +239,13 @@ proto_item_set_generated.exit:                    ; preds = %bb.ci, %bb.ch, %bb.
   %i.lj = add nuw i32 %.0226279, 1                ; 2 uses
   %i.lk = call i32 @wmem_array_get_count(ptr noundef %.0)
   %i.ll = icmp ult i32 %i.lj, %i.lk
-  br i1 %i.ll, label %bb.ce, label %.loopexit, !llvm.loop !10
+  br i1 %i.ll, label %bb.ce, label %.loopexit.loopexit, !llvm.loop !10
 
-.loopexit:                                        ; preds = %proto_item_set_generated.exit, %.preheader270, %bb.bz, %bb.cd
+.loopexit.loopexit:                               ; preds = %proto_item_set_generated.exit
+  store ptr %i.kv, ptr %i.d, align 8
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %.loopexit.loopexit, %.preheader270, %bb.bz, %bb.cd
   br i1 %i.jl, label %bb.cj, label %proto_item_set_generated.exit253
 
 bb.cj:                                            ; preds = %.loopexit

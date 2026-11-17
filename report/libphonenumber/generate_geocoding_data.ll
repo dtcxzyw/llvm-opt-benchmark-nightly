@@ -205,15 +205,18 @@ bb.a:
   %i.l = zext i8 %i.j to i64
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %i.l
   %storemerge.i.i.i = load ptr, ptr %i.m, align 8, !tbaa !56 ; 4 uses
-  store ptr %storemerge.i.i.i, ptr %6, align 8, !tbaa !61
   %i.n = getelementptr i8, ptr %storemerge.i.i.i, i64 11
   %i.o = load i8, ptr %i.n, align 1, !tbaa !26    ; 2 uses
   %.not.i.i.i.i = icmp eq i8 %i.o, 0
-  br i1 %.not.i.i.i.i, label %.lr.ph6.i.i.i, label %_ZN4absl7debian318container_internal14btree_iteratorINS1_10btree_nodeINS1_10map_paramsIiNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIiESaISt4pairIKiSA_EELi256ELb0EEEEERSF_PSF_EmmEv.exit, !llvm.loop !350
+  br i1 %.not.i.i.i.i, label %.lr.ph6.i.i.i, label %_ZN4absl7debian318container_internal14btree_iteratorINS1_10btree_nodeINS1_10map_paramsIiNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIiESaISt4pairIKiSA_EELi256ELb0EEEEERSF_PSF_EmmEv.exit.loopexit, !llvm.loop !350
 
-_ZN4absl7debian318container_internal14btree_iteratorINS1_10btree_nodeINS1_10map_paramsIiNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIiESaISt4pairIKiSA_EELi256ELb0EEEEERSF_PSF_EmmEv.exit: ; preds = %.lr.ph6.i.i.i, %.thread.i.i
-  %.pre = phi i8 [ %i.h, %.thread.i.i ], [ %i.o, %.lr.ph6.i.i.i ]
-  %storemerge.lcssa.i.i.i = phi ptr [ %storemerge3.i.i.i, %.thread.i.i ], [ %storemerge.i.i.i, %.lr.ph6.i.i.i ] ; 2 uses
+_ZN4absl7debian318container_internal14btree_iteratorINS1_10btree_nodeINS1_10map_paramsIiNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIiESaISt4pairIKiSA_EELi256ELb0EEEEERSF_PSF_EmmEv.exit.loopexit: ; preds = %.lr.ph6.i.i.i
+  store ptr %storemerge.i.i.i, ptr %6, align 8, !tbaa !61
+  br label %_ZN4absl7debian318container_internal14btree_iteratorINS1_10btree_nodeINS1_10map_paramsIiNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIiESaISt4pairIKiSA_EELi256ELb0EEEEERSF_PSF_EmmEv.exit
+
+_ZN4absl7debian318container_internal14btree_iteratorINS1_10btree_nodeINS1_10map_paramsIiNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIiESaISt4pairIKiSA_EELi256ELb0EEEEERSF_PSF_EmmEv.exit: ; preds = %_ZN4absl7debian318container_internal14btree_iteratorINS1_10btree_nodeINS1_10map_paramsIiNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIiESaISt4pairIKiSA_EELi256ELb0EEEEERSF_PSF_EmmEv.exit.loopexit, %.thread.i.i
+  %.pre = phi i8 [ %i.h, %.thread.i.i ], [ %i.o, %_ZN4absl7debian318container_internal14btree_iteratorINS1_10btree_nodeINS1_10map_paramsIiNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIiESaISt4pairIKiSA_EELi256ELb0EEEEERSF_PSF_EmmEv.exit.loopexit ]
+  %storemerge.lcssa.i.i.i = phi ptr [ %storemerge3.i.i.i, %.thread.i.i ], [ %storemerge.i.i.i, %_ZN4absl7debian318container_internal14btree_iteratorINS1_10btree_nodeINS1_10map_paramsIiNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIiESaISt4pairIKiSA_EELi256ELb0EEEEERSF_PSF_EmmEv.exit.loopexit ] ; 2 uses
   %i.p = getelementptr i8, ptr %storemerge.lcssa.i.i.i, i64 10
   %i.q = load i8, ptr %i.p, align 1, !tbaa !26    ; 2 uses
   %i.r = zext i8 %i.q to i32                      ; 2 uses
@@ -616,15 +619,18 @@ bb.a:
   %i.l = zext i8 %i.j to i64
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %i.l
   %storemerge.i.i.i = load ptr, ptr %i.m, align 8, !tbaa !83 ; 4 uses
-  store ptr %storemerge.i.i.i, ptr %4, align 8, !tbaa !125
   %i.n = getelementptr i8, ptr %storemerge.i.i.i, i64 11
   %i.o = load i8, ptr %i.n, align 1, !tbaa !26    ; 2 uses
   %.not.i.i.i.i = icmp eq i8 %i.o, 0
-  br i1 %.not.i.i.i.i, label %.lr.ph6.i.i.i, label %_ZN4absl7debian318container_internal14btree_iteratorINS1_10btree_nodeINS1_10set_paramsIiSt4lessIiESaIiELi256ELb0EEEEERiPiEmmEv.exit, !llvm.loop !358
+  br i1 %.not.i.i.i.i, label %.lr.ph6.i.i.i, label %_ZN4absl7debian318container_internal14btree_iteratorINS1_10btree_nodeINS1_10set_paramsIiSt4lessIiESaIiELi256ELb0EEEEERiPiEmmEv.exit.loopexit, !llvm.loop !358
 
-_ZN4absl7debian318container_internal14btree_iteratorINS1_10btree_nodeINS1_10set_paramsIiSt4lessIiESaIiELi256ELb0EEEEERiPiEmmEv.exit: ; preds = %.lr.ph6.i.i.i, %.thread.i.i
-  %.pre = phi i8 [ %i.h, %.thread.i.i ], [ %i.o, %.lr.ph6.i.i.i ]
-  %storemerge.lcssa.i.i.i = phi ptr [ %storemerge3.i.i.i, %.thread.i.i ], [ %storemerge.i.i.i, %.lr.ph6.i.i.i ] ; 2 uses
+_ZN4absl7debian318container_internal14btree_iteratorINS1_10btree_nodeINS1_10set_paramsIiSt4lessIiESaIiELi256ELb0EEEEERiPiEmmEv.exit.loopexit: ; preds = %.lr.ph6.i.i.i
+  store ptr %storemerge.i.i.i, ptr %4, align 8, !tbaa !125
+  br label %_ZN4absl7debian318container_internal14btree_iteratorINS1_10btree_nodeINS1_10set_paramsIiSt4lessIiESaIiELi256ELb0EEEEERiPiEmmEv.exit
+
+_ZN4absl7debian318container_internal14btree_iteratorINS1_10btree_nodeINS1_10set_paramsIiSt4lessIiESaIiELi256ELb0EEEEERiPiEmmEv.exit: ; preds = %_ZN4absl7debian318container_internal14btree_iteratorINS1_10btree_nodeINS1_10set_paramsIiSt4lessIiESaIiELi256ELb0EEEEERiPiEmmEv.exit.loopexit, %.thread.i.i
+  %.pre = phi i8 [ %i.h, %.thread.i.i ], [ %i.o, %_ZN4absl7debian318container_internal14btree_iteratorINS1_10btree_nodeINS1_10set_paramsIiSt4lessIiESaIiELi256ELb0EEEEERiPiEmmEv.exit.loopexit ]
+  %storemerge.lcssa.i.i.i = phi ptr [ %storemerge3.i.i.i, %.thread.i.i ], [ %storemerge.i.i.i, %_ZN4absl7debian318container_internal14btree_iteratorINS1_10btree_nodeINS1_10set_paramsIiSt4lessIiESaIiELi256ELb0EEEEERiPiEmmEv.exit.loopexit ] ; 2 uses
   %i.p = getelementptr i8, ptr %storemerge.lcssa.i.i.i, i64 10
   %i.q = load i8, ptr %i.p, align 1, !tbaa !26    ; 2 uses
   %i.r = zext i8 %i.q to i32                      ; 2 uses
@@ -1027,15 +1033,18 @@ bb.a:
   %i.l = zext i8 %i.j to i64
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %i.l
   %storemerge.i.i.i = load ptr, ptr %i.m, align 8, !tbaa !90 ; 4 uses
-  store ptr %storemerge.i.i.i, ptr %6, align 8, !tbaa !116
   %i.n = getelementptr i8, ptr %storemerge.i.i.i, i64 11
   %i.o = load i8, ptr %i.n, align 1, !tbaa !26    ; 2 uses
   %.not.i.i.i.i = icmp eq i8 %i.o, 0
-  br i1 %.not.i.i.i.i, label %.lr.ph6.i.i.i, label %_ZN4absl7debian318container_internal14btree_iteratorINS1_10btree_nodeINS1_10map_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESA_St4lessISA_ESaISt4pairIKSA_SA_EELi256ELb0EEEEERSF_PSF_EmmEv.exit, !llvm.loop !400
+  br i1 %.not.i.i.i.i, label %.lr.ph6.i.i.i, label %_ZN4absl7debian318container_internal14btree_iteratorINS1_10btree_nodeINS1_10map_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESA_St4lessISA_ESaISt4pairIKSA_SA_EELi256ELb0EEEEERSF_PSF_EmmEv.exit.loopexit, !llvm.loop !400
 
-_ZN4absl7debian318container_internal14btree_iteratorINS1_10btree_nodeINS1_10map_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESA_St4lessISA_ESaISt4pairIKSA_SA_EELi256ELb0EEEEERSF_PSF_EmmEv.exit: ; preds = %.lr.ph6.i.i.i, %.thread.i.i
-  %.pre = phi i8 [ %i.h, %.thread.i.i ], [ %i.o, %.lr.ph6.i.i.i ]
-  %storemerge.lcssa.i.i.i = phi ptr [ %storemerge3.i.i.i, %.thread.i.i ], [ %storemerge.i.i.i, %.lr.ph6.i.i.i ] ; 2 uses
+_ZN4absl7debian318container_internal14btree_iteratorINS1_10btree_nodeINS1_10map_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESA_St4lessISA_ESaISt4pairIKSA_SA_EELi256ELb0EEEEERSF_PSF_EmmEv.exit.loopexit: ; preds = %.lr.ph6.i.i.i
+  store ptr %storemerge.i.i.i, ptr %6, align 8, !tbaa !116
+  br label %_ZN4absl7debian318container_internal14btree_iteratorINS1_10btree_nodeINS1_10map_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESA_St4lessISA_ESaISt4pairIKSA_SA_EELi256ELb0EEEEERSF_PSF_EmmEv.exit
+
+_ZN4absl7debian318container_internal14btree_iteratorINS1_10btree_nodeINS1_10map_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESA_St4lessISA_ESaISt4pairIKSA_SA_EELi256ELb0EEEEERSF_PSF_EmmEv.exit: ; preds = %_ZN4absl7debian318container_internal14btree_iteratorINS1_10btree_nodeINS1_10map_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESA_St4lessISA_ESaISt4pairIKSA_SA_EELi256ELb0EEEEERSF_PSF_EmmEv.exit.loopexit, %.thread.i.i
+  %.pre = phi i8 [ %i.h, %.thread.i.i ], [ %i.o, %_ZN4absl7debian318container_internal14btree_iteratorINS1_10btree_nodeINS1_10map_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESA_St4lessISA_ESaISt4pairIKSA_SA_EELi256ELb0EEEEERSF_PSF_EmmEv.exit.loopexit ]
+  %storemerge.lcssa.i.i.i = phi ptr [ %storemerge3.i.i.i, %.thread.i.i ], [ %storemerge.i.i.i, %_ZN4absl7debian318container_internal14btree_iteratorINS1_10btree_nodeINS1_10map_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESA_St4lessISA_ESaISt4pairIKSA_SA_EELi256ELb0EEEEERSF_PSF_EmmEv.exit.loopexit ] ; 2 uses
   %i.p = getelementptr i8, ptr %storemerge.lcssa.i.i.i, i64 10
   %i.q = load i8, ptr %i.p, align 1, !tbaa !26    ; 2 uses
   %i.r = zext i8 %i.q to i32                      ; 2 uses

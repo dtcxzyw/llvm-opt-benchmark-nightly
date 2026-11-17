@@ -54,6 +54,8 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.g
 
 ._crit_edge207:                                   ; preds = %bb.h, %bb.c
+  %.lcssa199205.lcssa = phi i64 [ undef, %bb.c ], [ %.lcssa199, %bb.h ]
+  store i64 %.lcssa199205.lcssa, ptr %i.a, align 8
   %i.ab = load ptr, ptr %i.h, align 8, !tbaa !48  ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(8192) %i.r, i8 0, i64 8192, i1 false), !tbaa !16
   %.not38.i = icmp eq i64 %i.g, 0                 ; 2 uses
@@ -349,6 +351,7 @@ bb.g:                                             ; preds = %.lr.ph206, %bb.h
   %i.fd = phi i16 [ %.pre, %.lr.ph206 ], [ %i.fk, %bb.h ] ; 2 uses
   %.0142204 = phi i32 [ 0, %.lr.ph206 ], [ %i.fl, %bb.h ] ; 4 uses
   %.0146203 = phi ptr [ %i.x, %.lr.ph206 ], [ %.1147.lcssa, %bb.h ] ; 2 uses
+  %.lcssa199205206 = phi i64 [ undef, %.lr.ph206 ], [ %.lcssa199, %bb.h ]
   %i.fe = load i32, ptr %i.y, align 8, !tbaa !52
   %i.ff = add nsw i32 %i.fe, %.0142204
   %i.fg = icmp sgt i16 %i.fd, 0
@@ -360,15 +363,15 @@ bb.g:                                             ; preds = %.lr.ph206, %bb.h
   br label %.lr.ph
 
 ._crit_edge.a:                                    ; preds = %bb.m
-  store i64 %i.ga, ptr %i.a, align 8, !tbaa !54
   %.pre234 = load i32, ptr %i.u, align 4, !tbaa !45
   br label %bb.h
 
 bb.h:                                             ; preds = %._crit_edge.a, %bb.g
-  %i.fi = phi i32 [ %.pre234, %._crit_edge.a ], [ %i.fb, %bb.g ] ; 2 uses
-  %i.fj = phi i16 [ %i.gj, %._crit_edge.a ], [ %i.fc, %bb.g ]
-  %i.fk = phi i16 [ %i.gj, %._crit_edge.a ], [ %i.fd, %bb.g ]
-  %.1147.lcssa = phi ptr [ %.2, %._crit_edge.a ], [ %.0146203, %bb.g ]
+  %i.fi = phi i32 [ %i.fb, %bb.g ], [ %.pre234, %._crit_edge.a ] ; 2 uses
+  %i.fj = phi i16 [ %i.fc, %bb.g ], [ %i.gj, %._crit_edge.a ]
+  %i.fk = phi i16 [ %i.fd, %bb.g ], [ %i.gj, %._crit_edge.a ]
+  %.lcssa199 = phi i64 [ %.lcssa199205206, %bb.g ], [ %i.ga, %._crit_edge.a ] ; 2 uses
+  %.1147.lcssa = phi ptr [ %.0146203, %bb.g ], [ %.2, %._crit_edge.a ]
   %i.fl = add nuw nsw i32 %.0142204, 1            ; 2 uses
   %i.fm = icmp slt i32 %i.fl, %i.fi
   br i1 %i.fm, label %bb.g, label %._crit_edge207, !llvm.loop !32

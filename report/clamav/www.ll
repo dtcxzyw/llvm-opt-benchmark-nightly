@@ -33,7 +33,7 @@ define range(i32 -1, -2147483648) i32 @connect_host(ptr noundef %0, ptr noundef 
 bb.a:
   %4 = alloca %struct.addrinfo, align 8           ; 5 uses
   %i.a = alloca ptr, align 8                      ; 8 uses
-  %i.b = alloca i32, align 4                      ; 5 uses
+  %i.b = alloca i32, align 4                      ; 6 uses
   %i.c = alloca i32, align 4                      ; 4 uses
   %5 = alloca %struct.fd_set, align 8             ; 5 uses
   %6 = alloca %struct.fd_set, align 8             ; 5 uses
@@ -70,6 +70,7 @@ bb.a:
   br i1 %.not61, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %bb.d
+  %8 = phi i32 [ %9, %bb.d ], [ undef, %.lr.ph ]
   %.05482.us = phi ptr [ %.054.us, %bb.d ], [ %.05479, %.lr.ph ] ; 6 uses
   %i.i = getelementptr inbounds nuw i8, ptr %.05482.us, i64 4
   %i.j = load i32, ptr %i.i, align 4, !tbaa !25
@@ -87,19 +88,27 @@ bb.b:                                             ; preds = %.lr.ph.split.us
   %i.s = getelementptr inbounds nuw i8, ptr %.05482.us, i64 16
   %i.t = load i32, ptr %i.s, align 8, !tbaa !28
   %i.u = call i32 @connect(i32 noundef %i.o, ptr %i.r, i32 noundef %i.t) #10 ; 2 uses
-  store i32 %i.u, ptr %i.b, align 4, !tbaa !29
   %.not62.us = icmp eq i32 %i.u, 0
-  br i1 %.not62.us, label %.thread69, label %bb.c
+  br i1 %.not62.us, label %.thread69.split.us, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.v = call i32 @close(i32 noundef %i.o) #10    ; 0 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %.lr.ph.split.us
+  %9 = phi i32 [ %8, %.lr.ph.split.us ], [ %i.u, %bb.c ] ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %.05482.us, i64 40
   %.054.us = load ptr, ptr %i.w, align 8, !tbaa !20 ; 2 uses
   %.not60.us = icmp eq ptr %.054.us, null
-  br i1 %.not60.us, label %.thread, label %.lr.ph.split.us
+  br i1 %.not60.us, label %..thread_crit_edge.split.us, label %.lr.ph.split.us
+
+.thread69.split.us:                               ; preds = %bb.b
+  store i32 0, ptr %i.b, align 4
+  br label %.thread69
+
+..thread_crit_edge.split.us:                      ; preds = %bb.d
+  store i32 %9, ptr %i.b, align 4
+  br label %.thread
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %bb.k
   %.05482 = phi ptr [ %.054, %bb.k ], [ %.05479, %.lr.ph ] ; 6 uses
@@ -188,8 +197,8 @@ bb.k:                                             ; preds = %.sink.split, %.lr.p
   %.not60 = icmp eq ptr %.054, null
   br i1 %.not60, label %.thread, label %.lr.ph.split
 
-.thread:                                          ; preds = %bb.k, %bb.d
-  %.055.lcssa = phi i32 [ %i.o, %bb.d ], [ %i.ad, %bb.k ] ; 2 uses
+.thread:                                          ; preds = %bb.k, %..thread_crit_edge.split.us
+  %.055.lcssa = phi i32 [ %i.o, %..thread_crit_edge.split.us ], [ %i.ad, %bb.k ] ; 2 uses
   %i.bm = load ptr, ptr %i.a, align 8, !tbaa !20
   call void @freeaddrinfo(ptr noundef %i.bm) #10
   %i.bn = icmp sgt i32 %.055.lcssa, -1
@@ -199,9 +208,9 @@ bb.l:                                             ; preds = %.thread
   %i.bo = call i32 @close(i32 noundef %.055.lcssa) #10 ; 0 uses
   br label %bb.o
 
-.thread69:                                        ; preds = %bb.f, %bb.j, %bb.b
-  %.us-phi = phi i32 [ 0, %bb.b ], [ %i.af, %bb.j ], [ %i.af, %bb.f ]
-  %.us-phi83 = phi i32 [ %i.o, %bb.b ], [ %i.ad, %bb.j ], [ %i.ad, %bb.f ] ; 4 uses
+.thread69:                                        ; preds = %bb.f, %bb.j, %.thread69.split.us
+  %.us-phi = phi i32 [ 0, %.thread69.split.us ], [ %i.af, %bb.j ], [ %i.af, %bb.f ]
+  %.us-phi83 = phi i32 [ %i.o, %.thread69.split.us ], [ %i.ad, %bb.j ], [ %i.ad, %bb.f ] ; 4 uses
   %i.bp = load ptr, ptr %i.a, align 8, !tbaa !20
   call void @freeaddrinfo(ptr noundef %i.bp) #10
   br i1 %.not61, label %bb.o, label %bb.m

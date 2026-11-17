@@ -205,7 +205,7 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 14 uses
   %i.g = load i64, ptr %i.f, align 8, !alias.scope !7076, !noundef !18 ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.i = load i64, ptr %i.h, align 8, !alias.scope !7076, !noundef !18 ; 16 uses
+  %i.i = load i64, ptr %i.h, align 8, !alias.scope !7076, !noundef !18 ; 17 uses
   %i.j = icmp ult i64 %i.g, %i.i
   br i1 %i.j, label %"_ZN10serde_json2de21Deserializer$LT$R$GT$17next_char_or_null17had8dfa755cc951b2E.exit", label %.thread
 
@@ -284,7 +284,6 @@ bb.e:                                             ; preds = %"_ZN10serde_json2de
 bb.f:                                             ; preds = %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17he4d7e89f56e52f42E.exit5"
   tail call void @llvm.experimental.noalias.scope.decl(metadata !7082)
   %storemerge.peel.i = add nuw i64 %i.w, 1        ; 5 uses
-  store i64 %storemerge.peel.i, ptr %i.f, align 8, !alias.scope !7082
   %i.ai = icmp ult i64 %storemerge.peel.i, %i.i
   br i1 %i.ai, label %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17he4d7e89f56e52f42E.exit.peel.i", label %.thread.thread.i
 
@@ -298,11 +297,11 @@ bb.f:                                             ; preds = %"_ZN10serde_json2de
 .peel.next.i.preheader:                           ; preds = %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17he4d7e89f56e52f42E.exit.peel.i"
   %i.am = add i64 %i.i, -1                        ; 2 uses
   %exitcond.not58 = icmp eq i64 %storemerge.peel.i, %i.am
-  br i1 %exitcond.not58, label %"_ZN10serde_json2de21Deserializer$LT$R$GT$14ignore_decimal17h0723783e273ec160E.exit.loopexit30", label %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17he4d7e89f56e52f42E.exit.i"
+  br i1 %exitcond.not58, label %.thread.i, label %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17he4d7e89f56e52f42E.exit.i"
 
 .peel.next.i:                                     ; preds = %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17he4d7e89f56e52f42E.exit.i"
   %exitcond.not = icmp eq i64 %storemerge.i, %i.am
-  br i1 %exitcond.not, label %"_ZN10serde_json2de21Deserializer$LT$R$GT$14ignore_decimal17h0723783e273ec160E.exit.loopexit30", label %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17he4d7e89f56e52f42E.exit.i", !llvm.loop !7018
+  br i1 %exitcond.not, label %.thread.i, label %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17he4d7e89f56e52f42E.exit.i", !llvm.loop !7018
 
 "_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17he4d7e89f56e52f42E.exit.i": ; preds = %.peel.next.i.preheader, %.peel.next.i
   %storemerge.in17.i59 = phi i64 [ %storemerge.i, %.peel.next.i ], [ %storemerge.peel.i, %.peel.next.i.preheader ] ; 3 uses
@@ -320,7 +319,13 @@ bb.f:                                             ; preds = %"_ZN10serde_json2de
     i8 69, label %bb.g
   ]
 
+.thread.i:                                        ; preds = %.peel.next.i, %.peel.next.i.preheader
+  store i64 %i.i, ptr %i.f, align 8, !alias.scope !7082
+  br label %"_ZN10serde_json2de21Deserializer$LT$R$GT$14ignore_decimal17h0723783e273ec160E.exit"
+
 .thread.thread.i:                                 ; preds = %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17he4d7e89f56e52f42E.exit.peel.i", %bb.f
+  %umax.sink.i = phi i64 [ %i.i, %bb.f ], [ %storemerge.peel.i, %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17he4d7e89f56e52f42E.exit.peel.i" ]
+  store i64 %umax.sink.i, ptr %i.f, align 8, !alias.scope !7082
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !7082
   store i64 13, ptr %i.c, align 8, !noalias !7082
   %i.aq = call fastcc noundef nonnull align 8 ptr @"_ZN10serde_json2de21Deserializer$LT$R$GT$10peek_error17hce042435a49e999eE"(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(64) %0, ptr noalias noundef align 8 captures(address) dereferenceable(24) %i.c)
@@ -449,12 +454,8 @@ bb.l:                                             ; preds = %"_ZN10serde_json2de
   %exitcond.not.i = icmp eq i64 %i.ca, %i.i
   br i1 %exitcond.not.i, label %"_ZN10serde_json2de21Deserializer$LT$R$GT$14ignore_decimal17h0723783e273ec160E.exit", label %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17he4d7e89f56e52f42E.exit4.i"
 
-"_ZN10serde_json2de21Deserializer$LT$R$GT$14ignore_decimal17h0723783e273ec160E.exit.loopexit30": ; preds = %.peel.next.i, %.peel.next.i.preheader
-  store i64 %i.i, ptr %i.f, align 8, !alias.scope !7082
-  br label %"_ZN10serde_json2de21Deserializer$LT$R$GT$14ignore_decimal17h0723783e273ec160E.exit"
-
-"_ZN10serde_json2de21Deserializer$LT$R$GT$14ignore_decimal17h0723783e273ec160E.exit": ; preds = %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17he4d7e89f56e52f42E.exit4.i", %bb.l, %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17he4d7e89f56e52f42E.exit4.i.i", %bb.i, %"_ZN10serde_json2de21Deserializer$LT$R$GT$14ignore_decimal17h0723783e273ec160E.exit.loopexit30", %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17he4d7e89f56e52f42E.exit.thread", %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17he4d7e89f56e52f42E.exit5", %.thread.thread.i, %.loopexit.i, %.preheader.i.i, %"_ZN10serde_json2de21Deserializer$LT$R$GT$17next_char_or_null17had8dfa755cc951b2E.exit.thread.i.i", %.preheader.i, %"_ZN10serde_json2de21Deserializer$LT$R$GT$17next_char_or_null17had8dfa755cc951b2E.exit.thread.i", %bb.d, %.thread
-  %.sroa.0.3 = phi ptr [ %i.z, %.thread ], [ %i.y, %bb.d ], [ null, %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17he4d7e89f56e52f42E.exit4.i.i" ], [ null, %.preheader.i ], [ null, %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17he4d7e89f56e52f42E.exit5" ], [ %i.aq, %.thread.thread.i ], [ null, %"_ZN10serde_json2de21Deserializer$LT$R$GT$14ignore_decimal17h0723783e273ec160E.exit.loopexit30" ], [ null, %.loopexit.i ], [ %i.bd, %"_ZN10serde_json2de21Deserializer$LT$R$GT$17next_char_or_null17had8dfa755cc951b2E.exit.thread.i.i" ], [ null, %.preheader.i.i ], [ null, %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17he4d7e89f56e52f42E.exit.thread" ], [ %i.bv, %"_ZN10serde_json2de21Deserializer$LT$R$GT$17next_char_or_null17had8dfa755cc951b2E.exit.thread.i" ], [ null, %bb.i ], [ null, %bb.l ], [ null, %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17he4d7e89f56e52f42E.exit4.i" ]
+"_ZN10serde_json2de21Deserializer$LT$R$GT$14ignore_decimal17h0723783e273ec160E.exit": ; preds = %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17he4d7e89f56e52f42E.exit4.i", %bb.l, %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17he4d7e89f56e52f42E.exit4.i.i", %bb.i, %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17he4d7e89f56e52f42E.exit.thread", %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17he4d7e89f56e52f42E.exit5", %.thread.i, %.thread.thread.i, %.loopexit.i, %.preheader.i.i, %"_ZN10serde_json2de21Deserializer$LT$R$GT$17next_char_or_null17had8dfa755cc951b2E.exit.thread.i.i", %.preheader.i, %"_ZN10serde_json2de21Deserializer$LT$R$GT$17next_char_or_null17had8dfa755cc951b2E.exit.thread.i", %bb.d, %.thread
+  %.sroa.0.3 = phi ptr [ %i.z, %.thread ], [ %i.y, %bb.d ], [ null, %.preheader.i ], [ null, %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17he4d7e89f56e52f42E.exit4.i.i" ], [ null, %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17he4d7e89f56e52f42E.exit5" ], [ %i.aq, %.thread.thread.i ], [ null, %.thread.i ], [ null, %.loopexit.i ], [ %i.bd, %"_ZN10serde_json2de21Deserializer$LT$R$GT$17next_char_or_null17had8dfa755cc951b2E.exit.thread.i.i" ], [ null, %.preheader.i.i ], [ null, %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17he4d7e89f56e52f42E.exit.thread" ], [ %i.bv, %"_ZN10serde_json2de21Deserializer$LT$R$GT$17next_char_or_null17had8dfa755cc951b2E.exit.thread.i" ], [ null, %bb.i ], [ null, %bb.l ], [ null, %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17he4d7e89f56e52f42E.exit4.i" ]
   ret ptr %.sroa.0.3
 }
 
@@ -472,7 +473,7 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 14 uses
   %i.g = load i64, ptr %i.f, align 8, !alias.scope !7236, !noundef !18 ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.i = load i64, ptr %i.h, align 8, !alias.scope !7236, !noundef !18 ; 16 uses
+  %i.i = load i64, ptr %i.h, align 8, !alias.scope !7236, !noundef !18 ; 17 uses
   %i.j = icmp ult i64 %i.g, %i.i
   br i1 %i.j, label %"_ZN10serde_json2de21Deserializer$LT$R$GT$17next_char_or_null17hc1715726119987ceE.exit", label %.thread
 
@@ -551,7 +552,6 @@ bb.e:                                             ; preds = %"_ZN10serde_json2de
 bb.f:                                             ; preds = %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17h66e1592d8c06b2e1E.exit5"
   tail call void @llvm.experimental.noalias.scope.decl(metadata !7242)
   %storemerge.peel.i = add nuw i64 %i.w, 1        ; 5 uses
-  store i64 %storemerge.peel.i, ptr %i.f, align 8, !alias.scope !7242
   %i.ai = icmp ult i64 %storemerge.peel.i, %i.i
   br i1 %i.ai, label %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17h66e1592d8c06b2e1E.exit.peel.i", label %.thread.thread.i
 
@@ -565,11 +565,11 @@ bb.f:                                             ; preds = %"_ZN10serde_json2de
 .peel.next.i.preheader:                           ; preds = %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17h66e1592d8c06b2e1E.exit.peel.i"
   %i.am = add i64 %i.i, -1                        ; 2 uses
   %exitcond.not58 = icmp eq i64 %storemerge.peel.i, %i.am
-  br i1 %exitcond.not58, label %"_ZN10serde_json2de21Deserializer$LT$R$GT$14ignore_decimal17hf128a72c529f8881E.exit.loopexit30", label %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17h66e1592d8c06b2e1E.exit.i"
+  br i1 %exitcond.not58, label %.thread.i, label %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17h66e1592d8c06b2e1E.exit.i"
 
 .peel.next.i:                                     ; preds = %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17h66e1592d8c06b2e1E.exit.i"
   %exitcond.not = icmp eq i64 %storemerge.i, %i.am
-  br i1 %exitcond.not, label %"_ZN10serde_json2de21Deserializer$LT$R$GT$14ignore_decimal17hf128a72c529f8881E.exit.loopexit30", label %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17h66e1592d8c06b2e1E.exit.i", !llvm.loop !7158
+  br i1 %exitcond.not, label %.thread.i, label %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17h66e1592d8c06b2e1E.exit.i", !llvm.loop !7158
 
 "_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17h66e1592d8c06b2e1E.exit.i": ; preds = %.peel.next.i.preheader, %.peel.next.i
   %storemerge.in17.i59 = phi i64 [ %storemerge.i, %.peel.next.i ], [ %storemerge.peel.i, %.peel.next.i.preheader ] ; 3 uses
@@ -587,7 +587,13 @@ bb.f:                                             ; preds = %"_ZN10serde_json2de
     i8 69, label %bb.g
   ]
 
+.thread.i:                                        ; preds = %.peel.next.i, %.peel.next.i.preheader
+  store i64 %i.i, ptr %i.f, align 8, !alias.scope !7242
+  br label %"_ZN10serde_json2de21Deserializer$LT$R$GT$14ignore_decimal17hf128a72c529f8881E.exit"
+
 .thread.thread.i:                                 ; preds = %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17h66e1592d8c06b2e1E.exit.peel.i", %bb.f
+  %umax.sink.i = phi i64 [ %i.i, %bb.f ], [ %storemerge.peel.i, %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17h66e1592d8c06b2e1E.exit.peel.i" ]
+  store i64 %umax.sink.i, ptr %i.f, align 8, !alias.scope !7242
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !7242
   store i64 13, ptr %i.c, align 8, !noalias !7242
   %i.aq = call fastcc noundef nonnull align 8 ptr @"_ZN10serde_json2de21Deserializer$LT$R$GT$10peek_error17h80f92ff32117c114E"(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %0, ptr noalias noundef align 8 captures(address) dereferenceable(24) %i.c)
@@ -718,12 +724,8 @@ bb.l:                                             ; preds = %"_ZN10serde_json2de
   %exitcond.not.i = icmp eq i64 %i.ca, %i.i
   br i1 %exitcond.not.i, label %"_ZN10serde_json2de21Deserializer$LT$R$GT$14ignore_decimal17hf128a72c529f8881E.exit", label %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17h66e1592d8c06b2e1E.exit4.i"
 
-"_ZN10serde_json2de21Deserializer$LT$R$GT$14ignore_decimal17hf128a72c529f8881E.exit.loopexit30": ; preds = %.peel.next.i, %.peel.next.i.preheader
-  store i64 %i.i, ptr %i.f, align 8, !alias.scope !7242
-  br label %"_ZN10serde_json2de21Deserializer$LT$R$GT$14ignore_decimal17hf128a72c529f8881E.exit"
-
-"_ZN10serde_json2de21Deserializer$LT$R$GT$14ignore_decimal17hf128a72c529f8881E.exit": ; preds = %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17h66e1592d8c06b2e1E.exit4.i", %bb.l, %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17h66e1592d8c06b2e1E.exit4.i.i", %bb.i, %"_ZN10serde_json2de21Deserializer$LT$R$GT$14ignore_decimal17hf128a72c529f8881E.exit.loopexit30", %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17h66e1592d8c06b2e1E.exit.thread", %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17h66e1592d8c06b2e1E.exit5", %.thread.thread.i, %.loopexit.i, %.preheader.i.i, %"_ZN10serde_json2de21Deserializer$LT$R$GT$17next_char_or_null17hc1715726119987ceE.exit.thread.i.i", %.preheader.i, %"_ZN10serde_json2de21Deserializer$LT$R$GT$17next_char_or_null17hc1715726119987ceE.exit.thread.i", %bb.d, %.thread
-  %.sroa.0.3 = phi ptr [ %i.z, %.thread ], [ %i.y, %bb.d ], [ null, %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17h66e1592d8c06b2e1E.exit4.i.i" ], [ null, %.preheader.i ], [ null, %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17h66e1592d8c06b2e1E.exit5" ], [ %i.aq, %.thread.thread.i ], [ null, %"_ZN10serde_json2de21Deserializer$LT$R$GT$14ignore_decimal17hf128a72c529f8881E.exit.loopexit30" ], [ null, %.loopexit.i ], [ %i.bd, %"_ZN10serde_json2de21Deserializer$LT$R$GT$17next_char_or_null17hc1715726119987ceE.exit.thread.i.i" ], [ null, %.preheader.i.i ], [ null, %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17h66e1592d8c06b2e1E.exit.thread" ], [ %i.bv, %"_ZN10serde_json2de21Deserializer$LT$R$GT$17next_char_or_null17hc1715726119987ceE.exit.thread.i" ], [ null, %bb.i ], [ null, %bb.l ], [ null, %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17h66e1592d8c06b2e1E.exit4.i" ]
+"_ZN10serde_json2de21Deserializer$LT$R$GT$14ignore_decimal17hf128a72c529f8881E.exit": ; preds = %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17h66e1592d8c06b2e1E.exit4.i", %bb.l, %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17h66e1592d8c06b2e1E.exit4.i.i", %bb.i, %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17h66e1592d8c06b2e1E.exit.thread", %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17h66e1592d8c06b2e1E.exit5", %.thread.i, %.thread.thread.i, %.loopexit.i, %.preheader.i.i, %"_ZN10serde_json2de21Deserializer$LT$R$GT$17next_char_or_null17hc1715726119987ceE.exit.thread.i.i", %.preheader.i, %"_ZN10serde_json2de21Deserializer$LT$R$GT$17next_char_or_null17hc1715726119987ceE.exit.thread.i", %bb.d, %.thread
+  %.sroa.0.3 = phi ptr [ %i.z, %.thread ], [ %i.y, %bb.d ], [ null, %.preheader.i ], [ null, %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17h66e1592d8c06b2e1E.exit4.i.i" ], [ null, %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17h66e1592d8c06b2e1E.exit5" ], [ %i.aq, %.thread.thread.i ], [ null, %.thread.i ], [ null, %.loopexit.i ], [ %i.bd, %"_ZN10serde_json2de21Deserializer$LT$R$GT$17next_char_or_null17hc1715726119987ceE.exit.thread.i.i" ], [ null, %.preheader.i.i ], [ null, %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17h66e1592d8c06b2e1E.exit.thread" ], [ %i.bv, %"_ZN10serde_json2de21Deserializer$LT$R$GT$17next_char_or_null17hc1715726119987ceE.exit.thread.i" ], [ null, %bb.i ], [ null, %bb.l ], [ null, %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17h66e1592d8c06b2e1E.exit4.i" ]
   ret ptr %.sroa.0.3
 }
 

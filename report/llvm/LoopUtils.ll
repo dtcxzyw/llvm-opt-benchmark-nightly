@@ -205,6 +205,7 @@ bb.c:                                             ; preds = %bb.b
   store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4mlir6affine26FlatAffineValueConstraintsE, i64 16), ptr %34, align 8, !tbaa !119
   %.idx.i = shl nuw nsw i64 %1, 3
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 %.idx.i ; 5 uses
+  %.promoted.i = load ptr, ptr %44, align 8
   %i.t = getelementptr inbounds nuw i8, ptr %32, i64 8
   %i.u = getelementptr inbounds nuw i8, ptr %36, i64 16 ; 4 uses
   %i.v = getelementptr inbounds nuw i8, ptr %36, i64 8
@@ -271,6 +272,7 @@ bb.d:                                             ; preds = %bb.t
 
 bb.e:                                             ; preds = %bb.d, %.lr.ph.i
   %.090.i = phi ptr [ %0, %.lr.ph.i ], [ %i.by, %bb.d ] ; 2 uses
+  %46 = phi ptr [ %.promoted.i, %.lr.ph.i ], [ %47, %bb.d ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %35) #20
   %i.bz = load i64, ptr %.090.i, align 8
   store i64 %i.bz, ptr %35, align 8
@@ -438,7 +440,6 @@ bb.o:                                             ; preds = %_ZNSt14_Optional_ba
   store i32 0, ptr %i.bu, align 8, !tbaa !115
   store i32 4, ptr %i.bv, align 4, !tbaa !116
   %i.dl = load i32, ptr %i.c, align 4, !tbaa !143
-  %46 = load ptr, ptr %44, align 8, !tbaa !65     ; 2 uses
   call void @_ZNK4mlir6affine26FlatAffineValueConstraints23getIneqAsAffineValueMapEjjRNS0_14AffineValueMapEPNS_11MLIRContextE(ptr noundef nonnull align 8 dereferenceable(624) %34, i32 noundef 0, i32 noundef %i.dl, ptr noundef nonnull align 8 dereferenceable(192) %39, ptr noundef %46) #20
   %i.dm = load i32, ptr %i.d, align 4, !tbaa !143
   call void @_ZNK4mlir6affine26FlatAffineValueConstraints23getIneqAsAffineValueMapEjjRNS0_14AffineValueMapEPNS_11MLIRContextE(ptr noundef nonnull align 8 dereferenceable(624) %34, i32 noundef 0, i32 noundef %i.dm, ptr noundef nonnull align 8 dereferenceable(192) %40, ptr noundef %46) #20
@@ -484,7 +485,7 @@ bb.o:                                             ; preds = %_ZNSt14_Optional_ba
   %i.ev = call noundef ptr @_ZN4mlir5Block13getTerminatorEv(ptr noundef nonnull align 8 dereferenceable(80) %i.eu) #20, !noalias !663
   %i.ew = call noundef ptr @_ZN4llvm12ilist_detail18SpecificNodeAccessINS0_12node_optionsIN4mlir9OperationELb0ELb0EvLb0EvEEE10getNodePtrEPS4_(ptr noundef %i.ev) #20, !noalias !663
   %i.ex = call noundef ptr @_ZNK4mlir5Block9getParentEv(ptr noundef nonnull align 8 dereferenceable(80) %i.eu) #20, !noalias !663
-  %i.ey = call noundef ptr @_ZN4mlir6Region10getContextEv(ptr noundef nonnull align 8 dereferenceable(28) %i.ex) #20, !noalias !663
+  %i.ey = call noundef ptr @_ZN4mlir6Region10getContextEv(ptr noundef nonnull align 8 dereferenceable(28) %i.ex) #20, !noalias !663 ; 2 uses
   store ptr %i.ey, ptr %44, align 8
   store ptr null, ptr %.sroa.277.0..sroa_idx, align 8
   store ptr %i.eu, ptr %.sroa.378.0..sroa_idx, align 8
@@ -516,6 +517,7 @@ _ZN4llvm23SmallVectorTemplateBaseIN4mlir6affine11AffineForOpELb1EE9push_backES3_
   br label %bb.r
 
 bb.r:                                             ; preds = %_ZN4llvm23SmallVectorTemplateBaseIN4mlir6affine11AffineForOpELb1EE9push_backES3_.exit.i, %_ZNSt14_Optional_baseIN4llvm12DynamicAPIntELb0ELb0EED2Ev.exit.i
+  %47 = phi ptr [ %i.ey, %_ZN4llvm23SmallVectorTemplateBaseIN4mlir6affine11AffineForOpELb1EE9push_backES3_.exit.i ], [ %46, %_ZNSt14_Optional_baseIN4llvm12DynamicAPIntELb0ELb0EED2Ev.exit.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #20
   %i.fg = load ptr, ptr %36, align 8, !tbaa !114  ; 2 uses

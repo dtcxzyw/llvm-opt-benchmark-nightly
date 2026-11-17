@@ -202,7 +202,6 @@ define i32 @ares_dns_rr_set_opt_own(ptr noundef %0, i32 noundef %1, i16 noundef 
 bb.a:
   %i.a = alloca ptr, align 8                      ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
-  store ptr null, ptr %i.a, align 8, !tbaa !52
   %i.b = tail call i32 @ares_dns_rr_key_datatype(i32 noundef %1) #5
   %.not = icmp eq i32 %i.b, 10
   br i1 %.not, label %bb.b, label %.loopexit
@@ -227,13 +226,12 @@ bb.d:                                             ; preds = %bb.c
   %i.i = phi ptr [ %i.g, %bb.d ], [ %i.e, %bb.c ]
   %i.j = tail call i64 @ares_array_len(ptr noundef nonnull %i.i) #5 ; 3 uses
   %.not33 = icmp eq i64 %i.j, 0
-  br i1 %.not33, label %._crit_edge.thread, label %.lr.ph
+  br i1 %.not33, label %.sink.split, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.thread, %bb.f
   %.030 = phi i64 [ %i.p, %bb.f ], [ 0, %.thread ] ; 3 uses
   %i.k = load ptr, ptr %i.c, align 8, !tbaa !33
-  %i.l = tail call ptr @ares_array_at(ptr noundef %i.k, i64 noundef %.030) #5 ; 4 uses
-  store ptr %i.l, ptr %i.a, align 8, !tbaa !52
+  %i.l = tail call ptr @ares_array_at(ptr noundef %i.k, i64 noundef %.030) #5 ; 5 uses
   %i.m = icmp eq ptr %i.l, null
   br i1 %i.m, label %.loopexit, label %bb.e
 
@@ -245,13 +243,19 @@ bb.e:                                             ; preds = %.lr.ph
 bb.f:                                             ; preds = %bb.e
   %i.p = add nuw i64 %.030, 1                     ; 2 uses
   %exitcond.not = icmp eq i64 %i.p, %i.j
-  br i1 %exitcond.not, label %._crit_edge.thread, label %.lr.ph
+  br i1 %exitcond.not, label %.sink.split, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %bb.e
   %.not51 = icmp eq i64 %.030, %i.j
+  store ptr %i.l, ptr %i.a, align 8
   br i1 %.not51, label %._crit_edge.thread, label %bb.g
 
-._crit_edge.thread:                               ; preds = %bb.f, %.thread, %._crit_edge
+.sink.split:                                      ; preds = %bb.f, %.thread
+  %.lcssa51.sink = phi ptr [ null, %.thread ], [ %i.l, %bb.f ]
+  store ptr %.lcssa51.sink, ptr %i.a, align 8
+  br label %._crit_edge.thread
+
+._crit_edge.thread:                               ; preds = %.sink.split, %._crit_edge
   %i.q = load ptr, ptr %i.c, align 8, !tbaa !33
   %i.r = call i32 @ares_array_insert_last(ptr noundef nonnull %i.a, ptr noundef %i.q) #5 ; 2 uses
   %.not28 = icmp eq i32 %i.r, 0

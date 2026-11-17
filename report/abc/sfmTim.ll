@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.epil.preheader, %._crit_edge.loopexit.unr-lcssa, %bb.a
-  %i.at = getelementptr inbounds nuw i8, ptr %i.a, i64 4
+  %i.at = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 2 uses
   store i32 0, ptr %i.at, align 4, !tbaa !19
   store i32 0, ptr %i.a, align 16, !tbaa !19
   %i.au = tail call ptr @Mio_GateReadPins(ptr noundef %3) #15 ; 2 uses
@@ -249,15 +249,16 @@ bb.c:                                             ; preds = %.lr.ph.i
   br label %Sfm_TimEdgeArrival.exit.i
 
 Sfm_TimEdgeArrival.exit.i:                        ; preds = %._crit_edge.i.i, %bb.c
-  %i.bp = phi <2 x i32> [ %i.bo, %._crit_edge.i.i ], [ %i.bj, %bb.c ] ; 4 uses
-  store <2 x i32> %i.bp, ptr %i.a, align 16, !tbaa !19
+  %i.bp = phi <2 x i32> [ %i.bo, %._crit_edge.i.i ], [ %i.bj, %bb.c ] ; 3 uses
   %i.bq = tail call ptr @Mio_PinReadNext(ptr noundef nonnull %.092.i) #15 ; 2 uses
   %.not.i = icmp eq ptr %i.bq, null
   br i1 %.not.i, label %Sfm_TimGateArrival.exit.loopexit, label %.lr.ph.i, !llvm.loop !0
 
 Sfm_TimGateArrival.exit.loopexit:                 ; preds = %Sfm_TimEdgeArrival.exit.i
-  %i.br = extractelement <2 x i32> %i.bp, i64 0
-  %i.bs = extractelement <2 x i32> %i.bp, i64 1
+  %i.br = extractelement <2 x i32> %i.bp, i64 0   ; 2 uses
+  store i32 %i.br, ptr %i.a, align 16
+  %i.bs = extractelement <2 x i32> %i.bp, i64 1   ; 2 uses
+  store i32 %i.bs, ptr %i.at, align 4
   %i.bt = tail call i32 @llvm.smax.i32(i32 %i.br, i32 %i.bs)
   br label %Sfm_TimGateArrival.exit
 

@@ -202,7 +202,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !371)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !370
   store ptr %i.f, ptr %i.d, align 8, !noalias !372
-  %i.i = load ptr, ptr %i.e, align 8, !alias.scope !371, !noalias !370, !noundef !4 ; 2 uses
+  %i.i = load ptr, ptr %i.e, align 8, !alias.scope !371, !noalias !370, !noundef !4 ; 3 uses
   %.not.i.i = icmp eq ptr %i.i, null
   br i1 %.not.i.i, label %bb.f, label %bb.b
 
@@ -212,20 +212,21 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !375
   store ptr %i.d, ptr %i.c, align 8, !noalias !376
   %i.j = getelementptr inbounds nuw i8, ptr %i.e, i64 8
-  %i.k = load ptr, ptr %i.j, align 8, !alias.scope !377, !noalias !370, !nonnull !4, !noundef !4
-  br label %bb.c
+  %i.k = load ptr, ptr %i.j, align 8, !alias.scope !377, !noalias !370, !nonnull !4, !noundef !4 ; 2 uses
+  %.not.not.not.i.not.not.not.i.not.i3.i = icmp eq ptr %i.i, %i.k
+  br i1 %.not.not.not.i.not.not.not.i.not.i3.i, label %_RNCINvNvXsi_NtNtNtCskKLDkoKarTP_4core4iter8adapters7flattenINtBa_13FlattenCompatppENtNtNtBe_6traits8iterator8Iterator8try_fold7flattenINtNtNtBg_5slice4iter4IterNtCsbli3iz7XG76_9multiaddr9MultiaddrEuINtNtNtBg_3ops12control_flow11ControlFlowuENCINvNvB1j_3any5checkRB2y_NCNCNCNvMs0_NtCsg9QLscIEtAL_17libp2p_rendezvous6clientNtB4t_9Behaviour15handle_response000E0E0B4v_.exit.i.i, label %bb.d
 
-bb.c:                                             ; preds = %bb.d, %bb.b
-  %3 = phi ptr [ %4, %bb.d ], [ %i.i, %bb.b ]     ; 3 uses
+bb.c:                                             ; preds = %bb.d
+  %3 = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
   %.not.not.not.i.not.not.not.i.not.i.i = icmp eq ptr %3, %i.k
   br i1 %.not.not.not.i.not.not.not.i.not.i.i, label %_RNCINvNvXsi_NtNtNtCskKLDkoKarTP_4core4iter8adapters7flattenINtBa_13FlattenCompatppENtNtNtBe_6traits8iterator8Iterator8try_fold7flattenINtNtNtBg_5slice4iter4IterNtCsbli3iz7XG76_9multiaddr9MultiaddrEuINtNtNtBg_3ops12control_flow11ControlFlowuENCINvNvB1j_3any5checkRB2y_NCNCNCNvMs0_NtCsg9QLscIEtAL_17libp2p_rendezvous6clientNtB4t_9Behaviour15handle_response000E0E0B4v_.exit.i.i, label %bb.d
 
-bb.d:                                             ; preds = %bb.c
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 32
-  %i.l = call noundef zeroext i1 @_RNvXs1_NtNtNtCskKLDkoKarTP_4core3ops8function5implsQNCINvNvNtNtNtNtBb_4iter6traits8iterator8Iterator3any5checkRNtCsbli3iz7XG76_9multiaddr9MultiaddrNCNCNCNvMs0_NtCsg9QLscIEtAL_17libp2p_rendezvous6clientNtB2x_9Behaviour15handle_response000E0INtB7_5FnMutTuB1K_EE8call_mutB2z_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.c, ptr noundef nonnull align 8 %3), !noalias !378
+bb.d:                                             ; preds = %bb.b, %bb.c
+  %4 = phi ptr [ %3, %bb.c ], [ %i.i, %bb.b ]     ; 2 uses
+  %i.l = call noundef zeroext i1 @_RNvXs1_NtNtNtCskKLDkoKarTP_4core3ops8function5implsQNCINvNvNtNtNtNtBb_4iter6traits8iterator8Iterator3any5checkRNtCsbli3iz7XG76_9multiaddr9MultiaddrNCNCNCNvMs0_NtCsg9QLscIEtAL_17libp2p_rendezvous6clientNtB2x_9Behaviour15handle_response000E0INtB7_5FnMutTuB1K_EE8call_mutB2z_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.c, ptr noundef nonnull align 8 %4), !noalias !378
   br i1 %i.l, label %bb.e, label %bb.c
 
-_RNCINvNvXsi_NtNtNtCskKLDkoKarTP_4core4iter8adapters7flattenINtBa_13FlattenCompatppENtNtNtBe_6traits8iterator8Iterator8try_fold7flattenINtNtNtBg_5slice4iter4IterNtCsbli3iz7XG76_9multiaddr9MultiaddrEuINtNtNtBg_3ops12control_flow11ControlFlowuENCINvNvB1j_3any5checkRB2y_NCNCNCNvMs0_NtCsg9QLscIEtAL_17libp2p_rendezvous6clientNtB4t_9Behaviour15handle_response000E0E0B4v_.exit.i.i: ; preds = %bb.c
+_RNCINvNvXsi_NtNtNtCskKLDkoKarTP_4core4iter8adapters7flattenINtBa_13FlattenCompatppENtNtNtBe_6traits8iterator8Iterator8try_fold7flattenINtNtNtBg_5slice4iter4IterNtCsbli3iz7XG76_9multiaddr9MultiaddrEuINtNtNtBg_3ops12control_flow11ControlFlowuENCINvNvB1j_3any5checkRB2y_NCNCNCNvMs0_NtCsg9QLscIEtAL_17libp2p_rendezvous6clientNtB4t_9Behaviour15handle_response000E0E0B4v_.exit.i.i: ; preds = %bb.c, %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !375
   br label %bb.f
 

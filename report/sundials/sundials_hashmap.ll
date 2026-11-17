@@ -23,7 +23,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %bb.f, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.c = tail call noalias dereferenceable_or_null(32) ptr @malloc(i64 noundef 32) #16 ; 8 uses
+  %i.c = tail call noalias dereferenceable_or_null(32) ptr @malloc(i64 noundef 32) #16 ; 9 uses
   %.not.i = icmp eq ptr %i.c, null
   br i1 %.not.i, label %bb.f, label %bb.d
 
@@ -41,7 +41,7 @@ bb.e:                                             ; preds = %bb.d
 
 .lr.ph:                                           ; preds = %bb.d
   store i64 0, ptr %i.c, align 8, !tbaa !16
-  %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 3 uses
   store i64 %0, ptr %i.g, align 8, !tbaa !17
   %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   store ptr %1, ptr %i.h, align 8, !tbaa !18
@@ -53,7 +53,7 @@ bb.f:                                             ; preds = %bb.b, %bb.e, %bb.c
 
 bb.g:                                             ; preds = %.lr.ph, %bb.k
   %i.i = phi ptr [ %i.e, %.lr.ph ], [ %i.r, %bb.k ] ; 3 uses
-  %i.j = phi i64 [ %0, %.lr.ph ], [ %i.s, %bb.k ] ; 5 uses
+  %i.j = phi i64 [ %0, %.lr.ph ], [ %i.s, %bb.k ] ; 7 uses
   %.pre.i = phi i64 [ 0, %.lr.ph ], [ %i.t, %bb.k ] ; 3 uses
   %.036 = phi i64 [ 0, %.lr.ph ], [ %i.v, %bb.k ]
   %i.k = icmp eq i64 %.pre.i, %i.j
@@ -63,7 +63,7 @@ bb.h:                                             ; preds = %bb.g
   %i.l = uitofp nneg i64 %i.j to x86_fp80
   %i.m = fmul nnan x86_fp80 %i.l, 1.500000e+00
   %i.n = tail call x86_fp80 @llvm.ceil.f80(x86_fp80 %i.m)
-  %i.o = fptosi x86_fp80 %i.n to i64              ; 4 uses
+  %i.o = fptosi x86_fp80 %i.n to i64              ; 3 uses
   %.not.i.i.i = icmp slt i64 %i.j, %i.o
   br i1 %.not.i.i.i, label %bb.i, label %bb.k
 
@@ -71,18 +71,16 @@ bb.i:                                             ; preds = %bb.h
   %i.p = shl i64 %i.o, 3
   %i.q = tail call ptr @realloc(ptr noundef %i.i, i64 noundef %i.p) #18 ; 3 uses
   %.not11.i.i.i = icmp eq ptr %i.q, null
-  br i1 %.not11.i.i.i, label %.thread, label %bb.j
+  br i1 %.not11.i.i.i, label %.thread.loopexit, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   store ptr %i.q, ptr %i.f, align 8, !tbaa !15
-  store i64 %i.o, ptr %i.g, align 8, !tbaa !17
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.g, %bb.h, %bb.j
   %i.r = phi ptr [ %i.q, %bb.j ], [ %i.i, %bb.h ], [ %i.i, %bb.g ] ; 2 uses
-  %i.s = phi i64 [ %i.o, %bb.j ], [ %i.j, %bb.h ], [ %i.j, %bb.g ]
+  %i.s = phi i64 [ %i.o, %bb.j ], [ %i.j, %bb.h ], [ %i.j, %bb.g ] ; 2 uses
   %i.t = add nuw nsw i64 %.pre.i, 1               ; 2 uses
-  store i64 %i.t, ptr %i.c, align 8, !tbaa !16
   %i.u = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %.pre.i
   store ptr null, ptr %i.u, align 8, !tbaa !20
   %i.v = add nuw nsw i64 %.036, 1                 ; 2 uses
@@ -90,13 +88,20 @@ bb.k:                                             ; preds = %bb.g, %bb.h, %bb.j
   br i1 %exitcond.not, label %._crit_edge, label %bb.g
 
 ._crit_edge:                                      ; preds = %bb.k
+  store i64 %i.t, ptr %i.c, align 8
+  store i64 %i.s, ptr %i.g, align 8
   %.pre = load ptr, ptr %2, align 8, !tbaa !10
   %i.w = getelementptr inbounds nuw i8, ptr %.pre, i64 8
   store ptr %i.c, ptr %i.w, align 8, !tbaa !23
   br label %.thread
 
-.thread:                                          ; preds = %bb.i, %bb.f, %._crit_edge, %bb.a
-  %.4 = phi i32 [ -9997, %bb.a ], [ 0, %._crit_edge ], [ -9988, %bb.f ], [ -9988, %bb.i ]
+.thread.loopexit:                                 ; preds = %bb.i
+  store i64 %i.j, ptr %i.c, align 8
+  store i64 %i.j, ptr %i.g, align 8
+  br label %.thread
+
+.thread:                                          ; preds = %.thread.loopexit, %bb.f, %._crit_edge, %bb.a
+  %.4 = phi i32 [ -9997, %bb.a ], [ 0, %._crit_edge ], [ -9988, %bb.f ], [ -9988, %.thread.loopexit ]
   ret i32 %.4
 }
 

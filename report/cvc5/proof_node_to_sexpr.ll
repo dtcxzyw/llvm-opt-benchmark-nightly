@@ -202,7 +202,7 @@ _ZNKSt6vectorIPKN4cvc58internal9ProofNodeESaIS4_EE12_M_check_lenEmPKc.exit.i.i:
   %24 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 8 uses
   %25 = alloca %"class.std::vector.133", align 8  ; 11 uses
   %26 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 14 uses
-  %27 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 2 uses
+  %27 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 7 uses
   %28 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 8 uses
   %29 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 8 uses
   store ptr %2, ptr %i.a, align 8, !tbaa !83
@@ -605,6 +605,7 @@ _ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE9push_backERKS3_.exit14
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %25, i8 0, i64 24, i1 false)
   %i.ld = load ptr, ptr %i.kj, align 8, !tbaa !93 ; 2 uses
   %i.le = load ptr, ptr %i.jf, align 8, !tbaa !95 ; 2 uses
+  %.promoted = load ptr, ptr %27, align 8         ; 2 uses
   %.not660 = icmp eq ptr %i.ld, %i.le
   br i1 %.not660, label %._crit_edge642, label %.lr.ph641.preheader
 
@@ -616,6 +617,8 @@ _ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE9push_backERKS3_.exit14
   br label %.lr.ph641
 
 ._crit_edge642:                                   ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit167, %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE9push_backERKS3_.exit141
+  %.lcssa = phi ptr [ %.promoted, %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE9push_backERKS3_.exit141 ], [ %i.lt, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit167 ]
+  store ptr %.lcssa, ptr %27, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %28) #20
   %i.lj = load ptr, ptr %1, align 8, !tbaa !64
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #20, !noalias !186
@@ -660,6 +663,7 @@ _ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE9push_backERKS3_.exit14
 
 .lr.ph641:                                        ; preds = %.lr.ph641.preheader, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit167
   %.0640 = phi i64 [ %i.oc, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit167 ], [ 0, %.lr.ph641.preheader ] ; 3 uses
+  %30 = phi ptr [ %i.lt, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit167 ], [ %.promoted, %.lr.ph641.preheader ]
   %i.lp = load ptr, ptr %i.b, align 8, !tbaa !83
   %i.lq = invoke noundef i32 @_ZN4cvc58internal16ProofNodeToSExpr17getArgumentFormatEPKNS0_9ProofNodeEm(ptr nonnull align 8 poison, ptr noundef %i.lp, i64 noundef %.0640)
           to label %bb.cv unwind label %bb.dv
@@ -668,8 +672,7 @@ bb.cv:                                            ; preds = %.lr.ph641
   call void @llvm.lifetime.start.p0(ptr nonnull %26) #20
   %i.lr = load ptr, ptr %i.jf, align 8, !tbaa !95
   %i.ls = getelementptr inbounds nuw [8 x i8], ptr %i.lr, i64 %.0640
-  %i.lt = load ptr, ptr %i.ls, align 8, !tbaa !70 ; 19 uses
-  store ptr %i.lt, ptr %27, align 8, !tbaa !70
+  %i.lt = load ptr, ptr %i.ls, align 8, !tbaa !70 ; 23 uses
   %i.lu = load i64, ptr %i.lt, align 8            ; 3 uses
   %i.lv = lshr i64 %i.lu, 40
   %i.lw = trunc nuw nsw i64 %i.lv to i32
@@ -884,22 +887,26 @@ _ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit167: ; preds = %_ZNSt6vectorIN4cvc
 bb.dv:                                            ; preds = %.lr.ph641
   %i.od = landingpad { ptr, i32 }
           cleanup
+  store ptr %30, ptr %27, align 8
   br label %bb.ep
 
 bb.dw:                                            ; preds = %bb.cy
   %i.oe = landingpad { ptr, i32 }
           cleanup
+  store ptr %i.lt, ptr %27, align 8
   br label %bb.dz
 
 bb.dx:                                            ; preds = %bb.di, %bb.de, %bb.dd, %bb.dc, %bb.db, %bb.da, %bb.cz
   %i.of = landingpad { ptr, i32 }
           cleanup
+  store ptr %i.lt, ptr %27, align 8
   call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %27) #20
   br label %bb.dz
 
 bb.dy:                                            ; preds = %bb.dr, %bb.dq
   %i.og = landingpad { ptr, i32 }
           cleanup
+  store ptr %i.lt, ptr %27, align 8
   call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %26) #20
   br label %bb.dz
 

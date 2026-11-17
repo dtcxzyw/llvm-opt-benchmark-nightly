@@ -205,15 +205,23 @@ bb.gi:                                            ; preds = %_ZN7rocksdb6StatusD
 .preheader1442:                                   ; preds = %bb.gi
   %i.aou = load i32, ptr %i.a, align 4, !tbaa !669 ; 2 uses
   %.not3371611 = icmp eq i32 %i.aou, 0
-  br i1 %.not3371611, label %.loopexit1438, label %.lr.ph1613.a
+  br i1 %.not3371611, label %.loopexit1438, label %.lr.ph1613
+
+.lr.ph1613:                                       ; preds = %.preheader1442
+  %72 = load ptr, ptr %29, align 8
+  br label %.lr.ph1613.a
 
 .preheader1437:                                   ; preds = %.critedge
   %.not3381614 = icmp eq i32 %i.apn, 0
-  br i1 %.not3381614, label %.loopexit1438, label %.lr.ph1616.a
+  br i1 %.not3381614, label %.loopexit1438, label %.lr.ph1616
 
-.lr.ph1613.a:                                     ; preds = %.preheader1442, %.critedge
-  %i.aov = phi i32 [ %i.apn, %.critedge ], [ %i.aou, %.preheader1442 ] ; 2 uses
-  %indvars.iv1751 = phi i64 [ %indvars.iv.next1752, %.critedge ], [ 0, %.preheader1442 ] ; 7 uses
+.lr.ph1616:                                       ; preds = %.preheader1437
+  %73 = load ptr, ptr %29, align 8
+  br label %.lr.ph1616.a
+
+.lr.ph1613.a:                                     ; preds = %.lr.ph1613, %.critedge
+  %i.aov = phi i32 [ %i.aou, %.lr.ph1613 ], [ %i.apn, %.critedge ] ; 2 uses
+  %indvars.iv1751 = phi i64 [ 0, %.lr.ph1613 ], [ %indvars.iv.next1752, %.critedge ] ; 7 uses
   %i.aow = load ptr, ptr %40, align 8, !tbaa !985
   %i.aox = lshr i64 %indvars.iv1751, 6
   %.zext = and i64 %i.aox, 67108863
@@ -238,7 +246,6 @@ bb.gj:                                            ; preds = %.lr.ph1613.a
   br i1 %i.apk, label %.critedge, label %bb.gk
 
 bb.gk:                                            ; preds = %bb.gj
-  %72 = load ptr, ptr %29, align 8, !tbaa !963
   %i.apl = getelementptr inbounds nuw [8 x i8], ptr %72, i64 %indvars.iv1751
   %i.apm = load ptr, ptr %i.apl, align 8, !tbaa !962
   invoke void @_ZN7rocksdb8FlushJob6CancelEv(ptr noundef nonnull align 8 dereferenceable(1960) %i.apm)
@@ -255,9 +262,9 @@ bb.gk:                                            ; preds = %bb.gj
   %.not337 = icmp eq i64 %indvars.iv.next1752, %i.apo
   br i1 %.not337, label %.preheader1437, label %.lr.ph1613.a, !llvm.loop !1676
 
-.lr.ph1616.a:                                     ; preds = %.preheader1437, %bb.gn
-  %i.app = phi i32 [ %i.aql, %bb.gn ], [ %i.apn, %.preheader1437 ] ; 2 uses
-  %indvars.iv1754 = phi i64 [ %indvars.iv.next1755, %bb.gn ], [ 0, %.preheader1437 ] ; 7 uses
+.lr.ph1616.a:                                     ; preds = %.lr.ph1616, %bb.gn
+  %i.app = phi i32 [ %i.apn, %.lr.ph1616 ], [ %i.aql, %bb.gn ] ; 2 uses
+  %indvars.iv1754 = phi i64 [ 0, %.lr.ph1616 ], [ %indvars.iv.next1755, %bb.gn ] ; 7 uses
   %i.apq = icmp samesign ult i64 %indvars.iv1754, 8 ; 2 uses
   %i.apr = load ptr, ptr %i.rk, align 8
   %i.aps = getelementptr inbounds nuw [24 x i8], ptr %i.apr, i64 %indvars.iv1754
@@ -276,7 +283,6 @@ bb.gl:                                            ; preds = %.lr.ph1616.a
   br i1 %i.aqa, label %bb.gm, label %bb.gn
 
 bb.gm:                                            ; preds = %bb.gl
-  %73 = load ptr, ptr %29, align 8, !tbaa !963
   %i.aqb = getelementptr inbounds nuw [8 x i8], ptr %73, i64 %indvars.iv1754
   %i.aqc = load ptr, ptr %i.aqb, align 8, !tbaa !962
   %i.aqd = getelementptr inbounds nuw i8, ptr %i.aqc, i64 1656
@@ -679,7 +685,7 @@ thread-pre-split1360:                             ; preds = %thread-pre-split136
   %.not3611617.old = icmp eq i32 %.old1649, 0
   br i1 %.not3611617.old, label %.thread1364, label %.lr.ph1619.preheader
 
-.lr.ph1619.preheader:                             ; preds = %.preheader1428, %thread-pre-split1360
+.lr.ph1619.preheader:                             ; preds = %thread-pre-split1360, %.preheader1428
   %.pre1865 = load ptr, ptr %29, align 8, !tbaa !963
   br label %.lr.ph1619
 
@@ -750,15 +756,16 @@ bb.hu:                                            ; preds = %.thread1328
   br i1 %.not3641620, label %._crit_edge1624, label %.lr.ph1623
 
 .lr.ph1623:                                       ; preds = %bb.hu
+  %74 = load ptr, ptr %29, align 8, !tbaa !963
   %i.axa = getelementptr inbounds nuw i8, ptr %55, i64 88 ; 3 uses
   %i.axb = getelementptr inbounds nuw i8, ptr %55, i64 96 ; 3 uses
   %i.axc = getelementptr inbounds nuw i8, ptr %56, i64 88 ; 3 uses
   %i.axd = getelementptr inbounds nuw i8, ptr %56, i64 96 ; 3 uses
-  %74 = getelementptr inbounds nuw i8, ptr %57, i64 88 ; 3 uses
-  %i.axe = getelementptr inbounds nuw i8, ptr %57, i64 96 ; 3 uses
-  %i.axf = getelementptr inbounds nuw i8, ptr %58, i64 88 ; 3 uses
-  %i.axg = getelementptr inbounds nuw i8, ptr %58, i64 96 ; 3 uses
-  %.pre1868 = load ptr, ptr %29, align 8, !tbaa !963 ; 2 uses
+  %75 = load ptr, ptr %33, align 8
+  %i.axe = getelementptr inbounds nuw i8, ptr %57, i64 88 ; 3 uses
+  %i.axf = getelementptr inbounds nuw i8, ptr %57, i64 96 ; 3 uses
+  %i.axg = getelementptr inbounds nuw i8, ptr %58, i64 88 ; 3 uses
+  %76 = getelementptr inbounds nuw i8, ptr %58, i64 96 ; 3 uses
   br label %bb.hv
 
 ._crit_edge1624:                                  ; preds = %_ZN7rocksdb10autovectorIPNSt7__cxx114listISt10unique_ptrINS_12FlushJobInfoESt14default_deleteIS4_EESaIS7_EEELm8EE12emplace_backIJSA_EEEvDpOT_.exit, %bb.hu
@@ -772,8 +779,8 @@ bb.hu:                                            ; preds = %.thread1328
           to label %bb.iw unwind label %bb.jg
 
 bb.hv:                                            ; preds = %.lr.ph1623, %_ZN7rocksdb10autovectorIPNSt7__cxx114listISt10unique_ptrINS_12FlushJobInfoESt14default_deleteIS4_EESaIS7_EEELm8EE12emplace_backIJSA_EEEvDpOT_.exit
-  %indvars.iv1760 = phi i64 [ 0, %.lr.ph1623 ], [ %indvars.iv.next1761, %_ZN7rocksdb10autovectorIPNSt7__cxx114listISt10unique_ptrINS_12FlushJobInfoESt14default_deleteIS4_EESaIS7_EEELm8EE12emplace_backIJSA_EEEvDpOT_.exit ] ; 7 uses
-  %i.axm = getelementptr inbounds nuw [8 x i8], ptr %.pre1868, i64 %indvars.iv1760
+  %indvars.iv1760 = phi i64 [ 0, %.lr.ph1623 ], [ %indvars.iv.next1761, %_ZN7rocksdb10autovectorIPNSt7__cxx114listISt10unique_ptrINS_12FlushJobInfoESt14default_deleteIS4_EESaIS7_EEELm8EE12emplace_backIJSA_EEEvDpOT_.exit ] ; 6 uses
+  %i.axm = getelementptr inbounds nuw [8 x i8], ptr %74, i64 %indvars.iv1760 ; 2 uses
   %i.axn = load ptr, ptr %i.axm, align 8, !tbaa !962 ; 3 uses
   %i.axo = getelementptr inbounds nuw i8, ptr %i.axn, i64 1656 ; 4 uses
   %i.axp = icmp samesign ult i64 %indvars.iv1760, 8
@@ -955,7 +962,6 @@ _ZNSt6vectorIPKN7rocksdb10autovectorIPNS0_16ReadOnlyMemTableELm8EEESaIS6_EE17_M_
   br label %_ZN7rocksdb10autovectorIPKNS0_IPNS_16ReadOnlyMemTableELm8EEELm8EE12emplace_backIJS5_EEEvDpOT_.exit
 
 _ZN7rocksdb10autovectorIPKNS0_IPNS_16ReadOnlyMemTableELm8EEELm8EE12emplace_backIJS5_EEEvDpOT_.exit: ; preds = %_ZNSt6vectorIPKN7rocksdb10autovectorIPNS0_16ReadOnlyMemTableELm8EEESaIS6_EE17_M_realloc_insertIJS6_EEEvN9__gnu_cxx17__normal_iteratorIPS6_S8_EEDpOT_.exit.i.i, %bb.ig, %bb.ie
-  %75 = load ptr, ptr %33, align 8, !tbaa !952
   %i.ban = getelementptr inbounds nuw [424 x i8], ptr %75, i64 %indvars.iv1760 ; 3 uses
   %i.bao = load i64, ptr %57, align 8, !tbaa !1761 ; 3 uses
   %i.bap = icmp ult i64 %i.bao, 8
@@ -970,15 +976,15 @@ bb.ik:                                            ; preds = %_ZN7rocksdb10autove
   br label %_ZN7rocksdb10autovectorIPNS_12FileMetaDataELm8EE12emplace_backIJS2_EEEvDpOT_.exit
 
 bb.il:                                            ; preds = %_ZN7rocksdb10autovectorIPKNS0_IPNS_16ReadOnlyMemTableELm8EEELm8EE12emplace_backIJS5_EEEvDpOT_.exit
-  %i.bat = load ptr, ptr %74, align 8, !tbaa !878 ; 4 uses
-  %i.bau = load ptr, ptr %i.axe, align 8, !tbaa !1017
+  %i.bat = load ptr, ptr %i.axe, align 8, !tbaa !878 ; 4 uses
+  %i.bau = load ptr, ptr %i.axf, align 8, !tbaa !1017
   %.not.i.i828 = icmp eq ptr %i.bat, %i.bau
   br i1 %.not.i.i828, label %bb.in, label %bb.im
 
 bb.im:                                            ; preds = %bb.il
   store ptr %i.ban, ptr %i.bat, align 8, !tbaa !1016
   %i.bav = getelementptr inbounds nuw i8, ptr %i.bat, i64 8
-  store ptr %i.bav, ptr %74, align 8, !tbaa !878
+  store ptr %i.bav, ptr %i.axe, align 8, !tbaa !878
   br label %_ZN7rocksdb10autovectorIPNS_12FileMetaDataELm8EE12emplace_backIJS2_EEEvDpOT_.exit
 
 bb.in:                                            ; preds = %bb.il
@@ -1025,7 +1031,7 @@ _ZNSt6vectorIPN7rocksdb12FileMetaDataESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit1
   br i1 %.not.i17.i.i.i831, label %_ZNSt6vectorIPN7rocksdb12FileMetaDataESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i, label %bb.ip
 
 bb.ip:                                            ; preds = %_ZNSt6vectorIPN7rocksdb12FileMetaDataESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i.i
-  %i.bbl = load ptr, ptr %i.axe, align 8, !tbaa !1017
+  %i.bbl = load ptr, ptr %i.axf, align 8, !tbaa !1017
   %i.bbm = ptrtoint ptr %i.bbl to i64
   %i.bbn = sub i64 %i.bbm, %i.bay
   call void @_ZdlPvm(ptr noundef nonnull %i.baw, i64 noundef %i.bbn) #33
@@ -1033,14 +1039,13 @@ bb.ip:                                            ; preds = %_ZNSt6vectorIPN7roc
 
 _ZNSt6vectorIPN7rocksdb12FileMetaDataESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i: ; preds = %bb.ip, %_ZNSt6vectorIPN7rocksdb12FileMetaDataESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i.i
   store ptr %i.bbh, ptr %i.aww, align 8, !tbaa !879
-  store ptr %i.bbk, ptr %74, align 8, !tbaa !878
+  store ptr %i.bbk, ptr %i.axe, align 8, !tbaa !878
   %i.bbo = getelementptr inbounds nuw [8 x i8], ptr %i.bbh, i64 %i.bbf
-  store ptr %i.bbo, ptr %i.axe, align 8, !tbaa !1017
+  store ptr %i.bbo, ptr %i.axf, align 8, !tbaa !1017
   br label %_ZN7rocksdb10autovectorIPNS_12FileMetaDataELm8EE12emplace_backIJS2_EEEvDpOT_.exit
 
 _ZN7rocksdb10autovectorIPNS_12FileMetaDataELm8EE12emplace_backIJS2_EEEvDpOT_.exit: ; preds = %_ZNSt6vectorIPN7rocksdb12FileMetaDataESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i, %bb.im, %bb.ik
-  %76 = getelementptr inbounds nuw [8 x i8], ptr %.pre1868, i64 %indvars.iv1760
-  %i.bbp = load ptr, ptr %76, align 8, !tbaa !962
+  %i.bbp = load ptr, ptr %i.axm, align 8, !tbaa !962
   %i.bbq = getelementptr inbounds nuw i8, ptr %i.bbp, i64 1208 ; 3 uses
   %i.bbr = load i64, ptr %58, align 8, !tbaa !1769 ; 3 uses
   %i.bbs = icmp ult i64 %i.bbr, 8
@@ -1055,15 +1060,15 @@ bb.iq:                                            ; preds = %_ZN7rocksdb10autove
   br label %_ZN7rocksdb10autovectorIPNSt7__cxx114listISt10unique_ptrINS_12FlushJobInfoESt14default_deleteIS4_EESaIS7_EEELm8EE12emplace_backIJSA_EEEvDpOT_.exit
 
 bb.ir:                                            ; preds = %_ZN7rocksdb10autovectorIPNS_12FileMetaDataELm8EE12emplace_backIJS2_EEEvDpOT_.exit
-  %i.bbw = load ptr, ptr %i.axf, align 8, !tbaa !1778 ; 4 uses
-  %i.bbx = load ptr, ptr %i.axg, align 8, !tbaa !1779
+  %i.bbw = load ptr, ptr %i.axg, align 8, !tbaa !1778 ; 4 uses
+  %i.bbx = load ptr, ptr %76, align 8, !tbaa !1779
   %.not.i.i834 = icmp eq ptr %i.bbw, %i.bbx
   br i1 %.not.i.i834, label %bb.it, label %bb.is
 
 bb.is:                                            ; preds = %bb.ir
   store ptr %i.bbq, ptr %i.bbw, align 8, !tbaa !1777
   %i.bby = getelementptr inbounds nuw i8, ptr %i.bbw, i64 8
-  store ptr %i.bby, ptr %i.axf, align 8, !tbaa !1778
+  store ptr %i.bby, ptr %i.axg, align 8, !tbaa !1778
   br label %_ZN7rocksdb10autovectorIPNSt7__cxx114listISt10unique_ptrINS_12FlushJobInfoESt14default_deleteIS4_EESaIS7_EEELm8EE12emplace_backIJSA_EEEvDpOT_.exit
 
 bb.it:                                            ; preds = %bb.ir
@@ -1103,7 +1108,7 @@ _ZNSt6vectorIPNSt7__cxx114listISt10unique_ptrIN7rocksdb12FlushJobInfoESt14defaul
   br i1 %.not.i17.i.i.i837, label %_ZNSt6vectorIPNSt7__cxx114listISt10unique_ptrIN7rocksdb12FlushJobInfoESt14default_deleteIS4_EESaIS7_EEESaISA_EE17_M_realloc_insertIJSA_EEEvN9__gnu_cxx17__normal_iteratorIPSA_SC_EEDpOT_.exit.i.i, label %bb.iv
 
 bb.iv:                                            ; preds = %_ZNSt6vectorIPNSt7__cxx114listISt10unique_ptrIN7rocksdb12FlushJobInfoESt14default_deleteIS4_EESaIS7_EEESaISA_EE11_S_relocateEPSA_SD_SD_RSB_.exit16.i.i.i
-  %i.bco = load ptr, ptr %i.axg, align 8, !tbaa !1779
+  %i.bco = load ptr, ptr %76, align 8, !tbaa !1779
   %i.bcp = ptrtoint ptr %i.bco to i64
   %i.bcq = sub i64 %i.bcp, %i.bcb
   call void @_ZdlPvm(ptr noundef nonnull %i.bbz, i64 noundef %i.bcq) #33
@@ -1111,9 +1116,9 @@ bb.iv:                                            ; preds = %_ZNSt6vectorIPNSt7_
 
 _ZNSt6vectorIPNSt7__cxx114listISt10unique_ptrIN7rocksdb12FlushJobInfoESt14default_deleteIS4_EESaIS7_EEESaISA_EE17_M_realloc_insertIJSA_EEEvN9__gnu_cxx17__normal_iteratorIPSA_SC_EEDpOT_.exit.i.i: ; preds = %bb.iv, %_ZNSt6vectorIPNSt7__cxx114listISt10unique_ptrIN7rocksdb12FlushJobInfoESt14default_deleteIS4_EESaIS7_EEESaISA_EE11_S_relocateEPSA_SD_SD_RSB_.exit16.i.i.i
   store ptr %i.bck, ptr %i.awz, align 8, !tbaa !1780
-  store ptr %i.bcn, ptr %i.axf, align 8, !tbaa !1778
+  store ptr %i.bcn, ptr %i.axg, align 8, !tbaa !1778
   %i.bcr = getelementptr inbounds nuw [8 x i8], ptr %i.bck, i64 %i.bci
-  store ptr %i.bcr, ptr %i.axg, align 8, !tbaa !1779
+  store ptr %i.bcr, ptr %76, align 8, !tbaa !1779
   br label %_ZN7rocksdb10autovectorIPNSt7__cxx114listISt10unique_ptrINS_12FlushJobInfoESt14default_deleteIS4_EESaIS7_EEELm8EE12emplace_backIJSA_EEEvDpOT_.exit
 
 .loopexit.split-lp1424.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %_ZNKSt6vectorIPN7rocksdb12FileMetaDataESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i, %_ZNKSt6vectorIPN7rocksdb16ColumnFamilyDataESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i815, %_ZNKSt6vectorIPKN7rocksdb10autovectorIPNS0_16ReadOnlyMemTableELm8EEESaIS6_EE12_M_check_lenEmPKc.exit.i.i.i, %_ZNKSt6vectorIPNSt7__cxx114listISt10unique_ptrIN7rocksdb12FlushJobInfoESt14default_deleteIS4_EESaIS7_EEESaISA_EE12_M_check_lenEmPKc.exit.i.i.i, %.invoke2358
@@ -1516,6 +1521,7 @@ _ZN7rocksdb10autovectorIhLm8EE7reserveEm.exit:    ; preds = %_ZNSt12_Vector_base
   %i.bgy = phi i1 [ %i.bgf, %_ZN7rocksdb10autovectorIhLm8EE7reserveEm.exit.thread ], [ %i.bgx, %_ZN7rocksdb10autovectorIhLm8EE7reserveEm.exit ]
   %i.bgz = getelementptr inbounds nuw i8, ptr %34, i64 16
   %i.bha = getelementptr inbounds nuw i8, ptr %34, i64 24
+  %77 = load ptr, ptr %29, align 8
   %i.bhb = getelementptr inbounds nuw i8, ptr %60, i64 32 ; 4 uses
   %i.bhc = getelementptr inbounds nuw i8, ptr %60, i64 40 ; 3 uses
   br label %bb.jw
@@ -1610,7 +1616,6 @@ bb.kd:                                            ; preds = %_ZNSt5dequeIbSaIbEE
   br i1 %i.bip, label %.thread1366, label %bb.ke
 
 bb.ke:                                            ; preds = %bb.kd
-  %77 = load ptr, ptr %29, align 8, !tbaa !963
   %i.biq = getelementptr inbounds nuw [8 x i8], ptr %77, i64 %indvars.iv1763
   %i.bir = load ptr, ptr %i.biq, align 8, !tbaa !962
   %i.bis = getelementptr inbounds nuw i8, ptr %i.bir, i64 1208 ; 2 uses
@@ -1739,6 +1744,7 @@ _ZN7rocksdb5DeferC2EOSt8functionIFvvEE.exit:      ; preds = %._crit_edge1628
 .lr.ph1631:                                       ; preds = %_ZN7rocksdb5DeferC2EOSt8functionIFvvEE.exit
   %i.bki = getelementptr inbounds nuw i8, ptr %34, i64 16
   %i.bkj = getelementptr inbounds nuw i8, ptr %34, i64 24
+  %78 = load ptr, ptr %33, align 8
   br label %bb.km
 
 .body900:                                         ; preds = %bb.jt, %bb.ju
@@ -1808,7 +1814,6 @@ _ZNSt5dequeIbSaIbEEixEm.exit914:                  ; preds = %bb.kq, %bb.kt
   br i1 %i.blp, label %bb.kw, label %bb.ku
 
 bb.ku:                                            ; preds = %_ZNSt5dequeIbSaIbEEixEm.exit914
-  %78 = load ptr, ptr %33, align 8, !tbaa !952
   %i.blq = getelementptr inbounds nuw [424 x i8], ptr %78, i64 %indvars.iv1766 ; 2 uses
   %i.blr = getelementptr inbounds nuw i8, ptr %i.blq, i64 24
   %i.bls = load i64, ptr %i.blr, align 8, !tbaa !684
@@ -2211,7 +2216,9 @@ bb.mg:                                            ; preds = %bb.mf, %._crit_edge
 .lr.ph1645:                                       ; preds = %bb.mg
   %i.bsz = getelementptr inbounds nuw i8, ptr %34, i64 16
   %i.bta = getelementptr inbounds nuw i8, ptr %34, i64 24
+  %79 = load ptr, ptr %29, align 8
   %.not374 = icmp eq ptr %i.bsv, null
+  %80 = load ptr, ptr %33, align 8
   %i.btb = getelementptr inbounds nuw i8, ptr %67, i64 8
   %i.btc = getelementptr inbounds nuw i8, ptr %1, i64 2160
   %i.btd = getelementptr inbounds nuw i8, ptr %1, i64 2168
@@ -2287,7 +2294,6 @@ bb.mn:                                            ; preds = %_ZNSt5dequeIbSaIbEE
 bb.mo:                                            ; preds = %bb.mn
   %i.bun = load ptr, ptr %30, align 8, !tbaa !949
   %i.buo = getelementptr inbounds nuw [736 x i8], ptr %i.bun, i64 %indvars.iv1775
-  %79 = load ptr, ptr %29, align 8, !tbaa !963
   %i.bup = getelementptr inbounds nuw [8 x i8], ptr %79, i64 %indvars.iv1775
   %i.buq = load ptr, ptr %i.bup, align 8, !tbaa !962
   %i.bur = getelementptr inbounds nuw i8, ptr %i.buq, i64 1208
@@ -2307,13 +2313,12 @@ bb.mq:                                            ; preds = %bb.mp
   %.0.i951 = select i1 %i.bud, ptr %i.but, ptr %i.buw
   %i.bux = load ptr, ptr %.0.i951, align 8, !tbaa !606
   %i.buy = getelementptr inbounds nuw i8, ptr %i.bux, i64 1856
-  %80 = load ptr, ptr %i.buy, align 8, !tbaa !800
-  %i.buz = load ptr, ptr %33, align 8, !tbaa !952
-  %i.bva = getelementptr inbounds nuw [424 x i8], ptr %i.buz, i64 %indvars.iv1775
+  %i.buz = load ptr, ptr %i.buy, align 8, !tbaa !800
+  %i.bva = getelementptr inbounds nuw [424 x i8], ptr %80, i64 %indvars.iv1775
   %i.bvb = getelementptr inbounds nuw i8, ptr %i.bva, i64 16
   %i.bvc = load i64, ptr %i.bvb, align 8, !tbaa !683
   %i.bvd = and i64 %i.bvc, 4611686018427387903
-  invoke void @_ZN7rocksdb17MakeTableFileNameERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEm(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %66, ptr noundef nonnull align 8 dereferenceable(32) %80, i64 noundef %i.bvd)
+  invoke void @_ZN7rocksdb17MakeTableFileNameERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEm(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %66, ptr noundef nonnull align 8 dereferenceable(32) %i.buz, i64 noundef %i.bvd)
           to label %bb.mr unwind label %bb.mz
 
 bb.mr:                                            ; preds = %bb.mq
@@ -2716,10 +2721,10 @@ _ZNSt6vectorIPN7rocksdb12FileMetaDataESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZNSt6vectorIPN7rocksdb12FileMetaDataESaIS2_EE9push_backERKS2_.exit80
-  %i.ar = phi ptr [ %i.bo, %_ZNSt6vectorIPN7rocksdb12FileMetaDataESaIS2_EE9push_backERKS2_.exit80 ], [ null, %.lr.ph.preheader ] ; 5 uses
-  %i.as = phi ptr [ %i.bp, %_ZNSt6vectorIPN7rocksdb12FileMetaDataESaIS2_EE9push_backERKS2_.exit80 ], [ null, %.lr.ph.preheader ] ; 3 uses
-  %i.at = phi ptr [ %i.bq, %_ZNSt6vectorIPN7rocksdb12FileMetaDataESaIS2_EE9push_backERKS2_.exit80 ], [ null, %.lr.ph.preheader ] ; 3 uses
-  %.sroa.0111.0128 = phi ptr [ %i.br, %_ZNSt6vectorIPN7rocksdb12FileMetaDataESaIS2_EE9push_backERKS2_.exit80 ], [ %i.w, %.lr.ph.preheader ] ; 2 uses
+  %i.ar = phi ptr [ null, %.lr.ph.preheader ], [ %i.bo, %_ZNSt6vectorIPN7rocksdb12FileMetaDataESaIS2_EE9push_backERKS2_.exit80 ] ; 5 uses
+  %i.as = phi ptr [ null, %.lr.ph.preheader ], [ %i.bp, %_ZNSt6vectorIPN7rocksdb12FileMetaDataESaIS2_EE9push_backERKS2_.exit80 ] ; 3 uses
+  %i.at = phi ptr [ null, %.lr.ph.preheader ], [ %i.bq, %_ZNSt6vectorIPN7rocksdb12FileMetaDataESaIS2_EE9push_backERKS2_.exit80 ] ; 3 uses
+  %.sroa.0111.0128 = phi ptr [ %i.w, %.lr.ph.preheader ], [ %i.br, %_ZNSt6vectorIPN7rocksdb12FileMetaDataESaIS2_EE9push_backERKS2_.exit80 ] ; 2 uses
   %i.au = load ptr, ptr %.sroa.0111.0128, align 8, !tbaa !1016 ; 2 uses
   %.not.i71 = icmp eq ptr %i.at, %i.as
   br i1 %.not.i71, label %bb.d, label %bb.c

@@ -204,10 +204,10 @@ bb.f:                                             ; preds = %_ZN15CByteOutBufWra
   br i1 %.not46, label %.lr.ph65.split.us, label %.lr.ph65.split
 
 .lr.ph65.split.us:                                ; preds = %.lr.ph65, %.backedge.us
-  %i.bg = phi i64 [ %i.bq, %.backedge.us ], [ 0, %.lr.ph65 ]
+  %i.bg = phi i64 [ %i.bq, %.backedge.us ], [ 0, %.lr.ph65 ] ; 2 uses
   %i.bh = load i32, ptr %i.b, align 4, !tbaa !7
   %i.bi = icmp eq i32 %i.bh, 0
-  br i1 %i.bi, label %.split67.us.a, label %.lr.ph.us
+  br i1 %i.bi, label %.split67.us, label %.lr.ph.us
 
 bb.g:                                             ; preds = %.lr.ph.us
   %indvars.iv.next82 = add nuw nsw i64 %indvars.iv81, 1 ; 2 uses
@@ -228,8 +228,7 @@ bb.g:                                             ; preds = %.lr.ph.us
   br i1 %.not44.us, label %bb.g, label %.thread50
 
 .backedge.us:                                     ; preds = %bb.g
-  %i.bq = add i64 %i.bg, %i.bk                    ; 2 uses
-  store i64 %i.bq, ptr %i.a, align 8, !tbaa !43
+  %i.bq = add i64 %i.bg, %i.bk
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #9
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
   %i.br = load ptr, ptr %i.d, align 8, !tbaa !96
@@ -240,12 +239,16 @@ bb.g:                                             ; preds = %.lr.ph.us
   %.not43.us = icmp eq i32 %i.bv, 0
   br i1 %.not43.us, label %.lr.ph65.split.us, label %.thread50, !llvm.loop !84
 
+.split67.us:                                      ; preds = %.lr.ph65.split.us
+  store i64 %i.bg, ptr %i.a, align 8
+  br label %.split67.us.a
+
 .lr.ph65.split:                                   ; preds = %.lr.ph65, %.backedge
   %i.bw = load i32, ptr %i.b, align 4, !tbaa !7
   %i.bx = icmp eq i32 %i.bw, 0
   br i1 %i.bx, label %.split67.us.a, label %.lr.ph
 
-.split67.us.a:                                    ; preds = %.lr.ph65.split, %.lr.ph65.split.us
+.split67.us.a:                                    ; preds = %.lr.ph65.split, %.split67.us
   call void @Ppmd8_EncodeSymbol(ptr noundef nonnull %i.i, i32 noundef -1)
   call void @Ppmd8_RangeEnc_FlushData(ptr noundef nonnull %i.i)
   %i.by = call noundef i32 @_ZN15CByteOutBufWrap5FlushEv(ptr noundef nonnull align 8 dereferenceable(60) %i.g)

@@ -204,12 +204,11 @@ bb.g:                                             ; preds = %bb.e
   %i.aa = tail call i32 @llvm.umin.i32(i32 %i.z, i32 %i.y) ; 2 uses
   %i.ab = getelementptr i8, ptr %i.c, i64 67248   ; 3 uses
   %storemerge106 = load ptr, ptr %i.ab, align 8   ; 3 uses
-  store ptr %storemerge106, ptr %i.a, align 8
   %.not103107 = icmp eq ptr %storemerge106, %i.ab
   br i1 %.not103107, label %._crit_edge111, label %.lr.ph110
 
 .lr.ph110:                                        ; preds = %bb.g, %bb.j
-  %storemerge108 = phi ptr [ %storemerge, %bb.j ], [ %storemerge106, %bb.g ] ; 3 uses
+  %storemerge108 = phi ptr [ %storemerge, %bb.j ], [ %storemerge106, %bb.g ] ; 4 uses
   %i.ac = getelementptr i8, ptr %storemerge108, i64 24
   %i.ad = load i32, ptr %i.ac, align 8
   %i.ae = icmp eq i32 %i.ad, %i.n
@@ -222,16 +221,18 @@ bb.h:                                             ; preds = %.lr.ph110
   br i1 %i.ah, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
+  store ptr %storemerge108, ptr %i.a, align 8
   tail call void @_raw_spin_unlock(ptr noundef %i.j) #8
   br label %bb.l
 
 bb.j:                                             ; preds = %.lr.ph110, %bb.h
   %storemerge = load ptr, ptr %storemerge108, align 8 ; 3 uses
-  store ptr %storemerge, ptr %i.a, align 8
   %.not103 = icmp eq ptr %storemerge, %i.ab
   br i1 %.not103, label %._crit_edge111, label %.lr.ph110, !llvm.loop !22
 
 ._crit_edge111:                                   ; preds = %bb.j, %bb.g
+  %storemerge.lcssa = phi ptr [ %storemerge106, %bb.g ], [ %storemerge, %bb.j ]
+  store ptr %storemerge.lcssa, ptr %i.a, align 8
   tail call void @_raw_spin_unlock(ptr noundef %i.j) #8
   %i.ai = load i32, ptr %i.o, align 4
   %i.aj = call i32 @virtio_gpu_cmd_get_capset(ptr noundef %i.c, i32 noundef %.079105, i32 noundef %i.ai, ptr noundef nonnull %i.a) #8 ; 2 uses

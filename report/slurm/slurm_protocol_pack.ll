@@ -202,7 +202,7 @@ bb.k:                                             ; preds = %unpack_step_id_memb
 define internal fastcc range(i32 -1, 1) i32 @_unpack_job_info_request_msg(ptr nofree noundef captures(none) %0, ptr noundef %1) unnamed_addr #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 10 uses
-  %i.b = alloca ptr, align 8                      ; 8 uses
+  %i.b = alloca ptr, align 8                      ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
   store ptr null, ptr %i.b, align 8
@@ -246,15 +246,13 @@ bb.f:                                             ; preds = %bb.e
 .lr.ph51:                                         ; preds = %bb.f, %bb.g
   %.03150 = phi i32 [ %i.t, %bb.g ], [ 0, %bb.f ]
   %i.q = call ptr @slurm_xcalloc(i64 noundef 1, i64 noundef 4, i1 noundef zeroext true, i1 noundef zeroext false, ptr noundef nonnull @.str.2, i32 noundef 10561, ptr noundef nonnull @__func__._unpack_job_info_request_msg) #6 ; 3 uses
-  store ptr %i.q, ptr %i.b, align 8
   %i.r = call i32 @unpack32(ptr noundef %i.q, ptr noundef %1) #6
   %.not42 = icmp eq i32 %i.r, 0
-  br i1 %.not42, label %bb.g, label %.loopexit
+  br i1 %.not42, label %bb.g, label %.sink.split
 
 bb.g:                                             ; preds = %.lr.ph51
   %i.s = load ptr, ptr %i.o, align 8
   call void @list_append(ptr noundef %i.s, ptr noundef %i.q) #6
-  store ptr null, ptr %i.b, align 8
   %i.t = add nuw nsw i32 %.03150, 1               ; 2 uses
   %i.u = load i32, ptr %i.a, align 4
   %i.v = icmp ult i32 %i.t, %i.u
@@ -298,15 +296,13 @@ bb.m:                                             ; preds = %bb.l
 .lr.ph:                                           ; preds = %bb.m, %bb.n
   %.049 = phi i32 [ %i.ak, %bb.n ], [ 0, %bb.m ]
   %i.ah = call ptr @slurm_xcalloc(i64 noundef 1, i64 noundef 4, i1 noundef zeroext true, i1 noundef zeroext false, ptr noundef nonnull @.str.2, i32 noundef 10577, ptr noundef nonnull @__func__._unpack_job_info_request_msg) #6 ; 3 uses
-  store ptr %i.ah, ptr %i.b, align 8
   %i.ai = call i32 @unpack32(ptr noundef %i.ah, ptr noundef %1) #6
   %.not38 = icmp eq i32 %i.ai, 0
-  br i1 %.not38, label %bb.n, label %.loopexit
+  br i1 %.not38, label %bb.n, label %.sink.split
 
 bb.n:                                             ; preds = %.lr.ph
   %i.aj = load ptr, ptr %i.af, align 8
   call void @list_append(ptr noundef %i.aj, ptr noundef %i.ah) #6
-  store ptr null, ptr %i.b, align 8
   %i.ak = add nuw nsw i32 %.049, 1                ; 2 uses
   %i.al = load i32, ptr %i.a, align 4
   %i.am = icmp ult i32 %i.ak, %i.al
@@ -317,7 +313,12 @@ bb.n:                                             ; preds = %.lr.ph
   store ptr %i.c, ptr %i.an, align 8
   br label %bb.o
 
-.loopexit:                                        ; preds = %.lr.ph, %.lr.ph51, %bb.k, %bb.j, %bb.i, %bb.d, %bb.c, %bb.b
+.sink.split:                                      ; preds = %.lr.ph, %.lr.ph51
+  %.lcssa68.sink = phi ptr [ %i.q, %.lr.ph51 ], [ %i.ah, %.lr.ph ]
+  store ptr %.lcssa68.sink, ptr %i.b, align 8
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %.sink.split, %bb.k, %bb.j, %bb.i, %bb.d, %bb.c, %bb.b
   call void @slurm_xfree(ptr noundef nonnull %i.b) #6
   call void @slurm_free_job_info_request_msg(ptr noundef %i.c) #6
   br label %bb.o

@@ -204,7 +204,11 @@ bb.dc:                                            ; preds = %bb.db, %bb.cw
 
 ._crit_edge:                                      ; preds = %bb.df, %.preheader463
   %i.nm = invoke noundef nonnull align 8 dereferenceable(24) ptr @_ZNSt6vectorIN2cv6detail12CameraParamsESaIS2_EEaSERKS4_(ptr noundef nonnull align 8 dereferenceable(24) %26, ptr noundef nonnull align 8 dereferenceable(24) %25)
-          to label %.preheader.a unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
+          to label %.preheader unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
+
+.preheader:                                       ; preds = %._crit_edge
+  %69 = load ptr, ptr %20, align 8                ; 2 uses
+  br label %.preheader.a
 
 bb.dd:                                            ; preds = %.lr.ph, %bb.df
   %.0467 = phi i64 [ 0, %.lr.ph ], [ %i.nu, %bb.df ] ; 3 uses
@@ -258,8 +262,8 @@ bb.di:                                            ; preds = %bb.dh, %bb.dg
   call void @llvm.lifetime.end.p0(ptr nonnull %31) #29
   br label %.loopexit.split-lp
 
-.preheader.a:                                     ; preds = %._crit_edge, %_ZN2cv6detail9EstimatorclERKSt6vectorINS0_13ImageFeaturesESaIS3_EERKS2_INS0_11MatchesInfoESaIS8_EERS2_INS0_12CameraParamsESaISD_EE.exit258
-  %.0452 = phi i8 [ %i.ol, %_ZN2cv6detail9EstimatorclERKSt6vectorINS0_13ImageFeaturesESaIS3_EERKS2_INS0_11MatchesInfoESaIS8_EERS2_INS0_12CameraParamsESaISD_EE.exit258 ], [ 1, %._crit_edge ] ; 2 uses
+.preheader.a:                                     ; preds = %.preheader, %_ZN2cv6detail9EstimatorclERKSt6vectorINS0_13ImageFeaturesESaIS3_EERKS2_INS0_11MatchesInfoESaIS8_EERS2_INS0_12CameraParamsESaISD_EE.exit258
+  %.0452 = phi i8 [ %i.ol, %_ZN2cv6detail9EstimatorclERKSt6vectorINS0_13ImageFeaturesESaIS3_EERKS2_INS0_11MatchesInfoESaIS8_EERS2_INS0_12CameraParamsESaISD_EE.exit258 ], [ 1, %.preheader ] ; 2 uses
   %i.oe = invoke noundef zeroext i1 @_ZN4perf8TestBase4nextEv(ptr noundef nonnull align 8 dereferenceable(248) %0)
           to label %bb.dj unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -275,7 +279,6 @@ bb.dl:                                            ; preds = %bb.dk
           to label %bb.dm unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 
 bb.dm:                                            ; preds = %bb.dl
-  %69 = load ptr, ptr %20, align 8, !tbaa !287    ; 2 uses
   %i.oh = load ptr, ptr %69, align 8, !tbaa !40
   %i.oi = getelementptr inbounds nuw i8, ptr %i.oh, i64 16
   %i.oj = load ptr, ptr %i.oi, align 8

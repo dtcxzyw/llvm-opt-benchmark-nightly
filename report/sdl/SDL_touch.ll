@@ -204,7 +204,7 @@ SDL_GetTouch.exit:                                ; preds = %bb.d
 
 bb.i:                                             ; preds = %SDL_GetTouch.exit
   %i.ad = load i32, ptr %i.u, align 4             ; 6 uses
-  %i.ae = sext i32 %i.ad to i64                   ; 2 uses
+  %i.ae = sext i32 %i.ad to i64
   %i.af = getelementptr [8 x i8], ptr %i.ac, i64 %i.ae ; 2 uses
   %i.ag = getelementptr i8, ptr %i.af, i64 8      ; 3 uses
   %i.ah = icmp sgt i32 %i.ad, 0
@@ -213,16 +213,17 @@ bb.i:                                             ; preds = %SDL_GetTouch.exit
 .lr.ph:                                           ; preds = %bb.i
   %i.ai = getelementptr inbounds nuw i8, ptr %i.h, i64 24
   %.pre = load ptr, ptr %i.ai, align 8            ; 3 uses
+  %wide.trip.count = zext nneg i32 %i.ad to i64   ; 2 uses
+  %xtraiter = and i64 %wide.trip.count, 1
   %i.aj = icmp eq i32 %i.ad, 1
   br i1 %i.aj, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph
-  %unroll_iter = and i64 %i.ae, 2147483646
+  %unroll_iter = and i64 %wide.trip.count, 2147483646
   br label %bb.j
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %bb.j
-  %2 = and i32 %i.ad, 1
-  %lcmp.mod.not = icmp eq i32 %2, 0
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %._crit_edge, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph

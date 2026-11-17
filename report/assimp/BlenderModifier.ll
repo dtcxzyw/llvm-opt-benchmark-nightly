@@ -111,12 +111,11 @@ $_ZTSN6Assimp7Blender15BlenderModifierE = comdat any
 define hidden void @_ZN6Assimp7Blender23BlenderModifierShowcase14ApplyModifiersER6aiNodeRNS0_14ConversionDataERKNS0_5SceneERKNS0_6ObjectE(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(1144) %1, ptr noundef nonnull align 8 dereferenceable(336) %2, ptr noundef nonnull align 8 dereferenceable(1176) %3, ptr noundef nonnull align 8 dereferenceable(1384) %4) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 !guid !33 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
-  %i.b = alloca i64, align 8                      ; 5 uses
+  %i.b = alloca i64, align 8                      ; 4 uses
   %i.c = alloca i64, align 8                      ; 4 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #16
-  store i64 0, ptr %i.b, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #16
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 1352
   %i.e = load ptr, ptr %i.d, align 8              ; 2 uses
@@ -135,12 +134,13 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.af
-  %i.n = phi i64 [ 0, %.lr.ph ], [ %i.gy, %bb.af ]
+  %i.n = phi i64 [ 0, %.lr.ph ], [ %8, %bb.af ]   ; 4 uses
+  %.0148 = phi ptr [ %i.e, %.lr.ph ], [ %i.gx, %bb.af ] ; 5 uses
   %i.o = phi i64 [ 0, %.lr.ph ], [ %i.gv, %bb.af ] ; 5 uses
-  %.0147 = phi ptr [ %i.e, %.lr.ph ], [ %i.gx, %bb.af ] ; 5 uses
+  %7 = phi i64 [ 0, %.lr.ph ], [ %i.gy, %bb.af ]
   %i.p = load ptr, ptr %i.f, align 8, !nonnull !34, !align !35 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #16
-  %i.q = getelementptr inbounds nuw i8, ptr %.0147, i64 8 ; 2 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %.0148, i64 8 ; 2 uses
   %i.r = load ptr, ptr %i.q, align 8              ; 4 uses
   store ptr %i.g, ptr %5, align 8
   %i.s = icmp eq ptr %i.r, null
@@ -503,7 +503,7 @@ _ZNK6Assimp7Blender3DNA3GetERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcE
   br label %bb.af
 
 _ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread135: ; preds = %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
-  %i.eb = getelementptr inbounds nuw i8, ptr %.0147, i64 16 ; 2 uses
+  %i.eb = getelementptr inbounds nuw i8, ptr %.0148, i64 16 ; 2 uses
   %i.ec = load ptr, ptr %0, align 8               ; 2 uses
   %i.ed = load ptr, ptr %i.k, align 8             ; 2 uses
   %i.ee = icmp eq ptr %i.ec, %i.ed
@@ -595,9 +595,8 @@ bb.x:                                             ; preds = %_ZNSt6vectorIPN6Ass
   %i.fk = load ptr, ptr %.lcssa, align 8
   %i.fl = getelementptr inbounds nuw i8, ptr %i.fk, i64 24
   %i.fm = load ptr, ptr %i.fl, align 8
-  call void %i.fm(ptr noundef nonnull align 8 dereferenceable(8) %.lcssa, ptr noundef nonnull align 8 dereferenceable(1144) %1, ptr noundef nonnull align 8 dereferenceable(336) %2, ptr noundef nonnull align 8 dereferenceable(16) %.0147, ptr noundef nonnull align 8 dereferenceable(1176) %3, ptr noundef nonnull align 8 dereferenceable(1384) %4)
+  call void %i.fm(ptr noundef nonnull align 8 dereferenceable(8) %.lcssa, ptr noundef nonnull align 8 dereferenceable(1144) %1, ptr noundef nonnull align 8 dereferenceable(336) %2, ptr noundef nonnull align 8 dereferenceable(16) %.0148, ptr noundef nonnull align 8 dereferenceable(1176) %3, ptr noundef nonnull align 8 dereferenceable(1384) %4)
   %i.fn = add i64 %i.o, 1                         ; 2 uses
-  store i64 %i.fn, ptr %i.b, align 8
   br label %bb.af
 
 bb.y:                                             ; preds = %bb.x
@@ -678,20 +677,22 @@ _ZNSt6vectorIPN6Assimp7Blender15BlenderModifierESaIS3_EE9push_backEOS3_.exit.1: 
 
 bb.ae:                                            ; preds = %_ZNSt6vectorIPN6Assimp7Blender15BlenderModifierESaIS3_EE9push_backEOS3_.exit.1
   %i.gt = call noundef ptr @_ZN6Assimp13DefaultLogger3getEv()
-  %i.gu = getelementptr inbounds nuw i8, ptr %.0147, i64 72
+  %i.gu = getelementptr inbounds nuw i8, ptr %.0148, i64 72
   call void @_ZN6Assimp6Logger4warnIJRA39_KcRA32_S2_EEEvDpOT_(ptr noundef nonnull align 8 dereferenceable(12) %i.gt, ptr noundef nonnull align 1 dereferenceable(39) @.str.5, ptr noundef nonnull align 1 dereferenceable(32) %i.gu)
   br label %bb.af
 
 bb.af:                                            ; preds = %bb.ae, %.thread139, %bb.m, %_ZNK6Assimp7Blender3DNA3GetERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit125.thread, %bb.j
+  %8 = phi i64 [ %i.n, %bb.ae ], [ %i.fn, %.thread139 ], [ %i.n, %bb.m ], [ %i.n, %_ZNK6Assimp7Blender3DNA3GetERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit125.thread ], [ %i.n, %bb.j ] ; 2 uses
   %i.gv = phi i64 [ %i.o, %bb.ae ], [ %i.fn, %.thread139 ], [ %i.o, %bb.m ], [ %i.o, %_ZNK6Assimp7Blender3DNA3GetERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit125.thread ], [ %i.o, %bb.j ]
-  %i.gw = getelementptr inbounds nuw i8, ptr %.0147, i64 32
+  %i.gw = getelementptr inbounds nuw i8, ptr %.0148, i64 32
   %i.gx = load ptr, ptr %i.gw, align 8            ; 2 uses
-  %i.gy = add i64 %i.n, 1                         ; 3 uses
-  store i64 %i.gy, ptr %i.c, align 8
+  %i.gy = add i64 %7, 1                           ; 3 uses
   %.not = icmp eq ptr %i.gx, null
   br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !32
 
 ._crit_edge:                                      ; preds = %bb.af
+  store i64 %8, ptr %i.b, align 8
+  store i64 %i.gy, ptr %i.c, align 8
   %i.gz = icmp eq i64 %i.gy, 0
   br i1 %i.gz, label %._crit_edge.thread, label %bb.ag
 

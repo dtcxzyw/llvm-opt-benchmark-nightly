@@ -204,14 +204,14 @@ bb.a:
   %i.a = alloca [4096 x i8], align 16             ; 22 uses
   %i.b = alloca [4096 x i8], align 16             ; 24 uses
   %6 = alloca %struct.err_data, align 1           ; 9 uses
-  %i.c = alloca ptr, align 8                      ; 6 uses
+  %i.c = alloca ptr, align 8                      ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(4096) %i.a, i8 0, i64 4096, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #12
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #12
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #12
   %i.d = tail call i32 @llvm.smax.i32(i32 %4, i32 0) ; 3 uses
-  %i.e = tail call ptr @jq_init() #12             ; 3 uses
+  %i.e = tail call ptr @jq_init() #12             ; 4 uses
   store ptr %i.e, ptr %i.c, align 8, !tbaa !16
   %.not = icmp eq ptr %i.e, null
   br i1 %.not, label %bb.b, label %bb.c
@@ -248,6 +248,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br label %.lr.ph.lr.ph
 
 .lr.ph.lr.ph:                                     ; preds = %.lr.ph.lr.ph.lr.ph, %.outer.backedge
+  %7 = phi ptr [ %i.e, %.lr.ph.lr.ph.lr.ph ], [ %8, %.outer.backedge ] ; 9 uses
   %.0139.ph435 = phi i32 [ %4, %.lr.ph.lr.ph.lr.ph ], [ %.0139.ph.be, %.outer.backedge ]
   %.0140.ph434 = phi i32 [ %5, %.lr.ph.lr.ph.lr.ph ], [ %.0140.ph.be, %.outer.backedge ]
   %.0143.ph433 = phi i32 [ 0, %.lr.ph.lr.ph.lr.ph ], [ %.0143.ph.be, %.outer.backedge ]
@@ -314,11 +315,12 @@ checkfail.exit:                                   ; preds = %bb.h
 
 checkfail.exit.thread:                            ; preds = %bb.h, %checkfail.exit
   %i.ac = zext i1 %.not256 to i32
-  %i.ad = load ptr, ptr %i.c, align 8, !tbaa !16
+  %i.ad = load ptr, ptr %i.c, align 8, !tbaa !16  ; 2 uses
   call void @jq_set_error_cb(ptr noundef %i.ad, ptr noundef nonnull @test_err_cb, ptr noundef nonnull %6) #12
   br label %.outer.backedge
 
 .outer.backedge:                                  ; preds = %skipline.exit229.loopexit, %bb.be, %bb.be, %bb.be, %bb.bd, %checkfail.exit.thread, %bb.ai
+  %8 = phi ptr [ %10, %bb.ai ], [ %i.ad, %checkfail.exit.thread ], [ %12, %bb.bd ], [ %12, %bb.be ], [ %12, %bb.be ], [ %12, %bb.be ], [ %12, %skipline.exit229.loopexit ]
   %.0164.ph.be = phi i32 [ 0, %bb.ai ], [ %i.ac, %checkfail.exit.thread ], [ 0, %bb.bd ], [ 0, %bb.be ], [ 0, %bb.be ], [ 0, %bb.be ], [ 0, %skipline.exit229.loopexit ]
   %.0162.ph.be = phi i32 [ 0, %bb.ai ], [ 1, %checkfail.exit.thread ], [ 0, %bb.bd ], [ 0, %bb.be ], [ 0, %bb.be ], [ 0, %bb.be ], [ 0, %skipline.exit229.loopexit ]
   %.0154.ph.be = phi i32 [ %.2156, %bb.ai ], [ %i.q, %checkfail.exit.thread ], [ %.7161, %bb.bd ], [ %i.ex, %bb.be ], [ %i.ex, %bb.be ], [ %i.ex, %bb.be ], [ %i.ex, %skipline.exit229.loopexit ]
@@ -381,12 +383,12 @@ bb.s:                                             ; preds = %bb.q, %bb.p
   %i.as = add nsw i32 %.0143.ph270403, 1          ; 6 uses
   %i.at = add nsw i32 %i.as, %i.d
   %i.au = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.11, i32 noundef %i.at, ptr noundef nonnull %i.a, i32 noundef %i.q) ; 0 uses
-  %7 = load ptr, ptr %i.c, align 8, !tbaa !16     ; 6 uses
   %i.av = call i32 @jq_compile(ptr noundef %7, ptr noundef nonnull %i.a) #12 ; 2 uses
   br i1 %.0162.ph266396, label %bb.aj, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  call void @jq_set_error_cb(ptr noundef %7, ptr noundef null, ptr noundef null) #12
+  %9 = load ptr, ptr %i.c, align 8, !tbaa !16     ; 5 uses
+  call void @jq_set_error_cb(ptr noundef %9, ptr noundef null, ptr noundef null) #12
   %.not200 = icmp eq i32 %i.av, 0
   br i1 %.not200, label %.preheader, label %bb.w
 
@@ -515,9 +517,11 @@ bb.ag:                                            ; preds = %bb.af
 bb.ah:                                            ; preds = %bb.ag, %bb.af
   %i.bu = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.14, ptr noundef nonnull %.0175375, i32 noundef %.2156, ptr noundef nonnull %i.a) ; 0 uses
   %i.bv = add nsw i32 %.0150.ph268398, 1
+  %.pre = load ptr, ptr %i.c, align 8
   br label %bb.ai
 
 bb.ai:                                            ; preds = %skipline.exit217, %bb.ae, %bb.ah
+  %10 = phi ptr [ %.pre, %bb.ah ], [ %9, %bb.ae ], [ %9, %skipline.exit217 ]
   %.0166 = phi i32 [ 0, %bb.ah ], [ 1, %bb.ae ], [ 1, %skipline.exit217 ]
   %.1151 = phi i32 [ %i.bv, %bb.ah ], [ %.0150.ph268398, %bb.ae ], [ %.0150.ph268398, %skipline.exit217 ]
   %i.bw = add nsw i32 %.0166, %.0146.ph269400
@@ -721,11 +725,13 @@ bb.bb:                                            ; preds = %skipline.exit223.th
   br i1 %.not182380, label %.loopexit, label %.lr.ph
 
 bb.bc:                                            ; preds = %.thread245, %.thread, %bb.aq, %bb.ak, %bb.w
+  %11 = phi ptr [ %9, %bb.w ], [ %9, %.thread ], [ %7, %.thread245 ], [ %7, %bb.aq ], [ %7, %bb.ak ]
   %.6160 = phi i32 [ %i.q, %bb.w ], [ %i.bc, %.thread ], [ %i.ch, %.thread245 ], [ %i.ca, %bb.aq ], [ %i.q, %bb.ak ]
   %i.eu = add nsw i32 %.0150.ph268398, 1
   br label %bb.bd
 
 bb.bd:                                            ; preds = %bb.bc, %bb.l
+  %12 = phi ptr [ %7, %bb.l ], [ %11, %bb.bc ]    ; 5 uses
   %.7161 = phi i32 [ %i.q, %bb.l ], [ %.6160, %bb.bc ] ; 2 uses
   %.6 = phi i32 [ %.0150.ph268398, %bb.l ], [ %i.eu, %bb.bc ] ; 5 uses
   %.1144 = phi i32 [ %.0143.ph270403, %bb.l ], [ %i.as, %bb.bc ] ; 5 uses

@@ -205,7 +205,7 @@ bb.a:
   %5 = alloca %"class.cv::Range", align 8         ; 4 uses
   %6 = alloca %"class.cv::Range", align 4         ; 5 uses
   %7 = alloca %"class.cv::Mat", align 8           ; 11 uses
-  %8 = alloca %"struct.cv::dnn::dnn5_v20260605::detail::LayerPin", align 8 ; 8 uses
+  %8 = alloca %"struct.cv::dnn::dnn5_v20260605::detail::LayerPin", align 8 ; 9 uses
   %9 = alloca %"class.cv::Mat", align 8           ; 7 uses
   %10 = alloca %"class.cv::Mat", align 8          ; 7 uses
   %11 = alloca %"class.cv::Mat", align 8          ; 7 uses
@@ -312,6 +312,7 @@ _ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit: ; preds = %_ZN2cv3dnn1
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 120
   %i.az = load ptr, ptr %i.ay, align 8, !tbaa !129 ; 2 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 2 uses
+  %.promoted = load i64, ptr %8, align 8          ; 3 uses
   %.not5658 = icmp eq ptr %i.az, %i.ba
   br i1 %.not5658, label %._crit_edge, label %.lr.ph
 
@@ -332,6 +333,7 @@ _ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit: ; preds = %_ZN2cv3dnn1
   %i.bg = phi ptr [ %.pr, %.lr.ph.splitthread-pre-split ], [ %i.be, %.lr.ph ] ; 2 uses
   %.02460 = phi i64 [ %.2, %.lr.ph.splitthread-pre-split ], [ 2147483647, %.lr.ph ] ; 9 uses
   %.sroa.048.059 = phi ptr [ %i.co, %.lr.ph.splitthread-pre-split ], [ %i.az, %.lr.ph ] ; 4 uses
+  %12 = phi i64 [ %13, %.lr.ph.splitthread-pre-split ], [ %.promoted, %.lr.ph ] ; 8 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %.sroa.048.059, i64 32 ; 2 uses
   %.not11.i.i.i = icmp eq ptr %i.bg, null
   br i1 %.not11.i.i.i, label %.critedge, label %.lr.ph.i.i.i
@@ -423,7 +425,6 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.k
   %i.cl = load i64, ptr %i.bh, align 8, !tbaa !72
-  store i64 %i.cl, ptr %8, align 8, !tbaa !72
   %i.cm = invoke noundef nonnull align 8 dereferenceable(208) ptr @_ZN2cv3MataSERKS0_(ptr noundef nonnull align 8 dereferenceable(208) %7, ptr noundef nonnull align 8 dereferenceable(208) %i.cd)
           to label %bb.m unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 
@@ -432,12 +433,15 @@ bb.m:                                             ; preds = %bb.l
           to label %.critedge unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .critedge:                                        ; preds = %bb.e, %_ZNKSt4lessIN2cv3dnn14dnn5_v202606056detail8LayerPinEEclERKS4_S7_.exit.i.i, %_ZNSt8_Rb_treeIN2cv3dnn14dnn5_v202606056detail8LayerPinESt4pairIKS4_iESt10_Select1stIS7_ESt4lessIS4_ESaIS7_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS7_EPSt18_Rb_tree_node_baseRS6_.exit.i.i, %.lr.ph.split, %bb.h, %bb.j, %bb.k, %bb.m, %_ZNSt3mapIN2cv3dnn14dnn5_v202606056detail8LayerPinEiSt4lessIS4_ESaISt4pairIKS4_iEEE4findERS8_.exit
+  %13 = phi i64 [ %i.cl, %bb.m ], [ %12, %_ZNSt3mapIN2cv3dnn14dnn5_v202606056detail8LayerPinEiSt4lessIS4_ESaISt4pairIKS4_iEEE4findERS8_.exit ], [ %12, %bb.h ], [ %12, %bb.k ], [ %12, %bb.j ], [ %12, %bb.e ], [ %12, %.lr.ph.split ], [ %12, %_ZNSt8_Rb_treeIN2cv3dnn14dnn5_v202606056detail8LayerPinESt4pairIKS4_iESt10_Select1stIS7_ESt4lessIS4_ESaIS7_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS7_EPSt18_Rb_tree_node_baseRS6_.exit.i.i ], [ %12, %_ZNKSt4lessIN2cv3dnn14dnn5_v202606056detail8LayerPinEEclERKS4_S7_.exit.i.i ] ; 2 uses
   %.2 = phi i64 [ %i.cn, %bb.m ], [ %.02460, %_ZNSt3mapIN2cv3dnn14dnn5_v202606056detail8LayerPinEiSt4lessIS4_ESaISt4pairIKS4_iEEE4findERS8_.exit ], [ %.02460, %bb.h ], [ %.02460, %bb.k ], [ %.02460, %bb.j ], [ %.02460, %bb.e ], [ %.02460, %.lr.ph.split ], [ %.02460, %_ZNSt8_Rb_treeIN2cv3dnn14dnn5_v202606056detail8LayerPinESt4pairIKS4_iESt10_Select1stIS7_ESt4lessIS4_ESaIS7_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS7_EPSt18_Rb_tree_node_baseRS6_.exit.i.i ], [ %.02460, %_ZNKSt4lessIN2cv3dnn14dnn5_v202606056detail8LayerPinEEclERKS4_S7_.exit.i.i ]
   %i.co = call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef %.sroa.048.059) #33 ; 2 uses
   %.not56 = icmp eq ptr %i.co, %i.ba
   br i1 %.not56, label %._crit_edge, label %.lr.ph.splitthread-pre-split, !llvm.loop !1159
 
 ._crit_edge:                                      ; preds = %.critedge, %.lr.ph, %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit
+  %.lcssa58 = phi i64 [ %.promoted, %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit ], [ %.promoted, %.lr.ph ], [ %13, %.critedge ]
+  store i64 %.lcssa58, ptr %8, align 8
   %i.cp = invoke noundef zeroext i1 @_ZNK2cv3Mat5emptyEv(ptr noundef nonnull align 8 dereferenceable(208) %7)
           to label %bb.n unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -481,7 +485,7 @@ bb.s:                                             ; preds = %bb.r
   %i.cr = invoke noundef nonnull align 8 dereferenceable(208) ptr @_ZN2cv3MataSEOS0_(ptr noundef nonnull align 8 dereferenceable(208) %3, ptr noundef nonnull align 8 dereferenceable(208) %9)
           to label %bb.aa unwind label %bb.w      ; 0 uses
 
-.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.g, %bb.i, %bb.l, %bb.m, %bb.o, %._crit_edge
+.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.g, %bb.i, %bb.l, %bb.m, %._crit_edge, %bb.o
   %lpad.loopexit.split-lp70 = landingpad { ptr, i32 }
           cleanup
   br label %.loopexit.split-lp

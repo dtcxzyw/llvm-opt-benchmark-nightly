@@ -205,7 +205,7 @@ bb.a:
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %i.a = alloca i64, align 8                      ; 6 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
-  %i.b = alloca i32, align 4                      ; 6 uses
+  %i.b = alloca i32, align 4                      ; 12 uses
   %i.c = alloca [32 x i8], align 16               ; 9 uses
   %i.d = alloca i32, align 4                      ; 10 uses
   %i.e = alloca i32, align 4                      ; 5 uses
@@ -344,17 +344,18 @@ bb.i:                                             ; preds = %_ZNSt7__cxx1112basi
   %.sroa.14.0.ph = phi ptr [ %.sroa.14.3, %_ZNSt6vectorIfSaIfEE9push_backERKf.exit ], [ null, %bb.i ] ; 6 uses
   %.sroa.10.0.ph = phi ptr [ %.sroa.10.2, %_ZNSt6vectorIfSaIfEE9push_backERKf.exit ], [ null, %bb.i ] ; 4 uses
   %.sroa.053.0.ph = phi ptr [ %.sroa.053.3, %_ZNSt6vectorIfSaIfEE9push_backERKf.exit ], [ null, %bb.i ] ; 12 uses
+  %.promoted = load i32, ptr %i.b, align 1
   br label %.outer178
 
 .outer178:                                        ; preds = %.outer178.backedge, %.outer
+  %.lcssa245247 = phi i32 [ %.promoted, %.outer ], [ %i.as, %.outer178.backedge ] ; 2 uses
   %.026.ph = phi i1 [ false, %.outer ], [ true, %.outer178.backedge ]
   %.0.ph = phi i32 [ 0, %.outer ], [ %.0.ph.be, %.outer178.backedge ] ; 7 uses
   br label %bb.j
 
 bb.j:                                             ; preds = %.backedge, %.outer178
   %.026 = phi i1 [ %.026.ph, %.outer178 ], [ false, %.backedge ]
-  %i.as = call i32 @getc(ptr noundef nonnull %i.v) ; 9 uses
-  store i32 %i.as, ptr %i.b, align 4, !tbaa !42
+  %i.as = call i32 @getc(ptr noundef nonnull %i.v) ; 14 uses
   switch i32 %i.as, label %bb.m [
     i32 -1, label %.thread
     i32 10, label %bb.k
@@ -379,6 +380,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.aw, label %bb.o, label %bb.q
 
 bb.o:                                             ; preds = %bb.n
+  store i32 %i.as, ptr %i.b, align 1
   invoke void @_ZN4pbrt8LogFatalIJRNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERiEEEvNS_8LogLevelEPKciSB_DpOT_(i32 noundef 2, ptr noundef nonnull @.str.3, i32 noundef 244, ptr noundef nonnull @.str.19, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull align 4 dereferenceable(4) %i.d) #31
           to label %bb.p unwind label %bb.l
 
@@ -408,6 +410,7 @@ bb.r:                                             ; preds = %switch.early.test, 
   br i1 %i.ax, label %bb.v, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
+  store i32 %i.as, ptr %i.b, align 1
   invoke void @_ZN4pbrt8LogFatalIJRA13_KcRA18_S1_S3_RiS5_RmEEEvNS_8LogLevelEPS1_iS9_DpOT_(i32 noundef 2, ptr noundef nonnull @.str.3, i32 noundef 249, ptr noundef nonnull @.str.12, ptr noundef nonnull align 1 dereferenceable(13) @.str.20, ptr noundef nonnull align 1 dereferenceable(18) @.str.21, ptr noundef nonnull align 1 dereferenceable(13) @.str.20, ptr noundef nonnull align 4 dereferenceable(4) %i.e, ptr noundef nonnull align 1 dereferenceable(18) @.str.21, ptr noundef nonnull align 8 dereferenceable(8) %i.f) #31
           to label %bb.t unwind label %bb.u
 
@@ -435,6 +438,7 @@ bb.v:                                             ; preds = %bb.r
   br label %.outer178, !llvm.loop !143
 
 bb.w:                                             ; preds = %switch.early.test
+  store i32 %i.as, ptr %i.b, align 1
   %i.bc = zext nneg i32 %.0.ph to i64
   %i.bd = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.bc
   store i8 0, ptr %i.bd, align 1, !tbaa !23
@@ -547,8 +551,7 @@ bb.ah:                                            ; preds = %switch.early.test39
   br label %.outer178.backedge
 
 .preheader:                                       ; preds = %switch.early.test39, %.preheader
-  %i.bz = call i32 @getc(ptr noundef nonnull %i.v) ; 2 uses
-  store i32 %i.bz, ptr %i.b, align 4, !tbaa !42
+  %i.bz = call i32 @getc(ptr noundef nonnull %i.v)
   switch i32 %i.bz, label %.preheader [
     i32 -1, label %bb.ai
     i32 10, label %bb.ai
@@ -569,6 +572,8 @@ bb.aj:                                            ; preds = %switch.early.test39
   br label %bb.j, !llvm.loop !143
 
 bb.ak:                                            ; preds = %bb.aj
+  store i32 %.lcssa245247, ptr %i.b, align 1
+  store i32 %i.as, ptr %i.b, align 1
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #29
   %i.ce = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 8 uses
   store ptr %i.ce, ptr %2, align 8, !tbaa !38, !alias.scope !149
@@ -625,6 +630,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit7.i: ; preds = %bb
   br label %.body
 
 .thread:                                          ; preds = %bb.j
+  store i32 %.lcssa245247, ptr %i.b, align 1
+  store i32 %i.as, ptr %i.b, align 1
   %i.cv = call i32 @fclose(ptr noundef nonnull %i.v) ; 0 uses
   store ptr %.sroa.053.0.ph, ptr %0, align 8, !tbaa !152
   %i.cw = getelementptr inbounds nuw i8, ptr %0, i64 8

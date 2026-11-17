@@ -205,7 +205,8 @@ bb.a:
   br i1 %.not25.not, label %.critedge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
+  %.sroa.5.0..sroa_idx.promoted = load i64, ptr %.sroa.5.0..sroa_idx, align 8 ; 2 uses
   %i.h = invoke noundef nonnull align 8 dereferenceable(64) ptr @_ZNK6duckdb6vectorINS_5ValueELb1ESaIS1_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %1, i64 noundef 0)
           to label %bb.b unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -221,7 +222,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.m = invoke i64 @_ZNK6duckdb5Value8GetValueINS_11timestamp_tEEET_v(ptr noundef nonnull align 8 dereferenceable(64) %i.l)
-          to label %bb.e unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 3 uses
+          to label %bb.e unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.e:                                             ; preds = %bb.d
   %.pre31 = load ptr, ptr %1, align 8, !tbaa !794
@@ -230,7 +231,7 @@ bb.e:                                             ; preds = %bb.d
   %i.o = ptrtoint ptr %.pre31 to i64
   %i.p = sub i64 %i.n, %i.o
   %.not.peel = icmp ugt i64 %i.p, 64
-  br i1 %.not.peel, label %.peel.next, label %.critedge
+  br i1 %.not.peel, label %.peel.next, label %..critedge_crit_edge
 
 .peel.next:                                       ; preds = %bb.e
   %i.q = invoke noundef nonnull align 8 dereferenceable(64) ptr @_ZNK6duckdb6vectorINS_5ValueELb1ESaIS1_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %1, i64 noundef 1)
@@ -257,7 +258,7 @@ bb.i:                                             ; preds = %bb.h
   %i.x = ptrtoint ptr %.pre33 to i64
   %i.y = sub i64 %i.w, %i.x
   %.not.peel28 = icmp ugt i64 %i.y, 128
-  br i1 %.not.peel28, label %.peel.next27, label %.critedge
+  br i1 %.not.peel28, label %.peel.next27, label %..critedge_crit_edge
 
 .peel.next27:                                     ; preds = %bb.i, %bb.m
   %.02026 = phi i64 [ %i.af, %bb.m ], [ 2, %bb.i ] ; 3 uses
@@ -284,10 +285,6 @@ bb.l:                                             ; preds = %bb.k
   br label %bb.w
 
 bb.m:                                             ; preds = %bb.l
-  %3 = extractvalue { i64, i64 } %i.ae, 0
-  %4 = extractvalue { i64, i64 } %i.ae, 1
-  store i64 %3, ptr %2, align 8, !tbaa !156
-  store i64 %4, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !689
   %.pre35 = load ptr, ptr %1, align 8, !tbaa !794
   %.pre34 = load ptr, ptr %i.e, align 8, !tbaa !793
   %i.af = add nuw i64 %.02026, 1                  ; 2 uses
@@ -296,11 +293,25 @@ bb.m:                                             ; preds = %bb.l
   %i.ai = sub i64 %i.ag, %i.ah
   %i.aj = ashr exact i64 %i.ai, 6
   %.not = icmp ult i64 %i.af, %i.aj
-  br i1 %.not, label %.peel.next27, label %.critedge, !llvm.loop !4853
+  br i1 %.not, label %.peel.next27, label %..critedge_crit_edge.loopexit, !llvm.loop !4853
 
-.critedge:                                        ; preds = %bb.m, %bb.e, %bb.i, %bb.a
-  %.sroa.3.0 = phi i64 [ undef, %bb.a ], [ undef, %bb.e ], [ %i.v, %bb.i ], [ %i.v, %bb.m ]
-  %5 = phi i64 [ undef, %bb.a ], [ %i.m, %bb.e ], [ %i.m, %bb.i ], [ %i.m, %bb.m ]
+..critedge_crit_edge.loopexit:                    ; preds = %bb.m
+  %3 = extractvalue { i64, i64 } %i.ae, 0
+  %4 = extractvalue { i64, i64 } %i.ae, 1
+  br label %..critedge_crit_edge
+
+..critedge_crit_edge:                             ; preds = %..critedge_crit_edge.loopexit, %bb.i, %bb.e
+  %.sroa.3.0 = phi i64 [ %i.v, %..critedge_crit_edge.loopexit ], [ %i.v, %bb.i ], [ undef, %bb.e ]
+  %.lcssa39 = phi i64 [ %4, %..critedge_crit_edge.loopexit ], [ %.sroa.5.0..sroa_idx.promoted, %bb.i ], [ %.sroa.5.0..sroa_idx.promoted, %bb.e ]
+  %.lcssa38 = phi i64 [ %3, %..critedge_crit_edge.loopexit ], [ undef, %bb.i ], [ undef, %bb.e ]
+  store i64 %.lcssa39, ptr %.sroa.5.0..sroa_idx, align 8
+  br label %.critedge
+
+.critedge:                                        ; preds = %..critedge_crit_edge, %bb.a
+  %.sroa.3.1 = phi i64 [ undef, %bb.a ], [ %.sroa.3.0, %..critedge_crit_edge ]
+  %5 = phi i64 [ undef, %bb.a ], [ %i.m, %..critedge_crit_edge ]
+  %.lcssa = phi i64 [ undef, %bb.a ], [ %.lcssa38, %..critedge_crit_edge ]
+  store i64 %.lcssa, ptr %2, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #29
   store i64 0, ptr %i.a, align 8, !tbaa !689
   %i.ak = invoke noundef zeroext i1 @_ZN6duckdb8Interval11TryGetMicroERKNS_10interval_tERl(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(8) %i.a)
@@ -320,7 +331,7 @@ bb.o:                                             ; preds = %.critedge
 bb.p:                                             ; preds = %bb.n
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #29
   store i64 0, ptr %i.b, align 8, !tbaa !689
-  %i.ao = invoke noundef zeroext i1 @_ZN6duckdb19TrySubtractOperator9OperationIlllEEbT_T0_RT1_(i64 noundef %.sroa.3.0, i64 noundef %5, ptr noundef nonnull align 8 dereferenceable(8) %i.b)
+  %i.ao = invoke noundef zeroext i1 @_ZN6duckdb19TrySubtractOperator9OperationIlllEEbT_T0_RT1_(i64 noundef %.sroa.3.1, i64 noundef %5, ptr noundef nonnull align 8 dereferenceable(8) %i.b)
           to label %bb.q unwind label %bb.r
 
 bb.q:                                             ; preds = %bb.p
@@ -356,7 +367,7 @@ bb.v:                                             ; preds = %bb.r, %bb.o
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #29
   br label %bb.w
 
-bb.w:                                             ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.v
+bb.w:                                             ; preds = %bb.v, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
   %.pn22.pn = phi { ptr, i32 } [ %.pn22, %bb.v ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #29
   call void @_ZN6duckdb17TableFunctionDataD2Ev(ptr noundef nonnull align 8 dereferenceable(32) %0) #29

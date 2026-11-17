@@ -204,8 +204,8 @@ _ZSt6fill_nIPPcmS0_ET_S2_T0_RKT1_.exit.loopexit.i.i.i.i.i844: ; preds = %.noexc8
   br label %.lr.ph2331.preheader
 
 .lr.ph2331.preheader:                             ; preds = %_ZSt6fill_nIPPcmS0_ET_S2_T0_RKT1_.exit.loopexit.i.i.i.i.i844, %.noexc849
+  %85 = load ptr, ptr %28, align 8, !tbaa !37
   %wide.trip.count = zext nneg i32 %i.rk to i64
-  %.pre2358 = load ptr, ptr %28, align 8, !tbaa !37 ; 2 uses
   br label %.lr.ph2331
 
 ._crit_edge2332:                                  ; preds = %bb.gi, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i
@@ -293,11 +293,11 @@ _ZNSt6vectorIPcSaIS0_EED2Ev.exit910.thread:       ; preds = %bb.gf
   br label %bb.nf
 
 .lr.ph2331:                                       ; preds = %.lr.ph2331.preheader, %bb.gi
-  %indvars.iv = phi i64 [ 0, %.lr.ph2331.preheader ], [ %indvars.iv.next, %bb.gi ] ; 14 uses
-  %i.aox = getelementptr inbounds nuw [24 x i8], ptr %.pre2358, i64 %indvars.iv ; 2 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph2331.preheader ], [ %indvars.iv.next, %bb.gi ] ; 13 uses
+  %i.aox = getelementptr inbounds nuw [24 x i8], ptr %85, i64 %indvars.iv ; 3 uses
   %i.aoy = getelementptr inbounds nuw i8, ptr %i.aox, i64 8
   %i.aoz = load ptr, ptr %i.aoy, align 8, !tbaa !49 ; 4 uses
-  %i.apa = load ptr, ptr %i.aox, align 8, !tbaa !50 ; 4 uses
+  %i.apa = load ptr, ptr %i.aox, align 8, !tbaa !50 ; 5 uses
   %i.apb = ptrtoint ptr %i.aoz to i64
   %i.apc = ptrtoint ptr %i.apa to i64
   %i.apd = sub i64 %i.apb, %i.apc
@@ -321,11 +321,14 @@ bb.gh:                                            ; preds = %bb.gg
 
 .noexc852:                                        ; preds = %bb.gh
   invoke void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIP5RgbazSt6vectorIS2_SaIS2_EEEENS0_5__ops15_Iter_less_iterEEvT_SA_T0_(ptr %i.apa, ptr %i.aoz)
-          to label %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIP5RgbazSt6vectorIS2_SaIS2_EEEEEvT_S8_.exit unwind label %.thread2876
+          to label %.noexc852._ZSt4sortIN9__gnu_cxx17__normal_iteratorIP5RgbazSt6vectorIS2_SaIS2_EEEEEvT_S8_.exit_crit_edge unwind label %.thread2876
 
-_ZSt4sortIN9__gnu_cxx17__normal_iteratorIP5RgbazSt6vectorIS2_SaIS2_EEEEEvT_S8_.exit: ; preds = %bb.gg, %.noexc852
-  %85 = getelementptr inbounds nuw [24 x i8], ptr %.pre2358, i64 %indvars.iv
-  %86 = load ptr, ptr %85, align 8, !tbaa !50     ; 10 uses
+.noexc852._ZSt4sortIN9__gnu_cxx17__normal_iteratorIP5RgbazSt6vectorIS2_SaIS2_EEEEEvT_S8_.exit_crit_edge: ; preds = %.noexc852
+  %.pre2358 = load ptr, ptr %i.aox, align 8, !tbaa !50
+  br label %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIP5RgbazSt6vectorIS2_SaIS2_EEEEEvT_S8_.exit
+
+_ZSt4sortIN9__gnu_cxx17__normal_iteratorIP5RgbazSt6vectorIS2_SaIS2_EEEEEvT_S8_.exit: ; preds = %.noexc852._ZSt4sortIN9__gnu_cxx17__normal_iteratorIP5RgbazSt6vectorIS2_SaIS2_EEEEEvT_S8_.exit_crit_edge, %bb.gg
+  %86 = phi ptr [ %.pre2358, %.noexc852._ZSt4sortIN9__gnu_cxx17__normal_iteratorIP5RgbazSt6vectorIS2_SaIS2_EEEEEvT_S8_.exit_crit_edge ], [ %i.apa, %bb.gg ] ; 10 uses
   %i.apl = getelementptr inbounds nuw [8 x i8], ptr %i.anj, i64 %indvars.iv
   store ptr %86, ptr %i.apl, align 8, !tbaa !94
   %i.apm = getelementptr inbounds nuw i8, ptr %86, i64 2
