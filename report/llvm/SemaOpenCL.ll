@@ -204,7 +204,7 @@ _ZNK5clang4Type6castAsINS_17FunctionProtoTypeEEEPKT_v.exit: ; preds = %bb.a, %bb
   ret i1 %.013.lcssa
 
 bb.c:                                             ; preds = %.lr.ph, %bb.i
-  %.042 = phi i32 [ 0, %.lr.ph ], [ %5, %bb.i ]   ; 2 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.i ] ; 2 uses
   %.01341 = phi i1 [ false, %.lr.ph ], [ %.1, %bb.i ]
   %.01439 = phi ptr [ %i.p, %.lr.ph ], [ %i.bu, %bb.i ] ; 3 uses
   %.0.copyload.i.i.i.i.i17 = load i64, ptr %.01439, align 8
@@ -279,8 +279,7 @@ bb.f:                                             ; preds = %.critedge
   %i.bl = load ptr, ptr %i.x, align 8, !tbaa !849
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bl, i64 72
   %i.bn = load ptr, ptr %i.bm, align 8, !tbaa !853
-  %4 = zext i32 %.042 to i64
-  %i.bo = getelementptr inbounds nuw [8 x i8], ptr %i.bn, i64 %4
+  %i.bo = getelementptr inbounds nuw [8 x i8], ptr %i.bn, i64 %indvars.iv
   %i.bp = load ptr, ptr %i.bo, align 8, !tbaa !799
   %i.bq = call i32 @_ZNK5clang14DeclaratorDecl16getOuterLocStartEv(ptr noundef nonnull align 8 dereferenceable(68) %i.bp) #17
   br label %_ZNK5clang11DeclRefExpr11getBeginLocEv.exit
@@ -314,7 +313,7 @@ _ZNK5clang11DeclRefExpr11getBeginLocEv.exit:      ; preds = %.critedge, %bb.h, %
 bb.i:                                             ; preds = %_ZNK5clang8QualType13getQualifiersEv.exit, %_ZNK5clang11DeclRefExpr11getBeginLocEv.exit
   %.1 = phi i1 [ true, %_ZNK5clang11DeclRefExpr11getBeginLocEv.exit ], [ %.01341, %_ZNK5clang8QualType13getQualifiersEv.exit ] ; 2 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %.01439, i64 8 ; 2 uses
-  %5 = add i32 %.042, 1
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   %.not = icmp eq ptr %i.bu, %i.t
   br i1 %.not, label %._crit_edge, label %bb.c, !llvm.loop !846
 }
