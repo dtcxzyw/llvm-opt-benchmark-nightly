@@ -205,13 +205,17 @@ bb.c:                                             ; preds = %bb.b
   %i.bs = load ptr, ptr %i.e, align 8, !tbaa !405
   %i.bt = load ptr, ptr %i.d, align 8, !tbaa !404 ; 2 uses
   %.not434.not = icmp eq ptr %i.bs, %i.bt
-  br i1 %.not434.not, label %.lr.ph268.preheader, label %.lr.ph439
+  br i1 %.not434.not, label %.lr.ph268.preheader, label %.lr.ph439.preheader
 
-.lr.ph439:                                        ; preds = %.lr.ph, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17NodeHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_EEJEE14const_iteratorppEv.exit
-  %i.bu = phi ptr [ %i.fc, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17NodeHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_EEJEE14const_iteratorppEv.exit ], [ %i.bt, %.lr.ph ]
-  %.sroa.14.0244437 = phi ptr [ %.sroa.14.2, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17NodeHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_EEJEE14const_iteratorppEv.exit ], [ %.sroa.6.0.i.i.ph, %.lr.ph ] ; 3 uses
-  %.sroa.0175.0245436 = phi ptr [ %.sroa.0175.2, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17NodeHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_EEJEE14const_iteratorppEv.exit ], [ %.sroa.0.0.i.i.ph, %.lr.ph ] ; 3 uses
-  %storemerge246435 = phi i64 [ %i.fa, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17NodeHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_EEJEE14const_iteratorppEv.exit ], [ 0, %.lr.ph ] ; 6 uses
+.lr.ph439.preheader:                              ; preds = %.lr.ph
+  %14 = load ptr, ptr %9, align 8
+  br label %.lr.ph439
+
+.lr.ph439:                                        ; preds = %.lr.ph439.preheader, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17NodeHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_EEJEE14const_iteratorppEv.exit
+  %i.bu = phi ptr [ %i.fc, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17NodeHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_EEJEE14const_iteratorppEv.exit ], [ %i.bt, %.lr.ph439.preheader ]
+  %.sroa.14.0244437 = phi ptr [ %.sroa.14.2, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17NodeHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_EEJEE14const_iteratorppEv.exit ], [ %.sroa.6.0.i.i.ph, %.lr.ph439.preheader ] ; 3 uses
+  %.sroa.0175.0245436 = phi ptr [ %.sroa.0175.2, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17NodeHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_EEJEE14const_iteratorppEv.exit ], [ %.sroa.0.0.i.i.ph, %.lr.ph439.preheader ] ; 3 uses
+  %storemerge246435 = phi i64 [ %i.fa, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17NodeHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_EEJEE14const_iteratorppEv.exit ], [ 0, %.lr.ph439.preheader ] ; 6 uses
   br i1 %i.c, label %bb.d, label %bb.u
 
 bb.d:                                             ; preds = %.lr.ph439
@@ -304,7 +308,6 @@ bb.k:                                             ; preds = %_ZNK7testing8intern
           to label %_ZNK7testing25StringMatchResultListener3strB5cxx11Ev.exit unwind label %bb.j
 
 _ZNK7testing25StringMatchResultListener3strB5cxx11Ev.exit: ; preds = %bb.k, %bb.i
-  %14 = load ptr, ptr %9, align 8, !tbaa !100
   %i.cu = getelementptr inbounds nuw [32 x i8], ptr %14, i64 %storemerge246435 ; 9 uses
   %i.cv = load ptr, ptr %i.cu, align 8, !tbaa !89 ; 6 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cu, i64 16 ; 4 uses
@@ -707,8 +710,8 @@ bb.az:                                            ; preds = %bb.ah
   br label %.lr.ph273
 
 .lr.ph273:                                        ; preds = %.lr.ph273.preheader, %_ZN7testing19MatchResultListenerlsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEERS0_RKT_.exit155
-  %.0272 = phi i1 [ %.1, %_ZN7testing19MatchResultListenerlsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEERS0_RKT_.exit155 ], [ false, %.lr.ph273.preheader ] ; 2 uses
-  %storemerge56271 = phi i64 [ %i.lv, %_ZN7testing19MatchResultListenerlsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEERS0_RKT_.exit155 ], [ 0, %.lr.ph273.preheader ] ; 3 uses
+  %.0272 = phi i1 [ false, %.lr.ph273.preheader ], [ %.1, %_ZN7testing19MatchResultListenerlsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEERS0_RKT_.exit155 ] ; 2 uses
+  %storemerge56271 = phi i64 [ 0, %.lr.ph273.preheader ], [ %i.lv, %_ZN7testing19MatchResultListenerlsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEERS0_RKT_.exit155 ] ; 3 uses
   %i.lk = getelementptr inbounds nuw [32 x i8], ptr %.pre, i64 %storemerge56271 ; 2 uses
   %i.ll = getelementptr inbounds nuw i8, ptr %i.lk, i64 8 ; 2 uses
   %i.lm = load i64, ptr %i.ll, align 8, !tbaa !93

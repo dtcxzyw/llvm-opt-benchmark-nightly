@@ -202,6 +202,7 @@ bb.iu:                                            ; preds = %bb.it
   %i.apc = getelementptr inbounds nuw i8, ptr %73, i64 8
   %i.apd = getelementptr inbounds nuw i8, ptr %73, i64 16
   %i.ape = and i64 %i.aod, 2147483647
+  %106 = call i64 @llvm.umax.i64(i64 %i.ape, i64 1)
   br label %bb.iw
 
 ._crit_edge293.i:                                 ; preds = %bb.jb, %.preheader.i
@@ -291,8 +292,8 @@ bb.jb:                                            ; preds = %bb.ja
   call void @llvm.lifetime.end.p0(ptr nonnull %72) #24
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %70) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %70) #24
-  %106 = icmp samesign ult i64 %indvars.iv.next296.i, %i.ape
-  br i1 %106, label %bb.iw, label %._crit_edge293.i, !llvm.loop !260
+  %exitcond.not = icmp eq i64 %indvars.iv.next296.i, %106
+  br i1 %exitcond.not, label %._crit_edge293.i, label %bb.iw, !llvm.loop !260
 
 bb.jc:                                            ; preds = %bb.iw
   %i.aqa = landingpad { ptr, i32 }

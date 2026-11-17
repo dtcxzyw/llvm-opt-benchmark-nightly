@@ -205,7 +205,7 @@ bb.a:
 ; Function Attrs: nonlazybind uwtable
 define { ptr, ptr } @_RNvXsx_NtCs8frGy5WneL6_4fish3astNtB5_9TraversalNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4next(ptr noalias nofree noundef align 8 dereferenceable(24) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
   %.promoted = load i64, ptr %i.a, align 8        ; 2 uses
   %i.b = load i64, ptr %0, align 8, !range !20
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -215,12 +215,11 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph
   %i.f = icmp eq i64 %i.h, 0
-  br i1 %i.f, label %_RINvNvMNtCs3oUPovFnLWP_4core5sliceSp7reverse7revswapNtNtCs8frGy5WneL6_4fish3ast14TraversalEntryEBS_.exit, label %.lr.ph
+  br i1 %i.f, label %_RINvNvMNtCs3oUPovFnLWP_4core5sliceSp7reverse7revswapNtNtCs8frGy5WneL6_4fish3ast14TraversalEntryEBS_.exit.loopexit35, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %bb.b
   %i.g = phi i64 [ %i.h, %bb.b ], [ %.promoted, %bb.a ] ; 8 uses
-  %i.h = add nsw i64 %i.g, -1                     ; 5 uses
-  store i64 %i.h, ptr %i.a, align 8
+  %i.h = add nsw i64 %i.g, -1                     ; 6 uses
   %i.i = icmp samesign ult i64 %i.h, %i.b
   tail call void @llvm.assume(i1 %i.i)
   %i.j = icmp ult i64 %i.g, 384307168202282327
@@ -230,14 +229,19 @@ bb.b:                                             ; preds = %.lr.ph
   %i.l = trunc nuw i64 %.sroa.08.0.copyload to i1
   br i1 %i.l, label %bb.b, label %_RNvMsG_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecNtNtCs8frGy5WneL6_4fish3ast14TraversalEntryE8push_mutBJ_.exit
 
-_RINvNvMNtCs3oUPovFnLWP_4core5sliceSp7reverse7revswapNtNtCs8frGy5WneL6_4fish3ast14TraversalEntryEBS_.exit: ; preds = %bb.b, %_RINvNtCs3oUPovFnLWP_4core10intrinsics25typed_swap_nonoverlappingNtNtCs8frGy5WneL6_4fish3ast14TraversalEntryEB14_.exit.i, %bb.a, %bb.c
-  %.sroa.3.0 = phi ptr [ undef, %bb.a ], [ %.sroa.510.0.copyload.le, %bb.c ], [ %.sroa.510.0.copyload.le, %_RINvNtCs3oUPovFnLWP_4core10intrinsics25typed_swap_nonoverlappingNtNtCs8frGy5WneL6_4fish3ast14TraversalEntryEB14_.exit.i ], [ undef, %bb.b ]
-  %.sroa.0.0 = phi ptr [ null, %bb.a ], [ %.sroa.49.0.copyload.le, %bb.c ], [ %.sroa.49.0.copyload.le, %_RINvNtCs3oUPovFnLWP_4core10intrinsics25typed_swap_nonoverlappingNtNtCs8frGy5WneL6_4fish3ast14TraversalEntryEB14_.exit.i ], [ null, %bb.b ]
+_RINvNvMNtCs3oUPovFnLWP_4core5sliceSp7reverse7revswapNtNtCs8frGy5WneL6_4fish3ast14TraversalEntryEBS_.exit.loopexit35: ; preds = %bb.b
+  store i64 %i.h, ptr %i.a, align 8
+  br label %_RINvNvMNtCs3oUPovFnLWP_4core5sliceSp7reverse7revswapNtNtCs8frGy5WneL6_4fish3ast14TraversalEntryEBS_.exit
+
+_RINvNvMNtCs3oUPovFnLWP_4core5sliceSp7reverse7revswapNtNtCs8frGy5WneL6_4fish3ast14TraversalEntryEBS_.exit: ; preds = %_RINvNtCs3oUPovFnLWP_4core10intrinsics25typed_swap_nonoverlappingNtNtCs8frGy5WneL6_4fish3ast14TraversalEntryEB14_.exit.i, %_RINvNvMNtCs3oUPovFnLWP_4core5sliceSp7reverse7revswapNtNtCs8frGy5WneL6_4fish3ast14TraversalEntryEBS_.exit.loopexit35, %bb.a, %bb.c
+  %.sroa.3.0 = phi ptr [ undef, %bb.a ], [ %.sroa.510.0.copyload.le, %bb.c ], [ undef, %_RINvNvMNtCs3oUPovFnLWP_4core5sliceSp7reverse7revswapNtNtCs8frGy5WneL6_4fish3ast14TraversalEntryEBS_.exit.loopexit35 ], [ %.sroa.510.0.copyload.le, %_RINvNtCs3oUPovFnLWP_4core10intrinsics25typed_swap_nonoverlappingNtNtCs8frGy5WneL6_4fish3ast14TraversalEntryEB14_.exit.i ]
+  %.sroa.0.0 = phi ptr [ null, %bb.a ], [ %.sroa.49.0.copyload.le, %bb.c ], [ null, %_RINvNvMNtCs3oUPovFnLWP_4core5sliceSp7reverse7revswapNtNtCs8frGy5WneL6_4fish3ast14TraversalEntryEBS_.exit.loopexit35 ], [ %.sroa.49.0.copyload.le, %_RINvNtCs3oUPovFnLWP_4core10intrinsics25typed_swap_nonoverlappingNtNtCs8frGy5WneL6_4fish3ast14TraversalEntryEB14_.exit.i ]
   %i.m = insertvalue { ptr, ptr } poison, ptr %.sroa.0.0, 0
   %i.n = insertvalue { ptr, ptr } %i.m, ptr %.sroa.3.0, 1
   ret { ptr, ptr } %i.n
 
 _RNvMsG_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecNtNtCs8frGy5WneL6_4fish3ast14TraversalEntryE8push_mutBJ_.exit: ; preds = %.lr.ph
+  store i64 %i.h, ptr %i.a, align 8
   %.sroa.49.0..sroa_idx.le = getelementptr inbounds nuw i8, ptr %i.k, i64 8 ; 2 uses
   %.sroa.49.0.copyload.le = load ptr, ptr %.sroa.49.0..sroa_idx.le, align 8, !nonnull !15, !noundef !15 ; 4 uses
   %.sroa.510.0..sroa_idx.le = getelementptr inbounds nuw i8, ptr %i.k, i64 16 ; 2 uses

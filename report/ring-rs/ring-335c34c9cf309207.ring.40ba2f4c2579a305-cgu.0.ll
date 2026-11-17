@@ -205,13 +205,19 @@ _RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5in
   %i.ap = getelementptr inbounds nuw i8, ptr %.promoted64, i64 %i.s ; 2 uses
   %i.aq = and i64 %i.ao, -16                      ; 2 uses
   %i.ar = icmp eq i64 %i.aq, 0
-  br i1 %i.ar, label %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit9._crit_edge, label %.lr.ph.a
+  br i1 %i.ar, label %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit9._crit_edge, label %.lr.ph
 
-.lr.ph.a:                                         ; preds = %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit9.lr.ph, %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit9
-  %i.as = phi i64 [ %i.bs, %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit9 ], [ %i.aq, %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit9.lr.ph ]
-  %i.at = phi ptr [ %i.br, %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit9 ], [ %i.ap, %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit9.lr.ph ] ; 2 uses
-  %i.au = phi ptr [ %i.bp, %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit9 ], [ %.promoted64, %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit9.lr.ph ] ; 2 uses
-  %i.av = phi i64 [ %i.bd, %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit9 ], [ %i.q, %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit9.lr.ph ] ; 3 uses
+.lr.ph:                                           ; preds = %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit9.lr.ph
+  %.promoted65 = load i32, ptr %i.an, align 1
+  %7 = call i32 @llvm.bswap.i32(i32 %.promoted65)
+  br label %.lr.ph.a
+
+.lr.ph.a:                                         ; preds = %.lr.ph, %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit9
+  %i.as = phi i64 [ %i.aq, %.lr.ph ], [ %i.bs, %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit9 ]
+  %i.at = phi ptr [ %i.ap, %.lr.ph ], [ %i.br, %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit9 ] ; 2 uses
+  %i.au = phi ptr [ %.promoted64, %.lr.ph ], [ %i.bp, %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit9 ] ; 2 uses
+  %i.av = phi i64 [ %i.q, %.lr.ph ], [ %i.bd, %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit9 ] ; 3 uses
+  %8 = phi i32 [ %7, %.lr.ph ], [ %i.ba, %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit9 ]
   %..i = call noundef i64 @llvm.umin.i64(i64 %i.as, i64 3072) ; 6 uses
   %i.aw = add i64 %..i, %i.s                      ; 2 uses
   %i.ax = icmp ult i64 %i.aw, %i.s
@@ -225,9 +231,7 @@ _RNCINvNtNtCs5yxAJGbRKSL_4ring4aead7aes_gcm12open_stridedNtNtNtB6_3aes2hw3KeyNtN
   %i.az = lshr exact i64 %..i, 4                  ; 2 uses
   %.sroa.6.0.extract.trunc.i.i.i.i.i.i = trunc nuw nsw i64 %i.az to i32
   call void @ring_core_0_17_16000__aes_hw_ctr32_encrypt_blocks(ptr noundef nonnull %i.at, ptr noundef nonnull %i.au, i64 noundef %i.az, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(244) %i.o, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(16) %5) #36, !noalias !488, !inline_history !1
-  %7 = load i32, ptr %i.an, align 1, !alias.scope !489, !noalias !490
-  %8 = call i32 @llvm.bswap.i32(i32 %7)
-  %i.ba = add i32 %8, %.sroa.6.0.extract.trunc.i.i.i.i.i.i
+  %i.ba = add i32 %8, %.sroa.6.0.extract.trunc.i.i.i.i.i.i ; 2 uses
   %i.bb = call i32 @llvm.bswap.i32(i32 %i.ba)
   store i32 %i.bb, ptr %i.an, align 1, !alias.scope !489, !noalias !490
   %i.bc = icmp ult i64 %i.av, %..i
@@ -472,13 +476,19 @@ _RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5in
   %i.ca = getelementptr inbounds nuw i8, ptr %.promoted94, i64 %i.k ; 2 uses
   %i.cb = and i64 %i.bz, -16                      ; 2 uses
   %i.cc = icmp eq i64 %i.cb, 0
-  br i1 %i.cc, label %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit9._crit_edge, label %.lr.ph.a
+  br i1 %i.cc, label %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit9._crit_edge, label %.lr.ph
 
-.lr.ph.a:                                         ; preds = %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit9.lr.ph, %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit9
-  %i.cd = phi i64 [ %i.hd, %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit9 ], [ %i.cb, %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit9.lr.ph ]
-  %i.ce = phi ptr [ %i.hc, %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit9 ], [ %i.ca, %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit9.lr.ph ] ; 2 uses
-  %i.cf = phi ptr [ %i.ha, %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit9 ], [ %.promoted94, %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit9.lr.ph ] ; 2 uses
-  %i.cg = phi i64 [ %i.co, %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit9 ], [ %i.i, %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit9.lr.ph ] ; 3 uses
+.lr.ph:                                           ; preds = %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit9.lr.ph
+  %.promoted96 = load i32, ptr %i.by, align 1
+  %7 = tail call i32 @llvm.bswap.i32(i32 %.promoted96)
+  br label %.lr.ph.a
+
+.lr.ph.a:                                         ; preds = %.lr.ph, %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit9
+  %i.cd = phi i64 [ %i.cb, %.lr.ph ], [ %i.hd, %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit9 ]
+  %i.ce = phi ptr [ %i.ca, %.lr.ph ], [ %i.hc, %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit9 ] ; 2 uses
+  %i.cf = phi ptr [ %.promoted94, %.lr.ph ], [ %i.ha, %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit9 ] ; 2 uses
+  %i.cg = phi i64 [ %i.i, %.lr.ph ], [ %i.co, %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit9 ] ; 3 uses
+  %8 = phi i32 [ %7, %.lr.ph ], [ %i.cl, %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit9 ]
   %..i = tail call noundef i64 @llvm.umin.i64(i64 %i.cd, i64 3072) ; 5 uses
   %i.ch = add i64 %..i, %i.k                      ; 2 uses
   %i.ci = icmp ult i64 %i.ch, %i.k
@@ -492,9 +502,7 @@ _RNCINvNtNtCs5yxAJGbRKSL_4ring4aead7aes_gcm12open_stridedNtNtNtB6_3aes2vp3KeyNtN
   call void @_RNvXs0_NtNtNtCs5yxAJGbRKSL_4ring4aead3gcm8fallbackNtB5_3KeyNtB7_12UpdateBlocks13update_blocks(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.ck, ptr noalias nofree noundef nonnull dereferenceable(16) %.sroa.4.0..sroa_idx, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.ce, i64 noundef %i.cj), !noalias !592
   %.sroa.6.0.extract.trunc.i.i.i.i.i.i = trunc nuw nsw i64 %i.cj to i32
   tail call void @ring_core_0_17_16000__vpaes_ctr32_encrypt_blocks(ptr noundef nonnull %i.ce, ptr noundef nonnull %i.cf, i64 noundef %i.cj, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(244) %i.g, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(16) %5) #36, !noalias !593, !inline_history !1
-  %7 = load i32, ptr %i.by, align 1, !alias.scope !594, !noalias !595
-  %8 = tail call i32 @llvm.bswap.i32(i32 %7)
-  %i.cl = add i32 %8, %.sroa.6.0.extract.trunc.i.i.i.i.i.i
+  %i.cl = add i32 %8, %.sroa.6.0.extract.trunc.i.i.i.i.i.i ; 2 uses
   %i.cm = tail call i32 @llvm.bswap.i32(i32 %i.cl)
   store i32 %i.cm, ptr %i.by, align 1, !alias.scope !594, !noalias !595
   %i.cn = icmp ult i64 %i.cg, %..i

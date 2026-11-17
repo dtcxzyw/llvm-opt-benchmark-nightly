@@ -204,8 +204,8 @@ bb.d:                                             ; preds = %bb.a
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 30
   %i.ak = load i16, ptr %i.aj, align 2
   %i.al = sext i16 %i.ak to i32
-  %i.am = sub i32 %i.al, %1                       ; 5 uses
-  %i.an = sext i32 %i.am to i64                   ; 5 uses
+  %i.am = sub i32 %i.al, %1                       ; 6 uses
+  %i.an = sext i32 %i.am to i64                   ; 3 uses
   %i.ao = tail call ptr @palloc0(i64 noundef %i.an) #7 ; 5 uses
   %i.ap = shl nsw i64 %i.an, 3
   %i.aq = tail call ptr @palloc0(i64 noundef %i.ap) #7 ; 5 uses
@@ -216,6 +216,7 @@ bb.d:                                             ; preds = %bb.a
 
 .lr.ph:                                           ; preds = %bb.d
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
+  %wide.trip.count82 = zext nneg i32 %i.am to i64 ; 2 uses
   br i1 %2, label %.lr.ph.split, label %.lr.ph.split.us
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %bb.e
@@ -241,8 +242,8 @@ bb.d:                                             ; preds = %bb.a
 
 bb.e:                                             ; preds = %.lr.ph.split.us
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %6 = icmp slt i64 %indvars.iv.next, %i.an
-  br i1 %6, label %.lr.ph.split.us, label %.loopexit, !llvm.loop !20
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count82
+  br i1 %exitcond.not, label %.loopexit, label %.lr.ph.split.us, !llvm.loop !20
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %bb.k
   %indvars.iv79 = phi i64 [ %indvars.iv.next80, %bb.k ], [ 0, %.lr.ph ] ; 5 uses
@@ -304,8 +305,8 @@ bb.j:                                             ; preds = %bb.g, %bb.h, %bb.i
 
 bb.k:                                             ; preds = %bb.j
   %indvars.iv.next80 = add nuw nsw i64 %indvars.iv79, 1 ; 2 uses
-  %7 = icmp slt i64 %indvars.iv.next80, %i.an
-  br i1 %7, label %.lr.ph.split, label %.loopexit, !llvm.loop !20
+  %exitcond83.not = icmp eq i64 %indvars.iv.next80, %wide.trip.count82
+  br i1 %exitcond83.not, label %.loopexit, label %.lr.ph.split, !llvm.loop !20
 
 .loopexit:                                        ; preds = %bb.e, %bb.k, %bb.d, %._crit_edge
   %i.ci = phi i32 [ %i.ai, %._crit_edge ], [ %i.am, %bb.k ], [ %i.am, %bb.d ], [ %i.am, %bb.e ]

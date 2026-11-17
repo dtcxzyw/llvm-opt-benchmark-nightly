@@ -202,14 +202,17 @@ bb.j:                                             ; preds = %.lr.ph187, %bb.j
   %i.fh = phi i64 [ %.promoted, %.lr.ph187 ], [ %i.fi, %bb.j ]
   %.0134185 = phi ptr [ %.0134183, %.lr.ph187 ], [ %.0134, %bb.j ]
   %i.fi = add i64 %i.fh, 1                        ; 2 uses
-  store i64 %i.fi, ptr %i.fe, align 8
   %.0134.in = getelementptr inbounds nuw i8, ptr %.0134185, i64 120
   %.0134 = load ptr, ptr %.0134.in, align 8       ; 2 uses
   %.not145 = icmp eq ptr %.0134, null
-  br i1 %.not145, label %.loopexit, label %bb.j, !llvm.loop !12
+  br i1 %.not145, label %..loopexit_crit_edge, label %bb.j, !llvm.loop !12
 
-.loopexit:                                        ; preds = %bb.j, %bb.i, %bb.h, %bb.b
-  %.0 = phi ptr [ null, %bb.h ], [ null, %bb.b ], [ %i.g, %bb.i ], [ %i.g, %bb.j ]
+..loopexit_crit_edge:                             ; preds = %bb.j
+  store i64 %i.fi, ptr %i.fe, align 8
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %bb.i, %..loopexit_crit_edge, %bb.h, %bb.b
+  %.0 = phi ptr [ null, %bb.h ], [ null, %bb.b ], [ %i.g, %..loopexit_crit_edge ], [ %i.g, %bb.i ]
   %.val = load ptr, ptr %4, align 8
   %.val176 = load ptr, ptr %i.a, align 8
   call void @error_propagate(ptr noundef %.val176, ptr noundef %.val) #9

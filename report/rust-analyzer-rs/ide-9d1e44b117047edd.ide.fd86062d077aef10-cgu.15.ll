@@ -204,7 +204,7 @@ bb.a:
   %i.aq = alloca [32 x i8], align 8               ; 7 uses
   %i.ar = alloca [16 x i8], align 8               ; 5 uses
   %i.as = alloca [8 x i8], align 8                ; 4 uses
-  %i.at = alloca [8 x i8], align 8                ; 5 uses
+  %i.at = alloca [8 x i8], align 8                ; 6 uses
   tail call void @_RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VechE7reserveCslLuZgPVt6hg_3ide(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, i64 noundef 16)
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
   %i.av = load i64, ptr %i.au, align 8, !alias.scope !279, !noundef !11 ; 2 uses
@@ -253,7 +253,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.loopexit278, %bb.a
-  %i.bp = phi ptr [ %0, %bb.a ], [ %i.bs, %.loopexit278 ] ; 12 uses
+  %i.bp = phi ptr [ %0, %bb.a ], [ %i.bs, %.loopexit278 ] ; 14 uses
   %i.bq = load i32, ptr %i.bp, align 8, !range !22, !noundef !11
   switch i32 %i.bq, label %.unreachabledefault [
     i32 10, label %bb.c
@@ -276,8 +276,7 @@ bb.b:                                             ; preds = %.loopexit278, %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.br = getelementptr inbounds nuw i8, ptr %i.bp, i64 8
-  %i.bs = load ptr, ptr %i.br, align 8, !nonnull !11, !noundef !11 ; 2 uses
-  store ptr %i.bs, ptr %i.at, align 8, !captures !14
+  %i.bs = load ptr, ptr %i.br, align 8, !nonnull !11, !noundef !11
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bp, i64 24
   %i.bu = load ptr, ptr %i.bt, align 8, !nonnull !11, !noundef !11 ; 3 uses
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bp, i64 32
@@ -680,6 +679,7 @@ bb.au:                                            ; preds = %bb.bq, %bb.bh, %bb.
   unreachable
 
 bb.av:                                            ; preds = %bb.b
+  store ptr %i.bp, ptr %i.at, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q)
   %i.fv = getelementptr inbounds nuw i8, ptr %i.bp, i64 24
   %i.fw = load ptr, ptr %i.fv, align 8, !nonnull !11, !noundef !11
@@ -741,6 +741,7 @@ bb.aw:                                            ; preds = %bb.b
   br i1 %i.gg, label %.loopexit, label %bb.bk
 
 bb.ax:                                            ; preds = %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b
+  store ptr %i.bp, ptr %i.at, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p)
   store ptr %i.at, ptr %i.p, align 8
   %.sroa.488.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.p, i64 8
@@ -1065,7 +1066,6 @@ bb.a:
   %i.ao = add i64 %.pre.i, 16
   store i64 %i.ao, ptr %i.ai, align 8, !alias.scope !318
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ag)
-  store ptr %0, ptr %i.ag, align 8, !captures !14
   %i.ap = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 3 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ae, i64 8
   %.sroa.440.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
@@ -1085,7 +1085,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.loopexit251, %bb.a
-  %i.av = phi ptr [ %0, %bb.a ], [ %i.ay, %.loopexit251 ] ; 12 uses
+  %i.av = phi ptr [ %0, %bb.a ], [ %i.ay, %.loopexit251 ] ; 14 uses
   %i.aw = load i32, ptr %i.av, align 8, !range !22, !noundef !11
   switch i32 %i.aw, label %.unreachabledefault [
     i32 10, label %bb.c
@@ -1108,8 +1108,7 @@ bb.b:                                             ; preds = %.loopexit251, %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.ax = getelementptr inbounds nuw i8, ptr %i.av, i64 8
-  %i.ay = load ptr, ptr %i.ax, align 8, !nonnull !11, !noundef !11 ; 2 uses
-  store ptr %i.ay, ptr %i.ag, align 8, !captures !14
+  %i.ay = load ptr, ptr %i.ax, align 8, !nonnull !11, !noundef !11
   %i.az = getelementptr inbounds nuw i8, ptr %i.av, i64 24
   %i.ba = load ptr, ptr %i.az, align 8, !nonnull !11, !noundef !11 ; 3 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %i.av, i64 32
@@ -1392,6 +1391,7 @@ bb.ab:                                            ; preds = %bb.ax, %bb.ao, %bb.
   unreachable
 
 bb.ac:                                            ; preds = %bb.b
+  store ptr %i.av, ptr %i.ag, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   %i.dx = getelementptr inbounds nuw i8, ptr %i.av, i64 24
   %i.dy = load ptr, ptr %i.dx, align 8, !nonnull !11, !noundef !11
@@ -1453,6 +1453,7 @@ bb.ad:                                            ; preds = %bb.b
   br i1 %i.ei, label %.loopexit, label %bb.ar
 
 bb.ae:                                            ; preds = %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b
+  store ptr %i.av, ptr %i.ag, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store ptr %i.ag, ptr %i.c, align 8
   %.sroa.488.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8

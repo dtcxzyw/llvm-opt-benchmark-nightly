@@ -205,7 +205,11 @@ bb.er:                                            ; preds = %bb.eq
 .preheader:                                       ; preds = %bb.er
   %i.yp = load ptr, ptr %i.ad, align 8, !tbaa !48 ; 2 uses
   %i.yq = icmp eq ptr %i.yp, null
-  br i1 %i.yq, label %.critedge527, label %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit465
+  br i1 %i.yq, label %.critedge527, label %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit465.lr.ph
+
+_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit465.lr.ph: ; preds = %.preheader
+  %25 = load ptr, ptr %5, align 8
+  br label %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit465
 
 bb.es:                                            ; preds = %bb.er
   %i.yr = load ptr, ptr %3, align 8, !tbaa !59
@@ -608,9 +612,9 @@ bb.gq:                                            ; preds = %.loopexit.split-lp,
   call void @llvm.lifetime.end.p0(ptr nonnull %21) #15
   br label %bb.hp
 
-_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit465: ; preds = %.preheader, %_ZNSt4pairI7obj_refI4expr11ast_managerES0_IN18dependency_managerINS2_22expr_dependency_configEE10dependencyES2_EED2Ev.exit489
-  %indvars.iv649 = phi i64 [ %indvars.iv.next650, %_ZNSt4pairI7obj_refI4expr11ast_managerES0_IN18dependency_managerINS2_22expr_dependency_configEE10dependencyES2_EED2Ev.exit489 ], [ 0, %.preheader ] ; 4 uses
-  %i.agp = phi ptr [ %i.ajd, %_ZNSt4pairI7obj_refI4expr11ast_managerES0_IN18dependency_managerINS2_22expr_dependency_configEE10dependencyES2_EED2Ev.exit489 ], [ %i.yp, %.preheader ] ; 2 uses
+_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit465: ; preds = %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit465.lr.ph, %_ZNSt4pairI7obj_refI4expr11ast_managerES0_IN18dependency_managerINS2_22expr_dependency_configEE10dependencyES2_EED2Ev.exit489
+  %indvars.iv649 = phi i64 [ 0, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit465.lr.ph ], [ %indvars.iv.next650, %_ZNSt4pairI7obj_refI4expr11ast_managerES0_IN18dependency_managerINS2_22expr_dependency_configEE10dependencyES2_EED2Ev.exit489 ] ; 4 uses
+  %i.agp = phi ptr [ %i.yp, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit465.lr.ph ], [ %i.ajd, %_ZNSt4pairI7obj_refI4expr11ast_managerES0_IN18dependency_managerINS2_22expr_dependency_configEE10dependencyES2_EED2Ev.exit489 ] ; 2 uses
   %i.agq = getelementptr inbounds i8, ptr %i.agp, i64 -4
   %i.agr = load i32, ptr %i.agq, align 4, !tbaa !62
   %i.ags = zext i32 %i.agr to i64
@@ -706,7 +710,6 @@ bb.gx:                                            ; preds = %_ZNK15ref_vector_co
   %i.aht = getelementptr inbounds nuw [8 x i8], ptr %i.agp, i64 %indvars.iv649
   %i.ahu = load ptr, ptr %i.aht, align 8, !tbaa !63 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %24) #15
-  %25 = load ptr, ptr %5, align 8, !tbaa !69
   invoke void @_ZN13expr_replacer16replace_with_depEP4expr(ptr dead_on_unwind nonnull writable sret(%"struct.std::pair") align 8 %24, ptr noundef nonnull align 8 dereferenceable(8) %25, ptr noundef %i.ahu)
           to label %bb.gy unwind label %bb.hf
 

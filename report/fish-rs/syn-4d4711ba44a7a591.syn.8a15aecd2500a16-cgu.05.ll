@@ -125,7 +125,6 @@ bb.a:
   store i64 0, ptr %i.j, align 8
   store ptr %i.e, ptr %i.d, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
-  store i64 0, ptr %i.k, align 8
   %i.l = getelementptr inbounds nuw [248 x i8], ptr %1, i64 %2
   store ptr %1, ptr %i.c, align 8
   %.sroa.0.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8
@@ -137,31 +136,42 @@ bb.a:
   br i1 %i.m, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %bb.g
-  %i.n = phi i64 [ %.pr, %bb.g ], [ %i.g, %bb.a ]
-  %i.o = add i64 %i.n, -1
+  %3 = phi i64 [ %.pr, %bb.g ], [ %i.g, %bb.a ]
+  %i.n = phi i64 [ %i.q, %bb.g ], [ 0, %bb.a ]
+  %i.o = add i64 %3, -1
   store i64 %i.o, ptr %.sroa.2.0..sroa_idx, align 8
   %i.p = invoke { i64, ptr } @_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterNtNtCsJWcWohxsl6_3syn4attr9AttributeEENtNtNtB8_6traits8iterator8Iterator4nextB1B_(ptr nonnull align 8 %i.c)
-          to label %bb.b unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
+          to label %bb.b unwind label %.loopexit  ; 2 uses
 
 ._crit_edge:                                      ; preds = %bb.b, %bb.g, %bb.a
   store i64 %2, ptr %i.j, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.e, i64 24, i1 false)
   ret void
 
-.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %.noexc12, %.noexc, %bb.d, %.lr.ph, %bb.e
+.loopexit:                                        ; preds = %.lr.ph, %bb.d, %.noexc, %.noexc12
+  %4 = phi i64 [ %i.n, %.lr.ph ], [ %i.q, %bb.d ], [ %i.q, %.noexc ], [ %i.q, %.noexc12 ]
+  %lpad.loopexit = landingpad { ptr, i32 }
+          cleanup
+  store i64 %4, ptr %i.k, align 8
+  br label %5
+
+.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.e
   %lpad.loopexit.split-lp34 = landingpad { ptr, i32 }
           cleanup
+  br label %5
+
+5:                                                ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %.loopexit
+  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp34, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNvXNvMNtCs1xwejQucwHj_5alloc5sliceSp9to_vec_inpNtBH_10ConvertVec6to_vec9DropGuardNtNtCsJWcWohxsl6_3syn4attr9AttributeNtNtBM_5alloc6GlobalEEB21_(ptr nonnull align 8 %i.d) #20
           to label %bb.i unwind label %bb.h
 
 bb.b:                                             ; preds = %.lr.ph
-  %i.q = extractvalue { i64, ptr } %i.p, 0        ; 4 uses
+  %i.q = extractvalue { i64, ptr } %i.p, 0        ; 8 uses
   %i.r = extractvalue { i64, ptr } %i.p, 1        ; 5 uses
   %.not = icmp eq ptr %i.r, null
   br i1 %.not, label %._crit_edge, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  store i64 %i.q, ptr %i.k, align 8
   %i.s = icmp ult i64 %i.q, %i.g
   br i1 %i.s, label %bb.d, label %bb.e
 
@@ -170,20 +180,21 @@ bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.t = getelementptr inbounds nuw i8, ptr %i.r, i64 232
   %i.u = invoke i32 @_RNvXsbx_NtCsJWcWohxsl6_3syn5tokenNtB6_5PoundNtNtCs3oUPovFnLWP_4core5clone5Clone5clone(ptr nonnull align 4 %i.t)
-          to label %.noexc unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %.noexc unwind label %.loopexit
 
 .noexc:                                           ; preds = %bb.d
   %i.v = getelementptr inbounds nuw i8, ptr %i.r, i64 224
   %.sroa.0.0.copyload.i.i = load i64, ptr %i.v, align 4
   %i.w = getelementptr inbounds nuw i8, ptr %i.r, i64 236
   invoke void @_RNvXscr_NtCsJWcWohxsl6_3syn5tokenNtB6_7BracketNtNtCs3oUPovFnLWP_4core5clone5Clone5clone(ptr nonnull sret([12 x i8]) align 4 %i.b, ptr nonnull align 4 %i.w)
-          to label %.noexc12 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %.noexc12 unwind label %.loopexit
 
 .noexc12:                                         ; preds = %.noexc
   invoke void @_RNvXsN_NtNtCsJWcWohxsl6_3syn3gen5cloneNtNtB9_4attr4MetaNtNtCs3oUPovFnLWP_4core5clone5Clone5clone(ptr nonnull sret([224 x i8]) align 8 %i.a, ptr nonnull align 8 %i.r)
-          to label %bb.g unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %bb.g unwind label %.loopexit
 
 bb.e:                                             ; preds = %bb.c
+  store i64 %i.q, ptr %i.k, align 8
   invoke void @_RNvNtCs3oUPovFnLWP_4core9panicking18panic_bounds_check(i64 %i.q, i64 %i.g, ptr nonnull align 8 @1) #21
           to label %bb.f unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -207,18 +218,18 @@ bb.g:                                             ; preds = %.noexc12
   %i.y = icmp eq i64 %.pr, 0
   br i1 %i.y, label %._crit_edge, label %.lr.ph
 
-bb.h:                                             ; preds = %bb.i, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+bb.h:                                             ; preds = %bb.i, %5
   %i.z = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #22
   unreachable
 
-bb.i:                                             ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+bb.i:                                             ; preds = %5
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtCsJWcWohxsl6_3syn4attr9AttributeEEB1c_(ptr nonnull align 8 %i.e) #20
           to label %bb.j unwind label %bb.h
 
 bb.j:                                             ; preds = %bb.i
-  resume { ptr, i32 } %lpad.loopexit.split-lp34
+  resume { ptr, i32 } %lpad.phi
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable

@@ -204,11 +204,11 @@ bb.bu:                                            ; preds = %bb.bt
   %i.go = getelementptr inbounds nuw i8, ptr %3, i64 24
   %.not404 = icmp eq i64 %.2, 0
   %i.gp = add nuw nsw i64 %.2, 1
+  %5 = load ptr, ptr %i.fv, align 8, !tbaa !62
   br label %bb.bv
 
 bb.bv:                                            ; preds = %.lr.ph542, %bb.cd
   %indvars.iv551 = phi i64 [ 0, %.lr.ph542 ], [ %indvars.iv.next552, %bb.cd ] ; 2 uses
-  %5 = load ptr, ptr %i.fv, align 8, !tbaa !62
   %i.gq = getelementptr inbounds nuw [40 x i8], ptr %5, i64 %indvars.iv551 ; 5 uses
   %i.gr = load double, ptr %i.go, align 8, !tbaa !80
   %i.gs = getelementptr inbounds nuw i8, ptr %i.gq, i64 16 ; 3 uses
@@ -280,14 +280,21 @@ bb.cf:                                            ; preds = %bb.ce
 .lr.ph535:                                        ; preds = %bb.cf
   %i.hk = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
   %i.hl = getelementptr inbounds nuw i8, ptr %i.hi, i64 8 ; 2 uses
-  br i1 %.4340, label %.lr.ph535.split.us, label %.lr.ph535.split
+  br i1 %.4340, label %.lr.ph535.split.us.preheader, label %.lr.ph535.split.preheader
 
-.lr.ph535.split.us:                               ; preds = %.lr.ph535, %bb.cl
-  %indvars.iv547 = phi i64 [ %indvars.iv.next548, %bb.cl ], [ 0, %.lr.ph535 ] ; 2 uses
-  %.0533.us = phi i64 [ %i.ip, %bb.cl ], [ 0, %.lr.ph535 ]
-  %.0279532.us = phi i64 [ %spec.select414.us, %bb.cl ], [ 0, %.lr.ph535 ]
+.lr.ph535.split.preheader:                        ; preds = %.lr.ph535
   %6 = load ptr, ptr %i.fv, align 8, !tbaa !62
-  %i.hm = getelementptr inbounds nuw [40 x i8], ptr %6, i64 %indvars.iv547 ; 3 uses
+  br label %.lr.ph535.split
+
+.lr.ph535.split.us.preheader:                     ; preds = %.lr.ph535
+  %7 = load ptr, ptr %i.fv, align 8, !tbaa !62
+  br label %.lr.ph535.split.us
+
+.lr.ph535.split.us:                               ; preds = %.lr.ph535.split.us.preheader, %bb.cl
+  %indvars.iv547 = phi i64 [ %indvars.iv.next548, %bb.cl ], [ 0, %.lr.ph535.split.us.preheader ] ; 2 uses
+  %.0533.us = phi i64 [ %i.ip, %bb.cl ], [ 0, %.lr.ph535.split.us.preheader ]
+  %.0279532.us = phi i64 [ %spec.select414.us, %bb.cl ], [ 0, %.lr.ph535.split.us.preheader ]
+  %i.hm = getelementptr inbounds nuw [40 x i8], ptr %7, i64 %indvars.iv547 ; 3 uses
   %i.hn = load double, ptr %i.hk, align 8, !tbaa !80
   %i.ho = getelementptr inbounds nuw i8, ptr %i.hm, i64 16 ; 2 uses
   %i.hp = load double, ptr %i.ho, align 8, !tbaa !69
@@ -355,12 +362,11 @@ bb.cl:                                            ; preds = %sdslen.exit.us
   %exitcond550.not = icmp eq i64 %indvars.iv.next548, %i.gh
   br i1 %exitcond550.not, label %.loopexit579, label %.lr.ph535.split.us, !llvm.loop !148
 
-.lr.ph535.split:                                  ; preds = %.lr.ph535, %bb.cr
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.cr ], [ 0, %.lr.ph535 ] ; 2 uses
-  %.0533 = phi i64 [ %i.js, %bb.cr ], [ 0, %.lr.ph535 ]
-  %.0279532 = phi i64 [ %spec.select414, %bb.cr ], [ 0, %.lr.ph535 ]
-  %7 = load ptr, ptr %i.fv, align 8, !tbaa !62
-  %i.ir = getelementptr inbounds nuw [40 x i8], ptr %7, i64 %indvars.iv ; 2 uses
+.lr.ph535.split:                                  ; preds = %.lr.ph535.split.preheader, %bb.cr
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.cr ], [ 0, %.lr.ph535.split.preheader ] ; 2 uses
+  %.0533 = phi i64 [ %i.js, %bb.cr ], [ 0, %.lr.ph535.split.preheader ]
+  %.0279532 = phi i64 [ %spec.select414, %bb.cr ], [ 0, %.lr.ph535.split.preheader ]
+  %i.ir = getelementptr inbounds nuw [40 x i8], ptr %6, i64 %indvars.iv ; 2 uses
   %i.is = load double, ptr %i.hk, align 8, !tbaa !80
   %i.it = getelementptr inbounds nuw i8, ptr %i.ir, i64 16 ; 2 uses
   %i.iu = load double, ptr %i.it, align 8, !tbaa !69

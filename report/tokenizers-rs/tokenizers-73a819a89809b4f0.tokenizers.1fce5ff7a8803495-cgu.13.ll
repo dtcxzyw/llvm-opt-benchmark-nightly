@@ -204,9 +204,9 @@ bb.b:                                             ; preds = %.noexc.i.i
 .lr.ph.i.i:                                       ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 48
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  %.pre = load i64, ptr %i.e, align 8, !alias.scope !317 ; 5 uses
-  %.val.i.i.i.pre = load ptr, ptr %i.a, align 8, !alias.scope !317 ; 5 uses
-  %.val1.i.i.i.pre = load ptr, ptr %i.f, align 8, !alias.scope !317 ; 5 uses
+  %.pre = load i64, ptr %i.e, align 8, !alias.scope !317, !noundef !4 ; 5 uses
+  %.val.i.i.i.pre = load ptr, ptr %i.a, align 8, !alias.scope !317, !nonnull !4, !noundef !4 ; 5 uses
+  %.val1.i.i.i.pre = load ptr, ptr %i.f, align 8, !alias.scope !317, !nonnull !4, !noundef !4 ; 5 uses
   %min.iters.check = icmp ult i64 %.sroa.0.0.i.i.i.i, 14
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
@@ -371,9 +371,9 @@ bb.b:                                             ; preds = %.noexc.i.i
 .lr.ph.i.i:                                       ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 48
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  %.pre = load i64, ptr %i.e, align 8, !alias.scope !342 ; 5 uses
-  %.val.i.i.i.pre = load ptr, ptr %i.a, align 8, !alias.scope !342 ; 5 uses
-  %.val1.i.i.i.pre = load ptr, ptr %i.f, align 8, !alias.scope !342 ; 5 uses
+  %.pre = load i64, ptr %i.e, align 8, !alias.scope !342, !noundef !4 ; 5 uses
+  %.val.i.i.i.pre = load ptr, ptr %i.a, align 8, !alias.scope !342, !nonnull !4, !noundef !4 ; 5 uses
+  %.val1.i.i.i.pre = load ptr, ptr %i.f, align 8, !alias.scope !342, !nonnull !4, !noundef !4 ; 5 uses
   %min.iters.check = icmp ult i64 %.sroa.0.0.i.i.i.i, 14
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
@@ -776,11 +776,16 @@ bb.h:                                             ; preds = %_RINvXs_NtNtCscdodA
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !noalias !1572
   %.idx.i.i.i = shl nuw nsw i64 %.sroa.0.0.i.i.i, 4
   %i.ay = getelementptr inbounds nuw i8, ptr %i.al, i64 %.idx.i.i.i
-  br i1 %i.aj, label %.loopexit.i.i, label %.lr.ph49.i.i.i.a
+  br i1 %i.aj, label %.loopexit.i.i, label %.lr.ph49.i.i.i
 
-.lr.ph49.i.i.i.a:                                 ; preds = %bb.h, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7lattice7LatticeEBJ_.exit.i
-  %.sroa.0.047.i.i.i = phi double [ %i.bq, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7lattice7LatticeEBJ_.exit.i ], [ 0.000000e+00, %bb.h ]
-  %.sroa.02.046.i.i.i = phi ptr [ %i.az, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7lattice7LatticeEBJ_.exit.i ], [ %i.al, %bb.h ] ; 3 uses
+.lr.ph49.i.i.i:                                   ; preds = %bb.h
+  %3 = load i64, ptr %i.ab, align 8, !noalias !1572 ; 2 uses
+  %4 = load ptr, ptr %i.ac, align 8, !noalias !1572, !nonnull !4
+  br label %.lr.ph49.i.i.i.a
+
+.lr.ph49.i.i.i.a:                                 ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7lattice7LatticeEBJ_.exit.i, %.lr.ph49.i.i.i
+  %.sroa.0.047.i.i.i = phi double [ 0.000000e+00, %.lr.ph49.i.i.i ], [ %i.bq, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7lattice7LatticeEBJ_.exit.i ]
+  %.sroa.02.046.i.i.i = phi ptr [ %i.al, %.lr.ph49.i.i.i ], [ %i.az, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7lattice7LatticeEBJ_.exit.i ] ; 3 uses
   %i.az = getelementptr inbounds nuw i8, ptr %.sroa.02.046.i.i.i, i64 16 ; 2 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %.sroa.02.046.i.i.i, i64 8
   %i.bb = load ptr, ptr %i.ba, align 8, !alias.scope !1575, !noalias !1569, !nonnull !4, !align !5, !noundef !4 ; 3 uses
@@ -1011,7 +1016,6 @@ bb.af:                                            ; preds = %bb.ae
   %i.cv = load double, ptr %i.cu, align 8, !noalias !1572, !noundef !4
   %i.cw = fadd double %i.cv, %i.bp
   store double %i.cw, ptr %i.cu, align 8, !noalias !1572
-  %3 = load i64, ptr %i.ab, align 8, !noalias !1572, !noundef !4 ; 2 uses
   %i.cx = icmp ult i64 %i.cs, %3
   br i1 %i.cx, label %bb.ag, label %.invoke
 
@@ -1025,7 +1029,6 @@ bb.af:                                            ; preds = %bb.ae
   unreachable
 
 bb.ag:                                            ; preds = %bb.af
-  %4 = load ptr, ptr %i.ac, align 8, !noalias !1572, !nonnull !4, !noundef !4
   %i.da = getelementptr inbounds nuw [24 x i8], ptr %4, i64 %i.cs ; 4 uses
   %i.db = load i64, ptr %.sroa.02.046.i.i.i, align 8, !alias.scope !1575, !noalias !1569, !noundef !4
   %i.dc = getelementptr inbounds nuw i8, ptr %i.da, i64 16 ; 2 uses

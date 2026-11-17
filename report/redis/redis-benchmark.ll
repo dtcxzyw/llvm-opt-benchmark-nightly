@@ -205,15 +205,18 @@ hi_sdslen.exit191:                                ; preds = %bb.aq, %bb.ar, %bb.
   %i.ex = phi ptr [ %i.ey, %.lr.ph ], [ %i.dc, %.preheader ]
   %.0196 = phi i32 [ %i.ez, %.lr.ph ], [ 0, %.preheader ]
   %i.ey = call ptr @hi_sdscatlen(ptr noundef %i.ex, ptr noundef %0, i64 noundef %1) #20 ; 3 uses
-  store ptr %i.ey, ptr %i.bb, align 8, !tbaa !327
   %i.ez = add nuw nsw i32 %.0196, 1               ; 2 uses
   %i.fa = load i32, ptr getelementptr inbounds nuw (i8, ptr @config, i64 180), align 4, !tbaa !247 ; 2 uses
   %i.fb = icmp slt i32 %i.ez, %i.fa
-  br i1 %i.fb, label %.lr.ph, label %.loopexit195, !llvm.loop !383
+  br i1 %i.fb, label %.lr.ph, label %..loopexit195_crit_edge, !llvm.loop !383
 
-.loopexit195:                                     ; preds = %.lr.ph, %.preheader, %hi_sdslen.exit191
-  %i.fc = phi ptr [ %i.ew, %hi_sdslen.exit191 ], [ %i.dc, %.preheader ], [ %i.ey, %.lr.ph ] ; 2 uses
-  %i.fd = phi i32 [ %.pre, %hi_sdslen.exit191 ], [ %i.dw, %.preheader ], [ %i.fa, %.lr.ph ]
+..loopexit195_crit_edge:                          ; preds = %.lr.ph
+  store ptr %i.ey, ptr %i.bb, align 8
+  br label %.loopexit195
+
+.loopexit195:                                     ; preds = %.preheader, %..loopexit195_crit_edge, %hi_sdslen.exit191
+  %i.fc = phi ptr [ %i.dc, %.preheader ], [ %i.ey, %..loopexit195_crit_edge ], [ %i.ew, %hi_sdslen.exit191 ] ; 2 uses
+  %i.fd = phi i32 [ %i.dw, %.preheader ], [ %i.fa, %..loopexit195_crit_edge ], [ %.pre, %hi_sdslen.exit191 ]
   %i.fe = getelementptr inbounds nuw i8, ptr %i.i, i64 64
   store i64 0, ptr %i.fe, align 8, !tbaa !330
   %i.ff = load i32, ptr %i.bc, align 4, !tbaa !328
@@ -386,21 +389,24 @@ bb.az:                                            ; preds = %.lr.ph200
   br label %bb.ba
 
 bb.ba:                                            ; preds = %bb.az, %.lr.ph200
-  %4 = phi i64 [ %i.hv, %bb.az ], [ %i.hw, %.lr.ph200 ]
   %i.ib = phi i64 [ %.pre213, %bb.az ], [ %i.hv, %.lr.ph200 ] ; 2 uses
   %i.ic = phi ptr [ %i.ia, %bb.az ], [ %i.hu, %.lr.ph200 ] ; 2 uses
+  %4 = phi i64 [ %i.hv, %bb.az ], [ %i.hw, %.lr.ph200 ]
   %i.id = add i64 %i.ib, 1                        ; 2 uses
   store i64 %i.id, ptr %i.fj, align 8, !tbaa !332
   %i.ie = getelementptr inbounds nuw [8 x i8], ptr %i.ic, i64 %i.ib
   store ptr %i.hx, ptr %i.ie, align 8, !tbaa !220
   %i.if = add i64 %4, -1                          ; 2 uses
-  store i64 %i.if, ptr %i.hr, align 8, !tbaa !398
   %i.ig = getelementptr inbounds nuw i8, ptr %i.hx, i64 12
   %i.ih = call ptr @strstr(ptr noundef nonnull dereferenceable(1) %i.ig, ptr noundef nonnull dereferenceable(1) @.str.112) #21 ; 2 uses
   %.not185 = icmp eq ptr %i.ih, null
-  br i1 %.not185, label %.loopexit193, label %.lr.ph200, !llvm.loop !387
+  br i1 %.not185, label %..loopexit193_crit_edge, label %.lr.ph200, !llvm.loop !387
 
-.loopexit193:                                     ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %bb.ba, %middle.block, %bb.ax, %.loopexit195
+..loopexit193_crit_edge:                          ; preds = %bb.ba
+  store i64 %i.if, ptr %i.hr, align 8
+  br label %.loopexit193
+
+.loopexit193:                                     ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block, %bb.ax, %..loopexit193_crit_edge, %.loopexit195
   %i.ii = load i32, ptr getelementptr inbounds nuw (i8, ptr @config, i64 272), align 8, !tbaa !258
   %.not186 = icmp eq i32 %i.ii, 0
   br i1 %.not186, label %.loopexit, label %bb.bb
@@ -569,21 +575,24 @@ bb.bd:                                            ; preds = %.lr.ph204
   br label %bb.be
 
 bb.be:                                            ; preds = %bb.bd, %.lr.ph204
-  %5 = phi i64 [ %i.ku, %bb.bd ], [ %i.kv, %.lr.ph204 ]
   %i.la = phi i64 [ %.pre214, %bb.bd ], [ %i.ku, %.lr.ph204 ] ; 2 uses
   %i.lb = phi ptr [ %i.kz, %bb.bd ], [ %i.kt, %.lr.ph204 ] ; 2 uses
+  %5 = phi i64 [ %i.ku, %bb.bd ], [ %i.kv, %.lr.ph204 ]
   %i.lc = add i64 %i.la, 1                        ; 2 uses
   store i64 %i.lc, ptr %i.fl, align 8, !tbaa !336
   %i.ld = getelementptr inbounds nuw [8 x i8], ptr %i.lb, i64 %i.la
   store ptr %i.kw, ptr %i.ld, align 8, !tbaa !220
   %i.le = add i64 %5, -1                          ; 2 uses
-  store i64 %i.le, ptr %i.kq, align 8, !tbaa !399
   %i.lf = getelementptr inbounds nuw i8, ptr %i.kw, i64 5
   %i.lg = call ptr @strstr(ptr noundef nonnull dereferenceable(1) %i.lf, ptr noundef nonnull dereferenceable(1) @.str.168) #21 ; 2 uses
   %.not187 = icmp eq ptr %i.lg, null
-  br i1 %.not187, label %.loopexit, label %.lr.ph204, !llvm.loop !391
+  br i1 %.not187, label %..loopexit_crit_edge, label %.lr.ph204, !llvm.loop !391
 
-.loopexit:                                        ; preds = %scalar.ph247.prol.loopexit, %scalar.ph247, %bb.be, %middle.block262, %.loopexit193.thread, %bb.bc, %.thread, %.loopexit193
+..loopexit_crit_edge:                             ; preds = %bb.be
+  store i64 %i.le, ptr %i.kq, align 8
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %scalar.ph247.prol.loopexit, %scalar.ph247, %middle.block262, %.loopexit193.thread, %bb.bc, %.thread, %..loopexit_crit_edge, %.loopexit193
   %i.lh = icmp slt i32 %3, 0
   br i1 %i.lh, label %bb.bg, label %bb.bf
 

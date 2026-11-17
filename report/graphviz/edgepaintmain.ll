@@ -96,6 +96,8 @@ bb.a:
   br i1 %i.l, label %._crit_edge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.a, %.thread105.i
+  %3 = phi i32 [ %5, %.thread105.i ], [ 70, %bb.a ] ; 8 uses
+  %4 = phi i32 [ %6, %.thread105.i ], [ 0, %bb.a ] ; 8 uses
   %.021 = phi i32 [ %.122, %.thread105.i ], [ 0, %bb.a ] ; 7 uses
   %.020 = phi ptr [ %.1, %.thread105.i ], [ @.str.4, %bb.a ] ; 8 uses
   %i.m = phi i32 [ %i.bo, %.thread105.i ], [ %i.k, %bb.a ] ; 2 uses
@@ -289,8 +291,6 @@ bb.x:                                             ; preds = %bb.w
   unreachable
 
 bb.y:                                             ; preds = %bb.w
-  store i32 %i.bd, ptr %i.g, align 8, !tbaa !20
-  store i32 %i.bf, ptr %i.j, align 4, !tbaa !20
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
   br label %.thread105.i
@@ -314,6 +314,8 @@ bb.aa:                                            ; preds = %bb.z
   unreachable
 
 .thread105.i:                                     ; preds = %bb.p, %.lr.ph.i, %bb.g, %bb.u, %bb.z, %bb.y, %bb.s, %bb.o, %openFile.exit.i
+  %5 = phi i32 [ %3, %bb.p ], [ %3, %bb.s ], [ %3, %bb.o ], [ %3, %bb.z ], [ %i.bf, %bb.y ], [ %3, %bb.u ], [ %3, %openFile.exit.i ], [ %3, %bb.g ], [ %3, %.lr.ph.i ] ; 2 uses
+  %6 = phi i32 [ %4, %bb.p ], [ %4, %bb.s ], [ %4, %bb.o ], [ %4, %bb.z ], [ %i.bd, %bb.y ], [ %4, %bb.u ], [ %4, %openFile.exit.i ], [ %4, %bb.g ], [ %4, %.lr.ph.i ] ; 2 uses
   %.122 = phi i32 [ %.021, %bb.p ], [ %.021, %bb.s ], [ %.021, %bb.o ], [ %.021, %bb.z ], [ %.021, %bb.y ], [ %.021, %bb.u ], [ %.021, %openFile.exit.i ], [ 1, %bb.g ], [ 1, %.lr.ph.i ] ; 2 uses
   %.1 = phi ptr [ %.020, %bb.p ], [ %.020, %bb.s ], [ %.020, %bb.o ], [ %.020, %bb.z ], [ %.020, %bb.y ], [ %.096.i, %bb.u ], [ %.020, %openFile.exit.i ], [ %.020, %bb.g ], [ %.020, %.lr.ph.i ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
@@ -321,11 +323,16 @@ bb.aa:                                            ; preds = %bb.z
   store i32 0, ptr %i.a, align 4, !tbaa !20
   %i.bo = call i32 @getopt_long(i32 noundef %0, ptr noundef nonnull %1, ptr noundef nonnull @.str.11, ptr noundef nonnull @init.opts, ptr noundef nonnull %i.a) #12 ; 2 uses
   %i.bp = icmp eq i32 %i.bo, -1
-  br i1 %i.bp, label %._crit_edge.i, label %.lr.ph.i
+  br i1 %i.bp, label %._crit_edge.i.loopexit, label %.lr.ph.i
 
-._crit_edge.i:                                    ; preds = %.thread105.i, %bb.a
-  %.223 = phi i32 [ 0, %bb.a ], [ %.122, %.thread105.i ]
-  %.2 = phi ptr [ @.str.4, %bb.a ], [ %.1, %.thread105.i ]
+._crit_edge.i.loopexit:                           ; preds = %.thread105.i
+  store i32 %6, ptr %i.g, align 8
+  store i32 %5, ptr %i.j, align 4
+  br label %._crit_edge.i
+
+._crit_edge.i:                                    ; preds = %._crit_edge.i.loopexit, %bb.a
+  %.223 = phi i32 [ 0, %bb.a ], [ %.122, %._crit_edge.i.loopexit ]
+  %.2 = phi ptr [ @.str.4, %bb.a ], [ %.1, %._crit_edge.i.loopexit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   %i.bq = load i32, ptr @optind, align 4, !tbaa !20 ; 2 uses
   %i.br = icmp sgt i32 %0, %i.bq

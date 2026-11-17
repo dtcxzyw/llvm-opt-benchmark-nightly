@@ -202,16 +202,14 @@ bb.a:
   %i.q = alloca [8 x i8], align 8                 ; 6 uses
   %i.r = alloca [8 x i8], align 8                 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r)
-  store i64 0, ptr %i.r, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q)
-  store i64 0, ptr %i.q, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %i.p, ptr noundef nonnull align 8 dereferenceable(104) %1, i64 104, i1 false)
   %i.s = getelementptr inbounds nuw i8, ptr %i.p, i64 96 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.11.i)
   %i.t = load i8, ptr %i.s, align 8, !range !7, !alias.scope !59, !noundef !8
   %i.u = trunc nuw i8 %i.t to i1
-  br i1 %i.u, label %.loopexit28.a, label %.preheader.i.i.lr.ph
+  br i1 %i.u, label %.loopexit28, label %.preheader.i.i.lr.ph
 
 .preheader.i.i.lr.ph:                             ; preds = %bb.a
   %i.v = getelementptr inbounds nuw i8, ptr %i.p, i64 24 ; 2 uses
@@ -239,8 +237,8 @@ bb.a:
   br label %.preheader.i.i
 
 .preheader.i.i:                                   ; preds = %.preheader.i.i.lr.ph, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtCseO5Jl7W60Eg_16rustls_pki_types14CertificateDerECskaDheoimX9_18simple_0rtt_client.exit
-  %i.ao = phi i64 [ 0, %.preheader.i.i.lr.ph ], [ %i.cd, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtCseO5Jl7W60Eg_16rustls_pki_types14CertificateDerECskaDheoimX9_18simple_0rtt_client.exit ] ; 3 uses
-  %i.ap = phi i64 [ 0, %.preheader.i.i.lr.ph ], [ %i.ce, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtCseO5Jl7W60Eg_16rustls_pki_types14CertificateDerECskaDheoimX9_18simple_0rtt_client.exit ] ; 3 uses
+  %i.ao = phi i64 [ 0, %.preheader.i.i.lr.ph ], [ %i.ce, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtCseO5Jl7W60Eg_16rustls_pki_types14CertificateDerECskaDheoimX9_18simple_0rtt_client.exit ] ; 4 uses
+  %i.ap = phi i64 [ 0, %.preheader.i.i.lr.ph ], [ %i.cd, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtCseO5Jl7W60Eg_16rustls_pki_types14CertificateDerECskaDheoimX9_18simple_0rtt_client.exit ] ; 4 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !60)
   call void @llvm.experimental.noalias.scope.decl(metadata !61)
   store i64 0, ptr %i.w, align 8, !alias.scope !62
@@ -321,6 +319,8 @@ bb.g:                                             ; preds = %._crit_edge.i.i
   br label %bb.h
 
 _RNvXs0_NtCseO5Jl7W60Eg_16rustls_pki_types3pemINtB5_8ReadIterINtNtNtNtCs4wP2HXfJTCR_5alloc2io8buffered9bufreader9BufReaderNtNtCsaKJjC64KgbL_3std2fs4FileENtB7_14CertificateDerENtNtNtNtCsj6eKBz9Db1c_4core4iter6traits8iterator8Iterator4nextCskaDheoimX9_18simple_0rtt_client.exit.i: ; preds = %.lr.ph.i.i
+  store i64 %i.ao, ptr %i.r, align 8
+  store i64 %i.ap, ptr %i.q, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !63
   br label %.loopexit28.a
 
@@ -356,7 +356,7 @@ bb.k:                                             ; preds = %bb.i
   invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtNtB4_4iter8adapters3map3MapINtNtCseO5Jl7W60Eg_16rustls_pki_types3pem8ReadIterINtNtNtNtCs4wP2HXfJTCR_5alloc2io8buffered9bufreader9BufReaderNtNtCsaKJjC64KgbL_3std2fs4FileENtB1e_14CertificateDerENCNvCskaDheoimX9_18simple_0rtt_client4mains_0EEB3S_(ptr noalias nofree noundef align 8 dereferenceable(104) %i.p) #14
           to label %bb.an unwind label %bb.ad
 
-.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %.noexc19, %_RNvXNtCseO5Jl7W60Eg_16rustls_pki_types3pemNtB4_14CertificateDerNtB2_9PemObject8from_pemCskaDheoimX9_18simple_0rtt_client.exit.thread.i.i, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECskaDheoimX9_18simple_0rtt_client.exit.i.i.i, %.preheader.i.i
+.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %.noexc19, %_RNvXNtCseO5Jl7W60Eg_16rustls_pki_types3pemNtB4_14CertificateDerNtB2_9PemObject8from_pemCskaDheoimX9_18simple_0rtt_client.exit.thread.i.i, %.preheader.i.i, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECskaDheoimX9_18simple_0rtt_client.exit.i.i.i
   %lpad.loopexit.split-lp100 = landingpad { ptr, i32 }
           cleanup
   br label %.body
@@ -373,9 +373,16 @@ bb.l:                                             ; preds = %_RNvXNtCseO5Jl7W60E
   invoke void @_RNvNtCshVVPy9isBpn_6webpki12trust_anchor24anchor_from_trusted_cert(ptr noalias nofree noundef nonnull sret([72 x i8]) align 8 captures(address) dereferenceable(72) %i.n, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.o)
           to label %bb.q unwind label %bb.p
 
-.loopexit28.a:                                    ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtCseO5Jl7W60Eg_16rustls_pki_types14CertificateDerECskaDheoimX9_18simple_0rtt_client.exit, %bb.a, %_RNvXs0_NtCseO5Jl7W60Eg_16rustls_pki_types3pemINtB5_8ReadIterINtNtNtNtCs4wP2HXfJTCR_5alloc2io8buffered9bufreader9BufReaderNtNtCsaKJjC64KgbL_3std2fs4FileENtB7_14CertificateDerENtNtNtNtCsj6eKBz9Db1c_4core4iter6traits8iterator8Iterator4nextCskaDheoimX9_18simple_0rtt_client.exit.i
-  %2 = phi i64 [ %i.ao, %_RNvXs0_NtCseO5Jl7W60Eg_16rustls_pki_types3pemINtB5_8ReadIterINtNtNtNtCs4wP2HXfJTCR_5alloc2io8buffered9bufreader9BufReaderNtNtCsaKJjC64KgbL_3std2fs4FileENtB7_14CertificateDerENtNtNtNtCsj6eKBz9Db1c_4core4iter6traits8iterator8Iterator4nextCskaDheoimX9_18simple_0rtt_client.exit.i ], [ 0, %bb.a ], [ %i.cd, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtCseO5Jl7W60Eg_16rustls_pki_types14CertificateDerECskaDheoimX9_18simple_0rtt_client.exit ]
-  %3 = phi i64 [ %i.ap, %_RNvXs0_NtCseO5Jl7W60Eg_16rustls_pki_types3pemINtB5_8ReadIterINtNtNtNtCs4wP2HXfJTCR_5alloc2io8buffered9bufreader9BufReaderNtNtCsaKJjC64KgbL_3std2fs4FileENtB7_14CertificateDerENtNtNtNtCsj6eKBz9Db1c_4core4iter6traits8iterator8Iterator4nextCskaDheoimX9_18simple_0rtt_client.exit.i ], [ 0, %bb.a ], [ %i.ce, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtCseO5Jl7W60Eg_16rustls_pki_types14CertificateDerECskaDheoimX9_18simple_0rtt_client.exit ]
+.loopexit28:                                      ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtCseO5Jl7W60Eg_16rustls_pki_types14CertificateDerECskaDheoimX9_18simple_0rtt_client.exit, %bb.a
+  %.lcssa51 = phi i64 [ 0, %bb.a ], [ %i.cd, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtCseO5Jl7W60Eg_16rustls_pki_types14CertificateDerECskaDheoimX9_18simple_0rtt_client.exit ] ; 2 uses
+  %.lcssa = phi i64 [ 0, %bb.a ], [ %i.ce, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtCseO5Jl7W60Eg_16rustls_pki_types14CertificateDerECskaDheoimX9_18simple_0rtt_client.exit ] ; 2 uses
+  store i64 %.lcssa, ptr %i.r, align 8
+  store i64 %.lcssa51, ptr %i.q, align 8
+  br label %.loopexit28.a
+
+.loopexit28.a:                                    ; preds = %.loopexit28, %_RNvXs0_NtCseO5Jl7W60Eg_16rustls_pki_types3pemINtB5_8ReadIterINtNtNtNtCs4wP2HXfJTCR_5alloc2io8buffered9bufreader9BufReaderNtNtCsaKJjC64KgbL_3std2fs4FileENtB7_14CertificateDerENtNtNtNtCsj6eKBz9Db1c_4core4iter6traits8iterator8Iterator4nextCskaDheoimX9_18simple_0rtt_client.exit.i
+  %2 = phi i64 [ %.lcssa51, %.loopexit28 ], [ %i.ap, %_RNvXs0_NtCseO5Jl7W60Eg_16rustls_pki_types3pemINtB5_8ReadIterINtNtNtNtCs4wP2HXfJTCR_5alloc2io8buffered9bufreader9BufReaderNtNtCsaKJjC64KgbL_3std2fs4FileENtB7_14CertificateDerENtNtNtNtCsj6eKBz9Db1c_4core4iter6traits8iterator8Iterator4nextCskaDheoimX9_18simple_0rtt_client.exit.i ]
+  %3 = phi i64 [ %.lcssa, %.loopexit28 ], [ %i.ao, %_RNvXs0_NtCseO5Jl7W60Eg_16rustls_pki_types3pemINtB5_8ReadIterINtNtNtNtCs4wP2HXfJTCR_5alloc2io8buffered9bufreader9BufReaderNtNtCsaKJjC64KgbL_3std2fs4FileENtB7_14CertificateDerENtNtNtNtCsj6eKBz9Db1c_4core4iter6traits8iterator8Iterator4nextCskaDheoimX9_18simple_0rtt_client.exit.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.11.i)
   call fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtNtB4_4iter8adapters3map3MapINtNtCseO5Jl7W60Eg_16rustls_pki_types3pem8ReadIterINtNtNtNtCs4wP2HXfJTCR_5alloc2io8buffered9bufreader9BufReaderNtNtCsaKJjC64KgbL_3std2fs4FileENtB1e_14CertificateDerENCNvCskaDheoimX9_18simple_0rtt_client4mains_0EEB3S_(ptr noalias nofree noundef align 8 dereferenceable(104) %i.p)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p)
@@ -481,18 +488,17 @@ bb.x:                                             ; preds = %bb.u, %bb.t
   %i.cc = add i64 %i.bv, 1
   store i64 %i.cc, ptr %i.ab, align 8, !alias.scope !73
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l)
-  %4 = add i64 %i.ap, 1                           ; 2 uses
-  store i64 %4, ptr %i.r, align 8
   invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtCseO5Jl7W60Eg_16rustls_pki_types11TrustAnchorECskaDheoimX9_18simple_0rtt_client(ptr noalias nofree noundef align 8 dereferenceable(72) %i.m)
           to label %bb.y unwind label %bb.p
 
 bb.y:                                             ; preds = %bb.x
+  %4 = add i64 %i.ao, 1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m)
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.am, %bb.y
-  %i.cd = phi i64 [ %5, %bb.am ], [ %i.ao, %bb.y ] ; 2 uses
-  %i.ce = phi i64 [ %i.ap, %bb.am ], [ %4, %bb.y ] ; 2 uses
+  %i.cd = phi i64 [ %5, %bb.am ], [ %i.ap, %bb.y ] ; 2 uses
+  %i.ce = phi i64 [ %i.ao, %bb.am ], [ %4, %bb.y ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n)
   %i.cf = load i64, ptr %i.o, align 8, !range !11, !alias.scope !75, !noundef !8
   %.not.i.i.i = icmp eq i64 %i.cf, -1
@@ -584,8 +590,6 @@ bb.aj:                                            ; preds = %bb.ai
           to label %bb.al unwind label %bb.ae
 
 bb.ak:                                            ; preds = %bb.ai, %bb.al
-  %5 = add i64 %i.ao, 1                           ; 2 uses
-  store i64 %5, ptr %i.q, align 8
   invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCshVVPy9isBpn_6webpki5error5ErrorECskaDheoimX9_18simple_0rtt_client(ptr noalias nofree noundef align 8 dereferenceable(56) %i.k)
           to label %bb.am unwind label %bb.p
 
@@ -595,6 +599,7 @@ bb.al:                                            ; preds = %bb.aj
   br label %bb.ak
 
 bb.am:                                            ; preds = %bb.ak
+  %5 = add i64 %i.ap, 1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
   br label %bb.z
 
@@ -603,7 +608,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtCseO5Jl7W60Eg_16rustls_pki_types14Cert
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.11.i)
   %i.cs = load i8, ptr %i.s, align 8, !range !7, !alias.scope !76, !noundef !8
   %i.ct = trunc nuw i8 %i.cs to i1
-  br i1 %i.ct, label %.loopexit28.a, label %.preheader.i.i
+  br i1 %i.ct, label %.loopexit28, label %.preheader.i.i
 
 bb.an:                                            ; preds = %.body
   resume { ptr, i32 } %.pn17

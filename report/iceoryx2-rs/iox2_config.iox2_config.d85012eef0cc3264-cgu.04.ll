@@ -202,10 +202,9 @@ _RNvXs4_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsizqwQrikMeu
   %.sroa.5430.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ds, i64 272
   store i64 38, ptr %.sroa.5430.0..sroa_idx.i, align 8, !noalias !39
   call void @llvm.lifetime.end.p0(ptr nonnull %i.dq)
-  %i.zl = getelementptr inbounds nuw i8, ptr %i.ds, i64 280
+  %i.zl = getelementptr inbounds nuw i8, ptr %i.ds, i64 280 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.dp)
   store ptr %i.ds, ptr %i.dp, align 8
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.dp, i64 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.dp, i64 16
   store i64 7, ptr %.sroa.5.0..sroa_idx, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.dp, i64 24
@@ -241,13 +240,10 @@ _RNvXs4_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsizqwQrikMeu
 _RNvXs4_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsizqwQrikMeu_11iox2_config7command7explain7SectionENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextB12_.exit: ; preds = %_RNvXs4_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsizqwQrikMeu_11iox2_config7command7explain7SectionENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextB12_.exit.lr.ph, %_RNvXs4_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsizqwQrikMeu_11iox2_config7command7explain5FieldENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextB12_.exit.thread
   %.idx153 = phi i64 [ 0, %_RNvXs4_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsizqwQrikMeu_11iox2_config7command7explain7SectionENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextB12_.exit.lr.ph ], [ %.add, %_RNvXs4_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsizqwQrikMeu_11iox2_config7command7explain5FieldENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextB12_.exit.thread ] ; 2 uses
   %.ptr = getelementptr inbounds nuw i8, ptr %i.ds, i64 %.idx153 ; 2 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !61)
   %.add = add nuw nsw i64 %.idx153, 40            ; 3 uses
-  %.ptr154 = getelementptr inbounds nuw i8, ptr %i.ds, i64 %.add
-  store ptr %.ptr154, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !61
   %.sroa.099.0.copyload100 = load i64, ptr %.ptr, align 8, !noalias !61 ; 2 uses
   %.not = icmp eq i64 %.sroa.099.0.copyload100, -1
-  br i1 %.not, label %_RNvXs4_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsizqwQrikMeu_11iox2_config7command7explain7SectionENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextB12_.exit.thread, label %.split
+  br i1 %.not, label %_RNvXs4_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsizqwQrikMeu_11iox2_config7command7explain7SectionENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextB12_.exit.thread.split.loop.exit, label %.split
 
 .split:                                           ; preds = %_RNvXs4_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsizqwQrikMeu_11iox2_config7command7explain7SectionENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextB12_.exit
   %.sroa.7.0..sroa_idx102 = getelementptr inbounds nuw i8, ptr %.ptr, i64 8
@@ -294,7 +290,14 @@ _RNvXs4_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsizqwQrikMeu
   %i.aah = icmp eq i64 %i.aae, 0
   br i1 %i.aah, label %_RNvXs4_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsizqwQrikMeu_11iox2_config7command7explain5FieldENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextB12_.exit.thread, label %_RNvXs4_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsizqwQrikMeu_11iox2_config7command7explain5FieldENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextB12_.exit
 
-_RNvXs4_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsizqwQrikMeu_11iox2_config7command7explain7SectionENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextB12_.exit.thread: ; preds = %_RNvXs4_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsizqwQrikMeu_11iox2_config7command7explain7SectionENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextB12_.exit, %_RNvXs4_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsizqwQrikMeu_11iox2_config7command7explain5FieldENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextB12_.exit.thread
+_RNvXs4_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsizqwQrikMeu_11iox2_config7command7explain7SectionENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextB12_.exit.thread.split.loop.exit: ; preds = %_RNvXs4_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsizqwQrikMeu_11iox2_config7command7explain7SectionENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextB12_.exit
+  %.ptr156.le = getelementptr inbounds nuw i8, ptr %i.ds, i64 %.add
+  br label %_RNvXs4_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsizqwQrikMeu_11iox2_config7command7explain7SectionENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextB12_.exit.thread
+
+_RNvXs4_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsizqwQrikMeu_11iox2_config7command7explain7SectionENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextB12_.exit.thread: ; preds = %_RNvXs4_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsizqwQrikMeu_11iox2_config7command7explain5FieldENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextB12_.exit.thread, %_RNvXs4_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsizqwQrikMeu_11iox2_config7command7explain7SectionENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextB12_.exit.thread.split.loop.exit
+  %.lcssa = phi ptr [ %.ptr156.le, %_RNvXs4_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsizqwQrikMeu_11iox2_config7command7explain7SectionENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextB12_.exit.thread.split.loop.exit ], [ %i.zl, %_RNvXs4_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsizqwQrikMeu_11iox2_config7command7explain5FieldENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextB12_.exit.thread ]
+  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.dp, i64 8
+  store ptr %.lcssa, ptr %.sroa.4.0..sroa_idx, align 8
   call void @_RNvXse_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsizqwQrikMeu_11iox2_config7command7explain7SectionENtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4dropB12_(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.dp) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %i.dp)
   ret ptr null

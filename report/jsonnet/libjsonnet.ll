@@ -202,7 +202,7 @@ bb.a:
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
-  %11 = alloca %"class.std::vector.34", align 8   ; 7 uses
+  %11 = alloca %"class.std::vector.34", align 8   ; 8 uses
   %12 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %13 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #35
@@ -369,6 +369,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit58: ; preds = %_ZN
   %i.av = ptrtoint ptr %i.at to i64
   %i.aw = ptrtoint ptr %i.au to i64
   %i.ax = sub i64 %i.av, %i.aw                    ; 5 uses
+  %14 = getelementptr inbounds nuw i8, ptr %11, i64 8
+  store i64 0, ptr %14, align 8
   %.not.i.i.i.i = icmp eq ptr %i.at, %i.au
   br i1 %.not.i.i.i.i, label %.noexc60, label %bb.m
 
@@ -390,12 +392,12 @@ _ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8all
 .noexc60:                                         ; preds = %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit58
   %.pr.i = phi ptr [ null, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit58 ], [ %i.az, %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i ] ; 10 uses
   store ptr %.pr.i, ptr %11, align 8, !tbaa !90
-  %i.ba = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 2 uses
+  %i.ba = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 3 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %.pr.i, i64 %i.ax
   %i.bc = getelementptr inbounds nuw i8, ptr %11, i64 16
   store ptr %i.bb, ptr %i.bc, align 8, !tbaa !89
   %i.bd = invoke noundef ptr @_ZSt16__do_uninit_copyIN9__gnu_cxx17__normal_iteratorIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS7_SaIS7_EEEEPS7_ET0_T_SG_SF_(ptr %i.au, ptr %i.at, ptr noundef %.pr.i)
-          to label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EEC2ERKS7_.exit unwind label %bb.n ; 2 uses
+          to label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EEC2ERKS7_.exit unwind label %bb.n
 
 bb.n:                                             ; preds = %.noexc60
   %i.be = landingpad { ptr, i32 }
@@ -408,13 +410,12 @@ bb.o:                                             ; preds = %bb.n
   br label %.body
 
 _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EEC2ERKS7_.exit: ; preds = %.noexc60
-  store ptr %i.bd, ptr %i.ba, align 8, !tbaa !88
   %i.bf = getelementptr inbounds nuw i8, ptr %13, i64 16 ; 7 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %13, i64 8
   br label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE8pop_backEv.exit
 
 _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE8pop_backEv.exit: ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE8pop_backEv.exit.backedge, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EEC2ERKS7_.exit
-  %i.bh = phi ptr [ %i.bd, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EEC2ERKS7_.exit ], [ %i.ci, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE8pop_backEv.exit.backedge ] ; 6 uses
+  %i.bh = phi ptr [ %i.bd, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EEC2ERKS7_.exit ], [ %i.ci, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE8pop_backEv.exit.backedge ] ; 9 uses
   %.028 = phi i32 [ %i.ai, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EEC2ERKS7_.exit ], [ %i.ct, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE8pop_backEv.exit.backedge ]
   switch i32 %.028, label %bb.aj [
     i32 1, label %bb.p
@@ -426,6 +427,7 @@ bb.p:                                             ; preds = %_ZNSt6vectorINSt7__
   br i1 %i.bi, label %.noexc.i62, label %bb.y
 
 .noexc.i62:                                       ; preds = %bb.p
+  store ptr %i.bh, ptr %i.ba, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #35
   %i.bj = getelementptr inbounds nuw i8, ptr %12, i64 16 ; 4 uses
   store ptr %i.bj, ptr %12, align 8, !tbaa !46
@@ -534,7 +536,7 @@ bb.x:                                             ; preds = %.noexc.i62
   br label %bb.as
 
 bb.y:                                             ; preds = %bb.p
-  %i.ci = getelementptr inbounds i8, ptr %i.bh, i64 -32 ; 4 uses
+  %i.ci = getelementptr inbounds i8, ptr %i.bh, i64 -32 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #35
   store ptr %i.bf, ptr %13, align 8, !tbaa !46
   %i.cj = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %2) #35 ; 4 uses
@@ -595,7 +597,6 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i82
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit84: ; preds = %bb.ac, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i82
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #35
-  store ptr %i.ci, ptr %i.ba, align 8, !tbaa !88
   %i.cy = load ptr, ptr %i.ci, align 8, !tbaa !44 ; 2 uses
   %i.cz = getelementptr inbounds i8, ptr %i.bh, i64 -16 ; 2 uses
   %i.da = icmp eq ptr %i.cy, %i.cz
@@ -613,11 +614,13 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 bb.ad:                                            ; preds = %.noexc.i78
   %i.dd = landingpad { ptr, i32 }
           cleanup
+  store ptr %i.bh, ptr %i.ba, align 8
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit87
 
 bb.ae:                                            ; preds = %bb.ab
   %i.de = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
+  store ptr %i.bh, ptr %i.ba, align 8
   %i.df = load ptr, ptr %13, align 8, !tbaa !44   ; 2 uses
   %i.dg = icmp eq ptr %i.df, %i.bf
   br i1 %i.dg, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit87, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i85

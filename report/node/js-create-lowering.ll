@@ -204,8 +204,9 @@ _ZN2v88internal8compiler17AllocationBuilder8AllocateEiNS0_14AllocationTypeENS1_4
   store ptr %i.co, ptr %i.cv, align 8
   %i.cw = getelementptr inbounds nuw i8, ptr %4, i64 24
   store ptr %i.az, ptr %i.cw, align 8
-  %i.cx = call noundef ptr @_ZN2v88internal8compiler7TFGraph7NewNodeEPKNS1_8OperatorEiPKPNS1_4NodeEb(ptr noundef nonnull align 8 dereferenceable(104) %i.cr, ptr noundef %i.ct, i32 noundef 4, ptr noundef nonnull %4, i1 noundef zeroext false) #17
+  %i.cx = call noundef ptr @_ZN2v88internal8compiler7TFGraph7NewNodeEPKNS1_8OperatorEiPKPNS1_4NodeEb(ptr noundef nonnull align 8 dereferenceable(104) %i.cr, ptr noundef %i.ct, i32 noundef 4, ptr noundef nonnull %4, i1 noundef zeroext false) #17 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #17
+  store ptr %i.cx, ptr %i.bp, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #17
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #17
@@ -223,7 +224,6 @@ _ZN2v88internal8compiler17AllocationBuilder8AllocateEiNS0_14AllocationTypeENS1_4
   store ptr %i.az, ptr %i.dd, align 8
   %i.de = call noundef ptr @_ZN2v88internal8compiler7TFGraph7NewNodeEPKNS1_8OperatorEiPKPNS1_4NodeEb(ptr noundef nonnull align 8 dereferenceable(104) %i.cy, ptr noundef %i.da, i32 noundef 4, ptr noundef nonnull %3, i1 noundef zeroext false) #17 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #17
-  store ptr %i.de, ptr %i.bp, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #17
   %i.df = call noundef i32 @_ZNK2v88internal8compiler6MapRef21GetInObjectPropertiesEv(ptr noundef nonnull align 8 dereferenceable(8) %8) #17
   %i.dg = icmp sgt i32 %i.df, 0
@@ -236,6 +236,8 @@ _ZN2v88internal8compiler17AllocationBuilder8AllocateEiNS0_14AllocationTypeENS1_4
   br label %bb.j
 
 ._crit_edge:                                      ; preds = %bb.j, %_ZN2v88internal8compiler17AllocationBuilder8AllocateEiNS0_14AllocationTypeENS1_4TypeE.exit
+  %.lcssa = phi ptr [ %i.de, %_ZN2v88internal8compiler17AllocationBuilder8AllocateEiNS0_14AllocationTypeENS1_4TypeE.exit ], [ %i.du, %bb.j ]
+  store ptr %.lcssa, ptr %i.bp, align 8
   %i.dk = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.dl = load ptr, ptr %i.dk, align 8            ; 2 uses
   %i.dm = load ptr, ptr %i.dl, align 8
@@ -248,8 +250,8 @@ _ZN2v88internal8compiler17AllocationBuilder8AllocateEiNS0_14AllocationTypeENS1_4
   ret ptr %1
 
 bb.j:                                             ; preds = %.lr.ph, %bb.j
-  %19 = phi ptr [ %i.de, %.lr.ph ], [ %i.du, %bb.j ]
   %.018 = phi i32 [ 0, %.lr.ph ], [ %i.dv, %bb.j ] ; 2 uses
+  %19 = phi ptr [ %i.de, %.lr.ph ], [ %i.du, %bb.j ]
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #17
   %.sroa.01.0.copyload = load ptr, ptr %8, align 8
   call void @_ZN2v88internal8compiler13AccessBuilder27ForJSObjectInObjectPropertyENS1_6MapRefEiNS0_11MachineTypeE(ptr dead_on_unwind nonnull writable sret(%"struct.v8::internal::compiler::FieldAccess") align 8 %17, ptr %.sroa.01.0.copyload, i32 noundef %.018, i16 2569) #17
@@ -267,7 +269,6 @@ bb.j:                                             ; preds = %.lr.ph, %bb.j
   store ptr %i.az, ptr %i.dj, align 8
   %i.du = call noundef ptr @_ZN2v88internal8compiler7TFGraph7NewNodeEPKNS1_8OperatorEiPKPNS1_4NodeEb(ptr noundef nonnull align 8 dereferenceable(104) %i.dr, ptr noundef %i.dt, i32 noundef 4, ptr noundef nonnull %2, i1 noundef zeroext false) #17 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #17
-  store ptr %i.du, ptr %i.bp, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %18) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %17) #17
   %i.dv = add nuw nsw i32 %.018, 1                ; 2 uses

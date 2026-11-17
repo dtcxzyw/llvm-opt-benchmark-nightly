@@ -202,7 +202,7 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.e, i8 0, i64 40, i1 false)
   store <2 x i32> splat (i32 -1), ptr %2, align 8
-  %i.f = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 5 uses
   store i32 -1, ptr %i.f, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #23
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #23
@@ -605,23 +605,37 @@ bb.bv:                                            ; preds = %bb.bt
 
 bb.bw:                                            ; preds = %.thread260
   store ptr %.5224.ph263, ptr %i.b, align 16
-  %i.jd = getelementptr inbounds nuw i8, ptr %2, i64 20 ; 2 uses
-  %i.je = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 2 uses
-  %i.jf = getelementptr inbounds nuw i8, ptr %2, i64 12
-  %i.jg = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %i.jh = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
-  %i.ji = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
+  %.promoted = load i32, ptr %i.f, align 8
+  %i.jd = getelementptr inbounds nuw i8, ptr %2, i64 20 ; 4 uses
+  %i.je = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 4 uses
+  %i.jf = getelementptr inbounds nuw i8, ptr %2, i64 12 ; 4 uses
+  %i.jg = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 4 uses
+  %i.jh = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 4 uses
+  %i.ji = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 4 uses
+  %.promoted388 = load i32, ptr %i.jd, align 4
+  %.promoted396 = load ptr, ptr %i.je, align 8
+  %.promoted404 = load i32, ptr %i.jf, align 4
+  %.promoted412 = load ptr, ptr %i.jg, align 8
+  %.promoted420 = load i32, ptr %i.jh, align 8
+  %.promoted428 = load ptr, ptr %i.ji, align 8
   br label %bb.bx
 
 bb.bx:                                            ; preds = %bb.bw, %bb.cv
+  %5 = phi ptr [ %.promoted428, %bb.bw ], [ %11, %bb.cv ] ; 7 uses
+  %6 = phi i32 [ %.promoted420, %bb.bw ], [ %12, %bb.cv ] ; 7 uses
+  %7 = phi ptr [ %.promoted412, %bb.bw ], [ %13, %bb.cv ] ; 8 uses
+  %8 = phi i32 [ %.promoted404, %bb.bw ], [ %14, %bb.cv ] ; 8 uses
+  %9 = phi ptr [ %.promoted396, %bb.bw ], [ %15, %bb.cv ] ; 7 uses
+  %10 = phi i32 [ %.promoted388, %bb.bw ], [ %16, %bb.cv ] ; 7 uses
   %.0131381 = phi i8 [ 0, %bb.bw ], [ %.4135, %bb.cv ] ; 7 uses
   %.0138380 = phi i8 [ 0, %bb.bw ], [ %.3141, %bb.cv ] ; 9 uses
   %.0144379 = phi i8 [ 0, %bb.bw ], [ %.4148, %bb.cv ] ; 8 uses
-  %.0158378 = phi i32 [ 1, %bb.bw ], [ %.5163, %bb.cv ] ; 5 uses
+  %.0158384 = phi i32 [ 1, %bb.bw ], [ %.5163, %bb.cv ] ; 5 uses
+  %.0158378 = phi i32 [ %.promoted, %bb.bw ], [ %17, %bb.cv ] ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #23
   store i32 0, ptr %i.d, align 4
   %i.jj = call fastcc ptr @nsh_argument(ptr noundef %0, ptr noundef %i.c, ptr noundef %3, ptr noundef null, ptr noundef nonnull %i.d) #22 ; 4 uses
-  %i.jk = sext i32 %.0158378 to i64               ; 4 uses
+  %i.jk = sext i32 %.0158384 to i64               ; 4 uses
   %i.jl = getelementptr inbounds [8 x i8], ptr %i.b, i64 %i.jk
   store ptr %i.jj, ptr %i.jl, align 8
   %.not175 = icmp eq ptr %i.jj, null
@@ -704,7 +718,7 @@ bb.cd:                                            ; preds = %bb.cc, %bb.cb
 .thread265:                                       ; preds = %.thread265.loopexit, %.thread265.loopexit382, %bb.by
   %.pre-phi = phi i64 [ %.phi.trans.insert, %.thread265.loopexit382 ], [ %i.jk, %bb.by ], [ %indvars.iv, %.thread265.loopexit ]
   %i.kc = phi ptr [ %.pre, %.thread265.loopexit382 ], [ %i.jj, %bb.by ], [ %i.jn, %.thread265.loopexit ]
-  %.3161 = phi i32 [ %.3161.ph, %.thread265.loopexit382 ], [ %.0158378, %bb.by ], [ %i.kb, %.thread265.loopexit ] ; 7 uses
+  %.3161 = phi i32 [ %.3161.ph, %.thread265.loopexit382 ], [ %.0158384, %bb.by ], [ %i.kb, %.thread265.loopexit ] ; 7 uses
   %i.kd = getelementptr inbounds [8 x i8], ptr %i.b, i64 %.pre-phi
   %i.ke = call i32 @strncmp(ptr noundef %i.kc, ptr noundef nonnull @g_redirect_out2, i64 noundef 2) #22
   %.not181 = icmp eq i32 %i.ke, 0
@@ -726,9 +740,7 @@ bb.cf:                                            ; preds = %bb.ce
   %.0127273 = phi ptr [ %i.ki, %bb.cf ], [ %i.kg, %bb.ce ]
   %i.kj = load i8, ptr %i.h, align 1, !range !7, !noundef !8
   store i8 1, ptr %i.h, align 1
-  store i32 1089, ptr %i.jh, align 8
   %i.kk = call ptr @nsh_getfullpath(ptr noundef %0, ptr noundef nonnull %.0127273) #24
-  store ptr %i.kk, ptr %i.ji, align 8
   br label %bb.cv
 
 bb.cg:                                            ; preds = %.thread265
@@ -751,9 +763,7 @@ bb.ci:                                            ; preds = %bb.ch
   %.0126283 = phi ptr [ %i.ko, %bb.ci ], [ %i.km, %bb.ch ]
   %i.kp = load i8, ptr %i.h, align 1, !range !7, !noundef !8
   store i8 1, ptr %i.h, align 1
-  store i32 577, ptr %i.jh, align 8
   %i.kq = call ptr @nsh_getfullpath(ptr noundef %0, ptr noundef nonnull %.0126283) #24
-  store ptr %i.kq, ptr %i.ji, align 8
   br label %bb.cv
 
 bb.cj:                                            ; preds = %bb.cg
@@ -776,9 +786,7 @@ bb.cl:                                            ; preds = %bb.ck
   %.0125293 = phi ptr [ %i.ku, %bb.cl ], [ %i.ks, %bb.ck ]
   %i.kv = load i8, ptr %i.i, align 2, !range !7, !noundef !8
   store i8 1, ptr %i.i, align 2
-  store i32 0, ptr %i.jf, align 4
   %i.kw = call ptr @nsh_getfullpath(ptr noundef %0, ptr noundef nonnull %.0125293) #24
-  store ptr %i.kw, ptr %i.jg, align 8
   br label %bb.cv
 
 bb.cm:                                            ; preds = %bb.cj
@@ -789,7 +797,6 @@ bb.cm:                                            ; preds = %bb.cj
 bb.cn:                                            ; preds = %bb.cm
   %i.ky = load i8, ptr %i.j, align 1, !range !7, !noundef !8
   store i8 1, ptr %i.j, align 1
-  store i32 1, ptr %i.f, align 8
   br label %bb.cv
 
 bb.co:                                            ; preds = %bb.cm
@@ -812,9 +819,7 @@ bb.cq:                                            ; preds = %bb.cp
   %.0124303 = phi ptr [ %i.lc, %bb.cq ], [ %i.la, %bb.cp ]
   %i.ld = load i8, ptr %i.j, align 1, !range !7, !noundef !8
   store i8 1, ptr %i.j, align 1
-  store i32 1089, ptr %i.jd, align 4
   %i.le = call ptr @nsh_getfullpath(ptr noundef %0, ptr noundef nonnull %.0124303) #24
-  store ptr %i.le, ptr %i.je, align 8
   br label %bb.cv
 
 bb.cr:                                            ; preds = %bb.co
@@ -837,9 +842,7 @@ bb.ct:                                            ; preds = %bb.cs
   %.0313 = phi ptr [ %i.li, %bb.ct ], [ %i.lg, %bb.cs ]
   %i.lj = load i8, ptr %i.j, align 1, !range !7, !noundef !8
   store i8 1, ptr %i.j, align 1
-  store i32 577, ptr %i.jd, align 4
   %i.lk = call ptr @nsh_getfullpath(ptr noundef %0, ptr noundef nonnull %.0313) #24
-  store ptr %i.lk, ptr %i.je, align 8
   br label %bb.cv
 
 bb.cu:                                            ; preds = %bb.cr
@@ -847,6 +850,13 @@ bb.cu:                                            ; preds = %bb.cr
   br label %bb.cv
 
 .thread321:                                       ; preds = %bb.ct, %bb.cq, %bb.cl, %bb.ci, %bb.cf
+  store i32 %10, ptr %i.jd, align 4
+  store ptr %9, ptr %i.je, align 8
+  store i32 %8, ptr %i.jf, align 4
+  store ptr %7, ptr %i.jg, align 8
+  store i32 %6, ptr %i.jh, align 8
+  store ptr %5, ptr %i.ji, align 8
+  store i32 %.0158378, ptr %i.f, align 8
   %i.lm = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.ln = load ptr, ptr %i.lm, align 8
   %i.lo = call i32 (ptr, ptr, ...) %i.ln(ptr noundef %0, ptr noundef nonnull @g_fmtarginvalid, ptr noundef nonnull %.5224.ph263) #24 ; 0 uses
@@ -854,17 +864,31 @@ bb.cu:                                            ; preds = %bb.cr
   br label %.thread256
 
 bb.cv:                                            ; preds = %bb.cu, %bb.cn, %.thread270, %.thread280, %.thread290, %.thread300, %.thread310
+  %11 = phi ptr [ %5, %.thread310 ], [ %5, %.thread300 ], [ %5, %bb.cn ], [ %5, %.thread290 ], [ %i.kq, %.thread280 ], [ %i.kk, %.thread270 ], [ %5, %bb.cu ] ; 2 uses
+  %12 = phi i32 [ %6, %.thread310 ], [ %6, %.thread300 ], [ %6, %bb.cn ], [ %6, %.thread290 ], [ 577, %.thread280 ], [ 1089, %.thread270 ], [ %6, %bb.cu ] ; 2 uses
+  %13 = phi ptr [ %7, %.thread310 ], [ %7, %.thread300 ], [ %7, %bb.cn ], [ %i.kw, %.thread290 ], [ %7, %.thread280 ], [ %7, %.thread270 ], [ %7, %bb.cu ] ; 2 uses
+  %14 = phi i32 [ %8, %.thread310 ], [ %8, %.thread300 ], [ %8, %bb.cn ], [ 0, %.thread290 ], [ %8, %.thread280 ], [ %8, %.thread270 ], [ %8, %bb.cu ] ; 2 uses
+  %15 = phi ptr [ %i.lk, %.thread310 ], [ %i.le, %.thread300 ], [ %9, %bb.cn ], [ %9, %.thread290 ], [ %9, %.thread280 ], [ %9, %.thread270 ], [ %9, %bb.cu ] ; 2 uses
+  %16 = phi i32 [ 577, %.thread310 ], [ 1089, %.thread300 ], [ %10, %bb.cn ], [ %10, %.thread290 ], [ %10, %.thread280 ], [ %10, %.thread270 ], [ %10, %bb.cu ] ; 2 uses
+  %17 = phi i32 [ %.0158378, %.thread310 ], [ %.0158378, %.thread300 ], [ 1, %bb.cn ], [ %.0158378, %.thread290 ], [ %.0158378, %.thread280 ], [ %.0158378, %.thread270 ], [ %.0158378, %bb.cu ] ; 2 uses
   %.5163 = phi i32 [ %.3161, %.thread310 ], [ %.3161, %.thread300 ], [ %.3161, %bb.cn ], [ %.3161, %.thread290 ], [ %.3161, %.thread280 ], [ %.3161, %.thread270 ], [ %i.ll, %bb.cu ] ; 3 uses
   %.4148 = phi i8 [ %.0144379, %.thread310 ], [ %.0144379, %.thread300 ], [ %.0144379, %bb.cn ], [ %.0144379, %.thread290 ], [ %i.kp, %.thread280 ], [ %i.kj, %.thread270 ], [ %.0144379, %bb.cu ] ; 2 uses
   %.3141 = phi i8 [ %.0138380, %.thread310 ], [ %.0138380, %.thread300 ], [ %.0138380, %bb.cn ], [ %i.kv, %.thread290 ], [ %.0138380, %.thread280 ], [ %.0138380, %.thread270 ], [ %.0138380, %bb.cu ] ; 2 uses
   %.4135 = phi i8 [ %i.lj, %.thread310 ], [ %i.ld, %.thread300 ], [ %i.ky, %bb.cn ], [ %.0131381, %.thread290 ], [ %.0131381, %.thread280 ], [ %.0131381, %.thread270 ], [ %.0131381, %bb.cu ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #23
   %i.lp = icmp slt i32 %.5163, 11
-  br i1 %i.lp, label %bb.bx, label %.thread333
+  br i1 %i.lp, label %bb.bx, label %.thread333.loopexit
 
 bb.cw:                                            ; preds = %bb.bx
+  store i32 %10, ptr %i.jd, align 4
+  store ptr %9, ptr %i.je, align 8
+  store i32 %8, ptr %i.jf, align 4
+  store ptr %7, ptr %i.jg, align 8
+  store i32 %6, ptr %i.jh, align 8
+  store ptr %5, ptr %i.ji, align 8
+  store i32 %.0158378, ptr %i.f, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #23
-  %i.lq = icmp sgt i32 %.0158378, 1
+  %i.lq = icmp sgt i32 %.0158384, 1
   br i1 %i.lq, label %.thread333, label %.thread334
 
 .thread334:                                       ; preds = %bb.cw
@@ -872,11 +896,21 @@ bb.cw:                                            ; preds = %bb.bx
   store ptr null, ptr %i.lr, align 8
   br label %bb.da
 
-.thread333:                                       ; preds = %bb.cv, %bb.cw
-  %.0158373 = phi i32 [ %.0158378, %bb.cw ], [ %.5163, %bb.cv ] ; 3 uses
-  %.0144366 = phi i8 [ %.0144379, %bb.cw ], [ %.4148, %bb.cv ] ; 2 uses
-  %.0138357 = phi i8 [ %.0138380, %bb.cw ], [ %.3141, %bb.cv ] ; 2 uses
-  %.0131348 = phi i8 [ %.0131381, %bb.cw ], [ %.4135, %bb.cv ] ; 2 uses
+.thread333.loopexit:                              ; preds = %bb.cv
+  store i32 %16, ptr %i.jd, align 4
+  store ptr %15, ptr %i.je, align 8
+  store i32 %14, ptr %i.jf, align 4
+  store ptr %13, ptr %i.jg, align 8
+  store i32 %12, ptr %i.jh, align 8
+  store ptr %11, ptr %i.ji, align 8
+  store i32 %17, ptr %i.f, align 8
+  br label %.thread333
+
+.thread333:                                       ; preds = %.thread333.loopexit, %bb.cw
+  %.0158373 = phi i32 [ %.5163, %.thread333.loopexit ], [ %.0158384, %bb.cw ] ; 3 uses
+  %.0144366 = phi i8 [ %.4148, %.thread333.loopexit ], [ %.0144379, %bb.cw ] ; 2 uses
+  %.0138357 = phi i8 [ %.3141, %.thread333.loopexit ], [ %.0138380, %bb.cw ] ; 2 uses
+  %.0131348 = phi i8 [ %.4135, %.thread333.loopexit ], [ %.0131381, %bb.cw ] ; 2 uses
   %i.ls = zext nneg i32 %.0158373 to i64          ; 2 uses
   %i.lt = getelementptr [8 x i8], ptr %i.b, i64 %i.ls
   %i.lu = getelementptr i8, ptr %i.lt, i64 -8
@@ -909,7 +943,7 @@ bb.da:                                            ; preds = %.thread334, %bb.cz,
   %.0144365 = phi i8 [ %.0144379, %.thread334 ], [ %.0144366, %bb.cz ], [ %.0144366, %bb.cy ]
   %.0138356 = phi i8 [ %.0138380, %.thread334 ], [ %.0138357, %bb.cz ], [ %.0138357, %bb.cy ]
   %.0131347 = phi i8 [ %.0131381, %.thread334 ], [ %.0131348, %bb.cz ], [ %.0131348, %bb.cy ]
-  %.7165336 = phi i32 [ %.0158378, %.thread334 ], [ %.7165, %bb.cz ], [ %.7165, %bb.cy ]
+  %.7165336 = phi i32 [ %.0158384, %.thread334 ], [ %.7165, %bb.cz ], [ %.7165, %bb.cy ]
   %i.me = call fastcc i32 @nsh_execute(ptr noundef %0, i32 noundef %.7165336, ptr noundef %i.b, ptr noundef %2) #22
   br label %.thread256
 

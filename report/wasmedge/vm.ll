@@ -205,7 +205,7 @@ bb.a:
   %i.c = ptrtoaddr ptr %i.b to i64
   %.sroa.0.0.copyload = load ptr, ptr %2, align 8, !tbaa !810 ; 2 uses
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !811 ; 4 uses
+  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !811 ; 5 uses
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 16
   %.sroa.7.0.copyload = load ptr, ptr %.sroa.7.0..sroa_idx, align 8, !tbaa !811 ; 2 uses
   %i.d = icmp ugt i64 %1, 3
@@ -454,7 +454,7 @@ _ZN3fmt3v116detail4copyIcPKcPcTnNSt9enable_ifIXntsr23is_back_insert_iteratorIT1_
   %i.do = sub i64 %i.fz, %i.dn
   %i.dp = getelementptr inbounds i8, ptr %.33165, i64 %i.do ; 2 uses
   %.not.i8.not.i40 = icmp eq i64 %i.em, 0
-  br i1 %.not.i8.not.i40, label %.critedge, label %.lr.ph, !llvm.loop !1966
+  br i1 %.not.i8.not.i40, label %.critedge.loopexit, label %.lr.ph, !llvm.loop !1966
 
 .lr.ph:                                           ; preds = %_ZN3fmt3v116detail4copyIcPKcPcTnNSt9enable_ifIXntsr23is_back_insert_iteratorIT1_EE5valueEiE4typeELi0EEES7_T0_SA_S7_.exit.preheader, %_ZN3fmt3v116detail4copyIcPKcPcTnNSt9enable_ifIXntsr23is_back_insert_iteratorIT1_EE5valueEiE4typeELi0EEES7_T0_SA_S7_.exit
   %.066 = phi ptr [ %i.fy, %_ZN3fmt3v116detail4copyIcPKcPcTnNSt9enable_ifIXntsr23is_back_insert_iteratorIT1_EE5valueEiE4typeELi0EEES7_T0_SA_S7_.exit ], [ %i.b, %_ZN3fmt3v116detail4copyIcPKcPcTnNSt9enable_ifIXntsr23is_back_insert_iteratorIT1_EE5valueEiE4typeELi0EEES7_T0_SA_S7_.exit.preheader ] ; 6 uses
@@ -481,8 +481,7 @@ _ZN3fmt3v116detail4copyIcPKcPcTnNSt9enable_ifIXntsr23is_back_insert_iteratorIT1_
   %i.ej = load i8, ptr %i.ei, align 1, !tbaa !319 ; 2 uses
   %i.ek = getelementptr inbounds [4 x i8], ptr @__const._ZN3fmt3v116detail11utf8_decodeEPKcPjPi.masks, i64 %i.dx
   %i.el = load i32, ptr %i.ek, align 4, !tbaa !409
-  %i.em = add i64 %i.dq, -1                       ; 3 uses
-  store i64 %i.em, ptr %.sroa.5.0.copyload, align 8, !tbaa !76
+  %i.em = add i64 %i.dq, -1                       ; 4 uses
   %i.en = and i8 %i.eh, 63
   %i.eo = zext nneg i8 %i.en to i32
   %i.ep = shl nuw nsw i32 %i.eo, 6
@@ -527,16 +526,24 @@ _ZN3fmt3v116detail4copyIcPKcPcTnNSt9enable_ifIXntsr23is_back_insert_iteratorIT1_
   %i.fz = ptrtoint ptr %i.fy to i64               ; 2 uses
   %i.ga = sub i64 %i.fz, %i.dm
   %i.gb = icmp slt i64 %i.ga, %i.bv
-  br i1 %i.gb, label %_ZN3fmt3v116detail4copyIcPKcPcTnNSt9enable_ifIXntsr23is_back_insert_iteratorIT1_EE5valueEiE4typeELi0EEES7_T0_SA_S7_.exit, label %.thread.sink.split, !llvm.loop !1966
+  br i1 %i.gb, label %_ZN3fmt3v116detail4copyIcPKcPcTnNSt9enable_ifIXntsr23is_back_insert_iteratorIT1_EE5valueEiE4typeELi0EEES7_T0_SA_S7_.exit, label %.thread.sink.split.loopexit, !llvm.loop !1966
 
-.critedge:                                        ; preds = %_ZN3fmt3v116detail4copyIcPKcPcTnNSt9enable_ifIXntsr23is_back_insert_iteratorIT1_EE5valueEiE4typeELi0EEES7_T0_SA_S7_.exit, %_ZN3fmt3v116detail4copyIcPKcPcTnNSt9enable_ifIXntsr23is_back_insert_iteratorIT1_EE5valueEiE4typeELi0EEES7_T0_SA_S7_.exit.preheader
-  %.331.lcssa = phi ptr [ %.230, %_ZN3fmt3v116detail4copyIcPKcPcTnNSt9enable_ifIXntsr23is_back_insert_iteratorIT1_EE5valueEiE4typeELi0EEES7_T0_SA_S7_.exit.preheader ], [ %i.dp, %_ZN3fmt3v116detail4copyIcPKcPcTnNSt9enable_ifIXntsr23is_back_insert_iteratorIT1_EE5valueEiE4typeELi0EEES7_T0_SA_S7_.exit ]
+.critedge.loopexit:                               ; preds = %_ZN3fmt3v116detail4copyIcPKcPcTnNSt9enable_ifIXntsr23is_back_insert_iteratorIT1_EE5valueEiE4typeELi0EEES7_T0_SA_S7_.exit
+  store i64 %i.em, ptr %.sroa.5.0.copyload, align 8, !tbaa !76
+  br label %.critedge
+
+.critedge:                                        ; preds = %.critedge.loopexit, %_ZN3fmt3v116detail4copyIcPKcPcTnNSt9enable_ifIXntsr23is_back_insert_iteratorIT1_EE5valueEiE4typeELi0EEES7_T0_SA_S7_.exit.preheader
+  %.331.lcssa = phi ptr [ %.230, %_ZN3fmt3v116detail4copyIcPKcPcTnNSt9enable_ifIXntsr23is_back_insert_iteratorIT1_EE5valueEiE4typeELi0EEES7_T0_SA_S7_.exit.preheader ], [ %i.dp, %.critedge.loopexit ]
   %i.gc = ptrtoint ptr %.331.lcssa to i64
   %i.gd = sub i64 %i.gc, %i.dl
   store i64 %i.gd, ptr %.sroa.7.0.copyload, align 8, !tbaa !76
   br label %.thread.sink.split
 
-.thread.sink.split:                               ; preds = %.lr.ph, %.critedge
+.thread.sink.split.loopexit:                      ; preds = %.lr.ph
+  store i64 %i.em, ptr %.sroa.5.0.copyload, align 8, !tbaa !76
+  br label %.thread.sink.split
+
+.thread.sink.split:                               ; preds = %.thread.sink.split.loopexit, %.critedge
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #27
   br label %.thread
 

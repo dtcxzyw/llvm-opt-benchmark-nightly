@@ -205,7 +205,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.g = tail call noundef i32 @_ZN3igl19default_num_threadsEj(i32 noundef 0) ; 3 uses
   %i.h = zext i32 %i.g to i64                     ; 3 uses
-  %i.i = sext i32 %0 to i64                       ; 2 uses
+  %i.i = sext i32 %0 to i64
   %i.j = icmp ule i64 %4, %i.i
   %i.k = icmp ugt i32 %i.g, 1
   %or.cond.not = and i1 %i.k, %i.j
@@ -222,6 +222,7 @@ bb.b:                                             ; preds = %bb.a
   %i.o = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.p = getelementptr inbounds nuw i8, ptr %8, i64 8
   %i.q = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 2 uses
+  %wide.trip.count = zext nneg i32 %0 to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %bb.c
@@ -302,8 +303,8 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #21
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %11 = icmp slt i64 %indvars.iv.next, %i.i
-  br i1 %11, label %bb.c, label %.loopexit58, !llvm.loop !3320
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond.not, label %.loopexit58, label %bb.c, !llvm.loop !3320
 
 _ZNSt12_Vector_baseISt6threadSaIS0_EE11_M_allocateEm.exit.i: ; preds = %bb.b
   %i.bn = add nsw i32 %0, 1

@@ -204,7 +204,7 @@ define void @_ZNK22llama_memory_recurrent11state_writeER16llama_io_write_iij(ptr
 bb.a:
   %4 = alloca %"class.std::vector.194", align 8   ; 20 uses
   %5 = alloca %"class.std::vector.194", align 8   ; 13 uses
-  %i.a = alloca i32, align 4                      ; 10 uses
+  %i.a = alloca i32, align 4                      ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #27
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #27
@@ -217,6 +217,7 @@ bb.a:
   br i1 %.not203, label %._crit_edge.thread, label %.lr.ph180
 
 ._crit_edge.thread:                               ; preds = %bb.a
+  store i32 0, ptr %i.a, align 4
   store ptr null, ptr %5, align 8
   store ptr null, ptr %4, align 8
   br label %_ZNSt6vectorISt4pairIjjESaIS1_EE12emplace_backIJRjRKjEEERS1_DpOT_.exit
@@ -239,6 +240,7 @@ bb.a:
   %i.o = ptrtoaddr ptr %i.fi to i64
   %i.p = ptrtoaddr ptr %i.fm to i64               ; 2 uses
   %i.q = icmp eq i32 %.2131, %i.fh
+  store i32 %9, ptr %i.a, align 4
   store ptr %i.fn, ptr %5, align 8
   store ptr %i.fm, ptr %4, align 8
   br i1 %i.q, label %_ZNSt6vectorISt4pairIjjESaIS1_EE12emplace_backIJRjRKjEEERS1_DpOT_.exit, label %bb.z
@@ -250,7 +252,8 @@ bb.b:                                             ; preds = %.lr.ph180, %_ZNSt6v
   %i.t = phi ptr [ null, %.lr.ph180 ], [ %i.fj, %_ZNSt6vectorISt4pairIjjESaIS1_EE12emplace_backIJRjS5_EEERS1_DpOT_.exit ] ; 6 uses
   %i.u = phi ptr [ null, %.lr.ph180 ], [ %i.fk, %_ZNSt6vectorISt4pairIjjESaIS1_EE12emplace_backIJRjS5_EEERS1_DpOT_.exit ] ; 12 uses
   %i.v = phi ptr [ null, %.lr.ph180 ], [ %i.fl, %_ZNSt6vectorISt4pairIjjESaIS1_EE12emplace_backIJRjS5_EEERS1_DpOT_.exit ] ; 10 uses
-  %.0129177 = phi i32 [ %i.c, %.lr.ph180 ], [ %.2131, %_ZNSt6vectorISt4pairIjjESaIS1_EE12emplace_backIJRjS5_EEERS1_DpOT_.exit ] ; 5 uses
+  %.0129184 = phi i32 [ %i.c, %.lr.ph180 ], [ %.2131, %_ZNSt6vectorISt4pairIjjESaIS1_EE12emplace_backIJRjS5_EEERS1_DpOT_.exit ] ; 5 uses
+  %.0129177 = phi i32 [ 0, %.lr.ph180 ], [ %9, %_ZNSt6vectorISt4pairIjjESaIS1_EE12emplace_backIJRjS5_EEERS1_DpOT_.exit ] ; 5 uses
   %i.w = phi ptr [ null, %.lr.ph180 ], [ %i.fn, %_ZNSt6vectorISt4pairIjjESaIS1_EE12emplace_backIJRjS5_EEERS1_DpOT_.exit ] ; 20 uses
   %i.x = phi ptr [ null, %.lr.ph180 ], [ %i.fm, %_ZNSt6vectorISt4pairIjjESaIS1_EE12emplace_backIJRjS5_EEERS1_DpOT_.exit ] ; 14 uses
   %i.y = load ptr, ptr %i.d, align 8, !tbaa !53
@@ -294,17 +297,13 @@ _ZNK22llama_memory_recurrent8mem_cell10has_seq_idERKi.exit: ; preds = %_ZNKSt8_R
   br i1 %.not137, label %_ZNK22llama_memory_recurrent8mem_cell10has_seq_idERKi.exit.thread, label %bb.e
 
 bb.e:                                             ; preds = %_ZNK22llama_memory_recurrent8mem_cell10has_seq_idERKi.exit
-  %6 = load i32, ptr %i.a, align 4, !tbaa !52
-  %i.am = add i32 %6, 1
-  store i32 %i.am, ptr %i.a, align 4, !tbaa !52
+  %i.am = add i32 %.0129177, 1                    ; 5 uses
   %i.an = load i32, ptr %i.f, align 4, !tbaa !51
   %.not51 = icmp eq i32 %i.an, 0
   br i1 %.not51, label %.loopexit, label %bb.f
 
 .thread:                                          ; preds = %bb.c
-  %7 = load i32, ptr %i.a, align 4, !tbaa !52
-  %i.ao = add i32 %7, 1
-  store i32 %i.ao, ptr %i.a, align 4, !tbaa !52
+  %i.ao = add i32 %.0129177, 1                    ; 2 uses
   %i.ap = load i32, ptr %i.f, align 4, !tbaa !51
   %.not51133 = icmp eq i32 %i.ap, 0
   br i1 %.not51133, label %.loopexit, label %.thread134
@@ -331,6 +330,7 @@ bb.i:                                             ; preds = %bb.h
   br label %.loopexit
 
 .thread134:                                       ; preds = %.thread, %bb.f
+  %6 = phi i32 [ %i.ao, %.thread ], [ %i.am, %bb.f ] ; 8 uses
   %i.az = getelementptr inbounds nuw i8, ptr %i.z, i64 40
   %i.ba = load ptr, ptr %i.az, align 8, !tbaa !63 ; 3 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %i.z, i64 24 ; 3 uses
@@ -374,8 +374,10 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.bu, label %bb.m, label %.loopexit226.invoke
 
 .loopexit226.invoke:                              ; preds = %.lr.ph.preheader, %bb.j, %bb.g, %bb.h, %.lr.ph, %bb.l
+  %.sink = phi i32 [ %6, %.lr.ph ], [ %6, %bb.l ], [ %6, %.lr.ph.preheader ], [ %6, %bb.j ], [ %i.am, %bb.h ], [ %i.am, %bb.g ]
   %i.bv = phi i32 [ 790, %.lr.ph ], [ 790, %bb.l ], [ 790, %.lr.ph.preheader ], [ 790, %bb.j ], [ 785, %bb.h ], [ 785, %bb.g ]
   %i.bw = phi ptr [ @.str.23, %.lr.ph ], [ @.str.23, %bb.l ], [ @.str.23, %.lr.ph.preheader ], [ @.str.23, %bb.j ], [ @.str.22, %bb.h ], [ @.str.22, %bb.g ]
+  store i32 %.sink, ptr %i.a, align 4
   store ptr %i.w, ptr %5, align 8
   store ptr %i.x, ptr %4, align 8
   invoke void (ptr, i32, ptr, ...) @ggml_abort(ptr noundef nonnull @.str.11, i32 noundef %i.bv, ptr noundef nonnull @.str.12, ptr noundef nonnull %i.bw) #32
@@ -391,6 +393,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %.not53, label %bb.o, label %.loopexit227
 
 .loopexit227:                                     ; preds = %bb.m
+  store i32 %6, ptr %i.a, align 4
   store ptr %i.w, ptr %5, align 8
   store ptr %i.x, ptr %4, align 8
   invoke void (ptr, i32, ptr, ...) @ggml_abort(ptr noundef nonnull @.str.11, i32 noundef 797, ptr noundef nonnull @.str.24) #32
@@ -405,6 +408,7 @@ bb.o:                                             ; preds = %bb.m
   br i1 %.not138, label %.loopexit, label %.lr.ph, !llvm.loop !218
 
 .loopexit:                                        ; preds = %bb.o, %bb.k, %.thread134, %.thread, %bb.i, %bb.e
+  %7 = phi i32 [ %i.am, %bb.i ], [ %i.ao, %.thread ], [ %i.am, %bb.e ], [ %6, %.thread134 ], [ %6, %bb.k ], [ %6, %bb.o ] ; 2 uses
   %.2 = phi i32 [ %i.ay, %bb.i ], [ 0, %.thread ], [ 0, %bb.e ], [ 0, %.thread134 ], [ %i.bo, %bb.k ], [ %i.bo, %bb.o ]
   %i.ca = mul i32 %.2, %i.r
   %i.cb = getelementptr inbounds nuw i8, ptr %i.z, i64 4
@@ -440,7 +444,11 @@ bb.s:                                             ; preds = %bb.q
   %i.co = ptrtoint ptr %i.w to i64                ; 3 uses
   %i.cp = sub i64 %i.cn, %i.co                    ; 4 uses
   %i.cq = icmp eq i64 %i.cp, 9223372036854775800
-  br i1 %i.cq, label %.invoke441, label %_ZNKSt6vectorISt4pairIjjESaIS1_EE12_M_check_lenEmPKc.exit.i.i
+  br i1 %i.cq, label %8, label %_ZNKSt6vectorISt4pairIjjESaIS1_EE12_M_check_lenEmPKc.exit.i.i
+
+8:                                                ; preds = %bb.s
+  store i32 %7, ptr %i.a, align 4
+  br label %.invoke441
 
 _ZNKSt6vectorISt4pairIjjESaIS1_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.s
   %i.cr = ashr exact i64 %i.cp, 3                 ; 3 uses
@@ -546,12 +554,12 @@ _ZNSt6vectorISt4pairIjjESaIS1_EE12emplace_backIJRKjjEEERS1_DpOT_.exit: ; preds =
   %i.du = phi ptr [ %i.u, %bb.r ], [ %i.dr, %_ZNSt6vectorISt4pairIjjESaIS1_EE17_M_realloc_insertIJRKjjEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %i.u, %bb.u ]
   %i.dv = phi ptr [ %i.cm, %bb.r ], [ %i.dq, %_ZNSt6vectorISt4pairIjjESaIS1_EE17_M_realloc_insertIJRKjjEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %i.v, %bb.u ]
   %i.dw = phi ptr [ %i.w, %bb.r ], [ %i.cx, %_ZNSt6vectorISt4pairIjjESaIS1_EE17_M_realloc_insertIJRKjjEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %i.w, %bb.u ]
-  %i.dx = icmp eq i32 %.0129177, %i.dt
-  %spec.select = select i1 %i.dx, i32 %i.ce, i32 %.0129177
+  %i.dx = icmp eq i32 %.0129184, %i.dt
+  %spec.select = select i1 %i.dx, i32 %i.ce, i32 %.0129184
   br label %_ZNSt6vectorISt4pairIjjESaIS1_EE12emplace_backIJRjS5_EEERS1_DpOT_.exit
 
 _ZNK22llama_memory_recurrent8mem_cell10has_seq_idERKi.exit.thread: ; preds = %_ZNKSt8_Rb_treeIiiSt9_IdentityIiESt4lessIiESaIiEE14_M_lower_boundEPKSt13_Rb_tree_nodeIiEPKSt18_Rb_tree_node_baseRKi.exit.i.i.i, %bb.d, %_ZNK22llama_memory_recurrent8mem_cell10has_seq_idERKi.exit
-  %.not50 = icmp eq i32 %.0129177, %i.r
+  %.not50 = icmp eq i32 %.0129184, %i.r
   br i1 %.not50, label %_ZNSt6vectorISt4pairIjjESaIS1_EE12emplace_backIJRjS5_EEERS1_DpOT_.exit, label %bb.v
 
 bb.v:                                             ; preds = %_ZNK22llama_memory_recurrent8mem_cell10has_seq_idERKi.exit.thread
@@ -559,7 +567,7 @@ bb.v:                                             ; preds = %_ZNK22llama_memory_
   br i1 %.not.i61, label %bb.x, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  store i32 %.0129177, ptr %i.t, align 4, !tbaa !141
+  store i32 %.0129184, ptr %i.t, align 4, !tbaa !141
   %i.dy = getelementptr inbounds nuw i8, ptr %i.t, i64 4
   %i.dz = trunc nuw i64 %indvars.iv to i32
   store i32 %i.dz, ptr %i.dy, align 4, !tbaa !140
@@ -574,7 +582,7 @@ bb.x:                                             ; preds = %bb.v
   %i.ee = icmp eq i64 %i.ed, 9223372036854775800
   br i1 %i.ee, label %.invoke441, label %_ZNKSt6vectorISt4pairIjjESaIS1_EE12_M_check_lenEmPKc.exit.i.i62
 
-.invoke441:                                       ; preds = %bb.x, %bb.s
+.invoke441:                                       ; preds = %bb.x, %8
   store ptr %i.w, ptr %5, align 8
   store ptr %i.x, ptr %4, align 8
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.50) #32
@@ -598,7 +606,7 @@ _ZNKSt6vectorISt4pairIjjESaIS1_EE12_M_check_lenEmPKc.exit.i.i62: ; preds = %bb.x
 
 .noexc74:                                         ; preds = %_ZNKSt6vectorISt4pairIjjESaIS1_EE12_M_check_lenEmPKc.exit.i.i62
   %i.em = getelementptr inbounds nuw i8, ptr %i.el, i64 %i.ed ; 2 uses
-  store i32 %.0129177, ptr %i.em, align 4, !tbaa !141
+  store i32 %.0129184, ptr %i.em, align 4, !tbaa !141
   %i.en = getelementptr inbounds nuw i8, ptr %i.em, i64 4
   %i.eo = trunc nuw i64 %indvars.iv to i32
   store i32 %i.eo, ptr %i.en, align 4, !tbaa !140
@@ -687,6 +695,7 @@ _ZNSt6vectorISt4pairIjjESaIS1_EE12emplace_backIJRjS5_EEERS1_DpOT_.exit: ; preds 
   %i.fl = phi ptr [ %i.dv, %_ZNSt6vectorISt4pairIjjESaIS1_EE12emplace_backIJRKjjEEERS1_DpOT_.exit ], [ %i.v, %_ZNK22llama_memory_recurrent8mem_cell10has_seq_idERKi.exit.thread ], [ %i.v, %_ZNSt6vectorISt4pairIjjESaIS1_EE17_M_realloc_insertIJRjS5_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %i.v, %bb.w ] ; 4 uses
   %i.fm = phi ptr [ %i.x, %_ZNSt6vectorISt4pairIjjESaIS1_EE12emplace_backIJRKjjEEERS1_DpOT_.exit ], [ %i.x, %_ZNK22llama_memory_recurrent8mem_cell10has_seq_idERKi.exit.thread ], [ %i.el, %_ZNSt6vectorISt4pairIjjESaIS1_EE17_M_realloc_insertIJRjS5_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %i.x, %bb.w ] ; 12 uses
   %i.fn = phi ptr [ %i.dw, %_ZNSt6vectorISt4pairIjjESaIS1_EE12emplace_backIJRKjjEEERS1_DpOT_.exit ], [ %i.w, %_ZNK22llama_memory_recurrent8mem_cell10has_seq_idERKi.exit.thread ], [ %i.w, %_ZNSt6vectorISt4pairIjjESaIS1_EE17_M_realloc_insertIJRjS5_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %i.w, %bb.w ] ; 7 uses
+  %9 = phi i32 [ %7, %_ZNSt6vectorISt4pairIjjESaIS1_EE12emplace_backIJRKjjEEERS1_DpOT_.exit ], [ %.0129177, %_ZNK22llama_memory_recurrent8mem_cell10has_seq_idERKi.exit.thread ], [ %.0129177, %_ZNSt6vectorISt4pairIjjESaIS1_EE17_M_realloc_insertIJRjS5_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %.0129177, %bb.w ] ; 2 uses
   %.2131 = phi i32 [ %spec.select, %_ZNSt6vectorISt4pairIjjESaIS1_EE12emplace_backIJRKjjEEERS1_DpOT_.exit ], [ %i.r, %_ZNK22llama_memory_recurrent8mem_cell10has_seq_idERKi.exit.thread ], [ %.pre237, %_ZNSt6vectorISt4pairIjjESaIS1_EE17_M_realloc_insertIJRjS5_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %i.r, %bb.w ] ; 4 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.fo = zext i32 %i.fh to i64

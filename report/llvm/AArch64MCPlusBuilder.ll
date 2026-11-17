@@ -205,6 +205,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not214, label %._crit_edge.thread, label %.lr.ph
 
 ._crit_edge.thread:                               ; preds = %bb.c
+  store ptr null, ptr %i.b, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #25
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -231,6 +232,7 @@ bb.c:                                             ; preds = %bb.b
   %.pre219.a = load ptr, ptr %i.t, align 8, !tbaa !352 ; 5 uses
   %.pre221 = load ptr, ptr %i.u, align 8, !tbaa !353
   %i.ag = icmp eq ptr %.pre219.a, %.pre221
+  store ptr %17, ptr %i.b, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #25
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -312,6 +314,7 @@ _ZNSt6vectorIN4llvm6MCInstESaIS1_EED2Ev.exit:     ; preds = %_ZSt8_DestroyIPN4ll
 bb.f:                                             ; preds = %.lr.ph, %_ZNSt6vectorIN4llvm6MCInstESaIS1_EED2Ev.exit129
   %i.bj = phi i64 [ 0, %.lr.ph ], [ %i.hv, %_ZNSt6vectorIN4llvm6MCInstESaIS1_EED2Ev.exit129 ] ; 3 uses
   %.073209 = phi i32 [ 0, %.lr.ph ], [ %i.hu, %_ZNSt6vectorIN4llvm6MCInstESaIS1_EED2Ev.exit129 ] ; 2 uses
+  %16 = phi ptr [ null, %.lr.ph ], [ %17, %_ZNSt6vectorIN4llvm6MCInstESaIS1_EED2Ev.exit129 ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #25
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %9, i8 0, i64 24, i1 false)
   %i.bk = load ptr, ptr %i.t, align 8, !tbaa !352 ; 5 uses
@@ -650,7 +653,6 @@ bb.ac:                                            ; preds = %bb.ab
 
 bb.ad:                                            ; preds = %bb.ac
   %i.fz = call noundef ptr @_ZN4llvm9MCContext21createNamedTempSymbolEv(ptr noundef nonnull align 8 dereferenceable(2208) %8) #25
-  store ptr %i.fz, ptr %i.b, align 8, !tbaa !283
   br label %bb.ai
 
 bb.ae:                                            ; preds = %bb.ac
@@ -718,7 +720,6 @@ _ZZN12_GLOBAL__N_120AArch64MCPlusBuilder21indirectCallPromotionERKN4llvm6MCInstE
   %i.gr = getelementptr inbounds i8, ptr %i.gq, i64 -128
   %i.gs = getelementptr inbounds i8, ptr %i.gq, i64 -104
   store i32 0, ptr %i.gs, align 8, !tbaa !83
-  %16 = load ptr, ptr %i.b, align 8, !tbaa !283
   %i.gt = load ptr, ptr %1, align 8, !tbaa !29
   %i.gu = getelementptr inbounds nuw i8, ptr %i.gt, i64 1368
   %i.gv = load ptr, ptr %i.gu, align 8
@@ -726,6 +727,7 @@ _ZZN12_GLOBAL__N_120AArch64MCPlusBuilder21indirectCallPromotionERKN4llvm6MCInstE
   br label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ad, %_ZZN12_GLOBAL__N_120AArch64MCPlusBuilder21indirectCallPromotionERKN4llvm6MCInstEtRKSt6vectorISt4pairIPNS1_8MCSymbolEmESaIS9_EESD_RKS5_IPS2_SaISE_EEbPNS1_9MCContextEENKUlRS5_IS2_SaIS2_EEE_clESN_.exit, %bb.ab
+  %17 = phi ptr [ %i.fz, %bb.ad ], [ %16, %_ZZN12_GLOBAL__N_120AArch64MCPlusBuilder21indirectCallPromotionERKN4llvm6MCInstEtRKSt6vectorISt4pairIPNS1_8MCSymbolEmESaIS9_EESD_RKS5_IPS2_SaISE_EEbPNS1_9MCContextEENKUlRS5_IS2_SaIS2_EEE_clESN_.exit ], [ %16, %bb.ab ] ; 2 uses
   %i.gw = load ptr, ptr %11, align 8, !tbaa !278  ; 3 uses
   %i.gx = load ptr, ptr %i.y, align 8, !tbaa !274 ; 2 uses
   %.not4.i.i.i110 = icmp eq ptr %i.gw, %i.gx

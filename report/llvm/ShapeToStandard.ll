@@ -202,6 +202,8 @@ _ZN4mlir5shape23ShapeEqOpGenericAdaptorINS_10ValueRangeEE9getShapesEv.exit58: ; 
   br label %bb.u
 
 ._crit_edge:                                      ; preds = %bb.w, %_ZN4mlir5shape23ShapeEqOpGenericAdaptorINS_10ValueRangeEE9getShapesEv.exit58
+  %.lcssa = phi ptr [ null, %_ZN4mlir5shape23ShapeEqOpGenericAdaptorINS_10ValueRangeEE9getShapesEv.exit58 ], [ %.sroa.03.0, %bb.w ]
+  store ptr %.lcssa, ptr %12, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #20
   %i.ez = load ptr, ptr %6, align 8, !tbaa !63
   %i.fa = ptrtoint ptr %12 to i64
@@ -213,8 +215,8 @@ _ZN4mlir5shape23ShapeEqOpGenericAdaptorINS_10ValueRangeEE9getShapesEv.exit58: ; 
   br label %bb.x
 
 bb.u:                                             ; preds = %.lr.ph, %bb.w
-  %19 = phi ptr [ null, %.lr.ph ], [ %.sroa.03.0, %bb.w ] ; 2 uses
   %storemerge85 = phi i64 [ 0, %.lr.ph ], [ %i.fk, %bb.w ]
+  %19 = phi ptr [ null, %.lr.ph ], [ %.sroa.03.0, %bb.w ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #20
   %i.fb = call ptr @_ZN4mlir10ValueRange20dereference_iteratorERKN4llvm12PointerUnionIJPKNS_5ValueEPNS_9OpOperandEPNS_6detail12OpResultImplEPKNS1_8RepeatedIS3_EEEEEl(ptr noundef nonnull align 8 dereferenceable(16) %14, i64 noundef %storemerge85) #20 ; 2 uses
   store ptr %i.fb, ptr %15, align 8
@@ -248,7 +250,6 @@ bb.v:                                             ; preds = %bb.u
 bb.w:                                             ; preds = %bb.u, %bb.v
   %.pn = phi ptr [ %i.fi, %bb.v ], [ %i.fg, %bb.u ]
   %.sroa.03.0 = getelementptr inbounds i8, ptr %.pn, i64 -16 ; 2 uses
-  store ptr %.sroa.03.0, ptr %12, align 8, !tbaa !75
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #20
   %i.fj = load i64, ptr %i.er, align 8, !tbaa !112
   %i.fk = add nsw i64 %i.fj, 1                    ; 3 uses

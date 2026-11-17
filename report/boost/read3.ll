@@ -205,7 +205,7 @@ bb.a:
   store i64 0, ptr %i.d, align 8, !tbaa !2223
   %i.e = getelementptr inbounds nuw i8, ptr %11, i64 48
   store i32 2, ptr %i.e, align 8, !tbaa !2224
-  %i.f = getelementptr inbounds nuw i8, ptr %11, i64 8
+  %i.f = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %11, i8 0, i64 16, i1 false)
   %i.h = load i64, ptr %i.g, align 8, !tbaa !1552
@@ -252,12 +252,12 @@ bb.b:                                             ; preds = %.backedge
 
 _ZNK5boost5beast6detail21buffers_range_adaptorIRKNS0_14buffers_suffixINS1_12buffers_pairILb1EEEEEE14const_iteratordeEv.exit: ; preds = %.backedge, %bb.b
   %.pn3.i.i = phi ptr [ %i.u, %bb.b ], [ %.sroa.0.0.copyload1.i.i, %.backedge ]
-  %.pn.i.i = phi i64 [ %i.v, %bb.b ], [ %.sroa.4.0.copyload.i.i, %.backedge ] ; 2 uses
-  store i64 %.pn.i.i, ptr %i.f, align 8, !tbaa !2227
+  %.pn.i.i = phi i64 [ %i.v, %bb.b ], [ %.sroa.4.0.copyload.i.i, %.backedge ] ; 3 uses
   %i.w = icmp eq i64 %.pn.i.i, 0
   br i1 %i.w, label %bb.p, label %bb.c
 
 bb.c:                                             ; preds = %_ZNK5boost5beast6detail21buffers_range_adaptorIRKNS0_14buffers_suffixINS1_12buffers_pairILb1EEEEEE14const_iteratordeEv.exit
+  store i64 %.pn.i.i, ptr %i.f, align 8, !tbaa !2227
   store ptr %.pn3.i.i, ptr %11, align 8, !tbaa !2228
   call void @llvm.lifetime.start.p0(ptr nonnull %10)
   store i8 1, ptr %10, align 4, !tbaa !2199
@@ -405,9 +405,13 @@ _ZNK5boost6system10error_codecvbEv.exit.thread74..backedge_crit_edge: ; preds = 
 bb.p:                                             ; preds = %_ZNK5boost5beast6detail21buffers_range_adaptorIRKNS0_14buffers_suffixINS1_12buffers_pairILb1EEEEEE14const_iteratordeEv.exit
   %.old = getelementptr inbounds nuw i8, ptr %.sroa.067.094, i64 16 ; 2 uses
   %.not.old = icmp eq ptr %.old, %.0.i.i.i.i.i
-  br i1 %.not.old, label %.thread78, label %.backedge
+  br i1 %.not.old, label %.thread78.loopexit.loopexit, label %.backedge
 
-.thread78:                                        ; preds = %bb.p, %_ZNK5boost6system10error_codecvbEv.exit.thread74, %bb.a, %bb.o
+.thread78.loopexit.loopexit:                      ; preds = %bb.p
+  store i64 %.pn.i.i, ptr %i.f, align 8, !tbaa !2227
+  br label %.thread78
+
+.thread78:                                        ; preds = %.thread78.loopexit.loopexit, %_ZNK5boost6system10error_codecvbEv.exit.thread74, %bb.a, %bb.o
   %i.bo = load i64, ptr %i.c, align 8, !tbaa !2222 ; 5 uses
   store i64 %i.bo, ptr %4, align 8, !tbaa !1316
   %i.bp = load i64, ptr %i.n, align 8, !tbaa !1552

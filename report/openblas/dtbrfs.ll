@@ -162,6 +162,8 @@ bb.r:                                             ; preds = %bb.p
   %i.ax = fmul double %i.ar, %i.at                ; 4 uses
   %i.ay = sext i32 %i.m to i64
   %i.az = sext i32 %i.j to i64                    ; 3 uses
+  %17 = add nuw i32 %i.aw, 1
+  %wide.trip.count867 = zext i32 %17 to i64
   %.pre = load i32, ptr %3, align 4, !tbaa !63
   %.0538635736 = add i32 %i.g, -1
   %.1539643738 = add i32 %i.g, -1
@@ -171,7 +173,6 @@ bb.r:                                             ; preds = %bb.p
   %.5543678744 = add i32 %i.g, -1
   %.6688745 = add i32 %i.g, -1
   %.7698746 = add i32 %i.g, -1                    ; 3 uses
-  %17 = zext nneg i32 %i.aw to i64
   %i.ba = add i32 %i.g, 2                         ; 2 uses
   %i.bb = shl nsw i64 %i.h, 3
   %i.bc = getelementptr i8, ptr %6, i64 %i.bb
@@ -204,7 +205,7 @@ bb.r:                                             ; preds = %bb.p
 bb.s:                                             ; preds = %.lr.ph731, %._crit_edge726.thread
   %indvar1293 = phi i64 [ 0, %.lr.ph731 ], [ %indvar.next1294, %._crit_edge726.thread ] ; 2 uses
   %i.bm = phi i32 [ %.pre, %.lr.ph731 ], [ %i.aib, %._crit_edge726.thread ]
-  %indvars.iv864 = phi i64 [ 1, %.lr.ph731 ], [ %indvars.iv.next865, %._crit_edge726.thread ] ; 7 uses
+  %indvars.iv864 = phi i64 [ 1, %.lr.ph731 ], [ %indvars.iv.next865, %._crit_edge726.thread ] ; 6 uses
   %i.bn = mul nsw i64 %indvars.iv864, %i.ay       ; 12 uses
   %i.bo = getelementptr [8 x i8], ptr %i.o, i64 %i.bn
   %i.bp = getelementptr i8, ptr %i.bo, i64 8
@@ -607,10 +608,10 @@ bb.aw:                                            ; preds = %._crit_edge726
   br label %._crit_edge726.thread
 
 ._crit_edge726.thread:                            ; preds = %bb.av, %._crit_edge726, %bb.aw
-  %indvars.iv.next865 = add nuw nsw i64 %indvars.iv864, 1
-  %.not573.not = icmp samesign ult i64 %indvars.iv864, %17
+  %indvars.iv.next865 = add nuw nsw i64 %indvars.iv864, 1 ; 2 uses
+  %exitcond868.not = icmp eq i64 %indvars.iv.next865, %wide.trip.count867
   %indvar.next1294 = add i64 %indvar1293, 1
-  br i1 %.not573.not, label %bb.s, label %.loopexit, !llvm.loop !62
+  br i1 %exitcond868.not, label %.loopexit, label %bb.s, !llvm.loop !62
 
 .loopexit:                                        ; preds = %._crit_edge726.thread, %bb.p, %.lr.ph735.preheader, %bb.r, %bb.q, %.thread
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #7

@@ -202,8 +202,7 @@ GinPageIsRecyclable.exit.thread68:                ; preds = %GinPageIsRecyclable
   br i1 %.not, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %GinPageIsRecyclable.exit.thread68
-  %i.bo = add i32 %i.am, 1                        ; 2 uses
-  store i32 %i.bo, ptr %i.ah, align 4
+  %i.bo = add i32 %i.am, 1
   br label %bb.s
 
 bb.p:                                             ; preds = %GinPageIsRecyclable.exit.thread68
@@ -212,8 +211,7 @@ bb.p:                                             ; preds = %GinPageIsRecyclable
   br i1 %.not63, label %bb.q, label %bb.s
 
 bb.q:                                             ; preds = %bb.p
-  %i.bq = add i32 %i.al, 1                        ; 3 uses
-  store i32 %i.bq, ptr %i.ai, align 8
+  %i.bq = add i32 %i.al, 1                        ; 2 uses
   %i.br = and i16 %i.bm, 2
   %.not64 = icmp eq i16 %i.br, 0
   br i1 %.not64, label %bb.s, label %bb.r
@@ -227,22 +225,27 @@ bb.r:                                             ; preds = %bb.q
   %i.bw = lshr i64 %i.bv, 2
   %i.bx = and i64 %i.bw, 65535
   %i.by = select i1 %i.bt, i64 0, i64 %i.bx
-  %i.bz = add i64 %i.by, %i.ak                    ; 2 uses
-  store i64 %i.bz, ptr %i.aj, align 8
+  %i.bz = add i64 %i.by, %i.ak
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.o, %bb.q, %bb.r, %bb.p, %GinPageIsRecyclable.exit.thread
-  %i.ca = phi i64 [ %i.ak, %GinPageIsRecyclable.exit.thread ], [ %i.ak, %bb.o ], [ %i.ak, %bb.p ], [ %i.bz, %bb.r ], [ %i.ak, %bb.q ]
-  %i.cb = phi i32 [ %i.al, %GinPageIsRecyclable.exit.thread ], [ %i.al, %bb.o ], [ %i.al, %bb.p ], [ %i.bq, %bb.r ], [ %i.bq, %bb.q ]
-  %i.cc = phi i32 [ %i.am, %GinPageIsRecyclable.exit.thread ], [ %i.bo, %bb.o ], [ %i.am, %bb.p ], [ %i.am, %bb.r ], [ %i.am, %bb.q ]
+  %i.ca = phi i64 [ %i.ak, %GinPageIsRecyclable.exit.thread ], [ %i.ak, %bb.o ], [ %i.ak, %bb.p ], [ %i.bz, %bb.r ], [ %i.ak, %bb.q ] ; 2 uses
+  %i.cb = phi i32 [ %i.al, %GinPageIsRecyclable.exit.thread ], [ %i.al, %bb.o ], [ %i.al, %bb.p ], [ %i.bq, %bb.r ], [ %i.bq, %bb.q ] ; 2 uses
+  %i.cc = phi i32 [ %i.am, %GinPageIsRecyclable.exit.thread ], [ %i.bo, %bb.o ], [ %i.am, %bb.p ], [ %i.am, %bb.r ], [ %i.am, %bb.q ] ; 2 uses
   %.1 = phi i32 [ %i.bl, %GinPageIsRecyclable.exit.thread ], [ %.072, %bb.o ], [ %.072, %bb.p ], [ %.072, %bb.r ], [ %.072, %bb.q ] ; 2 uses
   call void @UnlockReleaseBuffer(i32 noundef %i.an) #6
   %i.cd = add nuw i32 %.05770, 1                  ; 2 uses
   %exitcond.not = icmp eq i32 %i.cd, %i.aa
-  br i1 %exitcond.not, label %._crit_edge.a, label %bb.j, !llvm.loop !12
+  br i1 %exitcond.not, label %._crit_edge, label %bb.j, !llvm.loop !12
 
-._crit_edge.a:                                    ; preds = %bb.s, %bb.i
-  %.0.lcssa = phi i32 [ 0, %bb.i ], [ %.1, %bb.s ]
+._crit_edge:                                      ; preds = %bb.s
+  store i32 %i.cc, ptr %i.ah, align 4
+  store i32 %i.cb, ptr %i.ai, align 8
+  store i64 %i.ca, ptr %i.aj, align 8
+  br label %._crit_edge.a
+
+._crit_edge.a:                                    ; preds = %._crit_edge, %bb.i
+  %.0.lcssa = phi i32 [ %.1, %._crit_edge ], [ 0, %bb.i ]
   call void @read_stream_end(ptr noundef %i.af) #6
   %i.ce = getelementptr inbounds nuw i8, ptr %3, i64 4
   store i32 %i.aa, ptr %i.ce, align 4

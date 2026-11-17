@@ -202,7 +202,7 @@ bb.a:
   %3 = alloca %"struct.std::_Hashtable<cvc5::internal::NodeTemplate<true>, cvc5::internal::NodeTemplate<true>, std::allocator<cvc5::internal::NodeTemplate<true>>, std::__detail::_Identity, std::equal_to<cvc5::internal::NodeTemplate<true>>, std::hash<cvc5::internal::Node>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<true, true, true>>::_Scoped_node", align 8 ; 6 uses
   %4 = alloca %"class.cvc5::internal::NodeTemplate.189", align 8 ; 4 uses
   %5 = alloca %"class.cvc5::internal::NodeBuilder", align 8 ; 8 uses
-  %6 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 6 uses
+  %6 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 7 uses
   %7 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 8 uses
   %8 = alloca %"class.std::unordered_map.191", align 8 ; 15 uses
   %9 = alloca %"class.cvc5::internal::TypeNode", align 8 ; 7 uses
@@ -436,7 +436,7 @@ bb.w:                                             ; preds = %bb.r, %bb.o
   br label %bb.dd
 
 bb.x:                                             ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit, %_ZN4cvc58internal12NodeTemplateILb1EEC2Ev.exit
-  %i.bm = phi ptr [ %i.az, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit ], [ %i.u, %_ZN4cvc58internal12NodeTemplateILb1EEC2Ev.exit ] ; 8 uses
+  %i.bm = phi ptr [ %i.az, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit ], [ %i.u, %_ZN4cvc58internal12NodeTemplateILb1EEC2Ev.exit ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #25
   %i.bn = getelementptr inbounds nuw i8, ptr %8, i64 48 ; 2 uses
   store ptr %i.bn, ptr %8, align 8, !tbaa !106
@@ -839,7 +839,8 @@ bb.cu:                                            ; preds = %_ZNSt10_HashtableIN
 
 _ZNSt13unordered_mapIN4cvc58internal12NodeTemplateILb1EEENS1_8TypeNodeESt4hashIS3_ESt8equal_toIS3_ESaISt4pairIKS3_S4_EEED2Ev.exit: ; preds = %_ZNSt10_HashtableIN4cvc58internal12NodeTemplateILb1EEESt4pairIKS3_NS1_8TypeNodeEESaIS7_ENSt8__detail10_Select1stESt8equal_toIS3_ESt4hashIS3_ENS9_18_Mod_range_hashingENS9_20_Default_ranged_hashENS9_20_Prime_rehash_policyENS9_17_Hashtable_traitsILb1ELb0ELb1EEEE5clearEv.exit.i.i, %bb.cu
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #25
-  %i.mb = load i64, ptr %i.bm, align 8            ; 3 uses
+  %18 = load ptr, ptr %6, align 8, !tbaa !47      ; 3 uses
+  %i.mb = load i64, ptr %18, align 8              ; 3 uses
   %i.mc = and i64 %i.mb, 1152920405095219200
   %.not.i.i102 = icmp eq i64 %i.mc, 1152920405095219200
   br i1 %.not.i.i102, label %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit104, label %bb.cv, !prof !27
@@ -849,12 +850,12 @@ bb.cv:                                            ; preds = %_ZNSt13unordered_ma
   %i.me = and i64 %i.md, 1152920405095219200      ; 2 uses
   %i.mf = and i64 %i.mb, -1152920405095219201
   %i.mg = or disjoint i64 %i.me, %i.mf
-  store i64 %i.mg, ptr %i.bm, align 8
+  store i64 %i.mg, ptr %18, align 8
   %i.mh = icmp eq i64 %i.me, 0
   br i1 %i.mh, label %bb.cw, label %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit104, !prof !27
 
 bb.cw:                                            ; preds = %bb.cv
-  invoke void @_ZN4cvc58internal4expr9NodeValue15markForDeletionEv(ptr noundef nonnull align 8 dereferenceable(24) %i.bm)
+  invoke void @_ZN4cvc58internal4expr9NodeValue15markForDeletionEv(ptr noundef nonnull align 8 dereferenceable(24) %18)
           to label %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit104 unwind label %bb.cx
 
 bb.cx:                                            ; preds = %bb.cw

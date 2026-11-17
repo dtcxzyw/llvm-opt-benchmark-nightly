@@ -202,9 +202,15 @@ bb.c:                                             ; preds = %_RNvXs4_NtCs27TyLBe
   %i.z = load ptr, ptr %i.y, align 8, !alias.scope !294, !nonnull !6, !align !17, !noundef !6
   %i.aa = load i64, ptr %i.z, align 8, !range !297, !noalias !296, !noundef !6
   %.not.i = icmp eq i64 %i.aa, -1
-  br i1 %.not.i, label %bb.d, label %bb.e
+  br i1 %.not.i, label %._crit_edge.i, label %bb.e
 
-bb.d:                                             ; preds = %bb.e, %bb.c
+._crit_edge.i:                                    ; preds = %bb.c
+  %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %i.e, i64 16
+  %.pre.i = load ptr, ptr %.phi.trans.insert.i, align 8, !alias.scope !294
+  br label %bb.d
+
+bb.d:                                             ; preds = %bb.e, %._crit_edge.i
+  %3 = phi ptr [ %.pre.i, %._crit_edge.i ], [ %i.ad, %bb.e ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !296
   %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.a, ptr noundef nonnull align 8 dereferenceable(48) %i.ab, i64 48, i1 false)
@@ -214,14 +220,12 @@ bb.d:                                             ; preds = %bb.e, %bb.c
 
 .noexc19:                                         ; preds = %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !296
-  %3 = getelementptr inbounds nuw i8, ptr %i.e, i64 16
-  %4 = load ptr, ptr %3, align 8, !nonnull !6
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.c
   store i8 1, ptr %i.u, align 8, !alias.scope !295
   %i.ac = getelementptr inbounds nuw i8, ptr %i.e, i64 16
-  %i.ad = load ptr, ptr %i.ac, align 8, !alias.scope !294, !nonnull !6, !noundef !6
+  %i.ad = load ptr, ptr %i.ac, align 8, !alias.scope !294, !nonnull !6, !noundef !6 ; 2 uses
   %i.ae = load i8, ptr %i.ad, align 1, !range !21, !noalias !296, !noundef !6
   %i.af = invoke noundef i8 @_RNvMNtNtNtCsPYQCUnoTxQ_10collection6shards11replica_set17replica_set_stateNtB2_15ReplicaSetState14set_peer_state(ptr noalias nofree noundef nonnull align 8 dereferenceable(64) %i.f, i64 noundef %i.x, i8 noundef %i.ae)
           to label %bb.d unwind label %bb.k, !noalias !294 ; 0 uses
@@ -243,7 +247,7 @@ bb.h:                                             ; preds = %bb.f
 
 bb.i:                                             ; preds = %bb.h
   %i.ak = extractvalue { i64, i64 } %i.ag, 1
-  %i.al = load i8, ptr %4, align 1, !range !21, !noalias !294, !noundef !6
+  %i.al = load i8, ptr %3, align 1, !range !21, !noalias !294, !noundef !6
   %i.am = invoke noundef i8 @_RNvMNtNtNtCsPYQCUnoTxQ_10collection6shards11replica_set17replica_set_stateNtB2_15ReplicaSetState14set_peer_state(ptr noalias nofree noundef nonnull align 8 dereferenceable(64) %i.f, i64 noundef %i.ak, i8 noundef %i.al)
           to label %bb.f unwind label %bb.g, !noalias !294 ; 0 uses
 

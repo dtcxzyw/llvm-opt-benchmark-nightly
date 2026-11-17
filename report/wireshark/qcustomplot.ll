@@ -204,10 +204,9 @@ bb.i:                                             ; preds = %bb.h
 
 _ZN9QtPrivate21qMakeForeachContainerIR5QListI7QStringEEENS_17QForeachContainerINSt5decayIT_E4typeEEEOS7_.exit: ; preds = %bb.h, %bb.i
   %i.ar = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 2 uses
-  store ptr %i.ao, ptr %i.ar, align 8, !alias.scope !600
   %i.as = getelementptr inbounds nuw i8, ptr %4, i64 32
   %.idx = mul i64 %i.ai, 24                       ; 2 uses
-  %i.at = getelementptr i8, ptr %i.ao, i64 %.idx  ; 2 uses
+  %i.at = getelementptr i8, ptr %i.ao, i64 %.idx  ; 3 uses
   store ptr %i.at, ptr %i.as, align 8, !alias.scope !600
   %i.au = getelementptr inbounds nuw i8, ptr %4, i64 40
   store i32 1, ptr %i.au, align 8, !alias.scope !600
@@ -219,6 +218,8 @@ _ZN9QtPrivate21qMakeForeachContainerIR5QListI7QStringEEENS_17QForeachContainerIN
   br label %bb.l
 
 ._crit_edge:                                      ; preds = %bb.m, %_ZN9QtPrivate21qMakeForeachContainerIR5QListI7QStringEEENS_17QForeachContainerINSt5decayIT_E4typeEEEOS7_.exit
+  %.lcssa = phi ptr [ %i.ao, %_ZN9QtPrivate21qMakeForeachContainerIR5QListI7QStringEEENS_17QForeachContainerINSt5decayIT_E4typeEEEOS7_.exit ], [ %i.at, %bb.m ]
+  store ptr %.lcssa, ptr %i.ar, align 8
   %i.aw = load ptr, ptr %4, align 8               ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %i.aw, null
   br i1 %.not.i.i.i.i, label %_ZN9QtPrivate17QForeachContainerI5QListI7QStringEED2Ev.exit, label %_ZN17QArrayDataPointerI7QStringE5derefEv.exit.i.i.i
@@ -272,7 +273,7 @@ _ZN9QtPrivate17QForeachContainerI5QListI7QStringEED2Ev.exit: ; preds = %._crit_e
   ]
 
 bb.l:                                             ; preds = %.lr.ph, %bb.m
-  %i.bi = phi ptr [ %i.ao, %.lr.ph ], [ %i.bm, %bb.m ] ; 2 uses
+  %i.bi = phi ptr [ %i.ao, %.lr.ph ], [ %i.bm, %bb.m ] ; 3 uses
   %i.bj = load ptr, ptr %0, align 8
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 72
   %i.bl = load ptr, ptr %i.bk, align 8
@@ -280,14 +281,14 @@ bb.l:                                             ; preds = %.lr.ph, %bb.m
           to label %bb.m unwind label %bb.n
 
 bb.m:                                             ; preds = %bb.l
-  %i.bm = getelementptr i8, ptr %i.bi, i64 24     ; 3 uses
-  store ptr %i.bm, ptr %i.ar, align 8
+  %i.bm = getelementptr i8, ptr %i.bi, i64 24     ; 2 uses
   %.not26 = icmp eq ptr %i.bm, %i.at
   br i1 %.not26, label %._crit_edge, label %bb.l, !llvm.loop !599
 
 bb.n:                                             ; preds = %bb.l
   %i.bn = landingpad { ptr, i32 }
           cleanup
+  store ptr %i.bi, ptr %i.ar, align 8
   call void @_ZN9QtPrivate17QForeachContainerI5QListI7QStringEED2Ev(ptr noundef nonnull align 8 dead_on_return(44) dereferenceable_or_null(44) %4) #49
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #49
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #49

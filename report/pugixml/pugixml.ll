@@ -205,7 +205,7 @@ define internal fastcc ptr @_ZNK4pugi8xml_node14find_attributeINS_4impl12_GLOBAL
 bb.a:
   %2 = alloca %"class.pugi::xml_attribute", align 8 ; 12 uses
   %3 = alloca %"class.pugi::xml_attribute", align 8 ; 4 uses
-  %4 = alloca %"class.pugi::xml_attribute", align 8 ; 6 uses
+  %4 = alloca %"class.pugi::xml_attribute", align 8 ; 10 uses
   %.fr13 = freeze i64 %1                          ; 3 uses
   %.fr = freeze ptr %0                            ; 2 uses
   %.not = icmp eq ptr %.0.val, null
@@ -224,10 +224,15 @@ _ZNK4pugi8xml_node15first_attributeEv.exit:       ; preds = %bb.a
 
 _ZNK4pugi13xml_attribute4nameEv.exit.i.lr.ph:     ; preds = %_ZNK4pugi8xml_node15first_attributeEv.exit
   %.not.i5 = icmp eq ptr %.fr, null
-  br i1 %.not.i5, label %_ZNK4pugi13xml_attribute4nameEv.exit.i.us, label %_ZNK4pugi13xml_attribute4nameEv.exit.i.lr.ph.split
+  br i1 %.not.i5, label %_ZNK4pugi13xml_attribute4nameEv.exit.i.us.preheader, label %_ZNK4pugi13xml_attribute4nameEv.exit.i.lr.ph.split
 
-_ZNK4pugi13xml_attribute4nameEv.exit.i.us:        ; preds = %_ZNK4pugi13xml_attribute4nameEv.exit.i.lr.ph, %_ZNK4pugi13xml_attribute14next_attributeEv.exit.us
-  %storemerge3.us = phi ptr [ %i.z, %_ZNK4pugi13xml_attribute14next_attributeEv.exit.us ], [ %i.c, %_ZNK4pugi13xml_attribute4nameEv.exit.i.lr.ph ] ; 2 uses
+_ZNK4pugi13xml_attribute4nameEv.exit.i.us.preheader: ; preds = %_ZNK4pugi13xml_attribute4nameEv.exit.i.lr.ph
+  %.promoted35 = load ptr, ptr %4, align 1
+  br label %_ZNK4pugi13xml_attribute4nameEv.exit.i.us
+
+_ZNK4pugi13xml_attribute4nameEv.exit.i.us:        ; preds = %_ZNK4pugi13xml_attribute4nameEv.exit.i.us.preheader, %_ZNK4pugi13xml_attribute14next_attributeEv.exit.us
+  %5 = phi ptr [ %i.z, %_ZNK4pugi13xml_attribute14next_attributeEv.exit.us ], [ %.promoted35, %_ZNK4pugi13xml_attribute4nameEv.exit.i.us.preheader ]
+  %storemerge3.us = phi ptr [ %i.z, %_ZNK4pugi13xml_attribute14next_attributeEv.exit.us ], [ %i.c, %_ZNK4pugi13xml_attribute4nameEv.exit.i.us.preheader ] ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %storemerge3.us, i64 8
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !87   ; 2 uses
   %.not5.i.i.us = icmp eq ptr %i.e, null
@@ -264,25 +269,29 @@ _ZNK4pugi4impl12_GLOBAL__N_123namespace_uri_predicateclENS_13xml_attributeE.exit
   %i.u = getelementptr inbounds nuw i8, ptr %i.f, i64 5
   %i.v = load i8, ptr %i.u, align 1, !tbaa !86
   %i.w = icmp eq i8 %i.v, 0
-  br i1 %i.w, label %.loopexit, label %_ZNK4pugi13xml_attribute14next_attributeEv.exit.us
+  br i1 %i.w, label %.loopexit.loopexit, label %_ZNK4pugi13xml_attribute14next_attributeEv.exit.us
 
 _ZNK4pugi13xml_attribute14next_attributeEv.exit.us: ; preds = %_ZNK4pugi4impl12_GLOBAL__N_123namespace_uri_predicateclENS_13xml_attributeE.exit.us, %.lr.ph.i.4.i.us, %.lr.ph.i.3.i.us, %.lr.ph.i.2.i.us, %.lr.ph.i.1.i.us, %_ZNK4pugi13xml_attribute4nameEv.exit.i.us
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
   %i.x = getelementptr inbounds nuw i8, ptr %storemerge3.us, i64 32
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !83
   call void @_ZN4pugi13xml_attributeC1EPNS_20xml_attribute_structE(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef %i.y)
-  %i.z = load ptr, ptr %2, align 8                ; 3 uses
+  %i.z = load ptr, ptr %2, align 8                ; 4 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %2)
-  store ptr %i.z, ptr %4, align 8
   %.not.i4.us = icmp eq ptr %i.z, null
-  br i1 %.not.i4.us, label %.loopexit.sink.split, label %_ZNK4pugi13xml_attribute4nameEv.exit.i.us, !llvm.loop !736
+  br i1 %.not.i4.us, label %.loopexit.sink.split.loopexit, label %_ZNK4pugi13xml_attribute4nameEv.exit.i.us, !llvm.loop !736
 
 _ZNK4pugi13xml_attribute4nameEv.exit.i.lr.ph.split: ; preds = %_ZNK4pugi13xml_attribute4nameEv.exit.i.lr.ph
   %.not14.i.i = icmp eq i64 %.fr13, 0
-  br i1 %.not14.i.i, label %_ZNK4pugi13xml_attribute4nameEv.exit.i.us4, label %_ZNK4pugi13xml_attribute4nameEv.exit.i
+  br i1 %.not14.i.i, label %_ZNK4pugi13xml_attribute4nameEv.exit.i.us4.preheader, label %_ZNK4pugi13xml_attribute4nameEv.exit.i
 
-_ZNK4pugi13xml_attribute4nameEv.exit.i.us4:       ; preds = %_ZNK4pugi13xml_attribute4nameEv.exit.i.lr.ph.split, %_ZNK4pugi13xml_attribute14next_attributeEv.exit.us11
-  %storemerge3.us5 = phi ptr [ %i.az, %_ZNK4pugi13xml_attribute14next_attributeEv.exit.us11 ], [ %i.c, %_ZNK4pugi13xml_attribute4nameEv.exit.i.lr.ph.split ] ; 2 uses
+_ZNK4pugi13xml_attribute4nameEv.exit.i.us4.preheader: ; preds = %_ZNK4pugi13xml_attribute4nameEv.exit.i.lr.ph.split
+  %.promoted = load ptr, ptr %4, align 1
+  br label %_ZNK4pugi13xml_attribute4nameEv.exit.i.us4
+
+_ZNK4pugi13xml_attribute4nameEv.exit.i.us4:       ; preds = %_ZNK4pugi13xml_attribute4nameEv.exit.i.us4.preheader, %_ZNK4pugi13xml_attribute14next_attributeEv.exit.us11
+  %6 = phi ptr [ %i.az, %_ZNK4pugi13xml_attribute14next_attributeEv.exit.us11 ], [ %.promoted, %_ZNK4pugi13xml_attribute4nameEv.exit.i.us4.preheader ]
+  %storemerge3.us5 = phi ptr [ %i.az, %_ZNK4pugi13xml_attribute14next_attributeEv.exit.us11 ], [ %i.c, %_ZNK4pugi13xml_attribute4nameEv.exit.i.us4.preheader ] ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %storemerge3.us5, i64 8
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !87 ; 2 uses
   %.not5.i.i.us6 = icmp eq ptr %i.ab, null
@@ -325,18 +334,17 @@ bb.b:                                             ; preds = %.lr.ph.i.4.i.us10
   %i.au = getelementptr inbounds nuw i8, ptr %i.ac, i64 6
   %i.av = load i8, ptr %i.au, align 1, !tbaa !86
   %i.aw = icmp eq i8 %i.av, 0
-  br i1 %i.aw, label %.loopexit, label %_ZNK4pugi13xml_attribute14next_attributeEv.exit.us11
+  br i1 %i.aw, label %.loopexit.loopexit30, label %_ZNK4pugi13xml_attribute14next_attributeEv.exit.us11
 
 _ZNK4pugi13xml_attribute14next_attributeEv.exit.us11: ; preds = %._crit_edge.i.i.us, %bb.b, %.lr.ph.i.4.i.us10, %.lr.ph.i.3.i.us9, %.lr.ph.i.2.i.us8, %.lr.ph.i.1.i.us7, %_ZNK4pugi13xml_attribute4nameEv.exit.i.us4
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
   %i.ax = getelementptr inbounds nuw i8, ptr %storemerge3.us5, i64 32
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !83
   call void @_ZN4pugi13xml_attributeC1EPNS_20xml_attribute_structE(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef %i.ay)
-  %i.az = load ptr, ptr %2, align 8               ; 3 uses
+  %i.az = load ptr, ptr %2, align 8               ; 4 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %2)
-  store ptr %i.az, ptr %4, align 8
   %.not.i4.us12 = icmp eq ptr %i.az, null
-  br i1 %.not.i4.us12, label %.loopexit.sink.split, label %_ZNK4pugi13xml_attribute4nameEv.exit.i.us4, !llvm.loop !736
+  br i1 %.not.i4.us12, label %.loopexit.sink.split.loopexit31, label %_ZNK4pugi13xml_attribute4nameEv.exit.i.us4, !llvm.loop !736
 
 _ZNK4pugi13xml_attribute4nameEv.exit.i:           ; preds = %_ZNK4pugi13xml_attribute4nameEv.exit.i.lr.ph.split, %_ZNK4pugi13xml_attribute14next_attributeEv.exit
   %storemerge3 = phi ptr [ %i.cf, %_ZNK4pugi13xml_attribute14next_attributeEv.exit ], [ %i.c, %_ZNK4pugi13xml_attribute4nameEv.exit.i.lr.ph.split ] ; 2 uses
@@ -413,11 +421,27 @@ _ZNK4pugi13xml_attribute14next_attributeEv.exit:  ; preds = %.lr.ph.i8.i, %.lr.p
   %.not.i4 = icmp eq ptr %i.cf, null
   br i1 %.not.i4, label %.loopexit.sink.split, label %_ZNK4pugi13xml_attribute4nameEv.exit.i, !llvm.loop !736
 
-.loopexit.sink.split:                             ; preds = %_ZNK4pugi13xml_attribute14next_attributeEv.exit, %_ZNK4pugi13xml_attribute14next_attributeEv.exit.us11, %_ZNK4pugi13xml_attribute14next_attributeEv.exit.us, %_ZNK4pugi8xml_node15first_attributeEv.exit, %bb.a
+.loopexit.sink.split.loopexit:                    ; preds = %_ZNK4pugi13xml_attribute14next_attributeEv.exit.us
+  store ptr %i.z, ptr %4, align 1
+  br label %.loopexit.sink.split
+
+.loopexit.sink.split.loopexit31:                  ; preds = %_ZNK4pugi13xml_attribute14next_attributeEv.exit.us11
+  store ptr %i.az, ptr %4, align 1
+  br label %.loopexit.sink.split
+
+.loopexit.sink.split:                             ; preds = %_ZNK4pugi13xml_attribute14next_attributeEv.exit, %.loopexit.sink.split.loopexit31, %.loopexit.sink.split.loopexit, %_ZNK4pugi8xml_node15first_attributeEv.exit, %bb.a
   call void @_ZN4pugi13xml_attributeC1Ev(ptr noundef nonnull align 8 dereferenceable(8) %4)
   br label %.loopexit
 
-.loopexit:                                        ; preds = %._crit_edge.i.i.loopexit, %._crit_edge.i.i.us, %_ZNK4pugi4impl12_GLOBAL__N_123namespace_uri_predicateclENS_13xml_attributeE.exit.us, %.loopexit.sink.split
+.loopexit.loopexit:                               ; preds = %_ZNK4pugi4impl12_GLOBAL__N_123namespace_uri_predicateclENS_13xml_attributeE.exit.us
+  store ptr %5, ptr %4, align 1
+  br label %.loopexit
+
+.loopexit.loopexit30:                             ; preds = %._crit_edge.i.i.us
+  store ptr %6, ptr %4, align 1
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %._crit_edge.i.i.loopexit, %.loopexit.loopexit30, %.loopexit.loopexit, %.loopexit.sink.split
   %i.cg = load ptr, ptr %4, align 8
   ret ptr %i.cg
 }

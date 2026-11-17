@@ -206,13 +206,13 @@ bb.a:
   %3 = alloca %"struct.std::_Rb_tree<std::__cxx11::basic_string<char>, std::pair<const std::__cxx11::basic_string<char>, long long>, std::_Select1st<std::pair<const std::__cxx11::basic_string<char>, long long>>, std::less<std::__cxx11::basic_string<char>>>::_Reuse_or_alloc_node", align 8 ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #27
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !48   ; 4 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !48   ; 5 uses
   store ptr %i.b, ptr %3, align 8, !tbaa !109
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !48   ; 3 uses
   store ptr %i.e, ptr %i.c, align 8, !tbaa !171
-  %i.f = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 4 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   store ptr %0, ptr %i.f, align 8, !tbaa !46
   %.not.i = icmp eq ptr %i.b, null
   br i1 %.not.i, label %.sink.split.i, label %bb.b
@@ -231,7 +231,7 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE20_Reuse_or_alloc_nodeC2ERSE_.exit
 
 _ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE20_Reuse_or_alloc_nodeC2ERSE_.exit: ; preds = %bb.b, %.sink.split.i
-  %i.j = phi ptr [ %i.e, %bb.b ], [ %.sink.i, %.sink.split.i ]
+  %i.j = phi ptr [ %i.e, %bb.b ], [ %.sink.i, %.sink.split.i ] ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
   store ptr null, ptr %i.a, align 8, !tbaa !42
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -243,9 +243,10 @@ _ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_x
   br i1 %.not13, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE20_Reuse_or_alloc_nodeC2ERSE_.exit, %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE17_M_insert_unique_IRKS8_NSE_20_Reuse_or_alloc_nodeEEESt17_Rb_tree_iteratorIS8_ESt23_Rb_tree_const_iteratorIS8_EOT_RT0_.exit
-  %i.n = phi ptr [ %i.bb, %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE17_M_insert_unique_IRKS8_NSE_20_Reuse_or_alloc_nodeEEESt17_Rb_tree_iteratorIS8_ESt23_Rb_tree_const_iteratorIS8_EOT_RT0_.exit ], [ %i.j, %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE20_Reuse_or_alloc_nodeC2ERSE_.exit ] ; 8 uses
-  %.014 = phi ptr [ %i.bc, %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE17_M_insert_unique_IRKS8_NSE_20_Reuse_or_alloc_nodeEEESt17_Rb_tree_iteratorIS8_ESt23_Rb_tree_const_iteratorIS8_EOT_RT0_.exit ], [ %1, %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE20_Reuse_or_alloc_nodeC2ERSE_.exit ] ; 6 uses
-  %i.o = invoke { ptr, ptr } @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS8_ERS7_(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr nonnull %i.k, ptr noundef nonnull align 8 dereferenceable(40) %.014)
+  %.016 = phi ptr [ %i.bc, %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE17_M_insert_unique_IRKS8_NSE_20_Reuse_or_alloc_nodeEEESt17_Rb_tree_iteratorIS8_ESt23_Rb_tree_const_iteratorIS8_EOT_RT0_.exit ], [ %1, %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE20_Reuse_or_alloc_nodeC2ERSE_.exit ] ; 6 uses
+  %i.n = phi ptr [ %i.bb, %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE17_M_insert_unique_IRKS8_NSE_20_Reuse_or_alloc_nodeEEESt17_Rb_tree_iteratorIS8_ESt23_Rb_tree_const_iteratorIS8_EOT_RT0_.exit ], [ %i.j, %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE20_Reuse_or_alloc_nodeC2ERSE_.exit ] ; 9 uses
+  %.014 = phi ptr [ %6, %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE17_M_insert_unique_IRKS8_NSE_20_Reuse_or_alloc_nodeEEESt17_Rb_tree_iteratorIS8_ESt23_Rb_tree_const_iteratorIS8_EOT_RT0_.exit ], [ %i.b, %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE20_Reuse_or_alloc_nodeC2ERSE_.exit ] ; 8 uses
+  %i.o = invoke { ptr, ptr } @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS8_ERS7_(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr nonnull %i.k, ptr noundef nonnull align 8 dereferenceable(40) %.016)
           to label %.noexc unwind label %bb.k     ; 2 uses
 
 .noexc:                                           ; preds = %.lr.ph
@@ -261,7 +262,7 @@ bb.c:                                             ; preds = %.noexc
   br i1 %or.cond.i.i, label %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE10_M_insert_IRKS8_NSE_20_Reuse_or_alloc_nodeEEESt17_Rb_tree_iteratorIS8_EPSt18_Rb_tree_node_baseSM_OT_RT0_.exit.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.s = getelementptr inbounds nuw i8, ptr %.014, i64 8
+  %i.s = getelementptr inbounds nuw i8, ptr %.016, i64 8
   %i.t = load i64, ptr %i.s, align 8, !tbaa !23   ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.p, i64 40
   %i.v = load i64, ptr %i.u, align 8, !tbaa !23   ; 2 uses
@@ -272,7 +273,7 @@ bb.d:                                             ; preds = %bb.c
 _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i: ; preds = %bb.d
   %i.x = getelementptr inbounds nuw i8, ptr %i.p, i64 32
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !25
-  %i.z = load ptr, ptr %.014, align 8, !tbaa !25
+  %i.z = load ptr, ptr %.016, align 8, !tbaa !25
   %i.aa = tail call i32 @memcmp(ptr noundef %i.z, ptr noundef %i.y, i64 noundef %.sroa.speculated.i.i.i.i.i) #27 ; 2 uses
   %.not.i.i.i.i.i = icmp eq i32 %i.aa, 0
   br i1 %.not.i.i.i.i.i, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i.i.i, label %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit.i.i
@@ -296,10 +297,9 @@ _ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_x
 
 bb.e:                                             ; preds = %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE10_M_insert_IRKS8_NSE_20_Reuse_or_alloc_nodeEEESt17_Rb_tree_iteratorIS8_EPSt18_Rb_tree_node_baseSM_OT_RT0_.exit.i
   %i.ae = getelementptr inbounds nuw i8, ptr %i.n, i64 8
-  %i.af = load ptr, ptr %i.ae, align 8, !tbaa !55 ; 7 uses
-  store ptr %i.af, ptr %i.c, align 8, !tbaa !171
+  %i.af = load ptr, ptr %i.ae, align 8, !tbaa !55 ; 6 uses
   %.not9.i.i = icmp eq ptr %i.af, null
-  br i1 %.not9.i.i, label %4, label %bb.f
+  br i1 %.not9.i.i, label %bb.j, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 24 ; 2 uses
@@ -325,8 +325,7 @@ bb.h:                                             ; preds = %.preheader.i.i
   %i.an = getelementptr inbounds nuw i8, ptr %storemerge.i.i, i64 16
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !47 ; 2 uses
   %.not12.i.i = icmp eq ptr %i.ao, null
-  %spec.store.select.i.i = select i1 %.not12.i.i, ptr %storemerge.i.i, ptr %i.ao ; 2 uses
-  store ptr %spec.store.select.i.i, ptr %i.c, align 8, !tbaa !171
+  %spec.store.select.i.i = select i1 %.not12.i.i, ptr %storemerge.i.i, ptr %i.ao
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.f
@@ -334,12 +333,9 @@ bb.i:                                             ; preds = %bb.f
   store ptr null, ptr %i.ap, align 8, !tbaa !47
   br label %bb.j
 
-4:                                                ; preds = %bb.e
-  store ptr null, ptr %3, align 8, !tbaa !109
-  br label %bb.j
-
-bb.j:                                             ; preds = %4, %bb.i, %bb.h, %bb.g
-  %i.aq = phi ptr [ null, %4 ], [ %i.af, %bb.i ], [ %spec.store.select.i.i, %bb.h ], [ %i.af, %bb.g ]
+bb.j:                                             ; preds = %bb.e, %bb.i, %bb.h, %bb.g
+  %4 = phi ptr [ %.014, %bb.g ], [ %.014, %bb.i ], [ %.014, %bb.h ], [ null, %bb.e ] ; 2 uses
+  %i.aq = phi ptr [ %i.af, %bb.g ], [ %i.af, %bb.i ], [ %spec.store.select.i.i, %bb.h ], [ null, %bb.e ] ; 2 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %i.n, i64 32
   %i.as = load ptr, ptr %i.ar, align 8, !tbaa !25 ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %i.n, i64 48 ; 2 uses
@@ -353,20 +349,19 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   br label %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE15_M_destroy_nodeEPSt13_Rb_tree_nodeIS8_E.exit.i
 
 _ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE15_M_destroy_nodeEPSt13_Rb_tree_nodeIS8_E.exit.i: ; preds = %bb.j, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i
-  %5 = load ptr, ptr %i.f, align 8, !tbaa !110, !nonnull !53, !align !54
-  invoke void @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE17_M_construct_nodeIJRKS8_EEEvPSt13_Rb_tree_nodeIS8_EDpOT_(ptr noundef nonnull align 8 dereferenceable(48) %5, ptr noundef nonnull %i.n, ptr noundef nonnull align 8 dereferenceable(40) %.014)
+  invoke void @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE17_M_construct_nodeIJRKS8_EEEvPSt13_Rb_tree_nodeIS8_EDpOT_(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull %i.n, ptr noundef nonnull align 8 dereferenceable(40) %.016)
           to label %.noexc7 unwind label %bb.k
 
 _ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE20_Reuse_or_alloc_node10_M_extractEv.exit.i: ; preds = %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE10_M_insert_IRKS8_NSE_20_Reuse_or_alloc_nodeEEESt17_Rb_tree_iteratorIS8_EPSt18_Rb_tree_node_baseSM_OT_RT0_.exit.i
-  %6 = load ptr, ptr %i.f, align 8, !tbaa !110, !nonnull !53, !align !54
   %i.ax = invoke noalias noundef nonnull dereferenceable(72) ptr @_Znwm(i64 noundef 72) #33
           to label %.noexc10 unwind label %bb.k   ; 2 uses
 
 .noexc10:                                         ; preds = %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE20_Reuse_or_alloc_node10_M_extractEv.exit.i
-  invoke void @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE17_M_construct_nodeIJRKS8_EEEvPSt13_Rb_tree_nodeIS8_EDpOT_(ptr noundef nonnull align 8 dereferenceable(48) %6, ptr noundef nonnull %i.ax, ptr noundef nonnull align 8 dereferenceable(40) %.014)
+  invoke void @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE17_M_construct_nodeIJRKS8_EEEvPSt13_Rb_tree_nodeIS8_EDpOT_(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull %i.ax, ptr noundef nonnull align 8 dereferenceable(40) %.016)
           to label %.noexc7 unwind label %bb.k
 
 .noexc7:                                          ; preds = %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE15_M_destroy_nodeEPSt13_Rb_tree_nodeIS8_E.exit.i, %.noexc10
+  %5 = phi ptr [ %4, %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE15_M_destroy_nodeEPSt13_Rb_tree_nodeIS8_E.exit.i ], [ %.014, %.noexc10 ]
   %i.ay = phi ptr [ %i.aq, %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE15_M_destroy_nodeEPSt13_Rb_tree_nodeIS8_E.exit.i ], [ null, %.noexc10 ]
   %.0.i = phi ptr [ %i.n, %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE15_M_destroy_nodeEPSt13_Rb_tree_nodeIS8_E.exit.i ], [ %i.ax, %.noexc10 ]
   tail call void @_ZSt29_Rb_tree_insert_and_rebalancebPSt18_Rb_tree_node_baseS0_RS_(i1 noundef zeroext %i.ad, ptr noundef nonnull %.0.i, ptr noundef nonnull %i.p, ptr noundef nonnull align 8 dereferenceable(32) %i.k) #27
@@ -376,27 +371,34 @@ _ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_x
   br label %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE17_M_insert_unique_IRKS8_NSE_20_Reuse_or_alloc_nodeEEESt17_Rb_tree_iteratorIS8_ESt23_Rb_tree_const_iteratorIS8_EOT_RT0_.exit
 
 _ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE17_M_insert_unique_IRKS8_NSE_20_Reuse_or_alloc_nodeEEESt17_Rb_tree_iteratorIS8_ESt23_Rb_tree_const_iteratorIS8_EOT_RT0_.exit: ; preds = %.noexc7, %.noexc
-  %i.bb = phi ptr [ %i.ay, %.noexc7 ], [ %i.n, %.noexc ]
-  %i.bc = getelementptr inbounds nuw i8, ptr %.014, i64 40 ; 2 uses
+  %6 = phi ptr [ %5, %.noexc7 ], [ %.014, %.noexc ] ; 2 uses
+  %i.bb = phi ptr [ %i.ay, %.noexc7 ], [ %i.n, %.noexc ] ; 2 uses
+  %i.bc = getelementptr inbounds nuw i8, ptr %.016, i64 40 ; 2 uses
   %.not = icmp eq ptr %i.bc, %2
   br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !170
 
 bb.k:                                             ; preds = %.noexc10, %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE20_Reuse_or_alloc_node10_M_extractEv.exit.i, %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE15_M_destroy_nodeEPSt13_Rb_tree_nodeIS8_E.exit.i, %.lr.ph
+  %7 = phi ptr [ %.014, %.noexc10 ], [ %.014, %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE20_Reuse_or_alloc_node10_M_extractEv.exit.i ], [ %4, %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE15_M_destroy_nodeEPSt13_Rb_tree_nodeIS8_E.exit.i ], [ %.014, %.lr.ph ]
+  %8 = phi ptr [ null, %.noexc10 ], [ null, %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE20_Reuse_or_alloc_node10_M_extractEv.exit.i ], [ %i.aq, %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE15_M_destroy_nodeEPSt13_Rb_tree_nodeIS8_E.exit.i ], [ %i.n, %.lr.ph ]
   %i.bd = landingpad { ptr, i32 }
           cleanup
+  store ptr %8, ptr %i.c, align 8
+  store ptr %7, ptr %3, align 8
   call void @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE20_Reuse_or_alloc_nodeD2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %3) #27
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #27
   resume { ptr, i32 } %i.bd
 
 ._crit_edge.loopexit:                             ; preds = %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE17_M_insert_unique_IRKS8_NSE_20_Reuse_or_alloc_nodeEEESt17_Rb_tree_iteratorIS8_ESt23_Rb_tree_const_iteratorIS8_EOT_RT0_.exit
   %.pre = load ptr, ptr %i.f, align 8, !tbaa !110
-  %.pre16 = load ptr, ptr %3, align 8, !tbaa !109
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE20_Reuse_or_alloc_nodeC2ERSE_.exit
-  %i.be = phi ptr [ %.pre16, %._crit_edge.loopexit ], [ %i.b, %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE20_Reuse_or_alloc_nodeC2ERSE_.exit ]
-  %i.bf = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %0, %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE20_Reuse_or_alloc_nodeC2ERSE_.exit ]
-  invoke void @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE8_M_eraseEPSt13_Rb_tree_nodeIS8_E(ptr noundef nonnull align 8 dereferenceable(48) %i.bf, ptr noundef %i.be)
+  %9 = phi ptr [ %0, %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE20_Reuse_or_alloc_nodeC2ERSE_.exit ], [ %.pre, %._crit_edge.loopexit ]
+  %i.be = phi ptr [ %i.b, %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE20_Reuse_or_alloc_nodeC2ERSE_.exit ], [ %6, %._crit_edge.loopexit ] ; 2 uses
+  %i.bf = phi ptr [ %i.j, %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE20_Reuse_or_alloc_nodeC2ERSE_.exit ], [ %i.bb, %._crit_edge.loopexit ]
+  store ptr %i.bf, ptr %i.c, align 8
+  store ptr %i.be, ptr %3, align 8
+  invoke void @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE8_M_eraseEPSt13_Rb_tree_nodeIS8_E(ptr noundef nonnull align 8 dereferenceable(48) %9, ptr noundef %i.be)
           to label %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_xESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE20_Reuse_or_alloc_nodeD2Ev.exit unwind label %bb.l
 
 bb.l:                                             ; preds = %._crit_edge

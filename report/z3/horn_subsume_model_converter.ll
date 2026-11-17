@@ -204,7 +204,7 @@ bb.a:
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %6 = alloca %"class.std::allocator.83", align 1 ; 4 uses
   %7 = alloca %class.ref_vector.0, align 8        ; 7 uses
-  %8 = alloca %class.ref_vector.0, align 8        ; 7 uses
+  %8 = alloca %class.ref_vector.0, align 8        ; 8 uses
   %9 = alloca %class.ptr_vector.35, align 8       ; 7 uses
   %10 = alloca %class.var_subst, align 8          ; 13 uses
   %11 = alloca %class.expr_free_vars, align 8     ; 14 uses
@@ -214,7 +214,7 @@ bb.a:
   %15 = alloca %class.obj_ref, align 8            ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #15
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 8 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !54, !nonnull !55, !align !56 ; 3 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !54, !nonnull !55, !align !56 ; 2 uses
   %i.c = ptrtoint ptr %i.b to i64                 ; 2 uses
   store i64 %i.c, ptr %7, align 8, !tbaa !59
   %i.d = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 13 uses
@@ -617,6 +617,7 @@ _ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0
 .lr.ph:                                           ; preds = %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit
   %i.ez = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.fa = getelementptr inbounds nuw i8, ptr %13, i64 8 ; 2 uses
+  %16 = load ptr, ptr %8, align 8, !nonnull !55, !align !56
   %wide.trip.count = zext i32 %i.af to i64
   br label %bb.ac
 
@@ -735,7 +736,7 @@ bb.ai:                                            ; preds = %.lr.ph.i.i80
   br i1 %i.gw, label %bb.aj, label %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE7dec_refEPS0_.exit.i.i
 
 bb.aj:                                            ; preds = %bb.ai
-  invoke void @_ZN11ast_manager11delete_nodeEP3ast(ptr noundef nonnull align 8 dereferenceable(952) %i.b, ptr noundef nonnull %i.gs)
+  invoke void @_ZN11ast_manager11delete_nodeEP3ast(ptr noundef nonnull align 8 dereferenceable(952) %16, ptr noundef nonnull %i.gs)
           to label %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE7dec_refEPS0_.exit.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 _ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE7dec_refEPS0_.exit.i.i: ; preds = %bb.aj, %bb.ai, %.lr.ph.i.i80
@@ -1138,7 +1139,7 @@ _ZNK6vectorIP4exprLb0EjE4sizeEv.exit.i136:        ; preds = %_ZN6vectorIP4sortLb
   br i1 %.not.i137, label %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE13dec_range_refEPKPS0_S7_.exit.thread7.i, label %.lr.ph.i.i138.preheader
 
 .lr.ph.i.i138.preheader:                          ; preds = %_ZNK6vectorIP4exprLb0EjE4sizeEv.exit.i136
-  %.pre194 = load ptr, ptr %8, align 8, !tbaa !176
+  %.pre194 = load ptr, ptr %8, align 8, !tbaa !176, !nonnull !55, !align !56
   br label %.lr.ph.i.i138
 
 .lr.ph.i.i138:                                    ; preds = %.lr.ph.i.i138.preheader, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE7dec_refEPS0_.exit.i.i141

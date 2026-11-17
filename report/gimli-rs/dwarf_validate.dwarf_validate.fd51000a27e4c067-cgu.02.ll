@@ -202,7 +202,7 @@ bb.a:
   %i.g = alloca [16 x i8], align 8                ; 4 uses
   %i.h = alloca [80 x i8], align 8                ; 7 uses
   %i.i = alloca [80 x i8], align 8                ; 7 uses
-  %i.j = alloca [8 x i8], align 8                 ; 5 uses
+  %i.j = alloca [8 x i8], align 8                 ; 6 uses
   %i.k = alloca [32 x i8], align 8                ; 4 uses
   %i.l = alloca [24 x i8], align 8                ; 9 uses
   %i.m = alloca [8 x i8], align 8                 ; 4 uses
@@ -605,8 +605,8 @@ bb.ar:                                            ; preds = %_RINvNtCskKLDkoKarT
           cleanup
   br label %.body.i
 
-.body.i:                                          ; preds = %bb.bq, %bb.bo, %.thread.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp, %bb.bb, %bb.ar, %bb.ao
-  %eh.lpad-body.i = phi { ptr, i32 } [ %i.fc, %bb.ao ], [ %i.fx, %bb.bb ], [ %i.fe, %bb.ar ], [ %lpad.loopexit.split-lp261, %.thread.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp ], [ %i.gm, %bb.bq ], [ %i.gl, %bb.bo ]
+.body.i:                                          ; preds = %bb.bq, %bb.bo, %.thread.i.i, %bb.bb, %bb.ar, %bb.ao
+  %eh.lpad-body.i = phi { ptr, i32 } [ %i.fc, %bb.ao ], [ %i.fx, %bb.bb ], [ %i.fe, %bb.ar ], [ %lpad.phi.i.i, %.thread.i.i ], [ %i.gm, %bb.bq ], [ %i.gl, %bb.bo ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtCsfER1pEaRVit_11typed_arena5ArenaINtNtCsexYYUdYSQU6_5alloc6borrow3CowShEEECslKoDbeUmNq5_14dwarf_validate(ptr noalias nofree noundef align 8 dereferenceable(56) %i.y) #18
           to label %.body unwind label %bb.bu
 
@@ -771,23 +771,24 @@ bb.be:                                            ; preds = %bb.bd, %.noexc36.i
 
 bb.bf:                                            ; preds = %bb.be
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !117
-  store i64 0, ptr %i.j, align 8, !noalias !117
   br label %bb.bg
 
 bb.bg:                                            ; preds = %bb.bm, %bb.bf
+  %0 = phi i64 [ %i.ge, %bb.bm ], [ 0, %bb.bf ]   ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !117
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !117
   invoke void @_RNvMs7_NtNtCsi68uqYEhoRA_5gimli4read4unitINtB5_24DebugInfoUnitHeadersIterINtNtB7_12endian_slice11EndianSliceNtNtB9_9endianity13RunTimeEndianEE4nextCslKoDbeUmNq5_14dwarf_validate(ptr noalias nofree noundef nonnull sret([80 x i8]) align 8 captures(none) dereferenceable(80) %i.h, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.k)
-          to label %bb.bh unwind label %.thread.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp
+          to label %bb.bh unwind label %.thread.loopexit.i.i
 
 bb.bh:                                            ; preds = %bb.bg
   %i.fz = load i64, ptr %i.h, align 8, !range !118, !noalias !117, !noundef !6
   switch i64 %i.fz, label %bb.bj [
     i64 -2, label %bb.bi
-    i64 -1, label %.loopexit.i.i.a
+    i64 -1, label %.loopexit.i.i
   ]
 
 bb.bi:                                            ; preds = %bb.bh
+  store i64 %0, ptr %i.j, align 8, !noalias !117
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !117
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.g, ptr noundef nonnull align 8 dereferenceable(16) %i.bw, i64 16, i1 false), !noalias !117
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !117
@@ -803,9 +804,13 @@ bb.bj:                                            ; preds = %bb.bh
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !117
   %i.ga = load i64, ptr %i.bv, align 8, !noalias !117, !noundef !6
   %i.gb = invoke noundef i64 @_RNvMsb_NtNtCsi68uqYEhoRA_5gimli4read4unitINtB5_10UnitHeaderINtNtB7_12endian_slice11EndianSliceNtNtB9_9endianity13RunTimeEndianEjE21length_including_selfCslKoDbeUmNq5_14dwarf_validate(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %i.i)
-          to label %bb.bk unwind label %.thread.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp
+          to label %bb.bk unwind label %.thread.loopexit.i.i
 
-.loopexit.i.i.a:                                  ; preds = %bb.bh, %bb.bn
+.loopexit.i.i:                                    ; preds = %bb.bh
+  store i64 %0, ptr %i.j, align 8, !noalias !117
+  br label %.loopexit.i.i.a
+
+.loopexit.i.i.a:                                  ; preds = %bb.bn, %.loopexit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !117
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !117
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !117
@@ -823,15 +828,25 @@ bb.bj:                                            ; preds = %bb.bh
   invoke void @_RINvYINtNtCs3uS0LcqId4h_5rayon5slice4IterNtCslKoDbeUmNq5_14dwarf_validate11UnitSummaryENtNtB8_4iter16ParallelIterator8for_eachNCINvBF_13validate_infoQINtNtNtNtCsexYYUdYSQU6_5alloc2io8buffered9bufwriter9BufWriterNtNtNtCsG258MDvU3F_3std2io5stdio6StdoutEINtNtNtCsi68uqYEhoRA_5gimli4read12endian_slice11EndianSliceNtNtB48_9endianity13RunTimeEndianEEs_0EBF_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %i.gc, i64 noundef %i.gd, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.d, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.n)
           to label %bb.bp unwind label %bb.bo
 
-.thread.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.bl, %bb.bj, %bb.bg, %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionReE11map_or_elseNtNtCsexYYUdYSQU6_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECslKoDbeUmNq5_14dwarf_validate.exit.i.i, %bb.bi, %bb.be
+.thread.loopexit.i.i:                             ; preds = %bb.bl, %bb.bj, %bb.bg
+  %1 = phi i64 [ %i.ge, %bb.bl ], [ %0, %bb.bj ], [ %0, %bb.bg ]
+  %lpad.loopexit.i.i = landingpad { ptr, i32 }
+          cleanup
+  store i64 %1, ptr %i.j, align 8, !noalias !117
+  br label %.thread.i.i
+
+.thread.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp: ; preds = %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionReE11map_or_elseNtNtCsexYYUdYSQU6_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECslKoDbeUmNq5_14dwarf_validate.exit.i.i, %bb.bi, %bb.be
   %lpad.loopexit.split-lp261 = landingpad { ptr, i32 }
           cleanup
+  br label %.thread.i.i
+
+.thread.i.i:                                      ; preds = %.thread.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp, %.thread.loopexit.i.i
+  %lpad.phi.i.i = phi { ptr, i32 } [ %lpad.loopexit.i.i, %.thread.loopexit.i.i ], [ %lpad.loopexit.split-lp261, %.thread.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecINtNtNtCsi68uqYEhoRA_5gimli4read4unit10UnitHeaderINtNtB1d_12endian_slice11EndianSliceNtNtB1f_9endianity13RunTimeEndianEjEEECslKoDbeUmNq5_14dwarf_validate(ptr noalias nofree noundef align 8 dereferenceable(24) %i.l) #18
           to label %.body.i unwind label %bb.bs
 
 bb.bk:                                            ; preds = %bb.bj
-  %i.ge = add i64 %i.gb, %i.ga
-  store i64 %i.ge, ptr %i.j, align 8, !noalias !117
+  %i.ge = add i64 %i.gb, %i.ga                    ; 2 uses
   %i.gf = load i64, ptr %i.bu, align 8, !alias.scope !119, !noalias !117, !noundef !6 ; 3 uses
   %i.gg = load i64, ptr %i.l, align 8, !range !14, !alias.scope !119, !noalias !117, !noundef !6
   %i.gh = icmp eq i64 %i.gf, %i.gg
@@ -839,7 +854,7 @@ bb.bk:                                            ; preds = %bb.bj
 
 bb.bl:                                            ; preds = %bb.bk
   invoke void @_RNvMs4_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecINtNtNtCsi68uqYEhoRA_5gimli4read4unit10UnitHeaderINtNtBR_12endian_slice11EndianSliceNtNtBT_9endianity13RunTimeEndianEjEE8grow_oneCslKoDbeUmNq5_14dwarf_validate(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.l) #19
-          to label %bb.bm unwind label %.thread.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp
+          to label %bb.bm unwind label %.thread.loopexit.i.i
 
 bb.bm:                                            ; preds = %bb.bl, %bb.bk
   %i.gi = load ptr, ptr %i.bt, align 8, !alias.scope !119, !noalias !117, !nonnull !6, !noundef !6
@@ -885,7 +900,7 @@ bb.br:                                            ; preds = %bb.bq
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #17
   unreachable
 
-bb.bs:                                            ; preds = %bb.bo, %.thread.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp
+bb.bs:                                            ; preds = %bb.bo, %.thread.i.i
   %i.go = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #17

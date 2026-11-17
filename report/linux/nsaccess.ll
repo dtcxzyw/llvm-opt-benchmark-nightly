@@ -202,7 +202,7 @@ declare dso_local i32 @acpi_ns_get_node(ptr noundef, ptr noundef, i32 noundef, p
 define dso_local i32 @acpi_ns_lookup(ptr nofree noundef readonly captures(address_is_null) %0, ptr noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, ptr noundef %5, ptr nofree noundef writeonly captures(address_is_null) %6) local_unnamed_addr #0 align 16 prefalign(16) {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 6 uses
-  %i.b = alloca ptr, align 8                      ; 19 uses
+  %i.b = alloca ptr, align 8                      ; 21 uses
   %i.c = alloca i32, align 4                      ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #4
@@ -301,7 +301,7 @@ bb.m:                                             ; preds = %.lr.ph
   br i1 %.not150, label %.lr.ph, label %.critedge, !llvm.loop !12
 
 .critedge:                                        ; preds = %.lr.ph, %bb.m, %bb.g, %bb.h, %bb.i, %.preheader, %bb.l
-  %.1117 = phi ptr [ %i.i, %bb.l ], [ %i.g, %bb.g ], [ %i.i, %.preheader ], [ %.pre, %bb.i ], [ %i.g, %bb.h ], [ %.0116205, %.lr.ph ], [ %i.y, %bb.m ] ; 5 uses
+  %.1117 = phi ptr [ %i.i, %bb.l ], [ %i.g, %bb.g ], [ %i.i, %.preheader ], [ %.pre, %bb.i ], [ %i.g, %bb.h ], [ %.0116205, %.lr.ph ], [ %i.y, %bb.m ] ; 6 uses
   %.not152 = icmp eq ptr %1, null
   br i1 %.not152, label %bb.n, label %bb.q
 
@@ -369,7 +369,11 @@ bb.x:                                             ; preds = %bb.w, %bb.v, %bb.u
   %i.av = phi i8 [ %.pre256, %bb.w ], [ %i.ai, %bb.v ], [ %i.ai, %bb.u ] ; 2 uses
   store ptr %.1117, ptr %i.b, align 8
   %i.aw = icmp eq i8 %i.av, 94
-  br i1 %i.aw, label %.lr.ph210, label %._crit_edge.thread.a
+  br i1 %i.aw, label %.lr.ph210, label %._crit_edge.thread
+
+._crit_edge.thread:                               ; preds = %bb.x
+  store ptr %.1117, ptr %i.b, align 8
+  br label %._crit_edge.thread.a
 
 bb.y:                                             ; preds = %.lr.ph210
   %i.ax = getelementptr i8, ptr %.0112209, i64 1  ; 5 uses
@@ -384,11 +388,11 @@ bb.y:                                             ; preds = %.lr.ph210
   %i.bb = phi ptr [ %i.bd, %bb.y ], [ %.1117, %bb.x ]
   %i.bc = getelementptr i8, ptr %i.bb, i64 16
   %i.bd = load ptr, ptr %i.bc, align 8            ; 7 uses
-  store ptr %i.bd, ptr %i.b, align 8
   %.not159 = icmp eq ptr %i.bd, null
   br i1 %.not159, label %bb.z, label %bb.y, !llvm.loop !13
 
 bb.z:                                             ; preds = %.lr.ph210
+  store ptr null, ptr %i.b, align 8
   %i.be = call i32 @acpi_ns_externalize_name(i32 noundef -1, ptr noundef nonnull %1, ptr noundef null, ptr noundef nonnull %i.a) #5
   %.not160 = icmp eq i32 %i.be, 0
   br i1 %.not160, label %bb.aa, label %bb.ab
@@ -405,6 +409,7 @@ bb.ab:                                            ; preds = %bb.z, %bb.aa
   br label %bb.br
 
 ._crit_edge:                                      ; preds = %bb.y
+  store ptr %i.bd, ptr %i.b, align 8
   %i.bh = load i32, ptr @acpi_dbg_level, align 4
   %i.bi = and i32 %i.bh, 1024
   %.not157 = icmp eq i32 %i.bi, 0
@@ -427,11 +432,11 @@ thread-pre-split:                                 ; preds = %bb.t, %bb.s, %bb.r,
   %.pr = load i8, ptr %.1113.ph, align 1
   br label %._crit_edge.thread.a
 
-._crit_edge.thread.a:                             ; preds = %bb.x, %thread-pre-split
-  %i.bn = phi ptr [ %i.bm, %thread-pre-split ], [ %.1117, %bb.x ] ; 5 uses
-  %i.bo = phi i8 [ %.pr, %thread-pre-split ], [ %i.av, %bb.x ]
-  %.1128 = phi i32 [ 0, %thread-pre-split ], [ 1, %bb.x ] ; 6 uses
-  %.1113 = phi ptr [ %.1113.ph, %thread-pre-split ], [ %1, %bb.x ] ; 9 uses
+._crit_edge.thread.a:                             ; preds = %._crit_edge.thread, %thread-pre-split
+  %i.bn = phi ptr [ %i.bm, %thread-pre-split ], [ %.1117, %._crit_edge.thread ] ; 5 uses
+  %i.bo = phi i8 [ %.pr, %thread-pre-split ], [ %i.av, %._crit_edge.thread ]
+  %.1128 = phi i32 [ 0, %thread-pre-split ], [ 1, %._crit_edge.thread ] ; 6 uses
+  %.1113 = phi ptr [ %.1113.ph, %thread-pre-split ], [ %1, %._crit_edge.thread ] ; 9 uses
   switch i8 %i.bo, label %bb.an [
     i8 0, label %bb.ae
     i8 46, label %bb.ah
