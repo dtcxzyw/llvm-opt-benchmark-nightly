@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/image-rs/original/image-8036e6f222cb5171.image.759311b8532bf42b-cgu.15?download=true
 inline.NumInlined: 862
 inline.NumDeleted: 412
-loop-unroll.NumCompletelyUnrolled: 18
+loop-unroll.NumCompletelyUnrolled: 20
 loop-unroll.NumRuntimeUnrolled: 5
-loop-unroll.NumUnrolled: 23
+loop-unroll.NumUnrolled: 25
 begin_hunk_0_@_RNvMs5_NtCs5XDXJCpOCOR_3png7encoderINtB5_7EncoderQINtNtCs4wP2HXfJTCR_5alloc3vec3VechEE12write_headerCsa5QsYiPB8Gl_5image:bb.a
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECsa5QsYiPB8Gl_5image.exit168.i.i.i: ; preds = %bb.ed
@@ -205,7 +205,7 @@ bb.ew:                                            ; preds = %bb.ev, %_RNvMsG_NtC
   %i.ou = add nuw nsw i64 %i.oc, 3
   store i64 %i.ou, ptr %i.nq, align 8, !alias.scope !759, !noalias !756
   %i.ov = getelementptr inbounds nuw i8, ptr %.sroa.019.0331.i.i, i64 64
-  %i.ow = load ptr, ptr %i.ov, align 8, !alias.scope !755, !noalias !734, !nonnull !5, !noundef !5 ; 5 uses
+  %i.ow = load ptr, ptr %i.ov, align 8, !alias.scope !755, !noalias !734, !nonnull !5, !noundef !5 ; 11 uses
   %i.ox = getelementptr inbounds nuw i8, ptr %.sroa.019.0331.i.i, i64 72
   %i.oy = load i64, ptr %i.ox, align 8, !alias.scope !755, !noalias !734, !noundef !5 ; 9 uses
   %i.oz = icmp samesign ult i64 %i.oy, 64
@@ -257,19 +257,79 @@ bb.ez:                                            ; preds = %.lr.ph
   br i1 %i.pu, label %bb.ez, label %.loopexit.i.i.i
 
 bb.fa:                                            ; preds = %bb.ew
-  %i.pv = and i64 %i.oy, 56                       ; 3 uses
+  %i.pv = and i64 %i.oy, 56                       ; 8 uses
   %i.pw = getelementptr inbounds nuw i8, ptr %i.ow, i64 %i.pv ; 7 uses
   %i.px = and i64 %i.oy, 7                        ; 7 uses
   %.not.i.i101.i.i313 = icmp eq i64 %i.pv, 0
   br i1 %.not.i.i101.i.i313, label %._crit_edge, label %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.i.i.i
 
-bb.fb:                                            ; preds = %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.i.i.i
-  %i.py = getelementptr inbounds nuw i8, ptr %.sroa.0.017.i.i.i.i315, i64 8
-  %2 = add nsw i64 %.sroa.6.0.i.i.i.i314, -8      ; 2 uses
-  %.not.i.i101.i.i.a = icmp eq i64 %2, 0
-  br i1 %.not.i.i101.i.i.a, label %._crit_edge, label %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.i.i.i
+2:                                                ; preds = %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.i.i.i
+  %.not.i.i101.i.i = icmp eq i64 %i.pv, 8
+  br i1 %.not.i.i101.i.i, label %._crit_edge, label %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.i.i.i.1
 
-._crit_edge:                                      ; preds = %bb.fb, %bb.fa
+_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.i.i.i.1: ; preds = %2
+  %3 = getelementptr inbounds nuw i8, ptr %i.ow, i64 8
+  %.sroa.012.0.copyload.i.i.i.i.1 = load i64, ptr %3, align 1, !alias.scope !766, !noalias !757
+  %4 = and i64 %.sroa.012.0.copyload.i.i.i.i.1, -9187201950435737472
+  %5 = icmp eq i64 %4, 0
+  br i1 %5, label %6, label %.loopexit.i.i.i
+
+6:                                                ; preds = %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.i.i.i.1
+  %.not.i.i101.i.i.1 = icmp eq i64 %i.pv, 16
+  br i1 %.not.i.i101.i.i.1, label %._crit_edge, label %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.i.i.i.2
+
+_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.i.i.i.2: ; preds = %6
+  %7 = getelementptr inbounds nuw i8, ptr %i.ow, i64 16
+  %.sroa.012.0.copyload.i.i.i.i.2 = load i64, ptr %7, align 1, !alias.scope !766, !noalias !757
+  %8 = and i64 %.sroa.012.0.copyload.i.i.i.i.2, -9187201950435737472
+  %9 = icmp eq i64 %8, 0
+  br i1 %9, label %10, label %.loopexit.i.i.i
+
+10:                                               ; preds = %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.i.i.i.2
+  %.not.i.i101.i.i.2 = icmp eq i64 %i.pv, 24
+  br i1 %.not.i.i101.i.i.2, label %._crit_edge, label %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.i.i.i.3
+
+_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.i.i.i.3: ; preds = %10
+  %11 = getelementptr inbounds nuw i8, ptr %i.ow, i64 24
+  %.sroa.012.0.copyload.i.i.i.i.3 = load i64, ptr %11, align 1, !alias.scope !766, !noalias !757
+  %12 = and i64 %.sroa.012.0.copyload.i.i.i.i.3, -9187201950435737472
+  %13 = icmp eq i64 %12, 0
+  br i1 %13, label %14, label %.loopexit.i.i.i
+
+14:                                               ; preds = %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.i.i.i.3
+  %.not.i.i101.i.i.3 = icmp eq i64 %i.pv, 32
+  br i1 %.not.i.i101.i.i.3, label %._crit_edge, label %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.i.i.i.4
+
+_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.i.i.i.4: ; preds = %14
+  %15 = getelementptr inbounds nuw i8, ptr %i.ow, i64 32
+  %.sroa.012.0.copyload.i.i.i.i.4 = load i64, ptr %15, align 1, !alias.scope !766, !noalias !757
+  %16 = and i64 %.sroa.012.0.copyload.i.i.i.i.4, -9187201950435737472
+  %17 = icmp eq i64 %16, 0
+  br i1 %17, label %18, label %.loopexit.i.i.i
+
+18:                                               ; preds = %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.i.i.i.4
+  %.not.i.i101.i.i.4 = icmp eq i64 %i.pv, 40
+  br i1 %.not.i.i101.i.i.4, label %._crit_edge, label %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.i.i.i.5
+
+_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.i.i.i.5: ; preds = %18
+  %19 = getelementptr inbounds nuw i8, ptr %i.ow, i64 40
+  %.sroa.012.0.copyload.i.i.i.i.5 = load i64, ptr %19, align 1, !alias.scope !766, !noalias !757
+  %20 = and i64 %.sroa.012.0.copyload.i.i.i.i.5, -9187201950435737472
+  %21 = icmp eq i64 %20, 0
+  br i1 %21, label %22, label %.loopexit.i.i.i
+
+22:                                               ; preds = %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.i.i.i.5
+  %.not.i.i101.i.i.5 = icmp eq i64 %i.pv, 48
+  br i1 %.not.i.i101.i.i.5, label %._crit_edge, label %bb.fb
+
+bb.fb:                                            ; preds = %22
+  %i.py = getelementptr inbounds nuw i8, ptr %i.ow, i64 48
+  %.sroa.012.0.copyload.i.i.i.i.6 = load i64, ptr %i.py, align 1, !alias.scope !766, !noalias !757
+  %23 = and i64 %.sroa.012.0.copyload.i.i.i.i.6, -9187201950435737472
+  %.not.i.i101.i.i.a = icmp eq i64 %23, 0
+  br i1 %.not.i.i101.i.i.a, label %._crit_edge, label %.loopexit.i.i.i
+
+._crit_edge:                                      ; preds = %2, %6, %10, %14, %18, %22, %bb.fb, %bb.fa
   %i.pz = icmp samesign eq i64 %i.px, 0
   br i1 %i.pz, label %_RNvNvNtNtCsj6eKBz9Db1c_4core5slice5ascii8is_ascii7runtime.exit.i.i.i, label %.lr.ph317
 
@@ -338,13 +398,11 @@ bb.fh:                                            ; preds = %.lr.ph317.5
   %i.qs = icmp sgt i8 %.val.i.i.i102.i.i, -1
   br i1 %i.qs, label %bb.fc, label %.loopexit.i.i.i
 
-_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.i.i.i: ; preds = %bb.fa, %bb.fb
-  %.sroa.0.017.i.i.i.i315 = phi ptr [ %i.py, %bb.fb ], [ %i.ow, %bb.fa ] ; 2 uses
-  %.sroa.6.0.i.i.i.i314 = phi i64 [ %2, %bb.fb ], [ %i.pv, %bb.fa ]
-  %.sroa.012.0.copyload.i.i.i.i = load i64, ptr %.sroa.0.017.i.i.i.i315, align 1, !alias.scope !766, !noalias !757
+_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.i.i.i: ; preds = %bb.fa
+  %.sroa.012.0.copyload.i.i.i.i = load i64, ptr %i.ow, align 1, !alias.scope !766, !noalias !757
   %i.qt = and i64 %.sroa.012.0.copyload.i.i.i.i, -9187201950435737472
   %i.qu = icmp eq i64 %i.qt, 0
-  br i1 %i.qu, label %bb.fb, label %.loopexit.i.i.i
+  br i1 %i.qu, label %2, label %.loopexit.i.i.i
 
 _RNvNvNtNtCsj6eKBz9Db1c_4core5slice5ascii8is_ascii7runtime.exit.i.i.i: ; preds = %bb.ez, %bb.fc, %bb.fd, %bb.fe, %bb.ff, %bb.fg, %bb.fh, %.lr.ph317.6, %._crit_edge.i.i.i.i.i, %._crit_edge
   invoke void @_RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VechE7reserveCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.s, i64 noundef %i.oy)
@@ -364,8 +422,8 @@ bb.fi:                                            ; preds = %.noexc192.i.i.i
   %.pre.i.i98.i.i = load i64, ptr %i.nq, align 8, !alias.scope !768, !noalias !756
   br label %bb.fl
 
-.loopexit.i.i.i:                                  ; preds = %bb.en, %.lr.ph.i.i.i.i.i, %.lr.ph, %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.i.i.i, %.lr.ph317, %.lr.ph317.1, %.lr.ph317.2, %.lr.ph317.3, %.lr.ph317.4, %.lr.ph317.5, %.lr.ph317.6, %bb.fy
-  %.sroa.18142.0.i.i = phi i8 [ 0, %.lr.ph ], [ 2, %bb.fy ], [ 0, %.lr.ph.i.i.i.i.i ], [ 0, %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.i.i.i ], [ 0, %.lr.ph317 ], [ 0, %.lr.ph317.6 ], [ 0, %.lr.ph317.5 ], [ 0, %.lr.ph317.4 ], [ 0, %.lr.ph317.3 ], [ 0, %.lr.ph317.2 ], [ 0, %.lr.ph317.1 ], [ 1, %bb.en ]
+.loopexit.i.i.i:                                  ; preds = %bb.en, %.lr.ph.i.i.i.i.i, %.lr.ph, %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.i.i.i, %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.i.i.i.1, %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.i.i.i.2, %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.i.i.i.3, %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.i.i.i.4, %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.i.i.i.5, %bb.fb, %.lr.ph317, %.lr.ph317.1, %.lr.ph317.2, %.lr.ph317.3, %.lr.ph317.4, %.lr.ph317.5, %.lr.ph317.6, %bb.fy
+  %.sroa.18142.0.i.i = phi i8 [ 0, %.lr.ph ], [ 2, %bb.fy ], [ 0, %.lr.ph.i.i.i.i.i ], [ 0, %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.i.i.i ], [ 0, %.lr.ph317 ], [ 0, %.lr.ph317.6 ], [ 0, %.lr.ph317.5 ], [ 0, %.lr.ph317.4 ], [ 0, %.lr.ph317.3 ], [ 0, %.lr.ph317.2 ], [ 0, %.lr.ph317.1 ], [ 0, %bb.fb ], [ 0, %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.i.i.i.5 ], [ 0, %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.i.i.i.4 ], [ 0, %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.i.i.i.3 ], [ 0, %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.i.i.i.2 ], [ 0, %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.i.i.i.1 ], [ 1, %bb.en ]
   invoke void @_RNvXsp_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VechENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.s)
           to label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECsa5QsYiPB8Gl_5image.exit.i96.i.i unwind label %bb.fj, !noalias !757
 
@@ -768,7 +826,7 @@ bb.x:                                             ; preds = %_RINvNtCsj6eKBz9Db1
   br label %.body
 
 bb.y:                                             ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs4wP2HXfJTCR_5alloc6string6StringECsa5QsYiPB8Gl_5image.exit
-  %i.cf = load ptr, ptr %i.as, align 8, !nonnull !5, !noundef !5 ; 9 uses
+  %i.cf = load ptr, ptr %i.as, align 8, !nonnull !5, !noundef !5 ; 15 uses
   %i.cg = load i8, ptr %i.cf, align 1, !noundef !5
   %i.ch = icmp eq i8 %i.cg, 35
   br i1 %i.ch, label %.backedge.backedge, label %bb.ab
@@ -833,19 +891,79 @@ bb.ae:                                            ; preds = %.lr.ph
   br i1 %i.dd, label %bb.ae, label %.loopexit
 
 bb.af:                                            ; preds = %bb.ab
-  %i.de = and i64 %.sroa.6.sroa.6.0.i, 56         ; 3 uses
+  %i.de = and i64 %.sroa.6.sroa.6.0.i, 56         ; 8 uses
   %i.df = getelementptr inbounds nuw i8, ptr %i.cf, i64 %i.de ; 7 uses
   %i.dg = and i64 %.sroa.6.sroa.6.0.i, 7          ; 7 uses
   %.not.i173760 = icmp eq i64 %i.de, 0
   br i1 %.not.i173760, label %._crit_edge, label %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i
 
-bb.ag:                                            ; preds = %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i
-  %i.dh = getelementptr inbounds nuw i8, ptr %.sroa.0.017.i762, i64 8
-  %2 = add nsw i64 %.sroa.6.0.i761, -8            ; 2 uses
-  %.not.i173.a = icmp eq i64 %2, 0
-  br i1 %.not.i173.a, label %._crit_edge, label %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i
+2:                                                ; preds = %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i
+  %.not.i173 = icmp eq i64 %i.de, 8
+  br i1 %.not.i173, label %._crit_edge, label %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.1
 
-._crit_edge:                                      ; preds = %bb.ag, %bb.af
+_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.1: ; preds = %2
+  %3 = getelementptr inbounds nuw i8, ptr %i.cf, i64 8
+  %.sroa.012.0.copyload.i.1 = load i64, ptr %3, align 1, !alias.scope !1779
+  %4 = and i64 %.sroa.012.0.copyload.i.1, -9187201950435737472
+  %5 = icmp eq i64 %4, 0
+  br i1 %5, label %6, label %.loopexit
+
+6:                                                ; preds = %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.1
+  %.not.i173.1 = icmp eq i64 %i.de, 16
+  br i1 %.not.i173.1, label %._crit_edge, label %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.2
+
+_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.2: ; preds = %6
+  %7 = getelementptr inbounds nuw i8, ptr %i.cf, i64 16
+  %.sroa.012.0.copyload.i.2 = load i64, ptr %7, align 1, !alias.scope !1779
+  %8 = and i64 %.sroa.012.0.copyload.i.2, -9187201950435737472
+  %9 = icmp eq i64 %8, 0
+  br i1 %9, label %10, label %.loopexit
+
+10:                                               ; preds = %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.2
+  %.not.i173.2 = icmp eq i64 %i.de, 24
+  br i1 %.not.i173.2, label %._crit_edge, label %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.3
+
+_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.3: ; preds = %10
+  %11 = getelementptr inbounds nuw i8, ptr %i.cf, i64 24
+  %.sroa.012.0.copyload.i.3 = load i64, ptr %11, align 1, !alias.scope !1779
+  %12 = and i64 %.sroa.012.0.copyload.i.3, -9187201950435737472
+  %13 = icmp eq i64 %12, 0
+  br i1 %13, label %14, label %.loopexit
+
+14:                                               ; preds = %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.3
+  %.not.i173.3 = icmp eq i64 %i.de, 32
+  br i1 %.not.i173.3, label %._crit_edge, label %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.4
+
+_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.4: ; preds = %14
+  %15 = getelementptr inbounds nuw i8, ptr %i.cf, i64 32
+  %.sroa.012.0.copyload.i.4 = load i64, ptr %15, align 1, !alias.scope !1779
+  %16 = and i64 %.sroa.012.0.copyload.i.4, -9187201950435737472
+  %17 = icmp eq i64 %16, 0
+  br i1 %17, label %18, label %.loopexit
+
+18:                                               ; preds = %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.4
+  %.not.i173.4 = icmp eq i64 %i.de, 40
+  br i1 %.not.i173.4, label %._crit_edge, label %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.5
+
+_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.5: ; preds = %18
+  %19 = getelementptr inbounds nuw i8, ptr %i.cf, i64 40
+  %.sroa.012.0.copyload.i.5 = load i64, ptr %19, align 1, !alias.scope !1779
+  %20 = and i64 %.sroa.012.0.copyload.i.5, -9187201950435737472
+  %21 = icmp eq i64 %20, 0
+  br i1 %21, label %22, label %.loopexit
+
+22:                                               ; preds = %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.5
+  %.not.i173.5 = icmp eq i64 %i.de, 48
+  br i1 %.not.i173.5, label %._crit_edge, label %bb.ag
+
+bb.ag:                                            ; preds = %22
+  %i.dh = getelementptr inbounds nuw i8, ptr %i.cf, i64 48
+  %.sroa.012.0.copyload.i.6 = load i64, ptr %i.dh, align 1, !alias.scope !1779
+  %23 = and i64 %.sroa.012.0.copyload.i.6, -9187201950435737472
+  %.not.i173.a = icmp eq i64 %23, 0
+  br i1 %.not.i173.a, label %._crit_edge, label %.loopexit
+
+._crit_edge:                                      ; preds = %2, %6, %10, %14, %18, %22, %bb.ag, %bb.af
   %i.di = icmp samesign eq i64 %i.dg, 0
   br i1 %i.di, label %_RNvNvNtNtCsj6eKBz9Db1c_4core5slice5ascii8is_ascii7runtime.exit, label %.lr.ph764
 
@@ -914,15 +1032,13 @@ bb.am:                                            ; preds = %.lr.ph764.5
   %i.eb = icmp sgt i8 %.val.i.i, -1
   br i1 %i.eb, label %bb.ah, label %.loopexit
 
-_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i: ; preds = %bb.af, %bb.ag
-  %.sroa.0.017.i762 = phi ptr [ %i.dh, %bb.ag ], [ %i.cf, %bb.af ] ; 2 uses
-  %.sroa.6.0.i761 = phi i64 [ %2, %bb.ag ], [ %i.de, %bb.af ]
-  %.sroa.012.0.copyload.i = load i64, ptr %.sroa.0.017.i762, align 1, !alias.scope !1779
+_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i: ; preds = %bb.af
+  %.sroa.012.0.copyload.i = load i64, ptr %i.cf, align 1, !alias.scope !1779
   %i.ec = and i64 %.sroa.012.0.copyload.i, -9187201950435737472
   %i.ed = icmp eq i64 %i.ec, 0
-  br i1 %i.ed, label %bb.ag, label %.loopexit
+  br i1 %i.ed, label %2, label %.loopexit
 
-.loopexit:                                        ; preds = %.lr.ph.i.i, %.lr.ph, %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i, %.lr.ph764, %.lr.ph764.1, %.lr.ph764.2, %.lr.ph764.3, %.lr.ph764.4, %.lr.ph764.5, %.lr.ph764.6
+.loopexit:                                        ; preds = %.lr.ph.i.i, %.lr.ph, %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i, %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.1, %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.2, %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.3, %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.4, %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit.i.5, %bb.ag, %.lr.ph764, %.lr.ph764.1, %.lr.ph764.2, %.lr.ph764.3, %.lr.ph764.4, %.lr.ph764.5, %.lr.ph764.6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.s)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r)
   store i8 3, ptr %i.r, align 8

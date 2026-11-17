@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/rust-analyzer-rs/original/load_cargo-b2a3fa6503799efb.load_cargo.5e33c83682b377e2-cgu.08?download=true
 inline.NumInlined: 157
 inline.NumDeleted: 119
-loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumUnrolled: 1
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs4sl5YdnrCxp_3vfs8file_set7FileSetECs85r3Sry2XhC_10load_cargo:bb.a
   unreachable
 
@@ -204,13 +204,13 @@ bb.a:
 
 bb.b:                                             ; preds = %.loopexit.i.i, %.lr.ph.i.i
   %i.h = phi i64 [ %.sroa.4.0.copyload, %.lr.ph.i.i ], [ %i.at, %.loopexit.i.i ] ; 2 uses
-  %i.i = phi i64 [ %i.e, %.lr.ph.i.i ], [ %i.au, %.loopexit.i.i ] ; 10 uses
+  %i.i = phi i64 [ %i.e, %.lr.ph.i.i ], [ %i.au, %.loopexit.i.i ] ; 16 uses
   %i.j = phi ptr [ %.sroa.4.0.copyload.i, %.lr.ph.i.i ], [ %i.k, %.loopexit.i.i ] ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 88 ; 2 uses
   %i.l = load ptr, ptr %i.f, align 8, !noalias !101, !nonnull !4, !noundef !4 ; 2 uses
   %i.m = load i64, ptr %i.g, align 8, !noalias !101, !noundef !4 ; 2 uses
   %i.n = and i64 %i.m, 1152921504606846968        ; 3 uses
-  %i.o = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %i.n ; 2 uses
+  %i.o = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %i.n ; 7 uses
   %.not.i.i.i.i.i.i6 = icmp eq i64 %i.n, 0
   br i1 %.not.i.i.i.i.i.i6, label %._crit_edge, label %_RINvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsD_NtB9_3cmpyNtB1L_13SliceContains14slice_contains0ECs85r3Sry2XhC_10load_cargo.exit.i.i.i.i.i.i
 
@@ -222,21 +222,75 @@ bb.c:                                             ; preds = %_RINvXs2J_NtNtCshzW
 
 ._crit_edge:                                      ; preds = %bb.c, %bb.b
   %i.r = shl i64 %i.m, 3
-  %.idx = and i64 %i.r, 56                        ; 2 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.o, i64 %.idx
+  %.idx = and i64 %i.r, 56                        ; 7 uses
   %.not.not.not.i.not.not.i.i.i.i.i.i9 = icmp samesign eq i64 %.idx, 0
-  br i1 %.not.not.not.i.not.not.i.i.i.i.i.i9, label %.loopexit.i.i, label %.lr.ph.a
+  br i1 %.not.not.not.i.not.not.i.i.i.i.i.i9, label %.loopexit.i.i, label %.lr.ph
 
-bb.d:                                             ; preds = %.lr.ph.a
-  %i.s = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
-  %.not.not.not.i.not.not.i.i.i.i.i.i.a = icmp eq ptr %i.s, %2
-  br i1 %.not.not.not.i.not.not.i.i.i.i.i.i.a, label %.loopexit.i.i, label %.lr.ph.a
+2:                                                ; preds = %.lr.ph
+  %.not.not.not.i.not.not.i.i.i.i.i.i = icmp samesign eq i64 %.idx, 8
+  br i1 %.not.not.not.i.not.not.i.i.i.i.i.i, label %.loopexit.i.i, label %.lr.ph.1
 
-.lr.ph.a:                                         ; preds = %._crit_edge, %bb.d
-  %3 = phi ptr [ %i.s, %bb.d ], [ %i.o, %._crit_edge ] ; 2 uses
-  %.val2.i.i.i.i.i.i.i.a = load i64, ptr %3, align 8, !alias.scope !102, !noalias !103, !noundef !4
+.lr.ph.1:                                         ; preds = %2
+  %3 = getelementptr inbounds nuw i8, ptr %i.o, i64 8
+  %.val2.i.i.i.i.i.i.i.1 = load i64, ptr %3, align 8, !alias.scope !102, !noalias !103, !noundef !4
+  %4 = icmp eq i64 %.val2.i.i.i.i.i.i.i.1, %i.i
+  br i1 %4, label %.loopexit.i.i, label %5
+
+5:                                                ; preds = %.lr.ph.1
+  %.not.not.not.i.not.not.i.i.i.i.i.i.1 = icmp samesign eq i64 %.idx, 16
+  br i1 %.not.not.not.i.not.not.i.i.i.i.i.i.1, label %.loopexit.i.i, label %.lr.ph.2
+
+.lr.ph.2:                                         ; preds = %5
+  %6 = getelementptr inbounds nuw i8, ptr %i.o, i64 16
+  %.val2.i.i.i.i.i.i.i.2 = load i64, ptr %6, align 8, !alias.scope !102, !noalias !103, !noundef !4
+  %7 = icmp eq i64 %.val2.i.i.i.i.i.i.i.2, %i.i
+  br i1 %7, label %.loopexit.i.i, label %8
+
+8:                                                ; preds = %.lr.ph.2
+  %.not.not.not.i.not.not.i.i.i.i.i.i.2 = icmp samesign eq i64 %.idx, 24
+  br i1 %.not.not.not.i.not.not.i.i.i.i.i.i.2, label %.loopexit.i.i, label %.lr.ph.3
+
+.lr.ph.3:                                         ; preds = %8
+  %9 = getelementptr inbounds nuw i8, ptr %i.o, i64 24
+  %.val2.i.i.i.i.i.i.i.3 = load i64, ptr %9, align 8, !alias.scope !102, !noalias !103, !noundef !4
+  %10 = icmp eq i64 %.val2.i.i.i.i.i.i.i.3, %i.i
+  br i1 %10, label %.loopexit.i.i, label %11
+
+11:                                               ; preds = %.lr.ph.3
+  %.not.not.not.i.not.not.i.i.i.i.i.i.3 = icmp samesign eq i64 %.idx, 32
+  br i1 %.not.not.not.i.not.not.i.i.i.i.i.i.3, label %.loopexit.i.i, label %bb.d
+
+bb.d:                                             ; preds = %11
+  %i.s = getelementptr inbounds nuw i8, ptr %i.o, i64 32
+  %.val2.i.i.i.i.i.i.i.4 = load i64, ptr %i.s, align 8, !alias.scope !102, !noalias !103, !noundef !4
+  %.not.not.not.i.not.not.i.i.i.i.i.i.a = icmp eq i64 %.val2.i.i.i.i.i.i.i.4, %i.i
+  br i1 %.not.not.not.i.not.not.i.i.i.i.i.i.a, label %.loopexit.i.i, label %12
+
+12:                                               ; preds = %bb.d
+  %.not.not.not.i.not.not.i.i.i.i.i.i.4 = icmp samesign eq i64 %.idx, 40
+  br i1 %.not.not.not.i.not.not.i.i.i.i.i.i.4, label %.loopexit.i.i, label %.lr.ph.a
+
+.lr.ph.a:                                         ; preds = %12
+  %13 = getelementptr inbounds nuw i8, ptr %i.o, i64 40
+  %.val2.i.i.i.i.i.i.i.a = load i64, ptr %13, align 8, !alias.scope !102, !noalias !103, !noundef !4
   %i.t = icmp eq i64 %.val2.i.i.i.i.i.i.i.a, %i.i
-  br i1 %i.t, label %.loopexit.i.i, label %bb.d
+  br i1 %i.t, label %.loopexit.i.i, label %14
+
+14:                                               ; preds = %.lr.ph.a
+  %.not.not.not.i.not.not.i.i.i.i.i.i.5 = icmp samesign eq i64 %.idx, 48
+  br i1 %.not.not.not.i.not.not.i.i.i.i.i.i.5, label %.loopexit.i.i, label %.lr.ph.6
+
+.lr.ph.6:                                         ; preds = %14
+  %15 = getelementptr inbounds nuw i8, ptr %i.o, i64 48
+  %.val2.i.i.i.i.i.i.i.6 = load i64, ptr %15, align 8, !alias.scope !102, !noalias !103, !noundef !4
+  %16 = icmp eq i64 %.val2.i.i.i.i.i.i.i.6, %i.i
+  %spec.select = select i1 %16, i8 0, i8 1
+  br label %.loopexit.i.i
+
+.lr.ph:                                           ; preds = %._crit_edge
+  %.val2.i.i.i.i.i.i.i = load i64, ptr %i.o, align 8, !alias.scope !102, !noalias !103, !noundef !4
+  %17 = icmp eq i64 %.val2.i.i.i.i.i.i.i, %i.i
+  br i1 %17, label %.loopexit.i.i, label %2
 
 _RINvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsD_NtB9_3cmpyNtB1L_13SliceContains14slice_contains0ECs85r3Sry2XhC_10load_cargo.exit.i.i.i.i.i.i: ; preds = %bb.b, %bb.c
   %.sroa.0.05.i.i.i.i.i.i8 = phi ptr [ %i.p, %bb.c ], [ %i.l, %bb.b ] ; 9 uses
@@ -290,8 +344,8 @@ bb.e:                                             ; preds = %._crit_edge.i.i
   store i64 %.sroa.52.0.i, ptr %.sroa.0.0.copyload, align 8, !noalias !105
   resume { ptr, i32 } %i.ar
 
-.loopexit.i.i:                                    ; preds = %_RINvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsD_NtB9_3cmpyNtB1L_13SliceContains14slice_contains0ECs85r3Sry2XhC_10load_cargo.exit.i.i.i.i.i.i, %bb.d, %.lr.ph.a, %._crit_edge
-  %.sroa.5.0.i.i.i.i = phi i8 [ 1, %._crit_edge ], [ 0, %.lr.ph.a ], [ 1, %bb.d ], [ 0, %_RINvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsD_NtB9_3cmpyNtB1L_13SliceContains14slice_contains0ECs85r3Sry2XhC_10load_cargo.exit.i.i.i.i.i.i ]
+.loopexit.i.i:                                    ; preds = %.lr.ph.6, %_RINvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsD_NtB9_3cmpyNtB1L_13SliceContains14slice_contains0ECs85r3Sry2XhC_10load_cargo.exit.i.i.i.i.i.i, %2, %.lr.ph, %.lr.ph.1, %5, %.lr.ph.2, %8, %.lr.ph.3, %11, %bb.d, %12, %.lr.ph.a, %14, %._crit_edge
+  %.sroa.5.0.i.i.i.i = phi i8 [ 1, %._crit_edge ], [ 0, %_RINvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsD_NtB9_3cmpyNtB1L_13SliceContains14slice_contains0ECs85r3Sry2XhC_10load_cargo.exit.i.i.i.i.i.i ], [ 1, %2 ], [ 0, %.lr.ph ], [ 0, %.lr.ph.1 ], [ 1, %5 ], [ 0, %.lr.ph.2 ], [ 1, %8 ], [ 0, %.lr.ph.3 ], [ 1, %11 ], [ 0, %bb.d ], [ 1, %12 ], [ 0, %.lr.ph.a ], [ 1, %14 ], [ %spec.select, %.lr.ph.6 ]
   %i.as = getelementptr inbounds nuw [96 x i8], ptr %.sroa.5.0.copyload, i64 %i.h ; 2 uses
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %i.as, ptr noundef nonnull align 8 dereferenceable(88) %i.j, i64 88, i1 false), !noalias !105
   %.sroa.4.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.as, i64 88

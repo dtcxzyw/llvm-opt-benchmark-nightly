@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/diesel-rs/original/diesel_derives-b71f3221b3f302d9.diesel_derives.fa624579f925b3f0-cgu.02?download=true
 inline.NumInlined: 1420
 inline.NumDeleted: 394
-loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumUnrolled: 1
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_RNvXs0_NtCsluMP4ekZjHw_14diesel_derives12sql_functionNtB5_11StrictFnArgNtNtCshMFl0SviwmK_3syn5parse5Parse5parse:bb.a
   %i.e = trunc nuw i64 %i.d to i1
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 8
@@ -204,7 +204,7 @@ _RNCINvNtCsluMP4ekZjHw_14diesel_derives12sql_function16parse_attributesNCNvXs_B4
 define hidden void @_RNvXs1_NtNtNtCscI6d9CVNmLh_4core3ops8function5implsQNCNvNtCsluMP4ekZjHw_14diesel_derives12sql_function15expand_variadics1_0INtB7_5FnMutTTjINtNtCshMFl0SviwmK_3syn10punctuated4PairNtNtB2h_8generics12GenericParamNtNtB2h_5token5CommaEEEE8call_mutBU_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([472 x i8]) align 8 captures(none) dereferenceable(472) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(8) %1, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(480) %2) unnamed_addr #0 personality ptr @rust_eh_personality !guid !2679 {
 bb.a:
   %i.a = alloca [472 x i8], align 8               ; 11 uses
-  %.sroa.0.0.copyload = load i64, ptr %2, align 8 ; 9 uses
+  %.sroa.0.0.copyload = load i64, ptr %2, align 8 ; 15 uses
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.b = load ptr, ptr %1, align 8, !nonnull !15, !align !16, !noundef !15
   %.val = load ptr, ptr %i.b, align 8, !nonnull !15, !align !16, !noundef !15 ; 2 uses
@@ -214,7 +214,7 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %.val, i64 16
   %i.f = load i64, ptr %i.e, align 8, !noalias !2681, !noundef !15 ; 2 uses
   %i.g = and i64 %i.f, 1152921504606846968        ; 3 uses
-  %i.h = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.g ; 2 uses
+  %i.h = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.g ; 7 uses
   %.not.i.i6 = icmp eq i64 %i.g, 0
   br i1 %.not.i.i6, label %._crit_edge, label %_RINvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsJ_NtB9_3cmpjNtB1L_13SliceContains14slice_contains0ECsluMP4ekZjHw_14diesel_derives.exit.i.i
 
@@ -226,21 +226,74 @@ bb.b:                                             ; preds = %_RINvXs2J_NtNtCscI6
 
 ._crit_edge:                                      ; preds = %bb.b, %bb.a
   %i.k = shl i64 %i.f, 3
-  %.idx = and i64 %i.k, 56                        ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.h, i64 %.idx
+  %.idx = and i64 %i.k, 56                        ; 7 uses
   %.not.not.not.i.not.not.i.i9 = icmp samesign eq i64 %.idx, 0
-  br i1 %.not.not.not.i.not.not.i.i9, label %._crit_edge11, label %.lr.ph.a
+  br i1 %.not.not.not.i.not.not.i.i9, label %._crit_edge11, label %.lr.ph
 
-bb.c:                                             ; preds = %.lr.ph.a
-  %i.l = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
-  %.not.not.not.i.not.not.i.i.a = icmp eq ptr %i.l, %3
-  br i1 %.not.not.not.i.not.not.i.i.a, label %._crit_edge11, label %.lr.ph.a
+3:                                                ; preds = %.lr.ph
+  %.not.not.not.i.not.not.i.i = icmp samesign eq i64 %.idx, 8
+  br i1 %.not.not.not.i.not.not.i.i, label %._crit_edge11, label %.lr.ph.1
 
-.lr.ph.a:                                         ; preds = %._crit_edge, %bb.c
-  %4 = phi ptr [ %i.l, %bb.c ], [ %i.h, %._crit_edge ] ; 2 uses
-  %.val3.i.i.i.a = load i64, ptr %4, align 8, !alias.scope !2682, !noalias !2683, !noundef !15
+.lr.ph.1:                                         ; preds = %3
+  %4 = getelementptr inbounds nuw i8, ptr %i.h, i64 8
+  %.val3.i.i.i.1 = load i64, ptr %4, align 8, !alias.scope !2682, !noalias !2683, !noundef !15
+  %5 = icmp eq i64 %.val3.i.i.i.1, %.sroa.0.0.copyload
+  br i1 %5, label %.loopexit.i, label %6
+
+6:                                                ; preds = %.lr.ph.1
+  %.not.not.not.i.not.not.i.i.1 = icmp samesign eq i64 %.idx, 16
+  br i1 %.not.not.not.i.not.not.i.i.1, label %._crit_edge11, label %.lr.ph.2
+
+.lr.ph.2:                                         ; preds = %6
+  %7 = getelementptr inbounds nuw i8, ptr %i.h, i64 16
+  %.val3.i.i.i.2 = load i64, ptr %7, align 8, !alias.scope !2682, !noalias !2683, !noundef !15
+  %8 = icmp eq i64 %.val3.i.i.i.2, %.sroa.0.0.copyload
+  br i1 %8, label %.loopexit.i, label %9
+
+9:                                                ; preds = %.lr.ph.2
+  %.not.not.not.i.not.not.i.i.2 = icmp samesign eq i64 %.idx, 24
+  br i1 %.not.not.not.i.not.not.i.i.2, label %._crit_edge11, label %.lr.ph.3
+
+.lr.ph.3:                                         ; preds = %9
+  %10 = getelementptr inbounds nuw i8, ptr %i.h, i64 24
+  %.val3.i.i.i.3 = load i64, ptr %10, align 8, !alias.scope !2682, !noalias !2683, !noundef !15
+  %11 = icmp eq i64 %.val3.i.i.i.3, %.sroa.0.0.copyload
+  br i1 %11, label %.loopexit.i, label %12
+
+12:                                               ; preds = %.lr.ph.3
+  %.not.not.not.i.not.not.i.i.3 = icmp samesign eq i64 %.idx, 32
+  br i1 %.not.not.not.i.not.not.i.i.3, label %._crit_edge11, label %.lr.ph.4
+
+.lr.ph.4:                                         ; preds = %12
+  %13 = getelementptr inbounds nuw i8, ptr %i.h, i64 32
+  %.val3.i.i.i.4 = load i64, ptr %13, align 8, !alias.scope !2682, !noalias !2683, !noundef !15
+  %14 = icmp eq i64 %.val3.i.i.i.4, %.sroa.0.0.copyload
+  br i1 %14, label %.loopexit.i, label %15
+
+15:                                               ; preds = %.lr.ph.4
+  %.not.not.not.i.not.not.i.i.4 = icmp samesign eq i64 %.idx, 40
+  br i1 %.not.not.not.i.not.not.i.i.4, label %._crit_edge11, label %bb.c
+
+bb.c:                                             ; preds = %15
+  %i.l = getelementptr inbounds nuw i8, ptr %i.h, i64 40
+  %.val3.i.i.i.5 = load i64, ptr %i.l, align 8, !alias.scope !2682, !noalias !2683, !noundef !15
+  %.not.not.not.i.not.not.i.i.a = icmp eq i64 %.val3.i.i.i.5, %.sroa.0.0.copyload
+  br i1 %.not.not.not.i.not.not.i.i.a, label %.loopexit.i, label %16
+
+16:                                               ; preds = %bb.c
+  %.not.not.not.i.not.not.i.i.5 = icmp samesign eq i64 %.idx, 48
+  br i1 %.not.not.not.i.not.not.i.i.5, label %._crit_edge11, label %.lr.ph.a
+
+.lr.ph.a:                                         ; preds = %16
+  %17 = getelementptr inbounds nuw i8, ptr %i.h, i64 48
+  %.val3.i.i.i.a = load i64, ptr %17, align 8, !alias.scope !2682, !noalias !2683, !noundef !15
   %i.m = icmp eq i64 %.val3.i.i.i.a, %.sroa.0.0.copyload
-  br i1 %i.m, label %.loopexit.i, label %bb.c
+  br i1 %i.m, label %.loopexit.i, label %._crit_edge11
+
+.lr.ph:                                           ; preds = %._crit_edge
+  %.val3.i.i.i = load i64, ptr %i.h, align 8, !alias.scope !2682, !noalias !2683, !noundef !15
+  %18 = icmp eq i64 %.val3.i.i.i, %.sroa.0.0.copyload
+  br i1 %18, label %.loopexit.i, label %3
 
 _RINvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsJ_NtB9_3cmpjNtB1L_13SliceContains14slice_contains0ECsluMP4ekZjHw_14diesel_derives.exit.i.i: ; preds = %bb.a, %bb.b
   %.sroa.0.05.i.i8 = phi ptr [ %i.i, %bb.b ], [ %i.d, %bb.a ] ; 9 uses
@@ -277,7 +330,7 @@ _RINvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits
   %i.ai = or i1 %i.af, %i.ah
   br i1 %i.ai, label %.loopexit.i, label %bb.b
 
-.loopexit.i:                                      ; preds = %_RINvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsJ_NtB9_3cmpjNtB1L_13SliceContains14slice_contains0ECsluMP4ekZjHw_14diesel_derives.exit.i.i, %.lr.ph.a
+.loopexit.i:                                      ; preds = %_RINvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsJ_NtB9_3cmpjNtB1L_13SliceContains14slice_contains0ECsluMP4ekZjHw_14diesel_derives.exit.i.i, %.lr.ph, %.lr.ph.1, %.lr.ph.2, %.lr.ph.3, %.lr.ph.4, %bb.c, %.lr.ph.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !2681
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(472) %i.a, ptr noundef nonnull align 8 dereferenceable(472) %.sroa.2.0..sroa_idx, i64 472, i1 false)
   store i64 -2, ptr %0, align 8, !alias.scope !2680
@@ -333,7 +386,7 @@ bb.k:                                             ; preds = %bb.h
   call fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCshMFl0SviwmK_3syn8generics9TypeParamECsluMP4ekZjHw_14diesel_derives(ptr noalias noundef align 8 dereferenceable(320) %i.av), !noalias !2681, !inline_history !1
   br label %_RNCNvNtCsluMP4ekZjHw_14diesel_derives12sql_function15expand_variadics1_0B5_.exit
 
-._crit_edge11:                                    ; preds = %bb.c, %._crit_edge
+._crit_edge11:                                    ; preds = %3, %6, %9, %12, %15, %16, %.lr.ph.a, %._crit_edge
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !2681
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(472) %0, ptr noundef nonnull align 8 dereferenceable(472) %.sroa.2.0..sroa_idx, i64 472, i1 false)
   br label %_RNCNvNtCsluMP4ekZjHw_14diesel_derives12sql_function15expand_variadics1_0B5_.exit

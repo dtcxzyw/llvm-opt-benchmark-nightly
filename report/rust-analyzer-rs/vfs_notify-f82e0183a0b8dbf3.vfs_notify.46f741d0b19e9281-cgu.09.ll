@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/rust-analyzer-rs/original/vfs_notify-f82e0183a0b8dbf3.vfs_notify.46f741d0b19e9281-cgu.09?download=true
 inline.NumInlined: 222
 inline.NumDeleted: 116
-loop-unroll.NumCompletelyUnrolled: 2
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_RNvXs1_NtNtNtCshzWfHUSfYae_4core3ops8function5implsQNCNvMs_Cs65Ktfge4woL_10vfs_notifyNtBV_11NotifyActor3runs2_0INtB7_5FnMutTNtCs9R0CJ7nmiec_5paths10AbsPathBufEE8call_mutBV_:bb.a
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCshzWfHUSfYae_4core9panicking16panic_in_cleanup() #18, !noalias !733
@@ -204,7 +204,7 @@ bb.a:
   %i.z = alloca [72 x i8], align 8                ; 6 uses
   %i.aa = alloca [72 x i8], align 8               ; 6 uses
   %i.ab = alloca [72 x i8], align 8               ; 14 uses
-  %.sroa.0.0.copyload = load i64, ptr %1, align 8 ; 9 uses
+  %.sroa.0.0.copyload = load i64, ptr %1, align 8 ; 15 uses
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ab), !noalias !800
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.ab, ptr noundef nonnull align 8 dereferenceable(72) %.sroa.2.0..sroa_idx, i64 72, i1 false)
@@ -216,7 +216,7 @@ bb.a:
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ad, i64 16
   %i.ah = load i64, ptr %i.ag, align 8, !noalias !800, !noundef !10 ; 2 uses
   %i.ai = and i64 %i.ah, 1152921504606846968      ; 3 uses
-  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.af, i64 %i.ai ; 2 uses
+  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.af, i64 %i.ai ; 7 uses
   %.not.i.i6 = icmp eq i64 %i.ai, 0
   br i1 %.not.i.i6, label %._crit_edge, label %_RINvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsJ_NtB9_3cmpjNtB1L_13SliceContains14slice_contains0ECs65Ktfge4woL_10vfs_notify.exit.i.i
 
@@ -228,21 +228,74 @@ bb.b:                                             ; preds = %_RINvXs2J_NtNtCshzW
 
 ._crit_edge:                                      ; preds = %bb.b, %bb.a
   %i.am = shl i64 %i.ah, 3
-  %.idx = and i64 %i.am, 56                       ; 2 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.aj, i64 %.idx
+  %.idx = and i64 %i.am, 56                       ; 7 uses
   %.not.not.not.i.not.not.i.i9 = icmp samesign eq i64 %.idx, 0
-  br i1 %.not.not.not.i.not.not.i.i9, label %_RNvXsJ_NtNtCshzWfHUSfYae_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.i, label %.lr.ph.a
+  br i1 %.not.not.not.i.not.not.i.i9, label %_RNvXsJ_NtNtCshzWfHUSfYae_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.i, label %.lr.ph
 
-bb.c:                                             ; preds = %.lr.ph.a
-  %i.an = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
-  %.not.not.not.i.not.not.i.i.a = icmp eq ptr %i.an, %2
-  br i1 %.not.not.not.i.not.not.i.i.a, label %_RNvXsJ_NtNtCshzWfHUSfYae_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.i, label %.lr.ph.a
+2:                                                ; preds = %.lr.ph
+  %.not.not.not.i.not.not.i.i = icmp samesign eq i64 %.idx, 8
+  br i1 %.not.not.not.i.not.not.i.i, label %_RNvXsJ_NtNtCshzWfHUSfYae_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.i, label %.lr.ph.1
 
-.lr.ph.a:                                         ; preds = %._crit_edge, %bb.c
-  %3 = phi ptr [ %i.an, %bb.c ], [ %i.aj, %._crit_edge ] ; 2 uses
-  %.val2.i.i.i.a = load i64, ptr %3, align 8, !alias.scope !802, !noalias !803, !noundef !10
+.lr.ph.1:                                         ; preds = %2
+  %3 = getelementptr inbounds nuw i8, ptr %i.aj, i64 8
+  %.val2.i.i.i.1 = load i64, ptr %3, align 8, !alias.scope !802, !noalias !803, !noundef !10
+  %4 = icmp eq i64 %.val2.i.i.i.1, %.sroa.0.0.copyload
+  br i1 %4, label %.loopexit.i, label %5
+
+5:                                                ; preds = %.lr.ph.1
+  %.not.not.not.i.not.not.i.i.1 = icmp samesign eq i64 %.idx, 16
+  br i1 %.not.not.not.i.not.not.i.i.1, label %_RNvXsJ_NtNtCshzWfHUSfYae_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.i, label %.lr.ph.2
+
+.lr.ph.2:                                         ; preds = %5
+  %6 = getelementptr inbounds nuw i8, ptr %i.aj, i64 16
+  %.val2.i.i.i.2 = load i64, ptr %6, align 8, !alias.scope !802, !noalias !803, !noundef !10
+  %7 = icmp eq i64 %.val2.i.i.i.2, %.sroa.0.0.copyload
+  br i1 %7, label %.loopexit.i, label %8
+
+8:                                                ; preds = %.lr.ph.2
+  %.not.not.not.i.not.not.i.i.2 = icmp samesign eq i64 %.idx, 24
+  br i1 %.not.not.not.i.not.not.i.i.2, label %_RNvXsJ_NtNtCshzWfHUSfYae_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.i, label %.lr.ph.3
+
+.lr.ph.3:                                         ; preds = %8
+  %9 = getelementptr inbounds nuw i8, ptr %i.aj, i64 24
+  %.val2.i.i.i.3 = load i64, ptr %9, align 8, !alias.scope !802, !noalias !803, !noundef !10
+  %10 = icmp eq i64 %.val2.i.i.i.3, %.sroa.0.0.copyload
+  br i1 %10, label %.loopexit.i, label %11
+
+11:                                               ; preds = %.lr.ph.3
+  %.not.not.not.i.not.not.i.i.3 = icmp samesign eq i64 %.idx, 32
+  br i1 %.not.not.not.i.not.not.i.i.3, label %_RNvXsJ_NtNtCshzWfHUSfYae_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.i, label %.lr.ph.4
+
+.lr.ph.4:                                         ; preds = %11
+  %12 = getelementptr inbounds nuw i8, ptr %i.aj, i64 32
+  %.val2.i.i.i.4 = load i64, ptr %12, align 8, !alias.scope !802, !noalias !803, !noundef !10
+  %13 = icmp eq i64 %.val2.i.i.i.4, %.sroa.0.0.copyload
+  br i1 %13, label %.loopexit.i, label %14
+
+14:                                               ; preds = %.lr.ph.4
+  %.not.not.not.i.not.not.i.i.4 = icmp samesign eq i64 %.idx, 40
+  br i1 %.not.not.not.i.not.not.i.i.4, label %_RNvXsJ_NtNtCshzWfHUSfYae_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.i, label %bb.c
+
+bb.c:                                             ; preds = %14
+  %i.an = getelementptr inbounds nuw i8, ptr %i.aj, i64 40
+  %.val2.i.i.i.5 = load i64, ptr %i.an, align 8, !alias.scope !802, !noalias !803, !noundef !10
+  %.not.not.not.i.not.not.i.i.a = icmp eq i64 %.val2.i.i.i.5, %.sroa.0.0.copyload
+  br i1 %.not.not.not.i.not.not.i.i.a, label %.loopexit.i, label %15
+
+15:                                               ; preds = %bb.c
+  %.not.not.not.i.not.not.i.i.5 = icmp samesign eq i64 %.idx, 48
+  br i1 %.not.not.not.i.not.not.i.i.5, label %_RNvXsJ_NtNtCshzWfHUSfYae_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.i, label %.lr.ph.a
+
+.lr.ph.a:                                         ; preds = %15
+  %16 = getelementptr inbounds nuw i8, ptr %i.aj, i64 48
+  %.val2.i.i.i.a = load i64, ptr %16, align 8, !alias.scope !802, !noalias !803, !noundef !10
   %i.ao = icmp eq i64 %.val2.i.i.i.a, %.sroa.0.0.copyload
-  br i1 %i.ao, label %.loopexit.i, label %bb.c
+  br i1 %i.ao, label %.loopexit.i, label %_RNvXsJ_NtNtCshzWfHUSfYae_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.i
+
+.lr.ph:                                           ; preds = %._crit_edge
+  %.val2.i.i.i = load i64, ptr %i.aj, align 8, !alias.scope !802, !noalias !803, !noundef !10
+  %17 = icmp eq i64 %.val2.i.i.i, %.sroa.0.0.copyload
+  br i1 %17, label %.loopexit.i, label %2
 
 _RINvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsJ_NtB9_3cmpjNtB1L_13SliceContains14slice_contains0ECs65Ktfge4woL_10vfs_notify.exit.i.i: ; preds = %bb.a, %bb.b
   %.sroa.0.05.i.i8 = phi ptr [ %i.ak, %bb.b ], [ %i.af, %bb.a ] ; 9 uses
@@ -284,8 +337,8 @@ _RINvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits
           cleanup
   br label %.body.thread39.i
 
-_RNvXsJ_NtNtCshzWfHUSfYae_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.i: ; preds = %bb.c, %._crit_edge, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6result6ResultuINtNtCsM5evIHPibA_17crossbeam_channel3err9SendErrorNtNtCs4sl5YdnrCxp_3vfs6loader5EntryEEECs65Ktfge4woL_10vfs_notify.exit.i
-  %.sroa.0.0.i48.i = phi i8 [ 1, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6result6ResultuINtNtCsM5evIHPibA_17crossbeam_channel3err9SendErrorNtNtCs4sl5YdnrCxp_3vfs6loader5EntryEEECs65Ktfge4woL_10vfs_notify.exit.i ], [ 0, %._crit_edge ], [ 0, %bb.c ]
+_RNvXsJ_NtNtCshzWfHUSfYae_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.i: ; preds = %2, %5, %8, %11, %14, %15, %.lr.ph.a, %._crit_edge, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6result6ResultuINtNtCsM5evIHPibA_17crossbeam_channel3err9SendErrorNtNtCs4sl5YdnrCxp_3vfs6loader5EntryEEECs65Ktfge4woL_10vfs_notify.exit.i
+  %.sroa.0.0.i48.i = phi i8 [ 1, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6result6ResultuINtNtCsM5evIHPibA_17crossbeam_channel3err9SendErrorNtNtCs4sl5YdnrCxp_3vfs6loader5EntryEEECs65Ktfge4woL_10vfs_notify.exit.i ], [ 0, %._crit_edge ], [ 0, %.lr.ph.a ], [ 0, %15 ], [ 0, %14 ], [ 0, %11 ], [ 0, %8 ], [ 0, %5 ], [ 0, %2 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.y), !noalias !800
   %i.bl = getelementptr inbounds nuw i8, ptr %i.ac, i64 16
   %i.bm = load ptr, ptr %i.bl, align 8, !alias.scope !801, !nonnull !10, !align !14, !noundef !10
@@ -509,7 +562,7 @@ bb.p:                                             ; preds = %.body.i.i
   invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs4sl5YdnrCxp_3vfs6loader11DirectoriesECs65Ktfge4woL_10vfs_notify(ptr noalias nofree noundef align 8 dereferenceable(72) %i.p) #20
           to label %.body.thread.i unwind label %bb.o, !noalias !808
 
-.loopexit.i:                                      ; preds = %_RINvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsJ_NtB9_3cmpjNtB1L_13SliceContains14slice_contains0ECs65Ktfge4woL_10vfs_notify.exit.i.i, %.lr.ph.a
+.loopexit.i:                                      ; preds = %_RINvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsJ_NtB9_3cmpjNtB1L_13SliceContains14slice_contains0ECs65Ktfge4woL_10vfs_notify.exit.i.i, %.lr.ph, %.lr.ph.1, %.lr.ph.2, %.lr.ph.3, %.lr.ph.4, %bb.c, %.lr.ph.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aa), !noalias !800
   %i.db = getelementptr inbounds nuw i8, ptr %i.ac, i64 8
   %i.dc = load ptr, ptr %i.db, align 8, !alias.scope !801, !nonnull !10, !align !14, !noundef !10

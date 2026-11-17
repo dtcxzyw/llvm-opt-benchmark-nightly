@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/coreutils-rs/original/uu_fold-9fbef8c9ae416a1b.uu_fold.607f53ef74bdd1d0-cgu.0?download=true
 inline.NumInlined: 349
 inline.NumDeleted: 227
-loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumCompletelyUnrolled: 3
 loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 3
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@_RINvCs8hEv8bFEvN4_7uu_fold11emit_outputINtNtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufwriter9BufWriterNtNtNtCs2vKOLqTMYjT_3std2io5stdio6StdoutEEB2_:bb.a
 
 bb.x:                                             ; preds = %bb.ab, %bb.w, %bb.v, %bb.t
@@ -205,19 +205,79 @@ bb.d:                                             ; preds = %.lr.ph
   br i1 %i.v, label %bb.d, label %.loopexit
 
 bb.e:                                             ; preds = %bb.a
-  %i.w = and i64 %1, 56                           ; 3 uses
+  %i.w = and i64 %1, 56                           ; 8 uses
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 %i.w ; 7 uses
   %i.y = and i64 %1, 7                            ; 7 uses
   %.not.i267 = icmp eq i64 %i.w, 0
   br i1 %.not.i267, label %._crit_edge, label %_RNvMNtCs6JMX4GRUq9U_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8hEv8bFEvN4_7uu_fold.exit.i
 
-bb.f:                                             ; preds = %_RNvMNtCs6JMX4GRUq9U_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8hEv8bFEvN4_7uu_fold.exit.i
-  %i.z = getelementptr inbounds nuw i8, ptr %.sroa.0.017.i269, i64 8
-  %3 = add nsw i64 %.sroa.6.0.i268, -8            ; 2 uses
-  %.not.i.a = icmp eq i64 %3, 0
-  br i1 %.not.i.a, label %._crit_edge, label %_RNvMNtCs6JMX4GRUq9U_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8hEv8bFEvN4_7uu_fold.exit.i
+3:                                                ; preds = %_RNvMNtCs6JMX4GRUq9U_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8hEv8bFEvN4_7uu_fold.exit.i
+  %.not.i = icmp eq i64 %i.w, 8
+  br i1 %.not.i, label %._crit_edge, label %_RNvMNtCs6JMX4GRUq9U_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8hEv8bFEvN4_7uu_fold.exit.i.1
 
-._crit_edge:                                      ; preds = %bb.f, %bb.e
+_RNvMNtCs6JMX4GRUq9U_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8hEv8bFEvN4_7uu_fold.exit.i.1: ; preds = %3
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %.sroa.012.0.copyload.i.1 = load i64, ptr %4, align 1, !alias.scope !149
+  %5 = and i64 %.sroa.012.0.copyload.i.1, -9187201950435737472
+  %6 = icmp eq i64 %5, 0
+  br i1 %6, label %7, label %.loopexit
+
+7:                                                ; preds = %_RNvMNtCs6JMX4GRUq9U_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8hEv8bFEvN4_7uu_fold.exit.i.1
+  %.not.i.1 = icmp eq i64 %i.w, 16
+  br i1 %.not.i.1, label %._crit_edge, label %_RNvMNtCs6JMX4GRUq9U_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8hEv8bFEvN4_7uu_fold.exit.i.2
+
+_RNvMNtCs6JMX4GRUq9U_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8hEv8bFEvN4_7uu_fold.exit.i.2: ; preds = %7
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %.sroa.012.0.copyload.i.2 = load i64, ptr %8, align 1, !alias.scope !149
+  %9 = and i64 %.sroa.012.0.copyload.i.2, -9187201950435737472
+  %10 = icmp eq i64 %9, 0
+  br i1 %10, label %11, label %.loopexit
+
+11:                                               ; preds = %_RNvMNtCs6JMX4GRUq9U_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8hEv8bFEvN4_7uu_fold.exit.i.2
+  %.not.i.2 = icmp eq i64 %i.w, 24
+  br i1 %.not.i.2, label %._crit_edge, label %_RNvMNtCs6JMX4GRUq9U_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8hEv8bFEvN4_7uu_fold.exit.i.3
+
+_RNvMNtCs6JMX4GRUq9U_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8hEv8bFEvN4_7uu_fold.exit.i.3: ; preds = %11
+  %12 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %.sroa.012.0.copyload.i.3 = load i64, ptr %12, align 1, !alias.scope !149
+  %13 = and i64 %.sroa.012.0.copyload.i.3, -9187201950435737472
+  %14 = icmp eq i64 %13, 0
+  br i1 %14, label %15, label %.loopexit
+
+15:                                               ; preds = %_RNvMNtCs6JMX4GRUq9U_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8hEv8bFEvN4_7uu_fold.exit.i.3
+  %.not.i.3 = icmp eq i64 %i.w, 32
+  br i1 %.not.i.3, label %._crit_edge, label %_RNvMNtCs6JMX4GRUq9U_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8hEv8bFEvN4_7uu_fold.exit.i.4
+
+_RNvMNtCs6JMX4GRUq9U_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8hEv8bFEvN4_7uu_fold.exit.i.4: ; preds = %15
+  %16 = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %.sroa.012.0.copyload.i.4 = load i64, ptr %16, align 1, !alias.scope !149
+  %17 = and i64 %.sroa.012.0.copyload.i.4, -9187201950435737472
+  %18 = icmp eq i64 %17, 0
+  br i1 %18, label %19, label %.loopexit
+
+19:                                               ; preds = %_RNvMNtCs6JMX4GRUq9U_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8hEv8bFEvN4_7uu_fold.exit.i.4
+  %.not.i.4 = icmp eq i64 %i.w, 40
+  br i1 %.not.i.4, label %._crit_edge, label %_RNvMNtCs6JMX4GRUq9U_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8hEv8bFEvN4_7uu_fold.exit.i.5
+
+_RNvMNtCs6JMX4GRUq9U_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8hEv8bFEvN4_7uu_fold.exit.i.5: ; preds = %19
+  %20 = getelementptr inbounds nuw i8, ptr %0, i64 40
+  %.sroa.012.0.copyload.i.5 = load i64, ptr %20, align 1, !alias.scope !149
+  %21 = and i64 %.sroa.012.0.copyload.i.5, -9187201950435737472
+  %22 = icmp eq i64 %21, 0
+  br i1 %22, label %23, label %.loopexit
+
+23:                                               ; preds = %_RNvMNtCs6JMX4GRUq9U_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8hEv8bFEvN4_7uu_fold.exit.i.5
+  %.not.i.5 = icmp eq i64 %i.w, 48
+  br i1 %.not.i.5, label %._crit_edge, label %bb.f
+
+bb.f:                                             ; preds = %23
+  %i.z = getelementptr inbounds nuw i8, ptr %0, i64 48
+  %.sroa.012.0.copyload.i.6 = load i64, ptr %i.z, align 1, !alias.scope !149
+  %24 = and i64 %.sroa.012.0.copyload.i.6, -9187201950435737472
+  %.not.i.a = icmp eq i64 %24, 0
+  br i1 %.not.i.a, label %._crit_edge, label %.loopexit
+
+._crit_edge:                                      ; preds = %3, %7, %11, %15, %19, %23, %bb.f, %bb.e
   %i.aa = icmp samesign eq i64 %i.y, 0
   br i1 %i.aa, label %_RNvNvNtNtCs6JMX4GRUq9U_4core5slice5ascii8is_ascii7runtime.exit, label %.lr.ph271
 
@@ -286,15 +346,13 @@ bb.l:                                             ; preds = %.lr.ph271.5
   %i.at = icmp sgt i8 %.val.i.i, -1
   br i1 %i.at, label %bb.g, label %.loopexit
 
-_RNvMNtCs6JMX4GRUq9U_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8hEv8bFEvN4_7uu_fold.exit.i: ; preds = %bb.e, %bb.f
-  %.sroa.0.017.i269 = phi ptr [ %i.z, %bb.f ], [ %0, %bb.e ] ; 2 uses
-  %.sroa.6.0.i268 = phi i64 [ %3, %bb.f ], [ %i.w, %bb.e ]
-  %.sroa.012.0.copyload.i = load i64, ptr %.sroa.0.017.i269, align 1, !alias.scope !149
+_RNvMNtCs6JMX4GRUq9U_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8hEv8bFEvN4_7uu_fold.exit.i: ; preds = %bb.e
+  %.sroa.012.0.copyload.i = load i64, ptr %0, align 1, !alias.scope !149
   %i.au = and i64 %.sroa.012.0.copyload.i, -9187201950435737472
   %i.av = icmp eq i64 %i.au, 0
-  br i1 %i.av, label %bb.f, label %.loopexit
+  br i1 %i.av, label %3, label %.loopexit
 
-.loopexit:                                        ; preds = %.lr.ph.i.i, %.lr.ph, %_RNvMNtCs6JMX4GRUq9U_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8hEv8bFEvN4_7uu_fold.exit.i, %.lr.ph271, %.lr.ph271.1, %.lr.ph271.2, %.lr.ph271.3, %.lr.ph271.4, %.lr.ph271.5, %.lr.ph271.6
+.loopexit:                                        ; preds = %.lr.ph.i.i, %.lr.ph, %_RNvMNtCs6JMX4GRUq9U_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8hEv8bFEvN4_7uu_fold.exit.i, %_RNvMNtCs6JMX4GRUq9U_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8hEv8bFEvN4_7uu_fold.exit.i.1, %_RNvMNtCs6JMX4GRUq9U_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8hEv8bFEvN4_7uu_fold.exit.i.2, %_RNvMNtCs6JMX4GRUq9U_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8hEv8bFEvN4_7uu_fold.exit.i.3, %_RNvMNtCs6JMX4GRUq9U_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8hEv8bFEvN4_7uu_fold.exit.i.4, %_RNvMNtCs6JMX4GRUq9U_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8hEv8bFEvN4_7uu_fold.exit.i.5, %bb.f, %.lr.ph271, %.lr.ph271.1, %.lr.ph271.2, %.lr.ph271.3, %.lr.ph271.4, %.lr.ph271.5, %.lr.ph271.6
   tail call void @llvm.experimental.noalias.scope.decl(metadata !151)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !152)
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 %1 ; 12 uses

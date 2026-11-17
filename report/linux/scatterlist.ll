@@ -204,6 +204,9 @@ bb.f:                                             ; preds = %bb.e
 .preheader.lr.ph:                                 ; preds = %.critedge139.thread, %.preheader164
   %.0108.lcssa206 = phi i32 [ %.1109, %.preheader164 ], [ 1, %.critedge139.thread ] ; 3 uses
   %i.au = getelementptr i8, ptr %0, i64 24        ; 3 uses
+  %8 = add i32 %5, -4096
+  %9 = lshr i32 %8, 12
+  %10 = add nuw nsw i32 %9, 1
   br label %.preheader
 
 bb.g:                                             ; preds = %.lr.ph178, %bb.j
@@ -246,8 +249,9 @@ bb.j:                                             ; preds = %bb.h, %bb.i
   %.0104183 = phi i64 [ %4, %.preheader.lr.ph ], [ %i.eb, %bb.y ] ; 2 uses
   %.0111182 = phi ptr [ %i.b, %.preheader.lr.ph ], [ %.0.i, %bb.y ] ; 3 uses
   %.0113181 = phi i32 [ 0, %.preheader.lr.ph ], [ %i.ea, %bb.y ] ; 2 uses
-  %.0122179 = phi i32 [ 0, %.preheader.lr.ph ], [ %.0101.lcssa, %bb.y ] ; 5 uses
+  %.0122179 = phi i32 [ 0, %.preheader.lr.ph ], [ %.0101.lcssa, %bb.y ] ; 6 uses
   %i.bj = load i64, ptr @vmemmap_base, align 8    ; 2 uses
+  %11 = add i32 %10, %.0122179
   %i.bk = add i32 %.0122179, 1
   %umax = tail call i32 @llvm.umax.i32(i32 %.3100, i32 %i.bk) ; 3 uses
   %i.bl = add i32 %umax, -1                       ; 2 uses
@@ -261,12 +265,12 @@ bb.k:                                             ; preds = %bb.l
 .lr.ph218:                                        ; preds = %.preheader, %bb.k
   %.0101.in216 = phi i32 [ %.0101217, %bb.k ], [ %.0122179, %.preheader ] ; 2 uses
   %.2121215 = phi i32 [ %i.bm, %bb.k ], [ 0, %.preheader ]
-  %.0101217 = add i32 %.0101.in216, 1             ; 5 uses
   %i.bm = add nuw i32 %.2121215, 4096             ; 2 uses
   %.not132 = icmp ugt i32 %i.c, %i.bm
   br i1 %.not132, label %bb.l, label %._crit_edge219
 
 bb.l:                                             ; preds = %.lr.ph218
+  %.0101217 = add i32 %.0101.in216, 1             ; 4 uses
   %i.bn = zext i32 %.0101217 to i64
   %i.bo = getelementptr [8 x i8], ptr %.396, i64 %i.bn
   %i.bp = load ptr, ptr %i.bo, align 8
@@ -287,7 +291,7 @@ bb.l:                                             ; preds = %.lr.ph218
   br label %._crit_edge219, !llvm.loop !42
 
 ._crit_edge219:                                   ; preds = %bb.k, %.lr.ph218, %._crit_edge220, %.preheader
-  %.0101.lcssa = phi i32 [ %umax, %.preheader ], [ %.0101217, %._crit_edge220 ], [ %umax, %bb.k ], [ %.0101217, %.lr.ph218 ] ; 2 uses
+  %.0101.lcssa = phi i32 [ %umax, %.preheader ], [ %.0101217, %._crit_edge220 ], [ %umax, %bb.k ], [ %11, %.lr.ph218 ] ; 2 uses
   %i.ca = sub nuw i32 %.0108.lcssa206, %.0113181
   %i.cb = add i32 %i.ca, %6                       ; 3 uses
   %.not30.i = icmp eq ptr %.0111182, null         ; 2 uses
