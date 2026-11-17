@@ -205,7 +205,7 @@ _ZN5mldsa12_GLOBAL__N_110scalar_addEPNS0_6scalarEPKS1_S4_.exit.4: ; preds = %_ZN
 }
 
 ; Function Attrs: mustprogress nounwind memory(argmem: readwrite) uwtable
-define internal fastcc void @_ZN5mldsa12_GLOBAL__N_110vector_addILi6EEEvPNS0_6vectorIXT_EEEPKS3_S6_(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2) unnamed_addr #18 {
+define internal fastcc void @_ZN5mldsa12_GLOBAL__N_110vector_addILi6EEEvPNS0_6vectorIXT_EEEPKS3_S6_(ptr nofree noundef writeonly captures(none) initializes((0, 1024)) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2) unnamed_addr #18 {
 bb.a:
   br label %bb.b
 
@@ -388,7 +388,7 @@ _ZN5mldsa12_GLOBAL__N_110scalar_addEPNS0_6scalarEPKS1_S4_.exit.5: ; preds = %bb.
 }
 
 ; Function Attrs: mustprogress nounwind memory(argmem: readwrite) uwtable
-define internal fastcc void @_ZN5mldsa12_GLOBAL__N_119vector_power2_roundILi6EEEvPNS0_6vectorIXT_EEES4_PKS3_(ptr nofree noundef captures(none) %0, ptr nofree noundef writeonly captures(none) %1, ptr nofree noundef readonly captures(none) %2) unnamed_addr #18 {
+define internal fastcc void @_ZN5mldsa12_GLOBAL__N_119vector_power2_roundILi6EEEvPNS0_6vectorIXT_EEES4_PKS3_(ptr nofree noundef captures(none) initializes((0, 1024)) %0, ptr nofree noundef writeonly captures(none) initializes((0, 1024)) %1, ptr nofree noundef readonly captures(none) %2) unnamed_addr #18 {
 bb.a:
   %i.a = tail call noundef i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 -1, 1) -1) #38, !srcloc !110 ; 7 uses
   %i.b = xor i64 %i.a, -1                         ; 6 uses
@@ -791,7 +791,7 @@ bb.j:                                             ; preds = %BORINGSSL_keccak_sq
 }
 
 ; Function Attrs: mustprogress nounwind memory(argmem: readwrite) uwtable
-define internal fastcc void @_ZN5mldsa12_GLOBAL__N_118vector_mult_scalarILi6EEEvPNS0_6vectorIXT_EEEPKS3_PKNS0_6scalarE(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef nonnull readonly captures(none) %2) unnamed_addr #18 {
+define internal fastcc void @_ZN5mldsa12_GLOBAL__N_118vector_mult_scalarILi6EEEvPNS0_6vectorIXT_EEEPKS3_PKNS0_6scalarE(ptr nofree noundef writeonly captures(none) initializes((0, 1024)) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef nonnull readonly captures(none) %2) unnamed_addr #18 {
 bb.a:
   br label %bb.b
 
@@ -999,7 +999,7 @@ _ZN5mldsa12_GLOBAL__N_111scalar_multEPNS0_6scalarEPKS1_S4_.exit.5: ; preds = %bb
 }
 
 ; Function Attrs: mustprogress nounwind memory(argmem: readwrite) uwtable
-define internal fastcc void @_ZN5mldsa12_GLOBAL__N_110vector_subILi6EEEvPNS0_6vectorIXT_EEEPKS3_S6_(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2) unnamed_addr #18 {
+define internal fastcc void @_ZN5mldsa12_GLOBAL__N_110vector_subILi6EEEvPNS0_6vectorIXT_EEEPKS3_S6_(ptr nofree noundef writeonly captures(none) initializes((0, 1024)) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2) unnamed_addr #18 {
 bb.a:
   br label %bb.b
 
@@ -1402,7 +1402,7 @@ _ZN5mlkem12_GLOBAL__N_110scalar_nttEPNS0_6scalarE.exit.2: ; preds = %._crit_edge
 }
 
 ; Function Attrs: mustprogress nofree nounwind uwtable
-define internal fastcc void @_ZN5mlkem12_GLOBAL__N_152scalar_centered_binomial_distribution_eta_2_with_prfEPNS0_6scalarEPKh(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef nonnull readonly captures(none) %1) unnamed_addr #2 {
+define internal fastcc void @_ZN5mlkem12_GLOBAL__N_152scalar_centered_binomial_distribution_eta_2_with_prfEPNS0_6scalarEPKh(ptr nofree noundef writeonly captures(none) initializes((0, 508)) %0, ptr nofree noundef nonnull readonly captures(none) %1) unnamed_addr #2 {
 vector.ph:
   %2 = alloca %struct.BORINGSSL_keccak_st, align 8 ; 8 uses
   %i.a = alloca [128 x i8], align 16              ; 4 uses
@@ -1805,7 +1805,7 @@ _ZN5mldsa12_GLOBAL__N_126scalar_from_keccak_vartimeEPNS0_6scalarEPKh.exit: ; pre
 }
 
 ; Function Attrs: mustprogress nounwind memory(argmem: readwrite) uwtable
-define internal fastcc void @_ZN5mldsa12_GLOBAL__N_118vector_mult_scalarILi8EEEvPNS0_6vectorIXT_EEEPKS3_PKNS0_6scalarE(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef nonnull readonly captures(none) %2) unnamed_addr #18 {
+define internal fastcc void @_ZN5mldsa12_GLOBAL__N_118vector_mult_scalarILi8EEEvPNS0_6vectorIXT_EEEPKS3_PKNS0_6scalarE(ptr nofree noundef writeonly captures(none) initializes((0, 1024)) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef nonnull readonly captures(none) %2) unnamed_addr #18 {
 bb.a:
   br label %bb.b
 
@@ -2081,7 +2081,7 @@ _ZN5mldsa12_GLOBAL__N_111scalar_multEPNS0_6scalarEPKS1_S4_.exit.7: ; preds = %bb
 }
 
 ; Function Attrs: mustprogress nounwind memory(argmem: readwrite) uwtable
-define internal fastcc void @_ZN5mldsa12_GLOBAL__N_110vector_subILi8EEEvPNS0_6vectorIXT_EEEPKS3_S6_(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2) unnamed_addr #18 {
+define internal fastcc void @_ZN5mldsa12_GLOBAL__N_110vector_subILi8EEEvPNS0_6vectorIXT_EEEPKS3_S6_(ptr nofree noundef writeonly captures(none) initializes((0, 1024)) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2) unnamed_addr #18 {
 bb.a:
   br label %bb.b
 
@@ -2484,7 +2484,7 @@ bb.i:                                             ; preds = %bb.i, %_ZN5mldsa12_
 }
 
 ; Function Attrs: mustprogress nounwind memory(argmem: readwrite) uwtable
-define internal fastcc void @_ZN5mldsa12_GLOBAL__N_110vector_addILi8EEEvPNS0_6vectorIXT_EEEPKS3_S6_(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2) unnamed_addr #18 {
+define internal fastcc void @_ZN5mldsa12_GLOBAL__N_110vector_addILi8EEEvPNS0_6vectorIXT_EEEPKS3_S6_(ptr nofree noundef writeonly captures(none) initializes((0, 1024)) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2) unnamed_addr #18 {
 bb.a:
   br label %bb.b
 

@@ -204,7 +204,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define void @_ZN18duckdb_fastpforlib8internal14__fastunpack64EPKjPm(ptr noalias nofree noundef readonly captures(none) %0, ptr noalias nofree noundef writeonly captures(none) %1) local_unnamed_addr #5 !guid !7450 {
+define void @_ZN18duckdb_fastpforlib8internal14__fastunpack64EPKjPm(ptr noalias nofree noundef readonly captures(none) %0, ptr noalias nofree noundef writeonly captures(none) initializes((0, 256)) %1) local_unnamed_addr #5 !guid !7450 {
 vector.ph:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %wide.vec = load <4 x i32>, ptr %0, align 4, !tbaa !6

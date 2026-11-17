@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind nonlazybind memory(argmem: write) uwtable
-define hidden void @_RINvNtNtCslFlrwjHoTci_14polars_compute12if_then_else6scalar37if_then_else_broadcast_both_scalar_64NtNtCs2mZqlW55729_12polars_utils7float164pf16ECs1LHh8CLbVkQ_11polars_core(i64 noundef %0, i16 noundef %1, i16 noundef %2, ptr noalias nofree noundef writeonly align 2 captures(none) dereferenceable(128) %3) unnamed_addr #6 personality ptr @rust_eh_personality !dbg !94249 !guid !94256 {
+define hidden void @_RINvNtNtCslFlrwjHoTci_14polars_compute12if_then_else6scalar37if_then_else_broadcast_both_scalar_64NtNtCs2mZqlW55729_12polars_utils7float164pf16ECs1LHh8CLbVkQ_11polars_core(i64 noundef %0, i16 noundef %1, i16 noundef %2, ptr noalias nofree noundef writeonly align 2 captures(none) dereferenceable(128) initializes((0, 128)) %3) unnamed_addr #6 personality ptr @rust_eh_personality !dbg !94249 !guid !94256 {
 vector.ph:
   %broadcast.splatinsert3 = insertelement <8 x i16> poison, i16 %1, i64 0
   %broadcast.splat4 = shufflevector <8 x i16> %broadcast.splatinsert3, <8 x i16> poison, <8 x i32> zeroinitializer ; 8 uses
@@ -256,7 +256,7 @@ vector.ph:
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind nonlazybind memory(argmem: write) uwtable
-define hidden void @_RINvNtNtCslFlrwjHoTci_14polars_compute12if_then_else6scalar37if_then_else_broadcast_both_scalar_64aECs1LHh8CLbVkQ_11polars_core(i64 noundef %0, i8 noundef %1, i8 noundef %2, ptr noalias nofree noundef writeonly captures(none) dereferenceable(64) %3) unnamed_addr #6 personality ptr @rust_eh_personality !dbg !94263 !guid !94270 {
+define hidden void @_RINvNtNtCslFlrwjHoTci_14polars_compute12if_then_else6scalar37if_then_else_broadcast_both_scalar_64aECs1LHh8CLbVkQ_11polars_core(i64 noundef %0, i8 noundef %1, i8 noundef %2, ptr noalias nofree noundef writeonly captures(none) dereferenceable(64) initializes((0, 64)) %3) unnamed_addr #6 personality ptr @rust_eh_personality !dbg !94263 !guid !94270 {
 vector.ph:
   %broadcast.splatinsert3 = insertelement <16 x i8> poison, i8 %1, i64 0
   %broadcast.splat4 = shufflevector <16 x i8> %broadcast.splatinsert3, <16 x i8> poison, <16 x i32> zeroinitializer ; 4 uses
@@ -287,7 +287,7 @@ vector.ph:
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind nonlazybind memory(argmem: write) uwtable
-define hidden void @_RINvNtNtCslFlrwjHoTci_14polars_compute12if_then_else6scalar37if_then_else_broadcast_both_scalar_64dECs1LHh8CLbVkQ_11polars_core(i64 noundef %0, double noundef %1, double noundef %2, ptr noalias nofree noundef writeonly align 8 captures(none) dereferenceable(512) %3) unnamed_addr #6 personality ptr @rust_eh_personality !dbg !94277 !guid !94285 {
+define hidden void @_RINvNtNtCslFlrwjHoTci_14polars_compute12if_then_else6scalar37if_then_else_broadcast_both_scalar_64dECs1LHh8CLbVkQ_11polars_core(i64 noundef %0, double noundef %1, double noundef %2, ptr noalias nofree noundef writeonly align 8 captures(none) dereferenceable(512) initializes((0, 512)) %3) unnamed_addr #6 personality ptr @rust_eh_personality !dbg !94277 !guid !94285 {
 vector.ph:
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %0, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
@@ -323,7 +323,7 @@ _RINvNtNtCslFlrwjHoTci_14polars_compute12if_then_else6scalar39if_then_else_broad
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind nonlazybind memory(argmem: write) uwtable
-define hidden void @_RINvNtNtCslFlrwjHoTci_14polars_compute12if_then_else6scalar37if_then_else_broadcast_both_scalar_64fECs1LHh8CLbVkQ_11polars_core(i64 noundef %0, float noundef %1, float noundef %2, ptr noalias nofree noundef writeonly align 4 captures(none) dereferenceable(256) %3) unnamed_addr #6 personality ptr @rust_eh_personality !dbg !94294 !guid !94302 {
+define hidden void @_RINvNtNtCslFlrwjHoTci_14polars_compute12if_then_else6scalar37if_then_else_broadcast_both_scalar_64fECs1LHh8CLbVkQ_11polars_core(i64 noundef %0, float noundef %1, float noundef %2, ptr noalias nofree noundef writeonly align 4 captures(none) dereferenceable(256) initializes((0, 256)) %3) unnamed_addr #6 personality ptr @rust_eh_personality !dbg !94294 !guid !94302 {
 vector.ph:
   %broadcast.splatinsert = insertelement <4 x i64> poison, i64 %0, i64 0
   %broadcast.splat = shufflevector <4 x i64> %broadcast.splatinsert, <4 x i64> poison, <4 x i32> zeroinitializer
@@ -353,7 +353,7 @@ _RINvNtNtCslFlrwjHoTci_14polars_compute12if_then_else6scalar39if_then_else_broad
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind nonlazybind memory(argmem: write) uwtable
-define hidden void @_RINvNtNtCslFlrwjHoTci_14polars_compute12if_then_else6scalar37if_then_else_broadcast_both_scalar_64hECs1LHh8CLbVkQ_11polars_core(i64 noundef %0, i8 noundef %1, i8 noundef %2, ptr noalias nofree noundef writeonly captures(none) dereferenceable(64) %3) unnamed_addr #6 personality ptr @rust_eh_personality !dbg !94311 !guid !94318 {
+define hidden void @_RINvNtNtCslFlrwjHoTci_14polars_compute12if_then_else6scalar37if_then_else_broadcast_both_scalar_64hECs1LHh8CLbVkQ_11polars_core(i64 noundef %0, i8 noundef %1, i8 noundef %2, ptr noalias nofree noundef writeonly captures(none) dereferenceable(64) initializes((0, 64)) %3) unnamed_addr #6 personality ptr @rust_eh_personality !dbg !94311 !guid !94318 {
 vector.ph:
   %broadcast.splatinsert3 = insertelement <16 x i8> poison, i8 %1, i64 0
   %broadcast.splat4 = shufflevector <16 x i8> %broadcast.splatinsert3, <16 x i8> poison, <16 x i32> zeroinitializer ; 4 uses
@@ -384,7 +384,7 @@ vector.ph:
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind nonlazybind memory(argmem: write) uwtable
-define hidden void @_RINvNtNtCslFlrwjHoTci_14polars_compute12if_then_else6scalar37if_then_else_broadcast_both_scalar_64lECs1LHh8CLbVkQ_11polars_core(i64 noundef %0, i32 noundef %1, i32 noundef %2, ptr noalias nofree noundef writeonly align 4 captures(none) dereferenceable(256) %3) unnamed_addr #6 personality ptr @rust_eh_personality !dbg !94325 !guid !94333 {
+define hidden void @_RINvNtNtCslFlrwjHoTci_14polars_compute12if_then_else6scalar37if_then_else_broadcast_both_scalar_64lECs1LHh8CLbVkQ_11polars_core(i64 noundef %0, i32 noundef %1, i32 noundef %2, ptr noalias nofree noundef writeonly align 4 captures(none) dereferenceable(256) initializes((0, 256)) %3) unnamed_addr #6 personality ptr @rust_eh_personality !dbg !94325 !guid !94333 {
 vector.ph:
   %broadcast.splatinsert = insertelement <4 x i64> poison, i64 %0, i64 0
   %broadcast.splat = shufflevector <4 x i64> %broadcast.splatinsert, <4 x i64> poison, <4 x i32> zeroinitializer
@@ -414,7 +414,7 @@ _RINvNtNtCslFlrwjHoTci_14polars_compute12if_then_else6scalar39if_then_else_broad
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind nonlazybind memory(argmem: write) uwtable
-define hidden void @_RINvNtNtCslFlrwjHoTci_14polars_compute12if_then_else6scalar37if_then_else_broadcast_both_scalar_64mECs1LHh8CLbVkQ_11polars_core(i64 noundef %0, i32 noundef %1, i32 noundef %2, ptr noalias nofree noundef writeonly align 4 captures(none) dereferenceable(256) %3) unnamed_addr #6 personality ptr @rust_eh_personality !dbg !94342 !guid !94350 {
+define hidden void @_RINvNtNtCslFlrwjHoTci_14polars_compute12if_then_else6scalar37if_then_else_broadcast_both_scalar_64mECs1LHh8CLbVkQ_11polars_core(i64 noundef %0, i32 noundef %1, i32 noundef %2, ptr noalias nofree noundef writeonly align 4 captures(none) dereferenceable(256) initializes((0, 256)) %3) unnamed_addr #6 personality ptr @rust_eh_personality !dbg !94342 !guid !94350 {
 vector.ph:
   %broadcast.splatinsert = insertelement <4 x i64> poison, i64 %0, i64 0
   %broadcast.splat = shufflevector <4 x i64> %broadcast.splatinsert, <4 x i64> poison, <4 x i32> zeroinitializer
@@ -444,7 +444,7 @@ _RINvNtNtCslFlrwjHoTci_14polars_compute12if_then_else6scalar39if_then_else_broad
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind nonlazybind memory(argmem: write) uwtable
-define hidden void @_RINvNtNtCslFlrwjHoTci_14polars_compute12if_then_else6scalar37if_then_else_broadcast_both_scalar_64nECs1LHh8CLbVkQ_11polars_core(i64 noundef %0, i128 noundef %1, i128 noundef %2, ptr noalias nofree noundef writeonly align 16 captures(none) dereferenceable(1024) %3) unnamed_addr #6 personality ptr @rust_eh_personality !dbg !94359 !guid !94367 {
+define hidden void @_RINvNtNtCslFlrwjHoTci_14polars_compute12if_then_else6scalar37if_then_else_broadcast_both_scalar_64nECs1LHh8CLbVkQ_11polars_core(i64 noundef %0, i128 noundef %1, i128 noundef %2, ptr noalias nofree noundef writeonly align 16 captures(none) dereferenceable(1024) initializes((0, 1024)) %3) unnamed_addr #6 personality ptr @rust_eh_personality !dbg !94359 !guid !94367 {
 bb.a:
   br label %.lr.ph.i, !dbg !94369
 
@@ -474,7 +474,7 @@ _RINvNtNtCslFlrwjHoTci_14polars_compute12if_then_else6scalar39if_then_else_broad
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind nonlazybind memory(argmem: write) uwtable
-define hidden void @_RINvNtNtCslFlrwjHoTci_14polars_compute12if_then_else6scalar37if_then_else_broadcast_both_scalar_64oECs1LHh8CLbVkQ_11polars_core(i64 noundef %0, i128 noundef %1, i128 noundef %2, ptr noalias nofree noundef writeonly align 16 captures(none) dereferenceable(1024) %3) unnamed_addr #6 personality ptr @rust_eh_personality !dbg !94377 !guid !94385 {
+define hidden void @_RINvNtNtCslFlrwjHoTci_14polars_compute12if_then_else6scalar37if_then_else_broadcast_both_scalar_64oECs1LHh8CLbVkQ_11polars_core(i64 noundef %0, i128 noundef %1, i128 noundef %2, ptr noalias nofree noundef writeonly align 16 captures(none) dereferenceable(1024) initializes((0, 1024)) %3) unnamed_addr #6 personality ptr @rust_eh_personality !dbg !94377 !guid !94385 {
 bb.a:
   br label %.lr.ph.i, !dbg !94387
 
@@ -504,7 +504,7 @@ _RINvNtNtCslFlrwjHoTci_14polars_compute12if_then_else6scalar39if_then_else_broad
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind nonlazybind memory(argmem: write) uwtable
-define hidden void @_RINvNtNtCslFlrwjHoTci_14polars_compute12if_then_else6scalar37if_then_else_broadcast_both_scalar_64sECs1LHh8CLbVkQ_11polars_core(i64 noundef %0, i16 noundef %1, i16 noundef %2, ptr noalias nofree noundef writeonly align 2 captures(none) dereferenceable(128) %3) unnamed_addr #6 personality ptr @rust_eh_personality !dbg !94395 !guid !94402 {
+define hidden void @_RINvNtNtCslFlrwjHoTci_14polars_compute12if_then_else6scalar37if_then_else_broadcast_both_scalar_64sECs1LHh8CLbVkQ_11polars_core(i64 noundef %0, i16 noundef %1, i16 noundef %2, ptr noalias nofree noundef writeonly align 2 captures(none) dereferenceable(128) initializes((0, 128)) %3) unnamed_addr #6 personality ptr @rust_eh_personality !dbg !94395 !guid !94402 {
 vector.ph:
   %broadcast.splatinsert3 = insertelement <8 x i16> poison, i16 %1, i64 0
   %broadcast.splat4 = shufflevector <8 x i16> %broadcast.splatinsert3, <8 x i16> poison, <8 x i32> zeroinitializer ; 8 uses
@@ -555,7 +555,7 @@ vector.ph:
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind nonlazybind memory(argmem: write) uwtable
-define hidden void @_RINvNtNtCslFlrwjHoTci_14polars_compute12if_then_else6scalar37if_then_else_broadcast_both_scalar_64tECs1LHh8CLbVkQ_11polars_core(i64 noundef %0, i16 noundef %1, i16 noundef %2, ptr noalias nofree noundef writeonly align 2 captures(none) dereferenceable(128) %3) unnamed_addr #6 personality ptr @rust_eh_personality !dbg !94409 !guid !94416 {
+define hidden void @_RINvNtNtCslFlrwjHoTci_14polars_compute12if_then_else6scalar37if_then_else_broadcast_both_scalar_64tECs1LHh8CLbVkQ_11polars_core(i64 noundef %0, i16 noundef %1, i16 noundef %2, ptr noalias nofree noundef writeonly align 2 captures(none) dereferenceable(128) initializes((0, 128)) %3) unnamed_addr #6 personality ptr @rust_eh_personality !dbg !94409 !guid !94416 {
 vector.ph:
   %broadcast.splatinsert3 = insertelement <8 x i16> poison, i16 %1, i64 0
   %broadcast.splat4 = shufflevector <8 x i16> %broadcast.splatinsert3, <8 x i16> poison, <8 x i32> zeroinitializer ; 8 uses
@@ -606,7 +606,7 @@ vector.ph:
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind nonlazybind memory(argmem: write) uwtable
-define hidden void @_RINvNtNtCslFlrwjHoTci_14polars_compute12if_then_else6scalar37if_then_else_broadcast_both_scalar_64xECs1LHh8CLbVkQ_11polars_core(i64 noundef %0, i64 noundef %1, i64 noundef %2, ptr noalias nofree noundef writeonly align 8 captures(none) dereferenceable(512) %3) unnamed_addr #6 personality ptr @rust_eh_personality !dbg !94423 !guid !94431 {
+define hidden void @_RINvNtNtCslFlrwjHoTci_14polars_compute12if_then_else6scalar37if_then_else_broadcast_both_scalar_64xECs1LHh8CLbVkQ_11polars_core(i64 noundef %0, i64 noundef %1, i64 noundef %2, ptr noalias nofree noundef writeonly align 8 captures(none) dereferenceable(512) initializes((0, 512)) %3) unnamed_addr #6 personality ptr @rust_eh_personality !dbg !94423 !guid !94431 {
 bb.a:
   br label %.lr.ph.i, !dbg !94433
 
@@ -636,7 +636,7 @@ _RINvNtNtCslFlrwjHoTci_14polars_compute12if_then_else6scalar39if_then_else_broad
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind nonlazybind memory(argmem: write) uwtable
-define hidden void @_RINvNtNtCslFlrwjHoTci_14polars_compute12if_then_else6scalar37if_then_else_broadcast_both_scalar_64yECs1LHh8CLbVkQ_11polars_core(i64 noundef %0, i64 noundef %1, i64 noundef %2, ptr noalias nofree noundef writeonly align 8 captures(none) dereferenceable(512) %3) unnamed_addr #6 personality ptr @rust_eh_personality !dbg !94441 !guid !94449 {
+define hidden void @_RINvNtNtCslFlrwjHoTci_14polars_compute12if_then_else6scalar37if_then_else_broadcast_both_scalar_64yECs1LHh8CLbVkQ_11polars_core(i64 noundef %0, i64 noundef %1, i64 noundef %2, ptr noalias nofree noundef writeonly align 8 captures(none) dereferenceable(512) initializes((0, 512)) %3) unnamed_addr #6 personality ptr @rust_eh_personality !dbg !94441 !guid !94449 {
 bb.a:
   br label %.lr.ph.i, !dbg !94451
 

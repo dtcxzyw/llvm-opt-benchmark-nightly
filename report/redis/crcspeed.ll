@@ -12,7 +12,7 @@ target triple = "x86_64-pc-linux-gnu"
 @CRC64_TRI_CUTOFF = internal unnamed_addr global i64 16384, align 8, !guid !18
 
 ; Function Attrs: nounwind uwtable
-define dso_local void @crcspeed64little_init(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef captures(none) %1) local_unnamed_addr #0 !guid !27 {
+define dso_local void @crcspeed64little_init(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef captures(none) initializes((0, 2048)) %1) local_unnamed_addr #0 !guid !27 {
 bb.a:
   %i.a = alloca i8, align 1                       ; 4 uses
   br label %bb.b
@@ -189,7 +189,7 @@ bb.e:                                             ; preds = %bb.b, %bb.e
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local void @crcspeed64big_init(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef captures(none) %1) local_unnamed_addr #0 !guid !37 {
+define dso_local void @crcspeed64big_init(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef captures(none) initializes((0, 2048)) %1) local_unnamed_addr #0 !guid !37 {
 bb.a:
   %i.a = alloca i8, align 1                       ; 4 uses
   br label %bb.b
@@ -592,7 +592,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local void @crcspeed64native_init(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef captures(none) %1) local_unnamed_addr #0 !guid !63 {
+define dso_local void @crcspeed64native_init(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef captures(none) initializes((0, 2048)) %1) local_unnamed_addr #0 !guid !63 {
 bb.a:
   %i.a = alloca i8, align 1                       ; 4 uses
   br label %bb.b

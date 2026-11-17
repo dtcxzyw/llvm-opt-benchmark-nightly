@@ -204,11 +204,10 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: nounwind sspstrong uwtable
 define dso_local void @aspeed_smc_test_erase_sector(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [64 x i32], align 16              ; 9 uses
+  %i.a = alloca [64 x i32], align 16              ; 8 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.c = load i32, ptr %i.b, align 8              ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %i.a, i8 0, i64 256, i1 false), !annotation !11
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 5 uses
   %i.e = load i8, ptr %i.d, align 8
   %i.f = zext nneg i8 %i.e to i32
@@ -401,7 +400,7 @@ bb.o:                                             ; preds = %bb.n
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #3
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc void @read_page(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, ptr nofree noundef nonnull writeonly captures(none) %2) unnamed_addr #0 {
+define internal fastcc void @read_page(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, ptr nofree noundef nonnull writeonly captures(none) initializes((0, 256)) %2) unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8
@@ -468,11 +467,10 @@ bb.c:                                             ; preds = %bb.b
 ; Function Attrs: nounwind sspstrong uwtable
 define dso_local void @aspeed_smc_test_erase_all(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [64 x i32], align 16              ; 9 uses
+  %i.a = alloca [64 x i32], align 16              ; 8 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.c = load i32, ptr %i.b, align 8              ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %i.a, i8 0, i64 256, i1 false), !annotation !11
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 5 uses
   %i.e = load i8, ptr %i.d, align 8
   %i.f = zext nneg i8 %i.e to i32
@@ -658,7 +656,7 @@ bb.o:                                             ; preds = %bb.n
 ; Function Attrs: nounwind sspstrong uwtable
 define dso_local void @aspeed_smc_test_write_page(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [64 x i32], align 16              ; 7 uses
+  %i.a = alloca [64 x i32], align 16              ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.c = load i32, ptr %i.b, align 8              ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
@@ -721,7 +719,6 @@ bb.b:                                             ; preds = %bb.a, %bb.b
   br i1 %exitcond.not, label %bb.c, label %bb.b, !llvm.loop !22
 
 bb.c:                                             ; preds = %bb.b
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %i.a, i8 0, i64 256, i1 false), !annotation !11
   %i.aa = load i8, ptr %i.d, align 8
   %i.ab = zext i8 %i.aa to i64
   %i.ac = shl nuw nsw i64 %i.ab, 2
@@ -865,7 +862,7 @@ bb.b:                                             ; preds = %bb.a, %bb.b
   br i1 %exitcond.not, label %bb.c, label %bb.b, !llvm.loop !25
 
 bb.c:                                             ; preds = %bb.b
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %i.a, i8 0, i64 256, i1 false), !annotation !11
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %i.a, i8 0, i64 256, i1 false), !annotation !12
   %i.ah = load i8, ptr %i.d, align 8
   %i.ai = zext i8 %i.ah to i64
   %i.aj = shl nuw nsw i64 %i.ai, 2
@@ -1103,7 +1100,7 @@ bb.b:                                             ; preds = %bb.a, %bb.b
   br i1 %exitcond.not, label %bb.c, label %bb.b, !llvm.loop !28
 
 bb.c:                                             ; preds = %bb.b
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %i.a, i8 0, i64 256, i1 false), !annotation !11
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %i.a, i8 0, i64 256, i1 false), !annotation !12
   %i.ay = load i8, ptr %i.d, align 8
   %i.az = zext i8 %i.ay to i64
   %i.ba = shl nuw nsw i64 %i.az, 2
@@ -1506,7 +1503,7 @@ bb.g:                                             ; preds = %bb.e, %assert_page_
   %indvars.iv = phi i64 [ 0, %bb.e ], [ %indvars.iv.next, %assert_page_mem.exit89 ] ; 3 uses
   %i.av = shl nuw nsw i64 %indvars.iv, 16         ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %i.b, i8 0, i64 256, i1 false), !annotation !11
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %i.b, i8 0, i64 256, i1 false), !annotation !12
   %i.aw = load i8, ptr %i.c, align 8
   %i.ax = zext i8 %i.aw to i64
   %i.ay = shl nuw nsw i64 %i.ax, 2
@@ -1588,7 +1585,7 @@ bb.j:                                             ; preds = %bb.j, %assert_page_
 
 write_page_mem.exit:                              ; preds = %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %i.a, i8 0, i64 256, i1 false), !annotation !11
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %i.a, i8 0, i64 256, i1 false), !annotation !12
   %i.cc = load i8, ptr %i.c, align 8
   %i.cd = zext i8 %i.cc to i64
   %i.ce = shl nuw nsw i64 %i.cd, 2
@@ -1770,7 +1767,7 @@ bb.g:                                             ; preds = %bb.e, %assert_page_
   %indvars.iv = phi i64 [ 0, %bb.e ], [ %indvars.iv.next, %assert_page_mem.exit86 ] ; 3 uses
   %i.av = shl nuw nsw i64 %indvars.iv, 16         ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %i.b, i8 0, i64 256, i1 false), !annotation !11
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %i.b, i8 0, i64 256, i1 false), !annotation !12
   %i.aw = load i8, ptr %i.c, align 8
   %i.ax = zext i8 %i.aw to i64
   %i.ay = shl nuw nsw i64 %i.ax, 2
@@ -1852,7 +1849,7 @@ bb.j:                                             ; preds = %bb.j, %assert_page_
 
 write_page_mem.exit:                              ; preds = %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %i.a, i8 0, i64 256, i1 false), !annotation !11
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %i.a, i8 0, i64 256, i1 false), !annotation !12
   %i.cc = load i8, ptr %i.c, align 8
   %i.cd = zext i8 %i.cc to i64
   %i.ce = shl nuw nsw i64 %i.cd, 2
@@ -2008,7 +2005,7 @@ define dso_local void @aspeed_smc_test_write_page_qpi(ptr nofree noundef readonl
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !36
 
 ._crit_edge:                                      ; preds = %.lr.ph
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %i.a, i8 0, i64 256, i1 false), !annotation !11
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %i.a, i8 0, i64 256, i1 false), !annotation !12
   %i.ak = load i8, ptr %i.d, align 8
   %i.al = zext i8 %i.ak to i64
   %i.am = shl nuw nsw i64 %i.al, 2
@@ -2158,9 +2155,9 @@ attributes #7 = { noreturn nounwind }
 !llvm.module.flags = !{!3, !4, !5, !6, !7, !8, !9}
 !llvm.ident = !{!10}
 
-!0 = distinct !{!0, !12}
-!1 = distinct !{!1, !12}
-!2 = distinct !{!2, !12}
+!0 = distinct !{!0, !11}
+!1 = distinct !{!1, !11}
+!2 = distinct !{!2, !11}
 !3 = !{i32 7, !"Dwarf Version", i32 5}
 !4 = !{i32 2, !"Debug Info Version", i32 3}
 !5 = !{i32 1, !"long-double-type", !"x86_fp80"}
@@ -2169,32 +2166,32 @@ attributes #7 = { noreturn nounwind }
 !8 = !{i32 7, !"uwtable", i32 2}
 !9 = !{i32 7, !"debug-info-assignment-tracking", i1 true}
 !10 = !{!"Ubuntu clang version 24.0.0 (++20260815081758+83e1178daa12-1~exp1~20260815201912.1788)"}
-!11 = !{!"auto-init"}
-!12 = !{!"llvm.loop.mustprogress"}
-!13 = distinct !{!13, !12}
-!14 = distinct !{!14, !12}
-!15 = distinct !{!15, !12}
-!16 = distinct !{!16, !12}
-!17 = distinct !{!17, !12}
-!18 = distinct !{!18, !12}
-!19 = distinct !{!19, !12}
-!20 = distinct !{!20, !12}
-!21 = distinct !{!21, !12}
-!22 = distinct !{!22, !12}
-!23 = distinct !{!23, !12}
-!24 = distinct !{!24, !12}
-!25 = distinct !{!25, !12}
-!26 = distinct !{!26, !12}
-!27 = distinct !{!27, !12}
-!28 = distinct !{!28, !12}
-!29 = distinct !{!29, !12}
+!11 = !{!"llvm.loop.mustprogress"}
+!12 = !{!"auto-init"}
+!13 = distinct !{!13, !11}
+!14 = distinct !{!14, !11}
+!15 = distinct !{!15, !11}
+!16 = distinct !{!16, !11}
+!17 = distinct !{!17, !11}
+!18 = distinct !{!18, !11}
+!19 = distinct !{!19, !11}
+!20 = distinct !{!20, !11}
+!21 = distinct !{!21, !11}
+!22 = distinct !{!22, !11}
+!23 = distinct !{!23, !11}
+!24 = distinct !{!24, !11}
+!25 = distinct !{!25, !11}
+!26 = distinct !{!26, !11}
+!27 = distinct !{!27, !11}
+!28 = distinct !{!28, !11}
+!29 = distinct !{!29, !11}
 !30 = !{!"branch_weights", !"expected", i32 1, i32 2000}
 !31 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!32 = distinct !{!32, !12}
-!33 = distinct !{!33, !12}
-!34 = distinct !{!34, !12}
-!35 = distinct !{!35, !12}
-!36 = distinct !{!36, !12}
-!37 = distinct !{!37, !12}
-!38 = distinct !{!38, !12}
+!32 = distinct !{!32, !11}
+!33 = distinct !{!33, !11}
+!34 = distinct !{!34, !11}
+!35 = distinct !{!35, !11}
+!36 = distinct !{!36, !11}
+!37 = distinct !{!37, !11}
+!38 = distinct !{!38, !11}
 end_hunk_1
