@@ -14,7 +14,7 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.2 = private unnamed_addr constant [30 x i8] c"  [ %.2f, %.2f, %.2f, %.2f]]\0A\00", align 1, !guid !10
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define dso_local void @MultMatrixMatrix(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2) local_unnamed_addr #0 !guid !14 {
+define dso_local void @MultMatrixMatrix(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) initializes((0, 128)) %2) local_unnamed_addr #0 !guid !14 {
 bb.a:
   %gep.1 = getelementptr inbounds nuw i8, ptr %1, i64 32
   %gep.2 = getelementptr inbounds nuw i8, ptr %1, i64 64
@@ -286,34 +286,8 @@ bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.7.0..sroa_idx.i47, i8 0, i64 32, i1 false)
   %.sroa.73.0..sroa_idx.i48 = getelementptr inbounds nuw i8, ptr %i.m, i64 120
   store double 1.000000e+00, ptr %.sroa.73.0..sroa_idx.i48, align 8, !tbaa !12
-  %i.o = tail call noalias dereferenceable_or_null(128) ptr @malloc(i64 noundef 128) #14 ; 9 uses
-  store double 1.000000e+00, ptr %i.o, align 8, !tbaa !12
-  %.sroa.5.0..sroa_idx.i49 = getelementptr inbounds nuw i8, ptr %i.o, i64 8
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.5.0..sroa_idx.i49, i8 0, i64 32, i1 false)
-  %.sroa.51.0..sroa_idx.i50 = getelementptr inbounds nuw i8, ptr %i.o, i64 40
-  store double 1.000000e+00, ptr %.sroa.51.0..sroa_idx.i50, align 8, !tbaa !12
-  %.sroa.6.0..sroa_idx.i51 = getelementptr inbounds nuw i8, ptr %i.o, i64 48
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.6.0..sroa_idx.i51, i8 0, i64 32, i1 false)
-  %.sroa.62.0..sroa_idx.i52 = getelementptr inbounds nuw i8, ptr %i.o, i64 80
-  store double 1.000000e+00, ptr %.sroa.62.0..sroa_idx.i52, align 8, !tbaa !12
-  %.sroa.7.0..sroa_idx.i53 = getelementptr inbounds nuw i8, ptr %i.o, i64 88
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.7.0..sroa_idx.i53, i8 0, i64 32, i1 false)
-  %.sroa.73.0..sroa_idx.i54 = getelementptr inbounds nuw i8, ptr %i.o, i64 120
-  store double 1.000000e+00, ptr %.sroa.73.0..sroa_idx.i54, align 8, !tbaa !12
-  %i.p = tail call noalias dereferenceable_or_null(128) ptr @malloc(i64 noundef 128) #14 ; 9 uses
-  store double 1.000000e+00, ptr %i.p, align 8, !tbaa !12
-  %.sroa.5.0..sroa_idx.i55 = getelementptr inbounds nuw i8, ptr %i.p, i64 8
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.5.0..sroa_idx.i55, i8 0, i64 32, i1 false)
-  %.sroa.51.0..sroa_idx.i56 = getelementptr inbounds nuw i8, ptr %i.p, i64 40
-  store double 1.000000e+00, ptr %.sroa.51.0..sroa_idx.i56, align 8, !tbaa !12
-  %.sroa.6.0..sroa_idx.i57 = getelementptr inbounds nuw i8, ptr %i.p, i64 48
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.6.0..sroa_idx.i57, i8 0, i64 32, i1 false)
-  %.sroa.62.0..sroa_idx.i58 = getelementptr inbounds nuw i8, ptr %i.p, i64 80
-  store double 1.000000e+00, ptr %.sroa.62.0..sroa_idx.i58, align 8, !tbaa !12
-  %.sroa.7.0..sroa_idx.i59 = getelementptr inbounds nuw i8, ptr %i.p, i64 88
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.7.0..sroa_idx.i59, i8 0, i64 32, i1 false)
-  %.sroa.73.0..sroa_idx.i60 = getelementptr inbounds nuw i8, ptr %i.p, i64 120
-  store double 1.000000e+00, ptr %.sroa.73.0..sroa_idx.i60, align 8, !tbaa !12
+  %i.o = tail call noalias dereferenceable_or_null(128) ptr @malloc(i64 noundef 128) #14 ; 2 uses
+  %i.p = tail call noalias dereferenceable_or_null(128) ptr @malloc(i64 noundef 128) #14 ; 2 uses
   store double %i.b, ptr %.sroa.51.0..sroa_idx.i, align 8, !tbaa !12
   %i.q = fneg double %i.c
   store double %i.q, ptr %.sroa.6.0..sroa_idx.i, align 8, !tbaa !12
