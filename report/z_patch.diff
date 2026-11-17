@@ -1,0 +1,325 @@
+diff --git a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+index bd6392c69f379..4c2ca71725f60 100644
+--- a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+@@ -364,6 +364,11 @@ class ConstraintInfo {
+   /// cleared when the system changes.
+   DenseMap<PointerIntPair<Value *, 1, bool>, Decomposition> DecomposeCache;
+ 
++  /// Reentrancy guard for getKnownSign. When true, getKnownSign degrades to at
++  /// most a KnownBits query, and skips querying the signed system (which may in
++  /// turn query getKnownSign again).
++  bool InSignQuery = false;
++
+ public:
+   DenseMap<PointerIntPair<Value *, 1, bool>, Decomposition> &
+   getDecomposeCache() {
+@@ -419,10 +424,12 @@ class ConstraintInfo {
+   /// system implies it or because ValueTracking can prove it.
+   bool isKnownPositive(Value *V);
+ 
+-  /// Returns true if \p V is known to be negative, false if \p V is known to be
+-  /// nonnegative, or std::nullopt if neither the signed system nor
+-  /// ValueTracking can prove it.
+-  std::optional<bool> getKnownSign(Value *V);
++  /// Returns the sign of \p V, if known. The result is false if \p V is known
++  /// to be non-negative. Otherwise it is true if \p V is known to be negative
++  /// (if \p StrictlyNegative), or non-positive (if not \p StrictlyNegative).
++  /// Returns std::nullopt if neither ValueTracking, nor the signed system can
++  /// prove either fact.
++  std::optional<bool> getKnownSign(Value *V, bool StrictlyNegative);
+ 
+   void addFact(CmpInst::Predicate Pred, Value *A, Value *B, unsigned NumIn,
+                unsigned NumOut, SmallVectorImpl<StackEntry> &DFSInStack);
+@@ -635,15 +642,22 @@ static bool isKnownNoWrap(Instruction::BinaryOps Opcode, Value *Op0, Value *Op1,
+ 
+   // For a constant Op1, the ranges of Op0 for which the operation does not
+   // wrap are known exactly; check if the systems imply one of them.
+-  auto *C = dyn_cast<ConstantInt>(Op1);
+-  if (!C)
+-    return false;
++  if (auto *C = dyn_cast<ConstantInt>(Op1)) {
++    auto Range = ConstantRange::makeExactNoWrapRegion(
++        Opcode, C->getValue(),
++        Signed ? OBO::NoSignedWrap : OBO::NoUnsignedWrap);
++    return doesHoldInRange(Info, Op0, Range, Signed);
++  }
+ 
+-  return doesHoldInRange(Info, Op0,
+-                         ConstantRange::makeExactNoWrapRegion(
+-                             Opcode, C->getValue(),
+-                             Signed ? OBO::NoSignedWrap : OBO::NoUnsignedWrap),
+-                         Signed);
++  // A signed sum of operands with opposite signs cannot wrap.
++  if (Signed && Opcode == Instruction::Add) {
++    if (auto Op0Sign = Info.getKnownSign(Op0, /*StrictlyNegative=*/false))
++      if (auto Op1Sign = Info.getKnownSign(Op1, /*StrictlyNegative=*/false))
++        if (*Op0Sign != *Op1Sign)
++          return true;
++  }
++
++  return false;
+ }
+ 
+ /// Returns true if \p V is known to not wrap in signed or unsigned, depending
+@@ -1178,16 +1192,28 @@ bool ConstraintInfo::isKnownPositive(Value *V) {
+          doesHold(CmpInst::ICMP_SGT, V, ConstantInt::get(V->getType(), 0));
+ }
+ 
+-std::optional<bool> ConstraintInfo::getKnownSign(Value *V) {
++std::optional<bool> ConstraintInfo::getKnownSign(Value *V,
++                                                 bool StrictlyNegative) {
++  if (auto *CI = dyn_cast<ConstantInt>(V))
++    return CI->isNegative();
+   KnownBits Known = computeKnownBits(V, DL);
+   if (Known.isNonNegative())
+     return false;
+-  if (Known.isNegative())
++  if (StrictlyNegative ? Known.isNegative() : Known.isNonPositive())
+     return true;
++
++  // Bail early if we're already in a recursive sign query.
++  if (InSignQuery)
++    return std::nullopt;
++
++  InSignQuery = true;
++  auto Cleanup = llvm::scope_exit([&]() { InSignQuery = false; });
++
+   Constant *Zero = ConstantInt::get(V->getType(), 0);
+   if (doesHold(CmpInst::ICMP_SGE, V, Zero))
+     return false;
+-  if (doesHold(CmpInst::ICMP_SLT, V, Zero))
++  auto NegativePred = StrictlyNegative ? CmpInst::ICMP_SLT : CmpInst::ICMP_SLE;
++  if (doesHold(NegativePred, V, Zero))
+     return true;
+   return std::nullopt;
+ }
+@@ -2684,8 +2710,10 @@ static bool eliminateConstraints(Function &F, DominatorTree &DT, LoopInfo &LI,
+           // The operands also have the same sign: if one of them is known to
+           // be non-negative (or negative), so is the other.
+           if (A->getType()->isIntegerTy()) {
+-            std::optional<bool> ASign = Info.getKnownSign(A);
+-            std::optional<bool> BSign = Info.getKnownSign(B);
++            std::optional<bool> ASign =
++                Info.getKnownSign(A, /*StrictlyNegative=*/true);
++            std::optional<bool> BSign =
++                Info.getKnownSign(B, /*StrictlyNegative=*/true);
+             if (ASign.has_value() != BSign.has_value()) {
+               bool IsNegative = ASign ? *ASign : *BSign;
+               Value *OtherOp = ASign ? B : A;
+diff --git a/llvm/test/Transforms/ConstraintElimination/add-nsw.ll b/llvm/test/Transforms/ConstraintElimination/add-nsw.ll
+index 07ad9a51f1912..c6f383b8edd9c 100644
+--- a/llvm/test/Transforms/ConstraintElimination/add-nsw.ll
++++ b/llvm/test/Transforms/ConstraintElimination/add-nsw.ll
+@@ -978,8 +978,7 @@ define i1 @add_non_positive_slt(i64 %x, i64 %y, i64 %b) {
+ ; CHECK-NEXT:    [[C:%.*]] = icmp slt i64 [[X]], [[B:%.*]]
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[C]])
+ ; CHECK-NEXT:    [[SUB:%.*]] = add i64 [[X]], [[Y]]
+-; CHECK-NEXT:    [[T:%.*]] = icmp slt i64 [[SUB]], [[B]]
+-; CHECK-NEXT:    ret i1 [[T]]
++; CHECK-NEXT:    ret i1 true
+ ;
+   %x.non.neg = icmp sge i64 %x, 0
+   call void @llvm.assume(i1 %x.non.neg)
+@@ -1001,8 +1000,7 @@ define i1 @add_non_positive_slt_commuted(i64 %x, i64 %y, i64 %b) {
+ ; CHECK-NEXT:    [[C:%.*]] = icmp slt i64 [[X]], [[B:%.*]]
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[C]])
+ ; CHECK-NEXT:    [[SUB:%.*]] = add i64 [[Y]], [[X]]
+-; CHECK-NEXT:    [[T:%.*]] = icmp slt i64 [[SUB]], [[B]]
+-; CHECK-NEXT:    ret i1 [[T]]
++; CHECK-NEXT:    ret i1 true
+ ;
+   %x.non.neg = icmp sge i64 %x, 0
+   call void @llvm.assume(i1 %x.non.neg)
+@@ -1026,8 +1024,7 @@ define i1 @add_non_positive_slt_hoisted(i64 %x, i64 %y, i64 %b) {
+ ; CHECK-NEXT:    [[SUB:%.*]] = add i64 [[X]], [[Y]]
+ ; CHECK-NEXT:    br i1 [[AND_2]], label [[IF_END:%.*]], label [[EXIT:%.*]]
+ ; CHECK:       if.end:
+-; CHECK-NEXT:    [[T:%.*]] = icmp slt i64 [[SUB]], [[B]]
+-; CHECK-NEXT:    ret i1 [[T]]
++; CHECK-NEXT:    ret i1 true
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    ret i1 false
+ ;
+@@ -1203,3 +1200,48 @@ define i64 @add_i64_bound_above_max_constraint_value(i64 %x) {
+   %add = add i64 %x, 3
+   ret i64 %add
+ }
++
++; We could infer nsw on the add here, but don't currently.
++define i64 @add_neg_via_known_bits(i64 %x) {
++; CHECK-LABEL: @add_neg_via_known_bits(
++; CHECK-NEXT:    [[NEG:%.*]] = or i64 [[X:%.*]], -9223372036854775808
++; CHECK-NEXT:    [[SUM:%.*]] = add i64 [[NEG]], 3
++; CHECK-NEXT:    ret i64 [[SUM]]
++;
++  %neg = or i64 %x, -9223372036854775808
++  %sum = add i64 %neg, 3
++  ret i64 %sum
++}
++
++define i1 @nested_sign_query_is_not_recursive(i32 %x, i32 %y, i32 %z) {
++; CHECK-LABEL: @nested_sign_query_is_not_recursive(
++; CHECK-NEXT:    [[A1:%.*]] = add i32 [[X:%.*]], [[Y:%.*]]
++; CHECK-NEXT:    [[A2:%.*]] = add i32 [[A1]], [[Z:%.*]]
++; CHECK-NEXT:    [[X_GT_5:%.*]] = icmp sgt i32 [[X]], 5
++; CHECK-NEXT:    call void @llvm.assume(i1 [[X_GT_5]])
++; CHECK-NEXT:    [[Y_GT_M4:%.*]] = icmp sgt i32 [[Y]], -4
++; CHECK-NEXT:    call void @llvm.assume(i1 [[Y_GT_M4]])
++; CHECK-NEXT:    [[Y_NEG:%.*]] = icmp slt i32 [[Y]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[Y_NEG]])
++; CHECK-NEXT:    [[Z_GT_M3:%.*]] = icmp sgt i32 [[Z]], -3
++; CHECK-NEXT:    call void @llvm.assume(i1 [[Z_GT_M3]])
++; CHECK-NEXT:    [[Z_NEG:%.*]] = icmp slt i32 [[Z]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[Z_NEG]])
++; CHECK-NEXT:    [[C:%.*]] = icmp sgt i32 [[A2]], 0
++; CHECK-NEXT:    ret i1 [[C]]
++;
++  %a1 = add i32 %x, %y
++  %a2 = add i32 %a1, %z
++  %x.gt.5 = icmp sgt i32 %x, 5
++  call void @llvm.assume(i1 %x.gt.5)
++  %y.gt.m4 = icmp sgt i32 %y, -4
++  call void @llvm.assume(i1 %y.gt.m4)
++  %y.neg = icmp slt i32 %y, 0
++  call void @llvm.assume(i1 %y.neg)
++  %z.gt.m3 = icmp sgt i32 %z, -3
++  call void @llvm.assume(i1 %z.gt.m3)
++  %z.neg = icmp slt i32 %z, 0
++  call void @llvm.assume(i1 %z.neg)
++  %c = icmp sgt i32 %a2, 0
++  ret i1 %c
++}
+diff --git a/llvm/test/Transforms/ConstraintElimination/sadd-with-overflow.ll b/llvm/test/Transforms/ConstraintElimination/sadd-with-overflow.ll
+index e24a282f50eec..4a758e2ae93e7 100644
+--- a/llvm/test/Transforms/ConstraintElimination/sadd-with-overflow.ll
++++ b/llvm/test/Transforms/ConstraintElimination/sadd-with-overflow.ll
+@@ -567,3 +567,113 @@ noov:
+ exit:
+   ret void
+ }
++
++define void @sadd_positive_constant_lhs(i64 %x) {
++; CHECK-LABEL: define void @sadd_positive_constant_lhs(
++; CHECK-SAME: i64 [[X:%.*]]) {
++; CHECK-NEXT:    [[C:%.*]] = icmp slt i64 [[X]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C]])
++; CHECK-NEXT:    call void @use(i1 false)
++; CHECK-NEXT:    ret void
++;
++  %c = icmp slt i64 %x, 0
++  call void @llvm.assume(i1 %c)
++  %s = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 3, i64 %x)
++  %o = extractvalue { i64, i1 } %s, 1
++  call void @use(i1 %o)
++  ret void
++}
++
++define void @sadd_negative_constant_lhs(i64 %x) {
++; CHECK-LABEL: define void @sadd_negative_constant_lhs(
++; CHECK-SAME: i64 [[X:%.*]]) {
++; CHECK-NEXT:    [[C:%.*]] = icmp sge i64 [[X]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C]])
++; CHECK-NEXT:    call void @use(i1 false)
++; CHECK-NEXT:    ret void
++;
++  %c = icmp sge i64 %x, 0
++  call void @llvm.assume(i1 %c)
++  %s = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 -3, i64 %x)
++  %o = extractvalue { i64, i1 } %s, 1
++  call void @use(i1 %o)
++  ret void
++}
++
++define void @sadd_opposite_signs_known_non_positive(i64 %v, i64 %w) {
++; CHECK-LABEL: define void @sadd_opposite_signs_known_non_positive(
++; CHECK-SAME: i64 [[V:%.*]], i64 [[W:%.*]]) {
++; CHECK-NEXT:    [[A:%.*]] = lshr i64 [[V]], 1
++; CHECK-NEXT:    [[B:%.*]] = and i64 [[W]], -9223372036854775808
++; CHECK-NEXT:    call void @use(i1 false)
++; CHECK-NEXT:    ret void
++;
++  %a = lshr i64 %v, 1
++  %b = and i64 %w, -9223372036854775808
++  %r = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %a, i64 %b)
++  %ov = extractvalue { i64, i1 } %r, 1
++  call void @use(i1 %ov)
++  ret void
++}
++
++define void @sadd_opposite_signs(i64 %v, i64 %s) {
++; CHECK-LABEL: define void @sadd_opposite_signs(
++; CHECK-SAME: i64 [[V:%.*]], i64 [[S:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[A:%.*]] = lshr i64 [[V]], 1
++; CHECK-NEXT:    [[C:%.*]] = icmp sge i64 [[S]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C]])
++; CHECK-NEXT:    [[N:%.*]] = xor i64 [[S]], -1
++; CHECK-NEXT:    call void @use(i1 false)
++; CHECK-NEXT:    ret void
++;
++entry:
++  %a = lshr i64 %v, 1
++  %c = icmp sge i64 %s, 0
++  call void @llvm.assume(i1 %c)
++  %n = xor i64 %s, -1
++  %r = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %a, i64 %n)
++  %ov = extractvalue { i64, i1 } %r, 1
++  call void @use(i1 %ov)
++  ret void
++}
++
++define void @sadd_same_signs(i64 %v, i64 %s) {
++; CHECK-LABEL: define void @sadd_same_signs(
++; CHECK-SAME: i64 [[V:%.*]], i64 [[S:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[A:%.*]] = lshr i64 [[V]], 1
++; CHECK-NEXT:    [[C:%.*]] = icmp sge i64 [[S]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C]])
++; CHECK-NEXT:    [[R:%.*]] = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 [[A]], i64 [[S]])
++; CHECK-NEXT:    [[OV:%.*]] = extractvalue { i64, i1 } [[R]], 1
++; CHECK-NEXT:    call void @use(i1 [[OV]])
++; CHECK-NEXT:    ret void
++;
++entry:
++  %a = lshr i64 %v, 1
++  %c = icmp sge i64 %s, 0
++  call void @llvm.assume(i1 %c)
++  %r = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %a, i64 %s)
++  %ov = extractvalue { i64, i1 } %r, 1
++  call void @use(i1 %ov)
++  ret void
++}
++
++define void @sadd_opposite_signs_known_negative(i8 %v, i8 %w) {
++; CHECK-LABEL: define void @sadd_opposite_signs_known_negative(
++; CHECK-SAME: i8 [[V:%.*]], i8 [[W:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[A:%.*]] = lshr i8 [[V]], 1
++; CHECK-NEXT:    [[B:%.*]] = or i8 [[W]], -128
++; CHECK-NEXT:    call void @use(i1 false)
++; CHECK-NEXT:    ret void
++;
++entry:
++  %a = lshr i8 %v, 1
++  %b = or i8 %w, -128
++  %r = call { i8, i1 } @llvm.sadd.with.overflow.i8(i8 %a, i8 %b)
++  %ov = extractvalue { i8, i1 } %r, 1
++  call void @use(i1 %ov)
++  ret void
++}
+diff --git a/llvm/test/Transforms/ConstraintElimination/vector-with-overflow.ll b/llvm/test/Transforms/ConstraintElimination/vector-with-overflow.ll
+index 055fae2fa7708..33181f1fdd4b4 100644
+--- a/llvm/test/Transforms/ConstraintElimination/vector-with-overflow.ll
++++ b/llvm/test/Transforms/ConstraintElimination/vector-with-overflow.ll
+@@ -28,9 +28,7 @@ define <2 x i1> @sadd_vec_opposite_signs(<2 x i8> %v, <2 x i8> %w) {
+ ; CHECK-SAME: <2 x i8> [[V:%.*]], <2 x i8> [[W:%.*]]) {
+ ; CHECK-NEXT:    [[A:%.*]] = lshr <2 x i8> [[V]], splat (i8 1)
+ ; CHECK-NEXT:    [[B:%.*]] = or <2 x i8> [[W]], splat (i8 -128)
+-; CHECK-NEXT:    [[R:%.*]] = call { <2 x i8>, <2 x i1> } @llvm.sadd.with.overflow.v2i8(<2 x i8> [[A]], <2 x i8> [[B]])
+-; CHECK-NEXT:    [[OV:%.*]] = extractvalue { <2 x i8>, <2 x i1> } [[R]], 1
+-; CHECK-NEXT:    ret <2 x i1> [[OV]]
++; CHECK-NEXT:    ret <2 x i1> zeroinitializer
+ ;
+   %a = lshr <2 x i8> %v, splat (i8 1)
+   %b = or <2 x i8> %w, splat (i8 -128)
