@@ -204,7 +204,7 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   %i.cu = phi i32 [ %i.cq, %bb.n ], [ %i.ct, %bb.o ]
   %switch.tableidx55 = add i32 %i.cu, -1          ; 2 uses
   %i.cv = icmp ult i32 %switch.tableidx55, 4
-  br i1 %i.cv, label %v4l2_get_color_primaries.exit.sink.split, label %bb.q
+  br i1 %i.cv, label %switch.lookup56, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
   %i.cw = load i32, ptr %.in.i, align 8, !tbaa !76
@@ -212,17 +212,21 @@ bb.q:                                             ; preds = %bb.p
   %i.cx = icmp ult i32 %switch.tableidx59, 10
   br i1 %i.cx, label %v4l2_get_color_primaries.exit.sink.split, label %v4l2_get_color_primaries.exit
 
-v4l2_get_color_primaries.exit.sink.split:         ; preds = %bb.q, %bb.p
-  %switch.tableidx59.sink = phi i32 [ %switch.tableidx55, %bb.p ], [ %switch.tableidx59, %bb.q ]
-  %switch.table.ff_v4l2_buffer_buf_to_avframe.7.sink = phi ptr [ @switch.table.ff_v4l2_buffer_buf_to_avframe.6, %bb.p ], [ @switch.table.ff_v4l2_buffer_buf_to_avframe.7, %bb.q ]
-  %i.cy = zext nneg i32 %switch.tableidx59.sink to i64
-  %switch.gep61 = getelementptr inbounds nuw i8, ptr %switch.table.ff_v4l2_buffer_buf_to_avframe.7.sink, i64 %i.cy
-  %switch.load62 = load i8, ptr %switch.gep61, align 1
-  %switch.ext63 = zext i8 %switch.load62 to i32
+switch.lookup56:                                  ; preds = %bb.p
+  %2 = zext nneg i32 %switch.tableidx55 to i64
+  %switch.gep57 = getelementptr inbounds nuw i8, ptr @switch.table.ff_v4l2_buffer_buf_to_avframe.6, i64 %2
+  %switch.load58 = load i8, ptr %switch.gep57, align 1
   br label %v4l2_get_color_primaries.exit
 
-v4l2_get_color_primaries.exit:                    ; preds = %v4l2_get_color_primaries.exit.sink.split, %bb.q
-  %.0.i = phi i32 [ 2, %bb.q ], [ %switch.ext63, %v4l2_get_color_primaries.exit.sink.split ]
+v4l2_get_color_primaries.exit.sink.split:         ; preds = %bb.q
+  %i.cy = zext nneg i32 %switch.tableidx59 to i64
+  %switch.gep61 = getelementptr inbounds nuw i8, ptr @switch.table.ff_v4l2_buffer_buf_to_avframe.7, i64 %i.cy
+  %switch.load62 = load i8, ptr %switch.gep61, align 1
+  br label %v4l2_get_color_primaries.exit
+
+v4l2_get_color_primaries.exit:                    ; preds = %bb.q, %v4l2_get_color_primaries.exit.sink.split, %switch.lookup56
+  %.0.i.shrunk = phi i8 [ %switch.load62, %v4l2_get_color_primaries.exit.sink.split ], [ %switch.load58, %switch.lookup56 ], [ 2, %bb.q ]
+  %.0.i = zext i8 %.0.i.shrunk to i32
   %i.cz = getelementptr inbounds nuw i8, ptr %0, i64 284
   store i32 %.0.i, ptr %i.cz, align 4, !tbaa !100
   br i1 %switch.i, label %bb.r, label %bb.s

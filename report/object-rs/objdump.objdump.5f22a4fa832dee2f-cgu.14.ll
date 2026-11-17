@@ -202,74 +202,87 @@ bb.b:                                             ; preds = %bb.a
   ]
 
 bb.c:                                             ; preds = %bb.b
-  %switch.tableidx = add i16 %.sroa.06.0.copyload.i, -1 ; 4 uses
+  %switch.tableidx = add i16 %.sroa.06.0.copyload.i, -1 ; 5 uses
   %i.k = icmp ult i16 %switch.tableidx, 15
   br i1 %i.k, label %switch.lookup, label %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationINtB4_22CoffRelocationIteratorRShNtNtBa_2pe22AnonObjectHeaderBigobjENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit
 
 bb.d:                                             ; preds = %bb.b, %bb.b
-  %switch.tableidx10 = add i16 %.sroa.06.0.copyload.i, -1 ; 4 uses
+  %switch.tableidx10 = add i16 %.sroa.06.0.copyload.i, -1 ; 5 uses
   %i.l = icmp ult i16 %switch.tableidx10, 17
   br i1 %i.l, label %switch.lookup11, label %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationINtB4_22CoffRelocationIteratorRShNtNtBa_2pe22AnonObjectHeaderBigobjENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit
 
 bb.e:                                             ; preds = %bb.b
-  %switch.tableidx20 = add i16 %.sroa.06.0.copyload.i, -1 ; 4 uses
+  %switch.tableidx20 = add i16 %.sroa.06.0.copyload.i, -1 ; 5 uses
   %i.m = icmp ult i16 %switch.tableidx20, 20
   br i1 %i.m, label %switch.lookup21, label %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationINtB4_22CoffRelocationIteratorRShNtNtBa_2pe22AnonObjectHeaderBigobjENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit
 
 bb.f:                                             ; preds = %bb.b
-  %switch.tableidx30 = add i16 %.sroa.06.0.copyload.i, -1 ; 3 uses
+  %switch.tableidx30 = add i16 %.sroa.06.0.copyload.i, -1 ; 4 uses
   %i.n = icmp ult i16 %switch.tableidx30, 12
-  br i1 %i.n, label %switch.lookup31, label %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationINtB4_22CoffRelocationIteratorRShNtNtBa_2pe22AnonObjectHeaderBigobjENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit
+  br i1 %i.n, label %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationINtB4_22CoffRelocationIteratorRShNtNtBa_2pe22AnonObjectHeaderBigobjENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit.sink.split, label %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationINtB4_22CoffRelocationIteratorRShNtNtBa_2pe22AnonObjectHeaderBigobjENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit
 
 switch.lookup:                                    ; preds = %bb.c
+  %2 = zext nneg i16 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump, i64 %2
+  %switch.load = load i8, ptr %switch.gep, align 1
   %i.o = zext nneg i16 %switch.tableidx to i64
-  %switch.gep.a = getelementptr inbounds nuw i8, ptr @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump, i64 %i.o
+  %switch.gep.a = getelementptr inbounds nuw i8, ptr @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.57, i64 %i.o
+  %switch.load5 = load i8, ptr %switch.gep.a, align 1
   %i.p = zext nneg i16 %switch.tableidx to i64
-  %switch.gep4 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.57, i64 %i.p
+  %switch.gep4 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.58, i64 %i.p
   %switch.load5.a = load i8, ptr %switch.gep4, align 1
-  br label %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationINtB4_22CoffRelocationIteratorRShNtNtBa_2pe22AnonObjectHeaderBigobjENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit.sink.split
+  %3 = zext nneg i16 %switch.tableidx to i64
+  %switch.gep8 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.59, i64 %3
+  %switch.load9 = load i64, ptr %switch.gep8, align 8
+  br label %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationINtB4_22CoffRelocationIteratorRShNtNtBa_2pe22AnonObjectHeaderBigobjENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit
 
 switch.lookup11:                                  ; preds = %bb.d
+  %4 = zext nneg i16 %switch.tableidx10 to i64
+  %switch.gep12 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.60, i64 %4
+  %switch.load13 = load i8, ptr %switch.gep12, align 1
   %i.q = zext nneg i16 %switch.tableidx10 to i64
-  %switch.gep12.a = getelementptr inbounds nuw i8, ptr @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.60, i64 %i.q
+  %switch.gep12.a = getelementptr inbounds nuw i8, ptr @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.61, i64 %i.q
+  %switch.load15 = load i8, ptr %switch.gep12.a, align 1
   %i.r = zext nneg i16 %switch.tableidx10 to i64
-  %switch.gep14 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.61, i64 %i.r
+  %switch.gep14 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.62, i64 %i.r
   %switch.load15.a = load i8, ptr %switch.gep14, align 1
-  br label %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationINtB4_22CoffRelocationIteratorRShNtNtBa_2pe22AnonObjectHeaderBigobjENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit.sink.split
+  %5 = zext nneg i16 %switch.tableidx10 to i64
+  %switch.gep18 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.63, i64 %5
+  %switch.load19 = load i64, ptr %switch.gep18, align 8
+  br label %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationINtB4_22CoffRelocationIteratorRShNtNtBa_2pe22AnonObjectHeaderBigobjENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit
 
 switch.lookup21:                                  ; preds = %bb.e
+  %6 = zext nneg i16 %switch.tableidx20 to i64
+  %switch.gep22 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.64, i64 %6
+  %switch.load23 = load i8, ptr %switch.gep22, align 1
   %i.s = zext nneg i16 %switch.tableidx20 to i64
-  %switch.gep22.a = getelementptr inbounds nuw i8, ptr @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.64, i64 %i.s
+  %switch.gep22.a = getelementptr inbounds nuw i8, ptr @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.65, i64 %i.s
+  %switch.load25 = load i8, ptr %switch.gep22.a, align 1
   %i.t = zext nneg i16 %switch.tableidx20 to i64
-  %switch.gep24 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.65, i64 %i.t
+  %switch.gep24 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.66, i64 %i.t
   %switch.load25.a = load i8, ptr %switch.gep24, align 1
-  br label %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationINtB4_22CoffRelocationIteratorRShNtNtBa_2pe22AnonObjectHeaderBigobjENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit.sink.split
+  %7 = zext nneg i16 %switch.tableidx20 to i64
+  %switch.gep28 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.67, i64 %7
+  %switch.load29 = load i64, ptr %switch.gep28, align 8
+  br label %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationINtB4_22CoffRelocationIteratorRShNtNtBa_2pe22AnonObjectHeaderBigobjENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit
 
-switch.lookup31:                                  ; preds = %bb.f
-  %2 = zext nneg i16 %switch.tableidx30 to i64
-  %switch.gep32 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.68, i64 %2
-  br label %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationINtB4_22CoffRelocationIteratorRShNtNtBa_2pe22AnonObjectHeaderBigobjENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit.sink.split
-
-_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationINtB4_22CoffRelocationIteratorRShNtNtBa_2pe22AnonObjectHeaderBigobjENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit.sink.split: ; preds = %switch.lookup, %switch.lookup11, %switch.lookup21, %switch.lookup31
-  %switch.tableidx30.sink38 = phi i16 [ %switch.tableidx30, %switch.lookup31 ], [ %switch.tableidx20, %switch.lookup21 ], [ %switch.tableidx10, %switch.lookup11 ], [ %switch.tableidx, %switch.lookup ] ; 2 uses
-  %switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationINtB2_22CoffRelocationIteratorRShNtNtB8_2pe22AnonObjectHeaderBigobjENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.55.sink = phi ptr [ @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.69, %switch.lookup31 ], [ @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.66, %switch.lookup21 ], [ @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.62, %switch.lookup11 ], [ @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.58, %switch.lookup ]
-  %switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationINtB2_22CoffRelocationIteratorRShNtNtB8_2pe22AnonObjectHeaderBigobjENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.56.sink = phi ptr [ @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.70, %switch.lookup31 ], [ @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.67, %switch.lookup21 ], [ @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.63, %switch.lookup11 ], [ @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.59, %switch.lookup ]
-  %.sroa.07.0.i.ph.in = phi ptr [ %switch.gep32, %switch.lookup31 ], [ %switch.gep22.a, %switch.lookup21 ], [ %switch.gep12.a, %switch.lookup11 ], [ %switch.gep.a, %switch.lookup ]
-  %.sroa.08.0.i.ph = phi i8 [ 1, %switch.lookup31 ], [ %switch.load25.a, %switch.lookup21 ], [ %switch.load15.a, %switch.lookup11 ], [ %switch.load5.a, %switch.lookup ]
-  %.sroa.07.0.i.ph = load i8, ptr %.sroa.07.0.i.ph.in, align 1
-  %i.u = zext nneg i16 %switch.tableidx30.sink38 to i64
-  %switch.gep34 = getelementptr inbounds nuw i8, ptr %switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationINtB2_22CoffRelocationIteratorRShNtNtB8_2pe22AnonObjectHeaderBigobjENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.55.sink, i64 %i.u
+_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationINtB4_22CoffRelocationIteratorRShNtNtBa_2pe22AnonObjectHeaderBigobjENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit.sink.split: ; preds = %bb.f
+  %8 = zext nneg i16 %switch.tableidx30 to i64
+  %switch.gep32 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.68, i64 %8
+  %.sroa.07.0.i.ph = load i8, ptr %switch.gep32, align 1
+  %i.u = zext nneg i16 %switch.tableidx30 to i64
+  %switch.gep34 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.69, i64 %i.u
   %switch.load35 = load i8, ptr %switch.gep34, align 1
-  %i.v = zext nneg i16 %switch.tableidx30.sink38 to i64
-  %switch.gep36 = getelementptr inbounds nuw [8 x i8], ptr %switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationINtB2_22CoffRelocationIteratorRShNtNtB8_2pe22AnonObjectHeaderBigobjENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.56.sink, i64 %i.v
+  %i.v = zext nneg i16 %switch.tableidx30 to i64
+  %switch.gep36 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.70, i64 %i.v
   %switch.load37 = load i64, ptr %switch.gep36, align 8
   br label %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationINtB4_22CoffRelocationIteratorRShNtNtBa_2pe22AnonObjectHeaderBigobjENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit
 
-_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationINtB4_22CoffRelocationIteratorRShNtNtBa_2pe22AnonObjectHeaderBigobjENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit: ; preds = %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationINtB4_22CoffRelocationIteratorRShNtNtBa_2pe22AnonObjectHeaderBigobjENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit.sink.split, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b
-  %.sroa.07.0.i = phi i8 [ 0, %bb.d ], [ 0, %bb.b ], [ 0, %bb.e ], [ 0, %bb.f ], [ 0, %bb.c ], [ %.sroa.07.0.i.ph, %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationINtB4_22CoffRelocationIteratorRShNtNtBa_2pe22AnonObjectHeaderBigobjENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit.sink.split ]
-  %.sroa.08.0.i = phi i8 [ 0, %bb.d ], [ 0, %bb.b ], [ 0, %bb.e ], [ 0, %bb.f ], [ 0, %bb.c ], [ %.sroa.08.0.i.ph, %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationINtB4_22CoffRelocationIteratorRShNtNtBa_2pe22AnonObjectHeaderBigobjENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit.sink.split ]
-  %.sroa.09.0.i = phi i8 [ 0, %bb.d ], [ 0, %bb.b ], [ 0, %bb.e ], [ 0, %bb.f ], [ 0, %bb.c ], [ %switch.load35, %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationINtB4_22CoffRelocationIteratorRShNtNtBa_2pe22AnonObjectHeaderBigobjENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit.sink.split ]
-  %.sroa.010.0.i = phi i64 [ 0, %bb.d ], [ 0, %bb.b ], [ 0, %bb.e ], [ 0, %bb.f ], [ 0, %bb.c ], [ %switch.load37, %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationINtB4_22CoffRelocationIteratorRShNtNtBa_2pe22AnonObjectHeaderBigobjENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit.sink.split ]
+_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationINtB4_22CoffRelocationIteratorRShNtNtBa_2pe22AnonObjectHeaderBigobjENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit: ; preds = %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationINtB4_22CoffRelocationIteratorRShNtNtBa_2pe22AnonObjectHeaderBigobjENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit.sink.split, %bb.f, %switch.lookup21, %bb.e, %switch.lookup11, %bb.d, %switch.lookup, %bb.c, %bb.b
+  %.sroa.07.0.i = phi i8 [ %.sroa.07.0.i.ph, %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationINtB4_22CoffRelocationIteratorRShNtNtBa_2pe22AnonObjectHeaderBigobjENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit.sink.split ], [ 0, %bb.b ], [ 0, %bb.e ], [ %switch.load, %switch.lookup ], [ %switch.load23, %switch.lookup21 ], [ 0, %bb.d ], [ %switch.load13, %switch.lookup11 ], [ 0, %bb.c ], [ 0, %bb.f ]
+  %.sroa.08.0.i = phi i8 [ 1, %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationINtB4_22CoffRelocationIteratorRShNtNtBa_2pe22AnonObjectHeaderBigobjENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit.sink.split ], [ 0, %bb.b ], [ 0, %bb.e ], [ %switch.load5, %switch.lookup ], [ %switch.load25, %switch.lookup21 ], [ 0, %bb.d ], [ %switch.load15, %switch.lookup11 ], [ 0, %bb.c ], [ 0, %bb.f ]
+  %.sroa.09.0.i = phi i8 [ %switch.load35, %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationINtB4_22CoffRelocationIteratorRShNtNtBa_2pe22AnonObjectHeaderBigobjENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit.sink.split ], [ 0, %bb.b ], [ 0, %bb.e ], [ %switch.load5.a, %switch.lookup ], [ %switch.load25.a, %switch.lookup21 ], [ 0, %bb.d ], [ %switch.load15.a, %switch.lookup11 ], [ 0, %bb.c ], [ 0, %bb.f ]
+  %.sroa.010.0.i = phi i64 [ %switch.load37, %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationINtB4_22CoffRelocationIteratorRShNtNtBa_2pe22AnonObjectHeaderBigobjENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit.sink.split ], [ 0, %bb.b ], [ 0, %bb.e ], [ %switch.load9, %switch.lookup ], [ %switch.load29, %switch.lookup21 ], [ 0, %bb.d ], [ %switch.load19, %switch.lookup11 ], [ 0, %bb.c ], [ 0, %bb.f ]
   %i.w = getelementptr inbounds nuw i8, ptr %i.b, i64 4
   %.sroa.05.0.copyload.i = load i32, ptr %i.w, align 1, !alias.scope !125
   %i.x = zext i32 %.sroa.05.0.copyload.i to i64
@@ -334,74 +347,87 @@ bb.b:                                             ; preds = %bb.a
   ]
 
 bb.c:                                             ; preds = %bb.b
-  %switch.tableidx = add i16 %.sroa.06.0.copyload.i, -1 ; 4 uses
+  %switch.tableidx = add i16 %.sroa.06.0.copyload.i, -1 ; 5 uses
   %i.j = icmp ult i16 %switch.tableidx, 15
   br i1 %i.j, label %switch.lookup, label %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB4_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit
 
 bb.d:                                             ; preds = %bb.b, %bb.b
-  %switch.tableidx10 = add i16 %.sroa.06.0.copyload.i, -1 ; 4 uses
+  %switch.tableidx10 = add i16 %.sroa.06.0.copyload.i, -1 ; 5 uses
   %i.k = icmp ult i16 %switch.tableidx10, 17
   br i1 %i.k, label %switch.lookup11, label %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB4_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit
 
 bb.e:                                             ; preds = %bb.b
-  %switch.tableidx20 = add i16 %.sroa.06.0.copyload.i, -1 ; 4 uses
+  %switch.tableidx20 = add i16 %.sroa.06.0.copyload.i, -1 ; 5 uses
   %i.l = icmp ult i16 %switch.tableidx20, 20
   br i1 %i.l, label %switch.lookup21, label %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB4_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit
 
 bb.f:                                             ; preds = %bb.b
-  %switch.tableidx30 = add i16 %.sroa.06.0.copyload.i, -1 ; 3 uses
+  %switch.tableidx30 = add i16 %.sroa.06.0.copyload.i, -1 ; 4 uses
   %i.m = icmp ult i16 %switch.tableidx30, 12
-  br i1 %i.m, label %switch.lookup31, label %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB4_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit
+  br i1 %i.m, label %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB4_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit.sink.split, label %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB4_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit
 
 switch.lookup:                                    ; preds = %bb.c
+  %2 = zext nneg i16 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump, i64 %2
+  %switch.load = load i8, ptr %switch.gep, align 1
   %i.n = zext nneg i16 %switch.tableidx to i64
-  %switch.gep.a = getelementptr inbounds nuw i8, ptr @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump, i64 %i.n
+  %switch.gep.a = getelementptr inbounds nuw i8, ptr @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.57, i64 %i.n
+  %switch.load5 = load i8, ptr %switch.gep.a, align 1
   %i.o = zext nneg i16 %switch.tableidx to i64
-  %switch.gep4 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.57, i64 %i.o
+  %switch.gep4 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.58, i64 %i.o
   %switch.load5.a = load i8, ptr %switch.gep4, align 1
-  br label %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB4_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit.sink.split
+  %3 = zext nneg i16 %switch.tableidx to i64
+  %switch.gep8 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.59, i64 %3
+  %switch.load9 = load i64, ptr %switch.gep8, align 8
+  br label %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB4_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit
 
 switch.lookup11:                                  ; preds = %bb.d
+  %4 = zext nneg i16 %switch.tableidx10 to i64
+  %switch.gep12 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.60, i64 %4
+  %switch.load13 = load i8, ptr %switch.gep12, align 1
   %i.p = zext nneg i16 %switch.tableidx10 to i64
-  %switch.gep12.a = getelementptr inbounds nuw i8, ptr @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.60, i64 %i.p
+  %switch.gep12.a = getelementptr inbounds nuw i8, ptr @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.61, i64 %i.p
+  %switch.load15 = load i8, ptr %switch.gep12.a, align 1
   %i.q = zext nneg i16 %switch.tableidx10 to i64
-  %switch.gep14 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.61, i64 %i.q
+  %switch.gep14 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.62, i64 %i.q
   %switch.load15.a = load i8, ptr %switch.gep14, align 1
-  br label %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB4_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit.sink.split
+  %5 = zext nneg i16 %switch.tableidx10 to i64
+  %switch.gep18 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.63, i64 %5
+  %switch.load19 = load i64, ptr %switch.gep18, align 8
+  br label %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB4_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit
 
 switch.lookup21:                                  ; preds = %bb.e
+  %6 = zext nneg i16 %switch.tableidx20 to i64
+  %switch.gep22 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.64, i64 %6
+  %switch.load23 = load i8, ptr %switch.gep22, align 1
   %i.r = zext nneg i16 %switch.tableidx20 to i64
-  %switch.gep22.a = getelementptr inbounds nuw i8, ptr @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.64, i64 %i.r
+  %switch.gep22.a = getelementptr inbounds nuw i8, ptr @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.65, i64 %i.r
+  %switch.load25 = load i8, ptr %switch.gep22.a, align 1
   %i.s = zext nneg i16 %switch.tableidx20 to i64
-  %switch.gep24 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.65, i64 %i.s
+  %switch.gep24 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.66, i64 %i.s
   %switch.load25.a = load i8, ptr %switch.gep24, align 1
-  br label %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB4_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit.sink.split
+  %7 = zext nneg i16 %switch.tableidx20 to i64
+  %switch.gep28 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.67, i64 %7
+  %switch.load29 = load i64, ptr %switch.gep28, align 8
+  br label %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB4_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit
 
-switch.lookup31:                                  ; preds = %bb.f
-  %2 = zext nneg i16 %switch.tableidx30 to i64
-  %switch.gep32 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.68, i64 %2
-  br label %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB4_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit.sink.split
-
-_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB4_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit.sink.split: ; preds = %switch.lookup, %switch.lookup11, %switch.lookup21, %switch.lookup31
-  %switch.tableidx30.sink38 = phi i16 [ %switch.tableidx30, %switch.lookup31 ], [ %switch.tableidx20, %switch.lookup21 ], [ %switch.tableidx10, %switch.lookup11 ], [ %switch.tableidx, %switch.lookup ] ; 2 uses
-  %switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.69.sink = phi ptr [ @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.69, %switch.lookup31 ], [ @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.66, %switch.lookup21 ], [ @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.62, %switch.lookup11 ], [ @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.58, %switch.lookup ]
-  %switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.70.sink = phi ptr [ @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.70, %switch.lookup31 ], [ @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.67, %switch.lookup21 ], [ @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.63, %switch.lookup11 ], [ @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.59, %switch.lookup ]
-  %.sroa.07.0.i.ph.in = phi ptr [ %switch.gep32, %switch.lookup31 ], [ %switch.gep22.a, %switch.lookup21 ], [ %switch.gep12.a, %switch.lookup11 ], [ %switch.gep.a, %switch.lookup ]
-  %.sroa.08.0.i.ph = phi i8 [ 1, %switch.lookup31 ], [ %switch.load25.a, %switch.lookup21 ], [ %switch.load15.a, %switch.lookup11 ], [ %switch.load5.a, %switch.lookup ]
-  %.sroa.07.0.i.ph = load i8, ptr %.sroa.07.0.i.ph.in, align 1
-  %i.t = zext nneg i16 %switch.tableidx30.sink38 to i64
-  %switch.gep34 = getelementptr inbounds nuw i8, ptr %switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.69.sink, i64 %i.t
+_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB4_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit.sink.split: ; preds = %bb.f
+  %8 = zext nneg i16 %switch.tableidx30 to i64
+  %switch.gep32 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.68, i64 %8
+  %.sroa.07.0.i.ph = load i8, ptr %switch.gep32, align 1
+  %i.t = zext nneg i16 %switch.tableidx30 to i64
+  %switch.gep34 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.69, i64 %i.t
   %switch.load35 = load i8, ptr %switch.gep34, align 1
-  %i.u = zext nneg i16 %switch.tableidx30.sink38 to i64
-  %switch.gep36 = getelementptr inbounds nuw [8 x i8], ptr %switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.70.sink, i64 %i.u
+  %i.u = zext nneg i16 %switch.tableidx30 to i64
+  %switch.gep36 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB2_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs8aoZCP6pRcV_7objdump.70, i64 %i.u
   %switch.load37 = load i64, ptr %switch.gep36, align 8
   br label %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB4_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit
 
-_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB4_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit: ; preds = %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB4_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit.sink.split, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b
-  %.sroa.07.0.i = phi i8 [ 0, %bb.d ], [ 0, %bb.b ], [ 0, %bb.e ], [ 0, %bb.f ], [ 0, %bb.c ], [ %.sroa.07.0.i.ph, %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB4_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit.sink.split ]
-  %.sroa.08.0.i = phi i8 [ 0, %bb.d ], [ 0, %bb.b ], [ 0, %bb.e ], [ 0, %bb.f ], [ 0, %bb.c ], [ %.sroa.08.0.i.ph, %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB4_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit.sink.split ]
-  %.sroa.09.0.i = phi i8 [ 0, %bb.d ], [ 0, %bb.b ], [ 0, %bb.e ], [ 0, %bb.f ], [ 0, %bb.c ], [ %switch.load35, %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB4_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit.sink.split ]
-  %.sroa.010.0.i = phi i64 [ 0, %bb.d ], [ 0, %bb.b ], [ 0, %bb.e ], [ 0, %bb.f ], [ 0, %bb.c ], [ %switch.load37, %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB4_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit.sink.split ]
+_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB4_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit: ; preds = %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB4_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit.sink.split, %bb.f, %switch.lookup21, %bb.e, %switch.lookup11, %bb.d, %switch.lookup, %bb.c, %bb.b
+  %.sroa.07.0.i = phi i8 [ %.sroa.07.0.i.ph, %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB4_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit.sink.split ], [ 0, %bb.b ], [ 0, %bb.e ], [ %switch.load, %switch.lookup ], [ %switch.load23, %switch.lookup21 ], [ 0, %bb.d ], [ %switch.load13, %switch.lookup11 ], [ 0, %bb.c ], [ 0, %bb.f ]
+  %.sroa.08.0.i = phi i8 [ 1, %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB4_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit.sink.split ], [ 0, %bb.b ], [ 0, %bb.e ], [ %switch.load5, %switch.lookup ], [ %switch.load25, %switch.lookup21 ], [ 0, %bb.d ], [ %switch.load15, %switch.lookup11 ], [ 0, %bb.c ], [ 0, %bb.f ]
+  %.sroa.09.0.i = phi i8 [ %switch.load35, %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB4_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit.sink.split ], [ 0, %bb.b ], [ 0, %bb.e ], [ %switch.load5.a, %switch.lookup ], [ %switch.load25.a, %switch.lookup21 ], [ 0, %bb.d ], [ %switch.load15.a, %switch.lookup11 ], [ 0, %bb.c ], [ 0, %bb.f ]
+  %.sroa.010.0.i = phi i64 [ %switch.load37, %_RNCNvXNtNtNtCseHTIzroA4w0_6object4read4coff10relocationNtB4_22CoffRelocationIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4next0Cs8aoZCP6pRcV_7objdump.exit.sink.split ], [ 0, %bb.b ], [ 0, %bb.e ], [ %switch.load9, %switch.lookup ], [ %switch.load29, %switch.lookup21 ], [ 0, %bb.d ], [ %switch.load19, %switch.lookup11 ], [ 0, %bb.c ], [ 0, %bb.f ]
   %i.v = getelementptr inbounds nuw i8, ptr %i.b, i64 4
   %.sroa.05.0.copyload.i = load i32, ptr %i.v, align 1, !alias.scope !128
   %i.w = zext i32 %.sroa.05.0.copyload.i to i64

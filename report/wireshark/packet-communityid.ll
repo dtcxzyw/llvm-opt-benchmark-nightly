@@ -202,20 +202,27 @@ switch.hole_check:                                ; preds = %bb.i
   %switch.maskindex = zext nneg i16 %rev106 to i32
   %switch.shifted = lshr i32 517889, %switch.maskindex
   %switch.lobit = trunc i32 %switch.shifted to i1
-  br i1 %switch.lobit, label %.thread.sink.split, label %.split
+  br i1 %switch.lobit, label %switch.lookup, label %.split
+
+switch.lookup:                                    ; preds = %switch.hole_check
+  %7 = zext nneg i16 %rev106 to i64
+  %switch.gep = getelementptr inbounds nuw [2 x i8], ptr @switch.table.communityid_calc, i64 %7
+  br label %.thread.sink.split
 
 switch.hole_check20:                              ; preds = %bb.j
   %switch.maskindex22 = zext nneg i16 %switch.tableidx to i32
   %switch.shifted23 = lshr i32 203247, %switch.maskindex22
   %switch.lobit24 = trunc i32 %switch.shifted23 to i1
-  br i1 %switch.lobit24, label %.thread.sink.split, label %bb.k
+  br i1 %switch.lobit24, label %switch.lookup21, label %bb.k
 
-.thread.sink.split:                               ; preds = %switch.hole_check20, %switch.hole_check
-  %switch.tableidx.sink = phi i16 [ %rev106, %switch.hole_check ], [ %switch.tableidx, %switch.hole_check20 ]
-  %switch.table.communityid_calc.3.sink = phi ptr [ @switch.table.communityid_calc, %switch.hole_check ], [ @switch.table.communityid_calc.3, %switch.hole_check20 ]
-  %7 = zext nneg i16 %switch.tableidx.sink to i64
-  %switch.gep25 = getelementptr inbounds nuw [2 x i8], ptr %switch.table.communityid_calc.3.sink, i64 %7
-  %switch.load26 = load i16, ptr %switch.gep25, align 2
+switch.lookup21:                                  ; preds = %switch.hole_check20
+  %8 = zext nneg i16 %switch.tableidx to i64
+  %switch.gep25 = getelementptr inbounds nuw [2 x i8], ptr @switch.table.communityid_calc.3, i64 %8
+  br label %.thread.sink.split
+
+.thread.sink.split:                               ; preds = %switch.lookup21, %switch.lookup
+  %switch.table.communityid_calc.3.sink = phi ptr [ %switch.gep, %switch.lookup ], [ %switch.gep25, %switch.lookup21 ]
+  %switch.load26 = load i16, ptr %switch.table.communityid_calc.3.sink, align 2
   store i16 %i.m, ptr %i.e, align 2
   store i16 %switch.load26, ptr %i.f, align 2
   br label %.thread

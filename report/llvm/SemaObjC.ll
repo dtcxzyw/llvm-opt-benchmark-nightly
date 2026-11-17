@@ -205,14 +205,16 @@ bb.c:                                             ; preds = %bb.b
   %i.l = load ptr, ptr %i.g, align 8, !tbaa !1189
   %i.m = tail call i64 @_ZN5clang5NSAPI20getNSArrayMethodKindENS_8SelectorE(ptr noundef nonnull align 8 dereferenceable(712) %i.l, i64 %i.k) #19 ; 2 uses
   %i.n = and i64 %i.m, 4294967296
-  %.not.i = icmp ne i64 %i.n, 0
+  %.not.i = icmp eq i64 %i.n, 0
+  br i1 %.not.i, label %bb.d, label %8
+
+8:                                                ; preds = %bb.c
   %.sroa.0.0.extract.trunc.i = trunc i64 %i.m to i32
   %switch.tableidx = add i32 %.sroa.0.0.extract.trunc.i, -8 ; 2 uses
-  %8 = icmp ult i32 %switch.tableidx, 4
-  %or.cond136 = and i1 %.not.i, %8
-  br i1 %or.cond136, label %.critedge.sink.split, label %bb.d
+  %9 = icmp ult i32 %switch.tableidx, 4
+  br i1 %9, label %.critedge.sink.split, label %bb.d
 
-bb.d:                                             ; preds = %bb.b, %bb.c
+bb.d:                                             ; preds = %8, %bb.b, %bb.c
   %i.o = load ptr, ptr %i.g, align 8, !tbaa !1189
   %i.p = tail call noundef ptr @_ZNK5clang15ObjCMessageExpr20getReceiverInterfaceEv(ptr noundef nonnull align 8 dereferenceable(40) %1) #19
   %i.q = tail call noundef zeroext i1 @_ZNK5clang5NSAPI19isSubclassOfNSClassEPNS_17ObjCInterfaceDeclENS0_17NSClassIdKindKindE(ptr noundef nonnull align 8 dereferenceable(712) %i.o, ptr noundef %i.p, i32 noundef 5) #19
@@ -243,25 +245,29 @@ _ZN5clangL35GetNSMutableDictionaryArgumentIndexERNS_8SemaObjCEPNS_15ObjCMessageE
 bb.f:                                             ; preds = %_ZN5clangL35GetNSMutableDictionaryArgumentIndexERNS_8SemaObjCEPNS_15ObjCMessageExprE.exit.thread
   %i.ab = tail call i64 @_ZNK5clang15ObjCMessageExpr11getSelectorEv(ptr noundef nonnull align 8 dereferenceable(40) %1) #19
   %i.ac = load ptr, ptr %i.g, align 8, !tbaa !1189
-  %i.ad = tail call i64 @_ZN5clang5NSAPI18getNSSetMethodKindENS_8SelectorE(ptr noundef nonnull align 8 dereferenceable(712) %i.ac, i64 %i.ab) #19 ; 2 uses
+  %i.ad = tail call i64 @_ZN5clang5NSAPI18getNSSetMethodKindENS_8SelectorE(ptr noundef nonnull align 8 dereferenceable(712) %i.ac, i64 %i.ab) #19 ; 3 uses
   %i.ae = and i64 %i.ad, 4294967296
   %.not.i60 = icmp ne i64 %i.ae, 0
-  %.sroa.0.0.extract.trunc.i61 = trunc i64 %i.ad to i32 ; 2 uses
+  %.sroa.0.0.extract.trunc.i61 = trunc i64 %i.ad to i32
   %i.af = icmp ult i32 %.sroa.0.0.extract.trunc.i61, 5
   %or.cond137 = and i1 %.not.i60, %i.af
-  br i1 %or.cond137, label %.critedge.sink.split, label %_ZN5clangL21GetNSSetArgumentIndexERNS_8SemaObjCEPNS_15ObjCMessageExprE.exit.thread
+  br i1 %or.cond137, label %switch.lookup132, label %_ZN5clangL21GetNSSetArgumentIndexERNS_8SemaObjCEPNS_15ObjCMessageExprE.exit.thread
 
-.critedge.sink.split:                             ; preds = %bb.f, %bb.c
-  %.sroa.0.0.extract.trunc.i61.sink = phi i32 [ %switch.tableidx, %bb.c ], [ %.sroa.0.0.extract.trunc.i61, %bb.f ]
-  %switch.table._ZN5clang8SemaObjC26CheckObjCCircularContainerEPNS_15ObjCMessageExprE.15.sink = phi ptr [ @switch.table._ZN5clang8SemaObjC26CheckObjCCircularContainerEPNS_15ObjCMessageExprE, %bb.c ], [ @switch.table._ZN5clang8SemaObjC26CheckObjCCircularContainerEPNS_15ObjCMessageExprE.15, %bb.f ]
-  %i.ag = zext nneg i32 %.sroa.0.0.extract.trunc.i61.sink to i64
-  %switch.gep133.a = getelementptr inbounds nuw i8, ptr %switch.table._ZN5clang8SemaObjC26CheckObjCCircularContainerEPNS_15ObjCMessageExprE.15.sink, i64 %i.ag
+.critedge.sink.split:                             ; preds = %8
+  %i.ag = zext nneg i32 %switch.tableidx to i64
+  %switch.gep133.a = getelementptr inbounds nuw i8, ptr @switch.table._ZN5clang8SemaObjC26CheckObjCCircularContainerEPNS_15ObjCMessageExprE, i64 %i.ag
   %switch.load134.a = load i8, ptr %switch.gep133.a, align 1
-  %switch.ext135 = zext i8 %switch.load134.a to i64
   br label %.critedge
 
-.critedge:                                        ; preds = %.critedge.sink.split, %bb.e
-  %.sroa.078.0 = phi i64 [ 0, %bb.e ], [ %switch.ext135, %.critedge.sink.split ]
+switch.lookup132:                                 ; preds = %bb.f
+  %10 = and i64 %i.ad, 7
+  %switch.gep133 = getelementptr inbounds nuw i8, ptr @switch.table._ZN5clang8SemaObjC26CheckObjCCircularContainerEPNS_15ObjCMessageExprE.15, i64 %10
+  %switch.load134 = load i8, ptr %switch.gep133, align 1
+  br label %.critedge
+
+.critedge:                                        ; preds = %switch.lookup132, %.critedge.sink.split, %bb.e
+  %.sroa.078.0.shrunk = phi i8 [ %switch.load134.a, %.critedge.sink.split ], [ 0, %bb.e ], [ %switch.load134, %switch.lookup132 ]
+  %.sroa.078.0 = zext i8 %.sroa.078.0.shrunk to i64
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.ai = getelementptr inbounds nuw [8 x i8], ptr %i.ah, i64 %.sroa.078.0
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !715

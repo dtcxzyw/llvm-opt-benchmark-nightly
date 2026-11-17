@@ -202,22 +202,26 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %switch.tableidx = add i32 %1, -29              ; 2 uses
   %i.a = icmp ult i32 %switch.tableidx, 78
-  br i1 %i.a, label %.sink.split, label %bb.d
+  br i1 %i.a, label %switch.lookup, label %bb.d
 
 bb.c:                                             ; preds = %bb.a
   %i.b = icmp ult i32 %1, 107
   br i1 %i.b, label %.sink.split, label %bb.d
 
-.sink.split:                                      ; preds = %bb.c, %bb.b
-  %.sink6 = phi i32 [ %switch.tableidx, %bb.b ], [ %1, %bb.c ]
-  %switch.table._ZN22EmulateInstructionMIPS15GetRegisterNameEjb.2.sink = phi ptr [ @switch.table._ZN22EmulateInstructionMIPS15GetRegisterNameEjb, %bb.b ], [ @switch.table._ZN22EmulateInstructionMIPS15GetRegisterNameEjb.2, %bb.c ]
-  %i.c = zext nneg i32 %.sink6 to i64
-  %switch.gep4 = getelementptr inbounds nuw [8 x i8], ptr %switch.table._ZN22EmulateInstructionMIPS15GetRegisterNameEjb.2.sink, i64 %i.c
+switch.lookup:                                    ; preds = %bb.b
+  %3 = zext nneg i32 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN22EmulateInstructionMIPS15GetRegisterNameEjb, i64 %3
+  %switch.load = load ptr, ptr %switch.gep, align 8
+  br label %bb.d
+
+.sink.split:                                      ; preds = %bb.c
+  %i.c = zext nneg i32 %1 to i64
+  %switch.gep4 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN22EmulateInstructionMIPS15GetRegisterNameEjb.2, i64 %i.c
   %switch.load5 = load ptr, ptr %switch.gep4, align 8
   br label %bb.d
 
-bb.d:                                             ; preds = %.sink.split, %bb.b, %bb.c
-  %.0 = phi ptr [ null, %bb.c ], [ null, %bb.b ], [ %switch.load5, %.sink.split ]
+bb.d:                                             ; preds = %bb.b, %bb.c, %.sink.split, %switch.lookup
+  %.0 = phi ptr [ %switch.load5, %.sink.split ], [ %switch.load, %switch.lookup ], [ null, %bb.c ], [ null, %bb.b ]
   ret ptr %.0
 }
 
