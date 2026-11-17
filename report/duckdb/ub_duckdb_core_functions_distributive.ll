@@ -205,9 +205,9 @@ bb.e:                                             ; preds = %bb.d
   %i.as = fdiv double %i.aq, %i.ar
   %i.at = tail call double @llvm.fmuladd.f64(double %i.ao, double -3.000000e+00, double %i.as)
   %i.au = fmul double %i.ao, %i.at
-  %i.av = fadd nnan double %i.b, -2.000000e+00
-  %i.aw = fadd nnan double %i.b, -3.000000e+00
-  %i.ax = fmul double %i.av, %i.aw
+  %i.av = fadd nnan ninf double %i.b, -2.000000e+00
+  %i.aw = fadd nnan ninf double %i.b, -3.000000e+00
+  %i.ax = fmul nnan double %i.av, %i.aw
   %i.ay = fdiv double %i.au, %i.ax                ; 2 uses
   store double %i.ay, ptr %1, align 8, !tbaa !633
   %i.az = tail call noundef zeroext i1 @_ZN6duckdb5Value14DoubleIsFiniteEd(double noundef %i.ay)
@@ -610,10 +610,10 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %sqrt = tail call double @llvm.sqrt.f64(double %spec.store.select)
-  %i.p = fadd nnan double %i.c, -1.000000e+00
-  %i.q = fmul double %i.p, %i.c
+  %i.p = fadd nnan ninf double %i.c, -1.000000e+00
+  %i.q = fmul nnan double %i.p, %i.c
   %i.r = tail call double @sqrt(double noundef %i.q) #27, !tbaa !178
-  %i.s = fadd nnan double %i.c, -2.000000e+00
+  %i.s = fadd nnan ninf double %i.c, -2.000000e+00
   %i.t = fdiv double %i.r, %i.s
   %i.u = fmul double %i.d, %i.t
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 24

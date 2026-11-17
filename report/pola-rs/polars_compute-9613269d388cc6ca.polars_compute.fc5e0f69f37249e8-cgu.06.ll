@@ -205,7 +205,7 @@ _RNvMs_NtCslFlrwjHoTci_14polars_compute15hyperloglogplusINtB4_11HyperLogLogINtNt
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 204, !dbg !23760
   %i.u = load i32, ptr %i.t, align 4, !dbg !23760, !noundef !1573
   %i.v = uitofp i32 %i.u to double, !dbg !23760
-  %i.w = fsub nnan double 1.638400e+04, %i.v, !dbg !23761
+  %i.w = fsub nnan ninf double 1.638400e+04, %i.v, !dbg !23761
   %i.x = fmul nnan double %i.w, f0x3F10000000000000, !dbg !23761 ; 4 uses
   %i.y = fcmp oeq double %i.x, 0.000000e+00, !dbg !23762
   %i.z = fcmp oeq double %i.x, 1.000000e+00
@@ -600,7 +600,7 @@ _RNvMs_NtCslFlrwjHoTci_14polars_compute15hyperloglogplusINtB4_11HyperLogLogINtNt
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 204, !dbg !23916
   %i.u = load i32, ptr %i.t, align 4, !dbg !23916, !noundef !1573
   %i.v = uitofp i32 %i.u to double, !dbg !23916
-  %i.w = fsub nnan double 1.638400e+04, %i.v, !dbg !23917
+  %i.w = fsub nnan ninf double 1.638400e+04, %i.v, !dbg !23917
   %i.x = fmul nnan double %i.w, f0x3F10000000000000, !dbg !23917 ; 4 uses
   %i.y = fcmp oeq double %i.x, 0.000000e+00, !dbg !23918
   %i.z = fcmp oeq double %i.x, 1.000000e+00
@@ -996,7 +996,7 @@ _RNvMs_NtCslFlrwjHoTci_14polars_compute15hyperloglogplusINtB4_11HyperLogLogINtNt
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 204, !dbg !24073
   %i.u = load i32, ptr %i.t, align 4, !dbg !24073, !noundef !1573
   %i.v = uitofp i32 %i.u to double, !dbg !24073
-  %i.w = fsub nnan double 1.638400e+04, %i.v, !dbg !24074
+  %i.w = fsub nnan ninf double 1.638400e+04, %i.v, !dbg !24074
   %i.x = fmul nnan double %i.w, f0x3F10000000000000, !dbg !24074 ; 4 uses
   %i.y = fcmp oeq double %i.x, 0.000000e+00, !dbg !24075
   %i.z = fcmp oeq double %i.x, 1.000000e+00
@@ -1399,7 +1399,7 @@ _RNvMs_NtCslFlrwjHoTci_14polars_compute15hyperloglogplusINtB4_11HyperLogLogShE13
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 204, !dbg !24299
   %i.u = load i32, ptr %i.t, align 4, !dbg !24299, !noundef !1573
   %i.v = uitofp i32 %i.u to double, !dbg !24299
-  %i.w = fsub nnan double 1.638400e+04, %i.v, !dbg !24300
+  %i.w = fsub nnan ninf double 1.638400e+04, %i.v, !dbg !24300
   %i.x = fmul nnan double %i.w, f0x3F10000000000000, !dbg !24300 ; 4 uses
   %i.y = fcmp oeq double %i.x, 0.000000e+00, !dbg !24301
   %i.z = fcmp oeq double %i.x, 1.000000e+00
@@ -1791,7 +1791,7 @@ _RNvMs_NtCslFlrwjHoTci_14polars_compute15hyperloglogplusINtB4_11HyperLogLogaE13g
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 204, !dbg !24445
   %i.u = load i32, ptr %i.t, align 4, !dbg !24445, !noundef !1573
   %i.v = uitofp i32 %i.u to double, !dbg !24445
-  %i.w = fsub nnan double 1.638400e+04, %i.v, !dbg !24446
+  %i.w = fsub nnan ninf double 1.638400e+04, %i.v, !dbg !24446
   %i.x = fmul nnan double %i.w, f0x3F10000000000000, !dbg !24446 ; 4 uses
   %i.y = fcmp oeq double %i.x, 0.000000e+00, !dbg !24447
   %i.z = fcmp oeq double %i.x, 1.000000e+00
@@ -2183,7 +2183,7 @@ _RNvMs_NtCslFlrwjHoTci_14polars_compute15hyperloglogplusINtB4_11HyperLogLoghE13g
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 204, !dbg !24591
   %i.u = load i32, ptr %i.t, align 4, !dbg !24591, !noundef !1573
   %i.v = uitofp i32 %i.u to double, !dbg !24591
-  %i.w = fsub nnan double 1.638400e+04, %i.v, !dbg !24592
+  %i.w = fsub nnan ninf double 1.638400e+04, %i.v, !dbg !24592
   %i.x = fmul nnan double %i.w, f0x3F10000000000000, !dbg !24592 ; 4 uses
   %i.y = fcmp oeq double %i.x, 0.000000e+00, !dbg !24593
   %i.z = fcmp oeq double %i.x, 1.000000e+00
@@ -2575,7 +2575,7 @@ _RNvMs_NtCslFlrwjHoTci_14polars_compute15hyperloglogplusINtB4_11HyperLogLoglE13g
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 204, !dbg !24737
   %i.u = load i32, ptr %i.t, align 4, !dbg !24737, !noundef !1573
   %i.v = uitofp i32 %i.u to double, !dbg !24737
-  %i.w = fsub nnan double 1.638400e+04, %i.v, !dbg !24738
+  %i.w = fsub nnan ninf double 1.638400e+04, %i.v, !dbg !24738
   %i.x = fmul nnan double %i.w, f0x3F10000000000000, !dbg !24738 ; 4 uses
   %i.y = fcmp oeq double %i.x, 0.000000e+00, !dbg !24739
   %i.z = fcmp oeq double %i.x, 1.000000e+00
@@ -2967,7 +2967,7 @@ _RNvMs_NtCslFlrwjHoTci_14polars_compute15hyperloglogplusINtB4_11HyperLogLogmE13g
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 204, !dbg !24883
   %i.u = load i32, ptr %i.t, align 4, !dbg !24883, !noundef !1573
   %i.v = uitofp i32 %i.u to double, !dbg !24883
-  %i.w = fsub nnan double 1.638400e+04, %i.v, !dbg !24884
+  %i.w = fsub nnan ninf double 1.638400e+04, %i.v, !dbg !24884
   %i.x = fmul nnan double %i.w, f0x3F10000000000000, !dbg !24884 ; 4 uses
   %i.y = fcmp oeq double %i.x, 0.000000e+00, !dbg !24885
   %i.z = fcmp oeq double %i.x, 1.000000e+00
@@ -3361,7 +3361,7 @@ _RNvMs_NtCslFlrwjHoTci_14polars_compute15hyperloglogplusINtB4_11HyperLogLognE13g
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 204, !dbg !25036
   %i.u = load i32, ptr %i.t, align 4, !dbg !25036, !noundef !1573
   %i.v = uitofp i32 %i.u to double, !dbg !25036
-  %i.w = fsub nnan double 1.638400e+04, %i.v, !dbg !25037
+  %i.w = fsub nnan ninf double 1.638400e+04, %i.v, !dbg !25037
   %i.x = fmul nnan double %i.w, f0x3F10000000000000, !dbg !25037 ; 4 uses
   %i.y = fcmp oeq double %i.x, 0.000000e+00, !dbg !25038
   %i.z = fcmp oeq double %i.x, 1.000000e+00
@@ -3755,7 +3755,7 @@ _RNvMs_NtCslFlrwjHoTci_14polars_compute15hyperloglogplusINtB4_11HyperLogLogoE13g
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 204, !dbg !25188
   %i.u = load i32, ptr %i.t, align 4, !dbg !25188, !noundef !1573
   %i.v = uitofp i32 %i.u to double, !dbg !25188
-  %i.w = fsub nnan double 1.638400e+04, %i.v, !dbg !25189
+  %i.w = fsub nnan ninf double 1.638400e+04, %i.v, !dbg !25189
   %i.x = fmul nnan double %i.w, f0x3F10000000000000, !dbg !25189 ; 4 uses
   %i.y = fcmp oeq double %i.x, 0.000000e+00, !dbg !25190
   %i.z = fcmp oeq double %i.x, 1.000000e+00
@@ -4147,7 +4147,7 @@ _RNvMs_NtCslFlrwjHoTci_14polars_compute15hyperloglogplusINtB4_11HyperLogLogsE13g
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 204, !dbg !25334
   %i.u = load i32, ptr %i.t, align 4, !dbg !25334, !noundef !1573
   %i.v = uitofp i32 %i.u to double, !dbg !25334
-  %i.w = fsub nnan double 1.638400e+04, %i.v, !dbg !25335
+  %i.w = fsub nnan ninf double 1.638400e+04, %i.v, !dbg !25335
   %i.x = fmul nnan double %i.w, f0x3F10000000000000, !dbg !25335 ; 4 uses
   %i.y = fcmp oeq double %i.x, 0.000000e+00, !dbg !25336
   %i.z = fcmp oeq double %i.x, 1.000000e+00
@@ -4539,7 +4539,7 @@ _RNvMs_NtCslFlrwjHoTci_14polars_compute15hyperloglogplusINtB4_11HyperLogLogtE13g
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 204, !dbg !25480
   %i.u = load i32, ptr %i.t, align 4, !dbg !25480, !noundef !1573
   %i.v = uitofp i32 %i.u to double, !dbg !25480
-  %i.w = fsub nnan double 1.638400e+04, %i.v, !dbg !25481
+  %i.w = fsub nnan ninf double 1.638400e+04, %i.v, !dbg !25481
   %i.x = fmul nnan double %i.w, f0x3F10000000000000, !dbg !25481 ; 4 uses
   %i.y = fcmp oeq double %i.x, 0.000000e+00, !dbg !25482
   %i.z = fcmp oeq double %i.x, 1.000000e+00
@@ -4930,7 +4930,7 @@ _RNvMs_NtCslFlrwjHoTci_14polars_compute15hyperloglogplusINtB4_11HyperLogLogxE13g
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 204, !dbg !25625
   %i.u = load i32, ptr %i.t, align 4, !dbg !25625, !noundef !1573
   %i.v = uitofp i32 %i.u to double, !dbg !25625
-  %i.w = fsub nnan double 1.638400e+04, %i.v, !dbg !25626
+  %i.w = fsub nnan ninf double 1.638400e+04, %i.v, !dbg !25626
   %i.x = fmul nnan double %i.w, f0x3F10000000000000, !dbg !25626 ; 4 uses
   %i.y = fcmp oeq double %i.x, 0.000000e+00, !dbg !25627
   %i.z = fcmp oeq double %i.x, 1.000000e+00
@@ -5321,7 +5321,7 @@ _RNvMs_NtCslFlrwjHoTci_14polars_compute15hyperloglogplusINtB4_11HyperLogLogyE13g
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 204, !dbg !25770
   %i.u = load i32, ptr %i.t, align 4, !dbg !25770, !noundef !1573
   %i.v = uitofp i32 %i.u to double, !dbg !25770
-  %i.w = fsub nnan double 1.638400e+04, %i.v, !dbg !25771
+  %i.w = fsub nnan ninf double 1.638400e+04, %i.v, !dbg !25771
   %i.x = fmul nnan double %i.w, f0x3F10000000000000, !dbg !25771 ; 4 uses
   %i.y = fcmp oeq double %i.x, 0.000000e+00, !dbg !25772
   %i.z = fcmp oeq double %i.x, 1.000000e+00

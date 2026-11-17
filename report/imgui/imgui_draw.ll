@@ -205,7 +205,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = uitofp nneg i32 %4 to float              ; 2 uses
-  %i.d = fadd nnan float %i.c, -1.000000e+00
+  %i.d = fadd nnan ninf float %i.c, -1.000000e+00
   %i.e = fmul nnan float %i.d, f0x40C90FDB
   %i.f = fdiv float %i.e, %i.c
   %i.g = fadd float %2, -5.000000e-01
@@ -233,7 +233,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = uitofp nneg i32 %4 to float              ; 2 uses
-  %i.d = fadd nnan float %i.c, -1.000000e+00
+  %i.d = fadd nnan ninf float %i.c, -1.000000e+00
   %i.e = fmul nnan float %i.d, f0x40C90FDB
   %i.f = fdiv float %i.e, %i.c
   %i.g = add nsw i32 %4, -1
@@ -302,7 +302,7 @@ bb.e:                                             ; preds = %bb.c
 _ZNK10ImDrawList27_CalcCircleAutoSegmentCountEf.exit: ; preds = %bb.e, %bb.d, %bb.b
   %.0 = phi i32 [ %5, %bb.b ], [ %i.p, %bb.d ], [ %i.ae, %bb.e ] ; 2 uses
   %i.af = uitofp nneg i32 %.0 to float            ; 2 uses
-  %i.ag = fadd nnan float %i.af, -1.000000e+00
+  %i.ag = fadd nnan ninf float %i.af, -1.000000e+00
   %i.ah = fmul nnan float %i.ag, f0x40C90FDB
   %i.ai = fdiv float %i.ah, %i.af
   %i.aj = add nsw i32 %.0, -1
@@ -371,7 +371,7 @@ bb.e:                                             ; preds = %bb.c
 _ZNK10ImDrawList27_CalcCircleAutoSegmentCountEf.exit: ; preds = %bb.e, %bb.d, %bb.b
   %.0 = phi i32 [ %5, %bb.b ], [ %i.p, %bb.d ], [ %i.ae, %bb.e ] ; 2 uses
   %i.af = uitofp nneg i32 %.0 to float            ; 2 uses
-  %i.ag = fadd nnan float %i.af, -1.000000e+00
+  %i.ag = fadd nnan ninf float %i.af, -1.000000e+00
   %i.ah = fmul nnan float %i.ag, f0x40C90FDB
   %i.ai = fdiv float %i.ah, %i.af
   %i.aj = add nsw i32 %.0, -1
@@ -774,7 +774,7 @@ bb.de:                                            ; preds = %bb.dd
   br i1 %i.aby, label %bb.df, label %bb.dg
 
 bb.df:                                            ; preds = %bb.de
-  %i.abz = fsub nnan float %i.zv, %i.zt
+  %i.abz = fsub nnan ninf float %i.zv, %i.zt
   %i.aca = fsub float %i.abw, %i.aab
   %i.acb = fmul float %i.abz, %i.aca
   %i.acc = fsub float %i.aad, %i.aab
@@ -1020,7 +1020,7 @@ bb.ek:                                            ; preds = %bb.ej
   br i1 %i.agn, label %bb.el, label %bb.em
 
 bb.el:                                            ; preds = %bb.ek
-  %i.ago = fsub nnan float %i.zt, %i.zv
+  %i.ago = fsub nnan ninf float %i.zt, %i.zv
   %i.agp = fsub float %i.agl, %i.aad
   %i.agq = fmul float %i.ago, %i.agp
   %i.agr = fsub float %i.aab, %i.aad

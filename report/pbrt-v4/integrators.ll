@@ -205,7 +205,7 @@ bb.a:
   br i1 %or.cond.i, label %_ZN4pbrt21VisibleWavelengthsPDFEf.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.m = fadd float %i.j, -5.380000e+02
+  %i.m = fadd ninf float %i.j, -5.380000e+02
   %i.n = fmul float %i.m, 7.200000e-03
   %i.o = tail call noundef float @coshf(float noundef %i.n) #38 ; 2 uses
   %i.p = fmul float %i.o, %i.o
@@ -232,7 +232,7 @@ _ZN4pbrt21VisibleWavelengthsPDFEf.exit:           ; preds = %bb.a, %bb.b
   br i1 %or.cond.i.1, label %_ZN4pbrt21VisibleWavelengthsPDFEf.exit.1, label %bb.c
 
 bb.c:                                             ; preds = %_ZN4pbrt21VisibleWavelengthsPDFEf.exit
-  %i.ac = fadd float %i.y, -5.380000e+02
+  %i.ac = fadd ninf float %i.y, -5.380000e+02
   %i.ad = fmul float %i.ac, 7.200000e-03
   %i.ae = tail call noundef float @coshf(float noundef %i.ad) #38 ; 2 uses
   %i.af = fmul float %i.ae, %i.ae
@@ -260,7 +260,7 @@ _ZN4pbrt21VisibleWavelengthsPDFEf.exit.1:         ; preds = %bb.c, %_ZN4pbrt21Vi
   br i1 %or.cond.i.2, label %_ZN4pbrt21VisibleWavelengthsPDFEf.exit.2, label %bb.d
 
 bb.d:                                             ; preds = %_ZN4pbrt21VisibleWavelengthsPDFEf.exit.1
-  %i.at = fadd float %i.ap, -5.380000e+02
+  %i.at = fadd ninf float %i.ap, -5.380000e+02
   %i.au = fmul float %i.at, 7.200000e-03
   %i.av = tail call noundef float @coshf(float noundef %i.au) #38 ; 2 uses
   %i.aw = fmul float %i.av, %i.av
@@ -288,7 +288,7 @@ _ZN4pbrt21VisibleWavelengthsPDFEf.exit.2:         ; preds = %bb.d, %_ZN4pbrt21Vi
   br i1 %or.cond.i.3, label %_ZN4pbrt21VisibleWavelengthsPDFEf.exit.3, label %bb.e
 
 bb.e:                                             ; preds = %_ZN4pbrt21VisibleWavelengthsPDFEf.exit.2
-  %i.bk = fadd float %i.bg, -5.380000e+02
+  %i.bk = fadd ninf float %i.bg, -5.380000e+02
   %i.bl = fmul float %i.bk, 7.200000e-03
   %i.bm = tail call noundef float @coshf(float noundef %i.bl) #38 ; 2 uses
   %i.bn = fmul float %i.bm, %i.bm
@@ -691,7 +691,7 @@ _ZN4pbrt12FrDielectricEff.exit:                   ; preds = %bb.a
   br i1 %i.x, label %bb.b, label %_ZN4pbrt12FrDielectricEff.exit.thread
 
 bb.b:                                             ; preds = %_ZN4pbrt12FrDielectricEff.exit
-  %i.y = fmul float %i.w, %i.w
+  %i.y = fmul nnan float %i.w, %i.w
   %i.z = fmul float %i.v, %i.y
   %i.aa = fmul nnan float %i.v, %i.v
   %i.ab = fsub float 1.000000e+00, %i.aa
@@ -1094,7 +1094,7 @@ _ZNK4pbrt6Tuple3INS_7Normal3EfEneENS1_IfEE.exit.thread: ; preds = %bb.d
   %i.gn = fsub float 1.000000e+00, %i.gm          ; 2 uses
   %i.go = fcmp ogt float %i.gn, 0.000000e+00
   %.sroa.speculated.i140 = select i1 %i.go, float %i.gn, float 0.000000e+00
-  %sqrt.i141 = tail call nnan float @llvm.sqrt.f32(float %.sroa.speculated.i140)
+  %sqrt.i141 = tail call nnan ninf float @llvm.sqrt.f32(float %.sroa.speculated.i140)
   %i.gp = fcmp ogt float %i.gl, %.sroa.3.12.vec.extract
   %i.gq = fmul float %i.gl, %.sroa.3.12.vec.extract
   %i.gr = fmul float %sqrt.i141, %sqrt.i130

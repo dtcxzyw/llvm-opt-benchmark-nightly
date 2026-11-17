@@ -205,7 +205,7 @@ bb.gy:                                            ; preds = %stbtt__handle_clipp
   br i1 %i.avu, label %bb.gz, label %bb.ha
 
 bb.gz:                                            ; preds = %bb.gy
-  %i.axe = fsub nnan float %i.avi, %i.avg
+  %i.axe = fsub nnan ninf float %i.avi, %i.avg
   %i.axf = fsub float %i.aql, %i.avo
   %i.axg = fmul float %i.axe, %i.axf
   %i.axh = fsub float %i.avq, %i.avo
@@ -418,7 +418,7 @@ bb.hw:                                            ; preds = %stbtt__handle_clipp
   br i1 %i.azv, label %bb.hx, label %bb.hy
 
 bb.hx:                                            ; preds = %bb.hw
-  %i.bbf = fsub nnan float %i.avg, %i.avi
+  %i.bbf = fsub nnan ninf float %i.avg, %i.avi
   %i.bbg = fsub float %i.aql, %i.avq
   %i.bbh = fmul float %i.bbf, %i.bbg
   %i.bbi = fsub float %i.avo, %i.avq
@@ -821,7 +821,7 @@ bb.lu:                                            ; preds = %bb.lp
   br i1 %i.bvh, label %bb.lw, label %bb.lv
 
 bb.lv:                                            ; preds = %bb.lu
-  %i.bvi = fmul float %i.bvf, -2.000000e+00
+  %i.bvi = fmul nnan float %i.bvf, -2.000000e+00
   %i.bvj = fdiv float %i.bvg, %i.bvi              ; 3 uses
   %i.bvk = fcmp ult float %i.bvj, 0.000000e+00
   %i.bvl = fcmp ugt float %i.bvj, 1.000000e+00
@@ -1217,7 +1217,7 @@ stbtt__solve_cubic.exit.i.us.us.i:                ; preds = %bb.ms, %bb.mr, %bb.
 
 bb.mt:                                            ; preds = %stbtt__solve_cubic.exit.i.us.us.i
   %i.cfk = fsub float 1.000000e+00, %.sroa.0.0.i.us.us.i ; 3 uses
-  %i.cfl = fmul float %i.cfk, %i.cfk              ; 2 uses
+  %i.cfl = fmul nnan float %i.cfk, %i.cfk         ; 2 uses
   %i.cfm = fmul nnan float %.sroa.0.0.i.us.us.i, 2.000000e+00
   %i.cfn = fmul float %i.cfm, %i.cfk              ; 2 uses
   %i.cfo = fmul float %i.caa, %i.cfn
@@ -1249,7 +1249,7 @@ bb.mv:                                            ; preds = %bb.mu, %bb.mt, %stb
 
 bb.mw:                                            ; preds = %bb.mv
   %i.cge = fsub float 1.000000e+00, %.sroa.8.0.i.us.us.i ; 3 uses
-  %i.cgf = fmul float %i.cge, %i.cge              ; 2 uses
+  %i.cgf = fmul nnan float %i.cge, %i.cge         ; 2 uses
   %i.cgg = fmul nnan float %.sroa.8.0.i.us.us.i, 2.000000e+00
   %i.cgh = fmul float %i.cgg, %i.cge              ; 2 uses
   %i.cgi = fmul float %i.caa, %i.cgh
@@ -1281,7 +1281,7 @@ bb.my:                                            ; preds = %bb.mx, %bb.mw, %bb.
 
 bb.mz:                                            ; preds = %bb.my
   %i.cgy = fsub float 1.000000e+00, %.sroa.11.0.i.us.us.i ; 3 uses
-  %i.cgz = fmul float %i.cgy, %i.cgy              ; 2 uses
+  %i.cgz = fmul nnan float %i.cgy, %i.cgy         ; 2 uses
   %i.cha = fmul nnan float %.sroa.11.0.i.us.us.i, 2.000000e+00
   %i.chb = fmul float %i.cha, %i.cgy              ; 2 uses
   %i.chc = fmul float %i.caa, %i.chb

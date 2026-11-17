@@ -205,7 +205,7 @@ _ZN6embree17DynamicStackArrayINS_6Vec3faELm32ELm128EE6resizeEm.exit.i228: ; pred
   %.084.i182.lcssa = phi i64 [ 0, %._crit_edge ], [ %.1.i196, %._crit_edge798.loopexit ], [ 0, %._crit_edge.thread ] ; 2 uses
   %.lcssa783 = phi float [ 0.000000e+00, %._crit_edge ], [ %i.mv, %._crit_edge798.loopexit ], [ 0.000000e+00, %._crit_edge.thread ] ; 2 uses
   %i.mw = fdiv float 1.000000e+00, %.lcssa783
-  %i.mx = fadd nnan float %.lcssa783, -2.000000e+00
+  %i.mx = fadd nnan ninf float %.lcssa783, -2.000000e+00
   %i.my = getelementptr inbounds nuw i8, ptr %0, i64 208 ; 6 uses
   %i.mz = insertelement <4 x float> poison, float %i.mx, i64 0
   %i.na = shufflevector <4 x float> %i.mz, <4 x float> poison, <4 x i32> zeroinitializer
@@ -608,7 +608,7 @@ _ZN6embree17DynamicStackArrayINS_6Vec3faELm32ELm128EE6resizeEm.exit138.i201: ; p
 bb.o:                                             ; preds = %_ZN6embree17DynamicStackArrayINS_6Vec3faELm32ELm128EE6resizeEm.exit138.i201
   %i.aep = fadd <4 x float> %i.ov, %i.wp
   %i.aeq = fmul <4 x float> %i.aep, splat (float 2.500000e-01)
-  %i.aer = fsub nnan float 1.000000e+00, %i.ns
+  %i.aer = fsub nnan ninf float 1.000000e+00, %i.ns
   %i.aes = insertelement <4 x float> poison, float %i.ns, i64 0
   %i.aet = shufflevector <4 x float> %i.aes, <4 x float> poison, <4 x i32> zeroinitializer
   %i.aeu = fmul <4 x float> %i.aet, %i.aas
@@ -785,7 +785,7 @@ bb.s:                                             ; preds = %bb.r
   br label %_ZNK6embree18CatmullClark1RingTINS_6Vec3faES1_E9subdivideERS2_.exit233.sink.split
 
 bb.t:                                             ; preds = %bb.r
-  %i.aiy = fsub nnan float 1.000000e+00, %i.nj
+  %i.aiy = fsub nnan ninf float 1.000000e+00, %i.nj
   %i.aiz = insertelement <4 x float> poison, float %i.nj, i64 0
   %i.aja = shufflevector <4 x float> %i.aiz, <4 x float> poison, <4 x i32> zeroinitializer
   %i.ajb = load <4 x float>, ptr %i.my, align 16, !noalias !1063
@@ -1188,7 +1188,7 @@ _ZN6embree17DynamicStackArrayINS_6Vec3faELm32ELm128EE6resizeEm.exit.i175: ; pred
   %.084.i129.lcssa = phi i64 [ 0, %._crit_edge808 ], [ %.1.i143, %._crit_edge821.loopexit ], [ 0, %._crit_edge808.thread ] ; 2 uses
   %.lcssa782 = phi float [ 0.000000e+00, %._crit_edge808 ], [ %i.bad, %._crit_edge821.loopexit ], [ 0.000000e+00, %._crit_edge808.thread ] ; 2 uses
   %i.bae = fdiv float 1.000000e+00, %.lcssa782
-  %i.baf = fadd nnan float %.lcssa782, -2.000000e+00
+  %i.baf = fadd nnan ninf float %.lcssa782, -2.000000e+00
   %i.bag = getelementptr inbounds nuw i8, ptr %0, i64 1040 ; 6 uses
   %i.bah = insertelement <4 x float> poison, float %i.baf, i64 0
   %i.bai = shufflevector <4 x float> %i.bah, <4 x float> poison, <4 x i32> zeroinitializer
@@ -1591,7 +1591,7 @@ _ZN6embree17DynamicStackArrayINS_6Vec3faELm32ELm128EE6resizeEm.exit138.i148: ; p
 bb.ao:                                            ; preds = %_ZN6embree17DynamicStackArrayINS_6Vec3faELm32ELm128EE6resizeEm.exit138.i148
   %i.brx = fadd <4 x float> %i.bcd, %i.bjx
   %i.bry = fmul <4 x float> %i.brx, splat (float 2.500000e-01)
-  %i.brz = fsub nnan float 1.000000e+00, %i.bba
+  %i.brz = fsub nnan ninf float 1.000000e+00, %i.bba
   %i.bsa = insertelement <4 x float> poison, float %i.bba, i64 0
   %i.bsb = shufflevector <4 x float> %i.bsa, <4 x float> poison, <4 x i32> zeroinitializer
   %i.bsc = fmul <4 x float> %i.bsb, %i.boa
@@ -1768,7 +1768,7 @@ bb.as:                                            ; preds = %bb.ar
   br label %_ZNK6embree18CatmullClark1RingTINS_6Vec3faES1_E9subdivideERS2_.exit180.sink.split
 
 bb.at:                                            ; preds = %bb.ar
-  %i.bwg = fsub nnan float 1.000000e+00, %i.bar
+  %i.bwg = fsub nnan ninf float 1.000000e+00, %i.bar
   %i.bwh = insertelement <4 x float> poison, float %i.bar, i64 0
   %i.bwi = shufflevector <4 x float> %i.bwh, <4 x float> poison, <4 x i32> zeroinitializer
   %i.bwj = load <4 x float>, ptr %i.bag, align 16, !noalias !1073
@@ -2171,7 +2171,7 @@ _ZN6embree17DynamicStackArrayINS_6Vec3faELm32ELm128EE6resizeEm.exit.i122: ; pred
   %.084.i76.lcssa = phi i64 [ 0, %._crit_edge831 ], [ %.1.i90, %._crit_edge844.loopexit ], [ 0, %._crit_edge831.thread ] ; 2 uses
   %.lcssa781 = phi float [ 0.000000e+00, %._crit_edge831 ], [ %i.cnl, %._crit_edge844.loopexit ], [ 0.000000e+00, %._crit_edge831.thread ] ; 2 uses
   %i.cnm = fdiv float 1.000000e+00, %.lcssa781
-  %i.cnn = fadd nnan float %.lcssa781, -2.000000e+00
+  %i.cnn = fadd nnan ninf float %.lcssa781, -2.000000e+00
   %i.cno = getelementptr inbounds nuw i8, ptr %0, i64 1872 ; 6 uses
   %i.cnp = insertelement <4 x float> poison, float %i.cnn, i64 0
   %i.cnq = shufflevector <4 x float> %i.cnp, <4 x float> poison, <4 x i32> zeroinitializer
@@ -2574,7 +2574,7 @@ _ZN6embree17DynamicStackArrayINS_6Vec3faELm32ELm128EE6resizeEm.exit138.i95: ; pr
 bb.bo:                                            ; preds = %_ZN6embree17DynamicStackArrayINS_6Vec3faELm32ELm128EE6resizeEm.exit138.i95
   %i.dff = fadd <4 x float> %i.cpl, %i.cxf
   %i.dfg = fmul <4 x float> %i.dff, splat (float 2.500000e-01)
-  %i.dfh = fsub nnan float 1.000000e+00, %i.coi
+  %i.dfh = fsub nnan ninf float 1.000000e+00, %i.coi
   %i.dfi = insertelement <4 x float> poison, float %i.coi, i64 0
   %i.dfj = shufflevector <4 x float> %i.dfi, <4 x float> poison, <4 x i32> zeroinitializer
   %i.dfk = fmul <4 x float> %i.dfj, %i.dbi
@@ -2751,7 +2751,7 @@ bb.bs:                                            ; preds = %bb.br
   br label %_ZNK6embree18CatmullClark1RingTINS_6Vec3faES1_E9subdivideERS2_.exit127.sink.split
 
 bb.bt:                                            ; preds = %bb.br
-  %i.djo = fsub nnan float 1.000000e+00, %i.cnz
+  %i.djo = fsub nnan ninf float 1.000000e+00, %i.cnz
   %i.djp = insertelement <4 x float> poison, float %i.cnz, i64 0
   %i.djq = shufflevector <4 x float> %i.djp, <4 x float> poison, <4 x i32> zeroinitializer
   %i.djr = load <4 x float>, ptr %i.cno, align 16, !noalias !1083
@@ -3154,7 +3154,7 @@ _ZN6embree17DynamicStackArrayINS_6Vec3faELm32ELm128EE6resizeEm.exit.i: ; preds =
   %.084.i.lcssa = phi i64 [ 0, %._crit_edge854 ], [ %.1.i, %._crit_edge867.loopexit ], [ 0, %._crit_edge854.thread ] ; 2 uses
   %.lcssa = phi float [ 0.000000e+00, %._crit_edge854 ], [ %i.eat, %._crit_edge867.loopexit ], [ 0.000000e+00, %._crit_edge854.thread ] ; 2 uses
   %i.eau = fdiv float 1.000000e+00, %.lcssa
-  %i.eav = fadd nnan float %.lcssa, -2.000000e+00
+  %i.eav = fadd nnan ninf float %.lcssa, -2.000000e+00
   %i.eaw = getelementptr inbounds nuw i8, ptr %0, i64 2704 ; 6 uses
   %i.eax = insertelement <4 x float> poison, float %i.eav, i64 0
   %i.eay = shufflevector <4 x float> %i.eax, <4 x float> poison, <4 x i32> zeroinitializer
@@ -3557,7 +3557,7 @@ _ZN6embree17DynamicStackArrayINS_6Vec3faELm32ELm128EE6resizeEm.exit138.i: ; pred
 bb.co:                                            ; preds = %_ZN6embree17DynamicStackArrayINS_6Vec3faELm32ELm128EE6resizeEm.exit138.i
   %i.esn = fadd <4 x float> %i.ect, %i.ekn
   %i.eso = fmul <4 x float> %i.esn, splat (float 2.500000e-01)
-  %i.esp = fsub nnan float 1.000000e+00, %i.ebq
+  %i.esp = fsub nnan ninf float 1.000000e+00, %i.ebq
   %i.esq = insertelement <4 x float> poison, float %i.ebq, i64 0
   %i.esr = shufflevector <4 x float> %i.esq, <4 x float> poison, <4 x i32> zeroinitializer
   %i.ess = fmul <4 x float> %i.esr, %i.eoq
@@ -3734,7 +3734,7 @@ bb.cs:                                            ; preds = %bb.cr
   br label %_ZNK6embree18CatmullClark1RingTINS_6Vec3faES1_E9subdivideERS2_.exit.sink.split
 
 bb.ct:                                            ; preds = %bb.cr
-  %i.eww = fsub nnan float 1.000000e+00, %i.ebh
+  %i.eww = fsub nnan ninf float 1.000000e+00, %i.ebh
   %i.ewx = insertelement <4 x float> poison, float %i.ebh, i64 0
   %i.ewy = shufflevector <4 x float> %i.ewx, <4 x float> poison, <4 x i32> zeroinitializer
   %i.ewz = load <4 x float>, ptr %i.eaw, align 16, !noalias !1093
@@ -4137,7 +4137,7 @@ bb.e:                                             ; preds = %.lr.ph, %bb.e
   %.074.i.lcssa = phi i64 [ 0, %._crit_edge174 ], [ %.1.i, %._crit_edge190.loopexit ], [ 0, %._crit_edge174.thread ] ; 2 uses
   %.lcssa163 = phi float [ 0.000000e+00, %._crit_edge174 ], [ %i.pb, %._crit_edge190.loopexit ], [ 0.000000e+00, %._crit_edge174.thread ] ; 2 uses
   %i.pc = fdiv float 1.000000e+00, %.lcssa163
-  %i.pd = fadd nnan float %.lcssa163, -2.000000e+00
+  %i.pd = fadd nnan ninf float %.lcssa163, -2.000000e+00
   %i.pe = insertelement <4 x float> poison, float %i.pd, i64 0
   %i.pf = shufflevector <4 x float> %i.pe, <4 x float> poison, <4 x i32> zeroinitializer
   %i.pg = load <4 x float>, ptr %i.j, align 64, !noalias !1529
@@ -4540,7 +4540,7 @@ bb.u:                                             ; preds = %bb.t
   br label %_ZNK6embree25GeneralCatmullClark1RingTINS_6Vec3faES1_E9subdivideERNS_18CatmullClark1RingTIS1_S1_EE.exit.sink.split
 
 bb.v:                                             ; preds = %bb.t
-  %i.app = fsub nnan float 1.000000e+00, %i.po
+  %i.app = fsub nnan ninf float 1.000000e+00, %i.po
   %i.apq = insertelement <4 x float> poison, float %i.po, i64 0
   %i.apr = shufflevector <4 x float> %i.apq, <4 x float> poison, <4 x i32> zeroinitializer
   %i.aps = fmul <4 x float> %i.pm, %i.apr

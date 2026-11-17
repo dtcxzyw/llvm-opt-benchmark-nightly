@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %_ZNK9grpc_core11Mem
 
 bb.c:                                             ; preds = %bb.b
   %i.m = fsub double %i.d, %.sroa.speculated
-  %i.n = fadd nnan double %.pre, -2.000000e-01
+  %i.n = fadd nnan ninf double %.pre, -2.000000e-01
   %i.o = fmul double %i.m, %i.n
   %i.p = fdiv double %i.o, 3.000000e-01
   %i.q = fadd double %.sroa.speculated, %i.p
@@ -214,7 +214,7 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %i.s = fsub nnan double 0.000000e+00, %i.d
-  %i.t = fadd nnan double %.pre, -5.000000e-01
+  %i.t = fadd nnan ninf double %.pre, -5.000000e-01
   %i.u = fmul double %i.s, %i.t
   %i.v = fmul double %i.u, 2.000000e+00
   %i.w = fadd double %i.d, %i.v
@@ -433,7 +433,7 @@ bb.c:                                             ; preds = %_ZNK9grpc_core11Mem
 
 bb.d:                                             ; preds = %bb.c
   %i.v = fsub double %i.m, %.sroa.speculated.i
-  %i.w = fadd nnan double %.pre.i, -2.000000e-01
+  %i.w = fadd nnan ninf double %.pre.i, -2.000000e-01
   %i.x = fmul double %i.v, %i.w
   %i.y = fdiv double %i.x, 3.000000e-01
   %i.z = fadd double %.sroa.speculated.i, %i.y
@@ -445,7 +445,7 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.e
   %i.ab = fsub nnan double 0.000000e+00, %i.m
-  %i.ac = fadd nnan double %.pre.i, -5.000000e-01
+  %i.ac = fadd nnan ninf double %.pre.i, -5.000000e-01
   %i.ad = fmul double %i.ab, %i.ac
   %i.ae = fmul double %i.ad, 2.000000e+00
   %i.af = fadd double %i.m, %i.ae

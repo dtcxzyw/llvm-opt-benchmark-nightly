@@ -204,7 +204,7 @@ default.unreachable31:                            ; preds = %bb.c
   unreachable
 
 bb.d:                                             ; preds = %bb.c
-  %i.r = fadd nnan double %i.q, -1.000000e+00, !dbg !175762
+  %i.r = fadd nnan ninf double %i.q, -1.000000e+00, !dbg !175762
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 80, !dbg !175763
   %i.t = load double, ptr %i.s, align 8, !dbg !175763, !noundef !3009
   %i.u = fmul double %i.r, %i.t, !dbg !175764
@@ -215,7 +215,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.j, !dbg !175768
 
 bb.e:                                             ; preds = %bb.c
-  %i.y = fadd nnan double %i.q, -1.000000e+00, !dbg !175769
+  %i.y = fadd nnan ninf double %i.q, -1.000000e+00, !dbg !175769
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 80, !dbg !175770
   %i.aa = load double, ptr %i.z, align 8, !dbg !175770, !noundef !3009
   %i.ab = fmul double %i.y, %i.aa, !dbg !175771
@@ -224,7 +224,7 @@ bb.e:                                             ; preds = %bb.c
   br label %bb.j, !dbg !175773
 
 bb.f:                                             ; preds = %bb.c
-  %i.ae = fadd nnan double %i.q, -1.000000e+00, !dbg !175774
+  %i.ae = fadd nnan ninf double %i.q, -1.000000e+00, !dbg !175774
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 80, !dbg !175775
   %i.ag = load double, ptr %i.af, align 8, !dbg !175775, !noundef !3009
   %i.ah = fmul double %i.ae, %i.ag, !dbg !175776
@@ -235,7 +235,7 @@ bb.f:                                             ; preds = %bb.c
   br label %bb.j, !dbg !175780
 
 bb.g:                                             ; preds = %bb.c
-  %i.al = fadd nnan double %i.q, -1.000000e+00, !dbg !175781
+  %i.al = fadd nnan ninf double %i.q, -1.000000e+00, !dbg !175781
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 80, !dbg !175782
   %i.an = load double, ptr %i.am, align 8, !dbg !175782, !noundef !3009
   %i.ao = fmul double %i.al, %i.an, !dbg !175783  ; 2 uses
@@ -250,7 +250,7 @@ bb.g:                                             ; preds = %bb.c
   br i1 %i.au, label %bb.n, label %bb.k, !dbg !175789
 
 bb.h:                                             ; preds = %bb.c
-  %i.aw = fadd nnan double %i.q, -1.000000e+00, !dbg !175791
+  %i.aw = fadd nnan ninf double %i.q, -1.000000e+00, !dbg !175791
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 80, !dbg !175792
   %i.ay = load double, ptr %i.ax, align 8, !dbg !175792, !noundef !3009
   %i.az = fmul double %i.aw, %i.ay, !dbg !175793  ; 3 uses
@@ -389,7 +389,7 @@ default.unreachable31:                            ; preds = %bb.c
   unreachable
 
 bb.d:                                             ; preds = %bb.c
-  %i.r = fadd nnan double %i.q, -1.000000e+00, !dbg !175935
+  %i.r = fadd nnan ninf double %i.q, -1.000000e+00, !dbg !175935
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 80, !dbg !175936
   %i.t = load double, ptr %i.s, align 8, !dbg !175936, !noundef !3009
   %i.u = fmul double %i.r, %i.t, !dbg !175937
@@ -400,7 +400,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.j, !dbg !175941
 
 bb.e:                                             ; preds = %bb.c
-  %i.y = fadd nnan double %i.q, -1.000000e+00, !dbg !175942
+  %i.y = fadd nnan ninf double %i.q, -1.000000e+00, !dbg !175942
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 80, !dbg !175943
   %i.aa = load double, ptr %i.z, align 8, !dbg !175943, !noundef !3009
   %i.ab = fmul double %i.y, %i.aa, !dbg !175944
@@ -409,7 +409,7 @@ bb.e:                                             ; preds = %bb.c
   br label %bb.j, !dbg !175946
 
 bb.f:                                             ; preds = %bb.c
-  %i.ae = fadd nnan double %i.q, -1.000000e+00, !dbg !175947
+  %i.ae = fadd nnan ninf double %i.q, -1.000000e+00, !dbg !175947
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 80, !dbg !175948
   %i.ag = load double, ptr %i.af, align 8, !dbg !175948, !noundef !3009
   %i.ah = fmul double %i.ae, %i.ag, !dbg !175949
@@ -420,7 +420,7 @@ bb.f:                                             ; preds = %bb.c
   br label %bb.j, !dbg !175953
 
 bb.g:                                             ; preds = %bb.c
-  %i.al = fadd nnan double %i.q, -1.000000e+00, !dbg !175954
+  %i.al = fadd nnan ninf double %i.q, -1.000000e+00, !dbg !175954
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 80, !dbg !175955
   %i.an = load double, ptr %i.am, align 8, !dbg !175955, !noundef !3009
   %i.ao = fmul double %i.al, %i.an, !dbg !175956  ; 2 uses
@@ -435,7 +435,7 @@ bb.g:                                             ; preds = %bb.c
   br i1 %i.au, label %bb.n, label %bb.k, !dbg !175962
 
 bb.h:                                             ; preds = %bb.c
-  %i.aw = fadd nnan double %i.q, -1.000000e+00, !dbg !175964
+  %i.aw = fadd nnan ninf double %i.q, -1.000000e+00, !dbg !175964
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 80, !dbg !175965
   %i.ay = load double, ptr %i.ax, align 8, !dbg !175965, !noundef !3009
   %i.az = fmul double %i.aw, %i.ay, !dbg !175966  ; 3 uses
@@ -572,7 +572,7 @@ default.unreachable31:                            ; preds = %bb.c
   unreachable
 
 bb.d:                                             ; preds = %bb.c
-  %i.r = fadd nnan double %i.q, -1.000000e+00, !dbg !176108
+  %i.r = fadd nnan ninf double %i.q, -1.000000e+00, !dbg !176108
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 80, !dbg !176109
   %i.t = load double, ptr %i.s, align 8, !dbg !176109, !noundef !3009
   %i.u = fmul double %i.r, %i.t, !dbg !176110
@@ -583,7 +583,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.j, !dbg !176114
 
 bb.e:                                             ; preds = %bb.c
-  %i.y = fadd nnan double %i.q, -1.000000e+00, !dbg !176115
+  %i.y = fadd nnan ninf double %i.q, -1.000000e+00, !dbg !176115
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 80, !dbg !176116
   %i.aa = load double, ptr %i.z, align 8, !dbg !176116, !noundef !3009
   %i.ab = fmul double %i.y, %i.aa, !dbg !176117
@@ -592,7 +592,7 @@ bb.e:                                             ; preds = %bb.c
   br label %bb.j, !dbg !176119
 
 bb.f:                                             ; preds = %bb.c
-  %i.ae = fadd nnan double %i.q, -1.000000e+00, !dbg !176120
+  %i.ae = fadd nnan ninf double %i.q, -1.000000e+00, !dbg !176120
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 80, !dbg !176121
   %i.ag = load double, ptr %i.af, align 8, !dbg !176121, !noundef !3009
   %i.ah = fmul double %i.ae, %i.ag, !dbg !176122
@@ -603,7 +603,7 @@ bb.f:                                             ; preds = %bb.c
   br label %bb.j, !dbg !176126
 
 bb.g:                                             ; preds = %bb.c
-  %i.al = fadd nnan double %i.q, -1.000000e+00, !dbg !176127
+  %i.al = fadd nnan ninf double %i.q, -1.000000e+00, !dbg !176127
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 80, !dbg !176128
   %i.an = load double, ptr %i.am, align 8, !dbg !176128, !noundef !3009
   %i.ao = fmul double %i.al, %i.an, !dbg !176129  ; 2 uses
@@ -618,7 +618,7 @@ bb.g:                                             ; preds = %bb.c
   br i1 %i.au, label %bb.n, label %bb.k, !dbg !176135
 
 bb.h:                                             ; preds = %bb.c
-  %i.aw = fadd nnan double %i.q, -1.000000e+00, !dbg !176137
+  %i.aw = fadd nnan ninf double %i.q, -1.000000e+00, !dbg !176137
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 80, !dbg !176138
   %i.ay = load double, ptr %i.ax, align 8, !dbg !176138, !noundef !3009
   %i.az = fmul double %i.aw, %i.ay, !dbg !176139  ; 3 uses

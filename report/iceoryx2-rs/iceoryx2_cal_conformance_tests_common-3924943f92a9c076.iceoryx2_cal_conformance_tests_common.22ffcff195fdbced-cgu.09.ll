@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.d
   store ptr @91, ptr %i.e, align 8, !captures !12
   %i.av = icmp eq i8 %i.ar, 1
   %i.aw = icmp eq i8 %i.at, 3
-  %or.cond38 = select i1 %i.av, i1 %i.aw, i1 false
+  %or.cond38 = select i1 %i.av, i1 %i.aw, i1 false, !prof !16
   br i1 %or.cond38, label %bb.g, label %_RNvXs9_NtCs7gufeB8TUC6_12iceoryx2_cal23resizable_shared_memoryNtB5_27ResizableShmAllocationErrorNtNtCs8Chj7Szqq0n_4core3cmp9PartialEq2eq.exit.thread, !prof !16
 
 _RNvXs9_NtCs7gufeB8TUC6_12iceoryx2_cal23resizable_shared_memoryNtB5_27ResizableShmAllocationErrorNtNtCs8Chj7Szqq0n_4core3cmp9PartialEq2eq.exit.thread: ; preds = %bb.f
@@ -403,7 +403,7 @@ bb.f:                                             ; preds = %bb.d
   store ptr @91, ptr %i.e, align 8, !captures !12
   %i.av = icmp eq i8 %i.ar, 1
   %i.aw = icmp eq i8 %i.at, 3
-  %or.cond38 = select i1 %i.av, i1 %i.aw, i1 false
+  %or.cond38 = select i1 %i.av, i1 %i.aw, i1 false, !prof !16
   br i1 %or.cond38, label %bb.g, label %_RNvXs9_NtCs7gufeB8TUC6_12iceoryx2_cal23resizable_shared_memoryNtB5_27ResizableShmAllocationErrorNtNtCs8Chj7Szqq0n_4core3cmp9PartialEq2eq.exit.thread, !prof !16
 
 _RNvXs9_NtCs7gufeB8TUC6_12iceoryx2_cal23resizable_shared_memoryNtB5_27ResizableShmAllocationErrorNtNtCs8Chj7Szqq0n_4core3cmp9PartialEq2eq.exit.thread: ; preds = %bb.f
@@ -601,7 +601,7 @@ bb.f:                                             ; preds = %bb.d
   store ptr @91, ptr %i.e, align 8, !captures !12
   %i.av = icmp eq i8 %i.ar, 1
   %i.aw = icmp eq i8 %i.at, 3
-  %or.cond38 = select i1 %i.av, i1 %i.aw, i1 false
+  %or.cond38 = select i1 %i.av, i1 %i.aw, i1 false, !prof !16
   br i1 %or.cond38, label %bb.g, label %_RNvXs9_NtCs7gufeB8TUC6_12iceoryx2_cal23resizable_shared_memoryNtB5_27ResizableShmAllocationErrorNtNtCs8Chj7Szqq0n_4core3cmp9PartialEq2eq.exit.thread, !prof !16
 
 _RNvXs9_NtCs7gufeB8TUC6_12iceoryx2_cal23resizable_shared_memoryNtB5_27ResizableShmAllocationErrorNtNtCs8Chj7Szqq0n_4core3cmp9PartialEq2eq.exit.thread: ; preds = %bb.f

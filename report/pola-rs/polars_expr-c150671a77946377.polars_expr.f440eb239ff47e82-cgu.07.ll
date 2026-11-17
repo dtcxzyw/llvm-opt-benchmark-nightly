@@ -205,7 +205,7 @@ default.unreachable:                              ; preds = %bb.by, %_RNvMs_NtNt
   unreachable
 
 bb.av:                                            ; preds = %_RNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB4_5BlockRSNtNtCs2mZqlW55729_12polars_utils7float164pf16E8undeleteCskY9G75ZWc4U_11polars_expr.exit
-  %i.oc = fadd nnan double %i.ob, -1.000000e+00, !dbg !15743
+  %i.oc = fadd nnan ninf double %i.ob, -1.000000e+00, !dbg !15743
   %i.od = fmul double %6, %i.oc, !dbg !15744
   %i.oe = call double @llvm.round.f64(double %i.od), !dbg !15745
   %i.of = call i64 @llvm.fptoui.sat.i64.f64(double %i.oe), !dbg !15744
@@ -214,7 +214,7 @@ bb.av:                                            ; preds = %_RNvMs_NtNtCslFlrwj
   br label %.invoke, !dbg !15748
 
 bb.aw:                                            ; preds = %_RNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB4_5BlockRSNtNtCs2mZqlW55729_12polars_utils7float164pf16E8undeleteCskY9G75ZWc4U_11polars_expr.exit
-  %i.oh = fadd nnan double %i.ob, -1.000000e+00, !dbg !15749
+  %i.oh = fadd nnan ninf double %i.ob, -1.000000e+00, !dbg !15749
   %i.oi = fmul double %6, %i.oh, !dbg !15750
   %i.oj = call double @llvm.floor.f64(double %i.oi), !dbg !15751
   %i.ok = call i64 @llvm.fptoui.sat.i64.f64(double %i.oj), !dbg !15750
@@ -223,7 +223,7 @@ bb.aw:                                            ; preds = %_RNvMs_NtNtCslFlrwj
   br label %.invoke, !dbg !15754
 
 bb.ax:                                            ; preds = %_RNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB4_5BlockRSNtNtCs2mZqlW55729_12polars_utils7float164pf16E8undeleteCskY9G75ZWc4U_11polars_expr.exit
-  %i.om = fadd nnan double %i.ob, -1.000000e+00, !dbg !15755
+  %i.om = fadd nnan ninf double %i.ob, -1.000000e+00, !dbg !15755
   %i.on = fmul double %6, %i.om, !dbg !15756
   %i.oo = call double @llvm.ceil.f64(double %i.on), !dbg !15757
   %i.op = call i64 @llvm.fptoui.sat.i64.f64(double %i.oo), !dbg !15756
@@ -232,7 +232,7 @@ bb.ax:                                            ; preds = %_RNvMs_NtNtCslFlrwj
   br label %.invoke, !dbg !15760
 
 bb.ay:                                            ; preds = %_RNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB4_5BlockRSNtNtCs2mZqlW55729_12polars_utils7float164pf16E8undeleteCskY9G75ZWc4U_11polars_expr.exit
-  %i.or = fadd nnan double %i.ob, -1.000000e+00, !dbg !15761
+  %i.or = fadd nnan ninf double %i.ob, -1.000000e+00, !dbg !15761
   %i.os = fmul double %6, %i.or, !dbg !15762      ; 2 uses
   %i.ot = call double @llvm.floor.f64(double %i.os), !dbg !15763
   %i.ou = call i64 @llvm.fptoui.sat.i64.f64(double %i.ot), !dbg !15762
@@ -249,7 +249,7 @@ bb.ay:                                            ; preds = %_RNvMs_NtNtCslFlrwj
   br i1 %i.pa, label %_RNvMsi_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB5_14QuantileUpdateINtB5_10BlockUnionRSNtNtCs2mZqlW55729_12polars_utils7float164pf16EE8quantileCskY9G75ZWc4U_11polars_expr.exit, label %bb.bb, !dbg !15769
 
 bb.az:                                            ; preds = %_RNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB4_5BlockRSNtNtCs2mZqlW55729_12polars_utils7float164pf16E8undeleteCskY9G75ZWc4U_11polars_expr.exit
-  %i.pb = fadd nnan double %i.ob, -1.000000e+00, !dbg !15770
+  %i.pb = fadd nnan ninf double %i.ob, -1.000000e+00, !dbg !15770
   %i.pc = fmul double %6, %i.pb, !dbg !15770      ; 3 uses
   %i.pd = call double @llvm.floor.f64(double %i.pc), !dbg !15771
   %i.pe = call i64 @llvm.fptoui.sat.i64.f64(double %i.pd), !dbg !15772 ; 3 uses
@@ -496,7 +496,7 @@ bb.by:                                            ; preds = %bb.l
   ], !dbg !15826
 
 bb.bz:                                            ; preds = %bb.by
-  %i.qy = fadd nnan double %i.qx, -1.000000e+00, !dbg !15827
+  %i.qy = fadd nnan ninf double %i.qx, -1.000000e+00, !dbg !15827
   %i.qz = fmul double %6, %i.qy, !dbg !15828
   %i.ra = call double @llvm.round.f64(double %i.qz), !dbg !15829
   %i.rb = call i64 @llvm.fptoui.sat.i64.f64(double %i.ra), !dbg !15828
@@ -511,7 +511,7 @@ bb.bz:                                            ; preds = %bb.by
           to label %_RNvMsi_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB5_14QuantileUpdateQINtB5_5BlockRSNtNtCs2mZqlW55729_12polars_utils7float164pf16EE8quantileCskY9G75ZWc4U_11polars_expr.exit unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !dbg !15833
 
 bb.ca:                                            ; preds = %bb.by
-  %i.rf = fadd nnan double %i.qx, -1.000000e+00, !dbg !15834
+  %i.rf = fadd nnan ninf double %i.qx, -1.000000e+00, !dbg !15834
   %i.rg = fmul double %6, %i.rf, !dbg !15835
   %i.rh = call double @llvm.floor.f64(double %i.rg), !dbg !15836
   %i.ri = call i64 @llvm.fptoui.sat.i64.f64(double %i.rh), !dbg !15835
@@ -520,7 +520,7 @@ bb.ca:                                            ; preds = %bb.by
   br label %.invoke169, !dbg !15839
 
 bb.cb:                                            ; preds = %bb.by
-  %i.rk = fadd nnan double %i.qx, -1.000000e+00, !dbg !15840
+  %i.rk = fadd nnan ninf double %i.qx, -1.000000e+00, !dbg !15840
   %i.rl = fmul double %6, %i.rk, !dbg !15841
   %i.rm = call double @llvm.ceil.f64(double %i.rl), !dbg !15842
   %i.rn = call i64 @llvm.fptoui.sat.i64.f64(double %i.rm), !dbg !15841
@@ -529,7 +529,7 @@ bb.cb:                                            ; preds = %bb.by
   br label %.invoke169, !dbg !15845
 
 bb.cc:                                            ; preds = %bb.by
-  %i.rp = fadd nnan double %i.qx, -1.000000e+00, !dbg !15846
+  %i.rp = fadd nnan ninf double %i.qx, -1.000000e+00, !dbg !15846
   %i.rq = fmul double %6, %i.rp, !dbg !15847      ; 2 uses
   %i.rr = call double @llvm.floor.f64(double %i.rq), !dbg !15848
   %i.rs = call i64 @llvm.fptoui.sat.i64.f64(double %i.rr), !dbg !15847
@@ -546,7 +546,7 @@ bb.cc:                                            ; preds = %bb.by
   br i1 %i.ry, label %_RNvMsi_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB5_14QuantileUpdateQINtB5_5BlockRSNtNtCs2mZqlW55729_12polars_utils7float164pf16EE8quantileCskY9G75ZWc4U_11polars_expr.exit, label %bb.cf, !dbg !15854
 
 bb.cd:                                            ; preds = %bb.by
-  %i.rz = fadd nnan double %i.qx, -1.000000e+00, !dbg !15855
+  %i.rz = fadd nnan ninf double %i.qx, -1.000000e+00, !dbg !15855
   %i.sa = fmul double %6, %i.rz, !dbg !15855      ; 3 uses
   %i.sb = call double @llvm.floor.f64(double %i.sa), !dbg !15856
   %i.sc = call i64 @llvm.fptoui.sat.i64.f64(double %i.sb), !dbg !15857 ; 3 uses
@@ -949,7 +949,7 @@ default.unreachable:                              ; preds = %_RNvMs_NtNtCslFlrwj
   unreachable
 
 bb.ar:                                            ; preds = %_RNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB4_5BlockRSdE8undeleteCskY9G75ZWc4U_11polars_expr.exit56
-  %i.qo = fadd nnan double %i.qn, -1.000000e+00, !dbg !17030
+  %i.qo = fadd nnan ninf double %i.qn, -1.000000e+00, !dbg !17030
   %i.qp = fmul double %6, %i.qo, !dbg !17031
   %i.qq = call double @llvm.round.f64(double %i.qp), !dbg !17032
   %i.qr = call i64 @llvm.fptoui.sat.i64.f64(double %i.qq), !dbg !17031
@@ -958,7 +958,7 @@ bb.ar:                                            ; preds = %_RNvMs_NtNtCslFlrwj
   br label %.invoke, !dbg !17035
 
 bb.as:                                            ; preds = %_RNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB4_5BlockRSdE8undeleteCskY9G75ZWc4U_11polars_expr.exit56
-  %i.qt = fadd nnan double %i.qn, -1.000000e+00, !dbg !17036
+  %i.qt = fadd nnan ninf double %i.qn, -1.000000e+00, !dbg !17036
   %i.qu = fmul double %6, %i.qt, !dbg !17037
   %i.qv = call double @llvm.floor.f64(double %i.qu), !dbg !17038
   %i.qw = call i64 @llvm.fptoui.sat.i64.f64(double %i.qv), !dbg !17037
@@ -967,7 +967,7 @@ bb.as:                                            ; preds = %_RNvMs_NtNtCslFlrwj
   br label %.invoke, !dbg !17041
 
 bb.at:                                            ; preds = %_RNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB4_5BlockRSdE8undeleteCskY9G75ZWc4U_11polars_expr.exit56
-  %i.qy = fadd nnan double %i.qn, -1.000000e+00, !dbg !17042
+  %i.qy = fadd nnan ninf double %i.qn, -1.000000e+00, !dbg !17042
   %i.qz = fmul double %6, %i.qy, !dbg !17043
   %i.ra = call double @llvm.ceil.f64(double %i.qz), !dbg !17044
   %i.rb = call i64 @llvm.fptoui.sat.i64.f64(double %i.ra), !dbg !17043
@@ -976,7 +976,7 @@ bb.at:                                            ; preds = %_RNvMs_NtNtCslFlrwj
   br label %.invoke, !dbg !17047
 
 bb.au:                                            ; preds = %_RNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB4_5BlockRSdE8undeleteCskY9G75ZWc4U_11polars_expr.exit56
-  %i.rd = fadd nnan double %i.qn, -1.000000e+00, !dbg !17048
+  %i.rd = fadd nnan ninf double %i.qn, -1.000000e+00, !dbg !17048
   %i.re = fmul double %6, %i.rd, !dbg !17049      ; 2 uses
   %i.rf = call double @llvm.floor.f64(double %i.re), !dbg !17050
   %i.rg = call i64 @llvm.fptoui.sat.i64.f64(double %i.rf), !dbg !17049
@@ -993,7 +993,7 @@ bb.au:                                            ; preds = %_RNvMs_NtNtCslFlrwj
   br i1 %i.rm, label %_RNvMsi_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB5_14QuantileUpdateINtB5_10BlockUnionRSdEE8quantileCskY9G75ZWc4U_11polars_expr.exit, label %bb.ax, !dbg !17056
 
 bb.av:                                            ; preds = %_RNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB4_5BlockRSdE8undeleteCskY9G75ZWc4U_11polars_expr.exit56
-  %i.rn = fadd nnan double %i.qn, -1.000000e+00, !dbg !17057
+  %i.rn = fadd nnan ninf double %i.qn, -1.000000e+00, !dbg !17057
   %i.ro = fmul double %6, %i.rn, !dbg !17057      ; 3 uses
   %i.rp = call double @llvm.floor.f64(double %i.ro), !dbg !17058
   %i.rq = call i64 @llvm.fptoui.sat.i64.f64(double %i.rp), !dbg !17059 ; 3 uses
@@ -1249,7 +1249,7 @@ _RNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB4_5BlockRS
   ], !dbg !17119
 
 bb.bu:                                            ; preds = %_RNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB4_5BlockRSdE8undeleteCskY9G75ZWc4U_11polars_expr.exit
-  %i.tn = fadd nnan double %i.tm, -1.000000e+00, !dbg !17120
+  %i.tn = fadd nnan ninf double %i.tm, -1.000000e+00, !dbg !17120
   %i.to = fmul double %6, %i.tn, !dbg !17121
   %i.tp = call double @llvm.round.f64(double %i.to), !dbg !17122
   %i.tq = call i64 @llvm.fptoui.sat.i64.f64(double %i.tp), !dbg !17121
@@ -1264,7 +1264,7 @@ bb.bu:                                            ; preds = %_RNvMs_NtNtCslFlrwj
           to label %_RNvMsi_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB5_14QuantileUpdateQINtB5_5BlockRSdEE8quantileCskY9G75ZWc4U_11polars_expr.exit unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !dbg !17126
 
 bb.bv:                                            ; preds = %_RNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB4_5BlockRSdE8undeleteCskY9G75ZWc4U_11polars_expr.exit
-  %i.tu = fadd nnan double %i.tm, -1.000000e+00, !dbg !17127
+  %i.tu = fadd nnan ninf double %i.tm, -1.000000e+00, !dbg !17127
   %i.tv = fmul double %6, %i.tu, !dbg !17128
   %i.tw = call double @llvm.floor.f64(double %i.tv), !dbg !17129
   %i.tx = call i64 @llvm.fptoui.sat.i64.f64(double %i.tw), !dbg !17128
@@ -1273,7 +1273,7 @@ bb.bv:                                            ; preds = %_RNvMs_NtNtCslFlrwj
   br label %.invoke177, !dbg !17132
 
 bb.bw:                                            ; preds = %_RNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB4_5BlockRSdE8undeleteCskY9G75ZWc4U_11polars_expr.exit
-  %i.tz = fadd nnan double %i.tm, -1.000000e+00, !dbg !17133
+  %i.tz = fadd nnan ninf double %i.tm, -1.000000e+00, !dbg !17133
   %i.ua = fmul double %6, %i.tz, !dbg !17134
   %i.ub = call double @llvm.ceil.f64(double %i.ua), !dbg !17135
   %i.uc = call i64 @llvm.fptoui.sat.i64.f64(double %i.ub), !dbg !17134
@@ -1282,7 +1282,7 @@ bb.bw:                                            ; preds = %_RNvMs_NtNtCslFlrwj
   br label %.invoke177, !dbg !17138
 
 bb.bx:                                            ; preds = %_RNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB4_5BlockRSdE8undeleteCskY9G75ZWc4U_11polars_expr.exit
-  %i.ue = fadd nnan double %i.tm, -1.000000e+00, !dbg !17139
+  %i.ue = fadd nnan ninf double %i.tm, -1.000000e+00, !dbg !17139
   %i.uf = fmul double %6, %i.ue, !dbg !17140      ; 2 uses
   %i.ug = call double @llvm.floor.f64(double %i.uf), !dbg !17141
   %i.uh = call i64 @llvm.fptoui.sat.i64.f64(double %i.ug), !dbg !17140
@@ -1299,7 +1299,7 @@ bb.bx:                                            ; preds = %_RNvMs_NtNtCslFlrwj
   br i1 %i.un, label %_RNvMsi_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB5_14QuantileUpdateQINtB5_5BlockRSdEE8quantileCskY9G75ZWc4U_11polars_expr.exit, label %bb.ca, !dbg !17147
 
 bb.by:                                            ; preds = %_RNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB4_5BlockRSdE8undeleteCskY9G75ZWc4U_11polars_expr.exit
-  %i.uo = fadd nnan double %i.tm, -1.000000e+00, !dbg !17148
+  %i.uo = fadd nnan ninf double %i.tm, -1.000000e+00, !dbg !17148
   %i.up = fmul double %6, %i.uo, !dbg !17148      ; 3 uses
   %i.uq = call double @llvm.floor.f64(double %i.up), !dbg !17149
   %i.ur = call i64 @llvm.fptoui.sat.i64.f64(double %i.uq), !dbg !17150 ; 3 uses
@@ -1702,7 +1702,7 @@ default.unreachable:                              ; preds = %_RNvMs_NtNtCslFlrwj
   unreachable
 
 bb.ar:                                            ; preds = %_RNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB4_5BlockRSfE8undeleteCskY9G75ZWc4U_11polars_expr.exit56
-  %i.qo = fadd nnan double %i.qn, -1.000000e+00, !dbg !18339
+  %i.qo = fadd nnan ninf double %i.qn, -1.000000e+00, !dbg !18339
   %i.qp = fmul double %6, %i.qo, !dbg !18340
   %i.qq = call double @llvm.round.f64(double %i.qp), !dbg !18341
   %i.qr = call i64 @llvm.fptoui.sat.i64.f64(double %i.qq), !dbg !18340
@@ -1711,7 +1711,7 @@ bb.ar:                                            ; preds = %_RNvMs_NtNtCslFlrwj
   br label %.invoke, !dbg !18344
 
 bb.as:                                            ; preds = %_RNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB4_5BlockRSfE8undeleteCskY9G75ZWc4U_11polars_expr.exit56
-  %i.qt = fadd nnan double %i.qn, -1.000000e+00, !dbg !18345
+  %i.qt = fadd nnan ninf double %i.qn, -1.000000e+00, !dbg !18345
   %i.qu = fmul double %6, %i.qt, !dbg !18346
   %i.qv = call double @llvm.floor.f64(double %i.qu), !dbg !18347
   %i.qw = call i64 @llvm.fptoui.sat.i64.f64(double %i.qv), !dbg !18346
@@ -1720,7 +1720,7 @@ bb.as:                                            ; preds = %_RNvMs_NtNtCslFlrwj
   br label %.invoke, !dbg !18350
 
 bb.at:                                            ; preds = %_RNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB4_5BlockRSfE8undeleteCskY9G75ZWc4U_11polars_expr.exit56
-  %i.qy = fadd nnan double %i.qn, -1.000000e+00, !dbg !18351
+  %i.qy = fadd nnan ninf double %i.qn, -1.000000e+00, !dbg !18351
   %i.qz = fmul double %6, %i.qy, !dbg !18352
   %i.ra = call double @llvm.ceil.f64(double %i.qz), !dbg !18353
   %i.rb = call i64 @llvm.fptoui.sat.i64.f64(double %i.ra), !dbg !18352
@@ -1729,7 +1729,7 @@ bb.at:                                            ; preds = %_RNvMs_NtNtCslFlrwj
   br label %.invoke, !dbg !18356
 
 bb.au:                                            ; preds = %_RNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB4_5BlockRSfE8undeleteCskY9G75ZWc4U_11polars_expr.exit56
-  %i.rd = fadd nnan double %i.qn, -1.000000e+00, !dbg !18357
+  %i.rd = fadd nnan ninf double %i.qn, -1.000000e+00, !dbg !18357
   %i.re = fmul double %6, %i.rd, !dbg !18358      ; 2 uses
   %i.rf = call double @llvm.floor.f64(double %i.re), !dbg !18359
   %i.rg = call i64 @llvm.fptoui.sat.i64.f64(double %i.rf), !dbg !18358
@@ -1746,7 +1746,7 @@ bb.au:                                            ; preds = %_RNvMs_NtNtCslFlrwj
   br i1 %i.rm, label %_RNvMsi_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB5_14QuantileUpdateINtB5_10BlockUnionRSfEE8quantileCskY9G75ZWc4U_11polars_expr.exit, label %bb.ax, !dbg !18365
 
 bb.av:                                            ; preds = %_RNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB4_5BlockRSfE8undeleteCskY9G75ZWc4U_11polars_expr.exit56
-  %i.rn = fadd nnan double %i.qn, -1.000000e+00, !dbg !18366
+  %i.rn = fadd nnan ninf double %i.qn, -1.000000e+00, !dbg !18366
   %i.ro = fmul double %6, %i.rn, !dbg !18366      ; 3 uses
   %i.rp = call double @llvm.floor.f64(double %i.ro), !dbg !18367
   %i.rq = call i64 @llvm.fptoui.sat.i64.f64(double %i.rp), !dbg !18368 ; 3 uses
@@ -2003,7 +2003,7 @@ _RNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB4_5BlockRS
   ], !dbg !18429
 
 bb.bu:                                            ; preds = %_RNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB4_5BlockRSfE8undeleteCskY9G75ZWc4U_11polars_expr.exit
-  %i.to = fadd nnan double %i.tn, -1.000000e+00, !dbg !18430
+  %i.to = fadd nnan ninf double %i.tn, -1.000000e+00, !dbg !18430
   %i.tp = fmul double %6, %i.to, !dbg !18431
   %i.tq = call double @llvm.round.f64(double %i.tp), !dbg !18432
   %i.tr = call i64 @llvm.fptoui.sat.i64.f64(double %i.tq), !dbg !18431
@@ -2018,7 +2018,7 @@ bb.bu:                                            ; preds = %_RNvMs_NtNtCslFlrwj
           to label %_RNvMsi_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB5_14QuantileUpdateQINtB5_5BlockRSfEE8quantileCskY9G75ZWc4U_11polars_expr.exit unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !dbg !18436
 
 bb.bv:                                            ; preds = %_RNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB4_5BlockRSfE8undeleteCskY9G75ZWc4U_11polars_expr.exit
-  %i.tv = fadd nnan double %i.tn, -1.000000e+00, !dbg !18437
+  %i.tv = fadd nnan ninf double %i.tn, -1.000000e+00, !dbg !18437
   %i.tw = fmul double %6, %i.tv, !dbg !18438
   %i.tx = call double @llvm.floor.f64(double %i.tw), !dbg !18439
   %i.ty = call i64 @llvm.fptoui.sat.i64.f64(double %i.tx), !dbg !18438
@@ -2027,7 +2027,7 @@ bb.bv:                                            ; preds = %_RNvMs_NtNtCslFlrwj
   br label %.invoke177, !dbg !18442
 
 bb.bw:                                            ; preds = %_RNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB4_5BlockRSfE8undeleteCskY9G75ZWc4U_11polars_expr.exit
-  %i.ua = fadd nnan double %i.tn, -1.000000e+00, !dbg !18443
+  %i.ua = fadd nnan ninf double %i.tn, -1.000000e+00, !dbg !18443
   %i.ub = fmul double %6, %i.ua, !dbg !18444
   %i.uc = call double @llvm.ceil.f64(double %i.ub), !dbg !18445
   %i.ud = call i64 @llvm.fptoui.sat.i64.f64(double %i.uc), !dbg !18444
@@ -2036,7 +2036,7 @@ bb.bw:                                            ; preds = %_RNvMs_NtNtCslFlrwj
   br label %.invoke177, !dbg !18448
 
 bb.bx:                                            ; preds = %_RNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB4_5BlockRSfE8undeleteCskY9G75ZWc4U_11polars_expr.exit
-  %i.uf = fadd nnan double %i.tn, -1.000000e+00, !dbg !18449
+  %i.uf = fadd nnan ninf double %i.tn, -1.000000e+00, !dbg !18449
   %i.ug = fmul double %6, %i.uf, !dbg !18450      ; 2 uses
   %i.uh = call double @llvm.floor.f64(double %i.ug), !dbg !18451
   %i.ui = call i64 @llvm.fptoui.sat.i64.f64(double %i.uh), !dbg !18450
@@ -2053,7 +2053,7 @@ bb.bx:                                            ; preds = %_RNvMs_NtNtCslFlrwj
   br i1 %i.uo, label %_RNvMsi_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB5_14QuantileUpdateQINtB5_5BlockRSfEE8quantileCskY9G75ZWc4U_11polars_expr.exit, label %bb.ca, !dbg !18457
 
 bb.by:                                            ; preds = %_RNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB4_5BlockRSfE8undeleteCskY9G75ZWc4U_11polars_expr.exit
-  %i.up = fadd nnan double %i.tn, -1.000000e+00, !dbg !18458
+  %i.up = fadd nnan ninf double %i.tn, -1.000000e+00, !dbg !18458
   %i.uq = fmul double %6, %i.up, !dbg !18458      ; 3 uses
   %i.ur = call double @llvm.floor.f64(double %i.uq), !dbg !18459
   %i.us = call i64 @llvm.fptoui.sat.i64.f64(double %i.ur), !dbg !18460 ; 3 uses

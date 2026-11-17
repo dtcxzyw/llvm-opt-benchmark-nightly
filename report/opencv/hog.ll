@@ -205,8 +205,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.dp = fsub <4 x float> %i.dn, %broadcast.splat ; 2 uses
   %i.dq = fsub <4 x float> %i.do, %broadcast.splat ; 2 uses
   %i.dr = getelementptr inbounds nuw [4 x i8], ptr %i.dh, i64 %index ; 2 uses
-  %i.ds = fmul <4 x float> %i.dp, %i.dp
-  %i.dt = fmul <4 x float> %i.dq, %i.dq
+  %i.ds = fmul nnan <4 x float> %i.dp, %i.dp
+  %i.dt = fmul nnan <4 x float> %i.dq, %i.dq
   %i.du = getelementptr inbounds nuw i8, ptr %i.dr, i64 16
   store <4 x float> %i.ds, ptr %i.dr, align 4, !tbaa !53
   store <4 x float> %i.dt, ptr %i.du, align 4, !tbaa !53
@@ -251,8 +251,8 @@ vector.body426:                                   ; preds = %vector.body426, %ve
   %i.ea = fsub <4 x float> %i.dy, %broadcast.splat425 ; 2 uses
   %i.eb = fsub <4 x float> %i.dz, %broadcast.splat425 ; 2 uses
   %i.ec = getelementptr inbounds nuw [4 x i8], ptr %i.dg, i64 %index427 ; 2 uses
-  %i.ed = fmul <4 x float> %i.ea, %i.ea
-  %i.ee = fmul <4 x float> %i.eb, %i.eb
+  %i.ed = fmul nnan <4 x float> %i.ea, %i.ea
+  %i.ee = fmul nnan <4 x float> %i.eb, %i.eb
   %i.ef = getelementptr inbounds nuw i8, ptr %i.ec, i64 16
   store <4 x float> %i.ed, ptr %i.ec, align 4, !tbaa !53
   store <4 x float> %i.ee, ptr %i.ef, align 4, !tbaa !53
@@ -275,7 +275,7 @@ middle.block432:                                  ; preds = %vector.body426
   %i.ei = uitofp nneg i32 %i.eh to float
   %i.ej = fsub float %i.ei, %i.dj                 ; 2 uses
   %i.ek = getelementptr inbounds nuw [4 x i8], ptr %i.dh, i64 %indvars.iv
-  %i.el = fmul float %i.ej, %i.ej
+  %i.el = fmul nnan float %i.ej, %i.ej
   store float %i.el, ptr %i.ek, align 4, !tbaa !53
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
@@ -346,7 +346,7 @@ bb.l:                                             ; preds = %bb.l, %.preheader29
   %i.fg = uitofp nneg i32 %i.ff to float
   %i.fh = fsub float %i.fg, %i.dl                 ; 2 uses
   %i.fi = getelementptr inbounds nuw [4 x i8], ptr %i.dg, i64 %indvars.iv324
-  %i.fj = fmul float %i.fh, %i.fh
+  %i.fj = fmul nnan float %i.fh, %i.fh
   store float %i.fj, ptr %i.fi, align 4, !tbaa !53
   %indvars.iv.next325 = add nuw nsw i64 %indvars.iv324, 1 ; 2 uses
   %exitcond328.not = icmp eq i64 %indvars.iv.next325, %wide.trip.count327

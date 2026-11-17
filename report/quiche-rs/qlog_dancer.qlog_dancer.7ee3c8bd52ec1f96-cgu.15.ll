@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f
   %i.dj = fmul double %i.dc, %i.dc, !dbg !37898   ; 6 uses
     #dbg_value(double %i.df, !37294, !DIExpression(), !35807)
     #dbg_value(double %i.df, !37296, !DIExpression(), !35810)
-  %i.dk = fmul double %i.df, %i.df, !dbg !37899
+  %i.dk = fmul nnan double %i.df, %i.df, !dbg !37899
   %i.dl = fsub double %i.dj, %i.dk, !dbg !37900
     #dbg_value(double %i.dl, !37299, !DIExpression(), !35813)
     #dbg_value(double %i.dl, !37301, !DIExpression(), !35816)

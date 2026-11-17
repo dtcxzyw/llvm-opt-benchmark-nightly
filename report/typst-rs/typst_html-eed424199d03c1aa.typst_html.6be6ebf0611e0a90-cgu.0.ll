@@ -205,7 +205,7 @@ bb.a:
   %.sroa.650.0.extract.trunc = trunc i32 %i.x to i8
   %i.y = or disjoint i32 %.sroa.0.0.insert.ext.i.i, 1258291200
   %i.z = bitcast i32 %i.y to float
-  %i.aa = fadd nnan float %i.z, f0xCB000000
+  %i.aa = fadd nnan ninf float %i.z, f0xCB000000
   %i.ab = fmul nnan float %i.aa, f0x3B808081
   %.sroa.650.0.extract.shift = and i32 %i.x, 255
   %i.ac = insertelement <2 x i32> poison, i32 %.sroa.448.0.extract.shift, i64 0
@@ -213,7 +213,7 @@ bb.a:
   %i.ae = and <2 x i32> %i.ad, splat (i32 255)
   %i.af = or disjoint <2 x i32> %i.ae, splat (i32 1258291200)
   %i.ag = bitcast <2 x i32> %i.af to <2 x float>
-  %i.ah = fadd nnan <2 x float> %i.ag, splat (float f0xCB000000)
+  %i.ah = fadd nnan ninf <2 x float> %i.ag, splat (float f0xCB000000)
   %i.ai = fmul nnan <2 x float> %i.ah, splat (float f0x3B808081) ; 2 uses
   %i.aj = extractelement <4 x float> %i.m, i64 0  ; 2 uses
   %i.ak = fpext float %i.aj to double             ; 2 uses
@@ -226,7 +226,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.ap = or disjoint i32 %.sroa.549.0.extract.shift, 1258291200
   %i.aq = bitcast i32 %i.ap to float
-  %i.ar = fadd nnan float %i.aq, f0xCB000000
+  %i.ar = fadd nnan ninf float %i.aq, f0xCB000000
   %i.as = fmul nnan float %i.ar, f0x3B808081
   %i.at = extractelement <4 x float> %i.m, i64 2
   %i.au = fpext float %i.at to double

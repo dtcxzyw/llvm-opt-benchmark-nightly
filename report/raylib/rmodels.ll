@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.av = fsub float 1.000000e+00, %.0.i169
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 120
   %i.ax = load ptr, ptr %i.aw, align 8
-  %i.ay = fsub nnan float 1.000000e+00, %5
+  %i.ay = fsub nnan ninf float 1.000000e+00, %5
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 112
   %i.ba = load ptr, ptr %i.az, align 8
   %wide.trip.count = zext nneg i32 %i.ak to i64
@@ -608,7 +608,7 @@ bb.a:
 
 .lr.ph:                                           ; preds = %.preheader1058
   %i.t = uitofp nneg i32 %.010501066 to float     ; 2 uses
-  %i.u = fadd nnan float %i.t, -5.000000e-01
+  %i.u = fadd nnan ninf float %i.t, -5.000000e-01
   %i.v = fmul float %3, %i.u                      ; 24 uses
   %i.w = fadd nnan float %i.t, 5.000000e-01
   %i.x = fmul float %3, %i.w                      ; 24 uses
@@ -678,7 +678,7 @@ bb.b:                                             ; preds = %.lr.ph, %.thread
   %.110451061 = phi i32 [ %.010441067, %.lr.ph ], [ %.51049, %.thread ] ; 12 uses
   %.010511059 = phi i32 [ 0, %.lr.ph ], [ %i.kq, %.thread ] ; 10 uses
   %i.ax = uitofp nneg i32 %.010511059 to float    ; 2 uses
-  %i.ay = fadd nnan float %i.ax, -5.000000e-01
+  %i.ay = fadd nnan ninf float %i.ax, -5.000000e-01
   %i.az = fmul float %.sroa.01030.0.vec.extract, %i.ay ; 24 uses
   %i.ba = fadd nnan float %i.ax, 5.000000e-01
   %i.bb = fmul float %.sroa.01030.0.vec.extract, %i.ba ; 24 uses

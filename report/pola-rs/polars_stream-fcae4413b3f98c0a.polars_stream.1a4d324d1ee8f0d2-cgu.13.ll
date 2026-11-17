@@ -205,14 +205,14 @@ _RINvYNtNtNtCsci2cbTAlhZn_4rand4rngs6thread9ThreadRngNtNtB9_3rng6RngExt6sampledN
   %i.de = lshr i64 %i.dd, 12, !dbg !4516
   %i.df = or disjoint i64 %i.de, 4607182418800017408, !dbg !4517
   %i.dg = bitcast i64 %i.df to double, !dbg !4518
-  %i.dh = fadd nnan double %i.dg, f0xBFEFFFFFFFFFFFFF, !dbg !4519
+  %i.dh = fadd nnan ninf double %i.dg, f0xBFEFFFFFFFFFFFFF, !dbg !4519
   %i.di = fsub double 1.000000e+00, %i.cn, !dbg !4520
   %i.dj = fdiv double %i.cn, %i.di, !dbg !4521
   %i.dk = tail call noundef double @llvm.log.f64(double %i.dj), !dbg !4522
   %i.dl = fmul double %i.bl, %i.dk, !dbg !4523    ; 2 uses
   %i.dm = tail call noundef double @llvm.exp.f64(double %i.dl), !dbg !4524
   %i.dn = fmul double %i.ae, %i.dm, !dbg !4525    ; 5 uses
-  %i.do = fmul double %i.cn, %i.cn, !dbg !4526
+  %i.do = fmul nnan double %i.cn, %i.cn, !dbg !4526
   %i.dp = fmul double %i.do, %i.dh, !dbg !4527    ; 2 uses
   %i.dq = fmul double %i.bn, %i.dl, !dbg !4528
   %i.dr = fadd double %i.dq, f0xBFF62E42FEFA39EF, !dbg !4529 ; 2 uses
@@ -353,7 +353,7 @@ bb.y:                                             ; preds = %_RINvYNtNtNtCsci2cb
   br i1 %i.fz, label %bb.aa, label %.split.i, !dbg !4602
 
 bb.z:                                             ; preds = %_RINvYNtNtNtCsci2cbTAlhZn_4rand4rngs6thread9ThreadRngNtNtB9_3rng6RngExt6sampledNtNtNtB9_5distr5float6Open01ECs2g09Ig8GZd6_13polars_stream.exit43.i.i
-  %i.ga = fmul double %i.fb, %i.fv, !dbg !4603    ; 2 uses
+  %i.ga = fmul nnan double %i.fb, %i.fv, !dbg !4603 ; 2 uses
   %i.gb = fmul double %i.fb, %i.ga, !dbg !4604    ; 2 uses
   %i.gc = fmul nnan double %i.fv, 2.500000e-01, !dbg !4605
   %i.gd = fadd double %i.gc, %i.gb, !dbg !4606

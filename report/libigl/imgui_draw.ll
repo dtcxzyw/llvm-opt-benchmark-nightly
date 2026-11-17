@@ -205,7 +205,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = uitofp nneg i32 %4 to float              ; 2 uses
-  %i.d = fadd nnan float %i.c, -1.000000e+00
+  %i.d = fadd nnan ninf float %i.c, -1.000000e+00
   %i.e = fmul nnan float %i.d, f0x40C90FDB
   %i.f = fdiv float %i.e, %i.c
   %i.g = fadd float %2, -5.000000e-01
@@ -233,7 +233,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = uitofp nneg i32 %4 to float              ; 2 uses
-  %i.d = fadd nnan float %i.c, -1.000000e+00
+  %i.d = fadd nnan ninf float %i.c, -1.000000e+00
   %i.e = fmul nnan float %i.d, f0x40C90FDB
   %i.f = fdiv float %i.e, %i.c
   %i.g = add nsw i32 %4, -1
@@ -636,9 +636,9 @@ bb.ke:                                            ; preds = %bb.kd
   %i.byr = sitofp i32 %i.byl to float             ; 2 uses
   %i.bys = fsub nnan float %.0295.i.i.i.i.i.i, %i.byr
   %i.byt = fsub nnan float %.0293.i.i.i.i.i.i, %i.byr
-  %i.byu = fadd float %i.bys, %i.byt
-  %i.byv = fmul float %i.byu, 5.000000e-01
-  %i.byw = fsub float 1.000000e+00, %i.byv
+  %i.byu = fadd nnan float %i.bys, %i.byt
+  %i.byv = fmul nnan float %i.byu, 5.000000e-01
+  %i.byw = fsub nnan float 1.000000e+00, %i.byv
   %i.byx = fmul float %i.byw, %i.byq
   %i.byy = zext nneg i32 %i.byl to i64            ; 2 uses
   %i.byz = getelementptr inbounds nuw [4 x i8], ptr %.080.i.i.i.i.i, i64 %i.byy ; 2 uses
@@ -898,7 +898,7 @@ bb.kx:                                            ; preds = %bb.kw
   br i1 %i.cei, label %bb.ky, label %bb.kz
 
 bb.ky:                                            ; preds = %bb.kx
-  %i.cej = fsub nnan float %i.ccf, %i.ccd
+  %i.cej = fsub nnan ninf float %i.ccf, %i.ccd
   %i.cek = fsub float %i.ceg, %i.ccl
   %i.cel = fmul float %i.cej, %i.cek
   %i.cem = fsub float %i.ccn, %i.ccl
@@ -1144,7 +1144,7 @@ bb.md:                                            ; preds = %bb.mc
   br i1 %i.cix, label %bb.me, label %bb.mf
 
 bb.me:                                            ; preds = %bb.md
-  %i.ciy = fsub nnan float %i.ccd, %i.ccf
+  %i.ciy = fsub nnan ninf float %i.ccd, %i.ccf
   %i.ciz = fsub float %i.civ, %i.ccn
   %i.cja = fmul float %i.ciy, %i.ciz
   %i.cjb = fsub float %i.ccl, %i.ccn

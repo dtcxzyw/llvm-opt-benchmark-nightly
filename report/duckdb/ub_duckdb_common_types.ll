@@ -205,7 +205,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 232 ; 2 uses
   %i.b = load i32, ptr %i.a, align 4, !tbaa !165
   %i.c = uitofp i32 %i.b to double                ; 2 uses
-  %i.d = fsub nnan double 6.400000e+01, %i.c
+  %i.d = fsub nnan ninf double 6.400000e+01, %i.c
   %i.e = fmul nnan double %i.d, 1.562500e-02      ; 4 uses
   %i.f = fcmp oeq double %i.e, 0.000000e+00
   %i.g = fcmp oeq double %i.e, 1.000000e+00

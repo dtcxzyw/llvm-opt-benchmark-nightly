@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.l = fsub float 2.000000e+00, %i.d            ; 3 uses
-  %i.m = fmul float %i.l, %i.l
+  %i.m = fmul nnan float %i.l, %i.l
   %i.n = fmul float %i.l, %i.m
   %i.o = fdiv float %i.n, 6.000000e+00
   br label %_ZN11OpenImageIO4v3_115FilterBSpline1D9bspline1dEf.exit
@@ -605,7 +605,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.l = fsub float 2.000000e+00, %i.d            ; 3 uses
-  %i.m = fmul float %i.l, %i.l
+  %i.m = fmul nnan float %i.l, %i.l
   %i.n = fmul float %i.l, %i.m
   %i.o = fdiv float %i.n, 6.000000e+00
   br label %_ZN11OpenImageIO4v3_115FilterBSpline1D9bspline1dEf.exit
@@ -633,7 +633,7 @@ bb.f:                                             ; preds = %_ZN11OpenImageIO4v3
 
 bb.g:                                             ; preds = %bb.f
   %i.aa = fsub float 2.000000e+00, %i.s           ; 3 uses
-  %i.ab = fmul float %i.aa, %i.aa
+  %i.ab = fmul nnan float %i.aa, %i.aa
   %i.ac = fmul float %i.aa, %i.ab
   %i.ad = fdiv float %i.ac, 6.000000e+00
   br label %_ZN11OpenImageIO4v3_115FilterBSpline1D9bspline1dEf.exit4
@@ -668,7 +668,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.l = fsub float 2.000000e+00, %i.d            ; 3 uses
-  %i.m = fmul float %i.l, %i.l
+  %i.m = fmul nnan float %i.l, %i.l
   %i.n = fmul float %i.l, %i.m
   %i.o = fdiv float %i.n, 6.000000e+00
   br label %_ZN11OpenImageIO4v3_115FilterBSpline1D9bspline1dEf.exit
@@ -702,7 +702,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.l = fsub float 2.000000e+00, %i.d            ; 3 uses
-  %i.m = fmul float %i.l, %i.l
+  %i.m = fmul nnan float %i.l, %i.l
   %i.n = fmul float %i.l, %i.m
   %i.o = fdiv float %i.n, 6.000000e+00
   br label %_ZN11OpenImageIO4v3_115FilterBSpline1D9bspline1dEf.exit

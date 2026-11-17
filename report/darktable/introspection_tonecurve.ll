@@ -205,7 +205,7 @@ bb.w:                                             ; preds = %bb.f
   %i.hm = fcmp reassoc nsz arcp contract afn ogt float %i.hl, f0x3E53DCB1
   %i.hn = fmul reassoc ninf nsz arcp contract afn float %i.hl, %i.hl
   %i.ho = fmul reassoc ninf nsz arcp contract afn float %i.hn, %i.hl
-  %i.hp = fadd reassoc nsz arcp contract afn float %i.hl, f0xBC911AA6
+  %i.hp = fadd reassoc ninf nsz arcp contract afn float %i.hl, f0xBC911AA6
   %i.hq = select reassoc nsz arcp contract afn i1 %i.hm, float %i.ho, float %i.hp
   %i.hr = fmul reassoc nsz arcp contract afn float %i.gw, 9.642000e-01 ; 2 uses
   %i.hs = fmul reassoc nsz arcp contract afn float %i.hj, f0x3F532CA5 ; 2 uses
@@ -252,12 +252,12 @@ bb.ae:                                            ; preds = %bb.ac
 
 bb.af:                                            ; preds = %bb.ae, %bb.ad
   %i.ii = phi reassoc nsz arcp contract afn float [ %i.ih, %bb.ae ], [ %i.ig, %bb.ad ]
-  %i.ij = fmul reassoc nsz arcp contract afn float %i.hq, 0.000000e+00 ; 3 uses
+  %i.ij = fmul reassoc ninf nsz arcp contract afn float %i.hq, 0.000000e+00 ; 3 uses
   %i.ik = fcmp reassoc nsz arcp contract afn ogt float %i.ij, f0x3C111AA7
   br i1 %i.ik, label %bb.ah, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
-  %i.il = fadd reassoc nsz arcp contract afn float %i.ij, f0x3E0D3DCB
+  %i.il = fadd reassoc ninf nsz arcp contract afn float %i.ij, f0x3E0D3DCB
   br label %dt_XYZ_to_Lab.exit
 
 bb.ah:                                            ; preds = %bb.af
@@ -660,7 +660,7 @@ bb.cg:                                            ; preds = %bb.cf, %bb.ce
   br i1 %i.vc, label %bb.ci, label %bb.ch
 
 bb.ch:                                            ; preds = %bb.cg
-  %i.vd = fadd reassoc nsz arcp contract afn float %i.vb, f0x3E0D3DCB
+  %i.vd = fadd reassoc ninf nsz arcp contract afn float %i.vb, f0x3E0D3DCB
   br label %dt_prophotorgb_to_Lab.exit
 
 bb.ci:                                            ; preds = %bb.cg
