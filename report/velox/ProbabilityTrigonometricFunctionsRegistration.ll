@@ -205,7 +205,7 @@ bb.cv:                                            ; preds = %bb.cu
   br label %bb.dj
 
 bb.cw:                                            ; preds = %bb.ct, %bb.cs
-  %i.ls = fmul x86_fp80 %i.lf, %i.ld
+  %i.ls = fmul nnan x86_fp80 %i.lf, %i.ld
   %i.lt = fcmp ugt x86_fp80 %i.ls, f0x3FFEB333333333333000
   br i1 %i.lt, label %bb.dc, label %bb.cx
 
@@ -608,7 +608,7 @@ bb.c:                                             ; preds = %_ZN5boost4math4erfc
   %.038 = phi i32 [ %i.u, %.lr.ph ], [ 2, %bb.c ]
   %.02837 = phi x86_fp80 [ %i.t, %.lr.ph ], [ %i.m, %bb.c ]
   %.03036 = phi x86_fp80 [ %i.s, %.lr.ph ], [ %i.m, %bb.c ]
-  %i.q = fadd nnan x86_fp80 %i.p, -5.000000e-01
+  %i.q = fadd nnan ninf x86_fp80 %i.p, -5.000000e-01
   %i.r = fdiv x86_fp80 %.03036, %i.q
   %i.s = fmul x86_fp80 %1, %i.r                   ; 2 uses
   %i.t = fadd x86_fp80 %.02837, %i.s              ; 2 uses
@@ -1011,7 +1011,7 @@ bb.cv:                                            ; preds = %bb.cu
   br label %bb.dj
 
 bb.cw:                                            ; preds = %bb.ct, %bb.cs
-  %i.ls = fmul x86_fp80 %i.lf, %i.ld
+  %i.ls = fmul nnan x86_fp80 %i.lf, %i.ld
   %i.lt = fcmp ugt x86_fp80 %i.ls, f0x3FFEB333333333333000
   br i1 %i.lt, label %bb.dc, label %bb.cx
 

@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d
   br label %_ZN7openvdb5v13_05tools15ConvexVoxelizerINS0_4GridINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEEENS1_6lvlset16CapsuleVoxelizerISE_NS0_4util15NullInterrupterEEESI_E11XYRangeData5resetERKfSN_RKj.exit
 
 bb.f:                                             ; preds = %bb.d
-  %i.an = fadd nnan float %i.b, -1.000000e+00
+  %i.an = fadd nnan ninf float %i.b, -1.000000e+00
   %i.ao = fmul nnan float %i.an, 5.000000e-01
   %i.ap = insertelement <2 x float> poison, float %i.i, i64 0
   %i.aq = insertelement <2 x float> %i.ap, float %i.ab, i64 1
@@ -265,7 +265,7 @@ bb.g:                                             ; preds = %_ZN7openvdb5v13_05t
 
 bb.h:                                             ; preds = %_ZN7openvdb5v13_05tools15ConvexVoxelizerINS0_4GridINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEEENS1_6lvlset16CapsuleVoxelizerISE_NS0_4util15NullInterrupterEEESI_E11XYRangeData5resetERKfSN_RKj.exit
   %i.cf = uitofp i32 %i.bz to float               ; 3 uses
-  %i.cg = fadd nnan float %i.cf, -1.000000e+00
+  %i.cg = fadd nnan ninf float %i.cf, -1.000000e+00
   %i.ch = fmul nnan float %i.cg, 5.000000e-01     ; 2 uses
   %i.ci = fsub float %i.by, %i.ch
   %i.cj = fdiv float %i.ci, %i.cf
@@ -395,7 +395,7 @@ bb.o:                                             ; preds = %bb.n
   br label %_ZN7openvdb5v13_05tools15ConvexVoxelizerINS0_4GridINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEEENS1_6lvlset16CapsuleVoxelizerISE_NS0_4util15NullInterrupterEEESI_E11XYRangeData5resetERKfSN_RKj.exit42
 
 bb.p:                                             ; preds = %bb.n
-  %i.fq = fadd nnan float %i.b, -1.000000e+00
+  %i.fq = fadd nnan ninf float %i.b, -1.000000e+00
   %i.fr = fmul nnan float %i.fq, 5.000000e-01     ; 2 uses
   %i.fs = insertelement <4 x float> poison, float %i.fr, i64 0
   %i.ft = shufflevector <4 x float> %i.fs, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
@@ -798,7 +798,7 @@ bb.e:                                             ; preds = %bb.d
   br label %_ZN7openvdb5v13_05tools15ConvexVoxelizerINS0_4GridINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEENS1_6lvlset16CapsuleVoxelizerISE_NS0_4util15NullInterrupterEEESI_E11XYRangeData5resetERKdSN_RKj.exit
 
 bb.f:                                             ; preds = %bb.d
-  %i.an = fadd nnan double %i.b, -1.000000e+00
+  %i.an = fadd nnan ninf double %i.b, -1.000000e+00
   %i.ao = fmul nnan double %i.an, 5.000000e-01
   %i.ap = insertelement <2 x double> poison, double %i.g, i64 0
   %i.aq = insertelement <2 x double> %i.ap, double %i.ab, i64 1
@@ -859,7 +859,7 @@ bb.g:                                             ; preds = %_ZN7openvdb5v13_05t
 
 bb.h:                                             ; preds = %_ZN7openvdb5v13_05tools15ConvexVoxelizerINS0_4GridINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEENS1_6lvlset16CapsuleVoxelizerISE_NS0_4util15NullInterrupterEEESI_E11XYRangeData5resetERKdSN_RKj.exit
   %i.cg = uitofp i32 %i.ca to double              ; 3 uses
-  %i.ch = fadd nnan double %i.cg, -1.000000e+00
+  %i.ch = fadd nnan ninf double %i.cg, -1.000000e+00
   %i.ci = fmul nnan double %i.ch, 5.000000e-01    ; 2 uses
   %i.cj = fsub double %i.bz, %i.ci
   %i.ck = fdiv double %i.cj, %i.cg
@@ -989,7 +989,7 @@ bb.o:                                             ; preds = %bb.n
   br label %_ZN7openvdb5v13_05tools15ConvexVoxelizerINS0_4GridINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEENS1_6lvlset16CapsuleVoxelizerISE_NS0_4util15NullInterrupterEEESI_E11XYRangeData5resetERKdSN_RKj.exit42
 
 bb.p:                                             ; preds = %bb.n
-  %i.fr = fadd nnan double %i.b, -1.000000e+00
+  %i.fr = fadd nnan ninf double %i.b, -1.000000e+00
   %i.fs = fmul nnan double %i.fr, 5.000000e-01    ; 4 uses
   %i.ft = fsub double %i.g, %i.fs
   %i.fu = fdiv double %i.ft, %i.b
@@ -1392,7 +1392,7 @@ bb.d:                                             ; preds = %bb.c
   br label %_ZN7openvdb5v13_05tools15ConvexVoxelizerINS0_4GridINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEEENS1_6lvlset23TaperedCapsuleVoxelizerISE_NS0_4util15NullInterrupterEEESI_E11XYRangeData5resetERKfSN_RKj.exit
 
 bb.e:                                             ; preds = %bb.c
-  %i.ag = fadd nnan float %i.c, -1.000000e+00
+  %i.ag = fadd nnan ninf float %i.c, -1.000000e+00
   %i.ah = fmul nnan float %i.ag, 5.000000e-01
   %i.ai = insertelement <2 x float> poison, float %i.m, i64 0
   %i.aj = insertelement <2 x float> %i.ai, float %i.x, i64 1
@@ -1452,7 +1452,7 @@ bb.f:                                             ; preds = %_ZN7openvdb5v13_05t
 
 bb.g:                                             ; preds = %_ZN7openvdb5v13_05tools15ConvexVoxelizerINS0_4GridINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEEENS1_6lvlset23TaperedCapsuleVoxelizerISE_NS0_4util15NullInterrupterEEESI_E11XYRangeData5resetERKfSN_RKj.exit
   %i.by = uitofp i32 %i.bs to float               ; 3 uses
-  %i.bz = fadd nnan float %i.by, -1.000000e+00
+  %i.bz = fadd nnan ninf float %i.by, -1.000000e+00
   %i.ca = fmul nnan float %i.bz, 5.000000e-01     ; 2 uses
   %i.cb = fsub float %i.br, %i.ca
   %i.cc = fdiv float %i.cb, %i.by
@@ -1556,7 +1556,7 @@ bb.n:                                             ; preds = %bb.m
   br label %_ZN7openvdb5v13_05tools15ConvexVoxelizerINS0_4GridINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEEENS1_6lvlset23TaperedCapsuleVoxelizerISE_NS0_4util15NullInterrupterEEESI_E11XYRangeData5resetERKfSN_RKj.exit8
 
 bb.o:                                             ; preds = %bb.m
-  %i.em = fadd nnan float %i.c, -1.000000e+00
+  %i.em = fadd nnan ninf float %i.c, -1.000000e+00
   %i.en = fmul nnan float %i.em, 5.000000e-01
   %i.eo = insertelement <2 x float> poison, float %i.r, i64 0
   %i.ep = insertelement <2 x float> %i.eo, float %i.ed, i64 1
@@ -1616,7 +1616,7 @@ bb.p:                                             ; preds = %_ZN7openvdb5v13_05t
 
 bb.q:                                             ; preds = %_ZN7openvdb5v13_05tools15ConvexVoxelizerINS0_4GridINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEEENS1_6lvlset23TaperedCapsuleVoxelizerISE_NS0_4util15NullInterrupterEEESI_E11XYRangeData5resetERKfSN_RKj.exit8
   %i.ge = uitofp i32 %i.fy to float               ; 3 uses
-  %i.gf = fadd nnan float %i.ge, -1.000000e+00
+  %i.gf = fadd nnan ninf float %i.ge, -1.000000e+00
   %i.gg = fmul nnan float %i.gf, 5.000000e-01     ; 2 uses
   %i.gh = fsub float %i.fx, %i.gg
   %i.gi = fdiv float %i.gh, %i.ge
@@ -1740,7 +1740,7 @@ bb.x:                                             ; preds = %bb.w
   br label %_ZN7openvdb5v13_05tools15ConvexVoxelizerINS0_4GridINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEEENS1_6lvlset23TaperedCapsuleVoxelizerISE_NS0_4util15NullInterrupterEEESI_E11XYRangeData5resetERKfSN_RKj.exit13
 
 bb.y:                                             ; preds = %bb.w
-  %i.jk = fadd nnan float %i.c, -1.000000e+00
+  %i.jk = fadd nnan ninf float %i.c, -1.000000e+00
   %i.jl = fmul nnan float %i.jk, 5.000000e-01
   %i.jm = shufflevector <2 x float> %i.is, <2 x float> %i.it, <2 x i32> <i32 0, i32 3>
   %i.jn = shufflevector <2 x float> %i.it, <2 x float> %i.is, <2 x i32> <i32 0, i32 3>
@@ -2143,7 +2143,7 @@ bb.d:                                             ; preds = %bb.c
   br label %_ZN7openvdb5v13_05tools15ConvexVoxelizerINS0_4GridINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEENS1_6lvlset23TaperedCapsuleVoxelizerISE_NS0_4util15NullInterrupterEEESI_E11XYRangeData5resetERKdSN_RKj.exit
 
 bb.e:                                             ; preds = %bb.c
-  %i.ag = fadd nnan double %i.c, -1.000000e+00
+  %i.ag = fadd nnan ninf double %i.c, -1.000000e+00
   %i.ah = fmul nnan double %i.ag, 5.000000e-01
   %i.ai = insertelement <2 x double> poison, double %i.m, i64 0
   %i.aj = insertelement <2 x double> %i.ai, double %i.x, i64 1
@@ -2204,7 +2204,7 @@ bb.f:                                             ; preds = %_ZN7openvdb5v13_05t
 
 bb.g:                                             ; preds = %_ZN7openvdb5v13_05tools15ConvexVoxelizerINS0_4GridINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEENS1_6lvlset23TaperedCapsuleVoxelizerISE_NS0_4util15NullInterrupterEEESI_E11XYRangeData5resetERKdSN_RKj.exit
   %i.bz = uitofp i32 %i.bt to double              ; 3 uses
-  %i.ca = fadd nnan double %i.bz, -1.000000e+00
+  %i.ca = fadd nnan ninf double %i.bz, -1.000000e+00
   %i.cb = fmul nnan double %i.ca, 5.000000e-01    ; 2 uses
   %i.cc = fsub double %i.bs, %i.cb
   %i.cd = fdiv double %i.cc, %i.bz
@@ -2308,7 +2308,7 @@ bb.n:                                             ; preds = %bb.m
   br label %_ZN7openvdb5v13_05tools15ConvexVoxelizerINS0_4GridINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEENS1_6lvlset23TaperedCapsuleVoxelizerISE_NS0_4util15NullInterrupterEEESI_E11XYRangeData5resetERKdSN_RKj.exit8
 
 bb.o:                                             ; preds = %bb.m
-  %i.en = fadd nnan double %i.c, -1.000000e+00
+  %i.en = fadd nnan ninf double %i.c, -1.000000e+00
   %i.eo = fmul nnan double %i.en, 5.000000e-01
   %i.ep = insertelement <2 x double> poison, double %i.r, i64 0
   %i.eq = insertelement <2 x double> %i.ep, double %i.ee, i64 1
@@ -2369,7 +2369,7 @@ bb.p:                                             ; preds = %_ZN7openvdb5v13_05t
 
 bb.q:                                             ; preds = %_ZN7openvdb5v13_05tools15ConvexVoxelizerINS0_4GridINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEENS1_6lvlset23TaperedCapsuleVoxelizerISE_NS0_4util15NullInterrupterEEESI_E11XYRangeData5resetERKdSN_RKj.exit8
   %i.gg = uitofp i32 %i.ga to double              ; 3 uses
-  %i.gh = fadd nnan double %i.gg, -1.000000e+00
+  %i.gh = fadd nnan ninf double %i.gg, -1.000000e+00
   %i.gi = fmul nnan double %i.gh, 5.000000e-01    ; 2 uses
   %i.gj = fsub double %i.fz, %i.gi
   %i.gk = fdiv double %i.gj, %i.gg
@@ -2494,7 +2494,7 @@ bb.x:                                             ; preds = %bb.w
   br label %_ZN7openvdb5v13_05tools15ConvexVoxelizerINS0_4GridINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEENS1_6lvlset23TaperedCapsuleVoxelizerISE_NS0_4util15NullInterrupterEEESI_E11XYRangeData5resetERKdSN_RKj.exit13
 
 bb.y:                                             ; preds = %bb.w
-  %i.jn = fadd nnan double %i.c, -1.000000e+00
+  %i.jn = fadd nnan ninf double %i.c, -1.000000e+00
   %i.jo = fmul nnan double %i.jn, 5.000000e-01
   %i.jp = shufflevector <2 x double> %i.it, <2 x double> %i.iu, <2 x i32> <i32 1, i32 3>
   %i.jq = shufflevector <2 x double> %i.it, <2 x double> %i.iu, <2 x i32> <i32 0, i32 2>

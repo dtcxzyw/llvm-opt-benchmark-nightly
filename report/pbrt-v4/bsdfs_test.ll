@@ -205,7 +205,7 @@ _ZN4pbrt14RadicalInverseEim.exit:                 ; preds = %bb.f, %._crit_edge.
   br i1 %or.cond.i.i, label %_ZN4pbrt21VisibleWavelengthsPDFEf.exit.i, label %bb.g
 
 bb.g:                                             ; preds = %_ZN4pbrt14RadicalInverseEim.exit
-  %i.bo = fadd float %i.bl, -5.380000e+02
+  %i.bo = fadd ninf float %i.bl, -5.380000e+02
   %i.bp = fmul float %i.bo, 7.200000e-03
   %i.bq = call noundef float @coshf(float noundef %i.bp) #31, !noalias !314 ; 2 uses
   %i.br = fmul float %i.bq, %i.bq
@@ -231,7 +231,7 @@ _ZN4pbrt21VisibleWavelengthsPDFEf.exit.i:         ; preds = %bb.g, %_ZN4pbrt14Ra
   br i1 %or.cond.i.1.i, label %_ZN4pbrt21VisibleWavelengthsPDFEf.exit.1.i, label %bb.h
 
 bb.h:                                             ; preds = %_ZN4pbrt21VisibleWavelengthsPDFEf.exit.i
-  %i.cd = fadd float %i.ca, -5.380000e+02
+  %i.cd = fadd ninf float %i.ca, -5.380000e+02
   %i.ce = fmul float %i.cd, 7.200000e-03
   %i.cf = call noundef float @coshf(float noundef %i.ce) #31, !noalias !314 ; 2 uses
   %i.cg = fmul float %i.cf, %i.cf
@@ -257,7 +257,7 @@ _ZN4pbrt21VisibleWavelengthsPDFEf.exit.1.i:       ; preds = %bb.h, %_ZN4pbrt21Vi
   br i1 %or.cond.i.2.i, label %_ZN4pbrt21VisibleWavelengthsPDFEf.exit.2.i, label %bb.i
 
 bb.i:                                             ; preds = %_ZN4pbrt21VisibleWavelengthsPDFEf.exit.1.i
-  %i.cs = fadd float %i.cp, -5.380000e+02
+  %i.cs = fadd ninf float %i.cp, -5.380000e+02
   %i.ct = fmul float %i.cs, 7.200000e-03
   %i.cu = call noundef float @coshf(float noundef %i.ct) #31, !noalias !314 ; 2 uses
   %i.cv = fmul float %i.cu, %i.cu
@@ -283,7 +283,7 @@ _ZN4pbrt21VisibleWavelengthsPDFEf.exit.2.i:       ; preds = %bb.i, %_ZN4pbrt21Vi
   br i1 %or.cond.i.3.i, label %_ZN4pbrt18SampledWavelengths13SampleVisibleEf.exit, label %bb.j
 
 bb.j:                                             ; preds = %_ZN4pbrt21VisibleWavelengthsPDFEf.exit.2.i
-  %i.dh = fadd float %i.de, -5.380000e+02
+  %i.dh = fadd ninf float %i.de, -5.380000e+02
   %i.di = fmul float %i.dh, 7.200000e-03
   %i.dj = call noundef float @coshf(float noundef %i.di) #31, !noalias !314 ; 2 uses
   %i.dk = fmul float %i.dj, %i.dj
@@ -614,7 +614,7 @@ bb.a:
   br i1 %or.cond.i, label %_ZN4pbrt21VisibleWavelengthsPDFEf.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.m = fadd float %i.j, -5.380000e+02
+  %i.m = fadd ninf float %i.j, -5.380000e+02
   %i.n = fmul float %i.m, 7.200000e-03
   %i.o = tail call noundef float @coshf(float noundef %i.n) #31 ; 2 uses
   %i.p = fmul float %i.o, %i.o
@@ -641,7 +641,7 @@ _ZN4pbrt21VisibleWavelengthsPDFEf.exit:           ; preds = %bb.a, %bb.b
   br i1 %or.cond.i.1, label %_ZN4pbrt21VisibleWavelengthsPDFEf.exit.1, label %bb.c
 
 bb.c:                                             ; preds = %_ZN4pbrt21VisibleWavelengthsPDFEf.exit
-  %i.ac = fadd float %i.y, -5.380000e+02
+  %i.ac = fadd ninf float %i.y, -5.380000e+02
   %i.ad = fmul float %i.ac, 7.200000e-03
   %i.ae = tail call noundef float @coshf(float noundef %i.ad) #31 ; 2 uses
   %i.af = fmul float %i.ae, %i.ae
@@ -669,7 +669,7 @@ _ZN4pbrt21VisibleWavelengthsPDFEf.exit.1:         ; preds = %bb.c, %_ZN4pbrt21Vi
   br i1 %or.cond.i.2, label %_ZN4pbrt21VisibleWavelengthsPDFEf.exit.2, label %bb.d
 
 bb.d:                                             ; preds = %_ZN4pbrt21VisibleWavelengthsPDFEf.exit.1
-  %i.at = fadd float %i.ap, -5.380000e+02
+  %i.at = fadd ninf float %i.ap, -5.380000e+02
   %i.au = fmul float %i.at, 7.200000e-03
   %i.av = tail call noundef float @coshf(float noundef %i.au) #31 ; 2 uses
   %i.aw = fmul float %i.av, %i.av
@@ -697,7 +697,7 @@ _ZN4pbrt21VisibleWavelengthsPDFEf.exit.2:         ; preds = %bb.d, %_ZN4pbrt21Vi
   br i1 %or.cond.i.3, label %_ZN4pbrt21VisibleWavelengthsPDFEf.exit.3, label %bb.e
 
 bb.e:                                             ; preds = %_ZN4pbrt21VisibleWavelengthsPDFEf.exit.2
-  %i.bk = fadd float %i.bg, -5.380000e+02
+  %i.bk = fadd ninf float %i.bg, -5.380000e+02
   %i.bl = fmul float %i.bk, 7.200000e-03
   %i.bm = tail call noundef float @coshf(float noundef %i.bl) #31 ; 2 uses
   %i.bn = fmul float %i.bm, %i.bm
@@ -861,7 +861,7 @@ _ZN4pbrt14RadicalInverseEim.exit:                 ; preds = %bb.e, %._crit_edge.
   br i1 %or.cond.i.i, label %_ZN4pbrt21VisibleWavelengthsPDFEf.exit.i, label %bb.f
 
 bb.f:                                             ; preds = %_ZN4pbrt14RadicalInverseEim.exit
-  %i.bn = fadd float %i.bk, -5.380000e+02
+  %i.bn = fadd ninf float %i.bk, -5.380000e+02
   %i.bo = fmul float %i.bn, 7.200000e-03
   %i.bp = call noundef float @coshf(float noundef %i.bo) #31, !noalias !320 ; 2 uses
   %i.bq = fmul float %i.bp, %i.bp
@@ -887,7 +887,7 @@ _ZN4pbrt21VisibleWavelengthsPDFEf.exit.i:         ; preds = %bb.f, %_ZN4pbrt14Ra
   br i1 %or.cond.i.1.i, label %_ZN4pbrt21VisibleWavelengthsPDFEf.exit.1.i, label %bb.g
 
 bb.g:                                             ; preds = %_ZN4pbrt21VisibleWavelengthsPDFEf.exit.i
-  %i.cc = fadd float %i.bz, -5.380000e+02
+  %i.cc = fadd ninf float %i.bz, -5.380000e+02
   %i.cd = fmul float %i.cc, 7.200000e-03
   %i.ce = call noundef float @coshf(float noundef %i.cd) #31, !noalias !320 ; 2 uses
   %i.cf = fmul float %i.ce, %i.ce
@@ -913,7 +913,7 @@ _ZN4pbrt21VisibleWavelengthsPDFEf.exit.1.i:       ; preds = %bb.g, %_ZN4pbrt21Vi
   br i1 %or.cond.i.2.i, label %_ZN4pbrt21VisibleWavelengthsPDFEf.exit.2.i, label %bb.h
 
 bb.h:                                             ; preds = %_ZN4pbrt21VisibleWavelengthsPDFEf.exit.1.i
-  %i.cr = fadd float %i.co, -5.380000e+02
+  %i.cr = fadd ninf float %i.co, -5.380000e+02
   %i.cs = fmul float %i.cr, 7.200000e-03
   %i.ct = call noundef float @coshf(float noundef %i.cs) #31, !noalias !320 ; 2 uses
   %i.cu = fmul float %i.ct, %i.ct
@@ -939,7 +939,7 @@ _ZN4pbrt21VisibleWavelengthsPDFEf.exit.2.i:       ; preds = %bb.h, %_ZN4pbrt21Vi
   br i1 %or.cond.i.3.i, label %_ZN4pbrt18SampledWavelengths13SampleVisibleEf.exit, label %bb.i
 
 bb.i:                                             ; preds = %_ZN4pbrt21VisibleWavelengthsPDFEf.exit.2.i
-  %i.dg = fadd float %i.dd, -5.380000e+02
+  %i.dg = fadd ninf float %i.dd, -5.380000e+02
   %i.dh = fmul float %i.dg, 7.200000e-03
   %i.di = call noundef float @coshf(float noundef %i.dh) #31, !noalias !320 ; 2 uses
   %i.dj = fmul float %i.di, %i.di
@@ -1342,7 +1342,7 @@ bb.f:                                             ; preds = %bb.k
   br i1 %or.cond.i.i, label %_ZN4pbrt21VisibleWavelengthsPDFEf.exit.i, label %bb.g
 
 bb.g:                                             ; preds = %.preheader
-  %i.fc = fadd float %i.ez, -5.380000e+02
+  %i.fc = fadd ninf float %i.ez, -5.380000e+02
   %i.fd = fmul float %i.fc, 7.200000e-03
   %i.fe = call noundef float @coshf(float noundef %i.fd) #31, !noalias !326 ; 2 uses
   %i.ff = fmul float %i.fe, %i.fe
@@ -1368,7 +1368,7 @@ _ZN4pbrt21VisibleWavelengthsPDFEf.exit.i:         ; preds = %bb.g, %.preheader
   br i1 %or.cond.i.1.i, label %_ZN4pbrt21VisibleWavelengthsPDFEf.exit.1.i, label %bb.h
 
 bb.h:                                             ; preds = %_ZN4pbrt21VisibleWavelengthsPDFEf.exit.i
-  %i.fr = fadd float %i.fo, -5.380000e+02
+  %i.fr = fadd ninf float %i.fo, -5.380000e+02
   %i.fs = fmul float %i.fr, 7.200000e-03
   %i.ft = call noundef float @coshf(float noundef %i.fs) #31, !noalias !326 ; 2 uses
   %i.fu = fmul float %i.ft, %i.ft
@@ -1394,7 +1394,7 @@ _ZN4pbrt21VisibleWavelengthsPDFEf.exit.1.i:       ; preds = %bb.h, %_ZN4pbrt21Vi
   br i1 %or.cond.i.2.i, label %_ZN4pbrt21VisibleWavelengthsPDFEf.exit.2.i, label %bb.i
 
 bb.i:                                             ; preds = %_ZN4pbrt21VisibleWavelengthsPDFEf.exit.1.i
-  %i.gg = fadd float %i.gd, -5.380000e+02
+  %i.gg = fadd ninf float %i.gd, -5.380000e+02
   %i.gh = fmul float %i.gg, 7.200000e-03
   %i.gi = call noundef float @coshf(float noundef %i.gh) #31, !noalias !326 ; 2 uses
   %i.gj = fmul float %i.gi, %i.gi
@@ -1420,7 +1420,7 @@ _ZN4pbrt21VisibleWavelengthsPDFEf.exit.2.i:       ; preds = %bb.i, %_ZN4pbrt21Vi
   br i1 %or.cond.i.3.i, label %_ZN4pstd8optionalIN4pbrt10BSDFSampleEEptEv.exit, label %bb.j
 
 bb.j:                                             ; preds = %_ZN4pbrt21VisibleWavelengthsPDFEf.exit.2.i
-  %i.gv = fadd float %i.gs, -5.380000e+02
+  %i.gv = fadd ninf float %i.gs, -5.380000e+02
   %i.gw = fmul float %i.gv, 7.200000e-03
   %i.gx = call noundef float @coshf(float noundef %i.gw) #31, !noalias !326 ; 2 uses
   %i.gy = fmul float %i.gx, %i.gx
@@ -1823,7 +1823,7 @@ _ZN4pbrt12FrDielectricEff.exit:                   ; preds = %bb.a
   br i1 %i.x, label %bb.b, label %_ZN4pbrt12FrDielectricEff.exit.thread
 
 bb.b:                                             ; preds = %_ZN4pbrt12FrDielectricEff.exit
-  %i.y = fmul float %i.w, %i.w
+  %i.y = fmul nnan float %i.w, %i.w
   %i.z = fmul float %i.v, %i.y
   %i.aa = fmul nnan float %i.v, %i.v
   %i.ab = fsub float 1.000000e+00, %i.aa

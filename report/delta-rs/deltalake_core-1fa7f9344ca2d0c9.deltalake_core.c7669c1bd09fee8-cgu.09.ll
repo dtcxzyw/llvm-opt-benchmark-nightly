@@ -205,7 +205,7 @@ _RNCINvNtNtNtCsbvkFyIu7lgC_4core4iter8adapters3map8map_foldjfuNCNvNtNtNtCs14kWLk
   %i.ad = lshr i32 %i.ab, 9
   %i.ae = or disjoint i32 %i.ad, 1065353216
   %i.af = bitcast i32 %i.ae to float
-  %i.ag = fadd nnan float %i.af, -1.000000e+00
+  %i.ag = fadd nnan ninf float %i.af, -1.000000e+00
   %i.ah = load float, ptr %i.i, align 4, !noalias !12422, !noundef !24
   %i.ai = fmul float %i.ah, %i.ag
   %i.aj = load float, ptr %i.e, align 4, !noalias !12422, !noundef !24
@@ -265,7 +265,7 @@ _RNCINvNtNtNtCsbvkFyIu7lgC_4core4iter8adapters3map8map_foldjduNCNvNtNtNtCs14kWLk
   %i.n = lshr i64 %i.l, 12
   %i.o = or disjoint i64 %i.n, 4607182418800017408
   %i.p = bitcast i64 %i.o to double
-  %i.q = fadd nnan double %i.p, -1.000000e+00
+  %i.q = fadd nnan ninf double %i.p, -1.000000e+00
   %i.r = load double, ptr %i.i, align 8, !noalias !12436, !noundef !24
   %i.s = fmul double %i.q, %i.r
   %i.t = load double, ptr %i.e, align 8, !noalias !12436, !noundef !24

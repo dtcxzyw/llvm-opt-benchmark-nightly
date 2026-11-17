@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %.preheader, %bb.dx
   %i.bf = fmul nnan float %i.be, f0x2F800000      ; 2 uses
   %i.bg = fcmp olt float %i.bf, f0x3F7FFFFF
   %.sroa.speculated.i91 = select i1 %i.bg, float %i.bf, float f0x3F7FFFFF ; 2 uses
-  %i.bh = fsub nnan float 1.000000e+00, %.sroa.speculated.i91
+  %i.bh = fsub nnan ninf float 1.000000e+00, %.sroa.speculated.i91
   %i.bi = fmul nnan float %i.bh, 5.000000e+00
   %i.bj = fmul nnan float %.sroa.speculated.i91, 5.000000e+00
   %i.bk = fsub float %i.bj, %i.bi                 ; 4 uses
@@ -225,7 +225,7 @@ bb.h:                                             ; preds = %.preheader, %bb.dx
   %i.by = fmul nnan <2 x float> %i.bx, splat (float f0x2F800000) ; 2 uses
   %i.bz = fcmp olt <2 x float> %i.by, splat (float f0x3F7FFFFF)
   %i.ca = select <2 x i1> %i.bz, <2 x float> %i.by, <2 x float> splat (float f0x3F7FFFFF) ; 2 uses
-  %i.cb = fsub nnan <2 x float> splat (float 1.000000e+00), %i.ca
+  %i.cb = fsub nnan ninf <2 x float> splat (float 1.000000e+00), %i.ca
   %i.cc = fmul nnan <2 x float> %i.cb, splat (float 5.000000e+00)
   %i.cd = fmul nnan <2 x float> %i.ca, splat (float 5.000000e+00)
   %i.ce = fsub <2 x float> %i.cd, %i.cc           ; 6 uses
@@ -628,7 +628,7 @@ bb.d:                                             ; preds = %bb.c
   %i.as = fmul nnan <2 x float> %i.ar, splat (float f0x2F800000) ; 2 uses
   %i.at = fcmp olt <2 x float> %i.as, splat (float f0x3F7FFFFF)
   %i.au = select <2 x i1> %i.at, <2 x float> %i.as, <2 x float> splat (float f0x3F7FFFFF) ; 2 uses
-  %i.av = fsub nnan <2 x float> splat (float 1.000000e+00), %i.au
+  %i.av = fsub nnan ninf <2 x float> splat (float 1.000000e+00), %i.au
   %i.aw = fmul nnan <2 x float> %i.av, splat (float 5.000000e+00)
   %i.ax = fmul nnan <2 x float> %i.au, splat (float 5.000000e+00)
   %i.ay = fsub <2 x float> %i.ax, %i.aw
@@ -643,7 +643,7 @@ bb.d:                                             ; preds = %bb.c
   %i.bh = fmul nnan float %i.bg, f0x2F800000      ; 2 uses
   %i.bi = fcmp olt float %i.bh, f0x3F7FFFFF
   %.sroa.speculated.i117 = select i1 %i.bi, float %i.bh, float f0x3F7FFFFF ; 2 uses
-  %i.bj = fsub nnan float 1.000000e+00, %.sroa.speculated.i117
+  %i.bj = fsub nnan ninf float 1.000000e+00, %.sroa.speculated.i117
   %i.bk = fmul nnan float %i.bj, 5.000000e+00
   %i.bl = fmul nnan float %.sroa.speculated.i117, 5.000000e+00
   %i.bm = fsub float %i.bl, %i.bk
@@ -883,7 +883,7 @@ bb.n:                                             ; preds = %.preheader, %_ZNSt6
   %i.ec = extractelement <2 x i1> %i.dx, i64 0
   %i.ed = extractelement <2 x float> %i.dw, i64 0
   %.sroa.speculated.i1.i = select i1 %i.ec, float %i.ed, float f0x3F7FFFFF ; 3 uses
-  %i.ee = fsub nnan float 1.000000e+00, %.sroa.speculated.i1.i ; 2 uses
+  %i.ee = fsub nnan ninf float 1.000000e+00, %.sroa.speculated.i1.i ; 2 uses
   br i1 %i.eb, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
@@ -923,7 +923,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   %i.fe = extractelement <2 x i1> %i.ez, i64 0
   %i.ff = extractelement <2 x float> %i.ey, i64 0
   %.sroa.speculated.i1.i123 = select i1 %i.fe, float %i.ff, float f0x3F7FFFFF ; 3 uses
-  %i.fg = fsub nnan float 1.000000e+00, %.sroa.speculated.i1.i123 ; 2 uses
+  %i.fg = fsub nnan ninf float 1.000000e+00, %.sroa.speculated.i1.i123 ; 2 uses
   br i1 %i.fd, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %bb.q
@@ -963,7 +963,7 @@ bb.t:                                             ; preds = %bb.s, %bb.r
   %i.gg = extractelement <2 x i1> %i.gb, i64 0
   %i.gh = extractelement <2 x float> %i.ga, i64 0
   %.sroa.speculated.i1.i128 = select i1 %i.gg, float %i.gh, float f0x3F7FFFFF ; 3 uses
-  %i.gi = fsub nnan float 1.000000e+00, %.sroa.speculated.i1.i128 ; 2 uses
+  %i.gi = fsub nnan ninf float 1.000000e+00, %.sroa.speculated.i1.i128 ; 2 uses
   br i1 %i.gf, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %bb.t
@@ -1366,7 +1366,7 @@ bb.c:                                             ; preds = %bb.a, %_ZNSt13unord
   %i.av = fmul nnan <2 x float> %i.au, splat (float f0x2F800000) ; 2 uses
   %i.aw = fcmp olt <2 x float> %i.av, splat (float f0x3F7FFFFF)
   %i.ax = select <2 x i1> %i.aw, <2 x float> %i.av, <2 x float> splat (float f0x3F7FFFFF) ; 2 uses
-  %i.ay = fsub nnan <2 x float> splat (float 1.000000e+00), %i.ax
+  %i.ay = fsub nnan ninf <2 x float> splat (float 1.000000e+00), %i.ax
   %i.az = fmul nnan <2 x float> %i.ay, splat (float 5.000000e+00)
   %i.ba = fmul nnan <2 x float> %i.ax, splat (float 5.000000e+00)
   %i.bb = fsub <2 x float> %i.ba, %i.az
@@ -1388,7 +1388,7 @@ bb.c:                                             ; preds = %bb.a, %_ZNSt13unord
   %i.br = extractelement <2 x i1> %i.bq, i64 1
   %i.bs = extractelement <2 x float> %i.bp, i64 1
   %.sroa.speculated.i241 = select i1 %i.br, float %i.bs, float f0x3F7FFFFF ; 2 uses
-  %i.bt = fsub nnan float 1.000000e+00, %.sroa.speculated.i241
+  %i.bt = fsub nnan ninf float 1.000000e+00, %.sroa.speculated.i241
   %i.bu = fmul nnan float %i.bt, 5.000000e+00
   %i.bv = fmul nnan float %.sroa.speculated.i241, 5.000000e+00
   %i.bw = fsub float %i.bv, %i.bu
@@ -1791,7 +1791,7 @@ bb.x:                                             ; preds = %.preheader, %_ZNSt6
   %i.hu = extractelement <2 x i1> %i.hp, i64 0
   %i.hv = extractelement <2 x float> %i.ho, i64 0
   %.sroa.speculated.i1.i = select i1 %i.hu, float %i.hv, float f0x3F7FFFFF ; 3 uses
-  %i.hw = fsub nnan float 1.000000e+00, %.sroa.speculated.i1.i ; 2 uses
+  %i.hw = fsub nnan ninf float 1.000000e+00, %.sroa.speculated.i1.i ; 2 uses
   br i1 %i.ht, label %bb.y, label %bb.z
 
 bb.y:                                             ; preds = %bb.x
@@ -1831,7 +1831,7 @@ bb.aa:                                            ; preds = %bb.z, %bb.y
   %i.iw = extractelement <2 x i1> %i.ir, i64 0
   %i.ix = extractelement <2 x float> %i.iq, i64 0
   %.sroa.speculated.i1.i259 = select i1 %i.iw, float %i.ix, float f0x3F7FFFFF ; 3 uses
-  %i.iy = fsub nnan float 1.000000e+00, %.sroa.speculated.i1.i259 ; 2 uses
+  %i.iy = fsub nnan ninf float 1.000000e+00, %.sroa.speculated.i1.i259 ; 2 uses
   br i1 %i.iv, label %bb.ab, label %bb.ac
 
 bb.ab:                                            ; preds = %bb.aa
@@ -1871,7 +1871,7 @@ bb.ad:                                            ; preds = %bb.ac, %bb.ab
   %i.jy = extractelement <2 x i1> %i.jt, i64 0
   %i.jz = extractelement <2 x float> %i.js, i64 0
   %.sroa.speculated.i1.i264 = select i1 %i.jy, float %i.jz, float f0x3F7FFFFF ; 3 uses
-  %i.ka = fsub nnan float 1.000000e+00, %.sroa.speculated.i1.i264 ; 2 uses
+  %i.ka = fsub nnan ninf float 1.000000e+00, %.sroa.speculated.i1.i264 ; 2 uses
   br i1 %i.jx, label %bb.ae, label %bb.af
 
 bb.ae:                                            ; preds = %bb.ad
@@ -2274,7 +2274,7 @@ bb.ey:                                            ; preds = %.critedge226.prehea
   %i.ub = extractelement <2 x i1> %i.tw, i64 0
   %i.uc = extractelement <2 x float> %i.tv, i64 0
   %.sroa.speculated.i1.i337 = select i1 %i.ub, float %i.uc, float f0x3F7FFFFF ; 3 uses
-  %i.ud = fsub nnan float 1.000000e+00, %.sroa.speculated.i1.i337 ; 2 uses
+  %i.ud = fsub nnan ninf float 1.000000e+00, %.sroa.speculated.i1.i337 ; 2 uses
   br i1 %i.ua, label %bb.ez, label %bb.fa
 
 bb.ez:                                            ; preds = %bb.ey
@@ -2315,7 +2315,7 @@ bb.fb:                                            ; preds = %bb.fa, %bb.ez
   %i.ve = extractelement <2 x i1> %i.uz, i64 0
   %i.vf = extractelement <2 x float> %i.uy, i64 0
   %.sroa.speculated.i1.i341 = select i1 %i.ve, float %i.vf, float f0x3F7FFFFF ; 3 uses
-  %i.vg = fsub nnan float 1.000000e+00, %.sroa.speculated.i1.i341 ; 2 uses
+  %i.vg = fsub nnan ninf float 1.000000e+00, %.sroa.speculated.i1.i341 ; 2 uses
   br i1 %i.vd, label %bb.fc, label %bb.fd
 
 bb.fc:                                            ; preds = %bb.fb
@@ -2355,7 +2355,7 @@ bb.fe:                                            ; preds = %bb.fd, %bb.fc
   %i.wg = extractelement <2 x i1> %i.wb, i64 0
   %i.wh = extractelement <2 x float> %i.wa, i64 0
   %.sroa.speculated.i1.i346 = select i1 %i.wg, float %i.wh, float f0x3F7FFFFF ; 3 uses
-  %i.wi = fsub nnan float 1.000000e+00, %.sroa.speculated.i1.i346 ; 2 uses
+  %i.wi = fsub nnan ninf float 1.000000e+00, %.sroa.speculated.i1.i346 ; 2 uses
   br i1 %i.wf, label %bb.ff, label %bb.fg
 
 bb.ff:                                            ; preds = %bb.fe
@@ -2758,14 +2758,14 @@ bb.ax:                                            ; preds = %.preheader, %bb.bx
   %i.gp = extractelement <2 x i1> %i.go, i64 1
   %i.gq = extractelement <2 x float> %i.gn, i64 1
   %.sroa.speculated.i = select i1 %i.gp, float %i.gq, float f0x3F7FFFFF ; 2 uses
-  %i.gr = fsub nnan float 1.000000e+00, %.sroa.speculated.i
+  %i.gr = fsub nnan ninf float 1.000000e+00, %.sroa.speculated.i
   %i.gs = fmul nnan float %i.gr, 5.000000e+00
   %i.gt = fmul nnan float %.sroa.speculated.i, 5.000000e+00
   %i.gu = fsub float %i.gt, %i.gs
   %i.gv = extractelement <2 x i1> %i.go, i64 0
   %i.gw = extractelement <2 x float> %i.gn, i64 0
   %.sroa.speculated.i113 = select i1 %i.gv, float %i.gw, float f0x3F7FFFFF ; 2 uses
-  %i.gx = fsub nnan float 1.000000e+00, %.sroa.speculated.i113
+  %i.gx = fsub nnan ninf float 1.000000e+00, %.sroa.speculated.i113
   %i.gy = fmul nnan float %i.gx, 5.000000e+00
   %i.gz = fmul nnan float %.sroa.speculated.i113, 5.000000e+00
   %i.ha = fsub float %i.gz, %i.gy
@@ -2781,7 +2781,7 @@ bb.ax:                                            ; preds = %.preheader, %bb.bx
   %i.hk = fmul nnan float %i.hj, f0x2F800000      ; 2 uses
   %i.hl = fcmp olt float %i.hk, f0x3F7FFFFF
   %.sroa.speculated.i114 = select i1 %i.hl, float %i.hk, float f0x3F7FFFFF ; 2 uses
-  %i.hm = fsub nnan float 1.000000e+00, %.sroa.speculated.i114
+  %i.hm = fsub nnan ninf float 1.000000e+00, %.sroa.speculated.i114
   %i.hn = fmul nnan float %i.hm, 5.000000e+00
   %i.ho = fmul nnan float %.sroa.speculated.i114, 5.000000e+00
   %i.hp = fsub float %i.ho, %i.hn
@@ -3184,7 +3184,7 @@ bb.aq:                                            ; preds = %bb.ap
   %i.kz = fmul nnan <2 x float> %i.ky, splat (float f0x2F800000) ; 2 uses
   %i.la = fcmp olt <2 x float> %i.kz, splat (float f0x3F7FFFFF)
   %i.lb = select <2 x i1> %i.la, <2 x float> %i.kz, <2 x float> splat (float f0x3F7FFFFF) ; 2 uses
-  %i.lc = fsub nnan <2 x float> splat (float 1.000000e+00), %i.lb
+  %i.lc = fsub nnan ninf <2 x float> splat (float 1.000000e+00), %i.lb
   %i.ld = fmul nnan <2 x float> %i.lc, splat (float 5.000000e+00)
   %i.le = fmul nnan <2 x float> %i.lb, splat (float 5.000000e+00)
   %i.lf = fsub <2 x float> %i.le, %i.ld
@@ -3199,7 +3199,7 @@ bb.aq:                                            ; preds = %bb.ap
   %i.lo = fmul nnan float %i.ln, f0x2F800000      ; 2 uses
   %i.lp = fcmp olt float %i.lo, f0x3F7FFFFF
   %.sroa.speculated.i122 = select i1 %i.lp, float %i.lo, float f0x3F7FFFFF ; 2 uses
-  %i.lq = fsub nnan float 1.000000e+00, %.sroa.speculated.i122
+  %i.lq = fsub nnan ninf float 1.000000e+00, %.sroa.speculated.i122
   %i.lr = fmul nnan float %i.lq, 5.000000e+00
   %i.ls = fmul nnan float %.sroa.speculated.i122, 5.000000e+00
   %i.lt = fsub float %i.ls, %i.lr
@@ -3602,7 +3602,7 @@ _ZNK4pbrt6Tuple3INS_7Normal3EfEneENS1_IfEE.exit.thread: ; preds = %bb.d
   %i.gn = fsub float 1.000000e+00, %i.gm          ; 2 uses
   %i.go = fcmp ogt float %i.gn, 0.000000e+00
   %.sroa.speculated.i140 = select i1 %i.go, float %i.gn, float 0.000000e+00
-  %sqrt.i141 = tail call nnan float @llvm.sqrt.f32(float %.sroa.speculated.i140)
+  %sqrt.i141 = tail call nnan ninf float @llvm.sqrt.f32(float %.sroa.speculated.i140)
   %i.gp = fcmp ogt float %i.gl, %.sroa.3.12.vec.extract
   %i.gq = fmul float %i.gl, %.sroa.3.12.vec.extract
   %i.gr = fmul float %sqrt.i141, %sqrt.i130

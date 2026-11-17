@@ -202,8 +202,8 @@ bb.a:
   %i.b = uitofp i64 %i.a to double                ; 3 uses
   %i.c = fmul nnan double %i.b, 5.000000e-01      ; 2 uses
   %i.d = tail call noundef double @_RNvNtNtCs8lmMd0ZksV9_6statrs8function5gamma8ln_gamma(double noundef %i.c)
-  %i.e = fadd nnan double %i.b, f0xBFE62E42FEFA39EF
-  %i.f = fadd nnan double %i.b, -1.000000e+00
+  %i.e = fadd nnan ninf double %i.b, f0xBFE62E42FEFA39EF
+  %i.f = fadd nnan ninf double %i.b, -1.000000e+00
   %i.g = tail call noundef double @_RNvNtNtCs8lmMd0ZksV9_6statrs8function5gamma7digamma(double noundef %i.c)
   %i.h = fmul double %i.f, %i.g
   %i.i = fsub double %i.e, %i.h
@@ -333,7 +333,7 @@ bb.b:                                             ; preds = %bb.a
   %i.b = icmp ugt i64 %i.a, 160
   %i.c = uitofp i64 %i.a to double                ; 2 uses
   %i.d = fmul nnan double %i.c, 5.000000e-01      ; 3 uses
-  %i.e = fsub nnan double 1.000000e+00, %i.d      ; 2 uses
+  %i.e = fsub nnan ninf double 1.000000e+00, %i.d ; 2 uses
   %i.f = fadd double %i.c, -1.000000e+00          ; 2 uses
   br i1 %i.b, label %_RNvXs8_NtNtCs8lmMd0ZksV9_6statrs12distribution3chiNtB5_3ChiINtB7_10ContinuousddE6ln_pdf.exit, label %bb.c
 
@@ -378,9 +378,9 @@ bb.b:                                             ; preds = %bb.a
   %i.a = load i64, ptr %0, align 8, !range !12, !noundef !4
   %i.b = uitofp i64 %i.a to double                ; 2 uses
   %i.c = fmul nnan double %i.b, 5.000000e-01      ; 2 uses
-  %i.d = fsub nnan double 1.000000e+00, %i.c
+  %i.d = fsub nnan ninf double 1.000000e+00, %i.c
   %i.e = fmul nnan double %i.d, f0x3FE62E42FEFA39EF
-  %i.f = fadd nnan double %i.b, -1.000000e+00
+  %i.f = fadd nnan ninf double %i.b, -1.000000e+00
   %i.g = tail call ninf double @llvm.log.f64(double %1)
   %i.h = fmul double %i.g, %i.f
   %i.i = fadd double %i.h, %i.e

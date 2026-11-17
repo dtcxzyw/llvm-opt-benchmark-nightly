@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.c
   %i.ae = add i64 %i.ab, 2
   %.sroa.75.0 = select i1 %i.ac, i64 %i.ae, i64 undef, !prof !384 ; 2 uses
   %i.af = icmp ult i64 %i.ab, -2
-  %narrow = select i1 %i.ac, i1 %i.af, i1 false   ; 2 uses
+  %narrow = select i1 %i.ac, i1 %i.af, i1 false, !prof !384 ; 2 uses
   %.sroa.04.0 = zext i1 %narrow to i64
   store i64 %i.ad, ptr %i.q, align 8
   store i64 %.sroa.04.0, ptr %0, align 8

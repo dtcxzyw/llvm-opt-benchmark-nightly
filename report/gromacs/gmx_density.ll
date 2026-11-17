@@ -205,14 +205,14 @@ _ZNSt10filesystem7__cxx114pathD2Ev.exit.i52:      ; preds = %_ZNSt10filesystem7_
 
 .lr.ph8.split.us.i:                               ; preds = %.lr.ph8.i
   %i.sl = zext nneg i32 %i.qd to i64              ; 3 uses
-  %i.sm = select i1 %i.qj, double %i.si, double 0.000000e+00 ; 2 uses
+  %i.sm = select ninf i1 %i.qj, double %i.si, double 0.000000e+00 ; 2 uses
   br i1 %i.ql, label %.lr.ph8.split.us.split.us.i, label %.lr.ph8.split.us.split.i
 
 .lr.ph8.split.us.split.us.i:                      ; preds = %.lr.ph8.split.us.i, %._crit_edge.split.us.us.us.i
   %indvars.iv33.i = phi i64 [ %indvars.iv.next34.i, %._crit_edge.split.us.us.us.i ], [ 0, %.lr.ph8.split.us.i ] ; 4 uses
   %i.sn = trunc nuw nsw i64 %indvars.iv33.i to i32
   %i.so = uitofp nneg i32 %i.sn to double
-  %.pn52.in.i = fsub nnan double %i.so, %i.sm
+  %.pn52.in.i = fsub nnan ninf double %i.so, %i.sm
   %.pn52.i = fadd nnan double %.pn52.in.i, 5.000000e-01
   %.044.in.us.us.i = fmul double %.pn52.i, %i.sg
   %.044.us.us.i = fptrunc double %.044.in.us.us.i to float
@@ -255,7 +255,7 @@ bb.bi:                                            ; preds = %bb.bi, %.lr.ph8.spl
   %indvars.iv25.i = phi i64 [ %indvars.iv.next26.i, %._crit_edge.split.us13.i ], [ 0, %.lr.ph8.split.us.i ] ; 3 uses
   %i.ti = trunc nuw nsw i64 %indvars.iv25.i to i32
   %i.tj = uitofp nneg i32 %i.ti to double
-  %.pn51.in.i = fsub nnan double %i.tj, %i.sm
+  %.pn51.in.i = fsub nnan ninf double %i.tj, %i.sm
   %.pn51.i = fadd nnan double %.pn51.in.i, 5.000000e-01
   %.044.in.us.i = fmul double %.pn51.i, %i.sg
   %.044.us.i = fptrunc double %.044.in.us.i to float
@@ -294,7 +294,7 @@ bb.bj:                                            ; preds = %bb.bj, %.lr.ph8.spl
 .lr.ph8.split.split.us.i:                         ; preds = %.lr.ph8.split.i, %.lr.ph8.split.split.us.i
   %.0467.us14.i = phi i32 [ %i.ud, %.lr.ph8.split.split.us.i ], [ 0, %.lr.ph8.split.i ] ; 2 uses
   %i.tx = uitofp nneg i32 %.0467.us14.i to double
-  %i.ty = fsub nnan double %i.tx, %i.si
+  %i.ty = fsub nnan ninf double %i.tx, %i.si
   %i.tz = fadd nnan double %i.ty, 5.000000e-01
   %i.ua = fmul double %i.tz, %i.sg
   %.044.us16.i = fptrunc double %i.ua to float

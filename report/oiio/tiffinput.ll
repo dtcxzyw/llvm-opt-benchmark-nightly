@@ -205,7 +205,7 @@ bb.cl:                                            ; preds = %_ZN11OpenImageIO4v3
   %i.ach = fmul nnan <2 x float> %i.acg, splat (float f0x3B808081)
   %i.aci = fsub <2 x float> splat (float 1.000000e+00), %i.ach ; 3 uses
   %shift = shufflevector <2 x float> %i.aci, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fmul <2 x float> %i.aci, %shift
+  %foldExtExtBinop = fmul nnan <2 x float> %i.aci, %shift
   %i.acj = extractelement <2 x float> %foldExtExtBinop, i64 0
   %i.ack = load <2 x i8>, ptr %.01830.i, align 1, !tbaa !306
   %i.acl = uitofp <2 x i8> %i.ack to <2 x float>
@@ -231,7 +231,7 @@ bb.cl:                                            ; preds = %_ZN11OpenImageIO4v3
   %i.ade = select i1 %i.adb, i8 -1, i8 %i.add
   %i.adf = getelementptr inbounds nuw i8, ptr %.01929.i, i64 1
   store i8 %i.ade, ptr %i.adf, align 1, !tbaa !306
-  %i.adg = fmul float %i.acj, 2.550000e+02        ; 2 uses
+  %i.adg = fmul nnan float %i.acj, 2.550000e+02   ; 2 uses
   %i.adh = fcmp olt float %i.adg, 0.000000e+00
   %i.adi = select i1 %i.adh, float -5.000000e-01, float 5.000000e-01
   %i.adj = fadd float %i.adg, %i.adi              ; 2 uses
@@ -491,7 +491,7 @@ bb.a:
   %i.d = fmul nnan <2 x float> %i.c, splat (float f0x37800080)
   %i.e = fsub <2 x float> splat (float 1.000000e+00), %i.d ; 3 uses
   %shift = shufflevector <2 x float> %i.e, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fmul <2 x float> %i.e, %shift
+  %foldExtExtBinop = fmul nnan <2 x float> %i.e, %shift
   %i.f = extractelement <2 x float> %foldExtExtBinop, i64 0
   %i.g = load <2 x i16>, ptr %.01830, align 2, !tbaa !380
   %i.h = uitofp <2 x i16> %i.g to <2 x float>
@@ -509,7 +509,7 @@ bb.a:
   %i.t = select <2 x i1> %i.s, <2 x float> splat (float 6.553500e+04), <2 x float> %i.r
   %i.u = fptoui <2 x float> %i.t to <2 x i16>
   store <2 x i16> %i.u, ptr %.01929, align 2, !tbaa !380
-  %i.v = fmul float %i.f, 6.553500e+04            ; 2 uses
+  %i.v = fmul nnan float %i.f, 6.553500e+04       ; 2 uses
   %i.w = fcmp olt float %i.v, 0.000000e+00
   %i.x = select i1 %i.w, float -5.000000e-01, float 5.000000e-01
   %i.y = fadd float %i.v, %i.x                    ; 2 uses

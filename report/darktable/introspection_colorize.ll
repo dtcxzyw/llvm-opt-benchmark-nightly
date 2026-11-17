@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.p = fcmp reassoc nsz arcp contract afn olt float %i.m, 4.000000e+00
-  %i.q = fsub reassoc nnan nsz arcp contract afn float 4.000000e+00, %i.m
+  %i.q = fsub fast float 4.000000e+00, %i.m
   %i.r = select reassoc nsz arcp contract afn i1 %i.p, float %i.q, float 0.000000e+00
   br label %hue2rgb.exit.i.i
 
@@ -219,7 +219,7 @@ bb.e:                                             ; preds = %hue2rgb.exit.i.i
   br i1 %i.t, label %hue2rgb.exit36.i.i, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.u = fsub reassoc nnan nsz arcp contract afn float 4.000000e+00, %i.k
+  %i.u = fsub fast float 4.000000e+00, %i.k
   %i.v = select reassoc nsz arcp contract afn i1 %i.l, float %i.u, float 0.000000e+00
   br label %hue2rgb.exit36.i.i
 
@@ -237,7 +237,7 @@ bb.g:                                             ; preds = %hue2rgb.exit36.i.i
 
 bb.h:                                             ; preds = %bb.g
   %i.aa = fcmp reassoc nsz arcp contract afn olt float %i.x, 4.000000e+00
-  %i.ab = fsub reassoc nnan nsz arcp contract afn float 4.000000e+00, %i.x
+  %i.ab = fsub fast float 4.000000e+00, %i.x
   %i.ac = select reassoc nsz arcp contract afn i1 %i.aa, float %i.ab, float 0.000000e+00
   br label %update_saturation_slider_end_color.exit
 
@@ -331,7 +331,7 @@ bb.a:
   %i.bt = fadd reassoc nnan nsz arcp contract afn <4 x float> %i.bs, splat (float f0xC02153F6)
   %i.bu = fmul reassoc nnan nsz arcp contract afn <4 x float> %i.bt, %i.bj
   %i.bv = fadd reassoc nnan nsz arcp contract afn <4 x float> %i.bu, splat (float f0x4038D96C)
-  %i.bw = fadd reassoc nnan nsz arcp contract afn <4 x float> %i.bj, splat (float -1.000000e+00)
+  %i.bw = fadd fast <4 x float> %i.bj, splat (float -1.000000e+00)
   %i.bx = fmul reassoc nsz arcp contract afn <4 x float> %i.bv, %i.bw
   %i.by = fadd reassoc nsz arcp contract afn <4 x float> %i.bx, %i.bn
   %i.bz = fmul reassoc nsz arcp contract afn <4 x float> %i.by, splat (float f0x3ED55555)
@@ -528,7 +528,7 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.q
   %i.gr = fcmp reassoc nsz arcp contract afn olt float %i.go, 4.000000e+00
-  %i.gs = fsub reassoc nnan nsz arcp contract afn float 4.000000e+00, %i.go
+  %i.gs = fsub fast float 4.000000e+00, %i.go
   %i.gt = select reassoc nsz arcp contract afn i1 %i.gr, float %i.gs, float 0.000000e+00
   br label %hue2rgb.exit.i.i
 
@@ -542,7 +542,7 @@ bb.s:                                             ; preds = %hue2rgb.exit.i.i
   br i1 %i.gv, label %hue2rgb.exit36.i.i, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  %i.gw = fsub reassoc nnan nsz arcp contract afn float 4.000000e+00, %i.gm
+  %i.gw = fsub fast float 4.000000e+00, %i.gm
   %i.gx = select reassoc nsz arcp contract afn i1 %i.gn, float %i.gw, float 0.000000e+00
   br label %hue2rgb.exit36.i.i
 
@@ -560,7 +560,7 @@ bb.u:                                             ; preds = %hue2rgb.exit36.i.i
 
 bb.v:                                             ; preds = %bb.u
   %i.hc = fcmp reassoc nsz arcp contract afn olt float %i.gz, 4.000000e+00
-  %i.hd = fsub reassoc nnan nsz arcp contract afn float 4.000000e+00, %i.gz
+  %i.hd = fsub fast float 4.000000e+00, %i.gz
   %i.he = select reassoc nsz arcp contract afn i1 %i.hc, float %i.hd, float 0.000000e+00
   br label %update_saturation_slider_end_color.exit
 
@@ -654,7 +654,7 @@ bb.g:                                             ; preds = %bb.e
 bb.h:                                             ; preds = %bb.g
   %i.ah = fcmp reassoc nsz arcp contract afn olt float %i.ab, 4.000000e+00
   %i.ai = fsub reassoc nsz arcp contract afn float %i.u, %i.y
-  %i.aj = fsub reassoc nnan nsz arcp contract afn float 4.000000e+00, %i.ab
+  %i.aj = fsub fast float 4.000000e+00, %i.ab
   %i.ak = fmul reassoc nsz arcp contract afn float %i.ai, %i.aj
   %i.al = fadd reassoc nsz arcp contract afn float %i.ak, %i.y
   %i.am = select reassoc nsz arcp contract afn i1 %i.ah, float %i.al, float %i.y
@@ -677,7 +677,7 @@ bb.j:                                             ; preds = %hue2rgb.exit.i
 
 bb.k:                                             ; preds = %bb.j
   %i.as = fsub reassoc nsz arcp contract afn float %i.u, %i.y
-  %i.at = fsub reassoc nnan nsz arcp contract afn float 4.000000e+00, %i.z
+  %i.at = fsub fast float 4.000000e+00, %i.z
   %i.au = fmul reassoc nsz arcp contract afn float %i.as, %i.at
   %i.av = fadd reassoc nsz arcp contract afn float %i.au, %i.y
   %i.aw = select reassoc nsz arcp contract afn i1 %i.aa, float %i.av, float %i.y
@@ -704,7 +704,7 @@ bb.m:                                             ; preds = %hue2rgb.exit36.i
 bb.n:                                             ; preds = %bb.m
   %i.be = fcmp reassoc nsz arcp contract afn olt float %i.ay, 4.000000e+00
   %i.bf = fsub reassoc nsz arcp contract afn float %i.u, %i.y
-  %i.bg = fsub reassoc nnan nsz arcp contract afn float 4.000000e+00, %i.ay
+  %i.bg = fsub fast float 4.000000e+00, %i.ay
   %i.bh = fmul reassoc nsz arcp contract afn float %i.bf, %i.bg
   %i.bi = fadd reassoc nsz arcp contract afn float %i.bh, %i.y
   %i.bj = select reassoc nsz arcp contract afn i1 %i.be, float %i.bi, float %i.y
@@ -849,7 +849,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.m = fcmp reassoc nsz arcp contract afn olt float %i.j, 4.000000e+00
-  %i.n = fsub reassoc nnan nsz arcp contract afn float 4.000000e+00, %i.j
+  %i.n = fsub fast float 4.000000e+00, %i.j
   %i.o = select reassoc nsz arcp contract afn i1 %i.m, float %i.n, float 0.000000e+00
   br label %hue2rgb.exit.i.i
 
@@ -863,7 +863,7 @@ bb.d:                                             ; preds = %hue2rgb.exit.i.i
   br i1 %i.q, label %hue2rgb.exit36.i.i, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.r = fsub reassoc nnan nsz arcp contract afn float 4.000000e+00, %i.h
+  %i.r = fsub fast float 4.000000e+00, %i.h
   %i.s = select reassoc nsz arcp contract afn i1 %i.i, float %i.r, float 0.000000e+00
   br label %hue2rgb.exit36.i.i
 
@@ -881,7 +881,7 @@ bb.f:                                             ; preds = %hue2rgb.exit36.i.i
 
 bb.g:                                             ; preds = %bb.f
   %i.x = fcmp reassoc nsz arcp contract afn olt float %i.u, 4.000000e+00
-  %i.y = fsub reassoc nnan nsz arcp contract afn float 4.000000e+00, %i.u
+  %i.y = fsub fast float 4.000000e+00, %i.u
   %i.z = select reassoc nsz arcp contract afn i1 %i.x, float %i.y, float 0.000000e+00
   br label %update_saturation_slider_end_color.exit
 

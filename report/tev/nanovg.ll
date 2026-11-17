@@ -205,7 +205,7 @@ bb.db:                                            ; preds = %bb.da
   br i1 %i.aah, label %bb.dc, label %bb.dd
 
 bb.dc:                                            ; preds = %bb.db
-  %i.aai = fsub nnan float %i.ye, %i.yc
+  %i.aai = fsub nnan ninf float %i.ye, %i.yc
   %i.aaj = fsub float %i.aaf, %i.yk
   %i.aak = fmul float %i.aai, %i.aaj
   %i.aal = fsub float %i.ym, %i.yk
@@ -451,7 +451,7 @@ bb.eh:                                            ; preds = %bb.eg
   br i1 %i.aew, label %bb.ei, label %bb.ej
 
 bb.ei:                                            ; preds = %bb.eh
-  %i.aex = fsub nnan float %i.yc, %i.ye
+  %i.aex = fsub nnan ninf float %i.yc, %i.ye
   %i.aey = fsub float %i.aeu, %i.ym
   %i.aez = fmul float %i.aex, %i.aey
   %i.afa = fsub float %i.yk, %i.ym
@@ -854,7 +854,7 @@ bb.ap:                                            ; preds = %bb.ao
   br label %.thread21.i.i
 
 bb.aq:                                            ; preds = %bb.am
-  %i.jy = fmul float %i.jh, -2.000000e+00
+  %i.jy = fmul nnan float %i.jh, -2.000000e+00
   %i.jz = fdiv float %i.ji, %i.jy                 ; 3 uses
   %i.ka = fcmp ult float %i.jz, 0.000000e+00
   %i.kb = fcmp ugt float %i.jz, 1.000000e+00
@@ -1232,7 +1232,7 @@ stbtt__solve_cubic.exit:                          ; preds = %bb.bj, %stbtt__cube
 
 bb.bk:                                            ; preds = %stbtt__solve_cubic.exit
   %i.tt = fsub float 1.000000e+00, %.sroa.0.0     ; 3 uses
-  %i.tu = fmul float %i.tt, %i.tt                 ; 2 uses
+  %i.tu = fmul nnan float %i.tt, %i.tt            ; 2 uses
   %i.tv = fmul nnan float %.sroa.0.0, 2.000000e+00
   %i.tw = fmul float %i.tv, %i.tt                 ; 2 uses
   %i.tx = fmul float %i.oj, %i.tw
@@ -1264,7 +1264,7 @@ bb.bm:                                            ; preds = %bb.bk, %bb.bl, %stb
 
 bb.bn:                                            ; preds = %bb.bm
   %i.un = fsub float 1.000000e+00, %.sroa.8.0     ; 3 uses
-  %i.uo = fmul float %i.un, %i.un                 ; 2 uses
+  %i.uo = fmul nnan float %i.un, %i.un            ; 2 uses
   %i.up = fmul nnan float %.sroa.8.0, 2.000000e+00
   %i.uq = fmul float %i.up, %i.un                 ; 2 uses
   %i.ur = fmul float %i.oj, %i.uq
@@ -1296,7 +1296,7 @@ bb.bp:                                            ; preds = %bb.bn, %bb.bo, %bb.
 
 bb.bq:                                            ; preds = %bb.bp
   %i.vh = fsub float 1.000000e+00, %.sroa.11.0    ; 3 uses
-  %i.vi = fmul float %i.vh, %i.vh                 ; 2 uses
+  %i.vi = fmul nnan float %i.vh, %i.vh            ; 2 uses
   %i.vj = fmul nnan float %.sroa.11.0, 2.000000e+00
   %i.vk = fmul float %i.vj, %i.vh                 ; 2 uses
   %i.vl = fmul float %i.oj, %i.vk
@@ -1699,7 +1699,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %i.af = fsub float %i.r, %i.t
-  %i.ag = fsub nnan float f0x3F2AAAAB, %.1.i
+  %i.ag = fsub nnan ninf float f0x3F2AAAAB, %.1.i
   %i.ah = fmul float %i.ag, %i.af
   %i.ai = tail call float @llvm.fmuladd.f32(float %i.ah, float 6.000000e+00, float %i.t)
   br label %nvg__hue.exit
@@ -1731,7 +1731,7 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.k
   %i.at = fsub float %i.r, %i.t
-  %i.au = fsub nnan float f0x3F2AAAAB, %.1.i29
+  %i.au = fsub nnan ninf float f0x3F2AAAAB, %.1.i29
   %i.av = fmul float %i.au, %i.at
   %i.aw = tail call float @llvm.fmuladd.f32(float %i.av, float 6.000000e+00, float %i.t)
   br label %nvg__hue.exit31
@@ -1764,7 +1764,7 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o
   %i.bi = fsub float %i.r, %i.t
-  %i.bj = fsub nnan float f0x3F2AAAAB, %.1.i33
+  %i.bj = fsub nnan ninf float f0x3F2AAAAB, %.1.i33
   %i.bk = fmul float %i.bj, %i.bi
   %i.bl = tail call float @llvm.fmuladd.f32(float %i.bk, float 6.000000e+00, float %i.t)
   br label %nvg__hue.exit35

@@ -205,7 +205,7 @@ _RNCINvMNtNtCsbNMRYq9Xj9a_14rustworkx_core10generators23hexagonal_lattice_graphN
   %i.da = extractelement <2 x double> %i.cz, i64 0
   %i.db = fadd double %i.da, %i.cx
   %i.dc = extractelement <2 x double> %i.cz, i64 1
-  %i.dd = fmul double %i.dc, %i.cr
+  %i.dd = fmul nnan double %i.dc, %i.cr
   %i.de = fadd double %i.db, %i.dd
   %i.df = invoke noundef nonnull ptr @_RNvMNtNtCsi0YPOvDEjiZ_4pyo35types5floatNtB2_7PyFloat3new(double noundef %i.de)
           to label %.noexc9.i.i.i.i.i.i.i.i.us.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.i.loopexit.split-lp.i.loopexit.split-lp.i.loopexit.split-lp.i.loopexit.split-lp.i.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !96971 ; 3 uses
@@ -292,7 +292,7 @@ _RNCINvMNtNtCsbNMRYq9Xj9a_14rustworkx_core10generators23hexagonal_lattice_graphN
   %i.ej = extractelement <2 x double> %i.ei, i64 0
   %i.ek = fadd double %i.ej, %i.ec
   %i.el = extractelement <2 x double> %i.ei, i64 1
-  %i.em = fmul double %i.el, %i.ed
+  %i.em = fmul nnan double %i.el, %i.ed
   %i.en = fadd double %i.ek, %i.em
   %i.eo = invoke noundef nonnull ptr @_RNvMNtNtCsi0YPOvDEjiZ_4pyo35types5floatNtB2_7PyFloat3new(double noundef %i.en)
           to label %.noexc9.i.i.i.i.i.i.i.i.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.i.loopexit.split-lp.i.loopexit.split-lp.i.loopexit.split-lp.i.loopexit.split-lp.i.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !96971 ; 3 uses
@@ -695,7 +695,7 @@ _RNCINvMNtNtCsbNMRYq9Xj9a_14rustworkx_core10generators23hexagonal_lattice_graphN
   %i.dg = extractelement <2 x double> %i.df, i64 0
   %i.dh = fadd double %i.dg, %i.dd
   %i.di = extractelement <2 x double> %i.df, i64 1
-  %i.dj = fmul double %i.di, %i.cx
+  %i.dj = fmul nnan double %i.di, %i.cx
   %i.dk = fadd double %i.dh, %i.dj
   %i.dl = invoke noundef nonnull ptr @_RNvMNtNtCsi0YPOvDEjiZ_4pyo35types5floatNtB2_7PyFloat3new(double noundef %i.dk)
           to label %.noexc9.i.i.i.i.i.i.i.i.us.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.i.loopexit.split-lp.i.loopexit.split-lp.i.loopexit.split-lp.i.loopexit.split-lp.i.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !98921 ; 3 uses
@@ -782,7 +782,7 @@ _RNCINvMNtNtCsbNMRYq9Xj9a_14rustworkx_core10generators23hexagonal_lattice_graphN
   %i.ep = extractelement <2 x double> %i.eo, i64 0
   %i.eq = fadd double %i.ep, %i.ei
   %i.er = extractelement <2 x double> %i.eo, i64 1
-  %i.es = fmul double %i.er, %i.ej
+  %i.es = fmul nnan double %i.er, %i.ej
   %i.et = fadd double %i.eq, %i.es
   %i.eu = invoke noundef nonnull ptr @_RNvMNtNtCsi0YPOvDEjiZ_4pyo35types5floatNtB2_7PyFloat3new(double noundef %i.et)
           to label %.noexc9.i.i.i.i.i.i.i.i.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.i.loopexit.split-lp.i.loopexit.split-lp.i.loopexit.split-lp.i.loopexit.split-lp.i.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !98921 ; 3 uses
@@ -1185,7 +1185,7 @@ _RNvMs_NtCs87CvPiUlf0m_5alloc3vecINtB4_3VecdE7reserveCskcxRuJ53GpR_9rustworkx.ex
   %i.ew = lshr i64 %i.ev, 12
   %i.ex = or disjoint i64 %i.ew, 4607182418800017408
   %i.ey = bitcast i64 %i.ex to double
-  %i.ez = fadd nnan double %i.ey, -1.000000e+00
+  %i.ez = fadd nnan ninf double %i.ey, -1.000000e+00
   %i.fa = getelementptr inbounds nuw [8 x i8], ptr %i.ej, i64 %i.em
   store double %i.ez, ptr %i.fa, align 8, !noalias !110973
   %exitcond.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.en, %3
@@ -1588,7 +1588,7 @@ bb.ad:                                            ; preds = %._crit_edge.thread.
   %i.gi = lshr i64 %i.gh, 12
   %i.gj = or disjoint i64 %i.gi, 4607182418800017408
   %i.gk = bitcast i64 %i.gj to double
-  %i.gl = fadd nnan double %i.gk, -1.000000e+00
+  %i.gl = fadd nnan ninf double %i.gk, -1.000000e+00
   %i.gm = fmul double %i.gl, %i.fz
   %i.gn = fcmp olt double %i.gm, 1.000000e+00
   br i1 %i.gn, label %.loopexit, label %.outer.backedge
@@ -1991,7 +1991,7 @@ bb.z:                                             ; preds = %bb.ae, %.lr.ph104.i
   %i.ge = lshr i64 %i.gd, 12
   %i.gf = or disjoint i64 %i.ge, 4607182418800017408
   %i.gg = bitcast i64 %i.gf to double
-  %i.gh = fadd nnan double %i.gg, -1.000000e+00
+  %i.gh = fadd nnan ninf double %i.gg, -1.000000e+00
   %i.gi = fsub double 1.000000e+00, %i.gh
   %i.gj = call double @llvm.log.f64(double %i.gi)
   %i.gk = add i64 %.sroa.022.0101.i.i, 1
@@ -2016,7 +2016,7 @@ bb.z:                                             ; preds = %bb.ae, %.lr.ph104.i
   %i.gx = lshr i64 %i.gw, 12
   %i.gy = or disjoint i64 %i.gx, 4607182418800017408
   %i.gz = bitcast i64 %i.gy to double
-  %i.ha = fadd nnan double %i.gz, -1.000000e+00
+  %i.ha = fadd nnan ninf double %i.gz, -1.000000e+00
   %i.hb = fsub double 1.000000e+00, %i.ha
   %i.hc = call double @llvm.log.f64(double %i.hb)
   %i.hd = add i64 %.sroa.035.0119.i.i, 1
@@ -2419,7 +2419,7 @@ _RNCINvNvNtNtNtNtCslwFuT2d6ECx_4core4iter6traits8iterator8Iterator4find5checkjQN
   %i.hm = lshr i64 %i.hl, 12
   %i.hn = or disjoint i64 %i.hm, 4607182418800017408
   %i.ho = bitcast i64 %i.hn to double
-  %i.hp = fadd nnan double %i.ho, -1.000000e+00
+  %i.hp = fadd nnan ninf double %i.ho, -1.000000e+00
   %i.hq = load ptr, ptr %i.gh, align 8, !noalias !112281, !nonnull !56, !noundef !56 ; 2 uses
   %i.hr = load i64, ptr %i.gi, align 8, !noalias !112281, !noundef !56 ; 4 uses
   %i.hs = icmp ult i64 %.sroa.021.0159.i.i, %i.hr
@@ -2822,7 +2822,7 @@ bb.aa:                                            ; preds = %bb.ab, %.lr.ph91.i.
   %i.fz = lshr i64 %i.fy, 12
   %i.ga = or disjoint i64 %i.fz, 4607182418800017408
   %i.gb = bitcast i64 %i.ga to double
-  %i.gc = fadd nnan double %i.gb, -1.000000e+00
+  %i.gc = fadd nnan ninf double %i.gb, -1.000000e+00
   %i.gd = fsub double 1.000000e+00, %i.gc
   %i.ge = call double @llvm.log.f64(double %i.gd)
   %i.gf = add i64 %.sroa.035.088.i.i, 1
@@ -3225,7 +3225,7 @@ _RNCINvNvNtNtNtNtCslwFuT2d6ECx_4core4iter6traits8iterator8Iterator4find5checkjQN
   %i.is = lshr i64 %i.ir, 12
   %i.it = or disjoint i64 %i.is, 4607182418800017408
   %i.iu = bitcast i64 %i.it to double
-  %i.iv = fadd nnan double %i.iu, -1.000000e+00
+  %i.iv = fadd nnan ninf double %i.iu, -1.000000e+00
   %i.iw = load ptr, ptr %i.hm, align 8, !noalias !112603, !nonnull !56, !noundef !56 ; 2 uses
   %i.ix = load i64, ptr %i.hn, align 8, !noalias !112603, !noundef !56 ; 4 uses
   %i.iy = icmp ult i64 %.sroa.021.0191.i.i, %i.ix
@@ -3628,7 +3628,7 @@ bb.t:                                             ; preds = %bb.w, %.lr.ph36.us.
   %i.fr = lshr i64 %i.fq, 12
   %i.fs = or disjoint i64 %i.fr, 4607182418800017408
   %i.ft = bitcast i64 %i.fs to double
-  %i.fu = fadd nnan double %i.ft, -1.000000e+00
+  %i.fu = fadd nnan ninf double %i.ft, -1.000000e+00
   %i.fv = fcmp olt double %i.fu, %i.bh
   br i1 %i.fv, label %bb.u, label %bb.w
 
@@ -4031,7 +4031,7 @@ bb.t:                                             ; preds = %bb.w, %.lr.ph36.us.
   %i.fr = lshr i64 %i.fq, 12
   %i.fs = or disjoint i64 %i.fr, 4607182418800017408
   %i.ft = bitcast i64 %i.fs to double
-  %i.fu = fadd nnan double %i.ft, -1.000000e+00
+  %i.fu = fadd nnan ninf double %i.ft, -1.000000e+00
   %i.fv = fcmp olt double %i.fu, %i.bh
   br i1 %i.fv, label %bb.u, label %bb.w
 
@@ -4434,7 +4434,7 @@ bb.s:                                             ; preds = %bb.s, %.lr.ph.i.i.i
   %i.ep = lshr <2 x i64> %i.eo, splat (i64 12)
   %i.eq = or disjoint <2 x i64> %i.ep, splat (i64 4607182418800017408)
   %i.er = bitcast <2 x i64> %i.eq to <2 x double>
-  %i.es = fadd nnan <2 x double> %i.er, splat (double -1.000000e+00)
+  %i.es = fadd nnan ninf <2 x double> %i.er, splat (double -1.000000e+00)
   store <2 x double> %i.es, ptr %i.dx, align 8, !noalias !131346
   %exitcond.not.i.i.i.i.i.i.i.i = icmp eq i64 %i.du, %i.dm
   br i1 %exitcond.not.i.i.i.i.i.i.i.i, label %_RNvXNtNtCs87CvPiUlf0m_5alloc3vec14spec_from_iterINtB4_3VecAdj2_EINtB2_12SpecFromIterBU_INtNtNtNtCslwFuT2d6ECx_4core4iter8adapters3map3MapINtNtNtB1w_3ops5range5RangejENCINvNtNtCskcxRuJ53GpR_9rustworkx6layout6spring13spring_layoutNtCs68Jln09rRqb_8petgraph10UndirectedEs_0EE9from_iterB2N_.exit.loopexit.i, label %bb.s
@@ -4837,7 +4837,7 @@ bb.s:                                             ; preds = %bb.s, %.lr.ph.i.i.i
   %i.ep = lshr <2 x i64> %i.eo, splat (i64 12)
   %i.eq = or disjoint <2 x i64> %i.ep, splat (i64 4607182418800017408)
   %i.er = bitcast <2 x i64> %i.eq to <2 x double>
-  %i.es = fadd nnan <2 x double> %i.er, splat (double -1.000000e+00)
+  %i.es = fadd nnan ninf <2 x double> %i.er, splat (double -1.000000e+00)
   store <2 x double> %i.es, ptr %i.dx, align 8, !noalias !131931
   %exitcond.not.i.i.i.i.i.i.i.i = icmp eq i64 %i.du, %i.dm
   br i1 %exitcond.not.i.i.i.i.i.i.i.i, label %_RNvXNtNtCs87CvPiUlf0m_5alloc3vec14spec_from_iterINtB4_3VecAdj2_EINtB2_12SpecFromIterBU_INtNtNtNtCslwFuT2d6ECx_4core4iter8adapters3map3MapINtNtNtB1w_3ops5range5RangejENCINvNtNtCskcxRuJ53GpR_9rustworkx6layout6spring13spring_layoutNtCs68Jln09rRqb_8petgraph8DirectedEs_0EE9from_iterB2N_.exit.loopexit.i, label %bb.s

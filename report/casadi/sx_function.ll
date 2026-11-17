@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.c
   br i1 %i.g, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %i.h = fadd nnan double %0, 1.000000e+00
+  %i.h = fadd nnan ninf double %0, 1.000000e+00
   %i.i = fmul nnan double %i.h, 5.000000e-01
   %i.j = tail call double @log(double noundef %i.i) #28
   %i.k = fneg double %i.j
@@ -245,7 +245,7 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.g
-  %i.am = fsub double 1.000000e+00, %0
+  %i.am = fsub ninf double 1.000000e+00, %0
   %i.an = fmul double %i.am, 5.000000e-01
   %i.ao = tail call double @log(double noundef %i.an) #28
   %i.ap = fneg double %i.ao

@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %or.cond9, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  %i.z = fadd nnan nsz float %i.j, -5.000000e-01
+  %i.z = fadd nnan ninf nsz float %i.j, -5.000000e-01
   %i.aa = fmul nnan nsz float %i.z, 2.000000e+00
   %i.ab = fcmp nsz oge float %i.i, %i.aa
   %or.cond11 = and i1 %i.o, %i.p
@@ -223,7 +223,7 @@ bb.i:                                             ; preds = %bb.g, %bb.h
   br i1 %or.cond13, label %bb.j, label %bb.l
 
 bb.j:                                             ; preds = %bb.i
-  %i.ae = fsub nnan nsz float 1.000000e+00, %i.j
+  %i.ae = fsub nnan ninf nsz float 1.000000e+00, %i.j
   %i.af = fmul nnan nsz float %i.ae, 2.000000e+00
   %i.ag = fcmp nsz ugt float %i.i, %i.af
   br i1 %i.ag, label %bb.l, label %bb.k
@@ -305,7 +305,7 @@ bb.r:                                             ; preds = %._crit_edge
   br i1 %or.cond25, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %bb.r
-  %i.br = fadd nnan nsz float %i.j, -5.000000e-01
+  %i.br = fadd nnan ninf nsz float %i.j, -5.000000e-01
   %i.bs = fmul nnan nsz float %i.br, 2.000000e+00
   %i.bt = fcmp nsz olt float %i.i, %i.bs
   %brmerge = or i1 %or.cond, %i.bt

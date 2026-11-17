@@ -204,7 +204,7 @@ bb.l:                                             ; preds = %bb.h, %bb.j, %bb.k
   %i.cz = fmul nsz double %i.cy, f0x400921FB60000000
   %i.da = call nsz double @llvm.sin.f64(double %i.cz)
   %i.db = call nsz double @llvm.fabs.f64(double %i.da)
-  %i.dc = fsub nsz double 1.000000e+00, %i.db
+  %i.dc = fsub ninf nsz double 1.000000e+00, %i.db
   %i.dd = fmul nsz double %i.dc, 5.110000e+02
   %i.de = fptrunc nsz double %i.dd to float       ; 2 uses
   %i.df = getelementptr inbounds nuw i8, ptr %0, i64 2352
@@ -607,7 +607,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.jc, label %bb.t, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.jd = fadd nnan nsz double %i.ja, -3.000000e-01
+  %i.jd = fadd nnan ninf nsz double %i.ja, -3.000000e-01
   br label %_ZN3Sky15m_horizon_blendEv.exit
 
 bb.t:                                             ; preds = %bb.r
@@ -615,7 +615,7 @@ bb.t:                                             ; preds = %bb.r
   br i1 %i.je, label %bb.z, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %i.jf = fsub nnan nsz double 5.000000e-01, %i.ja
+  %i.jf = fsub nnan ninf nsz double 5.000000e-01, %i.ja
   br label %_ZN3Sky15m_horizon_blendEv.exit
 
 _ZN3Sky15m_horizon_blendEv.exit:                  ; preds = %bb.s, %bb.u
@@ -864,7 +864,7 @@ bb.z:                                             ; preds = %bb.t, %_ZN3Sky15m_h
   br i1 %i.qr, label %bb.ab, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
-  %i.qs = fadd nnan nsz double %i.ja, -3.000000e-01
+  %i.qs = fadd nnan ninf nsz double %i.ja, -3.000000e-01
   %i.qt = fmul nnan nsz double %i.qs, 1.000000e+01
   %i.qu = fptrunc nnan nsz double %i.qt to float
   br label %_ZN3Sky15m_horizon_blendEv.exit198
@@ -874,7 +874,7 @@ bb.ab:                                            ; preds = %bb.z
   br i1 %i.qv, label %_ZN3Sky15m_horizon_blendEv.exit198, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
-  %i.qw = fsub nnan nsz double 5.000000e-01, %i.ja
+  %i.qw = fsub nnan ninf nsz double 5.000000e-01, %i.ja
   %i.qx = fmul nnan nsz double %i.qw, 1.000000e+01
   %i.qy = fptrunc nnan nsz double %i.qx to float
   br label %_ZN3Sky15m_horizon_blendEv.exit198
@@ -920,7 +920,7 @@ bb.ae:                                            ; preds = %bb.ad
   br i1 %i.rz, label %bb.ag, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
-  %i.sa = fadd nnan nsz double %i.rx, -3.000000e-01
+  %i.sa = fadd nnan ninf nsz double %i.rx, -3.000000e-01
   %i.sb = fmul nnan nsz double %i.sa, 1.000000e+01
   %i.sc = fptrunc nnan nsz double %i.sb to float
   br label %bb.ai
@@ -930,7 +930,7 @@ bb.ag:                                            ; preds = %bb.ae
   br i1 %i.sd, label %bb.ai, label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag
-  %i.se = fsub nnan nsz double 5.000000e-01, %i.rx
+  %i.se = fsub nnan ninf nsz double 5.000000e-01, %i.rx
   %i.sf = fmul nnan nsz double %i.se, 1.000000e+01
   %i.sg = fptrunc nnan nsz double %i.sf to float
   br label %bb.ai
@@ -983,7 +983,7 @@ bb.al:                                            ; preds = %bb.ak
   br i1 %i.tg, label %bb.an, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
-  %i.th = fadd nnan nsz double %i.te, -3.000000e-01
+  %i.th = fadd nnan ninf nsz double %i.te, -3.000000e-01
   %i.ti = fmul nnan nsz double %i.th, 1.000000e+01
   %i.tj = fptrunc nsz double %i.ti to float
   br label %_ZN3Sky15m_horizon_blendEv.exit204
@@ -993,7 +993,7 @@ bb.an:                                            ; preds = %bb.al
   br i1 %i.tk, label %_ZN3Sky15m_horizon_blendEv.exit204, label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an
-  %i.tl = fsub nnan nsz double 5.000000e-01, %i.te
+  %i.tl = fsub nnan ninf nsz double 5.000000e-01, %i.te
   %i.tm = fmul nnan nsz double %i.tl, 1.000000e+01
   %i.tn = fptrunc nsz double %i.tm to float
   br label %_ZN3Sky15m_horizon_blendEv.exit204
@@ -1070,7 +1070,7 @@ bb.at:                                            ; preds = %bb.as
   br i1 %i.vc, label %bb.av, label %bb.au
 
 bb.au:                                            ; preds = %bb.at
-  %i.vd = fadd nnan nsz double %i.va, -3.000000e-01
+  %i.vd = fadd nnan ninf nsz double %i.va, -3.000000e-01
   %i.ve = fmul nnan nsz double %i.vd, 1.000000e+01
   %i.vf = fptrunc nnan nsz double %i.ve to float
   br label %_ZN3Sky15m_horizon_blendEv.exit207
@@ -1080,7 +1080,7 @@ bb.av:                                            ; preds = %bb.at
   br i1 %i.vg, label %_ZN3Sky15m_horizon_blendEv.exit207, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av
-  %i.vh = fsub nnan nsz double 5.000000e-01, %i.va
+  %i.vh = fsub nnan ninf nsz double 5.000000e-01, %i.va
   %i.vi = fmul nnan nsz double %i.vh, 1.000000e+01
   %i.vj = fptrunc nnan nsz double %i.vi to float
   br label %_ZN3Sky15m_horizon_blendEv.exit207

@@ -205,26 +205,26 @@ bb.j:                                             ; preds = %bb.i
   br label %m_sinpi.exit
 
 bb.k:                                             ; preds = %bb.i
-  %i.ab = fadd nnan double %i.v, -5.000000e-01
+  %i.ab = fadd nnan ninf double %i.v, -5.000000e-01
   %i.ac = fmul nnan double %i.ab, f0x400921FB54442D18
   %i.ad = tail call double @cos(double noundef %i.ac) #15, !tbaa !9
   br label %m_sinpi.exit
 
 bb.l:                                             ; preds = %bb.i
-  %i.ae = fsub nnan double 1.000000e+00, %i.v
+  %i.ae = fsub nnan ninf double 1.000000e+00, %i.v
   %i.af = fmul nnan double %i.ae, f0x400921FB54442D18
   %i.ag = tail call double @sin(double noundef %i.af) #15, !tbaa !9
   br label %m_sinpi.exit
 
 bb.m:                                             ; preds = %bb.i
-  %i.ah = fadd nnan double %i.v, -1.500000e+00
+  %i.ah = fadd nnan ninf double %i.v, -1.500000e+00
   %i.ai = fmul nnan double %i.ah, f0x400921FB54442D18
   %i.aj = tail call double @cos(double noundef %i.ai) #15, !tbaa !9
   %i.ak = fneg double %i.aj
   br label %m_sinpi.exit
 
 bb.n:                                             ; preds = %bb.i
-  %i.al = fadd nnan double %i.v, -2.000000e+00
+  %i.al = fadd nnan ninf double %i.v, -2.000000e+00
   %i.am = fmul nnan double %i.al, f0x400921FB54442D18
   %i.an = tail call double @sin(double noundef %i.am) #15, !tbaa !9
   br label %m_sinpi.exit
@@ -517,12 +517,12 @@ bb.g:                                             ; preds = %bb.f, %bb.b, %bb.e,
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare { double, double } @llvm.modf.f64(double) #13
 
-; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(errnomem: write) uwtable
-define internal double @m_remainder(double noundef %0, double noundef %1) #11 !guid !300 {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
+define internal double @m_remainder(double noundef %0, double noundef %1) #12 !guid !300 {
 bb.a:
   %i.a = tail call double @llvm.fabs.f64(double %0) ; 4 uses
   %i.b = fcmp ueq double %i.a, +inf
-  %i.c = tail call double @llvm.fabs.f64(double %1) ; 3 uses
+  %i.c = tail call double @llvm.fabs.f64(double %1) ; 2 uses
   %i.d = fcmp ueq double %i.c, +inf
   %or.cond = or i1 %i.b, %i.d
   br i1 %or.cond, label %bb.h, label %bb.b
@@ -546,10 +546,10 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.d
-  %i.k = fsub nnan double %i.a, %i.f
+  %i.k = fsub nnan ninf double %i.a, %i.f
   %i.l = fmul nnan double %i.k, 5.000000e-01
-  %2 = tail call double @fmod(double noundef %i.l, double noundef %i.c) #15, !tbaa !9
-  %i.m = tail call double @llvm.fmuladd.f64(double %2, double -2.000000e+00, double %i.f)
+  %2 = frem double %i.l, %1
+  %i.m = tail call nnan double @llvm.fmuladd.f64(double %2, double -2.000000e+00, double %i.f)
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.c, %bb.e, %bb.f

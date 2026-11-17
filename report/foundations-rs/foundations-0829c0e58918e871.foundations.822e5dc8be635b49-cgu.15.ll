@@ -204,8 +204,8 @@ _RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs3ZeXDd4Wx7Y_4rand5distr7u
   %i.ac = lshr i64 %i.ab, 12, !dbg !3838
   %i.ad = or disjoint i64 %i.ac, 4607182418800017408, !dbg !3839
   %i.ae = bitcast i64 %i.ad to double, !dbg !3840
-  %i.af = fadd nnan double %i.ae, -1.000000e+00, !dbg !3841
-  %i.ag = fmul double %i.c, %i.af, !dbg !3842
+  %i.af = fadd nnan ninf double %i.ae, -1.000000e+00, !dbg !3841
+  %i.ag = fmul nnan double %i.c, %i.af, !dbg !3842
   %i.ah = fadd double %1, %i.ag, !dbg !3842
   ret double %i.ah, !dbg !3843
 

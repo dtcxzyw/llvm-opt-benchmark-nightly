@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.a
   store ptr %i.k, ptr %i.a, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i64 %i.l, ptr %i.m, align 8
-  %i.n = fsub nnan double 1.000000e+00, %1
+  %i.n = fsub nnan ninf double 1.000000e+00, %1
   %i.o = fmul nnan double %i.n, 5.000000e+01
   %i.p = invoke noundef double @_RNvMNtNtNtCs7NzLGBMhIGf_9criterion5stats10univariate11percentilesINtB2_11PercentilesdE2atB8_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.a, double noundef %i.o)
           to label %bb.f unwind label %bb.c
@@ -544,7 +544,7 @@ bb.d:                                             ; preds = %bb.c
   unreachable
 
 _RNCNvMNtNtNtCs7NzLGBMhIGf_9criterion5stats10univariate6sampleINtB4_6SampledE14median_abs_dev0Ba_.exit: ; preds = %bb.c
-  %i.r = fsub nnan double %i.o, %i.p
+  %i.r = fsub nnan ninf double %i.o, %i.p
   %i.s = tail call i64 @llvm.fptoui.sat.i64.f64(double %i.p) ; 2 uses
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %i.s
   %i.u = load double, ptr %i.t, align 8, !noalias !636, !noundef !5 ; 2 uses
@@ -694,7 +694,7 @@ bb.s:                                             ; preds = %bb.p
   br label %.thread
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtNtCs7NzLGBMhIGf_9criterion5stats10univariate11percentiles11PercentilesdEEBK_.exit12: ; preds = %bb.p
-  %i.bm = fsub nnan double %i.ay, %i.az
+  %i.bm = fsub nnan ninf double %i.ay, %i.az
   %i.bn = fsub double %i.bh, %i.bd
   %i.bo = fmul double %i.bm, %i.bn
   %i.bp = fadd double %i.bd, %i.bo
@@ -1097,8 +1097,8 @@ bb.i:                                             ; preds = %bb.h
   br label %.thread
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtNtCs7NzLGBMhIGf_9criterion5stats10univariate11percentiles11PercentilesdEEBK_.exit18: ; preds = %bb.g
-  %i.aj = fsub nnan double %i.ae, %i.af
-  %i.ak = fsub nnan double %i.m, %i.n
+  %i.aj = fsub nnan ninf double %i.ae, %i.af
+  %i.ak = fsub nnan ninf double %i.m, %i.n
   %i.al = fsub double %i.w, %i.s
   %i.am = fmul double %i.ak, %i.al
   %i.an = fadd double %i.s, %i.am

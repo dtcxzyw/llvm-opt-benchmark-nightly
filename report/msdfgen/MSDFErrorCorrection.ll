@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.e, %bb.c
   br i1 %or.cond36.i, label %_ZNK7msdfgen22BaseArtifactClassifier9rangeTestEdddfff.exit, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.cd = fsub nnan double 1.000000e+00, %i.ag
+  %i.cd = fsub nnan ninf double 1.000000e+00, %i.ag
   %i.ce = fmul double %i.cd, %i.bw                ; 2 uses
   %i.cf = fsub double %i.w, %i.ce
   %i.cg = fcmp ugt double %i.cf, %i.by
@@ -271,7 +271,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.do, label %bb.k, label %_ZNK7msdfgen22BaseArtifactClassifier9rangeTestEdddfff.exit108
 
 bb.k:                                             ; preds = %bb.j, %bb.h, %.cont25
-  %i.dp = fsub nnan double %i.ag, %.
+  %i.dp = fsub nnan ninf double %i.ag, %.
   %i.dq = load double, ptr %0, align 8, !tbaa !45 ; 2 uses
   %i.dr = fmul double %i.dp, %i.dq                ; 2 uses
   %i.ds = fpext float %i.bm to double             ; 4 uses
@@ -284,7 +284,7 @@ bb.k:                                             ; preds = %bb.j, %bb.h, %.cont
   br i1 %or.cond36.i105, label %_ZNK7msdfgen22BaseArtifactClassifier9rangeTestEdddfff.exit108, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.dy = fsub nnan double %.97, %i.ag
+  %i.dy = fsub nnan ninf double %.97, %i.ag
   %i.dz = fmul double %i.dy, %i.dq                ; 2 uses
   %i.ea = fpext float %.sroa.8.1 to double        ; 2 uses
   %i.eb = fsub double %i.ea, %i.dz
@@ -353,7 +353,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.fl, label %bb.p, label %_ZNK7msdfgen22BaseArtifactClassifier9rangeTestEdddfff.exit117
 
 bb.p:                                             ; preds = %bb.o, %bb.m, %.cont22
-  %i.fm = fsub nnan double %i.ag, %.98
+  %i.fm = fsub nnan ninf double %i.ag, %.98
   %i.fn = load double, ptr %0, align 8, !tbaa !45 ; 2 uses
   %i.fo = fmul double %i.fm, %i.fn                ; 2 uses
   %i.fp = fpext float %i.bm to double             ; 4 uses
@@ -366,7 +366,7 @@ bb.p:                                             ; preds = %bb.o, %bb.m, %.cont
   br i1 %or.cond36.i114, label %_ZNK7msdfgen22BaseArtifactClassifier9rangeTestEdddfff.exit117, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.fv = fsub nnan double %.99, %i.ag
+  %i.fv = fsub nnan ninf double %.99, %i.ag
   %i.fw = fmul double %i.fv, %i.fn                ; 2 uses
   %i.fx = fpext float %.sroa.8.0 to double        ; 2 uses
   %i.fy = fsub double %i.fx, %i.fw
@@ -769,7 +769,7 @@ bb.f:                                             ; preds = %bb.e, %bb.c
   br i1 %or.cond36.i, label %_ZNK7msdfgen22BaseArtifactClassifier9rangeTestEdddfff.exit, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.cd = fsub nnan double 1.000000e+00, %i.ag
+  %i.cd = fsub nnan ninf double 1.000000e+00, %i.ag
   %i.ce = fmul double %i.cd, %i.bw                ; 2 uses
   %i.cf = fsub double %i.w, %i.ce
   %i.cg = fcmp ugt double %i.cf, %i.by
@@ -836,7 +836,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.do, label %bb.k, label %_ZNK7msdfgen22BaseArtifactClassifier9rangeTestEdddfff.exit108
 
 bb.k:                                             ; preds = %bb.j, %bb.h, %.cont25
-  %i.dp = fsub nnan double %i.ag, %.
+  %i.dp = fsub nnan ninf double %i.ag, %.
   %i.dq = load double, ptr %0, align 8, !tbaa !45 ; 2 uses
   %i.dr = fmul double %i.dp, %i.dq                ; 2 uses
   %i.ds = fpext float %i.bm to double             ; 4 uses
@@ -849,7 +849,7 @@ bb.k:                                             ; preds = %bb.j, %bb.h, %.cont
   br i1 %or.cond36.i105, label %_ZNK7msdfgen22BaseArtifactClassifier9rangeTestEdddfff.exit108, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.dy = fsub nnan double %.97, %i.ag
+  %i.dy = fsub nnan ninf double %.97, %i.ag
   %i.dz = fmul double %i.dy, %i.dq                ; 2 uses
   %i.ea = fpext float %.sroa.8.1 to double        ; 2 uses
   %i.eb = fsub double %i.ea, %i.dz
@@ -918,7 +918,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.fl, label %bb.p, label %_ZNK7msdfgen22BaseArtifactClassifier9rangeTestEdddfff.exit117
 
 bb.p:                                             ; preds = %bb.o, %bb.m, %.cont22
-  %i.fm = fsub nnan double %i.ag, %.98
+  %i.fm = fsub nnan ninf double %i.ag, %.98
   %i.fn = load double, ptr %0, align 8, !tbaa !45 ; 2 uses
   %i.fo = fmul double %i.fm, %i.fn                ; 2 uses
   %i.fp = fpext float %i.bm to double             ; 4 uses
@@ -931,7 +931,7 @@ bb.p:                                             ; preds = %bb.o, %bb.m, %.cont
   br i1 %or.cond36.i114, label %_ZNK7msdfgen22BaseArtifactClassifier9rangeTestEdddfff.exit117, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.fv = fsub nnan double %.99, %i.ag
+  %i.fv = fsub nnan ninf double %.99, %i.ag
   %i.fw = fmul double %i.fv, %i.fn                ; 2 uses
   %i.fx = fpext float %.sroa.8.0 to double        ; 2 uses
   %i.fy = fsub double %i.fx, %i.fw
@@ -1334,7 +1334,7 @@ bb.f:                                             ; preds = %bb.e, %bb.c
   br i1 %or.cond36.i, label %_ZNK7msdfgen22BaseArtifactClassifier9rangeTestEdddfff.exit, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.cd = fsub nnan double 1.000000e+00, %i.ag
+  %i.cd = fsub nnan ninf double 1.000000e+00, %i.ag
   %i.ce = fmul double %i.cd, %i.bw                ; 2 uses
   %i.cf = fsub double %i.w, %i.ce
   %i.cg = fcmp ugt double %i.cf, %i.by
@@ -1401,7 +1401,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.do, label %bb.k, label %_ZNK7msdfgen22BaseArtifactClassifier9rangeTestEdddfff.exit108
 
 bb.k:                                             ; preds = %bb.j, %bb.h, %.cont25
-  %i.dp = fsub nnan double %i.ag, %.
+  %i.dp = fsub nnan ninf double %i.ag, %.
   %i.dq = load double, ptr %0, align 8, !tbaa !45 ; 2 uses
   %i.dr = fmul double %i.dp, %i.dq                ; 2 uses
   %i.ds = fpext float %i.bm to double             ; 4 uses
@@ -1414,7 +1414,7 @@ bb.k:                                             ; preds = %bb.j, %bb.h, %.cont
   br i1 %or.cond36.i105, label %_ZNK7msdfgen22BaseArtifactClassifier9rangeTestEdddfff.exit108, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.dy = fsub nnan double %.97, %i.ag
+  %i.dy = fsub nnan ninf double %.97, %i.ag
   %i.dz = fmul double %i.dy, %i.dq                ; 2 uses
   %i.ea = fpext float %.sroa.8.1 to double        ; 2 uses
   %i.eb = fsub double %i.ea, %i.dz
@@ -1483,7 +1483,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.fl, label %bb.p, label %_ZNK7msdfgen22BaseArtifactClassifier9rangeTestEdddfff.exit117
 
 bb.p:                                             ; preds = %bb.o, %bb.m, %.cont22
-  %i.fm = fsub nnan double %i.ag, %.98
+  %i.fm = fsub nnan ninf double %i.ag, %.98
   %i.fn = load double, ptr %0, align 8, !tbaa !45 ; 2 uses
   %i.fo = fmul double %i.fm, %i.fn                ; 2 uses
   %i.fp = fpext float %i.bm to double             ; 4 uses
@@ -1496,7 +1496,7 @@ bb.p:                                             ; preds = %bb.o, %bb.m, %.cont
   br i1 %or.cond36.i114, label %_ZNK7msdfgen22BaseArtifactClassifier9rangeTestEdddfff.exit117, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.fv = fsub nnan double %.99, %i.ag
+  %i.fv = fsub nnan ninf double %.99, %i.ag
   %i.fw = fmul double %i.fv, %i.fn                ; 2 uses
   %i.fx = fpext float %.sroa.8.0 to double        ; 2 uses
   %i.fy = fsub double %i.fx, %i.fw
@@ -1899,7 +1899,7 @@ bb.f:                                             ; preds = %bb.e, %bb.c
   br i1 %or.cond36.i, label %_ZNK7msdfgen22BaseArtifactClassifier9rangeTestEdddfff.exit, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.cd = fsub nnan double 1.000000e+00, %i.ag
+  %i.cd = fsub nnan ninf double 1.000000e+00, %i.ag
   %i.ce = fmul double %i.cd, %i.bw                ; 2 uses
   %i.cf = fsub double %i.w, %i.ce
   %i.cg = fcmp ugt double %i.cf, %i.by
@@ -1966,7 +1966,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.do, label %bb.k, label %_ZNK7msdfgen22BaseArtifactClassifier9rangeTestEdddfff.exit108
 
 bb.k:                                             ; preds = %bb.j, %bb.h, %.cont25
-  %i.dp = fsub nnan double %i.ag, %.
+  %i.dp = fsub nnan ninf double %i.ag, %.
   %i.dq = load double, ptr %0, align 8, !tbaa !45 ; 2 uses
   %i.dr = fmul double %i.dp, %i.dq                ; 2 uses
   %i.ds = fpext float %i.bm to double             ; 4 uses
@@ -1979,7 +1979,7 @@ bb.k:                                             ; preds = %bb.j, %bb.h, %.cont
   br i1 %or.cond36.i105, label %_ZNK7msdfgen22BaseArtifactClassifier9rangeTestEdddfff.exit108, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.dy = fsub nnan double %.97, %i.ag
+  %i.dy = fsub nnan ninf double %.97, %i.ag
   %i.dz = fmul double %i.dy, %i.dq                ; 2 uses
   %i.ea = fpext float %.sroa.8.1 to double        ; 2 uses
   %i.eb = fsub double %i.ea, %i.dz
@@ -2048,7 +2048,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.fl, label %bb.p, label %_ZNK7msdfgen22BaseArtifactClassifier9rangeTestEdddfff.exit117
 
 bb.p:                                             ; preds = %bb.o, %bb.m, %.cont22
-  %i.fm = fsub nnan double %i.ag, %.98
+  %i.fm = fsub nnan ninf double %i.ag, %.98
   %i.fn = load double, ptr %0, align 8, !tbaa !45 ; 2 uses
   %i.fo = fmul double %i.fm, %i.fn                ; 2 uses
   %i.fp = fpext float %i.bm to double             ; 4 uses
@@ -2061,7 +2061,7 @@ bb.p:                                             ; preds = %bb.o, %bb.m, %.cont
   br i1 %or.cond36.i114, label %_ZNK7msdfgen22BaseArtifactClassifier9rangeTestEdddfff.exit117, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.fv = fsub nnan double %.99, %i.ag
+  %i.fv = fsub nnan ninf double %.99, %i.ag
   %i.fw = fmul double %i.fv, %i.fn                ; 2 uses
   %i.fx = fpext float %.sroa.8.0 to double        ; 2 uses
   %i.fy = fsub double %i.fx, %i.fw
@@ -2442,7 +2442,7 @@ bb.f:                                             ; preds = %bb.e, %bb.c
   br i1 %or.cond36.i, label %_ZNK7msdfgen22BaseArtifactClassifier9rangeTestEdddfff.exit, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.cd = fsub nnan double 1.000000e+00, %i.ag
+  %i.cd = fsub nnan ninf double 1.000000e+00, %i.ag
   %i.ce = fmul double %i.cd, %i.bw                ; 2 uses
   %i.cf = fsub double %i.w, %i.ce
   %i.cg = fcmp ugt double %i.cf, %i.by
@@ -2509,7 +2509,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.do, label %bb.k, label %_ZNK7msdfgen22BaseArtifactClassifier9rangeTestEdddfff.exit108
 
 bb.k:                                             ; preds = %bb.j, %bb.h, %.cont25
-  %i.dp = fsub nnan double %i.ag, %.
+  %i.dp = fsub nnan ninf double %i.ag, %.
   %i.dq = load double, ptr %0, align 8, !tbaa !45 ; 2 uses
   %i.dr = fmul double %i.dp, %i.dq                ; 2 uses
   %i.ds = fpext float %i.bm to double             ; 4 uses
@@ -2522,7 +2522,7 @@ bb.k:                                             ; preds = %bb.j, %bb.h, %.cont
   br i1 %or.cond36.i105, label %_ZNK7msdfgen22BaseArtifactClassifier9rangeTestEdddfff.exit108, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.dy = fsub nnan double %.97, %i.ag
+  %i.dy = fsub nnan ninf double %.97, %i.ag
   %i.dz = fmul double %i.dy, %i.dq                ; 2 uses
   %i.ea = fpext float %.sroa.8.1 to double        ; 2 uses
   %i.eb = fsub double %i.ea, %i.dz
@@ -2591,7 +2591,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.fl, label %bb.p, label %_ZNK7msdfgen22BaseArtifactClassifier9rangeTestEdddfff.exit117
 
 bb.p:                                             ; preds = %bb.o, %bb.m, %.cont22
-  %i.fm = fsub nnan double %i.ag, %.98
+  %i.fm = fsub nnan ninf double %i.ag, %.98
   %i.fn = load double, ptr %0, align 8, !tbaa !45 ; 2 uses
   %i.fo = fmul double %i.fm, %i.fn                ; 2 uses
   %i.fp = fpext float %i.bm to double             ; 4 uses
@@ -2604,7 +2604,7 @@ bb.p:                                             ; preds = %bb.o, %bb.m, %.cont
   br i1 %or.cond36.i114, label %_ZNK7msdfgen22BaseArtifactClassifier9rangeTestEdddfff.exit117, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.fv = fsub nnan double %.99, %i.ag
+  %i.fv = fsub nnan ninf double %.99, %i.ag
   %i.fw = fmul double %i.fv, %i.fn                ; 2 uses
   %i.fx = fpext float %.sroa.8.0 to double        ; 2 uses
   %i.fy = fsub double %i.fx, %i.fw

@@ -204,7 +204,7 @@ bb.bk:                                            ; preds = %bb.bo, %bb.bn, %bb.
 
 bb.bl:                                            ; preds = %bb.bj
   %i.eg = uitofp nneg i8 %i.ee to double          ; 2 uses
-  %i.eh = fsub nnan double 1.000000e+02, %i.eg
+  %i.eh = fsub nnan ninf double 1.000000e+02, %i.eg
   %i.ei = fdiv double %i.eh, %i.eg
   %i.ej = uitofp i64 %i.ea to double
   %i.ek = icmp ult i32 %i.eb, 1000000000
@@ -607,7 +607,7 @@ bb.dy:                                            ; preds = %bb.ec, %bb.eb, %bb.
 
 bb.dz:                                            ; preds = %bb.dx
   %i.nd = uitofp nneg i8 %i.nb to double          ; 2 uses
-  %i.ne = fsub nnan double 1.000000e+02, %i.nd
+  %i.ne = fsub nnan ninf double 1.000000e+02, %i.nd
   %i.nf = fdiv double %i.ne, %i.nd
   %i.ng = uitofp i64 %i.mx to double
   %i.nh = icmp ult i32 %i.my, 1000000000
@@ -1010,7 +1010,7 @@ bb.u:                                             ; preds = %bb.y, %bb.x, %bb.t,
 
 bb.v:                                             ; preds = %bb.t
   %i.bg = uitofp nneg i8 %i.be to double          ; 2 uses
-  %i.bh = fsub nnan double 1.000000e+02, %i.bg
+  %i.bh = fsub nnan ninf double 1.000000e+02, %i.bg
   %i.bi = fdiv double %i.bh, %i.bg
   %i.bj = uitofp i64 %i.ba to double
   %i.bk = icmp ult i32 %i.bb, 1000000000

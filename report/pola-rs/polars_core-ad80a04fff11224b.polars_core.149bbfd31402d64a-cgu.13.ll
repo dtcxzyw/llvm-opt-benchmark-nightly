@@ -204,8 +204,8 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.c
   %i.h = uitofp nneg i64 %2 to double, !dbg !160411 ; 2 uses
-  %i.i = fadd nnan double %i.h, -1.000000e+00, !dbg !160412
-  %i.j = fmul double %3, %i.i, !dbg !160412
+  %i.i = fadd nnan ninf double %i.h, -1.000000e+00, !dbg !160412
+  %i.j = fmul nnan double %3, %i.i, !dbg !160412
   %i.k = fadd double %i.j, 0.000000e+00, !dbg !160412 ; 5 uses
   switch i8 %4, label %default.unreachable [
     i8 0, label %bb.g
@@ -608,7 +608,7 @@ _RNvXNvNtCs2mZqlW55729_12polars_utils7float16s5_1__NtB4_4pf16NtNtCslmKYcnV0hjo_1
 
 bb.cm:                                            ; preds = %_RNvXNvNtCs2mZqlW55729_12polars_utils7float16s5_1__NtB4_4pf16NtNtCslmKYcnV0hjo_10num_traits4cast11ToPrimitive6to_f64.exit79
   %i.nb = uitofp i64 %.sink13.i to double, !dbg !160755
-  %i.nc = fsub double %.sink11.i, %i.nb, !dbg !160756
+  %i.nc = fsub nnan double %.sink11.i, %i.nb, !dbg !160756
   %i.nd = fsub double %.sroa.0.0.i.i73, %.sroa.0.0.i.i64, !dbg !160757
   %i.ne = fmul double %i.nc, %i.nd, !dbg !160758
   %i.nf = fadd double %.sroa.0.0.i.i64, %i.ne, !dbg !160759
@@ -662,8 +662,8 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.c
   %i.h = uitofp nneg i64 %2 to double, !dbg !160843 ; 2 uses
-  %i.i = fadd nnan double %i.h, -1.000000e+00, !dbg !160844
-  %i.j = fmul double %3, %i.i, !dbg !160844
+  %i.i = fadd nnan ninf double %i.h, -1.000000e+00, !dbg !160844
+  %i.j = fmul nnan double %3, %i.i, !dbg !160844
   %i.k = fadd double %i.j, 0.000000e+00, !dbg !160844 ; 5 uses
   switch i8 %4, label %default.unreachable [
     i8 0, label %bb.g
@@ -819,7 +819,7 @@ bb.t:                                             ; preds = %bb.q
 
 bb.u:                                             ; preds = %bb.t
   %i.bm = uitofp i64 %.sink13.i to double, !dbg !160909
-  %i.bn = fsub double %.sink11.i, %i.bm, !dbg !160910
+  %i.bn = fsub nnan double %.sink11.i, %i.bm, !dbg !160910
   %i.bo = fsub nnan double %i.bj, %i.bk, !dbg !160911
   %i.bp = fmul double %i.bn, %i.bo, !dbg !160912
   %i.bq = fadd double %i.bp, %i.bk, !dbg !160913
@@ -873,8 +873,8 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.c
   %i.h = uitofp nneg i64 %2 to double, !dbg !160990 ; 2 uses
-  %i.i = fadd nnan double %i.h, -1.000000e+00, !dbg !160991
-  %i.j = fmul double %3, %i.i, !dbg !160991
+  %i.i = fadd nnan ninf double %i.h, -1.000000e+00, !dbg !160991
+  %i.j = fmul nnan double %3, %i.i, !dbg !160991
   %i.k = fadd double %i.j, 0.000000e+00, !dbg !160991 ; 5 uses
   switch i8 %4, label %default.unreachable [
     i8 0, label %bb.g
@@ -1025,7 +1025,7 @@ bb.t:                                             ; preds = %bb.q
 
 bb.u:                                             ; preds = %bb.t
   %i.bh = uitofp i64 %.sink13.i to double, !dbg !161049
-  %i.bi = fsub double %.sink11.i, %i.bh, !dbg !161050
+  %i.bi = fsub nnan double %.sink11.i, %i.bh, !dbg !161050
   %i.bj = fsub double %i.bf, %.val21, !dbg !161051
   %i.bk = fmul double %i.bi, %i.bj, !dbg !161052
   %i.bl = fadd double %.val21, %i.bk, !dbg !161053
@@ -1079,8 +1079,8 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.c
   %i.h = uitofp nneg i64 %2 to double, !dbg !161137 ; 2 uses
-  %i.i = fadd nnan double %i.h, -1.000000e+00, !dbg !161138
-  %i.j = fmul double %3, %i.i, !dbg !161138
+  %i.i = fadd nnan ninf double %i.h, -1.000000e+00, !dbg !161138
+  %i.j = fmul nnan double %3, %i.i, !dbg !161138
   %i.k = fadd double %i.j, 0.000000e+00, !dbg !161138 ; 5 uses
   switch i8 %4, label %default.unreachable [
     i8 0, label %bb.g
@@ -1238,7 +1238,7 @@ bb.t:                                             ; preds = %bb.q
 bb.u:                                             ; preds = %bb.t
   %i.bn = fpext float %i.bk to double, !dbg !161202
   %i.bo = uitofp i64 %.sink13.i to double, !dbg !161203
-  %i.bp = fsub double %.sink11.i, %i.bo, !dbg !161204
+  %i.bp = fsub nnan double %.sink11.i, %i.bo, !dbg !161204
   %i.bq = fsub double %i.bn, %i.bl, !dbg !161205
   %i.br = fmul double %i.bp, %i.bq, !dbg !161206
   %i.bs = fadd double %i.br, %i.bl, !dbg !161207
@@ -1292,8 +1292,8 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.c
   %i.h = uitofp nneg i64 %2 to double, !dbg !161291 ; 2 uses
-  %i.i = fadd nnan double %i.h, -1.000000e+00, !dbg !161292
-  %i.j = fmul double %3, %i.i, !dbg !161292
+  %i.i = fadd nnan ninf double %i.h, -1.000000e+00, !dbg !161292
+  %i.j = fmul nnan double %3, %i.i, !dbg !161292
   %i.k = fadd double %i.j, 0.000000e+00, !dbg !161292 ; 5 uses
   switch i8 %4, label %default.unreachable [
     i8 0, label %bb.g
@@ -1449,8 +1449,8 @@ bb.t:                                             ; preds = %bb.q
 
 bb.u:                                             ; preds = %bb.t
   %i.bm = uitofp i64 %.sink13.i to double, !dbg !161357
-  %i.bn = fsub double %.sink11.i, %i.bm, !dbg !161358
-  %i.bo = fsub nnan double %i.bj, %i.bk, !dbg !161359
+  %i.bn = fsub nnan double %.sink11.i, %i.bm, !dbg !161358
+  %i.bo = fsub nnan ninf double %i.bj, %i.bk, !dbg !161359
   %i.bp = fmul double %i.bn, %i.bo, !dbg !161360
   %i.bq = fadd double %i.bp, %i.bk, !dbg !161361
   br label %_RINvNtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops9aggregate8quantile15linear_interpoldEBa_.exit, !dbg !161362
@@ -1503,8 +1503,8 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.c
   %i.h = uitofp nneg i64 %2 to double, !dbg !161445 ; 2 uses
-  %i.i = fadd nnan double %i.h, -1.000000e+00, !dbg !161446
-  %i.j = fmul double %3, %i.i, !dbg !161446
+  %i.i = fadd nnan ninf double %i.h, -1.000000e+00, !dbg !161446
+  %i.j = fmul nnan double %3, %i.i, !dbg !161446
   %i.k = fadd double %i.j, 0.000000e+00, !dbg !161446 ; 5 uses
   switch i8 %4, label %default.unreachable [
     i8 0, label %bb.g
@@ -1662,7 +1662,7 @@ bb.t:                                             ; preds = %bb.q
 
 bb.u:                                             ; preds = %bb.t
   %i.bo = uitofp i64 %.sink13.i to double, !dbg !161511
-  %i.bp = fsub double %.sink11.i, %i.bo, !dbg !161512
+  %i.bp = fsub nnan double %.sink11.i, %i.bo, !dbg !161512
   %i.bq = fsub nnan double %i.bm, %i.bl, !dbg !161513
   %i.br = fmul double %i.bp, %i.bq, !dbg !161514
   %i.bs = fadd double %i.br, %i.bl, !dbg !161515
@@ -1716,8 +1716,8 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.c
   %i.h = uitofp nneg i64 %2 to double, !dbg !161599 ; 2 uses
-  %i.i = fadd nnan double %i.h, -1.000000e+00, !dbg !161600
-  %i.j = fmul double %3, %i.i, !dbg !161600
+  %i.i = fadd nnan ninf double %i.h, -1.000000e+00, !dbg !161600
+  %i.j = fmul nnan double %3, %i.i, !dbg !161600
   %i.k = fadd double %i.j, 0.000000e+00, !dbg !161600 ; 5 uses
   switch i8 %4, label %default.unreachable [
     i8 0, label %bb.g
@@ -1875,8 +1875,8 @@ bb.t:                                             ; preds = %bb.q
 
 bb.u:                                             ; preds = %bb.t
   %i.bo = uitofp i64 %.sink13.i to double, !dbg !161665
-  %i.bp = fsub double %.sink11.i, %i.bo, !dbg !161666
-  %i.bq = fsub nnan double %i.bm, %i.bl, !dbg !161667
+  %i.bp = fsub nnan double %.sink11.i, %i.bo, !dbg !161666
+  %i.bq = fsub nnan ninf double %i.bm, %i.bl, !dbg !161667
   %i.br = fmul double %i.bp, %i.bq, !dbg !161668
   %i.bs = fadd double %i.br, %i.bl, !dbg !161669
   br label %_RINvNtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops9aggregate8quantile15linear_interpoldEBa_.exit, !dbg !161670
@@ -1931,8 +1931,8 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.c
   %i.j = uitofp nneg i64 %2 to double, !dbg !161759 ; 2 uses
-  %i.k = fadd nnan double %i.j, -1.000000e+00, !dbg !161760
-  %i.l = fmul double %3, %i.k, !dbg !161760
+  %i.k = fadd nnan ninf double %i.j, -1.000000e+00, !dbg !161760
+  %i.l = fmul nnan double %3, %i.k, !dbg !161760
   %i.m = fadd double %i.l, 0.000000e+00, !dbg !161760 ; 5 uses
   switch i8 %4, label %default.unreachable [
     i8 0, label %bb.g
@@ -2097,7 +2097,7 @@ bb.t:                                             ; preds = %bb.q
 
 bb.u:                                             ; preds = %bb.t
   %i.bq = uitofp i64 %.sink13.i to double, !dbg !161831
-  %i.br = fsub double %.sink11.i, %i.bq, !dbg !161832
+  %i.br = fsub nnan double %.sink11.i, %i.bq, !dbg !161832
   %i.bs = fsub nnan double %i.bo, %i.bn, !dbg !161833
   %i.bt = fmul double %i.br, %i.bs, !dbg !161834
   %i.bu = fadd double %i.bt, %i.bn, !dbg !161835
@@ -2154,8 +2154,8 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.c
   %i.j = uitofp nneg i64 %2 to double, !dbg !161925 ; 2 uses
-  %i.k = fadd nnan double %i.j, -1.000000e+00, !dbg !161926
-  %i.l = fmul double %3, %i.k, !dbg !161926
+  %i.k = fadd nnan ninf double %i.j, -1.000000e+00, !dbg !161926
+  %i.l = fmul nnan double %3, %i.k, !dbg !161926
   %i.m = fadd double %i.l, 0.000000e+00, !dbg !161926 ; 5 uses
   switch i8 %4, label %default.unreachable [
     i8 0, label %bb.g
@@ -2320,8 +2320,8 @@ bb.t:                                             ; preds = %bb.q
 
 bb.u:                                             ; preds = %bb.t
   %i.bq = uitofp i64 %.sink13.i to double, !dbg !161997
-  %i.br = fsub double %.sink11.i, %i.bq, !dbg !161998
-  %i.bs = fsub nnan double %i.bo, %i.bn, !dbg !161999
+  %i.br = fsub nnan double %.sink11.i, %i.bq, !dbg !161998
+  %i.bs = fsub nnan ninf double %i.bo, %i.bn, !dbg !161999
   %i.bt = fmul double %i.br, %i.bs, !dbg !162000
   %i.bu = fadd double %i.bt, %i.bn, !dbg !162001
   br label %_RINvNtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops9aggregate8quantile15linear_interpoldEBa_.exit, !dbg !162002
@@ -2375,8 +2375,8 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.c
   %i.h = uitofp nneg i64 %2 to double, !dbg !162085 ; 2 uses
-  %i.i = fadd nnan double %i.h, -1.000000e+00, !dbg !162086
-  %i.j = fmul double %3, %i.i, !dbg !162086
+  %i.i = fadd nnan ninf double %i.h, -1.000000e+00, !dbg !162086
+  %i.j = fmul nnan double %3, %i.i, !dbg !162086
   %i.k = fadd double %i.j, 0.000000e+00, !dbg !162086 ; 5 uses
   switch i8 %4, label %default.unreachable [
     i8 0, label %bb.g
@@ -2534,7 +2534,7 @@ bb.t:                                             ; preds = %bb.q
 
 bb.u:                                             ; preds = %bb.t
   %i.bo = uitofp i64 %.sink13.i to double, !dbg !162151
-  %i.bp = fsub double %.sink11.i, %i.bo, !dbg !162152
+  %i.bp = fsub nnan double %.sink11.i, %i.bo, !dbg !162152
   %i.bq = fsub nnan double %i.bm, %i.bl, !dbg !162153
   %i.br = fmul double %i.bp, %i.bq, !dbg !162154
   %i.bs = fadd double %i.br, %i.bl, !dbg !162155
@@ -2588,8 +2588,8 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.c
   %i.h = uitofp nneg i64 %2 to double, !dbg !162239 ; 2 uses
-  %i.i = fadd nnan double %i.h, -1.000000e+00, !dbg !162240
-  %i.j = fmul double %3, %i.i, !dbg !162240
+  %i.i = fadd nnan ninf double %i.h, -1.000000e+00, !dbg !162240
+  %i.j = fmul nnan double %3, %i.i, !dbg !162240
   %i.k = fadd double %i.j, 0.000000e+00, !dbg !162240 ; 5 uses
   switch i8 %4, label %default.unreachable [
     i8 0, label %bb.g
@@ -2747,8 +2747,8 @@ bb.t:                                             ; preds = %bb.q
 
 bb.u:                                             ; preds = %bb.t
   %i.bo = uitofp i64 %.sink13.i to double, !dbg !162305
-  %i.bp = fsub double %.sink11.i, %i.bo, !dbg !162306
-  %i.bq = fsub nnan double %i.bm, %i.bl, !dbg !162307
+  %i.bp = fsub nnan double %.sink11.i, %i.bo, !dbg !162306
+  %i.bq = fsub nnan ninf double %i.bm, %i.bl, !dbg !162307
   %i.br = fmul double %i.bp, %i.bq, !dbg !162308
   %i.bs = fadd double %i.br, %i.bl, !dbg !162309
   br label %_RINvNtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops9aggregate8quantile15linear_interpoldEBa_.exit, !dbg !162310
@@ -2801,8 +2801,8 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.c
   %i.h = uitofp nneg i64 %2 to double, !dbg !162393 ; 2 uses
-  %i.i = fadd nnan double %i.h, -1.000000e+00, !dbg !162394
-  %i.j = fmul double %3, %i.i, !dbg !162394
+  %i.i = fadd nnan ninf double %i.h, -1.000000e+00, !dbg !162394
+  %i.j = fmul nnan double %3, %i.i, !dbg !162394
   %i.k = fadd double %i.j, 0.000000e+00, !dbg !162394 ; 5 uses
   switch i8 %4, label %default.unreachable [
     i8 0, label %bb.g
@@ -2960,7 +2960,7 @@ bb.t:                                             ; preds = %bb.q
 
 bb.u:                                             ; preds = %bb.t
   %i.bo = uitofp i64 %.sink13.i to double, !dbg !162459
-  %i.bp = fsub double %.sink11.i, %i.bo, !dbg !162460
+  %i.bp = fsub nnan double %.sink11.i, %i.bo, !dbg !162460
   %i.bq = fsub nnan double %i.bm, %i.bl, !dbg !162461
   %i.br = fmul double %i.bp, %i.bq, !dbg !162462
   %i.bs = fadd double %i.br, %i.bl, !dbg !162463
@@ -3014,8 +3014,8 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.c
   %i.h = uitofp nneg i64 %2 to double, !dbg !162547 ; 2 uses
-  %i.i = fadd nnan double %i.h, -1.000000e+00, !dbg !162548
-  %i.j = fmul double %3, %i.i, !dbg !162548
+  %i.i = fadd nnan ninf double %i.h, -1.000000e+00, !dbg !162548
+  %i.j = fmul nnan double %3, %i.i, !dbg !162548
   %i.k = fadd double %i.j, 0.000000e+00, !dbg !162548 ; 5 uses
   switch i8 %4, label %default.unreachable [
     i8 0, label %bb.g
@@ -3173,8 +3173,8 @@ bb.t:                                             ; preds = %bb.q
 
 bb.u:                                             ; preds = %bb.t
   %i.bo = uitofp i64 %.sink13.i to double, !dbg !162613
-  %i.bp = fsub double %.sink11.i, %i.bo, !dbg !162614
-  %i.bq = fsub nnan double %i.bm, %i.bl, !dbg !162615
+  %i.bp = fsub nnan double %.sink11.i, %i.bo, !dbg !162614
+  %i.bq = fsub nnan ninf double %i.bm, %i.bl, !dbg !162615
   %i.br = fmul double %i.bp, %i.bq, !dbg !162616
   %i.bs = fadd double %i.br, %i.bl, !dbg !162617
   br label %_RINvNtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops9aggregate8quantile15linear_interpoldEBa_.exit, !dbg !162618
@@ -3381,7 +3381,7 @@ bb.u:                                             ; preds = %_RINvMNtCsgZ49sUHp3
 
 .lr.ph64:                                         ; preds = %bb.u
   %i.bq = uitofp nneg i64 %2 to double            ; 2 uses
-  %i.br = fadd nnan double %i.bq, -1.000000e+00
+  %i.br = fadd nnan ninf double %i.bq, -1.000000e+00
   %i.bs = add nsw i64 %2, -1
   br label %bb.v, !dbg !162891
 
@@ -3784,7 +3784,7 @@ bb.k:                                             ; preds = %_RINvMNtCsgZ49sUHp3
 
 .lr.ph37:                                         ; preds = %bb.k
   %i.z = uitofp nneg i64 %2 to double             ; 2 uses
-  %i.aa = fadd nnan double %i.z, -1.000000e+00
+  %i.aa = fadd nnan ninf double %i.z, -1.000000e+00
   %i.ab = add nsw i64 %2, -1
   br label %bb.l, !dbg !163224
 
@@ -4044,7 +4044,7 @@ bb.k:                                             ; preds = %_RINvMNtCsgZ49sUHp3
 
 .lr.ph37:                                         ; preds = %bb.k
   %i.y = uitofp nneg i64 %2 to double             ; 2 uses
-  %i.z = fadd nnan double %i.y, -1.000000e+00
+  %i.z = fadd nnan ninf double %i.y, -1.000000e+00
   %i.aa = add nsw i64 %2, -1
   br label %bb.l, !dbg !163431
 
@@ -4302,7 +4302,7 @@ bb.k:                                             ; preds = %_RINvMNtCsgZ49sUHp3
 
 .lr.ph37:                                         ; preds = %bb.k
   %i.z = uitofp nneg i64 %2 to double             ; 2 uses
-  %i.aa = fadd nnan double %i.z, -1.000000e+00
+  %i.aa = fadd nnan ninf double %i.z, -1.000000e+00
   %i.ab = add nsw i64 %2, -1
   br label %bb.l, !dbg !163640
 
@@ -4563,7 +4563,7 @@ bb.k:                                             ; preds = %_RINvMNtCsgZ49sUHp3
 
 .lr.ph37:                                         ; preds = %bb.k
   %i.z = uitofp nneg i64 %2 to double             ; 2 uses
-  %i.aa = fadd nnan double %i.z, -1.000000e+00
+  %i.aa = fadd nnan ninf double %i.z, -1.000000e+00
   %i.ab = add nsw i64 %2, -1
   br label %bb.l, !dbg !163852
 
@@ -4712,7 +4712,7 @@ bb.y:                                             ; preds = %bb.x
 bb.z:                                             ; preds = %bb.y
   %i.br = uitofp nneg i64 %.sink13.i to double, !dbg !163905
   %i.bs = fsub double %.sink11.i, %i.br, !dbg !163906
-  %i.bt = fsub nnan double %i.bp, %i.av, !dbg !163907
+  %i.bt = fsub nnan ninf double %i.bp, %i.av, !dbg !163907
   %i.bu = fmul double %i.bs, %i.bt, !dbg !163908
   %i.bv = fadd double %i.bu, %i.av, !dbg !163909
   br label %_RINvNtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops9aggregate8quantile15linear_interpoldEBa_.exit, !dbg !163910
@@ -4824,7 +4824,7 @@ bb.k:                                             ; preds = %_RINvMNtCsgZ49sUHp3
 
 .lr.ph37:                                         ; preds = %bb.k
   %i.z = uitofp nneg i64 %2 to double             ; 2 uses
-  %i.aa = fadd nnan double %i.z, -1.000000e+00
+  %i.aa = fadd nnan ninf double %i.z, -1.000000e+00
   %i.ab = add nsw i64 %2, -1
   br label %bb.l, !dbg !164064
 
@@ -5085,7 +5085,7 @@ bb.k:                                             ; preds = %_RINvMNtCsgZ49sUHp3
 
 .lr.ph37:                                         ; preds = %bb.k
   %i.z = uitofp nneg i64 %2 to double             ; 2 uses
-  %i.aa = fadd nnan double %i.z, -1.000000e+00
+  %i.aa = fadd nnan ninf double %i.z, -1.000000e+00
   %i.ab = add nsw i64 %2, -1
   br label %bb.l, !dbg !164276
 
@@ -5234,7 +5234,7 @@ bb.y:                                             ; preds = %bb.x
 bb.z:                                             ; preds = %bb.y
   %i.br = uitofp nneg i64 %.sink13.i to double, !dbg !164329
   %i.bs = fsub double %.sink11.i, %i.br, !dbg !164330
-  %i.bt = fsub nnan double %i.bp, %i.av, !dbg !164331
+  %i.bt = fsub nnan ninf double %i.bp, %i.av, !dbg !164331
   %i.bu = fmul double %i.bs, %i.bt, !dbg !164332
   %i.bv = fadd double %i.bu, %i.av, !dbg !164333
   br label %_RINvNtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops9aggregate8quantile15linear_interpoldEBa_.exit, !dbg !164334
@@ -5346,7 +5346,7 @@ bb.k:                                             ; preds = %_RINvMNtCsgZ49sUHp3
 
 .lr.ph37:                                         ; preds = %bb.k
   %i.z = uitofp nneg i64 %2 to double             ; 2 uses
-  %i.aa = fadd nnan double %i.z, -1.000000e+00
+  %i.aa = fadd nnan ninf double %i.z, -1.000000e+00
   %i.ab = add nsw i64 %2, -1
   br label %bb.l, !dbg !164488
 
@@ -5607,7 +5607,7 @@ bb.k:                                             ; preds = %_RINvMNtCsgZ49sUHp3
 
 .lr.ph37:                                         ; preds = %bb.k
   %i.z = uitofp nneg i64 %2 to double             ; 2 uses
-  %i.aa = fadd nnan double %i.z, -1.000000e+00
+  %i.aa = fadd nnan ninf double %i.z, -1.000000e+00
   %i.ab = add nsw i64 %2, -1
   br label %bb.l, !dbg !164700
 
@@ -5756,7 +5756,7 @@ bb.y:                                             ; preds = %bb.x
 bb.z:                                             ; preds = %bb.y
   %i.br = uitofp nneg i64 %.sink13.i to double, !dbg !164753
   %i.bs = fsub double %.sink11.i, %i.br, !dbg !164754
-  %i.bt = fsub nnan double %i.bp, %i.av, !dbg !164755
+  %i.bt = fsub nnan ninf double %i.bp, %i.av, !dbg !164755
   %i.bu = fmul double %i.bs, %i.bt, !dbg !164756
   %i.bv = fadd double %i.bu, %i.av, !dbg !164757
   br label %_RINvNtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops9aggregate8quantile15linear_interpoldEBa_.exit, !dbg !164758
@@ -5868,7 +5868,7 @@ bb.k:                                             ; preds = %_RINvMNtCsgZ49sUHp3
 
 .lr.ph37:                                         ; preds = %bb.k
   %i.z = uitofp nneg i64 %2 to double             ; 2 uses
-  %i.aa = fadd nnan double %i.z, -1.000000e+00
+  %i.aa = fadd nnan ninf double %i.z, -1.000000e+00
   %i.ab = add nsw i64 %2, -1
   br label %bb.l, !dbg !164912
 
@@ -6129,7 +6129,7 @@ bb.k:                                             ; preds = %_RINvMNtCsgZ49sUHp3
 
 .lr.ph37:                                         ; preds = %bb.k
   %i.z = uitofp nneg i64 %2 to double             ; 2 uses
-  %i.aa = fadd nnan double %i.z, -1.000000e+00
+  %i.aa = fadd nnan ninf double %i.z, -1.000000e+00
   %i.ab = add nsw i64 %2, -1
   br label %bb.l, !dbg !165124
 
@@ -6278,7 +6278,7 @@ bb.y:                                             ; preds = %bb.x
 bb.z:                                             ; preds = %bb.y
   %i.br = uitofp nneg i64 %.sink13.i to double, !dbg !165177
   %i.bs = fsub double %.sink11.i, %i.br, !dbg !165178
-  %i.bt = fsub nnan double %i.bp, %i.av, !dbg !165179
+  %i.bt = fsub nnan ninf double %i.bp, %i.av, !dbg !165179
   %i.bu = fmul double %i.bs, %i.bt, !dbg !165180
   %i.bv = fadd double %i.bu, %i.av, !dbg !165181
   br label %_RINvNtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops9aggregate8quantile15linear_interpoldEBa_.exit, !dbg !165182
@@ -6390,7 +6390,7 @@ bb.k:                                             ; preds = %_RINvMNtCsgZ49sUHp3
 
 .lr.ph37:                                         ; preds = %bb.k
   %i.z = uitofp nneg i64 %2 to double             ; 2 uses
-  %i.aa = fadd nnan double %i.z, -1.000000e+00
+  %i.aa = fadd nnan ninf double %i.z, -1.000000e+00
   %i.ab = add nsw i64 %2, -1
   br label %bb.l, !dbg !165336
 
@@ -6651,7 +6651,7 @@ bb.k:                                             ; preds = %_RINvMNtCsgZ49sUHp3
 
 .lr.ph37:                                         ; preds = %bb.k
   %i.z = uitofp nneg i64 %2 to double             ; 2 uses
-  %i.aa = fadd nnan double %i.z, -1.000000e+00
+  %i.aa = fadd nnan ninf double %i.z, -1.000000e+00
   %i.ab = add nsw i64 %2, -1
   br label %bb.l, !dbg !165548
 
@@ -6800,7 +6800,7 @@ bb.y:                                             ; preds = %bb.x
 bb.z:                                             ; preds = %bb.y
   %i.br = uitofp nneg i64 %.sink13.i to double, !dbg !165601
   %i.bs = fsub double %.sink11.i, %i.br, !dbg !165602
-  %i.bt = fsub nnan double %i.bp, %i.av, !dbg !165603
+  %i.bt = fsub nnan ninf double %i.bp, %i.av, !dbg !165603
   %i.bu = fmul double %i.bs, %i.bt, !dbg !165604
   %i.bv = fadd double %i.bu, %i.av, !dbg !165605
   br label %_RINvNtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops9aggregate8quantile15linear_interpoldEBa_.exit, !dbg !165606
@@ -6924,7 +6924,7 @@ bb.n:                                             ; preds = %bb.l
 .lr.ph:                                           ; preds = %bb.n
   %i.ae = sub i64 %.val30, %.val
   %i.af = uitofp i64 %i.ae to double              ; 2 uses
-  %i.ag = fadd nnan double %i.af, -1.000000e+00
+  %i.ag = fadd nnan ninf double %i.af, -1.000000e+00
   %i.ah = uitofp i64 %.val to double
   %i.ai = add i64 %.val30, -1
   %i.aj = getelementptr inbounds nuw i8, ptr %i.d, i64 16
@@ -7254,7 +7254,7 @@ bb.n:                                             ; preds = %bb.l
 .lr.ph:                                           ; preds = %bb.n
   %i.ab = sub i64 %.val37, %.val
   %i.ac = uitofp i64 %i.ab to double              ; 2 uses
-  %i.ad = fadd nnan double %i.ac, -1.000000e+00
+  %i.ad = fadd nnan ninf double %i.ac, -1.000000e+00
   %i.ae = uitofp i64 %.val to double
   %i.af = add i64 %.val37, -1
   br label %bb.o, !dbg !165978
@@ -7438,7 +7438,7 @@ bb.ai:                                            ; preds = %bb.ah
 bb.aj:                                            ; preds = %bb.ai
   %i.cb = uitofp i64 %.sink13.i to double, !dbg !166038
   %i.cc = fsub double %.sink11.i, %i.cb, !dbg !166039
-  %i.cd = fsub nnan double %i.bz, %i.bb, !dbg !166040
+  %i.cd = fsub nnan ninf double %i.bz, %i.bb, !dbg !166040
   %i.ce = fmul double %i.cc, %i.cd, !dbg !166041
   %i.cf = fadd double %i.ce, %i.bb, !dbg !166042
   br label %_RINvNtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops9aggregate8quantile15linear_interpoldEBa_.exit, !dbg !166043
@@ -7574,7 +7574,7 @@ bb.n:                                             ; preds = %bb.l
 .lr.ph:                                           ; preds = %bb.n
   %i.ab = sub i64 %.val37, %.val
   %i.ac = uitofp i64 %i.ab to double              ; 2 uses
-  %i.ad = fadd nnan double %i.ac, -1.000000e+00
+  %i.ad = fadd nnan ninf double %i.ac, -1.000000e+00
   %i.ae = uitofp i64 %.val to double
   %i.af = add i64 %.val37, -1
   br label %bb.o, !dbg !166194
@@ -7758,7 +7758,7 @@ bb.ai:                                            ; preds = %bb.ah
 bb.aj:                                            ; preds = %bb.ai
   %i.cb = uitofp i64 %.sink13.i to double, !dbg !166254
   %i.cc = fsub double %.sink11.i, %i.cb, !dbg !166255
-  %i.cd = fsub nnan double %i.bz, %i.bb, !dbg !166256
+  %i.cd = fsub nnan ninf double %i.bz, %i.bb, !dbg !166256
   %i.ce = fmul double %i.cc, %i.cd, !dbg !166257
   %i.cf = fadd double %i.ce, %i.bb, !dbg !166258
   br label %_RINvNtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops9aggregate8quantile15linear_interpoldEBa_.exit, !dbg !166259
@@ -7894,7 +7894,7 @@ bb.n:                                             ; preds = %bb.l
 .lr.ph:                                           ; preds = %bb.n
   %i.ab = sub i64 %.val37, %.val
   %i.ac = uitofp i64 %i.ab to double              ; 2 uses
-  %i.ad = fadd nnan double %i.ac, -1.000000e+00
+  %i.ad = fadd nnan ninf double %i.ac, -1.000000e+00
   %i.ae = uitofp i64 %.val to double
   %i.af = add i64 %.val37, -1
   br label %bb.o, !dbg !166410
@@ -8076,7 +8076,7 @@ bb.ai:                                            ; preds = %bb.ah
 bb.aj:                                            ; preds = %bb.ai
   %i.cb = uitofp i64 %.sink13.i to double, !dbg !166470
   %i.cc = fsub double %.sink11.i, %i.cb, !dbg !166471
-  %i.cd = fsub nnan double %i.bz, %i.bb, !dbg !166472
+  %i.cd = fsub nnan ninf double %i.bz, %i.bb, !dbg !166472
   %i.ce = fmul double %i.cc, %i.cd, !dbg !166473
   %i.cf = fadd double %i.ce, %i.bb, !dbg !166474
   br label %_RINvNtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops9aggregate8quantile15linear_interpoldEBa_.exit, !dbg !166475
@@ -8212,7 +8212,7 @@ bb.n:                                             ; preds = %bb.l
 .lr.ph:                                           ; preds = %bb.n
   %i.ab = sub i64 %.val37, %.val
   %i.ac = uitofp i64 %i.ab to double              ; 2 uses
-  %i.ad = fadd nnan double %i.ac, -1.000000e+00
+  %i.ad = fadd nnan ninf double %i.ac, -1.000000e+00
   %i.ae = uitofp i64 %.val to double
   %i.af = add i64 %.val37, -1
   br label %bb.o, !dbg !166687
@@ -8615,7 +8615,7 @@ bb.n:                                             ; preds = %bb.l
 .lr.ph:                                           ; preds = %bb.n
   %i.ab = sub i64 %.val37, %.val
   %i.ac = uitofp i64 %i.ab to double              ; 2 uses
-  %i.ad = fadd nnan double %i.ac, -1.000000e+00
+  %i.ad = fadd nnan ninf double %i.ac, -1.000000e+00
   %i.ae = uitofp i64 %.val to double
   %i.af = add i64 %.val37, -1
   br label %bb.o, !dbg !167021
@@ -8935,7 +8935,7 @@ bb.n:                                             ; preds = %bb.l
 .lr.ph:                                           ; preds = %bb.n
   %i.ab = sub i64 %.val37, %.val
   %i.ac = uitofp i64 %i.ab to double              ; 2 uses
-  %i.ad = fadd nnan double %i.ac, -1.000000e+00
+  %i.ad = fadd nnan ninf double %i.ac, -1.000000e+00
   %i.ae = uitofp i64 %.val to double
   %i.af = add i64 %.val37, -1
   br label %bb.o, !dbg !167229
@@ -9253,7 +9253,7 @@ bb.n:                                             ; preds = %bb.l
 .lr.ph:                                           ; preds = %bb.n
   %i.ae = sub i64 %.val30, %.val
   %i.af = uitofp i64 %i.ae to double              ; 2 uses
-  %i.ag = fadd nnan double %i.af, -1.000000e+00
+  %i.ag = fadd nnan ninf double %i.af, -1.000000e+00
   %i.ah = uitofp i64 %.val to double
   %i.ai = add i64 %.val30, -1
   %i.aj = getelementptr inbounds nuw i8, ptr %i.d, i64 16
@@ -9447,7 +9447,7 @@ bb.ai:                                            ; preds = %bb.ah
 bb.aj:                                            ; preds = %bb.ai
   %i.cf = uitofp i64 %.sink13.i to double, !dbg !167511
   %i.cg = fsub double %.sink11.i, %i.cf, !dbg !167512
-  %i.ch = fsub nnan double %i.cd, %i.bg, !dbg !167513
+  %i.ch = fsub nnan ninf double %i.cd, %i.bg, !dbg !167513
   %i.ci = fmul double %i.cg, %i.ch, !dbg !167514
   %i.cj = fadd double %i.ci, %i.bg, !dbg !167515
   br label %_RINvNtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops9aggregate8quantile15linear_interpoldEBa_.exit, !dbg !167516
@@ -9583,7 +9583,7 @@ bb.n:                                             ; preds = %bb.l
 .lr.ph:                                           ; preds = %bb.n
   %i.ab = sub i64 %.val37, %.val
   %i.ac = uitofp i64 %i.ab to double              ; 2 uses
-  %i.ad = fadd nnan double %i.ac, -1.000000e+00
+  %i.ad = fadd nnan ninf double %i.ac, -1.000000e+00
   %i.ae = uitofp i64 %.val to double
   %i.af = add i64 %.val37, -1
   br label %bb.o, !dbg !167667
@@ -9899,7 +9899,7 @@ bb.n:                                             ; preds = %bb.l
 .lr.ph:                                           ; preds = %bb.n
   %i.ab = sub i64 %.val37, %.val
   %i.ac = uitofp i64 %i.ab to double              ; 2 uses
-  %i.ad = fadd nnan double %i.ac, -1.000000e+00
+  %i.ad = fadd nnan ninf double %i.ac, -1.000000e+00
   %i.ae = uitofp i64 %.val to double
   %i.af = add i64 %.val37, -1
   br label %bb.o, !dbg !167883
@@ -10219,7 +10219,7 @@ bb.n:                                             ; preds = %bb.l
 .lr.ph:                                           ; preds = %bb.n
   %i.ab = sub i64 %.val37, %.val
   %i.ac = uitofp i64 %i.ab to double              ; 2 uses
-  %i.ad = fadd nnan double %i.ac, -1.000000e+00
+  %i.ad = fadd nnan ninf double %i.ac, -1.000000e+00
   %i.ae = uitofp i64 %.val to double
   %i.af = add i64 %.val37, -1
   br label %bb.o, !dbg !168099
@@ -10539,7 +10539,7 @@ bb.n:                                             ; preds = %bb.l
 .lr.ph:                                           ; preds = %bb.n
   %i.ab = sub i64 %.val37, %.val
   %i.ac = uitofp i64 %i.ab to double              ; 2 uses
-  %i.ad = fadd nnan double %i.ac, -1.000000e+00
+  %i.ad = fadd nnan ninf double %i.ac, -1.000000e+00
   %i.ae = uitofp i64 %.val to double
   %i.af = add i64 %.val37, -1
   br label %bb.o, !dbg !168315
@@ -10857,7 +10857,7 @@ bb.n:                                             ; preds = %bb.l
 .lr.ph:                                           ; preds = %bb.n
   %i.ab = sub i64 %.val37, %.val
   %i.ac = uitofp i64 %i.ab to double              ; 2 uses
-  %i.ad = fadd nnan double %i.ac, -1.000000e+00
+  %i.ad = fadd nnan ninf double %i.ac, -1.000000e+00
   %i.ae = uitofp i64 %.val to double
   %i.af = add i64 %.val37, -1
   br label %bb.o, !dbg !168531
@@ -11037,7 +11037,7 @@ bb.ai:                                            ; preds = %bb.ah
 bb.aj:                                            ; preds = %bb.ai
   %i.by = uitofp i64 %.sink13.i to double, !dbg !168591
   %i.bz = fsub double %.sink11.i, %i.by, !dbg !168592
-  %i.ca = fsub nnan double %i.bw, %i.ba, !dbg !168593
+  %i.ca = fsub nnan ninf double %i.bw, %i.ba, !dbg !168593
   %i.cb = fmul double %i.bz, %i.ca, !dbg !168594
   %i.cc = fadd double %i.cb, %i.ba, !dbg !168595
   br label %_RINvNtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops9aggregate8quantile15linear_interpoldEBa_.exit, !dbg !168596
@@ -11440,7 +11440,7 @@ define void @_RNvNtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops9aggregat
 bb.a:
   %i.a = sub i64 %2, %3, !dbg !220987
   %i.b = uitofp i64 %i.a to double, !dbg !220987  ; 2 uses
-  %i.c = fadd nnan double %i.b, -1.000000e+00, !dbg !220988
+  %i.c = fadd nnan ninf double %i.b, -1.000000e+00, !dbg !220988
   %i.d = fmul double %1, %i.c, !dbg !220988
   %i.e = uitofp i64 %3 to double, !dbg !220989
   %i.f = fadd double %i.d, %i.e, !dbg !220988     ; 5 uses
@@ -11843,7 +11843,7 @@ default.unreachable75:                            ; preds = %bb.c
   unreachable
 
 bb.d:                                             ; preds = %bb.c
-  %i.r = fadd nnan double %i.q, -1.000000e+00, !dbg !231342
+  %i.r = fadd nnan ninf double %i.q, -1.000000e+00, !dbg !231342
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 80, !dbg !231343
   %i.t = load double, ptr %i.s, align 8, !dbg !231343, !noundef !3468
   %i.u = fmul double %i.r, %i.t, !dbg !231344
@@ -11854,7 +11854,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.j, !dbg !231348
 
 bb.e:                                             ; preds = %bb.c
-  %i.y = fadd nnan double %i.q, -1.000000e+00, !dbg !231349
+  %i.y = fadd nnan ninf double %i.q, -1.000000e+00, !dbg !231349
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 80, !dbg !231350
   %i.aa = load double, ptr %i.z, align 8, !dbg !231350, !noundef !3468
   %i.ab = fmul double %i.y, %i.aa, !dbg !231351
@@ -11863,7 +11863,7 @@ bb.e:                                             ; preds = %bb.c
   br label %bb.j, !dbg !231353
 
 bb.f:                                             ; preds = %bb.c
-  %i.ae = fadd nnan double %i.q, -1.000000e+00, !dbg !231354
+  %i.ae = fadd nnan ninf double %i.q, -1.000000e+00, !dbg !231354
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 80, !dbg !231355
   %i.ag = load double, ptr %i.af, align 8, !dbg !231355, !noundef !3468
   %i.ah = fmul double %i.ae, %i.ag, !dbg !231356
@@ -11874,7 +11874,7 @@ bb.f:                                             ; preds = %bb.c
   br label %bb.j, !dbg !231360
 
 bb.g:                                             ; preds = %bb.c
-  %i.al = fadd nnan double %i.q, -1.000000e+00, !dbg !231361
+  %i.al = fadd nnan ninf double %i.q, -1.000000e+00, !dbg !231361
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 80, !dbg !231362
   %i.an = load double, ptr %i.am, align 8, !dbg !231362, !noundef !3468
   %i.ao = fmul double %i.al, %i.an, !dbg !231363  ; 2 uses
@@ -11889,7 +11889,7 @@ bb.g:                                             ; preds = %bb.c
   br i1 %i.au, label %bb.cd, label %bb.k, !dbg !231369
 
 bb.h:                                             ; preds = %bb.c
-  %i.aw = fadd nnan double %i.q, -1.000000e+00, !dbg !231371
+  %i.aw = fadd nnan ninf double %i.q, -1.000000e+00, !dbg !231371
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 80, !dbg !231372
   %i.ay = load double, ptr %i.ax, align 8, !dbg !231372, !noundef !3468
   %i.az = fmul double %i.aw, %i.ay, !dbg !231373  ; 3 uses
@@ -12292,7 +12292,7 @@ default.unreachable31:                            ; preds = %bb.c
   unreachable
 
 bb.d:                                             ; preds = %bb.c
-  %i.r = fadd nnan double %i.q, -1.000000e+00, !dbg !231736
+  %i.r = fadd nnan ninf double %i.q, -1.000000e+00, !dbg !231736
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 80, !dbg !231737
   %i.t = load double, ptr %i.s, align 8, !dbg !231737, !noundef !3468
   %i.u = fmul double %i.r, %i.t, !dbg !231738
@@ -12303,7 +12303,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.j, !dbg !231742
 
 bb.e:                                             ; preds = %bb.c
-  %i.y = fadd nnan double %i.q, -1.000000e+00, !dbg !231743
+  %i.y = fadd nnan ninf double %i.q, -1.000000e+00, !dbg !231743
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 80, !dbg !231744
   %i.aa = load double, ptr %i.z, align 8, !dbg !231744, !noundef !3468
   %i.ab = fmul double %i.y, %i.aa, !dbg !231745
@@ -12312,7 +12312,7 @@ bb.e:                                             ; preds = %bb.c
   br label %bb.j, !dbg !231747
 
 bb.f:                                             ; preds = %bb.c
-  %i.ae = fadd nnan double %i.q, -1.000000e+00, !dbg !231748
+  %i.ae = fadd nnan ninf double %i.q, -1.000000e+00, !dbg !231748
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 80, !dbg !231749
   %i.ag = load double, ptr %i.af, align 8, !dbg !231749, !noundef !3468
   %i.ah = fmul double %i.ae, %i.ag, !dbg !231750
@@ -12323,7 +12323,7 @@ bb.f:                                             ; preds = %bb.c
   br label %bb.j, !dbg !231754
 
 bb.g:                                             ; preds = %bb.c
-  %i.al = fadd nnan double %i.q, -1.000000e+00, !dbg !231755
+  %i.al = fadd nnan ninf double %i.q, -1.000000e+00, !dbg !231755
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 80, !dbg !231756
   %i.an = load double, ptr %i.am, align 8, !dbg !231756, !noundef !3468
   %i.ao = fmul double %i.al, %i.an, !dbg !231757  ; 2 uses
@@ -12338,7 +12338,7 @@ bb.g:                                             ; preds = %bb.c
   br i1 %i.au, label %bb.n, label %bb.k, !dbg !231763
 
 bb.h:                                             ; preds = %bb.c
-  %i.aw = fadd nnan double %i.q, -1.000000e+00, !dbg !231765
+  %i.aw = fadd nnan ninf double %i.q, -1.000000e+00, !dbg !231765
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 80, !dbg !231766
   %i.ay = load double, ptr %i.ax, align 8, !dbg !231766, !noundef !3468
   %i.az = fmul double %i.aw, %i.ay, !dbg !231767  ; 3 uses
@@ -12441,7 +12441,7 @@ default.unreachable31:                            ; preds = %bb.c
   unreachable
 
 bb.d:                                             ; preds = %bb.c
-  %i.r = fadd nnan double %i.q, -1.000000e+00, !dbg !231906
+  %i.r = fadd nnan ninf double %i.q, -1.000000e+00, !dbg !231906
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 80, !dbg !231907
   %i.t = load double, ptr %i.s, align 8, !dbg !231907, !noundef !3468
   %i.u = fmul double %i.r, %i.t, !dbg !231908
@@ -12452,7 +12452,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.j, !dbg !231912
 
 bb.e:                                             ; preds = %bb.c
-  %i.y = fadd nnan double %i.q, -1.000000e+00, !dbg !231913
+  %i.y = fadd nnan ninf double %i.q, -1.000000e+00, !dbg !231913
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 80, !dbg !231914
   %i.aa = load double, ptr %i.z, align 8, !dbg !231914, !noundef !3468
   %i.ab = fmul double %i.y, %i.aa, !dbg !231915
@@ -12461,7 +12461,7 @@ bb.e:                                             ; preds = %bb.c
   br label %bb.j, !dbg !231917
 
 bb.f:                                             ; preds = %bb.c
-  %i.ae = fadd nnan double %i.q, -1.000000e+00, !dbg !231918
+  %i.ae = fadd nnan ninf double %i.q, -1.000000e+00, !dbg !231918
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 80, !dbg !231919
   %i.ag = load double, ptr %i.af, align 8, !dbg !231919, !noundef !3468
   %i.ah = fmul double %i.ae, %i.ag, !dbg !231920
@@ -12472,7 +12472,7 @@ bb.f:                                             ; preds = %bb.c
   br label %bb.j, !dbg !231924
 
 bb.g:                                             ; preds = %bb.c
-  %i.al = fadd nnan double %i.q, -1.000000e+00, !dbg !231925
+  %i.al = fadd nnan ninf double %i.q, -1.000000e+00, !dbg !231925
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 80, !dbg !231926
   %i.an = load double, ptr %i.am, align 8, !dbg !231926, !noundef !3468
   %i.ao = fmul double %i.al, %i.an, !dbg !231927  ; 2 uses
@@ -12487,7 +12487,7 @@ bb.g:                                             ; preds = %bb.c
   br i1 %i.au, label %bb.n, label %bb.k, !dbg !231933
 
 bb.h:                                             ; preds = %bb.c
-  %i.aw = fadd nnan double %i.q, -1.000000e+00, !dbg !231935
+  %i.aw = fadd nnan ninf double %i.q, -1.000000e+00, !dbg !231935
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 80, !dbg !231936
   %i.ay = load double, ptr %i.ax, align 8, !dbg !231936, !noundef !3468
   %i.az = fmul double %i.aw, %i.ay, !dbg !231937  ; 3 uses

@@ -205,7 +205,7 @@ _ZN4rand3rng3Rng6random17h789e5d4b799b53a8E.exit: ; preds = %bb.a, %bb.b
   %i.i = lshr i32 %i.g, 9
   %i.j = or disjoint i32 %i.i, 1065353216
   %i.k = bitcast i32 %i.j to float
-  %i.l = fadd nnan float %i.k, -1.000000e+00
+  %i.l = fadd nnan ninf float %i.k, -1.000000e+00
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.n = load float, ptr %i.m, align 4, !noundef !25
   %i.o = fmul float %i.n, %i.l
@@ -608,8 +608,8 @@ bb.d:                                             ; preds = %bb.c
   %i.o = lshr i32 %i.m, 9
   %i.p = or disjoint i32 %i.o, 1065353216
   %i.q = bitcast i32 %i.p to float
-  %i.r = fadd nnan float %i.q, -1.000000e+00
-  %i.s = fmul float %i.d, %i.r
+  %i.r = fadd nnan ninf float %i.q, -1.000000e+00
+  %i.s = fmul nnan float %i.d, %i.r
   %i.t = fadd float %1, %i.s
   ret float %i.t
 

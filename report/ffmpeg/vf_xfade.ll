@@ -205,7 +205,7 @@ bb.a:
   %i.t = tail call nsz float @llvm.sqrt.f32(float %i.au)
   %i.u = fcmp nsz ole float %i.t, %4
   %i.v = uitofp i1 %i.u to float                  ; 2 uses
-  %i.w = fsub nnan nsz float 1.000000e+00, %i.v
+  %i.w = fsub nnan ninf nsz float 1.000000e+00, %i.v
   br label %bb.c
 
 bb.b:                                             ; preds = %.lr.ph, %bb.b
@@ -277,7 +277,7 @@ bb.c:                                             ; preds = %.lr.ph74, %bb.c
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bj, i64 %indvars.iv84
   %i.bv = load i8, ptr %i.bu, align 1, !tbaa !65
   %i.bw = uitofp nsz i8 %i.bv to float            ; 2 uses
-  %i.bx = fmul nsz float %i.w, %i.bw
+  %i.bx = fmul nnan nsz float %i.w, %i.bw
   %i.by = tail call nsz noundef float @llvm.fmuladd.f32(float %i.bt, float %i.v, float %i.bx)
   %i.bz = fmul nsz float %i.n, %i.bw
   %i.ca = tail call nsz noundef float @llvm.fmuladd.f32(float %i.by, float %4, float %i.bz)
@@ -370,7 +370,7 @@ bb.b:                                             ; preds = %bb.b, %.preheader.u
   %i.aq = tail call nsz float @llvm.sqrt.f32(float %i.ap)
   %i.ar = fcmp nsz ole float %i.aq, %4
   %i.as = uitofp i1 %i.ar to float                ; 2 uses
-  %i.at = fsub nnan nsz float 1.000000e+00, %i.as
+  %i.at = fsub nnan ninf nsz float 1.000000e+00, %i.as
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.c, %._crit_edge.us.us.us.us.us
@@ -402,7 +402,7 @@ bb.c:                                             ; preds = %bb.c, %._crit_edge.
   %i.bs = getelementptr inbounds nuw [2 x i8], ptr %i.bh, i64 %indvars.iv97
   %i.bt = load i16, ptr %i.bs, align 2, !tbaa !59
   %i.bu = uitofp nsz i16 %i.bt to float           ; 2 uses
-  %i.bv = fmul nsz float %i.at, %i.bu
+  %i.bv = fmul nnan nsz float %i.at, %i.bu
   %i.bw = tail call nsz noundef float @llvm.fmuladd.f32(float %i.br, float %i.as, float %i.bv)
   %i.bx = fmul nsz float %i.m, %i.bu
   %i.by = tail call nsz noundef float @llvm.fmuladd.f32(float %i.bw, float %4, float %i.bx)
@@ -805,7 +805,7 @@ bb.a:
   %i.aj = fsub nsz float %i.ah, %i.ai
   %i.ak = fcmp nsz ole float %i.ag, %i.aj
   %i.al = select nsz i1 %i.ak, float 0.000000e+00, float 1.000000e+00 ; 2 uses
-  %i.am = fsub nnan nsz float 1.000000e+00, %i.al
+  %i.am = fsub nnan ninf nsz float 1.000000e+00, %i.al
   br label %bb.b
 
 ._crit_edge:                                      ; preds = %bb.b
@@ -842,7 +842,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.bl = getelementptr inbounds nuw i8, ptr %i.at, i64 %indvars.iv53
   %i.bm = load i8, ptr %i.bl, align 1, !tbaa !65
   %i.bn = uitofp nsz i8 %i.bm to float
-  %i.bo = fmul nsz float %i.am, %i.bn
+  %i.bo = fmul nnan nsz float %i.am, %i.bn
   %i.bp = tail call nsz noundef float @llvm.fmuladd.f32(float %i.bk, float %i.al, float %i.bo)
   %i.bq = fptoui float %i.bp to i8
   %i.br = getelementptr inbounds nuw i8, ptr %i.bh, i64 %indvars.iv53
@@ -918,7 +918,7 @@ bb.a:
   %i.aj = fsub nsz float %i.ah, %i.ai
   %i.ak = fcmp nsz ole float %i.ag, %i.aj
   %i.al = select nsz i1 %i.ak, float 0.000000e+00, float 1.000000e+00 ; 2 uses
-  %i.am = fsub nnan nsz float 1.000000e+00, %i.al
+  %i.am = fsub nnan ninf nsz float 1.000000e+00, %i.al
   br label %bb.b
 
 ._crit_edge:                                      ; preds = %bb.b
@@ -955,7 +955,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.bl = getelementptr inbounds nuw [2 x i8], ptr %i.at, i64 %indvars.iv53
   %i.bm = load i16, ptr %i.bl, align 2, !tbaa !59
   %i.bn = uitofp nsz i16 %i.bm to float
-  %i.bo = fmul nsz float %i.am, %i.bn
+  %i.bo = fmul nnan nsz float %i.am, %i.bn
   %i.bp = tail call nsz noundef float @llvm.fmuladd.f32(float %i.bk, float %i.al, float %i.bo)
   %i.bq = fptoui float %i.bp to i16
   %i.br = getelementptr inbounds nuw [2 x i8], ptr %i.bh, i64 %indvars.iv53
@@ -1027,7 +1027,7 @@ bb.a:
   %i.af = fsub nsz float %i.ad, %i.ae
   %i.ag = fcmp nsz ole float %i.ac, %i.af
   %i.ah = select nsz i1 %i.ag, float 0.000000e+00, float 1.000000e+00 ; 2 uses
-  %i.ai = fsub nnan nsz float 1.000000e+00, %i.ah
+  %i.ai = fsub nnan ninf nsz float 1.000000e+00, %i.ah
   br label %bb.b
 
 ._crit_edge:                                      ; preds = %bb.b
@@ -1064,7 +1064,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.bh = getelementptr inbounds nuw i8, ptr %i.ap, i64 %indvars.iv54
   %i.bi = load i8, ptr %i.bh, align 1, !tbaa !65
   %i.bj = uitofp nsz i8 %i.bi to float
-  %i.bk = fmul nsz float %i.ai, %i.bj
+  %i.bk = fmul nnan nsz float %i.ai, %i.bj
   %i.bl = tail call nsz noundef float @llvm.fmuladd.f32(float %i.bg, float %i.ah, float %i.bk)
   %i.bm = fptoui float %i.bl to i8
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bd, i64 %indvars.iv54
@@ -1136,7 +1136,7 @@ bb.a:
   %i.af = fsub nsz float %i.ad, %i.ae
   %i.ag = fcmp nsz ole float %i.ac, %i.af
   %i.ah = select nsz i1 %i.ag, float 0.000000e+00, float 1.000000e+00 ; 2 uses
-  %i.ai = fsub nnan nsz float 1.000000e+00, %i.ah
+  %i.ai = fsub nnan ninf nsz float 1.000000e+00, %i.ah
   br label %bb.b
 
 ._crit_edge:                                      ; preds = %bb.b
@@ -1173,7 +1173,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.bh = getelementptr inbounds nuw [2 x i8], ptr %i.ap, i64 %indvars.iv54
   %i.bi = load i16, ptr %i.bh, align 2, !tbaa !59
   %i.bj = uitofp nsz i16 %i.bi to float
-  %i.bk = fmul nsz float %i.ai, %i.bj
+  %i.bk = fmul nnan nsz float %i.ai, %i.bj
   %i.bl = tail call nsz noundef float @llvm.fmuladd.f32(float %i.bg, float %i.ah, float %i.bk)
   %i.bm = fptoui float %i.bl to i16
   %i.bn = getelementptr inbounds nuw [2 x i8], ptr %i.bd, i64 %indvars.iv54
@@ -1241,7 +1241,7 @@ bb.a:
   %i.aj = fsub nsz float %i.ah, %i.ai
   %i.ak = fcmp nsz ole float %i.ag, %i.aj
   %i.al = select nsz i1 %i.ak, float 0.000000e+00, float 1.000000e+00 ; 2 uses
-  %i.am = fsub nnan nsz float 1.000000e+00, %i.al
+  %i.am = fsub nnan ninf nsz float 1.000000e+00, %i.al
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %._crit_edge
@@ -1287,7 +1287,7 @@ bb.b:                                             ; preds = %.preheader, %bb.b
   %i.bm = getelementptr inbounds nuw i8, ptr %i.au, i64 %indvars.iv53
   %i.bn = load i8, ptr %i.bm, align 1, !tbaa !65
   %i.bo = uitofp nsz i8 %i.bn to float
-  %i.bp = fmul nsz float %i.am, %i.bo
+  %i.bp = fmul nnan nsz float %i.am, %i.bo
   %i.bq = tail call nsz noundef float @llvm.fmuladd.f32(float %i.bl, float %i.al, float %i.bp)
   %i.br = fptoui float %i.bq to i8
   %i.bs = getelementptr inbounds nuw i8, ptr %i.bi, i64 %indvars.iv53
@@ -1355,7 +1355,7 @@ bb.a:
   %i.aj = fsub nsz float %i.ah, %i.ai
   %i.ak = fcmp nsz ole float %i.ag, %i.aj
   %i.al = select nsz i1 %i.ak, float 0.000000e+00, float 1.000000e+00 ; 2 uses
-  %i.am = fsub nnan nsz float 1.000000e+00, %i.al
+  %i.am = fsub nnan ninf nsz float 1.000000e+00, %i.al
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %._crit_edge
@@ -1401,7 +1401,7 @@ bb.b:                                             ; preds = %.preheader, %bb.b
   %i.bm = getelementptr inbounds nuw [2 x i8], ptr %i.au, i64 %indvars.iv53
   %i.bn = load i16, ptr %i.bm, align 2, !tbaa !59
   %i.bo = uitofp nsz i16 %i.bn to float
-  %i.bp = fmul nsz float %i.am, %i.bo
+  %i.bp = fmul nnan nsz float %i.am, %i.bo
   %i.bq = tail call nsz noundef float @llvm.fmuladd.f32(float %i.bl, float %i.al, float %i.bp)
   %i.br = fptoui float %i.bq to i16
   %i.bs = getelementptr inbounds nuw [2 x i8], ptr %i.bi, i64 %indvars.iv53
@@ -1465,7 +1465,7 @@ bb.a:
   %i.af = fsub nsz float %i.ad, %i.ae
   %i.ag = fcmp nsz ole float %i.ac, %i.af
   %i.ah = select nsz i1 %i.ag, float 0.000000e+00, float 1.000000e+00 ; 2 uses
-  %i.ai = fsub nnan nsz float 1.000000e+00, %i.ah
+  %i.ai = fsub nnan ninf nsz float 1.000000e+00, %i.ah
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %._crit_edge
@@ -1511,7 +1511,7 @@ bb.b:                                             ; preds = %.preheader, %bb.b
   %i.bi = getelementptr inbounds nuw i8, ptr %i.aq, i64 %indvars.iv54
   %i.bj = load i8, ptr %i.bi, align 1, !tbaa !65
   %i.bk = uitofp nsz i8 %i.bj to float
-  %i.bl = fmul nsz float %i.ai, %i.bk
+  %i.bl = fmul nnan nsz float %i.ai, %i.bk
   %i.bm = tail call nsz noundef float @llvm.fmuladd.f32(float %i.bh, float %i.ah, float %i.bl)
   %i.bn = fptoui float %i.bm to i8
   %i.bo = getelementptr inbounds nuw i8, ptr %i.be, i64 %indvars.iv54
@@ -1575,7 +1575,7 @@ bb.a:
   %i.af = fsub nsz float %i.ad, %i.ae
   %i.ag = fcmp nsz ole float %i.ac, %i.af
   %i.ah = select nsz i1 %i.ag, float 0.000000e+00, float 1.000000e+00 ; 2 uses
-  %i.ai = fsub nnan nsz float 1.000000e+00, %i.ah
+  %i.ai = fsub nnan ninf nsz float 1.000000e+00, %i.ah
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %._crit_edge
@@ -1621,7 +1621,7 @@ bb.b:                                             ; preds = %.preheader, %bb.b
   %i.bi = getelementptr inbounds nuw [2 x i8], ptr %i.aq, i64 %indvars.iv54
   %i.bj = load i16, ptr %i.bi, align 2, !tbaa !59
   %i.bk = uitofp nsz i16 %i.bj to float
-  %i.bl = fmul nsz float %i.ai, %i.bk
+  %i.bl = fmul nnan nsz float %i.ai, %i.bk
   %i.bm = tail call nsz noundef float @llvm.fmuladd.f32(float %i.bh, float %i.ah, float %i.bl)
   %i.bn = fptoui float %i.bm to i16
   %i.bo = getelementptr inbounds nuw [2 x i8], ptr %i.be, i64 %indvars.iv54
@@ -2024,7 +2024,7 @@ bb.a:
   %i.l = getelementptr inbounds nuw i8, ptr %3, i64 64
   %i.m = icmp slt i32 %i.f, 1
   %i.n = icmp slt i32 %i.d, 1
-  %i.o = fadd nnan nsz float %i.e, -1.000000e+00
+  %i.o = fadd nnan ninf nsz float %i.e, -1.000000e+00
   %brmerge = select i1 %i.m, i1 true, i1 %i.n
   br i1 %brmerge, label %._crit_edge67.split, label %.preheader.lr.ph.preheader
 
@@ -2134,7 +2134,7 @@ bb.a:
   %i.l = getelementptr inbounds nuw i8, ptr %3, i64 64
   %i.m = icmp slt i32 %i.f, 1
   %i.n = icmp slt i32 %i.d, 1
-  %i.o = fadd nnan nsz float %i.e, -1.000000e+00
+  %i.o = fadd nnan ninf nsz float %i.e, -1.000000e+00
   %brmerge = select i1 %i.m, i1 true, i1 %i.n
   br i1 %brmerge, label %._crit_edge67.split, label %.preheader.lr.ph.preheader
 
@@ -2253,7 +2253,7 @@ bb.a:
   %i.u = getelementptr inbounds nuw i8, ptr %3, i64 64
   %i.v = icmp sge i32 %5, %6
   %i.w = icmp slt i32 %i.d, 1
-  %i.x = fadd nnan nsz float %i.e, -1.000000e+00
+  %i.x = fadd nnan ninf nsz float %i.e, -1.000000e+00
   %i.y = fadd nnan nsz float %i.h, -1.000000e+00
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.aa = fmul nsz float %4, 2.000000e+00         ; 2 uses
@@ -2387,7 +2387,7 @@ bb.a:
   %i.u = getelementptr inbounds nuw i8, ptr %3, i64 64
   %i.v = icmp sge i32 %5, %6
   %i.w = icmp slt i32 %i.d, 1
-  %i.x = fadd nnan nsz float %i.e, -1.000000e+00
+  %i.x = fadd nnan ninf nsz float %i.e, -1.000000e+00
   %i.y = fadd nnan nsz float %i.h, -1.000000e+00
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.aa = fmul nsz float %4, 2.000000e+00         ; 2 uses

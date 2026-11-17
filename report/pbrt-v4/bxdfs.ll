@@ -205,7 +205,7 @@ cdce.end:                                         ; preds = %bb.a, %cdce.call
   %i.ao = fsub float 1.000000e+00, %i.an          ; 2 uses
   %i.ap = fcmp ogt float %i.ao, 0.000000e+00
   %.sroa.speculated.i.i = select i1 %i.ap, float %i.ao, float 0.000000e+00
-  %sqrt.i.i = tail call nnan float @llvm.sqrt.f32(float %.sroa.speculated.i.i)
+  %sqrt.i.i = tail call nnan ninf float @llvm.sqrt.f32(float %.sroa.speculated.i.i)
   %i.aq = fmul float %1, %sqrt.i.i                ; 3 uses
   %i.ar = fcmp olt float %i.aq, -1.000000e+00
   %i.as = fcmp ogt float %i.aq, 1.000000e+00
@@ -608,7 +608,7 @@ _ZN4pbrt12FrDielectricEff.exit:                   ; preds = %bb.a
   br i1 %i.x, label %bb.b, label %_ZN4pbrt12FrDielectricEff.exit.thread
 
 bb.b:                                             ; preds = %_ZN4pbrt12FrDielectricEff.exit
-  %i.y = fmul float %i.w, %i.w
+  %i.y = fmul nnan float %i.w, %i.w
   %i.z = fmul float %i.v, %i.y
   %i.aa = fmul nnan float %i.v, %i.v
   %i.ab = fsub float 1.000000e+00, %i.aa

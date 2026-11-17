@@ -204,7 +204,7 @@ _ZNK4pbrt6Tuple3INS_7Normal3EfEneENS1_IfEE.exit.thread: ; preds = %bb.d
   %i.gn = fsub float 1.000000e+00, %i.gm          ; 2 uses
   %i.go = fcmp ogt float %i.gn, 0.000000e+00
   %.sroa.speculated.i140 = select i1 %i.go, float %i.gn, float 0.000000e+00
-  %sqrt.i141 = tail call nnan float @llvm.sqrt.f32(float %.sroa.speculated.i140)
+  %sqrt.i141 = tail call nnan ninf float @llvm.sqrt.f32(float %.sroa.speculated.i140)
   %i.gp = fcmp ogt float %i.gl, %.sroa.3.12.vec.extract
   %i.gq = fmul float %i.gl, %.sroa.3.12.vec.extract
   %i.gr = fmul float %sqrt.i141, %sqrt.i130
@@ -607,7 +607,7 @@ _ZN4pbrt12FrDielectricEff.exit.i.i:               ; preds = %bb.r
   br i1 %i.wx, label %bb.s, label %_ZN4pbrt12FrDielectricEff.exit.thread.i.i
 
 bb.s:                                             ; preds = %_ZN4pbrt12FrDielectricEff.exit.i.i
-  %i.wy = fmul float %i.ww, %i.ww
+  %i.wy = fmul nnan float %i.ww, %i.ww
   %i.wz = fmul float %i.wv, %i.wy
   %i.xa = fmul nnan float %i.wv, %i.wv
   %i.xb = fsub float 1.000000e+00, %i.xa
@@ -1010,7 +1010,7 @@ _ZN4pbrt12FrDielectricEff.exit.i.i:               ; preds = %bb.r
   br i1 %i.wx, label %bb.s, label %_ZN4pbrt12FrDielectricEff.exit.thread.i.i
 
 bb.s:                                             ; preds = %_ZN4pbrt12FrDielectricEff.exit.i.i
-  %i.wy = fmul float %i.ww, %i.ww
+  %i.wy = fmul nnan float %i.ww, %i.ww
   %i.wz = fmul float %i.wv, %i.wy
   %i.xa = fmul nnan float %i.wv, %i.wv
   %i.xb = fsub float 1.000000e+00, %i.xa

@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.dl = fmul reassoc nsz arcp contract afn float %i.cq, %i.f
   %i.dm = fmul reassoc nsz arcp contract afn float %i.cv, 0.000000e+00 ; 2 uses
   %i.dn = fadd reassoc nsz arcp contract afn float %i.dm, %i.dl
-  %i.do = fmul reassoc nsz arcp contract afn float %i.dc, 0.000000e+00
+  %i.do = fmul reassoc ninf nsz arcp contract afn float %i.dc, 0.000000e+00
   %i.dp = fadd reassoc nsz arcp contract afn float %i.dn, %i.do ; 3 uses
   store float %i.dp, ptr %i.az, align 8, !tbaa !15, !alias.scope !351
   %i.dq = fmul reassoc nsz arcp contract afn float %i.cm, %i.bu
@@ -608,7 +608,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.an, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.ao = fsub reassoc nnan nsz arcp contract afn float f0x3FC90FDB, %i.al
+  %i.ao = fsub fast float f0x3FC90FDB, %i.al
   br label %bb.h
 
 bb.e:                                             ; preds = %bb.c
@@ -616,7 +616,7 @@ bb.e:                                             ; preds = %bb.c
   br i1 %i.ap, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %i.aq = fsub reassoc nnan nsz arcp contract afn float f0xBFC90FDB, %i.al
+  %i.aq = fsub fast float f0xBFC90FDB, %i.al
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.e
@@ -1019,7 +1019,7 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   br i1 %i.et, label %bb.r, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.eu = fadd reassoc nsz arcp contract afn float %i.es, f0x3E0D3DCB
+  %i.eu = fadd reassoc ninf nsz arcp contract afn float %i.es, f0x3E0D3DCB
   br label %dt_XYZ_to_Lab.exit.i.i.i
 
 bb.r:                                             ; preds = %bb.p

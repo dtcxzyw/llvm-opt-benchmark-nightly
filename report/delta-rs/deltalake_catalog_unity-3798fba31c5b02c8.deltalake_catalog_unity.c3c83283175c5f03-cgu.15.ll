@@ -202,8 +202,8 @@ _RNvMNtCsbvkFyIu7lgC_4core6resultINtB2_6ResultdNtNtNtCsiGwHUc8edKX_4rand5distr7u
   %i.j = lshr i64 %i.i, 12
   %i.k = or disjoint i64 %i.j, 4607182418800017408
   %i.l = bitcast i64 %i.k to double
-  %i.m = fadd nnan double %i.l, -1.000000e+00
-  %i.n = fmul double %i.c, %i.m
+  %i.m = fadd nnan ninf double %i.l, -1.000000e+00
+  %i.n = fmul nnan double %i.c, %i.m
   %i.o = fadd double %1, %i.n
   ret double %i.o
 
@@ -306,8 +306,8 @@ _RNvMNtCsbvkFyIu7lgC_4core6resultINtB2_6ResultdNtNtNtCsiGwHUc8edKX_4rand5distr7u
   %i.ae = lshr i64 %.sroa.0.0.i.i.i.i.i.i, 12
   %i.af = or disjoint i64 %i.ae, 4607182418800017408
   %i.ag = bitcast i64 %i.af to double
-  %i.ah = fadd nnan double %i.ag, -1.000000e+00
-  %i.ai = fmul double %i.c, %i.ah
+  %i.ah = fadd nnan ninf double %i.ag, -1.000000e+00
+  %i.ai = fmul nnan double %i.c, %i.ah
   %i.aj = fadd double %1, %i.ai
   ret double %i.aj
 

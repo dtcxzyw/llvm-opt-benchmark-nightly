@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %.lr.ph, %bb.e
   %i.pc = fdiv float 1.000000e+00, %.lcssa164
   %i.pd = insertelement <4 x float> poison, float %i.pc, i64 0
   %i.pe = shufflevector <4 x float> %i.pd, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
-  %i.pf = fadd nnan float %.lcssa164, -2.000000e+00
+  %i.pf = fadd nnan ninf float %.lcssa164, -2.000000e+00
   %i.pg = insertelement <4 x float> poison, float %i.pf, i64 0
   %i.ph = shufflevector <4 x float> %i.pg, <4 x float> poison, <4 x i32> zeroinitializer
   %i.pi = load <4 x float>, ptr %i.j, align 64, !noalias !1426
@@ -608,7 +608,7 @@ _ZN6embree17DynamicStackArrayINS_11vfloat_implILi4EEELm32ELm128EE6resizeEm.exit.
   %i.mw = fdiv float 1.000000e+00, %.lcssa783
   %i.mx = insertelement <4 x float> poison, float %i.mw, i64 0
   %i.my = shufflevector <4 x float> %i.mx, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
-  %i.mz = fadd nnan float %.lcssa783, -2.000000e+00
+  %i.mz = fadd nnan ninf float %.lcssa783, -2.000000e+00
   %i.na = getelementptr inbounds nuw i8, ptr %0, i64 208 ; 6 uses
   %i.nb = insertelement <4 x float> poison, float %i.mz, i64 0
   %i.nc = shufflevector <4 x float> %i.nb, <4 x float> poison, <4 x i32> zeroinitializer
@@ -1011,7 +1011,7 @@ _ZN6embree17DynamicStackArrayINS_11vfloat_implILi4EEELm32ELm128EE6resizeEm.exit.
   %i.azv = fdiv float 1.000000e+00, %.lcssa782
   %i.azw = insertelement <4 x float> poison, float %i.azv, i64 0
   %i.azx = shufflevector <4 x float> %i.azw, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
-  %i.azy = fadd nnan float %.lcssa782, -2.000000e+00
+  %i.azy = fadd nnan ninf float %.lcssa782, -2.000000e+00
   %i.azz = getelementptr inbounds nuw i8, ptr %0, i64 1040 ; 6 uses
   %i.baa = insertelement <4 x float> poison, float %i.azy, i64 0
   %i.bab = shufflevector <4 x float> %i.baa, <4 x float> poison, <4 x i32> zeroinitializer
@@ -1414,7 +1414,7 @@ _ZN6embree17DynamicStackArrayINS_11vfloat_implILi4EEELm32ELm128EE6resizeEm.exit.
   %i.cmu = fdiv float 1.000000e+00, %.lcssa781
   %i.cmv = insertelement <4 x float> poison, float %i.cmu, i64 0
   %i.cmw = shufflevector <4 x float> %i.cmv, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
-  %i.cmx = fadd nnan float %.lcssa781, -2.000000e+00
+  %i.cmx = fadd nnan ninf float %.lcssa781, -2.000000e+00
   %i.cmy = getelementptr inbounds nuw i8, ptr %0, i64 1872 ; 6 uses
   %i.cmz = insertelement <4 x float> poison, float %i.cmx, i64 0
   %i.cna = shufflevector <4 x float> %i.cmz, <4 x float> poison, <4 x i32> zeroinitializer
@@ -1817,7 +1817,7 @@ _ZN6embree17DynamicStackArrayINS_11vfloat_implILi4EEELm32ELm128EE6resizeEm.exit.
   %i.dzt = fdiv float 1.000000e+00, %.lcssa
   %i.dzu = insertelement <4 x float> poison, float %i.dzt, i64 0
   %i.dzv = shufflevector <4 x float> %i.dzu, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
-  %i.dzw = fadd nnan float %.lcssa, -2.000000e+00
+  %i.dzw = fadd nnan ninf float %.lcssa, -2.000000e+00
   %i.dzx = getelementptr inbounds nuw i8, ptr %0, i64 2704 ; 6 uses
   %i.dzy = insertelement <4 x float> poison, float %i.dzw, i64 0
   %i.dzz = shufflevector <4 x float> %i.dzy, <4 x float> poison, <4 x i32> zeroinitializer
