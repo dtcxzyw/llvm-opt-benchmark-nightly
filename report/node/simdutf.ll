@@ -205,51 +205,43 @@ _ZN7simdutf8westmere12_GLOBAL__N_15utf3222utf8_length_from_utf32EPKDim.exit: ; p
   br i1 %.not.i1, label %_ZN7simdutf6scalar12_GLOBAL__N_15utf3222utf8_length_from_utf32EPKDim.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %_ZN7simdutf8westmere12_GLOBAL__N_15utf3222utf8_length_from_utf32EPKDim.exit
-  %i.bv = load i32, ptr %.2.i.lcssa, align 4      ; 3 uses
-  %3 = icmp ugt i32 %i.bv, 127
-  %4 = select i1 %3, i64 2, i64 1
-  %5 = icmp ugt i32 %i.bv, 2047
-  %6 = zext i1 %5 to i64
-  %7 = add nuw nsw i64 %4, %6
-  %8 = icmp ugt i32 %i.bv, 65535
-  %i.bw = zext i1 %8 to i64
-  %9 = add nuw nsw i64 %7, %i.bw                  ; 2 uses
+  %i.bv = load i32, ptr %.2.i.lcssa, align 4
+  %3 = insertelement <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>, i32 %i.bv, i64 0
+  %4 = shufflevector <4 x i32> %3, <4 x i32> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
+  %5 = icmp ugt <4 x i32> %4, <i32 127, i32 2047, i32 65535, i32 0>
+  %6 = bitcast <4 x i1> %5 to i4
+  %7 = tail call range(i4 0, 5) i4 @llvm.ctpop.i4(i4 %6) ; 2 uses
+  %i.bw = zext nneg i4 %7 to i64
   %exitcond.not.i = icmp eq i64 %i.bu, 1
   br i1 %exitcond.not.i, label %_ZN7simdutf6scalar12_GLOBAL__N_15utf3222utf8_length_from_utf32EPKDim.exit, label %.lr.ph.i.1
 
 .lr.ph.i.1:                                       ; preds = %.lr.ph.i
-  %10 = add nuw nsw i64 %9, 1
   %i.bx = getelementptr inbounds nuw i8, ptr %.2.i.lcssa, i64 4
-  %i.by = load i32, ptr %i.bx, align 4            ; 3 uses
-  %11 = icmp ugt i32 %i.by, 127
-  %12 = zext i1 %11 to i64
-  %13 = add nuw nsw i64 %10, %12
-  %14 = icmp ugt i32 %i.by, 2047
-  %15 = zext i1 %14 to i64
-  %16 = add nuw nsw i64 %13, %15
-  %17 = icmp ugt i32 %i.by, 65535
-  %i.bz = zext i1 %17 to i64
-  %18 = add nuw nsw i64 %16, %i.bz                ; 2 uses
+  %i.by = load i32, ptr %i.bx, align 4
+  %8 = insertelement <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>, i32 %i.by, i64 0
+  %9 = shufflevector <4 x i32> %8, <4 x i32> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
+  %10 = icmp ugt <4 x i32> %9, <i32 127, i32 2047, i32 65535, i32 0>
+  %11 = bitcast <4 x i1> %10 to i4
+  %12 = tail call range(i4 0, 5) i4 @llvm.ctpop.i4(i4 %11)
+  %narrow = add nuw i4 %7, %12
+  %i.bz = zext i4 %narrow to i64                  ; 2 uses
   %exitcond.not.i.1 = icmp eq i64 %i.bu, 2
   br i1 %exitcond.not.i.1, label %_ZN7simdutf6scalar12_GLOBAL__N_15utf3222utf8_length_from_utf32EPKDim.exit, label %.lr.ph.i.2
 
 .lr.ph.i.2:                                       ; preds = %.lr.ph.i.1
-  %19 = add i64 %18, 1
   %i.ca = getelementptr inbounds nuw i8, ptr %.2.i.lcssa, i64 8
-  %i.cb = load i32, ptr %i.ca, align 4            ; 3 uses
-  %20 = icmp ugt i32 %i.cb, 127
-  %21 = zext i1 %20 to i64
-  %22 = add i64 %19, %21
-  %23 = icmp ugt i32 %i.cb, 2047
-  %24 = zext i1 %23 to i64
-  %25 = add i64 %22, %24
-  %26 = icmp ugt i32 %i.cb, 65535
-  %i.cc = zext i1 %26 to i64
-  %i.cd = add i64 %25, %i.cc
+  %i.cb = load i32, ptr %i.ca, align 4
+  %13 = insertelement <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>, i32 %i.cb, i64 0
+  %14 = shufflevector <4 x i32> %13, <4 x i32> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
+  %15 = icmp ugt <4 x i32> %14, <i32 127, i32 2047, i32 65535, i32 0>
+  %16 = bitcast <4 x i1> %15 to i4
+  %17 = tail call range(i4 0, 5) i4 @llvm.ctpop.i4(i4 %16)
+  %i.cc = zext nneg i4 %17 to i64
+  %i.cd = add nuw nsw i64 %i.bz, %i.cc
   br label %_ZN7simdutf6scalar12_GLOBAL__N_15utf3222utf8_length_from_utf32EPKDim.exit
 
 _ZN7simdutf6scalar12_GLOBAL__N_15utf3222utf8_length_from_utf32EPKDim.exit: ; preds = %.lr.ph.i, %.lr.ph.i.1, %.lr.ph.i.2, %_ZN7simdutf8westmere12_GLOBAL__N_15utf3222utf8_length_from_utf32EPKDim.exit
-  %.014.lcssa.i = phi i64 [ 0, %_ZN7simdutf8westmere12_GLOBAL__N_15utf3222utf8_length_from_utf32EPKDim.exit ], [ %9, %.lr.ph.i ], [ %18, %.lr.ph.i.1 ], [ %i.cd, %.lr.ph.i.2 ]
+  %.014.lcssa.i = phi i64 [ 0, %_ZN7simdutf8westmere12_GLOBAL__N_15utf3222utf8_length_from_utf32EPKDim.exit ], [ %i.bw, %.lr.ph.i ], [ %i.bz, %.lr.ph.i.1 ], [ %i.cd, %.lr.ph.i.2 ]
   %.not150.i = icmp eq ptr %.2.i.lcssa, %1
   %i.ce = ptrtoint ptr %.2.i.lcssa to i64
   %i.cf = ptrtoint ptr %1 to i64
@@ -651,6 +643,9 @@ declare <8 x i32> @llvm.bswap.v8i32(<8 x i32>) #39
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #39
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i4 @llvm.ctpop.i4(i4) #39
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

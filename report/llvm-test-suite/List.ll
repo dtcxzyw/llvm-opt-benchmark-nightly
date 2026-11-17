@@ -205,7 +205,7 @@ bb.a:
   %5 = alloca %"class.NWindows::NCOM::CPropVariant", align 8 ; 14 uses
   %6 = alloca %class.CStringBase, align 8         ; 13 uses
   %i.b = alloca i8, align 1                       ; 6 uses
-  %i.c = alloca [8 x i8], align 4                 ; 7 uses
+  %i.c = alloca [8 x i8], align 1                 ; 7 uses
   %7 = alloca %class.CStringBase, align 8         ; 10 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
   %i.e = load i32, ptr %i.d, align 4, !tbaa !123
@@ -219,7 +219,7 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %6, i64 12 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 5 uses
   %i.l = getelementptr inbounds nuw i8, ptr %5, i64 12
-  %i.m = getelementptr inbounds nuw i8, ptr %i.c, i64 4
+  %i.m = getelementptr inbounds nuw i8, ptr %i.c, i64 1
   %i.n = getelementptr inbounds nuw i8, ptr %i.c, i64 5
   %i.o = getelementptr inbounds nuw i8, ptr %7, i64 8
   br label %bb.c
@@ -485,20 +485,17 @@ bb.y:                                             ; preds = %bb.w
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #15
   %i.cm = load i8, ptr %i.b, align 1, !tbaa !139, !range !140, !noundef !141
   %i.cn = trunc nuw i8 %i.cm to i1
-  %8 = insertelement <4 x i32> poison, i32 %i.ci, i64 0
-  %9 = shufflevector <4 x i32> %8, <4 x i32> poison, <4 x i32> zeroinitializer
-  %10 = and <4 x i32> %9, <i32 16, i32 1, i32 2, i32 4> ; 2 uses
-  %11 = icmp ne <4 x i32> %10, zeroinitializer
-  %12 = icmp eq <4 x i32> %10, zeroinitializer
-  %13 = shufflevector <4 x i1> %11, <4 x i1> %12, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
-  %14 = insertelement <4 x i1> <i1 poison, i1 false, i1 false, i1 false>, i1 %i.cn, i64 0
-  %15 = or <4 x i1> %13, %14
-  %16 = select <4 x i1> %15, <4 x i8> <i8 68, i8 46, i8 46, i8 46>, <4 x i8> <i8 46, i8 82, i8 72, i8 83>
-  store <4 x i8> %16, ptr %i.c, align 4, !tbaa !119
-  %17 = and i32 %i.ci, 32
-  %.not13.i = icmp eq i32 %17, 0
-  %18 = select i1 %.not13.i, i8 46, i8 65
-  store i8 %18, ptr %i.m, align 4, !tbaa !119
+  %8 = and i32 %i.ci, 16
+  %9 = icmp ne i32 %8, 0
+  %10 = or i1 %9, %i.cn
+  %11 = select i1 %10, i8 68, i8 46
+  store i8 %11, ptr %i.c, align 1, !tbaa !119
+  %12 = insertelement <4 x i32> poison, i32 %i.ci, i64 0
+  %13 = shufflevector <4 x i32> %12, <4 x i32> poison, <4 x i32> zeroinitializer
+  %14 = and <4 x i32> %13, <i32 1, i32 2, i32 4, i32 32>
+  %15 = icmp eq <4 x i32> %14, zeroinitializer
+  %16 = select <4 x i1> %15, <4 x i8> splat (i8 46), <4 x i8> <i8 82, i8 72, i8 83, i8 65>
+  store <4 x i8> %16, ptr %i.m, align 1, !tbaa !119
   store i8 0, ptr %i.n, align 1, !tbaa !119
   %i.co = invoke noundef nonnull align 8 dereferenceable(16) ptr @_ZN13CStdOutStreamlsEPKc(ptr noundef nonnull align 8 dereferenceable(16) @g_StdOut, ptr noundef nonnull %i.c)
           to label %bb.z unwind label %bb.aa      ; 0 uses
