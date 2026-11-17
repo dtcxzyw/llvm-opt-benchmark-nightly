@@ -205,26 +205,26 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 540
   %i.f = load i32, ptr %i.e, align 4
   %i.g = icmp eq i32 %i.f, 3
-  %i.h = select i1 %i.d, i1 %i.g, i1 false        ; 3 uses
-  %i.i = select i1 %i.h, i32 3, i32 1             ; 2 uses
-  br i1 %i.h, label %.critedge50, label %1
+  %i.h = select i1 %i.d, i1 %i.g, i1 false
+  %.fr = freeze i1 %i.h                           ; 4 uses
+  %i.i = select i1 %.fr, i32 3, i32 1             ; 2 uses
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 193784 ; 2 uses
+  %2 = load ptr, ptr %1, align 8
+  %.not = icmp ne ptr %2, null
+  %or.cond.not = select i1 %.fr, i1 true, i1 %.not
+  br i1 %or.cond.not, label %.critedge50, label %bb.b
 
-1:                                                ; preds = %bb.a
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 193784
-  %3 = load ptr, ptr %2, align 8, !tbaa !73
-  %.not = icmp eq ptr %3, null
-  br i1 %.not, label %bb.b, label %bb.d
-
-bb.b:                                             ; preds = %1
+bb.b:                                             ; preds = %bb.a
   %i.j = tail call ptr @__cxa_allocate_exception(i64 4) #15 ; 2 uses
   store i32 2, ptr %i.j, align 16, !tbaa !72
   tail call void @__cxa_throw(ptr nonnull %i.j, ptr nonnull @_ZTI17LibRaw_exceptions, ptr null) #16
   unreachable
 
 .critedge50:                                      ; preds = %bb.a
-  %.old = load ptr, ptr %i.a, align 8, !tbaa !91
+  %.old = load ptr, ptr %i.a, align 8
   %.not47.old = icmp eq ptr %.old, null
-  br i1 %.not47.old, label %bb.c, label %bb.d
+  %or.cond51 = select i1 %.fr, i1 %.not47.old, i1 false
+  br i1 %or.cond51, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %.critedge50
   %i.k = tail call ptr @__cxa_allocate_exception(i64 4) #15 ; 2 uses
@@ -232,7 +232,7 @@ bb.c:                                             ; preds = %.critedge50
   tail call void @__cxa_throw(ptr nonnull %i.k, ptr nonnull @_ZTI17LibRaw_exceptions, ptr null) #16
   unreachable
 
-bb.d:                                             ; preds = %1, %.critedge50
+bb.d:                                             ; preds = %.critedge50
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 18
   %i.n = load i16, ptr %i.m, align 2, !tbaa !74
@@ -259,12 +259,11 @@ bb.d:                                             ; preds = %1, %.critedge50
 
 .lr.ph69:                                         ; preds = %bb.d
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 381592 ; 4 uses
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 193784
   %i.af = add i32 %.fr.a, -3                      ; 3 uses
   %i.ag = add i32 %i.w, -6
   %i.ah = add i32 %i.w, -20
   %.not77 = icmp eq i32 %i.af, 0                  ; 2 uses
-  br i1 %i.h, label %.lr.ph69.split.us, label %.lr.ph69.split
+  br i1 %.fr, label %.lr.ph69.split.us, label %.lr.ph69.split
 
 .lr.ph69.split.us:                                ; preds = %.lr.ph69
   br i1 %.not77, label %.critedge.loopexit.us.us, label %.lr.ph69.split.us.split
@@ -504,7 +503,7 @@ bb.d:                                             ; preds = %1, %.critedge50
   %i.hn = getelementptr inbounds nuw i8, ptr %i.hm, i64 24
   %i.ho = load ptr, ptr %i.hn, align 8
   %i.hp = tail call noundef i32 %i.ho(ptr noundef nonnull align 8 dereferenceable(8) %i.hl, ptr noundef %i.ac, i64 noundef 1, i64 noundef %i.ab)
-  %i.hq = load ptr, ptr %4, align 8, !tbaa !73
+  %i.hq = load ptr, ptr %1, align 8, !tbaa !73
   %i.hr = trunc nuw nsw i64 %indvars.iv to i32
   %i.hs = mul i32 %.fr.a, %i.hr
   %i.ht = zext i32 %i.hs to i64

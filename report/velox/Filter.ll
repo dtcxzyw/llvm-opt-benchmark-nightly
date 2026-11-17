@@ -205,17 +205,15 @@ bb.a:                                             ; preds = %_ZNK8facebook5velox
   %i.l = load i64, ptr %i.k, align 8, !tbaa !672  ; 2 uses
   %i.m = icmp eq i64 %i.b, %i.l
   %i.n = icmp sle i64 %i.b, %i.l
-  br i1 %i.m, label %2, label %_ZNK8facebook5velox9TimestampssERKS1_.exit7
-
-2:                                                ; preds = %bb.a
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %4 = load i64, ptr %3, align 8, !tbaa !673
-  %5 = icmp ule i64 %i.g, %4
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 40
+  %3 = load i64, ptr %2, align 8
+  %4 = icmp ule i64 %i.g, %3
+  %.sroa.09.2.i6 = select i1 %i.m, i1 %4, i1 %i.n
   br label %_ZNK8facebook5velox9TimestampssERKS1_.exit7
 
-_ZNK8facebook5velox9TimestampssERKS1_.exit7:      ; preds = %2, %bb.a, %_ZNK8facebook5velox9TimestampssERKS1_.exit
-  %6 = phi i1 [ false, %_ZNK8facebook5velox9TimestampssERKS1_.exit ], [ %i.n, %bb.a ], [ %5, %2 ]
-  ret i1 %6
+_ZNK8facebook5velox9TimestampssERKS1_.exit7:      ; preds = %bb.a, %_ZNK8facebook5velox9TimestampssERKS1_.exit
+  %5 = phi i1 [ false, %_ZNK8facebook5velox9TimestampssERKS1_.exit ], [ %.sroa.09.2.i6, %bb.a ]
+  ret i1 %5
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
