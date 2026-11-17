@@ -205,29 +205,35 @@ bb.a:
   ]
 
 bb.b:                                             ; preds = %bb.a
-  %switch.tableidx = add i32 %1, -3               ; 3 uses
+  %switch.tableidx = add i32 %1, -3               ; 4 uses
   %i.a = icmp ult i32 %switch.tableidx, 9
   %switch.maskindex = trunc i32 %switch.tableidx to i16
   %switch.shifted = lshr i16 485, %switch.maskindex
   %switch.lobit = trunc i16 %switch.shifted to i1
   %or.cond = select i1 %i.a, i1 %switch.lobit, i1 false
-  br i1 %or.cond, label %.sink.split, label %.loopexit
+  br i1 %or.cond, label %switch.lookup, label %.loopexit
 
-.sink.split:                                      ; preds = %bb.d, %bb.b
-  %switch.tableidx41.sink52 = phi i32 [ %switch.tableidx, %bb.b ], [ %switch.tableidx41, %bb.d ] ; 2 uses
-  %switch.table.mbedtls_oid_get_oid_by_sig_alg.2.sink = phi ptr [ @switch.table.mbedtls_oid_get_oid_by_sig_alg, %bb.b ], [ @switch.table.mbedtls_oid_get_oid_by_sig_alg.2, %bb.d ]
-  %switch.table.mbedtls_oid_get_oid_by_sig_alg.3.sink = phi ptr [ @switch.table.mbedtls_oid_get_oid_by_sig_alg.1, %bb.b ], [ @switch.table.mbedtls_oid_get_oid_by_sig_alg.3, %bb.d ]
-  %i.b = zext nneg i32 %switch.tableidx41.sink52 to i64
-  %switch.gep47 = getelementptr inbounds nuw [8 x i8], ptr %switch.table.mbedtls_oid_get_oid_by_sig_alg.2.sink, i64 %i.b
+switch.lookup:                                    ; preds = %bb.b
+  %4 = zext nneg i32 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.mbedtls_oid_get_oid_by_sig_alg, i64 %4
+  %switch.load = load ptr, ptr %switch.gep, align 8
+  %5 = zext nneg i32 %switch.tableidx to i64
+  %switch.gep39 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.mbedtls_oid_get_oid_by_sig_alg.1, i64 %5
+  %switch.load40 = load ptr, ptr %switch.gep39, align 8
+  br label %bb.c
+
+.sink.split:                                      ; preds = %bb.d
+  %i.b = zext nneg i32 %switch.tableidx41 to i64
+  %switch.gep47 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.mbedtls_oid_get_oid_by_sig_alg.2, i64 %i.b
   %switch.load48 = load ptr, ptr %switch.gep47, align 8
-  %i.c = zext nneg i32 %switch.tableidx41.sink52 to i64
-  %switch.gep49 = getelementptr inbounds nuw [8 x i8], ptr %switch.table.mbedtls_oid_get_oid_by_sig_alg.3.sink, i64 %i.c
+  %i.c = zext nneg i32 %switch.tableidx41 to i64
+  %switch.gep49 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.mbedtls_oid_get_oid_by_sig_alg.3, i64 %i.c
   %switch.load50 = load ptr, ptr %switch.gep49, align 8
   br label %bb.c
 
-bb.c:                                             ; preds = %.sink.split, %bb.e
-  %.lcssa = phi ptr [ @.str.164, %bb.e ], [ %switch.load48, %.sink.split ]
-  %.014.lcssa = phi ptr [ getelementptr inbounds nuw (i8, ptr @oid_sig_alg, i64 480), %bb.e ], [ %switch.load50, %.sink.split ]
+bb.c:                                             ; preds = %.sink.split, %switch.lookup, %bb.e
+  %.lcssa = phi ptr [ %switch.load, %switch.lookup ], [ @.str.164, %bb.e ], [ %switch.load48, %.sink.split ]
+  %.014.lcssa = phi ptr [ %switch.load40, %switch.lookup ], [ getelementptr inbounds nuw (i8, ptr @oid_sig_alg, i64 480), %bb.e ], [ %switch.load50, %.sink.split ]
   store ptr %.lcssa, ptr %2, align 8, !tbaa !312
   %i.d = getelementptr inbounds nuw i8, ptr %.014.lcssa, i64 8
   %i.e = load i64, ptr %i.d, align 8, !tbaa !335
@@ -235,7 +241,7 @@ bb.c:                                             ; preds = %.sink.split, %bb.e
   br label %.loopexit
 
 bb.d:                                             ; preds = %bb.a
-  %switch.tableidx41 = add i32 %1, -5             ; 3 uses
+  %switch.tableidx41 = add i32 %1, -5             ; 4 uses
   %i.f = icmp ult i32 %switch.tableidx41, 7
   %switch.maskindex44 = trunc i32 %switch.tableidx41 to i8
   %switch.shifted45 = lshr i8 121, %switch.maskindex44

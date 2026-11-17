@@ -205,13 +205,21 @@ bb.e:                                             ; preds = %bb.c
   %i.y = load i64, ptr %i.f, align 8, !tbaa !1463 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #27
   %i.z = icmp ugt i64 %i.y, 5
-  br i1 %i.z, label %._crit_edge.i.i.i.i, label %switch.lookup.a
+  br i1 %i.z, label %._crit_edge.i.i.i.i, label %switch.lookup
+
+switch.lookup:                                    ; preds = %bb.e
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN12lldb_private6plugin5dwarf15SymbolFileDWARF24ResolveFunctionCallLabelERNS_17FunctionCallLabelE, i64 %i.y
+  br label %switch.lookup.a
 
 bb.f:                                             ; preds = %.thread.i
   %i.aa = load i64, ptr %i.f, align 8, !tbaa !1463 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #27
   %i.ab = icmp ugt i64 %i.aa, 4
-  br i1 %i.ab, label %._crit_edge.i.i.i.i, label %switch.lookup.a
+  br i1 %i.ab, label %._crit_edge.i.i.i.i, label %switch.lookup108
+
+switch.lookup108:                                 ; preds = %bb.f
+  %switch.gep109 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN12lldb_private6plugin5dwarf15SymbolFileDWARF24ResolveFunctionCallLabelERNS_17FunctionCallLabelE.59, i64 %i.aa
+  br label %switch.lookup.a
 
 ._crit_edge.i.i.i.i:                              ; preds = %bb.f, %bb.e, %bb.d, %_ZNK4llvm9StringRef11starts_withES0_.exit.i.i
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %14, i8 0, i64 16, i1 false)
@@ -257,11 +265,9 @@ _ZN4llvm5ErrorD2Ev.exit:                          ; preds = %._crit_edge.i.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #27
   br label %.critedge
 
-switch.lookup.a:                                  ; preds = %bb.f, %bb.e
-  %.sink = phi i64 [ %i.y, %bb.e ], [ %i.aa, %bb.f ]
-  %switch.table._ZN12lldb_private6plugin5dwarf15SymbolFileDWARF24ResolveFunctionCallLabelERNS_17FunctionCallLabelE.59.sink = phi ptr [ @switch.table._ZN12lldb_private6plugin5dwarf15SymbolFileDWARF24ResolveFunctionCallLabelERNS_17FunctionCallLabelE, %bb.e ], [ @switch.table._ZN12lldb_private6plugin5dwarf15SymbolFileDWARF24ResolveFunctionCallLabelERNS_17FunctionCallLabelE.59, %bb.f ]
-  %switch.gep109 = getelementptr inbounds nuw [8 x i8], ptr %switch.table._ZN12lldb_private6plugin5dwarf15SymbolFileDWARF24ResolveFunctionCallLabelERNS_17FunctionCallLabelE.59.sink, i64 %.sink
-  %switch.load110 = load ptr, ptr %switch.gep109, align 8 ; 2 uses
+switch.lookup.a:                                  ; preds = %switch.lookup108, %switch.lookup
+  %switch.table._ZN12lldb_private6plugin5dwarf15SymbolFileDWARF24ResolveFunctionCallLabelERNS_17FunctionCallLabelE.59.sink = phi ptr [ %switch.gep, %switch.lookup ], [ %switch.gep109, %switch.lookup108 ]
+  %switch.load110 = load ptr, ptr %switch.table._ZN12lldb_private6plugin5dwarf15SymbolFileDWARF24ResolveFunctionCallLabelERNS_17FunctionCallLabelE.59.sink, align 8 ; 2 uses
   store ptr %switch.load110, ptr %14, align 8
   %i.as = getelementptr inbounds nuw i8, ptr %14, i64 8
   store i64 2, ptr %i.as, align 8
