@@ -1,0 +1,571 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
+index 5d9e01ac505a0c..6a13d79c0a75e5 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
+@@ -88,16 +88,6 @@ using namespace PatternMatch;
+ 
+ STATISTIC(NumSimplified, "Number of library calls simplified");
+ 
+-/// Return the specified type promoted as it would be to pass though a va_arg
+-/// area.
+-static Type *getPromotedType(Type *Ty) {
+-  if (IntegerType* ITy = dyn_cast<IntegerType>(Ty)) {
+-    if (ITy->getBitWidth() < 32)
+-      return Type::getInt32Ty(Ty->getContext());
+-  }
+-  return Ty;
+-}
+-
+ /// Recognize a memcpy/memmove from a trivially otherwise unused alloca.
+ /// TODO: This should probably be integrated with visitAllocSites, but that
+ /// requires a deeper change to allow either unread or unwritten objects.
+@@ -5242,14 +5232,8 @@ Instruction *InstCombinerImpl::visitCallBase(CallBase &Call) {
+     Changed = true;
+   }
+ 
+-  // If the callee is a pointer to a function, attempt to move any casts to the
+-  // arguments of the call/callbr/invoke.
+   Value *Callee = Call.getCalledOperand();
+   Function *CalleeF = dyn_cast<Function>(Callee);
+-  if ((!CalleeF || CalleeF->getFunctionType() != Call.getFunctionType()) &&
+-      transformConstExprCastCall(Call))
+-    return nullptr;
+-
+   if (CalleeF) {
+     // Remove the convergent attr on calls when the callee is not convergent.
+     if (Call.isConvergent() && !CalleeF->isConvergent() &&
+@@ -5486,260 +5470,6 @@ Instruction *InstCombinerImpl::visitCallBase(CallBase &Call) {
+   return Changed ? &Call : nullptr;
+ }
+ 
+-/// If the callee is a constexpr cast of a function, attempt to move the cast to
+-/// the arguments of the call/invoke.
+-/// CallBrInst is not supported.
+-bool InstCombinerImpl::transformConstExprCastCall(CallBase &Call) {
+-  auto *Callee =
+-      dyn_cast<Function>(Call.getCalledOperand()->stripPointerCasts());
+-  if (!Callee)
+-    return false;
+-
+-  assert(!isa<CallBrInst>(Call) &&
+-         "CallBr's don't have a single point after a def to insert at");
+-
+-  // Don't perform the transform for declarations, which may not be fully
+-  // accurate. For example, void @foo() is commonly used as a placeholder for
+-  // unknown prototypes.
+-  if (Callee->isDeclaration())
+-    return false;
+-
+-  // If this is a call to a thunk function, don't remove the cast. Thunks are
+-  // used to transparently forward all incoming parameters and outgoing return
+-  // values, so it's important to leave the cast in place.
+-  if (Callee->hasFnAttribute("thunk"))
+-    return false;
+-
+-  // If this is a call to a naked function, the assembly might be
+-  // using an argument, or otherwise rely on the frame layout,
+-  // the function prototype will mismatch.
+-  if (Callee->hasFnAttribute(Attribute::Naked))
+-    return false;
+-
+-  // If this is a musttail call, the callee's prototype must match the caller's
+-  // prototype with the exception of pointee types. The code below doesn't
+-  // implement that, so we can't do this transform.
+-  // TODO: Do the transform if it only requires adding pointer casts.
+-  if (Call.isMustTailCall())
+-    return false;
+-
+-  Instruction *Caller = &Call;
+-  const AttributeList &CallerPAL = Call.getAttributes();
+-
+-  // Okay, this is a cast from a function to a different type.  Unless doing so
+-  // would cause a type conversion of one of our arguments, change this call to
+-  // be a direct call with arguments casted to the appropriate types.
+-  FunctionType *FT = Callee->getFunctionType();
+-  Type *OldRetTy = Caller->getType();
+-  Type *NewRetTy = FT->getReturnType();
+-
+-  // Check to see if we are changing the return type...
+-  if (OldRetTy != NewRetTy) {
+-
+-    if (NewRetTy->isStructTy())
+-      return false; // TODO: Handle multiple return values.
+-
+-    if (!CastInst::isBitOrNoopPointerCastable(NewRetTy, OldRetTy, DL)) {
+-      if (!Caller->use_empty())
+-        return false;   // Cannot transform this return value.
+-    }
+-
+-    if (!CallerPAL.isEmpty() && !Caller->use_empty()) {
+-      AttrBuilder RAttrs(FT->getContext(), CallerPAL.getRetAttrs());
+-      if (RAttrs.overlaps(AttributeFuncs::typeIncompatible(
+-              NewRetTy, CallerPAL.getRetAttrs())))
+-        return false;   // Attribute not compatible with transformed value.
+-    }
+-
+-    // If the callbase is an invoke instruction, and the return value is
+-    // used by a PHI node in a successor, we cannot change the return type of
+-    // the call because there is no place to put the cast instruction (without
+-    // breaking the critical edge).  Bail out in this case.
+-    if (!Caller->use_empty()) {
+-      BasicBlock *PhisNotSupportedBlock = nullptr;
+-      if (auto *II = dyn_cast<InvokeInst>(Caller))
+-        PhisNotSupportedBlock = II->getNormalDest();
+-      if (PhisNotSupportedBlock)
+-        for (User *U : Caller->users())
+-          if (PHINode *PN = dyn_cast<PHINode>(U))
+-            if (PN->getParent() == PhisNotSupportedBlock)
+-              return false;
+-    }
+-  }
+-
+-  unsigned NumActualArgs = Call.arg_size();
+-  unsigned NumCommonArgs = std::min(FT->getNumParams(), NumActualArgs);
+-
+-  // Prevent us turning:
+-  // declare void @takes_i32_inalloca(i32* inalloca)
+-  //  call void bitcast (void (i32*)* @takes_i32_inalloca to void (i32)*)(i32 0)
+-  //
+-  // into:
+-  //  call void @takes_i32_inalloca(i32* null)
+-  //
+-  //  Similarly, avoid folding away bitcasts of byval calls.
+-  if (Callee->getAttributes().hasAttrSomewhere(Attribute::InAlloca) ||
+-      Callee->getAttributes().hasAttrSomewhere(Attribute::Preallocated))
+-    return false;
+-
+-  auto AI = Call.arg_begin();
+-  for (unsigned i = 0, e = NumCommonArgs; i != e; ++i, ++AI) {
+-    Type *ParamTy = FT->getParamType(i);
+-    Type *ActTy = (*AI)->getType();
+-
+-    if (!CastInst::isBitOrNoopPointerCastable(ActTy, ParamTy, DL))
+-      return false;   // Cannot transform this parameter value.
+-
+-    // Check if there are any incompatible attributes we cannot drop safely.
+-    if (AttrBuilder(FT->getContext(), CallerPAL.getParamAttrs(i))
+-            .overlaps(AttributeFuncs::typeIncompatible(
+-                ParamTy, CallerPAL.getParamAttrs(i),
+-                AttributeFuncs::ASK_UNSAFE_TO_DROP)))
+-      return false;   // Attribute not compatible with transformed value.
+-
+-    if (Call.isInAllocaArgument(i) ||
+-        CallerPAL.hasParamAttr(i, Attribute::Preallocated))
+-      return false; // Cannot transform to and from inalloca/preallocated.
+-
+-    if (CallerPAL.hasParamAttr(i, Attribute::SwiftError))
+-      return false;
+-
+-    if (CallerPAL.hasParamAttr(i, Attribute::ByVal) !=
+-        Callee->getAttributes().hasParamAttr(i, Attribute::ByVal))
+-      return false; // Cannot transform to or from byval.
+-  }
+-
+-  if (FT->getNumParams() < NumActualArgs && FT->isVarArg() &&
+-      !CallerPAL.isEmpty()) {
+-    // In this case we have more arguments than the new function type, but we
+-    // won't be dropping them.  Check that these extra arguments have attributes
+-    // that are compatible with being a vararg call argument.
+-    unsigned SRetIdx;
+-    if (CallerPAL.hasAttrSomewhere(Attribute::StructRet, &SRetIdx) &&
+-        SRetIdx - AttributeList::FirstArgIndex >= FT->getNumParams())
+-      return false;
+-  }
+-
+-  // Okay, we decided that this is a safe thing to do: go ahead and start
+-  // inserting cast instructions as necessary.
+-  SmallVector<Value *, 8> Args;
+-  SmallVector<AttributeSet, 8> ArgAttrs;
+-  Args.reserve(NumActualArgs);
+-  ArgAttrs.reserve(NumActualArgs);
+-
+-  // Get any return attributes.
+-  AttrBuilder RAttrs(FT->getContext(), CallerPAL.getRetAttrs());
+-
+-  // If the return value is not being used, the type may not be compatible
+-  // with the existing attributes.  Wipe out any problematic attributes.
+-  RAttrs.remove(
+-      AttributeFuncs::typeIncompatible(NewRetTy, CallerPAL.getRetAttrs()));
+-
+-  LLVMContext &Ctx = Call.getContext();
+-  AI = Call.arg_begin();
+-  for (unsigned i = 0; i != NumCommonArgs; ++i, ++AI) {
+-    Type *ParamTy = FT->getParamType(i);
+-
+-    Value *NewArg = *AI;
+-    if ((*AI)->getType() != ParamTy)
+-      NewArg = Builder.CreateBitOrPointerCast(*AI, ParamTy);
+-    Args.push_back(NewArg);
+-
+-    // Add any parameter attributes except the ones incompatible with the new
+-    // type. Note that we made sure all incompatible ones are safe to drop.
+-    AttributeMask IncompatibleAttrs = AttributeFuncs::typeIncompatible(
+-        ParamTy, CallerPAL.getParamAttrs(i), AttributeFuncs::ASK_SAFE_TO_DROP);
+-    ArgAttrs.push_back(
+-        CallerPAL.getParamAttrs(i).removeAttributes(Ctx, IncompatibleAttrs));
+-  }
+-
+-  // If the function takes more arguments than the call was taking, add them
+-  // now.
+-  for (unsigned i = NumCommonArgs; i != FT->getNumParams(); ++i) {
+-    Args.push_back(Constant::getNullValue(FT->getParamType(i)));
+-    ArgAttrs.push_back(AttributeSet());
+-  }
+-
+-  // If we are removing arguments to the function, emit an obnoxious warning.
+-  if (FT->getNumParams() < NumActualArgs) {
+-    // TODO: if (!FT->isVarArg()) this call may be unreachable. PR14722
+-    if (FT->isVarArg()) {
+-      // Add all of the arguments in their promoted form to the arg list.
+-      for (unsigned i = FT->getNumParams(); i != NumActualArgs; ++i, ++AI) {
+-        Type *PTy = getPromotedType((*AI)->getType());
+-        Value *NewArg = *AI;
+-        if (PTy != (*AI)->getType()) {
+-          // Must promote to pass through va_arg area!
+-          Instruction::CastOps opcode =
+-            CastInst::getCastOpcode(*AI, false, PTy, false);
+-          NewArg = Builder.CreateCast(opcode, *AI, PTy);
+-        }
+-        Args.push_back(NewArg);
+-
+-        // Add any parameter attributes.
+-        ArgAttrs.push_back(CallerPAL.getParamAttrs(i));
+-      }
+-    }
+-  }
+-
+-  AttributeSet FnAttrs = CallerPAL.getFnAttrs();
+-
+-  if (NewRetTy->isVoidTy())
+-    Caller->setName("");   // Void type should not have a name.
+-
+-  assert((ArgAttrs.size() == FT->getNumParams() || FT->isVarArg()) &&
+-         "missing argument attributes");
+-  AttributeList NewCallerPAL = AttributeList::get(
+-      Ctx, FnAttrs, AttributeSet::get(Ctx, RAttrs), ArgAttrs);
+-
+-  SmallVector<OperandBundleDef, 1> OpBundles;
+-  Call.getOperandBundlesAsDefs(OpBundles);
+-
+-  CallBase *NewCall;
+-  if (InvokeInst *II = dyn_cast<InvokeInst>(Caller)) {
+-    NewCall = Builder.CreateInvoke(Callee, II->getNormalDest(),
+-                                   II->getUnwindDest(), Args, OpBundles);
+-  } else {
+-    NewCall = Builder.CreateCall(Callee, Args, OpBundles);
+-    cast<CallInst>(NewCall)->setTailCallKind(
+-        cast<CallInst>(Caller)->getTailCallKind());
+-  }
+-  NewCall->takeName(Caller);
+-  NewCall->setCallingConv(Call.getCallingConv());
+-  NewCall->setAttributes(NewCallerPAL);
+-
+-  // Preserve prof metadata if any.
+-  NewCall->copyMetadata(*Caller, {LLVMContext::MD_prof});
+-
+-  // Insert a cast of the return type as necessary.
+-  Instruction *NC = NewCall;
+-  Value *NV = NC;
+-  if (OldRetTy != NV->getType() && !Caller->use_empty()) {
+-    assert(!NV->getType()->isVoidTy());
+-    NV = NC = CastInst::CreateBitOrPointerCast(NC, OldRetTy);
+-    NC->setDebugLoc(Caller->getDebugLoc());
+-
+-    auto OptInsertPt = NewCall->getInsertionPointAfterDef();
+-    assert(OptInsertPt && "No place to insert cast");
+-    InsertNewInstBefore(NC, *OptInsertPt);
+-    Worklist.pushUsersToWorkList(*Caller);
+-  }
+-
+-  if (!Caller->use_empty())
+-    replaceInstUsesWith(*Caller, NV);
+-  else if (Caller->hasValueHandle()) {
+-    if (OldRetTy == NV->getType())
+-      ValueHandleBase::ValueIsRAUWd(Caller, NV);
+-    else
+-      // We cannot call ValueIsRAUWd with a different type, and the
+-      // actual tracked value will disappear.
+-      ValueHandleBase::ValueIsDeleted(Caller);
+-  }
+-
+-  eraseInstFromFunction(*Caller);
+-  return true;
+-}
+-
+ /// Turn a call to a function created by init_trampoline / adjust_trampoline
+ /// intrinsic pair into a direct call to the underlying function.
+ Instruction *
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineInternal.h b/llvm/lib/Transforms/InstCombine/InstCombineInternal.h
+index 0752b50ca24be0..798d0f775daddc 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineInternal.h
++++ b/llvm/lib/Transforms/InstCombine/InstCombineInternal.h
+@@ -262,7 +262,6 @@ class LLVM_LIBRARY_VISIBILITY InstCombinerImpl final
+ 
+   Instruction *visitCallBase(CallBase &Call);
+   Instruction *tryOptimizeCall(CallInst *CI);
+-  bool transformConstExprCastCall(CallBase &Call);
+   Instruction *transformCallThroughTrampoline(CallBase &Call,
+                                               IntrinsicInst &Tramp);
+ 
+diff --git a/llvm/test/Transforms/GlobalOpt/constantexpr-dangle.ll b/llvm/test/Transforms/GlobalOpt/constantexpr-dangle.ll
+index 82e7f6449611eb..f6ee78811305c5 100644
+--- a/llvm/test/Transforms/GlobalOpt/constantexpr-dangle.ll
++++ b/llvm/test/Transforms/GlobalOpt/constantexpr-dangle.ll
+@@ -6,7 +6,7 @@ define internal float @foo() {
+ }
+ 
+ define float @bar() {
+-        %tmp1 = call float (...) @foo( )
++        %tmp1 = call float @foo( )
+         %tmp2 = fmul float %tmp1, 1.000000e+01           ; <float> [#uses=1]
+         ret float %tmp2
+ }
+diff --git a/llvm/test/Transforms/InstCombine/apint-call-cast-target.ll b/llvm/test/Transforms/InstCombine/apint-call-cast-target.ll
+index 6cb195e3d50927..dc6f58f7e61b71 100644
+--- a/llvm/test/Transforms/InstCombine/apint-call-cast-target.ll
++++ b/llvm/test/Transforms/InstCombine/apint-call-cast-target.ll
+@@ -21,8 +21,7 @@ define ptr @ctime2(ptr %p) {
+ define ptr @ctime(ptr) {
+ ; CHECK-LABEL: @ctime(
+ ; CHECK-NEXT:  entry:
+-; CHECK-NEXT:    [[I0:%.*]] = call i32 @main2()
+-; CHECK-NEXT:    [[TMP1:%.*]] = inttoptr i32 [[I0]] to ptr
++; CHECK-NEXT:    [[TMP1:%.*]] = call ptr @main2()
+ ; CHECK-NEXT:    ret ptr [[TMP1]]
+ ;
+ entry:
+@@ -33,8 +32,7 @@ entry:
+ define i32 @main() {
+ ; CHECK-LABEL: @main(
+ ; CHECK-NEXT:  entry:
+-; CHECK-NEXT:    [[I1:%.*]] = call ptr @ctime2(ptr null)
+-; CHECK-NEXT:    [[TMP0:%.*]] = ptrtoint ptr [[I1]] to i32
++; CHECK-NEXT:    [[TMP0:%.*]] = call i32 @ctime2(ptr null)
+ ; CHECK-NEXT:    ret i32 [[TMP0]]
+ ;
+ entry:
+diff --git a/llvm/test/Transforms/InstCombine/bitcast-function.ll b/llvm/test/Transforms/InstCombine/bitcast-function.ll
+index e92d4e5de664af..ce44bd5377a7b3 100644
+--- a/llvm/test/Transforms/InstCombine/bitcast-function.ll
++++ b/llvm/test/Transforms/InstCombine/bitcast-function.ll
+@@ -80,9 +80,9 @@ define void @bitcast_scalar(ptr noalias %source, ptr noalias %dest) nounwind {
+ ; CHECK-LABEL: define void @bitcast_scalar
+ ; CHECK-SAME: (ptr noalias [[SOURCE:%.*]], ptr noalias [[DEST:%.*]]) #[[ATTR1:[0-9]+]] {
+ ; CHECK-NEXT:  entry:
+-; CHECK-NEXT:    [[TMP1:%.*]] = load i32, ptr [[SOURCE]], align 8
+-; CHECK-NEXT:    [[CALL:%.*]] = call i32 @func_i32(i32 [[TMP1]]) #[[ATTR1]]
+-; CHECK-NEXT:    store i32 [[CALL]], ptr [[DEST]], align 8
++; CHECK-NEXT:    [[TMP:%.*]] = load float, ptr [[SOURCE]], align 8
++; CHECK-NEXT:    [[CALL:%.*]] = call float @func_i32(float [[TMP]]) #[[ATTR1]]
++; CHECK-NEXT:    store float [[CALL]], ptr [[DEST]], align 8
+ ; CHECK-NEXT:    ret void
+ ;
+ entry:
+@@ -98,9 +98,9 @@ define void @bitcast_vector(ptr noalias %source, ptr noalias %dest) nounwind {
+ ; CHECK-LABEL: define void @bitcast_vector
+ ; CHECK-SAME: (ptr noalias [[SOURCE:%.*]], ptr noalias [[DEST:%.*]]) #[[ATTR1]] {
+ ; CHECK-NEXT:  entry:
+-; CHECK-NEXT:    [[TMP1:%.*]] = load <2 x i32>, ptr [[SOURCE]], align 8
+-; CHECK-NEXT:    [[CALL:%.*]] = call <2 x i32> @func_v2i32(<2 x i32> [[TMP1]]) #[[ATTR1]]
+-; CHECK-NEXT:    store <2 x i32> [[CALL]], ptr [[DEST]], align 8
++; CHECK-NEXT:    [[TMP:%.*]] = load <2 x float>, ptr [[SOURCE]], align 8
++; CHECK-NEXT:    [[CALL:%.*]] = call <2 x float> @func_v2i32(<2 x float> [[TMP]]) #[[ATTR1]]
++; CHECK-NEXT:    store <2 x float> [[CALL]], ptr [[DEST]], align 8
+ ; CHECK-NEXT:    ret void
+ ;
+ entry:
+@@ -116,9 +116,9 @@ define void @bitcast_vector_scalar_same_size(ptr noalias %source, ptr noalias %d
+ ; CHECK-LABEL: define void @bitcast_vector_scalar_same_size
+ ; CHECK-SAME: (ptr noalias [[SOURCE:%.*]], ptr noalias [[DEST:%.*]]) #[[ATTR1]] {
+ ; CHECK-NEXT:  entry:
+-; CHECK-NEXT:    [[TMP1:%.*]] = load i64, ptr [[SOURCE]], align 8
+-; CHECK-NEXT:    [[CALL:%.*]] = call i64 @func_i64(i64 [[TMP1]]) #[[ATTR1]]
+-; CHECK-NEXT:    store i64 [[CALL]], ptr [[DEST]], align 8
++; CHECK-NEXT:    [[TMP:%.*]] = load <2 x float>, ptr [[SOURCE]], align 8
++; CHECK-NEXT:    [[CALL:%.*]] = call <2 x float> @func_i64(<2 x float> [[TMP]]) #[[ATTR1]]
++; CHECK-NEXT:    store <2 x float> [[CALL]], ptr [[DEST]], align 8
+ ; CHECK-NEXT:    ret void
+ ;
+ entry:
+@@ -133,9 +133,9 @@ define void @bitcast_scalar_vector_same_size(ptr noalias %source, ptr noalias %d
+ ; CHECK-LABEL: define void @bitcast_scalar_vector_same_size
+ ; CHECK-SAME: (ptr noalias [[SOURCE:%.*]], ptr noalias [[DEST:%.*]]) #[[ATTR1]] {
+ ; CHECK-NEXT:  entry:
+-; CHECK-NEXT:    [[TMP1:%.*]] = load <2 x float>, ptr [[SOURCE]], align 8
+-; CHECK-NEXT:    [[CALL:%.*]] = call <2 x float> @func_v2f32(<2 x float> [[TMP1]]) #[[ATTR1]]
+-; CHECK-NEXT:    store <2 x float> [[CALL]], ptr [[DEST]], align 8
++; CHECK-NEXT:    [[TMP:%.*]] = load i64, ptr [[SOURCE]], align 8
++; CHECK-NEXT:    [[CALL:%.*]] = call i64 @func_v2f32(i64 [[TMP]]) #[[ATTR1]]
++; CHECK-NEXT:    store i64 [[CALL]], ptr [[DEST]], align 8
+ ; CHECK-NEXT:    ret void
+ ;
+ entry:
+diff --git a/llvm/test/Transforms/InstCombine/call-cast-attrs.ll b/llvm/test/Transforms/InstCombine/call-cast-attrs.ll
+index 009ddaf6b5e372..8639bb78342cc1 100644
+--- a/llvm/test/Transforms/InstCombine/call-cast-attrs.ll
++++ b/llvm/test/Transforms/InstCombine/call-cast-attrs.ll
+@@ -1,5 +1,5 @@
+-; RUN: opt < %s -passes=instcombine -data-layout="p:32:32" -S | FileCheck %s --check-prefixes=CHECK,CHECK32
+-; RUN: opt < %s -passes=instcombine -data-layout="p:64:64" -S | FileCheck %s --check-prefixes=CHECK,CHECK64
++; RUN: opt < %s -passes=instcombine -data-layout="p:32:32" -S | FileCheck %s
++; RUN: opt < %s -passes=instcombine -data-layout="p:64:64" -S | FileCheck %s
+ 
+ define signext i32 @b(ptr inreg %x)   {
+   ret i32 0
+@@ -33,11 +33,9 @@ define void @g(ptr %y) {
+ }
+ ; CHECK-LABEL: define void @g(ptr %y)
+ ; CHECK:    call i32 @b(i32 zeroext 0)
+-; CHECK:    call void (...) @c(ptr %y)
++; CHECK:    call void @c(ptr %y)
+ ; CHECK:    call void @c(ptr sret(i32) %y)
+ ; CHECK:    call void @d(i32 0, ptr sret(i32) %y)
+-; CHECK:    call void (i32, ...) @d(i32 0, ptr captures(none) %y)
+-; CHECK32:  %2 = ptrtoint ptr %y to i32
+-; CHECK32:  call void (i32, ...) @d(i32 noundef %2)
+-; CHECK64:  call void @d(ptr noundef captures(none) %y)
++; CHECK:    call void @d(i32 0, ptr captures(none) %y)
++; CHECK:    call void @d(ptr noundef captures(none) %y)
+ ; CHECK:    call void @naked_func(i32 1)
+diff --git a/llvm/test/Transforms/InstCombine/call-cast-target.ll b/llvm/test/Transforms/InstCombine/call-cast-target.ll
+index 2f4b4ad2409e6b..aa11adb0387841 100644
+--- a/llvm/test/Transforms/InstCombine/call-cast-target.ll
++++ b/llvm/test/Transforms/InstCombine/call-cast-target.ll
+@@ -7,8 +7,7 @@ target triple = "i686-pc-linux-gnu"
+ define i32 @main() {
+ ; CHECK-LABEL: define i32 @main() {
+ ; CHECK-NEXT:  [[ENTRY:.*:]]
+-; CHECK-NEXT:    [[TMP:%.*]] = call ptr @ctime(ptr null)
+-; CHECK-NEXT:    [[TMP0:%.*]] = ptrtoint ptr [[TMP]] to i32
++; CHECK-NEXT:    [[TMP0:%.*]] = call i32 @ctime(ptr null)
+ ; CHECK-NEXT:    ret i32 [[TMP0]]
+ ;
+ entry:
+@@ -57,8 +56,7 @@ define i32 @test1(ptr %a) {
+ ; CHECK-LABEL: define i32 @test1(
+ ; CHECK-SAME: ptr [[A:%.*]]) {
+ ; CHECK-NEXT:  [[ENTRY:.*:]]
+-; CHECK-NEXT:    [[TMP0:%.*]] = ptrtoint ptr [[A]] to i32
+-; CHECK-NEXT:    [[CALL:%.*]] = tail call i32 @fn1(i32 [[TMP0]])
++; CHECK-NEXT:    [[CALL:%.*]] = tail call i32 @fn1(ptr [[A]])
+ ; CHECK-NEXT:    ret i32 [[CALL]]
+ ;
+ entry:
+@@ -111,8 +109,9 @@ entry:
+ declare i1 @fn5(ptr byval({ i32, i32 }) align 4 %r)
+ 
+ define i1 @test5(ptr %ptr) {
+-; CHECK-LABEL: define i1 @test5(ptr %ptr) {
+-; CHECK-NEXT:    [[TMP2:%.*]] = load i32, ptr [[PTR:%.*]], align 4
++; CHECK-LABEL: define i1 @test5(
++; CHECK-SAME: ptr [[PTR:%.*]]) {
++; CHECK-NEXT:    [[TMP2:%.*]] = load i32, ptr [[PTR]], align 4
+ ; CHECK-NEXT:    [[TMP3:%.*]] = getelementptr inbounds nuw i8, ptr [[PTR]], i32 4
+ ; CHECK-NEXT:    [[TMP4:%.*]] = load i32, ptr [[TMP3]], align 4
+ ; CHECK-NEXT:    [[TMP5:%.*]] = call i1 @fn5(i32 [[TMP2]], i32 [[TMP4]])
+@@ -137,7 +136,7 @@ define void @bundles_callee(i32) {
+ define void @bundles() {
+ ; CHECK-LABEL: define void @bundles() {
+ ; CHECK-NEXT:  [[ENTRY:.*:]]
+-; CHECK-NEXT:    call void @bundles_callee(i32 0) [ "deopt"() ]
++; CHECK-NEXT:    call void @bundles_callee() [ "deopt"() ]
+ ; CHECK-NEXT:    ret void
+ ;
+ entry:
+diff --git a/llvm/test/Transforms/InstCombine/call.ll b/llvm/test/Transforms/InstCombine/call.ll
+index d17fd8930a68a9..18ab7f27441b53 100644
+--- a/llvm/test/Transforms/InstCombine/call.ll
++++ b/llvm/test/Transforms/InstCombine/call.ll
+@@ -127,7 +127,7 @@ define void @test7a() {
+ 
+ define void @test7() {
+ ; CHECK-LABEL: define void @test7() {
+-; CHECK-NEXT:    call void @test7a()
++; CHECK-NEXT:    call void @test7a(i32 5)
+ ; CHECK-NEXT:    ret void
+ ;
+   call void @test7a( i32 5 )
+@@ -316,8 +316,7 @@ define <2 x i16> @test15a() {
+ 
+ define i32 @test15() {
+ ; CHECK-LABEL: define i32 @test15() {
+-; CHECK-NEXT:    [[X:%.*]] = call <2 x i16> @test15a()
+-; CHECK-NEXT:    [[TMP1:%.*]] = bitcast <2 x i16> [[X]] to i32
++; CHECK-NEXT:    [[TMP1:%.*]] = call i32 @test15a()
+ ; CHECK-NEXT:    ret i32 [[TMP1]]
+ ;
+   %X = call i32 @test15a( )
+@@ -333,8 +332,7 @@ define i32 @test16a() {
+ 
+ define <2 x i16> @test16() {
+ ; CHECK-LABEL: define <2 x i16> @test16() {
+-; CHECK-NEXT:    [[X:%.*]] = call i32 @test16a()
+-; CHECK-NEXT:    [[TMP1:%.*]] = bitcast i32 [[X]] to <2 x i16>
++; CHECK-NEXT:    [[TMP1:%.*]] = call <2 x i16> @test16a()
+ ; CHECK-NEXT:    ret <2 x i16> [[TMP1]]
+ ;
+   %X = call <2 x i16> @test16a( )
+@@ -365,7 +363,7 @@ define void @non_vararg(ptr, i32) {
+ define void @test_cast_to_vararg(ptr %this) {
+ ; CHECK-LABEL: define void @test_cast_to_vararg
+ ; CHECK-SAME: (ptr [[THIS:%.*]]) {
+-; CHECK-NEXT:    call void @non_vararg(ptr [[THIS]], i32 42)
++; CHECK-NEXT:    call void (ptr, ...) @non_vararg(ptr [[THIS]], i32 42)
+ ; CHECK-NEXT:    ret void
+ ;
+   call void (ptr, ...) @non_vararg(ptr %this, i32 42)
+diff --git a/llvm/test/Transforms/InstCombine/skip-opt-void-to-non-void-conversion.ll b/llvm/test/Transforms/InstCombine/skip-opt-void-to-non-void-conversion.ll
+index 8108201b4db774..1b74ebf8dce26c 100644
+--- a/llvm/test/Transforms/InstCombine/skip-opt-void-to-non-void-conversion.ll
++++ b/llvm/test/Transforms/InstCombine/skip-opt-void-to-non-void-conversion.ll
+@@ -24,7 +24,7 @@ entry:
+ define void @goo() {
+ ; CHECK-LABEL: define void @goo() {
+ ; CHECK-NEXT:  [[ENTRY:.*:]]
+-; CHECK-NEXT:    call void @foo()
++; CHECK-NEXT:    [[RES:%.*]] = call i32 @foo()
+ ; CHECK-NEXT:    ret void
+ ;
+ entry:
+diff --git a/llvm/test/Transforms/PhaseOrdering/X86/ptrtoaddr-ptrtoint.ll b/llvm/test/Transforms/PhaseOrdering/X86/ptrtoaddr-ptrtoint.ll
+index 06dd78217c4ae1..9cab0be9193181 100644
+--- a/llvm/test/Transforms/PhaseOrdering/X86/ptrtoaddr-ptrtoint.ll
++++ b/llvm/test/Transforms/PhaseOrdering/X86/ptrtoaddr-ptrtoint.ll
+@@ -329,7 +329,7 @@ define i1 @lambda(ptr %lam, ptr %cmp) {
+ }
+ 
+ define ptr @gep_base_cancel(ptr %p, ptr %end, ptr noalias %a) {
+-; CHECK-LABEL: define noundef ptr @gep_base_cancel(
++; CHECK-LABEL: define ptr @gep_base_cancel(
+ ; CHECK-SAME: ptr nofree readonly captures(address) [[P:%.*]], ptr nofree readnone captures(address) [[END:%.*]], ptr noalias nofree captures(address, ret: address, provenance) [[A:%.*]]) local_unnamed_addr #[[ATTR5:[0-9]+]] {
+ ; CHECK-NEXT:  [[ENTRY:.*]]:
+ ; CHECK-NEXT:    [[IN_BOUNDS6:%.*]] = icmp ult ptr [[P]], [[END]]
+@@ -349,7 +349,7 @@ define ptr @gep_base_cancel(ptr %p, ptr %end, ptr noalias %a) {
+ ; CHECK-NEXT:    [[EXITCOND_PEEL_NOT:%.*]] = icmp eq i64 [[TMP1]], 0
+ ; CHECK-NEXT:    br i1 [[EXITCOND_PEEL_NOT]], label %[[COMMON_RET]], label %[[BODY:.*]]
+ ; CHECK:       [[COMMON_RET]]:
+-; CHECK-NEXT:    [[RET_KNOWN_TR3:%.*]] = phi ptr [ [[A_TR9_LCSSA:%.*]], %[[TRAP]] ], [ null, %[[ENTRY]] ], [ null, %[[ADVANCE_PEEL]] ], [ null, %[[ADVANCE:.*]] ]
++; CHECK-NEXT:    [[RET_KNOWN_TR3:%.*]] = phi ptr [ [[RET_KNOWN_TR9_LCSSA:%.*]], %[[TRAP]] ], [ null, %[[ENTRY]] ], [ null, %[[ADVANCE_PEEL]] ], [ null, %[[ADVANCE:.*]] ]
+ ; CHECK-NEXT:    ret ptr [[RET_KNOWN_TR3]]
+ ; CHECK:       [[BODY]]:
+ ; CHECK-NEXT:    [[P_TR7_PN:%.*]] = phi ptr [ [[P_TR7:%.*]], %[[ADVANCE]] ], [ [[P]], %[[ADVANCE_PEEL]] ]
+@@ -363,8 +363,8 @@ define ptr @gep_base_cancel(ptr %p, ptr %end, ptr noalias %a) {
+ ; CHECK-NEXT:    [[EXITCOND_NOT:%.*]] = icmp eq ptr [[P_TR7]], [[SCEVGEP]]
+ ; CHECK-NEXT:    br i1 [[EXITCOND_NOT]], label %[[COMMON_RET]], label %[[BODY]], !llvm.loop [[LOOP11:![0-9]+]]
+ ; CHECK:       [[TRAP]]:
+-; CHECK-NEXT:    [[A_TR9_LCSSA]] = phi ptr [ [[A]], %[[BODY_PREHEADER]] ], [ null, %[[BODY]] ]
+-; CHECK-NEXT:    store volatile i32 0, ptr [[A_TR9_LCSSA]], align 4
++; CHECK-NEXT:    [[RET_KNOWN_TR9_LCSSA]] = phi ptr [ [[A]], %[[BODY_PREHEADER]] ], [ null, %[[BODY]] ]
++; CHECK-NEXT:    store volatile i32 0, ptr [[A]], align 4
+ ; CHECK-NEXT:    br label %[[COMMON_RET]]
+ ;
+ entry:
+@@ -388,7 +388,7 @@ advance:
+   br i1 %next.in.bounds, label %recurse, label %common.ret
+ 
+ recurse:
+-  %rec = call ptr @gep_base_cancel(ptr %p.next, ptr %end)
++  %rec = call ptr @gep_base_cancel(ptr %p.next, ptr %end, ptr %a)
+   br label %common.ret
+ 
+ trap:
