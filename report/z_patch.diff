@@ -1,0 +1,1060 @@
+diff --git a/llvm/include/llvm/Transforms/Utils/LoopUtils.h b/llvm/include/llvm/Transforms/Utils/LoopUtils.h
+index 5b539ee515ca78..913be0935b18aa 100644
+--- a/llvm/include/llvm/Transforms/Utils/LoopUtils.h
++++ b/llvm/include/llvm/Transforms/Utils/LoopUtils.h
+@@ -46,6 +46,7 @@ class LPPassManager;
+ class Instruction;
+ struct RuntimeCheckingPtrGroup;
+ class ConditionalInductionDescriptor;
++class EarliestEscapeAnalysis;
+ 
+ typedef std::pair<const RuntimeCheckingPtrGroup *,
+                   const RuntimeCheckingPtrGroup *>
+@@ -151,6 +152,7 @@ struct SinkAndHoistDependencies {
+   AAResults &AA;
+   DominatorTree &DT;
+   MemorySSAUpdater &MSSAU;
++  EarliestEscapeAnalysis &EEA;
+   OptimizationRemarkEmitter *ORE;
+ };
+ 
+diff --git a/llvm/lib/Transforms/Scalar/LICM.cpp b/llvm/lib/Transforms/Scalar/LICM.cpp
+index 4217d1a1013995..b2f644a1f59410 100644
+--- a/llvm/lib/Transforms/Scalar/LICM.cpp
++++ b/llvm/lib/Transforms/Scalar/LICM.cpp
+@@ -131,10 +131,8 @@ static bool isNotUsedOrFoldableInLoop(const Instruction &I, const Loop *CurLoop,
+                                       const LoopSafetyInfo *SafetyInfo,
+                                       TargetTransformInfo *TTI,
+                                       bool &FoldableInLoop, bool LoopNestMode);
+-static void hoist(Instruction &I, const DominatorTree *DT, const Loop *CurLoop,
+-                  BasicBlock *Dest, ICFLoopSafetyInfo *SafetyInfo,
+-                  MemorySSAUpdater &MSSAU, ScalarEvolution *SE,
+-                  OptimizationRemarkEmitter *ORE);
++static void hoist(Instruction &I, const LICMDependencies &Deps,
++                  const Loop *CurLoop, BasicBlock *Dest);
+ static bool sink(Instruction &I, const LICMDependencies &Deps,
+                  const Loop *CurLoop);
+ static bool isSafeToExecuteUnconditionally(
+@@ -142,8 +140,8 @@ static bool isSafeToExecuteUnconditionally(
+     const Loop *CurLoop, const LoopSafetyInfo *SafetyInfo,
+     OptimizationRemarkEmitter *ORE, const Instruction *CtxI,
+     AssumptionCache *AC, bool AllowSpeculation);
+-static bool noConflictingReadWrites(Instruction *I, MemorySSA *MSSA,
+-                                    AAResults *AA, Loop *CurLoop,
++static bool noConflictingReadWrites(Instruction *I, Loop *CurLoop,
++                                    const SinkAndHoistDependencies &Deps,
+                                     SinkAndHoistLICMFlags &Flags);
+ static bool pointerInvalidatedByLoop(const SinkAndHoistDependencies &Deps,
+                                      MemoryUse *MU, Loop *CurLoop,
+@@ -155,11 +153,9 @@ static bool pointerInvalidatedByBlock(BasicBlock &BB, MemorySSA &MSSA,
+ /// Aggregates various functions for hoisting computations out of loop.
+ static bool hoistArithmetics(const ScalarOptions &Opts, Instruction &I, Loop &L,
+                              const LICMDependencies &Deps);
+-static bool hoistInsertPastInsert(InsertElementInst *Ins, Loop *CurLoop,
+-                                  DominatorTree *DT, BasicBlock *HoistDest,
+-                                  ICFLoopSafetyInfo *SafetyInfo,
+-                                  MemorySSAUpdater &MSSAU, ScalarEvolution *SE,
+-                                  OptimizationRemarkEmitter *ORE);
++static bool hoistInsertPastInsert(InsertElementInst *Ins,
++                                  const LICMDependencies &Deps, Loop *CurLoop,
++                                  BasicBlock *HoistDest);
+ static Instruction *cloneInstructionInExitBlock(
+     Instruction &I, BasicBlock &ExitBlock, PHINode &PN, const LoopInfo *LI,
+     const LoopSafetyInfo *SafetyInfo, MemorySSAUpdater &MSSAU);
+@@ -167,16 +163,14 @@ static Instruction *cloneInstructionInExitBlock(
+ static void eraseInstruction(Instruction &I, const LICMDependencies &Deps);
+ 
+ static void moveInstructionBefore(Instruction &I, BasicBlock::iterator Dest,
+-                                  ICFLoopSafetyInfo &SafetyInfo,
+-                                  MemorySSAUpdater &MSSAU, ScalarEvolution *SE);
++                                  const LICMDependencies &Deps);
+ 
+ static void foreachMemoryAccess(MemorySSA *MSSA, Loop *L,
+                                 function_ref<void(Instruction *)> Fn);
+ using PointersAndHasReadsOutsideSet =
+     std::pair<SmallSetVector<Value *, 8>, bool>;
+ static SmallVector<PointersAndHasReadsOutsideSet, 0> collectPromotionCandidates(
+-    MemorySSA *MSSA, AliasAnalysis *AA, DominatorTree *DT,
+-    ICFLoopSafetyInfo *SafetyInfo,
++    const LICMDependencies &Deps,
+     const SmallPtrSetImpl<const MDNode *> &LoopLocalAliasScopes, Loop *L);
+ 
+ namespace {
+@@ -216,6 +210,7 @@ struct LegacyLICMPass : public LoopPass {
+     auto *SE = getAnalysisIfAvailable<ScalarEvolutionWrapperPass>();
+     MemorySSA *MSSA = &getAnalysis<MemorySSAWrapperPass>().getMSSA();
+     MemorySSAUpdater MSSAU(MSSA);
++    EarliestEscapeAnalysis EEA(MSSA->getDomTree());
+     // For the old PM, we can't use OptimizationRemarkEmitter as an analysis
+     // pass. Function analyses need to be preserved across loop transformations
+     // but ORE cannot be preserved (see comment before the pass definition).
+@@ -226,7 +221,8 @@ struct LegacyLICMPass : public LoopPass {
+     LICMDependencies Deps{
+         SinkAndHoistDependencies{
+             getAnalysis<AAResultsWrapperPass>().getAAResults(),
+-            getAnalysis<DominatorTreeWrapperPass>().getDomTree(), MSSAU, &ORE},
++            getAnalysis<DominatorTreeWrapperPass>().getDomTree(), MSSAU, EEA,
++            &ORE},
+         getAnalysis<AssumptionCacheTracker>().getAssumptionCache(*F),
+         getAnalysis<LoopInfoWrapperPass>().getLoopInfo(),
+         getAnalysis<TargetLibraryInfoWrapperPass>().getTLI(*F),
+@@ -267,7 +263,8 @@ PreservedAnalyses LICMPass::run(Loop &L, LoopAnalysisManager &AM,
+ 
+   MemorySSAUpdater MSSAU(AR.MSSA);
+   ICFLoopSafetyInfo SafetyInfo(&L);
+-  SinkAndHoistDependencies SHDeps{AR.AA, AR.DT, MSSAU, &ORE};
++  EarliestEscapeAnalysis EEA(AR.DT);
++  SinkAndHoistDependencies SHDeps{AR.AA, AR.DT, MSSAU, EEA, &ORE};
+   LICMDependencies Deps{SHDeps, AR.AC,  AR.LI,     AR.TLI,
+                         AR.TTI, &AR.SE, SafetyInfo};
+   LoopInvariantCodeMotion LICM(getScalarOptions(L), Opts);
+@@ -304,7 +301,8 @@ PreservedAnalyses LNICMPass::run(LoopNest &LN, LoopAnalysisManager &AM,
+   MemorySSAUpdater MSSAU(AR.MSSA);
+   Loop &OutermostLoop = LN.getOutermostLoop();
+   ICFLoopSafetyInfo SafetyInfo(&OutermostLoop);
+-  SinkAndHoistDependencies SHDeps{AR.AA, AR.DT, MSSAU, &ORE};
++  EarliestEscapeAnalysis EEA(AR.DT);
++  SinkAndHoistDependencies SHDeps{AR.AA, AR.DT, MSSAU, EEA, &ORE};
+   LICMDependencies Deps{SHDeps, AR.AC,  AR.LI,     AR.TLI,
+                         AR.TTI, &AR.SE, SafetyInfo};
+   LoopInvariantCodeMotion LICM(getScalarOptions(OutermostLoop), Opts);
+@@ -482,9 +480,7 @@ bool LoopInvariantCodeMotion::runOnLoop(Loop *L, const LICMDependencies &Deps,
+         }
+ 
+         for (auto [PointerMustAliases, HasReadsOutsideSet] :
+-             collectPromotionCandidates(MSSA, &Deps.AA, &Deps.DT,
+-                                        &Deps.SafetyInfo, LoopLocalAliasScopes,
+-                                        L)) {
++             collectPromotionCandidates(Deps, LoopLocalAliasScopes, L)) {
+           LocalPromoted |= promoteLoopAccessesToScalars(
+               PointerMustAliases, ExitBlocks, InsertPts, MSSAInsertPts, PIC,
+               Deps, L, LicmAllowSpeculation, HasReadsOutsideSet);
+@@ -635,16 +631,13 @@ bool llvm::hoistRegion(DomTreeNode *N, const LICMDependencies &Deps,
+           isSafeToExecuteUnconditionally(
+               I, &Deps.DT, &Deps.TLI, CurLoop, &Deps.SafetyInfo, Deps.ORE,
+               Preheader->getTerminator(), &Deps.AC, AllowSpeculation)) {
+-        hoist(I, &Deps.DT, CurLoop, Preheader, &Deps.SafetyInfo, Deps.MSSAU,
+-              Deps.SE, Deps.ORE);
++        hoist(I, Deps, CurLoop, Preheader);
+         Changed = true;
+         continue;
+       }
+ 
+       if (auto *Ins = dyn_cast<InsertElementInst>(&I))
+-        if (hoistInsertPastInsert(Ins, CurLoop, &Deps.DT, Preheader,
+-                                  &Deps.SafetyInfo, Deps.MSSAU, Deps.SE,
+-                                  Deps.ORE)) {
++        if (hoistInsertPastInsert(Ins, Deps, CurLoop, Preheader)) {
+           Changed = true;
+           continue;
+         }
+@@ -670,8 +663,7 @@ bool llvm::hoistRegion(DomTreeNode *N, const LICMDependencies &Deps,
+         I.replaceAllUsesWith(Product);
+         eraseInstruction(I, Deps);
+ 
+-        hoist(*ReciprocalDivisor, &Deps.DT, CurLoop, Preheader,
+-              &Deps.SafetyInfo, Deps.MSSAU, Deps.SE, Deps.ORE);
++        hoist(*ReciprocalDivisor, Deps, CurLoop, Preheader);
+         Changed = true;
+         continue;
+       }
+@@ -688,8 +680,7 @@ bool llvm::hoistRegion(DomTreeNode *N, const LICMDependencies &Deps,
+       if ((IsInvariantStart(I) || isGuard(&I)) &&
+           CurLoop->hasLoopInvariantOperands(&I) &&
+           MustExecuteWithoutWritesBefore(I)) {
+-        hoist(I, &Deps.DT, CurLoop, Preheader, &Deps.SafetyInfo, Deps.MSSAU,
+-              Deps.SE, Deps.ORE);
++        hoist(I, Deps, CurLoop, Preheader);
+         Changed = true;
+         continue;
+       }
+@@ -735,11 +726,9 @@ getConstantInsertionIndex(InsertElementInst *Ins) {
+   return InsertedIdxCI->getValue().getLimitedValue();
+ }
+ 
+-static bool hoistInsertPastInsert(InsertElementInst *Ins, Loop *CurLoop,
+-                                  DominatorTree *DT, BasicBlock *HoistDest,
+-                                  ICFLoopSafetyInfo *SafetyInfo,
+-                                  MemorySSAUpdater &MSSAU, ScalarEvolution *SE,
+-                                  OptimizationRemarkEmitter *ORE) {
++static bool hoistInsertPastInsert(InsertElementInst *Ins,
++                                  const LICMDependencies &Deps, Loop *CurLoop,
++                                  BasicBlock *HoistDest) {
+   // Canonicalize:
+   //   %inner = insertelement %base, %variant, C1
+   //   %outer = insertelement %inner, %invariant, C2
+@@ -786,7 +775,7 @@ static bool hoistInsertPastInsert(InsertElementInst *Ins, Loop *CurLoop,
+   Ins->moveBefore(Inner->getIterator());
+   Ins->setOperand(0, Inner->getOperand(0));
+   Inner->setOperand(0, Ins);
+-  hoist(*Ins, DT, CurLoop, HoistDest, SafetyInfo, MSSAU, SE, ORE);
++  hoist(*Ins, Deps, CurLoop, HoistDest);
+   return true;
+ }
+ 
+@@ -992,7 +981,7 @@ bool llvm::canSinkOrHoistInst(Instruction &I,
+     if (Behavior.onlyWritesMemory()) {
+       // can hoist or sink if there are no conflicting read/writes to the
+       // memory location written to by the call.
+-      return noConflictingReadWrites(CI, MSSA, &Deps.AA, CurLoop, Flags);
++      return noConflictingReadWrites(CI, CurLoop, Deps, Flags);
+     }
+ 
+     return false;
+@@ -1011,7 +1000,7 @@ bool llvm::canSinkOrHoistInst(Instruction &I,
+     // arbitrary number of reads in the loop.
+     if (isOnlyMemoryAccess(SI, CurLoop, Deps.MSSAU))
+       return true;
+-    return noConflictingReadWrites(SI, MSSA, &Deps.AA, CurLoop, Flags);
++    return noConflictingReadWrites(SI, CurLoop, Deps, Flags);
+   }
+ 
+   assert(!I.mayReadOrWriteMemory() && "unhandled aliasing");
+@@ -1185,25 +1174,31 @@ static Instruction *cloneInstructionInExitBlock(
+   return New;
+ }
+ 
+-static void eraseInstruction(Instruction &I, const LICMDependencies &Deps) {
++static void removeInstructionFromDeps(Instruction &I,
++                                      const LICMDependencies &Deps) {
+   Deps.MSSAU.removeMemoryAccess(&I);
+   Deps.SafetyInfo.removeInstruction(&I);
++  Deps.EEA.removeInstruction(&I);
++}
++
++static void eraseInstruction(Instruction &I, const LICMDependencies &Deps) {
++  removeInstructionFromDeps(I, Deps);
+   I.eraseFromParent();
+ }
+ 
+ static void moveInstructionBefore(Instruction &I, BasicBlock::iterator Dest,
+-                                  ICFLoopSafetyInfo &SafetyInfo,
+-                                  MemorySSAUpdater &MSSAU,
+-                                  ScalarEvolution *SE) {
+-  SafetyInfo.removeInstruction(&I);
+-  SafetyInfo.insertInstructionTo(&I, Dest->getParent());
++                                  const LICMDependencies &Deps) {
++  // Moving a capture may invalidate the cached earliest escapes.
++  Deps.EEA.insertPotentialCapture(&I);
++  Deps.SafetyInfo.removeInstruction(&I);
++  Deps.SafetyInfo.insertInstructionTo(&I, Dest->getParent());
+   I.moveBefore(*Dest->getParent(), Dest);
+   if (MemoryUseOrDef *OldMemAcc = cast_or_null<MemoryUseOrDef>(
+-          MSSAU.getMemorySSA()->getMemoryAccess(&I)))
+-    MSSAU.moveToPlace(OldMemAcc, Dest->getParent(),
+-                      MemorySSA::BeforeTerminator);
+-  if (SE)
+-    SE->forgetBlockAndLoopDispositions(&I);
++          Deps.MSSAU.getMemorySSA()->getMemoryAccess(&I)))
++    Deps.MSSAU.moveToPlace(OldMemAcc, Dest->getParent(),
++                           MemorySSA::BeforeTerminator);
++  if (Deps.SE)
++    Deps.SE->forgetBlockAndLoopDispositions(&I);
+ }
+ 
+ static Instruction *sinkThroughTriviallyReplaceablePHI(
+@@ -1418,13 +1413,11 @@ static bool sink(Instruction &I, const LICMDependencies &Deps,
+ /// When an instruction is found to only use loop invariant operands that
+ /// is safe to hoist, this instruction is called to do the dirty work.
+ ///
+-static void hoist(Instruction &I, const DominatorTree *DT, const Loop *CurLoop,
+-                  BasicBlock *Dest, ICFLoopSafetyInfo *SafetyInfo,
+-                  MemorySSAUpdater &MSSAU, ScalarEvolution *SE,
+-                  OptimizationRemarkEmitter *ORE) {
++static void hoist(Instruction &I, const LICMDependencies &Deps,
++                  const Loop *CurLoop, BasicBlock *Dest) {
+   LLVM_DEBUG(dbgs() << "LICM hoisting to " << Dest->getNameOrAsOperand() << ": "
+                     << I << "\n");
+-  ORE->emit([&]() {
++  Deps.ORE->emit([&]() {
+     return OptimizationRemark(DEBUG_TYPE, "Hoisted", &I) << "hoisting "
+                                                          << ore::NV("Inst", &I);
+   });
+@@ -1441,17 +1434,16 @@ static void hoist(Instruction &I, const DominatorTree *DT, const Loop *CurLoop,
+       // The check on hasMetadataOtherThanDebugLoc is to prevent us from burning
+       // time in isGuaranteedToExecute if we don't actually have anything to
+       // drop.  It is a compile time optimization, not required for correctness.
+-      !SafetyInfo->isGuaranteedToExecute(I, DT)) {
++      !Deps.SafetyInfo.isGuaranteedToExecute(I, &Deps.DT)) {
+     I.dropUBImplyingAttrsAndMetadata();
+   }
+ 
+   if (isa<PHINode>(I))
+     // Move the new node to the end of the phi list in the destination block.
+-    moveInstructionBefore(I, Dest->getFirstNonPHIIt(), *SafetyInfo, MSSAU, SE);
++    moveInstructionBefore(I, Dest->getFirstNonPHIIt(), Deps);
+   else
+     // Move the new node to the destination block, before its terminator.
+-    moveInstructionBefore(I, Dest->getTerminator()->getIterator(), *SafetyInfo,
+-                          MSSAU, SE);
++    moveInstructionBefore(I, Dest->getTerminator()->getIterator(), Deps);
+ 
+   I.updateLocationAfterHoist();
+ 
+@@ -1497,13 +1489,11 @@ class LoopPromoter : public LoadAndStorePromoter {
+   SmallVectorImpl<BasicBlock::iterator> &LoopInsertPts;
+   SmallVectorImpl<MemoryAccess *> &MSSAInsertPts;
+   PredIteratorCache &PredCache;
+-  MemorySSAUpdater &MSSAU;
+-  LoopInfo &LI;
++  const LICMDependencies &Deps;
+   DebugLoc DL;
+   Align Alignment;
+   bool UnorderedAtomic;
+   AAMDNodes AATags;
+-  ICFLoopSafetyInfo &SafetyInfo;
+   bool CanInsertStoresInExitBlocks;
+   ArrayRef<const Instruction *> Uses;
+ 
+@@ -1511,7 +1501,7 @@ class LoopPromoter : public LoadAndStorePromoter {
+   // (if legal) if doing so would add an out-of-loop use to an instruction
+   // defined in-loop.
+   Value *maybeInsertLCSSAPHI(Value *V, BasicBlock *BB) const {
+-    if (!LI.wouldBeOutOfLoopUseRequiringLCSSA(V, BB))
++    if (!Deps.LI.wouldBeOutOfLoopUseRequiringLCSSA(V, BB))
+       return V;
+ 
+     Instruction *I = cast<Instruction>(V);
+@@ -1530,14 +1520,13 @@ class LoopPromoter : public LoadAndStorePromoter {
+                SmallVectorImpl<BasicBlock *> &LEB,
+                SmallVectorImpl<BasicBlock::iterator> &LIP,
+                SmallVectorImpl<MemoryAccess *> &MSSAIP, PredIteratorCache &PIC,
+-               MemorySSAUpdater &MSSAU, LoopInfo &li, DebugLoc dl,
+-               Align Alignment, bool UnorderedAtomic, const AAMDNodes &AATags,
+-               ICFLoopSafetyInfo &SafetyInfo, bool CanInsertStoresInExitBlocks)
++               const LICMDependencies &Deps, DebugLoc dl, Align Alignment,
++               bool UnorderedAtomic, const AAMDNodes &AATags,
++               bool CanInsertStoresInExitBlocks)
+       : LoadAndStorePromoter(Insts, S), SomePtr(SP), LoopExitBlocks(LEB),
+-        LoopInsertPts(LIP), MSSAInsertPts(MSSAIP), PredCache(PIC), MSSAU(MSSAU),
+-        LI(li), DL(std::move(dl)), Alignment(Alignment),
++        LoopInsertPts(LIP), MSSAInsertPts(MSSAIP), PredCache(PIC), Deps(Deps),
++        DL(std::move(dl)), Alignment(Alignment),
+         UnorderedAtomic(UnorderedAtomic), AATags(AATags),
+-        SafetyInfo(SafetyInfo),
+         CanInsertStoresInExitBlocks(CanInsertStoresInExitBlocks), Uses(Insts) {}
+ 
+   void insertStoresInLoopExitBlocks() {
+@@ -1578,14 +1567,14 @@ class LoopPromoter : public LoadAndStorePromoter {
+       MemoryAccess *MSSAInsertPoint = MSSAInsertPts[i];
+       MemoryAccess *NewMemAcc;
+       if (!MSSAInsertPoint) {
+-        NewMemAcc = MSSAU.createMemoryAccessInBB(
++        NewMemAcc = Deps.MSSAU.createMemoryAccessInBB(
+             NewSI, nullptr, NewSI->getParent(), MemorySSA::Beginning);
+       } else {
+         NewMemAcc =
+-            MSSAU.createMemoryAccessAfter(NewSI, nullptr, MSSAInsertPoint);
++            Deps.MSSAU.createMemoryAccessAfter(NewSI, nullptr, MSSAInsertPoint);
+       }
+       MSSAInsertPts[i] = NewMemAcc;
+-      MSSAU.insertDef(cast<MemoryDef>(NewMemAcc), true);
++      Deps.MSSAU.insertDef(cast<MemoryDef>(NewMemAcc), true);
+       // FIXME: true for safety, false may still be correct.
+     }
+   }
+@@ -1596,8 +1585,7 @@ class LoopPromoter : public LoadAndStorePromoter {
+   }
+ 
+   void instructionDeleted(Instruction *I) const override {
+-    SafetyInfo.removeInstruction(I);
+-    MSSAU.removeMemoryAccess(I);
++    removeInstructionFromDeps(*I, Deps);
+   }
+ 
+   bool shouldDelete(Instruction *I) const override {
+@@ -1925,10 +1913,10 @@ bool llvm::promoteLoopAccessesToScalars(
+   SmallVector<PHINode *, 16> NewPHIs;
+   SSAUpdater SSA(&NewPHIs);
+   LoopPromoter Promoter(SomePtr, LoopUses, SSA, ExitBlocks, InsertPts,
+-                        MSSAInsertPts, PIC, Deps.MSSAU, Deps.LI, DL, Alignment,
++                        MSSAInsertPts, PIC, Deps, DL, Alignment,
+                         SawUnorderedAtomic,
+                         StoreIsGuaranteedToExecute ? AATags : AAMDNodes(),
+-                        Deps.SafetyInfo, StoreSafety == StoreSafe);
++                        StoreSafety == StoreSafe);
+ 
+   // Set up the preheader to have a definition of the value.  It is the live-out
+   // value from the preheader that uses in the loop will use.
+@@ -2049,10 +2037,10 @@ static SmallPtrSet<const StoreInst *, 8> collectStoresWithInvariantAATags(
+ // The bool indicates whether there might be reads outside the set, in which
+ // case only loads may be promoted.
+ static SmallVector<PointersAndHasReadsOutsideSet, 0> collectPromotionCandidates(
+-    MemorySSA *MSSA, AliasAnalysis *AA, DominatorTree *DT,
+-    ICFLoopSafetyInfo *SafetyInfo,
++    const LICMDependencies &Deps,
+     const SmallPtrSetImpl<const MDNode *> &LoopLocalAliasScopes, Loop *L) {
+-  BatchAAResults BatchAA(*AA);
++  MemorySSA *MSSA = Deps.MSSAU.getMemorySSA();
++  BatchAAResults BatchAA(Deps.AA, &Deps.EEA);
+   AliasSetTracker AST(BatchAA);
+ 
+   // Only conditionally executed stores need this, so compute it on demand to
+@@ -2060,8 +2048,8 @@ static SmallVector<PointersAndHasReadsOutsideSet, 0> collectPromotionCandidates(
+   std::optional<SmallPtrSet<const StoreInst *, 8>> StoresWithInvariantAATags;
+   auto HasInvariantAATags = [&](const StoreInst *SI) {
+     if (!StoresWithInvariantAATags)
+-      StoresWithInvariantAATags =
+-          collectStoresWithInvariantAATags(MSSA, DT, LoopLocalAliasScopes, L);
++      StoresWithInvariantAATags = collectStoresWithInvariantAATags(
++          MSSA, &Deps.DT, LoopLocalAliasScopes, L);
+     return StoresWithInvariantAATags->contains(SI);
+   };
+ 
+@@ -2072,7 +2060,7 @@ static SmallVector<PointersAndHasReadsOutsideSet, 0> collectPromotionCandidates(
+       AttemptingPromotion.insert(I);
+       if (StoreInst *SI = dyn_cast<StoreInst>(I);
+           SI && SI->getAAMetadata() &&
+-          !SafetyInfo->isGuaranteedToExecute(*SI, DT) &&
++          !Deps.SafetyInfo.isGuaranteedToExecute(*SI, &Deps.DT) &&
+           !HasInvariantAATags(SI)) {
+         // Promotion requires inserting a new store at the loop exits; we need
+         // to prove that store doesn't alias anything, in addition to proving
+@@ -2130,8 +2118,8 @@ static SmallVector<PointersAndHasReadsOutsideSet, 0> collectPromotionCandidates(
+ // For a given store instruction or writeonly call instruction, this function
+ // checks that there are no read or writes that conflict with the memory
+ // access in the instruction
+-static bool noConflictingReadWrites(Instruction *I, MemorySSA *MSSA,
+-                                    AAResults *AA, Loop *CurLoop,
++static bool noConflictingReadWrites(Instruction *I, Loop *CurLoop,
++                                    const SinkAndHoistDependencies &Deps,
+                                     SinkAndHoistLICMFlags &Flags) {
+   assert(isa<CallInst>(*I) || isa<StoreInst>(*I));
+   // If there are more accesses than the Promotion cap, then give up as we're
+@@ -2139,8 +2127,9 @@ static bool noConflictingReadWrites(Instruction *I, MemorySSA *MSSA,
+   if (Flags.tooManyMemoryAccesses())
+     return false;
+ 
++  MemorySSA *MSSA = Deps.MSSAU.getMemorySSA();
+   auto *IMD = MSSA->getMemoryAccess(I);
+-  BatchAAResults BAA(*AA);
++  BatchAAResults BAA(Deps.AA, &Deps.EEA);
+   auto *Source = getClobberingMemoryAccess(*MSSA, BAA, Flags, IMD);
+   // Make sure there are no clobbers inside the loop.
+   if (!MSSA->isLiveOnEntryDef(Source) && CurLoop->contains(Source->getBlock()))
+@@ -2187,7 +2176,10 @@ static bool pointerInvalidatedByLoop(const SinkAndHoistDependencies &Deps,
+     // 2) the earliest access is at the loop header,
+     // if the memory loaded is the phi node
+ 
+-    BatchAAResults BAA(MSSA->getAA());
++    // Use flow-sensitive capture information: an object captured only after
++    // the loop or on an unwind path cannot be accessed through pointers
++    // obtained inside the loop.
++    BatchAAResults BAA(MSSA->getAA(), &Deps.EEA);
+     MemoryAccess *Source = getClobberingMemoryAccess(*MSSA, BAA, Flags, MU);
+     return !MSSA->isLiveOnEntryDef(Source) &&
+            CurLoop->contains(Source->getBlock()) &&
+diff --git a/llvm/lib/Transforms/Scalar/LoopSink.cpp b/llvm/lib/Transforms/Scalar/LoopSink.cpp
+index 09b388475c92ce..fcc171beb49ced 100644
+--- a/llvm/lib/Transforms/Scalar/LoopSink.cpp
++++ b/llvm/lib/Transforms/Scalar/LoopSink.cpp
+@@ -181,8 +181,8 @@ static bool
+ sinkInstruction(const ScalarOptions &Opts, Loop &L, Instruction &I,
+                 const SmallVectorImpl<BasicBlock *> &ColdLoopBBs,
+                 const SmallDenseMap<BasicBlock *, int, 16> &LoopBlockNumber,
+-                LoopInfo &LI, DominatorTree &DT, BlockFrequencyInfo &BFI,
+-                MemorySSAUpdater *MSSAU) {
++                LoopInfo &LI, const SinkAndHoistDependencies &Deps,
++                BlockFrequencyInfo &BFI) {
+   // Compute the set of blocks in loop L which contain a use of I.
+   SmallPtrSet<BasicBlock *, 2> BBs;
+   for (auto &U : I.uses()) {
+@@ -218,7 +218,7 @@ sinkInstruction(const ScalarOptions &Opts, Loop &L, Instruction &I,
+ 
+   // Find the set of BBs that we should insert a copy of I.
+   SmallPtrSet<BasicBlock *, 2> BBsToSinkInto =
+-      findBBsToSinkInto(Opts, L, BBs, ColdLoopBBs, DT, BFI);
++      findBBsToSinkInto(Opts, L, BBs, ColdLoopBBs, Deps.DT, BFI);
+   if (BBsToSinkInto.empty())
+     return false;
+ 
+@@ -239,6 +239,8 @@ sinkInstruction(const ScalarOptions &Opts, Loop &L, Instruction &I,
+   }
+ 
+   BasicBlock *MoveBB = *SortedBBsToSinkInto.begin();
++  // I is moved rather than erased, drop it if it is a cached earliest escape.
++  Deps.EEA.removeInstruction(&I);
+   // FIXME: Optimize the efficiency for cloned value replacement. The current
+   //        implementation is O(SortedBBsToSinkInto.size() * I.num_uses()).
+   for (BasicBlock *N : ArrayRef(SortedBBsToSinkInto).drop_front(1)) {
+@@ -250,16 +252,16 @@ sinkInstruction(const ScalarOptions &Opts, Loop &L, Instruction &I,
+     IC->setName(I.getName());
+     IC->insertBefore(N->getFirstInsertionPt());
+ 
+-    if (MSSAU && MSSAU->getMemorySSA()->getMemoryAccess(&I)) {
++    if (Deps.MSSAU.getMemorySSA()->getMemoryAccess(&I)) {
+       // Create a new MemoryAccess and let MemorySSA set its defining access.
+-      MemoryAccess *NewMemAcc =
+-          MSSAU->createMemoryAccessInBB(IC, nullptr, N, MemorySSA::Beginning);
++      MemoryAccess *NewMemAcc = Deps.MSSAU.createMemoryAccessInBB(
++          IC, nullptr, N, MemorySSA::Beginning);
+       if (NewMemAcc) {
+         if (auto *MemDef = dyn_cast<MemoryDef>(NewMemAcc))
+-          MSSAU->insertDef(MemDef, /*RenameUses=*/true);
++          Deps.MSSAU.insertDef(MemDef, /*RenameUses=*/true);
+         else {
+           auto *MemUse = cast<MemoryUse>(NewMemAcc);
+-          MSSAU->insertUse(MemUse, /*RenameUses=*/true);
++          Deps.MSSAU.insertUse(MemUse, /*RenameUses=*/true);
+         }
+       }
+     }
+@@ -271,7 +273,7 @@ sinkInstruction(const ScalarOptions &Opts, Loop &L, Instruction &I,
+       return UIToReplace->getParent() == N && !isa<PHINode>(UIToReplace);
+     });
+     // Replaces uses of I with IC in blocks dominated by N
+-    replaceDominatedUsesWith(&I, IC, DT, N);
++    replaceDominatedUsesWith(&I, IC, Deps.DT, N);
+     LLVM_DEBUG(dbgs() << "Sinking a clone of " << I << " To: " << N->getName()
+                       << '\n');
+     NumLoopSunkCloned++;
+@@ -280,10 +282,9 @@ sinkInstruction(const ScalarOptions &Opts, Loop &L, Instruction &I,
+   NumLoopSunk++;
+   I.moveBefore(MoveBB->getFirstInsertionPt());
+ 
+-  if (MSSAU)
+-    if (MemoryUseOrDef *OldMemAcc = cast_or_null<MemoryUseOrDef>(
+-            MSSAU->getMemorySSA()->getMemoryAccess(&I)))
+-      MSSAU->moveToPlace(OldMemAcc, MoveBB, MemorySSA::Beginning);
++  if (MemoryUseOrDef *OldMemAcc = cast_or_null<MemoryUseOrDef>(
++          Deps.MSSAU.getMemorySSA()->getMemoryAccess(&I)))
++    Deps.MSSAU.moveToPlace(OldMemAcc, MoveBB, MemorySSA::Beginning);
+ 
+   return true;
+ }
+@@ -339,8 +340,8 @@ static bool sinkLoopInvariantInstructions(Loop &L,
+            "Insts in a loop's preheader should have loop invariant operands!");
+     if (!canSinkOrHoistInst(I, Deps, &L, false, LICMFlags))
+       continue;
+-    if (sinkInstruction(Opts, L, I, ColdLoopBBs, LoopBlockNumber, LI, Deps.DT,
+-                        BFI, &Deps.MSSAU)) {
++    if (sinkInstruction(Opts, L, I, ColdLoopBBs, LoopBlockNumber, LI, Deps,
++                        BFI)) {
+       Changed = true;
+       if (SE)
+         SE->forgetBlockAndLoopDispositions(&I);
+@@ -382,7 +383,8 @@ PreservedAnalyses LoopSinkPass::run(Function &F, FunctionAnalysisManager &FAM) {
+       continue;
+ 
+     MemorySSAUpdater MSSAU(&MSSA);
+-    SinkAndHoistDependencies Deps{AA, DT, MSSAU, /*ORE=*/nullptr};
++    EarliestEscapeAnalysis EEA(DT);
++    SinkAndHoistDependencies Deps{AA, DT, MSSAU, EEA, /*ORE=*/nullptr};
+     // Note that we don't pass SCEV here because it is only used to invalidate
+     // loops in SCEV and we don't preserve (or request) SCEV at all making that
+     // unnecessary.
+diff --git a/llvm/test/Transforms/LICM/call-hoisting.ll b/llvm/test/Transforms/LICM/call-hoisting.ll
+index 2520e2277cf56b..72c720e72baba6 100644
+--- a/llvm/test/Transforms/LICM/call-hoisting.ll
++++ b/llvm/test/Transforms/LICM/call-hoisting.ll
+@@ -308,6 +308,45 @@ exit:
+   ret i32 %val
+ }
+ 
++declare void @capture(ptr)
++
++define i32 @unrelated_read_captured_after_loop(ptr %pp) {
++; CHECK-LABEL: define i32 @unrelated_read_captured_after_loop(
++; CHECK-SAME: ptr [[PP:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[LOC:%.*]] = alloca i32, align 4
++; CHECK-NEXT:    [[OTHERLOC:%.*]] = load ptr, ptr [[PP]], align 8
++; CHECK-NEXT:    call void @store(i32 0, ptr [[LOC]])
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ 0, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    [[OTHERLOC_GEP:%.*]] = getelementptr i32, ptr [[OTHERLOC]], i32 [[IV]]
++; CHECK-NEXT:    [[VAL:%.*]] = call i32 @load(ptr [[OTHERLOC_GEP]])
++; CHECK-NEXT:    [[IV_NEXT]] = add i32 [[IV]], 1
++; CHECK-NEXT:    [[CMP:%.*]] = icmp slt i32 [[IV]], 200
++; CHECK-NEXT:    br i1 [[CMP]], label %[[LOOP]], label %[[EXIT:.*]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    [[VAL_LCSSA:%.*]] = phi i32 [ [[VAL]], %[[LOOP]] ]
++; CHECK-NEXT:    call void @capture(ptr [[LOC]])
++; CHECK-NEXT:    ret i32 [[VAL_LCSSA]]
++;
++entry:
++  %loc = alloca i32
++  %otherloc = load ptr, ptr %pp
++  br label %loop
++loop:
++  %iv = phi i32 [0, %entry], [%iv.next, %loop]
++  %otherloc.gep = getelementptr i32, ptr %otherloc, i32 %iv
++  %val = call i32 @load(ptr %otherloc.gep)
++  call void @store(i32 0, ptr %loc)
++  %iv.next = add i32 %iv, 1
++  %cmp = icmp slt i32 %iv, 200
++  br i1 %cmp, label %loop, label %exit
++exit:
++  call void @capture(ptr %loc)
++  ret i32 %val
++}
++
+ define void @neg_lv_value(ptr %loc) {
+ ; CHECK-LABEL: define void @neg_lv_value(
+ ; CHECK-SAME: ptr [[LOC:%.*]]) {
+diff --git a/llvm/test/Transforms/LICM/hoist-load-captured-after-loop.ll b/llvm/test/Transforms/LICM/hoist-load-captured-after-loop.ll
+new file mode 100644
+index 00000000000000..c6d89c5289c553
+--- /dev/null
++++ b/llvm/test/Transforms/LICM/hoist-load-captured-after-loop.ll
+@@ -0,0 +1,276 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -passes='loop-mssa(licm)' -S %s | FileCheck %s
++
++declare ptr @get_ptr()
++declare void @capture(ptr)
++declare void @may_throw()
++declare i32 @__gxx_personality_v0(...)
++declare ptr @opaque(ptr) memory(none) nounwind willreturn
++declare void @use(i32) memory(inaccessiblemem: write) nounwind willreturn
++
++define void @captured_after_loop(i64 %n) {
++; CHECK-LABEL: define void @captured_after_loop(
++; CHECK-SAME: i64 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[A:%.*]] = alloca i32, align 4
++; CHECK-NEXT:    store i32 3, ptr [[A]], align 4
++; CHECK-NEXT:    [[Q:%.*]] = call ptr @get_ptr()
++; CHECK-NEXT:    [[V:%.*]] = load i32, ptr [[A]], align 4
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[I:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[I_NEXT:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    [[G:%.*]] = getelementptr inbounds i32, ptr [[Q]], i64 [[I]]
++; CHECK-NEXT:    store i32 [[V]], ptr [[G]], align 4
++; CHECK-NEXT:    [[I_NEXT]] = add nuw nsw i64 [[I]], 1
++; CHECK-NEXT:    [[C:%.*]] = icmp eq i64 [[I_NEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[C]], label %[[EXIT:.*]], label %[[LOOP]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    call void @capture(ptr [[A]])
++; CHECK-NEXT:    ret void
++;
++entry:
++  %a = alloca i32
++  store i32 3, ptr %a
++  %q = call ptr @get_ptr()
++  br label %loop
++
++loop:
++  %i = phi i64 [ 0, %entry ], [ %i.next, %loop ]
++  %v = load i32, ptr %a
++  %g = getelementptr inbounds i32, ptr %q, i64 %i
++  store i32 %v, ptr %g
++  %i.next = add nuw nsw i64 %i, 1
++  %c = icmp eq i64 %i.next, %n
++  br i1 %c, label %exit, label %loop
++
++exit:
++  call void @capture(ptr %a)
++  ret void
++}
++
++define void @captured_in_eh_cleanup(ptr noalias %obj, ptr %pp, i64 %n) personality ptr @__gxx_personality_v0 {
++; CHECK-LABEL: define void @captured_in_eh_cleanup(
++; CHECK-SAME: ptr noalias [[OBJ:%.*]], ptr [[PP:%.*]], i64 [[N:%.*]]) personality ptr @__gxx_personality_v0 {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    store i32 3, ptr [[OBJ]], align 4
++; CHECK-NEXT:    invoke void @may_throw()
++; CHECK-NEXT:            to label %[[LOOP_PREHEADER:.*]] unwind label %[[LPAD:.*]]
++; CHECK:       [[LOOP_PREHEADER]]:
++; CHECK-NEXT:    [[V:%.*]] = load i32, ptr [[OBJ]], align 4
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[I:%.*]] = phi i64 [ [[I_NEXT:%.*]], %[[LOOP]] ], [ 0, %[[LOOP_PREHEADER]] ]
++; CHECK-NEXT:    [[Q:%.*]] = load ptr, ptr [[PP]], align 8
++; CHECK-NEXT:    [[G:%.*]] = getelementptr inbounds i32, ptr [[Q]], i64 [[I]]
++; CHECK-NEXT:    store i32 [[V]], ptr [[G]], align 4
++; CHECK-NEXT:    [[I_NEXT]] = add nuw nsw i64 [[I]], 1
++; CHECK-NEXT:    [[C:%.*]] = icmp eq i64 [[I_NEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[C]], label %[[EXIT:.*]], label %[[LOOP]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++; CHECK:       [[LPAD]]:
++; CHECK-NEXT:    [[LP:%.*]] = landingpad { ptr, i32 }
++; CHECK-NEXT:            cleanup
++; CHECK-NEXT:    call void @capture(ptr [[OBJ]])
++; CHECK-NEXT:    resume { ptr, i32 } [[LP]]
++;
++entry:
++  store i32 3, ptr %obj
++  invoke void @may_throw()
++  to label %loop unwind label %lpad
++
++loop:
++  %i = phi i64 [ 0, %entry ], [ %i.next, %loop ]
++  %q = load ptr, ptr %pp
++  %v = load i32, ptr %obj
++  %g = getelementptr inbounds i32, ptr %q, i64 %i
++  store i32 %v, ptr %g
++  %i.next = add nuw nsw i64 %i, 1
++  %c = icmp eq i64 %i.next, %n
++  br i1 %c, label %exit, label %loop
++
++exit:
++  ret void
++
++lpad:
++  %lp = landingpad { ptr, i32 }
++  cleanup
++  call void @capture(ptr %obj)
++  resume { ptr, i32 } %lp
++}
++
++; Negative test: %q may point to %a.
++define void @captured_before_loop(i64 %n) {
++; CHECK-LABEL: define void @captured_before_loop(
++; CHECK-SAME: i64 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[A:%.*]] = alloca i32, align 4
++; CHECK-NEXT:    store i32 3, ptr [[A]], align 4
++; CHECK-NEXT:    call void @capture(ptr [[A]])
++; CHECK-NEXT:    [[Q:%.*]] = call ptr @get_ptr()
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[I:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[I_NEXT:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    [[V:%.*]] = load i32, ptr [[A]], align 4
++; CHECK-NEXT:    [[G:%.*]] = getelementptr inbounds i32, ptr [[Q]], i64 [[I]]
++; CHECK-NEXT:    store i32 [[V]], ptr [[G]], align 4
++; CHECK-NEXT:    [[I_NEXT]] = add nuw nsw i64 [[I]], 1
++; CHECK-NEXT:    [[C:%.*]] = icmp eq i64 [[I_NEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[C]], label %[[EXIT:.*]], label %[[LOOP]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %a = alloca i32
++  store i32 3, ptr %a
++  call void @capture(ptr %a)
++  %q = call ptr @get_ptr()
++  br label %loop
++
++loop:
++  %i = phi i64 [ 0, %entry ], [ %i.next, %loop ]
++  %v = load i32, ptr %a
++  %g = getelementptr inbounds i32, ptr %q, i64 %i
++  store i32 %v, ptr %g
++  %i.next = add nuw nsw i64 %i, 1
++  %c = icmp eq i64 %i.next, %n
++  br i1 %c, label %exit, label %loop
++
++exit:
++  ret void
++}
++
++; Negative test: %q may point to %a on the next iteration.
++define void @captured_in_loop(ptr %pp, i64 %n) {
++; CHECK-LABEL: define void @captured_in_loop(
++; CHECK-SAME: ptr [[PP:%.*]], i64 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[A:%.*]] = alloca i32, align 4
++; CHECK-NEXT:    store i32 3, ptr [[A]], align 4
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[I:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[I_NEXT:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    [[Q:%.*]] = load ptr, ptr [[PP]], align 8
++; CHECK-NEXT:    [[V:%.*]] = load i32, ptr [[A]], align 4
++; CHECK-NEXT:    [[G:%.*]] = getelementptr inbounds i32, ptr [[Q]], i64 [[I]]
++; CHECK-NEXT:    store i32 [[V]], ptr [[G]], align 4
++; CHECK-NEXT:    call void @capture(ptr [[A]])
++; CHECK-NEXT:    [[I_NEXT]] = add nuw nsw i64 [[I]], 1
++; CHECK-NEXT:    [[C:%.*]] = icmp eq i64 [[I_NEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[C]], label %[[EXIT:.*]], label %[[LOOP]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %a = alloca i32
++  store i32 3, ptr %a
++  br label %loop
++
++loop:
++  %i = phi i64 [ 0, %entry ], [ %i.next, %loop ]
++  %q = load ptr, ptr %pp
++  %v = load i32, ptr %a
++  %g = getelementptr inbounds i32, ptr %q, i64 %i
++  store i32 %v, ptr %g
++  call void @capture(ptr %a)
++  %i.next = add nuw nsw i64 %i, 1
++  %c = icmp eq i64 %i.next, %n
++  br i1 %c, label %exit, label %loop
++
++exit:
++  ret void
++}
++
++define void @hoisted_call_capture(ptr %ptr, i64 %n) {
++; CHECK-LABEL: define void @hoisted_call_capture(
++; CHECK-SAME: ptr [[PTR:%.*]], i64 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[A:%.*]] = alloca i32, align 4
++; CHECK-NEXT:    store i32 0, ptr [[A]], align 4
++; CHECK-NEXT:    [[Q:%.*]] = call ptr @opaque(ptr [[A]])
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[I:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[I_NEXT:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    [[G:%.*]] = getelementptr inbounds ptr, ptr [[PTR]], i64 [[I]]
++; CHECK-NEXT:    store ptr [[A]], ptr [[G]], align 8
++; CHECK-NEXT:    [[V:%.*]] = load i32, ptr [[A]], align 4
++; CHECK-NEXT:    call void @use(i32 [[V]])
++; CHECK-NEXT:    store i32 1, ptr [[Q]], align 4
++; CHECK-NEXT:    [[V_1:%.*]] = load i32, ptr [[A]], align 4
++; CHECK-NEXT:    call void @use(i32 [[V_1]])
++; CHECK-NEXT:    [[I_NEXT]] = add nuw nsw i64 [[I]], 1
++; CHECK-NEXT:    [[C:%.*]] = icmp eq i64 [[I_NEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[C]], label %[[EXIT:.*]], label %[[LOOP]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %a = alloca i32
++  store i32 0, ptr %a
++  br label %loop
++
++loop:
++  %i = phi i64 [ 0, %entry ], [ %i.next, %loop ]
++  %g = getelementptr inbounds ptr, ptr %ptr, i64 %i
++  store ptr %a, ptr %g
++  %v = load i32, ptr %a
++  call void @use(i32 %v)
++  %q = call ptr @opaque(ptr %a)
++  store i32 1, ptr %q
++  %v.1 = load i32, ptr %a
++  call void @use(i32 %v.1)
++  %i.next = add nuw nsw i64 %i, 1
++  %c = icmp eq i64 %i.next, %n
++  br i1 %c, label %exit, label %loop
++
++exit:
++  ret void
++}
++
++define void @hoisted_store_capture(ptr noalias %p, ptr %ptr, i64 %n) {
++; CHECK-LABEL: define void @hoisted_store_capture(
++; CHECK-SAME: ptr noalias [[P:%.*]], ptr [[PTR:%.*]], i64 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[A:%.*]] = alloca i32, align 4
++; CHECK-NEXT:    store i32 0, ptr [[A]], align 4
++; CHECK-NEXT:    store ptr [[A]], ptr [[P]], align 8
++; CHECK-NEXT:    [[Q:%.*]] = load ptr, ptr [[P]], align 8
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[I:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[I_NEXT:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    [[G:%.*]] = getelementptr inbounds ptr, ptr [[PTR]], i64 [[I]]
++; CHECK-NEXT:    store ptr [[A]], ptr [[G]], align 8
++; CHECK-NEXT:    [[V:%.*]] = load i32, ptr [[A]], align 4
++; CHECK-NEXT:    call void @use(i32 [[V]])
++; CHECK-NEXT:    store i32 1, ptr [[Q]], align 4
++; CHECK-NEXT:    [[V_1:%.*]] = load i32, ptr [[A]], align 4
++; CHECK-NEXT:    call void @use(i32 [[V_1]])
++; CHECK-NEXT:    [[I_NEXT]] = add nuw nsw i64 [[I]], 1
++; CHECK-NEXT:    [[C:%.*]] = icmp eq i64 [[I_NEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[C]], label %[[EXIT:.*]], label %[[LOOP]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %a = alloca i32
++  store i32 0, ptr %a
++  br label %loop
++
++loop:
++  %i = phi i64 [ 0, %entry ], [ %i.next, %loop ]
++  %g = getelementptr inbounds ptr, ptr %ptr, i64 %i
++  store ptr %a, ptr %g
++  %v = load i32, ptr %a
++  call void @use(i32 %v)
++  store ptr %a, ptr %p
++  %q = load ptr, ptr %p
++  store i32 1, ptr %q
++  %v.1 = load i32, ptr %a
++  call void @use(i32 %v.1)
++  %i.next = add nuw nsw i64 %i, 1
++  %c = icmp eq i64 %i.next, %n
++  br i1 %c, label %exit, label %loop
++
++exit:
++  ret void
++}
+diff --git a/llvm/test/Transforms/LICM/loopsink.ll b/llvm/test/Transforms/LICM/loopsink.ll
+index ea7b0e06264d71..577ab88b15eb9e 100644
+--- a/llvm/test/Transforms/LICM/loopsink.ll
++++ b/llvm/test/Transforms/LICM/loopsink.ll
+@@ -441,7 +441,50 @@ define i32 @t7(i32, i32) #0 !prof !0 {
+   ret i32 10
+ }
+ 
++; CHECK-LABEL: @sink_earliest_capture(
++; CHECK: entry:
++; CHECK: %r0 = call i32 @w(ptr %a)
++; CHECK: cold:
++; CHECK-NOT: %r0 = call i32 @w(ptr %a)
++; CHECK: %x = call ptr @opaque(ptr %a)
++define i32 @sink_earliest_capture(ptr noalias %p, i32 %n) !prof !0 {
++entry:
++  %a = alloca i32, align 4
++  store i32 0, ptr %a, align 4
++  %r0 = call i32 @w(ptr %a)
++  %x = call ptr @opaque(ptr %a)
++  store ptr %a, ptr %p, align 8
++  %q = load ptr, ptr %p, align 8
++  %r2 = call i32 @w(ptr %a)
++  br label %loop
++
++loop:
++  %iv = phi i32 [ 0, %entry ], [ %iv.next, %latch ]
++  store i32 1, ptr %q, align 4
++  %c1 = icmp eq i32 %iv, 7
++  br i1 %c1, label %cold, label %latch, !prof !1
++
++cold:
++  call void @use(i32 %r0)
++  call void @use.p(ptr %x)
++  call void @use(i32 %r2)
++  br label %latch
++
++latch:
++  %iv.next = add nuw nsw i32 %iv, 1
++  %c = icmp ne i32 %iv.next, %n
++  br i1 %c, label %loop, label %exit, !prof !3
++
++exit:
++  %v = load i32, ptr %a, align 4
++  ret i32 %v
++}
++
+ declare i32 @foo()
++declare ptr @opaque(ptr) memory(none) nounwind willreturn
++declare i32 @w(ptr captures(none)) memory(argmem: write) nounwind willreturn
++declare void @use(i32) memory(inaccessiblemem: write) nounwind willreturn
++declare void @use.p(ptr) memory(inaccessiblemem: write) nounwind willreturn
+ 
+ !0 = !{!"function_entry_count", i64 1}
+ !1 = !{!"branch_weights", i32 1, i32 2000}
+diff --git a/llvm/test/Transforms/LICM/promote-capture.ll b/llvm/test/Transforms/LICM/promote-capture.ll
+index 19c5700740e7ca..c1c5f10c548268 100644
+--- a/llvm/test/Transforms/LICM/promote-capture.ll
++++ b/llvm/test/Transforms/LICM/promote-capture.ll
+@@ -3,6 +3,7 @@
+ 
+ declare i1 @cond(i32 %v) readnone
+ declare ptr @capture(ptr %p) readnone
++declare void @use(i32) memory(inaccessiblemem: write) nounwind willreturn
+ 
+ define void @test_captured_after_loop(i32 %len) {
+ ; CHECK-LABEL: @test_captured_after_loop(
+@@ -56,6 +57,51 @@ exit:
+   ret void
+ }
+ 
++define void @test_captured_after_loop_unrelated_load(ptr %pp, i32 %len) {
++; CHECK-LABEL: @test_captured_after_loop_unrelated_load(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[COUNT:%.*]] = alloca i32, align 4
++; CHECK-NEXT:    store i32 0, ptr [[COUNT]], align 4
++; CHECK-NEXT:    [[P:%.*]] = load ptr, ptr [[PP:%.*]], align 8
++; CHECK-NEXT:    [[COUNT_PROMOTED:%.*]] = load i32, ptr [[COUNT]], align 4
++; CHECK-NEXT:    br label [[LOOP:%.*]]
++; CHECK:       loop:
++; CHECK-NEXT:    [[C_INC1:%.*]] = phi i32 [ [[COUNT_PROMOTED]], [[ENTRY:%.*]] ], [ [[C_INC:%.*]], [[LOOP]] ]
++; CHECK-NEXT:    [[I:%.*]] = phi i32 [ 0, [[ENTRY]] ], [ [[I_NEXT:%.*]], [[LOOP]] ]
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr i32, ptr [[P]], i32 [[I]]
++; CHECK-NEXT:    [[V:%.*]] = load i32, ptr [[GEP]], align 4
++; CHECK-NEXT:    [[C_INC]] = add i32 [[C_INC1]], [[V]]
++; CHECK-NEXT:    [[I_NEXT]] = add nuw i32 [[I]], 1
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i32 [[I_NEXT]], [[LEN:%.*]]
++; CHECK-NEXT:    br i1 [[CMP]], label [[EXIT:%.*]], label [[LOOP]]
++; CHECK:       exit:
++; CHECK-NEXT:    [[C_INC_LCSSA:%.*]] = phi i32 [ [[C_INC]], [[LOOP]] ]
++; CHECK-NEXT:    store i32 [[C_INC_LCSSA]], ptr [[COUNT]], align 4
++; CHECK-NEXT:    [[TMP0:%.*]] = call ptr @capture(ptr [[COUNT]])
++; CHECK-NEXT:    ret void
++;
++entry:
++  %count = alloca i32
++  store i32 0, ptr %count
++  %p = load ptr, ptr %pp
++  br label %loop
++
++loop:
++  %i = phi i32 [ 0, %entry ], [ %i.next, %loop ]
++  %gep = getelementptr i32, ptr %p, i32 %i
++  %v = load i32, ptr %gep
++  %c = load i32, ptr %count
++  %c.inc = add i32 %c, %v
++  store i32 %c.inc, ptr %count
++  %i.next = add nuw i32 %i, 1
++  %cmp = icmp eq i32 %i.next, %len
++  br i1 %cmp, label %exit, label %loop
++
++exit:
++  call ptr @capture(ptr %count)
++  ret void
++}
++
+ define void @test_captured_in_loop(i32 %len) {
+ ; CHECK-LABEL: @test_captured_in_loop(
+ ; CHECK-NEXT:  entry:
+@@ -261,6 +307,63 @@ exit:
+   ret void
+ }
+ 
++define void @test_promoted_capture(ptr %pp, i1 %cond, i64 %n) {
++; CHECK-LABEL: @test_promoted_capture(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[A:%.*]] = alloca [16 x i32], align 4
++; CHECK-NEXT:    [[LOC:%.*]] = alloca ptr, align 8
++; CHECK-NEXT:    [[A_PROMOTED:%.*]] = load i32, ptr [[A]], align 4
++; CHECK-NEXT:    br label [[LOOP:%.*]]
++; CHECK:       loop:
++; CHECK-NEXT:    [[TMP0:%.*]] = phi i32 [ [[A_PROMOTED]], [[ENTRY:%.*]] ], [ [[TMP1:%.*]], [[LATCH:%.*]] ]
++; CHECK-NEXT:    [[I:%.*]] = phi i64 [ 0, [[ENTRY]] ], [ [[I_NEXT:%.*]], [[LATCH]] ]
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds i32, ptr [[A]], i64 [[I]]
++; CHECK-NEXT:    [[Q:%.*]] = load ptr, ptr [[PP:%.*]], align 8
++; CHECK-NEXT:    store i32 1, ptr [[Q]], align 4
++; CHECK-NEXT:    call void @use(i32 [[TMP0]])
++; CHECK-NEXT:    br i1 [[COND:%.*]], label [[IF:%.*]], label [[LATCH]]
++; CHECK:       if:
++; CHECK-NEXT:    br label [[LATCH]]
++; CHECK:       latch:
++; CHECK-NEXT:    [[TMP1]] = phi i32 [ 2, [[IF]] ], [ [[TMP0]], [[LOOP]] ]
++; CHECK-NEXT:    [[I_NEXT]] = add nuw i64 [[I]], 1
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i64 [[I_NEXT]], [[N:%.*]]
++; CHECK-NEXT:    br i1 [[CMP]], label [[EXIT:%.*]], label [[LOOP]]
++; CHECK:       exit:
++; CHECK-NEXT:    [[DOTLCSSA:%.*]] = phi i32 [ [[TMP1]], [[LATCH]] ]
++; CHECK-NEXT:    [[GEP_LCSSA:%.*]] = phi ptr [ [[GEP]], [[LATCH]] ]
++; CHECK-NEXT:    store i32 [[DOTLCSSA]], ptr [[A]], align 4
++; CHECK-NEXT:    store ptr [[GEP_LCSSA]], ptr [[LOC]], align 8
++; CHECK-NEXT:    ret void
++;
++entry:
++  %a = alloca [16 x i32]
++  %loc = alloca ptr
++  br label %loop
++
++loop:
++  %i = phi i64 [ 0, %entry ], [ %i.next, %latch ]
++  %gep = getelementptr inbounds i32, ptr %a, i64 %i
++  store ptr %gep, ptr %loc
++  %q = load ptr, ptr %pp
++  store i32 1, ptr %q
++  %v = load i32, ptr %a
++  call void @use(i32 %v)
++  br i1 %cond, label %if, label %latch
++
++if:
++  store i32 2, ptr %a
++  br label %latch
++
++latch:
++  %i.next = add nuw i64 %i, 1
++  %cmp = icmp eq i64 %i.next, %n
++  br i1 %cmp, label %exit, label %loop
++
++exit:
++  ret void
++}
++
+ define void @test_captured_after_loop_byval(ptr byval(i32) align 4 %count, i32 %len) {
+ ; CHECK-LABEL: @test_captured_after_loop_byval(
+ ; CHECK-NEXT:  entry:
