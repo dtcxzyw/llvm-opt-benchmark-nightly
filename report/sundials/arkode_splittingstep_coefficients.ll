@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.q = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %indvars.iv32
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !22   ; 2 uses
-  %i.t = add nsw i64 %i.p, 1
+  %i.t = add nuw nsw i64 %i.p, 1
   %i.u = tail call i64 @llvm.smax.i64(i64 %i.t, i64 %i.i)
   %i.v = sub i64 %i.u, %i.p                       ; 3 uses
   %min.iters.check = icmp ult i64 %i.v, 4
@@ -244,7 +244,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %indvars.iv29 = phi i64 [ %indvars.iv.next30, %scalar.ph ], [ %indvars.iv29.ph, %scalar.ph.preheader ] ; 2 uses
   %i.z = getelementptr inbounds [8 x i8], ptr %i.s, i64 %indvars.iv29
   store double 1.000000e+00, ptr %i.z, align 8, !tbaa !24
-  %indvars.iv.next30 = add nsw i64 %indvars.iv29, 1 ; 2 uses
+  %indvars.iv.next30 = add nuw nsw i64 %indvars.iv29, 1 ; 2 uses
   %i.aa = icmp slt i64 %indvars.iv.next30, %i.m
   br i1 %i.aa, label %scalar.ph, label %._crit_edge, !llvm.loop !41
 

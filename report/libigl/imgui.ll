@@ -205,7 +205,7 @@ bb.r:                                             ; preds = %.lr.ph.i38
   %i.di = xor i32 %.023.i, -1
   %i.dj = add i32 %i.cr, %i.di
   %i.dk = sext i32 %i.dj to i64
-  %i.dl = shl nsw i64 %i.dk, 3
+  %i.dl = shl nuw nsw i64 %i.dk, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.dg, ptr nonnull align 8 %i.dh, i64 %i.dl, i1 false)
   %i.dm = load i32, ptr %i.co, align 8, !tbaa !504
   %i.dn = load ptr, ptr %i.cp, align 8, !tbaa !340
@@ -608,7 +608,7 @@ bb.c:                                             ; preds = %.lr.ph
   %i.v = xor i32 %.023, -1
   %i.w = add i32 %i.e, %i.v
   %i.x = sext i32 %i.w to i64
-  %i.y = shl nsw i64 %i.x, 3
+  %i.y = shl nuw nsw i64 %i.x, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.t, ptr nonnull align 8 %i.u, i64 %i.y, i1 false)
   %i.z = load i32, ptr %i.b, align 8, !tbaa !504
   %i.aa = load ptr, ptr %i.c, align 8, !tbaa !340
