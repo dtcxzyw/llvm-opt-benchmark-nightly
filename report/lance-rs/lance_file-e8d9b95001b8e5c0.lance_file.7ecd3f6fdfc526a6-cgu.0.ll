@@ -205,7 +205,7 @@ bb.dq:                                            ; preds = %bb.dp
 
 _RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator8try_fold9enumerateRsuINtNtNtBf_3ops12control_flow11ControlFlowTjB25_EENCINvNvB1e_4find5checkB2N_NCNvMs_NtNtCs4ytUTZt2Gw9_11arrow_array5array16dictionary_arrayINtB3s_15DictionaryArrayNtNtB3w_5types9Int16TypeE7try_new0E0E0CsaSXGKSfiU2E_10lance_file.exit.i.i.us.i: ; preds = %.lr.ph.i.i.us.i124
   %i.qt = getelementptr inbounds nuw i8, ptr %i.qp, i64 2 ; 2 uses
-  %i.qu = add nuw i64 %i.qo, 1
+  %i.qu = add nuw nsw i64 %i.qo, 1
   %i.qv = icmp eq ptr %i.qt, %i.qj
   br i1 %i.qv, label %.loopexit.i.i115, label %.lr.ph.i.i.us.i124
 
@@ -247,7 +247,7 @@ _RNCNvMs_NtNtCs4ytUTZt2Gw9_11arrow_array5array16dictionary_arrayINtB6_15Dictiona
   br i1 %i.rl, label %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator8try_fold9enumerateRsuINtNtNtBf_3ops12control_flow11ControlFlowTjB25_EENCINvNvB1e_4find5checkB2N_NCNvMs_NtNtCs4ytUTZt2Gw9_11arrow_array5array16dictionary_arrayINtB3s_15DictionaryArrayNtNtB3w_5types9Int16TypeE7try_new0E0E0CsaSXGKSfiU2E_10lance_file.exit.i.i.i, label %.split.i105
 
 _RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator8try_fold9enumerateRsuINtNtNtBf_3ops12control_flow11ControlFlowTjB25_EENCINvNvB1e_4find5checkB2N_NCNvMs_NtNtCs4ytUTZt2Gw9_11arrow_array5array16dictionary_arrayINtB3s_15DictionaryArrayNtNtB3w_5types9Int16TypeE7try_new0E0E0CsaSXGKSfiU2E_10lance_file.exit.i.i.i: ; preds = %_RNCNvMs_NtNtCs4ytUTZt2Gw9_11arrow_array5array16dictionary_arrayINtB6_15DictionaryArrayNtNtBa_5types9Int16TypeE7try_new0CsaSXGKSfiU2E_10lance_file.exit.i.i.i.i.i, %.lr.ph.i.i.i100
-  %i.rm = add nuw i64 %i.qw, 1
+  %i.rm = add nuw nsw i64 %i.qw, 1
   %i.rn = icmp eq ptr %i.qy, %i.qj
   br i1 %i.rn, label %.loopexit.i.i115, label %.lr.ph.i.i.i100
 
@@ -650,7 +650,7 @@ bb.mc:                                            ; preds = %bb.mb
 
 _RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator8try_fold9enumerateRtuINtNtNtBf_3ops12control_flow11ControlFlowTjB25_EENCINvNvB1e_4find5checkB2N_NCNvMs_NtNtCs4ytUTZt2Gw9_11arrow_array5array16dictionary_arrayINtB3s_15DictionaryArrayNtNtB3w_5types10UInt16TypeE7try_new0E0E0CsaSXGKSfiU2E_10lance_file.exit.i.i.us.i: ; preds = %.lr.ph.i.i.us.i422
   %i.amf = getelementptr inbounds nuw i8, ptr %i.amc, i64 2 ; 2 uses
-  %i.amg = add nuw i64 %i.amb, 1
+  %i.amg = add nuw nsw i64 %i.amb, 1
   %i.amh = icmp eq ptr %i.amf, %i.alw
   br i1 %i.amh, label %.loopexit.i.i413, label %.lr.ph.i.i.us.i422
 
@@ -690,7 +690,7 @@ _RNCNvMs_NtNtCs4ytUTZt2Gw9_11arrow_array5array16dictionary_arrayINtB6_15Dictiona
   br i1 %i.amw, label %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator8try_fold9enumerateRtuINtNtNtBf_3ops12control_flow11ControlFlowTjB25_EENCINvNvB1e_4find5checkB2N_NCNvMs_NtNtCs4ytUTZt2Gw9_11arrow_array5array16dictionary_arrayINtB3s_15DictionaryArrayNtNtB3w_5types10UInt16TypeE7try_new0E0E0CsaSXGKSfiU2E_10lance_file.exit.i.i.i, label %.split.i403
 
 _RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator8try_fold9enumerateRtuINtNtNtBf_3ops12control_flow11ControlFlowTjB25_EENCINvNvB1e_4find5checkB2N_NCNvMs_NtNtCs4ytUTZt2Gw9_11arrow_array5array16dictionary_arrayINtB3s_15DictionaryArrayNtNtB3w_5types10UInt16TypeE7try_new0E0E0CsaSXGKSfiU2E_10lance_file.exit.i.i.i: ; preds = %_RNCNvMs_NtNtCs4ytUTZt2Gw9_11arrow_array5array16dictionary_arrayINtB6_15DictionaryArrayNtNtBa_5types10UInt16TypeE7try_new0CsaSXGKSfiU2E_10lance_file.exit.i.i.i.i.i, %.lr.ph.i.i.i399
-  %i.amx = add nuw i64 %i.ami, 1
+  %i.amx = add nuw nsw i64 %i.ami, 1
   %i.amy = icmp eq ptr %i.amk, %i.alw
   br i1 %i.amy, label %.loopexit.i.i413, label %.lr.ph.i.i.i399
 
@@ -1093,7 +1093,7 @@ bb.ad:                                            ; preds = %.lr.ph, %bb.ae
   %.sroa.0.050 = phi ptr [ %i.bg, %.lr.ph ], [ %i.ca, %bb.ae ] ; 2 uses
   %.sroa.7.049 = phi i64 [ 0, %.lr.ph ], [ %i.cb, %bb.ae ] ; 3 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %.sroa.0.050, i64 2 ; 2 uses
-  %i.cb = add nuw i64 %.sroa.7.049, 1
+  %i.cb = add nuw nsw i64 %.sroa.7.049, 1
   %i.cc = load i16, ptr %.sroa.0.050, align 2, !noundef !76
   %i.cd = zext i16 %i.cc to i64                   ; 2 uses
   %i.ce = icmp ugt i64 %i.bz, %i.cd
@@ -1496,7 +1496,7 @@ bb.ad:                                            ; preds = %.lr.ph, %bb.ae
   %.sroa.0.050 = phi ptr [ %i.bg, %.lr.ph ], [ %i.ca, %bb.ae ] ; 2 uses
   %.sroa.7.049 = phi i64 [ 0, %.lr.ph ], [ %i.cb, %bb.ae ] ; 3 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %.sroa.0.050, i64 2 ; 2 uses
-  %i.cb = add nuw i64 %.sroa.7.049, 1
+  %i.cb = add nuw nsw i64 %.sroa.7.049, 1
   %i.cc = load i16, ptr %.sroa.0.050, align 2, !noundef !76
   %i.cd = sext i16 %i.cc to i64                   ; 2 uses
   %i.ce = icmp ugt i64 %i.bz, %i.cd

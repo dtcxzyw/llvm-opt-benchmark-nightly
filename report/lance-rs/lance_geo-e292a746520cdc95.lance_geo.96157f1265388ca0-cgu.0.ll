@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/lance-rs/original/lance_geo-e292a746520cdc95.lance_geo.96157f1265388ca0-cgu.0?download=true
 inline.NumInlined: 1265
 inline.NumDeleted: 690
-loop-unroll.NumCompletelyUnrolled: 38
-loop-unroll.NumUnrolled: 38
+loop-unroll.NumCompletelyUnrolled: 39
+loop-unroll.NumUnrolled: 39
 begin_hunk_0_@_RNvMs1_CsdkROKCKhesT_3wktNtB5_3Wkt20from_word_and_tokensCscSToqyP0NyK_9lance_geo:bb.a
   br label %bb.km
 
@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.c
   %.sroa.444.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %.sroa.444.0.copyload = load ptr, ptr %.sroa.444.0..sroa_idx, align 8 ; 10 uses
+  %.sroa.444.0.copyload = load ptr, ptr %.sroa.444.0..sroa_idx, align 8 ; 16 uses
   %.sroa.545.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %.sroa.545.0.copyload = load i64, ptr %.sroa.545.0..sroa_idx, align 8 ; 6 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
@@ -261,19 +261,79 @@ bb.j:                                             ; preds = %.lr.ph
   br i1 %i.ak, label %bb.j, label %.loopexit
 
 bb.k:                                             ; preds = %bb.g
-  %i.al = and i64 %.sroa.545.0.copyload, 56       ; 3 uses
+  %i.al = and i64 %.sroa.545.0.copyload, 56       ; 8 uses
   %i.am = getelementptr inbounds nuw i8, ptr %.sroa.444.0.copyload, i64 %i.al ; 7 uses
   %i.an = and i64 %.sroa.545.0.copyload, 7        ; 7 uses
   %.not.i96 = icmp eq i64 %i.al, 0
   br i1 %.not.i96, label %._crit_edge, label %_RNvMNtCscI6d9CVNmLh_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCscSToqyP0NyK_9lance_geo.exit.i
 
-bb.l:                                             ; preds = %_RNvMNtCscI6d9CVNmLh_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCscSToqyP0NyK_9lance_geo.exit.i
-  %i.ao = getelementptr inbounds nuw i8, ptr %.sroa.0.017.i98, i64 8
-  %2 = add nsw i64 %.sroa.6.0.i97, -8             ; 2 uses
-  %.not.i.a = icmp eq i64 %2, 0
-  br i1 %.not.i.a, label %._crit_edge, label %_RNvMNtCscI6d9CVNmLh_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCscSToqyP0NyK_9lance_geo.exit.i
+2:                                                ; preds = %_RNvMNtCscI6d9CVNmLh_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCscSToqyP0NyK_9lance_geo.exit.i
+  %.not.i = icmp eq i64 %i.al, 8
+  br i1 %.not.i, label %._crit_edge, label %_RNvMNtCscI6d9CVNmLh_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCscSToqyP0NyK_9lance_geo.exit.i.1
 
-._crit_edge:                                      ; preds = %bb.l, %bb.k
+_RNvMNtCscI6d9CVNmLh_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCscSToqyP0NyK_9lance_geo.exit.i.1: ; preds = %2
+  %3 = getelementptr inbounds nuw i8, ptr %.sroa.444.0.copyload, i64 8
+  %.sroa.012.0.copyload.i.1 = load i64, ptr %3, align 1, !alias.scope !2086
+  %4 = and i64 %.sroa.012.0.copyload.i.1, -9187201950435737472
+  %5 = icmp eq i64 %4, 0
+  br i1 %5, label %6, label %.loopexit
+
+6:                                                ; preds = %_RNvMNtCscI6d9CVNmLh_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCscSToqyP0NyK_9lance_geo.exit.i.1
+  %.not.i.1 = icmp eq i64 %i.al, 16
+  br i1 %.not.i.1, label %._crit_edge, label %_RNvMNtCscI6d9CVNmLh_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCscSToqyP0NyK_9lance_geo.exit.i.2
+
+_RNvMNtCscI6d9CVNmLh_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCscSToqyP0NyK_9lance_geo.exit.i.2: ; preds = %6
+  %7 = getelementptr inbounds nuw i8, ptr %.sroa.444.0.copyload, i64 16
+  %.sroa.012.0.copyload.i.2 = load i64, ptr %7, align 1, !alias.scope !2086
+  %8 = and i64 %.sroa.012.0.copyload.i.2, -9187201950435737472
+  %9 = icmp eq i64 %8, 0
+  br i1 %9, label %10, label %.loopexit
+
+10:                                               ; preds = %_RNvMNtCscI6d9CVNmLh_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCscSToqyP0NyK_9lance_geo.exit.i.2
+  %.not.i.2 = icmp eq i64 %i.al, 24
+  br i1 %.not.i.2, label %._crit_edge, label %_RNvMNtCscI6d9CVNmLh_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCscSToqyP0NyK_9lance_geo.exit.i.3
+
+_RNvMNtCscI6d9CVNmLh_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCscSToqyP0NyK_9lance_geo.exit.i.3: ; preds = %10
+  %11 = getelementptr inbounds nuw i8, ptr %.sroa.444.0.copyload, i64 24
+  %.sroa.012.0.copyload.i.3 = load i64, ptr %11, align 1, !alias.scope !2086
+  %12 = and i64 %.sroa.012.0.copyload.i.3, -9187201950435737472
+  %13 = icmp eq i64 %12, 0
+  br i1 %13, label %14, label %.loopexit
+
+14:                                               ; preds = %_RNvMNtCscI6d9CVNmLh_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCscSToqyP0NyK_9lance_geo.exit.i.3
+  %.not.i.3 = icmp eq i64 %i.al, 32
+  br i1 %.not.i.3, label %._crit_edge, label %_RNvMNtCscI6d9CVNmLh_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCscSToqyP0NyK_9lance_geo.exit.i.4
+
+_RNvMNtCscI6d9CVNmLh_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCscSToqyP0NyK_9lance_geo.exit.i.4: ; preds = %14
+  %15 = getelementptr inbounds nuw i8, ptr %.sroa.444.0.copyload, i64 32
+  %.sroa.012.0.copyload.i.4 = load i64, ptr %15, align 1, !alias.scope !2086
+  %16 = and i64 %.sroa.012.0.copyload.i.4, -9187201950435737472
+  %17 = icmp eq i64 %16, 0
+  br i1 %17, label %18, label %.loopexit
+
+18:                                               ; preds = %_RNvMNtCscI6d9CVNmLh_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCscSToqyP0NyK_9lance_geo.exit.i.4
+  %.not.i.4 = icmp eq i64 %i.al, 40
+  br i1 %.not.i.4, label %._crit_edge, label %_RNvMNtCscI6d9CVNmLh_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCscSToqyP0NyK_9lance_geo.exit.i.5
+
+_RNvMNtCscI6d9CVNmLh_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCscSToqyP0NyK_9lance_geo.exit.i.5: ; preds = %18
+  %19 = getelementptr inbounds nuw i8, ptr %.sroa.444.0.copyload, i64 40
+  %.sroa.012.0.copyload.i.5 = load i64, ptr %19, align 1, !alias.scope !2086
+  %20 = and i64 %.sroa.012.0.copyload.i.5, -9187201950435737472
+  %21 = icmp eq i64 %20, 0
+  br i1 %21, label %22, label %.loopexit
+
+22:                                               ; preds = %_RNvMNtCscI6d9CVNmLh_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCscSToqyP0NyK_9lance_geo.exit.i.5
+  %.not.i.5 = icmp eq i64 %i.al, 48
+  br i1 %.not.i.5, label %._crit_edge, label %bb.l
+
+bb.l:                                             ; preds = %22
+  %i.ao = getelementptr inbounds nuw i8, ptr %.sroa.444.0.copyload, i64 48
+  %.sroa.012.0.copyload.i.6 = load i64, ptr %i.ao, align 1, !alias.scope !2086
+  %23 = and i64 %.sroa.012.0.copyload.i.6, -9187201950435737472
+  %.not.i.a = icmp eq i64 %23, 0
+  br i1 %.not.i.a, label %._crit_edge, label %.loopexit
+
+._crit_edge:                                      ; preds = %2, %6, %10, %14, %18, %22, %bb.l, %bb.k
   %i.ap = icmp samesign eq i64 %i.an, 0
   br i1 %i.ap, label %_RNvNvNtNtCscI6d9CVNmLh_4core5slice5ascii8is_ascii7runtime.exit, label %.lr.ph100
 
@@ -342,13 +402,11 @@ bb.r:                                             ; preds = %.lr.ph100.5
   %i.bi = icmp sgt i8 %.val.i.i, -1
   br i1 %i.bi, label %bb.m, label %.loopexit
 
-_RNvMNtCscI6d9CVNmLh_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCscSToqyP0NyK_9lance_geo.exit.i: ; preds = %bb.k, %bb.l
-  %.sroa.0.017.i98 = phi ptr [ %i.ao, %bb.l ], [ %.sroa.444.0.copyload, %bb.k ] ; 2 uses
-  %.sroa.6.0.i97 = phi i64 [ %2, %bb.l ], [ %i.al, %bb.k ]
-  %.sroa.012.0.copyload.i = load i64, ptr %.sroa.0.017.i98, align 1, !alias.scope !2086
+_RNvMNtCscI6d9CVNmLh_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCscSToqyP0NyK_9lance_geo.exit.i: ; preds = %bb.k
+  %.sroa.012.0.copyload.i = load i64, ptr %.sroa.444.0.copyload, align 1, !alias.scope !2086
   %i.bj = and i64 %.sroa.012.0.copyload.i, -9187201950435737472
   %i.bk = icmp eq i64 %i.bj, 0
-  br i1 %i.bk, label %bb.l, label %.loopexit
+  br i1 %i.bk, label %2, label %.loopexit
 
 bb.s:                                             ; preds = %bb.f
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -358,7 +416,7 @@ bb.s:                                             ; preds = %bb.f
   store i64 -2, ptr %0, align 8
   br label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs40k4W9msRzi_5alloc6string6StringECscSToqyP0NyK_9lance_geo.exit64
 
-.loopexit:                                        ; preds = %.lr.ph.i.i, %.lr.ph, %_RNvMNtCscI6d9CVNmLh_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCscSToqyP0NyK_9lance_geo.exit.i, %.lr.ph100, %.lr.ph100.1, %.lr.ph100.2, %.lr.ph100.3, %.lr.ph100.4, %.lr.ph100.5, %.lr.ph100.6
+.loopexit:                                        ; preds = %.lr.ph.i.i, %.lr.ph, %_RNvMNtCscI6d9CVNmLh_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCscSToqyP0NyK_9lance_geo.exit.i, %_RNvMNtCscI6d9CVNmLh_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCscSToqyP0NyK_9lance_geo.exit.i.1, %_RNvMNtCscI6d9CVNmLh_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCscSToqyP0NyK_9lance_geo.exit.i.2, %_RNvMNtCscI6d9CVNmLh_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCscSToqyP0NyK_9lance_geo.exit.i.3, %_RNvMNtCscI6d9CVNmLh_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCscSToqyP0NyK_9lance_geo.exit.i.4, %_RNvMNtCscI6d9CVNmLh_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCscSToqyP0NyK_9lance_geo.exit.i.5, %bb.l, %.lr.ph100, %.lr.ph100.1, %.lr.ph100.2, %.lr.ph100.3, %.lr.ph100.4, %.lr.ph100.5, %.lr.ph100.6
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr @27, ptr %i.bn, align 8
   %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 16

@@ -205,7 +205,7 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.g = load i32, ptr %i.f, align 8              ; 3 uses
   %i.h = mul i32 %i.e, %i.g                       ; 4 uses
-  %i.i = lshr i32 %i.h, 3                         ; 4 uses
+  %i.i = lshr i32 %i.h, 3                         ; 3 uses
   %i.j = mul nuw nsw i32 %i.i, 12
   %i.k = add nuw nsw i32 %i.j, 2000
   %i.l = zext nneg i32 %i.k to i64
@@ -334,28 +334,23 @@ bb.f:                                             ; preds = %._crit_edge
   %i.cc = icmp ugt i32 %i.h, 15
   %i.cd = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.ce = load ptr, ptr %i.cd, align 8            ; 2 uses
-  br i1 %i.cc, label %.lr.ph102, label %._crit_edge103
-
-.lr.ph102:                                        ; preds = %bb.f
-  %umax = call i32 @llvm.umax.i32(i32 %i.i, i32 2)
-  %wide.trip.count = zext nneg i32 %umax to i64
-  br label %bb.g
+  %wide.trip.count = zext nneg i32 %i.i to i64    ; 2 uses
+  br i1 %i.cc, label %bb.g, label %._crit_edge103
 
 ._crit_edge103:                                   ; preds = %bb.g, %bb.f
   %.1.lcssa = phi i32 [ %i.cb, %bb.f ], [ %i.cx, %bb.g ]
   %i.cf = sext i32 %.1.lcssa to i64
   %i.cg = getelementptr inbounds i8, ptr %i.m, i64 %i.cf
-  %2 = zext nneg i32 %i.i to i64
-  %i.ch = getelementptr i8, ptr %i.ce, i64 %2
+  %i.ch = getelementptr i8, ptr %i.ce, i64 %wide.trip.count
   %i.ci = getelementptr i8, ptr %i.ch, i64 -1
   %i.cj = load i8, ptr %i.ci, align 1
   %i.ck = zext i8 %i.cj to i32
   %i.cl = call i32 (ptr, ptr, ...) @sprintf(ptr noundef nonnull dereferenceable(1) %i.cg, ptr noundef nonnull dereferenceable(1) @.str.275, i32 noundef %i.ck) #61 ; 0 uses
   br label %bb.h
 
-bb.g:                                             ; preds = %.lr.ph102, %bb.g
-  %indvars.iv111 = phi i64 [ 1, %.lr.ph102 ], [ %indvars.iv.next112, %bb.g ] ; 3 uses
-  %.199 = phi i32 [ %i.cb, %.lr.ph102 ], [ %i.cx, %bb.g ] ; 2 uses
+bb.g:                                             ; preds = %bb.f, %bb.g
+  %indvars.iv111 = phi i64 [ %indvars.iv.next112, %bb.g ], [ 1, %bb.f ] ; 3 uses
+  %.199 = phi i32 [ %i.cx, %bb.g ], [ %i.cb, %bb.f ] ; 2 uses
   %i.cm = sext i32 %.199 to i64
   %i.cn = getelementptr inbounds i8, ptr %i.m, i64 %i.cm
   %i.co = trunc nuw nsw i64 %indvars.iv111 to i32

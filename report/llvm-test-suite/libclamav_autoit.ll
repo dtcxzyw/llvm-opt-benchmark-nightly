@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 47
 inline.NumDeleted: 9
 loop-unroll.NumCompletelyUnrolled: 18
-loop-unroll.NumRuntimeUnrolled: 5
-loop-unroll.NumUnrolled: 24
+loop-unroll.NumRuntimeUnrolled: 7
+loop-unroll.NumUnrolled: 26
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -88,7 +88,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define dso_local range(i32 -123, 2) i32 @cli_scanautoit(i32 noundef %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #0 !guid !104 {
 bb.a:
-  %i.a = alloca [600 x i8], align 16              ; 32 uses
+  %i.a = alloca [600 x i8], align 16              ; 36 uses
   %i.b = alloca [1024 x i8], align 16             ; 9 uses
   %i.c = alloca [300 x i8], align 16              ; 33 uses
   %i.d = alloca [1024 x i8], align 16             ; 9 uses
@@ -491,32 +491,86 @@ bb.dk:                                            ; preds = %bb.dj
 .lr.ph.preheader.i.i51:                           ; preds = %bb.dj
   %i.amr = call i32 @llvm.umin.i32(i32 %i.amd, i32 20) ; 2 uses
   %i.ams = zext nneg i32 %i.amr to i64
+  %3 = add nsw i64 %i.ams, -2                     ; 3 uses
+  %4 = lshr exact i64 %3, 1
+  %5 = add nuw i64 %4, 1                          ; 2 uses
+  %6 = icmp eq i64 %3, 0
+  br i1 %6, label %.lr.ph.i.i52.epil.preheader, label %.lr.ph.preheader.i.i51.new
+
+.lr.ph.preheader.i.i51.new:                       ; preds = %.lr.ph.preheader.i.i51
+  %unroll_iter = and i64 %5, -2
   br label %.lr.ph.i.i52
 
-.lr.ph.i.i52:                                     ; preds = %bb.dm, %.lr.ph.preheader.i.i51
-  %indvars.iv.i.i53 = phi i64 [ 0, %.lr.ph.preheader.i.i51 ], [ %indvars.iv.next.i.i56, %bb.dm ] ; 2 uses
-  %.045.i.i54 = phi i32 [ 0, %.lr.ph.preheader.i.i51 ], [ %i.ana, %bb.dm ]
+.lr.ph.i.i52:                                     ; preds = %bb.dm, %.lr.ph.preheader.i.i51.new
+  %indvars.iv.i.i53 = phi i64 [ 0, %.lr.ph.preheader.i.i51.new ], [ %indvars.iv.next.i.i56.1, %bb.dm ] ; 3 uses
+  %.045.i.i54 = phi i32 [ 0, %.lr.ph.preheader.i.i51.new ], [ %i.ana, %bb.dm ]
+  %niter = phi i64 [ 0, %.lr.ph.preheader.i.i51.new ], [ %indvars.iv.next.i.i56, %bb.dm ]
   %i.amt = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.i.i53 ; 2 uses
-  %i.amu = load i8, ptr %i.amt, align 2, !tbaa !79
+  %i.amu = load i8, ptr %i.amt, align 4, !tbaa !79
   %.not43.i.i55 = icmp eq i8 %i.amu, 0
-  br i1 %.not43.i.i55, label %bb.dm, label %bb.dl
+  br i1 %.not43.i.i55, label %.lr.ph.i.i52.1, label %7
 
-bb.dl:                                            ; preds = %.lr.ph.i.i52
-  %i.amv = getelementptr inbounds nuw i8, ptr %i.amt, i64 1
+7:                                                ; preds = %.lr.ph.i.i52
+  %8 = getelementptr inbounds nuw i8, ptr %i.amt, i64 1
+  %9 = load i8, ptr %8, align 1, !tbaa !79
+  %10 = icmp eq i8 %9, 0
+  %11 = zext i1 %10 to i32
+  br label %.lr.ph.i.i52.1
+
+.lr.ph.i.i52.1:                                   ; preds = %7, %.lr.ph.i.i52
+  %12 = phi i32 [ 0, %.lr.ph.i.i52 ], [ %11, %7 ]
+  %13 = add i32 %12, %.045.i.i54
+  %14 = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.i.i53 ; 2 uses
+  %15 = getelementptr inbounds nuw i8, ptr %14, i64 2
+  %16 = load i8, ptr %15, align 2, !tbaa !79
+  %.not43.i.i55.1 = icmp eq i8 %16, 0
+  br i1 %.not43.i.i55.1, label %bb.dm, label %bb.dl
+
+bb.dl:                                            ; preds = %.lr.ph.i.i52.1
+  %i.amv = getelementptr inbounds nuw i8, ptr %14, i64 3
   %i.amw = load i8, ptr %i.amv, align 1, !tbaa !79
   %i.amx = icmp eq i8 %i.amw, 0
   %i.amy = zext i1 %i.amx to i32
   br label %bb.dm
 
-bb.dm:                                            ; preds = %bb.dl, %.lr.ph.i.i52
-  %i.amz = phi i32 [ 0, %.lr.ph.i.i52 ], [ %i.amy, %bb.dl ]
-  %i.ana = add i32 %i.amz, %.045.i.i54            ; 2 uses
-  %indvars.iv.next.i.i56 = add nuw nsw i64 %indvars.iv.i.i53, 2 ; 2 uses
-  %3 = icmp samesign ult i64 %indvars.iv.next.i.i56, %i.ams
-  br i1 %3, label %.lr.ph.i.i52, label %._crit_edge.i.i57, !llvm.loop !91
+bb.dm:                                            ; preds = %bb.dl, %.lr.ph.i.i52.1
+  %i.amz = phi i32 [ 0, %.lr.ph.i.i52.1 ], [ %i.amy, %bb.dl ]
+  %i.ana = add i32 %i.amz, %13                    ; 3 uses
+  %indvars.iv.next.i.i56.1 = add nuw nsw i64 %indvars.iv.i.i53, 4 ; 2 uses
+  %indvars.iv.next.i.i56 = add nuw nsw i64 %niter, 2 ; 2 uses
+  %niter.ncmp.1.not = icmp eq i64 %indvars.iv.next.i.i56, %unroll_iter
+  br i1 %niter.ncmp.1.not, label %._crit_edge.i.i57.unr-lcssa, label %.lr.ph.i.i52, !llvm.loop !91
 
-._crit_edge.i.i57:                                ; preds = %bb.dm
-  %i.anb = shl i32 %i.ana, 2
+._crit_edge.i.i57.unr-lcssa:                      ; preds = %bb.dm
+  %17 = and i64 %3, 2
+  %lcmp.mod.not.not = icmp eq i64 %17, 0
+  br i1 %lcmp.mod.not.not, label %.lr.ph.i.i52.epil.preheader, label %._crit_edge.i.i57
+
+.lr.ph.i.i52.epil.preheader:                      ; preds = %._crit_edge.i.i57.unr-lcssa, %.lr.ph.preheader.i.i51
+  %indvars.iv.i.i53.epil.init = phi i64 [ 0, %.lr.ph.preheader.i.i51 ], [ %indvars.iv.next.i.i56.1, %._crit_edge.i.i57.unr-lcssa ]
+  %.045.i.i54.epil.init = phi i32 [ 0, %.lr.ph.preheader.i.i51 ], [ %i.ana, %._crit_edge.i.i57.unr-lcssa ]
+  %lcmp.mod784 = trunc i64 %5 to i1
+  call void @llvm.assume(i1 %lcmp.mod784)
+  %18 = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.i.i53.epil.init ; 2 uses
+  %19 = load i8, ptr %18, align 2, !tbaa !79
+  %.not43.i.i55.epil = icmp eq i8 %19, 0
+  br i1 %.not43.i.i55.epil, label %._crit_edge.i.i57.epilog-lcssa, label %20
+
+20:                                               ; preds = %.lr.ph.i.i52.epil.preheader
+  %21 = getelementptr inbounds nuw i8, ptr %18, i64 1
+  %22 = load i8, ptr %21, align 1, !tbaa !79
+  %23 = icmp eq i8 %22, 0
+  %24 = zext i1 %23 to i32
+  br label %._crit_edge.i.i57.epilog-lcssa
+
+._crit_edge.i.i57.epilog-lcssa:                   ; preds = %20, %.lr.ph.i.i52.epil.preheader
+  %25 = phi i32 [ 0, %.lr.ph.i.i52.epil.preheader ], [ %24, %20 ]
+  %26 = add i32 %25, %.045.i.i54.epil.init
+  br label %._crit_edge.i.i57
+
+._crit_edge.i.i57:                                ; preds = %._crit_edge.i.i57.unr-lcssa, %._crit_edge.i.i57.epilog-lcssa
+  %.lcssa721 = phi i32 [ %i.ana, %._crit_edge.i.i57.unr-lcssa ], [ %26, %._crit_edge.i.i57.epilog-lcssa ]
+  %i.anb = shl i32 %.lcssa721, 2
   %.not42.i.i58 = icmp ult i32 %i.anb, %i.amr
   br i1 %.not42.i.i58, label %u2a.exit.i50, label %.lr.ph49.preheader.i.i43
 
@@ -688,32 +742,86 @@ bb.dv:                                            ; preds = %bb.du
 .lr.ph.preheader.i323.i:                          ; preds = %bb.du
   %i.apv = call i32 @llvm.umin.i32(i32 %i.apc, i32 20) ; 2 uses
   %i.apw = zext nneg i32 %i.apv to i64
+  %27 = add nsw i64 %i.apw, -2                    ; 3 uses
+  %28 = lshr exact i64 %27, 1
+  %29 = add nuw i64 %28, 1                        ; 2 uses
+  %30 = icmp eq i64 %27, 0
+  br i1 %30, label %.lr.ph.i324.i.epil.preheader, label %.lr.ph.preheader.i323.i.new
+
+.lr.ph.preheader.i323.i.new:                      ; preds = %.lr.ph.preheader.i323.i
+  %unroll_iter795 = and i64 %29, -2
   br label %.lr.ph.i324.i
 
-.lr.ph.i324.i:                                    ; preds = %bb.dx, %.lr.ph.preheader.i323.i
-  %indvars.iv.i325.i = phi i64 [ 0, %.lr.ph.preheader.i323.i ], [ %indvars.iv.next.i328.i, %bb.dx ] ; 2 uses
-  %.045.i326.i = phi i32 [ 0, %.lr.ph.preheader.i323.i ], [ %i.aqe, %bb.dx ]
+.lr.ph.i324.i:                                    ; preds = %bb.dx, %.lr.ph.preheader.i323.i.new
+  %indvars.iv.i325.i = phi i64 [ 0, %.lr.ph.preheader.i323.i.new ], [ %indvars.iv.next.i328.i.1, %bb.dx ] ; 3 uses
+  %.045.i326.i = phi i32 [ 0, %.lr.ph.preheader.i323.i.new ], [ %i.aqe, %bb.dx ]
+  %niter796 = phi i64 [ 0, %.lr.ph.preheader.i323.i.new ], [ %indvars.iv.next.i328.i, %bb.dx ]
   %i.apx = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.i325.i ; 2 uses
-  %i.apy = load i8, ptr %i.apx, align 2, !tbaa !79
+  %i.apy = load i8, ptr %i.apx, align 4, !tbaa !79
   %.not43.i327.i = icmp eq i8 %i.apy, 0
-  br i1 %.not43.i327.i, label %bb.dx, label %bb.dw
+  br i1 %.not43.i327.i, label %.lr.ph.i324.i.1, label %31
 
-bb.dw:                                            ; preds = %.lr.ph.i324.i
-  %i.apz = getelementptr inbounds nuw i8, ptr %i.apx, i64 1
+31:                                               ; preds = %.lr.ph.i324.i
+  %32 = getelementptr inbounds nuw i8, ptr %i.apx, i64 1
+  %33 = load i8, ptr %32, align 1, !tbaa !79
+  %34 = icmp eq i8 %33, 0
+  %35 = zext i1 %34 to i32
+  br label %.lr.ph.i324.i.1
+
+.lr.ph.i324.i.1:                                  ; preds = %31, %.lr.ph.i324.i
+  %36 = phi i32 [ 0, %.lr.ph.i324.i ], [ %35, %31 ]
+  %37 = add i32 %36, %.045.i326.i
+  %38 = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.i325.i ; 2 uses
+  %39 = getelementptr inbounds nuw i8, ptr %38, i64 2
+  %40 = load i8, ptr %39, align 2, !tbaa !79
+  %.not43.i327.i.1 = icmp eq i8 %40, 0
+  br i1 %.not43.i327.i.1, label %bb.dx, label %bb.dw
+
+bb.dw:                                            ; preds = %.lr.ph.i324.i.1
+  %i.apz = getelementptr inbounds nuw i8, ptr %38, i64 3
   %i.aqa = load i8, ptr %i.apz, align 1, !tbaa !79
   %i.aqb = icmp eq i8 %i.aqa, 0
   %i.aqc = zext i1 %i.aqb to i32
   br label %bb.dx
 
-bb.dx:                                            ; preds = %bb.dw, %.lr.ph.i324.i
-  %i.aqd = phi i32 [ 0, %.lr.ph.i324.i ], [ %i.aqc, %bb.dw ]
-  %i.aqe = add i32 %i.aqd, %.045.i326.i           ; 2 uses
-  %indvars.iv.next.i328.i = add nuw nsw i64 %indvars.iv.i325.i, 2 ; 2 uses
-  %4 = icmp samesign ult i64 %indvars.iv.next.i328.i, %i.apw
-  br i1 %4, label %.lr.ph.i324.i, label %._crit_edge.i329.i, !llvm.loop !91
+bb.dx:                                            ; preds = %bb.dw, %.lr.ph.i324.i.1
+  %i.aqd = phi i32 [ 0, %.lr.ph.i324.i.1 ], [ %i.aqc, %bb.dw ]
+  %i.aqe = add i32 %i.aqd, %37                    ; 3 uses
+  %indvars.iv.next.i328.i.1 = add nuw nsw i64 %indvars.iv.i325.i, 4 ; 2 uses
+  %indvars.iv.next.i328.i = add nuw nsw i64 %niter796, 2 ; 2 uses
+  %niter796.ncmp.1.not = icmp eq i64 %indvars.iv.next.i328.i, %unroll_iter795
+  br i1 %niter796.ncmp.1.not, label %._crit_edge.i329.i.unr-lcssa, label %.lr.ph.i324.i, !llvm.loop !91
 
-._crit_edge.i329.i:                               ; preds = %bb.dx
-  %i.aqf = shl i32 %i.aqe, 2
+._crit_edge.i329.i.unr-lcssa:                     ; preds = %bb.dx
+  %41 = and i64 %27, 2
+  %lcmp.mod792.not.not = icmp eq i64 %41, 0
+  br i1 %lcmp.mod792.not.not, label %.lr.ph.i324.i.epil.preheader, label %._crit_edge.i329.i
+
+.lr.ph.i324.i.epil.preheader:                     ; preds = %._crit_edge.i329.i.unr-lcssa, %.lr.ph.preheader.i323.i
+  %indvars.iv.i325.i.epil.init = phi i64 [ 0, %.lr.ph.preheader.i323.i ], [ %indvars.iv.next.i328.i.1, %._crit_edge.i329.i.unr-lcssa ]
+  %.045.i326.i.epil.init = phi i32 [ 0, %.lr.ph.preheader.i323.i ], [ %i.aqe, %._crit_edge.i329.i.unr-lcssa ]
+  %lcmp.mod794 = trunc i64 %29 to i1
+  call void @llvm.assume(i1 %lcmp.mod794)
+  %42 = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.i325.i.epil.init ; 2 uses
+  %43 = load i8, ptr %42, align 2, !tbaa !79
+  %.not43.i327.i.epil = icmp eq i8 %43, 0
+  br i1 %.not43.i327.i.epil, label %._crit_edge.i329.i.epilog-lcssa, label %44
+
+44:                                               ; preds = %.lr.ph.i324.i.epil.preheader
+  %45 = getelementptr inbounds nuw i8, ptr %42, i64 1
+  %46 = load i8, ptr %45, align 1, !tbaa !79
+  %47 = icmp eq i8 %46, 0
+  %48 = zext i1 %47 to i32
+  br label %._crit_edge.i329.i.epilog-lcssa
+
+._crit_edge.i329.i.epilog-lcssa:                  ; preds = %44, %.lr.ph.i324.i.epil.preheader
+  %49 = phi i32 [ 0, %.lr.ph.i324.i.epil.preheader ], [ %48, %44 ]
+  %50 = add i32 %49, %.045.i326.i.epil.init
+  br label %._crit_edge.i329.i
+
+._crit_edge.i329.i:                               ; preds = %._crit_edge.i329.i.unr-lcssa, %._crit_edge.i329.i.epilog-lcssa
+  %.lcssa722 = phi i32 [ %i.aqe, %._crit_edge.i329.i.unr-lcssa ], [ %50, %._crit_edge.i329.i.epilog-lcssa ]
+  %i.aqf = shl i32 %.lcssa722, 2
   %.not42.i330.i = icmp ult i32 %i.aqf, %i.apv
   br i1 %.not42.i330.i, label %u2a.exit340.i, label %.lr.ph49.preheader.i331.i
 

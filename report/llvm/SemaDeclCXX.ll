@@ -205,18 +205,18 @@ _ZNK5clang4Type6castAsINS_17FunctionProtoTypeEEEPKT_v.exit: ; preds = %bb.a, %bb
   br i1 %i.s, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %bb.c
-  %.01829.us = phi i32 [ %6, %bb.c ], [ 0, %.lr.ph ] ; 2 uses
+  %indvars.iv37 = phi i64 [ %indvars.iv.next38, %bb.c ], [ 0, %.lr.ph ] ; 2 uses
   %.02128.us = phi ptr [ %i.aw, %bb.c ], [ %i.k, %.lr.ph ] ; 2 uses
   %i.z = load ptr, ptr %i.p, align 8, !tbaa !1282
-  %5 = zext i32 %.01829.us to i64
-  %i.aa = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %5
+  %i.aa = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %indvars.iv37
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !1167 ; 3 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 24
   %.sroa.0.0.copyload.i22.us = load i32, ptr %i.ac, align 8, !tbaa !116
   %.sroa.0.0.copyload.us = load i64, ptr %.02128.us, align 8, !tbaa !92 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #26
-  %6 = add i32 %.01829.us, 1                      ; 2 uses
-  store i32 %6, ptr %i.a, align 4, !tbaa !116
+  %indvars.iv.next38 = add nuw nsw i64 %indvars.iv37, 1 ; 2 uses
+  %5 = trunc nuw nsw i64 %indvars.iv.next38 to i32
+  store i32 %5, ptr %i.a, align 4, !tbaa !116
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #26
   %i.ad = load ptr, ptr %i.ab, align 8, !tbaa !1195
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 16

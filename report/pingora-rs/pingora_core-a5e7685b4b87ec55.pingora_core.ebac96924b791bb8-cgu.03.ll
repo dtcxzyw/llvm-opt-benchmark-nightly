@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pingora-rs/original/pingora_core-a5e7685b4b87ec55.pingora_core.ebac96924b791bb8-cgu.03?download=true
 inline.NumInlined: 1136
 inline.NumDeleted: 512
-loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumCompletelyUnrolled: 2
 loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 3
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@_RNvMs2_NtCs5zWH1ndsy9S_15crossbeam_queue11array_queueINtB5_10ArrayQueueTlNtNtNtNtCskeugdADtBsi_12pingora_core10connectors4http2v213ConnectionRefEE3popB1h_:bb.a
   %i.aw = load ptr, ptr %i.av, align 8
   %i.ax = load i64, ptr %i.b, align 8, !noundef !7
@@ -205,25 +205,85 @@ bb.d:                                             ; preds = %.lr.ph
   br i1 %i.v, label %bb.d, label %.loopexit
 
 bb.e:                                             ; preds = %bb.a
-  %i.w = and i64 %2, 56                           ; 2 uses
-  %i.x = getelementptr inbounds nuw i8, ptr %1, i64 %i.w ; 8 uses
+  %i.w = and i64 %2, 56                           ; 8 uses
+  %i.x = getelementptr inbounds nuw i8, ptr %1, i64 %i.w ; 7 uses
   %i.y = and i64 %2, 7                            ; 7 uses
   %i.z = icmp samesign eq i64 %i.w, 0
-  br i1 %i.z, label %._crit_edge.i, label %.lr.ph.i.a
+  br i1 %i.z, label %._crit_edge.i, label %.lr.ph.i
 
-bb.f:                                             ; preds = %.lr.ph.i.a
-  %i.aa = getelementptr inbounds nuw i8, ptr %.sroa.01.09.i, i64 8 ; 2 uses
-  %i.ab = icmp eq ptr %i.aa, %i.x
-  br i1 %i.ab, label %._crit_edge.i, label %.lr.ph.i.a
+3:                                                ; preds = %.lr.ph.i
+  %4 = icmp samesign eq i64 %i.w, 8
+  br i1 %4, label %._crit_edge.i, label %.lr.ph.i.1
 
-.lr.ph.i.a:                                       ; preds = %bb.e, %bb.f
-  %.sroa.01.09.i = phi ptr [ %i.aa, %bb.f ], [ %1, %bb.e ] ; 2 uses
-  %.sroa.03.0.copyload.i.a = load i64, ptr %.sroa.01.09.i, align 1, !alias.scope !2257
+.lr.ph.i.1:                                       ; preds = %3
+  %5 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %.sroa.03.0.copyload.i.1 = load i64, ptr %5, align 1, !alias.scope !2257
+  %6 = and i64 %.sroa.03.0.copyload.i.1, -9187201950435737472
+  %7 = icmp eq i64 %6, 0
+  br i1 %7, label %8, label %.loopexit
+
+8:                                                ; preds = %.lr.ph.i.1
+  %9 = icmp samesign eq i64 %i.w, 16
+  br i1 %9, label %._crit_edge.i, label %.lr.ph.i.2
+
+.lr.ph.i.2:                                       ; preds = %8
+  %10 = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %.sroa.03.0.copyload.i.2 = load i64, ptr %10, align 1, !alias.scope !2257
+  %11 = and i64 %.sroa.03.0.copyload.i.2, -9187201950435737472
+  %12 = icmp eq i64 %11, 0
+  br i1 %12, label %13, label %.loopexit
+
+13:                                               ; preds = %.lr.ph.i.2
+  %14 = icmp samesign eq i64 %i.w, 24
+  br i1 %14, label %._crit_edge.i, label %.lr.ph.i.3
+
+.lr.ph.i.3:                                       ; preds = %13
+  %15 = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %.sroa.03.0.copyload.i.3 = load i64, ptr %15, align 1, !alias.scope !2257
+  %16 = and i64 %.sroa.03.0.copyload.i.3, -9187201950435737472
+  %17 = icmp eq i64 %16, 0
+  br i1 %17, label %18, label %.loopexit
+
+18:                                               ; preds = %.lr.ph.i.3
+  %19 = icmp samesign eq i64 %i.w, 32
+  br i1 %19, label %._crit_edge.i, label %.lr.ph.i.4
+
+.lr.ph.i.4:                                       ; preds = %18
+  %20 = getelementptr inbounds nuw i8, ptr %1, i64 32
+  %.sroa.03.0.copyload.i.4 = load i64, ptr %20, align 1, !alias.scope !2257
+  %21 = and i64 %.sroa.03.0.copyload.i.4, -9187201950435737472
+  %22 = icmp eq i64 %21, 0
+  br i1 %22, label %23, label %.loopexit
+
+23:                                               ; preds = %.lr.ph.i.4
+  %24 = icmp samesign eq i64 %i.w, 40
+  br i1 %24, label %._crit_edge.i, label %bb.f
+
+bb.f:                                             ; preds = %23
+  %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 40
+  %.sroa.03.0.copyload.i.5 = load i64, ptr %i.aa, align 1, !alias.scope !2257
+  %25 = and i64 %.sroa.03.0.copyload.i.5, -9187201950435737472
+  %i.ab = icmp eq i64 %25, 0
+  br i1 %i.ab, label %26, label %.loopexit
+
+26:                                               ; preds = %bb.f
+  %27 = icmp samesign eq i64 %i.w, 48
+  br i1 %27, label %._crit_edge.i, label %.lr.ph.i.a
+
+.lr.ph.i.a:                                       ; preds = %26
+  %28 = getelementptr inbounds nuw i8, ptr %1, i64 48
+  %.sroa.03.0.copyload.i.a = load i64, ptr %28, align 1, !alias.scope !2257
   %i.ac = and i64 %.sroa.03.0.copyload.i.a, -9187201950435737472
   %i.ad = icmp eq i64 %i.ac, 0
-  br i1 %i.ad, label %bb.f, label %.loopexit
+  br i1 %i.ad, label %._crit_edge.i, label %.loopexit
 
-._crit_edge.i:                                    ; preds = %bb.f, %bb.e
+.lr.ph.i:                                         ; preds = %bb.e
+  %.sroa.03.0.copyload.i = load i64, ptr %1, align 1, !alias.scope !2257
+  %29 = and i64 %.sroa.03.0.copyload.i, -9187201950435737472
+  %30 = icmp eq i64 %29, 0
+  br i1 %30, label %3, label %.loopexit
+
+._crit_edge.i:                                    ; preds = %3, %8, %13, %18, %23, %26, %.lr.ph.i.a, %bb.e
   %i.ae = icmp samesign eq i64 %i.y, 0
   br i1 %i.ae, label %.loopexit, label %.lr.ph29
 
@@ -293,8 +353,8 @@ bb.l:                                             ; preds = %.lr.ph29.5
   %i.ax = icmp sgt i8 %.val.i.i, -1
   br i1 %i.ax, label %bb.g, label %.loopexit
 
-.loopexit:                                        ; preds = %.lr.ph29.6, %.lr.ph.i.i, %.lr.ph, %bb.d, %.lr.ph.i.a, %.lr.ph29, %bb.g, %.lr.ph29.1, %bb.h, %.lr.ph29.2, %bb.i, %.lr.ph29.3, %bb.j, %.lr.ph29.4, %bb.k, %.lr.ph29.5, %bb.l, %._crit_edge.i.i, %._crit_edge.i
-  %.sink = phi i64 [ 0, %._crit_edge.i.i ], [ 0, %bb.d ], [ 1, %.lr.ph.i.i ], [ 1, %.lr.ph.i.a ], [ 0, %._crit_edge.i ], [ 1, %.lr.ph29 ], [ 0, %bb.g ], [ 1, %.lr.ph29.1 ], [ 0, %bb.h ], [ 1, %.lr.ph29.2 ], [ 0, %bb.i ], [ 1, %.lr.ph29.3 ], [ 0, %bb.j ], [ 1, %.lr.ph29.4 ], [ 0, %bb.k ], [ 1, %.lr.ph29.5 ], [ 0, %bb.l ], [ %spec.select, %.lr.ph29.6 ], [ 1, %.lr.ph ]
+.loopexit:                                        ; preds = %.lr.ph29.6, %.lr.ph.i.i, %.lr.ph, %bb.d, %.lr.ph.i, %.lr.ph.i.1, %.lr.ph.i.2, %.lr.ph.i.3, %.lr.ph.i.4, %bb.f, %.lr.ph.i.a, %.lr.ph29, %bb.g, %.lr.ph29.1, %bb.h, %.lr.ph29.2, %bb.i, %.lr.ph29.3, %bb.j, %.lr.ph29.4, %bb.k, %.lr.ph29.5, %bb.l, %._crit_edge.i.i, %._crit_edge.i
+  %.sink = phi i64 [ 0, %._crit_edge.i.i ], [ 0, %bb.d ], [ 1, %.lr.ph.i.i ], [ 1, %.lr.ph.i ], [ 0, %._crit_edge.i ], [ 1, %.lr.ph29 ], [ 0, %bb.g ], [ 1, %.lr.ph29.1 ], [ 0, %bb.h ], [ 1, %.lr.ph29.2 ], [ 0, %bb.i ], [ 1, %.lr.ph29.3 ], [ 0, %bb.j ], [ 1, %.lr.ph29.4 ], [ 0, %bb.k ], [ 1, %.lr.ph29.5 ], [ 0, %bb.l ], [ %spec.select, %.lr.ph29.6 ], [ 1, %.lr.ph.i.a ], [ 1, %bb.f ], [ 1, %.lr.ph.i.4 ], [ 1, %.lr.ph.i.3 ], [ 1, %.lr.ph.i.2 ], [ 1, %.lr.ph.i.1 ], [ 1, %.lr.ph ]
   store i64 %.sink, ptr %0, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %1, ptr %.sroa.4.0..sroa_idx, align 8

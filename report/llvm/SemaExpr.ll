@@ -205,13 +205,12 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not185, label %_ZN4llvm23SmallVectorTemplateBaseIN5clang8QualTypeELb1EE9push_backES2_.exit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.c, %bb.m
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.m ], [ 0, %bb.c ] ; 2 uses
   %.078188 = phi i1 [ %.280.ph, %bb.m ], [ false, %bb.c ] ; 2 uses
-  %.082187 = phi i32 [ %11, %bb.m ], [ 0, %bb.c ] ; 2 uses
   %.083186 = phi ptr [ %i.dz, %bb.m ], [ %i.ai, %bb.c ] ; 2 uses
   %i.am = load i64, ptr %.083186, align 8, !tbaa !788 ; 3 uses
-  %11 = add i32 %.082187, 1
-  %12 = zext i32 %.082187 to i64
-  %i.an = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %12
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %i.an = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !1514
   %i.ap = call i64 @_ZN5clang4Sema30DefaultFunctionArrayConversionEPNS_4ExprEb(ptr noundef nonnull align 8 dereferenceable(18640) %0, ptr noundef %i.ao, i1 noundef zeroext true), !inline_history !1667 ; 2 uses
   %i.aq = icmp eq i64 %i.ap, 1

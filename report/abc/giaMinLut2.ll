@@ -205,11 +205,11 @@ Abc_TtDup.exit:                                   ; preds = %Abc_Clock.exit, %.l
   %i.u = sext i32 %1 to i64
   %i.v = shl nsw i64 %i.u, 2                      ; 4 uses
   %i.w = icmp sgt i32 %i.i, 1
-  %wide.trip.count24.i57 = zext i32 %i.i to i64   ; 2 uses
   %.not55 = icmp eq i32 %5, 0                     ; 3 uses
   br i1 %i.w, label %.lr.ph.split.us.preheader, label %.lr.ph.split
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
+  %wide.trip.count24.i57 = zext nneg i32 %i.i to i64
   %wide.trip.count24.i = zext nneg i32 %i.o to i64
   %i.x = shl nuw nsw i64 %wide.trip.count24.i, 3
   %i.y = shl nuw nsw i64 %wide.trip.count24.i57, 3
@@ -264,16 +264,12 @@ bb.e:                                             ; preds = %bb.d, %Abc_TtCopy.e
   br i1 %exitcond120.not, label %._crit_edge, label %.lr.ph.split.us, !llvm.loop !251
 
 .lr.ph.split:                                     ; preds = %.lr.ph
-  br i1 %i.m, label %.lr.ph.split.split.us.preheader, label %.lr.ph.split.split
+  br i1 %i.m, label %.lr.ph.split.split.us, label %.lr.ph.split.split
 
-.lr.ph.split.split.us.preheader:                  ; preds = %.lr.ph.split
-  %8 = shl nuw nsw i64 %wide.trip.count24.i57, 3
-  br label %.lr.ph.split.split.us
-
-.lr.ph.split.split.us:                            ; preds = %.lr.ph.split.split.us.preheader, %bb.h
-  %.078.us81 = phi i32 [ %.1.us86, %bb.h ], [ 1000000000, %.lr.ph.split.split.us.preheader ] ; 2 uses
-  %.04577.us82 = phi i32 [ %.146.us85, %bb.h ], [ -1, %.lr.ph.split.split.us.preheader ]
-  %.04774.us83 = phi i32 [ %i.am, %bb.h ], [ 0, %.lr.ph.split.split.us.preheader ] ; 3 uses
+.lr.ph.split.split.us:                            ; preds = %.lr.ph.split, %bb.h
+  %.078.us81 = phi i32 [ %.1.us86, %bb.h ], [ 1000000000, %.lr.ph.split ] ; 2 uses
+  %.04577.us82 = phi i32 [ %.146.us85, %bb.h ], [ -1, %.lr.ph.split ]
+  %.04774.us83 = phi i32 [ %i.am, %bb.h ], [ 0, %.lr.ph.split ] ; 3 uses
   %i.ag = icmp ne i32 %.04774.us83, 0
   %i.ah = zext i1 %i.ag to i32
   %i.ai = call i32 @Gia_ManPermuteTreeOne(ptr noundef %i.l, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %i.ah, ptr noundef nonnull %i.b, i32 noundef 0, i32 noundef %5) ; 0 uses
@@ -297,7 +293,8 @@ Abc_TtCopy.exit.thread.us88:                      ; preds = %Abc_TtCopy.exit.us8
   br label %.lr.ph18.preheader.i56.us89
 
 .lr.ph18.preheader.i56.us89:                      ; preds = %Abc_TtCopy.exit.thread.us88, %Abc_TtCopy.exit.us84
-  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.l, ptr align 8 %0, i64 %8, i1 false), !tbaa !26
+  %8 = load i64, ptr %0, align 8, !tbaa !26
+  store i64 %8, ptr %i.l, align 8, !tbaa !26
   br i1 %.not55, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph18.preheader.i56.us89

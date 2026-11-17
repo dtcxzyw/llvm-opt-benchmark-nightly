@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/influxdb-rs/original/influxdb3_cache-873b4e3417b63821.influxdb3_cache.d4363e94e8c1e8df-cgu.04?download=true
 inline.NumInlined: 1300
 inline.NumDeleted: 714
-loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumUnrolled: 1
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_RNvXs_NtNtCscdodAO9FK5_5alloc3vec21spec_from_iter_nestedINtB6_3VecINtNtB8_4sync3ArcDNtNtCs8eNff9Ojv9L_24datafusion_physical_plan14execution_plan13ExecutionPlanEL_EEINtB4_18SpecFromIterNestedB12_INtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters6cloned6ClonedINtNtB6_9into_iter8IntoIterRB12_EEE9from_iterCsidB8gjke19X_15influxdb3_cache:bb.a
   invoke void @_RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters6clonedINtB4_6ClonedINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterRINtNtB18_4sync3ArcDNtNtCs8eNff9Ojv9L_24datafusion_physical_plan14execution_plan13ExecutionPlanEL_EEENtNtNtB8_6traits8iterator8Iterator9size_hintCsidB8gjke19X_15influxdb3_cache(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.c, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.e)
           to label %bb.g unwind label %bb.l, !noalias !2202
@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.k, %.lr.ph.i.i.i
   %i.ab = phi i64 [ %i.v, %.lr.ph.i.i.i.i ], [ %i.bk, %bb.k ] ; 3 uses
   %.sroa.0.013.i.i.i.i = phi i64 [ 0, %.lr.ph.i.i.i.i ], [ %i.ac, %bb.k ] ; 2 uses
   %i.ac = add nuw i64 %.sroa.0.013.i.i.i.i, 1     ; 2 uses
-  %i.ad = add nuw i64 %.sroa.0.013.i.i.i.i, %.sroa.4.0.copyload ; 9 uses
+  %i.ad = add nuw i64 %.sroa.0.013.i.i.i.i, %.sroa.4.0.copyload ; 15 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !2243
   %i.ae = load ptr, ptr %i.x, align 8, !noalias !2244, !align !6, !noundef !5 ; 3 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.ae, null
@@ -213,7 +213,7 @@ bb.f:                                             ; preds = %bb.k, %.lr.ph.i.i.i
 bb.g:                                             ; preds = %bb.f
   %i.af = load i64, ptr %i.aa, align 8, !noalias !2244 ; 2 uses
   %i.ag = and i64 %i.af, 1152921504606846968      ; 3 uses
-  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.ae, i64 %i.ag ; 2 uses
+  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.ae, i64 %i.ag ; 7 uses
   %.not.i.i.i.i.i.i.i28 = icmp eq i64 %i.ag, 0
   br i1 %.not.i.i.i.i.i.i.i28, label %._crit_edge, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsJ_NtB9_3cmpjNtB1L_13SliceContains14slice_contains0ECsidB8gjke19X_15influxdb3_cache.exit.i.i.i.i.i.i.i
 
@@ -225,21 +225,74 @@ bb.h:                                             ; preds = %_RINvXs2J_NtNtCs4NR
 
 ._crit_edge:                                      ; preds = %bb.h, %bb.g
   %i.ak = shl i64 %i.af, 3
-  %.idx = and i64 %i.ak, 56                       ; 2 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.ah, i64 %.idx
+  %.idx = and i64 %i.ak, 56                       ; 7 uses
   %.not.not.not.i.not.not.i.i.i.i.i.i.i31 = icmp samesign eq i64 %.idx, 0
-  br i1 %.not.not.not.i.not.not.i.i.i.i.i.i.i31, label %_RNvXsJ_NtNtCs4NRVxsYgnAr_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.i.i.i.i.i.i, label %.lr.ph.a
+  br i1 %.not.not.not.i.not.not.i.i.i.i.i.i.i31, label %_RNvXsJ_NtNtCs4NRVxsYgnAr_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.i.i.i.i.i.i, label %.lr.ph
 
-bb.i:                                             ; preds = %.lr.ph.a
-  %i.al = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
-  %.not.not.not.i.not.not.i.i.i.i.i.i.i.a = icmp eq ptr %i.al, %2
-  br i1 %.not.not.not.i.not.not.i.i.i.i.i.i.i.a, label %_RNvXsJ_NtNtCs4NRVxsYgnAr_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.i.i.i.i.i.i, label %.lr.ph.a
+2:                                                ; preds = %.lr.ph
+  %.not.not.not.i.not.not.i.i.i.i.i.i.i = icmp samesign eq i64 %.idx, 8
+  br i1 %.not.not.not.i.not.not.i.i.i.i.i.i.i, label %_RNvXsJ_NtNtCs4NRVxsYgnAr_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.i.i.i.i.i.i, label %.lr.ph.1
 
-.lr.ph.a:                                         ; preds = %._crit_edge, %bb.i
-  %3 = phi ptr [ %i.al, %bb.i ], [ %i.ah, %._crit_edge ] ; 2 uses
-  %.val3.i.i.i.i.i.i.i.i.a = load i64, ptr %3, align 8, !alias.scope !2245, !noalias !2246, !noundef !5
+.lr.ph.1:                                         ; preds = %2
+  %3 = getelementptr inbounds nuw i8, ptr %i.ah, i64 8
+  %.val3.i.i.i.i.i.i.i.i.1 = load i64, ptr %3, align 8, !alias.scope !2245, !noalias !2246, !noundef !5
+  %4 = icmp eq i64 %.val3.i.i.i.i.i.i.i.i.1, %i.ad
+  br i1 %4, label %.loopexit.i.i.i.i.i.i, label %5
+
+5:                                                ; preds = %.lr.ph.1
+  %.not.not.not.i.not.not.i.i.i.i.i.i.i.1 = icmp samesign eq i64 %.idx, 16
+  br i1 %.not.not.not.i.not.not.i.i.i.i.i.i.i.1, label %_RNvXsJ_NtNtCs4NRVxsYgnAr_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.i.i.i.i.i.i, label %.lr.ph.2
+
+.lr.ph.2:                                         ; preds = %5
+  %6 = getelementptr inbounds nuw i8, ptr %i.ah, i64 16
+  %.val3.i.i.i.i.i.i.i.i.2 = load i64, ptr %6, align 8, !alias.scope !2245, !noalias !2246, !noundef !5
+  %7 = icmp eq i64 %.val3.i.i.i.i.i.i.i.i.2, %i.ad
+  br i1 %7, label %.loopexit.i.i.i.i.i.i, label %8
+
+8:                                                ; preds = %.lr.ph.2
+  %.not.not.not.i.not.not.i.i.i.i.i.i.i.2 = icmp samesign eq i64 %.idx, 24
+  br i1 %.not.not.not.i.not.not.i.i.i.i.i.i.i.2, label %_RNvXsJ_NtNtCs4NRVxsYgnAr_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.i.i.i.i.i.i, label %.lr.ph.3
+
+.lr.ph.3:                                         ; preds = %8
+  %9 = getelementptr inbounds nuw i8, ptr %i.ah, i64 24
+  %.val3.i.i.i.i.i.i.i.i.3 = load i64, ptr %9, align 8, !alias.scope !2245, !noalias !2246, !noundef !5
+  %10 = icmp eq i64 %.val3.i.i.i.i.i.i.i.i.3, %i.ad
+  br i1 %10, label %.loopexit.i.i.i.i.i.i, label %11
+
+11:                                               ; preds = %.lr.ph.3
+  %.not.not.not.i.not.not.i.i.i.i.i.i.i.3 = icmp samesign eq i64 %.idx, 32
+  br i1 %.not.not.not.i.not.not.i.i.i.i.i.i.i.3, label %_RNvXsJ_NtNtCs4NRVxsYgnAr_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.i.i.i.i.i.i, label %.lr.ph.4
+
+.lr.ph.4:                                         ; preds = %11
+  %12 = getelementptr inbounds nuw i8, ptr %i.ah, i64 32
+  %.val3.i.i.i.i.i.i.i.i.4 = load i64, ptr %12, align 8, !alias.scope !2245, !noalias !2246, !noundef !5
+  %13 = icmp eq i64 %.val3.i.i.i.i.i.i.i.i.4, %i.ad
+  br i1 %13, label %.loopexit.i.i.i.i.i.i, label %14
+
+14:                                               ; preds = %.lr.ph.4
+  %.not.not.not.i.not.not.i.i.i.i.i.i.i.4 = icmp samesign eq i64 %.idx, 40
+  br i1 %.not.not.not.i.not.not.i.i.i.i.i.i.i.4, label %_RNvXsJ_NtNtCs4NRVxsYgnAr_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.i.i.i.i.i.i, label %bb.i
+
+bb.i:                                             ; preds = %14
+  %i.al = getelementptr inbounds nuw i8, ptr %i.ah, i64 40
+  %.val3.i.i.i.i.i.i.i.i.5 = load i64, ptr %i.al, align 8, !alias.scope !2245, !noalias !2246, !noundef !5
+  %.not.not.not.i.not.not.i.i.i.i.i.i.i.a = icmp eq i64 %.val3.i.i.i.i.i.i.i.i.5, %i.ad
+  br i1 %.not.not.not.i.not.not.i.i.i.i.i.i.i.a, label %.loopexit.i.i.i.i.i.i, label %15
+
+15:                                               ; preds = %bb.i
+  %.not.not.not.i.not.not.i.i.i.i.i.i.i.5 = icmp samesign eq i64 %.idx, 48
+  br i1 %.not.not.not.i.not.not.i.i.i.i.i.i.i.5, label %_RNvXsJ_NtNtCs4NRVxsYgnAr_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.i.i.i.i.i.i, label %.lr.ph.a
+
+.lr.ph.a:                                         ; preds = %15
+  %16 = getelementptr inbounds nuw i8, ptr %i.ah, i64 48
+  %.val3.i.i.i.i.i.i.i.i.a = load i64, ptr %16, align 8, !alias.scope !2245, !noalias !2246, !noundef !5
   %i.am = icmp eq i64 %.val3.i.i.i.i.i.i.i.i.a, %i.ad
-  br i1 %i.am, label %.loopexit.i.i.i.i.i.i, label %bb.i
+  br i1 %i.am, label %.loopexit.i.i.i.i.i.i, label %_RNvXsJ_NtNtCs4NRVxsYgnAr_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.i.i.i.i.i.i
+
+.lr.ph:                                           ; preds = %._crit_edge
+  %.val3.i.i.i.i.i.i.i.i = load i64, ptr %i.ah, align 8, !alias.scope !2245, !noalias !2246, !noundef !5
+  %17 = icmp eq i64 %.val3.i.i.i.i.i.i.i.i, %i.ad
+  br i1 %17, label %.loopexit.i.i.i.i.i.i, label %2
 
 _RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsJ_NtB9_3cmpjNtB1L_13SliceContains14slice_contains0ECsidB8gjke19X_15influxdb3_cache.exit.i.i.i.i.i.i.i: ; preds = %bb.g, %bb.h
   %.sroa.0.05.i.i.i.i.i.i.i30 = phi ptr [ %i.ai, %bb.h ], [ %i.ae, %bb.g ] ; 9 uses
@@ -280,7 +333,7 @@ bb.j:                                             ; preds = %bb.f
   invoke void @_RNvMs_NtNtCs6ePPILGZvJ2_11arrow_array7builder26generic_bytes_view_builderINtB4_22GenericByteViewBuilderNtNtB8_5types14StringViewTypeE13with_capacityCsidB8gjke19X_15influxdb3_cache(ptr noalias noundef nonnull sret([208 x i8]) align 8 captures(none) dereferenceable(208) %i.b, i64 noundef 1024)
           to label %bb.k unwind label %.loopexit.split-lp.loopexit.i.i.i.i, !noalias !2242
 
-.loopexit.i.i.i.i.i.i:                            ; preds = %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsJ_NtB9_3cmpjNtB1L_13SliceContains14slice_contains0ECsidB8gjke19X_15influxdb3_cache.exit.i.i.i.i.i.i.i, %.lr.ph.a
+.loopexit.i.i.i.i.i.i:                            ; preds = %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsJ_NtB9_3cmpjNtB1L_13SliceContains14slice_contains0ECsidB8gjke19X_15influxdb3_cache.exit.i.i.i.i.i.i.i, %.lr.ph, %.lr.ph.1, %.lr.ph.2, %.lr.ph.3, %.lr.ph.4, %bb.i, %.lr.ph.a
   invoke void @_RNvMs_NtNtCs6ePPILGZvJ2_11arrow_array7builder26generic_bytes_view_builderINtB4_22GenericByteViewBuilderNtNtB8_5types14StringViewTypeE13with_capacityCsidB8gjke19X_15influxdb3_cache(ptr noalias noundef nonnull sret([208 x i8]) align 8 captures(none) dereferenceable(208) %i.a, i64 noundef 1024)
           to label %.noexc11.i.i.i.i unwind label %.loopexit.split-lp.loopexit.i.i.i.i, !noalias !2242
 
@@ -288,8 +341,8 @@ bb.j:                                             ; preds = %bb.f
   %.sroa.03.0.copyload.i.i.i.i.i.i = load i64, ptr %i.a, align 8, !noalias !2248
   br label %_RNvXsJ_NtNtCs4NRVxsYgnAr_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.i.i.i.i.i.i
 
-_RNvXsJ_NtNtCs4NRVxsYgnAr_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.i.i.i.i.i.i: ; preds = %bb.i, %._crit_edge, %.noexc11.i.i.i.i
-  %.sroa.03.0.i.i.i.i.i.i = phi i64 [ %.sroa.03.0.copyload.i.i.i.i.i.i, %.noexc11.i.i.i.i ], [ -1, %._crit_edge ], [ -1, %bb.i ]
+_RNvXsJ_NtNtCs4NRVxsYgnAr_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.i.i.i.i.i.i: ; preds = %2, %5, %8, %11, %14, %15, %.lr.ph.a, %._crit_edge, %.noexc11.i.i.i.i
+  %.sroa.03.0.i.i.i.i.i.i = phi i64 [ %.sroa.03.0.copyload.i.i.i.i.i.i, %.noexc11.i.i.i.i ], [ -1, %._crit_edge ], [ -1, %.lr.ph.a ], [ -1, %15 ], [ -1, %14 ], [ -1, %11 ], [ -1, %8 ], [ -1, %5 ], [ -1, %2 ]
   store i64 %.sroa.03.0.i.i.i.i.i.i, ptr %i.b, align 8, !noalias !2249
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(200) %.sroa.4.0..sroa_idx.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(200) %i.z, i64 200, i1 false), !noalias !2249
   br label %bb.k

@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/qdrant-rs/original/qdrant.qdrant.3f8cc1c7dccbb09-cgu.011?download=true
 inline.NumInlined: 4847
 inline.NumDeleted: 2086
-loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumCompletelyUnrolled: 2
 loop-unroll.NumRuntimeUnrolled: 7
-loop-unroll.NumUnrolled: 8
+loop-unroll.NumUnrolled: 9
 begin_hunk_0_@_RINvMsi_NtCsjqcU1oJFKXj_9hashbrown3rawINtB6_12RawIterRangeTyNtNtCs577yCKf7gy3_4http3uri3UriEE9next_implKb0_ECsl8OoimOLbh_6qdrant:bb.a
 
 ; Function Attrs: nonlazybind uwtable
@@ -205,9 +205,9 @@ bb.d:                                             ; preds = %bb.c
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1.i.i) ]
   %i.ab = load ptr, ptr %i.k, align 8, !noalias !3128, !nonnull !16, !noundef !16 ; 2 uses
   %i.ac = load i64, ptr %i.l, align 8, !noalias !3128, !noundef !16 ; 2 uses
-  %.val.i.i.i = load i64, ptr %i.y, align 8, !alias.scope !3129 ; 9 uses
+  %.val.i.i.i = load i64, ptr %i.y, align 8, !alias.scope !3129 ; 15 uses
   %i.ad = and i64 %i.ac, 1152921504606846968      ; 3 uses
-  %i.ae = getelementptr inbounds nuw [8 x i8], ptr %i.ab, i64 %i.ad ; 2 uses
+  %i.ae = getelementptr inbounds nuw [8 x i8], ptr %i.ab, i64 %i.ad ; 7 uses
   %.not.i.i.i.i53 = icmp eq i64 %i.ad, 0
   br i1 %.not.i.i.i.i53, label %._crit_edge56, label %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsC_NtB9_3cmpyNtB1L_13SliceContains14slice_contains0ECsl8OoimOLbh_6qdrant.exit.i.i.i.i
 
@@ -219,21 +219,75 @@ bb.e:                                             ; preds = %_RINvXs2J_NtNtCskKL
 
 ._crit_edge56:                                    ; preds = %bb.e, %bb.d
   %i.ah = shl i64 %i.ac, 3
-  %.idx = and i64 %i.ah, 56                       ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.ae, i64 %.idx
+  %.idx = and i64 %i.ah, 56                       ; 7 uses
   %.not.not.not.i.not.not.i.i.i.i57 = icmp samesign eq i64 %.idx, 0
-  br i1 %.not.not.not.i.not.not.i.i.i.i57, label %_RNvXsC_NtNtCskKLDkoKarTP_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit.i.i.i, label %.lr.ph59.a
+  br i1 %.not.not.not.i.not.not.i.i.i.i57, label %_RNvXsC_NtNtCskKLDkoKarTP_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit.i.i.i, label %.lr.ph59
 
-bb.f:                                             ; preds = %.lr.ph59.a
-  %i.ai = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
-  %.not.not.not.i.not.not.i.i.i.i.a = icmp eq ptr %i.ai, %3
-  br i1 %.not.not.not.i.not.not.i.i.i.i.a, label %_RNvXsC_NtNtCskKLDkoKarTP_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit.i.i.i, label %.lr.ph59.a
+3:                                                ; preds = %.lr.ph59
+  %.not.not.not.i.not.not.i.i.i.i = icmp samesign eq i64 %.idx, 8
+  br i1 %.not.not.not.i.not.not.i.i.i.i, label %_RNvXsC_NtNtCskKLDkoKarTP_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit.i.i.i, label %.lr.ph59.1
 
-.lr.ph59.a:                                       ; preds = %._crit_edge56, %bb.f
-  %4 = phi ptr [ %i.ai, %bb.f ], [ %i.ae, %._crit_edge56 ] ; 2 uses
-  %.val2.i.i.i.i.i.a = load i64, ptr %4, align 8, !alias.scope !3130, !noalias !3131, !noundef !16
+.lr.ph59.1:                                       ; preds = %3
+  %4 = getelementptr inbounds nuw i8, ptr %i.ae, i64 8
+  %.val2.i.i.i.i.i.1 = load i64, ptr %4, align 8, !alias.scope !3130, !noalias !3131, !noundef !16
+  %5 = icmp eq i64 %.val2.i.i.i.i.i.1, %.val.i.i.i
+  br i1 %5, label %_RNvXsC_NtNtCskKLDkoKarTP_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit.i.i.i, label %6
+
+6:                                                ; preds = %.lr.ph59.1
+  %.not.not.not.i.not.not.i.i.i.i.1 = icmp samesign eq i64 %.idx, 16
+  br i1 %.not.not.not.i.not.not.i.i.i.i.1, label %_RNvXsC_NtNtCskKLDkoKarTP_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit.i.i.i, label %.lr.ph59.2
+
+.lr.ph59.2:                                       ; preds = %6
+  %7 = getelementptr inbounds nuw i8, ptr %i.ae, i64 16
+  %.val2.i.i.i.i.i.2 = load i64, ptr %7, align 8, !alias.scope !3130, !noalias !3131, !noundef !16
+  %8 = icmp eq i64 %.val2.i.i.i.i.i.2, %.val.i.i.i
+  br i1 %8, label %_RNvXsC_NtNtCskKLDkoKarTP_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit.i.i.i, label %9
+
+9:                                                ; preds = %.lr.ph59.2
+  %.not.not.not.i.not.not.i.i.i.i.2 = icmp samesign eq i64 %.idx, 24
+  br i1 %.not.not.not.i.not.not.i.i.i.i.2, label %_RNvXsC_NtNtCskKLDkoKarTP_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit.i.i.i, label %.lr.ph59.3
+
+.lr.ph59.3:                                       ; preds = %9
+  %10 = getelementptr inbounds nuw i8, ptr %i.ae, i64 24
+  %.val2.i.i.i.i.i.3 = load i64, ptr %10, align 8, !alias.scope !3130, !noalias !3131, !noundef !16
+  %11 = icmp eq i64 %.val2.i.i.i.i.i.3, %.val.i.i.i
+  br i1 %11, label %_RNvXsC_NtNtCskKLDkoKarTP_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit.i.i.i, label %12
+
+12:                                               ; preds = %.lr.ph59.3
+  %.not.not.not.i.not.not.i.i.i.i.3 = icmp samesign eq i64 %.idx, 32
+  br i1 %.not.not.not.i.not.not.i.i.i.i.3, label %_RNvXsC_NtNtCskKLDkoKarTP_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit.i.i.i, label %bb.f
+
+bb.f:                                             ; preds = %12
+  %i.ai = getelementptr inbounds nuw i8, ptr %i.ae, i64 32
+  %.val2.i.i.i.i.i.4 = load i64, ptr %i.ai, align 8, !alias.scope !3130, !noalias !3131, !noundef !16
+  %.not.not.not.i.not.not.i.i.i.i.a = icmp eq i64 %.val2.i.i.i.i.i.4, %.val.i.i.i
+  br i1 %.not.not.not.i.not.not.i.i.i.i.a, label %_RNvXsC_NtNtCskKLDkoKarTP_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit.i.i.i, label %13
+
+13:                                               ; preds = %bb.f
+  %.not.not.not.i.not.not.i.i.i.i.4 = icmp samesign eq i64 %.idx, 40
+  br i1 %.not.not.not.i.not.not.i.i.i.i.4, label %_RNvXsC_NtNtCskKLDkoKarTP_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit.i.i.i, label %.lr.ph59.a
+
+.lr.ph59.a:                                       ; preds = %13
+  %14 = getelementptr inbounds nuw i8, ptr %i.ae, i64 40
+  %.val2.i.i.i.i.i.a = load i64, ptr %14, align 8, !alias.scope !3130, !noalias !3131, !noundef !16
   %i.aj = icmp eq i64 %.val2.i.i.i.i.i.a, %.val.i.i.i
-  br i1 %i.aj, label %_RNvXsC_NtNtCskKLDkoKarTP_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit.i.i.i, label %bb.f
+  br i1 %i.aj, label %_RNvXsC_NtNtCskKLDkoKarTP_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit.i.i.i, label %15
+
+15:                                               ; preds = %.lr.ph59.a
+  %.not.not.not.i.not.not.i.i.i.i.5 = icmp samesign eq i64 %.idx, 48
+  br i1 %.not.not.not.i.not.not.i.i.i.i.5, label %_RNvXsC_NtNtCskKLDkoKarTP_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit.i.i.i, label %.lr.ph59.6
+
+.lr.ph59.6:                                       ; preds = %15
+  %16 = getelementptr inbounds nuw i8, ptr %i.ae, i64 48
+  %.val2.i.i.i.i.i.6 = load i64, ptr %16, align 8, !alias.scope !3130, !noalias !3131, !noundef !16
+  %17 = icmp eq i64 %.val2.i.i.i.i.i.6, %.val.i.i.i
+  %spec.select = select i1 %17, i8 0, i8 1
+  br label %_RNvXsC_NtNtCskKLDkoKarTP_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit.i.i.i
+
+.lr.ph59:                                         ; preds = %._crit_edge56
+  %.val2.i.i.i.i.i = load i64, ptr %i.ae, align 8, !alias.scope !3130, !noalias !3131, !noundef !16
+  %18 = icmp eq i64 %.val2.i.i.i.i.i, %.val.i.i.i
+  br i1 %18, label %_RNvXsC_NtNtCskKLDkoKarTP_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit.i.i.i, label %3
 
 _RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsC_NtB9_3cmpyNtB1L_13SliceContains14slice_contains0ECsl8OoimOLbh_6qdrant.exit.i.i.i.i: ; preds = %bb.d, %bb.e
   %.sroa.0.05.i.i.i.i55 = phi ptr [ %i.af, %bb.e ], [ %i.ab, %bb.d ] ; 9 uses
@@ -270,8 +324,8 @@ _RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits
   %i.bf = or i1 %i.bc, %i.be
   br i1 %i.bf, label %_RNvXsC_NtNtCskKLDkoKarTP_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit.i.i.i, label %bb.e
 
-_RNvXsC_NtNtCskKLDkoKarTP_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit.i.i.i: ; preds = %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsC_NtB9_3cmpyNtB1L_13SliceContains14slice_contains0ECsl8OoimOLbh_6qdrant.exit.i.i.i.i, %bb.f, %.lr.ph59.a, %._crit_edge56, %bb.c
-  %.sroa.0.0.i.i.i = phi i8 [ 0, %bb.c ], [ 0, %.lr.ph59.a ], [ 1, %._crit_edge56 ], [ 1, %bb.f ], [ 0, %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsC_NtB9_3cmpyNtB1L_13SliceContains14slice_contains0ECsl8OoimOLbh_6qdrant.exit.i.i.i.i ]
+_RNvXsC_NtNtCskKLDkoKarTP_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit.i.i.i: ; preds = %.lr.ph59.6, %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsC_NtB9_3cmpyNtB1L_13SliceContains14slice_contains0ECsl8OoimOLbh_6qdrant.exit.i.i.i.i, %3, %.lr.ph59, %.lr.ph59.1, %6, %.lr.ph59.2, %9, %.lr.ph59.3, %12, %bb.f, %13, %.lr.ph59.a, %15, %._crit_edge56, %bb.c
+  %.sroa.0.0.i.i.i = phi i8 [ 0, %bb.c ], [ 0, %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsC_NtB9_3cmpyNtB1L_13SliceContains14slice_contains0ECsl8OoimOLbh_6qdrant.exit.i.i.i.i ], [ 1, %._crit_edge56 ], [ 1, %3 ], [ 0, %.lr.ph59 ], [ 0, %.lr.ph59.1 ], [ 1, %6 ], [ 0, %.lr.ph59.2 ], [ 1, %9 ], [ 0, %.lr.ph59.3 ], [ 1, %12 ], [ 0, %bb.f ], [ 1, %13 ], [ 0, %.lr.ph59.a ], [ 1, %15 ], [ %spec.select, %.lr.ph59.6 ]
   %i.bg = load i64, ptr %i.m, align 8, !alias.scope !3133, !noalias !3128, !noundef !16
   %i.bh = icmp eq i64 %i.bg, 0
   br i1 %i.bh, label %_RNCNvNtNtNtCsl8OoimOLbh_6qdrant6common13telemetry_ops21distributed_telemetry20aggregate_peers_info0B9_.exit.i.i, label %bb.g

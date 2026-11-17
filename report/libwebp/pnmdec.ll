@@ -1,7 +1,7 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libwebp/original/pnmdec?download=true
 inline.NumInlined: 10
 inline.NumDeleted: 4
-loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumRuntimeUnrolled: 4
 loop-unroll.NumUnrolled: 4
 begin_hunk_0_@ReadPNM:bb.a
   %i.ra = getelementptr inbounds nuw i8, ptr %.0104156.us162.us.us, i64 %index
@@ -204,6 +204,7 @@ bb.bw:                                            ; preds = %bb.bv, %bb.bu
 bb.bx:                                            ; preds = %bb.bz, %.lr.ph.us.us172.us
   %indvars.iv224 = phi i64 [ 0, %.lr.ph.us.us172.us ], [ %indvars.iv.next225.1, %bb.bz ] ; 3 uses
   %.0102152.us.us.us166.us177.us = phi i32 [ 0, %.lr.ph.us.us172.us ], [ %.1.us.us.us171.us.us.1, %bb.bz ] ; 2 uses
+  %niter372 = phi i64 [ 0, %.lr.ph.us.us172.us ], [ %niter372.next.1, %bb.bz ]
   %i.vh = getelementptr inbounds nuw i8, ptr %i.vg, i64 %indvars.iv224
   %i.vi = load i8, ptr %i.vh, align 1, !tbaa !29
   %i.vj = sext i32 %.0102152.us.us.us166.us177.us to i64
@@ -226,8 +227,9 @@ bb.by:                                            ; preds = %bb.bx
 
 bb.bz:                                            ; preds = %bb.by, %bb.bx
   %.1.us.us.us171.us.us.1 = phi i32 [ %i.vl, %bb.bx ], [ %i.vs, %bb.by ]
-  %indvars.iv.next225.1 = add nuw nsw i64 %indvars.iv224, 2 ; 2 uses
-  %exitcond228.not.1 = icmp eq i64 %indvars.iv.next225.1, %wide.trip.count247
+  %indvars.iv.next225.1 = add nuw nsw i64 %indvars.iv224, 2
+  %niter372.next.1 = add i64 %niter372, 2         ; 2 uses
+  %exitcond228.not.1 = icmp eq i64 %niter372.next.1, %wide.trip.count247
   br i1 %exitcond228.not.1, label %..loopexit134_crit_edge.split.us.us.split.split.us.split.us179.us, label %bb.bx, !llvm.loop !13
 
 ..loopexit134_crit_edge.split.us.us.split.split.us.split.us179.us: ; preds = %bb.bz

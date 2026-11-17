@@ -205,11 +205,10 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecINtNtBG_
   %.sroa.414.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 8 ; 2 uses
   %.sroa.515.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 16 ; 3 uses
   %i.cl = mul i64 %2, 10                          ; 2 uses
+  %.sroa.0.0.i = call i64 @llvm.umin.i64(i64 %i.cl, i64 512)
   %.not424 = icmp eq i64 %i.cl, 0
   %i.cm = getelementptr inbounds nuw i8, ptr %i.k, i64 8 ; 2 uses
   %i.cn = getelementptr inbounds nuw i8, ptr %i.k, i64 16 ; 3 uses
-  %3 = call i64 @llvm.umax.i64(i64 %i.cl, i64 1)
-  %umax = call i64 @llvm.umin.i64(i64 %3, i64 512)
   br label %bb.y
 
 ._crit_edge423:                                   ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc2rc2RcINtNtB4_4cell7RefCellNtNtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7lattice10HypothesisEEEB1y_.exit166, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecINtNtBG_2rc2RcINtNtB4_4cell7RefCellNtNtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7lattice4NodeEEEEB1O_.exit
@@ -612,7 +611,7 @@ bb.bx:                                            ; preds = %.lr.ph416
   store i64 %.sroa.523.0.copyload.i.i127, ptr %.sroa.13.16..sroa_idx8.i.i135, align 8, !noalias !1899
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.9.i.i121)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
-  %exitcond.not = icmp eq i64 %i.hr, %umax
+  %exitcond.not = icmp eq i64 %i.hr, %.sroa.0.0.i
   br i1 %exitcond.not, label %._crit_edge417, label %.lr.ph416
 
 .thread232:                                       ; preds = %bb.bu, %bb.bm

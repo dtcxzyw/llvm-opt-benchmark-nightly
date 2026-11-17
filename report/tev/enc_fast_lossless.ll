@@ -205,7 +205,7 @@ bb.a:
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !972, !nonnull !121, !align !176
   %i.k = load i64, ptr %i.j, align 8, !tbaa !68
-  %i.l = sub i64 %i.k, %i.e                       ; 5 uses
+  %i.l = sub i64 %i.k, %i.e                       ; 3 uses
   %.sroa.speculated28 = tail call i64 @llvm.umin.i64(i64 %i.l, i64 256) ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #37
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -406,9 +406,7 @@ _ZNSt3__16vectorINS_5arrayINS1_IsLm352EEELm2EEENS_9allocatorIS3_EEEC2Em.exit.i.i
   %min.iters.check222 = icmp ult i64 %i.aq, 4
   %n.vec224 = and i64 %i.aq, -4                   ; 3 uses
   %cmp.n242 = icmp eq i64 %i.aq, %n.vec224
-  %min.iters.check189 = icmp ult i64 %i.l, 8
   %stride.check201 = icmp slt i64 %i.aa, 0
-  %min.iters.check140 = icmp ult i64 %i.l, 8
   %stride.check145 = icmp slt i64 %i.aa, 0
   %min.iters.check146 = icmp ult i64 %i.l, 16
   %i.dd = and i64 %.sroa.speculated28, 8
@@ -502,7 +500,7 @@ scalar.ph221.preheader:                           ; preds = %.lr.ph.i.i, %middle
 ._crit_edge.i.i:                                  ; preds = %scalar.ph221, %middle.block241
   %.pre.i = load ptr, ptr %i.a, align 16, !tbaa !92 ; 17 uses
   switch i64 %i.aq, label %._crit_edge.i.._crit_edge.thread.i_crit_edge.i [
-    i64 1, label %8
+    i64 1, label %iter.check
     i64 2, label %bb.d
     i64 3, label %bb.e
   ]
@@ -536,11 +534,8 @@ scalar.ph221:                                     ; preds = %scalar.ph221.prehea
   %exitcond.not.i.i = icmp eq i64 %i.er, %i.aq
   br i1 %exitcond.not.i.i, label %._crit_edge.i.i, label %scalar.ph221, !llvm.loop !942
 
-8:                                                ; preds = %._crit_edge.i.i
-  br i1 %.not.i72.i.i, label %.lr.ph84.i.i, label %iter.check
-
-iter.check:                                       ; preds = %8
-  br i1 %min.iters.check140, label %.lr.ph.i.i.i.preheader, label %vector.memcheck141
+iter.check:                                       ; preds = %._crit_edge.i.i
+  br i1 %.not.i72.i.i, label %.lr.ph84.i.i, label %vector.memcheck141
 
 vector.memcheck141:                               ; preds = %iter.check
   %i.es = getelementptr i8, ptr %.pre.i, i64 %i.cv
@@ -579,8 +574,8 @@ vec.epilog.vector.body.preheader:                 ; preds = %vector.main.loop.it
   %index153.ph = phi i64 [ 0, %vector.main.loop.iter.check ], [ %n.vec, %vec.epilog.iter.check ]
   br label %vec.epilog.vector.body
 
-.lr.ph.i.i.i.preheader:                           ; preds = %iter.check, %vector.memcheck141, %vec.epilog.iter.check
-  %.06.i.i.i.ph = phi i64 [ 0, %vector.memcheck141 ], [ %n.vec, %vec.epilog.iter.check ], [ 0, %iter.check ]
+.lr.ph.i.i.i.preheader:                           ; preds = %vector.memcheck141, %vec.epilog.iter.check
+  %.06.i.i.i.ph = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.memcheck141 ]
   br label %.lr.ph.i.i.i
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body.preheader, %vec.epilog.vector.body
@@ -659,15 +654,9 @@ bb.d:                                             ; preds = %._crit_edge.i.i
 bb.e:                                             ; preds = %._crit_edge.i.i
   %i.gu = load ptr, ptr %i.cg, align 8, !tbaa !92 ; 6 uses
   %i.gv = load ptr, ptr %i.ch, align 16, !tbaa !92 ; 6 uses
-  br i1 %.not.i72.i.i, label %.lr.ph84.i.i, label %.lr.ph.i73.i.i.preheader
+  br i1 %.not.i72.i.i, label %.lr.ph84.i.i, label %vector.memcheck190
 
-.lr.ph.i73.i.i.preheader:                         ; preds = %bb.e
-  br i1 %min.iters.check189, label %.lr.ph.i73.i.i.preheader249, label %vector.memcheck190
-
-.lr.ph.i73.i.i.preheader249:                      ; preds = %vector.memcheck190, %.lr.ph.i73.i.i.preheader
-  br label %.lr.ph.i73.i.i
-
-vector.memcheck190:                               ; preds = %.lr.ph.i73.i.i.preheader
+vector.memcheck190:                               ; preds = %bb.e
   %i.gw = getelementptr i8, ptr %i.gu, i64 %i.db  ; 3 uses
   %i.gx = getelementptr i8, ptr %i.gv, i64 %i.db  ; 3 uses
   %i.gy = getelementptr i8, ptr %.pre.i, i64 %i.db ; 3 uses
@@ -695,7 +684,7 @@ vector.memcheck190:                               ; preds = %.lr.ph.i73.i.i.preh
   %bound1212 = icmp ult ptr %scevgep187, %i.gy
   %found.conflict213 = and i1 %bound0211, %bound1212
   %conflict.rdx214 = or i1 %conflict.rdx210, %found.conflict213
-  br i1 %conflict.rdx214, label %.lr.ph.i73.i.i.preheader249, label %vector.body216
+  br i1 %conflict.rdx214, label %.lr.ph.i73.i.i, label %vector.body216
 
 vector.body216:                                   ; preds = %vector.memcheck190, %vector.body216
   %index217 = phi i64 [ %index.next218, %vector.body216 ], [ 0, %vector.memcheck190 ] ; 12 uses
@@ -805,8 +794,8 @@ vector.body216:                                   ; preds = %vector.memcheck190,
   %i.kv = icmp eq i64 %index.next218, %i.z
   br i1 %i.kv, label %.lr.ph84.i.i, label %vector.body216, !llvm.loop !954
 
-.lr.ph.i73.i.i:                                   ; preds = %.lr.ph.i73.i.i.preheader249, %.lr.ph.i73.i.i
-  %.017.i.i.i = phi i64 [ %i.lp, %.lr.ph.i73.i.i ], [ 0, %.lr.ph.i73.i.i.preheader249 ] ; 5 uses
+.lr.ph.i73.i.i:                                   ; preds = %vector.memcheck190, %.lr.ph.i73.i.i
+  %.017.i.i.i = phi i64 [ %i.lp, %.lr.ph.i73.i.i ], [ 0, %vector.memcheck190 ] ; 5 uses
   %i.kw = mul nuw nsw i64 %.017.i.i.i, 3
   %i.kx = getelementptr inbounds nuw i8, ptr %i.di, i64 %i.kw ; 3 uses
   %i.ky = load i8, ptr %i.kx, align 1, !tbaa !85
@@ -1064,7 +1053,7 @@ vector.body:                                      ; preds = %vector.memcheck, %v
 _ZN22default_implementation12_GLOBAL__N_19FillRowG8IsEEvPKhmPT_.exit.i.i: ; preds = %vector.body, %.lr.ph.i76.i.i, %._crit_edge.thread.i.i
   br i1 %.not54.i, label %.loopexit.i.i, label %.lr.ph84.i.i
 
-.lr.ph84.i.i:                                     ; preds = %vector.body216, %.lr.ph.i73.i.i, %.lr.ph.i70.i.i, %vec.epilog.vector.body, %.lr.ph.i.i.i, %middle.block152, %_ZN22default_implementation12_GLOBAL__N_19FillRowG8IsEEvPKhmPT_.exit.i.i, %bb.e, %bb.d, %8
+.lr.ph84.i.i:                                     ; preds = %vector.body216, %.lr.ph.i73.i.i, %.lr.ph.i70.i.i, %vec.epilog.vector.body, %.lr.ph.i.i.i, %middle.block152, %_ZN22default_implementation12_GLOBAL__N_19FillRowG8IsEEvPKhmPT_.exit.i.i, %bb.e, %bb.d, %iter.check
   %.not.i.i = icmp eq i64 %.06688.i.i, 0
   br i1 %.not.i.i, label %.critedge.us.i.i.preheader, label %.lr.ph84.split.i.i.preheader
 
@@ -1467,7 +1456,7 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !1084, !nonnull !121, !align !176
   %i.l = load i64, ptr %i.k, align 8, !tbaa !68
-  %i.m = sub i64 %i.l, %i.f                       ; 10 uses
+  %i.m = sub i64 %i.l, %i.f                       ; 5 uses
   %.sroa.speculated28 = tail call i64 @llvm.umin.i64(i64 %i.m, i64 256) ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #37
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -1704,21 +1693,16 @@ _ZNSt3__16vectorINS_5arrayINS1_IsLm352EEELm2EEENS_9allocatorIS3_EEEC2Em.exit.i.i
   %min.iters.check505 = icmp ult i64 %i.as, 4
   %n.vec507 = and i64 %i.as, -4                   ; 3 uses
   %cmp.n525 = icmp eq i64 %i.as, %n.vec507
-  %min.iters.check472 = icmp ult i64 %i.m, 8
   %stride.check484 = icmp slt i64 %i.ac, 0
-  %min.iters.check408 = icmp ult i64 %i.m, 8
   %stride.check420 = icmp slt i64 %i.ac, 0
   %min.iters.check353 = icmp samesign ult i64 %i.ab, 12
   %stride.check361 = icmp slt i64 %i.ac, 0
-  %min.iters.check313 = icmp ult i64 %i.m, 8
   %stride.check321 = icmp slt i64 %i.ac, 0
-  %min.iters.check267 = icmp ult i64 %i.m, 8
   %min.iters.check271 = icmp ult i64 %i.m, 16
   %i.eg = and i64 %.sroa.speculated28, 8
   %n.vec273 = and i64 %.sroa.speculated28, 496    ; 4 uses
   %cmp.n280 = icmp eq i64 %i.ab, %n.vec273
   %min.epilog.iters.check284.not.not = icmp eq i64 %i.eg, 0
-  %min.iters.check251 = icmp ult i64 %i.m, 8
   %min.iters.check253 = icmp ult i64 %i.m, 16
   %i.eh = and i64 %.sroa.speculated28, 8
   %n.vec = and i64 %.sroa.speculated28, 496       ; 4 uses
@@ -1809,7 +1793,7 @@ scalar.ph504.preheader:                           ; preds = %.lr.ph.i.i, %middle
   %.pre.i = load ptr, ptr %i.b, align 16, !tbaa !92 ; 38 uses
   %.pre.i249 = ptrtoaddr ptr %.pre.i to i64       ; 2 uses
   switch i64 %i.as, label %._crit_edge.i.._crit_edge.thread.i_crit_edge.i [
-    i64 1, label %8
+    i64 1, label %bb.d
     i64 2, label %bb.e
     i64 3, label %bb.g
   ]
@@ -1843,14 +1827,11 @@ scalar.ph504:                                     ; preds = %scalar.ph504.prehea
   %exitcond.not.i.i = icmp eq i64 %i.fu, %i.as
   br i1 %exitcond.not.i.i, label %._crit_edge.i.i, label %scalar.ph504, !llvm.loop !1027
 
-8:                                                ; preds = %._crit_edge.i.i
-  br i1 %i.aw, label %bb.d, label %9
-
-bb.d:                                             ; preds = %8
-  br i1 %.not.i97.i.i, label %.lr.ph125.i.i, label %iter.check
+bb.d:                                             ; preds = %._crit_edge.i.i
+  br i1 %i.aw, label %iter.check, label %iter.check281
 
 iter.check:                                       ; preds = %bb.d
-  br i1 %min.iters.check251, label %.lr.ph.i.i.i.preheader, label %vector.memcheck252
+  br i1 %.not.i97.i.i, label %.lr.ph125.i.i, label %vector.memcheck252
 
 vector.memcheck252:                               ; preds = %iter.check
   %i.fv = mul i64 %.078129.i.i, %i.dc
@@ -1890,8 +1871,8 @@ vec.epilog.vector.body.preheader:                 ; preds = %vector.main.loop.it
   %index260.ph = phi i64 [ 0, %vector.main.loop.iter.check ], [ %n.vec, %vec.epilog.iter.check ]
   br label %vec.epilog.vector.body
 
-.lr.ph.i.i.i.preheader:                           ; preds = %iter.check, %vector.memcheck252, %vec.epilog.iter.check
-  %.09.i.i.i.ph = phi i64 [ 0, %vector.memcheck252 ], [ %n.vec, %vec.epilog.iter.check ], [ 0, %iter.check ]
+.lr.ph.i.i.i.preheader:                           ; preds = %vector.memcheck252, %vec.epilog.iter.check
+  %.09.i.i.i.ph = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.memcheck252 ]
   br label %.lr.ph.i.i.i
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body.preheader, %vec.epilog.vector.body
@@ -1939,11 +1920,8 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %exitcond.not.i.i.i.3 = icmp eq i64 %i.hf, %i.ab
   br i1 %exitcond.not.i.i.i.3, label %.lr.ph125.i.i, label %.lr.ph.i.i.i, !llvm.loop !1030
 
-9:                                                ; preds = %8
-  br i1 %.not.i97.i.i, label %.lr.ph125.i.i, label %iter.check281
-
-iter.check281:                                    ; preds = %9
-  br i1 %min.iters.check267, label %.lr.ph.i82.i.i.preheader, label %vector.memcheck268
+iter.check281:                                    ; preds = %bb.d
+  br i1 %.not.i97.i.i, label %.lr.ph125.i.i, label %vector.memcheck268
 
 vector.memcheck268:                               ; preds = %iter.check281
   %i.hg = mul i64 %.078129.i.i, %i.dc
@@ -1981,8 +1959,8 @@ vec.epilog.vector.body287.preheader:              ; preds = %vector.main.loop.it
   %index288.ph = phi i64 [ 0, %vector.main.loop.iter.check270 ], [ %n.vec273, %vec.epilog.iter.check282 ]
   br label %vec.epilog.vector.body287
 
-.lr.ph.i82.i.i.preheader:                         ; preds = %iter.check281, %vector.memcheck268, %vec.epilog.iter.check282
-  %.08.i.i.i.ph = phi i64 [ 0, %vector.memcheck268 ], [ %n.vec273, %vec.epilog.iter.check282 ], [ 0, %iter.check281 ]
+.lr.ph.i82.i.i.preheader:                         ; preds = %vector.memcheck268, %vec.epilog.iter.check282
+  %.08.i.i.i.ph = phi i64 [ %n.vec273, %vec.epilog.iter.check282 ], [ 0, %vector.memcheck268 ]
   br label %.lr.ph.i82.i.i
 
 vec.epilog.vector.body287:                        ; preds = %vec.epilog.vector.body287.preheader, %vec.epilog.vector.body287
@@ -2027,16 +2005,10 @@ vec.epilog.vector.body287:                        ; preds = %vec.epilog.vector.b
 
 bb.e:                                             ; preds = %._crit_edge.i.i
   %i.ik = load ptr, ptr %i.cl, align 8, !tbaa !92 ; 12 uses
-  br i1 %i.aw, label %10, label %bb.f
+  br i1 %i.aw, label %.lr.ph.i86.i.i.preheader, label %bb.f
 
-10:                                               ; preds = %bb.e
-  br i1 %.not.i97.i.i, label %.lr.ph125.i.i, label %.lr.ph.i86.i.i.preheader
-
-.lr.ph.i86.i.i.preheader:                         ; preds = %10
-  br i1 %min.iters.check313, label %.lr.ph.i86.i.i.preheader536, label %vector.memcheck314
-
-.lr.ph.i86.i.i.preheader536:                      ; preds = %vector.memcheck314, %.lr.ph.i86.i.i.preheader
-  br label %.lr.ph.i86.i.i
+.lr.ph.i86.i.i.preheader:                         ; preds = %bb.e
+  br i1 %.not.i97.i.i, label %.lr.ph125.i.i, label %vector.memcheck314
 
 vector.memcheck314:                               ; preds = %.lr.ph.i86.i.i.preheader
   %i.il = getelementptr i8, ptr %.pre.i, i64 %i.dk ; 2 uses
@@ -2053,7 +2025,7 @@ vector.memcheck314:                               ; preds = %.lr.ph.i86.i.i.preh
   %bound1324 = icmp ult ptr %scevgep311, %i.im
   %found.conflict325 = and i1 %bound0323, %bound1324
   %conflict.rdx326 = or i1 %conflict.rdx322, %found.conflict325
-  br i1 %conflict.rdx326, label %.lr.ph.i86.i.i.preheader536, label %vector.body328
+  br i1 %conflict.rdx326, label %.lr.ph.i86.i.i, label %vector.body328
 
 vector.body328:                                   ; preds = %vector.memcheck314, %vector.body328
   %index329 = phi i64 [ %index.next331, %vector.body328 ], [ 0, %vector.memcheck314 ] ; 4 uses
@@ -2072,8 +2044,8 @@ vector.body328:                                   ; preds = %vector.memcheck314,
   %i.iw = icmp eq i64 %index.next331, %i.ab
   br i1 %i.iw, label %.lr.ph125.i.i, label %vector.body328, !llvm.loop !1038
 
-.lr.ph.i86.i.i:                                   ; preds = %.lr.ph.i86.i.i, %.lr.ph.i86.i.i.preheader536
-  %.017.i.i.i = phi i64 [ 0, %.lr.ph.i86.i.i.preheader536 ], [ %i.jm, %.lr.ph.i86.i.i ] ; 5 uses
+.lr.ph.i86.i.i:                                   ; preds = %vector.memcheck314, %.lr.ph.i86.i.i
+  %.017.i.i.i = phi i64 [ %i.jm, %.lr.ph.i86.i.i ], [ 0, %vector.memcheck314 ] ; 5 uses
   %i.ix = shl nuw nsw i64 %.017.i.i.i, 2
   %i.iy = getelementptr inbounds nuw i8, ptr %i.el, i64 %i.ix ; 2 uses
   %.val15.i.i.i = load i16, ptr %i.iy, align 1
@@ -2170,16 +2142,10 @@ vector.body368:                                   ; preds = %vector.memcheck354,
 bb.g:                                             ; preds = %._crit_edge.i.i
   %i.kh = load ptr, ptr %i.cl, align 8, !tbaa !92 ; 12 uses
   %i.ki = load ptr, ptr %i.cm, align 16, !tbaa !92 ; 12 uses
-  br i1 %i.aw, label %11, label %12
+  br i1 %i.aw, label %.lr.ph.i94.i.i.preheader, label %.lr.ph.i98.i.i.preheader
 
-11:                                               ; preds = %bb.g
-  br i1 %.not.i97.i.i, label %.lr.ph125.i.i, label %.lr.ph.i94.i.i.preheader
-
-.lr.ph.i94.i.i.preheader:                         ; preds = %11
-  br i1 %min.iters.check408, label %.lr.ph.i94.i.i.preheader542, label %vector.memcheck409
-
-.lr.ph.i94.i.i.preheader542:                      ; preds = %vector.memcheck409, %.lr.ph.i94.i.i.preheader
-  br label %.lr.ph.i94.i.i
+.lr.ph.i94.i.i.preheader:                         ; preds = %bb.g
+  br i1 %.not.i97.i.i, label %.lr.ph125.i.i, label %vector.memcheck409
 
 vector.memcheck409:                               ; preds = %.lr.ph.i94.i.i.preheader
   %i.kj = getelementptr i8, ptr %i.kh, i64 %i.dy  ; 3 uses
@@ -2209,7 +2175,7 @@ vector.memcheck409:                               ; preds = %.lr.ph.i94.i.i.preh
   %bound1431 = icmp ult ptr %scevgep406, %i.kl
   %found.conflict432 = and i1 %bound0430, %bound1431
   %conflict.rdx433 = or i1 %conflict.rdx429, %found.conflict432
-  br i1 %conflict.rdx433, label %.lr.ph.i94.i.i.preheader542, label %vector.body435
+  br i1 %conflict.rdx433, label %.lr.ph.i94.i.i, label %vector.body435
 
 vector.body435:                                   ; preds = %vector.memcheck409, %vector.body435
   %index436 = phi i64 [ %index.next437, %vector.body435 ], [ 0, %vector.memcheck409 ] ; 12 uses
@@ -2319,8 +2285,8 @@ vector.body435:                                   ; preds = %vector.memcheck409,
   %i.oi = icmp eq i64 %index.next437, %i.ab
   br i1 %i.oi, label %.lr.ph125.i.i, label %vector.body435, !llvm.loop !1051
 
-.lr.ph.i94.i.i:                                   ; preds = %.lr.ph.i94.i.i.preheader542, %.lr.ph.i94.i.i
-  %.025.i.i.i = phi i64 [ %i.oz, %.lr.ph.i94.i.i ], [ 0, %.lr.ph.i94.i.i.preheader542 ] ; 5 uses
+.lr.ph.i94.i.i:                                   ; preds = %vector.memcheck409, %.lr.ph.i94.i.i
+  %.025.i.i.i = phi i64 [ %i.oz, %.lr.ph.i94.i.i ], [ 0, %vector.memcheck409 ] ; 5 uses
   %i.oj = mul nuw nsw i64 %.025.i.i.i, 6
   %i.ok = getelementptr inbounds nuw i8, ptr %i.el, i64 %i.oj ; 3 uses
   %.val23.i.i.i = load i16, ptr %i.ok, align 1
@@ -2347,14 +2313,8 @@ vector.body435:                                   ; preds = %vector.memcheck409,
   %exitcond.not.i96.i.i = icmp eq i64 %i.oz, %i.ab
   br i1 %exitcond.not.i96.i.i, label %.lr.ph125.i.i, label %.lr.ph.i94.i.i, !llvm.loop !1052
 
-12:                                               ; preds = %bb.g
-  br i1 %.not.i97.i.i, label %.lr.ph125.i.i, label %.lr.ph.i98.i.i.preheader
-
-.lr.ph.i98.i.i.preheader:                         ; preds = %12
-  br i1 %min.iters.check472, label %.lr.ph.i98.i.i.preheader545, label %vector.memcheck473
-
-.lr.ph.i98.i.i.preheader545:                      ; preds = %vector.memcheck473, %.lr.ph.i98.i.i.preheader
-  br label %.lr.ph.i98.i.i
+.lr.ph.i98.i.i.preheader:                         ; preds = %bb.g
+  br i1 %.not.i97.i.i, label %.lr.ph125.i.i, label %vector.memcheck473
 
 vector.memcheck473:                               ; preds = %.lr.ph.i98.i.i.preheader
   %i.pa = getelementptr i8, ptr %i.kh, i64 %i.ef  ; 3 uses
@@ -2384,7 +2344,7 @@ vector.memcheck473:                               ; preds = %.lr.ph.i98.i.i.preh
   %bound1495 = icmp ult ptr %scevgep470, %i.pc
   %found.conflict496 = and i1 %bound0494, %bound1495
   %conflict.rdx497 = or i1 %conflict.rdx493, %found.conflict496
-  br i1 %conflict.rdx497, label %.lr.ph.i98.i.i.preheader545, label %vector.body499
+  br i1 %conflict.rdx497, label %.lr.ph.i98.i.i, label %vector.body499
 
 vector.body499:                                   ; preds = %vector.memcheck473, %vector.body499
   %index500 = phi i64 [ %index.next501, %vector.body499 ], [ 0, %vector.memcheck473 ] ; 12 uses
@@ -2491,8 +2451,8 @@ vector.body499:                                   ; preds = %vector.memcheck473,
   %i.sw = icmp eq i64 %index.next501, %i.ab
   br i1 %i.sw, label %.lr.ph125.i.i, label %vector.body499, !llvm.loop !1058
 
-.lr.ph.i98.i.i:                                   ; preds = %.lr.ph.i98.i.i.preheader545, %.lr.ph.i98.i.i
-  %.022.i.i.i = phi i64 [ %i.tk, %.lr.ph.i98.i.i ], [ 0, %.lr.ph.i98.i.i.preheader545 ] ; 5 uses
+.lr.ph.i98.i.i:                                   ; preds = %vector.memcheck473, %.lr.ph.i98.i.i
+  %.022.i.i.i = phi i64 [ %i.tk, %.lr.ph.i98.i.i ], [ 0, %vector.memcheck473 ] ; 5 uses
   %i.sx = mul nuw nsw i64 %.022.i.i.i, 6
   %i.sy = getelementptr inbounds nuw i8, ptr %i.el, i64 %i.sx ; 3 uses
   %.val20.i.i.i = load i16, ptr %i.sy, align 1
@@ -2895,7 +2855,7 @@ vector.body242:                                   ; preds = %vector.memcheck200,
 _ZN22default_implementation12_GLOBAL__N_110FillRowG16ILb1EsEEvPKhmPT0_.exit.i.i: ; preds = %vector.body242, %.lr.ph.i106.i.i, %vector.body, %.lr.ph.i102.i.i, %bb.i, %bb.h
   br i1 %.not59.i, label %.loopexit.i.i, label %.lr.ph125.i.i
 
-.lr.ph125.i.i:                                    ; preds = %vector.body499, %.lr.ph.i98.i.i, %vector.body435, %.lr.ph.i94.i.i, %vector.body368, %.lr.ph.i90.i.i, %vector.body328, %.lr.ph.i86.i.i, %vec.epilog.vector.body287, %.lr.ph.i82.i.i, %vec.epilog.vector.body, %.lr.ph.i.i.i, %middle.block279, %middle.block259, %_ZN22default_implementation12_GLOBAL__N_110FillRowG16ILb1EsEEvPKhmPT0_.exit.i.i, %12, %11, %bb.f, %10, %9, %bb.d
+.lr.ph125.i.i:                                    ; preds = %vector.body499, %.lr.ph.i98.i.i, %vector.body435, %.lr.ph.i94.i.i, %vector.body368, %.lr.ph.i90.i.i, %vector.body328, %.lr.ph.i86.i.i, %vec.epilog.vector.body287, %.lr.ph.i82.i.i, %vec.epilog.vector.body, %.lr.ph.i.i.i, %middle.block279, %middle.block259, %_ZN22default_implementation12_GLOBAL__N_110FillRowG16ILb1EsEEvPKhmPT0_.exit.i.i, %.lr.ph.i98.i.i.preheader, %.lr.ph.i94.i.i.preheader, %bb.f, %.lr.ph.i86.i.i.preheader, %iter.check281, %iter.check
   %.not.i.i = icmp eq i64 %.078129.i.i, 0         ; 4 uses
   br i1 %i.ei, label %.epil.preheader554, label %.lr.ph125.i.i.new
 
@@ -3290,7 +3250,7 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !1195, !nonnull !121, !align !176
   %i.l = load i64, ptr %i.k, align 8, !tbaa !68
-  %i.m = sub i64 %i.l, %i.f                       ; 10 uses
+  %i.m = sub i64 %i.l, %i.f                       ; 5 uses
   %.sroa.speculated28 = tail call i64 @llvm.umin.i64(i64 %i.m, i64 256) ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #37
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -3527,21 +3487,16 @@ _ZNSt3__16vectorINS_5arrayINS1_IsLm352EEELm2EEENS_9allocatorIS3_EEEC2Em.exit.i.i
   %min.iters.check505 = icmp ult i64 %i.as, 4
   %n.vec507 = and i64 %i.as, -4                   ; 3 uses
   %cmp.n525 = icmp eq i64 %i.as, %n.vec507
-  %min.iters.check472 = icmp ult i64 %i.m, 8
   %stride.check484 = icmp slt i64 %i.ac, 0
-  %min.iters.check408 = icmp ult i64 %i.m, 8
   %stride.check420 = icmp slt i64 %i.ac, 0
   %min.iters.check353 = icmp samesign ult i64 %i.ab, 12
   %stride.check361 = icmp slt i64 %i.ac, 0
-  %min.iters.check313 = icmp ult i64 %i.m, 8
   %stride.check321 = icmp slt i64 %i.ac, 0
-  %min.iters.check267 = icmp ult i64 %i.m, 8
   %min.iters.check271 = icmp ult i64 %i.m, 16
   %i.eg = and i64 %.sroa.speculated28, 8
   %n.vec273 = and i64 %.sroa.speculated28, 496    ; 4 uses
   %cmp.n280 = icmp eq i64 %i.ab, %n.vec273
   %min.epilog.iters.check284.not.not = icmp eq i64 %i.eg, 0
-  %min.iters.check251 = icmp ult i64 %i.m, 8
   %min.iters.check253 = icmp ult i64 %i.m, 16
   %i.eh = and i64 %.sroa.speculated28, 8
   %n.vec = and i64 %.sroa.speculated28, 496       ; 4 uses
@@ -3632,7 +3587,7 @@ scalar.ph504.preheader:                           ; preds = %.lr.ph.i.i, %middle
   %.pre.i = load ptr, ptr %i.b, align 16, !tbaa !92 ; 38 uses
   %.pre.i249 = ptrtoaddr ptr %.pre.i to i64       ; 2 uses
   switch i64 %i.as, label %._crit_edge.i.._crit_edge.thread.i_crit_edge.i [
-    i64 1, label %8
+    i64 1, label %bb.d
     i64 2, label %bb.e
     i64 3, label %bb.g
   ]
@@ -3666,14 +3621,11 @@ scalar.ph504:                                     ; preds = %scalar.ph504.prehea
   %exitcond.not.i.i = icmp eq i64 %i.fu, %i.as
   br i1 %exitcond.not.i.i, label %._crit_edge.i.i, label %scalar.ph504, !llvm.loop !1138
 
-8:                                                ; preds = %._crit_edge.i.i
-  br i1 %i.aw, label %bb.d, label %9
-
-bb.d:                                             ; preds = %8
-  br i1 %.not.i97.i.i, label %.lr.ph125.i.i, label %iter.check
+bb.d:                                             ; preds = %._crit_edge.i.i
+  br i1 %i.aw, label %iter.check, label %iter.check281
 
 iter.check:                                       ; preds = %bb.d
-  br i1 %min.iters.check251, label %.lr.ph.i.i.i.preheader, label %vector.memcheck252
+  br i1 %.not.i97.i.i, label %.lr.ph125.i.i, label %vector.memcheck252
 
 vector.memcheck252:                               ; preds = %iter.check
   %i.fv = mul i64 %.078129.i.i, %i.dc
@@ -3713,8 +3665,8 @@ vec.epilog.vector.body.preheader:                 ; preds = %vector.main.loop.it
   %index260.ph = phi i64 [ 0, %vector.main.loop.iter.check ], [ %n.vec, %vec.epilog.iter.check ]
   br label %vec.epilog.vector.body
 
-.lr.ph.i.i.i.preheader:                           ; preds = %iter.check, %vector.memcheck252, %vec.epilog.iter.check
-  %.09.i.i.i.ph = phi i64 [ 0, %vector.memcheck252 ], [ %n.vec, %vec.epilog.iter.check ], [ 0, %iter.check ]
+.lr.ph.i.i.i.preheader:                           ; preds = %vector.memcheck252, %vec.epilog.iter.check
+  %.09.i.i.i.ph = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.memcheck252 ]
   br label %.lr.ph.i.i.i
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body.preheader, %vec.epilog.vector.body
@@ -3762,11 +3714,8 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %exitcond.not.i.i.i.3 = icmp eq i64 %i.hf, %i.ab
   br i1 %exitcond.not.i.i.i.3, label %.lr.ph125.i.i, label %.lr.ph.i.i.i, !llvm.loop !1141
 
-9:                                                ; preds = %8
-  br i1 %.not.i97.i.i, label %.lr.ph125.i.i, label %iter.check281
-
-iter.check281:                                    ; preds = %9
-  br i1 %min.iters.check267, label %.lr.ph.i82.i.i.preheader, label %vector.memcheck268
+iter.check281:                                    ; preds = %bb.d
+  br i1 %.not.i97.i.i, label %.lr.ph125.i.i, label %vector.memcheck268
 
 vector.memcheck268:                               ; preds = %iter.check281
   %i.hg = mul i64 %.078129.i.i, %i.dc
@@ -3804,8 +3753,8 @@ vec.epilog.vector.body287.preheader:              ; preds = %vector.main.loop.it
   %index288.ph = phi i64 [ 0, %vector.main.loop.iter.check270 ], [ %n.vec273, %vec.epilog.iter.check282 ]
   br label %vec.epilog.vector.body287
 
-.lr.ph.i82.i.i.preheader:                         ; preds = %iter.check281, %vector.memcheck268, %vec.epilog.iter.check282
-  %.08.i.i.i.ph = phi i64 [ 0, %vector.memcheck268 ], [ %n.vec273, %vec.epilog.iter.check282 ], [ 0, %iter.check281 ]
+.lr.ph.i82.i.i.preheader:                         ; preds = %vector.memcheck268, %vec.epilog.iter.check282
+  %.08.i.i.i.ph = phi i64 [ %n.vec273, %vec.epilog.iter.check282 ], [ 0, %vector.memcheck268 ]
   br label %.lr.ph.i82.i.i
 
 vec.epilog.vector.body287:                        ; preds = %vec.epilog.vector.body287.preheader, %vec.epilog.vector.body287
@@ -3850,16 +3799,10 @@ vec.epilog.vector.body287:                        ; preds = %vec.epilog.vector.b
 
 bb.e:                                             ; preds = %._crit_edge.i.i
   %i.ik = load ptr, ptr %i.cl, align 8, !tbaa !92 ; 12 uses
-  br i1 %i.aw, label %10, label %bb.f
+  br i1 %i.aw, label %.lr.ph.i86.i.i.preheader, label %bb.f
 
-10:                                               ; preds = %bb.e
-  br i1 %.not.i97.i.i, label %.lr.ph125.i.i, label %.lr.ph.i86.i.i.preheader
-
-.lr.ph.i86.i.i.preheader:                         ; preds = %10
-  br i1 %min.iters.check313, label %.lr.ph.i86.i.i.preheader536, label %vector.memcheck314
-
-.lr.ph.i86.i.i.preheader536:                      ; preds = %vector.memcheck314, %.lr.ph.i86.i.i.preheader
-  br label %.lr.ph.i86.i.i
+.lr.ph.i86.i.i.preheader:                         ; preds = %bb.e
+  br i1 %.not.i97.i.i, label %.lr.ph125.i.i, label %vector.memcheck314
 
 vector.memcheck314:                               ; preds = %.lr.ph.i86.i.i.preheader
   %i.il = getelementptr i8, ptr %.pre.i, i64 %i.dk ; 2 uses
@@ -3876,7 +3819,7 @@ vector.memcheck314:                               ; preds = %.lr.ph.i86.i.i.preh
   %bound1324 = icmp ult ptr %scevgep311, %i.im
   %found.conflict325 = and i1 %bound0323, %bound1324
   %conflict.rdx326 = or i1 %conflict.rdx322, %found.conflict325
-  br i1 %conflict.rdx326, label %.lr.ph.i86.i.i.preheader536, label %vector.body328
+  br i1 %conflict.rdx326, label %.lr.ph.i86.i.i, label %vector.body328
 
 vector.body328:                                   ; preds = %vector.memcheck314, %vector.body328
   %index329 = phi i64 [ %index.next331, %vector.body328 ], [ 0, %vector.memcheck314 ] ; 4 uses
@@ -3895,8 +3838,8 @@ vector.body328:                                   ; preds = %vector.memcheck314,
   %i.iw = icmp eq i64 %index.next331, %i.ab
   br i1 %i.iw, label %.lr.ph125.i.i, label %vector.body328, !llvm.loop !1149
 
-.lr.ph.i86.i.i:                                   ; preds = %.lr.ph.i86.i.i, %.lr.ph.i86.i.i.preheader536
-  %.017.i.i.i = phi i64 [ 0, %.lr.ph.i86.i.i.preheader536 ], [ %i.jm, %.lr.ph.i86.i.i ] ; 5 uses
+.lr.ph.i86.i.i:                                   ; preds = %vector.memcheck314, %.lr.ph.i86.i.i
+  %.017.i.i.i = phi i64 [ %i.jm, %.lr.ph.i86.i.i ], [ 0, %vector.memcheck314 ] ; 5 uses
   %i.ix = shl nuw nsw i64 %.017.i.i.i, 2
   %i.iy = getelementptr inbounds nuw i8, ptr %i.el, i64 %i.ix ; 2 uses
   %.val15.i.i.i = load i16, ptr %i.iy, align 1
@@ -3993,16 +3936,10 @@ vector.body368:                                   ; preds = %vector.memcheck354,
 bb.g:                                             ; preds = %._crit_edge.i.i
   %i.kh = load ptr, ptr %i.cl, align 8, !tbaa !92 ; 12 uses
   %i.ki = load ptr, ptr %i.cm, align 16, !tbaa !92 ; 12 uses
-  br i1 %i.aw, label %11, label %12
+  br i1 %i.aw, label %.lr.ph.i94.i.i.preheader, label %.lr.ph.i98.i.i.preheader
 
-11:                                               ; preds = %bb.g
-  br i1 %.not.i97.i.i, label %.lr.ph125.i.i, label %.lr.ph.i94.i.i.preheader
-
-.lr.ph.i94.i.i.preheader:                         ; preds = %11
-  br i1 %min.iters.check408, label %.lr.ph.i94.i.i.preheader542, label %vector.memcheck409
-
-.lr.ph.i94.i.i.preheader542:                      ; preds = %vector.memcheck409, %.lr.ph.i94.i.i.preheader
-  br label %.lr.ph.i94.i.i
+.lr.ph.i94.i.i.preheader:                         ; preds = %bb.g
+  br i1 %.not.i97.i.i, label %.lr.ph125.i.i, label %vector.memcheck409
 
 vector.memcheck409:                               ; preds = %.lr.ph.i94.i.i.preheader
   %i.kj = getelementptr i8, ptr %i.kh, i64 %i.dy  ; 3 uses
@@ -4032,7 +3969,7 @@ vector.memcheck409:                               ; preds = %.lr.ph.i94.i.i.preh
   %bound1431 = icmp ult ptr %scevgep406, %i.kl
   %found.conflict432 = and i1 %bound0430, %bound1431
   %conflict.rdx433 = or i1 %conflict.rdx429, %found.conflict432
-  br i1 %conflict.rdx433, label %.lr.ph.i94.i.i.preheader542, label %vector.body435
+  br i1 %conflict.rdx433, label %.lr.ph.i94.i.i, label %vector.body435
 
 vector.body435:                                   ; preds = %vector.memcheck409, %vector.body435
   %index436 = phi i64 [ %index.next437, %vector.body435 ], [ 0, %vector.memcheck409 ] ; 12 uses
@@ -4142,8 +4079,8 @@ vector.body435:                                   ; preds = %vector.memcheck409,
   %i.oi = icmp eq i64 %index.next437, %i.ab
   br i1 %i.oi, label %.lr.ph125.i.i, label %vector.body435, !llvm.loop !1162
 
-.lr.ph.i94.i.i:                                   ; preds = %.lr.ph.i94.i.i.preheader542, %.lr.ph.i94.i.i
-  %.025.i.i.i = phi i64 [ %i.oz, %.lr.ph.i94.i.i ], [ 0, %.lr.ph.i94.i.i.preheader542 ] ; 5 uses
+.lr.ph.i94.i.i:                                   ; preds = %vector.memcheck409, %.lr.ph.i94.i.i
+  %.025.i.i.i = phi i64 [ %i.oz, %.lr.ph.i94.i.i ], [ 0, %vector.memcheck409 ] ; 5 uses
   %i.oj = mul nuw nsw i64 %.025.i.i.i, 6
   %i.ok = getelementptr inbounds nuw i8, ptr %i.el, i64 %i.oj ; 3 uses
   %.val23.i.i.i = load i16, ptr %i.ok, align 1
@@ -4170,14 +4107,8 @@ vector.body435:                                   ; preds = %vector.memcheck409,
   %exitcond.not.i96.i.i = icmp eq i64 %i.oz, %i.ab
   br i1 %exitcond.not.i96.i.i, label %.lr.ph125.i.i, label %.lr.ph.i94.i.i, !llvm.loop !1163
 
-12:                                               ; preds = %bb.g
-  br i1 %.not.i97.i.i, label %.lr.ph125.i.i, label %.lr.ph.i98.i.i.preheader
-
-.lr.ph.i98.i.i.preheader:                         ; preds = %12
-  br i1 %min.iters.check472, label %.lr.ph.i98.i.i.preheader545, label %vector.memcheck473
-
-.lr.ph.i98.i.i.preheader545:                      ; preds = %vector.memcheck473, %.lr.ph.i98.i.i.preheader
-  br label %.lr.ph.i98.i.i
+.lr.ph.i98.i.i.preheader:                         ; preds = %bb.g
+  br i1 %.not.i97.i.i, label %.lr.ph125.i.i, label %vector.memcheck473
 
 vector.memcheck473:                               ; preds = %.lr.ph.i98.i.i.preheader
   %i.pa = getelementptr i8, ptr %i.kh, i64 %i.ef  ; 3 uses
@@ -4207,7 +4138,7 @@ vector.memcheck473:                               ; preds = %.lr.ph.i98.i.i.preh
   %bound1495 = icmp ult ptr %scevgep470, %i.pc
   %found.conflict496 = and i1 %bound0494, %bound1495
   %conflict.rdx497 = or i1 %conflict.rdx493, %found.conflict496
-  br i1 %conflict.rdx497, label %.lr.ph.i98.i.i.preheader545, label %vector.body499
+  br i1 %conflict.rdx497, label %.lr.ph.i98.i.i, label %vector.body499
 
 vector.body499:                                   ; preds = %vector.memcheck473, %vector.body499
   %index500 = phi i64 [ %index.next501, %vector.body499 ], [ 0, %vector.memcheck473 ] ; 12 uses
@@ -4314,8 +4245,8 @@ vector.body499:                                   ; preds = %vector.memcheck473,
   %i.sw = icmp eq i64 %index.next501, %i.ab
   br i1 %i.sw, label %.lr.ph125.i.i, label %vector.body499, !llvm.loop !1169
 
-.lr.ph.i98.i.i:                                   ; preds = %.lr.ph.i98.i.i.preheader545, %.lr.ph.i98.i.i
-  %.022.i.i.i = phi i64 [ %i.tk, %.lr.ph.i98.i.i ], [ 0, %.lr.ph.i98.i.i.preheader545 ] ; 5 uses
+.lr.ph.i98.i.i:                                   ; preds = %vector.memcheck473, %.lr.ph.i98.i.i
+  %.022.i.i.i = phi i64 [ %i.tk, %.lr.ph.i98.i.i ], [ 0, %vector.memcheck473 ] ; 5 uses
   %i.sx = mul nuw nsw i64 %.022.i.i.i, 6
   %i.sy = getelementptr inbounds nuw i8, ptr %i.el, i64 %i.sx ; 3 uses
   %.val20.i.i.i = load i16, ptr %i.sy, align 1
@@ -4718,7 +4649,7 @@ vector.body242:                                   ; preds = %vector.memcheck200,
 _ZN22default_implementation12_GLOBAL__N_110FillRowG16ILb1EsEEvPKhmPT0_.exit.i.i: ; preds = %vector.body242, %.lr.ph.i106.i.i, %vector.body, %.lr.ph.i102.i.i, %bb.i, %bb.h
   br i1 %.not58.i, label %.loopexit.i.i, label %.lr.ph125.i.i
 
-.lr.ph125.i.i:                                    ; preds = %vector.body499, %.lr.ph.i98.i.i, %vector.body435, %.lr.ph.i94.i.i, %vector.body368, %.lr.ph.i90.i.i, %vector.body328, %.lr.ph.i86.i.i, %vec.epilog.vector.body287, %.lr.ph.i82.i.i, %vec.epilog.vector.body, %.lr.ph.i.i.i, %middle.block279, %middle.block259, %_ZN22default_implementation12_GLOBAL__N_110FillRowG16ILb1EsEEvPKhmPT0_.exit.i.i, %12, %11, %bb.f, %10, %9, %bb.d
+.lr.ph125.i.i:                                    ; preds = %vector.body499, %.lr.ph.i98.i.i, %vector.body435, %.lr.ph.i94.i.i, %vector.body368, %.lr.ph.i90.i.i, %vector.body328, %.lr.ph.i86.i.i, %vec.epilog.vector.body287, %.lr.ph.i82.i.i, %vec.epilog.vector.body, %.lr.ph.i.i.i, %middle.block279, %middle.block259, %_ZN22default_implementation12_GLOBAL__N_110FillRowG16ILb1EsEEvPKhmPT0_.exit.i.i, %.lr.ph.i98.i.i.preheader, %.lr.ph.i94.i.i.preheader, %bb.f, %.lr.ph.i86.i.i.preheader, %iter.check281, %iter.check
   %.not.i.i = icmp eq i64 %.078129.i.i, 0         ; 4 uses
   br i1 %i.ei, label %.epil.preheader554, label %.lr.ph125.i.i.new
 
@@ -5113,7 +5044,7 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !1310, !nonnull !121, !align !176
   %i.l = load i64, ptr %i.k, align 8, !tbaa !68
-  %i.m = sub i64 %i.l, %i.f                       ; 7 uses
+  %i.m = sub i64 %i.l, %i.f
   %.sroa.speculated28 = tail call i64 @llvm.umin.i64(i64 %i.m, i64 256) ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #37
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -5364,21 +5295,15 @@ _ZNSt3__16vectorINS_5arrayINS1_IiLm336EEELm2EEENS_9allocatorIS3_EEEC2Em.exit.i.i
   %min.iters.check505 = icmp ult i64 %i.ar, 4
   %n.vec = and i64 %i.ar, -4                      ; 3 uses
   %cmp.n = icmp eq i64 %i.ar, %n.vec
-  %min.iters.check472 = icmp ult i64 %i.m, 8
   %stride.check484 = icmp slt i64 %i.ab, 0
-  %min.iters.check408 = icmp ult i64 %i.m, 8
   %stride.check420 = icmp slt i64 %i.ab, 0
   %min.iters.check353 = icmp samesign ult i64 %i.aa, 12
   %stride.check361 = icmp slt i64 %i.ab, 0
-  %min.iters.check313 = icmp ult i64 %i.m, 8
   %stride.check321 = icmp slt i64 %i.ab, 0
-  %min.iters.check280 = icmp ult i64 %i.m, 8
   %stride.check285 = icmp slt i64 %i.ab, 0
-  %min.iters.check257 = icmp ult i64 %i.m, 8
   %stride.check262 = icmp slt i64 %i.ab, 0
   %min.iters.check199 = icmp samesign ult i64 %i.aa, 12
   %stride.check215 = icmp slt i64 %i.ab, 0
-  %min.iters.check = icmp ult i64 %i.m, 8
   %stride.check = icmp slt i64 %i.ab, 0
   %xtraiter556 = and i64 %i.ar, 1
   %i.eq = icmp eq i64 %i.ar, 1
@@ -5460,7 +5385,7 @@ scalar.ph504.preheader:                           ; preds = %.lr.ph.i.i, %middle
 ._crit_edge.i.i:                                  ; preds = %scalar.ph504, %middle.block523
   %.pre.i = load ptr, ptr %i.b, align 16, !tbaa !101 ; 37 uses
   switch i64 %i.ar, label %._crit_edge.i.._crit_edge.thread.i_crit_edge.i [
-    i64 1, label %8
+    i64 1, label %bb.d
     i64 2, label %bb.e
     i64 3, label %bb.g
   ]
@@ -5494,17 +5419,11 @@ scalar.ph504:                                     ; preds = %scalar.ph504.prehea
   %exitcond.not.i.i = icmp eq i64 %i.gc, %i.ar
   br i1 %exitcond.not.i.i, label %._crit_edge.i.i, label %scalar.ph504, !llvm.loop !1249
 
-8:                                                ; preds = %._crit_edge.i.i
-  br i1 %i.av, label %bb.d, label %9
-
-bb.d:                                             ; preds = %8
-  br i1 %.not.i97.i.i, label %.lr.ph125.i.i, label %.lr.ph.i.i.i.preheader
+bb.d:                                             ; preds = %._crit_edge.i.i
+  br i1 %i.av, label %.lr.ph.i.i.i.preheader, label %.lr.ph.i82.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %bb.d
-  br i1 %min.iters.check257, label %.lr.ph.i.i.i.preheader532, label %vector.memcheck258
-
-.lr.ph.i.i.i.preheader532:                        ; preds = %vector.memcheck258, %.lr.ph.i.i.i.preheader
-  br label %.lr.ph.i.i.i
+  br i1 %.not.i97.i.i, label %.lr.ph125.i.i, label %vector.memcheck258
 
 vector.memcheck258:                               ; preds = %.lr.ph.i.i.i.preheader
   %i.gd = getelementptr i8, ptr %.pre.i, i64 %i.di
@@ -5512,7 +5431,7 @@ vector.memcheck258:                               ; preds = %.lr.ph.i.i.i.prehea
   %bound1260 = icmp ult ptr %scevgep255, %i.gd
   %found.conflict261 = and i1 %bound0259, %bound1260
   %i.ge = or i1 %found.conflict261, %stride.check262
-  br i1 %i.ge, label %.lr.ph.i.i.i.preheader532, label %vector.body264
+  br i1 %i.ge, label %.lr.ph.i.i.i, label %vector.body264
 
 vector.body264:                                   ; preds = %vector.memcheck258, %vector.body264
   %index265 = phi i64 [ %index.next267, %vector.body264 ], [ 0, %vector.memcheck258 ] ; 3 uses
@@ -5533,8 +5452,8 @@ vector.body264:                                   ; preds = %vector.memcheck258,
   %i.go = icmp eq i64 %index.next267, %i.aa
   br i1 %i.go, label %.lr.ph125.i.i, label %vector.body264, !llvm.loop !1253
 
-.lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i, %.lr.ph.i.i.i.preheader532
-  %.09.i.i.i = phi i64 [ 0, %.lr.ph.i.i.i.preheader532 ], [ %i.ha, %.lr.ph.i.i.i ] ; 4 uses
+.lr.ph.i.i.i:                                     ; preds = %vector.memcheck258, %.lr.ph.i.i.i
+  %.09.i.i.i = phi i64 [ %i.ha, %.lr.ph.i.i.i ], [ 0, %vector.memcheck258 ] ; 4 uses
   %i.gp = shl nuw nsw i64 %.09.i.i.i, 1
   %i.gq = getelementptr inbounds nuw i8, ptr %i.et, i64 %i.gp
   %.val.i.i.i = load i16, ptr %i.gq, align 1
@@ -5554,14 +5473,8 @@ vector.body264:                                   ; preds = %vector.memcheck258,
   %exitcond.not.i.i.i.1 = icmp eq i64 %i.ha, %i.aa
   br i1 %exitcond.not.i.i.i.1, label %.lr.ph125.i.i, label %.lr.ph.i.i.i, !llvm.loop !1254
 
-9:                                                ; preds = %8
-  br i1 %.not.i97.i.i, label %.lr.ph125.i.i, label %.lr.ph.i82.i.i.preheader
-
-.lr.ph.i82.i.i.preheader:                         ; preds = %9
-  br i1 %min.iters.check280, label %.lr.ph.i82.i.i.preheader534, label %vector.memcheck281
-
-.lr.ph.i82.i.i.preheader534:                      ; preds = %vector.memcheck281, %.lr.ph.i82.i.i.preheader
-  br label %.lr.ph.i82.i.i
+.lr.ph.i82.i.i.preheader:                         ; preds = %bb.d
+  br i1 %.not.i97.i.i, label %.lr.ph125.i.i, label %vector.memcheck281
 
 vector.memcheck281:                               ; preds = %.lr.ph.i82.i.i.preheader
   %i.hb = getelementptr i8, ptr %.pre.i, i64 %i.dp
@@ -5569,7 +5482,7 @@ vector.memcheck281:                               ; preds = %.lr.ph.i82.i.i.preh
   %bound1283 = icmp ult ptr %scevgep278, %i.hb
   %found.conflict284 = and i1 %bound0282, %bound1283
   %i.hc = or i1 %found.conflict284, %stride.check285
-  br i1 %i.hc, label %.lr.ph.i82.i.i.preheader534, label %vector.body287
+  br i1 %i.hc, label %.lr.ph.i82.i.i, label %vector.body287
 
 vector.body287:                                   ; preds = %vector.memcheck281, %vector.body287
   %index288 = phi i64 [ %index.next291, %vector.body287 ], [ 0, %vector.memcheck281 ] ; 3 uses
@@ -5588,8 +5501,8 @@ vector.body287:                                   ; preds = %vector.memcheck281,
   %i.hk = icmp eq i64 %index.next291, %i.aa
   br i1 %i.hk, label %.lr.ph125.i.i, label %vector.body287, !llvm.loop !1258
 
-.lr.ph.i82.i.i:                                   ; preds = %.lr.ph.i82.i.i, %.lr.ph.i82.i.i.preheader534
-  %.08.i.i.i = phi i64 [ 0, %.lr.ph.i82.i.i.preheader534 ], [ %i.ie, %.lr.ph.i82.i.i ] ; 6 uses
+.lr.ph.i82.i.i:                                   ; preds = %vector.memcheck281, %.lr.ph.i82.i.i
+  %.08.i.i.i = phi i64 [ %i.ie, %.lr.ph.i82.i.i ], [ 0, %vector.memcheck281 ] ; 6 uses
   %i.hl = shl nuw nsw i64 %.08.i.i.i, 1
   %i.hm = getelementptr inbounds nuw i8, ptr %i.et, i64 %i.hl
   %.val.i83.i.i = load i16, ptr %i.hm, align 1
@@ -5623,16 +5536,10 @@ vector.body287:                                   ; preds = %vector.memcheck281,
 
 bb.e:                                             ; preds = %._crit_edge.i.i
   %i.if = load ptr, ptr %i.ck, align 8, !tbaa !101 ; 12 uses
-  br i1 %i.av, label %10, label %bb.f
+  br i1 %i.av, label %.lr.ph.i86.i.i.preheader, label %bb.f
 
-10:                                               ; preds = %bb.e
-  br i1 %.not.i97.i.i, label %.lr.ph125.i.i, label %.lr.ph.i86.i.i.preheader
-
-.lr.ph.i86.i.i.preheader:                         ; preds = %10
-  br i1 %min.iters.check313, label %.lr.ph.i86.i.i.preheader537, label %vector.memcheck314
-
-.lr.ph.i86.i.i.preheader537:                      ; preds = %vector.memcheck314, %.lr.ph.i86.i.i.preheader
-  br label %.lr.ph.i86.i.i
+.lr.ph.i86.i.i.preheader:                         ; preds = %bb.e
+  br i1 %.not.i97.i.i, label %.lr.ph125.i.i, label %vector.memcheck314
 
 vector.memcheck314:                               ; preds = %.lr.ph.i86.i.i.preheader
   %i.ig = getelementptr i8, ptr %.pre.i, i64 %i.dt ; 2 uses
@@ -5649,7 +5556,7 @@ vector.memcheck314:                               ; preds = %.lr.ph.i86.i.i.preh
   %bound1324 = icmp ult ptr %scevgep311, %i.ih
   %found.conflict325 = and i1 %bound0323, %bound1324
   %conflict.rdx326 = or i1 %conflict.rdx322, %found.conflict325
-  br i1 %conflict.rdx326, label %.lr.ph.i86.i.i.preheader537, label %vector.body328
+  br i1 %conflict.rdx326, label %.lr.ph.i86.i.i, label %vector.body328
 
 vector.body328:                                   ; preds = %vector.memcheck314, %vector.body328
   %index329 = phi i64 [ %index.next331, %vector.body328 ], [ 0, %vector.memcheck314 ] ; 4 uses
@@ -5671,8 +5578,8 @@ vector.body328:                                   ; preds = %vector.memcheck314,
   %i.it = icmp eq i64 %index.next331, %i.aa
   br i1 %i.it, label %.lr.ph125.i.i, label %vector.body328, !llvm.loop !1264
 
-.lr.ph.i86.i.i:                                   ; preds = %.lr.ph.i86.i.i, %.lr.ph.i86.i.i.preheader537
-  %.017.i.i.i = phi i64 [ 0, %.lr.ph.i86.i.i.preheader537 ], [ %i.jn, %.lr.ph.i86.i.i ] ; 5 uses
+.lr.ph.i86.i.i:                                   ; preds = %vector.memcheck314, %.lr.ph.i86.i.i
+  %.017.i.i.i = phi i64 [ %i.jn, %.lr.ph.i86.i.i ], [ 0, %vector.memcheck314 ] ; 5 uses
   %i.iu = shl nuw nsw i64 %.017.i.i.i, 2
   %i.iv = getelementptr inbounds nuw i8, ptr %i.et, i64 %i.iu ; 2 uses
   %.val15.i.i.i = load i16, ptr %i.iv, align 1
@@ -5780,16 +5687,10 @@ vector.body368:                                   ; preds = %vector.memcheck354,
 bb.g:                                             ; preds = %._crit_edge.i.i
   %i.kr = load ptr, ptr %i.ck, align 8, !tbaa !101 ; 12 uses
   %i.ks = load ptr, ptr %i.cl, align 16, !tbaa !101 ; 12 uses
-  br i1 %i.av, label %11, label %12
+  br i1 %i.av, label %.lr.ph.i94.i.i.preheader, label %.lr.ph.i98.i.i.preheader
 
-11:                                               ; preds = %bb.g
-  br i1 %.not.i97.i.i, label %.lr.ph125.i.i, label %.lr.ph.i94.i.i.preheader
-
-.lr.ph.i94.i.i.preheader:                         ; preds = %11
-  br i1 %min.iters.check408, label %.lr.ph.i94.i.i.preheader543, label %vector.memcheck409
-
-.lr.ph.i94.i.i.preheader543:                      ; preds = %vector.memcheck409, %.lr.ph.i94.i.i.preheader
-  br label %.lr.ph.i94.i.i
+.lr.ph.i94.i.i.preheader:                         ; preds = %bb.g
+  br i1 %.not.i97.i.i, label %.lr.ph125.i.i, label %vector.memcheck409
 
 vector.memcheck409:                               ; preds = %.lr.ph.i94.i.i.preheader
   %i.kt = getelementptr i8, ptr %i.kr, i64 %i.ei  ; 3 uses
@@ -5819,7 +5720,7 @@ vector.memcheck409:                               ; preds = %.lr.ph.i94.i.i.preh
   %bound1431 = icmp ult ptr %scevgep406, %i.kv
   %found.conflict432 = and i1 %bound0430, %bound1431
   %conflict.rdx433 = or i1 %conflict.rdx429, %found.conflict432
-  br i1 %conflict.rdx433, label %.lr.ph.i94.i.i.preheader543, label %vector.body435
+  br i1 %conflict.rdx433, label %.lr.ph.i94.i.i, label %vector.body435
 
 vector.body435:                                   ; preds = %vector.memcheck409, %vector.body435
   %index436 = phi i64 [ %index.next437, %vector.body435 ], [ 0, %vector.memcheck409 ] ; 8 uses
@@ -5888,8 +5789,8 @@ vector.body435:                                   ; preds = %vector.memcheck409,
   %i.nd = icmp eq i64 %index.next437, %i.aa
   br i1 %i.nd, label %.lr.ph125.i.i, label %vector.body435, !llvm.loop !1277
 
-.lr.ph.i94.i.i:                                   ; preds = %.lr.ph.i94.i.i.preheader543, %.lr.ph.i94.i.i
-  %.025.i.i.i = phi i64 [ %i.nx, %.lr.ph.i94.i.i ], [ 0, %.lr.ph.i94.i.i.preheader543 ] ; 5 uses
+.lr.ph.i94.i.i:                                   ; preds = %vector.memcheck409, %.lr.ph.i94.i.i
+  %.025.i.i.i = phi i64 [ %i.nx, %.lr.ph.i94.i.i ], [ 0, %vector.memcheck409 ] ; 5 uses
   %i.ne = mul nuw nsw i64 %.025.i.i.i, 6
   %i.nf = getelementptr inbounds nuw i8, ptr %i.et, i64 %i.ne ; 3 uses
   %.val23.i.i.i = load i16, ptr %i.nf, align 1
@@ -5919,14 +5820,8 @@ vector.body435:                                   ; preds = %vector.memcheck409,
   %exitcond.not.i96.i.i = icmp eq i64 %i.nx, %i.aa
   br i1 %exitcond.not.i96.i.i, label %.lr.ph125.i.i, label %.lr.ph.i94.i.i, !llvm.loop !1278
 
-12:                                               ; preds = %bb.g
-  br i1 %.not.i97.i.i, label %.lr.ph125.i.i, label %.lr.ph.i98.i.i.preheader
-
-.lr.ph.i98.i.i.preheader:                         ; preds = %12
-  br i1 %min.iters.check472, label %.lr.ph.i98.i.i.preheader546, label %vector.memcheck473
-
-.lr.ph.i98.i.i.preheader546:                      ; preds = %vector.memcheck473, %.lr.ph.i98.i.i.preheader
-  br label %.lr.ph.i98.i.i
+.lr.ph.i98.i.i.preheader:                         ; preds = %bb.g
+  br i1 %.not.i97.i.i, label %.lr.ph125.i.i, label %vector.memcheck473
 
 vector.memcheck473:                               ; preds = %.lr.ph.i98.i.i.preheader
   %i.ny = getelementptr i8, ptr %i.kr, i64 %i.ep  ; 3 uses
@@ -5956,7 +5851,7 @@ vector.memcheck473:                               ; preds = %.lr.ph.i98.i.i.preh
   %bound1495 = icmp ult ptr %scevgep470, %i.oa
   %found.conflict496 = and i1 %bound0494, %bound1495
   %conflict.rdx497 = or i1 %conflict.rdx493, %found.conflict496
-  br i1 %conflict.rdx497, label %.lr.ph.i98.i.i.preheader546, label %vector.body499
+  br i1 %conflict.rdx497, label %.lr.ph.i98.i.i, label %vector.body499
 
 vector.body499:                                   ; preds = %vector.memcheck473, %vector.body499
   %index500 = phi i64 [ %index.next501, %vector.body499 ], [ 0, %vector.memcheck473 ] ; 8 uses
@@ -6022,8 +5917,8 @@ vector.body499:                                   ; preds = %vector.memcheck473,
   %i.qf = icmp eq i64 %index.next501, %i.aa
   br i1 %i.qf, label %.lr.ph125.i.i, label %vector.body499, !llvm.loop !1284
 
-.lr.ph.i98.i.i:                                   ; preds = %.lr.ph.i98.i.i.preheader546, %.lr.ph.i98.i.i
-  %.022.i.i.i = phi i64 [ %i.qw, %.lr.ph.i98.i.i ], [ 0, %.lr.ph.i98.i.i.preheader546 ] ; 5 uses
+.lr.ph.i98.i.i:                                   ; preds = %vector.memcheck473, %.lr.ph.i98.i.i
+  %.022.i.i.i = phi i64 [ %i.qw, %.lr.ph.i98.i.i ], [ 0, %vector.memcheck473 ] ; 5 uses
   %i.qg = mul nuw nsw i64 %.022.i.i.i, 6
   %i.qh = getelementptr inbounds nuw i8, ptr %i.et, i64 %i.qg ; 3 uses
   %.val20.i.i.i = load i16, ptr %i.qh, align 1
@@ -6055,16 +5950,10 @@ vector.body499:                                   ; preds = %vector.memcheck473,
   %i.qy = phi ptr [ %.pre69.i, %._crit_edge.i.._crit_edge.thread.i_crit_edge.i ], [ null, %bb.c ] ; 14 uses
   %i.qz = phi ptr [ %.pre68.i, %._crit_edge.i.._crit_edge.thread.i_crit_edge.i ], [ null, %bb.c ] ; 14 uses
   %i.ra = phi ptr [ %.pre.i, %._crit_edge.i.._crit_edge.thread.i_crit_edge.i ], [ null, %bb.c ] ; 14 uses
-  br i1 %i.av, label %13, label %bb.h
+  br i1 %i.av, label %.lr.ph.i102.i.i.preheader, label %bb.h
 
-13:                                               ; preds = %._crit_edge.thread.i.i
-  br i1 %.not.i97.i.i, label %_ZN22default_implementation12_GLOBAL__N_110FillRowG16ILb1EiEEvPKhmPT0_.exit.i.i, label %.lr.ph.i102.i.i.preheader
-
-.lr.ph.i102.i.i.preheader:                        ; preds = %13
-  br i1 %min.iters.check, label %.lr.ph.i102.i.i.preheader527, label %vector.memcheck
-
-.lr.ph.i102.i.i.preheader527:                     ; preds = %vector.memcheck, %.lr.ph.i102.i.i.preheader
-  br label %.lr.ph.i102.i.i
+.lr.ph.i102.i.i.preheader:                        ; preds = %._crit_edge.thread.i.i
+  br i1 %.not.i97.i.i, label %_ZN22default_implementation12_GLOBAL__N_110FillRowG16ILb1EiEEvPKhmPT0_.exit.i.i, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i102.i.i.preheader
   %i.rb = getelementptr i8, ptr %i.qz, i64 %i.cu  ; 4 uses
@@ -6111,7 +6000,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.i102.i.i.pre
   %bound1147 = icmp ult ptr %scevgep114, %i.re
   %found.conflict148 = and i1 %bound0146, %bound1147
   %conflict.rdx149 = or i1 %conflict.rdx145, %found.conflict148
-  br i1 %conflict.rdx149, label %.lr.ph.i102.i.i.preheader527, label %vector.body
+  br i1 %conflict.rdx149, label %.lr.ph.i102.i.i, label %vector.body
 
 vector.body:                                      ; preds = %vector.memcheck, %vector.body
   %index = phi i64 [ %index.next, %vector.body ], [ 0, %vector.memcheck ] ; 9 uses
@@ -6196,8 +6085,8 @@ vector.body:                                      ; preds = %vector.memcheck, %v
   %i.ub = icmp eq i64 %index.next, %i.aa
   br i1 %i.ub, label %_ZN22default_implementation12_GLOBAL__N_110FillRowG16ILb1EiEEvPKhmPT0_.exit.i.i, label %vector.body, !llvm.loop !1292
 
-.lr.ph.i102.i.i:                                  ; preds = %.lr.ph.i102.i.i.preheader527, %.lr.ph.i102.i.i
-  %.033.i.i.i = phi i64 [ %i.uz, %.lr.ph.i102.i.i ], [ 0, %.lr.ph.i102.i.i.preheader527 ] ; 6 uses
+.lr.ph.i102.i.i:                                  ; preds = %vector.memcheck, %.lr.ph.i102.i.i
+  %.033.i.i.i = phi i64 [ %i.uz, %.lr.ph.i102.i.i ], [ 0, %vector.memcheck ] ; 6 uses
   %i.uc = shl nuw nsw i64 %.033.i.i.i, 3
   %i.ud = getelementptr inbounds nuw i8, ptr %i.et, i64 %i.uc ; 4 uses
   %.val31.i.i.i = load i16, ptr %i.ud, align 1
@@ -6401,10 +6290,10 @@ vector.body242:                                   ; preds = %vector.memcheck200,
   %exitcond.not.i110.i.i = icmp eq i64 %i.yq, %i.aa
   br i1 %exitcond.not.i110.i.i, label %_ZN22default_implementation12_GLOBAL__N_110FillRowG16ILb1EiEEvPKhmPT0_.exit.i.i, label %.lr.ph.i106.i.i, !llvm.loop !1301
 
-_ZN22default_implementation12_GLOBAL__N_110FillRowG16ILb1EiEEvPKhmPT0_.exit.i.i: ; preds = %vector.body242, %.lr.ph.i106.i.i, %vector.body, %.lr.ph.i102.i.i, %bb.h, %13
+_ZN22default_implementation12_GLOBAL__N_110FillRowG16ILb1EiEEvPKhmPT0_.exit.i.i: ; preds = %vector.body242, %.lr.ph.i106.i.i, %vector.body, %.lr.ph.i102.i.i, %bb.h, %.lr.ph.i102.i.i.preheader
   br i1 %.not59.i, label %.loopexit.i.i, label %.lr.ph125.i.i
 
-.lr.ph125.i.i:                                    ; preds = %vector.body499, %.lr.ph.i98.i.i, %vector.body435, %.lr.ph.i94.i.i, %vector.body368, %.lr.ph.i90.i.i, %vector.body328, %.lr.ph.i86.i.i, %vector.body287, %.lr.ph.i82.i.i, %vector.body264, %.lr.ph.i.i.i, %_ZN22default_implementation12_GLOBAL__N_110FillRowG16ILb1EiEEvPKhmPT0_.exit.i.i, %12, %11, %bb.f, %10, %9, %bb.d
+.lr.ph125.i.i:                                    ; preds = %vector.body499, %.lr.ph.i98.i.i, %vector.body435, %.lr.ph.i94.i.i, %vector.body368, %.lr.ph.i90.i.i, %vector.body328, %.lr.ph.i86.i.i, %vector.body287, %.lr.ph.i82.i.i, %vector.body264, %.lr.ph.i.i.i, %_ZN22default_implementation12_GLOBAL__N_110FillRowG16ILb1EiEEvPKhmPT0_.exit.i.i, %.lr.ph.i98.i.i.preheader, %.lr.ph.i94.i.i.preheader, %bb.f, %.lr.ph.i86.i.i.preheader, %.lr.ph.i82.i.i.preheader, %.lr.ph.i.i.i.preheader
   %.not.i.i = icmp eq i64 %.078129.i.i, 0         ; 4 uses
   br i1 %i.eq, label %.epil.preheader555, label %.lr.ph125.i.i.new
 

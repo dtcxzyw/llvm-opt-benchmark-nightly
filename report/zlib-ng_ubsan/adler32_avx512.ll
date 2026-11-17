@@ -116,7 +116,7 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.j, !nosanitize !14
 
 bb.j:                                             ; preds = %bb.i, %bb.h
-  %i.ag = add i64 %.06197.i, -64                  ; 2 uses
+  %i.ag = add nsw i64 %.06197.i, -64              ; 2 uses
   %i.ah = bitcast <8 x i64> %i.u to <64 x i8>     ; 2 uses
   %i.ai = call <8 x i64> @llvm.x86.avx512.psad.bw.512(<64 x i8> %i.ah, <64 x i8> zeroinitializer)
   %i.aj = call <32 x i16> @llvm.x86.avx512.pmaddubs.w.512(<64 x i8> %i.ah, <64 x i8> <i8 64, i8 63, i8 62, i8 61, i8 60, i8 59, i8 58, i8 57, i8 56, i8 55, i8 54, i8 53, i8 52, i8 51, i8 50, i8 49, i8 48, i8 47, i8 46, i8 45, i8 44, i8 43, i8 42, i8 41, i8 40, i8 39, i8 38, i8 37, i8 36, i8 35, i8 34, i8 33, i8 32, i8 31, i8 30, i8 29, i8 28, i8 27, i8 26, i8 25, i8 24, i8 23, i8 22, i8 21, i8 20, i8 19, i8 18, i8 17, i8 16, i8 15, i8 14, i8 13, i8 12, i8 11, i8 10, i8 9, i8 8, i8 7, i8 6, i8 5, i8 4, i8 3, i8 2, i8 1>)
@@ -233,7 +233,7 @@ bb.f:                                             ; preds = %.lr.ph.split.us.i
   br label %bb.g, !nosanitize !14
 
 bb.g:                                             ; preds = %bb.f, %.lr.ph.split.us.i
-  %i.w = add i64 %.06197.us.i, -64                ; 2 uses
+  %i.w = add nsw i64 %.06197.us.i, -64            ; 2 uses
   %i.x = call <8 x i64> @llvm.x86.avx512.psad.bw.512(<64 x i8> %i.q, <64 x i8> zeroinitializer)
   %i.y = call <32 x i16> @llvm.x86.avx512.pmaddubs.w.512(<64 x i8> %i.q, <64 x i8> <i8 64, i8 63, i8 62, i8 61, i8 60, i8 59, i8 58, i8 57, i8 56, i8 55, i8 54, i8 53, i8 52, i8 51, i8 50, i8 49, i8 48, i8 47, i8 46, i8 45, i8 44, i8 43, i8 42, i8 41, i8 40, i8 39, i8 38, i8 37, i8 36, i8 35, i8 34, i8 33, i8 32, i8 31, i8 30, i8 29, i8 28, i8 27, i8 26, i8 25, i8 24, i8 23, i8 22, i8 21, i8 20, i8 19, i8 18, i8 17, i8 16, i8 15, i8 14, i8 13, i8 12, i8 11, i8 10, i8 9, i8 8, i8 7, i8 6, i8 5, i8 4, i8 3, i8 2, i8 1>)
   %i.z = bitcast <8 x i64> %i.x to <16 x i32>
