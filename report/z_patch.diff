@@ -1,0 +1,120 @@
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index 40baea4dad716..81dd139c09936 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -15772,7 +15772,7 @@ void ScalarEvolution::LoopGuards::collectFromBlock(
+           !C2)
+         return false;
+ 
+-      auto ExactRegion =
++      ConstantRange GuardRegion =
+           ConstantRange::makeExactICmpRegion(Pred, C2->getAPInt())
+               .sub(C1->getAPInt());
+ 
+@@ -15780,8 +15780,8 @@ void ScalarEvolution::LoopGuards::collectFromBlock(
+       // from prior guards recorded in RewriteMap, or from SCEV's own range
+       // analysis.
+       const SCEV *RewrittenLHS = GetMaybeRewritten(LHSUnknown);
+-      ExactRegion = ExactRegion.intersectWith(SE.getUnsignedRange(RewrittenLHS),
+-                                              ConstantRange::Unsigned);
++      ConstantRange ExactRegion = GuardRegion.intersectWith(
++          SE.getUnsignedRange(RewrittenLHS), ConstantRange::Unsigned);
+ 
+       // Bail if the guard is inconsistent with prior facts, or if the range
+       // is still not a monotonic non-wrapping interval after tightening.
+@@ -15794,7 +15794,9 @@ void ScalarEvolution::LoopGuards::collectFromBlock(
+       const SCEV *ClampedLHS =
+           SE.getUMaxExpr(RegionMin, SE.getUMinExpr(RewrittenLHS, RegionMax));
+       AddRewrite(LHSUnknown, RewrittenLHS, ClampedLHS);
+-      return true;
++      // If the intersection over-approximates an unsigned guard, the clamp
++      // does not capture it fully; also apply the generic rewrite.
++      return GuardRegion.contains(ExactRegion) || ICmpInst::isSigned(Pred);
+     };
+     if (MatchRangeCheckIdiom(Predicate, LHS, RHS))
+       return;
+diff --git a/llvm/test/Analysis/ScalarEvolution/max-backedge-taken-count-guard-info.ll b/llvm/test/Analysis/ScalarEvolution/max-backedge-taken-count-guard-info.ll
+index 209b9d9d9f6cf..956f9d2c777e5 100644
+--- a/llvm/test/Analysis/ScalarEvolution/max-backedge-taken-count-guard-info.ll
++++ b/llvm/test/Analysis/ScalarEvolution/max-backedge-taken-count-guard-info.ll
+@@ -1330,6 +1330,80 @@ exit:
+   ret void
+ }
+ 
++; The unsigned range checks below have wrapped regions for %n; intersecting
++; them with the range from the dominating != check over-approximates, so the
++; generic rewrite must also be applied.
++define void @range_check_wrapped_region_after_ne_zero(i8 %n) {
++; CHECK-LABEL: 'range_check_wrapped_region_after_ne_zero'
++; CHECK-NEXT:  Classifying expressions for: @range_check_wrapped_region_after_ne_zero
++; CHECK-NEXT:    %n.p2 = add i8 %n, 2
++; CHECK-NEXT:    --> (2 + %n) U: full-set S: full-set
++; CHECK-NEXT:    %iv = phi i8 [ 0, %guard ], [ %iv.next, %loop ]
++; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%loop> U: [0,5) S: [0,5) Exits: (2 + %n) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %iv.next = add i8 %iv, 1
++; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%loop> U: [1,6) S: [1,6) Exits: (3 + %n) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @range_check_wrapped_region_after_ne_zero
++; CHECK-NEXT:  Loop %loop: backedge-taken count is (2 + %n)
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i8 4
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (2 + %n)
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  %n.p2 = add i8 %n, 2
++  %nz = icmp ne i8 %n, 0
++  br i1 %nz, label %guard, label %exit
++
++guard:
++  %rc = icmp ult i8 %n.p2, 5
++  br i1 %rc, label %loop, label %exit
++
++loop:
++  %iv = phi i8 [ 0, %guard ], [ %iv.next, %loop ]
++  %iv.next = add i8 %iv, 1
++  %c = icmp ne i8 %iv, %n.p2
++  br i1 %c, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++define i8 @range_check_wrapped_region_after_ne_offset(i8 %n) {
++; CHECK-LABEL: 'range_check_wrapped_region_after_ne_offset'
++; CHECK-NEXT:  Classifying expressions for: @range_check_wrapped_region_after_ne_offset
++; CHECK-NEXT:    %n.p2 = add i8 %n, 2
++; CHECK-NEXT:    --> (2 + %n) U: full-set S: full-set
++; CHECK-NEXT:    %iv = phi i8 [ 0, %guard ], [ %iv.next, %loop ]
++; CHECK-NEXT:    --> {0,+,2}<nuw><%loop> U: [0,-1) S: [-128,127) Exits: (2 * (trunc i16 ((2 + (zext i8 (2 + %n) to i16))<nuw><nsw> /u 2) to i8)) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %iv.next = add i8 %iv, 2
++; CHECK-NEXT:    --> {2,+,2}<nw><%loop> U: [0,-1) S: [-128,127) Exits: (2 + (2 * (trunc i16 ((2 + (zext i8 (2 + %n) to i16))<nuw><nsw> /u 2) to i8))) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %r = phi i8 [ 0, %entry ], [ 1, %guard ], [ %iv, %loop ]
++; CHECK-NEXT:    --> %r U: full-set S: full-set
++; CHECK-NEXT:  Determining loop execution counts for: @range_check_wrapped_region_after_ne_offset
++; CHECK-NEXT:  Loop %loop: backedge-taken count is ((2 + (zext i8 (2 + %n) to i16))<nuw><nsw> /u 2)
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i16 128
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((2 + (zext i8 (2 + %n) to i16))<nuw><nsw> /u 2)
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  %n.p2 = add i8 %n, 2
++  %ne = icmp ne i8 %n.p2, 2
++  br i1 %ne, label %guard, label %exit
++
++guard:
++  %rc = icmp ult i8 %n.p2, 200
++  br i1 %rc, label %loop, label %exit
++
++loop:
++  %iv = phi i8 [ 0, %guard ], [ %iv.next, %loop ]
++  %iv.next = add i8 %iv, 2
++  %c = icmp ule i8 %iv, %n.p2
++  br i1 %c, label %loop, label %exit
++
++exit:
++  %r = phi i8 [ 0, %entry ], [ 1, %guard ], [ %iv, %loop ]
++  ret i8 %r
++}
++
+ define i32 @ptr_induction_ult_1(ptr %a, ptr %b) {
+ ; CHECK-LABEL: 'ptr_induction_ult_1'
+ ; CHECK-NEXT:  Classifying expressions for: @ptr_induction_ult_1
