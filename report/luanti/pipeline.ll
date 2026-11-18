@@ -204,7 +204,7 @@ _ZN19TextureBufferOutputD0Ev.exit:                ; preds = %bb.d, %bb.e
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZN19TextureBufferOutput8activateER15PipelineContext(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(72) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(47) %1) unnamed_addr #7 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca %"class.core::dimension2d", align 8 ; 7 uses
+  %2 = alloca %"class.core::dimension2d", align 8 ; 10 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 4 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !105  ; 2 uses
   %.not = icmp eq ptr %i.b, null
@@ -248,18 +248,24 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 
 .lr.ph:                                           ; preds = %bb.e
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %.promoted = load i64, ptr %2, align 8
   br label %bb.f
 
-._crit_edge:                                      ; preds = %bb.n, %bb.e
-  %.sroa.13.0.lcssa = phi ptr [ null, %bb.e ], [ %.sroa.13.1, %bb.n ] ; 5 uses
-  %.sroa.9.0.lcssa = phi ptr [ null, %bb.e ], [ %.sroa.9.1, %bb.n ] ; 2 uses
-  %.sroa.037.0.lcssa = phi ptr [ null, %bb.e ], [ %.sroa.037.1, %bb.n ] ; 10 uses
+._crit_edge.loopexit:                             ; preds = %bb.n
+  store i64 %4, ptr %2, align 8
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.e
+  %.sroa.13.0.lcssa = phi ptr [ null, %bb.e ], [ %.sroa.13.1, %._crit_edge.loopexit ] ; 5 uses
+  %.sroa.9.0.lcssa = phi ptr [ null, %bb.e ], [ %.sroa.9.1, %._crit_edge.loopexit ] ; 2 uses
+  %.sroa.037.0.lcssa = phi ptr [ null, %bb.e ], [ %.sroa.037.1, %._crit_edge.loopexit ] ; 10 uses
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.v = load i8, ptr %i.u, align 8, !tbaa !101   ; 2 uses
   %.not18 = icmp eq i8 %i.v, -1
   br i1 %.not18, label %bb.p, label %bb.o
 
 bb.f:                                             ; preds = %.lr.ph, %bb.n
+  %3 = phi i64 [ %.promoted, %.lr.ph ], [ %4, %bb.n ] ; 3 uses
   %i.w = phi i32 [ 0, %.lr.ph ], [ %i.ay, %bb.n ] ; 2 uses
   %i.x = phi ptr [ %i.s, %.lr.ph ], [ %i.bb, %bb.n ]
   %.01258 = phi i64 [ 0, %.lr.ph ], [ %i.az, %bb.n ] ; 2 uses
@@ -291,6 +297,7 @@ bb.i:                                             ; preds = %bb.g
   br i1 %i.ai, label %bb.j, label %_ZNKSt6vectorIPN5video8ITextureESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i
 
 bb.j:                                             ; preds = %bb.i
+  store i64 %3, ptr %2, align 8
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.34) #34
           to label %.noexc unwind label %_ZN4core5arrayIN5video14E_CUBE_SURFACEEED2Ev.exit27.loopexit.split-lp
 
@@ -345,11 +352,11 @@ _ZN4core5arrayIPN5video8ITextureEE9push_backERKS3_.exit: ; preds = %_ZNSt6vector
 bb.m:                                             ; preds = %_ZN4core5arrayIPN5video8ITextureEE9push_backERKS3_.exit
   %i.av = getelementptr inbounds nuw i8, ptr %i.ae, i64 80
   %i.aw = load i64, ptr %i.av, align 4, !tbaa !55 ; 2 uses
-  store i64 %i.aw, ptr %2, align 8, !tbaa !55
   %i.ax = trunc i64 %i.aw to i32
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %_ZN4core5arrayIPN5video8ITextureEE9push_backERKS3_.exit
+  %4 = phi i64 [ %i.aw, %bb.m ], [ %3, %_ZN4core5arrayIPN5video8ITextureEE9push_backERKS3_.exit ] ; 2 uses
   %i.ay = phi i32 [ %i.ax, %bb.m ], [ %i.w, %_ZN4core5arrayIPN5video8ITextureEE9push_backERKS3_.exit ]
   %i.az = add nuw i64 %.01258, 1                  ; 2 uses
   %i.ba = load ptr, ptr %i.q, align 8, !tbaa !100
@@ -358,7 +365,7 @@ bb.n:                                             ; preds = %bb.m, %_ZN4core5arr
   %i.bd = ptrtoint ptr %i.bb to i64
   %i.be = sub i64 %i.bc, %i.bd
   %i.bf = icmp ult i64 %i.az, %i.be
-  br i1 %i.bf, label %bb.f, label %._crit_edge, !llvm.loop !171
+  br i1 %i.bf, label %bb.f, label %._crit_edge.loopexit, !llvm.loop !171
 
 bb.o:                                             ; preds = %._crit_edge
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -415,6 +422,7 @@ _ZN4core5arrayIN5video14E_CUBE_SURFACEEED2Ev.exit27.loopexit: ; preds = %bb.f, %
   %.sroa.13.055.lcssa = phi ptr [ %.sroa.13.055, %bb.f ], [ %.sroa.9.056, %_ZNKSt6vectorIPN5video8ITextureESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i ]
   %lpad.loopexit = landingpad { ptr, i32 }
           cleanup
+  store i64 %3, ptr %2, align 8
   br label %_ZN4core5arrayIN5video14E_CUBE_SURFACEEED2Ev.exit27
 
 _ZN4core5arrayIN5video14E_CUBE_SURFACEEED2Ev.exit27.loopexit.split-lp: ; preds = %bb.q, %bb.j, %bb.r, %_ZN4core5arrayIN5video14E_CUBE_SURFACEEED2Ev.exit, %bb.o

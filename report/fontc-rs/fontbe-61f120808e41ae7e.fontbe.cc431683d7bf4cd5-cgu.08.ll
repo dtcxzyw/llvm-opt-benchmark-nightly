@@ -205,7 +205,7 @@ bb.a:
   %i.u = alloca [8 x i8], align 8                 ; 12 uses
   %i.v = alloca [96 x i8], align 8                ; 7 uses
   %i.w = alloca [16 x i8], align 8                ; 4 uses
-  %i.x = alloca [8 x i8], align 8                 ; 2 uses
+  %i.x = alloca [8 x i8], align 8                 ; 4 uses
   %i.y = alloca [24 x i8], align 8                ; 17 uses
   %i.z = alloca [8 x i8], align 8                 ; 5 uses
   %i.aa = alloca [96 x i8], align 8               ; 7 uses
@@ -608,14 +608,14 @@ bb.de:                                            ; preds = %bb.dc
 
 .lr.ph:                                           ; preds = %bb.de, %_RNvMsG_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecRNtNtCs3v5ql5U6hxj_6fontir2ir10PaintGlyphE8push_mutCshxhuDJfZv4T_6fontbe.exit
   %i.my = phi i64 [ %i.no, %_RNvMsG_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecRNtNtCs3v5ql5U6hxj_6fontir2ir10PaintGlyphE8push_mutCshxhuDJfZv4T_6fontbe.exit ], [ 0, %bb.de ] ; 3 uses
-  %.sroa.025.0535 = phi ptr [ %i.mz, %_RNvMsG_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecRNtNtCs3v5ql5U6hxj_6fontir2ir10PaintGlyphE8push_mutCshxhuDJfZv4T_6fontbe.exit ], [ %i.mt, %bb.de ] ; 4 uses
+  %.sroa.025.0535 = phi ptr [ %i.mz, %_RNvMsG_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecRNtNtCs3v5ql5U6hxj_6fontir2ir10PaintGlyphE8push_mutCshxhuDJfZv4T_6fontbe.exit ], [ %i.mt, %bb.de ] ; 6 uses
   %i.mz = getelementptr inbounds nuw i8, ptr %.sroa.025.0535, i64 16 ; 2 uses
-  store ptr %.sroa.025.0535, ptr %i.x, align 8, !captures !2341
   %i.na = load i64, ptr %.sroa.025.0535, align 8, !range !32, !noundef !8
   %i.nb = icmp eq i64 %i.na, 0
   br i1 %i.nb, label %bb.df, label %bb.dh, !prof !23
 
 ._crit_edge.loopexit:                             ; preds = %_RNvMsG_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecRNtNtCs3v5ql5U6hxj_6fontir2ir10PaintGlyphE8push_mutCshxhuDJfZv4T_6fontbe.exit
+  store ptr %.sroa.025.0535, ptr %i.x, align 8
   %.pre = load ptr, ptr %i.fe, align 8
   br label %._crit_edge
 
@@ -633,24 +633,25 @@ bb.de:                                            ; preds = %bb.dc
 bb.df:                                            ; preds = %.lr.ph
   %i.ni = getelementptr inbounds nuw i8, ptr %.sroa.025.0535, i64 8
   %i.nj = load ptr, ptr %i.ni, align 8, !nonnull !8, !noundef !8
-  %i.nk = load i64, ptr %i.y, align 8, !range !31, !alias.scope !2342, !noundef !8
+  %i.nk = load i64, ptr %i.y, align 8, !range !31, !alias.scope !2341, !noundef !8
   %i.nl = icmp eq i64 %i.my, %i.nk
   br i1 %i.nl, label %bb.dg, label %_RNvMsG_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecRNtNtCs3v5ql5U6hxj_6fontir2ir10PaintGlyphE8push_mutCshxhuDJfZv4T_6fontbe.exit
 
 bb.dg:                                            ; preds = %bb.df
   invoke void @_RNvMs4_NtCsgCecv3eZDcN_5alloc7raw_vecINtB5_6RawVecRNtNtCs3v5ql5U6hxj_6fontir2ir10PaintGlyphE8grow_oneCshxhuDJfZv4T_6fontbe(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.y) #35
-          to label %_RNvMsG_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecRNtNtCs3v5ql5U6hxj_6fontir2ir10PaintGlyphE8push_mutCshxhuDJfZv4T_6fontbe.exit unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %_RNvMsG_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecRNtNtCs3v5ql5U6hxj_6fontir2ir10PaintGlyphE8push_mutCshxhuDJfZv4T_6fontbe.exit unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit
 
 _RNvMsG_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecRNtNtCs3v5ql5U6hxj_6fontir2ir10PaintGlyphE8push_mutCshxhuDJfZv4T_6fontbe.exit: ; preds = %bb.dg, %bb.df
-  %i.nm = load ptr, ptr %i.fe, align 8, !alias.scope !2342, !nonnull !8, !noundef !8
+  %i.nm = load ptr, ptr %i.fe, align 8, !alias.scope !2341, !nonnull !8, !noundef !8
   %i.nn = getelementptr inbounds nuw [8 x i8], ptr %i.nm, i64 %i.my
-  store ptr %i.nj, ptr %i.nn, align 8, !noalias !2343, !captures !2341
+  store ptr %i.nj, ptr %i.nn, align 8, !noalias !2342, !captures !2343
   %i.no = add i64 %i.my, 1                        ; 3 uses
-  store i64 %i.no, ptr %i.ff, align 8, !alias.scope !2342
+  store i64 %i.no, ptr %i.ff, align 8, !alias.scope !2341
   %i.np = icmp eq ptr %i.mz, %i.mw
   br i1 %i.np, label %._crit_edge.loopexit, label %.lr.ph
 
 bb.dh:                                            ; preds = %.lr.ph
+  store ptr %.sroa.025.0535, ptr %i.x, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.w)
   store ptr %i.x, ptr %i.w, align 8
   %.sroa.4117.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.w, i64 8
@@ -658,19 +659,29 @@ bb.dh:                                            ; preds = %.lr.ph
   invoke void @_RNvNtCsf3Ta7LF998c_4core9panicking9panic_fmt(ptr noundef nonnull @47, ptr noundef nonnull %i.w, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @48) #34
           to label %bb.cq unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
-.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.dr, %._crit_edge, %bb.dg, %bb.dh
+.loopexit.split-lp.loopexit.split-lp.loopexit:    ; preds = %bb.dg
+  %lpad.loopexit542 = landingpad { ptr, i32 }
+          cleanup
+  store ptr %.sroa.025.0535, ptr %i.x, align 8
+  br label %.loopexit.split-lp.loopexit.split-lp
+
+.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.dr, %._crit_edge, %bb.dh
   %lpad.loopexit.split-lp545 = landingpad { ptr, i32 }
           cleanup
+  br label %.loopexit.split-lp.loopexit.split-lp
+
+.loopexit.split-lp.loopexit.split-lp:             ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %.loopexit.split-lp.loopexit.split-lp.loopexit
+  %lpad.phi543 = phi { ptr, i32 } [ %lpad.loopexit542, %.loopexit.split-lp.loopexit.split-lp.loopexit ], [ %lpad.loopexit.split-lp545, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
   invoke void @_RNvXsp_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecRNtNtCs3v5ql5U6hxj_6fontir2ir10PaintGlyphENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCshxhuDJfZv4T_6fontbe(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.y)
           to label %bb.dj unwind label %bb.di
 
-bb.di:                                            ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+bb.di:                                            ; preds = %.loopexit.split-lp.loopexit.split-lp
   %i.nq = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   invoke void @_RNvXs1_NtCsgCecv3eZDcN_5alloc7raw_vecINtB5_6RawVecRNtNtCs3v5ql5U6hxj_6fontir2ir10PaintGlyphENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCshxhuDJfZv4T_6fontbe(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.y)
           to label %.body266 unwind label %bb.dk
 
-bb.dj:                                            ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+bb.dj:                                            ; preds = %.loopexit.split-lp.loopexit.split-lp
   invoke void @_RNvXs1_NtCsgCecv3eZDcN_5alloc7raw_vecINtB5_6RawVecRNtNtCs3v5ql5U6hxj_6fontir2ir10PaintGlyphENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCshxhuDJfZv4T_6fontbe(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.y)
           to label %.thread unwind label %bb.cw
 
@@ -1073,7 +1084,7 @@ bb.ip:                                            ; preds = %.critedge206
           to label %.thread unwind label %bb.cw
 
 .thread:                                          ; preds = %.loopexit493, %.loopexit.split-lp494, %.critedge207, %.critedge207.thread401, %bb.et, %bb.dt, %bb.dn, %bb.dj, %.body251, %bb.bg, %bb.ay, %bb.aq
-  %.pn.pn.pn387 = phi { ptr, i32 } [ %.pn421, %bb.aq ], [ %i.gv, %bb.ay ], [ %i.ob, %bb.dt ], [ %eh.lpad-body252, %.body251 ], [ %lpad.loopexit.split-lp545, %bb.dj ], [ %i.nt, %bb.dn ], [ %eh.lpad-body311404, %.critedge207.thread401 ], [ %eh.lpad-body252, %bb.bg ], [ %i.pj, %bb.et ], [ %i.pq, %.critedge207 ], [ %lpad.loopexit495, %.loopexit493 ], [ %lpad.loopexit.split-lp496, %.loopexit.split-lp494 ]
+  %.pn.pn.pn387 = phi { ptr, i32 } [ %.pn421, %bb.aq ], [ %i.gv, %bb.ay ], [ %i.ob, %bb.dt ], [ %eh.lpad-body252, %.body251 ], [ %lpad.phi543, %bb.dj ], [ %i.nt, %bb.dn ], [ %eh.lpad-body311404, %.critedge207.thread401 ], [ %eh.lpad-body252, %bb.bg ], [ %i.pj, %bb.et ], [ %i.pq, %.critedge207 ], [ %lpad.loopexit495, %.loopexit493 ], [ %lpad.loopexit.split-lp496, %.loopexit.split-lp494 ]
   %.sroa.075.0386 = phi i8 [ %.sroa.075.4417, %bb.aq ], [ 1, %bb.ay ], [ 1, %bb.dt ], [ 1, %.body251 ], [ 1, %bb.dj ], [ 1, %bb.dn ], [ 1, %.critedge207.thread401 ], [ 1, %bb.bg ], [ 1, %bb.et ], [ 1, %.critedge207 ], [ 1, %.loopexit493 ], [ 1, %.loopexit.split-lp494 ]
   %.sroa.077.0385 = phi i8 [ %.sroa.077.7415, %bb.aq ], [ 1, %bb.ay ], [ 1, %bb.dt ], [ 1, %.body251 ], [ 1, %bb.dj ], [ 1, %bb.dn ], [ 1, %.critedge207.thread401 ], [ 1, %bb.bg ], [ 1, %bb.et ], [ 1, %.critedge207 ], [ 1, %.loopexit493 ], [ 1, %.loopexit.split-lp494 ]
   %.sroa.093.2384 = phi i8 [ 0, %bb.aq ], [ 1, %bb.ay ], [ 1, %bb.dt ], [ 1, %.body251 ], [ 1, %bb.dj ], [ 1, %bb.dn ], [ 0, %.critedge207.thread401 ], [ 1, %bb.bg ], [ 1, %bb.et ], [ 0, %.critedge207 ], [ 1, %.loopexit493 ], [ 1, %.loopexit.split-lp494 ]
@@ -1476,9 +1487,9 @@ begin_hunk_3_@llvm.smin.v2i16
 !2338 = !{!2184}
 !2339 = !{!2184, !2182}
 !2340 = !{!2186}
-!2341 = !{!"address", !"read_provenance"}
-!2342 = !{!2188}
-!2343 = !{!2189}
+!2341 = !{!2188}
+!2342 = !{!2189}
+!2343 = !{!"address", !"read_provenance"}
 !2344 = !{!2191}
 !2345 = !{!2193}
 !2346 = !{!2195}

@@ -205,58 +205,59 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   store ptr %i.f, ptr %i.bo, align 8, !tbaa !86
   store ptr null, ptr %i.e, align 8, !tbaa !71
   %i.bp = getelementptr inbounds nuw i8, ptr %i.f, i64 16
-  %1 = load float, ptr %i.bp, align 8, !tbaa !30  ; 2 uses
-  %i.bq = getelementptr inbounds nuw i8, ptr %i.h, i64 152 ; 2 uses
-  store float %1, ptr %i.bq, align 8, !tbaa !30
-  %2 = getelementptr inbounds nuw i8, ptr %i.f, i64 20
-  %i.br = load float, ptr %2, align 4, !tbaa !30  ; 2 uses
-  %i.bs = getelementptr inbounds nuw i8, ptr %i.h, i64 156 ; 2 uses
+  %1 = getelementptr inbounds nuw i8, ptr %i.h, i64 152 ; 2 uses
+  %i.bq = getelementptr inbounds nuw i8, ptr %i.f, i64 20
+  %2 = load float, ptr %i.bp, align 8, !tbaa !30  ; 2 uses
+  store float %2, ptr %1, align 8, !tbaa !30
+  %i.br = load float, ptr %i.bq, align 4, !tbaa !30 ; 2 uses
+  %i.bs = getelementptr inbounds nuw i8, ptr %i.h, i64 156
   store float %i.br, ptr %i.bs, align 4, !tbaa !30
   %i.bt = getelementptr inbounds nuw i8, ptr %i.f, i64 24
-  %3 = load float, ptr %i.bt, align 8, !tbaa !30  ; 2 uses
-  %i.bu = getelementptr inbounds nuw i8, ptr %i.h, i64 160 ; 2 uses
-  store float %3, ptr %i.bu, align 8, !tbaa !30
-  %4 = getelementptr inbounds nuw i8, ptr %i.f, i64 28
-  %i.bv = load float, ptr %4, align 4, !tbaa !30  ; 2 uses
-  %i.bw = getelementptr inbounds nuw i8, ptr %i.h, i64 164 ; 2 uses
-  store float %i.bv, ptr %i.bw, align 4, !tbaa !30
+  %3 = getelementptr inbounds nuw i8, ptr %i.h, i64 160 ; 2 uses
+  %i.bu = getelementptr inbounds nuw i8, ptr %i.f, i64 28
+  %4 = load float, ptr %i.bt, align 8, !tbaa !30  ; 2 uses
+  store float %4, ptr %3, align 8, !tbaa !30
+  %i.bv = load float, ptr %i.bu, align 4, !tbaa !30 ; 2 uses
+  %i.bw = getelementptr inbounds nuw i8, ptr %i.h, i64 164
   %.097.in103 = getelementptr inbounds nuw i8, ptr %i.f, i64 32
   %.097104 = load ptr, ptr %.097.in103, align 8, !tbaa !72 ; 2 uses
   %.not105 = icmp eq ptr %.097104, null
-  br i1 %.not105, label %._crit_edge110.a, label %.lr.ph109
+  br i1 %.not105, label %._crit_edge110.a, label %.lr.ph109.preheader
 
-.lr.ph109:                                        ; preds = %._crit_edge, %.lr.ph109
-  %5 = phi float [ %18, %.lr.ph109 ], [ %3, %._crit_edge ] ; 2 uses
-  %6 = phi float [ %15, %.lr.ph109 ], [ %i.br, %._crit_edge ] ; 2 uses
-  %7 = phi float [ %11, %.lr.ph109 ], [ %1, %._crit_edge ] ; 2 uses
-  %.097107 = phi ptr [ %.097, %.lr.ph109 ], [ %.097104, %._crit_edge ] ; 5 uses
-  %storemerge106 = phi float [ %21, %.lr.ph109 ], [ %i.bv, %._crit_edge ] ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %.097107, i64 16
-  %9 = load float, ptr %8, align 8, !tbaa !30     ; 2 uses
-  %10 = fcmp olt float %7, %9
-  %11 = select i1 %10, float %7, float %9         ; 2 uses
-  store float %11, ptr %i.bq, align 8, !tbaa !30
-  %12 = getelementptr inbounds nuw i8, ptr %.097107, i64 20
-  %13 = load float, ptr %12, align 4, !tbaa !30   ; 2 uses
-  %14 = fcmp olt float %6, %13
-  %15 = select i1 %14, float %6, float %13        ; 2 uses
-  store float %15, ptr %i.bs, align 4, !tbaa !30
-  %i.bx = getelementptr inbounds nuw i8, ptr %.097107, i64 24
-  %16 = load float, ptr %i.bx, align 8, !tbaa !30 ; 2 uses
-  %17 = fcmp ogt float %5, %16
-  %18 = select i1 %17, float %5, float %16        ; 2 uses
-  store float %18, ptr %i.bu, align 8, !tbaa !30
-  %i.by = getelementptr inbounds nuw i8, ptr %.097107, i64 28
-  %19 = load float, ptr %i.by, align 4, !tbaa !30 ; 2 uses
-  %20 = fcmp ogt float %storemerge106, %19
-  %21 = select i1 %20, float %storemerge106, float %19 ; 2 uses
-  store float %21, ptr %i.bw, align 4, !tbaa !30
+.lr.ph109.preheader:                              ; preds = %._crit_edge
+  %5 = insertelement <2 x float> poison, float %4, i64 0
+  %6 = insertelement <2 x float> %5, float %i.bv, i64 1
+  %7 = insertelement <2 x float> poison, float %2, i64 0
+  %8 = insertelement <2 x float> %7, float %i.br, i64 1
+  br label %.lr.ph109
+
+.lr.ph109:                                        ; preds = %.lr.ph109.preheader, %.lr.ph109
+  %.097107 = phi ptr [ %.097, %.lr.ph109 ], [ %.097104, %.lr.ph109.preheader ] ; 3 uses
+  %9 = phi <2 x float> [ %13, %.lr.ph109 ], [ %8, %.lr.ph109.preheader ] ; 2 uses
+  %10 = phi <2 x float> [ %16, %.lr.ph109 ], [ %6, %.lr.ph109.preheader ] ; 2 uses
+  %i.bx = getelementptr inbounds nuw i8, ptr %.097107, i64 16
+  %11 = load <2 x float>, ptr %i.bx, align 8, !tbaa !30 ; 2 uses
+  %12 = fcmp olt <2 x float> %9, %11
+  %13 = select <2 x i1> %12, <2 x float> %9, <2 x float> %11 ; 2 uses
+  %i.by = getelementptr inbounds nuw i8, ptr %.097107, i64 24
+  %14 = load <2 x float>, ptr %i.by, align 8, !tbaa !30 ; 2 uses
+  %15 = fcmp ogt <2 x float> %10, %14
+  %16 = select <2 x i1> %15, <2 x float> %10, <2 x float> %14 ; 3 uses
   %.097.in = getelementptr inbounds nuw i8, ptr %.097107, i64 32
   %.097 = load ptr, ptr %.097.in, align 8, !tbaa !72 ; 2 uses
   %.not = icmp eq ptr %.097, null
-  br i1 %.not, label %._crit_edge110.a, label %.lr.ph109, !llvm.loop !305
+  br i1 %.not, label %._crit_edge110, label %.lr.ph109, !llvm.loop !305
 
-._crit_edge110.a:                                 ; preds = %.lr.ph109, %._crit_edge
+._crit_edge110:                                   ; preds = %.lr.ph109
+  store <2 x float> %13, ptr %1, align 8, !tbaa !30
+  %17 = extractelement <2 x float> %16, i64 0
+  store float %17, ptr %3, align 8, !tbaa !30
+  %18 = extractelement <2 x float> %16, i64 1
+  br label %._crit_edge110.a
+
+._crit_edge110.a:                                 ; preds = %._crit_edge110, %._crit_edge
+  %storemerge.lcssa = phi float [ %18, %._crit_edge110 ], [ %i.bv, %._crit_edge ]
+  store float %storemerge.lcssa, ptr %i.bw, align 4, !tbaa !30
   %i.bz = getelementptr inbounds nuw i8, ptr %i.d, i64 308
   %i.ca = load i8, ptr %i.bz, align 4, !tbaa !36
   switch i8 %i.ca, label %bb.g [

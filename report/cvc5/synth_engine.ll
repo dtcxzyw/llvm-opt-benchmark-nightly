@@ -202,7 +202,7 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define hidden void @_ZN4cvc58internal6theory11quantifiers11SynthEngine5checkENS1_6Theory6EffortENS2_17QuantifiersModule7QEffortE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(120) %0, i32 %1, i32 noundef %2) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = alloca %"class.std::vector.569", align 8   ; 18 uses
+  %3 = alloca %"class.std::vector.569", align 8   ; 17 uses
   %i.a = alloca i8, align 1                       ; 5 uses
   %4 = alloca %"class.cvc5::internal::NodeTemplate.574", align 8 ; 2 uses
   %5 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 5 uses
@@ -251,6 +251,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %.lr.ph, %_ZNSt6vectorIPN4cvc58internal6theory11quantifiers15SynthConjectureESaIS5_EE9push_backERKS5_.exit
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZNSt6vectorIPN4cvc58internal6theory11quantifiers15SynthConjectureESaIS5_EE9push_backERKS5_.exit ] ; 2 uses
+  %7 = phi ptr [ null, %.lr.ph ], [ %8, %_ZNSt6vectorIPN4cvc58internal6theory11quantifiers15SynthConjectureESaIS5_EE9push_backERKS5_.exit ] ; 7 uses
   %i.w = load ptr, ptr %i.e, align 8, !tbaa !19
   %i.x = getelementptr inbounds nuw [8 x i8], ptr %i.w, i64 %indvars.iv
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !18   ; 4 uses
@@ -360,7 +361,6 @@ bb.q:                                             ; preds = %bb.p
   br label %_ZNSt6vectorIPN4cvc58internal6theory11quantifiers15SynthConjectureESaIS5_EE9push_backERKS5_.exit
 
 bb.r:                                             ; preds = %bb.p
-  %7 = load ptr, ptr %3, align 8, !tbaa !55       ; 4 uses
   %i.bg = ptrtoint ptr %i.bd to i64
   %i.bh = ptrtoint ptr %7 to i64                  ; 2 uses
   %i.bi = sub i64 %i.bg, %i.bh                    ; 5 uses
@@ -385,7 +385,7 @@ _ZNKSt6vectorIPN4cvc58internal6theory11quantifiers15SynthConjectureESaIS5_EE12_M
   call void @llvm.assume(i1 %.not.i.i.i)
   %i.bp = shl nuw nsw i64 %i.bo, 3
   %i.bq = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bp) #17
-          to label %.noexc43 unwind label %.loopexit.split-lp152.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 4 uses
+          to label %.noexc43 unwind label %.loopexit.split-lp152.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 5 uses
 
 .noexc43:                                         ; preds = %_ZNKSt6vectorIPN4cvc58internal6theory11quantifiers15SynthConjectureESaIS5_EE12_M_check_lenEmPKc.exit.i.i
   %i.br = getelementptr inbounds i8, ptr %i.bq, i64 %i.bi ; 2 uses
@@ -422,6 +422,7 @@ _ZNSt6vectorIPN4cvc58internal6theory11quantifiers15SynthConjectureESaIS5_EE17_M_
   br label %.loopexit.split-lp152
 
 _ZNSt6vectorIPN4cvc58internal6theory11quantifiers15SynthConjectureESaIS5_EE9push_backERKS5_.exit: ; preds = %_ZNSt6vectorIPN4cvc58internal6theory11quantifiers15SynthConjectureESaIS5_EE17_M_realloc_insertIJRKS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i, %bb.q, %bb.o, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit
+  %8 = phi ptr [ %i.bq, %_ZNSt6vectorIPN4cvc58internal6theory11quantifiers15SynthConjectureESaIS5_EE17_M_realloc_insertIJRKS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i ], [ %7, %bb.q ], [ %7, %bb.o ], [ %7, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #20
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count

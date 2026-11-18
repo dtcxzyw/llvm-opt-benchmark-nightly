@@ -204,7 +204,7 @@ declare i32 @__cxa_atexit(ptr, ptr, ptr) local_unnamed_addr #2
 define dso_local noundef i32 @main(i32 noundef %0, ptr noundef %1) local_unnamed_addr #3 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 34 uses
-  %2 = alloca %"class.icu_78::LocalPointer", align 8 ; 7 uses
+  %2 = alloca %"class.icu_78::LocalPointer", align 8 ; 8 uses
   %3 = alloca %"class.icu_78::CharString", align 8 ; 20 uses
   %4 = alloca %"class.icu_78::StringPiece", align 8 ; 3 uses
   %5 = alloca %"class.icu_78::StringPiece", align 8 ; 3 uses
@@ -584,7 +584,7 @@ bb.ay:                                            ; preds = %bb.ax
   br label %bb.az
 
 bb.az:                                            ; preds = %bb.ay, %bb.aq
-  %i.ds = phi ptr [ %i.dn, %bb.ay ], [ null, %bb.aq ] ; 3 uses
+  %i.ds = phi ptr [ %i.dn, %bb.ay ], [ null, %bb.aq ] ; 2 uses
   %i.dt = load i8, ptr getelementptr inbounds nuw (i8, ptr @options, i64 834), align 2, !tbaa !27
   %.not260 = icmp eq i8 %i.dt, 0
   br i1 %.not260, label %bb.dr, label %bb.ba
@@ -987,7 +987,8 @@ bb.eq:                                            ; preds = %_ZN7ResFile5closeEv
   %.not294 = icmp eq ptr %i.mv, null
   %.0217. = select i1 %.not294, ptr %.0217, ptr %i.mv
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #25
-  invoke void @_ZN7SRBRoot5writeEPKcS1_PciR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(176) %i.ds, ptr noundef %.0217., ptr noundef null, ptr noundef nonnull %i.b, i32 noundef 256, ptr noundef nonnull align 4 dereferenceable(4) %i.a)
+  %10 = load ptr, ptr %2, align 8, !tbaa !31
+  invoke void @_ZN7SRBRoot5writeEPKcS1_PciR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(176) %10, ptr noundef %.0217., ptr noundef null, ptr noundef nonnull %i.b, i32 noundef 256, ptr noundef nonnull align 4 dereferenceable(4) %i.a)
           to label %bb.er unwind label %bb.eu
 
 bb.er:                                            ; preds = %bb.eq

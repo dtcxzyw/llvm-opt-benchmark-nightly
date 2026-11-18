@@ -205,7 +205,7 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define dso_local noundef i32 @_ZN9NCompress8NDeflate8NEncoder6CCoder8CodeRealEP19ISequentialInStreamP20ISequentialOutStreamPKyS8_P21ICompressProgressInfo(ptr noundef nonnull align 8 dereferenceable(39764) initializes((1300, 1302)) %0, ptr noundef %1, ptr noundef %2, ptr nofree readnone captures(none) %3, ptr nofree readnone captures(none) %4, ptr noundef %5) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 !guid !221 {
 bb.a:
-  %i.a = alloca i64, align 8                      ; 8 uses
+  %i.a = alloca i64, align 8                      ; 9 uses
   %6 = alloca %"class.NCompress::NDeflate::NEncoder::CCoder::CCoderReleaser", align 8 ; 5 uses
   %i.b = alloca i64, align 8                      ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 1292
@@ -295,19 +295,19 @@ _ZN9CMyComPtrI19ISequentialInStreamEaSEPS0_.exit: ; preds = %bb.d, %bb.e
   br i1 %.not29, label %_ZN9CMyComPtrI19ISequentialInStreamEaSEPS0_.exit.split.us, label %_ZN9CMyComPtrI19ISequentialInStreamEaSEPS0_.exit.split
 
 _ZN9CMyComPtrI19ISequentialInStreamEaSEPS0_.exit.split.us: ; preds = %_ZN9CMyComPtrI19ISequentialInStreamEaSEPS0_.exit, %bb.g
-  %i.ar = phi i64 [ %i.bb, %bb.g ], [ 0, %_ZN9CMyComPtrI19ISequentialInStreamEaSEPS0_.exit ]
+  %i.ar = phi i64 [ %i.bb, %bb.g ], [ 0, %_ZN9CMyComPtrI19ISequentialInStreamEaSEPS0_.exit ] ; 2 uses
   store i32 60923, ptr %i.an, align 4, !tbaa !119
   store i8 0, ptr %i.ao, align 8, !tbaa !95
   %i.as = load i32, ptr %i.e, align 8, !tbaa !70
   %i.at = invoke noundef i32 @_ZN9NCompress8NDeflate8NEncoder6CCoder13GetBlockPriceEii(ptr noundef nonnull align 8 dereferenceable(39764) %0, i32 noundef 1, i32 noundef %i.as)
-          to label %bb.f unwind label %.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
+          to label %bb.f unwind label %.loopexit.split.us ; 0 uses
 
 bb.f:                                             ; preds = %_ZN9CMyComPtrI19ISequentialInStreamEaSEPS0_.exit.split.us
   %i.au = load i32, ptr %i.ap, align 8, !tbaa !99
   %i.av = load i32, ptr %i.aq, align 8, !tbaa !100
   %i.aw = icmp eq i32 %i.au, %i.av
   invoke void @_ZN9NCompress8NDeflate8NEncoder6CCoder9CodeBlockEib(ptr noundef nonnull align 8 dereferenceable(39764) %0, i32 noundef 1, i1 noundef zeroext %i.aw)
-          to label %bb.g unwind label %.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %bb.g unwind label %.loopexit.split.us
 
 bb.g:                                             ; preds = %bb.f
   %i.ax = load ptr, ptr %i.ah, align 8, !tbaa !73
@@ -315,11 +315,20 @@ bb.g:                                             ; preds = %bb.f
   %i.az = load i32, ptr %i.ay, align 4, !tbaa !119
   %i.ba = zext i32 %i.az to i64
   %i.bb = add i64 %i.ar, %i.ba                    ; 2 uses
-  store i64 %i.bb, ptr %i.a, align 8, !tbaa !222
   %i.bc = load i32, ptr %i.ap, align 8, !tbaa !99
   %i.bd = load i32, ptr %i.aq, align 8, !tbaa !100
   %.not32.us = icmp eq i32 %i.bc, %i.bd
-  br i1 %.not32.us, label %.split.us.a, label %_ZN9CMyComPtrI19ISequentialInStreamEaSEPS0_.exit.split.us, !llvm.loop !220
+  br i1 %.not32.us, label %.split.us, label %_ZN9CMyComPtrI19ISequentialInStreamEaSEPS0_.exit.split.us, !llvm.loop !220
+
+.loopexit.split.us:                               ; preds = %bb.f, %_ZN9CMyComPtrI19ISequentialInStreamEaSEPS0_.exit.split.us
+  %lpad.loopexit.us = landingpad { ptr, i32 }
+          cleanup
+  store i64 %i.ar, ptr %i.a, align 8
+  br label %.loopexit.split
+
+.split.us:                                        ; preds = %bb.g
+  store i64 %i.bb, ptr %i.a, align 8
+  br label %.split.us.a
 
 _ZN9CMyComPtrI19ISequentialInStreamEaSEPS0_.exit.split: ; preds = %_ZN9CMyComPtrI19ISequentialInStreamEaSEPS0_.exit, %bb.m
   store i32 60923, ptr %i.an, align 4, !tbaa !119
@@ -365,7 +374,7 @@ bb.k:                                             ; preds = %bb.j
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #23
   br i1 %.not31, label %bb.m, label %_ZN12CBitlEncoder5FlushEv.exit
 
-.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %_ZN9CMyComPtrI19ISequentialInStreamEaSEPS0_.exit.split.us, %bb.f, %bb.h, %_ZN9CMyComPtrI19ISequentialInStreamEaSEPS0_.exit.split, %_ZN12CBitlEncoder9FlushByteEv.exit.i, %bb.p
+.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %_ZN9CMyComPtrI19ISequentialInStreamEaSEPS0_.exit.split, %bb.h, %bb.p, %_ZN12CBitlEncoder9FlushByteEv.exit.i
   %lpad.loopexit.split-lp58 = landingpad { ptr, i32 }
           cleanup
   br label %.loopexit.split
@@ -382,7 +391,7 @@ bb.m:                                             ; preds = %bb.k
   %.not32 = icmp eq i32 %i.ca, %i.cb
   br i1 %.not32, label %.split.us.a, label %_ZN9CMyComPtrI19ISequentialInStreamEaSEPS0_.exit.split, !llvm.loop !220
 
-.split.us.a:                                      ; preds = %bb.m, %bb.g
+.split.us.a:                                      ; preds = %bb.m, %.split.us
   %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 136
   %i.cd = load i32, ptr %i.cc, align 8, !tbaa !225 ; 2 uses
   %.not33 = icmp eq i32 %i.cd, 0
@@ -465,8 +474,8 @@ _ZN9NCompress8NDeflate8NEncoder6CCoder14CCoderReleaserD2Ev.exit: ; preds = %_ZN9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #23
   br label %bb.t
 
-.loopexit.split:                                  ; preds = %.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.l
-  %.pn34 = phi { ptr, i32 } [ %i.bz, %bb.l ], [ %lpad.loopexit.split-lp58, %.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+.loopexit.split:                                  ; preds = %.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %.loopexit.split.us, %bb.l
+  %.pn34 = phi { ptr, i32 } [ %i.bz, %bb.l ], [ %lpad.loopexit.us, %.loopexit.split.us ], [ %lpad.loopexit.split-lp58, %.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
   call void @_ZN9NCompress8NDeflate8NEncoder6CCoder14CCoderReleaserD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %6) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #23

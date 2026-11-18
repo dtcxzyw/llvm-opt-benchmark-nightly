@@ -202,17 +202,16 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 .lr.ph:                                           ; preds = %bb.e, %bb.g
   %.012 = phi i32 [ %i.q, %bb.g ], [ 0, %bb.e ]
   %i.i = call ptr @slurm_xcalloc(i64 noundef 1, i64 noundef 16, i1 noundef zeroext true, i1 noundef zeroext false, ptr noundef nonnull @.str.6, i32 noundef 558, ptr noundef nonnull @__func__.gres_c_s_recv_stepd) #7 ; 4 uses
-  store ptr %i.i, ptr %i.a, align 8
   %i.j = call i32 @slurm_unpack64(ptr noundef nonnull %i.b, ptr noundef %0) #7
   %.not9 = icmp eq i32 %i.j, 0
-  br i1 %.not9, label %bb.f, label %.thread
+  br i1 %.not9, label %bb.f, label %.thread.loopexit
 
 bb.f:                                             ; preds = %.lr.ph
   %i.k = load i64, ptr %i.b, align 8
   store i64 %i.k, ptr %i.i, align 8
   %i.l = call i32 @slurm_unpack64(ptr noundef nonnull %i.b, ptr noundef %0) #7
   %.not10 = icmp eq i32 %i.l, 0
-  br i1 %.not10, label %bb.g, label %.thread
+  br i1 %.not10, label %bb.g, label %.thread.loopexit
 
 bb.g:                                             ; preds = %bb.f
   %i.m = load i64, ptr %i.b, align 8
@@ -226,7 +225,11 @@ bb.g:                                             ; preds = %bb.f
   %i.s = icmp ult i32 %i.q, %i.r
   br i1 %i.s, label %.lr.ph, label %.loopexit, !llvm.loop !19
 
-.thread:                                          ; preds = %bb.f, %.lr.ph, %bb.a
+.thread.loopexit:                                 ; preds = %.lr.ph, %bb.f
+  store ptr %i.i, ptr %i.a, align 8
+  br label %.thread
+
+.thread:                                          ; preds = %.thread.loopexit, %bb.a
   %i.t = call i32 (ptr, ...) @slurm_error(ptr noundef nonnull @.str.7) #7 ; 0 uses
   call void @slurm_xfree(ptr noundef nonnull %i.a) #7
   br label %.loopexit

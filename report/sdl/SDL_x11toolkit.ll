@@ -205,19 +205,22 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 32
   %i.ag = load i32, ptr %i.af, align 8
   %i.ah = add nsw i32 %i.ag, %i.ad                ; 3 uses
-  store i32 %i.ah, ptr %i.aa, align 8
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ae, i64 36
   %i.aj = load i32, ptr %i.ai, align 4
   %..i.i = tail call i32 @llvm.smax.i32(i32 %i.ac, i32 %i.aj) ; 3 uses
-  store i32 %..i.i, ptr %i.z, align 4
   %i.ak = getelementptr inbounds nuw i8, ptr %.01924.i.i, i64 8
   %i.al = load ptr, ptr %i.ak, align 8            ; 2 uses
   %.not.i.i = icmp eq ptr %i.al, null
-  br i1 %.not.i.i, label %X11Toolkit_CalculateButtonControl.exit, label %.lr.ph.i.i, !llvm.loop !0
+  br i1 %.not.i.i, label %X11Toolkit_GetTextElementsRect.exit.i.loopexit, label %.lr.ph.i.i, !llvm.loop !0
 
-X11Toolkit_CalculateButtonControl.exit:           ; preds = %.lr.ph.i.i, %bb.e
-  %i.am = phi i32 [ 0, %bb.e ], [ %..i.i, %.lr.ph.i.i ]
-  %i.an = phi i32 [ 0, %bb.e ], [ %i.ah, %.lr.ph.i.i ]
+X11Toolkit_GetTextElementsRect.exit.i.loopexit:   ; preds = %.lr.ph.i.i
+  store i32 %i.ah, ptr %i.aa, align 8
+  store i32 %..i.i, ptr %i.z, align 4
+  br label %X11Toolkit_CalculateButtonControl.exit
+
+X11Toolkit_CalculateButtonControl.exit:           ; preds = %X11Toolkit_GetTextElementsRect.exit.i.loopexit, %bb.e
+  %i.am = phi i32 [ 0, %bb.e ], [ %..i.i, %X11Toolkit_GetTextElementsRect.exit.i.loopexit ]
+  %i.an = phi i32 [ 0, %bb.e ], [ %i.ah, %X11Toolkit_GetTextElementsRect.exit.i.loopexit ]
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 292
   %i.ap = load i32, ptr %i.ao, align 4            ; 2 uses
   %i.aq = shl nsw i32 %i.ap, 4                    ; 2 uses
@@ -620,9 +623,9 @@ bb.j:                                             ; preds = %bb.i
   %sext67 = add i64 %i.aj, 4294967296
   %i.ak = ashr exact i64 %sext67, 32
   %i.al = getelementptr inbounds i8, ptr %.05870, i64 %i.ak
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %2 = icmp ult i64 %indvars.iv.next, %i.q
-  br i1 %2, label %.lr.ph, label %._crit_edge, !llvm.loop !31
+  %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.q
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !31
 
 ._crit_edge:                                      ; preds = %bb.j, %bb.i, %X11Toolkit_CountLinesOfText.exit
   %i.am = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 2 uses

@@ -204,10 +204,12 @@ do_reads.exit:                                    ; preds = %bb.u, %do_recovery.
 .lr.ph.i23:                                       ; preds = %.outer96.i, %.lr.ph.lr.ph.i
   %i.fk = phi ptr [ %i.fj, %.lr.ph.lr.ph.i ], [ %i.fm, %.outer96.i ]
   %.0.ph97105.i = phi ptr [ %.0.ph113.i, %.lr.ph.lr.ph.i ], [ %.1.i, %.outer96.i ] ; 3 uses
+  %.promoted.i = load ptr, ptr %i.fi, align 8
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.w, %.lr.ph.i23
-  %i.fl = phi ptr [ %i.fk, %.lr.ph.i23 ], [ %i.fm, %bb.w ] ; 14 uses
+  %10 = phi ptr [ %.promoted.i, %.lr.ph.i23 ], [ %i.fl, %bb.w ] ; 2 uses
+  %i.fl = phi ptr [ %i.fk, %.lr.ph.i23 ], [ %i.fm, %bb.w ] ; 15 uses
   %i.fm = load ptr, ptr %i.fl, align 8            ; 4 uses
   %.not8.i.i24 = icmp eq ptr %i.fm, null          ; 3 uses
   store ptr null, ptr %i.fl, align 8
@@ -221,7 +223,6 @@ bb.v:                                             ; preds = %bb.w, %.lr.ph.i23
   br i1 %or.cond93.i, label %bb.w, label %bb.x
 
 bb.w:                                             ; preds = %bb.v
-  %10 = load ptr, ptr %i.fi, align 8              ; 2 uses
   %.not.i66.i = icmp eq ptr %10, null
   %..i.i = select i1 %.not.i66.i, ptr %3, ptr %10
   store ptr %i.fl, ptr %..i.i, align 8

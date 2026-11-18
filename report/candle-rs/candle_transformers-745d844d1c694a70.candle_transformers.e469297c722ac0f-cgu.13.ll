@@ -205,7 +205,6 @@ begin_hunk_0_@_RNvMs9_NtNtNtCs1dZk1kIfPhr_19candle_transformers6models6gemma45au
   %.sroa.07.sroa.20.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cp, i64 440
   %.sroa.78.0..sroa_idx9 = getelementptr inbounds nuw i8, ptr %i.cp, i64 568
   %.sroa.811.0..sroa_idx12 = getelementptr inbounds nuw i8, ptr %i.cp, i64 569
-  %brmerge = select i1 %.not.i.i, i1 true, i1 %.not533.i.i
   %i.lt = insertelement <2 x i64> poison, i64 %i.ih, i64 0
   %i.lu = shufflevector <2 x double> %i.ku, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   br label %bb.bi
@@ -608,10 +607,15 @@ bb.er:                                            ; preds = %bb.ep
   %i.qr = fdiv double %i.qq, f0x3FE62E42FEFA39EF
   call void @llvm.lifetime.start.p0(ptr nonnull %i.au), !noalias !41695
   invoke fastcc void @_RINvXs1_NtNtCsgCecv3eZDcN_5alloc3vec14spec_from_elemhNtB6_12SpecFromElem9from_elemNtNtBa_5alloc6GlobalECs1dZk1kIfPhr_19candle_transformers(ptr noalias nofree noundef align 8 captures(none) dereferenceable(24) %i.au, i8 noundef 0, i64 noundef %i.kh)
-          to label %.preheader.i.i.a unwind label %.thread527.i.i, !noalias !41696
+          to label %.preheader.i.i unwind label %.thread527.i.i, !noalias !41696
 
-.preheader.i.i.a:                                 ; preds = %bb.er
-  br i1 %brmerge, label %._crit_edge.split.i.i, label %.lr.ph.i.i
+.preheader.i.i:                                   ; preds = %bb.er
+  br i1 %.not.i.i, label %._crit_edge.split.i.i, label %.preheader.i.i.a
+
+.preheader.i.i.a:                                 ; preds = %.preheader.i.i
+  %3 = load i64, ptr %i.ki, align 8, !noalias !41695 ; 2 uses
+  %4 = load ptr, ptr %i.kj, align 8, !noalias !41695, !nonnull !4
+  br i1 %.not533.i.i, label %._crit_edge.split.i.i, label %.lr.ph.i.i
 
 .thread520.i.i:                                   ; preds = %bb.fe, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit419.i.i, %bb.ey, %bb.ex, %bb.et, %.thread527.i.i
   %.pn385.pn.i.i = phi { ptr, i32 } [ %lpad.thr_comm.split-lp526.i.i, %bb.et ], [ %.pn381.i.i, %bb.fe ], [ %.pn381.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit419.i.i ], [ %lpad.thr_comm525.i.i, %.thread527.i.i ], [ %i.re, %bb.ex ], [ %i.re, %bb.ey ] ; 2 uses
@@ -633,7 +637,7 @@ bb.es:                                            ; preds = %.thread520.i.i
   %exitcond.not.i.i = icmp eq i64 %i.qx, %i.im
   br i1 %exitcond.not.i.i, label %._crit_edge.split.i.i, label %.lr.ph.i.i
 
-._crit_edge.split.i.i:                            ; preds = %..loopexit_crit_edge.i.i, %.preheader.i.i.a
+._crit_edge.split.i.i:                            ; preds = %..loopexit_crit_edge.i.i, %.preheader.i.i.a, %.preheader.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.at), !noalias !41695
   call void @llvm.lifetime.start.p0(ptr nonnull %i.as), !noalias !41695
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ar), !noalias !41695
@@ -1036,12 +1040,10 @@ bb.hm:                                            ; preds = %bb.ho, %bb.hl
 
 bb.hn:                                            ; preds = %bb.hl
   %i.xo = add i64 %.sroa.0283.0530.i.i, %i.qz     ; 3 uses
-  %3 = load i64, ptr %i.ki, align 8, !noalias !41695, !noundef !4 ; 2 uses
   %i.xp = icmp ult i64 %i.xo, %3
   br i1 %i.xp, label %bb.ho, label %bb.hp
 
 bb.ho:                                            ; preds = %bb.hn
-  %4 = load ptr, ptr %i.kj, align 8, !noalias !41695, !nonnull !4, !noundef !4
   %i.xq = getelementptr inbounds nuw i8, ptr %4, i64 %i.xo
   store i8 1, ptr %i.xq, align 1, !noalias !41696
   br label %bb.hm

@@ -36,7 +36,7 @@ bb.a:
   %i.b = alloca double, align 8                   ; 6 uses
   %i.c = alloca double, align 8                   ; 4 uses
   %i.d = alloca i32, align 4                      ; 15 uses
-  %i.e = alloca i32, align 4                      ; 6 uses
+  %i.e = alloca i32, align 4                      ; 5 uses
   %i.f = alloca double, align 8                   ; 7 uses
   %i.g = alloca double, align 8                   ; 6 uses
   %i.h = alloca double, align 8                   ; 6 uses
@@ -439,14 +439,12 @@ scalar.ph529:                                     ; preds = %scalar.ph529.prol.l
 
 ._crit_edge.i.i:                                  ; preds = %scalar.ph529.prol.loopexit, %scalar.ph529, %middle.block550, %bb.du
   %.0320.lcssa.i.i = phi i32 [ 1, %bb.du ], [ %narrow.i, %middle.block550 ], [ %narrow.i, %scalar.ph529 ], [ %narrow.i, %scalar.ph529.prol.loopexit ]
-  %i.ati = add nsw i32 %.0318.i.i, -1             ; 2 uses
-  store i32 %i.ati, ptr %i.e, align 4, !tbaa !8
+  %i.ati = add nsw i32 %.0318.i.i, -1
   %.not33514.not.i.i = icmp slt i32 %.0.i.i, %i.ati
   br i1 %.not33514.not.i.i, label %.lr.ph18.preheader.i.i, label %.loopexit1.i.i
 
 .lr.ph18.preheader.i.i:                           ; preds = %._crit_edge.i.i
   %i.atj = add nsw i64 %i.aox, 1                  ; 2 uses
-  %17 = sext i32 %.0318.i.i to i64
   %i.atk = mul i64 %i.aog, %i.atj                 ; 2 uses
   %i.atl = add nsw i64 %i.aox, 2
   %i.atm = mul i64 %i.aoh, %i.atl                 ; 2 uses
@@ -458,7 +456,8 @@ scalar.ph529:                                     ; preds = %scalar.ph529.prol.l
 
 .loopexit.i.i:                                    ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block515, %bb.dw
   %.2.lcssa.i.i = phi i32 [ 1, %bb.dw ], [ %narrow184.i, %middle.block515 ], [ %narrow184.i, %scalar.ph ], [ %narrow184.i, %scalar.ph.prol.loopexit ]
-  %exitcond127.not.i = icmp eq i64 %indvars.iv.next56.i.i, %17
+  %lftr.wideiv.i.i = trunc i64 %indvars.iv.next56.i.i to i32
+  %exitcond127.not.i = icmp eq i32 %.0318.i.i, %lftr.wideiv.i.i
   %indvar.next = add i64 %indvar, 1
   br i1 %exitcond127.not.i, label %.loopexit1.i.i, label %.lr.ph18.i.i, !llvm.loop !63
 
@@ -707,8 +706,6 @@ bb.dy:                                            ; preds = %bb.dx, %.loopexit1.
   br i1 %i.axy, label %bb.dr, label %bb.dz
 
 bb.dz:                                            ; preds = %bb.dy
-  %18 = add nsw i32 %i.axx, -1
-  store i32 %18, ptr %i.e, align 4, !tbaa !8
   %.not336.not19.i.i = icmp slt i32 %.031730.i.i, %i.axx
   br i1 %.not336.not19.i.i, label %.lr.ph23.preheader.i.i, label %._crit_edge24.i.i
 
@@ -737,12 +734,18 @@ bb.ea:                                            ; preds = %.lr.ph23.i.i
   %.1.lcssa.i.i = phi i32 [ %.031730.i.i, %bb.dz ], [ %indvars61.le.i.i, %._crit_edge24.loopexit.split.loop.exit.i.i ], [ %i.axx, %bb.ea ] ; 2 uses
   %indvars.iv.next66.i.i = add nuw nsw i64 %indvars.iv65.i.i, 1 ; 2 uses
   %exitcond69.not.i.i = icmp eq i64 %indvars.iv.next66.i.i, %wide.trip.count68.i.i
-  br i1 %exitcond69.not.i.i, label %._crit_edge31.i.i, label %.preheader.i.i, !llvm.loop !71
+  br i1 %exitcond69.not.i.i, label %._crit_edge32.i.i, label %.preheader.i.i, !llvm.loop !71
 
-._crit_edge31.i.i:                                ; preds = %._crit_edge24.i.i, %.preheader3.._crit_edge31_crit_edge.i.i
-  %i.ayd = phi i32 [ %.pre79.i.i.a, %.preheader3.._crit_edge31_crit_edge.i.i ], [ %i.axx, %._crit_edge24.i.i ] ; 2 uses
-  %.0317.lcssa.i.i = phi i32 [ 1, %.preheader3.._crit_edge31_crit_edge.i.i ], [ %.1.lcssa.i.i, %._crit_edge24.i.i ] ; 2 uses
-  %.not330.not33.i.i = icmp slt i32 %.0317.lcssa.i.i, %i.ayd
+._crit_edge32.i.i:                                ; preds = %._crit_edge24.i.i
+  %17 = add nsw i32 %i.axx, -1
+  br label %._crit_edge31.i.i
+
+._crit_edge31.i.i:                                ; preds = %._crit_edge32.i.i, %.preheader3.._crit_edge31_crit_edge.i.i
+  %18 = phi i32 [ %i.axx, %._crit_edge32.i.i ], [ %.pre79.i.i.a, %.preheader3.._crit_edge31_crit_edge.i.i ] ; 2 uses
+  %i.ayd = phi i32 [ %17, %._crit_edge32.i.i ], [ undef, %.preheader3.._crit_edge31_crit_edge.i.i ]
+  %.0317.lcssa.i.i = phi i32 [ %.1.lcssa.i.i, %._crit_edge32.i.i ], [ 1, %.preheader3.._crit_edge31_crit_edge.i.i ] ; 2 uses
+  store i32 %i.ayd, ptr %i.e, align 4
+  %.not330.not33.i.i = icmp slt i32 %.0317.lcssa.i.i, %18
   br i1 %.not330.not33.i.i, label %iter.check596, label %._crit_edge37.i.i
 
 iter.check596:                                    ; preds = %._crit_edge31.i.i
@@ -750,7 +753,7 @@ iter.check596:                                    ; preds = %._crit_edge31.i.i
   %i.ayf = sext i32 %.0317.lcssa.i.i to i64       ; 8 uses
   %i.ayg = sext i32 %i.aye to i64                 ; 3 uses
   %i.ayh = sext i32 %.val395.i to i64             ; 3 uses
-  %wide.trip.count73.i.i = sext i32 %i.ayd to i64 ; 5 uses
+  %wide.trip.count73.i.i = sext i32 %18 to i64    ; 5 uses
   %invariant.gep122.i.i = getelementptr [8 x i8], ptr %i.anq, i64 %i.ayg ; 7 uses
   %invariant.gep126.i.i = getelementptr [8 x i8], ptr %i.anq, i64 %i.ayh ; 5 uses
   %i.ayi = sub nsw i64 %wide.trip.count73.i.i, %i.ayf ; 7 uses
@@ -1153,7 +1156,7 @@ bb.a:
   %i.b = alloca float, align 4                    ; 6 uses
   %i.c = alloca float, align 4                    ; 4 uses
   %i.d = alloca i32, align 4                      ; 15 uses
-  %i.e = alloca i32, align 4                      ; 6 uses
+  %i.e = alloca i32, align 4                      ; 5 uses
   %i.f = alloca float, align 4                    ; 7 uses
   %i.g = alloca float, align 4                    ; 6 uses
   %i.h = alloca float, align 4                    ; 6 uses
@@ -1556,14 +1559,12 @@ vec.epilog.scalar.ph577:                          ; preds = %vec.epilog.scalar.p
 
 ._crit_edge.i.i:                                  ; preds = %vec.epilog.scalar.ph577.prol.loopexit, %vec.epilog.scalar.ph577, %middle.block573, %vec.epilog.middle.block593, %bb.du
   %.0320.lcssa.i.i = phi i32 [ 1, %bb.du ], [ %narrow.i, %middle.block573 ], [ %narrow.i, %vec.epilog.middle.block593 ], [ %narrow.i, %vec.epilog.scalar.ph577 ], [ %narrow.i, %vec.epilog.scalar.ph577.prol.loopexit ]
-  %i.auk = add nsw i32 %.0318.i.i, -1             ; 2 uses
-  store i32 %i.auk, ptr %i.e, align 4, !tbaa !8
+  %i.auk = add nsw i32 %.0318.i.i, -1
   %.not33314.not.i.i = icmp slt i32 %.0.i.i, %i.auk
   br i1 %.not33314.not.i.i, label %.lr.ph18.preheader.i.i, label %.loopexit1.i.i
 
 .lr.ph18.preheader.i.i:                           ; preds = %._crit_edge.i.i
   %i.aul = add nsw i64 %i.app, 1                  ; 2 uses
-  %17 = sext i32 %.0318.i.i to i64
   %i.aum = mul i64 %i.aoy, %i.aul                 ; 2 uses
   %i.aun = add nsw i64 %i.app, 2
   %i.auo = mul i64 %i.aoz, %i.aun                 ; 2 uses
@@ -1575,7 +1576,8 @@ vec.epilog.scalar.ph577:                          ; preds = %vec.epilog.scalar.p
 
 .loopexit.i.i:                                    ; preds = %vec.epilog.scalar.ph521.prol.loopexit, %vec.epilog.scalar.ph521, %middle.block517, %vec.epilog.middle.block537, %bb.dw
   %.2.lcssa.i.i = phi i32 [ 1, %bb.dw ], [ %narrow184.i, %middle.block517 ], [ %narrow184.i, %vec.epilog.middle.block537 ], [ %narrow184.i, %vec.epilog.scalar.ph521 ], [ %narrow184.i, %vec.epilog.scalar.ph521.prol.loopexit ]
-  %exitcond127.not.i = icmp eq i64 %indvars.iv.next56.i.i, %17
+  %lftr.wideiv.i.i = trunc i64 %indvars.iv.next56.i.i to i32
+  %exitcond127.not.i = icmp eq i32 %.0318.i.i, %lftr.wideiv.i.i
   %indvar.next = add i64 %indvar, 1
   br i1 %exitcond127.not.i, label %.loopexit1.i.i, label %.lr.ph18.i.i, !llvm.loop !209
 
@@ -1866,8 +1868,6 @@ bb.dy:                                            ; preds = %bb.dx, %.loopexit1.
   br i1 %i.azk, label %bb.dr, label %bb.dz
 
 bb.dz:                                            ; preds = %bb.dy
-  %18 = add nsw i32 %i.azj, -1
-  store i32 %18, ptr %i.e, align 4, !tbaa !8
   %.not334.not19.i.i = icmp slt i32 %.031730.i.i, %i.azj
   br i1 %.not334.not19.i.i, label %.lr.ph23.preheader.i.i, label %._crit_edge24.i.i
 
@@ -1896,12 +1896,18 @@ bb.ea:                                            ; preds = %.lr.ph23.i.i
   %.1.lcssa.i.i = phi i32 [ %.031730.i.i, %bb.dz ], [ %indvars61.le.i.i, %._crit_edge24.loopexit.split.loop.exit.i.i ], [ %i.azj, %bb.ea ] ; 2 uses
   %indvars.iv.next66.i.i = add nuw nsw i64 %indvars.iv65.i.i, 1 ; 2 uses
   %exitcond69.not.i.i = icmp eq i64 %indvars.iv.next66.i.i, %wide.trip.count68.i.i
-  br i1 %exitcond69.not.i.i, label %._crit_edge31.i.i, label %.preheader.i.i, !llvm.loop !218
+  br i1 %exitcond69.not.i.i, label %._crit_edge32.i.i, label %.preheader.i.i, !llvm.loop !218
 
-._crit_edge31.i.i:                                ; preds = %._crit_edge24.i.i, %.preheader3.._crit_edge31_crit_edge.i.i
-  %i.azp = phi i32 [ %.pre79.i.i.a, %.preheader3.._crit_edge31_crit_edge.i.i ], [ %i.azj, %._crit_edge24.i.i ] ; 2 uses
-  %.0317.lcssa.i.i = phi i32 [ 1, %.preheader3.._crit_edge31_crit_edge.i.i ], [ %.1.lcssa.i.i, %._crit_edge24.i.i ] ; 2 uses
-  %.not328.not33.i.i = icmp slt i32 %.0317.lcssa.i.i, %i.azp
+._crit_edge32.i.i:                                ; preds = %._crit_edge24.i.i
+  %17 = add nsw i32 %i.azj, -1
+  br label %._crit_edge31.i.i
+
+._crit_edge31.i.i:                                ; preds = %._crit_edge32.i.i, %.preheader3.._crit_edge31_crit_edge.i.i
+  %18 = phi i32 [ %i.azj, %._crit_edge32.i.i ], [ %.pre79.i.i.a, %.preheader3.._crit_edge31_crit_edge.i.i ] ; 2 uses
+  %i.azp = phi i32 [ %17, %._crit_edge32.i.i ], [ undef, %.preheader3.._crit_edge31_crit_edge.i.i ]
+  %.0317.lcssa.i.i = phi i32 [ %.1.lcssa.i.i, %._crit_edge32.i.i ], [ 1, %.preheader3.._crit_edge31_crit_edge.i.i ] ; 2 uses
+  store i32 %i.azp, ptr %i.e, align 4
+  %.not328.not33.i.i = icmp slt i32 %.0317.lcssa.i.i, %18
   br i1 %.not328.not33.i.i, label %iter.check638, label %._crit_edge37.i.i
 
 iter.check638:                                    ; preds = %._crit_edge31.i.i
@@ -1909,7 +1915,7 @@ iter.check638:                                    ; preds = %._crit_edge31.i.i
   %i.azr = sext i32 %.0317.lcssa.i.i to i64       ; 8 uses
   %i.azs = sext i32 %i.azq to i64                 ; 3 uses
   %i.azt = sext i32 %.val395.i to i64             ; 3 uses
-  %wide.trip.count73.i.i = sext i32 %i.azp to i64 ; 5 uses
+  %wide.trip.count73.i.i = sext i32 %18 to i64    ; 5 uses
   %invariant.gep122.i.i = getelementptr [4 x i8], ptr %i.aoi, i64 %i.azs ; 7 uses
   %invariant.gep126.i.i = getelementptr [4 x i8], ptr %i.aoi, i64 %i.azt ; 5 uses
   %i.azu = sub nsw i64 %wide.trip.count73.i.i, %i.azr ; 7 uses

@@ -204,6 +204,8 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.t, label %.lr.ph87, label %.critedge.preheader
 
 .critedge.preheader:                              ; preds = %.lr.ph87, %._crit_edge81
+  %.lcssa82 = phi ptr [ undef, %._crit_edge81 ], [ %i.y, %.lr.ph87 ]
+  store ptr %.lcssa82, ptr %i.a, align 8
   %.val6595 = load ptr, ptr %i.l, align 8, !tbaa !63 ; 2 uses
   %i.u = getelementptr i8, ptr %.val6595, i64 4
   %.val65.val96 = load i32, ptr %i.u, align 4, !tbaa !26
@@ -217,7 +219,6 @@ bb.c:                                             ; preds = %bb.a
   %.val70.val = load ptr, ptr %i.w, align 8, !tbaa !27
   %i.x = getelementptr inbounds nuw [8 x i8], ptr %.val70.val, i64 %indvars.iv
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !28   ; 2 uses
-  store ptr %i.y, ptr %i.a, align 8, !tbaa !55
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 72
   %i.aa = trunc nuw nsw i64 %indvars.iv to i32
   store i32 %i.aa, ptr %i.z, align 8, !tbaa !65

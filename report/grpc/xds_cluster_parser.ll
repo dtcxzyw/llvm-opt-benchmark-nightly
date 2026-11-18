@@ -204,7 +204,12 @@ envoy_config_core_v3_HealthStatusSet_statuses.exit: ; preds = %_ZN9grpc_core16Va
   %i.bam = and i64 %i.bal, -8
   %i.ban = inttoptr i64 %i.bam to ptr
   %.not908 = icmp eq i64 %i.bak, 0
-  br i1 %.not908, label %._crit_edge, label %.lr.ph905.a
+  br i1 %.not908, label %._crit_edge, label %.lr.ph905
+
+.lr.ph905:                                        ; preds = %envoy_config_core_v3_HealthStatusSet_statuses.exit
+  %107 = load ptr, ptr %70, align 8
+  %108 = getelementptr inbounds nuw i8, ptr %107, i64 400 ; 2 uses
+  br label %.lr.ph905.a
 
 ._crit_edge:                                      ; preds = %bb.rw, %_ZN9grpc_core16ValidationErrors11ScopedFieldC2EPS0_St17basic_string_viewIcSt11char_traitsIcEE.exit571, %envoy_config_core_v3_HealthStatusSet_statuses.exit
   invoke void @_ZN9grpc_core16ValidationErrors8PopFieldEv(ptr noundef nonnull align 8 dereferenceable(80) %71)
@@ -248,8 +253,8 @@ bb.rs:                                            ; preds = %bb.rn
           cleanup
   br label %bb.rx
 
-.lr.ph905.a:                                      ; preds = %envoy_config_core_v3_HealthStatusSet_statuses.exit, %bb.rw
-  %.0109904 = phi i64 [ %i.bbd, %bb.rw ], [ 0, %envoy_config_core_v3_HealthStatusSet_statuses.exit ] ; 2 uses
+.lr.ph905.a:                                      ; preds = %.lr.ph905, %bb.rw
+  %.0109904 = phi i64 [ 0, %.lr.ph905 ], [ %i.bbd, %bb.rw ] ; 2 uses
   %i.bav = getelementptr inbounds nuw [4 x i8], ptr %i.ban, i64 %.0109904
   %i.baw = load i32, ptr %i.bav, align 4, !tbaa !67
   %i.bax = invoke i64 @_ZN9grpc_core15XdsHealthStatus7FromUpbEj(i32 noundef %i.baw)
@@ -262,8 +267,6 @@ bb.rt:                                            ; preds = %.lr.ph905.a
 
 bb.ru:                                            ; preds = %bb.rt
   %.sroa.0637.0.extract.trunc = trunc i64 %i.bax to i32
-  %107 = load ptr, ptr %70, align 8, !tbaa !321
-  %108 = getelementptr inbounds nuw i8, ptr %107, i64 400 ; 2 uses
   %i.baz = shl nuw i32 1, %.sroa.0637.0.extract.trunc
   %i.bba = load i32, ptr %108, align 4, !tbaa !187
   %i.bbb = or i32 %i.bba, %i.baz

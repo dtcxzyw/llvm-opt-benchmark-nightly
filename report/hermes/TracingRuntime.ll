@@ -204,7 +204,7 @@ define internal void @_ZZN8facebook6hermes7tracing14TracingRuntime12createObject
 bb.a:
   %3 = alloca %"class.std::chrono::duration.38", align 8 ; 4 uses
   %4 = alloca %"class.std::vector.164", align 8   ; 6 uses
-  %5 = alloca %"class.std::vector.59", align 8    ; 13 uses
+  %5 = alloca %"class.std::vector.59", align 8    ; 15 uses
   %6 = alloca %"class.std::chrono::duration.38", align 8 ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %.val = load ptr, ptr %i.a, align 8, !tbaa !353 ; 6 uses
@@ -256,7 +256,7 @@ bb.b:                                             ; preds = %_ZNSt6vectorIN8face
   unreachable
 
 bb.c:                                             ; preds = %_ZNSt6vectorIN8facebook3jsi10PropNameIDESaIS2_EED2Ev.exit
-  %i.x = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 4 uses
+  %i.x = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 3 uses
   %.not60 = icmp eq ptr %i.r, %i.o
   br i1 %.not60, label %_ZNSt6vectorIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE7reserveEm.exit, label %_ZNSt12_Vector_baseIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE11_M_allocateEm.exit.i
 
@@ -269,7 +269,7 @@ _ZNSt12_Vector_baseIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE13
   %i.aa = getelementptr inbounds nuw i8, ptr %5, i64 8
   store ptr %i.z, ptr %5, align 8, !tbaa !293
   store ptr %i.z, ptr %i.aa, align 8, !tbaa !300
-  %i.ab = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %i.v
+  %i.ab = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %i.v ; 2 uses
   store ptr %i.ab, ptr %i.x, align 8, !tbaa !294
   br label %_ZNSt6vectorIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE7reserveEm.exit
 
@@ -292,7 +292,8 @@ bb.f:                                             ; preds = %bb.d
           to label %bb.r unwind label %bb.s
 
 _ZNSt6vectorIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE7reserveEm.exit: ; preds = %_ZNSt12_Vector_baseIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE13_M_deallocateEPS4_m.exit.i, %bb.c
-  %i.ag = phi ptr [ %i.z, %_ZNSt12_Vector_baseIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE13_M_deallocateEPS4_m.exit.i ], [ null, %bb.c ] ; 2 uses
+  %.promoted = phi ptr [ %i.ab, %_ZNSt12_Vector_baseIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE13_M_deallocateEPS4_m.exit.i ], [ null, %bb.c ]
+  %i.ag = phi ptr [ %i.z, %_ZNSt12_Vector_baseIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE13_M_deallocateEPS4_m.exit.i ], [ null, %bb.c ] ; 3 uses
   %.not42 = icmp eq ptr %i.o, %i.r
   br i1 %.not42, label %._crit_edge, label %.lr.ph
 
@@ -305,10 +306,11 @@ _ZNSt6vectorIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE7reserveE
   br label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph, %_ZNSt6vectorIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE12emplace_backIJS4_EEERS4_DpOT_.exit
-  %i.am = phi ptr [ %i.ag, %.lr.ph ], [ %i.cg, %_ZNSt6vectorIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE12emplace_backIJS4_EEERS4_DpOT_.exit ] ; 8 uses
-  %i.an = phi ptr [ %i.ag, %.lr.ph ], [ %i.ch, %_ZNSt6vectorIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE12emplace_backIJS4_EEERS4_DpOT_.exit ] ; 6 uses
-  %.sroa.036.043 = phi ptr [ %i.o, %.lr.ph ], [ %i.ci, %_ZNSt6vectorIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE12emplace_backIJS4_EEERS4_DpOT_.exit ] ; 2 uses
-  %i.ao = load ptr, ptr %.sroa.036.043, align 8, !tbaa !211 ; 4 uses
+  %7 = phi ptr [ %i.ag, %.lr.ph ], [ %8, %_ZNSt6vectorIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE12emplace_backIJS4_EEERS4_DpOT_.exit ] ; 6 uses
+  %i.am = phi ptr [ %i.o, %.lr.ph ], [ %i.ci, %_ZNSt6vectorIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE12emplace_backIJS4_EEERS4_DpOT_.exit ] ; 2 uses
+  %i.an = phi ptr [ %.promoted, %.lr.ph ], [ %i.ch, %_ZNSt6vectorIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE12emplace_backIJS4_EEERS4_DpOT_.exit ] ; 2 uses
+  %.sroa.036.043 = phi ptr [ %i.ag, %.lr.ph ], [ %i.cg, %_ZNSt6vectorIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE12emplace_backIJS4_EEERS4_DpOT_.exit ] ; 10 uses
+  %i.ao = load ptr, ptr %i.am, align 8, !tbaa !211 ; 4 uses
   %i.ap = load i64, ptr %i.ah, align 8, !tbaa !212
   %.not.not.i.i.i = icmp eq i64 %i.ap, 0
   br i1 %.not.not.i.i.i, label %.preheader, label %bb.h
@@ -356,13 +358,12 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %.loopexit
   %i.bm = extractvalue { i32, i64 } %i.bl, 0      ; 2 uses
   %i.bn = extractvalue { i32, i64 } %i.bl, 1      ; 2 uses
-  %7 = load ptr, ptr %i.x, align 8, !tbaa !294
-  %.not.i = icmp eq ptr %i.an, %7
+  %.not.i = icmp eq ptr %7, %i.an
   br i1 %.not.i, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  store i32 %i.bm, ptr %i.an, align 8, !tbaa !246
-  %.sroa.632.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.an, i64 8
+  store i32 %i.bm, ptr %7, align 8, !tbaa !246
+  %.sroa.632.0..sroa_idx = getelementptr inbounds nuw i8, ptr %7, i64 8
   store i64 %i.bn, ptr %.sroa.632.0..sroa_idx, align 8, !tbaa !207
   %i.bo = load ptr, ptr %i.al, align 8, !tbaa !300
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 16 ; 2 uses
@@ -370,13 +371,14 @@ bb.j:                                             ; preds = %bb.i
   br label %_ZNSt6vectorIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE12emplace_backIJS4_EEERS4_DpOT_.exit
 
 bb.k:                                             ; preds = %bb.i
-  %i.bq = ptrtoint ptr %i.an to i64
-  %i.br = ptrtoint ptr %i.am to i64
+  %i.bq = ptrtoint ptr %7 to i64
+  %i.br = ptrtoint ptr %.sroa.036.043 to i64
   %i.bs = sub i64 %i.bq, %i.br                    ; 4 uses
   %i.bt = icmp eq i64 %i.bs, 9223372036854775792
   br i1 %i.bt, label %bb.l, label %_ZNKSt6vectorIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE12_M_check_lenEmPKc.exit.i.i
 
 bb.l:                                             ; preds = %bb.k
+  store ptr %.sroa.036.043, ptr %5, align 8
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.29) #38
           to label %.noexc24 unwind label %.loopexit.split-lp.loopexit.split-lp
 
@@ -394,61 +396,64 @@ _ZNKSt6vectorIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE12_M_che
   call void @llvm.assume(i1 %.not.i.i.i21)
   %i.bz = shl nuw nsw i64 %i.by, 4
   %i.ca = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bz) #36
-          to label %.noexc25 unwind label %.loopexit.split-lp.loopexit ; 6 uses
+          to label %.noexc25 unwind label %.loopexit.split-lp.loopexit ; 5 uses
 
 .noexc25:                                         ; preds = %_ZNKSt6vectorIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE12_M_check_lenEmPKc.exit.i.i
   %i.cb = getelementptr inbounds nuw i8, ptr %i.ca, i64 %i.bs ; 2 uses
   store i32 %i.bm, ptr %i.cb, align 8, !tbaa !246
   %.sroa.632.0..sroa_idx33 = getelementptr inbounds nuw i8, ptr %i.cb, i64 8
   store i64 %i.bn, ptr %.sroa.632.0..sroa_idx33, align 8, !tbaa !207
-  %.not10.i.i.i.i.i = icmp eq ptr %i.am, %i.an
+  %.not10.i.i.i.i.i = icmp eq ptr %.sroa.036.043, %7
   br i1 %.not10.i.i.i.i.i, label %_ZNSt6vectorIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit22.i.i, label %.lr.ph.i.i.i.i.i22
 
 .lr.ph.i.i.i.i.i22:                               ; preds = %.noexc25, %.lr.ph.i.i.i.i.i22
   %.012.i.i.i.i.i = phi ptr [ %i.cd, %.lr.ph.i.i.i.i.i22 ], [ %i.ca, %.noexc25 ] ; 2 uses
-  %.0911.i.i.i.i.i = phi ptr [ %i.cc, %.lr.ph.i.i.i.i.i22 ], [ %i.am, %.noexc25 ] ; 2 uses
+  %.0911.i.i.i.i.i = phi ptr [ %i.cc, %.lr.ph.i.i.i.i.i22 ], [ %.sroa.036.043, %.noexc25 ] ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.012.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.0911.i.i.i.i.i, i64 16, i1 false), !tbaa.struct !302, !alias.scope !1557
   %i.cc = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i.i, i64 16 ; 2 uses
   %i.cd = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i, i64 16 ; 2 uses
-  %.not.i.i.i.i.i23 = icmp eq ptr %i.cc, %i.an
+  %.not.i.i.i.i.i23 = icmp eq ptr %i.cc, %7
   br i1 %.not.i.i.i.i.i23, label %_ZNSt6vectorIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit22.i.i, label %.lr.ph.i.i.i.i.i22, !llvm.loop !8
 
 _ZNSt6vectorIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit22.i.i: ; preds = %.lr.ph.i.i.i.i.i22, %.noexc25
   %.0.lcssa.i.i.i.i.i = phi ptr [ %i.ca, %.noexc25 ], [ %i.cd, %.lr.ph.i.i.i.i.i22 ]
   %i.ce = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i, i64 16 ; 2 uses
-  %.not.i23.i.i = icmp eq ptr %i.am, null
+  %.not.i23.i.i = icmp eq ptr %.sroa.036.043, null
   br i1 %.not.i23.i.i, label %_ZNSt6vectorIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i, label %bb.m
 
 bb.m:                                             ; preds = %_ZNSt6vectorIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit22.i.i
-  call void @_ZdlPvm(ptr noundef nonnull %i.am, i64 noundef %i.bs) #35
+  call void @_ZdlPvm(ptr noundef nonnull %.sroa.036.043, i64 noundef %i.bs) #35
   br label %_ZNSt6vectorIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i
 
 _ZNSt6vectorIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i: ; preds = %bb.m, %_ZNSt6vectorIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit22.i.i
-  store ptr %i.ca, ptr %5, align 8, !tbaa !293
   store ptr %i.ce, ptr %i.al, align 8, !tbaa !300
-  %i.cf = getelementptr inbounds nuw [16 x i8], ptr %i.ca, i64 %i.by
+  %i.cf = getelementptr inbounds nuw [16 x i8], ptr %i.ca, i64 %i.by ; 2 uses
   store ptr %i.cf, ptr %i.x, align 8, !tbaa !294
   br label %_ZNSt6vectorIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE12emplace_backIJS4_EEERS4_DpOT_.exit
 
 _ZNSt6vectorIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE12emplace_backIJS4_EEERS4_DpOT_.exit: ; preds = %_ZNSt6vectorIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i, %bb.j
-  %i.cg = phi ptr [ %i.ca, %_ZNSt6vectorIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i ], [ %i.am, %bb.j ]
-  %i.ch = phi ptr [ %i.ce, %_ZNSt6vectorIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i ], [ %i.bp, %bb.j ]
-  %i.ci = getelementptr inbounds nuw i8, ptr %.sroa.036.043, i64 8 ; 2 uses
+  %8 = phi ptr [ %i.ce, %_ZNSt6vectorIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i ], [ %i.bp, %bb.j ]
+  %i.cg = phi ptr [ %i.ca, %_ZNSt6vectorIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i ], [ %.sroa.036.043, %bb.j ] ; 2 uses
+  %i.ch = phi ptr [ %i.cf, %_ZNSt6vectorIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i ], [ %i.an, %bb.j ]
+  %i.ci = getelementptr inbounds nuw i8, ptr %i.am, i64 8 ; 2 uses
   %.not = icmp eq ptr %i.ci, %i.r
   br i1 %.not, label %._crit_edge, label %bb.g
 
 .loopexit.split-lp.loopexit:                      ; preds = %.loopexit, %_ZNKSt6vectorIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE12_M_check_lenEmPKc.exit.i.i
   %lpad.loopexit = landingpad { ptr, i32 }
           cleanup
+  store ptr %.sroa.036.043, ptr %5, align 8
   br label %.loopexit.split-lp
 
-.loopexit.split-lp.loopexit.split-lp:             ; preds = %bb.b, %_ZNSt12_Vector_baseIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE11_M_allocateEm.exit.i, %bb.l
-  %i.cj = phi ptr [ null, %bb.b ], [ null, %_ZNSt12_Vector_baseIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE11_M_allocateEm.exit.i ], [ %i.am, %bb.l ]
+.loopexit.split-lp.loopexit.split-lp:             ; preds = %bb.l, %_ZNSt12_Vector_baseIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE11_M_allocateEm.exit.i, %bb.b
+  %i.cj = phi ptr [ %.sroa.036.043, %bb.l ], [ null, %_ZNSt12_Vector_baseIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE11_M_allocateEm.exit.i ], [ null, %bb.b ]
   %lpad.loopexit.split-lp45 = landingpad { ptr, i32 }
           cleanup
   br label %.loopexit.split-lp
 
 ._crit_edge:                                      ; preds = %_ZNSt6vectorIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE12emplace_backIJS4_EEERS4_DpOT_.exit, %_ZNSt6vectorIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE7reserveEm.exit
+  %.lcssa43 = phi ptr [ %i.ag, %_ZNSt6vectorIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE7reserveEm.exit ], [ %i.cg, %_ZNSt6vectorIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EE12emplace_backIJS4_EEERS4_DpOT_.exit ]
+  store ptr %.lcssa43, ptr %5, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #34
   %i.ck = call i64 @_ZNSt6chrono3_V212steady_clock3nowEv() #34
   %.sroa.0.0.copyload.i2.i.i19 = load i64, ptr %i.d, align 8, !tbaa !220
@@ -484,7 +489,7 @@ bb.p:                                             ; preds = %._crit_edge
   br label %.loopexit.split-lp
 
 .loopexit.split-lp:                               ; preds = %.loopexit.split-lp.loopexit, %.loopexit.split-lp.loopexit.split-lp, %bb.p
-  %i.ct = phi ptr [ %.pre, %bb.p ], [ %i.am, %.loopexit.split-lp.loopexit ], [ %i.cj, %.loopexit.split-lp.loopexit.split-lp ] ; 3 uses
+  %i.ct = phi ptr [ %.pre, %bb.p ], [ %.sroa.036.043, %.loopexit.split-lp.loopexit ], [ %i.cj, %.loopexit.split-lp.loopexit.split-lp ] ; 3 uses
   %.pn = phi { ptr, i32 } [ %i.cs, %bb.p ], [ %lpad.loopexit, %.loopexit.split-lp.loopexit ], [ %lpad.loopexit.split-lp45, %.loopexit.split-lp.loopexit.split-lp ]
   %.not.i.i.i27 = icmp eq ptr %i.ct, null
   br i1 %.not.i.i.i27, label %_ZNSt6vectorIN8facebook6hermes7tracing10SynthTrace10TraceValueESaIS4_EED2Ev.exit28, label %bb.q

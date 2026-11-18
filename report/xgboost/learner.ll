@@ -205,7 +205,7 @@ declare void @_ZN7xgboost13ConsoleLogger9ConfigureERKSt6vectorISt4pairINSt7__cxx
 define linkonce_odr void @_ZN7xgboost20LearnerConfiguration20ConfigureNumFeaturesEv(ptr noundef nonnull align 8 dereferenceable(5848) %0) local_unnamed_addr #5 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %1 = alloca %"class.xgboost::linalg::TensorView.276", align 8 ; 10 uses
-  %i.a = alloca i32, align 4                      ; 8 uses
+  %i.a = alloca i32, align 4                      ; 9 uses
   %2 = alloca %"class.dmlc::LogMessageFatal", align 1 ; 7 uses
   %3 = alloca %"class.dmlc::LogMessageFatal", align 1 ; 7 uses
   %4 = alloca %"struct.xgboost::collective::Result", align 8 ; 7 uses
@@ -224,7 +224,6 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #17
-  store i32 0, ptr %i.a, align 4, !tbaa !63
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 5640 ; 4 uses
   %i.g = tail call noundef i32 @pthread_mutex_lock(ptr noundef nonnull align 8 dereferenceable(184) %i.f) #17 ; 2 uses
   %.not.i.i.i = icmp eq i32 %i.g, 0
@@ -256,6 +255,8 @@ _ZN7xgboost12DMatrixCacheINS_20PredictionCacheEntryEE9ContainerEv.exit: ; preds 
   br i1 %.not4750, label %._crit_edge, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %bb.k, %_ZN7xgboost12DMatrixCacheINS_20PredictionCacheEntryEE9ContainerEv.exit
+  %.lcssa = phi i32 [ 0, %_ZN7xgboost12DMatrixCacheINS_20PredictionCacheEntryEE9ContainerEv.exit ], [ %.sroa.speculated, %bb.k ]
+  store i32 %.lcssa, ptr %i.a, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #17
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 64
   call void @llvm.lifetime.start.p0(ptr nonnull %1)
@@ -280,9 +281,9 @@ _ZN7xgboost12DMatrixCacheINS_20PredictionCacheEntryEE9ContainerEv.exit: ; preds 
           to label %bb.l unwind label %bb.n
 
 .lr.ph:                                           ; preds = %_ZN7xgboost12DMatrixCacheINS_20PredictionCacheEntryEE9ContainerEv.exit, %bb.k
-  %7 = phi i32 [ %.sroa.speculated, %bb.k ], [ 0, %_ZN7xgboost12DMatrixCacheINS_20PredictionCacheEntryEE9ContainerEv.exit ]
-  %.sroa.039.051 = phi ptr [ %.sroa.039.0, %bb.k ], [ %.sroa.039.049, %_ZN7xgboost12DMatrixCacheINS_20PredictionCacheEntryEE9ContainerEv.exit ] ; 3 uses
-  %i.o = getelementptr inbounds nuw i8, ptr %.sroa.039.051, i64 8 ; 2 uses
+  %.sroa.039.053 = phi ptr [ %.sroa.039.0, %bb.k ], [ %.sroa.039.049, %_ZN7xgboost12DMatrixCacheINS_20PredictionCacheEntryEE9ContainerEv.exit ] ; 3 uses
+  %7 = phi i32 [ %.sroa.speculated, %bb.k ], [ 0, %_ZN7xgboost12DMatrixCacheINS_20PredictionCacheEntryEE9ContainerEv.exit ] ; 3 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %.sroa.039.053, i64 8 ; 2 uses
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !272
   %.not = icmp eq ptr %i.p, null
   br i1 %.not, label %bb.e, label %bb.h, !prof !64
@@ -310,6 +311,7 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit19: ; preds = %_ZStl
 bb.f:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit, %_ZN4dmlc15LogMessageFatal6streamB5cxx11Ev.exit, %bb.e
   %i.u = landingpad { ptr, i32 }
           cleanup
+  store i32 %7, ptr %i.a, align 4
   invoke void @_ZN4dmlc15LogMessageFatalD2Ev(ptr noundef nonnull align 1 dereferenceable(1) %2)
           to label %bb.g unwind label %bb.x
 
@@ -318,7 +320,7 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.p
 
 bb.h:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit19, %.lr.ph
-  %i.v = getelementptr inbounds nuw i8, ptr %.sroa.039.051, i64 32
+  %i.v = getelementptr inbounds nuw i8, ptr %.sroa.039.053, i64 32
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !336  ; 2 uses
   %.not.i.i = icmp eq ptr %i.w, null
   br i1 %.not.i.i, label %_ZNKSt10__weak_ptrIN7xgboost7DMatrixELN9__gnu_cxx12_Lock_policyE2EE7expiredEv.exit.thread, label %_ZNKSt10__weak_ptrIN7xgboost7DMatrixELN9__gnu_cxx12_Lock_policyE2EE7expiredEv.exit, !prof !850
@@ -352,6 +354,7 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit22: ; preds = %_ZStl
 bb.i:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit21, %_ZN4dmlc15LogMessageFatal6streamB5cxx11Ev.exit20, %_ZNKSt10__weak_ptrIN7xgboost7DMatrixELN9__gnu_cxx12_Lock_policyE2EE7expiredEv.exit.thread
   %i.ae = landingpad { ptr, i32 }
           cleanup
+  store i32 %7, ptr %i.a, align 4
   invoke void @_ZN4dmlc15LogMessageFatalD2Ev(ptr noundef nonnull align 1 dereferenceable(1) %3)
           to label %bb.j unwind label %bb.x
 
@@ -370,8 +373,7 @@ bb.k:                                             ; preds = %_ZStlsISt11char_tra
   call void @_ZN7xgboost5error14MaxFeatureSizeEm(i64 noundef %i.al)
   %i.am = trunc i64 %i.al to i32
   %.sroa.speculated = call i32 @llvm.umax.i32(i32 %7, i32 %i.am) ; 2 uses
-  store i32 %.sroa.speculated, ptr %i.a, align 4, !tbaa !63
-  %.sroa.039.0 = load ptr, ptr %.sroa.039.051, align 8, !tbaa !259 ; 2 uses
+  %.sroa.039.0 = load ptr, ptr %.sroa.039.053, align 8, !tbaa !259 ; 2 uses
   %.not47 = icmp eq ptr %.sroa.039.0, null
   br i1 %.not47, label %._crit_edge, label %.lr.ph
 

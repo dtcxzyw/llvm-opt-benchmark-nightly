@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %bb.a, %_ZN4llvh11Sm
 define hidden noundef ptr @_ZN6hermes5irgen11ESTreeIRGen21genTaggedTemplateExprEPNS_6ESTree28TaggedTemplateExpressionNodeE(ptr noundef nonnull align 8 dereferenceable(200) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #0 align 2 !guid !456 {
 bb.a:
   %2 = alloca %"class.llvh::SmallVector.196", align 8 ; 18 uses
-  %3 = alloca %"class.std::vector.280", align 8   ; 10 uses
+  %3 = alloca %"class.std::vector.280", align 8   ; 9 uses
   %4 = alloca %"class.llvh::SmallVector.196", align 8 ; 10 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !458  ; 4 uses
@@ -281,8 +281,9 @@ _ZN4llvh23SmallVectorTemplateBaseIPN6hermes5ValueELb1EE9push_backERKS3_.exit50: 
   br i1 %.not96104, label %_ZN4llvh23SmallVectorTemplateBaseIPN6hermes5ValueELb1EE9push_backERKS3_.exit62.critedge, label %.lr.ph107
 
 bb.d:                                             ; preds = %.lr.ph, %_ZNSt6vectorIPN6hermes13LiteralStringESaIS2_EE9push_backEOS2_.exit
-  %.sroa.092.0102.a = phi ptr [ %.sroa.092.0100, %.lr.ph ], [ %.sroa.092.0, %_ZNSt6vectorIPN6hermes13LiteralStringESaIS2_EE9push_backEOS2_.exit ] ; 2 uses
-  %i.ai = getelementptr inbounds nuw i8, ptr %.sroa.092.0102.a, i64 64
+  %.sroa.092.0102 = phi ptr [ %.sroa.092.0100, %.lr.ph ], [ %.sroa.092.0, %_ZNSt6vectorIPN6hermes13LiteralStringESaIS2_EE9push_backEOS2_.exit ] ; 2 uses
+  %.sroa.092.0102.a = phi ptr [ null, %.lr.ph ], [ %5, %_ZNSt6vectorIPN6hermes13LiteralStringESaIS2_EE9push_backEOS2_.exit ] ; 5 uses
+  %i.ai = getelementptr inbounds nuw i8, ptr %.sroa.092.0102, i64 64
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !459 ; 2 uses
   %.sroa.028.0.copyload = load ptr, ptr %i.aj, align 8, !tbaa !41
   %.sroa.229.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.aj, i64 8
@@ -300,9 +301,8 @@ bb.e:                                             ; preds = %bb.d
   br label %_ZNSt6vectorIPN6hermes13LiteralStringESaIS2_EE9push_backEOS2_.exit
 
 bb.f:                                             ; preds = %bb.d
-  %5 = load ptr, ptr %3, align 8, !tbaa !465      ; 4 uses
   %i.ao = ptrtoint ptr %i.al to i64
-  %i.ap = ptrtoint ptr %5 to i64                  ; 2 uses
+  %i.ap = ptrtoint ptr %.sroa.092.0102.a to i64   ; 2 uses
   %i.aq = sub i64 %i.ao, %i.ap                    ; 5 uses
   %i.ar = icmp eq i64 %i.aq, 9223372036854775800
   br i1 %i.ar, label %bb.g, label %_ZNKSt6vectorIPN6hermes13LiteralStringESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i
@@ -321,26 +321,26 @@ _ZNKSt6vectorIPN6hermes13LiteralStringESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i: ;
   %.not.i.i.i.i = icmp ne i64 %i.aw, 0
   call void @llvm.assume(i1 %.not.i.i.i.i)
   %i.ax = shl nuw nsw i64 %i.aw, 3
-  %i.ay = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ax) #19 ; 4 uses
+  %i.ay = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ax) #19 ; 5 uses
   %i.az = getelementptr inbounds i8, ptr %i.ay, i64 %i.aq ; 2 uses
   store ptr %i.ak, ptr %i.az, align 8, !tbaa !464
   %i.ba = icmp sgt i64 %i.aq, 0
   br i1 %i.ba, label %bb.h, label %_ZNSt6vectorIPN6hermes13LiteralStringESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i.i
 
 bb.h:                                             ; preds = %_ZNKSt6vectorIPN6hermes13LiteralStringESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.ay, ptr align 8 %5, i64 %i.aq, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.ay, ptr align 8 %.sroa.092.0102.a, i64 %i.aq, i1 false)
   br label %_ZNSt6vectorIPN6hermes13LiteralStringESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i.i
 
 _ZNSt6vectorIPN6hermes13LiteralStringESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i.i: ; preds = %bb.h, %_ZNKSt6vectorIPN6hermes13LiteralStringESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.bb = getelementptr inbounds nuw i8, ptr %i.az, i64 8
-  %.not.i17.i.i.i = icmp eq ptr %5, null
+  %.not.i17.i.i.i = icmp eq ptr %.sroa.092.0102.a, null
   br i1 %.not.i17.i.i.i, label %_ZNSt6vectorIPN6hermes13LiteralStringESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt6vectorIPN6hermes13LiteralStringESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i.i
   %i.bc = load ptr, ptr %i.j, align 8, !tbaa !463
   %i.bd = ptrtoint ptr %i.bc to i64
   %i.be = sub i64 %i.bd, %i.ap
-  call void @_ZdlPvm(ptr noundef nonnull %5, i64 noundef %i.be) #17
+  call void @_ZdlPvm(ptr noundef nonnull %.sroa.092.0102.a, i64 noundef %i.be) #17
   br label %_ZNSt6vectorIPN6hermes13LiteralStringESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIPN6hermes13LiteralStringESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i: ; preds = %bb.i, %_ZNSt6vectorIPN6hermes13LiteralStringESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i.i
@@ -351,7 +351,8 @@ _ZNSt6vectorIPN6hermes13LiteralStringESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gn
   br label %_ZNSt6vectorIPN6hermes13LiteralStringESaIS2_EE9push_backEOS2_.exit
 
 _ZNSt6vectorIPN6hermes13LiteralStringESaIS2_EE9push_backEOS2_.exit: ; preds = %bb.e, %_ZNSt6vectorIPN6hermes13LiteralStringESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i
-  %i.bg = getelementptr inbounds nuw i8, ptr %.sroa.092.0102.a, i64 8
+  %5 = phi ptr [ %.sroa.092.0102.a, %bb.e ], [ %i.ay, %_ZNSt6vectorIPN6hermes13LiteralStringESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i ]
+  %i.bg = getelementptr inbounds nuw i8, ptr %.sroa.092.0102, i64 8
   %.sroa.092.0 = load ptr, ptr %i.bg, align 8, !tbaa !271 ; 2 uses
   %.not95 = icmp eq ptr %.sroa.092.0, %i.f
   br i1 %.not95, label %._crit_edge, label %bb.d

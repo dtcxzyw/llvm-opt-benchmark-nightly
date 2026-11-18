@@ -204,7 +204,7 @@ bb.a:
   %i.ac = alloca [30 x i8], align 16              ; 5 uses
   %i.ad = alloca i32, align 4                     ; 9 uses
   %i.ae = alloca i32, align 4                     ; 28 uses
-  %i.af = alloca i8, align 1                      ; 4 uses
+  %i.af = alloca i8, align 1                      ; 5 uses
   %i.ag = alloca i32, align 4                     ; 10 uses
   %i.ah = alloca i32, align 4                     ; 8 uses
   %i.ai = alloca i32, align 4                     ; 12 uses
@@ -311,8 +311,7 @@ bb.i:                                             ; preds = %bb.g
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph._crit_edge
   %.0563920 = phi i32 [ %.pre1086, %.lr.ph._crit_edge ], [ %.0563920.ph, %.lr.ph.preheader ] ; 2 uses
-  %i.br = call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %.0563920) ; 2 uses
-  store i8 %i.br, ptr %i.af, align 1
+  %i.br = call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %.0563920) ; 3 uses
   %.pre1086 = add nuw i32 %.0563920, 1            ; 5 uses
   switch i8 %i.br, label %.lr.ph._crit_edge [
     i8 32, label %bb.j
@@ -329,6 +328,7 @@ bb.j:                                             ; preds = %.lr.ph, %.lr.ph, %.
   ]
 
 bb.k:                                             ; preds = %bb.j
+  store i8 %i.br, ptr %i.af, align 1
   store i32 %.pre1086, ptr %i.t, align 4
   br label %.loopexit779
 
@@ -337,6 +337,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.bt, label %.lr.ph, label %.loopexit779.loopexit, !llvm.loop !11
 
 .loopexit779.loopexit:                            ; preds = %.lr.ph._crit_edge
+  store i8 %i.br, ptr %i.af, align 1
   %.pre = load i32, ptr %i.t, align 4
   br label %.loopexit779
 

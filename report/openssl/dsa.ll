@@ -88,7 +88,7 @@ bb.a:
   %i.c = alloca ptr, align 8                      ; 6 uses
   %i.d = alloca i32, align 4                      ; 5 uses
   %i.e = alloca i32, align 4                      ; 8 uses
-  %i.f = alloca i32, align 4                      ; 5 uses
+  %i.f = alloca i32, align 4                      ; 7 uses
   %i.g = alloca ptr, align 8                      ; 7 uses
   %2 = alloca [2 x %struct.ossl_param_st], align 16 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
@@ -102,12 +102,12 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #6
   store i32 32773, ptr %i.e, align 4, !tbaa !15
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #6
-  store i32 2, ptr %i.f, align 4, !tbaa !15
   tail call void @opt_set_unknown_name(ptr noundef nonnull @.str.44) #6
   %i.h = tail call ptr @opt_init(i32 noundef %0, ptr noundef %1, ptr noundef nonnull @dsa_options) #6
   br label %bb.b
 
 bb.b:                                             ; preds = %.backedge, %bb.a
+  %3 = phi i32 [ 2, %bb.a ], [ %.be, %.backedge ] ; 18 uses
   %.088 = phi ptr [ null, %bb.a ], [ %.088.be, %.backedge ] ; 16 uses
   %.086 = phi ptr [ null, %bb.a ], [ %.086.be, %.backedge ] ; 16 uses
   %.084 = phi ptr [ null, %bb.a ], [ %.084.be, %.backedge ] ; 15 uses
@@ -122,7 +122,7 @@ bb.b:                                             ; preds = %.backedge, %bb.a
   switch i32 %i.i, label %.backedge [
     i32 0, label %bb.r
     i32 1602, label %bb.q
-    i32 -1, label %.loopexit.a
+    i32 -1, label %.loopexit
     i32 1, label %bb.c
     i32 2, label %bb.d
     i32 4, label %bb.e
@@ -145,6 +145,7 @@ bb.b:                                             ; preds = %.backedge, %bb.a
   ]
 
 .backedge:                                        ; preds = %bb.b, %bb.q, %bb.f, %bb.d, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.e
+  %.be = phi i32 [ %3, %bb.b ], [ %3, %bb.d ], [ %3, %bb.e ], [ %3, %bb.f ], [ %3, %bb.g ], [ %3, %bb.h ], [ %3, %bb.i ], [ %i.t, %bb.j ], [ %3, %bb.k ], [ %3, %bb.l ], [ %3, %bb.m ], [ %3, %bb.n ], [ %3, %bb.o ], [ %3, %bb.p ], [ %3, %bb.q ]
   %.088.be = phi ptr [ %.088, %bb.b ], [ %.088, %bb.d ], [ %i.n, %bb.e ], [ %.088, %bb.f ], [ %.088, %bb.g ], [ %.088, %bb.h ], [ %.088, %bb.i ], [ %.088, %bb.j ], [ %.088, %bb.k ], [ %.088, %bb.l ], [ %.088, %bb.m ], [ %.088, %bb.n ], [ %.088, %bb.o ], [ %.088, %bb.p ], [ %.088, %bb.q ]
   %.086.be = phi ptr [ %.086, %bb.b ], [ %.086, %bb.d ], [ %.086, %bb.e ], [ %.086, %bb.f ], [ %i.q, %bb.g ], [ %.086, %bb.h ], [ %.086, %bb.i ], [ %.086, %bb.j ], [ %.086, %bb.k ], [ %.086, %bb.l ], [ %.086, %bb.m ], [ %.086, %bb.n ], [ %.086, %bb.o ], [ %.086, %bb.p ], [ %.086, %bb.q ]
   %.084.be = phi ptr [ %.084, %bb.b ], [ %.084, %bb.d ], [ %.084, %bb.e ], [ %.084, %bb.f ], [ %.084, %bb.g ], [ %i.r, %bb.h ], [ %.084, %bb.i ], [ %.084, %bb.j ], [ %.084, %bb.k ], [ %.084, %bb.l ], [ %.084, %bb.m ], [ %.084, %bb.n ], [ %.084, %bb.o ], [ %.084, %bb.p ], [ %.084, %bb.q ]
@@ -157,12 +158,17 @@ bb.b:                                             ; preds = %.backedge, %bb.a
   %.068.be = phi ptr [ %.068, %bb.b ], [ %.068, %bb.d ], [ %.068, %bb.e ], [ %.068, %bb.f ], [ %.068, %bb.g ], [ %.068, %bb.h ], [ %.068, %bb.i ], [ %.068, %bb.j ], [ %.068, %bb.k ], [ %.068, %bb.l ], [ %.068, %bb.m ], [ %.068, %bb.n ], [ %.068, %bb.o ], [ %i.u, %bb.p ], [ %.068, %bb.q ]
   br label %bb.b, !llvm.loop !9
 
-.loopexit.a:                                      ; preds = %bb.b, %bb.f, %bb.d, %bb.r
+.loopexit:                                        ; preds = %bb.d, %bb.f, %bb.b
+  store i32 %3, ptr %i.f, align 4
+  br label %.loopexit.a
+
+.loopexit.a:                                      ; preds = %.loopexit, %bb.r
   %i.j = load ptr, ptr @bio_err, align 8, !tbaa !18
   %i.k = call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.j, ptr noundef nonnull @.str.45, ptr noundef %i.h) #6 ; 0 uses
   br label %bb.bb
 
 bb.c:                                             ; preds = %bb.b
+  store i32 %3, ptr %i.f, align 4
   call void @opt_help(ptr noundef nonnull @dsa_options) #6
   br label %bb.bb
 
@@ -170,7 +176,7 @@ bb.d:                                             ; preds = %bb.b
   %i.l = call ptr @opt_arg() #6
   %i.m = call i32 @opt_format(ptr noundef %i.l, i64 noundef 4030, ptr noundef nonnull %i.d) #6
   %.not116 = icmp eq i32 %i.m, 0
-  br i1 %.not116, label %.loopexit.a, label %.backedge
+  br i1 %.not116, label %.loopexit, label %.backedge
 
 bb.e:                                             ; preds = %bb.b
   %i.n = call ptr @opt_arg() #6
@@ -180,7 +186,7 @@ bb.f:                                             ; preds = %bb.b
   %i.o = call ptr @opt_arg() #6
   %i.p = call i32 @opt_format(ptr noundef %i.o, i64 noundef 4030, ptr noundef nonnull %i.e) #6
   %.not115 = icmp eq i32 %i.p, 0
-  br i1 %.not115, label %.loopexit.a, label %.backedge
+  br i1 %.not115, label %.loopexit, label %.backedge
 
 bb.g:                                             ; preds = %bb.b
   %i.q = call ptr @opt_arg() #6
@@ -196,7 +202,6 @@ bb.i:                                             ; preds = %bb.b
 
 bb.j:                                             ; preds = %bb.b, %bb.b, %bb.b
   %i.t = add nsw i32 %i.i, -6
-  store i32 %i.t, ptr %i.f, align 4, !tbaa !15
   br label %.backedge
 
 bb.k:                                             ; preds = %bb.b
@@ -221,9 +226,10 @@ bb.p:                                             ; preds = %bb.b
 bb.q:                                             ; preds = %bb.b, %bb.b, %bb.b, %bb.b
   %i.v = call i32 @opt_provider(i32 noundef %i.i) #6
   %.not114 = icmp eq i32 %i.v, 0
-  br i1 %.not114, label %.loopexit141.a, label %.backedge
+  br i1 %.not114, label %.loopexit141, label %.backedge
 
 bb.r:                                             ; preds = %bb.b
+  store i32 %3, ptr %i.f, align 4
   %i.w = call i32 @opt_check_rest_arg(ptr noundef null) #6
   %.not100 = icmp eq i32 %i.w, 0
   br i1 %.not100, label %.loopexit.a, label %bb.s
@@ -459,10 +465,14 @@ bb.ba:                                            ; preds = %.thread123
   %i.cm = call i32 @BIO_puts(ptr noundef %i.cl, ptr noundef nonnull @.str.68) #6 ; 0 uses
   br label %.loopexit141.a
 
-.loopexit141.a:                                   ; preds = %bb.q, %bb.z, %bb.ac, %bb.ag, %bb.s, %bb.ar, %bb.ba, %bb.az, %bb.ao, %bb.ap, %bb.aj, %bb.ab, %bb.u
-  %.092.ph = phi ptr [ null, %bb.u ], [ null, %bb.ab ], [ %i.ar, %bb.aj ], [ %i.ar, %bb.ap ], [ %i.ar, %bb.ao ], [ %i.ar, %bb.az ], [ %i.ar, %bb.ba ], [ %i.ar, %bb.ar ], [ null, %bb.s ], [ %i.ar, %bb.ag ], [ null, %bb.ac ], [ null, %bb.z ], [ null, %bb.q ]
-  %.191.ph = phi ptr [ null, %bb.u ], [ %.090, %bb.ab ], [ %.090, %bb.aj ], [ %.090, %bb.ap ], [ %.090, %bb.ao ], [ %.090, %bb.az ], [ %.090, %bb.ba ], [ %.090, %bb.ar ], [ null, %bb.s ], [ %.090, %bb.ag ], [ %.090, %bb.ac ], [ null, %bb.z ], [ null, %bb.q ]
-  %.065.ph = phi ptr [ null, %bb.u ], [ null, %bb.ab ], [ null, %bb.aj ], [ null, %bb.ap ], [ null, %bb.ao ], [ %i.bo, %bb.az ], [ %i.bo, %bb.ba ], [ %i.bo, %bb.ar ], [ null, %bb.s ], [ null, %bb.ag ], [ null, %bb.ac ], [ null, %bb.z ], [ null, %bb.q ]
+.loopexit141:                                     ; preds = %bb.q
+  store i32 %3, ptr %i.f, align 4
+  br label %.loopexit141.a
+
+.loopexit141.a:                                   ; preds = %.loopexit141, %bb.z, %bb.ac, %bb.ag, %bb.s, %bb.ar, %bb.ba, %bb.az, %bb.ao, %bb.ap, %bb.aj, %bb.ab, %bb.u
+  %.092.ph = phi ptr [ null, %bb.u ], [ null, %bb.ab ], [ %i.ar, %bb.aj ], [ %i.ar, %bb.ap ], [ %i.ar, %bb.ao ], [ %i.ar, %bb.az ], [ %i.ar, %bb.ba ], [ %i.ar, %bb.ar ], [ null, %bb.s ], [ %i.ar, %bb.ag ], [ null, %bb.ac ], [ null, %bb.z ], [ null, %.loopexit141 ]
+  %.191.ph = phi ptr [ null, %bb.u ], [ %.090, %bb.ab ], [ %.090, %bb.aj ], [ %.090, %bb.ap ], [ %.090, %bb.ao ], [ %.090, %bb.az ], [ %.090, %bb.ba ], [ %.090, %bb.ar ], [ null, %bb.s ], [ %.090, %bb.ag ], [ %.090, %bb.ac ], [ null, %bb.z ], [ null, %.loopexit141 ]
+  %.065.ph = phi ptr [ null, %bb.u ], [ null, %bb.ab ], [ null, %bb.aj ], [ null, %bb.ap ], [ null, %bb.ao ], [ %i.bo, %bb.az ], [ %i.bo, %bb.ba ], [ %i.bo, %bb.ar ], [ null, %bb.s ], [ null, %bb.ag ], [ null, %bb.ac ], [ null, %bb.z ], [ null, %.loopexit141 ]
   %i.cn = load ptr, ptr @bio_err, align 8, !tbaa !18
   call void @ERR_print_errors(ptr noundef %i.cn) #6
   br label %bb.bb

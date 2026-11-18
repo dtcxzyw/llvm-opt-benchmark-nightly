@@ -202,13 +202,18 @@ rb_vm_ractor_blocking_cnt_inc.exit:               ; preds = %.lr.ph38, %.backedg
   call void @rb_vm_cond_timedwait(ptr noundef nonnull %i.c, ptr noundef %i.af, i64 noundef 1000) #21
   %i.am = load i8, ptr %i.ag, align 8, !tbaa !394, !range !196, !noundef !149
   %i.an = trunc nuw i8 %i.am to i1
-  %0 = load ptr, ptr @ruby_single_main_ractor, align 8
-  %1 = icmp eq ptr %0, null
-  %or.cond = select i1 %i.an, i1 %1, i1 false
-  br i1 %or.cond, label %.lr.ph.split, label %._crit_edge
+  br i1 %i.an, label %.lr.ph, label %._crit_edge
 
-.lr.ph.split:                                     ; preds = %rb_vm_ractor_blocking_cnt_inc.exit, %rb_vm_lock_enter_nb.exit
-  %i.ao = phi ptr [ %i.ap, %rb_vm_lock_enter_nb.exit ], [ null, %rb_vm_ractor_blocking_cnt_inc.exit ] ; 2 uses
+.lr.ph:                                           ; preds = %rb_vm_ractor_blocking_cnt_inc.exit
+  %0 = load ptr, ptr @ruby_single_main_ractor, align 8, !tbaa !207
+  %1 = icmp eq ptr %0, null
+  br i1 %1, label %.lr.ph.split, label %rb_vm_unlock.exit20.thread.us.us
+
+rb_vm_unlock.exit20.thread.us.us:                 ; preds = %.lr.ph, %rb_vm_unlock.exit20.thread.us.us
+  br label %rb_vm_unlock.exit20.thread.us.us
+
+.lr.ph.split:                                     ; preds = %.lr.ph, %rb_vm_lock_enter_nb.exit
+  %i.ao = phi ptr [ %i.ap, %rb_vm_lock_enter_nb.exit ], [ null, %.lr.ph ] ; 2 uses
   %.not.i.i19 = icmp eq ptr %i.ao, null
   br i1 %.not.i.i19, label %rb_vm_unlock.exit20, label %rb_vm_unlock.exit20.thread
 
@@ -611,12 +616,12 @@ bb.k:                                             ; preds = %rb_obj_written.exit
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %rb_obj_written.exit221
-  %i.ap = phi i64 [ %i.ao, %bb.k ], [ %0, %rb_obj_written.exit221 ] ; 47 uses
+  %i.ap = phi i64 [ %i.ao, %bb.k ], [ %0, %rb_obj_written.exit221 ] ; 46 uses
   %i.aq = icmp eq i64 %i.ap, 0                    ; 2 uses
   %i.ar = and i64 %i.ap, 7
   %i.as = icmp ne i64 %i.ar, 0                    ; 2 uses
   %i.at = or i1 %i.aq, %i.as                      ; 2 uses
-  %.pre.i = inttoptr i64 %i.ap to ptr             ; 14 uses
+  %.pre.i = inttoptr i64 %i.ap to ptr             ; 16 uses
   %.pre = load i64, ptr %.pre.i, align 8, !tbaa !236 ; 2 uses
   br i1 %i.at, label %rb_obj_gen_fields_p.exit, label %rb_type.exit.i
 
@@ -835,13 +840,12 @@ rb_obj_write.exit229:                             ; preds = %bb.y, %bb.z, %bb.aa
 
 bb.ab:                                            ; preds = %rb_obj_gen_fields_p.exit.thread
   call void @rb_ary_cancel_sharing(i64 noundef %i.ap) #21
-  %5 = inttoptr i64 %i.ap to ptr                  ; 2 uses
-  %i.dg = getelementptr i8, ptr %5, i64 16
+  %i.dg = getelementptr i8, ptr %.pre.i, i64 16
   br label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ak, %bb.ab
   %indvars.iv276 = phi i64 [ %indvars.iv.next277, %bb.ak ], [ 0, %bb.ab ] ; 4 uses
-  %i.dh = load i64, ptr %5, align 8, !tbaa !236   ; 2 uses
+  %i.dh = load i64, ptr %.pre.i, align 8, !tbaa !236 ; 2 uses
   %i.di = and i64 %i.dh, 8192
   %.not.i.i = icmp eq i64 %i.di, 0
   br i1 %.not.i.i, label %bb.ae, label %bb.ad

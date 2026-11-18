@@ -204,13 +204,13 @@ bb.j:                                             ; preds = %.lr.ph94.epil.prehe
   %i.ct = load i32, ptr %i.cs, align 4, !tbaa !106
   %i.cu = sext i32 %i.ct to i64                   ; 2 uses
   %i.cv = getelementptr inbounds nuw [4 x i8], ptr %.sroa.079.0132, i64 %i.cu
-  %2 = mul nsw i64 %i.cu, %i.h
-  %gep.us = getelementptr [4 x i8], ptr %invariant.gep.us, i64 %2 ; 2 uses
-  %.pre = load float, ptr %i.cv, align 4, !tbaa !113 ; 2 uses
+  %2 = load float, ptr %i.cv, align 4, !tbaa !113 ; 2 uses
+  %3 = mul nsw i64 %i.cu, %i.h
+  %gep.us = getelementptr [4 x i8], ptr %invariant.gep.us, i64 %3 ; 2 uses
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph97.us
-  %broadcast.splatinsert = insertelement <4 x float> poison, float %.pre, i64 0
+  %broadcast.splatinsert = insertelement <4 x float> poison, float %2, i64 0
   %broadcast.splat = shufflevector <4 x float> %broadcast.splatinsert, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %vector.body
 
@@ -234,7 +234,7 @@ scalar.ph.preheader:                              ; preds = %.lr.ph97.us, %middl
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
   %indvars.iv115 = phi i64 [ %indvars.iv.next116, %scalar.ph ], [ %indvars.iv115.ph, %scalar.ph.preheader ] ; 2 uses
   %i.cz = getelementptr [4 x i8], ptr %gep.us, i64 %indvars.iv115
-  store float %.pre, ptr %i.cz, align 4, !tbaa !113
+  store float %2, ptr %i.cz, align 4, !tbaa !113
   %indvars.iv.next116 = add nuw nsw i64 %indvars.iv115, 1 ; 2 uses
   %exitcond119.not = icmp eq i64 %indvars.iv.next116, %i.k
   br i1 %exitcond119.not, label %._crit_edge98.us, label %scalar.ph, !llvm.loop !551
@@ -637,7 +637,7 @@ bb.a:
   %i.g = alloca ptr, align 8                      ; 4 uses
   %i.h = alloca ptr, align 8                      ; 4 uses
   %i.i = alloca i32, align 4                      ; 4 uses
-  %2 = alloca %"struct.std::array.236", align 8   ; 12 uses
+  %2 = alloca %"struct.std::array.236", align 8   ; 13 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !447, !nonnull !133, !align !167
   %i.l = tail call noundef i32 @_ZNK13llama_hparams10n_embd_inpEv(ptr noundef nonnull align 8 dereferenceable(36056) %i.k) ; 2 uses
@@ -771,9 +771,17 @@ bb.g:                                             ; preds = %bb.f
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bl, i64 16
   %.sroa.079.0118 = load ptr, ptr %i.bm, align 8, !tbaa !340 ; 2 uses
   %.not116119 = icmp eq ptr %.sroa.079.0118, null
-  br i1 %.not116119, label %._crit_edge, label %.lr.ph
+  br i1 %.not116119, label %._crit_edge, label %.lr.ph.preheader
 
-._crit_edge:                                      ; preds = %bb.n, %bb.g
+.lr.ph.preheader:                                 ; preds = %bb.g
+  %.promoted = load ptr, ptr %2, align 8
+  br label %.lr.ph
+
+._crit_edge.loopexit:                             ; preds = %bb.n
+  store ptr %4, ptr %2, align 8
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.g
   %.not = icmp eq i32 %i.l, %i.p                  ; 2 uses
   br i1 %.not, label %bb.r, label %bb.o
 
@@ -782,8 +790,9 @@ bb.g:                                             ; preds = %bb.f
           cleanup
   br label %_ZNKSt14default_deleteI20llm_graph_input_embdEclEPS0_.exit.i71
 
-.lr.ph:                                           ; preds = %bb.g, %bb.n
-  %.sroa.079.0120 = phi ptr [ %.sroa.079.0, %bb.n ], [ %.sroa.079.0118, %bb.g ] ; 3 uses
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.n
+  %3 = phi ptr [ %4, %bb.n ], [ %.promoted, %.lr.ph.preheader ] ; 3 uses
+  %.sroa.079.0120 = phi ptr [ %.sroa.079.0, %bb.n ], [ %.sroa.079.0118, %.lr.ph.preheader ] ; 3 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %.sroa.079.0120, i64 8 ; 2 uses
   %i.bp = load ptr, ptr %i.bo, align 8, !tbaa !467
   %i.bq = invoke noundef ptr @_ZN18llama_adapter_lora10get_weightEP11ggml_tensor(ptr noundef nonnull align 8 dereferenceable(200) %i.bp, ptr noundef %1)
@@ -830,22 +839,19 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.l
   %i.cm = load ptr, ptr %i.z, align 8, !tbaa !459
-  %3 = load ptr, ptr %2, align 8, !tbaa !413
   %i.cn = invoke ptr @ggml_add(ptr noundef %i.cm, ptr noundef %3, ptr noundef %i.cl)
-          to label %4 unwind label %.thread108
+          to label %bb.n unwind label %.thread108
 
-4:                                                ; preds = %bb.m
-  store ptr %i.cn, ptr %2, align 8, !tbaa !413
-  br label %bb.n
-
-bb.n:                                             ; preds = %bb.h, %4
+bb.n:                                             ; preds = %bb.m, %bb.h
+  %4 = phi ptr [ %3, %bb.h ], [ %i.cn, %bb.m ]    ; 2 uses
   %.sroa.079.0 = load ptr, ptr %.sroa.079.0120, align 8, !tbaa !340 ; 2 uses
   %.not116 = icmp eq ptr %.sroa.079.0, null
-  br i1 %.not116, label %._crit_edge, label %.lr.ph
+  br i1 %.not116, label %._crit_edge.loopexit, label %.lr.ph
 
 .thread108:                                       ; preds = %_ZNK25llama_adapter_lora_weight9get_scaleEff.exit, %bb.k, %bb.l, %bb.m, %.lr.ph
   %i.co = landingpad { ptr, i32 }
           cleanup
+  store ptr %3, ptr %2, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #30
   br label %_ZNKSt14default_deleteI20llm_graph_input_embdEclEPS0_.exit.i71
 

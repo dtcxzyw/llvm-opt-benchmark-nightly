@@ -204,20 +204,20 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph105.a, %_ZN5faiss15maxheap_reorderIfEEmmPT_Pl.exit
-  %i.af = phi i64 [ 0, %.lr.ph105.a ], [ %i.bg, %_ZN5faiss15maxheap_reorderIfEEmmPT_Pl.exit ] ; 2 uses
-  %.077103 = phi i64 [ %i.w, %.lr.ph105.a ], [ %i.ke, %_ZN5faiss15maxheap_reorderIfEEmmPT_Pl.exit ] ; 5 uses
+  %i.af = phi i64 [ %i.w, %.lr.ph105.a ], [ %i.ke, %_ZN5faiss15maxheap_reorderIfEEmmPT_Pl.exit ] ; 5 uses
+  %.077103 = phi i64 [ 0, %.lr.ph105.a ], [ %i.bg, %_ZN5faiss15maxheap_reorderIfEEmmPT_Pl.exit ] ; 2 uses
   %i.ag = load ptr, ptr %4, align 8, !tbaa !82
   %i.ah = load i32, ptr %i.g, align 8, !tbaa !34
   %i.ai = sext i32 %i.ah to i64
-  %i.aj = mul nsw i64 %.077103, %i.ai
+  %i.aj = mul nsw i64 %i.af, %i.ai
   %i.ak = getelementptr inbounds [4 x i8], ptr %i.ag, i64 %i.aj
   %i.al = load ptr, ptr %5, align 8, !tbaa !83
   %i.am = load i64, ptr %6, align 8, !tbaa !81    ; 2 uses
-  %i.an = mul i64 %i.am, %.077103
+  %i.an = mul i64 %i.am, %i.af
   %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.al, i64 %i.an
   %i.ap = load ptr, ptr %7, align 8, !tbaa !82
   %i.aq = load i64, ptr %8, align 8, !tbaa !81    ; 6 uses
-  %i.ar = mul nsw i64 %i.aq, %.077103             ; 2 uses
+  %i.ar = mul nsw i64 %i.aq, %i.af                ; 2 uses
   %i.as = getelementptr inbounds [4 x i8], ptr %i.ap, i64 %i.ar ; 13 uses
   %i.at = load ptr, ptr %9, align 8, !tbaa !83
   %i.au = getelementptr inbounds [8 x i8], ptr %i.at, i64 %i.ar ; 12 uses
@@ -279,7 +279,7 @@ _ZN5faiss15maxheap_heapifyIfEEvmPT_PlPKS1_PKlm.exit: ; preds = %_ZN5faiss15maxhe
   br label %bb.i
 
 ._crit_edge101:                                   ; preds = %_ZN5faiss13InvertedLists11ScopedCodesD2Ev.exit, %_ZN5faiss15maxheap_heapifyIfEEvmPT_PlPKS1_PKlm.exit
-  %i.bg = phi i64 [ %i.af, %_ZN5faiss15maxheap_heapifyIfEEvmPT_PlPKS1_PKlm.exit ], [ %i.kb, %_ZN5faiss13InvertedLists11ScopedCodesD2Ev.exit ]
+  %i.bg = phi i64 [ %.077103, %_ZN5faiss15maxheap_heapifyIfEEvmPT_PlPKS1_PKlm.exit ], [ %i.kb, %_ZN5faiss13InvertedLists11ScopedCodesD2Ev.exit ] ; 2 uses
   %i.bh = load i64, ptr %8, align 8, !tbaa !81    ; 9 uses
   %.not46.i.i = icmp eq i64 %i.bh, 0
   br i1 %.not46.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i
@@ -453,9 +453,9 @@ middle.block:                                     ; preds = %vector.body
 
 bb.i:                                             ; preds = %.lr.ph100, %_ZN5faiss13InvertedLists11ScopedCodesD2Ev.exit
   %i.ea = phi i64 [ %i.bd, %.lr.ph100 ], [ %i.ka, %_ZN5faiss13InvertedLists11ScopedCodesD2Ev.exit ]
-  %i.eb = phi i64 [ %i.af, %.lr.ph100 ], [ %i.kb, %_ZN5faiss13InvertedLists11ScopedCodesD2Ev.exit ] ; 2 uses
-  %.07699 = phi i64 [ 0, %.lr.ph100 ], [ %i.kc, %_ZN5faiss13InvertedLists11ScopedCodesD2Ev.exit ] ; 2 uses
-  %i.ec = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %.07699
+  %i.eb = phi i64 [ 0, %.lr.ph100 ], [ %i.kc, %_ZN5faiss13InvertedLists11ScopedCodesD2Ev.exit ] ; 2 uses
+  %.07699 = phi i64 [ %.077103, %.lr.ph100 ], [ %i.kb, %_ZN5faiss13InvertedLists11ScopedCodesD2Ev.exit ] ; 2 uses
+  %i.ec = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %i.eb
   %i.ed = load i64, ptr %i.ec, align 8, !tbaa !81 ; 6 uses
   %i.ee = icmp eq i64 %i.ed, -1
   br i1 %i.ee, label %_ZN5faiss13InvertedLists11ScopedCodesD2Ev.exit, label %bb.j
@@ -498,6 +498,14 @@ bb.o:                                             ; preds = %bb.n, %bb.l
   %i.es = call ptr @__cxa_allocate_exception(i64 40) #18 ; 2 uses
   invoke void @_ZN5faiss14FaissExceptionC1ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKcSA_i(ptr noundef nonnull align 8 dereferenceable(40) %i.es, ptr noundef nonnull align 8 dereferenceable(32) %12, ptr noundef nonnull @__PRETTY_FUNCTION__._ZNK5faiss11IndexIVFPQR18search_preassignedElPKflPKlS2_PfPlbPKNS_19SearchParametersIVFEPNS_13IndexIVFStatsE.omp_outlined, ptr noundef nonnull @.str.5, i32 noundef 180)
           to label %.invoke unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+
+.invoke:                                          ; preds = %bb.ad, %bb.v, %bb.o
+  %15 = phi ptr [ %i.fl, %bb.v ], [ %i.es, %bb.o ], [ %i.hz, %bb.ad ]
+  invoke void @__cxa_throw(ptr nonnull %15, ptr nonnull @_ZTIN5faiss14FaissExceptionE, ptr nonnull @_ZN5faiss14FaissExceptionD2Ev) #27
+          to label %.cont unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+
+.cont:                                            ; preds = %.invoke
+  unreachable
 
 bb.p:                                             ; preds = %bb.k
   %i.et = and i64 %i.ed, 2147483648
@@ -716,14 +724,6 @@ bb.ad:                                            ; preds = %bb.ac, %bb.aa
   invoke void @_ZN5faiss14FaissExceptionC1ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKcSA_i(ptr noundef nonnull align 8 dereferenceable(40) %i.hz, ptr noundef nonnull align 8 dereferenceable(32) %14, ptr noundef nonnull @__PRETTY_FUNCTION__._ZNK5faiss11IndexIVFPQR18search_preassignedElPKflPKlS2_PfPlbPKNS_19SearchParametersIVFEPNS_13IndexIVFStatsE.omp_outlined, ptr noundef nonnull @.str.5, i32 noundef 198)
           to label %.invoke unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
-.invoke:                                          ; preds = %bb.ad, %bb.v, %bb.o
-  %15 = phi ptr [ %i.fl, %bb.v ], [ %i.es, %bb.o ], [ %i.hz, %bb.ad ]
-  invoke void @__cxa_throw(ptr nonnull %15, ptr nonnull @_ZTIN5faiss14FaissExceptionE, ptr nonnull @_ZN5faiss14FaissExceptionD2Ev) #27
-          to label %.cont unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
-
-.cont:                                            ; preds = %.invoke
-  unreachable
-
 bb.ae:                                            ; preds = %bb.z
   %i.ia = load i64, ptr %i.ae, align 8, !tbaa !37
   %i.ib = mul i64 %i.ia, %i.gs
@@ -829,8 +829,6 @@ _ZN5faiss19maxheap_replace_topIfEEvmPT_PlS1_l.exit: ; preds = %_ZN5faiss4CMaxIfl
   br label %bb.al
 
 bb.al:                                            ; preds = %_ZN5faiss19maxheap_replace_topIfEEvmPT_PlS1_l.exit, %bb.ag
-  %16 = add i64 %i.eb, 1                          ; 2 uses
-  store i64 %16, ptr %i.a, align 8, !tbaa !81
   %i.jv = load ptr, ptr %i.fq, align 8, !tbaa !10
   %i.jw = getelementptr inbounds nuw i8, ptr %i.jv, i64 40
   %i.jx = load ptr, ptr %i.jw, align 8
@@ -838,6 +836,7 @@ bb.al:                                            ; preds = %_ZN5faiss19maxheap_
           to label %._ZN5faiss13InvertedLists11ScopedCodesD2Ev.exit_crit_edge unwind label %bb.am
 
 ._ZN5faiss13InvertedLists11ScopedCodesD2Ev.exit_crit_edge: ; preds = %bb.al
+  %16 = add i64 %.07699, 1
   %.pre110 = load i64, ptr %6, align 8, !tbaa !81
   br label %_ZN5faiss13InvertedLists11ScopedCodesD2Ev.exit
 
@@ -850,18 +849,20 @@ bb.am:                                            ; preds = %bb.al
 
 _ZN5faiss13InvertedLists11ScopedCodesD2Ev.exit:   ; preds = %._ZN5faiss13InvertedLists11ScopedCodesD2Ev.exit_crit_edge, %bb.i
   %i.ka = phi i64 [ %.pre110, %._ZN5faiss13InvertedLists11ScopedCodesD2Ev.exit_crit_edge ], [ %i.ea, %bb.i ] ; 2 uses
-  %i.kb = phi i64 [ %16, %._ZN5faiss13InvertedLists11ScopedCodesD2Ev.exit_crit_edge ], [ %i.eb, %bb.i ] ; 2 uses
-  %i.kc = add nuw i64 %.07699, 1                  ; 2 uses
+  %i.kb = phi i64 [ %16, %._ZN5faiss13InvertedLists11ScopedCodesD2Ev.exit_crit_edge ], [ %.07699, %bb.i ] ; 2 uses
+  %i.kc = add nuw i64 %i.eb, 1                    ; 2 uses
   %i.kd = icmp ult i64 %i.kc, %i.ka
   br i1 %i.kd, label %bb.i, label %._crit_edge101, !llvm.loop !121
 
 _ZN5faiss15maxheap_reorderIfEEmmPT_Pl.exit:       ; preds = %.lr.ph44.i.i, %middle.block, %._crit_edge.i.i
-  %i.ke = add nsw i64 %.077103, 1
+  %i.ke = add nsw i64 %i.af, 1
   %i.kf = load i64, ptr %i.c, align 8, !tbaa !81
-  %.not.not = icmp slt i64 %.077103, %i.kf
+  %.not.not = icmp slt i64 %i.af, %i.kf
   br i1 %.not.not, label %bb.d, label %._crit_edge106
 
 ._crit_edge106:                                   ; preds = %_ZN5faiss15maxheap_reorderIfEEmmPT_Pl.exit, %bb.c
+  %.lcssa108.lcssa = phi i64 [ 0, %bb.c ], [ %i.bg, %_ZN5faiss15maxheap_reorderIfEEmmPT_Pl.exit ]
+  store i64 %.lcssa108.lcssa, ptr %i.a, align 8
   call void @__kmpc_for_static_fini(ptr nonnull @1, i32 %.pre111)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #18
@@ -896,7 +897,7 @@ bb.ap:                                            ; preds = %bb.ao, %bb.an, %_ZN
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #18
   ret void
 
-.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.x, %bb.af, %bb.ae, %._crit_edge, %_ZN5faiss13InvertedLists11ScopedCodesC2EPKS0_mm.exit, %bb.w, %bb.q, %.invoke, %bb.ad, %bb.ac, %bb.ab, %bb.v, %bb.u, %bb.t, %bb.o, %bb.n, %bb.m, %bb.a
+.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.x, %bb.af, %bb.ae, %._crit_edge, %_ZN5faiss13InvertedLists11ScopedCodesC2EPKS0_mm.exit, %bb.w, %bb.q, %.invoke, %bb.a, %bb.m, %bb.n, %bb.o, %bb.t, %bb.u, %bb.v, %bb.ab, %bb.ac, %bb.ad
   %lpad.loopexit.split-lp171 = landingpad { ptr, i32 }
           catch ptr null
   %i.km = extractvalue { ptr, i32 } %lpad.loopexit.split-lp171, 0

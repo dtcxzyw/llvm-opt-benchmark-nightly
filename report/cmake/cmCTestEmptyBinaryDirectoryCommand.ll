@@ -69,7 +69,7 @@ bb.a:
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %7 = alloca [2 x %"struct.std::pair"], align 8  ; 9 uses
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
-  %9 = alloca %"class.cmsys::Status", align 8     ; 6 uses
+  %9 = alloca %"class.cmsys::Status", align 8     ; 11 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 15 uses
   %i.a = alloca i64, align 8                      ; 5 uses
   %11 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
@@ -221,9 +221,11 @@ bb.k:                                             ; preds = %bb.h
   %.sroa.4.0..sroa_idx.i19.i.i.i = getelementptr inbounds nuw i8, ptr %3, i64 56
   %i.at = getelementptr inbounds nuw i8, ptr %3, i64 64
   %i.au = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 4 uses
+  %.promoted.i = load i64, ptr %9, align 8
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.z, %bb.k
+  %.sroa.6.2.in.in.i71.i = phi i64 [ %.promoted.i, %bb.k ], [ %.sroa.6.2.in.in.i.i, %bb.z ] ; 4 uses
   %.048.i = phi i32 [ 0, %bb.k ], [ %i.cn, %bb.z ]
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #10
   invoke void @_ZN5cmsys9DirectoryC1Ev(ptr noundef nonnull align 8 dereferenceable(8) %5)
@@ -236,7 +238,7 @@ bb.l:                                             ; preds = %bb.z, %bb.k
 .preheader.i.i:                                   ; preds = %.noexc.i28, %.thread.i.i
   %.016.i.i = phi i64 [ %i.ci, %.thread.i.i ], [ 0, %.noexc.i28 ] ; 3 uses
   %i.aw = invoke noundef i64 @_ZNK5cmsys9Directory16GetNumberOfFilesEv(ptr noundef nonnull align 8 dereferenceable(8) %5)
-          to label %bb.m unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %bb.m unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.i
 
 bb.m:                                             ; preds = %.preheader.i.i
   %.not.i.i = icmp ult i64 %.016.i.i, %i.aw
@@ -244,7 +246,7 @@ bb.m:                                             ; preds = %.preheader.i.i
 
 bb.n:                                             ; preds = %bb.m
   %i.ax = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNK5cmsys9Directory11GetFileNameB5cxx11Em(ptr noundef nonnull align 8 dereferenceable(8) %5, i64 noundef %.016.i.i)
-          to label %bb.o unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 5 uses
+          to label %bb.o unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.i ; 5 uses
 
 bb.o:                                             ; preds = %bb.n
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 8 ; 2 uses
@@ -282,9 +284,16 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   %i.bo = icmp eq i32 %i.bn, 0
   br i1 %i.bo, label %.thread.i.i, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit36.thread46.i.i
 
-.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.n, %.preheader.i.i, %.critedge32.i.i, %.noexc.i28
+.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.i: ; preds = %bb.n, %.preheader.i.i
+  %lpad.loopexit.i = landingpad { ptr, i32 }
+          cleanup
+  store i64 %.sroa.6.2.in.in.i71.i, ptr %9, align 8
+  br label %.loopexit.split-lp.i.i
+
+.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %.critedge32.i.i, %.noexc.i28
   %lpad.loopexit.split-lp84 = landingpad { ptr, i32 }
           cleanup
+  store i64 %.sroa.6.2.in.in.i71.i, ptr %9, align 8
   br label %.loopexit.split-lp.i.i
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit36.thread46.i.i: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit36.i.i, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit34.i.i, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i.i, %bb.o
@@ -334,6 +343,7 @@ bb.t:                                             ; preds = %bb.s
 bb.u:                                             ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit36.thread46.i.i
   %i.bw = landingpad { ptr, i32 }
           cleanup
+  store i64 %.sroa.6.2.in.in.i71.i, ptr %9, align 8
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i
 
 .critedge.i.i:                                    ; preds = %bb.s, %bb.q
@@ -343,6 +353,7 @@ bb.u:                                             ; preds = %_ZSteqIcSt11char_tr
 bb.v:                                             ; preds = %.critedge.i.i, %bb.t, %bb.r, %bb.p
   %i.by = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
+  store i64 %.sroa.6.2.in.in.i71.i, ptr %9, align 8
   %i.bz = load ptr, ptr %6, align 8, !tbaa !58    ; 2 uses
   %i.ca = icmp eq ptr %i.bz, %i.au
   br i1 %i.ca, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
@@ -384,17 +395,16 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i: ; preds = %b
   %i.cj = invoke i64 @_ZN5cmsys11SystemTools16RemoveADirectoryERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(32) %i.d)
           to label %.loopexit.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
-.loopexit.split-lp.i.i:                           ; preds = %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i
-  %.pn29.i.i = phi { ptr, i32 } [ %.pn.pn.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i ], [ %lpad.loopexit.split-lp84, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+.loopexit.split-lp.i.i:                           ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.i
+  %.pn29.i.i = phi { ptr, i32 } [ %.pn.pn.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i ], [ %lpad.loopexit.i, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.i ], [ %lpad.loopexit.split-lp84, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
   call void @_ZN5cmsys9DirectoryD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %5) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #10
   br label %.body.i
 
 .loopexit.i:                                      ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i38.i.i, %.critedge32.i.i
-  %.sroa.6.2.in.in.i.i = phi i64 [ %i.cj, %.critedge32.i.i ], [ %storemerge.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i38.i.i ] ; 2 uses
+  %.sroa.6.2.in.in.i.i = phi i64 [ %i.cj, %.critedge32.i.i ], [ %storemerge.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i38.i.i ] ; 3 uses
   call void @_ZN5cmsys9DirectoryD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %5) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #10
-  store i64 %.sroa.6.2.in.in.i.i, ptr %9, align 8
   %i.ck = and i64 %.sroa.6.2.in.in.i.i, 4294967295
   %i.cl = icmp eq i64 %i.ck, 0                    ; 2 uses
   br i1 %i.cl, label %.loopexit33.i, label %bb.y
@@ -414,6 +424,7 @@ bb.z:                                             ; preds = %bb.y
   br i1 %exitcond.not.i, label %.critedge.i, label %bb.l, !llvm.loop !38
 
 .critedge.i:                                      ; preds = %bb.z
+  store i64 %.sroa.6.2.in.in.i.i, ptr %9, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #10
   invoke void @_ZNK5cmsys6Status9GetStringB5cxx11Ev(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %10, ptr noundef nonnull align 4 dereferenceable(8) %9)
           to label %bb.aa unwind label %bb.ag

@@ -204,9 +204,10 @@ pmix_pointer_array_get_item.exit163.lr.ph:        ; preds = %bb.y
 
 pmix_pointer_array_get_item.exit163:              ; preds = %pmix_pointer_array_get_item.exit163.lr.ph, %bb.ae
   %indvars.iv221 = phi i64 [ 0, %pmix_pointer_array_get_item.exit163.lr.ph ], [ %indvars.iv.next222, %bb.ae ] ; 2 uses
-  %i.bv = phi ptr [ %i.bq, %pmix_pointer_array_get_item.exit163.lr.ph ], [ %i.dc, %bb.ae ]
+  %7 = phi ptr [ %i.bq, %pmix_pointer_array_get_item.exit163.lr.ph ], [ %i.dc, %bb.ae ]
+  %i.bv = phi ptr [ undef, %pmix_pointer_array_get_item.exit163.lr.ph ], [ %8, %bb.ae ] ; 2 uses
   store ptr null, ptr %i.d, align 8, !tbaa !43
-  %i.bw = getelementptr inbounds nuw i8, ptr %i.bv, i64 152
+  %i.bw = getelementptr inbounds nuw i8, ptr %7, i64 152
   %i.bx = load ptr, ptr %i.bw, align 8, !tbaa !39
   %i.by = getelementptr inbounds nuw [8 x i8], ptr %i.bx, i64 %indvars.iv221
   %i.bz = load ptr, ptr %i.by, align 8, !tbaa !40 ; 3 uses
@@ -262,7 +263,6 @@ bb.ac:                                            ; preds = %pmix_pointer_array_
 
 bb.ad:                                            ; preds = %._crit_edge194
   %i.cz = call ptr @PMIx_Argv_join(ptr noundef nonnull %i.cy, i32 noundef 44) #16 ; 3 uses
-  store ptr %i.cz, ptr %i.e, align 8, !tbaa !54
   %i.da = load ptr, ptr %i.d, align 8, !tbaa !43
   call void @PMIx_Argv_free(ptr noundef %i.da) #16
   %i.db = call i32 @PMIx_Argv_append_nosize(ptr noundef nonnull %i.c, ptr noundef %i.cz) #16 ; 0 uses
@@ -270,6 +270,7 @@ bb.ad:                                            ; preds = %._crit_edge194
   br label %bb.ae
 
 bb.ae:                                            ; preds = %pmix_pointer_array_get_item.exit163, %bb.ad, %._crit_edge194
+  %8 = phi ptr [ %i.bv, %pmix_pointer_array_get_item.exit163 ], [ %i.cz, %bb.ad ], [ %i.bv, %._crit_edge194 ] ; 2 uses
   %indvars.iv.next222 = add nuw nsw i64 %indvars.iv221, 1 ; 2 uses
   %i.dc = load ptr, ptr %i.bp, align 8, !tbaa !46 ; 2 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %i.dc, i64 128
@@ -279,6 +280,8 @@ bb.ae:                                            ; preds = %pmix_pointer_array_
   br i1 %i.dg, label %pmix_pointer_array_get_item.exit163, label %._crit_edge196, !llvm.loop !151
 
 ._crit_edge196:                                   ; preds = %bb.ae, %bb.y
+  %.lcssa195 = phi ptr [ undef, %bb.y ], [ %8, %bb.ae ]
+  store ptr %.lcssa195, ptr %i.e, align 8
   %i.dh = load ptr, ptr %i.b, align 8, !tbaa !43  ; 2 uses
   %.not132 = icmp eq ptr %i.dh, null
   br i1 %.not132, label %bb.aj, label %bb.af

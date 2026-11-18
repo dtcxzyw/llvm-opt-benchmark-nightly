@@ -202,8 +202,7 @@ bb.a:
   %i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 2 uses
   store i64 0, ptr %i.i, align 8
   store ptr %i.d, ptr %i.c, align 8
-  %i.j = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
-  store i64 0, ptr %i.j, align 8
+  %i.j = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 3 uses
   %i.k = getelementptr inbounds nuw [32 x i8], ptr %1, i64 %2
   store ptr %1, ptr %i.b, align 8
   %.sroa.0.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -215,42 +214,49 @@ bb.a:
   br i1 %i.l, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %bb.i
-  %i.m = phi i64 [ %.pr, %bb.i ], [ %i.f, %bb.a ]
-  %i.n = add i64 %i.m, -1
+  %3 = phi i64 [ %.pr, %bb.i ], [ %i.f, %bb.a ]
+  %i.m = phi i64 [ %i.p, %bb.i ], [ 0, %bb.a ]
+  %i.n = add i64 %3, -1
   store i64 %i.n, ptr %.sroa.2.0..sroa_idx, align 8
   %i.o = invoke { i64, ptr } @"_ZN110_$LT$core..iter..adapters..enumerate..Enumerate$LT$I$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h555c2efe17e39b35E"(ptr nonnull align 8 %i.b)
-          to label %bb.b unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
+          to label %bb.b unwind label %.loopexit  ; 2 uses
 
 ._crit_edge:                                      ; preds = %bb.b, %bb.i, %bb.a
   store i64 %2, ptr %i.i, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.d, i64 24, i1 false)
   ret void
 
-.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.d, %.lr.ph, %bb.g
+.loopexit:                                        ; preds = %.lr.ph, %bb.d
+  %4 = phi i64 [ %i.m, %.lr.ph ], [ %i.p, %bb.d ]
+  %lpad.loopexit = landingpad { ptr, i32 }
+          cleanup
+  store i64 %4, ptr %i.j, align 8
+  br label %.body
+
+.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.g
   %lpad.loopexit.split-lp30 = landingpad { ptr, i32 }
           cleanup
   br label %.body
 
-.body:                                            ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.e
-  %eh.lpad-body = phi { ptr, i32 } [ %i.u, %bb.e ], [ %lpad.loopexit.split-lp30, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+.body:                                            ; preds = %.loopexit, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.e
+  %eh.lpad-body = phi { ptr, i32 } [ %i.u, %bb.e ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp30, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
   invoke void @"_ZN4core3ptr206drop_in_place$LT$$LT$T$u20$as$u20$alloc..slice..$LT$impl$u20$$u5b$T$u5d$$GT$..to_vec_in..ConvertVec$GT$..to_vec..DropGuard$LT$regex_automata..nfa..thompson..compiler..Utf8Node$C$alloc..alloc..Global$GT$$GT$17he6a695d6e4df513dE"(ptr nonnull align 8 %i.c) #20
           to label %bb.k unwind label %bb.j
 
 bb.b:                                             ; preds = %.lr.ph
-  %i.p = extractvalue { i64, ptr } %i.o, 0        ; 4 uses
+  %i.p = extractvalue { i64, ptr } %i.o, 0        ; 7 uses
   %i.q = extractvalue { i64, ptr } %i.o, 1        ; 3 uses
   %.not = icmp eq ptr %i.q, null
   br i1 %.not, label %._crit_edge, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  store i64 %i.p, ptr %i.j, align 8
   %i.r = icmp ult i64 %i.p, %i.f
   br i1 %i.r, label %bb.d, label %bb.g
 
 bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   invoke void @"_ZN67_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..clone..Clone$GT$5clone17hb7250f407599c52eE"(ptr nonnull sret([24 x i8]) align 8 %i.a, ptr nonnull align 8 %i.q)
-          to label %.noexc unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %.noexc unwind label %.loopexit
 
 .noexc:                                           ; preds = %bb.d
   %i.s = getelementptr inbounds nuw i8, ptr %i.q, i64 24
@@ -260,6 +266,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %.noexc
   %i.u = landingpad { ptr, i32 }
           cleanup
+  store i64 %i.p, ptr %i.j, align 8
   invoke void @"_ZN4core3ptr90drop_in_place$LT$alloc..vec..Vec$LT$regex_automata..nfa..thompson..nfa..Transition$GT$$GT$17h8d9a11beff15b3cfE"(ptr nonnull align 8 %i.a) #20
           to label %.body unwind label %bb.f, !noalias !237
 
@@ -270,6 +277,7 @@ bb.f:                                             ; preds = %bb.e
   unreachable
 
 bb.g:                                             ; preds = %bb.c
+  store i64 %i.p, ptr %i.j, align 8
   invoke void @_ZN4core9panicking18panic_bounds_check17h91fb439f93b2e326E(i64 %i.p, i64 %i.f, ptr nonnull align 8 @168) #19
           to label %bb.h unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 

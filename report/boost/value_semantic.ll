@@ -202,18 +202,22 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit: ; preds = %_ZN
   %i.aq = ptrtoint ptr %.pr.i to i64
   %i.ar = sub i64 %i.ap, %i.aq                    ; 3 uses
   %i.as = icmp ugt i64 %i.ar, 32
-  br i1 %i.as, label %.lr.ph, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit36
+  br i1 %i.as, label %.preheader, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit36
 
-.lr.ph:                                           ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit
+.preheader:                                       ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit
+  %10 = ashr exact i64 %i.ar, 5
+  %11 = add nsw i64 %10, -1                       ; 2 uses
+  %.not = icmp eq i64 %11, 0
+  br i1 %.not, label %._crit_edge, label %.lr.ph
+
+.lr.ph:                                           ; preds = %.preheader
   %i.at = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 7 uses
   %i.au = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 4 uses
   %i.av = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 7 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
-  %10 = ashr exact i64 %i.ar, 5
-  %11 = add nsw i64 %10, -1
   br label %bb.l
 
-._crit_edge:                                      ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit47
+._crit_edge:                                      ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit47, %.preheader
   %i.ax = load i64, ptr %i.n, align 8, !tbaa !35
   %i.ay = and i64 %i.ax, -4
   %i.az = icmp eq i64 %i.ay, 4611686018427387900

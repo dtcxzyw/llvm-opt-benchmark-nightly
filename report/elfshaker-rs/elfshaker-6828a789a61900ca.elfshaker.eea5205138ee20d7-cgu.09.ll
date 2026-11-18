@@ -202,9 +202,13 @@ bb.c:                                             ; preds = %.lr.ph, %bb.t
   %.val.i.i = load i64, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !617, !noundef !4
   %i.ad = load i64, ptr %i.r, align 8, !alias.scope !618, !noundef !4 ; 3 uses
   %i.ae = load ptr, ptr %i.c, align 8, !alias.scope !618, !nonnull !4, !noundef !4 ; 4 uses
+  %.promoted.i = load i64, ptr %i.s, align 8, !alias.scope !615
+  %.promoted19.i = load i64, ptr %i.t, align 8, !alias.scope !615
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.i, %.lr.ph.i
+  %4 = phi i64 [ %.promoted19.i, %.lr.ph.i ], [ %i.cm, %bb.i ]
+  %5 = phi i64 [ %.promoted.i, %.lr.ph.i ], [ %6, %bb.i ] ; 2 uses
   %.sroa.03.018.i = phi ptr [ %i.y, %.lr.ph.i ], [ %i.cn, %bb.i ] ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !619)
   call void @llvm.experimental.noalias.scope.decl(metadata !620)
@@ -309,18 +313,17 @@ _RINvMs6_NtCs4u2a9tqgjUw_9hashbrown3rawINtB6_8RawTableTNtNtCskuiImRAV2ip_9elfsha
   br i1 %i.cj, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %_RINvMs6_NtCs4u2a9tqgjUw_9hashbrown3rawINtB6_8RawTableTNtNtCskuiImRAV2ip_9elfshaker7packidx10FileHandleuEE4findNCINvNtB8_3map14equivalent_keyBQ_BQ_uE0EBU_.exit.i.i
-  %4 = load i64, ptr %i.s, align 8, !alias.scope !635, !noundef !4
-  %i.ck = add i64 %4, 1
+  %i.ck = add i64 %5, 1                           ; 2 uses
   store i64 %i.ck, ptr %i.s, align 8, !alias.scope !635
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %_RINvMs6_NtCs4u2a9tqgjUw_9hashbrown3rawINtB6_8RawTableTNtNtCskuiImRAV2ip_9elfshaker7packidx10FileHandleuEE4findNCINvNtB8_3map14equivalent_keyBQ_BQ_uE0EBU_.exit.i.i
+  %6 = phi i64 [ %i.ck, %bb.h ], [ %5, %_RINvMs6_NtCs4u2a9tqgjUw_9hashbrown3rawINtB6_8RawTableTNtNtCskuiImRAV2ip_9elfshaker7packidx10FileHandleuEE4findNCINvNtB8_3map14equivalent_keyBQ_BQ_uE0EBU_.exit.i.i ]
   %.sroa.0.0.i.i.i.i.i = phi i8 [ -1, %bb.h ], [ -128, %_RINvMs6_NtCs4u2a9tqgjUw_9hashbrown3rawINtB6_8RawTableTNtNtCskuiImRAV2ip_9elfshaker7packidx10FileHandleuEE4findNCINvNtB8_3map14equivalent_keyBQ_BQ_uE0EBU_.exit.i.i ] ; 2 uses
   store i8 %.sroa.0.0.i.i.i.i.i, ptr %i.ce, align 1, !noalias !636
   %i.cl = getelementptr i8, ptr %i.cb, i64 16
   store i8 %.sroa.0.0.i.i.i.i.i, ptr %i.cl, align 1, !noalias !636
-  %5 = load i64, ptr %i.t, align 8, !alias.scope !635, !noundef !4
-  %i.cm = add i64 %5, -1
+  %i.cm = add i64 %4, -1                          ; 2 uses
   store i64 %i.cm, ptr %i.t, align 8, !alias.scope !635
   %i.cn = getelementptr inbounds nuw i8, ptr %.sroa.03.018.i, i64 12 ; 2 uses
   %i.co = icmp eq ptr %i.cn, %i.ab

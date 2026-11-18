@@ -202,6 +202,7 @@ bb.ba:                                            ; preds = %bb.az
   br i1 %.not228, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader189
+  %.promoted = load ptr, ptr %0, align 8
   %i.gx = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.gy = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   br label %bb.bc
@@ -226,6 +227,7 @@ _ZNSt6vectorIPK8VariableSaIS2_EED2Ev.exit166:     ; preds = %._crit_edge, %bb.bb
 
 bb.bc:                                            ; preds = %.lr.ph, %_ZNSt6vectorIPK4FactSaIS2_EE9push_backEOS2_.exit
   %.0219 = phi i64 [ 0, %.lr.ph ], [ %i.ih, %_ZNSt6vectorIPK4FactSaIS2_EE9push_backEOS2_.exit ] ; 3 uses
+  %11 = phi ptr [ %.promoted, %.lr.ph ], [ %12, %_ZNSt6vectorIPK4FactSaIS2_EE9push_backEOS2_.exit ] ; 5 uses
   %i.hf = load ptr, ptr %10, align 8, !tbaa !16
   %i.hg = getelementptr inbounds nuw [8 x i8], ptr %i.hf, i64 %.0219
   %i.hh = load ptr, ptr %i.hg, align 8, !tbaa !26
@@ -255,7 +257,6 @@ bb.bf:                                            ; preds = %bb.be
   br label %_ZNSt6vectorIPK4FactSaIS2_EE9push_backEOS2_.exit
 
 bb.bg:                                            ; preds = %bb.be
-  %11 = load ptr, ptr %0, align 8, !tbaa !108     ; 4 uses
   %i.hs = ptrtoint ptr %i.hp to i64
   %i.ht = ptrtoint ptr %11 to i64
   %i.hu = sub i64 %i.hs, %i.ht                    ; 6 uses
@@ -280,7 +281,7 @@ _ZNKSt6vectorIPK4FactSaIS2_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.bg
   call void @llvm.assume(i1 %.not.i.i.i.i)
   %i.ib = shl nuw nsw i64 %i.ia, 3
   %i.ic = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ib) #26
-          to label %.noexc167 unwind label %.loopexit.split-lp191.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 4 uses
+          to label %.noexc167 unwind label %.loopexit.split-lp191.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 5 uses
 
 .noexc167:                                        ; preds = %_ZNKSt6vectorIPK4FactSaIS2_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.id = getelementptr inbounds i8, ptr %i.ic, i64 %i.hu ; 2 uses
@@ -309,6 +310,7 @@ _ZNSt6vectorIPK4FactSaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_it
   br label %_ZNSt6vectorIPK4FactSaIS2_EE9push_backEOS2_.exit
 
 _ZNSt6vectorIPK4FactSaIS2_EE9push_backEOS2_.exit: ; preds = %_ZNSt6vectorIPK4FactSaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i, %bb.bf
+  %12 = phi ptr [ %i.ic, %_ZNSt6vectorIPK4FactSaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i ], [ %11, %bb.bf ]
   %i.ih = add nuw i64 %.0219, 1                   ; 2 uses
   %i.ii = load ptr, ptr %i.a, align 8, !tbaa !24
   %i.ij = load ptr, ptr %3, align 8, !tbaa !16

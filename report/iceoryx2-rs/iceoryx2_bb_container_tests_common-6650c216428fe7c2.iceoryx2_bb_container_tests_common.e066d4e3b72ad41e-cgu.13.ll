@@ -205,7 +205,7 @@ bb.a:
   %i.j = alloca [64 x i8], align 8                ; 10 uses
   %i.k = alloca [16 x i8], align 8                ; 4 uses
   %i.l = alloca [16 x i8], align 8                ; 4 uses
-  %i.m = alloca [8 x i8], align 8                 ; 6 uses
+  %i.m = alloca [8 x i8], align 8                 ; 7 uses
   %i.n = alloca [8 x i8], align 8                 ; 11 uses
   %i.o = alloca [8 x i8], align 8                 ; 12 uses
   %i.p = alloca [64 x i8], align 8                ; 10 uses
@@ -394,7 +394,6 @@ bb.k:                                             ; preds = %_RNvMNtCs8Chj7Szqq0
   call void @llvm.experimental.noalias.scope.decl(metadata !189)
   store ptr %.val2.i, ptr %i.o, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n)
-  store i64 2, ptr %i.m, align 8
   store ptr %i.m, ptr %i.n, align 8
   %i.bp = load i64, ptr %.val2.i, align 8, !noundef !4
   %i.bq = icmp eq i64 %i.bp, 2                    ; 2 uses
@@ -410,6 +409,7 @@ _RNvYINtNtNtCs5kzjBmDVxDj_21iceoryx2_bb_container6vector15polymorphic_vec14Polym
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
+  store i64 2, ptr %i.m, align 8
   call void @_RNvNtNtCs8Chj7Szqq0n_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef 3, i64 noundef %.sroa.10.0.copyload.fr, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @147) #16, !noalias !190
   unreachable
 
@@ -451,6 +451,7 @@ bb.l:                                             ; preds = %bb.j
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
+  store i64 4, ptr %i.m, align 8
   %i.by = getelementptr inbounds nuw i8, ptr %.sroa.4.0.copyload, i64 16
   call void @_RNvXs2_NtCs7iP7wj4erds_20iceoryx2_pal_testing16lifetime_trackerNtB5_15LifetimeTrackerNtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.by) #15, !noalias !191
   %i.bz = getelementptr inbounds nuw i8, ptr %.sroa.4.0.copyload, i64 8
@@ -490,6 +491,8 @@ _RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtNtCs5kzjBmDVxDj_21iceoryx2_bb_conta
   ret void
 
 .split123.us:                                     ; preds = %_RNvYINtNtNtCs5kzjBmDVxDj_21iceoryx2_bb_container6vector15polymorphic_vec14PolymorphicVecNtNtCslCQgxiHprg6_19iceoryx2_bb_testing16lifetime_tracker15LifetimeTrackerNtNtCs3stRo7scs5B_22iceoryx2_bb_elementary14bump_allocator13BumpAllocatorEINtB7_6VectorB1o_E8as_sliceCsjgu3Zj9OQAQ_34iceoryx2_bb_container_tests_common.exit.preheader, %_RNvYINtNtNtCs5kzjBmDVxDj_21iceoryx2_bb_container6vector15polymorphic_vec14PolymorphicVecNtNtCslCQgxiHprg6_19iceoryx2_bb_testing16lifetime_tracker15LifetimeTrackerNtNtCs3stRo7scs5B_22iceoryx2_bb_elementary14bump_allocator13BumpAllocatorEINtB7_6VectorB1o_E8as_sliceCsjgu3Zj9OQAQ_34iceoryx2_bb_container_tests_common.exit.1, %_RNvYINtNtNtCs5kzjBmDVxDj_21iceoryx2_bb_container6vector15polymorphic_vec14PolymorphicVecNtNtCslCQgxiHprg6_19iceoryx2_bb_testing16lifetime_tracker15LifetimeTrackerNtNtCs3stRo7scs5B_22iceoryx2_bb_elementary14bump_allocator13BumpAllocatorEINtB7_6VectorB1o_E8as_sliceCsjgu3Zj9OQAQ_34iceoryx2_bb_container_tests_common.exit.2, %_RNvYINtNtNtCs5kzjBmDVxDj_21iceoryx2_bb_container6vector15polymorphic_vec14PolymorphicVecNtNtCslCQgxiHprg6_19iceoryx2_bb_testing16lifetime_tracker15LifetimeTrackerNtNtCs3stRo7scs5B_22iceoryx2_bb_elementary14bump_allocator13BumpAllocatorEINtB7_6VectorB1o_E8as_sliceCsjgu3Zj9OQAQ_34iceoryx2_bb_container_tests_common.exit.us
+  %.us-phi = phi i64 [ 2, %_RNvYINtNtNtCs5kzjBmDVxDj_21iceoryx2_bb_container6vector15polymorphic_vec14PolymorphicVecNtNtCslCQgxiHprg6_19iceoryx2_bb_testing16lifetime_tracker15LifetimeTrackerNtNtCs3stRo7scs5B_22iceoryx2_bb_elementary14bump_allocator13BumpAllocatorEINtB7_6VectorB1o_E8as_sliceCsjgu3Zj9OQAQ_34iceoryx2_bb_container_tests_common.exit.us ], [ 2, %_RNvYINtNtNtCs5kzjBmDVxDj_21iceoryx2_bb_container6vector15polymorphic_vec14PolymorphicVecNtNtCslCQgxiHprg6_19iceoryx2_bb_testing16lifetime_tracker15LifetimeTrackerNtNtCs3stRo7scs5B_22iceoryx2_bb_elementary14bump_allocator13BumpAllocatorEINtB7_6VectorB1o_E8as_sliceCsjgu3Zj9OQAQ_34iceoryx2_bb_container_tests_common.exit.preheader ], [ 3, %_RNvYINtNtNtCs5kzjBmDVxDj_21iceoryx2_bb_container6vector15polymorphic_vec14PolymorphicVecNtNtCslCQgxiHprg6_19iceoryx2_bb_testing16lifetime_tracker15LifetimeTrackerNtNtCs3stRo7scs5B_22iceoryx2_bb_elementary14bump_allocator13BumpAllocatorEINtB7_6VectorB1o_E8as_sliceCsjgu3Zj9OQAQ_34iceoryx2_bb_container_tests_common.exit.1 ], [ 4, %_RNvYINtNtNtCs5kzjBmDVxDj_21iceoryx2_bb_container6vector15polymorphic_vec14PolymorphicVecNtNtCslCQgxiHprg6_19iceoryx2_bb_testing16lifetime_tracker15LifetimeTrackerNtNtCs3stRo7scs5B_22iceoryx2_bb_elementary14bump_allocator13BumpAllocatorEINtB7_6VectorB1o_E8as_sliceCsjgu3Zj9OQAQ_34iceoryx2_bb_container_tests_common.exit.2 ]
+  store i64 %.us-phi, ptr %i.m, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)
   %i.ch = call noundef zeroext i1 @_RNvCs7iP7wj4erds_20iceoryx2_pal_testing11is_terminal() #15 ; 2 uses
   %spec.select149 = select i1 %i.ch, ptr @18, ptr inttoptr (i64 1 to ptr)
@@ -537,6 +540,8 @@ _RNvYINtNtNtCs5kzjBmDVxDj_21iceoryx2_bb_container6vector15polymorphic_vec14Polym
   br i1 %i.cp, label %_RNvYINtNtNtCs5kzjBmDVxDj_21iceoryx2_bb_container6vector15polymorphic_vec14PolymorphicVecNtNtCslCQgxiHprg6_19iceoryx2_bb_testing16lifetime_tracker15LifetimeTrackerNtNtCs3stRo7scs5B_22iceoryx2_bb_elementary14bump_allocator13BumpAllocatorEINtB7_6VectorB1o_E8as_sliceCsjgu3Zj9OQAQ_34iceoryx2_bb_container_tests_common.exit.1, label %bb.m, !prof !6
 
 bb.m:                                             ; preds = %_RNvYINtNtNtCs5kzjBmDVxDj_21iceoryx2_bb_container6vector15polymorphic_vec14PolymorphicVecNtNtCslCQgxiHprg6_19iceoryx2_bb_testing16lifetime_tracker15LifetimeTrackerNtNtCs3stRo7scs5B_22iceoryx2_bb_elementary14bump_allocator13BumpAllocatorEINtB7_6VectorB1o_E8as_sliceCsjgu3Zj9OQAQ_34iceoryx2_bb_container_tests_common.exit103.2, %_RNvYINtNtNtCs5kzjBmDVxDj_21iceoryx2_bb_container6vector15polymorphic_vec14PolymorphicVecNtNtCslCQgxiHprg6_19iceoryx2_bb_testing16lifetime_tracker15LifetimeTrackerNtNtCs3stRo7scs5B_22iceoryx2_bb_elementary14bump_allocator13BumpAllocatorEINtB7_6VectorB1o_E8as_sliceCsjgu3Zj9OQAQ_34iceoryx2_bb_container_tests_common.exit103.1, %_RNvYINtNtNtCs5kzjBmDVxDj_21iceoryx2_bb_container6vector15polymorphic_vec14PolymorphicVecNtNtCslCQgxiHprg6_19iceoryx2_bb_testing16lifetime_tracker15LifetimeTrackerNtNtCs3stRo7scs5B_22iceoryx2_bb_elementary14bump_allocator13BumpAllocatorEINtB7_6VectorB1o_E8as_sliceCsjgu3Zj9OQAQ_34iceoryx2_bb_container_tests_common.exit103
+  %.lcssa130 = phi i64 [ 2, %_RNvYINtNtNtCs5kzjBmDVxDj_21iceoryx2_bb_container6vector15polymorphic_vec14PolymorphicVecNtNtCslCQgxiHprg6_19iceoryx2_bb_testing16lifetime_tracker15LifetimeTrackerNtNtCs3stRo7scs5B_22iceoryx2_bb_elementary14bump_allocator13BumpAllocatorEINtB7_6VectorB1o_E8as_sliceCsjgu3Zj9OQAQ_34iceoryx2_bb_container_tests_common.exit103 ], [ 3, %_RNvYINtNtNtCs5kzjBmDVxDj_21iceoryx2_bb_container6vector15polymorphic_vec14PolymorphicVecNtNtCslCQgxiHprg6_19iceoryx2_bb_testing16lifetime_tracker15LifetimeTrackerNtNtCs3stRo7scs5B_22iceoryx2_bb_elementary14bump_allocator13BumpAllocatorEINtB7_6VectorB1o_E8as_sliceCsjgu3Zj9OQAQ_34iceoryx2_bb_container_tests_common.exit103.1 ], [ 4, %_RNvYINtNtNtCs5kzjBmDVxDj_21iceoryx2_bb_container6vector15polymorphic_vec14PolymorphicVecNtNtCslCQgxiHprg6_19iceoryx2_bb_testing16lifetime_tracker15LifetimeTrackerNtNtCs3stRo7scs5B_22iceoryx2_bb_elementary14bump_allocator13BumpAllocatorEINtB7_6VectorB1o_E8as_sliceCsjgu3Zj9OQAQ_34iceoryx2_bb_container_tests_common.exit103.2 ]
+  store i64 %.lcssa130, ptr %i.m, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   %i.cq = call noundef zeroext i1 @_RNvCs7iP7wj4erds_20iceoryx2_pal_testing11is_terminal() #15 ; 2 uses
   %spec.select151 = select i1 %i.cq, ptr @18, ptr inttoptr (i64 1 to ptr)
@@ -578,7 +583,6 @@ _RNvYINtNtNtCs5kzjBmDVxDj_21iceoryx2_bb_container6vector15polymorphic_vec14Polym
   %i.cx = getelementptr inbounds nuw i8, ptr %.val2.i, i64 8 ; 2 uses
   store ptr %i.cx, ptr %i.o, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n)
-  store i64 3, ptr %i.m, align 8
   store ptr %i.m, ptr %i.n, align 8
   %i.cy = load i64, ptr %i.cx, align 8, !noundef !4
   %i.cz = icmp eq i64 %i.cy, 3
@@ -606,7 +610,6 @@ _RNvYINtNtNtCs5kzjBmDVxDj_21iceoryx2_bb_container6vector15polymorphic_vec14Polym
   %i.dd = getelementptr inbounds nuw i8, ptr %.val2.i, i64 16 ; 2 uses
   store ptr %i.dd, ptr %i.o, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n)
-  store i64 4, ptr %i.m, align 8
   store ptr %i.m, ptr %i.n, align 8
   %i.de = load i64, ptr %i.dd, align 8, !noundef !4
   %i.df = icmp eq i64 %i.de, 4

@@ -205,7 +205,11 @@ _ZNK2dd4bddvleERKS0_.exit:                        ; preds = %bb.u
           to label %_ZNK2dd4bddvmiERKS0_.exit.preheader unwind label %bb.w
 
 _ZNK2dd4bddvmiERKS0_.exit.preheader:              ; preds = %_ZNK2dd4bddvleERKS0_.exit
-  br i1 %.not, label %_ZNK2dd4bddvmiERKS0_.exit._crit_edge, label %.lr.ph.a
+  br i1 %.not, label %_ZNK2dd4bddvmiERKS0_.exit._crit_edge, label %.lr.ph
+
+.lr.ph:                                           ; preds = %_ZNK2dd4bddvmiERKS0_.exit.preheader
+  %13 = load i32, ptr %10, align 8, !tbaa !94, !noalias !534
+  br label %.lr.ph.a
 
 _ZNK2dd4bddvmiERKS0_.exit._crit_edge:             ; preds = %_ZN2dd3bddD2Ev.exit, %_ZNK2dd4bddvmiERKS0_.exit.preheader
   %.not40 = icmp eq i32 %.030, 0
@@ -221,8 +225,8 @@ bb.w:                                             ; preds = %_ZNK2dd4bddvleERKS0
           cleanup
   br label %bb.bm
 
-.lr.ph.a:                                         ; preds = %_ZNK2dd4bddvmiERKS0_.exit.preheader, %_ZN2dd3bddD2Ev.exit
-  %indvars.iv = phi i64 [ %indvars.iv.next, %_ZN2dd3bddD2Ev.exit ], [ 0, %_ZNK2dd4bddvmiERKS0_.exit.preheader ] ; 4 uses
+.lr.ph.a:                                         ; preds = %.lr.ph, %_ZN2dd3bddD2Ev.exit
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZN2dd3bddD2Ev.exit ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #25
   %i.cl = load ptr, ptr %11, align 8, !tbaa !116
   %i.cm = getelementptr inbounds nuw [16 x i8], ptr %i.cl, i64 %indvars.iv
@@ -240,14 +244,13 @@ bb.x:                                             ; preds = %.lr.ph.a
 
 _ZN2dd11bdd_manager11scoped_pushC2ERS0_.exit.i:   ; preds = %bb.x, %.lr.ph.a
   %.0.i.i.i = phi i32 [ %i.cs, %bb.x ], [ 0, %.lr.ph.a ] ; 2 uses
-  %.pre = load i32, ptr %10, align 8, !tbaa !94, !noalias !534
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.ai, %_ZN2dd11bdd_manager11scoped_pushC2ERS0_.exit.i
   %.010.i = phi i1 [ true, %_ZN2dd11bdd_manager11scoped_pushC2ERS0_.exit.i ], [ false, %bb.ai ]
   %i.ct = load i32, ptr %i.cm, align 8, !tbaa !94, !noalias !534
   %i.cu = load i32, ptr %i.co, align 8, !tbaa !94, !noalias !534
-  %i.cv = invoke noundef i32 @_ZN2dd11bdd_manager10mk_ite_recEjjj(ptr noundef nonnull align 8 dereferenceable(728) %0, i32 noundef %.pre, i32 noundef %i.ct, i32 noundef %i.cu)
+  %i.cv = invoke noundef i32 @_ZN2dd11bdd_manager10mk_ite_recEjjj(ptr noundef nonnull align 8 dereferenceable(728) %0, i32 noundef %13, i32 noundef %i.ct, i32 noundef %i.cu)
           to label %bb.z unwind label %bb.ae, !noalias !534 ; 6 uses
 
 bb.z:                                             ; preds = %bb.y

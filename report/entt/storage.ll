@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/entt/original/storage?download=true
 inline.NumInlined: 52093
 inline.NumDeleted: 9229
-loop-unroll.NumCompletelyUnrolled: 226
+loop-unroll.NumCompletelyUnrolled: 227
 loop-unroll.NumRuntimeUnrolled: 58
-loop-unroll.NumUnrolled: 284
+loop-unroll.NumUnrolled: 285
 begin_hunk_0_@_ZN7testing8internal21TypeParameterizedTestI7StorageNS0_11TemplateSelI33Storage_ReferencesGuaranteed_TestEENS0_5TypesIiJN4test8internal20pointer_stable_mixinINS8_10value_typeIiEEEENS8_32non_trivially_destructible_mixinISB_EENS9_ISE_EEEEEE8RegisterEPKcRKNS0_12CodeLocationESJ_SJ_iRKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIST_EE:bb.a
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i93: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit92
@@ -205,7 +205,7 @@ bb.a:
   %10 = alloca %"class.testing::Message", align 8 ; 7 uses
   %11 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   %12 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
-  %13 = alloca %"class.testing::AssertionResult", align 8 ; 37 uses
+  %13 = alloca %"class.testing::AssertionResult", align 8 ; 38 uses
   %14 = alloca %"class.testing::Message", align 8 ; 7 uses
   %15 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   %16 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
@@ -608,12 +608,16 @@ _ZN4entt16basic_sparse_setIN11StorageBase9my_entityESaIS2_EE5clearEv.exit: ; pre
   %i.hf = load ptr, ptr %i.k, align 8, !tbaa !194
   %i.hg = load ptr, ptr %i.c, align 8, !tbaa !182 ; 2 uses
   %.not207 = icmp eq ptr %i.hf, %i.hg
+  br i1 %.not207, label %_ZNK4entt16basic_sparse_setIN11StorageBase9my_entityESaIS2_EE8containsES2_.exit175.thread.us.preheader, label %.split.preheader
+
+_ZNK4entt16basic_sparse_setIN11StorageBase9my_entityESaIS2_EE8containsES2_.exit175.thread.us.preheader: ; preds = %_ZN4entt16basic_sparse_setIN11StorageBase9my_entityESaIS2_EE5clearEv.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #29
-  br i1 %.not207, label %.split220.us.sink.split, label %.split.preheader
+  br label %.split220.us.sink.split
 
 .split.preheader:                                 ; preds = %_ZN4entt16basic_sparse_setIN11StorageBase9my_entityESaIS2_EE5clearEv.exit
   %i.hh = load ptr, ptr %i.hg, align 8, !tbaa !178 ; 11 uses
   %.not.i.i173 = icmp eq ptr %i.hh, null
+  call void @llvm.lifetime.start.p0(ptr nonnull %13) #29
   br i1 %.not.i.i173, label %.split220.us.sink.split, label %_ZNK4entt16basic_sparse_setIN11StorageBase9my_entityESaIS2_EE8containsES2_.exit175
 
 _ZNK4entt16basic_sparse_setIN11StorageBase9my_entityESaIS2_EE8containsES2_.exit175: ; preds = %.split.preheader
@@ -852,7 +856,7 @@ bb.bs:                                            ; preds = %_ZNKSt14default_del
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #29
   br label %.loopexit208.sink.split
 
-.split220.us.sink.split:                          ; preds = %.split.preheader, %_ZN4entt16basic_sparse_setIN11StorageBase9my_entityESaIS2_EE5clearEv.exit
+.split220.us.sink.split:                          ; preds = %.split.preheader, %_ZNK4entt16basic_sparse_setIN11StorageBase9my_entityESaIS2_EE8containsES2_.exit175.thread.us.preheader
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #29
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #29
   br label %.split220.us

@@ -204,7 +204,7 @@ bb.y:                                             ; preds = %.lr.ph16.i
 
 .critedge2.i:                                     ; preds = %bb.y, %.lr.ph16.i, %.preheader.i
   %i.fq = phi i32 [ 0, %.preheader.i ], [ %.06415.i, %.lr.ph16.i ], [ 0, %bb.y ] ; 10 uses
-  %i.fr = zext i32 %i.fq to i64                   ; 9 uses
+  %i.fr = zext i32 %i.fq to i64                   ; 8 uses
   %i.fs = add nuw nsw i64 %i.fr, 1                ; 4 uses
   %min.iters.check400 = icmp ult i32 %i.fq, 7
   br i1 %min.iters.check400, label %scalar.ph399.preheader, label %vector.ph401
@@ -292,7 +292,7 @@ ZS_Histograms_computeO1.exit:                     ; preds = %scalar.ph399, %midd
   %i.hp = shl nuw nsw i64 %i.fr, 2
   %i.hq = add nuw nsw i64 %i.hp, 4
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %i.a, i8 -1, i64 %i.hq, i1 false), !tbaa !28
-  %i.hr = add i32 %i.fq, 1                        ; 5 uses
+  %i.hr = add i32 %i.fq, 1                        ; 6 uses
   %umax = tail call i32 @llvm.umax.i32(i32 %i.hr, i32 1)
   %wide.trip.count = zext i32 %umax to i64        ; 2 uses
   %xtraiter447 = and i64 %wide.trip.count, 3      ; 3 uses
@@ -695,7 +695,7 @@ bb.br:                                            ; preds = %bb.bv
   br i1 %i.vm, label %bb.bw, label %bb.bx
 
 bb.bs:                                            ; preds = %bb.bj, %bb.bv
-  %indvars.iv344 = phi i64 [ 0, %bb.bj ], [ %indvars.iv.next345, %bb.bv ] ; 6 uses
+  %indvars.iv344 = phi i64 [ 0, %bb.bj ], [ %indvars.iv.next345, %bb.bv ] ; 5 uses
   %i.vn = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv344
   %i.vo = load i32, ptr %i.vn, align 4, !tbaa !28 ; 2 uses
   %i.vp = icmp eq i32 %i.vo, -1
@@ -715,9 +715,10 @@ bb.bu:                                            ; preds = %bb.bs
   br label %bb.bv
 
 bb.bv:                                            ; preds = %bb.bt, %bb.bu
-  %indvars.iv.next345 = add nuw nsw i64 %indvars.iv344, 1
-  %.not202.not = icmp samesign ult i64 %indvars.iv344, %i.fr
-  br i1 %.not202.not, label %bb.bs, label %bb.br, !llvm.loop !61
+  %indvars.iv.next345 = add nuw nsw i64 %indvars.iv344, 1 ; 2 uses
+  %lftr.wideiv347 = trunc i64 %indvars.iv.next345 to i32
+  %exitcond348.not = icmp eq i32 %i.hr, %lftr.wideiv347
+  br i1 %exitcond348.not, label %bb.br, label %bb.bs, !llvm.loop !61
 
 bb.bw:                                            ; preds = %bb.br
   %i.vx = lshr i64 %.4185, 3

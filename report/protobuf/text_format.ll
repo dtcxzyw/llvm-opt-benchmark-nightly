@@ -205,7 +205,12 @@ bb.j:                                             ; preds = %bb.h
 
 bb.k:                                             ; preds = %bb.j, %bb.i
   %i.z = icmp sgt i32 %.080, 0
-  br i1 %i.z, label %.lr.ph, label %.critedge
+  br i1 %i.z, label %.lr.ph, label %..critedge_crit_edge
+
+..critedge_crit_edge:                             ; preds = %bb.k
+  %.phi.trans.insert101 = getelementptr inbounds nuw i8, ptr %5, i64 24
+  %.pre102 = load ptr, ptr %.phi.trans.insert101, align 8, !tbaa !426
+  br label %.critedge
 
 .lr.ph:                                           ; preds = %bb.k
   %i.aa = getelementptr inbounds nuw i8, ptr %3, i64 2
@@ -229,6 +234,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %.fca.1.insert.i.i.i.i.i = insertvalue { ptr, ptr } { ptr @_ZN4absl12lts_2025051218container_internal11kSooControlE, ptr poison }, ptr %i.ad, 1
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.at = getelementptr inbounds nuw i8, ptr %5, i64 24
+  %6 = load ptr, ptr %i.at, align 8               ; 3 uses
   %wide.trip.count = zext nneg i32 %.080 to i64
   br label %bb.l
 
@@ -353,7 +359,6 @@ bb.x:                                             ; preds = %bb.w
   br i1 %.not88, label %bb.z, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
-  %6 = load ptr, ptr %i.at, align 8, !tbaa !426
   %i.co = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %indvars.iv
   %i.cp = load ptr, ptr %i.co, align 8, !tbaa !428
   br label %bb.ab
@@ -448,19 +453,18 @@ _ZN6google8protobuf10TextFormat17BaseTextGenerator12PrintLiteralILm2EEEvRAT__Kc.
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.critedge, label %bb.l, !llvm.loop !819
 
-.critedge:                                        ; preds = %_ZN6google8protobuf10TextFormat17BaseTextGenerator12PrintLiteralILm2EEEvRAT__Kc.exit, %bb.o, %bb.k
-  %7 = getelementptr inbounds nuw i8, ptr %5, i64 24
-  %8 = load ptr, ptr %7, align 8, !tbaa !426      ; 3 uses
-  %.not.i.i.i.i85 = icmp eq ptr %8, null
+.critedge:                                        ; preds = %_ZN6google8protobuf10TextFormat17BaseTextGenerator12PrintLiteralILm2EEEvRAT__Kc.exit, %bb.o, %..critedge_crit_edge
+  %7 = phi ptr [ %.pre102, %..critedge_crit_edge ], [ %6, %bb.o ], [ %6, %_ZN6google8protobuf10TextFormat17BaseTextGenerator12PrintLiteralILm2EEEvRAT__Kc.exit ] ; 3 uses
+  %.not.i.i.i.i85 = icmp eq ptr %7, null
   br i1 %.not.i.i.i.i85, label %_ZNSt6vectorIPKN6google8protobuf7MessageESaIS4_EED2Ev.exit.i, label %bb.al
 
 bb.al:                                            ; preds = %.critedge
   %i.dy = getelementptr inbounds nuw i8, ptr %5, i64 40
   %i.dz = load ptr, ptr %i.dy, align 8, !tbaa !429
   %i.ea = ptrtoint ptr %i.dz to i64
-  %i.eb = ptrtoint ptr %8 to i64
+  %i.eb = ptrtoint ptr %7 to i64
   %i.ec = sub i64 %i.ea, %i.eb
-  tail call void @_ZdlPvm(ptr noundef nonnull %8, i64 noundef %i.ec) #40
+  tail call void @_ZdlPvm(ptr noundef nonnull %7, i64 noundef %i.ec) #40
   br label %_ZNSt6vectorIPKN6google8protobuf7MessageESaIS4_EED2Ev.exit.i
 
 _ZNSt6vectorIPKN6google8protobuf7MessageESaIS4_EED2Ev.exit.i: ; preds = %bb.al, %.critedge

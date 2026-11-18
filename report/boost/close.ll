@@ -205,7 +205,7 @@ bb.a:
   %i.d = alloca [14 x i8], align 1                ; 9 uses
   %10 = alloca %"class.boost::beast::buffers_cat_view<boost::asio::mutable_buffer, boost::asio::mutable_buffer>::const_iterator", align 8 ; 6 uses
   %i.e = alloca [14 x i8], align 1                ; 12 uses
-  %i.f = alloca i64, align 8                      ; 22 uses
+  %i.f = alloca i64, align 8                      ; 17 uses
   %11 = alloca %"class.boost::beast::buffers_suffix.349", align 8 ; 9 uses
   %12 = alloca %"class.boost::asio::mutable_buffer", align 8 ; 13 uses
   %13 = alloca %"struct.std::array", align 1      ; 4 uses
@@ -608,6 +608,7 @@ bb.an:                                            ; preds = %bb.ae
   br label %bb.ao
 
 bb.ao:                                            ; preds = %_ZN5boost5beast14buffers_suffixINS0_6detail12buffers_pairILb1EEEE7consumeEm.exit, %bb.an
+  %33 = phi i64 [ 0, %bb.an ], [ %i.kl, %_ZN5boost5beast14buffers_suffixINS0_6detail12buffers_pairILb1EEEE7consumeEm.exit ]
   %.sroa.20.3 = phi i8 [ %i.ii, %bb.an ], [ %i.ib, %_ZN5boost5beast14buffers_suffixINS0_6detail12buffers_pairILb1EEEE7consumeEm.exit ]
   %.0127 = phi i64 [ %.lcssa677, %bb.an ], [ %i.ik, %_ZN5boost5beast14buffers_suffixINS0_6detail12buffers_pairILb1EEEE7consumeEm.exit ] ; 2 uses
   %i.ij = load i64, ptr %i.hb, align 8, !tbaa !2117
@@ -805,8 +806,7 @@ _ZN5boost4asio5writeINS_5beast4test12basic_streamINS0_15any_io_executorEEENS2_16
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #36
   call void @llvm.lifetime.end.p0(ptr nonnull %21) #36
   call void @llvm.lifetime.end.p0(ptr nonnull %20) #36
-  %33 = load i64, ptr %i.f, align 8, !tbaa !1265
-  %i.kl = add i64 %33, %..i
+  %i.kl = add i64 %33, %..i                       ; 2 uses
   store i64 %i.kl, ptr %i.f, align 8, !tbaa !1265
   %i.km = call noundef zeroext i1 @_ZN5boost5beast9websocket6streamIRNS0_4test12basic_streamINS_4asio15any_io_executorEEELb1EE9impl_type14check_stop_nowERNS_6system10error_codeE(ptr noundef nonnull align 8 dereferenceable(2464) %i.g, ptr noundef nonnull align 8 dereferenceable(24) %3)
   br i1 %i.km, label %bb.be, label %bb.ay
@@ -1133,7 +1133,7 @@ _ZN5boost4asio5writeINS_5beast4test12basic_streamINS0_15any_io_executorEEENS2_16
   %i.nv = add i64 %i.nu, %..i217
   store i64 %i.nv, ptr %i.f, align 8, !tbaa !1265
   %i.nw = call noundef zeroext i1 @_ZN5boost5beast9websocket6streamIRNS0_4test12basic_streamINS_4asio15any_io_executorEEELb1EE9impl_type14check_stop_nowERNS_6system10error_codeE(ptr noundef nonnull align 8 dereferenceable(2464) %i.g, ptr noundef nonnull align 8 dereferenceable(24) %3)
-  %i.nx = load i64, ptr %i.f, align 8
+  %i.nx = load i64, ptr %i.f, align 8             ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %25) #36
   br i1 %i.nw, label %.thread495, label %.preheader
 
@@ -1144,6 +1144,7 @@ _ZN5boost4asio5writeINS_5beast4test12basic_streamINS0_15any_io_executorEEENS2_16
   br label %bb.bv
 
 bb.bv:                                            ; preds = %.preheader, %_ZN5boost4asio5writeINS_5beast4test12basic_streamINS0_15any_io_executorEEENS0_14mutable_bufferEEEmRT_RKT0_RNS_6system10error_codeENS0_10constraintIXsr24is_const_buffer_sequenceISA_EE5valueEiE4typeE.exit
+  %34 = phi i64 [ %i.pk, %_ZN5boost4asio5writeINS_5beast4test12basic_streamINS0_15any_io_executorEEENS0_14mutable_bufferEEEmRT_RKT0_RNS_6system10error_codeENS0_10constraintIXsr24is_const_buffer_sequenceISA_EE5valueEiE4typeE.exit ], [ %i.nx, %.preheader ]
   %.1128 = phi i64 [ %i.oy, %_ZN5boost4asio5writeINS_5beast4test12basic_streamINS0_15any_io_executorEEENS0_14mutable_bufferEEEmRT_RKT0_RNS_6system10error_codeENS0_10constraintIXsr24is_const_buffer_sequenceISA_EE5valueEiE4typeE.exit ], [ %i.nd, %.preheader ] ; 3 uses
   %.not143 = icmp eq i64 %.1128, 0
   br i1 %.not143, label %bb.cf, label %bb.bw
@@ -1291,16 +1292,14 @@ _ZN5boost4asio6detail14transfer_all_tclINS_6system10error_codeEEEmRKT_m.exit.i.i
   br i1 %.not.i.i.i291, label %.lr.ph.i.i.i288, label %_ZN5boost4asio5writeINS_5beast4test12basic_streamINS0_15any_io_executorEEENS0_14mutable_bufferEEEmRT_RKT0_RNS_6system10error_codeENS0_10constraintIXsr24is_const_buffer_sequenceISA_EE5valueEiE4typeE.exit
 
 _ZN5boost4asio5writeINS_5beast4test12basic_streamINS0_15any_io_executorEEENS0_14mutable_bufferEEEmRT_RKT0_RNS_6system10error_codeENS0_10constraintIXsr24is_const_buffer_sequenceISA_EE5valueEiE4typeE.exit: ; preds = %bb.ce, %_ZN5boost4asio6detail14transfer_all_tclINS_6system10error_codeEEEmRKT_m.exit.i.i.i, %_ZN5boost5beast14buffers_suffixINS0_6detail12buffers_pairILb1EEEE7consumeEm.exit287
-  %34 = load i64, ptr %i.f, align 8, !tbaa !1265
-  %i.pk = add i64 %34, %..i247
+  %i.pk = add i64 %34, %..i247                    ; 3 uses
   store i64 %i.pk, ptr %i.f, align 8, !tbaa !1265
   %i.pl = call noundef zeroext i1 @_ZN5boost5beast9websocket6streamIRNS0_4test12basic_streamINS_4asio15any_io_executorEEELb1EE9impl_type14check_stop_nowERNS_6system10error_codeE(ptr noundef nonnull align 8 dereferenceable(2464) %i.g, ptr noundef nonnull align 8 dereferenceable(24) %3)
-  %35 = load i64, ptr %i.f, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %27) #36
   br i1 %i.pl, label %.thread495, label %bb.bv, !llvm.loop !9252
 
 .thread495:                                       ; preds = %_ZN5boost4asio5writeINS_5beast4test12basic_streamINS0_15any_io_executorEEENS0_14mutable_bufferEEEmRT_RKT0_RNS_6system10error_codeENS0_10constraintIXsr24is_const_buffer_sequenceISA_EE5valueEiE4typeE.exit, %_ZN5boost4asio5writeINS_5beast4test12basic_streamINS0_15any_io_executorEEENS2_16buffers_cat_viewIJNS0_14mutable_bufferES8_EEEEEmRT_RKT0_RNS_6system10error_codeENS0_10constraintIXsr24is_const_buffer_sequenceISC_EE5valueEiE4typeE.exit246
-  %.10.ph = phi i64 [ %i.nx, %_ZN5boost4asio5writeINS_5beast4test12basic_streamINS0_15any_io_executorEEENS2_16buffers_cat_viewIJNS0_14mutable_bufferES8_EEEEEmRT_RKT0_RNS_6system10error_codeENS0_10constraintIXsr24is_const_buffer_sequenceISC_EE5valueEiE4typeE.exit246 ], [ %35, %_ZN5boost4asio5writeINS_5beast4test12basic_streamINS0_15any_io_executorEEENS0_14mutable_bufferEEEmRT_RKT0_RNS_6system10error_codeENS0_10constraintIXsr24is_const_buffer_sequenceISA_EE5valueEiE4typeE.exit ]
+  %.10.ph = phi i64 [ %i.nx, %_ZN5boost4asio5writeINS_5beast4test12basic_streamINS0_15any_io_executorEEENS2_16buffers_cat_viewIJNS0_14mutable_bufferES8_EEEEEmRT_RKT0_RNS_6system10error_codeENS0_10constraintIXsr24is_const_buffer_sequenceISC_EE5valueEiE4typeE.exit246 ], [ %i.pk, %_ZN5boost4asio5writeINS_5beast4test12basic_streamINS0_15any_io_executorEEENS0_14mutable_bufferEEEmRT_RKT0_RNS_6system10error_codeENS0_10constraintIXsr24is_const_buffer_sequenceISA_EE5valueEiE4typeE.exit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %24) #36
   call void @llvm.lifetime.end.p0(ptr nonnull %23) #36
   call void @llvm.lifetime.end.p0(ptr nonnull %22) #36
@@ -1351,6 +1350,7 @@ bb.cg:                                            ; preds = %bb.bf
   br label %bb.ch
 
 bb.ch:                                            ; preds = %_ZN5boost5beast14buffers_suffixINS0_6detail12buffers_pairILb1EEEE7consumeEm.exit357, %bb.cg
+  %35 = phi i64 [ 0, %bb.cg ], [ %i.sd, %_ZN5boost5beast14buffers_suffixINS0_6detail12buffers_pairILb1EEEE7consumeEm.exit357 ]
   %.sroa.20.5 = phi i8 [ %i.qf, %bb.cg ], [ %i.qb, %_ZN5boost5beast14buffers_suffixINS0_6detail12buffers_pairILb1EEEE7consumeEm.exit357 ]
   %.2129 = phi i64 [ %.lcssa677, %bb.cg ], [ %i.qz, %_ZN5boost5beast14buffers_suffixINS0_6detail12buffers_pairILb1EEEE7consumeEm.exit357 ] ; 2 uses
   %i.qg = load ptr, ptr %0, align 8, !tbaa !1466
@@ -1524,9 +1524,7 @@ _ZN5boost4asio5writeINS_5beast4test12basic_streamINS0_15any_io_executorEEENS2_16
   %i.sc = call noundef i64 @_ZN5boost4asio6detail5writeINS_5beast4test12basic_streamINS0_15any_io_executorEEENS3_16buffers_cat_viewIJNS0_14mutable_bufferES9_EEENSA_14const_iteratorENS1_14transfer_all_tEEEmRT_RKT0_RKT1_T2_RNS_6system10error_codeE(ptr noundef nonnull align 8 dereferenceable(32) %i.rw, ptr noundef nonnull align 8 dereferenceable(32) %32, ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(24) %3) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #36
   call void @llvm.lifetime.end.p0(ptr nonnull %32) #36
-  %36 = load i64, ptr %i.f, align 8, !tbaa !1265
-  %i.sd = add i64 %36, %..i294
-  store i64 %i.sd, ptr %i.f, align 8, !tbaa !1265
+  %i.sd = add i64 %35, %..i294                    ; 3 uses
   %i.se = call noundef zeroext i1 @_ZN5boost5beast9websocket6streamIRNS0_4test12basic_streamINS_4asio15any_io_executorEEELb1EE9impl_type14check_stop_nowERNS_6system10error_codeE(ptr noundef nonnull align 8 dereferenceable(2464) %i.g, ptr noundef nonnull align 8 dereferenceable(24) %3)
   br i1 %i.se, label %bb.cy, label %bb.cs
 
@@ -1590,6 +1588,7 @@ _ZN5boost5beast14buffers_suffixINS0_6detail12buffers_pairILb1EEEE7consumeEm.exit
   br label %bb.ch
 
 .thread507:                                       ; preds = %bb.cs
+  store i64 %i.sd, ptr %i.f, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %31) #36
   call void @llvm.lifetime.end.p0(ptr nonnull %30) #36
   call void @llvm.lifetime.end.p0(ptr nonnull %29) #36
@@ -1597,7 +1596,6 @@ _ZN5boost5beast14buffers_suffixINS0_6detail12buffers_pairILb1EEEE7consumeEm.exit
   br label %bb.cz
 
 bb.cy:                                            ; preds = %_ZN5boost4asio5writeINS_5beast4test12basic_streamINS0_15any_io_executorEEENS2_16buffers_cat_viewIJNS0_14mutable_bufferES8_EEEEEmRT_RKT0_RNS_6system10error_codeENS0_10constraintIXsr24is_const_buffer_sequenceISC_EE5valueEiE4typeE.exit342
-  %37 = load i64, ptr %i.f, align 8, !tbaa !1265
   call void @llvm.lifetime.end.p0(ptr nonnull %31) #36
   call void @llvm.lifetime.end.p0(ptr nonnull %30) #36
   call void @llvm.lifetime.end.p0(ptr nonnull %29) #36
@@ -1609,7 +1607,7 @@ bb.cz:                                            ; preds = %.thread507, %bb.cf,
   br label %bb.da
 
 bb.da:                                            ; preds = %bb.a, %bb.cz, %_ZN5boost5beast9websocket6detail9impl_baseILb1EE25do_context_takeover_writeENS0_9role_typeE.exit, %.thread476, %bb.be, %.thread495, %bb.cy
-  %.14 = phi i64 [ %i.gx, %.thread476 ], [ %i.sp, %bb.cz ], [ %.3454, %_ZN5boost5beast9websocket6detail9impl_baseILb1EE25do_context_takeover_writeENS0_9role_typeE.exit ], [ %37, %bb.cy ], [ %.10.ph, %.thread495 ], [ %i.kx, %bb.be ], [ 0, %bb.a ]
+  %.14 = phi i64 [ %i.gx, %.thread476 ], [ %i.sp, %bb.cz ], [ %.3454, %_ZN5boost5beast9websocket6detail9impl_baseILb1EE25do_context_takeover_writeENS0_9role_typeE.exit ], [ %i.sd, %bb.cy ], [ %.10.ph, %.thread495 ], [ %i.kx, %bb.be ], [ 0, %bb.a ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #36
   ret i64 %.14
 }
@@ -1632,7 +1630,7 @@ bb.a:
   store i64 0, ptr %i.d, align 8, !tbaa !2208
   %i.e = getelementptr inbounds nuw i8, ptr %11, i64 48
   store i32 2, ptr %i.e, align 8, !tbaa !2209
-  %i.f = getelementptr inbounds nuw i8, ptr %11, i64 8
+  %i.f = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %11, i8 0, i64 16, i1 false)
   %i.h = load i64, ptr %i.g, align 8, !tbaa !1764
@@ -1679,12 +1677,12 @@ bb.b:                                             ; preds = %.backedge
 
 _ZNK5boost5beast6detail21buffers_range_adaptorIRKNS0_14buffers_suffixINS1_12buffers_pairILb1EEEEEE14const_iteratordeEv.exit: ; preds = %.backedge, %bb.b
   %.pn3.i.i = phi ptr [ %i.u, %bb.b ], [ %.sroa.0.0.copyload1.i.i, %.backedge ]
-  %.pn.i.i = phi i64 [ %i.v, %bb.b ], [ %.sroa.4.0.copyload.i.i, %.backedge ] ; 2 uses
-  store i64 %.pn.i.i, ptr %i.f, align 8, !tbaa !2212
+  %.pn.i.i = phi i64 [ %i.v, %bb.b ], [ %.sroa.4.0.copyload.i.i, %.backedge ] ; 3 uses
   %i.w = icmp eq i64 %.pn.i.i, 0
   br i1 %i.w, label %bb.p, label %bb.c
 
 bb.c:                                             ; preds = %_ZNK5boost5beast6detail21buffers_range_adaptorIRKNS0_14buffers_suffixINS1_12buffers_pairILb1EEEEEE14const_iteratordeEv.exit
+  store i64 %.pn.i.i, ptr %i.f, align 8, !tbaa !2212
   store ptr %.pn3.i.i, ptr %11, align 8, !tbaa !2213
   call void @llvm.lifetime.start.p0(ptr nonnull %10)
   store i8 1, ptr %10, align 4, !tbaa !2137
@@ -1832,9 +1830,13 @@ _ZNK5boost6system10error_codecvbEv.exit.thread74..backedge_crit_edge: ; preds = 
 bb.p:                                             ; preds = %_ZNK5boost5beast6detail21buffers_range_adaptorIRKNS0_14buffers_suffixINS1_12buffers_pairILb1EEEEEE14const_iteratordeEv.exit
   %.old = getelementptr inbounds nuw i8, ptr %.sroa.067.094, i64 16 ; 2 uses
   %.not.old = icmp eq ptr %.old, %.0.i.i.i.i.i
-  br i1 %.not.old, label %.thread78, label %.backedge
+  br i1 %.not.old, label %.thread78.loopexit.loopexit, label %.backedge
 
-.thread78:                                        ; preds = %bb.p, %_ZNK5boost6system10error_codecvbEv.exit.thread74, %bb.a, %bb.o
+.thread78.loopexit.loopexit:                      ; preds = %bb.p
+  store i64 %.pn.i.i, ptr %i.f, align 8, !tbaa !2212
+  br label %.thread78
+
+.thread78:                                        ; preds = %.thread78.loopexit.loopexit, %_ZNK5boost6system10error_codecvbEv.exit.thread74, %bb.a, %bb.o
   %i.bo = load i64, ptr %i.c, align 8, !tbaa !2207 ; 5 uses
   store i64 %i.bo, ptr %4, align 8, !tbaa !1265
   %i.bp = load i64, ptr %i.n, align 8, !tbaa !1764

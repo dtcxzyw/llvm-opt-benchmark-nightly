@@ -205,16 +205,17 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i: ; preds = 
   %i.cd = sub i64 %i.cb, %i.cc
   %i.ce = ashr exact i64 %i.cd, 5
   %i.cf = add nsw i64 %i.ce, -1                   ; 2 uses
+  %umax = call i64 @llvm.umax.i64(i64 %.041200, i64 %i.cf) ; 3 uses
   %i.cg = icmp ult i64 %.041200, %i.cf
   br i1 %i.cg, label %.lr.ph352, label %.critedge.i
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit.i: ; preds = %bb.t
-  %8 = icmp ult i64 %i.ch, %i.cf
-  br i1 %8, label %.lr.ph352, label %.critedge.i
+  %exitcond.not = icmp eq i64 %i.ch, %umax
+  br i1 %exitcond.not, label %.critedge.i, label %.lr.ph352
 
 .lr.ph352:                                        ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit.i
   %.0.i351 = phi i64 [ %i.ch, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit.i ], [ %.041200, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i ] ; 3 uses
-  %i.ch = add nuw i64 %.0.i351, 1                 ; 4 uses
+  %i.ch = add i64 %.0.i351, 1                     ; 3 uses
   %i.ci = getelementptr inbounds nuw [32 x i8], ptr %.pr.i, i64 %i.ch ; 3 uses
   %i.cj = load ptr, ptr %i.h, align 8, !tbaa !82  ; 3 uses
   %.not10.i.i.i.i95 = icmp eq ptr %i.cj, null
@@ -409,7 +410,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i: ; preds = %.lo
   br label %.body55
 
 .critedge.i:                                      ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit.i, %bb.s, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i
-  %.0.i.lcssa = phi i64 [ %.041200, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i ], [ %i.ch, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit.i ], [ %.0.i351, %bb.s ]
+  %.0.i.lcssa = phi i64 [ %umax, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i ], [ %umax, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit.i ], [ %.0.i351, %bb.s ]
   %i.ef = getelementptr inbounds nuw [32 x i8], ptr %.pr.i, i64 %.0.i.lcssa
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_(ptr noundef nonnull align 8 dereferenceable(32) %i.ef, ptr noundef nonnull align 8 dereferenceable(32) %4)
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit17.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp

@@ -114,9 +114,8 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define dso_local void @transformAggregateCall(ptr noundef %0, ptr nofree noundef captures(none) initializes((32, 40)) %1, ptr noundef %2, ptr noundef %3, i1 noundef zeroext %4) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca ptr, align 8                      ; 10 uses
+  %i.a = alloca ptr, align 8                      ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
-  store ptr null, ptr %i.a, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 74
   %i.c = load i8, ptr %i.b, align 2
   %.not = icmp eq i8 %i.c, 110
@@ -174,14 +173,14 @@ bb.f:                                             ; preds = %list_length.exit130
   %i.x = load i32, ptr %i.m, align 4
   %i.y = sext i32 %i.x to i64
   %i.z = icmp slt i64 %indvars.iv, %i.y
-  br i1 %i.z, label %bb.g, label %.thread
+  br i1 %i.z, label %bb.g, label %.thread.loopexit
 
 bb.g:                                             ; preds = %bb.f
   %i.aa = load ptr, ptr %i.p, align 8             ; 2 uses
   %i.ab = icmp ne ptr %i.w, null
   %i.ac = icmp ne ptr %i.aa, null
   %i.ad = select i1 %i.ab, i1 %i.ac, i1 false
-  br i1 %i.ad, label %bb.h, label %.thread
+  br i1 %i.ad, label %bb.h, label %.thread.loopexit
 
 bb.h:                                             ; preds = %bb.g
   %i.ae = getelementptr inbounds nuw [8 x i8], ptr %i.aa, i64 %indvars.iv
@@ -189,8 +188,7 @@ bb.h:                                             ; preds = %bb.g
   %i.ag = load ptr, ptr %i.ae, align 8
   %i.ah = add i16 %.099, 1
   %i.ai = tail call ptr @makeTargetEntry(ptr noundef %i.af, i16 noundef signext %.099, ptr noundef null, i1 noundef zeroext false) #11 ; 2 uses
-  %i.aj = tail call ptr @lappend(ptr noundef %i.q, ptr noundef %i.ai) #11 ; 3 uses
-  store ptr %i.aj, ptr %i.a, align 8
+  %i.aj = tail call ptr @lappend(ptr noundef %i.q, ptr noundef %i.ai) #11 ; 2 uses
   %i.ak = tail call ptr @addTargetToSortList(ptr noundef %0, ptr noundef %i.ai, ptr noundef %.095, ptr noundef %i.aj, ptr noundef %i.ag) #11
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   br label %list_length.exit130.split, !llvm.loop !7
@@ -218,7 +216,6 @@ bb.i:                                             ; preds = %bb.a
   %i.au = add i16 %.1100133138, 1                 ; 2 uses
   %i.av = tail call ptr @makeTargetEntry(ptr noundef %i.at, i16 noundef signext %.1100133138, ptr noundef null, i1 noundef zeroext false) #11
   %i.aw = tail call ptr @lappend(ptr noundef %i.aq, ptr noundef %i.av) #11 ; 2 uses
-  store ptr %i.aw, ptr %i.a, align 8
   %indvars.iv.next180 = add nuw nsw i64 %indvars.iv179, 1 ; 2 uses
   %i.ax = load i32, ptr %i.am, align 4
   %i.ay = sext i32 %i.ax to i64
@@ -230,7 +227,9 @@ bb.i:                                             ; preds = %bb.a
   br label %.critedge
 
 .critedge:                                        ; preds = %.critedge.loopexit, %.lr.ph, %bb.i
+  %.lcssa134 = phi ptr [ null, %bb.i ], [ null, %.lr.ph ], [ %i.aw, %.critedge.loopexit ]
   %.1100.lcssa = phi i32 [ 1, %bb.i ], [ 1, %.lr.ph ], [ %i.ba, %.critedge.loopexit ]
+  store ptr %.lcssa134, ptr %i.a, align 8
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 132 ; 3 uses
   %i.bc = load i32, ptr %i.bb, align 4
   store i32 %.1100.lcssa, ptr %i.bb, align 4
@@ -293,12 +292,18 @@ bb.l:                                             ; preds = %.lr.ph150, %bb.k
   %i.bz = tail call ptr @list_truncate(ptr noundef %2, i32 noundef %i.f) #11
   %i.ca = getelementptr inbounds nuw i8, ptr %1, i64 32
   store ptr %i.bz, ptr %i.ca, align 8
+  br label %.thread.loopexit
+
+.thread.loopexit:                                 ; preds = %bb.f, %bb.g, %.thread.critedge
+  %.us-phi = phi ptr [ null, %.thread.critedge ], [ %i.q, %bb.g ], [ %i.q, %bb.f ] ; 2 uses
+  %.us-phi132 = phi ptr [ null, %.thread.critedge ], [ %.095, %bb.g ], [ %.095, %bb.f ]
+  store ptr %.us-phi, ptr %i.a, align 8
   br label %.thread
 
-.thread:                                          ; preds = %bb.g, %bb.f, %.thread.critedge, %.critedge124
-  %5 = phi ptr [ %.pre, %.critedge124 ], [ null, %.thread.critedge ], [ %i.q, %bb.f ], [ %i.q, %bb.g ] ; 3 uses
-  %.198 = phi ptr [ %.097, %.critedge124 ], [ null, %.thread.critedge ], [ null, %bb.f ], [ null, %bb.g ]
-  %.196 = phi ptr [ %i.bd, %.critedge124 ], [ null, %.thread.critedge ], [ %.095, %bb.f ], [ %.095, %bb.g ]
+.thread:                                          ; preds = %.thread.loopexit, %.critedge124
+  %5 = phi ptr [ %.pre, %.critedge124 ], [ %.us-phi, %.thread.loopexit ] ; 3 uses
+  %.198 = phi ptr [ %.097, %.critedge124 ], [ null, %.thread.loopexit ]
+  %.196 = phi ptr [ %i.bd, %.critedge124 ], [ %.us-phi132, %.thread.loopexit ]
   %i.cb = getelementptr inbounds nuw i8, ptr %1, i64 40
   store ptr %5, ptr %i.cb, align 8
   %i.cc = getelementptr inbounds nuw i8, ptr %1, i64 48

@@ -104,11 +104,15 @@ bb.c:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %9, i64 8
   %i.k = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 4 uses
   %i.l = getelementptr inbounds nuw i8, ptr %10, i64 32 ; 2 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %5, i64 32
-  %i.n = getelementptr inbounds nuw i8, ptr %4, i64 32
+  %i.m = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
+  %.promoted = load i32, ptr %i.m, align 4
+  %.promoted127 = load i32, ptr %i.n, align 4
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %bb.q
+  %13 = phi i32 [ %.promoted127, %.lr.ph ], [ %15, %bb.q ] ; 4 uses
+  %14 = phi i32 [ %.promoted, %.lr.ph ], [ %16, %bb.q ] ; 4 uses
   %.065120 = phi ptr [ null, %.lr.ph ], [ %.267, %bb.q ] ; 4 uses
   %.068119 = phi ptr [ null, %.lr.ph ], [ %.270, %bb.q ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #14
@@ -166,13 +170,11 @@ bb.k:                                             ; preds = %bb.i
 bb.l:                                             ; preds = %bb.k
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %4, ptr noundef nonnull readonly align 4 dereferenceable(32) %10, i64 32, i1 false)
   %i.af = load i32, ptr %i.l, align 4, !tbaa !48
-  store i32 %i.af, ptr %i.n, align 4, !tbaa !48
   br label %bb.q
 
 bb.m:                                             ; preds = %bb.k
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %5, ptr noundef nonnull readonly align 4 dereferenceable(32) %10, i64 32, i1 false)
   %i.ag = load i32, ptr %i.l, align 4, !tbaa !48
-  store i32 %i.ag, ptr %i.m, align 4, !tbaa !48
   br label %bb.q
 
 bb.n:                                             ; preds = %bb.k
@@ -192,17 +194,24 @@ bb.p:                                             ; preds = %bb.k
   unreachable
 
 bb.q:                                             ; preds = %bb.l, %bb.m, %bb.n, %bb.o, %bb.d
+  %15 = phi i32 [ %13, %bb.d ], [ %i.af, %bb.l ], [ %13, %bb.m ], [ %13, %bb.n ], [ %13, %bb.o ] ; 2 uses
+  %16 = phi i32 [ %14, %bb.d ], [ %14, %bb.l ], [ %i.ag, %bb.m ], [ %14, %bb.n ], [ %14, %bb.o ] ; 2 uses
   %.270 = phi ptr [ %.068119, %bb.d ], [ %.068119, %bb.l ], [ %i.ab, %bb.m ], [ %.068119, %bb.n ], [ %.068119, %bb.o ] ; 2 uses
   %.267 = phi ptr [ %.065120, %bb.d ], [ %i.ab, %bb.l ], [ %.065120, %bb.m ], [ %.065120, %bb.n ], [ %.065120, %bb.o ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #14
   %i.ak = load ptr, ptr @stdin, align 8, !tbaa !43
   %i.al = call i32 @strbuf_getline(ptr noundef nonnull %9, ptr noundef %i.ak) #14
   %.not = icmp eq i32 %i.al, -1
-  br i1 %.not, label %._crit_edge.a, label %bb.d
+  br i1 %.not, label %._crit_edge, label %bb.d
 
-._crit_edge.a:                                    ; preds = %bb.q, %bb.c
-  %.068.lcssa = phi ptr [ null, %bb.c ], [ %.270, %bb.q ]
-  %.065.lcssa = phi ptr [ null, %bb.c ], [ %.267, %bb.q ] ; 6 uses
+._crit_edge:                                      ; preds = %bb.q
+  store i32 %16, ptr %i.m, align 4
+  store i32 %15, ptr %i.n, align 4
+  br label %._crit_edge.a
+
+._crit_edge.a:                                    ; preds = %._crit_edge, %bb.c
+  %.068.lcssa = phi ptr [ %.270, %._crit_edge ], [ null, %bb.c ]
+  %.065.lcssa = phi ptr [ %.267, %._crit_edge ], [ null, %bb.c ] ; 6 uses
   call void @strbuf_release(ptr noundef nonnull %9) #14
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
   %i.an = load ptr, ptr %i.am, align 8, !tbaa !49 ; 19 uses

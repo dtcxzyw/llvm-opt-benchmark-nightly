@@ -205,7 +205,7 @@ bb.a:
   %7 = alloca %"class.std::tuple.397", align 1    ; 3 uses
   %8 = alloca %"class.std::tuple.600", align 1    ; 3 uses
   %9 = alloca %"struct.v8::internal::compiler::turboshaft::SnapshotTableEntry", align 8 ; 6 uses
-  %10 = alloca %"class.v8::internal::compiler::turboshaft::V.324", align 4 ; 2 uses
+  %10 = alloca %"class.v8::internal::compiler::turboshaft::V.324", align 4 ; 3 uses
   %11 = alloca %"class.v8::internal::compiler::turboshaft::OpIndex", align 4 ; 2 uses
   %12 = alloca %"class.v8::internal::compiler::turboshaft::Label.594", align 8 ; 15 uses
   %13 = alloca %"struct.v8::internal::compiler::turboshaft::GenericAssemblerOpInterface<v8::internal::compiler::turboshaft::Assembler<v8::base::tmp::list1<v8::internal::compiler::turboshaft::SelectLoweringReducer, v8::internal::compiler::turboshaft::DataViewLoweringReducer, v8::internal::compiler::turboshaft::VariableReducer, v8::internal::compiler::turboshaft::TSReducerBase>>>::ControlFlowHelper_IfState", align 8 ; 5 uses
@@ -320,6 +320,7 @@ bb.e:                                             ; preds = %_ZN2v88internal4was
 
 .loopexit:                                        ; preds = %.critedge, %.critedge.thread
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #22
+  %.sroa.021.0.copyload.pre = load i32, ptr %10, align 4
   %.pre125.a = load ptr, ptr %i.b, align 8
   br label %_ZN2v88internal4wasm32TurboshaftGraphBuildingInterface21IsSimd128ZeroConstantENS0_8compiler10turboshaft7OpIndexE.exit.thread
 
@@ -490,6 +491,7 @@ bb.n:                                             ; preds = %_ZN2v88internal8com
 
 _ZN2v88internal4wasm32TurboshaftGraphBuildingInterface21IsSimd128ZeroConstantENS0_8compiler10turboshaft7OpIndexE.exit.thread: ; preds = %bb.d, %bb.c, %.loopexit, %_ZN2v88internal4wasm32TurboshaftGraphBuildingInterface21IsSimd128ZeroConstantENS0_8compiler10turboshaft7OpIndexE.exit
   %i.dk = phi ptr [ %i.ae, %bb.d ], [ %i.ae, %bb.c ], [ %.pre125.a, %.loopexit ], [ %i.ae, %_ZN2v88internal4wasm32TurboshaftGraphBuildingInterface21IsSimd128ZeroConstantENS0_8compiler10turboshaft7OpIndexE.exit ] ; 8 uses
+  %.sroa.021.0.copyload = phi i32 [ %2, %bb.d ], [ %2, %bb.c ], [ %.sroa.021.0.copyload.pre, %.loopexit ], [ %2, %_ZN2v88internal4wasm32TurboshaftGraphBuildingInterface21IsSimd128ZeroConstantENS0_8compiler10turboshaft7OpIndexE.exit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #22
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #22
   store i64 0, ptr %9, align 8
@@ -545,7 +547,7 @@ _ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9Assemb
 
 bb.s:                                             ; preds = %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE7resolveERKNS2_8ConstOrVINS2_12WordWithBitsILm32EEEjEE.exit.i.i
   %i.ei = getelementptr inbounds nuw i8, ptr %i.dk, i64 32
-  call void @_ZN2v88internal8compiler10turboshaft27ChangeTrackingSnapshotTableINS2_15VariableReducerINS2_21EmitProjectionReducerINS2_18GenericReducerBaseINS2_13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerES4_S7_EEEEEEEEEEEE13VariableTableENS2_7OpIndexENS2_12VariableDataEE3SetENS2_16SnapshotTableKeyISL_SM_EESL_(ptr noundef nonnull align 8 dereferenceable(504) %i.ei, ptr nonnull %i.ed, i32 %2)
+  call void @_ZN2v88internal8compiler10turboshaft27ChangeTrackingSnapshotTableINS2_15VariableReducerINS2_21EmitProjectionReducerINS2_18GenericReducerBaseINS2_13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerES4_S7_EEEEEEEEEEEE13VariableTableENS2_7OpIndexENS2_12VariableDataEE3SetENS2_16SnapshotTableKeyISL_SM_EESL_(ptr noundef nonnull align 8 dereferenceable(504) %i.ei, ptr nonnull %i.ed, i32 %.sroa.021.0.copyload)
   br label %_ZN2v88internal8compiler10turboshaft9ScopedVarINS2_12WordWithBitsILm32EEENS2_11TSAssemblerIJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerEEEEECI2NS2_3VarIS5_SA_EEINS0_4wasm32TurboshaftGraphBuildingInterfaceEEEPT_NS2_8ConstOrVIS5_jEE.exit
 
 _ZN2v88internal8compiler10turboshaft9ScopedVarINS2_12WordWithBitsILm32EEENS2_11TSAssemblerIJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerEEEEECI2NS2_3VarIS5_SA_EEINS0_4wasm32TurboshaftGraphBuildingInterfaceEEEPT_NS2_8ConstOrVIS5_jEE.exit: ; preds = %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE7resolveERKNS2_8ConstOrVINS2_12WordWithBitsILm32EEEjEE.exit.i.i, %bb.s
