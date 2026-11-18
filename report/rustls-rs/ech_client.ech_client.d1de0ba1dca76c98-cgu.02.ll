@@ -202,7 +202,7 @@ bb.y:                                             ; preds = %.noexc145
 
 bb.z:                                             ; preds = %.thread274, %bb.y
   %i.dd = phi i64 [ %i.ct, %.thread274 ], [ %i.dc, %bb.y ] ; 6 uses
-  %.sroa.5.0.i277 = phi ptr [ %i.cs, %.thread274 ], [ %i.cz, %bb.y ] ; 12 uses
+  %.sroa.5.0.i277 = phi ptr [ %i.cs, %.thread274 ], [ %i.cz, %bb.y ] ; 14 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.0.i277) ]
   %i.de = and i64 %i.dd, 3                        ; 3 uses
   switch i64 %i.de, label %default.unreachable [
@@ -260,6 +260,7 @@ _RNvMs1_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_5Error4kind.exit151: ; preds = %bb.
   br i1 %i.dt, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_2io5error5ErrorEECsi17nFaBu4HY_10ech_client.exit161, label %bb.ag
 
 bb.ag:                                            ; preds = %_RNvMs1_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_5Error4kind.exit151
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.0.i277) ]
   switch i64 %i.de, label %default.unreachable [
     i64 2, label %bb.ah
     i64 3, label %bb.ai
@@ -311,6 +312,7 @@ bb.al:                                            ; preds = %_RNvMs1_NtNtCsj6eKB
 
 bb.am:                                            ; preds = %_RNvMs1_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_5Error4kind.exit157
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.0.i277) ]
   switch i64 %i.de, label %default.unreachable [
     i64 2, label %.lr.ph506
     i64 3, label %bb.an
@@ -346,7 +348,7 @@ bb.ao:                                            ; preds = %bb.am
 bb.ap:                                            ; preds = %.noexc155, %.noexc149, %bb.aa, %bb.ah
   %lpad.thr_comm287 = landingpad { ptr, i32 }
           cleanup
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsi17nFaBu4HY_10ech_client(ptr nonnull %.sroa.5.0.i277) #20
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsi17nFaBu4HY_10ech_client(ptr %.sroa.5.0.i277) #20
           to label %.thread unwind label %bb.aq
 
 bb.aq:                                            ; preds = %bb.au, %bb.as, %.thread, %.split.thread, %bb.ap, %bb.cc, %bb.cj, %bb.co, %bb.az

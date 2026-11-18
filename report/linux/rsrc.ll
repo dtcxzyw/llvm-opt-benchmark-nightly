@@ -202,7 +202,7 @@ bb.k:                                             ; preds = %bb.j
   %i.bf = ptrtoint ptr %.val.i to i64             ; 4 uses
   %i.bg = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.bf, i64 %i.bb) ; 2 uses
   %i.bh = extractvalue { i64, i1 } %i.bg, 1
-  %i.bi = extractvalue { i64, i1 } %i.bg, 0       ; 2 uses
+  %i.bi = extractvalue { i64, i1 } %i.bg, 0       ; 3 uses
   br i1 %i.bh, label %.critedge, label %bb.l, !prof !20
 
 bb.l:                                             ; preds = %bb.k
@@ -216,16 +216,20 @@ bb.m:                                             ; preds = %bb.l
   %i.bn = icmp ugt i64 %i.bi, %i.bm
   %i.bo = icmp ugt i64 %i.bb, 2147479552
   %or.cond.i.i = or i1 %i.bo, %i.bn
-  br i1 %or.cond.i.i, label %.critedge, label %validate_fixed_range.exit.preheader.i.i.a, !prof !34
+  br i1 %or.cond.i.i, label %.critedge, label %validate_fixed_range.exit.preheader.i.i, !prof !34
 
-validate_fixed_range.exit.preheader.i.i.a:        ; preds = %bb.m
+validate_fixed_range.exit.preheader.i.i:          ; preds = %bb.m
+  %.not.i.i68 = icmp eq i64 %i.bi, 0
+  br i1 %.not.i.i68, label %.critedge.loopexit.i.i, label %validate_fixed_range.exit.preheader.i.i.a
+
+validate_fixed_range.exit.preheader.i.i.a:        ; preds = %validate_fixed_range.exit.preheader.i.i
   %i.bp = load i32, ptr %i.ax, align 8            ; 4 uses
   %exitcond.not.i.i203 = icmp eq i32 %i.bp, 0
-  br i1 %exitcond.not.i.i203, label %.critedge.loopexit.i.i, label %validate_fixed_range.exit.i.i
+  br i1 %exitcond.not.i.i203, label %validate_fixed_range.exit.i.i..critedge.loopexit.i.i_crit_edge.a, label %validate_fixed_range.exit.i.i
 
 bb.n:                                             ; preds = %validate_fixed_range.exit.i.i
   %exitcond.not.i.i = icmp eq i32 %i.bs, %i.bp
-  br i1 %exitcond.not.i.i, label %.critedge.loopexit.i.i, label %validate_fixed_range.exit.i.i, !llvm.loop !86
+  br i1 %exitcond.not.i.i, label %validate_fixed_range.exit.i.i..critedge.loopexit.i.i_crit_edge.a, label %validate_fixed_range.exit.i.i, !llvm.loop !86
 
 validate_fixed_range.exit.i.i:                    ; preds = %validate_fixed_range.exit.preheader.i.i.a, %bb.n
   %.0273.i.i206 = phi i32 [ %.1.i.i, %bb.n ], [ 0, %validate_fixed_range.exit.preheader.i.i.a ]
@@ -243,16 +247,20 @@ validate_fixed_range.exit.i.i:                    ; preds = %validate_fixed_rang
   %.1.i.i = select i1 %i.br, i32 %.0273.i.i206, i32 %.0264.i.i205 ; 3 uses
   %i.bs = add nuw i32 %.0264.i.i205, 1            ; 3 uses
   %i.bt = icmp ult i64 %.pre13.i.i, %i.bi
-  br i1 %i.bt, label %bb.n, label %validate_fixed_range.exit.i.i..critedge.loopexit.i.i_crit_edge.a, !llvm.loop !86
+  br i1 %i.bt, label %bb.n, label %validate_fixed_range.exit.i.i..critedge.loopexit.i.i_crit_edge, !llvm.loop !86
 
-validate_fixed_range.exit.i.i..critedge.loopexit.i.i_crit_edge.a: ; preds = %validate_fixed_range.exit.i.i
-  br label %.critedge.loopexit.i.i, !llvm.loop !86
+validate_fixed_range.exit.i.i..critedge.loopexit.i.i_crit_edge: ; preds = %validate_fixed_range.exit.i.i
+  br label %validate_fixed_range.exit.i.i..critedge.loopexit.i.i_crit_edge.a, !llvm.loop !86
 
-.critedge.loopexit.i.i:                           ; preds = %bb.n, %validate_fixed_range.exit.i.i..critedge.loopexit.i.i_crit_edge.a, %validate_fixed_range.exit.preheader.i.i.a
-  %.027.lcssa.ph.i.i = phi i32 [ 0, %validate_fixed_range.exit.preheader.i.i.a ], [ %.1.i.i, %validate_fixed_range.exit.i.i..critedge.loopexit.i.i_crit_edge.a ], [ %.1.i.i, %bb.n ]
-  %.026.lcssa.ph.i.i = phi i32 [ %i.bp, %validate_fixed_range.exit.preheader.i.i.a ], [ %i.bs, %validate_fixed_range.exit.i.i..critedge.loopexit.i.i_crit_edge.a ], [ %i.bp, %bb.n ]
+validate_fixed_range.exit.i.i..critedge.loopexit.i.i_crit_edge.a: ; preds = %bb.n, %validate_fixed_range.exit.i.i..critedge.loopexit.i.i_crit_edge, %validate_fixed_range.exit.preheader.i.i.a
+  %.027.lcssa.ph.i.i = phi i32 [ 0, %validate_fixed_range.exit.preheader.i.i.a ], [ %.1.i.i, %validate_fixed_range.exit.i.i..critedge.loopexit.i.i_crit_edge ], [ %.1.i.i, %bb.n ]
+  %.026.lcssa.ph.i.i = phi i32 [ %i.bp, %validate_fixed_range.exit.preheader.i.i.a ], [ %i.bs, %validate_fixed_range.exit.i.i..critedge.loopexit.i.i_crit_edge ], [ %i.bp, %bb.n ]
   %6 = sub i32 %.026.lcssa.ph.i.i, %.027.lcssa.ph.i.i
-  %i.bu = add i32 %6, %i.ay                       ; 2 uses
+  br label %.critedge.loopexit.i.i
+
+.critedge.loopexit.i.i:                           ; preds = %validate_fixed_range.exit.i.i..critedge.loopexit.i.i_crit_edge.a, %validate_fixed_range.exit.preheader.i.i
+  %.1.i = phi i32 [ %6, %validate_fixed_range.exit.i.i..critedge.loopexit.i.i_crit_edge.a ], [ 0, %validate_fixed_range.exit.preheader.i.i ]
+  %i.bu = add i32 %.1.i, %i.ay                    ; 2 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %._crit_edge.loopexit.i, label %bb.i, !llvm.loop !87

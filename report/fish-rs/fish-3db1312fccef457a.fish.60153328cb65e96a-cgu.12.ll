@@ -206,7 +206,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCs8frGy5WneL6_4fish3env3var6EnvVar
   %.val.i.i.peel = load ptr, ptr %i.bk, align 8, !alias.scope !3106, !nonnull !9, !noundef !9
   %.val1.i.i.peel = load i64, ptr %i.bl, align 8, !alias.scope !3106, !noundef !9
   %i.bn = invoke noundef ptr @_RINvMsD_NtCsaL1QbXo9JQH_3std2fsNtB6_10DirBuilder6createRNtNtB8_4path4PathECs8frGy5WneL6_4fish(ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(8) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.val.i.i.peel, i64 noundef %.val1.i.i.peel)
-          to label %bb.ae unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 13 uses
+          to label %bb.ae unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 15 uses
 
 bb.ae:                                            ; preds = %.peel.begin
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !3106
@@ -224,6 +224,8 @@ bb.af:                                            ; preds = %bb.ae
   ], !prof !19
 
 bb.ag:                                            ; preds = %bb.af
+  %5 = getelementptr i8, ptr %i.bn, i64 -1
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %5) ]
   %i.bq = getelementptr i8, ptr %i.bn, i64 31
   %i.br = load i8, ptr %i.bq, align 8, !range !3107, !noundef !9
   br label %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error4kind.exit.peel
@@ -277,6 +279,8 @@ bb.am:                                            ; preds = %bb.al, %_RNvMs1_NtN
   ], !prof !19
 
 bb.an:                                            ; preds = %bb.am
+  %6 = getelementptr i8, ptr %i.bn, i64 -1
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %6) ]
   %i.ch = getelementptr i8, ptr %i.bn, i64 31
   %i.ci = load i8, ptr %i.ch, align 8, !range !3107, !noundef !9
   br label %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error4kind.exit64.peel

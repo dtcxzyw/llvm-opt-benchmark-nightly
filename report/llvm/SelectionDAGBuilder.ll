@@ -205,7 +205,7 @@ switch.lookup:
 ; Function Attrs: mustprogress nounwind uwtable
 define internal fastcc { ptr, i32 } @_ZL12expandDivFixjRKN4llvm5SDLocENS_7SDValueES3_S3_RNS_12SelectionDAGERKNS_14TargetLoweringE(i32 noundef range(i32 91, 99) %0, ptr noundef nonnull align 8 dereferenceable(12) %1, ptr %2, i32 %3, ptr %4, i32 %5, ptr nofree noundef readonly byval(%"class.llvm::SDValue") align 8 captures(none) %6, ptr noundef nonnull align 8 dereferenceable(920) %7, ptr noundef nonnull align 8 dereferenceable(518435) %8) unnamed_addr #3 {
 bb.a:
-  %9 = alloca %"struct.llvm::EVT", align 8        ; 15 uses
+  %9 = alloca %"struct.llvm::EVT", align 8        ; 16 uses
   %10 = alloca %"struct.llvm::EVT", align 8       ; 16 uses
   %11 = alloca %"class.llvm::SDValue", align 8    ; 3 uses
   %12 = alloca %"class.llvm::SDValue", align 8    ; 3 uses
@@ -425,6 +425,8 @@ bb.j:                                             ; preds = %.split240
   br label %_ZNK4llvm3EVT20getVectorElementTypeEv.exit186
 
 bb.k:                                             ; preds = %_ZNK4llvm3EVT15isScalarIntegerEv.exit
+  %19 = call noundef zeroext i1 @_ZNK4llvm3EVT16isExtendedVectorEv(ptr noundef nonnull align 8 dereferenceable(16) %9) #35
+  call void @llvm.assume(i1 %19)
   %i.bz = call { i16, ptr } @_ZNK4llvm3EVT28getExtendedVectorElementTypeEv(ptr noundef nonnull align 8 dereferenceable(16) %9) #34
   br label %_ZNK4llvm3EVT20getVectorElementTypeEv.exit186
 

@@ -202,7 +202,7 @@ define void @_ZN6apache6thrift5async25TConcurrentClientSyncInfo20throwDeadConnec
   %i.f = load i64, ptr %i.b, align 8, !tbaa !107  ; 3 uses
   store i64 %i.f, ptr %i.d, align 8, !tbaa !85
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(67) %i.e, ptr noundef nonnull align 1 dereferenceable(67) @.str.1, i64 67, i1 false)
-  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
   store i64 %i.f, ptr %i.g, align 8, !tbaa !84
   %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.f
   store i8 0, ptr %i.h, align 1, !tbaa !85
@@ -285,6 +285,9 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.t
   br i1 %i.ae, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread15, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread15: ; preds = %.body.thread
+  %2 = load i64, ptr %i.g, align 8, !tbaa !84
+  %3 = icmp ult i64 %2, 16
+  call void @llvm.assume(i1 %3)
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #22
   br label %bb.d
 
@@ -571,7 +574,7 @@ define void @_ZN6apache6thrift5async25TConcurrentClientSyncInfo14throwBadSeqId_E
   %i.f = load i64, ptr %i.b, align 8, !tbaa !107  ; 3 uses
   store i64 %i.f, ptr %i.d, align 8, !tbaa !85
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(23) %i.e, ptr noundef nonnull align 1 dereferenceable(23) @.str, i64 23, i1 false)
-  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
   store i64 %i.f, ptr %i.g, align 8, !tbaa !84
   %i.h = load ptr, ptr %1, align 8, !tbaa !96
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.f
@@ -655,6 +658,9 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.t
   br i1 %i.af, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread15, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread15: ; preds = %.body.thread
+  %2 = load i64, ptr %i.g, align 8, !tbaa !84
+  %3 = icmp ult i64 %2, 16
+  call void @llvm.assume(i1 %3)
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #22
   br label %bb.d
 

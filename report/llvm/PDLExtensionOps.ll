@@ -204,7 +204,15 @@ bb.r:                                             ; preds = %bb.h, %_ZN4llvm9Str
   call void @_ZN4mlir9emitErrorENS_8LocationERKN4llvm5TwineE(ptr dead_on_unwind nonnull writable sret(%"class.mlir::InFlightDiagnostic") align 8 dereferenceable(208) %21, ptr %.sroa.0.0.copyload.i.i.i17, ptr noundef nonnull align 8 dereferenceable(34) %22) #22
   %i.ia = load ptr, ptr %21, align 8, !tbaa !60
   %.not.i.i.i.i18 = icmp eq ptr %i.ia, null
-  br i1 %.not.i.i.i.i18, label %_ZNO4mlir24DiagnosedDefiniteFailurelsIRA2_KcEEOS0_OT_.exit.thread, label %bb.s
+  br i1 %.not.i.i.i.i18, label %_ZNO4mlir24DiagnosedDefiniteFailurelsIRA25_KcEEOS0_OT_.exit.thread, label %bb.s
+
+_ZNO4mlir24DiagnosedDefiniteFailurelsIRA25_KcEEOS0_OT_.exit.thread: ; preds = %bb.r
+  %23 = load ptr, ptr %1, align 8, !tbaa !95
+  %24 = getelementptr inbounds nuw i8, ptr %23, i64 44
+  %25 = load i32, ptr %24, align 4
+  %.not.i.i.i.i1977 = icmp ugt i32 %25, 16777215
+  call void @llvm.assume(i1 %.not.i.i.i.i1977)
+  br label %_ZNO4mlir24DiagnosedDefiniteFailurelsIRA2_KcEEOS0_OT_.exit.thread
 
 bb.s:                                             ; preds = %bb.r
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #22
@@ -309,7 +317,7 @@ bb.ab:                                            ; preds = %_ZNO4mlir24Diagnose
   call void @_ZN4mlir18InFlightDiagnostic6reportEv(ptr noundef nonnull align 8 dereferenceable(208) %21) #22
   br label %_ZNO4mlir24DiagnosedDefiniteFailurelsIRA2_KcEEOS0_OT_.exit.thread
 
-_ZNO4mlir24DiagnosedDefiniteFailurelsIRA2_KcEEOS0_OT_.exit.thread: ; preds = %bb.r, %_ZNO4mlir24DiagnosedDefiniteFailurelsIRA25_KcEEOS0_OT_.exit, %_ZNO4mlir24DiagnosedDefiniteFailurelsINS_13SymbolRefAttrEEEOS0_OT_.exit, %bb.ab, %_ZNO4mlir24DiagnosedDefiniteFailurelsIRA2_KcEEOS0_OT_.exit
+_ZNO4mlir24DiagnosedDefiniteFailurelsIRA2_KcEEOS0_OT_.exit.thread: ; preds = %_ZNO4mlir24DiagnosedDefiniteFailurelsIRA25_KcEEOS0_OT_.exit.thread, %_ZNO4mlir24DiagnosedDefiniteFailurelsIRA25_KcEEOS0_OT_.exit, %_ZNO4mlir24DiagnosedDefiniteFailurelsINS_13SymbolRefAttrEEEOS0_OT_.exit, %bb.ab, %_ZNO4mlir24DiagnosedDefiniteFailurelsIRA2_KcEEOS0_OT_.exit
   %i.je = load i8, ptr %i.ch, align 8, !tbaa !61, !range !62, !noundef !63
   %i.jf = trunc nuw i8 %i.je to i1
   br i1 %i.jf, label %bb.ac, label %_ZN4mlir24DiagnosedDefiniteFailureD2Ev.exit

@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.g
   call void @_ZN4mlir7OpState11emitOpErrorERKN4llvm5TwineE(ptr dead_on_unwind nonnull writable sret(%"class.mlir::InFlightDiagnostic") align 8 %12, ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(34) %13) #26
   %i.ce = load ptr, ptr %12, align 8, !tbaa !168
   %.not.i.i = icmp eq ptr %i.ce, null
-  br i1 %.not.i.i, label %_ZNO4mlir18InFlightDiagnosticlsIRA2_KcEEOS0_OT_.exit, label %bb.i
+  br i1 %.not.i.i, label %_ZNO4mlir18InFlightDiagnosticlsIRA8_KcEEOS0_OT_.exit.thread, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.cf = getelementptr inbounds nuw i8, ptr %12, i64 24 ; 8 uses
@@ -236,7 +236,7 @@ _ZNO4mlir18InFlightDiagnosticlsIRNS_16RankedTensorTypeEEEOS0_OT_.exit: ; preds =
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #26
   %.pr = load ptr, ptr %12, align 8, !tbaa !168
   %.not.i.i44 = icmp eq ptr %.pr, null
-  br i1 %.not.i.i44, label %_ZNO4mlir18InFlightDiagnosticlsIRA2_KcEEOS0_OT_.exit, label %bb.l
+  br i1 %.not.i.i44, label %_ZNO4mlir18InFlightDiagnosticlsIRA8_KcEEOS0_OT_.exit.thread, label %bb.l
 
 bb.l:                                             ; preds = %_ZNO4mlir18InFlightDiagnosticlsIRNS_16RankedTensorTypeEEEOS0_OT_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #26
@@ -268,7 +268,7 @@ _ZNO4mlir18InFlightDiagnosticlsIRA30_KcEEOS0_OT_.exit: ; preds = %bb.m, %bb.n
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #26
   %.pr72 = load ptr, ptr %12, align 8, !tbaa !168
   %.not.i.i46 = icmp eq ptr %.pr72, null
-  br i1 %.not.i.i46, label %_ZNO4mlir18InFlightDiagnosticlsIRA2_KcEEOS0_OT_.exit, label %bb.o
+  br i1 %.not.i.i46, label %_ZNO4mlir18InFlightDiagnosticlsIRA8_KcEEOS0_OT_.exit.thread, label %bb.o
 
 bb.o:                                             ; preds = %_ZNO4mlir18InFlightDiagnosticlsIRA30_KcEEOS0_OT_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #26
@@ -296,7 +296,7 @@ _ZNO4mlir18InFlightDiagnosticlsIRNS_16RankedTensorTypeEEEOS0_OT_.exit50: ; preds
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #26
   %.pr74.pr = load ptr, ptr %12, align 8, !tbaa !168
   %.not.i.i51 = icmp eq ptr %.pr74.pr, null
-  br i1 %.not.i.i51, label %_ZNO4mlir18InFlightDiagnosticlsIRA2_KcEEOS0_OT_.exit, label %bb.r
+  br i1 %.not.i.i51, label %_ZNO4mlir18InFlightDiagnosticlsIRA8_KcEEOS0_OT_.exit.thread, label %bb.r
 
 bb.r:                                             ; preds = %_ZNO4mlir18InFlightDiagnosticlsIRNS_16RankedTensorTypeEEEOS0_OT_.exit50
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #26
@@ -323,6 +323,15 @@ bb.t:                                             ; preds = %bb.r
   %i.dl = add i32 %i.dk, 1
   store i32 %i.dl, ptr %i.cg, align 8, !tbaa !60
   br label %_ZNO4mlir18InFlightDiagnosticlsIRA8_KcEEOS0_OT_.exit
+
+_ZNO4mlir18InFlightDiagnosticlsIRA8_KcEEOS0_OT_.exit.thread: ; preds = %_ZNO4mlir18InFlightDiagnosticlsIRNS_16RankedTensorTypeEEEOS0_OT_.exit, %bb.h, %_ZNO4mlir18InFlightDiagnosticlsIRA30_KcEEOS0_OT_.exit, %_ZNO4mlir18InFlightDiagnosticlsIRNS_16RankedTensorTypeEEEOS0_OT_.exit50
+  %14 = load ptr, ptr %0, align 8, !tbaa !130
+  %15 = getelementptr inbounds nuw i8, ptr %14, i64 44
+  %16 = load i32, ptr %15, align 4
+  %17 = and i32 %16, 8388608
+  %.not.i.i.i.i.i.i5489 = icmp ne i32 %17, 0
+  call void @llvm.assume(i1 %.not.i.i.i.i.i.i5489)
+  br label %_ZNO4mlir18InFlightDiagnosticlsIRA2_KcEEOS0_OT_.exit
 
 _ZNO4mlir18InFlightDiagnosticlsIRA8_KcEEOS0_OT_.exit: ; preds = %bb.s, %bb.t
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #26
@@ -400,7 +409,7 @@ _ZN4mlir10Diagnostic6appendIRA2_KcEERS0_OT_.exit.i.i: ; preds = %bb.z, %bb.y
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #26
   br label %_ZNO4mlir18InFlightDiagnosticlsIRA2_KcEEOS0_OT_.exit
 
-_ZNO4mlir18InFlightDiagnosticlsIRA2_KcEEOS0_OT_.exit: ; preds = %_ZNO4mlir18InFlightDiagnosticlsIRNS_16RankedTensorTypeEEEOS0_OT_.exit50, %_ZNO4mlir18InFlightDiagnosticlsIRA30_KcEEOS0_OT_.exit, %bb.h, %_ZNO4mlir18InFlightDiagnosticlsIRNS_16RankedTensorTypeEEEOS0_OT_.exit, %_ZNO4mlir18InFlightDiagnosticlsIRA8_KcEEOS0_OT_.exit, %_ZNO4mlir18InFlightDiagnosticlsINS_16RankedTensorTypeEEEOS0_OT_.exit, %_ZN4mlir10Diagnostic6appendIRA2_KcEERS0_OT_.exit.i.i
+_ZNO4mlir18InFlightDiagnosticlsIRA2_KcEEOS0_OT_.exit: ; preds = %_ZNO4mlir18InFlightDiagnosticlsIRA8_KcEEOS0_OT_.exit.thread, %_ZNO4mlir18InFlightDiagnosticlsIRA8_KcEEOS0_OT_.exit, %_ZNO4mlir18InFlightDiagnosticlsINS_16RankedTensorTypeEEEOS0_OT_.exit, %_ZN4mlir10Diagnostic6appendIRA2_KcEERS0_OT_.exit.i.i
   %i.em = call i8 @_ZNK4mlir18InFlightDiagnosticcvN4llvm13LogicalResultEEv(ptr noundef nonnull align 8 dereferenceable(208) %12) #26
   %i.en = load ptr, ptr %12, align 8, !tbaa !168
   %.not.i63 = icmp eq ptr %i.en, null

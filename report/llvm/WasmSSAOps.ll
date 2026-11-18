@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %bb.i
   call void @_ZN4mlir7OpState9emitErrorERKN4llvm5TwineE(ptr dead_on_unwind nonnull writable sret(%"class.mlir::InFlightDiagnostic") align 8 %10, ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(34) %11) #24
   %i.av = load ptr, ptr %10, align 8, !tbaa !74
   %.not.i.i5 = icmp eq ptr %i.av, null
-  br i1 %.not.i.i5, label %_ZNO4mlir18InFlightDiagnosticlsIRA18_KcEEOS0_OT_.exit21, label %bb.k
+  br i1 %.not.i.i5, label %_ZNO4mlir18InFlightDiagnosticlsIRA18_KcEEOS0_OT_.exit.thread, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %i.aw = getelementptr inbounds nuw i8, ptr %10, i64 24 ; 4 uses
@@ -237,7 +237,7 @@ _ZNO4mlir18InFlightDiagnosticlsIRmEEOS0_OT_.exit8: ; preds = %bb.l, %bb.m
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #24
   %.pr = load ptr, ptr %10, align 8, !tbaa !74
   %.not.i.i9 = icmp eq ptr %.pr, null
-  br i1 %.not.i.i9, label %_ZNO4mlir18InFlightDiagnosticlsIRA18_KcEEOS0_OT_.exit21, label %bb.n
+  br i1 %.not.i.i9, label %_ZNO4mlir18InFlightDiagnosticlsIRA18_KcEEOS0_OT_.exit.thread, label %bb.n
 
 bb.n:                                             ; preds = %_ZNO4mlir18InFlightDiagnosticlsIRmEEOS0_OT_.exit8
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #24
@@ -264,6 +264,15 @@ bb.p:                                             ; preds = %bb.n
   %i.bo = add i32 %i.bn, 1
   store i32 %i.bo, ptr %i.ay, align 8, !tbaa !83
   br label %_ZNO4mlir18InFlightDiagnosticlsIRA18_KcEEOS0_OT_.exit
+
+_ZNO4mlir18InFlightDiagnosticlsIRA18_KcEEOS0_OT_.exit.thread: ; preds = %bb.j, %_ZNO4mlir18InFlightDiagnosticlsIRmEEOS0_OT_.exit8
+  %12 = load ptr, ptr %0, align 8, !tbaa !102
+  %13 = getelementptr inbounds nuw i8, ptr %12, i64 44
+  %14 = load i32, ptr %13, align 4
+  %15 = and i32 %14, 8388608
+  %.not.i.i.i.i.i1136 = icmp ne i32 %15, 0
+  call void @llvm.assume(i1 %.not.i.i.i.i.i1136)
+  br label %_ZNO4mlir18InFlightDiagnosticlsIRA18_KcEEOS0_OT_.exit21
 
 _ZNO4mlir18InFlightDiagnosticlsIRA18_KcEEOS0_OT_.exit: ; preds = %bb.o, %bb.p
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #24
@@ -341,7 +350,7 @@ _ZN4mlir10Diagnostic6appendIRA18_KcEERS0_OT_.exit.i.i20: ; preds = %bb.v, %bb.u
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #24
   br label %_ZNO4mlir18InFlightDiagnosticlsIRA18_KcEEOS0_OT_.exit21
 
-_ZNO4mlir18InFlightDiagnosticlsIRA18_KcEEOS0_OT_.exit21: ; preds = %_ZNO4mlir18InFlightDiagnosticlsIRmEEOS0_OT_.exit8, %bb.j, %_ZNO4mlir18InFlightDiagnosticlsIRA18_KcEEOS0_OT_.exit, %_ZNO4mlir18InFlightDiagnosticlsINS_4TypeEEEOS0_OT_.exit, %_ZN4mlir10Diagnostic6appendIRA18_KcEERS0_OT_.exit.i.i20
+_ZNO4mlir18InFlightDiagnosticlsIRA18_KcEEOS0_OT_.exit21: ; preds = %_ZNO4mlir18InFlightDiagnosticlsIRA18_KcEEOS0_OT_.exit.thread, %_ZNO4mlir18InFlightDiagnosticlsIRA18_KcEEOS0_OT_.exit, %_ZNO4mlir18InFlightDiagnosticlsINS_4TypeEEEOS0_OT_.exit, %_ZN4mlir10Diagnostic6appendIRA18_KcEERS0_OT_.exit.i.i20
   %i.cp = call i8 @_ZNK4mlir18InFlightDiagnosticcvN4llvm13LogicalResultEEv(ptr noundef nonnull align 8 dereferenceable(208) %10) #24
   %i.cq = load ptr, ptr %10, align 8, !tbaa !74
   %.not.i22 = icmp eq ptr %i.cq, null

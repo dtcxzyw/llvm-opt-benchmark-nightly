@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not10, label %bb.f, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.h = load i64, ptr %i.a, align 8, !tbaa !24   ; 4 uses
+  %i.h = load i64, ptr %i.a, align 8, !tbaa !24   ; 5 uses
   %i.i = add i64 %i.h, 1
   %i.j = load i64, ptr %0, align 8, !tbaa !22
   %.not.i.i = icmp eq i64 %i.j, 0
@@ -224,7 +224,7 @@ strbuf_release.exit.i:                            ; preds = %bb.d, %bb.c
   br i1 %i.l, label %bb.e, label %st_add.exit19.i.i
 
 bb.e:                                             ; preds = %strbuf_release.exit.i
-  call void (ptr, ...) @die(ptr noundef nonnull @.str.46, i64 noundef -1, i64 noundef 1) #26
+  call void (ptr, ...) @die(ptr noundef nonnull @.str.46, i64 noundef %i.h, i64 noundef 1) #26
   unreachable
 
 st_add.exit19.i.i:                                ; preds = %strbuf_release.exit.i

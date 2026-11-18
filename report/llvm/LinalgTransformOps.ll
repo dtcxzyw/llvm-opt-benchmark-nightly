@@ -205,7 +205,15 @@ bb.l:                                             ; preds = %"_ZN4llvm6any_ofIRN
   call void @_ZN4mlir7OpState11emitOpErrorERKN4llvm5TwineE(ptr dead_on_unwind nonnull writable sret(%"class.mlir::InFlightDiagnostic") align 8 %18, ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(34) %19) #29
   %i.bf = load ptr, ptr %18, align 8, !tbaa !192
   %.not.i.i = icmp eq ptr %i.bf, null
-  br i1 %.not.i.i, label %_ZNO4mlir18InFlightDiagnosticlsINS_9ArrayAttrEEEOS0_OT_.exit, label %bb.m
+  br i1 %.not.i.i, label %_ZNO4mlir18InFlightDiagnosticlsIRA55_KcEEOS0_OT_.exit.thread, label %bb.m
+
+_ZNO4mlir18InFlightDiagnosticlsIRA55_KcEEOS0_OT_.exit.thread: ; preds = %bb.l
+  %34 = load ptr, ptr %0, align 8, !tbaa !85
+  %35 = getelementptr inbounds nuw i8, ptr %34, i64 44
+  %36 = load i32, ptr %35, align 4
+  %.not.i.i.i.i35220 = icmp ugt i32 %36, 16777215
+  call void @llvm.assume(i1 %.not.i.i.i.i35220)
+  br label %_ZNO4mlir18InFlightDiagnosticlsINS_9ArrayAttrEEEOS0_OT_.exit
 
 bb.m:                                             ; preds = %bb.l
   %i.bg = getelementptr inbounds nuw i8, ptr %18, i64 24 ; 2 uses
@@ -282,7 +290,7 @@ _ZN4mlir10Diagnostic6appendINS_9ArrayAttrEEERS0_OT_.exit.i.i: ; preds = %bb.r, %
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #29
   br label %_ZNO4mlir18InFlightDiagnosticlsINS_9ArrayAttrEEEOS0_OT_.exit
 
-_ZNO4mlir18InFlightDiagnosticlsINS_9ArrayAttrEEEOS0_OT_.exit: ; preds = %bb.l, %_ZNO4mlir18InFlightDiagnosticlsIRA55_KcEEOS0_OT_.exit, %_ZN4mlir10Diagnostic6appendINS_9ArrayAttrEEERS0_OT_.exit.i.i
+_ZNO4mlir18InFlightDiagnosticlsINS_9ArrayAttrEEEOS0_OT_.exit: ; preds = %_ZNO4mlir18InFlightDiagnosticlsIRA55_KcEEOS0_OT_.exit.thread, %_ZNO4mlir18InFlightDiagnosticlsIRA55_KcEEOS0_OT_.exit, %_ZN4mlir10Diagnostic6appendINS_9ArrayAttrEEERS0_OT_.exit.i.i
   %i.ck = call i8 @_ZNK4mlir18InFlightDiagnosticcvN4llvm13LogicalResultEEv(ptr noundef nonnull align 8 dereferenceable(208) %18) #29
   %i.cl = load ptr, ptr %18, align 8, !tbaa !192
   %.not.i39 = icmp eq ptr %i.cl, null
@@ -500,7 +508,15 @@ bb.af:                                            ; preds = %"_ZN4llvm6any_ofIRN
   call void @_ZN4mlir7OpState11emitOpErrorERKN4llvm5TwineE(ptr dead_on_unwind nonnull writable sret(%"class.mlir::InFlightDiagnostic") align 8 %21, ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(34) %22) #29
   %i.ev = load ptr, ptr %21, align 8, !tbaa !192
   %.not.i.i77 = icmp eq ptr %i.ev, null
-  br i1 %.not.i.i77, label %_ZNO4mlir18InFlightDiagnosticlsINS_9ArrayAttrEEEOS0_OT_.exit86, label %bb.ag
+  br i1 %.not.i.i77, label %_ZNO4mlir18InFlightDiagnosticlsIRA64_KcEEOS0_OT_.exit.thread, label %bb.ag
+
+_ZNO4mlir18InFlightDiagnosticlsIRA64_KcEEOS0_OT_.exit.thread: ; preds = %bb.af
+  %37 = load ptr, ptr %0, align 8, !tbaa !85
+  %38 = getelementptr inbounds nuw i8, ptr %37, i64 44
+  %39 = load i32, ptr %38, align 4
+  %.not.i.i.i.i80222 = icmp ugt i32 %39, 16777215
+  call void @llvm.assume(i1 %.not.i.i.i.i80222)
+  br label %_ZNO4mlir18InFlightDiagnosticlsINS_9ArrayAttrEEEOS0_OT_.exit86
 
 bb.ag:                                            ; preds = %bb.af
   %i.ew = getelementptr inbounds nuw i8, ptr %21, i64 24 ; 2 uses
@@ -577,7 +593,7 @@ _ZN4mlir10Diagnostic6appendINS_9ArrayAttrEEERS0_OT_.exit.i.i85: ; preds = %bb.al
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #29
   br label %_ZNO4mlir18InFlightDiagnosticlsINS_9ArrayAttrEEEOS0_OT_.exit86
 
-_ZNO4mlir18InFlightDiagnosticlsINS_9ArrayAttrEEEOS0_OT_.exit86: ; preds = %bb.af, %_ZNO4mlir18InFlightDiagnosticlsIRA64_KcEEOS0_OT_.exit, %_ZN4mlir10Diagnostic6appendINS_9ArrayAttrEEERS0_OT_.exit.i.i85
+_ZNO4mlir18InFlightDiagnosticlsINS_9ArrayAttrEEEOS0_OT_.exit86: ; preds = %_ZNO4mlir18InFlightDiagnosticlsIRA64_KcEEOS0_OT_.exit.thread, %_ZNO4mlir18InFlightDiagnosticlsIRA64_KcEEOS0_OT_.exit, %_ZN4mlir10Diagnostic6appendINS_9ArrayAttrEEERS0_OT_.exit.i.i85
   %i.ga = call i8 @_ZNK4mlir18InFlightDiagnosticcvN4llvm13LogicalResultEEv(ptr noundef nonnull align 8 dereferenceable(208) %21) #29
   %i.gb = load ptr, ptr %21, align 8, !tbaa !192
   %.not.i87 = icmp eq ptr %i.gb, null

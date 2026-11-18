@@ -204,11 +204,11 @@ bb.aj:                                            ; preds = %.loopexit90.i35, %.
   %i.fn = icmp slt i64 %i.fm, 0
   %..i.i22 = call i64 @llvm.smin.i64(i64 %i.fm, i64 range(i64 -1, 4294967296) %i.ev)
   %.sroa.0.0.i.i23 = select i1 %i.fn, i64 0, i64 %..i.i22 ; 3 uses
-  %i.fo = trunc i64 %.sroa.0.0.i.i23 to i32       ; 4 uses
+  %i.fo = trunc i64 %.sroa.0.0.i.i23 to i32       ; 3 uses
   %i.fp = fadd float %i.et, %i.fj
   %i.fq = call float @llvm.ceil.f32(float %i.fp)
   %i.fr = call i64 @llvm.fptosi.sat.i64.f32(float %i.fq) ; 2 uses
-  %i.fs = and i64 %.sroa.0.0.i.i23, 4294967295
+  %i.fs = and i64 %.sroa.0.0.i.i23, 4294967295    ; 2 uses
   %i.ft = add nsw i64 %.sroa.0.0.i.i23, 1
   %.not.i24 = icmp sgt i64 %i.fr, %i.fs
   %..i56.i = call i64 @llvm.smin.i64(i64 %i.fr, i64 range(i64 -1, 4294967296) %i.eu)
@@ -311,14 +311,12 @@ bb.am:                                            ; preds = %bb.au, %.lr.ph146.i
   %i.gx = phi <2 x float> [ zeroinitializer, %.lr.ph146.i ], [ %i.ip, %bb.au ]
   %i.gy = getelementptr inbounds nuw i8, ptr %.sroa.0.0141.i, i64 4 ; 2 uses
   %indvars.iv.next.i28 = add nuw nsw i64 %indvars.iv.i27, 1
-  %5 = trunc nuw i64 %indvars.iv.i27 to i32
-  %6 = add i32 %5, %i.fo                          ; 2 uses
+  %5 = add nuw nsw i64 %indvars.iv.i27, %i.fs     ; 2 uses
   %exitcond207.not.i = icmp eq i64 %indvars.iv.i27, %wide.trip.count.i26
   br i1 %exitcond207.not.i, label %bb.aq, label %bb.an, !prof !12
 
 bb.an:                                            ; preds = %bb.am
-  %7 = zext i32 %6 to i64
-  %i.gz = add nuw i64 %i.gw, %7
+  %i.gz = add nuw i64 %5, %i.gw
   %i.ha = shl i64 %i.gz, 2                        ; 4 uses
   %i.hb = or disjoint i64 %i.ha, 3
   %or.cond14.not.i.i29 = icmp ult i64 %i.hb, %.val15.i.i20
@@ -335,6 +333,7 @@ bb.ap:                                            ; preds = %bb.an
 
 bb.aq:                                            ; preds = %bb.am
   %i.hf = trunc nuw i64 %indvars.iv208.i to i32
+  %6 = trunc nuw i64 %5 to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !82
   store i32 %6, ptr %i.f, align 4, !noalias !82
   %i.hg = getelementptr inbounds nuw i8, ptr %i.f, i64 4
@@ -737,11 +736,11 @@ bb.aj:                                            ; preds = %.loopexit97.i, %.lr
   %i.fo = icmp slt i64 %i.fn, 0
   %..i.i22 = call i64 @llvm.smin.i64(i64 %i.fn, i64 range(i64 -1, 4294967296) %i.ex)
   %.sroa.0.0.i.i23 = select i1 %i.fo, i64 0, i64 %..i.i22 ; 3 uses
-  %i.fp = trunc i64 %.sroa.0.0.i.i23 to i32       ; 4 uses
+  %i.fp = trunc i64 %.sroa.0.0.i.i23 to i32       ; 3 uses
   %i.fq = fadd float %i.ev, %i.fk
   %i.fr = call float @llvm.ceil.f32(float %i.fq)
   %i.fs = call i64 @llvm.fptosi.sat.i64.f32(float %i.fr) ; 2 uses
-  %i.ft = and i64 %.sroa.0.0.i.i23, 4294967295
+  %i.ft = and i64 %.sroa.0.0.i.i23, 4294967295    ; 2 uses
   %i.fu = add nsw i64 %.sroa.0.0.i.i23, 1
   %.not.i24 = icmp sgt i64 %i.fs, %i.ft
   %..i59.i = call i64 @llvm.smin.i64(i64 %i.fs, i64 range(i64 -1, 4294967296) %i.ew)
@@ -843,14 +842,12 @@ bb.am:                                            ; preds = %bb.ay, %.lr.ph165.i
   %i.gy = phi <4 x float> [ zeroinitializer, %.lr.ph165.i ], [ %i.jq, %bb.ay ]
   %i.gz = getelementptr inbounds nuw i8, ptr %.sroa.0.0159.i, i64 4 ; 2 uses
   %indvars.iv.next.i28 = add nuw nsw i64 %indvars.iv.i27, 1
-  %5 = trunc nuw i64 %indvars.iv.i27 to i32
-  %6 = add i32 %5, %i.fp                          ; 2 uses
+  %5 = add nuw nsw i64 %indvars.iv.i27, %i.ft     ; 2 uses
   %exitcond236.not.i = icmp eq i64 %indvars.iv.i27, %wide.trip.count.i26
   br i1 %exitcond236.not.i, label %bb.aq, label %bb.an, !prof !12
 
 bb.an:                                            ; preds = %bb.am
-  %7 = zext i32 %6 to i64
-  %i.ha = add nuw i64 %i.gx, %7
+  %i.ha = add nuw i64 %5, %i.gx
   %i.hb = shl i64 %i.ha, 2                        ; 4 uses
   %i.hc = or disjoint i64 %i.hb, 3
   %or.cond14.not.i.i29 = icmp ult i64 %i.hc, %.val15.i.i20
@@ -867,6 +864,7 @@ bb.ap:                                            ; preds = %bb.an
 
 bb.aq:                                            ; preds = %bb.am
   %i.hg = trunc nuw i64 %indvars.iv237.i to i32
+  %6 = trunc nuw i64 %5 to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !126
   store i32 %6, ptr %i.f, align 4, !noalias !126
   %i.hh = getelementptr inbounds nuw i8, ptr %i.f, i64 4
@@ -1269,11 +1267,11 @@ bb.aj:                                            ; preds = %.loopexit100.i, %.l
   %i.fo = icmp slt i64 %i.fn, 0
   %..i.i22 = call i64 @llvm.smin.i64(i64 %i.fn, i64 range(i64 -1, 4294967296) %i.ex)
   %.sroa.0.0.i.i23 = select i1 %i.fo, i64 0, i64 %..i.i22 ; 3 uses
-  %i.fp = trunc i64 %.sroa.0.0.i.i23 to i32       ; 4 uses
+  %i.fp = trunc i64 %.sroa.0.0.i.i23 to i32       ; 3 uses
   %i.fq = fadd float %i.ev, %i.fk
   %i.fr = call float @llvm.ceil.f32(float %i.fq)
   %i.fs = call i64 @llvm.fptosi.sat.i64.f32(float %i.fr) ; 2 uses
-  %i.ft = and i64 %.sroa.0.0.i.i23, 4294967295
+  %i.ft = and i64 %.sroa.0.0.i.i23, 4294967295    ; 2 uses
   %i.fu = add nsw i64 %.sroa.0.0.i.i23, 1
   %.not.i24 = icmp sgt i64 %i.fs, %i.ft
   %..i59.i = call i64 @llvm.smin.i64(i64 %i.fs, i64 range(i64 -1, 4294967296) %i.ew)
@@ -1375,14 +1373,12 @@ bb.am:                                            ; preds = %bb.ay, %.lr.ph168.i
   %i.gy = phi <4 x float> [ zeroinitializer, %.lr.ph168.i ], [ %i.jq, %bb.ay ]
   %i.gz = getelementptr inbounds nuw i8, ptr %.sroa.0.0162.i, i64 4 ; 2 uses
   %indvars.iv.next.i28 = add nuw nsw i64 %indvars.iv.i27, 1
-  %5 = trunc nuw i64 %indvars.iv.i27 to i32
-  %6 = add i32 %5, %i.fp                          ; 2 uses
+  %5 = add nuw nsw i64 %indvars.iv.i27, %i.ft     ; 2 uses
   %exitcond239.not.i = icmp eq i64 %indvars.iv.i27, %wide.trip.count.i26
   br i1 %exitcond239.not.i, label %bb.aq, label %bb.an, !prof !12
 
 bb.an:                                            ; preds = %bb.am
-  %7 = zext i32 %6 to i64
-  %i.ha = add nuw i64 %i.gx, %7
+  %i.ha = add nuw i64 %5, %i.gx
   %i.hb = shl i64 %i.ha, 2                        ; 4 uses
   %i.hc = or disjoint i64 %i.hb, 3
   %or.cond14.not.i.i29 = icmp ult i64 %i.hc, %.val15.i.i20
@@ -1399,6 +1395,7 @@ bb.ap:                                            ; preds = %bb.an
 
 bb.aq:                                            ; preds = %bb.am
   %i.hg = trunc nuw i64 %indvars.iv240.i to i32
+  %6 = trunc nuw i64 %5 to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !170
   store i32 %6, ptr %i.f, align 4, !noalias !170
   %i.hh = getelementptr inbounds nuw i8, ptr %i.f, i64 4
@@ -1801,11 +1798,11 @@ bb.aj:                                            ; preds = %.loopexit96.i, %.lr
   %i.fo = icmp slt i64 %i.fn, 0
   %..i.i22 = call i64 @llvm.smin.i64(i64 %i.fn, i64 range(i64 -1, 4294967296) %i.ex)
   %.sroa.0.0.i.i23 = select i1 %i.fo, i64 0, i64 %..i.i22 ; 3 uses
-  %i.fp = trunc i64 %.sroa.0.0.i.i23 to i32       ; 4 uses
+  %i.fp = trunc i64 %.sroa.0.0.i.i23 to i32       ; 3 uses
   %i.fq = fadd float %i.ev, %i.fk
   %i.fr = call float @llvm.ceil.f32(float %i.fq)
   %i.fs = call i64 @llvm.fptosi.sat.i64.f32(float %i.fr) ; 2 uses
-  %i.ft = and i64 %.sroa.0.0.i.i23, 4294967295
+  %i.ft = and i64 %.sroa.0.0.i.i23, 4294967295    ; 2 uses
   %i.fu = add nsw i64 %.sroa.0.0.i.i23, 1
   %.not.i24 = icmp sgt i64 %i.fs, %i.ft
   %..i59.i = call i64 @llvm.smin.i64(i64 %i.fs, i64 range(i64 -1, 4294967296) %i.ew)
@@ -1907,14 +1904,12 @@ bb.am:                                            ; preds = %bb.az, %.lr.ph162.i
   %i.gy = phi <4 x float> [ zeroinitializer, %.lr.ph162.i ], [ %i.jm, %bb.az ]
   %i.gz = getelementptr inbounds nuw i8, ptr %.sroa.0.0156.i, i64 4 ; 2 uses
   %indvars.iv.next.i28 = add nuw nsw i64 %indvars.iv.i27, 1
-  %5 = trunc nuw i64 %indvars.iv.i27 to i32
-  %6 = add i32 %5, %i.fp                          ; 2 uses
+  %5 = add nuw nsw i64 %indvars.iv.i27, %i.ft     ; 2 uses
   %exitcond230.not.i = icmp eq i64 %indvars.iv.i27, %wide.trip.count.i26
   br i1 %exitcond230.not.i, label %bb.aq, label %bb.an, !prof !12
 
 bb.an:                                            ; preds = %bb.am
-  %7 = zext i32 %6 to i64
-  %i.ha = add nuw i64 %i.gx, %7
+  %i.ha = add nuw i64 %5, %i.gx
   %i.hb = shl i64 %i.ha, 2                        ; 4 uses
   %i.hc = or disjoint i64 %i.hb, 3
   %or.cond14.not.i.i29 = icmp ult i64 %i.hc, %.val15.i.i20
@@ -1931,6 +1926,7 @@ bb.ap:                                            ; preds = %bb.an
 
 bb.aq:                                            ; preds = %bb.am
   %i.hg = trunc nuw i64 %indvars.iv231.i to i32
+  %6 = trunc nuw i64 %5 to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !214
   store i32 %6, ptr %i.f, align 4, !noalias !214
   %i.hh = getelementptr inbounds nuw i8, ptr %i.f, i64 4
@@ -2333,11 +2329,11 @@ bb.aj:                                            ; preds = %.loopexit99.i, %.lr
   %i.fo = icmp slt i64 %i.fn, 0
   %..i.i22 = call i64 @llvm.smin.i64(i64 %i.fn, i64 range(i64 -1, 4294967296) %i.ex)
   %.sroa.0.0.i.i23 = select i1 %i.fo, i64 0, i64 %..i.i22 ; 3 uses
-  %i.fp = trunc i64 %.sroa.0.0.i.i23 to i32       ; 4 uses
+  %i.fp = trunc i64 %.sroa.0.0.i.i23 to i32       ; 3 uses
   %i.fq = fadd float %i.ev, %i.fk
   %i.fr = call float @llvm.ceil.f32(float %i.fq)
   %i.fs = call i64 @llvm.fptosi.sat.i64.f32(float %i.fr) ; 2 uses
-  %i.ft = and i64 %.sroa.0.0.i.i23, 4294967295
+  %i.ft = and i64 %.sroa.0.0.i.i23, 4294967295    ; 2 uses
   %i.fu = add nsw i64 %.sroa.0.0.i.i23, 1
   %.not.i24 = icmp sgt i64 %i.fs, %i.ft
   %..i59.i = call i64 @llvm.smin.i64(i64 %i.fs, i64 range(i64 -1, 4294967296) %i.ew)
@@ -2439,14 +2435,12 @@ bb.am:                                            ; preds = %bb.az, %.lr.ph165.i
   %i.gy = phi <4 x float> [ zeroinitializer, %.lr.ph165.i ], [ %i.jm, %bb.az ]
   %i.gz = getelementptr inbounds nuw i8, ptr %.sroa.0.0159.i, i64 4 ; 2 uses
   %indvars.iv.next.i28 = add nuw nsw i64 %indvars.iv.i27, 1
-  %5 = trunc nuw i64 %indvars.iv.i27 to i32
-  %6 = add i32 %5, %i.fp                          ; 2 uses
+  %5 = add nuw nsw i64 %indvars.iv.i27, %i.ft     ; 2 uses
   %exitcond233.not.i = icmp eq i64 %indvars.iv.i27, %wide.trip.count.i26
   br i1 %exitcond233.not.i, label %bb.aq, label %bb.an, !prof !12
 
 bb.an:                                            ; preds = %bb.am
-  %7 = zext i32 %6 to i64
-  %i.ha = add nuw i64 %i.gx, %7
+  %i.ha = add nuw i64 %5, %i.gx
   %i.hb = shl i64 %i.ha, 2                        ; 4 uses
   %i.hc = or disjoint i64 %i.hb, 3
   %or.cond14.not.i.i29 = icmp ult i64 %i.hc, %.val15.i.i20
@@ -2463,6 +2457,7 @@ bb.ap:                                            ; preds = %bb.an
 
 bb.aq:                                            ; preds = %bb.am
   %i.hg = trunc nuw i64 %indvars.iv234.i to i32
+  %6 = trunc nuw i64 %5 to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !258
   store i32 %6, ptr %i.f, align 4, !noalias !258
   %i.hh = getelementptr inbounds nuw i8, ptr %i.f, i64 4
@@ -2865,11 +2860,11 @@ bb.aj:                                            ; preds = %.loopexit91.i36, %.
   %i.fm = icmp slt i64 %i.fl, 0
   %..i.i22 = call i64 @llvm.smin.i64(i64 %i.fl, i64 range(i64 -1, 4294967296) %i.ev)
   %.sroa.0.0.i.i23 = select i1 %i.fm, i64 0, i64 %..i.i22 ; 3 uses
-  %i.fn = trunc i64 %.sroa.0.0.i.i23 to i32       ; 4 uses
+  %i.fn = trunc i64 %.sroa.0.0.i.i23 to i32       ; 3 uses
   %i.fo = fadd float %i.et, %i.fi
   %i.fp = call float @llvm.ceil.f32(float %i.fo)
   %i.fq = call i64 @llvm.fptosi.sat.i64.f32(float %i.fp) ; 2 uses
-  %i.fr = and i64 %.sroa.0.0.i.i23, 4294967295
+  %i.fr = and i64 %.sroa.0.0.i.i23, 4294967295    ; 2 uses
   %i.fs = add nsw i64 %.sroa.0.0.i.i23, 1
   %.not.i24 = icmp sgt i64 %i.fq, %i.fr
   %..i56.i = call i64 @llvm.smin.i64(i64 %i.fq, i64 range(i64 -1, 4294967296) %i.eu)
@@ -2971,14 +2966,12 @@ bb.am:                                            ; preds = %bb.at, %.lr.ph149.i
   %i.gw = phi <4 x float> [ zeroinitializer, %.lr.ph149.i ], [ %i.ij, %bb.at ]
   %i.gx = getelementptr inbounds nuw i8, ptr %.sroa.0.0143.i, i64 4 ; 2 uses
   %indvars.iv.next.i28 = add nuw nsw i64 %indvars.iv.i27, 1
-  %5 = trunc nuw i64 %indvars.iv.i27 to i32
-  %6 = add i32 %5, %i.fn                          ; 2 uses
+  %5 = add nuw nsw i64 %indvars.iv.i27, %i.fr     ; 2 uses
   %exitcond209.not.i = icmp eq i64 %indvars.iv.i27, %wide.trip.count.i26
   br i1 %exitcond209.not.i, label %bb.ap, label %bb.an, !prof !12
 
 bb.an:                                            ; preds = %bb.am
-  %7 = zext i32 %6 to i64
-  %i.gy = add nuw i64 %i.gv, %7
+  %i.gy = add nuw i64 %5, %i.gv
   %i.gz = shl i64 %i.gy, 2                        ; 3 uses
   %i.ha = or disjoint i64 %i.gz, 3
   %or.cond14.not.i.i29 = icmp ult i64 %i.ha, %.val15.i.i20
@@ -2991,6 +2984,7 @@ bb.ao:                                            ; preds = %bb.an
 
 bb.ap:                                            ; preds = %bb.am
   %i.hd = trunc nuw i64 %indvars.iv210.i to i32
+  %6 = trunc nuw i64 %5 to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !302
   store i32 %6, ptr %i.f, align 4, !noalias !302
   %i.he = getelementptr inbounds nuw i8, ptr %i.f, i64 4
@@ -3393,11 +3387,11 @@ bb.aj:                                            ; preds = %.loopexit98.i, %.lr
   %i.fo = icmp slt i64 %i.fn, 0
   %..i.i22 = call i64 @llvm.smin.i64(i64 %i.fn, i64 range(i64 -1, 4294967296) %i.ex)
   %.sroa.0.0.i.i23 = select i1 %i.fo, i64 0, i64 %..i.i22 ; 3 uses
-  %i.fp = trunc i64 %.sroa.0.0.i.i23 to i32       ; 4 uses
+  %i.fp = trunc i64 %.sroa.0.0.i.i23 to i32       ; 3 uses
   %i.fq = fadd float %i.ev, %i.fk
   %i.fr = call float @llvm.ceil.f32(float %i.fq)
   %i.fs = call i64 @llvm.fptosi.sat.i64.f32(float %i.fr) ; 2 uses
-  %i.ft = and i64 %.sroa.0.0.i.i23, 4294967295
+  %i.ft = and i64 %.sroa.0.0.i.i23, 4294967295    ; 2 uses
   %i.fu = add nsw i64 %.sroa.0.0.i.i23, 1
   %.not.i24 = icmp sgt i64 %i.fs, %i.ft
   %..i59.i = call i64 @llvm.smin.i64(i64 %i.fs, i64 range(i64 -1, 4294967296) %i.ew)
@@ -3499,14 +3493,12 @@ bb.am:                                            ; preds = %bb.ax, %.lr.ph164.i
   %i.gy = phi <4 x float> [ zeroinitializer, %.lr.ph164.i ], [ %i.jo, %bb.ax ]
   %i.gz = getelementptr inbounds nuw i8, ptr %.sroa.0.0158.i, i64 4 ; 2 uses
   %indvars.iv.next.i28 = add nuw nsw i64 %indvars.iv.i27, 1
-  %5 = trunc nuw i64 %indvars.iv.i27 to i32
-  %6 = add i32 %5, %i.fp                          ; 2 uses
+  %5 = add nuw nsw i64 %indvars.iv.i27, %i.ft     ; 2 uses
   %exitcond232.not.i = icmp eq i64 %indvars.iv.i27, %wide.trip.count.i26
   br i1 %exitcond232.not.i, label %bb.ap, label %bb.an, !prof !12
 
 bb.an:                                            ; preds = %bb.am
-  %7 = zext i32 %6 to i64
-  %i.ha = add nuw i64 %i.gx, %7
+  %i.ha = add nuw i64 %5, %i.gx
   %i.hb = shl i64 %i.ha, 2                        ; 3 uses
   %i.hc = or disjoint i64 %i.hb, 3
   %or.cond14.not.i.i29 = icmp ult i64 %i.hc, %.val15.i.i20
@@ -3519,6 +3511,7 @@ bb.ao:                                            ; preds = %bb.an
 
 bb.ap:                                            ; preds = %bb.am
   %i.hf = trunc nuw i64 %indvars.iv233.i to i32
+  %6 = trunc nuw i64 %5 to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !346
   store i32 %6, ptr %i.f, align 4, !noalias !346
   %i.hg = getelementptr inbounds nuw i8, ptr %i.f, i64 4
@@ -3921,11 +3914,11 @@ bb.aj:                                            ; preds = %.loopexit101.i, %.l
   %i.fo = icmp slt i64 %i.fn, 0
   %..i.i22 = call i64 @llvm.smin.i64(i64 %i.fn, i64 range(i64 -1, 4294967296) %i.ex)
   %.sroa.0.0.i.i23 = select i1 %i.fo, i64 0, i64 %..i.i22 ; 3 uses
-  %i.fp = trunc i64 %.sroa.0.0.i.i23 to i32       ; 4 uses
+  %i.fp = trunc i64 %.sroa.0.0.i.i23 to i32       ; 3 uses
   %i.fq = fadd float %i.ev, %i.fk
   %i.fr = call float @llvm.ceil.f32(float %i.fq)
   %i.fs = call i64 @llvm.fptosi.sat.i64.f32(float %i.fr) ; 2 uses
-  %i.ft = and i64 %.sroa.0.0.i.i23, 4294967295
+  %i.ft = and i64 %.sroa.0.0.i.i23, 4294967295    ; 2 uses
   %i.fu = add nsw i64 %.sroa.0.0.i.i23, 1
   %.not.i24 = icmp sgt i64 %i.fs, %i.ft
   %..i59.i = call i64 @llvm.smin.i64(i64 %i.fs, i64 range(i64 -1, 4294967296) %i.ew)
@@ -4027,14 +4020,12 @@ bb.am:                                            ; preds = %bb.ax, %.lr.ph167.i
   %i.gy = phi <4 x float> [ zeroinitializer, %.lr.ph167.i ], [ %i.jo, %bb.ax ]
   %i.gz = getelementptr inbounds nuw i8, ptr %.sroa.0.0161.i, i64 4 ; 2 uses
   %indvars.iv.next.i28 = add nuw nsw i64 %indvars.iv.i27, 1
-  %5 = trunc nuw i64 %indvars.iv.i27 to i32
-  %6 = add i32 %5, %i.fp                          ; 2 uses
+  %5 = add nuw nsw i64 %indvars.iv.i27, %i.ft     ; 2 uses
   %exitcond235.not.i = icmp eq i64 %indvars.iv.i27, %wide.trip.count.i26
   br i1 %exitcond235.not.i, label %bb.ap, label %bb.an, !prof !12
 
 bb.an:                                            ; preds = %bb.am
-  %7 = zext i32 %6 to i64
-  %i.ha = add nuw i64 %i.gx, %7
+  %i.ha = add nuw i64 %5, %i.gx
   %i.hb = shl i64 %i.ha, 2                        ; 3 uses
   %i.hc = or disjoint i64 %i.hb, 3
   %or.cond14.not.i.i29 = icmp ult i64 %i.hc, %.val15.i.i20
@@ -4047,6 +4038,7 @@ bb.ao:                                            ; preds = %bb.an
 
 bb.ap:                                            ; preds = %bb.am
   %i.hf = trunc nuw i64 %indvars.iv236.i to i32
+  %6 = trunc nuw i64 %5 to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !390
   store i32 %6, ptr %i.f, align 4, !noalias !390
   %i.hg = getelementptr inbounds nuw i8, ptr %i.f, i64 4
@@ -4449,11 +4441,11 @@ bb.aj:                                            ; preds = %.loopexit98.i, %.lr
   %i.fo = icmp slt i64 %i.fn, 0
   %..i.i22 = call i64 @llvm.smin.i64(i64 %i.fn, i64 range(i64 -1, 4294967296) %i.ex)
   %.sroa.0.0.i.i23 = select i1 %i.fo, i64 0, i64 %..i.i22 ; 3 uses
-  %i.fp = trunc i64 %.sroa.0.0.i.i23 to i32       ; 4 uses
+  %i.fp = trunc i64 %.sroa.0.0.i.i23 to i32       ; 3 uses
   %i.fq = fadd float %i.ev, %i.fk
   %i.fr = call float @llvm.ceil.f32(float %i.fq)
   %i.fs = call i64 @llvm.fptosi.sat.i64.f32(float %i.fr) ; 2 uses
-  %i.ft = and i64 %.sroa.0.0.i.i23, 4294967295
+  %i.ft = and i64 %.sroa.0.0.i.i23, 4294967295    ; 2 uses
   %i.fu = add nsw i64 %.sroa.0.0.i.i23, 1
   %.not.i24 = icmp sgt i64 %i.fs, %i.ft
   %..i59.i = call i64 @llvm.smin.i64(i64 %i.fs, i64 range(i64 -1, 4294967296) %i.ew)
@@ -4555,14 +4547,12 @@ bb.am:                                            ; preds = %bb.az, %.lr.ph164.i
   %i.gy = phi <4 x float> [ zeroinitializer, %.lr.ph164.i ], [ %i.jp, %bb.az ]
   %i.gz = getelementptr inbounds nuw i8, ptr %.sroa.0.0158.i, i64 4 ; 2 uses
   %indvars.iv.next.i28 = add nuw nsw i64 %indvars.iv.i27, 1
-  %5 = trunc nuw i64 %indvars.iv.i27 to i32
-  %6 = add i32 %5, %i.fp                          ; 2 uses
+  %5 = add nuw nsw i64 %indvars.iv.i27, %i.ft     ; 2 uses
   %exitcond232.not.i = icmp eq i64 %indvars.iv.i27, %wide.trip.count.i26
   br i1 %exitcond232.not.i, label %bb.aq, label %bb.an, !prof !12
 
 bb.an:                                            ; preds = %bb.am
-  %7 = zext i32 %6 to i64
-  %i.ha = add nuw i64 %i.gx, %7
+  %i.ha = add nuw i64 %5, %i.gx
   %i.hb = shl i64 %i.ha, 2                        ; 4 uses
   %i.hc = or disjoint i64 %i.hb, 3
   %or.cond14.not.i.i29 = icmp ult i64 %i.hc, %.val15.i.i20
@@ -4579,6 +4569,7 @@ bb.ap:                                            ; preds = %bb.an
 
 bb.aq:                                            ; preds = %bb.am
   %i.hg = trunc nuw i64 %indvars.iv233.i to i32
+  %6 = trunc nuw i64 %5 to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !434
   store i32 %6, ptr %i.f, align 4, !noalias !434
   %i.hh = getelementptr inbounds nuw i8, ptr %i.f, i64 4
@@ -4981,11 +4972,11 @@ bb.aj:                                            ; preds = %.loopexit101.i, %.l
   %i.fo = icmp slt i64 %i.fn, 0
   %..i.i22 = call i64 @llvm.smin.i64(i64 %i.fn, i64 range(i64 -1, 4294967296) %i.ex)
   %.sroa.0.0.i.i23 = select i1 %i.fo, i64 0, i64 %..i.i22 ; 3 uses
-  %i.fp = trunc i64 %.sroa.0.0.i.i23 to i32       ; 4 uses
+  %i.fp = trunc i64 %.sroa.0.0.i.i23 to i32       ; 3 uses
   %i.fq = fadd float %i.ev, %i.fk
   %i.fr = call float @llvm.ceil.f32(float %i.fq)
   %i.fs = call i64 @llvm.fptosi.sat.i64.f32(float %i.fr) ; 2 uses
-  %i.ft = and i64 %.sroa.0.0.i.i23, 4294967295
+  %i.ft = and i64 %.sroa.0.0.i.i23, 4294967295    ; 2 uses
   %i.fu = add nsw i64 %.sroa.0.0.i.i23, 1
   %.not.i24 = icmp sgt i64 %i.fs, %i.ft
   %..i59.i = call i64 @llvm.smin.i64(i64 %i.fs, i64 range(i64 -1, 4294967296) %i.ew)
@@ -5087,14 +5078,12 @@ bb.am:                                            ; preds = %bb.az, %.lr.ph167.i
   %i.gy = phi <4 x float> [ zeroinitializer, %.lr.ph167.i ], [ %i.jp, %bb.az ]
   %i.gz = getelementptr inbounds nuw i8, ptr %.sroa.0.0161.i, i64 4 ; 2 uses
   %indvars.iv.next.i28 = add nuw nsw i64 %indvars.iv.i27, 1
-  %5 = trunc nuw i64 %indvars.iv.i27 to i32
-  %6 = add i32 %5, %i.fp                          ; 2 uses
+  %5 = add nuw nsw i64 %indvars.iv.i27, %i.ft     ; 2 uses
   %exitcond235.not.i = icmp eq i64 %indvars.iv.i27, %wide.trip.count.i26
   br i1 %exitcond235.not.i, label %bb.aq, label %bb.an, !prof !12
 
 bb.an:                                            ; preds = %bb.am
-  %7 = zext i32 %6 to i64
-  %i.ha = add nuw i64 %i.gx, %7
+  %i.ha = add nuw i64 %5, %i.gx
   %i.hb = shl i64 %i.ha, 2                        ; 4 uses
   %i.hc = or disjoint i64 %i.hb, 3
   %or.cond14.not.i.i29 = icmp ult i64 %i.hc, %.val15.i.i20
@@ -5111,6 +5100,7 @@ bb.ap:                                            ; preds = %bb.an
 
 bb.aq:                                            ; preds = %bb.am
   %i.hg = trunc nuw i64 %indvars.iv236.i to i32
+  %6 = trunc nuw i64 %5 to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !478
   store i32 %6, ptr %i.f, align 4, !noalias !478
   %i.hh = getelementptr inbounds nuw i8, ptr %i.f, i64 4

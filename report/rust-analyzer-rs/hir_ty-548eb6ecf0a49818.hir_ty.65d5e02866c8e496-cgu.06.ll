@@ -205,7 +205,8 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %i.f = getelementptr i8, ptr %.0.val, i64 -2    ; 3 uses
+  %i.f = getelementptr i8, ptr %.0.val, i64 -2    ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.f) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.f) ]
   %i.g = tail call noundef i64 @_RNvMs0_NtCs50pZefIA5Ye_8triomphe3arcINtB5_8ArcInnerNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6region14RegionInternedE14offset_of_dataBT_(ptr noundef nonnull %i.f)

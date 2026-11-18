@@ -204,6 +204,10 @@ bb.bq:                                            ; preds = %.noexc292.i
   store i8 1, ptr %i.lb, align 1, !noalias !13101
   %i.lc = getelementptr inbounds nuw i8, ptr %1, i64 1813
   store i8 1, ptr %i.lc, align 1, !noalias !13101
+  %3 = getelementptr i8, ptr %1, i64 1344
+  %.val239.i273 = load i64, ptr %3, align 8, !noalias !13101, !noundef !17
+  %4 = icmp ult i64 %.val239.i273, 67818912035696881
+  call void @llvm.assume(i1 %4)
   br label %bb.bs
 
 bb.br:                                            ; preds = %.noexc292.i, %bb.bq

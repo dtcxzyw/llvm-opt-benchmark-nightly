@@ -205,7 +205,7 @@ _RNvXs2_NtCsgrcu2UPjJtD_14futures_rustls6commonINtB5_15SyncReadAdapterINtNtCsbVD
 
 _RNvXs2_NtCsgrcu2UPjJtD_14futures_rustls6commonINtB5_15SyncReadAdapterINtNtCsbVDXp34Q3tF_18multistream_select10negotiated10NegotiatedINtCshlctkzJY7Kq_14rw_stream_sink12RwStreamSinkINtCsknXHD0xsxtc_16libp2p_websocket15BytesConnectionNtNtNtCs62FBUrD8956_10libp2p_tcp8provider5tokio9TcpStreamEEEENtNtNtCsexYYUdYSQU6_5alloc2io4read4Read4readCshnt8FRa5Rut_11native_ping.exit.thread: ; preds = %bb.b, %_RNvXs2_NtCsgrcu2UPjJtD_14futures_rustls6commonINtB5_15SyncReadAdapterINtNtCsbVDXp34Q3tF_18multistream_select10negotiated10NegotiatedINtCshlctkzJY7Kq_14rw_stream_sink12RwStreamSinkINtCsknXHD0xsxtc_16libp2p_websocket15BytesConnectionNtNtNtCs62FBUrD8956_10libp2p_tcp8provider5tokio9TcpStreamEEEENtNtNtCsexYYUdYSQU6_5alloc2io4read4Read4readCshnt8FRa5Rut_11native_ping.exit
   %storemerge = phi i64 [ %i.g, %_RNvXs2_NtCsgrcu2UPjJtD_14futures_rustls6commonINtB5_15SyncReadAdapterINtNtCsbVDXp34Q3tF_18multistream_select10negotiated10NegotiatedINtCshlctkzJY7Kq_14rw_stream_sink12RwStreamSinkINtCsknXHD0xsxtc_16libp2p_websocket15BytesConnectionNtNtNtCs62FBUrD8956_10libp2p_tcp8provider5tokio9TcpStreamEEEENtNtNtCsexYYUdYSQU6_5alloc2io4read4Read4readCshnt8FRa5Rut_11native_ping.exit ], [ 1, %bb.b ]
-  %.sroa.4.0.i3 = phi ptr [ %i.h, %_RNvXs2_NtCsgrcu2UPjJtD_14futures_rustls6commonINtB5_15SyncReadAdapterINtNtCsbVDXp34Q3tF_18multistream_select10negotiated10NegotiatedINtCshlctkzJY7Kq_14rw_stream_sink12RwStreamSinkINtCsknXHD0xsxtc_16libp2p_websocket15BytesConnectionNtNtNtCs62FBUrD8956_10libp2p_tcp8provider5tokio9TcpStreamEEEENtNtNtCsexYYUdYSQU6_5alloc2io4read4Read4readCshnt8FRa5Rut_11native_ping.exit ], [ inttoptr (i64 55834574851 to ptr), %bb.b ] ; 11 uses
+  %.sroa.4.0.i3 = phi ptr [ %i.h, %_RNvXs2_NtCsgrcu2UPjJtD_14futures_rustls6commonINtB5_15SyncReadAdapterINtNtCsbVDXp34Q3tF_18multistream_select10negotiated10NegotiatedINtCshlctkzJY7Kq_14rw_stream_sink12RwStreamSinkINtCsknXHD0xsxtc_16libp2p_websocket15BytesConnectionNtNtNtCs62FBUrD8956_10libp2p_tcp8provider5tokio9TcpStreamEEEENtNtNtCsexYYUdYSQU6_5alloc2io4read4Read4readCshnt8FRa5Rut_11native_ping.exit ], [ inttoptr (i64 55834574851 to ptr), %bb.b ] ; 14 uses
   store i64 %storemerge, ptr %i.b, align 8
   store ptr %.sroa.4.0.i3, ptr %i.d, align 8
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4.0.i3) ]
@@ -295,10 +295,12 @@ _RNvMs1_NtNtCskKLDkoKarTP_4core2io5errorNtB5_5Error14is_interrupted.exit: ; pred
   br i1 %i.r, label %.thread17, label %.loopexit
 
 .thread17:                                        ; preds = %_RNvMs1_NtNtCskKLDkoKarTP_4core2io5errorNtB5_5Error14is_interrupted.exit, %.split15
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4.0.i3) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !1331
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECshnt8FRa5Rut_11native_ping.exit
 
 bb.g:                                             ; preds = %.split14
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4.0.i3) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !1331
   %i.am = and i64 %i.k, 1095216660480
   %i.an = icmp ne i64 %i.am, 1095216660480
@@ -308,6 +310,7 @@ bb.g:                                             ; preds = %.split14
 
 bb.h:                                             ; preds = %.split
   %i.ao = getelementptr i8, ptr %.sroa.4.0.i3, i64 -1 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4.0.i3) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !1331
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ao) ]
   store ptr %i.ao, ptr %i.e, align 8, !alias.scope !1332, !noalias !1331
@@ -369,7 +372,7 @@ _RNvXs2_NtCsgrcu2UPjJtD_14futures_rustls6commonINtB5_15SyncReadAdapterINtNtCsbVD
 
 _RNvXs2_NtCsgrcu2UPjJtD_14futures_rustls6commonINtB5_15SyncReadAdapterINtNtCsbVDXp34Q3tF_18multistream_select10negotiated10NegotiatedNtNtNtCs62FBUrD8956_10libp2p_tcp8provider5tokio9TcpStreamEENtNtNtCsexYYUdYSQU6_5alloc2io4read4Read4readCshnt8FRa5Rut_11native_ping.exit.thread: ; preds = %bb.b, %_RNvXs2_NtCsgrcu2UPjJtD_14futures_rustls6commonINtB5_15SyncReadAdapterINtNtCsbVDXp34Q3tF_18multistream_select10negotiated10NegotiatedNtNtNtCs62FBUrD8956_10libp2p_tcp8provider5tokio9TcpStreamEENtNtNtCsexYYUdYSQU6_5alloc2io4read4Read4readCshnt8FRa5Rut_11native_ping.exit
   %storemerge = phi i64 [ %i.g, %_RNvXs2_NtCsgrcu2UPjJtD_14futures_rustls6commonINtB5_15SyncReadAdapterINtNtCsbVDXp34Q3tF_18multistream_select10negotiated10NegotiatedNtNtNtCs62FBUrD8956_10libp2p_tcp8provider5tokio9TcpStreamEENtNtNtCsexYYUdYSQU6_5alloc2io4read4Read4readCshnt8FRa5Rut_11native_ping.exit ], [ 1, %bb.b ]
-  %.sroa.4.0.i3 = phi ptr [ %i.h, %_RNvXs2_NtCsgrcu2UPjJtD_14futures_rustls6commonINtB5_15SyncReadAdapterINtNtCsbVDXp34Q3tF_18multistream_select10negotiated10NegotiatedNtNtNtCs62FBUrD8956_10libp2p_tcp8provider5tokio9TcpStreamEENtNtNtCsexYYUdYSQU6_5alloc2io4read4Read4readCshnt8FRa5Rut_11native_ping.exit ], [ inttoptr (i64 55834574851 to ptr), %bb.b ] ; 11 uses
+  %.sroa.4.0.i3 = phi ptr [ %i.h, %_RNvXs2_NtCsgrcu2UPjJtD_14futures_rustls6commonINtB5_15SyncReadAdapterINtNtCsbVDXp34Q3tF_18multistream_select10negotiated10NegotiatedNtNtNtCs62FBUrD8956_10libp2p_tcp8provider5tokio9TcpStreamEENtNtNtCsexYYUdYSQU6_5alloc2io4read4Read4readCshnt8FRa5Rut_11native_ping.exit ], [ inttoptr (i64 55834574851 to ptr), %bb.b ] ; 14 uses
   store i64 %storemerge, ptr %i.b, align 8
   store ptr %.sroa.4.0.i3, ptr %i.d, align 8
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4.0.i3) ]
@@ -459,10 +462,12 @@ _RNvMs1_NtNtCskKLDkoKarTP_4core2io5errorNtB5_5Error14is_interrupted.exit: ; pred
   br i1 %i.r, label %.thread17, label %.loopexit
 
 .thread17:                                        ; preds = %_RNvMs1_NtNtCskKLDkoKarTP_4core2io5errorNtB5_5Error14is_interrupted.exit, %.split15
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4.0.i3) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !1340
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECshnt8FRa5Rut_11native_ping.exit
 
 bb.g:                                             ; preds = %.split14
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4.0.i3) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !1340
   %i.am = and i64 %i.k, 1095216660480
   %i.an = icmp ne i64 %i.am, 1095216660480
@@ -472,6 +477,7 @@ bb.g:                                             ; preds = %.split14
 
 bb.h:                                             ; preds = %.split
   %i.ao = getelementptr i8, ptr %.sroa.4.0.i3, i64 -1 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4.0.i3) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !1340
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ao) ]
   store ptr %i.ao, ptr %i.e, align 8, !alias.scope !1341, !noalias !1340
@@ -533,7 +539,7 @@ _RNvXs2_NtCsgrcu2UPjJtD_14futures_rustls6commonINtB5_15SyncReadAdapterNtNtNtCs62
 
 _RNvXs2_NtCsgrcu2UPjJtD_14futures_rustls6commonINtB5_15SyncReadAdapterNtNtNtCs62FBUrD8956_10libp2p_tcp8provider5tokio9TcpStreamENtNtNtCsexYYUdYSQU6_5alloc2io4read4Read4readCshnt8FRa5Rut_11native_ping.exit.thread: ; preds = %bb.b, %_RNvXs2_NtCsgrcu2UPjJtD_14futures_rustls6commonINtB5_15SyncReadAdapterNtNtNtCs62FBUrD8956_10libp2p_tcp8provider5tokio9TcpStreamENtNtNtCsexYYUdYSQU6_5alloc2io4read4Read4readCshnt8FRa5Rut_11native_ping.exit
   %storemerge = phi i64 [ %i.g, %_RNvXs2_NtCsgrcu2UPjJtD_14futures_rustls6commonINtB5_15SyncReadAdapterNtNtNtCs62FBUrD8956_10libp2p_tcp8provider5tokio9TcpStreamENtNtNtCsexYYUdYSQU6_5alloc2io4read4Read4readCshnt8FRa5Rut_11native_ping.exit ], [ 1, %bb.b ]
-  %.sroa.4.0.i3 = phi ptr [ %i.h, %_RNvXs2_NtCsgrcu2UPjJtD_14futures_rustls6commonINtB5_15SyncReadAdapterNtNtNtCs62FBUrD8956_10libp2p_tcp8provider5tokio9TcpStreamENtNtNtCsexYYUdYSQU6_5alloc2io4read4Read4readCshnt8FRa5Rut_11native_ping.exit ], [ inttoptr (i64 55834574851 to ptr), %bb.b ] ; 11 uses
+  %.sroa.4.0.i3 = phi ptr [ %i.h, %_RNvXs2_NtCsgrcu2UPjJtD_14futures_rustls6commonINtB5_15SyncReadAdapterNtNtNtCs62FBUrD8956_10libp2p_tcp8provider5tokio9TcpStreamENtNtNtCsexYYUdYSQU6_5alloc2io4read4Read4readCshnt8FRa5Rut_11native_ping.exit ], [ inttoptr (i64 55834574851 to ptr), %bb.b ] ; 14 uses
   store i64 %storemerge, ptr %i.b, align 8
   store ptr %.sroa.4.0.i3, ptr %i.d, align 8
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4.0.i3) ]
@@ -623,10 +629,12 @@ _RNvMs1_NtNtCskKLDkoKarTP_4core2io5errorNtB5_5Error14is_interrupted.exit: ; pred
   br i1 %i.r, label %.thread17, label %.loopexit
 
 .thread17:                                        ; preds = %_RNvMs1_NtNtCskKLDkoKarTP_4core2io5errorNtB5_5Error14is_interrupted.exit, %.split15
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4.0.i3) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !1349
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECshnt8FRa5Rut_11native_ping.exit
 
 bb.g:                                             ; preds = %.split14
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4.0.i3) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !1349
   %i.am = and i64 %i.k, 1095216660480
   %i.an = icmp ne i64 %i.am, 1095216660480
@@ -636,6 +644,7 @@ bb.g:                                             ; preds = %.split14
 
 bb.h:                                             ; preds = %.split
   %i.ao = getelementptr i8, ptr %.sroa.4.0.i3, i64 -1 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4.0.i3) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !1349
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ao) ]
   store ptr %i.ao, ptr %i.e, align 8, !alias.scope !1350, !noalias !1349

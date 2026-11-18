@@ -205,7 +205,7 @@ bb.bw:                                            ; preds = %bb.bv
   %i.lj = extractvalue { i32, i1 } %i.lh, 0
   %i.lk = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %i.lj, i32 1) ; 2 uses
   %i.ll = extractvalue { i32, i1 } %i.lk, 1
-  %i.lm = extractvalue { i32, i1 } %i.lk, 0       ; 2 uses
+  %i.lm = extractvalue { i32, i1 } %i.lk, 0       ; 3 uses
   br i1 %i.ll, label %bb.by, label %bb.bx
 
 bb.bx:                                            ; preds = %bb.bw
@@ -225,6 +225,7 @@ bb.by:                                            ; preds = %bb.bx, %bb.bw, %bb.
 bb.bz:                                            ; preds = %bb.bx
   %i.lt = icmp sgt i32 %i.lm, 1
   %spec.select228 = select i1 %i.lt, i1 true, i1 %.0191
+  %9 = icmp eq i32 %i.lm, 0
   br label %.loopexit
 
 .lr.ph.1:                                         ; preds = %bb.cj
@@ -339,7 +340,7 @@ bb.ck:                                            ; preds = %bb.ci, %.lr.ph.5, %
 
 .loopexit:                                        ; preds = %bb.cb, %bb.cd, %bb.cf, %bb.ch, %bb.ci, %bb.bz, %bb.bu
   %.1295 = phi i32 [ %.0294, %bb.bu ], [ %.0294, %bb.bz ], [ 0, %bb.ci ], [ 0, %bb.ch ], [ 0, %bb.cf ], [ 0, %bb.cd ], [ 0, %bb.cb ] ; 3 uses
-  %.0293 = phi i1 [ true, %bb.bu ], [ false, %bb.bz ], [ true, %bb.ci ], [ true, %bb.ch ], [ true, %bb.cf ], [ true, %bb.cd ], [ true, %bb.cb ] ; 3 uses
+  %.0293 = phi i1 [ true, %bb.bu ], [ %9, %bb.bz ], [ true, %bb.ci ], [ true, %bb.ch ], [ true, %bb.cf ], [ true, %bb.cd ], [ true, %bb.cb ] ; 3 uses
   %.1192 = phi i1 [ %.0191, %bb.bu ], [ %spec.select228, %bb.bz ], [ %i.ko, %bb.ci ], [ %i.ko, %bb.ch ], [ %i.ko, %bb.cf ], [ %i.ko, %bb.cd ], [ %i.ko, %bb.cb ] ; 2 uses
   %i.nq = call i32 @ArrayGetNItems(i32 noundef %1, ptr noundef nonnull %i.e) #16 ; 2 uses
   call void @ArrayCheckBounds(i32 noundef %1, ptr noundef nonnull %i.e, ptr noundef nonnull %i.f) #16

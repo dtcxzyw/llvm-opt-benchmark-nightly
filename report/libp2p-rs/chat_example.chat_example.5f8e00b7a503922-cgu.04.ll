@@ -204,7 +204,7 @@ bb.cy:                                            ; preds = %bb.cw
   br label %bb.cv
 
 bb.cz:                                            ; preds = %.thread406, %bb.cy
-  %.sroa.10.0410 = phi ptr [ %i.rx, %.thread406 ], [ %.sroa.4382.0.copyload, %bb.cy ] ; 9 uses
+  %.sroa.10.0410 = phi ptr [ %i.rx, %.thread406 ], [ %.sroa.4382.0.copyload, %bb.cy ] ; 11 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0410) ]
   %i.rz = ptrtoint ptr %.sroa.10.0410 to i64      ; 4 uses
   %i.sa = and i64 %i.rz, 3                        ; 2 uses
@@ -261,6 +261,7 @@ bb.de:                                            ; preds = %bb.cy
 bb.df:                                            ; preds = %bb.da, %.noexc318
   %lpad.thr_comm.split-lp431 = landingpad { ptr, i32 }
           cleanup
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0410) ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsvMXERwWlfq_12chat_example(ptr nonnull %.sroa.10.0410) #27
           to label %common.resume unwind label %bb.ci
 
@@ -663,6 +664,7 @@ _RNvMs1_NtNtCskKLDkoKarTP_4core2io5errorNtB5_5Error4kind.exit: ; preds = %bb.dd,
 
 bb.gd:                                            ; preds = %_RNvMs1_NtNtCskKLDkoKarTP_4core2io5errorNtB5_5Error4kind.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0410) ]
   switch i64 %i.sa, label %default.unreachable [
     i64 2, label %bb.hd
     i64 3, label %bb.ge

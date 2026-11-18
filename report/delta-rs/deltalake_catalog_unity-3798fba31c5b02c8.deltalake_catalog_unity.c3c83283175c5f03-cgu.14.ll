@@ -204,9 +204,9 @@ bb.h:                                             ; preds = %bb.d
   br i1 %i.as, label %bb.ap, label %.body
 
 bb.i:                                             ; preds = %bb.e
-  %i.at = extractvalue { ptr, ptr } %i.ah, 0      ; 4 uses
-  %i.au = extractvalue { ptr, ptr } %i.ah, 1      ; 6 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.at) ]
+  %i.at = extractvalue { ptr, ptr } %i.ah, 0      ; 6 uses
+  %i.au = extractvalue { ptr, ptr } %i.ah, 1      ; 7 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.at), "nonnull"(ptr %i.au) ]
   %i.av = load ptr, ptr %i.j, align 8, !nonnull !6, !align !10, !noundef !6
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 16
   store atomic i8 0, ptr %i.aw release, align 8
@@ -216,6 +216,7 @@ bb.i:                                             ; preds = %bb.e
   br i1 %.not.i, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.at) ]
   invoke void %i.ax(ptr noundef nonnull %i.at)
           to label %bb.k unwind label %bb.m
 
@@ -228,6 +229,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
 bb.l:                                             ; preds = %bb.k
   %i.bb = getelementptr inbounds nuw i8, ptr %i.au, i64 16
   %i.bc = load i64, ptr %i.bb, align 8, !range !8, !invariant.load !6
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.at) ]
   call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %i.at, i64 noundef range(i64 1, -9223372036854775808) %i.az, i64 noundef range(i64 1, 536870913) %i.bc) #23
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtB4_3any3AnyNtNtB4_6marker4SendEL_EECsgO8S5jLFugx_23deltalake_catalog_unity.exit
 

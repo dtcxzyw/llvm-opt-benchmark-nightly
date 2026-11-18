@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %.lr.ph946, %._crit_
 .lr.ph:                                           ; preds = %bb.b, %_ZNSt14_Function_baseD2Ev.exit93
   %.sroa.0760.0939 = phi ptr [ %.sroa.0760.0, %_ZNSt14_Function_baseD2Ev.exit93 ], [ %.sroa.0760.0936, %bb.b ] ; 44 uses
   %.1938 = phi i1 [ %.8, %_ZNSt14_Function_baseD2Ev.exit93 ], [ %.0943, %bb.b ] ; 12 uses
-  %i.rs = getelementptr inbounds i8, ptr %.sroa.0760.0939, i64 -24 ; 36 uses
+  %i.rs = getelementptr inbounds i8, ptr %.sroa.0760.0939, i64 -24 ; 38 uses
   %i.rt = getelementptr inbounds i8, ptr %.sroa.0760.0939, i64 -16 ; 6 uses
   %i.ru = load ptr, ptr %i.rt, align 8, !tbaa !317, !noalias !707 ; 3 uses
   %i.rv = getelementptr inbounds nuw i8, ptr %i.ru, i64 8
@@ -608,11 +608,17 @@ _ZL12getIndexTypePN4llvm5ValueE.exit.i:           ; preds = %bb.ii, %_ZN4llvm8dy
   %.sink.i.i = phi ptr [ %i.bvx, %bb.ig ], [ %i.bxj, %bb.ii ], [ %i.bwt, %bb.if ], [ %i.bvx, %_ZN4llvm8dyn_castINS_13IntrinsicInstENS_5ValueEEEDcPT0_.exit.i294.i ], [ %i.bvx, %_Z10getPointerPN4llvm5ValueE.exit.thread440.i ], [ %i.bvx, %_ZN4llvm14CastIsPossibleINS_13IntrinsicInstEPNS_5ValueEvE10isPossibleERKS3_.exit.i.i.i292.i ], [ %i.bvx, %bb.ih ]
   %i.bxk = getelementptr inbounds nuw i8, ptr %.sink.i.i, i64 8
   %.1.i290.i = load ptr, ptr %i.bxk, align 8, !tbaa !317 ; 2 uses
-  %.pre99.i = load ptr, ptr %i.bvc, align 8, !tbaa !327
+  %.pre.i663 = load i8, ptr %i.rs, align 8, !tbaa !295
+  %.pre99.i = load ptr, ptr %i.bvc, align 8, !tbaa !327 ; 2 uses
   %.phi.trans.insert100.i = getelementptr inbounds nuw i8, ptr %.pre99.i, i64 36
   %.pre101.i = load i32, ptr %.phi.trans.insert100.i, align 4, !tbaa !389
+  %.pre102.i = load i8, ptr %.pre99.i, align 8, !tbaa !295
+  %238 = icmp eq i8 %.pre.i663, 88
+  %239 = icmp eq i8 %.pre102.i, 14
   %i.bxl = icmp eq i32 %.pre101.i, 240
   %i.bxm = select i1 %i.bxl, i64 0, i64 32
+  call void @llvm.assume(i1 %238)
+  call void @llvm.assume(i1 %239)
   %i.bxn = getelementptr inbounds i8, ptr %.sroa.0760.0939, i64 -20
   %i.bxo = load i32, ptr %i.bxn, align 4
   %i.bxp = and i32 %i.bxo, 268435455
@@ -1015,11 +1021,17 @@ _ZNK4llvm4User10getOperandEj.exit119.i:           ; preds = %bb.op, %bb.oo
   br i1 %.not.i108, label %tailrecurse.i698.peel.begin, label %_ZNK12_GLOBAL__N_19HvxIdioms15processVScatterERN4llvm11InstructionE.exit
 
 tailrecurse.i698.peel.begin:                      ; preds = %_ZNK4llvm4User10getOperandEj.exit119.i
-  %.pre99.i694 = load ptr, ptr %i.bvc, align 8, !tbaa !327
+  %.pre.i692 = load i8, ptr %i.rs, align 8, !tbaa !295
+  %.pre99.i694 = load ptr, ptr %i.bvc, align 8, !tbaa !327 ; 2 uses
   %.phi.trans.insert100.i695 = getelementptr inbounds nuw i8, ptr %.pre99.i694, i64 36
   %.pre101.i696 = load i32, ptr %.phi.trans.insert100.i695, align 4, !tbaa !389
+  %.pre102.i697 = load i8, ptr %.pre99.i694, align 8, !tbaa !295
+  %240 = icmp eq i8 %.pre.i692, 88
+  %241 = icmp eq i8 %.pre102.i697, 14
   %i.dmk = icmp eq i32 %.pre101.i696, 240
   %i.dml = select i1 %i.dmk, i64 0, i64 32
+  call void @llvm.assume(i1 %240)
+  call void @llvm.assume(i1 %241)
   %i.dmm = and i32 %i.dlq, 268435455
   %i.dmn = zext nneg i32 %i.dmm to i64
   %i.dmo = sub nsw i64 0, %i.dmn

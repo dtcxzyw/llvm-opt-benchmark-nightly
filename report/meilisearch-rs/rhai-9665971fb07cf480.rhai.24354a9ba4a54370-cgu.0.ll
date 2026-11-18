@@ -205,7 +205,8 @@ bb.cp:                                            ; preds = %bb.co
   unreachable
 
 bb.cq:                                            ; preds = %bb.cm, %.thread498
-  %.sroa.666.0503 = phi ptr [ %i.iu, %.thread498 ], [ %.sroa.666.0.copyload, %bb.cm ] ; 6 uses
+  %.sroa.666.0503 = phi ptr [ %i.iu, %.thread498 ], [ %.sroa.666.0.copyload, %bb.cm ] ; 7 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.666.0503) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.664)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.666.0503) ]
@@ -380,7 +381,8 @@ bb.di:                                            ; preds = %bb.dh
   unreachable
 
 bb.dj:                                            ; preds = %bb.df, %.thread513
-  %.sroa.685.0518 = phi ptr [ %i.kh, %.thread513 ], [ %.sroa.685.0.copyload, %bb.df ] ; 6 uses
+  %.sroa.685.0518 = phi ptr [ %i.kh, %.thread513 ], [ %.sroa.685.0.copyload, %bb.df ] ; 7 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.685.0518) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.683)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.888)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.685.0518) ]

@@ -205,21 +205,25 @@ _RNvNtCs8frGy5WneL6_4fish10parse_util20get_offset_from_line.exit: ; preds = %bb.
   ret { i64, i64 } %i.v
 
 .split.i16.a:                                     ; preds = %.loopexit
-  %i.w = extractvalue { i32, i1 } %i.s, 0
+  %i.w = extractvalue { i32, i1 } %i.s, 0         ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1061)
-  %4 = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %1
+  %4 = icmp slt i32 %i.w, 0
+  br i1 %4, label %_RNvNtCs8frGy5WneL6_4fish10parse_util20get_offset_from_line.exit25, label %.split.i16
+
+.split.i16:                                       ; preds = %.split.i16.a
+  %5 = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %1
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.n, %.split.i16.a
-  %.sroa.8.0.i17 = phi i64 [ 0, %.split.i16.a ], [ %i.ag, %bb.n ]
-  %.sroa.0.013.i18 = phi ptr [ %0, %.split.i16.a ], [ %i.z, %bb.n ]
-  %.sroa.01.0.i19 = phi i32 [ 0, %.split.i16.a ], [ %i.ah, %bb.n ]
+bb.i:                                             ; preds = %bb.n, %.split.i16
+  %.sroa.8.0.i17 = phi i64 [ 0, %.split.i16 ], [ %i.ag, %bb.n ]
+  %.sroa.0.013.i18 = phi ptr [ %0, %.split.i16 ], [ %i.z, %bb.n ]
+  %.sroa.01.0.i19 = phi i32 [ 0, %.split.i16 ], [ %i.ah, %bb.n ]
   br label %bb.j
 
 bb.j:                                             ; preds = %_RNCINvNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator8try_fold9enumeratecuINtNtNtBf_3ops12control_flow11ControlFlowTjcEENCINvNvB1e_4find5checkB2M_QNCNvNtCs8frGy5WneL6_4fish10parse_util20get_offset_from_line0E0E0B3o_.exit.i.i20, %bb.i
   %i.x = phi i64 [ %i.ag, %_RNCINvNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator8try_fold9enumeratecuINtNtNtBf_3ops12control_flow11ControlFlowTjcEENCINvNvB1e_4find5checkB2M_QNCNvNtCs8frGy5WneL6_4fish10parse_util20get_offset_from_line0E0E0B3o_.exit.i.i20 ], [ %.sroa.8.0.i17, %bb.i ] ; 2 uses
   %i.y = phi ptr [ %i.z, %_RNCINvNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator8try_fold9enumeratecuINtNtNtBf_3ops12control_flow11ControlFlowTjcEENCINvNvB1e_4find5checkB2M_QNCNvNtCs8frGy5WneL6_4fish10parse_util20get_offset_from_line0E0E0B3o_.exit.i.i20 ], [ %.sroa.0.013.i18, %bb.i ] ; 3 uses
-  %.not = icmp eq ptr %i.y, %4                    ; 2 uses
+  %.not = icmp eq ptr %i.y, %5
   br i1 %.not, label %_RNvNtCs8frGy5WneL6_4fish10parse_util20get_offset_from_line.exit25, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
@@ -256,8 +260,9 @@ bb.n:                                             ; preds = %_RNCINvNvXs_NtNtNtC
   %i.ai = icmp eq i32 %i.ah, %i.w
   br i1 %i.ai, label %_RNvNtCs8frGy5WneL6_4fish10parse_util20get_offset_from_line.exit25, label %bb.i
 
-_RNvNtCs8frGy5WneL6_4fish10parse_util20get_offset_from_line.exit25: ; preds = %bb.n, %bb.j
-  %.sroa.5.0.i22 = phi i64 [ undef, %bb.j ], [ %i.ag, %bb.n ]
+_RNvNtCs8frGy5WneL6_4fish10parse_util20get_offset_from_line.exit25: ; preds = %bb.n, %bb.j, %.split.i16.a
+  %.sroa.5.0.i22 = phi i64 [ undef, %bb.j ], [ undef, %.split.i16.a ], [ %i.ag, %bb.n ]
+  %.sroa.0.0.i23 = phi i1 [ false, %bb.j ], [ false, %.split.i16.a ], [ true, %bb.n ]
   %i.aj = icmp eq i64 %1, -1
   br i1 %i.aj, label %bb.q, label %bb.p
 
@@ -267,7 +272,7 @@ bb.o:                                             ; preds = %.loopexit
 
 bb.p:                                             ; preds = %_RNvNtCs8frGy5WneL6_4fish10parse_util20get_offset_from_line.exit25
   %i.ak = add nuw i64 %1, 1
-  %spec.select = select i1 %.not, i64 %i.ak, i64 %.sroa.5.0.i22 ; 3 uses
+  %spec.select = select i1 %.sroa.0.0.i23, i64 %.sroa.5.0.i22, i64 %i.ak ; 3 uses
   %i.al = icmp ult i64 %spec.select, %.sroa.5.0.i.ph
   br i1 %i.al, label %bb.s, label %bb.r
 

@@ -205,7 +205,7 @@ _RNvYINtNtCs8rTCm43AEA0_12tokio_rustls6common15SyncReadAdapterNtNtNtNtCseCDlJsl4
   ], !prof !42
 
 .split43.peel:                                    ; preds = %_RNvYINtNtCs8rTCm43AEA0_12tokio_rustls6common15SyncReadAdapterNtNtNtNtCseCDlJsl44RV_5tokio3net3tcp6stream9TcpStreamENtNtCs2AWtUsOyxgP_3std2io4Read8read_bufCsgsNUVCRJO2f_13influxdb3_lib.exit.peel
-  %i.be = getelementptr i8, ptr %i.bb, i64 -1     ; 4 uses
+  %i.be = getelementptr i8, ptr %i.bb, i64 -1     ; 5 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.be) ]
   %i.bf = getelementptr i8, ptr %i.bb, i64 15
   %i.bg = load i8, ptr %i.bf, align 8, !range !43, !noundef !17
@@ -213,6 +213,7 @@ _RNvYINtNtCs8rTCm43AEA0_12tokio_rustls6common15SyncReadAdapterNtNtNtNtCseCDlJsl4
   br i1 %i.bh, label %bb.o, label %.loopexit
 
 bb.o:                                             ; preds = %.split43.peel
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.be) ]
   %.val.i.i.i.i.i.peel = load ptr, ptr %i.be, align 8, !noalias !1242 ; 5 uses
   %i.bi = getelementptr i8, ptr %i.bb, i64 7
   %.val1.i.i.i.i.i.peel = load ptr, ptr %i.bi, align 8, !noalias !1242, !nonnull !17, !align !27, !noundef !17 ; 4 uses
@@ -615,7 +616,7 @@ _RNvYINtNtCs8rTCm43AEA0_12tokio_rustls6common15SyncReadAdapterNtNtNtNtCseCDlJsl4
   br i1 %i.v, label %_RINvNtCs2AWtUsOyxgP_3std2io22default_read_buf_exactINtNtCs8rTCm43AEA0_12tokio_rustls6common15SyncReadAdapterNtNtNtNtCseCDlJsl44RV_5tokio3net3tcp6stream9TcpStreamEECsgsNUVCRJO2f_13influxdb3_lib.exit, label %.backedge.i.peel
 
 _RNvYINtNtCs8rTCm43AEA0_12tokio_rustls6common15SyncReadAdapterNtNtNtNtCseCDlJsl44RV_5tokio3net3tcp6stream9TcpStreamENtNtCs2AWtUsOyxgP_3std2io4Read8read_bufCsgsNUVCRJO2f_13influxdb3_lib.exit.thread5.i.peel: ; preds = %bb.c, %_RNvMs3_NtNtCs4NRVxsYgnAr_4core2io12borrowed_bufNtB5_14BorrowedCursor11ensure_init.exit.i.i.i.peel
-  %i.w = phi ptr [ inttoptr (i64 55834574851 to ptr), %_RNvMs3_NtNtCs4NRVxsYgnAr_4core2io12borrowed_bufNtB5_14BorrowedCursor11ensure_init.exit.i.i.i.peel ], [ %i.r, %bb.c ] ; 9 uses
+  %i.w = phi ptr [ inttoptr (i64 55834574851 to ptr), %_RNvMs3_NtNtCs4NRVxsYgnAr_4core2io12borrowed_bufNtB5_14BorrowedCursor11ensure_init.exit.i.i.i.peel ], [ %i.r, %bb.c ] ; 10 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !20016
   %i.x = ptrtoint ptr %i.w to i64                 ; 3 uses
   %i.y = and i64 %i.x, 3
@@ -627,6 +628,8 @@ _RNvYINtNtCs8rTCm43AEA0_12tokio_rustls6common15SyncReadAdapterNtNtNtNtCseCDlJsl4
   ], !prof !42
 
 .split25.i.peel:                                  ; preds = %_RNvYINtNtCs8rTCm43AEA0_12tokio_rustls6common15SyncReadAdapterNtNtNtNtCseCDlJsl44RV_5tokio3net3tcp6stream9TcpStreamENtNtCs2AWtUsOyxgP_3std2io4Read8read_bufCsgsNUVCRJO2f_13influxdb3_lib.exit.thread5.i.peel
+  %2 = getelementptr i8, ptr %i.w, i64 -1
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.z = getelementptr i8, ptr %i.w, i64 15
   %i.aa = load i8, ptr %i.z, align 8, !range !43, !noalias !20010, !noundef !17
   %i.ab = icmp eq i8 %i.aa, 35

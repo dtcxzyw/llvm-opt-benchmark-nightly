@@ -204,7 +204,7 @@ bb.a:
   %7 = alloca %"class.std::unique_ptr", align 8   ; 7 uses
   %8 = alloca %"class.std::unique_ptr.6", align 8 ; 7 uses
   %9 = alloca %"struct.vcpkg::SourceControlFileAndLocation", align 8 ; 20 uses
-  %10 = alloca %"struct.vcpkg::Path", align 8     ; 13 uses
+  %10 = alloca %"struct.vcpkg::Path", align 8     ; 14 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = tail call noundef nonnull align 8 dereferenceable(48) ptr @_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES_IN5vcpkg7VersionENS6_28SourceControlFileAndLocationENS6_14VersionMapLessESaISt4pairIKS7_S8_EEESt4lessIS5_ESaISA_IKS5_SE_EEEixERSH_(ptr noundef nonnull align 8 dereferenceable(48) %i.a, ptr noundef nonnull align 8 dereferenceable(32) %1) ; 6 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
@@ -518,6 +518,10 @@ _ZN5vcpkg4PathD2Ev.exit38.thread.loopexit.split-lp.loopexit.split-lp.loopexit.sp
   br i1 %i.cb, label %_ZN5vcpkg4PathD2Ev.exit42.thread57, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i39
 
 _ZN5vcpkg4PathD2Ev.exit42.thread57:               ; preds = %_ZN5vcpkg4PathD2Ev.exit38.thread.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+  %11 = getelementptr inbounds nuw i8, ptr %10, i64 8
+  %12 = load i64, ptr %11, align 8, !tbaa !50
+  %13 = icmp ult i64 %12, 16
+  call void @llvm.assume(i1 %13)
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #22
   br label %bb.o
 

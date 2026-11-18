@@ -202,7 +202,8 @@ _RNvMNtNtCs6P5GRezSnwZ_4http3uri4pathNtB2_12PathAndQuery4path.exit: ; preds = %b
 
 bb.f:                                             ; preds = %_RNvMNtNtCs6P5GRezSnwZ_4http3uri4pathNtB2_12PathAndQuery4path.exit, %_RNvMNtNtCs6P5GRezSnwZ_4http3uri4pathNtB2_12PathAndQuery4path.exit.thread
   %spec.select.i107 = phi i64 [ %.sroa.5.0.i.ph, %_RNvMNtNtCs6P5GRezSnwZ_4http3uri4pathNtB2_12PathAndQuery4path.exit.thread ], [ %spec.select.i, %_RNvMNtNtCs6P5GRezSnwZ_4http3uri4pathNtB2_12PathAndQuery4path.exit ]
-  %i.aa = phi ptr [ %i.t, %_RNvMNtNtCs6P5GRezSnwZ_4http3uri4pathNtB2_12PathAndQuery4path.exit.thread ], [ %spec.select, %_RNvMNtNtCs6P5GRezSnwZ_4http3uri4pathNtB2_12PathAndQuery4path.exit ] ; 10 uses
+  %i.aa = phi ptr [ %i.t, %_RNvMNtNtCs6P5GRezSnwZ_4http3uri4pathNtB2_12PathAndQuery4path.exit.thread ], [ %spec.select, %_RNvMNtNtCs6P5GRezSnwZ_4http3uri4pathNtB2_12PathAndQuery4path.exit ] ; 11 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aa) ]
   switch i64 %spec.select.i107, label %.thread146 [
     i64 46, label %bb.g
     i64 48, label %bb.i

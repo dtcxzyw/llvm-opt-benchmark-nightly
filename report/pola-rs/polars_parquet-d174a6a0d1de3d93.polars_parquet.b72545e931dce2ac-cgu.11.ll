@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a
   store i64 %i.aa, ptr %i.o, align 8, !dbg !5500
   %i.ae = getelementptr inbounds nuw i8, ptr %i.o, i64 8, !dbg !5500 ; 4 uses
   store ptr %i.ad, ptr %i.ae, align 8, !dbg !5500
-  %i.af = getelementptr inbounds nuw i8, ptr %i.o, i64 16, !dbg !5500 ; 7 uses
+  %i.af = getelementptr inbounds nuw i8, ptr %i.o, i64 16, !dbg !5500 ; 8 uses
   store i64 0, ptr %i.af, align 8, !dbg !5500
   %i.ag = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
   %.phi.trans.insert.i.i = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
@@ -478,22 +478,28 @@ bb.q:                                             ; preds = %bb.p
   br i1 %i.bu, label %bb.r, label %.outer341.outer, !dbg !5559
 
 .thread112:                                       ; preds = %bb.p
-  br i1 %i.bu, label %.thread114.a, label %.outer341, !dbg !5559
+  br i1 %i.bu, label %.thread114, label %.outer341, !dbg !5559
+
+.thread114:                                       ; preds = %.thread112
+  %8 = load i64, ptr %i.af, align 8, !dbg !5560, !noundef !1309
+  %9 = icmp sgt i64 %8, -1, !dbg !5561
+  call void @llvm.assume(i1 %9), !dbg !5562
+  br label %.thread114.a, !dbg !5563
 
 bb.r:                                             ; preds = %bb.q
   %i.ct = load i64, ptr %i.af, align 8, !dbg !5560, !noundef !1309 ; 2 uses
   %i.cu = icmp sgt i64 %i.ct, -1, !dbg !5561
   call void @llvm.assume(i1 %i.cu), !dbg !5562
-  %i.cv = trunc i64 %i.ct to i32, !dbg !5563
-  %i.cw = icmp ult i32 %.sroa.014.0.copyload, 13, !dbg !5564
-  br i1 %i.cw, label %.thread114.a, label %bb.s, !dbg !5564
+  %i.cv = trunc i64 %i.ct to i32, !dbg !5564
+  %i.cw = icmp ult i32 %.sroa.014.0.copyload, 13, !dbg !5563
+  br i1 %i.cw, label %.thread114.a, label %bb.s, !dbg !5563
 
 bb.s:                                             ; preds = %bb.r
   invoke void @_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE7reserveCsfISxE4fmY1Y_14polars_parquet(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.o, i64 noundef %i.cj)
           to label %bb.u unwind label %.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !dbg !5565
 
-.thread114.a:                                     ; preds = %.thread112, %bb.r
-  %i.cx = phi i8 [ %i.cs, %bb.r ], [ %.sroa.0.0.ph345.ph, %.thread112 ]
+.thread114.a:                                     ; preds = %.thread114, %bb.r
+  %i.cx = phi i8 [ %.sroa.0.0.ph345.ph, %.thread114 ], [ %i.cs, %bb.r ]
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.496), !dbg !5566
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.439), !dbg !5567
   store i32 0, ptr %.sroa.439, align 4, !dbg !5568
@@ -896,7 +902,7 @@ bb.c:                                             ; preds = %bb.a
   store i64 %i.aa, ptr %i.o, align 8, !dbg !6045
   %i.ae = getelementptr inbounds nuw i8, ptr %i.o, i64 8, !dbg !6045 ; 4 uses
   store ptr %i.ad, ptr %i.ae, align 8, !dbg !6045
-  %i.af = getelementptr inbounds nuw i8, ptr %i.o, i64 16, !dbg !6045 ; 7 uses
+  %i.af = getelementptr inbounds nuw i8, ptr %i.o, i64 16, !dbg !6045 ; 8 uses
   store i64 0, ptr %i.af, align 8, !dbg !6045
   %i.ag = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
   %.phi.trans.insert.i.i = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
@@ -1036,22 +1042,28 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.az, label %bb.l, label %.outer111, !dbg !6081
 
 .thread101:                                       ; preds = %bb.j
-  br i1 %i.az, label %.thread104.a, label %bb.d, !dbg !6081
+  br i1 %i.az, label %.thread104, label %bb.d, !dbg !6081
+
+.thread104:                                       ; preds = %.thread101
+  %7 = load i64, ptr %i.af, align 8, !dbg !6082, !noundef !1309
+  %8 = icmp sgt i64 %7, -1, !dbg !6083
+  call void @llvm.assume(i1 %8), !dbg !6084
+  br label %.thread104.a, !dbg !6085
 
 bb.l:                                             ; preds = %bb.k
   %i.bs = load i64, ptr %i.af, align 8, !dbg !6082, !noundef !1309 ; 2 uses
   %i.bt = icmp sgt i64 %i.bs, -1, !dbg !6083
   call void @llvm.assume(i1 %i.bt), !dbg !6084
-  %i.bu = trunc i64 %i.bs to i32, !dbg !6085
-  %i.bv = icmp ult i32 %.sroa.014.0.copyload, 13, !dbg !6086
-  br i1 %i.bv, label %.thread104.a, label %bb.m, !dbg !6086
+  %i.bu = trunc i64 %i.bs to i32, !dbg !6086
+  %i.bv = icmp ult i32 %.sroa.014.0.copyload, 13, !dbg !6085
+  br i1 %i.bv, label %.thread104.a, label %bb.m, !dbg !6085
 
 bb.m:                                             ; preds = %bb.l
   invoke void @_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE7reserveCsfISxE4fmY1Y_14polars_parquet(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.o, i64 noundef %i.bi)
           to label %bb.o unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !dbg !6087
 
-.thread104.a:                                     ; preds = %.thread101, %bb.l
-  %.sroa.025.0103107 = phi i1 [ %i.br, %bb.l ], [ %.sroa.0.0.shrunk.ph115, %.thread101 ]
+.thread104.a:                                     ; preds = %.thread104, %bb.l
+  %.sroa.025.0103107 = phi i1 [ %.sroa.0.0.shrunk.ph115, %.thread104 ], [ %i.br, %bb.l ]
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.487), !dbg !6088
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.439), !dbg !6089
   store i32 0, ptr %.sroa.439, align 4, !dbg !6090
@@ -1454,7 +1466,7 @@ bb.c:                                             ; preds = %bb.a
   store i64 %i.aa, ptr %i.o, align 8, !dbg !6584
   %i.ae = getelementptr inbounds nuw i8, ptr %i.o, i64 8, !dbg !6584 ; 4 uses
   store ptr %i.ad, ptr %i.ae, align 8, !dbg !6584
-  %i.af = getelementptr inbounds nuw i8, ptr %i.o, i64 16, !dbg !6584 ; 7 uses
+  %i.af = getelementptr inbounds nuw i8, ptr %i.o, i64 16, !dbg !6584 ; 8 uses
   store i64 0, ptr %i.af, align 8, !dbg !6584
   %i.ag = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
   %.phi.trans.insert.i.i = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
@@ -1583,25 +1595,31 @@ bb.m:                                             ; preds = %bb.k
   %i.bs = icmp ult i32 %.sroa.014.0.copyload, 128, !dbg !6624
   %i.bt = select i1 %i.bs, i1 %.sroa.03.0.ph, i1 false, !dbg !6625
   %i.bu = icmp eq i32 %.sroa.014.0.copyload, 0, !dbg !6626
-  br i1 %i.bu, label %.thread109.a, label %bb.n, !dbg !6626
+  br i1 %i.bu, label %.thread109, label %bb.n, !dbg !6626
+
+.thread109:                                       ; preds = %bb.m
+  %7 = load i64, ptr %i.af, align 8, !dbg !6627, !noundef !1309
+  %8 = icmp sgt i64 %7, -1, !dbg !6628
+  call void @llvm.assume(i1 %8), !dbg !6629
+  br label %.thread109.a, !dbg !6630
 
 bb.n:                                             ; preds = %bb.m
-  %i.bv = load i8, ptr %i.bm, align 1, !dbg !6627, !noundef !1309
-  %i.bw = icmp sgt i8 %i.bv, -65, !dbg !6627
-  %i.bx = select i1 %i.bw, i8 %.sroa.0.0.ph, i8 0, !dbg !6628 ; 2 uses
-  %i.by = load i64, ptr %i.af, align 8, !dbg !6629, !noundef !1309 ; 2 uses
-  %i.bz = icmp sgt i64 %i.by, -1, !dbg !6630
-  call void @llvm.assume(i1 %i.bz), !dbg !6631
-  %i.ca = trunc i64 %i.by to i32, !dbg !6632
-  %i.cb = icmp ult i32 %.sroa.014.0.copyload, 13, !dbg !6633
-  br i1 %i.cb, label %.thread109.a, label %bb.o, !dbg !6633
+  %i.bv = load i8, ptr %i.bm, align 1, !dbg !6631, !noundef !1309
+  %i.bw = icmp sgt i8 %i.bv, -65, !dbg !6631
+  %i.bx = select i1 %i.bw, i8 %.sroa.0.0.ph, i8 0, !dbg !6632 ; 2 uses
+  %i.by = load i64, ptr %i.af, align 8, !dbg !6627, !noundef !1309 ; 2 uses
+  %i.bz = icmp sgt i64 %i.by, -1, !dbg !6628
+  call void @llvm.assume(i1 %i.bz), !dbg !6629
+  %i.ca = trunc i64 %i.by to i32, !dbg !6633
+  %i.cb = icmp ult i32 %.sroa.014.0.copyload, 13, !dbg !6630
+  br i1 %i.cb, label %.thread109.a, label %bb.o, !dbg !6630
 
 bb.o:                                             ; preds = %bb.n
   invoke void @_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE7reserveCsfISxE4fmY1Y_14polars_parquet(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.o, i64 noundef %i.bo)
           to label %bb.q unwind label %.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !dbg !6634
 
-.thread109.a:                                     ; preds = %bb.m, %bb.n
-  %i.cc = phi i8 [ %i.bx, %bb.n ], [ %.sroa.0.0.ph, %bb.m ]
+.thread109.a:                                     ; preds = %.thread109, %bb.n
+  %i.cc = phi i8 [ %.sroa.0.0.ph, %.thread109 ], [ %i.bx, %bb.n ]
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.495), !dbg !6635
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.439), !dbg !6636
   store i32 0, ptr %.sroa.439, align 4, !dbg !6637
@@ -2004,8 +2022,8 @@ begin_hunk_3_@llvm.memmove.p0.p0.i64
 !5560 = !DILocation(line: 3024, column: 19, scope: !5214, inlinedAt: !5375)
 !5561 = !DILocation(line: 3029, column: 37, scope: !5215, inlinedAt: !5375)
 !5562 = !DILocation(line: 3029, column: 18, scope: !5215, inlinedAt: !5375)
-!5563 = !DILocation(line: 403, column: 22, scope: !5209)
-!5564 = !DILocation(line: 405, column: 12, scope: !5216)
+!5563 = !DILocation(line: 405, column: 12, scope: !5216)
+!5564 = !DILocation(line: 403, column: 22, scope: !5209)
 !5565 = !DILocation(line: 2906, column: 14, scope: !251, inlinedAt: !5220)
 !5566 = !DILocation(line: 406, column: 48, scope: !5216)
 !5567 = !DILocation(line: 77, column: 13, scope: !5221, inlinedAt: !5378)
@@ -2408,8 +2426,8 @@ begin_hunk_4_@llvm.memmove.p0.p0.i64
 !6082 = !DILocation(line: 3024, column: 19, scope: !5758, inlinedAt: !5920)
 !6083 = !DILocation(line: 3029, column: 37, scope: !5759, inlinedAt: !5920)
 !6084 = !DILocation(line: 3029, column: 18, scope: !5759, inlinedAt: !5920)
-!6085 = !DILocation(line: 403, column: 22, scope: !5753)
-!6086 = !DILocation(line: 405, column: 12, scope: !5760)
+!6085 = !DILocation(line: 405, column: 12, scope: !5760)
+!6086 = !DILocation(line: 403, column: 22, scope: !5753)
 !6087 = !DILocation(line: 2906, column: 14, scope: !251, inlinedAt: !5764)
 !6088 = !DILocation(line: 406, column: 48, scope: !5760)
 !6089 = !DILocation(line: 77, column: 13, scope: !5765, inlinedAt: !5923)
@@ -2812,13 +2830,13 @@ begin_hunk_5_@llvm.memmove.p0.p0.i64
 !6624 = !DILocation(line: 394, column: 30, scope: !6291)
 !6625 = !DILocation(line: 394, column: 9, scope: !6291)
 !6626 = !DILocation(line: 397, column: 13, scope: !6291)
-!6627 = !DILocation(line: 397, column: 33, scope: !6291)
-!6628 = !DILocation(line: 396, column: 9, scope: !6291)
-!6629 = !DILocation(line: 3024, column: 19, scope: !6296, inlinedAt: !6460)
-!6630 = !DILocation(line: 3029, column: 37, scope: !6297, inlinedAt: !6460)
-!6631 = !DILocation(line: 3029, column: 18, scope: !6297, inlinedAt: !6460)
-!6632 = !DILocation(line: 403, column: 22, scope: !6291)
-!6633 = !DILocation(line: 405, column: 12, scope: !6298)
+!6627 = !DILocation(line: 3024, column: 19, scope: !6296, inlinedAt: !6460)
+!6628 = !DILocation(line: 3029, column: 37, scope: !6297, inlinedAt: !6460)
+!6629 = !DILocation(line: 3029, column: 18, scope: !6297, inlinedAt: !6460)
+!6630 = !DILocation(line: 405, column: 12, scope: !6298)
+!6631 = !DILocation(line: 397, column: 33, scope: !6291)
+!6632 = !DILocation(line: 396, column: 9, scope: !6291)
+!6633 = !DILocation(line: 403, column: 22, scope: !6291)
 !6634 = !DILocation(line: 2906, column: 14, scope: !251, inlinedAt: !6302)
 !6635 = !DILocation(line: 406, column: 48, scope: !6298)
 !6636 = !DILocation(line: 77, column: 13, scope: !6303, inlinedAt: !6463)

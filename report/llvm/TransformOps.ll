@@ -206,7 +206,15 @@ bb.c:                                             ; preds = %_ZN4mlir11SymbolTab
   call void @_ZN4mlir9emitErrorENS_8LocationERKN4llvm5TwineE(ptr dead_on_unwind nonnull writable sret(%"class.mlir::InFlightDiagnostic") align 8 dereferenceable(208) %8, ptr %.sroa.0.0.copyload.i.i.i21, ptr noundef nonnull align 8 dereferenceable(34) %9) #26
   %i.aj = load ptr, ptr %8, align 8, !tbaa !104
   %.not.i.i.i.i22 = icmp eq ptr %i.aj, null
-  br i1 %.not.i.i.i.i22, label %_ZNO4mlir24DiagnosedDefiniteFailurelsINS_13SymbolRefAttrEEEOS0_OT_.exit, label %bb.d
+  br i1 %.not.i.i.i.i22, label %_ZNO4mlir24DiagnosedDefiniteFailurelsIRA28_KcEEOS0_OT_.exit.thread, label %bb.d
+
+_ZNO4mlir24DiagnosedDefiniteFailurelsIRA28_KcEEOS0_OT_.exit.thread: ; preds = %bb.c
+  %13 = load ptr, ptr %1, align 8, !tbaa !90
+  %14 = getelementptr inbounds nuw i8, ptr %13, i64 44
+  %15 = load i32, ptr %14, align 4
+  %.not.i.i.i.i2390 = icmp ugt i32 %15, 16777215
+  call void @llvm.assume(i1 %.not.i.i.i.i2390)
+  br label %_ZNO4mlir24DiagnosedDefiniteFailurelsINS_13SymbolRefAttrEEEOS0_OT_.exit
 
 bb.d:                                             ; preds = %bb.c
   %i.ak = getelementptr inbounds nuw i8, ptr %8, i64 24 ; 2 uses
@@ -283,7 +291,7 @@ _ZN4mlir10Diagnostic6appendINS_13SymbolRefAttrEEERS0_OT_.exit.i.i.i.i: ; preds =
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #26
   br label %_ZNO4mlir24DiagnosedDefiniteFailurelsINS_13SymbolRefAttrEEEOS0_OT_.exit
 
-_ZNO4mlir24DiagnosedDefiniteFailurelsINS_13SymbolRefAttrEEEOS0_OT_.exit: ; preds = %bb.c, %_ZNO4mlir24DiagnosedDefiniteFailurelsIRA28_KcEEOS0_OT_.exit, %_ZN4mlir10Diagnostic6appendINS_13SymbolRefAttrEEERS0_OT_.exit.i.i.i.i
+_ZNO4mlir24DiagnosedDefiniteFailurelsINS_13SymbolRefAttrEEEOS0_OT_.exit: ; preds = %_ZNO4mlir24DiagnosedDefiniteFailurelsIRA28_KcEEOS0_OT_.exit.thread, %_ZNO4mlir24DiagnosedDefiniteFailurelsIRA28_KcEEOS0_OT_.exit, %_ZN4mlir10Diagnostic6appendINS_13SymbolRefAttrEEERS0_OT_.exit.i.i.i.i
   call void @llvm.experimental.noalias.scope.decl(metadata !1366)
   call void @_ZN4mlir18InFlightDiagnostic6reportEv(ptr noundef nonnull align 8 dereferenceable(208) %8) #26, !noalias !1366
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -686,7 +694,15 @@ bb.c:                                             ; preds = %_ZN4llvm16dyn_cast_
   call void @_ZN4mlir7OpState9emitErrorERKN4llvm5TwineE(ptr dead_on_unwind nonnull writable sret(%"class.mlir::InFlightDiagnostic") align 8 %11, ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(34) %12) #26
   %i.v = load ptr, ptr %11, align 8, !tbaa !104
   %.not.i.i16 = icmp eq ptr %i.v, null
-  br i1 %.not.i.i16, label %_ZNO4mlir18InFlightDiagnosticlsINS_13SymbolRefAttrEEEOS0_OT_.exit, label %bb.d
+  br i1 %.not.i.i16, label %_ZNO4mlir18InFlightDiagnosticlsIRA27_KcEEOS0_OT_.exit.thread, label %bb.d
+
+_ZNO4mlir18InFlightDiagnosticlsIRA27_KcEEOS0_OT_.exit.thread: ; preds = %.critedge
+  %22 = load ptr, ptr %0, align 8, !tbaa !90
+  %23 = getelementptr inbounds nuw i8, ptr %22, i64 44
+  %24 = load i32, ptr %23, align 4
+  %.not.i.i.i.i1792 = icmp ugt i32 %24, 16777215
+  call void @llvm.assume(i1 %.not.i.i.i.i1792)
+  br label %_ZNO4mlir18InFlightDiagnosticlsINS_13SymbolRefAttrEEEOS0_OT_.exit
 
 bb.d:                                             ; preds = %.critedge
   %i.w = getelementptr inbounds nuw i8, ptr %11, i64 24 ; 2 uses
@@ -763,7 +779,7 @@ _ZN4mlir10Diagnostic6appendINS_13SymbolRefAttrEEERS0_OT_.exit.i.i: ; preds = %bb
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #26
   br label %_ZNO4mlir18InFlightDiagnosticlsINS_13SymbolRefAttrEEEOS0_OT_.exit
 
-_ZNO4mlir18InFlightDiagnosticlsINS_13SymbolRefAttrEEEOS0_OT_.exit: ; preds = %.critedge, %_ZNO4mlir18InFlightDiagnosticlsIRA27_KcEEOS0_OT_.exit, %_ZN4mlir10Diagnostic6appendINS_13SymbolRefAttrEEERS0_OT_.exit.i.i
+_ZNO4mlir18InFlightDiagnosticlsINS_13SymbolRefAttrEEEOS0_OT_.exit: ; preds = %_ZNO4mlir18InFlightDiagnosticlsIRA27_KcEEOS0_OT_.exit.thread, %_ZNO4mlir18InFlightDiagnosticlsIRA27_KcEEOS0_OT_.exit, %_ZN4mlir10Diagnostic6appendINS_13SymbolRefAttrEEERS0_OT_.exit.i.i
   %i.az = call i8 @_ZNK4mlir18InFlightDiagnosticcvN4llvm13LogicalResultEEv(ptr noundef nonnull align 8 dereferenceable(208) %11) #26
   %i.ba = load ptr, ptr %11, align 8, !tbaa !104
   %.not.i = icmp eq ptr %i.ba, null

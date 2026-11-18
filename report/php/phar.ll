@@ -205,7 +205,7 @@ zend_hash_str_add_ptr.exit117:                    ; preds = %bb.v, %bb.z, %bb.y
   %i.bs = getelementptr inbounds nuw i8, ptr %i.bq, i64 176
   call void @_zend_hash_init(ptr noundef nonnull %i.bs, i32 noundef 8, ptr noundef null, i1 noundef zeroext false) #23
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bq, i64 120
-  %i.bu = getelementptr inbounds nuw i8, ptr %i.bq, i64 316 ; 5 uses
+  %i.bu = getelementptr inbounds nuw i8, ptr %i.bq, i64 316 ; 6 uses
   %i.bv = load i16, ptr %i.bu, align 4
   %i.bw = and i16 %i.bv, 256
   %i.bx = icmp ne i16 %i.bw, 0
@@ -279,6 +279,10 @@ bb.ae:                                            ; preds = %bb.ad
   br label %zend_string_release_ex.exit111
 
 zend_hash_str_find_ptr.exit.thread:               ; preds = %bb.ab, %bb.ac
+  %10 = load i16, ptr %i.bu, align 4
+  %11 = and i16 %10, 256
+  %.not104131 = icmp eq i16 %11, 0
+  call void @llvm.assume(i1 %.not104131)
   %i.cy = call noalias ptr @_estrndup(ptr noundef nonnull %2, i64 noundef %3) #23
   %i.cz = getelementptr inbounds nuw i8, ptr %i.bq, i64 32
   store ptr %i.cy, ptr %i.cz, align 8, !tbaa !73

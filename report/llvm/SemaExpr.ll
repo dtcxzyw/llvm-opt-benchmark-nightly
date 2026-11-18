@@ -205,9 +205,9 @@ bb.ah:                                            ; preds = %_ZSt4copyIPKPN5clan
 _ZN5clang32EnterExpressionEvaluationContextD2Ev.exit.thread: ; preds = %bb.v, %.sink.split.i.i
   call void @_ZN5clang4Sema30PopExpressionEvaluationContextEv(ptr noundef nonnull align 8 dereferenceable(18640) %i.cb), !inline_history !7
   %.pr = load i8, ptr %i.bz, align 8, !tbaa !2892
-  %i.gb = and i64 %i.ex, -2
+  %i.gb = and i64 %.sroa.0128.0, -2
   %i.gc = inttoptr i64 %i.gb to ptr
-  %i.gd = and i64 %.sroa.0128.0, -2
+  %i.gd = and i64 %i.ex, -2
   %i.ge = inttoptr i64 %i.gd to ptr
   br label %bb.ai
 
@@ -217,8 +217,8 @@ _ZN5clang32EnterExpressionEvaluationContextD2Ev.exit: ; preds = %_ZN5clang4Sema1
 
 bb.ai:                                            ; preds = %bb.l, %_ZN5clang32EnterExpressionEvaluationContextD2Ev.exit.thread
   %i.gf = phi i8 [ %.pr, %_ZN5clang32EnterExpressionEvaluationContextD2Ev.exit.thread ], [ %i.ca, %bb.l ]
-  %.sroa.0130.2 = phi ptr [ %i.gc, %_ZN5clang32EnterExpressionEvaluationContextD2Ev.exit.thread ], [ null, %bb.l ]
-  %.sroa.0128.2 = phi ptr [ %i.ge, %_ZN5clang32EnterExpressionEvaluationContextD2Ev.exit.thread ], [ null, %bb.l ]
+  %.sroa.0130.2 = phi ptr [ %i.ge, %_ZN5clang32EnterExpressionEvaluationContextD2Ev.exit.thread ], [ null, %bb.l ]
+  %.sroa.0128.2 = phi ptr [ %i.gc, %_ZN5clang32EnterExpressionEvaluationContextD2Ev.exit.thread ], [ null, %bb.l ]
   switch i8 %i.gf, label %.unreachabledefault [
     i8 0, label %bb.aj
     i8 1, label %bb.al
@@ -621,9 +621,9 @@ bb.ah:                                            ; preds = %_ZSt4copyIPKPN5clan
 _ZN5clang32EnterExpressionEvaluationContextD2Ev.exit.thread: ; preds = %bb.v, %.sink.split.i.i
   call void @_ZN5clang4Sema30PopExpressionEvaluationContextEv(ptr noundef nonnull align 8 dereferenceable(18640) %i.cb), !inline_history !7
   %.pr = load i8, ptr %i.bz, align 8, !tbaa !2892
-  %i.gb = and i64 %i.ex, -2
+  %i.gb = and i64 %.sroa.0128.0, -2
   %i.gc = inttoptr i64 %i.gb to ptr
-  %i.gd = and i64 %.sroa.0128.0, -2
+  %i.gd = and i64 %i.ex, -2
   %i.ge = inttoptr i64 %i.gd to ptr
   br label %bb.ai
 
@@ -633,8 +633,8 @@ _ZN5clang32EnterExpressionEvaluationContextD2Ev.exit: ; preds = %_ZN5clang4Sema1
 
 bb.ai:                                            ; preds = %bb.l, %_ZN5clang32EnterExpressionEvaluationContextD2Ev.exit.thread
   %i.gf = phi i8 [ %.pr, %_ZN5clang32EnterExpressionEvaluationContextD2Ev.exit.thread ], [ %i.ca, %bb.l ]
-  %.sroa.0130.2 = phi ptr [ %i.gc, %_ZN5clang32EnterExpressionEvaluationContextD2Ev.exit.thread ], [ null, %bb.l ]
-  %.sroa.0128.2 = phi ptr [ %i.ge, %_ZN5clang32EnterExpressionEvaluationContextD2Ev.exit.thread ], [ null, %bb.l ]
+  %.sroa.0130.2 = phi ptr [ %i.ge, %_ZN5clang32EnterExpressionEvaluationContextD2Ev.exit.thread ], [ null, %bb.l ]
+  %.sroa.0128.2 = phi ptr [ %i.gc, %_ZN5clang32EnterExpressionEvaluationContextD2Ev.exit.thread ], [ null, %bb.l ]
   switch i8 %i.gf, label %.unreachabledefault [
     i8 0, label %bb.aj
     i8 1, label %bb.al
@@ -1037,9 +1037,9 @@ bb.ah:                                            ; preds = %_ZSt4copyIPKPN5clan
 _ZN5clang32EnterExpressionEvaluationContextD2Ev.exit.thread: ; preds = %bb.v, %.sink.split.i.i
   call void @_ZN5clang4Sema30PopExpressionEvaluationContextEv(ptr noundef nonnull align 8 dereferenceable(18640) %i.cb), !inline_history !7
   %.pr = load i8, ptr %i.bz, align 8, !tbaa !2892
-  %i.gb = and i64 %i.ex, -2
+  %i.gb = and i64 %.sroa.0128.0, -2
   %i.gc = inttoptr i64 %i.gb to ptr
-  %i.gd = and i64 %.sroa.0128.0, -2
+  %i.gd = and i64 %i.ex, -2
   %i.ge = inttoptr i64 %i.gd to ptr
   br label %bb.ai
 
@@ -1049,8 +1049,8 @@ _ZN5clang32EnterExpressionEvaluationContextD2Ev.exit: ; preds = %_ZN5clang4Sema1
 
 bb.ai:                                            ; preds = %bb.l, %_ZN5clang32EnterExpressionEvaluationContextD2Ev.exit.thread
   %i.gf = phi i8 [ %.pr, %_ZN5clang32EnterExpressionEvaluationContextD2Ev.exit.thread ], [ %i.ca, %bb.l ]
-  %.sroa.0130.2 = phi ptr [ %i.gc, %_ZN5clang32EnterExpressionEvaluationContextD2Ev.exit.thread ], [ null, %bb.l ]
-  %.sroa.0128.2 = phi ptr [ %i.ge, %_ZN5clang32EnterExpressionEvaluationContextD2Ev.exit.thread ], [ null, %bb.l ]
+  %.sroa.0130.2 = phi ptr [ %i.ge, %_ZN5clang32EnterExpressionEvaluationContextD2Ev.exit.thread ], [ null, %bb.l ]
+  %.sroa.0128.2 = phi ptr [ %i.gc, %_ZN5clang32EnterExpressionEvaluationContextD2Ev.exit.thread ], [ null, %bb.l ]
   switch i8 %i.gf, label %.unreachabledefault [
     i8 0, label %bb.aj
     i8 1, label %bb.al

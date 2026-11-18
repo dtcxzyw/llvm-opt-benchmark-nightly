@@ -205,7 +205,7 @@ bb.a:
   %i.j = load i16, ptr %i.i, align 8, !noundef !5
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 210
   %i.l = load i16, ptr %i.k, align 2, !noundef !5
-  %i.m = getelementptr inbounds nuw i8, ptr %1, i64 240 ; 2 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %1, i64 240 ; 3 uses
   %i.n = load i64, ptr %i.m, align 8, !noundef !5 ; 5 uses
   %i.o = icmp ult i64 %i.n, 18595508138820113
   tail call void @llvm.assume(i1 %i.o)
@@ -465,16 +465,16 @@ bb.ab:                                            ; preds = %bb.ac, %_RINvXs2J_N
   %i.do = getelementptr inbounds nuw i8, ptr %1, i64 1396 ; 3 uses
   switch i32 %i.dn, label %default.unreachable126 [
     i32 0, label %bb.ah
-    i32 1, label %bb.ad
+    i32 1, label %2
     i32 2, label %bb.ah
-    i32 3, label %bb.ae
-    i32 4, label %bb.af
-    i32 5, label %bb.ad
-    i32 6, label %bb.ad
+    i32 3, label %bb.ad
+    i32 4, label %bb.ae
+    i32 5, label %2
+    i32 6, label %2
     i32 7, label %bb.ah
-    i32 8, label %bb.ad
-    i32 9, label %.thread
-    i32 10, label %bb.ad
+    i32 8, label %2
+    i32 9, label %bb.af
+    i32 10, label %2
     i32 11, label %bb.ah
     i32 12, label %bb.ah
     i32 13, label %bb.ag
@@ -492,22 +492,28 @@ bb.ac:                                            ; preds = %_RINvXs2J_NtNtCsj6e
 default.unreachable126:                           ; preds = %bb.al, %bb.ab
   unreachable
 
-bb.ad:                                            ; preds = %bb.ab, %bb.ab, %bb.ab, %bb.ab, %bb.ab
+2:                                                ; preds = %bb.ab, %bb.ab, %bb.ab, %bb.ab, %bb.ab
+  br label %bb.ah
+
+bb.ad:                                            ; preds = %bb.ab
   br label %bb.ah
 
 bb.ae:                                            ; preds = %bb.ab
   br label %bb.ah
 
 bb.af:                                            ; preds = %bb.ab
-  br label %bb.ah
+  %3 = load i64, ptr %i.m, align 8, !noundef !5
+  %4 = icmp ult i64 %3, 18595508138820113
+  tail call void @llvm.assume(i1 %4)
+  br label %.thread
 
 bb.ag:                                            ; preds = %bb.ab
   %i.du = load i32, ptr %i.do, align 4, !range !11, !noundef !5
   %i.dv = zext i32 %i.du to i64
   br label %bb.ah
 
-bb.ah:                                            ; preds = %bb.ab, %bb.ab, %bb.ab, %bb.ab, %bb.ab, %bb.ag, %bb.af, %bb.ae, %bb.ad
-  %.sroa.031.0 = phi i64 [ 1, %bb.ae ], [ 2, %bb.af ], [ 3, %bb.ab ], [ 4, %bb.ad ], [ %i.dv, %bb.ag ], [ 3, %bb.ab ], [ 3, %bb.ab ], [ 3, %bb.ab ], [ 3, %bb.ab ]
+bb.ah:                                            ; preds = %bb.ab, %bb.ab, %bb.ab, %bb.ab, %bb.ab, %bb.ag, %bb.ae, %bb.ad, %2
+  %.sroa.031.0 = phi i64 [ 1, %bb.ad ], [ 2, %bb.ae ], [ 3, %bb.ab ], [ 4, %2 ], [ %i.dv, %bb.ag ], [ 3, %bb.ab ], [ 3, %bb.ab ], [ 3, %bb.ab ], [ 3, %bb.ab ]
   %i.dw = load i64, ptr %i.m, align 8, !noundef !5 ; 5 uses
   %i.dx = icmp ult i64 %i.dw, 18595508138820113
   tail call void @llvm.assume(i1 %i.dx)
@@ -518,7 +524,7 @@ bb.ai:                                            ; preds = %bb.ah
   %i.dz = icmp eq i32 %i.dn, 5
   br i1 %i.dz, label %bb.ak, label %bb.aj
 
-.thread:                                          ; preds = %bb.ab, %bb.ah, %bb.ak, %bb.am, %bb.an
+.thread:                                          ; preds = %bb.af, %bb.ah, %bb.ak, %bb.am, %bb.an
   store i8 -1, ptr %0, align 8
   br label %bb.at
 
@@ -630,7 +636,7 @@ bb.a:
   %i.j = load i16, ptr %i.i, align 8, !noundef !5
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 210
   %i.l = load i16, ptr %i.k, align 2, !noundef !5
-  %i.m = getelementptr inbounds nuw i8, ptr %1, i64 240 ; 2 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %1, i64 240 ; 3 uses
   %i.n = load i64, ptr %i.m, align 8, !noundef !5 ; 5 uses
   %i.o = icmp ult i64 %i.n, 18595508138820113
   tail call void @llvm.assume(i1 %i.o)
@@ -890,16 +896,16 @@ bb.ab:                                            ; preds = %bb.ac, %_RINvXs2J_N
   %i.do = getelementptr inbounds nuw i8, ptr %1, i64 1388 ; 3 uses
   switch i32 %i.dn, label %default.unreachable126 [
     i32 0, label %bb.ah
-    i32 1, label %bb.ad
+    i32 1, label %2
     i32 2, label %bb.ah
-    i32 3, label %bb.ae
-    i32 4, label %bb.af
-    i32 5, label %bb.ad
-    i32 6, label %bb.ad
+    i32 3, label %bb.ad
+    i32 4, label %bb.ae
+    i32 5, label %2
+    i32 6, label %2
     i32 7, label %bb.ah
-    i32 8, label %bb.ad
-    i32 9, label %.thread
-    i32 10, label %bb.ad
+    i32 8, label %2
+    i32 9, label %bb.af
+    i32 10, label %2
     i32 11, label %bb.ah
     i32 12, label %bb.ah
     i32 13, label %bb.ag
@@ -917,22 +923,28 @@ bb.ac:                                            ; preds = %_RINvXs2J_NtNtCsj6e
 default.unreachable126:                           ; preds = %bb.al, %bb.ab
   unreachable
 
-bb.ad:                                            ; preds = %bb.ab, %bb.ab, %bb.ab, %bb.ab, %bb.ab
+2:                                                ; preds = %bb.ab, %bb.ab, %bb.ab, %bb.ab, %bb.ab
+  br label %bb.ah
+
+bb.ad:                                            ; preds = %bb.ab
   br label %bb.ah
 
 bb.ae:                                            ; preds = %bb.ab
   br label %bb.ah
 
 bb.af:                                            ; preds = %bb.ab
-  br label %bb.ah
+  %3 = load i64, ptr %i.m, align 8, !noundef !5
+  %4 = icmp ult i64 %3, 18595508138820113
+  tail call void @llvm.assume(i1 %4)
+  br label %.thread
 
 bb.ag:                                            ; preds = %bb.ab
   %i.du = load i32, ptr %i.do, align 4, !range !11, !noundef !5
   %i.dv = zext i32 %i.du to i64
   br label %bb.ah
 
-bb.ah:                                            ; preds = %bb.ab, %bb.ab, %bb.ab, %bb.ab, %bb.ab, %bb.ag, %bb.af, %bb.ae, %bb.ad
-  %.sroa.031.0 = phi i64 [ 1, %bb.ae ], [ 2, %bb.af ], [ 3, %bb.ab ], [ 4, %bb.ad ], [ %i.dv, %bb.ag ], [ 3, %bb.ab ], [ 3, %bb.ab ], [ 3, %bb.ab ], [ 3, %bb.ab ]
+bb.ah:                                            ; preds = %bb.ab, %bb.ab, %bb.ab, %bb.ab, %bb.ab, %bb.ag, %bb.ae, %bb.ad, %2
+  %.sroa.031.0 = phi i64 [ 1, %bb.ad ], [ 2, %bb.ae ], [ 3, %bb.ab ], [ 4, %2 ], [ %i.dv, %bb.ag ], [ 3, %bb.ab ], [ 3, %bb.ab ], [ 3, %bb.ab ], [ 3, %bb.ab ]
   %i.dw = load i64, ptr %i.m, align 8, !noundef !5 ; 5 uses
   %i.dx = icmp ult i64 %i.dw, 18595508138820113
   tail call void @llvm.assume(i1 %i.dx)
@@ -943,7 +955,7 @@ bb.ai:                                            ; preds = %bb.ah
   %i.dz = icmp eq i32 %i.dn, 5
   br i1 %i.dz, label %bb.ak, label %bb.aj
 
-.thread:                                          ; preds = %bb.ab, %bb.ah, %bb.ak, %bb.am, %bb.an
+.thread:                                          ; preds = %bb.af, %bb.ah, %bb.ak, %bb.am, %bb.an
   store i8 -1, ptr %0, align 8
   br label %bb.at
 
@@ -1346,7 +1358,7 @@ bb.d:                                             ; preds = %bb.f
           to label %common.resume unwind label %bb.l
 
 .lr.ph:                                           ; preds = %bb.c, %bb.k
-  %i.q = phi i64 [ %i.ae, %bb.k ], [ 0, %bb.c ]   ; 3 uses
+  %i.q = phi i64 [ %i.ae, %bb.k ], [ 0, %bb.c ]   ; 4 uses
   %..i.i.i.pn = phi i64 [ %..i.i.i, %bb.k ], [ %.promoted, %bb.c ]
   %i.r = phi i64 [ %i.u, %bb.k ], [ %.promoted, %bb.c ]
   %i.s = getelementptr inbounds nuw i8, ptr %.val.i.i, i64 %..i.i.i.pn
@@ -1355,7 +1367,12 @@ bb.d:                                             ; preds = %bb.f
   %i.u = add nuw i64 %i.r, 1                      ; 5 uses
   store i64 %i.u, ptr %i.n, align 8, !alias.scope !320
   %i.v = icmp eq i8 %i.t, 10
-  br i1 %i.v, label %.loopexit.thread.a, label %bb.e
+  br i1 %i.v, label %.loopexit.thread, label %bb.e
+
+.loopexit.thread:                                 ; preds = %.lr.ph
+  %2 = icmp sgt i64 %i.q, -1
+  call void @llvm.assume(i1 %2)
+  br label %.loopexit.thread.a
 
 .loopexit:                                        ; preds = %bb.k, %bb.c
   %i.w = phi i64 [ 0, %bb.c ], [ %i.ae, %bb.k ]   ; 2 uses
@@ -1375,7 +1392,7 @@ bb.f:                                             ; preds = %bb.e
   invoke void @_RNvMs4_NtCs4wP2HXfJTCR_5alloc7raw_vecINtB5_6RawVechE8grow_oneB7_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.b) #33
           to label %bb.k unwind label %bb.d
 
-.loopexit.thread.a:                               ; preds = %.lr.ph, %.loopexit
+.loopexit.thread.a:                               ; preds = %.loopexit.thread, %.loopexit
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false)
   br label %bb.j
 

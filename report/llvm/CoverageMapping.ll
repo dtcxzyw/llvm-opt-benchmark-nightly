@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %_ZNRSt8optionalISt1
 .lr.ph75:                                         ; preds = %bb.b
   %i.m = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %6, i64 32
-  %i.o = getelementptr inbounds nuw i8, ptr %6, i64 80 ; 2 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %6, i64 80 ; 3 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph75, %._crit_edge
@@ -230,7 +230,7 @@ _ZN4llvm5ErrorD2Ev.exit:                          ; preds = %.lr.ph
   call void @_ZN4llvm8coverage15CoverageMapping18loadFunctionRecordERKNS0_21CoverageMappingRecordERKSt8optionalISt17reference_wrapperINS_22IndexedInstrProfReaderEEE(ptr dead_on_unwind nonnull writable sret(%"class.llvm::Error") align 8 %0, ptr noundef nonnull align 8 dereferenceable(98) %4, ptr noundef nonnull align 8 dereferenceable(72) %i.m, ptr noundef nonnull align 8 dereferenceable(16) %3)
   %i.s = load ptr, ptr %0, align 8, !tbaa !105
   %.not69 = icmp eq ptr %i.s, null
-  br i1 %.not69, label %bb.d, label %.loopexit
+  br i1 %.not69, label %bb.d, label %.loopexit.loopexit
 
 bb.d:                                             ; preds = %_ZN4llvm5ErrorD2Ev.exit
   call void @_ZN4llvm8coverage23CoverageMappingIterator9incrementEv(ptr noundef nonnull align 8 dereferenceable(84) %6) #31
@@ -261,7 +261,14 @@ _ZN4llvm8ExpectedIRNS_8coverage21CoverageMappingRecordEED2Ev.exit41: ; preds = %
   %.not = icmp eq ptr %i.aa, %i.l
   br i1 %.not, label %_ZN4llvm5ErrorD2Ev.exit44, label %bb.c
 
-.loopexit:                                        ; preds = %_ZN4llvm5ErrorD2Ev.exit, %_ZN4llvm8ExpectedIRNS_8coverage21CoverageMappingRecordEED2Ev.exit41
+.loopexit.loopexit:                               ; preds = %_ZN4llvm5ErrorD2Ev.exit
+  %.pre = load i32, ptr %i.o, align 8, !tbaa !734
+  %7 = icmp eq i32 %.pre, 0
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %.loopexit.loopexit, %_ZN4llvm8ExpectedIRNS_8coverage21CoverageMappingRecordEED2Ev.exit41
+  %.not.i4365 = phi i1 [ %7, %.loopexit.loopexit ], [ true, %_ZN4llvm8ExpectedIRNS_8coverage21CoverageMappingRecordEED2Ev.exit41 ]
+  call void @llvm.assume(i1 %.not.i4365)
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #31
   br label %bb.e
 

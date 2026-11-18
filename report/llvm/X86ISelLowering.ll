@@ -205,7 +205,7 @@ bb.aw:                                            ; preds = %bb.au
 .unreachabledefault:                              ; preds = %bb.am
   unreachable
 
-.critedge8:                                       ; preds = %_ZNK4llvm12X86Subtarget16canExtendTo512DQEv.exit, %bb.am, %bb.an, %bb.ar
+.critedge8:                                       ; preds = %bb.am, %_ZNK4llvm12X86Subtarget16canExtendTo512DQEv.exit, %bb.an, %bb.ar
   %i.hy = icmp eq i16 %.sroa.0.0.copyload.i.i.i, 48
   call void @llvm.assume(i1 %i.hy)
   %i.hz = icmp eq i16 %.sroa.0.0.copyload.i.i.i266, 63

@@ -205,12 +205,12 @@ bb.i:                                             ; preds = %._crit_edge
   br label %.peel.begin
 
 .peel.begin:                                      ; preds = %bb.i, %._crit_edge
-  %.pre-phi = phi ptr [ %.phi.trans.insert, %bb.i ], [ %.pre138, %._crit_edge ] ; 5 uses
+  %.pre-phi = phi ptr [ %.phi.trans.insert, %bb.i ], [ %.pre138, %._crit_edge ] ; 6 uses
   %i.ak = phi i64 [ %.pre, %bb.i ], [ %i.af, %._crit_edge ]
   %.042 = phi i64 [ %i.aj, %bb.i ], [ %.044116, %._crit_edge ] ; 11 uses
   %i.al = icmp eq i64 %.042, 0
-  %i.am = getelementptr i8, ptr %.pre-phi, i64 160 ; 4 uses
-  %i.an = getelementptr i8, ptr %.pre-phi, i64 24 ; 10 uses
+  %i.am = getelementptr i8, ptr %.pre-phi, i64 160 ; 5 uses
+  %i.an = getelementptr i8, ptr %.pre-phi, i64 24 ; 11 uses
   %i.ao = and i64 %i.ak, 65536
   %.not.i.i.i59.peel = icmp eq i64 %i.ao, 0
   br i1 %.not.i.i.i59.peel, label %RCLASS_EXT_READABLE.exit.i.peel, label %RCLASS_PRIME_CLASSEXT_READABLE_P.exit.i.i.peel
@@ -223,7 +223,7 @@ RCLASS_PRIME_CLASSEXT_READABLE_P.exit.i.i.peel:   ; preds = %.peel.begin
 bb.j:                                             ; preds = %RCLASS_PRIME_CLASSEXT_READABLE_P.exit.i.i.peel
   %i.ar = call ptr @rb_current_box() #25          ; 3 uses
   %.not.i.i60.peel = icmp eq ptr %i.ar, null
-  br i1 %.not.i.i60.peel, label %RCLASS_EXT_READABLE.exit.i.peel, label %bb.k
+  br i1 %.not.i.i60.peel, label %.split.i.i.peel, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %i.as = getelementptr i8, ptr %i.ar, i64 128
@@ -261,8 +261,20 @@ RCLASS_EXT_READABLE_LOOKUP.exit17.i.i.peel:       ; preds = %bb.m, %bb.l, %RCLAS
   %.0.i16.i.i.peel = select i1 %.not.i15.i.i.peel, ptr %i.an, ptr %.0.i.i14.i.i.peel
   br label %RCLASS_EXT_READABLE.exit.i.peel
 
-RCLASS_EXT_READABLE.exit.i.peel:                  ; preds = %bb.j, %RCLASS_EXT_READABLE_LOOKUP.exit17.i.i.peel, %bb.k, %RCLASS_PRIME_CLASSEXT_READABLE_P.exit.i.i.peel, %.peel.begin
-  %.0.i.i.peel = phi ptr [ %.0.i16.i.i.peel, %RCLASS_EXT_READABLE_LOOKUP.exit17.i.i.peel ], [ %i.an, %bb.k ], [ %i.an, %.peel.begin ], [ %i.an, %RCLASS_PRIME_CLASSEXT_READABLE_P.exit.i.i.peel ], [ %i.an, %bb.j ]
+.split.i.i.peel:                                  ; preds = %bb.j
+  %6 = load i64, ptr %.pre-phi, align 8, !tbaa !97
+  %7 = and i64 %6, 65536
+  %.not.i.i.i.i.i.peel = icmp eq i64 %7, 0
+  br i1 %.not.i.i.i.i.i.peel, label %RCLASS_EXT_READABLE.exit.i.peel, label %RCLASS_CLASSEXT_TBL.exit.i.i.i.i.peel
+
+RCLASS_CLASSEXT_TBL.exit.i.i.i.i.peel:            ; preds = %.split.i.i.peel
+  %8 = load ptr, ptr %i.am, align 8, !tbaa !107
+  %.not.i.i.i.i61.peel = icmp eq ptr %8, null
+  call void @llvm.assume(i1 %.not.i.i.i.i61.peel)
+  br label %RCLASS_EXT_READABLE.exit.i.peel
+
+RCLASS_EXT_READABLE.exit.i.peel:                  ; preds = %RCLASS_CLASSEXT_TBL.exit.i.i.i.i.peel, %.split.i.i.peel, %RCLASS_EXT_READABLE_LOOKUP.exit17.i.i.peel, %bb.k, %RCLASS_PRIME_CLASSEXT_READABLE_P.exit.i.i.peel, %.peel.begin
+  %.0.i.i.peel = phi ptr [ %.0.i16.i.i.peel, %RCLASS_EXT_READABLE_LOOKUP.exit17.i.i.peel ], [ %i.an, %.split.i.i.peel ], [ %i.an, %.peel.begin ], [ %i.an, %RCLASS_PRIME_CLASSEXT_READABLE_P.exit.i.i.peel ], [ %i.an, %RCLASS_CLASSEXT_TBL.exit.i.i.i.i.peel ], [ %i.an, %bb.k ]
   %i.bc = getelementptr i8, ptr %.0.i.i.peel, i64 32
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !249 ; 2 uses
   %.not.i2.i.peel = icmp eq ptr %i.bd, null

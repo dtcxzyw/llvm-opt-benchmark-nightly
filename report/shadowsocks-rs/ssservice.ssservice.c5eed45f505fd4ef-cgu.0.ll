@@ -205,7 +205,8 @@ _RNvYINtNtCs3Ol6WPi9G6e_12tokio_rustls6common15SyncReadAdapterINtNtCsgCecv3eZDcN
   br i1 %i.bq, label %bb.n, label %.thread44
 
 bb.n:                                             ; preds = %.split35.peel
-  %i.br = getelementptr i8, ptr %i.bk, i64 -1     ; 2 uses
+  %i.br = getelementptr i8, ptr %i.bk, i64 -1     ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.br) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !31253
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.br) ]
   store ptr %i.br, ptr %i.w, align 8, !alias.scope !31254, !noalias !31253
@@ -608,7 +609,8 @@ bb.n:                                             ; preds = %_RNvMs8_NtNtCsf3Ta7
   br i1 %i.bq, label %bb.o, label %.thread33
 
 bb.o:                                             ; preds = %.split28.peel
-  %i.br = getelementptr i8, ptr %.sroa.0.0.i.i.ph.peel, i64 -1 ; 2 uses
+  %i.br = getelementptr i8, ptr %.sroa.0.0.i.i.ph.peel, i64 -1 ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.br) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !31294
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.br) ]
   store ptr %i.br, ptr %i.w, align 8, !alias.scope !31295, !noalias !31294
@@ -1011,7 +1013,8 @@ _RNvYINtNtCs3Ol6WPi9G6e_12tokio_rustls6common15SyncReadAdapterNtNtNtNtNtCs8UFHSM
   br i1 %i.bq, label %bb.n, label %.thread44
 
 bb.n:                                             ; preds = %.split35.peel
-  %i.br = getelementptr i8, ptr %i.bk, i64 -1     ; 2 uses
+  %i.br = getelementptr i8, ptr %i.bk, i64 -1     ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.br) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !31327
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.br) ]
   store ptr %i.br, ptr %i.w, align 8, !alias.scope !31328, !noalias !31327
@@ -1414,7 +1417,7 @@ _RNvXs1_NtNtNtCscVsx2cUGvkQ_12futures_util6stream6stream4nextINtB5_4NextINtNtB9_
   br label %common.ret
 
 bb.ke:                                            ; preds = %_RNvXs1_NtNtNtCscVsx2cUGvkQ_12futures_util6stream6stream4nextINtB5_4NextINtNtB9_17futures_unordered16FuturesUnorderedNCNCNCNvMs0_NtCs8AjStw0eGtC_16hickory_resolver16name_server_poolINtB22_9PoolStateNtNtNtCslxdWNweD0x2_11shadowsocks12dns_resolver20hickory_dns_resolver24ShadowDnsRuntimeProviderE8try_send0s_00EENtNtNtCsf3Ta7LF998c_4core6future6future6Future4pollCsgZAIVb0XKpv_9ssservice.exit.thread329, %_RNvXs1_NtNtNtCscVsx2cUGvkQ_12futures_util6stream6stream4nextINtB5_4NextINtNtB9_17futures_unordered16FuturesUnorderedNCNCNCNvMs0_NtCs8AjStw0eGtC_16hickory_resolver16name_server_poolINtB22_9PoolStateNtNtNtCslxdWNweD0x2_11shadowsocks12dns_resolver20hickory_dns_resolver24ShadowDnsRuntimeProviderE8try_send0s_00EENtNtNtCsf3Ta7LF998c_4core6future6future6Future4pollCsgZAIVb0XKpv_9ssservice.exit
-  %.sroa.0266.0347 = phi ptr [ undef, %_RNvXs1_NtNtNtCscVsx2cUGvkQ_12futures_util6stream6stream4nextINtB5_4NextINtNtB9_17futures_unordered16FuturesUnorderedNCNCNCNvMs0_NtCs8AjStw0eGtC_16hickory_resolver16name_server_poolINtB22_9PoolStateNtNtNtCslxdWNweD0x2_11shadowsocks12dns_resolver20hickory_dns_resolver24ShadowDnsRuntimeProviderE8try_send0s_00EENtNtNtCsf3Ta7LF998c_4core6future6future6Future4pollCsgZAIVb0XKpv_9ssservice.exit.thread329 ], [ %i.aoc, %_RNvXs1_NtNtNtCscVsx2cUGvkQ_12futures_util6stream6stream4nextINtB5_4NextINtNtB9_17futures_unordered16FuturesUnorderedNCNCNCNvMs0_NtCs8AjStw0eGtC_16hickory_resolver16name_server_poolINtB22_9PoolStateNtNtNtCslxdWNweD0x2_11shadowsocks12dns_resolver20hickory_dns_resolver24ShadowDnsRuntimeProviderE8try_send0s_00EENtNtNtCsf3Ta7LF998c_4core6future6future6Future4pollCsgZAIVb0XKpv_9ssservice.exit ] ; 3 uses
+  %.sroa.0266.0347 = phi ptr [ undef, %_RNvXs1_NtNtNtCscVsx2cUGvkQ_12futures_util6stream6stream4nextINtB5_4NextINtNtB9_17futures_unordered16FuturesUnorderedNCNCNCNvMs0_NtCs8AjStw0eGtC_16hickory_resolver16name_server_poolINtB22_9PoolStateNtNtNtCslxdWNweD0x2_11shadowsocks12dns_resolver20hickory_dns_resolver24ShadowDnsRuntimeProviderE8try_send0s_00EENtNtNtCsf3Ta7LF998c_4core6future6future6Future4pollCsgZAIVb0XKpv_9ssservice.exit.thread329 ], [ %i.aoc, %_RNvXs1_NtNtNtCscVsx2cUGvkQ_12futures_util6stream6stream4nextINtB5_4NextINtNtB9_17futures_unordered16FuturesUnorderedNCNCNCNvMs0_NtCs8AjStw0eGtC_16hickory_resolver16name_server_poolINtB22_9PoolStateNtNtNtCslxdWNweD0x2_11shadowsocks12dns_resolver20hickory_dns_resolver24ShadowDnsRuntimeProviderE8try_send0s_00EENtNtNtCsf3Ta7LF998c_4core6future6future6Future4pollCsgZAIVb0XKpv_9ssservice.exit ] ; 4 uses
   %.sroa.5267.0346 = phi i64 [ -2, %_RNvXs1_NtNtNtCscVsx2cUGvkQ_12futures_util6stream6stream4nextINtB5_4NextINtNtB9_17futures_unordered16FuturesUnorderedNCNCNCNvMs0_NtCs8AjStw0eGtC_16hickory_resolver16name_server_poolINtB22_9PoolStateNtNtNtCslxdWNweD0x2_11shadowsocks12dns_resolver20hickory_dns_resolver24ShadowDnsRuntimeProviderE8try_send0s_00EENtNtNtCsf3Ta7LF998c_4core6future6future6Future4pollCsgZAIVb0XKpv_9ssservice.exit.thread329 ], [ %.sroa.0164.1.i.i67.i.i.i, %_RNvXs1_NtNtNtCscVsx2cUGvkQ_12futures_util6stream6stream4nextINtB5_4NextINtNtB9_17futures_unordered16FuturesUnorderedNCNCNCNvMs0_NtCs8AjStw0eGtC_16hickory_resolver16name_server_poolINtB22_9PoolStateNtNtNtCslxdWNweD0x2_11shadowsocks12dns_resolver20hickory_dns_resolver24ShadowDnsRuntimeProviderE8try_send0s_00EENtNtNtCsf3Ta7LF998c_4core6future6future6Future4pollCsgZAIVb0XKpv_9ssservice.exit ] ; 6 uses
   %.sroa.11.0345 = phi i8 [ undef, %_RNvXs1_NtNtNtCscVsx2cUGvkQ_12futures_util6stream6stream4nextINtB5_4NextINtNtB9_17futures_unordered16FuturesUnorderedNCNCNCNvMs0_NtCs8AjStw0eGtC_16hickory_resolver16name_server_poolINtB22_9PoolStateNtNtNtCslxdWNweD0x2_11shadowsocks12dns_resolver20hickory_dns_resolver24ShadowDnsRuntimeProviderE8try_send0s_00EENtNtNtCsf3Ta7LF998c_4core6future6future6Future4pollCsgZAIVb0XKpv_9ssservice.exit.thread329 ], [ %.sroa.5166.1.i.i68.i.i.i, %_RNvXs1_NtNtNtCscVsx2cUGvkQ_12futures_util6stream6stream4nextINtB5_4NextINtNtB9_17futures_unordered16FuturesUnorderedNCNCNCNvMs0_NtCs8AjStw0eGtC_16hickory_resolver16name_server_poolINtB22_9PoolStateNtNtNtCslxdWNweD0x2_11shadowsocks12dns_resolver20hickory_dns_resolver24ShadowDnsRuntimeProviderE8try_send0s_00EENtNtNtCsf3Ta7LF998c_4core6future6future6Future4pollCsgZAIVb0XKpv_9ssservice.exit ] ; 6 uses
   %.sroa.427.sroa.4.0.copyload = phi ptr [ undef, %_RNvXs1_NtNtNtCscVsx2cUGvkQ_12futures_util6stream6stream4nextINtB5_4NextINtNtB9_17futures_unordered16FuturesUnorderedNCNCNCNvMs0_NtCs8AjStw0eGtC_16hickory_resolver16name_server_poolINtB22_9PoolStateNtNtNtCslxdWNweD0x2_11shadowsocks12dns_resolver20hickory_dns_resolver24ShadowDnsRuntimeProviderE8try_send0s_00EENtNtNtCsf3Ta7LF998c_4core6future6future6Future4pollCsgZAIVb0XKpv_9ssservice.exit.thread329 ], [ %.sroa.9173.1.i.i69.i.i.i, %_RNvXs1_NtNtNtCscVsx2cUGvkQ_12futures_util6stream6stream4nextINtB5_4NextINtNtB9_17futures_unordered16FuturesUnorderedNCNCNCNvMs0_NtCs8AjStw0eGtC_16hickory_resolver16name_server_poolINtB22_9PoolStateNtNtNtCslxdWNweD0x2_11shadowsocks12dns_resolver20hickory_dns_resolver24ShadowDnsRuntimeProviderE8try_send0s_00EENtNtNtCsf3Ta7LF998c_4core6future6future6Future4pollCsgZAIVb0XKpv_9ssservice.exit ] ; 6 uses
@@ -1438,6 +1441,7 @@ bb.ke:                                            ; preds = %_RNvXs1_NtNtNtCscVs
 
 bb.kf:                                            ; preds = %bb.ke
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ci)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0266.0347) ]
   store ptr %.sroa.0266.0347, ptr %i.ci, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.19277)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.20278)

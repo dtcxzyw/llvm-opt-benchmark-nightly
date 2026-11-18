@@ -204,7 +204,7 @@ _ZNK2cm8enum_setIN12_GLOBAL__N_15Test2ELm5ELi0EE4testEh.exit.i.peel.i.i: ; preds
   %i.dq = zext i8 %i.dp to i64
   %i.dr = call i64 @llvm.usub.sat.i64(i64 %i.dq, i64 2) ; 2 uses
   %i.ds = add nuw nsw i64 %i.dr, 1                ; 2 uses
-  %min.iters.check318 = icmp samesign ult i64 %i.dr, 143
+  %min.iters.check318 = icmp samesign ult i64 %i.dr, 127
   br i1 %min.iters.check318, label %.preheader.i.i.i.preheader398, label %vector.scevcheck315
 
 vector.scevcheck315:                              ; preds = %.preheader.i.i.i.preheader

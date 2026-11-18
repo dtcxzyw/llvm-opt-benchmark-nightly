@@ -205,13 +205,13 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a, %bb.b
   %.sroa.086.091 = phi ptr [ %i.l, %bb.b ], [ %i.e, %bb.a ] ; 4 uses
-  %2 = getelementptr inbounds nuw i8, ptr %.sroa.086.091, i64 32
-  %3 = getelementptr inbounds nuw i8, ptr %.sroa.086.091, i64 72
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store ptr %0, ptr %i.b, align 8, !tbaa !189
+  %2 = getelementptr inbounds nuw i8, ptr %.sroa.086.091, i64 72
+  %3 = getelementptr inbounds nuw i8, ptr %.sroa.086.091, i64 32
   %i.j = getelementptr inbounds nuw i8, ptr %.sroa.086.091, i64 96
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !3186
-  invoke void %i.k(ptr noundef nonnull align 8 dereferenceable(32) %3, ptr noundef nonnull align 8 dereferenceable(40) %2, ptr noundef nonnull align 8 dereferenceable(8) %i.b)
+  invoke void %i.k(ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(40) %3, ptr noundef nonnull align 8 dereferenceable(8) %i.b)
           to label %bb.b unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !inline_history !3183
 
 bb.b:                                             ; preds = %.lr.ph

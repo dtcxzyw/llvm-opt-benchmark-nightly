@@ -205,7 +205,7 @@ bb.y:                                             ; preds = %.thread.i
   %i.km = tail call i32 @llvm.umin.i32(i32 %i.ig, i32 %i.kl) ; 2 uses
   store i32 %i.km, ptr %i.hp, align 8, !tbaa !66
   %i.kn = select i1 %.not4.i.i, i32 1, i32 -16
-  %i.ko = add nsw i32 %i.kk, %i.kn
+  %i.ko = add nuw nsw i32 %i.kk, %i.kn
   br label %decode_motion.exit.i
 
 decode_motion.exit.i:                             ; preds = %bb.y, %.thread.i
@@ -252,7 +252,7 @@ bb.z:                                             ; preds = %decode_motion.exit.
   %i.lt = tail call i32 @llvm.umin.i32(i32 %i.ig, i32 %i.ls)
   store i32 %i.lt, ptr %i.hp, align 8, !tbaa !66
   %i.lu = select i1 %.not4.i51.i, i32 1, i32 -16
-  %i.lv = add nsw i32 %i.lr, %i.lu
+  %i.lv = add nuw nsw i32 %i.lr, %i.lu
   br label %decode_motion.exit53.i
 
 decode_motion.exit53.i:                           ; preds = %bb.z, %decode_motion.exit.i, %decode210.exit.i, %bb.v
@@ -323,7 +323,7 @@ bb.ac:                                            ; preds = %bb.ab
   %i.no = tail call i32 @llvm.umin.i32(i32 %i.mo, i32 %i.nn)
   store i32 %i.no, ptr %i.hp, align 8, !tbaa !66
   %i.np = select i1 %.not4.i57.i, i32 1, i32 -16
-  %i.nq = add nsw i32 %i.nm, %i.np
+  %i.nq = add nuw nsw i32 %i.nm, %i.np
   %i.nr = shl nsw i32 %i.nq, 1
   br label %decode_motion.exit59.i
 

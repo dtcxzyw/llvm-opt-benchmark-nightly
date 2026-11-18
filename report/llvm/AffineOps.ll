@@ -205,7 +205,16 @@ bb.h:                                             ; preds = %.critedge55.thread,
   call void @_ZN4mlir7OpState11emitOpErrorERKN4llvm5TwineE(ptr dead_on_unwind nonnull writable sret(%"class.mlir::InFlightDiagnostic") align 8 %30, ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(34) %31) #32
   %i.bf = load ptr, ptr %30, align 8, !tbaa !182
   %.not.i.i = icmp eq ptr %i.bf, null
-  br i1 %.not.i.i, label %_ZNO4mlir18InFlightDiagnosticlsIRA43_KcEEOS0_OT_.exit, label %bb.i
+  br i1 %.not.i.i, label %_ZNO4mlir18InFlightDiagnosticlsIRA33_KcEEOS0_OT_.exit.thread, label %bb.i
+
+_ZNO4mlir18InFlightDiagnosticlsIRA33_KcEEOS0_OT_.exit.thread: ; preds = %bb.h
+  %64 = load ptr, ptr %0, align 8, !tbaa !166
+  %65 = getelementptr inbounds nuw i8, ptr %64, i64 44
+  %66 = load i32, ptr %65, align 4
+  %67 = and i32 %66, 8388607
+  %68 = icmp ne i32 %67, 0
+  call void @llvm.assume(i1 %68)
+  br label %_ZNO4mlir18InFlightDiagnosticlsIRA43_KcEEOS0_OT_.exit
 
 bb.i:                                             ; preds = %bb.h
   %i.bg = getelementptr inbounds nuw i8, ptr %30, i64 24 ; 2 uses
@@ -334,7 +343,7 @@ _ZN4mlir10Diagnostic6appendIRA43_KcEERS0_OT_.exit.i.i: ; preds = %bb.q, %bb.p
   call void @llvm.lifetime.end.p0(ptr nonnull %23) #32
   br label %_ZNO4mlir18InFlightDiagnosticlsIRA43_KcEEOS0_OT_.exit
 
-_ZNO4mlir18InFlightDiagnosticlsIRA43_KcEEOS0_OT_.exit: ; preds = %bb.h, %_ZNO4mlir18InFlightDiagnosticlsIRA33_KcEEOS0_OT_.exit, %_ZNO4mlir18InFlightDiagnosticlsIjEEOS0_OT_.exit, %_ZN4mlir10Diagnostic6appendIRA43_KcEERS0_OT_.exit.i.i
+_ZNO4mlir18InFlightDiagnosticlsIRA43_KcEEOS0_OT_.exit: ; preds = %_ZNO4mlir18InFlightDiagnosticlsIRA33_KcEEOS0_OT_.exit.thread, %_ZNO4mlir18InFlightDiagnosticlsIRA33_KcEEOS0_OT_.exit, %_ZNO4mlir18InFlightDiagnosticlsIjEEOS0_OT_.exit, %_ZN4mlir10Diagnostic6appendIRA43_KcEERS0_OT_.exit.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %32) #32
   %i.dm = load ptr, ptr %0, align 8, !tbaa !166   ; 2 uses
   %i.dn = getelementptr inbounds nuw i8, ptr %i.dm, i64 44
