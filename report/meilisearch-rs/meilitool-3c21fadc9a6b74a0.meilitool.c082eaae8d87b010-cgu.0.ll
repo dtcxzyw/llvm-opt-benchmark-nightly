@@ -206,8 +206,7 @@ bb.cc:                                            ; preds = %.critedge.i.i.i.i
   br i1 %.not306.i.i.i.i, label %bb.cj, label %bb.ci
 
 bb.cd:                                            ; preds = %bb.cc
-  %2 = add i32 %i.jg, -10000
-  %or.cond.i340.i.i.i.i = icmp ult i32 %2, -19999
+  %or.cond.i340.i.i.i.i = icmp slt i32 %i.jg, -9999
   br i1 %or.cond.i340.i.i.i.i, label %bb.cg, label %bb.ce, !prof !66
 
 bb.ce:                                            ; preds = %bb.cd
@@ -356,8 +355,7 @@ switch.lookup:                                    ; preds = %bb.cr
   %switch.load247 = load i16, ptr %switch.gep246, align 2
   %i.md = add nsw i16 %i.lo, %switch.load247      ; 2 uses
   %i.me = add nsw i16 %i.md, 1                    ; 2 uses
-  %3 = add i32 %i.jg, -10000
-  %or.cond.i344.i.i.i.i = icmp ult i32 %3, -19999
+  %or.cond.i344.i.i.i.i = icmp slt i32 %i.jg, -9999
   br i1 %or.cond.i344.i.i.i.i, label %bb.cu, label %bb.cs, !prof !66
 
 bb.cs:                                            ; preds = %switch.lookup
@@ -432,8 +430,7 @@ switch.lookup241:                                 ; preds = %bb.cy
   %switch.load243 = load i16, ptr %switch.gep242, align 2
   %i.nk = add nsw i16 %i.mv, %switch.load243      ; 2 uses
   %i.nl = add nsw i16 %i.nk, 1                    ; 2 uses
-  %4 = add i32 %i.jg, -10000
-  %or.cond.i358.i.i.i.i = icmp ult i32 %4, -19999
+  %or.cond.i358.i.i.i.i = icmp slt i32 %i.jg, -9999
   br i1 %or.cond.i358.i.i.i.i, label %bb.db, label %bb.cz, !prof !66
 
 bb.cz:                                            ; preds = %switch.lookup241

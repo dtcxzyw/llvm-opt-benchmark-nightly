@@ -206,8 +206,7 @@ bb.c:                                             ; preds = %bb.a
   %.sroa.7.013 = phi i64 [ %i.g, %_ZN4core4iter6traits8iterator8Iterator7collect17hdf1bf04b434796a0E.exit ], [ 0, %bb.c ] ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %.sroa.0.014, i64 8 ; 2 uses
   %i.g = add nuw nsw i64 %.sroa.7.013, 1
-  %2 = and i64 %.sroa.7.013, 63
-  %i.h = shl nuw i64 1, %2                        ; 3 uses
+  %i.h = shl nuw i64 1, %.sroa.7.013              ; 3 uses
   %exitcond = icmp eq i64 %.sroa.7.013, 63
   br i1 %exitcond, label %bb.d, label %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i.i.i, !prof !194
 
