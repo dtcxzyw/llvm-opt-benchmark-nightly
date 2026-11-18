@@ -205,10 +205,10 @@ bb.f:                                             ; preds = %_ZN6ImPlot24CalcLog
   %i.cd = select i1 %i.cc, double %i.bz, double 0.000000e+00 ; 2 uses
   %i.ce = fsub double %i.cd, %i.cb
   %i.cf = fptosi double %i.ce to i32
-  %8 = sdiv i32 %i.cf, %i.bx                      ; 4 uses
+  %8 = udiv i32 %i.cf, %i.bx                      ; 4 uses
   %i.cg = fptosi double %i.cb to i32              ; 4 uses
   %i.ch = fptosi double %i.cd to i32              ; 3 uses
-  %.not.i43 = icmp slt i32 %8, 2
+  %.not.i43 = icmp samesign ult i32 %8, 2
   br i1 %.not.i43, label %_ZN6ImPlot24CalcLogarithmicExponentsERK11ImPlotRangefbRiS3_S3_.exit53, label %.preheader27.i44
 
 .preheader27.i44:                                 ; preds = %bb.f

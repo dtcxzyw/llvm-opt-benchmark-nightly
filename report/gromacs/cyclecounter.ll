@@ -43,7 +43,7 @@ bb.d:                                             ; preds = %bb.e
   %i.r = sitofp <2 x i64> %i.q to <2 x double>    ; 2 uses
   %i.s = extractelement <2 x double> %i.r, i64 0
   %i.t = extractelement <2 x double> %i.r, i64 1
-  %i.u = tail call double @llvm.fmuladd.f64(double %i.t, double f0x3EB0C6F7A0B5ED8D, double %i.s) ; 3 uses
+  %i.u = tail call double @llvm.fmuladd.f64(double %i.t, double f0x3EB0C6F7A0B5ED8D, double %i.s) ; 2 uses
   %i.v = fcmp olt double %i.u, %0
   br i1 %i.v, label %.backedge, label %bb.f
 
@@ -77,8 +77,8 @@ bb.f:                                             ; preds = %bb.d
   %i.ai = add i64 %i.ah, %i.ae
   %i.aj = uitofp i64 %i.ai to double
   %i.ak = fcmp olt double %i.y, 1.000000e-30
-  %3 = fadd double %i.y, %i.u
-  %spec.select = select i1 %i.ak, double %3, double %i.u
+  %3 = select i1 %i.ak, double %i.y, double -0.000000e+00
+  %spec.select = fadd double %3, %i.u
   %i.al = fdiv double %spec.select, %i.aj
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #4
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #4
