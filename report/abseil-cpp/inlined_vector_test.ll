@@ -205,10 +205,10 @@ _ZN4absl12lts_2026052623inlined_vector_internal13MallocAdapterISaINS0_13test_int
   br i1 %min.iters.check, label %.lr.ph.i.split.i.preheader221, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.split.i.preheader
+  %bound0 = icmp ult ptr @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance14num_instances_E, getelementptr inbounds nuw (i8, ptr @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance11num_copies_E, i64 4)
+  %bound0.a = icmp ult ptr @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance11num_copies_E, getelementptr inbounds nuw (i8, ptr @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance14num_instances_E, i64 4)
+  %found.conflict = and i1 %bound0, %bound0.a
   %3 = getelementptr i8, ptr %1, i64 4            ; 2 uses
-  %bound0.a = icmp ult ptr @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance14num_instances_E, getelementptr inbounds nuw (i8, ptr @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance11num_copies_E, i64 4)
-  %bound1 = icmp ult ptr @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance11num_copies_E, getelementptr inbounds nuw (i8, ptr @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance14num_instances_E, i64 4)
-  %found.conflict = and i1 %bound0.a, %bound1
   %bound0128 = icmp ugt ptr %3, @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance14num_instances_E
   %bound1129 = icmp ult ptr %1, getelementptr inbounds nuw (i8, ptr @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance14num_instances_E, i64 4)
   %found.conflict130 = and i1 %bound0128, %bound1129
@@ -329,7 +329,6 @@ middle.block:                                     ; preds = %vector.body
   br i1 %min.iters.check165, label %.lr.ph.i.split.us.i.preheader210, label %vector.memcheck166
 
 vector.memcheck166:                               ; preds = %.lr.ph.i.split.us.i.preheader
-  %4 = getelementptr i8, ptr %1, i64 4            ; 3 uses
   %bound0167 = icmp ult ptr @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance14num_instances_E, getelementptr inbounds nuw (i8, ptr @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance19num_live_instances_E, i64 4)
   %bound1168 = icmp ult ptr @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance19num_live_instances_E, getelementptr inbounds nuw (i8, ptr @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance14num_instances_E, i64 4)
   %found.conflict169 = and i1 %bound0167, %bound1168
@@ -337,6 +336,7 @@ vector.memcheck166:                               ; preds = %.lr.ph.i.split.us.i
   %bound1171 = icmp ult ptr @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance11num_copies_E, getelementptr inbounds nuw (i8, ptr @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance14num_instances_E, i64 4)
   %found.conflict172 = and i1 %bound0170, %bound1171
   %conflict.rdx173 = or i1 %found.conflict169, %found.conflict172
+  %4 = getelementptr i8, ptr %1, i64 4            ; 3 uses
   %bound0174 = icmp ugt ptr %4, @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance14num_instances_E
   %bound1175 = icmp ult ptr %1, getelementptr inbounds nuw (i8, ptr @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance14num_instances_E, i64 4)
   %found.conflict176 = and i1 %bound0174, %bound1175
@@ -739,10 +739,10 @@ _ZN4absl12lts_2026052623inlined_vector_internal13MallocAdapterISaINS0_13test_int
   br i1 %min.iters.check, label %.lr.ph.i.split.i.preheader212, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.split.i.preheader
+  %bound0 = icmp ult ptr @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance14num_instances_E, getelementptr inbounds nuw (i8, ptr @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance11num_copies_E, i64 4)
+  %bound0.a = icmp ult ptr @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance11num_copies_E, getelementptr inbounds nuw (i8, ptr @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance14num_instances_E, i64 4)
+  %found.conflict = and i1 %bound0, %bound0.a
   %3 = getelementptr i8, ptr %1, i64 4            ; 2 uses
-  %bound0.a = icmp ult ptr @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance14num_instances_E, getelementptr inbounds nuw (i8, ptr @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance11num_copies_E, i64 4)
-  %bound1 = icmp ult ptr @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance11num_copies_E, getelementptr inbounds nuw (i8, ptr @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance14num_instances_E, i64 4)
-  %found.conflict = and i1 %bound0.a, %bound1
   %bound0120 = icmp ugt ptr %3, @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance14num_instances_E
   %bound1121 = icmp ult ptr %1, getelementptr inbounds nuw (i8, ptr @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance14num_instances_E, i64 4)
   %found.conflict122 = and i1 %bound0120, %bound1121
@@ -862,7 +862,6 @@ middle.block:                                     ; preds = %vector.body
   br i1 %min.iters.check157, label %.lr.ph.i.split.us.i.preheader202, label %vector.memcheck158
 
 vector.memcheck158:                               ; preds = %.lr.ph.i.split.us.i.preheader
-  %4 = getelementptr i8, ptr %1, i64 4            ; 3 uses
   %bound0159 = icmp ult ptr @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance14num_instances_E, getelementptr inbounds nuw (i8, ptr @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance19num_live_instances_E, i64 4)
   %bound1160 = icmp ult ptr @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance19num_live_instances_E, getelementptr inbounds nuw (i8, ptr @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance14num_instances_E, i64 4)
   %found.conflict161 = and i1 %bound0159, %bound1160
@@ -870,6 +869,7 @@ vector.memcheck158:                               ; preds = %.lr.ph.i.split.us.i
   %bound1163 = icmp ult ptr @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance11num_copies_E, getelementptr inbounds nuw (i8, ptr @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance14num_instances_E, i64 4)
   %found.conflict164 = and i1 %bound0162, %bound1163
   %conflict.rdx165 = or i1 %found.conflict161, %found.conflict164
+  %4 = getelementptr i8, ptr %1, i64 4            ; 3 uses
   %bound0166 = icmp ugt ptr %4, @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance14num_instances_E
   %bound1167 = icmp ult ptr %1, getelementptr inbounds nuw (i8, ptr @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance14num_instances_E, i64 4)
   %found.conflict168 = and i1 %bound0166, %bound1167

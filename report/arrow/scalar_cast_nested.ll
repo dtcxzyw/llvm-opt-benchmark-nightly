@@ -205,12 +205,12 @@ vector.memcheck:                                  ; preds = %.lr.ph.i.preheader
   %i.es = shl i64 %i.ct, 2                        ; 2 uses
   %i.et = getelementptr i8, ptr %i.cu, i64 %i.es
   %i.eu = getelementptr i8, ptr %i.et, i64 4
-  %19 = getelementptr i8, ptr %i.cu, i64 %i.es
-  %20 = getelementptr i8, ptr %19, i64 %i.ep
-  %i.ev = getelementptr i8, ptr %20, i64 4
   %bound0 = icmp ult ptr %.0.i.i.i, %i.eu
   %bound1 = icmp ult ptr %i.cv, %i.er
-  %bound0154 = icmp ult ptr %.0.i.i.i, %i.ev
+  %i.ev = getelementptr i8, ptr %i.cu, i64 %i.es
+  %19 = getelementptr i8, ptr %i.ev, i64 %i.ep
+  %20 = getelementptr i8, ptr %19, i64 4
+  %bound0154 = icmp ult ptr %.0.i.i.i, %20
   %found.conflict157 = or i1 %bound0, %bound0154
   %conflict.rdx = and i1 %found.conflict157, %bound1
   br i1 %conflict.rdx, label %.lr.ph.i.preheader158, label %vector.ph
@@ -613,12 +613,12 @@ vector.memcheck:                                  ; preds = %.lr.ph.i.preheader
   %i.es = shl i64 %i.ct, 2                        ; 2 uses
   %i.et = getelementptr i8, ptr %i.cu, i64 %i.es
   %i.eu = getelementptr i8, ptr %i.et, i64 4
-  %19 = getelementptr i8, ptr %i.cu, i64 %i.es
-  %20 = getelementptr i8, ptr %19, i64 %i.ep
-  %i.ev = getelementptr i8, ptr %20, i64 4
   %bound0 = icmp ult ptr %.0.i.i.i, %i.eu
   %bound1 = icmp ult ptr %i.cv, %i.er
-  %bound0154 = icmp ult ptr %.0.i.i.i, %i.ev
+  %i.ev = getelementptr i8, ptr %i.cu, i64 %i.es
+  %19 = getelementptr i8, ptr %i.ev, i64 %i.ep
+  %20 = getelementptr i8, ptr %19, i64 4
+  %bound0154 = icmp ult ptr %.0.i.i.i, %20
   %found.conflict157 = or i1 %bound0, %bound0154
   %conflict.rdx = and i1 %found.conflict157, %bound1
   br i1 %conflict.rdx, label %.lr.ph.i.preheader158, label %vector.ph
@@ -1021,12 +1021,12 @@ vector.memcheck:                                  ; preds = %.lr.ph.i.preheader
   %i.iv = add i64 %i.iu, 4                        ; 2 uses
   %i.iw = getelementptr i8, ptr %.0.i.i.i, i64 %i.iv
   %i.ix = getelementptr i8, ptr %i.ha, i64 4
+  %bound0 = icmp ult ptr %.0.i.i.i, %i.ix
+  %bound0.a = icmp ult ptr %i.ha, %i.iw
   %38 = getelementptr i8, ptr %i.ha, i64 %i.iv
-  %bound0.a = icmp ult ptr %.0.i.i.i, %i.ix
-  %bound1 = icmp ult ptr %i.ha, %i.iw
   %bound0394 = icmp ult ptr %.0.i.i.i, %38
-  %found.conflict397 = or i1 %bound0.a, %bound0394
-  %conflict.rdx = and i1 %found.conflict397, %bound1
+  %found.conflict397 = or i1 %bound0, %bound0394
+  %conflict.rdx = and i1 %found.conflict397, %bound0.a
   br i1 %conflict.rdx, label %.lr.ph.i.preheader398, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
@@ -1429,12 +1429,12 @@ vector.memcheck:                                  ; preds = %.lr.ph.i.preheader
   %i.iv = add i64 %i.iu, 4                        ; 2 uses
   %i.iw = getelementptr i8, ptr %.0.i.i.i, i64 %i.iv
   %i.ix = getelementptr i8, ptr %i.ha, i64 4
+  %bound0 = icmp ult ptr %.0.i.i.i, %i.ix
+  %bound0.a = icmp ult ptr %i.ha, %i.iw
   %38 = getelementptr i8, ptr %i.ha, i64 %i.iv
-  %bound0.a = icmp ult ptr %.0.i.i.i, %i.ix
-  %bound1 = icmp ult ptr %i.ha, %i.iw
   %bound0394 = icmp ult ptr %.0.i.i.i, %38
-  %found.conflict397 = or i1 %bound0.a, %bound0394
-  %conflict.rdx = and i1 %found.conflict397, %bound1
+  %found.conflict397 = or i1 %bound0, %bound0394
+  %conflict.rdx = and i1 %found.conflict397, %bound0.a
   br i1 %conflict.rdx, label %.lr.ph.i.preheader398, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck

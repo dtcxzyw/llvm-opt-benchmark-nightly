@@ -205,7 +205,7 @@ bb.w:                                             ; preds = %_RNvXs_NtNtNtCslwFu
   %i.ce = getelementptr inbounds nuw i8, ptr %i.p, i64 56
   %.val6.i202 = load i64, ptr %i.ce, align 8      ; 11 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %i.p, i64 48
-  %.val5.i203 = load i64, ptr %i.cf, align 8      ; 11 uses
+  %.val5.i203 = load i64, ptr %i.cf, align 8      ; 10 uses
   %i.cg = load ptr, ptr %i.cd, align 8, !nonnull !56 ; 21 uses
   br label %_RINvNtCslwFuT2d6ECx_4core3ptr9drop_glueINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtBG_5types3any5PyAnyEECskcxRuJ53GpR_9rustworkx.exit235
 
@@ -471,7 +471,7 @@ _RNvXsg_NtCshByAT0BfsDP_7ndarray9iteratorsINtB5_7IterMutdINtNtNtB7_9dimension3di
   %i.fy = add i64 %i.r, -1                        ; 2 uses
   %umin = tail call i64 @llvm.umin.i64(i64 %.val4.i200, i64 %i.fy)
   %i.fz = shl i64 %umin, 3                        ; 2 uses
-  %i.ga = shl i64 %.val5.i203, 3
+  %i.ga = shl i64 %.val5.i203, 3                  ; 2 uses
   %i.gb = mul i64 %.val5.i203, %i.fy
   %i.gc = shl i64 %i.gb, 3                        ; 2 uses
   %i.gd = getelementptr i8, ptr %i.cg, i64 %i.gc
@@ -491,8 +491,7 @@ _RNvXsg_NtCshByAT0BfsDP_7ndarray9iteratorsINtB5_7IterMutdINtNtNtB7_9dimension3di
   %i.gn = shufflevector <2 x ptr> %i.gm, <2 x ptr> poison, <2 x i32> zeroinitializer
   %i.go = insertelement <2 x ptr> poison, ptr %scevgep56, i64 0
   %i.gp = shufflevector <2 x ptr> %i.go, <2 x ptr> poison, <2 x i32> zeroinitializer
-  %.mask = and i64 %.val5.i203, 1152921504606846976
-  %stride.check = icmp ne i64 %.mask, 0
+  %stride.check = icmp slt i64 %i.ga, 0
   %bound062 = icmp ult ptr %i.cg, %scevgep56
   %invariant.op = or i1 %bound062, %stride.check
   %i.gq = and i64 %i.gl, 3                        ; 2 uses
@@ -895,7 +894,7 @@ bb.w:                                             ; preds = %_RNvXs_NtNtNtCslwFu
   %i.ce = getelementptr inbounds nuw i8, ptr %i.p, i64 56
   %.val6.i200 = load i64, ptr %i.ce, align 8      ; 11 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %i.p, i64 48
-  %.val5.i201 = load i64, ptr %i.cf, align 8      ; 11 uses
+  %.val5.i201 = load i64, ptr %i.cf, align 8      ; 10 uses
   %i.cg = load ptr, ptr %i.cd, align 8, !nonnull !56 ; 21 uses
   br label %_RINvNtCslwFuT2d6ECx_4core3ptr9drop_glueINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtBG_5types3any5PyAnyEECskcxRuJ53GpR_9rustworkx.exit216
 
@@ -1161,7 +1160,7 @@ _RNvXsg_NtCshByAT0BfsDP_7ndarray9iteratorsINtB5_7IterMutdINtNtNtB7_9dimension3di
   %i.fy = add i64 %i.r, -1                        ; 2 uses
   %umin = tail call i64 @llvm.umin.i64(i64 %.val4.i198, i64 %i.fy)
   %i.fz = shl i64 %umin, 3                        ; 2 uses
-  %i.ga = shl i64 %.val5.i201, 3
+  %i.ga = shl i64 %.val5.i201, 3                  ; 2 uses
   %i.gb = mul i64 %.val5.i201, %i.fy
   %i.gc = shl i64 %i.gb, 3                        ; 2 uses
   %i.gd = getelementptr i8, ptr %i.cg, i64 %i.gc
@@ -1181,8 +1180,7 @@ _RNvXsg_NtCshByAT0BfsDP_7ndarray9iteratorsINtB5_7IterMutdINtNtNtB7_9dimension3di
   %i.gn = shufflevector <2 x ptr> %i.gm, <2 x ptr> poison, <2 x i32> zeroinitializer
   %i.go = insertelement <2 x ptr> poison, ptr %scevgep801, i64 0
   %i.gp = shufflevector <2 x ptr> %i.go, <2 x ptr> poison, <2 x i32> zeroinitializer
-  %.mask = and i64 %.val5.i201, 1152921504606846976
-  %stride.check = icmp ne i64 %.mask, 0
+  %stride.check = icmp slt i64 %i.ga, 0
   %bound0807 = icmp ult ptr %i.cg, %scevgep801
   %invariant.op = or i1 %bound0807, %stride.check
   %i.gq = and i64 %i.gl, 3                        ; 2 uses
@@ -1585,10 +1583,10 @@ _RINvMso_NtCshByAT0BfsDP_7ndarray3zipINtB6_3ZipTINtB8_9ArrayBaseINtB8_8ViewReprR
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.preheader
   %i.aa = getelementptr i8, ptr %i.x, i64 %i.r    ; 2 uses
   %i.ab = getelementptr i8, ptr %.sroa.039.0, i64 8
-  %4 = getelementptr i8, ptr %.sroa.17.0, i64 %i.r
   %bound0 = icmp ugt ptr %i.ab, %i.x
   %bound1 = icmp ult ptr %.sroa.039.0, %i.aa
   %found.conflict = and i1 %bound0, %bound1
+  %4 = getelementptr i8, ptr %.sroa.17.0, i64 %i.r
   %bound07 = icmp ugt ptr %4, %i.x
   %bound18 = icmp ult ptr %.sroa.17.0, %i.aa
   %found.conflict9 = and i1 %bound07, %bound18

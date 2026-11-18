@@ -204,10 +204,10 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g
   %i.dq = mul nsw i64 %i.bo, 40
   %i.dr = getelementptr i8, ptr @ff_cb1_vects, i64 %i.dq
   %i.ds = getelementptr i8, ptr %i.dr, i64 40
+  %bound068 = icmp ult ptr %i.dh, %i.ds           ; 2 uses
   %i.dt = mul nsw i64 %i.bv, 40
   %i.du = getelementptr i8, ptr @ff_cb2_vects, i64 %i.dt
   %i.dv = getelementptr i8, ptr %i.du, i64 40
-  %bound068 = icmp ult ptr %i.dh, %i.ds           ; 2 uses
   %bound071 = icmp ult ptr %i.dh, %i.dv           ; 2 uses
   br i1 %.not26.i, label %vector.memcheck67, label %vector.memcheck
 
