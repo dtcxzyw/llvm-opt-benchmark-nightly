@@ -205,7 +205,6 @@ bb.a:
   %i.a = lshr i64 %3, 1                           ; 3 uses
   %i.b = lshr i64 %1, 1                           ; 2 uses
   %wide.trip.count = zext nneg i32 %4 to i64      ; 8 uses
-  %7 = and i64 %3, -2
   %i.c = add i32 %5, -1
   %i.d = zext i32 %i.c to i64                     ; 3 uses
   %i.e = mul i64 %i.a, %i.d
@@ -213,6 +212,7 @@ bb.a:
   %i.g = add i64 %i.e, %wide.trip.count
   %i.h = shl i64 %i.g, 1
   %scevgep = getelementptr i8, ptr %2, i64 %i.h
+  %7 = and i64 %3, -2
   %i.i = shl nuw nsw i64 %i.d, 1
   %i.j = add nuw nsw i64 %i.i, 2
   %i.k = mul i64 %i.a, %i.j
@@ -615,7 +615,6 @@ bb.a:
   %i.a = lshr i64 %3, 1                           ; 3 uses
   %i.b = lshr i64 %1, 1                           ; 2 uses
   %wide.trip.count = zext nneg i32 %4 to i64      ; 6 uses
-  %7 = and i64 %3, -2
   %i.c = add i32 %5, -1
   %i.d = zext i32 %i.c to i64                     ; 3 uses
   %i.e = mul i64 %i.a, %i.d
@@ -623,6 +622,7 @@ bb.a:
   %i.g = add i64 %i.e, %wide.trip.count
   %i.h = shl i64 %i.g, 1
   %scevgep = getelementptr i8, ptr %2, i64 %i.h
+  %7 = and i64 %3, -2
   %i.i = shl nuw nsw i64 %i.d, 1
   %i.j = add nuw nsw i64 %i.i, 2
   %i.k = mul i64 %i.a, %i.j

@@ -205,10 +205,10 @@ _ZN4llvm11SmallVectorIjLj12EEC2Em.exit.i:         ; preds = %.lr.ph.preheader.i.
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader.i
   %i.nl = getelementptr i8, ptr %i.nc, i64 4
-  %57 = getelementptr inbounds nuw i8, ptr %37, i64 36
   %bound0 = icmp ult ptr %.0103189.i, %i.nl
   %bound1 = icmp ult ptr %i.nc, %i.nh
   %found.conflict = and i1 %bound0, %bound1
+  %57 = getelementptr inbounds nuw i8, ptr %37, i64 36
   %bound0554 = icmp ult ptr %.0103189.i, %57
   %bound1555 = icmp ult ptr %i.bh, %i.nh
   %found.conflict556 = and i1 %bound0554, %bound1555

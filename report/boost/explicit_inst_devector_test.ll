@@ -204,16 +204,16 @@ _ZN5boost9container24uninitialized_move_allocINS0_13new_allocatorINS0_4test24mov
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.preheader
   %i.ax = shl i64 %2, 2
-  %6 = getelementptr i8, ptr %.015.lcssa.i.i, i64 %i.ax ; 2 uses
-  %i.ay = getelementptr i8, ptr %3, i64 4         ; 2 uses
+  %i.ay = getelementptr i8, ptr %.015.lcssa.i.i, i64 %i.ax ; 2 uses
   %bound0 = icmp ult ptr %.015.lcssa.i.i, getelementptr inbounds nuw (i8, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, i64 4)
-  %bound1 = icmp ugt ptr %6, @_ZN5boost9container4test24movable_and_copyable_int5countE
+  %bound1 = icmp ugt ptr %i.ay, @_ZN5boost9container4test24movable_and_copyable_int5countE
   %found.conflict = and i1 %bound0, %bound1
-  %bound087 = icmp ult ptr %.015.lcssa.i.i, %i.ay
-  %bound188 = icmp ult ptr %3, %6
+  %6 = getelementptr i8, ptr %3, i64 4            ; 2 uses
+  %bound087 = icmp ult ptr %.015.lcssa.i.i, %6
+  %bound188 = icmp ult ptr %3, %i.ay
   %found.conflict89 = and i1 %bound087, %bound188
   %conflict.rdx = or i1 %found.conflict, %found.conflict89
-  %bound090 = icmp ugt ptr %i.ay, @_ZN5boost9container4test24movable_and_copyable_int5countE
+  %bound090 = icmp ugt ptr %6, @_ZN5boost9container4test24movable_and_copyable_int5countE
   %bound191 = icmp ult ptr %3, getelementptr inbounds nuw (i8, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, i64 4)
   %found.conflict92 = and i1 %bound090, %bound191
   %conflict.rdx93 = or i1 %conflict.rdx, %found.conflict92
@@ -616,16 +616,16 @@ _ZN5boost9container24uninitialized_move_allocINS0_13new_allocatorINS0_4test24mov
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.preheader
   %i.ax = shl i64 %2, 2                           ; 2 uses
-  %4 = getelementptr i8, ptr %.015.lcssa.i.i, i64 %i.ax ; 2 uses
-  %i.ay = getelementptr i8, ptr %3, i64 %i.ax     ; 2 uses
+  %i.ay = getelementptr i8, ptr %.015.lcssa.i.i, i64 %i.ax ; 2 uses
   %bound0 = icmp ult ptr %.015.lcssa.i.i, getelementptr inbounds nuw (i8, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, i64 4)
-  %bound1 = icmp ugt ptr %4, @_ZN5boost9container4test24movable_and_copyable_int5countE
+  %bound1 = icmp ugt ptr %i.ay, @_ZN5boost9container4test24movable_and_copyable_int5countE
   %found.conflict = and i1 %bound0, %bound1
-  %bound082 = icmp ult ptr %.015.lcssa.i.i, %i.ay
-  %bound183 = icmp ult ptr %3, %4
+  %4 = getelementptr i8, ptr %3, i64 %i.ax        ; 2 uses
+  %bound082 = icmp ult ptr %.015.lcssa.i.i, %4
+  %bound183 = icmp ult ptr %3, %i.ay
   %found.conflict84 = and i1 %bound082, %bound183
   %conflict.rdx = or i1 %found.conflict, %found.conflict84
-  %bound085 = icmp ugt ptr %i.ay, @_ZN5boost9container4test24movable_and_copyable_int5countE
+  %bound085 = icmp ugt ptr %4, @_ZN5boost9container4test24movable_and_copyable_int5countE
   %bound186 = icmp ult ptr %3, getelementptr inbounds nuw (i8, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, i64 4)
   %found.conflict87 = and i1 %bound085, %bound186
   %conflict.rdx88 = or i1 %conflict.rdx, %found.conflict87
