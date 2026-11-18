@@ -205,9 +205,9 @@ bb.kw:                                            ; preds = %bb.kt, %_RNvMsa_NtN
   %.sroa.0.0 = phi ptr [ %i.ee, %bb.kt ], [ %4, %bb.bz ], [ %4, %_RNvMsa_NtNtNtCs1dZk1kIfPhr_19candle_transformers6models16stable_diffusion6uni_pcNtB5_24EdmDpmMultistepScheduler20convert_model_output.exit.thread279 ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ed)
   %i.agy = getelementptr inbounds nuw i8, ptr %1, i64 200 ; 4 uses
-  %.val80 = load ptr, ptr %i.agy, align 8, !nonnull !4, !noundef !4 ; 2 uses
+  %.val80 = load ptr, ptr %i.agy, align 8, !nonnull !4, !noundef !4
   %i.agz = getelementptr inbounds nuw i8, ptr %1, i64 208 ; 4 uses
-  %.val81 = load i64, ptr %i.agz, align 8, !noundef !4 ; 7 uses
+  %.val81 = load i64, ptr %i.agz, align 8, !noundef !4 ; 6 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !38409)
   %i.aha = shl nuw nsw i64 %.val81, 3             ; 2 uses
   %i.ahb = icmp eq i64 %.val81, 0
@@ -215,9 +215,9 @@ bb.kw:                                            ; preds = %bb.kt, %_RNvMsa_NtN
 
 bb.kx:                                            ; preds = %bb.kw
   call void @_RNvCsh0WfaQiVYm0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #30, !noalias !38410
-  %i.ahc = call noundef align 8 ptr @_RNvCsh0WfaQiVYm0_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.aha, i64 noundef range(i64 1, -9223372036854775807) 8) #30, !noalias !38410 ; 4 uses
+  %i.ahc = call noundef align 8 ptr @_RNvCsh0WfaQiVYm0_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.aha, i64 noundef range(i64 1, -9223372036854775807) 8) #30, !noalias !38410 ; 3 uses
   %i.ahd = icmp eq ptr %i.ahc, null
-  br i1 %i.ahd, label %bb.ky, label %.lr.ph.preheader.i
+  br i1 %i.ahd, label %bb.ky, label %.lr.ph.i105
 
 bb.ky:                                            ; preds = %bb.kx
   invoke void @_RNvNtCsgCecv3eZDcN_5alloc7raw_vec12handle_error(i64 noundef 8, i64 %i.aha) #31
@@ -226,26 +226,18 @@ bb.ky:                                            ; preds = %bb.kx
 .noexc107:                                        ; preds = %bb.ky
   unreachable
 
-.lr.ph.preheader.i:                               ; preds = %bb.kx
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %.val80, i64 %.val81
-  br label %.lr.ph.i105
-
-.lr.ph.i105:                                      ; preds = %_RNvXs4_NtCsf3Ta7LF998c_4core6optionINtB5_6OptionNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorENtNtB7_5clone5Clone5cloneCs1dZk1kIfPhr_19candle_transformers.exit.i, %.lr.ph.preheader.i
-  %.sroa.013.023.i = phi ptr [ %7, %_RNvXs4_NtCsf3Ta7LF998c_4core6optionINtB5_6OptionNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorENtNtB7_5clone5Clone5cloneCs1dZk1kIfPhr_19candle_transformers.exit.i ], [ %.val80, %.lr.ph.preheader.i ] ; 3 uses
-  %.sroa.7.022.i = phi i64 [ %8, %_RNvXs4_NtCsf3Ta7LF998c_4core6optionINtB5_6OptionNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorENtNtB7_5clone5Clone5cloneCs1dZk1kIfPhr_19candle_transformers.exit.i ], [ 0, %.lr.ph.preheader.i ] ; 2 uses
-  %.sroa.10.021.i = phi i64 [ %i.ahe, %_RNvXs4_NtCsf3Ta7LF998c_4core6optionINtB5_6OptionNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorENtNtB7_5clone5Clone5cloneCs1dZk1kIfPhr_19candle_transformers.exit.i ], [ %.val81, %.lr.ph.preheader.i ]
-  %i.ahe = add nsw i64 %.sroa.10.021.i, -1        ; 2 uses
-  %i.ahf = icmp eq ptr %.sroa.013.023.i, %5
-  br i1 %i.ahf, label %.loopexit, label %6
-
-6:                                                ; preds = %.lr.ph.i105
-  %7 = getelementptr inbounds nuw i8, ptr %.sroa.013.023.i, i64 8
-  %8 = add nuw nsw i64 %.sroa.7.022.i, 1
+.lr.ph.i105:                                      ; preds = %bb.kx, %_RNvXs4_NtCsf3Ta7LF998c_4core6optionINtB5_6OptionNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorENtNtB7_5clone5Clone5cloneCs1dZk1kIfPhr_19candle_transformers.exit.i
+  %.sroa.013.023.i = phi ptr [ %6, %_RNvXs4_NtCsf3Ta7LF998c_4core6optionINtB5_6OptionNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorENtNtB7_5clone5Clone5cloneCs1dZk1kIfPhr_19candle_transformers.exit.i ], [ %.val80, %bb.kx ] ; 2 uses
+  %.sroa.7.022.i = phi i64 [ %i.ahe, %_RNvXs4_NtCsf3Ta7LF998c_4core6optionINtB5_6OptionNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorENtNtB7_5clone5Clone5cloneCs1dZk1kIfPhr_19candle_transformers.exit.i ], [ 0, %bb.kx ] ; 2 uses
+  %.sroa.10.021.i = phi i64 [ %5, %_RNvXs4_NtCsf3Ta7LF998c_4core6optionINtB5_6OptionNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorENtNtB7_5clone5Clone5cloneCs1dZk1kIfPhr_19candle_transformers.exit.i ], [ %.val81, %bb.kx ]
+  %5 = add nsw i64 %.sroa.10.021.i, -1            ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %.sroa.013.023.i, i64 8
+  %i.ahe = add nuw nsw i64 %.sroa.7.022.i, 1
   %.val12.i = load ptr, ptr %.sroa.013.023.i, align 8, !alias.scope !38409, !noundef !4 ; 3 uses
-  %.not.i.i106 = icmp eq ptr %.val12.i, null
-  br i1 %.not.i.i106, label %_RNvXs4_NtCsf3Ta7LF998c_4core6optionINtB5_6OptionNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorENtNtB7_5clone5Clone5cloneCs1dZk1kIfPhr_19candle_transformers.exit.i, label %bb.kz
+  %i.ahf = icmp eq ptr %.val12.i, null
+  br i1 %i.ahf, label %_RNvXs4_NtCsf3Ta7LF998c_4core6optionINtB5_6OptionNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorENtNtB7_5clone5Clone5cloneCs1dZk1kIfPhr_19candle_transformers.exit.i, label %bb.kz
 
-bb.kz:                                            ; preds = %6
+bb.kz:                                            ; preds = %.lr.ph.i105
   %i.ahg = atomicrmw add ptr %.val12.i, i64 1 monotonic, align 8, !noalias !38411
   %i.ahh = icmp slt i64 %i.ahg, 0
   br i1 %i.ahh, label %bb.la, label %_RNvXs4_NtCsf3Ta7LF998c_4core6optionINtB5_6OptionNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorENtNtB7_5clone5Clone5cloneCs1dZk1kIfPhr_19candle_transformers.exit.i
@@ -254,17 +246,17 @@ bb.la:                                            ; preds = %bb.kz
   call void @llvm.trap()
   unreachable
 
-_RNvXs4_NtCsf3Ta7LF998c_4core6optionINtB5_6OptionNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorENtNtB7_5clone5Clone5cloneCs1dZk1kIfPhr_19candle_transformers.exit.i: ; preds = %bb.kz, %6
+_RNvXs4_NtCsf3Ta7LF998c_4core6optionINtB5_6OptionNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorENtNtB7_5clone5Clone5cloneCs1dZk1kIfPhr_19candle_transformers.exit.i: ; preds = %bb.kz, %.lr.ph.i105
   %i.ahi = getelementptr inbounds nuw [8 x i8], ptr %i.ahc, i64 %.sroa.7.022.i
   store ptr %.val12.i, ptr %i.ahi, align 8, !noalias !38411
-  %i.ahj = icmp eq i64 %i.ahe, 0
+  %i.ahj = icmp eq i64 %5, 0
   br i1 %i.ahj, label %.loopexit, label %.lr.ph.i105
 
-.loopexit:                                        ; preds = %.lr.ph.i105, %_RNvXs4_NtCsf3Ta7LF998c_4core6optionINtB5_6OptionNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorENtNtB7_5clone5Clone5cloneCs1dZk1kIfPhr_19candle_transformers.exit.i, %bb.kw
-  %.sroa.5275.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.kw ], [ %i.ahc, %_RNvXs4_NtCsf3Ta7LF998c_4core6optionINtB5_6OptionNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorENtNtB7_5clone5Clone5cloneCs1dZk1kIfPhr_19candle_transformers.exit.i ], [ %i.ahc, %.lr.ph.i105 ]
+.loopexit:                                        ; preds = %_RNvXs4_NtCsf3Ta7LF998c_4core6optionINtB5_6OptionNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorENtNtB7_5clone5Clone5cloneCs1dZk1kIfPhr_19candle_transformers.exit.i, %bb.kw
+  %.sroa.5274.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.kw ], [ %i.ahc, %_RNvXs4_NtCsf3Ta7LF998c_4core6optionINtB5_6OptionNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorENtNtB7_5clone5Clone5cloneCs1dZk1kIfPhr_19candle_transformers.exit.i ]
   store i64 %.val81, ptr %i.ed, align 8, !noalias !38409
   %.sroa.5275.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ed, i64 8 ; 6 uses
-  store ptr %.sroa.5275.0, ptr %.sroa.5275.0..sroa_idx, align 8, !noalias !38409
+  store ptr %.sroa.5274.0, ptr %.sroa.5275.0..sroa_idx, align 8, !noalias !38409
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ed, i64 16 ; 3 uses
   store i64 %.val81, ptr %.sroa.7.0..sroa_idx, align 8, !noalias !38409
   %i.ahk = getelementptr inbounds nuw i8, ptr %1, i64 152 ; 3 uses

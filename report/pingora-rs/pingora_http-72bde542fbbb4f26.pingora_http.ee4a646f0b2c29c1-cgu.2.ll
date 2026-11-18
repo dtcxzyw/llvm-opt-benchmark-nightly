@@ -202,8 +202,8 @@ bb.a:
   %i.b = alloca [24 x i8], align 8                ; 10 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.e = load ptr, ptr %i.d, align 8, !nonnull !9, !noundef !9 ; 2 uses
-  %i.f = load i64, ptr %i.c, align 8, !noundef !9 ; 6 uses
+  %i.e = load ptr, ptr %i.d, align 8, !nonnull !9, !noundef !9
+  %i.f = load i64, ptr %i.c, align 8, !noundef !9 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !411
   %i.g = mul nuw nsw i64 %i.f, 72                 ; 2 uses
   %i.h = icmp eq i64 %i.f, 0
@@ -230,20 +230,14 @@ bb.c:                                             ; preds = %bb.b
   store i64 %i.f, ptr %i.b, align 8, !noalias !411
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr %i.k, ptr %i.m, align 8, !noalias !411
-  %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 3 uses
-  %2 = getelementptr inbounds nuw [72 x i8], ptr %i.e, i64 %i.f
+  %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  br label %3
+  br label %bb.d
 
-3:                                                ; preds = %bb.e, %.lr.ph.i
-  %.sroa.012.042.i = phi ptr [ %i.e, %.lr.ph.i ], [ %i.y, %bb.e ] ; 9 uses
+bb.d:                                             ; preds = %bb.e, %.lr.ph.i
+  %.sroa.012.042.i = phi ptr [ %i.e, %.lr.ph.i ], [ %i.y, %bb.e ] ; 8 uses
   %.sroa.7.041.i = phi i64 [ 0, %.lr.ph.i ], [ %i.x, %bb.e ] ; 3 uses
-  %.sroa.10.040.i = phi i64 [ %i.f, %.lr.ph.i ], [ %4, %bb.e ]
-  %4 = add nsw i64 %.sroa.10.040.i, -1            ; 2 uses
-  %5 = icmp eq ptr %.sroa.012.042.i, %2
-  br i1 %5, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inINtNtNtCs84JG9zk80ZV_4http6header3map10ExtraValueNtNtBP_5value11HeaderValueENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECskspKcFIsYcD_12pingora_http.exit, label %bb.d
-
-bb.d:                                             ; preds = %3
+  %.sroa.10.040.i = phi i64 [ %i.f, %.lr.ph.i ], [ %2, %bb.e ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !413
   %i.p = getelementptr inbounds nuw i8, ptr %.sroa.012.042.i, i64 32
   call void @llvm.experimental.noalias.scope.decl(metadata !414)
@@ -260,6 +254,7 @@ bb.d:                                             ; preds = %3
 bb.e:                                             ; preds = %bb.d
   %i.x = add nuw nsw i64 %.sroa.7.041.i, 1
   %i.y = getelementptr inbounds nuw i8, ptr %.sroa.012.042.i, i64 72
+  %2 = add nsw i64 %.sroa.10.040.i, -1            ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %.sroa.012.042.i, i64 64
   %i.aa = load i8, ptr %i.z, align 8, !range !16, !noalias !415, !noundef !9
   store i8 %i.aa, ptr %i.o, align 8, !alias.scope !414, !noalias !413
@@ -276,8 +271,8 @@ bb.e:                                             ; preds = %bb.d
   %.sroa.731.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ac, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.731.0..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.731.i, i64 40, i1 false), !noalias !411
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.731.i)
-  %i.af = icmp eq i64 %4, 0
-  br i1 %i.af, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inINtNtNtCs84JG9zk80ZV_4http6header3map10ExtraValueNtNtBP_5value11HeaderValueENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECskspKcFIsYcD_12pingora_http.exit, label %3
+  %i.af = icmp eq i64 %2, 0
+  br i1 %i.af, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inINtNtNtCs84JG9zk80ZV_4http6header3map10ExtraValueNtNtBP_5value11HeaderValueENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECskspKcFIsYcD_12pingora_http.exit, label %bb.d
 
 bb.f:                                             ; preds = %bb.g
   %i.ag = landingpad { ptr, i32 }
@@ -295,9 +290,9 @@ bb.g:                                             ; preds = %bb.d
 bb.h:                                             ; preds = %bb.g
   resume { ptr, i32 } %lpad.loopexit.i
 
-_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inINtNtNtCs84JG9zk80ZV_4http6header3map10ExtraValueNtNtBP_5value11HeaderValueENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECskspKcFIsYcD_12pingora_http.exit: ; preds = %3, %bb.e, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskspKcFIsYcD_12pingora_http.exit.thread.i
-  %6 = phi ptr [ %i.j, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskspKcFIsYcD_12pingora_http.exit.thread.i ], [ %i.n, %bb.e ], [ %i.n, %3 ]
-  store i64 %i.f, ptr %6, align 8, !noalias !411
+_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inINtNtNtCs84JG9zk80ZV_4http6header3map10ExtraValueNtNtBP_5value11HeaderValueENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECskspKcFIsYcD_12pingora_http.exit: ; preds = %bb.e, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskspKcFIsYcD_12pingora_http.exit.thread.i
+  %3 = phi ptr [ %i.j, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskspKcFIsYcD_12pingora_http.exit.thread.i ], [ %i.n, %bb.e ]
+  store i64 %i.f, ptr %3, align 8, !noalias !411
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !411
   ret void
@@ -310,8 +305,8 @@ bb.a:
   %i.b = alloca [24 x i8], align 8                ; 10 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.e = load ptr, ptr %i.d, align 8, !nonnull !9, !noundef !9 ; 2 uses
-  %i.f = load i64, ptr %i.c, align 8, !noundef !9 ; 6 uses
+  %i.e = load ptr, ptr %i.d, align 8, !nonnull !9, !noundef !9
+  %i.f = load i64, ptr %i.c, align 8, !noundef !9 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !425
   %i.g = shl nuw nsw i64 %i.f, 6                  ; 2 uses
   %i.h = icmp eq i64 %i.f, 0
@@ -338,21 +333,15 @@ bb.c:                                             ; preds = %bb.b
   store i64 %i.f, ptr %i.b, align 8, !noalias !425
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr %i.k, ptr %i.m, align 8, !noalias !425
-  %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 3 uses
-  %2 = getelementptr inbounds nuw [64 x i8], ptr %i.e, i64 %i.f
+  %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   %i.p = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  br label %3
+  br label %bb.d
 
-3:                                                ; preds = %bb.e, %.lr.ph.i
-  %.sroa.012.023.i = phi ptr [ %i.e, %.lr.ph.i ], [ %i.z, %bb.e ] ; 8 uses
+bb.d:                                             ; preds = %bb.e, %.lr.ph.i
+  %.sroa.012.023.i = phi ptr [ %i.e, %.lr.ph.i ], [ %i.z, %bb.e ] ; 7 uses
   %.sroa.7.022.i = phi i64 [ 0, %.lr.ph.i ], [ %i.y, %bb.e ] ; 3 uses
-  %.sroa.10.021.i = phi i64 [ %i.f, %.lr.ph.i ], [ %4, %bb.e ]
-  %4 = add nsw i64 %.sroa.10.021.i, -1            ; 2 uses
-  %5 = icmp eq ptr %.sroa.012.023.i, %2
-  br i1 %5, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inINtNtNtCs84JG9zk80ZV_4http6header3map10ExtraValueNtNtCskspKcFIsYcD_12pingora_http16case_header_name14CaseHeaderNameENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEB1B_.exit, label %bb.d
-
-bb.d:                                             ; preds = %3
+  %.sroa.10.021.i = phi i64 [ %i.f, %.lr.ph.i ], [ %2, %bb.e ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !425
   call void @llvm.experimental.noalias.scope.decl(metadata !427)
   %i.q = getelementptr inbounds nuw i8, ptr %.sroa.012.023.i, i64 32
@@ -369,6 +358,7 @@ bb.d:                                             ; preds = %3
 bb.e:                                             ; preds = %bb.d
   %i.y = add nuw nsw i64 %.sroa.7.022.i, 1
   %i.z = getelementptr inbounds nuw i8, ptr %.sroa.012.023.i, i64 64
+  %2 = add nsw i64 %.sroa.10.021.i, -1            ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %.sroa.012.023.i, i64 16
   %i.ab = load <2 x i64>, ptr %.sroa.012.023.i, align 8, !noalias !429
   store <2 x i64> %i.ab, ptr %i.a, align 16, !alias.scope !427, !noalias !425
@@ -377,8 +367,8 @@ bb.e:                                             ; preds = %bb.d
   %i.ad = getelementptr inbounds nuw [64 x i8], ptr %i.k, i64 %.sroa.7.022.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.ad, ptr noundef nonnull align 16 dereferenceable(64) %i.a, i64 64, i1 false), !noalias !425
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !425
-  %i.ae = icmp eq i64 %4, 0
-  br i1 %i.ae, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inINtNtNtCs84JG9zk80ZV_4http6header3map10ExtraValueNtNtCskspKcFIsYcD_12pingora_http16case_header_name14CaseHeaderNameENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEB1B_.exit, label %3
+  %i.ae = icmp eq i64 %2, 0
+  br i1 %i.ae, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inINtNtNtCs84JG9zk80ZV_4http6header3map10ExtraValueNtNtCskspKcFIsYcD_12pingora_http16case_header_name14CaseHeaderNameENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEB1B_.exit, label %bb.d
 
 bb.f:                                             ; preds = %bb.g
   %i.af = landingpad { ptr, i32 }
@@ -396,9 +386,9 @@ bb.g:                                             ; preds = %bb.d
 bb.h:                                             ; preds = %bb.g
   resume { ptr, i32 } %lpad.loopexit.i
 
-_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inINtNtNtCs84JG9zk80ZV_4http6header3map10ExtraValueNtNtCskspKcFIsYcD_12pingora_http16case_header_name14CaseHeaderNameENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEB1B_.exit: ; preds = %3, %bb.e, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskspKcFIsYcD_12pingora_http.exit.thread.i
-  %6 = phi ptr [ %i.j, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskspKcFIsYcD_12pingora_http.exit.thread.i ], [ %i.n, %bb.e ], [ %i.n, %3 ]
-  store i64 %i.f, ptr %6, align 8, !noalias !425
+_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inINtNtNtCs84JG9zk80ZV_4http6header3map10ExtraValueNtNtCskspKcFIsYcD_12pingora_http16case_header_name14CaseHeaderNameENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEB1B_.exit: ; preds = %bb.e, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskspKcFIsYcD_12pingora_http.exit.thread.i
+  %3 = phi ptr [ %i.j, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskspKcFIsYcD_12pingora_http.exit.thread.i ], [ %i.n, %bb.e ]
+  store i64 %i.f, ptr %3, align 8, !noalias !425
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !425
   ret void
@@ -413,8 +403,8 @@ bb.a:
   %i.c = alloca [24 x i8], align 8                ; 10 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.f = load ptr, ptr %i.e, align 8, !nonnull !9, !noundef !9 ; 2 uses
-  %i.g = load i64, ptr %i.d, align 8, !noundef !9 ; 6 uses
+  %i.f = load ptr, ptr %i.e, align 8, !nonnull !9, !noundef !9
+  %i.g = load i64, ptr %i.d, align 8, !noundef !9 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !452
   %i.h = mul nuw nsw i64 %i.g, 104                ; 2 uses
   %i.i = icmp eq i64 %i.g, 0
@@ -441,29 +431,24 @@ bb.c:                                             ; preds = %bb.b
   store i64 %i.g, ptr %i.c, align 8, !noalias !452
   %i.n = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store ptr %i.l, ptr %i.n, align 8, !noalias !452
-  %i.o = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 3 uses
-  %2 = getelementptr inbounds nuw [104 x i8], ptr %i.f, i64 %i.g
+  %i.o = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 2 uses
   %.sroa.411.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %.sroa.512.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 9
   %.sroa.512.sroa.4.0..sroa.512.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %.sroa.512.sroa.5.0..sroa.512.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %i.p = getelementptr inbounds nuw i8, ptr %i.b, i64 32
-  br label %3
-
-3:                                                ; preds = %bb.m, %.lr.ph.i
-  %.sroa.013.061.i = phi ptr [ %i.f, %.lr.ph.i ], [ %i.q, %bb.m ] ; 15 uses
-  %.sroa.7.060.i = phi i64 [ 0, %.lr.ph.i ], [ %i.r, %bb.m ] ; 3 uses
-  %.sroa.10.059.i = phi i64 [ %i.g, %.lr.ph.i ], [ %4, %bb.m ]
-  %4 = add nsw i64 %.sroa.10.059.i, -1            ; 2 uses
-  %5 = icmp eq ptr %.sroa.013.061.i, %2
-  br i1 %5, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inINtNtNtCs84JG9zk80ZV_4http6header3map6BucketNtNtBP_5value11HeaderValueENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECskspKcFIsYcD_12pingora_http.exit, label %bb.d
+  br label %bb.d
 
 .loopexit.i:                                      ; preds = %bb.e
   %lpad.loopexit.i = landingpad { ptr, i32 }
           cleanup
   br label %bb.o
 
-bb.d:                                             ; preds = %3
+bb.d:                                             ; preds = %bb.m, %.lr.ph.i
+  %.sroa.013.061.i = phi ptr [ %i.f, %.lr.ph.i ], [ %i.q, %bb.m ] ; 14 uses
+  %.sroa.7.060.i = phi i64 [ 0, %.lr.ph.i ], [ %i.r, %bb.m ] ; 3 uses
+  %.sroa.10.059.i = phi i64 [ %i.g, %.lr.ph.i ], [ %2, %bb.m ]
+  %2 = add nsw i64 %.sroa.10.059.i, -1            ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %.sroa.013.061.i, i64 104
   %i.r = add nuw nsw i64 %.sroa.7.060.i, 1
   %i.s = getelementptr inbounds nuw i8, ptr %.sroa.013.061.i, i64 96
@@ -576,8 +561,8 @@ bb.m:                                             ; preds = %bb.k, %bb.j
   %.sroa.1147.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bb, i64 96
   store i16 %i.t, ptr %.sroa.1147.0..sroa_idx.i, align 8, !noalias !452
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.642.i)
-  %i.bc = icmp eq i64 %4, 0
-  br i1 %i.bc, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inINtNtNtCs84JG9zk80ZV_4http6header3map6BucketNtNtBP_5value11HeaderValueENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECskspKcFIsYcD_12pingora_http.exit, label %3
+  %i.bc = icmp eq i64 %2, 0
+  br i1 %i.bc, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inINtNtNtCs84JG9zk80ZV_4http6header3map6BucketNtNtBP_5value11HeaderValueENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECskspKcFIsYcD_12pingora_http.exit, label %bb.d
 
 bb.n:                                             ; preds = %bb.o
   %i.bd = landingpad { ptr, i32 }
@@ -594,9 +579,9 @@ bb.o:                                             ; preds = %bb.i, %bb.h, %.loop
 bb.p:                                             ; preds = %bb.o
   resume { ptr, i32 } %eh.lpad-body.i
 
-_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inINtNtNtCs84JG9zk80ZV_4http6header3map6BucketNtNtBP_5value11HeaderValueENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECskspKcFIsYcD_12pingora_http.exit: ; preds = %3, %bb.m, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskspKcFIsYcD_12pingora_http.exit.thread.i
-  %6 = phi ptr [ %i.k, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskspKcFIsYcD_12pingora_http.exit.thread.i ], [ %i.o, %bb.m ], [ %i.o, %3 ]
-  store i64 %i.g, ptr %6, align 8, !noalias !452
+_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inINtNtNtCs84JG9zk80ZV_4http6header3map6BucketNtNtBP_5value11HeaderValueENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECskspKcFIsYcD_12pingora_http.exit: ; preds = %bb.m, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskspKcFIsYcD_12pingora_http.exit.thread.i
+  %3 = phi ptr [ %i.k, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskspKcFIsYcD_12pingora_http.exit.thread.i ], [ %i.o, %bb.m ]
+  store i64 %i.g, ptr %3, align 8, !noalias !452
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !452
   ret void
@@ -611,8 +596,8 @@ bb.a:
   %i.c = alloca [24 x i8], align 8                ; 10 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.f = load ptr, ptr %i.e, align 8, !nonnull !9, !noundef !9 ; 2 uses
-  %i.g = load i64, ptr %i.d, align 8, !noundef !9 ; 6 uses
+  %i.f = load ptr, ptr %i.e, align 8, !nonnull !9, !noundef !9
+  %i.g = load i64, ptr %i.d, align 8, !noundef !9 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !480
   %i.h = mul nuw nsw i64 %i.g, 96                 ; 2 uses
   %i.i = icmp eq i64 %i.g, 0
@@ -639,28 +624,23 @@ bb.c:                                             ; preds = %bb.b
   store i64 %i.g, ptr %i.c, align 8, !noalias !480
   %i.n = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store ptr %i.l, ptr %i.n, align 8, !noalias !480
-  %i.o = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 3 uses
-  %2 = getelementptr inbounds nuw [96 x i8], ptr %i.f, i64 %i.g
+  %i.o = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 2 uses
   %.sroa.411.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %.sroa.512.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 9
   %.sroa.512.sroa.4.0..sroa.512.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %.sroa.512.sroa.5.0..sroa.512.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  br label %3
-
-3:                                                ; preds = %bb.l, %.lr.ph.i
-  %.sroa.013.061.i = phi ptr [ %i.f, %.lr.ph.i ], [ %i.p, %bb.l ] ; 14 uses
-  %.sroa.7.060.i = phi i64 [ 0, %.lr.ph.i ], [ %i.q, %bb.l ] ; 3 uses
-  %.sroa.10.059.i = phi i64 [ %i.g, %.lr.ph.i ], [ %4, %bb.l ]
-  %4 = add nsw i64 %.sroa.10.059.i, -1            ; 2 uses
-  %5 = icmp eq ptr %.sroa.013.061.i, %2
-  br i1 %5, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inINtNtNtCs84JG9zk80ZV_4http6header3map6BucketNtNtCskspKcFIsYcD_12pingora_http16case_header_name14CaseHeaderNameENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEB1w_.exit, label %bb.d
+  br label %bb.d
 
 .loopexit.i:                                      ; preds = %bb.e
   %lpad.loopexit.i = landingpad { ptr, i32 }
           cleanup
   br label %bb.n
 
-bb.d:                                             ; preds = %3
+bb.d:                                             ; preds = %bb.l, %.lr.ph.i
+  %.sroa.013.061.i = phi ptr [ %i.f, %.lr.ph.i ], [ %i.p, %bb.l ] ; 13 uses
+  %.sroa.7.060.i = phi i64 [ 0, %.lr.ph.i ], [ %i.q, %bb.l ] ; 3 uses
+  %.sroa.10.059.i = phi i64 [ %i.g, %.lr.ph.i ], [ %2, %bb.l ]
+  %2 = add nsw i64 %.sroa.10.059.i, -1            ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %.sroa.013.061.i, i64 96
   %i.q = add nuw nsw i64 %.sroa.7.060.i, 1
   %i.r = getelementptr inbounds nuw i8, ptr %.sroa.013.061.i, i64 88
@@ -769,8 +749,8 @@ bb.l:                                             ; preds = %bb.j, %_RNvXs7_NtCs
   %.sroa.1147.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ay, i64 88
   store i16 %i.s, ptr %.sroa.1147.0..sroa_idx.i, align 8, !noalias !480
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.642.i)
-  %i.az = icmp eq i64 %4, 0
-  br i1 %i.az, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inINtNtNtCs84JG9zk80ZV_4http6header3map6BucketNtNtCskspKcFIsYcD_12pingora_http16case_header_name14CaseHeaderNameENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEB1w_.exit, label %3
+  %i.az = icmp eq i64 %2, 0
+  br i1 %i.az, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inINtNtNtCs84JG9zk80ZV_4http6header3map6BucketNtNtCskspKcFIsYcD_12pingora_http16case_header_name14CaseHeaderNameENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEB1w_.exit, label %bb.d
 
 bb.m:                                             ; preds = %bb.n
   %i.ba = landingpad { ptr, i32 }
@@ -787,9 +767,9 @@ bb.n:                                             ; preds = %bb.i, %bb.h, %.loop
 bb.o:                                             ; preds = %bb.n
   resume { ptr, i32 } %eh.lpad-body.i
 
-_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inINtNtNtCs84JG9zk80ZV_4http6header3map6BucketNtNtCskspKcFIsYcD_12pingora_http16case_header_name14CaseHeaderNameENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEB1w_.exit: ; preds = %3, %bb.l, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskspKcFIsYcD_12pingora_http.exit.thread.i
-  %6 = phi ptr [ %i.k, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskspKcFIsYcD_12pingora_http.exit.thread.i ], [ %i.o, %bb.l ], [ %i.o, %3 ]
-  store i64 %i.g, ptr %6, align 8, !noalias !480
+_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inINtNtNtCs84JG9zk80ZV_4http6header3map6BucketNtNtCskspKcFIsYcD_12pingora_http16case_header_name14CaseHeaderNameENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEB1w_.exit: ; preds = %bb.l, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskspKcFIsYcD_12pingora_http.exit.thread.i
+  %3 = phi ptr [ %i.k, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskspKcFIsYcD_12pingora_http.exit.thread.i ], [ %i.o, %bb.l ]
+  store i64 %i.g, ptr %3, align 8, !noalias !480
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !480
   ret void

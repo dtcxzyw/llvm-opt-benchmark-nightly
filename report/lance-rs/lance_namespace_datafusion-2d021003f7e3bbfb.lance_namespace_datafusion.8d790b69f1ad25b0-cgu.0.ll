@@ -205,42 +205,37 @@ bb.b:                                             ; preds = %_RNvXs_NtCs40k4W9ms
   store i64 %.16.val, ptr %i.b, align 8, !noalias !42325
   %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr %i.g, ptr %i.i, align 8, !noalias !42325
-  %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 3 uses
-  %1 = getelementptr inbounds nuw [24 x i8], ptr %.8.val, i64 %.16.val
+  %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.c, %.lr.ph.preheader.i
-  %.sroa.012.023.i = phi ptr [ %i.l, %bb.c ], [ %.8.val, %.lr.ph.preheader.i ] ; 3 uses
+  %.sroa.012.023.i = phi ptr [ %i.l, %bb.c ], [ %.8.val, %.lr.ph.preheader.i ] ; 2 uses
   %.sroa.7.022.i = phi i64 [ %i.k, %bb.c ], [ 0, %.lr.ph.preheader.i ] ; 3 uses
-  %.sroa.10.021.i = phi i64 [ %2, %bb.c ], [ %.16.val, %.lr.ph.preheader.i ]
-  %2 = add nsw i64 %.sroa.10.021.i, -1            ; 2 uses
-  %3 = icmp eq ptr %.sroa.012.023.i, %1
-  br i1 %3, label %_RINvXNvMNtCs40k4W9msRzi_5alloc5sliceSp9to_vec_inNtNtB8_6string6StringNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsc93vp1BCDlY_26lance_namespace_datafusion.exit, label %4
-
-4:                                                ; preds = %.lr.ph.i
+  %.sroa.10.021.i = phi i64 [ %1, %bb.c ], [ %.16.val, %.lr.ph.preheader.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !42325
   invoke void @_RNvXs4_NtCs40k4W9msRzi_5alloc6stringNtB5_6StringNtNtCscI6d9CVNmLh_4core5clone5Clone5clone(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %.sroa.012.023.i)
           to label %bb.c unwind label %bb.d, !noalias !42327
 
-bb.c:                                             ; preds = %4
+bb.c:                                             ; preds = %.lr.ph.i
   %i.k = add nuw nsw i64 %.sroa.7.022.i, 1
   %i.l = getelementptr inbounds nuw i8, ptr %.sroa.012.023.i, i64 24
+  %1 = add nsw i64 %.sroa.10.021.i, -1            ; 2 uses
   %i.m = getelementptr inbounds nuw [24 x i8], ptr %i.g, i64 %.sroa.7.022.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.m, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false), !noalias !42327
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !42325
-  %i.n = icmp eq i64 %2, 0
+  %i.n = icmp eq i64 %1, 0
   br i1 %i.n, label %_RINvXNvMNtCs40k4W9msRzi_5alloc5sliceSp9to_vec_inNtNtB8_6string6StringNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsc93vp1BCDlY_26lance_namespace_datafusion.exit, label %.lr.ph.i
 
-bb.d:                                             ; preds = %4
+bb.d:                                             ; preds = %.lr.ph.i
   %lpad.loopexit.i = landingpad { ptr, i32 }
           cleanup
   store i64 %.sroa.7.022.i, ptr %i.j, align 8, !noalias !42325
   call void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VecNtNtBG_6string6StringEECsc93vp1BCDlY_26lance_namespace_datafusion(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.b) #49, !noalias !42327
   resume { ptr, i32 } %lpad.loopexit.i
 
-_RINvXNvMNtCs40k4W9msRzi_5alloc5sliceSp9to_vec_inNtNtB8_6string6StringNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsc93vp1BCDlY_26lance_namespace_datafusion.exit: ; preds = %.lr.ph.i, %bb.c, %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsc93vp1BCDlY_26lance_namespace_datafusion.exit.thread.i
-  %5 = phi ptr [ %i.f, %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsc93vp1BCDlY_26lance_namespace_datafusion.exit.thread.i ], [ %i.j, %bb.c ], [ %i.j, %.lr.ph.i ]
-  store i64 %.16.val, ptr %5, align 8, !noalias !42325
+_RINvXNvMNtCs40k4W9msRzi_5alloc5sliceSp9to_vec_inNtNtB8_6string6StringNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsc93vp1BCDlY_26lance_namespace_datafusion.exit: ; preds = %bb.c, %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsc93vp1BCDlY_26lance_namespace_datafusion.exit.thread.i
+  %2 = phi ptr [ %i.f, %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsc93vp1BCDlY_26lance_namespace_datafusion.exit.thread.i ], [ %i.j, %bb.c ]
+  store i64 %.16.val, ptr %2, align 8, !noalias !42325
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false), !noalias !42328
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !42325
   ret void

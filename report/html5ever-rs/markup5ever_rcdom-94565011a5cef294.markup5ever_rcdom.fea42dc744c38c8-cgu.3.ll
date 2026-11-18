@@ -202,8 +202,8 @@ bb.a:
   %i.e = alloca [24 x i8], align 8                ; 10 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.h = load ptr, ptr %i.g, align 8, !nonnull !4, !noundef !4 ; 2 uses
-  %i.i = load i64, ptr %i.f, align 8, !noundef !4 ; 6 uses
+  %i.h = load ptr, ptr %i.g, align 8, !nonnull !4, !noundef !4
+  %i.i = load i64, ptr %i.f, align 8, !noundef !4 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !177
   %i.j = mul nuw nsw i64 %i.i, 40                 ; 2 uses
   %i.k = icmp eq i64 %i.i, 0
@@ -231,26 +231,22 @@ bb.c:                                             ; preds = %bb.b
   %i.p = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   store ptr %i.n, ptr %i.p, align 8, !noalias !177
   %i.q = getelementptr inbounds nuw i8, ptr %i.e, i64 16 ; 3 uses
-  %2 = getelementptr inbounds nuw [40 x i8], ptr %i.h, i64 %i.i
+  store i64 0, ptr %i.q, align 8, !noalias !177
   %i.r = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %i.s = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.t = getelementptr inbounds nuw i8, ptr %i.d, i64 24
-  br label %3
-
-3:                                                ; preds = %bb.y, %.lr.ph.i
-  %.sroa.014.030.i = phi ptr [ %i.h, %.lr.ph.i ], [ %i.v, %bb.y ] ; 7 uses
-  %.sroa.7.029.i = phi i64 [ 0, %.lr.ph.i ], [ %i.w, %bb.y ] ; 3 uses
-  %.sroa.10.028.i = phi i64 [ %i.i, %.lr.ph.i ], [ %4, %bb.y ]
-  %4 = add nsw i64 %.sroa.10.028.i, -1            ; 2 uses
-  %5 = icmp eq ptr %.sroa.014.030.i, %2
-  br i1 %5, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtCsa2F6HLACPlS_11markup5ever9interface9AttributeNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs1mImOlsSUsK_17markup5ever_rcdom.exit, label %bb.e
+  br label %bb.e
 
 bb.d:                                             ; preds = %bb.h
   %i.u = landingpad { ptr, i32 }
           cleanup
   br label %bb.aa
 
-bb.e:                                             ; preds = %3
+bb.e:                                             ; preds = %bb.y, %.lr.ph.i
+  %.sroa.014.030.i = phi ptr [ %i.h, %.lr.ph.i ], [ %i.v, %bb.y ] ; 6 uses
+  %.sroa.7.029.i = phi i64 [ 0, %.lr.ph.i ], [ %i.w, %bb.y ] ; 3 uses
+  %.sroa.10.028.i = phi i64 [ %i.i, %.lr.ph.i ], [ %2, %bb.y ]
+  %2 = add nsw i64 %.sroa.10.028.i, -1            ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %.sroa.014.030.i, i64 40
   %i.w = add nuw nsw i64 %.sroa.7.029.i, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
@@ -432,8 +428,8 @@ bb.y:                                             ; preds = %_RNvXNtCsldpiDtalS1
   %i.bz = getelementptr inbounds nuw [40 x i8], ptr %i.n, i64 %.sroa.7.029.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.bz, ptr noundef nonnull align 8 dereferenceable(40) %i.d, i64 40, i1 false), !noalias !177
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
-  %i.ca = icmp eq i64 %4, 0
-  br i1 %i.ca, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtCsa2F6HLACPlS_11markup5ever9interface9AttributeNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs1mImOlsSUsK_17markup5ever_rcdom.exit, label %3
+  %i.ca = icmp eq i64 %2, 0
+  br i1 %i.ca, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtCsa2F6HLACPlS_11markup5ever9interface9AttributeNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs1mImOlsSUsK_17markup5ever_rcdom.exit, label %bb.e
 
 bb.z:                                             ; preds = %bb.aa
   %i.cb = landingpad { ptr, i32 }
@@ -450,9 +446,9 @@ bb.aa:                                            ; preds = %bb.w, %_RINvNtCskKL
 bb.ab:                                            ; preds = %bb.aa
   resume { ptr, i32 } %eh.lpad-body.i
 
-_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtCsa2F6HLACPlS_11markup5ever9interface9AttributeNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs1mImOlsSUsK_17markup5ever_rcdom.exit: ; preds = %3, %bb.y, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs1mImOlsSUsK_17markup5ever_rcdom.exit.thread.i
-  %6 = phi ptr [ %i.m, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs1mImOlsSUsK_17markup5ever_rcdom.exit.thread.i ], [ %i.q, %bb.y ], [ %i.q, %3 ]
-  store i64 %i.i, ptr %6, align 8, !noalias !177
+_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtCsa2F6HLACPlS_11markup5ever9interface9AttributeNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs1mImOlsSUsK_17markup5ever_rcdom.exit: ; preds = %bb.y, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs1mImOlsSUsK_17markup5ever_rcdom.exit.thread.i
+  %3 = phi ptr [ %i.m, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs1mImOlsSUsK_17markup5ever_rcdom.exit.thread.i ], [ %i.q, %bb.y ]
+  store i64 %i.i, ptr %3, align 8, !noalias !177
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.e, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !177
   ret void

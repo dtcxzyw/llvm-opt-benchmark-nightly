@@ -206,7 +206,7 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !2309
   %i.e = icmp ult i64 %.sroa.5.0.copyload, 2305843009213693952
   tail call void @llvm.assume(i1 %i.e)
-  %i.f = getelementptr inbounds nuw [4 x i8], ptr %.sroa.4.0.copyload, i64 %.sroa.5.0.copyload ; 2 uses
+  %i.f = getelementptr inbounds nuw [4 x i8], ptr %.sroa.4.0.copyload, i64 %.sroa.5.0.copyload
   store ptr %.sroa.4.0.copyload, ptr %i.b, align 8, !alias.scope !2310, !noalias !2309
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store i64 %.sroa.0.0.copyload5, ptr %i.g, align 8, !alias.scope !2310, !noalias !2309
@@ -217,7 +217,7 @@ bb.b:                                             ; preds = %bb.a
   %.not.i = icmp eq i64 %.sroa.5.0.copyload, 0
   br i1 %.not.i, label %.loopexit.i, label %bb.c
 
-.loopexit.i:                                      ; preds = %_RNvMs3_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecINtCsbq3eHDLgq0Z_8la_arena3IdxNtNtNtCsileJQcQObtj_7hir_def3hir8type_ref7TypeRefEE14push_uncheckedB1g_.exit.i, %.preheader.i, %bb.b
+.loopexit.i:                                      ; preds = %_RNvMs3_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecINtCsbq3eHDLgq0Z_8la_arena3IdxNtNtNtCsileJQcQObtj_7hir_def3hir8type_ref7TypeRefEE14push_uncheckedB1g_.exit.i, %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !2309
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.a, ptr noundef nonnull align 8 dereferenceable(32) %i.b, i64 32, i1 false), !noalias !2309
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 24
@@ -226,17 +226,12 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   invoke void @_RNvMs3_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecINtCsbq3eHDLgq0Z_8la_arena3IdxNtNtNtCsileJQcQObtj_7hir_def3hir8type_ref7TypeRefEE7reserveB1g_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.c, i64 noundef %.sroa.5.0.copyload)
-          to label %.preheader.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !2311
+          to label %bb.d unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !2311
 
-.preheader.i:                                     ; preds = %bb.c, %_RNvMs3_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecINtCsbq3eHDLgq0Z_8la_arena3IdxNtNtNtCsileJQcQObtj_7hir_def3hir8type_ref7TypeRefEE14push_uncheckedB1g_.exit.i
-  %1 = phi ptr [ %i.l, %_RNvMs3_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecINtCsbq3eHDLgq0Z_8la_arena3IdxNtNtNtCsileJQcQObtj_7hir_def3hir8type_ref7TypeRefEE14push_uncheckedB1g_.exit.i ], [ %.sroa.4.0.copyload, %bb.c ] ; 3 uses
+bb.d:                                             ; preds = %bb.c, %_RNvMs3_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecINtCsbq3eHDLgq0Z_8la_arena3IdxNtNtNtCsileJQcQObtj_7hir_def3hir8type_ref7TypeRefEE14push_uncheckedB1g_.exit.i
+  %1 = phi ptr [ %i.l, %_RNvMs3_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecINtCsbq3eHDLgq0Z_8la_arena3IdxNtNtNtCsileJQcQObtj_7hir_def3hir8type_ref7TypeRefEE14push_uncheckedB1g_.exit.i ], [ %.sroa.4.0.copyload, %bb.c ] ; 2 uses
   %.sroa.0.034.i = phi i64 [ %2, %_RNvMs3_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecINtCsbq3eHDLgq0Z_8la_arena3IdxNtNtNtCsileJQcQObtj_7hir_def3hir8type_ref7TypeRefEE14push_uncheckedB1g_.exit.i ], [ %.sroa.5.0.copyload, %bb.c ]
-  %2 = add nsw i64 %.sroa.0.034.i, -1             ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !2312)
-  %3 = icmp eq ptr %1, %i.f
-  br i1 %3, label %.loopexit.i, label %bb.d
-
-bb.d:                                             ; preds = %.preheader.i
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   store ptr %i.l, ptr %i.h, align 8, !alias.scope !2312, !noalias !2309
   %i.m = load i32, ptr %1, align 4, !noalias !2313, !noundef !16
@@ -247,13 +242,14 @@ bb.d:                                             ; preds = %.preheader.i
           to label %_RNvMs3_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecINtCsbq3eHDLgq0Z_8la_arena3IdxNtNtNtCsileJQcQObtj_7hir_def3hir8type_ref7TypeRefEE14push_uncheckedB1g_.exit.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !2311
 
 _RNvMs3_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecINtCsbq3eHDLgq0Z_8la_arena3IdxNtNtNtCsileJQcQObtj_7hir_def3hir8type_ref7TypeRefEE14push_uncheckedB1g_.exit.i: ; preds = %bb.d
+  %2 = add nsw i64 %.sroa.0.034.i, -1             ; 2 uses
   %i.q = getelementptr inbounds nuw [4 x i8], ptr %i.p, i64 %i.o
   store i32 %i.m, ptr %i.q, align 4, !noalias !2311
   %i.r = add i64 %i.o, 1
   %i.s = load ptr, ptr %i.c, align 8, !alias.scope !2315, !nonnull !16, !noundef !16
   store i64 %i.r, ptr %i.s, align 8, !noalias !2311
   %i.t = icmp eq i64 %2, 0
-  br i1 %i.t, label %.loopexit.i, label %.preheader.i
+  br i1 %i.t, label %.loopexit.i, label %bb.d
 
 bb.e:                                             ; preds = %bb.g, %.loopexit.i
   call void @llvm.experimental.noalias.scope.decl(metadata !2317)
@@ -656,7 +652,7 @@ bb.i:                                             ; preds = %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !5918
   %i.t = icmp ult i64 %.sroa.5.0.copyload.i, 576460752303423488
   call void @llvm.assume(i1 %i.t)
-  %i.u = getelementptr inbounds nuw [16 x i8], ptr %.sroa.4.0.copyload.i, i64 %.sroa.5.0.copyload.i ; 2 uses
+  %i.u = getelementptr inbounds nuw [16 x i8], ptr %.sroa.4.0.copyload.i, i64 %.sroa.5.0.copyload.i
   store ptr %.sroa.4.0.copyload.i, ptr %i.d, align 8, !alias.scope !5919, !noalias !5918
   %i.v = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   store i64 %.sroa.0.0.copyload5.i, ptr %i.v, align 8, !alias.scope !5919, !noalias !5918
@@ -667,7 +663,7 @@ bb.i:                                             ; preds = %bb.h
   %.not.i.i = icmp eq i64 %.sroa.5.0.copyload.i, 0
   br i1 %.not.i.i, label %_RNvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsileJQcQObtj_7hir_def3hir8type_ref9TypeBoundENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator4nextB12_.exit.thread.i.i, label %bb.j
 
-_RNvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsileJQcQObtj_7hir_def3hir8type_ref9TypeBoundENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator4nextB12_.exit.thread.i.i: ; preds = %bb.s, %_RNvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsileJQcQObtj_7hir_def3hir8type_ref9TypeBoundENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator4nextB12_.exit.i.i, %bb.k, %bb.i
+_RNvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsileJQcQObtj_7hir_def3hir8type_ref9TypeBoundENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator4nextB12_.exit.thread.i.i: ; preds = %bb.s, %bb.k, %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !5918
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.b, ptr noundef nonnull align 8 dereferenceable(32) %i.d, i64 32, i1 false), !noalias !5918
   %i.y = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 2 uses
@@ -695,21 +691,17 @@ bb.j:                                             ; preds = %bb.i
   br label %.thread23.i.i
 
 bb.k:                                             ; preds = %bb.s, %.preheader.i.i
-  %i.ae = phi ptr [ %.sroa.4.0.copyload.i, %.preheader.i.i ], [ %4, %bb.s ] ; 4 uses
+  %i.ae = phi ptr [ %.sroa.4.0.copyload.i, %.preheader.i.i ], [ %4, %bb.s ] ; 3 uses
   %.sroa.0.033.i.i = phi i64 [ %.sroa.5.0.copyload.i, %.preheader.i.i ], [ %i.af, %bb.s ]
   %i.af = add nsw i64 %.sroa.0.033.i.i, -1        ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !5922)
-  %i.ag = icmp eq ptr %i.ae, %i.u
-  br i1 %i.ag, label %_RNvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsileJQcQObtj_7hir_def3hir8type_ref9TypeBoundENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator4nextB12_.exit.thread.i.i, label %_RNvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsileJQcQObtj_7hir_def3hir8type_ref9TypeBoundENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator4nextB12_.exit.i.i
-
-_RNvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsileJQcQObtj_7hir_def3hir8type_ref9TypeBoundENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator4nextB12_.exit.i.i: ; preds = %bb.k
   %4 = getelementptr inbounds nuw i8, ptr %i.ae, i64 16 ; 2 uses
   store ptr %4, ptr %i.w, align 8, !alias.scope !5922, !noalias !5918
   %.sroa.013.0.copyload14.i.i = load i8, ptr %i.ae, align 8, !noalias !5923 ; 2 uses
-  %.not6.i.i = icmp eq i8 %.sroa.013.0.copyload14.i.i, -1
-  br i1 %.not6.i.i, label %_RNvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsileJQcQObtj_7hir_def3hir8type_ref9TypeBoundENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator4nextB12_.exit.thread.i.i, label %bb.l
+  %i.ag = icmp eq i8 %.sroa.013.0.copyload14.i.i, -1
+  br i1 %i.ag, label %_RNvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsileJQcQObtj_7hir_def3hir8type_ref9TypeBoundENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator4nextB12_.exit.thread.i.i, label %bb.l
 
-bb.l:                                             ; preds = %_RNvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsileJQcQObtj_7hir_def3hir8type_ref9TypeBoundENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator4nextB12_.exit.i.i
+bb.l:                                             ; preds = %bb.k
   %.sroa.7.0..sroa_idx15.i.i = getelementptr inbounds nuw i8, ptr %i.ae, i64 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !5918
   store i8 %.sroa.013.0.copyload14.i.i, ptr %i.c, align 8, !noalias !5918

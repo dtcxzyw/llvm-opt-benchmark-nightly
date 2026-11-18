@@ -205,7 +205,7 @@ bb.q:                                             ; preds = %bb.n, %bb.bx, %bb.b
 
 bb.r:                                             ; preds = %bb.m, %.thread
   %i.aq = phi i1 [ false, %bb.m ], [ true, %.thread ] ; 3 uses
-  %i.ar = phi i64 [ %i.aj, %bb.m ], [ 0, %.thread ] ; 9 uses
+  %i.ar = phi i64 [ %i.aj, %bb.m ], [ 0, %.thread ] ; 8 uses
   %.sroa.14.0398632 = phi i64 [ %.sroa.14.0398631, %bb.m ], [ undef, %.thread ] ; 2 uses
   %.sroa.10.0403622 = phi ptr [ %.sroa.10.0403621, %bb.m ], [ undef, %.thread ] ; 8 uses
   %.sroa.0294.0410612 = phi i64 [ %.sroa.0294.0410611, %bb.m ], [ -1, %.thread ] ; 7 uses
@@ -352,7 +352,7 @@ bb.ae:                                            ; preds = %bb.w
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %.sroa.745.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 24
-  br label %3
+  br label %bb.ag
 
 ._crit_edge:                                      ; preds = %bb.bq
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.e, i64 24, i1 false)
@@ -360,19 +360,6 @@ bb.ae:                                            ; preds = %bb.w
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.as) ]
   call void @_RNvCs9hJ03s5DiqP_7___rustc14___rust_dealloc(ptr noundef nonnull %i.as, i64 noundef %i.ar, i64 noundef range(i64 1, -9223372036854775807) 1) #36
   br label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VechEECsbjTsVCnQnhv_12lance_select.exit217
-
-3:                                                ; preds = %.lr.ph, %bb.bq
-  %.sroa.027.0541 = phi i1 [ false, %.lr.ph ], [ true, %bb.bq ]
-  %.sroa.6.0540 = phi i16 [ undef, %.lr.ph ], [ %.sroa.0.0.copyload.i218, %bb.bq ]
-  %.sroa.8.0539 = phi i64 [ undef, %.lr.ph ], [ %.sroa.8.1, %bb.bq ]
-  %.sroa.0119.0538 = phi i64 [ 0, %.lr.ph ], [ %4, %bb.bq ] ; 3 uses
-  %.sroa.0.2537 = phi ptr [ %.sroa.0.1, %.lr.ph ], [ %.sroa.0.3, %bb.bq ] ; 8 uses
-  %.sroa.19.2536 = phi i64 [ %.sroa.19.1, %.lr.ph ], [ %.sroa.19.3, %bb.bq ] ; 6 uses
-  %.sroa.0304.0535 = phi ptr [ %i.as, %.lr.ph ], [ %i.ca, %bb.bq ] ; 3 uses
-  %.sroa.8.0380534 = phi i64 [ %i.ar, %.lr.ph ], [ %8, %bb.bq ] ; 2 uses
-  %4 = add nuw nsw i64 %.sroa.0119.0538, 1        ; 2 uses
-  %5 = icmp eq i64 %.sroa.8.0380534, 0
-  br i1 %5, label %6, label %bb.ag
 
 _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VechEECsbjTsVCnQnhv_12lance_select.exit217: ; preds = %._crit_edge.thread, %._crit_edge
   %.0.val.off.i222 = add nsw i64 %.sroa.0294.0410612, -1
@@ -387,13 +374,15 @@ bb.af:                                            ; preds = %_RINvNtCscI6d9CVNmL
 _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs40k4W9msRzi_5alloc3vec3VechEEECsbjTsVCnQnhv_12lance_select.exit224: ; preds = %bb.l, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VechEECsbjTsVCnQnhv_12lance_select.exit262.thread, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VechEECsbjTsVCnQnhv_12lance_select.exit262, %bb.bt, %bb.af, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VechEECsbjTsVCnQnhv_12lance_select.exit217, %bb.b, %_RNvMNtCs40k4W9msRzi_5alloc5boxedINtB2_3BoxNtNvXsf_NtB2_7convertIBv_DNtNtCscI6d9CVNmLh_4core5error5ErrorNtNtB18_6marker4SyncNtB1F_4SendEL_EINtNtB18_7convert4FromNtNtB4_6string6StringE4from11StringErrorE3newCsbjTsVCnQnhv_12lance_select.exit, %bb.f
   ret void
 
-6:                                                ; preds = %3
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr @179, ptr %7, align 8
-  store i64 -1, ptr %0, align 8
-  br label %bb.aj
-
-bb.ag:                                            ; preds = %3
+bb.ag:                                            ; preds = %bb.bq, %.lr.ph
+  %.sroa.027.0541 = phi i1 [ false, %.lr.ph ], [ true, %bb.bq ]
+  %.sroa.6.0540 = phi i16 [ undef, %.lr.ph ], [ %.sroa.0.0.copyload.i218, %bb.bq ]
+  %.sroa.8.0539 = phi i64 [ undef, %.lr.ph ], [ %.sroa.8.1, %bb.bq ]
+  %.sroa.0119.0538 = phi i64 [ 0, %.lr.ph ], [ %3, %bb.bq ] ; 3 uses
+  %.sroa.0.2537 = phi ptr [ %.sroa.0.1, %.lr.ph ], [ %.sroa.0.3, %bb.bq ] ; 8 uses
+  %.sroa.19.2536 = phi i64 [ %.sroa.19.1, %.lr.ph ], [ %.sroa.19.3, %bb.bq ] ; 6 uses
+  %.sroa.0304.0535 = phi ptr [ %i.as, %.lr.ph ], [ %i.ca, %bb.bq ] ; 3 uses
+  %3 = add nuw nsw i64 %.sroa.0119.0538, 1        ; 2 uses
   %.sroa.0.0.copyload.i218 = load i16, ptr %.sroa.0304.0535, align 1, !alias.scope !474, !noalias !475 ; 3 uses
   %i.bw = icmp ule i16 %.sroa.0.0.copyload.i218, %.sroa.6.0540
   %or.cond = and i1 %.sroa.027.0541, %i.bw
@@ -409,7 +398,7 @@ bb.ai:                                            ; preds = %bb.ah
   store i64 -1, ptr %0, align 8
   br label %bb.aj
 
-bb.aj:                                            ; preds = %_RINvNtNtCscI6d9CVNmLh_4core4iter8adapters11try_processINtNtB2_3map3MapINtNtNtCs40k4W9msRzi_5alloc3vec9into_iter8IntoIterAtj2_ENCINvMNtNtCs1akgR21QTtx_7roaring6bitmap13serializationNtB28_13RoaringBitmap21deserialize_from_implRShNvYNtNtNtB28_5store11array_store10ArrayStoreINtNtB6_7convert7TryFromINtB1b_3VectEE8try_fromNtB3I_5ErrorNvMNtB3K_12bitmap_storeNtB5l_11BitmapStore8try_fromNtB5l_5ErrorEs0_0ENtNtB3K_14interval_store8IntervalINtNtB6_6result6ResultNtB4o_10InfallibleNtNtNtB6_2io5error9ErrorKindENCINvXso_B6Z_IB6X_IB4K_B6p_EB7A_EINtNtNtB4_6traits7collect12FromIteratorIB6X_B6p_B7A_EE9from_iterBQ_E0B8l_ECsbjTsVCnQnhv_12lance_select.exit.thread, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VecAtj2_EECsbjTsVCnQnhv_12lance_select.exit, %bb.bh, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VectEECsbjTsVCnQnhv_12lance_select.exit, %bb.az, %bb.av, %bb.bm, %bb.bi, %bb.ai, %6
+bb.aj:                                            ; preds = %_RINvNtNtCscI6d9CVNmLh_4core4iter8adapters11try_processINtNtB2_3map3MapINtNtNtCs40k4W9msRzi_5alloc3vec9into_iter8IntoIterAtj2_ENCINvMNtNtCs1akgR21QTtx_7roaring6bitmap13serializationNtB28_13RoaringBitmap21deserialize_from_implRShNvYNtNtNtB28_5store11array_store10ArrayStoreINtNtB6_7convert7TryFromINtB1b_3VectEE8try_fromNtB3I_5ErrorNvMNtB3K_12bitmap_storeNtB5l_11BitmapStore8try_fromNtB5l_5ErrorEs0_0ENtNtB3K_14interval_store8IntervalINtNtB6_6result6ResultNtB4o_10InfallibleNtNtNtB6_2io5error9ErrorKindENCINvXso_B6Z_IB6X_IB4K_B6p_EB7A_EINtNtNtB4_6traits7collect12FromIteratorIB6X_B6p_B7A_EE9from_iterBQ_E0B8l_ECsbjTsVCnQnhv_12lance_select.exit.thread, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VecAtj2_EECsbjTsVCnQnhv_12lance_select.exit, %bb.bh, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VectEECsbjTsVCnQnhv_12lance_select.exit, %bb.az, %bb.av, %bb.bm, %bb.bi, %bb.ai
   call fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VecNtNtNtCs1akgR21QTtx_7roaring6bitmap9container9ContainerEECsbjTsVCnQnhv_12lance_select(ptr noalias noundef align 8 dereferenceable(24) %i.e)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   br label %bb.br
@@ -417,7 +406,6 @@ bb.aj:                                            ; preds = %_RINvNtNtCscI6d9CVN
 bb.ak:                                            ; preds = %bb.ag
   %i.bz = getelementptr inbounds nuw i8, ptr %.sroa.0304.0535, i64 2
   %i.ca = getelementptr inbounds nuw i8, ptr %.sroa.0304.0535, i64 4
-  %8 = add nsw i64 %.sroa.8.0380534, -4
   %.sroa.0.0.copyload.i225 = load i16, ptr %i.bz, align 1, !alias.scope !476, !noalias !477 ; 2 uses
   %i.cb = zext i16 %.sroa.0.0.copyload.i225 to i64
   %i.cc = add nuw nsw i64 %i.cb, 1                ; 4 uses
@@ -729,8 +717,8 @@ bb.bq:                                            ; preds = %bb.bg, %bb.bf
   %i.fb = add i64 %i.do, 1
   store i64 %i.fb, ptr %i.bs, align 8, !alias.scope !484
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
-  %exitcond.not = icmp eq i64 %4, %.sroa.03.0416604
-  br i1 %exitcond.not, label %._crit_edge, label %3
+  %exitcond.not = icmp eq i64 %3, %.sroa.03.0416604
+  br i1 %exitcond.not, label %._crit_edge, label %bb.ag
 
 _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VechEECsbjTsVCnQnhv_12lance_select.exit215: ; preds = %bb.ab, %bb.aa
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)

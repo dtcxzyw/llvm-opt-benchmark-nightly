@@ -205,47 +205,31 @@ bb.c:                                             ; preds = %_RNvXs_NtCscdodAO9F
 _RNvMs1_NtNtCsb6FLkjZuKG_18ruff_python_parser5lexer11indentationNtB5_12Indentations10checkpoint.exit: ; preds = %bb.a, %bb.c
   %.sroa.5.0.i = phi ptr [ %i.u, %bb.c ], [ inttoptr (i64 4 to ptr), %bb.a ] ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %.val4 = load ptr, ptr %i.w, align 8, !nonnull !17, !noundef !17 ; 2 uses
+  %.val4 = load ptr, ptr %i.w, align 8, !nonnull !17, !noundef !17
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %.val5 = load i64, ptr %i.x, align 8, !noundef !17 ; 6 uses
-  %i.y = mul nuw nsw i64 %.val5, 12               ; 2 uses
+  %.val5 = load i64, ptr %i.x, align 8, !noundef !17 ; 4 uses
+  %i.y = mul nuw i64 %.val5, 12                   ; 3 uses
   %i.z = icmp eq i64 %.val5, 0
   br i1 %i.z, label %_RNvMs_NtNtCsb6FLkjZuKG_18ruff_python_parser5lexer19interpolated_stringNtB4_19InterpolatedStrings10checkpoint.exit, label %_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator8allocate.exit.i.i.i.i.i8
 
 _RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator8allocate.exit.i.i.i.i.i8: ; preds = %_RNvMs1_NtNtCsb6FLkjZuKG_18ruff_python_parser5lexer11indentationNtB5_12Indentations10checkpoint.exit
   tail call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #42, !noalias !4218
-  %i.aa = tail call noundef align 4 ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef %i.y, i64 noundef range(i64 1, 9) 4) #42, !noalias !4218 ; 4 uses
+  %i.aa = tail call noundef align 4 ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef %i.y, i64 noundef range(i64 1, 9) 4) #42, !noalias !4218 ; 3 uses
   %i.ab = icmp eq ptr %i.aa, null
-  br i1 %i.ab, label %2, label %.lr.ph.preheader.i.i.i
-
-2:                                                ; preds = %_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator8allocate.exit.i.i.i.i.i8
-  invoke void @_RNvNtCscdodAO9FK5_5alloc7raw_vec12handle_error(i64 noundef 4, i64 %i.y) #41
-          to label %.noexc unwind label %bb.e
-
-.noexc:                                           ; preds = %2
-  unreachable
+  br i1 %i.ab, label %.lr.ph.i.i.i, label %.lr.ph.preheader.i.i.i
 
 .lr.ph.preheader.i.i.i:                           ; preds = %_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator8allocate.exit.i.i.i.i.i8
-  %3 = getelementptr inbounds nuw [12 x i8], ptr %.val4, i64 %.val5
-  br label %.lr.ph.i.i.i
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.aa, ptr nonnull readonly align 4 %.val4, i64 %i.y, i1 false), !noalias !4219
+  br label %_RNvMs_NtNtCsb6FLkjZuKG_18ruff_python_parser5lexer19interpolated_stringNtB4_19InterpolatedStrings10checkpoint.exit
 
-.lr.ph.i.i.i:                                     ; preds = %bb.d, %.lr.ph.preheader.i.i.i
-  %.sroa.014.023.i.i.i = phi ptr [ %7, %bb.d ], [ %.val4, %.lr.ph.preheader.i.i.i ] ; 3 uses
-  %.sroa.7.022.i.i.i = phi i64 [ %6, %bb.d ], [ 0, %.lr.ph.preheader.i.i.i ] ; 2 uses
-  %.sroa.10.021.i.i.i = phi i64 [ %5, %bb.d ], [ %.val5, %.lr.ph.preheader.i.i.i ]
-  %4 = icmp eq ptr %.sroa.014.023.i.i.i, %3
-  br i1 %4, label %_RNvMs_NtNtCsb6FLkjZuKG_18ruff_python_parser5lexer19interpolated_stringNtB4_19InterpolatedStrings10checkpoint.exit, label %bb.d
+.lr.ph.i.i.i:                                     ; preds = %_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator8allocate.exit.i.i.i.i.i8
+  invoke void @_RNvNtCscdodAO9FK5_5alloc7raw_vec12handle_error(i64 noundef 4, i64 %i.y) #41
+          to label %bb.d unwind label %bb.e
 
 bb.d:                                             ; preds = %.lr.ph.i.i.i
-  %5 = add nsw i64 %.sroa.10.021.i.i.i, -1        ; 2 uses
-  %6 = add nuw nsw i64 %.sroa.7.022.i.i.i, 1
-  %7 = getelementptr inbounds nuw i8, ptr %.sroa.014.023.i.i.i, i64 12
-  %8 = getelementptr inbounds nuw [12 x i8], ptr %i.aa, i64 %.sroa.7.022.i.i.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %8, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.014.023.i.i.i, i64 12, i1 false), !noalias !4219
-  %9 = icmp eq i64 %5, 0
-  br i1 %9, label %_RNvMs_NtNtCsb6FLkjZuKG_18ruff_python_parser5lexer19interpolated_stringNtB4_19InterpolatedStrings10checkpoint.exit, label %.lr.ph.i.i.i
+  unreachable
 
-bb.e:                                             ; preds = %2
+bb.e:                                             ; preds = %.lr.ph.i.i.i
   %i.ac = landingpad { ptr, i32 }
           cleanup
   br i1 %i.t, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer11indentation22IndentationsCheckpointEBH_.exit, label %bb.f
@@ -254,8 +238,8 @@ bb.f:                                             ; preds = %bb.e
   tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.5.0.i, i64 noundef %i.s, i64 noundef range(i64 1, -9223372036854775807) 4) #42
   br label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsb6FLkjZuKG_18ruff_python_parser5lexer11indentation22IndentationsCheckpointEBH_.exit
 
-_RNvMs_NtNtCsb6FLkjZuKG_18ruff_python_parser5lexer19interpolated_stringNtB4_19InterpolatedStrings10checkpoint.exit: ; preds = %bb.d, %.lr.ph.i.i.i, %_RNvMs1_NtNtCsb6FLkjZuKG_18ruff_python_parser5lexer11indentationNtB5_12Indentations10checkpoint.exit
-  %.sroa.10.0.i31.i.i.i = phi ptr [ inttoptr (i64 4 to ptr), %_RNvMs1_NtNtCsb6FLkjZuKG_18ruff_python_parser5lexer11indentationNtB5_12Indentations10checkpoint.exit ], [ %i.aa, %.lr.ph.i.i.i ], [ %i.aa, %bb.d ]
+_RNvMs_NtNtCsb6FLkjZuKG_18ruff_python_parser5lexer19interpolated_stringNtB4_19InterpolatedStrings10checkpoint.exit: ; preds = %.lr.ph.preheader.i.i.i, %_RNvMs1_NtNtCsb6FLkjZuKG_18ruff_python_parser5lexer11indentationNtB5_12Indentations10checkpoint.exit
+  %.sroa.10.0.i31.i.i.i = phi ptr [ inttoptr (i64 4 to ptr), %_RNvMs1_NtNtCsb6FLkjZuKG_18ruff_python_parser5lexer11indentationNtB5_12Indentations10checkpoint.exit ], [ %i.aa, %.lr.ph.preheader.i.i.i ]
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 120
   %i.ae = trunc i64 %i.h to i32
   %i.af = ptrtoint ptr %i.j to i64
@@ -658,56 +642,40 @@ bb.cb:                                            ; preds = %_RNvXs_NtCscdodAO9F
 
 _RNvMs1_NtNtCsb6FLkjZuKG_18ruff_python_parser5lexer11indentationNtB5_12Indentations10checkpoint.exit.i: ; preds = %bb.cb, %bb.bz
   %.sroa.5.0.i.i = phi ptr [ %i.ht, %bb.cb ], [ inttoptr (i64 4 to ptr), %bb.bz ] ; 2 uses
-  %.val4.i = load ptr, ptr %i.bu, align 8, !alias.scope !8554, !nonnull !17, !noundef !17 ; 2 uses
-  %.val5.i = load i64, ptr %i.bv, align 8, !alias.scope !8554, !noundef !17 ; 6 uses
+  %.val4.i = load ptr, ptr %i.bu, align 8, !alias.scope !8554, !nonnull !17, !noundef !17
+  %.val5.i = load i64, ptr %i.bv, align 8, !alias.scope !8554, !noundef !17 ; 4 uses
+  %6 = mul nuw i64 %.val5.i, 12                   ; 3 uses
   %i.hv = icmp eq i64 %.val5.i, 0
   br i1 %i.hv, label %_RNvMNtCsb6FLkjZuKG_18ruff_python_parser5lexerNtB2_5Lexer10checkpoint.exit, label %_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator8allocate.exit.i.i.i.i.i8.i
 
 _RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator8allocate.exit.i.i.i.i.i8.i: ; preds = %_RNvMs1_NtNtCsb6FLkjZuKG_18ruff_python_parser5lexer11indentationNtB5_12Indentations10checkpoint.exit.i
-  %6 = mul nuw nsw i64 %.val5.i, 12               ; 2 uses
   call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #42, !noalias !8557
-  %i.hw = call noundef align 4 ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef %6, i64 noundef range(i64 1, 9) 4) #42, !noalias !8557 ; 4 uses
+  %i.hw = call noundef align 4 ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef %6, i64 noundef range(i64 1, 9) 4) #42, !noalias !8557 ; 3 uses
   %i.hx = icmp eq ptr %i.hw, null
-  br i1 %i.hx, label %7, label %.lr.ph.preheader.i.i.i.i
-
-7:                                                ; preds = %_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator8allocate.exit.i.i.i.i.i8.i
-  invoke void @_RNvNtCscdodAO9FK5_5alloc7raw_vec12handle_error(i64 noundef 4, i64 %6) #41
-          to label %.noexc.i unwind label %bb.cd, !noalias !8558
-
-.noexc.i:                                         ; preds = %7
-  unreachable
+  br i1 %i.hx, label %.lr.ph.i.i.i.i, label %.lr.ph.preheader.i.i.i.i
 
 .lr.ph.preheader.i.i.i.i:                         ; preds = %_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator8allocate.exit.i.i.i.i.i8.i
-  %8 = getelementptr inbounds nuw [12 x i8], ptr %.val4.i, i64 %.val5.i
-  br label %.lr.ph.i.i.i.i
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.hw, ptr nonnull readonly align 4 %.val4.i, i64 %6, i1 false), !noalias !8558
+  br label %_RNvMNtCsb6FLkjZuKG_18ruff_python_parser5lexerNtB2_5Lexer10checkpoint.exit
 
-.lr.ph.i.i.i.i:                                   ; preds = %bb.cc, %.lr.ph.preheader.i.i.i.i
-  %.sroa.014.023.i.i.i.i = phi ptr [ %12, %bb.cc ], [ %.val4.i, %.lr.ph.preheader.i.i.i.i ] ; 3 uses
-  %.sroa.7.022.i.i.i.i = phi i64 [ %11, %bb.cc ], [ 0, %.lr.ph.preheader.i.i.i.i ] ; 2 uses
-  %.sroa.10.021.i.i.i.i = phi i64 [ %10, %bb.cc ], [ %.val5.i, %.lr.ph.preheader.i.i.i.i ]
-  %9 = icmp eq ptr %.sroa.014.023.i.i.i.i, %8
-  br i1 %9, label %_RNvMNtCsb6FLkjZuKG_18ruff_python_parser5lexerNtB2_5Lexer10checkpoint.exit, label %bb.cc
+.lr.ph.i.i.i.i:                                   ; preds = %_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator8allocate.exit.i.i.i.i.i8.i
+  invoke void @_RNvNtCscdodAO9FK5_5alloc7raw_vec12handle_error(i64 noundef 4, i64 %6) #41
+          to label %bb.cc unwind label %bb.cd, !noalias !8559
 
 bb.cc:                                            ; preds = %.lr.ph.i.i.i.i
-  %10 = add nsw i64 %.sroa.10.021.i.i.i.i, -1     ; 2 uses
-  %11 = add nuw nsw i64 %.sroa.7.022.i.i.i.i, 1
-  %12 = getelementptr inbounds nuw i8, ptr %.sroa.014.023.i.i.i.i, i64 12
-  %13 = getelementptr inbounds nuw [12 x i8], ptr %i.hw, i64 %.sroa.7.022.i.i.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %13, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.014.023.i.i.i.i, i64 12, i1 false), !noalias !8559
-  %14 = icmp eq i64 %10, 0
-  br i1 %14, label %_RNvMNtCsb6FLkjZuKG_18ruff_python_parser5lexerNtB2_5Lexer10checkpoint.exit, label %.lr.ph.i.i.i.i
+  unreachable
 
-bb.cd:                                            ; preds = %7
+bb.cd:                                            ; preds = %.lr.ph.i.i.i.i
   %i.hy = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   br i1 %i.hs, label %.thread310, label %bb.ce
 
 bb.ce:                                            ; preds = %bb.cd
-  call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.5.0.i.i, i64 noundef %i.hr, i64 noundef range(i64 1, -9223372036854775807) 4) #42, !noalias !8558
+  call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.5.0.i.i, i64 noundef %i.hr, i64 noundef range(i64 1, -9223372036854775807) 4) #42, !noalias !8559
   br label %.thread310
 
-_RNvMNtCsb6FLkjZuKG_18ruff_python_parser5lexerNtB2_5Lexer10checkpoint.exit: ; preds = %.lr.ph.i.i.i.i, %bb.cc, %_RNvMs1_NtNtCsb6FLkjZuKG_18ruff_python_parser5lexer11indentationNtB5_12Indentations10checkpoint.exit.i
-  %.sroa.10.0.i31.i.i.i.i = phi ptr [ inttoptr (i64 4 to ptr), %_RNvMs1_NtNtCsb6FLkjZuKG_18ruff_python_parser5lexer11indentationNtB5_12Indentations10checkpoint.exit.i ], [ %i.hw, %bb.cc ], [ %i.hw, %.lr.ph.i.i.i.i ]
+_RNvMNtCsb6FLkjZuKG_18ruff_python_parser5lexerNtB2_5Lexer10checkpoint.exit: ; preds = %_RNvMs1_NtNtCsb6FLkjZuKG_18ruff_python_parser5lexer11indentationNtB5_12Indentations10checkpoint.exit.i, %.lr.ph.preheader.i.i.i.i
+  %.sroa.10.0.i31.i.i.i.i = phi ptr [ inttoptr (i64 4 to ptr), %_RNvMs1_NtNtCsb6FLkjZuKG_18ruff_python_parser5lexer11indentationNtB5_12Indentations10checkpoint.exit.i ], [ %i.hw, %.lr.ph.preheader.i.i.i.i ]
   %i.hz = trunc i64 %i.hm to i32
   %i.ia = ptrtoint ptr %i.hn to i64
   %i.ib = ptrtoint ptr %i.ho to i64
@@ -726,7 +694,7 @@ _RNvMNtCsb6FLkjZuKG_18ruff_python_parser5lexerNtB2_5Lexer10checkpoint.exit: ; pr
   store i64 %.val3.i, ptr %i.j, align 8, !alias.scope !8553
   store ptr %.sroa.5.0.i.i, ptr %.sroa.5.0..sroa_idx.i552, align 8, !alias.scope !8553
   store i64 %.val3.i, ptr %.sroa.7.0..sroa_idx.i553, align 8, !alias.scope !8553
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.ce, ptr noundef nonnull readonly align 8 dereferenceable(12) %i.bw, i64 12, i1 false), !alias.scope !8558
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.ce, ptr noundef nonnull readonly align 8 dereferenceable(12) %i.bw, i64 12, i1 false), !alias.scope !8559
   store i64 %.val5.i, ptr %i.cf, align 8, !alias.scope !8553
   store ptr %.sroa.10.0.i31.i.i.i.i, ptr %.sroa.4.0..sroa_idx.i554, align 8, !alias.scope !8553
   store i64 %.val5.i, ptr %.sroa.511.0..sroa_idx.i, align 8, !alias.scope !8553
@@ -1129,8 +1097,8 @@ begin_hunk_2_@llvm.umax.i8
 !8555 = !{!8429, !8427, !8426, !8424, !8422, !8419, !8420}
 !8556 = !{!8427, !8424, !8422, !8419, !8420}
 !8557 = !{!8438, !8436, !8435, !8433, !8431, !8419, !8420}
-!8558 = !{!8419, !8420}
-!8559 = !{!8436, !8433, !8431, !8419, !8420}
+!8558 = !{!8436, !8433, !8431, !8419, !8420}
+!8559 = !{!8419, !8420}
 !8560 = !{!8440}
 !8561 = !{!8442, !8440}
 !8562 = !{!8444, !8442, !8440}

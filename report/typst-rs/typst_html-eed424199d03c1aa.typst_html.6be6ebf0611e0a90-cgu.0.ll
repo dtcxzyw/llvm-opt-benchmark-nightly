@@ -205,9 +205,9 @@ _RNvMs1m_NtCs1xwejQucwHj_5alloc4syncINtB6_15UniqueArcUninitNtNtCs9gmjTwvRRSu_10t
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !12324
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l), !noalias !12326
   %i.af = getelementptr i8, ptr %i.p, i64 24
-  %.val5.i.i.i.i.i.i = load ptr, ptr %i.af, align 8, !noalias !12326, !nonnull !52, !noundef !52 ; 2 uses
+  %.val5.i.i.i.i.i.i = load ptr, ptr %i.af, align 8, !noalias !12326, !nonnull !52, !noundef !52
   %i.ag = getelementptr i8, ptr %i.p, i64 32
-  %.val6.i.i.i.i.i.i = load i64, ptr %i.ag, align 8, !noalias !12326, !noundef !52 ; 6 uses
+  %.val6.i.i.i.i.i.i = load i64, ptr %i.ag, align 8, !noalias !12326, !noundef !52 ; 5 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !12327)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !12328
   %i.ah = shl nuw nsw i64 %.val6.i.i.i.i.i.i, 6   ; 2 uses
@@ -243,28 +243,23 @@ bb.g:                                             ; preds = %_RNvXs1_NtCs1xwejQu
   store i64 %.val6.i.i.i.i.i.i, ptr %i.j, align 8, !noalias !12328
   %i.ao = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   store ptr %i.al, ptr %i.ao, align 8, !noalias !12328
-  %i.ap = getelementptr inbounds nuw i8, ptr %i.j, i64 16 ; 3 uses
-  %1 = getelementptr inbounds nuw [64 x i8], ptr %.val5.i.i.i.i.i.i, i64 %.val6.i.i.i.i.i.i
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.j, i64 16 ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %i.i, i64 24
   %i.ar = getelementptr inbounds nuw i8, ptr %i.i, i64 48
   %i.as = getelementptr inbounds nuw i8, ptr %i.i, i64 56
   %.sroa.5.0..sroa_idx2.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.i, i64 32
-  br label %2
-
-2:                                                ; preds = %bb.n, %.lr.ph.i.i.i.i.i.i.i.i
-  %.sroa.013.026.i.i.i.i.i.i.i.i = phi ptr [ %.val5.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i ], [ %i.at, %bb.n ] ; 7 uses
-  %.sroa.7.025.i.i.i.i.i.i.i.i = phi i64 [ 0, %.lr.ph.i.i.i.i.i.i.i.i ], [ %i.au, %bb.n ] ; 3 uses
-  %.sroa.10.024.i.i.i.i.i.i.i.i = phi i64 [ %.val6.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i ], [ %3, %bb.n ]
-  %3 = add nsw i64 %.sroa.10.024.i.i.i.i.i.i.i.i, -1 ; 2 uses
-  %4 = icmp eq ptr %.sroa.013.026.i.i.i.i.i.i.i.i, %1
-  br i1 %4, label %_RNvXsb_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecTNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentNtNtNtBM_13introspection8position12HtmlPositionEENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs9gmjTwvRRSu_10typst_html.exit.i.i.i.i.i.i, label %bb.h
+  br label %bb.h
 
 .loopexit.i.i.i.i.i.i.i.i:                        ; preds = %bb.h
   %lpad.loopexit.i.i.i.i.i.i.i.i = landingpad { ptr, i32 }
           cleanup
   br label %bb.p
 
-bb.h:                                             ; preds = %2
+bb.h:                                             ; preds = %bb.n, %.lr.ph.i.i.i.i.i.i.i.i
+  %.sroa.013.026.i.i.i.i.i.i.i.i = phi ptr [ %.val5.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i ], [ %i.at, %bb.n ] ; 6 uses
+  %.sroa.7.025.i.i.i.i.i.i.i.i = phi i64 [ 0, %.lr.ph.i.i.i.i.i.i.i.i ], [ %i.au, %bb.n ] ; 3 uses
+  %.sroa.10.024.i.i.i.i.i.i.i.i = phi i64 [ %.val6.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i ], [ %1, %bb.n ]
+  %1 = add nsw i64 %.sroa.10.024.i.i.i.i.i.i.i.i, -1 ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %.sroa.013.026.i.i.i.i.i.i.i.i, i64 64
   %i.au = add nuw nsw i64 %.sroa.7.025.i.i.i.i.i.i.i.i, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !12328
@@ -329,8 +324,8 @@ bb.n:                                             ; preds = %bb.k, %_RNvXs6_NtCs
   %i.be = getelementptr inbounds nuw [64 x i8], ptr %i.al, i64 %.sroa.7.025.i.i.i.i.i.i.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.be, ptr noundef nonnull align 8 dereferenceable(64) %i.i, i64 64, i1 false), !noalias !12332
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !12328
-  %i.bf = icmp eq i64 %3, 0
-  br i1 %i.bf, label %_RNvXsb_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecTNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentNtNtNtBM_13introspection8position12HtmlPositionEENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs9gmjTwvRRSu_10typst_html.exit.i.i.i.i.i.i, label %2
+  %i.bf = icmp eq i64 %1, 0
+  br i1 %i.bf, label %_RNvXsb_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecTNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentNtNtNtBM_13introspection8position12HtmlPositionEENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs9gmjTwvRRSu_10typst_html.exit.i.i.i.i.i.i, label %bb.h
 
 bb.o:                                             ; preds = %bb.p
   %i.bg = landingpad { ptr, i32 }
@@ -344,9 +339,9 @@ bb.p:                                             ; preds = %bb.l, %.loopexit.i.
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecTNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentNtNtNtB1f_13introspection8position12HtmlPositionEEECs9gmjTwvRRSu_10typst_html(ptr noalias nofree noundef align 8 dereferenceable(24) %i.j) #49
           to label %.body.thread.i.i unwind label %bb.o, !noalias !12332
 
-_RNvXsb_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecTNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentNtNtNtBM_13introspection8position12HtmlPositionEENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs9gmjTwvRRSu_10typst_html.exit.i.i.i.i.i.i: ; preds = %bb.n, %2, %_RNvMs5_NtCs1xwejQucwHj_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs9gmjTwvRRSu_10typst_html.exit.thread.i.i.i.i.i.i.i.i
-  %5 = phi ptr [ %i.ak, %_RNvMs5_NtCs1xwejQucwHj_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs9gmjTwvRRSu_10typst_html.exit.thread.i.i.i.i.i.i.i.i ], [ %i.ap, %2 ], [ %i.ap, %bb.n ]
-  store i64 %.val6.i.i.i.i.i.i, ptr %5, align 8, !noalias !12328
+_RNvXsb_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecTNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentNtNtNtBM_13introspection8position12HtmlPositionEENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs9gmjTwvRRSu_10typst_html.exit.i.i.i.i.i.i: ; preds = %bb.n, %_RNvMs5_NtCs1xwejQucwHj_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs9gmjTwvRRSu_10typst_html.exit.thread.i.i.i.i.i.i.i.i
+  %2 = phi ptr [ %i.ak, %_RNvMs5_NtCs1xwejQucwHj_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs9gmjTwvRRSu_10typst_html.exit.thread.i.i.i.i.i.i.i.i ], [ %i.ap, %bb.n ]
+  store i64 %.val6.i.i.i.i.i.i, ptr %2, align 8, !noalias !12328
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %i.j, i64 24, i1 false), !noalias !12341
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !12328
   %i.bh = getelementptr inbounds nuw i8, ptr %i.p, i64 40
@@ -749,7 +744,7 @@ bb.an:                                            ; preds = %bb.am
 }
 
 ; Function Attrs: nonlazybind uwtable
-define internal fastcc void @_RNvXsb_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecNtNtCsakL8LGkl72C_4ecow6string9EcoStringENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs9gmjTwvRRSu_10typst_html(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(24) %0, ptr nofree readonly captures(address) %.8.val, i64 %.16.val) unnamed_addr #0 personality ptr @rust_eh_personality {
+define internal fastcc void @_RNvXsb_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecNtNtCsakL8LGkl72C_4ecow6string9EcoStringENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs9gmjTwvRRSu_10typst_html(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(24) %0, ptr nofree readonly captures(none) %.8.val, i64 %.16.val) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 10 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
@@ -780,19 +775,14 @@ bb.b:                                             ; preds = %_RNvXs1_NtCs1xwejQu
   store i64 %.16.val, ptr %i.a, align 8, !noalias !21314
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %i.f, ptr %i.h, align 8, !noalias !21314
-  %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 3 uses
-  %1 = getelementptr inbounds nuw [16 x i8], ptr %.8.val, i64 %.16.val
-  br label %.lr.ph.i
+  %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
+  br label %bb.c
 
-.lr.ph.i:                                         ; preds = %_RNvXsx_NtCsakL8LGkl72C_4ecow6stringNtB5_9EcoStringNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i, %.lr.ph.preheader.i
-  %.sroa.014.033.i = phi ptr [ %i.j, %_RNvXsx_NtCsakL8LGkl72C_4ecow6stringNtB5_9EcoStringNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i ], [ %.8.val, %.lr.ph.preheader.i ] ; 5 uses
+bb.c:                                             ; preds = %_RNvXsx_NtCsakL8LGkl72C_4ecow6stringNtB5_9EcoStringNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i, %.lr.ph.preheader.i
+  %.sroa.014.033.i = phi ptr [ %i.j, %_RNvXsx_NtCsakL8LGkl72C_4ecow6stringNtB5_9EcoStringNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i ], [ %.8.val, %.lr.ph.preheader.i ] ; 4 uses
   %.sroa.7.032.i = phi i64 [ %i.k, %_RNvXsx_NtCsakL8LGkl72C_4ecow6stringNtB5_9EcoStringNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i ], [ 0, %.lr.ph.preheader.i ] ; 3 uses
-  %.sroa.10.031.i = phi i64 [ %2, %_RNvXsx_NtCsakL8LGkl72C_4ecow6stringNtB5_9EcoStringNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i ], [ %.16.val, %.lr.ph.preheader.i ]
-  %2 = add nsw i64 %.sroa.10.031.i, -1            ; 2 uses
-  %3 = icmp eq ptr %.sroa.014.033.i, %1
-  br i1 %3, label %_RINvXNvMNtCs1xwejQucwHj_5alloc5sliceSp9to_vec_inNtNtCsakL8LGkl72C_4ecow6string9EcoStringNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs9gmjTwvRRSu_10typst_html.exit, label %bb.c
-
-bb.c:                                             ; preds = %.lr.ph.i
+  %.sroa.10.031.i = phi i64 [ %1, %_RNvXsx_NtCsakL8LGkl72C_4ecow6stringNtB5_9EcoStringNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i ], [ %.16.val, %.lr.ph.preheader.i ]
+  %1 = add nsw i64 %.sroa.10.031.i, -1            ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %.sroa.014.033.i, i64 16
   %i.k = add nuw nsw i64 %.sroa.7.032.i, 1
   tail call void @llvm.experimental.noalias.scope.decl(metadata !21316)
@@ -829,8 +819,8 @@ _RNvXsx_NtCsakL8LGkl72C_4ecow6stringNtB5_9EcoStringNtNtCs3oUPovFnLWP_4core5clone
   store ptr %.sroa.0.0.i13.i, ptr %i.r, align 8, !noalias !21314
   %.sroa.422.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.r, i64 8
   store i64 %.val10.i.i.i, ptr %.sroa.422.0..sroa_idx.i, align 8, !noalias !21314
-  %i.s = icmp eq i64 %2, 0
-  br i1 %i.s, label %_RINvXNvMNtCs1xwejQucwHj_5alloc5sliceSp9to_vec_inNtNtCsakL8LGkl72C_4ecow6string9EcoStringNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs9gmjTwvRRSu_10typst_html.exit, label %.lr.ph.i
+  %i.s = icmp eq i64 %1, 0
+  br i1 %i.s, label %_RINvXNvMNtCs1xwejQucwHj_5alloc5sliceSp9to_vec_inNtNtCsakL8LGkl72C_4ecow6string9EcoStringNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs9gmjTwvRRSu_10typst_html.exit, label %bb.c
 
 bb.g:                                             ; preds = %bb.h
   %i.t = landingpad { ptr, i32 }
@@ -848,9 +838,9 @@ bb.h:                                             ; preds = %bb.f
 bb.i:                                             ; preds = %bb.h
   resume { ptr, i32 } %i.u
 
-_RINvXNvMNtCs1xwejQucwHj_5alloc5sliceSp9to_vec_inNtNtCsakL8LGkl72C_4ecow6string9EcoStringNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs9gmjTwvRRSu_10typst_html.exit: ; preds = %.lr.ph.i, %_RNvXsx_NtCsakL8LGkl72C_4ecow6stringNtB5_9EcoStringNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i, %_RNvMs5_NtCs1xwejQucwHj_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs9gmjTwvRRSu_10typst_html.exit.thread.i
-  %4 = phi ptr [ %i.e, %_RNvMs5_NtCs1xwejQucwHj_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs9gmjTwvRRSu_10typst_html.exit.thread.i ], [ %i.i, %_RNvXsx_NtCsakL8LGkl72C_4ecow6stringNtB5_9EcoStringNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i ], [ %i.i, %.lr.ph.i ]
-  store i64 %.16.val, ptr %4, align 8, !noalias !21314
+_RINvXNvMNtCs1xwejQucwHj_5alloc5sliceSp9to_vec_inNtNtCsakL8LGkl72C_4ecow6string9EcoStringNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs9gmjTwvRRSu_10typst_html.exit: ; preds = %_RNvXsx_NtCsakL8LGkl72C_4ecow6stringNtB5_9EcoStringNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i, %_RNvMs5_NtCs1xwejQucwHj_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs9gmjTwvRRSu_10typst_html.exit.thread.i
+  %2 = phi ptr [ %i.e, %_RNvMs5_NtCs1xwejQucwHj_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs9gmjTwvRRSu_10typst_html.exit.thread.i ], [ %i.i, %_RNvXsx_NtCsakL8LGkl72C_4ecow6stringNtB5_9EcoStringNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i ]
+  store i64 %.16.val, ptr %2, align 8, !noalias !21314
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false), !noalias !21313
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !21314
   ret void

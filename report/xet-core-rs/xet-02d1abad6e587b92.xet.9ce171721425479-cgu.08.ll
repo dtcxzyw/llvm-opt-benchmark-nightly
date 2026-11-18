@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/xet-core-rs/original/xet-02d1abad6e587b92.xet.9ce171721425479-cgu.08?download=true
 inline.NumInlined: 1501
 inline.NumDeleted: 682
-loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumRuntimeUnrolled: 5
+loop-unroll.NumUnrolled: 5
 begin_hunk_0_@_RNvXs_NtNtCsexYYUdYSQU6_5alloc3vec16in_place_collectINtB6_3VecNtNtNtCsjHtSR7YjKD4_8xet_data10processing8xet_file11XetFileInfoEINtNtB6_14spec_from_iter12SpecFromIterBY_INtNtNtCskKLDkoKarTP_4core4iter8adapters12GenericShuntINtNtB6_9into_iter8IntoIterINtNtB2M_6option6OptionBY_EEIB3Z_zEEE9from_iterCsQbU2fm3lSD_3xet:bb.a
   %i.as = getelementptr inbounds nuw i8, ptr %i.am, i64 24
   %.val1.i.i.i.i.i.i.i = load ptr, ptr %i.as, align 8, !alias.scope !1904, !noalias !1902, !nonnull !7, !noundef !7
@@ -204,7 +204,7 @@ define hidden void @_RNvXsb_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtCsiAynQAjgD
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.c = load ptr, ptr %i.b, align 8, !nonnull !7, !noundef !7 ; 5 uses
+  %i.c = load ptr, ptr %i.b, align 8, !nonnull !7, !noundef !7 ; 4 uses
   %i.d = load i64, ptr %i.a, align 8, !noundef !7 ; 9 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1950)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1951)
@@ -216,29 +216,17 @@ bb.b:                                             ; preds = %bb.a
   tail call void @_RNvCsbkii2mvYdKU_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #29, !noalias !1952
   %i.g = tail call noundef align 4 ptr @_RNvCsbkii2mvYdKU_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.e, i64 noundef range(i64 1, -9223372036854775807) 4) #29, !noalias !1952 ; 6 uses
   %i.h = icmp eq ptr %i.g, null
-  br i1 %i.h, label %2, label %.lr.ph.preheader.i.a
-
-2:                                                ; preds = %bb.b
-  tail call void @_RNvNtCsexYYUdYSQU6_5alloc7raw_vec12handle_error(i64 noundef 4, i64 %i.e) #30, !noalias !1953
-  unreachable
+  br i1 %i.h, label %.lr.ph.i, label %.lr.ph.preheader.i.a
 
 .lr.ph.preheader.i.a:                             ; preds = %bb.b
-  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %i.d
-  %4 = and i64 %i.d, 2305843009213693951
-  %5 = add i64 %i.d, -1
-  %6 = tail call i64 @llvm.umin.i64(i64 %4, i64 %5) ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %6, 4
+  %min.iters.check = icmp ult i64 %i.d, 4
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader.i.a
-  %7 = add nuw nsw i64 %6, 1                      ; 2 uses
-  %i.i = and i64 %7, 3                            ; 2 uses
-  %8 = icmp eq i64 %i.i, 0
-  %9 = select i1 %8, i64 4, i64 %i.i
-  %n.vec = sub nsw i64 %7, %9                     ; 4 uses
-  %i.j = shl i64 %n.vec, 3
+  %i.i = and i64 %i.d, -4                         ; 4 uses
+  %i.j = shl i64 %i.i, 3
   %i.k = getelementptr i8, ptr %i.c, i64 %i.j
-  %10 = sub i64 %i.d, %n.vec
+  %2 = and i64 %i.d, 3
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -255,23 +243,27 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <4 x i32> %wide.vec, ptr %i.n, align 4, !noalias !1953
   store <4 x i32> %wide.vec5, ptr %i.p, align 4, !noalias !1953
   %index.next = add nuw i64 %index, 4             ; 2 uses
-  %i.q = icmp eq i64 %index.next, %n.vec
-  br i1 %i.q, label %.lr.ph.i.preheader, label %vector.body, !llvm.loop !1948
+  %i.q = icmp eq i64 %index.next, %i.i
+  br i1 %i.q, label %middle.block, label %vector.body, !llvm.loop !1948
 
-.lr.ph.i.preheader:                               ; preds = %vector.body, %.lr.ph.preheader.i.a
-  %.sroa.016.025.i.ph = phi ptr [ %i.c, %.lr.ph.preheader.i.a ], [ %i.k, %vector.body ]
-  %.sroa.7.024.i.ph = phi i64 [ 0, %.lr.ph.preheader.i.a ], [ %n.vec, %vector.body ]
-  %.sroa.10.023.i.ph = phi i64 [ %i.d, %.lr.ph.preheader.i.a ], [ %10, %vector.body ]
-  br label %.lr.ph.i
+middle.block:                                     ; preds = %vector.body
+  %cmp.n = icmp eq i64 %i.d, %i.i
+  br i1 %cmp.n, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inINtNtCsiAynQAjgDuT_10xet_client9cas_types5RangemNtBN_2__CENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit, label %.lr.ph.i.preheader
 
-.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %bb.c
-  %.sroa.016.025.i = phi ptr [ %i.t, %bb.c ], [ %.sroa.016.025.i.ph, %.lr.ph.i.preheader ] ; 3 uses
+.lr.ph.i.preheader:                               ; preds = %.lr.ph.preheader.i.a, %middle.block
+  %.sroa.016.025.i.ph = phi ptr [ %i.c, %.lr.ph.preheader.i.a ], [ %i.k, %middle.block ]
+  %.sroa.7.024.i.ph = phi i64 [ 0, %.lr.ph.preheader.i.a ], [ %i.i, %middle.block ]
+  %.sroa.10.023.i.ph = phi i64 [ %i.d, %.lr.ph.preheader.i.a ], [ %2, %middle.block ]
+  br label %bb.c
+
+.lr.ph.i:                                         ; preds = %bb.b
+  tail call void @_RNvNtCsexYYUdYSQU6_5alloc7raw_vec12handle_error(i64 noundef 4, i64 %i.e) #30, !noalias !1953
+  unreachable
+
+bb.c:                                             ; preds = %.lr.ph.i.preheader, %bb.c
+  %.sroa.016.025.i = phi ptr [ %i.t, %bb.c ], [ %.sroa.016.025.i.ph, %.lr.ph.i.preheader ] ; 2 uses
   %.sroa.7.024.i = phi i64 [ %i.s, %bb.c ], [ %.sroa.7.024.i.ph, %.lr.ph.i.preheader ] ; 2 uses
   %.sroa.10.023.i = phi i64 [ %i.r, %bb.c ], [ %.sroa.10.023.i.ph, %.lr.ph.i.preheader ]
-  %11 = icmp eq ptr %.sroa.016.025.i, %3
-  br i1 %11, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inINtNtCsiAynQAjgDuT_10xet_client9cas_types5RangemNtBN_2__CENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit, label %bb.c
-
-bb.c:                                             ; preds = %.lr.ph.i
   %i.r = add nsw i64 %.sroa.10.023.i, -1          ; 2 uses
   %i.s = add nuw nsw i64 %.sroa.7.024.i, 1
   %i.t = getelementptr inbounds nuw i8, ptr %.sroa.016.025.i, i64 8
@@ -279,10 +271,10 @@ bb.c:                                             ; preds = %.lr.ph.i
   %i.v = load <2 x i32>, ptr %.sroa.016.025.i, align 4, !alias.scope !1951
   store <2 x i32> %i.v, ptr %i.u, align 4, !noalias !1953
   %i.w = icmp eq i64 %i.r, 0
-  br i1 %i.w, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inINtNtCsiAynQAjgDuT_10xet_client9cas_types5RangemNtBN_2__CENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit, label %.lr.ph.i, !llvm.loop !1949
+  br i1 %i.w, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inINtNtCsiAynQAjgDuT_10xet_client9cas_types5RangemNtBN_2__CENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit, label %bb.c, !llvm.loop !1949
 
-_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inINtNtCsiAynQAjgDuT_10xet_client9cas_types5RangemNtBN_2__CENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit: ; preds = %.lr.ph.i, %bb.c, %bb.a
-  %.sroa.10.0.i33.i = phi ptr [ inttoptr (i64 4 to ptr), %bb.a ], [ %i.g, %bb.c ], [ %i.g, %.lr.ph.i ]
+_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inINtNtCsiAynQAjgDuT_10xet_client9cas_types5RangemNtBN_2__CENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit: ; preds = %bb.c, %middle.block, %bb.a
+  %.sroa.10.0.i33.i = phi ptr [ inttoptr (i64 4 to ptr), %bb.a ], [ %i.g, %middle.block ], [ %i.g, %bb.c ]
   store i64 %i.d, ptr %0, align 8, !alias.scope !1950
   %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.10.0.i33.i, ptr %.sroa.6.0..sroa_idx.i, align 8, !alias.scope !1950
@@ -296,7 +288,7 @@ define hidden void @_RNvXsb_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtCsiAynQAjgD
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.c = load ptr, ptr %i.b, align 8, !nonnull !7, !noundef !7 ; 5 uses
+  %i.c = load ptr, ptr %i.b, align 8, !nonnull !7, !noundef !7 ; 4 uses
   %i.d = load i64, ptr %i.a, align 8, !noundef !7 ; 9 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1961)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1962)
@@ -308,25 +300,17 @@ bb.b:                                             ; preds = %bb.a
   tail call void @_RNvCsbkii2mvYdKU_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #29, !noalias !1963
   %i.g = tail call noundef align 8 ptr @_RNvCsbkii2mvYdKU_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.e, i64 noundef range(i64 1, -9223372036854775807) 8) #29, !noalias !1963 ; 6 uses
   %i.h = icmp eq ptr %i.g, null
-  br i1 %i.h, label %2, label %.lr.ph.preheader.i.a
-
-2:                                                ; preds = %bb.b
-  tail call void @_RNvNtCsexYYUdYSQU6_5alloc7raw_vec12handle_error(i64 noundef 8, i64 %i.e) #30, !noalias !1964
-  unreachable
+  br i1 %i.h, label %.lr.ph.i, label %.lr.ph.preheader.i.a
 
 .lr.ph.preheader.i.a:                             ; preds = %bb.b
-  %3 = getelementptr inbounds nuw [16 x i8], ptr %i.c, i64 %i.d
-  %4 = and i64 %i.d, 1152921504606846975
-  %5 = add i64 %i.d, -1
-  %6 = tail call i64 @llvm.umin.i64(i64 %4, i64 %5) ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %6, 4
+  %min.iters.check = icmp ult i64 %i.d, 4
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader.i.a
-  %n.vec = and i64 %6, 1152921504606846974        ; 4 uses
-  %i.i = shl nuw i64 %n.vec, 4
+  %n.vec = and i64 %i.d, -2                       ; 4 uses
+  %i.i = shl i64 %n.vec, 4
   %i.j = getelementptr i8, ptr %i.c, i64 %i.i
-  %7 = sub i64 %i.d, %n.vec
+  %2 = and i64 %i.d, 1
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -344,22 +328,26 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <2 x i64> %wide.load4, ptr %i.o, align 8, !noalias !1964
   %index.next = add nuw i64 %index, 2             ; 2 uses
   %i.p = icmp eq i64 %index.next, %n.vec
-  br i1 %i.p, label %.lr.ph.i.preheader, label %vector.body, !llvm.loop !1959
+  br i1 %i.p, label %middle.block, label %vector.body, !llvm.loop !1959
 
-.lr.ph.i.preheader:                               ; preds = %vector.body, %.lr.ph.preheader.i.a
-  %.sroa.016.025.i.ph = phi ptr [ %i.c, %.lr.ph.preheader.i.a ], [ %i.j, %vector.body ]
-  %.sroa.7.024.i.ph = phi i64 [ 0, %.lr.ph.preheader.i.a ], [ %n.vec, %vector.body ]
-  %.sroa.10.023.i.ph = phi i64 [ %i.d, %.lr.ph.preheader.i.a ], [ %7, %vector.body ]
-  br label %.lr.ph.i
+middle.block:                                     ; preds = %vector.body
+  %cmp.n = icmp eq i64 %i.d, %n.vec
+  br i1 %cmp.n, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inINtNtCsiAynQAjgDuT_10xet_client9cas_types5RangeyNtBN_2__HENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit, label %.lr.ph.i.preheader
 
-.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %bb.c
-  %.sroa.016.025.i = phi ptr [ %i.s, %bb.c ], [ %.sroa.016.025.i.ph, %.lr.ph.i.preheader ] ; 3 uses
+.lr.ph.i.preheader:                               ; preds = %.lr.ph.preheader.i.a, %middle.block
+  %.sroa.016.025.i.ph = phi ptr [ %i.c, %.lr.ph.preheader.i.a ], [ %i.j, %middle.block ]
+  %.sroa.7.024.i.ph = phi i64 [ 0, %.lr.ph.preheader.i.a ], [ %n.vec, %middle.block ]
+  %.sroa.10.023.i.ph = phi i64 [ %i.d, %.lr.ph.preheader.i.a ], [ %2, %middle.block ]
+  br label %bb.c
+
+.lr.ph.i:                                         ; preds = %bb.b
+  tail call void @_RNvNtCsexYYUdYSQU6_5alloc7raw_vec12handle_error(i64 noundef 8, i64 %i.e) #30, !noalias !1964
+  unreachable
+
+bb.c:                                             ; preds = %.lr.ph.i.preheader, %bb.c
+  %.sroa.016.025.i = phi ptr [ %i.s, %bb.c ], [ %.sroa.016.025.i.ph, %.lr.ph.i.preheader ] ; 2 uses
   %.sroa.7.024.i = phi i64 [ %i.r, %bb.c ], [ %.sroa.7.024.i.ph, %.lr.ph.i.preheader ] ; 2 uses
   %.sroa.10.023.i = phi i64 [ %i.q, %bb.c ], [ %.sroa.10.023.i.ph, %.lr.ph.i.preheader ]
-  %8 = icmp eq ptr %.sroa.016.025.i, %3
-  br i1 %8, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inINtNtCsiAynQAjgDuT_10xet_client9cas_types5RangeyNtBN_2__HENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit, label %bb.c
-
-bb.c:                                             ; preds = %.lr.ph.i
   %i.q = add nsw i64 %.sroa.10.023.i, -1          ; 2 uses
   %i.r = add nuw nsw i64 %.sroa.7.024.i, 1
   %i.s = getelementptr inbounds nuw i8, ptr %.sroa.016.025.i, i64 16
@@ -367,10 +355,10 @@ bb.c:                                             ; preds = %.lr.ph.i
   %i.u = load <2 x i64>, ptr %.sroa.016.025.i, align 8, !alias.scope !1962
   store <2 x i64> %i.u, ptr %i.t, align 8, !noalias !1964
   %i.v = icmp eq i64 %i.q, 0
-  br i1 %i.v, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inINtNtCsiAynQAjgDuT_10xet_client9cas_types5RangeyNtBN_2__HENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit, label %.lr.ph.i, !llvm.loop !1960
+  br i1 %i.v, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inINtNtCsiAynQAjgDuT_10xet_client9cas_types5RangeyNtBN_2__HENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit, label %bb.c, !llvm.loop !1960
 
-_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inINtNtCsiAynQAjgDuT_10xet_client9cas_types5RangeyNtBN_2__HENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit: ; preds = %.lr.ph.i, %bb.c, %bb.a
-  %.sroa.10.0.i33.i = phi ptr [ inttoptr (i64 8 to ptr), %bb.a ], [ %i.g, %bb.c ], [ %i.g, %.lr.ph.i ]
+_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inINtNtCsiAynQAjgDuT_10xet_client9cas_types5RangeyNtBN_2__HENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit: ; preds = %bb.c, %middle.block, %bb.a
+  %.sroa.10.0.i33.i = phi ptr [ inttoptr (i64 8 to ptr), %bb.a ], [ %i.g, %middle.block ], [ %i.g, %bb.c ]
   store i64 %i.d, ptr %0, align 8, !alias.scope !1961
   %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.10.0.i33.i, ptr %.sroa.6.0..sroa_idx.i, align 8, !alias.scope !1961
@@ -385,7 +373,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.c = load ptr, ptr %i.b, align 8, !nonnull !7, !noundef !7 ; 2 uses
-  %i.d = load i64, ptr %i.a, align 8, !noundef !7 ; 6 uses
+  %i.d = load i64, ptr %i.a, align 8, !noundef !7 ; 8 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1970)
   %i.e = mul nuw nsw i64 %i.d, 48                 ; 2 uses
   %i.f = icmp eq i64 %i.d, 0
@@ -393,36 +381,54 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_RNvCsbkii2mvYdKU_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #29, !noalias !1971
-  %i.g = tail call noundef align 8 ptr @_RNvCsbkii2mvYdKU_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.e, i64 noundef range(i64 1, -9223372036854775807) 8) #29, !noalias !1971 ; 4 uses
+  %i.g = tail call noundef align 8 ptr @_RNvCsbkii2mvYdKU_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.e, i64 noundef range(i64 1, -9223372036854775807) 8) #29, !noalias !1971 ; 6 uses
   %i.h = icmp eq ptr %i.g, null
-  br i1 %i.h, label %bb.c, label %.lr.ph.preheader.i.a
+  br i1 %i.h, label %3, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
+  %xtraiter = and i64 %i.d, 1
+  %2 = icmp eq i64 %i.d, 1
+  br i1 %2, label %bb.d, label %.lr.ph.preheader.i.a
+
+.lr.ph.preheader.i.a:                             ; preds = %bb.c
+  %unroll_iter = and i64 %i.d, -2
+  br label %.lr.ph.i
+
+3:                                                ; preds = %bb.b
   tail call void @_RNvNtCsexYYUdYSQU6_5alloc7raw_vec12handle_error(i64 noundef 8, i64 %i.e) #30, !noalias !1972
   unreachable
 
-.lr.ph.preheader.i.a:                             ; preds = %bb.b
-  %2 = getelementptr inbounds nuw [48 x i8], ptr %i.c, i64 %i.d
-  br label %.lr.ph.i
+.lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i.a
+  %.sroa.014.023.i = phi ptr [ %i.c, %.lr.ph.preheader.i.a ], [ %7, %.lr.ph.i ] ; 3 uses
+  %.sroa.7.022.i = phi i64 [ 0, %.lr.ph.preheader.i.a ], [ %6, %.lr.ph.i ] ; 3 uses
+  %.sroa.10.021.i = phi i64 [ 0, %.lr.ph.preheader.i.a ], [ %niter.next.1, %.lr.ph.i ]
+  %4 = getelementptr inbounds nuw i8, ptr %.sroa.014.023.i, i64 48
+  %5 = getelementptr inbounds nuw [48 x i8], ptr %i.g, i64 %.sroa.7.022.i
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %5, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.014.023.i, i64 48, i1 false), !noalias !1970
+  %6 = add nuw nsw i64 %.sroa.7.022.i, 2          ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %.sroa.014.023.i, i64 96 ; 2 uses
+  %8 = getelementptr inbounds nuw [48 x i8], ptr %i.g, i64 %.sroa.7.022.i
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 48
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %9, ptr noundef nonnull align 8 dereferenceable(48) %4, i64 48, i1 false), !noalias !1970
+  %niter.next.1 = add nuw i64 %.sroa.10.021.i, 2  ; 2 uses
+  %i.i = icmp eq i64 %niter.next.1, %unroll_iter
+  br i1 %i.i, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12file_structs21FileDataSequenceEntryNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit.loopexit.unr-lcssa, label %.lr.ph.i
 
-.lr.ph.i:                                         ; preds = %bb.d, %.lr.ph.preheader.i.a
-  %.sroa.014.023.i = phi ptr [ %5, %bb.d ], [ %i.c, %.lr.ph.preheader.i.a ] ; 3 uses
-  %.sroa.7.022.i = phi i64 [ %4, %bb.d ], [ 0, %.lr.ph.preheader.i.a ] ; 2 uses
-  %.sroa.10.021.i = phi i64 [ %3, %bb.d ], [ %i.d, %.lr.ph.preheader.i.a ]
-  %i.i = icmp eq ptr %.sroa.014.023.i, %2
-  br i1 %i.i, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12file_structs21FileDataSequenceEntryNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit, label %bb.d
+_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12file_structs21FileDataSequenceEntryNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit.loopexit.unr-lcssa: ; preds = %.lr.ph.i
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12file_structs21FileDataSequenceEntryNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit, label %bb.d
 
-bb.d:                                             ; preds = %.lr.ph.i
-  %3 = add nsw i64 %.sroa.10.021.i, -1            ; 2 uses
-  %4 = add nuw nsw i64 %.sroa.7.022.i, 1
-  %5 = getelementptr inbounds nuw i8, ptr %.sroa.014.023.i, i64 48
-  %6 = getelementptr inbounds nuw [48 x i8], ptr %i.g, i64 %.sroa.7.022.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %6, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.014.023.i, i64 48, i1 false), !noalias !1970
-  %7 = icmp eq i64 %3, 0
-  br i1 %7, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12file_structs21FileDataSequenceEntryNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit, label %.lr.ph.i
+bb.d:                                             ; preds = %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12file_structs21FileDataSequenceEntryNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit.loopexit.unr-lcssa, %bb.c
+  %.sroa.014.023.i.epil.init = phi ptr [ %i.c, %bb.c ], [ %7, %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12file_structs21FileDataSequenceEntryNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit.loopexit.unr-lcssa ]
+  %.sroa.7.022.i.epil.init = phi i64 [ 0, %bb.c ], [ %6, %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12file_structs21FileDataSequenceEntryNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit.loopexit.unr-lcssa ]
+  %lcmp.mod2 = trunc i64 %i.d to i1
+  tail call void @llvm.assume(i1 %lcmp.mod2)
+  %10 = getelementptr inbounds nuw [48 x i8], ptr %i.g, i64 %.sroa.7.022.i.epil.init
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %10, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.014.023.i.epil.init, i64 48, i1 false), !noalias !1970
+  br label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12file_structs21FileDataSequenceEntryNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit
 
-_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12file_structs21FileDataSequenceEntryNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit: ; preds = %.lr.ph.i, %bb.d, %bb.a
-  %.sroa.10.0.i31.i = phi ptr [ inttoptr (i64 8 to ptr), %bb.a ], [ %i.g, %bb.d ], [ %i.g, %.lr.ph.i ]
+_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12file_structs21FileDataSequenceEntryNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit: ; preds = %bb.d, %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12file_structs21FileDataSequenceEntryNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit.loopexit.unr-lcssa, %bb.a
+  %.sroa.10.0.i31.i = phi ptr [ inttoptr (i64 8 to ptr), %bb.a ], [ %i.g, %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12file_structs21FileDataSequenceEntryNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit.loopexit.unr-lcssa ], [ %i.g, %bb.d ]
   store i64 %i.d, ptr %0, align 8, !alias.scope !1970
   %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.10.0.i31.i, ptr %.sroa.6.0..sroa_idx.i, align 8, !alias.scope !1970
@@ -437,7 +443,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.c = load ptr, ptr %i.b, align 8, !nonnull !7, !noundef !7 ; 2 uses
-  %i.d = load i64, ptr %i.a, align 8, !noundef !7 ; 6 uses
+  %i.d = load i64, ptr %i.a, align 8, !noundef !7 ; 8 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1978)
   %i.e = mul nuw nsw i64 %i.d, 48                 ; 2 uses
   %i.f = icmp eq i64 %i.d, 0
@@ -445,36 +451,54 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_RNvCsbkii2mvYdKU_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #29, !noalias !1979
-  %i.g = tail call noundef align 8 ptr @_RNvCsbkii2mvYdKU_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.e, i64 noundef range(i64 1, -9223372036854775807) 8) #29, !noalias !1979 ; 4 uses
+  %i.g = tail call noundef align 8 ptr @_RNvCsbkii2mvYdKU_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.e, i64 noundef range(i64 1, -9223372036854775807) 8) #29, !noalias !1979 ; 6 uses
   %i.h = icmp eq ptr %i.g, null
-  br i1 %i.h, label %bb.c, label %.lr.ph.preheader.i.a
+  br i1 %i.h, label %3, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
+  %xtraiter = and i64 %i.d, 1
+  %2 = icmp eq i64 %i.d, 1
+  br i1 %2, label %bb.d, label %.lr.ph.preheader.i.a
+
+.lr.ph.preheader.i.a:                             ; preds = %bb.c
+  %unroll_iter = and i64 %i.d, -2
+  br label %.lr.ph.i
+
+3:                                                ; preds = %bb.b
   tail call void @_RNvNtCsexYYUdYSQU6_5alloc7raw_vec12handle_error(i64 noundef 8, i64 %i.e) #30, !noalias !1980
   unreachable
 
-.lr.ph.preheader.i.a:                             ; preds = %bb.b
-  %2 = getelementptr inbounds nuw [48 x i8], ptr %i.c, i64 %i.d
-  br label %.lr.ph.i
+.lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i.a
+  %.sroa.014.023.i = phi ptr [ %i.c, %.lr.ph.preheader.i.a ], [ %7, %.lr.ph.i ] ; 3 uses
+  %.sroa.7.022.i = phi i64 [ 0, %.lr.ph.preheader.i.a ], [ %6, %.lr.ph.i ] ; 3 uses
+  %.sroa.10.021.i = phi i64 [ 0, %.lr.ph.preheader.i.a ], [ %niter.next.1, %.lr.ph.i ]
+  %4 = getelementptr inbounds nuw i8, ptr %.sroa.014.023.i, i64 48
+  %5 = getelementptr inbounds nuw [48 x i8], ptr %i.g, i64 %.sroa.7.022.i
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %5, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.014.023.i, i64 48, i1 false), !noalias !1978
+  %6 = add nuw nsw i64 %.sroa.7.022.i, 2          ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %.sroa.014.023.i, i64 96 ; 2 uses
+  %8 = getelementptr inbounds nuw [48 x i8], ptr %i.g, i64 %.sroa.7.022.i
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 48
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %9, ptr noundef nonnull align 8 dereferenceable(48) %4, i64 48, i1 false), !noalias !1978
+  %niter.next.1 = add nuw i64 %.sroa.10.021.i, 2  ; 2 uses
+  %i.i = icmp eq i64 %niter.next.1, %unroll_iter
+  br i1 %i.i, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12file_structs21FileVerificationEntryNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit.loopexit.unr-lcssa, label %.lr.ph.i
 
-.lr.ph.i:                                         ; preds = %bb.d, %.lr.ph.preheader.i.a
-  %.sroa.014.023.i = phi ptr [ %5, %bb.d ], [ %i.c, %.lr.ph.preheader.i.a ] ; 3 uses
-  %.sroa.7.022.i = phi i64 [ %4, %bb.d ], [ 0, %.lr.ph.preheader.i.a ] ; 2 uses
-  %.sroa.10.021.i = phi i64 [ %3, %bb.d ], [ %i.d, %.lr.ph.preheader.i.a ]
-  %i.i = icmp eq ptr %.sroa.014.023.i, %2
-  br i1 %i.i, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12file_structs21FileVerificationEntryNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit, label %bb.d
+_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12file_structs21FileVerificationEntryNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit.loopexit.unr-lcssa: ; preds = %.lr.ph.i
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12file_structs21FileVerificationEntryNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit, label %bb.d
 
-bb.d:                                             ; preds = %.lr.ph.i
-  %3 = add nsw i64 %.sroa.10.021.i, -1            ; 2 uses
-  %4 = add nuw nsw i64 %.sroa.7.022.i, 1
-  %5 = getelementptr inbounds nuw i8, ptr %.sroa.014.023.i, i64 48
-  %6 = getelementptr inbounds nuw [48 x i8], ptr %i.g, i64 %.sroa.7.022.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %6, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.014.023.i, i64 48, i1 false), !noalias !1978
-  %7 = icmp eq i64 %3, 0
-  br i1 %7, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12file_structs21FileVerificationEntryNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit, label %.lr.ph.i
+bb.d:                                             ; preds = %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12file_structs21FileVerificationEntryNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit.loopexit.unr-lcssa, %bb.c
+  %.sroa.014.023.i.epil.init = phi ptr [ %i.c, %bb.c ], [ %7, %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12file_structs21FileVerificationEntryNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit.loopexit.unr-lcssa ]
+  %.sroa.7.022.i.epil.init = phi i64 [ 0, %bb.c ], [ %6, %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12file_structs21FileVerificationEntryNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit.loopexit.unr-lcssa ]
+  %lcmp.mod2 = trunc i64 %i.d to i1
+  tail call void @llvm.assume(i1 %lcmp.mod2)
+  %10 = getelementptr inbounds nuw [48 x i8], ptr %i.g, i64 %.sroa.7.022.i.epil.init
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %10, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.014.023.i.epil.init, i64 48, i1 false), !noalias !1978
+  br label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12file_structs21FileVerificationEntryNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit
 
-_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12file_structs21FileVerificationEntryNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit: ; preds = %.lr.ph.i, %bb.d, %bb.a
-  %.sroa.10.0.i31.i = phi ptr [ inttoptr (i64 8 to ptr), %bb.a ], [ %i.g, %bb.d ], [ %i.g, %.lr.ph.i ]
+_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12file_structs21FileVerificationEntryNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit: ; preds = %bb.d, %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12file_structs21FileVerificationEntryNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit.loopexit.unr-lcssa, %bb.a
+  %.sroa.10.0.i31.i = phi ptr [ inttoptr (i64 8 to ptr), %bb.a ], [ %i.g, %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12file_structs21FileVerificationEntryNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit.loopexit.unr-lcssa ], [ %i.g, %bb.d ]
   store i64 %i.d, ptr %0, align 8, !alias.scope !1978
   %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.10.0.i31.i, ptr %.sroa.6.0..sroa_idx.i, align 8, !alias.scope !1978
@@ -489,7 +513,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.c = load ptr, ptr %i.b, align 8, !nonnull !7, !noundef !7 ; 2 uses
-  %i.d = load i64, ptr %i.a, align 8, !noundef !7 ; 6 uses
+  %i.d = load i64, ptr %i.a, align 8, !noundef !7 ; 8 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1986)
   %i.e = mul nuw nsw i64 %i.d, 48                 ; 2 uses
   %i.f = icmp eq i64 %i.d, 0
@@ -497,36 +521,54 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_RNvCsbkii2mvYdKU_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #29, !noalias !1987
-  %i.g = tail call noundef align 8 ptr @_RNvCsbkii2mvYdKU_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.e, i64 noundef range(i64 1, -9223372036854775807) 8) #29, !noalias !1987 ; 4 uses
+  %i.g = tail call noundef align 8 ptr @_RNvCsbkii2mvYdKU_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.e, i64 noundef range(i64 1, -9223372036854775807) 8) #29, !noalias !1987 ; 6 uses
   %i.h = icmp eq ptr %i.g, null
-  br i1 %i.h, label %bb.c, label %.lr.ph.preheader.i.a
+  br i1 %i.h, label %3, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
+  %xtraiter = and i64 %i.d, 1
+  %2 = icmp eq i64 %i.d, 1
+  br i1 %2, label %bb.d, label %.lr.ph.preheader.i.a
+
+.lr.ph.preheader.i.a:                             ; preds = %bb.c
+  %unroll_iter = and i64 %i.d, -2
+  br label %.lr.ph.i
+
+3:                                                ; preds = %bb.b
   tail call void @_RNvNtCsexYYUdYSQU6_5alloc7raw_vec12handle_error(i64 noundef 8, i64 %i.e) #30, !noalias !1988
   unreachable
 
-.lr.ph.preheader.i.a:                             ; preds = %bb.b
-  %2 = getelementptr inbounds nuw [48 x i8], ptr %i.c, i64 %i.d
-  br label %.lr.ph.i
+.lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i.a
+  %.sroa.014.023.i = phi ptr [ %i.c, %.lr.ph.preheader.i.a ], [ %7, %.lr.ph.i ] ; 3 uses
+  %.sroa.7.022.i = phi i64 [ 0, %.lr.ph.preheader.i.a ], [ %6, %.lr.ph.i ] ; 3 uses
+  %.sroa.10.021.i = phi i64 [ 0, %.lr.ph.preheader.i.a ], [ %niter.next.1, %.lr.ph.i ]
+  %4 = getelementptr inbounds nuw i8, ptr %.sroa.014.023.i, i64 48
+  %5 = getelementptr inbounds nuw [48 x i8], ptr %i.g, i64 %.sroa.7.022.i
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %5, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.014.023.i, i64 48, i1 false), !noalias !1986
+  %6 = add nuw nsw i64 %.sroa.7.022.i, 2          ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %.sroa.014.023.i, i64 96 ; 2 uses
+  %8 = getelementptr inbounds nuw [48 x i8], ptr %i.g, i64 %.sroa.7.022.i
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 48
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %9, ptr noundef nonnull align 8 dereferenceable(48) %4, i64 48, i1 false), !noalias !1986
+  %niter.next.1 = add nuw i64 %.sroa.10.021.i, 2  ; 2 uses
+  %i.i = icmp eq i64 %niter.next.1, %unroll_iter
+  br i1 %i.i, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12xorb_structs22XorbChunkSequenceEntryNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit.loopexit.unr-lcssa, label %.lr.ph.i
 
-.lr.ph.i:                                         ; preds = %bb.d, %.lr.ph.preheader.i.a
-  %.sroa.014.023.i = phi ptr [ %5, %bb.d ], [ %i.c, %.lr.ph.preheader.i.a ] ; 3 uses
-  %.sroa.7.022.i = phi i64 [ %4, %bb.d ], [ 0, %.lr.ph.preheader.i.a ] ; 2 uses
-  %.sroa.10.021.i = phi i64 [ %3, %bb.d ], [ %i.d, %.lr.ph.preheader.i.a ]
-  %i.i = icmp eq ptr %.sroa.014.023.i, %2
-  br i1 %i.i, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12xorb_structs22XorbChunkSequenceEntryNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit, label %bb.d
+_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12xorb_structs22XorbChunkSequenceEntryNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit.loopexit.unr-lcssa: ; preds = %.lr.ph.i
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12xorb_structs22XorbChunkSequenceEntryNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit, label %bb.d
 
-bb.d:                                             ; preds = %.lr.ph.i
-  %3 = add nsw i64 %.sroa.10.021.i, -1            ; 2 uses
-  %4 = add nuw nsw i64 %.sroa.7.022.i, 1
-  %5 = getelementptr inbounds nuw i8, ptr %.sroa.014.023.i, i64 48
-  %6 = getelementptr inbounds nuw [48 x i8], ptr %i.g, i64 %.sroa.7.022.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %6, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.014.023.i, i64 48, i1 false), !noalias !1986
-  %7 = icmp eq i64 %3, 0
-  br i1 %7, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12xorb_structs22XorbChunkSequenceEntryNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit, label %.lr.ph.i
+bb.d:                                             ; preds = %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12xorb_structs22XorbChunkSequenceEntryNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit.loopexit.unr-lcssa, %bb.c
+  %.sroa.014.023.i.epil.init = phi ptr [ %i.c, %bb.c ], [ %7, %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12xorb_structs22XorbChunkSequenceEntryNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit.loopexit.unr-lcssa ]
+  %.sroa.7.022.i.epil.init = phi i64 [ 0, %bb.c ], [ %6, %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12xorb_structs22XorbChunkSequenceEntryNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit.loopexit.unr-lcssa ]
+  %lcmp.mod2 = trunc i64 %i.d to i1
+  tail call void @llvm.assume(i1 %lcmp.mod2)
+  %10 = getelementptr inbounds nuw [48 x i8], ptr %i.g, i64 %.sroa.7.022.i.epil.init
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %10, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.014.023.i.epil.init, i64 48, i1 false), !noalias !1986
+  br label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12xorb_structs22XorbChunkSequenceEntryNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit
 
-_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12xorb_structs22XorbChunkSequenceEntryNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit: ; preds = %.lr.ph.i, %bb.d, %bb.a
-  %.sroa.10.0.i31.i = phi ptr [ inttoptr (i64 8 to ptr), %bb.a ], [ %i.g, %bb.d ], [ %i.g, %.lr.ph.i ]
+_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12xorb_structs22XorbChunkSequenceEntryNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit: ; preds = %bb.d, %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12xorb_structs22XorbChunkSequenceEntryNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit.loopexit.unr-lcssa, %bb.a
+  %.sroa.10.0.i31.i = phi ptr [ inttoptr (i64 8 to ptr), %bb.a ], [ %i.g, %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12xorb_structs22XorbChunkSequenceEntryNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit.loopexit.unr-lcssa ], [ %i.g, %bb.d ]
   store i64 %i.d, ptr %0, align 8, !alias.scope !1986
   %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.10.0.i31.i, ptr %.sroa.6.0..sroa_idx.i, align 8, !alias.scope !1986
@@ -540,8 +582,8 @@ define hidden void @_RNvXsb_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtNtCsQbU2fm3l
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.c = load ptr, ptr %i.b, align 8, !nonnull !7, !noundef !7 ; 2 uses
-  %i.d = load i64, ptr %i.a, align 8, !noundef !7 ; 6 uses
+  %i.c = load ptr, ptr %i.b, align 8, !nonnull !7, !noundef !7
+  %i.d = load i64, ptr %i.a, align 8, !noundef !7 ; 5 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1994)
   %i.e = shl nuw nsw i64 %i.d, 4                  ; 2 uses
   %i.f = icmp eq i64 %i.d, 0
@@ -549,27 +591,19 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_RNvCsbkii2mvYdKU_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #29, !noalias !1995
-  %i.g = tail call noundef align 8 ptr @_RNvCsbkii2mvYdKU_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.e, i64 noundef range(i64 1, -9223372036854775807) 8) #29, !noalias !1995 ; 4 uses
+  %i.g = tail call noundef align 8 ptr @_RNvCsbkii2mvYdKU_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.e, i64 noundef range(i64 1, -9223372036854775807) 8) #29, !noalias !1995 ; 3 uses
   %i.h = icmp eq ptr %i.g, null
-  br i1 %i.h, label %bb.c, label %.lr.ph.preheader.i
+  br i1 %i.h, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   tail call void @_RNvNtCsexYYUdYSQU6_5alloc7raw_vec12handle_error(i64 noundef 8, i64 %i.e) #30, !noalias !1996
   unreachable
 
-.lr.ph.preheader.i:                               ; preds = %bb.b
-  %2 = getelementptr inbounds nuw [16 x i8], ptr %i.c, i64 %i.d
-  br label %.lr.ph.i
-
-.lr.ph.i:                                         ; preds = %bb.h, %.lr.ph.preheader.i
-  %.sroa.014.025.i = phi ptr [ %i.i, %bb.h ], [ %i.c, %.lr.ph.preheader.i ] ; 4 uses
-  %.sroa.7.024.i = phi i64 [ %i.j, %bb.h ], [ 0, %.lr.ph.preheader.i ] ; 2 uses
-  %.sroa.10.023.i = phi i64 [ %3, %bb.h ], [ %i.d, %.lr.ph.preheader.i ]
-  %3 = add nsw i64 %.sroa.10.023.i, -1            ; 2 uses
-  %4 = icmp eq ptr %.sroa.014.025.i, %2
-  br i1 %4, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtCsQbU2fm3lSD_3xet11xet_session20upload_stream_handle15XetStreamUploadNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEBQ_.exit, label %bb.d
-
-bb.d:                                             ; preds = %.lr.ph.i
+bb.d:                                             ; preds = %bb.b, %bb.h
+  %.sroa.014.025.i = phi ptr [ %i.i, %bb.h ], [ %i.c, %bb.b ] ; 3 uses
+  %.sroa.7.024.i = phi i64 [ %i.j, %bb.h ], [ 0, %bb.b ] ; 2 uses
+  %.sroa.10.023.i = phi i64 [ %2, %bb.h ], [ %i.d, %bb.b ]
+  %2 = add nsw i64 %.sroa.10.023.i, -1            ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %.sroa.014.025.i, i64 16
   %i.j = add nuw nsw i64 %.sroa.7.024.i, 1
   %.val12.i = load ptr, ptr %.sroa.014.025.i, align 8, !alias.scope !1994, !nonnull !7, !noundef !7 ; 2 uses
@@ -598,11 +632,11 @@ bb.h:                                             ; preds = %bb.e
   store ptr %.val12.i, ptr %i.p, align 8, !noalias !1996
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 8
   store ptr %.val13.i, ptr %i.q, align 8, !noalias !1996
-  %i.r = icmp eq i64 %3, 0
-  br i1 %i.r, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtCsQbU2fm3lSD_3xet11xet_session20upload_stream_handle15XetStreamUploadNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEBQ_.exit, label %.lr.ph.i
+  %i.r = icmp eq i64 %2, 0
+  br i1 %i.r, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtCsQbU2fm3lSD_3xet11xet_session20upload_stream_handle15XetStreamUploadNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEBQ_.exit, label %bb.d
 
-_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtCsQbU2fm3lSD_3xet11xet_session20upload_stream_handle15XetStreamUploadNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEBQ_.exit: ; preds = %bb.h, %.lr.ph.i, %bb.a
-  %.sroa.5.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.a ], [ %i.g, %.lr.ph.i ], [ %i.g, %bb.h ]
+_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtCsQbU2fm3lSD_3xet11xet_session20upload_stream_handle15XetStreamUploadNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEBQ_.exit: ; preds = %bb.h, %bb.a
+  %.sroa.5.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.a ], [ %i.g, %bb.h ]
   store i64 %i.d, ptr %0, align 8, !noalias !1994
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.5.0, ptr %.sroa.5.0..sroa_idx, align 8, !noalias !1994
@@ -616,8 +650,8 @@ define hidden void @_RNvXsb_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtNtNtCsjHtSR7
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.c = load ptr, ptr %i.b, align 8, !nonnull !7, !noundef !7 ; 2 uses
-  %i.d = load i64, ptr %i.a, align 8, !noundef !7 ; 6 uses
+  %i.c = load ptr, ptr %i.b, align 8, !nonnull !7, !noundef !7
+  %i.d = load i64, ptr %i.a, align 8, !noundef !7 ; 5 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2005)
   %i.e = mul nuw nsw i64 %i.d, 56                 ; 2 uses
   %i.f = icmp eq i64 %i.d, 0
@@ -625,27 +659,19 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_RNvCsbkii2mvYdKU_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #29, !noalias !2006
-  %i.g = tail call noundef align 8 ptr @_RNvCsbkii2mvYdKU_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.e, i64 noundef range(i64 1, -9223372036854775807) 8) #29, !noalias !2006 ; 4 uses
+  %i.g = tail call noundef align 8 ptr @_RNvCsbkii2mvYdKU_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.e, i64 noundef range(i64 1, -9223372036854775807) 8) #29, !noalias !2006 ; 3 uses
   %i.h = icmp eq ptr %i.g, null
-  br i1 %i.h, label %bb.c, label %.lr.ph.preheader.i
+  br i1 %i.h, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   tail call void @_RNvNtCsexYYUdYSQU6_5alloc7raw_vec12handle_error(i64 noundef 8, i64 %i.e) #30, !noalias !2007
   unreachable
 
-.lr.ph.preheader.i:                               ; preds = %bb.b
-  %2 = getelementptr inbounds nuw [56 x i8], ptr %i.c, i64 %i.d
-  br label %.lr.ph.i
-
-.lr.ph.i:                                         ; preds = %_RNvXs_NtNtNtCsjHtSR7YjKD4_8xet_data19file_reconstruction20reconstruction_terms9file_termNtB4_8FileTermNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i, %.lr.ph.preheader.i
-  %.sroa.012.052.i = phi ptr [ %i.i, %_RNvXs_NtNtNtCsjHtSR7YjKD4_8xet_data19file_reconstruction20reconstruction_terms9file_termNtB4_8FileTermNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i ], [ %i.c, %.lr.ph.preheader.i ] ; 7 uses
-  %.sroa.7.051.i = phi i64 [ %i.j, %_RNvXs_NtNtNtCsjHtSR7YjKD4_8xet_data19file_reconstruction20reconstruction_terms9file_termNtB4_8FileTermNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i ], [ 0, %.lr.ph.preheader.i ] ; 2 uses
-  %.sroa.10.050.i = phi i64 [ %3, %_RNvXs_NtNtNtCsjHtSR7YjKD4_8xet_data19file_reconstruction20reconstruction_terms9file_termNtB4_8FileTermNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i ], [ %i.d, %.lr.ph.preheader.i ]
-  %3 = add nsw i64 %.sroa.10.050.i, -1            ; 2 uses
-  %4 = icmp eq ptr %.sroa.012.052.i, %2
-  br i1 %4, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtNtCsjHtSR7YjKD4_8xet_data19file_reconstruction20reconstruction_terms9file_term8FileTermNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit, label %bb.d
-
-bb.d:                                             ; preds = %.lr.ph.i
+bb.d:                                             ; preds = %bb.b, %_RNvXs_NtNtNtCsjHtSR7YjKD4_8xet_data19file_reconstruction20reconstruction_terms9file_termNtB4_8FileTermNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i
+  %.sroa.012.052.i = phi ptr [ %i.i, %_RNvXs_NtNtNtCsjHtSR7YjKD4_8xet_data19file_reconstruction20reconstruction_terms9file_termNtB4_8FileTermNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i ], [ %i.c, %bb.b ] ; 6 uses
+  %.sroa.7.051.i = phi i64 [ %i.j, %_RNvXs_NtNtNtCsjHtSR7YjKD4_8xet_data19file_reconstruction20reconstruction_terms9file_termNtB4_8FileTermNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i ], [ 0, %bb.b ] ; 2 uses
+  %.sroa.10.050.i = phi i64 [ %2, %_RNvXs_NtNtNtCsjHtSR7YjKD4_8xet_data19file_reconstruction20reconstruction_terms9file_termNtB4_8FileTermNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i ], [ %i.d, %bb.b ]
+  %2 = add nsw i64 %.sroa.10.050.i, -1            ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %.sroa.012.052.i, i64 56
   %i.j = add nuw nsw i64 %.sroa.7.051.i, 1
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2008)
@@ -686,11 +712,11 @@ _RNvXs_NtNtNtCsjHtSR7YjKD4_8xet_data19file_reconstruction20reconstruction_terms9
   store <2 x i32> %i.n, ptr %.sroa.738.0..sroa_idx.i, align 8, !noalias !2007
   %.sroa.940.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.x, i64 40
   store <2 x i64> %i.p, ptr %.sroa.940.0..sroa_idx.i, align 8, !noalias !2007
-  %i.y = icmp eq i64 %3, 0
-  br i1 %i.y, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtNtCsjHtSR7YjKD4_8xet_data19file_reconstruction20reconstruction_terms9file_term8FileTermNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit, label %.lr.ph.i
+  %i.y = icmp eq i64 %2, 0
+  br i1 %i.y, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtNtCsjHtSR7YjKD4_8xet_data19file_reconstruction20reconstruction_terms9file_term8FileTermNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit, label %bb.d
 
-_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtNtCsjHtSR7YjKD4_8xet_data19file_reconstruction20reconstruction_terms9file_term8FileTermNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit: ; preds = %_RNvXs_NtNtNtCsjHtSR7YjKD4_8xet_data19file_reconstruction20reconstruction_terms9file_termNtB4_8FileTermNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i, %.lr.ph.i, %bb.a
-  %.sroa.5.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.a ], [ %i.g, %.lr.ph.i ], [ %i.g, %_RNvXs_NtNtNtCsjHtSR7YjKD4_8xet_data19file_reconstruction20reconstruction_terms9file_termNtB4_8FileTermNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i ]
+_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtNtCsjHtSR7YjKD4_8xet_data19file_reconstruction20reconstruction_terms9file_term8FileTermNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit: ; preds = %_RNvXs_NtNtNtCsjHtSR7YjKD4_8xet_data19file_reconstruction20reconstruction_terms9file_termNtB4_8FileTermNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i, %bb.a
+  %.sroa.5.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.a ], [ %i.g, %_RNvXs_NtNtNtCsjHtSR7YjKD4_8xet_data19file_reconstruction20reconstruction_terms9file_termNtB4_8FileTermNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i ]
   store i64 %i.d, ptr %0, align 8, !noalias !2005
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.5.0, ptr %.sroa.5.0..sroa_idx, align 8, !noalias !2005
@@ -1093,7 +1119,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXsw_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtB7_4sync3ArcNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17shard_file_handle12MDBShardFileEEINtNtCskKLDkoKarTP_4core7convert4FromRSBF_E4fromCsQbU2fm3lSD_3xet(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(address) %1, i64 noundef range(i64 0, 1152921504606846976) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden void @_RNvXsw_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtB7_4sync3ArcNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17shard_file_handle12MDBShardFileEEINtNtCskKLDkoKarTP_4core7convert4FromRSBF_E4fromCsQbU2fm3lSD_3xet(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) %1, i64 noundef range(i64 0, 1152921504606846976) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2695)
   %i.a = shl nuw nsw i64 %2, 3                    ; 2 uses
@@ -1102,46 +1128,38 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_RNvCsbkii2mvYdKU_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #29, !noalias !2696
-  %i.c = tail call noundef align 8 ptr @_RNvCsbkii2mvYdKU_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.a, i64 noundef range(i64 1, -9223372036854775807) 8) #29, !noalias !2696 ; 4 uses
+  %i.c = tail call noundef align 8 ptr @_RNvCsbkii2mvYdKU_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.a, i64 noundef range(i64 1, -9223372036854775807) 8) #29, !noalias !2696 ; 3 uses
   %i.d = icmp eq ptr %i.c, null
-  br i1 %i.d, label %bb.c, label %.lr.ph.preheader.i
+  br i1 %i.d, label %bb.c, label %.lr.ph.i
 
 bb.c:                                             ; preds = %bb.b
   tail call void @_RNvNtCsexYYUdYSQU6_5alloc7raw_vec12handle_error(i64 noundef 8, i64 %i.a) #30, !noalias !2697
   unreachable
 
-.lr.ph.preheader.i:                               ; preds = %bb.b
-  %3 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %2
-  br label %.lr.ph.i
-
-.lr.ph.i:                                         ; preds = %_RNvXsu_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17shard_file_handle12MDBShardFileENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsQbU2fm3lSD_3xet.exit.i, %.lr.ph.preheader.i
-  %.sroa.013.023.i = phi ptr [ %i.f, %_RNvXsu_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17shard_file_handle12MDBShardFileENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsQbU2fm3lSD_3xet.exit.i ], [ %1, %.lr.ph.preheader.i ] ; 3 uses
-  %.sroa.7.022.i = phi i64 [ %i.e, %_RNvXsu_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17shard_file_handle12MDBShardFileENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsQbU2fm3lSD_3xet.exit.i ], [ 0, %.lr.ph.preheader.i ] ; 2 uses
-  %.sroa.10.021.i = phi i64 [ %4, %_RNvXsu_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17shard_file_handle12MDBShardFileENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsQbU2fm3lSD_3xet.exit.i ], [ %2, %.lr.ph.preheader.i ]
-  %4 = add nsw i64 %.sroa.10.021.i, -1            ; 2 uses
-  %5 = icmp eq ptr %.sroa.013.023.i, %3
-  br i1 %5, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inINtNtB8_4sync3ArcNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17shard_file_handle12MDBShardFileENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit, label %6
-
-6:                                                ; preds = %.lr.ph.i
+.lr.ph.i:                                         ; preds = %bb.b, %_RNvXsu_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17shard_file_handle12MDBShardFileENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsQbU2fm3lSD_3xet.exit.i
+  %.sroa.013.023.i = phi ptr [ %i.f, %_RNvXsu_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17shard_file_handle12MDBShardFileENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsQbU2fm3lSD_3xet.exit.i ], [ %1, %bb.b ] ; 2 uses
+  %.sroa.7.022.i = phi i64 [ %i.e, %_RNvXsu_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17shard_file_handle12MDBShardFileENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsQbU2fm3lSD_3xet.exit.i ], [ 0, %bb.b ] ; 2 uses
+  %.sroa.10.021.i = phi i64 [ %5, %_RNvXsu_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17shard_file_handle12MDBShardFileENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsQbU2fm3lSD_3xet.exit.i ], [ %2, %bb.b ]
   %.val12.i = load ptr, ptr %.sroa.013.023.i, align 8, !alias.scope !2695, !nonnull !7, !noundef !7 ; 2 uses
-  %7 = atomicrmw add ptr %.val12.i, i64 1 monotonic, align 8, !noalias !2697
-  %8 = icmp slt i64 %7, 0
-  br i1 %8, label %bb.d, label %_RNvXsu_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17shard_file_handle12MDBShardFileENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsQbU2fm3lSD_3xet.exit.i
+  %3 = atomicrmw add ptr %.val12.i, i64 1 monotonic, align 8, !noalias !2697
+  %4 = icmp slt i64 %3, 0
+  br i1 %4, label %bb.d, label %_RNvXsu_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17shard_file_handle12MDBShardFileENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsQbU2fm3lSD_3xet.exit.i
 
-bb.d:                                             ; preds = %6
+bb.d:                                             ; preds = %.lr.ph.i
   tail call void @llvm.trap()
   unreachable
 
-_RNvXsu_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17shard_file_handle12MDBShardFileENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsQbU2fm3lSD_3xet.exit.i: ; preds = %6
+_RNvXsu_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17shard_file_handle12MDBShardFileENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsQbU2fm3lSD_3xet.exit.i: ; preds = %.lr.ph.i
   %i.e = add nuw nsw i64 %.sroa.7.022.i, 1
   %i.f = getelementptr inbounds nuw i8, ptr %.sroa.013.023.i, i64 8
+  %5 = add nsw i64 %.sroa.10.021.i, -1            ; 2 uses
   %i.g = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %.sroa.7.022.i
   store ptr %.val12.i, ptr %i.g, align 8, !noalias !2697
-  %i.h = icmp eq i64 %4, 0
+  %i.h = icmp eq i64 %5, 0
   br i1 %i.h, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inINtNtB8_4sync3ArcNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17shard_file_handle12MDBShardFileENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit, label %.lr.ph.i
 
-_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inINtNtB8_4sync3ArcNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17shard_file_handle12MDBShardFileENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit: ; preds = %_RNvXsu_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17shard_file_handle12MDBShardFileENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsQbU2fm3lSD_3xet.exit.i, %.lr.ph.i, %bb.a
-  %.sroa.5.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.a ], [ %i.c, %.lr.ph.i ], [ %i.c, %_RNvXsu_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17shard_file_handle12MDBShardFileENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsQbU2fm3lSD_3xet.exit.i ]
+_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inINtNtB8_4sync3ArcNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17shard_file_handle12MDBShardFileENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsQbU2fm3lSD_3xet.exit: ; preds = %_RNvXsu_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17shard_file_handle12MDBShardFileENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsQbU2fm3lSD_3xet.exit.i, %bb.a
+  %.sroa.5.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.a ], [ %i.c, %_RNvXsu_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17shard_file_handle12MDBShardFileENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsQbU2fm3lSD_3xet.exit.i ]
   store i64 %2, ptr %0, align 8, !noalias !2695
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.5.0, ptr %.sroa.5.0..sroa_idx, align 8, !noalias !2695

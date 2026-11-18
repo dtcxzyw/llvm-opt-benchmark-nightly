@@ -26,11 +26,11 @@ target triple = "x86_64-unknown-linux-gnu"
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RINvMNtNtCs9xaRPakndqT_4pyo35types5tupleNtB3_7PyTuple3newRINtNtCs4NRVxsYgnAr_4core6option6OptionINtNtB7_8instance8BorrowedNtNtB5_3any5PyAnyEEINtNtNtBZ_5slice4iter4IterBU_ERSBU_ECskkCPRT7oCWw_16influxdb3_py_api(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([56 x i8]) align 8 captures(none) dereferenceable(56) %0, ptr noalias noundef nonnull readonly align 8 captures(address) %1, i64 noundef range(i64 0, 1152921504606846976) %2, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %3) unnamed_addr #0 personality ptr @rust_eh_personality !guid !42 {
 bb.a:
-  %i.a = alloca [56 x i8], align 8                ; 7 uses
-  %i.b = alloca [8 x i8], align 8                 ; 5 uses
+  %i.a = alloca [56 x i8], align 8                ; 6 uses
+  %i.b = alloca [8 x i8], align 8                 ; 4 uses
   %i.c = alloca [8 x i8], align 8                 ; 4 uses
   %.idx = shl nuw nsw i64 %2, 3
-  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 %.idx ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 %.idx
   tail call void @llvm.experimental.noalias.scope.decl(metadata !43)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !44
   store i64 %2, ptr %i.c, align 8, !noalias !44
@@ -47,7 +47,6 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !44
-  store i64 0, ptr %i.b, align 8, !noalias !44
   %i.g = icmp eq i64 %2, 0
   br i1 %i.g, label %_RINvNtNtCs9xaRPakndqT_4pyo35types5tuple17try_new_from_iterINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3map3MapINtNtNtB13_5slice4iter4IterINtNtB13_6option6OptionINtNtB6_8instance8BorrowedNtNtB4_3any5PyAnyEEENCINvMB2_NtB2_7PyTuple3newRB29_B1I_RSB29_E0EECskkCPRT7oCWw_16influxdb3_py_api.exit, label %.lr.ph.i
 
@@ -58,25 +57,17 @@ bb.d:                                             ; preds = %bb.a
 bb.e:                                             ; preds = %bb.v, %bb.t
   unreachable
 
-bb.f:                                             ; preds = %bb.w, %.lr.ph.i
-  %i.i = phi i64 [ 0, %.lr.ph.i ], [ %i.ag, %bb.w ] ; 3 uses
+bb.f:                                             ; preds = %.lr.ph.i, %bb.w
+  %i.i = phi i64 [ 0, %.lr.ph.i ], [ %i.ag, %bb.w ] ; 2 uses
   %.sroa.0.044.i = phi i64 [ %2, %.lr.ph.i ], [ %i.k, %bb.w ]
-  %i.j = phi ptr [ %1, %.lr.ph.i ], [ %5, %bb.w ] ; 3 uses
+  %i.j = phi ptr [ %1, %.lr.ph.i ], [ %4, %bb.w ] ; 2 uses
   %i.k = add nsw i64 %.sroa.0.044.i, -1           ; 2 uses
-  %i.l = icmp eq ptr %i.j, %i.d
-  br i1 %i.l, label %_RNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter4IterINtNtBb_6option6OptionINtNtCs9xaRPakndqT_4pyo38instance8BorrowedNtNtNtB1N_5types3any5PyAnyEEENCINvMNtB2s_5tupleNtB2X_7PyTuple3newRB1m_BW_RSB1m_E0ENtNtNtB9_6traits8iterator8Iterator4nextCskkCPRT7oCWw_16influxdb3_py_api.exit.i.thread, label %4
-
-_RNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter4IterINtNtBb_6option6OptionINtNtCs9xaRPakndqT_4pyo38instance8BorrowedNtNtNtB1N_5types3any5PyAnyEEENCINvMNtB2s_5tupleNtB2X_7PyTuple3newRB1m_BW_RSB1m_E0ENtNtNtB9_6traits8iterator8Iterator4nextCskkCPRT7oCWw_16influxdb3_py_api.exit.i.thread: ; preds = %bb.f
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !44
-  br label %bb.u
-
-4:                                                ; preds = %bb.f
-  %5 = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 3 uses
+  %4 = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 3 uses
   %.val.i.i = load ptr, ptr %i.j, align 8, !alias.scope !45, !noalias !46, !noundef !5 ; 5 uses
-  %.not.i.i.i.i.i = icmp eq ptr %.val.i.i, null
-  br i1 %.not.i.i.i.i.i, label %bb.i, label %bb.g
+  %i.l = icmp eq ptr %.val.i.i, null
+  br i1 %i.l, label %bb.i, label %bb.g
 
-bb.g:                                             ; preds = %4
+bb.g:                                             ; preds = %bb.f
   %i.m = load i32, ptr %.val.i.i, align 8, !noalias !47, !noundef !5
   %i.n = add i32 %i.m, 1                          ; 2 uses
   %i.o = icmp eq i32 %i.n, 0
@@ -86,7 +77,7 @@ bb.h:                                             ; preds = %bb.g
   store i32 %i.n, ptr %.val.i.i, align 8, !noalias !47
   br label %bb.w
 
-bb.i:                                             ; preds = %4
+bb.i:                                             ; preds = %bb.f
   %i.p = load i32, ptr @_Py_NoneStruct, align 8, !noalias !47, !noundef !5
   %i.q = add i32 %i.p, 1                          ; 2 uses
   %i.r = icmp eq i32 %i.q, 0
@@ -99,11 +90,11 @@ bb.j:                                             ; preds = %bb.i
 _RNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter4IterINtNtBb_6option6OptionINtNtCs9xaRPakndqT_4pyo38instance8BorrowedNtNtNtB1N_5types3any5PyAnyEEENCINvMNtB2s_5tupleNtB2X_7PyTuple3newRB1m_BW_RSB1m_E0ENtNtNtB9_6traits8iterator8Iterator4nextCskkCPRT7oCWw_16influxdb3_py_api.exit.i: ; preds = %bb.w
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !44
   tail call void @llvm.experimental.noalias.scope.decl(metadata !48)
-  %i.s = icmp eq ptr %5, %i.d
+  %i.s = icmp eq ptr %4, %i.d
   br i1 %i.s, label %bb.u, label %bb.k
 
 bb.k:                                             ; preds = %_RNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter4IterINtNtBb_6option6OptionINtNtCs9xaRPakndqT_4pyo38instance8BorrowedNtNtNtB1N_5types3any5PyAnyEEENCINvMNtB2s_5tupleNtB2X_7PyTuple3newRB1m_BW_RSB1m_E0ENtNtNtB9_6traits8iterator8Iterator4nextCskkCPRT7oCWw_16influxdb3_py_api.exit.i
-  %.val.i21.i = load ptr, ptr %5, align 8, !alias.scope !49, !noalias !50, !noundef !5 ; 5 uses
+  %.val.i21.i = load ptr, ptr %4, align 8, !alias.scope !49, !noalias !50, !noundef !5 ; 5 uses
   %.not.i.i.i.i22.i = icmp eq ptr %.val.i21.i, null
   br i1 %.not.i.i.i.i22.i, label %bb.n, label %bb.l
 
@@ -158,10 +149,9 @@ bb.t:                                             ; preds = %bb.s
   invoke void @_RNvNtCs4NRVxsYgnAr_4core9panicking9panic_fmt(ptr noundef nonnull @3, ptr noundef nonnull inttoptr (i64 221 to ptr), ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %3) #18
           to label %bb.e unwind label %bb.p, !noalias !52
 
-bb.u:                                             ; preds = %_RNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter4IterINtNtBb_6option6OptionINtNtCs9xaRPakndqT_4pyo38instance8BorrowedNtNtNtB1N_5types3any5PyAnyEEENCINvMNtB2s_5tupleNtB2X_7PyTuple3newRB1m_BW_RSB1m_E0ENtNtNtB9_6traits8iterator8Iterator4nextCskkCPRT7oCWw_16influxdb3_py_api.exit.i.thread, %_RNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter4IterINtNtBb_6option6OptionINtNtCs9xaRPakndqT_4pyo38instance8BorrowedNtNtNtB1N_5types3any5PyAnyEEENCINvMNtB2s_5tupleNtB2X_7PyTuple3newRB1m_BW_RSB1m_E0ENtNtNtB9_6traits8iterator8Iterator4nextCskkCPRT7oCWw_16influxdb3_py_api.exit.i
-  %.lcssa.i11 = phi i64 [ %i.i, %_RNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter4IterINtNtBb_6option6OptionINtNtCs9xaRPakndqT_4pyo38instance8BorrowedNtNtNtB1N_5types3any5PyAnyEEENCINvMNtB2s_5tupleNtB2X_7PyTuple3newRB1m_BW_RSB1m_E0ENtNtNtB9_6traits8iterator8Iterator4nextCskkCPRT7oCWw_16influxdb3_py_api.exit.i.thread ], [ %i.ag, %_RNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter4IterINtNtBb_6option6OptionINtNtCs9xaRPakndqT_4pyo38instance8BorrowedNtNtNtB1N_5types3any5PyAnyEEENCINvMNtB2s_5tupleNtB2X_7PyTuple3newRB1m_BW_RSB1m_E0ENtNtNtB9_6traits8iterator8Iterator4nextCskkCPRT7oCWw_16influxdb3_py_api.exit.i ]
+bb.u:                                             ; preds = %_RNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter4IterINtNtBb_6option6OptionINtNtCs9xaRPakndqT_4pyo38instance8BorrowedNtNtNtB1N_5types3any5PyAnyEEENCINvMNtB2s_5tupleNtB2X_7PyTuple3newRB1m_BW_RSB1m_E0ENtNtNtB9_6traits8iterator8Iterator4nextCskkCPRT7oCWw_16influxdb3_py_api.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !44
-  %i.ae = icmp eq i64 %2, %.lcssa.i11
+  %i.ae = icmp eq i64 %2, %i.ag
   br i1 %i.ae, label %_RINvNtNtCs9xaRPakndqT_4pyo35types5tuple17try_new_from_iterINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3map3MapINtNtNtB13_5slice4iter4IterINtNtB13_6option6OptionINtNtB6_8instance8BorrowedNtNtB4_3any5PyAnyEEENCINvMB2_NtB2_7PyTuple3newRB29_B1I_RSB29_E0EECskkCPRT7oCWw_16influxdb3_py_api.exit, label %bb.v, !prof !53
 
 bb.v:                                             ; preds = %bb.u

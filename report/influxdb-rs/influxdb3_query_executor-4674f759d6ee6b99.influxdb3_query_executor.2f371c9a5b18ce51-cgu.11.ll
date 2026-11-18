@@ -204,9 +204,9 @@ bb.b:                                             ; preds = %bb.a
   %i.av = load <2 x i64>, ptr %1, align 8
   store <2 x i64> %i.av, ptr %i.at, align 8
   %i.aw = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.ax = load ptr, ptr %i.aw, align 8, !nonnull !24, !align !29, !noundef !24 ; 2 uses
+  %i.ax = load ptr, ptr %i.aw, align 8, !nonnull !24, !align !29, !noundef !24
   %i.ay = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %i.az = load i64, ptr %i.ay, align 8, !noundef !24 ; 6 uses
+  %i.az = load i64, ptr %i.ay, align 8, !noundef !24 ; 5 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !noalias !21187
   %i.bb = mul nuw nsw i64 %i.az, 112              ; 2 uses
@@ -237,30 +237,25 @@ bb.d:                                             ; preds = %bb.c
   store i64 %i.az, ptr %i.o, align 8, !noalias !21187
   %i.bh = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   store ptr %i.bf, ptr %i.bh, align 8, !noalias !21187
-  %i.bi = getelementptr inbounds nuw i8, ptr %i.o, i64 16 ; 3 uses
-  %3 = getelementptr inbounds nuw [112 x i8], ptr %i.ax, i64 %i.az
+  %i.bi = getelementptr inbounds nuw i8, ptr %i.o, i64 16 ; 2 uses
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.e, %.lr.ph.preheader.i.i
-  %.sroa.012.023.i.i = phi ptr [ %i.bk, %bb.e ], [ %i.ax, %.lr.ph.preheader.i.i ] ; 3 uses
+  %.sroa.012.023.i.i = phi ptr [ %i.bk, %bb.e ], [ %i.ax, %.lr.ph.preheader.i.i ] ; 2 uses
   %.sroa.7.022.i.i = phi i64 [ %i.bj, %bb.e ], [ 0, %.lr.ph.preheader.i.i ] ; 3 uses
-  %.sroa.10.021.i.i = phi i64 [ %4, %bb.e ], [ %i.az, %.lr.ph.preheader.i.i ]
-  %4 = add nsw i64 %.sroa.10.021.i.i, -1          ; 2 uses
-  %5 = icmp eq ptr %.sroa.012.023.i.i, %3
-  br i1 %5, label %.noexc, label %6
-
-6:                                                ; preds = %.lr.ph.i.i
+  %.sroa.10.021.i.i = phi i64 [ %3, %bb.e ], [ %i.az, %.lr.ph.preheader.i.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n), !noalias !21187
   invoke fastcc void @_RNvXsV_NtCs7fnekraeopg_15datafusion_expr4exprNtB5_4ExprNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone(ptr noalias noundef align 16 captures(none) dereferenceable(112) %i.n, ptr noalias noundef readonly align 16 captures(address, read_provenance) dereferenceable(112) %.sroa.012.023.i.i)
           to label %bb.e unwind label %bb.g, !noalias !21189
 
-bb.e:                                             ; preds = %6
+bb.e:                                             ; preds = %.lr.ph.i.i
   %i.bj = add nuw nsw i64 %.sroa.7.022.i.i, 1
   %i.bk = getelementptr inbounds nuw i8, ptr %.sroa.012.023.i.i, i64 112
+  %3 = add nsw i64 %.sroa.10.021.i.i, -1          ; 2 uses
   %i.bl = getelementptr inbounds nuw [112 x i8], ptr %i.bf, i64 %.sroa.7.022.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(112) %i.bl, ptr noundef nonnull align 16 dereferenceable(112) %i.n, i64 112, i1 false), !noalias !21189
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n), !noalias !21187
-  %i.bm = icmp eq i64 %4, 0
+  %i.bm = icmp eq i64 %3, 0
   br i1 %i.bm, label %.noexc, label %.lr.ph.i.i
 
 bb.f:                                             ; preds = %bb.g
@@ -269,7 +264,7 @@ bb.f:                                             ; preds = %bb.g
   call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #45, !noalias !21189
   unreachable
 
-bb.g:                                             ; preds = %6
+bb.g:                                             ; preds = %.lr.ph.i.i
   %lpad.loopexit.i.i = landingpad { ptr, i32 }
           cleanup
   store i64 %.sroa.7.022.i.i, ptr %i.bi, align 8, !noalias !21187
@@ -291,9 +286,9 @@ bb.i:                                             ; preds = %bb.d
           cleanup
   br label %.body
 
-.noexc:                                           ; preds = %.lr.ph.i.i, %bb.e, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs43kcu4yvms7_24influxdb3_query_executor.exit.thread.i.i
-  %7 = phi ptr [ %i.be, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs43kcu4yvms7_24influxdb3_query_executor.exit.thread.i.i ], [ %i.bi, %bb.e ], [ %i.bi, %.lr.ph.i.i ]
-  store i64 %i.az, ptr %7, align 8, !noalias !21187
+.noexc:                                           ; preds = %bb.e, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs43kcu4yvms7_24influxdb3_query_executor.exit.thread.i.i
+  %4 = phi ptr [ %i.be, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs43kcu4yvms7_24influxdb3_query_executor.exit.thread.i.i ], [ %i.bi, %bb.e ]
+  store i64 %i.az, ptr %4, align 8, !noalias !21187
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ba, ptr noundef nonnull align 8 dereferenceable(24) %i.o, i64 24, i1 false), !noalias !21190
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o), !noalias !21187
   %i.bp = load atomic i64, ptr @_RNvNtCs4BfJs7E7SEE_12tracing_core8metadata9MAX_LEVEL monotonic, align 8

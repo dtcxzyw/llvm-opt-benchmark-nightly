@@ -205,25 +205,17 @@ _RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9All
   tail call void @_RNvCsjSVV5GABoor_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #33, !noalias !2542
   %i.el = tail call noundef align 8 ptr @_RNvCsjSVV5GABoor_7___rustc12___rust_alloc(i64 noundef %i.ei, i64 noundef range(i64 1, 9) 8) #33, !noalias !2542 ; 3 uses
   %i.em = icmp eq ptr %i.el, null
-  br i1 %i.em, label %bb.b, label %.lr.ph.preheader.i.i
+  br i1 %i.em, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i.i
   tail call void @_RNvNtCs7tKScEop1B6_5alloc7raw_vec12handle_error(i64 noundef 8, i64 %i.ei) #37, !noalias !2543
   unreachable
 
-.lr.ph.preheader.i.i:                             ; preds = %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i.i
-  %5 = getelementptr inbounds nuw [24 x i8], ptr %0, i64 %1
-  br label %.lr.ph.i.i
-
-.lr.ph.i.i:                                       ; preds = %_RNvXss_NtCs2vKOLqTMYjT_3std4pathNtB5_7PathBufNtNtCs6JMX4GRUq9U_4core5clone5Clone5clone.exit.i.i, %.lr.ph.preheader.i.i
-  %.sroa.0.034.i.i = phi ptr [ %i.en, %_RNvXss_NtCs2vKOLqTMYjT_3std4pathNtB5_7PathBufNtNtCs6JMX4GRUq9U_4core5clone5Clone5clone.exit.i.i ], [ %0, %.lr.ph.preheader.i.i ] ; 4 uses
-  %.sroa.7.033.i.i = phi i64 [ %i.eo, %_RNvXss_NtCs2vKOLqTMYjT_3std4pathNtB5_7PathBufNtNtCs6JMX4GRUq9U_4core5clone5Clone5clone.exit.i.i ], [ 0, %.lr.ph.preheader.i.i ] ; 2 uses
-  %.sroa.10.032.i.i = phi i64 [ %6, %_RNvXss_NtCs2vKOLqTMYjT_3std4pathNtB5_7PathBufNtNtCs6JMX4GRUq9U_4core5clone5Clone5clone.exit.i.i ], [ %1, %.lr.ph.preheader.i.i ]
-  %6 = add nsw i64 %.sroa.10.032.i.i, -1          ; 2 uses
-  %7 = icmp eq ptr %.sroa.0.034.i.i, %5
-  br i1 %7, label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtCs7tKScEop1B6_5alloc3vec3VecNtNtCs2vKOLqTMYjT_3std4path7PathBufEECseE7g6nXQLt3_5uu_mv.exit.i, label %bb.c
-
-bb.c:                                             ; preds = %.lr.ph.i.i
+bb.c:                                             ; preds = %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i.i, %_RNvXss_NtCs2vKOLqTMYjT_3std4pathNtB5_7PathBufNtNtCs6JMX4GRUq9U_4core5clone5Clone5clone.exit.i.i
+  %.sroa.0.034.i.i = phi ptr [ %i.en, %_RNvXss_NtCs2vKOLqTMYjT_3std4pathNtB5_7PathBufNtNtCs6JMX4GRUq9U_4core5clone5Clone5clone.exit.i.i ], [ %0, %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i.i ] ; 3 uses
+  %.sroa.7.033.i.i = phi i64 [ %i.eo, %_RNvXss_NtCs2vKOLqTMYjT_3std4pathNtB5_7PathBufNtNtCs6JMX4GRUq9U_4core5clone5Clone5clone.exit.i.i ], [ 0, %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i.i ] ; 2 uses
+  %.sroa.10.032.i.i = phi i64 [ %5, %_RNvXss_NtCs2vKOLqTMYjT_3std4pathNtB5_7PathBufNtNtCs6JMX4GRUq9U_4core5clone5Clone5clone.exit.i.i ], [ %1, %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i.i ]
+  %5 = add nsw i64 %.sroa.10.032.i.i, -1          ; 2 uses
   %i.en = getelementptr inbounds nuw i8, ptr %.sroa.0.034.i.i, i64 24
   %i.eo = add nuw nsw i64 %.sroa.7.033.i.i, 1
   %i.ep = getelementptr inbounds nuw [24 x i8], ptr %i.el, i64 %.sroa.7.033.i.i ; 3 uses
@@ -255,10 +247,10 @@ _RNvXss_NtCs2vKOLqTMYjT_3std4pathNtB5_7PathBufNtNtCs6JMX4GRUq9U_4core5clone5Clon
   store ptr %.sroa.5.0.i.i.i, ptr %.sroa.423.0..sroa_idx.i.i, align 8, !noalias !2543
   %.sroa.524.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.ep, i64 16
   store i64 %.val13.i.i, ptr %.sroa.524.0..sroa_idx.i.i, align 8, !noalias !2543
-  %i.ev = icmp eq i64 %6, 0
-  br i1 %i.ev, label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtCs7tKScEop1B6_5alloc3vec3VecNtNtCs2vKOLqTMYjT_3std4path7PathBufEECseE7g6nXQLt3_5uu_mv.exit.i, label %.lr.ph.i.i
+  %i.ev = icmp eq i64 %5, 0
+  br i1 %i.ev, label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtCs7tKScEop1B6_5alloc3vec3VecNtNtCs2vKOLqTMYjT_3std4path7PathBufEECseE7g6nXQLt3_5uu_mv.exit.i, label %bb.c
 
-_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtCs7tKScEop1B6_5alloc3vec3VecNtNtCs2vKOLqTMYjT_3std4path7PathBufEECseE7g6nXQLt3_5uu_mv.exit.i: ; preds = %_RNvXss_NtCs2vKOLqTMYjT_3std4pathNtB5_7PathBufNtNtCs6JMX4GRUq9U_4core5clone5Clone5clone.exit.i.i, %.lr.ph.i.i
+_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtCs7tKScEop1B6_5alloc3vec3VecNtNtCs2vKOLqTMYjT_3std4path7PathBufEECseE7g6nXQLt3_5uu_mv.exit.i: ; preds = %_RNvXss_NtCs2vKOLqTMYjT_3std4pathNtB5_7PathBufNtNtCs6JMX4GRUq9U_4core5clone5Clone5clone.exit.i.i
   store i64 %1, ptr %i.dz, align 8, !alias.scope !2539
   store ptr %i.el, ptr %.sroa.014.sroa.2.0..sroa_idx, align 8, !alias.scope !2539
   store i64 %1, ptr %.sroa.014.sroa.3.0..sroa_idx, align 8, !alias.scope !2539

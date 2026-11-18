@@ -205,22 +205,13 @@ bb.b:                                             ; preds = %_RNvXs_NtCscdodAO9F
   store i64 %2, ptr %i.d, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   store ptr %i.i, ptr %i.k, align 8
-  %i.l = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 4 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 3 uses
   store i64 0, ptr %i.l, align 8
-  %3 = getelementptr inbounds nuw [64 x i8], ptr %1, i64 %2
-  br label %.lr.ph
+  br label %bb.c
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %_RNvXsbH_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB6_25InterpolatedStringElementNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit
-  %.sroa.018.0129 = phi ptr [ %i.m, %_RNvXsbH_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB6_25InterpolatedStringElementNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit ], [ %1, %.lr.ph.preheader ] ; 17 uses
-  %.sroa.7.0127 = phi i64 [ %i.n, %_RNvXsbH_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB6_25InterpolatedStringElementNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit ], [ 0, %.lr.ph.preheader ] ; 3 uses
-  %.sroa.10.0126 = phi i64 [ %4, %_RNvXsbH_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB6_25InterpolatedStringElementNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit ], [ %2, %.lr.ph.preheader ]
-  %4 = add nsw i64 %.sroa.10.0126, -1             ; 2 uses
-  %5 = icmp eq ptr %.sroa.018.0129, %3
-  br i1 %5, label %.thread, label %bb.c
-
-.thread:                                          ; preds = %_RNvXsbH_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB6_25InterpolatedStringElementNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit, %.lr.ph, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread
-  %6 = phi ptr [ %i.h, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread ], [ %i.l, %.lr.ph ], [ %i.l, %_RNvXsbH_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB6_25InterpolatedStringElementNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit ]
-  store i64 %2, ptr %6, align 8
+.thread:                                          ; preds = %_RNvXsbH_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB6_25InterpolatedStringElementNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread
+  %3 = phi ptr [ %i.h, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread ], [ %i.l, %_RNvXsbH_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB6_25InterpolatedStringElementNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit ]
+  store i64 %2, ptr %3, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.d, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   ret void
@@ -230,7 +221,11 @@ bb.b:                                             ; preds = %_RNvXs_NtCscdodAO9F
           cleanup
   br label %bb.ag
 
-bb.c:                                             ; preds = %.lr.ph
+bb.c:                                             ; preds = %.lr.ph.preheader, %_RNvXsbH_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB6_25InterpolatedStringElementNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit
+  %.sroa.018.0129 = phi ptr [ %i.m, %_RNvXsbH_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB6_25InterpolatedStringElementNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit ], [ %1, %.lr.ph.preheader ] ; 16 uses
+  %.sroa.7.0127 = phi i64 [ %i.n, %_RNvXsbH_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB6_25InterpolatedStringElementNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit ], [ 0, %.lr.ph.preheader ] ; 3 uses
+  %.sroa.10.0126 = phi i64 [ %4, %_RNvXsbH_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB6_25InterpolatedStringElementNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit ], [ %2, %.lr.ph.preheader ]
+  %4 = add nsw i64 %.sroa.10.0126, -1             ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %.sroa.018.0129, i64 64
   %i.n = add nuw nsw i64 %.sroa.7.0127, 1
   %i.o = getelementptr inbounds nuw i8, ptr %.sroa.018.0129, i64 60 ; 2 uses
@@ -555,7 +550,7 @@ _RNvXsbH_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB6_25InterpolatedStringEle
   %.sroa.959.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.dc, i64 60
   store i8 %.sroa.932.0, ptr %.sroa.959.0..sroa_idx, align 4
   %i.dd = icmp eq i64 %4, 0
-  br i1 %i.dd, label %.thread, label %.lr.ph
+  br i1 %i.dd, label %.thread, label %bb.c
 
 bb.af:                                            ; preds = %bb.ag
   %i.de = landingpad { ptr, i32 }
@@ -958,30 +953,25 @@ bb.e:                                             ; preds = %_RNvXs_NtCscdodAO9F
   store i64 %2, ptr %i.b, align 8, !noalias !8435
   %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr %i.o, ptr %i.q, align 8, !noalias !8435
-  %i.r = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 3 uses
-  %4 = getelementptr inbounds nuw [72 x i8], ptr %1, i64 %2
+  %i.r = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.f, %.lr.ph.preheader.i
-  %.sroa.012.023.i = phi ptr [ %i.t, %bb.f ], [ %1, %.lr.ph.preheader.i ] ; 3 uses
+  %.sroa.012.023.i = phi ptr [ %i.t, %bb.f ], [ %1, %.lr.ph.preheader.i ] ; 2 uses
   %.sroa.7.022.i = phi i64 [ %i.s, %bb.f ], [ 0, %.lr.ph.preheader.i ] ; 3 uses
-  %.sroa.10.021.i = phi i64 [ %5, %bb.f ], [ %2, %.lr.ph.preheader.i ]
-  %5 = add nsw i64 %.sroa.10.021.i, -1            ; 2 uses
-  %6 = icmp eq ptr %.sroa.012.023.i, %4
-  br i1 %6, label %.loopexit, label %7
-
-7:                                                ; preds = %.lr.ph.i
+  %.sroa.10.021.i = phi i64 [ %4, %bb.f ], [ %2, %.lr.ph.preheader.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !8435
   invoke fastcc void @_RNvXsbx_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB6_4ExprNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone(ptr noalias noundef align 8 captures(none) dereferenceable(72) %i.a, ptr noundef nonnull align 8 %.sroa.012.023.i)
           to label %bb.f unwind label %bb.h, !noalias !8435, !inline_history !23
 
-bb.f:                                             ; preds = %7
+bb.f:                                             ; preds = %.lr.ph.i
   %i.s = add nuw nsw i64 %.sroa.7.022.i, 1
   %i.t = getelementptr inbounds nuw i8, ptr %.sroa.012.023.i, i64 72
+  %4 = add nsw i64 %.sroa.10.021.i, -1            ; 2 uses
   %i.u = getelementptr inbounds nuw [72 x i8], ptr %i.o, i64 %.sroa.7.022.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.u, ptr noundef nonnull align 8 dereferenceable(72) %i.a, i64 72, i1 false), !noalias !8435
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !8435
-  %i.v = icmp eq i64 %5, 0
+  %i.v = icmp eq i64 %4, 0
   br i1 %i.v, label %.loopexit, label %.lr.ph.i
 
 bb.g:                                             ; preds = %bb.h
@@ -990,7 +980,7 @@ bb.g:                                             ; preds = %bb.h
   tail call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #59, !noalias !8435, !inline_history !23
   unreachable
 
-bb.h:                                             ; preds = %7
+bb.h:                                             ; preds = %.lr.ph.i
   %lpad.loopexit.i = landingpad { ptr, i32 }
           cleanup
   store i64 %.sroa.7.022.i, ptr %i.r, align 8, !noalias !8435
@@ -1007,9 +997,9 @@ bb.i:                                             ; preds = %bb.e
   invoke void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc5boxed3BoxNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprEEB1d_(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.e) #58
           to label %common.resume unwind label %bb.n
 
-.loopexit:                                        ; preds = %bb.f, %.lr.ph.i, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread.i
-  %8 = phi ptr [ %i.n, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread.i ], [ %i.r, %.lr.ph.i ], [ %i.r, %bb.f ]
-  store i64 %2, ptr %8, align 8, !noalias !8435
+.loopexit:                                        ; preds = %bb.f, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread.i
+  %5 = phi ptr [ %i.n, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread.i ], [ %i.r, %bb.f ]
+  store i64 %2, ptr %5, align 8, !noalias !8435
   %i.y = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.y, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !8435
@@ -1412,8 +1402,8 @@ bb.g:                                             ; preds = %.noexc
 bb.h:                                             ; preds = %.noexc
   %i.ag = getelementptr inbounds nuw i8, ptr %.sroa.01.037, i64 16
   %i.ah = getelementptr inbounds nuw i8, ptr %.sroa.01.037, i64 8
-  %i.ai = load ptr, ptr %i.ah, align 8, !alias.scope !15101, !noalias !15100, !nonnull !49, !noundef !49 ; 2 uses
-  %i.aj = load i64, ptr %i.ag, align 8, !alias.scope !15101, !noalias !15100, !noundef !49 ; 6 uses
+  %i.ai = load ptr, ptr %i.ah, align 8, !alias.scope !15101, !noalias !15100, !nonnull !49, !noundef !49
+  %i.aj = load i64, ptr %i.ag, align 8, !alias.scope !15101, !noalias !15100, !noundef !49 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !15102
   %i.ak = icmp eq i64 %i.aj, 0
   br i1 %i.ak, label %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread.i, label %_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator8allocate.exit.i.i.i
@@ -1440,29 +1430,24 @@ bb.i:                                             ; preds = %_RNvXs_NtCscdodAO9F
 .lr.ph.preheader.i:                               ; preds = %_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator8allocate.exit.i.i.i
   store i64 %i.aj, ptr %i.b, align 8, !noalias !15102
   store ptr %i.am, ptr %i.t, align 8, !noalias !15102
-  %2 = getelementptr inbounds nuw [72 x i8], ptr %i.ai, i64 %i.aj
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.j, %.lr.ph.preheader.i
-  %.sroa.012.023.i = phi ptr [ %i.ap, %bb.j ], [ %i.ai, %.lr.ph.preheader.i ] ; 3 uses
+  %.sroa.012.023.i = phi ptr [ %i.ap, %bb.j ], [ %i.ai, %.lr.ph.preheader.i ] ; 2 uses
   %.sroa.7.022.i = phi i64 [ %i.ao, %bb.j ], [ 0, %.lr.ph.preheader.i ] ; 3 uses
-  %.sroa.10.021.i = phi i64 [ %3, %bb.j ], [ %i.aj, %.lr.ph.preheader.i ]
-  %3 = add nsw i64 %.sroa.10.021.i, -1            ; 2 uses
-  %4 = icmp eq ptr %.sroa.012.023.i, %2
-  br i1 %4, label %.loopexit58, label %5
-
-5:                                                ; preds = %.lr.ph.i
+  %.sroa.10.021.i = phi i64 [ %2, %bb.j ], [ %i.aj, %.lr.ph.preheader.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !15102
   invoke fastcc void @_RNvXsbx_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB6_4ExprNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone(ptr noalias noundef align 8 captures(none) dereferenceable(72) %i.a, ptr noundef nonnull align 8 %.sroa.012.023.i)
           to label %bb.j unwind label %bb.l, !noalias !15102, !inline_history !15095
 
-bb.j:                                             ; preds = %5
+bb.j:                                             ; preds = %.lr.ph.i
   %i.ao = add nuw nsw i64 %.sroa.7.022.i, 1
   %i.ap = getelementptr inbounds nuw i8, ptr %.sroa.012.023.i, i64 72
+  %2 = add nsw i64 %.sroa.10.021.i, -1            ; 2 uses
   %i.aq = getelementptr inbounds nuw [72 x i8], ptr %i.am, i64 %.sroa.7.022.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.aq, ptr noundef nonnull align 8 dereferenceable(72) %i.a, i64 72, i1 false), !noalias !15102
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !15102
-  %i.ar = icmp eq i64 %3, 0
+  %i.ar = icmp eq i64 %2, 0
   br i1 %i.ar, label %.loopexit58, label %.lr.ph.i
 
 bb.k:                                             ; preds = %bb.l
@@ -1471,7 +1456,7 @@ bb.k:                                             ; preds = %bb.l
   tail call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #59, !noalias !15102, !inline_history !15095
   unreachable
 
-bb.l:                                             ; preds = %5
+bb.l:                                             ; preds = %.lr.ph.i
   %lpad.loopexit.i = landingpad { ptr, i32 }
           cleanup
   store i64 %.sroa.7.022.i, ptr %i.u, align 8, !noalias !15102
@@ -1494,7 +1479,7 @@ bb.n:                                             ; preds = %.body, %bb.f
   call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #59, !noalias !15100, !inline_history !15088
   unreachable
 
-.loopexit58:                                      ; preds = %bb.j, %.lr.ph.i, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread.i
+.loopexit58:                                      ; preds = %bb.j, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread.i
   store i64 %i.aj, ptr %i.u, align 8, !noalias !15102
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.02, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false), !noalias !15098
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !15102
@@ -1897,8 +1882,8 @@ bb.b:                                             ; preds = %bb.a
   %i.by = load i8, ptr %i.bx, align 4, !range !54, !noalias !15536, !noundef !49
   %i.bz = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.ca = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.cb = load ptr, ptr %i.ca, align 8, !alias.scope !15537, !noalias !15536, !nonnull !49, !noundef !49 ; 2 uses
-  %i.cc = load i64, ptr %i.bz, align 8, !alias.scope !15537, !noalias !15536, !noundef !49 ; 6 uses
+  %i.cb = load ptr, ptr %i.ca, align 8, !alias.scope !15537, !noalias !15536, !nonnull !49, !noundef !49
+  %i.cc = load i64, ptr %i.bz, align 8, !alias.scope !15537, !noalias !15536, !noundef !49 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l), !noalias !15538
   %i.cd = mul nuw nsw i64 %i.cc, 72               ; 2 uses
   %i.ce = icmp eq i64 %i.cc, 0
@@ -1925,30 +1910,25 @@ bb.c:                                             ; preds = %_RNvXs_NtCscdodAO9F
   store i64 %i.cc, ptr %i.l, align 8, !noalias !15538
   %i.cj = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   store ptr %i.ch, ptr %i.cj, align 8, !noalias !15538
-  %i.ck = getelementptr inbounds nuw i8, ptr %i.l, i64 16 ; 3 uses
-  %2 = getelementptr inbounds nuw [72 x i8], ptr %i.cb, i64 %i.cc
+  %i.ck = getelementptr inbounds nuw i8, ptr %i.l, i64 16 ; 2 uses
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.d, %.lr.ph.preheader.i
-  %.sroa.012.023.i = phi ptr [ %i.cm, %bb.d ], [ %i.cb, %.lr.ph.preheader.i ] ; 3 uses
+  %.sroa.012.023.i = phi ptr [ %i.cm, %bb.d ], [ %i.cb, %.lr.ph.preheader.i ] ; 2 uses
   %.sroa.7.022.i = phi i64 [ %i.cl, %bb.d ], [ 0, %.lr.ph.preheader.i ] ; 3 uses
-  %.sroa.10.021.i = phi i64 [ %3, %bb.d ], [ %i.cc, %.lr.ph.preheader.i ]
-  %3 = add nsw i64 %.sroa.10.021.i, -1            ; 2 uses
-  %4 = icmp eq ptr %.sroa.012.023.i, %2
-  br i1 %4, label %_RINvXNvMNtCscdodAO9FK5_5alloc5sliceSp9to_vec_inNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEBN_.exit, label %5
-
-5:                                                ; preds = %.lr.ph.i
+  %.sroa.10.021.i = phi i64 [ %2, %bb.d ], [ %i.cc, %.lr.ph.preheader.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k), !noalias !15538
   invoke fastcc void @_RNvXsbx_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB6_4ExprNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone(ptr noalias noundef align 8 captures(none) dereferenceable(72) %i.k, ptr noundef nonnull align 8 %.sroa.012.023.i)
           to label %bb.d unwind label %bb.f, !noalias !15538, !inline_history !23
 
-bb.d:                                             ; preds = %5
+bb.d:                                             ; preds = %.lr.ph.i
   %i.cl = add nuw nsw i64 %.sroa.7.022.i, 1
   %i.cm = getelementptr inbounds nuw i8, ptr %.sroa.012.023.i, i64 72
+  %2 = add nsw i64 %.sroa.10.021.i, -1            ; 2 uses
   %i.cn = getelementptr inbounds nuw [72 x i8], ptr %i.ch, i64 %.sroa.7.022.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.cn, ptr noundef nonnull align 8 dereferenceable(72) %i.k, i64 72, i1 false), !noalias !15538
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k), !noalias !15538
-  %i.co = icmp eq i64 %3, 0
+  %i.co = icmp eq i64 %2, 0
   br i1 %i.co, label %_RINvXNvMNtCscdodAO9FK5_5alloc5sliceSp9to_vec_inNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEBN_.exit, label %.lr.ph.i
 
 bb.e:                                             ; preds = %bb.f
@@ -1957,7 +1937,7 @@ bb.e:                                             ; preds = %bb.f
   tail call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #59, !noalias !15538, !inline_history !23
   unreachable
 
-bb.f:                                             ; preds = %5
+bb.f:                                             ; preds = %.lr.ph.i
   %lpad.loopexit.i = landingpad { ptr, i32 }
           cleanup
   store i64 %.sroa.7.022.i, ptr %i.ck, align 8, !noalias !15538
@@ -1968,9 +1948,9 @@ common.resume549:                                 ; preds = %bb.gh, %bb.gc, %bb.
   %common.resume549.op = phi { ptr, i32 } [ %lpad.loopexit.i537, %bb.gc ], [ %lpad.loopexit.i, %bb.f ], [ %.pn.i62, %bb.gn ], [ %lpad.loopexit.i504, %bb.bh ], [ %i.cz, %bb.i ], [ %eh.lpad-body146, %.body145 ], [ %i.dq, %bb.p ], [ %eh.lpad-body, %.body ], [ %i.el, %bb.w ], [ %eh.lpad-body72, %.body71 ], [ %i.fk, %bb.ag ], [ %eh.lpad-body84, %.body83 ], [ %.pn.i, %.body95 ], [ %i.im, %bb.bk ], [ %eh.lpad-body157, %bb.bc ], [ %i.iz, %bb.bp ], [ %i.in, %bb.bl ], [ %i.ja, %bb.bq ], [ %i.kd, %bb.cd ], [ %.pn.i45, %.body111 ], [ %i.kr, %bb.ci ], [ %i.lj, %bb.cn ], [ %i.lt, %bb.cq ], [ %i.ke, %bb.ce ], [ %i.ng, %bb.dd ], [ %.pn.i47, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc5boxed3BoxSNtNtCskLngH8kgpZI_15ruff_python_ast5nodes5CmpOpEEB1e_.exit ], [ %common.resume.op.i.i, %common.resume.i.i ], [ %i.ta, %bb.er ], [ %i.vb, %bb.fg ], [ %eh.lpad-body134, %.body133 ], [ %i.vy, %bb.fn ], [ %i.vi, %bb.fj ], [ %i.wr, %bb.fu ], [ %lpad.loopexit.i546, %bb.gh ]
   resume { ptr, i32 } %common.resume549.op
 
-_RINvXNvMNtCscdodAO9FK5_5alloc5sliceSp9to_vec_inNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEBN_.exit: ; preds = %.lr.ph.i, %bb.d, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread.i
-  %6 = phi ptr [ %i.cg, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread.i ], [ %i.ck, %bb.d ], [ %i.ck, %.lr.ph.i ]
-  store i64 %i.cc, ptr %6, align 8, !noalias !15538
+_RINvXNvMNtCscdodAO9FK5_5alloc5sliceSp9to_vec_inNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEBN_.exit: ; preds = %bb.d, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread.i
+  %3 = phi ptr [ %i.cg, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread.i ], [ %i.ck, %bb.d ]
+  store i64 %i.cc, ptr %3, align 8, !noalias !15538
   %i.cq = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.cq, ptr noundef nonnull align 8 dereferenceable(24) %i.l, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l), !noalias !15538
@@ -2373,8 +2353,8 @@ bb.bd:                                            ; preds = %bb.a
   %i.hk = load <2 x i32>, ptr %i.hj, align 8, !noalias !15569
   %i.hl = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.hm = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.hn = load ptr, ptr %i.hm, align 8, !alias.scope !15570, !noalias !15569, !nonnull !49, !noundef !49 ; 2 uses
-  %i.ho = load i64, ptr %i.hl, align 8, !alias.scope !15570, !noalias !15569, !noundef !49 ; 6 uses
+  %i.hn = load ptr, ptr %i.hm, align 8, !alias.scope !15570, !noalias !15569, !nonnull !49, !noundef !49
+  %i.ho = load i64, ptr %i.hl, align 8, !alias.scope !15570, !noalias !15569, !noundef !49 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !15571
   %i.hp = mul nuw nsw i64 %i.ho, 72               ; 2 uses
   %i.hq = icmp eq i64 %i.ho, 0
@@ -2401,30 +2381,25 @@ bb.be:                                            ; preds = %_RNvXs_NtCscdodAO9F
   store i64 %i.ho, ptr %i.j, align 8, !noalias !15571
   %i.hv = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   store ptr %i.ht, ptr %i.hv, align 8, !noalias !15571
-  %i.hw = getelementptr inbounds nuw i8, ptr %i.j, i64 16 ; 3 uses
-  %7 = getelementptr inbounds nuw [72 x i8], ptr %i.hn, i64 %i.ho
+  %i.hw = getelementptr inbounds nuw i8, ptr %i.j, i64 16 ; 2 uses
   br label %.lr.ph.i500
 
 .lr.ph.i500:                                      ; preds = %bb.bf, %.lr.ph.preheader.i499
-  %.sroa.012.023.i501 = phi ptr [ %i.hy, %bb.bf ], [ %i.hn, %.lr.ph.preheader.i499 ] ; 3 uses
+  %.sroa.012.023.i501 = phi ptr [ %i.hy, %bb.bf ], [ %i.hn, %.lr.ph.preheader.i499 ] ; 2 uses
   %.sroa.7.022.i502 = phi i64 [ %i.hx, %bb.bf ], [ 0, %.lr.ph.preheader.i499 ] ; 3 uses
-  %.sroa.10.021.i503 = phi i64 [ %8, %bb.bf ], [ %i.ho, %.lr.ph.preheader.i499 ]
-  %8 = add nsw i64 %.sroa.10.021.i503, -1         ; 2 uses
-  %9 = icmp eq ptr %.sroa.012.023.i501, %7
-  br i1 %9, label %_RINvXNvMNtCscdodAO9FK5_5alloc5sliceSp9to_vec_inNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEBN_.exit506, label %10
-
-10:                                               ; preds = %.lr.ph.i500
+  %.sroa.10.021.i503 = phi i64 [ %4, %bb.bf ], [ %i.ho, %.lr.ph.preheader.i499 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !15571
   invoke fastcc void @_RNvXsbx_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB6_4ExprNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone(ptr noalias noundef align 8 captures(none) dereferenceable(72) %i.i, ptr noundef nonnull align 8 %.sroa.012.023.i501)
           to label %bb.bf unwind label %bb.bh, !noalias !15571, !inline_history !23
 
-bb.bf:                                            ; preds = %10
+bb.bf:                                            ; preds = %.lr.ph.i500
   %i.hx = add nuw nsw i64 %.sroa.7.022.i502, 1
   %i.hy = getelementptr inbounds nuw i8, ptr %.sroa.012.023.i501, i64 72
+  %4 = add nsw i64 %.sroa.10.021.i503, -1         ; 2 uses
   %i.hz = getelementptr inbounds nuw [72 x i8], ptr %i.ht, i64 %.sroa.7.022.i502
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.hz, ptr noundef nonnull align 8 dereferenceable(72) %i.i, i64 72, i1 false), !noalias !15571
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !15571
-  %i.ia = icmp eq i64 %8, 0
+  %i.ia = icmp eq i64 %4, 0
   br i1 %i.ia, label %_RINvXNvMNtCscdodAO9FK5_5alloc5sliceSp9to_vec_inNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEBN_.exit506, label %.lr.ph.i500
 
 bb.bg:                                            ; preds = %bb.bh
@@ -2433,16 +2408,16 @@ bb.bg:                                            ; preds = %bb.bh
   tail call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #59, !noalias !15571, !inline_history !23
   unreachable
 
-bb.bh:                                            ; preds = %10
+bb.bh:                                            ; preds = %.lr.ph.i500
   %lpad.loopexit.i504 = landingpad { ptr, i32 }
           cleanup
   store i64 %.sroa.7.022.i502, ptr %i.hw, align 8, !noalias !15571
   invoke void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprEEB1b_(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.j) #58
           to label %common.resume549 unwind label %bb.bg, !noalias !15571, !inline_history !23
 
-_RINvXNvMNtCscdodAO9FK5_5alloc5sliceSp9to_vec_inNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEBN_.exit506: ; preds = %.lr.ph.i500, %bb.bf, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread.i505
-  %11 = phi ptr [ %i.hs, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread.i505 ], [ %i.hw, %bb.bf ], [ %i.hw, %.lr.ph.i500 ]
-  store i64 %i.ho, ptr %11, align 8, !noalias !15571
+_RINvXNvMNtCscdodAO9FK5_5alloc5sliceSp9to_vec_inNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEBN_.exit506: ; preds = %bb.bf, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread.i505
+  %5 = phi ptr [ %i.hs, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread.i505 ], [ %i.hw, %bb.bf ]
+  store i64 %i.ho, ptr %5, align 8, !noalias !15571
   %i.ic = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ic, ptr noundef nonnull align 8 dereferenceable(24) %i.j, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !15571
@@ -2845,9 +2820,9 @@ bb.cu:                                            ; preds = %bb.cs, %_RNvXsd_NtC
   %i.mb = getelementptr inbounds nuw i8, ptr %1, i64 32
   tail call void @llvm.experimental.noalias.scope.decl(metadata !15597)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ab), !noalias !15598
-  %i.mc = load ptr, ptr %i.mb, align 8, !alias.scope !15597, !noalias !15592, !nonnull !49, !noundef !49 ; 2 uses
+  %i.mc = load ptr, ptr %i.mb, align 8, !alias.scope !15597, !noalias !15592, !nonnull !49, !noundef !49
   %i.md = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %i.me = load i64, ptr %i.md, align 8, !alias.scope !15597, !noalias !15592, !noundef !49 ; 6 uses
+  %i.me = load i64, ptr %i.md, align 8, !alias.scope !15597, !noalias !15592, !noundef !49 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !15599
   %i.mf = mul nuw nsw i64 %i.me, 72               ; 2 uses
   %i.mg = icmp eq i64 %i.me, 0
@@ -2877,30 +2852,25 @@ bb.cv:                                            ; preds = %_RNvXs_NtCscdodAO9F
   store i64 %i.me, ptr %i.h, align 8, !noalias !15599
   %i.ml = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   store ptr %i.mj, ptr %i.ml, align 8, !noalias !15599
-  %i.mm = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 3 uses
-  %12 = getelementptr inbounds nuw [72 x i8], ptr %i.mc, i64 %i.me
+  %i.mm = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 2 uses
   br label %.lr.ph.i509
 
 .lr.ph.i509:                                      ; preds = %bb.cw, %.lr.ph.preheader.i508
-  %.sroa.012.023.i510 = phi ptr [ %i.mo, %bb.cw ], [ %i.mc, %.lr.ph.preheader.i508 ] ; 3 uses
+  %.sroa.012.023.i510 = phi ptr [ %i.mo, %bb.cw ], [ %i.mc, %.lr.ph.preheader.i508 ] ; 2 uses
   %.sroa.7.022.i511 = phi i64 [ %i.mn, %bb.cw ], [ 0, %.lr.ph.preheader.i508 ] ; 3 uses
-  %.sroa.10.021.i512 = phi i64 [ %13, %bb.cw ], [ %i.me, %.lr.ph.preheader.i508 ]
-  %13 = add nsw i64 %.sroa.10.021.i512, -1        ; 2 uses
-  %14 = icmp eq ptr %.sroa.012.023.i510, %12
-  br i1 %14, label %.noexc124, label %15
-
-15:                                               ; preds = %.lr.ph.i509
+  %.sroa.10.021.i512 = phi i64 [ %6, %bb.cw ], [ %i.me, %.lr.ph.preheader.i508 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !15599
   invoke fastcc void @_RNvXsbx_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB6_4ExprNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone(ptr noalias noundef align 8 captures(none) dereferenceable(72) %i.g, ptr noundef nonnull align 8 %.sroa.012.023.i510)
           to label %bb.cw unwind label %bb.cy, !noalias !15599, !inline_history !15406
 
-bb.cw:                                            ; preds = %15
+bb.cw:                                            ; preds = %.lr.ph.i509
   %i.mn = add nuw nsw i64 %.sroa.7.022.i511, 1
   %i.mo = getelementptr inbounds nuw i8, ptr %.sroa.012.023.i510, i64 72
+  %6 = add nsw i64 %.sroa.10.021.i512, -1         ; 2 uses
   %i.mp = getelementptr inbounds nuw [72 x i8], ptr %i.mj, i64 %.sroa.7.022.i511
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.mp, ptr noundef nonnull align 8 dereferenceable(72) %i.g, i64 72, i1 false), !noalias !15599
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !15599
-  %i.mq = icmp eq i64 %13, 0
+  %i.mq = icmp eq i64 %6, 0
   br i1 %i.mq, label %.noexc124, label %.lr.ph.i509
 
 bb.cx:                                            ; preds = %bb.cy
@@ -2909,16 +2879,16 @@ bb.cx:                                            ; preds = %bb.cy
   tail call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #59, !noalias !15599, !inline_history !15406
   unreachable
 
-bb.cy:                                            ; preds = %15
+bb.cy:                                            ; preds = %.lr.ph.i509
   %lpad.loopexit.i513 = landingpad { ptr, i32 }
           cleanup
   store i64 %.sroa.7.022.i511, ptr %i.mm, align 8, !noalias !15599
   invoke void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprEEB1b_(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.h) #58
           to label %.body516 unwind label %bb.cx, !noalias !15599, !inline_history !15406
 
-.noexc124:                                        ; preds = %bb.cw, %.lr.ph.i509, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread.i514
-  %16 = phi ptr [ %i.mi, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread.i514 ], [ %i.mm, %.lr.ph.i509 ], [ %i.mm, %bb.cw ]
-  store i64 %i.me, ptr %16, align 8, !noalias !15599
+.noexc124:                                        ; preds = %bb.cw, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread.i514
+  %7 = phi ptr [ %i.mi, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread.i514 ], [ %i.mm, %bb.cw ]
+  store i64 %i.me, ptr %7, align 8, !noalias !15599
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ab, ptr noundef nonnull align 8 dereferenceable(24) %i.h, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !15599
   %i.ms = invoke fastcc { ptr, i64 } @_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprE16into_boxed_sliceBH_(ptr noalias noundef align 8 captures(address) dereferenceable(24) %i.ab)
@@ -3005,9 +2975,9 @@ _RNvXsd_NtCscdodAO9FK5_5alloc5boxedINtB5_3BoxNtNtCskLngH8kgpZI_15ruff_python_ast
   call void @llvm.lifetime.start.p0(ptr nonnull %i.z), !noalias !15605
   tail call void @llvm.experimental.noalias.scope.decl(metadata !15606), !noalias !15602
   call void @llvm.lifetime.start.p0(ptr nonnull %i.y), !noalias !15607
-  %i.nm = load ptr, ptr %i.nh, align 8, !alias.scope !15606, !noalias !15605, !nonnull !49, !noundef !49 ; 2 uses
+  %i.nm = load ptr, ptr %i.nh, align 8, !alias.scope !15606, !noalias !15605, !nonnull !49, !noundef !49
   %i.nn = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.no = load i64, ptr %i.nn, align 8, !alias.scope !15606, !noalias !15605, !noundef !49 ; 6 uses
+  %i.no = load i64, ptr %i.nn, align 8, !alias.scope !15606, !noalias !15605, !noundef !49 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !15608
   %i.np = mul nuw nsw i64 %i.no, 72               ; 2 uses
   %i.nq = icmp eq i64 %i.no, 0
@@ -3037,30 +3007,25 @@ bb.de:                                            ; preds = %_RNvXs_NtCscdodAO9F
   store i64 %i.no, ptr %i.f, align 8, !noalias !15608
   %i.nv = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   store ptr %i.nt, ptr %i.nv, align 8, !noalias !15608
-  %i.nw = getelementptr inbounds nuw i8, ptr %i.f, i64 16 ; 3 uses
-  %17 = getelementptr inbounds nuw [72 x i8], ptr %i.nm, i64 %i.no
+  %i.nw = getelementptr inbounds nuw i8, ptr %i.f, i64 16 ; 2 uses
   br label %.lr.ph.i521
 
 .lr.ph.i521:                                      ; preds = %bb.df, %.lr.ph.preheader.i520
-  %.sroa.012.023.i522 = phi ptr [ %i.ny, %bb.df ], [ %i.nm, %.lr.ph.preheader.i520 ] ; 3 uses
+  %.sroa.012.023.i522 = phi ptr [ %i.ny, %bb.df ], [ %i.nm, %.lr.ph.preheader.i520 ] ; 2 uses
   %.sroa.7.022.i523 = phi i64 [ %i.nx, %bb.df ], [ 0, %.lr.ph.preheader.i520 ] ; 3 uses
-  %.sroa.10.021.i524 = phi i64 [ %18, %bb.df ], [ %i.no, %.lr.ph.preheader.i520 ]
-  %18 = add nsw i64 %.sroa.10.021.i524, -1        ; 2 uses
-  %19 = icmp eq ptr %.sroa.012.023.i522, %17
-  br i1 %19, label %.noexc131, label %20
-
-20:                                               ; preds = %.lr.ph.i521
+  %.sroa.10.021.i524 = phi i64 [ %8, %bb.df ], [ %i.no, %.lr.ph.preheader.i520 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !15608
   invoke fastcc void @_RNvXsbx_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB6_4ExprNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone(ptr noalias noundef align 8 captures(none) dereferenceable(72) %i.e, ptr noundef nonnull align 8 %.sroa.012.023.i522)
           to label %bb.df unwind label %bb.dh, !noalias !15608, !inline_history !15424
 
-bb.df:                                            ; preds = %20
+bb.df:                                            ; preds = %.lr.ph.i521
   %i.nx = add nuw nsw i64 %.sroa.7.022.i523, 1
   %i.ny = getelementptr inbounds nuw i8, ptr %.sroa.012.023.i522, i64 72
+  %8 = add nsw i64 %.sroa.10.021.i524, -1         ; 2 uses
   %i.nz = getelementptr inbounds nuw [72 x i8], ptr %i.nt, i64 %.sroa.7.022.i523
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.nz, ptr noundef nonnull align 8 dereferenceable(72) %i.e, i64 72, i1 false), !noalias !15608
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !15608
-  %i.oa = icmp eq i64 %18, 0
+  %i.oa = icmp eq i64 %8, 0
   br i1 %i.oa, label %.noexc131, label %.lr.ph.i521
 
 bb.dg:                                            ; preds = %bb.dh
@@ -3069,16 +3034,16 @@ bb.dg:                                            ; preds = %bb.dh
   tail call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #59, !noalias !15608, !inline_history !15424
   unreachable
 
-bb.dh:                                            ; preds = %20
+bb.dh:                                            ; preds = %.lr.ph.i521
   %lpad.loopexit.i525 = landingpad { ptr, i32 }
           cleanup
   store i64 %.sroa.7.022.i523, ptr %i.nw, align 8, !noalias !15608
   invoke void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprEEB1b_(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.f) #58
           to label %.body133 unwind label %bb.dg, !noalias !15608, !inline_history !15424
 
-.noexc131:                                        ; preds = %bb.df, %.lr.ph.i521, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread.i526
-  %21 = phi ptr [ %i.ns, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread.i526 ], [ %i.nw, %.lr.ph.i521 ], [ %i.nw, %bb.df ]
-  store i64 %i.no, ptr %21, align 8, !noalias !15608
+.noexc131:                                        ; preds = %bb.df, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread.i526
+  %9 = phi ptr [ %i.ns, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread.i526 ], [ %i.nw, %bb.df ]
+  store i64 %i.no, ptr %9, align 8, !noalias !15608
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.y, ptr noundef nonnull align 8 dereferenceable(24) %i.f, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !15608
   %i.oc = invoke fastcc { ptr, i64 } @_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprE16into_boxed_sliceBH_(ptr noalias noundef align 8 captures(address) dereferenceable(24) %i.y)
@@ -3237,9 +3202,9 @@ bb.dt:                                            ; preds = %bb.a
 bb.du:                                            ; preds = %bb.dt
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bb), !noalias !15615
   %i.pn = getelementptr i8, ptr %1, i64 16
-  %.val.i.i = load ptr, ptr %i.pn, align 8, !noalias !15615, !nonnull !49, !noundef !49 ; 2 uses
+  %.val.i.i = load ptr, ptr %i.pn, align 8, !noalias !15615, !nonnull !49, !noundef !49
   %i.po = getelementptr i8, ptr %1, i64 24
-  %.val1.i.i = load i64, ptr %i.po, align 8, !noalias !15615, !noundef !49 ; 6 uses
+  %.val1.i.i = load i64, ptr %i.po, align 8, !noalias !15615, !noundef !49 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ba), !noalias !15616
   %i.pp = shl nuw nsw i64 %.val1.i.i, 5           ; 2 uses
   %i.pq = icmp eq i64 %.val1.i.i, 0
@@ -3266,19 +3231,13 @@ bb.dv:                                            ; preds = %_RNvXs_NtCscdodAO9F
   store i64 %.val1.i.i, ptr %i.ba, align 8, !noalias !15616
   %i.pv = getelementptr inbounds nuw i8, ptr %i.ba, i64 8
   store ptr %i.pt, ptr %i.pv, align 8, !noalias !15616
-  %i.pw = getelementptr inbounds nuw i8, ptr %i.ba, i64 16 ; 3 uses
-  %22 = getelementptr inbounds nuw [32 x i8], ptr %.val.i.i, i64 %.val1.i.i
-  br label %.lr.ph.i.i.i.i
+  %i.pw = getelementptr inbounds nuw i8, ptr %i.ba, i64 16 ; 2 uses
+  br label %bb.dw
 
-.lr.ph.i.i.i.i:                                   ; preds = %bb.dx, %.lr.ph.preheader.i.i.i.i
-  %.sroa.012.048.i.i.i.i = phi ptr [ %i.qd, %bb.dx ], [ %.val.i.i, %.lr.ph.preheader.i.i.i.i ] ; 6 uses
+bb.dw:                                            ; preds = %bb.dx, %.lr.ph.preheader.i.i.i.i
+  %.sroa.012.048.i.i.i.i = phi ptr [ %i.qd, %bb.dx ], [ %.val.i.i, %.lr.ph.preheader.i.i.i.i ] ; 5 uses
   %.sroa.7.047.i.i.i.i = phi i64 [ %i.qc, %bb.dx ], [ 0, %.lr.ph.preheader.i.i.i.i ] ; 3 uses
-  %.sroa.10.046.i.i.i.i = phi i64 [ %23, %bb.dx ], [ %.val1.i.i, %.lr.ph.preheader.i.i.i.i ]
-  %23 = add nsw i64 %.sroa.10.046.i.i.i.i, -1     ; 2 uses
-  %24 = icmp eq ptr %.sroa.012.048.i.i.i.i, %22
-  br i1 %24, label %_RNvXsa_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtCskLngH8kgpZI_15ruff_python_ast5nodes13StringLiteralENtNtCs4NRVxsYgnAr_4core5clone5Clone5cloneBI_.exit.i.i, label %bb.dw
-
-bb.dw:                                            ; preds = %.lr.ph.i.i.i.i
+  %.sroa.10.046.i.i.i.i = phi i64 [ %10, %bb.dx ], [ %.val1.i.i, %.lr.ph.preheader.i.i.i.i ]
   %i.px = getelementptr inbounds nuw i8, ptr %.sroa.012.048.i.i.i.i, i64 16
   %i.py = load <2 x i32>, ptr %i.px, align 8, !noalias !15618
   %i.pz = getelementptr inbounds nuw i8, ptr %.sroa.012.048.i.i.i.i, i64 24
@@ -3289,6 +3248,7 @@ bb.dw:                                            ; preds = %.lr.ph.i.i.i.i
 bb.dx:                                            ; preds = %bb.dw
   %i.qc = add nuw nsw i64 %.sroa.7.047.i.i.i.i, 1
   %i.qd = getelementptr inbounds nuw i8, ptr %.sroa.012.048.i.i.i.i, i64 32
+  %10 = add nsw i64 %.sroa.10.046.i.i.i.i, -1     ; 2 uses
   %i.qe = extractvalue { ptr, i64 } %i.qb, 0
   %i.qf = extractvalue { ptr, i64 } %i.qb, 1
   %i.qg = getelementptr inbounds nuw i8, ptr %.sroa.012.048.i.i.i.i, i64 28
@@ -3303,8 +3263,8 @@ bb.dx:                                            ; preds = %bb.dw
   store i32 %i.qa, ptr %.sroa.735.0..sroa_idx.i.i.i.i, align 8, !noalias !15616
   %.sroa.836.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.qi, i64 28
   store i8 %i.qh, ptr %.sroa.836.0..sroa_idx.i.i.i.i, align 4, !noalias !15616
-  %i.qj = icmp eq i64 %23, 0
-  br i1 %i.qj, label %_RNvXsa_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtCskLngH8kgpZI_15ruff_python_ast5nodes13StringLiteralENtNtCs4NRVxsYgnAr_4core5clone5Clone5cloneBI_.exit.i.i, label %.lr.ph.i.i.i.i
+  %i.qj = icmp eq i64 %10, 0
+  br i1 %i.qj, label %_RNvXsa_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtCskLngH8kgpZI_15ruff_python_ast5nodes13StringLiteralENtNtCs4NRVxsYgnAr_4core5clone5Clone5cloneBI_.exit.i.i, label %bb.dw
 
 common.resume.i.i:                                ; preds = %.body.i.i.i, %bb.dy
   %.sink.i.i = phi ptr [ %i.ba, %bb.dy ], [ %i.bb, %.body.i.i.i ]
@@ -3318,9 +3278,9 @@ bb.dy:                                            ; preds = %bb.dw
   store i64 %.sroa.7.047.i.i.i.i, ptr %i.pw, align 8, !noalias !15616
   br label %common.resume.i.i
 
-_RNvXsa_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtCskLngH8kgpZI_15ruff_python_ast5nodes13StringLiteralENtNtCs4NRVxsYgnAr_4core5clone5Clone5cloneBI_.exit.i.i: ; preds = %bb.dx, %.lr.ph.i.i.i.i, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread.i.i.i.i
-  %25 = phi ptr [ %i.ps, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread.i.i.i.i ], [ %i.pw, %.lr.ph.i.i.i.i ], [ %i.pw, %bb.dx ]
-  store i64 %.val1.i.i, ptr %25, align 8, !noalias !15616
+_RNvXsa_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtCskLngH8kgpZI_15ruff_python_ast5nodes13StringLiteralENtNtCs4NRVxsYgnAr_4core5clone5Clone5cloneBI_.exit.i.i: ; preds = %bb.dx, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread.i.i.i.i
+  %11 = phi ptr [ %i.ps, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread.i.i.i.i ], [ %i.pw, %bb.dx ]
+  store i64 %.val1.i.i, ptr %11, align 8, !noalias !15616
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bb, ptr noundef nonnull align 8 dereferenceable(24) %i.ba, i64 24, i1 false), !noalias !15615
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ba), !noalias !15616
   call void @llvm.lifetime.start.p0(ptr nonnull %i.az), !noalias !15619
@@ -3478,9 +3438,9 @@ bb.ek:                                            ; preds = %bb.a
   br i1 %i.rx, label %bb.el, label %bb.es
 
 bb.el:                                            ; preds = %bb.ek
-  %.val4.i = load ptr, ptr %i.ry, align 8, !noalias !15625, !nonnull !49, !noundef !49 ; 2 uses
+  %.val4.i = load ptr, ptr %i.ry, align 8, !noalias !15625, !nonnull !49, !noundef !49
   %i.rz = getelementptr i8, ptr %1, i64 32
-  %.val5.i54 = load i64, ptr %i.rz, align 8, !noalias !15625, !noundef !49 ; 8 uses
+  %.val5.i54 = load i64, ptr %i.rz, align 8, !noalias !15625, !noundef !49 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ax), !noalias !15626
   %i.sa = shl nuw nsw i64 %.val5.i54, 5           ; 2 uses
   %i.sb = icmp eq i64 %.val5.i54, 0
@@ -3504,23 +3464,18 @@ bb.em:                                            ; preds = %_RNvXs_NtCscdodAO9F
   store i64 %.val5.i54, ptr %i.ax, align 8, !noalias !15626
   %i.sf = getelementptr inbounds nuw i8, ptr %i.ax, i64 8
   store ptr %i.sd, ptr %i.sf, align 8, !noalias !15626
-  %i.sg = getelementptr inbounds nuw i8, ptr %i.ax, i64 16 ; 3 uses
-  %26 = getelementptr inbounds nuw [32 x i8], ptr %.val4.i, i64 %.val5.i54
+  %i.sg = getelementptr inbounds nuw i8, ptr %i.ax, i64 16 ; 2 uses
   %i.sh = ptrtoint ptr %i.sd to i64               ; 2 uses
-  %i.si = trunc i64 %i.sh to i32                  ; 2 uses
+  %i.si = trunc i64 %i.sh to i32
   %i.sj = lshr i64 %i.sh, 32
-  %i.sk = trunc nuw i64 %i.sj to i32              ; 2 uses
-  br label %.lr.ph.i.i.i
+  %i.sk = trunc nuw i64 %i.sj to i32
+  br label %bb.en
 
-.lr.ph.i.i.i:                                     ; preds = %bb.eq, %.lr.ph.preheader.i.i.i
-  %.sroa.012.048.i.i.i = phi ptr [ %i.sl, %bb.eq ], [ %.val4.i, %.lr.ph.preheader.i.i.i ] ; 7 uses
+bb.en:                                            ; preds = %bb.eq, %.lr.ph.preheader.i.i.i
+  %.sroa.012.048.i.i.i = phi ptr [ %i.sl, %bb.eq ], [ %.val4.i, %.lr.ph.preheader.i.i.i ] ; 6 uses
   %.sroa.7.047.i.i.i = phi i64 [ %i.sm, %bb.eq ], [ 0, %.lr.ph.preheader.i.i.i ] ; 3 uses
-  %.sroa.10.046.i.i.i = phi i64 [ %27, %bb.eq ], [ %.val5.i54, %.lr.ph.preheader.i.i.i ]
-  %27 = add nsw i64 %.sroa.10.046.i.i.i, -1       ; 2 uses
-  %28 = icmp eq ptr %.sroa.012.048.i.i.i, %26
-  br i1 %28, label %_RNvXsa_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtCskLngH8kgpZI_15ruff_python_ast5nodes12BytesLiteralENtNtCs4NRVxsYgnAr_4core5clone5Clone5cloneBI_.exit.i, label %bb.en
-
-bb.en:                                            ; preds = %.lr.ph.i.i.i
+  %.sroa.10.046.i.i.i = phi i64 [ %12, %bb.eq ], [ %.val5.i54, %.lr.ph.preheader.i.i.i ]
+  %12 = add nsw i64 %.sroa.10.046.i.i.i, -1       ; 2 uses
   %i.sl = getelementptr inbounds nuw i8, ptr %.sroa.012.048.i.i.i, i64 32
   %i.sm = add nuw nsw i64 %.sroa.7.047.i.i.i, 1
   %i.sn = getelementptr inbounds nuw i8, ptr %.sroa.012.048.i.i.i, i64 16
@@ -3566,8 +3521,8 @@ bb.eq:                                            ; preds = %bb.ep, %bb.en
   store i32 %i.sq, ptr %.sroa.735.0..sroa_idx.i.i.i, align 8, !noalias !15626
   %.sroa.836.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.sy, i64 28
   store i8 %i.sx, ptr %.sroa.836.0..sroa_idx.i.i.i, align 4, !noalias !15626
-  %i.sz = icmp eq i64 %27, 0
-  br i1 %i.sz, label %_RNvXsa_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtCskLngH8kgpZI_15ruff_python_ast5nodes12BytesLiteralENtNtCs4NRVxsYgnAr_4core5clone5Clone5cloneBI_.exit.i, label %.lr.ph.i.i.i
+  %i.sz = icmp eq i64 %12, 0
+  br i1 %i.sz, label %_RNvXsa_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtCskLngH8kgpZI_15ruff_python_ast5nodes12BytesLiteralENtNtCs4NRVxsYgnAr_4core5clone5Clone5cloneBI_.exit.i, label %bb.en
 
 bb.er:                                            ; preds = %bb.eo
   %i.ta = landingpad { ptr, i32 }
@@ -3576,11 +3531,11 @@ bb.er:                                            ; preds = %bb.eo
   call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecNtNtCskLngH8kgpZI_15ruff_python_ast5nodes12BytesLiteralEEB1b_(ptr noalias noundef align 8 dereferenceable(24) %i.ax) #58, !noalias !15626
   br label %common.resume549
 
-_RNvXsa_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtCskLngH8kgpZI_15ruff_python_ast5nodes12BytesLiteralENtNtCs4NRVxsYgnAr_4core5clone5Clone5cloneBI_.exit.i: ; preds = %bb.eq, %.lr.ph.i.i.i, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread.i.i.i
-  %.sroa.8319.8.copyload = phi i32 [ 0, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread.i.i.i ], [ %i.sk, %.lr.ph.i.i.i ], [ %i.sk, %bb.eq ]
-  %.sroa.7318.8.copyload = phi i32 [ 8, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread.i.i.i ], [ %i.si, %.lr.ph.i.i.i ], [ %i.si, %bb.eq ]
-  %29 = phi ptr [ %i.sc, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread.i.i.i ], [ %i.sg, %.lr.ph.i.i.i ], [ %i.sg, %bb.eq ]
-  store i64 %.val5.i54, ptr %29, align 8, !noalias !15626
+_RNvXsa_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtCskLngH8kgpZI_15ruff_python_ast5nodes12BytesLiteralENtNtCs4NRVxsYgnAr_4core5clone5Clone5cloneBI_.exit.i: ; preds = %bb.eq, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread.i.i.i
+  %.sroa.8319.8.copyload = phi i32 [ 0, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread.i.i.i ], [ %i.sk, %bb.eq ]
+  %.sroa.7318.8.copyload = phi i32 [ 8, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread.i.i.i ], [ %i.si, %bb.eq ]
+  %13 = phi ptr [ %i.sc, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread.i.i.i ], [ %i.sg, %bb.eq ]
+  store i64 %.val5.i54, ptr %13, align 8, !noalias !15626
   %i.tb = trunc i64 %.val5.i54 to i32
   %.sroa.10321.8..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ax, i64 20
   %.sroa.10321.8.copyload = load i8, ptr %.sroa.10321.8..sroa_idx, align 4
@@ -3983,8 +3938,8 @@ bb.fy:                                            ; preds = %bb.a
   %i.xl = load <2 x i32>, ptr %i.xk, align 8, !noalias !15652
   %i.xm = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.xn = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.xo = load ptr, ptr %i.xn, align 8, !alias.scope !15653, !noalias !15652, !nonnull !49, !noundef !49 ; 2 uses
-  %i.xp = load i64, ptr %i.xm, align 8, !alias.scope !15653, !noalias !15652, !noundef !49 ; 6 uses
+  %i.xo = load ptr, ptr %i.xn, align 8, !alias.scope !15653, !noalias !15652, !nonnull !49, !noundef !49
+  %i.xp = load i64, ptr %i.xm, align 8, !alias.scope !15653, !noalias !15652, !noundef !49 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !15654
   %i.xq = mul nuw nsw i64 %i.xp, 72               ; 2 uses
   %i.xr = icmp eq i64 %i.xp, 0
@@ -4011,30 +3966,25 @@ bb.fz:                                            ; preds = %_RNvXs_NtCscdodAO9F
   store i64 %i.xp, ptr %i.d, align 8, !noalias !15654
   %i.xw = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   store ptr %i.xu, ptr %i.xw, align 8, !noalias !15654
-  %i.xx = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 3 uses
-  %30 = getelementptr inbounds nuw [72 x i8], ptr %i.xo, i64 %i.xp
+  %i.xx = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 2 uses
   br label %.lr.ph.i533
 
 .lr.ph.i533:                                      ; preds = %bb.ga, %.lr.ph.preheader.i532
-  %.sroa.012.023.i534 = phi ptr [ %i.xz, %bb.ga ], [ %i.xo, %.lr.ph.preheader.i532 ] ; 3 uses
+  %.sroa.012.023.i534 = phi ptr [ %i.xz, %bb.ga ], [ %i.xo, %.lr.ph.preheader.i532 ] ; 2 uses
   %.sroa.7.022.i535 = phi i64 [ %i.xy, %bb.ga ], [ 0, %.lr.ph.preheader.i532 ] ; 3 uses
-  %.sroa.10.021.i536 = phi i64 [ %31, %bb.ga ], [ %i.xp, %.lr.ph.preheader.i532 ]
-  %31 = add nsw i64 %.sroa.10.021.i536, -1        ; 2 uses
-  %32 = icmp eq ptr %.sroa.012.023.i534, %30
-  br i1 %32, label %_RINvXNvMNtCscdodAO9FK5_5alloc5sliceSp9to_vec_inNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEBN_.exit539, label %33
-
-33:                                               ; preds = %.lr.ph.i533
+  %.sroa.10.021.i536 = phi i64 [ %14, %bb.ga ], [ %i.xp, %.lr.ph.preheader.i532 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !15654
   invoke fastcc void @_RNvXsbx_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB6_4ExprNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone(ptr noalias noundef align 8 captures(none) dereferenceable(72) %i.c, ptr noundef nonnull align 8 %.sroa.012.023.i534)
           to label %bb.ga unwind label %bb.gc, !noalias !15654, !inline_history !23
 
-bb.ga:                                            ; preds = %33
+bb.ga:                                            ; preds = %.lr.ph.i533
   %i.xy = add nuw nsw i64 %.sroa.7.022.i535, 1
   %i.xz = getelementptr inbounds nuw i8, ptr %.sroa.012.023.i534, i64 72
+  %14 = add nsw i64 %.sroa.10.021.i536, -1        ; 2 uses
   %i.ya = getelementptr inbounds nuw [72 x i8], ptr %i.xu, i64 %.sroa.7.022.i535
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.ya, ptr noundef nonnull align 8 dereferenceable(72) %i.c, i64 72, i1 false), !noalias !15654
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !15654
-  %i.yb = icmp eq i64 %31, 0
+  %i.yb = icmp eq i64 %14, 0
   br i1 %i.yb, label %_RINvXNvMNtCscdodAO9FK5_5alloc5sliceSp9to_vec_inNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEBN_.exit539, label %.lr.ph.i533
 
 bb.gb:                                            ; preds = %bb.gc
@@ -4043,16 +3993,16 @@ bb.gb:                                            ; preds = %bb.gc
   tail call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #59, !noalias !15654, !inline_history !23
   unreachable
 
-bb.gc:                                            ; preds = %33
+bb.gc:                                            ; preds = %.lr.ph.i533
   %lpad.loopexit.i537 = landingpad { ptr, i32 }
           cleanup
   store i64 %.sroa.7.022.i535, ptr %i.xx, align 8, !noalias !15654
   invoke void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprEEB1b_(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.d) #58
           to label %common.resume549 unwind label %bb.gb, !noalias !15654, !inline_history !23
 
-_RINvXNvMNtCscdodAO9FK5_5alloc5sliceSp9to_vec_inNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEBN_.exit539: ; preds = %.lr.ph.i533, %bb.ga, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread.i538
-  %34 = phi ptr [ %i.xt, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread.i538 ], [ %i.xx, %bb.ga ], [ %i.xx, %.lr.ph.i533 ]
-  store i64 %i.xp, ptr %34, align 8, !noalias !15654
+_RINvXNvMNtCscdodAO9FK5_5alloc5sliceSp9to_vec_inNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEBN_.exit539: ; preds = %bb.ga, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread.i538
+  %15 = phi ptr [ %i.xt, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread.i538 ], [ %i.xx, %bb.ga ]
+  store i64 %i.xp, ptr %15, align 8, !noalias !15654
   %i.yd = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.yd, ptr noundef nonnull align 8 dereferenceable(24) %i.d, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !15654
@@ -4073,8 +4023,8 @@ bb.gd:                                            ; preds = %bb.a
   %i.yj = load <2 x i32>, ptr %i.yi, align 8, !noalias !15656
   %i.yk = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.yl = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.ym = load ptr, ptr %i.yl, align 8, !alias.scope !15657, !noalias !15656, !nonnull !49, !noundef !49 ; 2 uses
-  %i.yn = load i64, ptr %i.yk, align 8, !alias.scope !15657, !noalias !15656, !noundef !49 ; 6 uses
+  %i.ym = load ptr, ptr %i.yl, align 8, !alias.scope !15657, !noalias !15656, !nonnull !49, !noundef !49
+  %i.yn = load i64, ptr %i.yk, align 8, !alias.scope !15657, !noalias !15656, !noundef !49 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !15658
   %i.yo = mul nuw nsw i64 %i.yn, 72               ; 2 uses
   %i.yp = icmp eq i64 %i.yn, 0
@@ -4101,30 +4051,25 @@ bb.ge:                                            ; preds = %_RNvXs_NtCscdodAO9F
   store i64 %i.yn, ptr %i.b, align 8, !noalias !15658
   %i.yu = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr %i.ys, ptr %i.yu, align 8, !noalias !15658
-  %i.yv = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 3 uses
-  %35 = getelementptr inbounds nuw [72 x i8], ptr %i.ym, i64 %i.yn
+  %i.yv = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
   br label %.lr.ph.i542
 
 .lr.ph.i542:                                      ; preds = %bb.gf, %.lr.ph.preheader.i541
-  %.sroa.012.023.i543 = phi ptr [ %i.yx, %bb.gf ], [ %i.ym, %.lr.ph.preheader.i541 ] ; 3 uses
+  %.sroa.012.023.i543 = phi ptr [ %i.yx, %bb.gf ], [ %i.ym, %.lr.ph.preheader.i541 ] ; 2 uses
   %.sroa.7.022.i544 = phi i64 [ %i.yw, %bb.gf ], [ 0, %.lr.ph.preheader.i541 ] ; 3 uses
-  %.sroa.10.021.i545 = phi i64 [ %36, %bb.gf ], [ %i.yn, %.lr.ph.preheader.i541 ]
-  %36 = add nsw i64 %.sroa.10.021.i545, -1        ; 2 uses
-  %37 = icmp eq ptr %.sroa.012.023.i543, %35
-  br i1 %37, label %_RINvXNvMNtCscdodAO9FK5_5alloc5sliceSp9to_vec_inNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEBN_.exit548, label %38
-
-38:                                               ; preds = %.lr.ph.i542
+  %.sroa.10.021.i545 = phi i64 [ %16, %bb.gf ], [ %i.yn, %.lr.ph.preheader.i541 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !15658
   invoke fastcc void @_RNvXsbx_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB6_4ExprNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone(ptr noalias noundef align 8 captures(none) dereferenceable(72) %i.a, ptr noundef nonnull align 8 %.sroa.012.023.i543)
           to label %bb.gf unwind label %bb.gh, !noalias !15658, !inline_history !23
 
-bb.gf:                                            ; preds = %38
+bb.gf:                                            ; preds = %.lr.ph.i542
   %i.yw = add nuw nsw i64 %.sroa.7.022.i544, 1
   %i.yx = getelementptr inbounds nuw i8, ptr %.sroa.012.023.i543, i64 72
+  %16 = add nsw i64 %.sroa.10.021.i545, -1        ; 2 uses
   %i.yy = getelementptr inbounds nuw [72 x i8], ptr %i.ys, i64 %.sroa.7.022.i544
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.yy, ptr noundef nonnull align 8 dereferenceable(72) %i.a, i64 72, i1 false), !noalias !15658
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !15658
-  %i.yz = icmp eq i64 %36, 0
+  %i.yz = icmp eq i64 %16, 0
   br i1 %i.yz, label %_RINvXNvMNtCscdodAO9FK5_5alloc5sliceSp9to_vec_inNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEBN_.exit548, label %.lr.ph.i542
 
 bb.gg:                                            ; preds = %bb.gh
@@ -4133,16 +4078,16 @@ bb.gg:                                            ; preds = %bb.gh
   tail call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #59, !noalias !15658, !inline_history !23
   unreachable
 
-bb.gh:                                            ; preds = %38
+bb.gh:                                            ; preds = %.lr.ph.i542
   %lpad.loopexit.i546 = landingpad { ptr, i32 }
           cleanup
   store i64 %.sroa.7.022.i544, ptr %i.yv, align 8, !noalias !15658
   invoke void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprEEB1b_(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.b) #58
           to label %common.resume549 unwind label %bb.gg, !noalias !15658, !inline_history !23
 
-_RINvXNvMNtCscdodAO9FK5_5alloc5sliceSp9to_vec_inNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEBN_.exit548: ; preds = %.lr.ph.i542, %bb.gf, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread.i547
-  %39 = phi ptr [ %i.yr, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread.i547 ], [ %i.yv, %bb.gf ], [ %i.yv, %.lr.ph.i542 ]
-  store i64 %i.yn, ptr %39, align 8, !noalias !15658
+_RINvXNvMNtCscdodAO9FK5_5alloc5sliceSp9to_vec_inNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEBN_.exit548: ; preds = %bb.gf, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread.i547
+  %17 = phi ptr [ %i.yr, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskLngH8kgpZI_15ruff_python_ast.exit.thread.i547 ], [ %i.yv, %bb.gf ]
+  store i64 %i.yn, ptr %17, align 8, !noalias !15658
   %i.zb = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.zb, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !15658

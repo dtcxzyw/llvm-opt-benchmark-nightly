@@ -202,8 +202,8 @@ bb.a:
   %i.a = alloca [24 x i8], align 8                ; 10 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.d = load ptr, ptr %i.c, align 8, !nonnull !4, !noundef !4 ; 2 uses
-  %i.e = load i64, ptr %i.b, align 8, !noundef !4 ; 6 uses
+  %i.d = load ptr, ptr %i.c, align 8, !nonnull !4, !noundef !4
+  %i.e = load i64, ptr %i.b, align 8, !noundef !4 ; 5 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !474)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !475
   %i.f = mul nuw nsw i64 %i.e, 20                 ; 2 uses
@@ -231,19 +231,14 @@ bb.c:                                             ; preds = %bb.b
   store i64 %i.e, ptr %i.a, align 8, !noalias !475
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %i.j, ptr %i.l, align 8, !noalias !475
-  %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 3 uses
-  %2 = getelementptr inbounds nuw [20 x i8], ptr %i.d, i64 %i.e
-  br label %.lr.ph.i
+  %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
+  br label %bb.d
 
-.lr.ph.i:                                         ; preds = %_RNvXs1b_CseSCJ3UB48O9_10proc_macroNtB6_9TokenTreeNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i, %.lr.ph.preheader.i
-  %.sroa.012.047.i = phi ptr [ %i.n, %_RNvXs1b_CseSCJ3UB48O9_10proc_macroNtB6_9TokenTreeNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i ], [ %i.d, %.lr.ph.preheader.i ] ; 14 uses
+bb.d:                                             ; preds = %_RNvXs1b_CseSCJ3UB48O9_10proc_macroNtB6_9TokenTreeNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i, %.lr.ph.preheader.i
+  %.sroa.012.047.i = phi ptr [ %i.n, %_RNvXs1b_CseSCJ3UB48O9_10proc_macroNtB6_9TokenTreeNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i ], [ %i.d, %.lr.ph.preheader.i ] ; 13 uses
   %.sroa.7.045.i = phi i64 [ %i.o, %_RNvXs1b_CseSCJ3UB48O9_10proc_macroNtB6_9TokenTreeNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i ], [ 0, %.lr.ph.preheader.i ] ; 3 uses
-  %.sroa.10.044.i = phi i64 [ %3, %_RNvXs1b_CseSCJ3UB48O9_10proc_macroNtB6_9TokenTreeNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i ], [ %i.e, %.lr.ph.preheader.i ]
-  %3 = add nsw i64 %.sroa.10.044.i, -1            ; 2 uses
-  %4 = icmp eq ptr %.sroa.012.047.i, %2
-  br i1 %4, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtCseSCJ3UB48O9_10proc_macro9TokenTreeNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs9m5QBc6kkBd_18wasmi_c_api_macros.exit, label %bb.d
-
-bb.d:                                             ; preds = %.lr.ph.i
+  %.sroa.10.044.i = phi i64 [ %2, %_RNvXs1b_CseSCJ3UB48O9_10proc_macroNtB6_9TokenTreeNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i ], [ %i.e, %.lr.ph.preheader.i ]
+  %2 = add nsw i64 %.sroa.10.044.i, -1            ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %.sroa.012.047.i, i64 20
   %i.o = add nuw nsw i64 %.sroa.7.045.i, 1
   %i.p = getelementptr inbounds nuw i8, ptr %.sroa.012.047.i, i64 16
@@ -340,8 +335,8 @@ _RNvXs1b_CseSCJ3UB48O9_10proc_macroNtB6_9TokenTreeNtNtCskKLDkoKarTP_4core5clone5
   store i32 %.sroa.13.sroa.0.0.insert.insert.i, ptr %.sroa.531.0..sroa_idx.i, align 4, !noalias !479
   %.sroa.632.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.am, i64 16
   store i8 %.sink.i.i, ptr %.sroa.632.0..sroa_idx.i, align 4, !noalias !479
-  %i.an = icmp eq i64 %3, 0
-  br i1 %i.an, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtCseSCJ3UB48O9_10proc_macro9TokenTreeNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs9m5QBc6kkBd_18wasmi_c_api_macros.exit, label %.lr.ph.i
+  %i.an = icmp eq i64 %2, 0
+  br i1 %i.an, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtCseSCJ3UB48O9_10proc_macro9TokenTreeNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs9m5QBc6kkBd_18wasmi_c_api_macros.exit, label %bb.d
 
 bb.k:                                             ; preds = %bb.l
   %i.ao = landingpad { ptr, i32 }
@@ -359,9 +354,9 @@ bb.l:                                             ; preds = %bb.g
 bb.m:                                             ; preds = %bb.l
   resume { ptr, i32 } %lpad.loopexit.i
 
-_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtCseSCJ3UB48O9_10proc_macro9TokenTreeNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs9m5QBc6kkBd_18wasmi_c_api_macros.exit: ; preds = %.lr.ph.i, %_RNvXs1b_CseSCJ3UB48O9_10proc_macroNtB6_9TokenTreeNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs9m5QBc6kkBd_18wasmi_c_api_macros.exit.thread.i
-  %5 = phi ptr [ %i.i, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs9m5QBc6kkBd_18wasmi_c_api_macros.exit.thread.i ], [ %i.m, %_RNvXs1b_CseSCJ3UB48O9_10proc_macroNtB6_9TokenTreeNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i ], [ %i.m, %.lr.ph.i ]
-  store i64 %i.e, ptr %5, align 8, !noalias !475
+_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtCseSCJ3UB48O9_10proc_macro9TokenTreeNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs9m5QBc6kkBd_18wasmi_c_api_macros.exit: ; preds = %_RNvXs1b_CseSCJ3UB48O9_10proc_macroNtB6_9TokenTreeNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs9m5QBc6kkBd_18wasmi_c_api_macros.exit.thread.i
+  %3 = phi ptr [ %i.i, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs9m5QBc6kkBd_18wasmi_c_api_macros.exit.thread.i ], [ %i.m, %_RNvXs1b_CseSCJ3UB48O9_10proc_macroNtB6_9TokenTreeNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i ]
+  store i64 %i.e, ptr %3, align 8, !noalias !475
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false), !noalias !474
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !475
   ret void
