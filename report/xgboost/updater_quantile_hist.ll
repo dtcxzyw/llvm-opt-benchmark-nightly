@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.b, %.noexc
   br i1 %.not28, label %._crit_edge26.split, label %.preheader21.lr.ph.split
 
 .preheader21.lr.ph.split:                         ; preds = %.preheader21.lr.ph
-  %i.u = load i64, ptr %i.f, align 8, !tbaa !91   ; 10 uses
+  %i.u = load i64, ptr %i.f, align 8, !tbaa !91   ; 9 uses
   %.not29 = icmp eq i64 %i.u, 0
   br i1 %.not29, label %._crit_edge26.split, label %.preheader21.lr.ph.split.split
 
@@ -218,14 +218,15 @@ bb.d:                                             ; preds = %bb.b, %.noexc
   %i.aa = add i64 %i.q, -1                        ; 2 uses
   %i.ab = mul i64 %i.w, %i.aa
   %i.ac = shl i64 %i.ab, 4                        ; 2 uses
-  %i.ad = shl i64 %i.u, 4                         ; 2 uses
+  %i.ad = shl i64 %i.u, 4                         ; 4 uses
   %i.ae = shl i64 %i.v, 4
   %i.af = mul i64 %.sroa.0.0, %i.aa
-  %3 = add i64 %i.af, %i.u
-  %4 = shl i64 %3, 4                              ; 2 uses
-  %scevgep47 = getelementptr i8, ptr %i.i, i64 %4
+  %3 = shl i64 %i.af, 4                           ; 2 uses
+  %4 = getelementptr i8, ptr %i.i, i64 %3
+  %scevgep47 = getelementptr i8, ptr %4, i64 %i.ad
   %scevgep48 = getelementptr i8, ptr %i.i, i64 8
-  %i.ag = getelementptr i8, ptr %i.i, i64 %4
+  %5 = getelementptr i8, ptr %i.i, i64 %3
+  %i.ag = getelementptr i8, ptr %5, i64 %i.ad
   %scevgep50 = getelementptr i8, ptr %i.ag, i64 -8
   %i.ah = getelementptr i8, ptr %i.y, i64 %i.ac
   %i.ai = getelementptr i8, ptr %i.ah, i64 %i.ad
