@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 5128
 inline.NumDeleted: 2462
 loop-unroll.NumCompletelyUnrolled: 38
-loop-unroll.NumRuntimeUnrolled: 11
-loop-unroll.NumUnrolled: 54
+loop-unroll.NumRuntimeUnrolled: 12
+loop-unroll.NumUnrolled: 55
 begin_hunk_0_@_RNvNtNtCsat9HgdBb3qc_16shadowsocks_rust7service5local6create:bb.a
   br i1 %i.qe, label %bb.bm, label %_RNvXs_NtNtCsf3Ta7LF998c_4core3str6traitseNtNtB8_3cmp9PartialEq2eq.exit.backedge.i.i.i
 
@@ -205,36 +205,28 @@ bb.cg:                                            ; preds = %bb.cf
 
 bb.ch:                                            ; preds = %bb.cg, %bb.cf
   %.sroa.0.0.i.i489 = phi i64 [ %.sroa.0.0.copyload.i.i, %bb.cg ], [ -1, %bb.cf ]
-  %2 = getelementptr inbounds nuw i8, ptr %i.qt, i64 72
-  %.val.i.i490 = load ptr, ptr %2, align 8, !alias.scope !7787, !nonnull !14, !noundef !14 ; 2 uses
   %i.sj = getelementptr inbounds nuw i8, ptr %i.qt, i64 80
-  %.val3.i.i = load i64, ptr %i.sj, align 8, !alias.scope !7787, !noundef !14 ; 5 uses
+  %.val3.i.i = load i64, ptr %i.sj, align 8, !alias.scope !7787, !noundef !14 ; 4 uses
   %i.sk = mul nuw nsw i64 %.val3.i.i, 24          ; 2 uses
   %i.sl = icmp eq i64 %.val3.i.i, 0
   br i1 %i.sl, label %_RNvXs1_NtCslxdWNweD0x2_11shadowsocks6pluginNtB5_12PluginConfigNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit.i, label %bb.ci
 
 bb.ci:                                            ; preds = %bb.ch
+  %2 = getelementptr inbounds nuw i8, ptr %i.qt, i64 72
+  %.val.i.i490 = load ptr, ptr %2, align 8, !alias.scope !7787, !nonnull !14, !noundef !14
   call void @_RNvCsh0WfaQiVYm0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #30, !noalias !7788
-  %i.sm = call noundef align 8 ptr @_RNvCsh0WfaQiVYm0_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.sk, i64 noundef range(i64 1, 9) 8) #30, !noalias !7788 ; 4 uses
+  %i.sm = call noundef align 8 ptr @_RNvCsh0WfaQiVYm0_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.sk, i64 noundef range(i64 1, 9) 8) #30, !noalias !7788 ; 3 uses
   %i.sn = icmp eq ptr %i.sm, null
-  br i1 %i.sn, label %bb.cj, label %.lr.ph.preheader.i.i.i.i
+  br i1 %i.sn, label %bb.cj, label %bb.ck
 
 bb.cj:                                            ; preds = %bb.ci
   call void @_RNvNtCsgCecv3eZDcN_5alloc7raw_vec12handle_error(i64 noundef 8, i64 %i.sk) #34, !noalias !7789
   unreachable
 
-.lr.ph.preheader.i.i.i.i:                         ; preds = %bb.ci
-  %3 = getelementptr inbounds nuw [24 x i8], ptr %.val.i.i490, i64 %.val3.i.i
-  br label %.lr.ph.i.i.i.i
-
-.lr.ph.i.i.i.i:                                   ; preds = %bb.ck, %.lr.ph.preheader.i.i.i.i
-  %.sroa.0.021.i.i.i.i = phi ptr [ %i.sq, %bb.ck ], [ %.val.i.i490, %.lr.ph.preheader.i.i.i.i ] ; 3 uses
-  %.sroa.7.020.i.i.i.i = phi i64 [ %i.sp, %bb.ck ], [ 0, %.lr.ph.preheader.i.i.i.i ] ; 2 uses
-  %.sroa.10.019.i.i.i.i = phi i64 [ %i.so, %bb.ck ], [ %.val3.i.i, %.lr.ph.preheader.i.i.i.i ]
-  %4 = icmp eq ptr %.sroa.0.021.i.i.i.i, %3
-  br i1 %4, label %_RNvXs1_NtCslxdWNweD0x2_11shadowsocks6pluginNtB5_12PluginConfigNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit.i, label %bb.ck
-
-bb.ck:                                            ; preds = %.lr.ph.i.i.i.i
+bb.ck:                                            ; preds = %bb.ci, %bb.ck
+  %.sroa.0.021.i.i.i.i = phi ptr [ %i.sq, %bb.ck ], [ %.val.i.i490, %bb.ci ] ; 2 uses
+  %.sroa.7.020.i.i.i.i = phi i64 [ %i.sp, %bb.ck ], [ 0, %bb.ci ] ; 2 uses
+  %.sroa.10.019.i.i.i.i = phi i64 [ %i.so, %bb.ck ], [ %.val3.i.i, %bb.ci ]
   %i.so = add nsw i64 %.sroa.10.019.i.i.i.i, -1   ; 2 uses
   %i.sp = add nuw nsw i64 %.sroa.7.020.i.i.i.i, 1
   %i.sq = getelementptr inbounds nuw i8, ptr %.sroa.0.021.i.i.i.i, i64 24
@@ -244,10 +236,10 @@ bb.ck:                                            ; preds = %.lr.ph.i.i.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.sr, ptr noundef nonnull align 8 dereferenceable(24) %i.dq, i64 24, i1 false), !noalias !7791
   call void @llvm.lifetime.end.p0(ptr nonnull %i.dq), !noalias !7790
   %i.ss = icmp eq i64 %i.so, 0
-  br i1 %i.ss, label %_RNvXs1_NtCslxdWNweD0x2_11shadowsocks6pluginNtB5_12PluginConfigNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit.i, label %.lr.ph.i.i.i.i
+  br i1 %i.ss, label %_RNvXs1_NtCslxdWNweD0x2_11shadowsocks6pluginNtB5_12PluginConfigNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit.i, label %bb.ck
 
-_RNvXs1_NtCslxdWNweD0x2_11shadowsocks6pluginNtB5_12PluginConfigNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit.i: ; preds = %bb.ck, %.lr.ph.i.i.i.i, %bb.ch
-  %.sroa.10.0.i29.i.i.i.i = phi ptr [ inttoptr (i64 8 to ptr), %bb.ch ], [ %i.sm, %.lr.ph.i.i.i.i ], [ %i.sm, %bb.ck ]
+_RNvXs1_NtCslxdWNweD0x2_11shadowsocks6pluginNtB5_12PluginConfigNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit.i: ; preds = %bb.ck, %bb.ch
+  %.sroa.10.0.i29.i.i.i.i = phi ptr [ inttoptr (i64 8 to ptr), %bb.ch ], [ %i.sm, %bb.ck ]
   %i.st = getelementptr inbounds nuw i8, ptr %i.dr, i64 8
   %i.su = getelementptr inbounds nuw i8, ptr %i.qt, i64 112
   %i.sv = load i8, ptr %i.su, align 8, !range !7792, !alias.scope !7787, !noundef !14
@@ -650,9 +642,9 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a, %bb.b
   %.sroa.0.0 = phi i64 [ %.sroa.0.0.copyload, %bb.b ], [ -1, %bb.a ]
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %.val = load ptr, ptr %i.f, align 8, !nonnull !14, !noundef !14 ; 2 uses
+  %.val = load ptr, ptr %i.f, align 8, !nonnull !14, !noundef !14
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %.val8 = load i64, ptr %i.g, align 8, !noundef !14 ; 6 uses
+  %.val8 = load i64, ptr %i.g, align 8, !noundef !14 ; 5 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !14649)
   %i.h = mul nuw nsw i64 %.val8, 48               ; 2 uses
   %i.i = icmp eq i64 %.val8, 0
@@ -660,7 +652,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_RNvCsh0WfaQiVYm0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #30, !noalias !14650
-  %i.j = tail call noundef align 8 ptr @_RNvCsh0WfaQiVYm0_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.h, i64 noundef range(i64 1, 9) 8) #30, !noalias !14650 ; 4 uses
+  %i.j = tail call noundef align 8 ptr @_RNvCsh0WfaQiVYm0_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.h, i64 noundef range(i64 1, 9) 8) #30, !noalias !14650 ; 3 uses
   %i.k = icmp eq ptr %i.j, null
   br i1 %i.k, label %bb.e, label %.lr.ph.i.i
 
@@ -669,20 +661,15 @@ bb.e:                                             ; preds = %bb.d
   unreachable
 
 .lr.ph.i.i:                                       ; preds = %bb.d
-  %2 = getelementptr inbounds nuw [48 x i8], ptr %.val, i64 %.val8
   %.sroa.01.32..sroa_idx.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.01.i.i.i.i.i.i.i, i64 32
   %.sroa.36.792..sroa_idx.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.36.i.i.i.i.i.i.i, i64 7
-  br label %3
+  br label %bb.f
 
-3:                                                ; preds = %_RNvXss_NtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env5fieldNtB5_5MatchNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit.i.i, %.lr.ph.i.i
-  %.sroa.0.070.i.i = phi ptr [ %.val, %.lr.ph.i.i ], [ %i.l, %_RNvXss_NtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env5fieldNtB5_5MatchNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit.i.i ] ; 11 uses
+bb.f:                                             ; preds = %_RNvXss_NtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env5fieldNtB5_5MatchNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit.i.i, %.lr.ph.i.i
+  %.sroa.0.070.i.i = phi ptr [ %.val, %.lr.ph.i.i ], [ %i.l, %_RNvXss_NtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env5fieldNtB5_5MatchNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit.i.i ] ; 10 uses
   %.sroa.7.069.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %i.m, %_RNvXss_NtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env5fieldNtB5_5MatchNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit.i.i ] ; 2 uses
-  %.sroa.10.068.i.i = phi i64 [ %.val8, %.lr.ph.i.i ], [ %4, %_RNvXss_NtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env5fieldNtB5_5MatchNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit.i.i ]
-  %4 = add nsw i64 %.sroa.10.068.i.i, -1          ; 2 uses
-  %5 = icmp eq ptr %.sroa.0.070.i.i, %2
-  br i1 %5, label %_RNvXsb_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecNtNtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env5field5MatchENtNtCsf3Ta7LF998c_4core5clone5Clone5cloneCsat9HgdBb3qc_16shadowsocks_rust.exit, label %bb.f
-
-bb.f:                                             ; preds = %3
+  %.sroa.10.068.i.i = phi i64 [ %.val8, %.lr.ph.i.i ], [ %2, %_RNvXss_NtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env5fieldNtB5_5MatchNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit.i.i ]
+  %2 = add nsw i64 %.sroa.10.068.i.i, -1          ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %.sroa.0.070.i.i, i64 48
   %i.m = add nuw nsw i64 %.sroa.7.069.i.i, 1
   %i.n = getelementptr inbounds nuw [48 x i8], ptr %i.j, i64 %.sroa.7.069.i.i ; 5 uses
@@ -1049,11 +1036,11 @@ _RNvXss_NtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env5fieldNtB5_5MatchNtNt
   store i64 %.sroa.5.sroa.5.0.i.i.i, ptr %.sroa.726.0..sroa_idx.i.i, align 8, !noalias !14651
   %.sroa.827.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.n, i64 40
   store i64 %.sroa.5.sroa.6.0.i.i.i, ptr %.sroa.827.0..sroa_idx.i.i, align 8, !noalias !14651
-  %i.dg = icmp eq i64 %4, 0
-  br i1 %i.dg, label %_RNvXsb_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecNtNtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env5field5MatchENtNtCsf3Ta7LF998c_4core5clone5Clone5cloneCsat9HgdBb3qc_16shadowsocks_rust.exit, label %3
+  %i.dg = icmp eq i64 %2, 0
+  br i1 %i.dg, label %_RNvXsb_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecNtNtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env5field5MatchENtNtCsf3Ta7LF998c_4core5clone5Clone5cloneCsat9HgdBb3qc_16shadowsocks_rust.exit, label %bb.f
 
-_RNvXsb_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecNtNtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env5field5MatchENtNtCsf3Ta7LF998c_4core5clone5Clone5cloneCsat9HgdBb3qc_16shadowsocks_rust.exit: ; preds = %3, %_RNvXss_NtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env5fieldNtB5_5MatchNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit.i.i, %bb.c
-  %.sroa.10.0.i119.i.i = phi ptr [ inttoptr (i64 8 to ptr), %bb.c ], [ %i.j, %_RNvXss_NtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env5fieldNtB5_5MatchNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit.i.i ], [ %i.j, %3 ]
+_RNvXsb_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecNtNtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env5field5MatchENtNtCsf3Ta7LF998c_4core5clone5Clone5cloneCsat9HgdBb3qc_16shadowsocks_rust.exit: ; preds = %_RNvXss_NtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env5fieldNtB5_5MatchNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit.i.i, %bb.c
+  %.sroa.10.0.i119.i.i = phi ptr [ inttoptr (i64 8 to ptr), %bb.c ], [ %i.j, %_RNvXss_NtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env5fieldNtB5_5MatchNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit.i.i ]
   %i.dh = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %i.di = load i64, ptr %i.dh, align 8, !range !24, !noundef !14
   %.not7 = icmp eq i64 %i.di, -1
@@ -1447,9 +1434,9 @@ define internal { ptr, ptr } @_RNvXsc_NtNtCslDQ48jUgq5Q_12clap_builder7builder12
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.val = load ptr, ptr %i.b, align 8, !nonnull !14, !noundef !14 ; 2 uses
+  %.val = load ptr, ptr %i.b, align 8, !nonnull !14, !noundef !14
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %.val1 = load i64, ptr %i.c, align 8, !noundef !14 ; 6 uses
+  %.val1 = load i64, ptr %i.c, align 8, !noundef !14 ; 5 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !14727)
   %i.d = mul nuw nsw i64 %.val1, 72               ; 2 uses
   %i.e = icmp eq i64 %.val1, 0
@@ -1457,7 +1444,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_RNvCsh0WfaQiVYm0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #30, !noalias !14728
-  %i.f = tail call noundef align 8 ptr @_RNvCsh0WfaQiVYm0_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.d, i64 noundef range(i64 1, 9) 8) #30, !noalias !14728 ; 4 uses
+  %i.f = tail call noundef align 8 ptr @_RNvCsh0WfaQiVYm0_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.d, i64 noundef range(i64 1, 9) 8) #30, !noalias !14728 ; 3 uses
   %i.g = icmp eq ptr %i.f, null
   br i1 %i.g, label %bb.c, label %.lr.ph.i.i.i
 
@@ -1466,19 +1453,14 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 .lr.ph.i.i.i:                                     ; preds = %bb.b
-  %1 = getelementptr inbounds nuw [72 x i8], ptr %.val, i64 %.val1
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  br label %2
+  br label %bb.d
 
-2:                                                ; preds = %_RNvXs3_NtNtCslDQ48jUgq5Q_12clap_builder7builder14possible_valueNtB5_13PossibleValueNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit.i.i.i, %.lr.ph.i.i.i
-  %.sroa.0.045.i.i.i = phi ptr [ %.val, %.lr.ph.i.i.i ], [ %i.i, %_RNvXs3_NtNtCslDQ48jUgq5Q_12clap_builder7builder14possible_valueNtB5_13PossibleValueNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit.i.i.i ] ; 8 uses
+bb.d:                                             ; preds = %_RNvXs3_NtNtCslDQ48jUgq5Q_12clap_builder7builder14possible_valueNtB5_13PossibleValueNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit.i.i.i, %.lr.ph.i.i.i
+  %.sroa.0.045.i.i.i = phi ptr [ %.val, %.lr.ph.i.i.i ], [ %i.i, %_RNvXs3_NtNtCslDQ48jUgq5Q_12clap_builder7builder14possible_valueNtB5_13PossibleValueNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit.i.i.i ] ; 7 uses
   %.sroa.7.044.i.i.i = phi i64 [ 0, %.lr.ph.i.i.i ], [ %i.j, %_RNvXs3_NtNtCslDQ48jUgq5Q_12clap_builder7builder14possible_valueNtB5_13PossibleValueNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit.i.i.i ] ; 2 uses
-  %.sroa.10.043.i.i.i = phi i64 [ %.val1, %.lr.ph.i.i.i ], [ %3, %_RNvXs3_NtNtCslDQ48jUgq5Q_12clap_builder7builder14possible_valueNtB5_13PossibleValueNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit.i.i.i ]
-  %3 = add nsw i64 %.sroa.10.043.i.i.i, -1        ; 2 uses
-  %4 = icmp eq ptr %.sroa.0.045.i.i.i, %1
-  br i1 %4, label %_RNvXs1r_NtNtCslDQ48jUgq5Q_12clap_builder7builder12value_parserNtB6_20PossibleValuesParserNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit, label %bb.d
-
-bb.d:                                             ; preds = %2
+  %.sroa.10.043.i.i.i = phi i64 [ %.val1, %.lr.ph.i.i.i ], [ %1, %_RNvXs3_NtNtCslDQ48jUgq5Q_12clap_builder7builder14possible_valueNtB5_13PossibleValueNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit.i.i.i ]
+  %1 = add nsw i64 %.sroa.10.043.i.i.i, -1        ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.045.i.i.i, i64 72
   %i.j = add nuw nsw i64 %.sroa.7.044.i.i.i, 1
   %i.k = getelementptr inbounds nuw [72 x i8], ptr %i.f, i64 %.sroa.7.044.i.i.i ; 8 uses
@@ -1503,7 +1485,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.r = getelementptr inbounds nuw i8, ptr %.sroa.0.045.i.i.i, i64 8
   %.val.i.i.i.i = load ptr, ptr %i.r, align 8, !alias.scope !14731, !noalias !14732, !nonnull !14, !noundef !14 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %.sroa.0.045.i.i.i, i64 16
-  %.val4.i.i.i.i = load i64, ptr %i.s, align 8, !alias.scope !14731, !noalias !14732, !noundef !14 ; 6 uses
+  %.val4.i.i.i.i = load i64, ptr %i.s, align 8, !alias.scope !14731, !noalias !14732, !noundef !14 ; 8 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !14735)
   %i.t = icmp eq i64 %.val4.i.i.i.i, 0
   br i1 %i.t, label %_RNvXs3_NtNtCslDQ48jUgq5Q_12clap_builder7builder14possible_valueNtB5_13PossibleValueNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit.i.i.i, label %bb.g
@@ -1511,41 +1493,69 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 bb.g:                                             ; preds = %bb.f
   %i.u = shl nuw nsw i64 %.val4.i.i.i.i, 4        ; 2 uses
   tail call void @_RNvCsh0WfaQiVYm0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #30, !noalias !14736
-  %i.v = tail call noundef align 8 ptr @_RNvCsh0WfaQiVYm0_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.u, i64 noundef range(i64 1, 9) 8) #30, !noalias !14736 ; 4 uses
+  %i.v = tail call noundef align 8 ptr @_RNvCsh0WfaQiVYm0_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.u, i64 noundef range(i64 1, 9) 8) #30, !noalias !14736 ; 6 uses
   %i.w = icmp eq ptr %i.v, null
-  br i1 %i.w, label %bb.h, label %.lr.ph.preheader.i.i.i.i.i.i.a
+  br i1 %i.w, label %3, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
+  %xtraiter = and i64 %.val4.i.i.i.i, 1
+  %2 = icmp eq i64 %.val4.i.i.i.i, 1
+  br i1 %2, label %bb.i, label %.lr.ph.preheader.i.i.i.i.i.i.a
+
+.lr.ph.preheader.i.i.i.i.i.i.a:                   ; preds = %bb.h
+  %unroll_iter = and i64 %.val4.i.i.i.i, -2
+  br label %.lr.ph.i.i.i.i.i.i
+
+3:                                                ; preds = %bb.g
   tail call void @_RNvNtCsgCecv3eZDcN_5alloc7raw_vec12handle_error(i64 noundef 8, i64 %i.u) #34, !noalias !14737
   unreachable
 
-.lr.ph.preheader.i.i.i.i.i.i.a:                   ; preds = %bb.g
-  %5 = getelementptr inbounds nuw [16 x i8], ptr %.val.i.i.i.i, i64 %.val4.i.i.i.i
-  br label %.lr.ph.i.i.i.i.i.i
+.lr.ph.i.i.i.i.i.i:                               ; preds = %.lr.ph.i.i.i.i.i.i, %.lr.ph.preheader.i.i.i.i.i.i.a
+  %.sroa.0.022.i.i.i.i.i.i = phi ptr [ %.val.i.i.i.i, %.lr.ph.preheader.i.i.i.i.i.i.a ], [ %9, %.lr.ph.i.i.i.i.i.i ] ; 5 uses
+  %.sroa.7.021.i.i.i.i.i.i = phi i64 [ 0, %.lr.ph.preheader.i.i.i.i.i.i.a ], [ %8, %.lr.ph.i.i.i.i.i.i ] ; 3 uses
+  %.sroa.10.020.i.i.i.i.i.i = phi i64 [ 0, %.lr.ph.preheader.i.i.i.i.i.i.a ], [ %niter.next.1, %.lr.ph.i.i.i.i.i.i ]
+  %4 = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i.i.i.i.i.i, i64 16
+  %5 = getelementptr inbounds nuw [16 x i8], ptr %i.v, i64 %.sroa.7.021.i.i.i.i.i.i ; 2 uses
+  %.val.i.i.i.i.i.i = load ptr, ptr %.sroa.0.022.i.i.i.i.i.i, align 8, !alias.scope !14735, !noalias !14738, !nonnull !14, !noundef !14
+  %6 = getelementptr i8, ptr %.sroa.0.022.i.i.i.i.i.i, i64 8
+  %.val13.i.i.i.i.i.i = load i64, ptr %6, align 8, !alias.scope !14735, !noalias !14738, !noundef !14
+  store ptr %.val.i.i.i.i.i.i, ptr %5, align 8, !noalias !14737
+  %7 = getelementptr inbounds nuw i8, ptr %5, i64 8
+  store i64 %.val13.i.i.i.i.i.i, ptr %7, align 8, !noalias !14737
+  %8 = add nuw nsw i64 %.sroa.7.021.i.i.i.i.i.i, 2 ; 2 uses
+  %9 = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i.i.i.i.i.i, i64 32 ; 2 uses
+  %10 = getelementptr inbounds nuw [16 x i8], ptr %i.v, i64 %.sroa.7.021.i.i.i.i.i.i ; 2 uses
+  %11 = getelementptr inbounds nuw i8, ptr %10, i64 16
+  %.val.i.i.i.i.i.i.1 = load ptr, ptr %4, align 8, !alias.scope !14735, !noalias !14738, !nonnull !14, !noundef !14
+  %12 = getelementptr i8, ptr %.sroa.0.022.i.i.i.i.i.i, i64 24
+  %.val13.i.i.i.i.i.i.1 = load i64, ptr %12, align 8, !alias.scope !14735, !noalias !14738, !noundef !14
+  store ptr %.val.i.i.i.i.i.i.1, ptr %11, align 8, !noalias !14737
+  %13 = getelementptr inbounds nuw i8, ptr %10, i64 24
+  store i64 %.val13.i.i.i.i.i.i.1, ptr %13, align 8, !noalias !14737
+  %niter.next.1 = add nuw i64 %.sroa.10.020.i.i.i.i.i.i, 2 ; 2 uses
+  %i.x = icmp eq i64 %niter.next.1, %unroll_iter
+  br i1 %i.x, label %_RNvXs3_NtNtCslDQ48jUgq5Q_12clap_builder7builder14possible_valueNtB5_13PossibleValueNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit.i.i.i.loopexit.unr-lcssa, label %.lr.ph.i.i.i.i.i.i
 
-.lr.ph.i.i.i.i.i.i:                               ; preds = %bb.i, %.lr.ph.preheader.i.i.i.i.i.i.a
-  %.sroa.0.022.i.i.i.i.i.i = phi ptr [ %8, %bb.i ], [ %.val.i.i.i.i, %.lr.ph.preheader.i.i.i.i.i.i.a ] ; 4 uses
-  %.sroa.7.021.i.i.i.i.i.i = phi i64 [ %7, %bb.i ], [ 0, %.lr.ph.preheader.i.i.i.i.i.i.a ] ; 2 uses
-  %.sroa.10.020.i.i.i.i.i.i = phi i64 [ %6, %bb.i ], [ %.val4.i.i.i.i, %.lr.ph.preheader.i.i.i.i.i.i.a ]
-  %i.x = icmp eq ptr %.sroa.0.022.i.i.i.i.i.i, %5
-  br i1 %i.x, label %_RNvXs3_NtNtCslDQ48jUgq5Q_12clap_builder7builder14possible_valueNtB5_13PossibleValueNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit.i.i.i, label %bb.i
+_RNvXs3_NtNtCslDQ48jUgq5Q_12clap_builder7builder14possible_valueNtB5_13PossibleValueNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit.i.i.i.loopexit.unr-lcssa: ; preds = %.lr.ph.i.i.i.i.i.i
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %_RNvXs3_NtNtCslDQ48jUgq5Q_12clap_builder7builder14possible_valueNtB5_13PossibleValueNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit.i.i.i, label %bb.i
 
-bb.i:                                             ; preds = %.lr.ph.i.i.i.i.i.i
-  %6 = add nsw i64 %.sroa.10.020.i.i.i.i.i.i, -1  ; 2 uses
-  %7 = add nuw nsw i64 %.sroa.7.021.i.i.i.i.i.i, 1
-  %8 = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i.i.i.i.i.i, i64 16
-  %i.y = getelementptr inbounds nuw [16 x i8], ptr %i.v, i64 %.sroa.7.021.i.i.i.i.i.i ; 2 uses
-  %.val.i.i.i.i.i.i.a = load ptr, ptr %.sroa.0.022.i.i.i.i.i.i, align 8, !alias.scope !14735, !noalias !14738, !nonnull !14, !noundef !14
-  %i.z = getelementptr i8, ptr %.sroa.0.022.i.i.i.i.i.i, i64 8
+bb.i:                                             ; preds = %_RNvXs3_NtNtCslDQ48jUgq5Q_12clap_builder7builder14possible_valueNtB5_13PossibleValueNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit.i.i.i.loopexit.unr-lcssa, %bb.h
+  %.sroa.0.022.i.i.i.i.i.i.epil.init = phi ptr [ %.val.i.i.i.i, %bb.h ], [ %9, %_RNvXs3_NtNtCslDQ48jUgq5Q_12clap_builder7builder14possible_valueNtB5_13PossibleValueNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit.i.i.i.loopexit.unr-lcssa ] ; 2 uses
+  %.sroa.7.021.i.i.i.i.i.i.epil.init = phi i64 [ 0, %bb.h ], [ %8, %_RNvXs3_NtNtCslDQ48jUgq5Q_12clap_builder7builder14possible_valueNtB5_13PossibleValueNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit.i.i.i.loopexit.unr-lcssa ]
+  %lcmp.mod5 = trunc i64 %.val4.i.i.i.i to i1
+  tail call void @llvm.assume(i1 %lcmp.mod5)
+  %i.y = getelementptr inbounds nuw [16 x i8], ptr %i.v, i64 %.sroa.7.021.i.i.i.i.i.i.epil.init ; 2 uses
+  %.val.i.i.i.i.i.i.a = load ptr, ptr %.sroa.0.022.i.i.i.i.i.i.epil.init, align 8, !alias.scope !14735, !noalias !14738, !nonnull !14, !noundef !14
+  %i.z = getelementptr i8, ptr %.sroa.0.022.i.i.i.i.i.i.epil.init, i64 8
   %.val13.i.i.i.i.i.i.a = load i64, ptr %i.z, align 8, !alias.scope !14735, !noalias !14738, !noundef !14
   store ptr %.val.i.i.i.i.i.i.a, ptr %i.y, align 8, !noalias !14737
   %i.aa = getelementptr inbounds nuw i8, ptr %i.y, i64 8
   store i64 %.val13.i.i.i.i.i.i.a, ptr %i.aa, align 8, !noalias !14737
-  %9 = icmp eq i64 %6, 0
-  br i1 %9, label %_RNvXs3_NtNtCslDQ48jUgq5Q_12clap_builder7builder14possible_valueNtB5_13PossibleValueNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit.i.i.i, label %.lr.ph.i.i.i.i.i.i
+  br label %_RNvXs3_NtNtCslDQ48jUgq5Q_12clap_builder7builder14possible_valueNtB5_13PossibleValueNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit.i.i.i
 
-_RNvXs3_NtNtCslDQ48jUgq5Q_12clap_builder7builder14possible_valueNtB5_13PossibleValueNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit.i.i.i: ; preds = %bb.i, %.lr.ph.i.i.i.i.i.i, %bb.f
-  %.sroa.10.0.i30.i.i.i.i.i.i = phi ptr [ inttoptr (i64 8 to ptr), %bb.f ], [ %i.v, %.lr.ph.i.i.i.i.i.i ], [ %i.v, %bb.i ]
+_RNvXs3_NtNtCslDQ48jUgq5Q_12clap_builder7builder14possible_valueNtB5_13PossibleValueNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit.i.i.i: ; preds = %bb.i, %_RNvXs3_NtNtCslDQ48jUgq5Q_12clap_builder7builder14possible_valueNtB5_13PossibleValueNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit.i.i.i.loopexit.unr-lcssa, %bb.f
+  %.sroa.10.0.i30.i.i.i.i.i.i = phi ptr [ inttoptr (i64 8 to ptr), %bb.f ], [ %i.v, %_RNvXs3_NtNtCslDQ48jUgq5Q_12clap_builder7builder14possible_valueNtB5_13PossibleValueNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit.i.i.i.loopexit.unr-lcssa ], [ %i.v, %bb.i ]
   %i.ab = getelementptr inbounds nuw i8, ptr %.sroa.0.045.i.i.i, i64 64
   %i.ac = load i8, ptr %i.ab, align 8, !range !19, !alias.scope !14731, !noalias !14732, !noundef !14
   %.sroa.731.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.k, i64 32
@@ -1564,11 +1574,11 @@ _RNvXs3_NtNtCslDQ48jUgq5Q_12clap_builder7builder14possible_valueNtB5_13PossibleV
   store i64 %i.o, ptr %.sroa.933.0..sroa_idx.i.i.i, align 8, !noalias !14739
   %.sroa.1034.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.k, i64 64
   store i8 %i.ac, ptr %.sroa.1034.0..sroa_idx.i.i.i, align 8, !noalias !14739
-  %i.ad = icmp eq i64 %3, 0
-  br i1 %i.ad, label %_RNvXs1r_NtNtCslDQ48jUgq5Q_12clap_builder7builder12value_parserNtB6_20PossibleValuesParserNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit, label %2
+  %i.ad = icmp eq i64 %1, 0
+  br i1 %i.ad, label %_RNvXs1r_NtNtCslDQ48jUgq5Q_12clap_builder7builder12value_parserNtB6_20PossibleValuesParserNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit, label %bb.d
 
-_RNvXs1r_NtNtCslDQ48jUgq5Q_12clap_builder7builder12value_parserNtB6_20PossibleValuesParserNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit: ; preds = %2, %_RNvXs3_NtNtCslDQ48jUgq5Q_12clap_builder7builder14possible_valueNtB5_13PossibleValueNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit.i.i.i, %bb.a
-  %.sroa.10.0.i56.i.i.i = phi ptr [ inttoptr (i64 8 to ptr), %bb.a ], [ %i.f, %_RNvXs3_NtNtCslDQ48jUgq5Q_12clap_builder7builder14possible_valueNtB5_13PossibleValueNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit.i.i.i ], [ %i.f, %2 ]
+_RNvXs1r_NtNtCslDQ48jUgq5Q_12clap_builder7builder12value_parserNtB6_20PossibleValuesParserNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit: ; preds = %_RNvXs3_NtNtCslDQ48jUgq5Q_12clap_builder7builder14possible_valueNtB5_13PossibleValueNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit.i.i.i, %bb.a
+  %.sroa.10.0.i55.i.i.i = phi ptr [ inttoptr (i64 8 to ptr), %bb.a ], [ %i.f, %_RNvXs3_NtNtCslDQ48jUgq5Q_12clap_builder7builder14possible_valueNtB5_13PossibleValueNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit.i.i.i ]
   tail call void @_RNvCsh0WfaQiVYm0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #30, !noalias !14740
   %i.ae = tail call noundef align 8 dereferenceable_or_null(24) ptr @_RNvCsh0WfaQiVYm0_7___rustc12___rust_alloc(i64 noundef 24, i64 noundef range(i64 1, -9223372036854775807) 8) #30, !noalias !14740 ; 5 uses
   %i.af = icmp eq ptr %i.ae, null
@@ -1581,7 +1591,7 @@ bb.j:                                             ; preds = %_RNvXs1r_NtNtCslDQ4
 _RNvNtCsgCecv3eZDcN_5alloc5boxed14box_new_uninit.exit: ; preds = %_RNvXs1r_NtNtCslDQ48jUgq5Q_12clap_builder7builder12value_parserNtB6_20PossibleValuesParserNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit
   store i64 %.val1, ptr %i.ae, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ae, i64 8
-  store ptr %.sroa.10.0.i56.i.i.i, ptr %.sroa.4.0..sroa_idx, align 8
+  store ptr %.sroa.10.0.i55.i.i.i, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ae, i64 16
   store i64 %.val1, ptr %.sroa.5.0..sroa_idx, align 8
   %i.ag = insertvalue { ptr, ptr } poison, ptr %i.ae, 0
