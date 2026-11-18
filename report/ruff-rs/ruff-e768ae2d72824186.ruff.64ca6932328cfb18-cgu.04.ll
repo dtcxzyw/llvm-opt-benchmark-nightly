@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ruff-rs/original/ruff-e768ae2d72824186.ruff.64ca6932328cfb18-cgu.04?download=true
 inline.NumInlined: 760
 inline.NumDeleted: 461
-loop-unroll.NumCompletelyUnrolled: 4
+loop-unroll.NumCompletelyUnrolled: 5
 loop-unroll.NumRuntimeUnrolled: 3
-loop-unroll.NumUnrolled: 7
+loop-unroll.NumUnrolled: 8
 begin_hunk_0_@_RNvXs_NtCs6nZeqdiIoCH_10serde_core2deNtNvXNvNtCs3ZkgueCtkyH_14ruff_workspace7optionssl_1__NtBG_21Flake8BuiltinsOptionsNtB4_11Deserialize11deserialize14___FieldVisitorNtB4_8Expected3fmtCs8EvorvD8vmS_4ruff:bb.a
 bb.a:
   %i.a = tail call noundef zeroext i1 @_RNvXNvXNvNtCs3ZkgueCtkyH_14ruff_workspace7optionssl_1__NtB7_21Flake8BuiltinsOptionsNtNtCs6nZeqdiIoCH_10serde_core2de11Deserialize11deserializeNtB2_14___FieldVisitorNtB1l_7Visitor9expecting(ptr noalias noundef nonnull readonly captures(address, read_provenance) %0, ptr noalias noundef nonnull align 8 dereferenceable(24) %1)
@@ -205,7 +205,7 @@ _RNvMNtNtCsgYAxyi3ZRSt_4rkyv6string4reprNtB2_18ArchivedStringRepr3len.exit.i7: ;
   %i.n = load i32, ptr %i.m, align 4, !alias.scope !2553, !noundef !4
   %i.o = sext i32 %i.n to i64
   %i.p = zext nneg i32 %i.k to i64                ; 7 uses
-  %i.q = getelementptr i8, ptr %0, i64 %i.o       ; 8 uses
+  %i.q = getelementptr i8, ptr %0, i64 %i.o       ; 14 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !2554
   store i64 1, ptr %i.d, align 8, !noalias !2555
   %i.r = getelementptr inbounds nuw i8, ptr %i.d, i64 8
@@ -280,19 +280,79 @@ bb.g:                                             ; preds = %.lr.ph39
   br i1 %i.av, label %bb.g, label %_RNCNvXNtNtCsgYAxyi3ZRSt_4rkyv6string6verifyNtB6_14ArchivedStringINtCsfPFYAtJtK7K_9bytecheck6VerifyINtCsht2POEgrkhf_6rancor8StrategyINtNtB8_10validation9ValidatorNtNtNtB28_7archive9validator16ArchiveValidatorNtNtNtB28_6shared9validator15SharedValidatorENtB1B_5ErrorEE6verify0Cs8EvorvD8vmS_4ruff.exit.i.i.i
 
 bb.h:                                             ; preds = %bb.d
-  %i.aw = and i64 %i.p, 56                        ; 3 uses
+  %i.aw = and i64 %i.p, 56                        ; 8 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %i.q, i64 %i.aw ; 7 uses
   %i.ay = and i64 %i.p, 7                         ; 7 uses
   %.not.i.i.i.i.i.i40 = icmp eq i64 %i.aw, 0
   br i1 %.not.i.i.i.i.i.i40, label %._crit_edge43, label %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8EvorvD8vmS_4ruff.exit.i.i.i.i.i.i
 
-bb.i:                                             ; preds = %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8EvorvD8vmS_4ruff.exit.i.i.i.i.i.i
-  %i.az = getelementptr inbounds nuw i8, ptr %.sroa.0.017.i.i.i.i.i.i42, i64 8
-  %2 = add nsw i64 %.sroa.6.0.i.i.i.i.i.i41, -8   ; 2 uses
-  %.not.i.i.i.i.i.i.a = icmp eq i64 %2, 0
-  br i1 %.not.i.i.i.i.i.i.a, label %._crit_edge43, label %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8EvorvD8vmS_4ruff.exit.i.i.i.i.i.i
+2:                                                ; preds = %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8EvorvD8vmS_4ruff.exit.i.i.i.i.i.i
+  %.not.i.i.i.i.i.i = icmp eq i64 %i.aw, 8
+  br i1 %.not.i.i.i.i.i.i, label %._crit_edge43, label %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8EvorvD8vmS_4ruff.exit.i.i.i.i.i.i.1
 
-._crit_edge43:                                    ; preds = %bb.i, %bb.h
+_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8EvorvD8vmS_4ruff.exit.i.i.i.i.i.i.1: ; preds = %2
+  %3 = getelementptr inbounds nuw i8, ptr %i.q, i64 8
+  %.sroa.012.0.copyload.i.i.i.i.i.i.1 = load i64, ptr %3, align 1, !alias.scope !2562, !noalias !2563
+  %4 = and i64 %.sroa.012.0.copyload.i.i.i.i.i.i.1, -9187201950435737472
+  %5 = icmp eq i64 %4, 0
+  br i1 %5, label %6, label %_RNCNvXNtNtCsgYAxyi3ZRSt_4rkyv6string6verifyNtB6_14ArchivedStringINtCsfPFYAtJtK7K_9bytecheck6VerifyINtCsht2POEgrkhf_6rancor8StrategyINtNtB8_10validation9ValidatorNtNtNtB28_7archive9validator16ArchiveValidatorNtNtNtB28_6shared9validator15SharedValidatorENtB1B_5ErrorEE6verify0Cs8EvorvD8vmS_4ruff.exit.i.i.i
+
+6:                                                ; preds = %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8EvorvD8vmS_4ruff.exit.i.i.i.i.i.i.1
+  %.not.i.i.i.i.i.i.1 = icmp eq i64 %i.aw, 16
+  br i1 %.not.i.i.i.i.i.i.1, label %._crit_edge43, label %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8EvorvD8vmS_4ruff.exit.i.i.i.i.i.i.2
+
+_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8EvorvD8vmS_4ruff.exit.i.i.i.i.i.i.2: ; preds = %6
+  %7 = getelementptr inbounds nuw i8, ptr %i.q, i64 16
+  %.sroa.012.0.copyload.i.i.i.i.i.i.2 = load i64, ptr %7, align 1, !alias.scope !2562, !noalias !2563
+  %8 = and i64 %.sroa.012.0.copyload.i.i.i.i.i.i.2, -9187201950435737472
+  %9 = icmp eq i64 %8, 0
+  br i1 %9, label %10, label %_RNCNvXNtNtCsgYAxyi3ZRSt_4rkyv6string6verifyNtB6_14ArchivedStringINtCsfPFYAtJtK7K_9bytecheck6VerifyINtCsht2POEgrkhf_6rancor8StrategyINtNtB8_10validation9ValidatorNtNtNtB28_7archive9validator16ArchiveValidatorNtNtNtB28_6shared9validator15SharedValidatorENtB1B_5ErrorEE6verify0Cs8EvorvD8vmS_4ruff.exit.i.i.i
+
+10:                                               ; preds = %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8EvorvD8vmS_4ruff.exit.i.i.i.i.i.i.2
+  %.not.i.i.i.i.i.i.2 = icmp eq i64 %i.aw, 24
+  br i1 %.not.i.i.i.i.i.i.2, label %._crit_edge43, label %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8EvorvD8vmS_4ruff.exit.i.i.i.i.i.i.3
+
+_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8EvorvD8vmS_4ruff.exit.i.i.i.i.i.i.3: ; preds = %10
+  %11 = getelementptr inbounds nuw i8, ptr %i.q, i64 24
+  %.sroa.012.0.copyload.i.i.i.i.i.i.3 = load i64, ptr %11, align 1, !alias.scope !2562, !noalias !2563
+  %12 = and i64 %.sroa.012.0.copyload.i.i.i.i.i.i.3, -9187201950435737472
+  %13 = icmp eq i64 %12, 0
+  br i1 %13, label %14, label %_RNCNvXNtNtCsgYAxyi3ZRSt_4rkyv6string6verifyNtB6_14ArchivedStringINtCsfPFYAtJtK7K_9bytecheck6VerifyINtCsht2POEgrkhf_6rancor8StrategyINtNtB8_10validation9ValidatorNtNtNtB28_7archive9validator16ArchiveValidatorNtNtNtB28_6shared9validator15SharedValidatorENtB1B_5ErrorEE6verify0Cs8EvorvD8vmS_4ruff.exit.i.i.i
+
+14:                                               ; preds = %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8EvorvD8vmS_4ruff.exit.i.i.i.i.i.i.3
+  %.not.i.i.i.i.i.i.3 = icmp eq i64 %i.aw, 32
+  br i1 %.not.i.i.i.i.i.i.3, label %._crit_edge43, label %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8EvorvD8vmS_4ruff.exit.i.i.i.i.i.i.4
+
+_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8EvorvD8vmS_4ruff.exit.i.i.i.i.i.i.4: ; preds = %14
+  %15 = getelementptr inbounds nuw i8, ptr %i.q, i64 32
+  %.sroa.012.0.copyload.i.i.i.i.i.i.4 = load i64, ptr %15, align 1, !alias.scope !2562, !noalias !2563
+  %16 = and i64 %.sroa.012.0.copyload.i.i.i.i.i.i.4, -9187201950435737472
+  %17 = icmp eq i64 %16, 0
+  br i1 %17, label %18, label %_RNCNvXNtNtCsgYAxyi3ZRSt_4rkyv6string6verifyNtB6_14ArchivedStringINtCsfPFYAtJtK7K_9bytecheck6VerifyINtCsht2POEgrkhf_6rancor8StrategyINtNtB8_10validation9ValidatorNtNtNtB28_7archive9validator16ArchiveValidatorNtNtNtB28_6shared9validator15SharedValidatorENtB1B_5ErrorEE6verify0Cs8EvorvD8vmS_4ruff.exit.i.i.i
+
+18:                                               ; preds = %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8EvorvD8vmS_4ruff.exit.i.i.i.i.i.i.4
+  %.not.i.i.i.i.i.i.4 = icmp eq i64 %i.aw, 40
+  br i1 %.not.i.i.i.i.i.i.4, label %._crit_edge43, label %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8EvorvD8vmS_4ruff.exit.i.i.i.i.i.i.5
+
+_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8EvorvD8vmS_4ruff.exit.i.i.i.i.i.i.5: ; preds = %18
+  %19 = getelementptr inbounds nuw i8, ptr %i.q, i64 40
+  %.sroa.012.0.copyload.i.i.i.i.i.i.5 = load i64, ptr %19, align 1, !alias.scope !2562, !noalias !2563
+  %20 = and i64 %.sroa.012.0.copyload.i.i.i.i.i.i.5, -9187201950435737472
+  %21 = icmp eq i64 %20, 0
+  br i1 %21, label %22, label %_RNCNvXNtNtCsgYAxyi3ZRSt_4rkyv6string6verifyNtB6_14ArchivedStringINtCsfPFYAtJtK7K_9bytecheck6VerifyINtCsht2POEgrkhf_6rancor8StrategyINtNtB8_10validation9ValidatorNtNtNtB28_7archive9validator16ArchiveValidatorNtNtNtB28_6shared9validator15SharedValidatorENtB1B_5ErrorEE6verify0Cs8EvorvD8vmS_4ruff.exit.i.i.i
+
+22:                                               ; preds = %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8EvorvD8vmS_4ruff.exit.i.i.i.i.i.i.5
+  %.not.i.i.i.i.i.i.5 = icmp eq i64 %i.aw, 48
+  br i1 %.not.i.i.i.i.i.i.5, label %._crit_edge43, label %bb.i
+
+bb.i:                                             ; preds = %22
+  %i.az = getelementptr inbounds nuw i8, ptr %i.q, i64 48
+  %.sroa.012.0.copyload.i.i.i.i.i.i.6 = load i64, ptr %i.az, align 1, !alias.scope !2562, !noalias !2563
+  %23 = and i64 %.sroa.012.0.copyload.i.i.i.i.i.i.6, -9187201950435737472
+  %.not.i.i.i.i.i.i.a = icmp eq i64 %23, 0
+  br i1 %.not.i.i.i.i.i.i.a, label %._crit_edge43, label %_RNCNvXNtNtCsgYAxyi3ZRSt_4rkyv6string6verifyNtB6_14ArchivedStringINtCsfPFYAtJtK7K_9bytecheck6VerifyINtCsht2POEgrkhf_6rancor8StrategyINtNtB8_10validation9ValidatorNtNtNtB28_7archive9validator16ArchiveValidatorNtNtNtB28_6shared9validator15SharedValidatorENtB1B_5ErrorEE6verify0Cs8EvorvD8vmS_4ruff.exit.i.i.i
+
+._crit_edge43:                                    ; preds = %2, %6, %10, %14, %18, %22, %bb.i, %bb.h
   %i.ba = icmp samesign eq i64 %i.ay, 0
   br i1 %i.ba, label %_RNCNvXNtNtCsgYAxyi3ZRSt_4rkyv6string6verifyNtB6_14ArchivedStringINtCsfPFYAtJtK7K_9bytecheck6VerifyINtCsht2POEgrkhf_6rancor8StrategyINtNtB8_10validation9ValidatorNtNtNtB28_7archive9validator16ArchiveValidatorNtNtNtB28_6shared9validator15SharedValidatorENtB1B_5ErrorEE6verify0Cs8EvorvD8vmS_4ruff.exit.thread.i.i.i, label %.lr.ph45
 
@@ -302,7 +362,7 @@ bb.j:                                             ; preds = %.lr.ph45
 
 .lr.ph45.1:                                       ; preds = %bb.j
   %i.bc = getelementptr inbounds nuw i8, ptr %i.ax, i64 1
-  %.val.i.i.i.i.i.i.i.1 = load i8, ptr %i.bc, align 1, !alias.scope !2562, !noalias !2563, !noundef !4
+  %.val.i.i.i.i.i.i.i.1 = load i8, ptr %i.bc, align 1, !alias.scope !2562, !noalias !2564, !noundef !4
   %i.bd = icmp sgt i8 %.val.i.i.i.i.i.i.i.1, -1
   br i1 %i.bd, label %bb.k, label %_RNCNvXNtNtCsgYAxyi3ZRSt_4rkyv6string6verifyNtB6_14ArchivedStringINtCsfPFYAtJtK7K_9bytecheck6VerifyINtCsht2POEgrkhf_6rancor8StrategyINtNtB8_10validation9ValidatorNtNtNtB28_7archive9validator16ArchiveValidatorNtNtNtB28_6shared9validator15SharedValidatorENtB1B_5ErrorEE6verify0Cs8EvorvD8vmS_4ruff.exit.i.i.i
 
@@ -312,7 +372,7 @@ bb.k:                                             ; preds = %.lr.ph45.1
 
 .lr.ph45.2:                                       ; preds = %bb.k
   %i.bf = getelementptr inbounds nuw i8, ptr %i.ax, i64 2
-  %.val.i.i.i.i.i.i.i.2 = load i8, ptr %i.bf, align 1, !alias.scope !2562, !noalias !2563, !noundef !4
+  %.val.i.i.i.i.i.i.i.2 = load i8, ptr %i.bf, align 1, !alias.scope !2562, !noalias !2564, !noundef !4
   %i.bg = icmp sgt i8 %.val.i.i.i.i.i.i.i.2, -1
   br i1 %i.bg, label %bb.l, label %_RNCNvXNtNtCsgYAxyi3ZRSt_4rkyv6string6verifyNtB6_14ArchivedStringINtCsfPFYAtJtK7K_9bytecheck6VerifyINtCsht2POEgrkhf_6rancor8StrategyINtNtB8_10validation9ValidatorNtNtNtB28_7archive9validator16ArchiveValidatorNtNtNtB28_6shared9validator15SharedValidatorENtB1B_5ErrorEE6verify0Cs8EvorvD8vmS_4ruff.exit.i.i.i
 
@@ -322,7 +382,7 @@ bb.l:                                             ; preds = %.lr.ph45.2
 
 .lr.ph45.3:                                       ; preds = %bb.l
   %i.bi = getelementptr inbounds nuw i8, ptr %i.ax, i64 3
-  %.val.i.i.i.i.i.i.i.3 = load i8, ptr %i.bi, align 1, !alias.scope !2562, !noalias !2563, !noundef !4
+  %.val.i.i.i.i.i.i.i.3 = load i8, ptr %i.bi, align 1, !alias.scope !2562, !noalias !2564, !noundef !4
   %i.bj = icmp sgt i8 %.val.i.i.i.i.i.i.i.3, -1
   br i1 %i.bj, label %bb.m, label %_RNCNvXNtNtCsgYAxyi3ZRSt_4rkyv6string6verifyNtB6_14ArchivedStringINtCsfPFYAtJtK7K_9bytecheck6VerifyINtCsht2POEgrkhf_6rancor8StrategyINtNtB8_10validation9ValidatorNtNtNtB28_7archive9validator16ArchiveValidatorNtNtNtB28_6shared9validator15SharedValidatorENtB1B_5ErrorEE6verify0Cs8EvorvD8vmS_4ruff.exit.i.i.i
 
@@ -332,7 +392,7 @@ bb.m:                                             ; preds = %.lr.ph45.3
 
 .lr.ph45.4:                                       ; preds = %bb.m
   %i.bl = getelementptr inbounds nuw i8, ptr %i.ax, i64 4
-  %.val.i.i.i.i.i.i.i.4 = load i8, ptr %i.bl, align 1, !alias.scope !2562, !noalias !2563, !noundef !4
+  %.val.i.i.i.i.i.i.i.4 = load i8, ptr %i.bl, align 1, !alias.scope !2562, !noalias !2564, !noundef !4
   %i.bm = icmp sgt i8 %.val.i.i.i.i.i.i.i.4, -1
   br i1 %i.bm, label %bb.n, label %_RNCNvXNtNtCsgYAxyi3ZRSt_4rkyv6string6verifyNtB6_14ArchivedStringINtCsfPFYAtJtK7K_9bytecheck6VerifyINtCsht2POEgrkhf_6rancor8StrategyINtNtB8_10validation9ValidatorNtNtNtB28_7archive9validator16ArchiveValidatorNtNtNtB28_6shared9validator15SharedValidatorENtB1B_5ErrorEE6verify0Cs8EvorvD8vmS_4ruff.exit.i.i.i
 
@@ -342,7 +402,7 @@ bb.n:                                             ; preds = %.lr.ph45.4
 
 .lr.ph45.5:                                       ; preds = %bb.n
   %i.bo = getelementptr inbounds nuw i8, ptr %i.ax, i64 5
-  %.val.i.i.i.i.i.i.i.5 = load i8, ptr %i.bo, align 1, !alias.scope !2562, !noalias !2563, !noundef !4
+  %.val.i.i.i.i.i.i.i.5 = load i8, ptr %i.bo, align 1, !alias.scope !2562, !noalias !2564, !noundef !4
   %i.bp = icmp sgt i8 %.val.i.i.i.i.i.i.i.5, -1
   br i1 %i.bp, label %bb.o, label %_RNCNvXNtNtCsgYAxyi3ZRSt_4rkyv6string6verifyNtB6_14ArchivedStringINtCsfPFYAtJtK7K_9bytecheck6VerifyINtCsht2POEgrkhf_6rancor8StrategyINtNtB8_10validation9ValidatorNtNtNtB28_7archive9validator16ArchiveValidatorNtNtNtB28_6shared9validator15SharedValidatorENtB1B_5ErrorEE6verify0Cs8EvorvD8vmS_4ruff.exit.i.i.i
 
@@ -352,24 +412,22 @@ bb.o:                                             ; preds = %.lr.ph45.5
 
 .lr.ph45.6:                                       ; preds = %bb.o
   %i.br = getelementptr inbounds nuw i8, ptr %i.ax, i64 6
-  %.val.i.i.i.i.i.i.i.6 = load i8, ptr %i.br, align 1, !alias.scope !2562, !noalias !2563, !noundef !4
+  %.val.i.i.i.i.i.i.i.6 = load i8, ptr %i.br, align 1, !alias.scope !2562, !noalias !2564, !noundef !4
   %i.bs = icmp sgt i8 %.val.i.i.i.i.i.i.i.6, -1
   br i1 %i.bs, label %_RNCNvXNtNtCsgYAxyi3ZRSt_4rkyv6string6verifyNtB6_14ArchivedStringINtCsfPFYAtJtK7K_9bytecheck6VerifyINtCsht2POEgrkhf_6rancor8StrategyINtNtB8_10validation9ValidatorNtNtNtB28_7archive9validator16ArchiveValidatorNtNtNtB28_6shared9validator15SharedValidatorENtB1B_5ErrorEE6verify0Cs8EvorvD8vmS_4ruff.exit.thread.i.i.i, label %_RNCNvXNtNtCsgYAxyi3ZRSt_4rkyv6string6verifyNtB6_14ArchivedStringINtCsfPFYAtJtK7K_9bytecheck6VerifyINtCsht2POEgrkhf_6rancor8StrategyINtNtB8_10validation9ValidatorNtNtNtB28_7archive9validator16ArchiveValidatorNtNtNtB28_6shared9validator15SharedValidatorENtB1B_5ErrorEE6verify0Cs8EvorvD8vmS_4ruff.exit.i.i.i
 
 .lr.ph45:                                         ; preds = %._crit_edge43
-  %.val.i.i.i.i.i.i.i = load i8, ptr %i.ax, align 1, !alias.scope !2562, !noalias !2563, !noundef !4
+  %.val.i.i.i.i.i.i.i = load i8, ptr %i.ax, align 1, !alias.scope !2562, !noalias !2564, !noundef !4
   %i.bt = icmp sgt i8 %.val.i.i.i.i.i.i.i, -1
   br i1 %i.bt, label %bb.j, label %_RNCNvXNtNtCsgYAxyi3ZRSt_4rkyv6string6verifyNtB6_14ArchivedStringINtCsfPFYAtJtK7K_9bytecheck6VerifyINtCsht2POEgrkhf_6rancor8StrategyINtNtB8_10validation9ValidatorNtNtNtB28_7archive9validator16ArchiveValidatorNtNtNtB28_6shared9validator15SharedValidatorENtB1B_5ErrorEE6verify0Cs8EvorvD8vmS_4ruff.exit.i.i.i
 
-_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8EvorvD8vmS_4ruff.exit.i.i.i.i.i.i: ; preds = %bb.h, %bb.i
-  %.sroa.0.017.i.i.i.i.i.i42 = phi ptr [ %i.az, %bb.i ], [ %i.q, %bb.h ] ; 2 uses
-  %.sroa.6.0.i.i.i.i.i.i41 = phi i64 [ %2, %bb.i ], [ %i.aw, %bb.h ]
-  %.sroa.012.0.copyload.i.i.i.i.i.i = load i64, ptr %.sroa.0.017.i.i.i.i.i.i42, align 1, !alias.scope !2562, !noalias !2564
+_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8EvorvD8vmS_4ruff.exit.i.i.i.i.i.i: ; preds = %bb.h
+  %.sroa.012.0.copyload.i.i.i.i.i.i = load i64, ptr %i.q, align 1, !alias.scope !2562, !noalias !2563
   %i.bu = and i64 %.sroa.012.0.copyload.i.i.i.i.i.i, -9187201950435737472
   %i.bv = icmp eq i64 %i.bu, 0
-  br i1 %i.bv, label %bb.i, label %_RNCNvXNtNtCsgYAxyi3ZRSt_4rkyv6string6verifyNtB6_14ArchivedStringINtCsfPFYAtJtK7K_9bytecheck6VerifyINtCsht2POEgrkhf_6rancor8StrategyINtNtB8_10validation9ValidatorNtNtNtB28_7archive9validator16ArchiveValidatorNtNtNtB28_6shared9validator15SharedValidatorENtB1B_5ErrorEE6verify0Cs8EvorvD8vmS_4ruff.exit.i.i.i
+  br i1 %i.bv, label %2, label %_RNCNvXNtNtCsgYAxyi3ZRSt_4rkyv6string6verifyNtB6_14ArchivedStringINtCsfPFYAtJtK7K_9bytecheck6VerifyINtCsht2POEgrkhf_6rancor8StrategyINtNtB8_10validation9ValidatorNtNtNtB28_7archive9validator16ArchiveValidatorNtNtNtB28_6shared9validator15SharedValidatorENtB1B_5ErrorEE6verify0Cs8EvorvD8vmS_4ruff.exit.i.i.i
 
-_RNCNvXNtNtCsgYAxyi3ZRSt_4rkyv6string6verifyNtB6_14ArchivedStringINtCsfPFYAtJtK7K_9bytecheck6VerifyINtCsht2POEgrkhf_6rancor8StrategyINtNtB8_10validation9ValidatorNtNtNtB28_7archive9validator16ArchiveValidatorNtNtNtB28_6shared9validator15SharedValidatorENtB1B_5ErrorEE6verify0Cs8EvorvD8vmS_4ruff.exit.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i.i, %.lr.ph39, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8EvorvD8vmS_4ruff.exit.i.i.i.i.i.i, %.lr.ph45, %.lr.ph45.1, %.lr.ph45.2, %.lr.ph45.3, %.lr.ph45.4, %.lr.ph45.5, %.lr.ph45.6
+_RNCNvXNtNtCsgYAxyi3ZRSt_4rkyv6string6verifyNtB6_14ArchivedStringINtCsfPFYAtJtK7K_9bytecheck6VerifyINtCsht2POEgrkhf_6rancor8StrategyINtNtB8_10validation9ValidatorNtNtNtB28_7archive9validator16ArchiveValidatorNtNtNtB28_6shared9validator15SharedValidatorENtB1B_5ErrorEE6verify0Cs8EvorvD8vmS_4ruff.exit.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i.i, %.lr.ph39, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8EvorvD8vmS_4ruff.exit.i.i.i.i.i.i, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8EvorvD8vmS_4ruff.exit.i.i.i.i.i.i.1, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8EvorvD8vmS_4ruff.exit.i.i.i.i.i.i.2, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8EvorvD8vmS_4ruff.exit.i.i.i.i.i.i.3, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8EvorvD8vmS_4ruff.exit.i.i.i.i.i.i.4, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8EvorvD8vmS_4ruff.exit.i.i.i.i.i.i.5, %bb.i, %.lr.ph45, %.lr.ph45.1, %.lr.ph45.2, %.lr.ph45.3, %.lr.ph45.4, %.lr.ph45.5, %.lr.ph45.6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !2555
   call void @_RNvNtNtCs4NRVxsYgnAr_4core3str8converts9from_utf8(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.b, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.q, i64 noundef %i.p)
   %i.bw = load i64, ptr %i.b, align 8, !range !13, !noalias !2555, !noundef !4
@@ -436,19 +494,13 @@ _RINvXs_NtNtCsgYAxyi3ZRSt_4rkyv10validation7archiveINtCsht2POEgrkhf_6rancor8Stra
 
 _RNvMNtNtCsgYAxyi3ZRSt_4rkyv6string4reprNtB2_18ArchivedStringRepr3len.exit36.i: ; preds = %.lr.ph.i.7.i31.i, %.lr.ph.i.6.i28.i, %.lr.ph.i.5.i25.i, %.lr.ph.i.4.i22.i, %.lr.ph.i.3.i19.i, %.lr.ph.i.2.i16.i, %.lr.ph.i.1.i13.i, %.lr.ph.i.preheader.i12.i
   %.sroa.0.0.i35.i = phi i64 [ 6, %.lr.ph.i.6.i28.i ], [ %spec.select.i34.i, %.lr.ph.i.7.i31.i ], [ 0, %.lr.ph.i.preheader.i12.i ], [ 1, %.lr.ph.i.1.i13.i ], [ 2, %.lr.ph.i.2.i16.i ], [ 3, %.lr.ph.i.3.i19.i ], [ 4, %.lr.ph.i.4.i22.i ], [ 5, %.lr.ph.i.5.i25.i ] ; 3 uses
-  %i.ch = and i64 %.sroa.0.0.i35.i, 8             ; 3 uses
+  %i.ch = and i64 %.sroa.0.0.i35.i, 8             ; 2 uses
   %i.ci = getelementptr inbounds nuw i8, ptr %0, i64 %i.ch ; 7 uses
   %i.cj = and i64 %.sroa.0.0.i35.i, 7             ; 7 uses
   %.not.i.i.i35 = icmp eq i64 %i.ch, 0
   br i1 %.not.i.i.i35, label %._crit_edge, label %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8EvorvD8vmS_4ruff.exit.i.i.i
 
-3:                                                ; preds = %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8EvorvD8vmS_4ruff.exit.i.i.i
-  %4 = getelementptr inbounds nuw i8, ptr %.sroa.0.017.i.i.i37, i64 8
-  %5 = add nsw i64 %.sroa.6.0.i.i.i36, -8         ; 2 uses
-  %.not.i.i.i = icmp eq i64 %5, 0
-  br i1 %.not.i.i.i, label %._crit_edge, label %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8EvorvD8vmS_4ruff.exit.i.i.i
-
-._crit_edge:                                      ; preds = %3, %_RNvMNtNtCsgYAxyi3ZRSt_4rkyv6string4reprNtB2_18ArchivedStringRepr3len.exit36.i
+._crit_edge:                                      ; preds = %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8EvorvD8vmS_4ruff.exit.i.i.i, %_RNvMNtNtCsgYAxyi3ZRSt_4rkyv6string4reprNtB2_18ArchivedStringRepr3len.exit36.i
   %i.ck = icmp samesign eq i64 %i.cj, 0
   br i1 %i.ck, label %_RNvXNtNtCsgYAxyi3ZRSt_4rkyv6string6verifyNtB4_14ArchivedStringINtCsfPFYAtJtK7K_9bytecheck6VerifyINtCsht2POEgrkhf_6rancor8StrategyINtNtB6_10validation9ValidatorNtNtNtB26_7archive9validator16ArchiveValidatorNtNtNtB26_6shared9validator15SharedValidatorENtB1z_5ErrorEE6verifyCs8EvorvD8vmS_4ruff.exit, label %.lr.ph
 
@@ -517,15 +569,13 @@ bb.u:                                             ; preds = %.lr.ph.5
   %i.dd = icmp sgt i8 %.val.i.i.i.i, -1
   br i1 %i.dd, label %bb.p, label %.loopexit.i.i
 
-_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8EvorvD8vmS_4ruff.exit.i.i.i: ; preds = %_RNvMNtNtCsgYAxyi3ZRSt_4rkyv6string4reprNtB2_18ArchivedStringRepr3len.exit36.i, %3
-  %.sroa.0.017.i.i.i37 = phi ptr [ %4, %3 ], [ %0, %_RNvMNtNtCsgYAxyi3ZRSt_4rkyv6string4reprNtB2_18ArchivedStringRepr3len.exit36.i ] ; 2 uses
-  %.sroa.6.0.i.i.i36 = phi i64 [ %5, %3 ], [ %i.ch, %_RNvMNtNtCsgYAxyi3ZRSt_4rkyv6string4reprNtB2_18ArchivedStringRepr3len.exit36.i ]
-  %.sroa.012.0.copyload.i.i.i = load i64, ptr %.sroa.0.017.i.i.i37, align 1, !alias.scope !2567
+_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8EvorvD8vmS_4ruff.exit.i.i.i: ; preds = %_RNvMNtNtCsgYAxyi3ZRSt_4rkyv6string4reprNtB2_18ArchivedStringRepr3len.exit36.i
+  %.sroa.012.0.copyload.i.i.i = load i64, ptr %0, align 4, !alias.scope !2567
   %i.de = and i64 %.sroa.012.0.copyload.i.i.i, -9187201950435737472
   %i.df = icmp eq i64 %i.de, 0
-  br i1 %i.df, label %3, label %.loopexit.i.i
+  br i1 %i.df, label %._crit_edge, label %.loopexit.i.i
 
-.loopexit.i.i:                                    ; preds = %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8EvorvD8vmS_4ruff.exit.i.i.i, %.lr.ph, %.lr.ph.1, %.lr.ph.2, %.lr.ph.3, %.lr.ph.4, %.lr.ph.5, %.lr.ph.6
+.loopexit.i.i:                                    ; preds = %.lr.ph, %.lr.ph.1, %.lr.ph.2, %.lr.ph.3, %.lr.ph.4, %.lr.ph.5, %.lr.ph.6, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8EvorvD8vmS_4ruff.exit.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !2569
   call void @_RNvNtNtCs4NRVxsYgnAr_4core3str8converts9from_utf8(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, ptr noalias noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(8) %0, i64 noundef %.sroa.0.0.i35.i), !noalias !2570
   %i.dg = load i64, ptr %i.a, align 8, !range !13, !noalias !2569, !noundef !4
@@ -928,8 +978,8 @@ begin_hunk_1_@llvm.vector.reduce.add.v2i64
 !2560 = !{!2538, !2526, !2524}
 !2561 = !{!2540, !2526, !2524}
 !2562 = !{!2528, !2521}
-!2563 = !{!2542, !2526, !2524}
-!2564 = !{!2526, !2524}
+!2563 = !{!2526, !2524}
+!2564 = !{!2542, !2526, !2524}
 !2565 = !{!2544, !2521}
 !2566 = !{!2546}
 !2567 = !{!2548, !2521}

@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ruff-rs/original/libcst_native-f6ddb4b5b15f8b82.libcst_native.799f4444683a0d30-cgu.09?download=true
 inline.NumInlined: 137
 inline.NumDeleted: 97
-loop-unroll.NumCompletelyUnrolled: 3
-loop-unroll.NumUnrolled: 3
+loop-unroll.NumCompletelyUnrolled: 4
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@_RNvMNtNtCsarohYtwVpE2_13libcst_native9tokenizer4coreNtB2_8TokState14consume_number:tailrecurse
   %i.di = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i8 2, ptr %i.di, align 4
@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 96
   %i.r = getelementptr inbounds nuw i8, ptr %i.p, i64 184
   %i.s = call { ptr, i64 } @_RNvMs1_NtNtCsarohYtwVpE2_13libcst_native9tokenizer13text_positionNtB5_12TextPosition20slice_from_start_pos(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(88) %i.q, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.r) ; 2 uses
-  %i.t = extractvalue { ptr, i64 } %i.s, 0        ; 10 uses
+  %i.t = extractvalue { ptr, i64 } %i.s, 0        ; 16 uses
   %i.u = extractvalue { ptr, i64 } %i.s, 1        ; 8 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !134)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
@@ -260,19 +260,79 @@ bb.g:                                             ; preds = %.lr.ph
   br i1 %i.ar, label %bb.g, label %_RNvNtNtCsarohYtwVpE2_13libcst_native9tokenizer4core17verify_identifier.exit
 
 bb.h:                                             ; preds = %bb.d
-  %i.as = and i64 %i.u, 56                        ; 3 uses
+  %i.as = and i64 %i.u, 56                        ; 8 uses
   %i.at = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.as ; 7 uses
   %i.au = and i64 %i.u, 7                         ; 7 uses
   %.not.i.i60 = icmp eq i64 %i.as, 0
   br i1 %.not.i.i60, label %._crit_edge, label %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsarohYtwVpE2_13libcst_native.exit.i.i
 
-bb.i:                                             ; preds = %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsarohYtwVpE2_13libcst_native.exit.i.i
-  %i.av = getelementptr inbounds nuw i8, ptr %.sroa.0.017.i.i62, i64 8
-  %2 = add nsw i64 %.sroa.6.0.i.i61, -8           ; 2 uses
-  %.not.i.i.a = icmp eq i64 %2, 0
-  br i1 %.not.i.i.a, label %._crit_edge, label %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsarohYtwVpE2_13libcst_native.exit.i.i
+2:                                                ; preds = %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsarohYtwVpE2_13libcst_native.exit.i.i
+  %.not.i.i = icmp eq i64 %i.as, 8
+  br i1 %.not.i.i, label %._crit_edge, label %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsarohYtwVpE2_13libcst_native.exit.i.i.1
 
-._crit_edge:                                      ; preds = %bb.i, %bb.h
+_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsarohYtwVpE2_13libcst_native.exit.i.i.1: ; preds = %2
+  %3 = getelementptr inbounds nuw i8, ptr %i.t, i64 8
+  %.sroa.012.0.copyload.i.i.1 = load i64, ptr %3, align 1, !alias.scope !141
+  %4 = and i64 %.sroa.012.0.copyload.i.i.1, -9187201950435737472
+  %5 = icmp eq i64 %4, 0
+  br i1 %5, label %6, label %_RNvNtNtCsarohYtwVpE2_13libcst_native9tokenizer4core17verify_identifier.exit
+
+6:                                                ; preds = %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsarohYtwVpE2_13libcst_native.exit.i.i.1
+  %.not.i.i.1 = icmp eq i64 %i.as, 16
+  br i1 %.not.i.i.1, label %._crit_edge, label %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsarohYtwVpE2_13libcst_native.exit.i.i.2
+
+_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsarohYtwVpE2_13libcst_native.exit.i.i.2: ; preds = %6
+  %7 = getelementptr inbounds nuw i8, ptr %i.t, i64 16
+  %.sroa.012.0.copyload.i.i.2 = load i64, ptr %7, align 1, !alias.scope !141
+  %8 = and i64 %.sroa.012.0.copyload.i.i.2, -9187201950435737472
+  %9 = icmp eq i64 %8, 0
+  br i1 %9, label %10, label %_RNvNtNtCsarohYtwVpE2_13libcst_native9tokenizer4core17verify_identifier.exit
+
+10:                                               ; preds = %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsarohYtwVpE2_13libcst_native.exit.i.i.2
+  %.not.i.i.2 = icmp eq i64 %i.as, 24
+  br i1 %.not.i.i.2, label %._crit_edge, label %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsarohYtwVpE2_13libcst_native.exit.i.i.3
+
+_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsarohYtwVpE2_13libcst_native.exit.i.i.3: ; preds = %10
+  %11 = getelementptr inbounds nuw i8, ptr %i.t, i64 24
+  %.sroa.012.0.copyload.i.i.3 = load i64, ptr %11, align 1, !alias.scope !141
+  %12 = and i64 %.sroa.012.0.copyload.i.i.3, -9187201950435737472
+  %13 = icmp eq i64 %12, 0
+  br i1 %13, label %14, label %_RNvNtNtCsarohYtwVpE2_13libcst_native9tokenizer4core17verify_identifier.exit
+
+14:                                               ; preds = %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsarohYtwVpE2_13libcst_native.exit.i.i.3
+  %.not.i.i.3 = icmp eq i64 %i.as, 32
+  br i1 %.not.i.i.3, label %._crit_edge, label %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsarohYtwVpE2_13libcst_native.exit.i.i.4
+
+_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsarohYtwVpE2_13libcst_native.exit.i.i.4: ; preds = %14
+  %15 = getelementptr inbounds nuw i8, ptr %i.t, i64 32
+  %.sroa.012.0.copyload.i.i.4 = load i64, ptr %15, align 1, !alias.scope !141
+  %16 = and i64 %.sroa.012.0.copyload.i.i.4, -9187201950435737472
+  %17 = icmp eq i64 %16, 0
+  br i1 %17, label %18, label %_RNvNtNtCsarohYtwVpE2_13libcst_native9tokenizer4core17verify_identifier.exit
+
+18:                                               ; preds = %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsarohYtwVpE2_13libcst_native.exit.i.i.4
+  %.not.i.i.4 = icmp eq i64 %i.as, 40
+  br i1 %.not.i.i.4, label %._crit_edge, label %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsarohYtwVpE2_13libcst_native.exit.i.i.5
+
+_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsarohYtwVpE2_13libcst_native.exit.i.i.5: ; preds = %18
+  %19 = getelementptr inbounds nuw i8, ptr %i.t, i64 40
+  %.sroa.012.0.copyload.i.i.5 = load i64, ptr %19, align 1, !alias.scope !141
+  %20 = and i64 %.sroa.012.0.copyload.i.i.5, -9187201950435737472
+  %21 = icmp eq i64 %20, 0
+  br i1 %21, label %22, label %_RNvNtNtCsarohYtwVpE2_13libcst_native9tokenizer4core17verify_identifier.exit
+
+22:                                               ; preds = %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsarohYtwVpE2_13libcst_native.exit.i.i.5
+  %.not.i.i.5 = icmp eq i64 %i.as, 48
+  br i1 %.not.i.i.5, label %._crit_edge, label %bb.i
+
+bb.i:                                             ; preds = %22
+  %i.av = getelementptr inbounds nuw i8, ptr %i.t, i64 48
+  %.sroa.012.0.copyload.i.i.6 = load i64, ptr %i.av, align 1, !alias.scope !141
+  %23 = and i64 %.sroa.012.0.copyload.i.i.6, -9187201950435737472
+  %.not.i.i.a = icmp eq i64 %23, 0
+  br i1 %.not.i.i.a, label %._crit_edge, label %_RNvNtNtCsarohYtwVpE2_13libcst_native9tokenizer4core17verify_identifier.exit
+
+._crit_edge:                                      ; preds = %2, %6, %10, %14, %18, %22, %bb.i, %bb.h
   %i.aw = icmp samesign eq i64 %i.au, 0
   br i1 %i.aw, label %_RNvNtNtCsarohYtwVpE2_13libcst_native9tokenizer4core17verify_identifier.exit.thread, label %.lr.ph64
 
@@ -341,19 +401,17 @@ bb.o:                                             ; preds = %.lr.ph64.5
   %i.bp = icmp sgt i8 %.val.i.i.i, -1
   br i1 %i.bp, label %bb.j, label %_RNvNtNtCsarohYtwVpE2_13libcst_native9tokenizer4core17verify_identifier.exit
 
-_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsarohYtwVpE2_13libcst_native.exit.i.i: ; preds = %bb.h, %bb.i
-  %.sroa.0.017.i.i62 = phi ptr [ %i.av, %bb.i ], [ %i.t, %bb.h ] ; 2 uses
-  %.sroa.6.0.i.i61 = phi i64 [ %2, %bb.i ], [ %i.as, %bb.h ]
-  %.sroa.012.0.copyload.i.i = load i64, ptr %.sroa.0.017.i.i62, align 1, !alias.scope !141
+_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsarohYtwVpE2_13libcst_native.exit.i.i: ; preds = %bb.h
+  %.sroa.012.0.copyload.i.i = load i64, ptr %i.t, align 1, !alias.scope !141
   %i.bq = and i64 %.sroa.012.0.copyload.i.i, -9187201950435737472
   %i.br = icmp eq i64 %i.bq, 0
-  br i1 %i.br, label %bb.i, label %_RNvNtNtCsarohYtwVpE2_13libcst_native9tokenizer4core17verify_identifier.exit
+  br i1 %i.br, label %2, label %_RNvNtNtCsarohYtwVpE2_13libcst_native9tokenizer4core17verify_identifier.exit
 
 _RNvNtNtCsarohYtwVpE2_13libcst_native9tokenizer4core17verify_identifier.exit.thread: ; preds = %bb.g, %bb.j, %bb.k, %bb.l, %bb.m, %bb.n, %bb.o, %.lr.ph64.6, %._crit_edge.i.i.i, %._crit_edge
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   br label %bb.aa
 
-_RNvNtNtCsarohYtwVpE2_13libcst_native9tokenizer4core17verify_identifier.exit: ; preds = %.lr.ph.i.i.i, %.lr.ph, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsarohYtwVpE2_13libcst_native.exit.i.i, %.lr.ph64, %.lr.ph64.1, %.lr.ph64.2, %.lr.ph64.3, %.lr.ph64.4, %.lr.ph64.5, %.lr.ph64.6
+_RNvNtNtCsarohYtwVpE2_13libcst_native9tokenizer4core17verify_identifier.exit: ; preds = %.lr.ph.i.i.i, %.lr.ph, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsarohYtwVpE2_13libcst_native.exit.i.i, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsarohYtwVpE2_13libcst_native.exit.i.i.1, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsarohYtwVpE2_13libcst_native.exit.i.i.2, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsarohYtwVpE2_13libcst_native.exit.i.i.3, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsarohYtwVpE2_13libcst_native.exit.i.i.4, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsarohYtwVpE2_13libcst_native.exit.i.i.5, %bb.i, %.lr.ph64, %.lr.ph64.1, %.lr.ph64.2, %.lr.ph64.3, %.lr.ph64.4, %.lr.ph64.5, %.lr.ph64.6
   %i.bs = call noundef zeroext i1 @_RINvMs2_NtNtCs2AWtUsOyxgP_3std6thread5localINtB6_8LocalKeyNtNtNtCs44bUZaa7qIB_5regex5regex6string5RegexE4withNCNvNtNtCsarohYtwVpE2_13libcst_native9tokenizer4core17verify_identifier0bEB1R_(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(8) @26, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.f)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   br i1 %i.bs, label %bb.aa, label %bb.z

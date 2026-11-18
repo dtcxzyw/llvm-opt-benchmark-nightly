@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/raft-rs/original/raft_proto-87d3c1e0d4c3ff14.raft_proto.72ee98fef958e700-cgu.2?download=true
 inline.NumInlined: 246
 inline.NumDeleted: 147
-loop-unroll.NumCompletelyUnrolled: 6
-loop-unroll.NumUnrolled: 6
+loop-unroll.NumCompletelyUnrolled: 8
+loop-unroll.NumUnrolled: 8
 begin_hunk_0_@_RNvMs2_NtCslpwiOMB70Kp_8protobuf8repeatedINtB5_13RepeatedFieldNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb5EntryE12push_defaultB14_:bb.a
 bb.i:                                             ; preds = %bb.b
   tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %i.c, i64 noundef %i.e, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @4) #26
@@ -204,38 +204,91 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.c = and i64 %3, 1152921504606846968          ; 3 uses
-  %i.d = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.c ; 2 uses
+  %i.d = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.c ; 7 uses
   %i.e = shl nuw nsw i64 %3, 3
-  %.idx60 = and i64 %i.e, 56                      ; 2 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 %.idx60
-  %.not.i50.a = icmp eq i64 %i.c, 0
-  %.not.not.not.i.not.not.i53.a = icmp samesign eq i64 %.idx60, 0
+  %.idx60 = and i64 %i.e, 56                      ; 7 uses
+  %.not.i50 = icmp eq i64 %i.c, 0
+  %.not.not.not.i.not.not.i53 = icmp samesign eq i64 %.idx60, 0
+  %.not.not.not.i.not.not.i = icmp samesign eq i64 %.idx60, 8
+  %4 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
+  %.not.not.not.i.not.not.i.1 = icmp samesign eq i64 %.idx60, 16
+  %5 = getelementptr inbounds nuw i8, ptr %i.d, i64 16
+  %.not.not.not.i.not.not.i.2 = icmp samesign eq i64 %.idx60, 24
+  %6 = getelementptr inbounds nuw i8, ptr %i.d, i64 24
+  %.not.not.not.i.not.not.i.3 = icmp samesign eq i64 %.idx60, 32
+  %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 32
+  %.not.i50.a = icmp samesign eq i64 %.idx60, 40
+  %7 = getelementptr inbounds nuw i8, ptr %i.d, i64 40
+  %.not.not.not.i.not.not.i53.a = icmp samesign eq i64 %.idx60, 48
+  %8 = getelementptr inbounds nuw i8, ptr %i.d, i64 48
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %.loopexit27
   %.sroa.01.029 = phi ptr [ %0, %.lr.ph ], [ %i.al, %.loopexit27 ] ; 2 uses
-  %.sroa.01.0.val = load i64, ptr %.sroa.01.029, align 8 ; 9 uses
-  br i1 %.not.i50.a, label %.preheader36.preheader.a, label %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsC_NtB9_3cmpyNtB1L_13SliceContains14slice_contains0ECs9RMo4C3Dvu6_10raft_proto.exit.i
+  %.sroa.01.0.val = load i64, ptr %.sroa.01.029, align 8 ; 15 uses
+  br i1 %.not.i50, label %.preheader36.preheader, label %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsC_NtB9_3cmpyNtB1L_13SliceContains14slice_contains0ECs9RMo4C3Dvu6_10raft_proto.exit.i
 
 bb.c:                                             ; preds = %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsC_NtB9_3cmpyNtB1L_13SliceContains14slice_contains0ECs9RMo4C3Dvu6_10raft_proto.exit.i
   %i.g = getelementptr inbounds nuw i8, ptr %.sroa.0.05.i52, i64 64
   %i.h = add nsw i64 %.sroa.5.0.i51, -8           ; 2 uses
   %.not.i = icmp eq i64 %i.h, 0
-  br i1 %.not.i, label %.preheader36.preheader.a, label %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsC_NtB9_3cmpyNtB1L_13SliceContains14slice_contains0ECs9RMo4C3Dvu6_10raft_proto.exit.i
+  br i1 %.not.i, label %.preheader36.preheader, label %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsC_NtB9_3cmpyNtB1L_13SliceContains14slice_contains0ECs9RMo4C3Dvu6_10raft_proto.exit.i
 
-.preheader36.preheader.a:                         ; preds = %bb.c, %bb.b
-  br i1 %.not.not.not.i.not.not.i53.a, label %_RNvXsC_NtNtCskKLDkoKarTP_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit, label %.lr.ph54
+.preheader36.preheader:                           ; preds = %bb.c, %bb.b
+  br i1 %.not.not.not.i.not.not.i53, label %_RNvXsC_NtNtCskKLDkoKarTP_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit, label %.lr.ph54
 
-.preheader36.a:                                   ; preds = %.lr.ph54
-  %4 = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
-  %.not.not.not.i.not.not.i.a = icmp eq ptr %4, %i.f
-  br i1 %.not.not.not.i.not.not.i.a, label %_RNvXsC_NtNtCskKLDkoKarTP_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit, label %.lr.ph54
+.preheader36:                                     ; preds = %.lr.ph54
+  br i1 %.not.not.not.i.not.not.i, label %_RNvXsC_NtNtCskKLDkoKarTP_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit, label %.lr.ph54.1
 
-.lr.ph54:                                         ; preds = %.preheader36.preheader.a, %.preheader36.a
-  %5 = phi ptr [ %4, %.preheader36.a ], [ %i.d, %.preheader36.preheader.a ] ; 2 uses
-  %.val2.i.i = load i64, ptr %5, align 8, !alias.scope !237, !noalias !238, !noundef !4
+.lr.ph54.1:                                       ; preds = %.preheader36
+  %.val2.i.i.1 = load i64, ptr %4, align 8, !alias.scope !237, !noalias !238, !noundef !4
+  %9 = icmp eq i64 %.val2.i.i.1, %.sroa.01.0.val
+  br i1 %9, label %.loopexit27, label %.preheader36.1
+
+.preheader36.1:                                   ; preds = %.lr.ph54.1
+  br i1 %.not.not.not.i.not.not.i.1, label %_RNvXsC_NtNtCskKLDkoKarTP_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit, label %.lr.ph54.2
+
+.lr.ph54.2:                                       ; preds = %.preheader36.1
+  %.val2.i.i.2 = load i64, ptr %5, align 8, !alias.scope !237, !noalias !238, !noundef !4
+  %10 = icmp eq i64 %.val2.i.i.2, %.sroa.01.0.val
+  br i1 %10, label %.loopexit27, label %.preheader36.2
+
+.preheader36.2:                                   ; preds = %.lr.ph54.2
+  br i1 %.not.not.not.i.not.not.i.2, label %_RNvXsC_NtNtCskKLDkoKarTP_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit, label %.lr.ph54.3
+
+.lr.ph54.3:                                       ; preds = %.preheader36.2
+  %.val2.i.i.3 = load i64, ptr %6, align 8, !alias.scope !237, !noalias !238, !noundef !4
+  %11 = icmp eq i64 %.val2.i.i.3, %.sroa.01.0.val
+  br i1 %11, label %.loopexit27, label %.preheader36.3
+
+.preheader36.3:                                   ; preds = %.lr.ph54.3
+  br i1 %.not.not.not.i.not.not.i.3, label %_RNvXsC_NtNtCskKLDkoKarTP_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit, label %.lr.ph54.4
+
+.lr.ph54.4:                                       ; preds = %.preheader36.3
+  %.val2.i.i.4 = load i64, ptr %i.f, align 8, !alias.scope !237, !noalias !238, !noundef !4
+  %12 = icmp eq i64 %.val2.i.i.4, %.sroa.01.0.val
+  br i1 %12, label %.loopexit27, label %.preheader36.4
+
+.preheader36.4:                                   ; preds = %.lr.ph54.4
+  br i1 %.not.i50.a, label %_RNvXsC_NtNtCskKLDkoKarTP_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit, label %.lr.ph54.5
+
+.lr.ph54.5:                                       ; preds = %.preheader36.4
+  %.val2.i.i.5 = load i64, ptr %7, align 8, !alias.scope !237, !noalias !238, !noundef !4
+  %13 = icmp eq i64 %.val2.i.i.5, %.sroa.01.0.val
+  br i1 %13, label %.loopexit27, label %.preheader36.preheader.a
+
+.preheader36.preheader.a:                         ; preds = %.lr.ph54.5
+  br i1 %.not.not.not.i.not.not.i53.a, label %_RNvXsC_NtNtCskKLDkoKarTP_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit, label %.preheader36.a
+
+.preheader36.a:                                   ; preds = %.preheader36.preheader.a
+  %.val2.i.i.6 = load i64, ptr %8, align 8, !alias.scope !237, !noalias !238, !noundef !4
+  %.not.not.not.i.not.not.i.a = icmp eq i64 %.val2.i.i.6, %.sroa.01.0.val
+  br i1 %.not.not.not.i.not.not.i.a, label %.loopexit27, label %_RNvXsC_NtNtCskKLDkoKarTP_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit
+
+.lr.ph54:                                         ; preds = %.preheader36.preheader
+  %.val2.i.i = load i64, ptr %i.d, align 8, !alias.scope !237, !noalias !238, !noundef !4
   %i.i = icmp eq i64 %.val2.i.i, %.sroa.01.0.val
-  br i1 %i.i, label %.loopexit27, label %.preheader36.a
+  br i1 %i.i, label %.loopexit27, label %.preheader36
 
 _RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsC_NtB9_3cmpyNtB1L_13SliceContains14slice_contains0ECs9RMo4C3Dvu6_10raft_proto.exit.i: ; preds = %bb.b, %bb.c
   %.sroa.0.05.i52 = phi ptr [ %i.g, %bb.c ], [ %2, %bb.b ] ; 9 uses
@@ -280,47 +333,100 @@ _RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits
 
 .lr.ph32:                                         ; preds = %._crit_edge
   %i.ah = and i64 %1, 1152921504606846968         ; 3 uses
-  %i.ai = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.ah ; 2 uses
+  %i.ai = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.ah ; 7 uses
   %i.aj = shl nuw nsw i64 %1, 3
-  %.idx61 = and i64 %i.aj, 56                     ; 2 uses
-  %i.ak = getelementptr inbounds nuw i8, ptr %i.ai, i64 %.idx61
-  %.not.i855.a = icmp eq i64 %i.ah, 0
-  %.not.not.not.i.not.not.i1958.a = icmp samesign eq i64 %.idx61, 0
+  %.idx61 = and i64 %i.aj, 56                     ; 7 uses
+  %.not.i855 = icmp eq i64 %i.ah, 0
+  %.not.not.not.i.not.not.i1958 = icmp samesign eq i64 %.idx61, 0
+  %.not.not.not.i.not.not.i19 = icmp samesign eq i64 %.idx61, 8
+  %14 = getelementptr inbounds nuw i8, ptr %i.ai, i64 8
+  %.not.not.not.i.not.not.i19.1 = icmp samesign eq i64 %.idx61, 16
+  %15 = getelementptr inbounds nuw i8, ptr %i.ai, i64 16
+  %.not.not.not.i.not.not.i19.2 = icmp samesign eq i64 %.idx61, 24
+  %16 = getelementptr inbounds nuw i8, ptr %i.ai, i64 24
+  %.not.not.not.i.not.not.i19.3 = icmp samesign eq i64 %.idx61, 32
+  %i.ak = getelementptr inbounds nuw i8, ptr %i.ai, i64 32
+  %.not.i855.a = icmp samesign eq i64 %.idx61, 40
+  %17 = getelementptr inbounds nuw i8, ptr %i.ai, i64 40
+  %.not.not.not.i.not.not.i1958.a = icmp samesign eq i64 %.idx61, 48
+  %18 = getelementptr inbounds nuw i8, ptr %i.ai, i64 48
   br label %bb.d
 
-.loopexit27:                                      ; preds = %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsC_NtB9_3cmpyNtB1L_13SliceContains14slice_contains0ECs9RMo4C3Dvu6_10raft_proto.exit.i, %.lr.ph54
+.loopexit27:                                      ; preds = %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsC_NtB9_3cmpyNtB1L_13SliceContains14slice_contains0ECs9RMo4C3Dvu6_10raft_proto.exit.i, %.lr.ph54, %.lr.ph54.1, %.lr.ph54.2, %.lr.ph54.3, %.lr.ph54.4, %.lr.ph54.5, %.preheader36.a
   %i.al = getelementptr inbounds nuw i8, ptr %.sroa.01.029, i64 8 ; 2 uses
   %i.am = icmp eq ptr %i.al, %i.a
   br i1 %i.am, label %._crit_edge, label %bb.b
 
-_RNvXsC_NtNtCskKLDkoKarTP_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit: ; preds = %.preheader36.preheader.a, %.preheader36.a, %.loopexit, %.preheader.preheader.a, %.preheader.a, %._crit_edge
-  %.sroa.0.0 = phi i1 [ false, %.preheader.a ], [ true, %._crit_edge ], [ false, %.preheader36.a ], [ false, %.preheader.preheader.a ], [ true, %.loopexit ], [ false, %.preheader36.preheader.a ]
+_RNvXsC_NtNtCskKLDkoKarTP_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit: ; preds = %.preheader.a, %.preheader36.preheader, %.preheader36.a, %.preheader36, %.preheader36.1, %.preheader36.2, %.preheader36.3, %.preheader36.4, %.preheader36.preheader.a, %.loopexit, %.preheader.preheader, %.preheader, %.preheader.1, %.preheader.2, %.preheader.3, %.preheader.4, %.preheader.preheader.a, %._crit_edge
+  %.sroa.0.0 = phi i1 [ false, %.preheader36.preheader ], [ true, %._crit_edge ], [ false, %.preheader36.a ], [ false, %.preheader.preheader ], [ false, %.preheader.preheader.a ], [ false, %.preheader.4 ], [ false, %.preheader.3 ], [ false, %.preheader.2 ], [ false, %.preheader.1 ], [ false, %.preheader ], [ true, %.loopexit ], [ false, %.preheader36.preheader.a ], [ false, %.preheader36.4 ], [ false, %.preheader36.3 ], [ false, %.preheader36.2 ], [ false, %.preheader36.1 ], [ false, %.preheader36 ], [ false, %.preheader.a ]
   ret i1 %.sroa.0.0
 
 bb.d:                                             ; preds = %.lr.ph32, %.loopexit
   %.sroa.03.030 = phi ptr [ %2, %.lr.ph32 ], [ %i.bm, %.loopexit ] ; 2 uses
-  %.sroa.03.0.val = load i64, ptr %.sroa.03.030, align 8 ; 9 uses
-  br i1 %.not.i855.a, label %.preheader.preheader.a, label %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsC_NtB9_3cmpyNtB1L_13SliceContains14slice_contains0ECs9RMo4C3Dvu6_10raft_proto.exit.i9
+  %.sroa.03.0.val = load i64, ptr %.sroa.03.030, align 8 ; 15 uses
+  br i1 %.not.i855, label %.preheader.preheader, label %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsC_NtB9_3cmpyNtB1L_13SliceContains14slice_contains0ECs9RMo4C3Dvu6_10raft_proto.exit.i9
 
 bb.e:                                             ; preds = %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsC_NtB9_3cmpyNtB1L_13SliceContains14slice_contains0ECs9RMo4C3Dvu6_10raft_proto.exit.i9
   %i.an = getelementptr inbounds nuw i8, ptr %.sroa.0.05.i757, i64 64
   %i.ao = add nsw i64 %.sroa.5.0.i656, -8         ; 2 uses
   %.not.i8 = icmp eq i64 %i.ao, 0
-  br i1 %.not.i8, label %.preheader.preheader.a, label %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsC_NtB9_3cmpyNtB1L_13SliceContains14slice_contains0ECs9RMo4C3Dvu6_10raft_proto.exit.i9
+  br i1 %.not.i8, label %.preheader.preheader, label %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsC_NtB9_3cmpyNtB1L_13SliceContains14slice_contains0ECs9RMo4C3Dvu6_10raft_proto.exit.i9
 
-.preheader.preheader.a:                           ; preds = %bb.e, %bb.d
-  br i1 %.not.not.not.i.not.not.i1958.a, label %_RNvXsC_NtNtCskKLDkoKarTP_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit, label %.lr.ph59
+.preheader.preheader:                             ; preds = %bb.e, %bb.d
+  br i1 %.not.not.not.i.not.not.i1958, label %_RNvXsC_NtNtCskKLDkoKarTP_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit, label %.lr.ph59
 
-.preheader.a:                                     ; preds = %.lr.ph59
-  %6 = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 2 uses
-  %.not.not.not.i.not.not.i19.a = icmp eq ptr %6, %i.ak
-  br i1 %.not.not.not.i.not.not.i19.a, label %_RNvXsC_NtNtCskKLDkoKarTP_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit, label %.lr.ph59
+.preheader:                                       ; preds = %.lr.ph59
+  br i1 %.not.not.not.i.not.not.i19, label %_RNvXsC_NtNtCskKLDkoKarTP_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit, label %.lr.ph59.1
 
-.lr.ph59:                                         ; preds = %.preheader.preheader.a, %.preheader.a
-  %7 = phi ptr [ %6, %.preheader.a ], [ %i.ai, %.preheader.preheader.a ] ; 2 uses
-  %.val2.i.i20 = load i64, ptr %7, align 8, !alias.scope !240, !noalias !241, !noundef !4
+.lr.ph59.1:                                       ; preds = %.preheader
+  %.val2.i.i20.1 = load i64, ptr %14, align 8, !alias.scope !240, !noalias !241, !noundef !4
+  %19 = icmp eq i64 %.val2.i.i20.1, %.sroa.03.0.val
+  br i1 %19, label %.loopexit, label %.preheader.1
+
+.preheader.1:                                     ; preds = %.lr.ph59.1
+  br i1 %.not.not.not.i.not.not.i19.1, label %_RNvXsC_NtNtCskKLDkoKarTP_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit, label %.lr.ph59.2
+
+.lr.ph59.2:                                       ; preds = %.preheader.1
+  %.val2.i.i20.2 = load i64, ptr %15, align 8, !alias.scope !240, !noalias !241, !noundef !4
+  %20 = icmp eq i64 %.val2.i.i20.2, %.sroa.03.0.val
+  br i1 %20, label %.loopexit, label %.preheader.2
+
+.preheader.2:                                     ; preds = %.lr.ph59.2
+  br i1 %.not.not.not.i.not.not.i19.2, label %_RNvXsC_NtNtCskKLDkoKarTP_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit, label %.lr.ph59.3
+
+.lr.ph59.3:                                       ; preds = %.preheader.2
+  %.val2.i.i20.3 = load i64, ptr %16, align 8, !alias.scope !240, !noalias !241, !noundef !4
+  %21 = icmp eq i64 %.val2.i.i20.3, %.sroa.03.0.val
+  br i1 %21, label %.loopexit, label %.preheader.3
+
+.preheader.3:                                     ; preds = %.lr.ph59.3
+  br i1 %.not.not.not.i.not.not.i19.3, label %_RNvXsC_NtNtCskKLDkoKarTP_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit, label %.lr.ph59.4
+
+.lr.ph59.4:                                       ; preds = %.preheader.3
+  %.val2.i.i20.4 = load i64, ptr %i.ak, align 8, !alias.scope !240, !noalias !241, !noundef !4
+  %22 = icmp eq i64 %.val2.i.i20.4, %.sroa.03.0.val
+  br i1 %22, label %.loopexit, label %.preheader.4
+
+.preheader.4:                                     ; preds = %.lr.ph59.4
+  br i1 %.not.i855.a, label %_RNvXsC_NtNtCskKLDkoKarTP_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit, label %.lr.ph59.5
+
+.lr.ph59.5:                                       ; preds = %.preheader.4
+  %.val2.i.i20.5 = load i64, ptr %17, align 8, !alias.scope !240, !noalias !241, !noundef !4
+  %23 = icmp eq i64 %.val2.i.i20.5, %.sroa.03.0.val
+  br i1 %23, label %.loopexit, label %.preheader.preheader.a
+
+.preheader.preheader.a:                           ; preds = %.lr.ph59.5
+  br i1 %.not.not.not.i.not.not.i1958.a, label %_RNvXsC_NtNtCskKLDkoKarTP_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit, label %.preheader.a
+
+.preheader.a:                                     ; preds = %.preheader.preheader.a
+  %.val2.i.i20.6 = load i64, ptr %18, align 8, !alias.scope !240, !noalias !241, !noundef !4
+  %.not.not.not.i.not.not.i19.a = icmp eq i64 %.val2.i.i20.6, %.sroa.03.0.val
+  br i1 %.not.not.not.i.not.not.i19.a, label %.loopexit, label %_RNvXsC_NtNtCskKLDkoKarTP_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit
+
+.lr.ph59:                                         ; preds = %.preheader.preheader
+  %.val2.i.i20 = load i64, ptr %i.ai, align 8, !alias.scope !240, !noalias !241, !noundef !4
   %i.ap = icmp eq i64 %.val2.i.i20, %.sroa.03.0.val
-  br i1 %i.ap, label %.loopexit, label %.preheader.a
+  br i1 %i.ap, label %.loopexit, label %.preheader
 
 _RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsC_NtB9_3cmpyNtB1L_13SliceContains14slice_contains0ECs9RMo4C3Dvu6_10raft_proto.exit.i9: ; preds = %bb.d, %bb.e
   %.sroa.0.05.i757 = phi ptr [ %i.an, %bb.e ], [ %0, %bb.d ] ; 9 uses
@@ -357,7 +463,7 @@ _RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits
   %i.bl = or i1 %i.bi, %i.bk
   br i1 %i.bl, label %.loopexit, label %bb.e
 
-.loopexit:                                        ; preds = %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsC_NtB9_3cmpyNtB1L_13SliceContains14slice_contains0ECs9RMo4C3Dvu6_10raft_proto.exit.i9, %.lr.ph59
+.loopexit:                                        ; preds = %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsC_NtB9_3cmpyNtB1L_13SliceContains14slice_contains0ECs9RMo4C3Dvu6_10raft_proto.exit.i9, %.lr.ph59, %.lr.ph59.1, %.lr.ph59.2, %.lr.ph59.3, %.lr.ph59.4, %.lr.ph59.5, %.preheader.a
   %i.bm = getelementptr inbounds nuw i8, ptr %.sroa.03.030, i64 8 ; 2 uses
   %i.bn = icmp eq ptr %i.bm, %i.af
   br i1 %i.bn, label %_RNvXsC_NtNtCskKLDkoKarTP_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit, label %bb.d

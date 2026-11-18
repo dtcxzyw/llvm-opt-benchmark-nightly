@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/candle-rs/original/candle_datasets-6e6d6245fef4de79.candle_datasets.60f338b118604b5e-cgu.5?download=true
 inline.NumInlined: 345
 inline.NumDeleted: 138
-loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumUnrolled: 1
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_RINvMs1_NtCsltEA4u8Pgfu_11candle_core6tensorNtB6_6Tensor3newRSmECs8k3UfHgJ3Xe_15candle_datasets:bb.a
   %.sroa.5.0..sroa_idx.i.i17.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 24
   store i64 %2, ptr %.sroa.5.0..sroa_idx.i.i17.i.i, align 8, !alias.scope !128, !noalias !114
@@ -204,38 +204,91 @@ bb.d:                                             ; preds = %bb.c
   %i.w = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   %i.x = load ptr, ptr %i.w, align 8, !noalias !149, !nonnull !4, !noundef !4 ; 2 uses
   %i.y = and i64 %i.q, 1152921504606846968        ; 3 uses
-  %i.z = getelementptr inbounds nuw [8 x i8], ptr %i.x, i64 %i.y ; 2 uses
+  %i.z = getelementptr inbounds nuw [8 x i8], ptr %i.x, i64 %i.y ; 7 uses
   %i.aa = shl nuw nsw i64 %i.q, 3
-  %.idx = and i64 %i.aa, 56                       ; 2 uses
-  %i.ab = getelementptr inbounds nuw i8, ptr %i.z, i64 %.idx
-  %.not.i.i.i.i82.a = icmp eq i64 %i.y, 0
-  %.not.not.not.i.not.not.i.not.i.i.i85.a = icmp samesign eq i64 %.idx, 0
+  %.idx = and i64 %i.aa, 56                       ; 7 uses
+  %.not.i.i.i.i82 = icmp eq i64 %i.y, 0
+  %.not.not.not.i.not.not.i.not.i.i.i85 = icmp samesign eq i64 %.idx, 0
+  %.not.not.not.i.not.not.i.not.i.i.i = icmp samesign eq i64 %.idx, 8
+  %3 = getelementptr inbounds nuw i8, ptr %i.z, i64 8
+  %.not.not.not.i.not.not.i.not.i.i.i.1 = icmp samesign eq i64 %.idx, 16
+  %4 = getelementptr inbounds nuw i8, ptr %i.z, i64 16
+  %.not.not.not.i.not.not.i.not.i.i.i.2 = icmp samesign eq i64 %.idx, 24
+  %5 = getelementptr inbounds nuw i8, ptr %i.z, i64 24
+  %.not.not.not.i.not.not.i.not.i.i.i.3 = icmp samesign eq i64 %.idx, 32
+  %i.ab = getelementptr inbounds nuw i8, ptr %i.z, i64 32
+  %.not.i.i.i.i82.a = icmp samesign eq i64 %.idx, 40
+  %6 = getelementptr inbounds nuw i8, ptr %i.z, i64 40
+  %.not.not.not.i.not.not.i.not.i.i.i85.a = icmp samesign eq i64 %.idx, 48
+  %7 = getelementptr inbounds nuw i8, ptr %i.z, i64 48
   br label %bb.e
 
 bb.e:                                             ; preds = %_RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator3all5checkjNCINvMs1_NtCsltEA4u8Pgfu_11candle_core6tensorNtB1l_6Tensor7permuteTjjjjEE0E0Cs8k3UfHgJ3Xe_15candle_datasets.exit.i, %.lr.ph.i
-  %i.ac = phi i64 [ 0, %.lr.ph.i ], [ %i.ad, %_RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator3all5checkjNCINvMs1_NtCsltEA4u8Pgfu_11candle_core6tensorNtB1l_6Tensor7permuteTjjjjEE0E0Cs8k3UfHgJ3Xe_15candle_datasets.exit.i ] ; 10 uses
+  %i.ac = phi i64 [ 0, %.lr.ph.i ], [ %i.ad, %_RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator3all5checkjNCINvMs1_NtCsltEA4u8Pgfu_11candle_core6tensorNtB1l_6Tensor7permuteTjjjjEE0E0Cs8k3UfHgJ3Xe_15candle_datasets.exit.i ] ; 16 uses
   %i.ad = add nuw nsw i64 %i.ac, 1                ; 2 uses
-  br i1 %.not.i.i.i.i82.a, label %.preheader.i.preheader.a, label %_RINvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsI_NtB9_3cmpjNtB1L_13SliceContains14slice_contains0ECs8k3UfHgJ3Xe_15candle_datasets.exit.i.i.i.i
+  br i1 %.not.i.i.i.i82, label %.preheader.i.preheader, label %_RINvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsI_NtB9_3cmpjNtB1L_13SliceContains14slice_contains0ECs8k3UfHgJ3Xe_15candle_datasets.exit.i.i.i.i
 
 bb.f:                                             ; preds = %_RINvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsI_NtB9_3cmpjNtB1L_13SliceContains14slice_contains0ECs8k3UfHgJ3Xe_15candle_datasets.exit.i.i.i.i
   %i.ae = getelementptr inbounds nuw i8, ptr %.sroa.0.05.i.i.i.i84, i64 64
   %i.af = add nsw i64 %.sroa.5.0.i.i.i.i83, -8    ; 2 uses
   %.not.i.i.i.i = icmp eq i64 %i.af, 0
-  br i1 %.not.i.i.i.i, label %.preheader.i.preheader.a, label %_RINvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsI_NtB9_3cmpjNtB1L_13SliceContains14slice_contains0ECs8k3UfHgJ3Xe_15candle_datasets.exit.i.i.i.i
+  br i1 %.not.i.i.i.i, label %.preheader.i.preheader, label %_RINvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsI_NtB9_3cmpjNtB1L_13SliceContains14slice_contains0ECs8k3UfHgJ3Xe_15candle_datasets.exit.i.i.i.i
 
-.preheader.i.preheader.a:                         ; preds = %bb.f, %bb.e
-  br i1 %.not.not.not.i.not.not.i.not.i.i.i85.a, label %.loopexit, label %.lr.ph
+.preheader.i.preheader:                           ; preds = %bb.f, %bb.e
+  br i1 %.not.not.not.i.not.not.i.not.i.i.i85, label %.loopexit, label %.lr.ph
 
-.preheader.i.a:                                   ; preds = %.lr.ph
-  %3 = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
-  %.not.not.not.i.not.not.i.not.i.i.i.a = icmp eq ptr %3, %i.ab
-  br i1 %.not.not.not.i.not.not.i.not.i.i.i.a, label %.loopexit, label %.lr.ph
+.preheader.i:                                     ; preds = %.lr.ph
+  br i1 %.not.not.not.i.not.not.i.not.i.i.i, label %.loopexit, label %.lr.ph.1
 
-.lr.ph:                                           ; preds = %.preheader.i.preheader.a, %.preheader.i.a
-  %4 = phi ptr [ %3, %.preheader.i.a ], [ %i.z, %.preheader.i.preheader.a ] ; 2 uses
-  %.val2.i.i.i.i.i = load i64, ptr %4, align 8, !alias.scope !150, !noalias !151, !noundef !4
+.lr.ph.1:                                         ; preds = %.preheader.i
+  %.val2.i.i.i.i.i.1 = load i64, ptr %3, align 8, !alias.scope !150, !noalias !151, !noundef !4
+  %8 = icmp eq i64 %.val2.i.i.i.i.i.1, %i.ac
+  br i1 %8, label %_RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator3all5checkjNCINvMs1_NtCsltEA4u8Pgfu_11candle_core6tensorNtB1l_6Tensor7permuteTjjjjEE0E0Cs8k3UfHgJ3Xe_15candle_datasets.exit.i, label %.preheader.i.1
+
+.preheader.i.1:                                   ; preds = %.lr.ph.1
+  br i1 %.not.not.not.i.not.not.i.not.i.i.i.1, label %.loopexit, label %.lr.ph.2
+
+.lr.ph.2:                                         ; preds = %.preheader.i.1
+  %.val2.i.i.i.i.i.2 = load i64, ptr %4, align 8, !alias.scope !150, !noalias !151, !noundef !4
+  %9 = icmp eq i64 %.val2.i.i.i.i.i.2, %i.ac
+  br i1 %9, label %_RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator3all5checkjNCINvMs1_NtCsltEA4u8Pgfu_11candle_core6tensorNtB1l_6Tensor7permuteTjjjjEE0E0Cs8k3UfHgJ3Xe_15candle_datasets.exit.i, label %.preheader.i.2
+
+.preheader.i.2:                                   ; preds = %.lr.ph.2
+  br i1 %.not.not.not.i.not.not.i.not.i.i.i.2, label %.loopexit, label %.lr.ph.3
+
+.lr.ph.3:                                         ; preds = %.preheader.i.2
+  %.val2.i.i.i.i.i.3 = load i64, ptr %5, align 8, !alias.scope !150, !noalias !151, !noundef !4
+  %10 = icmp eq i64 %.val2.i.i.i.i.i.3, %i.ac
+  br i1 %10, label %_RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator3all5checkjNCINvMs1_NtCsltEA4u8Pgfu_11candle_core6tensorNtB1l_6Tensor7permuteTjjjjEE0E0Cs8k3UfHgJ3Xe_15candle_datasets.exit.i, label %.preheader.i.3
+
+.preheader.i.3:                                   ; preds = %.lr.ph.3
+  br i1 %.not.not.not.i.not.not.i.not.i.i.i.3, label %.loopexit, label %.lr.ph.4
+
+.lr.ph.4:                                         ; preds = %.preheader.i.3
+  %.val2.i.i.i.i.i.4 = load i64, ptr %i.ab, align 8, !alias.scope !150, !noalias !151, !noundef !4
+  %11 = icmp eq i64 %.val2.i.i.i.i.i.4, %i.ac
+  br i1 %11, label %_RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator3all5checkjNCINvMs1_NtCsltEA4u8Pgfu_11candle_core6tensorNtB1l_6Tensor7permuteTjjjjEE0E0Cs8k3UfHgJ3Xe_15candle_datasets.exit.i, label %.preheader.i.4
+
+.preheader.i.4:                                   ; preds = %.lr.ph.4
+  br i1 %.not.i.i.i.i82.a, label %.loopexit, label %.lr.ph.5
+
+.lr.ph.5:                                         ; preds = %.preheader.i.4
+  %.val2.i.i.i.i.i.5 = load i64, ptr %6, align 8, !alias.scope !150, !noalias !151, !noundef !4
+  %12 = icmp eq i64 %.val2.i.i.i.i.i.5, %i.ac
+  br i1 %12, label %_RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator3all5checkjNCINvMs1_NtCsltEA4u8Pgfu_11candle_core6tensorNtB1l_6Tensor7permuteTjjjjEE0E0Cs8k3UfHgJ3Xe_15candle_datasets.exit.i, label %.preheader.i.preheader.a
+
+.preheader.i.preheader.a:                         ; preds = %.lr.ph.5
+  br i1 %.not.not.not.i.not.not.i.not.i.i.i85.a, label %.loopexit, label %.preheader.i.a
+
+.preheader.i.a:                                   ; preds = %.preheader.i.preheader.a
+  %.val2.i.i.i.i.i.6 = load i64, ptr %7, align 8, !alias.scope !150, !noalias !151, !noundef !4
+  %.not.not.not.i.not.not.i.not.i.i.i.a = icmp eq i64 %.val2.i.i.i.i.i.6, %i.ac
+  br i1 %.not.not.not.i.not.not.i.not.i.i.i.a, label %_RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator3all5checkjNCINvMs1_NtCsltEA4u8Pgfu_11candle_core6tensorNtB1l_6Tensor7permuteTjjjjEE0E0Cs8k3UfHgJ3Xe_15candle_datasets.exit.i, label %.loopexit
+
+.lr.ph:                                           ; preds = %.preheader.i.preheader
+  %.val2.i.i.i.i.i = load i64, ptr %i.z, align 8, !alias.scope !150, !noalias !151, !noundef !4
   %i.ag = icmp eq i64 %.val2.i.i.i.i.i, %i.ac
-  br i1 %i.ag, label %_RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator3all5checkjNCINvMs1_NtCsltEA4u8Pgfu_11candle_core6tensorNtB1l_6Tensor7permuteTjjjjEE0E0Cs8k3UfHgJ3Xe_15candle_datasets.exit.i, label %.preheader.i.a
+  br i1 %i.ag, label %_RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator3all5checkjNCINvMs1_NtCsltEA4u8Pgfu_11candle_core6tensorNtB1l_6Tensor7permuteTjjjjEE0E0Cs8k3UfHgJ3Xe_15candle_datasets.exit.i, label %.preheader.i
 
 _RINvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsI_NtB9_3cmpjNtB1L_13SliceContains14slice_contains0ECs8k3UfHgJ3Xe_15candle_datasets.exit.i.i.i.i: ; preds = %bb.e, %bb.f
   %.sroa.0.05.i.i.i.i84 = phi ptr [ %i.ae, %bb.f ], [ %i.x, %bb.e ] ; 9 uses
@@ -272,11 +325,11 @@ _RINvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits
   %i.bc = or i1 %i.az, %i.bb
   br i1 %i.bc, label %_RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator3all5checkjNCINvMs1_NtCsltEA4u8Pgfu_11candle_core6tensorNtB1l_6Tensor7permuteTjjjjEE0E0Cs8k3UfHgJ3Xe_15candle_datasets.exit.i, label %bb.f
 
-_RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator3all5checkjNCINvMs1_NtCsltEA4u8Pgfu_11candle_core6tensorNtB1l_6Tensor7permuteTjjjjEE0E0Cs8k3UfHgJ3Xe_15candle_datasets.exit.i: ; preds = %_RINvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsI_NtB9_3cmpjNtB1L_13SliceContains14slice_contains0ECs8k3UfHgJ3Xe_15candle_datasets.exit.i.i.i.i, %.lr.ph
+_RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator3all5checkjNCINvMs1_NtCsltEA4u8Pgfu_11candle_core6tensorNtB1l_6Tensor7permuteTjjjjEE0E0Cs8k3UfHgJ3Xe_15candle_datasets.exit.i: ; preds = %_RINvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsI_NtB9_3cmpjNtB1L_13SliceContains14slice_contains0ECs8k3UfHgJ3Xe_15candle_datasets.exit.i.i.i.i, %.lr.ph, %.lr.ph.1, %.lr.ph.2, %.lr.ph.3, %.lr.ph.4, %.lr.ph.5, %.preheader.i.a
   %exitcond.not.i = icmp eq i64 %i.ad, %i.q
   br i1 %exitcond.not.i, label %.loopexit73, label %bb.e
 
-.loopexit:                                        ; preds = %.preheader.i.preheader.a, %.preheader.i.a, %bb.c
+.loopexit:                                        ; preds = %.preheader.i.preheader, %.preheader.i.a, %.preheader.i, %.preheader.i.1, %.preheader.i.2, %.preheader.i.3, %.preheader.i.4, %.preheader.i.preheader.a, %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)

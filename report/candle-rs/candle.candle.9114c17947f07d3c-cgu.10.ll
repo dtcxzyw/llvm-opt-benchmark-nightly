@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/candle-rs/original/candle.candle.9114c17947f07d3c-cgu.10?download=true
 inline.NumInlined: 259
 inline.NumDeleted: 173
-loop-unroll.NumCompletelyUnrolled: 6
-loop-unroll.NumUnrolled: 6
+loop-unroll.NumCompletelyUnrolled: 7
+loop-unroll.NumUnrolled: 7
 begin_hunk_0_@_RNvXs5_NtNtCsf3Ta7LF998c_4core3num5errorNtB5_15TryFromIntErrorNtNtB9_3fmt5Debug3fmt:bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %0, ptr %i.a, align 8
@@ -204,9 +204,9 @@ bb.g:                                             ; preds = %bb.b, %_RINvNtCsf3T
   %.sroa.828.065 = phi i64 [ %i.z, %bb.d ], [ 0, %bb.c ] ; 3 uses
   %i.y = getelementptr inbounds nuw i8, ptr %.sroa.0.066, i64 8 ; 2 uses
   %i.z = add i64 %.sroa.828.065, 1
-  %i.aa = load i64, ptr %.sroa.0.066, align 8, !noundef !4 ; 11 uses
+  %i.aa = load i64, ptr %.sroa.0.066, align 8, !noundef !4 ; 17 uses
   %i.ab = and i64 %.sroa.828.065, 1152921504606846968 ; 3 uses
-  %i.ac = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %i.ab ; 2 uses
+  %i.ac = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %i.ab ; 7 uses
   %.not.i60 = icmp eq i64 %i.ab, 0
   br i1 %.not.i60, label %._crit_edge, label %_RINvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsI_NtB9_3cmpjNtB1L_13SliceContains14slice_contains0ECscsgjCEAuSgO_6candle.exit.i
 
@@ -218,21 +218,74 @@ bb.h:                                             ; preds = %_RINvXs2J_NtNtCsf3T
 
 ._crit_edge:                                      ; preds = %bb.h, %.lr.ph68
   %i.af = shl i64 %.sroa.828.065, 3
-  %.idx70 = and i64 %i.af, 56                     ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %i.ac, i64 %.idx70
+  %.idx70 = and i64 %i.af, 56                     ; 7 uses
   %.not.not.not.i.not.not.i63 = icmp samesign eq i64 %.idx70, 0
-  br i1 %.not.not.not.i.not.not.i63, label %_RNvXsI_NtNtCsf3Ta7LF998c_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit, label %.lr.ph.a
+  br i1 %.not.not.not.i.not.not.i63, label %_RNvXsI_NtNtCsf3Ta7LF998c_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit, label %.lr.ph
 
-bb.i:                                             ; preds = %.lr.ph.a
-  %i.ag = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 2 uses
-  %.not.not.not.i.not.not.i.a = icmp eq ptr %i.ag, %6
-  br i1 %.not.not.not.i.not.not.i.a, label %_RNvXsI_NtNtCsf3Ta7LF998c_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit, label %.lr.ph.a
+6:                                                ; preds = %.lr.ph
+  %.not.not.not.i.not.not.i = icmp samesign eq i64 %.idx70, 8
+  br i1 %.not.not.not.i.not.not.i, label %_RNvXsI_NtNtCsf3Ta7LF998c_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit, label %.lr.ph.1
 
-.lr.ph.a:                                         ; preds = %._crit_edge, %bb.i
-  %7 = phi ptr [ %i.ag, %bb.i ], [ %i.ac, %._crit_edge ] ; 2 uses
-  %.val2.i.i.a = load i64, ptr %7, align 8, !alias.scope !285, !noalias !286, !noundef !4
+.lr.ph.1:                                         ; preds = %6
+  %7 = getelementptr inbounds nuw i8, ptr %i.ac, i64 8
+  %.val2.i.i.1 = load i64, ptr %7, align 8, !alias.scope !285, !noalias !286, !noundef !4
+  %8 = icmp eq i64 %.val2.i.i.1, %i.aa
+  br i1 %8, label %.loopexit, label %9
+
+9:                                                ; preds = %.lr.ph.1
+  %.not.not.not.i.not.not.i.1 = icmp samesign eq i64 %.idx70, 16
+  br i1 %.not.not.not.i.not.not.i.1, label %_RNvXsI_NtNtCsf3Ta7LF998c_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit, label %.lr.ph.2
+
+.lr.ph.2:                                         ; preds = %9
+  %10 = getelementptr inbounds nuw i8, ptr %i.ac, i64 16
+  %.val2.i.i.2 = load i64, ptr %10, align 8, !alias.scope !285, !noalias !286, !noundef !4
+  %11 = icmp eq i64 %.val2.i.i.2, %i.aa
+  br i1 %11, label %.loopexit, label %12
+
+12:                                               ; preds = %.lr.ph.2
+  %.not.not.not.i.not.not.i.2 = icmp samesign eq i64 %.idx70, 24
+  br i1 %.not.not.not.i.not.not.i.2, label %_RNvXsI_NtNtCsf3Ta7LF998c_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit, label %.lr.ph.3
+
+.lr.ph.3:                                         ; preds = %12
+  %13 = getelementptr inbounds nuw i8, ptr %i.ac, i64 24
+  %.val2.i.i.3 = load i64, ptr %13, align 8, !alias.scope !285, !noalias !286, !noundef !4
+  %14 = icmp eq i64 %.val2.i.i.3, %i.aa
+  br i1 %14, label %.loopexit, label %15
+
+15:                                               ; preds = %.lr.ph.3
+  %.not.not.not.i.not.not.i.3 = icmp samesign eq i64 %.idx70, 32
+  br i1 %.not.not.not.i.not.not.i.3, label %_RNvXsI_NtNtCsf3Ta7LF998c_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit, label %.lr.ph.4
+
+.lr.ph.4:                                         ; preds = %15
+  %16 = getelementptr inbounds nuw i8, ptr %i.ac, i64 32
+  %.val2.i.i.4 = load i64, ptr %16, align 8, !alias.scope !285, !noalias !286, !noundef !4
+  %17 = icmp eq i64 %.val2.i.i.4, %i.aa
+  br i1 %17, label %.loopexit, label %18
+
+18:                                               ; preds = %.lr.ph.4
+  %.not.not.not.i.not.not.i.4 = icmp samesign eq i64 %.idx70, 40
+  br i1 %.not.not.not.i.not.not.i.4, label %_RNvXsI_NtNtCsf3Ta7LF998c_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit, label %bb.i
+
+bb.i:                                             ; preds = %18
+  %i.ag = getelementptr inbounds nuw i8, ptr %i.ac, i64 40
+  %.val2.i.i.5 = load i64, ptr %i.ag, align 8, !alias.scope !285, !noalias !286, !noundef !4
+  %.not.not.not.i.not.not.i.a = icmp eq i64 %.val2.i.i.5, %i.aa
+  br i1 %.not.not.not.i.not.not.i.a, label %.loopexit, label %19
+
+19:                                               ; preds = %bb.i
+  %.not.not.not.i.not.not.i.5 = icmp samesign eq i64 %.idx70, 48
+  br i1 %.not.not.not.i.not.not.i.5, label %_RNvXsI_NtNtCsf3Ta7LF998c_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit, label %.lr.ph.a
+
+.lr.ph.a:                                         ; preds = %19
+  %20 = getelementptr inbounds nuw i8, ptr %i.ac, i64 48
+  %.val2.i.i.a = load i64, ptr %20, align 8, !alias.scope !285, !noalias !286, !noundef !4
   %i.ah = icmp eq i64 %.val2.i.i.a, %i.aa
-  br i1 %i.ah, label %.loopexit, label %bb.i
+  br i1 %i.ah, label %.loopexit, label %_RNvXsI_NtNtCsf3Ta7LF998c_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit
+
+.lr.ph:                                           ; preds = %._crit_edge
+  %.val2.i.i = load i64, ptr %i.ac, align 8, !alias.scope !285, !noalias !286, !noundef !4
+  %21 = icmp eq i64 %.val2.i.i, %i.aa
+  br i1 %21, label %.loopexit, label %6
 
 _RINvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsI_NtB9_3cmpjNtB1L_13SliceContains14slice_contains0ECscsgjCEAuSgO_6candle.exit.i: ; preds = %.lr.ph68, %bb.h
   %.sroa.0.05.i62 = phi ptr [ %i.ad, %bb.h ], [ %i.n, %.lr.ph68 ] ; 9 uses
@@ -269,12 +322,12 @@ _RINvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits
   %i.bd = or i1 %i.ba, %i.bc
   br i1 %i.bd, label %.loopexit, label %bb.h
 
-_RNvXsI_NtNtCsf3Ta7LF998c_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit: ; preds = %bb.i, %._crit_edge
+_RNvXsI_NtNtCsf3Ta7LF998c_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit: ; preds = %6, %9, %12, %15, %18, %19, %.lr.ph.a, %._crit_edge
   tail call void @llvm.assume(i1 %i.t)
   %.not24 = icmp ult i64 %i.aa, %i.s
   br i1 %.not24, label %bb.d, label %bb.j
 
-.loopexit:                                        ; preds = %_RINvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsI_NtB9_3cmpjNtB1L_13SliceContains14slice_contains0ECscsgjCEAuSgO_6candle.exit.i, %.lr.ph.a
+.loopexit:                                        ; preds = %_RINvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsI_NtB9_3cmpjNtB1L_13SliceContains14slice_contains0ECscsgjCEAuSgO_6candle.exit.i, %.lr.ph, %.lr.ph.1, %.lr.ph.2, %.lr.ph.3, %.lr.ph.4, %bb.i, %.lr.ph.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)

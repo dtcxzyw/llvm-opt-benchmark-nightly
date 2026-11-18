@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ruff-rs/original/ruff_graph-16977beae1024313.ruff_graph.63996861029cb498-cgu.04?download=true
 inline.NumInlined: 165
 inline.NumDeleted: 96
-loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumCompletelyUnrolled: 2
 loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_RINvMs1_NtCsgQfI1edjipl_9hashbrown3mapINtB6_7HashMapNtNtNtCs56aZGHL6Dc6_7ruff_db6system4path13SystemPathBufuNtCsjp5HOZs6k8V_10rustc_hash13FxBuildHasherE12contains_keyNtBQ_10SystemPathECs8yaccCKGz54_10ruff_graph:bb.a
 bb.e:                                             ; preds = %._crit_edge.i
   %i.ac = add i64 %.sroa.9.0.i.i, 16              ; 2 uses
@@ -205,7 +205,7 @@ _RNvXsB_NtCscdodAO9FK5_5alloc6stringReNtB5_8ToString9to_stringCs8yaccCKGz54_10ru
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   store i64 %.val43, ptr %.sroa.5.0..sroa_idx, align 8
   %i.u = call { ptr, i64 } @_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VechE16into_boxed_sliceCs8yaccCKGz54_10ruff_graph(ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.d) ; 2 uses
-  %i.v = extractvalue { ptr, i64 } %i.u, 0        ; 9 uses
+  %i.v = extractvalue { ptr, i64 } %i.u, 0        ; 15 uses
   %i.w = extractvalue { ptr, i64 } %i.u, 1        ; 14 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.v) ]
@@ -301,19 +301,79 @@ bb.m:                                             ; preds = %.lr.ph
   br i1 %i.bd, label %bb.m, label %_RNvNvNtNtCs4NRVxsYgnAr_4core5slice5ascii8is_ascii7runtime.exit
 
 bb.n:                                             ; preds = %bb.j
-  %i.be = and i64 %i.w, 56                        ; 3 uses
+  %i.be = and i64 %i.w, 56                        ; 8 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %i.v, i64 %i.be ; 7 uses
   %i.bg = and i64 %i.w, 7                         ; 7 uses
   %.not.i117 = icmp eq i64 %i.be, 0
   br i1 %.not.i117, label %._crit_edge, label %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yaccCKGz54_10ruff_graph.exit.i
 
-bb.o:                                             ; preds = %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yaccCKGz54_10ruff_graph.exit.i
-  %i.bh = getelementptr inbounds nuw i8, ptr %.sroa.0.017.i119, i64 8
-  %13 = add nsw i64 %.sroa.6.0.i118, -8           ; 2 uses
-  %.not.i.a = icmp eq i64 %13, 0
-  br i1 %.not.i.a, label %._crit_edge, label %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yaccCKGz54_10ruff_graph.exit.i
+13:                                               ; preds = %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yaccCKGz54_10ruff_graph.exit.i
+  %.not.i = icmp eq i64 %i.be, 8
+  br i1 %.not.i, label %._crit_edge, label %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yaccCKGz54_10ruff_graph.exit.i.1
 
-._crit_edge:                                      ; preds = %bb.o, %bb.n
+_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yaccCKGz54_10ruff_graph.exit.i.1: ; preds = %13
+  %14 = getelementptr inbounds nuw i8, ptr %i.v, i64 8
+  %.sroa.012.0.copyload.i.1 = load i64, ptr %14, align 1, !alias.scope !75
+  %15 = and i64 %.sroa.012.0.copyload.i.1, -9187201950435737472
+  %16 = icmp eq i64 %15, 0
+  br i1 %16, label %17, label %_RNvNvNtNtCs4NRVxsYgnAr_4core5slice5ascii8is_ascii7runtime.exit
+
+17:                                               ; preds = %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yaccCKGz54_10ruff_graph.exit.i.1
+  %.not.i.1 = icmp eq i64 %i.be, 16
+  br i1 %.not.i.1, label %._crit_edge, label %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yaccCKGz54_10ruff_graph.exit.i.2
+
+_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yaccCKGz54_10ruff_graph.exit.i.2: ; preds = %17
+  %18 = getelementptr inbounds nuw i8, ptr %i.v, i64 16
+  %.sroa.012.0.copyload.i.2 = load i64, ptr %18, align 1, !alias.scope !75
+  %19 = and i64 %.sroa.012.0.copyload.i.2, -9187201950435737472
+  %20 = icmp eq i64 %19, 0
+  br i1 %20, label %21, label %_RNvNvNtNtCs4NRVxsYgnAr_4core5slice5ascii8is_ascii7runtime.exit
+
+21:                                               ; preds = %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yaccCKGz54_10ruff_graph.exit.i.2
+  %.not.i.2 = icmp eq i64 %i.be, 24
+  br i1 %.not.i.2, label %._crit_edge, label %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yaccCKGz54_10ruff_graph.exit.i.3
+
+_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yaccCKGz54_10ruff_graph.exit.i.3: ; preds = %21
+  %22 = getelementptr inbounds nuw i8, ptr %i.v, i64 24
+  %.sroa.012.0.copyload.i.3 = load i64, ptr %22, align 1, !alias.scope !75
+  %23 = and i64 %.sroa.012.0.copyload.i.3, -9187201950435737472
+  %24 = icmp eq i64 %23, 0
+  br i1 %24, label %25, label %_RNvNvNtNtCs4NRVxsYgnAr_4core5slice5ascii8is_ascii7runtime.exit
+
+25:                                               ; preds = %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yaccCKGz54_10ruff_graph.exit.i.3
+  %.not.i.3 = icmp eq i64 %i.be, 32
+  br i1 %.not.i.3, label %._crit_edge, label %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yaccCKGz54_10ruff_graph.exit.i.4
+
+_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yaccCKGz54_10ruff_graph.exit.i.4: ; preds = %25
+  %26 = getelementptr inbounds nuw i8, ptr %i.v, i64 32
+  %.sroa.012.0.copyload.i.4 = load i64, ptr %26, align 1, !alias.scope !75
+  %27 = and i64 %.sroa.012.0.copyload.i.4, -9187201950435737472
+  %28 = icmp eq i64 %27, 0
+  br i1 %28, label %29, label %_RNvNvNtNtCs4NRVxsYgnAr_4core5slice5ascii8is_ascii7runtime.exit
+
+29:                                               ; preds = %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yaccCKGz54_10ruff_graph.exit.i.4
+  %.not.i.4 = icmp eq i64 %i.be, 40
+  br i1 %.not.i.4, label %._crit_edge, label %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yaccCKGz54_10ruff_graph.exit.i.5
+
+_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yaccCKGz54_10ruff_graph.exit.i.5: ; preds = %29
+  %30 = getelementptr inbounds nuw i8, ptr %i.v, i64 40
+  %.sroa.012.0.copyload.i.5 = load i64, ptr %30, align 1, !alias.scope !75
+  %31 = and i64 %.sroa.012.0.copyload.i.5, -9187201950435737472
+  %32 = icmp eq i64 %31, 0
+  br i1 %32, label %33, label %_RNvNvNtNtCs4NRVxsYgnAr_4core5slice5ascii8is_ascii7runtime.exit
+
+33:                                               ; preds = %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yaccCKGz54_10ruff_graph.exit.i.5
+  %.not.i.5 = icmp eq i64 %i.be, 48
+  br i1 %.not.i.5, label %._crit_edge, label %bb.o
+
+bb.o:                                             ; preds = %33
+  %i.bh = getelementptr inbounds nuw i8, ptr %i.v, i64 48
+  %.sroa.012.0.copyload.i.6 = load i64, ptr %i.bh, align 1, !alias.scope !75
+  %34 = and i64 %.sroa.012.0.copyload.i.6, -9187201950435737472
+  %.not.i.a = icmp eq i64 %34, 0
+  br i1 %.not.i.a, label %._crit_edge, label %_RNvNvNtNtCs4NRVxsYgnAr_4core5slice5ascii8is_ascii7runtime.exit
+
+._crit_edge:                                      ; preds = %13, %17, %21, %25, %29, %33, %bb.o, %bb.n
   %i.bi = icmp samesign eq i64 %i.bg, 0
   br i1 %i.bi, label %_RNvNvNtNtCs4NRVxsYgnAr_4core5slice5ascii8is_ascii7runtime.exit, label %.lr.ph121
 
@@ -383,13 +443,11 @@ bb.u:                                             ; preds = %.lr.ph121.5
   %i.cb = icmp sgt i8 %.val.i.i, -1
   br i1 %i.cb, label %bb.p, label %_RNvNvNtNtCs4NRVxsYgnAr_4core5slice5ascii8is_ascii7runtime.exit
 
-_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yaccCKGz54_10ruff_graph.exit.i: ; preds = %bb.n, %bb.o
-  %.sroa.0.017.i119 = phi ptr [ %i.bh, %bb.o ], [ %i.v, %bb.n ] ; 2 uses
-  %.sroa.6.0.i118 = phi i64 [ %13, %bb.o ], [ %i.be, %bb.n ]
-  %.sroa.012.0.copyload.i = load i64, ptr %.sroa.0.017.i119, align 1, !alias.scope !75
+_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yaccCKGz54_10ruff_graph.exit.i: ; preds = %bb.n
+  %.sroa.012.0.copyload.i = load i64, ptr %i.v, align 1, !alias.scope !75
   %i.cc = and i64 %.sroa.012.0.copyload.i, -9187201950435737472
   %i.cd = icmp eq i64 %i.cc, 0
-  br i1 %i.cd, label %bb.o, label %_RNvNvNtNtCs4NRVxsYgnAr_4core5slice5ascii8is_ascii7runtime.exit
+  br i1 %i.cd, label %13, label %_RNvNvNtNtCs4NRVxsYgnAr_4core5slice5ascii8is_ascii7runtime.exit
 
 bb.v:                                             ; preds = %bb.h
   br i1 %i.x, label %bb.y, label %bb.w
@@ -418,8 +476,8 @@ bb.z:                                             ; preds = %bb.y
   %spec.select = or i32 %.sroa.07.1, %i.ck
   br label %bb.j
 
-_RNvNvNtNtCs4NRVxsYgnAr_4core5slice5ascii8is_ascii7runtime.exit: ; preds = %.lr.ph121.6, %.lr.ph.i.i, %bb.m, %.lr.ph, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yaccCKGz54_10ruff_graph.exit.i, %bb.p, %.lr.ph121, %.lr.ph121.1, %bb.q, %.lr.ph121.2, %bb.r, %.lr.ph121.3, %bb.s, %.lr.ph121.4, %bb.t, %.lr.ph121.5, %bb.u, %._crit_edge.i.i, %._crit_edge
-  %14 = phi i8 [ 1, %.lr.ph ], [ 0, %._crit_edge.i.i ], [ 1, %.lr.ph.i.i ], [ 1, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yaccCKGz54_10ruff_graph.exit.i ], [ 0, %._crit_edge ], [ 0, %bb.p ], [ 1, %.lr.ph121 ], [ 1, %.lr.ph121.1 ], [ 0, %bb.q ], [ 1, %.lr.ph121.2 ], [ 0, %bb.r ], [ 1, %.lr.ph121.3 ], [ 0, %bb.s ], [ 1, %.lr.ph121.4 ], [ 0, %bb.t ], [ 1, %.lr.ph121.5 ], [ 0, %bb.u ], [ %spec.select129, %.lr.ph121.6 ], [ 0, %bb.m ]
+_RNvNvNtNtCs4NRVxsYgnAr_4core5slice5ascii8is_ascii7runtime.exit: ; preds = %.lr.ph121.6, %.lr.ph.i.i, %bb.m, %.lr.ph, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yaccCKGz54_10ruff_graph.exit.i, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yaccCKGz54_10ruff_graph.exit.i.1, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yaccCKGz54_10ruff_graph.exit.i.2, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yaccCKGz54_10ruff_graph.exit.i.3, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yaccCKGz54_10ruff_graph.exit.i.4, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yaccCKGz54_10ruff_graph.exit.i.5, %bb.o, %bb.p, %.lr.ph121, %.lr.ph121.1, %bb.q, %.lr.ph121.2, %bb.r, %.lr.ph121.3, %bb.s, %.lr.ph121.4, %bb.t, %.lr.ph121.5, %bb.u, %._crit_edge.i.i, %._crit_edge
+  %35 = phi i8 [ 1, %.lr.ph ], [ 0, %._crit_edge.i.i ], [ 1, %.lr.ph.i.i ], [ 1, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yaccCKGz54_10ruff_graph.exit.i ], [ 0, %._crit_edge ], [ 0, %bb.p ], [ 1, %.lr.ph121 ], [ 1, %.lr.ph121.1 ], [ 0, %bb.q ], [ 1, %.lr.ph121.2 ], [ 0, %bb.r ], [ 1, %.lr.ph121.3 ], [ 0, %bb.s ], [ 1, %.lr.ph121.4 ], [ 0, %bb.t ], [ 1, %.lr.ph121.5 ], [ 0, %bb.u ], [ %spec.select129, %.lr.ph121.6 ], [ 1, %bb.o ], [ 1, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yaccCKGz54_10ruff_graph.exit.i.5 ], [ 1, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yaccCKGz54_10ruff_graph.exit.i.4 ], [ 1, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yaccCKGz54_10ruff_graph.exit.i.3 ], [ 1, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yaccCKGz54_10ruff_graph.exit.i.2 ], [ 1, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yaccCKGz54_10ruff_graph.exit.i.1 ], [ 0, %bb.m ]
   %i.cl = load <2 x i64>, ptr %2, align 8
   %i.cm = getelementptr inbounds nuw i8, ptr %2, i64 44
   %i.cn = load <2 x i16>, ptr %i.cm, align 4
@@ -505,7 +563,7 @@ bb.ah:                                            ; preds = %bb.ag
   %i.ds = trunc nuw nsw i32 %i.ah to i8
   store i8 %i.ds, ptr %i.dr, align 4
   %i.dt = getelementptr inbounds nuw i8, ptr %i.f, i64 221
-  store i8 %14, ptr %i.dt, align 1
+  store i8 %35, ptr %i.dt, align 1
   %i.du = getelementptr inbounds nuw i8, ptr %i.f, i64 222
   store i8 0, ptr %i.du, align 2
   %i.dv = getelementptr inbounds nuw i8, ptr %i.f, i64 200

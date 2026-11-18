@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ruff-rs/original/pep508_rs-be1a18b8111991cb.pep508_rs.768454d4f2aa2dfe-cgu.12?download=true
 inline.NumInlined: 198
 inline.NumDeleted: 112
-loop-unroll.NumCompletelyUnrolled: 4
-loop-unroll.NumUnrolled: 4
+loop-unroll.NumCompletelyUnrolled: 6
+loop-unroll.NumUnrolled: 6
 begin_hunk_0_@_RNvNtNtCsaaRuwTSDeTG_9pep508_rs6marker8simplify6to_dnf:bb.a
   %i.m = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   store ptr inttoptr (i64 8 to ptr), ptr %i.m, align 8
@@ -204,7 +204,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtNtB4_4iter8adapters3rev3RevINtNtN
 
 bb.n:                                             ; preds = %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtNtCsaaRuwTSDeTG_9pep508_rs6marker4tree16MarkerExpressionENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNvNtBU_8simplify8simplifys0_0EBW_.exit.backedge.i, %.lr.ph193.i
   %.sroa.080.0191.i = phi ptr [ %i.z, %.lr.ph193.i ], [ %i.be, %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtNtCsaaRuwTSDeTG_9pep508_rs6marker4tree16MarkerExpressionENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNvNtBU_8simplify8simplifys0_0EBW_.exit.backedge.i ] ; 3 uses
-  %.sroa.882.0190.i = phi i64 [ 0, %.lr.ph193.i ], [ %i.bf, %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtNtCsaaRuwTSDeTG_9pep508_rs6marker4tree16MarkerExpressionENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNvNtBU_8simplify8simplifys0_0EBW_.exit.backedge.i ] ; 11 uses
+  %.sroa.882.0190.i = phi i64 [ 0, %.lr.ph193.i ], [ %i.bf, %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtNtCsaaRuwTSDeTG_9pep508_rs6marker4tree16MarkerExpressionENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNvNtBU_8simplify8simplifys0_0EBW_.exit.backedge.i ] ; 17 uses
   %i.be = getelementptr inbounds nuw i8, ptr %.sroa.080.0191.i, i64 24 ; 2 uses
   %i.bf = add nuw nsw i64 %.sroa.882.0190.i, 1
   %i.bg = icmp eq i64 %.sroa.040.0194.i, %.sroa.882.0190.i
@@ -214,7 +214,7 @@ bb.o:                                             ; preds = %bb.n
   %i.bh = load ptr, ptr %i.x, align 8, !noalias !387, !nonnull !5, !noundef !5 ; 2 uses
   %i.bi = load i64, ptr %i.y, align 8, !noalias !387, !noundef !5 ; 2 uses
   %i.bj = and i64 %i.bi, 1152921504606846968      ; 3 uses
-  %i.bk = getelementptr inbounds nuw [8 x i8], ptr %i.bh, i64 %i.bj ; 2 uses
+  %i.bk = getelementptr inbounds nuw [8 x i8], ptr %i.bh, i64 %i.bj ; 7 uses
   %.not.i.i111 = icmp eq i64 %i.bj, 0
   br i1 %.not.i.i111, label %._crit_edge114, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsJ_NtB9_3cmpjNtB1L_13SliceContains14slice_contains0ECsaaRuwTSDeTG_9pep508_rs.exit.i.i
 
@@ -226,21 +226,74 @@ bb.p:                                             ; preds = %_RINvXs2J_NtNtCs4NR
 
 ._crit_edge114:                                   ; preds = %bb.p, %bb.o
   %i.bn = shl i64 %i.bi, 3
-  %.idx120 = and i64 %i.bn, 56                    ; 2 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.bk, i64 %.idx120
+  %.idx120 = and i64 %i.bn, 56                    ; 7 uses
   %.not.not.not.i.not.not.i.i115 = icmp samesign eq i64 %.idx120, 0
-  br i1 %.not.not.not.i.not.not.i.i115, label %_RNvXsJ_NtNtCs4NRVxsYgnAr_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.i, label %.lr.ph117.a
+  br i1 %.not.not.not.i.not.not.i.i115, label %_RNvXsJ_NtNtCs4NRVxsYgnAr_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.i, label %.lr.ph117
 
-bb.q:                                             ; preds = %.lr.ph117.a
-  %i.bo = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
-  %.not.not.not.i.not.not.i.i.a = icmp eq ptr %i.bo, %2
-  br i1 %.not.not.not.i.not.not.i.i.a, label %_RNvXsJ_NtNtCs4NRVxsYgnAr_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.i, label %.lr.ph117.a
+2:                                                ; preds = %.lr.ph117
+  %.not.not.not.i.not.not.i.i = icmp samesign eq i64 %.idx120, 8
+  br i1 %.not.not.not.i.not.not.i.i, label %_RNvXsJ_NtNtCs4NRVxsYgnAr_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.i, label %.lr.ph117.1
 
-.lr.ph117.a:                                      ; preds = %._crit_edge114, %bb.q
-  %3 = phi ptr [ %i.bo, %bb.q ], [ %i.bk, %._crit_edge114 ] ; 2 uses
-  %.val3.i.i.i.a = load i64, ptr %3, align 8, !alias.scope !390, !noalias !391, !noundef !5
+.lr.ph117.1:                                      ; preds = %2
+  %3 = getelementptr inbounds nuw i8, ptr %i.bk, i64 8
+  %.val3.i.i.i.1 = load i64, ptr %3, align 8, !alias.scope !390, !noalias !391, !noundef !5
+  %4 = icmp eq i64 %.val3.i.i.i.1, %.sroa.882.0190.i
+  br i1 %4, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtNtCsaaRuwTSDeTG_9pep508_rs6marker4tree16MarkerExpressionENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNvNtBU_8simplify8simplifys0_0EBW_.exit.backedge.i, label %5
+
+5:                                                ; preds = %.lr.ph117.1
+  %.not.not.not.i.not.not.i.i.1 = icmp samesign eq i64 %.idx120, 16
+  br i1 %.not.not.not.i.not.not.i.i.1, label %_RNvXsJ_NtNtCs4NRVxsYgnAr_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.i, label %.lr.ph117.2
+
+.lr.ph117.2:                                      ; preds = %5
+  %6 = getelementptr inbounds nuw i8, ptr %i.bk, i64 16
+  %.val3.i.i.i.2 = load i64, ptr %6, align 8, !alias.scope !390, !noalias !391, !noundef !5
+  %7 = icmp eq i64 %.val3.i.i.i.2, %.sroa.882.0190.i
+  br i1 %7, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtNtCsaaRuwTSDeTG_9pep508_rs6marker4tree16MarkerExpressionENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNvNtBU_8simplify8simplifys0_0EBW_.exit.backedge.i, label %8
+
+8:                                                ; preds = %.lr.ph117.2
+  %.not.not.not.i.not.not.i.i.2 = icmp samesign eq i64 %.idx120, 24
+  br i1 %.not.not.not.i.not.not.i.i.2, label %_RNvXsJ_NtNtCs4NRVxsYgnAr_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.i, label %.lr.ph117.3
+
+.lr.ph117.3:                                      ; preds = %8
+  %9 = getelementptr inbounds nuw i8, ptr %i.bk, i64 24
+  %.val3.i.i.i.3 = load i64, ptr %9, align 8, !alias.scope !390, !noalias !391, !noundef !5
+  %10 = icmp eq i64 %.val3.i.i.i.3, %.sroa.882.0190.i
+  br i1 %10, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtNtCsaaRuwTSDeTG_9pep508_rs6marker4tree16MarkerExpressionENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNvNtBU_8simplify8simplifys0_0EBW_.exit.backedge.i, label %11
+
+11:                                               ; preds = %.lr.ph117.3
+  %.not.not.not.i.not.not.i.i.3 = icmp samesign eq i64 %.idx120, 32
+  br i1 %.not.not.not.i.not.not.i.i.3, label %_RNvXsJ_NtNtCs4NRVxsYgnAr_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.i, label %.lr.ph117.4
+
+.lr.ph117.4:                                      ; preds = %11
+  %12 = getelementptr inbounds nuw i8, ptr %i.bk, i64 32
+  %.val3.i.i.i.4 = load i64, ptr %12, align 8, !alias.scope !390, !noalias !391, !noundef !5
+  %13 = icmp eq i64 %.val3.i.i.i.4, %.sroa.882.0190.i
+  br i1 %13, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtNtCsaaRuwTSDeTG_9pep508_rs6marker4tree16MarkerExpressionENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNvNtBU_8simplify8simplifys0_0EBW_.exit.backedge.i, label %14
+
+14:                                               ; preds = %.lr.ph117.4
+  %.not.not.not.i.not.not.i.i.4 = icmp samesign eq i64 %.idx120, 40
+  br i1 %.not.not.not.i.not.not.i.i.4, label %_RNvXsJ_NtNtCs4NRVxsYgnAr_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.i, label %bb.q
+
+bb.q:                                             ; preds = %14
+  %i.bo = getelementptr inbounds nuw i8, ptr %i.bk, i64 40
+  %.val3.i.i.i.5 = load i64, ptr %i.bo, align 8, !alias.scope !390, !noalias !391, !noundef !5
+  %.not.not.not.i.not.not.i.i.a = icmp eq i64 %.val3.i.i.i.5, %.sroa.882.0190.i
+  br i1 %.not.not.not.i.not.not.i.i.a, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtNtCsaaRuwTSDeTG_9pep508_rs6marker4tree16MarkerExpressionENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNvNtBU_8simplify8simplifys0_0EBW_.exit.backedge.i, label %15
+
+15:                                               ; preds = %bb.q
+  %.not.not.not.i.not.not.i.i.5 = icmp samesign eq i64 %.idx120, 48
+  br i1 %.not.not.not.i.not.not.i.i.5, label %_RNvXsJ_NtNtCs4NRVxsYgnAr_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.i, label %.lr.ph117.a
+
+.lr.ph117.a:                                      ; preds = %15
+  %16 = getelementptr inbounds nuw i8, ptr %i.bk, i64 48
+  %.val3.i.i.i.a = load i64, ptr %16, align 8, !alias.scope !390, !noalias !391, !noundef !5
   %i.bp = icmp eq i64 %.val3.i.i.i.a, %.sroa.882.0190.i
-  br i1 %i.bp, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtNtCsaaRuwTSDeTG_9pep508_rs6marker4tree16MarkerExpressionENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNvNtBU_8simplify8simplifys0_0EBW_.exit.backedge.i, label %bb.q
+  br i1 %i.bp, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtNtCsaaRuwTSDeTG_9pep508_rs6marker4tree16MarkerExpressionENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNvNtBU_8simplify8simplifys0_0EBW_.exit.backedge.i, label %_RNvXsJ_NtNtCs4NRVxsYgnAr_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.i
+
+.lr.ph117:                                        ; preds = %._crit_edge114
+  %.val3.i.i.i = load i64, ptr %i.bk, align 8, !alias.scope !390, !noalias !391, !noundef !5
+  %17 = icmp eq i64 %.val3.i.i.i, %.sroa.882.0190.i
+  br i1 %17, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtNtCsaaRuwTSDeTG_9pep508_rs6marker4tree16MarkerExpressionENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNvNtBU_8simplify8simplifys0_0EBW_.exit.backedge.i, label %2
 
 _RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsJ_NtB9_3cmpjNtB1L_13SliceContains14slice_contains0ECsaaRuwTSDeTG_9pep508_rs.exit.i.i: ; preds = %bb.o, %bb.p
   %.sroa.0.05.i.i113 = phi ptr [ %i.bl, %bb.p ], [ %i.bh, %bb.o ] ; 9 uses
@@ -277,11 +330,11 @@ _RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits
   %i.cl = or i1 %i.ci, %i.ck
   br i1 %i.cl, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtNtCsaaRuwTSDeTG_9pep508_rs6marker4tree16MarkerExpressionENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNvNtBU_8simplify8simplifys0_0EBW_.exit.backedge.i, label %bb.p
 
-_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtNtCsaaRuwTSDeTG_9pep508_rs6marker4tree16MarkerExpressionENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNvNtBU_8simplify8simplifys0_0EBW_.exit.backedge.i: ; preds = %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsJ_NtB9_3cmpjNtB1L_13SliceContains14slice_contains0ECsaaRuwTSDeTG_9pep508_rs.exit.i.i, %.lr.ph117.a, %.noexc.i, %bb.n
+_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtNtCsaaRuwTSDeTG_9pep508_rs6marker4tree16MarkerExpressionENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNvNtBU_8simplify8simplifys0_0EBW_.exit.backedge.i: ; preds = %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsJ_NtB9_3cmpjNtB1L_13SliceContains14slice_contains0ECsaaRuwTSDeTG_9pep508_rs.exit.i.i, %.lr.ph117, %.lr.ph117.1, %.lr.ph117.2, %.lr.ph117.3, %.lr.ph117.4, %bb.q, %.lr.ph117.a, %.noexc.i, %bb.n
   %i.cm = icmp eq ptr %i.be, %i.aa
   br i1 %i.cm, label %.backedge.i, label %bb.n
 
-_RNvXsJ_NtNtCs4NRVxsYgnAr_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.i: ; preds = %bb.q, %._crit_edge114
+_RNvXsJ_NtNtCs4NRVxsYgnAr_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit.i: ; preds = %2, %5, %8, %11, %14, %15, %.lr.ph117.a, %._crit_edge114
   %i.cn = getelementptr inbounds nuw i8, ptr %.sroa.080.0191.i, i64 8
   %i.co = load ptr, ptr %i.cn, align 8, !noalias !387, !nonnull !5, !noundef !5 ; 2 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %.sroa.080.0191.i, i64 16
@@ -684,7 +737,7 @@ _RNvNtNtCsaaRuwTSDeTG_9pep508_rs6marker8simplify11is_negation.exit.thread.i.i.i:
   br i1 %i.ho, label %.backedge139.i, label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %_RNvNtNtCsaaRuwTSDeTG_9pep508_rs6marker8simplify11is_negation.exit.thread.i.i.i, %bb.bm
-  %.sroa.02.08.i.i.i.i = phi i64 [ %i.hs, %bb.bm ], [ 0, %_RNvNtNtCsaaRuwTSDeTG_9pep508_rs6marker8simplify11is_negation.exit.thread.i.i.i ] ; 11 uses
+  %.sroa.02.08.i.i.i.i = phi i64 [ %i.hs, %bb.bm ], [ 0, %_RNvNtNtCsaaRuwTSDeTG_9pep508_rs6marker8simplify11is_negation.exit.thread.i.i.i ] ; 17 uses
   %i.hp = phi ptr [ %i.hr, %bb.bm ], [ %i.hl, %_RNvNtNtCsaaRuwTSDeTG_9pep508_rs6marker8simplify11is_negation.exit.thread.i.i.i ] ; 2 uses
   %i.hq = invoke fastcc noundef zeroext i1 @_RNvXs1M_NtNtCsaaRuwTSDeTG_9pep508_rs6marker4treeNtB6_16MarkerExpressionNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %i.hp, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %i.ek)
           to label %.noexc71.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !387
@@ -704,7 +757,7 @@ bb.bn:                                            ; preds = %.noexc71.i
   %i.hv = load ptr, ptr %i.v, align 8, !noalias !405, !nonnull !5, !noundef !5 ; 2 uses
   %i.hw = load i64, ptr %i.w, align 8, !noalias !405, !noundef !5 ; 2 uses
   %i.hx = and i64 %i.hw, 1152921504606846968      ; 3 uses
-  %i.hy = getelementptr inbounds nuw [8 x i8], ptr %i.hv, i64 %i.hx ; 2 uses
+  %i.hy = getelementptr inbounds nuw [8 x i8], ptr %i.hv, i64 %i.hx ; 7 uses
   %.not.i3.i.i.i106 = icmp eq i64 %i.hx, 0
   br i1 %.not.i3.i.i.i106, label %._crit_edge, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsJ_NtB9_3cmpjNtB1L_13SliceContains14slice_contains0ECsaaRuwTSDeTG_9pep508_rs.exit.i.i.i.i
 
@@ -716,21 +769,74 @@ bb.bo:                                            ; preds = %_RINvXs2J_NtNtCs4NR
 
 ._crit_edge:                                      ; preds = %bb.bo, %bb.bn
   %i.ib = shl i64 %i.hw, 3
-  %.idx = and i64 %i.ib, 56                       ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.hy, i64 %.idx
+  %.idx = and i64 %i.ib, 56                       ; 7 uses
   %.not.not.not.i.not.not.i.i.i.i109 = icmp samesign eq i64 %.idx, 0
-  br i1 %.not.not.not.i.not.not.i.i.i.i109, label %_RNCNvNtNtCsaaRuwTSDeTG_9pep508_rs6marker8simplify8simplify0B7_.exit.i.i, label %.lr.ph.a
+  br i1 %.not.not.not.i.not.not.i.i.i.i109, label %_RNCNvNtNtCsaaRuwTSDeTG_9pep508_rs6marker8simplify8simplify0B7_.exit.i.i, label %.lr.ph
 
-bb.bp:                                            ; preds = %.lr.ph.a
-  %i.ic = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
-  %.not.not.not.i.not.not.i.i.i.i.a = icmp eq ptr %i.ic, %4
-  br i1 %.not.not.not.i.not.not.i.i.i.i.a, label %_RNCNvNtNtCsaaRuwTSDeTG_9pep508_rs6marker8simplify8simplify0B7_.exit.i.i, label %.lr.ph.a
+18:                                               ; preds = %.lr.ph
+  %.not.not.not.i.not.not.i.i.i.i = icmp samesign eq i64 %.idx, 8
+  br i1 %.not.not.not.i.not.not.i.i.i.i, label %_RNCNvNtNtCsaaRuwTSDeTG_9pep508_rs6marker8simplify8simplify0B7_.exit.i.i, label %.lr.ph.1
 
-.lr.ph.a:                                         ; preds = %._crit_edge, %bb.bp
-  %5 = phi ptr [ %i.ic, %bb.bp ], [ %i.hy, %._crit_edge ] ; 2 uses
-  %.val3.i.i.i.i.i.a = load i64, ptr %5, align 8, !alias.scope !412, !noalias !413, !noundef !5
+.lr.ph.1:                                         ; preds = %18
+  %19 = getelementptr inbounds nuw i8, ptr %i.hy, i64 8
+  %.val3.i.i.i.i.i.1 = load i64, ptr %19, align 8, !alias.scope !412, !noalias !413, !noundef !5
+  %20 = icmp eq i64 %.val3.i.i.i.i.i.1, %.sroa.02.08.i.i.i.i
+  br i1 %20, label %.backedge139.i, label %21
+
+21:                                               ; preds = %.lr.ph.1
+  %.not.not.not.i.not.not.i.i.i.i.1 = icmp samesign eq i64 %.idx, 16
+  br i1 %.not.not.not.i.not.not.i.i.i.i.1, label %_RNCNvNtNtCsaaRuwTSDeTG_9pep508_rs6marker8simplify8simplify0B7_.exit.i.i, label %.lr.ph.2
+
+.lr.ph.2:                                         ; preds = %21
+  %22 = getelementptr inbounds nuw i8, ptr %i.hy, i64 16
+  %.val3.i.i.i.i.i.2 = load i64, ptr %22, align 8, !alias.scope !412, !noalias !413, !noundef !5
+  %23 = icmp eq i64 %.val3.i.i.i.i.i.2, %.sroa.02.08.i.i.i.i
+  br i1 %23, label %.backedge139.i, label %24
+
+24:                                               ; preds = %.lr.ph.2
+  %.not.not.not.i.not.not.i.i.i.i.2 = icmp samesign eq i64 %.idx, 24
+  br i1 %.not.not.not.i.not.not.i.i.i.i.2, label %_RNCNvNtNtCsaaRuwTSDeTG_9pep508_rs6marker8simplify8simplify0B7_.exit.i.i, label %.lr.ph.3
+
+.lr.ph.3:                                         ; preds = %24
+  %25 = getelementptr inbounds nuw i8, ptr %i.hy, i64 24
+  %.val3.i.i.i.i.i.3 = load i64, ptr %25, align 8, !alias.scope !412, !noalias !413, !noundef !5
+  %26 = icmp eq i64 %.val3.i.i.i.i.i.3, %.sroa.02.08.i.i.i.i
+  br i1 %26, label %.backedge139.i, label %27
+
+27:                                               ; preds = %.lr.ph.3
+  %.not.not.not.i.not.not.i.i.i.i.3 = icmp samesign eq i64 %.idx, 32
+  br i1 %.not.not.not.i.not.not.i.i.i.i.3, label %_RNCNvNtNtCsaaRuwTSDeTG_9pep508_rs6marker8simplify8simplify0B7_.exit.i.i, label %.lr.ph.4
+
+.lr.ph.4:                                         ; preds = %27
+  %28 = getelementptr inbounds nuw i8, ptr %i.hy, i64 32
+  %.val3.i.i.i.i.i.4 = load i64, ptr %28, align 8, !alias.scope !412, !noalias !413, !noundef !5
+  %29 = icmp eq i64 %.val3.i.i.i.i.i.4, %.sroa.02.08.i.i.i.i
+  br i1 %29, label %.backedge139.i, label %30
+
+30:                                               ; preds = %.lr.ph.4
+  %.not.not.not.i.not.not.i.i.i.i.4 = icmp samesign eq i64 %.idx, 40
+  br i1 %.not.not.not.i.not.not.i.i.i.i.4, label %_RNCNvNtNtCsaaRuwTSDeTG_9pep508_rs6marker8simplify8simplify0B7_.exit.i.i, label %bb.bp
+
+bb.bp:                                            ; preds = %30
+  %i.ic = getelementptr inbounds nuw i8, ptr %i.hy, i64 40
+  %.val3.i.i.i.i.i.5 = load i64, ptr %i.ic, align 8, !alias.scope !412, !noalias !413, !noundef !5
+  %.not.not.not.i.not.not.i.i.i.i.a = icmp eq i64 %.val3.i.i.i.i.i.5, %.sroa.02.08.i.i.i.i
+  br i1 %.not.not.not.i.not.not.i.i.i.i.a, label %.backedge139.i, label %31
+
+31:                                               ; preds = %bb.bp
+  %.not.not.not.i.not.not.i.i.i.i.5 = icmp samesign eq i64 %.idx, 48
+  br i1 %.not.not.not.i.not.not.i.i.i.i.5, label %_RNCNvNtNtCsaaRuwTSDeTG_9pep508_rs6marker8simplify8simplify0B7_.exit.i.i, label %.lr.ph.a
+
+.lr.ph.a:                                         ; preds = %31
+  %32 = getelementptr inbounds nuw i8, ptr %i.hy, i64 48
+  %.val3.i.i.i.i.i.a = load i64, ptr %32, align 8, !alias.scope !412, !noalias !413, !noundef !5
   %i.id = icmp eq i64 %.val3.i.i.i.i.i.a, %.sroa.02.08.i.i.i.i
-  br i1 %i.id, label %.backedge139.i, label %bb.bp
+  br i1 %i.id, label %.backedge139.i, label %_RNCNvNtNtCsaaRuwTSDeTG_9pep508_rs6marker8simplify8simplify0B7_.exit.i.i
+
+.lr.ph:                                           ; preds = %._crit_edge
+  %.val3.i.i.i.i.i = load i64, ptr %i.hy, align 8, !alias.scope !412, !noalias !413, !noundef !5
+  %33 = icmp eq i64 %.val3.i.i.i.i.i, %.sroa.02.08.i.i.i.i
+  br i1 %33, label %.backedge139.i, label %18
 
 _RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsJ_NtB9_3cmpjNtB1L_13SliceContains14slice_contains0ECsaaRuwTSDeTG_9pep508_rs.exit.i.i.i.i: ; preds = %bb.bn, %bb.bo
   %.sroa.0.05.i.i.i.i108 = phi ptr [ %i.hz, %bb.bo ], [ %i.hv, %bb.bn ] ; 9 uses
@@ -767,11 +873,11 @@ _RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits
   %i.iz = or i1 %i.iw, %i.iy
   br i1 %i.iz, label %.backedge139.i, label %bb.bo
 
-_RNCNvNtNtCsaaRuwTSDeTG_9pep508_rs6marker8simplify8simplify0B7_.exit.i.i: ; preds = %bb.bp, %._crit_edge, %_RNvNtNtCsaaRuwTSDeTG_9pep508_rs6marker8simplify11is_negation.exit.i.i.i, %.split9.i.i.i, %.split8.i.i.i, %.split.i.i.i
+_RNCNvNtNtCsaaRuwTSDeTG_9pep508_rs6marker8simplify8simplify0B7_.exit.i.i: ; preds = %18, %21, %24, %27, %30, %31, %.lr.ph.a, %._crit_edge, %_RNvNtNtCsaaRuwTSDeTG_9pep508_rs6marker8simplify11is_negation.exit.i.i.i, %.split9.i.i.i, %.split8.i.i.i, %.split.i.i.i
   %i.ja = icmp eq ptr %i.el, %i.ei
   br i1 %i.ja, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtNtCsaaRuwTSDeTG_9pep508_rs6marker4tree16MarkerExpressionENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNvNtBU_8simplify8simplify0EBW_.exit.i, label %.lr.ph.i.i
 
-.backedge139.i:                                   ; preds = %_RNvNtNtCsaaRuwTSDeTG_9pep508_rs6marker8simplify11is_negation.exit.thread.i.i.i, %.noexc68.i, %bb.bm, %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsJ_NtB9_3cmpjNtB1L_13SliceContains14slice_contains0ECsaaRuwTSDeTG_9pep508_rs.exit.i.i.i.i, %.lr.ph.a, %bb.aa
+.backedge139.i:                                   ; preds = %_RNvNtNtCsaaRuwTSDeTG_9pep508_rs6marker8simplify11is_negation.exit.thread.i.i.i, %.noexc68.i, %bb.bm, %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsJ_NtB9_3cmpjNtB1L_13SliceContains14slice_contains0ECsaaRuwTSDeTG_9pep508_rs.exit.i.i.i.i, %.lr.ph, %.lr.ph.1, %.lr.ph.2, %.lr.ph.3, %.lr.ph.4, %bb.bp, %.lr.ph.a, %bb.aa
   %i.jb = icmp eq ptr %i.eb, %i.df
   br i1 %i.jb, label %.backedge147.i, label %bb.aa
 

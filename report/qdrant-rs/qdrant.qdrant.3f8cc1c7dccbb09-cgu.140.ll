@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/qdrant-rs/original/qdrant.qdrant.3f8cc1c7dccbb09-cgu.140?download=true
 inline.NumInlined: 290
 inline.NumDeleted: 148
-loop-unroll.NumCompletelyUnrolled: 4
+loop-unroll.NumCompletelyUnrolled: 5
 loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 5
+loop-unroll.NumUnrolled: 6
 begin_hunk_0_@_RNvNtCsl8OoimOLbh_6qdrant9snapshots21recover_full_snapshot:bb.a
   %i.jv = landingpad { ptr, i32 }
           cleanup
@@ -205,25 +205,85 @@ bb.d:                                             ; preds = %.lr.ph
   br i1 %i.x, label %bb.d, label %.loopexit191
 
 bb.e:                                             ; preds = %bb.a
-  %i.y = and i64 %2, 56                           ; 2 uses
-  %i.z = getelementptr inbounds nuw i8, ptr %1, i64 %i.y ; 8 uses
+  %i.y = and i64 %2, 56                           ; 8 uses
+  %i.z = getelementptr inbounds nuw i8, ptr %1, i64 %i.y ; 7 uses
   %i.aa = and i64 %2, 7                           ; 7 uses
   %i.ab = icmp samesign eq i64 %i.y, 0
-  br i1 %i.ab, label %._crit_edge.i, label %.lr.ph.i.a
+  br i1 %i.ab, label %._crit_edge.i, label %.lr.ph.i
 
-bb.f:                                             ; preds = %.lr.ph.i.a
-  %i.ac = getelementptr inbounds nuw i8, ptr %.sroa.01.09.i, i64 8 ; 2 uses
-  %i.ad = icmp eq ptr %i.ac, %i.z
-  br i1 %i.ad, label %._crit_edge.i, label %.lr.ph.i.a
+3:                                                ; preds = %.lr.ph.i
+  %4 = icmp samesign eq i64 %i.y, 8
+  br i1 %4, label %._crit_edge.i, label %.lr.ph.i.1
 
-.lr.ph.i.a:                                       ; preds = %bb.e, %bb.f
-  %.sroa.01.09.i = phi ptr [ %i.ac, %bb.f ], [ %1, %bb.e ] ; 2 uses
-  %.sroa.03.0.copyload.i.a = load i64, ptr %.sroa.01.09.i, align 1, !alias.scope !376
+.lr.ph.i.1:                                       ; preds = %3
+  %5 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %.sroa.03.0.copyload.i.1 = load i64, ptr %5, align 1, !alias.scope !376
+  %6 = and i64 %.sroa.03.0.copyload.i.1, -9187201950435737472
+  %7 = icmp eq i64 %6, 0
+  br i1 %7, label %8, label %.loopexit191
+
+8:                                                ; preds = %.lr.ph.i.1
+  %9 = icmp samesign eq i64 %i.y, 16
+  br i1 %9, label %._crit_edge.i, label %.lr.ph.i.2
+
+.lr.ph.i.2:                                       ; preds = %8
+  %10 = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %.sroa.03.0.copyload.i.2 = load i64, ptr %10, align 1, !alias.scope !376
+  %11 = and i64 %.sroa.03.0.copyload.i.2, -9187201950435737472
+  %12 = icmp eq i64 %11, 0
+  br i1 %12, label %13, label %.loopexit191
+
+13:                                               ; preds = %.lr.ph.i.2
+  %14 = icmp samesign eq i64 %i.y, 24
+  br i1 %14, label %._crit_edge.i, label %.lr.ph.i.3
+
+.lr.ph.i.3:                                       ; preds = %13
+  %15 = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %.sroa.03.0.copyload.i.3 = load i64, ptr %15, align 1, !alias.scope !376
+  %16 = and i64 %.sroa.03.0.copyload.i.3, -9187201950435737472
+  %17 = icmp eq i64 %16, 0
+  br i1 %17, label %18, label %.loopexit191
+
+18:                                               ; preds = %.lr.ph.i.3
+  %19 = icmp samesign eq i64 %i.y, 32
+  br i1 %19, label %._crit_edge.i, label %.lr.ph.i.4
+
+.lr.ph.i.4:                                       ; preds = %18
+  %20 = getelementptr inbounds nuw i8, ptr %1, i64 32
+  %.sroa.03.0.copyload.i.4 = load i64, ptr %20, align 1, !alias.scope !376
+  %21 = and i64 %.sroa.03.0.copyload.i.4, -9187201950435737472
+  %22 = icmp eq i64 %21, 0
+  br i1 %22, label %23, label %.loopexit191
+
+23:                                               ; preds = %.lr.ph.i.4
+  %24 = icmp samesign eq i64 %i.y, 40
+  br i1 %24, label %._crit_edge.i, label %bb.f
+
+bb.f:                                             ; preds = %23
+  %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 40
+  %.sroa.03.0.copyload.i.5 = load i64, ptr %i.ac, align 1, !alias.scope !376
+  %25 = and i64 %.sroa.03.0.copyload.i.5, -9187201950435737472
+  %i.ad = icmp eq i64 %25, 0
+  br i1 %i.ad, label %26, label %.loopexit191
+
+26:                                               ; preds = %bb.f
+  %27 = icmp samesign eq i64 %i.y, 48
+  br i1 %27, label %._crit_edge.i, label %.lr.ph.i.a
+
+.lr.ph.i.a:                                       ; preds = %26
+  %28 = getelementptr inbounds nuw i8, ptr %1, i64 48
+  %.sroa.03.0.copyload.i.a = load i64, ptr %28, align 1, !alias.scope !376
   %i.ae = and i64 %.sroa.03.0.copyload.i.a, -9187201950435737472
   %i.af = icmp eq i64 %i.ae, 0
-  br i1 %i.af, label %bb.f, label %.loopexit191
+  br i1 %i.af, label %._crit_edge.i, label %.loopexit191
 
-._crit_edge.i:                                    ; preds = %bb.f, %bb.e
+.lr.ph.i:                                         ; preds = %bb.e
+  %.sroa.03.0.copyload.i = load i64, ptr %1, align 1, !alias.scope !376
+  %29 = and i64 %.sroa.03.0.copyload.i, -9187201950435737472
+  %30 = icmp eq i64 %29, 0
+  br i1 %30, label %3, label %.loopexit191
+
+._crit_edge.i:                                    ; preds = %3, %8, %13, %18, %23, %26, %.lr.ph.i.a, %bb.e
   %i.ag = icmp samesign eq i64 %i.aa, 0
   br i1 %i.ag, label %_RNvNvNtNtCskKLDkoKarTP_4core5slice5ascii8is_ascii7runtime.exit.preheader, label %.lr.ph218
 
@@ -295,7 +355,7 @@ _RNvNvNtNtCskKLDkoKarTP_4core5slice5ascii8is_ascii7runtime.exit.preheader: ; pre
   %i.az = icmp sgt i8 %.val.i.i, -1
   br i1 %i.az, label %bb.g, label %.loopexit191
 
-.loopexit191:                                     ; preds = %.lr.ph.i.i, %.lr.ph, %.lr.ph.i.a, %.lr.ph218, %.lr.ph218.1, %.lr.ph218.2, %.lr.ph218.3, %.lr.ph218.4, %.lr.ph218.5, %.lr.ph218.6
+.loopexit191:                                     ; preds = %.lr.ph.i.i, %.lr.ph, %.lr.ph.i, %.lr.ph.i.1, %.lr.ph.i.2, %.lr.ph.i.3, %.lr.ph.i.4, %bb.f, %.lr.ph.i.a, %.lr.ph218, %.lr.ph218.1, %.lr.ph218.2, %.lr.ph218.3, %.lr.ph218.4, %.lr.ph218.5, %.lr.ph218.6
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i8 5, ptr %.sroa.3.0..sroa_idx, align 8
   store i64 -3, ptr %0, align 8

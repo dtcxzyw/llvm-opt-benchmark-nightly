@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/rust-analyzer-rs/original/zip-6da3ff7bab271d6c.zip.63b7b3929591a8f8-cgu.0?download=true
 inline.NumInlined: 145
 inline.NumDeleted: 94
-loop-unroll.NumCompletelyUnrolled: 2
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumCompletelyUnrolled: 4
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@_RNvMs8_NtCs8yNfvVM1dno_3zip5typesNtB5_8DateTime8is_valid:bb.a
 default.unreachable.i.i:                          ; preds = %bb.b
   unreachable
@@ -204,7 +204,7 @@ _RNvMsd_NtCs8yNfvVM1dno_3zip5typesNtB5_11ZipFileData14version_needed.exit: ; pre
   br i1 %i.ax, label %bb.o, label %_RNvMsd_NtCs8yNfvVM1dno_3zip5typesNtB5_11ZipFileData5flags.exit
 
 bb.o:                                             ; preds = %_RNvMsd_NtCs8yNfvVM1dno_3zip5typesNtB5_11ZipFileData14version_needed.exit
-  %.val4.i = load ptr, ptr %i.au, align 8, !nonnull !6, !noundef !6 ; 4 uses
+  %.val4.i = load ptr, ptr %i.au, align 8, !nonnull !6, !noundef !6 ; 10 uses
   %.val5.i = load i64, ptr %i.av, align 8, !noundef !6 ; 5 uses
   %i.ay = icmp samesign ult i64 %.val5.i, 64
   br i1 %i.ay, label %bb.s, label %bb.p
@@ -255,19 +255,79 @@ bb.r:                                             ; preds = %.lr.ph
   br i1 %i.bt, label %bb.r, label %_RNvMsd_NtCs8yNfvVM1dno_3zip5typesNtB5_11ZipFileData5flags.exit
 
 bb.s:                                             ; preds = %bb.o
-  %i.bu = and i64 %.val5.i, 56                    ; 3 uses
+  %i.bu = and i64 %.val5.i, 56                    ; 8 uses
   %i.bv = getelementptr inbounds nuw i8, ptr %.val4.i, i64 %i.bu ; 7 uses
   %i.bw = and i64 %.val5.i, 7                     ; 7 uses
   %.not.i.i.i95 = icmp eq i64 %i.bu, 0
   br i1 %.not.i.i.i95, label %._crit_edge, label %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i
 
-bb.t:                                             ; preds = %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i
-  %i.bx = getelementptr inbounds nuw i8, ptr %.sroa.0.017.i.i.i97, i64 8
-  %2 = add nsw i64 %.sroa.6.0.i.i.i96, -8         ; 2 uses
-  %.not.i.i.i.a = icmp eq i64 %2, 0
-  br i1 %.not.i.i.i.a, label %._crit_edge, label %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i
+2:                                                ; preds = %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i
+  %.not.i.i.i = icmp eq i64 %i.bu, 8
+  br i1 %.not.i.i.i, label %._crit_edge, label %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.1
 
-._crit_edge:                                      ; preds = %bb.t, %bb.s
+_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.1: ; preds = %2
+  %3 = getelementptr inbounds nuw i8, ptr %.val4.i, i64 8
+  %.sroa.012.0.copyload.i.i.i.1 = load i64, ptr %3, align 1, !alias.scope !64
+  %4 = and i64 %.sroa.012.0.copyload.i.i.i.1, -9187201950435737472
+  %5 = icmp eq i64 %4, 0
+  br i1 %5, label %6, label %_RNvMsd_NtCs8yNfvVM1dno_3zip5typesNtB5_11ZipFileData5flags.exit
+
+6:                                                ; preds = %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.1
+  %.not.i.i.i.1 = icmp eq i64 %i.bu, 16
+  br i1 %.not.i.i.i.1, label %._crit_edge, label %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.2
+
+_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.2: ; preds = %6
+  %7 = getelementptr inbounds nuw i8, ptr %.val4.i, i64 16
+  %.sroa.012.0.copyload.i.i.i.2 = load i64, ptr %7, align 1, !alias.scope !64
+  %8 = and i64 %.sroa.012.0.copyload.i.i.i.2, -9187201950435737472
+  %9 = icmp eq i64 %8, 0
+  br i1 %9, label %10, label %_RNvMsd_NtCs8yNfvVM1dno_3zip5typesNtB5_11ZipFileData5flags.exit
+
+10:                                               ; preds = %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.2
+  %.not.i.i.i.2 = icmp eq i64 %i.bu, 24
+  br i1 %.not.i.i.i.2, label %._crit_edge, label %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.3
+
+_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.3: ; preds = %10
+  %11 = getelementptr inbounds nuw i8, ptr %.val4.i, i64 24
+  %.sroa.012.0.copyload.i.i.i.3 = load i64, ptr %11, align 1, !alias.scope !64
+  %12 = and i64 %.sroa.012.0.copyload.i.i.i.3, -9187201950435737472
+  %13 = icmp eq i64 %12, 0
+  br i1 %13, label %14, label %_RNvMsd_NtCs8yNfvVM1dno_3zip5typesNtB5_11ZipFileData5flags.exit
+
+14:                                               ; preds = %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.3
+  %.not.i.i.i.3 = icmp eq i64 %i.bu, 32
+  br i1 %.not.i.i.i.3, label %._crit_edge, label %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.4
+
+_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.4: ; preds = %14
+  %15 = getelementptr inbounds nuw i8, ptr %.val4.i, i64 32
+  %.sroa.012.0.copyload.i.i.i.4 = load i64, ptr %15, align 1, !alias.scope !64
+  %16 = and i64 %.sroa.012.0.copyload.i.i.i.4, -9187201950435737472
+  %17 = icmp eq i64 %16, 0
+  br i1 %17, label %18, label %_RNvMsd_NtCs8yNfvVM1dno_3zip5typesNtB5_11ZipFileData5flags.exit
+
+18:                                               ; preds = %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.4
+  %.not.i.i.i.4 = icmp eq i64 %i.bu, 40
+  br i1 %.not.i.i.i.4, label %._crit_edge, label %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.5
+
+_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.5: ; preds = %18
+  %19 = getelementptr inbounds nuw i8, ptr %.val4.i, i64 40
+  %.sroa.012.0.copyload.i.i.i.5 = load i64, ptr %19, align 1, !alias.scope !64
+  %20 = and i64 %.sroa.012.0.copyload.i.i.i.5, -9187201950435737472
+  %21 = icmp eq i64 %20, 0
+  br i1 %21, label %22, label %_RNvMsd_NtCs8yNfvVM1dno_3zip5typesNtB5_11ZipFileData5flags.exit
+
+22:                                               ; preds = %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.5
+  %.not.i.i.i.5 = icmp eq i64 %i.bu, 48
+  br i1 %.not.i.i.i.5, label %._crit_edge, label %bb.t
+
+bb.t:                                             ; preds = %22
+  %i.bx = getelementptr inbounds nuw i8, ptr %.val4.i, i64 48
+  %.sroa.012.0.copyload.i.i.i.6 = load i64, ptr %i.bx, align 1, !alias.scope !64
+  %23 = and i64 %.sroa.012.0.copyload.i.i.i.6, -9187201950435737472
+  %.not.i.i.i.a = icmp eq i64 %23, 0
+  br i1 %.not.i.i.i.a, label %._crit_edge, label %_RNvMsd_NtCs8yNfvVM1dno_3zip5typesNtB5_11ZipFileData5flags.exit
+
+._crit_edge:                                      ; preds = %2, %6, %10, %14, %18, %22, %bb.t, %bb.s
   %i.by = icmp samesign eq i64 %i.bw, 0
   br i1 %i.by, label %_RNvMsd_NtCs8yNfvVM1dno_3zip5typesNtB5_11ZipFileData5flags.exit, label %.lr.ph99
 
@@ -337,16 +397,14 @@ bb.z:                                             ; preds = %.lr.ph99.5
   %i.cr = icmp sgt i8 %.val.i.i.i.i, -1
   br i1 %i.cr, label %bb.u, label %_RNvMsd_NtCs8yNfvVM1dno_3zip5typesNtB5_11ZipFileData5flags.exit
 
-_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i: ; preds = %bb.s, %bb.t
-  %.sroa.0.017.i.i.i97 = phi ptr [ %i.bx, %bb.t ], [ %.val4.i, %bb.s ] ; 2 uses
-  %.sroa.6.0.i.i.i96 = phi i64 [ %2, %bb.t ], [ %i.bu, %bb.s ]
-  %.sroa.012.0.copyload.i.i.i = load i64, ptr %.sroa.0.017.i.i.i97, align 1, !alias.scope !64
+_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i: ; preds = %bb.s
+  %.sroa.012.0.copyload.i.i.i = load i64, ptr %.val4.i, align 1, !alias.scope !64
   %i.cs = and i64 %.sroa.012.0.copyload.i.i.i, -9187201950435737472
   %i.ct = icmp eq i64 %i.cs, 0
-  br i1 %i.ct, label %bb.t, label %_RNvMsd_NtCs8yNfvVM1dno_3zip5typesNtB5_11ZipFileData5flags.exit
+  br i1 %i.ct, label %2, label %_RNvMsd_NtCs8yNfvVM1dno_3zip5typesNtB5_11ZipFileData5flags.exit
 
-_RNvMsd_NtCs8yNfvVM1dno_3zip5typesNtB5_11ZipFileData5flags.exit: ; preds = %.lr.ph99.6, %.lr.ph.i.i.i.i, %.lr.ph, %bb.r, %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i, %.lr.ph99, %bb.u, %.lr.ph99.1, %bb.v, %.lr.ph99.2, %bb.w, %.lr.ph99.3, %bb.x, %.lr.ph99.4, %bb.y, %.lr.ph99.5, %bb.z, %._crit_edge.i.i.i.i, %._crit_edge, %_RNvMsd_NtCs8yNfvVM1dno_3zip5typesNtB5_11ZipFileData14version_needed.exit
-  %.sroa.0.0.i65 = phi i16 [ 0, %_RNvMsd_NtCs8yNfvVM1dno_3zip5typesNtB5_11ZipFileData14version_needed.exit ], [ 0, %bb.r ], [ 2048, %.lr.ph.i.i.i.i ], [ 0, %._crit_edge.i.i.i.i ], [ 0, %._crit_edge ], [ 2048, %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i ], [ 2048, %.lr.ph99 ], [ 0, %bb.u ], [ 2048, %.lr.ph99.1 ], [ 0, %bb.v ], [ 2048, %.lr.ph99.2 ], [ 0, %bb.w ], [ 2048, %.lr.ph99.3 ], [ 0, %bb.x ], [ 2048, %.lr.ph99.4 ], [ 0, %bb.y ], [ 2048, %.lr.ph99.5 ], [ 0, %bb.z ], [ %spec.select, %.lr.ph99.6 ], [ 2048, %.lr.ph ]
+_RNvMsd_NtCs8yNfvVM1dno_3zip5typesNtB5_11ZipFileData5flags.exit: ; preds = %.lr.ph99.6, %.lr.ph.i.i.i.i, %.lr.ph, %bb.r, %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i, %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.1, %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.2, %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.3, %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.4, %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.5, %bb.t, %.lr.ph99, %bb.u, %.lr.ph99.1, %bb.v, %.lr.ph99.2, %bb.w, %.lr.ph99.3, %bb.x, %.lr.ph99.4, %bb.y, %.lr.ph99.5, %bb.z, %._crit_edge.i.i.i.i, %._crit_edge, %_RNvMsd_NtCs8yNfvVM1dno_3zip5typesNtB5_11ZipFileData14version_needed.exit
+  %.sroa.0.0.i65 = phi i16 [ 0, %_RNvMsd_NtCs8yNfvVM1dno_3zip5typesNtB5_11ZipFileData14version_needed.exit ], [ 0, %bb.r ], [ 2048, %.lr.ph.i.i.i.i ], [ 0, %._crit_edge.i.i.i.i ], [ 0, %._crit_edge ], [ 2048, %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i ], [ 2048, %.lr.ph99 ], [ 0, %bb.u ], [ 2048, %.lr.ph99.1 ], [ 0, %bb.v ], [ 2048, %.lr.ph99.2 ], [ 0, %bb.w ], [ 2048, %.lr.ph99.3 ], [ 0, %bb.x ], [ 2048, %.lr.ph99.4 ], [ 0, %bb.y ], [ 2048, %.lr.ph99.5 ], [ 0, %bb.z ], [ %spec.select, %.lr.ph99.6 ], [ 2048, %bb.t ], [ 2048, %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.5 ], [ 2048, %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.4 ], [ 2048, %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.3 ], [ 2048, %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.2 ], [ 2048, %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.1 ], [ 2048, %.lr.ph ]
   %i.cu = load i8, ptr %i.c, align 4, !range !10, !noundef !6
   %i.cv = shl nuw nsw i8 %i.cu, 3
   %i.cw = zext nneg i8 %i.cv to i16
@@ -749,7 +807,7 @@ _RNvMsd_NtCs8yNfvVM1dno_3zip5typesNtB5_11ZipFileData14version_needed.exit: ; pre
   br i1 %i.bf, label %bb.o, label %_RNvMsd_NtCs8yNfvVM1dno_3zip5typesNtB5_11ZipFileData5flags.exit
 
 bb.o:                                             ; preds = %_RNvMsd_NtCs8yNfvVM1dno_3zip5typesNtB5_11ZipFileData14version_needed.exit
-  %.val4.i = load ptr, ptr %i.bc, align 8, !nonnull !6, !noundef !6 ; 4 uses
+  %.val4.i = load ptr, ptr %i.bc, align 8, !nonnull !6, !noundef !6 ; 10 uses
   %.val5.i = load i64, ptr %i.bd, align 8, !noundef !6 ; 5 uses
   %i.bg = icmp samesign ult i64 %.val5.i, 64
   br i1 %i.bg, label %bb.s, label %bb.p
@@ -800,19 +858,79 @@ bb.r:                                             ; preds = %.lr.ph
   br i1 %i.cb, label %bb.r, label %_RNvMsd_NtCs8yNfvVM1dno_3zip5typesNtB5_11ZipFileData5flags.exit
 
 bb.s:                                             ; preds = %bb.o
-  %i.cc = and i64 %.val5.i, 56                    ; 3 uses
+  %i.cc = and i64 %.val5.i, 56                    ; 8 uses
   %i.cd = getelementptr inbounds nuw i8, ptr %.val4.i, i64 %i.cc ; 7 uses
   %i.ce = and i64 %.val5.i, 7                     ; 7 uses
   %.not.i.i.i180 = icmp eq i64 %i.cc, 0
   br i1 %.not.i.i.i180, label %._crit_edge, label %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i
 
-bb.t:                                             ; preds = %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i
-  %i.cf = getelementptr inbounds nuw i8, ptr %.sroa.0.017.i.i.i182, i64 8
-  %2 = add nsw i64 %.sroa.6.0.i.i.i181, -8        ; 2 uses
-  %.not.i.i.i.a = icmp eq i64 %2, 0
-  br i1 %.not.i.i.i.a, label %._crit_edge, label %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i
+2:                                                ; preds = %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i
+  %.not.i.i.i = icmp eq i64 %i.cc, 8
+  br i1 %.not.i.i.i, label %._crit_edge, label %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.1
 
-._crit_edge:                                      ; preds = %bb.t, %bb.s
+_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.1: ; preds = %2
+  %3 = getelementptr inbounds nuw i8, ptr %.val4.i, i64 8
+  %.sroa.012.0.copyload.i.i.i.1 = load i64, ptr %3, align 1, !alias.scope !213
+  %4 = and i64 %.sroa.012.0.copyload.i.i.i.1, -9187201950435737472
+  %5 = icmp eq i64 %4, 0
+  br i1 %5, label %6, label %_RNvMsd_NtCs8yNfvVM1dno_3zip5typesNtB5_11ZipFileData5flags.exit
+
+6:                                                ; preds = %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.1
+  %.not.i.i.i.1 = icmp eq i64 %i.cc, 16
+  br i1 %.not.i.i.i.1, label %._crit_edge, label %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.2
+
+_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.2: ; preds = %6
+  %7 = getelementptr inbounds nuw i8, ptr %.val4.i, i64 16
+  %.sroa.012.0.copyload.i.i.i.2 = load i64, ptr %7, align 1, !alias.scope !213
+  %8 = and i64 %.sroa.012.0.copyload.i.i.i.2, -9187201950435737472
+  %9 = icmp eq i64 %8, 0
+  br i1 %9, label %10, label %_RNvMsd_NtCs8yNfvVM1dno_3zip5typesNtB5_11ZipFileData5flags.exit
+
+10:                                               ; preds = %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.2
+  %.not.i.i.i.2 = icmp eq i64 %i.cc, 24
+  br i1 %.not.i.i.i.2, label %._crit_edge, label %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.3
+
+_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.3: ; preds = %10
+  %11 = getelementptr inbounds nuw i8, ptr %.val4.i, i64 24
+  %.sroa.012.0.copyload.i.i.i.3 = load i64, ptr %11, align 1, !alias.scope !213
+  %12 = and i64 %.sroa.012.0.copyload.i.i.i.3, -9187201950435737472
+  %13 = icmp eq i64 %12, 0
+  br i1 %13, label %14, label %_RNvMsd_NtCs8yNfvVM1dno_3zip5typesNtB5_11ZipFileData5flags.exit
+
+14:                                               ; preds = %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.3
+  %.not.i.i.i.3 = icmp eq i64 %i.cc, 32
+  br i1 %.not.i.i.i.3, label %._crit_edge, label %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.4
+
+_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.4: ; preds = %14
+  %15 = getelementptr inbounds nuw i8, ptr %.val4.i, i64 32
+  %.sroa.012.0.copyload.i.i.i.4 = load i64, ptr %15, align 1, !alias.scope !213
+  %16 = and i64 %.sroa.012.0.copyload.i.i.i.4, -9187201950435737472
+  %17 = icmp eq i64 %16, 0
+  br i1 %17, label %18, label %_RNvMsd_NtCs8yNfvVM1dno_3zip5typesNtB5_11ZipFileData5flags.exit
+
+18:                                               ; preds = %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.4
+  %.not.i.i.i.4 = icmp eq i64 %i.cc, 40
+  br i1 %.not.i.i.i.4, label %._crit_edge, label %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.5
+
+_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.5: ; preds = %18
+  %19 = getelementptr inbounds nuw i8, ptr %.val4.i, i64 40
+  %.sroa.012.0.copyload.i.i.i.5 = load i64, ptr %19, align 1, !alias.scope !213
+  %20 = and i64 %.sroa.012.0.copyload.i.i.i.5, -9187201950435737472
+  %21 = icmp eq i64 %20, 0
+  br i1 %21, label %22, label %_RNvMsd_NtCs8yNfvVM1dno_3zip5typesNtB5_11ZipFileData5flags.exit
+
+22:                                               ; preds = %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.5
+  %.not.i.i.i.5 = icmp eq i64 %i.cc, 48
+  br i1 %.not.i.i.i.5, label %._crit_edge, label %bb.t
+
+bb.t:                                             ; preds = %22
+  %i.cf = getelementptr inbounds nuw i8, ptr %.val4.i, i64 48
+  %.sroa.012.0.copyload.i.i.i.6 = load i64, ptr %i.cf, align 1, !alias.scope !213
+  %23 = and i64 %.sroa.012.0.copyload.i.i.i.6, -9187201950435737472
+  %.not.i.i.i.a = icmp eq i64 %23, 0
+  br i1 %.not.i.i.i.a, label %._crit_edge, label %_RNvMsd_NtCs8yNfvVM1dno_3zip5typesNtB5_11ZipFileData5flags.exit
+
+._crit_edge:                                      ; preds = %2, %6, %10, %14, %18, %22, %bb.t, %bb.s
   %i.cg = icmp samesign eq i64 %i.ce, 0
   br i1 %i.cg, label %_RNvMsd_NtCs8yNfvVM1dno_3zip5typesNtB5_11ZipFileData5flags.exit, label %.lr.ph184
 
@@ -882,16 +1000,14 @@ bb.z:                                             ; preds = %.lr.ph184.5
   %i.cz = icmp sgt i8 %.val.i.i.i.i, -1
   br i1 %i.cz, label %bb.u, label %_RNvMsd_NtCs8yNfvVM1dno_3zip5typesNtB5_11ZipFileData5flags.exit
 
-_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i: ; preds = %bb.s, %bb.t
-  %.sroa.0.017.i.i.i182 = phi ptr [ %i.cf, %bb.t ], [ %.val4.i, %bb.s ] ; 2 uses
-  %.sroa.6.0.i.i.i181 = phi i64 [ %2, %bb.t ], [ %i.cc, %bb.s ]
-  %.sroa.012.0.copyload.i.i.i = load i64, ptr %.sroa.0.017.i.i.i182, align 1, !alias.scope !213
+_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i: ; preds = %bb.s
+  %.sroa.012.0.copyload.i.i.i = load i64, ptr %.val4.i, align 1, !alias.scope !213
   %i.da = and i64 %.sroa.012.0.copyload.i.i.i, -9187201950435737472
   %i.db = icmp eq i64 %i.da, 0
-  br i1 %i.db, label %bb.t, label %_RNvMsd_NtCs8yNfvVM1dno_3zip5typesNtB5_11ZipFileData5flags.exit
+  br i1 %i.db, label %2, label %_RNvMsd_NtCs8yNfvVM1dno_3zip5typesNtB5_11ZipFileData5flags.exit
 
-_RNvMsd_NtCs8yNfvVM1dno_3zip5typesNtB5_11ZipFileData5flags.exit: ; preds = %.lr.ph184.6, %.lr.ph.i.i.i.i, %.lr.ph, %bb.r, %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i, %.lr.ph184, %bb.u, %.lr.ph184.1, %bb.v, %.lr.ph184.2, %bb.w, %.lr.ph184.3, %bb.x, %.lr.ph184.4, %bb.y, %.lr.ph184.5, %bb.z, %._crit_edge.i.i.i.i, %._crit_edge, %_RNvMsd_NtCs8yNfvVM1dno_3zip5typesNtB5_11ZipFileData14version_needed.exit
-  %.sroa.0.0.i135 = phi i16 [ 0, %_RNvMsd_NtCs8yNfvVM1dno_3zip5typesNtB5_11ZipFileData14version_needed.exit ], [ 0, %bb.r ], [ 2048, %.lr.ph.i.i.i.i ], [ 0, %._crit_edge.i.i.i.i ], [ 0, %._crit_edge ], [ 2048, %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i ], [ 2048, %.lr.ph184 ], [ 0, %bb.u ], [ 2048, %.lr.ph184.1 ], [ 0, %bb.v ], [ 2048, %.lr.ph184.2 ], [ 0, %bb.w ], [ 2048, %.lr.ph184.3 ], [ 0, %bb.x ], [ 2048, %.lr.ph184.4 ], [ 0, %bb.y ], [ 2048, %.lr.ph184.5 ], [ 0, %bb.z ], [ %spec.select, %.lr.ph184.6 ], [ 2048, %.lr.ph ]
+_RNvMsd_NtCs8yNfvVM1dno_3zip5typesNtB5_11ZipFileData5flags.exit: ; preds = %.lr.ph184.6, %.lr.ph.i.i.i.i, %.lr.ph, %bb.r, %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i, %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.1, %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.2, %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.3, %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.4, %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.5, %bb.t, %.lr.ph184, %bb.u, %.lr.ph184.1, %bb.v, %.lr.ph184.2, %bb.w, %.lr.ph184.3, %bb.x, %.lr.ph184.4, %bb.y, %.lr.ph184.5, %bb.z, %._crit_edge.i.i.i.i, %._crit_edge, %_RNvMsd_NtCs8yNfvVM1dno_3zip5typesNtB5_11ZipFileData14version_needed.exit
+  %.sroa.0.0.i135 = phi i16 [ 0, %_RNvMsd_NtCs8yNfvVM1dno_3zip5typesNtB5_11ZipFileData14version_needed.exit ], [ 0, %bb.r ], [ 2048, %.lr.ph.i.i.i.i ], [ 0, %._crit_edge.i.i.i.i ], [ 0, %._crit_edge ], [ 2048, %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i ], [ 2048, %.lr.ph184 ], [ 0, %bb.u ], [ 2048, %.lr.ph184.1 ], [ 0, %bb.v ], [ 2048, %.lr.ph184.2 ], [ 0, %bb.w ], [ 2048, %.lr.ph184.3 ], [ 0, %bb.x ], [ 2048, %.lr.ph184.4 ], [ 0, %bb.y ], [ 2048, %.lr.ph184.5 ], [ 0, %bb.z ], [ %spec.select, %.lr.ph184.6 ], [ 2048, %bb.t ], [ 2048, %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.5 ], [ 2048, %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.4 ], [ 2048, %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.3 ], [ 2048, %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.2 ], [ 2048, %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8yNfvVM1dno_3zip.exit.i.i.i.1 ], [ 2048, %.lr.ph ]
   %i.dc = getelementptr inbounds nuw i8, ptr %1, i64 204
   %i.dd = load i8, ptr %i.dc, align 4, !range !10, !noundef !6
   %i.de = shl nuw nsw i8 %i.dd, 3
