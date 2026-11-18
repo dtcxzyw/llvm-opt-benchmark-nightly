@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/tokio-rs/original/tokio-780958579a272c82.tokio.f7a8dcd0f314c5e6-cgu.05?download=true
 inline.NumInlined: 431
 inline.NumDeleted: 241
-loop-unroll.NumCompletelyUnrolled: 2
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_RNvMNtNtNtNtCslghKHtsL3a4_5tokio7runtime9scheduler12multi_thread4idleNtB2_4Idle19unpark_worker_by_id:bb.a
   br i1 %i.o, label %bb.g, label %bb.d
 
@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 248
   %i.h = load i64, ptr %i.g, align 8, !noundef !4 ; 2 uses
   %i.i = and i64 %i.h, 1152921504606846968        ; 3 uses
-  %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.i ; 2 uses
+  %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.i ; 7 uses
   %.not.i11 = icmp eq i64 %i.i, 0
   br i1 %.not.i11, label %._crit_edge, label %_RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsI_NtB9_3cmpjNtB1L_13SliceContains14slice_contains0ECslghKHtsL3a4_5tokio.exit.i
 
@@ -216,19 +216,75 @@ bb.d:                                             ; preds = %_RINvXs2J_NtNtCs3oU
 
 ._crit_edge:                                      ; preds = %bb.d, %bb.c
   %i.m = shl i64 %i.h, 3
-  %.idx = and i64 %i.m, 56                        ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.j, i64 %.idx
+  %.idx = and i64 %i.m, 56                        ; 7 uses
   %.not.not.not.i.not.not.i.not14 = icmp samesign eq i64 %.idx, 0
-  br i1 %.not.not.not.i.not.not.i.not14, label %_RNvXsI_NtNtCs3oUPovFnLWP_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit, label %.lr.ph.a
+  br i1 %.not.not.not.i.not.not.i.not14, label %_RNvXsI_NtNtCs3oUPovFnLWP_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit, label %.lr.ph
 
-.lr.ph.a:                                         ; preds = %.lr.ph.a, %._crit_edge
-  %4 = phi ptr [ %6, %.lr.ph.a ], [ %i.j, %._crit_edge ] ; 2 uses
-  %.val2.i.i.a = load i64, ptr %4, align 8, !alias.scope !379, !noalias !380, !noundef !4
-  %5 = icmp eq i64 %.val2.i.i.a, %2               ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
-  %.not.not.not.i.not.not.i.not.a = icmp eq ptr %6, %3
-  %or.cond = select i1 %5, i1 true, i1 %.not.not.not.i.not.not.i.not.a
-  br i1 %or.cond, label %_RNvXsI_NtNtCs3oUPovFnLWP_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit, label %.lr.ph.a
+3:                                                ; preds = %.lr.ph
+  %.not.not.not.i.not.not.i.not = icmp samesign eq i64 %.idx, 8
+  br i1 %.not.not.not.i.not.not.i.not, label %_RNvXsI_NtNtCs3oUPovFnLWP_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit, label %.lr.ph.1
+
+.lr.ph.1:                                         ; preds = %3
+  %4 = getelementptr inbounds nuw i8, ptr %i.j, i64 8
+  %.val2.i.i.1 = load i64, ptr %4, align 8, !alias.scope !379, !noalias !380, !noundef !4
+  %5 = icmp eq i64 %.val2.i.i.1, %2
+  br i1 %5, label %_RNvXsI_NtNtCs3oUPovFnLWP_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit, label %6
+
+6:                                                ; preds = %.lr.ph.1
+  %.not.not.not.i.not.not.i.not.1 = icmp samesign eq i64 %.idx, 16
+  br i1 %.not.not.not.i.not.not.i.not.1, label %_RNvXsI_NtNtCs3oUPovFnLWP_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit, label %.lr.ph.2
+
+.lr.ph.2:                                         ; preds = %6
+  %7 = getelementptr inbounds nuw i8, ptr %i.j, i64 16
+  %.val2.i.i.2 = load i64, ptr %7, align 8, !alias.scope !379, !noalias !380, !noundef !4
+  %8 = icmp eq i64 %.val2.i.i.2, %2
+  br i1 %8, label %_RNvXsI_NtNtCs3oUPovFnLWP_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit, label %9
+
+9:                                                ; preds = %.lr.ph.2
+  %.not.not.not.i.not.not.i.not.2 = icmp samesign eq i64 %.idx, 24
+  br i1 %.not.not.not.i.not.not.i.not.2, label %_RNvXsI_NtNtCs3oUPovFnLWP_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit, label %.lr.ph.3
+
+.lr.ph.3:                                         ; preds = %9
+  %10 = getelementptr inbounds nuw i8, ptr %i.j, i64 24
+  %.val2.i.i.3 = load i64, ptr %10, align 8, !alias.scope !379, !noalias !380, !noundef !4
+  %11 = icmp eq i64 %.val2.i.i.3, %2
+  br i1 %11, label %_RNvXsI_NtNtCs3oUPovFnLWP_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit, label %12
+
+12:                                               ; preds = %.lr.ph.3
+  %.not.not.not.i.not.not.i.not.3 = icmp samesign eq i64 %.idx, 32
+  br i1 %.not.not.not.i.not.not.i.not.3, label %_RNvXsI_NtNtCs3oUPovFnLWP_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit, label %.lr.ph.4
+
+.lr.ph.4:                                         ; preds = %12
+  %13 = getelementptr inbounds nuw i8, ptr %i.j, i64 32
+  %.val2.i.i.4 = load i64, ptr %13, align 8, !alias.scope !379, !noalias !380, !noundef !4
+  %14 = icmp eq i64 %.val2.i.i.4, %2
+  br i1 %14, label %_RNvXsI_NtNtCs3oUPovFnLWP_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit, label %15
+
+15:                                               ; preds = %.lr.ph.4
+  %.not.not.not.i.not.not.i.not.4 = icmp samesign eq i64 %.idx, 40
+  br i1 %.not.not.not.i.not.not.i.not.4, label %_RNvXsI_NtNtCs3oUPovFnLWP_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit, label %.lr.ph.5
+
+.lr.ph.5:                                         ; preds = %15
+  %16 = getelementptr inbounds nuw i8, ptr %i.j, i64 40
+  %.val2.i.i.5 = load i64, ptr %16, align 8, !alias.scope !379, !noalias !380, !noundef !4
+  %17 = icmp eq i64 %.val2.i.i.5, %2
+  br i1 %17, label %_RNvXsI_NtNtCs3oUPovFnLWP_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit, label %18
+
+18:                                               ; preds = %.lr.ph.5
+  %.not.not.not.i.not.not.i.not.5 = icmp samesign eq i64 %.idx, 48
+  br i1 %.not.not.not.i.not.not.i.not.5, label %_RNvXsI_NtNtCs3oUPovFnLWP_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit, label %.lr.ph.a
+
+.lr.ph.a:                                         ; preds = %18
+  %19 = getelementptr inbounds nuw i8, ptr %i.j, i64 48
+  %.val2.i.i.a = load i64, ptr %19, align 8, !alias.scope !379, !noalias !380, !noundef !4
+  %.not.not.not.i.not.not.i.not.a = icmp eq i64 %.val2.i.i.a, %2
+  %or.cond = select i1 %.not.not.not.i.not.not.i.not.a, i1 true, i1 false
+  br label %_RNvXsI_NtNtCs3oUPovFnLWP_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit
+
+.lr.ph:                                           ; preds = %._crit_edge
+  %.val2.i.i = load i64, ptr %i.j, align 8, !alias.scope !379, !noalias !380, !noundef !4
+  %20 = icmp eq i64 %.val2.i.i, %2
+  br i1 %20, label %_RNvXsI_NtNtCs3oUPovFnLWP_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit, label %3
 
 _RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsI_NtB9_3cmpjNtB1L_13SliceContains14slice_contains0ECslghKHtsL3a4_5tokio.exit.i: ; preds = %bb.c, %bb.d
   %.sroa.0.05.i13 = phi ptr [ %i.k, %bb.d ], [ %i.f, %bb.c ] ; 9 uses
@@ -265,8 +321,8 @@ _RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits
   %i.ai = or i1 %i.af, %i.ah
   br i1 %i.ai, label %_RNvXsI_NtNtCs3oUPovFnLWP_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit, label %bb.d
 
-_RNvXsI_NtNtCs3oUPovFnLWP_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit: ; preds = %_RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsI_NtB9_3cmpjNtB1L_13SliceContains14slice_contains0ECslghKHtsL3a4_5tokio.exit.i, %.lr.ph.a, %._crit_edge
-  %.sroa.0.0.i3 = phi i1 [ %5, %.lr.ph.a ], [ false, %._crit_edge ], [ true, %_RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsI_NtB9_3cmpjNtB1L_13SliceContains14slice_contains0ECslghKHtsL3a4_5tokio.exit.i ]
+_RNvXsI_NtNtCs3oUPovFnLWP_4core5slice3cmpjNtB5_13SliceContains14slice_contains.exit: ; preds = %.lr.ph.a, %_RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsI_NtB9_3cmpjNtB1L_13SliceContains14slice_contains0ECslghKHtsL3a4_5tokio.exit.i, %3, %.lr.ph, %.lr.ph.1, %6, %.lr.ph.2, %9, %.lr.ph.3, %12, %.lr.ph.4, %15, %.lr.ph.5, %18, %._crit_edge
+  %.sroa.0.0.i3 = phi i1 [ true, %_RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsI_NtB9_3cmpjNtB1L_13SliceContains14slice_contains0ECslghKHtsL3a4_5tokio.exit.i ], [ false, %._crit_edge ], [ false, %3 ], [ true, %.lr.ph ], [ true, %.lr.ph.1 ], [ false, %6 ], [ true, %.lr.ph.2 ], [ false, %9 ], [ true, %.lr.ph.3 ], [ false, %12 ], [ true, %.lr.ph.4 ], [ false, %15 ], [ true, %.lr.ph.5 ], [ false, %18 ], [ %or.cond, %.lr.ph.a ]
   %i.aj = cmpxchg ptr %i.a, i8 1, i8 0 release monotonic, align 1
   %.sroa.18.0.in.i.i.i.i.i4 = extractvalue { i8, i1 } %i.aj, 1
   br i1 %.sroa.18.0.in.i.i.i.i.i4, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardNtNtNtNtNtBK_7runtime9scheduler12multi_thread6worker6SyncedEEBK_.exit5, label %bb.e, !prof !6

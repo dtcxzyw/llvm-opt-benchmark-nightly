@@ -205,7 +205,6 @@ bb.y:                                             ; preds = %_ZNSt4pairISt6vecto
   %i.do = getelementptr inbounds nuw i8, ptr %20, i64 24
   %i.dp = getelementptr inbounds nuw i8, ptr %19, i64 16 ; 2 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %13, i64 8 ; 4 uses
-  %umax1039 = call i64 @llvm.umax.i64(i64 %.sroa.speculated, i64 1)
   %i.dr = getelementptr inbounds nuw i8, ptr %18, i64 16
   br label %bb.z
 
@@ -608,7 +607,7 @@ bb.dz:                                            ; preds = %_ZSt10__pop_heapIN9
   %i.aba = getelementptr inbounds i8, ptr %.val.i302, i64 -8
   store ptr %i.aba, ptr %i.ct, align 8, !tbaa !119
   %i.abb = add nuw nsw i64 %.0810, 1              ; 2 uses
-  %exitcond1040.not = icmp eq i64 %i.abb, %umax1039
+  %exitcond1040.not = icmp eq i64 %i.abb, %.sroa.speculated
   br i1 %exitcond1040.not, label %._crit_edge812.loopexit, label %.lr.ph811, !llvm.loop !367
 
 .loopexit524:                                     ; preds = %bb.dn, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyIPKN13sentencepiece7unigram12_GLOBAL__N_110HypothesisEPS7_EEJEE22find_or_prepare_insertIS9_EESt4pairINSC_8iteratorEbERKT_.exit.i.i.i.i.i.i.i.thread.i, %bb.dg

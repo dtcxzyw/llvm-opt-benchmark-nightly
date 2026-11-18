@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/qdrant-rs/original/segment-22667ebc905013d6.segment.45e885bc3443a827-cgu.225?download=true
 inline.NumInlined: 168
 inline.NumDeleted: 92
-loop-unroll.NumCompletelyUnrolled: 2
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_RNvMs_NtNtNtNtNtCs607s0NAIaWN_7segment5index11field_index15full_text_index10tokenizers7stemmerNtB4_7Stemmer14from_algorithm:bb.a
 
 bb.d:                                             ; preds = %bb.a
@@ -204,7 +204,7 @@ bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [24 x i8], align 8                ; 12 uses
   %.sroa.0.0.in = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.sroa.0.0 = load ptr, ptr %.sroa.0.0.in, align 8, !nonnull !5, !noundef !5 ; 6 uses
+  %.sroa.0.0 = load ptr, ptr %.sroa.0.0.in, align 8, !nonnull !5, !noundef !5 ; 12 uses
   %.sroa.3.0.in = getelementptr inbounds nuw i8, ptr %1, i64 16
   %.sroa.3.0 = load i64, ptr %.sroa.3.0.in, align 8, !noundef !5 ; 9 uses
   %i.c = icmp samesign ult i64 %.sroa.3.0, 64
@@ -256,25 +256,85 @@ bb.d:                                             ; preds = %.lr.ph
   br i1 %i.x, label %bb.d, label %.loopexit
 
 bb.e:                                             ; preds = %bb.a
-  %i.y = and i64 %.sroa.3.0, 56                   ; 2 uses
-  %i.z = getelementptr inbounds nuw i8, ptr %.sroa.0.0, i64 %i.y ; 8 uses
+  %i.y = and i64 %.sroa.3.0, 56                   ; 8 uses
+  %i.z = getelementptr inbounds nuw i8, ptr %.sroa.0.0, i64 %i.y ; 7 uses
   %i.aa = and i64 %.sroa.3.0, 7                   ; 7 uses
   %i.ab = icmp samesign eq i64 %i.y, 0
-  br i1 %i.ab, label %._crit_edge.i, label %.lr.ph.i.a
+  br i1 %i.ab, label %._crit_edge.i, label %.lr.ph.i
 
-bb.f:                                             ; preds = %.lr.ph.i.a
-  %i.ac = getelementptr inbounds nuw i8, ptr %.sroa.01.09.i, i64 8 ; 2 uses
-  %i.ad = icmp eq ptr %i.ac, %i.z
-  br i1 %i.ad, label %._crit_edge.i, label %.lr.ph.i.a
+2:                                                ; preds = %.lr.ph.i
+  %3 = icmp samesign eq i64 %i.y, 8
+  br i1 %3, label %._crit_edge.i, label %.lr.ph.i.1
 
-.lr.ph.i.a:                                       ; preds = %bb.e, %bb.f
-  %.sroa.01.09.i = phi ptr [ %i.ac, %bb.f ], [ %.sroa.0.0, %bb.e ] ; 2 uses
-  %.sroa.03.0.copyload.i.a = load i64, ptr %.sroa.01.09.i, align 1, !alias.scope !83
+.lr.ph.i.1:                                       ; preds = %2
+  %4 = getelementptr inbounds nuw i8, ptr %.sroa.0.0, i64 8
+  %.sroa.03.0.copyload.i.1 = load i64, ptr %4, align 1, !alias.scope !83
+  %5 = and i64 %.sroa.03.0.copyload.i.1, -9187201950435737472
+  %6 = icmp eq i64 %5, 0
+  br i1 %6, label %7, label %.loopexit
+
+7:                                                ; preds = %.lr.ph.i.1
+  %8 = icmp samesign eq i64 %i.y, 16
+  br i1 %8, label %._crit_edge.i, label %.lr.ph.i.2
+
+.lr.ph.i.2:                                       ; preds = %7
+  %9 = getelementptr inbounds nuw i8, ptr %.sroa.0.0, i64 16
+  %.sroa.03.0.copyload.i.2 = load i64, ptr %9, align 1, !alias.scope !83
+  %10 = and i64 %.sroa.03.0.copyload.i.2, -9187201950435737472
+  %11 = icmp eq i64 %10, 0
+  br i1 %11, label %12, label %.loopexit
+
+12:                                               ; preds = %.lr.ph.i.2
+  %13 = icmp samesign eq i64 %i.y, 24
+  br i1 %13, label %._crit_edge.i, label %.lr.ph.i.3
+
+.lr.ph.i.3:                                       ; preds = %12
+  %14 = getelementptr inbounds nuw i8, ptr %.sroa.0.0, i64 24
+  %.sroa.03.0.copyload.i.3 = load i64, ptr %14, align 1, !alias.scope !83
+  %15 = and i64 %.sroa.03.0.copyload.i.3, -9187201950435737472
+  %16 = icmp eq i64 %15, 0
+  br i1 %16, label %17, label %.loopexit
+
+17:                                               ; preds = %.lr.ph.i.3
+  %18 = icmp samesign eq i64 %i.y, 32
+  br i1 %18, label %._crit_edge.i, label %.lr.ph.i.4
+
+.lr.ph.i.4:                                       ; preds = %17
+  %19 = getelementptr inbounds nuw i8, ptr %.sroa.0.0, i64 32
+  %.sroa.03.0.copyload.i.4 = load i64, ptr %19, align 1, !alias.scope !83
+  %20 = and i64 %.sroa.03.0.copyload.i.4, -9187201950435737472
+  %21 = icmp eq i64 %20, 0
+  br i1 %21, label %22, label %.loopexit
+
+22:                                               ; preds = %.lr.ph.i.4
+  %23 = icmp samesign eq i64 %i.y, 40
+  br i1 %23, label %._crit_edge.i, label %bb.f
+
+bb.f:                                             ; preds = %22
+  %i.ac = getelementptr inbounds nuw i8, ptr %.sroa.0.0, i64 40
+  %.sroa.03.0.copyload.i.5 = load i64, ptr %i.ac, align 1, !alias.scope !83
+  %24 = and i64 %.sroa.03.0.copyload.i.5, -9187201950435737472
+  %i.ad = icmp eq i64 %24, 0
+  br i1 %i.ad, label %25, label %.loopexit
+
+25:                                               ; preds = %bb.f
+  %26 = icmp samesign eq i64 %i.y, 48
+  br i1 %26, label %._crit_edge.i, label %.lr.ph.i.a
+
+.lr.ph.i.a:                                       ; preds = %25
+  %27 = getelementptr inbounds nuw i8, ptr %.sroa.0.0, i64 48
+  %.sroa.03.0.copyload.i.a = load i64, ptr %27, align 1, !alias.scope !83
   %i.ae = and i64 %.sroa.03.0.copyload.i.a, -9187201950435737472
   %i.af = icmp eq i64 %i.ae, 0
-  br i1 %i.af, label %bb.f, label %.loopexit
+  br i1 %i.af, label %._crit_edge.i, label %.loopexit
 
-._crit_edge.i:                                    ; preds = %bb.f, %bb.e
+.lr.ph.i:                                         ; preds = %bb.e
+  %.sroa.03.0.copyload.i = load i64, ptr %.sroa.0.0, align 1, !alias.scope !83
+  %28 = and i64 %.sroa.03.0.copyload.i, -9187201950435737472
+  %29 = icmp eq i64 %28, 0
+  br i1 %29, label %2, label %.loopexit
+
+._crit_edge.i:                                    ; preds = %2, %7, %12, %17, %22, %25, %.lr.ph.i.a, %bb.e
   %i.ag = icmp samesign eq i64 %i.aa, 0
   br i1 %i.ag, label %_RNvNvNtNtCskKLDkoKarTP_4core5slice5ascii8is_ascii7runtime.exit, label %.lr.ph37
 
@@ -353,7 +413,7 @@ bb.m:                                             ; preds = %bb.n, %.loopexit
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc6borrow3CoweEECs607s0NAIaWN_7segment(ptr noalias nofree noundef align 8 dereferenceable(24) %1) #21
           to label %common.resume unwind label %bb.ah
 
-.loopexit:                                        ; preds = %.lr.ph.i.i, %.lr.ph, %.lr.ph.i.a, %.lr.ph37, %.lr.ph37.1, %.lr.ph37.2, %.lr.ph37.3, %.lr.ph37.4, %.lr.ph37.5, %.lr.ph37.6
+.loopexit:                                        ; preds = %.lr.ph.i.i, %.lr.ph, %.lr.ph.i, %.lr.ph.i.1, %.lr.ph.i.2, %.lr.ph.i.3, %.lr.ph.i.4, %bb.f, %.lr.ph.i.a, %.lr.ph37, %.lr.ph37.1, %.lr.ph37.2, %.lr.ph37.3, %.lr.ph37.4, %.lr.ph37.5, %.lr.ph37.6
   tail call void @llvm.experimental.noalias.scope.decl(metadata !85)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !86
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !86

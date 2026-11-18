@@ -205,7 +205,7 @@ bb.ao:                                            ; preds = %bb.an
 
 _RNCINvNvXs_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator8try_fold9enumerateRsuINtNtNtBf_3ops12control_flow11ControlFlowTjB25_EENCINvNvB1e_4find5checkB2N_NCNvMs_NtNtCs1N9T06jgEdt_11arrow_array5array16dictionary_arrayINtB3s_15DictionaryArrayNtNtB3w_5types9Int16TypeE7try_new0E0E0Cs14kWLkQVSKO_14deltalake_core.exit.i.i.us: ; preds = %.lr.ph.i.i.split.us
   %i.dg = getelementptr inbounds nuw i8, ptr %i.dc, i64 2 ; 2 uses
-  %i.dh = add nuw i64 %i.db, 1
+  %i.dh = add nuw nsw i64 %i.db, 1
   %i.di = icmp eq ptr %i.dg, %i.cr
   br i1 %i.di, label %.loopexit, label %.lr.ph.i.i.split.us
 
@@ -247,7 +247,7 @@ _RNCNvMs_NtNtCs1N9T06jgEdt_11arrow_array5array16dictionary_arrayINtB6_15Dictiona
   br i1 %i.dy, label %_RNCINvNvXs_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator8try_fold9enumerateRsuINtNtNtBf_3ops12control_flow11ControlFlowTjB25_EENCINvNvB1e_4find5checkB2N_NCNvMs_NtNtCs1N9T06jgEdt_11arrow_array5array16dictionary_arrayINtB3s_15DictionaryArrayNtNtB3w_5types9Int16TypeE7try_new0E0E0Cs14kWLkQVSKO_14deltalake_core.exit.i.i, label %.split
 
 _RNCINvNvXs_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator8try_fold9enumerateRsuINtNtNtBf_3ops12control_flow11ControlFlowTjB25_EENCINvNvB1e_4find5checkB2N_NCNvMs_NtNtCs1N9T06jgEdt_11arrow_array5array16dictionary_arrayINtB3s_15DictionaryArrayNtNtB3w_5types9Int16TypeE7try_new0E0E0Cs14kWLkQVSKO_14deltalake_core.exit.i.i: ; preds = %_RNCNvMs_NtNtCs1N9T06jgEdt_11arrow_array5array16dictionary_arrayINtB6_15DictionaryArrayNtNtBa_5types9Int16TypeE7try_new0Cs14kWLkQVSKO_14deltalake_core.exit.i.i.i.i, %.lr.ph.i.i.split
-  %i.dz = add nuw i64 %i.dj, 1
+  %i.dz = add nuw nsw i64 %i.dj, 1
   %i.ea = icmp eq ptr %i.dl, %i.cr
   br i1 %i.ea, label %.loopexit, label %.lr.ph.i.i.split
 
@@ -650,7 +650,7 @@ _RNCNvMs_NtNtCs1N9T06jgEdt_11arrow_array5array16dictionary_arrayINtB6_15Dictiona
   br i1 %i.bf, label %_RNCINvNvXs_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator8try_fold9enumerateRtuINtNtNtBf_3ops12control_flow11ControlFlowTjB25_EENCINvNvB1e_4find5checkB2N_NCNvMs_NtNtCs1N9T06jgEdt_11arrow_array5array16dictionary_arrayINtB3s_15DictionaryArrayNtNtB3w_5types10UInt16TypeE7try_new0E0E0Cs14kWLkQVSKO_14deltalake_core.exit.i, label %bb.v
 
 _RNCINvNvXs_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator8try_fold9enumerateRtuINtNtNtBf_3ops12control_flow11ControlFlowTjB25_EENCINvNvB1e_4find5checkB2N_NCNvMs_NtNtCs1N9T06jgEdt_11arrow_array5array16dictionary_arrayINtB3s_15DictionaryArrayNtNtB3w_5types10UInt16TypeE7try_new0E0E0Cs14kWLkQVSKO_14deltalake_core.exit.i: ; preds = %_RNCNvMs_NtNtCs1N9T06jgEdt_11arrow_array5array16dictionary_arrayINtB6_15DictionaryArrayNtNtBa_5types10UInt16TypeE7try_new0Cs14kWLkQVSKO_14deltalake_core.exit.i.i.i, %bb.r
-  %i.bg = add nuw i64 %i.an, 1
+  %i.bg = add nuw nsw i64 %i.an, 1
   %i.bh = icmp eq ptr %i.ap, %i.ah
   br i1 %i.bh, label %.loopexit, label %bb.r
 
@@ -1053,7 +1053,7 @@ bb.ad:                                            ; preds = %.lr.ph, %bb.ae
   %.sroa.0.050 = phi ptr [ %i.bg, %.lr.ph ], [ %i.ca, %bb.ae ] ; 2 uses
   %.sroa.7.049 = phi i64 [ 0, %.lr.ph ], [ %i.cb, %bb.ae ] ; 3 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %.sroa.0.050, i64 2 ; 2 uses
-  %i.cb = add nuw i64 %.sroa.7.049, 1
+  %i.cb = add nuw nsw i64 %.sroa.7.049, 1
   %i.cc = load i16, ptr %.sroa.0.050, align 2, !noundef !5
   %i.cd = zext i16 %i.cc to i64                   ; 2 uses
   %i.ce = icmp ugt i64 %i.bz, %i.cd
@@ -1456,7 +1456,7 @@ bb.ad:                                            ; preds = %.lr.ph, %bb.ae
   %.sroa.0.050 = phi ptr [ %i.bg, %.lr.ph ], [ %i.ca, %bb.ae ] ; 2 uses
   %.sroa.7.049 = phi i64 [ 0, %.lr.ph ], [ %i.cb, %bb.ae ] ; 3 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %.sroa.0.050, i64 2 ; 2 uses
-  %i.cb = add nuw i64 %.sroa.7.049, 1
+  %i.cb = add nuw nsw i64 %.sroa.7.049, 1
   %i.cc = load i16, ptr %.sroa.0.050, align 2, !noundef !5
   %i.cd = sext i16 %i.cc to i64                   ; 2 uses
   %i.ce = icmp ugt i64 %i.bz, %i.cd

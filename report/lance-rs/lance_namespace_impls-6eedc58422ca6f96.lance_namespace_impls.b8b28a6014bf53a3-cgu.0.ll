@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/lance-rs/original/lance_namespace_impls-6eedc58422ca6f96.lance_namespace_impls.b8b28a6014bf53a3-cgu.0?download=true
 inline.NumInlined: 73518
 inline.NumDeleted: 27553
-loop-unroll.NumCompletelyUnrolled: 89
+loop-unroll.NumCompletelyUnrolled: 91
 loop-unroll.NumRuntimeUnrolled: 193
-loop-unroll.NumUnrolled: 286
+loop-unroll.NumUnrolled: 288
 loop-unroll.NumUnrolledNotLatch: 1
 begin_hunk_0_@_RNCNvMNtNtNtCshkPeWWG1flk_5lance2io6commit17conflict_resolverNtB4_17TransactionRebase20finish_delete_update0CsfR8GmIBoxTX_21lance_namespace_impls:bb.a
   br label %bb.l
@@ -206,12 +206,23 @@ bb.t:                                             ; preds = %bb.q, %_RNvXNtNtCs4
   %i.fr = load ptr, ptr %i.fo, align 8, !noalias !146212, !nonnull !411, !noundef !411 ; 2 uses
   %i.fs = load i64, ptr %i.fp, align 8, !noalias !146212, !noundef !411 ; 2 uses
   %i.ft = and i64 %i.fs, 1152921504606846968      ; 3 uses
-  %i.fu = getelementptr inbounds nuw [8 x i8], ptr %i.fr, i64 %i.ft ; 2 uses
+  %i.fu = getelementptr inbounds nuw [8 x i8], ptr %i.fr, i64 %i.ft ; 7 uses
   %i.fv = shl i64 %i.fs, 3
-  %.idx1465 = and i64 %i.fv, 56                   ; 2 uses
-  %i.fw = getelementptr inbounds nuw i8, ptr %i.fu, i64 %.idx1465
-  %.not.i.i.i.i.i.i.i.i.i1455.a = icmp eq i64 %i.ft, 0
-  %.not.not.not.i.not.not.i.i.i.i.i.i.i.i.i1458.a = icmp samesign eq i64 %.idx1465, 0
+  %.idx1465 = and i64 %i.fv, 56                   ; 7 uses
+  %.not.i.i.i.i.i.i.i.i.i1455 = icmp eq i64 %i.ft, 0
+  %.not.not.not.i.not.not.i.i.i.i.i.i.i.i.i1458 = icmp samesign eq i64 %.idx1465, 0
+  %.not.not.not.i.not.not.i.i.i.i.i.i.i.i.i = icmp samesign eq i64 %.idx1465, 8
+  %3 = getelementptr inbounds nuw i8, ptr %i.fu, i64 8
+  %.not.not.not.i.not.not.i.i.i.i.i.i.i.i.i.1 = icmp samesign eq i64 %.idx1465, 16
+  %4 = getelementptr inbounds nuw i8, ptr %i.fu, i64 16
+  %.not.not.not.i.not.not.i.i.i.i.i.i.i.i.i.2 = icmp samesign eq i64 %.idx1465, 24
+  %5 = getelementptr inbounds nuw i8, ptr %i.fu, i64 24
+  %.not.not.not.i.not.not.i.i.i.i.i.i.i.i.i.3 = icmp samesign eq i64 %.idx1465, 32
+  %i.fw = getelementptr inbounds nuw i8, ptr %i.fu, i64 32
+  %.not.i.i.i.i.i.i.i.i.i1455.a = icmp samesign eq i64 %.idx1465, 40
+  %6 = getelementptr inbounds nuw i8, ptr %i.fu, i64 40
+  %.not.not.not.i.not.not.i.i.i.i.i.i.i.i.i1458.a = icmp samesign eq i64 %.idx1465, 48
+  %7 = getelementptr inbounds nuw i8, ptr %i.fu, i64 48
   br label %bb.u
 
 bb.u:                                             ; preds = %_RNvXsD_NtNtCscI6d9CVNmLh_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i187
@@ -222,28 +233,70 @@ bb.u:                                             ; preds = %_RNvXsD_NtNtCscI6d9
   tail call void @llvm.experimental.noalias.scope.decl(metadata !146215)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !146216)
   %i.fz = getelementptr inbounds nuw i8, ptr %i.fx, i64 232
-  %.val.i.i.i.i.i.i.i.i = load i64, ptr %i.fz, align 8, !alias.scope !146217, !noalias !146218 ; 10 uses
-  br i1 %.not.i.i.i.i.i.i.i.i.i1455.a, label %.preheader.i.i.i.i.i.preheader.a, label %_RINvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsD_NtB9_3cmpyNtB1L_13SliceContains14slice_contains0ECsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i.i.i.i
+  %.val.i.i.i.i.i.i.i.i = load i64, ptr %i.fz, align 8, !alias.scope !146217, !noalias !146218 ; 16 uses
+  br i1 %.not.i.i.i.i.i.i.i.i.i1455, label %.preheader.i.i.i.i.i.preheader, label %_RINvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsD_NtB9_3cmpyNtB1L_13SliceContains14slice_contains0ECsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i.i.i.i
 
 bb.v:                                             ; preds = %_RINvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsD_NtB9_3cmpyNtB1L_13SliceContains14slice_contains0ECsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i.i.i.i
   %i.ga = getelementptr inbounds nuw i8, ptr %.sroa.0.05.i.i.i.i.i.i.i.i.i1457, i64 64
   %i.gb = add nsw i64 %.sroa.5.0.i.i.i.i.i.i.i.i.i1456, -8 ; 2 uses
   %.not.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.gb, 0
-  br i1 %.not.i.i.i.i.i.i.i.i.i, label %.preheader.i.i.i.i.i.preheader.a, label %_RINvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsD_NtB9_3cmpyNtB1L_13SliceContains14slice_contains0ECsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i.i.i.i
+  br i1 %.not.i.i.i.i.i.i.i.i.i, label %.preheader.i.i.i.i.i.preheader, label %_RINvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsD_NtB9_3cmpyNtB1L_13SliceContains14slice_contains0ECsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i.i.i.i
 
-.preheader.i.i.i.i.i.preheader.a:                 ; preds = %bb.v, %bb.u
-  br i1 %.not.not.not.i.not.not.i.i.i.i.i.i.i.i.i1458.a, label %_RNvXsD_NtNtCscI6d9CVNmLh_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit.i.i.i.i.i.i.i.i, label %.lr.ph1459
+.preheader.i.i.i.i.i.preheader:                   ; preds = %bb.v, %bb.u
+  br i1 %.not.not.not.i.not.not.i.i.i.i.i.i.i.i.i1458, label %_RNvXsD_NtNtCscI6d9CVNmLh_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit.i.i.i.i.i.i.i.i, label %.lr.ph1459
 
-.preheader.i.i.i.i.i.a:                           ; preds = %.lr.ph1459
-  %3 = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
-  %.not.not.not.i.not.not.i.i.i.i.i.i.i.i.i.a = icmp eq ptr %3, %i.fw
-  br i1 %.not.not.not.i.not.not.i.i.i.i.i.i.i.i.i.a, label %_RNvXsD_NtNtCscI6d9CVNmLh_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit.i.i.i.i.i.i.i.i, label %.lr.ph1459
+.preheader.i.i.i.i.i:                             ; preds = %.lr.ph1459
+  br i1 %.not.not.not.i.not.not.i.i.i.i.i.i.i.i.i, label %_RNvXsD_NtNtCscI6d9CVNmLh_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit.i.i.i.i.i.i.i.i, label %.lr.ph1459.1
 
-.lr.ph1459:                                       ; preds = %.preheader.i.i.i.i.i.preheader.a, %.preheader.i.i.i.i.i.a
-  %4 = phi ptr [ %3, %.preheader.i.i.i.i.i.a ], [ %i.fu, %.preheader.i.i.i.i.i.preheader.a ] ; 2 uses
-  %.val3.i.i.i.i.i.i.i.i.i.i = load i64, ptr %4, align 8, !alias.scope !146219, !noalias !146220, !noundef !411
+.lr.ph1459.1:                                     ; preds = %.preheader.i.i.i.i.i
+  %.val3.i.i.i.i.i.i.i.i.i.i.1 = load i64, ptr %3, align 8, !alias.scope !146219, !noalias !146220, !noundef !411
+  %8 = icmp eq i64 %.val3.i.i.i.i.i.i.i.i.i.i.1, %.val.i.i.i.i.i.i.i.i
+  br i1 %8, label %_RNvXs1_NtNtNtCscI6d9CVNmLh_4core3ops8function5implsQNCNCNvMNtNtNtCshkPeWWG1flk_5lance2io6commit17conflict_resolverNtBV_17TransactionRebase20finish_delete_update0s0_0INtB7_5FnMutTRNtNtNtCs9KQ7US1M400_11lance_table6format8fragment8FragmentEE8call_mutCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i, label %.preheader.i.i.i.i.i.1
+
+.preheader.i.i.i.i.i.1:                           ; preds = %.lr.ph1459.1
+  br i1 %.not.not.not.i.not.not.i.i.i.i.i.i.i.i.i.1, label %_RNvXsD_NtNtCscI6d9CVNmLh_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit.i.i.i.i.i.i.i.i, label %.lr.ph1459.2
+
+.lr.ph1459.2:                                     ; preds = %.preheader.i.i.i.i.i.1
+  %.val3.i.i.i.i.i.i.i.i.i.i.2 = load i64, ptr %4, align 8, !alias.scope !146219, !noalias !146220, !noundef !411
+  %9 = icmp eq i64 %.val3.i.i.i.i.i.i.i.i.i.i.2, %.val.i.i.i.i.i.i.i.i
+  br i1 %9, label %_RNvXs1_NtNtNtCscI6d9CVNmLh_4core3ops8function5implsQNCNCNvMNtNtNtCshkPeWWG1flk_5lance2io6commit17conflict_resolverNtBV_17TransactionRebase20finish_delete_update0s0_0INtB7_5FnMutTRNtNtNtCs9KQ7US1M400_11lance_table6format8fragment8FragmentEE8call_mutCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i, label %.preheader.i.i.i.i.i.2
+
+.preheader.i.i.i.i.i.2:                           ; preds = %.lr.ph1459.2
+  br i1 %.not.not.not.i.not.not.i.i.i.i.i.i.i.i.i.2, label %_RNvXsD_NtNtCscI6d9CVNmLh_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit.i.i.i.i.i.i.i.i, label %.lr.ph1459.3
+
+.lr.ph1459.3:                                     ; preds = %.preheader.i.i.i.i.i.2
+  %.val3.i.i.i.i.i.i.i.i.i.i.3 = load i64, ptr %5, align 8, !alias.scope !146219, !noalias !146220, !noundef !411
+  %10 = icmp eq i64 %.val3.i.i.i.i.i.i.i.i.i.i.3, %.val.i.i.i.i.i.i.i.i
+  br i1 %10, label %_RNvXs1_NtNtNtCscI6d9CVNmLh_4core3ops8function5implsQNCNCNvMNtNtNtCshkPeWWG1flk_5lance2io6commit17conflict_resolverNtBV_17TransactionRebase20finish_delete_update0s0_0INtB7_5FnMutTRNtNtNtCs9KQ7US1M400_11lance_table6format8fragment8FragmentEE8call_mutCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i, label %.preheader.i.i.i.i.i.3
+
+.preheader.i.i.i.i.i.3:                           ; preds = %.lr.ph1459.3
+  br i1 %.not.not.not.i.not.not.i.i.i.i.i.i.i.i.i.3, label %_RNvXsD_NtNtCscI6d9CVNmLh_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit.i.i.i.i.i.i.i.i, label %.lr.ph1459.4
+
+.lr.ph1459.4:                                     ; preds = %.preheader.i.i.i.i.i.3
+  %.val3.i.i.i.i.i.i.i.i.i.i.4 = load i64, ptr %i.fw, align 8, !alias.scope !146219, !noalias !146220, !noundef !411
+  %11 = icmp eq i64 %.val3.i.i.i.i.i.i.i.i.i.i.4, %.val.i.i.i.i.i.i.i.i
+  br i1 %11, label %_RNvXs1_NtNtNtCscI6d9CVNmLh_4core3ops8function5implsQNCNCNvMNtNtNtCshkPeWWG1flk_5lance2io6commit17conflict_resolverNtBV_17TransactionRebase20finish_delete_update0s0_0INtB7_5FnMutTRNtNtNtCs9KQ7US1M400_11lance_table6format8fragment8FragmentEE8call_mutCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i, label %.preheader.i.i.i.i.i.4
+
+.preheader.i.i.i.i.i.4:                           ; preds = %.lr.ph1459.4
+  br i1 %.not.i.i.i.i.i.i.i.i.i1455.a, label %_RNvXsD_NtNtCscI6d9CVNmLh_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit.i.i.i.i.i.i.i.i, label %.lr.ph1459.5
+
+.lr.ph1459.5:                                     ; preds = %.preheader.i.i.i.i.i.4
+  %.val3.i.i.i.i.i.i.i.i.i.i.5 = load i64, ptr %6, align 8, !alias.scope !146219, !noalias !146220, !noundef !411
+  %12 = icmp eq i64 %.val3.i.i.i.i.i.i.i.i.i.i.5, %.val.i.i.i.i.i.i.i.i
+  br i1 %12, label %_RNvXs1_NtNtNtCscI6d9CVNmLh_4core3ops8function5implsQNCNCNvMNtNtNtCshkPeWWG1flk_5lance2io6commit17conflict_resolverNtBV_17TransactionRebase20finish_delete_update0s0_0INtB7_5FnMutTRNtNtNtCs9KQ7US1M400_11lance_table6format8fragment8FragmentEE8call_mutCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i, label %.preheader.i.i.i.i.i.preheader.a
+
+.preheader.i.i.i.i.i.preheader.a:                 ; preds = %.lr.ph1459.5
+  br i1 %.not.not.not.i.not.not.i.i.i.i.i.i.i.i.i1458.a, label %_RNvXsD_NtNtCscI6d9CVNmLh_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit.i.i.i.i.i.i.i.i, label %.preheader.i.i.i.i.i.a
+
+.preheader.i.i.i.i.i.a:                           ; preds = %.preheader.i.i.i.i.i.preheader.a
+  %.val3.i.i.i.i.i.i.i.i.i.i.6 = load i64, ptr %7, align 8, !alias.scope !146219, !noalias !146220, !noundef !411
+  %.not.not.not.i.not.not.i.i.i.i.i.i.i.i.i.a = icmp eq i64 %.val3.i.i.i.i.i.i.i.i.i.i.6, %.val.i.i.i.i.i.i.i.i
+  br i1 %.not.not.not.i.not.not.i.i.i.i.i.i.i.i.i.a, label %_RNvXs1_NtNtNtCscI6d9CVNmLh_4core3ops8function5implsQNCNCNvMNtNtNtCshkPeWWG1flk_5lance2io6commit17conflict_resolverNtBV_17TransactionRebase20finish_delete_update0s0_0INtB7_5FnMutTRNtNtNtCs9KQ7US1M400_11lance_table6format8fragment8FragmentEE8call_mutCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i, label %_RNvXsD_NtNtCscI6d9CVNmLh_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit.i.i.i.i.i.i.i.i
+
+.lr.ph1459:                                       ; preds = %.preheader.i.i.i.i.i.preheader
+  %.val3.i.i.i.i.i.i.i.i.i.i = load i64, ptr %i.fu, align 8, !alias.scope !146219, !noalias !146220, !noundef !411
   %i.gc = icmp eq i64 %.val3.i.i.i.i.i.i.i.i.i.i, %.val.i.i.i.i.i.i.i.i
-  br i1 %i.gc, label %_RNvXs1_NtNtNtCscI6d9CVNmLh_4core3ops8function5implsQNCNCNvMNtNtNtCshkPeWWG1flk_5lance2io6commit17conflict_resolverNtBV_17TransactionRebase20finish_delete_update0s0_0INtB7_5FnMutTRNtNtNtCs9KQ7US1M400_11lance_table6format8fragment8FragmentEE8call_mutCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i, label %.preheader.i.i.i.i.i.a
+  br i1 %i.gc, label %_RNvXs1_NtNtNtCscI6d9CVNmLh_4core3ops8function5implsQNCNCNvMNtNtNtCshkPeWWG1flk_5lance2io6commit17conflict_resolverNtBV_17TransactionRebase20finish_delete_update0s0_0INtB7_5FnMutTRNtNtNtCs9KQ7US1M400_11lance_table6format8fragment8FragmentEE8call_mutCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i, label %.preheader.i.i.i.i.i
 
 _RINvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsD_NtB9_3cmpyNtB1L_13SliceContains14slice_contains0ECsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i.i.i.i: ; preds = %bb.u, %bb.v
   %.sroa.0.05.i.i.i.i.i.i.i.i.i1457 = phi ptr [ %i.ga, %bb.v ], [ %i.fr, %bb.u ] ; 9 uses
@@ -280,11 +333,11 @@ _RINvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits
   %i.gy = or i1 %i.gv, %i.gx
   br i1 %i.gy, label %_RNvXs1_NtNtNtCscI6d9CVNmLh_4core3ops8function5implsQNCNCNvMNtNtNtCshkPeWWG1flk_5lance2io6commit17conflict_resolverNtBV_17TransactionRebase20finish_delete_update0s0_0INtB7_5FnMutTRNtNtNtCs9KQ7US1M400_11lance_table6format8fragment8FragmentEE8call_mutCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i, label %bb.v
 
-_RNvXsD_NtNtCscI6d9CVNmLh_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit.i.i.i.i.i.i.i.i: ; preds = %.preheader.i.i.i.i.i.a, %.preheader.i.i.i.i.i.preheader.a
+_RNvXsD_NtNtCscI6d9CVNmLh_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit.i.i.i.i.i.i.i.i: ; preds = %.preheader.i.i.i.i.i, %.preheader.i.i.i.i.i.1, %.preheader.i.i.i.i.i.2, %.preheader.i.i.i.i.i.3, %.preheader.i.i.i.i.i.4, %.preheader.i.i.i.i.i.preheader.a, %.preheader.i.i.i.i.i.a, %.preheader.i.i.i.i.i.preheader
   %i.gz = icmp eq ptr %i.fy, %i.fn
   br i1 %i.gz, label %.loopexit757, label %bb.u
 
-_RNvXs1_NtNtNtCscI6d9CVNmLh_4core3ops8function5implsQNCNCNvMNtNtNtCshkPeWWG1flk_5lance2io6commit17conflict_resolverNtBV_17TransactionRebase20finish_delete_update0s0_0INtB7_5FnMutTRNtNtNtCs9KQ7US1M400_11lance_table6format8fragment8FragmentEE8call_mutCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i: ; preds = %_RINvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsD_NtB9_3cmpyNtB1L_13SliceContains14slice_contains0ECsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i.i.i.i, %.lr.ph1459
+_RNvXs1_NtNtNtCscI6d9CVNmLh_4core3ops8function5implsQNCNCNvMNtNtNtCshkPeWWG1flk_5lance2io6commit17conflict_resolverNtBV_17TransactionRebase20finish_delete_update0s0_0INtB7_5FnMutTRNtNtNtCs9KQ7US1M400_11lance_table6format8fragment8FragmentEE8call_mutCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i: ; preds = %_RINvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsD_NtB9_3cmpyNtB1L_13SliceContains14slice_contains0ECsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i.i.i.i, %.lr.ph1459, %.lr.ph1459.1, %.lr.ph1459.2, %.lr.ph1459.3, %.lr.ph1459.4, %.lr.ph1459.5, %.preheader.i.i.i.i.i.a
   %i.ha = getelementptr inbounds nuw i8, ptr %i.fx, i64 16
   %.sroa.7.8.copyload.i.i.i.i = load i64, ptr %i.ha, align 8, !alias.scope !146222, !noalias !146223 ; 2 uses
   %i.hb = icmp eq i64 %.sroa.7.8.copyload.i.i.i.i, -2
@@ -338,12 +391,23 @@ bb.y:                                             ; preds = %.noexc.i.i.i.i191, 
   %i.hh = load ptr, ptr %i.fo, align 8, !noalias !146227, !nonnull !411, !noundef !411 ; 2 uses
   %i.hi = load i64, ptr %i.fp, align 8, !noalias !146227, !noundef !411 ; 2 uses
   %i.hj = and i64 %i.hi, 1152921504606846968      ; 3 uses
-  %i.hk = getelementptr inbounds nuw [8 x i8], ptr %i.hh, i64 %i.hj ; 2 uses
+  %i.hk = getelementptr inbounds nuw [8 x i8], ptr %i.hh, i64 %i.hj ; 7 uses
   %i.hl = shl i64 %i.hi, 3
-  %.idx1466 = and i64 %i.hl, 56                   ; 2 uses
-  %i.hm = getelementptr inbounds nuw i8, ptr %i.hk, i64 %.idx1466
-  %.not.i.i.i.i.i.i.i.i.i.i.i1460.a = icmp eq i64 %i.hj, 0
-  %.not.not.not.i.not.not.i.i.i.i.i.i.i.i.i.i.i1463.a = icmp samesign eq i64 %.idx1466, 0
+  %.idx1466 = and i64 %i.hl, 56                   ; 7 uses
+  %.not.i.i.i.i.i.i.i.i.i.i.i1460 = icmp eq i64 %i.hj, 0
+  %.not.not.not.i.not.not.i.i.i.i.i.i.i.i.i.i.i1463 = icmp samesign eq i64 %.idx1466, 0
+  %.not.not.not.i.not.not.i.i.i.i.i.i.i.i.i.i.i = icmp samesign eq i64 %.idx1466, 8
+  %13 = getelementptr inbounds nuw i8, ptr %i.hk, i64 8
+  %.not.not.not.i.not.not.i.i.i.i.i.i.i.i.i.i.i.1 = icmp samesign eq i64 %.idx1466, 16
+  %14 = getelementptr inbounds nuw i8, ptr %i.hk, i64 16
+  %.not.not.not.i.not.not.i.i.i.i.i.i.i.i.i.i.i.2 = icmp samesign eq i64 %.idx1466, 24
+  %15 = getelementptr inbounds nuw i8, ptr %i.hk, i64 24
+  %.not.not.not.i.not.not.i.i.i.i.i.i.i.i.i.i.i.3 = icmp samesign eq i64 %.idx1466, 32
+  %i.hm = getelementptr inbounds nuw i8, ptr %i.hk, i64 32
+  %.not.i.i.i.i.i.i.i.i.i.i.i1460.a = icmp samesign eq i64 %.idx1466, 40
+  %16 = getelementptr inbounds nuw i8, ptr %i.hk, i64 40
+  %.not.not.not.i.not.not.i.i.i.i.i.i.i.i.i.i.i1463.a = icmp samesign eq i64 %.idx1466, 48
+  %17 = getelementptr inbounds nuw i8, ptr %i.hk, i64 48
   br label %bb.z
 
 bb.z:                                             ; preds = %_RNvXsD_NtNtCscI6d9CVNmLh_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit.i.i.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i
@@ -354,28 +418,70 @@ bb.z:                                             ; preds = %_RNvXsD_NtNtCscI6d9
   tail call void @llvm.experimental.noalias.scope.decl(metadata !146230)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !146231)
   %i.hp = getelementptr inbounds nuw i8, ptr %i.hn, i64 232
-  %.val.i.i.i.i.i.i.i.i.i.i = load i64, ptr %i.hp, align 8, !alias.scope !146232, !noalias !146233 ; 10 uses
-  br i1 %.not.i.i.i.i.i.i.i.i.i.i.i1460.a, label %.preheader.i.i.i.i.i.i.i.preheader.a, label %_RINvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsD_NtB9_3cmpyNtB1L_13SliceContains14slice_contains0ECsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i.i.i.i.i.i
+  %.val.i.i.i.i.i.i.i.i.i.i = load i64, ptr %i.hp, align 8, !alias.scope !146232, !noalias !146233 ; 16 uses
+  br i1 %.not.i.i.i.i.i.i.i.i.i.i.i1460, label %.preheader.i.i.i.i.i.i.i.preheader, label %_RINvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsD_NtB9_3cmpyNtB1L_13SliceContains14slice_contains0ECsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i.i.i.i.i.i
 
 bb.aa:                                            ; preds = %_RINvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsD_NtB9_3cmpyNtB1L_13SliceContains14slice_contains0ECsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i.i.i.i.i.i
   %i.hq = getelementptr inbounds nuw i8, ptr %.sroa.0.05.i.i.i.i.i.i.i.i.i.i.i1462, i64 64
   %i.hr = add nsw i64 %.sroa.5.0.i.i.i.i.i.i.i.i.i.i.i1461, -8 ; 2 uses
   %.not.i.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.hr, 0
-  br i1 %.not.i.i.i.i.i.i.i.i.i.i.i, label %.preheader.i.i.i.i.i.i.i.preheader.a, label %_RINvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsD_NtB9_3cmpyNtB1L_13SliceContains14slice_contains0ECsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i.i.i.i.i.i
+  br i1 %.not.i.i.i.i.i.i.i.i.i.i.i, label %.preheader.i.i.i.i.i.i.i.preheader, label %_RINvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsD_NtB9_3cmpyNtB1L_13SliceContains14slice_contains0ECsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i.i.i.i.i.i
 
-.preheader.i.i.i.i.i.i.i.preheader.a:             ; preds = %bb.aa, %bb.z
-  br i1 %.not.not.not.i.not.not.i.i.i.i.i.i.i.i.i.i.i1463.a, label %_RNvXsD_NtNtCscI6d9CVNmLh_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit.i.i.i.i.i.i.i.i.i.i, label %.lr.ph1464
+.preheader.i.i.i.i.i.i.i.preheader:               ; preds = %bb.aa, %bb.z
+  br i1 %.not.not.not.i.not.not.i.i.i.i.i.i.i.i.i.i.i1463, label %_RNvXsD_NtNtCscI6d9CVNmLh_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit.i.i.i.i.i.i.i.i.i.i, label %.lr.ph1464
 
-.preheader.i.i.i.i.i.i.i.a:                       ; preds = %.lr.ph1464
-  %5 = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
-  %.not.not.not.i.not.not.i.i.i.i.i.i.i.i.i.i.i.a = icmp eq ptr %5, %i.hm
-  br i1 %.not.not.not.i.not.not.i.i.i.i.i.i.i.i.i.i.i.a, label %_RNvXsD_NtNtCscI6d9CVNmLh_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit.i.i.i.i.i.i.i.i.i.i, label %.lr.ph1464
+.preheader.i.i.i.i.i.i.i:                         ; preds = %.lr.ph1464
+  br i1 %.not.not.not.i.not.not.i.i.i.i.i.i.i.i.i.i.i, label %_RNvXsD_NtNtCscI6d9CVNmLh_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit.i.i.i.i.i.i.i.i.i.i, label %.lr.ph1464.1
 
-.lr.ph1464:                                       ; preds = %.preheader.i.i.i.i.i.i.i.preheader.a, %.preheader.i.i.i.i.i.i.i.a
-  %6 = phi ptr [ %5, %.preheader.i.i.i.i.i.i.i.a ], [ %i.hk, %.preheader.i.i.i.i.i.i.i.preheader.a ] ; 2 uses
-  %.val3.i.i.i.i.i.i.i.i.i.i.i.i = load i64, ptr %6, align 8, !alias.scope !146234, !noalias !146235, !noundef !411
+.lr.ph1464.1:                                     ; preds = %.preheader.i.i.i.i.i.i.i
+  %.val3.i.i.i.i.i.i.i.i.i.i.i.i.1 = load i64, ptr %13, align 8, !alias.scope !146234, !noalias !146235, !noundef !411
+  %18 = icmp eq i64 %.val3.i.i.i.i.i.i.i.i.i.i.i.i.1, %.val.i.i.i.i.i.i.i.i.i.i
+  br i1 %18, label %_RNvXs1_NtNtNtCscI6d9CVNmLh_4core3ops8function5implsQNCNCNvMNtNtNtCshkPeWWG1flk_5lance2io6commit17conflict_resolverNtBV_17TransactionRebase20finish_delete_update0s0_0INtB7_5FnMutTRNtNtNtCs9KQ7US1M400_11lance_table6format8fragment8FragmentEE8call_mutCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i.i.i, label %.preheader.i.i.i.i.i.i.i.1
+
+.preheader.i.i.i.i.i.i.i.1:                       ; preds = %.lr.ph1464.1
+  br i1 %.not.not.not.i.not.not.i.i.i.i.i.i.i.i.i.i.i.1, label %_RNvXsD_NtNtCscI6d9CVNmLh_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit.i.i.i.i.i.i.i.i.i.i, label %.lr.ph1464.2
+
+.lr.ph1464.2:                                     ; preds = %.preheader.i.i.i.i.i.i.i.1
+  %.val3.i.i.i.i.i.i.i.i.i.i.i.i.2 = load i64, ptr %14, align 8, !alias.scope !146234, !noalias !146235, !noundef !411
+  %19 = icmp eq i64 %.val3.i.i.i.i.i.i.i.i.i.i.i.i.2, %.val.i.i.i.i.i.i.i.i.i.i
+  br i1 %19, label %_RNvXs1_NtNtNtCscI6d9CVNmLh_4core3ops8function5implsQNCNCNvMNtNtNtCshkPeWWG1flk_5lance2io6commit17conflict_resolverNtBV_17TransactionRebase20finish_delete_update0s0_0INtB7_5FnMutTRNtNtNtCs9KQ7US1M400_11lance_table6format8fragment8FragmentEE8call_mutCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i.i.i, label %.preheader.i.i.i.i.i.i.i.2
+
+.preheader.i.i.i.i.i.i.i.2:                       ; preds = %.lr.ph1464.2
+  br i1 %.not.not.not.i.not.not.i.i.i.i.i.i.i.i.i.i.i.2, label %_RNvXsD_NtNtCscI6d9CVNmLh_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit.i.i.i.i.i.i.i.i.i.i, label %.lr.ph1464.3
+
+.lr.ph1464.3:                                     ; preds = %.preheader.i.i.i.i.i.i.i.2
+  %.val3.i.i.i.i.i.i.i.i.i.i.i.i.3 = load i64, ptr %15, align 8, !alias.scope !146234, !noalias !146235, !noundef !411
+  %20 = icmp eq i64 %.val3.i.i.i.i.i.i.i.i.i.i.i.i.3, %.val.i.i.i.i.i.i.i.i.i.i
+  br i1 %20, label %_RNvXs1_NtNtNtCscI6d9CVNmLh_4core3ops8function5implsQNCNCNvMNtNtNtCshkPeWWG1flk_5lance2io6commit17conflict_resolverNtBV_17TransactionRebase20finish_delete_update0s0_0INtB7_5FnMutTRNtNtNtCs9KQ7US1M400_11lance_table6format8fragment8FragmentEE8call_mutCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i.i.i, label %.preheader.i.i.i.i.i.i.i.3
+
+.preheader.i.i.i.i.i.i.i.3:                       ; preds = %.lr.ph1464.3
+  br i1 %.not.not.not.i.not.not.i.i.i.i.i.i.i.i.i.i.i.3, label %_RNvXsD_NtNtCscI6d9CVNmLh_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit.i.i.i.i.i.i.i.i.i.i, label %.lr.ph1464.4
+
+.lr.ph1464.4:                                     ; preds = %.preheader.i.i.i.i.i.i.i.3
+  %.val3.i.i.i.i.i.i.i.i.i.i.i.i.4 = load i64, ptr %i.hm, align 8, !alias.scope !146234, !noalias !146235, !noundef !411
+  %21 = icmp eq i64 %.val3.i.i.i.i.i.i.i.i.i.i.i.i.4, %.val.i.i.i.i.i.i.i.i.i.i
+  br i1 %21, label %_RNvXs1_NtNtNtCscI6d9CVNmLh_4core3ops8function5implsQNCNCNvMNtNtNtCshkPeWWG1flk_5lance2io6commit17conflict_resolverNtBV_17TransactionRebase20finish_delete_update0s0_0INtB7_5FnMutTRNtNtNtCs9KQ7US1M400_11lance_table6format8fragment8FragmentEE8call_mutCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i.i.i, label %.preheader.i.i.i.i.i.i.i.4
+
+.preheader.i.i.i.i.i.i.i.4:                       ; preds = %.lr.ph1464.4
+  br i1 %.not.i.i.i.i.i.i.i.i.i.i.i1460.a, label %_RNvXsD_NtNtCscI6d9CVNmLh_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit.i.i.i.i.i.i.i.i.i.i, label %.lr.ph1464.5
+
+.lr.ph1464.5:                                     ; preds = %.preheader.i.i.i.i.i.i.i.4
+  %.val3.i.i.i.i.i.i.i.i.i.i.i.i.5 = load i64, ptr %16, align 8, !alias.scope !146234, !noalias !146235, !noundef !411
+  %22 = icmp eq i64 %.val3.i.i.i.i.i.i.i.i.i.i.i.i.5, %.val.i.i.i.i.i.i.i.i.i.i
+  br i1 %22, label %_RNvXs1_NtNtNtCscI6d9CVNmLh_4core3ops8function5implsQNCNCNvMNtNtNtCshkPeWWG1flk_5lance2io6commit17conflict_resolverNtBV_17TransactionRebase20finish_delete_update0s0_0INtB7_5FnMutTRNtNtNtCs9KQ7US1M400_11lance_table6format8fragment8FragmentEE8call_mutCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i.i.i, label %.preheader.i.i.i.i.i.i.i.preheader.a
+
+.preheader.i.i.i.i.i.i.i.preheader.a:             ; preds = %.lr.ph1464.5
+  br i1 %.not.not.not.i.not.not.i.i.i.i.i.i.i.i.i.i.i1463.a, label %_RNvXsD_NtNtCscI6d9CVNmLh_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit.i.i.i.i.i.i.i.i.i.i, label %.preheader.i.i.i.i.i.i.i.a
+
+.preheader.i.i.i.i.i.i.i.a:                       ; preds = %.preheader.i.i.i.i.i.i.i.preheader.a
+  %.val3.i.i.i.i.i.i.i.i.i.i.i.i.6 = load i64, ptr %17, align 8, !alias.scope !146234, !noalias !146235, !noundef !411
+  %.not.not.not.i.not.not.i.i.i.i.i.i.i.i.i.i.i.a = icmp eq i64 %.val3.i.i.i.i.i.i.i.i.i.i.i.i.6, %.val.i.i.i.i.i.i.i.i.i.i
+  br i1 %.not.not.not.i.not.not.i.i.i.i.i.i.i.i.i.i.i.a, label %_RNvXs1_NtNtNtCscI6d9CVNmLh_4core3ops8function5implsQNCNCNvMNtNtNtCshkPeWWG1flk_5lance2io6commit17conflict_resolverNtBV_17TransactionRebase20finish_delete_update0s0_0INtB7_5FnMutTRNtNtNtCs9KQ7US1M400_11lance_table6format8fragment8FragmentEE8call_mutCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i.i.i, label %_RNvXsD_NtNtCscI6d9CVNmLh_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit.i.i.i.i.i.i.i.i.i.i
+
+.lr.ph1464:                                       ; preds = %.preheader.i.i.i.i.i.i.i.preheader
+  %.val3.i.i.i.i.i.i.i.i.i.i.i.i = load i64, ptr %i.hk, align 8, !alias.scope !146234, !noalias !146235, !noundef !411
   %i.hs = icmp eq i64 %.val3.i.i.i.i.i.i.i.i.i.i.i.i, %.val.i.i.i.i.i.i.i.i.i.i
-  br i1 %i.hs, label %_RNvXs1_NtNtNtCscI6d9CVNmLh_4core3ops8function5implsQNCNCNvMNtNtNtCshkPeWWG1flk_5lance2io6commit17conflict_resolverNtBV_17TransactionRebase20finish_delete_update0s0_0INtB7_5FnMutTRNtNtNtCs9KQ7US1M400_11lance_table6format8fragment8FragmentEE8call_mutCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i.i.i, label %.preheader.i.i.i.i.i.i.i.a
+  br i1 %i.hs, label %_RNvXs1_NtNtNtCscI6d9CVNmLh_4core3ops8function5implsQNCNCNvMNtNtNtCshkPeWWG1flk_5lance2io6commit17conflict_resolverNtBV_17TransactionRebase20finish_delete_update0s0_0INtB7_5FnMutTRNtNtNtCs9KQ7US1M400_11lance_table6format8fragment8FragmentEE8call_mutCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i.i.i, label %.preheader.i.i.i.i.i.i.i
 
 _RINvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsD_NtB9_3cmpyNtB1L_13SliceContains14slice_contains0ECsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i.i.i.i.i.i: ; preds = %bb.z, %bb.aa
   %.sroa.0.05.i.i.i.i.i.i.i.i.i.i.i1462 = phi ptr [ %i.hq, %bb.aa ], [ %i.hh, %bb.z ] ; 9 uses
@@ -412,11 +518,11 @@ _RINvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits
   %i.io = or i1 %i.il, %i.in
   br i1 %i.io, label %_RNvXs1_NtNtNtCscI6d9CVNmLh_4core3ops8function5implsQNCNCNvMNtNtNtCshkPeWWG1flk_5lance2io6commit17conflict_resolverNtBV_17TransactionRebase20finish_delete_update0s0_0INtB7_5FnMutTRNtNtNtCs9KQ7US1M400_11lance_table6format8fragment8FragmentEE8call_mutCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i.i.i, label %bb.aa
 
-_RNvXsD_NtNtCscI6d9CVNmLh_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit.i.i.i.i.i.i.i.i.i.i: ; preds = %.preheader.i.i.i.i.i.i.i.a, %.preheader.i.i.i.i.i.i.i.preheader.a
+_RNvXsD_NtNtCscI6d9CVNmLh_4core5slice3cmpyNtB5_13SliceContains14slice_contains.exit.i.i.i.i.i.i.i.i.i.i: ; preds = %.preheader.i.i.i.i.i.i.i, %.preheader.i.i.i.i.i.i.i.1, %.preheader.i.i.i.i.i.i.i.2, %.preheader.i.i.i.i.i.i.i.3, %.preheader.i.i.i.i.i.i.i.4, %.preheader.i.i.i.i.i.i.i.preheader.a, %.preheader.i.i.i.i.i.i.i.a, %.preheader.i.i.i.i.i.i.i.preheader
   %i.ip = icmp eq ptr %i.ho, %i.fn
   br i1 %i.ip, label %.loopexit.i.i.i.i, label %bb.z
 
-_RNvXs1_NtNtNtCscI6d9CVNmLh_4core3ops8function5implsQNCNCNvMNtNtNtCshkPeWWG1flk_5lance2io6commit17conflict_resolverNtBV_17TransactionRebase20finish_delete_update0s0_0INtB7_5FnMutTRNtNtNtCs9KQ7US1M400_11lance_table6format8fragment8FragmentEE8call_mutCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i.i.i: ; preds = %_RINvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsD_NtB9_3cmpyNtB1L_13SliceContains14slice_contains0ECsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i.i.i.i.i.i, %.lr.ph1464
+_RNvXs1_NtNtNtCscI6d9CVNmLh_4core3ops8function5implsQNCNCNvMNtNtNtCshkPeWWG1flk_5lance2io6commit17conflict_resolverNtBV_17TransactionRebase20finish_delete_update0s0_0INtB7_5FnMutTRNtNtNtCs9KQ7US1M400_11lance_table6format8fragment8FragmentEE8call_mutCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i.i.i: ; preds = %_RINvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldbNCNvXsD_NtB9_3cmpyNtB1L_13SliceContains14slice_contains0ECsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i.i.i.i.i.i, %.lr.ph1464, %.lr.ph1464.1, %.lr.ph1464.2, %.lr.ph1464.3, %.lr.ph1464.4, %.lr.ph1464.5, %.preheader.i.i.i.i.i.i.i.a
   %i.iq = getelementptr inbounds nuw i8, ptr %i.hn, i64 16
   %.sroa.7.8.copyload.i.i.i.i.i.i = load i64, ptr %i.iq, align 8, !alias.scope !146237, !noalias !146238 ; 2 uses
   %.sroa.12.8..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.hn, i64 24

@@ -205,7 +205,7 @@ bary_add.exit1056:                                ; preds = %bb.at, %.lr.ph26.i1
   store i32 %i.ass, ptr %i.ast, align 4, !tbaa !44
   %i.asu = ashr i64 %i.asr, 32                    ; 2 uses
   %i.asv = add nuw i64 %.078.i.i1114, 2           ; 2 uses
-  %niter3479.next.1 = add i64 %niter3479, 2       ; 2 uses
+  %niter3479.next.1 = add nuw i64 %niter3479, 2   ; 2 uses
   %niter3479.ncmp.1 = icmp eq i64 %niter3479.next.1, %i.j
   br i1 %niter3479.ncmp.1, label %.lr.ph.i.i1113.epil, label %.lr.ph.i.i1113, !llvm.loop !5
 
@@ -319,7 +319,7 @@ middle.block2998:                                 ; preds = %vector.body2993
   store i32 %i.aut, ptr %i.auu, align 4, !tbaa !44
   %i.auv = lshr i64 %i.aus, 32                    ; 2 uses
   %i.auw = add nuw i64 %.05779.i.i1165, 2         ; 2 uses
-  %niter3472.next.1 = add i64 %niter3472, 2       ; 2 uses
+  %niter3472.next.1 = add nuw i64 %niter3472, 2   ; 2 uses
   %niter3472.ncmp.1 = icmp eq i64 %niter3472.next.1, %i.j
   br i1 %niter3472.ncmp.1, label %.lr.ph.i.i1164.epil, label %.lr.ph.i.i1164, !llvm.loop !3
 
@@ -399,7 +399,7 @@ bigdivrem_single.exit:                            ; preds = %bb.ax
   store i32 %i.awl, ptr %i.awm, align 4, !tbaa !44
   %i.awn = ashr i64 %i.awk, 32                    ; 2 uses
   %i.awo = add nuw i64 %.078.i.i1199, 2           ; 2 uses
-  %niter3492.next.1 = add i64 %niter3492, 2       ; 2 uses
+  %niter3492.next.1 = add nuw i64 %niter3492, 2   ; 2 uses
   %niter3492.ncmp.1 = icmp eq i64 %niter3492.next.1, %i.j
   br i1 %niter3492.ncmp.1, label %.lr.ph.i.i1198.epil, label %.lr.ph.i.i1198, !llvm.loop !5
 
@@ -513,7 +513,7 @@ middle.block3010:                                 ; preds = %vector.body3005
   store i32 %i.aym, ptr %i.ayn, align 4, !tbaa !44
   %i.ayo = lshr i64 %i.ayl, 32                    ; 2 uses
   %i.ayp = add nuw i64 %.05779.i.i1250, 2         ; 2 uses
-  %niter3485.next.1 = add i64 %niter3485, 2       ; 2 uses
+  %niter3485.next.1 = add nuw i64 %niter3485, 2   ; 2 uses
   %niter3485.ncmp.1 = icmp eq i64 %niter3485.next.1, %i.j
   br i1 %niter3485.ncmp.1, label %.lr.ph.i.i1249.epil, label %.lr.ph.i.i1249, !llvm.loop !3
 
@@ -907,7 +907,7 @@ bb.be:                                            ; preds = %bary_2comp.exit1329
   store i32 %i.bfg, ptr %i.bfb, align 4, !tbaa !44
   %i.bfh = ashr i64 %i.bff, 32                    ; 2 uses
   %i.bfi = add nuw i64 %.078.i.i1367, 2           ; 2 uses
-  %niter3511.next.1 = add i64 %niter3511, 2       ; 2 uses
+  %niter3511.next.1 = add nuw i64 %niter3511, 2   ; 2 uses
   %niter3511.ncmp.1 = icmp eq i64 %niter3511.next.1, %i.j
   br i1 %niter3511.ncmp.1, label %.lr.ph.i.i1366.epil, label %.lr.ph.i.i1366, !llvm.loop !5
 
@@ -1029,7 +1029,7 @@ bb.bh:                                            ; preds = %bary_2comp.exit1329
   store i32 %i.bhh, ptr %i.bhc, align 4, !tbaa !44
   %i.bhi = lshr i64 %i.bhg, 32                    ; 2 uses
   %i.bhj = add nuw i64 %.05779.i.i1418, 2         ; 2 uses
-  %niter3502.next.1 = add i64 %niter3502, 2       ; 2 uses
+  %niter3502.next.1 = add nuw i64 %niter3502, 2   ; 2 uses
   %niter3502.ncmp.1 = icmp eq i64 %niter3502.next.1, %i.j
   br i1 %niter3502.ncmp.1, label %.lr.ph.i.i1417.epil, label %.lr.ph.i.i1417, !llvm.loop !3
 
@@ -1315,7 +1315,7 @@ bary_2comp.exit1471:                              ; preds = %.thread2490, %bb.bo
   store i32 %i.blr, ptr %i.blj, align 4, !tbaa !44
   %i.bls = lshr i64 %i.blq, 32                    ; 2 uses
   %i.blt = add nuw i64 %.05779.i.i1478, 2         ; 2 uses
-  %niter3524.next.1 = add i64 %niter3524, 2       ; 2 uses
+  %niter3524.next.1 = add nuw i64 %niter3524, 2   ; 2 uses
   %niter3524.ncmp.1 = icmp eq i64 %niter3524.next.1, %i.j
   br i1 %niter3524.ncmp.1, label %.lr.ph.i.i1477.epil, label %.lr.ph.i.i1477, !llvm.loop !3
 
@@ -1347,7 +1347,7 @@ bary_2comp.exit1471:                              ; preds = %.thread2490, %bb.bo
   store i32 %i.bmn, ptr %i.bmf, align 4, !tbaa !44
   %i.bmo = ashr i64 %i.bmm, 32                    ; 2 uses
   %i.bmp = add nuw i64 %.078.i.i1509, 2           ; 2 uses
-  %niter3518.next.1 = add i64 %niter3518, 2       ; 2 uses
+  %niter3518.next.1 = add nuw i64 %niter3518, 2   ; 2 uses
   %niter3518.ncmp.1 = icmp eq i64 %niter3518.next.1, %i.j
   br i1 %niter3518.ncmp.1, label %.lr.ph.i.i1508.epil, label %.lr.ph.i.i1508, !llvm.loop !5
 
@@ -1648,7 +1648,7 @@ bary_2comp.exit1600:                              ; preds = %bb.bt, %.lr.ph26.i1
   store i32 %i.brs, ptr %i.brk, align 4, !tbaa !44
   %i.brt = ashr i64 %i.brr, 32                    ; 2 uses
   %i.bru = add nuw i64 %.078.i.i1638, 2           ; 2 uses
-  %niter3537.next.1 = add i64 %niter3537, 2       ; 2 uses
+  %niter3537.next.1 = add nuw i64 %niter3537, 2   ; 2 uses
   %niter3537.ncmp.1 = icmp eq i64 %niter3537.next.1, %i.j
   br i1 %niter3537.ncmp.1, label %.lr.ph.i.i1637.epil, label %.lr.ph.i.i1637, !llvm.loop !5
 
@@ -1759,7 +1759,7 @@ middle.block3132:                                 ; preds = %vector.body3127
   store i32 %i.btq, ptr %i.bti, align 4, !tbaa !44
   %i.btr = lshr i64 %i.btp, 32                    ; 2 uses
   %i.bts = add nuw i64 %.05779.i.i1689, 2         ; 2 uses
-  %niter3530.next.1 = add i64 %niter3530, 2       ; 2 uses
+  %niter3530.next.1 = add nuw i64 %niter3530, 2   ; 2 uses
   %niter3530.ncmp.1 = icmp eq i64 %niter3530.next.1, %i.j
   br i1 %niter3530.ncmp.1, label %.lr.ph.i.i1688.epil, label %.lr.ph.i.i1688, !llvm.loop !3
 

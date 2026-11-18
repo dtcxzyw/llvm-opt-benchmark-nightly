@@ -203,6 +203,7 @@ _ZNK4llvm6MDNode14getNumOperandsEv.exit46:        ; preds = %bb.l, %bb.m
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 288 ; 5 uses
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 120
   %i.ao = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %5 = zext i32 %i.ak to i64
   br label %bb.n
 
 bb.n:                                             ; preds = %.lr.ph, %_ZN4llvm7mdconst11dyn_extractINS_11ConstantIntERKNS_9MDOperandEEENSt9enable_ifIXsr6detail14IsValidPointerIT_T0_EE5valueEPS7_E4typeEOS8_.exit57.thread
@@ -352,8 +353,7 @@ _ZN4llvm17AMDGPUPALMetadata11setRegisterEjj.exit: ; preds = %bb.t, %_ZN4llvm17AM
 
 _ZN4llvm7mdconst11dyn_extractINS_11ConstantIntERKNS_9MDOperandEEENSt9enable_ifIXsr6detail14IsValidPointerIT_T0_EE5valueEPS7_E4typeEOS8_.exit57.thread: ; preds = %_ZNK4llvm6MDNode10getOperandEj.exit53, %_ZN4llvm7mdconst11dyn_extractINS_11ConstantIntERKNS_9MDOperandEEENSt9enable_ifIXsr6detail14IsValidPointerIT_T0_EE5valueEPS7_E4typeEOS8_.exit57, %_ZN4llvm17AMDGPUPALMetadata11setRegisterEjj.exit
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %indvars = trunc i64 %indvars.iv.next to i32
-  %.not38 = icmp eq i32 %i.ak, %indvars
+  %.not38 = icmp eq i64 %indvars.iv.next, %5
   br i1 %.not38, label %.loopexit, label %bb.n, !llvm.loop !103
 
 .loopexit:                                        ; preds = %_ZN4llvm7mdconst11dyn_extractINS_11ConstantIntERKNS_9MDOperandEEENSt9enable_ifIXsr6detail14IsValidPointerIT_T0_EE5valueEPS7_E4typeEOS8_.exit57.thread, %_ZNK4llvm6MDNode14getNumOperandsEv.exit46, %_ZNK4llvm6MDNode14getNumOperandsEv.exit.thread, %bb.j, %bb.c, %_ZNK4llvm6MDNode14getNumOperandsEv.exit, %bb.f, %_ZNK4llvm6MDNode10getOperandEj.exit, %bb.i
