@@ -57,6 +57,7 @@
   "cgscc.LargestCGSCC": 180603,
   "constmerge.NumIdenticalMerged": 27762,
   "constraint-elimination.NumCondsRemoved": 4252936,
+  "constraint-elimination.NumDoesHoldDepthLimitHit": 432765,
   "correlated-value-propagation.NumAShrsConverted": 6707,
   "correlated-value-propagation.NumAShrsRemoved": 167,
   "correlated-value-propagation.NumAbs": 859,
