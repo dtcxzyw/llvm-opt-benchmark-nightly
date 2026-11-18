@@ -206,7 +206,7 @@ bb.a:
   %i.i = icmp ult i64 %i.h, 76861433640456466
   tail call void @llvm.assume(i1 %i.i)
   %.idx = mul nuw nsw i64 %i.h, 120
-  %i.j = getelementptr inbounds nuw i8, ptr %i.f, i64 %.idx ; 2 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %i.f, i64 %.idx
   %i.k = load i64, ptr %0, align 8, !range !17, !noundef !12
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !8841
   store i64 ptrtoint (ptr @_RNvCsaSrGj5dYoxL_8thin_vec12EMPTY_HEADER to i64), ptr %i.d, align 8, !noalias !8841
@@ -222,9 +222,9 @@ bb.a:
   %.not.i.i = icmp eq i64 %i.h, 0
   br i1 %.not.i.i, label %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCskLngH8kgpZI_15ruff_python_ast5nodes7KeywordENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCsEhZmuQNqkz_11ruff_linter.exit.thread.i.i, label %bb.b
 
-_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCskLngH8kgpZI_15ruff_python_ast5nodes7KeywordENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCsEhZmuQNqkz_11ruff_linter.exit.thread.i.i: ; preds = %bb.j, %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCskLngH8kgpZI_15ruff_python_ast5nodes7KeywordENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCsEhZmuQNqkz_11ruff_linter.exit.i.i, %bb.c, %bb.a
-  %.sroa.0.0.copyload14.i = phi i64 [ ptrtoint (ptr @_RNvCsaSrGj5dYoxL_8thin_vec12EMPTY_HEADER to i64), %bb.a ], [ %i.r, %bb.c ], [ %i.r, %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCskLngH8kgpZI_15ruff_python_ast5nodes7KeywordENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCsEhZmuQNqkz_11ruff_linter.exit.i.i ], [ %i.r, %bb.j ] ; 2 uses
-  %1 = phi ptr [ @_RNvCsaSrGj5dYoxL_8thin_vec12EMPTY_HEADER, %bb.a ], [ %.val.i.i, %bb.c ], [ %.val.i.i, %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCskLngH8kgpZI_15ruff_python_ast5nodes7KeywordENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCsEhZmuQNqkz_11ruff_linter.exit.i.i ], [ %.val.i.i, %bb.j ]
+_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCskLngH8kgpZI_15ruff_python_ast5nodes7KeywordENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCsEhZmuQNqkz_11ruff_linter.exit.thread.i.i: ; preds = %bb.j, %bb.c, %bb.a
+  %.sroa.0.0.copyload14.i = phi i64 [ ptrtoint (ptr @_RNvCsaSrGj5dYoxL_8thin_vec12EMPTY_HEADER to i64), %bb.a ], [ %i.r, %bb.c ], [ %i.r, %bb.j ] ; 2 uses
+  %1 = phi ptr [ @_RNvCsaSrGj5dYoxL_8thin_vec12EMPTY_HEADER, %bb.a ], [ %.val.i.i, %bb.c ], [ %.val.i.i, %bb.j ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !8842
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.b, ptr noundef nonnull align 8 dereferenceable(32) %i.c, i64 32, i1 false), !noalias !8842
   %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 2 uses
@@ -243,25 +243,20 @@ bb.b:                                             ; preds = %bb.a
           to label %.lr.ph.i.i unwind label %bb.k, !noalias !8845
 
 .lr.ph.i.i:                                       ; preds = %bb.b
-  %.val.i.i = load ptr, ptr %i.d, align 8, !alias.scope !8843, !noalias !8841 ; 7 uses
+  %.val.i.i = load ptr, ptr %i.d, align 8, !alias.scope !8843, !noalias !8841 ; 6 uses
   %i.q = getelementptr inbounds nuw i8, ptr %.val.i.i, i64 16
-  %i.r = ptrtoint ptr %.val.i.i to i64            ; 3 uses
+  %i.r = ptrtoint ptr %.val.i.i to i64            ; 2 uses
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.j, %.lr.ph.i.i
-  %i.s = phi ptr [ %i.f, %.lr.ph.i.i ], [ %3, %bb.j ] ; 4 uses
-  %.sroa.0.032.i.i = phi i64 [ %i.h, %.lr.ph.i.i ], [ %2, %bb.j ]
-  %2 = add nsw i64 %.sroa.0.032.i.i, -1           ; 2 uses
+bb.c:                                             ; preds = %.lr.ph.i.i, %bb.j
+  %i.s = phi ptr [ %i.f, %.lr.ph.i.i ], [ %2, %bb.j ] ; 3 uses
+  %.sroa.0.032.i.i = phi i64 [ %i.h, %.lr.ph.i.i ], [ %3, %bb.j ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !8846)
-  %i.t = icmp eq ptr %i.s, %i.j
-  br i1 %i.t, label %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCskLngH8kgpZI_15ruff_python_ast5nodes7KeywordENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCsEhZmuQNqkz_11ruff_linter.exit.thread.i.i, label %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCskLngH8kgpZI_15ruff_python_ast5nodes7KeywordENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCsEhZmuQNqkz_11ruff_linter.exit.i.i
-
-_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCskLngH8kgpZI_15ruff_python_ast5nodes7KeywordENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCsEhZmuQNqkz_11ruff_linter.exit.i.i: ; preds = %bb.c
-  %3 = getelementptr inbounds nuw i8, ptr %i.s, i64 120 ; 2 uses
-  store ptr %3, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !8846, !noalias !8842
+  %2 = getelementptr inbounds nuw i8, ptr %i.s, i64 120 ; 2 uses
+  store ptr %2, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !8846, !noalias !8842
   %.sroa.014.0.copyload15.i.i = load i32, ptr %i.s, align 8, !noalias !8847 ; 2 uses
-  %.not6.i.i = icmp eq i32 %.sroa.014.0.copyload15.i.i, -1
-  br i1 %.not6.i.i, label %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCskLngH8kgpZI_15ruff_python_ast5nodes7KeywordENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCsEhZmuQNqkz_11ruff_linter.exit.thread.i.i, label %bb.j
+  %i.t = icmp eq i32 %.sroa.014.0.copyload15.i.i, -1
+  br i1 %i.t, label %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCskLngH8kgpZI_15ruff_python_ast5nodes7KeywordENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCsEhZmuQNqkz_11ruff_linter.exit.thread.i.i, label %bb.j
 
 .body.i.i:                                        ; preds = %bb.f
   invoke void @_RNvXse_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCskLngH8kgpZI_15ruff_python_ast5nodes7KeywordENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsEhZmuQNqkz_11ruff_linter(ptr noalias noundef nonnull align 8 dereferenceable(32) %i.b)
@@ -338,7 +333,8 @@ bb.i:                                             ; preds = %bb.k, %.body.i.i
   call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #48, !noalias !8842
   unreachable
 
-bb.j:                                             ; preds = %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCskLngH8kgpZI_15ruff_python_ast5nodes7KeywordENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCsEhZmuQNqkz_11ruff_linter.exit.i.i
+bb.j:                                             ; preds = %bb.c
+  %3 = add nsw i64 %.sroa.0.032.i.i, -1           ; 2 uses
   %.sroa.7.0..sroa_idx16.i.i = getelementptr inbounds nuw i8, ptr %i.s, i64 4
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.418.i.i)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(116) %.sroa.418.i.i, ptr noundef nonnull align 4 dereferenceable(116) %.sroa.7.0..sroa_idx16.i.i, i64 116, i1 false), !noalias !8842
@@ -350,7 +346,7 @@ bb.j:                                             ; preds = %_RNvXs4_NtNtCscdodA
   %i.ap = add i64 %i.an, 1
   store i64 %i.ap, ptr %.val.i.i, align 8, !noalias !8857
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.418.i.i)
-  %i.aq = icmp eq i64 %2, 0
+  %i.aq = icmp eq i64 %3, 0
   br i1 %i.aq, label %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCskLngH8kgpZI_15ruff_python_ast5nodes7KeywordENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCsEhZmuQNqkz_11ruff_linter.exit.thread.i.i, label %bb.c
 
 bb.k:                                             ; preds = %bb.b

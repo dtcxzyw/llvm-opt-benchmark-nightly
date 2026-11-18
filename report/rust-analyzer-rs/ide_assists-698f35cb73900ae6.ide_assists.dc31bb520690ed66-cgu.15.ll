@@ -205,26 +205,21 @@ bb.c:                                             ; preds = %bb.b
   store i64 %2, ptr %i.a, align 8
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %i.f, ptr %i.h, align 8
-  %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 3 uses
-  %3 = getelementptr inbounds nuw [40 x i8], ptr %1, i64 %2
-  br label %.lr.ph
+  %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
+  br label %bb.d
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.i
-  %.sroa.015.056 = phi ptr [ %i.j, %bb.i ], [ %1, %.lr.ph.preheader ] ; 11 uses
-  %.sroa.7.055 = phi i64 [ %i.k, %bb.i ], [ 0, %.lr.ph.preheader ] ; 3 uses
-  %.sroa.10.054 = phi i64 [ %4, %bb.i ], [ %2, %.lr.ph.preheader ]
-  %4 = add nsw i64 %.sroa.10.054, -1              ; 2 uses
-  %5 = icmp eq ptr %.sroa.015.056, %3
-  br i1 %5, label %.thread, label %bb.d
-
-.thread:                                          ; preds = %bb.i, %.lr.ph, %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsiU5vK8fN4ZC_11ide_assists.exit.thread
-  %6 = phi ptr [ %i.e, %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsiU5vK8fN4ZC_11ide_assists.exit.thread ], [ %i.i, %.lr.ph ], [ %i.i, %bb.i ]
-  store i64 %2, ptr %6, align 8
+.thread:                                          ; preds = %bb.i, %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsiU5vK8fN4ZC_11ide_assists.exit.thread
+  %3 = phi ptr [ %i.e, %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsiU5vK8fN4ZC_11ide_assists.exit.thread ], [ %i.i, %bb.i ]
+  store i64 %2, ptr %3, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret void
 
-bb.d:                                             ; preds = %.lr.ph
+bb.d:                                             ; preds = %.lr.ph.preheader, %bb.i
+  %.sroa.015.056 = phi ptr [ %i.j, %bb.i ], [ %1, %.lr.ph.preheader ] ; 10 uses
+  %.sroa.7.055 = phi i64 [ %i.k, %bb.i ], [ 0, %.lr.ph.preheader ] ; 3 uses
+  %.sroa.10.054 = phi i64 [ %4, %bb.i ], [ %2, %.lr.ph.preheader ]
+  %4 = add nsw i64 %.sroa.10.054, -1              ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %.sroa.015.056, i64 40
   %i.k = add nuw nsw i64 %.sroa.7.055, 1
   %i.l = getelementptr inbounds nuw i8, ptr %.sroa.015.056, i64 24
@@ -288,7 +283,7 @@ bb.i:                                             ; preds = %.noexc14, %bb.e, %b
   %.sroa.943.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ad, i64 32
   store i8 %i.ac, ptr %.sroa.943.0..sroa_idx, align 8
   %i.ae = icmp eq i64 %4, 0
-  br i1 %i.ae, label %.thread, label %.lr.ph
+  br i1 %i.ae, label %.thread, label %bb.d
 
 bb.j:                                             ; preds = %bb.k
   %i.af = landingpad { ptr, i32 }

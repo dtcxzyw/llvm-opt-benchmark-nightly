@@ -204,7 +204,7 @@ bb.a:
   %i.ei = alloca [24 x i8], align 8               ; 7 uses
   %i.ej = alloca [32 x i8], align 8               ; 6 uses
   %i.ek = alloca [32 x i8], align 8               ; 8 uses
-  %i.el = alloca [128 x i8], align 8              ; 16 uses
+  %i.el = alloca [128 x i8], align 8              ; 14 uses
   %i.em = alloca [24 x i8], align 8               ; 6 uses
   %i.en = alloca [40 x i8], align 8               ; 8 uses
   %i.eo = alloca [16 x i8], align 8               ; 9 uses
@@ -607,9 +607,9 @@ bb.bk:                                            ; preds = %bb.bg
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.el, ptr noundef nonnull align 8 dereferenceable(32) %i.ek, i64 32, i1 false)
   %i.km = getelementptr inbounds nuw i8, ptr %i.el, i64 32 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.km, ptr noundef nonnull align 8 dereferenceable(32) %i.ej, i64 32, i1 false)
-  %i.kn = getelementptr inbounds nuw i8, ptr %i.el, i64 64
+  %i.kn = getelementptr inbounds nuw i8, ptr %i.el, i64 64 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.kn, ptr noundef nonnull align 8 dereferenceable(32) %i.eh, i64 32, i1 false)
-  %i.ko = getelementptr inbounds nuw i8, ptr %i.el, i64 96
+  %i.ko = getelementptr inbounds nuw i8, ptr %i.el, i64 96 ; 2 uses
   store i32 0, ptr %i.ko, align 8
   %.sroa.258.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.el, i64 104
   store ptr %i.ki, ptr %.sroa.258.0..sroa_idx, align 8
@@ -619,27 +619,42 @@ bb.bk:                                            ; preds = %bb.bg
   tail call void @_RNvCsh0WfaQiVYm0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #31, !noalias !2391
   %i.kp = tail call noundef align 8 dereferenceable_or_null(128) ptr @_RNvCsh0WfaQiVYm0_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) 128, i64 noundef range(i64 1, -9223372036854775807) 8) #31, !noalias !2391 ; 6 uses
   %i.kq = icmp eq ptr %i.kp, null
-  br i1 %i.kq, label %5, label %_RNvMs5_NtCsgCecv3eZDcN_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsemnSGAKhbl_26candle_wasm_example_llama2.exit.i.preheader
+  br i1 %i.kq, label %3, label %_RNvMs5_NtCsgCecv3eZDcN_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsemnSGAKhbl_26candle_wasm_example_llama2.exit.i.preheader
+
+3:                                                ; preds = %bb.bk
+  invoke void @_RNvNtCsgCecv3eZDcN_5alloc7raw_vec12handle_error(i64 noundef 8, i64 128) #32
+          to label %.noexc565 unwind label %4
+
+.noexc565:                                        ; preds = %3
+  unreachable
+
+4:                                                ; preds = %3, %bb.bl, %_RNvMs5_NtCsgCecv3eZDcN_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsemnSGAKhbl_26candle_wasm_example_llama2.exit.i.preheader
+  %5 = landingpad { ptr, i32 }
+          cleanup
+  br label %.body477
+
+.body477:                                         ; preds = %bb.bo, %4
+  %eh.lpad-body478 = phi { ptr, i32 } [ %5, %4 ], [ %i.kz, %bb.bo ]
+  invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCs9OLX912zl7o_3yew11virtual_dom9listeners9ListenersECsemnSGAKhbl_26candle_wasm_example_llama2(ptr null, i64 undef) #33
+          to label %bb.pd unwind label %bb.jy
 
 _RNvMs5_NtCsgCecv3eZDcN_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsemnSGAKhbl_26candle_wasm_example_llama2.exit.i.preheader: ; preds = %bb.bk
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q), !noalias !2392
   call fastcc void @_RNvXsa_NtNtCs9OLX912zl7o_3yew11virtual_dom5vnodeNtB5_5VNodeNtNtCsf3Ta7LF998c_4core5clone5Clone5clone(ptr noalias nofree noundef align 8 captures(none) dereferenceable(32) %i.q, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.el), !noalias !2393
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.kp, ptr noundef nonnull align 8 dereferenceable(32) %i.q, i64 32, i1 false), !noalias !2392
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q), !noalias !2392
-  %3 = getelementptr inbounds nuw i8, ptr %i.el, i64 64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q), !noalias !2392
   call fastcc void @_RNvXsa_NtNtCs9OLX912zl7o_3yew11virtual_dom5vnodeNtB5_5VNodeNtNtCsf3Ta7LF998c_4core5clone5Clone5clone(ptr noalias nofree noundef align 8 captures(none) dereferenceable(32) %i.q, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.km), !noalias !2393
   %i.kr = getelementptr inbounds nuw i8, ptr %i.kp, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.kr, ptr noundef nonnull align 8 dereferenceable(32) %i.q, i64 32, i1 false), !noalias !2392
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q), !noalias !2392
-  %4 = getelementptr inbounds nuw i8, ptr %i.el, i64 96
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q), !noalias !2392
-  call fastcc void @_RNvXsa_NtNtCs9OLX912zl7o_3yew11virtual_dom5vnodeNtB5_5VNodeNtNtCsf3Ta7LF998c_4core5clone5Clone5clone(ptr noalias nofree noundef align 8 captures(none) dereferenceable(32) %i.q, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %3), !noalias !2393
+  call fastcc void @_RNvXsa_NtNtCs9OLX912zl7o_3yew11virtual_dom5vnodeNtB5_5VNodeNtNtCsf3Ta7LF998c_4core5clone5Clone5clone(ptr noalias nofree noundef align 8 captures(none) dereferenceable(32) %i.q, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.kn), !noalias !2393
   %i.ks = getelementptr inbounds nuw i8, ptr %i.kp, i64 64
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.ks, ptr noundef nonnull align 8 dereferenceable(32) %i.q, i64 32, i1 false), !noalias !2392
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q), !noalias !2392
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q), !noalias !2392
-  call fastcc void @_RNvXsa_NtNtCs9OLX912zl7o_3yew11virtual_dom5vnodeNtB5_5VNodeNtNtCsf3Ta7LF998c_4core5clone5Clone5clone(ptr noalias nofree noundef align 8 captures(none) dereferenceable(32) %i.q, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %4), !noalias !2393
+  call fastcc void @_RNvXsa_NtNtCs9OLX912zl7o_3yew11virtual_dom5vnodeNtB5_5VNodeNtNtCsf3Ta7LF998c_4core5clone5Clone5clone(ptr noalias nofree noundef align 8 captures(none) dereferenceable(32) %i.q, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.ko), !noalias !2393
   %i.kt = getelementptr inbounds nuw i8, ptr %i.kp, i64 96
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.kt, ptr noundef nonnull align 8 dereferenceable(32) %i.q, i64 32, i1 false), !noalias !2392
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q), !noalias !2392
@@ -649,30 +664,13 @@ _RNvMs5_NtCsgCecv3eZDcN_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsemnS
   %.sroa.5969.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.em, i64 16
   store i64 4, ptr %.sroa.5969.0..sroa_idx, align 8, !noalias !2394
   %i.ku = invoke noundef ptr @_RNvMs1_NtNtNtCs9OLX912zl7o_3yew4html9component8childrenINtB5_16ChildrenRendererNtNtNtBb_11virtual_dom5vnode5VNodeE3newCsemnSGAKhbl_26candle_wasm_example_llama2(ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.em)
-          to label %bb.bl unwind label %6
-
-5:                                                ; preds = %bb.bk
-  invoke void @_RNvNtCsgCecv3eZDcN_5alloc7raw_vec12handle_error(i64 noundef 8, i64 128) #32
-          to label %.noexc565 unwind label %6
-
-.noexc565:                                        ; preds = %5
-  unreachable
-
-6:                                                ; preds = %5, %bb.bl, %_RNvMs5_NtCsgCecv3eZDcN_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsemnSGAKhbl_26candle_wasm_example_llama2.exit.i.preheader
-  %7 = landingpad { ptr, i32 }
-          cleanup
-  br label %.body477
-
-.body477:                                         ; preds = %bb.bo, %6
-  %eh.lpad-body478 = phi { ptr, i32 } [ %7, %6 ], [ %i.kz, %bb.bo ]
-  invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCs9OLX912zl7o_3yew11virtual_dom9listeners9ListenersECsemnSGAKhbl_26candle_wasm_example_llama2(ptr null, i64 undef) #33
-          to label %bb.pd unwind label %bb.jy
+          to label %bb.bl unwind label %4
 
 bb.bl:                                            ; preds = %_RNvMs5_NtCsgCecv3eZDcN_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsemnSGAKhbl_26candle_wasm_example_llama2.exit.i.preheader
   call void @llvm.lifetime.end.p0(ptr nonnull %i.em)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bc)
   invoke void @_RNvXs6_NtNtNtCs9OLX912zl7o_3yew4html9component8childrenNtNtNtBb_11virtual_dom5vlist5VListINtNtCsf3Ta7LF998c_4core7convert4FromINtB5_16ChildrenRendererNtNtBV_5vnode5VNodeEE4from(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(address) dereferenceable(32) %i.bc, ptr noundef %i.ku)
-          to label %bb.bm unwind label %6
+          to label %bb.bm unwind label %4
 
 bb.bm:                                            ; preds = %bb.bl
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bb)
@@ -923,7 +921,24 @@ bb.ch:                                            ; preds = %bb.cd
   call void @_RNvCsh0WfaQiVYm0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #31, !noalias !2398
   %i.mg = call noundef align 8 dereferenceable_or_null(64) ptr @_RNvCsh0WfaQiVYm0_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) 64, i64 noundef range(i64 1, -9223372036854775807) 8) #31, !noalias !2398 ; 4 uses
   %i.mh = icmp eq ptr %i.mg, null
-  br i1 %i.mh, label %8, label %_RNvMs5_NtCsgCecv3eZDcN_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsemnSGAKhbl_26candle_wasm_example_llama2.exit.i579.preheader
+  br i1 %i.mh, label %6, label %_RNvMs5_NtCsgCecv3eZDcN_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsemnSGAKhbl_26candle_wasm_example_llama2.exit.i579.preheader
+
+6:                                                ; preds = %bb.ch
+  invoke void @_RNvNtCsgCecv3eZDcN_5alloc7raw_vec12handle_error(i64 noundef 8, i64 64) #32
+          to label %.noexc583 unwind label %7
+
+.noexc583:                                        ; preds = %6
+  unreachable
+
+7:                                                ; preds = %6, %bb.ci, %_RNvMs5_NtCsgCecv3eZDcN_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsemnSGAKhbl_26candle_wasm_example_llama2.exit.i579.preheader
+  %8 = landingpad { ptr, i32 }
+          cleanup
+  br label %.body474
+
+.body474:                                         ; preds = %bb.cl, %7
+  %eh.lpad-body475 = phi { ptr, i32 } [ %8, %7 ], [ %i.mo, %bb.cl ]
+  invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCs9OLX912zl7o_3yew11virtual_dom9listeners9ListenersECsemnSGAKhbl_26candle_wasm_example_llama2(ptr null, i64 undef) #33
+          to label %bb.ox unwind label %bb.jy
 
 _RNvMs5_NtCsgCecv3eZDcN_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsemnSGAKhbl_26candle_wasm_example_llama2.exit.i579.preheader: ; preds = %bb.ch
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p), !noalias !2399
@@ -941,30 +956,13 @@ _RNvMs5_NtCsgCecv3eZDcN_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsemnS
   %.sroa.5972.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.eu, i64 16
   store i64 2, ptr %.sroa.5972.0..sroa_idx, align 8, !noalias !2401
   %i.mj = invoke noundef ptr @_RNvMs1_NtNtNtCs9OLX912zl7o_3yew4html9component8childrenINtB5_16ChildrenRendererNtNtNtBb_11virtual_dom5vnode5VNodeE3newCsemnSGAKhbl_26candle_wasm_example_llama2(ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.eu)
-          to label %bb.ci unwind label %9
-
-8:                                                ; preds = %bb.ch
-  invoke void @_RNvNtCsgCecv3eZDcN_5alloc7raw_vec12handle_error(i64 noundef 8, i64 64) #32
-          to label %.noexc583 unwind label %9
-
-.noexc583:                                        ; preds = %8
-  unreachable
-
-9:                                                ; preds = %8, %bb.ci, %_RNvMs5_NtCsgCecv3eZDcN_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsemnSGAKhbl_26candle_wasm_example_llama2.exit.i579.preheader
-  %10 = landingpad { ptr, i32 }
-          cleanup
-  br label %.body474
-
-.body474:                                         ; preds = %bb.cl, %9
-  %eh.lpad-body475 = phi { ptr, i32 } [ %10, %9 ], [ %i.mo, %bb.cl ]
-  invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCs9OLX912zl7o_3yew11virtual_dom9listeners9ListenersECsemnSGAKhbl_26candle_wasm_example_llama2(ptr null, i64 undef) #33
-          to label %bb.ox unwind label %bb.jy
+          to label %bb.ci unwind label %7
 
 bb.ci:                                            ; preds = %_RNvMs5_NtCsgCecv3eZDcN_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsemnSGAKhbl_26candle_wasm_example_llama2.exit.i579.preheader
   call void @llvm.lifetime.end.p0(ptr nonnull %i.eu)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ay)
   invoke void @_RNvXs6_NtNtNtCs9OLX912zl7o_3yew4html9component8childrenNtNtNtBb_11virtual_dom5vlist5VListINtNtCsf3Ta7LF998c_4core7convert4FromINtB5_16ChildrenRendererNtNtBV_5vnode5VNodeEE4from(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(address) dereferenceable(32) %i.ay, ptr noundef %i.mj)
-          to label %bb.cj unwind label %9
+          to label %bb.cj unwind label %7
 
 bb.cj:                                            ; preds = %bb.ci
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ax)

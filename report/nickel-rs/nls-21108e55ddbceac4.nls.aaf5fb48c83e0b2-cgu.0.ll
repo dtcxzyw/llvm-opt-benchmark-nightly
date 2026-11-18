@@ -205,7 +205,7 @@ _ZN3nls5world5World18typecheck_uncached17hcfd59e8059031cc3E.exit: ; preds = %bb.
 
 bb.po:                                            ; preds = %bb.hs
   %i.bbg = getelementptr inbounds nuw i8, ptr %.sroa.0.1.i.ph, i64 408
-  %i.bbh = load i64, ptr %i.bbg, align 8, !noundef !46 ; 7 uses
+  %i.bbh = load i64, ptr %i.bbg, align 8, !noundef !46 ; 6 uses
   %i.bbi = icmp ult i64 %i.bbh, 96076792050570582
   tail call void @llvm.assume(i1 %i.bbi)
   %i.bbj = icmp eq i64 %i.bbh, 0
@@ -217,7 +217,7 @@ bb.pp:                                            ; preds = %bb.po
 
 _ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i: ; preds = %bb.po
   %i.bbk = getelementptr inbounds nuw i8, ptr %.sroa.0.1.i.ph, i64 400
-  %i.bbl = load ptr, ptr %i.bbk, align 8, !nonnull !46, !noundef !46 ; 2 uses
+  %i.bbl = load ptr, ptr %i.bbk, align 8, !nonnull !46, !noundef !46
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cv), !noalias !55628
   %i.bbm = mul nuw nsw i64 %i.bbh, 96             ; 2 uses
   tail call void @_RNvCskdKJRKLKjqM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #66, !noalias !55629
@@ -234,39 +234,34 @@ bb.pq:                                            ; preds = %_ZN4core5alloc6layo
   %i.bbp = getelementptr inbounds nuw i8, ptr %i.cv, i64 8
   store ptr %i.bbn, ptr %i.bbp, align 8, !noalias !55628
   %i.bbq = getelementptr inbounds nuw i8, ptr %i.cv, i64 16 ; 2 uses
-  %3 = getelementptr inbounds nuw [96 x i8], ptr %i.bbl, i64 %i.bbh
   br label %.lr.ph.i
 
-.lr.ph.i:                                         ; preds = %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hf24663954ed2e8caE.exit.i", %bb.pr
-  %.sroa.012.023.i = phi ptr [ %i.bbs, %bb.pr ], [ %i.bbl, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hf24663954ed2e8caE.exit.i" ] ; 3 uses
+.lr.ph.i:                                         ; preds = %bb.pr, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hf24663954ed2e8caE.exit.i"
+  %.sroa.012.023.i = phi ptr [ %i.bbs, %bb.pr ], [ %i.bbl, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hf24663954ed2e8caE.exit.i" ] ; 2 uses
   %.sroa.7.022.i = phi i64 [ %i.bbr, %bb.pr ], [ 0, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hf24663954ed2e8caE.exit.i" ] ; 3 uses
-  %.sroa.10.021.i = phi i64 [ %4, %bb.pr ], [ %i.bbh, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hf24663954ed2e8caE.exit.i" ]
-  %4 = add nsw i64 %.sroa.10.021.i, -1            ; 2 uses
-  %5 = icmp eq ptr %.sroa.012.023.i, %3
-  br i1 %5, label %"_ZN87_$LT$T$u20$as$u20$alloc..slice..$LT$impl$u20$$u5b$T$u5d$$GT$..to_vec_in..ConvertVec$GT$6to_vec17hef49bc4e2b161d4dE.exit", label %6
-
-6:                                                ; preds = %.lr.ph.i
+  %.sroa.10.021.i = phi i64 [ %3, %bb.pr ], [ %i.bbh, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hf24663954ed2e8caE.exit.i" ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cu), !noalias !55628
   invoke fastcc void @"_ZN78_$LT$nls..diagnostic..SerializableDiagnostic$u20$as$u20$core..clone..Clone$GT$5clone17h56563bf4a099406dE"(ptr noalias noundef align 8 captures(address) dereferenceable(96) %i.cu, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(96) %.sroa.012.023.i)
           to label %bb.pr unwind label %bb.ps, !noalias !55630
 
-bb.pr:                                            ; preds = %6
+bb.pr:                                            ; preds = %.lr.ph.i
+  %3 = add nsw i64 %.sroa.10.021.i, -1            ; 2 uses
   %i.bbr = add nuw nsw i64 %.sroa.7.022.i, 1
   %i.bbs = getelementptr inbounds nuw i8, ptr %.sroa.012.023.i, i64 96
   %i.bbt = getelementptr inbounds nuw [96 x i8], ptr %i.bbn, i64 %.sroa.7.022.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %i.bbt, ptr noundef nonnull align 8 dereferenceable(96) %i.cu, i64 96, i1 false), !noalias !55630
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cu), !noalias !55628
-  %i.bbu = icmp eq i64 %4, 0
+  %i.bbu = icmp eq i64 %3, 0
   br i1 %i.bbu, label %"_ZN87_$LT$T$u20$as$u20$alloc..slice..$LT$impl$u20$$u5b$T$u5d$$GT$..to_vec_in..ConvertVec$GT$6to_vec17hef49bc4e2b161d4dE.exit", label %.lr.ph.i
 
-bb.ps:                                            ; preds = %6
+bb.ps:                                            ; preds = %.lr.ph.i
   %lpad.loopexit.i = landingpad { ptr, i32 }
           cleanup
   store i64 %.sroa.7.022.i, ptr %i.bbq, align 8, !alias.scope !55631, !noalias !55628
   call fastcc void @"_ZN4core3ptr83drop_in_place$LT$alloc..vec..Vec$LT$nls..diagnostic..SerializableDiagnostic$GT$$GT$17h0150b37944347a0eE"(ptr noalias noundef align 8 dereferenceable(24) %i.cv) #77, !noalias !55630
   br label %common.resume
 
-"_ZN87_$LT$T$u20$as$u20$alloc..slice..$LT$impl$u20$$u5b$T$u5d$$GT$..to_vec_in..ConvertVec$GT$6to_vec17hef49bc4e2b161d4dE.exit": ; preds = %.lr.ph.i, %bb.pr
+"_ZN87_$LT$T$u20$as$u20$alloc..slice..$LT$impl$u20$$u5b$T$u5d$$GT$..to_vec_in..ConvertVec$GT$6to_vec17hef49bc4e2b161d4dE.exit": ; preds = %bb.pr
   store i64 %i.bbh, ptr %i.bbq, align 8, !noalias !55628
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.cv, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cv), !noalias !55628

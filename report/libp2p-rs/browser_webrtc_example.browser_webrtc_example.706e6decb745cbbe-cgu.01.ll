@@ -202,8 +202,8 @@ bb.ph:                                            ; preds = %bb.pf, %.thread.i10
   br label %_RNvMsd_CsczYENlYh6wI_8smallvecINtB5_8SmallVecANtCsbli3iz7XG76_9multiaddr9Multiaddrj1_E6tripleCs9Et6OYOsIUY_22browser_webrtc_example.exit125.i
 
 _RNvMsd_CsczYENlYh6wI_8smallvecINtB5_8SmallVecANtCsbli3iz7XG76_9multiaddr9Multiaddrj1_E6tripleCs9Et6OYOsIUY_22browser_webrtc_example.exit125.i: ; preds = %bb.ph, %bb.pg
-  %.sink13.i122.i = phi ptr [ %i.axz, %bb.pg ], [ %i.pl, %bb.ph ] ; 2 uses
-  %.sink12.i123.i = phi i64 [ %i.aya, %bb.pg ], [ %i.ayb, %bb.ph ] ; 6 uses
+  %.sink13.i122.i = phi ptr [ %i.axz, %bb.pg ], [ %i.pl, %bb.ph ]
+  %.sink12.i123.i = phi i64 [ %i.aya, %bb.pg ], [ %i.ayb, %bb.ph ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !2258
   %i.ayc = icmp eq i64 %.sink12.i123.i, 0
   br i1 %i.ayc, label %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs9Et6OYOsIUY_22browser_webrtc_example.exit.thread.i.i, label %bb.pi
@@ -230,18 +230,12 @@ bb.pj:                                            ; preds = %bb.pi
 .lr.ph.preheader.i.i:                             ; preds = %bb.pi
   store i64 %.sink12.i123.i, ptr %i.i, align 8, !noalias !2258
   store ptr %i.aye, ptr %i.pm, align 8, !noalias !2258
-  %3 = getelementptr inbounds nuw [32 x i8], ptr %.sink13.i122.i, i64 %.sink12.i123.i
-  br label %.lr.ph.i.i
+  br label %bb.pk
 
-.lr.ph.i.i:                                       ; preds = %_RNvXsl_Csbli3iz7XG76_9multiaddrNtB5_9MultiaddrNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i, %.lr.ph.preheader.i.i
-  %.sroa.012.023.i.i = phi ptr [ %i.ayo, %_RNvXsl_Csbli3iz7XG76_9multiaddrNtB5_9MultiaddrNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i ], [ %.sink13.i122.i, %.lr.ph.preheader.i.i ] ; 6 uses
+bb.pk:                                            ; preds = %_RNvXsl_Csbli3iz7XG76_9multiaddrNtB5_9MultiaddrNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i, %.lr.ph.preheader.i.i
+  %.sroa.012.023.i.i = phi ptr [ %i.ayo, %_RNvXsl_Csbli3iz7XG76_9multiaddrNtB5_9MultiaddrNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i ], [ %.sink13.i122.i, %.lr.ph.preheader.i.i ] ; 5 uses
   %.sroa.7.022.i.i = phi i64 [ %i.ayn, %_RNvXsl_Csbli3iz7XG76_9multiaddrNtB5_9MultiaddrNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i ], [ 0, %.lr.ph.preheader.i.i ] ; 3 uses
-  %.sroa.10.021.i.i = phi i64 [ %4, %_RNvXsl_Csbli3iz7XG76_9multiaddrNtB5_9MultiaddrNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i ], [ %.sink12.i123.i, %.lr.ph.preheader.i.i ]
-  %4 = add nsw i64 %.sroa.10.021.i.i, -1          ; 2 uses
-  %5 = icmp eq ptr %.sroa.012.023.i.i, %3
-  br i1 %5, label %.loopexit.i, label %bb.pk
-
-bb.pk:                                            ; preds = %.lr.ph.i.i
+  %.sroa.10.021.i.i = phi i64 [ %3, %_RNvXsl_Csbli3iz7XG76_9multiaddrNtB5_9MultiaddrNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i ], [ %.sink12.i123.i, %.lr.ph.preheader.i.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !2258
   %i.ayg = load ptr, ptr %.sroa.012.023.i.i, align 8, !noalias !2260, !nonnull !13, !align !14, !noundef !13
   %i.ayh = load ptr, ptr %i.ayg, align 8, !noalias !2260, !nonnull !13, !noundef !13
@@ -256,11 +250,12 @@ bb.pk:                                            ; preds = %.lr.ph.i.i
 _RNvXsl_Csbli3iz7XG76_9multiaddrNtB5_9MultiaddrNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i: ; preds = %bb.pk
   %i.ayn = add nuw nsw i64 %.sroa.7.022.i.i, 1
   %i.ayo = getelementptr inbounds nuw i8, ptr %.sroa.012.023.i.i, i64 32
+  %3 = add nsw i64 %.sroa.10.021.i.i, -1          ; 2 uses
   %i.ayp = getelementptr inbounds nuw [32 x i8], ptr %i.aye, i64 %.sroa.7.022.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.ayp, ptr noundef nonnull align 8 dereferenceable(32) %i.h, i64 32, i1 false), !noalias !2261
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !2258
-  %i.ayq = icmp eq i64 %4, 0
-  br i1 %i.ayq, label %.loopexit.i, label %.lr.ph.i.i
+  %i.ayq = icmp eq i64 %3, 0
+  br i1 %i.ayq, label %.loopexit.i, label %bb.pk
 
 bb.pl:                                            ; preds = %bb.pm
   %i.ayr = landingpad { ptr, i32 }
@@ -275,7 +270,7 @@ bb.pm:                                            ; preds = %bb.pk
   invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtCsbli3iz7XG76_9multiaddr9MultiaddrEECs9Et6OYOsIUY_22browser_webrtc_example(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.i) #35
           to label %.body127.i unwind label %bb.pl, !noalias !2261
 
-.loopexit.i:                                      ; preds = %_RNvXsl_Csbli3iz7XG76_9multiaddrNtB5_9MultiaddrNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i, %.lr.ph.i.i, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs9Et6OYOsIUY_22browser_webrtc_example.exit.thread.i.i
+.loopexit.i:                                      ; preds = %_RNvXsl_Csbli3iz7XG76_9multiaddrNtB5_9MultiaddrNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs9Et6OYOsIUY_22browser_webrtc_example.exit.thread.i.i
   store i64 %.sink12.i123.i, ptr %i.pn, align 8, !noalias !2258
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.po, ptr noundef nonnull align 8 dereferenceable(24) %i.i, i64 24, i1 false), !noalias !2224
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !2258

@@ -205,7 +205,7 @@ bb.a:
   %i.a = alloca [24 x i8], align 8                ; 4 uses
   %i.b = alloca [24 x i8], align 8                ; 4 uses
   %.idx = mul nuw nsw i64 %2, 24                  ; 5 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 %.idx ; 3 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 %.idx
   %i.d = icmp eq i64 %2, 0
   br i1 %i.d, label %_RINvXNvMNtCs7tKScEop1B6_5alloc5sliceSp9to_vec_inNtNtB8_6string6StringNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs8hEv8bFEvN4_7uu_fold.exit, label %.lr.ph
 
@@ -228,22 +228,18 @@ _RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCs8hEv8bFEvN4_7uu_fold.exit: ; pr
 
 _RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i: ; preds = %_RNvXNtNtCs6JMX4GRUq9U_4core3str4iterNtB2_5CharsNtNtNtNtB6_4iter6traits8iterator8Iterator10advance_by.exit
   tail call void @_RNvCsjSVV5GABoor_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #19, !noalias !250
-  %i.l = tail call noundef align 8 ptr @_RNvCsjSVV5GABoor_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %.idx, i64 noundef range(i64 1, 9) 8) #19, !noalias !250 ; 4 uses
+  %i.l = tail call noundef align 8 ptr @_RNvCsjSVV5GABoor_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %.idx, i64 noundef range(i64 1, 9) 8) #19, !noalias !250 ; 3 uses
   %i.m = icmp eq ptr %i.l, null
-  br i1 %i.m, label %bb.b, label %.lr.ph.i
+  br i1 %i.m, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i
   tail call void @_RNvNtCs7tKScEop1B6_5alloc7raw_vec12handle_error(i64 noundef 8, i64 %.idx) #23, !noalias !251
   unreachable
 
-.lr.ph.i:                                         ; preds = %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i, %bb.c
-  %.sroa.0.021.i = phi ptr [ %i.p, %bb.c ], [ %1, %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i ] ; 3 uses
+bb.c:                                             ; preds = %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i, %bb.c
+  %.sroa.0.021.i = phi ptr [ %i.p, %bb.c ], [ %1, %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i ] ; 2 uses
   %.sroa.7.020.i = phi i64 [ %i.o, %bb.c ], [ 0, %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i ] ; 2 uses
   %.sroa.10.019.i = phi i64 [ %i.n, %bb.c ], [ %2, %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i ]
-  %3 = icmp eq ptr %.sroa.0.021.i, %i.c
-  br i1 %3, label %_RINvXNvMNtCs7tKScEop1B6_5alloc5sliceSp9to_vec_inNtNtB8_6string6StringNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs8hEv8bFEvN4_7uu_fold.exit, label %bb.c
-
-bb.c:                                             ; preds = %.lr.ph.i
   %i.n = add nsw i64 %.sroa.10.019.i, -1          ; 2 uses
   %i.o = add nuw nsw i64 %.sroa.7.020.i, 1
   %i.p = getelementptr inbounds nuw i8, ptr %.sroa.0.021.i, i64 24
@@ -253,10 +249,10 @@ bb.c:                                             ; preds = %.lr.ph.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.q, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false), !noalias !252
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !251
   %i.r = icmp eq i64 %i.n, 0
-  br i1 %i.r, label %_RINvXNvMNtCs7tKScEop1B6_5alloc5sliceSp9to_vec_inNtNtB8_6string6StringNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs8hEv8bFEvN4_7uu_fold.exit, label %.lr.ph.i
+  br i1 %i.r, label %_RINvXNvMNtCs7tKScEop1B6_5alloc5sliceSp9to_vec_inNtNtB8_6string6StringNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs8hEv8bFEvN4_7uu_fold.exit, label %bb.c
 
-_RINvXNvMNtCs7tKScEop1B6_5alloc5sliceSp9to_vec_inNtNtB8_6string6StringNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs8hEv8bFEvN4_7uu_fold.exit: ; preds = %.lr.ph.i, %bb.c, %bb.a
-  %.sroa.10.0.i29.i = phi ptr [ inttoptr (i64 8 to ptr), %bb.a ], [ %i.l, %bb.c ], [ %i.l, %.lr.ph.i ]
+_RINvXNvMNtCs7tKScEop1B6_5alloc5sliceSp9to_vec_inNtNtB8_6string6StringNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs8hEv8bFEvN4_7uu_fold.exit: ; preds = %bb.c, %bb.a
+  %.sroa.10.0.i29.i = phi ptr [ inttoptr (i64 8 to ptr), %bb.a ], [ %i.l, %bb.c ]
   store i64 %2, ptr %0, align 8
   %.sroa.451.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.10.0.i29.i, ptr %.sroa.451.0..sroa_idx, align 8
@@ -343,32 +339,28 @@ _RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9All
   tail call void @_RNvCsjSVV5GABoor_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #19, !noalias !254
   %i.be = tail call noundef align 8 ptr @_RNvCsjSVV5GABoor_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %.idx, i64 noundef range(i64 1, 9) 8) #19, !noalias !254 ; 4 uses
   %i.bf = icmp eq ptr %i.be, null
-  br i1 %i.bf, label %bb.i, label %.lr.ph.i29
+  br i1 %i.bf, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i27
   tail call void @_RNvNtCs7tKScEop1B6_5alloc7raw_vec12handle_error(i64 noundef 8, i64 %.idx) #23, !noalias !255
   unreachable
 
-.lr.ph.i29:                                       ; preds = %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i27, %bb.j
-  %.sroa.0.021.i30 = phi ptr [ %i.bi, %bb.j ], [ %1, %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i27 ] ; 3 uses
-  %.sroa.7.020.i31 = phi i64 [ %i.bh, %bb.j ], [ 0, %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i27 ] ; 2 uses
-  %.sroa.10.019.i32 = phi i64 [ %i.bg, %bb.j ], [ %2, %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i27 ]
-  %4 = icmp eq ptr %.sroa.0.021.i30, %i.c
-  br i1 %4, label %_RINvXNvMNtCs7tKScEop1B6_5alloc5sliceSp9to_vec_inNtNtB8_6string6StringNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs8hEv8bFEvN4_7uu_fold.exit37, label %bb.j
-
-bb.j:                                             ; preds = %.lr.ph.i29
-  %i.bg = add nsw i64 %.sroa.10.019.i32, -1       ; 2 uses
-  %i.bh = add nuw nsw i64 %.sroa.7.020.i31, 1
-  %i.bi = getelementptr inbounds nuw i8, ptr %.sroa.0.021.i30, i64 24
-  %i.bj = getelementptr inbounds nuw [24 x i8], ptr %i.be, i64 %.sroa.7.020.i31
+bb.j:                                             ; preds = %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i27, %bb.j
+  %.sroa.0.021.i29 = phi ptr [ %i.bi, %bb.j ], [ %1, %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i27 ] ; 2 uses
+  %.sroa.7.020.i30 = phi i64 [ %i.bh, %bb.j ], [ 0, %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i27 ] ; 2 uses
+  %.sroa.10.019.i31 = phi i64 [ %i.bg, %bb.j ], [ %2, %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i27 ]
+  %i.bg = add nsw i64 %.sroa.10.019.i31, -1       ; 2 uses
+  %i.bh = add nuw nsw i64 %.sroa.7.020.i30, 1
+  %i.bi = getelementptr inbounds nuw i8, ptr %.sroa.0.021.i29, i64 24
+  %i.bj = getelementptr inbounds nuw [24 x i8], ptr %i.be, i64 %.sroa.7.020.i30
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !255
-  call void @_RNvXs4_NtCs7tKScEop1B6_5alloc6stringNtB5_6StringNtNtCs6JMX4GRUq9U_4core5clone5Clone5clone(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %.sroa.0.021.i30) #19, !noalias !256
+  call void @_RNvXs4_NtCs7tKScEop1B6_5alloc6stringNtB5_6StringNtNtCs6JMX4GRUq9U_4core5clone5Clone5clone(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %.sroa.0.021.i29) #19, !noalias !256
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bj, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false), !noalias !256
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !255
   %i.bk = icmp eq i64 %i.bg, 0
-  br i1 %i.bk, label %_RINvXNvMNtCs7tKScEop1B6_5alloc5sliceSp9to_vec_inNtNtB8_6string6StringNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs8hEv8bFEvN4_7uu_fold.exit37, label %.lr.ph.i29
+  br i1 %i.bk, label %_RINvXNvMNtCs7tKScEop1B6_5alloc5sliceSp9to_vec_inNtNtB8_6string6StringNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs8hEv8bFEvN4_7uu_fold.exit37, label %bb.j
 
-_RINvXNvMNtCs7tKScEop1B6_5alloc5sliceSp9to_vec_inNtNtB8_6string6StringNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs8hEv8bFEvN4_7uu_fold.exit37: ; preds = %.lr.ph.i29, %bb.j
+_RINvXNvMNtCs7tKScEop1B6_5alloc5sliceSp9to_vec_inNtNtB8_6string6StringNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs8hEv8bFEvN4_7uu_fold.exit37: ; preds = %bb.j
   %.not.i.i = icmp samesign ult i64 %.sroa.8.083, %2
   br i1 %.not.i.i, label %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VecNtNtB6_6string6StringE10try_removeCs8hEv8bFEvN4_7uu_fold.exit.i, label %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VecNtNtB6_6string6StringE10try_removeCs8hEv8bFEvN4_7uu_fold.exit.thread.i
 

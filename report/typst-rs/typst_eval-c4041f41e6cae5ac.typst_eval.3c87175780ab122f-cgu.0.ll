@@ -205,9 +205,9 @@ _RNvMs1m_NtCs1xwejQucwHj_5alloc4syncINtB6_15UniqueArcUninitNtNtNtCsdaEETE4DqmE_1
   %i.cf = load i64, ptr %i.bt, align 8, !range !36, !alias.scope !457, !noalias !447, !noundef !35
   %i.cg = trunc nuw i64 %i.cf to i1
   %i.ch = getelementptr inbounds nuw i8, ptr %i.bp, i64 24
-  %.val26.i.i.i.i.i.i = load ptr, ptr %i.ch, align 8, !alias.scope !457, !noalias !447, !nonnull !35, !noundef !35 ; 3 uses
+  %.val26.i.i.i.i.i.i = load ptr, ptr %i.ch, align 8, !alias.scope !457, !noalias !447, !nonnull !35, !noundef !35 ; 2 uses
   %i.ci = getelementptr inbounds nuw i8, ptr %i.bp, i64 32
-  %.val27.i.i.i.i.i.i = load i64, ptr %i.ci, align 8, !alias.scope !457, !noalias !447, !noundef !35 ; 7 uses
+  %.val27.i.i.i.i.i.i = load i64, ptr %i.ci, align 8, !alias.scope !457, !noalias !447, !noundef !35 ; 6 uses
   br i1 %i.cg, label %bb.p, label %bb.ar
 
 bb.p:                                             ; preds = %_RNvMs1m_NtCs1xwejQucwHj_5alloc4syncINtB6_15UniqueArcUninitNtNtNtCsdaEETE4DqmE_13typst_library11foundations6symbol8ModifiedNtNtB8_5alloc6GlobalE3newCs5cbCQMMIObr_10typst_eval.exit.i.i.i
@@ -247,30 +247,25 @@ bb.q:                                             ; preds = %_RNvXs1_NtCs1xwejQu
   store i64 %.val27.i.i.i.i.i.i, ptr %i.ad, align 8, !noalias !459
   %i.cq = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
   store ptr %i.cn, ptr %i.cq, align 8, !noalias !459
-  %i.cr = getelementptr inbounds nuw i8, ptr %i.ad, i64 16 ; 3 uses
-  %6 = getelementptr inbounds nuw [56 x i8], ptr %.val26.i.i.i.i.i.i, i64 %.val27.i.i.i.i.i.i
+  %i.cr = getelementptr inbounds nuw i8, ptr %i.ad, i64 16 ; 2 uses
   %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.ac, i64 8
   %i.cs = getelementptr inbounds nuw i8, ptr %i.ac, i64 16 ; 2 uses
   %.sroa.5.0..sroa_idx.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.ac, i64 24
   %i.ct = getelementptr inbounds nuw i8, ptr %i.ac, i64 40
   %.sroa.4.0..sroa_idx.i7.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.ac, i64 48
   %i.cu = getelementptr inbounds nuw i8, ptr %i.ac, i64 32
-  br label %7
-
-7:                                                ; preds = %bb.ai, %.lr.ph.i.i.i.i.i.i.i.i
-  %.sroa.012.044.i.i.i.i.i.i.i.i = phi ptr [ %.val26.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i ], [ %i.cw, %bb.ai ] ; 12 uses
-  %.sroa.7.042.i.i.i.i.i.i.i.i = phi i64 [ 0, %.lr.ph.i.i.i.i.i.i.i.i ], [ %i.cx, %bb.ai ] ; 3 uses
-  %.sroa.10.041.i.i.i.i.i.i.i.i = phi i64 [ %.val27.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i ], [ %8, %bb.ai ]
-  %8 = add nsw i64 %.sroa.10.041.i.i.i.i.i.i.i.i, -1 ; 2 uses
-  %9 = icmp eq ptr %.sroa.012.044.i.i.i.i.i.i.i.i, %6
-  br i1 %9, label %_RINvXNvMNtCs1xwejQucwHj_5alloc5sliceSp9to_vec_inTINtNtCseVcqU0FIJnD_5codex6shared11ModifierSetNtNtCsakL8LGkl72C_4ecow6string9EcoStringEB1u_INtNtCs3oUPovFnLWP_4core6option6OptionB1u_EENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs5cbCQMMIObr_10typst_eval.exit.i.i.i.i.i.i.i, label %bb.s
+  br label %bb.s
 
 bb.r:                                             ; preds = %bb.v
   %i.cv = landingpad { ptr, i32 }
           cleanup
   br label %bb.ak
 
-bb.s:                                             ; preds = %7
+bb.s:                                             ; preds = %bb.ai, %.lr.ph.i.i.i.i.i.i.i.i
+  %.sroa.012.044.i.i.i.i.i.i.i.i = phi ptr [ %.val26.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i ], [ %i.cw, %bb.ai ] ; 11 uses
+  %.sroa.7.042.i.i.i.i.i.i.i.i = phi i64 [ 0, %.lr.ph.i.i.i.i.i.i.i.i ], [ %i.cx, %bb.ai ] ; 3 uses
+  %.sroa.10.041.i.i.i.i.i.i.i.i = phi i64 [ %.val27.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i ], [ %6, %bb.ai ]
+  %6 = add nsw i64 %.sroa.10.041.i.i.i.i.i.i.i.i, -1 ; 2 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %.sroa.012.044.i.i.i.i.i.i.i.i, i64 56
   %i.cx = add nuw nsw i64 %.sroa.7.042.i.i.i.i.i.i.i.i, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ac), !noalias !459
@@ -417,8 +412,8 @@ bb.ai:                                            ; preds = %_RNvXsx_NtCsakL8LGk
   %i.dz = getelementptr inbounds nuw [56 x i8], ptr %i.cn, i64 %.sroa.7.042.i.i.i.i.i.i.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.dz, ptr noundef nonnull align 8 dereferenceable(56) %i.ac, i64 56, i1 false), !noalias !494
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ac), !noalias !459
-  %i.ea = icmp eq i64 %8, 0
-  br i1 %i.ea, label %_RINvXNvMNtCs1xwejQucwHj_5alloc5sliceSp9to_vec_inTINtNtCseVcqU0FIJnD_5codex6shared11ModifierSetNtNtCsakL8LGkl72C_4ecow6string9EcoStringEB1u_INtNtCs3oUPovFnLWP_4core6option6OptionB1u_EENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs5cbCQMMIObr_10typst_eval.exit.i.i.i.i.i.i.i, label %7
+  %i.ea = icmp eq i64 %6, 0
+  br i1 %i.ea, label %_RINvXNvMNtCs1xwejQucwHj_5alloc5sliceSp9to_vec_inTINtNtCseVcqU0FIJnD_5codex6shared11ModifierSetNtNtCsakL8LGkl72C_4ecow6string9EcoStringEB1u_INtNtCs3oUPovFnLWP_4core6option6OptionB1u_EENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs5cbCQMMIObr_10typst_eval.exit.i.i.i.i.i.i.i, label %bb.s
 
 bb.aj:                                            ; preds = %bb.ak
   %i.eb = landingpad { ptr, i32 }
@@ -432,9 +427,9 @@ bb.ak:                                            ; preds = %bb.z, %bb.r
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecTINtNtCseVcqU0FIJnD_5codex6shared11ModifierSetNtNtCsakL8LGkl72C_4ecow6string9EcoStringEB1S_INtNtB4_6option6OptionB1S_EEEECs5cbCQMMIObr_10typst_eval(ptr noalias nofree noundef align 8 dereferenceable(24) %i.ad) #44
           to label %.body.thread.i.i.i unwind label %bb.aj, !noalias !494
 
-_RINvXNvMNtCs1xwejQucwHj_5alloc5sliceSp9to_vec_inTINtNtCseVcqU0FIJnD_5codex6shared11ModifierSetNtNtCsakL8LGkl72C_4ecow6string9EcoStringEB1u_INtNtCs3oUPovFnLWP_4core6option6OptionB1u_EENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs5cbCQMMIObr_10typst_eval.exit.i.i.i.i.i.i.i: ; preds = %bb.ai, %7, %_RNvMs5_NtCs1xwejQucwHj_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs5cbCQMMIObr_10typst_eval.exit.thread.i.i.i.i.i.i.i.i
-  %10 = phi ptr [ %i.cm, %_RNvMs5_NtCs1xwejQucwHj_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs5cbCQMMIObr_10typst_eval.exit.thread.i.i.i.i.i.i.i.i ], [ %i.cr, %7 ], [ %i.cr, %bb.ai ]
-  store i64 %.val27.i.i.i.i.i.i, ptr %10, align 8, !noalias !459
+_RINvXNvMNtCs1xwejQucwHj_5alloc5sliceSp9to_vec_inTINtNtCseVcqU0FIJnD_5codex6shared11ModifierSetNtNtCsakL8LGkl72C_4ecow6string9EcoStringEB1u_INtNtCs3oUPovFnLWP_4core6option6OptionB1u_EENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs5cbCQMMIObr_10typst_eval.exit.i.i.i.i.i.i.i: ; preds = %bb.ai, %_RNvMs5_NtCs1xwejQucwHj_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs5cbCQMMIObr_10typst_eval.exit.thread.i.i.i.i.i.i.i.i
+  %7 = phi ptr [ %i.cm, %_RNvMs5_NtCs1xwejQucwHj_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs5cbCQMMIObr_10typst_eval.exit.thread.i.i.i.i.i.i.i.i ], [ %i.cr, %bb.ai ]
+  store i64 %.val27.i.i.i.i.i.i, ptr %7, align 8, !noalias !459
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ae, ptr noundef nonnull align 8 dereferenceable(24) %i.ad, i64 24, i1 false), !noalias !495
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ad), !noalias !459
   tail call void @llvm.experimental.noalias.scope.decl(metadata !496)
