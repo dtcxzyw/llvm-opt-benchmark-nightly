@@ -205,7 +205,7 @@ bb.a:
   %i.h = fsub double %i.d, %i.g
   %i.i = fmul double %i.h, 5.000000e-01           ; 5 uses
   %i.j = getelementptr i8, ptr %i.e, i64 %.idx.i  ; 2 uses
-  %i.k = load double, ptr %i.j, align 8, !tbaa !59 ; 12 uses
+  %i.k = load double, ptr %i.j, align 8, !tbaa !59 ; 11 uses
   %i.l = getelementptr i8, ptr %i.b, i64 %.idx.i44 ; 2 uses
   %i.m = load double, ptr %i.l, align 8, !tbaa !59
   %i.n = fmul double %i.k, %i.m
@@ -268,24 +268,15 @@ bb.h:                                             ; preds = %bb.f
   br label %_ZN5Eigen14JacobiRotationIdE10makeGivensERKdS3_Pd.exit
 
 bb.i:                                             ; preds = %bb.b
-  %i.ar = fsub double %i.i, %sqrt                 ; 6 uses
-  br i1 %i.w, label %4, label %7
+  %i.ar = fsub double %i.i, %sqrt                 ; 5 uses
+  br i1 %i.w, label %bb.j, label %bb.k
 
-4:                                                ; preds = %bb.i
-  %5 = fcmp olt double %i.ar, 0.000000e+00
-  %6 = select i1 %5, double -1.000000e+00, double 1.000000e+00
+bb.j:                                             ; preds = %bb.i
+  %i.as = fcmp olt double %i.ar, 0.000000e+00
+  %i.at = select i1 %i.as, double -1.000000e+00, double 1.000000e+00
   br label %_ZN5Eigen14JacobiRotationIdE10makeGivensERKdS3_Pd.exit
 
-7:                                                ; preds = %bb.i
-  %8 = fcmp oeq double %i.ar, 0.000000e+00
-  br i1 %8, label %bb.j, label %bb.k
-
-bb.j:                                             ; preds = %7
-  %i.as = fcmp olt double %i.k, 0.000000e+00
-  %i.at = select i1 %i.as, double 1.000000e+00, double -1.000000e+00
-  br label %_ZN5Eigen14JacobiRotationIdE10makeGivensERKdS3_Pd.exit
-
-bb.k:                                             ; preds = %7
+bb.k:                                             ; preds = %bb.i
   %i.au = tail call noundef double @llvm.fabs.f64(double %i.ar)
   %i.av = tail call noundef double @llvm.fabs.f64(double %i.k)
   %i.aw = fcmp ogt double %i.au, %i.av
@@ -317,9 +308,9 @@ bb.m:                                             ; preds = %bb.k
   %i.bm = fmul double %i.bk, %i.bl
   br label %_ZN5Eigen14JacobiRotationIdE10makeGivensERKdS3_Pd.exit
 
-_ZN5Eigen14JacobiRotationIdE10makeGivensERKdS3_Pd.exit: ; preds = %bb.c, %bb.m, %bb.l, %bb.j, %4, %bb.h, %bb.g, %bb.e
-  %.sroa.077.0 = phi double [ %i.aq, %bb.h ], [ %i.bm, %bb.m ], [ 0.000000e+00, %bb.e ], [ %i.ag, %bb.g ], [ %6, %4 ], [ 0.000000e+00, %bb.j ], [ %i.bc, %bb.l ], [ 1.000000e+00, %bb.c ] ; 7 uses
-  %.sroa.13.0 = phi double [ %i.ao, %bb.h ], [ %i.bk, %bb.m ], [ %i.aa, %bb.e ], [ %i.ai, %bb.g ], [ 0.000000e+00, %4 ], [ %i.at, %bb.j ], [ %i.be, %bb.l ], [ 0.000000e+00, %bb.c ] ; 6 uses
+_ZN5Eigen14JacobiRotationIdE10makeGivensERKdS3_Pd.exit: ; preds = %bb.c, %bb.m, %bb.l, %bb.j, %bb.h, %bb.g, %bb.e
+  %.sroa.077.0 = phi double [ %i.aq, %bb.h ], [ %i.bc, %bb.l ], [ 0.000000e+00, %bb.e ], [ %i.ag, %bb.g ], [ %i.at, %bb.j ], [ %i.bm, %bb.m ], [ 1.000000e+00, %bb.c ] ; 7 uses
+  %.sroa.13.0 = phi double [ %i.ao, %bb.h ], [ %i.be, %bb.l ], [ %i.aa, %bb.e ], [ %i.ai, %bb.g ], [ 0.000000e+00, %bb.j ], [ %i.bk, %bb.m ], [ 0.000000e+00, %bb.c ] ; 6 uses
   %i.bn = sub i64 4, %1                           ; 4 uses
   %i.bo = fneg double %.sroa.13.0                 ; 4 uses
   %i.bp = fcmp une double %.sroa.077.0, 1.000000e+00 ; 2 uses
