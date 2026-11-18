@@ -204,16 +204,16 @@ bb.a:
   %0 = alloca %"class.llvm::cl::parser<(anonymous namespace)::RuleTy>::OptionInfo", align 8 ; 14 uses
   %1 = alloca %"class.llvm::cl::ValuesClass", align 8 ; 27 uses
   tail call void @_ZN4llvm2cl6OptionC2ENS0_18NumOccurrencesFlagENS0_12OptionHiddenE(ptr noundef nonnull align 8 dereferenceable(120) @_ZL28LoopInterchangeCostThreshold, i32 noundef 0, i32 noundef 0) #25
-  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL28LoopInterchangeCostThreshold, i64 120), align 8, !tbaa !982
+  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL28LoopInterchangeCostThreshold, i64 120), align 8, !tbaa !983
   store i64 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL28LoopInterchangeCostThreshold, i64 136), align 8
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN4llvm2cl11OptionValueIiEE, i64 16), ptr getelementptr inbounds nuw (i8, ptr @_ZL28LoopInterchangeCostThreshold, i64 128), align 8, !tbaa !21
   store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4llvm2cl3optIiLb0ENS0_6parserIiEEEE, i64 16), ptr @_ZL28LoopInterchangeCostThreshold, align 8, !tbaa !21
   store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN4llvm2cl6parserIiEE, i64 16), ptr getelementptr inbounds nuw (i8, ptr @_ZL28LoopInterchangeCostThreshold, i64 144), align 8, !tbaa !21
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) getelementptr inbounds nuw (i8, ptr @_ZL28LoopInterchangeCostThreshold, i64 152), i8 0, i64 32, i1 false)
   tail call void @_ZN4llvm2cl6Option9setArgStrENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(184) @_ZL28LoopInterchangeCostThreshold, ptr nonnull align 1 dereferenceable(27) @.str, i64 26) #25
-  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL28LoopInterchangeCostThreshold, i64 120), align 8, !tbaa !982
+  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL28LoopInterchangeCostThreshold, i64 120), align 8, !tbaa !983
   store i8 1, ptr getelementptr inbounds nuw (i8, ptr @_ZL28LoopInterchangeCostThreshold, i64 140), align 4, !tbaa !351
-  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL28LoopInterchangeCostThreshold, i64 136), align 8, !tbaa !983
+  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL28LoopInterchangeCostThreshold, i64 136), align 8, !tbaa !984
   %i.a = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZL28LoopInterchangeCostThreshold, i64 10), align 2
   %i.b = and i16 %i.a, -97
   %i.c = or disjoint i16 %i.b, 32
@@ -232,7 +232,7 @@ bb.a:
   tail call void @_ZN4llvm2cl6Option9setArgStrENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(184) @_ZL16MaxMemInstrRatio, ptr nonnull align 1 dereferenceable(37) @.str.3, i64 36) #25
   store i32 4, ptr getelementptr inbounds nuw (i8, ptr @_ZL16MaxMemInstrRatio, i64 120), align 8, !tbaa !82
   store i8 1, ptr getelementptr inbounds nuw (i8, ptr @_ZL16MaxMemInstrRatio, i64 140), align 4, !tbaa !352
-  store i32 4, ptr getelementptr inbounds nuw (i8, ptr @_ZL16MaxMemInstrRatio, i64 136), align 8, !tbaa !984
+  store i32 4, ptr getelementptr inbounds nuw (i8, ptr @_ZL16MaxMemInstrRatio, i64 136), align 8, !tbaa !985
   %i.e = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZL16MaxMemInstrRatio, i64 10), align 2
   %i.f = and i16 %i.e, -97
   %i.g = or disjoint i16 %i.f, 32
@@ -251,7 +251,7 @@ bb.a:
   tail call void @_ZN4llvm2cl6Option9setArgStrENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(184) @_ZL16MinLoopNestDepth, ptr nonnull align 1 dereferenceable(37) @.str.6, i64 36) #25
   store i32 2, ptr getelementptr inbounds nuw (i8, ptr @_ZL16MinLoopNestDepth, i64 120), align 8, !tbaa !82
   store i8 1, ptr getelementptr inbounds nuw (i8, ptr @_ZL16MinLoopNestDepth, i64 140), align 4, !tbaa !352
-  store i32 2, ptr getelementptr inbounds nuw (i8, ptr @_ZL16MinLoopNestDepth, i64 136), align 8, !tbaa !984
+  store i32 2, ptr getelementptr inbounds nuw (i8, ptr @_ZL16MinLoopNestDepth, i64 136), align 8, !tbaa !985
   %i.i = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZL16MinLoopNestDepth, i64 10), align 2
   %i.j = and i16 %i.i, -97
   %i.k = or disjoint i16 %i.j, 32
@@ -270,7 +270,7 @@ bb.a:
   tail call void @_ZN4llvm2cl6Option9setArgStrENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(184) @_ZL16MaxLoopNestDepth, ptr nonnull align 1 dereferenceable(37) @.str.9, i64 36) #25
   store i32 10, ptr getelementptr inbounds nuw (i8, ptr @_ZL16MaxLoopNestDepth, i64 120), align 8, !tbaa !82
   store i8 1, ptr getelementptr inbounds nuw (i8, ptr @_ZL16MaxLoopNestDepth, i64 140), align 4, !tbaa !352
-  store i32 10, ptr getelementptr inbounds nuw (i8, ptr @_ZL16MaxLoopNestDepth, i64 136), align 8, !tbaa !984
+  store i32 10, ptr getelementptr inbounds nuw (i8, ptr @_ZL16MaxLoopNestDepth, i64 136), align 8, !tbaa !985
   %i.m = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZL16MaxLoopNestDepth, i64 10), align 2
   %i.n = and i16 %i.m, -97
   %i.o = or disjoint i16 %i.n, 32
@@ -281,10 +281,10 @@ bb.a:
   %i.p = tail call i32 @__cxa_atexit(ptr nonnull @_ZN4llvm2cl3optIjLb0ENS0_6parserIjEEED2Ev, ptr nonnull @_ZL16MaxLoopNestDepth, ptr nonnull @__dso_handle) #25 ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #25
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
-  store ptr %i.q, ptr %1, align 8, !tbaa !33, !alias.scope !985
+  store ptr %i.q, ptr %1, align 8, !tbaa !33, !alias.scope !986
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 12
-  store i32 4, ptr %i.s, align 4, !tbaa !76, !alias.scope !985
+  store i32 4, ptr %i.s, align 4, !tbaa !76, !alias.scope !986
   store ptr @.str.14, ptr %i.q, align 8
   %.sroa.453.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 24
   store i64 5, ptr %.sroa.453.0..sroa_idx.i, align 8
@@ -324,12 +324,12 @@ bb.a:
   store ptr @.str.21, ptr %.sroa.25.0..sroa_idx.i, align 8
   %.sroa.2658.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 168
   store i64 74, ptr %.sroa.2658.0..sroa_idx.i, align 8
-  store i32 4, ptr %i.r, align 8, !tbaa !75, !alias.scope !985
+  store i32 4, ptr %i.r, align 8, !tbaa !75, !alias.scope !986
   call void @_ZN4llvm2cl6OptionC2ENS0_18NumOccurrencesFlagENS0_12OptionHiddenE(ptr noundef nonnull align 8 dereferenceable(120) @_ZL15Profitabilities, i32 noundef 1, i32 noundef 0) #25
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(49) getelementptr inbounds nuw (i8, ptr @_ZL15Profitabilities, i64 120), i8 0, i64 49, i1 false)
   store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4llvm2cl4listIN12_GLOBAL__N_16RuleTyEbNS0_6parserIS3_EEEE, i64 16), ptr @_ZL15Profitabilities, align 8, !tbaa !21
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) getelementptr inbounds nuw (i8, ptr @_ZL15Profitabilities, i64 176), i8 0, i64 24, i1 false)
-  store ptr @_ZL15Profitabilities, ptr getelementptr inbounds nuw (i8, ptr @_ZL15Profitabilities, i64 208), align 8, !tbaa !986
+  store ptr @_ZL15Profitabilities, ptr getelementptr inbounds nuw (i8, ptr @_ZL15Profitabilities, i64 208), align 8, !tbaa !987
   store ptr getelementptr inbounds nuw inrange(-16, 64) (i8, ptr @_ZTVN4llvm2cl6parserIN12_GLOBAL__N_16RuleTyEEE, i64 16), ptr getelementptr inbounds nuw (i8, ptr @_ZL15Profitabilities, i64 200), align 8, !tbaa !21
   store ptr getelementptr inbounds nuw (i8, ptr @_ZL15Profitabilities, i64 232), ptr getelementptr inbounds nuw (i8, ptr @_ZL15Profitabilities, i64 216), align 8, !tbaa !33
   store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL15Profitabilities, i64 224), align 8, !tbaa !75
@@ -408,7 +408,7 @@ _ZNSt6vectorIN12_GLOBAL__N_16RuleTyESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gn
   br label %_ZNSt6vectorIN12_GLOBAL__N_16RuleTyESaIS1_EE9push_backERKS1_.exit.i.i.i
 
 _ZNSt6vectorIN12_GLOBAL__N_16RuleTyESaIS1_EE9push_backERKS1_.exit.i.i.i: ; preds = %_ZNSt6vectorIN12_GLOBAL__N_16RuleTyESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i.i.i, %bb.b
-  %i.as = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZL15Profitabilities, i64 152), align 8, !tbaa !987 ; 7 uses
+  %i.as = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZL15Profitabilities, i64 152), align 8, !tbaa !988 ; 7 uses
   %i.at = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZL15Profitabilities, i64 160), align 8, !tbaa !42
   %.not.i.i.i.i.i = icmp eq ptr %i.as, %i.at
   br i1 %.not.i.i.i.i.i, label %bb.h, label %bb.g
@@ -419,9 +419,9 @@ bb.g:                                             ; preds = %_ZNSt6vectorIN12_GL
   %.sroa.6.8..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.as, i64 12
   store i8 1, ptr %.sroa.6.8..sroa_idx.i.i.i, align 4
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN4llvm2cl15OptionValueCopyIN12_GLOBAL__N_16RuleTyEEE, i64 16), ptr %i.as, align 8, !tbaa !21
-  %i.av = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZL15Profitabilities, i64 152), align 8, !tbaa !987
+  %i.av = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZL15Profitabilities, i64 152), align 8, !tbaa !988
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 16
-  store ptr %i.aw, ptr getelementptr inbounds nuw (i8, ptr @_ZL15Profitabilities, i64 152), align 8, !tbaa !987
+  store ptr %i.aw, ptr getelementptr inbounds nuw (i8, ptr @_ZL15Profitabilities, i64 152), align 8, !tbaa !988
   br label %_ZN4llvm2cl12list_storageIN12_GLOBAL__N_16RuleTyEbE8addValueIS3_EEvRKT_b.exit.i.i
 
 bb.h:                                             ; preds = %_ZNSt6vectorIN12_GLOBAL__N_16RuleTyESaIS1_EE9push_backERKS1_.exit.i.i.i
@@ -459,11 +459,11 @@ _ZNKSt6vectorIN4llvm2cl11OptionValueIN12_GLOBAL__N_16RuleTyEEESaIS5_EE12_M_check
 .lr.ph.i.i.i.i.i.i.i.i.i:                         ; preds = %_ZNKSt6vectorIN4llvm2cl11OptionValueIN12_GLOBAL__N_16RuleTyEEESaIS5_EE12_M_check_lenEmPKc.exit.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i.i
   %.03.i.i.i.i.i.i.i.i.i = phi ptr [ %i.bo, %.lr.ph.i.i.i.i.i.i.i.i.i ], [ %i.bi, %_ZNKSt6vectorIN4llvm2cl11OptionValueIN12_GLOBAL__N_16RuleTyEEESaIS5_EE12_M_check_lenEmPKc.exit.i.i.i.i.i.i ] ; 3 uses
   %.092.i.i.i.i.i.i.i.i.i = phi ptr [ %i.bn, %.lr.ph.i.i.i.i.i.i.i.i.i ], [ %.val.i.i.i.i.i.i, %_ZNKSt6vectorIN4llvm2cl11OptionValueIN12_GLOBAL__N_16RuleTyEEESaIS5_EE12_M_check_lenEmPKc.exit.i.i.i.i.i.i ] ; 2 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !988)
+  call void @llvm.experimental.noalias.scope.decl(metadata !989)
   %i.bl = getelementptr inbounds nuw i8, ptr %.03.i.i.i.i.i.i.i.i.i, i64 8
   %i.bm = getelementptr inbounds nuw i8, ptr %.092.i.i.i.i.i.i.i.i.i, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(5) %i.bl, ptr noundef nonnull readonly align 8 dereferenceable(5) %i.bm, i64 5, i1 false), !alias.scope !989
-  store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN4llvm2cl15OptionValueCopyIN12_GLOBAL__N_16RuleTyEEE, i64 16), ptr %.03.i.i.i.i.i.i.i.i.i, align 8, !tbaa !21, !alias.scope !990
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(5) %i.bl, ptr noundef nonnull readonly align 8 dereferenceable(5) %i.bm, i64 5, i1 false), !alias.scope !990
+  store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN4llvm2cl15OptionValueCopyIN12_GLOBAL__N_16RuleTyEEE, i64 16), ptr %.03.i.i.i.i.i.i.i.i.i, align 8, !tbaa !21, !alias.scope !991
   %i.bn = getelementptr inbounds nuw i8, ptr %.092.i.i.i.i.i.i.i.i.i, i64 16 ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %.03.i.i.i.i.i.i.i.i.i, i64 16 ; 2 uses
   %.not.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.bn, %i.as
@@ -484,7 +484,7 @@ bb.j:                                             ; preds = %_ZNSt6vectorIN4llvm
 
 _ZNSt6vectorIN4llvm2cl11OptionValueIN12_GLOBAL__N_16RuleTyEEESaIS5_EE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i.i.i.i.i: ; preds = %bb.j, %_ZNSt6vectorIN4llvm2cl11OptionValueIN12_GLOBAL__N_16RuleTyEEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit26.i.i.i.i.i.i
   store ptr %i.bi, ptr getelementptr inbounds nuw (i8, ptr @_ZL15Profitabilities, i64 144), align 8, !tbaa !41
-  store ptr %i.bp, ptr getelementptr inbounds nuw (i8, ptr @_ZL15Profitabilities, i64 152), align 8, !tbaa !987
+  store ptr %i.bp, ptr getelementptr inbounds nuw (i8, ptr @_ZL15Profitabilities, i64 152), align 8, !tbaa !988
   %i.bt = getelementptr inbounds nuw [16 x i8], ptr %i.bi, i64 %i.bg
   store ptr %i.bt, ptr getelementptr inbounds nuw (i8, ptr @_ZL15Profitabilities, i64 160), align 8, !tbaa !42
   br label %_ZN4llvm2cl12list_storageIN12_GLOBAL__N_16RuleTyEbE8addValueIS3_EEvRKT_b.exit.i.i
@@ -551,7 +551,7 @@ _ZNSt6vectorIN12_GLOBAL__N_16RuleTyESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gn
   br label %_ZNSt6vectorIN12_GLOBAL__N_16RuleTyESaIS1_EE9push_backERKS1_.exit.i.i.1.i
 
 _ZNSt6vectorIN12_GLOBAL__N_16RuleTyESaIS1_EE9push_backERKS1_.exit.i.i.1.i: ; preds = %_ZNSt6vectorIN12_GLOBAL__N_16RuleTyESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i.i.1.i, %bb.k
-  %i.cr = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZL15Profitabilities, i64 152), align 8, !tbaa !987 ; 7 uses
+  %i.cr = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZL15Profitabilities, i64 152), align 8, !tbaa !988 ; 7 uses
   %i.cs = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZL15Profitabilities, i64 160), align 8, !tbaa !42
   %.not.i.i.i.i.1.i = icmp eq ptr %i.cr, %i.cs
   br i1 %.not.i.i.i.i.1.i, label %bb.p, label %bb.o
@@ -562,9 +562,9 @@ bb.o:                                             ; preds = %_ZNSt6vectorIN12_GL
   %.sroa.6.8..sroa_idx.i.i.1.i = getelementptr inbounds nuw i8, ptr %i.cr, i64 12
   store i8 1, ptr %.sroa.6.8..sroa_idx.i.i.1.i, align 4
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN4llvm2cl15OptionValueCopyIN12_GLOBAL__N_16RuleTyEEE, i64 16), ptr %i.cr, align 8, !tbaa !21
-  %i.cu = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZL15Profitabilities, i64 152), align 8, !tbaa !987
+  %i.cu = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZL15Profitabilities, i64 152), align 8, !tbaa !988
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cu, i64 16
-  store ptr %i.cv, ptr getelementptr inbounds nuw (i8, ptr @_ZL15Profitabilities, i64 152), align 8, !tbaa !987
+  store ptr %i.cv, ptr getelementptr inbounds nuw (i8, ptr @_ZL15Profitabilities, i64 152), align 8, !tbaa !988
   br label %_ZN4llvm2cl12list_storageIN12_GLOBAL__N_16RuleTyEbE8addValueIS3_EEvRKT_b.exit.i.1.i
 
 bb.p:                                             ; preds = %_ZNSt6vectorIN12_GLOBAL__N_16RuleTyESaIS1_EE9push_backERKS1_.exit.i.i.1.i
@@ -598,10 +598,11 @@ _ZNKSt6vectorIN4llvm2cl11OptionValueIN12_GLOBAL__N_16RuleTyEEESaIS5_EE12_M_check
 .lr.ph.i.i.i.i.i.i.i.i.1.i:                       ; preds = %_ZNKSt6vectorIN4llvm2cl11OptionValueIN12_GLOBAL__N_16RuleTyEEESaIS5_EE12_M_check_lenEmPKc.exit.i.i.i.i.i.1.i, %.lr.ph.i.i.i.i.i.i.i.i.1.i
   %.03.i.i.i.i.i.i.i.i.1.i = phi ptr [ %i.dn, %.lr.ph.i.i.i.i.i.i.i.i.1.i ], [ %i.dh, %_ZNKSt6vectorIN4llvm2cl11OptionValueIN12_GLOBAL__N_16RuleTyEEESaIS5_EE12_M_check_lenEmPKc.exit.i.i.i.i.i.1.i ] ; 3 uses
   %.092.i.i.i.i.i.i.i.i.1.i = phi ptr [ %i.dm, %.lr.ph.i.i.i.i.i.i.i.i.1.i ], [ %.val.i.i.i.i.i.1.i, %_ZNKSt6vectorIN4llvm2cl11OptionValueIN12_GLOBAL__N_16RuleTyEEESaIS5_EE12_M_check_lenEmPKc.exit.i.i.i.i.i.1.i ] ; 2 uses
+  call void @llvm.experimental.noalias.scope.decl(metadata !992)
   %i.dk = getelementptr inbounds nuw i8, ptr %.03.i.i.i.i.i.i.i.i.1.i, i64 8
   %i.dl = getelementptr inbounds nuw i8, ptr %.092.i.i.i.i.i.i.i.i.1.i, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(5) %i.dk, ptr noundef nonnull readonly align 8 dereferenceable(5) %i.dl, i64 5, i1 false), !alias.scope !991
-  store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN4llvm2cl15OptionValueCopyIN12_GLOBAL__N_16RuleTyEEE, i64 16), ptr %.03.i.i.i.i.i.i.i.i.1.i, align 8, !tbaa !21, !alias.scope !990
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(5) %i.dk, ptr noundef nonnull readonly align 8 dereferenceable(5) %i.dl, i64 5, i1 false), !alias.scope !993
+  store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN4llvm2cl15OptionValueCopyIN12_GLOBAL__N_16RuleTyEEE, i64 16), ptr %.03.i.i.i.i.i.i.i.i.1.i, align 8, !tbaa !21, !alias.scope !994
   %i.dm = getelementptr inbounds nuw i8, ptr %.092.i.i.i.i.i.i.i.i.1.i, i64 16 ; 2 uses
   %i.dn = getelementptr inbounds nuw i8, ptr %.03.i.i.i.i.i.i.i.i.1.i, i64 16 ; 2 uses
   %.not.i.i.i.i.i.i.i.i.1.i = icmp eq ptr %i.dm, %i.cr
@@ -622,7 +623,7 @@ bb.q:                                             ; preds = %_ZNSt6vectorIN4llvm
 
 _ZNSt6vectorIN4llvm2cl11OptionValueIN12_GLOBAL__N_16RuleTyEEESaIS5_EE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i.i.i.i.1.i: ; preds = %bb.q, %_ZNSt6vectorIN4llvm2cl11OptionValueIN12_GLOBAL__N_16RuleTyEEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit26.i.i.i.i.i.1.i
   store ptr %i.dh, ptr getelementptr inbounds nuw (i8, ptr @_ZL15Profitabilities, i64 144), align 8, !tbaa !41
-  store ptr %i.do, ptr getelementptr inbounds nuw (i8, ptr @_ZL15Profitabilities, i64 152), align 8, !tbaa !987
+  store ptr %i.do, ptr getelementptr inbounds nuw (i8, ptr @_ZL15Profitabilities, i64 152), align 8, !tbaa !988
   %i.ds = getelementptr inbounds nuw [16 x i8], ptr %i.dh, i64 %i.df
   store ptr %i.ds, ptr getelementptr inbounds nuw (i8, ptr @_ZL15Profitabilities, i64 160), align 8, !tbaa !42
   br label %_ZN4llvm2cl12list_storageIN12_GLOBAL__N_16RuleTyEbE8addValueIS3_EEvRKT_b.exit.i.1.i
@@ -664,7 +665,7 @@ bb.r:                                             ; preds = %_ZN4llvm2cl6parserI
   store i64 %.sroa.2.0.copyload.i.i.i.i.i.i.i.i.i.i, ptr %.sroa.2.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !tbaa !207
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN4llvm2cl15OptionValueCopyIN12_GLOBAL__N_16RuleTyEEE, i64 16), ptr %i.dw, align 8, !tbaa !21
   store i8 1, ptr %i.dx, align 4, !tbaa !214
-  store i32 %.val.i.i.i.i.i.i.i.i.i.i, ptr %i.dy, align 8, !tbaa !992
+  store i32 %.val.i.i.i.i.i.i.i.i.i.i, ptr %i.dy, align 8, !tbaa !995
   %i.ec = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL15Profitabilities, i64 224), align 8, !tbaa !75 ; 2 uses
   %i.ed = zext i32 %i.ec to i64                   ; 2 uses
   %i.ee = add nuw nsw i64 %i.ed, 1                ; 2 uses
@@ -739,7 +740,7 @@ __cxx_global_var_init.11.exit:                    ; preds = %_ZN4llvm2cl4listIN1
   call void @_ZN4llvm2cl6Option9setArgStrENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(184) @_ZL22EnableReduction2Memory, ptr nonnull align 1 dereferenceable(34) @.str.23, i64 33) #25
   store i8 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL22EnableReduction2Memory, i64 120), align 8, !tbaa !318
   store i8 1, ptr getelementptr inbounds nuw (i8, ptr @_ZL22EnableReduction2Memory, i64 137), align 1, !tbaa !354
-  store i8 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL22EnableReduction2Memory, i64 136), align 8, !tbaa !993
+  store i8 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL22EnableReduction2Memory, i64 136), align 8, !tbaa !996
   %i.ey = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZL22EnableReduction2Memory, i64 10), align 2
   %i.ez = and i16 %i.ey, -97
   %i.fa = or disjoint i16 %i.ez, 32
@@ -1142,19 +1143,22 @@ begin_hunk_1_@llvm.umax.i32
 !976 = distinct !{!976, !92}
 !977 = distinct !{!977, i1 true, !"_ZSt19__relocate_object_aIN4llvm2cl11OptionValueIN12_GLOBAL__N_16RuleTyEEES5_SaIS5_EEvPT_PT0_RT1_"}
 !978 = distinct !{!978, !977, !"_ZSt19__relocate_object_aIN4llvm2cl11OptionValueIN12_GLOBAL__N_16RuleTyEEES5_SaIS5_EEvPT_PT0_RT1_: argument 1:It1"}
-!979 = !{!"_ZTSN4llvm2cl15OptionValueBaseIiLb0EEE", !350, i64 0}
-!980 = !{!"_ZTSN4llvm2cl11OptionValueIiEE", !979, i64 0}
-!981 = !{!"_ZTSN4llvm2cl11opt_storageIiLb0ELb0EEE", !17, i64 0, !980, i64 8}
-!982 = !{!981, !17, i64 0}
-!983 = !{!350, !17, i64 8}
-!984 = !{!78, !17, i64 8}
-!985 = !{!972}
-!986 = !{!203, !203, i64 0}
-!987 = !{!40, !39, i64 8}
-!988 = !{!974}
-!989 = !{!975, !974}
-!990 = !{!975}
-!991 = !{!975, !978}
-!992 = !{!213, !16, i64 8}
-!993 = !{!314, !26, i64 8}
+!979 = distinct !{!979, !977, !"_ZSt19__relocate_object_aIN4llvm2cl11OptionValueIN12_GLOBAL__N_16RuleTyEEES5_SaIS5_EEvPT_PT0_RT1_: argument 0:It1"}
+!980 = !{!"_ZTSN4llvm2cl15OptionValueBaseIiLb0EEE", !350, i64 0}
+!981 = !{!"_ZTSN4llvm2cl11OptionValueIiEE", !980, i64 0}
+!982 = !{!"_ZTSN4llvm2cl11opt_storageIiLb0ELb0EEE", !17, i64 0, !981, i64 8}
+!983 = !{!982, !17, i64 0}
+!984 = !{!350, !17, i64 8}
+!985 = !{!78, !17, i64 8}
+!986 = !{!972}
+!987 = !{!203, !203, i64 0}
+!988 = !{!40, !39, i64 8}
+!989 = !{!974}
+!990 = !{!975, !974}
+!991 = !{!975}
+!992 = !{!978}
+!993 = !{!979, !978}
+!994 = !{!979}
+!995 = !{!213, !16, i64 8}
+!996 = !{!314, !26, i64 8}
 end_hunk_1

@@ -205,9 +205,10 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.c, ptr noundef nonnull align 8 dereferenceable(40) %0, i64 40, i1 false)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !2297)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !2296)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  store ptr %1, ptr %i.b, align 8, !noalias !2298
+  store ptr %1, ptr %i.b, align 8, !noalias !2297
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !2298)
   %.sroa.0.0.copyload25.i = load i64, ptr %i.c, align 8, !alias.scope !2299 ; 2 uses
   store i64 -1, ptr %i.c, align 8, !alias.scope !2300
   %.not6.i = icmp eq i64 %.sroa.0.0.copyload25.i, -1
@@ -221,15 +222,15 @@ bb.c:                                             ; preds = %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.b
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !2298
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !2297
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.4.0..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(32) %i.f, i64 32, i1 false)
-  store i64 %.sroa.0.0.copyload25.i, ptr %i.a, align 8, !noalias !2298
+  store i64 %.sroa.0.0.copyload25.i, ptr %i.a, align 8, !noalias !2297
   invoke void @_RNvXs1_NtNtNtCskKLDkoKarTP_4core3ops8function5implsQNCINvNvNtNtNtNtBb_4iter6traits8iterator8Iterator8for_each4callINtNtCsjouRnuJWSBB_5yamux5frame5FrameuENCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB2A_3VecB1O_E14extend_trustedINtNtNtB11_8adapters5chain5ChainINtNtBb_6option8IntoIterB1O_EB42_EE0E0INtB7_5FnMutTuB1O_EE8call_mutCs2Bxje7pdMIr_13libp2p_server(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.b, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(40) %i.a)
-          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option8IntoIterINtNtCsjouRnuJWSBB_5yamux5frame5FrameuEEECs2Bxje7pdMIr_13libp2p_server.exit.loopexit.i unwind label %bb.c, !noalias !2297
+          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option8IntoIterINtNtCsjouRnuJWSBB_5yamux5frame5FrameuEEECs2Bxje7pdMIr_13libp2p_server.exit.loopexit.i unwind label %bb.c, !noalias !2296
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option8IntoIterINtNtCsjouRnuJWSBB_5yamux5frame5FrameuEEECs2Bxje7pdMIr_13libp2p_server.exit.loopexit.i: ; preds = %.lr.ph.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !2298
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !2297
   br label %bb.f
 
 bb.d:                                             ; preds = %bb.c
@@ -632,21 +633,21 @@ begin_hunk_1_@llvm.umin.i64
 !2284 = distinct !{!2284, !2283, !"_RINvYINtNtCskKLDkoKarTP_4core6option8IntoIterINtNtCsjouRnuJWSBB_5yamux5frame5FrameuEENtNtNtNtB8_4iter6traits8iterator8Iterator4folduQNCINvNvB1l_8for_each4callBH_NCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB2I_3VecBH_E14extend_trustedINtNtNtB1r_8adapters5chain5ChainB3_B3_EE0E0ECs2Bxje7pdMIr_13libp2p_server: argument 0"}
 !2285 = distinct !{!2285, !2283, !"_RINvYINtNtCskKLDkoKarTP_4core6option8IntoIterINtNtCsjouRnuJWSBB_5yamux5frame5FrameuEENtNtNtNtB8_4iter6traits8iterator8Iterator4folduQNCINvNvB1l_8for_each4callBH_NCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB2I_3VecBH_E14extend_trustedINtNtNtB1r_8adapters5chain5ChainB3_B3_EE0E0ECs2Bxje7pdMIr_13libp2p_server: argument 1"}
 !2286 = distinct !{!2286, i1 true, !"_RNvXsy_NtCskKLDkoKarTP_4core6optionINtB5_8IntoIterINtNtCsjouRnuJWSBB_5yamux5frame5FrameuEENtNtNtNtB7_4iter6traits8iterator8Iterator4nextCs2Bxje7pdMIr_13libp2p_server"}
-!2287 = distinct !{!2287, !2286, !"_RNvXsy_NtCskKLDkoKarTP_4core6optionINtB5_8IntoIterINtNtCsjouRnuJWSBB_5yamux5frame5FrameuEENtNtNtNtB7_4iter6traits8iterator8Iterator4nextCs2Bxje7pdMIr_13libp2p_server: argument 1"}
-!2288 = distinct !{!2288, i1 true, !"_RNvXsy_NtCskKLDkoKarTP_4core6optionINtB5_8IntoIterINtNtCsjouRnuJWSBB_5yamux5frame5FrameuEENtNtNtNtB7_4iter6traits8iterator8Iterator4nextCs2Bxje7pdMIr_13libp2p_server"}
-!2289 = distinct !{!2289, !2288, !"_RNvXsy_NtCskKLDkoKarTP_4core6optionINtB5_8IntoIterINtNtCsjouRnuJWSBB_5yamux5frame5FrameuEENtNtNtNtB7_4iter6traits8iterator8Iterator4nextCs2Bxje7pdMIr_13libp2p_server: argument 0:pre.rot"}
-!2290 = distinct !{!2290, i1 true, !"_RINvYINtNtCskKLDkoKarTP_4core6option8IntoIterINtNtCsjouRnuJWSBB_5yamux5frame5FrameuEENtNtNtNtB8_4iter6traits8iterator8Iterator4folduNCINvNvB1l_8for_each4callBH_NCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB2H_3VecBH_E14extend_trustedINtNtNtB1r_8adapters5chain5ChainB3_B3_EE0E0ECs2Bxje7pdMIr_13libp2p_server"}
-!2291 = distinct !{!2291, !2290, !"_RINvYINtNtCskKLDkoKarTP_4core6option8IntoIterINtNtCsjouRnuJWSBB_5yamux5frame5FrameuEENtNtNtNtB8_4iter6traits8iterator8Iterator4folduNCINvNvB1l_8for_each4callBH_NCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB2H_3VecBH_E14extend_trustedINtNtNtB1r_8adapters5chain5ChainB3_B3_EE0E0ECs2Bxje7pdMIr_13libp2p_server: argument 1"}
-!2292 = distinct !{!2292, !2290, !"_RINvYINtNtCskKLDkoKarTP_4core6option8IntoIterINtNtCsjouRnuJWSBB_5yamux5frame5FrameuEENtNtNtNtB8_4iter6traits8iterator8Iterator4folduNCINvNvB1l_8for_each4callBH_NCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB2H_3VecBH_E14extend_trustedINtNtNtB1r_8adapters5chain5ChainB3_B3_EE0E0ECs2Bxje7pdMIr_13libp2p_server: argument 0"}
-!2293 = distinct !{!2293, i1 true, !"_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8for_each4callINtNtCsjouRnuJWSBB_5yamux5frame5FrameuENCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB21_3VecB1f_E14extend_trustedINtNtNtBc_8adapters5chain5ChainINtNtBe_6option8IntoIterB1f_EB3s_EE0E0Cs2Bxje7pdMIr_13libp2p_server"}
-!2294 = distinct !{!2294, !2293, !"_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8for_each4callINtNtCsjouRnuJWSBB_5yamux5frame5FrameuENCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB21_3VecB1f_E14extend_trustedINtNtNtBc_8adapters5chain5ChainINtNtBe_6option8IntoIterB1f_EB3s_EE0E0Cs2Bxje7pdMIr_13libp2p_server: argument 0"}
-!2295 = distinct !{!2295, i1 true, !"_RNCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB8_3VecINtNtCsjouRnuJWSBB_5yamux5frame5FrameuEE14extend_trustedINtNtNtNtCskKLDkoKarTP_4core4iter8adapters5chain5ChainINtNtB1L_6option8IntoIterBI_EB2u_EE0Cs2Bxje7pdMIr_13libp2p_server"}
-!2296 = distinct !{!2296, !2295, !"_RNCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB8_3VecINtNtCsjouRnuJWSBB_5yamux5frame5FrameuEE14extend_trustedINtNtNtNtCskKLDkoKarTP_4core4iter8adapters5chain5ChainINtNtB1L_6option8IntoIterBI_EB2u_EE0Cs2Bxje7pdMIr_13libp2p_server: argument 0"}
-!2297 = !{!2284}
-!2298 = !{!2284, !2285}
-!2299 = !{!2289, !2287, !2284}
-!2300 = !{!2287, !2284}
-!2301 = !{!2296, !2294, !2292, !2291}
+!2287 = distinct !{!2287, !2286, !"_RNvXsy_NtCskKLDkoKarTP_4core6optionINtB5_8IntoIterINtNtCsjouRnuJWSBB_5yamux5frame5FrameuEENtNtNtNtB7_4iter6traits8iterator8Iterator4nextCs2Bxje7pdMIr_13libp2p_server: argument 0:pre.rot"}
+!2288 = distinct !{!2288, !2286, !"_RNvXsy_NtCskKLDkoKarTP_4core6optionINtB5_8IntoIterINtNtCsjouRnuJWSBB_5yamux5frame5FrameuEENtNtNtNtB7_4iter6traits8iterator8Iterator4nextCs2Bxje7pdMIr_13libp2p_server: argument 1:pre.rot"}
+!2289 = distinct !{!2289, i1 true, !"_RINvYINtNtCskKLDkoKarTP_4core6option8IntoIterINtNtCsjouRnuJWSBB_5yamux5frame5FrameuEENtNtNtNtB8_4iter6traits8iterator8Iterator4folduNCINvNvB1l_8for_each4callBH_NCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB2H_3VecBH_E14extend_trustedINtNtNtB1r_8adapters5chain5ChainB3_B3_EE0E0ECs2Bxje7pdMIr_13libp2p_server"}
+!2290 = distinct !{!2290, !2289, !"_RINvYINtNtCskKLDkoKarTP_4core6option8IntoIterINtNtCsjouRnuJWSBB_5yamux5frame5FrameuEENtNtNtNtB8_4iter6traits8iterator8Iterator4folduNCINvNvB1l_8for_each4callBH_NCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB2H_3VecBH_E14extend_trustedINtNtNtB1r_8adapters5chain5ChainB3_B3_EE0E0ECs2Bxje7pdMIr_13libp2p_server: argument 1"}
+!2291 = distinct !{!2291, !2289, !"_RINvYINtNtCskKLDkoKarTP_4core6option8IntoIterINtNtCsjouRnuJWSBB_5yamux5frame5FrameuEENtNtNtNtB8_4iter6traits8iterator8Iterator4folduNCINvNvB1l_8for_each4callBH_NCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB2H_3VecBH_E14extend_trustedINtNtNtB1r_8adapters5chain5ChainB3_B3_EE0E0ECs2Bxje7pdMIr_13libp2p_server: argument 0"}
+!2292 = distinct !{!2292, i1 true, !"_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8for_each4callINtNtCsjouRnuJWSBB_5yamux5frame5FrameuENCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB21_3VecB1f_E14extend_trustedINtNtNtBc_8adapters5chain5ChainINtNtBe_6option8IntoIterB1f_EB3s_EE0E0Cs2Bxje7pdMIr_13libp2p_server"}
+!2293 = distinct !{!2293, !2292, !"_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8for_each4callINtNtCsjouRnuJWSBB_5yamux5frame5FrameuENCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB21_3VecB1f_E14extend_trustedINtNtNtBc_8adapters5chain5ChainINtNtBe_6option8IntoIterB1f_EB3s_EE0E0Cs2Bxje7pdMIr_13libp2p_server: argument 0"}
+!2294 = distinct !{!2294, i1 true, !"_RNCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB8_3VecINtNtCsjouRnuJWSBB_5yamux5frame5FrameuEE14extend_trustedINtNtNtNtCskKLDkoKarTP_4core4iter8adapters5chain5ChainINtNtB1L_6option8IntoIterBI_EB2u_EE0Cs2Bxje7pdMIr_13libp2p_server"}
+!2295 = distinct !{!2295, !2294, !"_RNCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB8_3VecINtNtCsjouRnuJWSBB_5yamux5frame5FrameuEE14extend_trustedINtNtNtNtCskKLDkoKarTP_4core4iter8adapters5chain5ChainINtNtB1L_6option8IntoIterBI_EB2u_EE0Cs2Bxje7pdMIr_13libp2p_server: argument 0"}
+!2296 = !{!2284}
+!2297 = !{!2284, !2285}
+!2298 = !{!2287}
+!2299 = !{!2287, !2288, !2284}
+!2300 = !{!2288, !2284}
+!2301 = !{!2295, !2293, !2291, !2290}
 !2302 = distinct !{!2302, i1 true, !"_RINvNtCsjYje7j88m19_18asynchronous_codec12framed_write14framed_write_2INtNtB4_4fuse4FuseQNtNtCs6b9j1MKPRPC_12libp2p_swarm6stream6StreamINtCsh4z5MoDg5zc_11prost_codec5CodecNtNtNtNtCsiQsUuLk7hWW_14libp2p_autonat2v15proto7structs7MessageEEECs2Bxje7pdMIr_13libp2p_server"}
 !2303 = distinct !{!2303, !2302, !"_RINvNtCsjYje7j88m19_18asynchronous_codec12framed_write14framed_write_2INtNtB4_4fuse4FuseQNtNtCs6b9j1MKPRPC_12libp2p_swarm6stream6StreamINtCsh4z5MoDg5zc_11prost_codec5CodecNtNtNtNtCsiQsUuLk7hWW_14libp2p_autonat2v15proto7structs7MessageEEECs2Bxje7pdMIr_13libp2p_server: argument 2"}
 !2304 = distinct !{!2304, !2302, !"_RINvNtCsjYje7j88m19_18asynchronous_codec12framed_write14framed_write_2INtNtB4_4fuse4FuseQNtNtCs6b9j1MKPRPC_12libp2p_swarm6stream6StreamINtCsh4z5MoDg5zc_11prost_codec5CodecNtNtNtNtCsiQsUuLk7hWW_14libp2p_autonat2v15proto7structs7MessageEEECs2Bxje7pdMIr_13libp2p_server: argument 1"}

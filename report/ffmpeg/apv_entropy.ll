@@ -174,7 +174,7 @@ flush_put_bits.exit:                              ; preds = %.thread301, %.prehe
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bj, i64 8
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bj, i64 4
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bj, i64 1 ; 2 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !44)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !48)
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(12) %i.bj, i8 0, i64 12, i1 false)
   %i.bo = load i32, ptr %i.a, align 16, !tbaa !13
   %i.bp = tail call i32 @llvm.bswap.i32(i32 %i.bo)
@@ -182,10 +182,10 @@ flush_put_bits.exit:                              ; preds = %.thread301, %.prehe
   %i.br = zext nneg i32 %i.bq to i64
   %i.bs = getelementptr inbounds nuw [4 x i8], ptr %i.aw, i64 %i.br ; 3 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bs, i64 3
-  %i.bu = load i8, ptr %i.bt, align 1, !tbaa !14, !alias.scope !44
+  %i.bu = load i8, ptr %i.bt, align 1, !tbaa !14, !alias.scope !48
   %.not.i203 = icmp eq i8 %i.bu, 0
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bs, i64 2
-  %i.bw = load i8, ptr %i.bv, align 2, !tbaa !11, !alias.scope !44
+  %i.bw = load i8, ptr %i.bv, align 2, !tbaa !11, !alias.scope !48
   %i.bx = tail call i8 @llvm.umin.i8(i8 %i.bw, i8 -120)
   %i.by = zext i8 %i.bx to i32                    ; 5 uses
   br i1 %.not.i203, label %bb.p, label %bb.n
@@ -204,7 +204,7 @@ bb.n:                                             ; preds = %flush_put_bits.exit
   %.1.i.i208 = select i1 %.not.i.i206, i32 0, i32 8
   %i.cg = zext nneg i32 %.110.i.i207 to i64
   %i.ch = getelementptr inbounds nuw i8, ptr @ff_log2_tab, i64 %i.cg
-  %i.ci = load i8, ptr %i.ch, align 1, !tbaa !13, !noalias !45
+  %i.ci = load i8, ptr %i.ch, align 1, !tbaa !13, !noalias !49
   %i.cj = zext i8 %i.ci to i32
   %i.ck = add nuw nsw i32 %.1.i.i208, %i.cj       ; 3 uses
   %i.cl = icmp eq i32 %i.ck, 15
@@ -220,7 +220,7 @@ bb.o:                                             ; preds = %bb.n
   %i.cq = lshr i32 %i.co, 3
   %i.cr = zext nneg i32 %i.cq to i64
   %i.cs = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.cr
-  %i.ct = load i32, ptr %i.cs, align 1, !tbaa !13, !noalias !44
+  %i.ct = load i32, ptr %i.cs, align 1, !tbaa !13, !noalias !48
   %i.cu = tail call i32 @llvm.bswap.i32(i32 %i.ct)
   %i.cv = and i32 %i.co, 7
   %i.cw = shl i32 %i.cu, %i.cv
@@ -233,7 +233,7 @@ bb.o:                                             ; preds = %bb.n
   br label %apv_read_vlc.exit211
 
 bb.p:                                             ; preds = %flush_put_bits.exit
-  %i.dd = load i16, ptr %i.bs, align 2, !tbaa !12, !alias.scope !44
+  %i.dd = load i16, ptr %i.bs, align 2, !tbaa !12, !alias.scope !48
   %i.de = zext i16 %i.dd to i32
   br label %apv_read_vlc.exit211
 
@@ -251,7 +251,7 @@ bb.q:                                             ; preds = %apv_read_vlc.exit21
   store i8 1, ptr %i.bj, align 2, !tbaa !16
   %i.di = ashr i32 %.1.i210, 2
   %i.dj = tail call i32 @llvm.smin.i32(i32 %i.di, i32 2) ; 5 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !46)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !50)
   %i.dk = lshr i32 %.sroa.18246.7, 3
   %i.dl = zext nneg i32 %i.dk to i64
   %i.dm = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.dl
@@ -263,10 +263,10 @@ bb.q:                                             ; preds = %apv_read_vlc.exit21
   %i.ds = zext nneg i32 %i.dr to i64
   %i.dt = getelementptr inbounds nuw [4 x i8], ptr %i.bc, i64 %i.ds ; 3 uses
   %i.du = getelementptr inbounds nuw i8, ptr %i.dt, i64 3
-  %i.dv = load i8, ptr %i.du, align 1, !tbaa !14, !alias.scope !46
+  %i.dv = load i8, ptr %i.du, align 1, !tbaa !14, !alias.scope !50
   %.not.i194 = icmp eq i8 %i.dv, 0
   %i.dw = getelementptr inbounds nuw i8, ptr %i.dt, i64 2
-  %i.dx = load i8, ptr %i.dw, align 2, !tbaa !11, !alias.scope !46
+  %i.dx = load i8, ptr %i.dw, align 2, !tbaa !11, !alias.scope !50
   %i.dy = zext i8 %i.dx to i32
   %i.dz = add nuw nsw i32 %.sroa.18246.7, %i.dy
   %i.ea = tail call i32 @llvm.umin.i32(i32 %i.dz, i32 136) ; 5 uses
@@ -286,7 +286,7 @@ bb.r:                                             ; preds = %bb.q
   %.1.i.i199 = select i1 %.not.i.i197, i32 0, i32 8
   %i.ei = zext nneg i32 %.110.i.i198 to i64
   %i.ej = getelementptr inbounds nuw i8, ptr @ff_log2_tab, i64 %i.ei
-  %i.ek = load i8, ptr %i.ej, align 1, !tbaa !13, !noalias !47
+  %i.ek = load i8, ptr %i.ej, align 1, !tbaa !13, !noalias !51
   %i.el = zext i8 %i.ek to i32
   %i.em = add nuw nsw i32 %.1.i.i199, %i.el       ; 3 uses
   %i.en = icmp eq i32 %i.em, 15
@@ -302,7 +302,7 @@ bb.s:                                             ; preds = %bb.r
   %i.es = lshr i32 %i.eq, 3
   %i.et = zext nneg i32 %i.es to i64
   %i.eu = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.et
-  %i.ev = load i32, ptr %i.eu, align 1, !tbaa !13, !noalias !46
+  %i.ev = load i32, ptr %i.eu, align 1, !tbaa !13, !noalias !50
   %i.ew = tail call i32 @llvm.bswap.i32(i32 %i.ev)
   %i.ex = and i32 %i.eq, 7
   %i.ey = shl i32 %i.ew, %i.ex
@@ -315,7 +315,7 @@ bb.s:                                             ; preds = %bb.r
   br label %apv_read_vlc.exit202
 
 bb.t:                                             ; preds = %bb.q
-  %i.ff = load i16, ptr %i.dt, align 2, !tbaa !12, !alias.scope !46
+  %i.ff = load i16, ptr %i.dt, align 2, !tbaa !12, !alias.scope !50
   %i.fg = zext i16 %i.ff to i32
   br label %apv_read_vlc.exit202
 
@@ -353,7 +353,7 @@ bb.u:                                             ; preds = %apv_read_vlc.exit20
   %i.gb = shl i8 %i.ga, 2
   %i.gc = and i8 %i.gb, 28                        ; 4 uses
   store i8 %i.gc, ptr %i.bn, align 1
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !48)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !52)
   %i.gd = lshr i32 %spec.select.i, 3
   %i.ge = zext nneg i32 %i.gd to i64
   %i.gf = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.ge
@@ -367,10 +367,10 @@ bb.u:                                             ; preds = %apv_read_vlc.exit20
   %i.gn = zext nneg i32 %i.gk to i64
   %i.go = getelementptr inbounds nuw [4 x i8], ptr %i.gm, i64 %i.gn ; 3 uses
   %i.gp = getelementptr inbounds nuw i8, ptr %i.go, i64 3
-  %i.gq = load i8, ptr %i.gp, align 1, !tbaa !14, !alias.scope !48
+  %i.gq = load i8, ptr %i.gp, align 1, !tbaa !14, !alias.scope !52
   %.not.i203.1 = icmp eq i8 %i.gq, 0
   %i.gr = getelementptr inbounds nuw i8, ptr %i.go, i64 2
-  %i.gs = load i8, ptr %i.gr, align 2, !tbaa !11, !alias.scope !48
+  %i.gs = load i8, ptr %i.gr, align 2, !tbaa !11, !alias.scope !52
   %i.gt = zext i8 %i.gs to i32
   %i.gu = add nuw nsw i32 %spec.select.i, %i.gt
   %i.gv = tail call i32 @llvm.umin.i32(i32 %i.gu, i32 136) ; 5 uses
@@ -390,7 +390,7 @@ bb.v:                                             ; preds = %bb.u
   %.1.i.i208.1 = select i1 %.not.i.i206.1, i32 0, i32 8
   %i.hd = zext nneg i32 %.110.i.i207.1 to i64
   %i.he = getelementptr inbounds nuw i8, ptr @ff_log2_tab, i64 %i.hd
-  %i.hf = load i8, ptr %i.he, align 1, !tbaa !13, !noalias !49
+  %i.hf = load i8, ptr %i.he, align 1, !tbaa !13, !noalias !53
   %i.hg = zext i8 %i.hf to i32
   %i.hh = add nuw nsw i32 %.1.i.i208.1, %i.hg     ; 3 uses
   %i.hi = icmp eq i32 %i.hh, 15
@@ -407,7 +407,7 @@ bb.w:                                             ; preds = %bb.v
   %i.ho = lshr i32 %i.hl, 3
   %i.hp = zext nneg i32 %i.ho to i64
   %i.hq = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.hp
-  %i.hr = load i32, ptr %i.hq, align 1, !tbaa !13, !noalias !48
+  %i.hr = load i32, ptr %i.hq, align 1, !tbaa !13, !noalias !52
   %i.hs = tail call i32 @llvm.bswap.i32(i32 %i.hr)
   %i.ht = and i32 %i.hl, 7
   %i.hu = shl i32 %i.hs, %i.ht
@@ -420,7 +420,7 @@ bb.w:                                             ; preds = %bb.v
   br label %apv_read_vlc.exit211.1
 
 bb.x:                                             ; preds = %bb.u
-  %i.ib = load i16, ptr %i.go, align 2, !tbaa !12, !alias.scope !48
+  %i.ib = load i16, ptr %i.go, align 2, !tbaa !12, !alias.scope !52
   %i.ic = zext i16 %i.ib to i32
   br label %apv_read_vlc.exit211.1
 
@@ -440,7 +440,7 @@ bb.y:                                             ; preds = %apv_read_vlc.exit21
   store i8 3, ptr %i.bj, align 2, !tbaa !16
   %i.ii = ashr i32 %.1.i210.1, 2
   %i.ij = tail call i32 @llvm.smin.i32(i32 %i.ii, i32 2) ; 2 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !50)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !54)
   %i.ik = lshr i32 %.sroa.18246.7.1, 3
   %i.il = zext nneg i32 %i.ik to i64
   %i.im = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.il
@@ -454,10 +454,10 @@ bb.y:                                             ; preds = %apv_read_vlc.exit21
   %i.iu = zext nneg i32 %i.ir to i64
   %i.iv = getelementptr inbounds nuw [4 x i8], ptr %i.it, i64 %i.iu ; 3 uses
   %i.iw = getelementptr inbounds nuw i8, ptr %i.iv, i64 3
-  %i.ix = load i8, ptr %i.iw, align 1, !tbaa !14, !alias.scope !50
+  %i.ix = load i8, ptr %i.iw, align 1, !tbaa !14, !alias.scope !54
   %.not.i194.1 = icmp eq i8 %i.ix, 0
   %i.iy = getelementptr inbounds nuw i8, ptr %i.iv, i64 2
-  %i.iz = load i8, ptr %i.iy, align 2, !tbaa !11, !alias.scope !50
+  %i.iz = load i8, ptr %i.iy, align 2, !tbaa !11, !alias.scope !54
   %i.ja = zext i8 %i.iz to i32
   %i.jb = add nuw nsw i32 %.sroa.18246.7.1, %i.ja
   %i.jc = tail call i32 @llvm.umin.i32(i32 %i.jb, i32 136) ; 5 uses
@@ -477,7 +477,7 @@ bb.z:                                             ; preds = %bb.y
   %.1.i.i199.1 = select i1 %.not.i.i197.1, i32 0, i32 8
   %i.jk = zext nneg i32 %.110.i.i198.1 to i64
   %i.jl = getelementptr inbounds nuw i8, ptr @ff_log2_tab, i64 %i.jk
-  %i.jm = load i8, ptr %i.jl, align 1, !tbaa !13, !noalias !51
+  %i.jm = load i8, ptr %i.jl, align 1, !tbaa !13, !noalias !55
   %i.jn = zext i8 %i.jm to i32
   %i.jo = add nuw nsw i32 %.1.i.i199.1, %i.jn     ; 3 uses
   %i.jp = icmp eq i32 %i.jo, 15
@@ -494,7 +494,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.jv = lshr i32 %i.js, 3
   %i.jw = zext nneg i32 %i.jv to i64
   %i.jx = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.jw
-  %i.jy = load i32, ptr %i.jx, align 1, !tbaa !13, !noalias !50
+  %i.jy = load i32, ptr %i.jx, align 1, !tbaa !13, !noalias !54
   %i.jz = tail call i32 @llvm.bswap.i32(i32 %i.jy)
   %i.ka = and i32 %i.js, 7
   %i.kb = shl i32 %i.jz, %i.ka
@@ -507,7 +507,7 @@ bb.aa:                                            ; preds = %bb.z
   br label %apv_read_vlc.exit202.1
 
 bb.ab:                                            ; preds = %bb.y
-  %i.ki = load i16, ptr %i.iv, align 2, !tbaa !12, !alias.scope !50
+  %i.ki = load i16, ptr %i.iv, align 2, !tbaa !12, !alias.scope !54
   %i.kj = zext i16 %i.ki to i32
   br label %apv_read_vlc.exit202.1
 
@@ -572,7 +572,7 @@ bb.ae:                                            ; preds = %apv_read_vlc.exit21
   %i.lr = getelementptr inbounds nuw i8, ptr %i.lp, i64 8
   %i.ls = getelementptr inbounds nuw i8, ptr %i.lp, i64 1 ; 2 uses
   %i.lt = getelementptr inbounds nuw i8, ptr %i.lp, i64 2
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !52)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !56)
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(12) %i.lp, i8 0, i64 12, i1 false)
   %i.lu = load i32, ptr %i.b, align 16, !tbaa !13
   %i.lv = tail call i32 @llvm.bswap.i32(i32 %i.lu)
@@ -580,10 +580,10 @@ bb.ae:                                            ; preds = %apv_read_vlc.exit21
   %i.lx = zext nneg i32 %i.lw to i64
   %i.ly = getelementptr inbounds nuw [4 x i8], ptr %i.be, i64 %i.lx ; 3 uses
   %i.lz = getelementptr inbounds nuw i8, ptr %i.ly, i64 3
-  %i.ma = load i8, ptr %i.lz, align 1, !tbaa !14, !alias.scope !52
+  %i.ma = load i8, ptr %i.lz, align 1, !tbaa !14, !alias.scope !56
   %.not.i185 = icmp eq i8 %i.ma, 0
   %i.mb = getelementptr inbounds nuw i8, ptr %i.ly, i64 2
-  %i.mc = load i8, ptr %i.mb, align 2, !tbaa !11, !alias.scope !52
+  %i.mc = load i8, ptr %i.mb, align 2, !tbaa !11, !alias.scope !56
   %i.md = tail call i8 @llvm.umin.i8(i8 %i.mc, i8 -120)
   %i.me = zext i8 %i.md to i32                    ; 5 uses
   br i1 %.not.i185, label %bb.ah, label %bb.af
@@ -602,7 +602,7 @@ bb.af:                                            ; preds = %bb.ae
   %.1.i.i190 = select i1 %.not.i.i188, i32 0, i32 8
   %i.mm = zext nneg i32 %.110.i.i189 to i64
   %i.mn = getelementptr inbounds nuw i8, ptr @ff_log2_tab, i64 %i.mm
-  %i.mo = load i8, ptr %i.mn, align 1, !tbaa !13, !noalias !53
+  %i.mo = load i8, ptr %i.mn, align 1, !tbaa !13, !noalias !57
   %i.mp = zext i8 %i.mo to i32
   %i.mq = add nuw nsw i32 %.1.i.i190, %i.mp       ; 3 uses
   %i.mr = icmp eq i32 %i.mq, 15
@@ -618,7 +618,7 @@ bb.ag:                                            ; preds = %bb.af
   %i.mw = lshr i32 %i.mu, 3
   %i.mx = zext nneg i32 %i.mw to i64
   %i.my = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.mx
-  %i.mz = load i32, ptr %i.my, align 1, !tbaa !13, !noalias !52
+  %i.mz = load i32, ptr %i.my, align 1, !tbaa !13, !noalias !56
   %i.na = tail call i32 @llvm.bswap.i32(i32 %i.mz)
   %i.nb = and i32 %i.mu, 7
   %i.nc = shl i32 %i.na, %i.nb
@@ -631,7 +631,7 @@ bb.ag:                                            ; preds = %bb.af
   br label %apv_read_vlc.exit193
 
 bb.ah:                                            ; preds = %bb.ae
-  %i.nj = load i16, ptr %i.ly, align 2, !tbaa !12, !alias.scope !52
+  %i.nj = load i16, ptr %i.ly, align 2, !tbaa !12, !alias.scope !56
   %i.nk = zext i16 %i.nj to i32
   br label %apv_read_vlc.exit193
 
@@ -668,7 +668,7 @@ bb.ai:                                            ; preds = %apv_read_vlc.exit19
   %i.oe = shl i8 %i.od, 2
   %i.of = and i8 %i.oe, 28                        ; 3 uses
   store i8 %i.of, ptr %i.ls, align 1
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !54)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !58)
   %i.og = lshr i32 %spec.select.i231, 3
   %i.oh = zext nneg i32 %i.og to i64
   %i.oi = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.oh
@@ -680,10 +680,10 @@ bb.ai:                                            ; preds = %apv_read_vlc.exit19
   %i.oo = zext nneg i32 %i.on to i64
   %i.op = getelementptr inbounds nuw [4 x i8], ptr %i.aw, i64 %i.oo ; 3 uses
   %i.oq = getelementptr inbounds nuw i8, ptr %i.op, i64 3
-  %i.or = load i8, ptr %i.oq, align 1, !tbaa !14, !alias.scope !54
+  %i.or = load i8, ptr %i.oq, align 1, !tbaa !14, !alias.scope !58
   %.not.i = icmp eq i8 %i.or, 0
   %i.os = getelementptr inbounds nuw i8, ptr %i.op, i64 2
-  %i.ot = load i8, ptr %i.os, align 2, !tbaa !11, !alias.scope !54
+  %i.ot = load i8, ptr %i.os, align 2, !tbaa !11, !alias.scope !58
   %i.ou = zext i8 %i.ot to i32
   %i.ov = add nuw nsw i32 %spec.select.i231, %i.ou
   %i.ow = tail call i32 @llvm.umin.i32(i32 %i.ov, i32 136) ; 5 uses
@@ -703,7 +703,7 @@ bb.aj:                                            ; preds = %bb.ai
   %.1.i.i = select i1 %.not.i.i, i32 0, i32 8
   %i.pe = zext nneg i32 %.110.i.i to i64
   %i.pf = getelementptr inbounds nuw i8, ptr @ff_log2_tab, i64 %i.pe
-  %i.pg = load i8, ptr %i.pf, align 1, !tbaa !13, !noalias !55
+  %i.pg = load i8, ptr %i.pf, align 1, !tbaa !13, !noalias !59
   %i.ph = zext i8 %i.pg to i32
   %i.pi = add nuw nsw i32 %.1.i.i, %i.ph          ; 3 uses
   %i.pj = icmp eq i32 %i.pi, 15
@@ -719,7 +719,7 @@ bb.ak:                                            ; preds = %bb.aj
   %i.po = lshr i32 %i.pm, 3
   %i.pp = zext nneg i32 %i.po to i64
   %i.pq = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.pp
-  %i.pr = load i32, ptr %i.pq, align 1, !tbaa !13, !noalias !54
+  %i.pr = load i32, ptr %i.pq, align 1, !tbaa !13, !noalias !58
   %i.ps = tail call i32 @llvm.bswap.i32(i32 %i.pr)
   %i.pt = and i32 %i.pm, 7
   %i.pu = shl i32 %i.ps, %i.pt
@@ -732,7 +732,7 @@ bb.ak:                                            ; preds = %bb.aj
   br label %apv_read_vlc.exit
 
 bb.al:                                            ; preds = %bb.ai
-  %i.qb = load i16, ptr %i.op, align 2, !tbaa !12, !alias.scope !54
+  %i.qb = load i16, ptr %i.op, align 2, !tbaa !12, !alias.scope !58
   %i.qc = zext i16 %i.qb to i32
   br label %apv_read_vlc.exit
 
@@ -751,7 +751,7 @@ bb.am:                                            ; preds = %apv_read_vlc.exit
   store i8 2, ptr %i.lp, align 2, !tbaa !16
   %i.qh = ashr i32 %.1.i, 2
   %i.qi = tail call i32 @llvm.smin.i32(i32 %i.qh, i32 2) ; 5 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !56)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !60)
   %i.qj = lshr i32 %.sroa.18246.4, 3
   %i.qk = zext nneg i32 %i.qj to i64
   %i.ql = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.qk
@@ -765,10 +765,10 @@ bb.am:                                            ; preds = %apv_read_vlc.exit
   %i.qt = zext nneg i32 %i.qq to i64
   %i.qu = getelementptr inbounds nuw [4 x i8], ptr %i.qs, i64 %i.qt ; 3 uses
   %i.qv = getelementptr inbounds nuw i8, ptr %i.qu, i64 3
-  %i.qw = load i8, ptr %i.qv, align 1, !tbaa !14, !alias.scope !56
+  %i.qw = load i8, ptr %i.qv, align 1, !tbaa !14, !alias.scope !60
   %.not.i185.1 = icmp eq i8 %i.qw, 0
   %i.qx = getelementptr inbounds nuw i8, ptr %i.qu, i64 2
-  %i.qy = load i8, ptr %i.qx, align 2, !tbaa !11, !alias.scope !56
+  %i.qy = load i8, ptr %i.qx, align 2, !tbaa !11, !alias.scope !60
   %i.qz = zext i8 %i.qy to i32
   %i.ra = add nuw nsw i32 %.sroa.18246.4, %i.qz
   %i.rb = tail call i32 @llvm.umin.i32(i32 %i.ra, i32 136) ; 5 uses
@@ -788,7 +788,7 @@ bb.an:                                            ; preds = %bb.am
   %.1.i.i190.1 = select i1 %.not.i.i188.1, i32 0, i32 8
   %i.rj = zext nneg i32 %.110.i.i189.1 to i64
   %i.rk = getelementptr inbounds nuw i8, ptr @ff_log2_tab, i64 %i.rj
-  %i.rl = load i8, ptr %i.rk, align 1, !tbaa !13, !noalias !57
+  %i.rl = load i8, ptr %i.rk, align 1, !tbaa !13, !noalias !61
   %i.rm = zext i8 %i.rl to i32
   %i.rn = add nuw nsw i32 %.1.i.i190.1, %i.rm     ; 3 uses
   %i.ro = icmp eq i32 %i.rn, 15
@@ -805,7 +805,7 @@ bb.ao:                                            ; preds = %bb.an
   %i.ru = lshr i32 %i.rr, 3
   %i.rv = zext nneg i32 %i.ru to i64
   %i.rw = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.rv
-  %i.rx = load i32, ptr %i.rw, align 1, !tbaa !13, !noalias !56
+  %i.rx = load i32, ptr %i.rw, align 1, !tbaa !13, !noalias !60
   %i.ry = tail call i32 @llvm.bswap.i32(i32 %i.rx)
   %i.rz = and i32 %i.rr, 7
   %i.sa = shl i32 %i.ry, %i.rz
@@ -818,7 +818,7 @@ bb.ao:                                            ; preds = %bb.an
   br label %apv_read_vlc.exit193.1
 
 bb.ap:                                            ; preds = %bb.am
-  %i.sh = load i16, ptr %i.qu, align 2, !tbaa !12, !alias.scope !56
+  %i.sh = load i16, ptr %i.qu, align 2, !tbaa !12, !alias.scope !60
   %i.si = zext i16 %i.sh to i32
   br label %apv_read_vlc.exit193.1
 
@@ -853,7 +853,7 @@ bb.aq:                                            ; preds = %apv_read_vlc.exit19
   store i8 3, ptr %i.lp, align 2, !tbaa !16
   %i.tb = ashr i32 %i.ss, 2
   %i.tc = tail call i32 @llvm.smin.i32(i32 %i.tb, i32 4) ; 2 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !58)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !62)
   %i.td = lshr i32 %spec.select.i231.1, 3
   %i.te = zext nneg i32 %i.td to i64
   %i.tf = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.te
@@ -867,10 +867,10 @@ bb.aq:                                            ; preds = %apv_read_vlc.exit19
   %i.tn = zext nneg i32 %i.tk to i64
   %i.to = getelementptr inbounds nuw [4 x i8], ptr %i.tm, i64 %i.tn ; 3 uses
   %i.tp = getelementptr inbounds nuw i8, ptr %i.to, i64 3
-  %i.tq = load i8, ptr %i.tp, align 1, !tbaa !14, !alias.scope !58
+  %i.tq = load i8, ptr %i.tp, align 1, !tbaa !14, !alias.scope !62
   %.not.i.1 = icmp eq i8 %i.tq, 0
   %i.tr = getelementptr inbounds nuw i8, ptr %i.to, i64 2
-  %i.ts = load i8, ptr %i.tr, align 2, !tbaa !11, !alias.scope !58
+  %i.ts = load i8, ptr %i.tr, align 2, !tbaa !11, !alias.scope !62
   %i.tt = zext i8 %i.ts to i32
   %i.tu = add nuw nsw i32 %spec.select.i231.1, %i.tt
   %i.tv = tail call i32 @llvm.umin.i32(i32 %i.tu, i32 136) ; 5 uses
@@ -890,7 +890,7 @@ bb.ar:                                            ; preds = %bb.aq
   %.1.i.i.1 = select i1 %.not.i.i.1, i32 0, i32 8
   %i.ud = zext nneg i32 %.110.i.i.1 to i64
   %i.ue = getelementptr inbounds nuw i8, ptr @ff_log2_tab, i64 %i.ud
-  %i.uf = load i8, ptr %i.ue, align 1, !tbaa !13, !noalias !59
+  %i.uf = load i8, ptr %i.ue, align 1, !tbaa !13, !noalias !63
   %i.ug = zext i8 %i.uf to i32
   %i.uh = add nuw nsw i32 %.1.i.i.1, %i.ug        ; 3 uses
   %i.ui = icmp eq i32 %i.uh, 15
@@ -907,7 +907,7 @@ bb.as:                                            ; preds = %bb.ar
   %i.uo = lshr i32 %i.ul, 3
   %i.up = zext nneg i32 %i.uo to i64
   %i.uq = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.up
-  %i.ur = load i32, ptr %i.uq, align 1, !tbaa !13, !noalias !58
+  %i.ur = load i32, ptr %i.uq, align 1, !tbaa !13, !noalias !62
   %i.us = tail call i32 @llvm.bswap.i32(i32 %i.ur)
   %i.ut = and i32 %i.ul, 7
   %i.uu = shl i32 %i.us, %i.ut
@@ -920,7 +920,7 @@ bb.as:                                            ; preds = %bb.ar
   br label %apv_read_vlc.exit.1
 
 bb.at:                                            ; preds = %bb.aq
-  %i.vb = load i16, ptr %i.to, align 2, !tbaa !12, !alias.scope !58
+  %i.vb = load i16, ptr %i.to, align 2, !tbaa !12, !alias.scope !62
   %i.vc = zext i16 %i.vb to i32
   br label %apv_read_vlc.exit.1
 
@@ -968,7 +968,7 @@ bb.av:                                            ; preds = %apv_read_vlc.exit, 
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   %indvars.iv.next346 = add nuw nsw i64 %indvars.iv345, 1 ; 2 uses
   %exitcond348.not = icmp eq i64 %indvars.iv.next346, 512
-  br i1 %exitcond348.not, label %bb.m, label %flush_put_bits.exit, !llvm.loop !42
+  br i1 %exitcond348.not, label %bb.m, label %flush_put_bits.exit, !llvm.loop !46
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
@@ -984,14 +984,14 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 define range(i32 -1094995529, 1) i32 @ff_apv_entropy_decode_block(ptr noalias nofree noundef writeonly captures(none) %0, ptr noalias nofree noundef captures(none) %1, ptr noalias nofree noundef captures(none) %2) local_unnamed_addr #3 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !66   ; 4 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !70   ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 18 ; 2 uses
-  %i.d = load i8, ptr %i.c, align 2, !tbaa !67    ; 2 uses
+  %i.d = load i8, ptr %i.c, align 2, !tbaa !71    ; 2 uses
   %i.e = zext i8 %i.d to i32                      ; 2 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !68)
-  %.val397 = load ptr, ptr %1, align 8, !tbaa !71 ; 12 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !72)
+  %.val397 = load ptr, ptr %1, align 8, !tbaa !75 ; 12 uses
   %i.f = getelementptr i8, ptr %1, i64 8          ; 19 uses
-  %.val398 = load i32, ptr %i.f, align 8, !tbaa !72 ; 3 uses
+  %.val398 = load i32, ptr %i.f, align 8, !tbaa !76 ; 3 uses
   %i.g = lshr i32 %.val398, 3
   %i.h = zext nneg i32 %i.g to i64
   %i.i = getelementptr inbounds nuw i8, ptr %.val397, i64 %i.h
@@ -1005,13 +1005,13 @@ bb.a:
   %i.q = zext nneg i32 %i.n to i64
   %i.r = getelementptr inbounds nuw [4 x i8], ptr %i.p, i64 %i.q ; 3 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 3
-  %i.t = load i8, ptr %i.s, align 1, !tbaa !14, !alias.scope !68
+  %i.t = load i8, ptr %i.s, align 1, !tbaa !14, !alias.scope !72
   %.not.i393 = icmp eq i8 %i.t, 0
   %i.u = getelementptr inbounds nuw i8, ptr %i.r, i64 2
-  %i.v = load i8, ptr %i.u, align 2, !tbaa !11, !alias.scope !68
+  %i.v = load i8, ptr %i.u, align 2, !tbaa !11, !alias.scope !72
   %i.w = zext i8 %i.v to i32
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.y = load i32, ptr %i.x, align 8, !tbaa !73, !noalias !68 ; 23 uses
+  %i.y = load i32, ptr %i.x, align 8, !tbaa !77, !noalias !72 ; 23 uses
   %i.z = add i32 %.val398, %i.w
   %i.aa = tail call i32 @llvm.umin.i32(i32 %i.y, i32 %i.z) ; 6 uses
   br i1 %.not.i393, label %bb.d, label %bb.b
@@ -1030,7 +1030,7 @@ bb.b:                                             ; preds = %bb.a
   %.1.i.i = select i1 %.not.i.i, i32 0, i32 8
   %i.ai = zext nneg i32 %.110.i.i to i64
   %i.aj = getelementptr inbounds nuw i8, ptr @ff_log2_tab, i64 %i.ai
-  %i.ak = load i8, ptr %i.aj, align 1, !tbaa !13, !noalias !74
+  %i.ak = load i8, ptr %i.aj, align 1, !tbaa !13, !noalias !78
   %i.al = zext i8 %i.ak to i32
   %i.am = add nuw nsw i32 %.1.i.i, %i.al          ; 3 uses
   %i.an = icmp eq i32 %i.am, 15
@@ -1047,7 +1047,7 @@ bb.c:                                             ; preds = %bb.b
   %i.at = lshr i32 %i.aq, 3
   %i.au = zext nneg i32 %i.at to i64
   %i.av = getelementptr inbounds nuw i8, ptr %.val397, i64 %i.au
-  %i.aw = load i32, ptr %i.av, align 1, !tbaa !13, !noalias !68
+  %i.aw = load i32, ptr %i.av, align 1, !tbaa !13, !noalias !72
   %i.ax = tail call i32 @llvm.bswap.i32(i32 %i.aw)
   %i.ay = and i32 %i.aq, 7
   %i.az = shl i32 %i.ax, %i.ay
@@ -1055,14 +1055,14 @@ bb.c:                                             ; preds = %bb.b
   %i.bb = lshr i32 %i.az, %i.ba
   %i.bc = add i32 %i.aq, %i.as
   %i.bd = tail call i32 @llvm.umin.i32(i32 %i.y, i32 %i.bc) ; 2 uses
-  store i32 %i.bd, ptr %i.f, align 8, !tbaa !72, !noalias !68
+  store i32 %i.bd, ptr %i.f, align 8, !tbaa !76, !noalias !72
   %i.be = add i32 %i.ar, %mulshl.i
   %i.bf = add i32 %i.be, %i.bb
   br label %apv_read_vlc.exit
 
 bb.d:                                             ; preds = %bb.a
-  store i32 %i.aa, ptr %i.f, align 8, !tbaa !72, !noalias !68
-  %i.bg = load i16, ptr %i.r, align 2, !tbaa !12, !alias.scope !68
+  store i32 %i.aa, ptr %i.f, align 8, !tbaa !76, !noalias !72
+  %i.bg = load i16, ptr %i.r, align 2, !tbaa !12, !alias.scope !72
   %i.bh = zext i16 %i.bg to i32
   br label %apv_read_vlc.exit
 
@@ -1089,12 +1089,12 @@ apv_read_vlc.exit.thread:                         ; preds = %apv_read_vlc.exit.a
   %i.bn = zext i1 %i.bm to i32
   %spec.select.i = add i32 %i.bj, %i.bn           ; 3 uses
   %i.bo = zext i8 %i.bl to i32
-  store i32 %spec.select.i, ptr %i.f, align 8, !tbaa !72
+  store i32 %spec.select.i, ptr %i.f, align 8, !tbaa !76
   %i.bp = lshr exact i32 128, %.pre-phi664
   %i.bq = and i32 %i.bp, %i.bo
   %.not369 = icmp eq i32 %i.bq, 0
   %i.br = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %i.bs = load i16, ptr %i.br, align 8, !tbaa !75
+  %i.bs = load i16, ptr %i.br, align 8, !tbaa !79
   %i.bt = sext i16 %i.bs to i32                   ; 2 uses
   br i1 %.not369, label %bb.f, label %bb.e
 
@@ -1108,7 +1108,7 @@ bb.f:                                             ; preds = %apv_read_vlc.exit.t
 
 bb.g:                                             ; preds = %apv_read_vlc.exit
   %i.bw = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %i.bx = load i16, ptr %i.bw, align 8, !tbaa !75
+  %i.bx = load i16, ptr %i.bw, align 8, !tbaa !79
   %i.by = sext i16 %i.bx to i32
   br label %bb.h
 
@@ -1121,7 +1121,7 @@ bb.h:                                             ; preds = %bb.e, %bb.f, %bb.g
   br i1 %or.cond, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.ca = load ptr, ptr %2, align 8, !tbaa !76
+  %i.ca = load ptr, ptr %2, align 8, !tbaa !80
   tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef %i.ca, i32 noundef 16, ptr noundef nonnull @.str, i32 noundef %.0296) #7
   br label %.thread464
 
@@ -1129,13 +1129,13 @@ bb.j:                                             ; preds = %bb.h
   %i.cb = trunc nsw i32 %.0296 to i16             ; 2 uses
   store i16 %i.cb, ptr %0, align 2, !tbaa !17
   %i.cc = getelementptr inbounds nuw i8, ptr %2, i64 16
-  store i16 %i.cb, ptr %i.cc, align 8, !tbaa !75
+  store i16 %i.cb, ptr %i.cc, align 8, !tbaa !79
   %i.cd = ashr i32 %.1.i394410, 1
   %i.ce = tail call i32 @llvm.smin.i32(i32 %i.cd, i32 5)
   %i.cf = trunc i32 %i.ce to i8
-  store i8 %i.cf, ptr %i.c, align 2, !tbaa !67
+  store i8 %i.cf, ptr %i.c, align 2, !tbaa !71
   %i.cg = getelementptr inbounds nuw i8, ptr %2, i64 19 ; 4 uses
-  %i.ch = load i8, ptr %i.cg, align 1, !tbaa !77  ; 2 uses
+  %i.ch = load i8, ptr %i.cg, align 1, !tbaa !81  ; 2 uses
   %i.ci = zext i8 %i.ch to i32
   %i.cj = lshr i32 %.val406, 3
   %i.ck = zext nneg i32 %i.cj to i64
@@ -1171,7 +1171,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.dh, label %.thread411, label %bb.l
 
 .thread411:                                       ; preds = %bb.k
-  %i.di = load ptr, ptr %2, align 8, !tbaa !76
+  %i.di = load ptr, ptr %2, align 8, !tbaa !80
   tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef %i.di, i32 noundef 16, ptr noundef nonnull @.str.1, i32 noundef %i.dg) #7
   br label %.thread464
 
@@ -1189,7 +1189,7 @@ bb.l:                                             ; preds = %bb.k
   %i.dq = sub i32 %reass.sub, %i.df
   %i.dr = add i32 %i.dq, %i.dg
   %i.ds = tail call i32 @llvm.umin.i32(i32 %i.y, i32 %i.dr) ; 2 uses
-  store i32 %i.ds, ptr %i.f, align 8, !tbaa !72
+  store i32 %i.ds, ptr %i.f, align 8, !tbaa !76
   %i.dt = add nuw nsw i32 %i.dp, 1                ; 2 uses
   %i.du = icmp samesign ugt i32 %i.dp, 62
   br i1 %i.du, label %.thread427, label %.thread415
@@ -1234,7 +1234,7 @@ bb.p:                                             ; preds = %bb.o
   %i.em = load i8, ptr %i.el, align 1             ; 4 uses
   %i.en = lshr i8 %i.em, 2
   %i.eo = and i8 %i.en, 7
-  store i8 %i.eo, ptr %i.cg, align 1, !tbaa !77
+  store i8 %i.eo, ptr %i.cg, align 1, !tbaa !81
   %i.ep = icmp eq i8 %i.dy, 62
   br i1 %i.ep, label %bb.q, label %bb.r
 
@@ -1244,7 +1244,7 @@ bb.q:                                             ; preds = %bb.p
   %i.es = zext i8 %i.er to i32
   %i.et = add i32 %.val406, %i.es
   %i.eu = tail call i32 @llvm.umin.i32(i32 %i.y, i32 %i.et)
-  store i32 %i.eu, ptr %i.f, align 8, !tbaa !72
+  store i32 %i.eu, ptr %i.f, align 8, !tbaa !76
   br label %.thread464
 
 bb.r:                                             ; preds = %bb.p
@@ -1286,7 +1286,7 @@ bb.w:                                             ; preds = %bb.v
   %i.fn = zext i8 %i.fm to i32
   %i.fo = add i32 %.val406, %i.fn
   %i.fp = tail call i32 @llvm.umin.i32(i32 %i.y, i32 %i.fo)
-  store i32 %i.fp, ptr %i.f, align 8, !tbaa !72
+  store i32 %i.fp, ptr %i.f, align 8, !tbaa !76
   br label %.thread464
 
 .thread421:                                       ; preds = %..thread421_crit_edge, %bb.r, %bb.v, %bb.u
@@ -1297,7 +1297,7 @@ bb.w:                                             ; preds = %bb.v
   %i.ft = zext i8 %i.fs to i32
   %i.fu = add i32 %.val406, %i.ft
   %i.fv = tail call i32 @llvm.umin.i32(i32 %i.y, i32 %i.fu) ; 4 uses
-  store i32 %i.fv, ptr %i.f, align 8, !tbaa !72
+  store i32 %i.fv, ptr %i.f, align 8, !tbaa !76
   %i.fw = and i8 %i.fq, 3
   %i.fx = zext nneg i8 %i.fw to i32               ; 3 uses
   %i.fy = lshr i8 %i.fq, 5
@@ -1378,7 +1378,7 @@ bb.z:                                             ; preds = %bb.y
   %i.ib = shl i32 %i.hz, %i.ia
   %i.ic = add i32 %i.hq, 1
   %i.id = tail call i32 @llvm.umin.i32(i32 %i.y, i32 %i.ic) ; 2 uses
-  store i32 %i.id, ptr %i.f, align 8, !tbaa !72
+  store i32 %i.id, ptr %i.f, align 8, !tbaa !76
   %i.ie = xor i32 %i.ht, -1
   %.not373471 = icmp slt i32 %i.ib, 0
   %.0294 = select i1 %.not373471, i32 %i.ie, i32 %i.hu ; 3 uses
@@ -1387,7 +1387,7 @@ bb.z:                                             ; preds = %bb.y
   br i1 %or.cond3, label %.thread423, label %bb.aa
 
 .thread423:                                       ; preds = %bb.z
-  %i.ig = load ptr, ptr %2, align 8, !tbaa !76
+  %i.ig = load ptr, ptr %2, align 8, !tbaa !80
   tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef %i.ig, i32 noundef 16, ptr noundef nonnull @.str.2, i32 noundef %.4311, i32 noundef %.0294) #7
   br label %.thread464
 
@@ -1403,7 +1403,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.io = ashr i32 %i.hu, 2
   %i.ip = tail call i32 @llvm.smin.i32(i32 %i.io, i32 4) ; 2 uses
   %i.iq = trunc i32 %i.ip to i8
-  store i8 %i.iq, ptr %i.cg, align 1, !tbaa !77
+  store i8 %i.iq, ptr %i.cg, align 1, !tbaa !81
   %i.ir = icmp samesign ugt i32 %.4311, 62
   br i1 %i.ir, label %.thread427, label %.preheader485.preheader
 
@@ -1421,7 +1421,7 @@ bb.ab:                                            ; preds = %bb.y
   %i.jb = load i8, ptr %i.ja, align 1             ; 3 uses
   %i.jc = lshr i8 %i.jb, 2
   %i.jd = and i8 %i.jc, 7
-  store i8 %i.jd, ptr %i.cg, align 1, !tbaa !77
+  store i8 %i.jd, ptr %i.cg, align 1, !tbaa !81
   %i.je = icmp samesign ugt i32 %.4311, 62
   br i1 %i.je, label %bb.ac, label %bb.ad
 
@@ -1468,7 +1468,7 @@ bb.ai:                                            ; preds = %bb.ah
   %i.jy = zext i8 %i.jx to i32
   %i.jz = add i32 %.val404, %i.jy
   %i.ka = tail call i32 @llvm.umin.i32(i32 %i.y, i32 %i.jz)
-  store i32 %i.ka, ptr %i.f, align 8, !tbaa !72
+  store i32 %i.ka, ptr %i.f, align 8, !tbaa !76
   br label %.thread464
 
 bb.aj:                                            ; preds = %bb.ah
@@ -1494,7 +1494,7 @@ bb.al:                                            ; preds = %bb.ak
   %i.kj = zext i8 %i.ki to i32
   %i.kk = add i32 %.val404, %i.kj
   %i.kl = tail call i32 @llvm.umin.i32(i32 %i.y, i32 %i.kk) ; 3 uses
-  store i32 %i.kl, ptr %i.f, align 8, !tbaa !72
+  store i32 %i.kl, ptr %i.f, align 8, !tbaa !76
   %i.km = and i8 %i.jb, 3
   %i.kn = zext nneg i8 %i.km to i32               ; 2 uses
   %i.ko = lshr i8 %i.jb, 5
@@ -1550,7 +1550,7 @@ bb.am:                                            ; preds = %.preheader485
   br i1 %i.lr, label %.thread436, label %bb.an
 
 .thread436:                                       ; preds = %bb.am
-  %i.ls = load ptr, ptr %2, align 8, !tbaa !76
+  %i.ls = load ptr, ptr %2, align 8, !tbaa !80
   tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef %i.ls, i32 noundef 16, ptr noundef nonnull @.str.1, i32 noundef %i.lq) #7
   br label %.thread464
 
@@ -1574,7 +1574,7 @@ bb.an:                                            ; preds = %bb.am
   %i.me = sub i32 %reass.sub378, %i.lp
   %i.mf = add i32 %i.me, %i.lt
   %i.mg = tail call i32 @llvm.umin.i32(i32 %i.y, i32 %i.mf) ; 2 uses
-  store i32 %i.mg, ptr %i.f, align 8, !tbaa !72
+  store i32 %i.mg, ptr %i.f, align 8, !tbaa !76
   %i.mh = add nsw i32 %i.md, %.9                  ; 3 uses
   %i.mi = icmp sgt i32 %i.mh, 63
   br i1 %i.mi, label %.thread427, label %bb.ao
@@ -1619,7 +1619,7 @@ bb.at:                                            ; preds = %bb.as
   %i.nc = zext i8 %i.nb to i32
   %i.nd = add i32 %i.kr, %i.nc
   %i.ne = tail call i32 @llvm.umin.i32(i32 %i.y, i32 %i.nd)
-  store i32 %i.ne, ptr %i.f, align 8, !tbaa !72
+  store i32 %i.ne, ptr %i.f, align 8, !tbaa !76
   br label %.thread464
 
 bb.au:                                            ; preds = %bb.as
@@ -1661,7 +1661,7 @@ bb.az:                                            ; preds = %bb.ay
   %i.nx = zext i8 %i.nw to i32
   %i.ny = add i32 %i.kr, %i.nx
   %i.nz = tail call i32 @llvm.umin.i32(i32 %i.y, i32 %i.ny)
-  store i32 %i.nz, ptr %i.f, align 8, !tbaa !72
+  store i32 %i.nz, ptr %i.f, align 8, !tbaa !76
   br label %.thread464
 
 .thread447:                                       ; preds = %bb.ar, %bb.au, %bb.ay, %bb.ax
@@ -1671,7 +1671,7 @@ bb.az:                                            ; preds = %bb.ay
   %i.oc = zext i8 %i.ob to i32
   %i.od = add i32 %i.kr, %i.oc
   %i.oe = tail call i32 @llvm.umin.i32(i32 %i.y, i32 %i.od) ; 3 uses
-  store i32 %i.oe, ptr %i.f, align 8, !tbaa !72
+  store i32 %i.oe, ptr %i.f, align 8, !tbaa !76
   %i.of = getelementptr inbounds nuw i8, ptr %i.lf, i64 1
   %i.og = load i8, ptr %i.of, align 1             ; 2 uses
   %i.oh = and i8 %i.og, 3
@@ -1758,7 +1758,7 @@ bb.bb:                                            ; preds = %bb.ba
   %i.qn = shl i32 %i.ql, %i.qm
   %i.qo = add i32 %i.qc, 1
   %i.qp = tail call i32 @llvm.umin.i32(i32 %i.y, i32 %i.qo) ; 2 uses
-  store i32 %i.qp, ptr %i.f, align 8, !tbaa !72
+  store i32 %i.qp, ptr %i.f, align 8, !tbaa !76
   %i.qq = xor i32 %i.qf, -1
   %.not382476 = icmp slt i32 %i.qn, 0
   %.0 = select i1 %.not382476, i32 %i.qq, i32 %i.qg ; 3 uses
@@ -1767,7 +1767,7 @@ bb.bb:                                            ; preds = %bb.ba
   br i1 %or.cond5, label %.thread450, label %bb.bc
 
 .thread450:                                       ; preds = %bb.bb
-  %i.qs = load ptr, ptr %2, align 8, !tbaa !76
+  %i.qs = load ptr, ptr %2, align 8, !tbaa !80
   tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef %i.qs, i32 noundef 16, ptr noundef nonnull @.str.2, i32 noundef %.14, i32 noundef %.0) #7
   br label %.thread464
 
@@ -1841,7 +1841,7 @@ bb.bk:                                            ; preds = %bb.bj
   %i.sf = zext i8 %i.se to i32
   %i.sg = add i32 %i.on, %i.sf
   %i.sh = tail call i32 @llvm.umin.i32(i32 %i.y, i32 %i.sg)
-  store i32 %i.sh, ptr %i.f, align 8, !tbaa !72
+  store i32 %i.sh, ptr %i.f, align 8, !tbaa !76
   br label %.thread464
 
 bb.bl:                                            ; preds = %bb.bj
@@ -1867,7 +1867,7 @@ bb.bn:                                            ; preds = %bb.bm
   %i.sq = zext i8 %i.sp to i32
   %i.sr = add i32 %i.on, %i.sq
   %i.ss = tail call i32 @llvm.umin.i32(i32 %i.y, i32 %i.sr) ; 3 uses
-  store i32 %i.ss, ptr %i.f, align 8, !tbaa !72
+  store i32 %i.ss, ptr %i.f, align 8, !tbaa !76
   %i.st = getelementptr inbounds nuw i8, ptr %i.pb, i64 1
   %i.su = load i8, ptr %i.st, align 1             ; 2 uses
   %i.sv = and i8 %i.su, 3
@@ -1886,7 +1886,7 @@ bb.bn:                                            ; preds = %bb.bm
   %i.ta = zext i8 %.sink780 to i32
   %i.tb = add i32 %.lcssa725.sink, %i.ta
   %i.tc = tail call i32 @llvm.umin.i32(i32 %i.y, i32 %i.tb)
-  store i32 %i.tc, ptr %i.f, align 8, !tbaa !72
+  store i32 %i.tc, ptr %i.f, align 8, !tbaa !76
   br label %.thread427
 
 .thread427:                                       ; preds = %.thread427.sink.split, %bb.bc, %bb.an, %bb.aa, %bb.l
@@ -1895,7 +1895,7 @@ bb.bn:                                            ; preds = %bb.bm
   br i1 %i.td, label %bb.bo, label %.thread464
 
 bb.bo:                                            ; preds = %.thread427
-  %i.te = load ptr, ptr %2, align 8, !tbaa !76
+  %i.te = load ptr, ptr %2, align 8, !tbaa !80
   tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef %i.te, i32 noundef 16, ptr noundef nonnull @.str.3, i32 noundef %.19) #7
   br label %.thread464
 
@@ -1952,10 +1952,10 @@ attributes #7 = { nounwind }
 !15 = !{!"APVMultiVLCLUTEntry", !5, i64 0, !5, i64 1, !5, i64 1, !5, i64 1, !5, i64 2, !5, i64 4, !5, i64 8}
 !16 = !{!15, !5, i64 0}
 !17 = !{!9, !9, i64 0}
-!18 = distinct !{!18, !43}
-!19 = distinct !{!19, !43}
-!20 = distinct !{!20, !43}
-!21 = distinct !{!21, !43}
+!18 = distinct !{!18, !47}
+!19 = distinct !{!19, !47}
+!20 = distinct !{!20, !47}
+!21 = distinct !{!21, !47}
 !22 = distinct !{!22, i1 true, !"apv_read_vlc"}
 !23 = distinct !{!23, !22, !"apv_read_vlc: argument 1"}
 !24 = distinct !{!24, !22, !"apv_read_vlc: argument 0"}
@@ -1964,52 +1964,56 @@ attributes #7 = { nounwind }
 !27 = distinct !{!27, !25, !"apv_read_vlc: argument 0"}
 !28 = distinct !{!28, i1 true, !"apv_read_vlc"}
 !29 = distinct !{!29, !28, !"apv_read_vlc: argument 1:It1"}
-!30 = distinct !{!30, i1 true, !"apv_read_vlc"}
-!31 = distinct !{!31, !30, !"apv_read_vlc: argument 1:It1"}
-!32 = distinct !{!32, i1 true, !"apv_read_vlc"}
-!33 = distinct !{!33, !32, !"apv_read_vlc: argument 1"}
-!34 = distinct !{!34, !32, !"apv_read_vlc: argument 0"}
-!35 = distinct !{!35, i1 true, !"apv_read_vlc"}
-!36 = distinct !{!36, !35, !"apv_read_vlc: argument 1"}
-!37 = distinct !{!37, !35, !"apv_read_vlc: argument 0"}
-!38 = distinct !{!38, i1 true, !"apv_read_vlc"}
-!39 = distinct !{!39, !38, !"apv_read_vlc: argument 1:It1"}
+!30 = distinct !{!30, !28, !"apv_read_vlc: argument 0:It1"}
+!31 = distinct !{!31, i1 true, !"apv_read_vlc"}
+!32 = distinct !{!32, !31, !"apv_read_vlc: argument 1:It1"}
+!33 = distinct !{!33, !31, !"apv_read_vlc: argument 0:It1"}
+!34 = distinct !{!34, i1 true, !"apv_read_vlc"}
+!35 = distinct !{!35, !34, !"apv_read_vlc: argument 1"}
+!36 = distinct !{!36, !34, !"apv_read_vlc: argument 0"}
+!37 = distinct !{!37, i1 true, !"apv_read_vlc"}
+!38 = distinct !{!38, !37, !"apv_read_vlc: argument 1"}
+!39 = distinct !{!39, !37, !"apv_read_vlc: argument 0"}
 !40 = distinct !{!40, i1 true, !"apv_read_vlc"}
 !41 = distinct !{!41, !40, !"apv_read_vlc: argument 1:It1"}
-!42 = distinct !{!42, !43}
-!43 = !{!"llvm.loop.mustprogress"}
-!44 = !{!23}
-!45 = !{!24, !23}
-!46 = !{!26}
-!47 = !{!27, !26}
-!48 = !{!29}
-!49 = !{!24, !29}
-!50 = !{!31}
-!51 = !{!27, !31}
-!52 = !{!33}
-!53 = !{!34, !33}
-!54 = !{!36}
-!55 = !{!37, !36}
-!56 = !{!39}
-!57 = !{!34, !39}
-!58 = !{!41}
-!59 = !{!37, !41}
-!60 = distinct !{!60, i1 true, !"apv_read_vlc"}
-!61 = distinct !{!61, !60, !"apv_read_vlc: argument 1"}
-!62 = distinct !{!62, !60, !"apv_read_vlc: argument 0"}
-!63 = !{!"any pointer", !5, i64 0}
-!64 = !{!"p1 _ZTS9APVVLCLUT", !63, i64 0}
-!65 = !{!"APVEntropyState", !63, i64 0, !64, i64 8, !9, i64 16, !5, i64 18, !5, i64 19}
-!66 = !{!65, !64, i64 8}
-!67 = !{!65, !5, i64 18}
-!68 = !{!61}
-!69 = !{!"p1 omnipotent char", !63, i64 0}
-!70 = !{!"GetBitContext", !69, i64 0, !6, i64 8, !6, i64 12, !6, i64 16}
-!71 = !{!70, !69, i64 0}
-!72 = !{!70, !6, i64 8}
-!73 = !{!70, !6, i64 16}
-!74 = !{!62, !61}
-!75 = !{!65, !9, i64 16}
-!76 = !{!65, !63, i64 0}
-!77 = !{!65, !5, i64 19}
+!42 = distinct !{!42, !40, !"apv_read_vlc: argument 0:It1"}
+!43 = distinct !{!43, i1 true, !"apv_read_vlc"}
+!44 = distinct !{!44, !43, !"apv_read_vlc: argument 1:It1"}
+!45 = distinct !{!45, !43, !"apv_read_vlc: argument 0:It1"}
+!46 = distinct !{!46, !47}
+!47 = !{!"llvm.loop.mustprogress"}
+!48 = !{!23}
+!49 = !{!24, !23}
+!50 = !{!26}
+!51 = !{!27, !26}
+!52 = !{!29}
+!53 = !{!30, !29}
+!54 = !{!32}
+!55 = !{!33, !32}
+!56 = !{!35}
+!57 = !{!36, !35}
+!58 = !{!38}
+!59 = !{!39, !38}
+!60 = !{!41}
+!61 = !{!42, !41}
+!62 = !{!44}
+!63 = !{!45, !44}
+!64 = distinct !{!64, i1 true, !"apv_read_vlc"}
+!65 = distinct !{!65, !64, !"apv_read_vlc: argument 1"}
+!66 = distinct !{!66, !64, !"apv_read_vlc: argument 0"}
+!67 = !{!"any pointer", !5, i64 0}
+!68 = !{!"p1 _ZTS9APVVLCLUT", !67, i64 0}
+!69 = !{!"APVEntropyState", !67, i64 0, !68, i64 8, !9, i64 16, !5, i64 18, !5, i64 19}
+!70 = !{!69, !68, i64 8}
+!71 = !{!69, !5, i64 18}
+!72 = !{!65}
+!73 = !{!"p1 omnipotent char", !67, i64 0}
+!74 = !{!"GetBitContext", !73, i64 0, !6, i64 8, !6, i64 12, !6, i64 16}
+!75 = !{!74, !73, i64 0}
+!76 = !{!74, !6, i64 8}
+!77 = !{!74, !6, i64 16}
+!78 = !{!66, !65}
+!79 = !{!69, !9, i64 16}
+!80 = !{!69, !67, i64 0}
+!81 = !{!69, !5, i64 19}
 end_hunk_0

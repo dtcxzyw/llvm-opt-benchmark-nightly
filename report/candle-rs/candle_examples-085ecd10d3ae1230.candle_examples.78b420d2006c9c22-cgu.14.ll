@@ -202,9 +202,9 @@ bb.a:
   br i1 %.not, label %_RINvYINtNtCsf3Ta7LF998c_4core6option8IntoIterNtNtCs1fJj97VvEPD_9minijinja5value5ValueENtNtNtNtB8_4iter6traits8iterator8Iterator8try_foldINtNtNtB8_3num7nonzero7NonZerojENCNvXs_NvB1m_10advance_byB3_NtB2N_13SpecAdvanceBy15spec_advance_by0INtB6_6OptionB2a_EECsamv9RYRPgRi_15candle_examples.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !303)
-  %.promoted.i = load i8, ptr %0, align 8, !alias.scope !304 ; 2 uses
-  store i8 -1, ptr %0, align 8, !alias.scope !305
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !307)
+  %.promoted.i = load i8, ptr %0, align 8, !alias.scope !308 ; 2 uses
+  store i8 -1, ptr %0, align 8, !alias.scope !309
   %.not11.i = icmp eq i8 %.promoted.i, -1
   br i1 %.not11.i, label %_RINvYINtNtCsf3Ta7LF998c_4core6option8IntoIterNtNtCs1fJj97VvEPD_9minijinja5value5ValueENtNtNtNtB8_4iter6traits8iterator8Iterator8try_foldINtNtNtB8_3num7nonzero7NonZerojENCNvXs_NvB1m_10advance_byB3_NtB2N_13SpecAdvanceBy15spec_advance_by0INtB6_6OptionB2a_EECsamv9RYRPgRi_15candle_examples.exit, label %.lr.ph.split.us.i
 
@@ -212,19 +212,18 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.7.0..sroa_idx7.i = getelementptr inbounds nuw i8, ptr %0, i64 1
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 9
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !306)
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !303
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !307
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(23) %.sroa.5.0..sroa_idx.i, ptr noundef nonnull align 1 dereferenceable(23) %.sroa.7.0..sroa_idx7.i, i64 23, i1 false)
-  store i64 %1, ptr %i.a, align 8, !noalias !303
-  store i8 %.promoted.i, ptr %i.b, align 8, !noalias !303
+  store i64 %1, ptr %i.a, align 8, !noalias !307
+  store i8 %.promoted.i, ptr %i.b, align 8, !noalias !307
   %i.c = add i64 %1, -1                           ; 2 uses
-  call fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs1fJj97VvEPD_9minijinja5value5ValueECsamv9RYRPgRi_15candle_examples(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.b), !noalias !303
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !303
+  call fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs1fJj97VvEPD_9minijinja5value5ValueECsamv9RYRPgRi_15candle_examples(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.b), !noalias !307
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !307
   %i.d = icmp eq i64 %i.c, 0
   br i1 %i.d, label %_RINvYINtNtCsf3Ta7LF998c_4core6option8IntoIterNtNtCs1fJj97VvEPD_9minijinja5value5ValueENtNtNtNtB8_4iter6traits8iterator8Iterator8try_foldINtNtNtB8_3num7nonzero7NonZerojENCNvXs_NvB1m_10advance_byB3_NtB2N_13SpecAdvanceBy15spec_advance_by0INtB6_6OptionB2a_EECsamv9RYRPgRi_15candle_examples.exit, label %._crit_edge.split.us.i
 
 ._crit_edge.split.us.i:                           ; preds = %.lr.ph.split.us.i
-  store i8 -1, ptr %0, align 8, !alias.scope !305
+  store i8 -1, ptr %0, align 8, !alias.scope !310
   br label %_RINvYINtNtCsf3Ta7LF998c_4core6option8IntoIterNtNtCs1fJj97VvEPD_9minijinja5value5ValueENtNtNtNtB8_4iter6traits8iterator8Iterator8try_foldINtNtNtB8_3num7nonzero7NonZerojENCNvXs_NvB1m_10advance_byB3_NtB2N_13SpecAdvanceBy15spec_advance_by0INtB6_6OptionB2a_EECsamv9RYRPgRi_15candle_examples.exit
 
 _RINvYINtNtCsf3Ta7LF998c_4core6option8IntoIterNtNtCs1fJj97VvEPD_9minijinja5value5ValueENtNtNtNtB8_4iter6traits8iterator8Iterator8try_foldINtNtNtB8_3num7nonzero7NonZerojENCNvXs_NvB1m_10advance_byB3_NtB2N_13SpecAdvanceBy15spec_advance_by0INtB6_6OptionB2a_EECsamv9RYRPgRi_15candle_examples.exit: ; preds = %.lr.ph.split.us.i, %._crit_edge.split.us.i, %bb.b, %bb.a
@@ -237,7 +236,7 @@ define internal noundef ptr @_RNvYNCNKNvNvMNtNtCs5Xr050g3D4S_3std4hash6randomNtB
 bb.a:
   %i.a = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr @_RNvNCNKNvNvMNtNtCs5Xr050g3D4S_3std4hash6randomNtBa_11RandomState3new4KEYS0s_023___RUST_STD_INTERNAL_VAL) ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %i.c = load i8, ptr %i.b, align 8, !range !8, !noalias !311, !noundef !6
+  %i.c = load i8, ptr %i.b, align 8, !range !8, !noalias !315, !noundef !6
   %i.d = trunc nuw i8 %i.c to i1
   br i1 %i.d, label %_RNCNKNvNvMNtNtCs5Xr050g3D4S_3std4hash6randomNtB8_11RandomState3new4KEYS0s_0Csamv9RYRPgRi_15candle_examples.exit, label %bb.b, !prof !9
 
@@ -640,13 +639,17 @@ begin_hunk_1_@llvm.memset.p0.i64
 !300 = distinct !{!300, i1 true, !"_RNvXsy_NtCsf3Ta7LF998c_4core6optionINtB5_8IntoIterNtNtCs1fJj97VvEPD_9minijinja5value5ValueENtNtNtNtB7_4iter6traits8iterator8Iterator4nextCsamv9RYRPgRi_15candle_examples"}
 !301 = distinct !{!301, !300, !"_RNvXsy_NtCsf3Ta7LF998c_4core6optionINtB5_8IntoIterNtNtCs1fJj97VvEPD_9minijinja5value5ValueENtNtNtNtB7_4iter6traits8iterator8Iterator4nextCsamv9RYRPgRi_15candle_examples: argument 0"}
 !302 = distinct !{!302, !300, !"_RNvXsy_NtCsf3Ta7LF998c_4core6optionINtB5_8IntoIterNtNtCs1fJj97VvEPD_9minijinja5value5ValueENtNtNtNtB7_4iter6traits8iterator8Iterator4nextCsamv9RYRPgRi_15candle_examples: argument 1"}
-!303 = !{!299}
-!304 = !{!302, !301, !299}
-!305 = !{!302, !299}
-!306 = !{!301}
-!307 = distinct !{!307, i1 true, !"_RNCNKNvNvMNtNtCs5Xr050g3D4S_3std4hash6randomNtB8_11RandomState3new4KEYS0s_0Csamv9RYRPgRi_15candle_examples"}
-!308 = distinct !{!308, !307, !"_RNCNKNvNvMNtNtCs5Xr050g3D4S_3std4hash6randomNtB8_11RandomState3new4KEYS0s_0Csamv9RYRPgRi_15candle_examples: argument 0"}
-!309 = distinct !{!309, i1 true, !"_RINvMs0_NtNtNtNtCs5Xr050g3D4S_3std3sys12thread_local6native4lazyINtB6_7StorageINtNtCsf3Ta7LF998c_4core4cell4CellTyyEEzE11get_or_initNvNvNvMNtNtBe_4hash6randomNtB2d_11RandomState3new4KEYS27___rust_std_internal_init_fnECsamv9RYRPgRi_15candle_examples"}
-!310 = distinct !{!310, !309, !"_RINvMs0_NtNtNtNtCs5Xr050g3D4S_3std3sys12thread_local6native4lazyINtB6_7StorageINtNtCsf3Ta7LF998c_4core4cell4CellTyyEEzE11get_or_initNvNvNvMNtNtBe_4hash6randomNtB2d_11RandomState3new4KEYS27___rust_std_internal_init_fnECsamv9RYRPgRi_15candle_examples: argument 0"}
-!311 = !{!310, !308}
+!303 = distinct !{!303, i1 true, !"_RNvXsy_NtCsf3Ta7LF998c_4core6optionINtB5_8IntoIterNtNtCs1fJj97VvEPD_9minijinja5value5ValueENtNtNtNtB7_4iter6traits8iterator8Iterator4nextCsamv9RYRPgRi_15candle_examples"}
+!304 = distinct !{!304, !303, !"_RNvXsy_NtCsf3Ta7LF998c_4core6optionINtB5_8IntoIterNtNtCs1fJj97VvEPD_9minijinja5value5ValueENtNtNtNtB7_4iter6traits8iterator8Iterator4nextCsamv9RYRPgRi_15candle_examples: argument 1:pre.rot"}
+!305 = distinct !{!305, i1 true, !"_RNvXsy_NtCsf3Ta7LF998c_4core6optionINtB5_8IntoIterNtNtCs1fJj97VvEPD_9minijinja5value5ValueENtNtNtNtB7_4iter6traits8iterator8Iterator4nextCsamv9RYRPgRi_15candle_examples"}
+!306 = distinct !{!306, !305, !"_RNvXsy_NtCsf3Ta7LF998c_4core6optionINtB5_8IntoIterNtNtCs1fJj97VvEPD_9minijinja5value5ValueENtNtNtNtB7_4iter6traits8iterator8Iterator4nextCsamv9RYRPgRi_15candle_examples: argument 1:h.rot"}
+!307 = !{!299}
+!308 = !{!302, !301, !299}
+!309 = !{!304, !299}
+!310 = !{!306, !299}
+!311 = distinct !{!311, i1 true, !"_RNCNKNvNvMNtNtCs5Xr050g3D4S_3std4hash6randomNtB8_11RandomState3new4KEYS0s_0Csamv9RYRPgRi_15candle_examples"}
+!312 = distinct !{!312, !311, !"_RNCNKNvNvMNtNtCs5Xr050g3D4S_3std4hash6randomNtB8_11RandomState3new4KEYS0s_0Csamv9RYRPgRi_15candle_examples: argument 0"}
+!313 = distinct !{!313, i1 true, !"_RINvMs0_NtNtNtNtCs5Xr050g3D4S_3std3sys12thread_local6native4lazyINtB6_7StorageINtNtCsf3Ta7LF998c_4core4cell4CellTyyEEzE11get_or_initNvNvNvMNtNtBe_4hash6randomNtB2d_11RandomState3new4KEYS27___rust_std_internal_init_fnECsamv9RYRPgRi_15candle_examples"}
+!314 = distinct !{!314, !313, !"_RINvMs0_NtNtNtNtCs5Xr050g3D4S_3std3sys12thread_local6native4lazyINtB6_7StorageINtNtCsf3Ta7LF998c_4core4cell4CellTyyEEzE11get_or_initNvNvNvMNtNtBe_4hash6randomNtB2d_11RandomState3new4KEYS27___rust_std_internal_init_fnECsamv9RYRPgRi_15candle_examples: argument 0"}
+!315 = !{!314, !312}
 end_hunk_1
