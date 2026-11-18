@@ -204,7 +204,7 @@ _ZNO4mlir18InFlightDiagnosticlsIRA10_KcEEOS0_OT_.exit: ; preds = %bb.af, %_ZN4ml
   %i.ei = call { ptr, i64 } @_ZNK4mlir10MemRefType8getShapeEv(ptr noundef nonnull align 8 dereferenceable(8) %11) #29
   %i.ej = load ptr, ptr %21, align 8, !tbaa !107
   %.not.i.i46 = icmp eq ptr %i.ej, null
-  br i1 %.not.i.i46, label %_ZNO4mlir18InFlightDiagnosticlsImEEOS0_OT_.exit, label %bb.aj
+  br i1 %.not.i.i46, label %_ZNO4mlir18InFlightDiagnosticlsIRA22_KcEEOS0_OT_.exit.thread, label %bb.aj
 
 bb.aj:                                            ; preds = %_ZNO4mlir18InFlightDiagnosticlsIRA10_KcEEOS0_OT_.exit
   %i.ek = extractvalue { ptr, i64 } %i.ei, 1
@@ -238,7 +238,7 @@ _ZNO4mlir18InFlightDiagnosticlsIlEEOS0_OT_.exit:  ; preds = %bb.ak, %bb.al
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #29
   %.pr95 = load ptr, ptr %21, align 8, !tbaa !107
   %.not.i.i48 = icmp eq ptr %.pr95, null
-  br i1 %.not.i.i48, label %_ZNO4mlir18InFlightDiagnosticlsImEEOS0_OT_.exit, label %bb.am
+  br i1 %.not.i.i48, label %_ZNO4mlir18InFlightDiagnosticlsIRA22_KcEEOS0_OT_.exit.thread, label %bb.am
 
 bb.am:                                            ; preds = %_ZNO4mlir18InFlightDiagnosticlsIlEEOS0_OT_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #29
@@ -265,6 +265,14 @@ bb.ao:                                            ; preds = %bb.am
   %i.fd = add i32 %i.fc, 1
   store i32 %i.fd, ptr %i.en, align 8, !tbaa !117
   br label %_ZNO4mlir18InFlightDiagnosticlsIRA22_KcEEOS0_OT_.exit
+
+_ZNO4mlir18InFlightDiagnosticlsIRA22_KcEEOS0_OT_.exit.thread: ; preds = %_ZNO4mlir18InFlightDiagnosticlsIRA10_KcEEOS0_OT_.exit, %_ZNO4mlir18InFlightDiagnosticlsIlEEOS0_OT_.exit
+  %30 = load ptr, ptr %0, align 8, !tbaa !89
+  %31 = getelementptr inbounds nuw i8, ptr %30, i64 44
+  %32 = load i32, ptr %31, align 4
+  %.not.i.i.i.i.i51121 = icmp ugt i32 %32, 16777215
+  call void @llvm.assume(i1 %.not.i.i.i.i.i51121)
+  br label %_ZNO4mlir18InFlightDiagnosticlsImEEOS0_OT_.exit
 
 _ZNO4mlir18InFlightDiagnosticlsIRA22_KcEEOS0_OT_.exit: ; preds = %bb.an, %bb.ao
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #29
@@ -326,7 +334,7 @@ _ZN4mlir10Diagnostic6appendImEERS0_OT_.exit.i.i:  ; preds = %bb.ar, %bb.aq
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #29
   br label %_ZNO4mlir18InFlightDiagnosticlsImEEOS0_OT_.exit
 
-_ZNO4mlir18InFlightDiagnosticlsImEEOS0_OT_.exit:  ; preds = %_ZNO4mlir18InFlightDiagnosticlsIlEEOS0_OT_.exit, %_ZNO4mlir18InFlightDiagnosticlsIRA10_KcEEOS0_OT_.exit, %_ZNO4mlir18InFlightDiagnosticlsIRA22_KcEEOS0_OT_.exit, %_ZN4mlir10Diagnostic6appendImEERS0_OT_.exit.i.i
+_ZNO4mlir18InFlightDiagnosticlsImEEOS0_OT_.exit:  ; preds = %_ZNO4mlir18InFlightDiagnosticlsIRA22_KcEEOS0_OT_.exit.thread, %_ZNO4mlir18InFlightDiagnosticlsIRA22_KcEEOS0_OT_.exit, %_ZN4mlir10Diagnostic6appendImEERS0_OT_.exit.i.i
   %i.gj = call i8 @_ZNK4mlir18InFlightDiagnosticcvN4llvm13LogicalResultEEv(ptr noundef nonnull align 8 dereferenceable(208) %21) #29
   %i.gk = load ptr, ptr %21, align 8, !tbaa !107
   %.not.i61 = icmp eq ptr %i.gk, null

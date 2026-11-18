@@ -205,7 +205,7 @@ bb.pt:                                            ; preds = %bb.rb, %bb.qx, %bb.
 bb.pu:                                            ; preds = %.noexc679, %.noexc680, %.noexc681
   %.pn881 = phi { i64, ptr } [ %i.akd, %.noexc681 ], [ %i.ajv, %.noexc680 ], [ %i.ajo, %.noexc679 ]
   %.sroa.0.0.i673.ph = phi i64 [ %i.ake, %.noexc681 ], [ %i.ajw, %.noexc680 ], [ %i.ajp, %.noexc679 ]
-  %.sroa.5.0.i.ph = extractvalue { i64, ptr } %.pn881, 1 ; 18 uses
+  %.sroa.5.0.i.ph = extractvalue { i64, ptr } %.pn881, 1 ; 24 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.r)
   switch i64 %.sroa.0.0.i673.ph, label %.loopexit924 [
     i64 2, label %bb.qm
@@ -461,6 +461,7 @@ bb.qp:                                            ; preds = %bb.qo
 bb.qq:                                            ; preds = %bb.pv
   %i.alu = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.0.i.ph) ]
   %i.alv = getelementptr inbounds nuw i8, ptr %.sroa.5.0.i.ph, i64 48 ; 2 uses
   %i.alw = load i32, ptr %i.alv, align 4, !noundef !29
   %i.alx = add i32 %i.alw, -1                     ; 2 uses
@@ -473,6 +474,7 @@ bb.qr:                                            ; preds = %bb.qq
           to label %.body682 unwind label %bb.ib
 
 bb.qs:                                            ; preds = %bb.pv
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.0.i.ph) ]
   %i.alz = getelementptr inbounds nuw i8, ptr %.sroa.5.0.i.ph, i64 48 ; 2 uses
   %i.ama = load i32, ptr %i.alz, align 4, !noundef !29
   %i.amb = add i32 %i.ama, -1                     ; 2 uses
@@ -498,6 +500,7 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9genera
 bb.qu:                                            ; preds = %.noexc703, %.noexc702, %bb.ql, %.noexc700, %.noexc699, %bb.qj, %.noexc697, %.noexc696, %bb.qi, %bb.qh, %.noexc693, %bb.qe, %bb.pw
   %i.amd = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.0.i.ph) ]
   %i.ame = getelementptr inbounds nuw i8, ptr %.sroa.5.0.i.ph, i64 48 ; 2 uses
   %i.amf = load i32, ptr %i.ame, align 4, !noundef !29
   %i.amg = add i32 %i.amf, -1                     ; 2 uses
@@ -512,6 +515,7 @@ bb.qv:                                            ; preds = %bb.qu
 bb.qw:                                            ; preds = %.noexc704, %bb.qk, %.noexc701, %.noexc698, %bb.qg, %bb.qb, %bb.qa, %bb.pz, %.noexc692
   %.sroa.0.2.i = phi i1 [ false, %bb.qg ], [ %i.akz, %.noexc698 ], [ %i.alk, %.noexc704 ], [ %i.ale, %.noexc701 ], [ false, %bb.qb ], [ false, %.noexc692 ], [ false, %bb.qa ], [ false, %bb.pz ], [ false, %bb.qk ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q), !noalias !1869
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.0.i.ph) ]
   %i.ami = getelementptr inbounds nuw i8, ptr %.sroa.5.0.i.ph, i64 48 ; 2 uses
   %i.amj = load i32, ptr %i.ami, align 4, !noundef !29
   %i.amk = add i32 %i.amj, -1                     ; 2 uses
@@ -526,6 +530,7 @@ bb.qx:                                            ; preds = %bb.qw
 bb.qy:                                            ; preds = %.noexc713, %.noexc712, %bb.qp, %bb.qm
   %i.amm = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.0.i.ph) ]
   %i.amn = getelementptr inbounds nuw i8, ptr %.sroa.5.0.i.ph, i64 48 ; 2 uses
   %i.amo = load i32, ptr %i.amn, align 4, !noundef !29
   %i.amp = add i32 %i.amo, -1                     ; 2 uses
@@ -540,6 +545,7 @@ bb.qz:                                            ; preds = %bb.qy
 bb.ra:                                            ; preds = %.noexc714, %bb.qo, %bb.qn, %.noexc711
   %.sroa.0.0.i706 = phi i1 [ %i.alt, %.noexc714 ], [ false, %bb.qo ], [ false, %bb.qn ], [ false, %.noexc711 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !1872
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.0.i.ph) ]
   %i.amr = getelementptr inbounds nuw i8, ptr %.sroa.5.0.i.ph, i64 48 ; 2 uses
   %i.ams = load i32, ptr %i.amr, align 4, !noundef !29
   %i.amt = add i32 %i.ams, -1                     ; 2 uses

@@ -205,7 +205,8 @@ _ZN4http3uri4path12PathAndQuery4path17h6a57330954aa7242E.exit: ; preds = %bb.c
 
 _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit: ; preds = %_ZN4http3uri4path12PathAndQuery4path17h6a57330954aa7242E.exit.thread, %_ZN4http3uri4path12PathAndQuery4path17h6a57330954aa7242E.exit, %"_ZN4core3str6traits110_$LT$impl$u20$core..slice..index..SliceIndex$LT$str$GT$$u20$for$u20$core..ops..range..RangeTo$LT$usize$GT$$GT$3get17h824a7d82d6dba62aE.exit.i", %bb.b
   %.sroa.5.0 = phi i64 [ 0, %bb.b ], [ %.sroa.7.0.i.ph, %_ZN4http3uri4path12PathAndQuery4path17h6a57330954aa7242E.exit.thread ], [ %..sroa.7.0.i, %_ZN4http3uri4path12PathAndQuery4path17h6a57330954aa7242E.exit ], [ 1, %"_ZN4core3str6traits110_$LT$impl$u20$core..slice..index..SliceIndex$LT$str$GT$$u20$for$u20$core..ops..range..RangeTo$LT$usize$GT$$GT$3get17h824a7d82d6dba62aE.exit.i" ]
-  %.sroa.010.0 = phi ptr [ inttoptr (i64 1 to ptr), %bb.b ], [ %i.af, %_ZN4http3uri4path12PathAndQuery4path17h6a57330954aa7242E.exit.thread ], [ %spec.select, %_ZN4http3uri4path12PathAndQuery4path17h6a57330954aa7242E.exit ], [ @313, %"_ZN4core3str6traits110_$LT$impl$u20$core..slice..index..SliceIndex$LT$str$GT$$u20$for$u20$core..ops..range..RangeTo$LT$usize$GT$$GT$3get17h824a7d82d6dba62aE.exit.i" ]
+  %.sroa.010.0 = phi ptr [ inttoptr (i64 1 to ptr), %bb.b ], [ %i.af, %_ZN4http3uri4path12PathAndQuery4path17h6a57330954aa7242E.exit.thread ], [ %spec.select, %_ZN4http3uri4path12PathAndQuery4path17h6a57330954aa7242E.exit ], [ @313, %"_ZN4core3str6traits110_$LT$impl$u20$core..slice..index..SliceIndex$LT$str$GT$$u20$for$u20$core..ops..range..RangeTo$LT$usize$GT$$GT$3get17h824a7d82d6dba62aE.exit.i" ] ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.010.0) ]
   store ptr %.sroa.010.0, ptr %i.q, align 8
   %i.am = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   store i64 %.sroa.5.0, ptr %i.am, align 8
@@ -608,7 +609,8 @@ _ZN4http3uri4path12PathAndQuery4path17h6a57330954aa7242E.exit: ; preds = %bb.c
 
 _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit: ; preds = %_ZN4http3uri4path12PathAndQuery4path17h6a57330954aa7242E.exit.thread, %_ZN4http3uri4path12PathAndQuery4path17h6a57330954aa7242E.exit, %"_ZN4core3str6traits110_$LT$impl$u20$core..slice..index..SliceIndex$LT$str$GT$$u20$for$u20$core..ops..range..RangeTo$LT$usize$GT$$GT$3get17h824a7d82d6dba62aE.exit.i", %bb.b
   %.sroa.5.0 = phi i64 [ 0, %bb.b ], [ %.sroa.7.0.i.ph, %_ZN4http3uri4path12PathAndQuery4path17h6a57330954aa7242E.exit.thread ], [ %..sroa.7.0.i, %_ZN4http3uri4path12PathAndQuery4path17h6a57330954aa7242E.exit ], [ 1, %"_ZN4core3str6traits110_$LT$impl$u20$core..slice..index..SliceIndex$LT$str$GT$$u20$for$u20$core..ops..range..RangeTo$LT$usize$GT$$GT$3get17h824a7d82d6dba62aE.exit.i" ]
-  %.sroa.09.0 = phi ptr [ inttoptr (i64 1 to ptr), %bb.b ], [ %i.ae, %_ZN4http3uri4path12PathAndQuery4path17h6a57330954aa7242E.exit.thread ], [ %spec.select, %_ZN4http3uri4path12PathAndQuery4path17h6a57330954aa7242E.exit ], [ @313, %"_ZN4core3str6traits110_$LT$impl$u20$core..slice..index..SliceIndex$LT$str$GT$$u20$for$u20$core..ops..range..RangeTo$LT$usize$GT$$GT$3get17h824a7d82d6dba62aE.exit.i" ]
+  %.sroa.09.0 = phi ptr [ inttoptr (i64 1 to ptr), %bb.b ], [ %i.ae, %_ZN4http3uri4path12PathAndQuery4path17h6a57330954aa7242E.exit.thread ], [ %spec.select, %_ZN4http3uri4path12PathAndQuery4path17h6a57330954aa7242E.exit ], [ @313, %"_ZN4core3str6traits110_$LT$impl$u20$core..slice..index..SliceIndex$LT$str$GT$$u20$for$u20$core..ops..range..RangeTo$LT$usize$GT$$GT$3get17h824a7d82d6dba62aE.exit.i" ] ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.09.0) ]
   store ptr %.sroa.09.0, ptr %i.o, align 8
   %i.al = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   store i64 %.sroa.5.0, ptr %i.al, align 8
@@ -1011,9 +1013,9 @@ define void @"_ZN84_$LT$actix_web..http..header..range..Range$u20$as$u20$core..s
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 8 uses
   %i.b = alloca [72 x i8], align 8                ; 6 uses
-  %i.c = alloca [24 x i8], align 8                ; 6 uses
-  %i.d = alloca [24 x i8], align 8                ; 10 uses
-  %i.e = alloca [72 x i8], align 8                ; 16 uses
+  %i.c = alloca [24 x i8], align 8                ; 7 uses
+  %i.d = alloca [24 x i8], align 8                ; 11 uses
+  %i.e = alloca [72 x i8], align 8                ; 17 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.d, %bb.a
@@ -1172,7 +1174,7 @@ bb.j:                                             ; preds = %bb.i
 .lr.ph.i.i.i.i.i.i.i:                             ; preds = %.noexc.i.i.i.i.i, %.noexc7.i.i.i.i.i
   %i.am = phi ptr [ %i.ar, %.noexc7.i.i.i.i.i ], [ %i.aj, %.noexc.i.i.i.i.i ]
   %i.an = phi i64 [ %i.as, %.noexc7.i.i.i.i.i ], [ 4, %.noexc.i.i.i.i.i ] ; 3 uses
-  %i.ao = phi i64 [ %i.au, %.noexc7.i.i.i.i.i ], [ 1, %.noexc.i.i.i.i.i ] ; 4 uses
+  %i.ao = phi i64 [ %i.au, %.noexc7.i.i.i.i.i ], [ 1, %.noexc.i.i.i.i.i ] ; 5 uses
   %i.ap = icmp samesign ult i64 %i.ao, 384307168202282326
   tail call void @llvm.assume(i1 %i.ap)
   %i.aq = icmp eq i64 %i.ao, %i.an
@@ -1207,6 +1209,11 @@ _ZN9actix_web4http6header5range20from_comma_delimited17h5ff79a7cec7bd004E.exit.t
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !9646
   %.sroa.065.0.copyload66106 = load i64, ptr %i.d, align 8, !noalias !9657
   %.sroa.7.0.copyload68107 = load ptr, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i, align 8, !noalias !9657
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !9646
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !9645
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !9642
+  %3 = icmp samesign ult i64 %i.ao, 384307168202282325
+  tail call void @llvm.assume(i1 %3)
   br label %bb.m
 
 .loopexit.split-lp.thread.i.i.i.i.i:              ; preds = %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h77edd112abb727dbE.exit.i.i.i.i.i"
@@ -1240,15 +1247,15 @@ common.resume:                                    ; preds = %.loopexit.split-lp.
 _ZN9actix_web4http6header5range20from_comma_delimited17h5ff79a7cec7bd004E.exit: ; preds = %.noexc.i.i.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !9653
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !9646
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !9646
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !9645
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !9642
   br label %bb.m
 
 bb.m:                                             ; preds = %_ZN9actix_web4http6header5range20from_comma_delimited17h5ff79a7cec7bd004E.exit, %_ZN9actix_web4http6header5range20from_comma_delimited17h5ff79a7cec7bd004E.exit.thread104
   %.sroa.7.0.copyload68110 = phi ptr [ %.sroa.7.0.copyload68107, %_ZN9actix_web4http6header5range20from_comma_delimited17h5ff79a7cec7bd004E.exit.thread104 ], [ %i.aj, %_ZN9actix_web4http6header5range20from_comma_delimited17h5ff79a7cec7bd004E.exit ]
   %.sroa.065.0.copyload66109 = phi i64 [ %.sroa.065.0.copyload66106, %_ZN9actix_web4http6header5range20from_comma_delimited17h5ff79a7cec7bd004E.exit.thread104 ], [ 4, %_ZN9actix_web4http6header5range20from_comma_delimited17h5ff79a7cec7bd004E.exit ]
   %.sroa.9.0.copyload70108 = phi i64 [ %i.au, %_ZN9actix_web4http6header5range20from_comma_delimited17h5ff79a7cec7bd004E.exit.thread104 ], [ 1, %_ZN9actix_web4http6header5range20from_comma_delimited17h5ff79a7cec7bd004E.exit ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !9646
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !9645
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !9642
   store i64 -9223372036854775808, ptr %0, align 8
   %.sroa.413.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.065.0.copyload66109, ptr %.sroa.413.0..sroa_idx, align 8
@@ -1651,8 +1658,9 @@ _ZN4http3uri4path12PathAndQuery4path17h6a57330954aa7242E.exit126.thread: ; preds
   br label %bb.bp
 
 bb.bp:                                            ; preds = %_ZN4http3uri4path12PathAndQuery4path17h6a57330954aa7242E.exit126.thread, %"_ZN4core3str6traits110_$LT$impl$u20$core..slice..index..SliceIndex$LT$str$GT$$u20$for$u20$core..ops..range..RangeTo$LT$usize$GT$$GT$3get17h824a7d82d6dba62aE.exit.i124"
-  %.sroa.062.0 = phi ptr [ @313, %"_ZN4core3str6traits110_$LT$impl$u20$core..slice..index..SliceIndex$LT$str$GT$$u20$for$u20$core..ops..range..RangeTo$LT$usize$GT$$GT$3get17h824a7d82d6dba62aE.exit.i124" ], [ %i.ad, %_ZN4http3uri4path12PathAndQuery4path17h6a57330954aa7242E.exit126.thread ]
+  %.sroa.062.0 = phi ptr [ @313, %"_ZN4core3str6traits110_$LT$impl$u20$core..slice..index..SliceIndex$LT$str$GT$$u20$for$u20$core..ops..range..RangeTo$LT$usize$GT$$GT$3get17h824a7d82d6dba62aE.exit.i124" ], [ %i.ad, %_ZN4http3uri4path12PathAndQuery4path17h6a57330954aa7242E.exit126.thread ] ; 2 uses
   %.sroa.563.0 = phi i64 [ 1, %"_ZN4core3str6traits110_$LT$impl$u20$core..slice..index..SliceIndex$LT$str$GT$$u20$for$u20$core..ops..range..RangeTo$LT$usize$GT$$GT$3get17h824a7d82d6dba62aE.exit.i124" ], [ %.sroa.7.0.i120.ph, %_ZN4http3uri4path12PathAndQuery4path17h6a57330954aa7242E.exit126.thread ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.062.0) ]
   store ptr %.sroa.062.0, ptr %i.l, align 8
   %i.jw = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   store i64 %.sroa.563.0, ptr %i.jw, align 8
@@ -1954,7 +1962,7 @@ bb.cr:                                            ; preds = %bb.cq
 
 "_ZN4core3str6traits110_$LT$impl$u20$core..slice..index..SliceIndex$LT$str$GT$$u20$for$u20$core..ops..range..RangeTo$LT$usize$GT$$GT$3get17h824a7d82d6dba62aE.exit.i161": ; preds = %bb.cp
   %.not.old.i162 = icmp eq ptr %i.lw, null
-  br i1 %.not.old.i162, label %"_ZN4core3str6traits110_$LT$impl$u20$core..slice..index..SliceIndex$LT$str$GT$$u20$for$u20$core..ops..range..RangeTo$LT$usize$GT$$GT$3get17h824a7d82d6dba62aE.exit.thread.i160", label %.thread355.a, !prof !59
+  br i1 %.not.old.i162, label %"_ZN4core3str6traits110_$LT$impl$u20$core..slice..index..SliceIndex$LT$str$GT$$u20$for$u20$core..ops..range..RangeTo$LT$usize$GT$$GT$3get17h824a7d82d6dba62aE.exit.thread.i160", label %.thread355, !prof !59
 
 "_ZN4core3str6traits110_$LT$impl$u20$core..slice..index..SliceIndex$LT$str$GT$$u20$for$u20$core..ops..range..RangeTo$LT$usize$GT$$GT$3get17h824a7d82d6dba62aE.exit.thread.i160": ; preds = %"_ZN4core3str6traits110_$LT$impl$u20$core..slice..index..SliceIndex$LT$str$GT$$u20$for$u20$core..ops..range..RangeTo$LT$usize$GT$$GT$3get17h824a7d82d6dba62aE.exit.i161", %bb.cr, %.split.i.i154
   tail call void @_ZN4core3str16slice_error_fail17h34415ed9969dc080E(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %i.lw, i64 noundef %i.im, i64 noundef 0, i64 noundef %i.lx, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @312) #52
@@ -1963,7 +1971,7 @@ bb.cr:                                            ; preds = %bb.cq
 _ZN4http3uri4path12PathAndQuery4path17h6a57330954aa7242E.exit163.thread: ; preds = %.split.i.i154, %bb.cr
   %.sroa.7.0.i157.ph = phi i64 [ %i.lx, %bb.cr ], [ %i.im, %.split.i.i154 ]
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.lw) ]
-  br label %.thread355.a
+  br label %.thread355
 
 _ZN4http3uri4path12PathAndQuery4path17h6a57330954aa7242E.exit163: ; preds = %bb.co
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.lw) ]
@@ -1972,9 +1980,15 @@ _ZN4http3uri4path12PathAndQuery4path17h6a57330954aa7242E.exit163: ; preds = %bb.
   %i.md = icmp slt i64 %..sroa.7.0.i158, 0
   br i1 %i.md, label %bb.cs, label %.thread355.a, !prof !34
 
-.thread355.a:                                     ; preds = %_ZN4http3uri4path12PathAndQuery4path17h6a57330954aa7242E.exit163.thread, %"_ZN4core3str6traits110_$LT$impl$u20$core..slice..index..SliceIndex$LT$str$GT$$u20$for$u20$core..ops..range..RangeTo$LT$usize$GT$$GT$3get17h824a7d82d6dba62aE.exit.i161", %_ZN4http3uri4path12PathAndQuery4path17h6a57330954aa7242E.exit163
-  %.sroa.041.0353.ph = phi ptr [ %spec.select363, %_ZN4http3uri4path12PathAndQuery4path17h6a57330954aa7242E.exit163 ], [ %i.lw, %_ZN4http3uri4path12PathAndQuery4path17h6a57330954aa7242E.exit163.thread ], [ @313, %"_ZN4core3str6traits110_$LT$impl$u20$core..slice..index..SliceIndex$LT$str$GT$$u20$for$u20$core..ops..range..RangeTo$LT$usize$GT$$GT$3get17h824a7d82d6dba62aE.exit.i161" ]
-  %.sroa.542.0351.ph = phi i64 [ %..sroa.7.0.i158, %_ZN4http3uri4path12PathAndQuery4path17h6a57330954aa7242E.exit163 ], [ %.sroa.7.0.i157.ph, %_ZN4http3uri4path12PathAndQuery4path17h6a57330954aa7242E.exit163.thread ], [ 1, %"_ZN4core3str6traits110_$LT$impl$u20$core..slice..index..SliceIndex$LT$str$GT$$u20$for$u20$core..ops..range..RangeTo$LT$usize$GT$$GT$3get17h824a7d82d6dba62aE.exit.i161" ] ; 3 uses
+.thread355:                                       ; preds = %"_ZN4core3str6traits110_$LT$impl$u20$core..slice..index..SliceIndex$LT$str$GT$$u20$for$u20$core..ops..range..RangeTo$LT$usize$GT$$GT$3get17h824a7d82d6dba62aE.exit.i161", %_ZN4http3uri4path12PathAndQuery4path17h6a57330954aa7242E.exit163.thread
+  %..sroa.7.0.i158343.ph = phi i64 [ %.sroa.7.0.i157.ph, %_ZN4http3uri4path12PathAndQuery4path17h6a57330954aa7242E.exit163.thread ], [ 1, %"_ZN4core3str6traits110_$LT$impl$u20$core..slice..index..SliceIndex$LT$str$GT$$u20$for$u20$core..ops..range..RangeTo$LT$usize$GT$$GT$3get17h824a7d82d6dba62aE.exit.i161" ]
+  %.ph = phi ptr [ %i.lw, %_ZN4http3uri4path12PathAndQuery4path17h6a57330954aa7242E.exit163.thread ], [ @313, %"_ZN4core3str6traits110_$LT$impl$u20$core..slice..index..SliceIndex$LT$str$GT$$u20$for$u20$core..ops..range..RangeTo$LT$usize$GT$$GT$3get17h824a7d82d6dba62aE.exit.i161" ] ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.ph) ]
+  br label %.thread355.a
+
+.thread355.a:                                     ; preds = %_ZN4http3uri4path12PathAndQuery4path17h6a57330954aa7242E.exit163, %.thread355
+  %.sroa.041.0353.ph = phi ptr [ %.ph, %.thread355 ], [ %spec.select363, %_ZN4http3uri4path12PathAndQuery4path17h6a57330954aa7242E.exit163 ]
+  %.sroa.542.0351.ph = phi i64 [ %..sroa.7.0.i158343.ph, %.thread355 ], [ %..sroa.7.0.i158, %_ZN4http3uri4path12PathAndQuery4path17h6a57330954aa7242E.exit163 ] ; 3 uses
   tail call void @_RNvCskdKJRKLKjqM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #46, !noalias !10953
   %i.me = tail call noundef ptr @_RNvCskdKJRKLKjqM_7___rustc12___rust_alloc(i64 noundef %.sroa.542.0351.ph, i64 noundef range(i64 1, 9) 1) #46, !noalias !10953 ; 2 uses
   %i.mf = icmp eq ptr %i.me, null

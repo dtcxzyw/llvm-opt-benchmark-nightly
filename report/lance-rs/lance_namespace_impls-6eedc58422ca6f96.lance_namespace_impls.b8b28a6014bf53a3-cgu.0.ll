@@ -206,9 +206,9 @@ bb.h:                                             ; preds = %bb.d
   br i1 %i.at, label %bb.ak, label %.body
 
 bb.i:                                             ; preds = %bb.e
-  %i.au = extractvalue { ptr, ptr } %i.aj, 0      ; 4 uses
-  %i.av = extractvalue { ptr, ptr } %i.aj, 1      ; 6 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.au) ]
+  %i.au = extractvalue { ptr, ptr } %i.aj, 0      ; 6 uses
+  %i.av = extractvalue { ptr, ptr } %i.aj, 1      ; 7 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.au), "nonnull"(ptr %i.av) ]
   %i.aw = load ptr, ptr %i.h, align 8, !nonnull !411, !align !412, !noundef !411
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 16
   store atomic i8 0, ptr %i.ax release, align 8
@@ -218,6 +218,7 @@ bb.i:                                             ; preds = %bb.e
   br i1 %.not.i, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.au) ]
   invoke void %i.ay(ptr noundef nonnull %i.au)
           to label %bb.k unwind label %bb.l
 
@@ -230,6 +231,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
 _RNvXs_NtCs40k4W9msRzi_5alloc5allocNtB4_6GlobalNtNtCscI6d9CVNmLh_4core5alloc9Allocator10deallocate.exit.i.i: ; preds = %bb.k
   %i.bc = getelementptr inbounds nuw i8, ptr %i.av, i64 16
   %i.bd = load i64, ptr %i.bc, align 8, !range !415, !invariant.load !411
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.au) ]
   tail call void @_RNvCs9hJ03s5DiqP_7___rustc14___rust_dealloc(ptr noundef nonnull %i.au, i64 noundef %i.ba, i64 noundef range(i64 1, -9223372036854775807) %i.bd) #68
   br label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtB4_3any3AnyNtNtB4_6marker4SendEL_EECsfR8GmIBoxTX_21lance_namespace_impls.exit
 
@@ -632,7 +634,7 @@ bb.j:                                             ; preds = %bb.i
   %i.bj = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
   %.sroa.8.sroa.6.7.copyload = load i64, ptr %i.bj, align 8, !alias.scope !163287 ; 3 uses
   %.sroa.8.sroa.8.7..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ag, i64 16
-  %.sroa.8.sroa.8.7.copyload = load ptr, ptr %.sroa.8.sroa.8.7..sroa_idx, align 8, !alias.scope !163287 ; 5 uses
+  %.sroa.8.sroa.8.7.copyload = load ptr, ptr %.sroa.8.sroa.8.7..sroa_idx, align 8, !alias.scope !163287 ; 6 uses
   %.sroa.8.sroa.9.7..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ag, i64 24
   %.sroa.8.sroa.9.7.copyload = load i64, ptr %.sroa.8.sroa.9.7..sroa_idx, align 8, !alias.scope !163287 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ag)
@@ -688,6 +690,7 @@ bb.n:                                             ; preds = %bb.m
   %i.bu = and i64 %i.bt, -16
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bp, i64 %i.bu
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bv, i64 16
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.sroa.8.7.copyload) ]
   %i.bx = getelementptr inbounds nuw i8, ptr %.val85, i64 32
   %i.by = load ptr, ptr %i.bx, align 8, !invariant.load !411, !nonnull !411
   %i.bz = invoke { ptr, ptr } %i.by(ptr noundef nonnull %i.bw, ptr noalias noundef nonnull readonly captures(address, read_provenance) %.sroa.8.sroa.8.7.copyload, i64 noundef %.sroa.8.sroa.9.7.copyload, ptr noundef nonnull %.pre, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(120) %.pre568)

@@ -205,7 +205,7 @@ _ZN3std2io4Read8read_buf17h78d691331ac6ea85E.exit.peel: ; preds = %.peel.begin, 
   ], !prof !60
 
 .split40.peel:                                    ; preds = %_ZN3std2io4Read8read_buf17h78d691331ac6ea85E.exit.peel
-  %i.bo = getelementptr i8, ptr %i.bl, i64 -1     ; 5 uses
+  %i.bo = getelementptr i8, ptr %i.bl, i64 -1     ; 6 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bo) ]
   %i.bp = getelementptr i8, ptr %i.bl, i64 15
   %i.bq = load i8, ptr %i.bp, align 8, !range !131, !noundef !52
@@ -213,9 +213,10 @@ _ZN3std2io4Read8read_buf17h78d691331ac6ea85E.exit.peel: ; preds = %.peel.begin, 
   br i1 %i.br, label %bb.o, label %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$11try_reserve17h2c169de990359478E.exit.thread.loopexit.split.loop.exit60"
 
 bb.o:                                             ; preds = %.split40.peel
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bo) ]
   %.val.i.i.i.i.i.peel = load ptr, ptr %i.bo, align 8, !noalias !18941 ; 4 uses
   %i.bs = getelementptr i8, ptr %i.bl, i64 7
-  %.val1.i.i.i.i.i.peel = load ptr, ptr %i.bs, align 8, !noalias !18941, !nonnull !52, !align !55, !noundef !52 ; 3 uses
+  %.val1.i.i.i.i.i.peel = load ptr, ptr %i.bs, align 8, !noalias !18941, !nonnull !52, !align !55, !noundef !52 ; 4 uses
   %i.bt = load ptr, ptr %.val1.i.i.i.i.i.peel, align 8, !invariant.load !52, !noalias !18941 ; 2 uses
   %.not.i.i.i.i.i.i.i.peel = icmp eq ptr %i.bt, null
   br i1 %.not.i.i.i.i.i.i.i.peel, label %bb.q, label %bb.p
@@ -227,8 +228,12 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.p, %bb.o
   %i.bu = getelementptr inbounds nuw i8, ptr %.val1.i.i.i.i.i.peel, i64 8
-  %i.bv = load i64, ptr %i.bu, align 8, !range !53, !invariant.load !52, !noalias !18941
-  %i.bw = icmp eq i64 %i.bv, 0
+  %3 = load i64, ptr %i.bu, align 8, !range !53, !invariant.load !52, !noalias !18941
+  %4 = getelementptr inbounds nuw i8, ptr %.val1.i.i.i.i.i.peel, i64 16
+  %i.bv = load i64, ptr %4, align 8, !range !69, !invariant.load !52, !noalias !18941
+  %5 = icmp ult i64 %i.bv, -9223372036854775807
+  call void @llvm.assume(i1 %5)
+  %i.bw = icmp eq i64 %3, 0
   br i1 %i.bw, label %"_ZN4core3ptr42drop_in_place$LT$std..io..error..Error$GT$17h255c5d003656fdfdE.exit.peel.sink.split", label %"_ZN4core3ptr42drop_in_place$LT$std..io..error..Error$GT$17h255c5d003656fdfdE.exit.peel.sink.split.sink.split"
 
 .split41.peel:                                    ; preds = %_ZN3std2io4Read8read_buf17h78d691331ac6ea85E.exit.peel

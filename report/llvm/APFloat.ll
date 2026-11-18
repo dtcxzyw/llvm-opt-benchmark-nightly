@@ -205,24 +205,33 @@ tailrecurse.preheader:                            ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 24 ; 2 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !46   ; 2 uses
   %.not.peel = icmp eq ptr %i.f, @_ZN4llvm11APFloatBase18semPPCDoubleDoubleE
-  br i1 %.not.peel, label %tailrecurse, label %tailrecurse._crit_edge.thread
+  br i1 %.not.peel, label %tailrecurse, label %tailrecurse._crit_edge.thread.loopexit.a
 
-tailrecurse._crit_edge.thread.loopexit.a:         ; preds = %tailrecurse
-  %i.g = getelementptr inbounds nuw i8, ptr %i.ad, i64 24
+tailrecurse._crit_edge.thread.loopexit:           ; preds = %tailrecurse
+  %2 = getelementptr inbounds nuw i8, ptr %i.ad, i64 24
+  br label %tailrecurse._crit_edge.thread.loopexit.a
+
+tailrecurse._crit_edge.thread.loopexit.a:         ; preds = %tailrecurse._crit_edge.thread.loopexit, %tailrecurse.preheader
+  %.tr.lcssa.ph = phi ptr [ %i.e, %tailrecurse.preheader ], [ %2, %tailrecurse._crit_edge.thread.loopexit ]
+  %.lcssa.ph = phi ptr [ %i.f, %tailrecurse.preheader ], [ %i.af, %tailrecurse._crit_edge.thread.loopexit ] ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %.lcssa.ph, i64 24
+  %3 = load i8, ptr %i.g, align 4, !tbaa !55, !range !56, !noundef !57
+  %4 = trunc nuw i8 %3 to i1
+  tail call void @llvm.assume(i1 %4)
   br label %tailrecurse._crit_edge.thread
 
 tailrecurse._crit_edge:                           ; preds = %bb.a
   %spec.select = select i1 %1, i8 8, i8 0
   br label %tailrecurse._crit_edge.thread
 
-tailrecurse._crit_edge.thread:                    ; preds = %tailrecurse.preheader, %tailrecurse._crit_edge.thread.loopexit.a, %tailrecurse._crit_edge
-  %.lcssa17 = phi ptr [ %i.a, %tailrecurse._crit_edge ], [ %i.f, %tailrecurse.preheader ], [ %i.af, %tailrecurse._crit_edge.thread.loopexit.a ] ; 3 uses
-  %.tr.lcssa16 = phi ptr [ %0, %tailrecurse._crit_edge ], [ %i.e, %tailrecurse.preheader ], [ %i.g, %tailrecurse._crit_edge.thread.loopexit.a ] ; 3 uses
-  %2 = phi i8 [ %spec.select, %tailrecurse._crit_edge ], [ 0, %tailrecurse.preheader ], [ 0, %tailrecurse._crit_edge.thread.loopexit.a ]
+tailrecurse._crit_edge.thread:                    ; preds = %tailrecurse._crit_edge, %tailrecurse._crit_edge.thread.loopexit.a
+  %.lcssa17 = phi ptr [ %.lcssa.ph, %tailrecurse._crit_edge.thread.loopexit.a ], [ %i.a, %tailrecurse._crit_edge ] ; 3 uses
+  %.tr.lcssa16 = phi ptr [ %.tr.lcssa.ph, %tailrecurse._crit_edge.thread.loopexit.a ], [ %0, %tailrecurse._crit_edge ] ; 3 uses
+  %5 = phi i8 [ 0, %tailrecurse._crit_edge.thread.loopexit.a ], [ %spec.select, %tailrecurse._crit_edge ]
   %i.h = getelementptr inbounds nuw i8, ptr %.tr.lcssa16, i64 20 ; 3 uses
   %.in = load i8, ptr %i.h, align 4
   %i.i = and i8 %.in, -16                         ; 2 uses
-  %i.j = or disjoint i8 %i.i, %2
+  %i.j = or disjoint i8 %i.i, %5
   %i.k = or disjoint i8 %i.j, 3
   store i8 %i.k, ptr %i.h, align 4
   %i.l = getelementptr inbounds nuw i8, ptr %.lcssa17, i64 20
@@ -263,7 +272,7 @@ tailrecurse:                                      ; preds = %tailrecurse.prehead
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 24
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !46 ; 2 uses
   %.not = icmp eq ptr %i.af, @_ZN4llvm11APFloatBase18semPPCDoubleDoubleE
-  br i1 %.not, label %tailrecurse, label %tailrecurse._crit_edge.thread.loopexit.a, !llvm.loop !543
+  br i1 %.not, label %tailrecurse, label %tailrecurse._crit_edge.thread.loopexit, !llvm.loop !543
 }
 
 ; Function Attrs: mustprogress nounwind uwtable

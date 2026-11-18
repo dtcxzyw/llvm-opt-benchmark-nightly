@@ -205,10 +205,10 @@ bb.u:                                             ; preds = %bb.o
   %i.ct = call fastcc { i32, i32 } @_RINvNtNtCs4NRVxsYgnAr_4core3str11validations15next_code_pointINtNtNtB6_5slice4iter4IterhEECsEhZmuQNqkz_11ruff_linter(ptr noalias noundef align 8 dereferenceable(16) %i.l) ; 2 uses
   %i.cu = extractvalue { i32, i32 } %i.ct, 0
   %i.cv = trunc i32 %i.cu to i1
-  br i1 %i.cv, label %bb.w, label %.thread54.a
+  br i1 %i.cv, label %bb.w, label %.thread54
 
 bb.v:                                             ; preds = %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %.thread57, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p
-  %.sroa.0.0 = phi i1 [ %i.ch, %bb.q ], [ %i.ck, %bb.r ], [ %i.cn, %bb.s ], [ %i.cq, %bb.t ], [ %3, %.thread57 ], [ false, %bb.p ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ]
+  %.sroa.0.0 = phi i1 [ %i.ch, %bb.q ], [ %i.ck, %bb.r ], [ %i.cn, %bb.s ], [ %i.cq, %bb.t ], [ %7, %.thread57 ], [ false, %bb.p ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k)
   call void @_RNvXs_NtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inferenceNtB4_18ResolvedPythonTypeINtNtCs4NRVxsYgnAr_4core7convert4FromRNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprE4from(ptr noalias noundef nonnull sret([40 x i8]) align 8 captures(address) dereferenceable(40) %i.k, ptr noundef nonnull align 8 %i.bo)
   %i.cw = load i8, ptr %i.k, align 8, !range !69, !noundef !20
@@ -227,8 +227,16 @@ bb.w:                                             ; preds = %bb.u
   %i.dc = trunc i32 %i.da to i1
   br i1 %i.dc, label %bb.x, label %.thread57
 
-.thread54.a:                                      ; preds = %bb.u
-  %2 = call fastcc { i32, i32 } @_RINvNtNtCs4NRVxsYgnAr_4core3str11validations15next_code_pointINtNtNtB6_5slice4iter4IterhEECsEhZmuQNqkz_11ruff_linter(ptr noalias noundef align 8 dereferenceable(16) %i.l) ; 0 uses
+.thread54:                                        ; preds = %bb.u
+  %2 = call fastcc { i32, i32 } @_RINvNtNtCs4NRVxsYgnAr_4core3str11validations15next_code_pointINtNtNtB6_5slice4iter4IterhEECsEhZmuQNqkz_11ruff_linter(ptr noalias noundef align 8 dereferenceable(16) %i.l) ; 2 uses
+  %3 = extractvalue { i32, i32 } %2, 0
+  %4 = trunc i32 %3 to i1
+  br i1 %4, label %.thread54.a, label %.thread57
+
+.thread54.a:                                      ; preds = %.thread54
+  %5 = extractvalue { i32, i32 } %2, 1
+  %6 = icmp ult i32 %5, 1114112
+  tail call void @llvm.assume(i1 %6)
   br label %.thread57
 
 bb.x:                                             ; preds = %bb.w
@@ -248,8 +256,8 @@ switch.lookup:                                    ; preds = %bb.y
   %switch.masked = trunc i55 %switch.downshift to i1
   br label %.thread57
 
-.thread57:                                        ; preds = %.thread54.a, %switch.lookup, %bb.y, %bb.x, %bb.w
-  %3 = phi i1 [ %switch.masked, %switch.lookup ], [ true, %bb.w ], [ true, %bb.y ], [ true, %bb.x ], [ true, %.thread54.a ]
+.thread57:                                        ; preds = %switch.lookup, %bb.y, %.thread54.a, %.thread54, %bb.x, %bb.w
+  %7 = phi i1 [ %switch.masked, %switch.lookup ], [ true, %bb.w ], [ true, %bb.y ], [ true, %bb.x ], [ true, %.thread54 ], [ true, %.thread54.a ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l)
   br label %bb.v
 

@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %_RNvXs_NtNtNtCscgRA
 
 _RNvXs_NtNtNtCscgRAwXFJnXP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterjEENtNtNtB8_6traits8iterator8Iterator4nextCs2g09Ig8GZd6_13polars_stream.exit.i.i96.i.i: ; preds = %bb.c, %bb.d
   %.sroa.0.03.i.i95.i.i125 = phi ptr [ %i.n, %bb.d ], [ %i.h, %bb.c ] ; 2 uses
-  %.sroa.8.0.i.i94.i.i124 = phi i64 [ %i.p, %bb.d ], [ 0, %bb.c ] ; 2 uses
+  %.sroa.8.0.i.i94.i.i124 = phi i64 [ %i.p, %bb.d ], [ 0, %bb.c ] ; 3 uses
   %i.p = add nuw nsw i64 %.sroa.8.0.i.i94.i.i124, 1, !dbg !14531 ; 3 uses
   %.val6.i.i97.i.i = load i64, ptr %.sroa.0.03.i.i95.i.i125, align 8, !dbg !14532, !noalias !14507, !noundef !2146
   %i.q = tail call noundef range(i8 -1, 2) i8 @llvm.ucmp.i8.i64(i64 %2, i64 %.val6.i.i97.i.i), !dbg !14533
@@ -238,31 +238,33 @@ _RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeR
   %i.s = getelementptr inbounds nuw i8, ptr %.sroa.0.0158.i.i, i64 632, !dbg !14542 ; 2 uses
   %i.t = load ptr, ptr %i.s, align 8, !dbg !14543, !noalias !14504, !nonnull !2146, !noundef !2146
   %i.u = add i64 %i.g, -1, !dbg !14544
-  %i.v = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %i.p, !dbg !14545
-  %i.w = load ptr, ptr %i.v, align 8, !dbg !14546, !noalias !14504, !nonnull !2146, !noundef !2146
-  br label %_RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBZ_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1j_14LeafOrInternalE22find_upper_bound_indexjECs2g09Ig8GZd6_13polars_stream.exit.jt3.preheader.i, !dbg !14547
+  %3 = icmp samesign ult i64 %.sroa.8.0.i.i94.i.i124, 11, !dbg !14545
+  tail call void @llvm.assume(i1 %3), !dbg !14546
+  %i.v = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %i.p, !dbg !14547
+  %i.w = load ptr, ptr %i.v, align 8, !dbg !14548, !noalias !14504, !nonnull !2146, !noundef !2146
+  br label %_RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBZ_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1j_14LeafOrInternalE22find_upper_bound_indexjECs2g09Ig8GZd6_13polars_stream.exit.jt3.preheader.i, !dbg !14549
 
 ._crit_edge.i:                                    ; preds = %_RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBZ_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1j_14LeafOrInternalE22find_upper_bound_indexjECs2g09Ig8GZd6_13polars_stream.exit.jt0.i, %_RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBZ_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1j_14LeafOrInternalE22find_lower_bound_indexjECs2g09Ig8GZd6_13polars_stream.exit.jt3.i.prol.loopexit, %_RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBZ_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1j_14LeafOrInternalE22find_lower_bound_indexjECs2g09Ig8GZd6_13polars_stream.exit.jt3.i, %_RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBZ_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1j_14LeafOrInternalE22find_lower_bound_indexjECs2g09Ig8GZd6_13polars_stream.exit.jt3.i.preheader, %_RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBZ_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1j_14LeafOrInternalE22find_upper_bound_indexjECs2g09Ig8GZd6_13polars_stream.exit.jt3.preheader.i, %_RINvMs_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB7_4node7NodeRefNtNtBY_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1i_14LeafOrInternalE27search_tree_for_bifurcationjINtNtNtCscgRAwXFJnXP_4core3ops5range16RangeToInclusivejEECs2g09Ig8GZd6_13polars_stream.exit.i.thread, %_RINvMs_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB7_4node7NodeRefNtNtBY_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1i_14LeafOrInternalE27search_tree_for_bifurcationjINtNtNtCscgRAwXFJnXP_4core3ops5range16RangeToInclusivejEECs2g09Ig8GZd6_13polars_stream.exit.i
-  %.sroa.065.0.lcssa.i = phi ptr [ %.sroa.0.0158.i.i, %_RINvMs_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB7_4node7NodeRefNtNtBY_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1i_14LeafOrInternalE27search_tree_for_bifurcationjINtNtNtCscgRAwXFJnXP_4core3ops5range16RangeToInclusivejEECs2g09Ig8GZd6_13polars_stream.exit.i ], [ %i.bk, %_RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBZ_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1j_14LeafOrInternalE22find_lower_bound_indexjECs2g09Ig8GZd6_13polars_stream.exit.jt3.i ], [ %.sroa.0.0158.i.i, %_RINvMs_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB7_4node7NodeRefNtNtBY_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1i_14LeafOrInternalE27search_tree_for_bifurcationjINtNtNtCscgRAwXFJnXP_4core3ops5range16RangeToInclusivejEECs2g09Ig8GZd6_13polars_stream.exit.i.thread ], [ %.ph218.i, %_RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBZ_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1j_14LeafOrInternalE22find_upper_bound_indexjECs2g09Ig8GZd6_13polars_stream.exit.jt3.preheader.i ], [ %i.cc, %_RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBZ_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1j_14LeafOrInternalE22find_lower_bound_indexjECs2g09Ig8GZd6_13polars_stream.exit.jt3.i.preheader ], [ %.lcssa133.unr, %_RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBZ_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1j_14LeafOrInternalE22find_lower_bound_indexjECs2g09Ig8GZd6_13polars_stream.exit.jt3.i.prol.loopexit ], [ %i.bo, %_RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBZ_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1j_14LeafOrInternalE22find_upper_bound_indexjECs2g09Ig8GZd6_13polars_stream.exit.jt0.i ], !dbg !14548
-  %.sroa.075.0.lcssa.i = phi ptr [ %.sroa.0.0158.i.i, %_RINvMs_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB7_4node7NodeRefNtNtBY_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1i_14LeafOrInternalE27search_tree_for_bifurcationjINtNtNtCscgRAwXFJnXP_4core3ops5range16RangeToInclusivejEECs2g09Ig8GZd6_13polars_stream.exit.i ], [ %i.bn, %_RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBZ_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1j_14LeafOrInternalE22find_lower_bound_indexjECs2g09Ig8GZd6_13polars_stream.exit.jt3.i ], [ %.sroa.0.0158.i.i, %_RINvMs_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB7_4node7NodeRefNtNtBY_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1i_14LeafOrInternalE27search_tree_for_bifurcationjINtNtNtCscgRAwXFJnXP_4core3ops5range16RangeToInclusivejEECs2g09Ig8GZd6_13polars_stream.exit.i.thread ], [ %.ph.i, %_RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBZ_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1j_14LeafOrInternalE22find_upper_bound_indexjECs2g09Ig8GZd6_13polars_stream.exit.jt3.preheader.i ], [ %i.ch, %_RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBZ_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1j_14LeafOrInternalE22find_lower_bound_indexjECs2g09Ig8GZd6_13polars_stream.exit.jt3.i.preheader ], [ %.lcssa.unr, %_RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBZ_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1j_14LeafOrInternalE22find_lower_bound_indexjECs2g09Ig8GZd6_13polars_stream.exit.jt3.i.prol.loopexit ], [ %i.bq, %_RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBZ_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1j_14LeafOrInternalE22find_upper_bound_indexjECs2g09Ig8GZd6_13polars_stream.exit.jt0.i ], !dbg !14549
+  %.sroa.065.0.lcssa.i = phi ptr [ %.sroa.0.0158.i.i, %_RINvMs_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB7_4node7NodeRefNtNtBY_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1i_14LeafOrInternalE27search_tree_for_bifurcationjINtNtNtCscgRAwXFJnXP_4core3ops5range16RangeToInclusivejEECs2g09Ig8GZd6_13polars_stream.exit.i ], [ %i.bk, %_RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBZ_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1j_14LeafOrInternalE22find_lower_bound_indexjECs2g09Ig8GZd6_13polars_stream.exit.jt3.i ], [ %.sroa.0.0158.i.i, %_RINvMs_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB7_4node7NodeRefNtNtBY_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1i_14LeafOrInternalE27search_tree_for_bifurcationjINtNtNtCscgRAwXFJnXP_4core3ops5range16RangeToInclusivejEECs2g09Ig8GZd6_13polars_stream.exit.i.thread ], [ %.ph218.i, %_RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBZ_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1j_14LeafOrInternalE22find_upper_bound_indexjECs2g09Ig8GZd6_13polars_stream.exit.jt3.preheader.i ], [ %i.cc, %_RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBZ_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1j_14LeafOrInternalE22find_lower_bound_indexjECs2g09Ig8GZd6_13polars_stream.exit.jt3.i.preheader ], [ %.lcssa133.unr, %_RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBZ_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1j_14LeafOrInternalE22find_lower_bound_indexjECs2g09Ig8GZd6_13polars_stream.exit.jt3.i.prol.loopexit ], [ %i.bo, %_RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBZ_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1j_14LeafOrInternalE22find_upper_bound_indexjECs2g09Ig8GZd6_13polars_stream.exit.jt0.i ], !dbg !14550
+  %.sroa.075.0.lcssa.i = phi ptr [ %.sroa.0.0158.i.i, %_RINvMs_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB7_4node7NodeRefNtNtBY_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1i_14LeafOrInternalE27search_tree_for_bifurcationjINtNtNtCscgRAwXFJnXP_4core3ops5range16RangeToInclusivejEECs2g09Ig8GZd6_13polars_stream.exit.i ], [ %i.bn, %_RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBZ_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1j_14LeafOrInternalE22find_lower_bound_indexjECs2g09Ig8GZd6_13polars_stream.exit.jt3.i ], [ %.sroa.0.0158.i.i, %_RINvMs_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB7_4node7NodeRefNtNtBY_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1i_14LeafOrInternalE27search_tree_for_bifurcationjINtNtNtCscgRAwXFJnXP_4core3ops5range16RangeToInclusivejEECs2g09Ig8GZd6_13polars_stream.exit.i.thread ], [ %.ph.i, %_RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBZ_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1j_14LeafOrInternalE22find_upper_bound_indexjECs2g09Ig8GZd6_13polars_stream.exit.jt3.preheader.i ], [ %i.ch, %_RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBZ_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1j_14LeafOrInternalE22find_lower_bound_indexjECs2g09Ig8GZd6_13polars_stream.exit.jt3.i.preheader ], [ %.lcssa.unr, %_RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBZ_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1j_14LeafOrInternalE22find_lower_bound_indexjECs2g09Ig8GZd6_13polars_stream.exit.jt3.i.prol.loopexit ], [ %i.bq, %_RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBZ_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1j_14LeafOrInternalE22find_upper_bound_indexjECs2g09Ig8GZd6_13polars_stream.exit.jt0.i ], !dbg !14551
   %.sroa.081.0.lcssa.i = phi i64 [ %.sroa.099.0.jt0.i.i, %_RINvMs_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB7_4node7NodeRefNtNtBY_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1i_14LeafOrInternalE27search_tree_for_bifurcationjINtNtNtCscgRAwXFJnXP_4core3ops5range16RangeToInclusivejEECs2g09Ig8GZd6_13polars_stream.exit.i ], [ 0, %_RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBZ_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1j_14LeafOrInternalE22find_lower_bound_indexjECs2g09Ig8GZd6_13polars_stream.exit.jt3.i.prol.loopexit ], [ %i.p, %_RINvMs_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB7_4node7NodeRefNtNtBY_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1i_14LeafOrInternalE27search_tree_for_bifurcationjINtNtNtCscgRAwXFJnXP_4core3ops5range16RangeToInclusivejEECs2g09Ig8GZd6_13polars_stream.exit.i.thread ], [ %.sroa.0103.0.jt3.ph.i, %_RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBZ_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1j_14LeafOrInternalE22find_upper_bound_indexjECs2g09Ig8GZd6_13polars_stream.exit.jt3.preheader.i ], [ 0, %_RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBZ_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1j_14LeafOrInternalE22find_lower_bound_indexjECs2g09Ig8GZd6_13polars_stream.exit.jt3.i.preheader ], [ 0, %_RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBZ_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1j_14LeafOrInternalE22find_lower_bound_indexjECs2g09Ig8GZd6_13polars_stream.exit.jt3.i ], [ %.sroa.0103.0.jt0.i, %_RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBZ_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1j_14LeafOrInternalE22find_upper_bound_indexjECs2g09Ig8GZd6_13polars_stream.exit.jt0.i ], !dbg !14538
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5, i8 0, i64 16, i1 false), !dbg !14550, !alias.scope !14504
-  br label %_RINvMsd_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree8navigateINtNtB8_4node7NodeRefNtNtB11_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1l_14LeafOrInternalE30find_leaf_edges_spanning_rangejINtNtNtCscgRAwXFJnXP_4core3ops5range16RangeToInclusivejEECs2g09Ig8GZd6_13polars_stream.exit, !dbg !14551
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5, i8 0, i64 16, i1 false), !dbg !14552, !alias.scope !14504
+  br label %_RINvMsd_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree8navigateINtNtB8_4node7NodeRefNtNtB11_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1l_14LeafOrInternalE30find_leaf_edges_spanning_rangejINtNtNtCscgRAwXFJnXP_4core3ops5range16RangeToInclusivejEECs2g09Ig8GZd6_13polars_stream.exit, !dbg !14553
 
 .preheader.i:                                     ; preds = %_RINvMs_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB7_4node7NodeRefNtNtBY_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1i_14LeafOrInternalE27search_tree_for_bifurcationjINtNtNtCscgRAwXFJnXP_4core3ops5range16RangeToInclusivejEECs2g09Ig8GZd6_13polars_stream.exit.i
   %i.x = getelementptr inbounds nuw i8, ptr %.sroa.0.0158.i.i, i64 632, !dbg !14542 ; 2 uses
-  %i.y = icmp samesign ult i64 %.sroa.099.0.jt0.i.i, 12, !dbg !14552
-  tail call void @llvm.assume(i1 %i.y), !dbg !14553
-  %i.z = getelementptr inbounds nuw [8 x i8], ptr %i.x, i64 %.sroa.099.0.jt0.i.i, !dbg !14545
+  %i.y = icmp samesign ult i64 %.sroa.099.0.jt0.i.i, 12, !dbg !14545
+  tail call void @llvm.assume(i1 %i.y), !dbg !14546
+  %i.z = getelementptr inbounds nuw [8 x i8], ptr %i.x, i64 %.sroa.099.0.jt0.i.i, !dbg !14547
   br label %bb.g, !dbg !14554
 
 _RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBZ_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1j_14LeafOrInternalE22find_lower_bound_indexjECs2g09Ig8GZd6_13polars_stream.exit.jt0.i: ; preds = %_RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBZ_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1j_14LeafOrInternalE22find_upper_bound_indexjECs2g09Ig8GZd6_13polars_stream.exit.jt0.i
   %i.aa = getelementptr inbounds nuw i8, ptr %i.bo, i64 632, !dbg !14542
   %i.ab = getelementptr inbounds nuw i8, ptr %i.bq, i64 632, !dbg !14555
-  %i.ac = icmp samesign ult i64 %.sroa.0103.0.jt0.i, 12, !dbg !14552
-  tail call void @llvm.assume(i1 %i.ac), !dbg !14553
-  %i.ad = getelementptr inbounds nuw [8 x i8], ptr %i.ab, i64 %.sroa.0103.0.jt0.i, !dbg !14545
-  br label %bb.g, !dbg !14547
+  %i.ac = icmp samesign ult i64 %.sroa.0103.0.jt0.i, 12, !dbg !14545
+  tail call void @llvm.assume(i1 %i.ac), !dbg !14546
+  %i.ad = getelementptr inbounds nuw [8 x i8], ptr %i.ab, i64 %.sroa.0103.0.jt0.i, !dbg !14547
+  br label %bb.g, !dbg !14549
 
 _RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBZ_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1j_14LeafOrInternalE22find_lower_bound_indexjECs2g09Ig8GZd6_13polars_stream.exit.jt3.i: ; preds = %_RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBZ_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1j_14LeafOrInternalE22find_lower_bound_indexjECs2g09Ig8GZd6_13polars_stream.exit.jt3.i.prol.loopexit, %_RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBZ_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1j_14LeafOrInternalE22find_lower_bound_indexjECs2g09Ig8GZd6_13polars_stream.exit.jt3.i
   %i.ae = phi ptr [ %i.bk, %_RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBZ_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1j_14LeafOrInternalE22find_lower_bound_indexjECs2g09Ig8GZd6_13polars_stream.exit.jt3.i ], [ %.unr, %_RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBZ_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1j_14LeafOrInternalE22find_lower_bound_indexjECs2g09Ig8GZd6_13polars_stream.exit.jt3.i.prol.loopexit ]
@@ -271,36 +273,36 @@ _RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeR
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ae, i64 632, !dbg !14542
   %i.ai = load ptr, ptr %i.ah, align 8, !dbg !14543, !noalias !14504, !nonnull !2146, !noundef !2146
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ag, i64 632, !dbg !14555
-  %i.ak = load ptr, ptr %i.aj, align 8, !dbg !14546, !noalias !14504, !nonnull !2146, !noundef !2146
+  %i.ak = load ptr, ptr %i.aj, align 8, !dbg !14548, !noalias !14504, !nonnull !2146, !noundef !2146
   %i.al = getelementptr inbounds nuw i8, ptr %i.ai, i64 632, !dbg !14542
   %i.am = load ptr, ptr %i.al, align 8, !dbg !14543, !noalias !14504, !nonnull !2146, !noundef !2146
   %i.an = getelementptr inbounds nuw i8, ptr %i.ak, i64 632, !dbg !14555
-  %i.ao = load ptr, ptr %i.an, align 8, !dbg !14546, !noalias !14504, !nonnull !2146, !noundef !2146
+  %i.ao = load ptr, ptr %i.an, align 8, !dbg !14548, !noalias !14504, !nonnull !2146, !noundef !2146
   %i.ap = getelementptr inbounds nuw i8, ptr %i.am, i64 632, !dbg !14542
   %i.aq = load ptr, ptr %i.ap, align 8, !dbg !14543, !noalias !14504, !nonnull !2146, !noundef !2146
   %i.ar = getelementptr inbounds nuw i8, ptr %i.ao, i64 632, !dbg !14555
-  %i.as = load ptr, ptr %i.ar, align 8, !dbg !14546, !noalias !14504, !nonnull !2146, !noundef !2146
+  %i.as = load ptr, ptr %i.ar, align 8, !dbg !14548, !noalias !14504, !nonnull !2146, !noundef !2146
   %i.at = getelementptr inbounds nuw i8, ptr %i.aq, i64 632, !dbg !14542
   %i.au = load ptr, ptr %i.at, align 8, !dbg !14543, !noalias !14504, !nonnull !2146, !noundef !2146
   %i.av = getelementptr inbounds nuw i8, ptr %i.as, i64 632, !dbg !14555
-  %i.aw = load ptr, ptr %i.av, align 8, !dbg !14546, !noalias !14504, !nonnull !2146, !noundef !2146
+  %i.aw = load ptr, ptr %i.av, align 8, !dbg !14548, !noalias !14504, !nonnull !2146, !noundef !2146
   %i.ax = getelementptr inbounds nuw i8, ptr %i.au, i64 632, !dbg !14542
   %i.ay = load ptr, ptr %i.ax, align 8, !dbg !14543, !noalias !14504, !nonnull !2146, !noundef !2146
   %i.az = getelementptr inbounds nuw i8, ptr %i.aw, i64 632, !dbg !14555
-  %i.ba = load ptr, ptr %i.az, align 8, !dbg !14546, !noalias !14504, !nonnull !2146, !noundef !2146
+  %i.ba = load ptr, ptr %i.az, align 8, !dbg !14548, !noalias !14504, !nonnull !2146, !noundef !2146
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ay, i64 632, !dbg !14542
   %i.bc = load ptr, ptr %i.bb, align 8, !dbg !14543, !noalias !14504, !nonnull !2146, !noundef !2146
   %i.bd = getelementptr inbounds nuw i8, ptr %i.ba, i64 632, !dbg !14555
-  %i.be = load ptr, ptr %i.bd, align 8, !dbg !14546, !noalias !14504, !nonnull !2146, !noundef !2146
+  %i.be = load ptr, ptr %i.bd, align 8, !dbg !14548, !noalias !14504, !nonnull !2146, !noundef !2146
   %i.bf = getelementptr inbounds nuw i8, ptr %i.bc, i64 632, !dbg !14542
   %i.bg = load ptr, ptr %i.bf, align 8, !dbg !14543, !noalias !14504, !nonnull !2146, !noundef !2146
   %i.bh = getelementptr inbounds nuw i8, ptr %i.be, i64 632, !dbg !14555
-  %i.bi = load ptr, ptr %i.bh, align 8, !dbg !14546, !noalias !14504, !nonnull !2146, !noundef !2146
+  %i.bi = load ptr, ptr %i.bh, align 8, !dbg !14548, !noalias !14504, !nonnull !2146, !noundef !2146
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bg, i64 632, !dbg !14542
   %i.bk = load ptr, ptr %i.bj, align 8, !dbg !14543, !noalias !14504, !nonnull !2146, !noundef !2146 ; 2 uses
   %i.bl = add i64 %i.af, -8, !dbg !14544          ; 2 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bi, i64 632, !dbg !14555
-  %i.bn = load ptr, ptr %i.bm, align 8, !dbg !14546, !noalias !14504, !nonnull !2146, !noundef !2146 ; 2 uses
+  %i.bn = load ptr, ptr %i.bm, align 8, !dbg !14548, !noalias !14504, !nonnull !2146, !noundef !2146 ; 2 uses
   %.not.jt3.i.7 = icmp eq i64 %i.bl, 0, !dbg !14541
   br i1 %.not.jt3.i.7, label %._crit_edge.i, label %_RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBZ_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1j_14LeafOrInternalE22find_lower_bound_indexjECs2g09Ig8GZd6_13polars_stream.exit.jt3.i, !dbg !14540, !llvm.loop !14488
 
@@ -310,7 +312,7 @@ bb.g:                                             ; preds = %_RINvMs0_NtNtNtCsgZ
   %.in14 = phi ptr [ %i.aa, %_RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBZ_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1j_14LeafOrInternalE22find_lower_bound_indexjECs2g09Ig8GZd6_13polars_stream.exit.jt0.i ], [ %i.x, %.preheader.i ]
   %i.bo = load ptr, ptr %.in14, align 8, !dbg !14543, !noalias !14504, !nonnull !2146, !noundef !2146 ; 3 uses
   %i.bp = add i64 %.in13, -1, !dbg !14544         ; 3 uses
-  %i.bq = load ptr, ptr %.in, align 8, !dbg !14546, !noalias !14504, !nonnull !2146, !noundef !2146 ; 5 uses
+  %i.bq = load ptr, ptr %.in, align 8, !dbg !14548, !noalias !14504, !nonnull !2146, !noundef !2146 ; 5 uses
   %i.br = getelementptr inbounds nuw i8, ptr %i.bq, i64 536, !dbg !14556 ; 2 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %i.bq, i64 626, !dbg !14557
   %i.bt = load i16, ptr %i.bs, align 2, !dbg !14557, !noalias !14514, !noundef !2146 ; 2 uses
@@ -353,10 +355,10 @@ _RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeR
   %i.cc = load ptr, ptr %i.cb, align 8, !dbg !14543, !noalias !14504, !nonnull !2146, !noundef !2146 ; 3 uses
   %i.cd = add i64 %.ph217.i, -1, !dbg !14544      ; 4 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %.ph.i, i64 632, !dbg !14555
-  %i.cf = icmp samesign ult i64 %.sroa.0103.0.jt3.ph.i, 12, !dbg !14552
-  tail call void @llvm.assume(i1 %i.cf), !dbg !14553
-  %i.cg = getelementptr inbounds nuw [8 x i8], ptr %i.ce, i64 %.sroa.0103.0.jt3.ph.i, !dbg !14545
-  %i.ch = load ptr, ptr %i.cg, align 8, !dbg !14546, !noalias !14504, !nonnull !2146, !noundef !2146 ; 3 uses
+  %i.cf = icmp samesign ult i64 %.sroa.0103.0.jt3.ph.i, 12, !dbg !14545
+  tail call void @llvm.assume(i1 %i.cf), !dbg !14546
+  %i.cg = getelementptr inbounds nuw [8 x i8], ptr %i.ce, i64 %.sroa.0103.0.jt3.ph.i, !dbg !14547
+  %i.ch = load ptr, ptr %i.cg, align 8, !dbg !14548, !noalias !14504, !nonnull !2146, !noundef !2146 ; 3 uses
   %.not.jt3.i.peel = icmp eq i64 %i.cd, 0, !dbg !14541
   br i1 %.not.jt3.i.peel, label %._crit_edge.i, label %_RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBZ_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1j_14LeafOrInternalE22find_lower_bound_indexjECs2g09Ig8GZd6_13polars_stream.exit.jt3.i.preheader132, !dbg !14540
 
@@ -375,7 +377,7 @@ _RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeR
   %i.cn = load ptr, ptr %i.cm, align 8, !dbg !14543, !noalias !14504, !nonnull !2146, !noundef !2146 ; 3 uses
   %i.co = add i64 %i.ck, -1, !dbg !14544          ; 2 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %i.cl, i64 632, !dbg !14555
-  %i.cq = load ptr, ptr %i.cp, align 8, !dbg !14546, !noalias !14504, !nonnull !2146, !noundef !2146 ; 3 uses
+  %i.cq = load ptr, ptr %i.cp, align 8, !dbg !14548, !noalias !14504, !nonnull !2146, !noundef !2146 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1, !dbg !14540 ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter, !dbg !14540
   br i1 %prol.iter.cmp.not, label %_RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBZ_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1j_14LeafOrInternalE22find_lower_bound_indexjECs2g09Ig8GZd6_13polars_stream.exit.jt3.i.prol.loopexit, label %_RINvMs0_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBZ_6marker5ImmutjNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1j_14LeafOrInternalE22find_lower_bound_indexjECs2g09Ig8GZd6_13polars_stream.exit.jt3.i.prol, !dbg !14540, !llvm.loop !14501
@@ -778,15 +780,15 @@ begin_hunk_1_@llvm.fshl.v4i32
 !14542 = !DILocation(line: 1115, column: 29, scope: !14464, inlinedAt: !14466)
 !14543 = !DILocation(line: 1721, column: 9, scope: !14467, inlinedAt: !14472)
 !14544 = !DILocation(line: 1116, column: 33, scope: !14474, inlinedAt: !14475)
-!14545 = !DILocation(line: 253, column: 13, scope: !14476, inlinedAt: !14479)
-!14546 = !DILocation(line: 1721, column: 9, scope: !14467, inlinedAt: !14482)
-!14547 = !DILocation(line: 276, column: 9, scope: !14396, inlinedAt: !14485)
-!14548 = !DILocation(line: 0, scope: !14456, inlinedAt: !14404)
-!14549 = !DILocation(line: 0, scope: !14457, inlinedAt: !14404)
-!14550 = !DILocation(line: 286, column: 54, scope: !14486, inlinedAt: !14404)
-!14551 = !DILocation(line: 298, column: 5, scope: !14403, inlinedAt: !14404)
-!14552 = !DILocation(line: 252, column: 39, scope: !14476, inlinedAt: !14479)
-!14553 = !DILocation(line: 252, column: 13, scope: !14476, inlinedAt: !14479)
+!14545 = !DILocation(line: 252, column: 39, scope: !14476, inlinedAt: !14479)
+!14546 = !DILocation(line: 252, column: 13, scope: !14476, inlinedAt: !14479)
+!14547 = !DILocation(line: 253, column: 13, scope: !14476, inlinedAt: !14479)
+!14548 = !DILocation(line: 1721, column: 9, scope: !14467, inlinedAt: !14482)
+!14549 = !DILocation(line: 276, column: 9, scope: !14396, inlinedAt: !14485)
+!14550 = !DILocation(line: 0, scope: !14456, inlinedAt: !14404)
+!14551 = !DILocation(line: 0, scope: !14457, inlinedAt: !14404)
+!14552 = !DILocation(line: 286, column: 54, scope: !14486, inlinedAt: !14404)
+!14553 = !DILocation(line: 298, column: 5, scope: !14403, inlinedAt: !14404)
 !14554 = !DILocation(line: 225, column: 9, scope: !14443, inlinedAt: !14487)
 !14555 = !DILocation(line: 1115, column: 29, scope: !14473, inlinedAt: !14475)
 !14556 = !DILocation(line: 396, column: 18, scope: !14424, inlinedAt: !14489)

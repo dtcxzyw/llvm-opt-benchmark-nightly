@@ -205,7 +205,7 @@ bb.cd:                                            ; preds = %bb.cc
 
 bb.ce:                                            ; preds = %bb.cd, %bb.cc, %bb.cb
   %.sroa.01.0.i.i.peel.i.peel = phi i64 [ 2, %bb.cc ], [ %..i.i.peel.i.peel, %bb.cd ], [ 1, %bb.cb ], !dbg !140237
-  %i.jv = add i64 %.sroa.01.0.i.i.peel.i.peel, %.sroa.4102.0.copyload.i, !dbg !140238 ; 15 uses
+  %i.jv = add i64 %.sroa.01.0.i.i.peel.i.peel, %.sroa.4102.0.copyload.i, !dbg !140238 ; 12 uses
   %i.jw = icmp eq i64 %i.jv, 0, !dbg !140193
   br i1 %i.jw, label %bb.ch, label %bb.cf, !dbg !140193
 
@@ -224,40 +224,75 @@ bb.cg:                                            ; preds = %bb.cf
   br i1 %i.ka, label %bb.ch, label %.loopexit266.i, !dbg !140196
 
 bb.ch:                                            ; preds = %bb.cg, %.split.i.i.i.i.peel, %bb.ce
+  %3 = getelementptr inbounds nuw i8, ptr %.sroa.12110.0.copyload.i, i64 %i.jv, !dbg !140199 ; 4 uses
   %i.kb = icmp samesign eq i64 %i.jv, %.sroa.13111.0.copyload.i, !dbg !140200
   br i1 %i.kb, label %.loopexit.i.i.peel, label %bb.ci, !dbg !140201
 
 bb.ci:                                            ; preds = %bb.ch
-  %3 = getelementptr inbounds nuw i8, ptr %.sroa.12110.0.copyload.i, i64 %i.jv, !dbg !140199
-  %i.kc = load i8, ptr %3, align 1, !dbg !140202, !noalias !139876, !noundef !2281 ; 3 uses
+  %i.kc = load i8, ptr %3, align 1, !dbg !140202, !noalias !139876, !noundef !2281 ; 5 uses
   %i.kd = icmp sgt i8 %i.kc, -1, !dbg !140203
-  br i1 %i.kd, label %.loopexit.i.i.peel, label %_RNvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsfcROwRM8ZtH_11polars_plan.exit12.i.i.i.i.peel, !dbg !140203
+  br i1 %i.kd, label %29, label %_RNvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsfcROwRM8ZtH_11polars_plan.exit12.i.i.i.i.peel, !dbg !140203
 
 _RNvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsfcROwRM8ZtH_11polars_plan.exit12.i.i.i.i.peel: ; preds = %bb.ci
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 1, !dbg !140204
+  %5 = and i8 %i.kc, 31, !dbg !140205
+  %6 = zext nneg i8 %5 to i32, !dbg !140205       ; 3 uses
   %i.ke = add nuw nsw i64 %i.jv, 1, !dbg !140206
   %i.kf = icmp samesign ne i64 %i.ke, %.sroa.13111.0.copyload.i, !dbg !140206
   tail call void @llvm.assume(i1 %i.kf), !dbg !140207
+  %7 = load i8, ptr %4, align 1, !dbg !140208, !noalias !139876, !noundef !2281
+  %8 = shl nuw nsw i32 %6, 6, !dbg !140209
+  %9 = and i8 %7, 63, !dbg !140210
+  %10 = zext nneg i8 %9 to i32, !dbg !140210      ; 2 uses
+  %11 = or disjoint i32 %8, %10, !dbg !140209
   %i.kg = icmp samesign ugt i8 %i.kc, -33, !dbg !140211
-  br i1 %i.kg, label %_RNvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsfcROwRM8ZtH_11polars_plan.exit14.i.i.i.i.peel, label %.loopexit.i.i.peel, !dbg !140211
+  br i1 %i.kg, label %_RNvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsfcROwRM8ZtH_11polars_plan.exit14.i.i.i.i.peel, label %.loopexit.i.loopexit.loopexit.i.peel, !dbg !140211
 
 _RNvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsfcROwRM8ZtH_11polars_plan.exit14.i.i.i.i.peel: ; preds = %_RNvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsfcROwRM8ZtH_11polars_plan.exit12.i.i.i.i.peel
+  %12 = getelementptr inbounds nuw i8, ptr %3, i64 2, !dbg !140212
   %i.kh = add nuw nsw i64 %i.jv, 2, !dbg !140213
   %i.ki = icmp samesign ne i64 %i.kh, %.sroa.13111.0.copyload.i, !dbg !140213
   tail call void @llvm.assume(i1 %i.ki), !dbg !140214
+  %13 = load i8, ptr %12, align 1, !dbg !140215, !noalias !139876, !noundef !2281
+  %14 = shl nuw nsw i32 %10, 6, !dbg !140216
+  %15 = and i8 %13, 63, !dbg !140217
+  %16 = zext nneg i8 %15 to i32, !dbg !140217
+  %17 = or disjoint i32 %14, %16, !dbg !140216    ; 2 uses
+  %18 = shl nuw nsw i32 %6, 12, !dbg !140218
+  %19 = or disjoint i32 %17, %18, !dbg !140219
   %i.kj = icmp samesign ugt i8 %i.kc, -17, !dbg !140220
-  br i1 %i.kj, label %_RNvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsfcROwRM8ZtH_11polars_plan.exit16.i.i.i.i.peel, label %.loopexit.i.i.peel, !dbg !140220
+  br i1 %i.kj, label %_RNvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsfcROwRM8ZtH_11polars_plan.exit16.i.i.i.i.peel, label %.loopexit.i.loopexit.loopexit.i.peel, !dbg !140220
 
 _RNvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsfcROwRM8ZtH_11polars_plan.exit16.i.i.i.i.peel: ; preds = %_RNvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsfcROwRM8ZtH_11polars_plan.exit14.i.i.i.i.peel
+  %20 = getelementptr inbounds nuw i8, ptr %3, i64 3, !dbg !140221
   %i.kk = add nuw nsw i64 %i.jv, 3, !dbg !140222
   %i.kl = icmp samesign ne i64 %i.kk, %.sroa.13111.0.copyload.i, !dbg !140222
   tail call void @llvm.assume(i1 %i.kl), !dbg !140223
-  br label %.loopexit.i.i.peel, !dbg !140229
+  %21 = load i8, ptr %20, align 1, !dbg !140224, !noalias !139876, !noundef !2281
+  %22 = shl nuw nsw i32 %6, 18, !dbg !140225
+  %23 = and i32 %22, 1835008, !dbg !140225
+  %24 = shl nuw nsw i32 %17, 6, !dbg !140226
+  %25 = and i8 %21, 63, !dbg !140227
+  %26 = zext nneg i8 %25 to i32, !dbg !140227
+  %27 = or disjoint i32 %24, %26, !dbg !140226
+  %28 = or disjoint i32 %27, %23, !dbg !140228
+  br label %.loopexit.i.loopexit.loopexit.i.peel, !dbg !140229
+
+29:                                               ; preds = %bb.ci
+  %30 = zext nneg i8 %i.kc to i32, !dbg !140230
+  br label %.loopexit.i.loopexit.loopexit.i.peel, !dbg !140231
+
+.loopexit.i.loopexit.loopexit.i.peel:             ; preds = %29, %_RNvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsfcROwRM8ZtH_11polars_plan.exit16.i.i.i.i.peel, %_RNvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsfcROwRM8ZtH_11polars_plan.exit14.i.i.i.i.peel, %_RNvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsfcROwRM8ZtH_11polars_plan.exit12.i.i.i.i.peel
+  %.sroa.4.0.i.ph.i.i.i.peel = phi i32 [ %19, %_RNvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsfcROwRM8ZtH_11polars_plan.exit14.i.i.i.i.peel ], [ %28, %_RNvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsfcROwRM8ZtH_11polars_plan.exit16.i.i.i.i.peel ], [ %11, %_RNvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsfcROwRM8ZtH_11polars_plan.exit12.i.i.i.i.peel ], [ %30, %29 ]
+  %31 = icmp samesign ult i32 %.sroa.4.0.i.ph.i.i.i.peel, 1114112, !dbg !140232
+  tail call void @llvm.assume(i1 %31), !dbg !140232
+  br label %.loopexit.i.i.peel, !dbg !140169
 
 .loopexit267.i.peel:                              ; preds = %bb.bx
   br i1 %i.hz, label %.loopexit.i.i.peel, label %.loopexit.i, !dbg !140233
 
-.loopexit.i.i.peel:                               ; preds = %_RNvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsfcROwRM8ZtH_11polars_plan.exit12.i.i.i.i.peel, %_RNvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsfcROwRM8ZtH_11polars_plan.exit14.i.i.i.i.peel, %_RNvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsfcROwRM8ZtH_11polars_plan.exit16.i.i.i.i.peel, %bb.ci, %.loopexit267.i.peel, %bb.ch, %bb.ca
-  %.sroa.468.1264.i.peel = phi i64 [ %.sroa.4102.0.copyload.i, %.loopexit267.i.peel ], [ %.sroa.13111.0.copyload.i, %bb.ch ], [ %.sroa.4102.0.copyload.i, %bb.ca ], [ %i.jv, %bb.ci ], [ %i.jv, %_RNvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsfcROwRM8ZtH_11polars_plan.exit16.i.i.i.i.peel ], [ %i.jv, %_RNvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsfcROwRM8ZtH_11polars_plan.exit14.i.i.i.i.peel ], [ %i.jv, %_RNvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsfcROwRM8ZtH_11polars_plan.exit12.i.i.i.i.peel ] ; 6 uses
+.loopexit.i.i.peel:                               ; preds = %.loopexit267.i.peel, %.loopexit.i.loopexit.loopexit.i.peel, %bb.ch, %bb.ca
+  %.sroa.468.1264.i.peel = phi i64 [ %.sroa.4102.0.copyload.i, %.loopexit267.i.peel ], [ %i.jv, %.loopexit.i.loopexit.loopexit.i.peel ], [ %.sroa.4102.0.copyload.i, %bb.ca ], [ %.sroa.13111.0.copyload.i, %bb.ch ] ; 6 uses
   invoke void @_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE7reserveCsfcROwRM8ZtH_11polars_plan(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.f, i64 noundef %.sroa.468.1264.i.peel)
           to label %.noexc31.i.peel unwind label %.loopexit138.split.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !dbg !140171, !noalias !139854
 

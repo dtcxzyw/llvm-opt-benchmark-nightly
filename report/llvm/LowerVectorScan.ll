@@ -205,7 +205,12 @@ bb.j:                                             ; preds = %_ZN4llvm11SmallVect
   %i.ed = load i32, ptr %i.bx, align 8, !tbaa !17
   %i.ee = zext i32 %i.ed to i64
   %i.ef = call ptr @_ZN4mlir7Builder15getI64ArrayAttrEN4llvm8ArrayRefIlEE(ptr noundef nonnull align 8 dereferenceable(8) %i.bk, ptr %i.eb, i64 %i.ee) #13
-  %i.eg = load ptr, ptr %5, align 8, !tbaa !74
+  %i.eg = load ptr, ptr %5, align 8, !tbaa !74    ; 2 uses
+  %17 = getelementptr inbounds nuw i8, ptr %i.eg, i64 44
+  %18 = load i32, ptr %17, align 4
+  %19 = and i32 %18, 8388608
+  %.not.i.i.i.i.i.peel = icmp ne i32 %19, 0
+  call void @llvm.assume(i1 %.not.i.i.i.i.i.peel)
   %i.eh = getelementptr inbounds nuw i8, ptr %i.eg, i64 72
   %i.ei = load ptr, ptr %i.eh, align 8, !tbaa !77
   %i.ej = getelementptr inbounds nuw i8, ptr %i.ei, i64 24
@@ -220,7 +225,12 @@ bb.k:                                             ; preds = %bb.j
   %.0.copyload.i.i.i.i.i.peel = load i64, ptr %i.en, align 8
   %i.eo = and i64 %.0.copyload.i.i.i.i.i.peel, -8
   %i.ep = inttoptr i64 %i.eo to ptr               ; 2 uses
-  %i.eq = load ptr, ptr %5, align 8, !tbaa !74
+  %i.eq = load ptr, ptr %5, align 8, !tbaa !74    ; 2 uses
+  %20 = getelementptr inbounds nuw i8, ptr %i.eq, i64 44
+  %21 = load i32, ptr %20, align 4
+  %22 = and i32 %21, 8388608
+  %.not.i.i.i.i.i113.peel = icmp ne i32 %22, 0
+  call void @llvm.assume(i1 %.not.i.i.i.i.i113.peel)
   %i.er = getelementptr inbounds nuw i8, ptr %i.eq, i64 72
   %i.es = load ptr, ptr %i.er, align 8, !tbaa !77
   %i.et = getelementptr inbounds nuw i8, ptr %i.es, i64 56

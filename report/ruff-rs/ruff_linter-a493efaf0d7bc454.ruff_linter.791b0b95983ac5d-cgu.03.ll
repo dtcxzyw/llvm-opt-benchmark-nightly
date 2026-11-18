@@ -206,7 +206,7 @@ bb.a:
   %i.b = alloca [40 x i8], align 8                ; 5 uses
   %i.c = alloca [24 x i8], align 8                ; 7 uses
   %i.d = alloca [48 x i8], align 8                ; 6 uses
-  %i.e = alloca [24 x i8], align 8                ; 11 uses
+  %i.e = alloca [24 x i8], align 8                ; 12 uses
   %i.f = load i32, ptr %1, align 8, !range !19, !noundef !8
   %i.g = icmp eq i32 %i.f, 28
   br i1 %i.g, label %bb.b, label %bb.c
@@ -326,8 +326,8 @@ bb.n:                                             ; preds = %bb.m
   call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #58
   unreachable
 
-common.resume:                                    ; preds = %bb.y, %bb.p, %bb.ad, %bb.m
-  %common.resume.op = phi { ptr, i32 } [ %i.bb, %bb.m ], [ %i.bf, %bb.p ], [ %i.bf, %bb.ad ], [ %.pn, %bb.y ]
+common.resume:                                    ; preds = %bb.p, %bb.ad, %.thread, %bb.m
+  %common.resume.op = phi { ptr, i32 } [ %i.bb, %bb.m ], [ %.pn, %.thread ], [ %i.bf, %bb.ad ], [ %i.bf, %bb.p ]
   resume { ptr, i32 } %common.resume.op
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecReEECsEhZmuQNqkz_11ruff_linter.exit.i: ; preds = %bb.l
@@ -403,7 +403,13 @@ bb.x:                                             ; preds = %bb.u, %bb.w
 bb.y:                                             ; preds = %bb.z, %bb.t
   %.pn = phi { ptr, i32 } [ %i.bs, %bb.z ], [ %i.bq, %bb.t ]
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsEhZmuQNqkz_11ruff_linter8checkers3ast15DiagnosticGuardEBH_(ptr noalias noundef align 8 dereferenceable(48) %i.d) #57
-          to label %common.resume unwind label %bb.ab
+          to label %.thread unwind label %bb.ab
+
+.thread:                                          ; preds = %bb.y
+  %3 = load i64, ptr %i.e, align 8, !range !30, !noundef !8
+  %4 = icmp ne i64 %3, -9223372036854775806
+  call void @llvm.assume(i1 %4)
+  br label %common.resume
 
 bb.z:                                             ; preds = %bb.x
   %i.bs = landingpad { ptr, i32 }
@@ -806,7 +812,7 @@ bb.a:
   %i.e = alloca [24 x i8], align 8                ; 7 uses
   %i.f = alloca [16 x i8], align 8                ; 4 uses
   %i.g = alloca [48 x i8], align 8                ; 6 uses
-  %i.h = alloca [24 x i8], align 8                ; 10 uses
+  %i.h = alloca [24 x i8], align 8                ; 11 uses
   %i.i = alloca [48 x i8], align 8                ; 6 uses
   %i.j = alloca [48 x i8], align 8                ; 14 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 64
@@ -930,8 +936,8 @@ bb.n:                                             ; preds = %bb.l
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
   br label %bb.ap
 
-.thread.a:                                        ; preds = %bb.ak, %bb.aq, %bb.v, %bb.o
-  %.pn27 = phi { ptr, i32 } [ %i.bq, %bb.o ], [ %i.cd, %bb.aq ], [ %i.cd, %bb.v ], [ %.pn, %bb.ak ]
+.thread.a:                                        ; preds = %.thread, %bb.aq, %bb.v, %bb.o
+  %.pn27 = phi { ptr, i32 } [ %i.bq, %bb.o ], [ %i.cd, %bb.aq ], [ %i.cd, %bb.v ], [ %.pn, %.thread ]
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules4ruff5rules17sort_dunder_slots20StringLiteralDisplayEBL_(ptr noalias noundef align 8 dereferenceable(48) %i.j) #57
           to label %bb.ar unwind label %bb.an
 
@@ -1102,7 +1108,13 @@ bb.aj:                                            ; preds = %bb.ab, %bb.ai
 bb.ak:                                            ; preds = %bb.al, %bb.aa
   %.pn = phi { ptr, i32 } [ %i.dg, %bb.al ], [ %i.cu, %bb.aa ]
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsEhZmuQNqkz_11ruff_linter8checkers3ast15DiagnosticGuardEBH_(ptr noalias noundef align 8 dereferenceable(48) %i.g) #57
-          to label %.thread.a unwind label %bb.an
+          to label %.thread unwind label %bb.an
+
+.thread:                                          ; preds = %bb.ak
+  %2 = load i64, ptr %i.h, align 8, !range !30, !noundef !8
+  %3 = icmp ne i64 %2, -9223372036854775806
+  call void @llvm.assume(i1 %3)
+  br label %.thread.a
 
 bb.al:                                            ; preds = %bb.aj
   %i.dg = landingpad { ptr, i32 }

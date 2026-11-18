@@ -202,7 +202,7 @@ bb.av:                                            ; preds = %bb.aq, %_RINvNtCsf3
   br label %bb.c
 
 bb.aw:                                            ; preds = %bb.j, %bb.i, %bb.ac
-  %.sroa.8.0.ph = phi ptr [ %i.cz, %bb.ac ], [ %i.bp, %bb.i ], [ %i.bp, %bb.j ] ; 10 uses
+  %.sroa.8.0.ph = phi ptr [ %i.cz, %bb.ac ], [ %i.bp, %bb.i ], [ %i.bp, %bb.j ] ; 11 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.01.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.as)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.ph) ]
@@ -304,7 +304,7 @@ bb.bg:                                            ; preds = %bb.ei, %bb.de, %bb.
 
 .body:                                            ; preds = %bb.ee, %bb.db, %bb.dc, %common.resume.sink.split.i95, %bb.dy, %bb.bl, %bb.bm, %common.resume.sink.split.i62, %bb.cs, %bb.bg
   %eh.lpad-body = phi { ptr, i32 } [ %common.resume.op.ph.i96, %common.resume.sink.split.i95 ], [ %common.resume.op.ph.i63, %common.resume.sink.split.i62 ], [ %i.fw, %bb.bg ], [ %i.gi, %bb.bl ], [ %i.gi, %bb.bm ], [ %.pn43.i, %bb.cs ], [ %i.jp, %bb.db ], [ %i.jp, %bb.dc ], [ %.pn42.i81, %bb.dy ], [ %i.mb, %bb.ee ]
-  invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsbzNSmZPCnTx_10tgrep_core(ptr nonnull %.sroa.8.0.ph) #22
+  invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsbzNSmZPCnTx_10tgrep_core(ptr %.sroa.8.0.ph) #22
           to label %common.resume unwind label %bb.ar
 
 bb.bh:                                            ; preds = %bb.bf
@@ -687,6 +687,7 @@ bb.ct:                                            ; preds = %.sink.split, %bb.bn
 
 bb.cu:                                            ; preds = %bb.ek, %bb.ct
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.ph) ]
   switch i64 %i.fd, label %default.unreachable [
     i64 2, label %bb.em
     i64 3, label %bb.cv
@@ -1089,7 +1090,7 @@ bb.en:                                            ; preds = %bb.bb, %bb.bc, %bb.
 bb.eo:                                            ; preds = %.noexc, %bb.ax
   %lpad.thr_comm = landingpad { ptr, i32 }
           cleanup
-  invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsbzNSmZPCnTx_10tgrep_core(ptr nonnull %.sroa.8.0.ph) #22
+  invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsbzNSmZPCnTx_10tgrep_core(ptr %.sroa.8.0.ph) #22
           to label %common.resume unwind label %bb.ar
 }
 

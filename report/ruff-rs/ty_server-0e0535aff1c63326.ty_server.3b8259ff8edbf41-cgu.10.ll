@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %.noexc.i
 
 _RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterNtNtNtCs56aZGHL6Dc6_7ruff_db6system4path13SystemPathBufEENtNtNtB8_6traits8iterator8Iterator4nextCsjNt1Wzngcv_9ty_server.exit.i.i95.i.i: ; preds = %bb.c, %bb.d
   %.sroa.0.01.i.i94.i.i153 = phi ptr [ %i.o, %bb.d ], [ %i.i, %bb.c ] ; 2 uses
-  %.sroa.8.0.i.i93.i.i152 = phi i64 [ %i.r, %bb.d ], [ 0, %bb.c ] ; 2 uses
+  %.sroa.8.0.i.i93.i.i152 = phi i64 [ %i.r, %bb.d ], [ 0, %bb.c ] ; 3 uses
   %i.q = invoke noundef range(i8 -1, 2) i8 @_RNvXs1H_CshFWUtO0bu8g_6caminoNtB6_11Utf8PathBufNtNtCs4NRVxsYgnAr_4core3cmp3Ord3cmp(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.a, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %.sroa.0.01.i.i94.i.i153)
           to label %.noexc.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !239
 
@@ -263,6 +263,8 @@ _RINvMs0_NtNtNtCscdodAO9FK5_5alloc11collections5btree6searchINtNtB8_4node7NodeRe
   %i.v = getelementptr inbounds nuw i8, ptr %.sroa.0.0187.i.i, i64 1952 ; 2 uses
   %i.w = load ptr, ptr %i.v, align 8, !noalias !239, !nonnull !10, !noundef !10
   %i.x = add i64 %i.h, -1
+  %3 = icmp samesign ult i64 %.sroa.8.0.i.i93.i.i152, 11
+  call void @llvm.assume(i1 %3)
   %i.y = getelementptr inbounds nuw [8 x i8], ptr %i.v, i64 %i.r
   %i.z = load ptr, ptr %i.y, align 8, !noalias !239, !nonnull !10, !noundef !10
   br label %_RINvMs0_NtNtNtCscdodAO9FK5_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBY_6marker5ImmutNtNtNtCs56aZGHL6Dc6_7ruff_db6system4path13SystemPathBufNtNtCsjNt1Wzngcv_9ty_server7session12ProjectStateNtB1i_14LeafOrInternalE22find_upper_bound_indexB1A_EB2x_.exit.jt3.preheader.i
@@ -665,7 +667,7 @@ bb.d:                                             ; preds = %.noexc.i
 
 _RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterNtNtNtCs56aZGHL6Dc6_7ruff_db6system4path13SystemPathBufEENtNtNtB8_6traits8iterator8Iterator4nextCsjNt1Wzngcv_9ty_server.exit.i.i95.i.i: ; preds = %bb.c, %bb.d
   %.sroa.0.01.i.i94.i.i153 = phi ptr [ %i.o, %bb.d ], [ %i.i, %bb.c ] ; 2 uses
-  %.sroa.8.0.i.i93.i.i152 = phi i64 [ %i.r, %bb.d ], [ 0, %bb.c ] ; 2 uses
+  %.sroa.8.0.i.i93.i.i152 = phi i64 [ %i.r, %bb.d ], [ 0, %bb.c ] ; 3 uses
   %i.q = invoke noundef range(i8 -1, 2) i8 @_RNvXs1H_CshFWUtO0bu8g_6caminoNtB6_11Utf8PathBufNtNtCs4NRVxsYgnAr_4core3cmp3Ord3cmp(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.a, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %.sroa.0.01.i.i94.i.i153)
           to label %.noexc.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !307
 
@@ -723,6 +725,8 @@ _RINvMs0_NtNtNtCscdodAO9FK5_5alloc11collections5btree6searchINtNtB8_4node7NodeRe
   %i.v = getelementptr inbounds nuw i8, ptr %.sroa.0.0187.i.i, i64 1952 ; 2 uses
   %i.w = load ptr, ptr %i.v, align 8, !noalias !307, !nonnull !10, !noundef !10
   %i.x = add i64 %i.h, -1
+  %3 = icmp samesign ult i64 %.sroa.8.0.i.i93.i.i152, 11
+  call void @llvm.assume(i1 %3)
   %i.y = getelementptr inbounds nuw [8 x i8], ptr %i.v, i64 %i.r
   %i.z = load ptr, ptr %i.y, align 8, !noalias !307, !nonnull !10, !noundef !10
   br label %_RINvMs0_NtNtNtCscdodAO9FK5_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBY_6marker6ValMutNtNtNtCs56aZGHL6Dc6_7ruff_db6system4path13SystemPathBufNtNtCsjNt1Wzngcv_9ty_server7session12ProjectStateNtB1i_14LeafOrInternalE22find_upper_bound_indexB1B_EB2y_.exit.jt3.preheader.i
@@ -1057,7 +1061,7 @@ bb.d:                                             ; preds = %.noexc.i
 
 _RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterNtNtNtCs56aZGHL6Dc6_7ruff_db6system4path13SystemPathBufEENtNtNtB8_6traits8iterator8Iterator4nextCsjNt1Wzngcv_9ty_server.exit.i.i95.i.i: ; preds = %bb.c, %bb.d
   %.sroa.0.01.i.i94.i.i153 = phi ptr [ %i.o, %bb.d ], [ %i.i, %bb.c ] ; 2 uses
-  %.sroa.8.0.i.i93.i.i152 = phi i64 [ %i.r, %bb.d ], [ 0, %bb.c ] ; 2 uses
+  %.sroa.8.0.i.i93.i.i152 = phi i64 [ %i.r, %bb.d ], [ 0, %bb.c ] ; 3 uses
   %i.q = invoke noundef range(i8 -1, 2) i8 @_RNvXs1H_CshFWUtO0bu8g_6caminoNtB6_11Utf8PathBufNtNtCs4NRVxsYgnAr_4core3cmp3Ord3cmp(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.a, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %.sroa.0.01.i.i94.i.i153)
           to label %.noexc.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !333
 
@@ -1115,6 +1119,8 @@ _RINvMs0_NtNtNtCscdodAO9FK5_5alloc11collections5btree6searchINtNtB8_4node7NodeRe
   %i.v = getelementptr inbounds nuw i8, ptr %.sroa.0.0187.i.i, i64 1424 ; 2 uses
   %i.w = load ptr, ptr %i.v, align 8, !noalias !333, !nonnull !10, !noundef !10
   %i.x = add i64 %i.h, -1
+  %3 = icmp samesign ult i64 %.sroa.8.0.i.i93.i.i152, 11
+  call void @llvm.assume(i1 %3)
   %i.y = getelementptr inbounds nuw [8 x i8], ptr %i.v, i64 %i.r
   %i.z = load ptr, ptr %i.y, align 8, !noalias !333, !nonnull !10, !noundef !10
   br label %_RINvMs0_NtNtNtCscdodAO9FK5_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBY_6marker5ImmutNtNtNtCs56aZGHL6Dc6_7ruff_db6system4path13SystemPathBufNtNtCsjNt1Wzngcv_9ty_server7session9WorkspaceNtB1i_14LeafOrInternalE22find_upper_bound_indexB1A_EB2x_.exit.jt3.preheader.i

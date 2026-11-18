@@ -205,7 +205,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 16
   %.val3 = load i64, ptr %i.c, align 8, !noundef !12 ; 9 uses
   %i.d = icmp eq i64 %.val3, 0
-  br i1 %i.d, label %"_ZN89_$LT$anki_proto..notes..ClozeNumbersInNoteResponse$u20$as$u20$prost..message..Message$GT$10encode_raw17h9e1a07389c433b8dE.exit", label %.preheader.i.i.preheader
+  br i1 %i.d, label %.thread, label %.preheader.i.i.preheader
 
 .preheader.i.i.preheader:                         ; preds = %bb.a
   %i.e = add i64 %.val3, -1                       ; 2 uses
@@ -216,6 +216,13 @@ bb.a:
 .preheader.i.i.preheader.new:                     ; preds = %.preheader.i.i.preheader
   %unroll_iter = and i64 %.val3, -2
   br label %.preheader.i.i
+
+.thread:                                          ; preds = %bb.a
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %.val10 = load i64, ptr %3, align 8, !noundef !12
+  %4 = icmp sgt i64 %.val10, -1
+  tail call void @llvm.assume(i1 %4)
+  br label %"_ZN89_$LT$anki_proto..notes..ClozeNumbersInNoteResponse$u20$as$u20$prost..message..Message$GT$10encode_raw17h9e1a07389c433b8dE.exit"
 
 .preheader.i.i:                                   ; preds = %.preheader.i.i, %.preheader.i.i.preheader.new
   %.sroa.04.0.i.i.i = phi i64 [ 0, %.preheader.i.i.preheader.new ], [ %i.z, %.preheader.i.i ] ; 3 uses
@@ -374,8 +381,8 @@ bb.d:                                             ; preds = %"_ZN89_$LT$anki_pro
   store i64 %i.at, ptr %i.cf, align 8
   br label %"_ZN89_$LT$anki_proto..notes..ClozeNumbersInNoteResponse$u20$as$u20$prost..message..Message$GT$10encode_raw17h9e1a07389c433b8dE.exit"
 
-"_ZN89_$LT$anki_proto..notes..ClozeNumbersInNoteResponse$u20$as$u20$prost..message..Message$GT$10encode_raw17h9e1a07389c433b8dE.exit": ; preds = %.lr.ph.i.i, %bb.a, %bb.d
-  %storemerge = phi i64 [ 1, %bb.d ], [ 0, %bb.a ], [ 0, %.lr.ph.i.i ]
+"_ZN89_$LT$anki_proto..notes..ClozeNumbersInNoteResponse$u20$as$u20$prost..message..Message$GT$10encode_raw17h9e1a07389c433b8dE.exit": ; preds = %.lr.ph.i.i, %.thread, %bb.d
+  %storemerge = phi i64 [ 1, %bb.d ], [ 0, %.thread ], [ 0, %.lr.ph.i.i ]
   store i64 %storemerge, ptr %0, align 8
   ret void
 }
@@ -778,7 +785,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 16
   %.val3 = load i64, ptr %i.c, align 8, !noundef !12 ; 9 uses
   %i.d = icmp eq i64 %.val3, 0
-  br i1 %i.d, label %"_ZN92_$LT$anki_proto..notetypes..GetClozeFieldOrdsResponse$u20$as$u20$prost..message..Message$GT$10encode_raw17h3ee00674ec665f11E.exit", label %.preheader.i.i.preheader
+  br i1 %i.d, label %.thread, label %.preheader.i.i.preheader
 
 .preheader.i.i.preheader:                         ; preds = %bb.a
   %i.e = add i64 %.val3, -1                       ; 2 uses
@@ -789,6 +796,13 @@ bb.a:
 .preheader.i.i.preheader.new:                     ; preds = %.preheader.i.i.preheader
   %unroll_iter = and i64 %.val3, -2
   br label %.preheader.i.i
+
+.thread:                                          ; preds = %bb.a
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %.val10 = load i64, ptr %3, align 8, !noundef !12
+  %4 = icmp sgt i64 %.val10, -1
+  tail call void @llvm.assume(i1 %4)
+  br label %"_ZN92_$LT$anki_proto..notetypes..GetClozeFieldOrdsResponse$u20$as$u20$prost..message..Message$GT$10encode_raw17h3ee00674ec665f11E.exit"
 
 .preheader.i.i:                                   ; preds = %.preheader.i.i, %.preheader.i.i.preheader.new
   %.sroa.04.0.i.i.i = phi i64 [ 0, %.preheader.i.i.preheader.new ], [ %i.z, %.preheader.i.i ] ; 3 uses
@@ -947,8 +961,8 @@ bb.d:                                             ; preds = %"_ZN92_$LT$anki_pro
   store i64 %i.at, ptr %i.cf, align 8
   br label %"_ZN92_$LT$anki_proto..notetypes..GetClozeFieldOrdsResponse$u20$as$u20$prost..message..Message$GT$10encode_raw17h3ee00674ec665f11E.exit"
 
-"_ZN92_$LT$anki_proto..notetypes..GetClozeFieldOrdsResponse$u20$as$u20$prost..message..Message$GT$10encode_raw17h3ee00674ec665f11E.exit": ; preds = %.lr.ph.i.i, %bb.a, %bb.d
-  %storemerge = phi i64 [ 1, %bb.d ], [ 0, %bb.a ], [ 0, %.lr.ph.i.i ]
+"_ZN92_$LT$anki_proto..notetypes..GetClozeFieldOrdsResponse$u20$as$u20$prost..message..Message$GT$10encode_raw17h3ee00674ec665f11E.exit": ; preds = %.lr.ph.i.i, %.thread, %bb.d
+  %storemerge = phi i64 [ 1, %bb.d ], [ 0, %.thread ], [ 0, %.lr.ph.i.i ]
   store i64 %storemerge, ptr %0, align 8
   ret void
 }
@@ -1351,7 +1365,7 @@ define hidden void @_ZN5prost7message7Message6encode17h909bf47623c3a774E(ptr dea
 bb.a:
   %i.a = load i32, ptr %1, align 8, !range !47, !alias.scope !15171, !noundef !12
   switch i32 %i.a, label %default.unreachable [
-    i32 12, label %"_ZN76_$LT$anki_proto..collection..Progress$u20$as$u20$prost..message..Message$GT$10encode_raw17hcf37cf6d645d2925E.exit"
+    i32 12, label %.thread
     i32 0, label %"_ZN76_$LT$anki_proto..collection..Progress$u20$as$u20$prost..message..Message$GT$11encoded_len17hca7883f9f7131ac6E.exit"
     i32 1, label %bb.b
     i32 2, label %bb.h
@@ -1365,6 +1379,13 @@ bb.a:
     i32 10, label %bb.ao
     i32 11, label %bb.au
   ]
+
+.thread:                                          ; preds = %bb.a
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %.val3 = load i64, ptr %3, align 8, !noundef !12
+  %4 = icmp sgt i64 %.val3, -1
+  tail call void @llvm.assume(i1 %4)
+  br label %"_ZN76_$LT$anki_proto..collection..Progress$u20$as$u20$prost..message..Message$GT$10encode_raw17hcf37cf6d645d2925E.exit"
 
 default.unreachable:                              ; preds = %bb.a
   unreachable
@@ -1768,8 +1789,8 @@ bb.az:                                            ; preds = %"_ZN76_$LT$anki_pro
   store i64 %i.ks, ptr %i.kv, align 8
   br label %"_ZN76_$LT$anki_proto..collection..Progress$u20$as$u20$prost..message..Message$GT$10encode_raw17hcf37cf6d645d2925E.exit"
 
-"_ZN76_$LT$anki_proto..collection..Progress$u20$as$u20$prost..message..Message$GT$10encode_raw17hcf37cf6d645d2925E.exit": ; preds = %bb.a, %bb.ay, %bb.az
-  %storemerge = phi i64 [ 1, %bb.az ], [ 0, %bb.ay ], [ 0, %bb.a ]
+"_ZN76_$LT$anki_proto..collection..Progress$u20$as$u20$prost..message..Message$GT$10encode_raw17hcf37cf6d645d2925E.exit": ; preds = %bb.ay, %.thread, %bb.az
+  %storemerge = phi i64 [ 1, %bb.az ], [ 0, %.thread ], [ 0, %bb.ay ]
   store i64 %storemerge, ptr %0, align 8
   ret void
 }
@@ -1914,7 +1935,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 16
   %.val3 = load i64, ptr %i.c, align 8, !noundef !12 ; 9 uses
   %i.d = icmp eq i64 %.val3, 0
-  br i1 %i.d, label %"_ZN78_$LT$anki_proto..search..SearchResponse$u20$as$u20$prost..message..Message$GT$10encode_raw17h4c7aa4be97874e64E.exit", label %.preheader.i.i.preheader
+  br i1 %i.d, label %.thread, label %.preheader.i.i.preheader
 
 .preheader.i.i.preheader:                         ; preds = %bb.a
   %i.e = add i64 %.val3, -1                       ; 2 uses
@@ -1925,6 +1946,13 @@ bb.a:
 .preheader.i.i.preheader.new:                     ; preds = %.preheader.i.i.preheader
   %unroll_iter = and i64 %.val3, -2
   br label %.preheader.i.i
+
+.thread:                                          ; preds = %bb.a
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %.val10 = load i64, ptr %3, align 8, !noundef !12
+  %4 = icmp sgt i64 %.val10, -1
+  tail call void @llvm.assume(i1 %4)
+  br label %"_ZN78_$LT$anki_proto..search..SearchResponse$u20$as$u20$prost..message..Message$GT$10encode_raw17h4c7aa4be97874e64E.exit"
 
 .preheader.i.i:                                   ; preds = %.preheader.i.i, %.preheader.i.i.preheader.new
   %.sroa.04.0.i.i.i = phi i64 [ 0, %.preheader.i.i.preheader.new ], [ %i.x, %.preheader.i.i ] ; 3 uses
@@ -2076,8 +2104,8 @@ bb.d:                                             ; preds = %"_ZN78_$LT$anki_pro
   store i64 %i.aq, ptr %i.by, align 8
   br label %"_ZN78_$LT$anki_proto..search..SearchResponse$u20$as$u20$prost..message..Message$GT$10encode_raw17h4c7aa4be97874e64E.exit"
 
-"_ZN78_$LT$anki_proto..search..SearchResponse$u20$as$u20$prost..message..Message$GT$10encode_raw17h4c7aa4be97874e64E.exit": ; preds = %.lr.ph.i.i, %bb.a, %bb.d
-  %storemerge = phi i64 [ 1, %bb.d ], [ 0, %bb.a ], [ 0, %.lr.ph.i.i ]
+"_ZN78_$LT$anki_proto..search..SearchResponse$u20$as$u20$prost..message..Message$GT$10encode_raw17h4c7aa4be97874e64E.exit": ; preds = %.lr.ph.i.i, %.thread, %bb.d
+  %storemerge = phi i64 [ 1, %bb.d ], [ 0, %.thread ], [ 0, %.lr.ph.i.i ]
   store i64 %storemerge, ptr %0, align 8
   ret void
 }
@@ -2480,7 +2508,14 @@ bb.a:
   %i.a = alloca [1 x i8], align 1                 ; 4 uses
   %.val2 = load i64, ptr %1, align 8, !noundef !12 ; 3 uses
   %i.b = icmp eq i64 %.val2, 0
-  br i1 %i.b, label %"_ZN77_$LT$anki_proto..notetypes..NotetypeId$u20$as$u20$prost..message..Message$GT$10encode_raw17h0a3d097156db7f2fE.exit", label %"_ZN77_$LT$anki_proto..notetypes..NotetypeId$u20$as$u20$prost..message..Message$GT$11encoded_len17hfd50ed785e8e275dE.exit"
+  br i1 %i.b, label %.thread, label %"_ZN77_$LT$anki_proto..notetypes..NotetypeId$u20$as$u20$prost..message..Message$GT$11encoded_len17hfd50ed785e8e275dE.exit"
+
+.thread:                                          ; preds = %bb.a
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %.val5 = load i64, ptr %3, align 8, !noundef !12
+  %4 = icmp sgt i64 %.val5, -1
+  tail call void @llvm.assume(i1 %4)
+  br label %"_ZN77_$LT$anki_proto..notetypes..NotetypeId$u20$as$u20$prost..message..Message$GT$10encode_raw17h0a3d097156db7f2fE.exit"
 
 "_ZN77_$LT$anki_proto..notetypes..NotetypeId$u20$as$u20$prost..message..Message$GT$11encoded_len17hfd50ed785e8e275dE.exit": ; preds = %bb.a
   %i.c = or i64 %.val2, 1
@@ -2513,8 +2548,8 @@ bb.c:                                             ; preds = %"_ZN77_$LT$anki_pro
   store i64 %i.k, ptr %i.n, align 8
   br label %"_ZN77_$LT$anki_proto..notetypes..NotetypeId$u20$as$u20$prost..message..Message$GT$10encode_raw17h0a3d097156db7f2fE.exit"
 
-"_ZN77_$LT$anki_proto..notetypes..NotetypeId$u20$as$u20$prost..message..Message$GT$10encode_raw17h0a3d097156db7f2fE.exit": ; preds = %bb.a, %bb.b, %bb.c
-  %storemerge = phi i64 [ 1, %bb.c ], [ 0, %bb.b ], [ 0, %bb.a ]
+"_ZN77_$LT$anki_proto..notetypes..NotetypeId$u20$as$u20$prost..message..Message$GT$10encode_raw17h0a3d097156db7f2fE.exit": ; preds = %bb.b, %.thread, %bb.c
+  %storemerge = phi i64 [ 1, %bb.c ], [ 0, %.thread ], [ 0, %bb.b ]
   store i64 %storemerge, ptr %0, align 8
   ret void
 }
@@ -2614,7 +2649,14 @@ bb.a:
   %i.a = load i64, ptr %1, align 8, !range !26, !alias.scope !15427, !noundef !12 ; 2 uses
   %.not.i = icmp eq i64 %i.a, -9223372036854775807
   tail call void @llvm.experimental.noalias.scope.decl(metadata !15428)
-  br i1 %.not.i, label %"_ZN82_$LT$anki_proto..decks..deck..KindContainer$u20$as$u20$prost..message..Message$GT$10encode_raw17h207839069bc3251cE.exit", label %bb.b
+  br i1 %.not.i, label %.thread, label %bb.b
+
+.thread:                                          ; preds = %bb.a
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %.val4 = load i64, ptr %3, align 8, !noundef !12
+  %4 = icmp sgt i64 %.val4, -1
+  tail call void @llvm.assume(i1 %4)
+  br label %"_ZN82_$LT$anki_proto..decks..deck..KindContainer$u20$as$u20$prost..message..Message$GT$10encode_raw17h207839069bc3251cE.exit"
 
 bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !15429)
@@ -2990,8 +3032,8 @@ bb.af:                                            ; preds = %"_ZN82_$LT$anki_pro
   store i64 %i.gs, ptr %i.gv, align 8
   br label %"_ZN82_$LT$anki_proto..decks..deck..KindContainer$u20$as$u20$prost..message..Message$GT$10encode_raw17h207839069bc3251cE.exit"
 
-"_ZN82_$LT$anki_proto..decks..deck..KindContainer$u20$as$u20$prost..message..Message$GT$10encode_raw17h207839069bc3251cE.exit": ; preds = %bb.a, %bb.ae, %bb.af
-  %storemerge = phi i64 [ 1, %bb.af ], [ 0, %bb.ae ], [ 0, %bb.a ]
+"_ZN82_$LT$anki_proto..decks..deck..KindContainer$u20$as$u20$prost..message..Message$GT$10encode_raw17h207839069bc3251cE.exit": ; preds = %bb.ae, %.thread, %bb.af
+  %storemerge = phi i64 [ 1, %bb.af ], [ 0, %.thread ], [ 0, %bb.ae ]
   store i64 %storemerge, ptr %0, align 8
   ret void
 }
@@ -3149,7 +3191,14 @@ bb.a:
   %i.a = alloca [1 x i8], align 1                 ; 4 uses
   %.val2 = load i32, ptr %1, align 4, !noundef !12 ; 3 uses
   %i.b = icmp eq i32 %.val2, 0
-  br i1 %i.b, label %"_ZN86_$LT$anki_proto..notes..NoteFieldsCheckResponse$u20$as$u20$prost..message..Message$GT$10encode_raw17he1d6ec3cf783d0afE.exit", label %"_ZN86_$LT$anki_proto..notes..NoteFieldsCheckResponse$u20$as$u20$prost..message..Message$GT$11encoded_len17h4bbbf981831b6e7bE.exit"
+  br i1 %i.b, label %.thread, label %"_ZN86_$LT$anki_proto..notes..NoteFieldsCheckResponse$u20$as$u20$prost..message..Message$GT$11encoded_len17h4bbbf981831b6e7bE.exit"
+
+.thread:                                          ; preds = %bb.a
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %.val5 = load i64, ptr %3, align 8, !noundef !12
+  %4 = icmp sgt i64 %.val5, -1
+  tail call void @llvm.assume(i1 %4)
+  br label %"_ZN86_$LT$anki_proto..notes..NoteFieldsCheckResponse$u20$as$u20$prost..message..Message$GT$10encode_raw17he1d6ec3cf783d0afE.exit"
 
 "_ZN86_$LT$anki_proto..notes..NoteFieldsCheckResponse$u20$as$u20$prost..message..Message$GT$11encoded_len17h4bbbf981831b6e7bE.exit": ; preds = %bb.a
   %i.c = or i32 %.val2, 1
@@ -3184,8 +3233,8 @@ bb.c:                                             ; preds = %"_ZN86_$LT$anki_pro
   store i64 %i.l, ptr %i.p, align 8
   br label %"_ZN86_$LT$anki_proto..notes..NoteFieldsCheckResponse$u20$as$u20$prost..message..Message$GT$10encode_raw17he1d6ec3cf783d0afE.exit"
 
-"_ZN86_$LT$anki_proto..notes..NoteFieldsCheckResponse$u20$as$u20$prost..message..Message$GT$10encode_raw17he1d6ec3cf783d0afE.exit": ; preds = %bb.a, %bb.b, %bb.c
-  %storemerge = phi i64 [ 1, %bb.c ], [ 0, %bb.b ], [ 0, %bb.a ]
+"_ZN86_$LT$anki_proto..notes..NoteFieldsCheckResponse$u20$as$u20$prost..message..Message$GT$10encode_raw17he1d6ec3cf783d0afE.exit": ; preds = %bb.b, %.thread, %bb.c
+  %storemerge = phi i64 [ 1, %bb.c ], [ 0, %.thread ], [ 0, %bb.b ]
   store i64 %storemerge, ptr %0, align 8
   ret void
 }
@@ -3588,7 +3637,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 16
   %.val3 = load i64, ptr %i.c, align 8, !noundef !12 ; 9 uses
   %i.d = icmp eq i64 %.val3, 0
-  br i1 %i.d, label %"_ZN70_$LT$anki_proto..cards..CardIds$u20$as$u20$prost..message..Message$GT$10encode_raw17h90e07353b0742ce7E.exit", label %.preheader.i.i.preheader
+  br i1 %i.d, label %.thread, label %.preheader.i.i.preheader
 
 .preheader.i.i.preheader:                         ; preds = %bb.a
   %i.e = add i64 %.val3, -1                       ; 2 uses
@@ -3599,6 +3648,13 @@ bb.a:
 .preheader.i.i.preheader.new:                     ; preds = %.preheader.i.i.preheader
   %unroll_iter = and i64 %.val3, -2
   br label %.preheader.i.i
+
+.thread:                                          ; preds = %bb.a
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %.val10 = load i64, ptr %3, align 8, !noundef !12
+  %4 = icmp sgt i64 %.val10, -1
+  tail call void @llvm.assume(i1 %4)
+  br label %"_ZN70_$LT$anki_proto..cards..CardIds$u20$as$u20$prost..message..Message$GT$10encode_raw17h90e07353b0742ce7E.exit"
 
 .preheader.i.i:                                   ; preds = %.preheader.i.i, %.preheader.i.i.preheader.new
   %.sroa.04.0.i.i.i = phi i64 [ 0, %.preheader.i.i.preheader.new ], [ %i.x, %.preheader.i.i ] ; 3 uses
@@ -3750,8 +3806,8 @@ bb.d:                                             ; preds = %"_ZN70_$LT$anki_pro
   store i64 %i.aq, ptr %i.by, align 8
   br label %"_ZN70_$LT$anki_proto..cards..CardIds$u20$as$u20$prost..message..Message$GT$10encode_raw17h90e07353b0742ce7E.exit"
 
-"_ZN70_$LT$anki_proto..cards..CardIds$u20$as$u20$prost..message..Message$GT$10encode_raw17h90e07353b0742ce7E.exit": ; preds = %.lr.ph.i.i, %bb.a, %bb.d
-  %storemerge = phi i64 [ 1, %bb.d ], [ 0, %bb.a ], [ 0, %.lr.ph.i.i ]
+"_ZN70_$LT$anki_proto..cards..CardIds$u20$as$u20$prost..message..Message$GT$10encode_raw17h90e07353b0742ce7E.exit": ; preds = %.lr.ph.i.i, %.thread, %bb.d
+  %storemerge = phi i64 [ 1, %bb.d ], [ 0, %.thread ], [ 0, %.lr.ph.i.i ]
   store i64 %storemerge, ptr %0, align 8
   ret void
 }

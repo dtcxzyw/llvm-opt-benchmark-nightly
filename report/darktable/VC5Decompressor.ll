@@ -205,7 +205,6 @@ iter.check415:                                    ; preds = %.preheader86
   tail call void @llvm.assume(i1 %i.ih)
   %i.ii = mul nuw nsw i64 %indvars.iv113, %i.ah
   %i.ij = getelementptr inbounds nuw [2 x i8], ptr %.sroa.1865.32.copyload, i64 %i.ii ; 5 uses
-  tail call void @llvm.assume(i1 %i.v)
   tail call void @llvm.assume(i1 %i.w)
   %i.ik = add nuw nsw i64 %indvars.iv113, 4294967294
   %i.il = and i64 %i.ik, 4294967295               ; 4 uses
@@ -231,7 +230,7 @@ vector.memcheck360:                               ; preds = %iter.check415
   %i.ja = shl i64 %i.iz, 1                        ; 2 uses
   %i.jb = getelementptr i8, ptr %.sroa.0.0.copyload, i64 %i.ja ; 2 uses
   %i.jc = getelementptr i8, ptr %scevgep355, i64 %i.ja ; 2 uses
-  %i.jd = mul nuw i64 %i.in, %i.x
+  %i.jd = mul i64 %i.in, %i.x
   %i.je = shl i64 %i.jd, 1                        ; 2 uses
   %i.jf = getelementptr i8, ptr %.sroa.0.0.copyload, i64 %i.je ; 2 uses
   %i.jg = getelementptr i8, ptr %scevgep355, i64 %i.je ; 2 uses
@@ -421,6 +420,7 @@ iter.check281:                                    ; preds = %.preheader84
   tail call void @llvm.assume(i1 %i.mv)
   %i.mw = mul nuw nsw i64 %indvars.iv113, %i.ah
   %i.mx = getelementptr inbounds nuw [2 x i8], ptr %.sroa.1865.32.copyload, i64 %i.mw ; 5 uses
+  tail call void @llvm.assume(i1 %i.v)
   tail call void @llvm.assume(i1 %i.w)
   %i.my = add nuw nsw i64 %indvars.iv113, 4294967295
   %i.mz = and i64 %i.my, 4294967295               ; 3 uses
@@ -823,6 +823,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %._crit_edge84, label %.lr.ph83
 
 .lr.ph83:                                         ; preds = %bb.b
+  %.sroa.46.72..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40
+  %.sroa.46.72.copyload = load i32, ptr %.sroa.46.72..sroa_idx, align 8, !tbaa !289
   %.sroa.15.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 24
   %.sroa.15.0.copyload = load i32, ptr %.sroa.15.0..sroa_idx, align 8, !tbaa !289
   %.sroa.12.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 20
@@ -836,13 +838,14 @@ bb.b:                                             ; preds = %bb.a
   %i.s = lshr i32 %.sroa.52.72.copyload, 1        ; 2 uses
   %i.t = icmp samesign ugt i32 %.sroa.52.72.copyload, 5 ; 2 uses
   %i.u = zext i32 %.sroa.12.0.copyload to i64     ; 3 uses
-  %i.v = zext nneg i32 %.sroa.52.72.copyload to i64 ; 2 uses
+  %i.v = zext nneg i32 %.sroa.52.72.copyload to i64 ; 3 uses
   %i.w = zext nneg i32 %i.b to i64                ; 2 uses
   %i.x = add nsw i32 %i.s, -3
   %i.y = zext i32 %i.x to i64
   %i.z = add nuw nsw i64 %i.y, 2                  ; 2 uses
   %i.aa = add nsw i32 %i.s, -1                    ; 2 uses
   %i.ab = zext i32 %.sroa.4968.72.copyload to i64 ; 4 uses
+  %6 = zext nneg i32 %.sroa.46.72.copyload to i64
   %i.ac = zext i32 %.sroa.953.0.copyload to i64   ; 3 uses
   %i.ad = zext nneg i32 %.sroa.15.0.copyload to i64
   %i.ae = zext i32 %i.h to i64                    ; 3 uses
@@ -993,7 +996,10 @@ bb.c:                                             ; preds = %.lr.ph83, %._crit_e
 
 "_ZZN8rawspeed15VC5Decompressor7Wavelet18combineLowHighPassENS_10Array2DRefIKsEES4_ibbENK3$_0clINS_12_GLOBAL__N_117ConvolutionParams5FirstEEEDaii.exit.thread": ; preds = %bb.c
   %i.dd = trunc i32 %i.cn to i16
-  %i.de = mul nuw nsw i64 %indvars.iv, %i.ab
+  %i.de = mul nuw nsw i64 %indvars.iv, %i.ab      ; 2 uses
+  %7 = add nuw nsw i64 %i.de, %i.v
+  %8 = icmp samesign ule i64 %7, %6
+  tail call void @llvm.assume(i1 %8)
   %i.df = getelementptr inbounds nuw [2 x i8], ptr %.sroa.4265.72.copyload, i64 %i.de ; 10 uses
   store i16 %i.dd, ptr %i.df, align 2, !tbaa !290
   %i.dg = trunc i32 %i.cv to i16

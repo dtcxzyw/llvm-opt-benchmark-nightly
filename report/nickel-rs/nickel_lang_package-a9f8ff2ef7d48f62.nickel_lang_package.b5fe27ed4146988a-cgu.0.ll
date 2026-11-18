@@ -206,7 +206,7 @@ bb.be:                                            ; preds = %.body.i.thread
 bb.bf:                                            ; preds = %"_ZN205_$LT$nickel_lang_core..serialize..$LT$impl$u20$serde_core..de..Deserialize$u20$for$u20$nickel_lang_core..eval..value..NickelValue$GT$..deserialize..NickelValueVisitor$u20$as$u20$serde_core..de..Visitor$GT$9visit_seq17h63eb22189a73dad1E.exit"
   %i.fm = landingpad { ptr, i32 }
           cleanup
-  invoke fastcc void @"_ZN4core3ptr118drop_in_place$LT$core..result..Result$LT$nickel_lang_core..eval..value..NickelValue$C$serde_json..error..Error$GT$$GT$17h07664b79f57574bbE"(i64 %.sroa.0.0.i15, ptr nonnull %.sroa.3.0.i14) #75
+  invoke fastcc void @"_ZN4core3ptr118drop_in_place$LT$core..result..Result$LT$nickel_lang_core..eval..value..NickelValue$C$serde_json..error..Error$GT$$GT$17h07664b79f57574bbE"(i64 %.sroa.0.0.i15, ptr %.sroa.3.0.i14) #75
           to label %common.resume282 unwind label %bb.bk, !inline_history !27139
 
 bb.bg:                                            ; preds = %"_ZN205_$LT$nickel_lang_core..serialize..$LT$impl$u20$serde_core..de..Deserialize$u20$for$u20$nickel_lang_core..eval..value..NickelValue$GT$..deserialize..NickelValueVisitor$u20$as$u20$serde_core..de..Visitor$GT$9visit_seq17h63eb22189a73dad1E.exit"
@@ -609,7 +609,7 @@ bb.s:                                             ; preds = %_ZN3std2io4Read8rea
   ], !prof !108
 
 .split37.peel:                                    ; preds = %bb.s
-  %i.co = getelementptr i8, ptr %i.ck, i64 -1     ; 5 uses
+  %i.co = getelementptr i8, ptr %i.ck, i64 -1     ; 6 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.co) ]
   %i.cp = getelementptr i8, ptr %i.ck, i64 15
   %i.cq = load i8, ptr %i.cp, align 8, !range !109, !noundef !43
@@ -617,6 +617,7 @@ bb.s:                                             ; preds = %_ZN3std2io4Read8rea
   br i1 %i.cr, label %bb.t, label %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$11try_reserve17h13b1a5cf9464d22fE.exit.thread.loopexit.split.loop.exit55"
 
 bb.t:                                             ; preds = %.split37.peel
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.co) ]
   %.val.i.i.i.i.i.peel = load ptr, ptr %i.co, align 8, !noalias !44544 ; 5 uses
   %i.cs = getelementptr i8, ptr %i.ck, i64 7
   %.val1.i.i.i.i.i.peel = load ptr, ptr %i.cs, align 8, !noalias !44544, !nonnull !43, !align !44, !noundef !43 ; 4 uses

@@ -205,7 +205,7 @@ bb.cj:                                            ; preds = %_RINvNtCs6JMX4GRUq9
   br i1 %.not112.i.peel, label %.loopexit243.i.peel, label %.loopexit242.i
 
 .loopexit243.i.peel:                              ; preds = %bb.cj, %bb.cb
-  %i.kz = call fastcc noundef ptr @_RNvYNtNtCs7cXCwYFNYaI_8uu_split8platform6WriterNtNtNtCs6JMX4GRUq9U_4core2io5write5Write9write_allB6_(ptr noalias nofree noundef nonnull align 4 dereferenceable(28) %i.q, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.8162.1.i, i64 noundef range(i64 0, -9223372036854775808) %i.ef) #26, !noalias !1675 ; 8 uses
+  %i.kz = call fastcc noundef ptr @_RNvYNtNtCs7cXCwYFNYaI_8uu_split8platform6WriterNtNtNtCs6JMX4GRUq9U_4core2io5write5Write9write_allB6_(ptr noalias nofree noundef nonnull align 4 dereferenceable(28) %i.q, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.8162.1.i, i64 noundef range(i64 0, -9223372036854775808) %i.ef) #26, !noalias !1675 ; 9 uses
   %.not.i131.i.peel = icmp eq ptr %i.kz, null
   br i1 %.not.i131.i.peel, label %.outer.i.peel.next, label %bb.ck
 
@@ -220,6 +220,8 @@ bb.ck:                                            ; preds = %.loopexit243.i.peel
   ], !prof !10
 
 bb.cl:                                            ; preds = %bb.ck
+  %1 = getelementptr i8, ptr %i.kz, i64 -1
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
   %i.lc = getelementptr i8, ptr %i.kz, i64 31
   %i.ld = load i8, ptr %i.lc, align 8, !range !11, !noalias !1675, !noundef !8
   br label %_RNvCs7cXCwYFNYaI_8uu_split18ignorable_io_error.exit.i132.i.peel

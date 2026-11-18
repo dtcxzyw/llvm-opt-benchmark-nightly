@@ -205,26 +205,36 @@ bb.af:                                            ; preds = %bb.aa
   br i1 %i.dj, label %bb.bl, label %.thread248
 
 .thread248:                                       ; preds = %bb.aa, %bb.ad, %bb.ac, %bb.ae, %bb.af
-  %i.dk = load ptr, ptr %i.w, align 8, !nonnull !5 ; 13 uses
-  %i.dl = load i64, ptr %i.x, align 8             ; 14 uses
+  %i.dk = load ptr, ptr %i.w, align 8, !nonnull !5 ; 15 uses
+  %i.dl = load i64, ptr %i.x, align 8             ; 15 uses
   %.not.i140 = icmp samesign ult i64 %i.dl, 2     ; 2 uses
-  br i1 %.not.i140, label %bb.ag, label %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCs41JD7yXDh97_6uu_env.exit143
+  br i1 %.not.i140, label %3, label %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCs41JD7yXDh97_6uu_env.exit143
 
 _RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCs41JD7yXDh97_6uu_env.exit143: ; preds = %.thread248
   %i.dm = load i16, ptr %i.dk, align 1
   %i.dn = icmp ne i16 11565, %i.dm
   %i.do = zext i1 %i.dn to i32
   %i.dp = icmp eq i32 %i.do, 0
-  br i1 %i.dp, label %bb.ah, label %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCs41JD7yXDh97_6uu_env.exit147
+  br i1 %i.dp, label %bb.ah, label %bb.ag
 
-bb.ag:                                            ; preds = %.thread248
-  %.not.i144.a = icmp eq i64 %i.dl, 0
-  br i1 %.not.i144.a, label %_RNvXs2_NtNtCs6JMX4GRUq9U_4core3str7patterncNtB5_7Pattern15is_contained_in.exit155.thread, label %.lr.ph.i.i152.preheader
+3:                                                ; preds = %.thread248
+  %.not.i144 = icmp eq i64 %i.dl, 0
+  br i1 %.not.i144, label %_RNvXs2_NtNtCs6JMX4GRUq9U_4core3str7patterncNtB5_7Pattern15is_contained_in.exit155.thread, label %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCs41JD7yXDh97_6uu_env.exit147
 
-_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCs41JD7yXDh97_6uu_env.exit147: ; preds = %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCs41JD7yXDh97_6uu_env.exit143
+bb.ag:                                            ; preds = %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCs41JD7yXDh97_6uu_env.exit143
+  %rhsc284 = load i8, ptr %i.dk, align 1
+  %.not.i144.a = icmp eq i8 %rhsc284, 45
+  br i1 %.not.i144.a, label %.lr.ph.preheader, label %_RNvXsf_NtNtCs6JMX4GRUq9U_4core5slice3cmpReNtB5_13SliceContains14slice_containsCs41JD7yXDh97_6uu_env.exit
+
+_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCs41JD7yXDh97_6uu_env.exit147: ; preds = %3
   %rhsc284.a = load i8, ptr %i.dk, align 1
   %i.dq = icmp eq i8 %rhsc284.a, 45
-  br i1 %i.dq, label %.lr.ph.preheader, label %_RNvXsf_NtNtCs6JMX4GRUq9U_4core5slice3cmpReNtB5_13SliceContains14slice_containsCs41JD7yXDh97_6uu_env.exit
+  br i1 %i.dq, label %.thread, label %.lr.ph.i.i152.preheader
+
+.thread:                                          ; preds = %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCs41JD7yXDh97_6uu_env.exit147
+  %4 = getelementptr i8, ptr %i.dk, i64 %i.dl
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %4) ]
+  br label %.lr.ph.i.i152.preheader
 
 bb.ah:                                            ; preds = %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCs41JD7yXDh97_6uu_env.exit143
   %i.dr = getelementptr inbounds nuw i8, ptr %i.dk, i64 2 ; 7 uses
@@ -282,7 +292,7 @@ bb.ah:                                            ; preds = %_RNvMNtCs6JMX4GRUq9
 bb.ai:                                            ; preds = %.split.i.i, %.split.i.1.i, %.split.i.3.i, %.split.i.2.i
   br label %.lr.ph.i.i152.preheader
 
-.lr.ph.preheader:                                 ; preds = %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCs41JD7yXDh97_6uu_env.exit147
+.lr.ph.preheader:                                 ; preds = %bb.ag
   %i.fa = getelementptr i8, ptr %i.dk, i64 %i.dl  ; 5 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.fa) ]
   %i.fb = getelementptr inbounds nuw i8, ptr %i.dk, i64 1
@@ -297,13 +307,13 @@ _RNvXsf_NtNtCs6JMX4GRUq9U_4core5slice3cmpReNtB5_13SliceContains14slice_containsC
   %.not.not.not.i.not.not.i.not.lcssa = select i1 %i.fc, i1 %switch.masked, i1 false
   br label %_RNvXsf_NtNtCs6JMX4GRUq9U_4core5slice3cmpReNtB5_13SliceContains14slice_containsCs41JD7yXDh97_6uu_env.exit
 
-_RNvXsf_NtNtCs6JMX4GRUq9U_4core5slice3cmpReNtB5_13SliceContains14slice_containsCs41JD7yXDh97_6uu_env.exit: ; preds = %_RNvXsf_NtNtCs6JMX4GRUq9U_4core5slice3cmpReNtB5_13SliceContains14slice_containsCs41JD7yXDh97_6uu_env.exit.loopexit, %bb.ah, %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCs41JD7yXDh97_6uu_env.exit147
-  %.sroa.047.2 = phi i1 [ false, %bb.ah ], [ false, %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCs41JD7yXDh97_6uu_env.exit147 ], [ %.not.not.not.i.not.not.i.not.lcssa, %_RNvXsf_NtNtCs6JMX4GRUq9U_4core5slice3cmpReNtB5_13SliceContains14slice_containsCs41JD7yXDh97_6uu_env.exit.loopexit ] ; 3 uses
+_RNvXsf_NtNtCs6JMX4GRUq9U_4core5slice3cmpReNtB5_13SliceContains14slice_containsCs41JD7yXDh97_6uu_env.exit: ; preds = %_RNvXsf_NtNtCs6JMX4GRUq9U_4core5slice3cmpReNtB5_13SliceContains14slice_containsCs41JD7yXDh97_6uu_env.exit.loopexit, %bb.ah, %bb.ag
+  %.sroa.047.2 = phi i1 [ false, %bb.ah ], [ false, %bb.ag ], [ %.not.not.not.i.not.not.i.not.lcssa, %_RNvXsf_NtNtCs6JMX4GRUq9U_4core5slice3cmpReNtB5_13SliceContains14slice_containsCs41JD7yXDh97_6uu_env.exit.loopexit ] ; 3 uses
   %i.fd = icmp samesign ult i64 %i.dl, 16
   br i1 %i.fd, label %.lr.ph.i.i152.preheader, label %_RNvXs2_NtNtCs6JMX4GRUq9U_4core3str7patterncNtB5_7Pattern15is_contained_in.exit155
 
-.lr.ph.i.i152.preheader:                          ; preds = %bb.ag, %_RNvXsf_NtNtCs6JMX4GRUq9U_4core5slice3cmpReNtB5_13SliceContains14slice_containsCs41JD7yXDh97_6uu_env.exit, %.split.i.2.i, %bb.ai, %.split.i.3.i
-  %.sroa.047.2258392 = phi i1 [ %.sroa.047.2, %_RNvXsf_NtNtCs6JMX4GRUq9U_4core5slice3cmpReNtB5_13SliceContains14slice_containsCs41JD7yXDh97_6uu_env.exit ], [ false, %.split.i.3.i ], [ true, %bb.ai ], [ false, %.split.i.2.i ], [ false, %bb.ag ] ; 3 uses
+.lr.ph.i.i152.preheader:                          ; preds = %_RNvXsf_NtNtCs6JMX4GRUq9U_4core5slice3cmpReNtB5_13SliceContains14slice_containsCs41JD7yXDh97_6uu_env.exit, %.split.i.2.i, %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCs41JD7yXDh97_6uu_env.exit147, %.thread, %bb.ai, %.split.i.3.i
+  %.sroa.047.2258392 = phi i1 [ false, %.split.i.2.i ], [ false, %.split.i.3.i ], [ true, %bb.ai ], [ false, %.thread ], [ false, %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCs41JD7yXDh97_6uu_env.exit147 ], [ %.sroa.047.2, %_RNvXsf_NtNtCs6JMX4GRUq9U_4core5slice3cmpReNtB5_13SliceContains14slice_containsCs41JD7yXDh97_6uu_env.exit ] ; 3 uses
   br label %.lr.ph.i.i152
 
 .lr.ph.i.i152:                                    ; preds = %.lr.ph.i.i152.preheader, %bb.aj
@@ -396,8 +406,8 @@ _RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCs41JD7yXDh97_6uu_env.exit161: ; 
   %i.gy = icmp eq i32 %i.gx, 0
   br i1 %i.gy, label %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCs41JD7yXDh97_6uu_env.exit169, label %_RNvXs2_NtNtCs6JMX4GRUq9U_4core3str7patterncNtB5_7Pattern15is_contained_in.exit155.thread
 
-_RNvXs2_NtNtCs6JMX4GRUq9U_4core3str7patterncNtB5_7Pattern15is_contained_in.exit155.thread: ; preds = %bb.aj, %bb.ag, %bb.al, %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCs41JD7yXDh97_6uu_env.exit169, %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCs41JD7yXDh97_6uu_env.exit161, %_RNvXs2_NtNtCs6JMX4GRUq9U_4core3str7patterncNtB5_7Pattern15is_contained_in.exit155
-  %.sroa.047.2257261 = phi i1 [ %.sroa.047.2258392, %bb.al ], [ %.sroa.047.2257265273, %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCs41JD7yXDh97_6uu_env.exit169 ], [ %.sroa.047.2257265273, %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCs41JD7yXDh97_6uu_env.exit161 ], [ %.sroa.047.2, %_RNvXs2_NtNtCs6JMX4GRUq9U_4core3str7patterncNtB5_7Pattern15is_contained_in.exit155 ], [ false, %bb.ag ], [ %.sroa.047.2258392, %bb.aj ]
+_RNvXs2_NtNtCs6JMX4GRUq9U_4core3str7patterncNtB5_7Pattern15is_contained_in.exit155.thread: ; preds = %bb.aj, %3, %bb.al, %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCs41JD7yXDh97_6uu_env.exit169, %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCs41JD7yXDh97_6uu_env.exit161, %_RNvXs2_NtNtCs6JMX4GRUq9U_4core3str7patterncNtB5_7Pattern15is_contained_in.exit155
+  %.sroa.047.2257261 = phi i1 [ %.sroa.047.2258392, %bb.al ], [ %.sroa.047.2257265273, %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCs41JD7yXDh97_6uu_env.exit169 ], [ %.sroa.047.2257265273, %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCs41JD7yXDh97_6uu_env.exit161 ], [ %.sroa.047.2, %_RNvXs2_NtNtCs6JMX4GRUq9U_4core3str7patterncNtB5_7Pattern15is_contained_in.exit155 ], [ false, %3 ], [ %.sroa.047.2258392, %bb.aj ]
   %.val125 = load ptr, ptr %i.ah, align 8, !nonnull !5, !noundef !5
   %.val126 = load i64, ptr %i.aj, align 8, !noundef !5 ; 6 uses
   %i.gz = icmp eq i64 %.val126, 0

@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %_RNvXs2J_NtNtCshzWf
   %i.bb = icmp samesign ult i32 %.sroa.4.0.i.ph, 128
   br i1 %i.bb, label %bb.f, label %bb.d
 
-.outer._crit_edge:                                ; preds = %_RNvXs2_NtNtCshzWfHUSfYae_4core3str7patterncNtB5_7Pattern15is_contained_in.exit.thread.i, %_RNvXs1_NtNtNtCshzWfHUSfYae_4core3ops8function5implsQNCNvYNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated6tokens6StringNtNtBZ_9token_ext8IsString19escaped_char_ranges0INtB7_5FnMutTINtNtB9_5range5RangejEINtNtBb_6result6ResultcNtCs1jFIaHZAhUD_21rustc_literal_escaper11EscapeErrorEEE8call_mutCs6oosyzwIepl_6ide_db.exit, %bb.a
+.outer._crit_edge:                                ; preds = %_RNvXs1_NtNtNtCshzWfHUSfYae_4core3ops8function5implsQNCNvYNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated6tokens6StringNtNtBZ_9token_ext8IsString19escaped_char_ranges0INtB7_5FnMutTINtNtB9_5range5RangejEINtNtBb_6result6ResultcNtCs1jFIaHZAhUD_21rustc_literal_escaper11EscapeErrorEEE8call_mutCs6oosyzwIepl_6ide_db.exit, %_RINvCs1jFIaHZAhUD_21rustc_literal_escaper21skip_ascii_whitespaceNCINvYeNtB2_8Unescape8unescapeQNCNvYNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated6tokens6StringNtNtB1G_9token_ext8IsString19escaped_char_ranges0E0ECs6oosyzwIepl_6ide_db.exit.thread, %bb.a
   ret void
 
 bb.d:                                             ; preds = %bb.c
@@ -608,12 +608,16 @@ bb.as:                                            ; preds = %bb.aq, %.split3.i.i
   unreachable
 
 _RNvXs2_NtNtCshzWfHUSfYae_4core3str7patterncNtB5_7Pattern15is_contained_in.exit.thread.i: ; preds = %bb.ar, %_RNCINvYeNtCs1jFIaHZAhUD_21rustc_literal_escaper8Unescape8unescapeQNCNvYNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated6tokens6StringNtNtB1d_9token_ext8IsString19escaped_char_ranges0E0Cs6oosyzwIepl_6ide_db.exit.i, %_RNvXs2_NtNtCshzWfHUSfYae_4core3str7patterncNtB5_7Pattern15is_contained_in.exit.i, %.preheader.i.i.thread.i
-  %.sroa.7.04456.i = phi ptr [ %i.lk, %_RNvXs2_NtNtCshzWfHUSfYae_4core3str7patterncNtB5_7Pattern15is_contained_in.exit.i ], [ %i.lk, %_RNCINvYeNtCs1jFIaHZAhUD_21rustc_literal_escaper8Unescape8unescapeQNCNvYNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated6tokens6StringNtNtB1d_9token_ext8IsString19escaped_char_ranges0E0Cs6oosyzwIepl_6ide_db.exit.i ], [ %i.bh, %.preheader.i.i.thread.i ], [ %i.lk, %bb.ar ] ; 6 uses
+  %.sroa.7.04456.i = phi ptr [ %i.lk, %_RNvXs2_NtNtCshzWfHUSfYae_4core3str7patterncNtB5_7Pattern15is_contained_in.exit.i ], [ %i.lk, %_RNCINvYeNtCs1jFIaHZAhUD_21rustc_literal_escaper8Unescape8unescapeQNCNvYNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated6tokens6StringNtNtB1d_9token_ext8IsString19escaped_char_ranges0E0Cs6oosyzwIepl_6ide_db.exit.i ], [ %i.bh, %.preheader.i.i.thread.i ], [ %i.lk, %bb.ar ] ; 7 uses
   %.sroa.9.04755.i = phi i64 [ %i.ll, %_RNvXs2_NtNtCshzWfHUSfYae_4core3str7patterncNtB5_7Pattern15is_contained_in.exit.i ], [ %i.ll, %_RNCINvYeNtCs1jFIaHZAhUD_21rustc_literal_escaper8Unescape8unescapeQNCNvYNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated6tokens6StringNtNtB1d_9token_ext8IsString19escaped_char_ranges0E0Cs6oosyzwIepl_6ide_db.exit.i ], [ %i.kx, %.preheader.i.i.thread.i ], [ %i.ll, %bb.ar ] ; 5 uses
   %i.lw = phi i64 [ %i.ln, %_RNvXs2_NtNtCshzWfHUSfYae_4core3str7patterncNtB5_7Pattern15is_contained_in.exit.i ], [ %i.ln, %_RNCINvYeNtCs1jFIaHZAhUD_21rustc_literal_escaper8Unescape8unescapeQNCNvYNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated6tokens6StringNtNtB1d_9token_ext8IsString19escaped_char_ranges0E0Cs6oosyzwIepl_6ide_db.exit.i ], [ %i.lf, %.preheader.i.i.thread.i ], [ %i.ln, %bb.ar ]
   %i.lx = getelementptr inbounds nuw i8, ptr %.sroa.7.04456.i, i64 %.sroa.9.04755.i
   %i.ly = icmp samesign eq i64 %.sroa.9.04755.i, 0
-  br i1 %i.ly, label %.outer._crit_edge, label %bb.at
+  br i1 %i.ly, label %_RINvCs1jFIaHZAhUD_21rustc_literal_escaper21skip_ascii_whitespaceNCINvYeNtB2_8Unescape8unescapeQNCNvYNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated6tokens6StringNtNtB1G_9token_ext8IsString19escaped_char_ranges0E0ECs6oosyzwIepl_6ide_db.exit.thread, label %bb.at
+
+_RINvCs1jFIaHZAhUD_21rustc_literal_escaper21skip_ascii_whitespaceNCINvYeNtB2_8Unescape8unescapeQNCNvYNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated6tokens6StringNtNtB1G_9token_ext8IsString19escaped_char_ranges0E0ECs6oosyzwIepl_6ide_db.exit.thread: ; preds = %_RNvXs2_NtNtCshzWfHUSfYae_4core3str7patterncNtB5_7Pattern15is_contained_in.exit.thread.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7.04456.i) ]
+  br label %.outer._crit_edge
 
 bb.at:                                            ; preds = %_RNvXs2_NtNtCshzWfHUSfYae_4core3str7patterncNtB5_7Pattern15is_contained_in.exit.thread.i
   %i.lz = load i8, ptr %.sroa.7.04456.i, align 1, !noalias !1249, !noundef !10 ; 5 uses

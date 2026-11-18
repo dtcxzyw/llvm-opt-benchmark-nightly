@@ -204,7 +204,24 @@ _ZN5clang4ento15ExplodedNodeSetD2Ev.exit:         ; preds = %_ZN4llvm11SmallVect
   store i32 0, ptr %i.an, align 8, !tbaa !753
   %i.ao = getelementptr inbounds nuw i8, ptr %11, i64 36
   store i32 4, ptr %i.ao, align 4, !tbaa !754
-  %i.ap = call noundef zeroext i1 @_ZNK5clang18ArraySubscriptExpr9lhsIsBaseEv(ptr noundef nonnull align 8 dereferenceable(32) %1) ; 0 uses
+  %i.ap = call noundef zeroext i1 @_ZNK5clang18ArraySubscriptExpr9lhsIsBaseEv(ptr noundef nonnull align 8 dereferenceable(32) %1)
+  %.in.v.i48 = select i1 %i.ap, i64 16, i64 24
+  %.in.i49 = getelementptr inbounds nuw i8, ptr %1, i64 %.in.v.i48
+  %12 = load ptr, ptr %.in.i49, align 8, !tbaa !904
+  %13 = getelementptr inbounds nuw i8, ptr %12, i64 8
+  %.sroa.0.0.copyload.i = load i64, ptr %13, align 8, !tbaa !317
+  %14 = and i64 %.sroa.0.0.copyload.i, -16
+  %15 = inttoptr i64 %14 to ptr
+  %16 = load ptr, ptr %15, align 16, !tbaa !320
+  %17 = getelementptr inbounds nuw i8, ptr %16, i64 8
+  %.sroa.0.0.copyload.i.i.i.i = load i64, ptr %17, align 8, !tbaa !317
+  %18 = and i64 %.sroa.0.0.copyload.i.i.i.i, -16
+  %19 = inttoptr i64 %18 to ptr
+  %20 = load ptr, ptr %19, align 16, !tbaa !320
+  %21 = getelementptr inbounds nuw i8, ptr %20, i64 16
+  %22 = load i8, ptr %21, align 16
+  %23 = and i8 %22, -2
+  %spec.select.i.i.i.i.i.i.i.i.i = icmp eq i8 %23, 58
   %i.aq = load i24, ptr %1, align 8
   %i.ar = and i24 %i.aq, 1536
   %.not84 = icmp eq i24 %i.ar, 0
@@ -473,6 +490,7 @@ _ZN5clang4ento15ExplodedNodeSet6insertEPNS0_12ExplodedNodeE.exit: ; preds = %_ZN
   br label %bb.x
 
 bb.r:                                             ; preds = %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEEC2ERKS5_.exit.thread
+  call void @llvm.assume(i1 %spec.select.i.i.i.i.i.i.i.i.i)
   call void @_ZN5clang4ento18ProgramStateRetainEPKNS0_12ProgramStateE(ptr noundef nonnull %i.df) #22
   br label %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEEC2ERKS5_.exit63
 

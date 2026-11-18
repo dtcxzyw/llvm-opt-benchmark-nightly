@@ -205,12 +205,12 @@ bb.cv:                                            ; preds = %_RNvXs1Z_NtNtCsoTR8
   %.idx144 = mul nuw nsw i64 %i.lh, 144
   %i.li = getelementptr inbounds nuw i8, ptr %i.lf, i64 %.idx144
   %i.lj = icmp eq i64 %i.lh, 0
-  br i1 %i.lj, label %._crit_edge141.a, label %.lr.ph140
+  br i1 %i.lj, label %._crit_edge141, label %.lr.ph140
 
 bb.cw:                                            ; preds = %.lr.ph140
   %i.lk = getelementptr inbounds nuw i8, ptr %i.lm, i64 144 ; 2 uses
   %i.ll = icmp eq ptr %i.lk, %i.li
-  br i1 %i.ll, label %._crit_edge141.a, label %.lr.ph140
+  br i1 %i.ll, label %._crit_edge141, label %.lr.ph140
 
 .lr.ph140:                                        ; preds = %bb.cv, %bb.cw
   %i.lm = phi ptr [ %i.lk, %bb.cw ], [ %i.lf, %bb.cv ] ; 2 uses
@@ -229,8 +229,14 @@ bb.cx:                                            ; preds = %.lr.ph140
   call void @llvm.assume(i1 %i.lo)
   br label %bb.df
 
-._crit_edge141.a:                                 ; preds = %bb.cz, %bb.cw, %bb.cy, %bb.cv
-  %.sroa.7.0.i = phi i64 [ %i.lh, %bb.cv ], [ %i.ls, %bb.cy ], [ %i.lh, %bb.cw ], [ %i.ls, %bb.cz ]
+._crit_edge141:                                   ; preds = %bb.cw, %bb.cv
+  %4 = icmp ult i64 %i.lh, 64051194700380388
+  br label %._crit_edge141.a
+
+._crit_edge141.a:                                 ; preds = %._crit_edge138, %._crit_edge141
+  %.sink = phi i1 [ %5, %._crit_edge138 ], [ %4, %._crit_edge141 ]
+  %.sroa.7.0.i = phi i64 [ %i.ls, %._crit_edge138 ], [ %i.lh, %._crit_edge141 ]
+  call void @llvm.assume(i1 %.sink)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.v)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u), !noalias !17919
   call void @llvm.lifetime.start.p0(ptr nonnull %i.t), !noalias !17919
@@ -247,12 +253,12 @@ bb.cy:                                            ; preds = %_RNvXs1Z_NtNtCsoTR8
   %.idx143 = mul nuw nsw i64 %i.ls, 72
   %i.lt = getelementptr inbounds nuw i8, ptr %i.lq, i64 %.idx143
   %i.lu = icmp eq i64 %i.ls, 0
-  br i1 %i.lu, label %._crit_edge141.a, label %.lr.ph137
+  br i1 %i.lu, label %._crit_edge138, label %.lr.ph137
 
 bb.cz:                                            ; preds = %.lr.ph137
   %i.lv = getelementptr inbounds nuw i8, ptr %i.lx, i64 72 ; 2 uses
   %i.lw = icmp eq ptr %i.lv, %i.lt
-  br i1 %i.lw, label %._crit_edge141.a, label %.lr.ph137
+  br i1 %i.lw, label %._crit_edge138, label %.lr.ph137
 
 .lr.ph137:                                        ; preds = %bb.cy, %bb.cz
   %i.lx = phi ptr [ %i.lv, %bb.cz ], [ %i.lq, %bb.cy ] ; 2 uses
@@ -264,6 +270,10 @@ bb.da:                                            ; preds = %.lr.ph137
   %i.ly = icmp ult i64 %i.ls, 128102389400760776
   call void @llvm.assume(i1 %i.ly)
   br label %bb.df
+
+._crit_edge138:                                   ; preds = %bb.cz, %bb.cy
+  %5 = icmp ult i64 %i.ls, 128102389400760776
+  br label %._crit_edge141.a
 
 bb.db:                                            ; preds = %._crit_edge141.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t), !noalias !17919

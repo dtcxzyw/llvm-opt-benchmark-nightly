@@ -205,7 +205,7 @@ bb.a:
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   %.sroa.076.0.copyload = load i64, ptr %i.e, align 8 ; 6 uses
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 8
-  %.sroa.8.0.copyload = load ptr, ptr %.sroa.8.0..sroa_idx, align 8 ; 9 uses
+  %.sroa.8.0.copyload = load ptr, ptr %.sroa.8.0..sroa_idx, align 8 ; 10 uses
   %.sroa.12.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   %.sroa.12.0.copyload = load i64, ptr %.sroa.12.0..sroa_idx, align 8 ; 4 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
@@ -356,6 +356,7 @@ bb.g:                                             ; preds = %.lr.ph120
   br i1 %i.bc, label %.loopexit111, label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph120, %bb.g
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload) ]
   %.not.i56 = icmp samesign ult i64 %i.aw, %.sroa.12.0.copyload
   br i1 %.not.i56, label %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCsdit6BuOJVAc_5uu_od.exit59.backedge, label %.split102
 

@@ -204,7 +204,15 @@ bb.c:                                             ; preds = %bb.a
   call void @_ZN4mlir9emitErrorENS_8LocationERKN4llvm5TwineE(ptr dead_on_unwind nonnull writable sret(%"class.mlir::InFlightDiagnostic") align 8 dereferenceable(208) %8, ptr %.sroa.0.0.copyload.i.i.i, ptr noundef nonnull align 8 dereferenceable(34) %9) #23
   %i.aa = load ptr, ptr %8, align 8, !tbaa !66
   %.not.i.i.i.i8 = icmp eq ptr %i.aa, null
-  br i1 %.not.i.i.i.i8, label %_ZNO4mlir24DiagnosedDefiniteFailurelsIRA54_KcEEOS0_OT_.exit, label %bb.d
+  br i1 %.not.i.i.i.i8, label %_ZNO4mlir24DiagnosedDefiniteFailurelsIRA26_KcEEOS0_OT_.exit.thread, label %bb.d
+
+_ZNO4mlir24DiagnosedDefiniteFailurelsIRA26_KcEEOS0_OT_.exit.thread: ; preds = %bb.c
+  %10 = load ptr, ptr %1, align 8, !tbaa !72
+  %11 = getelementptr inbounds nuw i8, ptr %10, i64 44
+  %12 = load i32, ptr %11, align 4
+  %.not.i.i.i.i922 = icmp ugt i32 %12, 16777215
+  call void @llvm.assume(i1 %.not.i.i.i.i922)
+  br label %_ZNO4mlir24DiagnosedDefiniteFailurelsIRA54_KcEEOS0_OT_.exit
 
 bb.d:                                             ; preds = %bb.c
   %i.ab = getelementptr inbounds nuw i8, ptr %8, i64 24 ; 2 uses
@@ -292,7 +300,7 @@ _ZN4mlir10Diagnostic6appendIRA54_KcEERS0_OT_.exit.i.i.i.i: ; preds = %bb.i, %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #23
   br label %_ZNO4mlir24DiagnosedDefiniteFailurelsIRA54_KcEEOS0_OT_.exit
 
-_ZNO4mlir24DiagnosedDefiniteFailurelsIRA54_KcEEOS0_OT_.exit: ; preds = %bb.c, %_ZNO4mlir24DiagnosedDefiniteFailurelsIRA26_KcEEOS0_OT_.exit, %_ZNO4mlir24DiagnosedDefiniteFailurelsINS_10StringAttrEEEOS0_OT_.exit, %_ZN4mlir10Diagnostic6appendIRA54_KcEERS0_OT_.exit.i.i.i.i
+_ZNO4mlir24DiagnosedDefiniteFailurelsIRA54_KcEEOS0_OT_.exit: ; preds = %_ZNO4mlir24DiagnosedDefiniteFailurelsIRA26_KcEEOS0_OT_.exit.thread, %_ZNO4mlir24DiagnosedDefiniteFailurelsIRA26_KcEEOS0_OT_.exit, %_ZNO4mlir24DiagnosedDefiniteFailurelsINS_10StringAttrEEEOS0_OT_.exit, %_ZN4mlir10Diagnostic6appendIRA54_KcEERS0_OT_.exit.i.i.i.i
   call void @llvm.experimental.noalias.scope.decl(metadata !256)
   call void @_ZN4mlir18InFlightDiagnostic6reportEv(ptr noundef nonnull align 8 dereferenceable(208) %8) #23, !noalias !256
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -695,7 +703,15 @@ bb.u:                                             ; preds = %_ZN4mlir9transform4
   call void @_ZN4mlir9emitErrorENS_8LocationERKN4llvm5TwineE(ptr dead_on_unwind nonnull writable sret(%"class.mlir::InFlightDiagnostic") align 8 dereferenceable(208) %20, ptr %.sroa.0.0.copyload.i.i.i46, ptr noundef nonnull align 8 dereferenceable(34) %21) #23
   %i.cl = load ptr, ptr %20, align 8, !tbaa !66
   %.not.i.i.i.i47 = icmp eq ptr %i.cl, null
-  br i1 %.not.i.i.i.i47, label %_ZNO4mlir24DiagnosedDefiniteFailurelsIRA67_KcEEOS0_OT_.exit, label %bb.v
+  br i1 %.not.i.i.i.i47, label %_ZNO4mlir24DiagnosedDefiniteFailurelsIRA26_KcEEOS0_OT_.exit.thread, label %bb.v
+
+_ZNO4mlir24DiagnosedDefiniteFailurelsIRA26_KcEEOS0_OT_.exit.thread: ; preds = %bb.u
+  %25 = load ptr, ptr %1, align 8, !tbaa !72
+  %26 = getelementptr inbounds nuw i8, ptr %25, i64 44
+  %27 = load i32, ptr %26, align 4
+  %.not.i.i.i.i50182 = icmp ugt i32 %27, 16777215
+  call void @llvm.assume(i1 %.not.i.i.i.i50182)
+  br label %_ZNO4mlir24DiagnosedDefiniteFailurelsIRA67_KcEEOS0_OT_.exit
 
 bb.v:                                             ; preds = %bb.u
   %i.cm = getelementptr inbounds nuw i8, ptr %20, i64 24 ; 2 uses
@@ -783,7 +799,7 @@ _ZN4mlir10Diagnostic6appendIRA67_KcEERS0_OT_.exit.i.i.i.i: ; preds = %bb.aa, %bb
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #23
   br label %_ZNO4mlir24DiagnosedDefiniteFailurelsIRA67_KcEEOS0_OT_.exit
 
-_ZNO4mlir24DiagnosedDefiniteFailurelsIRA67_KcEEOS0_OT_.exit: ; preds = %bb.u, %_ZNO4mlir24DiagnosedDefiniteFailurelsIRA26_KcEEOS0_OT_.exit, %_ZNO4mlir24DiagnosedDefiniteFailurelsINS_10StringAttrEEEOS0_OT_.exit, %_ZN4mlir10Diagnostic6appendIRA67_KcEERS0_OT_.exit.i.i.i.i
+_ZNO4mlir24DiagnosedDefiniteFailurelsIRA67_KcEEOS0_OT_.exit: ; preds = %_ZNO4mlir24DiagnosedDefiniteFailurelsIRA26_KcEEOS0_OT_.exit.thread, %_ZNO4mlir24DiagnosedDefiniteFailurelsIRA26_KcEEOS0_OT_.exit, %_ZNO4mlir24DiagnosedDefiniteFailurelsINS_10StringAttrEEEOS0_OT_.exit, %_ZN4mlir10Diagnostic6appendIRA67_KcEERS0_OT_.exit.i.i.i.i
   call void @llvm.experimental.noalias.scope.decl(metadata !313)
   call void @_ZN4mlir18InFlightDiagnostic6reportEv(ptr noundef nonnull align 8 dereferenceable(208) %20) #23, !noalias !313
   %i.ds = getelementptr inbounds nuw i8, ptr %0, i64 16

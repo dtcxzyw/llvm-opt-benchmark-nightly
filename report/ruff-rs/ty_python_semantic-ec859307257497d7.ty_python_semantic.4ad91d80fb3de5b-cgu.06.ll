@@ -204,7 +204,7 @@ bb.a:
   %i.g = alloca [32 x i8], align 8                ; 8 uses
   %i.h = alloca [16 x i8], align 4                ; 4 uses
   %i.i = alloca [64 x i8], align 8                ; 6 uses
-  %i.j = alloca [64 x i8], align 8                ; 17 uses
+  %i.j = alloca [64 x i8], align 8                ; 19 uses
   %i.k = alloca [56 x i8], align 8                ; 15 uses
   %i.l = alloca [64 x i8], align 8                ; 10 uses
   %i.m = alloca [64 x i8], align 8                ; 10 uses
@@ -313,7 +313,7 @@ bb.g:                                             ; preds = %.lr.ph171, %bb.q
   invoke fastcc void @_RNvMs0_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types8equality5enumsNtB5_12EnumValueSet9from_type(ptr noalias noundef align 8 captures(none) dereferenceable(64) %i.i, ptr noundef nonnull %1, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(272) %2, ptr noundef nonnull align 4 %3, ptr noalias noundef readonly align 4 captures(address) dereferenceable(16) %i.h, ptr noalias noundef nonnull align 8 dereferenceable(32) %5)
           to label %bb.h unwind label %.thread90.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !23077, !inline_history !22964
 
-.thread90.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterINtCs5e9M2GLoJMY_8indexmap6BucketRNtNtCskLngH8kgpZI_15ruff_python_ast4name4NamebEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCsoTR8nlGN3X_18ty_python_semantic.exit.i.thread, %bb.g, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCs5e9M2GLoJMY_8indexmap3map8IndexMapRNtNtCskLngH8kgpZI_15ruff_python_ast4name4NamebINtNtB4_4hash18BuildHasherDefaultNtCsjp5HOZs6k8V_10rustc_hash8FxHasherEEECsoTR8nlGN3X_18ty_python_semantic.exit.i.i
+.thread90.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.g, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCs5e9M2GLoJMY_8indexmap3map8IndexMapRNtNtCskLngH8kgpZI_15ruff_python_ast4name4NamebINtNtB4_4hash18BuildHasherDefaultNtCsjp5HOZs6k8V_10rustc_hash8FxHasherEEECsoTR8nlGN3X_18ty_python_semantic.exit.i.i
   %lpad.loopexit.split-lp261 = landingpad { ptr, i32 }
           cleanup
   br label %.thread87
@@ -459,7 +459,13 @@ bb.s:                                             ; preds = %bb.t
   %i.ce = landingpad { ptr, i32 }
           cleanup
   invoke void @_RNvXse_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterINtCs5e9M2GLoJMY_8indexmap6BucketRNtNtCskLngH8kgpZI_15ruff_python_ast4name4NamebEENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(32) %i.g)
-          to label %.thread87 unwind label %bb.u, !noalias !23077, !inline_history !22964
+          to label %.thread92 unwind label %bb.u, !noalias !23077, !inline_history !22964
+
+.thread92:                                        ; preds = %bb.s
+  %6 = load i64, ptr %i.j, align 8, !range !114, !noalias !23075, !noundef !73
+  %7 = icmp ne i64 %6, -9223372036854775806
+  call void @llvm.assume(i1 %7), !noalias !23078
+  br label %.thread87
 
 bb.t:                                             ; preds = %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterINtCs5e9M2GLoJMY_8indexmap6BucketRNtNtCskLngH8kgpZI_15ruff_python_ast4name4NamebEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCsoTR8nlGN3X_18ty_python_semantic.exit.i
   %.sroa.065.0.copyload = load ptr, ptr %i.cb, align 8, !noalias !23081, !nonnull !73, !noundef !73
@@ -469,7 +475,15 @@ bb.t:                                             ; preds = %_RNvXs4_NtNtCscdodA
 
 _RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterINtCs5e9M2GLoJMY_8indexmap6BucketRNtNtCskLngH8kgpZI_15ruff_python_ast4name4NamebEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCsoTR8nlGN3X_18ty_python_semantic.exit.i.thread: ; preds = %bb.r, %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterINtCs5e9M2GLoJMY_8indexmap6BucketRNtNtCskLngH8kgpZI_15ruff_python_ast4name4NamebEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCsoTR8nlGN3X_18ty_python_semantic.exit.i
   invoke void @_RNvXse_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterINtCs5e9M2GLoJMY_8indexmap6BucketRNtNtCskLngH8kgpZI_15ruff_python_ast4name4NamebEENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(32) %i.g)
-          to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtCs5e9M2GLoJMY_8indexmap3map4iter8IntoIterRNtNtCskLngH8kgpZI_15ruff_python_ast4name4NamebEECsoTR8nlGN3X_18ty_python_semantic.exit26.i unwind label %.thread90.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !23077, !inline_history !22964
+          to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtCs5e9M2GLoJMY_8indexmap3map4iter8IntoIterRNtNtCskLngH8kgpZI_15ruff_python_ast4name4NamebEECsoTR8nlGN3X_18ty_python_semantic.exit26.i unwind label %.thread97, !noalias !23077, !inline_history !22964
+
+.thread97:                                        ; preds = %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterINtCs5e9M2GLoJMY_8indexmap6BucketRNtNtCskLngH8kgpZI_15ruff_python_ast4name4NamebEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCsoTR8nlGN3X_18ty_python_semantic.exit.i.thread
+  %8 = landingpad { ptr, i32 }
+          cleanup
+  %9 = load i64, ptr %i.j, align 8, !range !114, !noalias !23075, !noundef !73
+  %10 = icmp ne i64 %9, -9223372036854775806
+  call void @llvm.assume(i1 %10), !noalias !23078
+  br label %.thread87
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtCs5e9M2GLoJMY_8indexmap3map4iter8IntoIterRNtNtCskLngH8kgpZI_15ruff_python_ast4name4NamebEECsoTR8nlGN3X_18ty_python_semantic.exit26.i: ; preds = %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterINtCs5e9M2GLoJMY_8indexmap6BucketRNtNtCskLngH8kgpZI_15ruff_python_ast4name4NamebEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCsoTR8nlGN3X_18ty_python_semantic.exit.i.thread
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !23075
@@ -595,8 +609,8 @@ _RNvMs0_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types8equality5enumsNtB5_12EnumV
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k), !noalias !23075
   br label %bb.bf
 
-.thread87:                                        ; preds = %bb.s, %.thread90.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.l, %bb.v, %bb.y
-  %.pn20.i86 = phi { ptr, i32 } [ %i.cu, %bb.y ], [ %i.ce, %bb.s ], [ %lpad.loopexit.split-lp261, %.thread90.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], [ %i.bb, %bb.l ], [ %i.bb, %bb.v ]
+.thread87:                                        ; preds = %.thread90.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %.thread97, %.thread92, %bb.l, %bb.v, %bb.y
+  %.pn20.i86 = phi { ptr, i32 } [ %i.cu, %bb.y ], [ %8, %.thread97 ], [ %i.ce, %.thread92 ], [ %i.bb, %bb.l ], [ %i.bb, %bb.v ], [ %lpad.loopexit.split-lp261, %.thread90.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCsh7jLiOpeRCu_8ordermap3map8OrderMapRNtNtCskLngH8kgpZI_15ruff_python_ast4name4NamebINtNtB4_4hash18BuildHasherDefaultNtCsjp5HOZs6k8V_10rustc_hash8FxHasherEEECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef align 8 dereferenceable(56) %i.k) #50
           to label %common.resume unwind label %bb.u, !noalias !23077, !inline_history !22964
 

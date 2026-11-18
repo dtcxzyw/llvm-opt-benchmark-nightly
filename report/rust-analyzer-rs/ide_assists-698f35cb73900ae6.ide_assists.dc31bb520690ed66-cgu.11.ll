@@ -205,7 +205,7 @@ bb.o:                                             ; preds = %_RINvNtCshzWfHUSfYa
 
 _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtB4_3ops12control_flow11ControlFlowINtNtCs9GitHPCrz2Q_5rowan13utility_types11NodeOrTokenINtNtB1l_3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEINtB2a_11SyntaxTokenB2w_EEEECsiU5vK8fN4ZC_11ide_assists.exit: ; preds = %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters6filter15filter_try_foldINtNtCs9GitHPCrz2Q_5rowan13utility_types11NodeOrTokenINtNtB1a_3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEINtB1Z_11SyntaxTokenB2l_EEuINtNtNtBa_3ops12control_flow11ControlFlowB15_ENCNvMs5_NtNtCsiU5vK8fN4ZC_11ide_assists8handlers16extract_functionNtB4v_12FunctionBody10from_range0NCINvNvNtNtNtB8_6traits8iterator8Iterator4find5checkB15_QNCB4p_s_0E0E0B4z_.exit.i, %.noexc60
   %.sroa.0111.0156 = phi i64 [ 2, %.noexc60 ], [ %.sroa.0.0.i.i, %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters6filter15filter_try_foldINtNtCs9GitHPCrz2Q_5rowan13utility_types11NodeOrTokenINtNtB1a_3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEINtB1Z_11SyntaxTokenB2l_EEuINtNtNtBa_3ops12control_flow11ControlFlowB15_ENCNvMs5_NtNtCsiU5vK8fN4ZC_11ide_assists8handlers16extract_functionNtB4v_12FunctionBody10from_range0NCINvNvNtNtNtB8_6traits8iterator8Iterator4find5checkB15_QNCB4p_s_0E0E0B4z_.exit.i ] ; 4 uses
-  %.sroa.7.0154 = phi ptr [ undef, %.noexc60 ], [ %i.x, %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters6filter15filter_try_foldINtNtCs9GitHPCrz2Q_5rowan13utility_types11NodeOrTokenINtNtB1a_3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEINtB1Z_11SyntaxTokenB2l_EEuINtNtNtBa_3ops12control_flow11ControlFlowB15_ENCNvMs5_NtNtCsiU5vK8fN4ZC_11ide_assists8handlers16extract_functionNtB4v_12FunctionBody10from_range0NCINvNvNtNtNtB8_6traits8iterator8Iterator4find5checkB15_QNCB4p_s_0E0E0B4z_.exit.i ] ; 9 uses
+  %.sroa.7.0154 = phi ptr [ undef, %.noexc60 ], [ %i.x, %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters6filter15filter_try_foldINtNtCs9GitHPCrz2Q_5rowan13utility_types11NodeOrTokenINtNtB1a_3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEINtB1Z_11SyntaxTokenB2l_EEuINtNtNtBa_3ops12control_flow11ControlFlowB15_ENCNvMs5_NtNtCsiU5vK8fN4ZC_11ide_assists8handlers16extract_functionNtB4v_12FunctionBody10from_range0NCINvNvNtNtNtB8_6traits8iterator8Iterator4find5checkB15_QNCB4p_s_0E0E0B4z_.exit.i ] ; 10 uses
   %i.ba = invoke fastcc { i64, ptr } @_RINvNtNtCsjJXvCMGntp8_6syntax3ast7support5childNtNtNtB4_9generated5nodes4ExprECsiU5vK8fN4ZC_11ide_assists(ptr nonnull %1)
           to label %bb.q unwind label %.thread190 ; 2 uses
 
@@ -608,6 +608,7 @@ bb.bo:                                            ; preds = %bb.bg
 bb.bp:                                            ; preds = %.invoke
   %i.fq = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7.0154) ]
   %i.fr = getelementptr inbounds nuw i8, ptr %.sroa.7.0154, i64 48 ; 2 uses
   %i.fs = load i32, ptr %i.fr, align 4, !noundef !19
   %i.ft = add i32 %i.fs, -1                       ; 2 uses
@@ -1010,7 +1011,7 @@ bb.ff:                                            ; preds = %bb.fd
   %i.pk = extractvalue { i64, ptr } %i.pi, 0      ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !2248
   %.not.i440 = icmp eq i64 %i.pk, -2
-  %i.pl = extractvalue { i64, ptr } %i.pi, 1      ; 9 uses
+  %i.pl = extractvalue { i64, ptr } %i.pi, 1      ; 11 uses
   %spec.select.i = select i1 %.not.i440, ptr undef, ptr %i.pl
   %.not162 = icmp ugt i64 %i.pk, -3
   %i.pm = getelementptr inbounds nuw i8, ptr %i.ap, i64 16 ; 2 uses
@@ -1187,6 +1188,7 @@ bb.fx:                                            ; preds = %bb.fw
 bb.fy:                                            ; preds = %bb.fw
   %i.rf = add nuw i32 %i.rd, 1                    ; 2 uses
   store i32 %i.rf, ptr %i.rc, align 4
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.pl) ]
   %i.rg = icmp eq i32 %i.rf, -1
   br i1 %i.rg, label %bb.fz, label %bb.gb, !prof !31
 
@@ -1200,6 +1202,7 @@ bb.fz:                                            ; preds = %bb.fy
 bb.ga:                                            ; preds = %bb.fz
   %i.rh = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.pl) ]
   %i.ri = load i32, ptr %i.rc, align 4, !noundef !19
   %i.rj = add i32 %i.ri, -1                       ; 2 uses
   store i32 %i.rj, ptr %i.rc, align 4

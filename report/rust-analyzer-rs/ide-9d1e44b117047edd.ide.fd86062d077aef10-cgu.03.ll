@@ -205,7 +205,7 @@ _RINvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters5chainINtB5_5ChainINtNtNtB9_7sour
   br i1 %.not12, label %_RINvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters5chainINtB5_5ChainINtNtNtB9_7sources4once4OnceINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEEINtNtB7_3map3MapINtNtB15_10successors10SuccessorsNtNtB1x_6cursor10SyntaxNodeNvMs4_B3O_B3M_6parentENvYB1s_INtNtBb_7convert4FromB3M_E4fromEENtNtNtB9_6traits8iterator8Iterator4findNCNvNtCslLuZgPVt6hg_3ide9move_item14find_ancestors0EB5W_.exit.thread, label %bb.y
 
 bb.y:                                             ; preds = %_RINvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters5chainINtB5_5ChainINtNtNtB9_7sources4once4OnceINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEEINtNtB7_3map3MapINtNtB15_10successors10SuccessorsNtNtB1x_6cursor10SyntaxNodeNvMs4_B3O_B3M_6parentENvYB1s_INtNtBb_7convert4FromB3M_E4fromEENtNtNtB9_6traits8iterator8Iterator4findNCNvNtCslLuZgPVt6hg_3ide9move_item14find_ancestors0EB5W_.exit.thread493, %_RINvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters5chainINtB5_5ChainINtNtNtB9_7sources4once4OnceINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEEINtNtB7_3map3MapINtNtB15_10successors10SuccessorsNtNtB1x_6cursor10SyntaxNodeNvMs4_B3O_B3M_6parentENvYB1s_INtNtBb_7convert4FromB3M_E4fromEENtNtNtB9_6traits8iterator8Iterator4findNCNvNtCslLuZgPVt6hg_3ide9move_item14find_ancestors0EB5W_.exit
-  %.sroa.0.0.i1.i496 = phi ptr [ %.sroa.0.0, %_RINvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters5chainINtB5_5ChainINtNtNtB9_7sources4once4OnceINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEEINtNtB7_3map3MapINtNtB15_10successors10SuccessorsNtNtB1x_6cursor10SyntaxNodeNvMs4_B3O_B3M_6parentENvYB1s_INtNtBb_7convert4FromB3M_E4fromEENtNtNtB9_6traits8iterator8Iterator4findNCNvNtCslLuZgPVt6hg_3ide9move_item14find_ancestors0EB5W_.exit.thread493 ], [ %i.cr, %_RINvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters5chainINtB5_5ChainINtNtNtB9_7sources4once4OnceINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEEINtNtB7_3map3MapINtNtB15_10successors10SuccessorsNtNtB1x_6cursor10SyntaxNodeNvMs4_B3O_B3M_6parentENvYB1s_INtNtBb_7convert4FromB3M_E4fromEENtNtNtB9_6traits8iterator8Iterator4findNCNvNtCslLuZgPVt6hg_3ide9move_item14find_ancestors0EB5W_.exit ] ; 39 uses
+  %.sroa.0.0.i1.i496 = phi ptr [ %.sroa.0.0, %_RINvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters5chainINtB5_5ChainINtNtNtB9_7sources4once4OnceINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEEINtNtB7_3map3MapINtNtB15_10successors10SuccessorsNtNtB1x_6cursor10SyntaxNodeNvMs4_B3O_B3M_6parentENvYB1s_INtNtBb_7convert4FromB3M_E4fromEENtNtNtB9_6traits8iterator8Iterator4findNCNvNtCslLuZgPVt6hg_3ide9move_item14find_ancestors0EB5W_.exit.thread493 ], [ %i.cr, %_RINvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters5chainINtB5_5ChainINtNtNtB9_7sources4once4OnceINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEEINtNtB7_3map3MapINtNtB15_10successors10SuccessorsNtNtB1x_6cursor10SyntaxNodeNvMs4_B3O_B3M_6parentENvYB1s_INtNtBb_7convert4FromB3M_E4fromEENtNtNtB9_6traits8iterator8Iterator4findNCNvNtCslLuZgPVt6hg_3ide9move_item14find_ancestors0EB5W_.exit ] ; 50 uses
   store ptr %.sroa.0.0.i1.i496, ptr %i.au, align 8
   invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtNtB4_4iter8adapters5chain5ChainINtNtNtBI_7sources4once4OnceINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEEINtNtBG_3map3MapINtNtB1i_10successors10SuccessorsNtNtB1K_6cursor10SyntaxNodeNvMs4_B41_B3Z_6parentENvYB1F_INtNtB4_7convert4FromB3Z_E4fromEEECslLuZgPVt6hg_3ide(ptr noalias nofree noundef align 8 dereferenceable(32) %i.at)
           to label %bb.ad unwind label %bb.ab
@@ -323,6 +323,7 @@ thread-pre-split:                                 ; preds = %bb.ai
 bb.al:                                            ; preds = %thread-pre-split, %bb.ah
   %i.dq = phi i32 [ %.pr, %thread-pre-split ], [ %i.dm, %bb.ah ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.i1.i496) ]
   %i.dr = icmp eq i32 %i.dq, -1
   br i1 %i.dr, label %.invoke, label %.noexc40, !prof !29
 
@@ -370,6 +371,7 @@ bb.ar:                                            ; preds = %bb.an
 
 .body362:                                         ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4ExprECslLuZgPVt6hg_3ide.exit48.i, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes9YieldExprECslLuZgPVt6hg_3ide.exit.sink.split.i49.i, %.body.i239, %bb.bi, %.thread542, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4ExprECslLuZgPVt6hg_3ide.exit.i, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes9YieldExprECslLuZgPVt6hg_3ide.exit.sink.split.i40.i
   %eh.lpad-body363 = phi { ptr, i32 } [ %lpad.thr_comm.split-lp, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4ExprECslLuZgPVt6hg_3ide.exit48.i ], [ %.pn.i286, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4ExprECslLuZgPVt6hg_3ide.exit.i ], [ %.pn.i286, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes9YieldExprECslLuZgPVt6hg_3ide.exit.sink.split.i40.i ], [ %lpad.thr_comm.split-lp, %bb.bi ], [ %eh.lpad-body.i240, %.body.i239 ], [ %lpad.thr_comm, %.thread542 ], [ %lpad.thr_comm.split-lp, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes9YieldExprECslLuZgPVt6hg_3ide.exit.sink.split.i49.i ] ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.i1.i496) ], !noalias !4730
   %i.ed = load i32, ptr %i.db, align 4, !noalias !4730, !noundef !23
   %i.ee = add i32 %i.ed, -1                       ; 2 uses
   store i32 %i.ee, ptr %i.db, align 4, !noalias !4730
@@ -772,6 +774,7 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9genera
           to label %.body362 unwind label %bb.br, !noalias !4733, !inline_history !4651
 
 _RINvNtCslLuZgPVt6hg_3ide9move_item20swap_sibling_in_listNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4ExprINtBY_11AstChildrenBS_EEB4_.exit: ; preds = %bb.bt, %bb.bs, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4ExprECslLuZgPVt6hg_3ide.exit45.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.i1.i496) ]
   %i.hz = load i32, ptr %i.db, align 4, !noundef !23
   %i.ia = add i32 %i.hz, -1                       ; 2 uses
   store i32 %i.ia, ptr %i.db, align 4
@@ -794,6 +797,7 @@ bb.bw:                                            ; preds = %bb.as, %bb.cg, %bb.
 
 bb.bx:                                            ; preds = %bb.ao
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.i1.i496) ], !noalias !4731
   %i.id = load i32, ptr %i.db, align 4, !noalias !4731, !noundef !23 ; 2 uses
   %i.ie = icmp eq i32 %i.id, -1
   br i1 %i.ie, label %.invoke1184, label %bb.by, !prof !29
@@ -818,6 +822,7 @@ thread-pre-split548:                              ; preds = %bb.aq
 bb.bz:                                            ; preds = %thread-pre-split548, %bb.ap
   %i.ih = phi i32 [ %.pr549, %thread-pre-split548 ], [ %i.ea, %bb.ap ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.i1.i496) ]
   %i.ii = icmp eq i32 %i.ih, -1
   br i1 %i.ii, label %.invoke, label %.noexc45, !prof !29
 
@@ -1220,6 +1225,7 @@ _RINvNtCslLuZgPVt6hg_3ide9move_item20swap_sibling_in_listNtNtNtNtCsjJXvCMGntp8_6
 
 bb.dh:                                            ; preds = %bb.cc
   call void @llvm.lifetime.end.p0(ptr nonnull %i.y)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.i1.i496) ], !noalias !4731
   %i.mt = load i32, ptr %i.db, align 4, !noalias !4731, !noundef !23 ; 2 uses
   %i.mu = icmp eq i32 %i.mt, -1
   br i1 %i.mu, label %.invoke1186, label %bb.di, !prof !29
@@ -1244,6 +1250,7 @@ thread-pre-split603:                              ; preds = %bb.ce
 bb.dj:                                            ; preds = %thread-pre-split603, %bb.cd
   %i.mx = phi i32 [ %.pr604, %thread-pre-split603 ], [ %i.ir, %bb.cd ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.y)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.i1.i496) ]
   %i.my = icmp eq i32 %i.mx, -1
   br i1 %i.my, label %.invoke, label %.noexc48, !prof !29
 
@@ -1646,6 +1653,7 @@ _RINvNtCslLuZgPVt6hg_3ide9move_item20swap_sibling_in_listNtNtNtNtCsjJXvCMGntp8_6
 
 bb.er:                                            ; preds = %bb.dm
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ag)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.i1.i496) ], !noalias !4731
   %i.rj = load i32, ptr %i.db, align 4, !noalias !4731, !noundef !23 ; 2 uses
   %i.rk = icmp eq i32 %i.rj, -1
   br i1 %i.rk, label %.noexc31.i.invoke, label %bb.es, !prof !29
@@ -1663,6 +1671,7 @@ thread-pre-split655:                              ; preds = %bb.do
 bb.et:                                            ; preds = %thread-pre-split655, %bb.dn
   %i.rn = phi i32 [ %.pr656, %thread-pre-split655 ], [ %i.nh, %bb.dn ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ag)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.i1.i496) ]
   %i.ro = icmp eq i32 %i.rn, -1
   br i1 %i.ro, label %.invoke, label %.noexc51, !prof !29
 
@@ -2065,6 +2074,7 @@ _RINvNtCslLuZgPVt6hg_3ide9move_item20swap_sibling_in_listNtNtNtNtCsjJXvCMGntp8_6
 
 bb.gn:                                            ; preds = %bb.ew
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.i1.i496) ], !noalias !4731
   %i.wg = load i32, ptr %i.db, align 4, !noalias !4731, !noundef !23 ; 2 uses
   %i.wh = icmp eq i32 %i.wg, -1
   br i1 %i.wh, label %.noexc31.i1279.invoke, label %bb.go, !prof !29
@@ -2467,6 +2477,7 @@ bb.ik:                                            ; preds = %bb.ij
   br label %_RNvNtCslLuZgPVt6hg_3ide9move_item17move_in_direction.exit
 
 _RNvNtCslLuZgPVt6hg_3ide9move_item17move_in_direction.exit: ; preds = %.invoke1183, %.noexc57, %bb.if, %.noexc42, %_RINvNtCslLuZgPVt6hg_3ide9move_item20swap_sibling_in_listNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamINtBY_11AstChildrenBS_EEB4_.exit, %_RINvNtCslLuZgPVt6hg_3ide9move_item20swap_sibling_in_listNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes10GenericArgINtBY_11AstChildrenBS_EEB4_.exit, %_RINvNtCslLuZgPVt6hg_3ide9move_item20swap_sibling_in_listNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7VariantINtBY_11AstChildrenBS_EEB4_.exit, %_RINvNtCslLuZgPVt6hg_3ide9move_item20swap_sibling_in_listNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes9TypeBoundINtBY_11AstChildrenBS_EEB4_.exit
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.i1.i496) ]
   %i.abb = load i32, ptr %i.db, align 4, !noundef !23
   %i.abc = add i32 %i.abb, -1                     ; 2 uses
   store i32 %i.abc, ptr %i.db, align 4

@@ -204,9 +204,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 bb.d:                                             ; preds = %bb.b
   %i.d = getelementptr i8, ptr %0, i64 40
-  %i.e = load i32, ptr %i.d, align 8              ; 3 uses
+  %i.e = load i32, ptr %i.d, align 8              ; 6 uses
   %.not.i.i = icmp ugt i32 %1, %i.e
-  br i1 %.not.i.i, label %bb.e, label %validate_offset.exit.i.i.i.a, !prof !14
+  br i1 %.not.i.i, label %bb.e, label %validate_offset.exit.i.i.i, !prof !14
 
 bb.e:                                             ; preds = %bb.d
   %i.f = getelementptr i8, ptr %0, i64 48
@@ -233,15 +233,40 @@ bb.h:                                             ; preds = %bb.g, %bb.e, %bb.f
   tail call void @except_throw(i64 noundef 1, i64 noundef %.0.i8.i.ph, ptr noundef null) #18
   unreachable
 
-validate_offset.exit.i.i.i.a:                     ; preds = %bb.d
+validate_offset.exit.i.i.i:                       ; preds = %bb.d
   %2 = sub nuw i32 %i.e, %1                       ; 3 uses
-  %3 = tail call { i32, i1 } @llvm.uadd.with.overflow.i32(i32 %1, i32 %2)
+  %3 = tail call { i32, i1 } @llvm.uadd.with.overflow.i32(i32 %1, i32 %2) ; 2 uses
   %4 = extractvalue { i32, i1 } %3, 1
-  %.not49 = icmp eq i32 %i.e, %1                  ; 2 uses
-  br i1 %4, label %ensure_contiguous_unsigned_no_exception.exit.i.thread, label %validate_offset_length_no_exception.exit.i.i
+  br i1 %4, label %ensure_contiguous_unsigned_no_exception.exit.i, label %5
 
-validate_offset_length_no_exception.exit.i.i:     ; preds = %validate_offset.exit.i.i.i.a
-  br i1 %.not49, label %.critedge, label %bb.i
+5:                                                ; preds = %validate_offset.exit.i.i.i
+  %6 = extractvalue { i32, i1 } %3, 0             ; 3 uses
+  %.not.i9.i.i.i = icmp ugt i32 %6, %i.e
+  br i1 %.not.i9.i.i.i, label %7, label %validate_offset_length_no_exception.exit.i.i, !prof !14
+
+7:                                                ; preds = %5
+  %8 = getelementptr i8, ptr %0, i64 48
+  %9 = load i32, ptr %8, align 8
+  %.not12.i11.i.i.i = icmp ugt i32 %6, %9
+  br i1 %.not12.i11.i.i.i, label %validate_offset.exit.i.i.i.a, label %ensure_contiguous_unsigned_no_exception.exit.i
+
+validate_offset.exit.i.i.i.a:                     ; preds = %7
+  %10 = getelementptr i8, ptr %0, i64 20
+  %11 = load i32, ptr %10, align 4
+  %12 = and i32 %11, 1
+  %.not49 = icmp eq i32 %12, 0
+  br i1 %.not49, label %validate_offset.exit15.sink.split.i.i.i, label %ensure_contiguous_unsigned_no_exception.exit.i
+
+validate_offset.exit15.sink.split.i.i.i:          ; preds = %validate_offset.exit.i.i.i.a
+  %13 = getelementptr i8, ptr %0, i64 44
+  %14 = load i32, ptr %13, align 4
+  %.not14.i.i.i.i = icmp ugt i32 %6, %14
+  %..i.i.i.i = select i1 %.not14.i.i.i.i, i32 3, i32 2
+  br label %ensure_contiguous_unsigned_no_exception.exit.i
+
+validate_offset_length_no_exception.exit.i.i:     ; preds = %5
+  %15 = icmp eq i32 %i.e, %1
+  br i1 %15, label %.critedge, label %bb.i
 
 bb.i:                                             ; preds = %validate_offset_length_no_exception.exit.i.i
   %i.m = getelementptr i8, ptr %0, i64 32
@@ -270,23 +295,32 @@ bb.m:                                             ; preds = %bb.k
   tail call void (ptr, ...) @proto_report_dissector_bug(ptr noundef @.str.7, ptr noundef @.str.1, i32 noundef 926) #18
   unreachable
 
-ensure_contiguous_unsigned_no_exception.exit.i:   ; preds = %bb.l, %bb.j
-  %.0.i.i = phi ptr [ %i.p, %bb.j ], [ %i.u, %bb.l ] ; 2 uses
+ensure_contiguous_unsigned_no_exception.exit.i:   ; preds = %bb.l, %bb.j, %validate_offset.exit15.sink.split.i.i.i, %validate_offset.exit.i.i.i.a, %7, %validate_offset.exit.i.i.i
+  %.0.i = phi i32 [ 0, %bb.j ], [ 1, %validate_offset.exit.i.i.i ], [ 0, %bb.l ], [ %..i.i.i.i, %validate_offset.exit15.sink.split.i.i.i ], [ 4, %validate_offset.exit.i.i.i.a ], [ 1, %7 ] ; 2 uses
+  %.0.i.i = phi ptr [ %i.p, %bb.j ], [ null, %validate_offset.exit.i.i.i ], [ %i.u, %bb.l ], [ null, %validate_offset.exit15.sink.split.i.i.i ], [ null, %validate_offset.exit.i.i.i.a ], [ null, %7 ] ; 2 uses
   %i.v = icmp eq ptr %.0.i.i, null
-  br i1 %i.v, label %bb.n, label %.lr.ph
+  %16 = icmp ne i32 %i.e, %1
+  %or.cond.i = and i1 %16, %i.v
+  br i1 %or.cond.i, label %ensure_contiguous_unsigned_no_exception.exit.i.thread, label %ensure_contiguous_unsigned.exit
 
-ensure_contiguous_unsigned_no_exception.exit.i.thread: ; preds = %validate_offset.exit.i.i.i.a
-  br i1 %.not49, label %.critedge, label %.thread
+ensure_contiguous_unsigned_no_exception.exit.i.thread: ; preds = %ensure_contiguous_unsigned_no_exception.exit.i
+  %.not.i = icmp eq i32 %.0.i, 0
+  br i1 %.not.i, label %bb.n, label %.thread
 
-bb.n:                                             ; preds = %ensure_contiguous_unsigned_no_exception.exit.i
+bb.n:                                             ; preds = %ensure_contiguous_unsigned_no_exception.exit.i.thread
   tail call void (ptr, ...) @proto_report_dissector_bug(ptr noundef @.str, ptr noundef @.str.1, i32 noundef 938, ptr noundef @.str.41) #18
   unreachable
 
 .thread:                                          ; preds = %ensure_contiguous_unsigned_no_exception.exit.i.thread
-  tail call void @except_throw(i64 noundef 1, i64 noundef 1, ptr noundef null) #18
+  %17 = zext nneg i32 %.0.i to i64
+  tail call void @except_throw(i64 noundef 1, i64 noundef %17, ptr noundef null) #18
   unreachable
 
-.lr.ph:                                           ; preds = %ensure_contiguous_unsigned_no_exception.exit.i
+ensure_contiguous_unsigned.exit:                  ; preds = %ensure_contiguous_unsigned_no_exception.exit.i
+  %.not2028 = icmp eq i32 %i.e, %1
+  br i1 %.not2028, label %.critedge, label %.lr.ph
+
+.lr.ph:                                           ; preds = %ensure_contiguous_unsigned.exit
   %i.w = load ptr, ptr @g_ascii_table, align 8
   br label %bb.o
 
@@ -305,8 +339,8 @@ bb.o:                                             ; preds = %bb.o, %.lr.ph
   %or.cond.not = select i1 %.not19.not, i1 %exitcond.not, i1 false
   br i1 %or.cond.not, label %bb.o, label %.critedge, !llvm.loop !71
 
-.critedge:                                        ; preds = %bb.o, %ensure_contiguous_unsigned_no_exception.exit.i.thread, %validate_offset_length_no_exception.exit.i.i
-  %.not20.lcssa = phi i1 [ true, %validate_offset_length_no_exception.exit.i.i ], [ true, %ensure_contiguous_unsigned_no_exception.exit.i.thread ], [ %.not19.not, %bb.o ]
+.critedge:                                        ; preds = %bb.o, %validate_offset_length_no_exception.exit.i.i, %ensure_contiguous_unsigned.exit
+  %.not20.lcssa = phi i1 [ true, %ensure_contiguous_unsigned.exit ], [ true, %validate_offset_length_no_exception.exit.i.i ], [ %.not19.not, %bb.o ]
   ret i1 %.not20.lcssa
 }
 
@@ -455,9 +489,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 bb.d:                                             ; preds = %bb.b
   %i.d = getelementptr i8, ptr %0, i64 40
-  %i.e = load i32, ptr %i.d, align 8              ; 2 uses
+  %i.e = load i32, ptr %i.d, align 8              ; 3 uses
   %.not.i.i = icmp ugt i32 %1, %i.e
-  br i1 %.not.i.i, label %bb.e, label %validate_offset.exit.i.i.i.a, !prof !14
+  br i1 %.not.i.i, label %bb.e, label %validate_offset.exit.i.i.i, !prof !14
 
 bb.e:                                             ; preds = %bb.d
   %i.f = getelementptr i8, ptr %0, i64 48
@@ -484,15 +518,40 @@ bb.h:                                             ; preds = %bb.g, %bb.e, %bb.f
   tail call void @except_throw(i64 noundef 1, i64 noundef %.0.i8.i.ph, ptr noundef null) #18
   unreachable
 
-validate_offset.exit.i.i.i.a:                     ; preds = %bb.d
-  %2 = sub nuw i32 %i.e, %1                       ; 4 uses
-  %3 = tail call { i32, i1 } @llvm.uadd.with.overflow.i32(i32 %1, i32 %2)
+validate_offset.exit.i.i.i:                       ; preds = %bb.d
+  %2 = sub nuw i32 %i.e, %1                       ; 5 uses
+  %3 = tail call { i32, i1 } @llvm.uadd.with.overflow.i32(i32 %1, i32 %2) ; 2 uses
   %4 = extractvalue { i32, i1 } %3, 1
-  %.not28 = icmp eq i32 %2, 0                     ; 2 uses
-  br i1 %4, label %ensure_contiguous_unsigned_no_exception.exit.i.thread, label %validate_offset_length_no_exception.exit.i.i
+  br i1 %4, label %ensure_contiguous_unsigned_no_exception.exit.i, label %5
 
-validate_offset_length_no_exception.exit.i.i:     ; preds = %validate_offset.exit.i.i.i.a
-  br i1 %.not28, label %ensure_contiguous_unsigned.exit, label %bb.i
+5:                                                ; preds = %validate_offset.exit.i.i.i
+  %6 = extractvalue { i32, i1 } %3, 0             ; 3 uses
+  %.not.i9.i.i.i = icmp ugt i32 %6, %i.e
+  br i1 %.not.i9.i.i.i, label %7, label %validate_offset_length_no_exception.exit.i.i, !prof !14
+
+7:                                                ; preds = %5
+  %8 = getelementptr i8, ptr %0, i64 48
+  %9 = load i32, ptr %8, align 8
+  %.not12.i11.i.i.i = icmp ugt i32 %6, %9
+  br i1 %.not12.i11.i.i.i, label %validate_offset.exit.i.i.i.a, label %ensure_contiguous_unsigned_no_exception.exit.i
+
+validate_offset.exit.i.i.i.a:                     ; preds = %7
+  %10 = getelementptr i8, ptr %0, i64 20
+  %11 = load i32, ptr %10, align 4
+  %12 = and i32 %11, 1
+  %.not28 = icmp eq i32 %12, 0
+  br i1 %.not28, label %validate_offset.exit15.sink.split.i.i.i, label %ensure_contiguous_unsigned_no_exception.exit.i
+
+validate_offset.exit15.sink.split.i.i.i:          ; preds = %validate_offset.exit.i.i.i.a
+  %13 = getelementptr i8, ptr %0, i64 44
+  %14 = load i32, ptr %13, align 4
+  %.not14.i.i.i.i = icmp ugt i32 %6, %14
+  %..i.i.i.i = select i1 %.not14.i.i.i.i, i32 3, i32 2
+  br label %ensure_contiguous_unsigned_no_exception.exit.i
+
+validate_offset_length_no_exception.exit.i.i:     ; preds = %5
+  %15 = icmp eq i32 %2, 0
+  br i1 %15, label %ensure_contiguous_unsigned.exit, label %bb.i
 
 bb.i:                                             ; preds = %validate_offset_length_no_exception.exit.i.i
   %i.m = getelementptr i8, ptr %0, i64 32
@@ -521,25 +580,30 @@ bb.m:                                             ; preds = %bb.k
   tail call void (ptr, ...) @proto_report_dissector_bug(ptr noundef @.str.7, ptr noundef @.str.1, i32 noundef 926) #18
   unreachable
 
-ensure_contiguous_unsigned_no_exception.exit.i:   ; preds = %bb.l, %bb.j
-  %.0.i.i = phi ptr [ %i.p, %bb.j ], [ %i.u, %bb.l ] ; 2 uses
+ensure_contiguous_unsigned_no_exception.exit.i:   ; preds = %bb.l, %bb.j, %validate_offset.exit15.sink.split.i.i.i, %validate_offset.exit.i.i.i.a, %7, %validate_offset.exit.i.i.i
+  %.0.i = phi i32 [ 0, %bb.j ], [ 1, %validate_offset.exit.i.i.i ], [ 0, %bb.l ], [ %..i.i.i.i, %validate_offset.exit15.sink.split.i.i.i ], [ 4, %validate_offset.exit.i.i.i.a ], [ 1, %7 ] ; 2 uses
+  %.0.i.i = phi ptr [ %i.p, %bb.j ], [ null, %validate_offset.exit.i.i.i ], [ %i.u, %bb.l ], [ null, %validate_offset.exit15.sink.split.i.i.i ], [ null, %validate_offset.exit.i.i.i.a ], [ null, %7 ] ; 2 uses
   %i.v = icmp eq ptr %.0.i.i, null
-  br i1 %i.v, label %bb.n, label %ensure_contiguous_unsigned.exit
+  %16 = icmp ne i32 %2, 0
+  %or.cond.i = and i1 %16, %i.v
+  br i1 %or.cond.i, label %ensure_contiguous_unsigned_no_exception.exit.i.thread, label %ensure_contiguous_unsigned.exit
 
-ensure_contiguous_unsigned_no_exception.exit.i.thread: ; preds = %validate_offset.exit.i.i.i.a
-  br i1 %.not28, label %ensure_contiguous_unsigned.exit, label %.thread
+ensure_contiguous_unsigned_no_exception.exit.i.thread: ; preds = %ensure_contiguous_unsigned_no_exception.exit.i
+  %.not.i = icmp eq i32 %.0.i, 0
+  br i1 %.not.i, label %bb.n, label %.thread
 
-bb.n:                                             ; preds = %ensure_contiguous_unsigned_no_exception.exit.i
+bb.n:                                             ; preds = %ensure_contiguous_unsigned_no_exception.exit.i.thread
   tail call void (ptr, ...) @proto_report_dissector_bug(ptr noundef @.str, ptr noundef @.str.1, i32 noundef 938, ptr noundef @.str.41) #18
   unreachable
 
 .thread:                                          ; preds = %ensure_contiguous_unsigned_no_exception.exit.i.thread
-  tail call void @except_throw(i64 noundef 1, i64 noundef 1, ptr noundef null) #18
+  %17 = zext nneg i32 %.0.i to i64
+  tail call void @except_throw(i64 noundef 1, i64 noundef %17, ptr noundef null) #18
   unreachable
 
-ensure_contiguous_unsigned.exit:                  ; preds = %ensure_contiguous_unsigned_no_exception.exit.i.thread, %validate_offset_length_no_exception.exit.i.i, %ensure_contiguous_unsigned_no_exception.exit.i
-  %.015 = phi i32 [ %2, %ensure_contiguous_unsigned_no_exception.exit.i ], [ 0, %validate_offset_length_no_exception.exit.i.i ], [ 0, %ensure_contiguous_unsigned_no_exception.exit.i.thread ]
-  %.0.i9.i = phi ptr [ %.0.i.i, %ensure_contiguous_unsigned_no_exception.exit.i ], [ null, %validate_offset_length_no_exception.exit.i.i ], [ null, %ensure_contiguous_unsigned_no_exception.exit.i.thread ]
+ensure_contiguous_unsigned.exit:                  ; preds = %validate_offset_length_no_exception.exit.i.i, %ensure_contiguous_unsigned_no_exception.exit.i
+  %.015 = phi i32 [ %2, %ensure_contiguous_unsigned_no_exception.exit.i ], [ 0, %validate_offset_length_no_exception.exit.i.i ]
+  %.0.i9.i = phi ptr [ %.0.i.i, %ensure_contiguous_unsigned_no_exception.exit.i ], [ null, %validate_offset_length_no_exception.exit.i.i ]
   %i.w = tail call zeroext i1 @isprint_utf8_string(ptr noundef %.0.i9.i, i32 noundef %.015)
   ret i1 %i.w
 }
@@ -942,7 +1006,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 
 bb.g:                                             ; preds = %bb.e
   %i.i = getelementptr i8, ptr %0, i64 40
-  %i.j = load i32, ptr %i.i, align 8              ; 4 uses
+  %i.j = load i32, ptr %i.i, align 8              ; 6 uses
   %i.k = icmp eq i32 %i.j, 0
   %i.l = icmp eq i32 %i.b, 0
   %or.cond = select i1 %i.k, i1 true, i1 %i.l
@@ -950,7 +1014,7 @@ bb.g:                                             ; preds = %bb.e
 
 bb.h:                                             ; preds = %bb.g
   %.not.i.i = icmp ugt i32 %2, %i.j
-  br i1 %.not.i.i, label %bb.i, label %validate_offset.exit.i.i.i.a, !prof !14
+  br i1 %.not.i.i, label %bb.i, label %validate_offset.exit.i.i.i, !prof !14
 
 bb.i:                                             ; preds = %bb.h
   %i.m = getelementptr i8, ptr %0, i64 48
@@ -977,15 +1041,40 @@ bb.l:                                             ; preds = %bb.k, %bb.i, %bb.j
   tail call void @except_throw(i64 noundef 1, i64 noundef %.0.i8.i.ph, ptr noundef null) #18
   unreachable
 
-validate_offset.exit.i.i.i.a:                     ; preds = %bb.h
+validate_offset.exit.i.i.i:                       ; preds = %bb.h
   %4 = sub nuw i32 %i.j, %2                       ; 3 uses
-  %5 = tail call { i32, i1 } @llvm.uadd.with.overflow.i32(i32 %2, i32 %4)
+  %5 = tail call { i32, i1 } @llvm.uadd.with.overflow.i32(i32 %2, i32 %4) ; 2 uses
   %6 = extractvalue { i32, i1 } %5, 1
-  %.not96 = icmp eq i32 %i.j, %2                  ; 2 uses
-  br i1 %6, label %ensure_contiguous_unsigned_no_exception.exit.i.thread, label %validate_offset_length_no_exception.exit.i.i
+  br i1 %6, label %ensure_contiguous_unsigned_no_exception.exit.i, label %7
 
-validate_offset_length_no_exception.exit.i.i:     ; preds = %validate_offset.exit.i.i.i.a
-  br i1 %.not96, label %validate_offset_length_no_exception.exit.i.i36, label %bb.m
+7:                                                ; preds = %validate_offset.exit.i.i.i
+  %8 = extractvalue { i32, i1 } %5, 0             ; 3 uses
+  %.not.i9.i.i.i = icmp ugt i32 %8, %i.j
+  br i1 %.not.i9.i.i.i, label %9, label %validate_offset_length_no_exception.exit.i.i, !prof !14
+
+9:                                                ; preds = %7
+  %10 = getelementptr i8, ptr %0, i64 48
+  %11 = load i32, ptr %10, align 8
+  %.not12.i11.i.i.i = icmp ugt i32 %8, %11
+  br i1 %.not12.i11.i.i.i, label %validate_offset.exit.i.i.i.a, label %ensure_contiguous_unsigned_no_exception.exit.i
+
+validate_offset.exit.i.i.i.a:                     ; preds = %9
+  %12 = getelementptr i8, ptr %0, i64 20
+  %13 = load i32, ptr %12, align 4
+  %14 = and i32 %13, 1
+  %.not96 = icmp eq i32 %14, 0
+  br i1 %.not96, label %validate_offset.exit15.sink.split.i.i.i, label %ensure_contiguous_unsigned_no_exception.exit.i
+
+validate_offset.exit15.sink.split.i.i.i:          ; preds = %validate_offset.exit.i.i.i.a
+  %15 = getelementptr i8, ptr %0, i64 44
+  %16 = load i32, ptr %15, align 4
+  %.not14.i.i.i.i = icmp ugt i32 %8, %16
+  %..i.i.i.i = select i1 %.not14.i.i.i.i, i32 3, i32 2
+  br label %ensure_contiguous_unsigned_no_exception.exit.i
+
+validate_offset_length_no_exception.exit.i.i:     ; preds = %7
+  %17 = icmp eq i32 %i.j, %2
+  br i1 %17, label %validate_offset_length_no_exception.exit.i.i36, label %bb.m
 
 bb.m:                                             ; preds = %validate_offset_length_no_exception.exit.i.i
   %i.t = getelementptr i8, ptr %0, i64 32
@@ -1014,24 +1103,28 @@ bb.q:                                             ; preds = %bb.o
   tail call void (ptr, ...) @proto_report_dissector_bug(ptr noundef @.str.7, ptr noundef @.str.1, i32 noundef 926) #18
   unreachable
 
-ensure_contiguous_unsigned_no_exception.exit.i:   ; preds = %bb.p, %bb.n
-  %.0.i.i = phi ptr [ %i.w, %bb.n ], [ %i.ab, %bb.p ] ; 2 uses
+ensure_contiguous_unsigned_no_exception.exit.i:   ; preds = %bb.p, %bb.n, %validate_offset.exit15.sink.split.i.i.i, %validate_offset.exit.i.i.i.a, %9, %validate_offset.exit.i.i.i
+  %.0.i = phi i32 [ 0, %bb.n ], [ 1, %validate_offset.exit.i.i.i ], [ 0, %bb.p ], [ %..i.i.i.i, %validate_offset.exit15.sink.split.i.i.i ], [ 4, %validate_offset.exit.i.i.i.a ], [ 1, %9 ] ; 2 uses
+  %.0.i.i = phi ptr [ %i.w, %bb.n ], [ null, %validate_offset.exit.i.i.i ], [ %i.ab, %bb.p ], [ null, %validate_offset.exit15.sink.split.i.i.i ], [ null, %validate_offset.exit.i.i.i.a ], [ null, %9 ] ; 2 uses
   %i.ac = icmp eq ptr %.0.i.i, null
-  br i1 %i.ac, label %bb.r, label %ensure_contiguous_unsigned.exit
+  %18 = icmp ne i32 %i.j, %2
+  %or.cond.i = and i1 %18, %i.ac
+  br i1 %or.cond.i, label %ensure_contiguous_unsigned_no_exception.exit.i.thread, label %ensure_contiguous_unsigned.exit
 
-ensure_contiguous_unsigned_no_exception.exit.i.thread: ; preds = %validate_offset.exit.i.i.i.a
-  br i1 %.not96, label %ensure_contiguous_unsigned.exit, label %.thread
+ensure_contiguous_unsigned_no_exception.exit.i.thread: ; preds = %ensure_contiguous_unsigned_no_exception.exit.i
+  %.not.i = icmp eq i32 %.0.i, 0
+  br i1 %.not.i, label %bb.r, label %.thread
 
-bb.r:                                             ; preds = %ensure_contiguous_unsigned_no_exception.exit.i
+bb.r:                                             ; preds = %ensure_contiguous_unsigned_no_exception.exit.i.thread
   tail call void (ptr, ...) @proto_report_dissector_bug(ptr noundef @.str, ptr noundef @.str.1, i32 noundef 938, ptr noundef @.str.41) #18
   unreachable
 
 .thread:                                          ; preds = %ensure_contiguous_unsigned_no_exception.exit.i.thread
-  tail call void @except_throw(i64 noundef 1, i64 noundef 1, ptr noundef null) #18
+  %19 = zext nneg i32 %.0.i to i64
+  tail call void @except_throw(i64 noundef 1, i64 noundef %19, ptr noundef null) #18
   unreachable
 
-ensure_contiguous_unsigned.exit:                  ; preds = %ensure_contiguous_unsigned_no_exception.exit.i, %ensure_contiguous_unsigned_no_exception.exit.i.thread
-  %.0.i.i88 = phi ptr [ null, %ensure_contiguous_unsigned_no_exception.exit.i.thread ], [ %.0.i.i, %ensure_contiguous_unsigned_no_exception.exit.i ]
+ensure_contiguous_unsigned.exit:                  ; preds = %ensure_contiguous_unsigned_no_exception.exit.i
   %.pre = load i32, ptr %i.a, align 8
   %i.ad = icmp ugt i32 %i.b, %.pre
   %i.ae = zext i32 %4 to i64
@@ -1058,7 +1151,7 @@ validate_offset.exit15.sink.split.i.i.i47:        ; preds = %bb.t
   br label %bb.x
 
 validate_offset_length_no_exception.exit.i.i36:   ; preds = %validate_offset_length_no_exception.exit.i.i, %ensure_contiguous_unsigned.exit
-  %.0.i9.i95 = phi ptr [ %.0.i.i88, %ensure_contiguous_unsigned.exit ], [ null, %validate_offset_length_no_exception.exit.i.i ] ; 2 uses
+  %.0.i9.i95 = phi ptr [ %.0.i.i, %ensure_contiguous_unsigned.exit ], [ null, %validate_offset_length_no_exception.exit.i.i ] ; 2 uses
   %.0556094 = phi i64 [ %i.ae, %ensure_contiguous_unsigned.exit ], [ 0, %validate_offset_length_no_exception.exit.i.i ]
   %i.am = getelementptr i8, ptr %1, i64 32
   %i.an = load ptr, ptr %i.am, align 8            ; 2 uses
@@ -1461,7 +1554,7 @@ attributes #22 = { nounwind willreturn memory(read) }
 !73 = distinct !{!73, !13}
 !74 = distinct !{!74, !13}
 !75 = distinct !{null, null}
-!76 = !{!"branch_weights", !"expected", i32 1320868, i32 2146162780}
+!76 = !{!"branch_weights", !"expected", i32 1320715, i32 2146162933}
 !77 = !{ptr @tvb_offset_from_real_beginning, ptr @tvb_offset_from_real_beginning_counter}
 !78 = distinct !{!78, !13}
 !79 = distinct !{!79, !13}

@@ -205,7 +205,14 @@ bb.c:                                             ; preds = %.lr.ph, %bb.b
   %i.q = add i64 %i.p, %.sroa.01.0.i.i12          ; 4 uses
   %i.r = icmp uge i64 %i.q, %.sroa.01.0.i.i12
   %narrow.i.not.i.i = select i1 %i.o, i1 %i.r, i1 false
-  br i1 %narrow.i.not.i.i, label %bb.b, label %_RNvMs8_NtCsaSXGKSfiU2E_10lance_file6readerNtB5_20FileMetadataProvider35projection_matches_indexed_metadata.exit.thread
+  br i1 %narrow.i.not.i.i, label %bb.b, label %_RNvMs8_NtCsaSXGKSfiU2E_10lance_file6readerNtB5_20FileMetadataProvider35projection_matches_indexed_metadata.exit.thread3
+
+_RNvMs8_NtCsaSXGKSfiU2E_10lance_file6readerNtB5_20FileMetadataProvider35projection_matches_indexed_metadata.exit.thread3: ; preds = %bb.c
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %3 = load i64, ptr %2, align 8, !alias.scope !34089, !noundef !76
+  %4 = icmp ult i64 %3, 2305843009213693952
+  tail call void @llvm.assume(i1 %4)
+  br label %_RNvMs8_NtCsaSXGKSfiU2E_10lance_file6readerNtB5_20FileMetadataProvider35projection_matches_indexed_metadata.exit.thread
 
 _RNvMs8_NtCsaSXGKSfiU2E_10lance_file6readerNtB5_20FileMetadataProvider35projection_matches_indexed_metadata.exit: ; preds = %bb.b
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -220,8 +227,8 @@ bb.d:                                             ; preds = %_RNvMs8_NtCsaSXGKSf
   %i.x = icmp ult i64 %i.w, %1
   br label %_RNvMs8_NtCsaSXGKSfiU2E_10lance_file6readerNtB5_20FileMetadataProvider35projection_matches_indexed_metadata.exit.thread
 
-_RNvMs8_NtCsaSXGKSfiU2E_10lance_file6readerNtB5_20FileMetadataProvider35projection_matches_indexed_metadata.exit.thread: ; preds = %bb.c, %bb.a, %_RNvMs8_NtCsaSXGKSfiU2E_10lance_file6readerNtB5_20FileMetadataProvider35projection_matches_indexed_metadata.exit, %bb.d
-  %.sroa.0.0 = phi i1 [ %i.x, %bb.d ], [ false, %_RNvMs8_NtCsaSXGKSfiU2E_10lance_file6readerNtB5_20FileMetadataProvider35projection_matches_indexed_metadata.exit ], [ false, %bb.a ], [ false, %bb.c ]
+_RNvMs8_NtCsaSXGKSfiU2E_10lance_file6readerNtB5_20FileMetadataProvider35projection_matches_indexed_metadata.exit.thread: ; preds = %bb.a, %_RNvMs8_NtCsaSXGKSfiU2E_10lance_file6readerNtB5_20FileMetadataProvider35projection_matches_indexed_metadata.exit.thread3, %_RNvMs8_NtCsaSXGKSfiU2E_10lance_file6readerNtB5_20FileMetadataProvider35projection_matches_indexed_metadata.exit, %bb.d
+  %.sroa.0.0 = phi i1 [ %i.x, %bb.d ], [ false, %_RNvMs8_NtCsaSXGKSfiU2E_10lance_file6readerNtB5_20FileMetadataProvider35projection_matches_indexed_metadata.exit ], [ false, %_RNvMs8_NtCsaSXGKSfiU2E_10lance_file6readerNtB5_20FileMetadataProvider35projection_matches_indexed_metadata.exit.thread3 ], [ false, %bb.a ]
   ret i1 %.sroa.0.0
 }
 
@@ -624,7 +631,14 @@ bb.e:                                             ; preds = %.lr.ph, %bb.d
   %i.s = add i64 %i.r, %.sroa.01.0.i.i11          ; 3 uses
   %i.t = icmp uge i64 %i.s, %.sroa.01.0.i.i11
   %narrow.i.not.i.i = select i1 %i.q, i1 %i.t, i1 false
-  br i1 %narrow.i.not.i.i, label %bb.d, label %_RNvMs8_NtCsaSXGKSfiU2E_10lance_file6readerNtB5_20FileMetadataProvider35projection_matches_indexed_metadata.exit.thread
+  br i1 %narrow.i.not.i.i, label %bb.d, label %_RNvMs8_NtCsaSXGKSfiU2E_10lance_file6readerNtB5_20FileMetadataProvider35projection_matches_indexed_metadata.exit.thread2
+
+_RNvMs8_NtCsaSXGKSfiU2E_10lance_file6readerNtB5_20FileMetadataProvider35projection_matches_indexed_metadata.exit.thread2: ; preds = %bb.e
+  %4 = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %5 = load i64, ptr %4, align 8, !alias.scope !53427, !noundef !76
+  %6 = icmp ult i64 %5, 2305843009213693952
+  tail call void @llvm.assume(i1 %6)
+  br label %_RNvMs8_NtCsaSXGKSfiU2E_10lance_file6readerNtB5_20FileMetadataProvider35projection_matches_indexed_metadata.exit.thread
 
 _RNvMs8_NtCsaSXGKSfiU2E_10lance_file6readerNtB5_20FileMetadataProvider35projection_matches_indexed_metadata.exit: ; preds = %bb.d
   %i.u = getelementptr inbounds nuw i8, ptr %2, i64 16
@@ -634,7 +648,7 @@ _RNvMs8_NtCsaSXGKSfiU2E_10lance_file6readerNtB5_20FileMetadataProvider35projecti
   %i.x = icmp eq i64 %i.s, %i.v
   br i1 %i.x, label %bb.f, label %_RNvMs8_NtCsaSXGKSfiU2E_10lance_file6readerNtB5_20FileMetadataProvider35projection_matches_indexed_metadata.exit.thread
 
-_RNvMs8_NtCsaSXGKSfiU2E_10lance_file6readerNtB5_20FileMetadataProvider35projection_matches_indexed_metadata.exit.thread: ; preds = %bb.e, %bb.c, %_RNvMs8_NtCsaSXGKSfiU2E_10lance_file6readerNtB5_20FileMetadataProvider35projection_matches_indexed_metadata.exit
+_RNvMs8_NtCsaSXGKSfiU2E_10lance_file6readerNtB5_20FileMetadataProvider35projection_matches_indexed_metadata.exit.thread: ; preds = %bb.c, %_RNvMs8_NtCsaSXGKSfiU2E_10lance_file6readerNtB5_20FileMetadataProvider35projection_matches_indexed_metadata.exit.thread2, %_RNvMs8_NtCsaSXGKSfiU2E_10lance_file6readerNtB5_20FileMetadataProvider35projection_matches_indexed_metadata.exit
   tail call void @_RNvMs8_NtCsaSXGKSfiU2E_10lance_file6readerNtB5_20FileMetadataProvider24indexed_projection_error(ptr noalias noundef nonnull sret([56 x i8]) align 8 captures(address) dereferenceable(56) %0, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %2, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(96) %3)
   br label %bb.g
 

@@ -205,7 +205,7 @@ _ZN24json11_internal_lightgbm4JsonD2Ev.exit:      ; preds = %bb.u, %bb.w, %_ZN9_
   %i.di = getelementptr inbounds nuw i8, ptr %22, i64 16 ; 6 uses
   %i.dj = getelementptr inbounds nuw i8, ptr %22, i64 8
   %i.dk = getelementptr inbounds nuw i8, ptr %23, i64 16 ; 8 uses
-  %i.dl = getelementptr inbounds nuw i8, ptr %23, i64 8
+  %i.dl = getelementptr inbounds nuw i8, ptr %23, i64 8 ; 2 uses
   %i.dm = getelementptr inbounds nuw i8, ptr %24, i64 16 ; 4 uses
   %i.dn = getelementptr inbounds nuw i8, ptr %24, i64 8
   %i.do = getelementptr inbounds nuw i8, ptr %25, i64 8 ; 2 uses
@@ -215,7 +215,7 @@ _ZN24json11_internal_lightgbm4JsonD2Ev.exit:      ; preds = %bb.u, %bb.w, %_ZN9_
   %i.ds = getelementptr inbounds nuw i8, ptr %27, i64 16 ; 6 uses
   %i.dt = getelementptr inbounds nuw i8, ptr %27, i64 8
   %i.du = getelementptr inbounds nuw i8, ptr %28, i64 16 ; 8 uses
-  %i.dv = getelementptr inbounds nuw i8, ptr %28, i64 8
+  %i.dv = getelementptr inbounds nuw i8, ptr %28, i64 8 ; 2 uses
   %i.dw = getelementptr inbounds nuw i8, ptr %29, i64 16 ; 4 uses
   %i.dx = getelementptr inbounds nuw i8, ptr %29, i64 8
   %i.dy = getelementptr inbounds nuw i8, ptr %30, i64 8 ; 2 uses
@@ -618,6 +618,9 @@ _ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exi
   br i1 %i.to, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i372, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit373
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i372.thread: ; preds = %_ZNKSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N24json11_internal_lightgbm4JsonEESt10_Select1stISA_ESt4lessIS5_ESaISA_EE14_M_lower_boundEPKSt13_Rb_tree_nodeISA_EPKSt18_Rb_tree_node_baseRS7_.exit.i.i318, %_ZNKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN24json11_internal_lightgbm4JsonESt4lessIS5_ESaISt4pairIKS5_S7_EEE5countERSB_.exit333, %._crit_edge.i.i300
+  %31 = load i64, ptr %i.dl, align 8, !tbaa !295
+  %32 = icmp ult i64 %31, 16
+  call void @llvm.assume(i1 %32)
   call void @llvm.lifetime.end.p0(ptr nonnull %23) #18
   br label %bb.eb
 
@@ -1020,6 +1023,9 @@ _ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exi
   br i1 %i.yy, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i524, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit525
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i524.thread: ; preds = %_ZNKSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N24json11_internal_lightgbm4JsonEESt10_Select1stISA_ESt4lessIS5_ESaISA_EE14_M_lower_boundEPKSt13_Rb_tree_nodeISA_EPKSt18_Rb_tree_node_baseRS7_.exit.i.i470, %_ZNKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN24json11_internal_lightgbm4JsonESt4lessIS5_ESaISt4pairIKS5_S7_EEE5countERSB_.exit485, %._crit_edge.i.i452
+  %33 = load i64, ptr %i.dv, align 8, !tbaa !295
+  %34 = icmp ult i64 %33, 16
+  call void @llvm.assume(i1 %34)
   call void @llvm.lifetime.end.p0(ptr nonnull %28) #18
   br label %bb.fh
 
