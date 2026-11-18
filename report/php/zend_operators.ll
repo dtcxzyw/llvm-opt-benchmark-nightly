@@ -205,7 +205,7 @@ declare ptr @zend_gcvt(double noundef, i32 noundef, i8 noundef signext, i8 nound
 ; Function Attrs: nounwind uwtable
 define dso_local zeroext range(i8 0, 6) i8 @_is_numeric_string_ex(ptr noundef %0, i64 noundef %1, ptr nofree noundef writeonly captures(address_is_null) %2, ptr nofree noundef writeonly captures(address_is_null) %3, i1 noundef zeroext %4, ptr nofree noundef writeonly captures(address_is_null) %5, ptr nofree noundef writeonly captures(address_is_null) %6) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca ptr, align 8                      ; 10 uses
+  %i.a = alloca ptr, align 8                      ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #24
   %.not128 = icmp eq i64 %1, 0
   br i1 %.not128, label %.critedge143, label %bb.b
@@ -269,22 +269,28 @@ bb.h:                                             ; preds = %bb.g, %.sink.split
 
 .preheader146:                                    ; preds = %bb.h
   %i.h = icmp eq i8 %i.f, 48
-  br i1 %i.h, label %.lr.ph, label %.loopexit
+  br i1 %i.h, label %thread-pre-split.lr.ph, label %.loopexit, !llvm.loop !179
 
-.lr.ph:                                           ; preds = %.preheader146, %.lr.ph
-  %i.i = phi ptr [ %i.j, %.lr.ph ], [ %.promoted, %.preheader146 ]
-  %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 1 ; 4 uses
-  store ptr %i.j, ptr %i.a, align 8, !tbaa !182
+thread-pre-split.lr.ph:                           ; preds = %.preheader146
+  br label %.lr.ph, !llvm.loop !179
+
+.lr.ph:                                           ; preds = %thread-pre-split.lr.ph, %.lr.ph
+  %i.i = phi ptr [ %.promoted, %thread-pre-split.lr.ph ], [ %i.j, %.lr.ph ]
+  %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 1 ; 3 uses
   %i.k = load i8, ptr %i.j, align 1, !tbaa !19
   %i.l = icmp eq i8 %i.k, 48
-  br i1 %i.l, label %.lr.ph, label %.loopexit, !llvm.loop !179
+  br i1 %i.l, label %.lr.ph, label %.preheader146..loopexit.loopexit_crit_edge, !llvm.loop !179
 
-.loopexit:                                        ; preds = %.lr.ph, %.preheader146, %bb.j
-  %i.m = phi ptr [ %i.z, %bb.j ], [ %.promoted, %.preheader146 ], [ %i.j, %.lr.ph ] ; 2 uses
-  %.096 = phi i32 [ %i.y, %bb.j ], [ 0, %.preheader146 ], [ 0, %.lr.ph ] ; 3 uses
-  %.093 = phi i32 [ %.194, %bb.j ], [ 0, %.preheader146 ], [ 0, %.lr.ph ]
-  %.088 = phi i8 [ %.189, %bb.j ], [ 4, %.preheader146 ], [ 4, %.lr.ph ] ; 2 uses
-  %.085 = phi i64 [ %i.x, %bb.j ], [ 0, %.preheader146 ], [ 0, %.lr.ph ] ; 2 uses
+.preheader146..loopexit.loopexit_crit_edge:       ; preds = %.lr.ph
+  br label %.loopexit, !llvm.loop !179
+
+.loopexit:                                        ; preds = %.preheader146, %.preheader146..loopexit.loopexit_crit_edge, %bb.j
+  %i.m = phi ptr [ %i.z, %bb.j ], [ %i.j, %.preheader146..loopexit.loopexit_crit_edge ], [ %.promoted, %.preheader146 ] ; 3 uses
+  %.096 = phi i32 [ %i.y, %bb.j ], [ 0, %.preheader146..loopexit.loopexit_crit_edge ], [ 0, %.preheader146 ] ; 3 uses
+  %.093 = phi i32 [ %.194, %bb.j ], [ 0, %.preheader146..loopexit.loopexit_crit_edge ], [ 0, %.preheader146 ]
+  %.088 = phi i8 [ %.189, %bb.j ], [ 4, %.preheader146..loopexit.loopexit_crit_edge ], [ 4, %.preheader146 ] ; 2 uses
+  %.085 = phi i64 [ %i.x, %bb.j ], [ 0, %.preheader146..loopexit.loopexit_crit_edge ], [ 0, %.preheader146 ] ; 2 uses
+  store ptr %i.m, ptr %i.a, align 8
   %i.n = icmp sgt i32 %.096, 19
   %i.o = icmp ne ptr %3, null
   %i.p = or i1 %i.o, %4
@@ -308,8 +314,7 @@ bb.j:                                             ; preds = %bb.i
   %i.w = add i64 %i.u, -48
   %i.x = add i64 %i.w, %i.v
   %i.y = add nsw i32 %.197, 1
-  %i.z = getelementptr inbounds nuw i8, ptr %i.r, i64 1 ; 2 uses
-  store ptr %i.z, ptr %i.a, align 8, !tbaa !182
+  %i.z = getelementptr inbounds nuw i8, ptr %i.r, i64 1
   br label %.loopexit, !llvm.loop !180
 
 bb.k:                                             ; preds = %bb.i

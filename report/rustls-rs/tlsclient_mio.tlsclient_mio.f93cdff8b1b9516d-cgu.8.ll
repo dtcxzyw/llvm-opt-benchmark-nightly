@@ -202,9 +202,7 @@ bb.a:
   %i.q = alloca [8 x i8], align 8                 ; 6 uses
   %i.r = alloca [8 x i8], align 8                 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r)
-  store i64 0, ptr %i.r, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q)
-  store i64 0, ptr %i.q, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %i.p, ptr noundef nonnull align 8 dereferenceable(104) %1, i64 104, i1 false)
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.f, i64 8 ; 2 uses
@@ -244,8 +242,8 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtCseO5Jl7W60Eg_16rustls_pki_types14CertificateDerECsloGAwzL3aMH_13tlsclient_mio.exit, %bb.a
-  %i.aj = phi i64 [ %i.bp, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtCseO5Jl7W60Eg_16rustls_pki_types14CertificateDerECsloGAwzL3aMH_13tlsclient_mio.exit ], [ 0, %bb.a ] ; 3 uses
-  %i.ak = phi i64 [ %i.bq, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtCseO5Jl7W60Eg_16rustls_pki_types14CertificateDerECsloGAwzL3aMH_13tlsclient_mio.exit ], [ 0, %bb.a ] ; 3 uses
+  %i.aj = phi i64 [ %i.bp, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtCseO5Jl7W60Eg_16rustls_pki_types14CertificateDerECsloGAwzL3aMH_13tlsclient_mio.exit ], [ 0, %bb.a ] ; 5 uses
+  %i.ak = phi i64 [ %i.bq, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtCseO5Jl7W60Eg_16rustls_pki_types14CertificateDerECsloGAwzL3aMH_13tlsclient_mio.exit ], [ 0, %bb.a ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.7)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   invoke void @_RNvXs0_NtCseO5Jl7W60Eg_16rustls_pki_types3pemINtB5_8ReadIterINtNtNtNtCs4wP2HXfJTCR_5alloc2io8buffered9bufreader9BufReaderNtNtCsaKJjC64KgbL_3std2fs4FileENtB7_14CertificateDerENtNtNtNtCsj6eKBz9Db1c_4core4iter6traits8iterator8Iterator4nextCsloGAwzL3aMH_13tlsclient_mio(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.f, ptr noalias nofree noundef nonnull align 8 dereferenceable(104) %i.p)
@@ -259,6 +257,8 @@ bb.b:                                             ; preds = %_RINvNtCsj6eKBz9Db1
   ], !prof !77
 
 .thread:                                          ; preds = %.noexc
+  store i64 %i.ak, ptr %i.r, align 8
+  store i64 %i.aj, ptr %i.q, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   br label %.loopexit.a
 
@@ -300,7 +300,7 @@ bb.h:                                             ; preds = %.noexc
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.7, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.7.0..sroa.4.0..sroa_idx.i.sroa_idx, i64 16, i1 false), !noalias !81
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   %.not = icmp eq i64 %.sroa.0.0.copyload40, -2
-  br i1 %.not, label %.loopexit.a, label %bb.i
+  br i1 %.not, label %.loopexit, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o)
@@ -310,7 +310,12 @@ bb.i:                                             ; preds = %bb.h
   invoke void @_RNvNtCshVVPy9isBpn_6webpki12trust_anchor24anchor_from_trusted_cert(ptr noalias nofree noundef nonnull sret([72 x i8]) align 8 captures(address) dereferenceable(72) %i.n, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.o)
           to label %bb.n unwind label %bb.m
 
-.loopexit.a:                                      ; preds = %bb.h, %.thread
+.loopexit:                                        ; preds = %bb.h
+  store i64 %i.ak, ptr %i.r, align 8
+  store i64 %i.aj, ptr %i.q, align 8
+  br label %.loopexit.a
+
+.loopexit.a:                                      ; preds = %.loopexit, %.thread
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7)
   call fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtNtB4_4iter8adapters3map3MapINtNtCseO5Jl7W60Eg_16rustls_pki_types3pem8ReadIterINtNtNtNtCs4wP2HXfJTCR_5alloc2io8buffered9bufreader9BufReaderNtNtCsaKJjC64KgbL_3std2fs4FileENtB1e_14CertificateDerENCNvCsloGAwzL3aMH_13tlsclient_mio11make_config0EEB3S_(ptr noalias nofree noundef align 8 dereferenceable(104) %i.p)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p)
@@ -432,12 +437,11 @@ bb.u:                                             ; preds = %bb.r, %bb.q
   %i.bo = add i64 %i.bh, 1
   store i64 %i.bo, ptr %i.s, align 8, !alias.scope !83
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l)
-  %2 = add i64 %i.ak, 1                           ; 2 uses
-  store i64 %2, ptr %i.r, align 8
   invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtCseO5Jl7W60Eg_16rustls_pki_types11TrustAnchorECsloGAwzL3aMH_13tlsclient_mio(ptr noalias nofree noundef align 8 dereferenceable(72) %i.m)
           to label %bb.v unwind label %bb.m
 
 bb.v:                                             ; preds = %bb.u
+  %2 = add i64 %i.ak, 1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m)
   br label %bb.w
 
@@ -551,8 +555,6 @@ bb.ag:                                            ; preds = %bb.af
           to label %bb.ai unwind label %bb.ab
 
 bb.ah:                                            ; preds = %bb.af, %bb.ai
-  %3 = add i64 %i.aj, 1                           ; 2 uses
-  store i64 %3, ptr %i.q, align 8
   invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCshVVPy9isBpn_6webpki5error5ErrorECsloGAwzL3aMH_13tlsclient_mio(ptr noalias nofree noundef align 8 dereferenceable(56) %i.k)
           to label %bb.aj unwind label %bb.m
 
@@ -562,6 +564,7 @@ bb.ai:                                            ; preds = %bb.ag
   br label %bb.ah
 
 bb.aj:                                            ; preds = %bb.ah
+  %3 = add i64 %i.aj, 1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
   br label %bb.w
 

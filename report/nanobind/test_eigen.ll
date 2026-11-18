@@ -204,26 +204,28 @@ bb.k:                                             ; preds = %bb.j
 .lr.ph99:                                         ; preds = %bb.k
   %i.di = add nsw i32 %i.dg, -1
   %i.dj = zext nneg i32 %i.di to i64
-  %i.dk = load ptr, ptr %i.cm, align 8, !tbaa !206
-  %i.dl = load ptr, ptr %i.cg, align 8, !tbaa !57
+  %i.dk = load ptr, ptr %i.cm, align 8, !tbaa !206 ; 2 uses
   %2 = sext i32 %i.da to i64                      ; 2 uses
+  %invariant.gep = getelementptr [4 x i8], ptr %i.dk, i64 %2
+  %i.dl = load ptr, ptr %i.cg, align 8, !tbaa !57 ; 2 uses
+  %invariant.gep100 = getelementptr [4 x i8], ptr %i.dl, i64 %2
   br label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph99, %bb.l
   %i.dm = phi i32 [ %i.dc, %.lr.ph99 ], [ %i.ds, %bb.l ]
-  %.097 = phi i64 [ %i.dj, %.lr.ph99 ], [ %i.dy, %bb.l ] ; 4 uses
+  %.097 = phi i64 [ %i.dj, %.lr.ph99 ], [ %i.dy, %bb.l ] ; 6 uses
   %i.dn = sext i32 %i.dm to i64
-  %i.do = getelementptr [4 x i8], ptr %i.dk, i64 %.097 ; 2 uses
+  %i.do = getelementptr [4 x i8], ptr %i.dk, i64 %.097
   %i.dp = getelementptr [4 x i8], ptr %i.do, i64 %i.dn
   %i.dq = load i32, ptr %i.dp, align 4, !tbaa !41
-  %i.dr = getelementptr [4 x i8], ptr %i.do, i64 %2
+  %i.dr = getelementptr [4 x i8], ptr %invariant.gep, i64 %.097
   store i32 %i.dq, ptr %i.dr, align 4, !tbaa !41
   %i.ds = load i32, ptr %i.db, align 4, !tbaa !41 ; 2 uses
   %i.dt = sext i32 %i.ds to i64
-  %i.du = getelementptr [4 x i8], ptr %i.dl, i64 %.097 ; 2 uses
+  %i.du = getelementptr [4 x i8], ptr %i.dl, i64 %.097
   %i.dv = getelementptr [4 x i8], ptr %i.du, i64 %i.dt
   %i.dw = load float, ptr %i.dv, align 4, !tbaa !35
-  %i.dx = getelementptr [4 x i8], ptr %i.du, i64 %2
+  %i.dx = getelementptr [4 x i8], ptr %invariant.gep100, i64 %.097
   store float %i.dw, ptr %i.dx, align 4, !tbaa !35
   %i.dy = add nsw i64 %.097, -1
   %.not140 = icmp eq i64 %.097, 0
@@ -573,26 +575,28 @@ bb.k:                                             ; preds = %bb.j
 .lr.ph99:                                         ; preds = %bb.k
   %i.du = add nsw i32 %i.ds, -1
   %i.dv = zext nneg i32 %i.du to i64
-  %i.dw = load ptr, ptr %i.cw, align 8, !tbaa !206
-  %i.dx = load ptr, ptr %i.cq, align 8, !tbaa !57
+  %i.dw = load ptr, ptr %i.cw, align 8, !tbaa !206 ; 2 uses
   %2 = sext i32 %i.dm to i64                      ; 2 uses
+  %invariant.gep = getelementptr [4 x i8], ptr %i.dw, i64 %2
+  %i.dx = load ptr, ptr %i.cq, align 8, !tbaa !57 ; 2 uses
+  %invariant.gep100 = getelementptr [4 x i8], ptr %i.dx, i64 %2
   br label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph99, %bb.l
   %i.dy = phi i32 [ %i.do, %.lr.ph99 ], [ %i.ee, %bb.l ]
-  %.097 = phi i64 [ %i.dv, %.lr.ph99 ], [ %i.ek, %bb.l ] ; 4 uses
+  %.097 = phi i64 [ %i.dv, %.lr.ph99 ], [ %i.ek, %bb.l ] ; 6 uses
   %i.dz = sext i32 %i.dy to i64
-  %i.ea = getelementptr [4 x i8], ptr %i.dw, i64 %.097 ; 2 uses
+  %i.ea = getelementptr [4 x i8], ptr %i.dw, i64 %.097
   %i.eb = getelementptr [4 x i8], ptr %i.ea, i64 %i.dz
   %i.ec = load i32, ptr %i.eb, align 4, !tbaa !41
-  %i.ed = getelementptr [4 x i8], ptr %i.ea, i64 %2
+  %i.ed = getelementptr [4 x i8], ptr %invariant.gep, i64 %.097
   store i32 %i.ec, ptr %i.ed, align 4, !tbaa !41
   %i.ee = load i32, ptr %i.dn, align 4, !tbaa !41 ; 2 uses
   %i.ef = sext i32 %i.ee to i64
-  %i.eg = getelementptr [4 x i8], ptr %i.dx, i64 %.097 ; 2 uses
+  %i.eg = getelementptr [4 x i8], ptr %i.dx, i64 %.097
   %i.eh = getelementptr [4 x i8], ptr %i.eg, i64 %i.ef
   %i.ei = load float, ptr %i.eh, align 4, !tbaa !35
-  %i.ej = getelementptr [4 x i8], ptr %i.eg, i64 %2
+  %i.ej = getelementptr [4 x i8], ptr %invariant.gep100, i64 %.097
   store float %i.ei, ptr %i.ej, align 4, !tbaa !35
   %i.ek = add nsw i64 %.097, -1
   %.not141 = icmp eq i64 %.097, 0

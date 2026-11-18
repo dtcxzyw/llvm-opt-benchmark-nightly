@@ -202,11 +202,11 @@ bb.a:
   %i.g = load i64, ptr %i.f, align 8, !noundef !6 ; 2 uses
   %i.h = icmp ult i64 %i.g, 192153584101141163
   tail call void @llvm.assume(i1 %i.h)
-  %i.i = getelementptr inbounds nuw [48 x i8], ptr %i.d, i64 %i.g ; 2 uses
+  %i.i = getelementptr inbounds nuw [48 x i8], ptr %i.d, i64 %i.g ; 3 uses
   store ptr %i.d, ptr %i.b, align 8
   %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store i64 %i.e, ptr %i.j, align 8
-  %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 4 uses
   store ptr %i.d, ptr %i.k, align 8
   %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   store ptr %i.i, ptr %i.l, align 8
@@ -236,11 +236,12 @@ bb.e:                                             ; preds = %bb.d, %_RINvNtCskKL
   %.sroa.0.038 = phi i64 [ %i.n, %bb.d ], [ %i.q, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCsbli3iz7XG76_9multiaddr9MultiaddrECs6b9j1MKPRPC_12libp2p_swarm.exit6 ]
   %i.p = phi ptr [ %i.d, %bb.d ], [ %i.v, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCsbli3iz7XG76_9multiaddr9MultiaddrECs6b9j1MKPRPC_12libp2p_swarm.exit6 ] ; 8 uses
   %i.q = add nsw i64 %.sroa.0.038, -1             ; 2 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !314)
   %i.r = icmp eq ptr %i.p, %i.i
   br i1 %i.r, label %_RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtNtCs6b9j1MKPRPC_12libp2p_swarm10connection4pool15concurrent_dial11PendingDialENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextB14_.exit.thread, label %_RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtNtCs6b9j1MKPRPC_12libp2p_swarm10connection4pool15concurrent_dial11PendingDialENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextB14_.exit
 
 _RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtNtCs6b9j1MKPRPC_12libp2p_swarm10connection4pool15concurrent_dial11PendingDialENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextB14_.exit.thread: ; preds = %bb.e, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCsbli3iz7XG76_9multiaddr9MultiaddrECs6b9j1MKPRPC_12libp2p_swarm.exit6, %_RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtNtCs6b9j1MKPRPC_12libp2p_swarm10connection4pool15concurrent_dial11PendingDialENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextB14_.exit
+  %3 = phi ptr [ %i.i, %bb.e ], [ %i.v, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCsbli3iz7XG76_9multiaddr9MultiaddrECs6b9j1MKPRPC_12libp2p_swarm.exit6 ], [ %i.v, %_RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtNtCs6b9j1MKPRPC_12libp2p_swarm10connection4pool15concurrent_dial11PendingDialENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextB14_.exit ]
+  store ptr %3, ptr %i.k, align 8
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.s, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false)
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 48
@@ -262,11 +263,11 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCsbli3iz7XG76_9multiaddr9MultiaddrECs6
 bb.f:                                             ; preds = %bb.i
   %i.u = landingpad { ptr, i32 }
           cleanup
+  store ptr %i.v, ptr %i.k, align 8
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCsbli3iz7XG76_9multiaddr9MultiaddrECs6b9j1MKPRPC_12libp2p_swarm.exit
 
 _RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtNtCs6b9j1MKPRPC_12libp2p_swarm10connection4pool15concurrent_dial11PendingDialENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextB14_.exit: ; preds = %bb.e
-  %i.v = getelementptr inbounds nuw i8, ptr %i.p, i64 48 ; 2 uses
-  store ptr %i.v, ptr %i.k, align 8, !alias.scope !314
+  %i.v = getelementptr inbounds nuw i8, ptr %i.p, i64 48 ; 5 uses
   %.sroa.0.0.copyload7 = load ptr, ptr %i.p, align 8, !noalias !314 ; 3 uses
   %.sroa.7.0..sroa_idx8 = getelementptr inbounds nuw i8, ptr %i.p, i64 8
   %.sroa.7.sroa.0.0.copyload = load ptr, ptr %.sroa.7.0..sroa_idx8, align 8, !noalias !314 ; 2 uses
@@ -288,6 +289,7 @@ bb.g:                                             ; preds = %_RNvXs4_NtNtCsexYYU
 bb.h:                                             ; preds = %bb.g
   %i.w = landingpad { ptr, i32 }
           cleanup
+  store ptr %i.v, ptr %i.k, align 8
   %i.x = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload7, i64 32
   %i.y = load ptr, ptr %i.x, align 8, !noalias !315, !nonnull !6, !noundef !6
   invoke void %i.y(ptr noundef %.sroa.7.sroa.6.0.copyload, ptr noundef %.sroa.7.sroa.0.0.copyload, i64 noundef %.sroa.7.sroa.5.0.copyload)

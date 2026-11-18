@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.d
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
   %.0104 = phi i64 [ %i.ai, %bb.g ], [ 6, %bb.e ], [ 4, %bb.f ]
   %.1101 = phi i64 [ %i.k, %bb.g ], [ %i.y, %bb.e ], [ %i.aa, %bb.f ] ; 12 uses
-  %.199 = phi i64 [ %i.p, %bb.g ], [ %i.z, %bb.e ], [ %i.p, %bb.f ] ; 7 uses
+  %.199 = phi i64 [ %i.p, %bb.g ], [ %i.z, %bb.e ], [ %i.p, %bb.f ] ; 9 uses
   %i.aj = icmp ult i32 %i.r, 11
   %switch.maskindex = trunc i32 %i.r to i16
   %switch.shifted = lshr i16 1793, %switch.maskindex
@@ -305,12 +305,12 @@ middle.block:                                     ; preds = %vector.body
   br label %.lr.ph.split.us.split
 
 .lr.ph.split.us.split.us.preheader:               ; preds = %.lr.ph.split.us
-  %1 = sub i64 %.1101, %i.j                       ; 4 uses
   %.pre = load i64, ptr %i.ay, align 8, !tbaa !76
   %i.bo = sub i64 %.pre, %i.g
   %i.bp = add i64 %i.bo, %i.d
   %i.bq = udiv i64 %i.bp, %i.d
   %i.br = lshr i64 %i.bq, %i.ba                   ; 2 uses
+  %1 = sub i64 %.1101, %i.j                       ; 4 uses
   %invariant.gep140 = getelementptr [8 x i8], ptr %i.ao, i64 %i.j ; 2 uses
   %min.iters.check157 = icmp ult i64 %1, 4
   br i1 %min.iters.check157, label %.lr.ph.split.us.split.us.preheader223, label %vector.ph158
@@ -451,7 +451,7 @@ bb.i:                                             ; preds = %switch.edge118
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %switch.edge118
-  %.1 = phi i64 [ 0, %switch.edge118 ], [ %i.dl, %bb.i ] ; 6 uses
+  %.1 = phi i64 [ 0, %switch.edge118 ], [ %i.dl, %bb.i ] ; 8 uses
   %i.dm = icmp ult i64 %.1, %.199
   br i1 %i.dm, label %.lr.ph124, label %.loopexit
 
@@ -459,10 +459,10 @@ bb.j:                                             ; preds = %bb.i, %switch.edge1
   %i.dn = getelementptr inbounds nuw i8, ptr %i.b, i64 56
   %i.do = icmp eq i32 %i.x, 1
   %i.dp = zext i1 %i.do to i64
-  %2 = sub nuw i64 %.199, %.1                     ; 10 uses
   br i1 %i.di, label %.lr.ph124.split.us, label %.lr.ph124.split.preheader
 
 .lr.ph124.split.preheader:                        ; preds = %.lr.ph124
+  %2 = sub i64 %.199, %.1                         ; 2 uses
   %invariant.gep142 = getelementptr [8 x i8], ptr %i.dd, i64 %.1 ; 5 uses
   %xtraiter228 = and i64 %2, 3                    ; 3 uses
   %i.dq = sub i64 %.1, %.199
@@ -477,12 +477,13 @@ bb.j:                                             ; preds = %bb.i, %switch.edge1
   br i1 %.not, label %.lr.ph124.split.us.split.us.preheader, label %.lr.ph124.split.us.split.preheader
 
 .lr.ph124.split.us.split.preheader:               ; preds = %.lr.ph124.split.us
+  %3 = sub i64 %.199, %.1                         ; 4 uses
   %invariant.gep144 = getelementptr [8 x i8], ptr %i.dd, i64 %.1 ; 2 uses
-  %min.iters.check176 = icmp ult i64 %2, 4
+  %min.iters.check176 = icmp ult i64 %3, 4
   br i1 %min.iters.check176, label %.lr.ph124.split.us.split.preheader220, label %vector.ph177
 
 vector.ph177:                                     ; preds = %.lr.ph124.split.us.split.preheader
-  %n.vec178 = and i64 %2, -4                      ; 3 uses
+  %n.vec178 = and i64 %3, -4                      ; 3 uses
   %broadcast.splatinsert179 = insertelement <2 x i64> poison, i64 %.199, i64 0
   %broadcast.splat180 = shufflevector <2 x i64> %broadcast.splatinsert179, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert181 = insertelement <2 x i64> poison, i64 %spec.select116, i64 0
@@ -508,7 +509,7 @@ vector.body183:                                   ; preds = %vector.body183, %ve
   br i1 %i.dz, label %middle.block189, label %vector.body183, !llvm.loop !372
 
 middle.block189:                                  ; preds = %vector.body183
-  %cmp.n190 = icmp eq i64 %2, %n.vec178
+  %cmp.n190 = icmp eq i64 %3, %n.vec178
   br i1 %cmp.n190, label %.loopexit, label %.lr.ph124.split.us.split.preheader220
 
 .lr.ph124.split.us.split.preheader220:            ; preds = %.lr.ph124.split.us.split.preheader, %middle.block189
@@ -521,12 +522,13 @@ middle.block189:                                  ; preds = %vector.body183
   %i.eb = add i64 %i.ea, %i.d
   %i.ec = udiv i64 %i.eb, %i.d
   %i.ed = lshr i64 %i.ec, %i.dp                   ; 2 uses
+  %4 = sub i64 %.199, %.1                         ; 4 uses
   %invariant.gep146 = getelementptr [8 x i8], ptr %i.dd, i64 %.1 ; 2 uses
-  %min.iters.check193 = icmp ult i64 %2, 4
+  %min.iters.check193 = icmp ult i64 %4, 4
   br i1 %min.iters.check193, label %.lr.ph124.split.us.split.us.preheader219, label %vector.ph194
 
 vector.ph194:                                     ; preds = %.lr.ph124.split.us.split.us.preheader
-  %n.vec195 = and i64 %2, -4                      ; 3 uses
+  %n.vec195 = and i64 %4, -4                      ; 3 uses
   %broadcast.splatinsert196 = insertelement <2 x i64> poison, i64 %i.ed, i64 0
   %broadcast.splat197 = shufflevector <2 x i64> %broadcast.splatinsert196, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert198 = insertelement <2 x i64> poison, i64 %spec.select116, i64 0
@@ -552,7 +554,7 @@ vector.body200:                                   ; preds = %vector.body200, %ve
   br i1 %i.el, label %middle.block206, label %vector.body200, !llvm.loop !373
 
 middle.block206:                                  ; preds = %vector.body200
-  %cmp.n207 = icmp eq i64 %2, %n.vec195
+  %cmp.n207 = icmp eq i64 %4, %n.vec195
   br i1 %cmp.n207, label %.loopexit, label %.lr.ph124.split.us.split.us.preheader219
 
 .lr.ph124.split.us.split.us.preheader219:         ; preds = %.lr.ph124.split.us.split.us.preheader, %middle.block206
@@ -567,7 +569,7 @@ middle.block206:                                  ; preds = %vector.body200
   %gep147 = getelementptr [8 x i8], ptr %invariant.gep146, i64 %.197122.us.us
   store i64 %i.eo, ptr %gep147, align 8, !tbaa !62
   %i.ep = add i64 %.197122.us.us, 1               ; 2 uses
-  %exitcond133.not = icmp eq i64 %i.ep, %2
+  %exitcond133.not = icmp eq i64 %i.ep, %4
   br i1 %exitcond133.not, label %.loopexit, label %.lr.ph124.split.us.split.us, !llvm.loop !374
 
 .lr.ph124.split.us.split:                         ; preds = %.lr.ph124.split.us.split.preheader220, %.lr.ph124.split.us.split
@@ -578,7 +580,7 @@ middle.block206:                                  ; preds = %vector.body200
   %gep145 = getelementptr [8 x i8], ptr %invariant.gep144, i64 %.197122.us
   store i64 %i.es, ptr %gep145, align 8, !tbaa !62
   %i.et = add i64 %.197122.us, 1                  ; 2 uses
-  %exitcond132.not = icmp eq i64 %i.et, %2
+  %exitcond132.not = icmp eq i64 %i.et, %3
   br i1 %exitcond132.not, label %.loopexit, label %.lr.ph124.split.us.split, !llvm.loop !375
 
 .lr.ph124.split:                                  ; preds = %.lr.ph124.split, %.lr.ph124.split.preheader.new

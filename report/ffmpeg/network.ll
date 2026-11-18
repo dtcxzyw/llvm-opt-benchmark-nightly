@@ -202,8 +202,7 @@ bb.e:                                             ; preds = %bb.d
   %i.k = tail call ptr @__errno_location() #12    ; 2 uses
   %i.l = load i32, ptr %i.k, align 4, !tbaa !14
   %i.m = sub nsw i32 0, %i.l                      ; 2 uses
-  store i32 %i.m, ptr %i.a, align 4, !tbaa !14
-  switch i32 %i.m, label %.loopexit22.a [
+  switch i32 %i.m, label %.loopexit22 [
     i32 -4, label %bb.f
     i32 -115, label %bb.g
     i32 -11, label %bb.g
@@ -260,7 +259,11 @@ bb.m:                                             ; preds = %bb.k
   call void (ptr, i32, ptr, ...) @av_log(ptr noundef nonnull %4, i32 noundef 16, ptr noundef nonnull @.str.4, ptr noundef %i.v, ptr noundef nonnull %i.d) #11
   br label %.loopexit22.a
 
-.loopexit22.a:                                    ; preds = %bb.e, %bb.j, %bb.m, %bb.l
+.loopexit22:                                      ; preds = %bb.e
+  store i32 %i.m, ptr %i.a, align 4
+  br label %.loopexit22.a
+
+.loopexit22.a:                                    ; preds = %.loopexit22, %bb.j, %bb.m, %bb.l
   %i.y = load i32, ptr %i.a, align 4, !tbaa !14
   br label %.loopexit
 

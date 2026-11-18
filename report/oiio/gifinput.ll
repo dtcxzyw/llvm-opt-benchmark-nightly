@@ -205,7 +205,7 @@ bb.a:
   %i.b = alloca i32, align 4                      ; 5 uses
   %1 = alloca %"class.OpenImageIO::v3_1::basic_string_view", align 8 ; 3 uses
   %i.c = alloca i32, align 4                      ; 8 uses
-  %i.d = alloca i32, align 4                      ; 7 uses
+  %i.d = alloca i32, align 4                      ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #28
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 216 ; 7 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !167  ; 2 uses
@@ -293,10 +293,15 @@ _ZSt4fillIN9__gnu_cxx17__normal_iteratorIPhSt6vectorIhSaIhEEEEiEvT_S7_RKT0_.exit
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 20
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 224
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 240 ; 4 uses
-  br i1 %.not4977, label %.lr.ph82.split.us, label %.lr.ph82.split
+  br i1 %.not4977, label %.lr.ph83.split.us.preheader, label %.lr.ph82.split
 
-.lr.ph82.split.us:                                ; preds = %.lr.ph82, %.critedge56.us
-  %.03280.us = phi i32 [ %i.cz, %.critedge56.us ], [ 0, %.lr.ph82 ] ; 9 uses
+.lr.ph83.split.us.preheader:                      ; preds = %.lr.ph82
+  %2 = sext i32 %i.ai to i64
+  %wide.trip.count = zext nneg i32 %.fr121 to i64
+  br label %.lr.ph82.split.us
+
+.lr.ph82.split.us:                                ; preds = %.lr.ph83.split.us.preheader, %.critedge56.us
+  %.03280.us = phi i32 [ %i.cz, %.critedge56.us ], [ 0, %.lr.ph83.split.us.preheader ] ; 9 uses
   %i.ax = load ptr, ptr %i.e, align 8, !tbaa !167
   %i.ay = invoke i32 @DGifGetLine(ptr noundef %i.ax, ptr noundef nonnull %i.ak, i32 noundef %.fr121)
           to label %bb.f unwind label %.loopexit.split.split.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
@@ -364,27 +369,27 @@ bb.p:                                             ; preds = %_ZN11OpenImageIO4v3
 
 .lr.ph.us:                                        ; preds = %bb.p
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #28
-  store i32 0, ptr %i.d, align 4, !tbaa !44
   br label %bb.q
 
 bb.q:                                             ; preds = %.lr.ph.us, %bb.u
-  %2 = phi i32 [ 0, %.lr.ph.us ], [ %5, %bb.u ]   ; 3 uses
-  %3 = zext nneg i32 %2 to i64
-  %i.bp = getelementptr inbounds nuw i8, ptr %i.ak, i64 %3 ; 4 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph.us ], [ %indvars.iv.next, %bb.u ] ; 4 uses
+  %i.bp = getelementptr inbounds nuw i8, ptr %i.ak, i64 %indvars.iv ; 4 uses
   %i.bq = load i8, ptr %i.bp, align 1, !tbaa !131 ; 2 uses
   %i.br = zext i8 %i.bq to i32                    ; 2 uses
   %.not47.us = icmp sgt i32 %storemerge, %i.br
   br i1 %.not47.us, label %bb.r, label %.split85.us
 
 bb.r:                                             ; preds = %bb.q
-  %4 = add nsw i32 %2, %i.ai                      ; 3 uses
+  %3 = add nsw i64 %indvars.iv, %2                ; 3 uses
   %i.bs = load i32, ptr %i.at, align 4, !tbaa !185
   %i.bt = load i32, ptr %i.au, align 4, !tbaa !183 ; 2 uses
   %i.bu = mul nsw i32 %i.bt, %i.bl
+  %4 = trunc nsw i64 %3 to i32
   %i.bv = add nsw i32 %i.bu, %4
   %i.bw = mul nsw i32 %i.bv, %i.bs
-  %i.bx = icmp sgt i32 %4, -1
-  %i.by = icmp slt i32 %4, %i.bt
+  %i.bx = icmp sgt i64 %3, -1
+  %5 = sext i32 %i.bt to i64
+  %i.by = icmp slt i64 %3, %5
   %or.cond54.us = select i1 %i.bx, i1 %i.by, i1 false
   br i1 %or.cond54.us, label %bb.s, label %bb.u
 
@@ -426,10 +431,9 @@ bb.t:                                             ; preds = %bb.s
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %bb.s, %bb.r
-  %5 = add nuw nsw i32 %2, 1                      ; 3 uses
-  store i32 %5, ptr %i.d, align 4, !tbaa !44
-  %.not49.us = icmp slt i32 %5, %.fr121
-  br i1 %.not49.us, label %bb.q, label %..critedge_crit_edge.us, !llvm.loop !390
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond147.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond147.not, label %..critedge_crit_edge.us, label %bb.q, !llvm.loop !390
 
 .critedge56.us:                                   ; preds = %..critedge_crit_edge.us, %bb.p, %_ZN11OpenImageIO4v3_18GIFInput18decode_line_numberEii.exit.us
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #28
@@ -517,6 +521,8 @@ _ZN11OpenImageIO4v3_18GIFInput17report_last_errorEv.exit: ; preds = %.noexc
   br label %_ZNSt10unique_ptrIA_hSt14default_deleteIS0_EED2Ev.exit
 
 .split85.us:                                      ; preds = %bb.q
+  %6 = trunc nuw nsw i64 %indvars.iv to i32
+  store i32 %6, ptr %i.d, align 4, !tbaa !44
   invoke void @_ZNK11OpenImageIO4v3_110ImageInput8errorfmtIJhiiiEEEvPKcDpRKT_(ptr noundef nonnull align 8 dereferenceable(184) %0, ptr noundef nonnull @.str.10, ptr noundef nonnull align 1 dereferenceable(1) %i.bp, ptr noundef nonnull align 4 dereferenceable(4) %i.d, ptr noundef nonnull align 4 dereferenceable(4) %i.c, ptr noundef nonnull align 4 dereferenceable(4) %i.b)
           to label %bb.z unwind label %bb.y
 

@@ -204,14 +204,17 @@ bb.t:                                             ; preds = %bb.s
   %i.eo = getelementptr inbounds nuw [16 x i8], ptr %i.en, i64 %.012.i.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.em, ptr noundef nonnull align 8 dereferenceable(16) %i.eo, i64 16, i1 false)
   %i.ep = add nuw i64 %.012.i.i.i, 1              ; 4 uses
-  store i64 %i.ep, ptr %i.ar, align 8, !tbaa !230
   %i.eq = load i64, ptr %i.eh, align 8, !tbaa !230
   %i.er = icmp ult i64 %i.ep, %i.eq
-  br i1 %i.er, label %.lr.ph.i.i.i, label %_ZN4Luau12DenseHashMapIPKNS_4TypeEbNS_16DenseHashPointerESt8equal_toIS3_EEC2ERKS7_.exit.i, !llvm.loop !18
+  br i1 %i.er, label %.lr.ph.i.i.i, label %_ZN4Luau12DenseHashMapIPKNS_4TypeEbNS_16DenseHashPointerESt8equal_toIS3_EEC2ERKS7_.exit.i.loopexit, !llvm.loop !18
 
-_ZN4Luau12DenseHashMapIPKNS_4TypeEbNS_16DenseHashPointerESt8equal_toIS3_EEC2ERKS7_.exit.i: ; preds = %.lr.ph.i.i.i, %bb.t, %bb.s
-  %i.es = phi i64 [ 0, %bb.s ], [ 0, %bb.t ], [ %i.ep, %.lr.ph.i.i.i ] ; 2 uses
-  %i.et = phi ptr [ null, %bb.s ], [ %i.ek, %bb.t ], [ %i.ek, %.lr.ph.i.i.i ] ; 5 uses
+_ZN4Luau12DenseHashMapIPKNS_4TypeEbNS_16DenseHashPointerESt8equal_toIS3_EEC2ERKS7_.exit.i.loopexit: ; preds = %.lr.ph.i.i.i
+  store i64 %i.ep, ptr %i.ar, align 8, !tbaa !230
+  br label %_ZN4Luau12DenseHashMapIPKNS_4TypeEbNS_16DenseHashPointerESt8equal_toIS3_EEC2ERKS7_.exit.i
+
+_ZN4Luau12DenseHashMapIPKNS_4TypeEbNS_16DenseHashPointerESt8equal_toIS3_EEC2ERKS7_.exit.i: ; preds = %_ZN4Luau12DenseHashMapIPKNS_4TypeEbNS_16DenseHashPointerESt8equal_toIS3_EEC2ERKS7_.exit.i.loopexit, %bb.t, %bb.s
+  %i.es = phi i64 [ %i.ep, %_ZN4Luau12DenseHashMapIPKNS_4TypeEbNS_16DenseHashPointerESt8equal_toIS3_EEC2ERKS7_.exit.i.loopexit ], [ 0, %bb.t ], [ 0, %bb.s ] ; 2 uses
+  %i.et = phi ptr [ %i.ek, %_ZN4Luau12DenseHashMapIPKNS_4TypeEbNS_16DenseHashPointerESt8equal_toIS3_EEC2ERKS7_.exit.i.loopexit ], [ %i.ek, %bb.t ], [ null, %bb.s ] ; 5 uses
   %i.eu = getelementptr inbounds nuw i8, ptr %.sroa.06.1.i.i.i, i64 56 ; 2 uses
   %i.ev = getelementptr inbounds nuw i8, ptr %.sroa.06.1.i.i.i, i64 64 ; 2 uses
   %i.ew = load ptr, ptr %i.ev, align 8, !tbaa !110 ; 2 uses

@@ -204,7 +204,7 @@ bb.a:
   %55 = alloca %class.anon.280, align 1           ; 3 uses
   %i.w = alloca [6 x ptr], align 8                ; 9 uses
   %56 = alloca %"class.llvm::Twine", align 8      ; 4 uses
-  %i.x = alloca ptr, align 8                      ; 5 uses
+  %i.x = alloca ptr, align 8                      ; 6 uses
   %i.y = alloca ptr, align 8                      ; 10 uses
   %i.z = alloca [6 x ptr], align 8                ; 21 uses
   %57 = alloca %"class.llvm::Twine", align 8      ; 13 uses
@@ -607,7 +607,7 @@ bb.bd:                                            ; preds = %bb.bc
   %i.kv = getelementptr inbounds nuw i8, ptr %101, i64 8
   %i.kw = ptrtoint ptr %102 to i64
   store i64 %i.kw, ptr %i.kv, align 8, !tbaa !444
-  %i.kx = call noundef ptr @_ZN4llvm13IRBuilderBase15CreateIntrinsicEjNS_8ArrayRefIPNS_4TypeEEENS1_IPNS_5ValueEEENS_9FMFSourceERKNS_5TwineENS1_INS_17OperandBundleDefTIS6_EEEENS_12function_refIFvPNS_8CallInstEEEE(ptr noundef nonnull align 8 dereferenceable(88) %85, i32 noundef 3532, ptr nonnull %i.ad, i64 1, ptr nonnull %i.al, i64 2, i64 0, ptr noundef nonnull align 8 dereferenceable(34) %99, ptr noundef nonnull byval(%"class.llvm::ArrayRef.267") align 8 %100, ptr noundef nonnull byval(%"class.llvm::function_ref") align 8 %101) #15 ; 7 uses
+  %i.kx = call noundef ptr @_ZN4llvm13IRBuilderBase15CreateIntrinsicEjNS_8ArrayRefIPNS_4TypeEEENS1_IPNS_5ValueEEENS_9FMFSourceERKNS_5TwineENS1_INS_17OperandBundleDefTIS6_EEEENS_12function_refIFvPNS_8CallInstEEEE(ptr noundef nonnull align 8 dereferenceable(88) %85, i32 noundef 3532, ptr nonnull %i.ad, i64 1, ptr nonnull %i.al, i64 2, i64 0, ptr noundef nonnull align 8 dereferenceable(34) %99, ptr noundef nonnull byval(%"class.llvm::ArrayRef.267") align 8 %100, ptr noundef nonnull byval(%"class.llvm::function_ref") align 8 %101) #15 ; 8 uses
   store ptr %i.kx, ptr %i.ak, align 8, !tbaa !432
   call void @llvm.lifetime.end.p0(ptr nonnull %102) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %99) #15
@@ -627,6 +627,7 @@ bb.bf:                                            ; preds = %bb.be
   call void @llvm.lifetime.start.p0(ptr nonnull %59)
   call void @llvm.lifetime.start.p0(ptr nonnull %62)
   call void @llvm.lifetime.start.p0(ptr nonnull %65)
+  store ptr %i.kx, ptr %i.x, align 8, !tbaa !432
   call void @llvm.lifetime.start.p0(ptr nonnull %i.y) #15
   %i.lc = getelementptr inbounds nuw i8, ptr %i.kx, i64 8
   %i.ld = load ptr, ptr %i.lc, align 8, !tbaa !78

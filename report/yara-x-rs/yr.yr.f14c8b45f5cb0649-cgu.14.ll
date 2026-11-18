@@ -205,13 +205,13 @@ bb.af:                                            ; preds = %_RINvNtCskKLDkoKarT
   br label %bb.ag
 
 bb.ag:                                            ; preds = %_RNvXsi_NtNtNtCskKLDkoKarTP_4core4iter8adapters7flattenINtB5_13FlattenCompatINtNtB7_3map3MapINtNtNtBb_5slice4iter4IterNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report7SectionENCNvMs0_B1T_NtB1T_6Report7patches0EIB1c_IB1s_TNtB1T_7CodeLocNtNtCsexYYUdYSQU6_5alloc6string6StringEENCNCB2J_00EENtNtNtB9_6traits8iterator8Iterator4nextCskIqAKC4t9Ft_2yr.exit.thread168.i, %.lr.ph.i
-  %2 = phi i32 [ 0, %.lr.ph.i ], [ %i.di, %_RNvXsi_NtNtNtCskKLDkoKarTP_4core4iter8adapters7flattenINtB5_13FlattenCompatINtNtB7_3map3MapINtNtNtBb_5slice4iter4IterNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report7SectionENCNvMs0_B1T_NtB1T_6Report7patches0EIB1c_IB1s_TNtB1T_7CodeLocNtNtCsexYYUdYSQU6_5alloc6string6StringEENCNCB2J_00EENtNtNtB9_6traits8iterator8Iterator4nextCskIqAKC4t9Ft_2yr.exit.thread168.i ]
+  %.sroa.08.0280.i = phi ptr [ %i.cw, %.lr.ph.i ], [ %i.de, %_RNvXsi_NtNtNtCskKLDkoKarTP_4core4iter8adapters7flattenINtB5_13FlattenCompatINtNtB7_3map3MapINtNtNtBb_5slice4iter4IterNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report7SectionENCNvMs0_B1T_NtB1T_6Report7patches0EIB1c_IB1s_TNtB1T_7CodeLocNtNtCsexYYUdYSQU6_5alloc6string6StringEENCNCB2J_00EENtNtNtB9_6traits8iterator8Iterator4nextCskIqAKC4t9Ft_2yr.exit.thread168.i ] ; 2 uses
   %i.dd = phi i32 [ 0, %.lr.ph.i ], [ %i.df, %_RNvXsi_NtNtNtCskKLDkoKarTP_4core4iter8adapters7flattenINtB5_13FlattenCompatINtNtB7_3map3MapINtNtNtBb_5slice4iter4IterNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report7SectionENCNvMs0_B1T_NtB1T_6Report7patches0EIB1c_IB1s_TNtB1T_7CodeLocNtNtCsexYYUdYSQU6_5alloc6string6StringEENCNCB2J_00EENtNtNtB9_6traits8iterator8Iterator4nextCskIqAKC4t9Ft_2yr.exit.thread168.i ]
-  %.sroa.08.0261.i = phi ptr [ %i.cw, %.lr.ph.i ], [ %i.de, %_RNvXsi_NtNtNtCskKLDkoKarTP_4core4iter8adapters7flattenINtB5_13FlattenCompatINtNtB7_3map3MapINtNtNtBb_5slice4iter4IterNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report7SectionENCNvMs0_B1T_NtB1T_6Report7patches0EIB1c_IB1s_TNtB1T_7CodeLocNtNtCsexYYUdYSQU6_5alloc6string6StringEENCNCB2J_00EENtNtNtB9_6traits8iterator8Iterator4nextCskIqAKC4t9Ft_2yr.exit.thread168.i ] ; 2 uses
-  %i.de = getelementptr inbounds nuw i8, ptr %.sroa.08.0261.i, i64 16 ; 2 uses
+  %.promoted265279.i = phi i32 [ 0, %.lr.ph.i ], [ %.promoted264.i, %_RNvXsi_NtNtNtCskKLDkoKarTP_4core4iter8adapters7flattenINtB5_13FlattenCompatINtNtB7_3map3MapINtNtNtBb_5slice4iter4IterNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report7SectionENCNvMs0_B1T_NtB1T_6Report7patches0EIB1c_IB1s_TNtB1T_7CodeLocNtNtCsexYYUdYSQU6_5alloc6string6StringEENCNCB2J_00EENtNtNtB9_6traits8iterator8Iterator4nextCskIqAKC4t9Ft_2yr.exit.thread168.i ] ; 2 uses
+  %i.de = getelementptr inbounds nuw i8, ptr %.sroa.08.0280.i, i64 16 ; 2 uses
   %i.df = add i32 %i.dd, 1                        ; 2 uses
   store i32 %i.df, ptr %i.z, align 4, !noalias !2148
-  invoke void @_RNvMs1_NtNtCs7gfv9tzbXmh_6yara_x8compiler8warningsNtB5_7Warning7patches(ptr noalias nofree noundef nonnull sret([72 x i8]) align 8 captures(none) dereferenceable(72) %i.x, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %.sroa.08.0261.i)
+  invoke void @_RNvMs1_NtNtCs7gfv9tzbXmh_6yara_x8compiler8warningsNtB5_7Warning7patches(ptr noalias nofree noundef nonnull sret([72 x i8]) align 8 captures(none) dereferenceable(72) %i.x, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %.sroa.08.0280.i)
           to label %bb.ah unwind label %.thread189.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 ._crit_edge.i:                                    ; preds = %_RNvXsi_NtNtNtCskKLDkoKarTP_4core4iter8adapters7flattenINtB5_13FlattenCompatINtNtB7_3map3MapINtNtNtBb_5slice4iter4IterNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report7SectionENCNvMs0_B1T_NtB1T_6Report7patches0EIB1c_IB1s_TNtB1T_7CodeLocNtNtCsexYYUdYSQU6_5alloc6string6StringEENCNCB2J_00EENtNtNtB9_6traits8iterator8Iterator4nextCskIqAKC4t9Ft_2yr.exit.thread168.i, %bb.af
@@ -239,7 +239,8 @@ bb.ah:                                            ; preds = %bb.ag
   br label %bb.ai
 
 bb.ai:                                            ; preds = %bb.bt, %bb.ah
-  %i.di = phi i32 [ %2, %bb.ah ], [ %i.ez, %bb.bt ] ; 3 uses
+  %.promoted264.i = phi i32 [ %.promoted265279.i, %bb.ah ], [ %.promoted263.i, %bb.bt ] ; 2 uses
+  %i.di = phi i32 [ %.promoted265279.i, %bb.ah ], [ %i.ez, %bb.bt ] ; 2 uses
   %.sroa.18.0.i = phi ptr [ %.sroa.18.0.copyload.i, %bb.ah ], [ %.sroa.18.3163.i, %bb.bt ] ; 6 uses
   %.sroa.16.0.i = phi ptr [ %.sroa.16.0.copyload.i, %bb.ah ], [ %.sroa.16.3164.i, %bb.bt ] ; 4 uses
   %.sroa.14.0.i = phi ptr [ %.sroa.14.0.copyload.i, %bb.ah ], [ %.sroa.14.3165.i, %bb.bt ] ; 4 uses
@@ -478,11 +479,12 @@ _RNvXsi_NtNtNtCskKLDkoKarTP_4core4iter8adapters7flattenINtB5_13FlattenCompatINtN
   br i1 %i.ex, label %._crit_edge.i, label %bb.ag
 
 bb.bc:                                            ; preds = %bb.bb
-  %i.ey = add i32 %i.di, 1                        ; 2 uses
+  %i.ey = add i32 %i.di, 1                        ; 3 uses
   store i32 %i.ey, ptr %i.y, align 4, !noalias !2148
   br label %bb.bd
 
 bb.bd:                                            ; preds = %bb.bc, %bb.bb
+  %.promoted263.i = phi i32 [ %i.ey, %bb.bc ], [ %.promoted264.i, %bb.bb ]
   %i.ez = phi i32 [ %i.ey, %bb.bc ], [ %i.di, %bb.bb ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.v), !noalias !2148
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u), !noalias !2148

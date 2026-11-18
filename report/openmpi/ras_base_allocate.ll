@@ -202,7 +202,7 @@ define void @prte_ras_base_allocate(i32 noundef %0, i16 noundef signext %1, ptr 
 bb.a:
   %3 = alloca %struct.pmix_list_t, align 8        ; 42 uses
   %i.a = alloca ptr, align 8                      ; 18 uses
-  %i.b = alloca ptr, align 8                      ; 9 uses
+  %i.b = alloca ptr, align 8                      ; 10 uses
   %4 = alloca %struct.timeval, align 8            ; 5 uses
   %5 = alloca %struct.timeval, align 8            ; 5 uses
   %6 = alloca %struct.timeval, align 8            ; 5 uses
@@ -605,11 +605,13 @@ bb.at:                                            ; preds = %bb.as
   store i8 1, ptr @prte_managed_allocation, align 1, !tbaa !32
   store i8 1, ptr @prte_do_not_resolve, align 1, !tbaa !32
   store i8 1, ptr getelementptr inbounds nuw (i8, ptr @prte_ras_base, i64 1), align 1, !tbaa !120
+  %.promoted = load ptr, ptr %i.b, align 8
   br label %bb.au
 
 bb.au:                                            ; preds = %bb.at, %bb.az
-  %.0356670 = phi ptr [ %i.fw, %bb.at ], [ %i.gn, %bb.az ] ; 5 uses
-  %i.fy = getelementptr inbounds nuw i8, ptr %.0356670, i64 152 ; 3 uses
+  %.0356671 = phi ptr [ %i.fw, %bb.at ], [ %i.gn, %bb.az ] ; 5 uses
+  %.0356670 = phi ptr [ %.promoted, %bb.at ], [ %21, %bb.az ]
+  %i.fy = getelementptr inbounds nuw i8, ptr %.0356671, i64 152 ; 3 uses
   %i.fz = load ptr, ptr %i.fy, align 8, !tbaa !41
   %i.ga = call zeroext i1 @pmix_net_isaddr(ptr noundef %i.fz) #16
   br i1 %i.ga, label %bb.az, label %bb.av
@@ -617,13 +619,12 @@ bb.au:                                            ; preds = %bb.at, %bb.az
 bb.av:                                            ; preds = %bb.au
   %i.gb = load ptr, ptr %i.fy, align 8, !tbaa !41 ; 3 uses
   %i.gc = call ptr @strchr(ptr noundef nonnull dereferenceable(1) %i.gb, i32 noundef 46) #17 ; 4 uses
-  store ptr %i.gc, ptr %i.b, align 8, !tbaa !30
   %.not407 = icmp eq ptr %i.gc, null
   br i1 %.not407, label %bb.az, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av
   %i.gd = call noalias ptr @strdup(ptr noundef nonnull %i.gb) #16
-  %i.ge = getelementptr inbounds nuw i8, ptr %.0356670, i64 160
+  %i.ge = getelementptr inbounds nuw i8, ptr %.0356671, i64 160
   store ptr %i.gd, ptr %i.ge, align 8, !tbaa !121
   %i.gf = load i8, ptr @prte_keep_fqdn_hostnames, align 1, !tbaa !32, !range !33, !noundef !34
   %i.gg = trunc nuw i8 %i.gf to i1
@@ -631,13 +632,13 @@ bb.aw:                                            ; preds = %bb.av
 
 bb.ax:                                            ; preds = %bb.aw
   store i8 0, ptr %i.gc, align 1, !tbaa !67
-  %i.gh = getelementptr inbounds nuw i8, ptr %.0356670, i64 168
+  %i.gh = getelementptr inbounds nuw i8, ptr %.0356671, i64 168
   %i.gi = load ptr, ptr %i.fy, align 8, !tbaa !41
   %i.gj = call i32 @PMIx_Argv_append_unique_nosize(ptr noundef nonnull %i.gh, ptr noundef %i.gi) #16 ; 0 uses
   br label %.sink.split
 
 bb.ay:                                            ; preds = %bb.aw
-  %i.gk = getelementptr inbounds nuw i8, ptr %.0356670, i64 168
+  %i.gk = getelementptr inbounds nuw i8, ptr %.0356671, i64 168
   %i.gl = call i32 @PMIx_Argv_append_unique_nosize(ptr noundef nonnull %i.gk, ptr noundef nonnull %i.gb) #16 ; 0 uses
   br label %.sink.split
 
@@ -647,12 +648,14 @@ bb.ay:                                            ; preds = %bb.aw
   br label %bb.az
 
 bb.az:                                            ; preds = %.sink.split, %bb.au, %bb.av
-  %i.gm = getelementptr inbounds nuw i8, ptr %.0356670, i64 120
+  %21 = phi ptr [ %.0356670, %bb.au ], [ null, %bb.av ], [ %i.gc, %.sink.split ] ; 2 uses
+  %i.gm = getelementptr inbounds nuw i8, ptr %.0356671, i64 120
   %i.gn = load ptr, ptr %i.gm, align 8, !tbaa !68 ; 2 uses
   %.not403 = icmp eq ptr %i.gn, %i.fu
   br i1 %.not403, label %bb.ba, label %bb.au, !llvm.loop !93
 
 bb.ba:                                            ; preds = %bb.az
+  store ptr %21, ptr %i.b, align 8
   %i.go = call i32 @prte_ras_base_node_insert(ptr noundef nonnull %3, ptr noundef %i.k) #16 ; 2 uses
   switch i32 %i.go, label %bb.bb [
     i32 0, label %bb.bn

@@ -205,17 +205,17 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.i = load i64, ptr %i.h, align 8
   %i.j = getelementptr inbounds nuw i8, ptr %i.f, i64 8
+  %2 = load ptr, ptr %i.j, align 8, !tbaa !93
   br label %_ZNK5boost5beast18basic_multi_bufferISaIcEE8subrangeILb1EE14const_iteratordeEv.exit.i.i
 
 bb.b:                                             ; preds = %_ZNK5boost5beast18basic_multi_bufferISaIcEE8subrangeILb1EE14const_iteratordeEv.exit.i.i
   %exitcond.not.i = icmp eq i64 %i.t, 64
-  br i1 %exitcond.not.i, label %_ZN5boost4asio6detail23buffer_sequence_adapterINS0_14mutable_bufferENS_5beast18basic_multi_bufferISaIcEE8subrangeILb1EEEEC2ERKS9_.exit, label %_ZNK5boost5beast18basic_multi_bufferISaIcEE8subrangeILb1EE14const_iteratordeEv.exit.i.i, !llvm.loop !1175
+  br i1 %exitcond.not.i, label %_ZN5boost4asio6detail23buffer_sequence_adapterINS0_14mutable_bufferENS_5beast18basic_multi_bufferISaIcEE8subrangeILb1EEEEC2ERKS9_.exit.loopexit, label %_ZNK5boost5beast18basic_multi_bufferISaIcEE8subrangeILb1EE14const_iteratordeEv.exit.i.i, !llvm.loop !1175
 
 _ZNK5boost5beast18basic_multi_bufferISaIcEE8subrangeILb1EE14const_iteratordeEv.exit.i.i: ; preds = %.lr.ph.i.i, %bb.b
   %.sroa.5.07.i.i9 = phi ptr [ %i.d, %.lr.ph.i.i ], [ %i.s, %bb.b ] ; 5 uses
   %i.k = phi i64 [ 0, %.lr.ph.i.i ], [ %i.t, %bb.b ] ; 2 uses
   %i.l = phi i64 [ 0, %.lr.ph.i.i ], [ %i.r, %bb.b ]
-  %2 = load ptr, ptr %i.j, align 8, !tbaa !93
   %i.m = icmp eq ptr %.sroa.5.07.i.i9, %2
   %i.n = getelementptr inbounds nuw i8, ptr %.sroa.5.07.i.i9, i64 16
   %.sroa.6.0.in.i.i.i = select i1 %i.m, ptr %i.g, ptr %i.n
@@ -231,15 +231,19 @@ _ZNK5boost5beast18basic_multi_bufferISaIcEE8subrangeILb1EE14const_iteratordeEv.e
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 8
   store i64 %.sroa.6.1.i.i.i, ptr %i.q, align 8, !tbaa !372
   %i.r = add i64 %.sroa.6.1.i.i.i, %i.l           ; 2 uses
-  store i64 %i.r, ptr %i.b, align 8, !tbaa !1179
   %i.s = load ptr, ptr %.sroa.5.07.i.i9, align 8, !tbaa !90 ; 2 uses
   %i.t = add nuw nsw i64 %i.k, 1                  ; 4 uses
-  store i64 %i.t, ptr %i.a, align 8, !tbaa !1180
   %.not6.i = icmp eq ptr %i.s, %i.f
-  br i1 %.not6.i, label %_ZN5boost4asio6detail23buffer_sequence_adapterINS0_14mutable_bufferENS_5beast18basic_multi_bufferISaIcEE8subrangeILb1EEEEC2ERKS9_.exit, label %bb.b, !llvm.loop !1175
+  br i1 %.not6.i, label %_ZN5boost4asio6detail23buffer_sequence_adapterINS0_14mutable_bufferENS_5beast18basic_multi_bufferISaIcEE8subrangeILb1EEEEC2ERKS9_.exit.loopexit, label %bb.b, !llvm.loop !1175
 
-_ZN5boost4asio6detail23buffer_sequence_adapterINS0_14mutable_bufferENS_5beast18basic_multi_bufferISaIcEE8subrangeILb1EEEEC2ERKS9_.exit: ; preds = %bb.b, %_ZNK5boost5beast18basic_multi_bufferISaIcEE8subrangeILb1EE14const_iteratordeEv.exit.i.i, %bb.a
-  %3 = phi i64 [ 0, %bb.a ], [ 64, %bb.b ], [ %i.t, %_ZNK5boost5beast18basic_multi_bufferISaIcEE8subrangeILb1EE14const_iteratordeEv.exit.i.i ]
+_ZN5boost4asio6detail23buffer_sequence_adapterINS0_14mutable_bufferENS_5beast18basic_multi_bufferISaIcEE8subrangeILb1EEEEC2ERKS9_.exit.loopexit: ; preds = %_ZNK5boost5beast18basic_multi_bufferISaIcEE8subrangeILb1EE14const_iteratordeEv.exit.i.i, %bb.b
+  %.ph = phi i64 [ 64, %bb.b ], [ %i.t, %_ZNK5boost5beast18basic_multi_bufferISaIcEE8subrangeILb1EE14const_iteratordeEv.exit.i.i ]
+  store i64 %i.r, ptr %i.b, align 8, !tbaa !1179
+  store i64 %i.t, ptr %i.a, align 8, !tbaa !1180
+  br label %_ZN5boost4asio6detail23buffer_sequence_adapterINS0_14mutable_bufferENS_5beast18basic_multi_bufferISaIcEE8subrangeILb1EEEEC2ERKS9_.exit
+
+_ZN5boost4asio6detail23buffer_sequence_adapterINS0_14mutable_bufferENS_5beast18basic_multi_bufferISaIcEE8subrangeILb1EEEEC2ERKS9_.exit: ; preds = %_ZN5boost4asio6detail23buffer_sequence_adapterINS0_14mutable_bufferENS_5beast18basic_multi_bufferISaIcEE8subrangeILb1EEEEC2ERKS9_.exit.loopexit, %bb.a
+  %3 = phi i64 [ 0, %bb.a ], [ %.ph, %_ZN5boost4asio6detail23buffer_sequence_adapterINS0_14mutable_bufferENS_5beast18basic_multi_bufferISaIcEE8subrangeILb1EEEEC2ERKS9_.exit.loopexit ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.v = load i32, ptr %i.u, align 8, !tbaa !364
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 24

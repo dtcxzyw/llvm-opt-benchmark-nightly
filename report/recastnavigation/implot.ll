@@ -205,12 +205,19 @@ _ZleRK10ImPlotTimeS1_.exit250.thread:             ; preds = %_ZleRK10ImPlotTimeS
   %i.kc = icmp slt i32 %storemerge385, %.fca.1.extract54
   %i.kd = icmp slt i64 %.fca.0.extract45, %.fca.0.extract53
   %i.ke = select i1 %i.kb, i1 %i.kc, i1 %i.kd
-  br i1 %i.ke, label %.lr.ph.a, label %._crit_edge
+  br i1 %i.ke, label %.lr.ph, label %._crit_edge
 
-.lr.ph.a:                                         ; preds = %_ZleRK10ImPlotTimeS1_.exit250.thread, %bb.au
-  %storemerge388 = phi i32 [ %storemerge, %bb.au ], [ %storemerge385, %_ZleRK10ImPlotTimeS1_.exit250.thread ] ; 6 uses
-  %.2387 = phi i32 [ %.3, %bb.au ], [ %.1, %_ZleRK10ImPlotTimeS1_.exit250.thread ] ; 4 uses
-  %.val384386 = phi i64 [ %.fca.0.extract31, %bb.au ], [ %.fca.0.extract45, %_ZleRK10ImPlotTimeS1_.exit250.thread ] ; 6 uses
+.lr.ph:                                           ; preds = %_ZleRK10ImPlotTimeS1_.exit250.thread
+  %.val165 = load i64, ptr %9, align 8, !tbaa !288 ; 2 uses
+  %.val166 = load i32, ptr %.sroa.298.0..sroa_idx, align 8 ; 2 uses
+  %.val177 = load i64, ptr %10, align 8           ; 2 uses
+  %.val178 = load i32, ptr %.sroa.294.0..sroa_idx, align 8 ; 2 uses
+  br label %.lr.ph.a
+
+.lr.ph.a:                                         ; preds = %.lr.ph, %bb.au
+  %storemerge388 = phi i32 [ %storemerge385, %.lr.ph ], [ %storemerge, %bb.au ] ; 6 uses
+  %.2387 = phi i32 [ %.1, %.lr.ph ], [ %.3, %bb.au ] ; 4 uses
+  %.val384386 = phi i64 [ %.fca.0.extract45, %.lr.ph ], [ %.fca.0.extract31, %bb.au ] ; 6 uses
   %i.kf = sub i64 %.fca.0.extract53, %.val384386
   %i.kg = sub nsw i32 %.fca.1.extract54, %storemerge388 ; 2 uses
   %i.kh = sdiv i32 %i.kg, 1000000
@@ -227,8 +234,6 @@ _ZleRK10ImPlotTimeS1_.exit250.thread:             ; preds = %_ZleRK10ImPlotTimeS
   %i.ks = fdiv double %i.ko, %i.kr
   %i.kt = fptrunc double %i.ks to float
   %i.ku = fmul float %2, %i.kt                    ; 2 uses
-  %.val165 = load i64, ptr %9, align 8, !tbaa !288 ; 2 uses
-  %.val166 = load i32, ptr %.sroa.298.0..sroa_idx, align 8 ; 2 uses
   %i.kv = icmp eq i64 %.val165, %.val384386       ; 2 uses
   %i.kw = icmp slt i32 %.val166, %storemerge388
   %i.kx = icmp slt i64 %.val165, %.val384386
@@ -239,8 +244,6 @@ _ZleRK10ImPlotTimeS1_.exit250.thread:             ; preds = %_ZleRK10ImPlotTimeS
   br i1 %or.cond376, label %_ZgeRK10ImPlotTimeS1_.exit253.thread, label %bb.au
 
 _ZgeRK10ImPlotTimeS1_.exit253.thread:             ; preds = %.lr.ph.a
-  %.val177 = load i64, ptr %10, align 8, !tbaa !288 ; 2 uses
-  %.val178 = load i32, ptr %.sroa.294.0..sroa_idx, align 8 ; 2 uses
   %i.lb = icmp eq i64 %.val384386, %.val177       ; 2 uses
   %i.lc = icmp slt i32 %storemerge388, %.val178
   %i.ld = icmp slt i64 %.val384386, %.val177
@@ -643,15 +646,15 @@ _ZN6ImPlotL16GetStyleColorU32Ei.exit:             ; preds = %bb.r, %bb.s
   %i.ef = getelementptr inbounds nuw i8, ptr %i.j, i64 896
   %i.eg = getelementptr inbounds nuw i8, ptr %i.j, i64 880
   %i.eh = getelementptr inbounds nuw i8, ptr %i.j, i64 864
-  %16 = getelementptr inbounds nuw i8, ptr %13, i64 4 ; 2 uses
-  %17 = getelementptr inbounds nuw i8, ptr %14, i64 4
-  %i.ei = getelementptr inbounds nuw i8, ptr %15, i64 4
-  %i.ej = getelementptr inbounds nuw i8, ptr %i.j, i64 144
+  %i.ei = getelementptr inbounds nuw i8, ptr %13, i64 4 ; 2 uses
+  %i.ej = getelementptr inbounds nuw i8, ptr %14, i64 4
   %i.ek = fadd <4 x float> %i.ct, <float -2.000000e+00, float 2.000000e+00, float 1.000000e+00, float -1.000000e+00> ; 4 uses
   %i.el = extractelement <4 x float> %i.ct, i64 2 ; 2 uses
   %i.em = fsub float %i.el, %i.ap
   %i.en = extractelement <4 x float> %i.ct, i64 3 ; 2 uses
   %i.eo = fadd float %i.ap, %i.en
+  %16 = getelementptr inbounds nuw i8, ptr %15, i64 4
+  %17 = getelementptr inbounds nuw i8, ptr %i.j, i64 144
   %i.ep = extractelement <4 x float> %i.ek, i64 0
   %i.eq = extractelement <4 x float> %i.ek, i64 1
   %i.er = extractelement <4 x float> %i.ek, i64 2
@@ -741,14 +744,14 @@ bb.w:                                             ; preds = %_ZNK18ImPlotColorma
 
 bb.x:                                             ; preds = %bb.w
   store float %i.er, ptr %13, align 4, !tbaa !172
-  store float %i.fa, ptr %16, align 4, !tbaa !173
+  store float %i.fa, ptr %i.ei, align 4, !tbaa !173
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #32
   %i.gu = fadd float %i.fe, %i.el
   br label %bb.z
 
 bb.y:                                             ; preds = %bb.w
   store float %i.es, ptr %13, align 4, !tbaa !172
-  store float %i.fa, ptr %16, align 4, !tbaa !173
+  store float %i.fa, ptr %i.ei, align 4, !tbaa !173
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #32
   %i.gv = fsub float %i.en, %i.fe
   br label %bb.z
@@ -756,7 +759,7 @@ bb.y:                                             ; preds = %bb.w
 bb.z:                                             ; preds = %bb.y, %bb.x
   %storemerge = phi float [ %i.gu, %bb.x ], [ %i.gv, %bb.y ]
   store float %storemerge, ptr %14, align 4, !tbaa !172
-  store float %i.fa, ptr %17, align 4, !tbaa !173
+  store float %i.fa, ptr %i.ej, align 4, !tbaa !173
   call void @_ZN10ImDrawList7AddLineERK6ImVec2S2_jf(ptr noundef nonnull align 8 dereferenceable(224) %i.bi, ptr noundef nonnull align 4 dereferenceable(8) %13, ptr noundef nonnull align 4 dereferenceable(8) %14, i32 noundef %i.gr, float noundef %i.ff) #32
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #32
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #32
@@ -782,8 +785,8 @@ bb.ac:                                            ; preds = %bb.aa, %bb.ab
   %i.hf = call float @llvm.fmuladd.f32(float %i.he, float 5.000000e-01, float %i.fa)
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #32
   store float %i.ha, ptr %15, align 4, !tbaa !172
-  store float %i.hf, ptr %i.ei, align 4, !tbaa !173
-  %i.hg = load ptr, ptr %i.ej, align 8, !tbaa !270
+  store float %i.hf, ptr %16, align 4, !tbaa !173
+  %i.hg = load ptr, ptr %17, align 8, !tbaa !270
   %i.hh = getelementptr inbounds nuw i8, ptr %i.hb, i64 20
   %i.hi = load i32, ptr %i.hh, align 4, !tbaa !292
   %i.hj = sext i32 %i.hi to i64

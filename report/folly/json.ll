@@ -205,7 +205,7 @@ _ZN3fmt2v96detail9normalizeILi0EyEENS1_8basic_fpIT0_EES5_.exit: ; preds = %.lr.p
   %i.er = load i64, ptr %i.eq, align 8, !tbaa !39
   %i.es = add i64 %i.ej, %i.er                    ; 2 uses
   %i.et = lshr i64 %i.es, 32
-  %i.eu = trunc nuw i64 %i.et to i32              ; 6 uses
+  %i.eu = trunc nuw i64 %i.et to i32              ; 7 uses
   br i1 %i.d, label %bb.q, label %bb.aa
 
 bb.q:                                             ; preds = %_ZN3fmt2v96detail9normalizeILi0EyEENS1_8basic_fpIT0_EES5_.exit
@@ -276,13 +276,15 @@ bb.aa:                                            ; preds = %_ZN3fmt2v96detail16
   %.sroa.33.0 = phi i32 [ %i.fb, %_ZN3fmt2v96detail16adjust_precisionERii.exit ], [ %1, %_ZN3fmt2v96detail9normalizeILi0EyEENS1_8basic_fpIT0_EES5_.exit ] ; 7 uses
   %i.fq = tail call i32 @llvm.umax.i32(i32 %.sroa.33.0, i32 1) ; 2 uses
   %i.fr = add nsw i32 %i.fq, -1                   ; 2 uses
-  %wide.trip.count.a = zext nneg i32 %i.fr to i64
+  %wide.trip.count = zext nneg i32 %i.fr to i64
+  %5 = tail call i32 @llvm.smax.i32(i32 %i.eu, i32 1)
+  %wide.trip.count.a = zext nneg i32 %5 to i64
   br label %bb.ab
 
 bb.ab:                                            ; preds = %bb.au, %bb.aa
   %indvars.iv309 = phi i64 [ %indvars.iv.next310, %bb.au ], [ 1, %bb.aa ] ; 2 uses
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.au ], [ 0, %bb.aa ] ; 4 uses
-  %i.fs = phi i32 [ %i.gl, %bb.au ], [ %i.eu, %bb.aa ] ; 3 uses
+  %i.fs = phi i32 [ %i.gl, %bb.au ], [ %i.eu, %bb.aa ] ; 2 uses
   %.0207 = phi i32 [ %.1208, %bb.au ], [ %i.ei, %bb.aa ] ; 20 uses
   switch i32 %i.fs, label %bb.al [
     i32 10, label %bb.ac
@@ -351,10 +353,10 @@ bb.am:                                            ; preds = %bb.ab, %bb.al, %bb.
   %i.gl = add nsw i32 %i.fs, -1                   ; 9 uses
   %i.gm = trunc i32 %.0209 to i8                  ; 2 uses
   %i.gn = add i8 %i.gm, 48
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 4 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 5 uses
   %i.go = getelementptr inbounds nuw i8, ptr %i.ed, i64 %indvars.iv
   store i8 %i.gn, ptr %i.go, align 1, !tbaa !37
-  %exitcond.not = icmp eq i64 %indvars.iv, %wide.trip.count.a
+  %exitcond.not = icmp eq i64 %indvars.iv, %wide.trip.count
   br i1 %exitcond.not, label %bb.an, label %bb.au
 
 bb.an:                                            ; preds = %bb.am
@@ -431,13 +433,13 @@ bb.at:                                            ; preds = %bb.ar
   br label %_ZN3fmt2v96detail16grisu_gen_digitsENS1_8basic_fpIyEEmRiRNS1_18gen_digits_handlerE.exit.thread235
 
 bb.au:                                            ; preds = %bb.am
-  %5 = icmp sgt i32 %i.fs, 1
+  %exitcond317.not = icmp eq i64 %indvars.iv.next, %wide.trip.count.a
   %indvars.iv.next310 = add nuw nsw i64 %indvars.iv309, 1
-  br i1 %5, label %bb.ab, label %_ZN3fmt2v96detail18gen_digits_handler8on_digitEcmmmb.exit115, !llvm.loop !931
+  br i1 %exitcond317.not, label %_ZN3fmt2v96detail18gen_digits_handler8on_digitEcmmmb.exit115, label %bb.ab, !llvm.loop !931
 
 _ZN3fmt2v96detail18gen_digits_handler8on_digitEcmmmb.exit115: ; preds = %bb.au, %bb.av
+  %indvars.iv321 = phi i64 [ %indvars.iv.next313, %bb.av ], [ %indvars.iv309, %bb.au ] ; 4 uses
   %6 = phi i32 [ %i.hx, %bb.av ], [ %i.gl, %bb.au ]
-  %indvars.iv312 = phi i64 [ %indvars.iv.next313, %bb.av ], [ %indvars.iv309, %bb.au ] ; 4 uses
   %.045.i = phi i64 [ %i.hs, %bb.av ], [ 1, %bb.au ] ; 2 uses
   %.042.i = phi i64 [ %i.hw, %bb.av ], [ %i.el, %bb.au ]
   %i.hr = mul i64 %.042.i, 10                     ; 2 uses
@@ -447,8 +449,8 @@ _ZN3fmt2v96detail18gen_digits_handler8on_digitEcmmmb.exit115: ; preds = %bb.au, 
   %i.hv = add i8 %i.hu, 48
   %i.hw = and i64 %i.hr, %i.ek                    ; 6 uses
   %i.hx = add nsw i32 %6, -1                      ; 8 uses
-  %indvars.iv.next313 = add nuw nsw i64 %indvars.iv312, 1 ; 4 uses
-  %i.hy = getelementptr inbounds nuw i8, ptr %i.ed, i64 %indvars.iv312
+  %indvars.iv.next313 = add nuw nsw i64 %indvars.iv321, 1 ; 4 uses
+  %i.hy = getelementptr inbounds nuw i8, ptr %i.ed, i64 %indvars.iv321
   store i8 %i.hv, ptr %i.hy, align 1, !tbaa !37
   %.not.i102 = icmp ult i64 %i.hs, %i.hw
   %i.hz = trunc nuw i64 %indvars.iv.next313 to i32 ; 7 uses
@@ -459,7 +461,7 @@ bb.av:                                            ; preds = %_ZN3fmt2v96detail18
   br i1 %i.ia, label %_ZN3fmt2v96detail18gen_digits_handler8on_digitEcmmmb.exit115, label %bb.aw, !llvm.loop !932
 
 bb.aw:                                            ; preds = %bb.av
-  %i.ib = trunc nuw nsw i64 %indvars.iv312 to i32
+  %i.ib = trunc nuw nsw i64 %indvars.iv321 to i32
   %.not29.i = icmp ult i64 %i.hs, %i.eg
   %i.ic = sub nuw i64 %i.eg, %i.hs
   %.not30.i = icmp ult i64 %i.hs, %i.ic
@@ -486,7 +488,7 @@ bb.az:                                            ; preds = %bb.ax, %bb.ay
 
 _ZN3fmt2v96detail19get_round_directionEmmm.exit.i109: ; preds = %bb.az
   %i.ij = getelementptr i8, ptr %i.ed, i64 %indvars.iv.next313
-  %i.ik = getelementptr i8, ptr %i.ed, i64 %indvars.iv312
+  %i.ik = getelementptr i8, ptr %i.ed, i64 %indvars.iv321
   %i.il = add i8 %i.hu, 49
   store i8 %i.il, ptr %i.ik, align 1, !tbaa !37
   br label %.lr.ph.i112

@@ -205,8 +205,8 @@ _RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4peek.exit40: 
 
 bb.f:                                             ; preds = %_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4peek.exit40
   tail call void @llvm.experimental.noalias.scope.decl(metadata !63800)
-  %storemerge.peel.i = add nuw i64 %i.y, 1        ; 5 uses
-  store i64 %storemerge.peel.i, ptr %i.f, align 8, !alias.scope !63800
+  %storemerge.peel.i = add nuw i64 %i.y, 1        ; 6 uses
+  %umax.i = tail call i64 @llvm.umax.i64(i64 %i.i, i64 %storemerge.peel.i) ; 2 uses
   %i.aj = icmp ult i64 %storemerge.peel.i, %i.i
   br i1 %i.aj, label %_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4peek.exit.peel.i, label %.thread.thread.i
 
@@ -220,11 +220,11 @@ _RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4peek.exit.pee
 .peel.next.i.preheader:                           ; preds = %_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4peek.exit.peel.i
   %i.ao = add i64 %i.i, -1                        ; 2 uses
   %exitcond80.not107 = icmp eq i64 %storemerge.peel.i, %i.ao
-  br i1 %exitcond80.not107, label %_RNvMs3_NtCsdLkRf3gRIi6_10serde_json2deINtB5_12DeserializerNtNtB7_4read9SliceReadE14ignore_decimalCs844E4pPEVZX_17influxdb3_catalog.exit.loopexit73, label %_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4peek.exit.i
+  br i1 %exitcond80.not107, label %.thread.i, label %_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4peek.exit.i
 
 .peel.next.i:                                     ; preds = %_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4peek.exit.i
   %exitcond80.not = icmp eq i64 %storemerge.i, %i.ao
-  br i1 %exitcond80.not, label %_RNvMs3_NtCsdLkRf3gRIi6_10serde_json2deINtB5_12DeserializerNtNtB7_4read9SliceReadE14ignore_decimalCs844E4pPEVZX_17influxdb3_catalog.exit.loopexit73, label %_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4peek.exit.i, !llvm.loop !63755
+  br i1 %exitcond80.not, label %.thread.i, label %_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4peek.exit.i, !llvm.loop !63755
 
 _RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4peek.exit.i: ; preds = %.peel.next.i.preheader, %.peel.next.i
   %storemerge.in.i108 = phi i64 [ %storemerge.i, %.peel.next.i ], [ %storemerge.peel.i, %.peel.next.i.preheader ] ; 3 uses
@@ -242,7 +242,13 @@ _RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4peek.exit.i: 
     i8 69, label %bb.g
   ]
 
+.thread.i:                                        ; preds = %.peel.next.i, %.peel.next.i.preheader
+  store i64 %umax.i, ptr %i.f, align 8, !alias.scope !63800
+  br label %_RNvMs3_NtCsdLkRf3gRIi6_10serde_json2deINtB5_12DeserializerNtNtB7_4read9SliceReadE14ignore_decimalCs844E4pPEVZX_17influxdb3_catalog.exit
+
 .thread.thread.i:                                 ; preds = %_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4peek.exit.peel.i, %bb.f
+  %umax.sink.i = phi i64 [ %umax.i, %bb.f ], [ %storemerge.peel.i, %_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4peek.exit.peel.i ]
+  store i64 %umax.sink.i, ptr %i.f, align 8, !alias.scope !63800
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !63800
   store i64 13, ptr %i.c, align 8, !noalias !63800
   %i.at = call noundef nonnull align 8 ptr @_RNvMs3_NtCsdLkRf3gRIi6_10serde_json2deINtB5_12DeserializerNtNtB7_4read9SliceReadE10peek_errorCs844E4pPEVZX_17influxdb3_catalog(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(64) %0, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.c)
@@ -369,12 +375,8 @@ bb.l:                                             ; preds = %_RNvXs5_NtCsdLkRf3g
   %exitcond.not.i = icmp eq i64 %i.ch, %i.i
   br i1 %exitcond.not.i, label %_RNvMs3_NtCsdLkRf3gRIi6_10serde_json2deINtB5_12DeserializerNtNtB7_4read9SliceReadE14ignore_decimalCs844E4pPEVZX_17influxdb3_catalog.exit, label %_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4peek.exit26.i
 
-_RNvMs3_NtCsdLkRf3gRIi6_10serde_json2deINtB5_12DeserializerNtNtB7_4read9SliceReadE14ignore_decimalCs844E4pPEVZX_17influxdb3_catalog.exit.loopexit73: ; preds = %.peel.next.i, %.peel.next.i.preheader
-  store i64 %i.i, ptr %i.f, align 8, !alias.scope !63800
-  br label %_RNvMs3_NtCsdLkRf3gRIi6_10serde_json2deINtB5_12DeserializerNtNtB7_4read9SliceReadE14ignore_decimalCs844E4pPEVZX_17influxdb3_catalog.exit
-
-_RNvMs3_NtCsdLkRf3gRIi6_10serde_json2deINtB5_12DeserializerNtNtB7_4read9SliceReadE14ignore_decimalCs844E4pPEVZX_17influxdb3_catalog.exit: ; preds = %bb.e, %bb.l, %_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4peek.exit26.i, %bb.i, %_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4peek.exit26.i.i, %_RNvMs3_NtCsdLkRf3gRIi6_10serde_json2deINtB5_12DeserializerNtNtB7_4read9SliceReadE14ignore_decimalCs844E4pPEVZX_17influxdb3_catalog.exit.loopexit73, %_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4peek.exit.thread, %_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4next.exit.thread.i, %.preheader.i, %_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4next.exit.thread.i.i, %.preheader.i.i, %.loopexit.i, %.thread.thread.i, %_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4peek.exit40, %_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4next.exit.thread, %bb.d
-  %.sroa.0.3 = phi ptr [ %i.x, %bb.d ], [ null, %.preheader.i ], [ null, %_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4peek.exit40 ], [ %i.aa, %_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4next.exit.thread ], [ null, %bb.i ], [ null, %.loopexit.i ], [ null, %_RNvMs3_NtCsdLkRf3gRIi6_10serde_json2deINtB5_12DeserializerNtNtB7_4read9SliceReadE14ignore_decimalCs844E4pPEVZX_17influxdb3_catalog.exit.loopexit73 ], [ %i.at, %.thread.thread.i ], [ %i.bh, %_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4next.exit.thread.i.i ], [ null, %.preheader.i.i ], [ null, %_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4peek.exit.thread ], [ %i.cb, %_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4next.exit.thread.i ], [ null, %bb.l ], [ null, %_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4peek.exit26.i.i ], [ null, %_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4peek.exit26.i ], [ null, %bb.e ]
+_RNvMs3_NtCsdLkRf3gRIi6_10serde_json2deINtB5_12DeserializerNtNtB7_4read9SliceReadE14ignore_decimalCs844E4pPEVZX_17influxdb3_catalog.exit: ; preds = %bb.e, %bb.l, %_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4peek.exit26.i, %bb.i, %_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4peek.exit26.i.i, %_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4peek.exit.thread, %_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4next.exit.thread.i, %.preheader.i, %_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4next.exit.thread.i.i, %.preheader.i.i, %.loopexit.i, %.thread.thread.i, %.thread.i, %_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4peek.exit40, %_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4next.exit.thread, %bb.d
+  %.sroa.0.3 = phi ptr [ %i.x, %bb.d ], [ null, %.preheader.i ], [ null, %_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4peek.exit40 ], [ %i.aa, %_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4next.exit.thread ], [ null, %bb.i ], [ null, %.loopexit.i ], [ null, %.thread.i ], [ %i.at, %.thread.thread.i ], [ %i.bh, %_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4next.exit.thread.i.i ], [ null, %.preheader.i.i ], [ null, %_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4peek.exit.thread ], [ %i.cb, %_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4next.exit.thread.i ], [ null, %bb.l ], [ null, %_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4peek.exit26.i.i ], [ null, %_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4peek.exit26.i ], [ null, %bb.e ]
   ret ptr %.sroa.0.3
 }
 

@@ -202,18 +202,22 @@ bb.o:                                             ; preds = %bb.m, %bb.n
   %i.ba = ptrtoint ptr %.pr.i to i64
   %i.bb = sub i64 %i.az, %i.ba                    ; 3 uses
   %i.bc = icmp ugt i64 %i.bb, 32
-  br i1 %i.bc, label %.lr.ph, label %bb.ah
+  br i1 %i.bc, label %.preheader, label %bb.ah
 
-.lr.ph:                                           ; preds = %bb.o
+.preheader:                                       ; preds = %bb.o
+  %12 = ashr exact i64 %i.bb, 5
+  %13 = add nsw i64 %12, -1                       ; 2 uses
+  %.not = icmp eq i64 %13, 0
+  br i1 %.not, label %._crit_edge, label %.lr.ph
+
+.lr.ph:                                           ; preds = %.preheader
   %i.bd = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 5 uses
   %i.be = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 11 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 8 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %8, i64 8
-  %12 = ashr exact i64 %i.bb, 5
-  %13 = add nsw i64 %12, -1
   br label %bb.s
 
-._crit_edge:                                      ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit59
+._crit_edge:                                      ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit59, %.preheader
   %i.bh = load i64, ptr %i.n, align 8, !tbaa !171 ; 5 uses
   %i.bi = and i64 %i.bh, -4
   %i.bj = icmp eq i64 %i.bi, 9223372036854775804

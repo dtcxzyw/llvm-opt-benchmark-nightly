@@ -204,8 +204,8 @@ _ZNSt10shared_ptrIN5arrow6SchemaEEC2ERKS2_.exit:  ; preds = %bb.bi, %bb.bk, %bb.
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.ce
-  %i.hh = phi ptr [ %i.jz, %bb.ce ], [ %i.hg, %.lr.ph.preheader ]
-  %storemerge290 = phi i64 [ %i.jx, %bb.ce ], [ 1, %.lr.ph.preheader ]
+  %i.hh = phi ptr [ %i.hg, %.lr.ph.preheader ], [ %i.jz, %bb.ce ]
+  %storemerge290 = phi i64 [ 1, %.lr.ph.preheader ], [ %i.jx, %bb.ce ]
   %i.hi = getelementptr inbounds nuw [16 x i8], ptr %i.hh, i64 %storemerge290
   %i.hj = load ptr, ptr %i.hi, align 8, !tbaa !194
   %i.hk = getelementptr inbounds nuw i8, ptr %i.hj, i64 8
@@ -608,7 +608,7 @@ bb.a:
   %i.a = alloca i32, align 4                      ; 9 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
-  %i.b = alloca i32, align 4                      ; 7 uses
+  %i.b = alloca i32, align 4                      ; 6 uses
   %7 = alloca %"class.std::shared_ptr.7", align 8 ; 7 uses
   %i.c = alloca i64, align 8                      ; 5 uses
   %8 = alloca %"class.arrow::Status", align 8     ; 12 uses
@@ -857,7 +857,6 @@ bb.o:                                             ; preds = %bb.g
 ._crit_edge:                                      ; preds = %bb.o, %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #27
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #27
-  store i32 0, ptr %i.b, align 4, !tbaa !39
   %i.cq = load ptr, ptr %i.m, align 8, !tbaa !146
   %i.cr = tail call noundef i32 @_ZNK5arrow6Schema10num_fieldsEv(ptr noundef nonnull align 8 dereferenceable(32) %i.cq)
   %i.cs = icmp sgt i32 %i.cr, 0
@@ -868,10 +867,9 @@ bb.o:                                             ; preds = %bb.g
   br label %bb.p
 
 bb.p:                                             ; preds = %.lr.ph87, %bb.av
-  %11 = phi i32 [ 0, %.lr.ph87 ], [ %13, %bb.av ] ; 4 uses
-  %12 = zext nneg i32 %11 to i64
+  %indvars.iv105 = phi i64 [ 0, %.lr.ph87 ], [ %indvars.iv.next106, %bb.av ] ; 4 uses
   %i.cu = load ptr, ptr %i.d, align 8, !tbaa !165
-  %i.cv = getelementptr inbounds nuw [16 x i8], ptr %i.cu, i64 %12
+  %i.cv = getelementptr inbounds nuw [16 x i8], ptr %i.cu, i64 %indvars.iv105
   %i.cw = load ptr, ptr %i.cv, align 8, !tbaa !170 ; 3 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cw, i64 40
   %i.cy = load i64, ptr %i.cx, align 8, !tbaa !188
@@ -881,6 +879,8 @@ bb.p:                                             ; preds = %.lr.ph87, %bb.av
 
 bb.q:                                             ; preds = %bb.p
   %i.da = getelementptr inbounds nuw i8, ptr %i.cw, i64 40
+  %11 = trunc nuw nsw i64 %indvars.iv105 to i32   ; 2 uses
+  store i32 %11, ptr %i.b, align 4, !tbaa !39
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #27
   call void @llvm.experimental.noalias.scope.decl(metadata !1056)
   %i.db = load ptr, ptr %i.m, align 8, !tbaa !146, !noalias !1056
@@ -1030,6 +1030,7 @@ bb.ad:                                            ; preds = %bb.p
   br i1 %i.es, label %bb.av, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
+  %12 = trunc nuw nsw i64 %indvars.iv105 to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #27
   invoke void @_ZNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEC1Ev(ptr noundef nonnull align 8 dereferenceable(128) %9)
           to label %bb.af unwind label %bb.ao
@@ -1040,7 +1041,7 @@ bb.af:                                            ; preds = %bb.ae
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit unwind label %bb.ap ; 0 uses
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit: ; preds = %bb.af
-  %i.ev = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSolsEi(ptr noundef nonnull align 8 dereferenceable(8) %i.et, i32 noundef %11)
+  %i.ev = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSolsEi(ptr noundef nonnull align 8 dereferenceable(8) %i.et, i32 noundef %12)
           to label %bb.ag unwind label %bb.ap     ; 2 uses
 
 bb.ag:                                            ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit
@@ -1231,11 +1232,11 @@ _ZN5arrow6StatusD2Ev.exit71:                      ; preds = %bb.as, %bb.at, %bb.
 
 bb.av:                                            ; preds = %bb.ad
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #27
-  %13 = add nuw nsw i32 %11, 1                    ; 3 uses
-  store i32 %13, ptr %i.b, align 4, !tbaa !39
+  %indvars.iv.next106 = add nuw nsw i64 %indvars.iv105, 1 ; 2 uses
   %i.hh = load ptr, ptr %i.m, align 8, !tbaa !146
   %i.hi = call noundef i32 @_ZNK5arrow6Schema10num_fieldsEv(ptr noundef nonnull align 8 dereferenceable(32) %i.hh)
-  %i.hj = icmp slt i32 %13, %i.hi
+  %13 = sext i32 %i.hi to i64
+  %i.hj = icmp slt i64 %indvars.iv.next106, %13
   br i1 %i.hj, label %bb.p, label %._crit_edge88, !llvm.loop !1050
 
 bb.aw:                                            ; preds = %_ZN5arrow6StatusD2Ev.exit71, %.body53

@@ -205,10 +205,15 @@ bb.h:                                             ; preds = %_ZSt8_DestroyIPNSt7
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #29
   %i.bi = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 8 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 5 uses
-  br i1 %.not.i.i.i.i, label %.loopexit, label %.preheader
+  br i1 %.not.i.i.i.i, label %.loopexit, label %.preheader.preheader
 
-.preheader:                                       ; preds = %.preheader.lr.ph, %._crit_edge
-  %.01834 = phi i64 [ %i.bm, %._crit_edge ], [ 0, %.preheader.lr.ph ] ; 3 uses
+.preheader.preheader:                             ; preds = %.preheader.lr.ph
+  %4 = load ptr, ptr %0, align 8
+  br label %.preheader
+
+.preheader:                                       ; preds = %.preheader.preheader, %._crit_edge
+  %.01834 = phi i64 [ %i.bm, %._crit_edge ], [ 0, %.preheader.preheader ] ; 3 uses
+  %5 = getelementptr inbounds nuw [24 x i8], ptr %4, i64 %.01834
   br label %bb.l
 
 bb.i:                                             ; preds = %_ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EEC2EmRKS6_.exit.i, %bb.d
@@ -250,8 +255,6 @@ bb.l:                                             ; preds = %.preheader, %_ZNSt7
           to label %_Z5toStrISt7complexIdEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEET_.exit unwind label %bb.s
 
 _Z5toStrISt7complexIdEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEET_.exit: ; preds = %bb.l
-  %4 = load ptr, ptr %0, align 8, !tbaa !74
-  %5 = getelementptr inbounds nuw [24 x i8], ptr %4, i64 %.01834
   %i.br = load ptr, ptr %5, align 8, !tbaa !57
   %i.bs = getelementptr inbounds nuw [32 x i8], ptr %i.br, i64 %.01733 ; 9 uses
   %i.bt = load ptr, ptr %i.bs, align 8, !tbaa !34 ; 6 uses
@@ -654,6 +657,7 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   %i.el = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 10 uses
   %i.em = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 6 uses
   %i.en = load ptr, ptr %i.bg, align 8, !tbaa !873
+  %23 = load ptr, ptr %7, align 8
   br label %bb.s
 
 .preheader:                                       ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %.loopexit
@@ -666,6 +670,7 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   %i.er = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 6 uses
   %i.es = load ptr, ptr %i.bg, align 8, !tbaa !873
   %invariant.gep = getelementptr [16 x i8], ptr %i.es, i64 %i.m
+  %24 = load ptr, ptr %8, align 8
   br label %bb.ah
 
 bb.p:                                             ; preds = %_Z23populateMatrixQuadrantsI11PauliStrSumEv18MatrixQuadrantIndsRSt6vectorIS2_ISt7complexIdESaIS4_EESaIS6_EES9_S9_S9_T_.exit, %_Z30getTruncatedMatrixQuadrantIndsxx.exit, %bb.k
@@ -736,7 +741,6 @@ bb.w:                                             ; preds = %bb.u
   br label %_Z19getPauliStrAsStringB5cxx118PauliStri.exit
 
 _Z19getPauliStrAsStringB5cxx118PauliStri.exit:    ; preds = %.noexc66, %bb.v, %bb.w
-  %23 = load ptr, ptr %7, align 8, !tbaa !57
   %i.fd = getelementptr inbounds nuw [32 x i8], ptr %23, i64 %.031420 ; 9 uses
   %i.fe = load ptr, ptr %i.fd, align 8, !tbaa !34 ; 6 uses
   %i.ff = getelementptr inbounds nuw i8, ptr %i.fd, i64 16 ; 4 uses
@@ -947,7 +951,6 @@ bb.al:                                            ; preds = %bb.aj
   br label %_Z19getPauliStrAsStringB5cxx118PauliStri.exit78
 
 _Z19getPauliStrAsStringB5cxx118PauliStri.exit78:  ; preds = %.noexc77, %bb.ak, %bb.al
-  %24 = load ptr, ptr %8, align 8, !tbaa !57
   %i.gz = getelementptr inbounds nuw [32 x i8], ptr %24, i64 %.030421 ; 9 uses
   %i.ha = load ptr, ptr %i.gz, align 8, !tbaa !34 ; 6 uses
   %i.hb = getelementptr inbounds nuw i8, ptr %i.gz, i64 16 ; 4 uses

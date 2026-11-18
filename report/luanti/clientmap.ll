@@ -205,8 +205,8 @@ define dso_local void @_ZN9ClientMap16renderMapShadowsEPN5video12IVideoDriverESt
   %i.d = alloca i64, align 8                      ; 5 uses
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   %i.e = alloca ptr, align 8                      ; 5 uses
-  %i.f = alloca i32, align 4                      ; 8 uses
-  %i.g = alloca i32, align 4                      ; 8 uses
+  %i.f = alloca i32, align 4                      ; 7 uses
+  %i.g = alloca i32, align 4                      ; 7 uses
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 16 uses
   %i.h = alloca ptr, align 8                      ; 11 uses
   %9 = alloca %class.anon.817, align 8            ; 10 uses
@@ -609,6 +609,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit95.i: ; preds = %b
 .lr.ph.i:                                         ; preds = %.noexc171, %bb.w
   %.065276.i = phi i32 [ %.166.i, %bb.w ], [ 0, %.noexc171 ] ; 2 uses
   %.sroa.0220.0275.i = phi ptr [ %i.hz, %bb.w ], [ %i.gi, %.noexc171 ] ; 2 uses
+  %23 = phi i32 [ %26, %bb.w ], [ 0, %.noexc171 ] ; 2 uses
+  %24 = phi i32 [ %25, %bb.w ], [ 0, %.noexc171 ] ; 2 uses
   %i.gt = getelementptr inbounds nuw i8, ptr %.sroa.0220.0275.i, i64 8 ; 3 uses
   %i.gu = load ptr, ptr %i.gt, align 8, !tbaa !498 ; 2 uses
   %i.gv = load ptr, ptr %i.gu, align 8, !tbaa !58
@@ -645,8 +647,7 @@ bb.v:                                             ; preds = %.noexc173
           to label %.noexc175 unwind label %.loopexit.split-lp412.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !inline_history !905
 
 .noexc175:                                        ; preds = %.noexc174
-  %23 = load i32, ptr %i.f, align 4, !tbaa !247
-  %i.ho = add i32 %23, %i.hn
+  %i.ho = add i32 %i.hn, %23                      ; 2 uses
   store i32 %i.ho, ptr %i.f, align 4, !tbaa !247
   %i.hp = load ptr, ptr %i.gt, align 8, !tbaa !498 ; 2 uses
   %i.hq = load ptr, ptr %i.hp, align 8, !tbaa !58
@@ -663,12 +664,13 @@ bb.v:                                             ; preds = %.noexc173
           to label %.noexc177 unwind label %.loopexit.split-lp412.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !inline_history !905
 
 .noexc177:                                        ; preds = %.noexc176
-  %24 = load i32, ptr %i.g, align 4, !tbaa !247
-  %i.hy = add i32 %24, %i.hx
+  %i.hy = add i32 %i.hx, %24                      ; 2 uses
   store i32 %i.hy, ptr %i.g, align 4, !tbaa !247
   br label %bb.w
 
 bb.w:                                             ; preds = %.noexc177, %.noexc173
+  %25 = phi i32 [ %i.hy, %.noexc177 ], [ %24, %.noexc173 ]
+  %26 = phi i32 [ %i.ho, %.noexc177 ], [ %23, %.noexc173 ]
   %.166.i = phi i32 [ %i.he, %.noexc177 ], [ %.065276.i, %.noexc173 ] ; 2 uses
   %i.hz = getelementptr inbounds nuw i8, ptr %.sroa.0220.0275.i, i64 16 ; 2 uses
   %.not225.i = icmp eq ptr %i.hz, %i.gk

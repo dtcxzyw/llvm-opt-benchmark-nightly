@@ -205,7 +205,7 @@ _ZN10ImDrawList17_PopUnusedDrawCmdEv.exit:        ; preds = %bb.b, %bb.c, %bb.d,
 ; Function Attrs: mustprogress uwtable
 define void @_ZN10ImDrawData17DeIndexAllBuffersEv(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(76) initializes((8, 16)) %0) local_unnamed_addr #10 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %1 = alloca %struct.ImVector.3, align 8         ; 8 uses
+  %1 = alloca %struct.ImVector.3, align 8         ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #38
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %1, i8 0, i64 16, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -223,16 +223,19 @@ bb.a:
   br i1 %.not27, label %_ZN8ImVectorI10ImDrawVertED2Ev.exit, label %.lr.ph30
 
 .lr.ph30:                                         ; preds = %bb.a
-  %i.i = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %i.j = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %i.i = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   br label %bb.d
 
 ._crit_edge31:                                    ; preds = %bb.n
-  %.not.i = icmp eq ptr %3, null
+  store i32 %7, ptr %i.i, align 4
+  store ptr %6, ptr %i.j, align 8
+  store i32 %i.bn, ptr %1, align 8
+  %.not.i = icmp eq ptr %6, null
   br i1 %.not.i, label %_ZN8ImVectorI10ImDrawVertED2Ev.exit, label %bb.b
 
 bb.b:                                             ; preds = %._crit_edge31
-  invoke void @_ZN5ImGui7MemFreeEPv(ptr noundef nonnull %3)
+  invoke void @_ZN5ImGui7MemFreeEPv(ptr noundef nonnull %6)
           to label %_ZN8ImVectorI10ImDrawVertED2Ev.exit unwind label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -247,34 +250,40 @@ _ZN8ImVectorI10ImDrawVertED2Ev.exit:              ; preds = %bb.a, %._crit_edge3
   ret void
 
 bb.d:                                             ; preds = %.lr.ph30, %bb.n
-  %i.m = phi i32 [ 0, %.lr.ph30 ], [ %2, %bb.n ]  ; 2 uses
-  %i.n = phi ptr [ null, %.lr.ph30 ], [ %3, %bb.n ] ; 5 uses
-  %i.o = phi i32 [ 0, %.lr.ph30 ], [ %i.bn, %bb.n ] ; 6 uses
-  %.02028 = phi ptr [ %i.e, %.lr.ph30 ], [ %i.bo, %bb.n ] ; 2 uses
-  %i.p = load ptr, ptr %.02028, align 8, !tbaa !76 ; 8 uses
+  %2 = phi ptr [ null, %.lr.ph30 ], [ %6, %bb.n ] ; 7 uses
+  %i.m = phi i32 [ 0, %.lr.ph30 ], [ %7, %bb.n ]  ; 8 uses
+  %i.n = phi ptr [ %i.e, %.lr.ph30 ], [ %i.bo, %bb.n ] ; 2 uses
+  %i.o = phi i32 [ 0, %.lr.ph30 ], [ %i.bn, %bb.n ] ; 4 uses
+  %i.p = load ptr, ptr %i.n, align 8, !tbaa !76   ; 8 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 16 ; 5 uses
   %i.r = load i32, ptr %i.q, align 8, !tbaa !88   ; 6 uses
   %i.s = icmp eq i32 %i.r, 0
   br i1 %i.s, label %bb.n, label %bb.f
 
 bb.e:                                             ; preds = %bb.k, %bb.j, %bb.i, %_ZNK8ImVectorI10ImDrawVertE14_grow_capacityEi.exit.i
+  %3 = phi ptr [ %i.ap, %bb.k ], [ %i.ap, %bb.j ], [ %2, %bb.i ], [ %2, %_ZNK8ImVectorI10ImDrawVertE14_grow_capacityEi.exit.i ]
+  %4 = phi i32 [ %i.an, %bb.k ], [ %i.an, %bb.j ], [ %i.m, %bb.i ], [ %i.m, %_ZNK8ImVectorI10ImDrawVertE14_grow_capacityEi.exit.i ]
+  %5 = phi i32 [ %i.al, %bb.k ], [ %i.al, %bb.j ], [ %i.o, %bb.i ], [ %i.o, %_ZNK8ImVectorI10ImDrawVertE14_grow_capacityEi.exit.i ]
   %i.t = landingpad { ptr, i32 }
           cleanup
+  store i32 %4, ptr %i.i, align 4
+  store ptr %3, ptr %i.j, align 8
+  store i32 %5, ptr %1, align 8
   call void @_ZN8ImVectorI10ImDrawVertED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %1) #38
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #38
   resume { ptr, i32 } %i.t
 
 bb.f:                                             ; preds = %bb.d
-  %i.u = icmp sgt i32 %i.r, %i.o
+  %i.u = icmp sgt i32 %i.r, %i.m
   br i1 %i.u, label %bb.g, label %_ZN8ImVectorI10ImDrawVertE6resizeEi.exit
 
 bb.g:                                             ; preds = %bb.f
-  %.not.i.i = icmp eq i32 %i.o, 0
+  %.not.i.i = icmp eq i32 %i.m, 0
   br i1 %.not.i.i, label %_ZNK8ImVectorI10ImDrawVertE14_grow_capacityEi.exit.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.v = sdiv i32 %i.o, 2
-  %i.w = add nsw i32 %i.v, %i.o
+  %i.v = sdiv i32 %i.m, 2
+  %i.w = add nsw i32 %i.v, %i.m
   br label %_ZNK8ImVectorI10ImDrawVertE14_grow_capacityEi.exit.i
 
 _ZNK8ImVectorI10ImDrawVertE14_grow_capacityEi.exit.i: ; preds = %bb.h, %bb.g
@@ -286,25 +295,25 @@ _ZNK8ImVectorI10ImDrawVertE14_grow_capacityEi.exit.i: ; preds = %bb.h, %bb.g
           to label %.noexc unwind label %bb.e     ; 2 uses
 
 .noexc:                                           ; preds = %_ZNK8ImVectorI10ImDrawVertE14_grow_capacityEi.exit.i
-  %.not6.i.i = icmp eq ptr %i.n, null
+  %.not6.i.i = icmp eq ptr %2, null
   br i1 %.not6.i.i, label %.noexc21, label %bb.i
 
 bb.i:                                             ; preds = %.noexc
-  %i.ac = sext i32 %i.m to i64
+  %i.ac = sext i32 %i.o to i64
   %i.ad = mul nsw i64 %i.ac, 20
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.ab, ptr nonnull align 4 %i.n, i64 %i.ad, i1 false)
-  invoke void @_ZN5ImGui7MemFreeEPv(ptr noundef nonnull %i.n)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.ab, ptr nonnull align 4 %2, i64 %i.ad, i1 false)
+  invoke void @_ZN5ImGui7MemFreeEPv(ptr noundef nonnull %2)
           to label %.noexc21 unwind label %bb.e
 
 .noexc21:                                         ; preds = %bb.i, %.noexc
   %.pre.a = load i32, ptr %i.q, align 8, !tbaa !110
   br label %_ZN8ImVectorI10ImDrawVertE6resizeEi.exit
 
-_ZN8ImVectorI10ImDrawVertE6resizeEi.exit:         ; preds = %bb.f, %.noexc21
-  %i.ae = phi i32 [ %i.o, %bb.f ], [ %i.y, %.noexc21 ]
-  %i.af = phi ptr [ %i.n, %bb.f ], [ %i.ab, %.noexc21 ] ; 2 uses
-  %i.ag = phi i32 [ %i.r, %bb.f ], [ %.pre.a, %.noexc21 ]
-  %i.ah = icmp sgt i32 %i.ag, 0
+_ZN8ImVectorI10ImDrawVertE6resizeEi.exit:         ; preds = %.noexc21, %bb.f
+  %i.ae = phi i32 [ %.pre.a, %.noexc21 ], [ %i.r, %bb.f ]
+  %i.af = phi ptr [ %i.ab, %.noexc21 ], [ %2, %bb.f ] ; 2 uses
+  %i.ag = phi i32 [ %i.y, %.noexc21 ], [ %i.m, %bb.f ]
+  %i.ah = icmp sgt i32 %i.ae, 0
   br i1 %i.ah, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %_ZN8ImVectorI10ImDrawVertE6resizeEi.exit
@@ -314,16 +323,13 @@ _ZN8ImVectorI10ImDrawVertE6resizeEi.exit:         ; preds = %bb.f, %.noexc21
 
 ._crit_edge:                                      ; preds = %bb.l, %_ZN8ImVectorI10ImDrawVertE6resizeEi.exit
   %i.ak = getelementptr inbounds nuw i8, ptr %i.p, i64 32 ; 3 uses
-  %i.al = load i32, ptr %i.ak, align 8, !tbaa !90 ; 2 uses
-  store i32 %i.al, ptr %1, align 8, !tbaa !90
+  %i.al = load i32, ptr %i.ak, align 8, !tbaa !90 ; 3 uses
   store i32 %i.r, ptr %i.ak, align 8, !tbaa !90
   %i.am = getelementptr inbounds nuw i8, ptr %i.p, i64 36 ; 2 uses
-  %i.an = load i32, ptr %i.am, align 4, !tbaa !89 ; 2 uses
-  store i32 %i.an, ptr %i.i, align 4, !tbaa !89
-  store i32 %i.ae, ptr %i.am, align 4, !tbaa !89
+  %i.an = load i32, ptr %i.am, align 4, !tbaa !89 ; 3 uses
+  store i32 %i.ag, ptr %i.am, align 4, !tbaa !89
   %i.ao = getelementptr inbounds nuw i8, ptr %i.p, i64 40 ; 2 uses
-  %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !82 ; 2 uses
-  store ptr %i.ap, ptr %i.j, align 8, !tbaa !82
+  %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !82 ; 3 uses
   store ptr %i.af, ptr %i.ao, align 8, !tbaa !82
   %i.aq = getelementptr inbounds nuw i8, ptr %i.p, i64 20 ; 2 uses
   %i.ar = load i32, ptr %i.aq, align 4, !tbaa !87
@@ -380,10 +386,10 @@ bb.m:                                             ; preds = %.noexc25, %._crit_e
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.d, %bb.m
-  %2 = phi i32 [ %i.m, %bb.d ], [ %i.al, %bb.m ]
-  %3 = phi ptr [ %i.n, %bb.d ], [ %i.ap, %bb.m ]  ; 3 uses
-  %i.bn = phi i32 [ %i.o, %bb.d ], [ %i.an, %bb.m ]
-  %i.bo = getelementptr inbounds nuw i8, ptr %.02028, i64 8 ; 2 uses
+  %6 = phi ptr [ %2, %bb.d ], [ %i.ap, %bb.m ]    ; 4 uses
+  %7 = phi i32 [ %i.m, %bb.d ], [ %i.an, %bb.m ]  ; 2 uses
+  %i.bn = phi i32 [ %i.o, %bb.d ], [ %i.al, %bb.m ] ; 2 uses
+  %i.bo = getelementptr inbounds nuw i8, ptr %i.n, i64 8 ; 2 uses
   %.not = icmp eq ptr %i.bo, %i.h
   br i1 %.not, label %._crit_edge31, label %bb.d
 }

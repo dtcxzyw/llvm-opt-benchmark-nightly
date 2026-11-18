@@ -205,7 +205,7 @@ _ZN8facebook5velox15ArrayVectorBase12mutableSizesEi.exit:
   %i.c = alloca i64, align 8                      ; 5 uses
   %10 = alloca %"class.boost::intrusive_ptr", align 8 ; 7 uses
   %11 = alloca %"class.boost::intrusive_ptr", align 8 ; 7 uses
-  %12 = alloca %"class.std::shared_ptr.84", align 8 ; 7 uses
+  %12 = alloca %"class.std::shared_ptr.84", align 8 ; 8 uses
   %13 = alloca %"class.folly::Range", align 8     ; 6 uses
   %14 = alloca %"class.folly::Range", align 8     ; 6 uses
   %15 = alloca %"class.facebook::velox::SelectivityVector", align 8 ; 32 uses
@@ -323,7 +323,7 @@ bb.g:                                             ; preds = %bb.e
   br label %_ZNSt10shared_ptrIN8facebook5velox10BaseVectorEEC2ERKS3_.exit
 
 _ZNSt10shared_ptrIN8facebook5velox10BaseVectorEEC2ERKS3_.exit: ; preds = %bb.d, %bb.f, %bb.g
-  %i.bj = phi ptr [ %i.ba, %bb.d ], [ %i.ba, %bb.f ], [ %.pre662, %bb.g ] ; 12 uses
+  %i.bj = phi ptr [ %i.ba, %bb.d ], [ %i.ba, %bb.f ], [ %.pre662, %bb.g ] ; 8 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 56 ; 3 uses
   %i.bl = load i32, ptr %i.bk, align 8, !tbaa !337 ; 29 uses
   %i.bm = load ptr, ptr %2, align 8, !tbaa !342
@@ -726,6 +726,7 @@ _ZZNK8facebook5velox9functions12_GLOBAL__N_116ArrayConstructor5applyERKNS0_17Sel
   %.sroa.0.20 = phi ptr [ %.sroa.0.3, %bb.ax ], [ %.sroa.0.3, %bb.aq ], [ %.sroa.0.3, %bb.az ], [ %.sroa.0.17, %_ZZNK8facebook5velox9functions12_GLOBAL__N_116ArrayConstructor5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUliE0_clEi.exit56.i.i.i ], [ %.sroa.0.9, %._crit_edge.i.i.i.i83 ], [ %.sroa.0.9, %bb.ca ], [ %.sroa.0.19, %_ZZNK8facebook5velox9functions12_GLOBAL__N_116ArrayConstructor5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUliE0_clEi.exit.i ], [ %.sroa.0.11, %_ZZNK8facebook5velox9functions12_GLOBAL__N_116ArrayConstructor5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUliE0_clEi.exit.i.i.i ] ; 10 uses
   %.sroa.24.11 = phi ptr [ %.sroa.0.3, %bb.ax ], [ %.sroa.0.3, %bb.aq ], [ %.sroa.0.3, %bb.az ], [ %.sroa.24.9, %_ZZNK8facebook5velox9functions12_GLOBAL__N_116ArrayConstructor5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUliE0_clEi.exit56.i.i.i ], [ %.sroa.24.5, %._crit_edge.i.i.i.i83 ], [ %.sroa.24.5, %bb.ca ], [ %.sroa.24.10, %_ZZNK8facebook5velox9functions12_GLOBAL__N_116ArrayConstructor5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUliE0_clEi.exit.i ], [ %.sroa.24.6, %_ZZNK8facebook5velox9functions12_GLOBAL__N_116ArrayConstructor5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUliE0_clEi.exit.i.i.i ] ; 3 uses
   %.sroa.48.20 = phi ptr [ %.sroa.48.3, %bb.ax ], [ %.sroa.48.3, %bb.aq ], [ %.sroa.48.3, %bb.az ], [ %.sroa.48.17, %_ZZNK8facebook5velox9functions12_GLOBAL__N_116ArrayConstructor5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUliE0_clEi.exit56.i.i.i ], [ %.sroa.48.9, %._crit_edge.i.i.i.i83 ], [ %.sroa.48.9, %bb.ca ], [ %.sroa.48.19, %_ZZNK8facebook5velox9functions12_GLOBAL__N_116ArrayConstructor5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUliE0_clEi.exit.i ], [ %.sroa.48.11, %_ZZNK8facebook5velox9functions12_GLOBAL__N_116ArrayConstructor5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUliE0_clEi.exit.i.i.i ] ; 3 uses
+  %16 = load ptr, ptr %12, align 8, !tbaa !326    ; 4 uses
   %i.sy = load ptr, ptr %2, align 8, !tbaa !286
   %i.sz = load ptr, ptr %i.sy, align 8, !tbaa !326
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #19
@@ -736,10 +737,10 @@ _ZZNK8facebook5velox9functions12_GLOBAL__N_116ArrayConstructor5applyERKNS0_17Sel
   %i.td = getelementptr inbounds nuw i8, ptr %13, i64 8
   %i.te = getelementptr inbounds nuw i8, ptr %.sroa.0.20, i64 %i.tc ; 2 uses
   store ptr %i.te, ptr %i.td, align 8, !tbaa !348
-  %i.tf = load ptr, ptr %i.bj, align 8, !tbaa !86
+  %i.tf = load ptr, ptr %16, align 8, !tbaa !86
   %i.tg = getelementptr inbounds nuw i8, ptr %i.tf, i64 216
   %i.th = load ptr, ptr %i.tg, align 8
-  invoke void %i.th(ptr noundef nonnull align 8 dereferenceable(94) %i.bj, ptr noundef %i.sz, ptr noundef nonnull align 8 dereferenceable(16) %13)
+  invoke void %i.th(ptr noundef nonnull align 8 dereferenceable(94) %16, ptr noundef %i.sz, ptr noundef nonnull align 8 dereferenceable(16) %13)
           to label %bb.cg unwind label %bb.ci
 
 bb.cg:                                            ; preds = %.loopexit536
@@ -831,10 +832,10 @@ bb.ci:                                            ; preds = %.loopexit536
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #19
   store ptr %.sroa.0.20, ptr %14, align 8, !tbaa !347
   store ptr %i.te, ptr %i.tk, align 8, !tbaa !348
-  %i.tx = load ptr, ptr %i.bj, align 8, !tbaa !86
+  %i.tx = load ptr, ptr %16, align 8, !tbaa !86
   %i.ty = getelementptr inbounds nuw i8, ptr %i.tx, i64 216
   %i.tz = load ptr, ptr %i.ty, align 8
-  invoke void %i.tz(ptr noundef nonnull align 8 dereferenceable(94) %i.bj, ptr noundef %i.tw, ptr noundef nonnull align 8 dereferenceable(16) %14)
+  invoke void %i.tz(ptr noundef nonnull align 8 dereferenceable(94) %16, ptr noundef %i.tw, ptr noundef nonnull align 8 dereferenceable(16) %14)
           to label %bb.cj unwind label %bb.ck
 
 bb.cj:                                            ; preds = %._crit_edge603

@@ -205,7 +205,7 @@ bb.a:
   %16 = alloca %"class.std::allocator.136", align 1 ; 3 uses
   %17 = alloca %"class.duckdb::vector.145", align 8 ; 15 uses
   %18 = alloca %"class.duckdb::Value", align 8    ; 15 uses
-  %19 = alloca %"class.duckdb::vector.145", align 8 ; 12 uses
+  %19 = alloca %"class.duckdb::vector.145", align 8 ; 11 uses
   %20 = alloca %"class.duckdb::Value", align 8    ; 8 uses
   %21 = alloca %"class.duckdb::vector.145", align 8 ; 13 uses
   %22 = alloca %"class.duckdb::vector.145", align 8 ; 3 uses
@@ -608,9 +608,10 @@ bb.bz:                                            ; preds = %bb.by, %bb.bx
   br label %bb.cw
 
 .lr.ph440:                                        ; preds = %bb.ax, %_ZNSt6vectorIN6duckdb5ValueESaIS1_EE9push_backEOS1_.exit
-  %i.kd = phi ptr [ %i.ls, %_ZNSt6vectorIN6duckdb5ValueESaIS1_EE9push_backEOS1_.exit ], [ null, %bb.ax ] ; 5 uses
-  %.sroa.0275.0438 = phi ptr [ %i.lt, %_ZNSt6vectorIN6duckdb5ValueESaIS1_EE9push_backEOS1_.exit ], [ %.sroa.0286.0.lcssa, %bb.ax ] ; 3 uses
-  %i.ke = load i64, ptr %.sroa.0275.0438, align 8, !tbaa !337 ; 3 uses
+  %24 = phi ptr [ %i.ls, %_ZNSt6vectorIN6duckdb5ValueESaIS1_EE9push_backEOS1_.exit ], [ null, %bb.ax ] ; 5 uses
+  %i.kd = phi ptr [ %i.lt, %_ZNSt6vectorIN6duckdb5ValueESaIS1_EE9push_backEOS1_.exit ], [ %.sroa.0286.0.lcssa, %bb.ax ] ; 3 uses
+  %.sroa.0275.0438 = phi ptr [ %25, %_ZNSt6vectorIN6duckdb5ValueESaIS1_EE9push_backEOS1_.exit ], [ null, %bb.ax ] ; 6 uses
+  %i.ke = load i64, ptr %i.kd, align 8, !tbaa !337 ; 3 uses
   %i.kf = load ptr, ptr %i.ae, align 8, !tbaa !218
   %i.kg = load ptr, ptr %0, align 8, !tbaa !219   ; 2 uses
   %i.kh = ptrtoint ptr %i.kf to i64
@@ -691,27 +692,26 @@ bb.ce:                                            ; preds = %.lr.ph440
 
 bb.cf:                                            ; preds = %bb.ce
   call void @llvm.lifetime.start.p0(ptr nonnull %20) #20
-  %i.kx = getelementptr inbounds nuw i8, ptr %.sroa.0275.0438, i64 8
+  %i.kx = getelementptr inbounds nuw i8, ptr %i.kd, i64 8
   %i.ky = load i64, ptr %i.kx, align 8, !tbaa !338
   invoke void @_ZNK6duckdb6Vector8GetValueEm(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::Value") align 8 %20, ptr noundef nonnull align 8 dereferenceable(104) %i.kw, i64 noundef %i.ky)
           to label %bb.cg unwind label %bb.cm
 
 bb.cg:                                            ; preds = %bb.cf
   %i.kz = load ptr, ptr %i.ar, align 8, !tbaa !229
-  %.not.i.i = icmp eq ptr %i.kd, %i.kz
+  %.not.i.i = icmp eq ptr %24, %i.kz
   br i1 %.not.i.i, label %bb.ci, label %bb.ch
 
 bb.ch:                                            ; preds = %bb.cg
-  call void @_ZN6duckdb5ValueC1EOS0_(ptr noundef nonnull align 8 dereferenceable(64) %i.kd, ptr noundef nonnull align 8 dereferenceable(64) %20) #20
+  call void @_ZN6duckdb5ValueC1EOS0_(ptr noundef nonnull align 8 dereferenceable(64) %24, ptr noundef nonnull align 8 dereferenceable(64) %20) #20
   %i.la = load ptr, ptr %i.aq, align 8, !tbaa !230
   %i.lb = getelementptr inbounds nuw i8, ptr %i.la, i64 64 ; 2 uses
   store ptr %i.lb, ptr %i.aq, align 8, !tbaa !230
   br label %_ZNSt6vectorIN6duckdb5ValueESaIS1_EE9push_backEOS1_.exit
 
 bb.ci:                                            ; preds = %bb.cg
-  %24 = load ptr, ptr %19, align 8, !tbaa !231    ; 5 uses
-  %i.lc = ptrtoint ptr %i.kd to i64
-  %i.ld = ptrtoint ptr %24 to i64
+  %i.lc = ptrtoint ptr %24 to i64
+  %i.ld = ptrtoint ptr %.sroa.0275.0438 to i64
   %i.le = sub i64 %i.lc, %i.ld                    ; 3 uses
   %i.lf = icmp eq i64 %i.le, 9223372036854775744
   br i1 %i.lf, label %bb.cj, label %_ZNKSt6vectorIN6duckdb5ValueESaIS1_EE12_M_check_lenEmPKc.exit.i
@@ -734,32 +734,32 @@ _ZNKSt6vectorIN6duckdb5ValueESaIS1_EE12_M_check_lenEmPKc.exit.i: ; preds = %bb.c
   call void @llvm.assume(i1 %.not.i.i260)
   %i.ll = shl nuw nsw i64 %i.lk, 6
   %i.lm = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ll) #22
-          to label %.noexc262 unwind label %.loopexit.split-lp314.loopexit.split-lp ; 5 uses
+          to label %.noexc262 unwind label %.loopexit.split-lp314.loopexit.split-lp ; 6 uses
 
 .noexc262:                                        ; preds = %_ZNKSt6vectorIN6duckdb5ValueESaIS1_EE12_M_check_lenEmPKc.exit.i
   %i.ln = getelementptr inbounds nuw i8, ptr %i.lm, i64 %i.le
   call void @_ZN6duckdb5ValueC1EOS0_(ptr noundef nonnull align 8 dereferenceable(64) %i.ln, ptr noundef nonnull align 8 dereferenceable(64) %20) #20
-  %.not10.i.i.i.i.i = icmp eq ptr %24, %i.kd
+  %.not10.i.i.i.i.i = icmp eq ptr %.sroa.0275.0438, %24
   br i1 %.not10.i.i.i.i.i, label %_ZNSt6vectorIN6duckdb5ValueESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i, label %.lr.ph.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %.noexc262, %.lr.ph.i.i.i.i.i
   %.012.i.i.i.i.i = phi ptr [ %i.lp, %.lr.ph.i.i.i.i.i ], [ %i.lm, %.noexc262 ] ; 2 uses
-  %.0911.i.i.i.i.i = phi ptr [ %i.lo, %.lr.ph.i.i.i.i.i ], [ %24, %.noexc262 ] ; 3 uses
+  %.0911.i.i.i.i.i = phi ptr [ %i.lo, %.lr.ph.i.i.i.i.i ], [ %.sroa.0275.0438, %.noexc262 ] ; 3 uses
   call void @_ZN6duckdb5ValueC1EOS0_(ptr noundef nonnull align 8 dereferenceable(64) %.012.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(64) %.0911.i.i.i.i.i) #20
   call void @_ZN6duckdb5ValueD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %.0911.i.i.i.i.i) #20
   %i.lo = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i.i, i64 64 ; 2 uses
   %i.lp = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i, i64 64 ; 2 uses
-  %.not.i.i.i.i.i = icmp eq ptr %i.lo, %i.kd
+  %.not.i.i.i.i.i = icmp eq ptr %i.lo, %24
   br i1 %.not.i.i.i.i.i, label %_ZNSt6vectorIN6duckdb5ValueESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i, label %.lr.ph.i.i.i.i.i, !llvm.loop !10
 
 _ZNSt6vectorIN6duckdb5ValueESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i: ; preds = %.lr.ph.i.i.i.i.i, %.noexc262
   %.0.lcssa.i.i.i.i.i = phi ptr [ %i.lm, %.noexc262 ], [ %i.lp, %.lr.ph.i.i.i.i.i ]
   %i.lq = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i, i64 64 ; 2 uses
-  %.not.i23.i = icmp eq ptr %24, null
+  %.not.i23.i = icmp eq ptr %.sroa.0275.0438, null
   br i1 %.not.i23.i, label %.noexc161, label %bb.ck
 
 bb.ck:                                            ; preds = %_ZNSt6vectorIN6duckdb5ValueESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i
-  call void @_ZdlPv(ptr noundef nonnull %24) #21
+  call void @_ZdlPv(ptr noundef nonnull %.sroa.0275.0438) #21
   br label %.noexc161
 
 .noexc161:                                        ; preds = %bb.ck, %_ZNSt6vectorIN6duckdb5ValueESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i
@@ -771,9 +771,10 @@ bb.ck:                                            ; preds = %_ZNSt6vectorIN6duck
 
 _ZNSt6vectorIN6duckdb5ValueESaIS1_EE9push_backEOS1_.exit: ; preds = %.noexc161, %bb.ch
   %i.ls = phi ptr [ %i.lq, %.noexc161 ], [ %i.lb, %bb.ch ] ; 2 uses
+  %25 = phi ptr [ %i.lm, %.noexc161 ], [ %.sroa.0275.0438, %bb.ch ]
   call void @_ZN6duckdb5ValueD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %20) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %20) #20
-  %i.lt = getelementptr inbounds nuw i8, ptr %.sroa.0275.0438, i64 16 ; 2 uses
+  %i.lt = getelementptr inbounds nuw i8, ptr %i.kd, i64 16 ; 2 uses
   %.not = icmp eq ptr %i.lt, %.sroa.10.0.lcssa
   br i1 %.not, label %._crit_edge441.loopexit, label %.lr.ph440
 

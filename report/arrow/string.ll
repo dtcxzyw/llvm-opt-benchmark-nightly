@@ -205,10 +205,9 @@ _ZN5arrow6StatusD2Ev.exit.thread:                 ; preds = %.lr.ph
 _ZN5arrow6StatusD2Ev.exit:                        ; preds = %.lr.ph
   call void @_ZN5arrow6Status8FromArgsIJRA26_KcEEES0_NS_10StatusCodeEDpOT_(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Status") align 8 %4, i8 noundef signext 4, ptr noundef nonnull align 1 dereferenceable(26) @.str.6)
   %.pr = load ptr, ptr %4, align 8, !tbaa !45     ; 2 uses
-  store ptr %.pr, ptr %0, align 8, !tbaa !45
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #24
   %i.t = icmp eq ptr %.pr, null
-  br i1 %i.t, label %_ZN5arrow6StatusD2Ev.exit14, label %.critedge
+  br i1 %i.t, label %_ZN5arrow6StatusD2Ev.exit14, label %.critedge.loopexit
 
 _ZN5arrow6StatusD2Ev.exit14:                      ; preds = %_ZN5arrow6StatusD2Ev.exit, %_ZN5arrow6StatusD2Ev.exit.thread
   %i.u = add nuw nsw i64 %.017, 1                 ; 2 uses
@@ -219,7 +218,11 @@ _ZN5arrow6StatusD2Ev.exit14:                      ; preds = %_ZN5arrow6StatusD2E
   store ptr null, ptr %0, align 8, !tbaa !45, !alias.scope !97
   br label %.critedge
 
-.critedge:                                        ; preds = %_ZN5arrow6StatusD2Ev.exit, %._crit_edge, %bb.b
+.critedge.loopexit:                               ; preds = %_ZN5arrow6StatusD2Ev.exit
+  store ptr %.pr, ptr %0, align 8
+  br label %.critedge
+
+.critedge:                                        ; preds = %.critedge.loopexit, %._crit_edge, %bb.b
   ret void
 }
 

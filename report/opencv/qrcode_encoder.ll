@@ -205,7 +205,7 @@ bb.a:
   br label %.split47
 
 .split47:                                         ; preds = %.split.preheader, %.split.us
-  %.pn = phi i8 [ %i.am, %.split.preheader ], [ %i.aw, %.split.us ]
+  %.pn = phi i8 [ %i.aw, %.split.us ], [ %i.am, %.split.preheader ]
   %i.ax = icmp slt i32 %.fr58, 2                  ; 2 uses
   %i.ay = mul i64 %i.i, 7
   %.sink.idx.i = select i1 %i.ax, i64 0, i64 %i.ay
@@ -220,12 +220,14 @@ bb.a:
   %i.be = getelementptr inbounds nuw i8, ptr %.sink.i34, i64 4
   %i.bf = load <2 x i8>, ptr %i.be, align 1, !tbaa !16
   %i.bg = load <4 x i8>, ptr %.sink.i34, align 1, !tbaa !16
-  %3 = shufflevector <2 x i8> %i.bd, <2 x i8> %i.bf, <8 x i32> <i32 0, i32 1, i32 3, i32 2, i32 poison, i32 poison, i32 poison, i32 poison>
+  %3 = shufflevector <2 x i8> %i.bf, <2 x i8> poison, <8 x i32> <i32 1, i32 0, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.bh = shufflevector <4 x i8> %i.bg, <4 x i8> poison, <8 x i32> <i32 3, i32 2, i32 1, i32 0, i32 poison, i32 poison, i32 poison, i32 poison>
-  %4 = shufflevector <8 x i8> %3, <8 x i8> %i.bh, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
-  %i.bi = and <8 x i8> %4, splat (i8 1)
+  %4 = shufflevector <8 x i8> %3, <8 x i8> %i.bh, <8 x i32> <i32 0, i32 1, i32 8, i32 9, i32 10, i32 11, i32 poison, i32 poison>
+  %5 = shufflevector <2 x i8> %i.bd, <2 x i8> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %6 = shufflevector <8 x i8> %4, <8 x i8> %5, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 8, i32 9>
+  %i.bi = and <8 x i8> %6, splat (i8 1)
   %i.bj = zext nneg <8 x i8> %i.bi to <8 x i16>
-  %i.bk = shl nuw <8 x i16> %i.bj, <i16 8, i16 7, i16 9, i16 10, i16 11, i16 12, i16 13, i16 14>
+  %i.bk = shl nuw <8 x i16> %i.bj, <i16 9, i16 10, i16 11, i16 12, i16 13, i16 14, i16 8, i16 7>
   %i.bl = tail call i16 @llvm.vector.reduce.or.v8i16(<8 x i16> %i.bk)
   %i.bm = shl i8 %i.ba, 6
   %i.bn = and i8 %i.bm, 64

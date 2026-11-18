@@ -190,7 +190,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = tail call noalias dereferenceable_or_null(40) ptr @malloc(i64 noundef 40) #14 ; 6 uses
   store ptr %2, ptr %i.b, align 8, !tbaa !62
-  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 3 uses
   store ptr null, ptr %i.c, align 8, !tbaa !63
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store ptr %4, ptr %i.d, align 8, !tbaa !64
@@ -213,7 +213,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.ap
   %.058 = phi i32 [ %6, %.lr.ph ], [ %i.ef, %bb.ap ] ; 2 uses
   %i.j = zext i32 %.058 to i64
   %i.k = inttoptr i64 %i.j to ptr
-  %i.l = call ptr @g_list_append(ptr noundef %i.i, ptr noundef %i.k) #13 ; 4 uses
+  %i.l = call ptr @g_list_append(ptr noundef %i.i, ptr noundef %i.k) #13 ; 5 uses
   switch i32 %.058, label %bb.al [
     i32 0, label %bb.d
     i32 1, label %bb.k
@@ -462,12 +462,12 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ai
   br label %bb.am
 
 bb.al:                                            ; preds = %bb.c
+  store ptr %i.l, ptr %i.c, align 8
   call void @g_assertion_message_expr(ptr noundef null, ptr noundef nonnull @.str.1, i32 noundef 541, ptr noundef nonnull @__func__.dt_lua_async_call_alien_internal, ptr noundef nonnull @.str.2) #15
   unreachable
 
 bb.am:                                            ; preds = %bb.ak, %bb.aa, %bb.t, %bb.j
   %.sink = phi ptr [ %i.dv, %bb.ak ], [ %i.cn, %bb.aa ], [ %i.br, %bb.t ], [ %i.ai, %bb.j ] ; 2 uses
-  store ptr %.sink, ptr %i.c, align 8, !tbaa !63
   %i.dw = load i32, ptr %7, align 16              ; 3 uses
   %i.dx = icmp ult i32 %i.dw, 41
   br i1 %i.dx, label %bb.an, label %bb.ao
@@ -490,9 +490,13 @@ bb.ap:                                            ; preds = %bb.ao, %bb.an
   %i.ee = phi ptr [ %i.ea, %bb.an ], [ %i.ec, %bb.ao ]
   %i.ef = load i32, ptr %i.ee, align 4, !tbaa !92 ; 2 uses
   %.not56 = icmp eq i32 %i.ef, 4
-  br i1 %.not56, label %._crit_edge.a, label %bb.c
+  br i1 %.not56, label %._crit_edge, label %bb.c
 
-._crit_edge.a:                                    ; preds = %bb.ap, %bb.b
+._crit_edge:                                      ; preds = %bb.ap
+  store ptr %.sink, ptr %i.c, align 8
+  br label %._crit_edge.a
+
+._crit_edge.a:                                    ; preds = %._crit_edge, %bb.b
   call void @llvm.va_end.p0(ptr nonnull %7)
   %i.eg = load ptr, ptr getelementptr inbounds nuw (i8, ptr @darktable, i64 3272), align 8, !tbaa !60
   call void @g_async_queue_push(ptr noundef %i.eg, ptr noundef nonnull %i.b) #13

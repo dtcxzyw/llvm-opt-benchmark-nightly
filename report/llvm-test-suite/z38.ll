@@ -53,7 +53,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define dso_local i32 @MapLoad(ptr noundef %0, i32 noundef %1) local_unnamed_addr #0 !guid !63 {
 sub_0:
-  %i.a = alloca i32, align 4                      ; 10 uses
+  %i.a = alloca i32, align 4                      ; 9 uses
   %i.b = alloca i32, align 4                      ; 7 uses
   %i.c = alloca i32, align 4                      ; 11 uses
   %i.d = alloca i32, align 4                      ; 5 uses
@@ -241,6 +241,7 @@ bb.i:                                             ; preds = %bb.h
   %i.co = getelementptr inbounds nuw i8, ptr %i.az, i64 3185
   store <16 x i8> <i8 -32, i8 -31, i8 -30, i8 -29, i8 -28, i8 -27, i8 -26, i8 -25, i8 -24, i8 -23, i8 -22, i8 -21, i8 -20, i8 -19, i8 -18, i8 -17>, ptr %i.cn, align 1, !tbaa !44
   store <16 x i8> <i8 -16, i8 -15, i8 -14, i8 -13, i8 -12, i8 -11, i8 -10, i8 -9, i8 -8, i8 -7, i8 -6, i8 -5, i8 -4, i8 -3, i8 -2, i8 -1>, ptr %i.co, align 1, !tbaa !44
+  store i32 256, ptr %i.a, align 4, !tbaa !9
   %i.cp = getelementptr inbounds nuw i8, ptr %i.az, i64 32 ; 5 uses
   %i.cq = load ptr, ptr @notdef_word, align 8, !tbaa !43
   %broadcast.splatinsert = insertelement <2 x ptr> poison, ptr %i.cq, i64 0
@@ -502,7 +503,6 @@ bb.i:                                             ; preds = %bb.h
   store <2 x ptr> %broadcast.splat, ptr %i.hn, align 8, !tbaa !43
   %i.ho = getelementptr inbounds nuw i8, ptr %i.az, i64 2080 ; 8 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(353) %i.ho, i8 0, i64 353, i1 false), !tbaa !44
-  store i32 353, ptr %i.a, align 4, !tbaa !9
   %i.hp = call ptr @fgets(ptr noundef nonnull %i.e, i32 noundef 512, ptr noundef %i.bj)
   %i.hq = icmp eq ptr %i.hp, %i.e
   br i1 %i.hq, label %.lr.ph153, label %.outer127._crit_edge
@@ -529,15 +529,11 @@ bb.k:                                             ; preds = %.critedge, %bb.j
   br label %bb.k, !llvm.loop !56
 
 bb.l:                                             ; preds = %bb.k, %bb.k, %bb.k
-  %2 = trunc nuw nsw i64 %indvars.iv209 to i32
-  store i32 %2, ptr %i.a, align 4, !tbaa !9
   %i.hu = call ptr @fgets(ptr noundef nonnull %i.e, i32 noundef 512, ptr noundef %i.bj)
   %i.hv = icmp eq ptr %i.hu, %i.e
-  br i1 %i.hv, label %bb.j, label %.outer127._crit_edge, !llvm.loop !57
+  br i1 %i.hv, label %bb.j, label %.outer127._crit_edge.loopexit, !llvm.loop !57
 
 bb.m:                                             ; preds = %bb.k
-  %3 = trunc nuw nsw i64 %indvars.iv209 to i32
-  store i32 %3, ptr %i.a, align 4, !tbaa !9
   %i.hw = call i32 (ptr, ptr, ...) @__isoc99_sscanf(ptr noundef nonnull %i.e, ptr noundef nonnull @.str.7, ptr noundef nonnull %i.c, ptr noundef nonnull %i.d, ptr noundef nonnull %i.f) #11 ; 2 uses
   %i.hx = icmp slt i32 %i.hw, 2
   br i1 %i.hx, label %bb.n, label %bb.o
@@ -726,14 +722,24 @@ NameInsert.exit:                                  ; preds = %.lr.ph.i106, %bb.af
 .outer127:                                        ; preds = %NameRetrieve.exit, %NameInsert.exit, %bb.aa, %bb.z
   %i.la = call ptr @fgets(ptr noundef nonnull %i.e, i32 noundef 512, ptr noundef %i.bj)
   %i.lb = icmp eq ptr %i.la, %i.e
-  br i1 %i.lb, label %.lr.ph153, label %.outer127._crit_edge, !llvm.loop !57
+  br i1 %i.lb, label %.lr.ph153, label %.outer127._crit_edge.loopexit243, !llvm.loop !57
 
 .lr.ph153:                                        ; preds = %.preheader130, %.outer127
   %.0.ph156 = phi i32 [ %i.ix, %.outer127 ], [ -1, %.preheader130 ] ; 3 uses
   %.072.ph155 = phi i32 [ %i.hr, %.outer127 ], [ 0, %.preheader130 ]
   br label %bb.j
 
-.outer127._crit_edge:                             ; preds = %.outer127, %bb.l, %.preheader130
+.outer127._crit_edge.loopexit:                    ; preds = %bb.l
+  %2 = trunc nuw nsw i64 %indvars.iv209 to i32
+  br label %.outer127._crit_edge
+
+.outer127._crit_edge.loopexit243:                 ; preds = %.outer127
+  %3 = trunc nuw nsw i64 %indvars.iv209 to i32
+  br label %.outer127._crit_edge
+
+.outer127._crit_edge:                             ; preds = %.outer127._crit_edge.loopexit243, %.outer127._crit_edge.loopexit, %.preheader130
+  %storemerge96.lcssa151152.lcssa = phi i32 [ %2, %.outer127._crit_edge.loopexit ], [ 353, %.preheader130 ], [ %3, %.outer127._crit_edge.loopexit243 ]
+  store i32 %storemerge96.lcssa151152.lcssa, ptr %i.a, align 4
   call void @rewind(ptr noundef %i.bj)
   %i.lc = call ptr @fgets(ptr noundef nonnull %i.e, i32 noundef 512, ptr noundef %i.bj)
   %i.ld = icmp eq ptr %i.lc, %i.e

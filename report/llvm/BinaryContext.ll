@@ -205,9 +205,11 @@ bb.c:                                             ; preds = %bb.b
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 1584
   %.pre3.i = load i64, ptr %i.b, align 8, !tbaa !396
   %i.ac = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %.promoted = load i64, ptr %i.b, align 8
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.g, %.lr.ph.i
+  %12 = phi i64 [ %.promoted, %.lr.ph.i ], [ %i.at, %bb.g ]
   %.2168 = phi i64 [ %i.l, %.lr.ph.i ], [ %i.as, %bb.g ] ; 5 uses
   %i.ad = phi i64 [ %.pre3.i, %.lr.ph.i ], [ %i.at, %bb.g ]
   %i.ae = load ptr, ptr %i.ab, align 8, !tbaa !406 ; 2 uses
@@ -240,8 +242,7 @@ _ZNKSt8functionIFbRKN4llvm6MCInstEEEclES3_.exit.i: ; preds = %bb.e
 bb.g:                                             ; preds = %_ZNKSt8functionIFbRKN4llvm6MCInstEEEclES3_.exit.i
   %i.ar = load i64, ptr %i.a, align 8, !tbaa !396 ; 2 uses
   %i.as = add i64 %i.ar, %.2168                   ; 3 uses
-  %12 = load i64, ptr %i.b, align 8, !tbaa !396
-  %i.at = add i64 %12, %i.ar                      ; 2 uses
+  %i.at = add i64 %12, %i.ar                      ; 3 uses
   store i64 %i.at, ptr %i.b, align 8, !tbaa !396
   %i.au = load i64, ptr %i.i, align 8, !tbaa !796
   %i.av = icmp ult i64 %i.as, %i.au

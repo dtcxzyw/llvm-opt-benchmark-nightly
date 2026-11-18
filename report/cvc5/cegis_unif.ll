@@ -204,7 +204,11 @@ _ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit192: ; preds = %bb.co, %bb.cn,
   %i.jr = getelementptr inbounds nuw i8, ptr %.sroa.0418.0492, i64 112
   %i.js = load ptr, ptr %i.jr, align 8, !tbaa !61 ; 2 uses
   %.not447488 = icmp eq ptr %i.jq, %i.js
-  br i1 %.not447488, label %._crit_edge490, label %_ZN4cvc58internal11Cvc5ostreamlsIA2_cEERS1_RKT_.exit
+  br i1 %.not447488, label %._crit_edge490, label %_ZN4cvc58internal11Cvc5ostreamlsIA2_cEERS1_RKT_.exit.lr.ph
+
+_ZN4cvc58internal11Cvc5ostreamlsIA2_cEERS1_RKT_.exit.lr.ph: ; preds = %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit192
+  store ptr %i.jc, ptr %26, align 8, !tbaa !26
+  br label %_ZN4cvc58internal11Cvc5ostreamlsIA2_cEERS1_RKT_.exit
 
 ._crit_edge490:                                   ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit255, %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit192
   %i.jt = load i64, ptr %i.jc, align 8            ; 3 uses
@@ -243,9 +247,8 @@ bb.ct:                                            ; preds = %bb.cp
           cleanup
   br label %bb.du
 
-_ZN4cvc58internal11Cvc5ostreamlsIA2_cEERS1_RKT_.exit: ; preds = %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit192, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit255
-  %.sroa.0414.0489 = phi ptr [ %i.ms, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit255 ], [ %i.jq, %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit192 ] ; 2 uses
-  store ptr %i.jc, ptr %26, align 8, !tbaa !26
+_ZN4cvc58internal11Cvc5ostreamlsIA2_cEERS1_RKT_.exit: ; preds = %_ZN4cvc58internal11Cvc5ostreamlsIA2_cEERS1_RKT_.exit.lr.ph, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit255
+  %.sroa.0414.0489 = phi ptr [ %i.jq, %_ZN4cvc58internal11Cvc5ostreamlsIA2_cEERS1_RKT_.exit.lr.ph ], [ %i.ms, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit255 ] ; 2 uses
   %i.ke = load i64, ptr %i.jc, align 8            ; 3 uses
   %i.kf = lshr i64 %i.ke, 40
   %i.kg = trunc nuw nsw i64 %i.kf to i32

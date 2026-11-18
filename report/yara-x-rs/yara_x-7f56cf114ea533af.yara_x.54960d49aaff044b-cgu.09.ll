@@ -205,7 +205,7 @@ define internal fastcc void @_RNvNtCs7gfv9tzbXmh_6yara_x4wasm12lookup_field(ptr 
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 6 uses
   %i.b = alloca [4 x i8], align 4                 ; 10 uses
-  %i.c = alloca [8 x i8], align 8                 ; 7 uses
+  %i.c = alloca [8 x i8], align 8                 ; 5 uses
   %i.d = alloca [24 x i8], align 8                ; 5 uses
   %i.e = alloca [8 x i8], align 8                 ; 5 uses
   %i.f = alloca [8 x i8], align 8                 ; 6 uses
@@ -295,7 +295,6 @@ bb.l:                                             ; preds = %bb.j
 
 .lr.ph.preheader:                                 ; preds = %bb.k, %bb.l
   %storemerge = phi ptr [ %i.ai, %bb.l ], [ %i.z, %bb.k ] ; 5 uses
-  store ptr %storemerge, ptr %i.c, align 8
   %.idx = shl nuw nsw i64 %i.x, 2                 ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.w, i64 %.idx
   %i.ak = add nsw i64 %.idx, -4                   ; 2 uses
@@ -326,16 +325,16 @@ bb.m:                                             ; preds = %.lr.ph.prol
 bb.n:                                             ; preds = %bb.m
   %i.ay = getelementptr inbounds nuw i8, ptr %i.au, i64 128
   %i.az = load ptr, ptr %i.ay, align 8, !nonnull !4, !noundef !4
-  %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 16 ; 2 uses
-  store ptr %i.ba, ptr %i.c, align 8, !captures !15
+  %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 16
   br label %.lr.ph.prol.loopexit.unr-lcssa
 
 .lr.ph.prol.loopexit.unr-lcssa:                   ; preds = %bb.n, %bb.m
-  %i.bb = phi ptr [ %i.ba, %bb.n ], [ %storemerge, %bb.m ]
+  %i.bb = phi ptr [ %i.ba, %bb.n ], [ %storemerge, %bb.m ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br label %.lr.ph.prol.loopexit
 
 .lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol.loopexit.unr-lcssa, %.lr.ph.preheader
+  %.lcssa24.unr = phi ptr [ poison, %.lr.ph.preheader ], [ %i.bb, %.lr.ph.prol.loopexit.unr-lcssa ]
   %.lcssa.unr = phi ptr [ poison, %.lr.ph.preheader ], [ %i.au, %.lr.ph.prol.loopexit.unr-lcssa ]
   %.sroa.04.02.unr = phi ptr [ %i.w, %.lr.ph.preheader ], [ %i.am, %.lr.ph.prol.loopexit.unr-lcssa ]
   %.unr = phi ptr [ %storemerge, %.lr.ph.preheader ], [ %i.bb, %.lr.ph.prol.loopexit.unr-lcssa ]
@@ -344,7 +343,7 @@ bb.n:                                             ; preds = %bb.m
 
 .lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %bb.s
   %.sroa.04.02 = phi ptr [ %i.bv, %bb.s ], [ %.sroa.04.02.unr, %.lr.ph.prol.loopexit ] ; 3 uses
-  %i.bd = phi ptr [ %i.ck, %bb.s ], [ %.unr, %.lr.ph.prol.loopexit ] ; 3 uses
+  %i.bd = phi ptr [ %i.ck, %bb.s ], [ %.unr, %.lr.ph.prol.loopexit ] ; 4 uses
   %i.be = getelementptr inbounds nuw i8, ptr %.sroa.04.02, i64 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.bf = load i32, ptr %.sroa.04.02, align 4, !noundef !4 ; 2 uses
@@ -356,6 +355,8 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.bj, label %bb.o, label %.loopexit, !prof !9
 
 .loopexit:                                        ; preds = %.lr.ph, %.lr.ph.1, %.lr.ph.prol
+  %.lcssa = phi ptr [ %storemerge, %.lr.ph.prol ], [ %i.bd, %.lr.ph ], [ %i.bu, %.lr.ph.1 ]
+  store ptr %.lcssa, ptr %i.c, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %i.b, ptr %i.a, align 8
   %.sroa.440.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -379,12 +380,11 @@ bb.o:                                             ; preds = %.lr.ph
 bb.p:                                             ; preds = %bb.o
   %i.br = getelementptr inbounds nuw i8, ptr %i.bn, i64 128
   %i.bs = load ptr, ptr %i.br, align 8, !nonnull !4, !noundef !4
-  %i.bt = getelementptr inbounds nuw i8, ptr %i.bs, i64 16 ; 2 uses
-  store ptr %i.bt, ptr %i.c, align 8, !captures !15
+  %i.bt = getelementptr inbounds nuw i8, ptr %i.bs, i64 16
   br label %.lr.ph.1
 
 .lr.ph.1:                                         ; preds = %bb.p, %bb.o
-  %i.bu = phi ptr [ %i.bt, %bb.p ], [ %i.bd, %bb.o ] ; 3 uses
+  %i.bu = phi ptr [ %i.bt, %bb.p ], [ %i.bd, %bb.o ] ; 4 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.bv = getelementptr inbounds nuw i8, ptr %.sroa.04.02, i64 8 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
@@ -408,18 +408,19 @@ bb.q:                                             ; preds = %.lr.ph.1
 bb.r:                                             ; preds = %bb.q
   %i.ch = getelementptr inbounds nuw i8, ptr %i.cd, i64 128
   %i.ci = load ptr, ptr %i.ch, align 8, !nonnull !4, !noundef !4
-  %i.cj = getelementptr inbounds nuw i8, ptr %i.ci, i64 16 ; 2 uses
-  store ptr %i.cj, ptr %i.c, align 8, !captures !15
+  %i.cj = getelementptr inbounds nuw i8, ptr %i.ci, i64 16
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.r, %bb.q
-  %i.ck = phi ptr [ %i.cj, %bb.r ], [ %i.bu, %bb.q ]
+  %i.ck = phi ptr [ %i.cj, %bb.r ], [ %i.bu, %bb.q ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.cl = icmp eq ptr %i.bv, %i.aj
   br i1 %i.cl, label %._crit_edge, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %bb.s, %.lr.ph.prol.loopexit
+  %.lcssa24 = phi ptr [ %.lcssa24.unr, %.lr.ph.prol.loopexit ], [ %i.ck, %bb.s ]
   %.lcssa.a = phi ptr [ %.lcssa.unr, %.lr.ph.prol.loopexit ], [ %i.cd, %bb.s ]
+  store ptr %.lcssa24, ptr %i.c, align 8
   %i.cm = getelementptr inbounds nuw i8, ptr %.lcssa.a, i64 120
   invoke fastcc void @_RNvXss_NtCs7gfv9tzbXmh_6yara_x5typesNtB5_9TypeValueNtNtCskKLDkoKarTP_4core5clone5Clone5clone(ptr noalias nofree noundef align 8 captures(none) dereferenceable(48) %0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.cm)
           to label %bb.t unwind label %bb.d

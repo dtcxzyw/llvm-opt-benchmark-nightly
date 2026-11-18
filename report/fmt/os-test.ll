@@ -202,7 +202,7 @@ bb.a:
   %6 = alloca %"class.fmt::v12::buffered_file", align 8 ; 9 uses
   %i.a = alloca i64, align 8                      ; 7 uses
   %7 = alloca %"class.std::thread", align 8       ; 8 uses
-  %i.b = alloca i64, align 8                      ; 5 uses
+  %i.b = alloca i64, align 8                      ; 6 uses
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %9 = alloca %"class.testing::AssertionResult", align 8 ; 9 uses
   %10 = alloca %"class.testing::Message", align 8 ; 7 uses
@@ -275,6 +275,7 @@ bb.f:                                             ; preds = %_ZNKSt14default_del
   br label %bb.k
 
 bb.g:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
+  store i64 %i.aa, ptr %i.b, align 8
   invoke void @_ZN3fmt3v1213buffered_file5closeEv(ptr noundef nonnull align 8 dereferenceable(8) %6)
           to label %bb.o unwind label %bb.s
 
@@ -294,11 +295,11 @@ bb.j:                                             ; preds = %bb.c
   br label %.body
 
 bb.k:                                             ; preds = %bb.f, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
-  %12 = phi i64 [ 0, %bb.f ], [ %i.aa, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ]
-  %storemerge41 = phi i32 [ 0, %bb.f ], [ %i.ag, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ] ; 2 uses
+  %storemerge44 = phi i32 [ 0, %bb.f ], [ %i.ag, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ] ; 2 uses
+  %12 = phi i64 [ 0, %bb.f ], [ %i.aa, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #24, !noalias !251
-  store i32 %storemerge41, ptr %3, align 16, !tbaa !45, !noalias !251
+  store i32 %storemerge44, ptr %3, align 16, !tbaa !45, !noalias !251
   invoke void @_ZN3fmt3v127vformatB5cxx11ENS0_17basic_string_viewIcEENS0_17basic_format_argsINS0_7contextEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %8, ptr nonnull @.str.176, i64 3, i64 1, ptr nonnull %3)
           to label %.noexc unwind label %bb.m
 
@@ -317,7 +318,6 @@ bb.l:                                             ; preds = %.noexc
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #24
   %i.z = load i64, ptr %i.q, align 8, !tbaa !65   ; 2 uses
   %i.aa = add i64 %12, %i.z                       ; 3 uses
-  store i64 %i.aa, ptr %i.b, align 8, !tbaa !64
   %i.ab = load ptr, ptr %8, align 8, !tbaa !44    ; 2 uses
   %i.ac = icmp eq ptr %i.ab, %i.s
   br i1 %i.ac, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
@@ -335,13 +335,14 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #24
-  %i.ag = add nuw nsw i32 %storemerge41, 1        ; 2 uses
+  %i.ag = add nuw nsw i32 %storemerge44, 1        ; 2 uses
   %exitcond.not = icmp eq i32 %i.ag, 20001
   br i1 %exitcond.not, label %bb.g, label %bb.k, !llvm.loop !245
 
 bb.m:                                             ; preds = %bb.k
   %i.ah = landingpad { ptr, i32 }
           cleanup
+  store i64 %12, ptr %i.b, align 8
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit22
 
 bb.n:                                             ; preds = %.noexc

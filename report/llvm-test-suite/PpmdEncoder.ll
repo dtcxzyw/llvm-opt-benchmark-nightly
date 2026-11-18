@@ -204,10 +204,10 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not40, label %.lr.ph57.split.us, label %.lr.ph57.split
 
 .lr.ph57.split.us:                                ; preds = %.lr.ph57, %.backedge.us
-  %i.af = phi i64 [ %i.ap, %.backedge.us ], [ 0, %.lr.ph57 ]
+  %i.af = phi i64 [ %i.ap, %.backedge.us ], [ 0, %.lr.ph57 ] ; 2 uses
   %i.ag = load i32, ptr %i.b, align 4, !tbaa !8
   %i.ah = icmp eq i32 %i.ag, 0
-  br i1 %i.ah, label %.split59.us.a, label %.lr.ph.us
+  br i1 %i.ah, label %.split59.us, label %.lr.ph.us
 
 bb.f:                                             ; preds = %.lr.ph.us
   %indvars.iv.next74 = add nuw nsw i64 %indvars.iv73, 1 ; 2 uses
@@ -228,8 +228,7 @@ bb.f:                                             ; preds = %.lr.ph.us
   br i1 %.not38.us, label %bb.f, label %.thread43
 
 .backedge.us:                                     ; preds = %bb.f
-  %i.ap = add i64 %i.af, %i.aj                    ; 2 uses
-  store i64 %i.ap, ptr %i.a, align 8, !tbaa !78
+  %i.ap = add i64 %i.af, %i.aj
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #12
   %i.aq = load ptr, ptr %i.d, align 8, !tbaa !44
@@ -240,12 +239,16 @@ bb.f:                                             ; preds = %.lr.ph.us
   %.not37.us = icmp eq i32 %i.au, 0
   br i1 %.not37.us, label %.lr.ph57.split.us, label %.thread43, !llvm.loop !69
 
+.split59.us:                                      ; preds = %.lr.ph57.split.us
+  store i64 %i.af, ptr %i.a, align 8
+  br label %.split59.us.a
+
 .lr.ph57.split:                                   ; preds = %.lr.ph57, %.backedge
   %i.av = load i32, ptr %i.b, align 4, !tbaa !8
   %i.aw = icmp eq i32 %i.av, 0
   br i1 %i.aw, label %.split59.us.a, label %.lr.ph
 
-.split59.us.a:                                    ; preds = %.lr.ph57.split, %.lr.ph57.split.us
+.split59.us.a:                                    ; preds = %.lr.ph57.split, %.split59.us
   call void @Ppmd7z_RangeEnc_FlushData(ptr noundef nonnull %i.w)
   %i.ax = call noundef i32 @_ZN15CByteOutBufWrap5FlushEv(ptr noundef nonnull align 8 dereferenceable(60) %i.g)
   br label %.thread43

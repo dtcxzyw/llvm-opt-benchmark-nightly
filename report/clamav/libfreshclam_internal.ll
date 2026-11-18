@@ -1,6 +1,7 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/clamav/original/libfreshclam_internal?download=true
 inline.NumInlined: 15
 inline.NumDeleted: 9
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@updatecustomdb:bb.a
   br i1 %i.ag, label %bb.p, label %bb.o
 
@@ -202,7 +203,7 @@ declare ptr @dnsquery(ptr noundef, i32 noundef, ptr noundef) local_unnamed_addr 
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i32 0, 17) i32 @remote_cvdhead(ptr noundef nonnull %0, i32 noundef %1, ptr noundef nonnull %2, i32 noundef %3, ptr nofree noundef nonnull writeonly captures(none) initializes((0, 8)) %4) unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [513 x i8], align 16              ; 5 uses
+  %i.a = alloca [513 x i8], align 16              ; 6 uses
   %5 = alloca %struct.MemoryStruct, align 8       ; 8 uses
   %i.b = alloca ptr, align 8                      ; 6 uses
   %i.c = alloca [256 x i8], align 16              ; 6 uses
@@ -491,22 +492,22 @@ bb.aq:                                            ; preds = %bb.ap
 
 bb.ar:                                            ; preds = %bb.ap
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(513) %i.a, i8 0, i64 513, i1 false)
-  %i.cn = load ptr, ptr %5, align 8, !tbaa !43    ; 3 uses
+  %i.cn = load ptr, ptr %5, align 8, !tbaa !43    ; 4 uses
   %.not93 = icmp eq ptr %i.cn, null
   br i1 %.not93, label %.split112, label %.split.preheader
 
 .split.preheader:                                 ; preds = %bb.ar
   %.pre = load i8, ptr %i.cn, align 1, !tbaa !18
   %.not94 = icmp eq i8 %.pre, 0
-  br label %.split
+  br i1 %.not94, label %.split112, label %.split
 
-.split:                                           ; preds = %.split.preheader, %bb.at
-  %indvars.iv = phi i64 [ 0, %.split.preheader ], [ %indvars.iv.next.a, %bb.at ] ; 3 uses
-  br i1 %.not94, label %.split112, label %bb.as
-
-bb.as:                                            ; preds = %.split
+.split:                                           ; preds = %.split.preheader
   %7 = tail call ptr @__ctype_b_loc() #21
-  %8 = load ptr, ptr %7, align 8, !tbaa !62
+  %8 = load ptr, ptr %7, align 8, !tbaa !62       ; 2 uses
+  br label %bb.as
+
+bb.as:                                            ; preds = %bb.at, %.split
+  %indvars.iv = phi i64 [ 0, %.split ], [ %indvars.iv.next.a, %bb.at ] ; 4 uses
   %i.co = getelementptr inbounds nuw i8, ptr %i.cn, i64 %indvars.iv
   %i.cp = load i8, ptr %i.co, align 1, !tbaa !18  ; 2 uses
   %i.cq = sext i8 %i.cp to i64
@@ -514,20 +515,33 @@ bb.as:                                            ; preds = %.split
   %i.cs = load i16, ptr %i.cr, align 2, !tbaa !27
   %i.ct = and i16 %i.cs, 16384
   %.not96 = icmp eq i16 %i.ct, 0
-  br i1 %.not96, label %.split112, label %bb.at
+  br i1 %.not96, label %.split112, label %9
 
-.split112:                                        ; preds = %.split, %bb.as, %bb.ar
+.split112:                                        ; preds = %bb.as, %9, %.split.preheader, %bb.ar
   %.not97 = icmp eq i32 %3, 0
   %i.cu = select i1 %.not97, i32 4, i32 5
   %i.cv = call i32 (i32, ptr, ...) @logg(i32 noundef %i.cu, ptr noundef nonnull @.str.150) #20 ; 0 uses
   br label %bb.ax
 
-bb.at:                                            ; preds = %bb.as
-  %i.cw = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv
-  store i8 %i.cp, ptr %i.cw, align 1, !tbaa !18
-  %indvars.iv.next.a = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+9:                                                ; preds = %bb.as
+  %10 = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv
+  store i8 %i.cp, ptr %10, align 2, !tbaa !18
+  %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
+  %11 = getelementptr inbounds nuw i8, ptr %i.cn, i64 %indvars.iv.next
+  %12 = load i8, ptr %11, align 1, !tbaa !18      ; 2 uses
+  %13 = sext i8 %12 to i64
+  %14 = getelementptr inbounds [2 x i8], ptr %8, i64 %13
+  %15 = load i16, ptr %14, align 2, !tbaa !27
+  %16 = and i16 %15, 16384
+  %.not96.1 = icmp eq i16 %16, 0
+  br i1 %.not96.1, label %.split112, label %bb.at
+
+bb.at:                                            ; preds = %9
+  %i.cw = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.next
+  store i8 %12, ptr %i.cw, align 1, !tbaa !18
+  %indvars.iv.next.a = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next.a, 512
-  br i1 %exitcond.not, label %bb.au, label %.split
+  br i1 %exitcond.not, label %bb.au, label %bb.as
 
 bb.au:                                            ; preds = %bb.at
   %i.cx = call ptr @cl_cvdparse(ptr noundef nonnull %i.a) #20 ; 2 uses

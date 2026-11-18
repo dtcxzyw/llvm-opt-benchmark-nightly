@@ -204,7 +204,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.f = tail call noundef i32 @_ZN3igl19default_num_threadsEj(i32 noundef 0) ; 3 uses
   %i.g = zext i32 %i.f to i64                     ; 3 uses
-  %i.h = sext i32 %0 to i64                       ; 2 uses
+  %i.h = sext i32 %0 to i64
   %i.i = icmp ule i64 %4, %i.h
   %i.j = icmp ugt i32 %i.f, 1
   %or.cond.not = and i1 %i.j, %i.i
@@ -226,6 +226,7 @@ bb.b:                                             ; preds = %bb.a
   %i.t = getelementptr inbounds nuw i8, ptr %i.l, i64 16
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !98, !nonnull !62, !align !63
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !54
+  %wide.trip.count = zext nneg i32 %0 to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %_ZZN3igl12parallel_forIiZNS_5histcIN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEES4_NS3_IiLin1ELin1ELi0ELin1ELin1EEEEEvRKNS2_10MatrixBaseIT_EERKNS6_IT0_EERNS2_15PlainObjectBaseIT1_EEEUliE_EEbS7_RKSB_mENKUlimE_clEim.exit
@@ -279,8 +280,8 @@ _ZZN3igl12parallel_forIiZNS_5histcIN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEES4_NS
   %i.at = getelementptr inbounds nuw [4 x i8], ptr %i.v, i64 %indvars.iv
   store i32 %.019..020.sink.i.i, ptr %i.at, align 4, !tbaa !52
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %7 = icmp slt i64 %indvars.iv.next, %i.h
-  br i1 %7, label %bb.c, label %.loopexit58, !llvm.loop !231
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond.not, label %.loopexit58, label %bb.c, !llvm.loop !231
 
 _ZNSt12_Vector_baseISt6threadSaIS0_EE11_M_allocateEm.exit.i: ; preds = %bb.b
   %i.au = add nsw i32 %0, 1
@@ -683,7 +684,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.f = tail call noundef i32 @_ZN3igl19default_num_threadsEj(i32 noundef 0) ; 3 uses
   %i.g = zext i32 %i.f to i64                     ; 3 uses
-  %i.h = sext i32 %0 to i64                       ; 2 uses
+  %i.h = sext i32 %0 to i64
   %i.i = icmp ule i64 %4, %i.h
   %i.j = icmp ugt i32 %i.f, 1
   %or.cond.not = and i1 %i.j, %i.i
@@ -705,6 +706,7 @@ bb.b:                                             ; preds = %bb.a
   %i.t = getelementptr inbounds nuw i8, ptr %i.l, i64 16
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !104, !nonnull !62, !align !63
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !51
+  %wide.trip.count = zext nneg i32 %0 to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %_ZZN3igl12parallel_forIiZNS_5histcIN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEES4_NS3_IiLin1ELi1ELi0ELin1ELi1EEEEEvRKNS2_10MatrixBaseIT_EERKNS6_IT0_EERNS2_15PlainObjectBaseIT1_EEEUliE_EEbS7_RKSB_mENKUlimE_clEim.exit
@@ -758,8 +760,8 @@ _ZZN3igl12parallel_forIiZNS_5histcIN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEES4_NS
   %i.at = getelementptr inbounds nuw [4 x i8], ptr %i.v, i64 %indvars.iv
   store i32 %.019..020.sink.i.i, ptr %i.at, align 4, !tbaa !52
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %7 = icmp slt i64 %indvars.iv.next, %i.h
-  br i1 %7, label %bb.c, label %.loopexit58, !llvm.loop !283
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond.not, label %.loopexit58, label %bb.c, !llvm.loop !283
 
 _ZNSt12_Vector_baseISt6threadSaIS0_EE11_M_allocateEm.exit.i: ; preds = %bb.b
   %i.au = add nsw i32 %0, 1
@@ -1162,7 +1164,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.f = tail call noundef i32 @_ZN3igl19default_num_threadsEj(i32 noundef 0) ; 3 uses
   %i.g = zext i32 %i.f to i64                     ; 3 uses
-  %i.h = sext i32 %0 to i64                       ; 2 uses
+  %i.h = sext i32 %0 to i64
   %i.i = icmp ule i64 %4, %i.h
   %i.j = icmp ugt i32 %i.f, 1
   %or.cond.not = and i1 %i.j, %i.i
@@ -1184,6 +1186,7 @@ bb.b:                                             ; preds = %bb.a
   %i.t = getelementptr inbounds nuw i8, ptr %i.l, i64 16
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !113, !nonnull !62, !align !63
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !54
+  %wide.trip.count = zext nneg i32 %0 to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %_ZZN3igl12parallel_forIiZNS_5histcIN5Eigen6MatrixIfLin1ELi1ELi0ELin1ELi1EEES4_NS3_IiLin1ELin1ELi0ELin1ELin1EEEEEvRKNS2_10MatrixBaseIT_EERKNS6_IT0_EERNS2_15PlainObjectBaseIT1_EEEUliE_EEbS7_RKSB_mENKUlimE_clEim.exit
@@ -1237,8 +1240,8 @@ _ZZN3igl12parallel_forIiZNS_5histcIN5Eigen6MatrixIfLin1ELi1ELi0ELin1ELi1EEES4_NS
   %i.at = getelementptr inbounds nuw [4 x i8], ptr %i.v, i64 %indvars.iv
   store i32 %.019..020.sink.i.i, ptr %i.at, align 4, !tbaa !52
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %7 = icmp slt i64 %indvars.iv.next, %i.h
-  br i1 %7, label %bb.c, label %.loopexit58, !llvm.loop !335
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond.not, label %.loopexit58, label %bb.c, !llvm.loop !335
 
 _ZNSt12_Vector_baseISt6threadSaIS0_EE11_M_allocateEm.exit.i: ; preds = %bb.b
   %i.au = add nsw i32 %0, 1
@@ -1641,7 +1644,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.f = tail call noundef i32 @_ZN3igl19default_num_threadsEj(i32 noundef 0) ; 3 uses
   %i.g = zext i32 %i.f to i64                     ; 3 uses
-  %i.h = sext i32 %0 to i64                       ; 2 uses
+  %i.h = sext i32 %0 to i64
   %i.i = icmp ule i64 %4, %i.h
   %i.j = icmp ugt i32 %i.f, 1
   %or.cond.not = and i1 %i.j, %i.i
@@ -1663,6 +1666,7 @@ bb.b:                                             ; preds = %bb.a
   %i.t = getelementptr inbounds nuw i8, ptr %i.l, i64 16
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !119, !nonnull !62, !align !63
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !51
+  %wide.trip.count = zext nneg i32 %0 to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %_ZZN3igl12parallel_forIiZNS_5histcIN5Eigen6MatrixIfLin1ELi1ELi0ELin1ELi1EEES4_NS3_IiLin1ELi1ELi0ELin1ELi1EEEEEvRKNS2_10MatrixBaseIT_EERKNS6_IT0_EERNS2_15PlainObjectBaseIT1_EEEUliE_EEbS7_RKSB_mENKUlimE_clEim.exit
@@ -1716,8 +1720,8 @@ _ZZN3igl12parallel_forIiZNS_5histcIN5Eigen6MatrixIfLin1ELi1ELi0ELin1ELi1EEES4_NS
   %i.at = getelementptr inbounds nuw [4 x i8], ptr %i.v, i64 %indvars.iv
   store i32 %.019..020.sink.i.i, ptr %i.at, align 4, !tbaa !52
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %7 = icmp slt i64 %indvars.iv.next, %i.h
-  br i1 %7, label %bb.c, label %.loopexit58, !llvm.loop !387
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond.not, label %.loopexit58, label %bb.c, !llvm.loop !387
 
 _ZNSt12_Vector_baseISt6threadSaIS0_EE11_M_allocateEm.exit.i: ; preds = %bb.b
   %i.au = add nsw i32 %0, 1

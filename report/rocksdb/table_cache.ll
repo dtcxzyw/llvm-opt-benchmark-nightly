@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %scalar.ph
   store i64 %.sink.i, ptr %i.ah, align 8, !tbaa !257
   %i.ai = getelementptr inbounds nuw i8, ptr %13, i64 16 ; 8 uses
   store i64 %.sroa.2.0.copyload.sink.i, ptr %i.ai, align 8, !tbaa !259
-  %i.aj = getelementptr inbounds nuw i8, ptr %13, i64 24 ; 11 uses
+  %i.aj = getelementptr inbounds nuw i8, ptr %13, i64 24 ; 10 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %13, i64 32 ; 7 uses
   store <2 x i64> %i.af, ptr %i.aj, align 8, !tbaa !158
   %i.al = load ptr, ptr %i.a, align 8, !tbaa !116 ; 2 uses
@@ -445,11 +445,17 @@ _ZNK7rocksdb15MultiGetContext5Range5beginEv.exit105: ; preds = %scalar.ph393, %v
 .lr.ph:                                           ; preds = %_ZNK7rocksdb15MultiGetContext5Range5beginEv.exit105
   %i.dt = getelementptr inbounds nuw i8, ptr %i.cx, i64 3584
   %i.du = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  %i.dv = getelementptr inbounds nuw i8, ptr %14, i64 1048 ; 4 uses
-  %i.dw = getelementptr inbounds nuw i8, ptr %14, i64 1056
+  %20 = getelementptr inbounds nuw i8, ptr %14, i64 1048 ; 4 uses
+  %i.dv = getelementptr inbounds nuw i8, ptr %14, i64 1056
+  %21 = load i64, ptr %i.ai, align 8              ; 3 uses
+  %22 = load ptr, ptr %13, align 8                ; 2 uses
+  %i.dw = getelementptr inbounds nuw i8, ptr %22, i64 3848
+  %23 = load i64, ptr %i.ak, align 8
+  %.promoted = load i64, ptr %i.aj, align 8
   br label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph, %_ZN7rocksdb15MultiGetContext5Range8IteratorppEv.exit
+  %24 = phi i64 [ %.promoted, %.lr.ph ], [ %25, %_ZN7rocksdb15MultiGetContext5Range8IteratorppEv.exit ] ; 2 uses
   %.sroa.9.0228 = phi i64 [ %storemerge.lcssa.i.i100, %.lr.ph ], [ %.lcssa.i, %_ZN7rocksdb15MultiGetContext5Range8IteratorppEv.exit ] ; 5 uses
   %i.dx = getelementptr inbounds nuw [8 x i8], ptr %i.dt, i64 %.sroa.9.0228
   %i.dy = load ptr, ptr %i.dx, align 8, !tbaa !283 ; 2 uses
@@ -482,8 +488,7 @@ bb.l:                                             ; preds = %bb.j
 
 bb.m:                                             ; preds = %bb.l
   %i.eh = shl nuw i64 1, %.sroa.9.0228
-  %20 = load i64, ptr %i.aj, align 8, !tbaa !280
-  %i.ei = or i64 %20, %i.eh
+  %i.ei = or i64 %24, %i.eh                       ; 2 uses
   store i64 %i.ei, ptr %i.aj, align 8, !tbaa !280
   br label %.critedge
 
@@ -505,8 +510,8 @@ bb.o:                                             ; preds = %bb.n
   br label %bb.s
 
 bb.p:                                             ; preds = %bb.n
-  %i.eq = load ptr, ptr %i.dv, align 8, !tbaa !305 ; 5 uses
-  %i.er = load ptr, ptr %i.dw, align 8, !tbaa !306
+  %i.eq = load ptr, ptr %20, align 8, !tbaa !305  ; 5 uses
+  %i.er = load ptr, ptr %i.dv, align 8, !tbaa !306
   %.not.i.i107 = icmp eq ptr %i.eq, %i.er
   br i1 %.not.i.i107, label %bb.r, label %bb.q
 
@@ -516,9 +521,9 @@ bb.q:                                             ; preds = %bb.p
   %i.et = getelementptr inbounds nuw i8, ptr %i.eq, i64 8
   store i64 0, ptr %i.et, align 8, !tbaa !49
   store i8 0, ptr %i.es, align 8, !tbaa !34
-  %i.eu = load ptr, ptr %i.dv, align 8, !tbaa !305
+  %i.eu = load ptr, ptr %20, align 8, !tbaa !305
   %i.ev = getelementptr inbounds nuw i8, ptr %i.eu, i64 32
-  store ptr %i.ev, ptr %i.dv, align 8, !tbaa !305
+  store ptr %i.ev, ptr %20, align 8, !tbaa !305
   br label %bb.s
 
 bb.r:                                             ; preds = %bb.p
@@ -527,7 +532,7 @@ bb.r:                                             ; preds = %bb.p
 
 bb.s:                                             ; preds = %bb.r, %bb.o, %bb.q
   %i.ew = load i64, ptr %14, align 8, !tbaa !278, !noalias !423
-  %i.ex = load ptr, ptr %i.dv, align 8, !tbaa !305, !noalias !423
+  %i.ex = load ptr, ptr %20, align 8, !tbaa !305, !noalias !423
   %i.ey = load ptr, ptr %i.ba, align 8, !tbaa !307, !noalias !423 ; 2 uses
   %i.ez = ptrtoint ptr %i.ex to i64
   %i.fa = ptrtoint ptr %i.ey to i64
@@ -546,6 +551,7 @@ bb.s:                                             ; preds = %bb.r, %bb.o, %bb.q
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.s, %bb.m
+  %25 = phi i64 [ %24, %bb.s ], [ %i.ei, %bb.m ]  ; 2 uses
   %i.fl = load ptr, ptr %i.du, align 8, !tbaa !153 ; 2 uses
   %.not.i.i108 = icmp eq ptr %i.fl, null
   br i1 %.not.i.i108, label %_ZN7rocksdb6StatusD2Ev.exit110, label %_ZNKSt14default_deleteIA_KcEclIS0_EENSt9enable_ifIXsr14is_convertibleIPA_T_PS1_EE5valueEvE4typeEPS5_.exit.i.i109
@@ -555,21 +561,16 @@ _ZNKSt14default_deleteIA_KcEclIS0_EENSt9enable_ifIXsr14is_convertibleIPA_T_PS1_E
   br label %_ZN7rocksdb6StatusD2Ev.exit110
 
 _ZN7rocksdb6StatusD2Ev.exit110:                   ; preds = %.critedge, %_ZNKSt14default_deleteIA_KcEclIS0_EENSt9enable_ifIXsr14is_convertibleIPA_T_PS1_EE5valueEvE4typeEPS5_.exit.i.i109
-  %21 = load i64, ptr %i.ai, align 8, !tbaa !259  ; 3 uses
   %i.fm = add i64 %.sroa.9.0228, 1
   %umax.i = call i64 @llvm.umax.i64(i64 %21, i64 %i.fm) ; 3 uses
-  %22 = load ptr, ptr %13, align 8                ; 2 uses
-  %23 = getelementptr inbounds nuw i8, ptr %22, i64 3848
-  %24 = load i64, ptr %i.aj, align 8
-  %25 = load i64, ptr %i.ak, align 8
-  %invariant.op = or i64 %24, %25
   %i.fn = add i64 %umax.i, -1                     ; 2 uses
   %exitcond.not358 = icmp eq i64 %.sroa.9.0228, %i.fn
   br i1 %exitcond.not358, label %_ZN7rocksdb15MultiGetContext5Range8IteratorppEv.exit, label %.lr.ph359.preheader
 
 .lr.ph359.preheader:                              ; preds = %_ZN7rocksdb6StatusD2Ev.exit110
-  %i.fo = load i64, ptr %23, align 8, !tbaa !269
-  %.reass = or i64 %i.fo, %invariant.op
+  %i.fo = load i64, ptr %i.dw, align 8, !tbaa !269
+  %26 = or i64 %23, %i.fo
+  %.reass = or i64 %26, %25
   br label %.lr.ph359
 
 bb.t:                                             ; preds = %.lr.ph359

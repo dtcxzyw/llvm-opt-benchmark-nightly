@@ -202,8 +202,9 @@ get_CMSG_SPACE.exit.i:                            ; preds = %bb.w
   br i1 %.not166.i, label %.loopexit.i, label %bb.x
 
 bb.x:                                             ; preds = %._crit_edge
-  %i.bg = call ptr @PyMem_Malloc(i64 noundef %.lcssa) #11 ; 15 uses
-  %i.bh = icmp eq ptr %i.bg, null
+  %i.bg = call ptr @PyMem_Malloc(i64 noundef %.lcssa) #11
+  %.fr30 = freeze ptr %i.bg                       ; 15 uses
+  %i.bh = icmp eq ptr %.fr30, null
   br i1 %i.bh, label %bb.y, label %bb.z
 
 bb.y:                                             ; preds = %bb.x
@@ -212,10 +213,10 @@ bb.y:                                             ; preds = %bb.x
 
 bb.z:                                             ; preds = %bb.x
   %i.bj = getelementptr inbounds nuw i8, ptr %4, i64 32
-  store ptr %i.bg, ptr %i.bj, align 8, !tbaa !884
+  store ptr %.fr30, ptr %i.bj, align 8, !tbaa !884
   %i.bk = getelementptr inbounds nuw i8, ptr %4, i64 40
   store i64 %.lcssa, ptr %i.bk, align 8, !tbaa !885
-  call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.bg, i8 0, i64 %.lcssa, i1 false)
+  call void @llvm.memset.p0.i64(ptr nonnull align 1 %.fr30, i8 0, i64 %.lcssa, i1 false)
   %i.bl = getelementptr i8, ptr %.097.i, i64 8
   %i.bm = getelementptr i8, ptr %.097.i, i64 24
   %i.bn = load i64, ptr %i.bm, align 8, !tbaa !1021 ; 3 uses
@@ -232,18 +233,18 @@ cmsg_min_space.exit.peel.i:                       ; preds = %__cmsg_nxthdr.exit.
   br i1 %i.br, label %.critedge.i, label %bb.aa
 
 bb.aa:                                            ; preds = %cmsg_min_space.exit.peel.i
-  store i64 %i.bq, ptr %i.bg, align 8, !tbaa !789
-  %i.bs = getelementptr i8, ptr %i.bg, i64 16     ; 2 uses
+  store i64 %i.bq, ptr %.fr30, align 8, !tbaa !789
+  %i.bs = getelementptr i8, ptr %.fr30, i64 16    ; 2 uses
   %i.bt = icmp eq ptr %i.bs, null
   br i1 %i.bt, label %.critedge.i, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
   %i.bu = load i32, ptr %.097.i, align 8, !tbaa !1022
-  %i.bv = getelementptr i8, ptr %i.bg, i64 8
+  %i.bv = getelementptr i8, ptr %.fr30, i64 8
   store i32 %i.bu, ptr %i.bv, align 8, !tbaa !9
   %i.bw = getelementptr i8, ptr %.097.i, i64 4
   %i.bx = load i32, ptr %i.bw, align 4, !tbaa !1023
-  %i.by = getelementptr i8, ptr %i.bg, i64 12
+  %i.by = getelementptr i8, ptr %.fr30, i64 12
   store i32 %i.bx, ptr %i.by, align 4, !tbaa !9
   %i.bz = load ptr, ptr %i.bl, align 8, !tbaa !1024
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.bs, ptr align 1 %i.bz, i64 %i.bn, i1 false)
@@ -251,14 +252,14 @@ bb.ab:                                            ; preds = %bb.aa
   br i1 %exitcond197.peel.not.i, label %.loopexit.i, label %.peel.next.i.preheader
 
 .peel.next.i.preheader:                           ; preds = %bb.ab
-  %i.ca = getelementptr i8, ptr %i.bg, i64 %.lcssa
+  %i.ca = getelementptr i8, ptr %.fr30, i64 %.lcssa
   %i.cb = ptrtoint ptr %i.ca to i64
-  %i.cc = ptrtoint ptr %i.bg to i64               ; 2 uses
+  %i.cc = ptrtoint ptr %.fr30 to i64              ; 2 uses
   br label %.peel.next.i
 
 .peel.next.i:                                     ; preds = %.peel.next.i.preheader, %bb.af
   %i.cd = phi i64 [ %i.cz, %bb.af ], [ %i.bq, %.peel.next.i.preheader ] ; 3 uses
-  %.085180.i = phi ptr [ %i.cs, %bb.af ], [ %i.bg, %.peel.next.i.preheader ] ; 2 uses
+  %.085180.i = phi ptr [ %i.cs, %bb.af ], [ %.fr30, %.peel.next.i.preheader ] ; 2 uses
   %.0103179.i = phi i64 [ %i.ds, %bb.af ], [ 1, %.peel.next.i.preheader ] ; 2 uses
   %i.ce = getelementptr [88 x i8], ptr %.097.i, i64 %.0103179.i ; 4 uses
   %i.cf = getelementptr i8, ptr %i.ce, i64 8
@@ -282,8 +283,8 @@ __cmsg_nxthdr.exit.i:                             ; preds = %.peel.next.i
   %i.ct = icmp eq ptr %i.cs, null
   br i1 %i.ct, label %__cmsg_nxthdr.exit.thread.i, label %bb.ac
 
-__cmsg_nxthdr.exit.thread.i:                      ; preds = %__cmsg_nxthdr.exit.i, %.peel.next.i, %bb.z
-  %i.cu = phi ptr [ @.str.647, %bb.z ], [ @.str.648, %.peel.next.i ], [ @.str.648, %__cmsg_nxthdr.exit.i ]
+__cmsg_nxthdr.exit.thread.i:                      ; preds = %.peel.next.i, %__cmsg_nxthdr.exit.i, %bb.z
+  %i.cu = phi ptr [ @.str.647, %bb.z ], [ @.str.648, %__cmsg_nxthdr.exit.i ], [ @.str.648, %.peel.next.i ]
   %i.cv = load ptr, ptr @PyExc_RuntimeError, align 8, !tbaa !766
   %i.cw = call ptr (ptr, ptr, ...) @PyErr_Format(ptr noundef %i.cv, ptr noundef nonnull @.str.646, ptr noundef nonnull %i.cu) #11 ; 0 uses
   br label %.thread144.i
@@ -323,7 +324,7 @@ bb.ae:                                            ; preds = %bb.ad
   %or.cond168.i = select i1 %i.dj, i1 true, i1 %.not120.i
   br i1 %or.cond168.i, label %.critedge.i, label %bb.af
 
-.critedge.i:                                      ; preds = %bb.ae, %bb.ad, %cmsg_min_space.exit.i, %bb.aa, %cmsg_min_space.exit.peel.i
+.critedge.i:                                      ; preds = %cmsg_min_space.exit.i, %bb.ad, %bb.ae, %bb.aa, %cmsg_min_space.exit.peel.i
   %i.dl = load ptr, ptr @PyExc_RuntimeError, align 8, !tbaa !766
   call void @PyErr_SetString(ptr noundef %i.dl, ptr noundef nonnull @.str.650) #11
   br label %.thread144.i
@@ -343,7 +344,7 @@ bb.af:                                            ; preds = %bb.ae
   br i1 %exitcond197.not.i, label %.loopexit.i, label %.peel.next.i, !llvm.loop !1016
 
 .loopexit.i:                                      ; preds = %bb.af, %bb.ab, %._crit_edge
-  %.095.i = phi ptr [ null, %._crit_edge ], [ %i.bg, %bb.ab ], [ %i.bg, %bb.af ] ; 2 uses
+  %.095.i = phi ptr [ null, %._crit_edge ], [ %.fr30, %bb.ab ], [ %.fr30, %bb.af ] ; 2 uses
   store ptr %4, ptr %5, align 8, !tbaa !888
   %i.dt = getelementptr inbounds nuw i8, ptr %5, i64 8
   store i32 %.017, ptr %i.dt, align 8, !tbaa !889
@@ -373,7 +374,7 @@ bb.ag:                                            ; preds = %.loopexit.i
 
 .thread144.i:                                     ; preds = %.lr.ph, %bb.ag, %.loopexit.i, %.critedge.i, %.loopexit199.i, %__cmsg_nxthdr.exit.thread.i, %bb.y
   %.2101.i = phi i64 [ %smax.i, %bb.y ], [ %smax.i, %__cmsg_nxthdr.exit.thread.i ], [ %smax.i, %.critedge.i ], [ %smax.i, %.loopexit.i ], [ %smax.i, %bb.ag ], [ %smax.i, %.loopexit199.i ], [ %.099.i76, %.lr.ph ] ; 2 uses
-  %.196.i = phi ptr [ null, %bb.y ], [ %i.bg, %__cmsg_nxthdr.exit.thread.i ], [ %i.bg, %.critedge.i ], [ %.095.i, %.loopexit.i ], [ %.095.i, %bb.ag ], [ %i.bg, %.loopexit199.i ], [ null, %.lr.ph ]
+  %.196.i = phi ptr [ null, %bb.y ], [ %.fr30, %__cmsg_nxthdr.exit.thread.i ], [ %.fr30, %.critedge.i ], [ %.095.i, %.loopexit.i ], [ %.095.i, %bb.ag ], [ %.fr30, %.loopexit199.i ], [ null, %.lr.ph ]
   %.088.i = phi ptr [ null, %bb.y ], [ null, %__cmsg_nxthdr.exit.thread.i ], [ null, %.critedge.i ], [ null, %.loopexit.i ], [ %i.ea, %bb.ag ], [ null, %.loopexit199.i ], [ null, %.lr.ph ] ; 2 uses
   call void @PyMem_Free(ptr noundef %.196.i) #11
   %.not69 = icmp eq i64 %.2101.i, 0
