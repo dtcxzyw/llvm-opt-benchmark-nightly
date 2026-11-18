@@ -202,9 +202,9 @@ bb.a:
   br i1 %.not, label %_RINvYINtNtCsf3Ta7LF998c_4core6option8IntoIterNtNtCs1fJj97VvEPD_9minijinja5value5ValueENtNtNtNtB8_4iter6traits8iterator8Iterator8try_foldINtNtNtB8_3num7nonzero7NonZerojENCNvXs_NvB1m_10advance_byB3_NtB2N_13SpecAdvanceBy15spec_advance_by0INtB6_6OptionB2a_EECs5EKAXG1naGG_25candle_wasm_chat_template.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !301)
-  %.promoted.i = load i8, ptr %0, align 8, !alias.scope !302 ; 2 uses
-  store i8 -1, ptr %0, align 8, !alias.scope !303
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !305)
+  %.promoted.i = load i8, ptr %0, align 8, !alias.scope !306 ; 2 uses
+  store i8 -1, ptr %0, align 8, !alias.scope !307
   %.not11.i = icmp eq i8 %.promoted.i, -1
   br i1 %.not11.i, label %_RINvYINtNtCsf3Ta7LF998c_4core6option8IntoIterNtNtCs1fJj97VvEPD_9minijinja5value5ValueENtNtNtNtB8_4iter6traits8iterator8Iterator8try_foldINtNtNtB8_3num7nonzero7NonZerojENCNvXs_NvB1m_10advance_byB3_NtB2N_13SpecAdvanceBy15spec_advance_by0INtB6_6OptionB2a_EECs5EKAXG1naGG_25candle_wasm_chat_template.exit, label %.lr.ph.split.us.i
 
@@ -212,19 +212,18 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.7.0..sroa_idx7.i = getelementptr inbounds nuw i8, ptr %0, i64 1
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 9
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !304)
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !301
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !305
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(23) %.sroa.5.0..sroa_idx.i, ptr noundef nonnull align 1 dereferenceable(23) %.sroa.7.0..sroa_idx7.i, i64 23, i1 false)
-  store i64 %1, ptr %i.a, align 8, !noalias !301
-  store i8 %.promoted.i, ptr %i.b, align 8, !noalias !301
+  store i64 %1, ptr %i.a, align 8, !noalias !305
+  store i8 %.promoted.i, ptr %i.b, align 8, !noalias !305
   %i.c = add i64 %1, -1                           ; 2 uses
-  call fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs1fJj97VvEPD_9minijinja5value5ValueECs5EKAXG1naGG_25candle_wasm_chat_template(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.b), !noalias !301
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !301
+  call fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs1fJj97VvEPD_9minijinja5value5ValueECs5EKAXG1naGG_25candle_wasm_chat_template(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.b), !noalias !305
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !305
   %i.d = icmp eq i64 %i.c, 0
   br i1 %i.d, label %_RINvYINtNtCsf3Ta7LF998c_4core6option8IntoIterNtNtCs1fJj97VvEPD_9minijinja5value5ValueENtNtNtNtB8_4iter6traits8iterator8Iterator8try_foldINtNtNtB8_3num7nonzero7NonZerojENCNvXs_NvB1m_10advance_byB3_NtB2N_13SpecAdvanceBy15spec_advance_by0INtB6_6OptionB2a_EECs5EKAXG1naGG_25candle_wasm_chat_template.exit, label %._crit_edge.split.us.i
 
 ._crit_edge.split.us.i:                           ; preds = %.lr.ph.split.us.i
-  store i8 -1, ptr %0, align 8, !alias.scope !303
+  store i8 -1, ptr %0, align 8, !alias.scope !308
   br label %_RINvYINtNtCsf3Ta7LF998c_4core6option8IntoIterNtNtCs1fJj97VvEPD_9minijinja5value5ValueENtNtNtNtB8_4iter6traits8iterator8Iterator8try_foldINtNtNtB8_3num7nonzero7NonZerojENCNvXs_NvB1m_10advance_byB3_NtB2N_13SpecAdvanceBy15spec_advance_by0INtB6_6OptionB2a_EECs5EKAXG1naGG_25candle_wasm_chat_template.exit
 
 _RINvYINtNtCsf3Ta7LF998c_4core6option8IntoIterNtNtCs1fJj97VvEPD_9minijinja5value5ValueENtNtNtNtB8_4iter6traits8iterator8Iterator8try_foldINtNtNtB8_3num7nonzero7NonZerojENCNvXs_NvB1m_10advance_byB3_NtB2N_13SpecAdvanceBy15spec_advance_by0INtB6_6OptionB2a_EECs5EKAXG1naGG_25candle_wasm_chat_template.exit: ; preds = %.lr.ph.split.us.i, %._crit_edge.split.us.i, %bb.b, %bb.a
@@ -245,9 +244,9 @@ bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val6 = load ptr, ptr %i.c, align 8, !nonnull !4, !noundef !4
   %i.d = getelementptr inbounds nuw i8, ptr %.val6, i64 24
-  %i.e = load ptr, ptr %i.d, align 8, !invariant.load !4, !noalias !309, !nonnull !4 ; 2 uses
+  %i.e = load ptr, ptr %i.d, align 8, !invariant.load !4, !noalias !313, !nonnull !4 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  call void %i.e(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.b, ptr noundef nonnull %.val) #23, !noalias !310, !inline_history !308
+  call void %i.e(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.b, ptr noundef nonnull %.val) #23, !noalias !314, !inline_history !312
   %i.f = load i8, ptr %i.b, align 8, !range !15, !noundef !4
   %.not2.i = icmp eq i8 %i.f, -1
   br i1 %.not2.i, label %_RINvYINtNtCsgCecv3eZDcN_5alloc5boxed3BoxDNtNtNtNtCsf3Ta7LF998c_4core4iter6traits12double_ended19DoubleEndedIteratorp4ItemNtNtCs1fJj97VvEPD_9minijinja5value5ValueNtNtBL_6marker4SendNtB2B_4SyncEL_ENtNtBH_8iterator8Iterator8try_foldINtNtNtBL_3num7nonzero7NonZerojENCNvXs_NvB37_10advance_byB3_NtB4i_13SpecAdvanceBy15spec_advance_by0INtNtBL_6option6OptionB3F_EECs5EKAXG1naGG_25candle_wasm_chat_template.exit, label %.lr.ph.i
@@ -277,7 +276,7 @@ bb.c:                                             ; preds = %.lr.ph
   %i.l = phi i64 [ %i.j, %bb.c ], [ %i.h, %.lr.ph.i ] ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  call void %i.e(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.b, ptr noundef nonnull %.val) #23, !noalias !310, !inline_history !308
+  call void %i.e(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.b, ptr noundef nonnull %.val) #23, !noalias !314, !inline_history !312
   %i.m = load i8, ptr %i.b, align 8, !range !15, !noundef !4
   %.not.i = icmp eq i8 %i.m, -1
   br i1 %.not.i, label %_RINvYINtNtCsgCecv3eZDcN_5alloc5boxed3BoxDNtNtNtNtCsf3Ta7LF998c_4core4iter6traits12double_ended19DoubleEndedIteratorp4ItemNtNtCs1fJj97VvEPD_9minijinja5value5ValueNtNtBL_6marker4SendNtB2B_4SyncEL_ENtNtBH_8iterator8Iterator8try_foldINtNtNtBL_3num7nonzero7NonZerojENCNvXs_NvB37_10advance_byB3_NtB4i_13SpecAdvanceBy15spec_advance_by0INtNtBL_6option6OptionB3F_EECs5EKAXG1naGG_25candle_wasm_chat_template.exit, label %bb.c
@@ -305,9 +304,9 @@ bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val6 = load ptr, ptr %i.c, align 8, !nonnull !4, !noundef !4
   %i.d = getelementptr inbounds nuw i8, ptr %.val6, i64 24
-  %i.e = load ptr, ptr %i.d, align 8, !invariant.load !4, !noalias !315, !nonnull !4 ; 2 uses
+  %i.e = load ptr, ptr %i.d, align 8, !invariant.load !4, !noalias !319, !nonnull !4 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  call void %i.e(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(address) dereferenceable(48) %i.b, ptr noundef nonnull %.val) #23, !noalias !316, !inline_history !314
+  call void %i.e(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(address) dereferenceable(48) %i.b, ptr noundef nonnull %.val) #23, !noalias !320, !inline_history !318
   %i.f = load i8, ptr %i.b, align 8, !range !15, !noundef !4
   %.not3.i = icmp eq i8 %i.f, -1
   br i1 %.not3.i, label %_RINvYINtNtCsgCecv3eZDcN_5alloc5boxed3BoxDNtNtNtNtCsf3Ta7LF998c_4core4iter6traits12double_ended19DoubleEndedIteratorp4ItemTNtNtCs1fJj97VvEPD_9minijinja5value5ValueB1W_ENtNtBL_6marker4SendNtB2H_4SyncEL_ENtNtBH_8iterator8Iterator8try_foldINtNtNtBL_3num7nonzero7NonZerojENCNvXs_NvB3d_10advance_byB3_NtB4o_13SpecAdvanceBy15spec_advance_by0INtNtBL_6option6OptionB3L_EECs5EKAXG1naGG_25candle_wasm_chat_template.exit, label %.lr.ph.i
@@ -350,7 +349,7 @@ _RNCNvXs_NvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator10advance_by
 bb.g:                                             ; preds = %_RNCNvXs_NvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator10advance_byINtNtCsgCecv3eZDcN_5alloc5boxed3BoxDNtNtBc_12double_ended19DoubleEndedIteratorp4ItemTNtNtCs1fJj97VvEPD_9minijinja5value5ValueB2C_ENtNtBg_6marker4SendNtB3n_4SyncEL_ENtB6_13SpecAdvanceBy15spec_advance_by0Cs5EKAXG1naGG_25candle_wasm_chat_template.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  call void %i.e(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(address) dereferenceable(48) %i.b, ptr noundef nonnull %.val) #23, !noalias !316, !inline_history !314
+  call void %i.e(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(address) dereferenceable(48) %i.b, ptr noundef nonnull %.val) #23, !noalias !320, !inline_history !318
   %i.m = load i8, ptr %i.b, align 8, !range !15, !noundef !4
   %.not.i = icmp eq i8 %i.m, -1
   br i1 %.not.i, label %_RINvYINtNtCsgCecv3eZDcN_5alloc5boxed3BoxDNtNtNtNtCsf3Ta7LF998c_4core4iter6traits12double_ended19DoubleEndedIteratorp4ItemTNtNtCs1fJj97VvEPD_9minijinja5value5ValueB1W_ENtNtBL_6marker4SendNtB2H_4SyncEL_ENtNtBH_8iterator8Iterator8try_foldINtNtNtBL_3num7nonzero7NonZerojENCNvXs_NvB3d_10advance_byB3_NtB4o_13SpecAdvanceBy15spec_advance_by0INtNtBL_6option6OptionB3L_EECs5EKAXG1naGG_25candle_wasm_chat_template.exit, label %bb.c
@@ -518,7 +517,7 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8, !nonnull !4, !noundef !4
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.d = load i64, ptr %i.c, align 8, !noundef !4 ; 2 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !319)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !323)
   %i.e = icmp eq i64 %i.d, 0
   br i1 %i.e, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueSNtCsej0D7ZFyXq_12wasm_bindgen7JsValueECs5EKAXG1naGG_25candle_wasm_chat_template.exit, label %.lr.ph.i
 
@@ -526,12 +525,12 @@ bb.a:
   %.sroa.0.09.i = phi i64 [ %i.g, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtCsej0D7ZFyXq_12wasm_bindgen7JsValueECs5EKAXG1naGG_25candle_wasm_chat_template.exit.i ], [ 0, %bb.a ] ; 2 uses
   %i.f = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.sroa.0.09.i
   %i.g = add nuw nsw i64 %.sroa.0.09.i, 1         ; 2 uses
-  %.val7.i = load i32, ptr %i.f, align 4, !alias.scope !319, !noundef !4 ; 2 uses
+  %.val7.i = load i32, ptr %i.f, align 4, !alias.scope !323, !noundef !4 ; 2 uses
   %i.h = icmp ugt i32 %.val7.i, 1027
   br i1 %i.h, label %bb.b, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtCsej0D7ZFyXq_12wasm_bindgen7JsValueECs5EKAXG1naGG_25candle_wasm_chat_template.exit.i
 
 bb.b:                                             ; preds = %.lr.ph.i
-  tail call void @_RNvCsej0D7ZFyXq_12wasm_bindgen26___wbindgen_object_drop_ref(i32 noundef %.val7.i) #19, !noalias !319
+  tail call void @_RNvCsej0D7ZFyXq_12wasm_bindgen26___wbindgen_object_drop_ref(i32 noundef %.val7.i) #19, !noalias !323
   br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtCsej0D7ZFyXq_12wasm_bindgen7JsValueECs5EKAXG1naGG_25candle_wasm_chat_template.exit.i
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtCsej0D7ZFyXq_12wasm_bindgen7JsValueECs5EKAXG1naGG_25candle_wasm_chat_template.exit.i: ; preds = %bb.b, %.lr.ph.i
@@ -663,7 +662,7 @@ bb.b:                                             ; preds = %.lr.ph
   %i.g = getelementptr inbounds nuw [32 x i8], ptr %i.b, i64 %.sroa.0.0.i1
   %i.h = add nuw i64 %.sroa.0.0.i1, 1             ; 4 uses
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCseZbltJ5Yqe_10serde_core7private7content7ContentECs5EKAXG1naGG_25candle_wasm_chat_template(ptr noalias nofree noundef align 8 dereferenceable(32) %i.g)
-          to label %bb.b unwind label %bb.d, !inline_history !320
+          to label %bb.b unwind label %bb.d, !inline_history !324
 
 bb.c:                                             ; preds = %.lr.ph3
   %i.i = add nuw i64 %.sroa.0.1.i2, 1             ; 2 uses
@@ -680,7 +679,7 @@ bb.d:                                             ; preds = %.lr.ph
   %.sroa.0.1.i2 = phi i64 [ %i.i, %bb.c ], [ %i.h, %bb.d ] ; 2 uses
   %i.m = getelementptr inbounds nuw [32 x i8], ptr %i.b, i64 %.sroa.0.1.i2
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCseZbltJ5Yqe_10serde_core7private7content7ContentECs5EKAXG1naGG_25candle_wasm_chat_template(ptr noalias nofree noundef align 8 dereferenceable(32) %i.m) #18
-          to label %bb.c unwind label %bb.e, !inline_history !320
+          to label %bb.c unwind label %bb.e, !inline_history !324
 
 ._crit_edge:                                      ; preds = %bb.c, %bb.d
   resume { ptr, i32 } %i.k
@@ -688,7 +687,7 @@ bb.d:                                             ; preds = %.lr.ph
 bb.e:                                             ; preds = %.lr.ph3
   %i.n = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCsf3Ta7LF998c_4core9panicking16panic_in_cleanup() #17, !inline_history !320
+  tail call void @_RNvNtCsf3Ta7LF998c_4core9panicking16panic_in_cleanup() #17, !inline_history !324
   unreachable
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueSNtNtNtCseZbltJ5Yqe_10serde_core7private7content7ContentECs5EKAXG1naGG_25candle_wasm_chat_template.exit: ; preds = %bb.b, %bb.a
@@ -720,24 +719,24 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueTNtNtNtCseZbltJ5Yqe_10serde_core7private
   %i.g = getelementptr inbounds nuw [64 x i8], ptr %i.b, i64 %.sroa.0.0.i13 ; 3 uses
   %i.h = add nuw i64 %.sroa.0.0.i13, 1            ; 4 uses
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCseZbltJ5Yqe_10serde_core7private7content7ContentECs5EKAXG1naGG_25candle_wasm_chat_template(ptr noalias nofree noundef nonnull align 8 dereferenceable(64) %i.g) #24
-          to label %bb.c unwind label %bb.b, !inline_history !321
+          to label %bb.c unwind label %bb.b, !inline_history !325
 
 bb.b:                                             ; preds = %.lr.ph
   %i.i = landingpad { ptr, i32 }
           cleanup
   %i.j = getelementptr inbounds nuw i8, ptr %i.g, i64 32
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCseZbltJ5Yqe_10serde_core7private7content7ContentECs5EKAXG1naGG_25candle_wasm_chat_template(ptr noalias nofree noundef align 8 dereferenceable(32) %i.j) #25
-          to label %.body unwind label %bb.d, !inline_history !321
+          to label %.body unwind label %bb.d, !inline_history !325
 
 bb.c:                                             ; preds = %.lr.ph
   %i.k = getelementptr inbounds nuw i8, ptr %i.g, i64 32
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCseZbltJ5Yqe_10serde_core7private7content7ContentECs5EKAXG1naGG_25candle_wasm_chat_template(ptr noalias nofree noundef align 8 dereferenceable(32) %i.k) #24
-          to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueTNtNtNtCseZbltJ5Yqe_10serde_core7private7content7ContentBC_EECs5EKAXG1naGG_25candle_wasm_chat_template.exit unwind label %bb.f, !inline_history !321
+          to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueTNtNtNtCseZbltJ5Yqe_10serde_core7private7content7ContentBC_EECs5EKAXG1naGG_25candle_wasm_chat_template.exit unwind label %bb.f, !inline_history !325
 
 bb.d:                                             ; preds = %bb.b
   %i.l = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCsf3Ta7LF998c_4core9panicking16panic_in_cleanup() #17, !inline_history !321
+  tail call void @_RNvNtCsf3Ta7LF998c_4core9panicking16panic_in_cleanup() #17, !inline_history !325
   unreachable
 
 bb.e:                                             ; preds = %.lr.ph15
@@ -759,7 +758,7 @@ bb.f:                                             ; preds = %bb.c
   %.sroa.0.1.i14 = phi i64 [ %i.m, %bb.e ], [ %i.h, %.body ] ; 2 uses
   %i.q = getelementptr inbounds nuw [64 x i8], ptr %i.b, i64 %.sroa.0.1.i14
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueTNtNtNtCseZbltJ5Yqe_10serde_core7private7content7ContentBC_EECs5EKAXG1naGG_25candle_wasm_chat_template(ptr noalias nofree noundef align 8 dereferenceable(64) %i.q) #18
-          to label %bb.e unwind label %bb.g, !inline_history !322
+          to label %bb.e unwind label %bb.g, !inline_history !326
 
 ._crit_edge:                                      ; preds = %bb.e, %.body
   resume { ptr, i32 } %eh.lpad-body
@@ -767,7 +766,7 @@ bb.f:                                             ; preds = %bb.c
 bb.g:                                             ; preds = %.lr.ph15
   %i.r = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCsf3Ta7LF998c_4core9panicking16panic_in_cleanup() #17, !inline_history !322
+  tail call void @_RNvNtCsf3Ta7LF998c_4core9panicking16panic_in_cleanup() #17, !inline_history !326
   unreachable
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueSTNtNtNtCseZbltJ5Yqe_10serde_core7private7content7ContentBD_EECs5EKAXG1naGG_25candle_wasm_chat_template.exit: ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueTNtNtNtCseZbltJ5Yqe_10serde_core7private7content7ContentBC_EECs5EKAXG1naGG_25candle_wasm_chat_template.exit, %bb.a
@@ -836,7 +835,7 @@ bb.a:
 ; Function Attrs: nonlazybind uwtable
 define hidden noundef zeroext i1 @_RNvYNtNtCsgCecv3eZDcN_5alloc6string6StringNtNtCsf3Ta7LF998c_4core3fmt5Write9write_fmtCs5EKAXG1naGG_25candle_wasm_chat_template(ptr noalias nofree noundef align 8 dereferenceable(24) %0, ptr noundef nonnull %1, ptr noundef nonnull %2) unnamed_addr #0 {
 _RNvXs_NvNtNtCsf3Ta7LF998c_4core3fmt5Write9write_fmtQNtNtCsgCecv3eZDcN_5alloc6string6StringNtB4_12SpecWriteFmt14spec_write_fmtCs5EKAXG1naGG_25candle_wasm_chat_template.exit:
-  %i.a = tail call noundef zeroext i1 @_RNvNtCsf3Ta7LF998c_4core3fmt5write(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) @3, ptr noundef nonnull %1, ptr noundef nonnull %2), !inline_history !323
+  %i.a = tail call noundef zeroext i1 @_RNvNtCsf3Ta7LF998c_4core3fmt5write(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) @3, ptr noundef nonnull %1, ptr noundef nonnull %2), !inline_history !327
   ret i1 %i.a
 }
 
@@ -1239,27 +1238,31 @@ begin_hunk_1_@llvm.experimental.noalias.scope.decl
 !298 = distinct !{!298, i1 true, !"_RNvXsy_NtCsf3Ta7LF998c_4core6optionINtB5_8IntoIterNtNtCs1fJj97VvEPD_9minijinja5value5ValueENtNtNtNtB7_4iter6traits8iterator8Iterator4nextCs5EKAXG1naGG_25candle_wasm_chat_template"}
 !299 = distinct !{!299, !298, !"_RNvXsy_NtCsf3Ta7LF998c_4core6optionINtB5_8IntoIterNtNtCs1fJj97VvEPD_9minijinja5value5ValueENtNtNtNtB7_4iter6traits8iterator8Iterator4nextCs5EKAXG1naGG_25candle_wasm_chat_template: argument 0"}
 !300 = distinct !{!300, !298, !"_RNvXsy_NtCsf3Ta7LF998c_4core6optionINtB5_8IntoIterNtNtCs1fJj97VvEPD_9minijinja5value5ValueENtNtNtNtB7_4iter6traits8iterator8Iterator4nextCs5EKAXG1naGG_25candle_wasm_chat_template: argument 1"}
-!301 = !{!297}
-!302 = !{!300, !299, !297}
-!303 = !{!300, !297}
-!304 = !{!299}
-!305 = distinct !{!305, i1 true, !"_RNvXNtNtCsgCecv3eZDcN_5alloc5boxed4iterINtB4_3BoxDNtNtNtNtCsf3Ta7LF998c_4core4iter6traits12double_ended19DoubleEndedIteratorp4ItemNtNtCs1fJj97VvEPD_9minijinja5value5ValueNtNtBU_6marker4SendNtB2K_4SyncEL_ENtNtBQ_8iterator8Iterator4nextCs5EKAXG1naGG_25candle_wasm_chat_template"}
-!306 = distinct !{!306, !305, !"_RNvXNtNtCsgCecv3eZDcN_5alloc5boxed4iterINtB4_3BoxDNtNtNtNtCsf3Ta7LF998c_4core4iter6traits12double_ended19DoubleEndedIteratorp4ItemNtNtCs1fJj97VvEPD_9minijinja5value5ValueNtNtBU_6marker4SendNtB2K_4SyncEL_ENtNtBQ_8iterator8Iterator4nextCs5EKAXG1naGG_25candle_wasm_chat_template: argument 1"}
-!307 = distinct !{!307, !305, !"_RNvXNtNtCsgCecv3eZDcN_5alloc5boxed4iterINtB4_3BoxDNtNtNtNtCsf3Ta7LF998c_4core4iter6traits12double_ended19DoubleEndedIteratorp4ItemNtNtCs1fJj97VvEPD_9minijinja5value5ValueNtNtBU_6marker4SendNtB2K_4SyncEL_ENtNtBQ_8iterator8Iterator4nextCs5EKAXG1naGG_25candle_wasm_chat_template: argument 0"}
-!308 = distinct !{null, ptr @_RNvXNtNtCsgCecv3eZDcN_5alloc5boxed4iterINtB4_3BoxDNtNtNtNtCsf3Ta7LF998c_4core4iter6traits12double_ended19DoubleEndedIteratorp4ItemNtNtCs1fJj97VvEPD_9minijinja5value5ValueNtNtBU_6marker4SendNtB2K_4SyncEL_ENtNtBQ_8iterator8Iterator4nextCs5EKAXG1naGG_25candle_wasm_chat_template}
-!309 = !{!307, !306}
-!310 = !{!306}
-!311 = distinct !{!311, i1 true, !"_RNvXNtNtCsgCecv3eZDcN_5alloc5boxed4iterINtB4_3BoxDNtNtNtNtCsf3Ta7LF998c_4core4iter6traits12double_ended19DoubleEndedIteratorp4ItemTNtNtCs1fJj97VvEPD_9minijinja5value5ValueB25_ENtNtBU_6marker4SendNtB2Q_4SyncEL_ENtNtBQ_8iterator8Iterator4nextCs5EKAXG1naGG_25candle_wasm_chat_template"}
-!312 = distinct !{!312, !311, !"_RNvXNtNtCsgCecv3eZDcN_5alloc5boxed4iterINtB4_3BoxDNtNtNtNtCsf3Ta7LF998c_4core4iter6traits12double_ended19DoubleEndedIteratorp4ItemTNtNtCs1fJj97VvEPD_9minijinja5value5ValueB25_ENtNtBU_6marker4SendNtB2Q_4SyncEL_ENtNtBQ_8iterator8Iterator4nextCs5EKAXG1naGG_25candle_wasm_chat_template: argument 1"}
-!313 = distinct !{!313, !311, !"_RNvXNtNtCsgCecv3eZDcN_5alloc5boxed4iterINtB4_3BoxDNtNtNtNtCsf3Ta7LF998c_4core4iter6traits12double_ended19DoubleEndedIteratorp4ItemTNtNtCs1fJj97VvEPD_9minijinja5value5ValueB25_ENtNtBU_6marker4SendNtB2Q_4SyncEL_ENtNtBQ_8iterator8Iterator4nextCs5EKAXG1naGG_25candle_wasm_chat_template: argument 0"}
-!314 = distinct !{null, ptr @_RNvXNtNtCsgCecv3eZDcN_5alloc5boxed4iterINtB4_3BoxDNtNtNtNtCsf3Ta7LF998c_4core4iter6traits12double_ended19DoubleEndedIteratorp4ItemTNtNtCs1fJj97VvEPD_9minijinja5value5ValueB25_ENtNtBU_6marker4SendNtB2Q_4SyncEL_ENtNtBQ_8iterator8Iterator4nextCs5EKAXG1naGG_25candle_wasm_chat_template}
-!315 = !{!313, !312}
-!316 = !{!312}
-!317 = distinct !{!317, i1 true, !"_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueSNtCsej0D7ZFyXq_12wasm_bindgen7JsValueECs5EKAXG1naGG_25candle_wasm_chat_template"}
-!318 = distinct !{!318, !317, !"_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueSNtCsej0D7ZFyXq_12wasm_bindgen7JsValueECs5EKAXG1naGG_25candle_wasm_chat_template: argument 0"}
-!319 = !{!318}
-!320 = distinct !{null}
-!321 = distinct !{ptr @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueTNtNtNtCseZbltJ5Yqe_10serde_core7private7content7ContentBC_EECs5EKAXG1naGG_25candle_wasm_chat_template, null}
-!322 = distinct !{null}
-!323 = distinct !{null}
+!301 = distinct !{!301, i1 true, !"_RNvXsy_NtCsf3Ta7LF998c_4core6optionINtB5_8IntoIterNtNtCs1fJj97VvEPD_9minijinja5value5ValueENtNtNtNtB7_4iter6traits8iterator8Iterator4nextCs5EKAXG1naGG_25candle_wasm_chat_template"}
+!302 = distinct !{!302, !301, !"_RNvXsy_NtCsf3Ta7LF998c_4core6optionINtB5_8IntoIterNtNtCs1fJj97VvEPD_9minijinja5value5ValueENtNtNtNtB7_4iter6traits8iterator8Iterator4nextCs5EKAXG1naGG_25candle_wasm_chat_template: argument 1:pre.rot"}
+!303 = distinct !{!303, i1 true, !"_RNvXsy_NtCsf3Ta7LF998c_4core6optionINtB5_8IntoIterNtNtCs1fJj97VvEPD_9minijinja5value5ValueENtNtNtNtB7_4iter6traits8iterator8Iterator4nextCs5EKAXG1naGG_25candle_wasm_chat_template"}
+!304 = distinct !{!304, !303, !"_RNvXsy_NtCsf3Ta7LF998c_4core6optionINtB5_8IntoIterNtNtCs1fJj97VvEPD_9minijinja5value5ValueENtNtNtNtB7_4iter6traits8iterator8Iterator4nextCs5EKAXG1naGG_25candle_wasm_chat_template: argument 1:h.rot"}
+!305 = !{!297}
+!306 = !{!300, !299, !297}
+!307 = !{!302, !297}
+!308 = !{!304, !297}
+!309 = distinct !{!309, i1 true, !"_RNvXNtNtCsgCecv3eZDcN_5alloc5boxed4iterINtB4_3BoxDNtNtNtNtCsf3Ta7LF998c_4core4iter6traits12double_ended19DoubleEndedIteratorp4ItemNtNtCs1fJj97VvEPD_9minijinja5value5ValueNtNtBU_6marker4SendNtB2K_4SyncEL_ENtNtBQ_8iterator8Iterator4nextCs5EKAXG1naGG_25candle_wasm_chat_template"}
+!310 = distinct !{!310, !309, !"_RNvXNtNtCsgCecv3eZDcN_5alloc5boxed4iterINtB4_3BoxDNtNtNtNtCsf3Ta7LF998c_4core4iter6traits12double_ended19DoubleEndedIteratorp4ItemNtNtCs1fJj97VvEPD_9minijinja5value5ValueNtNtBU_6marker4SendNtB2K_4SyncEL_ENtNtBQ_8iterator8Iterator4nextCs5EKAXG1naGG_25candle_wasm_chat_template: argument 1"}
+!311 = distinct !{!311, !309, !"_RNvXNtNtCsgCecv3eZDcN_5alloc5boxed4iterINtB4_3BoxDNtNtNtNtCsf3Ta7LF998c_4core4iter6traits12double_ended19DoubleEndedIteratorp4ItemNtNtCs1fJj97VvEPD_9minijinja5value5ValueNtNtBU_6marker4SendNtB2K_4SyncEL_ENtNtBQ_8iterator8Iterator4nextCs5EKAXG1naGG_25candle_wasm_chat_template: argument 0"}
+!312 = distinct !{null, ptr @_RNvXNtNtCsgCecv3eZDcN_5alloc5boxed4iterINtB4_3BoxDNtNtNtNtCsf3Ta7LF998c_4core4iter6traits12double_ended19DoubleEndedIteratorp4ItemNtNtCs1fJj97VvEPD_9minijinja5value5ValueNtNtBU_6marker4SendNtB2K_4SyncEL_ENtNtBQ_8iterator8Iterator4nextCs5EKAXG1naGG_25candle_wasm_chat_template}
+!313 = !{!311, !310}
+!314 = !{!310}
+!315 = distinct !{!315, i1 true, !"_RNvXNtNtCsgCecv3eZDcN_5alloc5boxed4iterINtB4_3BoxDNtNtNtNtCsf3Ta7LF998c_4core4iter6traits12double_ended19DoubleEndedIteratorp4ItemTNtNtCs1fJj97VvEPD_9minijinja5value5ValueB25_ENtNtBU_6marker4SendNtB2Q_4SyncEL_ENtNtBQ_8iterator8Iterator4nextCs5EKAXG1naGG_25candle_wasm_chat_template"}
+!316 = distinct !{!316, !315, !"_RNvXNtNtCsgCecv3eZDcN_5alloc5boxed4iterINtB4_3BoxDNtNtNtNtCsf3Ta7LF998c_4core4iter6traits12double_ended19DoubleEndedIteratorp4ItemTNtNtCs1fJj97VvEPD_9minijinja5value5ValueB25_ENtNtBU_6marker4SendNtB2Q_4SyncEL_ENtNtBQ_8iterator8Iterator4nextCs5EKAXG1naGG_25candle_wasm_chat_template: argument 1"}
+!317 = distinct !{!317, !315, !"_RNvXNtNtCsgCecv3eZDcN_5alloc5boxed4iterINtB4_3BoxDNtNtNtNtCsf3Ta7LF998c_4core4iter6traits12double_ended19DoubleEndedIteratorp4ItemTNtNtCs1fJj97VvEPD_9minijinja5value5ValueB25_ENtNtBU_6marker4SendNtB2Q_4SyncEL_ENtNtBQ_8iterator8Iterator4nextCs5EKAXG1naGG_25candle_wasm_chat_template: argument 0"}
+!318 = distinct !{null, ptr @_RNvXNtNtCsgCecv3eZDcN_5alloc5boxed4iterINtB4_3BoxDNtNtNtNtCsf3Ta7LF998c_4core4iter6traits12double_ended19DoubleEndedIteratorp4ItemTNtNtCs1fJj97VvEPD_9minijinja5value5ValueB25_ENtNtBU_6marker4SendNtB2Q_4SyncEL_ENtNtBQ_8iterator8Iterator4nextCs5EKAXG1naGG_25candle_wasm_chat_template}
+!319 = !{!317, !316}
+!320 = !{!316}
+!321 = distinct !{!321, i1 true, !"_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueSNtCsej0D7ZFyXq_12wasm_bindgen7JsValueECs5EKAXG1naGG_25candle_wasm_chat_template"}
+!322 = distinct !{!322, !321, !"_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueSNtCsej0D7ZFyXq_12wasm_bindgen7JsValueECs5EKAXG1naGG_25candle_wasm_chat_template: argument 0"}
+!323 = !{!322}
+!324 = distinct !{null}
+!325 = distinct !{ptr @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueTNtNtNtCseZbltJ5Yqe_10serde_core7private7content7ContentBC_EECs5EKAXG1naGG_25candle_wasm_chat_template, null}
+!326 = distinct !{null}
+!327 = distinct !{null}
 end_hunk_1

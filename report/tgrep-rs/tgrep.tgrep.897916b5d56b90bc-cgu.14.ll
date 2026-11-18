@@ -204,6 +204,7 @@ bb.a:
   %i.b = alloca [24 x i8], align 8                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.b, ptr noundef nonnull align 8 dereferenceable(24) %0, i64 24, i1 false)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !378)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !379)
   %.sroa.02.0.copyload38.i = load i64, ptr %i.b, align 8, !alias.scope !380 ; 2 uses
   store i64 -1, ptr %i.b, align 8, !alias.scope !381
@@ -221,9 +222,9 @@ bb.b:                                             ; preds = %.lr.ph.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !382
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.47.0..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(16) %i.d, i64 16, i1 false)
-  store i64 %.sroa.02.0.copyload38.i, ptr %i.a, align 8, !noalias !379
+  store i64 %.sroa.02.0.copyload38.i, ptr %i.a, align 8, !noalias !378
   %i.e = invoke noundef zeroext i1 @_RNvMs1_NtCsbDKHzkXHCUM_9hashbrown3mapINtB5_7HashMapNtNtCs5Xr050g3D4S_3std4path7PathBufuNtNtNtBR_4hash6random11RandomStateE6insertCsbNLsQi0JuJ4_5tgrep(ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %1, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.a)
-          to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceNtNtCs5Xr050g3D4S_3std4path7PathBufEECsbNLsQi0JuJ4_5tgrep.exit.loopexit.i unwind label %bb.b, !noalias !379 ; 0 uses
+          to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceNtNtCs5Xr050g3D4S_3std4path7PathBufEECsbNLsQi0JuJ4_5tgrep.exit.loopexit.i unwind label %bb.b, !noalias !378 ; 0 uses
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceNtNtCs5Xr050g3D4S_3std4path7PathBufEECsbNLsQi0JuJ4_5tgrep.exit.loopexit.i: ; preds = %.lr.ph.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !382
@@ -626,19 +627,19 @@ begin_hunk_1_@llvm.experimental.noalias.scope.decl
 !367 = distinct !{!367, i1 true, !"_RINvYINtNtNtNtCsf3Ta7LF998c_4core4iter7sources4once4OnceNtNtCs5Xr050g3D4S_3std4path7PathBufENtNtNtBa_6traits8iterator8Iterator4folduNCINvNtNtBa_8adapters3map8map_foldBS_TBS_uEuNCINvXs8_NtCsbDKHzkXHCUM_9hashbrown3setINtB2X_7HashSetBS_NtNtNtBW_4hash6random11RandomStateEINtNtB1w_7collect6ExtendBS_E6extendB3_E0NCINvNvB1s_8for_each4callB2H_NCINvXs1i_NtB2Z_3mapINtB5z_7HashMapBS_uB3J_EIB4j_B2H_E6extendINtB2b_3MapB3_B2O_EE0E0E0ECsbNLsQi0JuJ4_5tgrep"}
 !368 = distinct !{!368, !367, !"_RINvYINtNtNtNtCsf3Ta7LF998c_4core4iter7sources4once4OnceNtNtCs5Xr050g3D4S_3std4path7PathBufENtNtNtBa_6traits8iterator8Iterator4folduNCINvNtNtBa_8adapters3map8map_foldBS_TBS_uEuNCINvXs8_NtCsbDKHzkXHCUM_9hashbrown3setINtB2X_7HashSetBS_NtNtNtBW_4hash6random11RandomStateEINtNtB1w_7collect6ExtendBS_E6extendB3_E0NCINvNvB1s_8for_each4callB2H_NCINvXs1i_NtB2Z_3mapINtB5z_7HashMapBS_uB3J_EIB4j_B2H_E6extendINtB2b_3MapB3_B2O_EE0E0E0ECsbNLsQi0JuJ4_5tgrep: argument 0"}
 !369 = distinct !{!369, i1 true, !"_RNvXNtNtNtCsf3Ta7LF998c_4core4iter7sources4onceINtB2_4OnceNtNtCs5Xr050g3D4S_3std4path7PathBufENtNtNtB6_6traits8iterator8Iterator4nextCsbNLsQi0JuJ4_5tgrep"}
-!370 = distinct !{!370, !369, !"_RNvXNtNtNtCsf3Ta7LF998c_4core4iter7sources4onceINtB2_4OnceNtNtCs5Xr050g3D4S_3std4path7PathBufENtNtNtB6_6traits8iterator8Iterator4nextCsbNLsQi0JuJ4_5tgrep: argument 1"}
-!371 = distinct !{!371, i1 true, !"_RNvXNtNtNtCsf3Ta7LF998c_4core4iter7sources4onceINtB2_4OnceNtNtCs5Xr050g3D4S_3std4path7PathBufENtNtNtB6_6traits8iterator8Iterator4nextCsbNLsQi0JuJ4_5tgrep"}
-!372 = distinct !{!372, !371, !"_RNvXNtNtNtCsf3Ta7LF998c_4core4iter7sources4onceINtB2_4OnceNtNtCs5Xr050g3D4S_3std4path7PathBufENtNtNtB6_6traits8iterator8Iterator4nextCsbNLsQi0JuJ4_5tgrep: argument 0:pre.rot"}
-!373 = distinct !{!373, i1 true, !"_RNCINvNtNtNtCsf3Ta7LF998c_4core4iter8adapters3map8map_foldNtNtCs5Xr050g3D4S_3std4path7PathBufTBU_uEuNCINvXs8_NtCsbDKHzkXHCUM_9hashbrown3setINtB1J_7HashSetBU_NtNtNtBY_4hash6random11RandomStateEINtNtNtB8_6traits7collect6ExtendBU_E6extendINtNtNtB8_7sources4once4OnceBU_EE0NCINvNvNtNtB39_8iterator8Iterator8for_each4callB1t_NCINvXs1i_NtB1L_3mapINtB5i_7HashMapBU_uB2v_EIB35_B1t_E6extendINtB4_3MapB3L_B1A_EE0E0E0CsbNLsQi0JuJ4_5tgrep"}
-!374 = distinct !{!374, !373, !"_RNCINvNtNtNtCsf3Ta7LF998c_4core4iter8adapters3map8map_foldNtNtCs5Xr050g3D4S_3std4path7PathBufTBU_uEuNCINvXs8_NtCsbDKHzkXHCUM_9hashbrown3setINtB1J_7HashSetBU_NtNtNtBY_4hash6random11RandomStateEINtNtNtB8_6traits7collect6ExtendBU_E6extendINtNtNtB8_7sources4once4OnceBU_EE0NCINvNvNtNtB39_8iterator8Iterator8for_each4callB1t_NCINvXs1i_NtB1L_3mapINtB5i_7HashMapBU_uB2v_EIB35_B1t_E6extendINtB4_3MapB3L_B1A_EE0E0E0CsbNLsQi0JuJ4_5tgrep: argument 0"}
-!375 = distinct !{!375, i1 true, !"_RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator8for_each4callTNtNtCs5Xr050g3D4S_3std4path7PathBufuENCINvXs1i_NtCsbDKHzkXHCUM_9hashbrown3mapINtB21_7HashMapB1g_uNtNtNtB1k_4hash6random11RandomStateEINtNtBa_7collect6ExtendB1f_E6extendINtNtNtBc_8adapters3map3MapINtNtNtBc_7sources4once4OnceB1g_ENCINvXs8_NtB23_3setINtB55_7HashSetB1g_B2P_EIB3q_B1g_E6extendB4p_E0EE0E0CsbNLsQi0JuJ4_5tgrep"}
-!376 = distinct !{!376, !375, !"_RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator8for_each4callTNtNtCs5Xr050g3D4S_3std4path7PathBufuENCINvXs1i_NtCsbDKHzkXHCUM_9hashbrown3mapINtB21_7HashMapB1g_uNtNtNtB1k_4hash6random11RandomStateEINtNtBa_7collect6ExtendB1f_E6extendINtNtNtBc_8adapters3map3MapINtNtNtBc_7sources4once4OnceB1g_ENCINvXs8_NtB23_3setINtB55_7HashSetB1g_B2P_EIB3q_B1g_E6extendB4p_E0EE0E0CsbNLsQi0JuJ4_5tgrep: argument 0"}
-!377 = distinct !{!377, i1 true, !"_RNCINvXs1i_NtCsbDKHzkXHCUM_9hashbrown3mapINtB9_7HashMapNtNtCs5Xr050g3D4S_3std4path7PathBufuNtNtNtBV_4hash6random11RandomStateEINtNtNtNtCsf3Ta7LF998c_4core4iter6traits7collect6ExtendTBR_uEE6extendINtNtNtB27_8adapters3map3MapINtNtNtB27_7sources4once4OnceBR_ENCINvXs8_NtBb_3setINtB4f_7HashSetBR_B1r_EIB21_BR_E6extendB3z_E0EE0CsbNLsQi0JuJ4_5tgrep"}
-!378 = distinct !{!378, !377, !"_RNCINvXs1i_NtCsbDKHzkXHCUM_9hashbrown3mapINtB9_7HashMapNtNtCs5Xr050g3D4S_3std4path7PathBufuNtNtNtBV_4hash6random11RandomStateEINtNtNtNtCsf3Ta7LF998c_4core4iter6traits7collect6ExtendTBR_uEE6extendINtNtNtB27_8adapters3map3MapINtNtNtB27_7sources4once4OnceBR_ENCINvXs8_NtBb_3setINtB4f_7HashSetBR_B1r_EIB21_BR_E6extendB3z_E0EE0CsbNLsQi0JuJ4_5tgrep: argument 0"}
-!379 = !{!368}
-!380 = !{!372, !370, !368}
-!381 = !{!370, !368}
-!382 = !{!378, !376, !374, !368}
+!370 = distinct !{!370, !369, !"_RNvXNtNtNtCsf3Ta7LF998c_4core4iter7sources4onceINtB2_4OnceNtNtCs5Xr050g3D4S_3std4path7PathBufENtNtNtB6_6traits8iterator8Iterator4nextCsbNLsQi0JuJ4_5tgrep: argument 0:pre.rot"}
+!371 = distinct !{!371, !369, !"_RNvXNtNtNtCsf3Ta7LF998c_4core4iter7sources4onceINtB2_4OnceNtNtCs5Xr050g3D4S_3std4path7PathBufENtNtNtB6_6traits8iterator8Iterator4nextCsbNLsQi0JuJ4_5tgrep: argument 1:pre.rot"}
+!372 = distinct !{!372, i1 true, !"_RNCINvNtNtNtCsf3Ta7LF998c_4core4iter8adapters3map8map_foldNtNtCs5Xr050g3D4S_3std4path7PathBufTBU_uEuNCINvXs8_NtCsbDKHzkXHCUM_9hashbrown3setINtB1J_7HashSetBU_NtNtNtBY_4hash6random11RandomStateEINtNtNtB8_6traits7collect6ExtendBU_E6extendINtNtNtB8_7sources4once4OnceBU_EE0NCINvNvNtNtB39_8iterator8Iterator8for_each4callB1t_NCINvXs1i_NtB1L_3mapINtB5i_7HashMapBU_uB2v_EIB35_B1t_E6extendINtB4_3MapB3L_B1A_EE0E0E0CsbNLsQi0JuJ4_5tgrep"}
+!373 = distinct !{!373, !372, !"_RNCINvNtNtNtCsf3Ta7LF998c_4core4iter8adapters3map8map_foldNtNtCs5Xr050g3D4S_3std4path7PathBufTBU_uEuNCINvXs8_NtCsbDKHzkXHCUM_9hashbrown3setINtB1J_7HashSetBU_NtNtNtBY_4hash6random11RandomStateEINtNtNtB8_6traits7collect6ExtendBU_E6extendINtNtNtB8_7sources4once4OnceBU_EE0NCINvNvNtNtB39_8iterator8Iterator8for_each4callB1t_NCINvXs1i_NtB1L_3mapINtB5i_7HashMapBU_uB2v_EIB35_B1t_E6extendINtB4_3MapB3L_B1A_EE0E0E0CsbNLsQi0JuJ4_5tgrep: argument 0"}
+!374 = distinct !{!374, i1 true, !"_RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator8for_each4callTNtNtCs5Xr050g3D4S_3std4path7PathBufuENCINvXs1i_NtCsbDKHzkXHCUM_9hashbrown3mapINtB21_7HashMapB1g_uNtNtNtB1k_4hash6random11RandomStateEINtNtBa_7collect6ExtendB1f_E6extendINtNtNtBc_8adapters3map3MapINtNtNtBc_7sources4once4OnceB1g_ENCINvXs8_NtB23_3setINtB55_7HashSetB1g_B2P_EIB3q_B1g_E6extendB4p_E0EE0E0CsbNLsQi0JuJ4_5tgrep"}
+!375 = distinct !{!375, !374, !"_RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator8for_each4callTNtNtCs5Xr050g3D4S_3std4path7PathBufuENCINvXs1i_NtCsbDKHzkXHCUM_9hashbrown3mapINtB21_7HashMapB1g_uNtNtNtB1k_4hash6random11RandomStateEINtNtBa_7collect6ExtendB1f_E6extendINtNtNtBc_8adapters3map3MapINtNtNtBc_7sources4once4OnceB1g_ENCINvXs8_NtB23_3setINtB55_7HashSetB1g_B2P_EIB3q_B1g_E6extendB4p_E0EE0E0CsbNLsQi0JuJ4_5tgrep: argument 0"}
+!376 = distinct !{!376, i1 true, !"_RNCINvXs1i_NtCsbDKHzkXHCUM_9hashbrown3mapINtB9_7HashMapNtNtCs5Xr050g3D4S_3std4path7PathBufuNtNtNtBV_4hash6random11RandomStateEINtNtNtNtCsf3Ta7LF998c_4core4iter6traits7collect6ExtendTBR_uEE6extendINtNtNtB27_8adapters3map3MapINtNtNtB27_7sources4once4OnceBR_ENCINvXs8_NtBb_3setINtB4f_7HashSetBR_B1r_EIB21_BR_E6extendB3z_E0EE0CsbNLsQi0JuJ4_5tgrep"}
+!377 = distinct !{!377, !376, !"_RNCINvXs1i_NtCsbDKHzkXHCUM_9hashbrown3mapINtB9_7HashMapNtNtCs5Xr050g3D4S_3std4path7PathBufuNtNtNtBV_4hash6random11RandomStateEINtNtNtNtCsf3Ta7LF998c_4core4iter6traits7collect6ExtendTBR_uEE6extendINtNtNtB27_8adapters3map3MapINtNtNtB27_7sources4once4OnceBR_ENCINvXs8_NtBb_3setINtB4f_7HashSetBR_B1r_EIB21_BR_E6extendB3z_E0EE0CsbNLsQi0JuJ4_5tgrep: argument 0"}
+!378 = !{!368}
+!379 = !{!370}
+!380 = !{!370, !371, !368}
+!381 = !{!371, !368}
+!382 = !{!377, !375, !373, !368}
 !383 = distinct !{!383, i1 true, !"_RNCINvMs4_NtCs8sO4Nh65sHq_10rayon_core8registryNtB8_8Registry3newNtB8_12DefaultSpawnE0CsbNLsQi0JuJ4_5tgrep"}
 !384 = distinct !{!384, !383, !"_RNCINvMs4_NtCs8sO4Nh65sHq_10rayon_core8registryNtB8_8Registry3newNtB8_12DefaultSpawnE0CsbNLsQi0JuJ4_5tgrep: argument 0"}
 !385 = distinct !{!385, i1 true, !"_RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator8for_each4callTINtNtCsdB2fuMRIQJX_15crossbeam_deque5deque6WorkerNtNtCs8sO4Nh65sHq_10rayon_core3job6JobRefEINtB1j_7StealerB23_EENCINvNvNtBa_7collect14default_extend18unchecked_extenderTINtNtCsgCecv3eZDcN_5alloc3vec3VecB1g_EIB40_B2J_EEB1f_E0E0CsbNLsQi0JuJ4_5tgrep"}

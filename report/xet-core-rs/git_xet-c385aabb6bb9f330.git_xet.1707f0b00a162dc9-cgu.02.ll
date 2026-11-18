@@ -205,7 +205,7 @@ _RNvXs3_NtNtCskKLDkoKarTP_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Ha
 ; Function Attrs: inlinehint nonlazybind uwtable
 define internal fastcc void @_RNvYNtNtNtCskKLDkoKarTP_4core3str7pattern11StrSearcherNtB4_15ReverseSearcher16next_reject_backCs1YANDSn9Kib_7git_xet(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(104) %1) unnamed_addr #5 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = load i64, ptr %1, align 8, !range !9, !alias.scope !235, !noundef !4
+  %i.a = load i64, ptr %1, align 8, !range !9, !alias.scope !236, !noundef !4
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 6 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.d = load i64, ptr %i.c, align 8
@@ -236,7 +236,7 @@ bb.a:
 
 .split.us:                                        ; preds = %bb.a
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 26 ; 2 uses
-  %i.v = load i8, ptr %i.u, align 2, !range !236
+  %i.v = load i8, ptr %i.u, align 2, !range !237
   %i.w = trunc nuw i8 %i.v to i1
   %.promoted111 = load i8, ptr %i.t, align 1      ; 4 uses
   br i1 %i.w, label %_RNvXsw_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearcher9next_back.exit.thread5, label %.lr.ph
@@ -263,18 +263,18 @@ bb.a:
   br i1 %i.y, label %bb.c, label %.split72.us
 
 bb.b:                                             ; preds = %.lr.ph.split.split.peel
-  %i.ai = load i8, ptr %i.z, align 1, !alias.scope !237, !noalias !238, !noundef !4
+  %i.ai = load i8, ptr %i.z, align 1, !alias.scope !238, !noalias !239, !noundef !4
   %i.aj = icmp sgt i8 %i.ai, -65
   br i1 %i.aj, label %bb.c, label %.split72.us
 
 bb.c:                                             ; preds = %bb.b, %.split.i.i.us.peel
-  %i.ak = load i8, ptr %i.aa, align 1, !noalias !239, !noundef !4 ; 3 uses
+  %i.ak = load i8, ptr %i.aa, align 1, !noalias !240, !noundef !4 ; 3 uses
   %i.al = icmp sgt i8 %i.ak, -1
   br i1 %i.al, label %bb.f, label %_RNvXs2K_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9next_backCs1YANDSn9Kib_7git_xet.exit17.i.i.us.peel
 
 _RNvXs2K_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9next_backCs1YANDSn9Kib_7git_xet.exit17.i.i.us.peel: ; preds = %bb.c
   tail call void @llvm.assume(i1 %i.ab)
-  %i.am = load i8, ptr %i.ac, align 1, !noalias !239, !noundef !4 ; 3 uses
+  %i.am = load i8, ptr %i.ac, align 1, !noalias !240, !noundef !4 ; 3 uses
   %i.an = and i8 %i.am, 31
   %i.ao = zext nneg i8 %i.an to i32
   %i.ap = icmp slt i8 %i.am, -64
@@ -282,7 +282,7 @@ _RNvXs2K_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits1
 
 _RNvXs2K_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9next_backCs1YANDSn9Kib_7git_xet.exit19.i.i.us.peel: ; preds = %_RNvXs2K_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9next_backCs1YANDSn9Kib_7git_xet.exit17.i.i.us.peel
   tail call void @llvm.assume(i1 %i.ad)
-  %i.aq = load i8, ptr %i.ae, align 1, !noalias !239, !noundef !4 ; 3 uses
+  %i.aq = load i8, ptr %i.ae, align 1, !noalias !240, !noundef !4 ; 3 uses
   %i.ar = and i8 %i.aq, 15
   %i.as = zext nneg i8 %i.ar to i32
   %i.at = icmp slt i8 %i.aq, -64
@@ -290,7 +290,7 @@ _RNvXs2K_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits1
 
 _RNvXs2K_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9next_backCs1YANDSn9Kib_7git_xet.exit21.i.i.us.peel: ; preds = %_RNvXs2K_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9next_backCs1YANDSn9Kib_7git_xet.exit19.i.i.us.peel
   tail call void @llvm.assume(i1 %i.af)
-  %i.au = load i8, ptr %i.ag, align 1, !noalias !239, !noundef !4
+  %i.au = load i8, ptr %i.ag, align 1, !noalias !240, !noundef !4
   %i.av = and i8 %i.au, 7
   %i.aw = zext nneg i8 %i.av to i32
   %i.ax = shl nuw nsw i32 %i.aw, 6
@@ -330,29 +330,29 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br i1 %i.bl, label %.lr.ph127, label %.split80.us
 
 .lr.ph127:                                        ; preds = %.lr.ph.split.us.split
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !235)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !236)
   br label %.split80.us
 
 .lr.ph.split.split:                               ; preds = %bb.g
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !235)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !236)
   br i1 %.not.i.i.us, label %bb.h, label %.split.i.i.us
 
 .split.i.i.us:                                    ; preds = %.lr.ph.split.split
   br i1 %i.y, label %bb.i, label %.split72.us
 
 bb.h:                                             ; preds = %.lr.ph.split.split
-  %i.bm = load i8, ptr %i.z, align 1, !alias.scope !237, !noalias !240, !noundef !4
+  %i.bm = load i8, ptr %i.z, align 1, !alias.scope !238, !noalias !241, !noundef !4
   %i.bn = icmp sgt i8 %i.bm, -65
   br i1 %i.bn, label %bb.i, label %.split72.us
 
 bb.i:                                             ; preds = %bb.h, %.split.i.i.us
-  %i.bo = load i8, ptr %i.aa, align 1, !noalias !241, !noundef !4 ; 3 uses
+  %i.bo = load i8, ptr %i.aa, align 1, !noalias !242, !noundef !4 ; 3 uses
   %i.bp = icmp sgt i8 %i.bo, -1
   br i1 %i.bp, label %bb.l, label %_RNvXs2K_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9next_backCs1YANDSn9Kib_7git_xet.exit17.i.i.us
 
 _RNvXs2K_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9next_backCs1YANDSn9Kib_7git_xet.exit17.i.i.us: ; preds = %bb.i
   tail call void @llvm.assume(i1 %i.ab)
-  %i.bq = load i8, ptr %i.ac, align 1, !noalias !241, !noundef !4 ; 3 uses
+  %i.bq = load i8, ptr %i.ac, align 1, !noalias !242, !noundef !4 ; 3 uses
   %i.br = and i8 %i.bq, 31
   %i.bs = zext nneg i8 %i.br to i32
   %i.bt = icmp slt i8 %i.bq, -64
@@ -360,7 +360,7 @@ _RNvXs2K_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits1
 
 _RNvXs2K_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9next_backCs1YANDSn9Kib_7git_xet.exit19.i.i.us: ; preds = %_RNvXs2K_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9next_backCs1YANDSn9Kib_7git_xet.exit17.i.i.us
   tail call void @llvm.assume(i1 %i.ad)
-  %i.bu = load i8, ptr %i.ae, align 1, !noalias !241, !noundef !4 ; 3 uses
+  %i.bu = load i8, ptr %i.ae, align 1, !noalias !242, !noundef !4 ; 3 uses
   %i.bv = and i8 %i.bu, 15
   %i.bw = zext nneg i8 %i.bv to i32
   %i.bx = icmp slt i8 %i.bu, -64
@@ -368,7 +368,7 @@ _RNvXs2K_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits1
 
 _RNvXs2K_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9next_backCs1YANDSn9Kib_7git_xet.exit21.i.i.us: ; preds = %_RNvXs2K_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9next_backCs1YANDSn9Kib_7git_xet.exit19.i.i.us
   tail call void @llvm.assume(i1 %i.af)
-  %i.by = load i8, ptr %i.ag, align 1, !noalias !241, !noundef !4
+  %i.by = load i8, ptr %i.ag, align 1, !noalias !242, !noundef !4
   %i.bz = and i8 %i.by, 7
   %i.ca = zext nneg i8 %i.bz to i32
   %i.cb = shl nuw nsw i32 %i.ca, 6
@@ -406,19 +406,19 @@ bb.l:                                             ; preds = %bb.i
 .split72.us:                                      ; preds = %.split.i.i.us, %bb.h, %bb.b, %.split.i.i.us.peel
   %.lcssa = phi i8 [ %.promoted111, %.split.i.i.us.peel ], [ %.promoted111, %bb.b ], [ 0, %bb.h ], [ 0, %.split.i.i.us ]
   %i.cp = xor i8 %.lcssa, 1
-  store i8 %i.cp, ptr %i.t, align 1, !alias.scope !235
-  tail call void @_RNvNtCskKLDkoKarTP_4core3str16slice_error_fail(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.g, i64 noundef %i.i, i64 noundef 0, i64 noundef %.promoted65, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @11) #22, !noalias !240
+  store i8 %i.cp, ptr %i.t, align 1, !alias.scope !236
+  tail call void @_RNvNtCskKLDkoKarTP_4core3str16slice_error_fail(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.g, i64 noundef %i.i, i64 noundef 0, i64 noundef %.promoted65, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @11) #22, !noalias !241
   unreachable
 
 .split76.us:                                      ; preds = %.split76.us.loopexit, %bb.g
   %.sroa.4.1.i.ph.i.us.lcssa = phi i32 [ %.sroa.4.1.i.ph.i.us.peel, %bb.g ], [ %.sroa.4.1.i.ph.i.us, %.split76.us.loopexit ] ; 3 uses
-  store i8 1, ptr %i.t, align 1, !alias.scope !235
+  store i8 1, ptr %i.t, align 1, !alias.scope !236
   %i.cq = icmp samesign ult i32 %.sroa.4.1.i.ph.i.us.lcssa, 128
   br i1 %i.cq, label %bb.ab, label %bb.z
 
 .split80.us:                                      ; preds = %.lr.ph127, %.lr.ph.split.us.split
-  store i8 1, ptr %i.t, align 1, !alias.scope !235
-  store i8 1, ptr %i.u, align 2, !alias.scope !235
+  store i8 1, ptr %i.t, align 1, !alias.scope !236
+  store i8 1, ptr %i.u, align 2, !alias.scope !236
   br label %_RNvXsw_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearcher9next_back.exit.thread5
 
 .split.us81:                                      ; preds = %bb.a
@@ -432,18 +432,18 @@ bb.l:                                             ; preds = %bb.i
 
 .lr.ph128:                                        ; preds = %.lr.ph128.preheader, %bb.n
   %i.ct = phi i64 [ %i.cu, %bb.n ], [ %.promoted65, %.lr.ph128.preheader ] ; 5 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !235)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !236)
   %i.cu = add i64 %i.ct, -1                       ; 8 uses
   br i1 %.first_iter, label %bb.m, label %.split83.us
 
 bb.m:                                             ; preds = %.lr.ph128
   %i.cv = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.cu
-  %i.cw = load i8, ptr %i.cv, align 1, !noalias !240, !noundef !4 ; 2 uses
+  %i.cw = load i8, ptr %i.cv, align 1, !noalias !241, !noundef !4 ; 2 uses
   %i.cx = icmp eq i8 %i.cw, %i.s
   br i1 %i.cx, label %bb.n, label %.split87.us
 
 bb.n:                                             ; preds = %bb.m
-  store i64 %i.cu, ptr %i.p, align 8, !alias.scope !235
+  store i64 %i.cu, ptr %i.p, align 8, !alias.scope !236
   %i.cy = icmp eq i64 %i.cu, 0
   br i1 %i.cy, label %_RNvXsw_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearcher9next_back.exit.thread5, label %.lr.ph128
 
@@ -459,10 +459,10 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %.lr.ph129, %bb.y
   %i.db = phi i64 [ %.promoted, %.lr.ph129 ], [ %i.di, %bb.y ] ; 6 uses
   %i.dc = phi i64 [ %.promoted66, %.lr.ph129 ], [ %i.ek, %bb.y ] ; 2 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !235)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !242)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !236)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !243)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !244)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !245)
   %i.dd = sub i64 %i.db, %i.m                     ; 2 uses
   %i.de = icmp ult i64 %i.dd, %i.i
   br i1 %i.de, label %.lr.ph.i.i.us, label %.loopexit.i
@@ -482,7 +482,7 @@ bb.p:                                             ; preds = %bb.w, %.lr.ph.i.i.u
 
 bb.q:                                             ; preds = %bb.p
   %i.dk = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.di
-  %i.dl = load i8, ptr %i.dk, align 1, !alias.scope !243, !noalias !240, !noundef !4
+  %i.dl = load i8, ptr %i.dk, align 1, !alias.scope !244, !noalias !241, !noundef !4
   %i.dm = and i8 %i.dl, 63
   %i.dn = zext nneg i8 %i.dm to i64
   %i.do = shl nuw i64 1, %i.dn
@@ -513,18 +513,18 @@ bb.r:                                             ; preds = %bb.q
   %.sroa.2.0.i.us.i.us232 = phi i64 [ %i.dr, %.split.us.i.us ], [ %.sroa.03.0.i.fr.i.us, %.split.us.i.us.preheader ]
   %i.dr = add i64 %.sroa.2.0.i.us.i.us232, -1     ; 5 uses
   %i.ds = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.dr
-  %i.dt = load i8, ptr %i.ds, align 1, !alias.scope !244, !noalias !240, !noundef !4
+  %i.dt = load i8, ptr %i.ds, align 1, !alias.scope !245, !noalias !241, !noundef !4
   %i.du = add i64 %i.dr, %i.di                    ; 2 uses
   %i.dv = icmp ult i64 %i.du, %i.i
   tail call void @llvm.assume(i1 %i.dv)
   %i.dw = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.du
-  %i.dx = load i8, ptr %i.dw, align 1, !alias.scope !243, !noalias !240, !noundef !4
+  %i.dx = load i8, ptr %i.dw, align 1, !alias.scope !244, !noalias !241, !noundef !4
   %.not22.i.us.i.us = icmp eq i8 %i.dt, %i.dx
   br i1 %.not22.i.us.i.us, label %.split.us.i.us, label %.split41.us.i.us
 
 .split41.us.i.us:                                 ; preds = %.lr.ph233
   %.reass.i.i.us = add i64 %i.dr, %invariant.op.i.i.us ; 3 uses
-  store i64 %.reass.i.i.us, ptr %i.b, align 8, !alias.scope !245
+  store i64 %.reass.i.i.us, ptr %i.b, align 8, !alias.scope !246
   br i1 %i.e, label %bb.w, label %.sink.split.i.i.us
 
 .split39.us.i.us:                                 ; preds = %.split.us.i.us, %.split.us.i.us.preheader, %.split.i.us
@@ -545,27 +545,27 @@ bb.s:                                             ; preds = %bb.t
 
 bb.t:                                             ; preds = %.lr.ph236
   %i.dz = getelementptr inbounds nuw i8, ptr %i.k, i64 %.sroa.09.0.i.i.us235
-  %i.ea = load i8, ptr %i.dz, align 1, !alias.scope !244, !noalias !240, !noundef !4
+  %i.ea = load i8, ptr %i.dz, align 1, !alias.scope !245, !noalias !241, !noundef !4
   %i.eb = add i64 %.sroa.09.0.i.i.us235, %i.di    ; 2 uses
   %i.ec = icmp ult i64 %i.eb, %i.i
   tail call void @llvm.assume(i1 %i.ec)
   %i.ed = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.eb
-  %i.ee = load i8, ptr %i.ed, align 1, !alias.scope !243, !noalias !240, !noundef !4
+  %i.ee = load i8, ptr %i.ed, align 1, !alias.scope !244, !noalias !241, !noundef !4
   %.not21.i.i.us = icmp eq i8 %i.ea, %i.ee
   br i1 %.not21.i.i.us, label %bb.s, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  store i64 %i.df, ptr %i.b, align 8, !alias.scope !245
+  store i64 %i.df, ptr %i.b, align 8, !alias.scope !246
   br i1 %i.e, label %bb.w, label %.sink.split.i.i.us
 
 bb.v:                                             ; preds = %bb.q
-  store i64 %i.di, ptr %i.b, align 8, !alias.scope !245
+  store i64 %i.di, ptr %i.b, align 8, !alias.scope !246
   br i1 %i.e, label %bb.w, label %.sink.split.i.i.us
 
 .sink.split.i.i.us:                               ; preds = %bb.v, %bb.u, %.split41.us.i.us
   %.sink75.i.i.us = phi i64 [ %i.da, %bb.u ], [ %i.m, %.split41.us.i.us ], [ %i.m, %bb.v ] ; 3 uses
   %.ph74.i.i.us = phi i64 [ %i.df, %bb.u ], [ %.reass.i.i.us, %.split41.us.i.us ], [ %i.di, %bb.v ]
-  store i64 %.sink75.i.i.us, ptr %i.q, align 8, !alias.scope !245
+  store i64 %.sink75.i.i.us, ptr %i.q, align 8, !alias.scope !246
   br label %bb.w
 
 bb.w:                                             ; preds = %.sink.split.i.i.us, %bb.v, %bb.u, %.split41.us.i.us
@@ -577,11 +577,11 @@ bb.w:                                             ; preds = %.sink.split.i.i.us,
   br i1 %i.ej, label %bb.p, label %.loopexit.i
 
 .split39.us.i.us._crit_edge:                      ; preds = %.split39.us.i.us, %bb.s
-  store i64 %i.di, ptr %i.b, align 8, !alias.scope !245
+  store i64 %i.di, ptr %i.b, align 8, !alias.scope !246
   br i1 %i.e, label %bb.y, label %bb.x
 
 bb.x:                                             ; preds = %.split39.us.i.us._crit_edge
-  store i64 %i.m, ptr %i.q, align 8, !alias.scope !245
+  store i64 %i.m, ptr %i.q, align 8, !alias.scope !246
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.x, %.split39.us.i.us._crit_edge
@@ -604,11 +604,11 @@ bb.aa:                                            ; preds = %bb.z
 bb.ab:                                            ; preds = %bb.aa, %bb.z, %.split76.us
   %.sroa.01.0.neg.i = phi i64 [ -2, %bb.z ], [ %..i, %bb.aa ], [ -1, %.split76.us ]
   %i.eo = add i64 %.sroa.01.0.neg.i, %.promoted65 ; 2 uses
-  store i64 %i.eo, ptr %i.p, align 8, !alias.scope !235
+  store i64 %i.eo, ptr %i.p, align 8, !alias.scope !236
   br label %_RNvXsw_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearcher9next_back.exit
 
 .split83.us:                                      ; preds = %.lr.ph128
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %i.cu, i64 noundef %i.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @12) #22, !noalias !240
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %i.cu, i64 noundef %i.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @12) #22, !noalias !241
   unreachable
 
 .split87.us:                                      ; preds = %bb.m
@@ -620,7 +620,7 @@ bb.ac:                                            ; preds = %.split87.us
   tail call void @llvm.assume(i1 %i.eq)
   %i.er = add i64 %i.ct, -2                       ; 2 uses
   %i.es = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.er
-  %i.et = load i8, ptr %i.es, align 1, !alias.scope !246, !noalias !240, !noundef !4
+  %i.et = load i8, ptr %i.es, align 1, !alias.scope !247, !noalias !241, !noundef !4
   %i.eu = icmp sgt i8 %i.et, -65
   br i1 %i.eu, label %_RNvMNtCskKLDkoKarTP_4core3stre19floor_char_boundary.exit.i, label %bb.ad
 
@@ -629,7 +629,7 @@ bb.ad:                                            ; preds = %bb.ac
   tail call void @llvm.assume(i1 %i.ev)
   %i.ew = add i64 %i.ct, -3                       ; 2 uses
   %i.ex = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.ew
-  %i.ey = load i8, ptr %i.ex, align 1, !alias.scope !246, !noalias !240, !noundef !4
+  %i.ey = load i8, ptr %i.ex, align 1, !alias.scope !247, !noalias !241, !noundef !4
   %i.ez = icmp sgt i8 %i.ey, -65
   %i.fa = add i64 %i.ct, -4
   %spec.select.i.i = select i1 %i.ez, i64 %i.ew, i64 %i.fa
@@ -637,15 +637,15 @@ bb.ad:                                            ; preds = %bb.ac
 
 _RNvMNtCskKLDkoKarTP_4core3stre19floor_char_boundary.exit.i: ; preds = %bb.ad, %bb.ac, %.split87.us
   %.sroa.0.0.i13.i = phi i64 [ %i.er, %bb.ac ], [ %spec.select.i.i, %bb.ad ], [ %i.cu, %.split87.us ] ; 2 uses
-  store i64 %.sroa.0.0.i13.i, ptr %i.p, align 8, !alias.scope !235
+  store i64 %.sroa.0.0.i13.i, ptr %i.p, align 8, !alias.scope !236
   br label %_RNvXsw_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearcher9next_back.exit
 
 .split104.us:                                     ; preds = %.split.i.us
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %i.dq, i64 noundef range(i64 0, -9223372036854775808) %i.m, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @3) #22, !noalias !247
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %i.dq, i64 noundef range(i64 0, -9223372036854775808) %i.m, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @3) #22, !noalias !248
   unreachable
 
 .split108.us:                                     ; preds = %.lr.ph236
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %umax53.i.i.us, i64 noundef range(i64 0, -9223372036854775808) %i.m, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2) #22, !noalias !247
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %umax53.i.i.us, i64 noundef range(i64 0, -9223372036854775808) %i.m, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2) #22, !noalias !248
   unreachable
 
 .loopexit.i:                                      ; preds = %bb.o, %bb.w, %bb.p
@@ -655,7 +655,7 @@ _RNvMNtCskKLDkoKarTP_4core3stre19floor_char_boundary.exit.i: ; preds = %bb.ad, %
 
 bb.ae:                                            ; preds = %.loopexit.i
   %i.fc = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.fb
-  %i.fd = load i8, ptr %i.fc, align 1, !alias.scope !248, !noalias !240, !noundef !4
+  %i.fd = load i8, ptr %i.fc, align 1, !alias.scope !249, !noalias !241, !noundef !4
   %i.fe = icmp sgt i8 %i.fd, -65
   br i1 %i.fe, label %_RNvMNtCskKLDkoKarTP_4core3stre19floor_char_boundary.exit18.i, label %bb.af
 
@@ -664,7 +664,7 @@ bb.af:                                            ; preds = %bb.ae
   tail call void @llvm.assume(i1 %i.ff)
   %i.fg = add i64 %i.fb, -1                       ; 2 uses
   %i.fh = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.fg
-  %i.fi = load i8, ptr %i.fh, align 1, !alias.scope !248, !noalias !240, !noundef !4
+  %i.fi = load i8, ptr %i.fh, align 1, !alias.scope !249, !noalias !241, !noundef !4
   %i.fj = icmp sgt i8 %i.fi, -65
   br i1 %i.fj, label %_RNvMNtCskKLDkoKarTP_4core3stre19floor_char_boundary.exit18.i, label %bb.ag
 
@@ -673,7 +673,7 @@ bb.ag:                                            ; preds = %bb.af
   tail call void @llvm.assume(i1 %i.fk)
   %i.fl = add i64 %i.fb, -2                       ; 2 uses
   %i.fm = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.fl
-  %i.fn = load i8, ptr %i.fm, align 1, !alias.scope !248, !noalias !240, !noundef !4
+  %i.fn = load i8, ptr %i.fm, align 1, !alias.scope !249, !noalias !241, !noundef !4
   %i.fo = icmp sgt i8 %i.fn, -65
   %i.fp = add i64 %i.fb, -3
   %spec.select.i17.i = select i1 %i.fo, i64 %i.fl, i64 %i.fp
@@ -682,7 +682,7 @@ bb.ag:                                            ; preds = %bb.af
 _RNvMNtCskKLDkoKarTP_4core3stre19floor_char_boundary.exit18.i: ; preds = %bb.ag, %bb.af, %bb.ae, %.loopexit.i
   %.sroa.0.0.i16.i = phi i64 [ %i.i, %.loopexit.i ], [ %spec.select.i17.i, %bb.ag ], [ %i.fb, %bb.ae ], [ %i.fg, %bb.af ] ; 2 uses
   %..i.i = tail call noundef i64 @llvm.umin.i64(i64 %i.fb, i64 %.sroa.0.0.i16.i)
-  store i64 %..i.i, ptr %i.b, align 8, !alias.scope !235
+  store i64 %..i.i, ptr %i.b, align 8, !alias.scope !236
   br label %_RNvXsw_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearcher9next_back.exit
 
 _RNvXsw_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearcher9next_back.exit: ; preds = %_RNvMNtCskKLDkoKarTP_4core3stre19floor_char_boundary.exit18.i, %_RNvMNtCskKLDkoKarTP_4core3stre19floor_char_boundary.exit.i, %bb.ab
@@ -1085,30 +1085,31 @@ begin_hunk_1_@llvm.umax.i64
 !220 = distinct !{!220, !219, !"_RNvXs8_NtNtCskKLDkoKarTP_4core3str6traitsINtNtNtB9_3ops5range7RangeTojEINtNtNtB9_5slice5index10SliceIndexeE3get: argument 0"}
 !221 = distinct !{!221, i1 true, !"_RNvXsw_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearcher9next_back"}
 !222 = distinct !{!222, !221, !"_RNvXsw_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearcher9next_back: argument 1:Peel0"}
-!223 = distinct !{!223, !217, !"_RNvXsw_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearcher9next_back: argument 0"}
+!223 = distinct !{!223, !221, !"_RNvXsw_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearcher9next_back: argument 0:Peel0"}
 !224 = distinct !{!224, i1 true, !"_RINvNtNtCskKLDkoKarTP_4core3str11validations23next_code_point_reverseINtNtNtB6_5slice4iter4IterhEECs1YANDSn9Kib_7git_xet"}
 !225 = distinct !{!225, !224, !"_RINvNtNtCskKLDkoKarTP_4core3str11validations23next_code_point_reverseINtNtNtB6_5slice4iter4IterhEECs1YANDSn9Kib_7git_xet: argument 0"}
-!226 = distinct !{!226, i1 true, !"_RINvMsx_NtNtCskKLDkoKarTP_4core3str7patternNtB6_14TwoWaySearcher9next_backNtB6_14RejectAndMatchECs1YANDSn9Kib_7git_xet"}
-!227 = distinct !{!227, !226, !"_RINvMsx_NtNtCskKLDkoKarTP_4core3str7patternNtB6_14TwoWaySearcher9next_backNtB6_14RejectAndMatchECs1YANDSn9Kib_7git_xet: argument 1"}
-!228 = distinct !{!228, !226, !"_RINvMsx_NtNtCskKLDkoKarTP_4core3str7patternNtB6_14TwoWaySearcher9next_backNtB6_14RejectAndMatchECs1YANDSn9Kib_7git_xet: argument 2"}
-!229 = distinct !{!229, !226, !"_RINvMsx_NtNtCskKLDkoKarTP_4core3str7patternNtB6_14TwoWaySearcher9next_backNtB6_14RejectAndMatchECs1YANDSn9Kib_7git_xet: argument 3"}
-!230 = distinct !{!230, i1 true, !"_RNvMNtCskKLDkoKarTP_4core3stre19floor_char_boundary"}
-!231 = distinct !{!231, !230, !"_RNvMNtCskKLDkoKarTP_4core3stre19floor_char_boundary: argument 0"}
-!232 = distinct !{!232, !226, !"_RINvMsx_NtNtCskKLDkoKarTP_4core3str7patternNtB6_14TwoWaySearcher9next_backNtB6_14RejectAndMatchECs1YANDSn9Kib_7git_xet: argument 0"}
-!233 = distinct !{!233, i1 true, !"_RNvMNtCskKLDkoKarTP_4core3stre19floor_char_boundary"}
-!234 = distinct !{!234, !233, !"_RNvMNtCskKLDkoKarTP_4core3stre19floor_char_boundary: argument 0"}
-!235 = !{!218}
-!236 = !{i8 0, i8 2}
-!237 = !{!220}
-!238 = !{!223, !222}
-!239 = !{!225, !223, !222}
-!240 = !{!223, !218}
-!241 = !{!225, !223, !218}
-!242 = !{!227}
+!226 = distinct !{!226, !217, !"_RNvXsw_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearcher9next_back: argument 0"}
+!227 = distinct !{!227, i1 true, !"_RINvMsx_NtNtCskKLDkoKarTP_4core3str7patternNtB6_14TwoWaySearcher9next_backNtB6_14RejectAndMatchECs1YANDSn9Kib_7git_xet"}
+!228 = distinct !{!228, !227, !"_RINvMsx_NtNtCskKLDkoKarTP_4core3str7patternNtB6_14TwoWaySearcher9next_backNtB6_14RejectAndMatchECs1YANDSn9Kib_7git_xet: argument 1"}
+!229 = distinct !{!229, !227, !"_RINvMsx_NtNtCskKLDkoKarTP_4core3str7patternNtB6_14TwoWaySearcher9next_backNtB6_14RejectAndMatchECs1YANDSn9Kib_7git_xet: argument 2"}
+!230 = distinct !{!230, !227, !"_RINvMsx_NtNtCskKLDkoKarTP_4core3str7patternNtB6_14TwoWaySearcher9next_backNtB6_14RejectAndMatchECs1YANDSn9Kib_7git_xet: argument 3"}
+!231 = distinct !{!231, i1 true, !"_RNvMNtCskKLDkoKarTP_4core3stre19floor_char_boundary"}
+!232 = distinct !{!232, !231, !"_RNvMNtCskKLDkoKarTP_4core3stre19floor_char_boundary: argument 0"}
+!233 = distinct !{!233, !227, !"_RINvMsx_NtNtCskKLDkoKarTP_4core3str7patternNtB6_14TwoWaySearcher9next_backNtB6_14RejectAndMatchECs1YANDSn9Kib_7git_xet: argument 0"}
+!234 = distinct !{!234, i1 true, !"_RNvMNtCskKLDkoKarTP_4core3stre19floor_char_boundary"}
+!235 = distinct !{!235, !234, !"_RNvMNtCskKLDkoKarTP_4core3stre19floor_char_boundary: argument 0"}
+!236 = !{!218}
+!237 = !{i8 0, i8 2}
+!238 = !{!220}
+!239 = !{!223, !222}
+!240 = !{!225, !223, !222}
+!241 = !{!226, !218}
+!242 = !{!225, !226, !218}
 !243 = !{!228}
 !244 = !{!229}
-!245 = !{!227, !218}
-!246 = !{!231}
-!247 = !{!232, !227, !228, !229, !223, !218}
-!248 = !{!234}
+!245 = !{!230}
+!246 = !{!228, !218}
+!247 = !{!232}
+!248 = !{!233, !228, !229, !230, !226, !218}
+!249 = !{!235}
 end_hunk_1

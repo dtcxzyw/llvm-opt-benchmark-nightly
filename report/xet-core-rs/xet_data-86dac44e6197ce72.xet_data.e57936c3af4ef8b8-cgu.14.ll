@@ -205,37 +205,37 @@ bb.b:                                             ; preds = %bb.a
 
 _RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterTmmEENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCsjHtSR7YjKD4_8xet_data.exit.thread: ; preds = %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %.promoted17, i64 8 ; 2 uses
-  store ptr %i.f, ptr %i.d, align 8, !alias.scope !5504
+  store ptr %i.f, ptr %i.d, align 8, !alias.scope !5506
   br label %.preheader.peel
 
 .preheader.peel:                                  ; preds = %_RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterTmmEENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCsjHtSR7YjKD4_8xet_data.exit.thread, %bb.a
   %.ph = phi ptr [ %i.f, %_RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterTmmEENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCsjHtSR7YjKD4_8xet_data.exit.thread ], [ %.promoted17, %bb.a ] ; 4 uses
   %.sroa.6.010.in.ph = phi ptr [ %.promoted17, %_RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterTmmEENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCsjHtSR7YjKD4_8xet_data.exit.thread ], [ %.sroa.5.0..sroa_idx, %bb.a ]
   %.sroa.6.010.peel = load i64, ptr %.sroa.6.010.in.ph, align 4 ; 3 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !5505)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !5506)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5507)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5508)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !5509)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !5510)
   %.not21.peel = icmp eq ptr %.ph, %i.c
   br i1 %.not21.peel, label %.loopexit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader.peel
   %.sroa.6.4.extract.trunc.peel = trunc i64 %.sroa.6.010.peel to i32
   %i.g = getelementptr inbounds nuw i8, ptr %.ph, i64 8 ; 2 uses
-  store ptr %i.g, ptr %i.d, align 8, !alias.scope !5509
-  %i.h = load <2 x i32>, ptr %.ph, align 4, !noalias !5510
-  %i.i = load i32, ptr %.ph, align 4, !noalias !5510, !noundef !11
-  store <2 x i32> %i.h, ptr %.sroa.5.0..sroa_idx, align 4, !alias.scope !5505
+  store ptr %i.g, ptr %i.d, align 8, !alias.scope !5511
+  %i.h = load <2 x i32>, ptr %.ph, align 4, !noalias !5512
+  %i.i = load i32, ptr %.ph, align 4, !noalias !5512, !noundef !11
+  store <2 x i32> %i.h, ptr %.sroa.5.0..sroa_idx, align 4, !alias.scope !5507
   %.not.peel = icmp eq i32 %i.i, %.sroa.6.4.extract.trunc.peel
   br i1 %.not.peel, label %.preheader, label %.loopexit28
 
 .preheader:                                       ; preds = %bb.c, %bb.e
   %i.j = phi ptr [ %i.k, %bb.e ], [ %i.g, %bb.c ] ; 4 uses
   %.sroa.6.010 = load i64, ptr %.sroa.5.0..sroa_idx, align 4 ; 3 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !5511)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !5512)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5513)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5514)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !5515)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !5516)
   %.not21 = icmp eq ptr %i.j, %i.c
   br i1 %.not21, label %.loopexit, label %bb.e
 
@@ -251,12 +251,12 @@ bb.d:                                             ; preds = %.loopexit28, %.loop
 bb.e:                                             ; preds = %.preheader
   %.sroa.6.4.extract.trunc = trunc i64 %.sroa.6.010 to i32
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 2 uses
-  store ptr %i.k, ptr %i.d, align 8, !alias.scope !5515
-  %i.l = load <2 x i32>, ptr %i.j, align 4, !noalias !5516
-  %i.m = load i32, ptr %i.j, align 4, !noalias !5516, !noundef !11
-  store <2 x i32> %i.l, ptr %.sroa.5.0..sroa_idx, align 4, !alias.scope !5511
+  store ptr %i.k, ptr %i.d, align 8, !alias.scope !5517
+  %i.l = load <2 x i32>, ptr %i.j, align 4, !noalias !5518
+  %i.m = load i32, ptr %i.j, align 4, !noalias !5518, !noundef !11
+  store <2 x i32> %i.l, ptr %.sroa.5.0..sroa_idx, align 4, !alias.scope !5513
   %.not = icmp eq i32 %i.m, %.sroa.6.4.extract.trunc
-  br i1 %.not, label %.preheader, label %.loopexit28, !llvm.loop !5503
+  br i1 %.not, label %.preheader, label %.loopexit28, !llvm.loop !5505
 
 .loopexit:                                        ; preds = %.preheader, %.preheader.peel
   %.sroa.6.010.lcssa = phi i64 [ %.sroa.6.010.peel, %.preheader.peel ], [ %.sroa.6.010, %.preheader ]
@@ -659,28 +659,30 @@ begin_hunk_1_@llvm.umin.i64
 !5491 = distinct !{!5491, !5490, !"_RNCNvMs3_NtNtNtCskKLDkoKarTP_4core4iter8adapters8peekableINtB7_8PeekableINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterTmmEEE4peek0CsjHtSR7YjKD4_8xet_data: argument 1:Peel0"}
 !5492 = distinct !{!5492, i1 true, !"_RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterTmmEENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCsjHtSR7YjKD4_8xet_data"}
 !5493 = distinct !{!5493, !5492, !"_RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterTmmEENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCsjHtSR7YjKD4_8xet_data: argument 1:Peel0"}
-!5494 = distinct !{!5494, i1 true, !"_RNCNvMs3_NtNtNtCskKLDkoKarTP_4core4iter8adapters8peekableINtB7_8PeekableINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterTmmEEE4peek0CsjHtSR7YjKD4_8xet_data"}
-!5495 = distinct !{!5495, !5494, !"_RNCNvMs3_NtNtNtCskKLDkoKarTP_4core4iter8adapters8peekableINtB7_8PeekableINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterTmmEEE4peek0CsjHtSR7YjKD4_8xet_data: argument 0"}
-!5496 = distinct !{!5496, i1 true, !"_RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterTmmEENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCsjHtSR7YjKD4_8xet_data"}
-!5497 = distinct !{!5497, !5496, !"_RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterTmmEENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCsjHtSR7YjKD4_8xet_data: argument 0"}
-!5498 = distinct !{!5498, i1 true, !"_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionIBw_TmmEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1k_8PeekableINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterBM_EE4peek0ECsjHtSR7YjKD4_8xet_data"}
-!5499 = distinct !{!5499, !5498, !"_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionIBw_TmmEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1k_8PeekableINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterBM_EE4peek0ECsjHtSR7YjKD4_8xet_data: argument 0"}
-!5500 = distinct !{!5500, !5498, !"_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionIBw_TmmEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1k_8PeekableINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterBM_EE4peek0ECsjHtSR7YjKD4_8xet_data: argument 1"}
-!5501 = distinct !{!5501, !5494, !"_RNCNvMs3_NtNtNtCskKLDkoKarTP_4core4iter8adapters8peekableINtB7_8PeekableINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterTmmEEE4peek0CsjHtSR7YjKD4_8xet_data: argument 1"}
-!5502 = distinct !{!5502, !5496, !"_RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterTmmEENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCsjHtSR7YjKD4_8xet_data: argument 1"}
-!5503 = distinct !{!5503, !5517}
-!5504 = !{!5486}
-!5505 = !{!5488}
-!5506 = !{!5489}
-!5507 = !{!5491}
-!5508 = !{!5493}
-!5509 = !{!5493, !5491, !5489}
-!5510 = !{!5497, !5493, !5495, !5491, !5488, !5489}
-!5511 = !{!5499}
-!5512 = !{!5500}
-!5513 = !{!5501}
-!5514 = !{!5502}
-!5515 = !{!5502, !5501, !5500}
-!5516 = !{!5497, !5502, !5495, !5501, !5499, !5500}
-!5517 = !{!"llvm.loop.peeled.count", i32 1}
+!5494 = distinct !{!5494, !5490, !"_RNCNvMs3_NtNtNtCskKLDkoKarTP_4core4iter8adapters8peekableINtB7_8PeekableINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterTmmEEE4peek0CsjHtSR7YjKD4_8xet_data: argument 0:Peel0"}
+!5495 = distinct !{!5495, !5492, !"_RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterTmmEENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCsjHtSR7YjKD4_8xet_data: argument 0:Peel0"}
+!5496 = distinct !{!5496, i1 true, !"_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionIBw_TmmEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1k_8PeekableINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterBM_EE4peek0ECsjHtSR7YjKD4_8xet_data"}
+!5497 = distinct !{!5497, !5496, !"_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionIBw_TmmEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1k_8PeekableINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterBM_EE4peek0ECsjHtSR7YjKD4_8xet_data: argument 0"}
+!5498 = distinct !{!5498, !5496, !"_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionIBw_TmmEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1k_8PeekableINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterBM_EE4peek0ECsjHtSR7YjKD4_8xet_data: argument 1"}
+!5499 = distinct !{!5499, i1 true, !"_RNCNvMs3_NtNtNtCskKLDkoKarTP_4core4iter8adapters8peekableINtB7_8PeekableINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterTmmEEE4peek0CsjHtSR7YjKD4_8xet_data"}
+!5500 = distinct !{!5500, !5499, !"_RNCNvMs3_NtNtNtCskKLDkoKarTP_4core4iter8adapters8peekableINtB7_8PeekableINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterTmmEEE4peek0CsjHtSR7YjKD4_8xet_data: argument 1"}
+!5501 = distinct !{!5501, i1 true, !"_RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterTmmEENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCsjHtSR7YjKD4_8xet_data"}
+!5502 = distinct !{!5502, !5501, !"_RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterTmmEENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCsjHtSR7YjKD4_8xet_data: argument 1"}
+!5503 = distinct !{!5503, !5499, !"_RNCNvMs3_NtNtNtCskKLDkoKarTP_4core4iter8adapters8peekableINtB7_8PeekableINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterTmmEEE4peek0CsjHtSR7YjKD4_8xet_data: argument 0"}
+!5504 = distinct !{!5504, !5501, !"_RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterTmmEENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCsjHtSR7YjKD4_8xet_data: argument 0"}
+!5505 = distinct !{!5505, !5519}
+!5506 = !{!5486}
+!5507 = !{!5488}
+!5508 = !{!5489}
+!5509 = !{!5491}
+!5510 = !{!5493}
+!5511 = !{!5493, !5491, !5489}
+!5512 = !{!5495, !5493, !5494, !5491, !5488, !5489}
+!5513 = !{!5497}
+!5514 = !{!5498}
+!5515 = !{!5500}
+!5516 = !{!5502}
+!5517 = !{!5502, !5500, !5498}
+!5518 = !{!5504, !5502, !5503, !5500, !5497, !5498}
+!5519 = !{!"llvm.loop.peeled.count", i32 1}
 end_hunk_1

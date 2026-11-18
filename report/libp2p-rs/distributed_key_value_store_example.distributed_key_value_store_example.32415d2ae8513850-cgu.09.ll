@@ -205,9 +205,10 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.c, ptr noundef nonnull align 8 dereferenceable(40) %0, i64 40, i1 false)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !2289)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !2288)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  store ptr %1, ptr %i.b, align 8, !noalias !2290
+  store ptr %1, ptr %i.b, align 8, !noalias !2289
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !2290)
   %.sroa.0.0.copyload25.i = load i64, ptr %i.c, align 8, !alias.scope !2291 ; 2 uses
   store i64 -1, ptr %i.c, align 8, !alias.scope !2292
   %.not6.i = icmp eq i64 %.sroa.0.0.copyload25.i, -1
@@ -221,15 +222,15 @@ bb.c:                                             ; preds = %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.b
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !2290
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !2289
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.4.0..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(32) %i.f, i64 32, i1 false)
-  store i64 %.sroa.0.0.copyload25.i, ptr %i.a, align 8, !noalias !2290
+  store i64 %.sroa.0.0.copyload25.i, ptr %i.a, align 8, !noalias !2289
   invoke void @_RNvXs1_NtNtNtCskKLDkoKarTP_4core3ops8function5implsQNCINvNvNtNtNtNtBb_4iter6traits8iterator8Iterator8for_each4callINtNtCsjouRnuJWSBB_5yamux5frame5FrameuENCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB2A_3VecB1O_E14extend_trustedINtNtNtB11_8adapters5chain5ChainINtNtBb_6option8IntoIterB1O_EB42_EE0E0INtB7_5FnMutTuB1O_EE8call_mutCs4jvuubEK18G_35distributed_key_value_store_example(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.b, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(40) %i.a)
-          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option8IntoIterINtNtCsjouRnuJWSBB_5yamux5frame5FrameuEEECs4jvuubEK18G_35distributed_key_value_store_example.exit.loopexit.i unwind label %bb.c, !noalias !2289
+          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option8IntoIterINtNtCsjouRnuJWSBB_5yamux5frame5FrameuEEECs4jvuubEK18G_35distributed_key_value_store_example.exit.loopexit.i unwind label %bb.c, !noalias !2288
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option8IntoIterINtNtCsjouRnuJWSBB_5yamux5frame5FrameuEEECs4jvuubEK18G_35distributed_key_value_store_example.exit.loopexit.i: ; preds = %.lr.ph.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !2290
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !2289
   br label %bb.f
 
 bb.d:                                             ; preds = %bb.c
@@ -632,21 +633,21 @@ begin_hunk_1_@llvm.umin.i64
 !2276 = distinct !{!2276, !2275, !"_RINvYINtNtCskKLDkoKarTP_4core6option8IntoIterINtNtCsjouRnuJWSBB_5yamux5frame5FrameuEENtNtNtNtB8_4iter6traits8iterator8Iterator4folduQNCINvNvB1l_8for_each4callBH_NCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB2I_3VecBH_E14extend_trustedINtNtNtB1r_8adapters5chain5ChainB3_B3_EE0E0ECs4jvuubEK18G_35distributed_key_value_store_example: argument 0"}
 !2277 = distinct !{!2277, !2275, !"_RINvYINtNtCskKLDkoKarTP_4core6option8IntoIterINtNtCsjouRnuJWSBB_5yamux5frame5FrameuEENtNtNtNtB8_4iter6traits8iterator8Iterator4folduQNCINvNvB1l_8for_each4callBH_NCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB2I_3VecBH_E14extend_trustedINtNtNtB1r_8adapters5chain5ChainB3_B3_EE0E0ECs4jvuubEK18G_35distributed_key_value_store_example: argument 1"}
 !2278 = distinct !{!2278, i1 true, !"_RNvXsy_NtCskKLDkoKarTP_4core6optionINtB5_8IntoIterINtNtCsjouRnuJWSBB_5yamux5frame5FrameuEENtNtNtNtB7_4iter6traits8iterator8Iterator4nextCs4jvuubEK18G_35distributed_key_value_store_example"}
-!2279 = distinct !{!2279, !2278, !"_RNvXsy_NtCskKLDkoKarTP_4core6optionINtB5_8IntoIterINtNtCsjouRnuJWSBB_5yamux5frame5FrameuEENtNtNtNtB7_4iter6traits8iterator8Iterator4nextCs4jvuubEK18G_35distributed_key_value_store_example: argument 1"}
-!2280 = distinct !{!2280, i1 true, !"_RNvXsy_NtCskKLDkoKarTP_4core6optionINtB5_8IntoIterINtNtCsjouRnuJWSBB_5yamux5frame5FrameuEENtNtNtNtB7_4iter6traits8iterator8Iterator4nextCs4jvuubEK18G_35distributed_key_value_store_example"}
-!2281 = distinct !{!2281, !2280, !"_RNvXsy_NtCskKLDkoKarTP_4core6optionINtB5_8IntoIterINtNtCsjouRnuJWSBB_5yamux5frame5FrameuEENtNtNtNtB7_4iter6traits8iterator8Iterator4nextCs4jvuubEK18G_35distributed_key_value_store_example: argument 0:pre.rot"}
-!2282 = distinct !{!2282, i1 true, !"_RINvYINtNtCskKLDkoKarTP_4core6option8IntoIterINtNtCsjouRnuJWSBB_5yamux5frame5FrameuEENtNtNtNtB8_4iter6traits8iterator8Iterator4folduNCINvNvB1l_8for_each4callBH_NCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB2H_3VecBH_E14extend_trustedINtNtNtB1r_8adapters5chain5ChainB3_B3_EE0E0ECs4jvuubEK18G_35distributed_key_value_store_example"}
-!2283 = distinct !{!2283, !2282, !"_RINvYINtNtCskKLDkoKarTP_4core6option8IntoIterINtNtCsjouRnuJWSBB_5yamux5frame5FrameuEENtNtNtNtB8_4iter6traits8iterator8Iterator4folduNCINvNvB1l_8for_each4callBH_NCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB2H_3VecBH_E14extend_trustedINtNtNtB1r_8adapters5chain5ChainB3_B3_EE0E0ECs4jvuubEK18G_35distributed_key_value_store_example: argument 1"}
-!2284 = distinct !{!2284, !2282, !"_RINvYINtNtCskKLDkoKarTP_4core6option8IntoIterINtNtCsjouRnuJWSBB_5yamux5frame5FrameuEENtNtNtNtB8_4iter6traits8iterator8Iterator4folduNCINvNvB1l_8for_each4callBH_NCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB2H_3VecBH_E14extend_trustedINtNtNtB1r_8adapters5chain5ChainB3_B3_EE0E0ECs4jvuubEK18G_35distributed_key_value_store_example: argument 0"}
-!2285 = distinct !{!2285, i1 true, !"_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8for_each4callINtNtCsjouRnuJWSBB_5yamux5frame5FrameuENCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB21_3VecB1f_E14extend_trustedINtNtNtBc_8adapters5chain5ChainINtNtBe_6option8IntoIterB1f_EB3s_EE0E0Cs4jvuubEK18G_35distributed_key_value_store_example"}
-!2286 = distinct !{!2286, !2285, !"_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8for_each4callINtNtCsjouRnuJWSBB_5yamux5frame5FrameuENCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB21_3VecB1f_E14extend_trustedINtNtNtBc_8adapters5chain5ChainINtNtBe_6option8IntoIterB1f_EB3s_EE0E0Cs4jvuubEK18G_35distributed_key_value_store_example: argument 0"}
-!2287 = distinct !{!2287, i1 true, !"_RNCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB8_3VecINtNtCsjouRnuJWSBB_5yamux5frame5FrameuEE14extend_trustedINtNtNtNtCskKLDkoKarTP_4core4iter8adapters5chain5ChainINtNtB1L_6option8IntoIterBI_EB2u_EE0Cs4jvuubEK18G_35distributed_key_value_store_example"}
-!2288 = distinct !{!2288, !2287, !"_RNCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB8_3VecINtNtCsjouRnuJWSBB_5yamux5frame5FrameuEE14extend_trustedINtNtNtNtCskKLDkoKarTP_4core4iter8adapters5chain5ChainINtNtB1L_6option8IntoIterBI_EB2u_EE0Cs4jvuubEK18G_35distributed_key_value_store_example: argument 0"}
-!2289 = !{!2276}
-!2290 = !{!2276, !2277}
-!2291 = !{!2281, !2279, !2276}
-!2292 = !{!2279, !2276}
-!2293 = !{!2288, !2286, !2284, !2283}
+!2279 = distinct !{!2279, !2278, !"_RNvXsy_NtCskKLDkoKarTP_4core6optionINtB5_8IntoIterINtNtCsjouRnuJWSBB_5yamux5frame5FrameuEENtNtNtNtB7_4iter6traits8iterator8Iterator4nextCs4jvuubEK18G_35distributed_key_value_store_example: argument 0:pre.rot"}
+!2280 = distinct !{!2280, !2278, !"_RNvXsy_NtCskKLDkoKarTP_4core6optionINtB5_8IntoIterINtNtCsjouRnuJWSBB_5yamux5frame5FrameuEENtNtNtNtB7_4iter6traits8iterator8Iterator4nextCs4jvuubEK18G_35distributed_key_value_store_example: argument 1:pre.rot"}
+!2281 = distinct !{!2281, i1 true, !"_RINvYINtNtCskKLDkoKarTP_4core6option8IntoIterINtNtCsjouRnuJWSBB_5yamux5frame5FrameuEENtNtNtNtB8_4iter6traits8iterator8Iterator4folduNCINvNvB1l_8for_each4callBH_NCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB2H_3VecBH_E14extend_trustedINtNtNtB1r_8adapters5chain5ChainB3_B3_EE0E0ECs4jvuubEK18G_35distributed_key_value_store_example"}
+!2282 = distinct !{!2282, !2281, !"_RINvYINtNtCskKLDkoKarTP_4core6option8IntoIterINtNtCsjouRnuJWSBB_5yamux5frame5FrameuEENtNtNtNtB8_4iter6traits8iterator8Iterator4folduNCINvNvB1l_8for_each4callBH_NCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB2H_3VecBH_E14extend_trustedINtNtNtB1r_8adapters5chain5ChainB3_B3_EE0E0ECs4jvuubEK18G_35distributed_key_value_store_example: argument 1"}
+!2283 = distinct !{!2283, !2281, !"_RINvYINtNtCskKLDkoKarTP_4core6option8IntoIterINtNtCsjouRnuJWSBB_5yamux5frame5FrameuEENtNtNtNtB8_4iter6traits8iterator8Iterator4folduNCINvNvB1l_8for_each4callBH_NCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB2H_3VecBH_E14extend_trustedINtNtNtB1r_8adapters5chain5ChainB3_B3_EE0E0ECs4jvuubEK18G_35distributed_key_value_store_example: argument 0"}
+!2284 = distinct !{!2284, i1 true, !"_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8for_each4callINtNtCsjouRnuJWSBB_5yamux5frame5FrameuENCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB21_3VecB1f_E14extend_trustedINtNtNtBc_8adapters5chain5ChainINtNtBe_6option8IntoIterB1f_EB3s_EE0E0Cs4jvuubEK18G_35distributed_key_value_store_example"}
+!2285 = distinct !{!2285, !2284, !"_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8for_each4callINtNtCsjouRnuJWSBB_5yamux5frame5FrameuENCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB21_3VecB1f_E14extend_trustedINtNtNtBc_8adapters5chain5ChainINtNtBe_6option8IntoIterB1f_EB3s_EE0E0Cs4jvuubEK18G_35distributed_key_value_store_example: argument 0"}
+!2286 = distinct !{!2286, i1 true, !"_RNCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB8_3VecINtNtCsjouRnuJWSBB_5yamux5frame5FrameuEE14extend_trustedINtNtNtNtCskKLDkoKarTP_4core4iter8adapters5chain5ChainINtNtB1L_6option8IntoIterBI_EB2u_EE0Cs4jvuubEK18G_35distributed_key_value_store_example"}
+!2287 = distinct !{!2287, !2286, !"_RNCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB8_3VecINtNtCsjouRnuJWSBB_5yamux5frame5FrameuEE14extend_trustedINtNtNtNtCskKLDkoKarTP_4core4iter8adapters5chain5ChainINtNtB1L_6option8IntoIterBI_EB2u_EE0Cs4jvuubEK18G_35distributed_key_value_store_example: argument 0"}
+!2288 = !{!2276}
+!2289 = !{!2276, !2277}
+!2290 = !{!2279}
+!2291 = !{!2279, !2280, !2276}
+!2292 = !{!2280, !2276}
+!2293 = !{!2287, !2285, !2283, !2282}
 !2294 = distinct !{!2294, i1 true, !"_RINvXs3_NtNtCskKLDkoKarTP_4core4hash5implsRNtNtNtCsjouRnuJWSBB_5yamux5frame6header8StreamIdNtB8_4Hash4hashINtCsldc21sZubFy_13nohash_hasher12NoHashHasherBF_EECs4jvuubEK18G_35distributed_key_value_store_example"}
 !2295 = distinct !{!2295, !2294, !"_RINvXs3_NtNtCskKLDkoKarTP_4core4hash5implsRNtNtNtCsjouRnuJWSBB_5yamux5frame6header8StreamIdNtB8_4Hash4hashINtCsldc21sZubFy_13nohash_hasher12NoHashHasherBF_EECs4jvuubEK18G_35distributed_key_value_store_example: argument 0"}
 !2296 = !{!2295}

@@ -205,7 +205,7 @@ define internal noundef float @_maketaps_bilinear(ptr nofree noundef writeonly c
 
 vector.ph:                                        ; preds = %.preheader30.preheader
   %n.vec = and i64 %i.d, -8                       ; 4 uses
-  %5 = sitofp i64 %n.vec to float
+  %5 = uitofp i64 %n.vec to float
   %i.k = fmul reassoc nsz arcp contract afn float %i.a, %5
   %i.l = insertelement <4 x float> poison, float %i.k, i64 0
   %i.m = shufflevector <4 x float> %i.l, <4 x float> poison, <4 x i32> zeroinitializer
@@ -298,7 +298,7 @@ define internal noundef float @_maketaps_bicubic(ptr nofree noundef writeonly ca
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
   %n.vec = and i64 %i.d, -8                       ; 4 uses
-  %5 = sitofp i64 %n.vec to float
+  %5 = uitofp i64 %n.vec to float
   %i.k = fmul reassoc nsz arcp contract afn float %i.a, %5
   %i.l = insertelement <4 x float> poison, float %i.k, i64 0
   %i.m = shufflevector <4 x float> %i.l, <4 x float> poison, <4 x i32> zeroinitializer
@@ -465,7 +465,7 @@ define internal float @_maketaps_lanczos(ptr nofree noundef captures(none) %0, i
 
 vector.ph:                                        ; preds = %.lr.ph
   %n.vec = and i64 %i.d, -8                       ; 4 uses
-  %5 = sitofp i64 %n.vec to float
+  %5 = uitofp i64 %n.vec to float
   %i.p = fmul reassoc nsz arcp contract afn float %i.a, %5
   %i.q = insertelement <4 x float> poison, float %i.p, i64 0
   %i.r = shufflevector <4 x float> %i.q, <4 x float> poison, <4 x i32> zeroinitializer

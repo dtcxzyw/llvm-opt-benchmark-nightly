@@ -129,18 +129,13 @@ bb.g:                                             ; preds = %bb.a
   %i.p = fsub double %1, %5
   %i.q = fsub double %2, %4
   %i.r = fmul double %i.q, %i.p                   ; 5 uses
-  %i.s = fsub double %i.o, %i.r                   ; 8 uses
+  %i.s = fsub double %i.o, %i.r                   ; 6 uses
   %i.t = fcmp ogt double %i.o, 0.000000e+00
   br i1 %i.t, label %bb.h, label %bb.j
 
 bb.h:                                             ; preds = %bb.g
   %i.u = fcmp ugt double %i.r, 0.000000e+00
-  br i1 %i.u, label %bb.i, label %22
-
-22:                                               ; preds = %bb.h
-  %23 = fcmp ogt double %i.s, 0.000000e+00
-  %..i.i = zext i1 %23 to i32
-  br label %_ZN4geos9algorithm14CGAlgorithmsDD22orientationIndexFilterEdddddd.exit.thread
+  br i1 %i.u, label %bb.i, label %_ZN4geos9algorithm14CGAlgorithmsDD22orientationIndexFilterEdddddd.exit.thread
 
 bb.i:                                             ; preds = %bb.h
   %i.v = fadd double %i.o, %i.r
@@ -152,12 +147,7 @@ bb.j:                                             ; preds = %bb.g
 
 bb.k:                                             ; preds = %bb.j
   %i.x = fcmp ult double %i.r, 0.000000e+00
-  br i1 %i.x, label %bb.l, label %24
-
-24:                                               ; preds = %bb.k
-  %25 = fcmp olt double %i.s, 0.000000e+00
-  %.0.i36.i = sext i1 %25 to i32
-  br label %_ZN4geos9algorithm14CGAlgorithmsDD22orientationIndexFilterEdddddd.exit.thread
+  br i1 %i.x, label %bb.l, label %_ZN4geos9algorithm14CGAlgorithmsDD22orientationIndexFilterEdddddd.exit.thread
 
 bb.l:                                             ; preds = %bb.k
   %i.y = fneg double %i.o
@@ -328,8 +318,8 @@ _ZN12_GLOBAL__N_113OrientationDDERKN4geos4math2DDE.exit: ; preds = %bb.r, %_ZNK4
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #14
   br label %_ZN4geos9algorithm14CGAlgorithmsDD22orientationIndexFilterEdddddd.exit.thread
 
-_ZN4geos9algorithm14CGAlgorithmsDD22orientationIndexFilterEdddddd.exit.thread: ; preds = %bb.o, %24, %bb.m, %22, %_ZN12_GLOBAL__N_113OrientationDDERKN4geos4math2DDE.exit
-  %.023 = phi i32 [ %.0.i26, %_ZN12_GLOBAL__N_113OrientationDDERKN4geos4math2DDE.exit ], [ %.0.i40.i, %bb.o ], [ %.0.i36.i, %24 ], [ %.0.i38.i, %bb.m ], [ %..i.i, %22 ]
+_ZN4geos9algorithm14CGAlgorithmsDD22orientationIndexFilterEdddddd.exit.thread: ; preds = %bb.k, %bb.o, %bb.h, %bb.m, %_ZN12_GLOBAL__N_113OrientationDDERKN4geos4math2DDE.exit
+  %.023 = phi i32 [ %.0.i26, %_ZN12_GLOBAL__N_113OrientationDDERKN4geos4math2DDE.exit ], [ -1, %bb.k ], [ %.0.i40.i, %bb.o ], [ 1, %bb.h ], [ %.0.i38.i, %bb.m ]
   ret i32 %.023
 
 bb.t:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.f

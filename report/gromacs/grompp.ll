@@ -205,7 +205,7 @@ bb.vx:                                            ; preds = %.lr.ph190.i
   %i.doo = fmul nnan float %i.doh, f0x421DE9E6
   %i.dop = fmul float %i.doo, %i.dok
   %i.doq = fadd nnan float %i.doh, %i.dok
-  %i.dor = fmul float %.0152.i, %i.doq
+  %i.dor = fmul nnan float %.0152.i, %i.doq
   %i.dos = fdiv float %i.dop, %i.dor
   br label %bb.vy
 

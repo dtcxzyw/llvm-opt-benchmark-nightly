@@ -202,7 +202,7 @@ _RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
 ; Function Attrs: inlinehint nonlazybind uwtable
 define internal fastcc void @_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(104) %1) unnamed_addr #4 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = load i64, ptr %1, align 8, !range !96, !noundef !5
+  %i.a = load i64, ptr %1, align 8, !range !97, !noundef !5
   switch i64 %i.a, label %default.unreachable261 [
     i64 0, label %.preheader
     i64 1, label %bb.q
@@ -224,7 +224,7 @@ bb.a:
 .lr.ph.preheader:                                 ; preds = %.preheader
   %.promoted206 = load i8, ptr %i.f, align 8      ; 4 uses
   %.promoted157 = load i64, ptr %i.b, align 8     ; 13 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !97)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !98)
   %i.k = trunc nuw i8 %.promoted206 to i1         ; 2 uses
   %i.l = icmp eq i64 %.promoted157, 0
   br i1 %i.l, label %bb.d, label %bb.b
@@ -239,7 +239,7 @@ bb.b:                                             ; preds = %.lr.ph.preheader
 
 bb.c:                                             ; preds = %bb.b
   %i.n = getelementptr inbounds nuw i8, ptr %i.h, i64 %.promoted157
-  %i.o = load i8, ptr %i.n, align 1, !alias.scope !98, !noalias !99, !noundef !5
+  %i.o = load i8, ptr %i.n, align 1, !alias.scope !99, !noalias !100, !noundef !5
   %i.p = icmp sgt i8 %i.o, -65
   br i1 %i.p, label %bb.d, label %.split.us161
 
@@ -249,7 +249,7 @@ bb.d:                                             ; preds = %bb.c, %.split.i.i.u
   br i1 %i.r, label %.split166.us, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.s = load i8, ptr %i.q, align 1, !noalias !100, !noundef !5 ; 5 uses
+  %i.s = load i8, ptr %i.q, align 1, !noalias !101, !noundef !5 ; 5 uses
   %i.t = icmp sgt i8 %i.s, -1
   br i1 %i.t, label %bb.f, label %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsjfvwIE9w8og_20libp2p_webrtc_websys.exit12.i.i.us.peel
 
@@ -260,7 +260,7 @@ _RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
   %i.x = add nuw nsw i64 %.promoted157, 1
   %i.y = icmp samesign ne i64 %i.x, %i.j
   tail call void @llvm.assume(i1 %i.y)
-  %i.z = load i8, ptr %i.u, align 1, !noalias !100, !noundef !5
+  %i.z = load i8, ptr %i.u, align 1, !noalias !101, !noundef !5
   %i.aa = shl nuw nsw i32 %i.w, 6
   %i.ab = and i8 %i.z, 63
   %i.ac = zext nneg i8 %i.ab to i32               ; 2 uses
@@ -273,7 +273,7 @@ _RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
   %i.ag = add nuw nsw i64 %.promoted157, 2
   %i.ah = icmp samesign ne i64 %i.ag, %i.j
   tail call void @llvm.assume(i1 %i.ah)
-  %i.ai = load i8, ptr %i.af, align 1, !noalias !100, !noundef !5
+  %i.ai = load i8, ptr %i.af, align 1, !noalias !101, !noundef !5
   %i.aj = shl nuw nsw i32 %i.ac, 6
   %i.ak = and i8 %i.ai, 63
   %i.al = zext nneg i8 %i.ak to i32
@@ -288,7 +288,7 @@ _RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
   %i.ar = add nuw nsw i64 %.promoted157, 3
   %i.as = icmp samesign ne i64 %i.ar, %i.j
   tail call void @llvm.assume(i1 %i.as)
-  %i.at = load i8, ptr %i.aq, align 1, !noalias !100, !noundef !5
+  %i.at = load i8, ptr %i.aq, align 1, !noalias !101, !noundef !5
   %i.au = shl nuw nsw i32 %i.w, 18
   %i.av = and i32 %i.au, 1835008
   %i.aw = shl nuw nsw i32 %i.am, 6
@@ -324,7 +324,7 @@ bb.j:                                             ; preds = %bb.i
 _RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4next.exit.us.peel: ; preds = %bb.j, %bb.i, %bb.h
   %.sroa.01.0.i.us.peel = phi i64 [ 2, %bb.i ], [ %..i.us.peel, %bb.j ], [ 1, %bb.h ]
   %i.bg = add i64 %.sroa.01.0.i.us.peel, %.promoted157 ; 13 uses
-  store i64 %i.bg, ptr %i.b, align 8, !alias.scope !97
+  store i64 %i.bg, ptr %i.b, align 8, !alias.scope !98
   %i.bh = icmp eq i64 %i.bg, 0
   %.not.i.i.us = icmp ult i64 %i.bg, %i.j
   %i.bi = icmp eq i64 %i.bg, %i.j
@@ -340,7 +340,7 @@ _RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4next
   %i.bs = getelementptr inbounds nuw i8, ptr %i.bk, i64 3
   %i.bt = add nuw nsw i64 %i.bg, 3
   %i.bu = icmp samesign ne i64 %i.bt, %i.j
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !101)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !102)
   br i1 %i.bh, label %bb.m, label %bb.k
 
 bb.k:                                             ; preds = %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4next.exit.us.peel
@@ -350,7 +350,7 @@ bb.k:                                             ; preds = %_RNvXsv_NtNtCskKLDk
   br i1 %i.bi, label %bb.m, label %.split.us161
 
 bb.l:                                             ; preds = %bb.k
-  %i.bv = load i8, ptr %i.bj, align 1, !alias.scope !98, !noalias !102, !noundef !5
+  %i.bv = load i8, ptr %i.bj, align 1, !alias.scope !99, !noalias !103, !noundef !5
   %i.bw = icmp sgt i8 %i.bv, -65
   br i1 %i.bw, label %bb.m, label %.split.us161
 
@@ -358,7 +358,7 @@ bb.m:                                             ; preds = %bb.l, %.split.i.i.u
   br i1 %i.bl, label %.critedge, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %i.bx = load i8, ptr %i.bk, align 1, !noalias !103, !noundef !5 ; 5 uses
+  %i.bx = load i8, ptr %i.bk, align 1, !noalias !104, !noundef !5 ; 5 uses
   %i.by = icmp sgt i8 %i.bx, -1
   br i1 %i.by, label %bb.o, label %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsjfvwIE9w8og_20libp2p_webrtc_websys.exit12.i.i.us
 
@@ -366,7 +366,7 @@ _RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
   %i.bz = and i8 %i.bx, 31
   %i.ca = zext nneg i8 %i.bz to i32               ; 3 uses
   tail call void @llvm.assume(i1 %i.bo)
-  %i.cb = load i8, ptr %i.bm, align 1, !noalias !103, !noundef !5
+  %i.cb = load i8, ptr %i.bm, align 1, !noalias !104, !noundef !5
   %i.cc = shl nuw nsw i32 %i.ca, 6
   %i.cd = and i8 %i.cb, 63
   %i.ce = zext nneg i8 %i.cd to i32               ; 2 uses
@@ -376,7 +376,7 @@ _RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
 
 _RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsjfvwIE9w8og_20libp2p_webrtc_websys.exit14.i.i.us: ; preds = %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsjfvwIE9w8og_20libp2p_webrtc_websys.exit12.i.i.us
   tail call void @llvm.assume(i1 %i.br)
-  %i.ch = load i8, ptr %i.bp, align 1, !noalias !103, !noundef !5
+  %i.ch = load i8, ptr %i.bp, align 1, !noalias !104, !noundef !5
   %i.ci = shl nuw nsw i32 %i.ce, 6
   %i.cj = and i8 %i.ch, 63
   %i.ck = zext nneg i8 %i.cj to i32
@@ -388,7 +388,7 @@ _RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
 
 _RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsjfvwIE9w8og_20libp2p_webrtc_websys.exit16.i.i.us: ; preds = %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsjfvwIE9w8og_20libp2p_webrtc_websys.exit14.i.i.us
   tail call void @llvm.assume(i1 %i.bu)
-  %i.cp = load i8, ptr %i.bs, align 1, !noalias !103, !noundef !5
+  %i.cp = load i8, ptr %i.bs, align 1, !noalias !104, !noundef !5
   %i.cq = shl nuw nsw i32 %i.ca, 18
   %i.cr = and i32 %i.cq, 1835008
   %i.cs = shl nuw nsw i32 %i.cl, 6
@@ -412,25 +412,25 @@ bb.o:                                             ; preds = %bb.n
   %.lcssa323 = phi i64 [ %.promoted157, %.split.i.i.us.peel ], [ %.promoted157, %bb.c ], [ %i.bg, %.split.i.i.us ], [ %i.bg, %bb.l ]
   %.lcssa320 = phi i8 [ %.promoted206, %.split.i.i.us.peel ], [ %.promoted206, %bb.c ], [ 1, %.split.i.i.us ], [ 1, %bb.l ]
   %i.cz = xor i8 %.lcssa320, 1
-  store i8 %i.cz, ptr %i.f, align 8, !alias.scope !101
-  tail call void @_RNvNtCskKLDkoKarTP_4core3str16slice_error_fail(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.h, i64 noundef %i.j, i64 noundef %.lcssa323, i64 noundef %i.j, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @22) #21, !noalias !102
+  store i8 %i.cz, ptr %i.f, align 8, !alias.scope !102
+  tail call void @_RNvNtCskKLDkoKarTP_4core3str16slice_error_fail(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.h, i64 noundef %i.j, i64 noundef %.lcssa323, i64 noundef %i.j, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @22) #21, !noalias !103
   unreachable
 
 .split166.us:                                     ; preds = %bb.d
   %i.da = xor i8 %.promoted206, 1
-  store i8 %i.da, ptr %i.f, align 8, !alias.scope !101
+  store i8 %i.da, ptr %i.f, align 8, !alias.scope !102
   br i1 %i.k, label %bb.s, label %bb.p
 
 .loopexit42.split.us:                             ; preds = %.loopexit42.split.us.loopexit, %bb.g
   %.lcssa325 = phi i64 [ %.promoted157, %bb.g ], [ %i.bg, %.loopexit42.split.us.loopexit ]
-  store i8 0, ptr %i.f, align 8, !alias.scope !101
+  store i8 0, ptr %i.f, align 8, !alias.scope !102
   br label %bb.s
 
 default.unreachable261:                           ; preds = %bb.a
   unreachable
 
 bb.p:                                             ; preds = %.split166.us
-  store i8 1, ptr %i.c, align 2, !alias.scope !101
+  store i8 1, ptr %i.c, align 2, !alias.scope !102
   br label %_RINvMsx_NtNtCskKLDkoKarTP_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_9MatchOnlyECsjfvwIE9w8og_20libp2p_webrtc_websys.exit
 
 bb.q:                                             ; preds = %bb.a
@@ -459,7 +459,7 @@ bb.r:                                             ; preds = %bb.a
   br i1 %i.di, label %bb.ae, label %bb.w
 
 .critedge:                                        ; preds = %bb.m
-  store i8 0, ptr %i.f, align 8, !alias.scope !101
+  store i8 0, ptr %i.f, align 8, !alias.scope !102
   br label %bb.s
 
 bb.s:                                             ; preds = %.critedge, %.loopexit42.split.us, %.split166.us
@@ -495,7 +495,7 @@ bb.u:                                             ; preds = %bb.t
 .lr.ph.i:                                         ; preds = %bb.t, %bb.v
   %.sroa.04.011.i = phi i64 [ %i.ek, %bb.v ], [ 0, %bb.t ] ; 3 uses
   %i.eh = getelementptr inbounds nuw i8, ptr %i.eb, i64 %.sroa.04.011.i
-  %i.ei = load i8, ptr %i.eh, align 1, !alias.scope !104, !noundef !5
+  %i.ei = load i8, ptr %i.eh, align 1, !alias.scope !105, !noundef !5
   %i.ej = icmp eq i8 %i.ei, %i.dz
   br i1 %i.ej, label %.loopexit43, label %bb.v
 
@@ -522,27 +522,27 @@ bb.v:                                             ; preds = %.lr.ph.i
   br label %_RINvMsx_NtNtCskKLDkoKarTP_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_9MatchOnlyECsjfvwIE9w8og_20libp2p_webrtc_websys.exit
 
 bb.w:                                             ; preds = %bb.r
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !105)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !106)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !107)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !108)
-  %.promoted.i = load i64, ptr %i.dr, align 8, !alias.scope !106 ; 2 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !109)
+  %.promoted.i = load i64, ptr %i.dr, align 8, !alias.scope !107 ; 2 uses
   %i.eq = add i64 %.promoted.i, %i.ds             ; 2 uses
   %i.er = icmp ult i64 %i.eq, %i.dm
   br i1 %i.er, label %.lr.ph.i8, label %._crit_edge.i
 
 .lr.ph.i8:                                        ; preds = %bb.w
   %i.es = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %i.et = load i64, ptr %i.es, align 8, !alias.scope !106, !noundef !5
-  %i.eu = load i64, ptr %i.df, align 8, !alias.scope !106 ; 4 uses
+  %i.et = load i64, ptr %i.es, align 8, !alias.scope !107, !noundef !5
+  %i.eu = load i64, ptr %i.df, align 8, !alias.scope !107 ; 4 uses
   %i.ev = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.ew = load i64, ptr %i.ev, align 8, !alias.scope !106 ; 2 uses
+  %i.ew = load i64, ptr %i.ev, align 8, !alias.scope !107 ; 2 uses
   %i.ex = sub i64 %i.dq, %i.ew
   %invariant.op = sub i64 1, %i.eu
   br label %.lr.ph.split.i
 
 ._crit_edge.i:                                    ; preds = %bb.z, %bb.w
-  store i64 %i.dm, ptr %i.dr, align 8, !alias.scope !106
+  store i64 %i.dm, ptr %i.dr, align 8, !alias.scope !107
   br label %_RINvMsx_NtNtCskKLDkoKarTP_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_9MatchOnlyECsjfvwIE9w8og_20libp2p_webrtc_websys.exit
 
 .lr.ph.split.i:                                   ; preds = %bb.z, %.lr.ph.i8
@@ -550,7 +550,7 @@ bb.w:                                             ; preds = %bb.r
   %i.ez = phi i64 [ %i.fj, %bb.z ], [ %i.eq, %.lr.ph.i8 ]
   %i.fa = phi i64 [ %.sink71.i, %bb.z ], [ %.promoted.i, %.lr.ph.i8 ] ; 7 uses
   %i.fb = getelementptr inbounds nuw i8, ptr %i.dk, i64 %i.ez
-  %i.fc = load i8, ptr %i.fb, align 1, !alias.scope !107, !noundef !5
+  %i.fc = load i8, ptr %i.fb, align 1, !alias.scope !108, !noundef !5
   %i.fd = and i8 %i.fc, 63
   %i.fe = zext nneg i8 %i.fd to i64
   %i.ff = shl nuw i64 1, %i.fe
@@ -570,8 +570,8 @@ bb.y:                                             ; preds = %.lr.ph.split.i
 bb.z:                                             ; preds = %bb.ad, %bb.ac, %bb.x
   %.sink71.i = phi i64 [ %i.gh, %bb.ad ], [ %i.gg, %bb.ac ], [ %i.fh, %bb.x ] ; 3 uses
   %.sink70.i = phi i64 [ 0, %bb.ad ], [ %i.ex, %bb.ac ], [ 0, %bb.x ] ; 2 uses
-  store i64 %.sink71.i, ptr %i.dr, align 8, !alias.scope !106
-  store i64 %.sink70.i, ptr %i.dg, align 8, !alias.scope !106
+  store i64 %.sink71.i, ptr %i.dr, align 8, !alias.scope !107
+  store i64 %.sink70.i, ptr %i.dg, align 8, !alias.scope !107
   %i.fj = add i64 %.sink71.i, %i.ds               ; 2 uses
   %i.fk = icmp ult i64 %i.fj, %i.dm
   br i1 %i.fk, label %.lr.ph.split.i, label %._crit_edge.i
@@ -588,12 +588,12 @@ bb.aa:                                            ; preds = %.lr.ph306
 .lr.ph306:                                        ; preds = %bb.y, %bb.aa
   %.sroa.04.0.i305 = phi i64 [ %i.fl, %bb.aa ], [ %..i.i10, %bb.y ] ; 4 uses
   %i.fo = getelementptr inbounds nuw i8, ptr %i.do, i64 %.sroa.04.0.i305
-  %i.fp = load i8, ptr %i.fo, align 1, !alias.scope !108, !noundef !5
+  %i.fp = load i8, ptr %i.fo, align 1, !alias.scope !109, !noundef !5
   %i.fq = add i64 %.sroa.04.0.i305, %i.fa         ; 2 uses
   %i.fr = icmp ult i64 %i.fq, %i.dm
   tail call void @llvm.assume(i1 %i.fr)
   %i.fs = getelementptr inbounds nuw i8, ptr %i.dk, i64 %i.fq
-  %i.ft = load i8, ptr %i.fs, align 1, !alias.scope !107, !noundef !5
+  %i.ft = load i8, ptr %i.fs, align 1, !alias.scope !108, !noundef !5
   %.not21.i = icmp eq i8 %i.fp, %i.ft
   br i1 %.not21.i, label %bb.aa, label %bb.ad
 
@@ -603,12 +603,12 @@ bb.aa:                                            ; preds = %.lr.ph306
 
 .split.us.i11:                                    ; preds = %.preheader36.i.preheader, %.preheader36.i
   %i.fv = add i64 %i.fa, %i.dq                    ; 2 uses
-  store i64 %i.fv, ptr %i.dr, align 8, !alias.scope !106
-  store i64 0, ptr %i.dg, align 8, !alias.scope !106
+  store i64 %i.fv, ptr %i.dr, align 8, !alias.scope !107
+  store i64 0, ptr %i.dg, align 8, !alias.scope !107
   %i.fw = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %i.fa, ptr %i.fw, align 8, !alias.scope !109
+  store i64 %i.fa, ptr %i.fw, align 8, !alias.scope !110
   %i.fx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %i.fv, ptr %i.fx, align 8, !alias.scope !109
+  store i64 %i.fv, ptr %i.fx, align 8, !alias.scope !110
   br label %_RINvMsx_NtNtCskKLDkoKarTP_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_9MatchOnlyECsjfvwIE9w8og_20libp2p_webrtc_websys.exit
 
 .lr.ph308:                                        ; preds = %.preheader36.i.preheader, %.preheader36.i
@@ -619,17 +619,17 @@ bb.aa:                                            ; preds = %.lr.ph306
 
 bb.ab:                                            ; preds = %.lr.ph308
   %i.ga = getelementptr inbounds nuw i8, ptr %i.do, i64 %i.fy
-  %i.gb = load i8, ptr %i.ga, align 1, !alias.scope !108, !noundef !5
+  %i.gb = load i8, ptr %i.ga, align 1, !alias.scope !109, !noundef !5
   %i.gc = add i64 %i.fy, %i.fa                    ; 2 uses
   %i.gd = icmp ult i64 %i.gc, %i.dm
   tail call void @llvm.assume(i1 %i.gd)
   %i.ge = getelementptr inbounds nuw i8, ptr %i.dk, i64 %i.gc
-  %i.gf = load i8, ptr %i.ge, align 1, !alias.scope !107, !noundef !5
+  %i.gf = load i8, ptr %i.ge, align 1, !alias.scope !108, !noundef !5
   %.not20.i = icmp eq i8 %i.gb, %i.gf
   br i1 %.not20.i, label %.preheader36.i, label %bb.ac
 
 .split32.us.i:                                    ; preds = %.lr.ph308
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %i.fy, i64 noundef range(i64 0, -9223372036854775808) %i.dq, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @3) #21, !noalias !110
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %i.fy, i64 noundef range(i64 0, -9223372036854775808) %i.dq, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @3) #21, !noalias !111
   unreachable
 
 bb.ac:                                            ; preds = %bb.ab
@@ -642,22 +642,22 @@ bb.ad:                                            ; preds = %.lr.ph306
   br label %bb.z
 
 bb.ae:                                            ; preds = %bb.r
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !111)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !112)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !113)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !114)
-  %.promoted.i12 = load i64, ptr %i.dr, align 8, !alias.scope !112 ; 2 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !115)
+  %.promoted.i12 = load i64, ptr %i.dr, align 8, !alias.scope !113 ; 2 uses
   %i.gi = add i64 %.promoted.i12, %i.ds           ; 2 uses
   %i.gj = icmp ult i64 %i.gi, %i.dm
   br i1 %i.gj, label %.lr.ph.i15, label %._crit_edge.i13
 
 .lr.ph.i15:                                       ; preds = %bb.ae
   %i.gk = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %i.gl = load i64, ptr %i.gk, align 8, !alias.scope !112, !noundef !5
-  %i.gm = load i64, ptr %i.df, align 8, !alias.scope !112
+  %i.gl = load i64, ptr %i.gk, align 8, !alias.scope !113, !noundef !5
+  %i.gm = load i64, ptr %i.df, align 8, !alias.scope !113
   %.fr215 = freeze i64 %i.gm                      ; 7 uses
   %i.gn = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.go = load i64, ptr %i.gn, align 8, !alias.scope !112
+  %i.go = load i64, ptr %i.gn, align 8, !alias.scope !113
   %umax.i = tail call i64 @llvm.umax.i64(i64 %.fr215, i64 range(i64 0, -9223372036854775808) %i.dq)
   %i.gp = add i64 %.fr215, -1                     ; 2 uses
   %.first_iter.i16 = icmp ult i64 %i.gp, %i.dq
@@ -670,7 +670,7 @@ bb.ae:                                            ; preds = %bb.r
   %i.gq = phi i64 [ %i.hp, %bb.ah ], [ %i.gi, %.lr.ph.i15 ]
   %i.gr = phi i64 [ %.sink.i18, %bb.ah ], [ %.promoted.i12, %.lr.ph.i15 ] ; 7 uses
   %i.gs = getelementptr inbounds nuw i8, ptr %i.dk, i64 %i.gq
-  %i.gt = load i8, ptr %i.gs, align 1, !alias.scope !113, !noundef !5
+  %i.gt = load i8, ptr %i.gs, align 1, !alias.scope !114, !noundef !5
   %i.gu = and i8 %i.gt, 63
   %i.gv = zext nneg i8 %i.gu to i64
   %i.gw = shl nuw i64 1, %i.gv
@@ -700,12 +700,12 @@ bb.ae:                                            ; preds = %bb.r
   %.sroa.2.0.us.i.us314 = phi i64 [ %i.gz, %.preheader.i19.us ], [ %.fr215, %.preheader.i19.us.preheader ]
   %i.gz = add i64 %.sroa.2.0.us.i.us314, -1       ; 4 uses
   %i.ha = getelementptr inbounds nuw i8, ptr %i.do, i64 %i.gz
-  %i.hb = load i8, ptr %i.ha, align 1, !alias.scope !114, !noundef !5
+  %i.hb = load i8, ptr %i.ha, align 1, !alias.scope !115, !noundef !5
   %i.hc = add i64 %i.gz, %i.gr                    ; 2 uses
   %i.hd = icmp ult i64 %i.hc, %i.dm
   tail call void @llvm.assume(i1 %i.hd)
   %i.he = getelementptr inbounds nuw i8, ptr %i.dk, i64 %i.hc
-  %i.hf = load i8, ptr %i.he, align 1, !alias.scope !113, !noundef !5
+  %i.hf = load i8, ptr %i.he, align 1, !alias.scope !114, !noundef !5
   %.not20.us.i.us = icmp eq i8 %i.hb, %i.hf
   br i1 %.not20.us.i.us, label %.preheader.i19.us, label %.split.us
 
@@ -716,12 +716,12 @@ bb.ae:                                            ; preds = %bb.r
 .lr.ph312:                                        ; preds = %.preheader35.i.preheader, %.preheader35.i
   %.sroa.04.0.us.i311 = phi i64 [ %i.gy, %.preheader35.i ], [ %.fr215, %.preheader35.i.preheader ] ; 4 uses
   %i.hh = getelementptr inbounds nuw i8, ptr %i.do, i64 %.sroa.04.0.us.i311
-  %i.hi = load i8, ptr %i.hh, align 1, !alias.scope !114, !noundef !5
+  %i.hi = load i8, ptr %i.hh, align 1, !alias.scope !115, !noundef !5
   %i.hj = add i64 %.sroa.04.0.us.i311, %i.gr      ; 2 uses
   %i.hk = icmp ult i64 %i.hj, %i.dm
   tail call void @llvm.assume(i1 %i.hk)
   %i.hl = getelementptr inbounds nuw i8, ptr %i.dk, i64 %i.hj
-  %i.hm = load i8, ptr %i.hl, align 1, !alias.scope !113, !noundef !5
+  %i.hm = load i8, ptr %i.hl, align 1, !alias.scope !114, !noundef !5
   %.not21.us.i = icmp eq i8 %i.hi, %i.hm
   br i1 %.not21.us.i, label %.preheader35.i, label %bb.af
 
@@ -729,7 +729,7 @@ bb.ae:                                            ; preds = %bb.r
   br i1 %.not34.i.us313, label %.split.us.i21, label %.split32.us.i20
 
 .split32.us.i20:                                  ; preds = %.preheader.i19
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %i.gp, i64 noundef range(i64 0, -9223372036854775808) %i.dq, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @3) #21, !noalias !115
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %i.gp, i64 noundef range(i64 0, -9223372036854775808) %i.dq, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @3) #21, !noalias !116
   unreachable
 
 bb.af:                                            ; preds = %.lr.ph312
@@ -743,22 +743,22 @@ bb.ag:                                            ; preds = %.lr.ph.split.us.i
 
 bb.ah:                                            ; preds = %bb.ag, %bb.af, %.split.us
   %.sink.i18 = phi i64 [ %i.ho, %bb.ag ], [ %i.hn, %bb.af ], [ %i.hg, %.split.us ] ; 3 uses
-  store i64 %.sink.i18, ptr %i.dr, align 8, !alias.scope !112
+  store i64 %.sink.i18, ptr %i.dr, align 8, !alias.scope !113
   %i.hp = add i64 %.sink.i18, %i.ds               ; 2 uses
   %i.hq = icmp ult i64 %i.hp, %i.dm
   br i1 %i.hq, label %.lr.ph.split.us.i, label %._crit_edge.i13
 
 ._crit_edge.i13:                                  ; preds = %bb.ah, %bb.ae
-  store i64 %i.dm, ptr %i.dr, align 8, !alias.scope !112
+  store i64 %i.dm, ptr %i.dr, align 8, !alias.scope !113
   br label %_RINvMsx_NtNtCskKLDkoKarTP_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_9MatchOnlyECsjfvwIE9w8og_20libp2p_webrtc_websys.exit
 
 .split.us.i21:                                    ; preds = %.preheader.i19.us.preheader, %.preheader.i19.us, %.preheader.i19
   %i.hr = add i64 %i.gr, %i.dq                    ; 2 uses
-  store i64 %i.hr, ptr %i.dr, align 8, !alias.scope !112
+  store i64 %i.hr, ptr %i.dr, align 8, !alias.scope !113
   %i.hs = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %i.gr, ptr %i.hs, align 8, !alias.scope !116
+  store i64 %i.gr, ptr %i.hs, align 8, !alias.scope !117
   %i.ht = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %i.hr, ptr %i.ht, align 8, !alias.scope !116
+  store i64 %i.hr, ptr %i.ht, align 8, !alias.scope !117
   br label %_RINvMsx_NtNtCskKLDkoKarTP_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_9MatchOnlyECsjfvwIE9w8og_20libp2p_webrtc_websys.exit
 }
 
@@ -1002,46 +1002,47 @@ attributes #21 = { noinline noreturn }
 !72 = distinct !{!72, !71, !"_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4next: argument 1:Peel0"}
 !73 = distinct !{!73, i1 true, !"_RNvXs9_NtNtCskKLDkoKarTP_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3get"}
 !74 = distinct !{!74, !73, !"_RNvXs9_NtNtCskKLDkoKarTP_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3get: argument 0"}
-!75 = distinct !{!75, i1 true, !"_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4next"}
-!76 = distinct !{!76, !75, !"_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4next: argument 0"}
-!77 = distinct !{!77, i1 true, !"_RINvNtNtCskKLDkoKarTP_4core3str11validations15next_code_pointINtNtNtB6_5slice4iter4IterhEECsjfvwIE9w8og_20libp2p_webrtc_websys"}
-!78 = distinct !{!78, !77, !"_RINvNtNtCskKLDkoKarTP_4core3str11validations15next_code_pointINtNtNtB6_5slice4iter4IterhEECsjfvwIE9w8og_20libp2p_webrtc_websys: argument 0"}
-!79 = distinct !{!79, !75, !"_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4next: argument 1"}
-!80 = distinct !{!80, i1 true, !"_RNvNtNtCskKLDkoKarTP_4core5slice6memchr6memchr"}
-!81 = distinct !{!81, !80, !"_RNvNtNtCskKLDkoKarTP_4core5slice6memchr6memchr: argument 0"}
-!82 = distinct !{!82, i1 true, !"_RINvMsx_NtNtCskKLDkoKarTP_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_9MatchOnlyECsjfvwIE9w8og_20libp2p_webrtc_websys"}
-!83 = distinct !{!83, !82, !"_RINvMsx_NtNtCskKLDkoKarTP_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_9MatchOnlyECsjfvwIE9w8og_20libp2p_webrtc_websys: argument 0"}
-!84 = distinct !{!84, !82, !"_RINvMsx_NtNtCskKLDkoKarTP_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_9MatchOnlyECsjfvwIE9w8og_20libp2p_webrtc_websys: argument 1"}
-!85 = distinct !{!85, !82, !"_RINvMsx_NtNtCskKLDkoKarTP_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_9MatchOnlyECsjfvwIE9w8og_20libp2p_webrtc_websys: argument 2"}
-!86 = distinct !{!86, !82, !"_RINvMsx_NtNtCskKLDkoKarTP_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_9MatchOnlyECsjfvwIE9w8og_20libp2p_webrtc_websys: argument 3"}
-!87 = distinct !{!87, i1 true, !"_RNvXsy_NtNtCskKLDkoKarTP_4core3str7patternNtB5_9MatchOnlyNtB5_14TwoWayStrategy8matching"}
-!88 = distinct !{!88, !87, !"_RNvXsy_NtNtCskKLDkoKarTP_4core3str7patternNtB5_9MatchOnlyNtB5_14TwoWayStrategy8matching: argument 0"}
-!89 = distinct !{!89, i1 true, !"_RINvMsx_NtNtCskKLDkoKarTP_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_9MatchOnlyECsjfvwIE9w8og_20libp2p_webrtc_websys"}
-!90 = distinct !{!90, !89, !"_RINvMsx_NtNtCskKLDkoKarTP_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_9MatchOnlyECsjfvwIE9w8og_20libp2p_webrtc_websys: argument 0"}
-!91 = distinct !{!91, !89, !"_RINvMsx_NtNtCskKLDkoKarTP_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_9MatchOnlyECsjfvwIE9w8og_20libp2p_webrtc_websys: argument 1"}
-!92 = distinct !{!92, !89, !"_RINvMsx_NtNtCskKLDkoKarTP_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_9MatchOnlyECsjfvwIE9w8og_20libp2p_webrtc_websys: argument 2"}
-!93 = distinct !{!93, !89, !"_RINvMsx_NtNtCskKLDkoKarTP_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_9MatchOnlyECsjfvwIE9w8og_20libp2p_webrtc_websys: argument 3"}
-!94 = distinct !{!94, i1 true, !"_RNvXsy_NtNtCskKLDkoKarTP_4core3str7patternNtB5_9MatchOnlyNtB5_14TwoWayStrategy8matching"}
-!95 = distinct !{!95, !94, !"_RNvXsy_NtNtCskKLDkoKarTP_4core3str7patternNtB5_9MatchOnlyNtB5_14TwoWayStrategy8matching: argument 0"}
-!96 = !{i64 0, i64 3}
-!97 = !{!72}
-!98 = !{!74}
-!99 = !{!76, !72}
-!100 = !{!78, !76, !72}
-!101 = !{!79}
-!102 = !{!76, !79}
-!103 = !{!78, !76, !79}
-!104 = !{!81}
-!105 = !{!83}
+!75 = distinct !{!75, !71, !"_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4next: argument 0:Peel0"}
+!76 = distinct !{!76, i1 true, !"_RINvNtNtCskKLDkoKarTP_4core3str11validations15next_code_pointINtNtNtB6_5slice4iter4IterhEECsjfvwIE9w8og_20libp2p_webrtc_websys"}
+!77 = distinct !{!77, !76, !"_RINvNtNtCskKLDkoKarTP_4core3str11validations15next_code_pointINtNtNtB6_5slice4iter4IterhEECsjfvwIE9w8og_20libp2p_webrtc_websys: argument 0"}
+!78 = distinct !{!78, i1 true, !"_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4next"}
+!79 = distinct !{!79, !78, !"_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4next: argument 1"}
+!80 = distinct !{!80, !78, !"_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4next: argument 0"}
+!81 = distinct !{!81, i1 true, !"_RNvNtNtCskKLDkoKarTP_4core5slice6memchr6memchr"}
+!82 = distinct !{!82, !81, !"_RNvNtNtCskKLDkoKarTP_4core5slice6memchr6memchr: argument 0"}
+!83 = distinct !{!83, i1 true, !"_RINvMsx_NtNtCskKLDkoKarTP_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_9MatchOnlyECsjfvwIE9w8og_20libp2p_webrtc_websys"}
+!84 = distinct !{!84, !83, !"_RINvMsx_NtNtCskKLDkoKarTP_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_9MatchOnlyECsjfvwIE9w8og_20libp2p_webrtc_websys: argument 0"}
+!85 = distinct !{!85, !83, !"_RINvMsx_NtNtCskKLDkoKarTP_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_9MatchOnlyECsjfvwIE9w8og_20libp2p_webrtc_websys: argument 1"}
+!86 = distinct !{!86, !83, !"_RINvMsx_NtNtCskKLDkoKarTP_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_9MatchOnlyECsjfvwIE9w8og_20libp2p_webrtc_websys: argument 2"}
+!87 = distinct !{!87, !83, !"_RINvMsx_NtNtCskKLDkoKarTP_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_9MatchOnlyECsjfvwIE9w8og_20libp2p_webrtc_websys: argument 3"}
+!88 = distinct !{!88, i1 true, !"_RNvXsy_NtNtCskKLDkoKarTP_4core3str7patternNtB5_9MatchOnlyNtB5_14TwoWayStrategy8matching"}
+!89 = distinct !{!89, !88, !"_RNvXsy_NtNtCskKLDkoKarTP_4core3str7patternNtB5_9MatchOnlyNtB5_14TwoWayStrategy8matching: argument 0"}
+!90 = distinct !{!90, i1 true, !"_RINvMsx_NtNtCskKLDkoKarTP_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_9MatchOnlyECsjfvwIE9w8og_20libp2p_webrtc_websys"}
+!91 = distinct !{!91, !90, !"_RINvMsx_NtNtCskKLDkoKarTP_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_9MatchOnlyECsjfvwIE9w8og_20libp2p_webrtc_websys: argument 0"}
+!92 = distinct !{!92, !90, !"_RINvMsx_NtNtCskKLDkoKarTP_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_9MatchOnlyECsjfvwIE9w8og_20libp2p_webrtc_websys: argument 1"}
+!93 = distinct !{!93, !90, !"_RINvMsx_NtNtCskKLDkoKarTP_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_9MatchOnlyECsjfvwIE9w8og_20libp2p_webrtc_websys: argument 2"}
+!94 = distinct !{!94, !90, !"_RINvMsx_NtNtCskKLDkoKarTP_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_9MatchOnlyECsjfvwIE9w8og_20libp2p_webrtc_websys: argument 3"}
+!95 = distinct !{!95, i1 true, !"_RNvXsy_NtNtCskKLDkoKarTP_4core3str7patternNtB5_9MatchOnlyNtB5_14TwoWayStrategy8matching"}
+!96 = distinct !{!96, !95, !"_RNvXsy_NtNtCskKLDkoKarTP_4core3str7patternNtB5_9MatchOnlyNtB5_14TwoWayStrategy8matching: argument 0"}
+!97 = !{i64 0, i64 3}
+!98 = !{!72}
+!99 = !{!74}
+!100 = !{!75, !72}
+!101 = !{!77, !75, !72}
+!102 = !{!79}
+!103 = !{!80, !79}
+!104 = !{!77, !80, !79}
+!105 = !{!82}
 !106 = !{!84}
 !107 = !{!85}
 !108 = !{!86}
-!109 = !{!88, !83}
-!110 = !{!83, !84, !85, !86}
-!111 = !{!90}
+!109 = !{!87}
+!110 = !{!89, !84}
+!111 = !{!84, !85, !86, !87}
 !112 = !{!91}
 !113 = !{!92}
 !114 = !{!93}
-!115 = !{!90, !91, !92, !93}
-!116 = !{!95, !90}
+!115 = !{!94}
+!116 = !{!91, !92, !93, !94}
+!117 = !{!96, !91}
 end_hunk_0

@@ -204,7 +204,7 @@ _RNvMNtCscdodAO9FK5_5alloc6stringNtB2_6String8push_str.exit: ; preds = %bb.a, %b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define void @_RNvXs_NtNtNtCslBX3rbrQpFC_13clap_complete3aot6shells5shellNtB4_5ShellNtNtNtCs4NRVxsYgnAr_4core3str6traits7FromStr8from_str(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2) unnamed_addr #0 personality ptr @rust_eh_personality !guid !82 {
+define void @_RNvXs_NtNtNtCslBX3rbrQpFC_13clap_complete3aot6shells5shellNtB4_5ShellNtNtNtCs4NRVxsYgnAr_4core3str6traits7FromStr8from_str(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2) unnamed_addr #0 personality ptr @rust_eh_personality !guid !86 {
 _RNvXs0_NtNtNtCslBX3rbrQpFC_13clap_complete3aot6shells5shellNtB5_5ShellNtNtCsdjW2DEjcQy2_12clap_builder6derive9ValueEnum17to_possible_value.exit:
   %i.a = alloca [80 x i8], align 8                ; 21 uses
   %i.b = alloca [16 x i8], align 8                ; 5 uses
@@ -218,11 +218,11 @@ _RNvXs0_NtNtNtCslBX3rbrQpFC_13clap_complete3aot6shells5shellNtB5_5ShellNtNtCsdjW
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5)
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !83
-  call void @_RINvMNtNtCsdjW2DEjcQy2_12clap_builder7builder14possible_valueNtB3_13PossibleValue3newReECslBX3rbrQpFC_13clap_complete(ptr noalias noundef nonnull sret([80 x i8]) align 8 captures(none) dereferenceable(80) %i.a, ptr noalias noundef nonnull readonly captures(address, read_provenance) @5, i64 noundef 4), !noalias !83
-  %.sroa.0.0.copyload11 = load i64, ptr %i.a, align 8, !noalias !84 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %.sroa.5, ptr noundef nonnull align 8 dereferenceable(72) %.sroa.5.0..sroa_idx12, i64 72, i1 false), !noalias !84
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !83
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !87
+  call void @_RINvMNtNtCsdjW2DEjcQy2_12clap_builder7builder14possible_valueNtB3_13PossibleValue3newReECslBX3rbrQpFC_13clap_complete(ptr noalias noundef nonnull sret([80 x i8]) align 8 captures(none) dereferenceable(80) %i.a, ptr noalias noundef nonnull readonly captures(address, read_provenance) @5, i64 noundef 4), !noalias !87
+  %.sroa.0.0.copyload11 = load i64, ptr %i.a, align 8, !noalias !88 ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %.sroa.5, ptr noundef nonnull align 8 dereferenceable(72) %.sroa.5.0..sroa_idx12, i64 72, i1 false), !noalias !88
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !87
   %.not = icmp eq i64 %.sroa.0.0.copyload11, 2
   br i1 %.not, label %bb.b, label %bb.a, !prof !8
 
@@ -251,11 +251,11 @@ _RNvXs0_NtNtNtCslBX3rbrQpFC_13clap_complete3aot6shells5shellNtB5_5ShellNtNtCsdjW
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5)
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !85
-  call void @_RINvMNtNtCsdjW2DEjcQy2_12clap_builder7builder14possible_valueNtB3_13PossibleValue3newReECslBX3rbrQpFC_13clap_complete(ptr noalias noundef nonnull sret([80 x i8]) align 8 captures(none) dereferenceable(80) %i.a, ptr noalias noundef nonnull readonly captures(address, read_provenance) @8, i64 noundef 6), !noalias !85
-  %.sroa.0.0.copyload11.1 = load i64, ptr %i.a, align 8, !noalias !86 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %.sroa.5, ptr noundef nonnull align 8 dereferenceable(72) %.sroa.5.0..sroa_idx12, i64 72, i1 false), !noalias !86
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !85
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !89
+  call void @_RINvMNtNtCsdjW2DEjcQy2_12clap_builder7builder14possible_valueNtB3_13PossibleValue3newReECslBX3rbrQpFC_13clap_complete(ptr noalias noundef nonnull sret([80 x i8]) align 8 captures(none) dereferenceable(80) %i.a, ptr noalias noundef nonnull readonly captures(address, read_provenance) @8, i64 noundef 6), !noalias !89
+  %.sroa.0.0.copyload11.1 = load i64, ptr %i.a, align 8, !noalias !90 ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %.sroa.5, ptr noundef nonnull align 8 dereferenceable(72) %.sroa.5.0..sroa_idx12, i64 72, i1 false), !noalias !90
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !89
   %.not.1 = icmp eq i64 %.sroa.0.0.copyload11.1, 2
   br i1 %.not.1, label %bb.b, label %bb.e, !prof !8
 
@@ -274,11 +274,11 @@ _RNvXs0_NtNtNtCslBX3rbrQpFC_13clap_complete3aot6shells5shellNtB5_5ShellNtNtCsdjW
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5)
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !87
-  call void @_RINvMNtNtCsdjW2DEjcQy2_12clap_builder7builder14possible_valueNtB3_13PossibleValue3newReECslBX3rbrQpFC_13clap_complete(ptr noalias noundef nonnull sret([80 x i8]) align 8 captures(none) dereferenceable(80) %i.a, ptr noalias noundef nonnull readonly captures(address, read_provenance) @7, i64 noundef 4), !noalias !87
-  %.sroa.0.0.copyload11.2 = load i64, ptr %i.a, align 8, !noalias !88 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %.sroa.5, ptr noundef nonnull align 8 dereferenceable(72) %.sroa.5.0..sroa_idx12, i64 72, i1 false), !noalias !88
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !87
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !91
+  call void @_RINvMNtNtCsdjW2DEjcQy2_12clap_builder7builder14possible_valueNtB3_13PossibleValue3newReECslBX3rbrQpFC_13clap_complete(ptr noalias noundef nonnull sret([80 x i8]) align 8 captures(none) dereferenceable(80) %i.a, ptr noalias noundef nonnull readonly captures(address, read_provenance) @7, i64 noundef 4), !noalias !91
+  %.sroa.0.0.copyload11.2 = load i64, ptr %i.a, align 8, !noalias !92 ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %.sroa.5, ptr noundef nonnull align 8 dereferenceable(72) %.sroa.5.0..sroa_idx12, i64 72, i1 false), !noalias !92
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !91
   %.not.2 = icmp eq i64 %.sroa.0.0.copyload11.2, 2
   br i1 %.not.2, label %bb.b, label %bb.g, !prof !8
 
@@ -297,11 +297,11 @@ _RNvXs0_NtNtNtCslBX3rbrQpFC_13clap_complete3aot6shells5shellNtB5_5ShellNtNtCsdjW
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5)
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !89
-  call void @_RINvMNtNtCsdjW2DEjcQy2_12clap_builder7builder14possible_valueNtB3_13PossibleValue3newReECslBX3rbrQpFC_13clap_complete(ptr noalias noundef nonnull sret([80 x i8]) align 8 captures(none) dereferenceable(80) %i.a, ptr noalias noundef nonnull readonly captures(address, read_provenance) @9, i64 noundef 10), !noalias !89
-  %.sroa.0.0.copyload11.3 = load i64, ptr %i.a, align 8, !noalias !90 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %.sroa.5, ptr noundef nonnull align 8 dereferenceable(72) %.sroa.5.0..sroa_idx12, i64 72, i1 false), !noalias !90
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !89
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !93
+  call void @_RINvMNtNtCsdjW2DEjcQy2_12clap_builder7builder14possible_valueNtB3_13PossibleValue3newReECslBX3rbrQpFC_13clap_complete(ptr noalias noundef nonnull sret([80 x i8]) align 8 captures(none) dereferenceable(80) %i.a, ptr noalias noundef nonnull readonly captures(address, read_provenance) @9, i64 noundef 10), !noalias !93
+  %.sroa.0.0.copyload11.3 = load i64, ptr %i.a, align 8, !noalias !94 ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %.sroa.5, ptr noundef nonnull align 8 dereferenceable(72) %.sroa.5.0..sroa_idx12, i64 72, i1 false), !noalias !94
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !93
   %.not.3 = icmp eq i64 %.sroa.0.0.copyload11.3, 2
   br i1 %.not.3, label %bb.b, label %bb.i, !prof !8
 
@@ -320,11 +320,11 @@ _RNvXs0_NtNtNtCslBX3rbrQpFC_13clap_complete3aot6shells5shellNtB5_5ShellNtNtCsdjW
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5)
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !91
-  call void @_RINvMNtNtCsdjW2DEjcQy2_12clap_builder7builder14possible_valueNtB3_13PossibleValue3newReECslBX3rbrQpFC_13clap_complete(ptr noalias noundef nonnull sret([80 x i8]) align 8 captures(none) dereferenceable(80) %i.a, ptr noalias noundef nonnull readonly captures(address, read_provenance) @6, i64 noundef 3), !noalias !91
-  %.sroa.0.0.copyload11.4 = load i64, ptr %i.a, align 8, !noalias !92 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %.sroa.5, ptr noundef nonnull align 8 dereferenceable(72) %.sroa.5.0..sroa_idx12, i64 72, i1 false), !noalias !92
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !91
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !95
+  call void @_RINvMNtNtCsdjW2DEjcQy2_12clap_builder7builder14possible_valueNtB3_13PossibleValue3newReECslBX3rbrQpFC_13clap_complete(ptr noalias noundef nonnull sret([80 x i8]) align 8 captures(none) dereferenceable(80) %i.a, ptr noalias noundef nonnull readonly captures(address, read_provenance) @6, i64 noundef 3), !noalias !95
+  %.sroa.0.0.copyload11.4 = load i64, ptr %i.a, align 8, !noalias !96 ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %.sroa.5, ptr noundef nonnull align 8 dereferenceable(72) %.sroa.5.0..sroa_idx12, i64 72, i1 false), !noalias !96
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !95
   %.not.4 = icmp eq i64 %.sroa.0.0.copyload11.4, 2
   br i1 %.not.4, label %bb.b, label %bb.k, !prof !8
 
@@ -372,9 +372,9 @@ bb.p:                                             ; preds = %bb.c
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef zeroext i1 @_RNvYNtNtCscdodAO9FK5_5alloc6string6StringNtNtCs4NRVxsYgnAr_4core3fmt5Write9write_fmtCslBX3rbrQpFC_13clap_complete(ptr noalias noundef align 8 dereferenceable(24) %0, ptr noundef nonnull %1, ptr noundef nonnull %2) unnamed_addr #0 !guid !94 {
+define hidden noundef zeroext i1 @_RNvYNtNtCscdodAO9FK5_5alloc6string6StringNtNtCs4NRVxsYgnAr_4core3fmt5Write9write_fmtCslBX3rbrQpFC_13clap_complete(ptr noalias noundef align 8 dereferenceable(24) %0, ptr noundef nonnull %1, ptr noundef nonnull %2) unnamed_addr #0 !guid !98 {
 _RNvXs_NvNtNtCs4NRVxsYgnAr_4core3fmt5Write9write_fmtQNtNtCscdodAO9FK5_5alloc6string6StringNtB4_12SpecWriteFmt14spec_write_fmtCslBX3rbrQpFC_13clap_complete.exit:
-  %i.a = tail call noundef zeroext i1 @_RNvNtCs4NRVxsYgnAr_4core3fmt5write(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) @17, ptr noundef nonnull %1, ptr noundef nonnull %2), !inline_history !93
+  %i.a = tail call noundef zeroext i1 @_RNvNtCs4NRVxsYgnAr_4core3fmt5write(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) @17, ptr noundef nonnull %1, ptr noundef nonnull %2), !inline_history !97
   ret i1 %i.a
 }
 
@@ -630,23 +630,27 @@ attributes #15 = { noreturn }
 !73 = distinct !{!73, !71, !"_RNvXs0_NtNtNtCslBX3rbrQpFC_13clap_complete3aot6shells5shellNtB5_5ShellNtNtCsdjW2DEjcQy2_12clap_builder6derive9ValueEnum17to_possible_value: argument 0"}
 !74 = distinct !{!74, i1 true, !"_RNvXs0_NtNtNtCslBX3rbrQpFC_13clap_complete3aot6shells5shellNtB5_5ShellNtNtCsdjW2DEjcQy2_12clap_builder6derive9ValueEnum17to_possible_value"}
 !75 = distinct !{!75, !74, !"_RNvXs0_NtNtNtCslBX3rbrQpFC_13clap_complete3aot6shells5shellNtB5_5ShellNtNtCsdjW2DEjcQy2_12clap_builder6derive9ValueEnum17to_possible_value: argument 1:It1"}
-!76 = distinct !{!76, i1 true, !"_RNvXs0_NtNtNtCslBX3rbrQpFC_13clap_complete3aot6shells5shellNtB5_5ShellNtNtCsdjW2DEjcQy2_12clap_builder6derive9ValueEnum17to_possible_value"}
-!77 = distinct !{!77, !76, !"_RNvXs0_NtNtNtCslBX3rbrQpFC_13clap_complete3aot6shells5shellNtB5_5ShellNtNtCsdjW2DEjcQy2_12clap_builder6derive9ValueEnum17to_possible_value: argument 1:It2"}
-!78 = distinct !{!78, i1 true, !"_RNvXs0_NtNtNtCslBX3rbrQpFC_13clap_complete3aot6shells5shellNtB5_5ShellNtNtCsdjW2DEjcQy2_12clap_builder6derive9ValueEnum17to_possible_value"}
-!79 = distinct !{!79, !78, !"_RNvXs0_NtNtNtCslBX3rbrQpFC_13clap_complete3aot6shells5shellNtB5_5ShellNtNtCsdjW2DEjcQy2_12clap_builder6derive9ValueEnum17to_possible_value: argument 1:It3"}
+!76 = distinct !{!76, !74, !"_RNvXs0_NtNtNtCslBX3rbrQpFC_13clap_complete3aot6shells5shellNtB5_5ShellNtNtCsdjW2DEjcQy2_12clap_builder6derive9ValueEnum17to_possible_value: argument 0:It1"}
+!77 = distinct !{!77, i1 true, !"_RNvXs0_NtNtNtCslBX3rbrQpFC_13clap_complete3aot6shells5shellNtB5_5ShellNtNtCsdjW2DEjcQy2_12clap_builder6derive9ValueEnum17to_possible_value"}
+!78 = distinct !{!78, !77, !"_RNvXs0_NtNtNtCslBX3rbrQpFC_13clap_complete3aot6shells5shellNtB5_5ShellNtNtCsdjW2DEjcQy2_12clap_builder6derive9ValueEnum17to_possible_value: argument 1:It2"}
+!79 = distinct !{!79, !77, !"_RNvXs0_NtNtNtCslBX3rbrQpFC_13clap_complete3aot6shells5shellNtB5_5ShellNtNtCsdjW2DEjcQy2_12clap_builder6derive9ValueEnum17to_possible_value: argument 0:It2"}
 !80 = distinct !{!80, i1 true, !"_RNvXs0_NtNtNtCslBX3rbrQpFC_13clap_complete3aot6shells5shellNtB5_5ShellNtNtCsdjW2DEjcQy2_12clap_builder6derive9ValueEnum17to_possible_value"}
-!81 = distinct !{!81, !80, !"_RNvXs0_NtNtNtCslBX3rbrQpFC_13clap_complete3aot6shells5shellNtB5_5ShellNtNtCsdjW2DEjcQy2_12clap_builder6derive9ValueEnum17to_possible_value: argument 1:It4"}
-!82 = !{i64 -8790480695139131757}
-!83 = !{!73, !72}
-!84 = !{!72}
-!85 = !{!73, !75}
-!86 = !{!75}
-!87 = !{!73, !77}
-!88 = !{!77}
-!89 = !{!73, !79}
-!90 = !{!79}
-!91 = !{!73, !81}
-!92 = !{!81}
-!93 = distinct !{null}
-!94 = !{i64 -2227719913393416415}
+!81 = distinct !{!81, !80, !"_RNvXs0_NtNtNtCslBX3rbrQpFC_13clap_complete3aot6shells5shellNtB5_5ShellNtNtCsdjW2DEjcQy2_12clap_builder6derive9ValueEnum17to_possible_value: argument 1:It3"}
+!82 = distinct !{!82, !80, !"_RNvXs0_NtNtNtCslBX3rbrQpFC_13clap_complete3aot6shells5shellNtB5_5ShellNtNtCsdjW2DEjcQy2_12clap_builder6derive9ValueEnum17to_possible_value: argument 0:It3"}
+!83 = distinct !{!83, i1 true, !"_RNvXs0_NtNtNtCslBX3rbrQpFC_13clap_complete3aot6shells5shellNtB5_5ShellNtNtCsdjW2DEjcQy2_12clap_builder6derive9ValueEnum17to_possible_value"}
+!84 = distinct !{!84, !83, !"_RNvXs0_NtNtNtCslBX3rbrQpFC_13clap_complete3aot6shells5shellNtB5_5ShellNtNtCsdjW2DEjcQy2_12clap_builder6derive9ValueEnum17to_possible_value: argument 1:It4"}
+!85 = distinct !{!85, !83, !"_RNvXs0_NtNtNtCslBX3rbrQpFC_13clap_complete3aot6shells5shellNtB5_5ShellNtNtCsdjW2DEjcQy2_12clap_builder6derive9ValueEnum17to_possible_value: argument 0:It4"}
+!86 = !{i64 -8790480695139131757}
+!87 = !{!73, !72}
+!88 = !{!72}
+!89 = !{!76, !75}
+!90 = !{!75}
+!91 = !{!79, !78}
+!92 = !{!78}
+!93 = !{!82, !81}
+!94 = !{!81}
+!95 = !{!85, !84}
+!96 = !{!84}
+!97 = distinct !{null}
+!98 = !{i64 -2227719913393416415}
 end_hunk_0
