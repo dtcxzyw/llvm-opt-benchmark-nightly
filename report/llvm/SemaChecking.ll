@@ -205,8 +205,8 @@ _ZNK5clang4Type5getAsINS_17FunctionProtoTypeEEEPKT_v.exit.thread181.i: ; preds =
   br label %bb.bq
 
 bb.bq:                                            ; preds = %_ZN4llvm14SmallBitVector3setEj.exit133.i, %.lr.ph215.i
+  %indvars.iv233.i = phi i64 [ 0, %.lr.ph215.i ], [ %indvars.iv.next234.i, %_ZN4llvm14SmallBitVector3setEj.exit133.i ] ; 4 uses
   %.080214.i = phi ptr [ %i.pe, %.lr.ph215.i ], [ %i.qo, %_ZN4llvm14SmallBitVector3setEj.exit133.i ] ; 2 uses
-  %.081213.i = phi i32 [ 0, %.lr.ph215.i ], [ %38, %_ZN4llvm14SmallBitVector3setEj.exit133.i ] ; 4 uses
   %.sroa.010.0.copyload.i = load i64, ptr %.080214.i, align 8, !tbaa !1129
   %i.pk = and i64 %.sroa.010.0.copyload.i, -16
   %i.pl = inttoptr i64 %i.pk to ptr
@@ -246,8 +246,7 @@ bb.bu:                                            ; preds = %bb.bt
   %i.pz = lshr i64 %i.pw, 58
   %i.qa = shl nsw i64 -1, %i.pz
   %i.qb = xor i64 %i.qa, -1
-  %33 = zext nneg i32 %.081213.i to i64
-  %i.qc = shl nuw i64 1, %33
+  %i.qc = shl nuw i64 1, %indvars.iv233.i
   %i.qd = or i64 %i.py, %i.qc
   %i.qe = and i64 %i.qd, %i.qb
   %i.qf = shl nuw i64 %i.qe, 1
@@ -258,20 +257,19 @@ bb.bu:                                            ; preds = %bb.bt
 
 bb.bv:                                            ; preds = %bb.bt
   %i.qi = inttoptr i64 %i.pw to ptr
-  %34 = and i32 %.081213.i, 63
-  %35 = zext nneg i32 %34 to i64
-  %i.qj = shl nuw i64 1, %35
-  %36 = lshr i32 %.081213.i, 6
-  %37 = zext nneg i32 %36 to i64
+  %33 = and i64 %indvars.iv233.i, 63
+  %i.qj = shl nuw i64 1, %33
+  %34 = lshr i64 %indvars.iv233.i, 6
+  %35 = and i64 %34, 67108863
   %i.qk = load ptr, ptr %i.qi, align 8, !tbaa !1152
-  %i.ql = getelementptr inbounds nuw [8 x i8], ptr %i.qk, i64 %37 ; 2 uses
+  %i.ql = getelementptr inbounds nuw [8 x i8], ptr %i.qk, i64 %35 ; 2 uses
   %i.qm = load i64, ptr %i.ql, align 8, !tbaa !1130
   %i.qn = or i64 %i.qm, %i.qj
   store i64 %i.qn, ptr %i.ql, align 8, !tbaa !1130
   br label %_ZN4llvm14SmallBitVector3setEj.exit133.i
 
 _ZN4llvm14SmallBitVector3setEj.exit133.i:         ; preds = %bb.bv, %bb.bu, %bb.bq
-  %38 = add i32 %.081213.i, 1
+  %indvars.iv.next234.i = add nuw nsw i64 %indvars.iv233.i, 1
   %i.qo = getelementptr inbounds nuw i8, ptr %.080214.i, i64 8 ; 2 uses
   %.not101.i = icmp eq ptr %i.qo, %i.pi
   br i1 %.not101.i, label %_ZNK5clang4Type5getAsINS_17FunctionProtoTypeEEEPKT_v.exit.thread.i, label %bb.bq

@@ -205,8 +205,8 @@ _ZNK4heapIN11max_cliquesIZN3opt10preprocess12prop_mutexesER6vectorINS1_4softELb1
 _ZN8uint_set8iteratorC2ERKS_b.exit.i151.i:        ; preds = %_ZNK4heapIN11max_cliquesIZN3opt10preprocess12prop_mutexesER6vectorINS1_4softELb1EjER8rationalE11neg_literalE14compare_degreeEE8containsEi.exit.i
   %i.amx = getelementptr inbounds i8, ptr %.pr.pre.i.i150.i, i64 -4
   %i.amy = load i32, ptr %i.amx, align 4, !tbaa !42 ; 4 uses
-  %i.amz = shl i32 %i.amy, 5                      ; 9 uses
-  %i.ana = zext i32 %i.amz to i64
+  %i.amz = shl i32 %i.amy, 5                      ; 8 uses
+  %i.ana = zext i32 %i.amz to i64                 ; 2 uses
   %i.anb = shl nuw i64 %i.ana, 32                 ; 3 uses
   %.not1537.i = icmp eq i32 %i.amy, 0
   br i1 %.not1537.i, label %_ZN8uint_set8iterator8scan_idxEv.exit.i482.i, label %_ZNK8uint_set8iterator8containsEv.exit.i464.i
@@ -216,31 +216,23 @@ _ZNK8uint_set8iterator8containsEv.exit.i464.i:    ; preds = %_ZN8uint_set8iterat
   %i.and = trunc i32 %i.anc to i1
   %i.ane = icmp eq i32 %i.amz, 0
   %or.cond.i465.i = or i1 %i.ane, %i.and
-  br i1 %or.cond.i465.i, label %_ZN8uint_set8iterator8scan_idxEv.exit.i482.i, label %.lr.ph.i4.i441.i.preheader
+  br i1 %or.cond.i465.i, label %_ZN8uint_set8iterator8scan_idxEv.exit.i482.i, label %.lr.ph.i4.i441.i
 
-.lr.ph.i4.i441.i.preheader:                       ; preds = %_ZNK8uint_set8iterator8containsEv.exit.i464.i
-  %47 = add i32 %i.amz, -32
-  %48 = lshr exact i32 %47, 5
-  %49 = add nuw nsw i32 %48, 1
-  %wide.trip.count = zext nneg i32 %49 to i64
-  br label %.lr.ph.i4.i441.i
-
-.lr.ph.i4.i441.i:                                 ; preds = %.lr.ph.i4.i441.i.preheader, %bb.gu
-  %indvars.iv764 = phi i64 [ 0, %.lr.ph.i4.i441.i.preheader ], [ %indvars.iv.next765, %bb.gu ] ; 2 uses
-  %indvars.iv = phi i64 [ 0, %.lr.ph.i4.i441.i.preheader ], [ %indvars.iv.next, %bb.gu ] ; 2 uses
-  %.sroa.5259.6.i = phi i64 [ %i.anb, %.lr.ph.i4.i441.i.preheader ], [ %.sroa.5259.8.insert.insert283.i, %bb.gu ] ; 3 uses
+.lr.ph.i4.i441.i:                                 ; preds = %_ZNK8uint_set8iterator8containsEv.exit.i464.i, %bb.gu
+  %indvars.iv764 = phi i64 [ %indvars.iv.next765, %bb.gu ], [ 0, %_ZNK8uint_set8iterator8containsEv.exit.i464.i ] ; 2 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.gu ], [ 0, %_ZNK8uint_set8iterator8containsEv.exit.i464.i ] ; 2 uses
+  %.sroa.5259.6.i = phi i64 [ %.sroa.5259.8.insert.insert283.i, %bb.gu ], [ %i.anb, %_ZNK8uint_set8iterator8containsEv.exit.i464.i ] ; 3 uses
   %i.anf = getelementptr inbounds nuw [4 x i8], ptr %.pr.pre.i.i150.i, i64 %indvars.iv
   %i.ang = load i32, ptr %i.anf, align 4, !tbaa !42
   %.not.i5.i443.i = icmp eq i32 %i.ang, 0
   br i1 %.not.i5.i443.i, label %bb.gu, label %_ZNK6vectorIjLb0EjE4sizeEv.exit.i.i6.i445.i
 
 bb.gu:                                            ; preds = %.lr.ph.i4.i441.i
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %indvars.iv.next765 = add nuw nsw i64 %indvars.iv764, 32 ; 2 uses
-  %.sroa.5259.8.insert.ext281.i = and i64 %indvars.iv.next765, 4294967264
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %indvars.iv.next765 = add nuw nsw i64 %indvars.iv764, 32 ; 3 uses
   %.sroa.5259.8.insert.mask282.i = and i64 %.sroa.5259.6.i, -4294967296
-  %.sroa.5259.8.insert.insert283.i = or disjoint i64 %.sroa.5259.8.insert.mask282.i, %.sroa.5259.8.insert.ext281.i ; 2 uses
-  %exitcond = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %.sroa.5259.8.insert.insert283.i = or disjoint i64 %.sroa.5259.8.insert.mask282.i, %indvars.iv.next765 ; 2 uses
+  %exitcond = icmp eq i64 %indvars.iv.next765, %i.ana
   br i1 %exitcond, label %_ZN8uint_set8iterator8scan_idxEv.exit.i482.i, label %.lr.ph.i4.i441.i, !llvm.loop !4
 
 _ZNK6vectorIjLb0EjE4sizeEv.exit.i.i6.i445.i:      ; preds = %.lr.ph.i4.i441.i
@@ -643,8 +635,8 @@ bb.ig:                                            ; preds = %bb.if, %bb.ie, %.lr
 _ZN8uint_set8iteratorC2ERKS_b.exit.i250.i:        ; preds = %.loopexit511.i
   %i.awp = getelementptr inbounds i8, ptr %.pr.pre.i.i249.i, i64 -4
   %i.awq = load i32, ptr %i.awp, align 4, !tbaa !42 ; 4 uses
-  %i.awr = shl i32 %i.awq, 5                      ; 9 uses
-  %i.aws = zext i32 %i.awr to i64
+  %i.awr = shl i32 %i.awq, 5                      ; 8 uses
+  %i.aws = zext i32 %i.awr to i64                 ; 2 uses
   %i.awt = shl nuw i64 %i.aws, 32                 ; 3 uses
   %.not1538.i = icmp eq i32 %i.awq, 0
   br i1 %.not1538.i, label %_ZN8uint_set8iterator8scan_idxEv.exit.i632.i, label %_ZNK8uint_set8iterator8containsEv.exit.i614.i
@@ -654,31 +646,23 @@ _ZNK8uint_set8iterator8containsEv.exit.i614.i:    ; preds = %_ZN8uint_set8iterat
   %i.awv = trunc i32 %i.awu to i1
   %i.aww = icmp eq i32 %i.awr, 0
   %or.cond.i615.i = or i1 %i.aww, %i.awv
-  br i1 %or.cond.i615.i, label %_ZN8uint_set8iterator8scan_idxEv.exit.i632.i, label %.lr.ph.i4.i591.i.preheader
+  br i1 %or.cond.i615.i, label %_ZN8uint_set8iterator8scan_idxEv.exit.i632.i, label %.lr.ph.i4.i591.i
 
-.lr.ph.i4.i591.i.preheader:                       ; preds = %_ZNK8uint_set8iterator8containsEv.exit.i614.i
-  %50 = add i32 %i.awr, -32
-  %51 = lshr exact i32 %50, 5
-  %52 = add nuw nsw i32 %51, 1
-  %wide.trip.count776 = zext nneg i32 %52 to i64
-  br label %.lr.ph.i4.i591.i
-
-.lr.ph.i4.i591.i:                                 ; preds = %.lr.ph.i4.i591.i.preheader, %bb.ih
-  %indvars.iv771 = phi i64 [ 0, %.lr.ph.i4.i591.i.preheader ], [ %indvars.iv.next772, %bb.ih ] ; 2 uses
-  %indvars.iv769 = phi i64 [ 0, %.lr.ph.i4.i591.i.preheader ], [ %indvars.iv.next770, %bb.ih ] ; 2 uses
-  %.sroa.5320.6.i = phi i64 [ %i.awt, %.lr.ph.i4.i591.i.preheader ], [ %.sroa.5320.8.insert.insert344.i, %bb.ih ] ; 3 uses
+.lr.ph.i4.i591.i:                                 ; preds = %_ZNK8uint_set8iterator8containsEv.exit.i614.i, %bb.ih
+  %indvars.iv771 = phi i64 [ %indvars.iv.next772, %bb.ih ], [ 0, %_ZNK8uint_set8iterator8containsEv.exit.i614.i ] ; 2 uses
+  %indvars.iv769 = phi i64 [ %indvars.iv.next770, %bb.ih ], [ 0, %_ZNK8uint_set8iterator8containsEv.exit.i614.i ] ; 2 uses
+  %.sroa.5320.6.i = phi i64 [ %.sroa.5320.8.insert.insert344.i, %bb.ih ], [ %i.awt, %_ZNK8uint_set8iterator8containsEv.exit.i614.i ] ; 3 uses
   %i.awx = getelementptr inbounds nuw [4 x i8], ptr %.pr.pre.i.i249.i, i64 %indvars.iv769
   %i.awy = load i32, ptr %i.awx, align 4, !tbaa !42
   %.not.i5.i593.i = icmp eq i32 %i.awy, 0
   br i1 %.not.i5.i593.i, label %bb.ih, label %_ZNK6vectorIjLb0EjE4sizeEv.exit.i.i6.i595.i
 
 bb.ih:                                            ; preds = %.lr.ph.i4.i591.i
-  %indvars.iv.next770 = add nuw nsw i64 %indvars.iv769, 1 ; 2 uses
-  %indvars.iv.next772 = add nuw nsw i64 %indvars.iv771, 32 ; 2 uses
-  %.sroa.5320.8.insert.ext342.i = and i64 %indvars.iv.next772, 4294967264
+  %indvars.iv.next770 = add nuw nsw i64 %indvars.iv769, 1
+  %indvars.iv.next772 = add nuw nsw i64 %indvars.iv771, 32 ; 3 uses
   %.sroa.5320.8.insert.mask343.i = and i64 %.sroa.5320.6.i, -4294967296
-  %.sroa.5320.8.insert.insert344.i = or disjoint i64 %.sroa.5320.8.insert.mask343.i, %.sroa.5320.8.insert.ext342.i ; 2 uses
-  %exitcond777 = icmp eq i64 %indvars.iv.next770, %wide.trip.count776
+  %.sroa.5320.8.insert.insert344.i = or disjoint i64 %.sroa.5320.8.insert.mask343.i, %indvars.iv.next772 ; 2 uses
+  %exitcond777 = icmp eq i64 %indvars.iv.next772, %i.aws
   br i1 %exitcond777, label %_ZN8uint_set8iterator8scan_idxEv.exit.i632.i, label %.lr.ph.i4.i591.i, !llvm.loop !4
 
 _ZNK6vectorIjLb0EjE4sizeEv.exit.i.i6.i595.i:      ; preds = %.lr.ph.i4.i591.i

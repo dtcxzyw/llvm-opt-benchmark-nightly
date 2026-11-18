@@ -205,15 +205,12 @@ _ZN2v88internal8compiler10turboshaft23GrowingOpIndexSidetableINS2_7OpIndexEEixES
 define linkonce_odr hidden noundef ptr @_ZN2v88internal8compiler10turboshaft21ValueNumberingReducerINS2_20TypeInferenceReducerINS2_18GenericReducerBaseINS2_13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_12GraphVisitorENS2_18AssertTypesReducerES3_S4_S6_EEEEEEEEEEEE4FindINS2_19Simd128LaneMemoryOpEEEPNSI_5EntryERKT_Pm(ptr noundef nonnull align 8 dereferenceable(1136) %0, ptr noundef nonnull align 4 dereferenceable(12) %1, ptr noundef %2) local_unnamed_addr #0 comdat align 2 !guid !2205 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
-  %3 = load i8, ptr %i.a, align 4, !range !92, !noundef !87
-  %4 = trunc nuw i8 %3 to i1
-  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 5 ; 2 uses
-  %5 = load i8, ptr %i.b, align 1
-  %6 = and i8 %5, 4
-  %.not.i = icmp eq i8 %6, 0
-  %7 = and i1 %.not.i, %4                         ; 2 uses
-  %not. = xor i1 %7, true
-  %i.c = tail call noundef i64 @_ZN2v88internal8compiler10turboshaft21ValueNumberingReducerINS2_20TypeInferenceReducerINS2_18GenericReducerBaseINS2_13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_12GraphVisitorENS2_18AssertTypesReducerES3_S4_S6_EEEEEEEEEEEE11ComputeHashILb0ENS2_19Simd128LaneMemoryOpEEEmRKT0_b(ptr noundef nonnull align 8 dereferenceable(1136) %0, ptr noundef nonnull align 4 dereferenceable(12) %1, i1 noundef zeroext %not.) ; 3 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 5
+  %3 = load <2 x i8>, ptr %i.a, align 4
+  %4 = and <2 x i8> %3, <i8 1, i8 4>
+  %.scalar = bitcast <2 x i8> %4 to i16
+  %5 = icmp ne i16 %.scalar, 1                    ; 2 uses
+  %i.c = tail call noundef i64 @_ZN2v88internal8compiler10turboshaft21ValueNumberingReducerINS2_20TypeInferenceReducerINS2_18GenericReducerBaseINS2_13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_12GraphVisitorENS2_18AssertTypesReducerES3_S4_S6_EEEEEEEEEEEE11ComputeHashILb0ENS2_19Simd128LaneMemoryOpEEEmRKT0_b(ptr noundef nonnull align 8 dereferenceable(1136) %0, ptr noundef nonnull align 4 dereferenceable(12) %1, i1 noundef zeroext %5) ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 1040
   %i.e = load i64, ptr %i.d, align 8              ; 2 uses
   %i.f = and i64 %i.e, %i.c                       ; 2 uses
@@ -266,7 +263,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.af, label %bb.e, label %_ZNK2v88internal8compiler10turboshaft10OperationTINS2_19Simd128LaneMemoryOpEE12EqualsForGVNERKS5_.exit.thread
 
 bb.e:                                             ; preds = %bb.d
-  br i1 %7, label %bb.g, label %bb.f
+  br i1 %5, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
   %i.ag = load i32, ptr %i.n, align 4
