@@ -204,11 +204,11 @@ _ZNSt3__16vectorIN3jxl10NoiseLevelENS_9allocatorIS2_EEE9push_backB8nn180100ERKS2
   %i.ys = getelementptr inbounds nuw i8, ptr %i.kf, i64 %i.yj ; 2 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.ys, i64 64) ]
   %i.yt = getelementptr inbounds nuw [4 x i8], ptr %i.ys, i64 %..i.peel
-  %i.yu = load float, ptr %i.yt, align 8, !tbaa !11, !noalias !67
+  %i.yu = load float, ptr %i.yt, align 4, !tbaa !11, !noalias !67
   %i.yv = getelementptr inbounds nuw i8, ptr %i.kg, i64 %i.yj ; 2 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.yv, i64 64) ]
   %i.yw = getelementptr inbounds nuw [4 x i8], ptr %i.yv, i64 %..i.peel
-  %i.yx = load float, ptr %i.yw, align 8, !tbaa !11, !noalias !67
+  %i.yx = load float, ptr %i.yw, align 4, !tbaa !11, !noalias !67
   %i.yy = load <2 x float>, ptr %i.ym, align 8, !tbaa !11, !noalias !67
   %i.yz = load <2 x float>, ptr %i.yn, align 8, !tbaa !11, !noalias !67
   %i.za = shufflevector <2 x float> %i.yy, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
@@ -254,8 +254,8 @@ _ZNSt3__16vectorIN3jxl10NoiseLevelENS_9allocatorIS2_EEE9push_backB8nn180100ERKS2
   %i.aal = getelementptr inbounds nuw i8, ptr %i.kg, i64 %i.zz ; 2 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.aal, i64 64) ]
   %i.aam = getelementptr inbounds nuw [4 x i8], ptr %i.aal, i64 %..i.peel
-  %i.aan = load <2 x float>, ptr %i.aak, align 8, !tbaa !11, !noalias !67
-  %i.aao = load <2 x float>, ptr %i.aam, align 8, !tbaa !11, !noalias !67
+  %i.aan = load <2 x float>, ptr %i.aak, align 4, !tbaa !11, !noalias !67
+  %i.aao = load <2 x float>, ptr %i.aam, align 4, !tbaa !11, !noalias !67
   %i.aap = fadd <2 x float> %i.aan, %i.aao
   %i.aaq = fmul <2 x float> %i.aap, splat (float 5.000000e-01) ; 2 uses
   %i.aar = extractelement <2 x float> %i.aaq, i64 1

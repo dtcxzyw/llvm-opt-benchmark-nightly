@@ -206,7 +206,7 @@ bb.bt:                                            ; preds = %bb.bx, %bb.bs
 bb.bu:                                            ; preds = %bb.br
   %i.hx = landingpad { ptr, i32 }
           cleanup
-  invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr nonnull %.sroa.19.0..sroa.19.16..sroa.4.0.copyload103116) #32
+  invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr %.sroa.19.0..sroa.19.16..sroa.4.0.copyload103116) #32
           to label %common.resume unwind label %bb.bz
 
 bb.bv:                                            ; preds = %bb.br
@@ -221,7 +221,7 @@ bb.bw:                                            ; preds = %bb.bv
   store i64 -2, ptr %0, align 8
   %.sroa.459.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.ib, ptr %.sroa.459.0..sroa_idx, align 8
-  call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr nonnull %.sroa.19.0..sroa.19.16..sroa.4.0.copyload103116)
+  call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr %.sroa.19.0..sroa.19.16..sroa.4.0.copyload103116)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.al)
   br label %bb.by
 
@@ -233,7 +233,7 @@ bb.bx:                                            ; preds = %bb.bv
   store i64 %i.hy, ptr %0, align 8
   %.sroa.553.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.ib, ptr %.sroa.553.0..sroa_idx, align 8
-  call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr nonnull %.sroa.19.0..sroa.19.16..sroa.4.0.copyload103116)
+  call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr %.sroa.19.0..sroa.19.16..sroa.4.0.copyload103116)
   br label %bb.bt
 
 bb.by:                                            ; preds = %bb.bm, %bb.bq, %bb.bt, %bb.bi, %bb.bw
@@ -636,7 +636,7 @@ bb.bt:                                            ; preds = %bb.bx, %bb.bs
 bb.bu:                                            ; preds = %bb.br
   %i.hx = landingpad { ptr, i32 }
           cleanup
-  invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr nonnull %.sroa.19.0..sroa.19.16..sroa.4.0.copyload103116) #32
+  invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr %.sroa.19.0..sroa.19.16..sroa.4.0.copyload103116) #32
           to label %common.resume unwind label %bb.bz
 
 bb.bv:                                            ; preds = %bb.br
@@ -651,7 +651,7 @@ bb.bw:                                            ; preds = %bb.bv
   store i64 -2, ptr %0, align 8
   %.sroa.459.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.ib, ptr %.sroa.459.0..sroa_idx, align 8
-  call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr nonnull %.sroa.19.0..sroa.19.16..sroa.4.0.copyload103116)
+  call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr %.sroa.19.0..sroa.19.16..sroa.4.0.copyload103116)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.al)
   br label %bb.by
 
@@ -663,7 +663,7 @@ bb.bx:                                            ; preds = %bb.bv
   store i64 %i.hy, ptr %0, align 8
   %.sroa.553.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.ib, ptr %.sroa.553.0..sroa_idx, align 8
-  call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr nonnull %.sroa.19.0..sroa.19.16..sroa.4.0.copyload103116)
+  call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr %.sroa.19.0..sroa.19.16..sroa.4.0.copyload103116)
   br label %bb.bt
 
 bb.by:                                            ; preds = %bb.bm, %bb.bq, %bb.bt, %bb.bi, %bb.bw
@@ -1066,7 +1066,7 @@ bb.ax:                                            ; preds = %bb.bb, %bb.aw
 bb.ay:                                            ; preds = %bb.av
   %i.ge = landingpad { ptr, i32 }
           cleanup
-  invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr nonnull %.sroa.19.0..sroa.19.16..sroa.4.0.copyload103116) #32
+  invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr %.sroa.19.0..sroa.19.16..sroa.4.0.copyload103116) #32
           to label %common.resume unwind label %bb.bd
 
 bb.az:                                            ; preds = %bb.av
@@ -1081,7 +1081,7 @@ bb.ba:                                            ; preds = %bb.az
   store i64 -2, ptr %0, align 8
   %.sroa.459.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.gi, ptr %.sroa.459.0..sroa_idx, align 8
-  call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr nonnull %.sroa.19.0..sroa.19.16..sroa.4.0.copyload103116)
+  call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr %.sroa.19.0..sroa.19.16..sroa.4.0.copyload103116)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.x)
   br label %bb.bc
 
@@ -1093,7 +1093,7 @@ bb.bb:                                            ; preds = %bb.az
   store i64 %i.gf, ptr %0, align 8
   %.sroa.553.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.gi, ptr %.sroa.553.0..sroa_idx, align 8
-  call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr nonnull %.sroa.19.0..sroa.19.16..sroa.4.0.copyload103116)
+  call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr %.sroa.19.0..sroa.19.16..sroa.4.0.copyload103116)
   br label %bb.ax
 
 bb.bc:                                            ; preds = %bb.aq, %bb.au, %bb.ax, %bb.am, %bb.ba
@@ -1496,7 +1496,7 @@ bb.at:                                            ; preds = %bb.ax, %bb.as
 bb.au:                                            ; preds = %bb.ar
   %i.ft = landingpad { ptr, i32 }
           cleanup
-  invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr nonnull %.sroa.19.0..sroa.19.16..sroa.4.0.copyload103116) #32
+  invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr %.sroa.19.0..sroa.19.16..sroa.4.0.copyload103116) #32
           to label %common.resume unwind label %bb.az
 
 bb.av:                                            ; preds = %bb.ar
@@ -1511,7 +1511,7 @@ bb.aw:                                            ; preds = %bb.av
   store i64 -2, ptr %0, align 8
   %.sroa.459.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.fx, ptr %.sroa.459.0..sroa_idx, align 8
-  call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr nonnull %.sroa.19.0..sroa.19.16..sroa.4.0.copyload103116)
+  call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr %.sroa.19.0..sroa.19.16..sroa.4.0.copyload103116)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.x)
   br label %bb.ay
 
@@ -1523,7 +1523,7 @@ bb.ax:                                            ; preds = %bb.av
   store i64 %i.fu, ptr %0, align 8
   %.sroa.553.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.fx, ptr %.sroa.553.0..sroa_idx, align 8
-  call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr nonnull %.sroa.19.0..sroa.19.16..sroa.4.0.copyload103116)
+  call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr %.sroa.19.0..sroa.19.16..sroa.4.0.copyload103116)
   br label %bb.at
 
 bb.ay:                                            ; preds = %bb.am, %bb.aq, %bb.at, %bb.ai, %bb.aw
@@ -1926,7 +1926,7 @@ bb.br:                                            ; preds = %bb.bv, %bb.bq
 bb.bs:                                            ; preds = %bb.bp
   %i.hy = landingpad { ptr, i32 }
           cleanup
-  invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr nonnull %.sroa.19.0.ph.ph110) #32
+  invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr %.sroa.19.0.ph.ph110) #32
           to label %common.resume unwind label %bb.bx
 
 bb.bt:                                            ; preds = %bb.bp
@@ -1941,7 +1941,7 @@ bb.bu:                                            ; preds = %bb.bt
   store i64 -2, ptr %0, align 8
   %.sroa.459.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.ic, ptr %.sroa.459.0..sroa_idx, align 8
-  call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr nonnull %.sroa.19.0.ph.ph110)
+  call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr %.sroa.19.0.ph.ph110)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ak)
   br label %bb.bw
 
@@ -1953,7 +1953,7 @@ bb.bv:                                            ; preds = %bb.bt
   store i64 %i.hz, ptr %0, align 8
   %.sroa.553.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.ic, ptr %.sroa.553.0..sroa_idx, align 8
-  call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr nonnull %.sroa.19.0.ph.ph110)
+  call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr %.sroa.19.0.ph.ph110)
   br label %bb.br
 
 bb.bw:                                            ; preds = %_RNvXs_NtNtCsbYyEjVLvvus_5tonic5codec6encodeINtB4_12EncodedBytesINtNtCsk1F0U0dGulz_11tonic_prost5codec12ProstEncoderNtNtCsekDO8Mha3LU_12arrow_flight3gen12SchemaResultEINtNtCskbjA1QblxuK_12tokio_stream4once4OnceINtNtCs4NRVxsYgnAr_4core6result6ResultB1P_NtNtB8_6status6StatusEEENtNtCsi0Uwx9p0WRp_12futures_core6stream6Stream9poll_nextCsgsNUVCRJO2f_13influxdb3_lib.exit, %bb.bu, %bb.bl, %bb.bo, %bb.br
@@ -2356,7 +2356,7 @@ bb.bt:                                            ; preds = %bb.bx, %bb.bs
 bb.bu:                                            ; preds = %bb.br
   %i.hx = landingpad { ptr, i32 }
           cleanup
-  invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr nonnull %.sroa.19.0.ph.ph110) #32
+  invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr %.sroa.19.0.ph.ph110) #32
           to label %common.resume unwind label %bb.bz
 
 bb.bv:                                            ; preds = %bb.br
@@ -2371,7 +2371,7 @@ bb.bw:                                            ; preds = %bb.bv
   store i64 -2, ptr %0, align 8
   %.sroa.459.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.ib, ptr %.sroa.459.0..sroa_idx, align 8
-  call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr nonnull %.sroa.19.0.ph.ph110)
+  call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr %.sroa.19.0.ph.ph110)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ak)
   br label %bb.by
 
@@ -2383,7 +2383,7 @@ bb.bx:                                            ; preds = %bb.bv
   store i64 %i.hy, ptr %0, align 8
   %.sroa.553.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.ib, ptr %.sroa.553.0..sroa_idx, align 8
-  call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr nonnull %.sroa.19.0.ph.ph110)
+  call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr %.sroa.19.0.ph.ph110)
   br label %bb.bt
 
 bb.by:                                            ; preds = %_RNvXs_NtNtCsbYyEjVLvvus_5tonic5codec6encodeINtB4_12EncodedBytesINtNtCsk1F0U0dGulz_11tonic_prost5codec12ProstEncoderNtNtCsekDO8Mha3LU_12arrow_flight3gen17HandshakeResponseEINtNtCs4NRVxsYgnAr_4core3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtCsi0Uwx9p0WRp_12futures_core6stream6Streamp4ItemINtNtB2O_6result6ResultB1P_NtNtB8_6status6StatusENtNtB2O_6marker4SendEL_EEEB3O_9poll_nextCsgsNUVCRJO2f_13influxdb3_lib.exit, %bb.bw, %bb.bn, %bb.bq, %bb.bt
@@ -2786,7 +2786,7 @@ bb.bt:                                            ; preds = %bb.bx, %bb.bs
 bb.bu:                                            ; preds = %bb.br
   %i.hx = landingpad { ptr, i32 }
           cleanup
-  invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr nonnull %.sroa.19.0.ph.ph110) #32
+  invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr %.sroa.19.0.ph.ph110) #32
           to label %common.resume unwind label %bb.bz
 
 bb.bv:                                            ; preds = %bb.br
@@ -2801,7 +2801,7 @@ bb.bw:                                            ; preds = %bb.bv
   store i64 -2, ptr %0, align 8
   %.sroa.459.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.ib, ptr %.sroa.459.0..sroa_idx, align 8
-  call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr nonnull %.sroa.19.0.ph.ph110)
+  call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr %.sroa.19.0.ph.ph110)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ak)
   br label %bb.by
 
@@ -2813,7 +2813,7 @@ bb.bx:                                            ; preds = %bb.bv
   store i64 %i.hy, ptr %0, align 8
   %.sroa.553.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.ib, ptr %.sroa.553.0..sroa_idx, align 8
-  call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr nonnull %.sroa.19.0.ph.ph110)
+  call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr %.sroa.19.0.ph.ph110)
   br label %bb.bt
 
 bb.by:                                            ; preds = %_RNvXs_NtNtCsbYyEjVLvvus_5tonic5codec6encodeINtB4_12EncodedBytesINtNtCsk1F0U0dGulz_11tonic_prost5codec12ProstEncoderNtNtCsekDO8Mha3LU_12arrow_flight3gen6ResultEINtNtCs4NRVxsYgnAr_4core3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtCsi0Uwx9p0WRp_12futures_core6stream6Streamp4ItemINtNtB2C_6result6ResultB1P_NtNtB8_6status6StatusENtNtB2C_6marker4SendEL_EEEB3C_9poll_nextCsgsNUVCRJO2f_13influxdb3_lib.exit, %bb.bw, %bb.bn, %bb.bq, %bb.bt
@@ -3216,7 +3216,7 @@ bb.bt:                                            ; preds = %bb.bx, %bb.bs
 bb.bu:                                            ; preds = %bb.br
   %i.hs = landingpad { ptr, i32 }
           cleanup
-  invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr nonnull %.sroa.19.0..sroa.19.16..sroa.4.0.copyload103116) #32
+  invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr %.sroa.19.0..sroa.19.16..sroa.4.0.copyload103116) #32
           to label %common.resume unwind label %bb.bz
 
 bb.bv:                                            ; preds = %bb.br
@@ -3231,7 +3231,7 @@ bb.bw:                                            ; preds = %bb.bv
   store i64 -2, ptr %0, align 8
   %.sroa.459.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.hw, ptr %.sroa.459.0..sroa_idx, align 8
-  call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr nonnull %.sroa.19.0..sroa.19.16..sroa.4.0.copyload103116)
+  call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr %.sroa.19.0..sroa.19.16..sroa.4.0.copyload103116)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.al)
   br label %bb.by
 
@@ -3243,7 +3243,7 @@ bb.bx:                                            ; preds = %bb.bv
   store i64 %i.ht, ptr %0, align 8
   %.sroa.553.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.hw, ptr %.sroa.553.0..sroa_idx, align 8
-  call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr nonnull %.sroa.19.0..sroa.19.16..sroa.4.0.copyload103116)
+  call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr %.sroa.19.0..sroa.19.16..sroa.4.0.copyload103116)
   br label %bb.bt
 
 bb.by:                                            ; preds = %bb.bm, %bb.bq, %bb.bt, %bb.bi, %bb.bw
@@ -3646,7 +3646,7 @@ bb.bt:                                            ; preds = %bb.bx, %bb.bs
 bb.bu:                                            ; preds = %bb.br
   %i.hx = landingpad { ptr, i32 }
           cleanup
-  invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr nonnull %.sroa.19.0.ph.ph110) #32
+  invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr %.sroa.19.0.ph.ph110) #32
           to label %common.resume unwind label %bb.bz
 
 bb.bv:                                            ; preds = %bb.br
@@ -3661,7 +3661,7 @@ bb.bw:                                            ; preds = %bb.bv
   store i64 -2, ptr %0, align 8
   %.sroa.459.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.ib, ptr %.sroa.459.0..sroa_idx, align 8
-  call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr nonnull %.sroa.19.0.ph.ph110)
+  call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr %.sroa.19.0.ph.ph110)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ak)
   br label %bb.by
 
@@ -3673,7 +3673,7 @@ bb.bx:                                            ; preds = %bb.bv
   store i64 %i.hy, ptr %0, align 8
   %.sroa.553.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.ib, ptr %.sroa.553.0..sroa_idx, align 8
-  call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr nonnull %.sroa.19.0.ph.ph110)
+  call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsbYyEjVLvvus_5tonic6status6StatusECsgsNUVCRJO2f_13influxdb3_lib(ptr %.sroa.19.0.ph.ph110)
   br label %bb.bt
 
 bb.by:                                            ; preds = %_RNvXs_NtNtCsbYyEjVLvvus_5tonic5codec6encodeINtB4_12EncodedBytesINtNtCsk1F0U0dGulz_11tonic_prost5codec12ProstEncoderNtNtCsekDO8Mha3LU_12arrow_flight3gen9PutResultEINtNtCs4NRVxsYgnAr_4core3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtCsi0Uwx9p0WRp_12futures_core6stream6Streamp4ItemINtNtB2F_6result6ResultB1P_NtNtB8_6status6StatusENtNtB2F_6marker4SendEL_EEEB3F_9poll_nextCsgsNUVCRJO2f_13influxdb3_lib.exit, %bb.bw, %bb.bn, %bb.bq, %bb.bt

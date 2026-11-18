@@ -205,13 +205,13 @@ _prefilter_chromaticity.exit.._crit_edge406.split_crit_edge: ; preds = %_prefilt
   %i.aij = fmul reassoc nsz arcp contract afn float %i.aii, %i.ahu
   %i.aik = fmul reassoc nsz arcp contract afn float %i.aij, %i.ahe ; 3 uses
   %i.ail = getelementptr inbounds nuw i8, ptr %i.ahp, i64 8
-  store float %i.aik, ptr %i.ail, align 8, !tbaa !12
+  store float %i.aik, ptr %i.ail, align 4, !tbaa !12
   %i.aim = fcmp reassoc nsz arcp contract afn ogt float %i.aik, 0.000000e+00
   %i.ain = fdiv reassoc nsz arcp contract afn float %i.aif, %i.aik
   %spec.select350.peel = select reassoc nsz arcp contract afn i1 %i.aim, float %i.ain, float 0.000000e+00
   %i.aio = getelementptr inbounds nuw i8, ptr %i.ahp, i64 4 ; 2 uses
   store float %spec.select350.peel, ptr %i.aio, align 4, !tbaa !12
-  store float %i.aig, ptr %i.ahp, align 16, !tbaa !12
+  store float %i.aig, ptr %i.ahp, align 4, !tbaa !12
   br i1 %.not253, label %bb.ab, label %bb.aa
 
 bb.aa:                                            ; preds = %.preheader388
@@ -267,7 +267,7 @@ bb.ac:                                            ; preds = %bb.ab
   br label %bb.af
 
 bb.ad:                                            ; preds = %bb.ab
-  %i.akb = load float, ptr %i.ahp, align 16, !tbaa !12
+  %i.akb = load float, ptr %i.ahp, align 4, !tbaa !12
   %i.akc = load float, ptr %i.aio, align 4, !tbaa !12
   %i.akd = load ptr, ptr %i.aha, align 8, !tbaa !84 ; 2 uses
   %i.ake = fmul reassoc nsz arcp contract afn float %i.akb, f0x42A2F983

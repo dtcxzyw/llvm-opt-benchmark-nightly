@@ -205,7 +205,7 @@ bb.u:                                             ; preds = %bb.t
 bb.v:                                             ; preds = %bb.u
   %i.co = load ptr, ptr %i.z, align 8, !tbaa !1142 ; 2 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.co, i64 8) ]
-  %.0.copyload.i.i.i.i.i.i.i.i.us.peel = load i64, ptr %i.co, align 8
+  %.0.copyload.i.i.i.i.i.i.i.i.us.peel = load i64, ptr %i.co, align 1
   %i.cp = and i64 %.0.copyload.i.i.i.i.i.i.i.i.us.peel, -8
   %i.cq = inttoptr i64 %i.cp to ptr               ; 3 uses
   %i.cr = getelementptr inbounds nuw i8, ptr %i.cq, i64 28

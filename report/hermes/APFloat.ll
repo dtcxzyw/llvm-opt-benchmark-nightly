@@ -204,10 +204,10 @@ _ZN4llvh7APFloatC2ENS_6detail9IEEEFloatERKNS_12fltSemanticsE.exit: ; preds = %bb
   %i.ag = load i16, ptr %i.af, align 8, !tbaa !56
   %i.ah = getelementptr inbounds nuw i8, ptr %.0.i21, i64 18
   %i.ai = load i8, ptr %i.ah, align 2
-  %7 = and i8 %i.ai, 15
   store ptr @_ZN4llvhL8semBogusE, ptr %.0.i21, align 8, !tbaa !54
-  %8 = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 4 uses
-  store ptr %i.ac, ptr %8, align 8, !tbaa !54
+  %7 = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 4 uses
+  %8 = and i8 %i.ai, 15
+  store ptr %i.ac, ptr %7, align 8, !tbaa !54
   %i.aj = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 2 uses
   store i64 %i.ae, ptr %i.aj, align 8, !tbaa !55
   %i.ak = getelementptr inbounds nuw i8, ptr %6, i64 24
@@ -215,10 +215,10 @@ _ZN4llvh7APFloatC2ENS_6detail9IEEEFloatERKNS_12fltSemanticsE.exit: ; preds = %bb
   %i.al = getelementptr inbounds nuw i8, ptr %6, i64 26 ; 2 uses
   %i.am = load i8, ptr %i.al, align 2
   %i.an = and i8 %i.am, -16
-  %i.ao = or disjoint i8 %i.an, %7
+  %i.ao = or disjoint i8 %i.an, %8
   store i8 %i.ao, ptr %i.al, align 2
-  %i.ap = call noundef nonnull align 8 dereferenceable(24) ptr @_ZN4llvh7APFloat7StorageaSEOS1_(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %8) ; 0 uses
-  %i.aq = load ptr, ptr %8, align 8, !tbaa !55    ; 2 uses
+  %i.ap = call noundef nonnull align 8 dereferenceable(24) ptr @_ZN4llvh7APFloat7StorageaSEOS1_(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %7) ; 0 uses
+  %i.aq = load ptr, ptr %7, align 8, !tbaa !55    ; 2 uses
   %.not.i23 = icmp eq ptr %i.aq, @_ZN4llvhL18semPPCDoubleDoubleE
   br i1 %.not.i23, label %bb.o, label %bb.l
 
@@ -239,7 +239,7 @@ bb.n:                                             ; preds = %bb.m
   br label %_ZN4llvh6detail9IEEEFloatD2Ev.exit
 
 bb.o:                                             ; preds = %_ZN4llvh7APFloatC2ENS_6detail9IEEEFloatERKNS_12fltSemanticsE.exit
-  call void @_ZN4llvh6detail13DoubleAPFloatD2Ev(ptr noundef nonnull align 8 dereferenceable(24) %8) #25, !inline_history !5
+  call void @_ZN4llvh6detail13DoubleAPFloatD2Ev(ptr noundef nonnull align 8 dereferenceable(24) %7) #25, !inline_history !5
   br label %_ZN4llvh6detail9IEEEFloatD2Ev.exit
 
 _ZN4llvh6detail9IEEEFloatD2Ev.exit:               ; preds = %bb.o, %bb.n, %bb.m, %bb.l

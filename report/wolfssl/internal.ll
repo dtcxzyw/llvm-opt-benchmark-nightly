@@ -205,7 +205,7 @@ bb.bm:                                            ; preds = %._crit_edge.thread
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define noundef range(i32 -173, 16385) i32 @wolfssl_local_GetMaxPlaintextSize(ptr nofree noundef readnone captures(address_is_null) %0) local_unnamed_addr #1 {
+define range(i32 -173, 16385) i32 @wolfssl_local_GetMaxPlaintextSize(ptr nofree noundef readnone captures(address_is_null) %0) local_unnamed_addr #1 {
 bb.a:
   %i.a = icmp eq ptr %0, null
   %spec.select = select i1 %i.a, i32 -173, i32 16384
@@ -608,7 +608,7 @@ bb.d:                                             ; preds = %bb.b, %bb.a, %bb.c
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define noundef range(i32 -173, 16385) i32 @wolfSSL_GetMaxFragSize(ptr nofree noundef readnone captures(address_is_null) %0) local_unnamed_addr #1 {
+define range(i32 -173, 16385) i32 @wolfSSL_GetMaxFragSize(ptr nofree noundef readnone captures(address_is_null) %0) local_unnamed_addr #1 {
 bb.a:
   %i.a = icmp eq ptr %0, null
   %. = select i1 %i.a, i32 -173, i32 16384

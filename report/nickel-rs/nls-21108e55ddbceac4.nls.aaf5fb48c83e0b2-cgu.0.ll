@@ -205,7 +205,7 @@ bb.br:                                            ; preds = %"_ZN10serde_json2de
 .body:                                            ; preds = %bb.bp, %"_ZN10serde_json2de21Deserializer$LT$R$GT$16parse_whitespace17hccdce630c600ea9eE.exit17.thread.i", %bb.bm, %.loopexit.i14
   %i.ha = landingpad { ptr, i32 }
           cleanup
-  invoke fastcc void @"_ZN4core3ptr118drop_in_place$LT$core..result..Result$LT$nickel_lang_core..eval..value..NickelValue$C$serde_json..error..Error$GT$$GT$17h6065bb93c4d3240cE"(i64 %.sroa.0.0.i26, ptr nonnull %.sroa.3.0.i25) #77
+  invoke fastcc void @"_ZN4core3ptr118drop_in_place$LT$core..result..Result$LT$nickel_lang_core..eval..value..NickelValue$C$serde_json..error..Error$GT$$GT$17h6065bb93c4d3240cE"(i64 %.sroa.0.0.i26, ptr %.sroa.3.0.i25) #77
           to label %common.resume565 unwind label %bb.bt, !inline_history !34503
 
 "_ZN10serde_json2de21Deserializer$LT$R$GT$7end_seq17hef745176dd7e5802E.exit": ; preds = %.noexc20, %.noexc19, %bb.bq, %bb.br
@@ -608,7 +608,7 @@ bb.fq:                                            ; preds = %bb.fn
   %.pn.i167.pn = phi ptr [ %i.akf, %_ZN4core4iter8adapters7flatten17and_then_or_clear17hb1a3127ba8d36553E.exit.i.i.i ], [ %.pn.i167.pn.ph, %"_ZN102_$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hee7a18b1b4d2cdffE.exit.outer" ]
   %.val.i169.pn.in = getelementptr inbounds i8, ptr %.pn.i167.pn, i64 -8
   %.val.i169.pn = load i32, ptr %.val.i169.pn.in, align 4, !noalias !52476, !noundef !46
-  %i.aix = icmp ult i64 %i.aiw, 2305843009213693952
+  %i.aix = icmp samesign ult i64 %i.aiw, 2305843009213693952
   call void @llvm.assume(i1 %i.aix)
   %i.aiy = icmp eq i64 %i.aiw, %i.aiv
   br i1 %i.aiy, label %"_ZN102_$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$9size_hint17h84afa728d5a94300E.exit.i", label %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h96c0550bf6114267E.exit.i"

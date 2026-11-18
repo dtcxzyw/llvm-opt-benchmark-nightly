@@ -203,7 +203,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(argmem: write, inaccessiblemem: readwrite, errnomem: write) uwtable
-define noundef range(i64 -101, 1) i64 @WMPAlloc(ptr nofree noundef writeonly captures(none) initializes((0, 8)) %0, i64 noundef %1) local_unnamed_addr #7 {
+define range(i64 -101, 1) i64 @WMPAlloc(ptr nofree noundef writeonly captures(none) initializes((0, 8)) %0, i64 noundef %1) local_unnamed_addr #7 {
 bb.a:
   %i.a = tail call noalias ptr @calloc(i64 noundef 1, i64 noundef %1) #27 ; 2 uses
   store ptr %i.a, ptr %0, align 8, !tbaa !46
@@ -294,7 +294,7 @@ bb.a:
 }
 
 ; Function Attrs: nofree nounwind uwtable
-define noundef range(i64 -102, 1) i64 @ReadWS_File(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(none) %1, i64 noundef %2) #11 {
+define range(i64 -102, 1) i64 @ReadWS_File(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(none) %1, i64 noundef %2) #11 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !54
   %i.b = tail call i64 @fread(ptr noundef %1, i64 noundef %2, i64 noundef 1, ptr noundef %i.a)
@@ -322,7 +322,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 }
 
 ; Function Attrs: nofree nounwind uwtable
-define noundef range(i64 -102, 1) i64 @SetPosWS_File(ptr nofree noundef readonly captures(none) %0, i64 noundef %1) #11 {
+define range(i64 -102, 1) i64 @SetPosWS_File(ptr nofree noundef readonly captures(none) %0, i64 noundef %1) #11 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !54
   %i.b = tail call i32 @fseek(ptr noundef %i.a, i64 noundef %1, i32 noundef 0)

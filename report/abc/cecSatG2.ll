@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
 }
 
 ; Function Attrs: nounwind uwtable
-define noundef range(i32 -1, 2) i32 @computeInputVectors(ptr noundef %0, ptr nofree noundef captures(none) %1, ptr nofree noundef captures(none) %2, ptr nofree noundef readonly captures(none) %3, ptr nofree noundef readonly captures(none) %4, i32 noundef %5, ptr nofree noundef readonly captures(none) %6, ptr nofree noundef readonly captures(address_is_null) %7, ptr nofree noundef readonly captures(none) %8, i32 noundef %9) local_unnamed_addr #0 {
+define range(i32 -1, 2) i32 @computeInputVectors(ptr noundef %0, ptr nofree noundef captures(none) %1, ptr nofree noundef captures(none) %2, ptr nofree noundef readonly captures(none) %3, ptr nofree noundef readonly captures(none) %4, i32 noundef %5, ptr nofree noundef readonly captures(none) %6, ptr nofree noundef readonly captures(address_is_null) %7, ptr nofree noundef readonly captures(none) %8, i32 noundef %9) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca i8, align 1                       ; 6 uses
   %i.b = getelementptr i8, ptr %3, i64 4
