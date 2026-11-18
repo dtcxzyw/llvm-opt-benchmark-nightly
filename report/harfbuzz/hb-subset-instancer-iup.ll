@@ -205,7 +205,7 @@ bb.o:                                             ; preds = %bb.n
   store i32 %i.al, ptr %i.br, align 4, !tbaa !31
   br label %bb.p
 
-bb.p:                                             ; preds = %.critedge.i59, %bb.o
+bb.p:                                             ; preds = %bb.o, %.critedge.i59
   %i.bs = add i32 %i.aj, -3
   %i.bt = load i32, ptr %i.ai, align 4, !tbaa !27 ; 3 uses
   %i.bu = load i32, ptr %4, align 8, !tbaa !26
