@@ -205,22 +205,20 @@ bb.e:                                             ; preds = %.peel.begin
 bb.f:                                             ; preds = %.peel.begin
   %i.ai = tail call i32 @llvm.umin.i32(i32 %spec.select, i32 %i.b) ; 2 uses
   %i.aj = zext nneg i32 %i.ai to i64
-  %.sroa.05.0.lcssa.i.i133.peel = add i64 %1, %i.aj ; 3 uses
+  %.sroa.05.0.lcssa.i.i133.peel = add i64 %1, %i.aj ; 2 uses
   %i.ak = icmp samesign ult i32 %i.b, %spec.select
   br i1 %i.ak, label %bb.g, label %.peel.next.preheader
 
 bb.g:                                             ; preds = %bb.f
-  %2 = sub nsw i32 %spec.select, %i.ai            ; 2 uses
-  %3 = icmp sgt i32 %2, 0
-  %i.al = add nsw i32 %2, -1
+  %2 = xor i32 %i.ai, -1
+  %i.al = add nsw i32 %spec.select, %2
   %i.am = zext nneg i32 %i.al to i64
   %i.an = add i64 %.sroa.05.0.lcssa.i.i133.peel, 1
   %i.ao = add i64 %i.an, %i.am
-  %.sroa.02.0.lcssa.i.i.i134.peel = select i1 %3, i64 %i.ao, i64 %.sroa.05.0.lcssa.i.i133.peel
   br label %.peel.next.preheader
 
 .peel.next.preheader:                             ; preds = %bb.e, %bb.f, %bb.g
-  %.sroa.0186.2231.ph = phi i64 [ %.sroa.02.0.lcssa.i.i.i134.peel, %bb.g ], [ %.sroa.05.0.lcssa.i.i133.peel, %bb.f ], [ %i.ah, %bb.e ]
+  %.sroa.0186.2231.ph = phi i64 [ %i.ao, %bb.g ], [ %.sroa.05.0.lcssa.i.i133.peel, %bb.f ], [ %i.ah, %bb.e ]
   br label %.peel.next
 
 .peel.next:                                       ; preds = %.peel.next.preheader, %bb.k
@@ -623,22 +621,20 @@ bb.e:                                             ; preds = %.peel.begin
 bb.f:                                             ; preds = %.peel.begin
   %i.ak = tail call i32 @llvm.umin.i32(i32 %spec.select, i32 %i.b) ; 2 uses
   %i.al = zext nneg i32 %i.ak to i64
-  %.sroa.06.0.lcssa.i.i.i.i.i.i132.peel = add i64 %1, %i.al ; 3 uses
+  %.sroa.06.0.lcssa.i.i.i.i.i.i132.peel = add i64 %1, %i.al ; 2 uses
   %i.am = icmp samesign ult i32 %i.b, %spec.select
   br i1 %i.am, label %bb.g, label %.peel.next.preheader
 
 bb.g:                                             ; preds = %bb.f
-  %2 = sub nsw i32 %spec.select, %i.ak            ; 2 uses
-  %3 = icmp sgt i32 %2, 0
-  %i.an = add nsw i32 %2, -1
+  %2 = xor i32 %i.ak, -1
+  %i.an = add nsw i32 %spec.select, %2
   %i.ao = zext nneg i32 %i.an to i64
   %i.ap = add i64 %.sroa.06.0.lcssa.i.i.i.i.i.i132.peel, 1
   %i.aq = add i64 %i.ap, %i.ao
-  %.sroa.02.0.lcssa.i.i.i133.peel = select i1 %3, i64 %i.aq, i64 %.sroa.06.0.lcssa.i.i.i.i.i.i132.peel
   br label %.peel.next.preheader
 
 .peel.next.preheader:                             ; preds = %bb.e, %bb.f, %bb.g
-  %.sroa.0179.2224.ph = phi i64 [ %.sroa.02.0.lcssa.i.i.i133.peel, %bb.g ], [ %.sroa.06.0.lcssa.i.i.i.i.i.i132.peel, %bb.f ], [ %i.aj, %bb.e ]
+  %.sroa.0179.2224.ph = phi i64 [ %i.aq, %bb.g ], [ %.sroa.06.0.lcssa.i.i.i.i.i.i132.peel, %bb.f ], [ %i.aj, %bb.e ]
   br label %.peel.next
 
 .peel.next:                                       ; preds = %.peel.next.preheader, %bb.k
