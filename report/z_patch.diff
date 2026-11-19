@@ -1,0 +1,578 @@
+diff --git a/llvm/include/llvm/Analysis/ScalarEvolution.h b/llvm/include/llvm/Analysis/ScalarEvolution.h
+index 813a4acee8349..18383c49640fe 100644
+--- a/llvm/include/llvm/Analysis/ScalarEvolution.h
++++ b/llvm/include/llvm/Analysis/ScalarEvolution.h
+@@ -2005,18 +2005,18 @@ class ScalarEvolution {
+   DenseMap<const SCEV *, SmallPtrSet<const SCEV *, 8> > SCEVUsers;
+ 
+   /// Memoized results from getRange
+-  DenseMap<const SCEV *, ConstantRange> UnsignedRanges;
++  DenseMap<SCEVUse, ConstantRange> UnsignedRanges;
+ 
+   /// Memoized results from getRange
+-  DenseMap<const SCEV *, ConstantRange> SignedRanges;
++  DenseMap<SCEVUse, ConstantRange> SignedRanges;
+ 
+   /// Used to parameterize getRange
+   enum RangeSignHint { HINT_RANGE_UNSIGNED, HINT_RANGE_SIGNED };
+ 
+   /// Set the memoized range for the given SCEV.
+-  const ConstantRange &setRange(const SCEV *S, RangeSignHint Hint,
++  const ConstantRange &setRange(SCEVUse S, RangeSignHint Hint,
+                                 ConstantRange CR) {
+-    DenseMap<const SCEV *, ConstantRange> &Cache =
++    DenseMap<SCEVUse, ConstantRange> &Cache =
+         Hint == HINT_RANGE_UNSIGNED ? UnsignedRanges : SignedRanges;
+ 
+     auto Pair = Cache.insert_or_assign(S, std::move(CR));
+@@ -2026,8 +2026,15 @@ class ScalarEvolution {
+   /// Determine the range for a particular SCEV.
+   /// NOTE: This returns a reference to an entry in a cache. It must be
+   /// copied if its needed for longer.
+-  LLVM_ABI const ConstantRange &getRangeRef(const SCEV *S, RangeSignHint Hint,
+-                                            unsigned Depth = 0);
++  const ConstantRange &getRangeRef(const SCEV *S, RangeSignHint Hint,
++                                   unsigned Depth = 0) {
++    return getRangeForUse(S, Hint, Depth);
++  }
++
++  /// Like getRangeRef, but for an add also use the no-wrap flags of the use
++  /// \p S, which only hold where \p S is used.
++  LLVM_ABI const ConstantRange &getRangeForUse(SCEVUse S, RangeSignHint Hint,
++                                               unsigned Depth = 0);
+ 
+   /// Determine the range for a particular SCEV, but evaluates ranges for
+   /// operands iteratively first.
+@@ -2259,7 +2266,7 @@ class ScalarEvolution {
+   ///
+   /// If \p AllowPredicates is set, this call will try to use a minimal set of
+   /// SCEV predicates in order to return an exact answer.
+-  ExitLimit howManyLessThans(const SCEV *LHS, const SCEV *RHS, const Loop *L,
++  ExitLimit howManyLessThans(const SCEV *LHS, SCEVUse RHSUse, const Loop *L,
+                              bool IsSigned, bool Invert, bool ControlsOnlyExit,
+                              bool AllowPredicates = false);
+ 
+@@ -2540,17 +2547,19 @@ class ScalarEvolution {
+ 
+   /// Return the smallest signed (\p IsSigned) or unsigned value for \p S. If \p
+   /// Invert, return it for complement ~S instead.
+-  APInt getRangeMin(const SCEV *S, bool IsSigned, bool Invert = false) {
++  APInt getRangeMin(SCEVUse S, bool IsSigned, bool Invert = false) {
+     if (Invert)
+       return ~getRangeMax(S, IsSigned);
+-    return IsSigned ? getSignedRangeMin(S) : getUnsignedRangeMin(S);
++    return IsSigned ? getRangeForUse(S, HINT_RANGE_SIGNED).getSignedMin()
++                    : getRangeForUse(S, HINT_RANGE_UNSIGNED).getUnsignedMin();
+   }
+   /// Return the largest signed (\p IsSigned) or unsigned value for \p S. If \p
+   /// Invert, return it for complement ~S instead.
+-  APInt getRangeMax(const SCEV *S, bool IsSigned, bool Invert = false) {
++  APInt getRangeMax(SCEVUse S, bool IsSigned, bool Invert = false) {
+     if (Invert)
+       return ~getRangeMin(S, IsSigned);
+-    return IsSigned ? getSignedRangeMax(S) : getUnsignedRangeMax(S);
++    return IsSigned ? getRangeForUse(S, HINT_RANGE_SIGNED).getSignedMax()
++                    : getRangeForUse(S, HINT_RANGE_UNSIGNED).getUnsignedMax();
+   }
+ 
+   /// Compute the maximum backedge count based on the range of values
+@@ -2563,14 +2572,15 @@ class ScalarEvolution {
+   /// * the induction variable is assumed not to overflow (i.e. either it
+   ///   actually doesn't, or we'd have to immediately execute UB)
+   /// We *don't* assert these preconditions so please be careful.
+-  const SCEV *computeMaxBECountForLT(const SCEV *Start, const SCEV *Stride,
++  const SCEV *computeMaxBECountForLT(SCEVUse Start, const SCEV *Stride,
+                                      const SCEV *End, unsigned BitWidth,
+                                      bool IsSigned, bool Invert);
+ 
+   /// Verify if a linear IV with positive \p Stride can overflow when compared
+   /// against the invariant \p RHS with a less-than. If \p Invert is true, both
+   /// the IV and \p RHS are inverted
+-  bool canIVOverflowOnLT(const SCEV *RHS, const SCEV *Stride, bool IsSigned,
++  /// Uses the range of the use \p RHS, which only holds where \p RHS is used.
++  bool canIVOverflowOnLT(SCEVUse RHS, const SCEV *Stride, bool IsSigned,
+                          bool Invert = false);
+ 
+   /// Get add expr already created or create a new one.
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index 40baea4dad716..ce8f6ae8893ff 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -6455,7 +6455,7 @@ static bool RangeRefPHIAllowedOperands(DominatorTree &DT, PHINode *PHI) {
+ const ConstantRange &
+ ScalarEvolution::getRangeRefIter(const SCEV *S,
+                                  ScalarEvolution::RangeSignHint SignHint) {
+-  DenseMap<const SCEV *, ConstantRange> &Cache =
++  DenseMap<SCEVUse, ConstantRange> &Cache =
+       SignHint == ScalarEvolution::HINT_RANGE_UNSIGNED ? UnsignedRanges
+                                                        : SignedRanges;
+   SmallVector<SCEVUse> WorkList;
+@@ -6536,15 +6536,21 @@ const APInt *ScalarEvolution::getConstantAPIntOrNull(const SCEV *S) {
+ /// Determine the range for a particular SCEV.  If SignHint is
+ /// HINT_RANGE_UNSIGNED (resp. HINT_RANGE_SIGNED) then getRange prefers ranges
+ /// with a "cleaner" unsigned (resp. signed) representation.
+-const ConstantRange &ScalarEvolution::getRangeRef(
+-    const SCEV *S, ScalarEvolution::RangeSignHint SignHint, unsigned Depth) {
+-  DenseMap<const SCEV *, ConstantRange> &Cache =
++const ConstantRange &ScalarEvolution::getRangeForUse(
++    SCEVUse S, ScalarEvolution::RangeSignHint SignHint, unsigned Depth) {
++  DenseMap<SCEVUse, ConstantRange> &Cache =
+       SignHint == ScalarEvolution::HINT_RANGE_UNSIGNED ? UnsignedRanges
+                                                        : SignedRanges;
+   ConstantRange::PreferredRangeType RangeType =
+       SignHint == ScalarEvolution::HINT_RANGE_UNSIGNED ? ConstantRange::Unsigned
+                                                        : ConstantRange::Signed;
+ 
++  // Only uses of adds have their own entry. Rebuild the use, so that its key
++  // matches those erased by forgetMemoizedResultsImpl.
++  if (S.hasUseFlags())
++    S = SCEVUse(S.getPointer(),
++                isa<SCEVAddExpr>(S) ? S.getUseNoWrapFlags() : SCEV::FlagNone);
++
+   // See if we've computed this range already.
+   auto I = Cache.find(S);
+   if (I != Cache.end())
+@@ -6625,14 +6631,14 @@ const ConstantRange &ScalarEvolution::getRangeRef(
+     }
+     ConstantRange X = getRangeRef(Add->getOperand(0), SignHint, Depth + 1);
+     unsigned WrapType = OBO::AnyWrap;
+-    if (Add->hasNoSignedWrap())
++    if (hasFlags(S.getNoWrapFlags(), SCEV::FlagNSW))
+       WrapType |= OBO::NoSignedWrap;
+-    if (Add->hasNoUnsignedWrap())
++    if (hasFlags(S.getNoWrapFlags(), SCEV::FlagNUW))
+       WrapType |= OBO::NoUnsignedWrap;
+     for (const SCEV *Op : drop_begin(Add->operands()))
+       X = X.addWithNoWrap(getRangeRef(Op, SignHint, Depth + 1), WrapType,
+                           RangeType);
+-    return setRange(Add, SignHint,
++    return setRange(S, SignHint,
+                     ConservativeResult.intersectWith(X, RangeType));
+   }
+   case scMulExpr: {
+@@ -13135,7 +13141,7 @@ bool ScalarEvolution::isImpliedCondOperandsViaRanges(
+   return LHSRange.icmp(Pred, ConstRHS);
+ }
+ 
+-bool ScalarEvolution::canIVOverflowOnLT(const SCEV *RHS, const SCEV *Stride,
++bool ScalarEvolution::canIVOverflowOnLT(SCEVUse RHS, const SCEV *Stride,
+                                         bool IsSigned, bool Invert) {
+   assert(isKnownPositive(Stride) && "Positive stride expected!");
+ 
+@@ -13169,7 +13175,7 @@ const SCEV *ScalarEvolution::getUDivCeilSCEV(const SCEV *N, const SCEV *D) {
+ }
+ 
+ const SCEV *
+-ScalarEvolution::computeMaxBECountForLT(const SCEV *Start, const SCEV *Stride,
++ScalarEvolution::computeMaxBECountForLT(SCEVUse Start, const SCEV *Stride,
+                                         const SCEV *End, unsigned BitWidth,
+                                         bool IsSigned, bool Invert) {
+   // The logic in this function assumes we can represent a positive stride.
+@@ -13217,19 +13223,25 @@ ScalarEvolution::computeMaxBECountForLT(const SCEV *Start, const SCEV *Stride,
+ 
+   // Try to refine Delta in case End - Start (or Start - End if Invert) gives a
+   // tighter bound after folding.
+-  const SCEV *DeltaExpr =
+-      Invert ? getMinusSCEV(Start, End) : getMinusSCEV(End, Start);
++  // The use flags of Start do not hold for the difference.
++  const SCEV *DeltaExpr = Invert ? getMinusSCEV(Start.getPointer(), End)
++                                 : getMinusSCEV(End, Start.getPointer());
+   Delta = APIntOps::umin(Delta, getUnsignedRangeMax(DeltaExpr));
+ 
+   return getUDivCeilSCEV(getConstant(Delta), getConstant(StrideForMaxBECount));
+ }
+ 
+ ScalarEvolution::ExitLimit
+-ScalarEvolution::howManyLessThans(const SCEV *LHS, const SCEV *RHS,
++ScalarEvolution::howManyLessThans(const SCEV *LHS, SCEVUse RHSUse,
+                                   const Loop *L, bool IsSigned, bool Invert,
+                                   bool ControlsOnlyExit, bool AllowPredicates) {
+   SmallVector<const SCEVPredicate *> Predicates;
+ 
++  // RHSUse is RHS as used by the exit condition. Outside the range of the use,
++  // RHS and with it the exit condition is poison, which is UB if the exit is
++  // reached. Only range checks use it; everything else uses the expression.
++  const SCEV *RHS = RHSUse;
++
+   LoopGuards Guards = LoopGuards::collectOnDemand(L, *this);
+ 
+   // FIXME: Extend the non-invariant RHS analysis to greater-than comparisons.
+@@ -13430,9 +13442,11 @@ ScalarEvolution::howManyLessThans(const SCEV *LHS, const SCEV *RHS,
+   } else {
+     // Avoid proven overflow cases: this will ensure that the backedge taken
+     // count will not generate any unsigned overflow.
+-    IVMayOverflow = canIVOverflowOnLT(RHS, GuardedStride, IsSigned, Invert) &&
+-                    canIVOverflowOnLT(applyLoopGuards(RHS, Guards),
+-                                      GuardedStride, IsSigned, Invert);
++    // The check of the unguarded RHS uses the range of RHSUse.
++    IVMayOverflow =
++        canIVOverflowOnLT(RHSUse, GuardedStride, IsSigned, Invert) &&
++        canIVOverflowOnLT(applyLoopGuards(RHS, Guards), GuardedStride, IsSigned,
++                          Invert);
+     if (IVMayOverflow && !NoWrap)
+       return getCouldNotCompute();
+   }
+@@ -13661,6 +13675,13 @@ ScalarEvolution::howManyLessThans(const SCEV *LHS, const SCEV *RHS,
+         };
+ 
+         auto CondGE = IsSigned ? ICmpInst::ICMP_SGE : ICmpInst::ICMP_UGE;
++        // Also compare the ranges, with that of RHSUse if RHS is unconverted.
++        APInt RHSMin = getRangeMin(RHS == OrigRHS ? RHSUse : SCEVUse(RHS),
++                                   IsSigned, Invert);
++        APInt StartMax = getRangeMax(Start, IsSigned, Invert);
++        if (ICmpInst::compare(RHSMin, StartMax, CondGE))
++          return true;
++
+         const SCEV *GuardedRHS = applyLoopGuards(OrigRHS, Guards);
+         const SCEV *GuardedStart = applyLoopGuards(OrigStart, Guards);
+         if (Invert)
+@@ -13732,9 +13753,10 @@ ScalarEvolution::howManyLessThans(const SCEV *LHS, const SCEV *RHS,
+   if (isa<SCEVConstant>(BECount)) {
+     ConstantMaxBECount = BECount;
+   } else {
++    // Pass the start as used by the recurrence, for the range of that use.
+     ConstantMaxBECount = computeMaxBECountForLT(
+-        Start, Stride, RHS, getTypeSizeInBits(LHS->getType()), IsSigned,
+-        Invert);
++        Start == OrigStart ? IV->getStart() : SCEVUse(Start), Stride, RHS,
++        getTypeSizeInBits(LHS->getType()), IsSigned, Invert);
+     // If we know exactly how many times the backedge will be taken if it's
+     // taken at least once, then the backedge count will either be that or
+     // zero. If that count exceeds the range-based bound, the backedge can
+@@ -14523,6 +14545,14 @@ void ScalarEvolution::forgetMemoizedResultsImpl(const SCEV *S) {
+   BlockDispositions.erase(S);
+   UnsignedRanges.erase(S);
+   SignedRanges.erase(S);
++  // Uses of adds with flags have their own ranges.
++  if (isa<SCEVAddExpr>(S)) {
++    for (SCEVFlags Flags :
++         {SCEV::FlagNUW, SCEV::FlagNSW, SCEV::FlagNUW | SCEV::FlagNSW}) {
++      UnsignedRanges.erase(SCEVUse(S, Flags));
++      SignedRanges.erase(SCEVUse(S, Flags));
++    }
++  }
+   HasRecMap.erase(S);
+   ConstantMultipleCache.erase(S);
+ 
+diff --git a/llvm/test/Analysis/ScalarEvolution/exit-value-nowrap-flags.ll b/llvm/test/Analysis/ScalarEvolution/exit-value-nowrap-flags.ll
+index 731fbcf703b80..6bb4aa9135524 100644
+--- a/llvm/test/Analysis/ScalarEvolution/exit-value-nowrap-flags.ll
++++ b/llvm/test/Analysis/ScalarEvolution/exit-value-nowrap-flags.ll
+@@ -375,3 +375,317 @@ loop:
+ exit:
+   ret void
+ }
++
++; %j starts at the exit value of %iv, (4 + %start)<u nuw>, which is at least 4.
++; %k starts at %s4 = (4 + %start), which may wrap: neither the range of %s4 nor
++; the constant max backedge-taken count of %loop.3 may use the flags of the
++; exit value, so the former must be the full set and the latter -1.
++; The constant max backedge-taken count of %loop.2 is -5.
++define void @loops_start_at_exit_value_and_its_expr(i32 %start, i32 %m) {
++; CHECK-LABEL: 'loops_start_at_exit_value_and_its_expr'
++; CHECK-NEXT:  Classifying expressions for: @loops_start_at_exit_value_and_its_expr
++; CHECK-NEXT:    %iv = phi i32 [ %start, %entry ], [ %iv.next, %loop ]
++; CHECK-NEXT:    --> {%start,+,1}<nuw><%loop> U: full-set S: full-set Exits: (4 + %start)<u nuw> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %i = phi i32 [ 0, %entry ], [ %i.next, %loop ]
++; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%loop> U: [0,5) S: [0,5) Exits: 4 LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %iv.next = add nuw i32 %iv, 1
++; CHECK-NEXT:    --> {(1 + %start),+,1}<nw><%loop> U: full-set S: full-set Exits: (5 + %start) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %i.next = add i32 %i, 1
++; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%loop> U: [1,6) S: [1,6) Exits: 5 LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %j = phi i32 [ %iv, %loop ], [ %j.next, %loop.2 ]
++; CHECK-NEXT:    --> {{\{\{}}%start,+,1}<nuw><%loop>,+,1}<%loop.2> U: full-set S: full-set --> {(4 + %start)<u nuw>,+,1}<%loop.2> U: full-set S: full-set Exits: ((4 + %start) umax %m) LoopDispositions: { %loop.2: Computable }
++; CHECK-NEXT:    %j.next = add i32 %j, 1
++; CHECK-NEXT:    --> {{\{\{}}(1 + %start),+,1}<nw><%loop>,+,1}<%loop.2> U: full-set S: full-set --> {(5 + %start),+,1}<%loop.2> U: full-set S: full-set Exits: (1 + ((4 + %start) umax %m)) LoopDispositions: { %loop.2: Computable }
++; CHECK-NEXT:    %s4 = add i32 %start, 4
++; CHECK-NEXT:    --> (4 + %start) U: full-set S: full-set
++; CHECK-NEXT:    %k = phi i32 [ %s4, %ph.3 ], [ %k.next, %loop.3 ]
++; CHECK-NEXT:    --> {(4 + %start),+,1}<%loop.3> U: full-set S: full-set Exits: ((4 + %start) umax %m) LoopDispositions: { %loop.3: Computable }
++; CHECK-NEXT:    %k.next = add i32 %k, 1
++; CHECK-NEXT:    --> {(5 + %start),+,1}<%loop.3> U: full-set S: full-set Exits: (1 + ((4 + %start) umax %m)) LoopDispositions: { %loop.3: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @loops_start_at_exit_value_and_its_expr
++; CHECK-NEXT:  Loop %loop.3: backedge-taken count is (-4 + (-1 * %start) + ((4 + %start) umax %m))
++; CHECK-NEXT:  Loop %loop.3: constant max backedge-taken count is i32 -1
++; CHECK-NEXT:  Loop %loop.3: symbolic max backedge-taken count is (-4 + (-1 * %start) + ((4 + %start) umax %m))
++; CHECK-NEXT:  Loop %loop.3: Trip multiple is 1
++; CHECK-NEXT:  Loop %loop.2: backedge-taken count is (-4 + (-1 * %start) + ((4 + %start) umax %m))
++; CHECK-NEXT:  Loop %loop.2: constant max backedge-taken count is i32 -5
++; CHECK-NEXT:  Loop %loop.2: symbolic max backedge-taken count is (-4 + (-1 * %start) + ((4 + %start) umax %m))
++; CHECK-NEXT:  Loop %loop.2: Trip multiple is 1
++; CHECK-NEXT:  Loop %loop: backedge-taken count is i32 4
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 4
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is i32 4
++; CHECK-NEXT:  Loop %loop: Trip multiple is 5
++;
++entry:
++  br label %loop
++
++loop:
++  %iv = phi i32 [ %start, %entry ], [ %iv.next, %loop ]
++  %i = phi i32 [ 0, %entry ], [ %i.next, %loop ]
++  %iv.next = add nuw i32 %iv, 1
++  %i.next = add i32 %i, 1
++  %ec = icmp ne i32 %i.next, 5
++  br i1 %ec, label %loop, label %loop.2
++
++loop.2:
++  %j = phi i32 [ %iv, %loop ], [ %j.next, %loop.2 ]
++  %j.next = add i32 %j, 1
++  %ec.2 = icmp ult i32 %j, %m
++  br i1 %ec.2, label %loop.2, label %ph.3
++
++ph.3:
++  %s4 = add i32 %start, 4
++  br label %loop.3
++
++loop.3:
++  %k = phi i32 [ %s4, %ph.3 ], [ %k.next, %loop.3 ]
++  %k.next = add i32 %k, 1
++  %ec.3 = icmp ult i32 %k, %m
++  br i1 %ec.3, label %loop.3, label %exit
++
++exit:
++  ret void
++}
++
++; %loop.2 counts up from 0 to the exit value of %iv, (9 + %start)<u nuw>, which
++; is at least 9. %loop.3 counts up from 0 to %s9 = (9 + %start), which may wrap
++; to 0: its backedge-taken count may not use the flags of the exit value and
++; must keep the umax with 1.
++; The backedge-taken count of %loop.2 is (8 + %start).
++define void @loops_count_up_to_exit_value_and_its_expr(i32 %start) {
++; CHECK-LABEL: 'loops_count_up_to_exit_value_and_its_expr'
++; CHECK-NEXT:  Classifying expressions for: @loops_count_up_to_exit_value_and_its_expr
++; CHECK-NEXT:    %iv = phi i32 [ %start, %entry ], [ %iv.next, %loop ]
++; CHECK-NEXT:    --> {%start,+,1}<nuw><%loop> U: full-set S: full-set Exits: (9 + %start)<u nuw> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %i = phi i32 [ 0, %entry ], [ %i.next, %loop ]
++; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%loop> U: [0,10) S: [0,10) Exits: 9 LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %iv.next = add nuw i32 %iv, 1
++; CHECK-NEXT:    --> {(1 + %start),+,1}<nw><%loop> U: full-set S: full-set Exits: (10 + %start) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %i.next = add i32 %i, 1
++; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%loop> U: [1,11) S: [1,11) Exits: 10 LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %j = phi i32 [ 0, %loop ], [ %j.next, %loop.2 ]
++; CHECK-NEXT:    --> {0,+,1}<nuw><%loop.2> U: [0,-1) S: [0,-1) Exits: (8 + %start) LoopDispositions: { %loop.2: Computable }
++; CHECK-NEXT:    %j.next = add i32 %j, 1
++; CHECK-NEXT:    --> {1,+,1}<nuw><%loop.2> U: [1,0) S: [1,0) Exits: (9 + %start) LoopDispositions: { %loop.2: Computable }
++; CHECK-NEXT:    %s9 = add i32 %start, 9
++; CHECK-NEXT:    --> (9 + %start) U: full-set S: full-set
++; CHECK-NEXT:    %k = phi i32 [ 0, %ph.3 ], [ %k.next, %loop.3 ]
++; CHECK-NEXT:    --> {0,+,1}<nuw><%loop.3> U: [0,-1) S: [0,-1) Exits: (-1 + (1 umax (9 + %start))) LoopDispositions: { %loop.3: Computable }
++; CHECK-NEXT:    %k.next = add i32 %k, 1
++; CHECK-NEXT:    --> {1,+,1}<nuw><%loop.3> U: [1,0) S: [1,0) Exits: (1 umax (9 + %start)) LoopDispositions: { %loop.3: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @loops_count_up_to_exit_value_and_its_expr
++; CHECK-NEXT:  Loop %loop.3: backedge-taken count is (-1 + (1 umax (9 + %start)))
++; CHECK-NEXT:  Loop %loop.3: constant max backedge-taken count is i32 -2
++; CHECK-NEXT:  Loop %loop.3: symbolic max backedge-taken count is (-1 + (1 umax (9 + %start)))
++; CHECK-NEXT:  Loop %loop.3: Trip multiple is 1
++; CHECK-NEXT:  Loop %loop.2: backedge-taken count is (8 + %start)
++; CHECK-NEXT:  Loop %loop.2: constant max backedge-taken count is i32 -2
++; CHECK-NEXT:  Loop %loop.2: symbolic max backedge-taken count is (8 + %start)
++; CHECK-NEXT:  Loop %loop.2: Trip multiple is 1
++; CHECK-NEXT:  Loop %loop: backedge-taken count is i32 9
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 9
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is i32 9
++; CHECK-NEXT:  Loop %loop: Trip multiple is 10
++;
++entry:
++  br label %loop
++
++loop:
++  %iv = phi i32 [ %start, %entry ], [ %iv.next, %loop ]
++  %i = phi i32 [ 0, %entry ], [ %i.next, %loop ]
++  %iv.next = add nuw i32 %iv, 1
++  %i.next = add i32 %i, 1
++  %ec = icmp ne i32 %i.next, 10
++  br i1 %ec, label %loop, label %loop.2
++
++loop.2:
++  %j = phi i32 [ 0, %loop ], [ %j.next, %loop.2 ]
++  %j.next = add i32 %j, 1
++  %ec.2 = icmp ult i32 %j.next, %iv
++  br i1 %ec.2, label %loop.2, label %ph.3
++
++ph.3:
++  %s9 = add i32 %start, 9
++  br label %loop.3
++
++loop.3:
++  %k = phi i32 [ 0, %ph.3 ], [ %k.next, %loop.3 ]
++  %k.next = add i32 %k, 1
++  %ec.3 = icmp ult i32 %k.next, %s9
++  br i1 %ec.3, label %loop.3, label %exit
++
++exit:
++  ret void
++}
++
++; %loop.2 counts a pointer up from null to the exit value of %p,
++; (9 + %start)<u nuw>. The exit value is converted to an integer, which drops
++; its flags: the backedge-taken count must keep the umax with 1.
++define void @loop_counts_up_to_ptr_exit_value(ptr %start) {
++; CHECK-LABEL: 'loop_counts_up_to_ptr_exit_value'
++; CHECK-NEXT:  Classifying expressions for: @loop_counts_up_to_ptr_exit_value
++; CHECK-NEXT:    %p = phi ptr [ %start, %entry ], [ %p.next, %loop ]
++; CHECK-NEXT:    --> {%start,+,1}<nuw><%loop> U: full-set S: full-set Exits: (9 + %start)<u nuw> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %i = phi i32 [ 0, %entry ], [ %i.next, %loop ]
++; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%loop> U: [0,10) S: [0,10) Exits: 9 LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %p.next = getelementptr nuw i8, ptr %p, i64 1
++; CHECK-NEXT:    --> {(1 + %start),+,1}<nw><%loop> U: full-set S: full-set Exits: (10 + %start) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %i.next = add i32 %i, 1
++; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%loop> U: [1,11) S: [1,11) Exits: 10 LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %q = phi ptr [ null, %loop ], [ %q.next, %loop.2 ]
++; CHECK-NEXT:    --> {null,+,1}<nuw><%loop.2> U: [0,-1) S: [0,-1) Exits: (-1 + (1 umax (9 + (ptrtoaddr ptr %start to i64))) + null) LoopDispositions: { %loop.2: Computable }
++; CHECK-NEXT:    %q.next = getelementptr i8, ptr %q, i64 1
++; CHECK-NEXT:    --> {(1 + null)<nuw><nsw>,+,1}<nuw><%loop.2> U: [1,0) S: [1,0) Exits: ((1 umax (9 + (ptrtoaddr ptr %start to i64))) + null) LoopDispositions: { %loop.2: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @loop_counts_up_to_ptr_exit_value
++; CHECK-NEXT:  Loop %loop.2: backedge-taken count is (-1 + (1 umax (9 + (ptrtoaddr ptr %start to i64))))
++; CHECK-NEXT:  Loop %loop.2: constant max backedge-taken count is i64 -2
++; CHECK-NEXT:  Loop %loop.2: symbolic max backedge-taken count is (-1 + (1 umax (9 + (ptrtoaddr ptr %start to i64))))
++; CHECK-NEXT:  Loop %loop.2: Trip multiple is 1
++; CHECK-NEXT:  Loop %loop: backedge-taken count is i32 9
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 9
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is i32 9
++; CHECK-NEXT:  Loop %loop: Trip multiple is 10
++;
++entry:
++  br label %loop
++
++loop:
++  %p = phi ptr [ %start, %entry ], [ %p.next, %loop ]
++  %i = phi i32 [ 0, %entry ], [ %i.next, %loop ]
++  %p.next = getelementptr nuw i8, ptr %p, i64 1
++  %i.next = add i32 %i, 1
++  %ec = icmp ne i32 %i.next, 10
++  br i1 %ec, label %loop, label %loop.2
++
++loop.2:
++  %q = phi ptr [ null, %loop ], [ %q.next, %loop.2 ]
++  %q.next = getelementptr i8, ptr %q, i64 1
++  %ec.2 = icmp ult ptr %q.next, %p
++  br i1 %ec.2, label %loop.2, label %exit
++
++exit:
++  ret void
++}
++
++; %loop.2 counts down from %m in steps of 10 to the exit value of %iv,
++; (9 + %start)<u nuw>, which is at least 9 = Stride - 1, so %j cannot wrap
++; before the exit is taken. %loop.3 counts down to %s9 = (9 + %start), which may
++; wrap to a value less than 9, below which %k wraps: its backedge-taken count
++; may not use the flags of the exit value and must stay unpredictable.
++; The backedge-taken count of %loop.2 is computed.
++define void @loops_count_down_to_exit_value_and_its_expr(i32 %start, i32 %m) {
++; CHECK-LABEL: 'loops_count_down_to_exit_value_and_its_expr'
++; CHECK-NEXT:  Classifying expressions for: @loops_count_down_to_exit_value_and_its_expr
++; CHECK-NEXT:    %iv = phi i32 [ %start, %entry ], [ %iv.next, %loop ]
++; CHECK-NEXT:    --> {%start,+,1}<nuw><%loop> U: full-set S: full-set Exits: (9 + %start)<u nuw> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %i = phi i32 [ 0, %entry ], [ %i.next, %loop ]
++; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%loop> U: [0,10) S: [0,10) Exits: 9 LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %iv.next = add nuw i32 %iv, 1
++; CHECK-NEXT:    --> {(1 + %start),+,1}<nw><%loop> U: full-set S: full-set Exits: (10 + %start) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %i.next = add i32 %i, 1
++; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%loop> U: [1,11) S: [1,11) Exits: 10 LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %j = phi i32 [ %m, %loop ], [ %j.next, %loop.2 ]
++; CHECK-NEXT:    --> {%m,+,-10}<%loop.2> U: full-set S: full-set Exits: ((-10 * ((9 + (-1 * ((9 + %start) umin %m)) + %m) /u 10)) + %m) LoopDispositions: { %loop.2: Computable }
++; CHECK-NEXT:    %j.next = add i32 %j, -10
++; CHECK-NEXT:    --> {(-10 + %m),+,-10}<%loop.2> U: full-set S: full-set Exits: (-10 + (-10 * ((9 + (-1 * ((9 + %start) umin %m)) + %m) /u 10)) + %m) LoopDispositions: { %loop.2: Computable }
++; CHECK-NEXT:    %s9 = add i32 %start, 9
++; CHECK-NEXT:    --> (9 + %start) U: full-set S: full-set
++; CHECK-NEXT:    %k = phi i32 [ %m, %ph.3 ], [ %k.next, %loop.3 ]
++; CHECK-NEXT:    --> {%m,+,-10}<%loop.3> U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop.3: Computable }
++; CHECK-NEXT:    %k.next = add i32 %k, -10
++; CHECK-NEXT:    --> {(-10 + %m),+,-10}<%loop.3> U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop.3: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @loops_count_down_to_exit_value_and_its_expr
++; CHECK-NEXT:  Loop %loop.3: Unpredictable backedge-taken count.
++; CHECK-NEXT:  Loop %loop.3: Unpredictable constant max backedge-taken count.
++; CHECK-NEXT:  Loop %loop.3: Unpredictable symbolic max backedge-taken count.
++; CHECK-NEXT:  Loop %loop.2: backedge-taken count is ((9 + (-1 * ((9 + %start) umin %m)) + %m) /u 10)
++; CHECK-NEXT:  Loop %loop.2: constant max backedge-taken count is i32 429496729
++; CHECK-NEXT:  Loop %loop.2: symbolic max backedge-taken count is ((9 + (-1 * ((9 + %start) umin %m)) + %m) /u 10)
++; CHECK-NEXT:  Loop %loop.2: Trip multiple is 1
++; CHECK-NEXT:  Loop %loop: backedge-taken count is i32 9
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 9
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is i32 9
++; CHECK-NEXT:  Loop %loop: Trip multiple is 10
++;
++entry:
++  br label %loop
++
++loop:
++  %iv = phi i32 [ %start, %entry ], [ %iv.next, %loop ]
++  %i = phi i32 [ 0, %entry ], [ %i.next, %loop ]
++  %iv.next = add nuw i32 %iv, 1
++  %i.next = add i32 %i, 1
++  %ec = icmp ne i32 %i.next, 10
++  br i1 %ec, label %loop, label %loop.2
++
++loop.2:
++  %j = phi i32 [ %m, %loop ], [ %j.next, %loop.2 ]
++  %j.next = add i32 %j, -10
++  %ec.2 = icmp ugt i32 %j, %iv
++  br i1 %ec.2, label %loop.2, label %ph.3
++
++ph.3:
++  %s9 = add i32 %start, 9
++  br label %loop.3
++
++loop.3:
++  %k = phi i32 [ %m, %ph.3 ], [ %k.next, %loop.3 ]
++  %k.next = add i32 %k, -10
++  %ec.3 = icmp ugt i32 %k, %s9
++  br i1 %ec.3, label %loop.3, label %exit
++
++exit:
++  ret void
++}
++
++; %loop.2 counts a pointer down from %m in steps of 10 to the exit value of %p,
++; (9 + %start)<u nuw>. Unlike in @loop_counts_up_to_ptr_exit_value, where the
++; converted exit value is compared with Start and stays without flags, the exit
++; value is used before it is converted here, so its flags are used: it is at
++; least 9 = Stride - 1, so %q cannot wrap before the exit is taken.
++; The backedge-taken count of %loop.2 is computed.
++define void @loop_counts_down_to_ptr_exit_value(ptr %start, ptr %m) {
++; CHECK-LABEL: 'loop_counts_down_to_ptr_exit_value'
++; CHECK-NEXT:  Classifying expressions for: @loop_counts_down_to_ptr_exit_value
++; CHECK-NEXT:    %p = phi ptr [ %start, %entry ], [ %p.next, %loop ]
++; CHECK-NEXT:    --> {%start,+,1}<nuw><%loop> U: full-set S: full-set Exits: (9 + %start)<u nuw> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %i = phi i32 [ 0, %entry ], [ %i.next, %loop ]
++; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%loop> U: [0,10) S: [0,10) Exits: 9 LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %p.next = getelementptr nuw i8, ptr %p, i64 1
++; CHECK-NEXT:    --> {(1 + %start),+,1}<nw><%loop> U: full-set S: full-set Exits: (10 + %start) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %i.next = add i32 %i, 1
++; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%loop> U: [1,11) S: [1,11) Exits: 10 LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %q = phi ptr [ %m, %loop ], [ %q.next, %loop.2 ]
++; CHECK-NEXT:    --> {%m,+,-10}<%loop.2> U: full-set S: full-set Exits: ((-10 * ((9 + (-1 * ((9 + (ptrtoaddr ptr %start to i64)) umin (ptrtoaddr ptr %m to i64))) + (ptrtoaddr ptr %m to i64)) /u 10)) + %m) LoopDispositions: { %loop.2: Computable }
++; CHECK-NEXT:    %q.next = getelementptr i8, ptr %q, i64 -10
++; CHECK-NEXT:    --> {(-10 + %m),+,-10}<%loop.2> U: full-set S: full-set Exits: (-10 + (-10 * ((9 + (-1 * ((9 + (ptrtoaddr ptr %start to i64)) umin (ptrtoaddr ptr %m to i64))) + (ptrtoaddr ptr %m to i64)) /u 10)) + %m) LoopDispositions: { %loop.2: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @loop_counts_down_to_ptr_exit_value
++; CHECK-NEXT:  Loop %loop.2: backedge-taken count is ((9 + (-1 * ((9 + (ptrtoaddr ptr %start to i64)) umin (ptrtoaddr ptr %m to i64))) + (ptrtoaddr ptr %m to i64)) /u 10)
++; CHECK-NEXT:  Loop %loop.2: constant max backedge-taken count is i64 1844674407370955161
++; CHECK-NEXT:  Loop %loop.2: symbolic max backedge-taken count is ((9 + (-1 * ((9 + (ptrtoaddr ptr %start to i64)) umin (ptrtoaddr ptr %m to i64))) + (ptrtoaddr ptr %m to i64)) /u 10)
++; CHECK-NEXT:  Loop %loop.2: Trip multiple is 1
++; CHECK-NEXT:  Loop %loop: backedge-taken count is i32 9
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 9
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is i32 9
++; CHECK-NEXT:  Loop %loop: Trip multiple is 10
++;
++entry:
++  br label %loop
++
++loop:
++  %p = phi ptr [ %start, %entry ], [ %p.next, %loop ]
++  %i = phi i32 [ 0, %entry ], [ %i.next, %loop ]
++  %p.next = getelementptr nuw i8, ptr %p, i64 1
++  %i.next = add i32 %i, 1
++  %ec = icmp ne i32 %i.next, 10
++  br i1 %ec, label %loop, label %loop.2
++
++loop.2:
++  %q = phi ptr [ %m, %loop ], [ %q.next, %loop.2 ]
++  %q.next = getelementptr i8, ptr %q, i64 -10
++  %ec.2 = icmp ugt ptr %q, %p
++  br i1 %ec.2, label %loop.2, label %exit
++
++exit:
++  ret void
++}
