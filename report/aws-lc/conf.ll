@@ -202,19 +202,15 @@ bb.b:                                             ; preds = %bb.a
   %.not128150 = icmp ne i32 %i.u, 0
   %.not129151 = icmp eq i8 %i.p, %i.j
   %or.cond152 = or i1 %.not129151, %.not128150
-  br i1 %or.cond152, label %.critedge, label %.lr.ph.preheader
+  br i1 %or.cond152, label %.critedge, label %.lr.ph
 
-.lr.ph.preheader:                                 ; preds = %.preheader142
-  %5 = sext i32 %.0100.ph to i64
-  br label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.d
-  %i.v = phi i8 [ %i.p, %.lr.ph.preheader ], [ %i.ac, %bb.d ]
-  %indvars.iv = phi i64 [ %5, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.d ] ; 3 uses
-  %6 = phi i32 [ %i.t, %.lr.ph.preheader ], [ %i.ag, %bb.d ]
-  %.1106155 = phi ptr [ %.1106149, %.lr.ph.preheader ], [ %.1106, %bb.d ]
-  %.0105.pn153 = phi ptr [ %.0105, %.lr.ph.preheader ], [ %.2107, %bb.d ]
-  %i.w = and i32 %6, 32
+.lr.ph:                                           ; preds = %.preheader142, %bb.d
+  %i.v = phi i8 [ %i.ac, %bb.d ], [ %i.p, %.preheader142 ]
+  %5 = phi i32 [ %i.ag, %bb.d ], [ %i.t, %.preheader142 ]
+  %.1106155 = phi ptr [ %.1106, %bb.d ], [ %.1106149, %.preheader142 ]
+  %.1101154 = phi i32 [ %6, %bb.d ], [ %.0100.ph, %.preheader142 ] ; 3 uses
+  %.0105.pn153 = phi ptr [ %.2107, %bb.d ], [ %.0105, %.preheader142 ]
+  %i.w = and i32 %5, 32
   %.not130 = icmp eq i32 %i.w, 0
   br i1 %.not130, label %bb.d, label %bb.c
 
@@ -222,14 +218,15 @@ bb.c:                                             ; preds = %.lr.ph
   %i.x = getelementptr inbounds nuw i8, ptr %.0105.pn153, i64 2 ; 3 uses
   %i.y = load i8, ptr %i.x, align 1, !tbaa !24    ; 2 uses
   %.not131.not = icmp eq i8 %i.y, 0
-  br i1 %.not131.not, label %.critedge.loopexit, label %bb.d
+  br i1 %.not131.not, label %.critedge, label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %.lr.ph
   %i.z = phi i8 [ %i.y, %bb.c ], [ %i.v, %.lr.ph ]
   %.2107 = phi ptr [ %i.x, %bb.c ], [ %.1106155, %.lr.ph ] ; 2 uses
   %i.aa = load ptr, ptr %i.h, align 8, !tbaa !23
-  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
-  %i.ab = getelementptr inbounds i8, ptr %i.aa, i64 %indvars.iv
+  %6 = add nsw i32 %.1101154, 1                   ; 2 uses
+  %7 = sext i32 %.1101154 to i64
+  %i.ab = getelementptr inbounds i8, ptr %i.aa, i64 %7
   store i8 %i.z, ptr %i.ab, align 1, !tbaa !24
   %.1106 = getelementptr inbounds nuw i8, ptr %.2107, i64 1 ; 3 uses
   %i.ac = load i8, ptr %.1106, align 1, !tbaa !24 ; 4 uses
@@ -241,19 +238,12 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph
   %.not128 = icmp ne i32 %i.ah, 0
   %.not129 = icmp eq i8 %i.ac, %i.j
   %or.cond = or i1 %.not129, %.not128
-  br i1 %or.cond, label %.critedge.loopexit, label %.lr.ph, !llvm.loop !34
+  br i1 %or.cond, label %.critedge, label %.lr.ph, !llvm.loop !34
 
-.critedge.loopexit:                               ; preds = %bb.d, %bb.c
-  %7 = phi i8 [ 0, %bb.c ], [ %i.ac, %bb.d ]
-  %.1101.lcssa.ph.in = phi i64 [ %indvars.iv, %bb.c ], [ %indvars.iv.next, %bb.d ]
-  %.3108.ph = phi ptr [ %i.x, %bb.c ], [ %.1106, %bb.d ]
-  %.1101.lcssa.ph = trunc i64 %.1101.lcssa.ph.in to i32
-  br label %.critedge
-
-.critedge:                                        ; preds = %.critedge.loopexit, %.preheader142
-  %8 = phi i8 [ %i.p, %.preheader142 ], [ %7, %.critedge.loopexit ]
-  %.1101.lcssa = phi i32 [ %.0100.ph, %.preheader142 ], [ %.1101.lcssa.ph, %.critedge.loopexit ]
-  %.3108 = phi ptr [ %.1106149, %.preheader142 ], [ %.3108.ph, %.critedge.loopexit ]
+.critedge:                                        ; preds = %bb.c, %bb.d, %.preheader142
+  %8 = phi i8 [ %i.p, %.preheader142 ], [ %i.ac, %bb.d ], [ 0, %bb.c ]
+  %.1101.lcssa = phi i32 [ %.0100.ph, %.preheader142 ], [ %6, %bb.d ], [ %.1101154, %bb.c ]
+  %.3108 = phi ptr [ %.1106149, %.preheader142 ], [ %.1106, %bb.d ], [ %i.x, %bb.c ]
   %i.ai = icmp eq i8 %8, %i.j
   br i1 %i.ai, label %bb.e, label %bb.f
 

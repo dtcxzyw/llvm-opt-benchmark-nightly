@@ -200,7 +200,7 @@ bb.qq:                                            ; preds = %bb.qo, %bb.qp
   br label %.loopexit738.backedge
 
 .preheader741:                                    ; preds = %.preheader741.preheader, %bb.rp
-  %indvars.iv1109 = phi i64 [ %i.uz, %.preheader741.preheader ], [ %indvars.iv.next1110, %bb.rp ] ; 8 uses
+  %indvars.iv1109 = phi i64 [ %i.uz, %.preheader741.preheader ], [ %indvars.iv.next1110, %bb.rp ] ; 7 uses
   %.25512 = phi i32 [ %.24511, %.preheader741.preheader ], [ %i.xe, %bb.rp ] ; 4 uses
   %.15468 = phi i64 [ %.14467, %.preheader741.preheader ], [ %i.xv, %bb.rp ] ; 5 uses
   br i1 %i.r, label %bb.qs, label %bb.qr, !prof !13, !nosanitize !12
@@ -347,7 +347,7 @@ bb.rp:                                            ; preds = %bb.rn, %bb.ro
   br label %.preheader741
 
 bb.rq:                                            ; preds = %bb.ra
-  %i.xx = trunc nuw i64 %indvars.iv1109 to i32
+  %i.xx = trunc nuw i64 %indvars.iv1109 to i32    ; 2 uses
   %.sroa.0643.0.extract.trunc652 = trunc i32 %i.wu to i8 ; 2 uses
   %i.xy = add i8 %.sroa.0643.0.extract.trunc652, -1
   %or.cond626 = icmp ult i8 %i.xy, 15
@@ -368,9 +368,9 @@ bb.rr:                                            ; preds = %bb.rq
   br label %bb.rs
 
 bb.rs:                                            ; preds = %bb.sr, %bb.rr
-  %indvars.iv1113 = phi i64 [ %indvars.iv.next1114, %bb.sr ], [ %indvars.iv1109, %bb.rr ] ; 7 uses
-  %.27 = phi i32 [ %i.zi, %bb.sr ], [ %.25512, %bb.rr ] ; 3 uses
-  %.16469 = phi i64 [ %i.zz, %bb.sr ], [ %.15468, %bb.rr ] ; 5 uses
+  %.27 = phi i32 [ %.25512, %bb.rr ], [ %i.zi, %bb.sr ] ; 3 uses
+  %.16469 = phi i64 [ %.15468, %bb.rr ], [ %i.zz, %bb.sr ] ; 5 uses
+  %.16 = phi i32 [ %i.xx, %bb.rr ], [ %6, %bb.sr ] ; 5 uses
   br i1 %i.r, label %bb.ru, label %bb.rt, !prof !13, !nosanitize !12
 
 bb.rt:                                            ; preds = %bb.rs
@@ -427,8 +427,7 @@ bb.sc:                                            ; preds = %bb.sb, %bb.sa
   %.sroa.18.0.extract.shift663 = lshr i32 %i.yy, 8 ; 2 uses
   %i.yz = and i32 %.sroa.18.0.extract.shift663, 255 ; 3 uses
   %i.za = add nuw nsw i32 %i.yz, %i.wv
-  %5 = zext nneg i32 %i.za to i64
-  %.not578 = icmp samesign ult i64 %indvars.iv1113, %5
+  %.not578 = icmp ugt i32 %i.za, %.16
   br i1 %.not578, label %bb.sd, label %bb.ss
 
 bb.sd:                                            ; preds = %bb.sc
@@ -484,20 +483,21 @@ bb.sm:                                            ; preds = %bb.sl
 
 bb.sn:                                            ; preds = %bb.sm, %bb.sl
   %i.zq = load i8, ptr %i.zj, align 1, !tbaa !30
-  %i.zr = zext i8 %i.zq to i64                    ; 3 uses
-  %i.zs = icmp samesign ult i64 %indvars.iv1113, 64
-  %i.zt = sub nuw nsw i64 63, %indvars.iv1113
-  %i.zu = lshr i64 %i.zr, %i.zt
+  %5 = zext i8 %i.zq to i64                       ; 3 uses
+  %i.zr = zext nneg i32 %.16 to i64               ; 3 uses
+  %i.zs = icmp samesign ult i32 %.16, 64
+  %i.zt = sub nuw nsw i64 63, %i.zr
+  %i.zu = lshr i64 %5, %i.zt
   %i.zv = icmp samesign ult i64 %i.zu, 2
   %i.zw = select i1 %i.zs, i1 %i.zv, i1 false
   br i1 %i.zw, label %bb.sp, label %bb.so, !prof !13, !nosanitize !12
 
 bb.so:                                            ; preds = %bb.sn
-  call void @__ubsan_handle_shift_out_of_bounds(ptr nonnull @293, i64 %i.zr, i64 %indvars.iv1113) #6, !nosanitize !12
+  call void @__ubsan_handle_shift_out_of_bounds(ptr nonnull @293, i64 %5, i64 %i.zr) #6, !nosanitize !12
   br label %bb.sp, !nosanitize !12
 
 bb.sp:                                            ; preds = %bb.so, %bb.sn
-  %i.zx = shl i64 %i.zr, %indvars.iv1113          ; 2 uses
+  %i.zx = shl i64 %5, %i.zr                       ; 2 uses
   %i.zy = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %.16469, i64 %i.zx), !nosanitize !12 ; 2 uses
   %i.zz = extractvalue { i64, i1 } %i.zy, 0, !nosanitize !12
   %i.aaa = extractvalue { i64, i1 } %i.zy, 1, !nosanitize !12
@@ -508,11 +508,10 @@ bb.sq:                                            ; preds = %bb.sp
   br label %bb.sr, !nosanitize !12
 
 bb.sr:                                            ; preds = %bb.sp, %bb.sq
-  %indvars.iv.next1114 = add nuw nsw i64 %indvars.iv1113, 8
+  %6 = add nuw nsw i32 %.16, 8
   br label %bb.rs
 
 bb.ss:                                            ; preds = %bb.sc
-  %6 = trunc nuw i64 %indvars.iv1113 to i32
   %.sroa.0643.0.extract.trunc654.le = trunc i32 %i.yy to i8
   br i1 %i.yg, label %bb.su, label %bb.st, !prof !13, !nosanitize !12
 
@@ -522,7 +521,7 @@ bb.st:                                            ; preds = %bb.ss
 
 bb.su:                                            ; preds = %bb.st, %bb.ss
   %i.aab = lshr i64 %.16469, %i.ww
-  %i.aac = sub nuw i32 %6, %i.wv
+  %i.aac = sub nuw i32 %.16, %i.wv
   %.pre = zext nneg i32 %i.yz to i64
   br label %bb.sv
 
@@ -925,7 +924,7 @@ bb.vz:                                            ; preds = %bb.vx, %bb.vy, %bb.
   br label %bb.wa
 
 bb.wa:                                            ; preds = %bb.wz, %bb.vz
-  %indvars.iv1116 = phi i64 [ %indvars.iv.next1117, %bb.wz ], [ %i.adm, %bb.vz ] ; 8 uses
+  %indvars.iv1116 = phi i64 [ %indvars.iv.next1117, %bb.wz ], [ %i.adm, %bb.vz ] ; 7 uses
   %.33 = phi i32 [ %i.aer, %bb.wz ], [ %.32, %bb.vz ] ; 4 uses
   %.20473 = phi i64 [ %i.afi, %bb.wz ], [ %.19472, %bb.vz ] ; 5 uses
   br i1 %i.r, label %bb.wc, label %bb.wb, !prof !13, !nosanitize !12
@@ -1072,7 +1071,7 @@ bb.wz:                                            ; preds = %bb.wx, %bb.wy
   br label %bb.wa
 
 bb.xa:                                            ; preds = %bb.wk
-  %i.afk = trunc nuw i64 %indvars.iv1116 to i32
+  %i.afk = trunc nuw i64 %indvars.iv1116 to i32   ; 2 uses
   %.sroa.0643.0.extract.trunc655 = trunc i32 %i.aeh to i8 ; 2 uses
   %i.afl = icmp ult i8 %.sroa.0643.0.extract.trunc655, 16
   br i1 %i.afl, label %bb.xb, label %bb.yf
@@ -1092,9 +1091,9 @@ bb.xb:                                            ; preds = %bb.xa
   br label %bb.xc
 
 bb.xc:                                            ; preds = %bb.yb, %bb.xb
-  %indvars.iv1120 = phi i64 [ %indvars.iv.next1121, %bb.yb ], [ %indvars.iv1116, %bb.xb ] ; 7 uses
-  %.35 = phi i32 [ %i.agv, %bb.yb ], [ %.33, %bb.xb ] ; 3 uses
-  %.21474 = phi i64 [ %i.ahm, %bb.yb ], [ %.20473, %bb.xb ] ; 5 uses
+  %.35 = phi i32 [ %.33, %bb.xb ], [ %i.agv, %bb.yb ] ; 3 uses
+  %.21474 = phi i64 [ %.20473, %bb.xb ], [ %i.ahm, %bb.yb ] ; 5 uses
+  %.21 = phi i32 [ %i.afk, %bb.xb ], [ %8, %bb.yb ] ; 5 uses
   br i1 %i.r, label %bb.xe, label %bb.xd, !prof !13, !nosanitize !12
 
 bb.xd:                                            ; preds = %bb.xc
@@ -1151,8 +1150,7 @@ bb.xm:                                            ; preds = %bb.xl, %bb.xk
   %.sroa.18.0.extract.shift672 = lshr i32 %i.agl, 8 ; 2 uses
   %i.agm = and i32 %.sroa.18.0.extract.shift672, 255 ; 3 uses
   %i.agn = add nuw nsw i32 %i.agm, %i.aei
-  %7 = zext nneg i32 %i.agn to i64
-  %.not586 = icmp samesign ult i64 %indvars.iv1120, %7
+  %.not586 = icmp ugt i32 %i.agn, %.21
   br i1 %.not586, label %bb.xn, label %bb.yc
 
 bb.xn:                                            ; preds = %bb.xm
@@ -1208,20 +1206,21 @@ bb.xw:                                            ; preds = %bb.xv
 
 bb.xx:                                            ; preds = %bb.xw, %bb.xv
   %i.ahd = load i8, ptr %i.agw, align 1, !tbaa !30
-  %i.ahe = zext i8 %i.ahd to i64                  ; 3 uses
-  %i.ahf = icmp samesign ult i64 %indvars.iv1120, 64
-  %i.ahg = sub nuw nsw i64 63, %indvars.iv1120
-  %i.ahh = lshr i64 %i.ahe, %i.ahg
+  %7 = zext i8 %i.ahd to i64                      ; 3 uses
+  %i.ahe = zext nneg i32 %.21 to i64              ; 3 uses
+  %i.ahf = icmp samesign ult i32 %.21, 64
+  %i.ahg = sub nuw nsw i64 63, %i.ahe
+  %i.ahh = lshr i64 %7, %i.ahg
   %i.ahi = icmp samesign ult i64 %i.ahh, 2
   %i.ahj = select i1 %i.ahf, i1 %i.ahi, i1 false
   br i1 %i.ahj, label %bb.xz, label %bb.xy, !prof !13, !nosanitize !12
 
 bb.xy:                                            ; preds = %bb.xx
-  call void @__ubsan_handle_shift_out_of_bounds(ptr nonnull @350, i64 %i.ahe, i64 %indvars.iv1120) #6, !nosanitize !12
+  call void @__ubsan_handle_shift_out_of_bounds(ptr nonnull @350, i64 %7, i64 %i.ahe) #6, !nosanitize !12
   br label %bb.xz, !nosanitize !12
 
 bb.xz:                                            ; preds = %bb.xy, %bb.xx
-  %i.ahk = shl i64 %i.ahe, %indvars.iv1120        ; 2 uses
+  %i.ahk = shl i64 %7, %i.ahe                     ; 2 uses
   %i.ahl = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %.21474, i64 %i.ahk), !nosanitize !12 ; 2 uses
   %i.ahm = extractvalue { i64, i1 } %i.ahl, 0, !nosanitize !12
   %i.ahn = extractvalue { i64, i1 } %i.ahl, 1, !nosanitize !12
@@ -1232,11 +1231,10 @@ bb.ya:                                            ; preds = %bb.xz
   br label %bb.yb, !nosanitize !12
 
 bb.yb:                                            ; preds = %bb.xz, %bb.ya
-  %indvars.iv.next1121 = add nuw nsw i64 %indvars.iv1120, 8
+  %8 = add nuw nsw i32 %.21, 8
   br label %bb.xc
 
 bb.yc:                                            ; preds = %bb.xm
-  %8 = trunc nuw i64 %indvars.iv1120 to i32
   %.sroa.0643.0.extract.trunc660.le = trunc i32 %i.agl to i8
   br i1 %i.aft, label %bb.ye, label %bb.yd, !prof !13, !nosanitize !12
 
@@ -1246,7 +1244,7 @@ bb.yd:                                            ; preds = %bb.yc
 
 bb.ye:                                            ; preds = %bb.yd, %bb.yc
   %i.aho = lshr i64 %.21474, %i.aej
-  %i.ahp = sub nuw i32 %8, %i.aei
+  %i.ahp = sub nuw i32 %.21, %i.aei
   %.pre1125 = zext nneg i32 %i.agm to i64
   br label %bb.yf
 

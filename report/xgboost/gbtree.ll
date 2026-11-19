@@ -205,10 +205,10 @@ bb.av:                                            ; preds = %bb.au
   br label %bb.aw
 
 bb.aw:                                            ; preds = %._crit_edge.i, %.lr.ph124.i
-  %indvars.iv141.i = phi i64 [ 0, %.lr.ph124.i ], [ %indvars.iv.next142.i, %._crit_edge.i ] ; 2 uses
-  %.038122.i.a = phi i32 [ %1, %.lr.ph124.i ], [ %i.kb, %._crit_edge.i ] ; 3 uses
-  %i.gl = add nsw i32 %.038122.i.a, 1
-  %i.gm = call i64 @_ZN7xgboost3gbm6detail11LayerToTreeERKNS0_11GBTreeModelEii(ptr noundef nonnull align 8 dereferenceable(192) %i.ad, i32 noundef %.038122.i.a, i32 noundef %i.gl) ; 3 uses
+  %.038122.i = phi i32 [ %1, %.lr.ph124.i ], [ %i.kb, %._crit_edge.i ] ; 3 uses
+  %.038122.i.a = phi i32 [ 0, %.lr.ph124.i ], [ %26, %._crit_edge.i ] ; 2 uses
+  %i.gl = add nsw i32 %.038122.i, 1
+  %i.gm = call i64 @_ZN7xgboost3gbm6detail11LayerToTreeERKNS0_11GBTreeModelEii(ptr noundef nonnull align 8 dereferenceable(192) %i.ad, i32 noundef %.038122.i, i32 noundef %i.gl) ; 3 uses
   %.sroa.4.0.extract.shift.i = lshr i64 %i.gm, 32
   %.sroa.4.0.extract.trunc.i = trunc nuw i64 %.sroa.4.0.extract.shift.i to i32 ; 3 uses
   %i.gn = load ptr, ptr %i.gg, align 8, !tbaa !159
@@ -227,6 +227,7 @@ bb.aw:                                            ; preds = %._crit_edge.i, %.lr
   br i1 %i.gu, label %.lr.ph.i, label %._crit_edge.i
 
 .lr.ph.i:                                         ; preds = %.preheader.i
+  %25 = zext nneg i32 %.038122.i.a to i64
   %sext.i = shl i64 %i.gm, 32
   %i.gv = ashr exact i64 %sext.i, 32
   br label %bb.ax
@@ -468,7 +469,7 @@ common.resume:                                    ; preds = %bb.d, %bb.l, %bb.s,
 
 "_ZZNK7xgboost3gbm6GBTree5SliceEiiiPNS_15GradientBoosterEPbENK3$_0clIiiEEDaT_T0_.exit.i": ; preds = %_ZNSt6vectorIjSaIjEE17_M_realloc_insertIJRKjEEEvN9__gnu_cxx17__normal_iteratorIPjS1_EEDpOT_.exit.i.i.i, %bb.bd
   %i.jw = load ptr, ptr %i.cf, align 8, !tbaa !168
-  %i.jx = getelementptr [4 x i8], ptr %i.jw, i64 %indvars.iv141.i
+  %i.jx = getelementptr [4 x i8], ptr %i.jw, i64 %25
   %i.jy = getelementptr i8, ptr %i.jx, i64 4      ; 2 uses
   %i.jz = load i32, ptr %i.jy, align 4, !tbaa !171
   %i.ka = add nsw i32 %i.jz, 1
@@ -479,17 +480,13 @@ common.resume:                                    ; preds = %bb.d, %bb.l, %bb.s,
   br i1 %exitcond.not.i, label %._crit_edge.i, label %bb.ax, !llvm.loop !750
 
 ._crit_edge.i:                                    ; preds = %"_ZZNK7xgboost3gbm6GBTree5SliceEiiiPNS_15GradientBoosterEPbENK3$_0clIiiEEDaT_T0_.exit.i", %.preheader.i
-  %indvars.iv.next142.i = add nuw nsw i64 %indvars.iv141.i, 1 ; 2 uses
-  %i.kb = add nsw i32 %.038122.i.a, %3            ; 2 uses
+  %26 = add nuw nsw i32 %.038122.i.a, 1           ; 2 uses
+  %i.kb = add nsw i32 %.038122.i, %3              ; 2 uses
   %.not55.i = icmp slt i32 %i.kb, %i.fi
-  br i1 %.not55.i, label %bb.aw, label %.thread93.loopexit.i, !llvm.loop !751
+  br i1 %.not55.i, label %bb.aw, label %.thread93.i, !llvm.loop !751
 
-.thread93.loopexit.i:                             ; preds = %._crit_edge.i
-  %25 = trunc nuw i64 %indvars.iv.next142.i to i32
-  br label %.thread93.i
-
-.thread93.i:                                      ; preds = %.thread93.loopexit.i, %bb.av
-  %.039.lcssa.i = phi i32 [ 0, %bb.av ], [ %25, %.thread93.loopexit.i ] ; 2 uses
+.thread93.i:                                      ; preds = %._crit_edge.i, %bb.av
+  %.039.lcssa.i = phi i32 [ 0, %bb.av ], [ %26, %._crit_edge.i ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #23
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)

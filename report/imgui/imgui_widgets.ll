@@ -205,8 +205,8 @@ bb.ao:                                            ; preds = %bb.an
   br i1 %i.fr, label %bb.ap, label %bb.aw
 
 bb.ap:                                            ; preds = %bb.ao
-  %i.ft = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %2) #40 ; 3 uses
-  %i.fu = trunc i64 %i.ft to i32                  ; 3 uses
+  %i.ft = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %2) #40 ; 2 uses
+  %i.fu = trunc i64 %i.ft to i32                  ; 5 uses
   store i8 0, ptr %i.fp, align 1, !tbaa !375
   %i.fv = getelementptr inbounds nuw i8, ptr %i.dg, i64 40 ; 2 uses
   %i.fw = getelementptr inbounds nuw i8, ptr %i.dg, i64 48 ; 5 uses
@@ -241,7 +241,7 @@ bb.aq:                                            ; preds = %.lr.ph.i
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %bb.aq, %._crit_edge.loopexit.split.loop.exit.i, %bb.ap
-  %.046.lcssa.i = phi i32 [ 0, %bb.ap ], [ %i.gh, %._crit_edge.loopexit.split.loop.exit.i ], [ %i.gb, %bb.aq ] ; 9 uses
+  %.046.lcssa.i = phi i32 [ 0, %bb.ap ], [ %i.gh, %._crit_edge.loopexit.split.loop.exit.i ], [ %i.gb, %bb.aq ] ; 11 uses
   %i.gi = icmp eq i32 %.046.lcssa.i, %i.ga
   %i.gj = icmp eq i32 %.046.lcssa.i, %i.fu
   %or.cond51.i = and i1 %i.gi, %i.gj
@@ -249,33 +249,32 @@ bb.aq:                                            ; preds = %.lr.ph.i
 
 .preheader52.preheader.i:                         ; preds = %._crit_edge.i
   %i.gk = sext i32 %i.ga to i64
-  %i.gl = sext i32 %.046.lcssa.i to i64           ; 3 uses
-  %sext1633 = shl i64 %i.ft, 32
-  %23 = ashr exact i64 %sext1633, 32              ; 2 uses
+  %i.gl = sext i32 %.046.lcssa.i to i64
   %i.gm = sub i32 %i.ga, %.046.lcssa.i            ; 2 uses
-  %indvars.iv.next64.i1855 = add nsw i64 %23, -1  ; 2 uses
+  %.044.i1854 = add nsw i32 %i.fu, -1             ; 2 uses
   %indvars.iv.next62.i1856 = add nsw i64 %i.gk, -1 ; 2 uses
   %i.gn = icmp sgt i32 %i.ga, %.046.lcssa.i
-  %24 = icmp sgt i64 %23, %i.gl
-  %25 = select i1 %i.gn, i1 %24, i1 false
-  br i1 %25, label %.lr.ph1860, label %.preheader52.i._crit_edge
+  %23 = icmp slt i32 %.046.lcssa.i, %i.fu
+  %24 = and i1 %i.gn, %23
+  br i1 %24, label %.lr.ph1860, label %.preheader52.i._crit_edge
 
 .preheader52.i:                                   ; preds = %.lr.ph1860
   %indvars.iv.next72.i = add i32 %indvars.iv71.i1857, -1 ; 2 uses
-  %indvars.iv.next64.i = add nsw i64 %indvars.iv.next64.i1858, -1 ; 2 uses
+  %.044.i = add nsw i32 %.044.i1857, -1           ; 2 uses
   %indvars.iv.next62.i = add nsw i64 %indvars.iv.next62.i1859, -1 ; 2 uses
   %i.go = icmp sgt i64 %indvars.iv.next62.i1859, %i.gl
-  %i.gp = icmp sgt i64 %indvars.iv.next64.i1858, %i.gl
+  %i.gp = icmp sgt i32 %.044.i1857, %.046.lcssa.i
   %i.gq = and i1 %i.go, %i.gp
   br i1 %i.gq, label %.lr.ph1860, label %.preheader52.i._crit_edge, !llvm.loop !8
 
 .lr.ph1860:                                       ; preds = %.preheader52.preheader.i, %.preheader52.i
   %indvars.iv.next62.i1859 = phi i64 [ %indvars.iv.next62.i, %.preheader52.i ], [ %indvars.iv.next62.i1856, %.preheader52.preheader.i ] ; 4 uses
-  %indvars.iv.next64.i1858 = phi i64 [ %indvars.iv.next64.i, %.preheader52.i ], [ %indvars.iv.next64.i1855, %.preheader52.preheader.i ] ; 4 uses
+  %.044.i1857 = phi i32 [ %.044.i, %.preheader52.i ], [ %.044.i1854, %.preheader52.preheader.i ] ; 4 uses
   %indvars.iv71.i1857 = phi i32 [ %indvars.iv.next72.i, %.preheader52.i ], [ %i.gm, %.preheader52.preheader.i ] ; 2 uses
   %i.gr = getelementptr inbounds i8, ptr %i.fx, i64 %indvars.iv.next62.i1859
   %i.gs = load i8, ptr %i.gr, align 1, !tbaa !351
-  %i.gt = getelementptr inbounds i8, ptr %2, i64 %indvars.iv.next64.i1858
+  %25 = sext i32 %.044.i1857 to i64
+  %i.gt = getelementptr inbounds i8, ptr %2, i64 %25
   %i.gu = load i8, ptr %i.gt, align 1, !tbaa !351
   %.not48.i = icmp eq i8 %i.gs, %i.gu
   br i1 %.not48.i, label %.preheader52.i, label %._crit_edge1861, !llvm.loop !8
@@ -285,12 +284,11 @@ bb.aq:                                            ; preds = %.lr.ph.i
 
 .preheader52.i._crit_edge:                        ; preds = %.preheader52.i, %._crit_edge1861, %.preheader52.preheader.i
   %indvars.iv71.i.lcssa = phi i32 [ %indvars.iv71.i1857, %._crit_edge1861 ], [ %i.gm, %.preheader52.preheader.i ], [ %indvars.iv.next72.i, %.preheader52.i ] ; 3 uses
-  %indvars.iv.next64.i.lcssa = phi i64 [ %indvars.iv.next64.i1858, %._crit_edge1861 ], [ %indvars.iv.next64.i1855, %.preheader52.preheader.i ], [ %indvars.iv.next64.i, %.preheader52.i ]
+  %.044.i.lcssa = phi i32 [ %.044.i1857, %._crit_edge1861 ], [ %.044.i1854, %.preheader52.preheader.i ], [ %.044.i, %.preheader52.i ]
   %indvars.iv.next62.i.lcssa = phi i64 [ %indvars.iv.next62.i1859, %._crit_edge1861 ], [ %indvars.iv.next62.i1856, %.preheader52.preheader.i ], [ %indvars.iv.next62.i, %.preheader52.i ]
-  %26 = trunc nsw i64 %indvars.iv.next62.i.lcssa to i32
-  %i.gv = trunc nsw i64 %indvars.iv.next64.i.lcssa to i32
-  %i.gw = sub nsw i32 %i.gv, %.046.lcssa.i        ; 2 uses
-  %i.gx = sub nsw i32 %26, %.046.lcssa.i          ; 3 uses
+  %i.gv = trunc nsw i64 %indvars.iv.next62.i.lcssa to i32
+  %i.gw = sub nsw i32 %.044.i.lcssa, %.046.lcssa.i ; 2 uses
+  %i.gx = sub nsw i32 %i.gv, %.046.lcssa.i        ; 3 uses
   %i.gy = icmp sgt i32 %i.gw, -1
   %i.gz = icmp sgt i32 %i.gx, -1
   %or.cond.i = select i1 %i.gy, i1 true, i1 %i.gz
@@ -693,7 +691,7 @@ bb.b:                                             ; preds = %.lr.ph
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.b, %._crit_edge.loopexit.split.loop.exit, %bb.a
-  %.046.lcssa = phi i32 [ 0, %bb.a ], [ %i.h, %._crit_edge.loopexit.split.loop.exit ], [ %i.b, %bb.b ] ; 10 uses
+  %.046.lcssa = phi i32 [ 0, %bb.a ], [ %i.h, %._crit_edge.loopexit.split.loop.exit ], [ %i.b, %bb.b ] ; 11 uses
   %i.i = icmp eq i32 %.046.lcssa, %2
   %i.j = icmp eq i32 %.046.lcssa, %4
   %or.cond51 = and i1 %i.i, %i.j
@@ -701,10 +699,9 @@ bb.b:                                             ; preds = %.lr.ph
 
 .preheader52.preheader:                           ; preds = %._crit_edge
   %i.k = sext i32 %2 to i64
-  %i.l = sext i32 %.046.lcssa to i64              ; 2 uses
-  %5 = sext i32 %4 to i64
+  %i.l = sext i32 %.046.lcssa to i64
   %i.m = sub i32 %2, %.046.lcssa                  ; 2 uses
-  %indvars.iv.next6480 = add nsw i64 %5, -1       ; 2 uses
+  %.04475 = add nsw i32 %4, -1                    ; 2 uses
   %indvars.iv.next6281 = add nsw i64 %i.k, -1     ; 2 uses
   %i.n = icmp sgt i32 %2, %.046.lcssa
   %i.o = icmp sgt i32 %4, %.046.lcssa
@@ -713,20 +710,21 @@ bb.b:                                             ; preds = %.lr.ph
 
 .preheader52:                                     ; preds = %.lr.ph85
   %indvars.iv.next72 = add i32 %indvars.iv7182, -1 ; 2 uses
-  %indvars.iv.next64 = add nsw i64 %indvars.iv.next6483, -1 ; 2 uses
+  %.044 = add nsw i32 %.04478, -1                 ; 2 uses
   %indvars.iv.next62 = add nsw i64 %indvars.iv.next6284, -1 ; 2 uses
   %i.q = icmp sgt i64 %indvars.iv.next6284, %i.l
-  %i.r = icmp sgt i64 %indvars.iv.next6483, %i.l
+  %i.r = icmp sgt i32 %.04478, %.046.lcssa
   %i.s = and i1 %i.q, %i.r
   br i1 %i.s, label %.lr.ph85, label %.preheader52._crit_edge, !llvm.loop !8
 
 .lr.ph85:                                         ; preds = %.preheader52.preheader, %.preheader52
   %indvars.iv.next6284 = phi i64 [ %indvars.iv.next62, %.preheader52 ], [ %indvars.iv.next6281, %.preheader52.preheader ] ; 4 uses
-  %indvars.iv.next6483 = phi i64 [ %indvars.iv.next64, %.preheader52 ], [ %indvars.iv.next6480, %.preheader52.preheader ] ; 4 uses
+  %.04478 = phi i32 [ %.044, %.preheader52 ], [ %.04475, %.preheader52.preheader ] ; 4 uses
   %indvars.iv7182 = phi i32 [ %indvars.iv.next72, %.preheader52 ], [ %i.m, %.preheader52.preheader ] ; 2 uses
   %i.t = getelementptr inbounds i8, ptr %1, i64 %indvars.iv.next6284
   %i.u = load i8, ptr %i.t, align 1, !tbaa !351
-  %i.v = getelementptr inbounds i8, ptr %3, i64 %indvars.iv.next6483
+  %5 = sext i32 %.04478 to i64
+  %i.v = getelementptr inbounds i8, ptr %3, i64 %5
   %i.w = load i8, ptr %i.v, align 1, !tbaa !351
   %.not48 = icmp eq i8 %i.u, %i.w
   br i1 %.not48, label %.preheader52, label %._crit_edge86, !llvm.loop !8
@@ -736,12 +734,11 @@ bb.b:                                             ; preds = %.lr.ph
 
 .preheader52._crit_edge:                          ; preds = %.preheader52, %._crit_edge86, %.preheader52.preheader
   %indvars.iv71.lcssa = phi i32 [ %indvars.iv7182, %._crit_edge86 ], [ %i.m, %.preheader52.preheader ], [ %indvars.iv.next72, %.preheader52 ] ; 3 uses
-  %indvars.iv.next64.lcssa = phi i64 [ %indvars.iv.next6483, %._crit_edge86 ], [ %indvars.iv.next6480, %.preheader52.preheader ], [ %indvars.iv.next64, %.preheader52 ]
+  %.044.lcssa = phi i32 [ %.04478, %._crit_edge86 ], [ %.04475, %.preheader52.preheader ], [ %.044, %.preheader52 ]
   %indvars.iv.next62.lcssa = phi i64 [ %indvars.iv.next6284, %._crit_edge86 ], [ %indvars.iv.next6281, %.preheader52.preheader ], [ %indvars.iv.next62, %.preheader52 ]
-  %6 = trunc nsw i64 %indvars.iv.next62.lcssa to i32
-  %i.x = trunc nsw i64 %indvars.iv.next64.lcssa to i32
-  %i.y = sub nsw i32 %i.x, %.046.lcssa            ; 2 uses
-  %i.z = sub nsw i32 %6, %.046.lcssa              ; 3 uses
+  %i.x = trunc nsw i64 %indvars.iv.next62.lcssa to i32
+  %i.y = sub nsw i32 %.044.lcssa, %.046.lcssa     ; 2 uses
+  %i.z = sub nsw i32 %i.x, %.046.lcssa            ; 3 uses
   %i.aa = icmp sgt i32 %i.y, -1
   %i.ab = icmp sgt i32 %i.z, -1
   %or.cond = select i1 %i.aa, i1 true, i1 %i.ab

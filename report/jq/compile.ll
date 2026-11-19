@@ -202,21 +202,17 @@ nesting_level.exit:                               ; preds = %.preheader.i
   %i.ic = icmp eq i32 %i.hp, 33
   %i.id = select i1 %i.ic, i16 4096, i16 0
   %i.ie = or i16 %i.ib, %i.id
-  %i.if = add i32 %.2255475, 4                    ; 2 uses
+  %i.if = add nsw i32 %.2255475, 4                ; 2 uses
   %i.ig = getelementptr i8, ptr %i.gw, i64 6
   store i16 %i.ie, ptr %i.ig, align 2, !tbaa !64
   %i.ih = getelementptr inbounds nuw i8, ptr %.0268476, i64 128
   %.0267464 = load ptr, ptr %i.ih, align 8, !tbaa !46 ; 2 uses
   %.not304465 = icmp eq ptr %.0267464, null
-  br i1 %.not304465, label %.loopexit, label %.lr.ph468.preheader
+  br i1 %.not304465, label %.loopexit, label %.lr.ph468
 
-.lr.ph468.preheader:                              ; preds = %nesting_level.exit
-  %8 = sext i32 %i.if to i64
-  br label %.lr.ph468
-
-.lr.ph468:                                        ; preds = %.lr.ph468.preheader, %nesting_level.exit318
-  %indvars.iv = phi i64 [ %8, %.lr.ph468.preheader ], [ %indvars.iv.next, %nesting_level.exit318 ] ; 2 uses
-  %.0267467 = phi ptr [ %.0267464, %.lr.ph468.preheader ], [ %.0267, %nesting_level.exit318 ] ; 3 uses
+.lr.ph468:                                        ; preds = %nesting_level.exit, %nesting_level.exit318
+  %.0267467 = phi ptr [ %.0267, %nesting_level.exit318 ], [ %.0267464, %nesting_level.exit ] ; 3 uses
+  %.3256466 = phi i32 [ %9, %nesting_level.exit318 ], [ %i.if, %nesting_level.exit ] ; 2 uses
   %i.ii = getelementptr inbounds nuw i8, ptr %.0267467, i64 16
   %i.ij = load i32, ptr %i.ii, align 8, !tbaa !32
   %i.ik = icmp eq i32 %i.ij, 32
@@ -262,17 +258,18 @@ bb.ay:                                            ; preds = %.preheader.i312
   unreachable
 
 nesting_level.exit318:                            ; preds = %.preheader.i312
-  %i.iv = getelementptr inbounds [2 x i8], ptr %i.gf, i64 %indvars.iv ; 2 uses
+  %8 = sext i32 %.3256466 to i64
+  %i.iv = getelementptr inbounds [2 x i8], ptr %i.gf, i64 %8 ; 2 uses
   store i16 %.020.i313, ptr %i.iv, align 2, !tbaa !64
   %i.iw = getelementptr inbounds nuw i8, ptr %i.im, i64 24
   %i.ix = load i16, ptr %i.iw, align 8, !tbaa !62
   %i.iy = or i16 %i.ix, 4096
-  %indvars.iv.next = add nsw i64 %indvars.iv, 2   ; 2 uses
+  %9 = add nsw i32 %.3256466, 2                   ; 2 uses
   %i.iz = getelementptr i8, ptr %i.iv, i64 2
   store i16 %i.iy, ptr %i.iz, align 2, !tbaa !64
   %.0267 = load ptr, ptr %.0267467, align 8, !tbaa !46 ; 2 uses
   %.not304 = icmp eq ptr %.0267, null
-  br i1 %.not304, label %.loopexit.loopexit, label %.lr.ph468, !llvm.loop !97
+  br i1 %.not304, label %.loopexit, label %.lr.ph468, !llvm.loop !97
 
 bb.az:                                            ; preds = %bb.ai
   %i.ja = getelementptr inbounds nuw i8, ptr %i.go, i64 16
@@ -464,15 +461,11 @@ bb.bs:                                            ; preds = %bb.br
   tail call void @__assert_fail(ptr noundef nonnull @.str.66, ptr noundef nonnull @.str.1, i32 noundef 1358, ptr noundef nonnull @__PRETTY_FUNCTION__.compile) #16
   unreachable
 
-.loopexit.loopexit:                               ; preds = %nesting_level.exit318
-  %9 = trunc nsw i64 %indvars.iv.next to i32
-  br label %.loopexit
-
-.loopexit:                                        ; preds = %.loopexit.loopexit, %nesting_level.exit, %bb.ao, %nesting_level.exit327, %nesting_level.exit336, %bb.br, %bb.bq, %bb.bf, %.lr.ph477
-  %.sroa.10.2 = phi ptr [ %.sroa.10.0472, %.lr.ph477 ], [ %.sroa.10.0472, %bb.ao ], [ %.sroa.10.0472, %bb.br ], [ %i.ju, %nesting_level.exit327 ], [ %i.la, %bb.bf ], [ %.sroa.10.0472, %nesting_level.exit336 ], [ %.sroa.10.0472, %bb.bq ], [ %.sroa.10.0472, %nesting_level.exit ], [ %.sroa.10.0472, %.loopexit.loopexit ] ; 2 uses
-  %.sroa.059.2 = phi i64 [ %.sroa.059.0473, %.lr.ph477 ], [ %.sroa.059.0473, %bb.ao ], [ %.sroa.059.0473, %bb.br ], [ %i.jt, %nesting_level.exit327 ], [ %i.kz, %bb.bf ], [ %.sroa.059.0473, %nesting_level.exit336 ], [ %.sroa.059.0473, %bb.bq ], [ %.sroa.059.0473, %nesting_level.exit ], [ %.sroa.059.0473, %.loopexit.loopexit ] ; 2 uses
-  %.4273 = phi i32 [ %.0269474, %.lr.ph477 ], [ %.0269474, %bb.ao ], [ %.0269474, %bb.br ], [ %spec.select, %nesting_level.exit327 ], [ %.0269474, %bb.bf ], [ %spec.select309, %nesting_level.exit336 ], [ %.0269474, %bb.bq ], [ %.0269474, %nesting_level.exit ], [ %.0269474, %.loopexit.loopexit ] ; 2 uses
-  %.5258 = phi i32 [ %.2255475, %.lr.ph477 ], [ %i.hk, %bb.ao ], [ %i.gu, %bb.br ], [ %i.kf, %nesting_level.exit327 ], [ %i.ko, %bb.bf ], [ %i.lm, %nesting_level.exit336 ], [ %i.lv, %bb.bq ], [ %i.if, %nesting_level.exit ], [ %9, %.loopexit.loopexit ]
+.loopexit:                                        ; preds = %nesting_level.exit318, %nesting_level.exit, %bb.ao, %nesting_level.exit327, %nesting_level.exit336, %bb.br, %bb.bq, %bb.bf, %.lr.ph477
+  %.sroa.10.2 = phi ptr [ %.sroa.10.0472, %.lr.ph477 ], [ %.sroa.10.0472, %bb.ao ], [ %.sroa.10.0472, %bb.br ], [ %i.ju, %nesting_level.exit327 ], [ %i.la, %bb.bf ], [ %.sroa.10.0472, %nesting_level.exit336 ], [ %.sroa.10.0472, %bb.bq ], [ %.sroa.10.0472, %nesting_level.exit ], [ %.sroa.10.0472, %nesting_level.exit318 ] ; 2 uses
+  %.sroa.059.2 = phi i64 [ %.sroa.059.0473, %.lr.ph477 ], [ %.sroa.059.0473, %bb.ao ], [ %.sroa.059.0473, %bb.br ], [ %i.jt, %nesting_level.exit327 ], [ %i.kz, %bb.bf ], [ %.sroa.059.0473, %nesting_level.exit336 ], [ %.sroa.059.0473, %bb.bq ], [ %.sroa.059.0473, %nesting_level.exit ], [ %.sroa.059.0473, %nesting_level.exit318 ] ; 2 uses
+  %.4273 = phi i32 [ %.0269474, %.lr.ph477 ], [ %.0269474, %bb.ao ], [ %.0269474, %bb.br ], [ %spec.select, %nesting_level.exit327 ], [ %.0269474, %bb.bf ], [ %spec.select309, %nesting_level.exit336 ], [ %.0269474, %bb.bq ], [ %.0269474, %nesting_level.exit ], [ %.0269474, %nesting_level.exit318 ] ; 2 uses
+  %.5258 = phi i32 [ %.2255475, %.lr.ph477 ], [ %i.hk, %bb.ao ], [ %i.gu, %bb.br ], [ %i.kf, %nesting_level.exit327 ], [ %i.ko, %bb.bf ], [ %i.lm, %nesting_level.exit336 ], [ %i.lv, %bb.bq ], [ %i.if, %nesting_level.exit ], [ %9, %nesting_level.exit318 ]
   %.0268 = load ptr, ptr %.0268476, align 8, !tbaa !46 ; 2 uses
   %.not295 = icmp eq ptr %.0268, null
   br i1 %.not295, label %._crit_edge.loopexit, label %.lr.ph477, !llvm.loop !98

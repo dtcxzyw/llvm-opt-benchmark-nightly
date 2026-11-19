@@ -205,12 +205,10 @@ bb.u:                                             ; preds = %b3MeshMap_min_bucke
   %i.fp = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.fq = getelementptr inbounds nuw i8, ptr %12, i64 8
   %i.fr = getelementptr inbounds nuw i8, ptr %12, i64 16
-  %15 = sext i32 %.2 to i64
   %wide.trip.count483 = zext nneg i32 %i.z to i64
   br label %bb.w
 
 ._crit_edge412:                                   ; preds = %bb.af
-  %16 = trunc nsw i64 %indvars.iv.next477 to i32
   %i.fs = load i64, ptr %i.fk, align 8, !tbaa !54 ; 2 uses
   %.not.i374 = icmp eq i64 %i.fs, 0
   br i1 %.not.i374, label %b3MeshMap_cleanup.exit, label %bb.v
@@ -229,7 +227,7 @@ b3MeshMap_cleanup.exit:                           ; preds = %._crit_edge412, %bb
 
 bb.w:                                             ; preds = %.lr.ph411, %bb.af
   %indvars.iv478 = phi i64 [ 0, %.lr.ph411 ], [ %indvars.iv.next479, %bb.af ] ; 6 uses
-  %indvars.iv476 = phi i64 [ %15, %.lr.ph411 ], [ %indvars.iv.next477, %bb.af ] ; 2 uses
+  %.3410 = phi i32 [ %.2, %.lr.ph411 ], [ %16, %bb.af ] ; 2 uses
   %.0337408 = phi i32 [ 0, %.lr.ph411 ], [ %.1338, %bb.af ] ; 5 uses
   %.5350407 = phi i32 [ %.4349, %.lr.ph411 ], [ %.6.lcssa, %bb.af ] ; 2 uses
   %i.fx = load ptr, ptr %i.fm, align 8, !tbaa !170
@@ -242,8 +240,9 @@ bb.w:                                             ; preds = %.lr.ph411, %bb.af
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fy, i64 44
   %.sroa.2.0.copyload = load float, ptr %.sroa.2.0..sroa_idx, align 4
   call void @b3ComputeMeshAABB(ptr dead_on_unwind nonnull writable sret(%struct.b3AABB) align 4 %10, ptr noundef %i.fz, ptr noundef nonnull byval(%struct.b3Transform) align 8 %i.ga, <2 x float> %.sroa.0.0.copyload, float %.sroa.2.0.copyload) #19
-  %i.gc = call i32 @b3DynamicTree_CreateProxy(ptr noundef nonnull %1, ptr noundef nonnull byval(%struct.b3AABB) align 8 %10, i64 noundef -1, i64 noundef %indvars.iv476) #19 ; 0 uses
-  %indvars.iv.next477 = add nsw i64 %indvars.iv476, 1 ; 2 uses
+  %15 = sext i32 %.3410 to i64
+  %i.gc = call i32 @b3DynamicTree_CreateProxy(ptr noundef nonnull %1, ptr noundef nonnull byval(%struct.b3AABB) align 8 %10, i64 noundef -1, i64 noundef %15) #19 ; 0 uses
+  %16 = add nsw i32 %.3410, 1                     ; 2 uses
   %i.gd = getelementptr inbounds nuw i8, ptr %i.fy, i64 56
   %i.ge = load i32, ptr %i.gd, align 8, !tbaa !172 ; 2 uses
   %i.gf = icmp sgt i32 %i.ge, 0
@@ -384,7 +383,6 @@ bb.ag:                                            ; preds = %b3MeshMap_cleanup.e
   %i.ic = getelementptr inbounds nuw i8, ptr %13, i64 8
   %i.id = getelementptr inbounds nuw i8, ptr %13, i64 16
   %i.ie = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %17 = sext i32 %.4 to i64
   br label %bb.ah
 
 ._crit_edge421:                                   ; preds = %bb.al, %bb.ag
@@ -423,7 +421,7 @@ bb.ag:                                            ; preds = %b3MeshMap_cleanup.e
 
 bb.ah:                                            ; preds = %.lr.ph420, %bb.al
   %indvars.iv487 = phi i64 [ 0, %.lr.ph420 ], [ %indvars.iv.next488, %bb.al ] ; 3 uses
-  %indvars.iv485 = phi i64 [ %17, %.lr.ph420 ], [ %indvars.iv.next486, %bb.al ] ; 2 uses
+  %.5418 = phi i32 [ %.4, %.lr.ph420 ], [ %18, %bb.al ] ; 2 uses
   %.9416 = phi i32 [ %.8, %.lr.ph420 ], [ %.10, %bb.al ] ; 5 uses
   %i.ja = load ptr, ptr %i.ib, align 8, !tbaa !198
   %i.jb = getelementptr inbounds nuw [56 x i8], ptr %i.ja, i64 %indvars.iv487 ; 3 uses
@@ -473,8 +471,9 @@ bb.al:                                            ; preds = %bb.ak, %b3MaterialM
   %.10 = phi i32 [ %i.jr, %bb.ak ], [ %.9416, %b3MaterialMap_get_or_insert.exit385 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #19
   call void @b3ComputeSphereAABB(ptr dead_on_unwind nonnull writable sret(%struct.b3AABB) align 4 %14, ptr noundef nonnull %i.jb, ptr noundef nonnull byval(%struct.b3Transform) align 8 @b3Transform_identity) #19
-  %i.js = call i32 @b3DynamicTree_CreateProxy(ptr noundef nonnull %1, ptr noundef nonnull byval(%struct.b3AABB) align 8 %14, i64 noundef -1, i64 noundef %indvars.iv485) #19 ; 0 uses
-  %indvars.iv.next486 = add nsw i64 %indvars.iv485, 1
+  %17 = sext i32 %.5418 to i64
+  %i.js = call i32 @b3DynamicTree_CreateProxy(ptr noundef nonnull %1, ptr noundef nonnull byval(%struct.b3AABB) align 8 %14, i64 noundef -1, i64 noundef %17) #19 ; 0 uses
+  %18 = add nsw i32 %.5418, 1
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #19
   %indvars.iv.next488 = add nuw nsw i64 %indvars.iv487, 1 ; 2 uses

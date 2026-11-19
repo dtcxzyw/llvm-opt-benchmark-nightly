@@ -205,12 +205,11 @@ bb.f:                                             ; preds = %__cea_db_iter_curre
   %i.z = getelementptr i8, ptr %i.y, i64 8        ; 2 uses
   %.pre.i = load i32, ptr %i.u, align 8
   %.val9.i.pre.i = load ptr, ptr %i.z, align 8
-  %1 = sext i32 %.pre.i to i64
   br label %bb.g
 
 bb.g:                                             ; preds = %.backedge, %.lr.ph.i
-  %indvars.iv = phi i64 [ %1, %.lr.ph.i ], [ %indvars.iv.next, %.backedge ] ; 3 uses
   %.val9.i.i = phi ptr [ %.val9.i.pre.i, %.lr.ph.i ], [ %.val10.i.i, %.backedge ] ; 7 uses
+  %1 = phi i32 [ %.pre.i, %.lr.ph.i ], [ %2, %.backedge ] ; 3 uses
   %.val.i.i = load i64, ptr %i.y, align 8         ; 2 uses
   %i.aa = getelementptr i8, ptr %.val9.i.i, i64 126
   %.val.i.i.i.i = load i8, ptr %i.aa, align 1     ; 3 uses
@@ -273,16 +272,15 @@ drm_edid_block_count.exit.i.i:                    ; preds = %bb.m, %edid_hfeeodb
   %i.ap = trunc i64 %.val.i.i to i32
   %i.aq = sdiv i32 %i.ap, 128
   %i.ar = tail call range(i32 -16777216, 257) i32 @llvm.smin.i32(i32 %.1.i.i.i.i, i32 %i.aq)
-  %2 = sext i32 %i.ar to i64
-  %i.as = icmp slt i64 %indvars.iv, %2
+  %i.as = icmp slt i32 %1, %i.ar
   br i1 %i.as, label %__drm_edid_iter_next.exit.i, label %.loopexit
 
 __drm_edid_iter_next.exit.i:                      ; preds = %drm_edid_block_count.exit.i.i
-  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
-  %3 = trunc nsw i64 %indvars.iv.next to i32
-  store i32 %3, ptr %i.u, align 8
+  %2 = add nsw i32 %1, 1                          ; 2 uses
+  store i32 %2, ptr %i.u, align 8
   %.val10.i.i = load ptr, ptr %i.z, align 8       ; 2 uses
-  %i.at = getelementptr [128 x i8], ptr %.val10.i.i, i64 %indvars.iv ; 5 uses
+  %3 = sext i32 %1 to i64
+  %i.at = getelementptr [128 x i8], ptr %.val10.i.i, i64 %3 ; 5 uses
   %.not.i35 = icmp eq ptr %i.at, null
   br i1 %.not.i35, label %.loopexit, label %bb.n
 

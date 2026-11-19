@@ -205,9 +205,9 @@ bb.c:                                             ; preds = %bb.a
   %i.s = getelementptr inbounds nuw i8, ptr %2, i64 232 ; 4 uses
   %i.t = zext nneg i32 %i.o to i64
   %i.u = add nuw nsw i32 %0, 1
-  %i.v = sub nsw i32 %i.u, %i.h
+  %i.v = sub nsw i32 %i.u, %i.h                   ; 2 uses
   %i.w = zext nneg i32 %0 to i64                  ; 10 uses
-  %wide.trip.count1548 = zext i32 %i.v to i64     ; 3 uses
+  %wide.trip.count1548 = zext i32 %i.v to i64     ; 2 uses
   %wide.trip.count = zext nneg i32 %i.h to i64    ; 10 uses
   %wide.trip.count1528 = zext nneg i32 %i.h to i64
   %wide.trip.count1538 = zext nneg i32 %i.h to i64 ; 2 uses
@@ -610,18 +610,16 @@ middle.block46:                                   ; preds = %vector.body40
   br label %.preheader1161.split.us.preheader
 
 .preheader1161.split.us.preheader:                ; preds = %.split.us, %._crit_edge1297.split
-  %indvars.iv1687 = phi i64 [ 0, %._crit_edge1297.split ], [ %indvars.iv.next1688, %.split.us ] ; 8 uses
+  %indvars.iv1687 = phi i64 [ 0, %._crit_edge1297.split ], [ %indvars.iv.next1688, %.split.us ] ; 6 uses
   %i.zu = trunc i64 %indvars.iv1687 to i32
   %i.zv = mul i32 %0, %i.zu                       ; 2 uses
   %i.zw = add nsw i32 %i.zv, -1
-  %i.zx = trunc i64 %indvars.iv1687 to i32
+  %i.zx = trunc nuw i64 %indvars.iv1687 to i32    ; 3 uses
   %i.zy = add i32 %i.zx, -1
   %i.zz = mul i32 %i.zy, %0                       ; 13 uses
   %i.aaa = zext i32 %i.zz to i64
   %i.aab = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %i.aaa
-  %4 = trunc nuw nsw i64 %indvars.iv1687 to i32
-  %5 = trunc i64 %indvars.iv1687 to i32
-  %i.aac = add i32 %i.o, %5
+  %i.aac = add i32 %i.o, %i.zx
   %i.aad = mul i32 %i.aac, %0                     ; 12 uses
   %i.aae = xor i32 %i.zz, -1
   %i.aaf = icmp ult i32 %i.aae, %i.zd
@@ -695,7 +693,7 @@ middle.block46:                                   ; preds = %vector.body40
 
 .preheader1161.split.us:                          ; preds = %.preheader1161.split.us.preheader, %..loopexit1160_crit_edge.us
   %.81317.us = phi i32 [ %i.alb, %..loopexit1160_crit_edge.us ], [ 0, %.preheader1161.split.us.preheader ] ; 8 uses
-  %i.acu = or i32 %.81317.us, %4
+  %i.acu = or i32 %.81317.us, %i.zx
   %or.cond11.us = icmp eq i32 %i.acu, 0
   br i1 %or.cond11.us, label %.preheader1156.us.us, label %bb.bl
 
@@ -1098,7 +1096,8 @@ scalar.ph48:                                      ; preds = %scalar.ph48.prehead
 
 .split.us:                                        ; preds = %..loopexit1160_crit_edge.us
   %indvars.iv.next1688 = add nuw nsw i64 %indvars.iv1687, 1 ; 2 uses
-  %exitcond1691.not = icmp eq i64 %indvars.iv.next1688, %wide.trip.count1548
+  %lftr.wideiv = trunc i64 %indvars.iv.next1688 to i32
+  %exitcond1691.not = icmp eq i32 %i.v, %lftr.wideiv
   br i1 %exitcond1691.not, label %.preheader1155, label %.preheader1161.split.us.preheader
 
 .preheader1154.lr.ph:                             ; preds = %._crit_edge1380, %.preheader1155

@@ -204,7 +204,7 @@ bb.ag:                                            ; preds = %bb.aa, %bb.ae, %bb.
 ._crit_edge302:                                   ; preds = %bb.ag, %bb.x
   %.1203.lcssa = phi i32 [ %.0202, %bb.x ], [ %.3205, %bb.ag ] ; 4 uses
   %.1200.lcssa = phi i32 [ %.0199.lcssa, %bb.x ], [ %.2201, %bb.ag ] ; 2 uses
-  %.0195.lcssa = phi i32 [ 0, %bb.x ], [ %.1196, %bb.ag ] ; 11 uses
+  %.0195.lcssa = phi i32 [ 0, %bb.x ], [ %.1196, %bb.ag ] ; 9 uses
   %.0193.lcssa = phi i32 [ 0, %bb.x ], [ %.1194, %bb.ag ] ; 3 uses
   %i.er = load i32, ptr %i.cc, align 8, !tbaa !26 ; 2 uses
   %i.es = add nsw i32 %i.er, 1                    ; 3 uses
@@ -607,7 +607,6 @@ bb.at:                                            ; preds = %bb.as
   %i.kl = load ptr, ptr %i.a, align 8, !tbaa !21  ; 2 uses
   %i.km = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
   %i.kn = sext i32 %.0195.lcssa to i64            ; 2 uses
-  %5 = shl i32 %.0195.lcssa, 1
   %.pre430 = load i32, ptr %i.kl, align 4, !tbaa !28
   br label %bb.au
 
@@ -645,9 +644,9 @@ bb.au:                                            ; preds = %.lr.ph342, %.loopex
   br label %bb.av
 
 bb.av:                                            ; preds = %.lr.ph334, %bb.az
-  %indvars.iv401 = phi i64 [ %i.la, %.lr.ph334 ], [ %indvars.iv.next402, %bb.az ] ; 5 uses
-  %.1330 = phi i32 [ %.0182339, %.lr.ph334 ], [ %.2.lcssa, %bb.az ] ; 4 uses
-  %.1184329 = phi i32 [ %.0183338, %.lr.ph334 ], [ %.2185.lcssa, %bb.az ] ; 5 uses
+  %indvars.iv401 = phi i64 [ %i.la, %.lr.ph334 ], [ %indvars.iv.next402, %bb.az ] ; 4 uses
+  %.1330 = phi i32 [ %.0182339, %.lr.ph334 ], [ %.2.lcssa, %bb.az ] ; 3 uses
+  %.1184329 = phi i32 [ %.0183338, %.lr.ph334 ], [ %.2185.lcssa, %bb.az ] ; 3 uses
   %i.lc = getelementptr inbounds [4 x i8], ptr %i.bf, i64 %indvars.iv401
   %i.ld = load i32, ptr %i.lc, align 4, !tbaa !28 ; 3 uses
   %i.le = add nsw i32 %i.ld, -1                   ; 2 uses
@@ -670,84 +669,72 @@ bb.av:                                            ; preds = %.lr.ph334, %bb.az
   %i.lp = sext i32 %i.ld to i64
   %i.lq = getelementptr inbounds [4 x i8], ptr %i.in, i64 %i.lp
   %.not234.fr = freeze i1 %.not234
-  %i.lr = sext i32 %.1330 to i64                  ; 2 uses
-  %6 = sext i32 %.1184329 to i64                  ; 2 uses
-  br i1 %.not234.fr, label %.lr.ph320.split.us.preheader, label %.lr.ph320.split.preheader
+  %i.lr = sext i32 %.1184329 to i64               ; 2 uses
+  %5 = trunc nsw i64 %indvars.iv401 to i32        ; 2 uses
+  br i1 %.not234.fr, label %.lr.ph320.split.us, label %.lr.ph320.split
 
-.lr.ph320.split.preheader:                        ; preds = %.lr.ph320
-  %7 = add i32 %5, %.1330
-  %8 = shl i32 %.1184329, 1
-  %9 = sub i32 %7, %8
-  %10 = trunc nsw i64 %indvars.iv401 to i32
-  br label %.lr.ph320.split
-
-.lr.ph320.split.us.preheader:                     ; preds = %.lr.ph320
-  %11 = add i32 %.0195.lcssa, %.1330
-  %12 = sub i32 %11, %.1184329
-  %13 = trunc nsw i64 %indvars.iv401 to i32
-  br label %.lr.ph320.split.us
-
-.lr.ph320.split.us:                               ; preds = %.lr.ph320.split.us.preheader, %bb.aw
-  %indvars.iv395 = phi i64 [ %6, %.lr.ph320.split.us.preheader ], [ %indvars.iv.next396, %bb.aw ] ; 4 uses
-  %indvars.iv393 = phi i64 [ %i.lr, %.lr.ph320.split.us.preheader ], [ %indvars.iv.next394, %bb.aw ] ; 4 uses
+.lr.ph320.split.us:                               ; preds = %.lr.ph320, %bb.aw
+  %indvars.iv395 = phi i64 [ %indvars.iv.next396, %bb.aw ], [ %i.lr, %.lr.ph320 ] ; 4 uses
+  %.2318.us = phi i32 [ %7, %bb.aw ], [ %.1330, %.lr.ph320 ] ; 3 uses
   %i.ls = getelementptr inbounds [4 x i8], ptr %i.ca, i64 %indvars.iv395
   %i.lt = load i32, ptr %i.ls, align 4, !tbaa !28
-  %i.lu = icmp eq i32 %i.lt, %13
+  %i.lu = icmp eq i32 %i.lt, %5
   br i1 %i.lu, label %bb.aw, label %.critedge.loopexit.split.loop.exit459
 
 bb.aw:                                            ; preds = %.lr.ph320.split.us
   %i.lv = getelementptr inbounds [4 x i8], ptr %i.by, i64 %indvars.iv395
   %i.lw = load i32, ptr %i.lv, align 4, !tbaa !28
   %i.lx = load ptr, ptr %i.j, align 8, !tbaa !24
-  %i.ly = getelementptr inbounds [4 x i8], ptr %i.lx, i64 %indvars.iv393
+  %6 = sext i32 %.2318.us to i64                  ; 2 uses
+  %i.ly = getelementptr inbounds [4 x i8], ptr %i.lx, i64 %6
   store i32 %i.lw, ptr %i.ly, align 4, !tbaa !28
-  %i.lz = getelementptr inbounds [4 x i8], ptr %i.ki, i64 %indvars.iv393
+  %i.lz = getelementptr inbounds [4 x i8], ptr %i.ki, i64 %6
   store i32 %i.lh, ptr %i.lz, align 4, !tbaa !28
-  %indvars.iv.next394 = add nsw i64 %indvars.iv393, 1
+  %7 = add nsw i32 %.2318.us, 1                   ; 2 uses
   %indvars.iv.next396 = add nsw i64 %indvars.iv395, 1 ; 2 uses
   %exitcond400.not = icmp eq i64 %indvars.iv.next396, %i.kn
   br i1 %exitcond400.not, label %.critedge, label %.lr.ph320.split.us, !llvm.loop !49
 
-.lr.ph320.split:                                  ; preds = %.lr.ph320.split.preheader, %bb.ax
-  %indvars.iv387 = phi i64 [ %6, %.lr.ph320.split.preheader ], [ %indvars.iv.next388, %bb.ax ] ; 4 uses
-  %indvars.iv385 = phi i64 [ %i.lr, %.lr.ph320.split.preheader ], [ %indvars.iv.next386, %bb.ax ] ; 5 uses
+.lr.ph320.split:                                  ; preds = %.lr.ph320, %bb.ax
+  %indvars.iv387 = phi i64 [ %indvars.iv.next388, %bb.ax ], [ %i.lr, %.lr.ph320 ] ; 4 uses
+  %.2318 = phi i32 [ %11, %bb.ax ], [ %.1330, %.lr.ph320 ] ; 4 uses
   %i.ma = getelementptr inbounds [4 x i8], ptr %i.ca, i64 %indvars.iv387
   %i.mb = load i32, ptr %i.ma, align 4, !tbaa !28
-  %i.mc = icmp eq i32 %i.mb, %10
+  %i.mc = icmp eq i32 %i.mb, %5
   br i1 %i.mc, label %bb.ax, label %.critedge.loopexit452.split.loop.exit456
 
 bb.ax:                                            ; preds = %.lr.ph320.split
   %i.md = getelementptr inbounds [4 x i8], ptr %i.by, i64 %indvars.iv387
   %i.me = load i32, ptr %i.md, align 4, !tbaa !28 ; 2 uses
   %i.mf = load ptr, ptr %i.j, align 8, !tbaa !24  ; 2 uses
-  %i.mg = getelementptr inbounds [4 x i8], ptr %i.mf, i64 %indvars.iv385
+  %8 = sext i32 %.2318 to i64                     ; 2 uses
+  %i.mg = getelementptr inbounds [4 x i8], ptr %i.mf, i64 %8
   store i32 %i.me, ptr %i.mg, align 4, !tbaa !28
-  %i.mh = getelementptr inbounds [4 x i8], ptr %i.ki, i64 %indvars.iv385
+  %i.mh = getelementptr inbounds [4 x i8], ptr %i.ki, i64 %8
   store i32 %i.lh, ptr %i.mh, align 4, !tbaa !28
-  %14 = add nsw i64 %indvars.iv385, 1             ; 2 uses
-  %i.mi = getelementptr inbounds [4 x i8], ptr %i.mf, i64 %14
+  %9 = add nsw i32 %.2318, 1
+  %10 = sext i32 %9 to i64                        ; 2 uses
+  %i.mi = getelementptr inbounds [4 x i8], ptr %i.mf, i64 %10
   store i32 %i.me, ptr %i.mi, align 4, !tbaa !28
   %i.mj = load i32, ptr %i.lq, align 4, !tbaa !28
-  %i.mk = getelementptr inbounds [4 x i8], ptr %i.ki, i64 %14
+  %i.mk = getelementptr inbounds [4 x i8], ptr %i.ki, i64 %10
   store i32 %i.mj, ptr %i.mk, align 4, !tbaa !28
-  %indvars.iv.next386 = add nsw i64 %indvars.iv385, 2
+  %11 = add nsw i32 %.2318, 2                     ; 2 uses
   %indvars.iv.next388 = add nsw i64 %indvars.iv387, 1 ; 2 uses
   %exitcond392.not = icmp eq i64 %indvars.iv.next388, %i.kn
   br i1 %exitcond392.not, label %.critedge, label %.lr.ph320.split, !llvm.loop !49
 
 .critedge.loopexit.split.loop.exit459:            ; preds = %.lr.ph320.split.us
-  %15 = trunc nsw i64 %indvars.iv393 to i32
   %i.ml = trunc nsw i64 %indvars.iv395 to i32
   br label %.critedge
 
 .critedge.loopexit452.split.loop.exit456:         ; preds = %.lr.ph320.split
-  %16 = trunc nsw i64 %indvars.iv385 to i32
   %i.mm = trunc nsw i64 %indvars.iv387 to i32
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.ax, %bb.aw, %.critedge.loopexit452.split.loop.exit456, %.critedge.loopexit.split.loop.exit459, %bb.av
   %.2185.lcssa = phi i32 [ %.0195.lcssa, %bb.aw ], [ %.1184329, %bb.av ], [ %i.ml, %.critedge.loopexit.split.loop.exit459 ], [ %i.mm, %.critedge.loopexit452.split.loop.exit456 ], [ %.0195.lcssa, %bb.ax ] ; 2 uses
-  %.2.lcssa = phi i32 [ %12, %bb.aw ], [ %.1330, %bb.av ], [ %15, %.critedge.loopexit.split.loop.exit459 ], [ %16, %.critedge.loopexit452.split.loop.exit456 ], [ %9, %bb.ax ] ; 2 uses
+  %.2.lcssa = phi i32 [ %7, %bb.aw ], [ %.1330, %bb.av ], [ %.2318.us, %.critedge.loopexit.split.loop.exit459 ], [ %.2318, %.critedge.loopexit452.split.loop.exit456 ], [ %11, %bb.ax ] ; 2 uses
   %i.mn = add nsw i32 %i.lh, 1
   store i32 %i.mn, ptr %i.ky, align 4, !tbaa !28
   %.not233 = icmp eq i64 %indvars.iv404, %i.lo

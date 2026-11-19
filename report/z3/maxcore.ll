@@ -205,7 +205,7 @@ _ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit:
 
 bb.b:                                             ; preds = %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #20
-  %i.g = zext i32 %2 to i64                       ; 2 uses
+  %i.g = zext i32 %2 to i64
   %i.h = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.g
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !156
   tail call void @llvm.experimental.noalias.scope.decl(metadata !399)
@@ -273,8 +273,8 @@ _ZNK7maxcore10get_weightEP4expr.exit:             ; preds = %bb.e, %bb.f
   br label %bb.g
 
 bb.g:                                             ; preds = %.critedge, %_ZNK7maxcore10get_weightEP4expr.exit
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.critedge ], [ %i.g, %_ZNK7maxcore10get_weightEP4expr.exit ]
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 4 uses
+  %.021.in = phi i32 [ %2, %_ZNK7maxcore10get_weightEP4expr.exit ], [ %.021, %.critedge ]
+  %.021 = add nuw i32 %.021.in, 1                 ; 4 uses
   %i.ao = load ptr, ptr %i.a, align 8, !tbaa !57  ; 3 uses
   %i.ap = icmp eq ptr %i.ao, null
   br i1 %i.ap, label %.critedge.thread, label %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit28
@@ -282,13 +282,13 @@ bb.g:                                             ; preds = %.critedge, %_ZNK7ma
 _ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit28: ; preds = %bb.g
   %i.aq = getelementptr inbounds i8, ptr %i.ao, i64 -4
   %i.ar = load i32, ptr %i.aq, align 4, !tbaa !155
-  %5 = zext i32 %i.ar to i64
-  %i.as = icmp samesign ult i64 %indvars.iv.next, %5
+  %i.as = icmp ult i32 %.021, %i.ar
   br i1 %i.as, label %bb.h, label %.critedge.thread
 
 bb.h:                                             ; preds = %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit28
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #20
-  %i.at = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %indvars.iv.next
+  %5 = zext i32 %.021 to i64
+  %i.at = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %5
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !156
   call void @llvm.experimental.noalias.scope.decl(metadata !400)
   %i.av = invoke noundef ptr @_ZNK7obj_mapI4expr8rationalE9find_coreEPS0_(ptr noundef nonnull align 8 dereferenceable(24) %i.j, ptr noundef %i.au)
@@ -436,7 +436,6 @@ bb.v:                                             ; preds = %bb.t, %bb.u
   resume { ptr, i32 } %.pn
 
 .critedge.thread:                                 ; preds = %bb.g, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit28, %.critedge
-  %6 = trunc nuw i64 %indvars.iv.next to i32
   %i.cr = load ptr, ptr @_ZN8rational13g_mpq_managerE, align 8, !tbaa !141 ; 2 uses
   invoke void @_ZN11mpz_managerILb1EE3delEPS0_R3mpz(ptr noundef %i.cr, ptr noundef nonnull align 8 dereferenceable(32) %3)
           to label %.noexc.i35 unwind label %bb.w
@@ -457,7 +456,7 @@ _ZN8rationalD2Ev.exit36:                          ; preds = %.noexc.i35
   br label %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.thread
 
 _ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.thread: ; preds = %bb.a, %_ZN8rationalD2Ev.exit36, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit
-  %.122 = phi i32 [ %6, %_ZN8rationalD2Ev.exit36 ], [ %2, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit ], [ %2, %bb.a ]
+  %.122 = phi i32 [ %.021, %_ZN8rationalD2Ev.exit36 ], [ %2, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit ], [ %2, %bb.a ]
   ret i32 %.122
 }
 

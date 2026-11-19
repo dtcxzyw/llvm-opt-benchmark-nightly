@@ -205,7 +205,7 @@ bb.dp:                                            ; preds = %bb.do
 
 .lr.ph313.i:                                      ; preds = %bb.dp, %.loopexit.i
   %indvars.iv366.i = phi i64 [ %indvars.iv.next367.i, %.loopexit.i ], [ 0, %bb.dp ] ; 2 uses
-  %.0157312.i = phi i32 [ %.3.i, %.loopexit.i ], [ 0, %bb.dp ] ; 4 uses
+  %.0157312.i = phi i32 [ %.3.i, %.loopexit.i ], [ 0, %bb.dp ] ; 5 uses
   %.6174311.i = phi i32 [ %.10178.i, %.loopexit.i ], [ %.5173.i, %bb.dp ] ; 6 uses
   %i.wt = getelementptr inbounds nuw [56 x i8], ptr %i.pv, i64 %indvars.iv366.i ; 3 uses
   %i.wu = getelementptr inbounds nuw i8, ptr %i.wt, i64 52
@@ -244,13 +244,12 @@ bb.dt:                                            ; preds = %bb.dr
   br label %.loopexit.i
 
 .lr.ph307.preheader.i:                            ; preds = %bb.dq, %.lr.ph313.i
-  %9 = sext i32 %.0157312.i to i64
+  %9 = add i32 %i.wv, %.0157312.i                 ; 2 uses
   br label %.lr.ph307.i
 
 .lr.ph307.i:                                      ; preds = %bb.dw, %.lr.ph307.preheader.i
-  %indvars.iv362.i = phi i64 [ %9, %.lr.ph307.preheader.i ], [ %indvars.iv.next363.i, %bb.dw ] ; 3 uses
-  %.0305.i = phi i32 [ 0, %.lr.ph307.preheader.i ], [ %i.xs, %bb.dw ]
-  %.7175303.i = phi i32 [ %.6174311.i, %.lr.ph307.preheader.i ], [ %.8176.i, %bb.dw ] ; 4 uses
+  %.0305.i = phi i32 [ %i.xs, %bb.dw ], [ %.0157312.i, %.lr.ph307.preheader.i ] ; 2 uses
+  %.7175303.i = phi i32 [ %.8176.i, %bb.dw ], [ %.6174311.i, %.lr.ph307.preheader.i ] ; 4 uses
   %i.xh = load i32, ptr %3, align 4, !tbaa !46
   %.not221.i = icmp ult i32 %.7175303.i, %i.xh
   br i1 %.not221.i, label %bb.dv, label %bb.du
@@ -260,13 +259,14 @@ bb.du:                                            ; preds = %.lr.ph307.i
   br label %bb.dw
 
 bb.dv:                                            ; preds = %.lr.ph307.i
-  %i.xi = getelementptr inbounds i8, ptr %.pre.i81, i64 %indvars.iv362.i
+  %10 = sext i32 %.0305.i to i64                  ; 2 uses
+  %i.xi = getelementptr inbounds i8, ptr %.pre.i81, i64 %10
   %i.xj = load i8, ptr %i.xi, align 1, !tbaa !52
   %i.xk = load ptr, ptr %5, align 8, !tbaa !60
   %i.xl = zext i32 %.7175303.i to i64             ; 2 uses
   %i.xm = getelementptr inbounds nuw i8, ptr %i.xk, i64 %i.xl
   store i8 %i.xj, ptr %i.xm, align 1, !tbaa !52
-  %i.xn = getelementptr inbounds [4 x i8], ptr %.pre371.i, i64 %indvars.iv362.i
+  %i.xn = getelementptr inbounds [4 x i8], ptr %.pre371.i, i64 %10
   %i.xo = load i32, ptr %i.xn, align 4, !tbaa !46
   %i.xp = load ptr, ptr %6, align 8, !tbaa !71
   %i.xq = getelementptr inbounds nuw [4 x i8], ptr %i.xp, i64 %i.xl
@@ -276,18 +276,13 @@ bb.dv:                                            ; preds = %.lr.ph307.i
 
 bb.dw:                                            ; preds = %bb.dv, %bb.du
   %.8176.i = phi i32 [ %.7175303.i, %bb.du ], [ %i.xr, %bb.dv ] ; 2 uses
-  %i.xs = add nuw i32 %.0305.i, 1                 ; 2 uses
-  %indvars.iv.next363.i = add nsw i64 %indvars.iv362.i, 1 ; 2 uses
-  %exitcond365.not.i = icmp eq i32 %i.xs, %i.wv
-  br i1 %exitcond365.not.i, label %.loopexit.loopexit.i, label %.lr.ph307.i
+  %i.xs = add i32 %.0305.i, 1                     ; 2 uses
+  %exitcond365.not.i = icmp eq i32 %i.xs, %9
+  br i1 %exitcond365.not.i, label %.loopexit.i, label %.lr.ph307.i
 
-.loopexit.loopexit.i:                             ; preds = %bb.dw
-  %10 = trunc nsw i64 %indvars.iv.next363.i to i32
-  br label %.loopexit.i
-
-.loopexit.i:                                      ; preds = %.loopexit.loopexit.i, %bb.dt, %bb.ds, %.lr.ph313.i
-  %.10178.i = phi i32 [ %.6174311.i, %bb.ds ], [ %i.xg, %bb.dt ], [ %.6174311.i, %.lr.ph313.i ], [ %.8176.i, %.loopexit.loopexit.i ] ; 2 uses
-  %.3.i = phi i32 [ %.0157312.i, %bb.ds ], [ %.0157312.i, %bb.dt ], [ %.0157312.i, %.lr.ph313.i ], [ %10, %.loopexit.loopexit.i ]
+.loopexit.i:                                      ; preds = %bb.dw, %bb.dt, %bb.ds, %.lr.ph313.i
+  %.10178.i = phi i32 [ %.6174311.i, %bb.ds ], [ %i.xg, %bb.dt ], [ %.6174311.i, %.lr.ph313.i ], [ %.8176.i, %bb.dw ] ; 2 uses
+  %.3.i = phi i32 [ %.0157312.i, %bb.ds ], [ %.0157312.i, %bb.dt ], [ %.0157312.i, %.lr.ph313.i ], [ %9, %bb.dw ]
   %indvars.iv.next367.i = add nuw nsw i64 %indvars.iv366.i, 1 ; 2 uses
   %exitcond370.not.i = icmp eq i64 %indvars.iv.next367.i, %wide.trip.count346.i
   br i1 %exitcond370.not.i, label %.loopexit253.i, label %.lr.ph313.i

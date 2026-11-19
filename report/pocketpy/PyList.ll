@@ -201,14 +201,14 @@ bb.h:                                             ; preds = %bb.g, %bb.c
 
 .lr.ph:                                           ; preds = %bb.h
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %2 = zext nneg i32 %.123 to i64
   br label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph, %bb.k
-  %indvars.iv = phi i64 [ %2, %.lr.ph ], [ %indvars.iv.next, %bb.k ] ; 3 uses
+  %.038 = phi i32 [ %.123, %.lr.ph ], [ %3, %bb.k ] ; 2 uses
   %i.q = tail call ptr @py_touserdata(ptr noundef %1) #5
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !11
-  %i.s = getelementptr inbounds nuw [24 x i8], ptr %i.r, i64 %indvars.iv
+  %2 = zext nneg i32 %.038 to i64                 ; 2 uses
+  %i.s = getelementptr inbounds nuw [24 x i8], ptr %i.r, i64 %2
   %i.t = tail call i32 @py_equal(ptr noundef %i.s, ptr noundef nonnull %i.p) #5
   switch i32 %i.t, label %bb.j [
     i32 -1, label %.thread33
@@ -217,16 +217,15 @@ bb.i:                                             ; preds = %.lr.ph, %bb.k
 
 bb.j:                                             ; preds = %bb.i
   %i.u = tail call ptr (...) @py_retval() #5
-  tail call void @py_newint(ptr noundef %i.u, i64 noundef %indvars.iv) #5
+  tail call void @py_newint(ptr noundef %i.u, i64 noundef %2) #5
   br label %.thread33
 
 bb.k:                                             ; preds = %bb.i
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %3 = add nuw nsw i32 %.038, 1                   ; 2 uses
   %i.v = tail call ptr @py_touserdata(ptr noundef nonnull %1) #5
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 8
   %i.x = load i32, ptr %i.w, align 8, !tbaa !10
-  %3 = trunc nuw i64 %indvars.iv.next to i32
-  %.not30 = icmp sgt i32 %i.x, %3
+  %.not30 = icmp slt i32 %3, %i.x
   br i1 %.not30, label %bb.i, label %._crit_edge, !llvm.loop !37
 
 ._crit_edge:                                      ; preds = %bb.k, %bb.h

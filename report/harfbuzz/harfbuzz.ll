@@ -205,7 +205,7 @@ bb.au:                                            ; preds = %hb_font_get_nominal
 
 bb.av:                                            ; preds = %bb.au, %.thread14.i.i.i, %hb_font_get_glyph.exit75.i.i.i
   %i.kv = phi i32 [ 0, %hb_font_get_glyph.exit75.i.i.i ], [ 1, %bb.au ], [ 0, %.thread14.i.i.i ] ; 4 uses
-  %.5.i.i.i = phi i32 [ 0, %hb_font_get_glyph.exit75.i.i.i ], [ 2, %bb.au ], [ %.26130.lcssa.i.i.i, %.thread14.i.i.i ] ; 4 uses
+  %.5.i.i.i = phi i32 [ 0, %hb_font_get_glyph.exit75.i.i.i ], [ 2, %bb.au ], [ %.26130.lcssa.i.i.i, %.thread14.i.i.i ] ; 5 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q) #59
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q) #59
   store i32 0, ptr %i.q, align 4, !tbaa !322
@@ -230,7 +230,6 @@ hb_font_get_glyph.exit75.1.i.i.i:                 ; preds = %bb.aw, %bb.av
   br i1 %.not70.1.i.i.i, label %bb.bc, label %bb.ax
 
 bb.ax:                                            ; preds = %hb_font_get_glyph.exit75.1.i.i.i
-  %30 = zext nneg i32 %.5.i.i.i to i64            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r) #59
   store i32 0, ptr %i.r, align 4, !tbaa !322
   %i.lg = load ptr, ptr %i.ab, align 8, !tbaa !636 ; 2 uses
@@ -256,13 +255,13 @@ hb_font_get_nominal_glyph.exit.151.i.i.i:         ; preds = %bb.ay, %bb.ax
 bb.az:                                            ; preds = %hb_font_get_nominal_glyph.exit.151.i.i.i
   %i.lq = load i32, ptr %i.r, align 4, !tbaa !322
   %i.lr = trunc i32 %i.lq to i16
-  %indvars.iv.next42.152.i.i.i = add nuw nsw i64 %30, 1 ; 2 uses
-  %i.ls = getelementptr inbounds nuw [2 x i8], ptr %20, i64 %30
+  %30 = add nuw nsw i32 %.5.i.i.i, 1              ; 2 uses
+  %31 = zext nneg i32 %.5.i.i.i to i64
+  %i.ls = getelementptr inbounds nuw [2 x i8], ptr %20, i64 %31
   %i.lt = call i16 @llvm.bswap.i16(i16 %i.lr)
   store i16 %i.lt, ptr %i.ls, align 2, !tbaa !278
   call void @llvm.lifetime.end.p0(ptr nonnull %i.r) #59
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r) #59
-  %31 = trunc nuw nsw i64 %indvars.iv.next42.152.i.i.i to i32
   store i32 0, ptr %i.r, align 4, !tbaa !322
   %i.lu = load ptr, ptr %i.ab, align 8, !tbaa !636 ; 2 uses
   %i.lv = getelementptr inbounds nuw i8, ptr %i.lu, i64 48
@@ -288,7 +287,8 @@ bb.bb:                                            ; preds = %hb_font_get_nominal
   %i.me = load i32, ptr %i.r, align 4, !tbaa !322
   %i.mf = trunc i32 %i.me to i16
   %indvars.iv.next42.1.1.i.i.i = add nuw nsw i32 %.5.i.i.i, 2
-  %i.mg = getelementptr inbounds nuw [2 x i8], ptr %20, i64 %indvars.iv.next42.152.i.i.i
+  %32 = zext nneg i32 %30 to i64
+  %i.mg = getelementptr inbounds nuw [2 x i8], ptr %20, i64 %32
   %i.mh = call i16 @llvm.bswap.i16(i16 %i.mf)
   store i16 %i.mh, ptr %i.mg, align 2, !tbaa !278
   call void @llvm.lifetime.end.p0(ptr nonnull %i.r) #59
@@ -305,13 +305,13 @@ bb.bb:                                            ; preds = %hb_font_get_nominal
   br label %bb.bc
 
 .thread14.1.i.i.i:                                ; preds = %hb_font_get_nominal_glyph.exit.1.1.i.i.i, %hb_font_get_nominal_glyph.exit.151.i.i.i
-  %.26130.lcssa.1.i.i.i = phi i32 [ %31, %hb_font_get_nominal_glyph.exit.1.1.i.i.i ], [ %.5.i.i.i, %hb_font_get_nominal_glyph.exit.151.i.i.i ]
+  %.26130.lcssa.1.i.i.i = phi i32 [ %30, %hb_font_get_nominal_glyph.exit.1.1.i.i.i ], [ %.5.i.i.i, %hb_font_get_nominal_glyph.exit.151.i.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.r) #59
   br label %bb.bc
 
 bb.bc:                                            ; preds = %.thread14.1.i.i.i, %bb.bb, %hb_font_get_glyph.exit75.1.i.i.i
   %i.mp = phi i32 [ %i.kv, %hb_font_get_glyph.exit75.1.i.i.i ], [ %i.mo, %bb.bb ], [ %i.kv, %.thread14.1.i.i.i ] ; 4 uses
-  %.5.1.i.i.i = phi i32 [ %.5.i.i.i, %hb_font_get_glyph.exit75.1.i.i.i ], [ %indvars.iv.next42.1.1.i.i.i, %bb.bb ], [ %.26130.lcssa.1.i.i.i, %.thread14.1.i.i.i ] ; 4 uses
+  %.5.1.i.i.i = phi i32 [ %.5.i.i.i, %hb_font_get_glyph.exit75.1.i.i.i ], [ %indvars.iv.next42.1.1.i.i.i, %bb.bb ], [ %.26130.lcssa.1.i.i.i, %.thread14.1.i.i.i ] ; 5 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q) #59
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q) #59
   store i32 0, ptr %i.q, align 4, !tbaa !322
@@ -336,7 +336,6 @@ hb_font_get_glyph.exit75.2.i.i.i:                 ; preds = %bb.bd, %bb.bc
   br i1 %.not70.2.i.i.i, label %._crit_edge.i.i.i, label %bb.be
 
 bb.be:                                            ; preds = %hb_font_get_glyph.exit75.2.i.i.i
-  %32 = zext nneg i32 %.5.1.i.i.i to i64          ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r) #59
   store i32 0, ptr %i.r, align 4, !tbaa !322
   %i.na = load ptr, ptr %i.ab, align 8, !tbaa !636 ; 2 uses
@@ -362,13 +361,13 @@ hb_font_get_nominal_glyph.exit.2.i.i.i:           ; preds = %bb.bf, %bb.be
 bb.bg:                                            ; preds = %hb_font_get_nominal_glyph.exit.2.i.i.i
   %i.nk = load i32, ptr %i.r, align 4, !tbaa !322
   %i.nl = trunc i32 %i.nk to i16
-  %indvars.iv.next42.2.i.i.i = add nuw nsw i64 %32, 1 ; 2 uses
-  %i.nm = getelementptr inbounds nuw [2 x i8], ptr %20, i64 %32
+  %33 = add nuw nsw i32 %.5.1.i.i.i, 1            ; 2 uses
+  %34 = zext nneg i32 %.5.1.i.i.i to i64
+  %i.nm = getelementptr inbounds nuw [2 x i8], ptr %20, i64 %34
   %i.nn = call i16 @llvm.bswap.i16(i16 %i.nl)
   store i16 %i.nn, ptr %i.nm, align 2, !tbaa !278
   call void @llvm.lifetime.end.p0(ptr nonnull %i.r) #59
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r) #59
-  %33 = trunc nuw nsw i64 %indvars.iv.next42.2.i.i.i to i32
   store i32 0, ptr %i.r, align 4, !tbaa !322
   %i.no = load ptr, ptr %i.ab, align 8, !tbaa !636 ; 2 uses
   %i.np = getelementptr inbounds nuw i8, ptr %i.no, i64 48
@@ -394,7 +393,8 @@ hb_font_get_nominal_glyph.exit.1.2.i.i.i:         ; preds = %bb.bh, %bb.bg
   %i.ny = load i32, ptr %i.r, align 4, !tbaa !322
   %i.nz = trunc i32 %i.ny to i16
   %indvars.iv.next42.1.2.i.i.i = add nuw nsw i32 %.5.1.i.i.i, 2
-  %i.oa = getelementptr inbounds nuw [2 x i8], ptr %20, i64 %indvars.iv.next42.2.i.i.i
+  %35 = zext nneg i32 %33 to i64
+  %i.oa = getelementptr inbounds nuw [2 x i8], ptr %20, i64 %35
   %i.ob = call i16 @llvm.bswap.i16(i16 %i.nz)
   store i16 %i.ob, ptr %i.oa, align 2, !tbaa !278
   call void @llvm.lifetime.end.p0(ptr nonnull %i.r) #59
@@ -797,7 +797,6 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !1230
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %2 = zext i32 %i.i to i64
   %i.s = zext i32 %i.g to i64
   br label %.lr.ph
 
@@ -817,12 +816,10 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.ad = getelementptr inbounds nuw i8, ptr %i.x, i64 48 ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.x, i64 56 ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.x, i64 64 ; 2 uses
-  %3 = zext i32 %.0.ph126 to i64
   br label %bb.d
 
 .preheader106.loopexit:                           ; preds = %bb.g
   %i.ag = trunc nuw i64 %indvars.iv152 to i32
-  %4 = trunc nuw i64 %indvars.iv.next to i32
   br label %.preheader106
 
 .preheader106.loopexit140:                        ; preds = %.outer.backedge
@@ -831,7 +828,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 .preheader106:                                    ; preds = %.preheader106.loopexit140, %.preheader106.loopexit, %bb.c
   %.030.ph.lcssa120 = phi i32 [ %i.ag, %.preheader106.loopexit ], [ 0, %bb.c ], [ %i.ah, %.preheader106.loopexit140 ] ; 2 uses
-  %.0.lcssa = phi i32 [ %4, %.preheader106.loopexit ], [ 0, %bb.c ], [ %.0.ph.be, %.preheader106.loopexit140 ] ; 2 uses
+  %.0.lcssa = phi i32 [ %3, %.preheader106.loopexit ], [ 0, %bb.c ], [ %.0.ph.be, %.preheader106.loopexit140 ] ; 2 uses
   %i.ai = icmp ult i32 %.030.ph.lcssa120, %i.g
   br i1 %i.ai, label %.lr.ph130, label %.preheader
 
@@ -844,11 +841,11 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br label %bb.p
 
 bb.d:                                             ; preds = %.lr.ph, %bb.g
-  %indvars.iv = phi i64 [ %3, %.lr.ph ], [ %indvars.iv.next, %bb.g ] ; 4 uses
+  %.0121 = phi i32 [ %.0.ph126, %.lr.ph ], [ %3, %bb.g ] ; 5 uses
   %i.ao = load i32, ptr %i.x, align 8, !tbaa !1505
   switch i32 %i.ao, label %_ZNK13hb_bit_page_t8is_emptyEv.exit.thread93 [
     i32 -1, label %bb.e
-    i32 0, label %.loopexit
+    i32 0, label %.outer.backedge
   ]
 
 bb.e:                                             ; preds = %bb.d
@@ -879,14 +876,10 @@ bb.e:                                             ; preds = %bb.d
 
 _ZNK13hb_bit_page_t8is_emptyEv.exit.thread:       ; preds = %bb.e
   store i32 0, ptr %i.x, align 8, !tbaa !1505
-  br label %.loopexit
-
-.loopexit:                                        ; preds = %bb.d, %_ZNK13hb_bit_page_t8is_emptyEv.exit.thread
-  %.0121144 = trunc i64 %indvars.iv to i32
   br label %.outer.backedge
 
-.outer.backedge:                                  ; preds = %.loopexit, %bb.o
-  %.0.ph.be = phi i32 [ %i.cz, %bb.o ], [ %.0121144, %.loopexit ] ; 3 uses
+.outer.backedge:                                  ; preds = %bb.d, %_ZNK13hb_bit_page_t8is_emptyEv.exit.thread, %bb.o
+  %.0.ph.be = phi i32 [ %i.cz, %bb.o ], [ %.0121, %_ZNK13hb_bit_page_t8is_emptyEv.exit.thread ], [ %.0121, %bb.d ] ; 3 uses
   %indvars.iv.next153 = add nuw nsw i64 %indvars.iv152, 1 ; 3 uses
   %i.ax = icmp samesign ult i64 %indvars.iv.next153, %i.s
   %i.ay = icmp ult i32 %.0.ph.be, %i.i
@@ -896,7 +889,8 @@ _ZNK13hb_bit_page_t8is_emptyEv.exit.thread:       ; preds = %bb.e
 _ZNK13hb_bit_page_t8is_emptyEv.exit.thread93:     ; preds = %bb.d, %bb.e
   %i.ba = load ptr, ptr %i.q, align 8, !tbaa !1234
   %i.bb = load ptr, ptr %i.r, align 8, !tbaa !1230
-  %i.bc = getelementptr inbounds nuw [8 x i8], ptr %i.bb, i64 %indvars.iv ; 2 uses
+  %2 = zext i32 %.0121 to i64
+  %i.bc = getelementptr inbounds nuw [8 x i8], ptr %i.bb, i64 %2 ; 2 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bc, i64 4
   %i.be = load i32, ptr %i.bd, align 4, !tbaa !1236
   %i.bf = zext i32 %i.be to i64
@@ -946,12 +940,11 @@ _ZNK13hb_bit_page_t8is_emptyEv.exit53.thread:     ; preds = %bb.f
   br label %bb.g
 
 bb.g:                                             ; preds = %_ZNK13hb_bit_page_t8is_emptyEv.exit.thread93, %_ZNK13hb_bit_page_t8is_emptyEv.exit53.thread
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
-  %i.by = icmp samesign ult i64 %indvars.iv.next, %2
+  %3 = add nuw i32 %.0121, 1                      ; 3 uses
+  %i.by = icmp ult i32 %3, %i.i
   br i1 %i.by, label %bb.d, label %.preheader106.loopexit, !llvm.loop !6125
 
 _ZNK13hb_bit_page_t8is_emptyEv.exit53.thread96:   ; preds = %_ZNK13hb_bit_page_t8is_emptyEv.exit.thread93, %bb.f
-  %5 = trunc nuw i64 %indvars.iv to i32
   %i.bz = load i32, ptr %i.t, align 4, !tbaa !1233
   %i.ca = load i32, ptr %i.bc, align 4, !tbaa !1233
   %.not34 = icmp eq i32 %i.bz, %i.ca
@@ -1014,7 +1007,7 @@ _ZNK13hb_bit_page_t8is_equalERKS_.exit:           ; preds = %bb.n
   br i1 %.not.7.i.i, label %bb.o, label %_ZNK13hb_bit_page_t8is_equalERKS_.exit.thread
 
 bb.o:                                             ; preds = %_ZNK13hb_bit_page_t8is_equalERKS_.exit
-  %i.cz = add nuw i32 %5, 1
+  %i.cz = add nuw i32 %.0121, 1
   br label %.outer.backedge
 
 .preheader:                                       ; preds = %bb.r, %.preheader106

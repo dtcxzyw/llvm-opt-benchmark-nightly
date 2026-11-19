@@ -204,15 +204,13 @@ bb.d:                                             ; preds = %bb.c
   br label %rsock_getifaddrs.exit
 
 .preheader.i:                                     ; preds = %bb.c, %.preheader.i
-  %indvar = phi i64 [ %indvar.next, %.preheader.i ], [ 0, %bb.c ] ; 2 uses
-  %indvars.iv47.i = phi i32 [ %indvars.iv.next48.i, %.preheader.i ], [ 1, %bb.c ] ; 2 uses
+  %indvars.iv47.i = phi i32 [ %indvars.iv.next48.i, %.preheader.i ], [ 1, %bb.c ] ; 3 uses
   %.03441.i = phi ptr [ %i.i, %.preheader.i ], [ %i.f, %bb.c ]
   %.03740.i = phi i32 [ %i.h, %.preheader.i ], [ 0, %bb.c ] ; 2 uses
   %i.h = add nuw nsw i32 %.03740.i, 1             ; 3 uses
   %i.i = load ptr, ptr %.03441.i, align 8, !tbaa !81 ; 2 uses
   %.not39.i = icmp eq ptr %i.i, null
-  %indvars.iv.next48.i = add nuw i32 %indvars.iv47.i, 1
-  %indvar.next = add i64 %indvar, 1
+  %indvars.iv.next48.i = add i32 %indvars.iv47.i, 1
   br i1 %.not39.i, label %bb.e, label %.preheader.i, !llvm.loop !75
 
 bb.e:                                             ; preds = %.preheader.i
@@ -227,7 +225,8 @@ bb.e:                                             ; preds = %.preheader.i
   %i.q = getelementptr inbounds nuw i8, ptr %i.o, i64 8 ; 7 uses
   %wide.trip.count.i = zext i32 %indvars.iv47.i to i64 ; 3 uses
   %xtraiter = and i64 %wide.trip.count.i, 3       ; 3 uses
-  %i.r = icmp ult i64 %indvar, 3
+  %1 = add i32 %indvars.iv47.i, -1
+  %i.r = icmp ult i32 %1, 3
   br i1 %i.r, label %.epil.preheader, label %.new
 
 .new:                                             ; preds = %bb.e

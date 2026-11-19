@@ -204,14 +204,12 @@ bb.m:                                             ; preds = %.lr.ph186
   br label %.critedge.outer
 
 .critedge.outer:                                  ; preds = %bb.p, %bb.m
-  %.0104.ph = phi i32 [ %3, %bb.p ], [ 0, %bb.m ] ; 2 uses
+  %.0104.ph = phi i32 [ %2, %bb.p ], [ 0, %bb.m ]
   %.0103.ph = phi ptr [ %i.dg, %bb.p ], [ %i.cq, %bb.m ] ; 4 uses
-  %2 = sext i32 %.0104.ph to i64
   br label %.critedge
 
 .critedge:                                        ; preds = %.critedge.outer, %bb.o
-  %indvars.iv159 = phi i32 [ %.0104.ph, %.critedge.outer ], [ %indvars.iv.next160, %bb.o ] ; 2 uses
-  %indvars.iv156 = phi i64 [ %2, %.critedge.outer ], [ %indvars.iv.next157, %bb.o ] ; 3 uses
+  %indvars.iv159 = phi i32 [ %2, %bb.o ], [ %.0104.ph, %.critedge.outer ] ; 4 uses
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.n, %.critedge
@@ -235,27 +233,26 @@ bb.n:                                             ; preds = %bb.n, %.critedge
 
 bb.o:                                             ; preds = %bb.n
   %i.dd = trunc nuw nsw i64 %i.cz to i32
-  %indvars.iv.next157 = add nsw i64 %indvars.iv156, 1 ; 3 uses
-  %i.de = getelementptr inbounds [4 x i8], ptr %i.b, i64 %indvars.iv156
+  %2 = add nsw i32 %indvars.iv159, 1              ; 3 uses
+  %3 = sext i32 %indvars.iv159 to i64
+  %i.de = getelementptr inbounds [4 x i8], ptr %i.b, i64 %3
   store i32 %i.dd, ptr %i.de, align 4, !tbaa !9
   %i.df = load i64, ptr %.0103.ph, align 8, !tbaa !11
   %.not117 = icmp eq i64 %i.df, 0
-  %indvars.iv.next160 = add i32 %indvars.iv159, 1
   br i1 %.not117, label %bb.p, label %.critedge
 
 bb.p:                                             ; preds = %bb.o
-  %3 = trunc nsw i64 %indvars.iv.next157 to i32
   %i.dg = getelementptr inbounds i8, ptr %.0103.ph, i64 -8
   %.not118 = icmp eq ptr %.0103.ph, %i.a
   br i1 %.not118, label %bb.q, label %.critedge.outer
 
 bb.q:                                             ; preds = %bb.p
-  %4 = mul i64 %indvars.iv.next157, 38654705664
-  %sext = add i64 %4, 55834574848
-  %5 = ashr exact i64 %sext, 32
+  %4 = mul nsw i32 %2, 9
+  %5 = add nsw i32 %4, 13
+  %6 = sext i32 %5 to i64
   %i.dh = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 9 uses
   %i.di = load i64, ptr %i.dh, align 8, !tbaa !23 ; 2 uses
-  %i.dj = add nsw i64 %i.di, %5                   ; 2 uses
+  %i.dj = add nsw i64 %i.di, %6                   ; 2 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.dl = load i64, ptr %i.dk, align 8, !tbaa !24 ; 3 uses
   %.not.i123 = icmp sgt i64 %i.dj, %i.dl
@@ -310,11 +307,11 @@ bb.w:                                             ; preds = %bb.v
   %i.ea = load i64, ptr %i.dh, align 8, !tbaa !23
   %i.eb = add nsw i64 %i.ea, %i.dz                ; 2 uses
   store i64 %i.eb, ptr %i.dh, align 8, !tbaa !23
-  %i.ec = icmp sgt i64 %indvars.iv156, 0
+  %i.ec = icmp sgt i32 %indvars.iv159, 0
   br i1 %i.ec, label %.lr.ph144.preheader, label %.loopexit
 
 .lr.ph144.preheader:                              ; preds = %bb.w
-  %i.ed = zext i32 %indvars.iv159 to i64
+  %i.ed = zext nneg i32 %indvars.iv159 to i64
   br label %.lr.ph144
 
 .lr.ph144:                                        ; preds = %.lr.ph144.preheader, %.lr.ph144

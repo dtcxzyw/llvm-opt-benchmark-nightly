@@ -204,7 +204,6 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 12 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 8 uses
-  %5 = sext i32 %3 to i64
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %2, i64 8
   %.pre = load i8, ptr %.phi.trans.insert, align 8, !tbaa !30
   br label %bb.b
@@ -212,9 +211,8 @@ bb.a:
 bb.b:                                             ; preds = %tryfuncTM.exit, %bb.a
   %indvar = phi i32 [ %indvar.next, %tryfuncTM.exit ], [ 0, %bb.a ] ; 3 uses
   %i.d = phi i8 [ %i.go, %tryfuncTM.exit ], [ %.pre, %bb.a ]
-  %indvars.iv112 = phi i64 [ %indvars.iv.next113, %tryfuncTM.exit ], [ %5, %bb.a ] ; 3 uses
   %.065 = phi i32 [ %i.gs, %tryfuncTM.exit ], [ 0, %bb.a ] ; 4 uses
-  %.063 = phi i32 [ %i.gt, %tryfuncTM.exit ], [ %3, %bb.a ] ; 7 uses
+  %.063 = phi i32 [ %i.gt, %tryfuncTM.exit ], [ %3, %bb.a ] ; 8 uses
   %.062 = phi ptr [ %.2, %tryfuncTM.exit ], [ %2, %bb.a ] ; 11 uses
   %i.e = and i8 %i.d, 63
   switch i8 %i.e, label %bb.p [
@@ -466,6 +464,7 @@ bb.o:                                             ; preds = %bb.m, %bb.n
   br i1 %.not6789, label %._crit_edge93, label %.lr.ph92.preheader
 
 .lr.ph92.preheader:                               ; preds = %._crit_edge
+  %5 = sext i32 %.063 to i64                      ; 2 uses
   %i.eb = add nuw nsw i32 %i.cj, 1                ; 3 uses
   %i.ec = add i32 %3, %indvar
   %reass.sub = sub i32 %i.cj, %i.ec
@@ -477,7 +476,7 @@ bb.o:                                             ; preds = %bb.m, %bb.n
   br i1 %lcmp.mod186.not, label %.lr.ph92.prol.loopexit, label %.lr.ph92.prol
 
 .lr.ph92.prol:                                    ; preds = %.lr.ph92.preheader, %.lr.ph92.prol
-  %indvars.iv118.prol = phi i64 [ %indvars.iv.next119.prol, %.lr.ph92.prol ], [ %indvars.iv112, %.lr.ph92.preheader ] ; 2 uses
+  %indvars.iv118.prol = phi i64 [ %indvars.iv.next119.prol, %.lr.ph92.prol ], [ %5, %.lr.ph92.preheader ] ; 2 uses
   %prol.iter = phi i32 [ %prol.iter.next, %.lr.ph92.prol ], [ 0, %.lr.ph92.preheader ]
   %i.eg = getelementptr inbounds [16 x i8], ptr %i.ea, i64 %indvars.iv118.prol
   %i.eh = getelementptr inbounds nuw i8, ptr %i.eg, i64 8
@@ -488,7 +487,7 @@ bb.o:                                             ; preds = %bb.m, %bb.n
   br i1 %prol.iter.cmp.not, label %.lr.ph92.prol.loopexit, label %.lr.ph92.prol, !llvm.loop !97
 
 .lr.ph92.prol.loopexit:                           ; preds = %.lr.ph92.prol, %.lr.ph92.preheader
-  %indvars.iv118.unr = phi i64 [ %indvars.iv112, %.lr.ph92.preheader ], [ %indvars.iv.next119.prol, %.lr.ph92.prol ]
+  %indvars.iv118.unr = phi i64 [ %5, %.lr.ph92.preheader ], [ %indvars.iv.next119.prol, %.lr.ph92.prol ]
   %i.ei = icmp ult i32 %i.ef, 7
   br i1 %i.ei, label %._crit_edge93, label %.lr.ph92
 
@@ -616,7 +615,6 @@ bb.u:                                             ; preds = %._crit_edge.i
 tryfuncTM.exit:                                   ; preds = %._crit_edge.i
   %i.gs = add nuw nsw i32 %.065, 256
   %i.gt = add nsw i32 %.063, 1
-  %indvars.iv.next113 = add nsw i64 %indvars.iv112, 1
   %indvar.next = add i32 %indvar, 1
   br label %bb.b
 

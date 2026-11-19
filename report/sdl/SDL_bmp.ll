@@ -204,18 +204,18 @@ bb.o:                                             ; preds = %bb.j
   %i.ax = trunc nuw i32 %i.aw to i8
   store i8 %i.ax, ptr %i.a, align 1
   %i.ay = and i32 %i.aw, 1
-  %3 = sext i32 %.04365 to i64
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.s, %bb.o
-  %indvars.iv78 = phi i64 [ %indvars.iv.next79, %bb.s ], [ %3, %bb.o ] ; 2 uses
+  %.3 = phi i32 [ %.04365, %bb.o ], [ %3, %bb.s ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #3
   %i.az = call zeroext i1 @SDL_ReadU8_REAL(ptr noundef nonnull %1, ptr noundef nonnull %i.c) #3
   br i1 %i.az, label %bb.q, label %.critedge62
 
 bb.q:                                             ; preds = %bb.p
-  %indvars.iv.next79 = add nsw i64 %indvars.iv78, 1 ; 2 uses
-  %i.ba = getelementptr inbounds i8, ptr %.04564, i64 %indvars.iv78 ; 3 uses
+  %3 = add nsw i32 %.3, 1                         ; 3 uses
+  %4 = sext i32 %.3 to i64
+  %i.ba = getelementptr inbounds i8, ptr %.04564, i64 %4 ; 3 uses
   %.not56 = icmp uge ptr %i.ba, %i.i
   %i.bb = icmp ult ptr %i.ba, %i.l
   %or.cond60 = select i1 %.not56, i1 %i.bb, i1 false
@@ -235,7 +235,6 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   br i1 %.not57, label %bb.t, label %bb.p, !llvm.loop !14
 
 bb.t:                                             ; preds = %bb.s
-  %4 = trunc nsw i64 %indvars.iv.next79 to i32    ; 2 uses
   %.not58 = icmp eq i32 %i.ay, 0
   br i1 %.not58, label %bb.v, label %bb.u
 
@@ -245,7 +244,7 @@ bb.u:                                             ; preds = %bb.t
 
 bb.v:                                             ; preds = %bb.h, %bb.k, %bb.n, %bb.u, %bb.t
   %.146 = phi ptr [ %.04564, %bb.h ], [ %.04564, %bb.u ], [ %.04564, %bb.t ], [ %i.ah, %bb.k ], [ %i.au, %bb.n ]
-  %.5 = phi i32 [ %i.ae, %bb.h ], [ %4, %bb.u ], [ %4, %bb.t ], [ 0, %bb.k ], [ %i.an, %bb.n ]
+  %.5 = phi i32 [ %i.ae, %bb.h ], [ %3, %bb.u ], [ %3, %bb.t ], [ 0, %bb.k ], [ %i.an, %bb.n ]
   %i.bg = call zeroext i1 @SDL_ReadU8_REAL(ptr noundef nonnull %1, ptr noundef nonnull %i.a) #3
   br i1 %i.bg, label %bb.b, label %.loopexit
 

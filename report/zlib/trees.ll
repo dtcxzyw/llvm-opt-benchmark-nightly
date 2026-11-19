@@ -205,7 +205,6 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 3008 ; 17 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 3012 ; 5 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 5308 ; 10 uses
-  %2 = sext i32 %i.g to i64
   br label %bb.s
 
 bb.i:                                             ; preds = %.lr.ph146, %pqdownheap.exit
@@ -314,8 +313,8 @@ pqdownheap.exit:                                  ; preds = %pqdownheap.exit.loo
   br i1 %i.cv, label %bb.i, label %.preheader, !llvm.loop !52
 
 bb.s:                                             ; preds = %.preheader, %pqdownheap.exit122
-  %i.cw = phi i32 [ %.pre157.pre, %.preheader ], [ %i.hc, %pqdownheap.exit122 ] ; 3 uses
-  %indvars.iv154 = phi i64 [ %2, %.preheader ], [ %indvars.iv.next155, %pqdownheap.exit122 ] ; 5 uses
+  %i.cw = phi i32 [ %i.hc, %pqdownheap.exit122 ], [ %.pre157.pre, %.preheader ] ; 3 uses
+  %.0 = phi i32 [ %3, %pqdownheap.exit122 ], [ %i.g, %.preheader ] ; 5 uses
   %i.cx = load i32, ptr %i.ba, align 4, !tbaa !30 ; 2 uses
   %i.cy = add nsw i32 %i.cw, -1                   ; 2 uses
   store i32 %i.cy, ptr %i.h, align 4, !tbaa !68
@@ -436,7 +435,8 @@ pqdownheap.exit108:                               ; preds = %pqdownheap.exit108.
   %i.fd = getelementptr inbounds [4 x i8], ptr %i.b, i64 %i.fc ; 2 uses
   %i.fe = load i16, ptr %i.fd, align 2, !tbaa !23
   %i.ff = add i16 %i.fe, %i.fb
-  %i.fg = getelementptr inbounds [4 x i8], ptr %i.b, i64 %indvars.iv154 ; 2 uses
+  %2 = sext i32 %.0 to i64                        ; 2 uses
+  %i.fg = getelementptr inbounds [4 x i8], ptr %i.b, i64 %2 ; 2 uses
   store i16 %i.ff, ptr %i.fg, align 2, !tbaa !23
   %i.fh = getelementptr inbounds i8, ptr %i.bb, i64 %i.ez
   %i.fi = load i8, ptr %i.fh, align 1, !tbaa !23
@@ -444,16 +444,15 @@ pqdownheap.exit108:                               ; preds = %pqdownheap.exit108.
   %i.fk = load i8, ptr %i.fj, align 1, !tbaa !23
   %. = tail call i8 @llvm.umax.i8(i8 %i.fi, i8 %i.fk)
   %i.fl = add i8 %., 1
-  %i.fm = getelementptr inbounds i8, ptr %i.bb, i64 %indvars.iv154 ; 2 uses
+  %i.fm = getelementptr inbounds i8, ptr %i.bb, i64 %2 ; 2 uses
   store i8 %i.fl, ptr %i.fm, align 1, !tbaa !23
-  %3 = trunc nsw i64 %indvars.iv154 to i32        ; 2 uses
-  %i.fn = trunc i64 %indvars.iv154 to i16         ; 2 uses
+  %i.fn = trunc i32 %.0 to i16                    ; 2 uses
   %i.fo = getelementptr inbounds nuw i8, ptr %i.fd, i64 2
   store i16 %i.fn, ptr %i.fo, align 2, !tbaa !23
   %i.fp = getelementptr inbounds nuw i8, ptr %i.fa, i64 2
   store i16 %i.fn, ptr %i.fp, align 2, !tbaa !23
-  %indvars.iv.next155 = add nsw i64 %indvars.iv154, 1
-  store i32 %3, ptr %i.ba, align 4, !tbaa !30
+  %3 = add nsw i32 %.0, 1
+  store i32 %.0, ptr %i.ba, align 4, !tbaa !30
   %i.fq = load i32, ptr %i.h, align 4, !tbaa !68  ; 2 uses
   %.not58.i109 = icmp slt i32 %i.fq, 2
   br i1 %.not58.i109, label %pqdownheap.exit122, label %.lr.ph.i110
@@ -541,7 +540,7 @@ pqdownheap.exit122.loopexit:                      ; preds = %bb.aj, %bb.ai, %bb.
 pqdownheap.exit122:                               ; preds = %pqdownheap.exit122.loopexit, %pqdownheap.exit108
   %.049.lcssa.i119 = phi i64 [ 1, %pqdownheap.exit108 ], [ %i.ha, %pqdownheap.exit122.loopexit ]
   %i.hb = getelementptr inbounds [4 x i8], ptr %i.az, i64 %.049.lcssa.i119
-  store i32 %3, ptr %i.hb, align 4, !tbaa !30
+  store i32 %.0, ptr %i.hb, align 4, !tbaa !30
   %i.hc = load i32, ptr %i.h, align 4, !tbaa !68  ; 2 uses
   %i.hd = icmp sgt i32 %i.hc, 1
   br i1 %i.hd, label %bb.s, label %bb.ak, !llvm.loop !53

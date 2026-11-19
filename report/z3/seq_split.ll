@@ -205,7 +205,7 @@ bb.ct:                                            ; preds = %_ZNK6vectorI10split
   br label %.lr.ph503
 
 .lr.ph503:                                        ; preds = %bb.ct, %_ZN7obj_refI4expr11ast_managerED2Ev.exit260
-  %indvars.iv572 = phi i64 [ %indvars.iv.next573, %_ZN7obj_refI4expr11ast_managerED2Ev.exit260 ], [ 0, %bb.ct ] ; 4 uses
+  %.0500 = phi i32 [ %18, %_ZN7obj_refI4expr11ast_managerED2Ev.exit260 ], [ 0, %bb.ct ] ; 4 uses
   %.090499 = phi ptr [ %i.rs, %_ZN7obj_refI4expr11ast_managerED2Ev.exit260 ], [ %i.qv, %bb.ct ] ; 7 uses
   %i.qw = load ptr, ptr %i.la, align 8, !tbaa !47, !nonnull !31, !align !32 ; 3 uses
   %i.qx = getelementptr inbounds nuw i8, ptr %i.qw, i64 72
@@ -236,15 +236,13 @@ _ZNK8seq_util3rex8is_emptyEPK4expr.exit:          ; preds = %bb.cu
   %i.rk = load i32, ptr %i.rj, align 4
   %i.rl = icmp ne i32 %i.rk, 36
   %.not358 = select i1 %i.ri, i1 true, i1 %i.rl
-  %17 = zext i32 %.old.pre588 to i64
-  %i.rm = icmp samesign ult i64 %indvars.iv572, %17
+  %i.rm = icmp ult i32 %.0500, %.old.pre588
   %or.cond = select i1 %.not358, i1 %i.rm, i1 false
   br i1 %or.cond, label %bb.cw, label %_ZNK8seq_util3rex8is_emptyEPK4expr.exit.thread._crit_edge
 
 _ZNK8seq_util3rex8is_emptyEPK4expr.exit.thread:   ; preds = %.lr.ph503._ZNK8seq_util3rex8is_emptyEPK4expr.exit.thread_crit_edge, %bb.cu
   %.old = phi i32 [ %.old.pre, %.lr.ph503._ZNK8seq_util3rex8is_emptyEPK4expr.exit.thread_crit_edge ], [ %.old.pre588, %bb.cu ]
-  %18 = zext i32 %.old to i64
-  %.old355 = icmp samesign ult i64 %indvars.iv572, %18
+  %.old355 = icmp ult i32 %.0500, %.old
   br i1 %.old355, label %bb.cw, label %_ZNK8seq_util3rex8is_emptyEPK4expr.exit.thread._crit_edge
 
 bb.cv:                                            ; preds = %bb.cq, %bb.co, %bb.cr
@@ -255,7 +253,8 @@ bb.cv:                                            ; preds = %bb.cq, %bb.co, %bb.
 bb.cw:                                            ; preds = %_ZNK8seq_util3rex8is_emptyEPK4expr.exit, %_ZNK8seq_util3rex8is_emptyEPK4expr.exit.thread
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #20
   %i.ro = load ptr, ptr %12, align 8, !tbaa !93
-  %i.rp = getelementptr inbounds nuw [4 x i8], ptr %i.ro, i64 %indvars.iv572
+  %17 = zext i32 %.0500 to i64
+  %i.rp = getelementptr inbounds nuw [4 x i8], ptr %i.ro, i64 %17
   %i.rq = load i32, ptr %i.rp, align 4, !tbaa !87
   %i.rr = invoke noundef ptr @_ZNK8seq_util7mk_charEj(ptr noundef nonnull align 8 dereferenceable(144) %i.qw, i32 noundef %i.rq)
           to label %bb.cx unwind label %bb.db
@@ -287,7 +286,7 @@ bb.da:                                            ; preds = %bb.cz
 
 _ZN7obj_refI4expr11ast_managerED2Ev.exit260:      ; preds = %bb.cy, %bb.cz
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #20
-  %indvars.iv.next573 = add nuw nsw i64 %indvars.iv572, 1
+  %18 = add nuw i32 %.0500, 1
   br label %.lr.ph503, !llvm.loop !335
 
 bb.db:                                            ; preds = %bb.cx, %bb.cw

@@ -205,7 +205,7 @@ bb.a:
   br i1 %.not4657, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %bb.b
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.b ], [ 0, %bb.a ] ; 2 uses
+  %.03859 = phi i32 [ %2, %bb.b ], [ 0, %bb.a ]   ; 2 uses
   %.03958 = phi ptr [ %i.l, %bb.b ], [ %0, %bb.a ] ; 3 uses
   %i.d = getelementptr i8, ptr %.03958, i64 8     ; 2 uses
   %i.e = load atomic i32, ptr %i.d acquire, align 4
@@ -213,8 +213,9 @@ bb.a:
   br i1 %i.f, label %bb.b, label %.thread
 
 bb.b:                                             ; preds = %.lr.ph
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %i.g = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv
+  %2 = add nuw nsw i32 %.03859, 1                 ; 2 uses
+  %3 = zext nneg i32 %.03859 to i64
+  %i.g = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %3
   store ptr %.03958, ptr %i.g, align 8, !tbaa !26
   %i.h = getelementptr inbounds nuw i8, ptr %.03958, i64 15
   %i.i = load i8, ptr %i.h, align 1
@@ -224,15 +225,11 @@ bb.b:                                             ; preds = %.lr.ph
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 13
   %i.n = load i8, ptr %i.m, align 1, !tbaa !17
   %.not46 = icmp eq i8 %i.n, 0
-  br i1 %.not46, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !127
+  br i1 %.not46, label %._crit_edge, label %.lr.ph, !llvm.loop !127
 
-._crit_edge.loopexit:                             ; preds = %bb.b
-  %2 = trunc nuw i64 %indvars.iv.next to i32
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
-  %.039.lcssa = phi ptr [ %0, %bb.a ], [ %i.l, %._crit_edge.loopexit ] ; 5 uses
-  %.038.lcssa = phi i32 [ 0, %bb.a ], [ %2, %._crit_edge.loopexit ] ; 3 uses
+._crit_edge:                                      ; preds = %bb.b, %bb.a
+  %.039.lcssa = phi ptr [ %0, %bb.a ], [ %i.l, %bb.b ] ; 5 uses
+  %.038.lcssa = phi i32 [ 0, %bb.a ], [ %2, %bb.b ] ; 3 uses
   %i.o = getelementptr i8, ptr %.039.lcssa, i64 8 ; 2 uses
   %i.p = load atomic i32, ptr %i.o acquire, align 4
   %i.q = icmp eq i32 %i.p, 2

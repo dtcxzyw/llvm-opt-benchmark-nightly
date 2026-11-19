@@ -205,7 +205,7 @@ bb.dp:                                            ; preds = %.preheader, %._crit
   %i.bai = sext i32 %.1203953 to i64
   %i.baj = getelementptr [8 x i8], ptr %i.bah, i64 %i.bai ; 2 uses
   %i.bak = load ptr, ptr %i.baj, align 8, !tbaa !69 ; 4 uses
-  %i.bal = add i32 %.1203953, 2                   ; 2 uses
+  %i.bal = add nsw i32 %.1203953, 2               ; 2 uses
   %i.bam = getelementptr i8, ptr %i.baj, i64 8
   %i.ban = load ptr, ptr %i.bam, align 8, !tbaa !69 ; 2 uses
   %.not281946 = icmp eq ptr %i.ban, null
@@ -214,25 +214,25 @@ bb.dp:                                            ; preds = %.preheader, %._crit
 .lr.ph949:                                        ; preds = %bb.dp
   %i.bao = getelementptr inbounds nuw i8, ptr %i.bak, i64 32 ; 2 uses
   %i.bap = getelementptr inbounds nuw i8, ptr %i.bak, i64 24
-  %14 = sext i32 %i.bal to i64
   br label %bb.dq
 
 .loopexit:                                        ; preds = %_ZN20btConvexHullInternal14removeEdgePairEPNS_4EdgeE.exit621, %_ZN20btConvexHullInternal6Vertex18receiveNearbyFacesEPS0_.exit..loopexit_crit_edge
   %i.baq = phi ptr [ %.pre1015, %_ZN20btConvexHullInternal6Vertex18receiveNearbyFacesEPS0_.exit..loopexit_crit_edge ], [ %i.bej, %_ZN20btConvexHullInternal14removeEdgePairEPNS_4EdgeE.exit621 ] ; 6 uses
   %.1.lcssa = phi i8 [ %.0947, %_ZN20btConvexHullInternal6Vertex18receiveNearbyFacesEPS0_.exit..loopexit_crit_edge ], [ 1, %_ZN20btConvexHullInternal14removeEdgePairEPNS_4EdgeE.exit621 ] ; 2 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
-  %i.bar = getelementptr inbounds [8 x i8], ptr %i.baq, i64 %indvars.iv
+  %14 = add nsw i32 %17, 1                        ; 3 uses
+  %15 = sext i32 %17 to i64
+  %i.bar = getelementptr inbounds [8 x i8], ptr %i.baq, i64 %15
   %i.bas = load ptr, ptr %i.bar, align 8, !tbaa !69 ; 2 uses
   %.not281 = icmp eq ptr %i.bas, null
   br i1 %.not281, label %._crit_edge950, label %bb.dq, !llvm.loop !232
 
 bb.dq:                                            ; preds = %.lr.ph949, %.loopexit
-  %indvars.iv = phi i64 [ %14, %.lr.ph949 ], [ %indvars.iv.next, %.loopexit ] ; 2 uses
-  %15 = phi ptr [ %i.ban, %.lr.ph949 ], [ %i.bas, %.loopexit ] ; 3 uses
+  %16 = phi ptr [ %i.ban, %.lr.ph949 ], [ %i.bas, %.loopexit ] ; 3 uses
+  %17 = phi i32 [ %i.bal, %.lr.ph949 ], [ %14, %.loopexit ] ; 2 uses
   %.0947 = phi i8 [ 0, %.lr.ph949 ], [ %.1.lcssa, %.loopexit ] ; 2 uses
   %i.bat = load ptr, ptr %i.bao, align 8, !tbaa !120 ; 2 uses
   %.not.i581 = icmp eq ptr %i.bat, null
-  %i.bau = getelementptr inbounds nuw i8, ptr %15, i64 24 ; 3 uses
+  %i.bau = getelementptr inbounds nuw i8, ptr %16, i64 24 ; 3 uses
   %i.bav = load ptr, ptr %i.bau, align 8, !tbaa !122 ; 3 uses
   br i1 %.not.i581, label %bb.ds, label %bb.dr
 
@@ -246,7 +246,7 @@ bb.ds:                                            ; preds = %bb.dq
   br label %bb.dt
 
 bb.dt:                                            ; preds = %bb.ds, %bb.dr
-  %i.bax = getelementptr inbounds nuw i8, ptr %15, i64 32
+  %i.bax = getelementptr inbounds nuw i8, ptr %16, i64 32
   %i.bay = load ptr, ptr %i.bax, align 8, !tbaa !120 ; 2 uses
   %.not13.i = icmp eq ptr %i.bay, null
   br i1 %.not13.i, label %bb.dv, label %bb.du
@@ -272,7 +272,7 @@ bb.dv:                                            ; preds = %bb.du, %bb.dt
 
 _ZN20btConvexHullInternal6Vertex18receiveNearbyFacesEPS0_.exit: ; preds = %.lr.ph.i, %bb.dv
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bau, i8 0, i64 16, i1 false)
-  %i.bbb = getelementptr inbounds nuw i8, ptr %15, i64 16 ; 4 uses
+  %i.bbb = getelementptr inbounds nuw i8, ptr %16, i64 16 ; 4 uses
   %i.bbc = load ptr, ptr %i.bbb, align 8, !tbaa !70 ; 2 uses
   %.not282942 = icmp eq ptr %i.bbc, null
   br i1 %.not282942, label %_ZN20btConvexHullInternal6Vertex18receiveNearbyFacesEPS0_.exit..loopexit_crit_edge, label %.lr.ph944.preheader
@@ -635,7 +635,6 @@ _ZN20btConvexHullInternal14removeEdgePairEPNS_4EdgeE.exit621: ; preds = %bb.eh, 
   br i1 %.not282, label %.loopexit, label %.lr.ph944, !llvm.loop !240
 
 ._crit_edge950:                                   ; preds = %.loopexit
-  %16 = trunc nsw i64 %indvars.iv.next to i32     ; 2 uses
   %i.bfi = trunc nuw i8 %.1.lcssa to i1
   br i1 %i.bfi, label %bb.ej, label %._crit_edge950.thread
 
@@ -784,7 +783,7 @@ _ZN20btAlignedObjectArrayIPN20btConvexHullInternal6VertexEE9push_backERKS2_.exit
   br label %._crit_edge950.thread
 
 ._crit_edge950.thread:                            ; preds = %bb.dp, %_ZN20btAlignedObjectArrayIPN20btConvexHullInternal6VertexEE9push_backERKS2_.exit638, %._crit_edge950
-  %.lcssa1164 = phi i32 [ %16, %_ZN20btAlignedObjectArrayIPN20btConvexHullInternal6VertexEE9push_backERKS2_.exit638 ], [ %16, %._crit_edge950 ], [ %i.bal, %bb.dp ] ; 4 uses
+  %.lcssa1164 = phi i32 [ %14, %_ZN20btAlignedObjectArrayIPN20btConvexHullInternal6VertexEE9push_backERKS2_.exit638 ], [ %14, %._crit_edge950 ], [ %i.bal, %bb.dp ] ; 4 uses
   %i.bha = phi ptr [ %i.bgv, %_ZN20btAlignedObjectArrayIPN20btConvexHullInternal6VertexEE9push_backERKS2_.exit638 ], [ %i.baq, %._crit_edge950 ], [ %i.bag, %bb.dp ] ; 3 uses
   %i.bhb = phi ptr [ %i.bgv, %_ZN20btAlignedObjectArrayIPN20btConvexHullInternal6VertexEE9push_backERKS2_.exit638 ], [ %i.baq, %._crit_edge950 ], [ %i.bah, %bb.dp ] ; 2 uses
   %i.bhc = icmp slt i32 %.lcssa1164, %i.baf

@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d
   br label %.lr.ph.split.us.split.us
 
 .lr.ph.split.us.split.us:                         ; preds = %.lr.ph.split.us.split.us.preheader, %_ZNK7xgboost6common4SpanIiLm18446744073709551615EEixEm.exit60.us.us
-  %indvars.iv = phi i64 [ %indvars.iv.next, %_ZNK7xgboost6common4SpanIiLm18446744073709551615EEixEm.exit60.us.us ], [ 0, %.lr.ph.split.us.split.us.preheader ] ; 2 uses
+  %.02776.us.us = phi i32 [ %8, %_ZNK7xgboost6common4SpanIiLm18446744073709551615EEixEm.exit60.us.us ], [ 0, %.lr.ph.split.us.split.us.preheader ] ; 3 uses
   %.sroa.061.075.us.us = phi ptr [ %i.dy, %_ZNK7xgboost6common4SpanIiLm18446744073709551615EEixEm.exit60.us.us ], [ %i.bd, %.lr.ph.split.us.split.us.preheader ] ; 2 uses
   %i.bm = load i32, ptr %.sroa.061.075.us.us, align 4, !tbaa !30
   %i.bn = call noundef nonnull align 8 dereferenceable(24) ptr @_ZNK7xgboost16HostDeviceVectorIiE15ConstHostVectorEv(ptr noundef nonnull align 8 dereferenceable(8) %i.bf)
@@ -236,8 +236,7 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit36.us.us: ; preds = 
   br label %bb.g
 
 bb.g:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit36.us.us, %.lr.ph.split.us.split.us
-  %8 = trunc nuw nsw i64 %indvars.iv to i32       ; 2 uses
-  %i.bx = mul i32 %i.ad, %8
+  %i.bx = mul i32 %.02776.us.us, %i.ad
   %i.by = zext i32 %i.bx to i64                   ; 3 uses
   %i.bz = add nuw nsw i64 %.pre-phi, %i.by        ; 2 uses
   %.not.i.us.us = icmp ugt i64 %i.bz, %2
@@ -419,8 +418,8 @@ bb.l:                                             ; preds = %_ZNSt10unique_ptrIN
 
 _ZNK7xgboost6common4SpanIiLm18446744073709551615EEixEm.exit60.us.us: ; preds = %bb.l
   %i.dx = getelementptr inbounds nuw [4 x i8], ptr %i.ay, i64 %i.bo
-  store i32 %8, ptr %i.dx, align 4, !tbaa !30
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  store i32 %.02776.us.us, ptr %i.dx, align 4, !tbaa !30
+  %8 = add nuw nsw i32 %.02776.us.us, 1
   %i.dy = getelementptr inbounds nuw i8, ptr %.sroa.061.075.us.us, i64 4 ; 2 uses
   %.not71.us.us = icmp eq ptr %i.dy, %i.be
   br i1 %.not71.us.us, label %._crit_edge, label %.lr.ph.split.us.split.us

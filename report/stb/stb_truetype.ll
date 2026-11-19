@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define i32 @stbtt_PackFontRangesGatherRects(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef captures(none) %2, i32 noundef %3, ptr nofree noundef writeonly captures(none) %4) local_unnamed_addr #12 {
+define range(i32 -2147483647, -2147483648) i32 @stbtt_PackFontRangesGatherRects(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef captures(none) %2, i32 noundef %3, ptr nofree noundef writeonly captures(none) %4) local_unnamed_addr #12 {
 bb.a:
   %5 = alloca %struct.stbtt__csctx, align 8       ; 9 uses
   %i.a = icmp sgt i32 %3, 0
@@ -303,7 +303,6 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 .lr.ph:                                           ; preds = %bb.e
   %i.bs = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   %i.bt = getelementptr inbounds nuw i8, ptr %i.q, i64 4
-  %6 = sext i32 %.05487 to i64
   %i.bu = insertelement <2 x float> poison, float %i.bh, i64 0
   %i.bv = shufflevector <2 x float> %i.bu, <2 x float> poison, <2 x i32> zeroinitializer
   br label %bb.f
@@ -313,8 +312,8 @@ bb.f:                                             ; preds = %.lr.ph, %bb.u
   %.pre102111 = phi i32 [ %i.bq, %.lr.ph ], [ %.pre102112, %bb.u ] ; 4 uses
   %i.bw = phi i32 [ %i.bq, %.lr.ph ], [ %i.he, %bb.u ]
   %indvars.iv93 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next94, %bb.u ] ; 3 uses
-  %indvars.iv = phi i64 [ %6, %.lr.ph ], [ %indvars.iv.next, %bb.u ] ; 3 uses
-  %.184.a = phi i32 [ %.088, %.lr.ph ], [ %.2, %bb.u ] ; 3 uses
+  %.184 = phi i32 [ %.088, %.lr.ph ], [ %.2, %bb.u ] ; 3 uses
+  %.184.a = phi i32 [ %.05487, %.lr.ph ], [ %8, %bb.u ] ; 3 uses
   %i.bx = phi <2 x i32> [ %i.bj, %.lr.ph ], [ %i.hf, %bb.u ] ; 2 uses
   %i.by = phi <2 x i32> [ %i.bj, %.lr.ph ], [ %i.hg, %bb.u ] ; 5 uses
   %i.bz = phi <2 x i32> [ %i.bj, %.lr.ph ], [ %i.hh, %bb.u ] ; 4 uses
@@ -342,12 +341,13 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 bb.j:                                             ; preds = %bb.i
   %i.ck = load i32, ptr %i.f, align 8, !tbaa !141
   %i.cl = icmp ne i32 %i.ck, 0
-  %i.cm = icmp ne i32 %.184.a, 0
+  %i.cm = icmp ne i32 %.184, 0
   %or.cond = select i1 %i.cl, i1 true, i1 %i.cm
   br i1 %or.cond, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
-  %i.cn = getelementptr inbounds [24 x i8], ptr %4, i64 %indvars.iv ; 2 uses
+  %6 = sext i32 %.184.a to i64
+  %i.cn = getelementptr inbounds [24 x i8], ptr %4, i64 %6 ; 2 uses
   %i.co = getelementptr inbounds nuw i8, ptr %i.cn, i64 16
   store i32 0, ptr %i.co, align 4, !tbaa !127
   %i.cp = getelementptr inbounds nuw i8, ptr %i.cn, i64 12
@@ -515,7 +515,8 @@ stbtt_GetGlyphBitmapBoxSubpixel.exit:             ; preds = %bb.o, %bb.n, %bb.s,
   %i.gu = phi <2 x i32> [ %i.gc, %stbtt_GetGlyphBox.exit ], [ %i.bz, %bb.s ], [ %i.bz, %bb.n ], [ %i.bz, %bb.o ] ; 3 uses
   %i.gv = phi <2 x i32> [ %i.gc, %stbtt_GetGlyphBox.exit ], [ %i.by, %bb.s ], [ %i.by, %bb.n ], [ %i.by, %bb.o ]
   %i.gw = load i32, ptr %i.p, align 4, !tbaa !137
-  %i.gx = getelementptr inbounds [24 x i8], ptr %4, i64 %indvars.iv
+  %7 = sext i32 %.184.a to i64
+  %i.gx = getelementptr inbounds [24 x i8], ptr %4, i64 %7
   %i.gy = getelementptr inbounds nuw i8, ptr %i.gx, i64 12
   %i.gz = insertelement <2 x i32> poison, i32 %i.gw, i64 0
   %i.ha = shufflevector <2 x i32> %i.gz, <2 x i32> poison, <2 x i32> zeroinitializer
@@ -523,30 +524,26 @@ stbtt_GetGlyphBitmapBoxSubpixel.exit:             ; preds = %bb.o, %bb.n, %bb.s,
   %i.hc = add <2 x i32> %i.hb, %i.gt
   %i.hd = add <2 x i32> %i.hc, %i.gu
   store <2 x i32> %i.hd, ptr %i.gy, align 4, !tbaa !39
-  %spec.select = select i1 %i.cj, i32 1, i32 %.184.a
+  %spec.select = select i1 %i.cj, i32 1, i32 %.184
   br label %bb.u
 
 bb.u:                                             ; preds = %stbtt_GetGlyphBitmapBoxSubpixel.exit, %bb.k
   %.pre102.pre115 = phi i32 [ %.pre102.pre114, %bb.k ], [ %.pre102.pre116, %stbtt_GetGlyphBitmapBoxSubpixel.exit ]
   %.pre102112 = phi i32 [ %.pre102111, %bb.k ], [ %.pre102, %stbtt_GetGlyphBitmapBoxSubpixel.exit ]
   %i.he = phi i32 [ %i.bw, %bb.k ], [ %.pre102, %stbtt_GetGlyphBitmapBoxSubpixel.exit ] ; 2 uses
-  %.2 = phi i32 [ %.184.a, %bb.k ], [ %spec.select, %stbtt_GetGlyphBitmapBoxSubpixel.exit ] ; 2 uses
+  %.2 = phi i32 [ %.184, %bb.k ], [ %spec.select, %stbtt_GetGlyphBitmapBoxSubpixel.exit ] ; 2 uses
   %i.hf = phi <2 x i32> [ %i.bx, %bb.k ], [ %i.gu, %stbtt_GetGlyphBitmapBoxSubpixel.exit ]
   %i.hg = phi <2 x i32> [ %i.by, %bb.k ], [ %i.gv, %stbtt_GetGlyphBitmapBoxSubpixel.exit ]
   %i.hh = phi <2 x i32> [ %i.bz, %bb.k ], [ %i.gu, %stbtt_GetGlyphBitmapBoxSubpixel.exit ]
-  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
+  %8 = add nsw i32 %.184.a, 1                     ; 2 uses
   %indvars.iv.next94 = add nuw nsw i64 %indvars.iv93, 1 ; 2 uses
   %i.hi = sext i32 %i.he to i64
   %i.hj = icmp slt i64 %indvars.iv.next94, %i.hi
-  br i1 %i.hj, label %bb.f, label %._crit_edge.loopexit, !llvm.loop !212
+  br i1 %i.hj, label %bb.f, label %._crit_edge, !llvm.loop !212
 
-._crit_edge.loopexit:                             ; preds = %bb.u
-  %7 = trunc nsw i64 %indvars.iv.next to i32
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.e
-  %.155.lcssa = phi i32 [ %.05487, %bb.e ], [ %7, %._crit_edge.loopexit ] ; 2 uses
-  %.1.lcssa = phi i32 [ %.088, %bb.e ], [ %.2, %._crit_edge.loopexit ]
+._crit_edge:                                      ; preds = %bb.u, %bb.e
+  %.155.lcssa = phi i32 [ %.05487, %bb.e ], [ %8, %bb.u ] ; 2 uses
+  %.1.lcssa = phi i32 [ %.088, %bb.e ], [ %.2, %bb.u ]
   %indvars.iv.next99 = add nuw nsw i64 %indvars.iv98, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next99, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge91, label %bb.b, !llvm.loop !213
