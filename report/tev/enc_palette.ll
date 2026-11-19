@@ -205,7 +205,7 @@ bb.cc:                                            ; preds = %.loopexit861, %bb.c
   br label %bb.ci
 
 bb.cd:                                            ; preds = %.lr.ph1027, %_ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit643
-  %indvars.iv1239 = phi i64 [ 0, %.lr.ph1027 ], [ %indvars.iv.next1240, %_ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit643 ] ; 3 uses
+  %.05191025 = phi i32 [ 0, %.lr.ph1027 ], [ %57, %_ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit643 ] ; 3 uses
   %.sroa.0744.01024 = phi ptr [ %i.aff, %.lr.ph1027 ], [ %i.agg, %_ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit643 ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %46) #20
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %46, i8 0, i64 24, i1 false)
@@ -240,14 +240,20 @@ _ZNSt3__16vectorIiNS_9allocatorIiEEEC2ERKS3_.exit: ; preds = %bb.cd, %_ZNSt3__16
   %i.afv = phi ptr [ null, %bb.cd ], [ %i.aft, %_ZNSt3__16vectorIiNS_9allocatorIiEEE11__vallocateB8nn180100Em.exit.i.i ]
   %i.afw = load i32, ptr %i.a, align 4, !tbaa !35
   %.not1118 = icmp eq i32 %i.afw, 0
-  br i1 %.not1118, label %._crit_edge1022, label %.lr.ph1021
+  br i1 %.not1118, label %_ZNSt3__16vectorIiNS_9allocatorIiEEEC2ERKS3_.exit.._crit_edge1022_crit_edge, label %.lr.ph1021
+
+_ZNSt3__16vectorIiNS_9allocatorIiEEEC2ERKS3_.exit.._crit_edge1022_crit_edge: ; preds = %_ZNSt3__16vectorIiNS_9allocatorIiEEEC2ERKS3_.exit
+  %.pre1349 = zext nneg i32 %.05191025 to i64
+  br label %._crit_edge1022
 
 .lr.ph1021:                                       ; preds = %_ZNSt3__16vectorIiNS_9allocatorIiEEEC2ERKS3_.exit
   %i.afx = load ptr, ptr %i.g, align 8, !tbaa !68
   %i.afy = load i64, ptr %i.h, align 8, !tbaa !54
+  %56 = zext nneg i32 %.05191025 to i64           ; 2 uses
   br label %bb.ch
 
-._crit_edge1022:                                  ; preds = %bb.ch, %_ZNSt3__16vectorIiNS_9allocatorIiEEEC2ERKS3_.exit
+._crit_edge1022:                                  ; preds = %bb.ch, %_ZNSt3__16vectorIiNS_9allocatorIiEEEC2ERKS3_.exit.._crit_edge1022_crit_edge
+  %.pre-phi1350 = phi i64 [ %.pre1349, %_ZNSt3__16vectorIiNS_9allocatorIiEEEC2ERKS3_.exit.._crit_edge1022_crit_edge ], [ %56, %bb.ch ]
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #20
   store ptr %46, ptr %12, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #20
@@ -256,8 +262,8 @@ _ZNSt3__16vectorIiNS_9allocatorIiEEEC2ERKS3_.exit: ; preds = %bb.cd, %_ZNSt3__16
   %i.aga = getelementptr inbounds nuw i8, ptr %.fca.0.extract.i641, i64 56
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #20
-  store i64 %indvars.iv1239, ptr %i.aga, align 8, !tbaa !54
-  %indvars.iv.next1240 = add nuw nsw i64 %indvars.iv1239, 1
+  store i64 %.pre-phi1350, ptr %i.aga, align 8, !tbaa !54
+  %57 = add nuw nsw i32 %.05191025, 1
   %i.agb = load ptr, ptr %46, align 8, !tbaa !34  ; 4 uses
   %.not.i.i642 = icmp eq ptr %i.agb, null
   br i1 %.not.i.i642, label %_ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit643, label %bb.cg
@@ -286,7 +292,7 @@ bb.ch:                                            ; preds = %.lr.ph1021, %bb.ch
   %i.agl = mul i64 %i.afy, %.05171020
   %i.agm = getelementptr [4 x i8], ptr %i.afx, i64 %i.agl
   %i.agn = getelementptr [4 x i8], ptr %i.agm, i64 %i.agk
-  %i.ago = getelementptr [4 x i8], ptr %i.agn, i64 %indvars.iv1239
+  %i.ago = getelementptr [4 x i8], ptr %i.agn, i64 %56
   store i32 %i.agi, ptr %i.ago, align 4, !tbaa !35
   %i.agp = add nuw nsw i64 %.05171020, 1          ; 2 uses
   %i.agq = load i32, ptr %i.a, align 4, !tbaa !35

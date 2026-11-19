@@ -204,7 +204,8 @@ bb.f:                                             ; preds = %.lr.ph84, %bb.h
   br label %.backedge
 
 .backedge:                                        ; preds = %.backedge.backedge, %.lr.ph80
-  %indvars.iv92 = phi i64 [ 0, %.lr.ph80 ], [ %indvars.iv92.be, %.backedge.backedge ] ; 3 uses
+  %indvars.iv92 = phi i64 [ 0, %.lr.ph80 ], [ %indvars.iv92.be, %.backedge.backedge ]
+  %.05079 = phi i32 [ 0, %.lr.ph80 ], [ %.05079.be, %.backedge.backedge ] ; 2 uses
   %i.bu = getelementptr inbounds nuw [16 x i8], ptr %i.bq, i64 %indvars.iv92
   %i.bv = load ptr, ptr %i.bu, align 8, !tbaa !62 ; 2 uses
   %i.bw = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.bv) #22
@@ -214,18 +215,21 @@ bb.f:                                             ; preds = %.lr.ph84, %bb.h
 bb.g:                                             ; preds = %.backedge
   %i.by = call i32 @strncmp(ptr noundef nonnull %i.bv, ptr noundef %i.bn, i64 noundef %i.bt) #22
   %i.bz = icmp ne i32 %i.by, 0                    ; 2 uses
-  %indvars.iv.next93 = add nuw nsw i64 %indvars.iv92, 1 ; 2 uses
-  %i.ca = icmp ugt i64 %i.bp, %indvars.iv.next93
+  %4 = add nuw nsw i32 %.05079, 1                 ; 2 uses
+  %5 = zext nneg i32 %4 to i64                    ; 2 uses
+  %i.ca = icmp ugt i64 %i.bp, %5
   %i.cb = select i1 %i.bz, i1 %i.ca, i1 false
   br i1 %i.cb, label %.backedge.backedge, label %._crit_edge
 
 .backedge.backedge:                               ; preds = %bb.g, %.thread
-  %indvars.iv92.be = phi i64 [ %indvars.iv.next93, %bb.g ], [ %indvars.iv.next93111, %.thread ]
+  %indvars.iv92.be = phi i64 [ %5, %bb.g ], [ %7, %.thread ]
+  %.05079.be = phi i32 [ %4, %bb.g ], [ %6, %.thread ]
   br label %.backedge, !llvm.loop !235
 
 .thread:                                          ; preds = %.backedge
-  %indvars.iv.next93111 = add nuw nsw i64 %indvars.iv92, 1 ; 2 uses
-  %i.cc = icmp ugt i64 %i.bp, %indvars.iv.next93111
+  %6 = add nuw nsw i32 %.05079, 1                 ; 2 uses
+  %7 = zext nneg i32 %6 to i64                    ; 2 uses
+  %i.cc = icmp ugt i64 %i.bp, %7
   br i1 %i.cc, label %.backedge.backedge, label %.critedge87
 
 ._crit_edge:                                      ; preds = %bb.g

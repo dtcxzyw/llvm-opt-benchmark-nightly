@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZN6icu_7810CharString6appendEcR10UErrorCode.exit28
 
 bb.g:                                             ; preds = %.preheader, %_ZN6icu_7810CharString6appendEcR10UErrorCode.exit30
-  %indvars.iv38 = phi i64 [ 0, %.preheader ], [ %indvars.iv.next39, %_ZN6icu_7810CharString6appendEcR10UErrorCode.exit30 ] ; 2 uses
+  %indvars.iv38 = phi i32 [ 0, %.preheader ], [ %indvars.iv.next39, %_ZN6icu_7810CharString6appendEcR10UErrorCode.exit30 ] ; 2 uses
   %.023 = phi i64 [ %1, %.preheader ], [ %i.af, %_ZN6icu_7810CharString6appendEcR10UErrorCode.exit30 ] ; 3 uses
   %.021 = phi i32 [ 0, %.preheader ], [ %i.aw, %_ZN6icu_7810CharString6appendEcR10UErrorCode.exit30 ] ; 2 uses
   %.not25 = icmp eq i64 %.023, 0
@@ -239,24 +239,25 @@ _ZN6icu_7810CharString6appendEcR10UErrorCode.exit30: ; preds = %bb.h, %bb.i
   %i.aw = add nuw nsw i32 %.021, 1
   %i.ax = load i32, ptr %2, align 4, !tbaa !17
   %i.ay = icmp slt i32 %i.ax, 1
-  %indvars.iv.next39 = add i64 %indvars.iv38, -1
+  %indvars.iv.next39 = add i32 %indvars.iv38, -1
   br i1 %i.ay, label %bb.g, label %_ZN6icu_7810CharString6appendEcR10UErrorCode.exit28, !llvm.loop !22
 
 bb.j:                                             ; preds = %bb.g
-  %i.az = load i32, ptr %i.r, align 8, !tbaa !15  ; 3 uses
+  %i.az = load i32, ptr %i.r, align 8, !tbaa !15  ; 4 uses
   %i.ba = sub nsw i32 %i.az, %.021
   %.033 = add nsw i32 %i.az, -1
   %i.bb = icmp slt i32 %i.ba, %.033
   br i1 %i.bb, label %.lr.ph.preheader, label %_ZN6icu_7810CharString6appendEcR10UErrorCode.exit28
 
 .lr.ph.preheader:                                 ; preds = %bb.j
-  %i.bc = sext i32 %i.az to i64                   ; 2 uses
+  %i.bc = sext i32 %i.az to i64
   %i.bd = add nsw i64 %i.bc, -1
-  %3 = add nsw i64 %indvars.iv38, %i.bc
+  %3 = add i32 %i.az, %indvars.iv38
+  %4 = sext i32 %3 to i64
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %indvars.iv41 = phi i64 [ %3, %.lr.ph.preheader ], [ %indvars.iv.next42, %.lr.ph ] ; 2 uses
+  %indvars.iv41 = phi i64 [ %4, %.lr.ph.preheader ], [ %indvars.iv.next42, %.lr.ph ] ; 2 uses
   %indvars.iv = phi i64 [ %i.bd, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 2 uses
   %i.be = load ptr, ptr %0, align 8, !tbaa !11    ; 2 uses
   %indvars.iv.next42 = add nsw i64 %indvars.iv41, 1 ; 2 uses

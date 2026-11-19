@@ -205,8 +205,8 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %zend_string_release_ex.exit
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %zend_string_release_ex.exit ] ; 2 uses
   %.094 = phi ptr [ %.090, %.lr.ph ], [ %.0, %zend_string_release_ex.exit ] ; 3 uses
+  %.06293 = phi i32 [ 0, %.lr.ph ], [ %7, %zend_string_release_ex.exit ] ; 2 uses
   %.06492 = phi ptr [ %i.b, %.lr.ph ], [ %i.as, %zend_string_release_ex.exit ]
   %i.h = getelementptr inbounds nuw i8, ptr %.094, i64 16 ; 4 uses
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !168
@@ -215,7 +215,8 @@ bb.b:                                             ; preds = %.lr.ph, %zend_strin
 
 bb.c:                                             ; preds = %bb.b
   %i.j = load ptr, ptr %i.c, align 8, !tbaa !28
-  %i.k = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %indvars.iv
+  %6 = zext nneg i32 %.06293 to i64
+  %i.k = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %6
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !96
   %i.m = icmp eq ptr %i.j, %i.l
   br i1 %i.m, label %bb.d, label %zend_string_release_ex.exit
@@ -295,7 +296,7 @@ bb.k:                                             ; preds = %bb.j
 
 zend_string_release_ex.exit:                      ; preds = %bb.k, %bb.j, %zend_traits_check_private_final_inheritance.exit, %bb.e, %bb.d, %bb.c, %bb.b
   %i.as = getelementptr inbounds nuw i8, ptr %.06492, i64 8 ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %7 = add nuw nsw i32 %.06293, 1
   %.0 = load ptr, ptr %i.as, align 8, !tbaa !166  ; 2 uses
   %.not73 = icmp eq ptr %.0, null
   br i1 %.not73, label %.loopexit89, label %bb.b, !llvm.loop !330
@@ -332,8 +333,8 @@ bb.m:                                             ; preds = %bb.l, %.loopexit89
   br label %bb.n
 
 bb.n:                                             ; preds = %.lr.ph100, %bb.s
-  %indvars.iv102 = phi i64 [ 0, %.lr.ph100 ], [ %indvars.iv.next103, %bb.s ] ; 2 uses
   %.199 = phi ptr [ %.195, %.lr.ph100 ], [ %.1, %bb.s ] ; 3 uses
+  %.16398 = phi i32 [ 0, %.lr.ph100 ], [ %9, %bb.s ] ; 2 uses
   %.16597 = phi ptr [ %i.az, %.lr.ph100 ], [ %i.ca, %bb.s ]
   %i.bf = getelementptr inbounds nuw i8, ptr %.199, i64 16
   %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !168
@@ -348,7 +349,8 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o
   %i.bk = load ptr, ptr %i.ba, align 8, !tbaa !28
-  %i.bl = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %indvars.iv102
+  %8 = zext nneg i32 %.16398 to i64
+  %i.bl = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %8
   %i.bm = load ptr, ptr %i.bl, align 8, !tbaa !96
   %i.bn = icmp eq ptr %i.bk, %i.bm
   br i1 %i.bn, label %bb.q, label %bb.s
@@ -380,7 +382,7 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %.sink.split, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n
   %i.ca = getelementptr inbounds nuw i8, ptr %.16597, i64 8 ; 2 uses
-  %indvars.iv.next103 = add nuw nsw i64 %indvars.iv102, 1
+  %9 = add nuw nsw i32 %.16398, 1
   %.1 = load ptr, ptr %i.ca, align 8, !tbaa !166  ; 2 uses
   %.not75 = icmp eq ptr %.1, null
   br i1 %.not75, label %.loopexit, label %bb.n, !llvm.loop !331

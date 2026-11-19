@@ -96,7 +96,8 @@ bb.b:                                             ; preds = %Check_Type.exit
   unreachable
 
 bb.c:                                             ; preds = %.preheader, %bb.h
-  %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %bb.h ] ; 3 uses
+  %.0 = phi i32 [ %2, %bb.h ], [ 0, %.preheader ] ; 2 uses
+  %1 = zext nneg i32 %.0 to i64                   ; 2 uses
   %i.l = load i64, ptr %i.e, align 8, !tbaa !57   ; 2 uses
   %i.m = and i64 %i.l, 8192
   %.not.i = icmp eq i64 %i.m, 0
@@ -113,11 +114,11 @@ bb.e:                                             ; preds = %bb.c
 
 rb_array_len.exit:                                ; preds = %bb.d, %bb.e
   %.0.i = phi i64 [ %i.o, %bb.d ], [ %i.p, %bb.e ]
-  %i.q = icmp sgt i64 %.0.i, %indvars.iv
+  %i.q = icmp sgt i64 %.0.i, %1
   br i1 %i.q, label %bb.f, label %bb.i
 
 bb.f:                                             ; preds = %rb_array_len.exit
-  %i.r = tail call i64 @rb_ary_entry(i64 noundef %0, i64 noundef %indvars.iv) #18 ; 2 uses
+  %i.r = tail call i64 @rb_ary_entry(i64 noundef %0, i64 noundef %1) #18 ; 2 uses
   %i.s = load i64, ptr @cX509Cert, align 8, !tbaa !58
   %i.t = tail call i64 @rb_obj_is_kind_of(i64 noundef %i.r, i64 noundef %i.s) #16
   %.not14 = icmp eq i64 %i.t, 0
@@ -132,7 +133,7 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.f
   %i.v = tail call ptr @DupX509CertPtr(i64 noundef %i.r) #16
   %i.w = tail call i32 @OPENSSL_sk_push(ptr noundef nonnull %i.i, ptr noundef %i.v) #16 ; 0 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %2 = add nuw nsw i32 %.0, 1
   br label %bb.c, !llvm.loop !64
 
 bb.i:                                             ; preds = %rb_array_len.exit

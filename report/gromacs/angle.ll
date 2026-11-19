@@ -204,15 +204,15 @@ bb.b:                                             ; preds = %bb.a
   %i.ag = ptrtoint ptr %.val31.val.i to i64
   %i.ah = sub i64 %i.af, %i.ag
   %i.ai = icmp ugt i64 %i.ah, 8
+  %18 = zext i1 %i.ai to i32
   %.not.i.i = icmp eq ptr %.val28.val.i, %i.ab    ; 5 uses
-  %18 = zext i1 %i.ai to i64
   %i.aj = zext i1 %i.ae to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %_ZN3gmx15analysismodules12_GLOBAL__N_121AnglePositionIterator9nextGroupEv.exit.i, %.lr.ph137.i
   %indvars.iv177 = phi i64 [ %indvars.iv.next178, %_ZN3gmx15analysismodules12_GLOBAL__N_121AnglePositionIterator9nextGroupEv.exit.i ], [ 0, %.lr.ph137.i ] ; 2 uses
-  %indvars.iv = phi i64 [ %indvars.iv.next, %_ZN3gmx15analysismodules12_GLOBAL__N_121AnglePositionIterator9nextGroupEv.exit.i ], [ 0, %.lr.ph137.i ] ; 3 uses
-  %.022135.i = phi i64 [ %i.dt, %_ZN3gmx15analysismodules12_GLOBAL__N_121AnglePositionIterator9nextGroupEv.exit.i ], [ 0, %.lr.ph137.i ] ; 3 uses
+  %indvars.iv = phi i64 [ %i.dt, %_ZN3gmx15analysismodules12_GLOBAL__N_121AnglePositionIterator9nextGroupEv.exit.i ], [ 0, %.lr.ph137.i ] ; 3 uses
+  %.sroa.20.0133.i = phi i32 [ %.sroa.20.1.i, %_ZN3gmx15analysismodules12_GLOBAL__N_121AnglePositionIterator9nextGroupEv.exit.i ], [ 0, %.lr.ph137.i ] ; 3 uses
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %.val28.val.i, i64 %indvars.iv177
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !131 ; 3 uses
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 292
@@ -224,7 +224,8 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not.i, label %_ZN3gmx15analysismodules12_GLOBAL__N_121AnglePositionIterator9nextGroupEv.exit.i, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.ap = getelementptr inbounds nuw [8 x i8], ptr %.val31.val.i, i64 %indvars.iv
+  %19 = zext nneg i32 %.sroa.20.0133.i to i64
+  %i.ap = getelementptr inbounds nuw [8 x i8], ptr %.val31.val.i, i64 %19
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !131
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 292
   %i.as = load i8, ptr %i.ar, align 4, !tbaa !270, !range !271, !noundef !272
@@ -232,16 +233,17 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.at, label %bb.f, label %_ZN3gmx15analysismodules12_GLOBAL__N_121AnglePositionIterator9nextGroupEv.exit.i
 
 bb.f:                                             ; preds = %bb.e, %bb.c
-  %i.au = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %.022135.i
+  %i.au = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %indvars.iv
   %i.av = load i32, ptr %i.au, align 4, !tbaa !83 ; 3 uses
   %i.aw = icmp sgt i32 %i.av, 0
   br i1 %i.aw, label %.lr.ph.i, label %_ZN3gmx15analysismodules12_GLOBAL__N_121AnglePositionIterator9nextGroupEv.exit.i
 
 .lr.ph.i:                                         ; preds = %bb.f
   %i.ax = getelementptr inbounds nuw i8, ptr %i.al, i64 96 ; 3 uses
+  %20 = zext nneg i32 %.sroa.20.0133.i to i64
   %.not139.i = icmp eq i32 %i.av, 1
   %i.ay = getelementptr inbounds nuw i8, ptr %i.al, i64 112 ; 3 uses
-  %i.az = getelementptr inbounds nuw [8 x i8], ptr %.val31.val.i, i64 %indvars.iv ; 4 uses
+  %i.az = getelementptr inbounds nuw [8 x i8], ptr %.val31.val.i, i64 %20 ; 4 uses
   br label %bb.g
 
 bb.g:                                             ; preds = %_ZN3gmx15analysismodules12_GLOBAL__N_121AnglePositionIterator9nextValueEv.exit80.i, %.lr.ph.i
@@ -384,7 +386,7 @@ _ZNK3gmx15analysismodules12_GLOBAL__N_121AnglePositionIterator14hasSingleValueEv
 
 bb.o:                                             ; preds = %_ZNK3gmx15analysismodules12_GLOBAL__N_121AnglePositionIterator14hasSingleValueEv.exit65.i, %_ZNK3gmx15analysismodules12_GLOBAL__N_121AnglePositionIterator21currentValuesSelectedEv.exit67.i, %_ZNK3gmx15analysismodules12_GLOBAL__N_121AnglePositionIterator14hasSingleValueEv.exit51.thread.thread157.i
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #25
-  %i.cy = trunc i64 %.022135.i to i32
+  %i.cy = trunc i64 %indvars.iv to i32
   %i.cz = add i32 %i.cy, 1
   invoke void (ptr, ptr, ...) @_ZN3gmx12formatStringB5cxx11EPKcz(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %5, ptr noundef nonnull @.str.97, i32 noundef %i.cz)
           to label %.noexc unwind label %bb.y
@@ -499,9 +501,9 @@ _ZN3gmx15analysismodules12_GLOBAL__N_121AnglePositionIterator9nextValueEv.exit80
   br i1 %exitcond.not.i, label %_ZN3gmx15analysismodules12_GLOBAL__N_121AnglePositionIterator9nextGroupEv.exit.i, label %bb.g, !llvm.loop !248
 
 _ZN3gmx15analysismodules12_GLOBAL__N_121AnglePositionIterator9nextGroupEv.exit.i: ; preds = %_ZN3gmx15analysismodules12_GLOBAL__N_121AnglePositionIterator9nextValueEv.exit80.i, %bb.f, %bb.e, %bb.d
-  %i.dt = add nuw i64 %.022135.i, 1               ; 2 uses
+  %i.dt = add nuw i64 %indvars.iv, 1              ; 2 uses
   %indvars.iv.next178 = add nuw nsw i64 %indvars.iv177, %i.aj
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, %18
+  %.sroa.20.1.i = add nuw nsw i32 %.sroa.20.0133.i, %18
   %exitcond141.not.i = icmp eq i64 %i.dt, %i.v
   br i1 %exitcond141.not.i, label %.loopexit, label %bb.c, !llvm.loop !249
 

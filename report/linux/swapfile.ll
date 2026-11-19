@@ -205,7 +205,8 @@ bb.c:                                             ; preds = %folio_swapcache_fre
   %i.n = lshr i64 %.sroa.0.0.copyload.i, 8
   %i.o = and i64 %i.n, 1125899906842623
   %i.p = getelementptr [40 x i8], ptr %.val.i.i, i64 %i.o
-  %1 = and i64 %.sroa.0.0.copyload.i, 255         ; 2 uses
+  %1 = trunc i64 %.sroa.0.0.copyload.i to i32
+  %2 = and i32 %1, 255                            ; 2 uses
   %i.q = load volatile i64, ptr %0, align 8
   %i.r = and i64 %i.q, 64
   %.not.i.i = icmp eq i64 %i.r, 0
@@ -216,24 +217,25 @@ bb.d:                                             ; preds = %bb.c
   %.val.i11.i = load i64, ptr %i.s, align 16
   %i.t = and i64 %.val.i11.i, 255
   %i.u = shl nuw i64 1, %i.t
+  %3 = trunc i64 %i.u to i32
   br label %folio_nr_pages.exit.i
 
 folio_nr_pages.exit.i:                            ; preds = %bb.d, %bb.c
-  %.0.i.i = phi i64 [ %i.u, %bb.d ], [ 1, %bb.c ]
-  %2 = add nuw i64 %.0.i.i, %1
+  %.0.i.i = phi i32 [ %3, %bb.d ], [ 1, %bb.c ]
+  %4 = add i32 %.0.i.i, %2
   tail call void @__rcu_read_lock() #19
   %i.v = getelementptr i8, ptr %i.p, i64 8
-  %3 = and i64 %2, 4294967295
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.e, %folio_nr_pages.exit.i
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.e ], [ %1, %folio_nr_pages.exit.i ] ; 2 uses
+  %.08.i = phi i32 [ %2, %folio_nr_pages.exit.i ], [ %6, %bb.e ] ; 2 uses
   %i.w = load volatile ptr, ptr %i.v, align 8
-  %i.x = getelementptr [8 x i8], ptr %i.w, i64 %indvars.iv.i
+  %5 = zext i32 %.08.i to i64
+  %i.x = getelementptr [8 x i8], ptr %i.w, i64 %5
   %i.y = load volatile i64, ptr %i.x, align 8
   %.not.i5 = icmp ugt i64 %i.y, 1152921504606846975 ; 2 uses
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %i.z = icmp samesign uge i64 %indvars.iv.next.i, %3
+  %6 = add nuw i32 %.08.i, 1                      ; 2 uses
+  %i.z = icmp uge i32 %6, %4
   %or.cond.not.i = select i1 %.not.i5, i1 true, i1 %i.z
   br i1 %or.cond.not.i, label %folio_maybe_swapped.exit, label %bb.e, !llvm.loop !6
 

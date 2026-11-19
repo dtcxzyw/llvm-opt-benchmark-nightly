@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %_ZN11mpq_managerILb
 
 _ZN2lp12zero_of_typeI8rationalEET_v.exit:         ; preds = %bb.d, %bb.e
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 3 uses
-  %i.v = zext i32 %2 to i64                       ; 3 uses
+  %i.v = zext i32 %2 to i64                       ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 5 uses
   %i.y = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
@@ -217,7 +217,7 @@ _ZN2lp12zero_of_typeI8rationalEET_v.exit:         ; preds = %bb.d, %bb.e
 
 _ZNK6vectorIS_I8rationalLb1EjELb1EjE5emptyEv.exit.i: ; preds = %_ZN2lp12zero_of_typeI8rationalEET_v.exit, %bb.p
   %i.ae = phi ptr [ %i.dd, %bb.p ], [ %i.ac, %_ZN2lp12zero_of_typeI8rationalEET_v.exit ] ; 4 uses
-  %indvars.iv83 = phi i64 [ %indvars.iv.next, %bb.p ], [ %i.v, %_ZN2lp12zero_of_typeI8rationalEET_v.exit ] ; 4 uses
+  %.02281 = phi i32 [ %7, %bb.p ], [ %2, %_ZN2lp12zero_of_typeI8rationalEET_v.exit ] ; 4 uses
   %i.af = getelementptr inbounds i8, ptr %i.ae, i64 -4
   %i.ag = load i32, ptr %i.af, align 4, !tbaa !50
   %i.ah = icmp eq i32 %i.ag, 0
@@ -231,8 +231,7 @@ bb.f:                                             ; preds = %_ZNK6vectorIS_I8rat
 _ZNK2lp14general_matrix12column_countEv.exit:     ; preds = %bb.f
   %i.ak = getelementptr inbounds i8, ptr %i.ai, i64 -4
   %i.al = load i32, ptr %i.ak, align 4, !tbaa !50
-  %5 = zext i32 %i.al to i64
-  %i.am = icmp samesign ult i64 %indvars.iv83, %5
+  %i.am = icmp ult i32 %.02281, %i.al
   %i.an = load i32, ptr %0, align 8
   %i.ao = icmp eq i32 %i.an, 0
   %or.cond = select i1 %i.am, i1 %i.ao, i1 false
@@ -244,6 +243,7 @@ _ZNK6vectorIS_I8rationalLb1EjELb1EjE5emptyEv.exit.i30.lr.ph: ; preds = %_ZNK6vec
   %i.ar = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 4 uses
   %i.as = getelementptr inbounds nuw i8, ptr %4, i64 20 ; 4 uses
   %i.at = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 3 uses
+  %5 = zext i32 %.02281 to i64
   br label %_ZNK6vectorIS_I8rationalLb1EjELb1EjE5emptyEv.exit.i30
 
 bb.g:                                             ; preds = %_ZNK2lp14general_matrix12column_countEv.exit
@@ -253,7 +253,8 @@ bb.g:                                             ; preds = %_ZNK2lp14general_ma
   %i.ax = zext i32 %i.aw to i64
   %i.ay = getelementptr inbounds nuw [8 x i8], ptr %i.ae, i64 %i.ax
   %i.az = load ptr, ptr %i.w, align 8, !tbaa !66
-  %i.ba = getelementptr inbounds nuw [4 x i8], ptr %i.az, i64 %indvars.iv83
+  %6 = zext i32 %.02281 to i64
+  %i.ba = getelementptr inbounds nuw [4 x i8], ptr %i.az, i64 %6
   %i.bb = load i32, ptr %i.ba, align 4, !tbaa !50
   %i.bc = load ptr, ptr %i.ay, align 8, !tbaa !49
   %i.bd = zext i32 %i.bb to i64
@@ -390,14 +391,14 @@ bb.o:                                             ; preds = %bb.l, %bb.j
   br label %bb.v
 
 bb.p:                                             ; preds = %_ZN8rationalD2Ev.exit, %bb.g
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv83, 1
+  %7 = add nuw i32 %.02281, 1
   %i.dd = load ptr, ptr %i.u, align 8, !tbaa !63  ; 2 uses
   %i.de = icmp eq ptr %i.dd, null
   br i1 %i.de, label %.critedge42, label %_ZNK6vectorIS_I8rationalLb1EjELb1EjE5emptyEv.exit.i, !llvm.loop !349
 
 _ZNK6vectorIS_I8rationalLb1EjELb1EjE5emptyEv.exit.i30: ; preds = %_ZNK6vectorIS_I8rationalLb1EjELb1EjE5emptyEv.exit.i30.lr.ph, %.critedge
   %i.df = phi ptr [ %i.ae, %_ZNK6vectorIS_I8rationalLb1EjELb1EjE5emptyEv.exit.i30.lr.ph ], [ %i.fi, %.critedge ] ; 4 uses
-  %indvars.iv57 = phi i64 [ %indvars.iv83, %_ZNK6vectorIS_I8rationalLb1EjELb1EjE5emptyEv.exit.i30.lr.ph ], [ %indvars.iv.next58, %.critedge ] ; 3 uses
+  %indvars.iv57 = phi i64 [ %5, %_ZNK6vectorIS_I8rationalLb1EjELb1EjE5emptyEv.exit.i30.lr.ph ], [ %indvars.iv.next58, %.critedge ] ; 3 uses
   %i.dg = getelementptr inbounds i8, ptr %i.df, i64 -4
   %i.dh = load i32, ptr %i.dg, align 4, !tbaa !50
   %i.di = icmp eq i32 %i.dh, 0
@@ -570,7 +571,7 @@ bb.b:                                             ; preds = %bb.a
 
 _ZNK6vectorIS_I8rationalLb1EjELb1EjE5emptyEv.exit.i.lr.ph: ; preds = %bb.b, %bb.a
   %i.aa = phi ptr [ %i.z, %bb.b ], [ null, %bb.a ] ; 2 uses
-  %i.ab = add i32 %1, 1
+  %i.ab = add i32 %1, 1                           ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 5 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 3 uses
@@ -582,14 +583,14 @@ _ZNK6vectorIS_I8rationalLb1EjELb1EjE5emptyEv.exit.i.lr.ph: ; preds = %bb.b, %bb.
   %i.aj = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.ak = getelementptr inbounds nuw i8, ptr %3, i64 20
   %i.al = getelementptr inbounds nuw i8, ptr %3, i64 4
-  %i.am = zext i32 %i.ab to i64                   ; 2 uses
+  %i.am = zext i32 %i.ab to i64
   %i.an = getelementptr inbounds i8, ptr %i.f, i64 -4
   %i.ao = load i32, ptr %i.an, align 4, !tbaa !50
   %i.ap = icmp eq i32 %i.ao, 0
   br i1 %i.ap, label %.critedge73, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNK6vectorIS_I8rationalLb1EjELb1EjE5emptyEv.exit.i.lr.ph, %.critedge53
-  %indvars.iv78104 = phi i64 [ %indvars.iv.next79, %.critedge53 ], [ %i.am, %_ZNK6vectorIS_I8rationalLb1EjELb1EjE5emptyEv.exit.i.lr.ph ] ; 4 uses
+  %.04675100 = phi i32 [ %8, %.critedge53 ], [ %i.ab, %_ZNK6vectorIS_I8rationalLb1EjELb1EjE5emptyEv.exit.i.lr.ph ] ; 3 uses
   %i.aq = phi ptr [ %i.bj, %.critedge53 ], [ %i.f, %_ZNK6vectorIS_I8rationalLb1EjELb1EjE5emptyEv.exit.i.lr.ph ] ; 3 uses
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !49 ; 2 uses
   %i.as = icmp eq ptr %i.ar, null
@@ -598,8 +599,7 @@ _ZNK6vectorIS_I8rationalLb1EjELb1EjE5emptyEv.exit.i.lr.ph: ; preds = %bb.b, %bb.
 _ZNK2lp14general_matrix12column_countEv.exit:     ; preds = %.lr.ph
   %i.at = getelementptr inbounds i8, ptr %i.ar, i64 -4
   %i.au = load i32, ptr %i.at, align 4, !tbaa !50
-  %7 = zext i32 %i.au to i64
-  %i.av = icmp samesign ult i64 %indvars.iv78104, %7
+  %i.av = icmp ult i32 %.04675100, %i.au
   br i1 %i.av, label %_ZNK2lp14general_matrix9row_countEv.exit.preheader, label %.critedge73
 
 _ZNK2lp14general_matrix9row_countEv.exit.preheader: ; preds = %_ZNK2lp14general_matrix12column_countEv.exit
@@ -609,7 +609,8 @@ _ZNK2lp14general_matrix9row_countEv.exit.preheader: ; preds = %_ZNK2lp14general_
   %i.az = zext i32 %i.ay to i64
   %i.ba = getelementptr inbounds nuw [8 x i8], ptr %i.aq, i64 %i.az
   %i.bb = load ptr, ptr %i.i, align 8, !tbaa !66
-  %i.bc = getelementptr inbounds nuw [4 x i8], ptr %i.bb, i64 %indvars.iv78104
+  %7 = zext i32 %.04675100 to i64                 ; 2 uses
+  %i.bc = getelementptr inbounds nuw [4 x i8], ptr %i.bb, i64 %7
   %i.bd = load i32, ptr %i.bc, align 4, !tbaa !50
   %i.be = load ptr, ptr %i.ba, align 8, !tbaa !49
   %i.bf = zext i32 %i.bd to i64
@@ -638,7 +639,7 @@ bb.d:                                             ; preds = %_ZNK2lp14general_ma
   %i.br = zext i32 %i.bq to i64
   %i.bs = getelementptr inbounds nuw [8 x i8], ptr %i.bj, i64 %i.br
   %i.bt = load ptr, ptr %i.i, align 8, !tbaa !66
-  %i.bu = getelementptr inbounds nuw [4 x i8], ptr %i.bt, i64 %indvars.iv78104
+  %i.bu = getelementptr inbounds nuw [4 x i8], ptr %i.bt, i64 %7
   %i.bv = load i32, ptr %i.bu, align 4, !tbaa !50
   %i.bw = load ptr, ptr %i.bs, align 8, !tbaa !49
   %i.bx = zext i32 %i.bv to i64
@@ -858,7 +859,7 @@ bb.r:                                             ; preds = %.split86, %.split, 
   br label %.critedge73
 
 .critedge53:                                      ; preds = %_ZNK2lp14general_matrix9row_countEv.exit
-  %indvars.iv.next79 = add nuw nsw i64 %indvars.iv78104, 1
+  %8 = add nuw i32 %.04675100, 1
   %i.fr = getelementptr inbounds i8, ptr %i.bj, i64 -4
   %i.fs = load i32, ptr %i.fr, align 4, !tbaa !50
   %i.ft = icmp eq i32 %i.fs, 0

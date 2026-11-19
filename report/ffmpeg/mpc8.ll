@@ -205,17 +205,18 @@ bb.cb:                                            ; preds = %bb.ca, %get_vlc2.ex
 
 .preheader429:                                    ; preds = %.preheader429.lr.ph, %bb.dl
   %indvars.iv584 = phi i64 [ 0, %.preheader429.lr.ph ], [ %indvars.iv.next585, %bb.dl ] ; 2 uses
-  %indvars.iv582 = phi i64 [ 0, %.preheader429.lr.ph ], [ %indvars.iv.next583, %bb.dl ] ; 8 uses
+  %.0312513 = phi i32 [ 0, %.preheader429.lr.ph ], [ %6, %bb.dl ] ; 2 uses
   %.promoted501509511 = phi i32 [ %.lcssa462467.1, %.preheader429.lr.ph ], [ %.promoted501507, %bb.dl ] ; 2 uses
   %i.acu = getelementptr inbounds nuw [52 x i8], ptr %i.g, i64 %indvars.iv584
   %i.acv = getelementptr inbounds nuw i8, ptr %i.acu, i64 4
   %i.acw = load ptr, ptr getelementptr inbounds nuw (i8, ptr @q1_vlc, i64 8), align 8 ; 4 uses
   %i.acx = load ptr, ptr getelementptr inbounds nuw (i8, ptr @q9up_vlc, i64 8), align 8 ; 2 uses
-  %invariant.gep642.a = getelementptr inbounds nuw [4 x i8], ptr %i.ov, i64 %indvars.iv582
-  %invariant.gep644.a = getelementptr inbounds nuw [4 x i8], ptr %i.ov, i64 %indvars.iv582
-  %invariant.gep646.a = getelementptr inbounds nuw [4 x i8], ptr %i.ov, i64 %indvars.iv582
-  %invariant.gep648.a = getelementptr inbounds nuw [4 x i8], ptr %i.ov, i64 %indvars.iv582
-  %invariant.gep650 = getelementptr inbounds nuw [4 x i8], ptr %i.ov, i64 %indvars.iv582
+  %5 = zext nneg i32 %.0312513 to i64             ; 7 uses
+  %invariant.gep642.a = getelementptr inbounds nuw [4 x i8], ptr %i.ov, i64 %5
+  %invariant.gep644.a = getelementptr inbounds nuw [4 x i8], ptr %i.ov, i64 %5
+  %invariant.gep646.a = getelementptr inbounds nuw [4 x i8], ptr %i.ov, i64 %5
+  %invariant.gep648.a = getelementptr inbounds nuw [4 x i8], ptr %i.ov, i64 %5
+  %invariant.gep650 = getelementptr inbounds nuw [4 x i8], ptr %i.ov, i64 %5
   br label %bb.cc
 
 bb.cc:                                            ; preds = %.preheader429, %.loopexit422
@@ -434,7 +435,7 @@ mpc8_get_mask.exit:                               ; preds = %bb.ck, %get_vlc2.ex
   %i.ahg = icmp sgt i32 %.167.i375, 9
   %i.ahh = sext i1 %i.ahg to i32
   %spec.select.i = xor i32 %.0.i415, %i.ahh
-  %i.ahi = getelementptr inbounds nuw [4 x i8], ptr %i.adb, i64 %indvars.iv582
+  %i.ahi = getelementptr inbounds nuw [4 x i8], ptr %i.adb, i64 %5
   br label %bb.cl
 
 bb.cl:                                            ; preds = %mpc8_get_mask.exit, %bb.cn
@@ -620,7 +621,7 @@ mpc8_get_mask.exit.1:                             ; preds = %bb.cv, %get_vlc2.ex
   %i.all = icmp sgt i32 %.167.i375.1, 9
   %i.alm = sext i1 %i.all to i32
   %spec.select.i.1 = xor i32 %.0.i415.1, %i.alm
-  %i.aln = getelementptr inbounds nuw [4 x i8], ptr %i.adb, i64 %indvars.iv582
+  %i.aln = getelementptr inbounds nuw [4 x i8], ptr %i.adb, i64 %5
   %i.alo = getelementptr inbounds nuw i8, ptr %i.aln, i64 72
   br label %bb.cw
 
@@ -966,7 +967,7 @@ bb.dk:                                            ; preds = %bb.dj, %get_vlc2.ex
 
 bb.dl:                                            ; preds = %.loopexit422
   %indvars.iv.next585 = add nuw nsw i64 %indvars.iv584, 1 ; 2 uses
-  %indvars.iv.next583 = add nuw nsw i64 %indvars.iv582, 36
+  %6 = add nuw nsw i32 %.0312513, 36
   %exitcond590.not = icmp eq i64 %indvars.iv.next585, %wide.trip.count589
   br i1 %exitcond590.not, label %._crit_edge514, label %.preheader429, !llvm.loop !67
 

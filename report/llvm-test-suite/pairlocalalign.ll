@@ -204,7 +204,7 @@ bb.bs:                                            ; preds = %.lr.ph.i279.i
   br label %bb.bt
 
 bb.bt:                                            ; preds = %bb.bu, %bb.bs
-  %indvars.iv.i.i.i = phi i64 [ %indvars.iv.next.i.i.i, %bb.bu ], [ 0, %bb.bs ] ; 5 uses
+  %.0.i.i281.i = phi i32 [ 0, %bb.bs ], [ %6, %bb.bu ] ; 5 uses
   %i.ht = call i32 @getc(ptr noundef nonnull %i.hl) ; 2 uses
   %i.hu = call i32 @ungetc(i32 noundef %i.ht, ptr noundef nonnull %i.hl) ; 0 uses
   switch i32 %i.ht, label %bb.bu [
@@ -215,25 +215,28 @@ bb.bt:                                            ; preds = %bb.bu, %bb.bs
 bb.bu:                                            ; preds = %bb.bt
   %i.hv = call ptr @fgets(ptr noundef nonnull %i.c, i32 noundef 999, ptr noundef nonnull %i.hl) ; 0 uses
   %i.hw = load ptr, ptr %i.ho, align 8, !tbaa !173
-  %2 = shl i64 %indvars.iv.i.i.i, 3
-  %3 = add i64 %2, 16
-  %i.hx = call ptr @realloc(ptr noundef %i.hw, i64 noundef %3) #25 ; 2 uses
+  %2 = add nuw nsw i32 %.0.i.i281.i, 2
+  %3 = zext nneg i32 %2 to i64
+  %4 = shl nuw nsw i64 %3, 3
+  %i.hx = call ptr @realloc(ptr noundef %i.hw, i64 noundef %4) #25 ; 2 uses
   store ptr %i.hx, ptr %i.ho, align 8, !tbaa !173
   %i.hy = call noalias dereferenceable_or_null(100) ptr @calloc(i64 noundef 100, i64 noundef 1) #23 ; 2 uses
-  %i.hz = getelementptr inbounds nuw [8 x i8], ptr %i.hx, i64 %indvars.iv.i.i.i
+  %5 = zext nneg i32 %.0.i.i281.i to i64
+  %i.hz = getelementptr inbounds nuw [8 x i8], ptr %i.hx, i64 %5
   store ptr %i.hy, ptr %i.hz, align 8, !tbaa !128
   %i.ia = call ptr @strcpy(ptr noundef nonnull dereferenceable(1) %i.hy, ptr noundef nonnull dereferenceable(1) %i.c) #20 ; 0 uses
-  %indvars.iv.next.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i, 1
+  %6 = add nuw nsw i32 %.0.i.i281.i, 1
   br label %bb.bt
 
 readhat4.exit.i.i:                                ; preds = %bb.bt, %bb.bt
   %i.ib = load ptr, ptr %i.ho, align 8, !tbaa !173
-  %4 = shl i64 %indvars.iv.i.i.i, 3
-  %5 = add i64 %4, 16
-  %6 = and i64 %5, 34359738360
-  %i.ic = call ptr @realloc(ptr noundef %i.ib, i64 noundef %6) #25 ; 2 uses
+  %7 = add nuw nsw i32 %.0.i.i281.i, 2
+  %8 = zext nneg i32 %7 to i64
+  %9 = shl nuw nsw i64 %8, 3
+  %i.ic = call ptr @realloc(ptr noundef %i.ib, i64 noundef %9) #25 ; 2 uses
   store ptr %i.ic, ptr %i.ho, align 8, !tbaa !173
-  %i.id = getelementptr inbounds nuw [8 x i8], ptr %i.ic, i64 %indvars.iv.i.i.i
+  %10 = zext nneg i32 %.0.i.i281.i to i64
+  %i.id = getelementptr inbounds nuw [8 x i8], ptr %i.ic, i64 %10
   store ptr null, ptr %i.id, align 8, !tbaa !128
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #20
   %indvars.iv.next.i281.i = add nuw nsw i64 %indvars.iv.i280.i, 1 ; 2 uses

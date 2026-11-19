@@ -203,7 +203,7 @@ bb.cm:                                            ; preds = %bb.cl, %.thread826
   br i1 %brmerge, label %._crit_edge1175, label %.preheader.us
 
 .preheader.us:                                    ; preds = %.thread857, %._crit_edge.us
-  %.01174.us = phi i64 [ %indvars.iv.next1454, %._crit_edge.us ], [ 0, %.thread857 ]
+  %.01174.us = phi i32 [ %11, %._crit_edge.us ], [ 0, %.thread857 ]
   %.05781173.us = phi i64 [ %i.oz, %._crit_edge.us ], [ 0, %.thread857 ]
   %.06151172.us = phi i32 [ %i.pg, %._crit_edge.us ], [ 0, %.thread857 ] ; 2 uses
   %.16181171.us = phi double [ %.5622.us, %._crit_edge.us ], [ %.0617, %.thread857 ]
@@ -213,7 +213,7 @@ bb.cm:                                            ; preds = %bb.cl, %.thread826
   br label %bb.cn
 
 bb.cn:                                            ; preds = %.preheader.us, %.thread834.us
-  %indvars.iv1453 = phi i64 [ %.01174.us, %.preheader.us ], [ %indvars.iv.next1454, %.thread834.us ] ; 10 uses
+  %.11166.us = phi i32 [ %.01174.us, %.preheader.us ], [ %11, %.thread834.us ] ; 5 uses
   %.15791165.us = phi i64 [ %.05781173.us, %.preheader.us ], [ %i.oz, %.thread834.us ]
   %.06161164.us = phi i32 [ 0, %.preheader.us ], [ %i.pa, %.thread834.us ] ; 2 uses
   %.26191163.us = phi double [ %.16181171.us, %.preheader.us ], [ %.5622.us, %.thread834.us ] ; 11 uses
@@ -224,9 +224,10 @@ bb.cn:                                            ; preds = %.preheader.us, %.th
   br i1 %.b.us, label %bb.cp, label %bb.co
 
 bb.co:                                            ; preds = %bb.cn
-  %i.lu = getelementptr inbounds [8 x i8], ptr %.1576, i64 %indvars.iv1453
+  %7 = sext i32 %.11166.us to i64                 ; 2 uses
+  %i.lu = getelementptr inbounds [8 x i8], ptr %.1576, i64 %7
   %i.lv = load i64, ptr %i.lu, align 8, !tbaa !29
-  %i.lw = getelementptr inbounds [8 x i8], ptr %calloc, i64 %indvars.iv1453
+  %i.lw = getelementptr inbounds [8 x i8], ptr %calloc, i64 %7
   store i64 %i.lv, ptr %i.lw, align 8, !tbaa !29
   br label %bb.cp
 
@@ -242,8 +243,9 @@ bb.cq:                                            ; preds = %bb.cp
 bb.cr:                                            ; preds = %bb.cq
   %i.lz = icmp samesign ult i32 %i.lx, 13
   %i.ma = load i32, ptr @pf, align 4, !tbaa !9    ; 2 uses
-  %i.mb = getelementptr inbounds [8 x i8], ptr %calloc1497, i64 %indvars.iv1453 ; 2 uses
-  %i.mc = getelementptr inbounds [8 x i8], ptr %calloc, i64 %indvars.iv1453 ; 2 uses
+  %8 = sext i32 %.11166.us to i64                 ; 8 uses
+  %i.mb = getelementptr inbounds [8 x i8], ptr %calloc1497, i64 %8 ; 2 uses
+  %i.mc = getelementptr inbounds [8 x i8], ptr %calloc, i64 %8 ; 2 uses
   br i1 %i.lz, label %bb.cx, label %bb.cs
 
 bb.cs:                                            ; preds = %bb.cr
@@ -316,8 +318,9 @@ bb.db:                                            ; preds = %bb.da, %bb.cz
 
 bb.dc:                                            ; preds = %bb.cq
   %i.nb = load i32, ptr @pf, align 4, !tbaa !9
-  %i.nc = getelementptr inbounds [8 x i8], ptr %calloc1497, i64 %indvars.iv1453
-  %i.nd = getelementptr inbounds [8 x i8], ptr %calloc, i64 %indvars.iv1453
+  %9 = sext i32 %.11166.us to i64                 ; 5 uses
+  %i.nc = getelementptr inbounds [8 x i8], ptr %calloc1497, i64 %9
+  %i.nd = getelementptr inbounds [8 x i8], ptr %calloc, i64 %9
   %i.ne = call i32 @tj3Compress8(ptr noundef %0, ptr noundef %.06301162.us, i32 noundef %i.lt, i32 noundef %i.j, i32 noundef %i.lr, i32 noundef %i.nb, ptr noundef nonnull %i.nc, ptr noundef nonnull %i.nd) #22
   %i.nf = icmp eq i32 %i.ne, -1
   br i1 %i.nf, label %bb.dd, label %.thread834.us
@@ -400,8 +403,9 @@ bb.dm:                                            ; preds = %.thread830.us
 bb.dn:                                            ; preds = %bb.dm, %.thread830.us
   %.3620.us = phi double [ %i.oh, %bb.dm ], [ %.26191163.us, %.thread830.us ] ; 3 uses
   %i.oi = load i32, ptr @yuvAlign, align 4, !tbaa !9
-  %i.oj = getelementptr inbounds [8 x i8], ptr %calloc1497, i64 %indvars.iv1453
-  %i.ok = getelementptr inbounds [8 x i8], ptr %calloc, i64 %indvars.iv1453
+  %10 = sext i32 %.11166.us to i64                ; 5 uses
+  %i.oj = getelementptr inbounds [8 x i8], ptr %calloc1497, i64 %10
+  %i.ok = getelementptr inbounds [8 x i8], ptr %calloc, i64 %10
   %i.ol = call i32 @tj3CompressFromYUV8(ptr noundef %0, ptr noundef %.1633, i32 noundef %i.lt, i32 noundef %i.oi, i32 noundef %i.lr, ptr noundef nonnull %i.oj, ptr noundef nonnull %i.ok) #22
   %i.om = icmp eq i32 %i.ol, -1
   br i1 %i.om, label %bb.do, label %.thread834.us
@@ -436,12 +440,13 @@ bb.dr:                                            ; preds = %bb.dq, %bb.dp
   br label %.thread834.us
 
 .thread834.us:                                    ; preds = %bb.dr, %bb.dq, %bb.dn, %bb.dg, %bb.df, %bb.dc, %bb.db, %bb.da, %bb.cx, %bb.cw, %bb.cv, %bb.cs
-  %.5622.us = phi double [ %.3620.us, %bb.dr ], [ %.3620.us, %bb.dq ], [ %.26191163.us, %bb.dc ], [ %.26191163.us, %bb.dg ], [ %.26191163.us, %bb.cx ], [ %.26191163.us, %bb.db ], [ %.26191163.us, %bb.cs ], [ %.3620.us, %bb.dn ], [ %.26191163.us, %bb.df ], [ %.26191163.us, %bb.da ], [ %.26191163.us, %bb.cv ], [ %.26191163.us, %bb.cw ] ; 3 uses
-  %i.ox = getelementptr inbounds [8 x i8], ptr %calloc, i64 %indvars.iv1453
+  %.pre-phi = phi i64 [ %10, %bb.dr ], [ %10, %bb.dq ], [ %10, %bb.dn ], [ %9, %bb.dg ], [ %9, %bb.df ], [ %9, %bb.dc ], [ %8, %bb.db ], [ %8, %bb.da ], [ %8, %bb.cx ], [ %8, %bb.cw ], [ %8, %bb.cv ], [ %8, %bb.cs ]
+  %.5622.us = phi double [ %.3620.us, %bb.dr ], [ %.3620.us, %bb.dq ], [ %.3620.us, %bb.dn ], [ %.26191163.us, %bb.dg ], [ %.26191163.us, %bb.df ], [ %.26191163.us, %bb.dc ], [ %.26191163.us, %bb.db ], [ %.26191163.us, %bb.da ], [ %.26191163.us, %bb.cx ], [ %.26191163.us, %bb.cw ], [ %.26191163.us, %bb.cv ], [ %.26191163.us, %bb.cs ] ; 3 uses
+  %i.ox = getelementptr inbounds [8 x i8], ptr %calloc, i64 %.pre-phi
   %i.oy = load i64, ptr %i.ox, align 8, !tbaa !29
   %i.oz = add i64 %i.oy, %.15791165.us            ; 3 uses
   %i.pa = add nsw i32 %.06161164.us, %spec.select ; 2 uses
-  %indvars.iv.next1454 = add nsw i64 %indvars.iv1453, 1 ; 2 uses
+  %11 = add nsw i32 %.11166.us, 1                 ; 2 uses
   %i.pb = load i32, ptr @sampleSize, align 4, !tbaa !9 ; 2 uses
   %i.pc = mul nsw i32 %i.ll, %i.pb
   %i.pd = sext i32 %i.pc to i64
@@ -844,7 +849,7 @@ bb.bv:                                            ; preds = %bb.bu, %.loopexit
   br label %.preheader.us.us.us
 
 .preheader.us.us.us:                              ; preds = %._crit_edge.us.us.us, %.preheader.lr.ph.us.us
-  %.0828.us.us.us = phi i64 [ 0, %.preheader.lr.ph.us.us ], [ %indvars.iv.next907, %._crit_edge.us.us.us ]
+  %.0828.us.us.us = phi i32 [ 0, %.preheader.lr.ph.us.us ], [ %13, %._crit_edge.us.us.us ]
   %.0498827.us.us.us = phi ptr [ %.0547, %.preheader.lr.ph.us.us ], [ %i.mu, %._crit_edge.us.us.us ] ; 2 uses
   %.1502826.us.us.us = phi double [ %.0501.us.us, %.preheader.lr.ph.us.us ], [ %.6507.ph.us.us.us, %._crit_edge.us.us.us ]
   %.0542825.us.us.us = phi i32 [ 0, %.preheader.lr.ph.us.us ], [ %i.mr, %._crit_edge.us.us.us ] ; 2 uses
@@ -853,10 +858,10 @@ bb.bv:                                            ; preds = %bb.bu, %.loopexit
   br label %bb.bw
 
 bb.bw:                                            ; preds = %.thread735.us.us.us, %.preheader.us.us.us
-  %indvars.iv906 = phi i64 [ %indvars.iv.next907, %.thread735.us.us.us ], [ %.0828.us.us.us, %.preheader.us.us.us ] ; 7 uses
-  %.0497821.us.us.us = phi ptr [ %i.mp, %.thread735.us.us.us ], [ %.0498827.us.us.us, %.preheader.us.us.us ] ; 5 uses
-  %.2503820.us.us.us = phi double [ %.6507.ph.us.us.us, %.thread735.us.us.us ], [ %.1502826.us.us.us, %.preheader.us.us.us ] ; 11 uses
-  %.0543819.us.us.us = phi i32 [ %i.ml, %.thread735.us.us.us ], [ 0, %.preheader.us.us.us ] ; 2 uses
+  %.1822.us.us.us = phi i32 [ %.0828.us.us.us, %.preheader.us.us.us ], [ %13, %.thread735.us.us.us ] ; 4 uses
+  %.0497821.us.us.us = phi ptr [ %.0498827.us.us.us, %.preheader.us.us.us ], [ %i.mp, %.thread735.us.us.us ] ; 5 uses
+  %.2503820.us.us.us = phi double [ %.1502826.us.us.us, %.preheader.us.us.us ], [ %.6507.ph.us.us.us, %.thread735.us.us.us ] ; 11 uses
+  %.0543819.us.us.us = phi i32 [ 0, %.preheader.us.us.us ], [ %i.ml, %.thread735.us.us.us ] ; 2 uses
   %.b591.us.us.us = load i1, ptr @doTile, align 4 ; 2 uses
   %i.jb = sub nsw i32 %3, %.0543819.us.us.us
   %i.jc = tail call i32 @llvm.smin.i32(i32 %8, i32 %i.jb)
@@ -872,9 +877,10 @@ bb.bx:                                            ; preds = %bb.bw
 
 bb.by:                                            ; preds = %bb.bx
   %i.jh = icmp samesign ult i32 %i.jf, 13
-  %i.ji = getelementptr inbounds [8 x i8], ptr %0, i64 %indvars.iv906
+  %10 = sext i32 %.1822.us.us.us to i64           ; 2 uses
+  %i.ji = getelementptr inbounds [8 x i8], ptr %0, i64 %10
   %i.jj = load ptr, ptr %i.ji, align 8, !tbaa !13 ; 2 uses
-  %i.jk = getelementptr inbounds [8 x i8], ptr %1, i64 %indvars.iv906
+  %i.jk = getelementptr inbounds [8 x i8], ptr %1, i64 %10
   %i.jl = load i64, ptr %i.jk, align 8, !tbaa !29 ; 2 uses
   %i.jm = load i32, ptr @pf, align 4, !tbaa !9    ; 2 uses
   br i1 %i.jh, label %bb.ce, label %bb.bz
@@ -948,9 +954,10 @@ bb.ci:                                            ; preds = %bb.ch, %bb.cg
   br label %.thread735.us.us.us
 
 bb.cj:                                            ; preds = %bb.bx
-  %i.kl = getelementptr inbounds [8 x i8], ptr %0, i64 %indvars.iv906
+  %11 = sext i32 %.1822.us.us.us to i64           ; 2 uses
+  %i.kl = getelementptr inbounds [8 x i8], ptr %0, i64 %11
   %i.km = load ptr, ptr %i.kl, align 8, !tbaa !13
-  %i.kn = getelementptr inbounds [8 x i8], ptr %1, i64 %indvars.iv906
+  %i.kn = getelementptr inbounds [8 x i8], ptr %1, i64 %11
   %i.ko = load i64, ptr %i.kn, align 8, !tbaa !29
   %i.kp = load i32, ptr @pf, align 4, !tbaa !9
   %i.kq = tail call i32 @tj3Decompress8(ptr noundef nonnull %i.v, ptr noundef %i.km, i64 noundef %i.ko, ptr noundef %.0497821.us.us.us, i32 noundef %i.gv, i32 noundef %i.kp) #22
@@ -987,9 +994,10 @@ bb.cn:                                            ; preds = %bb.cm, %bb.cl
   br label %.thread735.us.us.us
 
 bb.co:                                            ; preds = %bb.bw
-  %i.lc = getelementptr inbounds [8 x i8], ptr %0, i64 %indvars.iv906
+  %12 = sext i32 %.1822.us.us.us to i64           ; 2 uses
+  %i.lc = getelementptr inbounds [8 x i8], ptr %0, i64 %12
   %i.ld = load ptr, ptr %i.lc, align 8, !tbaa !13
-  %i.le = getelementptr inbounds [8 x i8], ptr %1, i64 %indvars.iv906
+  %i.le = getelementptr inbounds [8 x i8], ptr %1, i64 %12
   %i.lf = load i64, ptr %i.le, align 8, !tbaa !29
   %i.lg = load i32, ptr @yuvAlign, align 4, !tbaa !9
   %i.lh = tail call i32 @tj3DecompressToYUV8(ptr noundef nonnull %i.v, ptr noundef %i.ld, i64 noundef %i.lf, ptr noundef %.1495, i32 noundef %i.lg) #22
@@ -1074,7 +1082,7 @@ bb.cx:                                            ; preds = %.thread731.us.us.us
 .thread735.us.us.us:                              ; preds = %bb.cx, %.thread731.us.us.us, %bb.cn, %bb.cm, %bb.cj, %bb.ci, %bb.ch, %bb.ce, %bb.cd, %bb.cc, %bb.bz
   %.6507.ph.us.us.us = phi double [ %.2503820.us.us.us, %bb.bz ], [ %.2503820.us.us.us, %bb.ci ], [ %.2503820.us.us.us, %bb.ce ], [ %.2503820.us.us.us, %bb.cn ], [ %.2503820.us.us.us, %bb.cj ], [ %i.mk, %bb.cx ], [ %.2503820.us.us.us, %.thread731.us.us.us ], [ %.2503820.us.us.us, %bb.cm ], [ %.2503820.us.us.us, %bb.ch ], [ %.2503820.us.us.us, %bb.cc ], [ %.2503820.us.us.us, %bb.cd ] ; 5 uses
   %i.ml = add nsw i32 %.0543819.us.us.us, %8      ; 2 uses
-  %indvars.iv.next907 = add nsw i64 %indvars.iv906, 1 ; 2 uses
+  %13 = add nsw i32 %.1822.us.us.us, 1            ; 2 uses
   %i.mm = load i32, ptr @sampleSize, align 4, !tbaa !9 ; 2 uses
   %i.mn = mul nsw i32 %i.is, %i.mm
   %i.mo = sext i32 %i.mn to i64

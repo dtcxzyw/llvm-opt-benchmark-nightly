@@ -204,7 +204,7 @@ begin_hunk_0_@b3CreateHeightField:bb.a
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge1344
   %indvars.iv1375 = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next1376, %._crit_edge1344 ] ; 7 uses
-  %.09311347 = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next1367, %._crit_edge1344 ]
+  %.09311347 = phi i32 [ 0, %.preheader.preheader ], [ %1, %._crit_edge1344 ]
   %i.fs = mul nuw nsw i64 %indvars.iv1375, %i.fo
   %i.ft = mul nuw nsw i64 %indvars.iv1375, %i.fp  ; 2 uses
   %indvars.iv.next1376 = add nuw nsw i64 %indvars.iv1375, 1 ; 6 uses
@@ -262,8 +262,8 @@ begin_hunk_0_@b3CreateHeightField:bb.a
 
 bb.b:                                             ; preds = %.preheader, %bb.v
   %indvars.iv1368 = phi i64 [ 0, %.preheader ], [ %indvars.iv.next1369.pre-phi, %bb.v ] ; 13 uses
-  %indvars.iv1366 = phi i64 [ %.09311347, %.preheader ], [ %indvars.iv.next1367, %bb.v ] ; 2 uses
-  %indvars.iv.next1367 = add nsw i64 %indvars.iv1366, 2 ; 2 uses
+  %.11342 = phi i32 [ %.09311347, %.preheader ], [ %1, %bb.v ] ; 2 uses
+  %1 = add nsw i32 %.11342, 2                     ; 2 uses
   %gep = getelementptr i8, ptr %invariant.gep, i64 %indvars.iv1368 ; 3 uses
   %i.gx = load i8, ptr %gep, align 1, !tbaa !41
   %i.gy = icmp eq i8 %i.gx, -1
@@ -666,7 +666,8 @@ b3Normalize.exit:                                 ; preds = %bb.s, %bb.t
 bb.u:                                             ; preds = %b3Normalize.exit, %bb.r, %bb.q
   %.7943 = phi i32 [ %.6942, %b3Normalize.exit ], [ %.4940, %bb.r ], [ %.4940, %bb.q ]
   %i.rc = trunc nuw nsw i32 %.7 to i8
-  %i.rd = getelementptr inbounds i8, ptr %i.at, i64 %indvars.iv1366 ; 2 uses
+  %2 = sext i32 %.11342 to i64
+  %i.rd = getelementptr inbounds i8, ptr %i.at, i64 %2 ; 2 uses
   store i8 %i.rc, ptr %i.rd, align 1, !tbaa !41
   %i.re = trunc nuw nsw i32 %.7943 to i8
   %i.rf = getelementptr i8, ptr %i.rd, i64 1

@@ -204,7 +204,7 @@ bb.l:                                             ; preds = %.thread.i, %.crited
   br label %bb.m
 
 bb.m:                                             ; preds = %._crit_edge.i, %.lr.ph82.i
-  %indvars.iv87.i = phi i64 [ 0, %.lr.ph82.i ], [ %indvars.iv.next88.i, %._crit_edge.i ]
+  %.04680.i = phi i32 [ 0, %.lr.ph82.i ], [ %1, %._crit_edge.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #11
   %i.bz = call i32 @ff_inlink_consume_frame(ptr noundef %i.z, ptr noundef nonnull %i.b) #11 ; 3 uses
   %i.ca = icmp slt i32 %i.bz, 0
@@ -275,9 +275,10 @@ ff_bufqueue_add.exit.i:                           ; preds = %bb.p, %bb.o
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i, %ff_bufqueue_add.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #11
-  %indvars.iv.next88.i = add nuw nsw i64 %indvars.iv87.i, 1 ; 2 uses
+  %1 = add nuw nsw i32 %.04680.i, 1               ; 2 uses
+  %2 = zext nneg i32 %1 to i64
   %i.di = call i64 @ff_inlink_queued_frames(ptr noundef nonnull %i.z) #11
-  %i.dj = icmp ugt i64 %i.di, %indvars.iv.next88.i
+  %i.dj = icmp ugt i64 %i.di, %2
   br i1 %i.dj, label %bb.m, label %filter_frame.exit.thread, !llvm.loop !87
 
 filter_frame.exit.thread55:                       ; preds = %bb.m

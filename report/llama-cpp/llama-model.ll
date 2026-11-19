@@ -205,7 +205,8 @@ bb.a:
   br i1 %i.q, label %bb.db, label %bb.f
 
 bb.b:                                             ; preds = %.lr.ph, %bb.d
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.d ] ; 4 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %13, %bb.d ] ; 2 uses
+  %.059306 = phi i32 [ 0, %.lr.ph ], [ %12, %bb.d ] ; 2 uses
   %i.r = call i32 @gguf_get_kv_type(ptr noundef %i.h, i64 noundef %indvars.iv)
   %i.s = icmp eq i32 %i.r, 9
   br i1 %i.s, label %bb.d, label %bb.c
@@ -215,8 +216,7 @@ bb.c:                                             ; preds = %bb.b
   %i.t = call ptr @gguf_get_key(ptr noundef %i.h, i64 noundef %indvars.iv)
   store ptr %i.t, ptr %i.c, align 8, !tbaa !212
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #38
-  %12 = trunc nuw nsw i64 %indvars.iv to i32
-  call void @_Z14gguf_kv_to_strB5cxx11PK12gguf_contexti(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %2, ptr noundef %i.h, i32 noundef %12)
+  call void @_Z14gguf_kv_to_strB5cxx11PK12gguf_contexti(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %2, ptr noundef %i.h, i32 noundef %.059306)
   %i.u = invoke { ptr, i8 } @_ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_S5_ESaIS8_ENSt8__detail10_Select1stESt8equal_toIS5_ESt4hashIS5_ENSA_18_Mod_range_hashingENSA_20_Default_ranged_hashENSA_20_Prime_rehash_policyENSA_17_Hashtable_traitsILb1ELb0ELb1EEEE10_M_emplaceIJRPKcRS7_EEES6_INSA_14_Node_iteratorIS8_Lb0ELb1EEEbESt17integral_constantIbLb1EEDpOT_(ptr noundef nonnull align 8 dereferenceable(56) %i.k, ptr noundef nonnull align 8 dereferenceable(8) %i.c, ptr noundef nonnull align 8 dereferenceable(32) %2)
           to label %_ZNSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_St4hashIS5_ESt8equal_toIS5_ESaISt4pairIKS5_S5_EEE7emplaceIJRPKcRSB_EEESA_INSt8__detail14_Node_iteratorISC_Lb0ELb1EEEbEDpOT_.exit unwind label %bb.e ; 0 uses
 
@@ -237,9 +237,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.b, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %12 = add nuw nsw i32 %.059306, 1               ; 2 uses
+  %13 = zext nneg i32 %12 to i64                  ; 2 uses
   %i.z = call i64 @gguf_get_n_kv(ptr noundef %i.h)
-  %i.aa = icmp sgt i64 %i.z, %indvars.iv.next
+  %i.aa = icmp sgt i64 %i.z, %13
   br i1 %i.aa, label %bb.b, label %._crit_edge, !llvm.loop !854
 
 bb.e:                                             ; preds = %bb.c

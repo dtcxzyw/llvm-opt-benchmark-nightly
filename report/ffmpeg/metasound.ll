@@ -204,14 +204,14 @@ twinvq_memset_float.exit.us.us:                   ; preds = %.lr.ph.i.us.us, %mi
   br i1 %i.cp, label %.preheader.us, label %._crit_edge, !llvm.loop !92
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %.split
-  %.05268 = phi i64 [ %indvars.iv.next, %.split ], [ 0, %.preheader.lr.ph ]
+  %.05268 = phi i32 [ %7, %.split ], [ 0, %.preheader.lr.ph ]
   %.05567 = phi i32 [ %i.eb, %.split ], [ 0, %.preheader.lr.ph ] ; 2 uses
   %.05666 = phi ptr [ %i.ea, %.split ], [ %4, %.preheader.lr.ph ]
   br label %bb.d
 
 bb.d:                                             ; preds = %.preheader, %twinvq_memset_float.exit
   %indvars.iv78 = phi i64 [ 0, %.preheader ], [ %indvars.iv.next79, %twinvq_memset_float.exit ] ; 2 uses
-  %indvars.iv = phi i64 [ %.05268, %.preheader ], [ %indvars.iv.next, %twinvq_memset_float.exit ] ; 4 uses
+  %.163 = phi i32 [ %.05268, %.preheader ], [ %7, %twinvq_memset_float.exit ] ; 2 uses
   %.15761 = phi ptr [ %.05666, %.preheader ], [ %i.ea, %twinvq_memset_float.exit ] ; 4 uses
   %i.cq = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv78
   %i.cr = load i8, ptr %i.cq, align 1, !tbaa !28
@@ -224,10 +224,11 @@ bb.d:                                             ; preds = %.preheader, %twinvq
   %i.cy = sitofp i16 %i.cx to float
   %i.cz = fmul nnan nsz float %i.cy, f0x3A000000  ; 2 uses
   %i.da = fpext nsz float %i.cz to double         ; 2 uses
+  %.pre = sext i32 %.163 to i64                   ; 3 uses
   br i1 %.not, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.db = getelementptr inbounds [4 x i8], ptr %i.h, i64 %indvars.iv
+  %i.db = getelementptr inbounds [4 x i8], ptr %i.h, i64 %.pre
   %i.dc = load float, ptr %i.db, align 4, !tbaa !48
   %i.dd = fmul nsz float %i.k, %i.dc
   %i.de = fpext nsz float %i.dd to double
@@ -238,13 +239,13 @@ bb.f:                                             ; preds = %bb.d, %bb.e
   %.in = phi double [ %i.df, %bb.e ], [ %i.da, %bb.d ]
   %i.dg = fadd nsz double %.in, 1.000000e+00
   %i.dh = fptrunc nsz double %i.dg to float       ; 2 uses
-  %i.di = getelementptr inbounds [4 x i8], ptr %i.h, i64 %indvars.iv
+  %i.di = getelementptr inbounds [4 x i8], ptr %i.h, i64 %.pre
   store float %i.cz, ptr %i.di, align 4, !tbaa !48
   %i.dj = fpext nsz float %i.dh to double
   %i.dk = fcmp nsz olt double %i.dj, 1.000000e-01
   %spec.store.select = select i1 %i.dk, float 1.000000e-01, float %i.dh
   %i.dl = fmul nsz float %5, %spec.store.select   ; 2 uses
-  %i.dm = getelementptr inbounds [2 x i8], ptr %i.z, i64 %indvars.iv
+  %i.dm = getelementptr inbounds [2 x i8], ptr %i.z, i64 %.pre
   %i.dn = load i16, ptr %i.dm, align 2, !tbaa !100 ; 5 uses
   %.not3.i = icmp eq i16 %i.dn, 0
   br i1 %.not3.i, label %twinvq_memset_float.exit, label %.lr.ph.i.preheader
@@ -298,7 +299,7 @@ twinvq_memset_float.exit:                         ; preds = %.lr.ph.i, %middle.b
   %i.dz = zext i16 %i.dn to i64
   %i.ea = getelementptr inbounds nuw [4 x i8], ptr %.15761, i64 %i.dz ; 2 uses
   %indvars.iv.next79 = add nuw nsw i64 %indvars.iv78, 1 ; 2 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
+  %7 = add nsw i32 %.163, 1                       ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next79, %wide.trip.count101
   br i1 %exitcond.not, label %.split, label %bb.d, !llvm.loop !91
 

@@ -204,8 +204,8 @@ bb.j:                                             ; preds = %.lr.ph183
   br label %.preheader165
 
 .lr.ph186.preheader:                              ; preds = %bb.d, %._crit_edge199
-  %.1 = phi i32 [ %i.bh, %._crit_edge199 ], [ 1, %bb.d ] ; 8 uses
-  %i.au = sub nsw i32 0, %.1                      ; 4 uses
+  %.1 = phi i32 [ %i.bh, %._crit_edge199 ], [ 1, %bb.d ] ; 6 uses
+  %i.au = sub nsw i32 0, %.1                      ; 5 uses
   br label %.lr.ph186
 
 .lr.ph186:                                        ; preds = %.lr.ph186.preheader, %bb.k
@@ -216,7 +216,7 @@ bb.j:                                             ; preds = %.lr.ph183
 
 bb.k:                                             ; preds = %.lr.ph186
   %i.aw = add nsw i32 %.2184, -1                  ; 5 uses
-  %7 = icmp samesign ugt i32 %i.aw, %i.au
+  %7 = icmp sgt i32 %i.aw, %i.au
   br i1 %7, label %.lr.ph186, label %.lr.ph189, !llvm.loop !176
 
 .preheader150:                                    ; preds = %bb.l
@@ -224,23 +224,24 @@ bb.k:                                             ; preds = %.lr.ph186
   br i1 %.not237, label %.lr.ph195.preheader, label %.lr.ph192
 
 .lr.ph189:                                        ; preds = %bb.k, %bb.l
-  %.3133188 = phi i32 [ %i.ay, %bb.l ], [ %i.au, %bb.k ] ; 2 uses
+  %.3133188 = phi i32 [ %i.ay, %bb.l ], [ %i.au, %bb.k ] ; 3 uses
   %i.ax = tail call fastcc i32 @fits(i32 noundef %.3133188, i32 noundef %i.aw, ptr noundef nonnull %1, ptr noundef %2, ptr noundef %3, i32 noundef %4, ptr noundef nonnull %6)
   %.not141 = icmp eq i32 %i.ax, 0
   br i1 %.not141, label %bb.l, label %.loopexit
 
 bb.l:                                             ; preds = %.lr.ph189
-  %i.ay = add i32 %.3133188, 1                    ; 2 uses
-  %exitcond221.not = icmp eq i32 %i.ay, %.1
-  br i1 %exitcond221.not, label %.preheader150, label %.lr.ph189, !llvm.loop !177
+  %i.ay = add nsw i32 %.3133188, 1                ; 5 uses
+  %8 = icmp slt i32 %i.ay, %.1
+  br i1 %8, label %.lr.ph189, label %.preheader150, !llvm.loop !177
 
 .lr.ph195.preheader:                              ; preds = %bb.m, %.preheader150
   %.3.lcssa = phi i32 [ %i.aw, %.preheader150 ], [ %.1, %bb.m ] ; 3 uses
-  br label %.lr.ph195
+  %.not238 = icmp slt i32 %.3133188, %i.au
+  br i1 %.not238, label %.preheader, label %.lr.ph195
 
 .lr.ph192:                                        ; preds = %.preheader150, %bb.m
   %.3191 = phi i32 [ %i.ba, %bb.m ], [ %i.aw, %.preheader150 ] ; 2 uses
-  %i.az = tail call fastcc i32 @fits(i32 noundef %.1, i32 noundef %.3191, ptr noundef nonnull %1, ptr noundef %2, ptr noundef %3, i32 noundef %4, ptr noundef nonnull %6)
+  %i.az = tail call fastcc i32 @fits(i32 noundef %i.ay, i32 noundef %.3191, ptr noundef nonnull %1, ptr noundef %2, ptr noundef %3, i32 noundef %4, ptr noundef nonnull %6)
   %.not140 = icmp eq i32 %i.az, 0
   br i1 %.not140, label %bb.m, label %.loopexit
 
@@ -249,12 +250,13 @@ bb.m:                                             ; preds = %.lr.ph192
   %exitcond222.not = icmp eq i32 %i.ba, %.1
   br i1 %exitcond222.not, label %.lr.ph195.preheader, label %.lr.ph192, !llvm.loop !178
 
-.preheader:                                       ; preds = %bb.n
+.preheader:                                       ; preds = %bb.n, %.lr.ph195.preheader
+  %.4134.lcssa = phi i32 [ %i.ay, %.lr.ph195.preheader ], [ %i.bc, %bb.n ]
   %.not201 = icmp eq i32 %.3.lcssa, 0
   br i1 %.not201, label %._crit_edge199, label %.lr.ph198
 
 .lr.ph195:                                        ; preds = %.lr.ph195.preheader, %bb.n
-  %.4134194 = phi i32 [ %i.bc, %bb.n ], [ %.1, %.lr.ph195.preheader ] ; 2 uses
+  %.4134194 = phi i32 [ %i.bc, %bb.n ], [ %i.ay, %.lr.ph195.preheader ] ; 2 uses
   %i.bb = tail call fastcc i32 @fits(i32 noundef %.4134194, i32 noundef %.3.lcssa, ptr noundef nonnull %1, ptr noundef %2, ptr noundef %3, i32 noundef %4, ptr noundef nonnull %6)
   %.not139 = icmp eq i32 %i.bb, 0
   br i1 %.not139, label %bb.n, label %.loopexit
@@ -271,7 +273,7 @@ bb.o:                                             ; preds = %.lr.ph198
 
 .lr.ph198:                                        ; preds = %.preheader, %bb.o
   %.4197 = phi i32 [ %i.be, %bb.o ], [ %.3.lcssa, %.preheader ] ; 3 uses
-  %i.bg = tail call fastcc i32 @fits(i32 noundef %i.bc, i32 noundef %.4197, ptr noundef nonnull %1, ptr noundef %2, ptr noundef %3, i32 noundef %4, ptr noundef nonnull %6)
+  %i.bg = tail call fastcc i32 @fits(i32 noundef %.4134.lcssa, i32 noundef %.4197, ptr noundef nonnull %1, ptr noundef %2, ptr noundef %3, i32 noundef %4, ptr noundef nonnull %6)
   %.not138 = icmp eq i32 %i.bg, 0
   br i1 %.not138, label %bb.o, label %.loopexit
 

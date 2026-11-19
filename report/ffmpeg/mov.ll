@@ -205,10 +205,10 @@ bb.c:                                             ; preds = %bb.b
   br label %.thread
 
 bb.d:                                             ; preds = %bb.b
-  %i.g = add nuw nsw i32 %i.c, 1                  ; 2 uses
+  %i.g = add nuw nsw i32 %i.c, 1                  ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 64
   store i32 %i.g, ptr %i.h, align 8, !tbaa !135
-  %i.i = zext nneg i32 %i.g to i64                ; 2 uses
+  %i.i = zext nneg i32 %i.g to i64
   %i.j = shl nuw nsw i64 %i.i, 3
   %i.k = tail call noalias ptr @av_mallocz(i64 noundef %i.j) #16 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
@@ -238,7 +238,7 @@ bb.e:                                             ; preds = %.lr.ph
   br i1 %i.r, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e, %.lr.ph
-  %i.s = trunc nuw nsw i64 %indvars.iv to i32
+  %i.s = trunc nuw i64 %indvars.iv to i32
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !36
   tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef %i.u, i32 noundef 16, ptr noundef nonnull @.str.476, i32 noundef %i.s, i32 noundef %i.n) #16
@@ -271,7 +271,8 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.h, %bb.j
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.i
+  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
+  %exitcond.not = icmp eq i32 %i.g, %lftr.wideiv
   br i1 %exitcond.not, label %.thread, label %.lr.ph, !llvm.loop !567
 
 .thread:                                          ; preds = %bb.k, %bb.i, %.preheader, %bb.f, %bb.d, %bb.a, %bb.c

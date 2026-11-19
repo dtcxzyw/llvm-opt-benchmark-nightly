@@ -205,20 +205,22 @@ bb.al:                                            ; preds = %bb.ak
   %i.ej = load i8, ptr %i.ei, align 1, !tbaa !44  ; 2 uses
   %i.ek = add i8 %i.ej, -43
   %switch.and.i = and i8 %i.ek, -3
-  %switch.selectcmp.i = icmp eq i8 %switch.and.i, 0
+  %switch.selectcmp.i = icmp eq i8 %switch.and.i, 0 ; 2 uses
   %i.el = zext i1 %switch.selectcmp.i to i64      ; 2 uses
   %i.em = load i64, ptr %1, align 8, !tbaa !93    ; 2 uses
   %i.en = icmp ugt i64 %i.em, %i.el
   br i1 %i.en, label %.lr.ph.i, label %_ZN4pbrtL8parseIntERKNS_5TokenE.exit
 
 .lr.ph.i:                                         ; preds = %bb.al
+  %3 = zext i1 %switch.selectcmp.i to i32
   %i.eo = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
   br label %bb.am
 
 bb.am:                                            ; preds = %bb.as, %.lr.ph.i
   %i.ep = phi i64 [ %i.em, %.lr.ph.i ], [ %i.fb, %bb.as ]
-  %indvars.iv.i = phi i64 [ %i.el, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.as ] ; 3 uses
+  %indvars.iv.i = phi i64 [ %i.el, %.lr.ph.i ], [ %5, %bb.as ] ; 2 uses
   %.032.i = phi i64 [ 0, %.lr.ph.i ], [ %i.ey, %bb.as ]
+  %.131.i = phi i32 [ %3, %.lr.ph.i ], [ %4, %bb.as ]
   %i.eq = load ptr, ptr %.sroa.26.0..sroa_idx, align 8, !tbaa !92 ; 2 uses
   %i.er = getelementptr inbounds nuw i8, ptr %i.eq, i64 %indvars.iv.i
   %i.es = load i8, ptr %i.er, align 1, !tbaa !44  ; 2 uses
@@ -236,7 +238,7 @@ bb.ao:                                            ; preds = %bb.am
   %i.ew = zext nneg i8 %i.es to i64
   %i.ex = add i64 %i.ev, -48
   %i.ey = add i64 %i.ex, %i.ew                    ; 4 uses
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
+  %4 = add nuw nsw i32 %.131.i, 1                 ; 2 uses
   %i.ez = icmp sgt i64 %i.ey, 2147483647
   br i1 %i.ez, label %bb.ap, label %bb.aq
 
@@ -255,7 +257,8 @@ bb.ar:                                            ; preds = %bb.aq
 
 bb.as:                                            ; preds = %bb.ar, %bb.aq
   %i.fb = phi i64 [ %i.ep, %bb.aq ], [ %.pre.i, %bb.ar ] ; 2 uses
-  %i.fc = icmp ugt i64 %i.fb, %indvars.iv.next.i
+  %5 = zext nneg i32 %4 to i64                    ; 2 uses
+  %i.fc = icmp ugt i64 %i.fb, %5
   br i1 %i.fc, label %bb.am, label %_ZN4pbrtL8parseIntERKNS_5TokenE.exit, !llvm.loop !1797
 
 _ZN4pbrtL8parseIntERKNS_5TokenE.exit:             ; preds = %bb.as, %bb.al

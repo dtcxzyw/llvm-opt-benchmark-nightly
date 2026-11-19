@@ -202,14 +202,15 @@ bb.e:                                             ; preds = %bb.c
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.f, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.f ]
   %.113.i = phi ptr [ %.111.i, %.lr.ph.i ], [ %.1.i, %bb.f ]
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
+  %.012.i = phi i32 [ 0, %.lr.ph.i ], [ %2, %bb.f ]
+  %2 = add nuw nsw i32 %.012.i, 1                 ; 2 uses
   %.2.in.i = getelementptr inbounds nuw i8, ptr %.113.i, i64 %.2.in.idx.i
   %.1.i = load ptr, ptr %.2.in.i, align 8, !tbaa !45 ; 3 uses
   %i.v = icmp ne ptr %.1.i, null
-  %2 = icmp sgt i64 %i.h, %indvars.iv.next.i
-  %i.w = select i1 %i.v, i1 %2, i1 false
+  %3 = zext nneg i32 %2 to i64
+  %4 = icmp samesign ugt i64 %i.h, %3
+  %i.w = select i1 %i.v, i1 %4, i1 false
   br i1 %i.w, label %bb.f, label %spl_ptr_llist_offset.exit, !llvm.loop !0
 
 spl_ptr_llist_offset.exit:                        ; preds = %bb.f, %bb.e
@@ -383,14 +384,15 @@ bb.k:                                             ; preds = %bb.i
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.l, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.l ]
   %.113.i = phi ptr [ %.111.i, %.lr.ph.i ], [ %.1.i, %bb.l ]
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
+  %.012.i = phi i32 [ 0, %.lr.ph.i ], [ %3, %bb.l ]
+  %3 = add nuw nsw i32 %.012.i, 1                 ; 2 uses
   %.2.in.i = getelementptr inbounds nuw i8, ptr %.113.i, i64 %.2.in.idx.i
   %.1.i = load ptr, ptr %.2.in.i, align 8, !tbaa !45 ; 3 uses
   %i.as = icmp ne ptr %.1.i, null
-  %3 = icmp sgt i64 %i.af, %indvars.iv.next.i
-  %i.at = select i1 %i.as, i1 %3, i1 false
+  %4 = zext nneg i32 %3 to i64
+  %5 = icmp samesign ugt i64 %i.af, %4
+  %i.at = select i1 %i.as, i1 %5, i1 false
   br i1 %i.at, label %bb.l, label %spl_ptr_llist_offset.exit, !llvm.loop !0
 
 spl_ptr_llist_offset.exit:                        ; preds = %bb.l, %bb.k
@@ -494,14 +496,15 @@ bb.e:                                             ; preds = %bb.c
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.f, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.f ]
   %.113.i = phi ptr [ %.111.i, %.lr.ph.i ], [ %.1.i, %bb.f ]
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
+  %.012.i = phi i32 [ 0, %.lr.ph.i ], [ %2, %bb.f ]
+  %2 = add nuw nsw i32 %.012.i, 1                 ; 2 uses
   %.2.in.i = getelementptr inbounds nuw i8, ptr %.113.i, i64 %.2.in.idx.i
   %.1.i = load ptr, ptr %.2.in.i, align 8, !tbaa !45 ; 3 uses
   %i.v = icmp ne ptr %.1.i, null
-  %2 = icmp sgt i64 %i.j, %indvars.iv.next.i
-  %i.w = select i1 %i.v, i1 %2, i1 false
+  %3 = zext nneg i32 %2 to i64
+  %4 = icmp samesign ugt i64 %i.j, %3
+  %i.w = select i1 %i.v, i1 %4, i1 false
   br i1 %i.w, label %bb.f, label %spl_ptr_llist_offset.exit, !llvm.loop !0
 
 spl_ptr_llist_offset.exit:                        ; preds = %bb.f, %bb.e
@@ -904,14 +907,15 @@ bb.k:                                             ; preds = %bb.e
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.l, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.l ]
   %.113.i = phi ptr [ %.111.i, %.lr.ph.i ], [ %.1.i, %bb.l ]
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
+  %.012.i = phi i32 [ 0, %.lr.ph.i ], [ %2, %bb.l ]
+  %2 = add nuw nsw i32 %.012.i, 1                 ; 2 uses
   %.2.in.i = getelementptr inbounds nuw i8, ptr %.113.i, i64 %.2.in.idx.i
   %.1.i = load ptr, ptr %.2.in.i, align 8, !tbaa !45 ; 3 uses
   %i.as = icmp ne ptr %.1.i, null
-  %2 = icmp sgt i64 %i.al, %indvars.iv.next.i
-  %i.at = select i1 %i.as, i1 %2, i1 false
+  %3 = zext nneg i32 %2 to i64
+  %4 = icmp samesign ugt i64 %i.al, %3
+  %i.at = select i1 %i.as, i1 %4, i1 false
   br i1 %i.at, label %bb.l, label %spl_ptr_llist_offset.exit, !llvm.loop !0
 
 spl_ptr_llist_offset.exit:                        ; preds = %bb.l, %bb.k

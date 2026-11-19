@@ -204,7 +204,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit255: ; preds = %bb
 .tail.thread:                                     ; preds = %sub_0, %bb.bn, %.tail
   %.1160 = phi i32 [ %.0156, %bb.bn ], [ %.0159, %.tail ], [ %.0159, %sub_0 ]
   %.1158 = phi i32 [ %i.gd, %bb.bn ], [ %.0157, %.tail ], [ %.0157, %sub_0 ]
-  %i.gk = add nuw i32 %.0156, 1
+  %i.gk = add i32 %.0156, 1
   %i.gl = call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.0446.0) #23
   br label %.preheader558, !llvm.loop !88
 
@@ -459,8 +459,8 @@ bb.cl:                                            ; preds = %bb.ck
           to label %.preheader548 unwind label %.loopexit.split-lp550.loopexit.split-lp
 
 .preheader548:                                    ; preds = %bb.cl, %bb.cr
-  %indvars.iv1310 = phi i64 [ %indvars.iv.next1311, %bb.cr ], [ 0, %bb.cl ] ; 2 uses
   %.sroa.0402.0 = phi ptr [ %i.je, %bb.cr ], [ %i.iu, %bb.cl ] ; 4 uses
+  %.0154 = phi i32 [ %22, %bb.cr ], [ 0, %bb.cl ] ; 2 uses
   %i.iv = invoke ptr @_ZNK7Imf_3_411ChannelList3endEv(ptr noundef nonnull align 8 dereferenceable(48) %i.eb)
           to label %bb.cm unwind label %.loopexit.split-lp550.loopexit.split-lp
 
@@ -503,7 +503,8 @@ bb.cp:                                            ; preds = %bb.cm
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #24
   %i.iy = getelementptr inbounds nuw i8, ptr %.sroa.0402.0, i64 288
   %i.iz = load i32, ptr %i.iy, align 4, !tbaa !116
-  %i.ja = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0421.01502, i64 %indvars.iv1310
+  %21 = zext nneg i32 %.0154 to i64
+  %i.ja = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0421.01502, i64 %21
   %i.jb = load ptr, ptr %i.ja, align 8, !tbaa !64
   %i.jc = getelementptr inbounds i8, ptr %i.jb, i64 %i.is
   invoke void @_ZN7Imf_3_49DeepSliceC1ENS_9PixelTypeEPcmmmiidbb(ptr noundef nonnull align 8 dereferenceable(56) %13, i32 noundef %i.iz, ptr noundef %i.jc, i64 noundef 8, i64 noundef 0, i64 noundef 4, i32 noundef 1, i32 noundef 1, double noundef 0.000000e+00, i1 noundef zeroext false, i1 noundef zeroext false)
@@ -517,7 +518,7 @@ bb.cq:                                            ; preds = %bb.cp
 bb.cr:                                            ; preds = %bb.cq
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #24
   %i.je = call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.0402.0) #23
-  %indvars.iv.next1311 = add nuw nsw i64 %indvars.iv1310, 1
+  %22 = add nuw nsw i32 %.0154, 1
   br label %.preheader548, !llvm.loop !91
 
 bb.cs:                                            ; preds = %bb.cq, %bb.cp

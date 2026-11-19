@@ -205,13 +205,13 @@ bb.c:                                             ; preds = %bb.a
   call void @qsort(ptr noundef nonnull %i.i, i64 noundef %i.au, i64 noundef 8, ptr noundef nonnull @iq2_compare_func) #14, !llvm.access.group !522
   %i.av = load ptr, ptr %6, align 8, !tbaa !75, !llvm.access.group !522
   %i.aw = getelementptr inbounds [4 x i8], ptr %i.av, i64 %indvars.iv110
-  %i.ax = load i32, ptr %i.aw, align 4, !tbaa !47, !llvm.access.group !522 ; 2 uses
+  %i.ax = load i32, ptr %i.aw, align 4, !tbaa !47, !llvm.access.group !522 ; 3 uses
   %i.ay = xor i32 %i.ax, -1
   %i.az = load ptr, ptr %4, align 8, !tbaa !75, !llvm.access.group !522 ; 2 uses
   %i.ba = getelementptr inbounds [4 x i8], ptr %i.az, i64 %indvars.iv110
   store i32 %i.ay, ptr %i.ba, align 4, !tbaa !47, !llvm.access.group !522
   %i.bb = load ptr, ptr %7, align 8, !tbaa !77, !llvm.access.group !522 ; 2 uses
-  %i.bc = sext i32 %i.ax to i64                   ; 2 uses
+  %i.bc = sext i32 %i.ax to i64
   %i.bd = getelementptr inbounds [2 x i8], ptr %i.bb, i64 %i.bc
   %i.be = load i32, ptr %2, align 4, !tbaa !47, !llvm.access.group !522 ; 3 uses
   %i.bf = icmp sgt i32 %i.be, 0
@@ -283,11 +283,11 @@ bb.d:                                             ; preds = %.lr.ph, %bb.d
 
 .lr.ph87:                                         ; preds = %.lr.ph87.preheader, %bb.g
   %indvars.iv105 = phi i64 [ 0, %.lr.ph87.preheader ], [ %indvars.iv.next106, %bb.g ] ; 2 uses
-  %indvars.iv103 = phi i64 [ %i.bc, %.lr.ph87.preheader ], [ %indvars.iv.next104, %bb.g ]
+  %.06485.in = phi i32 [ %i.ax, %.lr.ph87.preheader ], [ %.06485, %bb.g ]
   %.084 = phi i32 [ 0, %.lr.ph87.preheader ], [ %i.dp, %bb.g ] ; 2 uses
   %.06083 = phi i32 [ 1, %.lr.ph87.preheader ], [ %.1, %bb.g ] ; 3 uses
   %.06281 = phi i32 [ %i.bg, %.lr.ph87.preheader ], [ %.163, %bb.g ] ; 2 uses
-  %indvars.iv.next104 = add nsw i64 %indvars.iv103, 1 ; 2 uses
+  %.06485 = add nsw i32 %.06485.in, 1             ; 2 uses
   %.idx132 = shl nuw nsw i64 %indvars.iv105, 3
   %i.df = getelementptr inbounds nuw i8, ptr %i.i, i64 %.idx132 ; 2 uses
   %i.dg = load i32, ptr %i.df, align 4, !tbaa !47, !llvm.access.group !522 ; 2 uses
@@ -309,7 +309,8 @@ bb.g:                                             ; preds = %bb.f, %.lr.ph87
   %i.dl = getelementptr inbounds nuw i8, ptr %i.df, i64 4
   %i.dm = load i32, ptr %i.dl, align 4, !tbaa !47, !llvm.access.group !522
   %i.dn = trunc i32 %i.dm to i16
-  %i.do = getelementptr inbounds [2 x i8], ptr %i.bb, i64 %indvars.iv.next104
+  %9 = sext i32 %.06485 to i64
+  %i.do = getelementptr inbounds [2 x i8], ptr %i.bb, i64 %9
   store i16 %i.dn, ptr %i.do, align 2, !tbaa !57, !llvm.access.group !522
   %i.dp = add nuw nsw i32 %.084, 1
   %indvars.iv.next106 = add nuw nsw i64 %indvars.iv105, 1 ; 2 uses
@@ -712,13 +713,13 @@ bb.c:                                             ; preds = %bb.a
   call void @qsort(ptr noundef nonnull %i.i, i64 noundef %i.ai, i64 noundef 8, ptr noundef nonnull @iq3_compare_func) #14, !llvm.access.group !571
   %i.aj = load ptr, ptr %6, align 8, !tbaa !75, !llvm.access.group !571
   %i.ak = getelementptr inbounds [4 x i8], ptr %i.aj, i64 %indvars.iv110
-  %i.al = load i32, ptr %i.ak, align 4, !tbaa !47, !llvm.access.group !571 ; 2 uses
+  %i.al = load i32, ptr %i.ak, align 4, !tbaa !47, !llvm.access.group !571 ; 3 uses
   %i.am = xor i32 %i.al, -1
   %i.an = load ptr, ptr %4, align 8, !tbaa !75, !llvm.access.group !571 ; 2 uses
   %i.ao = getelementptr inbounds [4 x i8], ptr %i.an, i64 %indvars.iv110
   store i32 %i.am, ptr %i.ao, align 4, !tbaa !47, !llvm.access.group !571
   %i.ap = load ptr, ptr %7, align 8, !tbaa !77, !llvm.access.group !571 ; 2 uses
-  %i.aq = sext i32 %i.al to i64                   ; 2 uses
+  %i.aq = sext i32 %i.al to i64
   %i.ar = getelementptr inbounds [2 x i8], ptr %i.ap, i64 %i.aq
   %i.as = load i32, ptr %2, align 4, !tbaa !47, !llvm.access.group !571 ; 3 uses
   %i.at = icmp sgt i32 %i.as, 0
@@ -766,11 +767,11 @@ bb.d:                                             ; preds = %.lr.ph, %bb.d
 
 .lr.ph87:                                         ; preds = %.lr.ph87.preheader, %bb.g
   %indvars.iv105 = phi i64 [ 0, %.lr.ph87.preheader ], [ %indvars.iv.next106, %bb.g ] ; 2 uses
-  %indvars.iv103 = phi i64 [ %i.aq, %.lr.ph87.preheader ], [ %indvars.iv.next104, %bb.g ]
+  %.06485.in = phi i32 [ %i.al, %.lr.ph87.preheader ], [ %.06485, %bb.g ]
   %.084 = phi i32 [ 0, %.lr.ph87.preheader ], [ %i.cf, %bb.g ] ; 2 uses
   %.06083 = phi i32 [ 1, %.lr.ph87.preheader ], [ %.1, %bb.g ] ; 3 uses
   %.06281 = phi i32 [ %i.au, %.lr.ph87.preheader ], [ %.163, %bb.g ] ; 2 uses
-  %indvars.iv.next104 = add nsw i64 %indvars.iv103, 1 ; 2 uses
+  %.06485 = add nsw i32 %.06485.in, 1             ; 2 uses
   %.idx124 = shl nuw nsw i64 %indvars.iv105, 3
   %i.bv = getelementptr inbounds nuw i8, ptr %i.i, i64 %.idx124 ; 2 uses
   %i.bw = load i32, ptr %i.bv, align 4, !tbaa !47, !llvm.access.group !571 ; 2 uses
@@ -792,7 +793,8 @@ bb.g:                                             ; preds = %bb.f, %.lr.ph87
   %i.cb = getelementptr inbounds nuw i8, ptr %i.bv, i64 4
   %i.cc = load i32, ptr %i.cb, align 4, !tbaa !47, !llvm.access.group !571
   %i.cd = trunc i32 %i.cc to i16
-  %i.ce = getelementptr inbounds [2 x i8], ptr %i.ap, i64 %indvars.iv.next104
+  %9 = sext i32 %.06485 to i64
+  %i.ce = getelementptr inbounds [2 x i8], ptr %i.ap, i64 %9
   store i16 %i.cd, ptr %i.ce, align 2, !tbaa !57, !llvm.access.group !571
   %i.cf = add nuw nsw i32 %.084, 1
   %indvars.iv.next106 = add nuw nsw i64 %indvars.iv105, 1 ; 2 uses

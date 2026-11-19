@@ -205,12 +205,13 @@ _ZN6casadi34BlazingSplineIncrementalSerializerC2Ev.exit: ; preds = %.noexc102
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.bj, %_ZN6casadi34BlazingSplineIncrementalSerializerC2Ev.exit
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.bj ], [ 0, %_ZN6casadi34BlazingSplineIncrementalSerializerC2Ev.exit ] ; 3 uses
+  %.0 = phi i32 [ 0, %_ZN6casadi34BlazingSplineIncrementalSerializerC2Ev.exit ], [ %28, %bb.bj ] ; 2 uses
+  %27 = zext nneg i32 %.0 to i64                  ; 2 uses
   %i.br = invoke noundef i64 @_ZNK6casadi8Function14n_instructionsEv(ptr noundef nonnull align 8 dereferenceable(8) %7)
           to label %bb.k unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.k:                                             ; preds = %bb.j
-  %i.bs = icmp sgt i64 %i.br, %indvars.iv
+  %i.bs = icmp sgt i64 %i.br, %27
   br i1 %i.bs, label %bb.o, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
@@ -290,7 +291,7 @@ bb.n:                                             ; preds = %_ZNSt7__cxx1112basi
 
 bb.o:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #26
-  invoke void @_ZNK6casadi8Function14instruction_MXEx(ptr dead_on_unwind nonnull writable sret(%"class.casadi::MX") align 8 %16, ptr noundef nonnull align 8 dereferenceable(8) %7, i64 noundef %indvars.iv)
+  invoke void @_ZNK6casadi8Function14instruction_MXEx(ptr dead_on_unwind nonnull writable sret(%"class.casadi::MX") align 8 %16, ptr noundef nonnull align 8 dereferenceable(8) %7, i64 noundef %27)
           to label %bb.p unwind label %bb.ag
 
 bb.p:                                             ; preds = %bb.o
@@ -635,7 +636,7 @@ bb.bi:                                            ; preds = %bb.bh, %bb.ai
 bb.bj:                                            ; preds = %_ZNSt6vectorIN6casadi2MXESaIS1_EE9push_backERKS1_.exit, %bb.q
   call void @_ZN6casadi2MXD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %16) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #26
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %28 = add nuw nsw i32 %.0, 1
   br label %bb.j, !llvm.loop !383
 
 bb.bk:                                            ; preds = %bb.bi, %bb.ah

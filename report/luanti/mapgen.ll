@@ -205,7 +205,7 @@ _ZN6Mapgen15findGroundLevelEN4core8vector2dIsEEss.exit.us.us: ; preds = %_ZN6Map
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph.split.split, %._crit_edge.split
-  %.022 = phi i64 [ 0, %.preheader.lr.ph.split.split ], [ %indvars.iv.next, %._crit_edge.split ]
+  %.022 = phi i32 [ 0, %.preheader.lr.ph.split.split ], [ %4, %._crit_edge.split ]
   %.01321 = phi i16 [ %.sroa.311.0.extract.trunc, %.preheader.lr.ph.split.split ], [ %i.ba, %._crit_edge.split ] ; 2 uses
   %i.az = sext i16 %.01321 to i32
   br label %.lr.ph.i
@@ -217,7 +217,7 @@ _ZN6Mapgen15findGroundLevelEN4core8vector2dIsEEss.exit.us.us: ; preds = %_ZN6Map
   br i1 %.not14, label %.loopexit, label %.preheader, !llvm.loop !287
 
 .lr.ph.i:                                         ; preds = %.preheader, %_ZN6Mapgen15findGroundLevelEN4core8vector2dIsEEss.exit.loopexit
-  %indvars.iv = phi i64 [ %.022, %.preheader ], [ %indvars.iv.next, %_ZN6Mapgen15findGroundLevelEN4core8vector2dIsEEss.exit.loopexit ] ; 2 uses
+  %.119 = phi i32 [ %.022, %.preheader ], [ %4, %_ZN6Mapgen15findGroundLevelEN4core8vector2dIsEEss.exit.loopexit ] ; 2 uses
   %.01218 = phi i16 [ %.sroa.09.0.extract.trunc, %.preheader ], [ %i.cg, %_ZN6Mapgen15findGroundLevelEN4core8vector2dIsEEss.exit.loopexit ] ; 2 uses
   %i.bc = sext i16 %.01218 to i32
   %i.bd = load i16, ptr %i.h, align 8, !tbaa !95
@@ -270,10 +270,11 @@ bb.f:                                             ; preds = %_ZNK14NodeDefManage
 
 _ZN6Mapgen15findGroundLevelEN4core8vector2dIsEEss.exit.loopexit: ; preds = %bb.f, %_ZNK14NodeDefManager3getERK7MapNode.exit.i
   %narrow.i.ph = phi i16 [ -31007, %bb.f ], [ %.01120.i, %_ZNK14NodeDefManager3getERK7MapNode.exit.i ]
-  %i.cf = getelementptr inbounds [2 x i8], ptr %i.b, i64 %indvars.iv
+  %3 = sext i32 %.119 to i64
+  %i.cf = getelementptr inbounds [2 x i8], ptr %i.b, i64 %3
   store i16 %narrow.i.ph, ptr %i.cf, align 2, !tbaa !68
   %i.cg = add i16 %.01218, 1                      ; 2 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
+  %4 = add nsw i32 %.119, 1                       ; 2 uses
   %.not15 = icmp sgt i16 %i.cg, %.sroa.0.0.extract.trunc
   br i1 %.not15, label %._crit_edge.split, label %.lr.ph.i, !llvm.loop !288
 

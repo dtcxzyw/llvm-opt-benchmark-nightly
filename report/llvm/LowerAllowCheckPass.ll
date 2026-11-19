@@ -202,7 +202,7 @@ _ZN4llvm11raw_ostreamlsEPKc.exit:                 ; preds = %bb.e, %bb.f
   br i1 %.not, label %bb.t, label %_ZN4llvm13ListSeparatorcvNS_9StringRefEEv.exit32
 
 .lr.ph:                                           ; preds = %_ZN4llvm11raw_ostreamlsEPKc.exit, %bb.n
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.n ], [ 0, %_ZN4llvm11raw_ostreamlsEPKc.exit ] ; 2 uses
+  %.067 = phi i32 [ %5, %bb.n ], [ 0, %_ZN4llvm11raw_ostreamlsEPKc.exit ] ; 2 uses
   %.sroa.041.066 = phi ptr [ %i.bk, %bb.n ], [ %i.u, %_ZN4llvm11raw_ostreamlsEPKc.exit ] ; 2 uses
   %.sroa.050.065 = phi i8 [ %.sroa.050.1, %bb.n ], [ 1, %_ZN4llvm11raw_ostreamlsEPKc.exit ] ; 2 uses
   %i.aa = load i32, ptr %.sroa.041.066, align 4, !tbaa !51 ; 2 uses
@@ -263,7 +263,8 @@ bb.k:                                             ; preds = %_ZN4llvm11raw_ostre
 
 _ZN4llvm11raw_ostreamlsEPKc.exit21:               ; preds = %bb.j, %bb.k
   %.0.i.i20 = phi ptr [ %i.as, %bb.j ], [ %.0.i, %bb.k ]
-  %i.aw = tail call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostreamlsEl(ptr noundef nonnull align 8 dereferenceable(48) %.0.i.i20, i64 noundef %indvars.iv) #14 ; 4 uses
+  %4 = zext nneg i32 %.067 to i64
+  %i.aw = tail call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostreamlsEl(ptr noundef nonnull align 8 dereferenceable(48) %.0.i.i20, i64 noundef %4) #14 ; 4 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 24
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !212
   %i.az = getelementptr inbounds nuw i8, ptr %i.aw, i64 32 ; 3 uses
@@ -293,7 +294,7 @@ _ZN4llvm11raw_ostreamlsEPKc.exit24:               ; preds = %bb.l, %bb.m
 
 bb.n:                                             ; preds = %_ZN4llvm11raw_ostreamlsEPKc.exit24, %.lr.ph
   %.sroa.050.1 = phi i8 [ %.sroa.050.065, %.lr.ph ], [ 0, %_ZN4llvm11raw_ostreamlsEPKc.exit24 ] ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %5 = add nuw nsw i32 %.067, 1
   %i.bk = getelementptr inbounds nuw i8, ptr %.sroa.041.066, i64 4 ; 2 uses
   %.not62 = icmp eq ptr %i.bk, %i.w
   br i1 %.not62, label %._crit_edge.loopexit, label %.lr.ph

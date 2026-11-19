@@ -202,21 +202,21 @@ _ZN5Eigen16CommaInitializerINS_5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1E
 
 .preheader629.us.us.us677:                        ; preds = %._crit_edge641.split.us.split.split.us.us.us.us, %.preheader629.lr.ph.split.us.split.us.split.us676
   %.0129661.us.us.us678 = phi i32 [ 0, %.preheader629.lr.ph.split.us.split.us.split.us676 ], [ %i.dn, %._crit_edge641.split.us.split.split.us.us.us.us ] ; 6 uses
-  %.0130660.us.us.us679 = phi i64 [ 0, %.preheader629.lr.ph.split.us.split.us.split.us676 ], [ %indvars.iv.next, %._crit_edge641.split.us.split.split.us.us.us.us ]
+  %.0130660.us.us.us679 = phi i32 [ 0, %.preheader629.lr.ph.split.us.split.us.split.us676 ], [ %6, %._crit_edge641.split.us.split.split.us.us.us.us ]
   %i.dn = add nuw nsw i32 %.0129661.us.us.us678, 1 ; 6 uses
   br label %.preheader.us.us651.us.us.us
 
 .preheader.us.us651.us.us.us:                     ; preds = %._crit_edge.split.split.us.us.us.us.us.us, %.preheader629.us.us.us677
   %.0128638.us.us652.us.us.us = phi i32 [ 0, %.preheader629.us.us.us677 ], [ %i.do, %._crit_edge.split.split.us.us.us.us.us.us ] ; 4 uses
-  %.1637.us.us653.us.us.us = phi i64 [ %.0130660.us.us.us679, %.preheader629.us.us.us677 ], [ %indvars.iv.next, %._crit_edge.split.split.us.us.us.us.us.us ]
+  %.1637.us.us653.us.us.us = phi i32 [ %.0130660.us.us.us679, %.preheader629.us.us.us677 ], [ %6, %._crit_edge.split.split.us.us.us.us.us.us ]
   %i.do = add nuw nsw i32 %.0128638.us.us652.us.us.us, 1 ; 4 uses
   %i.dp = xor i32 %.0128638.us.us652.us.us.us, %.0129661.us.us.us678
   br label %bb.a
 
 bb.a:                                             ; preds = %bb.d, %.preheader.us.us651.us.us.us
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.d ], [ %.1637.us.us653.us.us.us, %.preheader.us.us651.us.us.us ] ; 2 uses
-  %.0127631.us633.us.us.us.us.us.a = phi i32 [ %i.dz, %bb.d ], [ 0, %.preheader.us.us651.us.us.us ] ; 3 uses
-  %i.dq = mul nuw nsw i32 %.0127631.us633.us.us.us.us.us.a, %i.c ; 2 uses
+  %.0127631.us633.us.us.us.us.us = phi i32 [ 0, %.preheader.us.us651.us.us.us ], [ %i.dz, %bb.d ] ; 3 uses
+  %.0127631.us633.us.us.us.us.us.a = phi i32 [ %.1637.us.us653.us.us.us, %.preheader.us.us651.us.us.us ], [ %6, %bb.d ] ; 2 uses
+  %i.dq = mul nuw nsw i32 %.0127631.us633.us.us.us.us.us, %i.c ; 2 uses
   %i.dr = add nuw nsw i32 %i.dq, %.0128638.us.us652.us.us.us
   %i.ds = mul nuw nsw i32 %i.dr, %i.a             ; 2 uses
   %i.dt = add nuw nsw i32 %i.ds, %.0129661.us.us.us678 ; 2 uses
@@ -225,7 +225,7 @@ bb.a:                                             ; preds = %bb.d, %.preheader.u
   %i.dw = add nuw nsw i32 %i.dv, %.0129661.us.us.us678 ; 2 uses
   %i.dx = add nuw nsw i32 %i.ds, %i.dn            ; 2 uses
   %i.dy = add nuw nsw i32 %i.dv, %i.dn            ; 2 uses
-  %i.dz = add nuw nsw i32 %.0127631.us633.us.us.us.us.us.a, 1 ; 3 uses
+  %i.dz = add nuw nsw i32 %.0127631.us633.us.us.us.us.us, 1 ; 3 uses
   %i.ea = mul nuw nsw i32 %i.dz, %i.c             ; 2 uses
   %i.eb = add nuw nsw i32 %i.ea, %.0128638.us.us652.us.us.us
   %i.ec = mul nuw nsw i32 %i.eb, %i.a             ; 2 uses
@@ -235,7 +235,7 @@ bb.a:                                             ; preds = %bb.d, %.preheader.u
   %i.eg = add nuw nsw i32 %i.ef, %.0129661.us.us.us678 ; 2 uses
   %i.eh = add nuw nsw i32 %i.ec, %i.dn            ; 2 uses
   %i.ei = add nuw nsw i32 %i.ef, %i.dn            ; 2 uses
-  %i.ej = xor i32 %i.dp, %.0127631.us633.us.us.us.us.us.a
+  %i.ej = xor i32 %i.dp, %.0127631.us633.us.us.us.us.us
   %i.ek = and i32 %i.ej, 1
   %.not.us.us.us.us.us.us = icmp eq i32 %i.ek, 0  ; 2 uses
   br i1 %.not.us.us.us.us.us.us, label %_ZN5Eigen16CommaInitializerINS_5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEEcmERKi.exit205.us.us.us.us.us.us, label %bb.b
@@ -252,20 +252,21 @@ _ZN5Eigen16CommaInitializerINS_5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1E
   %.0475.us.us.us.us.us.us = phi i32 [ %i.eg, %bb.a ], [ %i.ei, %bb.b ]
   %.0474.us.us.us.us.us.us = phi i32 [ %i.eh, %bb.a ], [ %i.ed, %bb.b ]
   %.0.us.us.us.us.us.us = phi i32 [ %i.ei, %bb.a ], [ %i.eg, %bb.b ] ; 4 uses
-  %.idx = mul i64 %indvars.iv, 20
-  %3 = getelementptr i8, ptr %i.cy, i64 %.idx     ; 11 uses
-  store i32 %.0476.us.us.us.us.us.us, ptr %3, align 4, !tbaa !45, !noalias !55
-  %i.el = getelementptr [4 x i8], ptr %3, i64 %i.dd
+  %3 = mul nsw i32 %.0127631.us633.us.us.us.us.us.a, 5
+  %4 = sext i32 %3 to i64
+  %5 = getelementptr [4 x i8], ptr %i.cy, i64 %4  ; 11 uses
+  store i32 %.0476.us.us.us.us.us.us, ptr %5, align 4, !tbaa !45, !noalias !55
+  %i.el = getelementptr [4 x i8], ptr %5, i64 %i.dd
   %i.em = getelementptr [4 x i8], ptr %i.el, i64 %.sroa.6321.0.us.us.us.us.us.us
   store i32 %.0478.us.us.us.us.us.us, ptr %i.em, align 4, !tbaa !45
-  %i.en = getelementptr [4 x i8], ptr %3, i64 %i.di
+  %i.en = getelementptr [4 x i8], ptr %5, i64 %i.di
   %i.eo = getelementptr [4 x i8], ptr %i.en, i64 %.sroa.6321.1.us.us.us.us.us.us
   store i32 %.0479.us.us.us.us.us.us, ptr %i.eo, align 4, !tbaa !45
-  %i.ep = getelementptr [4 x i8], ptr %3, i64 %i.dm
+  %i.ep = getelementptr [4 x i8], ptr %5, i64 %i.dm
   %i.eq = getelementptr [4 x i8], ptr %i.ep, i64 %.sroa.6321.1.us.us.us.us.us.us
   %i.er = getelementptr [4 x i8], ptr %i.eq, i64 %i.dl
   store i32 %.0480.us.us.us.us.us.us, ptr %i.er, align 4, !tbaa !45
-  %i.es = getelementptr i8, ptr %3, i64 4         ; 7 uses
+  %i.es = getelementptr i8, ptr %5, i64 4         ; 7 uses
   store i32 %.0478.us.us.us.us.us.us, ptr %i.es, align 4, !tbaa !45, !noalias !56
   %i.et = getelementptr [4 x i8], ptr %i.es, i64 %i.dd
   %i.eu = getelementptr [4 x i8], ptr %i.et, i64 %.sroa.6321.0.us.us.us.us.us.us
@@ -277,7 +278,7 @@ _ZN5Eigen16CommaInitializerINS_5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1E
   %i.ey = getelementptr [4 x i8], ptr %i.ex, i64 %.sroa.6321.1.us.us.us.us.us.us
   %i.ez = getelementptr [4 x i8], ptr %i.ey, i64 %i.dl
   store i32 %.0476.us.us.us.us.us.us, ptr %i.ez, align 4, !tbaa !45
-  %i.fa = getelementptr i8, ptr %3, i64 8         ; 7 uses
+  %i.fa = getelementptr i8, ptr %5, i64 8         ; 7 uses
   store i32 %.0478.us.us.us.us.us.us, ptr %i.fa, align 4, !tbaa !45, !noalias !57
   %i.fb = getelementptr [4 x i8], ptr %i.fa, i64 %i.dd
   %i.fc = getelementptr [4 x i8], ptr %i.fb, i64 %.sroa.6321.0.us.us.us.us.us.us
@@ -289,7 +290,7 @@ _ZN5Eigen16CommaInitializerINS_5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1E
   %i.fg = getelementptr [4 x i8], ptr %i.ff, i64 %.sroa.6321.1.us.us.us.us.us.us
   %i.fh = getelementptr [4 x i8], ptr %i.fg, i64 %i.dl
   store i32 %.0479.us.us.us.us.us.us, ptr %i.fh, align 4, !tbaa !45
-  %i.fi = getelementptr i8, ptr %3, i64 12        ; 7 uses
+  %i.fi = getelementptr i8, ptr %5, i64 12        ; 7 uses
   store i32 %.0478.us.us.us.us.us.us, ptr %i.fi, align 4, !tbaa !45, !noalias !58
   %i.fj = getelementptr [4 x i8], ptr %i.fi, i64 %i.dd
   %i.fk = getelementptr [4 x i8], ptr %i.fj, i64 %.sroa.6321.0.us.us.us.us.us.us
@@ -301,7 +302,7 @@ _ZN5Eigen16CommaInitializerINS_5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1E
   %i.fo = getelementptr [4 x i8], ptr %i.fn, i64 %.sroa.6321.1.us.us.us.us.us.us
   %i.fp = getelementptr [4 x i8], ptr %i.fo, i64 %i.dl
   store i32 %.0476.us.us.us.us.us.us, ptr %i.fp, align 4, !tbaa !45
-  %i.fq = getelementptr i8, ptr %3, i64 16        ; 7 uses
+  %i.fq = getelementptr i8, ptr %5, i64 16        ; 7 uses
   store i32 %.0479.us.us.us.us.us.us, ptr %i.fq, align 4, !tbaa !45, !noalias !59
   %i.fr = getelementptr [4 x i8], ptr %i.fq, i64 %i.dd
   %i.fs = getelementptr [4 x i8], ptr %i.fr, i64 %.sroa.6321.0.us.us.us.us.us.us
@@ -316,10 +317,10 @@ _ZN5Eigen16CommaInitializerINS_5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1E
   br i1 %.not.us.us.us.us.us.us, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %_ZN5Eigen16CommaInitializerINS_5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEEcmERKi.exit205.us.us.us.us.us.us
-  %i.fy = getelementptr [4 x i8], ptr %3, i64 %i.dc ; 2 uses
-  %i.fz = load i32, ptr %3, align 4, !tbaa !45
+  %i.fy = getelementptr [4 x i8], ptr %5, i64 %i.dc ; 2 uses
+  %i.fz = load i32, ptr %5, align 4, !tbaa !45
   %i.ga = load i32, ptr %i.fy, align 4, !tbaa !45
-  store i32 %i.ga, ptr %3, align 4, !tbaa !45
+  store i32 %i.ga, ptr %5, align 4, !tbaa !45
   store i32 %i.fz, ptr %i.fy, align 4, !tbaa !45
   %i.gb = getelementptr [4 x i8], ptr %i.es, i64 %i.dc ; 2 uses
   %i.gc = load i32, ptr %i.es, align 4, !tbaa !45
@@ -344,7 +345,7 @@ bb.c:                                             ; preds = %_ZN5Eigen16CommaIni
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %_ZN5Eigen16CommaInitializerINS_5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEEcmERKi.exit205.us.us.us.us.us.us
-  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 3 uses
+  %6 = add nsw i32 %.0127631.us633.us.us.us.us.us.a, 1 ; 3 uses
   %exitcond.not = icmp eq i32 %i.dz, %i.h
   br i1 %exitcond.not, label %._crit_edge.split.split.us.us.us.us.us.us, label %bb.a, !llvm.loop !30
 

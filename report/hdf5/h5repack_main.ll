@@ -204,7 +204,7 @@ bb.ad:                                            ; preds = %bb.ac
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ai, %bb.ad
-  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %bb.ai ], [ 0, %bb.ad ] ; 3 uses
+  %.022.i.i = phi i32 [ 0, %bb.ad ], [ %7, %bb.ai ] ; 2 uses
   %i.cy = call i32 (ptr, ptr, ...) @__isoc23_fscanf(ptr noundef nonnull %i.bx, ptr noundef nonnull @.str.256, ptr noundef nonnull %i.c) #15
   %i.cz = icmp slt i32 %i.cy, 0
   br i1 %i.cz, label %bb.af, label %bb.ah
@@ -220,14 +220,15 @@ bb.ag:                                            ; preds = %bb.af
 
 bb.ah:                                            ; preds = %bb.af, %bb.ae
   %i.db = load i8, ptr %i.c, align 1, !tbaa !26
-  %i.dc = getelementptr inbounds nuw i8, ptr %i.b, i64 %indvars.iv.i.i
+  %6 = zext nneg i32 %.022.i.i to i64             ; 2 uses
+  %i.dc = getelementptr inbounds nuw i8, ptr %i.b, i64 %6
   store i8 %i.db, ptr %i.dc, align 1, !tbaa !26
   %i.dd = call i32 @feof(ptr noundef nonnull %i.bx) #15
   %.not28.i.i = icmp eq i32 %i.dd, 0
   br i1 %.not28.i.i, label %bb.ai, label %bb.aj
 
 bb.ai:                                            ; preds = %bb.ah
-  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1
+  %7 = add nuw nsw i32 %.022.i.i, 1
   %i.de = load i8, ptr %i.c, align 1, !tbaa !26
   switch i8 %i.de, label %bb.ae [
     i8 32, label %bb.aj
@@ -235,7 +236,7 @@ bb.ai:                                            ; preds = %bb.ah
   ]
 
 bb.aj:                                            ; preds = %bb.ai, %bb.ai, %bb.ah
-  %i.df = getelementptr inbounds nuw i8, ptr %i.b, i64 %indvars.iv.i.i
+  %i.df = getelementptr inbounds nuw i8, ptr %i.b, i64 %6
   store i8 0, ptr %i.df, align 1, !tbaa !26
   %i.dg = load i16, ptr %i.a, align 1
   %i.dh = xor i16 %i.dg, 27693

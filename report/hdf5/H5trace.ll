@@ -204,9 +204,9 @@ define range(i32 -1, 1) i32 @H5_trace_args(ptr noundef %0, ptr noundef %1, ptr n
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %H5_trace_args_close_degree.exit1654
-  %indvars.iv = phi i64 [ 0, %.preheader.lr.ph ], [ %indvars.iv.next, %H5_trace_args_close_degree.exit1654 ] ; 11 uses
   %4 = phi i8 [ %i.c, %.preheader.lr.ph ], [ %i.czn, %H5_trace_args_close_degree.exit1654 ]
   %.014351778 = phi ptr [ %1, %.preheader.lr.ph ], [ %i.czm, %H5_trace_args_close_degree.exit1654 ]
+  %.014361777 = phi i32 [ 0, %.preheader.lr.ph ], [ %14, %H5_trace_args_close_degree.exit1654 ] ; 11 uses
   br label %bb.a
 
 bb.a:                                             ; preds = %.preheader, %bb.b
@@ -277,7 +277,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   br i1 %.not1612, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %.not1613 = icmp eq i64 %indvars.iv, 0
+  %.not1613 = icmp eq i32 %.014361777, 0
   %i.be = select i1 %.not1613, ptr @.str.2, ptr @.str.1
   %i.bf = call i32 (ptr, ptr, ...) @H5RS_asprintf_cat(ptr noundef %0, ptr noundef nonnull @.str, ptr noundef nonnull %i.be, ptr noundef nonnull %i.bd) #10 ; 0 uses
   br label %bb.k
@@ -680,7 +680,8 @@ bb.pn:                                            ; preds = %bb.pm
 
 bb.po:                                            ; preds = %bb.pm
   %i.aml = call i32 (ptr, ptr, ...) @H5RS_asprintf_cat(ptr noundef %0, ptr noundef nonnull @.str.18, i64 noundef %i.ami) #10 ; 0 uses
-  %i.amm = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv
+  %5 = zext nneg i32 %.014361777 to i64
+  %i.amm = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %5
   store i64 %i.ami, ptr %i.amm, align 8, !tbaa !28
   br label %H5_trace_args_close_degree.exit1654
 
@@ -740,7 +741,8 @@ bb.px:                                            ; preds = %bb.pw, %bb.pv
   %i.ani = phi ptr [ %i.ane, %bb.pv ], [ %i.ang, %bb.pw ]
   %i.anj = load i64, ptr %i.ani, align 8, !tbaa !28 ; 2 uses
   %i.ank = call i32 (ptr, ptr, ...) @H5RS_asprintf_cat(ptr noundef %0, ptr noundef nonnull @.str.32, i64 noundef %i.anj) #10 ; 0 uses
-  %i.anl = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv
+  %6 = zext nneg i32 %.014361777 to i64
+  %i.anl = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %6
   store i64 %i.anj, ptr %i.anl, align 8, !tbaa !28
   br label %H5_trace_args_close_degree.exit1654
 
@@ -1143,7 +1145,8 @@ bb.vf:                                            ; preds = %bb.ve
 bb.vg:                                            ; preds = %bb.vf
   %i.avp = call i32 @H5S_get_simple_extent_ndims(ptr noundef nonnull %i.avm) #10
   %i.avq = sext i32 %i.avp to i64
-  %i.avr = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv
+  %7 = zext nneg i32 %.014361777 to i64
+  %i.avr = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %7
   store i64 %i.avq, ptr %i.avr, align 8, !tbaa !28
   br label %H5_trace_args_close_degree.exit1654
 
@@ -1448,7 +1451,8 @@ bb.xi:                                            ; preds = %bb.xh, %bb.xg
   %i.azq = load i32, ptr %i.azp, align 4, !tbaa !10 ; 2 uses
   %i.azr = call i32 (ptr, ptr, ...) @H5RS_asprintf_cat(ptr noundef %0, ptr noundef nonnull @.str.266, i32 noundef %i.azq) #10 ; 0 uses
   %i.azs = sext i32 %i.azq to i64
-  %i.azt = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv
+  %8 = zext nneg i32 %.014361777 to i64
+  %i.azt = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %8
   store i64 %i.azs, ptr %i.azt, align 8, !tbaa !28
   br label %H5_trace_args_close_degree.exit1654
 
@@ -1625,9 +1629,10 @@ bb.yo:                                            ; preds = %bb.yn, %bb.ym
   %i.bbs = phi ptr [ %i.bbo, %bb.ym ], [ %i.bbq, %bb.yn ]
   %i.bbt = load i32, ptr %i.bbs, align 4, !tbaa !10 ; 2 uses
   %i.bbu = call i32 (ptr, ptr, ...) @H5RS_asprintf_cat(ptr noundef %0, ptr noundef nonnull @.str.286, i32 noundef %i.bbt) #10 ; 0 uses
-  %i.bbv = zext i32 %i.bbt to i64
-  %i.bbw = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv
-  store i64 %i.bbv, ptr %i.bbw, align 8, !tbaa !28
+  %9 = zext i32 %i.bbt to i64
+  %i.bbv = zext nneg i32 %.014361777 to i64
+  %i.bbw = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.bbv
+  store i64 %9, ptr %i.bbw, align 8, !tbaa !28
   br label %H5_trace_args_close_degree.exit1654
 
 bb.yp:                                            ; preds = %bb.vv
@@ -2030,7 +2035,8 @@ bb.ake:                                           ; preds = %bb.akd, %bb.akc
   %i.cas = phi ptr [ %i.cao, %bb.akc ], [ %i.caq, %bb.akd ]
   %i.cat = load i64, ptr %i.cas, align 8, !tbaa !28 ; 2 uses
   %i.cau = call i32 (ptr, ptr, ...) @H5RS_asprintf_cat(ptr noundef %0, ptr noundef nonnull @.str.18, i64 noundef %i.cat) #10 ; 0 uses
-  %i.cav = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv
+  %10 = zext nneg i32 %.014361777 to i64
+  %i.cav = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %10
   store i64 %i.cat, ptr %i.cav, align 8, !tbaa !28
   br label %H5_trace_args_close_degree.exit1654
 
@@ -2057,7 +2063,8 @@ bb.aki:                                           ; preds = %bb.akh, %bb.akg
   %i.cbe = phi ptr [ %i.cba, %bb.akg ], [ %i.cbc, %bb.akh ]
   %i.cbf = load i64, ptr %i.cbe, align 8, !tbaa !35 ; 2 uses
   %i.cbg = call i32 (ptr, ptr, ...) @H5RS_asprintf_cat(ptr noundef %0, ptr noundef nonnull @.str.383, i64 noundef %i.cbf) #10 ; 0 uses
-  %i.cbh = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv
+  %11 = zext nneg i32 %.014361777 to i64
+  %i.cbh = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %11
   store i64 %i.cbf, ptr %i.cbh, align 8, !tbaa !28
   br label %H5_trace_args_close_degree.exit1654
 
@@ -2460,7 +2467,8 @@ bb.avk:                                           ; preds = %bb.avj, %bb.avi
   %i.cve = phi ptr [ %i.cva, %bb.avi ], [ %i.cvc, %bb.avj ]
   %i.cvf = load i64, ptr %i.cve, align 8, !tbaa !28 ; 2 uses
   %i.cvg = call i32 (ptr, ptr, ...) @H5RS_asprintf_cat(ptr noundef %0, ptr noundef nonnull @.str.516, i64 noundef %i.cvf) #10 ; 0 uses
-  %i.cvh = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv
+  %12 = zext nneg i32 %.014361777 to i64
+  %i.cvh = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %12
   store i64 %i.cvf, ptr %i.cvh, align 8, !tbaa !28
   br label %H5_trace_args_close_degree.exit1654
 
@@ -2699,7 +2707,8 @@ bb.awy:                                           ; preds = %bb.awx, %bb.aww
   %i.cyk = phi ptr [ %i.cyg, %bb.aww ], [ %i.cyi, %bb.awx ]
   %i.cyl = load i64, ptr %i.cyk, align 8, !tbaa !28 ; 2 uses
   %i.cym = call i32 (ptr, ptr, ...) @H5RS_asprintf_cat(ptr noundef %0, ptr noundef nonnull @.str.529, i64 noundef %i.cyl) #10 ; 0 uses
-  %i.cyn = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv
+  %13 = zext nneg i32 %.014361777 to i64
+  %i.cyn = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %13
   store i64 %i.cyl, ptr %i.cyn, align 8, !tbaa !28
   br label %H5_trace_args_close_degree.exit1654
 
@@ -2739,7 +2748,7 @@ bb.axe:                                           ; preds = %bb.axc
   br label %.loopexit1659
 
 H5_trace_args_close_degree.exit1654:              ; preds = %bb.bf, %bb.am, %bb.ac, %bb.z, %bb.mb, %bb.ma, %bb.lz, %bb.ly, %bb.lx, %.thread, %bb.awj, %bb.awl, %bb.awn, %bb.awp, %bb.awq, %bb.awo, %bb.awm, %bb.awk, %bb.awc, %bb.awe, %bb.awd, %bb.avq, %bb.avr, %bb.avs, %bb.avt, %bb.aup, %bb.auq, %bb.aur, %bb.aus, %bb.aut, %bb.auu, %bb.auv, %bb.aue, %bb.auf, %bb.aug, %bb.asy, %bb.asz, %bb.ata, %bb.atb, %bb.atc, %bb.atd, %bb.ate, %bb.atf, %bb.atg, %bb.ath, %bb.ati, %bb.atj, %bb.atk, %bb.atl, %bb.atm, %bb.atn, %bb.ato, %bb.atp, %bb.atq, %bb.atr, %bb.ats, %bb.att, %bb.atu, %bb.atv, %bb.atw, %bb.atx, %bb.aty, %bb.atz, %bb.asf, %bb.asg, %bb.ash, %bb.asi, %bb.asj, %bb.ask, %bb.asl, %bb.asm, %bb.asn, %bb.aso, %bb.asp, %bb.arn, %bb.aro, %bb.arp, %bb.arq, %bb.arr, %bb.ars, %bb.art, %bb.aru, %bb.arv, %bb.arw, %bb.arx, %bb.ary, %bb.arz, %bb.asa, %bb.arh, %bb.ari, %bb.ara, %bb.arb, %bb.arc, %bb.aqp, %bb.aqq, %bb.aqr, %bb.aqs, %bb.aqt, %bb.aqu, %bb.aqv, %bb.aqc, %bb.aqd, %bb.aqe, %bb.aqf, %bb.aqg, %bb.apu, %bb.apv, %bb.apw, %bb.apx, %bb.apn, %bb.apo, %bb.app, %bb.apf, %bb.apg, %bb.aph, %bb.api, %bb.aox, %bb.aoy, %bb.aoz, %bb.apa, %bb.aoo, %bb.aop, %bb.aoq, %bb.aor, %bb.aos, %bb.aoh, %bb.aoi, %bb.aoj, %bb.anx, %bb.any, %bb.anz, %bb.aoa, %bb.aob, %bb.aoc, %bb.ank, %bb.anl, %bb.anm, %bb.ann, %bb.ano, %bb.anp, %bb.anq, %bb.anr, %bb.ans, %bb.and, %bb.ane, %bb.anf, %bb.amv, %bb.amw, %bb.amx, %bb.amy, %bb.amn, %bb.amo, %bb.amp, %bb.amq, %bb.amh, %bb.ami, %bb.alw, %bb.alx, %bb.aly, %bb.alz, %bb.ama, %bb.amb, %bb.amc, %bb.alo, %bb.alp, %bb.alq, %bb.alr, %bb.ale, %bb.alf, %bb.alg, %bb.alh, %bb.ali, %bb.alj, %bb.akp, %bb.akq, %bb.akr, %bb.aks, %bb.akt, %bb.aku, %bb.akv, %bb.ajt, %bb.aju, %bb.ajv, %bb.ajw, %bb.ajx, %bb.ajy, %bb.aja, %bb.ajb, %bb.ajc, %bb.ajd, %bb.aje, %bb.ajf, %bb.ajg, %bb.ajh, %bb.aji, %bb.ajj, %bb.ajk, %bb.ajl, %bb.ajm, %bb.ajn, %bb.ajo, %bb.air, %bb.ais, %bb.ait, %bb.aiu, %bb.aiv, %bb.aih, %bb.aii, %bb.aij, %bb.aik, %bb.ail, %bb.aim, %bb.ahw, %bb.ahx, %bb.ahy, %bb.ahz, %bb.aia, %bb.aib, %bb.aic, %bb.ahn, %bb.aho, %bb.ahp, %bb.ahq, %bb.ahr, %bb.ahb, %bb.ahc, %bb.ahd, %bb.ahe, %bb.agt, %bb.agu, %bb.agv, %bb.agw, %bb.agc, %bb.agf, %bb.age, %bb.afq, %bb.afr, %bb.afs, %bb.aft, %bb.afu, %bb.afv, %bb.afw, %bb.afb, %bb.afc, %bb.afd, %bb.afe, %bb.aff, %bb.afg, %bb.afh, %bb.afi, %bb.afj, %bb.afk, %bb.afl, %bb.aes, %bb.aet, %bb.aeu, %bb.aev, %bb.aew, %bb.aee, %bb.aef, %bb.aeg, %bb.aeh, %bb.aei, %bb.aej, %bb.aek, %bb.ael, %bb.abx, %bb.aby, %bb.abk, %bb.abl, %bb.abm, %bb.abn, %bb.abo, %bb.abp, %bb.abq, %bb.aaf, %bb.aag, %bb.aah, %bb.aai, %bb.aaj, %bb.aak, %bb.aal, %bb.aam, %bb.aan, %bb.aao, %bb.zh, %bb.zi, %bb.zj, %bb.zk, %bb.zl, %bb.zm, %bb.xr, %bb.xs, %bb.xt, %bb.xu, %bb.xv, %bb.xw, %bb.xx, %bb.xy, %bb.xz, %bb.ya, %bb.yb, %bb.yc, %bb.yd, %bb.ye, %bb.yf, %bb.yg, %bb.yh, %bb.yi, %bb.yj, %bb.yk, %bb.wv, %bb.ww, %bb.wx, %bb.wy, %bb.wz, %bb.xa, %bb.wi, %bb.wj, %bb.wk, %bb.wl, %bb.wm, %bb.qd, %bb.qh, %bb.qi, %bb.vh, %bb.vi, %bb.vj, %bb.vk, %bb.vl, %bb.vm, %bb.vn, %bb.vo, %bb.vp, %bb.vq, %bb.vr, %bb.vs, %bb.vt, %bb.vu, %bb.qm, %bb.qq, %bb.qu, %bb.qy, %bb.rc, %bb.rg, %bb.rk, %bb.ro, %bb.rs, %bb.rw, %bb.sa, %bb.se, %bb.si, %bb.sm, %bb.sq, %bb.su, %bb.sy, %bb.tc, %bb.tg, %bb.tk, %bb.to, %bb.ts, %bb.tw, %bb.ua, %bb.ue, %bb.ui, %bb.um, %bb.uq, %bb.uu, %bb.uy, %bb.vc, %bb.vd, %bb.va, %bb.uw, %bb.us, %bb.uo, %bb.uk, %bb.ug, %bb.uc, %bb.ty, %bb.tu, %bb.tq, %bb.tm, %bb.ti, %bb.te, %bb.ta, %bb.sw, %bb.ss, %bb.so, %bb.sk, %bb.sg, %bb.sc, %bb.ry, %bb.ru, %bb.rq, %bb.rm, %bb.ri, %bb.re, %bb.ra, %bb.qw, %bb.qs, %bb.qo, %bb.qk, %bb.qf, %bb.vf, %bb.vg, %bb.ve, %bb.pn, %bb.po, %bb.ow, %bb.ox, %bb.oy, %bb.oz, %bb.pa, %bb.pb, %bb.pc, %bb.pd, %bb.ny, %bb.nz, %bb.oa, %bb.ob, %bb.oc, %bb.od, %bb.oe, %bb.no, %bb.np, %bb.nq, %bb.nr, %bb.ns, %bb.nt, %bb.nh, %bb.ni, %bb.nj, %bb.mu, %bb.mv, %bb.mw, %bb.mx, %bb.my, %bb.mz, %bb.na, %bb.nb, %bb.nc, %bb.mg, %bb.mh, %bb.mi, %bb.mj, %bb.mk, %bb.li, %bb.lj, %bb.lk, %bb.kz, %bb.la, %bb.lb, %bb.lc, %bb.ld, %bb.kk, %bb.kl, %bb.km, %bb.jr, %bb.js, %bb.jd, %bb.je, %bb.jf, %bb.jg, %bb.jh, %bb.ji, %bb.jj, %bb.jk, %bb.jl, %bb.iv, %bb.iw, %bb.ix, %bb.iy, %bb.io, %bb.ip, %bb.iq, %bb.ib, %bb.ic, %bb.id, %bb.ie, %bb.if, %bb.hp, %bb.hq, %bb.hr, %bb.hs, %bb.hj, %bb.hk, %bb.go, %bb.gp, %bb.gq, %bb.gr, %bb.gs, %bb.gt, %bb.gu, %bb.gc, %bb.gd, %bb.ge, %bb.gf, %bb.gg, %bb.gh, %bb.gi, %bb.gj, %bb.fr, %bb.fs, %bb.ft, %bb.fu, %bb.fv, %bb.fw, %bb.fj, %bb.fk, %bb.fl, %bb.fm, %bb.ew, %bb.ex, %bb.ey, %bb.ez, %bb.fa, %bb.en, %bb.eo, %bb.ep, %bb.eq, %bb.er, %bb.ef, %bb.eg, %bb.eh, %bb.ei, %bb.dy, %bb.dz, %bb.ea, %bb.dk, %bb.dl, %bb.dm, %bb.dn, %bb.do, %bb.dp, %bb.bp, %bb.bq, %bb.bi, %._crit_edge1773, %bb.r, %bb.q, %bb.aa, %._crit_edge1769, %._crit_edge1761, %bb.ah, %bb.ag, %bb.ad, %bb.ae, %._crit_edge1765, %bb.al, %bb.ak, %._crit_edge1753, %bb.ar, %bb.aq, %bb.an, %bb.ao, %._crit_edge1757, %._crit_edge1749, %bb.au, %bb.at, %._crit_edge1745, %bb.bd, %bb.bc, %bb.bg, %._crit_edge, %bb.bj, %bb.avx, %bb.awu, %bb.awy, %bb.avf, %bb.avg, %bb.akz, %bb.aqk, %bb.ast, %bb.auk, %bb.auz, %bb.ake, %bb.aki, %bb.agk, %bb.ago, %bb.ahi, %bb.ady, %bb.acd, %bb.ach, %bb.acl, %bb.acp, %bb.act, %bb.acx, %bb.adb, %bb.adf, %bb.adj, %bb.adn, %bb.adr, %bb.aax, %bb.abb, %bb.abf, %bb.zw, %bb.aaa, %bb.yy, %bb.zc, %bb.zq, %bb.vz, %bb.wd, %bb.wq, %bb.xe, %bb.xi, %bb.xm, %bb.yo, %bb.pt, %bb.px, %bb.ok, %bb.or, %bb.ph, %H5_trace_args_close_degree.exit, %bb.mo, %bb.mp, %bb.jx, %bb.kb, %bb.kf, %bb.kq, %bb.ku, %bb.dt, %bb.fe, %bb.fx, %bb.hw, %bb.ij, %bb.cv, %bb.cz, %bb.bs, %bb.bw, %bb.ca, %bb.axb, %bb.axa, %bb.avk, %bb.aas, %bb.yt, %bb.de, %bb.cf
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %14 = add nuw nsw i32 %.014361777, 1
   %i.cze = tail call ptr @__ctype_b_loc() #12
   %i.czf = load ptr, ptr %i.cze, align 8, !tbaa !75
   %i.czg = load i8, ptr %.3, align 1, !tbaa !29

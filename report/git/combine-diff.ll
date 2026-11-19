@@ -204,7 +204,7 @@ bb.at:                                            ; preds = %bb.as
   br i1 %i.ip, label %st_add.exit.i.us.i, label %st_add.exit.i.i
 
 st_add.exit.i.us.i:                               ; preds = %.lr.ph.split.i, %._crit_edge.loopexit.i.us.i
-  %indvars.iv27.i = phi i64 [ %indvars.iv.next28.i, %._crit_edge.loopexit.i.us.i ], [ 0, %.lr.ph.split.i ] ; 2 uses
+  %.018.us19.i = phi i32 [ %5, %._crit_edge.loopexit.i.us.i ], [ 0, %.lr.ph.split.i ] ; 2 uses
   %.01517.us20.i = phi ptr [ %i.lf, %._crit_edge.loopexit.i.us.i ], [ %.2108215, %.lr.ph.split.i ] ; 6 uses
   %i.iq = call ptr @xcalloc(i64 noundef 1, i64 noundef 32) #16 ; 7 uses
   %i.ir = call ptr @xcalloc(i64 noundef %i.in, i64 noundef 96) #16 ; 2 uses
@@ -298,15 +298,16 @@ bb.au:                                            ; preds = %bb.au, %st_add.exit
   %i.lc = or disjoint i16 %i.lb, %i.kz
   %i.ld = xor i16 %i.lc, 1
   store i16 %i.ld, ptr %i.ky, align 2
-  %indvars.iv.next28.i = add nuw nsw i64 %indvars.iv27.i, 1
-  %i.le = getelementptr inbounds nuw [8 x i8], ptr %i.ih, i64 %indvars.iv27.i
+  %5 = add nuw nsw i32 %.018.us19.i, 1
+  %6 = zext nneg i32 %.018.us19.i to i64
+  %i.le = getelementptr inbounds nuw [8 x i8], ptr %i.ih, i64 %6
   store ptr %i.iq, ptr %i.le, align 8, !tbaa !258
   %i.lf = load ptr, ptr %.01517.us20.i, align 8, !tbaa !127 ; 2 uses
   %.not.us.i = icmp eq ptr %i.lf, null
   br i1 %.not.us.i, label %.lr.ph23.preheader.i, label %st_add.exit.i.us.i, !llvm.loop !227
 
 st_add.exit.i.i:                                  ; preds = %.lr.ph.split.i, %st_add.exit.i.i
-  %indvars.iv.i149 = phi i64 [ %indvars.iv.next.i150, %st_add.exit.i.i ], [ 0, %.lr.ph.split.i ] ; 2 uses
+  %.018.i = phi i32 [ %7, %st_add.exit.i.i ], [ 0, %.lr.ph.split.i ] ; 2 uses
   %.01517.i = phi ptr [ %i.mo, %st_add.exit.i.i ], [ %.2108215, %.lr.ph.split.i ] ; 5 uses
   %i.lg = call ptr @xcalloc(i64 noundef 1, i64 noundef 32) #16 ; 3 uses
   %i.lh = call ptr @xcalloc(i64 noundef %i.in, i64 noundef 96) #16 ; 2 uses
@@ -350,8 +351,9 @@ st_add.exit.i.i:                                  ; preds = %.lr.ph.split.i, %st
   %i.ml = or disjoint i16 %i.mk, %i.mi
   %i.mm = xor i16 %i.ml, 1
   store i16 %i.mm, ptr %i.mh, align 2
-  %indvars.iv.next.i150 = add nuw nsw i64 %indvars.iv.i149, 1
-  %i.mn = getelementptr inbounds nuw [8 x i8], ptr %i.ih, i64 %indvars.iv.i149
+  %7 = add nuw nsw i32 %.018.i, 1
+  %8 = zext nneg i32 %.018.i to i64
+  %i.mn = getelementptr inbounds nuw [8 x i8], ptr %i.ih, i64 %8
   store ptr %i.lg, ptr %i.mn, align 8, !tbaa !258
   %i.mo = load ptr, ptr %.01517.i, align 8, !tbaa !127 ; 2 uses
   %.not.i = icmp eq ptr %i.mo, null

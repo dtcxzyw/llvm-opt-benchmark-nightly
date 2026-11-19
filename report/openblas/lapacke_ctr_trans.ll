@@ -118,18 +118,21 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %smin = tail call i32 @llvm.smin.i32(i32 %5, i32 %indvars.iv102) ; 2 uses
   %i.at = mul nuw nsw i64 %indvars.iv106, %i.ah
   %wide.trip.count104 = zext i32 %smin to i64     ; 6 uses
-  %invariant.gep117 = getelementptr [8 x i8], ptr %4, i64 %i.at ; 12 uses
+  %invariant.gep117 = getelementptr [8 x i8], ptr %4, i64 %i.at ; 14 uses
   %invariant.gep119 = getelementptr [8 x i8], ptr %6, i64 %indvars.iv106 ; 14 uses
-  %min.iters.check157 = icmp ult i32 %smin, 24
+  %min.iters.check157 = icmp ult i32 %smin, 28
   br i1 %min.iters.check157, label %scalar.ph.preheader, label %vector.scevcheck142
 
 vector.scevcheck142:                              ; preds = %.lr.ph88
-  %mul.result146 = shl nsw i64 %i.ap, 3
+  %mul.result146 = shl nsw i64 %i.ap, 3           ; 2 uses
   %mul.overflow147 = icmp ugt i64 %i.ap, 2305843009213693951
-  %i.au = getelementptr i8, ptr %invariant.gep119, i64 %mul.result146
-  %i.av = icmp ult ptr %i.au, %invariant.gep119
-  %i.aw = or i1 %i.av, %mul.overflow147
-  %i.ax = or i1 %ident.check143, %i.aw
+  %8 = getelementptr i8, ptr %invariant.gep119, i64 %mul.result146
+  %9 = icmp ult ptr %8, %invariant.gep119
+  %i.au = getelementptr i8, ptr %invariant.gep117, i64 %mul.result146
+  %i.av = icmp ult ptr %i.au, %invariant.gep117
+  %10 = or i1 %i.av, %mul.overflow147
+  %i.aw = or i1 %9, %ident.check143
+  %i.ax = or i1 %i.aw, %10
   br i1 %i.ax, label %scalar.ph.preheader, label %vector.memcheck158
 
 vector.memcheck158:                               ; preds = %vector.scevcheck142

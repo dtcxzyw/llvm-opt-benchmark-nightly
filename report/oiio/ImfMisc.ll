@@ -205,8 +205,7 @@ switch.lookup:                                    ; preds = %.lr.ph45
   %i.bd = sub nsw i32 0, %.fr54                   ; 2 uses
   %i.be = xor i32 %.fr54, -1
   %i.bf = add i32 %i.az, 1
-  %i.bg = sub i32 %i.bf, %i.ay
-  %wide.trip.count60 = zext i32 %i.bg to i64      ; 2 uses
+  %i.bg = sub i32 %i.bf, %i.ay                    ; 2 uses
   br i1 %i.bc, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %bb.k
@@ -243,7 +242,8 @@ bb.j:                                             ; preds = %_ZN9Imath_3_14modpE
 bb.k:                                             ; preds = %bb.j, %_ZN9Imath_3_14modpEii.exit.us
   %i.bu = add nsw i32 %.03141.us, 1
   %indvars.iv.next58 = add nuw nsw i64 %indvars.iv57, 1 ; 2 uses
-  %exitcond61.not = icmp eq i64 %indvars.iv.next58, %wide.trip.count60
+  %lftr.wideiv60 = trunc i64 %indvars.iv.next58 to i32
+  %exitcond61.not = icmp eq i32 %i.bg, %lftr.wideiv60
   br i1 %exitcond61.not, label %._crit_edge, label %.lr.ph.split.us, !llvm.loop !83
 
 ._crit_edge:                                      ; preds = %bb.o, %bb.k, %switch.lookup
@@ -285,7 +285,8 @@ bb.n:                                             ; preds = %_ZN9Imath_3_14modpE
 bb.o:                                             ; preds = %_ZN9Imath_3_14modpEii.exit, %bb.n
   %i.cj = add nsw i32 %.03141, 1
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count60
+  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
+  %exitcond.not = icmp eq i32 %i.bg, %lftr.wideiv
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.split, !llvm.loop !83
 
 ._crit_edge53:                                    ; preds = %scalar.ph, %middle.block, %._crit_edge46

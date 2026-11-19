@@ -204,7 +204,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE6resize
   br label %bb.e
 
 ._crit_edge:                                      ; preds = %_ZN4absl12lts_2025051218container_internal14btree_iteratorIKNS1_10btree_nodeINS1_10set_paramsIN6google8protobuf25EncodedDescriptorDatabase15DescriptorIndex9FileEntryENS8_11FileCompareESaIS9_ELi256ELb0EEEEERKS9_PSF_EppEv.exit, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE6resizeEm.exit
-  %.020.lcssa = phi i64 [ 0, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE6resizeEm.exit ], [ %indvars.iv.next, %_ZN4absl12lts_2025051218container_internal14btree_iteratorIKNS1_10btree_nodeINS1_10set_paramsIN6google8protobuf25EncodedDescriptorDatabase15DescriptorIndex9FileEntryENS8_11FileCompareESaIS9_ELi256ELb0EEEEERKS9_PSF_EppEv.exit ]
+  %.020.lcssa = phi i32 [ 0, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE6resizeEm.exit ], [ %5, %_ZN4absl12lts_2025051218container_internal14btree_iteratorIKNS1_10btree_nodeINS1_10set_paramsIN6google8protobuf25EncodedDescriptorDatabase15DescriptorIndex9FileEntryENS8_11FileCompareESaIS9_ELi256ELb0EEEEERKS9_PSF_EppEv.exit ]
   %i.aq = load ptr, ptr %i.f, align 8, !tbaa !177 ; 2 uses
   %i.ar = load ptr, ptr %i.g, align 8, !tbaa !177 ; 2 uses
   %.not76 = icmp eq ptr %i.aq, %i.ar
@@ -216,7 +216,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE6resize
   br label %bb.s
 
 bb.e:                                             ; preds = %.lr.ph, %_ZN4absl12lts_2025051218container_internal14btree_iteratorIKNS1_10btree_nodeINS1_10set_paramsIN6google8protobuf25EncodedDescriptorDatabase15DescriptorIndex9FileEntryENS8_11FileCompareESaIS9_ELi256ELb0EEEEERKS9_PSF_EppEv.exit
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZN4absl12lts_2025051218container_internal14btree_iteratorIKNS1_10btree_nodeINS1_10set_paramsIN6google8protobuf25EncodedDescriptorDatabase15DescriptorIndex9FileEntryENS8_11FileCompareESaIS9_ELi256ELb0EEEEERKS9_PSF_EppEv.exit ] ; 2 uses
+  %.02075 = phi i32 [ 0, %.lr.ph ], [ %5, %_ZN4absl12lts_2025051218container_internal14btree_iteratorIKNS1_10btree_nodeINS1_10set_paramsIN6google8protobuf25EncodedDescriptorDatabase15DescriptorIndex9FileEntryENS8_11FileCompareESaIS9_ELi256ELb0EEEEERKS9_PSF_EppEv.exit ] ; 2 uses
   %.sroa.8.074 = phi i32 [ 0, %.lr.ph ], [ %.sroa.8.1, %_ZN4absl12lts_2025051218container_internal14btree_iteratorIKNS1_10btree_nodeINS1_10set_paramsIN6google8protobuf25EncodedDescriptorDatabase15DescriptorIndex9FileEntryENS8_11FileCompareESaIS9_ELi256ELb0EEEEERKS9_PSF_EppEv.exit ] ; 3 uses
   %.sroa.063.073 = phi ptr [ %i.ag, %.lr.ph ], [ %.sroa.063.1, %_ZN4absl12lts_2025051218container_internal14btree_iteratorIKNS1_10btree_nodeINS1_10set_paramsIN6google8protobuf25EncodedDescriptorDatabase15DescriptorIndex9FileEntryENS8_11FileCompareESaIS9_ELi256ELb0EEEEERKS9_PSF_EppEv.exit ] ; 7 uses
   %i.au = and i32 %.sroa.8.074, 255
@@ -274,8 +274,9 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %._cri
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 %i.bj
   store i8 0, ptr %i.bl, align 1, !tbaa !108
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #27
+  %4 = zext nneg i32 %.02075 to i64
   %i.bm = load ptr, ptr %1, align 8, !tbaa !110
-  %i.bn = getelementptr inbounds nuw [32 x i8], ptr %i.bm, i64 %indvars.iv ; 9 uses
+  %i.bn = getelementptr inbounds nuw [32 x i8], ptr %i.bm, i64 %4 ; 9 uses
   %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !103 ; 6 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bn, i64 16 ; 4 uses
   %i.bq = icmp eq ptr %i.bo, %i.bp
@@ -366,7 +367,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #27
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %5 = add nuw nsw i32 %.02075, 1                 ; 2 uses
   %i.cm = getelementptr inbounds nuw i8, ptr %.sroa.063.073, i64 11
   %i.cn = load i8, ptr %i.cm, align 1, !tbaa !108
   %.not.i.i28 = icmp eq i8 %i.cn, 0
@@ -429,7 +430,7 @@ _ZN4absl12lts_2025051218container_internal14btree_iteratorIKNS1_10btree_nodeINS1
   ret void
 
 bb.s:                                             ; preds = %.lr.ph80, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit52
-  %indvars.iv86 = phi i64 [ %.020.lcssa, %.lr.ph80 ], [ %indvars.iv.next87, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit52 ] ; 2 uses
+  %.178 = phi i32 [ %.020.lcssa, %.lr.ph80 ], [ %7, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit52 ] ; 2 uses
   %.sroa.055.077 = phi ptr [ %i.aq, %.lr.ph80 ], [ %i.fa, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit52 ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #27
   %i.dm = getelementptr inbounds nuw i8, ptr %.sroa.055.077, i64 8
@@ -482,8 +483,9 @@ bb.w:                                             ; preds = %bb.v, %bb.u, %._cri
   %i.dz = getelementptr inbounds nuw i8, ptr %i.dy, i64 %i.dx
   store i8 0, ptr %i.dz, align 1, !tbaa !108
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #27
+  %6 = zext nneg i32 %.178 to i64
   %i.ea = load ptr, ptr %1, align 8, !tbaa !110
-  %i.eb = getelementptr inbounds nuw [32 x i8], ptr %i.ea, i64 %indvars.iv86 ; 9 uses
+  %i.eb = getelementptr inbounds nuw [32 x i8], ptr %i.ea, i64 %6 ; 9 uses
   %i.ec = load ptr, ptr %i.eb, align 8, !tbaa !103 ; 6 uses
   %i.ed = getelementptr inbounds nuw i8, ptr %i.eb, i64 16 ; 4 uses
   %i.ee = icmp eq ptr %i.ec, %i.ed
@@ -574,7 +576,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i50
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit52: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit49, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i50
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #27
-  %indvars.iv.next87 = add nuw nsw i64 %indvars.iv86, 1
+  %7 = add nuw nsw i32 %.178, 1
   %i.fa = getelementptr inbounds nuw i8, ptr %.sroa.055.077, i64 40 ; 2 uses
   %.not = icmp eq ptr %i.fa, %i.ar
   br i1 %.not, label %._crit_edge81, label %bb.s

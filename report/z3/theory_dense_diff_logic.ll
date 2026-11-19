@@ -205,7 +205,7 @@ _ZN6vectorIN3smt23theory_dense_diff_logicINS0_6mi_extEE4edgeELb1EjE4backEv.exit:
   %i.h = phi i32 [ %i.f, %bb.b ], [ -1, %bb.a ]
   %.0.i.i = phi i64 [ %i.g, %bb.b ], [ 4294967295, %bb.a ]
   %i.i = getelementptr inbounds nuw [80 x i8], ptr %i.b, i64 %.0.i.i ; 3 uses
-  %i.j = load i32, ptr %i.i, align 8, !tbaa !54   ; 2 uses
+  %i.j = load i32, ptr %i.i, align 8, !tbaa !54   ; 3 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.i, i64 4
   %i.l = load i32, ptr %i.k, align 4, !tbaa !55
   %i.m = getelementptr inbounds nuw i8, ptr %i.i, i64 8
@@ -266,7 +266,7 @@ _ZN6vectorIN3smt23theory_dense_diff_logicINS0_6mi_extEE4cellELb1EjE3endEv.exit: 
   br i1 %.not114, label %_ZN6vectorIS_IN3smt23theory_dense_diff_logicINS0_6mi_extEE4cellELb1EjELb1EjE3endEv.exit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZN6vectorIN3smt23theory_dense_diff_logicINS0_6mi_extEE4cellELb1EjE3endEv.exit
-  %i.av = zext i32 %i.j to i64                    ; 2 uses
+  %i.av = zext i32 %i.j to i64
   br label %bb.c
 
 ._crit_edge:                                      ; preds = %bb.j
@@ -306,12 +306,12 @@ _ZN6vectorIS_IN3smt23theory_dense_diff_logicINS0_6mi_extEE4cellELb1EjELb1EjE3end
   br i1 %.not80118.fr, label %._crit_edge127, label %.lr.ph126.split
 
 bb.c:                                             ; preds = %.lr.ph, %bb.j
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.j ] ; 4 uses
+  %.062117 = phi i32 [ 0, %.lr.ph ], [ %4, %bb.j ] ; 4 uses
   %.063116 = phi ptr [ %i.au, %.lr.ph ], [ %.2, %bb.j ] ; 5 uses
   %.064115 = phi ptr [ %i.ak, %.lr.ph ], [ %i.cj, %bb.j ] ; 4 uses
   %i.bs = load i32, ptr %.064115, align 8, !tbaa !62
   %.not87 = icmp eq i32 %i.bs, -1
-  %.not88 = icmp eq i64 %indvars.iv, %i.av
+  %.not88 = icmp eq i32 %.062117, %i.j
   %or.cond = select i1 %.not87, i1 true, i1 %.not88
   br i1 %or.cond, label %bb.j, label %bb.d
 
@@ -335,7 +335,8 @@ _ZN12inf_rationalpLERKS_.exit:                    ; preds = %.noexc
   %i.by = load ptr, ptr %i.ag, align 8, !tbaa !133
   %i.bz = getelementptr inbounds nuw [8 x i8], ptr %i.by, i64 %i.av
   %i.ca = load ptr, ptr %i.bz, align 8, !tbaa !136
-  %i.cb = getelementptr inbounds nuw [80 x i8], ptr %i.ca, i64 %indvars.iv ; 2 uses
+  %3 = zext nneg i32 %.062117 to i64
+  %i.cb = getelementptr inbounds nuw [80 x i8], ptr %i.ca, i64 %3 ; 2 uses
   %i.cc = load i32, ptr %i.cb, align 8, !tbaa !62
   %i.cd = icmp eq i32 %i.cc, -1
   br i1 %i.cd, label %bb.h, label %bb.f
@@ -349,8 +350,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.cf, label %bb.h, label %bb.j
 
 bb.h:                                             ; preds = %bb.g, %_ZN12inf_rationalpLERKS_.exit
-  %3 = trunc nuw nsw i64 %indvars.iv to i32
-  store i32 %3, ptr %.063116, align 8, !tbaa !129
+  store i32 %.062117, ptr %.063116, align 8, !tbaa !129
   %i.cg = getelementptr inbounds nuw i8, ptr %.063116, i64 8
   %i.ch = invoke noundef nonnull align 8 dereferenceable(64) ptr @_ZN12inf_rationalaSERKS_(ptr noundef nonnull align 8 dereferenceable(64) %i.cg, ptr noundef nonnull align 8 dereferenceable(64) %1)
           to label %bb.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
@@ -362,7 +362,7 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.g, %bb.i, %bb.c
   %.2 = phi ptr [ %.063116, %bb.c ], [ %i.ci, %bb.i ], [ %.063116, %bb.g ] ; 2 uses
   %i.cj = getelementptr inbounds nuw i8, ptr %.064115, i64 80 ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %4 = add nuw nsw i32 %.062117, 1
   %.not = icmp eq ptr %i.cj, %i.as
   br i1 %.not, label %._crit_edge, label %bb.c, !llvm.loop !1077
 
@@ -765,7 +765,7 @@ _ZNK6vectorIN3smt23theory_dense_diff_logicINS0_6mi_extEE4cellELb1EjE3endEv.exit:
   br i1 %.not, label %._crit_edge51, label %bb.b, !llvm.loop !1098
 
 .lr.ph:                                           ; preds = %_ZNK6vectorIN3smt23theory_dense_diff_logicINS0_6mi_extEE4cellELb1EjE3endEv.exit, %bb.e
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.e ], [ 0, %_ZNK6vectorIN3smt23theory_dense_diff_logicINS0_6mi_extEE4cellELb1EjE3endEv.exit ] ; 2 uses
+  %.03446 = phi i32 [ %4, %bb.e ], [ 0, %_ZNK6vectorIN3smt23theory_dense_diff_logicINS0_6mi_extEE4cellELb1EjE3endEv.exit ] ; 2 uses
   %.03545 = phi ptr [ %i.cw, %bb.e ], [ %i.y, %_ZNK6vectorIN3smt23theory_dense_diff_logicINS0_6mi_extEE4cellELb1EjE3endEv.exit ] ; 4 uses
   %i.ag = load i32, ptr %.03545, align 8, !tbaa !62
   %.off = add i32 %i.ag, -1
@@ -864,7 +864,8 @@ _ZlsRSoRK12inf_rational.exit:                     ; preds = %_ZStlsIcSt11char_tr
   %i.cm = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSolsEi(ptr noundef nonnull align 8 dereferenceable(8) %1, i32 noundef %i.cl)
   %i.cn = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.cm, ptr noundef nonnull @.str.9, i64 noundef 6) ; 0 uses
   %i.co = load ptr, ptr %i.m, align 8, !tbaa !112
-  %i.cp = getelementptr inbounds nuw [8 x i8], ptr %i.co, i64 %indvars.iv
+  %3 = zext nneg i32 %.03446 to i64
+  %i.cp = getelementptr inbounds nuw [8 x i8], ptr %i.co, i64 %3
   %i.cq = load ptr, ptr %i.cp, align 8, !tbaa !114
   %i.cr = load ptr, ptr %i.cq, align 8, !tbaa !124
   %i.cs = load i32, ptr %i.cr, align 4, !tbaa !145
@@ -875,7 +876,7 @@ _ZlsRSoRK12inf_rational.exit:                     ; preds = %_ZStlsIcSt11char_tr
 
 bb.e:                                             ; preds = %.lr.ph, %_ZlsRSoRK12inf_rational.exit
   %i.cw = getelementptr inbounds nuw i8, ptr %.03545, i64 80 ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %4 = add nuw nsw i32 %.03446, 1
   %.not39 = icmp eq ptr %i.cw, %i.ae
   br i1 %.not39, label %._crit_edge, label %.lr.ph, !llvm.loop !1099
 
@@ -1278,7 +1279,7 @@ _ZN6vectorIN3smt23theory_dense_diff_logicINS0_5i_extEE4edgeELb1EjE4backEv.exit: 
   %i.h = phi i32 [ %i.f, %bb.b ], [ -1, %bb.a ]
   %.0.i.i = phi i64 [ %i.g, %bb.b ], [ 4294967295, %bb.a ]
   %i.i = getelementptr inbounds nuw [48 x i8], ptr %i.b, i64 %.0.i.i ; 6 uses
-  %i.j = load i32, ptr %i.i, align 8, !tbaa !866  ; 2 uses
+  %i.j = load i32, ptr %i.i, align 8, !tbaa !866  ; 3 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.i, i64 4
   %i.l = load i32, ptr %i.k, align 4, !tbaa !867
   %i.m = getelementptr inbounds nuw i8, ptr %i.i, i64 8 ; 2 uses
@@ -1326,7 +1327,7 @@ _ZN6vectorIN3smt23theory_dense_diff_logicINS0_5i_extEE4cellELb1EjE3endEv.exit: ;
   %i.al = getelementptr inbounds nuw i8, ptr %i.i, i64 12
   %i.am = getelementptr inbounds nuw i8, ptr %i.i, i64 24 ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.i, i64 28
-  %i.ao = zext i32 %i.j to i64                    ; 2 uses
+  %i.ao = zext i32 %i.j to i64
   br label %bb.c
 
 ._crit_edge:                                      ; preds = %bb.t
@@ -1360,12 +1361,12 @@ _ZN6vectorIS_IN3smt23theory_dense_diff_logicINS0_5i_extEE4cellELb1EjELb1EjE3endE
   br i1 %.not80126.fr, label %._crit_edge135, label %.lr.ph134.split
 
 bb.c:                                             ; preds = %.lr.ph, %bb.t
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.t ] ; 4 uses
+  %.062125 = phi i32 [ 0, %.lr.ph ], [ %4, %bb.t ] ; 4 uses
   %.063124 = phi ptr [ %i.ak, %.lr.ph ], [ %.2, %bb.t ] ; 10 uses
   %.064123 = phi ptr [ %i.aa, %.lr.ph ], [ %i.dw, %bb.t ] ; 3 uses
   %i.bf = load i32, ptr %.064123, align 8, !tbaa !872
   %.not87 = icmp eq i32 %i.bf, -1
-  %.not88 = icmp eq i64 %indvars.iv, %i.ao
+  %.not88 = icmp eq i32 %.062125, %i.j
   %or.cond = select i1 %.not87, i1 true, i1 %.not88
   br i1 %or.cond, label %bb.t, label %bb.d
 
@@ -1416,7 +1417,8 @@ _ZN8rationalpLERKS_.exit:                         ; preds = %_ZN8rationalaSERKS_
   %i.bv = load ptr, ptr %i.w, align 8, !tbaa !885
   %i.bw = getelementptr inbounds nuw [8 x i8], ptr %i.bv, i64 %i.ao
   %i.bx = load ptr, ptr %i.bw, align 8, !tbaa !888
-  %i.by = getelementptr inbounds nuw [48 x i8], ptr %i.bx, i64 %indvars.iv ; 5 uses
+  %3 = zext nneg i32 %.062125 to i64
+  %i.by = getelementptr inbounds nuw [48 x i8], ptr %i.bx, i64 %3 ; 5 uses
   %i.bz = load i32, ptr %i.by, align 8, !tbaa !872
   %i.ca = icmp eq i32 %i.bz, -1
   br i1 %i.ca, label %bb.o, label %bb.i
@@ -1478,8 +1480,7 @@ _ZltRK8rationalS1_.exit:                          ; preds = %bb.n
   br i1 %i.dd, label %bb.o, label %bb.t
 
 bb.o:                                             ; preds = %.split, %.noexc97, %_ZltRK8rationalS1_.exit, %_ZN8rationalpLERKS_.exit
-  %3 = trunc nuw nsw i64 %indvars.iv to i32
-  store i32 %3, ptr %.063124, align 8, !tbaa !894
+  store i32 %.062125, ptr %.063124, align 8, !tbaa !894
   %i.de = getelementptr inbounds nuw i8, ptr %.063124, i64 8 ; 2 uses
   %i.df = load ptr, ptr @_ZN8rational13g_mpq_managerE, align 8, !tbaa !51 ; 2 uses
   %i.dg = load i8, ptr %i.n, align 4
@@ -1527,7 +1528,7 @@ _ZN8rationalaSERKS_.exit102:                      ; preds = %bb.r, %bb.s
 bb.t:                                             ; preds = %.split, %.noexc97, %_ZltRK8rationalS1_.exit, %_ZN8rationalaSERKS_.exit102, %bb.c
   %.2 = phi ptr [ %.063124, %bb.c ], [ %i.dv, %_ZN8rationalaSERKS_.exit102 ], [ %.063124, %_ZltRK8rationalS1_.exit ], [ %.063124, %.noexc97 ], [ %.063124, %.split ] ; 2 uses
   %i.dw = getelementptr inbounds nuw i8, ptr %.064123, i64 48 ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %4 = add nuw nsw i32 %.062125, 1
   %.not = icmp eq ptr %i.dw, %i.ai
   br i1 %.not, label %._crit_edge, label %bb.c, !llvm.loop !1188
 
@@ -1930,7 +1931,7 @@ _ZNK6vectorIN3smt23theory_dense_diff_logicINS0_5i_extEE4cellELb1EjE3endEv.exit: 
   br i1 %.not, label %._crit_edge51, label %bb.b, !llvm.loop !1210
 
 .lr.ph:                                           ; preds = %_ZNK6vectorIN3smt23theory_dense_diff_logicINS0_5i_extEE4cellELb1EjE3endEv.exit, %bb.e
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.e ], [ 0, %_ZNK6vectorIN3smt23theory_dense_diff_logicINS0_5i_extEE4cellELb1EjE3endEv.exit ] ; 2 uses
+  %.03446 = phi i32 [ %4, %bb.e ], [ 0, %_ZNK6vectorIN3smt23theory_dense_diff_logicINS0_5i_extEE4cellELb1EjE3endEv.exit ] ; 2 uses
   %.03545 = phi ptr [ %i.cx, %bb.e ], [ %i.y, %_ZNK6vectorIN3smt23theory_dense_diff_logicINS0_5i_extEE4cellELb1EjE3endEv.exit ] ; 4 uses
   %i.ag = load i32, ptr %.03545, align 8, !tbaa !872
   %.off = add i32 %i.ag, -1
@@ -2030,7 +2031,8 @@ _ZlsRSoRK8rational.exit:                          ; preds = %_ZStlsIcSt11char_tr
   %i.cn = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSolsEi(ptr noundef nonnull align 8 dereferenceable(8) %1, i32 noundef %i.cm)
   %i.co = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.cn, ptr noundef nonnull @.str.9, i64 noundef 6) ; 0 uses
   %i.cp = load ptr, ptr %i.m, align 8, !tbaa !112
-  %i.cq = getelementptr inbounds nuw [8 x i8], ptr %i.cp, i64 %indvars.iv
+  %3 = zext nneg i32 %.03446 to i64
+  %i.cq = getelementptr inbounds nuw [8 x i8], ptr %i.cp, i64 %3
   %i.cr = load ptr, ptr %i.cq, align 8, !tbaa !114
   %i.cs = load ptr, ptr %i.cr, align 8, !tbaa !124
   %i.ct = load i32, ptr %i.cs, align 4, !tbaa !145
@@ -2041,7 +2043,7 @@ _ZlsRSoRK8rational.exit:                          ; preds = %_ZStlsIcSt11char_tr
 
 bb.e:                                             ; preds = %.lr.ph, %_ZlsRSoRK8rational.exit
   %i.cx = getelementptr inbounds nuw i8, ptr %.03545, i64 48 ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %4 = add nuw nsw i32 %.03446, 1
   %.not39 = icmp eq ptr %i.cx, %i.ae
   br i1 %.not39, label %._crit_edge, label %.lr.ph, !llvm.loop !1211
 
@@ -2444,7 +2446,7 @@ _ZN6vectorIN3smt23theory_dense_diff_logicINS0_7smi_extEE4edgeELb1EjE4backEv.exit
   %i.h = phi i32 [ %i.f, %bb.b ], [ -1, %bb.a ]
   %.0.i.i = phi i64 [ %i.g, %bb.b ], [ 4294967295, %bb.a ]
   %i.i = getelementptr inbounds nuw [20 x i8], ptr %i.b, i64 %.0.i.i ; 3 uses
-  %i.j = load i32, ptr %i.i, align 4, !tbaa !930  ; 2 uses
+  %i.j = load i32, ptr %i.i, align 4, !tbaa !930  ; 3 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.i, i64 4
   %i.l = load i32, ptr %i.k, align 4, !tbaa !931
   %i.m = getelementptr inbounds nuw i8, ptr %i.i, i64 8
@@ -2473,7 +2475,7 @@ _ZN6vectorIN3smt23theory_dense_diff_logicINS0_7smi_extEE4cellELb1EjE3endEv.exit:
   br i1 %.not88, label %_ZN6vectorIS_IN3smt23theory_dense_diff_logicINS0_7smi_extEE4cellELb1EjELb1EjE3endEv.exit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZN6vectorIN3smt23theory_dense_diff_logicINS0_7smi_extEE4cellELb1EjE3endEv.exit
-  %i.ac = zext i32 %i.j to i64                    ; 2 uses
+  %i.ac = zext i32 %i.j to i64
   %i.ad = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %i.ac
   br label %bb.c
 
@@ -2500,12 +2502,12 @@ _ZN6vectorIS_IN3smt23theory_dense_diff_logicINS0_7smi_extEE4cellELb1EjELb1EjE3en
   br i1 %.not6892.fr, label %._crit_edge101, label %.lr.ph100.split
 
 bb.c:                                             ; preds = %.lr.ph, %_ZltRK13inf_s_integerS1_.exit.thread86
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZltRK13inf_s_integerS1_.exit.thread86 ] ; 4 uses
+  %.06091 = phi i32 [ 0, %.lr.ph ], [ %3, %_ZltRK13inf_s_integerS1_.exit.thread86 ] ; 4 uses
   %.06190 = phi ptr [ %i.ab, %.lr.ph ], [ %.2, %_ZltRK13inf_s_integerS1_.exit.thread86 ] ; 6 uses
   %.06289 = phi ptr [ %i.r, %.lr.ph ], [ %i.bh, %_ZltRK13inf_s_integerS1_.exit.thread86 ] ; 3 uses
   %i.an = load i32, ptr %.06289, align 8, !tbaa !936
   %.not70 = icmp eq i32 %i.an, -1
-  %.not71 = icmp eq i64 %indvars.iv, %i.ac
+  %.not71 = icmp eq i32 %.06091, %i.j
   %or.cond = select i1 %.not70, i1 true, i1 %.not71
   br i1 %or.cond, label %_ZltRK13inf_s_integerS1_.exit.thread86, label %bb.d
 
@@ -2515,7 +2517,8 @@ bb.d:                                             ; preds = %bb.c
   %i.aq = load <2 x i32>, ptr %i.ao, align 4, !tbaa !56
   %i.ar = add nsw <2 x i32> %i.aq, %i.ap          ; 3 uses
   %i.as = load ptr, ptr %i.ad, align 8, !tbaa !960
-  %i.at = getelementptr inbounds nuw [24 x i8], ptr %i.as, i64 %indvars.iv ; 3 uses
+  %2 = zext nneg i32 %.06091 to i64
+  %i.at = getelementptr inbounds nuw [24 x i8], ptr %i.as, i64 %2 ; 3 uses
   %i.au = load i32, ptr %i.at, align 8, !tbaa !936
   %i.av = icmp eq i32 %i.au, -1
   br i1 %i.av, label %_ZltRK13inf_s_integerS1_.exit.thread, label %bb.e
@@ -2539,8 +2542,7 @@ _ZltRK13inf_s_integerS1_.exit:                    ; preds = %bb.f
   br i1 %i.be, label %_ZltRK13inf_s_integerS1_.exit.thread, label %_ZltRK13inf_s_integerS1_.exit.thread86
 
 _ZltRK13inf_s_integerS1_.exit.thread:             ; preds = %bb.e, %_ZltRK13inf_s_integerS1_.exit, %bb.d
-  %2 = trunc nuw nsw i64 %indvars.iv to i32
-  store i32 %2, ptr %.06190, align 4, !tbaa !1293
+  store i32 %.06091, ptr %.06190, align 4, !tbaa !1293
   %i.bf = getelementptr inbounds nuw i8, ptr %.06190, i64 4
   store <2 x i32> %i.ar, ptr %i.bf, align 4, !tbaa !56
   %i.bg = getelementptr inbounds nuw i8, ptr %.06190, i64 12
@@ -2549,7 +2551,7 @@ _ZltRK13inf_s_integerS1_.exit.thread:             ; preds = %bb.e, %_ZltRK13inf_
 _ZltRK13inf_s_integerS1_.exit.thread86:           ; preds = %bb.f, %_ZltRK13inf_s_integerS1_.exit, %_ZltRK13inf_s_integerS1_.exit.thread, %bb.c
   %.2 = phi ptr [ %.06190, %bb.c ], [ %i.bg, %_ZltRK13inf_s_integerS1_.exit.thread ], [ %.06190, %_ZltRK13inf_s_integerS1_.exit ], [ %.06190, %bb.f ] ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %.06289, i64 24 ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %3 = add nuw nsw i32 %.06091, 1
   %.not = icmp eq ptr %i.bh, %i.z
   br i1 %.not, label %._crit_edge, label %bb.c, !llvm.loop !1289
 
@@ -2952,7 +2954,7 @@ _ZNK6vectorIN3smt23theory_dense_diff_logicINS0_7smi_extEE4cellELb1EjE3endEv.exit
   br i1 %.not, label %._crit_edge51, label %bb.b, !llvm.loop !1307
 
 .lr.ph:                                           ; preds = %_ZNK6vectorIN3smt23theory_dense_diff_logicINS0_7smi_extEE4cellELb1EjE3endEv.exit, %bb.h
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.h ], [ 0, %_ZNK6vectorIN3smt23theory_dense_diff_logicINS0_7smi_extEE4cellELb1EjE3endEv.exit ] ; 2 uses
+  %.03446 = phi i32 [ %3, %bb.h ], [ 0, %_ZNK6vectorIN3smt23theory_dense_diff_logicINS0_7smi_extEE4cellELb1EjE3endEv.exit ] ; 2 uses
   %.03545 = phi ptr [ %i.cz, %bb.h ], [ %i.w, %_ZNK6vectorIN3smt23theory_dense_diff_logicINS0_7smi_extEE4cellELb1EjE3endEv.exit ] ; 5 uses
   %i.ae = load i32, ptr %.03545, align 8, !tbaa !936
   %.off = add i32 %i.ae, -1
@@ -3046,7 +3048,8 @@ _ZlsRSoRK13inf_s_integer.exit:                    ; preds = %bb.d, %bb.f, %bb.g
   %i.cp = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSolsEi(ptr noundef nonnull align 8 dereferenceable(8) %1, i32 noundef %i.co)
   %i.cq = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.cp, ptr noundef nonnull @.str.9, i64 noundef 6) ; 0 uses
   %i.cr = load ptr, ptr %i.m, align 8, !tbaa !112
-  %i.cs = getelementptr inbounds nuw [8 x i8], ptr %i.cr, i64 %indvars.iv
+  %2 = zext nneg i32 %.03446 to i64
+  %i.cs = getelementptr inbounds nuw [8 x i8], ptr %i.cr, i64 %2
   %i.ct = load ptr, ptr %i.cs, align 8, !tbaa !114
   %i.cu = load ptr, ptr %i.ct, align 8, !tbaa !124
   %i.cv = load i32, ptr %i.cu, align 4, !tbaa !145
@@ -3057,7 +3060,7 @@ _ZlsRSoRK13inf_s_integer.exit:                    ; preds = %bb.d, %bb.f, %bb.g
 
 bb.h:                                             ; preds = %.lr.ph, %_ZlsRSoRK13inf_s_integer.exit
   %i.cz = getelementptr inbounds nuw i8, ptr %.03545, i64 24 ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %3 = add nuw nsw i32 %.03446, 1
   %.not39 = icmp eq ptr %i.cz, %i.ac
   br i1 %.not39, label %._crit_edge, label %.lr.ph, !llvm.loop !1308
 
@@ -3460,7 +3463,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.ba, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e, %bb.d
-  %i.bb = trunc nuw nsw i64 %indvars.iv to i32
+  %i.bb = trunc nuw i64 %indvars.iv to i32
   store i32 %i.bb, ptr %.06185, align 4, !tbaa !1389
   %i.bc = getelementptr inbounds nuw i8, ptr %.06185, i64 4
   store i32 %i.at, ptr %i.bc, align 4, !tbaa !56

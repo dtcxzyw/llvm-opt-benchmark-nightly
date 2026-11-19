@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.n, %bb.g
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.n ], [ 0, %bb.g ] ; 3 uses
+  %.047 = phi i32 [ 0, %bb.g ], [ %4, %bb.n ]     ; 3 uses
   %i.z = load ptr, ptr %i.f, align 8, !tbaa !13
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 56
   %i.ab = load ptr, ptr %i.aa, align 8
@@ -254,13 +254,15 @@ bb.l:                                             ; preds = %bb.k
   store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN6icu_7813UnicodeStringE, i64 16), ptr %.ptr.ptr.4, align 8, !tbaa !13
   %i.am = getelementptr inbounds nuw i8, ptr %i.ag, i64 272
   store i16 2, ptr %i.am, align 8, !tbaa !24
-  %i.an = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %indvars.iv ; 2 uses
+  %2 = zext nneg i32 %.047 to i64
+  %i.an = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %2 ; 2 uses
   store ptr %.ptr.ptr, ptr %i.an, align 8, !tbaa !131
   %i.ao = invoke noundef nonnull align 8 dereferenceable(64) ptr @_ZN6icu_7813UnicodeString8copyFromERKS0_a(ptr noundef nonnull align 8 dereferenceable(64) %.ptr.ptr, ptr noundef nonnull align 8 dereferenceable(64) %i.ac, i8 noundef signext 0)
           to label %_ZN6icu_7813UnicodeString5setToERKS0_.exit unwind label %bb.j ; 0 uses
 
 bb.m:                                             ; preds = %bb.k
-  %i.ap = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %indvars.iv
+  %3 = zext nneg i32 %.047 to i64
+  %i.ap = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %3
   store ptr null, ptr %i.ap, align 8, !tbaa !131
   store i32 7, ptr %i.a, align 4, !tbaa !15
   br label %.loopexit96
@@ -275,7 +277,7 @@ _ZN6icu_7813UnicodeString5setToERKS0_.exit:       ; preds = %bb.l
           to label %bb.n unwind label %bb.j
 
 bb.n:                                             ; preds = %_ZN6icu_7813UnicodeString5setToERKS0_.exit
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %4 = add nuw nsw i32 %.047, 1
   br label %bb.h, !llvm.loop !269
 
 .loopexit96:                                      ; preds = %bb.i, %bb.m

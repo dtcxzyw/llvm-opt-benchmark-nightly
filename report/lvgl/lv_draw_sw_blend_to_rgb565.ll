@@ -204,7 +204,7 @@ lv_color_24_16_mix.exit334.i:                     ; preds = %bb.bg, %bb.bf
 
 bb.bh:                                            ; preds = %bb.bs, %.preheader348.i
   %indvars.iv392.i.a = phi i64 [ 0, %.preheader348.i ], [ %indvars.iv.next393.i.a, %bb.bs ] ; 7 uses
-  %indvars.iv.i29 = phi i64 [ 0, %.preheader348.i ], [ %indvars.iv.next.i30, %bb.bs ] ; 8 uses
+  %.4287354.i = phi i32 [ 0, %.preheader348.i ], [ %8, %bb.bs ] ; 8 uses
   %i.wd = load i32, ptr %i.ne, align 4, !tbaa !28
   switch i32 %i.wd, label %rgb565_image_blend.exit [
     i32 1, label %bb.bi
@@ -217,7 +217,8 @@ bb.bi:                                            ; preds = %bb.bh
   %i.we = getelementptr inbounds nuw [2 x i8], ptr %.4307356.i, i64 %indvars.iv392.i.a
   %i.wf = load i16, ptr %i.we, align 2            ; 4 uses
   %i.wg = lshr i16 %i.wf, 11
-  %i.wh = getelementptr inbounds nuw i8, ptr %.4302357.i, i64 %indvars.iv.i29 ; 3 uses
+  %1 = zext nneg i32 %.4287354.i to i64
+  %i.wh = getelementptr inbounds nuw i8, ptr %.4302357.i, i64 %1 ; 3 uses
   %i.wi = getelementptr inbounds nuw i8, ptr %i.wh, i64 2
   %i.wj = load i8, ptr %i.wi, align 1, !tbaa !17
   %i.wk = lshr i8 %i.wj, 3
@@ -248,7 +249,8 @@ bb.bj:                                            ; preds = %bb.bh
   %i.xf = getelementptr inbounds nuw [2 x i8], ptr %.4307356.i, i64 %indvars.iv392.i.a
   %i.xg = load i16, ptr %i.xf, align 2            ; 4 uses
   %i.xh = lshr i16 %i.xg, 11
-  %i.xi = getelementptr inbounds nuw i8, ptr %.4302357.i, i64 %indvars.iv.i29 ; 3 uses
+  %2 = zext nneg i32 %.4287354.i to i64
+  %i.xi = getelementptr inbounds nuw i8, ptr %.4302357.i, i64 %2 ; 3 uses
   %i.xj = getelementptr inbounds nuw i8, ptr %i.xi, i64 2
   %i.xk = load i8, ptr %i.xj, align 1, !tbaa !17
   %i.xl = lshr i8 %i.xk, 3
@@ -278,7 +280,8 @@ bb.bj:                                            ; preds = %bb.bh
 bb.bk:                                            ; preds = %bb.bh
   %i.yh = getelementptr inbounds nuw [2 x i8], ptr %.4307356.i, i64 %indvars.iv392.i.a
   %i.yi = load i16, ptr %i.yh, align 2            ; 3 uses
-  %i.yj = getelementptr inbounds nuw i8, ptr %.4302357.i, i64 %indvars.iv.i29 ; 3 uses
+  %3 = zext nneg i32 %.4287354.i to i64
+  %i.yj = getelementptr inbounds nuw i8, ptr %.4302357.i, i64 %3 ; 3 uses
   %i.yk = getelementptr inbounds nuw i8, ptr %i.yj, i64 2
   %i.yl = load i8, ptr %i.yk, align 1, !tbaa !17
   %i.ym = lshr i8 %i.yl, 3
@@ -309,7 +312,8 @@ bb.bl:                                            ; preds = %bb.bh
   %i.zi = getelementptr inbounds nuw [2 x i8], ptr %.4307356.i, i64 %indvars.iv392.i.a
   %i.zj = load i16, ptr %i.zi, align 2            ; 4 uses
   %i.zk = lshr i16 %i.zj, 11
-  %i.zl = getelementptr inbounds nuw i8, ptr %.4302357.i, i64 %indvars.iv.i29 ; 3 uses
+  %4 = zext nneg i32 %.4287354.i to i64
+  %i.zl = getelementptr inbounds nuw i8, ptr %.4302357.i, i64 %4 ; 3 uses
   %i.zm = getelementptr inbounds nuw i8, ptr %i.zl, i64 2
   %i.zn = load i8, ptr %i.zm, align 1, !tbaa !17
   %i.zo = lshr i8 %i.zn, 3
@@ -343,7 +347,8 @@ bb.bm:                                            ; preds = %bb.bl, %bb.bk, %bb.
   br i1 %or.cond15.i, label %bb.bn, label %bb.bo
 
 bb.bn:                                            ; preds = %bb.bm
-  %i.aam = getelementptr inbounds nuw i8, ptr %.4302357.i, i64 %indvars.iv.i29
+  %5 = zext nneg i32 %.4287354.i to i64
+  %i.aam = getelementptr inbounds nuw i8, ptr %.4302357.i, i64 %5
   %i.aan = getelementptr inbounds nuw i8, ptr %i.aam, i64 3
   %i.aao = load i8, ptr %i.aan, align 1, !tbaa !17
   br label %bb.bs
@@ -352,7 +357,8 @@ bb.bo:                                            ; preds = %bb.bm
   br i1 %or.cond18.i, label %bb.bp, label %bb.bq
 
 bb.bp:                                            ; preds = %bb.bo
-  %i.aap = getelementptr inbounds nuw i8, ptr %.4302357.i, i64 %indvars.iv.i29
+  %6 = zext nneg i32 %.4287354.i to i64
+  %i.aap = getelementptr inbounds nuw i8, ptr %.4302357.i, i64 %6
   %i.aaq = getelementptr inbounds nuw i8, ptr %i.aap, i64 3
   %i.aar = load i8, ptr %i.aaq, align 1, !tbaa !17
   %i.aas = zext i8 %i.aar to i32
@@ -369,7 +375,8 @@ bb.bq:                                            ; preds = %bb.bo
 bb.br:                                            ; preds = %bb.bq
   %i.aay = zext i8 %i.aax to i32
   %i.aaz = mul nuw nsw i32 %i.aay, %i.nh
-  %i.aba = getelementptr inbounds nuw i8, ptr %.4302357.i, i64 %indvars.iv.i29
+  %7 = zext nneg i32 %.4287354.i to i64
+  %i.aba = getelementptr inbounds nuw i8, ptr %.4302357.i, i64 %7
   %i.abb = getelementptr inbounds nuw i8, ptr %i.aba, i64 3
   %i.abc = load i8, ptr %i.abb, align 1, !tbaa !17
   %i.abd = zext i8 %i.abc to i32
@@ -383,7 +390,7 @@ bb.bs:                                            ; preds = %bb.br, %bb.bq, %bb.
   %i.abh = tail call zeroext i16 @lv_color_16_16_mix(i16 noundef zeroext %.0280.i, i16 noundef zeroext %i.aak, i8 noundef zeroext %.sink454.i) #4
   store i16 %i.abh, ptr %i.aal, align 2, !tbaa !12
   %indvars.iv.next393.i.a = add nuw nsw i64 %indvars.iv392.i.a, 1 ; 2 uses
-  %indvars.iv.next.i30 = add nuw nsw i64 %indvars.iv.i29, 4
+  %8 = add nuw nsw i32 %.4287354.i, 4
   %exitcond.not.i31 = icmp eq i64 %indvars.iv.next393.i.a, %wide.trip.count.i28
   br i1 %exitcond.not.i31, label %._crit_edge.i32, label %bb.bh, !llvm.loop !78
 
@@ -786,7 +793,7 @@ bb.cn:                                            ; preds = %lv_color_24_16_mix.
 
 bb.co:                                            ; preds = %bb.cz, %.preheader406.i
   %indvars.iv450.i = phi i64 [ 0, %.preheader406.i ], [ %indvars.iv.next451.i, %bb.cz ] ; 7 uses
-  %indvars.iv.i44 = phi i64 [ 0, %.preheader406.i ], [ %indvars.iv.next.i45, %bb.cz ] ; 8 uses
+  %.4320412.i = phi i32 [ 0, %.preheader406.i ], [ %16, %bb.cz ] ; 8 uses
   %i.ale = load i32, ptr %i.acd, align 4, !tbaa !28
   switch i32 %i.ale, label %rgb565_image_blend.exit [
     i32 1, label %bb.cp
@@ -799,7 +806,8 @@ bb.cp:                                            ; preds = %bb.co
   %i.alf = getelementptr inbounds nuw [2 x i8], ptr %.4340414.i, i64 %indvars.iv450.i
   %i.alg = load i16, ptr %i.alf, align 2          ; 4 uses
   %i.alh = lshr i16 %i.alg, 11
-  %i.ali = getelementptr inbounds nuw i8, ptr %.4335415.i, i64 %indvars.iv.i44 ; 3 uses
+  %9 = zext nneg i32 %.4320412.i to i64
+  %i.ali = getelementptr inbounds nuw i8, ptr %.4335415.i, i64 %9 ; 3 uses
   %i.alj = getelementptr inbounds nuw i8, ptr %i.ali, i64 2
   %i.alk = load i8, ptr %i.alj, align 1, !tbaa !17
   %i.all = lshr i8 %i.alk, 3
@@ -830,7 +838,8 @@ bb.cq:                                            ; preds = %bb.co
   %i.amg = getelementptr inbounds nuw [2 x i8], ptr %.4340414.i, i64 %indvars.iv450.i
   %i.amh = load i16, ptr %i.amg, align 2          ; 4 uses
   %i.ami = lshr i16 %i.amh, 11
-  %i.amj = getelementptr inbounds nuw i8, ptr %.4335415.i, i64 %indvars.iv.i44 ; 3 uses
+  %10 = zext nneg i32 %.4320412.i to i64
+  %i.amj = getelementptr inbounds nuw i8, ptr %.4335415.i, i64 %10 ; 3 uses
   %i.amk = getelementptr inbounds nuw i8, ptr %i.amj, i64 2
   %i.aml = load i8, ptr %i.amk, align 1, !tbaa !17
   %i.amm = lshr i8 %i.aml, 3
@@ -860,7 +869,8 @@ bb.cq:                                            ; preds = %bb.co
 bb.cr:                                            ; preds = %bb.co
   %i.ani = getelementptr inbounds nuw [2 x i8], ptr %.4340414.i, i64 %indvars.iv450.i
   %i.anj = load i16, ptr %i.ani, align 2          ; 3 uses
-  %i.ank = getelementptr inbounds nuw i8, ptr %.4335415.i, i64 %indvars.iv.i44 ; 3 uses
+  %11 = zext nneg i32 %.4320412.i to i64
+  %i.ank = getelementptr inbounds nuw i8, ptr %.4335415.i, i64 %11 ; 3 uses
   %i.anl = getelementptr inbounds nuw i8, ptr %i.ank, i64 2
   %i.anm = load i8, ptr %i.anl, align 1, !tbaa !17
   %i.ann = lshr i8 %i.anm, 3
@@ -891,7 +901,8 @@ bb.cs:                                            ; preds = %bb.co
   %i.aoj = getelementptr inbounds nuw [2 x i8], ptr %.4340414.i, i64 %indvars.iv450.i
   %i.aok = load i16, ptr %i.aoj, align 2          ; 4 uses
   %i.aol = lshr i16 %i.aok, 11
-  %i.aom = getelementptr inbounds nuw i8, ptr %.4335415.i, i64 %indvars.iv.i44 ; 3 uses
+  %12 = zext nneg i32 %.4320412.i to i64
+  %i.aom = getelementptr inbounds nuw i8, ptr %.4335415.i, i64 %12 ; 3 uses
   %i.aon = getelementptr inbounds nuw i8, ptr %i.aom, i64 2
   %i.aoo = load i8, ptr %i.aon, align 1, !tbaa !17
   %i.aop = lshr i8 %i.aoo, 3
@@ -925,7 +936,8 @@ bb.ct:                                            ; preds = %bb.cs, %bb.cr, %bb.
   br i1 %or.cond15.i42, label %bb.cu, label %bb.cv
 
 bb.cu:                                            ; preds = %bb.ct
-  %i.apn = getelementptr inbounds nuw i8, ptr %.4335415.i, i64 %indvars.iv.i44
+  %13 = zext nneg i32 %.4320412.i to i64
+  %i.apn = getelementptr inbounds nuw i8, ptr %.4335415.i, i64 %13
   %i.apo = getelementptr inbounds nuw i8, ptr %i.apn, i64 3
   %i.app = load i8, ptr %i.apo, align 1, !tbaa !17
   br label %bb.cz
@@ -934,7 +946,8 @@ bb.cv:                                            ; preds = %bb.ct
   br i1 %or.cond18.i43, label %bb.cw, label %bb.cx
 
 bb.cw:                                            ; preds = %bb.cv
-  %i.apq = getelementptr inbounds nuw i8, ptr %.4335415.i, i64 %indvars.iv.i44
+  %14 = zext nneg i32 %.4320412.i to i64
+  %i.apq = getelementptr inbounds nuw i8, ptr %.4335415.i, i64 %14
   %i.apr = getelementptr inbounds nuw i8, ptr %i.apq, i64 3
   %i.aps = load i8, ptr %i.apr, align 1, !tbaa !17
   %i.apt = zext i8 %i.aps to i32
@@ -951,7 +964,8 @@ bb.cx:                                            ; preds = %bb.cv
 bb.cy:                                            ; preds = %bb.cx
   %i.apz = zext i8 %i.apy to i32
   %i.aqa = mul nuw nsw i32 %i.apz, %i.acg
-  %i.aqb = getelementptr inbounds nuw i8, ptr %.4335415.i, i64 %indvars.iv.i44
+  %15 = zext nneg i32 %.4320412.i to i64
+  %i.aqb = getelementptr inbounds nuw i8, ptr %.4335415.i, i64 %15
   %i.aqc = getelementptr inbounds nuw i8, ptr %i.aqb, i64 3
   %i.aqd = load i8, ptr %i.aqc, align 1, !tbaa !17
   %i.aqe = zext i8 %i.aqd to i32
@@ -965,7 +979,7 @@ bb.cz:                                            ; preds = %bb.cy, %bb.cx, %bb.
   %i.aqi = tail call zeroext i16 @lv_color_16_16_mix(i16 noundef zeroext %.0313.i, i16 noundef zeroext %i.apl, i8 noundef zeroext %.sink515.i) #4
   store i16 %i.aqi, ptr %i.apm, align 2, !tbaa !12
   %indvars.iv.next451.i = add nuw nsw i64 %indvars.iv450.i, 1 ; 2 uses
-  %indvars.iv.next.i45 = add nuw nsw i64 %indvars.iv.i44, 4
+  %16 = add nuw nsw i32 %.4320412.i, 4
   %exitcond.not.i46 = icmp eq i64 %indvars.iv.next451.i, %wide.trip.count.i41
   br i1 %exitcond.not.i46, label %._crit_edge.i47, label %bb.co, !llvm.loop !88
 
@@ -1368,13 +1382,13 @@ bb.a:
 .preheader324.lr.ph:                              ; preds = %.preheader326
   %.not306328 = icmp sgt i32 %i.b, 0
   %i.u = icmp ugt i8 %i.f, -4
+  %2 = zext nneg i8 %1 to i32
   %i.v = zext i32 %i.i to i64
   %i.w = sext i32 %i.m to i64
   %i.x = sext i32 %i.q to i64
   br i1 %.not306328, label %.preheader324.preheader, label %.critedge
 
 .preheader324.preheader:                          ; preds = %.preheader324.lr.ph
-  %2 = zext nneg i8 %1 to i64
   %wide.trip.count = zext nneg i32 %i.b to i64
   br label %.preheader324
 
@@ -1525,13 +1539,13 @@ lv_color_24_16_mix.exit.us353:                    ; preds = %lv_color_24_16_mix.
 
 .preheader316.lr.ph:                              ; preds = %.loopexit320
   %i.cp = icmp sgt i32 %i.b, 0
+  %3 = zext nneg i8 %1 to i32
   %i.cq = zext i32 %i.i to i64
   %i.cr = sext i32 %i.m to i64
   %i.cs = sext i32 %i.q to i64
   br i1 %i.cp, label %.preheader316.us.preheader, label %.critedge
 
 .preheader316.us.preheader:                       ; preds = %.preheader316.lr.ph
-  %3 = zext nneg i8 %1 to i64
   %wide.trip.count481 = zext nneg i32 %i.b to i64
   br label %.preheader316.us
 
@@ -1544,8 +1558,9 @@ lv_color_24_16_mix.exit.us353:                    ; preds = %lv_color_24_16_mix.
 
 bb.e:                                             ; preds = %.preheader316.us, %lv_color_24_16_mix.exit309.us
   %indvars.iv476.a = phi i64 [ 0, %.preheader316.us ], [ %indvars.iv.next477.a, %lv_color_24_16_mix.exit309.us ] ; 3 uses
-  %indvars.iv474 = phi i64 [ 0, %.preheader316.us ], [ %indvars.iv.next475, %lv_color_24_16_mix.exit309.us ] ; 2 uses
-  %i.ct = getelementptr inbounds nuw i8, ptr %.3280386.us, i64 %indvars.iv474 ; 5 uses
+  %.2264383.us = phi i32 [ 0, %.preheader316.us ], [ %5, %lv_color_24_16_mix.exit309.us ] ; 2 uses
+  %4 = zext nneg i32 %.2264383.us to i64
+  %i.ct = getelementptr inbounds nuw i8, ptr %.3280386.us, i64 %4 ; 5 uses
   %i.cu = getelementptr inbounds nuw [2 x i8], ptr %.3286385.us, i64 %indvars.iv476.a ; 2 uses
   %i.cv = load i16, ptr %i.cu, align 2, !tbaa !12 ; 4 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %.0272387.us, i64 %indvars.iv476.a
@@ -1611,7 +1626,7 @@ lv_color_24_16_mix.exit309.us:                    ; preds = %bb.g, %bb.f, %bb.e
   %.0.i308.us = phi i16 [ %i.ep, %bb.g ], [ %i.dh, %bb.f ], [ %i.cv, %bb.e ]
   store i16 %.0.i308.us, ptr %i.cu, align 2, !tbaa !12
   %indvars.iv.next477.a = add nuw nsw i64 %indvars.iv476.a, 1 ; 2 uses
-  %indvars.iv.next475 = add nuw nsw i64 %indvars.iv474, %3
+  %5 = add nuw nsw i32 %.2264383.us, %3
   %exitcond482.not = icmp eq i64 %indvars.iv.next477.a, %wide.trip.count481
   br i1 %exitcond482.not, label %._crit_edge384.us, label %bb.e, !llvm.loop !199
 
@@ -1635,13 +1650,13 @@ lv_color_24_16_mix.exit309.us:                    ; preds = %bb.g, %bb.f, %bb.e
 
 .preheader.lr.ph:                                 ; preds = %.loopexit
   %i.ew = icmp sgt i32 %i.b, 0
+  %6 = zext nneg i8 %1 to i32
   %i.ex = zext i32 %i.i to i64
   %i.ey = sext i32 %i.m to i64
   %i.ez = sext i32 %i.q to i64
   br i1 %i.ew, label %.preheader.preheader, label %.critedge
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
-  %4 = zext nneg i8 %1 to i64
   %wide.trip.count491 = zext nneg i32 %i.b to i64
   br label %.preheader
 
@@ -1654,8 +1669,9 @@ lv_color_24_16_mix.exit309.us:                    ; preds = %bb.g, %bb.f, %bb.e
 
 bb.h:                                             ; preds = %.preheader, %lv_color_24_16_mix.exit311
   %indvars.iv486 = phi i64 [ 0, %.preheader ], [ %indvars.iv.next487, %lv_color_24_16_mix.exit311 ] ; 3 uses
-  %indvars.iv484 = phi i64 [ 0, %.preheader ], [ %indvars.iv.next485, %lv_color_24_16_mix.exit311 ] ; 2 uses
-  %i.fa = getelementptr inbounds nuw i8, ptr %.5282399, i64 %indvars.iv484 ; 5 uses
+  %.3265396 = phi i32 [ 0, %.preheader ], [ %8, %lv_color_24_16_mix.exit311 ] ; 2 uses
+  %7 = zext nneg i32 %.3265396 to i64
+  %i.fa = getelementptr inbounds nuw i8, ptr %.5282399, i64 %7 ; 5 uses
   %i.fb = getelementptr inbounds nuw [2 x i8], ptr %.5288398, i64 %indvars.iv486 ; 2 uses
   %i.fc = load i16, ptr %i.fb, align 2, !tbaa !12 ; 4 uses
   %i.fd = getelementptr inbounds nuw i8, ptr %.2274400, i64 %indvars.iv486
@@ -1722,7 +1738,7 @@ lv_color_24_16_mix.exit311:                       ; preds = %bb.h, %bb.i, %bb.j
   %.0.i310 = phi i16 [ %i.gx, %bb.j ], [ %i.fp, %bb.i ], [ %i.fc, %bb.h ]
   store i16 %.0.i310, ptr %i.fb, align 2, !tbaa !12
   %indvars.iv.next487 = add nuw nsw i64 %indvars.iv486, 1 ; 2 uses
-  %indvars.iv.next485 = add nuw nsw i64 %indvars.iv484, %4
+  %8 = add nuw nsw i32 %.3265396, %6
   %exitcond492.not = icmp eq i64 %indvars.iv.next487, %wide.trip.count491
   br i1 %exitcond492.not, label %._crit_edge397, label %bb.h, !llvm.loop !201
 
@@ -1744,7 +1760,7 @@ lv_color_24_16_mix.exit311:                       ; preds = %bb.h, %bb.i, %bb.j
 
 bb.k:                                             ; preds = %.preheader324, %bb.s
   %indvars.iv430 = phi i64 [ 0, %.preheader324 ], [ %indvars.iv.next431, %bb.s ] ; 7 uses
-  %indvars.iv = phi i64 [ 0, %.preheader324 ], [ %indvars.iv.next, %bb.s ] ; 5 uses
+  %.4266330 = phi i32 [ 0, %.preheader324 ], [ %13, %bb.s ] ; 5 uses
   %i.hd = load i32, ptr %i.r, align 4, !tbaa !28
   switch i32 %i.hd, label %.critedge [
     i32 1, label %bb.l
@@ -1757,7 +1773,8 @@ bb.l:                                             ; preds = %bb.k
   %i.he = getelementptr inbounds nuw [2 x i8], ptr %.6289332, i64 %indvars.iv430
   %i.hf = load i16, ptr %i.he, align 2            ; 4 uses
   %i.hg = lshr i16 %i.hf, 11
-  %i.hh = getelementptr inbounds nuw i8, ptr %.6333, i64 %indvars.iv ; 3 uses
+  %9 = zext nneg i32 %.4266330 to i64
+  %i.hh = getelementptr inbounds nuw i8, ptr %.6333, i64 %9 ; 3 uses
   %i.hi = getelementptr inbounds nuw i8, ptr %i.hh, i64 2
   %i.hj = load i8, ptr %i.hi, align 1, !tbaa !17
   %i.hk = lshr i8 %i.hj, 3
@@ -1788,7 +1805,8 @@ bb.m:                                             ; preds = %bb.k
   %i.if = getelementptr inbounds nuw [2 x i8], ptr %.6289332, i64 %indvars.iv430
   %i.ig = load i16, ptr %i.if, align 2            ; 4 uses
   %i.ih = lshr i16 %i.ig, 11
-  %i.ii = getelementptr inbounds nuw i8, ptr %.6333, i64 %indvars.iv ; 3 uses
+  %10 = zext nneg i32 %.4266330 to i64
+  %i.ii = getelementptr inbounds nuw i8, ptr %.6333, i64 %10 ; 3 uses
   %i.ij = getelementptr inbounds nuw i8, ptr %i.ii, i64 2
   %i.ik = load i8, ptr %i.ij, align 1, !tbaa !17
   %i.il = lshr i8 %i.ik, 3
@@ -1818,7 +1836,8 @@ bb.m:                                             ; preds = %bb.k
 bb.n:                                             ; preds = %bb.k
   %i.jh = getelementptr inbounds nuw [2 x i8], ptr %.6289332, i64 %indvars.iv430
   %i.ji = load i16, ptr %i.jh, align 2            ; 3 uses
-  %i.jj = getelementptr inbounds nuw i8, ptr %.6333, i64 %indvars.iv ; 3 uses
+  %11 = zext nneg i32 %.4266330 to i64
+  %i.jj = getelementptr inbounds nuw i8, ptr %.6333, i64 %11 ; 3 uses
   %i.jk = getelementptr inbounds nuw i8, ptr %i.jj, i64 2
   %i.jl = load i8, ptr %i.jk, align 1, !tbaa !17
   %i.jm = lshr i8 %i.jl, 3
@@ -1849,7 +1868,8 @@ bb.o:                                             ; preds = %bb.k
   %i.ki = getelementptr inbounds nuw [2 x i8], ptr %.6289332, i64 %indvars.iv430
   %i.kj = load i16, ptr %i.ki, align 2            ; 4 uses
   %i.kk = lshr i16 %i.kj, 11
-  %i.kl = getelementptr inbounds nuw i8, ptr %.6333, i64 %indvars.iv ; 3 uses
+  %12 = zext nneg i32 %.4266330 to i64
+  %i.kl = getelementptr inbounds nuw i8, ptr %.6333, i64 %12 ; 3 uses
   %i.km = getelementptr inbounds nuw i8, ptr %i.kl, i64 2
   %i.kn = load i8, ptr %i.km, align 1, !tbaa !17
   %i.ko = lshr i8 %i.kn, 3
@@ -1896,7 +1916,7 @@ bb.s:                                             ; preds = %bb.q, %bb.p, %bb.r
   %i.lp = tail call zeroext i16 @lv_color_16_16_mix(i16 noundef zeroext %.0259, i16 noundef zeroext %i.lk, i8 noundef zeroext %.sink528) #4
   store i16 %i.lp, ptr %i.ll, align 2, !tbaa !12
   %indvars.iv.next431 = add nuw nsw i64 %indvars.iv430, 1 ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, %2
+  %13 = add nuw nsw i32 %.4266330, %2
   %exitcond.not = icmp eq i64 %indvars.iv.next431, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %bb.k, !llvm.loop !203
 

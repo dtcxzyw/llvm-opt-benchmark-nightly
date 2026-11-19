@@ -204,11 +204,11 @@ bb.a:
   ret void
 
 .lr.ph71:                                         ; preds = %._crit_edge, %._crit_edge64
-  %indvars.iv78 = phi i64 [ %indvars.iv.next79, %._crit_edge64 ], [ 1, %._crit_edge ] ; 2 uses
-  %indvars.iv = phi i64 [ %i.v, %._crit_edge64 ], [ %i.b, %._crit_edge ] ; 2 uses
-  %.in.i48 = getelementptr inbounds nuw [4 x i8], ptr @_ZN4ojph5local17sqrt_energy_gains10gain_9x7_lE, i64 %indvars.iv
+  %indvars.iv78 = phi i64 [ %i.v, %._crit_edge64 ], [ %i.b, %._crit_edge ] ; 2 uses
+  %.04768 = phi i32 [ %3, %._crit_edge64 ], [ 1, %._crit_edge ] ; 2 uses
+  %.in.i48 = getelementptr inbounds nuw [4 x i8], ptr @_ZN4ojph5local17sqrt_energy_gains10gain_9x7_lE, i64 %indvars.iv78
   %i.u = load float, ptr %.in.i48, align 4, !tbaa !139
-  %i.v = add nsw i64 %indvars.iv, -1              ; 3 uses
+  %i.v = add nsw i64 %indvars.iv78, -1            ; 3 uses
   %.in.i49 = getelementptr inbounds nuw [4 x i8], ptr @_ZN4ojph5local17sqrt_energy_gains10gain_9x7_hE, i64 %i.v
   %i.w = load float, ptr %.in.i49, align 4, !tbaa !139 ; 3 uses
   %i.x = load float, ptr %i.d, align 4, !tbaa !88
@@ -239,7 +239,8 @@ bb.a:
   %i.aj = add nuw nsw i32 %i.ai, 63488
   %i.ak = or i32 %i.aj, %.0.lcssa
   %i.al = trunc i32 %i.ak to i16                  ; 2 uses
-  %i.am = getelementptr inbounds nuw [2 x i8], ptr %i.t, i64 %indvars.iv78 ; 3 uses
+  %2 = zext nneg i32 %.04768 to i64
+  %i.am = getelementptr inbounds nuw [2 x i8], ptr %i.t, i64 %2 ; 3 uses
   store i16 %i.al, ptr %i.am, align 2, !tbaa !56
   %i.an = getelementptr i8, ptr %i.am, i64 2
   store i16 %i.al, ptr %i.an, align 2, !tbaa !56
@@ -271,7 +272,7 @@ bb.a:
   %i.ba = add nuw nsw i32 %i.az, 63488
   %i.bb = or i32 %i.ba, %.1.lcssa
   %i.bc = trunc i32 %i.bb to i16
-  %indvars.iv.next79 = add nuw nsw i64 %indvars.iv78, 3
+  %3 = add nuw nsw i32 %.04768, 3
   %i.bd = getelementptr inbounds nuw i8, ptr %i.am, i64 4
   store i16 %i.bc, ptr %i.bd, align 2, !tbaa !56
   %.not.wide = icmp eq i64 %i.v, 0

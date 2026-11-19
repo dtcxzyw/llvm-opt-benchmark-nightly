@@ -204,33 +204,35 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.e
 
 .lr.ph:                                           ; preds = %bb.b, %bb.d
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.d ], [ 0, %bb.b ] ; 3 uses
   %4 = phi ptr [ %i.n, %bb.d ], [ %i.h, %bb.b ]   ; 2 uses
+  %.02 = phi i32 [ %6, %bb.d ], [ 0, %bb.b ]      ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %4, i64 1
   %i.k = call i64 @SDL_strtoul_REAL(ptr noundef nonnull %i.j, ptr noundef null, i32 noundef 16) #8
-  %i.l = icmp samesign ugt i64 %3, %indvars.iv
+  %5 = zext nneg i32 %.02 to i64                  ; 2 uses
+  %i.l = icmp samesign ugt i64 %3, %5
   br i1 %i.l, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph
-  %i.m = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv
+  %i.m = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %5
   store i64 %i.k, ptr %i.m, align 8
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %.lr.ph
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
+  %6 = add nuw nsw i32 %.02, 1                    ; 2 uses
   store i8 0, ptr %4, align 1
   %i.n = call ptr @SDL_strrchr_REAL(ptr noundef nonnull %i.a, i32 noundef 32) #8 ; 2 uses
   %.not22 = icmp eq ptr %i.n, null
   br i1 %.not22, label %._crit_edge, label %.lr.ph, !llvm.loop !12
 
 ._crit_edge:                                      ; preds = %bb.d
+  %7 = zext nneg i32 %6 to i64                    ; 2 uses
   %i.o = call i64 @SDL_strtoul_REAL(ptr noundef nonnull %i.a, ptr noundef null, i32 noundef 16) #8
-  %i.p = icmp samesign ugt i64 %3, %indvars.iv.next
+  %i.p = icmp samesign ugt i64 %3, %7
   br i1 %i.p, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %._crit_edge.thread, %._crit_edge
   %i.q = phi i64 [ %i.i, %._crit_edge.thread ], [ %i.o, %._crit_edge ]
-  %.0.lcssa8 = phi i64 [ 0, %._crit_edge.thread ], [ %indvars.iv.next, %._crit_edge ]
+  %.0.lcssa8 = phi i64 [ 0, %._crit_edge.thread ], [ %7, %._crit_edge ]
   %i.r = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %.0.lcssa8
   store i64 %i.q, ptr %i.r, align 8
   br label %bb.f

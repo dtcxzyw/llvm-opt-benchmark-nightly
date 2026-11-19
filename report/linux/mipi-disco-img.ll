@@ -204,8 +204,8 @@ bb.ad:                                            ; preds = %.epilog-lcssa, %bb.
 bb.ae:                                            ; preds = %bb.ad
   %i.cz = zext nneg i32 %i.cx to i64              ; 2 uses
   %i.da = shl nuw nsw i64 %i.cz, 3                ; 2 uses
-  %i.db = add nuw nsw i32 %.1100.i.i, 1           ; 2 uses
-  %i.dc = zext nneg i32 %i.db to i64              ; 3 uses
+  %i.db = add nuw nsw i32 %.1100.i.i, 1           ; 3 uses
+  %i.dc = zext nneg i32 %i.db to i64              ; 2 uses
   %i.dd = icmp samesign ult i64 %i.da, %i.dc
   br i1 %i.dd, label %bb.af, label %bb.ag
 
@@ -311,7 +311,8 @@ arch_test_bit.exit.i.i:                           ; preds = %arch_test_bit.exit.
   %i.es = getelementptr [4 x i8], ptr %i.dp, i64 %indvars.iv127.i.i
   store i32 %i.er, ptr %i.es, align 4
   %indvars.iv.next128.i.i = add nuw nsw i64 %indvars.iv127.i.i, 1 ; 2 uses
-  %exitcond131.not.i.i = icmp eq i64 %indvars.iv.next128.i.i, %i.dc
+  %lftr.wideiv = trunc i64 %indvars.iv.next128.i.i to i32
+  %exitcond131.not.i.i = icmp eq i32 %i.db, %lftr.wideiv
   br i1 %exitcond131.not.i.i, label %bb.ah, label %arch_test_bit.exit.i.i, !llvm.loop !34
 
 bb.ah:                                            ; preds = %arch_test_bit.exit.i.i

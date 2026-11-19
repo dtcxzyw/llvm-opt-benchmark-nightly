@@ -205,10 +205,10 @@ bb.w:                                             ; preds = %_ZNSt7__cxx1112basi
   %i.cv = load i32, ptr %i.cu, align 8, !tbaa !123
   %i.cw = getelementptr inbounds nuw i8, ptr %i.ah, i64 24
   %i.cx = load i8, ptr %i.cw, align 8, !tbaa !87  ; 5 uses
-  %3 = zext i8 %i.cx to i64
+  %3 = zext i8 %i.cx to i32
   %i.cy = zext i8 %i.cx to i64
-  %4 = shl nuw nsw i64 %3, 2                      ; 2 uses
-  %i.cz = shl nuw nsw i64 %i.cy, 2                ; 2 uses
+  %4 = shl nuw nsw i32 %3, 2                      ; 2 uses
+  %i.cz = shl nuw nsw i64 %i.cy, 2
   %i.da = call noalias noundef nonnull ptr @_Znam(i64 noundef %i.cz) #23 ; 10 uses
   %i.db = ptrtoaddr ptr %i.da to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #21
@@ -241,6 +241,7 @@ bb.z:                                             ; preds = %bb.y
   %.not178 = icmp eq i8 %i.cx, 0
   %i.dn = getelementptr inbounds nuw i8, ptr %i.bv, i64 16
   %i.do = getelementptr inbounds nuw i8, ptr %i.ah, i64 64 ; 2 uses
+  %5 = zext nneg i32 %4 to i64                    ; 2 uses
   br i1 %.not178, label %.preheader, label %.preheader.us.preheader
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
@@ -254,9 +255,9 @@ bb.z:                                             ; preds = %bb.y
   br label %.preheader.us
 
 .preheader.us:                                    ; preds = %.preheader.us.preheader, %._crit_edge.us
-  %indvars.iv189 = phi i64 [ 0, %.preheader.us.preheader ], [ %indvars.iv.next190, %._crit_edge.us ] ; 2 uses
-  %.062172.us.a = phi i32 [ 0, %.preheader.us.preheader ], [ %i.fm, %._crit_edge.us ]
-  %.064170.us = phi i64 [ 0, %.preheader.us.preheader ], [ %indvars.iv.next185.lcssa, %._crit_edge.us ] ; 3 uses
+  %.062172.us = phi i32 [ %i.fm, %._crit_edge.us ], [ 0, %.preheader.us.preheader ]
+  %.062172.us.a = phi i32 [ %7, %._crit_edge.us ], [ 0, %.preheader.us.preheader ] ; 2 uses
+  %.064170.us = phi i64 [ %indvars.iv.next185.lcssa, %._crit_edge.us ], [ 0, %.preheader.us.preheader ] ; 3 uses
   %i.dq = load float, ptr %2, align 4, !tbaa !186 ; 4 uses
   %i.dr = load ptr, ptr %i.dn, align 8, !tbaa !128 ; 5 uses
   %i.ds = ptrtoaddr ptr %i.dr to i64
@@ -356,11 +357,12 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
 ._crit_edge.us:                                   ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block
   %indvars.iv.next185.lcssa = phi i64 [ %i.du, %middle.block ], [ %indvars.iv.next185.lcssa212.unr, %scalar.ph.prol.loopexit ], [ %indvars.iv.next185.1, %scalar.ph ]
   %i.fj = load ptr, ptr %i.do, align 8, !tbaa !187
+  %6 = zext nneg i32 %.062172.us.a to i64
   %i.fk = load ptr, ptr %i.fj, align 8, !tbaa !100
-  %i.fl = getelementptr inbounds nuw i8, ptr %i.fk, i64 %indvars.iv189
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.fl, ptr nonnull align 1 %i.da, i64 %4, i1 false)
-  %indvars.iv.next190 = add nuw nsw i64 %indvars.iv189, %i.cz
-  %i.fm = add nuw i32 %.062172.us.a, 1            ; 2 uses
+  %i.fl = getelementptr inbounds nuw i8, ptr %i.fk, i64 %6
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.fl, ptr nonnull align 1 %i.da, i64 %5, i1 false)
+  %7 = add nuw nsw i32 %.062172.us.a, %4
+  %i.fm = add nuw i32 %.062172.us, 1              ; 2 uses
   %i.fn = load i32, ptr %i.dl, align 8, !tbaa !184
   %i.fo = icmp ugt i32 %i.fn, %i.fm
   br i1 %i.fo, label %.preheader.us, label %.thread148, !llvm.loop !350
@@ -369,7 +371,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %.062172 = phi i32 [ %i.fr, %.preheader ], [ 0, %.preheader.lr.ph ]
   %i.fp = load ptr, ptr %i.do, align 8, !tbaa !187
   %i.fq = load ptr, ptr %i.fp, align 8, !tbaa !100
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.fq, ptr nonnull align 1 %i.da, i64 %4, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.fq, ptr nonnull align 1 %i.da, i64 %5, i1 false)
   %i.fr = add nuw i32 %.062172, 1                 ; 2 uses
   %i.fs = load i32, ptr %i.dl, align 8, !tbaa !184
   %i.ft = icmp ugt i32 %i.fs, %i.fr

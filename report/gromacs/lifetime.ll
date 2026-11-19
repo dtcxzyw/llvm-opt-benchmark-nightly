@@ -204,7 +204,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br label %bb.ae
 
 bb.ae:                                            ; preds = %.lr.ph152, %._crit_edge146
-  %indvars.iv = phi i64 [ 0, %.lr.ph152 ], [ %indvars.iv.next, %._crit_edge146 ] ; 3 uses
+  %.022150 = phi i32 [ 0, %.lr.ph152 ], [ %4, %._crit_edge146 ] ; 3 uses
   %.sroa.050.1149 = phi ptr [ %i.nq, %.lr.ph152 ], [ %i.po, %._crit_edge146 ] ; 6 uses
   %i.nv = getelementptr inbounds nuw i8, ptr %.sroa.050.1149, i64 16
   %i.nw = load ptr, ptr %i.nv, align 8, !tbaa !85, !noalias !154 ; 2 uses
@@ -218,13 +218,18 @@ bb.ae:                                            ; preds = %.lr.ph152, %._crit_
   %i.oa = load ptr, ptr %i.nz, align 8, !tbaa !84, !noalias !154
   %i.ob = getelementptr inbounds nuw i8, ptr %.sroa.050.1149, i64 32
   %i.oc = load ptr, ptr %i.ob, align 8, !tbaa !87, !noalias !154
+  %2 = zext nneg i32 %.022150 to i64
   br label %bb.af
 
 .preheader:                                       ; preds = %_ZNSt15_Deque_iteratorIiRKiPS0_EppEv.exit, %bb.ae
   %.021.lcssa = phi i64 [ 0, %bb.ae ], [ %i.pb, %_ZNSt15_Deque_iteratorIiRKiPS0_EppEv.exit ] ; 2 uses
   %i.od = load i64, ptr %i.nu, align 8, !tbaa !156
   %i.oe = icmp ult i64 %.021.lcssa, %i.od
-  br i1 %i.oe, label %.lr.ph145.a, label %._crit_edge146
+  br i1 %i.oe, label %.lr.ph145, label %._crit_edge146
+
+.lr.ph145:                                        ; preds = %.preheader
+  %3 = zext nneg i32 %.022150 to i64
+  br label %.lr.ph145.a
 
 bb.af:                                            ; preds = %.lr.ph142, %_ZNSt15_Deque_iteratorIiRKiPS0_EppEv.exit
   %.021140 = phi i64 [ 0, %.lr.ph142 ], [ %i.pb, %_ZNSt15_Deque_iteratorIiRKiPS0_EppEv.exit ] ; 3 uses
@@ -244,7 +249,7 @@ bb.af:                                            ; preds = %.lr.ph142, %_ZNSt15
   %i.op = mul i64 %i.oo, %.021140
   %i.oq = load ptr, ptr %i.nt, align 8, !tbaa !157
   %i.or = getelementptr [16 x i8], ptr %i.oq, i64 %i.op
-  %i.os = getelementptr [16 x i8], ptr %i.or, i64 %indvars.iv ; 2 uses
+  %i.os = getelementptr [16 x i8], ptr %i.or, i64 %2 ; 2 uses
   store float %i.on, ptr %i.os, align 8, !tbaa !80
   %i.ot = getelementptr inbounds nuw i8, ptr %i.os, i64 8 ; 2 uses
   %i.ou = load i64, ptr %i.ot, align 8, !tbaa !78
@@ -269,13 +274,13 @@ _ZNSt15_Deque_iteratorIiRKiPS0_EppEv.exit:        ; preds = %bb.af, %bb.ag
   %.not93 = icmp eq ptr %.sroa.037.1, %i.pc
   br i1 %.not93, label %.preheader, label %bb.af, !llvm.loop !144
 
-.lr.ph145.a:                                      ; preds = %.preheader, %.lr.ph145.a
-  %.1144 = phi i64 [ %i.pl, %.lr.ph145.a ], [ %.021.lcssa, %.preheader ] ; 2 uses
+.lr.ph145.a:                                      ; preds = %.lr.ph145, %.lr.ph145.a
+  %.1144 = phi i64 [ %.021.lcssa, %.lr.ph145 ], [ %i.pl, %.lr.ph145.a ] ; 2 uses
   %i.pd = call noundef i64 @_ZNK3gmx20AbstractAnalysisData11columnCountEv(ptr noundef nonnull align 8 dereferenceable(98) %0)
   %i.pe = mul i64 %i.pd, %.1144
   %i.pf = load ptr, ptr %i.nt, align 8, !tbaa !157
   %i.pg = getelementptr [16 x i8], ptr %i.pf, i64 %i.pe
-  %i.ph = getelementptr [16 x i8], ptr %i.pg, i64 %indvars.iv ; 2 uses
+  %i.ph = getelementptr [16 x i8], ptr %i.pg, i64 %3 ; 2 uses
   store float 0.000000e+00, ptr %i.ph, align 8, !tbaa !80
   %i.pi = getelementptr inbounds nuw i8, ptr %i.ph, i64 8 ; 2 uses
   %i.pj = load i64, ptr %i.pi, align 8, !tbaa !78
@@ -288,7 +293,7 @@ _ZNSt15_Deque_iteratorIiRKiPS0_EppEv.exit:        ; preds = %bb.af, %bb.ag
 
 ._crit_edge146:                                   ; preds = %.lr.ph145.a, %.preheader
   %i.po = getelementptr inbounds nuw i8, ptr %.sroa.050.1149, i64 80 ; 3 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %4 = add nuw nsw i32 %.022150, 1
   %i.pp = load ptr, ptr %i.b, align 8, !tbaa !41  ; 3 uses
   %i.pq = getelementptr inbounds nuw i8, ptr %i.pp, i64 48
   %i.pr = load ptr, ptr %i.pq, align 8, !tbaa !149

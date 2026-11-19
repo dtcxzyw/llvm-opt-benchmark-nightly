@@ -205,7 +205,7 @@ bb.bk:                                            ; preds = %bb.bj
   br label %.backedge
 
 .backedge:                                        ; preds = %.backedge.backedge, %bb.bk
-  %indvars.iv602 = phi i64 [ 0, %bb.bk ], [ %indvars.iv.next603, %.backedge.backedge ] ; 7 uses
+  %.1475 = phi i32 [ 0, %bb.bk ], [ %14, %.backedge.backedge ] ; 5 uses
   %i.tk = call noundef i32 @_ZN3fmt3v126detail6bigint13divmod_assignERKS2_(ptr noundef nonnull align 8 dereferenceable(172) %10, ptr noundef nonnull align 8 dereferenceable(172) %11) ; 3 uses
   %i.tl = load i64, ptr %i.c, align 8, !tbaa !526 ; 2 uses
   %i.tm = trunc i64 %i.tl to i32                  ; 2 uses
@@ -378,8 +378,9 @@ _ZN3fmt3v126detail11add_compareERKNS1_6bigintES4_S4_.exit297: ; preds = %bb.bv, 
   %i.wi = icmp slt i32 %.4.i281, %i.mr            ; 2 uses
   %i.wj = trunc i32 %i.tk to i8                   ; 3 uses
   %i.wk = add i8 %i.wj, 48
-  %indvars.iv.next603 = add nuw nsw i64 %indvars.iv602, 1 ; 4 uses
-  %i.wl = getelementptr inbounds nuw i8, ptr %i.tg, i64 %indvars.iv602
+  %14 = add nuw nsw i32 %.1475, 1                 ; 4 uses
+  %15 = zext nneg i32 %.1475 to i64
+  %i.wl = getelementptr inbounds nuw i8, ptr %i.tg, i64 %15
   store i8 %i.wk, ptr %i.wl, align 1, !tbaa !253
   %or.cond.not = select i1 %i.uj, i1 %i.wi, i1 false
   br i1 %or.cond.not, label %bb.ci, label %bb.bx
@@ -390,8 +391,9 @@ bb.bx:                                            ; preds = %_ZN3fmt3v126detail1
 .thread759:                                       ; preds = %bb.bp, %_ZNK3fmt3v126detail6bigint9get_bigitEi.exit46.i294
   %i.wm = trunc i32 %i.tk to i8                   ; 3 uses
   %i.wn = add i8 %i.wm, 48
-  %indvars.iv.next603753 = add nuw nsw i64 %indvars.iv602, 1 ; 2 uses
-  %i.wo = getelementptr inbounds nuw i8, ptr %i.tg, i64 %indvars.iv602
+  %16 = add nuw nsw i32 %.1475, 1                 ; 2 uses
+  %17 = zext nneg i32 %.1475 to i64
+  %i.wo = getelementptr inbounds nuw i8, ptr %i.tg, i64 %17
   store i8 %i.wn, ptr %i.wo, align 1, !tbaa !253
   br i1 %i.uj, label %.thread.sink.split, label %.thread768
 
@@ -399,7 +401,7 @@ bb.by:                                            ; preds = %bb.bx
   br i1 %i.wi, label %.thread, label %.thread768
 
 .thread768:                                       ; preds = %.thread759, %bb.by
-  %indvars.iv.next603756766771 = phi i64 [ %indvars.iv.next603, %bb.by ], [ %indvars.iv.next603753, %.thread759 ] ; 6 uses
+  %18 = phi i32 [ %14, %bb.by ], [ %16, %.thread759 ] ; 6 uses
   %i.wp = phi i8 [ %i.wj, %bb.by ], [ %i.wm, %.thread759 ] ; 3 uses
   %i.wq = load i64, ptr %i.c, align 8, !tbaa !526
   %i.wr = trunc i64 %i.wq to i32
@@ -491,32 +493,34 @@ bb.cg:                                            ; preds = %bb.ca, %.thread.loo
   br i1 %or.cond, label %.thread, label %.thread.sink.split
 
 .thread.sink.split:                               ; preds = %_ZNK3fmt3v126detail6bigint9get_bigitEi.exit46.i312, %bb.cg, %bb.bz, %bb.bx, %.thread759
+  %.sink = phi i32 [ %14, %bb.bx ], [ %16, %.thread759 ], [ %18, %bb.cg ], [ %18, %bb.bz ], [ %18, %_ZNK3fmt3v126detail6bigint9get_bigitEi.exit46.i312 ] ; 2 uses
   %.sink816 = phi i8 [ %i.wj, %bb.bx ], [ %i.wm, %.thread759 ], [ %i.wp, %bb.cg ], [ %i.wp, %bb.bz ], [ %i.wp, %_ZNK3fmt3v126detail6bigint9get_bigitEi.exit46.i312 ]
-  %indvars.iv.next603756765.ph = phi i64 [ %indvars.iv.next603, %bb.bx ], [ %indvars.iv.next603753, %.thread759 ], [ %indvars.iv.next603756766771, %bb.cg ], [ %indvars.iv.next603756766771, %bb.bz ], [ %indvars.iv.next603756766771, %_ZNK3fmt3v126detail6bigint9get_bigitEi.exit46.i312 ]
-  %i.yd = getelementptr i8, ptr %i.tg, i64 %indvars.iv602
+  %19 = zext nneg i32 %.sink to i64
+  %20 = getelementptr i8, ptr %i.tg, i64 %19
+  %i.yd = getelementptr i8, ptr %20, i64 -1
   %i.ye = add i8 %.sink816, 49
   store i8 %i.ye, ptr %i.yd, align 1, !tbaa !253
   br label %.thread
 
 .thread:                                          ; preds = %bb.ce, %.thread.sink.split, %.thread768, %bb.cg, %bb.by
-  %indvars.iv.next603756765 = phi i64 [ %indvars.iv.next603, %bb.by ], [ %indvars.iv.next603756766771, %.thread768 ], [ %indvars.iv.next603756766771, %bb.cg ], [ %indvars.iv.next603756765.ph, %.thread.sink.split ], [ %indvars.iv.next603756766771, %bb.ce ] ; 2 uses
+  %21 = phi i32 [ %14, %bb.by ], [ %18, %.thread768 ], [ %18, %bb.cg ], [ %.sink, %.thread.sink.split ], [ %18, %bb.ce ]
+  %22 = zext nneg i32 %21 to i64                  ; 3 uses
   %i.yf = load i64, ptr %i.th, align 8, !tbaa !427 ; 2 uses
-  %.not747 = icmp ugt i64 %i.yf, %indvars.iv602
-  br i1 %.not747, label %_ZN3fmt3v126detail6bufferIcE10try_resizeEm.exit, label %bb.ch
+  %23 = icmp ult i64 %i.yf, %22
+  br i1 %23, label %bb.ch, label %_ZN3fmt3v126detail6bufferIcE10try_resizeEm.exit
 
 bb.ch:                                            ; preds = %.thread
   %i.yg = load ptr, ptr %i.ti, align 8, !tbaa !440
-  call void %i.yg(ptr noundef nonnull align 8 dereferenceable(32) %3, i64 noundef %indvars.iv.next603756765) #26, !inline_history !32
+  call void %i.yg(ptr noundef nonnull align 8 dereferenceable(32) %3, i64 noundef %22) #26, !inline_history !32
   %.pre.i316 = load i64, ptr %i.th, align 8, !tbaa !427
   br label %_ZN3fmt3v126detail6bufferIcE10try_resizeEm.exit
 
 _ZN3fmt3v126detail6bufferIcE10try_resizeEm.exit:  ; preds = %.thread, %bb.ch
   %i.yh = phi i64 [ %i.yf, %.thread ], [ %.pre.i316, %bb.ch ]
-  %i.yi = call noundef i64 @llvm.umin.i64(i64 %indvars.iv.next603756765, i64 %i.yh)
+  %i.yi = call noundef i64 @llvm.umin.i64(i64 %22, i64 %i.yh)
   store i64 %i.yi, ptr %i.tj, align 8, !tbaa !429
   %i.yj = load i32, ptr %4, align 4, !tbaa !119
-  %14 = trunc nuw nsw i64 %indvars.iv602 to i32
-  %i.yk = sub nsw i32 %i.yj, %14
+  %i.yk = sub nsw i32 %i.yj, %.1475
   store i32 %i.yk, ptr %4, align 4, !tbaa !119
   br label %.loopexit
 

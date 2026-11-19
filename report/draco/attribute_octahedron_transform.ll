@@ -167,10 +167,10 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph, %.cont34
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %.cont34 ] ; 2 uses
   %6 = phi ptr [ %i.w, %.lr.ph ], [ %i.be, %.cont34 ]
   %7 = phi i64 [ 0, %.lr.ph ], [ %i.bc, %.cont34 ]
-  %.042.a = phi i32 [ 0, %.lr.ph ], [ %i.bb, %.cont34 ]
+  %.042 = phi i32 [ 0, %.lr.ph ], [ %i.bb, %.cont34 ]
+  %.042.a = phi i32 [ 0, %.lr.ph ], [ %9, %.cont34 ] ; 2 uses
   %i.ai = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %7
   %i.aj = load i32, ptr %i.ai, align 4, !tbaa !76 ; 2 uses
   %i.ak = load i8, ptr %i.aa, align 4, !tbaa !77, !range !78, !noalias !79, !noundef !80
@@ -199,15 +199,16 @@ bb.c:                                             ; preds = %.lr.ph, %.cont34
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #13
   call void @_ZNK5draco17OctahedronToolBox38FloatVectorToQuantizedOctahedralCoordsIfEEvPKT_PiS5_(ptr noundef nonnull align 4 dereferenceable(20) %5, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c)
   %i.ax = load i32, ptr %i.b, align 4, !tbaa !56
-  %i.ay = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %indvars.iv ; 2 uses
+  %8 = zext nneg i32 %.042.a to i64
+  %i.ay = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %8 ; 2 uses
   store i32 %i.ax, ptr %i.ay, align 4, !tbaa !56
   %i.az = load i32, ptr %i.c, align 4, !tbaa !56
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2
+  %9 = add nuw nsw i32 %.042.a, 2
   %i.ba = getelementptr inbounds nuw i8, ptr %i.ay, i64 4
   store i32 %i.az, ptr %i.ba, align 4, !tbaa !56
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #13
-  %i.bb = add i32 %.042.a, 1                      ; 2 uses
+  %i.bb = add i32 %.042, 1                        ; 2 uses
   %i.bc = zext i32 %i.bb to i64                   ; 2 uses
   %i.bd = load ptr, ptr %i.x, align 8, !tbaa !83
   %i.be = load ptr, ptr %2, align 8, !tbaa !84    ; 2 uses
@@ -220,7 +221,7 @@ bb.c:                                             ; preds = %.lr.ph, %.cont34
 
 bb.d:                                             ; preds = %.lr.ph45, %.cont
   %indvars.iv51 = phi i64 [ 0, %.lr.ph45 ], [ %indvars.iv.next52, %.cont ] ; 3 uses
-  %indvars.iv49 = phi i64 [ 0, %.lr.ph45 ], [ %indvars.iv.next50, %.cont ] ; 2 uses
+  %.144 = phi i32 [ 0, %.lr.ph45 ], [ %11, %.cont ] ; 2 uses
   %i.bk = load i8, ptr %i.ae, align 4, !tbaa !77, !range !78, !noalias !85, !noundef !80
   %i.bl = trunc nuw i8 %i.bk to i1
   br i1 %i.bl, label %.cont, label %.else
@@ -246,10 +247,11 @@ bb.d:                                             ; preds = %.lr.ph45, %.cont
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #13
   call void @_ZNK5draco17OctahedronToolBox38FloatVectorToQuantizedOctahedralCoordsIfEEvPKT_PiS5_(ptr noundef nonnull align 4 dereferenceable(20) %5, ptr noundef nonnull %i.a, ptr noundef nonnull %i.d, ptr noundef nonnull %i.e)
   %i.bw = load i32, ptr %i.d, align 4, !tbaa !56
-  %i.bx = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %indvars.iv49 ; 2 uses
+  %10 = zext nneg i32 %.144 to i64
+  %i.bx = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %10 ; 2 uses
   store i32 %i.bw, ptr %i.bx, align 4, !tbaa !56
   %i.by = load i32, ptr %i.e, align 4, !tbaa !56
-  %indvars.iv.next50 = add nuw nsw i64 %indvars.iv49, 2
+  %11 = add nuw nsw i32 %.144, 2
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bx, i64 4
   store i32 %i.by, ptr %i.bz, align 4, !tbaa !56
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #13

@@ -205,7 +205,8 @@ _ZN6casadi13casadi_norm_2IdEET_xPKS1_.exit273:    ; preds = %_ZN6casadi13casadi_
   br label %bb.y
 
 bb.y:                                             ; preds = %.lr.ph, %bb.cc
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.cc ] ; 3 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %6, %bb.cc ]
+  %.0163596 = phi i32 [ 0, %.lr.ph ], [ %5, %bb.cc ] ; 2 uses
   %.0164595 = phi double [ %.0.lcssa.i, %.lr.ph ], [ %.1, %bb.cc ] ; 2 uses
   %.0165594 = phi double [ 0.000000e+00, %.lr.ph ], [ %.1166, %bb.cc ]
   %.0167593 = phi double [ %i.xf, %.lr.ph ], [ %i.btq, %bb.cc ] ; 2 uses
@@ -221,7 +222,7 @@ bb.z:                                             ; preds = %bb.y
   br label %.loopexit
 
 bb.aa:                                            ; preds = %bb.y
-  %.not179 = icmp eq i64 %indvars.iv, 0
+  %.not179 = icmp eq i32 %.0163596, 0
   br i1 %.not179, label %bb.ac, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
@@ -231,7 +232,7 @@ bb.ab:                                            ; preds = %bb.aa
   br i1 %or.cond, label %.loopexit, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.aa, %bb.ab
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
+  %5 = add nuw nsw i32 %.0163596, 1               ; 2 uses
   %i.ya = load ptr, ptr %i.gz, align 8, !tbaa !248 ; 5 uses
   %i.yb = ptrtoaddr ptr %i.ya to i64
   %i.yc = load i64, ptr %i.d, align 8, !tbaa !158 ; 23 uses
@@ -634,8 +635,9 @@ _ZN6casadi13casadi_norm_2IdEET_xPKS1_.exit539:    ; preds = %_ZN6casadi13casadi_
   %i.btq = fdiv double %i.bto, %i.btp             ; 4 uses
   call void (ptr, ptr, ...) @_ZNK6casadi13ProtoFunction5printEPKcz(ptr noundef nonnull align 8 dereferenceable(168) %0, ptr noundef nonnull @.str.142, ptr noundef nonnull @.str.143, double noundef %i.bnd, ptr noundef nonnull @.str.144, double noundef %.015.lcssa.i484, ptr noundef nonnull @.str.145, double noundef %i.btq)
   %i.btr = fadd double %.0165594, %i.btq          ; 2 uses
+  %6 = zext nneg i32 %5 to i64                    ; 3 uses
   %i.bts = load i64, ptr %i.xs, align 8, !tbaa !163
-  %i.btt = srem i64 %indvars.iv.next, %i.bts
+  %i.btt = srem i64 %6, %i.bts
   %i.btu = icmp eq i64 %i.btt, 0
   br i1 %i.btu, label %bb.bz, label %bb.cc
 
@@ -664,7 +666,7 @@ bb.cc:                                            ; preds = %bb.cb, %_ZN6casadi1
   %.1166 = phi double [ %i.btr, %_ZN6casadi13casadi_norm_2IdEET_xPKS1_.exit539 ], [ 0.000000e+00, %bb.cb ]
   %.1 = phi double [ %.0164595, %_ZN6casadi13casadi_norm_2IdEET_xPKS1_.exit539 ], [ %.0.lcssa.i458, %bb.cb ]
   %i.buf = load i64, ptr %i.xd, align 8, !tbaa !164
-  %.not184 = icmp sgt i64 %i.buf, %indvars.iv.next
+  %.not184 = icmp sgt i64 %i.buf, %6
   br i1 %.not184, label %bb.y, label %.loopexit, !llvm.loop !702
 
 .loopexit:                                        ; preds = %bb.cc, %bb.ab, %bb.bz, %bb.cb, %bb.ca, %_ZN6casadi13casadi_norm_2IdEET_xPKS1_.exit273, %bb.z

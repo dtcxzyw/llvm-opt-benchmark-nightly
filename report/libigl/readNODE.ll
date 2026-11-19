@@ -126,7 +126,7 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.lr.ph, %.outer
-  %indvars.iv99 = phi i64 [ 0, %.lr.ph.lr.ph ], [ %indvars.iv.next100, %.outer ] ; 3 uses
+  %.045.ph90 = phi i32 [ 0, %.lr.ph.lr.ph ], [ %4, %.outer ] ; 2 uses
   %.047.ph89 = phi i32 [ 0, %.lr.ph.lr.ph ], [ %i.an, %.outer ]
   br label %bb.k
 
@@ -146,8 +146,9 @@ bb.k:                                             ; preds = %.lr.ph, %.backedge
 
 bb.l:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #8
+  %3 = zext nneg i32 %.045.ph90 to i64            ; 2 uses
   %i.aq = load ptr, ptr %2, align 8, !tbaa !15
-  %i.ar = getelementptr inbounds nuw [4 x i8], ptr %i.aq, i64 %indvars.iv99
+  %i.ar = getelementptr inbounds nuw [4 x i8], ptr %i.aq, i64 %3
   %i.as = call i32 (ptr, ptr, ...) @__isoc23_sscanf(ptr noundef nonnull %i.a, ptr noundef nonnull @.str.7, ptr noundef nonnull %i.ar, ptr noundef nonnull %i.f) #8
   %.not60 = icmp eq i32 %i.as, 1
   br i1 %.not60, label %bb.m, label %.critedge67
@@ -172,7 +173,7 @@ bb.m:                                             ; preds = %bb.l
   %i.ay = load ptr, ptr %1, align 8, !tbaa !18
   %i.az = load i64, ptr %i.am, align 8, !tbaa !19
   %i.ba = mul nsw i64 %i.az, %indvars.iv
-  %i.bb = getelementptr [8 x i8], ptr %i.ay, i64 %indvars.iv99
+  %i.bb = getelementptr [8 x i8], ptr %i.ay, i64 %3
   %i.bc = getelementptr [8 x i8], ptr %i.bb, i64 %i.ba
   %i.bd = call i32 (ptr, ptr, ...) @__isoc23_sscanf(ptr noundef %.04480, ptr noundef nonnull @.str.9, ptr noundef nonnull %i.bc, ptr noundef nonnull %i.f) #8
   %.not61 = icmp eq i32 %i.bd, 1
@@ -216,7 +217,7 @@ bb.n:                                             ; preds = %.lr.ph83
   br i1 %.not64, label %.lr.ph87, label %.outer, !llvm.loop !21
 
 .outer:                                           ; preds = %.critedge, %.critedge.preheader
-  %indvars.iv.next100 = add nuw nsw i64 %indvars.iv99, 1
+  %4 = add nuw nsw i32 %.045.ph90, 1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #8
   %i.bt = call ptr @fgets(ptr noundef nonnull %i.a, i32 noundef 2048, ptr noundef nonnull %i.i)
   %.not5977 = icmp eq ptr %i.bt, null

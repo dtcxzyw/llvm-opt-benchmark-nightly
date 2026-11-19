@@ -204,7 +204,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.critedge.i, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %.critedge.i ] ; 2 uses
+  %.029.i = phi i32 [ 0, %.lr.ph.i ], [ %7, %.critedge.i ] ; 2 uses
   %.sroa.025.028.i = phi ptr [ %i.c, %.lr.ph.i ], [ %i.m, %.critedge.i ] ; 2 uses
   %i.h = load ptr, ptr %.sroa.025.028.i, align 8, !tbaa !162, !noalias !399 ; 2 uses
   %.not.i.i = icmp eq ptr %i.h, null
@@ -216,7 +216,8 @@ _ZN5arrow6StatusD2Ev.exit.i:                      ; preds = %bb.b
   %i.j = add nsw i32 %i.i, 1
   %.sroa.4.8.insert.ext.i.i = zext i32 %i.j to i64
   %.sroa.4.8.insert.shift.i.i = shl nuw i64 %.sroa.4.8.insert.ext.i.i, 32
-  %.sroa.2.8.insert.insert.i.i = add nuw nsw i64 %.sroa.4.8.insert.shift.i.i, %indvars.iv.i
+  %.sroa.2.8.insert.ext.i.i = zext nneg i32 %.029.i to i64
+  %.sroa.2.8.insert.insert.i.i = or disjoint i64 %.sroa.4.8.insert.shift.i.i, %.sroa.2.8.insert.ext.i.i
   call fastcc void @_ZN5arrow3ipc12_GLOBAL__N_118DictionaryResolver10VisitFieldENS0_8internal13FieldPositionEPNS_9ArrayDataE(ptr dead_on_unwind noalias writable align 8 %5, ptr noundef nonnull readonly align 8 dereferenceable(16) %6, ptr nonnull %4, i64 %.sroa.2.8.insert.insert.i.i, ptr noundef nonnull %i.h) #30, !noalias !399, !inline_history !400
   %i.k = load ptr, ptr %5, align 8, !tbaa !99, !noalias !399 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #25, !noalias !399
@@ -224,7 +225,7 @@ _ZN5arrow6StatusD2Ev.exit.i:                      ; preds = %bb.b
   br i1 %i.l, label %.critedge.i, label %_ZN5arrow3ipc12_GLOBAL__N_118DictionaryResolver13VisitChildrenERKSt6vectorISt10shared_ptrINS_9ArrayDataEESaIS6_EENS0_8internal13FieldPositionE.exit
 
 .critedge.i:                                      ; preds = %_ZN5arrow6StatusD2Ev.exit.i, %bb.b
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1
+  %7 = add nuw nsw i32 %.029.i, 1
   %i.m = getelementptr inbounds nuw i8, ptr %.sroa.025.028.i, i64 16 ; 2 uses
   %i.n = icmp eq ptr %i.m, %i.e
   br i1 %i.n, label %_ZN5arrow3ipc12_GLOBAL__N_118DictionaryResolver13VisitChildrenERKSt6vectorISt10shared_ptrINS_9ArrayDataEESaIS6_EENS0_8internal13FieldPositionE.exit, label %bb.b
@@ -256,7 +257,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %.critedge
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %.critedge ] ; 2 uses
+  %.029 = phi i32 [ 0, %.lr.ph ], [ %7, %.critedge ] ; 2 uses
   %.sroa.025.028 = phi ptr [ %i.b, %.lr.ph ], [ %i.l, %.critedge ] ; 2 uses
   %i.g = load ptr, ptr %.sroa.025.028, align 8, !tbaa !162 ; 2 uses
   %.not.i = icmp eq ptr %i.g, null
@@ -268,7 +269,8 @@ _ZN5arrow6StatusD2Ev.exit:                        ; preds = %bb.b
   %i.i = add nsw i32 %i.h, 1
   %.sroa.4.8.insert.ext.i = zext i32 %i.i to i64
   %.sroa.4.8.insert.shift.i = shl nuw i64 %.sroa.4.8.insert.ext.i, 32
-  %.sroa.2.8.insert.insert.i = or disjoint i64 %.sroa.4.8.insert.shift.i, %indvars.iv
+  %.sroa.2.8.insert.ext.i = zext nneg i32 %.029 to i64
+  %.sroa.2.8.insert.insert.i = or disjoint i64 %.sroa.4.8.insert.shift.i, %.sroa.2.8.insert.ext.i
   call fastcc void @_ZN5arrow3ipc12_GLOBAL__N_118DictionaryResolver10VisitFieldENS0_8internal13FieldPositionEPNS_9ArrayDataE(ptr dead_on_unwind noalias writable align 8 %6, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr nonnull %5, i64 %.sroa.2.8.insert.insert.i, ptr noundef nonnull %i.g)
   %i.j = load ptr, ptr %6, align 8, !tbaa !99     ; 2 uses
   store ptr %i.j, ptr %0, align 8, !tbaa !99
@@ -277,7 +279,7 @@ _ZN5arrow6StatusD2Ev.exit:                        ; preds = %bb.b
   br i1 %i.k, label %.critedge, label %.critedge18
 
 .critedge:                                        ; preds = %_ZN5arrow6StatusD2Ev.exit, %bb.b
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %7 = add nuw nsw i32 %.029, 1
   %i.l = getelementptr inbounds nuw i8, ptr %.sroa.025.028, i64 16 ; 2 uses
   %i.m = icmp eq ptr %i.l, %i.d
   br i1 %i.m, label %.critedge19, label %bb.b

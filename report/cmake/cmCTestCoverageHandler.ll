@@ -204,7 +204,7 @@ bb.cl:                                            ; preds = %.body231, %bb.cj
   br label %.backedge
 
 .backedge:                                        ; preds = %.backedge.backedge, %.split
-  %.038 = phi i64 [ -1, %.split ], [ %i.qj, %.backedge.backedge ]
+  %.038 = phi i64 [ -1, %.split ], [ %i.qj, %.backedge.backedge ] ; 2 uses
   %i.qi = invoke noundef zeroext i1 @_ZN5cmsys11SystemTools17GetLineFromStreamERSiRNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPbm(ptr noundef nonnull align 8 dereferenceable(16) %18, ptr noundef nonnull align 8 dereferenceable(32) %21, ptr noundef null, i64 noundef -1)
           to label %bb.cm unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -222,7 +222,7 @@ bb.cn:                                            ; preds = %bb.cm
   %i.qn = getelementptr inbounds nuw i8, ptr %i.qm, i64 5
   %i.qo = load i8, ptr %i.qn, align 1, !tbaa !48
   switch i8 %i.qo, label %bb.cp [
-    i8 32, label %.preheader
+    i8 32, label %.thread
     i8 58, label %bb.co
   ]
 
@@ -248,13 +248,13 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i25
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit252: ; preds = %bb.co, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i250
   call void @llvm.lifetime.end.p0(ptr nonnull %22) #22
-  br label %.preheader
+  br label %.thread
 
 bb.cp:                                            ; preds = %.preheader382
   %i.qw = getelementptr inbounds nuw i8, ptr %i.qm, i64 6
   %i.qx = load i8, ptr %i.qw, align 1, !tbaa !48
   switch i8 %i.qx, label %bb.cq [
-    i8 32, label %.preheader
+    i8 32, label %.thread
     i8 58, label %bb.co
   ]
 
@@ -262,7 +262,7 @@ bb.cq:                                            ; preds = %bb.cp
   %i.qy = getelementptr inbounds nuw i8, ptr %i.qm, i64 7
   %i.qz = load i8, ptr %i.qy, align 1, !tbaa !48
   switch i8 %i.qz, label %bb.cr [
-    i8 32, label %.preheader
+    i8 32, label %.thread
     i8 58, label %bb.co
   ]
 
@@ -400,7 +400,7 @@ _ZNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEED1Ev.exit272: ; pred
   call void @_ZNSt6localeD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.gp) #22
   call void @_ZNSt8ios_baseD2Ev(ptr noundef nonnull align 8 dead_on_return(264) dereferenceable(264) %i.gq) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %23) #22
-  br label %.preheader
+  br label %.thread
 
 bb.da:                                            ; preds = %bb.cr
   %i.sp = landingpad { ptr, i32 }
@@ -435,8 +435,15 @@ bb.dc:                                            ; preds = %.body264, %bb.da
   call void @llvm.lifetime.end.p0(ptr nonnull %23) #22
   br label %.loopexit.split-lp
 
-.preheader:                                       ; preds = %_ZNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEED1Ev.exit272, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit252, %bb.cq, %bb.cp, %.preheader382
+.thread:                                          ; preds = %.preheader382, %bb.cp, %bb.cq, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit252, %_ZNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEED1Ev.exit272
   %.0378 = phi i32 [ %i.qr, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit252 ], [ 0, %_ZNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEED1Ev.exit272 ], [ 0, %bb.cq ], [ 0, %bb.cp ], [ 0, %.preheader382 ] ; 2 uses
+  %25 = icmp sgt i64 %.038, -2
+  br i1 %25, label %.preheader, label %.backedge.backedge
+
+.backedge.backedge:                               ; preds = %.thread, %bb.dj, %bb.cn
+  br label %.backedge, !llvm.loop !942
+
+.preheader:                                       ; preds = %.thread
   %i.sv = load ptr, ptr %i.qg, align 8, !tbaa !124 ; 2 uses
   %i.sw = load ptr, ptr %i.lp, align 8, !tbaa !102 ; 3 uses
   %i.sx = ptrtoint ptr %i.sv to i64
@@ -527,7 +534,7 @@ _ZNSt6vectorIiSaIiEE9push_backEOi.exit:           ; preds = %_ZNSt6vectorIiSaIiE
   %i.ub = sub i64 %i.tz, %i.ua                    ; 2 uses
   %i.uc = ashr exact i64 %i.ub, 2                 ; 2 uses
   %.not = icmp ugt i64 %i.uc, %i.qj
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !942
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !943
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i, %.backedge, %bb.df
   %lpad.loopexit.split-lp749 = landingpad { ptr, i32 }
@@ -552,9 +559,6 @@ bb.dj:                                            ; preds = %bb.di, %._crit_edge
   %i.ui = add nsw i32 %i.uh, %.0378
   store i32 %i.ui, ptr %i.ud, align 4, !tbaa !123
   br label %.backedge.backedge
-
-.backedge.backedge:                               ; preds = %bb.dj, %bb.cn
-  br label %.backedge, !llvm.loop !943
 
 bb.dk:                                            ; preds = %bb.cm
   %i.uj = load ptr, ptr %21, align 8, !tbaa !55   ; 2 uses

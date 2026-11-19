@@ -205,7 +205,7 @@ bb.a:
   %13 = alloca %"struct.spdlog::source_loc", align 8 ; 4 uses
   %14 = alloca %"struct.WasmEdge::ErrInfo::InfoProposal", align 1 ; 4 uses
   %15 = alloca %"struct.WasmEdge::ErrInfo::InfoAST", align 1 ; 4 uses
-  %i.a = alloca [5 x i8], align 1                 ; 5 uses
+  %i.a = alloca [5 x i8], align 1                 ; 6 uses
   %16 = alloca %"struct.spdlog::source_loc", align 8 ; 4 uses
   %17 = alloca %"struct.spdlog::source_loc", align 8 ; 4 uses
   %18 = alloca %"struct.spdlog::source_loc", align 8 ; 4 uses
@@ -608,14 +608,21 @@ bb.aj:                                            ; preds = %_ZNK8WasmEdge9Confi
   %i.cp = zext nneg i32 %i.cn to i64
   br label %.lr.ph
 
-.thread.i.i:                                      ; preds = %.lr.ph, %bb.aj
-  %indvars.iv.i.i.lcssa = phi i64 [ 0, %bb.aj ], [ %indvars.iv.next.i.i, %.lr.ph ]
-  %.lcssa = phi i8 [ %i.cm, %bb.aj ], [ %i.db, %.lr.ph ]
-  %i.cq = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.i.i.lcssa ; 2 uses
+.thread.i.i.loopexit:                             ; preds = %.lr.ph
+  %37 = trunc nuw i64 %indvars.iv.next.i.i to i32
+  br label %.thread.i.i
+
+.thread.i.i:                                      ; preds = %.thread.i.i.loopexit, %bb.aj
+  %.01520.i.i.lcssa = phi i32 [ 0, %bb.aj ], [ %37, %.thread.i.i.loopexit ] ; 2 uses
+  %.lcssa = phi i8 [ %i.cm, %bb.aj ], [ %i.db, %.thread.i.i.loopexit ]
+  %38 = zext i32 %.01520.i.i.lcssa to i64
+  %i.cq = getelementptr inbounds nuw i8, ptr %i.a, i64 %38
   store i8 %.lcssa, ptr %i.cq, align 1, !tbaa !16
+  %39 = add nuw i32 %.01520.i.i.lcssa, 1
   %i.cr = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.cs = load ptr, ptr %i.cr, align 8, !tbaa !40
-  %i.ct = getelementptr inbounds nuw i8, ptr %i.cq, i64 1
+  %40 = zext i32 %39 to i64
+  %i.ct = getelementptr inbounds nuw i8, ptr %i.a, i64 %40
   %i.cu = load ptr, ptr %4, align 8, !tbaa !40    ; 2 uses
   %i.cv = ptrtoint ptr %i.cs to i64
   %i.cw = ptrtoint ptr %i.cu to i64
@@ -625,19 +632,19 @@ bb.aj:                                            ; preds = %_ZNK8WasmEdge9Confi
           to label %_ZNK8WasmEdge6Loader10Serializer12serializeS33ElRSt6vectorIhSaIhEE.exit unwind label %bb.ak
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %i.cz = phi i64 [ %i.dc, %.lr.ph ], [ %i.cp, %.lr.ph.preheader ] ; 3 uses
-  %37 = phi i8 [ %i.db, %.lr.ph ], [ %i.cm, %.lr.ph.preheader ]
-  %indvars.iv.i.i79 = phi i64 [ %indvars.iv.next.i.i, %.lr.ph ], [ 0, %.lr.ph.preheader ] ; 2 uses
-  %spec.select19.i.i = or i8 %37, -128
-  %i.da = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.i.i79
+  %i.cz = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next.i.i, %.lr.ph ] ; 2 uses
+  %41 = phi i64 [ %i.cp, %.lr.ph.preheader ], [ %i.dc, %.lr.ph ] ; 3 uses
+  %42 = phi i8 [ %i.cm, %.lr.ph.preheader ], [ %i.db, %.lr.ph ]
+  %spec.select19.i.i = or i8 %42, -128
+  %i.da = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.cz
   store i8 %spec.select19.i.i, ptr %i.da, align 1, !tbaa !16
-  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i79, 1 ; 2 uses
-  %i.db = trunc i64 %i.cz to i8                   ; 2 uses
-  %i.dc = lshr i64 %i.cz, 7                       ; 2 uses
+  %indvars.iv.next.i.i = add nuw i64 %i.cz, 1     ; 2 uses
+  %i.db = trunc i64 %41 to i8                     ; 2 uses
+  %i.dc = lshr i64 %41, 7                         ; 2 uses
   %i.dd = icmp eq i64 %i.dc, 0
-  %.not.i.i40 = icmp samesign ult i64 %i.cz, 64
+  %.not.i.i40 = icmp samesign ult i64 %41, 64
   %or.cond.i.i = and i1 %.not.i.i40, %i.dd
-  br i1 %or.cond.i.i, label %.thread.i.i, label %.lr.ph, !llvm.loop !114
+  br i1 %or.cond.i.i, label %.thread.i.i.loopexit, label %.lr.ph, !llvm.loop !114
 
 bb.ak:                                            ; preds = %.thread.i.i
   %i.de = landingpad { ptr, i32 }

@@ -205,22 +205,23 @@ bb.aa:                                            ; preds = %bb.z
   br label %.loopexit.split-lp
 
 .lr.ph170:                                        ; preds = %.lr.ph170.preheader, %_ZN5ImGui13IsItemHoveredEi.exit.thread
-  %.0115168 = phi i32 [ %indvars.iv.next183.2, %_ZN5ImGui13IsItemHoveredEi.exit.thread ], [ %i.fk, %.lr.ph170.preheader ] ; 3 uses
+  %.0115168 = phi i32 [ %indvars.iv.next183.2, %_ZN5ImGui13IsItemHoveredEi.exit.thread ], [ %i.fk, %.lr.ph170.preheader ] ; 6 uses
   %.0116167 = phi i32 [ %i.kh, %_ZN5ImGui13IsItemHoveredEi.exit.thread ], [ %i.ff, %.lr.ph170.preheader ]
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #41
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %8, i8 0, i64 24, i1 false), !tbaa !75
-  %10 = sext i32 %.0115168 to i64                 ; 4 uses
   br i1 %.not144, label %.preheader.1, label %bb.ab
 
 bb.ab:                                            ; preds = %.lr.ph170
+  %10 = sext i32 %.0115168 to i64
   %i.fl = getelementptr inbounds [2 x i8], ptr %i.dl, i64 %10
   %i.fm = load i16, ptr %i.fl, align 2, !tbaa !255
-  %.pre = zext i16 %i.fm to i64
+  %11 = zext i16 %i.fm to i32
   br label %.preheader.1
 
 .preheader.1:                                     ; preds = %.lr.ph170, %bb.ab
-  %.pre-phi = phi i64 [ %10, %.lr.ph170 ], [ %.pre, %bb.ab ]
-  %i.fn = getelementptr inbounds [20 x i8], ptr %i.dq, i64 %.pre-phi ; 3 uses
+  %12 = phi i32 [ %11, %bb.ab ], [ %.0115168, %.lr.ph170 ]
+  %13 = sext i32 %12 to i64
+  %i.fn = getelementptr inbounds [20 x i8], ptr %i.dq, i64 %13 ; 3 uses
   %i.fo = load i64, ptr %i.fn, align 4, !tbaa !75
   store i64 %i.fo, ptr %8, align 16, !tbaa !75
   %i.fp = load <4 x float>, ptr %i.fn, align 4, !tbaa !75
@@ -234,19 +235,20 @@ bb.ab:                                            ; preds = %.lr.ph170
   %i.fx = call noundef i32 (ptr, i64, ptr, ...) @_Z14ImFormatStringPcmPKcz(ptr noundef nonnull %i.b, i64 noundef 300, ptr noundef nonnull @.str.457, ptr noundef nonnull @.str.458, i32 noundef %.0115168, double noundef %i.ft, double noundef %i.fu, double noundef %i.fv, double noundef %i.fw, i32 noundef %i.fs)
   %i.fy = sext i32 %i.fx to i64                   ; 3 uses
   %i.fz = getelementptr inbounds i8, ptr %i.b, i64 %i.fy ; 2 uses
-  %indvars.iv.next183 = add nsw i64 %10, 1        ; 3 uses
-  %11 = trunc nsw i64 %indvars.iv.next183 to i32
+  %14 = add nsw i32 %.0115168, 1                  ; 3 uses
   br i1 %.not144, label %.preheader.2, label %bb.ac
 
 bb.ac:                                            ; preds = %.preheader.1
-  %i.ga = getelementptr inbounds [2 x i8], ptr %i.dl, i64 %indvars.iv.next183
+  %15 = sext i32 %14 to i64
+  %i.ga = getelementptr inbounds [2 x i8], ptr %i.dl, i64 %15
   %i.gb = load i16, ptr %i.ga, align 2, !tbaa !255
-  %12 = zext i16 %i.gb to i64
+  %16 = zext i16 %i.gb to i32
   br label %.preheader.2
 
 .preheader.2:                                     ; preds = %bb.ac, %.preheader.1
-  %13 = phi i64 [ %12, %bb.ac ], [ %indvars.iv.next183, %.preheader.1 ]
-  %i.gc = getelementptr inbounds [20 x i8], ptr %i.dq, i64 %13 ; 3 uses
+  %17 = phi i32 [ %16, %bb.ac ], [ %14, %.preheader.1 ]
+  %18 = sext i32 %17 to i64
+  %i.gc = getelementptr inbounds [20 x i8], ptr %i.dq, i64 %18 ; 3 uses
   %i.gd = load i64, ptr %i.gc, align 4, !tbaa !75
   store i64 %i.gd, ptr %i.bw, align 8, !tbaa !75
   %gepdiff = sub nsw i64 300, %i.fy
@@ -258,22 +260,23 @@ bb.ac:                                            ; preds = %.preheader.1
   %i.gj = extractelement <4 x double> %i.gf, i64 1
   %i.gk = extractelement <4 x double> %i.gf, i64 2
   %i.gl = extractelement <4 x double> %i.gf, i64 3
-  %i.gm = call noundef i32 (ptr, i64, ptr, ...) @_Z14ImFormatStringPcmPKcz(ptr noundef nonnull %i.fz, i64 noundef %gepdiff, ptr noundef nonnull @.str.457, ptr noundef nonnull @.str.459, i32 noundef %11, double noundef %i.gi, double noundef %i.gj, double noundef %i.gk, double noundef %i.gl, i32 noundef %i.gh)
+  %i.gm = call noundef i32 (ptr, i64, ptr, ...) @_Z14ImFormatStringPcmPKcz(ptr noundef nonnull %i.fz, i64 noundef %gepdiff, ptr noundef nonnull @.str.457, ptr noundef nonnull @.str.459, i32 noundef %14, double noundef %i.gi, double noundef %i.gj, double noundef %i.gk, double noundef %i.gl, i32 noundef %i.gh)
   %i.gn = sext i32 %i.gm to i64                   ; 2 uses
   %i.go = getelementptr inbounds i8, ptr %i.fz, i64 %i.gn
-  %indvars.iv.next183.1 = add nsw i64 %10, 2      ; 3 uses
-  %14 = trunc nsw i64 %indvars.iv.next183.1 to i32
+  %19 = add nsw i32 %.0115168, 2                  ; 3 uses
   br i1 %.not144, label %bb.ae, label %bb.ad
 
 bb.ad:                                            ; preds = %.preheader.2
-  %i.gp = getelementptr inbounds [2 x i8], ptr %i.dl, i64 %indvars.iv.next183.1
+  %20 = sext i32 %19 to i64
+  %i.gp = getelementptr inbounds [2 x i8], ptr %i.dl, i64 %20
   %i.gq = load i16, ptr %i.gp, align 2, !tbaa !255
-  %15 = zext i16 %i.gq to i64
+  %21 = zext i16 %i.gq to i32
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad, %.preheader.2
-  %16 = phi i64 [ %15, %bb.ad ], [ %indvars.iv.next183.1, %.preheader.2 ]
-  %i.gr = getelementptr inbounds [20 x i8], ptr %i.dq, i64 %16 ; 3 uses
+  %22 = phi i32 [ %21, %bb.ad ], [ %19, %.preheader.2 ]
+  %23 = sext i32 %22 to i64
+  %i.gr = getelementptr inbounds [20 x i8], ptr %i.dq, i64 %23 ; 3 uses
   %i.gs = load i64, ptr %i.gr, align 4, !tbaa !75
   store i64 %i.gs, ptr %i.bx, align 16, !tbaa !75
   %i.gt = add nsw i64 %i.fy, %i.gn
@@ -286,8 +289,8 @@ bb.ae:                                            ; preds = %bb.ad, %.preheader.
   %i.gz = extractelement <4 x double> %i.gv, i64 1
   %i.ha = extractelement <4 x double> %i.gv, i64 2
   %i.hb = extractelement <4 x double> %i.gv, i64 3
-  %i.hc = call noundef i32 (ptr, i64, ptr, ...) @_Z14ImFormatStringPcmPKcz(ptr noundef nonnull %i.go, i64 noundef %gepdiff226, ptr noundef nonnull @.str.457, ptr noundef nonnull @.str.459, i32 noundef %14, double noundef %i.gy, double noundef %i.gz, double noundef %i.ha, double noundef %i.hb, i32 noundef %i.gx) ; 0 uses
-  %indvars.iv.next183.2 = add i32 %.0115168, 3
+  %i.hc = call noundef i32 (ptr, i64, ptr, ...) @_Z14ImFormatStringPcmPKcz(ptr noundef nonnull %i.go, i64 noundef %gepdiff226, ptr noundef nonnull @.str.457, ptr noundef nonnull @.str.459, i32 noundef %19, double noundef %i.gy, double noundef %i.gz, double noundef %i.ha, double noundef %i.hb, i32 noundef %i.gx) ; 0 uses
+  %indvars.iv.next183.2 = add nsw i32 %.0115168, 3
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #41
   store <2 x float> zeroinitializer, ptr %9, align 8, !tbaa !75
   %i.hd = invoke noundef zeroext i1 @_ZN5ImGui10SelectableEPKcbiRK6ImVec2(ptr noundef nonnull %i.b, i1 noundef zeroext false, i32 noundef 0, ptr noundef nonnull align 4 dereferenceable(8) %9)

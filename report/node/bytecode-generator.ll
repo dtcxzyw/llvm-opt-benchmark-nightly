@@ -204,15 +204,16 @@ bb.u:                                             ; preds = %_ZN2v88internal10Zo
   br label %bb.v
 
 bb.v:                                             ; preds = %.lr.ph231, %bb.ac
-  %indvars.iv = phi i64 [ 0, %.lr.ph231 ], [ %indvars.iv.next, %bb.ac ] ; 2 uses
   %.0230 = phi ptr [ %i.w, %.lr.ph231 ], [ %i.gi, %bb.ac ] ; 2 uses
+  %.0106229 = phi i32 [ 0, %.lr.ph231 ], [ %8, %bb.ac ] ; 2 uses
   %.sroa.6202.0228 = phi i32 [ -1, %.lr.ph231 ], [ %.sroa.6202.1, %bb.ac ] ; 3 uses
   %i.fd = load ptr, ptr %.0230, align 8           ; 2 uses
   %i.fe = call noundef zeroext i1 @_ZN2v88internal10Expression18IsCompileTimeValueEv(ptr noundef nonnull align 4 dereferenceable(8) %i.fd) #21
   br i1 %i.fe, label %bb.ac, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  %i.ff = shl nuw nsw i64 %indvars.iv, 32
+  %7 = zext nneg i32 %.0106229 to i64
+  %i.ff = shl nuw nsw i64 %7, 32
   %i.fg = call noundef nonnull align 8 dereferenceable(480) ptr @_ZN2v88internal11interpreter20BytecodeArrayBuilder11LoadLiteralENS0_6TaggedINS0_3SmiEEE(ptr noundef nonnull align 8 dereferenceable(480) %i.eo, i64 %i.ff) #21
   %i.fh = call noundef nonnull align 8 dereferenceable(480) ptr @_ZN2v88internal11interpreter20BytecodeArrayBuilder26StoreAccumulatorInRegisterENS1_8RegisterE(ptr noundef nonnull align 8 dereferenceable(480) %i.fg, i32 %i.s) #21 ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #21
@@ -297,12 +298,13 @@ _ZN2v88internal18SharedFeedbackSlot3GetEv.exit:   ; preds = %_ZN2v88internal11in
 bb.ac:                                            ; preds = %bb.v, %_ZN2v88internal18SharedFeedbackSlot3GetEv.exit
   %.sroa.6202.1 = phi i32 [ %.sroa.6202.0228, %bb.v ], [ %.sroa.6202.5, %_ZN2v88internal18SharedFeedbackSlot3GetEv.exit ] ; 2 uses
   %i.gi = getelementptr inbounds nuw i8, ptr %.0230, i64 8 ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %8 = add nuw nsw i32 %.0106229, 1               ; 2 uses
   %.not113 = icmp eq ptr %i.gi, %i.ev
   br i1 %.not113, label %._crit_edge.loopexit, label %bb.v, !llvm.loop !320
 
 ._crit_edge.loopexit:                             ; preds = %bb.ac
-  %i.gj = shl nuw nsw i64 %indvars.iv.next, 32
+  %9 = zext nneg i32 %8 to i64
+  %i.gj = shl nuw nsw i64 %9, 32
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.u

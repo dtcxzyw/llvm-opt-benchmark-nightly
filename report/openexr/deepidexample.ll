@@ -204,7 +204,7 @@ _ZN9Imath_3_24halfaSEf.exit:                      ; preds = %bb.c, %bb.d, %bb.f,
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %._crit_edge
   %.03580 = phi i32 [ %i.bf, %._crit_edge ], [ 0, %.preheader.lr.ph ] ; 2 uses
-  %.03679 = phi i64 [ %indvars.iv.next, %._crit_edge ], [ 0, %.preheader.lr.ph ]
+  %.03679 = phi i32 [ %10, %._crit_edge ], [ 0, %.preheader.lr.ph ]
   %i.bc = uitofp nneg i32 %.03580 to float
   %i.bd = fsub float %i.bc, %4                    ; 2 uses
   %i.be = fmul float %i.bd, %i.bd
@@ -219,9 +219,9 @@ _ZN9Imath_3_24halfaSEf.exit:                      ; preds = %bb.c, %bb.d, %bb.f,
   br i1 %exitcond83.not, label %._crit_edge81.split, label %.preheader, !llvm.loop !133
 
 bb.l:                                             ; preds = %.preheader, %_ZNSt6vectorI5RgbazSaIS0_EE9push_backERKS0_.exit
-  %indvars.iv = phi i64 [ %.03679, %.preheader ], [ %indvars.iv.next, %_ZNSt6vectorI5RgbazSaIS0_EE9push_backERKS0_.exit ] ; 2 uses
-  %.078.a = phi i32 [ 0, %.preheader ], [ %i.jt, %_ZNSt6vectorI5RgbazSaIS0_EE9push_backERKS0_.exit ] ; 2 uses
-  %i.bg = uitofp nneg i32 %.078.a to float
+  %.078 = phi i32 [ 0, %.preheader ], [ %i.jt, %_ZNSt6vectorI5RgbazSaIS0_EE9push_backERKS0_.exit ] ; 2 uses
+  %.078.a = phi i32 [ %.03679, %.preheader ], [ %10, %_ZNSt6vectorI5RgbazSaIS0_EE9push_backERKS0_.exit ] ; 2 uses
+  %i.bg = uitofp nneg i32 %.078 to float
   %i.bh = fsub float %3, %i.bg                    ; 2 uses
   %i.bi = tail call float @llvm.fmuladd.f32(float %i.bh, float %i.bh, float %i.be) ; 2 uses
   %i.bj = fneg float %i.bi
@@ -564,8 +564,9 @@ bb.ba:                                            ; preds = %bb.az, %bb.ay
 
 _ZN9Imath_3_24halfaSEf.exit52:                    ; preds = %bb.as, %bb.at, %bb.av, %bb.aw, %bb.ax, %bb.az, %bb.ba
   %.033.i.i.i51 = phi i16 [ %i.hi, %bb.ax ], [ %i.ht, %bb.at ], [ %i.hv, %bb.av ], [ %i.id, %bb.aw ], [ %i.hl, %bb.as ], [ %i.is, %bb.ba ], [ %i.io, %bb.az ] ; 2 uses
+  %9 = sext i32 %.078.a to i64
   %i.it = load ptr, ptr %0, align 8, !tbaa !37
-  %i.iu = getelementptr inbounds nuw [24 x i8], ptr %i.it, i64 %indvars.iv ; 4 uses
+  %i.iu = getelementptr inbounds nuw [24 x i8], ptr %i.it, i64 %9 ; 4 uses
   %i.iv = getelementptr inbounds nuw i8, ptr %i.iu, i64 8 ; 3 uses
   %i.iw = load ptr, ptr %i.iv, align 8, !tbaa !49 ; 10 uses
   %i.ix = getelementptr inbounds nuw i8, ptr %i.iu, i64 16 ; 3 uses
@@ -655,8 +656,8 @@ _ZNSt6vectorI5RgbazSaIS0_EE17_M_realloc_insertIJRKS0_EEEvN9__gnu_cxx17__normal_i
   br label %_ZNSt6vectorI5RgbazSaIS0_EE9push_backERKS0_.exit
 
 _ZNSt6vectorI5RgbazSaIS0_EE9push_backERKS0_.exit: ; preds = %_ZNSt6vectorI5RgbazSaIS0_EE17_M_realloc_insertIJRKS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i, %bb.bb, %bb.l
-  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
-  %i.jt = add nuw nsw i32 %.078.a, 1              ; 2 uses
+  %10 = add nsw i32 %.078.a, 1                    ; 2 uses
+  %i.jt = add nuw nsw i32 %.078, 1                ; 2 uses
   %exitcond.not = icmp eq i32 %i.jt, %1
   br i1 %exitcond.not, label %._crit_edge, label %bb.l, !llvm.loop !134
 }
@@ -761,7 +762,7 @@ _ZN9Imath_3_24halfaSEf.exit:                      ; preds = %bb.c, %bb.d, %bb.f,
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %._crit_edge
   %.03278 = phi i32 [ %i.bg, %._crit_edge ], [ 0, %.preheader.lr.ph ] ; 2 uses
-  %.03377 = phi i64 [ %indvars.iv.next, %._crit_edge ], [ 0, %.preheader.lr.ph ]
+  %.03377 = phi i32 [ %10, %._crit_edge ], [ 0, %.preheader.lr.ph ]
   %i.bc = uitofp nneg i32 %.03278 to float
   %i.bd = fsub float %i.bc, %4                    ; 2 uses
   %i.be = fadd float %i.bd, -5.000000e-01
@@ -777,9 +778,9 @@ _ZN9Imath_3_24halfaSEf.exit:                      ; preds = %bb.c, %bb.d, %bb.f,
   br i1 %exitcond81.not, label %._crit_edge79.split, label %.preheader, !llvm.loop !135
 
 bb.l:                                             ; preds = %.preheader, %_ZNSt6vectorI5RgbazSaIS0_EE9push_backERKS0_.exit
-  %indvars.iv = phi i64 [ %.03377, %.preheader ], [ %indvars.iv.next, %_ZNSt6vectorI5RgbazSaIS0_EE9push_backERKS0_.exit ] ; 2 uses
-  %.076.a = phi i32 [ 0, %.preheader ], [ %i.je, %_ZNSt6vectorI5RgbazSaIS0_EE9push_backERKS0_.exit ] ; 2 uses
-  %i.bh = uitofp nneg i32 %.076.a to float
+  %.076 = phi i32 [ 0, %.preheader ], [ %i.je, %_ZNSt6vectorI5RgbazSaIS0_EE9push_backERKS0_.exit ] ; 2 uses
+  %.076.a = phi i32 [ %.03377, %.preheader ], [ %10, %_ZNSt6vectorI5RgbazSaIS0_EE9push_backERKS0_.exit ] ; 2 uses
+  %i.bh = uitofp nneg i32 %.076 to float
   %i.bi = fsub float %i.bh, %3                    ; 2 uses
   %i.bj = fadd float %i.bi, -5.000000e-01
   %i.bk = fadd float %i.bi, 5.000000e-01
@@ -1102,8 +1103,9 @@ bb.az:                                            ; preds = %bb.ay, %bb.ax
 
 _ZN9Imath_3_24halfaSEf.exit50:                    ; preds = %bb.au, %bb.as, %bb.at, %bb.av, %bb.aw, %bb.ay, %bb.az
   %.033.i.i.i49 = phi i16 [ 0, %bb.aw ], [ %i.hj, %bb.at ], [ %i.hz, %bb.ay ], [ %i.hq, %bb.av ], [ 31744, %bb.as ], [ %i.id, %bb.az ], [ 31744, %bb.au ] ; 2 uses
+  %9 = sext i32 %.076.a to i64
   %i.ie = load ptr, ptr %0, align 8, !tbaa !37
-  %i.if = getelementptr inbounds nuw [24 x i8], ptr %i.ie, i64 %indvars.iv ; 4 uses
+  %i.if = getelementptr inbounds nuw [24 x i8], ptr %i.ie, i64 %9 ; 4 uses
   %i.ig = getelementptr inbounds nuw i8, ptr %i.if, i64 8 ; 3 uses
   %i.ih = load ptr, ptr %i.ig, align 8, !tbaa !49 ; 10 uses
   %i.ii = getelementptr inbounds nuw i8, ptr %i.if, i64 16 ; 3 uses
@@ -1193,8 +1195,8 @@ _ZNSt6vectorI5RgbazSaIS0_EE17_M_realloc_insertIJRKS0_EEEvN9__gnu_cxx17__normal_i
   br label %_ZNSt6vectorI5RgbazSaIS0_EE9push_backERKS0_.exit
 
 _ZNSt6vectorI5RgbazSaIS0_EE9push_backERKS0_.exit: ; preds = %_ZNSt6vectorI5RgbazSaIS0_EE17_M_realloc_insertIJRKS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i, %bb.ba, %bb.l
-  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
-  %i.je = add nuw nsw i32 %.076.a, 1              ; 2 uses
+  %10 = add nsw i32 %.076.a, 1                    ; 2 uses
+  %i.je = add nuw nsw i32 %.076, 1                ; 2 uses
   %exitcond.not = icmp eq i32 %i.je, %1
   br i1 %exitcond.not, label %._crit_edge, label %bb.l, !llvm.loop !136
 }

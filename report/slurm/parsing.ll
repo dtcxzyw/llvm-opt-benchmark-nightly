@@ -202,10 +202,11 @@ bb.ar:                                            ; preds = %bb.an
   br label %bb.as
 
 bb.as:                                            ; preds = %.preheader100, %bb.at
-  %indvars.iv117 = phi i64 [ 0, %.preheader100 ], [ %indvars.iv.next118, %bb.at ] ; 2 uses
+  %.039.i105 = phi i32 [ 0, %.preheader100 ], [ %7, %bb.at ] ; 2 uses
   %i.eu = load ptr, ptr %0, align 8
   %i.ev = load i64, ptr %i.et, align 8            ; 10 uses
-  %i.ew = mul nsw i64 %i.ev, %indvars.iv117
+  %6 = zext nneg i32 %.039.i105 to i64
+  %i.ew = mul nsw i64 %i.ev, %6
   %i.ex = getelementptr inbounds i8, ptr %i.eu, i64 %i.ew ; 4 uses
   %i.ey = icmp sgt i64 %i.ev, 0
   br i1 %i.ey, label %iter.check, label %.critedge
@@ -297,7 +298,7 @@ bb.at:                                            ; preds = %._crit_edge
   %i.fo = tail call ptr @find_parser_by_type(i32 noundef %i.fn) #7, !inline_history !24
   %i.fp = tail call ptr @data_list_append(ptr noundef %4) #7, !inline_history !24
   %i.fq = tail call i32 @dump(ptr noundef nonnull %i.ex, i64 noundef 4294967294, ptr noundef null, ptr noundef %i.fo, ptr noundef %i.fp, ptr noundef nonnull %5), !inline_history !24 ; 2 uses
-  %indvars.iv.next118 = add nuw nsw i64 %indvars.iv117, 1
+  %7 = add nuw nsw i32 %.039.i105, 1
   %.not52.i = icmp eq i32 %i.fq, 0
   br i1 %.not52.i, label %bb.as, label %.critedge, !llvm.loop !29
 

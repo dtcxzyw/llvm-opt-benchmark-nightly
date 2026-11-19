@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %.lr.ph124.split.us
 
 bb.d:                                             ; preds = %bb.y, %.lr.ph.us
   %.075120.us = phi i32 [ 0, %.lr.ph.us ], [ %i.hi, %bb.y ]
-  %.177119.us = phi i64 [ 0, %.lr.ph.us ], [ %indvars.iv.next, %bb.y ]
+  %.177119.us = phi i32 [ 0, %.lr.ph.us ], [ %.3.us, %bb.y ]
   br i1 %i.f, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -365,12 +365,12 @@ bb.h:                                             ; preds = %._crit_edge, %_ZN21
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.x, %bb.h
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.x ], [ %.177119.us, %bb.h ] ; 2 uses
-  %.070118.us.a = phi i32 [ %i.hh, %bb.x ], [ 0, %bb.h ] ; 3 uses
-  %.071117.us = phi i32 [ %.172.us, %bb.x ], [ 0, %bb.h ]
-  %.073116.us = phi i32 [ %.174.us, %bb.x ], [ 0, %bb.h ]
-  %i.fr = phi i8 [ %i.gl, %bb.x ], [ %.promoted.us, %bb.h ] ; 7 uses
-  %i.fs = urem i32 %.070118.us.a, 3
+  %.070118.us = phi i32 [ 0, %bb.h ], [ %i.hh, %bb.x ] ; 3 uses
+  %.070118.us.a = phi i32 [ 0, %bb.h ], [ %.172.us, %bb.x ]
+  %.071117.us = phi i32 [ 0, %bb.h ], [ %.174.us, %bb.x ]
+  %.073116.us = phi i32 [ %.177119.us, %bb.h ], [ %.3.us, %bb.x ] ; 2 uses
+  %i.fr = phi i8 [ %.promoted.us, %bb.h ], [ %i.gl, %bb.x ] ; 7 uses
+  %i.fs = urem i32 %.070118.us, 3
   %i.ft = icmp eq i32 %i.fs, 2
   br i1 %i.ft, label %bb.j, label %bb.n
 
@@ -409,8 +409,8 @@ bb.m:                                             ; preds = %_ZN21pana_cs6_page_
 
 bb.n:                                             ; preds = %.thread.us, %bb.i
   %i.ge = phi i8 [ %i.ga, %.thread.us ], [ %i.fr, %bb.i ] ; 6 uses
-  %.174.us = phi i32 [ %i.gd, %.thread.us ], [ %.073116.us, %bb.i ] ; 2 uses
-  %.172.us = phi i32 [ %i.gc, %.thread.us ], [ %.071117.us, %bb.i ] ; 4 uses
+  %.174.us = phi i32 [ %i.gd, %.thread.us ], [ %.071117.us, %bb.i ] ; 2 uses
+  %.172.us = phi i32 [ %i.gc, %.thread.us ], [ %.070118.us.a, %bb.i ] ; 4 uses
   br i1 %i.f, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
@@ -432,7 +432,7 @@ _ZN21pana_cs6_page_decoder11nextpixel12Ev.exit101.us.sink.split: ; preds = %bb.p
 _ZN21pana_cs6_page_decoder11nextpixel12Ev.exit101.us: ; preds = %_ZN21pana_cs6_page_decoder11nextpixel12Ev.exit101.us.sink.split, %bb.p, %bb.o
   %i.gl = phi i8 [ %i.ge, %bb.p ], [ %i.ge, %bb.o ], [ %i.gh, %_ZN21pana_cs6_page_decoder11nextpixel12Ev.exit101.us.sink.split ]
   %i.gm = phi i32 [ 0, %bb.p ], [ 0, %bb.o ], [ %i.gk, %_ZN21pana_cs6_page_decoder11nextpixel12Ev.exit101.us.sink.split ] ; 5 uses
-  %i.gn = and i32 %.070118.us.a, 1
+  %i.gn = and i32 %.070118.us, 1
   %i.go = zext nneg i32 %i.gn to i64              ; 4 uses
   %i.gp = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.go ; 2 uses
   %i.gq = load i32, ptr %i.gp, align 4, !tbaa !89
@@ -485,10 +485,11 @@ bb.x:                                             ; preds = %bb.w, %bb.v, %bb.t
   %i.he = and i32 %i.hb, %i.o
   %i.hf = trunc nuw i32 %i.he to i16
   %.sink = select i1 %.not95.us, i16 %i.hd, i16 %i.hf
-  %i.hg = getelementptr inbounds [2 x i8], ptr %i.bk, i64 %indvars.iv
+  %3 = sext i32 %.073116.us to i64
+  %i.hg = getelementptr inbounds [2 x i8], ptr %i.bk, i64 %3
   store i16 %.sink, ptr %i.hg, align 2, !tbaa !79
-  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
-  %i.hh = add nuw nsw i32 %.070118.us.a, 1        ; 2 uses
+  %.3.us = add nsw i32 %.073116.us, 1             ; 2 uses
+  %i.hh = add nuw nsw i32 %.070118.us, 1          ; 2 uses
   %exitcond.not = icmp eq i32 %i.hh, %i.g
   br i1 %exitcond.not, label %bb.y, label %bb.i, !llvm.loop !155
 

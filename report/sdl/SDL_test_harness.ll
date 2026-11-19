@@ -204,17 +204,18 @@ bb.e:                                             ; preds = %.preheader.i, %bb.d
 
 .loopexit439:                                     ; preds = %.lr.ph, %.lr.ph461
   %.1343.lcssa = phi i32 [ %.0342459, %.lr.ph461 ], [ %i.cj, %.lr.ph ] ; 3 uses
-  %i.ce = getelementptr inbounds nuw [8 x i8], ptr %i.cc, i64 %indvars.iv.next561
+  %1 = zext nneg i32 %3 to i64
+  %i.ce = getelementptr inbounds nuw [8 x i8], ptr %i.cc, i64 %1
   %i.cf = load ptr, ptr %i.ce, align 8            ; 2 uses
   %.not372 = icmp eq ptr %i.cf, null
   br i1 %.not372, label %._crit_edge, label %.lr.ph461, !llvm.loop !6
 
 .lr.ph461:                                        ; preds = %bb.e, %.loopexit439
-  %indvars.iv560 = phi i64 [ %indvars.iv.next561, %.loopexit439 ], [ 0, %bb.e ]
-  %1 = phi ptr [ %i.cf, %.loopexit439 ], [ %i.cd, %bb.e ]
+  %2 = phi ptr [ %i.cf, %.loopexit439 ], [ %i.cd, %bb.e ]
+  %.0334460 = phi i32 [ %3, %.loopexit439 ], [ 0, %bb.e ]
   %.0342459 = phi i32 [ %.1343.lcssa, %.loopexit439 ], [ 0, %bb.e ] ; 2 uses
-  %indvars.iv.next561 = add nuw nsw i64 %indvars.iv560, 1 ; 2 uses
-  %i.cg = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %3 = add nuw nsw i32 %.0334460, 1               ; 2 uses
+  %i.cg = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.ch = load ptr, ptr %i.cg, align 8            ; 2 uses
   %i.ci = load ptr, ptr %i.ch, align 8
   %.not399455 = icmp eq ptr %i.ci, null
@@ -267,10 +268,10 @@ bb.i:                                             ; preds = %bb.h
   br i1 %.not545, label %._crit_edge472, label %.lr.ph471
 
 .lr.ph471:                                        ; preds = %.preheader438, %.loopexit437
-  %indvars.iv566 = phi i64 [ %indvars.iv.next567, %.loopexit437 ], [ 0, %.preheader438 ]
-  %2 = phi ptr [ %i.dp, %.loopexit437 ], [ %i.cu, %.preheader438 ] ; 4 uses
-  %indvars.iv.next567 = add nuw nsw i64 %indvars.iv566, 1 ; 2 uses
-  %i.cv = load ptr, ptr %2, align 8               ; 2 uses
+  %4 = phi ptr [ %i.dp, %.loopexit437 ], [ %i.cu, %.preheader438 ] ; 4 uses
+  %.1335467 = phi i32 [ %5, %.loopexit437 ], [ 0, %.preheader438 ]
+  %5 = add nuw nsw i32 %.1335467, 1               ; 2 uses
+  %i.cv = load ptr, ptr %4, align 8               ; 2 uses
   %.not376 = icmp eq ptr %i.cv, null
   br i1 %.not376, label %bb.k, label %bb.j
 
@@ -281,12 +282,12 @@ bb.j:                                             ; preds = %.lr.ph471
   br i1 %i.cy, label %.thread, label %bb.k
 
 .thread:                                          ; preds = %bb.j
-  %i.cz = load ptr, ptr %2, align 8               ; 2 uses
+  %i.cz = load ptr, ptr %4, align 8               ; 2 uses
   call void (ptr, ...) @SDLTest_Log(ptr noundef nonnull @.str.6, ptr noundef %i.cz) #8
   br label %bb.p
 
 bb.k:                                             ; preds = %bb.j, %.lr.ph471
-  %i.da = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
+  %i.da = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
   %i.db = load ptr, ptr %i.da, align 8            ; 2 uses
   %i.dc = load ptr, ptr %i.db, align 8            ; 2 uses
   %.not663 = icmp eq ptr %i.dc, null
@@ -294,10 +295,10 @@ bb.k:                                             ; preds = %bb.j, %.lr.ph471
 
 .lr.ph466.split:                                  ; preds = %bb.k, %bb.m
   %i.dd = phi ptr [ %i.dk, %bb.m ], [ %i.db, %bb.k ]
-  %indvars.iv563 = phi i64 [ %indvars.iv.next564, %bb.m ], [ 0, %bb.k ]
-  %3 = phi ptr [ %i.dm, %bb.m ], [ %i.dc, %bb.k ] ; 2 uses
-  %indvars.iv.next564 = add nuw nsw i64 %indvars.iv563, 1 ; 2 uses
-  %i.de = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %6 = phi ptr [ %i.dm, %bb.m ], [ %i.dc, %bb.k ] ; 2 uses
+  %.1331464 = phi i32 [ %7, %bb.m ], [ 0, %bb.k ]
+  %7 = add nuw nsw i32 %.1331464, 1               ; 2 uses
+  %i.de = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.df = load ptr, ptr %i.de, align 8            ; 2 uses
   %.not377 = icmp eq ptr %i.df, null
   br i1 %.not377, label %bb.m, label %bb.l
@@ -313,22 +314,24 @@ bb.l:                                             ; preds = %.lr.ph466.split
   br label %bb.m
 
 ._crit_edge472.thread:                            ; preds = %bb.l
-  %i.dj = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %i.dj = getelementptr inbounds nuw i8, ptr %6, i64 8
   %.pre608 = load ptr, ptr %i.dj, align 8         ; 2 uses
-  %.pre = load ptr, ptr %2, align 8               ; 2 uses
+  %.pre = load ptr, ptr %4, align 8               ; 2 uses
   call void (ptr, ...) @SDLTest_Log(ptr noundef nonnull @.str.7, ptr noundef %.pre608, ptr noundef %.pre) #8
   br label %bb.p
 
 bb.m:                                             ; preds = %._crit_edge609, %.lr.ph466.split
   %i.dk = phi ptr [ %.pre610, %._crit_edge609 ], [ %i.dd, %.lr.ph466.split ] ; 2 uses
-  %i.dl = getelementptr inbounds nuw [8 x i8], ptr %i.dk, i64 %indvars.iv.next564
+  %8 = zext nneg i32 %7 to i64
+  %i.dl = getelementptr inbounds nuw [8 x i8], ptr %i.dk, i64 %8
   %i.dm = load ptr, ptr %i.dl, align 8            ; 2 uses
   %.not546 = icmp eq ptr %i.dm, null
   br i1 %.not546, label %.loopexit437, label %.lr.ph466.split, !llvm.loop !8
 
 .loopexit437:                                     ; preds = %bb.m, %bb.k
   %i.dn = load ptr, ptr %0, align 8
-  %i.do = getelementptr inbounds nuw [8 x i8], ptr %i.dn, i64 %indvars.iv.next567
+  %9 = zext nneg i32 %5 to i64
+  %i.do = getelementptr inbounds nuw [8 x i8], ptr %i.dn, i64 %9
   %i.dp = load ptr, ptr %i.do, align 8            ; 2 uses
   %.not664 = icmp eq ptr %i.dp, null
   br i1 %.not664, label %._crit_edge472, label %.lr.ph471, !llvm.loop !9

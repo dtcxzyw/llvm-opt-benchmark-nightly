@@ -205,7 +205,7 @@ bb.bv:                                            ; preds = %bb.bu
   br label %.backedge
 
 .backedge:                                        ; preds = %.backedge.backedge, %bb.bv
-  %indvars.iv680 = phi i64 [ 0, %bb.bv ], [ %indvars.iv680.be, %.backedge.backedge ] ; 7 uses
+  %.1539 = phi i32 [ 0, %bb.bv ], [ %.1539.be, %.backedge.backedge ] ; 5 uses
   %i.to = invoke noundef i32 @_ZN3fmt3v116detail6bigint13divmod_assignERKS2_(ptr noundef nonnull align 8 dereferenceable(172) %5, ptr noundef nonnull align 8 dereferenceable(172) %6)
           to label %bb.bw unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 3 uses
 
@@ -381,8 +381,9 @@ _ZN3fmt3v116detail11add_compareERKNS1_6bigintES4_S4_.exit343: ; preds = %bb.ch, 
   %i.wm = icmp slt i32 %.4.i327, %i.mu            ; 3 uses
   %i.wn = trunc i32 %i.to to i8                   ; 3 uses
   %i.wo = add i8 %i.wn, 48
-  %indvars.iv.next681 = add nuw nsw i64 %indvars.iv680, 1 ; 7 uses
-  %i.wp = getelementptr inbounds nuw i8, ptr %i.tk, i64 %indvars.iv680
+  %9 = add nuw nsw i32 %.1539, 1                  ; 7 uses
+  %10 = zext nneg i32 %.1539 to i64
+  %i.wp = getelementptr inbounds nuw i8, ptr %i.tk, i64 %10
   store i8 %i.wo, ptr %i.wp, align 1, !tbaa !202
   %or.cond.not = select i1 %i.un, i1 %i.wm, i1 false
   br i1 %or.cond.not, label %bb.cu, label %bb.cj
@@ -393,8 +394,9 @@ bb.cj:                                            ; preds = %_ZN3fmt3v116detail1
 .thread842:                                       ; preds = %_ZNK3fmt3v116detail6bigint9get_bigitEi.exit46.i340, %bb.cb
   %i.wq = trunc i32 %i.to to i8                   ; 3 uses
   %i.wr = add i8 %i.wq, 48
-  %indvars.iv.next681836 = add nuw nsw i64 %indvars.iv680, 1 ; 2 uses
-  %i.ws = getelementptr inbounds nuw i8, ptr %i.tk, i64 %indvars.iv680
+  %11 = add nuw nsw i32 %.1539, 1                 ; 2 uses
+  %12 = zext nneg i32 %.1539 to i64
+  %i.ws = getelementptr inbounds nuw i8, ptr %i.tk, i64 %12
   store i8 %i.wr, ptr %i.ws, align 1, !tbaa !202
   br i1 %i.un, label %.thread543.sink.split, label %.thread851
 
@@ -402,7 +404,7 @@ bb.ck:                                            ; preds = %bb.cj
   br i1 %i.wm, label %.thread543, label %.thread851
 
 .thread851:                                       ; preds = %.thread842, %bb.ck
-  %indvars.iv.next681839849854 = phi i64 [ %indvars.iv.next681, %bb.ck ], [ %indvars.iv.next681836, %.thread842 ] ; 6 uses
+  %13 = phi i32 [ %9, %bb.ck ], [ %11, %.thread842 ] ; 6 uses
   %i.wt = phi i8 [ %i.wn, %bb.ck ], [ %i.wq, %.thread842 ] ; 3 uses
   %i.wu = load i64, ptr %i.c, align 8, !tbaa !375
   %i.wv = trunc i64 %i.wu to i32
@@ -494,24 +496,27 @@ bb.cs:                                            ; preds = %bb.cm, %.thread.loo
   br i1 %or.cond, label %.thread543, label %.thread543.sink.split
 
 .thread543.sink.split:                            ; preds = %_ZNK3fmt3v116detail6bigint9get_bigitEi.exit46.i358, %bb.cs, %bb.cl, %bb.cj, %.thread842
+  %.sink = phi i32 [ %9, %bb.cj ], [ %11, %.thread842 ], [ %13, %bb.cs ], [ %13, %bb.cl ], [ %13, %_ZNK3fmt3v116detail6bigint9get_bigitEi.exit46.i358 ] ; 2 uses
   %.sink901 = phi i8 [ %i.wn, %bb.cj ], [ %i.wq, %.thread842 ], [ %i.wt, %bb.cs ], [ %i.wt, %bb.cl ], [ %i.wt, %_ZNK3fmt3v116detail6bigint9get_bigitEi.exit46.i358 ]
-  %indvars.iv.next681839848.ph = phi i64 [ %indvars.iv.next681, %bb.cj ], [ %indvars.iv.next681836, %.thread842 ], [ %indvars.iv.next681839849854, %bb.cs ], [ %indvars.iv.next681839849854, %bb.cl ], [ %indvars.iv.next681839849854, %_ZNK3fmt3v116detail6bigint9get_bigitEi.exit46.i358 ]
-  %or.cond.not841845.ph = phi i1 [ %i.wm, %bb.cj ], [ false, %.thread842 ], [ false, %bb.cs ], [ false, %bb.cl ], [ false, %_ZNK3fmt3v116detail6bigint9get_bigitEi.exit46.i358 ]
-  %i.yh = getelementptr i8, ptr %i.tk, i64 %indvars.iv680
+  %or.cond.not834837.ph = phi i1 [ %i.wm, %bb.cj ], [ false, %.thread842 ], [ false, %bb.cs ], [ false, %bb.cl ], [ false, %_ZNK3fmt3v116detail6bigint9get_bigitEi.exit46.i358 ]
+  %14 = zext nneg i32 %.sink to i64
+  %15 = getelementptr i8, ptr %i.tk, i64 %14
+  %i.yh = getelementptr i8, ptr %15, i64 -1
   %i.yi = add i8 %.sink901, 49
   store i8 %i.yi, ptr %i.yh, align 1, !tbaa !202
   br label %.thread543
 
 .thread543:                                       ; preds = %bb.cq, %.thread543.sink.split, %.thread851, %bb.ck, %bb.cs
-  %indvars.iv.next681839848 = phi i64 [ %indvars.iv.next681839849854, %bb.cs ], [ %indvars.iv.next681839849854, %.thread851 ], [ %indvars.iv.next681839848.ph, %.thread543.sink.split ], [ %indvars.iv.next681, %bb.ck ], [ %indvars.iv.next681839849854, %bb.cq ] ; 3 uses
-  %or.cond.not841845 = phi i1 [ false, %bb.cs ], [ false, %.thread851 ], [ %or.cond.not841845.ph, %.thread543.sink.split ], [ false, %bb.ck ], [ false, %bb.cq ]
+  %16 = phi i32 [ %13, %bb.cs ], [ %13, %.thread851 ], [ %.sink, %.thread543.sink.split ], [ %9, %bb.ck ], [ %13, %bb.cq ] ; 2 uses
+  %or.cond.not841845 = phi i1 [ false, %bb.cs ], [ false, %.thread851 ], [ %or.cond.not834837.ph, %.thread543.sink.split ], [ false, %bb.ck ], [ false, %bb.cq ]
+  %17 = zext nneg i32 %16 to i64                  ; 3 uses
   %i.yj = load i64, ptr %i.tl, align 8, !tbaa !271 ; 2 uses
-  %.not829 = icmp ugt i64 %i.yj, %indvars.iv680
-  br i1 %.not829, label %.split, label %bb.ct
+  %18 = icmp ult i64 %i.yj, %17
+  br i1 %18, label %bb.ct, label %.split
 
 bb.ct:                                            ; preds = %.thread543
   %i.yk = load ptr, ptr %i.tm, align 8, !tbaa !272
-  invoke void %i.yk(ptr noundef nonnull align 8 dereferenceable(32) %3, i64 noundef %indvars.iv.next681839848)
+  invoke void %i.yk(ptr noundef nonnull align 8 dereferenceable(32) %3, i64 noundef %17)
           to label %.noexc363 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !inline_history !995
 
 .noexc363:                                        ; preds = %bb.ct
@@ -520,11 +525,10 @@ bb.ct:                                            ; preds = %.thread543
 
 .split:                                           ; preds = %.noexc363, %.thread543
   %i.yl = phi i64 [ %i.yj, %.thread543 ], [ %.pre.i362, %.noexc363 ]
-  %i.ym = call noundef i64 @llvm.umin.i64(i64 %indvars.iv.next681839848, i64 %i.yl)
+  %i.ym = call noundef i64 @llvm.umin.i64(i64 %17, i64 %i.yl)
   store i64 %i.ym, ptr %i.tn, align 8, !tbaa !270
   %i.yn = load i32, ptr %4, align 4, !tbaa !88
-  %9 = trunc nuw nsw i64 %indvars.iv680 to i32
-  %i.yo = sub nsw i32 %i.yn, %9
+  %i.yo = sub nsw i32 %i.yn, %.1539
   store i32 %i.yo, ptr %4, align 4, !tbaa !88
   br i1 %or.cond.not841845, label %.backedge.backedge, label %.loopexit566
 
@@ -716,7 +720,7 @@ _ZN3fmt3v116detail6bigintmLIiEERS2_T_.exit391:    ; preds = %_ZN3fmt3v116detail6
   br i1 %.not97, label %.backedge.backedge, label %bb.db
 
 .backedge.backedge:                               ; preds = %_ZN3fmt3v116detail6bigintmLIiEERS2_T_.exit391, %bb.db, %._crit_edge.i.i397, %.split, %_ZN3fmt3v116detail6bufferIjE9push_backERKj.exit.i.i399
-  %indvars.iv680.be = phi i64 [ %indvars.iv.next681839848, %.split ], [ %indvars.iv.next681, %_ZN3fmt3v116detail6bufferIjE9push_backERKj.exit.i.i399 ], [ %indvars.iv.next681, %._crit_edge.i.i397 ], [ %indvars.iv.next681, %bb.db ], [ %indvars.iv.next681, %_ZN3fmt3v116detail6bigintmLIiEERS2_T_.exit391 ]
+  %.1539.be = phi i32 [ %16, %.split ], [ %9, %_ZN3fmt3v116detail6bufferIjE9push_backERKj.exit.i.i399 ], [ %9, %._crit_edge.i.i397 ], [ %9, %bb.db ], [ %9, %_ZN3fmt3v116detail6bigintmLIiEERS2_T_.exit391 ]
   br label %.backedge
 
 bb.db:                                            ; preds = %_ZN3fmt3v116detail6bigintmLIiEERS2_T_.exit391

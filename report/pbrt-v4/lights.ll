@@ -205,9 +205,9 @@ _ZNKSt4hashIN4pbrt22DenselySampledSpectrumEEclERKS1_.exit56.i: ; preds = %bb.h, 
   br label %bb.i
 
 bb.i:                                             ; preds = %.loopexit.i, %.lr.ph121.i
-  %indvars.iv138.i = phi i64 [ 1, %.lr.ph121.i ], [ %indvars.iv.next139.i, %.loopexit.i ] ; 2 uses
   %4 = phi ptr [ %i.hd, %.lr.ph121.i ], [ %i.hx, %.loopexit.i ] ; 6 uses
   %.039120.i = phi i64 [ %.039117.i, %.lr.ph121.i ], [ %.039.i, %.loopexit.i ]
+  %.040119.i = phi i32 [ 1, %.lr.ph121.i ], [ %6, %.loopexit.i ] ; 2 uses
   %i.hi = load i32, ptr %4, align 8, !tbaa !74
   %.not.i.i = icmp eq i32 %i.hi, %i.he
   br i1 %.not.i.i, label %bb.j, label %.loopexit.i
@@ -247,8 +247,9 @@ bb.m:                                             ; preds = %bb.l, %.lr.ph.i.i
   br i1 %i.hu, label %bb.l, label %.loopexit.i
 
 .loopexit.i:                                      ; preds = %bb.m, %bb.k, %bb.j, %bb.i
-  %i.hv = add i64 %.039120.i, %indvars.iv138.i
-  %indvars.iv.next139.i = add nuw nsw i64 %indvars.iv138.i, 1
+  %5 = zext nneg i32 %.040119.i to i64
+  %i.hv = add i64 %.039120.i, %5
+  %6 = add nuw nsw i32 %.040119.i, 1
   %.039.i = urem i64 %i.hv, %i.ha                 ; 2 uses
   %i.hw = getelementptr inbounds nuw [8 x i8], ptr %i.hb, i64 %.039.i
   %i.hx = load ptr, ptr %i.hw, align 8, !tbaa !58 ; 2 uses
@@ -651,21 +652,21 @@ _ZN4pbrt11InternCacheINS_22DenselySampledSpectrumESt4hashIS1_EE6InsertEPKS1_PN4p
   br label %.loopexit
 
 bb.z:                                             ; preds = %_ZNSt12shared_mutex11lock_sharedEv.exit.i, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ 1, %.lr.ph.i ], [ %indvars.iv.next.i, %_ZNSt12shared_mutex11lock_sharedEv.exit.i ] ; 2 uses
-  %5 = phi ptr [ %i.em, %.lr.ph.i ], [ %i.sk, %_ZNSt12shared_mutex11lock_sharedEv.exit.i ] ; 6 uses
+  %7 = phi ptr [ %i.em, %.lr.ph.i ], [ %i.sk, %_ZNSt12shared_mutex11lock_sharedEv.exit.i ] ; 6 uses
   %.034116.i = phi i64 [ %i.eg, %.lr.ph.i ], [ %i.si, %_ZNSt12shared_mutex11lock_sharedEv.exit.i ]
-  %i.rt = load i32, ptr %5, align 8, !tbaa !74
+  %.035115.i = phi i32 [ 1, %.lr.ph.i ], [ %9, %_ZNSt12shared_mutex11lock_sharedEv.exit.i ] ; 2 uses
+  %i.rt = load i32, ptr %7, align 8, !tbaa !74
   %.not.i83.i = icmp eq i32 %i.rt, %i.en
   br i1 %.not.i83.i, label %bb.aa, label %_ZNSt12shared_mutex11lock_sharedEv.exit.i
 
 bb.aa:                                            ; preds = %bb.z
-  %i.ru = getelementptr inbounds nuw i8, ptr %5, i64 4
+  %i.ru = getelementptr inbounds nuw i8, ptr %7, i64 4
   %i.rv = load i32, ptr %i.ru, align 4, !tbaa !75
   %.not12.i85.i = icmp eq i32 %i.rv, %i.ep
   br i1 %.not12.i85.i, label %bb.ab, label %_ZNSt12shared_mutex11lock_sharedEv.exit.i
 
 bb.ab:                                            ; preds = %bb.aa
-  %i.rw = getelementptr inbounds nuw i8, ptr %5, i64 32
+  %i.rw = getelementptr inbounds nuw i8, ptr %7, i64 32
   %i.rx = load i64, ptr %i.rw, align 8, !tbaa !72
   %.not13.i86.i = icmp eq i64 %i.rx, %i.eq
   br i1 %.not13.i86.i, label %.preheader.i87.i, label %_ZNSt12shared_mutex11lock_sharedEv.exit.i
@@ -674,7 +675,7 @@ bb.ab:                                            ; preds = %bb.aa
   br i1 %i.es, label %.loopexit, label %.lr.ph.i88.i
 
 .lr.ph.i88.i:                                     ; preds = %.preheader.i87.i
-  %i.ry = getelementptr inbounds nuw i8, ptr %5, i64 16
+  %i.ry = getelementptr inbounds nuw i8, ptr %7, i64 16
   %i.rz = load ptr, ptr %i.ry, align 8, !tbaa !71
   br label %bb.ad
 
@@ -693,8 +694,9 @@ bb.ad:                                            ; preds = %bb.ac, %.lr.ph.i88.
   br i1 %i.sf, label %bb.ac, label %_ZNSt12shared_mutex11lock_sharedEv.exit.i
 
 _ZNSt12shared_mutex11lock_sharedEv.exit.i:        ; preds = %bb.ad, %bb.ab, %bb.aa, %bb.z
-  %i.sg = add i64 %.034116.i, %indvars.iv.i
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1
+  %8 = zext nneg i32 %.035115.i to i64
+  %i.sg = add i64 %.034116.i, %8
+  %9 = add nuw nsw i32 %.035115.i, 1
   %i.sh = load i64, ptr %i.ee, align 8, !tbaa !55
   %i.si = urem i64 %i.sg, %i.sh                   ; 2 uses
   %i.sj = getelementptr inbounds nuw [8 x i8], ptr %i.ek, i64 %i.si
@@ -703,7 +705,7 @@ _ZNSt12shared_mutex11lock_sharedEv.exit.i:        ; preds = %bb.ad, %bb.ab, %bb.
   br i1 %.not.i5, label %_ZNSt12shared_mutex11lock_sharedEv.exit._crit_edge.i, label %bb.z, !llvm.loop !424
 
 .loopexit:                                        ; preds = %.preheader.i87.i, %bb.ac, %.preheader.i.i, %bb.l, %_ZN4pbrt11InternCacheINS_22DenselySampledSpectrumESt4hashIS1_EE6InsertEPKS1_PN4pstd6vectorIS6_NS7_3pmr21polymorphic_allocatorIS6_EEEE.exit82.i
-  %.1.i = phi ptr [ %4, %bb.l ], [ %i.lw, %_ZN4pbrt11InternCacheINS_22DenselySampledSpectrumESt4hashIS1_EE6InsertEPKS1_PN4pstd6vectorIS6_NS7_3pmr21polymorphic_allocatorIS6_EEEE.exit82.i ], [ %5, %bb.ac ], [ %4, %.preheader.i.i ], [ %5, %.preheader.i87.i ]
+  %.1.i = phi ptr [ %4, %bb.l ], [ %i.lw, %_ZN4pbrt11InternCacheINS_22DenselySampledSpectrumESt4hashIS1_EE6InsertEPKS1_PN4pstd6vectorIS6_NS7_3pmr21polymorphic_allocatorIS6_EEEE.exit82.i ], [ %7, %bb.ac ], [ %4, %.preheader.i.i ], [ %7, %.preheader.i87.i ]
   %i.sl = call noundef i32 @pthread_rwlock_unlock(ptr noundef nonnull align 8 dereferenceable(56) %i.eh) #37 ; 0 uses
   store i64 0, ptr %i.bz, align 8, !tbaa !72
   %i.sm = load ptr, ptr %i.bx, align 8, !tbaa !71 ; 2 uses

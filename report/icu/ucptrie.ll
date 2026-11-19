@@ -202,7 +202,6 @@ bb.ax:                                            ; preds = %_ZN12_GLOBAL__N_116
   %.6209477482 = phi i32 [ %.6209, %.lr.ph ], [ %.0.i278, %.thread ]
   %.6196478481 = phi i32 [ %.6196, %.lr.ph ], [ %.4194, %.thread ] ; 2 uses
   %i.dv = phi i32 [ %i.dr, %.lr.ph ], [ %i.dt, %.thread ]
-  %5 = zext nneg i32 %i.cx to i64
   br label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph
@@ -298,12 +297,12 @@ _ZN12_GLOBAL__N_18getValueE11UCPTrieData17UCPTrieValueWidthi.exit285.us.us401: ;
   br i1 %.not266.us.us400, label %.loopexit, label %_ZN12_GLOBAL__N_18getValueE11UCPTrieData17UCPTrieValueWidthi.exit285.us.us401, !llvm.loop !35
 
 .lr.ph.split:                                     ; preds = %.lr.ph.split.preheader, %bb.bd
-  %indvars.iv = phi i64 [ %5, %.lr.ph.split.preheader ], [ %indvars.iv.next, %bb.bd ]
-  %i.fe = phi i32 [ %i.dv, %.lr.ph.split.preheader ], [ %i.fq, %bb.bd ] ; 2 uses
-  %.7210362 = phi i32 [ %.6209477482, %.lr.ph.split.preheader ], [ %.8211, %bb.bd ] ; 2 uses
-  %.4221361 = phi i32 [ %.3220, %.lr.ph.split.preheader ], [ %i.fe, %bb.bd ]
+  %5 = phi i32 [ %i.fq, %bb.bd ], [ %i.dv, %.lr.ph.split.preheader ] ; 2 uses
+  %i.fe = phi i32 [ %6, %bb.bd ], [ %i.cx, %.lr.ph.split.preheader ]
+  %.7210362 = phi i32 [ %.8211, %bb.bd ], [ %.6209477482, %.lr.ph.split.preheader ] ; 2 uses
+  %.4221361 = phi i32 [ %5, %bb.bd ], [ %.3220, %.lr.ph.split.preheader ]
   %.sroa.06.0.copyload = load ptr, ptr %i.ac, align 8, !tbaa !23 ; 3 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 4 uses
+  %6 = add nsw i32 %i.fe, 1                       ; 4 uses
   switch i8 %i.c, label %_ZN12_GLOBAL__N_18getValueE11UCPTrieData17UCPTrieValueWidthi.exit285 [
     i8 0, label %bb.ay
     i8 1, label %bb.az
@@ -311,18 +310,21 @@ _ZN12_GLOBAL__N_18getValueE11UCPTrieData17UCPTrieValueWidthi.exit285.us.us401: ;
   ]
 
 bb.ay:                                            ; preds = %.lr.ph.split
-  %i.ff = getelementptr inbounds nuw [2 x i8], ptr %.sroa.06.0.copyload, i64 %indvars.iv.next
+  %7 = sext i32 %6 to i64
+  %i.ff = getelementptr inbounds [2 x i8], ptr %.sroa.06.0.copyload, i64 %7
   %i.fg = load i16, ptr %i.ff, align 2, !tbaa !24
   %i.fh = zext i16 %i.fg to i32
   br label %_ZN12_GLOBAL__N_18getValueE11UCPTrieData17UCPTrieValueWidthi.exit285
 
 bb.az:                                            ; preds = %.lr.ph.split
-  %i.fi = getelementptr inbounds nuw [4 x i8], ptr %.sroa.06.0.copyload, i64 %indvars.iv.next
+  %8 = sext i32 %6 to i64
+  %i.fi = getelementptr inbounds [4 x i8], ptr %.sroa.06.0.copyload, i64 %8
   %i.fj = load i32, ptr %i.fi, align 4, !tbaa !25
   br label %_ZN12_GLOBAL__N_18getValueE11UCPTrieData17UCPTrieValueWidthi.exit285
 
 bb.ba:                                            ; preds = %.lr.ph.split
-  %i.fk = getelementptr inbounds nuw i8, ptr %.sroa.06.0.copyload, i64 %indvars.iv.next
+  %9 = sext i32 %6 to i64
+  %i.fk = getelementptr inbounds i8, ptr %.sroa.06.0.copyload, i64 %9
   %i.fl = load i8, ptr %i.fk, align 1, !tbaa !23
   %i.fm = zext i8 %i.fl to i32
   br label %_ZN12_GLOBAL__N_18getValueE11UCPTrieData17UCPTrieValueWidthi.exit285
@@ -348,7 +350,7 @@ _ZN12_GLOBAL__N_116maybeFilterValueEjjjPFjPKvjES1_.exit288: ; preds = %bb.bb, %b
 
 bb.bd:                                            ; preds = %_ZN12_GLOBAL__N_116maybeFilterValueEjjjPFjPKvjES1_.exit288, %_ZN12_GLOBAL__N_18getValueE11UCPTrieData17UCPTrieValueWidthi.exit285
   %.8211 = phi i32 [ %.7210362, %_ZN12_GLOBAL__N_18getValueE11UCPTrieData17UCPTrieValueWidthi.exit285 ], [ %.0.i284, %_ZN12_GLOBAL__N_116maybeFilterValueEjjjPFjPKvjES1_.exit288 ] ; 2 uses
-  %i.fq = add nsw i32 %i.fe, 1                    ; 3 uses
+  %i.fq = add nsw i32 %5, 1                       ; 3 uses
   %i.fr = and i32 %i.fq, %i.bl
   %.not266 = icmp eq i32 %i.fr, 0
   br i1 %.not266, label %.loopexit, label %.lr.ph.split, !llvm.loop !35

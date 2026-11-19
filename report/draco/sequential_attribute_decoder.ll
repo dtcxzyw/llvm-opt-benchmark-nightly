@@ -202,9 +202,10 @@ bb.a:
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !41
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 40
-  %i.l = load i64, ptr %i.k, align 8, !tbaa !96
+  %i.l = load i64, ptr %i.k, align 8, !tbaa !96   ; 2 uses
+  %3 = trunc i64 %i.l to i32
   %sext = shl i64 %i.l, 32
-  %i.m = ashr exact i64 %sext, 32                 ; 5 uses
+  %i.m = ashr exact i64 %sext, 32                 ; 4 uses
   %i.n = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.m) #12 ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %2, i64 8
   %.not26 = icmp slt i32 %i.h, 1
@@ -215,8 +216,8 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.c
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.c ] ; 2 uses
-  %.01828.a = phi i32 [ 0, %.lr.ph ], [ %i.aa, %bb.c ]
+  %.01828 = phi i32 [ 0, %.lr.ph ], [ %i.aa, %bb.c ]
+  %.01828.a = phi i32 [ 0, %.lr.ph ], [ %5, %bb.c ] ; 2 uses
   %i.q = load i64, ptr %i.o, align 8, !tbaa !100
   %i.r = load i64, ptr %i.p, align 8, !tbaa !101  ; 2 uses
   %i.s = add i64 %i.r, %i.m                       ; 2 uses
@@ -231,11 +232,12 @@ bb.c:                                             ; preds = %bb.b
   %i.v = load ptr, ptr %i.i, align 8, !tbaa !41
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 64
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !62
+  %4 = sext i32 %.01828.a to i64
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !64
-  %i.z = getelementptr inbounds i8, ptr %i.y, i64 %indvars.iv
+  %i.z = getelementptr inbounds i8, ptr %i.y, i64 %4
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.z, ptr nonnull align 1 %i.n, i64 %i.m, i1 false)
-  %indvars.iv.next = add nsw i64 %indvars.iv, %i.m
-  %i.aa = add nuw nsw i32 %.01828.a, 1            ; 2 uses
+  %5 = add nsw i32 %.01828.a, %3
+  %i.aa = add nuw nsw i32 %.01828, 1              ; 2 uses
   %exitcond.not = icmp eq i32 %i.aa, %i.h
   br i1 %exitcond.not, label %_ZNSt10unique_ptrIA_hSt14default_deleteIS0_EED2Ev.exit22, label %bb.b, !llvm.loop !95
 

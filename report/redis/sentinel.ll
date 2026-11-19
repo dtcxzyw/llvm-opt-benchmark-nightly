@@ -205,12 +205,13 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not6.i, label %sentinelReleaseScriptJob.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.k, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.lr.ph.i ], [ 0, %bb.k ]
   %3 = phi ptr [ %i.aq, %.lr.ph.i ], [ %i.an, %bb.k ]
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
+  %.07.i = phi i32 [ %4, %.lr.ph.i ], [ 0, %bb.k ]
+  %4 = add nuw nsw i32 %.07.i, 1                  ; 2 uses
   call void @sdsfree(ptr noundef nonnull %3) #26
   %i.ao = load ptr, ptr %i.al, align 8, !tbaa !565 ; 2 uses
-  %i.ap = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %indvars.iv.next.i
+  %5 = zext nneg i32 %4 to i64
+  %i.ap = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %5
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !560 ; 2 uses
   %.not.i = icmp eq ptr %i.aq, null
   br i1 %.not.i, label %sentinelReleaseScriptJob.exit, label %.lr.ph.i, !llvm.loop !1
@@ -261,12 +262,13 @@ bb.a:
   br i1 %.not6, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ 0, %bb.a ]
   %1 = phi ptr [ %i.f, %.lr.ph ], [ %i.c, %bb.a ]
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %.07 = phi i32 [ %2, %.lr.ph ], [ 0, %bb.a ]
+  %2 = add nuw nsw i32 %.07, 1                    ; 2 uses
   tail call void @sdsfree(ptr noundef nonnull %1) #26
   %i.d = load ptr, ptr %i.a, align 8, !tbaa !565  ; 2 uses
-  %i.e = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %indvars.iv.next
+  %3 = zext nneg i32 %2 to i64
+  %i.e = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %3
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !560  ; 2 uses
   %.not = icmp eq ptr %i.f, null
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !1
@@ -621,12 +623,13 @@ bb.j:                                             ; preds = %bb.h, %bb.i
   br i1 %.not6.i, label %sentinelReleaseScriptJob.exit, label %.lr.ph.i26
 
 .lr.ph.i26:                                       ; preds = %bb.j, %.lr.ph.i26
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.lr.ph.i26 ], [ 0, %bb.j ]
   %1 = phi ptr [ %i.bd, %.lr.ph.i26 ], [ %i.ba, %bb.j ]
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
+  %.07.i = phi i32 [ %2, %.lr.ph.i26 ], [ 0, %bb.j ]
+  %2 = add nuw nsw i32 %.07.i, 1                  ; 2 uses
   call void @sdsfree(ptr noundef nonnull %1) #26
   %i.bb = load ptr, ptr %i.ay, align 8, !tbaa !565 ; 2 uses
-  %i.bc = getelementptr inbounds nuw [8 x i8], ptr %i.bb, i64 %indvars.iv.next.i
+  %3 = zext nneg i32 %2 to i64
+  %i.bc = getelementptr inbounds nuw [8 x i8], ptr %i.bb, i64 %3
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !560 ; 2 uses
   %.not.i27 = icmp eq ptr %i.bd, null
   br i1 %.not.i27, label %sentinelReleaseScriptJob.exit, label %.lr.ph.i26, !llvm.loop !1
@@ -750,12 +753,13 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not3641, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.c, %.lr.ph
-  %indvars.iv48 = phi i64 [ %indvars.iv.next49, %.lr.ph ], [ 0, %bb.c ]
   %2 = phi ptr [ %i.q, %.lr.ph ], [ %i.n, %bb.c ]
-  %indvars.iv.next49 = add nuw nsw i64 %indvars.iv48, 1 ; 2 uses
+  %.142 = phi i32 [ %3, %.lr.ph ], [ 0, %bb.c ]
+  %3 = add nuw nsw i32 %.142, 1                   ; 2 uses
   call void @addReplyBulkCString(ptr noundef %0, ptr noundef nonnull %2) #26
   %i.o = load ptr, ptr %i.i, align 8, !tbaa !565
-  %i.p = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %indvars.iv.next49
+  %4 = zext nneg i32 %3 to i64
+  %i.p = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %4
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !560  ; 2 uses
   %.not36 = icmp eq ptr %i.q, null
   br i1 %.not36, label %._crit_edge, label %.lr.ph, !llvm.loop !722

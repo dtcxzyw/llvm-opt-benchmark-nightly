@@ -205,10 +205,10 @@ dss_sp_sf_synthesis.exit.i:                       ; preds = %vector.body
   br label %.preheader.i62.i
 
 .preheader.i62.i:                                 ; preds = %.preheader.i62.i, %.preheader.i62.preheader.i
-  %indvars.iv52.i.i = phi i64 [ %indvars.iv.next53.i.i, %.preheader.i62.i ], [ 0, %.preheader.i62.preheader.i ] ; 2 uses
-  %.030.i.i.a = phi i32 [ %spec.select.i.i, %.preheader.i62.i ], [ 6, %.preheader.i62.preheader.i ] ; 2 uses
+  %.030.i.i = phi i32 [ %spec.select.i.i, %.preheader.i62.i ], [ 6, %.preheader.i62.preheader.i ] ; 2 uses
+  %.030.i.i.a = phi i32 [ %5, %.preheader.i62.i ], [ 0, %.preheader.i62.preheader.i ] ; 2 uses
   %.028.i.i = phi i32 [ %i.auy, %.preheader.i62.i ], [ 0, %.preheader.i62.preheader.i ] ; 2 uses
-  %i.ath = zext nneg i32 %.030.i.i.a to i64       ; 2 uses
+  %i.ath = zext nneg i32 %.030.i.i to i64         ; 2 uses
   %i.ati = sext i32 %.028.i.i to i64
   %i.atj = getelementptr inbounds nuw [4 x i8], ptr %i.atg, i64 %i.ath ; 5 uses
   %i.atk = load i32, ptr %i.atj, align 4, !tbaa !29
@@ -245,13 +245,14 @@ dss_sp_sf_synthesis.exit.i:                       ; preds = %vector.body
   %i.aup = load i32, ptr %i.auo, align 4, !tbaa !29
   %i.auq = mul nsw i32 %i.aup, %i.aun
   %i.aur = add nsw i32 %i.aul, %i.auq
-  %i.aus = add nsw i32 %.030.i.i.a, -6
+  %i.aus = add nsw i32 %.030.i.i, -6
   %i.aut = ashr i32 %i.aur, 15
   %i.auu = tail call i32 @llvm.smax.i32(i32 %i.aut, i32 -32768)
   %i.auv = tail call i32 @llvm.smin.i32(i32 %i.auu, i32 32767)
-  %i.auw = getelementptr inbounds nuw [4 x i8], ptr %i.op, i64 %indvars.iv52.i.i
+  %4 = zext nneg i32 %.030.i.i.a to i64
+  %i.auw = getelementptr inbounds nuw [4 x i8], ptr %i.op, i64 %4
   store i32 %i.auv, ptr %i.auw, align 4, !tbaa !29
-  %indvars.iv.next53.i.i = add nuw nsw i64 %indvars.iv52.i.i, 1
+  %5 = add nuw nsw i32 %.030.i.i.a, 1
   %i.aux = add nsw i32 %.028.i.i, 1
   %i.auy = srem i32 %i.aux, 11                    ; 2 uses
   %.not.i63.i = icmp eq i32 %i.auy, 0

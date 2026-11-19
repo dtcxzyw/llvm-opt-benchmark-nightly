@@ -204,10 +204,10 @@ bb.b:                                             ; preds = %bb.a
   %i.d = load i32, ptr %i.c, align 8, !tbaa !30
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.f = load i8, ptr %i.e, align 8, !tbaa !36    ; 5 uses
-  %4 = zext i8 %i.f to i64
+  %4 = zext i8 %i.f to i32
   %i.g = zext i8 %i.f to i64
-  %5 = shl nuw nsw i64 %4, 2                      ; 4 uses
-  %i.h = shl nuw nsw i64 %i.g, 2                  ; 2 uses
+  %5 = shl nuw nsw i32 %4, 2                      ; 2 uses
+  %i.h = shl nuw nsw i64 %i.g, 2
   %i.i = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.h) #13 ; 11 uses
   %i.j = ptrtoaddr ptr %i.i to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #12
@@ -240,6 +240,7 @@ bb.e:                                             ; preds = %bb.d
   %.not48 = icmp eq i8 %i.f, 0
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.w = getelementptr inbounds nuw i8, ptr %2, i64 64 ; 4 uses
+  %6 = zext nneg i32 %5 to i64                    ; 4 uses
   br i1 %.not48, label %.preheader.preheader, label %.preheader.us.preheader
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
@@ -262,9 +263,9 @@ bb.e:                                             ; preds = %bb.d
   br label %.preheader.us
 
 .preheader.us:                                    ; preds = %.preheader.us.preheader, %._crit_edge.us
-  %indvars.iv55 = phi i64 [ 0, %.preheader.us.preheader ], [ %indvars.iv.next56, %._crit_edge.us ] ; 2 uses
-  %.02846.us.a = phi i32 [ 0, %.preheader.us.preheader ], [ %i.bv, %._crit_edge.us ]
-  %.03244.us = phi i64 [ 0, %.preheader.us.preheader ], [ %indvars.iv.next51.lcssa, %._crit_edge.us ] ; 3 uses
+  %.02846.us = phi i32 [ %i.bv, %._crit_edge.us ], [ 0, %.preheader.us.preheader ]
+  %.02846.us.a = phi i32 [ %8, %._crit_edge.us ], [ 0, %.preheader.us.preheader ] ; 2 uses
+  %.03244.us = phi i64 [ %indvars.iv.next51.lcssa, %._crit_edge.us ], [ 0, %.preheader.us.preheader ] ; 3 uses
   %i.z = load float, ptr %3, align 4, !tbaa !112  ; 4 uses
   %i.aa = load ptr, ptr %i.v, align 8, !tbaa !38  ; 5 uses
   %i.ab = ptrtoaddr ptr %i.aa to i64
@@ -364,11 +365,12 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
 ._crit_edge.us:                                   ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block
   %indvars.iv.next51.lcssa = phi i64 [ %i.ad, %middle.block ], [ %indvars.iv.next51.lcssa69.unr, %scalar.ph.prol.loopexit ], [ %indvars.iv.next51.1, %scalar.ph ]
   %i.bs = load ptr, ptr %i.w, align 8, !tbaa !113
+  %7 = zext nneg i32 %.02846.us.a to i64
   %i.bt = load ptr, ptr %i.bs, align 8, !tbaa !21
-  %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 %indvars.iv55
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bu, ptr nonnull align 1 %i.i, i64 %5, i1 false)
-  %indvars.iv.next56 = add nuw nsw i64 %indvars.iv55, %i.h
-  %i.bv = add nuw i32 %.02846.us.a, 1             ; 2 uses
+  %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 %7
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bu, ptr nonnull align 1 %i.i, i64 %6, i1 false)
+  %8 = add nuw nsw i32 %.02846.us.a, %5
+  %i.bv = add nuw i32 %.02846.us, 1               ; 2 uses
   %exitcond58.not = icmp eq i32 %i.bv, %i.u
   br i1 %exitcond58.not, label %_ZNSt10unique_ptrIA_fSt14default_deleteIS0_EED2Ev.exit37, label %.preheader.us, !llvm.loop !109
 
@@ -376,10 +378,10 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %niter = phi i32 [ 0, %.preheader.preheader.new ], [ %niter.next.1, %.preheader ]
   %i.bw = load ptr, ptr %i.w, align 8, !tbaa !113
   %i.bx = load ptr, ptr %i.bw, align 8, !tbaa !21
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bx, ptr nonnull align 1 %i.i, i64 %5, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bx, ptr nonnull align 1 %i.i, i64 %6, i1 false)
   %i.by = load ptr, ptr %i.w, align 8, !tbaa !113
   %i.bz = load ptr, ptr %i.by, align 8, !tbaa !21
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bz, ptr nonnull align 1 %i.i, i64 %5, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bz, ptr nonnull align 1 %i.i, i64 %6, i1 false)
   %niter.next.1 = add nuw i32 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i32 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZNSt10unique_ptrIA_fSt14default_deleteIS0_EED2Ev.exit37.loopexit.unr-lcssa, label %.preheader, !llvm.loop !109
@@ -400,7 +402,7 @@ _ZNSt10unique_ptrIA_fSt14default_deleteIS0_EED2Ev.exit37.loopexit.unr-lcssa: ; p
   call void @llvm.assume(i1 %lcmp.mod72)
   %i.cb = load ptr, ptr %i.w, align 8, !tbaa !113
   %i.cc = load ptr, ptr %i.cb, align 8, !tbaa !21
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.cc, ptr nonnull align 1 %i.i, i64 %5, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.cc, ptr nonnull align 1 %i.i, i64 %6, i1 false)
   br label %_ZNSt10unique_ptrIA_fSt14default_deleteIS0_EED2Ev.exit37
 
 _ZNSt10unique_ptrIA_fSt14default_deleteIS0_EED2Ev.exit37: ; preds = %._crit_edge.us, %.preheader.epil.preheader, %_ZNSt10unique_ptrIA_fSt14default_deleteIS0_EED2Ev.exit37.loopexit.unr-lcssa, %bb.e, %bb.d

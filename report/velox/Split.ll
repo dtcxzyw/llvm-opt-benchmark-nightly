@@ -205,24 +205,24 @@ bb.k:                                             ; preds = %bb.a
   br label %bb.l
 
 bb.l:                                             ; preds = %_ZN8facebook5velox4exec12StringWriter9setNoCopyERKNS0_10StringViewE.exit31, %bb.k
-  %indvars.iv = phi i64 [ %indvars.iv.next, %_ZN8facebook5velox4exec12StringWriter9setNoCopyERKNS0_10StringViewE.exit31 ], [ 0, %bb.k ] ; 2 uses
-  %.sroa.013.0 = phi i64 [ %i.gz, %_ZN8facebook5velox4exec12StringWriter9setNoCopyERKNS0_10StringViewE.exit31 ], [ %i.df, %bb.k ] ; 6 uses
-  %.sroa.8.0 = phi ptr [ %i.gy, %_ZN8facebook5velox4exec12StringWriter9setNoCopyERKNS0_10StringViewE.exit31 ], [ %i.de, %bb.k ] ; 8 uses
+  %indvars.iv = phi i64 [ %i.df, %bb.k ], [ %i.gz, %_ZN8facebook5velox4exec12StringWriter9setNoCopyERKNS0_10StringViewE.exit31 ] ; 6 uses
+  %.sroa.8.0 = phi ptr [ %i.de, %bb.k ], [ %i.gy, %_ZN8facebook5velox4exec12StringWriter9setNoCopyERKNS0_10StringViewE.exit31 ] ; 8 uses
+  %.019 = phi i32 [ 0, %bb.k ], [ %13, %_ZN8facebook5velox4exec12StringWriter9setNoCopyERKNS0_10StringViewE.exit31 ] ; 2 uses
   br i1 %i.dk, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findES2_m.exit, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %.not2531.i.i = icmp ult i64 %.sroa.013.0, %i.dj
+  %.not2531.i.i = icmp ult i64 %indvars.iv, %i.dj
   br i1 %.not2531.i.i, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findES2_m.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.m
-  %i.dr = getelementptr inbounds nuw i8, ptr %.sroa.8.0, i64 %.sroa.013.0
+  %i.dr = getelementptr inbounds nuw i8, ptr %.sroa.8.0, i64 %indvars.iv
   %i.ds = load i8, ptr %i.di, align 1, !tbaa !202
   %i.dt = sext i8 %i.ds to i32
   %i.du = ptrtoint ptr %i.dr to i64
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.p, %.lr.ph.i.i
-  %.033.i.i = phi i64 [ %.sroa.013.0, %.lr.ph.i.i ], [ %i.ed, %bb.p ]
+  %.033.i.i = phi i64 [ %indvars.iv, %.lr.ph.i.i ], [ %i.ed, %bb.p ]
   %.02032.i.i = phi ptr [ %.sroa.8.0, %.lr.ph.i.i ], [ %i.eb, %bb.p ]
   %.reass.reass.i.reass.reass.i.reass.reass.reass = add i64 %.033.i.i, %invariant.op ; 2 uses
   %i.dv = icmp eq i64 %.reass.reass.i.reass.reass.i.reass.reass.reass, 0
@@ -254,7 +254,7 @@ bb.p:                                             ; preds = %_ZNSt11char_traitsI
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findES2_m.exit: ; preds = %bb.n, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i, %bb.p, %bb.l, %bb.m, %bb.o
   %.1.i.i = phi i64 [ 0, %bb.l ], [ -1, %bb.m ], [ %i.ea, %bb.o ], [ -1, %bb.p ], [ -1, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i ], [ -1, %bb.n ]
   %spec.select = add i64 %.1.i.i, %i.dl           ; 4 uses
-  %i.ee = icmp ugt i64 %spec.select, %.sroa.013.0
+  %i.ee = icmp ugt i64 %spec.select, %indvars.iv
   br i1 %i.ee, label %select.unfold, label %bb.q
 
 bb.q:                                             ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findES2_m.exit
@@ -429,14 +429,15 @@ _ZN8facebook5velox4exec12StringWriter9setNoCopyERKNS0_10StringViewE.exit31: ; pr
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.47)
   %i.gx = add i64 %spec.select, %i.dj             ; 2 uses
   %i.gy = getelementptr inbounds nuw i8, ptr %.sroa.8.0, i64 %i.gx ; 2 uses
-  %i.gz = sub i64 %.sroa.013.0, %i.gx             ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
-  %13 = add nuw nsw i64 %indvars.iv, 2
-  %i.ha = icmp eq i64 %4, %13
+  %i.gz = sub i64 %indvars.iv, %i.gx              ; 2 uses
+  %13 = add nuw nsw i32 %.019, 1
+  %14 = add nuw nsw i32 %.019, 2
+  %15 = zext nneg i32 %14 to i64
+  %i.ha = icmp eq i64 %4, %15
   br i1 %i.ha, label %select.unfold, label %bb.l
 
 select.unfold:                                    ; preds = %_ZN8facebook5velox4exec12StringWriter9setNoCopyERKNS0_10StringViewE.exit31, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findES2_m.exit
-  %.sroa.013.1.ph = phi i64 [ %.sroa.013.0, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findES2_m.exit ], [ %i.gz, %_ZN8facebook5velox4exec12StringWriter9setNoCopyERKNS0_10StringViewE.exit31 ] ; 2 uses
+  %.sroa.013.1.ph = phi i64 [ %indvars.iv, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findES2_m.exit ], [ %i.gz, %_ZN8facebook5velox4exec12StringWriter9setNoCopyERKNS0_10StringViewE.exit31 ] ; 2 uses
   %.sroa.8.1.ph = phi ptr [ %.sroa.8.0, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findES2_m.exit ], [ %i.gy, %_ZN8facebook5velox4exec12StringWriter9setNoCopyERKNS0_10StringViewE.exit31 ] ; 3 uses
   %i.hb = load i32, ptr %i.dm, align 4, !tbaa !435 ; 2 uses
   %i.hc = add nsw i32 %i.hb, 1                    ; 2 uses

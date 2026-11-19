@@ -71,8 +71,8 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph32, %._crit_edge
-  %indvars.iv34 = phi i64 [ 0, %.lr.ph32 ], [ %indvars.iv.next35, %._crit_edge ] ; 2 uses
   %.01930 = phi ptr [ %i.m, %.lr.ph32 ], [ %i.bz, %._crit_edge ] ; 4 uses
+  %.02129 = phi i32 [ 0, %.lr.ph32 ], [ %5, %._crit_edge ] ; 2 uses
   %i.s = load volatile ptr, ptr %i.o, align 8, !tbaa !19 ; 2 uses
   %.not2425 = icmp eq ptr %i.s, %i.n
   br i1 %.not2425, label %._crit_edge, label %.lr.ph
@@ -81,11 +81,12 @@ bb.c:                                             ; preds = %.lr.ph32, %._crit_e
   %i.t = getelementptr inbounds nuw i8, ptr %.01930, i64 88 ; 6 uses
   %i.u = getelementptr inbounds nuw i8, ptr %.01930, i64 216 ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %.01930, i64 220 ; 2 uses
+  %2 = zext nneg i32 %.02129 to i64
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %get_weights.exit
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %get_weights.exit ] ; 2 uses
   %.027 = phi ptr [ %i.s, %.lr.ph ], [ %i.bx, %get_weights.exit ] ; 4 uses
+  %.02026 = phi i32 [ 0, %.lr.ph ], [ %4, %get_weights.exit ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
   %i.w = getelementptr inbounds nuw i8, ptr %.027, i64 88 ; 6 uses
@@ -188,18 +189,19 @@ get_weights.exit:                                 ; preds = %bb.p, %bb.q
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   %i.bs = load ptr, ptr %i.r, align 8, !tbaa !35
-  %i.bt = getelementptr inbounds nuw [8 x i8], ptr %i.bs, i64 %indvars.iv34
+  %i.bt = getelementptr inbounds nuw [8 x i8], ptr %i.bs, i64 %2
   %i.bu = load ptr, ptr %i.bt, align 8, !tbaa !37
-  %i.bv = getelementptr inbounds nuw [4 x i8], ptr %i.bu, i64 %indvars.iv
+  %3 = zext nneg i32 %.02026 to i64
+  %i.bv = getelementptr inbounds nuw [4 x i8], ptr %i.bu, i64 %3
   store i32 %.0.i, ptr %i.bv, align 4, !tbaa !8
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %4 = add nuw nsw i32 %.02026, 1
   %i.bw = getelementptr inbounds nuw i8, ptr %.027, i64 16
   %i.bx = load volatile ptr, ptr %i.bw, align 8, !tbaa !38 ; 2 uses
   %.not24 = icmp eq ptr %i.bx, %i.n
   br i1 %.not24, label %._crit_edge, label %bb.d, !llvm.loop !9
 
 ._crit_edge:                                      ; preds = %get_weights.exit, %bb.c
-  %indvars.iv.next35 = add nuw nsw i64 %indvars.iv34, 1
+  %5 = add nuw nsw i32 %.02129, 1
   %i.by = getelementptr inbounds nuw i8, ptr %.01930, i64 16
   %i.bz = load volatile ptr, ptr %i.by, align 8, !tbaa !38 ; 2 uses
   %.not = icmp eq ptr %i.bz, %i.k

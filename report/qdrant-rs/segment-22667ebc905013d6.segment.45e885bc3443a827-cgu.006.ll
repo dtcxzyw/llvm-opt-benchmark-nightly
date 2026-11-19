@@ -204,24 +204,32 @@ define hidden void @_RINvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB6_8IntoIt
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.b = load ptr, ptr %i.a, align 8, !nonnull !7, !noundef !7 ; 2 uses
-  %i.c = ptrtoaddr ptr %i.b to i64                ; 2 uses
+  %i.c = ptrtoaddr ptr %i.b to i64                ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
   %.promoted = load ptr, ptr %i.d, align 8        ; 9 uses
-  %.promoted18 = ptrtoaddr ptr %.promoted to i64  ; 2 uses
+  %.promoted18 = ptrtoaddr ptr %.promoted to i64  ; 3 uses
   %.promoted14 = load i64, ptr %4, align 8
-  %.promoted14.fr = freeze i64 %.promoted14       ; 6 uses
+  %.promoted14.fr = freeze i64 %.promoted14       ; 7 uses
   %i.e = add i64 %.promoted14.fr, -1              ; 2 uses
   %i.f = sub i64 %i.c, %.promoted18               ; 2 uses
   %i.g = lshr i64 %i.f, 3
   %i.h = tail call i64 @llvm.umin.i64(i64 %i.e, i64 %i.g) ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %i.h, 24
+  %min.iters.check = icmp samesign ult i64 %i.h, 54
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %bb.a
   %i.i = sub i64 %i.c, %.promoted18
   %i.j = and i64 %i.i, 7
-  %ident.check.not = icmp eq i64 %i.j, 0
-  br i1 %ident.check.not, label %vector.memcheck, label %scalar.ph.preheader
+  %ident.check = icmp ne i64 %i.j, 0
+  %6 = add i64 %.promoted14.fr, -1
+  %7 = sub i64 %i.c, %.promoted18
+  %8 = lshr i64 %7, 3
+  %umin = tail call i64 @llvm.umin.i64(i64 %6, i64 %8)
+  %mul = shl nuw i64 %umin, 3
+  %9 = getelementptr i8, ptr %3, i64 %mul
+  %10 = icmp ult ptr %9, %3
+  %11 = or i1 %ident.check, %10
+  br i1 %11, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
   %i.k = lshr i64 %i.f, 3

@@ -204,7 +204,7 @@ bb.k:                                             ; preds = %bb.h
           to label %.preheader.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .preheader.i:                                     ; preds = %.loopexit35.i, %bb.o
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.o ], [ 0, %.loopexit35.i ] ; 2 uses
+  %.0.i = phi i32 [ %3, %bb.o ], [ 0, %.loopexit35.i ] ; 2 uses
   %i.y = invoke signext i8 @ures_hasNext_78(ptr noundef nonnull %1)
           to label %bb.l unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -226,8 +226,9 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.n
   %i.ab = load ptr, ptr @_ZL19availableLocaleList, align 8, !tbaa !24
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1
-  %i.ac = getelementptr inbounds nuw [40 x i8], ptr %i.ab, i64 %indvars.iv.i
+  %3 = add nuw nsw i32 %.0.i, 1
+  %4 = zext nneg i32 %.0.i to i64
+  %i.ac = getelementptr inbounds nuw [40 x i8], ptr %i.ab, i64 %4
   %i.ad = call noundef nonnull align 8 dereferenceable(40) ptr @_ZN6icu_786LocaleaSEOS0_(ptr noundef nonnull align 8 dereferenceable(40) %i.ac, ptr noundef nonnull align 8 dereferenceable(40) %2) #16 ; 0 uses
   call void @_ZN6icu_786LocaleD1Ev(ptr noundef nonnull align 8 dead_on_return(40) dereferenceable(40) %2) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #16
