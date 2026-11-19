@@ -157,347 +157,106 @@ define internal void @ps_hybrid_analysis_c(ptr noalias nofree noundef writeonly 
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.l = load <2 x float>, ptr %1, align 4, !tbaa !10 ; 3 uses
   %i.m = load <2 x float>, ptr %i.a, align 4, !tbaa !10 ; 3 uses
-  %i.n = fadd nsz <2 x float> %i.l, %i.m          ; 3 uses
-  %foldExtExtBinop = fsub nsz <2 x float> %i.l, %i.m ; 2 uses
+  %i.n = fadd nsz <2 x float> %i.l, %i.m
+  %foldExtExtBinop = fsub nsz <2 x float> %i.l, %i.m
   %i.o = load <2 x float>, ptr %i.b, align 4, !tbaa !10 ; 3 uses
   %i.p = load <2 x float>, ptr %i.c, align 4, !tbaa !10 ; 3 uses
-  %i.q = fadd nsz <2 x float> %i.o, %i.p          ; 3 uses
-  %foldExtExtBinop140 = fsub nsz <2 x float> %i.o, %i.p ; 2 uses
+  %i.q = fadd nsz <2 x float> %i.o, %i.p
+  %foldExtExtBinop140 = fsub nsz <2 x float> %i.o, %i.p
   %i.r = load <2 x float>, ptr %i.d, align 4, !tbaa !10 ; 3 uses
   %i.s = load <2 x float>, ptr %i.e, align 4, !tbaa !10 ; 3 uses
-  %i.t = fadd nsz <2 x float> %i.r, %i.s          ; 3 uses
-  %foldExtExtBinop142 = fsub nsz <2 x float> %i.r, %i.s ; 2 uses
+  %i.t = fadd nsz <2 x float> %i.r, %i.s
+  %foldExtExtBinop142 = fsub nsz <2 x float> %i.r, %i.s
   %i.u = load <2 x float>, ptr %i.f, align 4, !tbaa !10 ; 3 uses
   %i.v = load <2 x float>, ptr %i.g, align 4, !tbaa !10 ; 3 uses
-  %i.w = fadd nsz <2 x float> %i.u, %i.v          ; 3 uses
-  %foldExtExtBinop144 = fsub nsz <2 x float> %i.u, %i.v ; 2 uses
+  %i.w = fadd nsz <2 x float> %i.u, %i.v
+  %foldExtExtBinop144 = fsub nsz <2 x float> %i.u, %i.v
   %i.x = load <2 x float>, ptr %i.h, align 4, !tbaa !10 ; 3 uses
   %i.y = load <2 x float>, ptr %i.i, align 4, !tbaa !10 ; 3 uses
-  %i.z = fadd nsz <2 x float> %i.x, %i.y          ; 3 uses
-  %foldExtExtBinop146 = fsub nsz <2 x float> %i.x, %i.y ; 2 uses
+  %i.z = fadd nsz <2 x float> %i.x, %i.y
   %i.aa = load <2 x float>, ptr %i.j, align 4, !tbaa !10 ; 3 uses
   %i.ab = load <2 x float>, ptr %i.k, align 4, !tbaa !10 ; 3 uses
-  %i.ac = fadd nsz <2 x float> %i.aa, %i.ab       ; 3 uses
-  %foldExtExtBinop148 = fsub nsz <2 x float> %i.aa, %i.ab ; 2 uses
+  %i.ac = fadd nsz <2 x float> %i.aa, %i.ab
+  %foldExtExtBinop148 = fsub nsz <2 x float> %i.aa, %i.ab
   %i.ad = icmp sgt i32 %4, 0
-  br i1 %i.ad, label %.lr.ph, label %._crit_edge
+  br i1 %i.ad, label %vector.body, label %._crit_edge
 
-.lr.ph:                                           ; preds = %.preheader
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %6 = load <2 x float>, ptr %5, align 4, !tbaa !10 ; 3 uses
-  %wide.trip.count = zext nneg i32 %4 to i64      ; 3 uses
-  %foldExtExtBinop150 = fsub nsz <2 x float> %i.m, %i.l ; 2 uses
-  %foldExtExtBinop152 = fsub nsz <2 x float> %i.p, %i.o ; 2 uses
-  %foldExtExtBinop154 = fsub nsz <2 x float> %i.s, %i.r ; 2 uses
-  %foldExtExtBinop156 = fsub nsz <2 x float> %i.v, %i.u ; 2 uses
-  %foldExtExtBinop158 = fsub nsz <2 x float> %i.y, %i.x ; 2 uses
-  %foldExtExtBinop160 = fsub nsz <2 x float> %i.ab, %i.aa ; 2 uses
-  %min.iters.check = icmp ugt i32 %4, 3
-  %ident.check.not = icmp eq i64 %3, 1
-  %or.cond = and i1 %min.iters.check, %ident.check.not
-  br i1 %or.cond, label %vector.ph, label %scalar.ph.preheader
-
-vector.ph:                                        ; preds = %.lr.ph
-  %n.vec = and i64 %wide.trip.count, 2147483644   ; 3 uses
-  %broadcast.splat = shufflevector <2 x float> %6, <2 x float> poison, <4 x i32> zeroinitializer
-  %broadcast.splat90 = shufflevector <2 x float> %6, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
-  %broadcast.splat92 = shufflevector <2 x float> %foldExtExtBinop150, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
-  %broadcast.splat94 = shufflevector <2 x float> %foldExtExtBinop152, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
-  %broadcast.splat96 = shufflevector <2 x float> %foldExtExtBinop154, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
-  %broadcast.splat98 = shufflevector <2 x float> %foldExtExtBinop156, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
-  %broadcast.splat100 = shufflevector <2 x float> %foldExtExtBinop158, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
-  %broadcast.splat102 = shufflevector <2 x float> %foldExtExtBinop160, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
-  %broadcast.splat104 = shufflevector <2 x float> %i.n, <2 x float> poison, <4 x i32> zeroinitializer
-  %broadcast.splat106 = shufflevector <2 x float> %foldExtExtBinop, <2 x float> poison, <4 x i32> zeroinitializer
-  %broadcast.splat108 = shufflevector <2 x float> %i.n, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
-  %broadcast.splat110 = shufflevector <2 x float> %i.q, <2 x float> poison, <4 x i32> zeroinitializer
-  %broadcast.splat112 = shufflevector <2 x float> %foldExtExtBinop140, <2 x float> poison, <4 x i32> zeroinitializer
-  %broadcast.splat114 = shufflevector <2 x float> %i.q, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
-  %broadcast.splat116 = shufflevector <2 x float> %i.t, <2 x float> poison, <4 x i32> zeroinitializer
-  %broadcast.splat118 = shufflevector <2 x float> %foldExtExtBinop142, <2 x float> poison, <4 x i32> zeroinitializer
-  %broadcast.splat120 = shufflevector <2 x float> %i.t, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
-  %broadcast.splat122 = shufflevector <2 x float> %i.w, <2 x float> poison, <4 x i32> zeroinitializer
-  %broadcast.splat124 = shufflevector <2 x float> %foldExtExtBinop144, <2 x float> poison, <4 x i32> zeroinitializer
-  %broadcast.splat126 = shufflevector <2 x float> %i.w, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
-  %broadcast.splat128 = shufflevector <2 x float> %i.z, <2 x float> poison, <4 x i32> zeroinitializer
-  %broadcast.splat130 = shufflevector <2 x float> %foldExtExtBinop146, <2 x float> poison, <4 x i32> zeroinitializer
-  %broadcast.splat132 = shufflevector <2 x float> %i.z, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
-  %broadcast.splat134 = shufflevector <2 x float> %i.ac, <2 x float> poison, <4 x i32> zeroinitializer
-  %broadcast.splat136 = shufflevector <2 x float> %foldExtExtBinop148, <2 x float> poison, <4 x i32> zeroinitializer
-  %broadcast.splat138 = shufflevector <2 x float> %i.ac, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
-  br label %vector.body
-
-vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 6 uses
-  %7 = getelementptr inbounds nuw [64 x i8], ptr %2, i64 %index ; 13 uses
-  %8 = getelementptr inbounds nuw [64 x i8], ptr %2, i64 %index ; 13 uses
-  %9 = getelementptr inbounds nuw i8, ptr %8, i64 64
-  %10 = getelementptr inbounds nuw [64 x i8], ptr %2, i64 %index ; 13 uses
-  %11 = getelementptr inbounds nuw i8, ptr %10, i64 128
-  %12 = getelementptr inbounds nuw [64 x i8], ptr %2, i64 %index ; 13 uses
-  %13 = getelementptr inbounds nuw i8, ptr %12, i64 192
-  %14 = getelementptr inbounds nuw i8, ptr %7, i64 48
-  %15 = getelementptr inbounds nuw i8, ptr %8, i64 112
-  %16 = getelementptr inbounds nuw i8, ptr %10, i64 176
-  %17 = getelementptr inbounds nuw i8, ptr %12, i64 240
-  %18 = load float, ptr %14, align 4, !tbaa !10
-  %19 = load float, ptr %15, align 4, !tbaa !10
-  %20 = load float, ptr %16, align 4, !tbaa !10
-  %21 = load float, ptr %17, align 4, !tbaa !10
-  %22 = insertelement <4 x float> poison, float %18, i64 0
-  %23 = insertelement <4 x float> %22, float %19, i64 1
-  %24 = insertelement <4 x float> %23, float %20, i64 2
-  %25 = insertelement <4 x float> %24, float %21, i64 3 ; 2 uses
-  %26 = fmul nsz <4 x float> %25, %broadcast.splat
-  %27 = fmul nsz <4 x float> %25, %broadcast.splat90
-  %28 = load float, ptr %7, align 4, !tbaa !10
-  %29 = load float, ptr %9, align 4, !tbaa !10
-  %30 = load float, ptr %11, align 4, !tbaa !10
-  %31 = load float, ptr %13, align 4, !tbaa !10
-  %32 = insertelement <4 x float> poison, float %28, i64 0
-  %33 = insertelement <4 x float> %32, float %29, i64 1
-  %34 = insertelement <4 x float> %33, float %30, i64 2
-  %35 = insertelement <4 x float> %34, float %31, i64 3 ; 2 uses
-  %36 = getelementptr inbounds nuw i8, ptr %7, i64 4
-  %37 = getelementptr inbounds nuw i8, ptr %8, i64 68
-  %38 = getelementptr inbounds nuw i8, ptr %10, i64 132
-  %39 = getelementptr inbounds nuw i8, ptr %12, i64 196
-  %40 = load float, ptr %36, align 4, !tbaa !10
-  %41 = load float, ptr %37, align 4, !tbaa !10
-  %42 = load float, ptr %38, align 4, !tbaa !10
-  %43 = load float, ptr %39, align 4, !tbaa !10
-  %44 = insertelement <4 x float> poison, float %40, i64 0
-  %45 = insertelement <4 x float> %44, float %41, i64 1
-  %46 = insertelement <4 x float> %45, float %42, i64 2
-  %47 = insertelement <4 x float> %46, float %43, i64 3 ; 2 uses
-  %48 = fmul nsz <4 x float> %47, %broadcast.splat92
-  %49 = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %35, <4 x float> %broadcast.splat104, <4 x float> %48)
-  %50 = fadd nsz <4 x float> %26, %49
-  %51 = fmul nsz <4 x float> %47, %broadcast.splat106
-  %52 = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %35, <4 x float> %broadcast.splat108, <4 x float> %51)
-  %53 = fadd nsz <4 x float> %27, %52
-  %54 = getelementptr inbounds nuw i8, ptr %7, i64 8
-  %55 = getelementptr inbounds nuw i8, ptr %8, i64 72
-  %56 = getelementptr inbounds nuw i8, ptr %10, i64 136
-  %57 = getelementptr inbounds nuw i8, ptr %12, i64 200
-  %58 = load float, ptr %54, align 4, !tbaa !10
-  %59 = load float, ptr %55, align 4, !tbaa !10
-  %60 = load float, ptr %56, align 4, !tbaa !10
-  %61 = load float, ptr %57, align 4, !tbaa !10
-  %62 = insertelement <4 x float> poison, float %58, i64 0
-  %63 = insertelement <4 x float> %62, float %59, i64 1
-  %64 = insertelement <4 x float> %63, float %60, i64 2
-  %65 = insertelement <4 x float> %64, float %61, i64 3 ; 2 uses
-  %66 = getelementptr inbounds nuw i8, ptr %7, i64 12
-  %67 = getelementptr inbounds nuw i8, ptr %8, i64 76
-  %68 = getelementptr inbounds nuw i8, ptr %10, i64 140
-  %69 = getelementptr inbounds nuw i8, ptr %12, i64 204
-  %70 = load float, ptr %66, align 4, !tbaa !10
-  %71 = load float, ptr %67, align 4, !tbaa !10
-  %72 = load float, ptr %68, align 4, !tbaa !10
-  %73 = load float, ptr %69, align 4, !tbaa !10
-  %74 = insertelement <4 x float> poison, float %70, i64 0
-  %75 = insertelement <4 x float> %74, float %71, i64 1
-  %76 = insertelement <4 x float> %75, float %72, i64 2
-  %77 = insertelement <4 x float> %76, float %73, i64 3 ; 2 uses
-  %78 = fmul nsz <4 x float> %77, %broadcast.splat94
-  %79 = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %65, <4 x float> %broadcast.splat110, <4 x float> %78)
-  %80 = fadd nsz <4 x float> %50, %79
-  %81 = fmul nsz <4 x float> %77, %broadcast.splat112
-  %82 = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %65, <4 x float> %broadcast.splat114, <4 x float> %81)
-  %83 = fadd nsz <4 x float> %53, %82
-  %84 = getelementptr inbounds nuw i8, ptr %7, i64 16
-  %85 = getelementptr inbounds nuw i8, ptr %8, i64 80
-  %86 = getelementptr inbounds nuw i8, ptr %10, i64 144
-  %87 = getelementptr inbounds nuw i8, ptr %12, i64 208
-  %88 = load float, ptr %84, align 4, !tbaa !10
-  %89 = load float, ptr %85, align 4, !tbaa !10
-  %90 = load float, ptr %86, align 4, !tbaa !10
-  %91 = load float, ptr %87, align 4, !tbaa !10
-  %92 = insertelement <4 x float> poison, float %88, i64 0
-  %93 = insertelement <4 x float> %92, float %89, i64 1
-  %94 = insertelement <4 x float> %93, float %90, i64 2
-  %95 = insertelement <4 x float> %94, float %91, i64 3 ; 2 uses
-  %96 = getelementptr inbounds nuw i8, ptr %7, i64 20
-  %97 = getelementptr inbounds nuw i8, ptr %8, i64 84
-  %98 = getelementptr inbounds nuw i8, ptr %10, i64 148
-  %99 = getelementptr inbounds nuw i8, ptr %12, i64 212
-  %100 = load float, ptr %96, align 4, !tbaa !10
-  %101 = load float, ptr %97, align 4, !tbaa !10
-  %102 = load float, ptr %98, align 4, !tbaa !10
-  %103 = load float, ptr %99, align 4, !tbaa !10
-  %104 = insertelement <4 x float> poison, float %100, i64 0
-  %105 = insertelement <4 x float> %104, float %101, i64 1
-  %106 = insertelement <4 x float> %105, float %102, i64 2
-  %107 = insertelement <4 x float> %106, float %103, i64 3 ; 2 uses
-  %108 = fmul nsz <4 x float> %107, %broadcast.splat96
-  %109 = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %95, <4 x float> %broadcast.splat116, <4 x float> %108)
-  %110 = fadd nsz <4 x float> %80, %109
-  %111 = fmul nsz <4 x float> %107, %broadcast.splat118
-  %112 = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %95, <4 x float> %broadcast.splat120, <4 x float> %111)
-  %113 = fadd nsz <4 x float> %83, %112
-  %114 = getelementptr inbounds nuw i8, ptr %7, i64 24
-  %115 = getelementptr inbounds nuw i8, ptr %8, i64 88
-  %116 = getelementptr inbounds nuw i8, ptr %10, i64 152
-  %117 = getelementptr inbounds nuw i8, ptr %12, i64 216
-  %118 = load float, ptr %114, align 4, !tbaa !10
-  %119 = load float, ptr %115, align 4, !tbaa !10
-  %120 = load float, ptr %116, align 4, !tbaa !10
-  %121 = load float, ptr %117, align 4, !tbaa !10
-  %122 = insertelement <4 x float> poison, float %118, i64 0
-  %123 = insertelement <4 x float> %122, float %119, i64 1
-  %124 = insertelement <4 x float> %123, float %120, i64 2
-  %125 = insertelement <4 x float> %124, float %121, i64 3 ; 2 uses
-  %126 = getelementptr inbounds nuw i8, ptr %7, i64 28
-  %127 = getelementptr inbounds nuw i8, ptr %8, i64 92
-  %128 = getelementptr inbounds nuw i8, ptr %10, i64 156
-  %129 = getelementptr inbounds nuw i8, ptr %12, i64 220
-  %130 = load float, ptr %126, align 4, !tbaa !10
-  %131 = load float, ptr %127, align 4, !tbaa !10
-  %132 = load float, ptr %128, align 4, !tbaa !10
-  %133 = load float, ptr %129, align 4, !tbaa !10
-  %134 = insertelement <4 x float> poison, float %130, i64 0
-  %135 = insertelement <4 x float> %134, float %131, i64 1
-  %136 = insertelement <4 x float> %135, float %132, i64 2
-  %137 = insertelement <4 x float> %136, float %133, i64 3 ; 2 uses
-  %138 = fmul nsz <4 x float> %137, %broadcast.splat98
-  %139 = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %125, <4 x float> %broadcast.splat122, <4 x float> %138)
-  %140 = fadd nsz <4 x float> %110, %139
-  %141 = fmul nsz <4 x float> %137, %broadcast.splat124
-  %142 = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %125, <4 x float> %broadcast.splat126, <4 x float> %141)
-  %143 = fadd nsz <4 x float> %113, %142
-  %144 = getelementptr inbounds nuw i8, ptr %7, i64 32
-  %145 = getelementptr inbounds nuw i8, ptr %8, i64 96
-  %146 = getelementptr inbounds nuw i8, ptr %10, i64 160
-  %147 = getelementptr inbounds nuw i8, ptr %12, i64 224
-  %148 = load float, ptr %144, align 4, !tbaa !10
-  %149 = load float, ptr %145, align 4, !tbaa !10
-  %150 = load float, ptr %146, align 4, !tbaa !10
-  %151 = load float, ptr %147, align 4, !tbaa !10
-  %152 = insertelement <4 x float> poison, float %148, i64 0
-  %153 = insertelement <4 x float> %152, float %149, i64 1
-  %154 = insertelement <4 x float> %153, float %150, i64 2
-  %155 = insertelement <4 x float> %154, float %151, i64 3 ; 2 uses
-  %156 = getelementptr inbounds nuw i8, ptr %7, i64 36
-  %157 = getelementptr inbounds nuw i8, ptr %8, i64 100
-  %158 = getelementptr inbounds nuw i8, ptr %10, i64 164
-  %159 = getelementptr inbounds nuw i8, ptr %12, i64 228
-  %160 = load float, ptr %156, align 4, !tbaa !10
-  %161 = load float, ptr %157, align 4, !tbaa !10
-  %162 = load float, ptr %158, align 4, !tbaa !10
-  %163 = load float, ptr %159, align 4, !tbaa !10
-  %164 = insertelement <4 x float> poison, float %160, i64 0
-  %165 = insertelement <4 x float> %164, float %161, i64 1
-  %166 = insertelement <4 x float> %165, float %162, i64 2
-  %167 = insertelement <4 x float> %166, float %163, i64 3 ; 2 uses
-  %168 = fmul nsz <4 x float> %167, %broadcast.splat100
-  %169 = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %155, <4 x float> %broadcast.splat128, <4 x float> %168)
-  %170 = fadd nsz <4 x float> %140, %169
-  %171 = fmul nsz <4 x float> %167, %broadcast.splat130
-  %172 = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %155, <4 x float> %broadcast.splat132, <4 x float> %171)
-  %173 = fadd nsz <4 x float> %143, %172
-  %174 = getelementptr inbounds nuw i8, ptr %7, i64 40
-  %175 = getelementptr inbounds nuw i8, ptr %8, i64 104
-  %176 = getelementptr inbounds nuw i8, ptr %10, i64 168
-  %i.ae = getelementptr inbounds nuw i8, ptr %12, i64 232
-  %177 = load float, ptr %174, align 4, !tbaa !10
-  %178 = load float, ptr %175, align 4, !tbaa !10
-  %179 = load float, ptr %176, align 4, !tbaa !10
-  %180 = load float, ptr %i.ae, align 4, !tbaa !10
-  %181 = insertelement <4 x float> poison, float %177, i64 0
-  %182 = insertelement <4 x float> %181, float %178, i64 1
-  %183 = insertelement <4 x float> %182, float %179, i64 2
-  %184 = insertelement <4 x float> %183, float %180, i64 3 ; 2 uses
-  %185 = getelementptr inbounds nuw i8, ptr %7, i64 44
-  %186 = getelementptr inbounds nuw i8, ptr %8, i64 108
-  %187 = getelementptr inbounds nuw i8, ptr %10, i64 172
-  %188 = getelementptr inbounds nuw i8, ptr %12, i64 236
-  %189 = load float, ptr %185, align 4, !tbaa !10
-  %190 = load float, ptr %186, align 4, !tbaa !10
-  %191 = load float, ptr %187, align 4, !tbaa !10
-  %192 = load float, ptr %188, align 4, !tbaa !10
-  %193 = insertelement <4 x float> poison, float %189, i64 0
-  %194 = insertelement <4 x float> %193, float %190, i64 1
-  %195 = insertelement <4 x float> %194, float %191, i64 2
-  %196 = insertelement <4 x float> %195, float %192, i64 3 ; 2 uses
-  %197 = fmul nsz <4 x float> %196, %broadcast.splat102
-  %198 = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %184, <4 x float> %broadcast.splat134, <4 x float> %197)
-  %199 = fadd nsz <4 x float> %170, %198
-  %200 = fmul nsz <4 x float> %196, %broadcast.splat136
-  %201 = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %184, <4 x float> %broadcast.splat138, <4 x float> %200)
-  %202 = fadd nsz <4 x float> %173, %201
-  %203 = getelementptr inbounds [8 x i8], ptr %0, i64 %index
-  %interleaved.vec = shufflevector <4 x float> %199, <4 x float> %202, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
-  store <8 x float> %interleaved.vec, ptr %203, align 4, !tbaa !10
-  %index.next = add nuw i64 %index, 4             ; 2 uses
-  %204 = icmp eq i64 %index.next, %n.vec
-  br i1 %204, label %middle.block, label %vector.body, !llvm.loop !20
-
-middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
-  br i1 %cmp.n, label %._crit_edge, label %scalar.ph.preheader
-
-scalar.ph.preheader:                              ; preds = %.lr.ph, %middle.block
-  %indvars.iv.ph = phi i64 [ 0, %.lr.ph ], [ %n.vec, %middle.block ]
-  %205 = shufflevector <2 x float> %foldExtExtBinop150, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %206 = shufflevector <2 x float> %205, <2 x float> %foldExtExtBinop, <2 x i32> <i32 0, i32 2>
-  %207 = shufflevector <2 x float> %foldExtExtBinop152, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %208 = shufflevector <2 x float> %207, <2 x float> %foldExtExtBinop140, <2 x i32> <i32 0, i32 2>
-  %209 = shufflevector <2 x float> %foldExtExtBinop154, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %210 = shufflevector <2 x float> %209, <2 x float> %foldExtExtBinop142, <2 x i32> <i32 0, i32 2>
-  %211 = shufflevector <2 x float> %foldExtExtBinop156, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %212 = shufflevector <2 x float> %211, <2 x float> %foldExtExtBinop144, <2 x i32> <i32 0, i32 2>
-  %213 = shufflevector <2 x float> %foldExtExtBinop158, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %214 = shufflevector <2 x float> %213, <2 x float> %foldExtExtBinop146, <2 x i32> <i32 0, i32 2>
-  %215 = shufflevector <2 x float> %foldExtExtBinop160, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %216 = shufflevector <2 x float> %215, <2 x float> %foldExtExtBinop148, <2 x i32> <i32 0, i32 2>
+vector.body:                                      ; preds = %.preheader
+  %foldExtExtBinop96 = fsub nsz <2 x float> %i.x, %i.y
+  %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 48
+  %5 = load <2 x float>, ptr %i.ae, align 4, !tbaa !10
+  %wide.trip.count = zext nneg i32 %4 to i64
+  %6 = shufflevector <2 x float> %i.m, <2 x float> %i.p, <4 x i32> <i32 1, i32 3, i32 poison, i32 poison>
+  %7 = shufflevector <2 x float> %i.s, <2 x float> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
+  %8 = shufflevector <4 x float> %6, <4 x float> %7, <4 x i32> <i32 0, i32 1, i32 5, i32 poison>
+  %9 = shufflevector <2 x float> %i.v, <2 x float> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
+  %10 = shufflevector <4 x float> %8, <4 x float> %9, <4 x i32> <i32 0, i32 1, i32 2, i32 5>
+  %11 = shufflevector <2 x float> %i.l, <2 x float> %i.o, <4 x i32> <i32 1, i32 3, i32 poison, i32 poison>
+  %12 = shufflevector <2 x float> %i.r, <2 x float> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
+  %13 = shufflevector <4 x float> %11, <4 x float> %12, <4 x i32> <i32 0, i32 1, i32 5, i32 poison>
+  %14 = shufflevector <2 x float> %i.u, <2 x float> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
+  %15 = shufflevector <4 x float> %13, <4 x float> %14, <4 x i32> <i32 0, i32 1, i32 2, i32 5>
+  %16 = fsub nsz <4 x float> %10, %15             ; 4 uses
+  %17 = shufflevector <2 x float> %i.y, <2 x float> %i.ab, <2 x i32> <i32 1, i32 3>
+  %18 = shufflevector <2 x float> %i.x, <2 x float> %i.aa, <2 x i32> <i32 1, i32 3>
+  %19 = fsub nsz <2 x float> %17, %18             ; 2 uses
+  %20 = shufflevector <2 x float> %19, <2 x float> %foldExtExtBinop96, <2 x i32> <i32 0, i32 2>
+  %21 = shufflevector <4 x float> %16, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %22 = shufflevector <4 x float> %16, <4 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %23 = shufflevector <4 x float> %16, <4 x float> poison, <2 x i32> <i32 2, i32 poison>
+  %24 = shufflevector <4 x float> %16, <4 x float> poison, <2 x i32> <i32 3, i32 poison>
+  %25 = shufflevector <2 x float> %21, <2 x float> %foldExtExtBinop, <2 x i32> <i32 0, i32 2>
+  %26 = shufflevector <2 x float> %22, <2 x float> %foldExtExtBinop140, <2 x i32> <i32 0, i32 2>
+  %27 = shufflevector <2 x float> %23, <2 x float> %foldExtExtBinop142, <2 x i32> <i32 0, i32 2>
+  %28 = shufflevector <2 x float> %24, <2 x float> %foldExtExtBinop144, <2 x i32> <i32 0, i32 2>
+  %29 = shufflevector <2 x float> %19, <2 x float> %foldExtExtBinop148, <2 x i32> <i32 1, i32 2>
   br label %scalar.ph
 
-._crit_edge:                                      ; preds = %scalar.ph, %middle.block, %.preheader
+._crit_edge:                                      ; preds = %scalar.ph, %.preheader
   ret void
 
-scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %scalar.ph ], [ %indvars.iv.ph, %scalar.ph.preheader ] ; 3 uses
+scalar.ph:                                        ; preds = %vector.body, %scalar.ph
+  %indvars.iv = phi i64 [ 0, %vector.body ], [ %indvars.iv.next, %scalar.ph ] ; 3 uses
   %i.af = getelementptr inbounds nuw [64 x i8], ptr %2, i64 %indvars.iv
   %i.ag = mul nsw i64 %3, %indvars.iv
   %i.ah = getelementptr inbounds [8 x i8], ptr %0, i64 %i.ag
   %i.ai = load <13 x float>, ptr %i.af, align 4, !tbaa !10 ; 13 uses
   %i.aj = shufflevector <13 x float> %i.ai, <13 x float> poison, <2 x i32> <i32 12, i32 12>
-  %i.ak = fmul nsz <2 x float> %i.aj, %6
+  %i.ak = fmul nsz <2 x float> %i.aj, %5
   %i.al = shufflevector <13 x float> %i.ai, <13 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.am = fmul nsz <2 x float> %i.al, %206
+  %i.am = fmul nsz <2 x float> %i.al, %25
   %i.an = shufflevector <13 x float> %i.ai, <13 x float> poison, <2 x i32> zeroinitializer
   %i.ao = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.an, <2 x float> %i.n, <2 x float> %i.am)
   %i.ap = fadd nsz <2 x float> %i.ak, %i.ao
   %i.aq = shufflevector <13 x float> %i.ai, <13 x float> poison, <2 x i32> <i32 3, i32 3>
-  %i.ar = fmul nsz <2 x float> %i.aq, %208
+  %i.ar = fmul nsz <2 x float> %i.aq, %26
   %i.as = shufflevector <13 x float> %i.ai, <13 x float> poison, <2 x i32> <i32 2, i32 2>
   %i.at = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.as, <2 x float> %i.q, <2 x float> %i.ar)
   %i.au = fadd nsz <2 x float> %i.ap, %i.at
   %i.av = shufflevector <13 x float> %i.ai, <13 x float> poison, <2 x i32> <i32 5, i32 5>
-  %i.aw = fmul nsz <2 x float> %i.av, %210
+  %i.aw = fmul nsz <2 x float> %i.av, %27
   %i.ax = shufflevector <13 x float> %i.ai, <13 x float> poison, <2 x i32> <i32 4, i32 4>
   %i.ay = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ax, <2 x float> %i.t, <2 x float> %i.aw)
   %i.az = fadd nsz <2 x float> %i.au, %i.ay
   %i.ba = shufflevector <13 x float> %i.ai, <13 x float> poison, <2 x i32> <i32 7, i32 7>
-  %i.bb = fmul nsz <2 x float> %i.ba, %212
+  %i.bb = fmul nsz <2 x float> %i.ba, %28
   %i.bc = shufflevector <13 x float> %i.ai, <13 x float> poison, <2 x i32> <i32 6, i32 6>
   %i.bd = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.bc, <2 x float> %i.w, <2 x float> %i.bb)
   %i.be = fadd nsz <2 x float> %i.az, %i.bd
   %i.bf = shufflevector <13 x float> %i.ai, <13 x float> poison, <2 x i32> <i32 9, i32 9>
-  %i.bg = fmul nsz <2 x float> %i.bf, %214
+  %i.bg = fmul nsz <2 x float> %i.bf, %20
   %i.bh = shufflevector <13 x float> %i.ai, <13 x float> poison, <2 x i32> <i32 8, i32 8>
   %i.bi = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.bh, <2 x float> %i.z, <2 x float> %i.bg)
   %i.bj = fadd nsz <2 x float> %i.be, %i.bi
   %i.bk = shufflevector <13 x float> %i.ai, <13 x float> poison, <2 x i32> <i32 11, i32 11>
-  %i.bl = fmul nsz <2 x float> %i.bk, %216
+  %i.bl = fmul nsz <2 x float> %i.bk, %29
   %i.bm = shufflevector <13 x float> %i.ai, <13 x float> poison, <2 x i32> <i32 10, i32 10>
   %i.bn = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.bm, <2 x float> %i.ac, <2 x float> %i.bl)
   %i.bo = fadd nsz <2 x float> %i.bj, %i.bn
   store <2 x float> %i.bo, ptr %i.ah, align 4, !tbaa !10
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %scalar.ph, !llvm.loop !21
+  br i1 %exitcond.not, label %._crit_edge, label %scalar.ph, !llvm.loop !20
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
@@ -546,7 +305,7 @@ vector.body:                                      ; preds = %.preheader, %vector
   store <4 x float> %interleaved.vec, ptr %i.m, align 4, !tbaa !10
   %index.next = add nuw i64 %index, 2             ; 2 uses
   %i.t = icmp eq i64 %index.next, %n.vec
-  br i1 %i.t, label %middle.block, label %vector.body, !llvm.loop !22
+  br i1 %i.t, label %middle.block, label %vector.body, !llvm.loop !21
 
 middle.block:                                     ; preds = %vector.body
   br i1 %cmp.n, label %._crit_edge, label %scalar.ph.preheader
@@ -558,7 +317,7 @@ scalar.ph.preheader:                              ; preds = %.preheader, %middle
 ._crit_edge:                                      ; preds = %scalar.ph, %middle.block
   %indvars.iv.next24 = add nsw i64 %indvars.iv23, 1 ; 2 uses
   %exitcond26.not = icmp eq i64 %indvars.iv.next24, 64
-  br i1 %exitcond26.not, label %._crit_edge21.split, label %.preheader, !llvm.loop !23
+  br i1 %exitcond26.not, label %._crit_edge21.split, label %.preheader, !llvm.loop !22
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
   %indvars.iv = phi i64 [ %indvars.iv.next, %scalar.ph ], [ %indvars.iv.ph, %scalar.ph.preheader ] ; 4 uses
@@ -572,7 +331,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   store float %i.w, ptr %i.x, align 4, !tbaa !10
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %scalar.ph, !llvm.loop !24
+  br i1 %exitcond.not, label %._crit_edge, label %scalar.ph, !llvm.loop !23
 
 ._crit_edge21.split:                              ; preds = %._crit_edge, %.preheader.lr.ph, %bb.a
   ret void
@@ -625,7 +384,7 @@ bb.a:
 ._crit_edge:                                      ; preds = %._crit_edge.unr-lcssa, %.epil.preheader
   %indvars.iv.next24 = add nsw i64 %indvars.iv23, 1 ; 2 uses
   %exitcond26.not = icmp eq i64 %indvars.iv.next24, 64
-  br i1 %exitcond26.not, label %._crit_edge21.split, label %.preheader, !llvm.loop !25
+  br i1 %exitcond26.not, label %._crit_edge21.split, label %.preheader, !llvm.loop !24
 
 .preheader.new:                                   ; preds = %.preheader, %.preheader.new
   %indvars.iv = phi i64 [ %indvars.iv.next.1, %.preheader.new ], [ 0, %.preheader ] ; 5 uses
@@ -650,7 +409,7 @@ bb.a:
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %._crit_edge.unr-lcssa, label %.preheader.new, !llvm.loop !26
+  br i1 %niter.ncmp.1, label %._crit_edge.unr-lcssa, label %.preheader.new, !llvm.loop !25
 
 ._crit_edge21.split:                              ; preds = %._crit_edge, %.preheader.lr.ph, %bb.a
   ret void
@@ -767,7 +526,7 @@ bb.a:                                             ; preds = %.lr.ph, %bb.a
   store float %i.cn, ptr %i.co, align 4, !tbaa !10
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %bb.a, !llvm.loop !27
+  br i1 %exitcond.not, label %._crit_edge, label %bb.a, !llvm.loop !26
 
 ._crit_edge:                                      ; preds = %bb.a, %.preheader
   ret void
@@ -827,7 +586,7 @@ bb.a:
   store <2 x float> %i.am, ptr %i.aa, align 4, !tbaa !10
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !28
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !27
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
   ret void
@@ -904,7 +663,7 @@ bb.a:
   store <2 x float> %i.bd, ptr %i.af, align 4, !tbaa !10
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !29
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !28
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
   ret void
@@ -951,14 +710,13 @@ attributes #3 = { nocallback nofree nosync nounwind willreturn memory(inaccessib
 !17 = distinct !{!17, !11, !13, !12}
 !18 = distinct !{!18, !11, !12, !13}
 !19 = distinct !{!19, !11, !13, !12}
-!20 = distinct !{!20, !11, !12, !13}
-!21 = distinct !{!21, !11, !12}
-!22 = distinct !{!22, !11, !12, !13}
-!23 = distinct !{!23, !11}
-!24 = distinct !{!24, !11, !13, !12}
+!20 = distinct !{!20, !11}
+!21 = distinct !{!21, !11, !12, !13}
+!22 = distinct !{!22, !11}
+!23 = distinct !{!23, !11, !13, !12}
+!24 = distinct !{!24, !11}
 !25 = distinct !{!25, !11}
 !26 = distinct !{!26, !11}
 !27 = distinct !{!27, !11}
 !28 = distinct !{!28, !11}
-!29 = distinct !{!29, !11}
 end_hunk_0

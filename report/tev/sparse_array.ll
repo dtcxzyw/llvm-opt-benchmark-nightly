@@ -204,9 +204,9 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.bc, label %bb.k, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.bd = getelementptr [4 x i8], ptr %i.bb, i64 %i.ab
+  %i.bd = getelementptr inbounds nuw [4 x i8], ptr %i.bb, i64 %i.ab
   %i.be = zext i32 %i.as to i64
-  %i.bf = getelementptr [4 x i8], ptr %i.bd, i64 %i.be ; 17 uses
+  %i.bf = getelementptr inbounds nuw [4 x i8], ptr %i.bd, i64 %i.be ; 17 uses
   %i.bg = sub i32 %.0381512.us, %1                ; 2 uses
   br i1 %i.m, label %bb.j, label %bb.g
 
@@ -572,9 +572,9 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.p, %bb.n
   %.0374.us = phi ptr [ %i.im, %bb.p ], [ %i.bb, %bb.n ]
-  %i.iu = getelementptr [4 x i8], ptr %.0374.us, i64 %i.ab
+  %i.iu = getelementptr inbounds nuw [4 x i8], ptr %.0374.us, i64 %i.ab
   %i.iv = zext i32 %i.as to i64
-  %i.iw = getelementptr [4 x i8], ptr %i.iu, i64 %i.iv ; 8 uses
+  %i.iw = getelementptr inbounds nuw [4 x i8], ptr %i.iu, i64 %i.iv ; 8 uses
   %i.ix = sub i32 %.0381512.us, %1                ; 2 uses
   br i1 %i.m, label %bb.t, label %bb.r
 
@@ -977,7 +977,7 @@ attributes #7 = { nounwind }
 !21 = !{!20, !20, i64 0}
 !22 = !{!"llvm.loop.mustprogress"}
 !23 = distinct !{!23, !22}
-!24 = distinct !{!24, !22, !59}
+!24 = distinct !{!24, !22}
 !25 = distinct !{!25, !22}
 !26 = distinct !{!26, !22}
 !27 = distinct !{!27, !22}
@@ -986,32 +986,31 @@ attributes #7 = { nounwind }
 !30 = distinct !{!30, !22}
 !31 = distinct !{!31, !22}
 !32 = distinct !{!32, !22}
-!33 = distinct !{!33, !22, !59}
+!33 = distinct !{!33, !22}
 !34 = distinct !{!34, !22}
-!35 = distinct !{!35, !22, !59}
+!35 = distinct !{!35, !22}
 !36 = distinct !{!36, !22}
 !37 = distinct !{!37, !22}
 !38 = distinct !{!38, !22}
 !39 = distinct !{!39, !22}
 !40 = distinct !{!40, !22}
 !41 = distinct !{!41, !22}
-!42 = distinct !{!42, !60}
-!43 = distinct !{!43, !60}
-!44 = distinct !{!44, !60}
-!45 = distinct !{!45, !60}
-!46 = distinct !{!46, !60}
-!47 = distinct !{!47, !60}
-!48 = distinct !{!48, !60}
+!42 = distinct !{!42, !59}
+!43 = distinct !{!43, !59}
+!44 = distinct !{!44, !59}
+!45 = distinct !{!45, !59}
+!46 = distinct !{!46, !59}
+!47 = distinct !{!47, !59}
+!48 = distinct !{!48, !59}
 !49 = distinct !{!49, !22}
-!50 = distinct !{!50, !60}
-!51 = distinct !{!51, !60}
+!50 = distinct !{!50, !59}
+!51 = distinct !{!51, !59}
 !52 = distinct !{!52, !22}
-!53 = distinct !{!53, !60}
+!53 = distinct !{!53, !59}
 !54 = distinct !{!54, !22}
-!55 = distinct !{!55, !60}
+!55 = distinct !{!55, !59}
 !56 = distinct !{!56, !22}
 !57 = distinct !{!57, !22}
 !58 = !{!6, !6, i64 0}
-!59 = !{!"llvm.loop.isvectorized", i32 1}
-!60 = !{!"llvm.loop.unroll.disable"}
+!59 = !{!"llvm.loop.unroll.disable"}
 end_hunk_1
