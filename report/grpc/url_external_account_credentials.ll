@@ -204,19 +204,20 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   br i1 %i.w, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread.i.i.i.i, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread41.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.a, %.lr.ph.i.i.i.i
-  %indvars.iv.i.i.i.i = phi i64 [ %indvars.iv.next.i.i.i.i, %.lr.ph.i.i.i.i ], [ 0, %bb.a ] ; 2 uses
+  %.01648.i.i.i.i = phi i32 [ %9, %.lr.ph.i.i.i.i ], [ 0, %bb.a ] ; 2 uses
   %.sroa.038.047.i.i.i.i = phi ptr [ %i.af, %.lr.ph.i.i.i.i ], [ %i.l, %bb.a ] ; 3 uses
   %i.x = getelementptr inbounds nuw i8, ptr %.sroa.038.047.i.i.i.i, i64 32
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !50, !noalias !270
   %i.z = tail call ptr @gpr_strdup(ptr noundef %i.y), !noalias !270
-  %i.aa = getelementptr inbounds nuw [16 x i8], ptr %i.j, i64 %indvars.iv.i.i.i.i ; 2 uses
+  %8 = zext nneg i32 %.01648.i.i.i.i to i64
+  %i.aa = getelementptr inbounds nuw [16 x i8], ptr %i.j, i64 %8 ; 2 uses
   store ptr %i.z, ptr %i.aa, align 8, !tbaa !278, !noalias !270
   %i.ab = getelementptr inbounds nuw i8, ptr %.sroa.038.047.i.i.i.i, i64 64
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !50, !noalias !270
   %i.ad = tail call ptr @gpr_strdup(ptr noundef %i.ac), !noalias !270
   %i.ae = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
   store ptr %i.ad, ptr %i.ae, align 8, !tbaa !279, !noalias !270
-  %indvars.iv.next.i.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i.i, 1
+  %9 = add nuw nsw i32 %.01648.i.i.i.i, 1
   %i.af = tail call noundef ptr @_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base(ptr noundef %.sroa.038.047.i.i.i.i) #31, !noalias !270 ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %i.af, %i.m
   br i1 %.not.i.i.i.i, label %._crit_edge.i.i.i.i, label %.lr.ph.i.i.i.i

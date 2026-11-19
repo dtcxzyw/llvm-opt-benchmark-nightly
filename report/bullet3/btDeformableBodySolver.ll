@@ -205,12 +205,10 @@ bb.r:                                             ; preds = %.lr.ph160, %.crited
 
 .lr.ph151:                                        ; preds = %.lr.ph155
   %i.co = getelementptr inbounds nuw i8, ptr %i.ck, i64 944 ; 2 uses
-  %5 = sext i32 %.050153 to i64
   %.pre183 = load ptr, ptr %i.co, align 8, !tbaa !159
   br label %bb.s
 
 ._crit_edge152.loopexit:                          ; preds = %bb.u
-  %6 = trunc nsw i64 %indvars.iv.next173 to i32
   %.pre185 = load i32, ptr %i.g, align 4, !tbaa !101
   br label %._crit_edge152
 
@@ -225,9 +223,9 @@ bb.r:                                             ; preds = %.lr.ph160, %.crited
 bb.s:                                             ; preds = %.lr.ph151, %bb.u
   %i.cs = phi i32 [ %i.cm, %.lr.ph151 ], [ %i.dk, %bb.u ]
   %i.ct = phi ptr [ %.pre183, %.lr.ph151 ], [ %i.dl, %bb.u ] ; 2 uses
-  %indvars.iv172 = phi i64 [ %5, %.lr.ph151 ], [ %indvars.iv.next173, %bb.u ] ; 3 uses
-  %indvars.iv170 = phi i64 [ 0, %.lr.ph151 ], [ %indvars.iv.next171, %bb.u ] ; 2 uses
-  %i.cu = getelementptr inbounds nuw [256 x i8], ptr %i.ct, i64 %indvars.iv170
+  %indvars.iv172 = phi i64 [ 0, %.lr.ph151 ], [ %indvars.iv.next171, %bb.u ] ; 2 uses
+  %.1148 = phi i32 [ %.050153, %.lr.ph151 ], [ %6, %bb.u ] ; 2 uses
+  %i.cu = getelementptr inbounds nuw [256 x i8], ptr %i.ct, i64 %indvars.iv172
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cu, i64 112
   %i.cw = load float, ptr %i.cv, align 8, !tbaa !167 ; 2 uses
   %i.cx = fcmp ogt float %i.cw, 0.000000e+00
@@ -236,7 +234,8 @@ bb.s:                                             ; preds = %.lr.ph151, %bb.u
 bb.t:                                             ; preds = %bb.s
   %i.cy = fdiv float -1.000000e+00, %i.cw         ; 2 uses
   %i.cz = load ptr, ptr %i.i, align 8, !tbaa !49
-  %i.da = getelementptr inbounds [16 x i8], ptr %i.cz, i64 %indvars.iv172 ; 2 uses
+  %5 = sext i32 %.1148 to i64                     ; 2 uses
+  %i.da = getelementptr inbounds [16 x i8], ptr %i.cz, i64 %5 ; 2 uses
   %i.db = load <2 x float>, ptr %i.da, align 4, !tbaa !62
   %i.dc = insertelement <2 x float> poison, float %i.cy, i64 0
   %i.dd = shufflevector <2 x float> %i.dc, <2 x float> poison, <2 x i32> zeroinitializer
@@ -246,7 +245,7 @@ bb.t:                                             ; preds = %bb.s
   %i.dh = fmul float %i.cy, %i.dg
   %.sroa.3.12.vec.insert.i.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.dh, i64 0
   %i.di = load ptr, ptr %i.j, align 8, !tbaa !49
-  %i.dj = getelementptr inbounds [16 x i8], ptr %i.di, i64 %indvars.iv172 ; 2 uses
+  %i.dj = getelementptr inbounds [16 x i8], ptr %i.di, i64 %5 ; 2 uses
   store <2 x float> %i.de, ptr %i.dj, align 4
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.dj, i64 8
   store <2 x float> %.sroa.3.12.vec.insert.i.i, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !59
@@ -257,8 +256,8 @@ bb.t:                                             ; preds = %bb.s
 bb.u:                                             ; preds = %bb.t, %bb.s
   %i.dk = phi i32 [ %.pre184, %bb.t ], [ %i.cs, %bb.s ] ; 2 uses
   %i.dl = phi ptr [ %.pre, %bb.t ], [ %i.ct, %bb.s ]
-  %indvars.iv.next173 = add nsw i64 %indvars.iv172, 1 ; 2 uses
-  %indvars.iv.next171 = add nuw nsw i64 %indvars.iv170, 1 ; 2 uses
+  %6 = add nsw i32 %.1148, 1                      ; 2 uses
+  %indvars.iv.next171 = add nuw nsw i64 %indvars.iv172, 1 ; 2 uses
   %i.dm = sext i32 %i.dk to i64
   %i.dn = icmp slt i64 %indvars.iv.next171, %i.dm
   br i1 %i.dn, label %bb.s, label %._crit_edge152.loopexit, !llvm.loop !353

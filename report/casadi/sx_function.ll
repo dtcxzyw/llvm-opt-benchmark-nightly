@@ -205,10 +205,11 @@ bb.an:                                            ; preds = %bb.am
   br label %bb.ao
 
 bb.ao:                                            ; preds = %.lr.ph955, %_ZNK6casadi10SXFunction8call_fwdIdEEvRKNS_12ScalarAtomicEPPKT_PPS5_PxS9_.exit
-  %indvars.iv = phi i64 [ 0, %.lr.ph955 ], [ %indvars.iv.next, %_ZNK6casadi10SXFunction8call_fwdIdEEvRKNS_12ScalarAtomicEPPKT_PPS5_PxS9_.exit ] ; 3 uses
+  %.0689954 = phi i32 [ 0, %.lr.ph955 ], [ %42, %_ZNK6casadi10SXFunction8call_fwdIdEEvRKNS_12ScalarAtomicEPPKT_PPS5_PxS9_.exit ] ; 2 uses
   %.sroa.0897.0953 = phi ptr [ %i.fd, %.lr.ph955 ], [ %i.anc, %_ZNK6casadi10SXFunction8call_fwdIdEEvRKNS_12ScalarAtomicEPPKT_PPS5_PxS9_.exit ] ; 137 uses
   %i.fm = call noundef nonnull align 8 dereferenceable(8) ptr @_ZN6casadi4uoutEv()
-  call void @_ZNK6casadi10SXFunction9print_argERSoxRKNS_12ScalarAtomicEPKd(ptr noundef nonnull align 8 dereferenceable(1611) %0, ptr noundef nonnull align 8 dereferenceable(8) %i.fm, i64 noundef %indvars.iv, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0897.0953, ptr noundef %4)
+  %41 = zext nneg i32 %.0689954 to i64            ; 2 uses
+  call void @_ZNK6casadi10SXFunction9print_argERSoxRKNS_12ScalarAtomicEPKd(ptr noundef nonnull align 8 dereferenceable(1611) %0, ptr noundef nonnull align 8 dereferenceable(8) %i.fm, i64 noundef %41, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0897.0953, ptr noundef %4)
   %i.fn = load i32, ptr %.sroa.0897.0953, align 8, !tbaa !182
   switch i32 %i.fn, label %bb.dg [
     i32 0, label %bb.ap
@@ -611,8 +612,8 @@ bb.dw:                                            ; preds = %.epil.preheader1107
 
 _ZNK6casadi10SXFunction8call_fwdIdEEvRKNS_12ScalarAtomicEPPKT_PPS5_PxS9_.exit: ; preds = %_ZNK6casadi10SXFunction8call_fwdIdEEvRKNS_12ScalarAtomicEPPKT_PPS5_PxS9_.exit.loopexit.unr-lcssa, %bb.dw, %.epil.preheader1107, %._crit_edge.i, %bb.cs, %bb.ct, %bb.cr, %bb.co, %bb.cn, %bb.cm, %bb.cl, %bb.ck, %bb.cj, %bb.ci, %bb.ch, %bb.cg, %bb.cf, %bb.ce, %bb.cd, %bb.cc, %bb.cb, %bb.ca, %bb.bz, %bb.by, %bb.bx, %bb.bw, %bb.bv, %bb.bu, %bb.bt, %bb.bs, %bb.br, %bb.bq, %bb.bp, %bb.bo, %bb.bn, %bb.bm, %bb.bl, %bb.bk, %bb.bj, %bb.bi, %bb.bh, %bb.bg, %bb.bf, %bb.be, %bb.bd, %bb.bc, %bb.bb, %bb.ba, %bb.az, %bb.ay, %bb.ax, %bb.aw, %bb.av, %bb.au, %bb.at, %bb.as, %bb.ar, %bb.aq, %bb.ap
   %i.anb = call noundef nonnull align 8 dereferenceable(8) ptr @_ZN6casadi4uoutEv()
-  call void @_ZNK6casadi10SXFunction9print_resERSoxRKNS_12ScalarAtomicEPKd(ptr noundef nonnull align 8 dereferenceable(1611) %0, ptr noundef nonnull align 8 dereferenceable(8) %i.anb, i64 noundef %indvars.iv, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0897.0953, ptr noundef %4)
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  call void @_ZNK6casadi10SXFunction9print_resERSoxRKNS_12ScalarAtomicEPKd(ptr noundef nonnull align 8 dereferenceable(1611) %0, ptr noundef nonnull align 8 dereferenceable(8) %i.anb, i64 noundef %41, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0897.0953, ptr noundef %4)
+  %42 = add nuw nsw i32 %.0689954, 1
   %i.anc = getelementptr inbounds nuw i8, ptr %.sroa.0897.0953, i64 16 ; 2 uses
   %.not946 = icmp eq ptr %i.anc, %i.ff
   br i1 %.not946, label %.loopexit, label %bb.ao

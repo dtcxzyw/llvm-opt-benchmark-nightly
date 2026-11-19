@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %_ZNKSt7__cxx1112bas
   br label %bb.n
 
 .lr.ph:                                           ; preds = %.preheader, %bb.m
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.m ], [ 7, %.preheader ] ; 2 uses
+  %6 = phi i32 [ %8, %bb.m ], [ 7, %.preheader ]  ; 2 uses
   %i.cf = phi i64 [ %i.cy, %bb.m ], [ %i.t, %.preheader ]
   %i.cg = phi i32 [ %i.ct, %bb.m ], [ %i.q, %.preheader ] ; 2 uses
   %i.ch = icmp ugt i32 %i.cg, 9
@@ -273,10 +273,11 @@ bb.m:                                             ; preds = %.lr.ph
   %i.ct = add i32 %i.cs, %i.cg                    ; 2 uses
   %i.cu = load i8, ptr %i.c, align 1, !tbaa !204  ; 2 uses
   %i.cv = and i8 %i.cu, 127
-  %i.cw = zext nneg i8 %i.cv to i64
-  %i.cx = shl i64 %i.cw, %indvars.iv
+  %7 = zext nneg i8 %i.cv to i64
+  %i.cw = zext nneg i32 %6 to i64
+  %i.cx = shl i64 %7, %i.cw
   %i.cy = or i64 %i.cx, %i.cf                     ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 7
+  %8 = add nuw nsw i32 %6, 7
   %.not48 = icmp slt i8 %i.cu, 0
   br i1 %.not48, label %.lr.ph, label %.thread65, !llvm.loop !912
 
@@ -679,7 +680,7 @@ bb.f:                                             ; preds = %_ZNKSt7__cxx1112bas
   br label %bb.n
 
 .lr.ph:                                           ; preds = %.preheader, %bb.m
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.m ], [ 7, %.preheader ] ; 2 uses
+  %6 = phi i32 [ %8, %bb.m ], [ 7, %.preheader ]  ; 2 uses
   %i.cf = phi i64 [ %i.cy, %bb.m ], [ %i.t, %.preheader ]
   %i.cg = phi i32 [ %i.ct, %bb.m ], [ %i.q, %.preheader ] ; 2 uses
   %i.ch = icmp ugt i32 %i.cg, 9
@@ -748,10 +749,11 @@ bb.m:                                             ; preds = %.lr.ph
   %i.ct = add i32 %i.cs, %i.cg                    ; 2 uses
   %i.cu = load i8, ptr %i.c, align 1, !tbaa !204  ; 2 uses
   %i.cv = and i8 %i.cu, 127
-  %i.cw = zext nneg i8 %i.cv to i64
-  %i.cx = shl i64 %i.cw, %indvars.iv
+  %7 = zext nneg i8 %i.cv to i64
+  %i.cw = zext nneg i32 %6 to i64
+  %i.cx = shl i64 %7, %i.cw
   %i.cy = or i64 %i.cx, %i.cf                     ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 7
+  %8 = add nuw nsw i32 %6, 7
   %.not48 = icmp slt i8 %i.cu, 0
   br i1 %.not48, label %.lr.ph, label %.thread65, !llvm.loop !1011
 
@@ -1154,7 +1156,7 @@ bb.f:                                             ; preds = %_ZNKSt7__cxx1112bas
   br label %bb.n
 
 .lr.ph:                                           ; preds = %.preheader, %bb.m
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.m ], [ 7, %.preheader ] ; 2 uses
+  %6 = phi i32 [ %8, %bb.m ], [ 7, %.preheader ]  ; 2 uses
   %i.cf = phi i64 [ %i.cy, %bb.m ], [ %i.t, %.preheader ]
   %i.cg = phi i32 [ %i.ct, %bb.m ], [ %i.q, %.preheader ] ; 2 uses
   %i.ch = icmp ugt i32 %i.cg, 9
@@ -1223,10 +1225,11 @@ bb.m:                                             ; preds = %.lr.ph
   %i.ct = add i32 %i.cs, %i.cg                    ; 2 uses
   %i.cu = load i8, ptr %i.c, align 1, !tbaa !204  ; 2 uses
   %i.cv = and i8 %i.cu, 127
-  %i.cw = zext nneg i8 %i.cv to i64
-  %i.cx = shl i64 %i.cw, %indvars.iv
+  %7 = zext nneg i8 %i.cv to i64
+  %i.cw = zext nneg i32 %6 to i64
+  %i.cx = shl i64 %7, %i.cw
   %i.cy = or i64 %i.cx, %i.cf                     ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 7
+  %8 = add nuw nsw i32 %6, 7
   %.not48 = icmp slt i8 %i.cu, 0
   br i1 %.not48, label %.lr.ph, label %.thread65, !llvm.loop !1154
 
@@ -1629,7 +1632,7 @@ bb.f:                                             ; preds = %_ZNKSt7__cxx1112bas
   br label %bb.n
 
 .lr.ph:                                           ; preds = %.preheader, %bb.m
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.m ], [ 7, %.preheader ] ; 2 uses
+  %6 = phi i32 [ %8, %bb.m ], [ 7, %.preheader ]  ; 2 uses
   %i.cf = phi i64 [ %i.cy, %bb.m ], [ %i.t, %.preheader ]
   %i.cg = phi i32 [ %i.ct, %bb.m ], [ %i.q, %.preheader ] ; 2 uses
   %i.ch = icmp ugt i32 %i.cg, 9
@@ -1698,10 +1701,11 @@ bb.m:                                             ; preds = %.lr.ph
   %i.ct = add i32 %i.cs, %i.cg                    ; 2 uses
   %i.cu = load i8, ptr %i.c, align 1, !tbaa !204  ; 2 uses
   %i.cv = and i8 %i.cu, 127
-  %i.cw = zext nneg i8 %i.cv to i64
-  %i.cx = shl i64 %i.cw, %indvars.iv
+  %7 = zext nneg i8 %i.cv to i64
+  %i.cw = zext nneg i32 %6 to i64
+  %i.cx = shl i64 %7, %i.cw
   %i.cy = or i64 %i.cx, %i.cf                     ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 7
+  %8 = add nuw nsw i32 %6, 7
   %.not48 = icmp slt i8 %i.cu, 0
   br i1 %.not48, label %.lr.ph, label %.thread65, !llvm.loop !1261
 

@@ -205,7 +205,7 @@ bb.w:                                             ; preds = %bb.g
   br label %.preheader466
 
 .preheader466:                                    ; preds = %.preheader466.lr.ph, %bb.as
-  %indvars.iv632 = phi i64 [ 97, %.preheader466.lr.ph ], [ %indvars.iv.next633, %bb.as ] ; 4 uses
+  %indvars.iv609 = phi i32 [ 97, %.preheader466.lr.ph ], [ %indvars.iv.next610, %bb.as ] ; 2 uses
   %.0368529 = phi ptr [ null, %.preheader466.lr.ph ], [ %.9, %bb.as ] ; 2 uses
   %.0369528 = phi i32 [ %2, %.preheader466.lr.ph ], [ %.6375, %bb.as ] ; 8 uses
   %.0376524 = phi i32 [ 96, %.preheader466.lr.ph ], [ %i.nq, %bb.as ] ; 2 uses
@@ -298,6 +298,7 @@ bb.ab:                                            ; preds = %bb.aa, %bb.y
   br i1 %.not426, label %.thread457, label %.preheader464
 
 .preheader464:                                    ; preds = %._crit_edge708
+  %wide.trip.count626 = zext i32 %indvars.iv609 to i64 ; 3 uses
   br i1 %i.i, label %.preheader464.split.us, label %.preheader464.split
 
 .preheader464.split.us:                           ; preds = %.preheader464
@@ -435,7 +436,7 @@ bb.aj:                                            ; preds = %bb.ai
 .split.us.us.split.us.us.thread:                  ; preds = %bb.aj, %.preheader464.split.us.split.us
   %.5374.us.us = phi i32 [ %.1370518.us.us, %.preheader464.split.us.split.us ], [ %.3372.us.us.us.us, %bb.aj ] ; 2 uses
   %indvars.iv.next624 = add nuw nsw i64 %indvars.iv623, 1 ; 2 uses
-  %exitcond627.not = icmp eq i64 %indvars.iv.next624, %indvars.iv632
+  %exitcond627.not = icmp eq i64 %indvars.iv.next624, %wide.trip.count626
   br i1 %exitcond627.not, label %.thread457, label %.preheader464.split.us.split.us, !llvm.loop !117
 
 .preheader464.split.us.split:                     ; preds = %.preheader464.split.us, %.split.us.us.split.thread
@@ -520,7 +521,7 @@ bb.am:                                            ; preds = %bb.al
 .split.us.us.split.thread:                        ; preds = %bb.am, %.preheader464.split.us.split
   %.5374.us = phi i32 [ %.1370518.us, %.preheader464.split.us.split ], [ %.3372.us.us, %bb.am ] ; 2 uses
   %indvars.iv.next614 = add nuw nsw i64 %indvars.iv613, 1 ; 2 uses
-  %exitcond617.not = icmp eq i64 %indvars.iv.next614, %indvars.iv632
+  %exitcond617.not = icmp eq i64 %indvars.iv.next614, %wide.trip.count626
   br i1 %exitcond617.not, label %.thread457, label %.preheader464.split.us.split, !llvm.loop !117
 
 .preheader464.split:                              ; preds = %.preheader464, %.split.thread
@@ -605,7 +606,7 @@ bb.aq:                                            ; preds = %bb.ap
 .split.thread:                                    ; preds = %bb.aq, %.preheader464.split
   %.5374 = phi i32 [ %.1370518, %.preheader464.split ], [ %.3372, %bb.aq ] ; 2 uses
   %indvars.iv.next607 = add nuw nsw i64 %indvars.iv606, 1 ; 2 uses
-  %exitcond612.not = icmp eq i64 %indvars.iv.next607, %indvars.iv632
+  %exitcond612.not = icmp eq i64 %indvars.iv.next607, %wide.trip.count626
   br i1 %exitcond612.not, label %.thread457, label %.preheader464.split, !llvm.loop !117
 
 .thread457:                                       ; preds = %._crit_edge511, %.split.thread, %.split.us.us.split.thread, %.split.us.us.split.us.us.thread, %bb.z, %bb.ap, %bb.al, %bb.ai, %._crit_edge708
@@ -638,7 +639,7 @@ bb.ar:                                            ; preds = %.thread457, %.loope
 bb.as:                                            ; preds = %.loopexit462
   %i.nq = add nuw nsw i32 %.0376524, 96
   %i.nr = icmp sgt i32 %.6375, %3
-  %indvars.iv.next633 = add nuw i64 %indvars.iv632, 96
+  %indvars.iv.next610 = add i32 %indvars.iv609, 96
   br i1 %i.nr, label %.preheader466, label %._crit_edge530, !llvm.loop !120
 
 ._crit_edge530:                                   ; preds = %bb.as

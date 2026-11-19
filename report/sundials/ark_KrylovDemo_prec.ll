@@ -205,17 +205,17 @@ GSIter.exit:                                      ; preds = %._crit_edge410.spli
   %i.amw = load i32, ptr %i.n, align 8, !tbaa !34 ; 2 uses
   %i.amx = load i32, ptr %i.p, align 4, !tbaa !197 ; 2 uses
   %i.amy = getelementptr inbounds nuw i8, ptr %8, i64 92
-  %i.amz = load i32, ptr %i.amy, align 4, !tbaa !33
+  %9 = load i32, ptr %i.amy, align 4, !tbaa !33
+  %10 = getelementptr inbounds nuw i8, ptr %8, i64 72
+  %i.amz = load i32, ptr %10, align 8, !tbaa !31  ; 2 uses
   %i.ana = getelementptr inbounds nuw i8, ptr %8, i64 128
   %i.anb = getelementptr inbounds nuw i8, ptr %8, i64 152
   %i.anc = icmp sgt i32 %i.amx, 0
   br i1 %i.anc, label %.lr.ph56, label %._crit_edge57.split
 
 .lr.ph56:                                         ; preds = %GSIter.exit
-  %9 = getelementptr inbounds nuw i8, ptr %8, i64 72
-  %10 = load i32, ptr %9, align 8, !tbaa !31
   %i.and = icmp sgt i32 %i.amw, 0
-  %i.ane = sext i32 %10 to i64                    ; 2 uses
+  %i.ane = sext i32 %i.amz to i64
   br i1 %i.and, label %.lr.ph.preheader, label %._crit_edge57.split
 
 .lr.ph.preheader:                                 ; preds = %.lr.ph56
@@ -225,15 +225,15 @@ GSIter.exit:                                      ; preds = %._crit_edge410.spli
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %._crit_edge
   %indvars.iv77 = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next78, %._crit_edge ] ; 2 uses
-  %.055 = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %._crit_edge ]
+  %.055 = phi i32 [ 0, %.lr.ph.preheader ], [ %12, %._crit_edge ]
   %i.anf = getelementptr inbounds nuw [4 x i8], ptr %i.anb, i64 %indvars.iv77
   %i.ang = load i32, ptr %i.anf, align 4, !tbaa !23
-  %i.anh = mul nsw i32 %i.ang, %i.amz
+  %i.anh = mul nsw i32 %i.ang, %9
   br label %bb.v
 
 bb.v:                                             ; preds = %.lr.ph, %bb.v
   %indvars.iv72 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next73, %bb.v ] ; 2 uses
-  %indvars.iv = phi i64 [ %.055, %.lr.ph ], [ %indvars.iv.next, %bb.v ] ; 2 uses
+  %.153 = phi i32 [ %.055, %.lr.ph ], [ %12, %bb.v ] ; 2 uses
   %i.ani = getelementptr inbounds nuw [4 x i8], ptr %i.ana, i64 %indvars.iv72
   %i.anj = load i32, ptr %i.ani, align 4, !tbaa !23
   %i.ank = add nsw i32 %i.anj, %i.anh
@@ -243,9 +243,10 @@ bb.v:                                             ; preds = %.lr.ph, %bb.v
   %i.ano = getelementptr inbounds [8 x i8], ptr %i.amv, i64 %i.anl
   %i.anp = load ptr, ptr %i.ano, align 8, !tbaa !16
   %i.anq = tail call ptr @N_VGetArrayPointer(ptr noundef %4) #11
-  %i.anr = getelementptr inbounds [8 x i8], ptr %i.anq, i64 %indvars.iv
+  %11 = sext i32 %.153 to i64
+  %i.anr = getelementptr inbounds [8 x i8], ptr %i.anq, i64 %11
   tail call void @SUNDlsMat_denseGETRS(ptr noundef %i.ann, i64 noundef %i.ane, ptr noundef %i.anp, ptr noundef %i.anr) #11
-  %indvars.iv.next = add nsw i64 %indvars.iv, %i.ane ; 2 uses
+  %12 = add nsw i32 %.153, %i.amz                 ; 2 uses
   %indvars.iv.next73 = add nuw nsw i64 %indvars.iv72, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next73, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %bb.v

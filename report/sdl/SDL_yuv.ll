@@ -204,7 +204,7 @@ bb.af:                                            ; preds = %._crit_edge1484
   %.not1407 = icmp eq i32 %i.j, 0
   %i.pu = zext i32 %i.pm to i64
   %i.pv = sext i32 %i.f to i64                    ; 3 uses
-  %wide.trip.count1606 = zext i32 %i.i to i64     ; 5 uses
+  %wide.trip.count1606 = zext i32 %i.i to i64     ; 6 uses
   %i.pw = shl nuw nsw i32 %i.i, 1                 ; 2 uses
   %i.px = add nsw i32 %i.g, -1
   %i.py = zext i32 %i.px to i64
@@ -217,6 +217,7 @@ bb.af:                                            ; preds = %._crit_edge1484
   %scevgep1904 = getelementptr i8, ptr %i.qd, i64 %i.qa
   %i.qe = shl nuw nsw i64 %wide.trip.count1606, 1
   %min.iters.check1906 = icmp ult i32 %0, 8
+  %8 = shl nuw nsw i64 %wide.trip.count1606, 1
   %stride.check1911 = icmp slt i32 %i.f, 0
   %n.vec1916 = and i64 %wide.trip.count1606, 1073741820 ; 4 uses
   %i.qf = shl nuw nsw i64 %n.vec1916, 1
@@ -224,7 +225,7 @@ bb.af:                                            ; preds = %._crit_edge1484
   br label %.preheader1441
 
 .preheader1441:                                   ; preds = %.preheader1441.lr.ph, %bb.at
-  %.013081495 = phi ptr [ %i.r, %.preheader1441.lr.ph ], [ %i.wp, %bb.at ] ; 8 uses
+  %.013081495 = phi ptr [ %i.r, %.preheader1441.lr.ph ], [ %i.wp, %bb.at ] ; 10 uses
   %.113171494 = phi ptr [ %i.cd, %.preheader1441.lr.ph ], [ %i.wr, %bb.at ] ; 5 uses
   %.213211493 = phi ptr [ %2, %.preheader1441.lr.ph ], [ %i.wq, %bb.at ] ; 5 uses
   %.213251492 = phi i32 [ 0, %.preheader1441.lr.ph ], [ %i.ws, %bb.at ]
@@ -237,7 +238,11 @@ bb.af:                                            ; preds = %._crit_edge1484
   %i.qj = load float, ptr %i.pr, align 4          ; 2 uses
   %i.qk = load float, ptr %i.ps, align 8          ; 2 uses
   %i.ql = load float, ptr %i.pt, align 4          ; 2 uses
-  br i1 %min.iters.check1906, label %scalar.ph1905.preheader, label %vector.memcheck1907
+  %9 = getelementptr i8, ptr %.013081495, i64 %8
+  %10 = getelementptr i8, ptr %9, i64 -2
+  %11 = icmp ult ptr %10, %.013081495
+  %or.cond = select i1 %min.iters.check1906, i1 true, i1 %11
+  br i1 %or.cond, label %scalar.ph1905.preheader, label %vector.memcheck1907
 
 vector.memcheck1907:                              ; preds = %.lr.ph1488
   %i.qm = getelementptr i8, ptr %.013081495, i64 %i.qe ; 2 uses
@@ -512,7 +517,7 @@ bb.at:                                            ; preds = %bb.as, %._crit_edge
 
 ._crit_edge1496:                                  ; preds = %bb.at, %bb.af
   %.21321.lcssa = phi ptr [ %2, %bb.af ], [ %i.wq, %bb.at ] ; 5 uses
-  %.01308.lcssa = phi ptr [ %i.r, %bb.af ], [ %i.wp, %bb.at ] ; 7 uses
+  %.01308.lcssa = phi ptr [ %i.r, %bb.af ], [ %i.wp, %bb.at ] ; 9 uses
   %.not1405 = icmp eq i32 %i.h, 0
   br i1 %.not1405, label %._crit_edge1531._crit_edge, label %.preheader1440
 
@@ -533,9 +538,14 @@ bb.at:                                            ; preds = %bb.as, %._crit_edge
   %i.xd = load float, ptr %i.xc, align 8          ; 2 uses
   %i.xe = getelementptr inbounds nuw i8, ptr %i.l, i64 36
   %i.xf = load float, ptr %i.xe, align 4          ; 2 uses
-  %wide.trip.count1612 = zext nneg i32 %i.i to i64 ; 5 uses
+  %wide.trip.count1612 = zext nneg i32 %i.i to i64 ; 6 uses
   %min.iters.check1955 = icmp ult i32 %0, 8
-  br i1 %min.iters.check1955, label %scalar.ph1954.preheader, label %vector.memcheck1956
+  %12 = shl nuw nsw i64 %wide.trip.count1612, 1
+  %13 = getelementptr i8, ptr %.01308.lcssa, i64 %12
+  %14 = getelementptr i8, ptr %13, i64 -2
+  %15 = icmp ult ptr %14, %.01308.lcssa
+  %or.cond2324 = select i1 %min.iters.check1955, i1 true, i1 %15
+  br i1 %or.cond2324, label %scalar.ph1954.preheader, label %vector.memcheck1956
 
 vector.memcheck1956:                              ; preds = %.lr.ph1501
   %i.xg = shl nuw nsw i64 %wide.trip.count1612, 1
@@ -789,7 +799,7 @@ bb.bh:                                            ; preds = %._crit_edge1484
   %.not1402 = icmp eq i32 %i.j, 0
   %i.acq = zext i32 %i.aci to i64
   %i.acr = sext i32 %i.f to i64                   ; 3 uses
-  %wide.trip.count1628 = zext i32 %i.i to i64     ; 5 uses
+  %wide.trip.count1628 = zext i32 %i.i to i64     ; 6 uses
   %i.acs = shl nuw nsw i32 %i.i, 1                ; 2 uses
   %i.act = add nsw i32 %i.g, -1
   %i.acu = zext i32 %i.act to i64
@@ -802,6 +812,7 @@ bb.bh:                                            ; preds = %._crit_edge1484
   %scevgep2207 = getelementptr i8, ptr %i.acz, i64 %i.acw
   %i.ada = shl nuw nsw i64 %wide.trip.count1628, 1
   %min.iters.check2209 = icmp ult i32 %0, 8
+  %16 = shl nuw nsw i64 %wide.trip.count1628, 1
   %stride.check2214 = icmp slt i32 %i.f, 0
   %n.vec2220 = and i64 %wide.trip.count1628, 1073741820 ; 4 uses
   %i.adb = shl nuw nsw i64 %n.vec2220, 1
@@ -809,7 +820,7 @@ bb.bh:                                            ; preds = %._crit_edge1484
   br label %.preheader1437
 
 .preheader1437:                                   ; preds = %.preheader1437.lr.ph, %bb.bv
-  %.413121542 = phi ptr [ %i.r, %.preheader1437.lr.ph ], [ %i.ajl, %bb.bv ] ; 8 uses
+  %.413121542 = phi ptr [ %i.r, %.preheader1437.lr.ph ], [ %i.ajl, %bb.bv ] ; 10 uses
   %.213181541 = phi ptr [ %i.cd, %.preheader1437.lr.ph ], [ %i.ajn, %bb.bv ] ; 5 uses
   %.313221540 = phi ptr [ %2, %.preheader1437.lr.ph ], [ %i.ajm, %bb.bv ] ; 5 uses
   %.313261539 = phi i32 [ 0, %.preheader1437.lr.ph ], [ %i.ajo, %bb.bv ]
@@ -822,7 +833,11 @@ bb.bh:                                            ; preds = %._crit_edge1484
   %i.adf = load float, ptr %i.acn, align 8        ; 2 uses
   %i.adg = load float, ptr %i.aco, align 4        ; 2 uses
   %i.adh = load float, ptr %i.acp, align 8        ; 2 uses
-  br i1 %min.iters.check2209, label %scalar.ph2208.preheader, label %vector.memcheck2210
+  %17 = getelementptr i8, ptr %.413121542, i64 %16
+  %18 = getelementptr i8, ptr %17, i64 -2
+  %19 = icmp ult ptr %18, %.413121542
+  %or.cond2328 = select i1 %min.iters.check2209, i1 true, i1 %19
+  br i1 %or.cond2328, label %scalar.ph2208.preheader, label %vector.memcheck2210
 
 vector.memcheck2210:                              ; preds = %.lr.ph1535
   %i.adi = getelementptr i8, ptr %.413121542, i64 %i.ada ; 2 uses
@@ -1097,7 +1112,7 @@ bb.bv:                                            ; preds = %bb.bu, %._crit_edge
 
 ._crit_edge1543:                                  ; preds = %bb.bv, %bb.bh
   %.31322.lcssa = phi ptr [ %2, %bb.bh ], [ %i.ajm, %bb.bv ] ; 5 uses
-  %.41312.lcssa = phi ptr [ %i.r, %bb.bh ], [ %i.ajl, %bb.bv ] ; 7 uses
+  %.41312.lcssa = phi ptr [ %i.r, %bb.bh ], [ %i.ajl, %bb.bv ] ; 9 uses
   %.not1400 = icmp eq i32 %i.h, 0
   br i1 %.not1400, label %._crit_edge1531._crit_edge, label %.preheader
 
@@ -1118,9 +1133,14 @@ bb.bv:                                            ; preds = %bb.bu, %._crit_edge
   %i.ajz = load float, ptr %i.ajy, align 4        ; 2 uses
   %i.aka = getelementptr inbounds nuw i8, ptr %i.l, i64 24
   %i.akb = load float, ptr %i.aka, align 8        ; 2 uses
-  %wide.trip.count1634 = zext nneg i32 %i.i to i64 ; 5 uses
+  %wide.trip.count1634 = zext nneg i32 %i.i to i64 ; 6 uses
   %min.iters.check2259 = icmp ult i32 %0, 8
-  br i1 %min.iters.check2259, label %scalar.ph2258.preheader, label %vector.memcheck2260
+  %20 = shl nuw nsw i64 %wide.trip.count1634, 1
+  %21 = getelementptr i8, ptr %.41312.lcssa, i64 %20
+  %22 = getelementptr i8, ptr %21, i64 -2
+  %23 = icmp ult ptr %22, %.41312.lcssa
+  %or.cond2332 = select i1 %min.iters.check2259, i1 true, i1 %23
+  br i1 %or.cond2332, label %scalar.ph2258.preheader, label %vector.memcheck2260
 
 vector.memcheck2260:                              ; preds = %.lr.ph1548
   %i.akc = shl nuw nsw i64 %wide.trip.count1634, 1
@@ -1399,8 +1419,9 @@ bb.ck:                                            ; preds = %bb.cj
   %.not = icmp eq i32 %i.j, 0
   %i.apr = sext i32 %i.apf to i64
   %i.aps = sext i32 %3 to i64                     ; 2 uses
-  %wide.trip.count = zext i32 %i.i to i64         ; 5 uses
+  %wide.trip.count = zext i32 %i.i to i64         ; 6 uses
   %i.apt = shl nuw nsw i32 %i.i, 1                ; 2 uses
+  %24 = add nsw i64 %wide.trip.count, -1          ; 2 uses
   %i.apu = add nsw i32 %1, -1
   %i.apv = zext i32 %i.apu to i64
   %i.apw = mul nsw i64 %i.aps, %i.apv
@@ -1409,6 +1430,8 @@ bb.ck:                                            ; preds = %bb.cj
   %scevgep = getelementptr i8, ptr %i.apy, i64 %i.apx
   %i.apz = shl nuw nsw i64 %wide.trip.count, 2
   %min.iters.check = icmp ult i32 %0, 8
+  %mul.result = shl nsw i64 %24, 2
+  %mul.overflow = icmp ugt i64 %24, 4611686018427387903
   %stride.check = icmp slt i32 %3, 0
   %n.vec = and i64 %wide.trip.count, 1073741820   ; 4 uses
   %i.aqa = shl nuw nsw i64 %n.vec, 2
@@ -1432,8 +1455,9 @@ bb.ck:                                            ; preds = %bb.cj
   %.not1396 = icmp eq i32 %i.j, 0
   %i.aql = sext i32 %i.apf to i64
   %i.aqm = sext i32 %3 to i64                     ; 2 uses
-  %wide.trip.count1588 = zext i32 %i.i to i64     ; 5 uses
+  %wide.trip.count1588 = zext i32 %i.i to i64     ; 6 uses
   %i.aqn = shl nuw nsw i32 %i.i, 1                ; 2 uses
+  %25 = add nsw i64 %wide.trip.count1588, -1      ; 2 uses
   %i.aqo = add nsw i32 %1, -1
   %i.aqp = zext i32 %i.aqo to i64
   %i.aqq = mul nsw i64 %i.aqm, %i.aqp
@@ -1442,6 +1466,8 @@ bb.ck:                                            ; preds = %bb.cj
   %scevgep1760 = getelementptr i8, ptr %i.aqs, i64 %i.aqr
   %i.aqt = shl nuw nsw i64 %wide.trip.count1588, 2
   %min.iters.check1762 = icmp ult i32 %0, 8
+  %mul.result1755 = shl nsw i64 %25, 2
+  %mul.overflow1756 = icmp ugt i64 %25, 4611686018427387903
   %stride.check1767 = icmp slt i32 %3, 0
   %n.vec1769 = and i64 %wide.trip.count1588, 1073741820 ; 4 uses
   %i.aqu = shl nuw nsw i64 %n.vec1769, 2
@@ -1466,8 +1492,9 @@ bb.ck:                                            ; preds = %bb.cj
   %.not1397 = icmp eq i32 %i.j, 0
   %i.arg = sext i32 %i.apf to i64
   %i.arh = sext i32 %3 to i64                     ; 2 uses
-  %wide.trip.count1594 = zext i32 %i.i to i64     ; 5 uses
+  %wide.trip.count1594 = zext i32 %i.i to i64     ; 6 uses
   %i.ari = shl nuw nsw i32 %i.i, 1                ; 2 uses
+  %26 = add nsw i64 %wide.trip.count1594, -1      ; 2 uses
   %i.arj = add nsw i32 %1, -1
   %i.ark = zext i32 %i.arj to i64
   %i.arl = mul nsw i64 %i.arh, %i.ark
@@ -1476,6 +1503,8 @@ bb.ck:                                            ; preds = %bb.cj
   %scevgep1813 = getelementptr i8, ptr %i.arn, i64 %i.arm
   %i.aro = shl nuw nsw i64 %wide.trip.count1594, 2
   %min.iters.check1815 = icmp ult i32 %0, 8
+  %mul.result1812 = shl nsw i64 %26, 2
+  %mul.overflow1813 = icmp ugt i64 %26, 4611686018427387903
   %stride.check1820 = icmp slt i32 %3, 0
   %n.vec1822 = and i64 %wide.trip.count1594, 1073741820 ; 4 uses
   %i.arp = shl nuw nsw i64 %n.vec1822, 2
@@ -1483,7 +1512,7 @@ bb.ck:                                            ; preds = %bb.cj
   br label %.preheader1443
 
 .preheader1443:                                   ; preds = %.preheader1443.lr.ph, %bb.cy
-  %.01474 = phi ptr [ %5, %.preheader1443.lr.ph ], [ %i.azz, %bb.cy ] ; 7 uses
+  %.01474 = phi ptr [ %5, %.preheader1443.lr.ph ], [ %i.azz, %bb.cy ] ; 9 uses
   %.013031473 = phi ptr [ %2, %.preheader1443.lr.ph ], [ %i.baa, %bb.cy ] ; 4 uses
   %.413271472 = phi i32 [ 0, %.preheader1443.lr.ph ], [ %i.bab, %bb.cy ]
   br i1 %i.aqw, label %.lr.ph1468, label %._crit_edge1469
@@ -1498,7 +1527,11 @@ bb.ck:                                            ; preds = %bb.cj
   %i.arw = load float, ptr %i.aqy, align 8
   %i.arx = load <2 x float>, ptr %i.ard, align 4  ; 4 uses
   %i.ary = load float, ptr %i.arf, align 4        ; 2 uses
-  br i1 %min.iters.check1815, label %scalar.ph1814.preheader, label %vector.memcheck1816
+  %27 = getelementptr i8, ptr %.01474, i64 %mul.result1812
+  %28 = icmp ult ptr %27, %.01474
+  %29 = or i1 %28, %mul.overflow1813
+  %or.cond2392 = select i1 %min.iters.check1815, i1 true, i1 %29
+  br i1 %or.cond2392, label %scalar.ph1814.preheader, label %vector.memcheck1816
 
 vector.memcheck1816:                              ; preds = %.lr.ph1468
   %i.arz = getelementptr i8, ptr %.01474, i64 %i.aro
@@ -1614,8 +1647,8 @@ middle.block1855:                                 ; preds = %vector.body1843
   br i1 %cmp.n1856, label %._crit_edge1469, label %scalar.ph1814.preheader
 
 scalar.ph1814.preheader:                          ; preds = %vector.memcheck1816, %.lr.ph1468, %middle.block1855
-  %indvars.iv1591.ph = phi i64 [ 0, %vector.memcheck1816 ], [ 0, %.lr.ph1468 ], [ %n.vec1822, %middle.block1855 ]
-  %.11467.ph = phi ptr [ %.01474, %vector.memcheck1816 ], [ %.01474, %.lr.ph1468 ], [ %i.asb, %middle.block1855 ]
+  %indvars.iv1591.ph = phi i64 [ 0, %vector.memcheck1816 ], [ %n.vec1822, %middle.block1855 ], [ 0, %.lr.ph1468 ]
+  %.11467.ph = phi ptr [ %.01474, %vector.memcheck1816 ], [ %i.asb, %middle.block1855 ], [ %.01474, %.lr.ph1468 ]
   %i.aur = extractelement <2 x float> %i.arv, i64 0
   %i.aus = shufflevector <2 x float> %i.arv, <2 x float> %i.arx, <2 x i32> <i32 1, i32 3>
   %i.aut = shufflevector <2 x float> %i.arv, <2 x float> %i.arx, <2 x i32> <i32 0, i32 2>
@@ -1826,7 +1859,7 @@ bb.cy:                                            ; preds = %bb.cx, %._crit_edge
   br i1 %exitcond1596.not, label %.thread1425, label %.preheader1443, !llvm.loop !58
 
 .preheader1445:                                   ; preds = %.preheader1445.lr.ph, %bb.dm
-  %.31465 = phi ptr [ %5, %.preheader1445.lr.ph ], [ %i.bim, %bb.dm ] ; 7 uses
+  %.31465 = phi ptr [ %5, %.preheader1445.lr.ph ], [ %i.bim, %bb.dm ] ; 9 uses
   %.113041464 = phi ptr [ %2, %.preheader1445.lr.ph ], [ %i.bin, %bb.dm ] ; 4 uses
   %.513281463 = phi i32 [ 0, %.preheader1445.lr.ph ], [ %i.bio, %bb.dm ]
   br i1 %i.aqc, label %.lr.ph1459, label %._crit_edge1460
@@ -1841,7 +1874,11 @@ bb.cy:                                            ; preds = %bb.cx, %._crit_edge
   %i.bai = load float, ptr %i.aqh, align 8
   %i.baj = load <2 x float>, ptr %i.aqj, align 4  ; 4 uses
   %i.bak = load float, ptr %i.aqk, align 4        ; 2 uses
-  br i1 %min.iters.check1762, label %scalar.ph1761.preheader, label %vector.memcheck1763
+  %30 = getelementptr i8, ptr %.31465, i64 %mul.result1755
+  %31 = icmp ult ptr %30, %.31465
+  %32 = or i1 %31, %mul.overflow1756
+  %or.cond2395 = select i1 %min.iters.check1762, i1 true, i1 %32
+  br i1 %or.cond2395, label %scalar.ph1761.preheader, label %vector.memcheck1763
 
 vector.memcheck1763:                              ; preds = %.lr.ph1459
   %i.bal = getelementptr i8, ptr %.31465, i64 %i.aqt
@@ -1957,8 +1994,8 @@ middle.block1802:                                 ; preds = %vector.body1790
   br i1 %cmp.n1803, label %._crit_edge1460, label %scalar.ph1761.preheader
 
 scalar.ph1761.preheader:                          ; preds = %vector.memcheck1763, %.lr.ph1459, %middle.block1802
-  %indvars.iv1585.ph = phi i64 [ 0, %vector.memcheck1763 ], [ 0, %.lr.ph1459 ], [ %n.vec1769, %middle.block1802 ]
-  %.41458.ph = phi ptr [ %.31465, %vector.memcheck1763 ], [ %.31465, %.lr.ph1459 ], [ %i.ban, %middle.block1802 ]
+  %indvars.iv1585.ph = phi i64 [ 0, %vector.memcheck1763 ], [ %n.vec1769, %middle.block1802 ], [ 0, %.lr.ph1459 ]
+  %.41458.ph = phi ptr [ %.31465, %vector.memcheck1763 ], [ %i.ban, %middle.block1802 ], [ %.31465, %.lr.ph1459 ]
   %i.bdd = shufflevector <2 x float> %i.bah, <2 x float> %i.baj, <2 x i32> <i32 1, i32 3>
   %i.bde = shufflevector <2 x float> %i.bah, <2 x float> %i.baj, <2 x i32> <i32 0, i32 2>
   %i.bdf = insertelement <2 x float> poison, float %i.baf, i64 0
@@ -2170,7 +2207,7 @@ bb.dm:                                            ; preds = %bb.dl, %._crit_edge
   br i1 %exitcond1590.not, label %.thread1425, label %.preheader1445, !llvm.loop !64
 
 .preheader1448:                                   ; preds = %.preheader1448.lr.ph, %bb.ea
-  %.61456 = phi ptr [ %5, %.preheader1448.lr.ph ], [ %i.bqz, %bb.ea ] ; 7 uses
+  %.61456 = phi ptr [ %5, %.preheader1448.lr.ph ], [ %i.bqz, %bb.ea ] ; 9 uses
   %.213051455 = phi ptr [ %2, %.preheader1448.lr.ph ], [ %i.bra, %bb.ea ] ; 4 uses
   %.613291454 = phi i32 [ 0, %.preheader1448.lr.ph ], [ %i.brb, %bb.ea ]
   br i1 %i.aph, label %.lr.ph, label %._crit_edge
@@ -2184,7 +2221,11 @@ bb.dm:                                            ; preds = %bb.dl, %._crit_edge
   %i.biu = load float, ptr %i.apk, align 4
   %i.biv = load float, ptr %i.apj, align 8
   %i.biw = load <2 x float>, ptr %i.app, align 4  ; 4 uses
-  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
+  %33 = getelementptr i8, ptr %.61456, i64 %mul.result
+  %34 = icmp ult ptr %33, %.61456
+  %35 = or i1 %34, %mul.overflow
+  %or.cond2398 = select i1 %min.iters.check, i1 true, i1 %35
+  br i1 %or.cond2398, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph
   %i.bix = getelementptr i8, ptr %.61456, i64 %i.apz
@@ -2298,8 +2339,8 @@ middle.block:                                     ; preds = %vector.body
   br i1 %cmp.n, label %._crit_edge, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph, %middle.block
-  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph ], [ %n.vec, %middle.block ]
-  %.71452.ph = phi ptr [ %.61456, %vector.memcheck ], [ %.61456, %.lr.ph ], [ %i.biz, %middle.block ]
+  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck ], [ %n.vec, %middle.block ], [ 0, %.lr.ph ]
+  %.71452.ph = phi ptr [ %.61456, %vector.memcheck ], [ %i.biz, %middle.block ], [ %.61456, %.lr.ph ]
   %i.blp = extractelement <4 x float> %i.bit, i64 0
   %i.blq = shufflevector <4 x float> %i.bit, <4 x float> poison, <2 x i32> <i32 2, i32 poison>
   %i.blr = shufflevector <2 x float> %i.biw, <2 x float> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
@@ -2693,8 +2734,9 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %.not173 = icmp eq i32 %i.e, 0
   %i.cg = zext i32 %i.ca to i64
   %i.ch = sext i32 %i.a to i64                    ; 3 uses
-  %wide.trip.count221 = zext i32 %i.d to i64      ; 5 uses
+  %wide.trip.count221 = zext i32 %i.d to i64      ; 6 uses
   %i.ci = shl nuw nsw i32 %i.d, 1                 ; 2 uses
+  %7 = add nsw i64 %wide.trip.count221, -1        ; 2 uses
   %i.cj = add nsw i32 %i.b, -1
   %i.ck = zext i32 %i.cj to i64
   %i.cl = mul nsw i64 %i.ch, %i.ck
@@ -2705,6 +2747,8 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %scevgep25 = getelementptr i8, ptr %i.co, i64 %i.u
   %i.cp = shl nuw nsw i64 %wide.trip.count221, 2
   %min.iters.check27 = icmp ult i32 %0, 8
+  %mul.result = shl nsw i64 %7, 2
+  %mul.overflow = icmp ugt i64 %7, 4611686018427387903
   %stride.check32 = icmp slt i32 %i.a, 0
   %n.vec37 = and i64 %wide.trip.count221, 1073741820 ; 4 uses
   %i.cq = shl nuw nsw i64 %n.vec37, 2
@@ -2715,13 +2759,17 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %.1161200 = phi i32 [ 0, %.preheader184.lr.ph ], [ %i.ht, %bb.c ]
   %.1163199 = phi ptr [ %2, %.preheader184.lr.ph ], [ %i.hr, %bb.c ] ; 4 uses
   %.0164198 = phi ptr [ %i.cc, %.preheader184.lr.ph ], [ %i.hs, %bb.c ] ; 5 uses
-  %.0165197 = phi ptr [ %i.p, %.preheader184.lr.ph ], [ %i.hq, %bb.c ] ; 8 uses
+  %.0165197 = phi ptr [ %i.p, %.preheader184.lr.ph ], [ %i.hq, %bb.c ] ; 10 uses
   br i1 %i.cd, label %.lr.ph, label %._crit_edge194
 
 .lr.ph:                                           ; preds = %.preheader184
   %i.cr = load <4 x float>, ptr %i.ce, align 8    ; 7 uses
   %i.cs = load <2 x float>, ptr %i.cf, align 8    ; 4 uses
-  br i1 %min.iters.check27, label %scalar.ph26.preheader, label %vector.memcheck28
+  %8 = getelementptr i8, ptr %.0165197, i64 %mul.result
+  %9 = icmp ult ptr %8, %.0165197
+  %10 = or i1 %9, %mul.overflow
+  %or.cond = select i1 %min.iters.check27, i1 true, i1 %10
+  br i1 %or.cond, label %scalar.ph26.preheader, label %vector.memcheck28
 
 vector.memcheck28:                                ; preds = %.lr.ph
   %i.ct = getelementptr i8, ptr %.0165197, i64 %i.cp ; 2 uses
@@ -2806,8 +2854,8 @@ middle.block58:                                   ; preds = %vector.body50
   br i1 %cmp.n59, label %._crit_edge194, label %scalar.ph26.preheader
 
 scalar.ph26.preheader:                            ; preds = %vector.memcheck28, %.lr.ph, %middle.block58
-  %indvars.iv218.ph = phi i64 [ 0, %vector.memcheck28 ], [ 0, %.lr.ph ], [ %n.vec37, %middle.block58 ]
-  %.1166192.ph = phi ptr [ %.0165197, %vector.memcheck28 ], [ %.0165197, %.lr.ph ], [ %i.cv, %middle.block58 ]
+  %indvars.iv218.ph = phi i64 [ 0, %vector.memcheck28 ], [ %n.vec37, %middle.block58 ], [ 0, %.lr.ph ]
+  %.1166192.ph = phi ptr [ %.0165197, %vector.memcheck28 ], [ %i.cv, %middle.block58 ], [ %.0165197, %.lr.ph ]
   %i.en = shufflevector <4 x float> %i.cr, <4 x float> poison, <2 x i32> <i32 2, i32 poison>
   %i.eo = shufflevector <2 x float> %i.cs, <2 x float> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
   %i.ep = shufflevector <4 x float> %i.cr, <4 x float> %i.eo, <2 x i32> <i32 1, i32 4>

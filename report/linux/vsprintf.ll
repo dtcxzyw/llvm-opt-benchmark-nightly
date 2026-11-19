@@ -202,7 +202,7 @@ bb.dd:                                            ; preds = %bb.dc, %bb.al, %utf
   %.0180 = phi i8 [ 0, %utf16s_utf8nlen.exit ], [ 0, %bb.x ], [ 0, %bb.al ], [ %.0.i238262, %bb.dc ] ; 2 uses
   %.8179 = phi i32 [ %i.cy, %utf16s_utf8nlen.exit ], [ %i.ar, %bb.x ], [ %i.bo, %bb.al ], [ %.7178, %bb.dc ] ; 4 uses
   %.3167 = phi i32 [ %.0164, %utf16s_utf8nlen.exit ], [ %.0164, %bb.x ], [ %.0164, %bb.al ], [ %.2166, %bb.dc ]
-  %.8 = phi i32 [ %i.cz, %utf16s_utf8nlen.exit ], [ 1, %bb.x ], [ %i.dc, %bb.al ], [ %spec.select234, %bb.dc ] ; 2 uses
+  %.8 = phi i32 [ %i.cz, %utf16s_utf8nlen.exit ], [ 1, %bb.x ], [ %i.dc, %bb.al ], [ %spec.select234, %bb.dc ] ; 3 uses
   %.2 = phi ptr [ %.0154386, %utf16s_utf8nlen.exit ], [ %i.b, %bb.x ], [ %.1, %bb.al ], [ %.2.i, %bb.dc ] ; 2 uses
   %i.mp = sub nsw i32 %.3167, %.8                 ; 3 uses
   %i.mq = and i32 %.8179, 16
@@ -284,14 +284,14 @@ bb.do:                                            ; preds = %bb.dn, %bb.dm
 
 bb.dp:                                            ; preds = %bb.do, %bb.dj
   %.4185 = phi i64 [ %i.nl, %bb.do ], [ %.3184, %bb.dj ] ; 2 uses
-  %i.nm = sext i32 %.8 to i64                     ; 2 uses
+  %i.nm = sext i32 %.8 to i64
   %i.nn = icmp ult i64 %.0191, %i.nm
   br i1 %i.nn, label %.lr.ph311, label %._crit_edge
 
 .lr.ph311:                                        ; preds = %bb.dp, %bb.dr
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.dr ], [ %i.nm, %bb.dp ]
+  %.in = phi i32 [ %5, %bb.dr ], [ %.8, %bb.dp ]
   %.5186310 = phi i64 [ %i.nq, %bb.dr ], [ %.4185, %bb.dp ] ; 3 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
+  %5 = add nsw i32 %.in, -1                       ; 2 uses
   %i.no = icmp ult i64 %.5186310, %1
   br i1 %i.no, label %bb.dq, label %bb.dr
 
@@ -302,7 +302,8 @@ bb.dq:                                            ; preds = %.lr.ph311
 
 bb.dr:                                            ; preds = %bb.dq, %.lr.ph311
   %i.nq = add i64 %.5186310, 1                    ; 2 uses
-  %i.nr = icmp ult i64 %.0191, %indvars.iv.next
+  %6 = sext i32 %5 to i64
+  %i.nr = icmp ult i64 %.0191, %6
   br i1 %i.nr, label %.lr.ph311, label %._crit_edge, !llvm.loop !11
 
 ._crit_edge:                                      ; preds = %bb.dr, %bb.dp

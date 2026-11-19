@@ -200,15 +200,11 @@ bb.a:
   store i32 0, ptr @g_flag, align 4
   %i.b = tail call i32 @getopt_long(i32 noundef %1, ptr noundef nonnull %2, ptr noundef %3, ptr noundef nonnull %4, ptr noundef null) #12 ; 2 uses
   %.not18 = icmp eq i32 %i.b, -1
-  br i1 %.not18, label %._crit_edge, label %.lr.ph.preheader
+  br i1 %.not18, label %._crit_edge, label %.lr.ph
 
-.lr.ph.preheader:                                 ; preds = %bb.a
-  %6 = zext nneg i32 %0 to i64
-  br label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.o
-  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.o ] ; 6 uses
-  %i.c = phi i32 [ %i.b, %.lr.ph.preheader ], [ %i.aq, %bb.o ] ; 2 uses
+.lr.ph:                                           ; preds = %bb.a, %bb.o
+  %6 = phi i32 [ %i.aq, %bb.o ], [ %i.b, %bb.a ]  ; 2 uses
+  %i.c = phi i32 [ %8, %bb.o ], [ 0, %bb.a ]      ; 6 uses
   %i.d = tail call ptr @getoptindp() #12
   %i.e = load i32, ptr %i.d, align 4
   %i.f = icmp slt i32 %i.e, 1
@@ -228,19 +224,19 @@ bb.c:                                             ; preds = %bb.b, %.lr.ph
   unreachable
 
 bb.d:                                             ; preds = %bb.b
-  %i.m = icmp samesign ult i64 %indvars.iv, %6
+  %i.m = icmp samesign ult i32 %i.c, %0
   br i1 %i.m, label %bb.e, label %bb.o
 
 bb.e:                                             ; preds = %bb.d
-  %i.n = getelementptr inbounds nuw [16 x i8], ptr %5, i64 %indvars.iv ; 3 uses
+  %7 = zext nneg i32 %i.c to i64
+  %i.n = getelementptr inbounds nuw [16 x i8], ptr %5, i64 %7 ; 3 uses
   %i.o = load i32, ptr %i.n, align 8              ; 2 uses
-  %.not46 = icmp eq i32 %i.o, %i.c
+  %.not46 = icmp eq i32 %i.o, %6
   br i1 %.not46, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %7 = trunc nuw nsw i64 %indvars.iv to i32
-  %i.p = add nuw nsw i32 %7, 1
-  %i.q = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.35, i32 noundef %i.p, i32 noundef %i.c, i32 noundef %i.o) #11 ; 0 uses
+  %i.p = add nuw nsw i32 %i.c, 1
+  %i.q = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.35, i32 noundef %i.p, i32 noundef %6, i32 noundef %i.o) #11 ; 0 uses
   tail call void @__assert(ptr noundef nonnull @.str.33, i32 noundef 288, ptr noundef nonnull @.str.34) #13
   unreachable
 
@@ -252,8 +248,7 @@ bb.g:                                             ; preds = %bb.e
   br i1 %.not47, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %8 = trunc nuw nsw i64 %indvars.iv to i32
-  %i.u = add nuw nsw i32 %8, 1
+  %i.u = add nuw nsw i32 %i.c, 1
   %i.v = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.40, i32 noundef %i.u, i32 noundef %i.s, i32 noundef %i.t) #11 ; 0 uses
   tail call void @__assert(ptr noundef nonnull @.str.33, i32 noundef 295, ptr noundef nonnull @.str.34) #13
   unreachable
@@ -296,11 +291,10 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.l, %bb.m
   %i.ak = phi ptr [ %i.aj, %bb.m ], [ @.str.37, %bb.l ]
-  %9 = trunc nuw nsw i64 %indvars.iv to i32
   %i.al = load ptr, ptr %i.w, align 8             ; 2 uses
   %i.am = icmp eq ptr %i.al, null
   %spec.select = select i1 %i.am, ptr @.str.37, ptr %i.al
-  %i.an = add nuw nsw i32 %9, 1
+  %i.an = add nuw nsw i32 %i.c, 1
   %i.ao = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.36, i32 noundef %i.an, ptr noundef %i.ak, ptr noundef nonnull %spec.select) #11 ; 0 uses
   tail call void @__assert(ptr noundef nonnull @.str.33, i32 noundef 307, ptr noundef nonnull @.str.34) #13
   unreachable
@@ -309,17 +303,13 @@ bb.o:                                             ; preds = %bb.k, %.thread, %bb
   %i.ap = tail call ptr @getoptargp() #12
   store ptr null, ptr %i.ap, align 8
   store i32 0, ptr @g_flag, align 4
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %8 = add nuw nsw i32 %i.c, 1                    ; 2 uses
   %i.aq = tail call i32 @getopt_long(i32 noundef %1, ptr noundef nonnull %2, ptr noundef %3, ptr noundef nonnull %4, ptr noundef null) #12 ; 2 uses
   %.not = icmp eq i32 %i.aq, -1
-  br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !9
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !9
 
-._crit_edge.loopexit:                             ; preds = %bb.o
-  %10 = trunc nuw i64 %indvars.iv.next to i32
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
-  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %10, %._crit_edge.loopexit ] ; 3 uses
+._crit_edge:                                      ; preds = %bb.o, %bb.a
+  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %8, %bb.o ] ; 3 uses
   %.not44 = icmp eq i32 %.0.lcssa, %0
   %i.ar = add nuw nsw i32 %0, 1
   %.not45 = icmp eq i32 %.0.lcssa, %i.ar
@@ -346,8 +336,8 @@ bb.a:
   br i1 %.not18, label %._crit_edge.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %bb.o
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.o ], [ 0, %bb.a ] ; 6 uses
-  %i.c = phi i32 [ %i.aq, %bb.o ], [ %i.b, %bb.a ] ; 2 uses
+  %3 = phi i32 [ %i.aq, %bb.o ], [ %i.b, %bb.a ]  ; 2 uses
+  %i.c = phi i32 [ %5, %bb.o ], [ 0, %bb.a ]      ; 6 uses
   %i.d = tail call ptr @getoptindp() #12
   %i.e = load i32, ptr %i.d, align 4
   %i.f = icmp slt i32 %i.e, 1
@@ -367,19 +357,19 @@ bb.c:                                             ; preds = %bb.b, %.lr.ph
   unreachable
 
 bb.d:                                             ; preds = %bb.b
-  %i.m = icmp samesign ult i64 %indvars.iv, 4
+  %i.m = icmp samesign ult i32 %i.c, 4
   br i1 %i.m, label %bb.e, label %bb.o
 
 bb.e:                                             ; preds = %bb.d
-  %i.n = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %indvars.iv ; 3 uses
+  %4 = zext nneg i32 %i.c to i64
+  %i.n = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %4 ; 3 uses
   %i.o = load i32, ptr %i.n, align 8              ; 2 uses
-  %.not46 = icmp eq i32 %i.o, %i.c
+  %.not46 = icmp eq i32 %i.o, %3
   br i1 %.not46, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %3 = trunc nuw nsw i64 %indvars.iv to i32
-  %i.p = add nuw nsw i32 %3, 1
-  %i.q = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.35, i32 noundef %i.p, i32 noundef %i.c, i32 noundef %i.o) #11 ; 0 uses
+  %i.p = add nuw nsw i32 %i.c, 1
+  %i.q = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.35, i32 noundef %i.p, i32 noundef %3, i32 noundef %i.o) #11 ; 0 uses
   tail call void @__assert(ptr noundef nonnull @.str.33, i32 noundef 365, ptr noundef nonnull @.str.34) #13
   unreachable
 
@@ -391,8 +381,7 @@ bb.g:                                             ; preds = %bb.e
   br i1 %.not47, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %4 = trunc nuw nsw i64 %indvars.iv to i32
-  %i.u = add nuw nsw i32 %4, 1
+  %i.u = add nuw nsw i32 %i.c, 1
   %i.v = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.40, i32 noundef %i.u, i32 noundef %i.s, i32 noundef %i.t) #11 ; 0 uses
   tail call void @__assert(ptr noundef nonnull @.str.33, i32 noundef 372, ptr noundef nonnull @.str.34) #13
   unreachable
@@ -435,11 +424,10 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.l, %bb.m
   %i.ak = phi ptr [ %i.aj, %bb.m ], [ @.str.37, %bb.l ]
-  %5 = trunc nuw nsw i64 %indvars.iv to i32
   %i.al = load ptr, ptr %i.w, align 8             ; 2 uses
   %i.am = icmp eq ptr %i.al, null
   %spec.select = select i1 %i.am, ptr @.str.37, ptr %i.al
-  %i.an = add nuw nsw i32 %5, 1
+  %i.an = add nuw nsw i32 %i.c, 1
   %i.ao = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.36, i32 noundef %i.an, ptr noundef %i.ak, ptr noundef nonnull %spec.select) #11 ; 0 uses
   tail call void @__assert(ptr noundef nonnull @.str.33, i32 noundef 384, ptr noundef nonnull @.str.34) #13
   unreachable
@@ -448,19 +436,18 @@ bb.o:                                             ; preds = %bb.k, %.thread, %bb
   %i.ap = tail call ptr @getoptargp() #12
   store ptr null, ptr %i.ap, align 8
   store i32 0, ptr @g_flag, align 4
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %5 = add nuw nsw i32 %i.c, 1                    ; 3 uses
   %i.aq = tail call i32 @getopt_long_only(i32 noundef 8, ptr noundef nonnull %0, ptr noundef nonnull @.str.39, ptr noundef nonnull %1, ptr noundef null) #12 ; 2 uses
   %.not = icmp eq i32 %i.aq, -1
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !10
 
 ._crit_edge:                                      ; preds = %bb.o
-  %6 = trunc nuw i64 %indvars.iv.next to i32      ; 2 uses
-  %i.ar = and i32 %6, 2147483646
+  %i.ar = and i32 %5, 2147483646
   %switch = icmp eq i32 %i.ar, 4
   br i1 %switch, label %bb.p, label %._crit_edge.thread
 
 ._crit_edge.thread:                               ; preds = %bb.a, %._crit_edge
-  %.0.lcssa46 = phi i32 [ %6, %._crit_edge ], [ 0, %bb.a ]
+  %.0.lcssa46 = phi i32 [ %5, %._crit_edge ], [ 0, %bb.a ]
   %i.as = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.38, i32 noundef %.0.lcssa46, i32 noundef 4) #11 ; 0 uses
   tail call void @__assert(ptr noundef nonnull @.str.33, i32 noundef 399, ptr noundef nonnull @.str.34) #13
   unreachable

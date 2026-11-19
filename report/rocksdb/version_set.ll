@@ -205,23 +205,24 @@ bb.p:                                             ; preds = %scalar.ph636
   br i1 %exitcond.not.i.i143, label %.loopexit367, label %scalar.ph636, !llvm.loop !2953
 
 bb.q:                                             ; preds = %.lr.ph380, %_ZN7rocksdb15MultiGetContext5Range8IteratorppEv.exit149
-  %indvars.iv = phi i64 [ 0, %.lr.ph380 ], [ %indvars.iv.next, %_ZN7rocksdb15MultiGetContext5Range8IteratorppEv.exit149 ] ; 4 uses
-  %.sroa.7305.0378 = phi i64 [ %storemerge.lcssa.i.i131, %.lr.ph380 ], [ %.lcssa.i147, %_ZN7rocksdb15MultiGetContext5Range8IteratorppEv.exit149 ] ; 4 uses
-  %i.fh = icmp samesign ult i64 %indvars.iv, 16
+  %.061379 = phi i32 [ 0, %.lr.ph380 ], [ %21, %_ZN7rocksdb15MultiGetContext5Range8IteratorppEv.exit149 ] ; 3 uses
+  %indvars.iv = phi i64 [ %storemerge.lcssa.i.i131, %.lr.ph380 ], [ %.lcssa.i147, %_ZN7rocksdb15MultiGetContext5Range8IteratorppEv.exit149 ] ; 4 uses
+  %20 = zext nneg i32 %.061379 to i64             ; 2 uses
+  %i.fh = icmp samesign ult i32 %.061379, 16
   %i.fi = load ptr, ptr %i.ac, align 8
-  %i.fj = getelementptr inbounds nuw [512 x i8], ptr %i.fi, i64 %indvars.iv
+  %i.fj = getelementptr inbounds nuw [512 x i8], ptr %i.fi, i64 %20
   %i.fk = load ptr, ptr %i.ae, align 8
-  %i.fl = getelementptr [512 x i8], ptr %i.fk, i64 %indvars.iv
+  %i.fl = getelementptr [512 x i8], ptr %i.fk, i64 %20
   %i.fm = getelementptr i8, ptr %i.fl, i64 -8192
   %.0.i = select i1 %i.fh, ptr %i.fj, ptr %i.fm
-  %i.fn = getelementptr inbounds nuw [8 x i8], ptr %i.cp, i64 %.sroa.7305.0378
+  %i.fn = getelementptr inbounds nuw [8 x i8], ptr %i.cp, i64 %indvars.iv
   %i.fo = load ptr, ptr %i.fn, align 8, !tbaa !1573
   %i.fp = getelementptr inbounds nuw i8, ptr %i.fo, i64 160
   store ptr %.0.i, ptr %i.fp, align 8, !tbaa !1010
-  %i.fq = add i64 %.sroa.7305.0378, 1
+  %i.fq = add i64 %indvars.iv, 1
   %umax.i146 = call i64 @llvm.umax.i64(i64 %.lcssa373, i64 %i.fq) ; 3 uses
   %i.fr = add i64 %umax.i146, -1                  ; 2 uses
-  %exitcond402.not595 = icmp eq i64 %.sroa.7305.0378, %i.fr
+  %exitcond402.not595 = icmp eq i64 %indvars.iv, %i.fr
   br i1 %exitcond402.not595, label %_ZN7rocksdb15MultiGetContext5Range8IteratorppEv.exit149, label %.lr.ph597.preheader
 
 .lr.ph597.preheader:                              ; preds = %bb.q
@@ -237,7 +238,7 @@ bb.r:                                             ; preds = %.lr.ph597
   br i1 %exitcond402.not, label %_ZN7rocksdb15MultiGetContext5Range8IteratorppEv.exit149, label %.lr.ph597, !llvm.loop !91
 
 .lr.ph597:                                        ; preds = %.lr.ph597.preheader, %bb.r
-  %i.fx = phi i64 [ %i.fy, %bb.r ], [ %.sroa.7305.0378, %.lr.ph597.preheader ]
+  %i.fx = phi i64 [ %i.fy, %bb.r ], [ %indvars.iv, %.lr.ph597.preheader ]
   %i.fy = add i64 %i.fx, 1                        ; 4 uses
   %i.fz = shl nuw i64 1, %i.fy
   %i.ga = and i64 %i.fw, %i.fz
@@ -249,7 +250,7 @@ bb.r:                                             ; preds = %.lr.ph597
 
 _ZN7rocksdb15MultiGetContext5Range8IteratorppEv.exit149: ; preds = %bb.r, %._ZN7rocksdb15MultiGetContext5Range8IteratorppEv.exit149_crit_edge599, %bb.q
   %.lcssa.i147 = phi i64 [ %umax.i146, %bb.q ], [ %i.fy, %._ZN7rocksdb15MultiGetContext5Range8IteratorppEv.exit149_crit_edge599 ], [ %umax.i146, %bb.r ] ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %21 = add nuw nsw i32 %.061379, 1
   %.not363 = icmp eq i64 %.lcssa.i147, %.lcssa373
   br i1 %.not363, label %._crit_edge381, label %bb.q, !llvm.loop !2954
 

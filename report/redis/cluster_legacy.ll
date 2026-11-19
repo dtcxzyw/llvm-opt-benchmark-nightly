@@ -205,12 +205,11 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %bb.m
-  %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %bb.m ] ; 6 uses
   %.025 = phi ptr [ null, %bb.a ], [ %.126, %bb.m ] ; 8 uses
   %.024 = phi i32 [ -1, %bb.a ], [ %.1, %bb.m ]   ; 2 uses
+  %.0 = phi i32 [ 0, %bb.a ], [ %4, %bb.m ]       ; 6 uses
   %1 = icmp eq ptr %.025, null
-  %2 = trunc nuw nsw i64 %indvars.iv to i32
-  %i.a = icmp eq i64 %indvars.iv, 16384           ; 3 uses
+  %i.a = icmp eq i32 %.0, 16384                   ; 3 uses
   br i1 %1, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
@@ -222,7 +221,8 @@ bb.d:                                             ; preds = %bb.b
 bb.e:                                             ; preds = %bb.d
   %i.b = load ptr, ptr getelementptr inbounds nuw (i8, ptr @server, i64 8224), align 8, !tbaa !414
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 262192
-  %i.d = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %indvars.iv
+  %2 = zext nneg i32 %.0 to i64
+  %i.d = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %2
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !404
   %.not = icmp eq ptr %.025, %i.e
   br i1 %.not, label %bb.m, label %bb.f
@@ -271,7 +271,7 @@ bb.k:                                             ; preds = %bb.i
   %i.z = sext i32 %i.s to i64
   %i.aa = getelementptr inbounds [2 x i8], ptr %i.q, i64 %i.z
   store i16 %i.y, ptr %i.aa, align 2, !tbaa !409
-  %i.ab = trunc i64 %indvars.iv to i16
+  %i.ab = trunc nuw nsw i32 %.0 to i16
   %i.ac = add nsw i16 %i.ab, -1
   %i.ad = add nsw i32 %i.s, 2
   store i32 %i.ad, ptr %i.r, align 8, !tbaa !443
@@ -286,14 +286,15 @@ bb.l:                                             ; preds = %bb.k, %bb.f
 .sink.split:                                      ; preds = %bb.l, %bb.c
   %i.ag = load ptr, ptr getelementptr inbounds nuw (i8, ptr @server, i64 8224), align 8, !tbaa !414
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 262192
-  %i.ai = getelementptr inbounds nuw [8 x i8], ptr %i.ah, i64 %indvars.iv
+  %3 = zext nneg i32 %.0 to i64
+  %i.ai = getelementptr inbounds nuw [8 x i8], ptr %i.ah, i64 %3
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !404
   br label %bb.m
 
 bb.m:                                             ; preds = %.sink.split, %bb.e
   %.126 = phi ptr [ %.025, %bb.e ], [ %i.aj, %.sink.split ]
-  %.1 = phi i32 [ %.024, %bb.e ], [ %2, %.sink.split ]
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %.1 = phi i32 [ %.024, %bb.e ], [ %.0, %.sink.split ]
+  %4 = add nuw nsw i32 %.0, 1
   br label %bb.b, !llvm.loop !793
 
 bb.n:                                             ; preds = %bb.l, %bb.c

@@ -205,9 +205,9 @@ _ZNKSt15__str_hash_baseIcSaIcENSt7__cxx1112basic_stringIcSt11char_traitsIcES0_EE
   br label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph72, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread59
-  %indvars.iv81 = phi i64 [ 1, %.lr.ph72 ], [ %indvars.iv.next82, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread59 ] ; 2 uses
   %3 = phi ptr [ %i.ae, %.lr.ph72 ], [ %i.aq, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread59 ] ; 3 uses
   %.03671 = phi i64 [ %.03668, %.lr.ph72 ], [ %.036, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread59 ]
+  %.03770 = phi i32 [ 1, %.lr.ph72 ], [ %5, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread59 ] ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.ai = load i64, ptr %i.ah, align 8, !tbaa !87
   %i.aj = icmp eq i64 %i.ai, %i.af
@@ -228,8 +228,9 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.
   br label %bb.y
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread59: ; preds = %bb.g, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit
-  %i.ao = add i64 %.03671, %indvars.iv81
-  %indvars.iv.next82 = add nuw nsw i64 %indvars.iv81, 1
+  %4 = zext nneg i32 %.03770 to i64
+  %i.ao = add i64 %.03671, %4
+  %5 = add nuw nsw i32 %.03770, 1
   %.036 = urem i64 %i.ao, %i.ab                   ; 2 uses
   %i.ap = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %.036
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !187 ; 2 uses
@@ -479,10 +480,10 @@ _ZN4pbrt11InternCacheINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4has
   br label %bb.y
 
 bb.w:                                             ; preds = %.lr.ph, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit56.thread60
-  %indvars.iv = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit56.thread60 ] ; 2 uses
-  %4 = phi ptr [ %i.q, %.lr.ph ], [ %i.ee, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit56.thread60 ] ; 3 uses
+  %6 = phi ptr [ %i.q, %.lr.ph ], [ %i.ee, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit56.thread60 ] ; 3 uses
   %.03467 = phi i64 [ %i.k, %.lr.ph ], [ %i.ec, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit56.thread60 ]
-  %i.dt = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %.03566 = phi i32 [ 1, %.lr.ph ], [ %8, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit56.thread60 ] ; 2 uses
+  %i.dt = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.du = load i64, ptr %i.dt, align 8, !tbaa !87
   %i.dv = icmp eq i64 %i.du, %i.r
   br i1 %i.dv, label %bb.x, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit56.thread60
@@ -492,7 +493,7 @@ bb.x:                                             ; preds = %bb.w
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit56: ; preds = %bb.x
   %i.dw = load ptr, ptr %1, align 8, !tbaa !89
-  %i.dx = load ptr, ptr %4, align 8, !tbaa !89
+  %i.dx = load ptr, ptr %6, align 8, !tbaa !89
   %bcmp.i55 = tail call i32 @bcmp(ptr %i.dx, ptr %i.dw, i64 %i.r)
   %i.dy = icmp eq i32 %bcmp.i55, 0
   br i1 %i.dy, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit56.thread, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit56.thread60
@@ -502,8 +503,9 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit5
   br label %bb.y
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit56.thread60: ; preds = %bb.w, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit56
-  %i.ea = add i64 %.03467, %indvars.iv
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %7 = zext nneg i32 %.03566 to i64
+  %i.ea = add i64 %.03467, %7
+  %8 = add nuw nsw i32 %.03566, 1
   %i.eb = load i64, ptr %i.i, align 8, !tbaa !67
   %i.ec = urem i64 %i.ea, %i.eb                   ; 2 uses
   %i.ed = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %i.ec
@@ -512,7 +514,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit5
   br i1 %.not, label %_ZNSt12shared_mutex11lock_sharedEv.exit._crit_edge, label %bb.w, !llvm.loop !1691
 
 bb.y:                                             ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread, %_ZN4pbrt11InternCacheINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4hashIS6_EE6InsertEPKS6_PN4pstd6vectorISB_NSC_3pmr21polymorphic_allocatorISB_EEEE.exit54, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit56.thread
-  %.1 = phi ptr [ %4, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit56.thread ], [ %3, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread ], [ %i.cs, %_ZN4pbrt11InternCacheINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4hashIS6_EE6InsertEPKS6_PN4pstd6vectorISB_NSC_3pmr21polymorphic_allocatorISB_EEEE.exit54 ]
+  %.1 = phi ptr [ %6, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit56.thread ], [ %3, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread ], [ %i.cs, %_ZN4pbrt11InternCacheINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4hashIS6_EE6InsertEPKS6_PN4pstd6vectorISB_NSC_3pmr21polymorphic_allocatorISB_EEEE.exit54 ]
   ret ptr %.1
 }
 
@@ -915,9 +917,9 @@ _ZNSt12shared_mutex4lockEv.exit:                  ; preds = %_ZNSt12shared_mutex
   br i1 %.not4269, label %._crit_edge, label %.lr.ph72
 
 .lr.ph72:                                         ; preds = %_ZNSt12shared_mutex4lockEv.exit, %bb.f
-  %indvars.iv81 = phi i64 [ %indvars.iv.next82, %bb.f ], [ 1, %_ZNSt12shared_mutex4lockEv.exit ] ; 2 uses
   %3 = phi ptr [ %i.ee, %bb.f ], [ %i.dt, %_ZNSt12shared_mutex4lockEv.exit ]
   %.03971 = phi i64 [ %i.eb, %bb.f ], [ %i.dq, %_ZNSt12shared_mutex4lockEv.exit ] ; 2 uses
+  %.04070 = phi i32 [ %5, %bb.f ], [ 1, %_ZNSt12shared_mutex4lockEv.exit ] ; 2 uses
   %i.du = tail call noundef zeroext i1 @_ZNK4pbrt12SquareMatrixILi4EEeqERKS1_(ptr noundef nonnull align 4 dereferenceable(128) %1, ptr noundef nonnull align 4 dereferenceable(128) %3)
   br i1 %i.du, label %bb.e, label %bb.f
 
@@ -929,8 +931,9 @@ bb.e:                                             ; preds = %.lr.ph72
   br label %bb.q
 
 bb.f:                                             ; preds = %.lr.ph72
-  %i.dz = add i64 %.03971, %indvars.iv81
-  %indvars.iv.next82 = add nuw nsw i64 %indvars.iv81, 1
+  %4 = zext nneg i32 %.04070 to i64
+  %i.dz = add i64 %.03971, %4
+  %5 = add nuw nsw i32 %.04070, 1
   %i.ea = load i64, ptr %i.bc, align 8, !tbaa !175 ; 2 uses
   %i.eb = urem i64 %i.dz, %i.ea                   ; 2 uses
   %i.ec = load ptr, ptr %i.bh, align 8, !tbaa !176 ; 2 uses
@@ -1082,10 +1085,10 @@ bb.o:                                             ; preds = %_ZN4pstd6vectorIPKN
   br label %bb.q
 
 .lr.ph:                                           ; preds = %_ZNSt12shared_mutex11lock_sharedEv.exit.preheader, %_ZNSt12shared_mutex11lock_sharedEv.exit
-  %indvars.iv = phi i64 [ %indvars.iv.next, %_ZNSt12shared_mutex11lock_sharedEv.exit ], [ 1, %_ZNSt12shared_mutex11lock_sharedEv.exit.preheader ] ; 2 uses
-  %4 = phi ptr [ %i.gh, %_ZNSt12shared_mutex11lock_sharedEv.exit ], [ %i.bk, %_ZNSt12shared_mutex11lock_sharedEv.exit.preheader ]
+  %6 = phi ptr [ %i.gh, %_ZNSt12shared_mutex11lock_sharedEv.exit ], [ %i.bk, %_ZNSt12shared_mutex11lock_sharedEv.exit.preheader ]
   %.03468 = phi i64 [ %i.ge, %_ZNSt12shared_mutex11lock_sharedEv.exit ], [ %i.be, %_ZNSt12shared_mutex11lock_sharedEv.exit.preheader ] ; 2 uses
-  %i.fx = tail call noundef zeroext i1 @_ZNK4pbrt12SquareMatrixILi4EEeqERKS1_(ptr noundef nonnull align 4 dereferenceable(128) %1, ptr noundef nonnull align 4 dereferenceable(128) %4)
+  %.03567 = phi i32 [ %8, %_ZNSt12shared_mutex11lock_sharedEv.exit ], [ 1, %_ZNSt12shared_mutex11lock_sharedEv.exit.preheader ] ; 2 uses
+  %i.fx = tail call noundef zeroext i1 @_ZNK4pbrt12SquareMatrixILi4EEeqERKS1_(ptr noundef nonnull align 4 dereferenceable(128) %1, ptr noundef nonnull align 4 dereferenceable(128) %6)
   br i1 %i.fx, label %bb.p, label %_ZNSt12shared_mutex11lock_sharedEv.exit
 
 bb.p:                                             ; preds = %.lr.ph
@@ -1096,8 +1099,9 @@ bb.p:                                             ; preds = %.lr.ph
   br label %bb.q
 
 _ZNSt12shared_mutex11lock_sharedEv.exit:          ; preds = %.lr.ph
-  %i.gc = add i64 %.03468, %indvars.iv
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %7 = zext nneg i32 %.03567 to i64
+  %i.gc = add i64 %.03468, %7
+  %8 = add nuw nsw i32 %.03567, 1
   %i.gd = load i64, ptr %i.bc, align 8, !tbaa !175
   %i.ge = urem i64 %i.gc, %i.gd                   ; 2 uses
   %i.gf = load ptr, ptr %i.bh, align 8, !tbaa !176

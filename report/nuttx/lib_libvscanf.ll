@@ -201,26 +201,25 @@ bb.x:                                             ; preds = %bb.w, %bb.p
 
 .preheader684:                                    ; preds = %._crit_edge728
   %.not523 = icmp eq i32 %.1406712, 0
-  %5 = sext i32 %.1406712 to i64
   br label %bb.y
 
 bb.y:                                             ; preds = %.preheader684, %bb.ae
-  %indvars.iv840 = phi i64 [ 0, %.preheader684 ], [ %indvars.iv.next841, %bb.ae ] ; 4 uses
-  %.4613.a = phi i32 [ %.3612.lcssa, %.preheader684 ], [ %i.bs, %bb.ae ] ; 5 uses
+  %.4613 = phi i32 [ %i.bs, %bb.ae ], [ %.3612.lcssa, %.preheader684 ] ; 5 uses
+  %.4613.a = phi i32 [ %6, %bb.ae ], [ 0, %.preheader684 ] ; 4 uses
   br i1 %.not523, label %bb.aa, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
-  %i.bm = icmp slt i64 %indvars.iv840, %5
-  %i.bn = icmp sgt i32 %.4613.a, 0
+  %i.bm = icmp slt i32 %.4613.a, %.1406712
+  %i.bn = icmp sgt i32 %.4613, 0
   %or.cond = select i1 %i.bm, i1 %i.bn, i1 false
   br i1 %or.cond, label %bb.ab, label %.critedge
 
 bb.aa:                                            ; preds = %bb.y
-  %.old4 = icmp sgt i32 %.4613.a, 0
+  %.old4 = icmp sgt i32 %.4613, 0
   br i1 %.old4, label %bb.ab, label %.critedge
 
 bb.ab:                                            ; preds = %bb.z, %bb.aa
-  %i.bo = call i32 @isspace(i32 noundef %.4613.a) #16
+  %i.bo = call i32 @isspace(i32 noundef %.4613) #16
   %.not524 = icmp eq i32 %i.bo, 0
   br i1 %.not524, label %bb.ac, label %.critedge
 
@@ -228,13 +227,14 @@ bb.ac:                                            ; preds = %bb.ab
   br i1 %i.as, label %bb.ae, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
-  %i.bp = trunc i32 %.4613.a to i8
-  %i.bq = getelementptr inbounds nuw i8, ptr %.0443, i64 %indvars.iv840
+  %i.bp = trunc i32 %.4613 to i8
+  %5 = zext nneg i32 %.4613.a to i64
+  %i.bq = getelementptr inbounds nuw i8, ptr %.0443, i64 %5
   store i8 %i.bp, ptr %i.bq, align 1
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad, %bb.ac
-  %indvars.iv.next841 = add nuw nsw i64 %indvars.iv840, 1
+  %6 = add nuw nsw i32 %.4613.a, 1
   %i.br = load ptr, ptr %i.f, align 8
   %i.bs = call i32 %i.br(ptr noundef nonnull %0) #15
   br label %bb.y, !llvm.loop !12
@@ -243,7 +243,8 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac
   br i1 %i.as, label %bb.ag, label %bb.af
 
 bb.af:                                            ; preds = %.critedge
-  %i.bt = getelementptr inbounds nuw i8, ptr %.0443, i64 %indvars.iv840
+  %7 = zext nneg i32 %.4613.a to i64
+  %i.bt = getelementptr inbounds nuw i8, ptr %.0443, i64 %7
   store i8 0, ptr %i.bt, align 1
   %i.bu = add nsw i32 %.0418791, 1
   br label %bb.ag
@@ -646,7 +647,7 @@ bb.gw:                                            ; preds = %bb.gv
 .thread652:                                       ; preds = %._crit_edge774, %._crit_edge733, %bb.fh, %bb.dw, %bb.fi, %bb.at, %bb.ap, %bb.gw, %bb.gu, %._crit_edge728, %bb.ag
   %.1456.pn698 = phi ptr [ %.1456.pn699, %bb.fi ], [ %.1456.pn699, %bb.gu ], [ %.1456.pn699, %bb.gw ], [ %.1456.pn699, %bb.fh ], [ %.1456.pn699, %bb.dw ], [ %.1456.pn709, %bb.ag ], [ %.1456.pn709, %._crit_edge728 ], [ %.1456.pn709, %bb.at ], [ %.1456.pn709, %bb.ap ], [ %.1456.pn699, %._crit_edge733 ], [ %.1456.pn699, %._crit_edge774 ]
   %.1432625 = phi i1 [ %.1432626, %bb.fi ], [ %.1432626, %bb.gu ], [ %.1432626, %bb.gw ], [ %.1432626, %bb.fh ], [ %.1432626, %bb.dw ], [ %spec.select, %bb.ag ], [ %spec.select, %._crit_edge728 ], [ %spec.select, %bb.at ], [ %spec.select, %bb.ap ], [ %.1432626, %._crit_edge733 ], [ %.1432626, %._crit_edge774 ]
-  %.25 = phi i32 [ %.2611, %bb.fi ], [ %.2611, %bb.gu ], [ %i.od, %bb.gw ], [ %.21.lcssa, %bb.fh ], [ %.17, %bb.dw ], [ %.4613.a, %bb.ag ], [ %.3612.lcssa, %._crit_edge728 ], [ %i.cr, %bb.at ], [ %.2611, %bb.ap ], [ %.6615.lcssa, %._crit_edge733 ], [ %.20.lcssa, %._crit_edge774 ]
+  %.25 = phi i32 [ %.2611, %bb.fi ], [ %.2611, %bb.gu ], [ %i.od, %bb.gw ], [ %.21.lcssa, %bb.fh ], [ %.17, %bb.dw ], [ %.4613, %bb.ag ], [ %.3612.lcssa, %._crit_edge728 ], [ %i.cr, %bb.at ], [ %.2611, %bb.ap ], [ %.6615.lcssa, %._crit_edge733 ], [ %.20.lcssa, %._crit_edge774 ]
   %.11429 = phi i32 [ %.0418791, %bb.fi ], [ %.0418791, %bb.gu ], [ %.0418791, %bb.gw ], [ %.7425, %bb.fh ], [ %.3421, %bb.dw ], [ %.1419, %bb.ag ], [ %.0418791, %._crit_edge728 ], [ %spec.select527, %bb.at ], [ %.0418791, %bb.ap ], [ %.0418791, %._crit_edge733 ], [ %.0418791, %._crit_edge774 ]
   %.7416 = phi i32 [ %.0409792, %bb.fi ], [ %i.ob, %bb.gu ], [ %.0409792, %bb.gw ], [ %i.ld, %bb.fh ], [ %i.ip, %bb.dw ], [ %i.bv, %bb.ag ], [ %.0409792, %._crit_edge728 ], [ %i.cy, %bb.at ], [ %.0409792, %bb.ap ], [ %.0409792, %._crit_edge733 ], [ %.0409792, %._crit_edge774 ]
   %.4390 = phi ptr [ %.0386793, %bb.fi ], [ %.3389, %bb.gu ], [ %.0386793, %bb.gw ], [ %.0386793, %bb.fh ], [ %.1387, %bb.dw ], [ %.0386793, %bb.ag ], [ %.0386793, %._crit_edge728 ], [ %.0386793, %bb.at ], [ %.0386793, %bb.ap ], [ %.1387, %._crit_edge733 ], [ %.0386793, %._crit_edge774 ]

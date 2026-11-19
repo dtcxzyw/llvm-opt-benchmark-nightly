@@ -204,17 +204,17 @@ _ZNSt6vectorIiSaIiEE6resizeEm.exit838:            ; preds = %._ZNSt6vectorIiSaIi
   br i1 %.not3661360, label %.lr.ph1363.preheader, label %._crit_edge
 
 .lr.ph1363.preheader:                             ; preds = %_ZNSt6vectorIiSaIiEE6resizeEm.exit838
-  %9 = sext i32 %.1319.lcssa to i64
   %i.ke = trunc nuw nsw i64 %indvars.iv1456 to i32
   br label %.lr.ph1363
 
 .lr.ph1363:                                       ; preds = %.lr.ph1363.preheader, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i853
-  %indvars.iv1442 = phi i64 [ %9, %.lr.ph1363.preheader ], [ %indvars.iv.next1443, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i853 ] ; 3 uses
-  %indvars.iv1440 = phi i64 [ 0, %.lr.ph1363.preheader ], [ %indvars.iv.next1441, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i853 ] ; 2 uses
+  %indvars.iv1442 = phi i64 [ 0, %.lr.ph1363.preheader ], [ %indvars.iv.next1441, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i853 ] ; 2 uses
+  %.53231361 = phi i32 [ %.1319.lcssa, %.lr.ph1363.preheader ], [ %10, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i853 ] ; 3 uses
   %i.kf = load ptr, ptr %i.ao, align 8, !tbaa !24
   %i.kg = getelementptr inbounds nuw i8, ptr %i.kf, i64 8
+  %9 = sext i32 %.53231361 to i64
   %i.kh = load ptr, ptr %i.kg, align 8, !tbaa !64
-  %i.ki = getelementptr inbounds nuw [112 x i8], ptr %i.kh, i64 %indvars.iv1442 ; 10 uses
+  %i.ki = getelementptr inbounds nuw [112 x i8], ptr %i.kh, i64 %9 ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m) #28
   %i.kj = load ptr, ptr %1, align 8, !tbaa !17
   %i.kk = getelementptr inbounds nuw i8, ptr %i.kj, i64 16
@@ -374,16 +374,15 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
   %i.lx = getelementptr inbounds nuw i8, ptr %i.ki, i64 32
   store i32 %i.ke, ptr %i.lx, align 8, !tbaa !86
   %i.ly = load ptr, ptr %i.jp, align 8, !tbaa !81
-  %i.lz = getelementptr inbounds nuw [4 x i8], ptr %i.ly, i64 %indvars.iv1440
-  %10 = trunc nsw i64 %indvars.iv1442 to i32
-  store i32 %10, ptr %i.lz, align 4, !tbaa !82
-  %indvars.iv.next1443 = add nsw i64 %indvars.iv1442, 1 ; 2 uses
+  %i.lz = getelementptr inbounds nuw [4 x i8], ptr %i.ly, i64 %indvars.iv1442
+  store i32 %.53231361, ptr %i.lz, align 4, !tbaa !82
+  %10 = add nsw i32 %.53231361, 1                 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m) #28
-  %indvars.iv.next1441 = add nuw nsw i64 %indvars.iv1440, 1 ; 2 uses
+  %indvars.iv.next1441 = add nuw nsw i64 %indvars.iv1442, 1 ; 2 uses
   %i.ma = load i32, ptr %i.k, align 4, !tbaa !82
   %i.mb = sext i32 %i.ma to i64
   %.not366 = icmp slt i64 %indvars.iv.next1441, %i.mb
-  br i1 %.not366, label %.lr.ph1363, label %._crit_edge.loopexit, !llvm.loop !202
+  br i1 %.not366, label %.lr.ph1363, label %._crit_edge, !llvm.loop !202
 
 bb.cj:                                            ; preds = %.noexc.i840
   %i.mc = landingpad { ptr, i32 }
@@ -396,12 +395,8 @@ bb.ck:                                            ; preds = %bb.cj, %bb.by
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m) #28
   br label %.loopexit.split-lp1137
 
-._crit_edge.loopexit:                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i853
-  %11 = trunc nsw i64 %indvars.iv.next1443 to i32
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %_ZNSt6vectorIiSaIiEE6resizeEm.exit838
-  %.5323.lcssa = phi i32 [ %.1319.lcssa, %_ZNSt6vectorIiSaIiEE6resizeEm.exit838 ], [ %11, %._crit_edge.loopexit ]
+._crit_edge:                                      ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i853, %_ZNSt6vectorIiSaIiEE6resizeEm.exit838
+  %.5323.lcssa = phi i32 [ %.1319.lcssa, %_ZNSt6vectorIiSaIiEE6resizeEm.exit838 ], [ %10, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i853 ]
   %i.md = getelementptr inbounds nuw i8, ptr %.12741079, i64 10 ; 2 uses
   %i.me = load i8, ptr %i.md, align 2, !tbaa !149, !range !92, !noundef !93
   %i.mf = trunc nuw i8 %i.me to i1

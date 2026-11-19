@@ -204,7 +204,7 @@ get_target_block.exit309.i:                       ; preds = %.critedge.i307.i, %
 
 .lr.ph425.i:                                      ; preds = %get_target_block.exit309.i, %get_target_block.exit303.i
   %.38 = phi i32 [ %.39, %get_target_block.exit303.i ], [ %.36, %get_target_block.exit309.i ] ; 4 uses
-  %indvars.iv494.i = phi i64 [ %indvars.iv.next495.i, %get_target_block.exit303.i ], [ 0, %get_target_block.exit309.i ] ; 4 uses
+  %.0424.i = phi i32 [ %10, %get_target_block.exit303.i ], [ 0, %get_target_block.exit309.i ] ; 3 uses
   %.0254423.i = phi ptr [ %.1.i298.i, %get_target_block.exit303.i ], [ %.1.i304.i, %get_target_block.exit309.i ] ; 4 uses
   %i.bua = getelementptr inbounds nuw i8, ptr %.0254423.i, i64 12
   %i.bub = load i32, ptr %i.bua, align 4, !tbaa !47
@@ -218,24 +218,29 @@ get_target_block.exit309.i:                       ; preds = %.critedge.i307.i, %
 bb.lu:                                            ; preds = %.lr.ph425.i
   %i.bug = load ptr, ptr %.0254423.i, align 8, !tbaa !54
   %i.buh = load i32, ptr %i.bug, align 4, !tbaa !56 ; 4 uses
-  %.not439.i = icmp eq i64 %indvars.iv494.i, 0
-  br i1 %.not439.i, label %in_hitlist.exit316.i, label %.lr.ph422.i
+  %.not439.i = icmp eq i32 %.0424.i, 0
+  br i1 %.not439.i, label %in_hitlist.exit316.i, label %.lr.ph422.preheader.i
+
+.lr.ph422.preheader.i:                            ; preds = %bb.lu
+  %wide.trip.count486.i = zext nneg i32 %.0424.i to i64 ; 2 uses
+  br label %.lr.ph422.i
 
 bb.lv:                                            ; preds = %.lr.ph422.i
   %indvars.iv.next491.i = add nuw nsw i64 %indvars.iv490.i, 1 ; 2 uses
-  %exitcond493.not.i = icmp eq i64 %indvars.iv.next491.i, %indvars.iv494.i
+  %exitcond493.not.i = icmp eq i64 %indvars.iv.next491.i, %wide.trip.count486.i
   br i1 %exitcond493.not.i, label %in_hitlist.exit316.i, label %.lr.ph422.i, !llvm.loop !118
 
-.lr.ph422.i:                                      ; preds = %bb.lu, %bb.lv
-  %indvars.iv490.i = phi i64 [ %indvars.iv.next491.i, %bb.lv ], [ 0, %bb.lu ] ; 2 uses
+.lr.ph422.i:                                      ; preds = %bb.lv, %.lr.ph422.preheader.i
+  %indvars.iv490.i = phi i64 [ 0, %.lr.ph422.preheader.i ], [ %indvars.iv.next491.i, %bb.lv ] ; 2 uses
   %i.bui = getelementptr inbounds nuw [4 x i8], ptr %.0.i95, i64 %indvars.iv490.i
   %i.buj = load i32, ptr %i.bui, align 4, !tbaa !56
   %i.buk = icmp eq i32 %i.buj, %i.buh
   br i1 %i.buk, label %in_hitlist.exit316.thread.i, label %bb.lv
 
 in_hitlist.exit316.i:                             ; preds = %bb.lv, %bb.lu
-  %indvars.iv.next495.i = add nuw nsw i64 %indvars.iv494.i, 1
-  %i.bul = getelementptr inbounds nuw [4 x i8], ptr %.0.i95, i64 %indvars.iv494.i
+  %.pre-phi.i138 = phi i64 [ 0, %bb.lu ], [ %wide.trip.count486.i, %bb.lv ]
+  %10 = add nuw nsw i32 %.0424.i, 1
+  %i.bul = getelementptr inbounds nuw [4 x i8], ptr %.0.i95, i64 %.pre-phi.i138
   store i32 %i.buh, ptr %i.bul, align 4, !tbaa !56
   store i32 %i.buh, ptr %i.btc, align 4, !tbaa !56
   %i.bum = add i32 %.38, 1                        ; 2 uses
@@ -464,7 +469,7 @@ get_target_block.exit297.i:                       ; preds = %.critedge.i295.i, %
 
 .lr.ph419.i:                                      ; preds = %get_target_block.exit297.i, %get_target_block.exit291.i
   %.34 = phi i32 [ %.35, %get_target_block.exit291.i ], [ %.33, %get_target_block.exit297.i ] ; 4 uses
-  %indvars.iv487.i = phi i64 [ %indvars.iv.next488.i, %get_target_block.exit291.i ], [ 0, %get_target_block.exit297.i ] ; 4 uses
+  %.1418.i = phi i32 [ %11, %get_target_block.exit291.i ], [ 0, %get_target_block.exit297.i ] ; 3 uses
   %.1255417.i = phi ptr [ %.1.i286.i, %get_target_block.exit291.i ], [ %.1.i292.i, %get_target_block.exit297.i ] ; 2 uses
   %i.byi = getelementptr inbounds nuw i8, ptr %.1255417.i, i64 12
   %i.byj = load i32, ptr %i.byi, align 4, !tbaa !47
@@ -478,24 +483,29 @@ get_target_block.exit297.i:                       ; preds = %.critedge.i295.i, %
 bb.mn:                                            ; preds = %.lr.ph419.i
   %i.byp = load ptr, ptr %.1255417.i, align 8, !tbaa !54
   %i.byq = load i32, ptr %i.byp, align 4, !tbaa !56 ; 4 uses
-  %.not438.i = icmp eq i64 %indvars.iv487.i, 0
-  br i1 %.not438.i, label %in_hitlist.exit314.i, label %.lr.ph416.i
+  %.not438.i = icmp eq i32 %.1418.i, 0
+  br i1 %.not438.i, label %in_hitlist.exit314.i, label %.lr.ph416.preheader.i
+
+.lr.ph416.preheader.i:                            ; preds = %bb.mn
+  %wide.trip.count481.i = zext nneg i32 %.1418.i to i64 ; 2 uses
+  br label %.lr.ph416.i
 
 bb.mo:                                            ; preds = %.lr.ph416.i
   %indvars.iv.next484.i = add nuw nsw i64 %indvars.iv483.i, 1 ; 2 uses
-  %exitcond486.not.i = icmp eq i64 %indvars.iv.next484.i, %indvars.iv487.i
+  %exitcond486.not.i = icmp eq i64 %indvars.iv.next484.i, %wide.trip.count481.i
   br i1 %exitcond486.not.i, label %in_hitlist.exit314.i, label %.lr.ph416.i, !llvm.loop !118
 
-.lr.ph416.i:                                      ; preds = %bb.mn, %bb.mo
-  %indvars.iv483.i = phi i64 [ %indvars.iv.next484.i, %bb.mo ], [ 0, %bb.mn ] ; 2 uses
+.lr.ph416.i:                                      ; preds = %bb.mo, %.lr.ph416.preheader.i
+  %indvars.iv483.i = phi i64 [ 0, %.lr.ph416.preheader.i ], [ %indvars.iv.next484.i, %bb.mo ] ; 2 uses
   %i.byr = getelementptr inbounds nuw [4 x i8], ptr %.0.i95, i64 %indvars.iv483.i
   %i.bys = load i32, ptr %i.byr, align 4, !tbaa !56
   %i.byt = icmp eq i32 %i.bys, %i.byq
   br i1 %i.byt, label %zend_jmp_optimization.exit, label %bb.mo
 
 in_hitlist.exit314.i:                             ; preds = %bb.mo, %bb.mn
-  %indvars.iv.next488.i = add nuw nsw i64 %indvars.iv487.i, 1
-  %i.byu = getelementptr inbounds nuw [4 x i8], ptr %.0.i95, i64 %indvars.iv487.i
+  %.pre-phi499.i = phi i64 [ 0, %bb.mn ], [ %wide.trip.count481.i, %bb.mo ]
+  %11 = add nuw nsw i32 %.1418.i, 1
+  %i.byu = getelementptr inbounds nuw [4 x i8], ptr %.0.i95, i64 %.pre-phi499.i
   store i32 %i.byq, ptr %i.byu, align 4, !tbaa !56
   store i32 %i.byq, ptr %i.bxk, align 4, !tbaa !56
   %i.byv = add i32 %.34, 1                        ; 2 uses
@@ -606,7 +616,7 @@ get_target_block.exit285.i:                       ; preds = %.critedge.i283.i, %
 bb.mu:                                            ; preds = %get_target_block.exit279.i, %.lr.ph402.i
   %i.caw = phi i32 [ %i.cap, %.lr.ph402.i ], [ %i.cda, %get_target_block.exit279.i ] ; 4 uses
   %.31 = phi i32 [ %.28, %.lr.ph402.i ], [ %.32, %get_target_block.exit279.i ] ; 6 uses
-  %indvars.iv480.i = phi i64 [ 0, %.lr.ph402.i ], [ %indvars.iv.next481.i, %get_target_block.exit279.i ] ; 4 uses
+  %.2401.i = phi i32 [ 0, %.lr.ph402.i ], [ %12, %get_target_block.exit279.i ] ; 3 uses
   %.2256400.i = phi ptr [ %.1.i280.i, %.lr.ph402.i ], [ %.1.i274.i, %get_target_block.exit279.i ] ; 8 uses
   %i.cax = getelementptr inbounds nuw i8, ptr %.2256400.i, i64 12
   %i.cay = load i32, ptr %i.cax, align 4, !tbaa !47
@@ -670,24 +680,29 @@ bb.nd:                                            ; preds = %bb.nc
 bb.ne:                                            ; preds = %bb.nd, %bb.mz, %bb.mv
   %.0252.in.i = phi ptr [ %i.cbe, %bb.mv ], [ %i.cbo, %bb.mz ], [ %i.cca, %bb.nd ]
   %.0252.i = load i32, ptr %.0252.in.i, align 4, !tbaa !56 ; 6 uses
-  %.not437.i = icmp eq i64 %indvars.iv480.i, 0
-  br i1 %.not437.i, label %in_hitlist.exit312.i, label %.lr.ph399.i
+  %.not437.i = icmp eq i32 %.2401.i, 0
+  br i1 %.not437.i, label %in_hitlist.exit312.i, label %.lr.ph399.preheader.i
+
+.lr.ph399.preheader.i:                            ; preds = %bb.ne
+  %wide.trip.count476.i = zext nneg i32 %.2401.i to i64 ; 2 uses
+  br label %.lr.ph399.i
 
 bb.nf:                                            ; preds = %.lr.ph399.i
   %indvars.iv.next477.i = add nuw nsw i64 %indvars.iv476.i, 1 ; 2 uses
-  %exitcond479.not.i = icmp eq i64 %indvars.iv.next477.i, %indvars.iv480.i
+  %exitcond479.not.i = icmp eq i64 %indvars.iv.next477.i, %wide.trip.count476.i
   br i1 %exitcond479.not.i, label %in_hitlist.exit312.i, label %.lr.ph399.i, !llvm.loop !118
 
-.lr.ph399.i:                                      ; preds = %bb.ne, %bb.nf
-  %indvars.iv476.i = phi i64 [ %indvars.iv.next477.i, %bb.nf ], [ 0, %bb.ne ] ; 2 uses
+.lr.ph399.i:                                      ; preds = %bb.nf, %.lr.ph399.preheader.i
+  %indvars.iv476.i = phi i64 [ 0, %.lr.ph399.preheader.i ], [ %indvars.iv.next477.i, %bb.nf ] ; 2 uses
   %i.ccb = getelementptr inbounds nuw [4 x i8], ptr %.0.i95, i64 %indvars.iv476.i
   %i.ccc = load i32, ptr %i.ccb, align 4, !tbaa !56
   %i.ccd = icmp eq i32 %i.ccc, %.0252.i
   br i1 %i.ccd, label %in_hitlist.exit312.thread.i, label %bb.nf
 
 in_hitlist.exit312.i:                             ; preds = %bb.nf, %bb.ne
-  %indvars.iv.next481.i = add nuw nsw i64 %indvars.iv480.i, 1
-  %i.cce = getelementptr inbounds nuw [4 x i8], ptr %.0.i95, i64 %indvars.iv480.i
+  %.pre-phi501.i = phi i64 [ 0, %bb.ne ], [ %wide.trip.count476.i, %bb.nf ]
+  %12 = add nuw nsw i32 %.2401.i, 1
+  %i.cce = getelementptr inbounds nuw [4 x i8], ptr %.0.i95, i64 %.pre-phi501.i
   store i32 %.0252.i, ptr %i.cce, align 4, !tbaa !56
   store i32 %.0252.i, ptr %i.bzt, align 4, !tbaa !56
   %i.ccf = add i32 %.31, 1                        ; 2 uses
@@ -1001,7 +1016,7 @@ bb.oc:                                            ; preds = %get_target_block.ex
   %.26 = phi i32 [ %.23, %.lr.ph391.i ], [ %.27, %get_target_block.exit.i ] ; 6 uses
   %i.cia = phi ptr [ %i.cgt, %.lr.ph391.i ], [ %i.cmc, %get_target_block.exit.i ] ; 3 uses
   %i.cib = phi ptr [ %i.cgs, %.lr.ph391.i ], [ %i.cme, %get_target_block.exit.i ] ; 3 uses
-  %indvars.iv473.i = phi i64 [ 0, %.lr.ph391.i ], [ %indvars.iv.next474.i, %get_target_block.exit.i ] ; 4 uses
+  %.3390.i = phi i32 [ 0, %.lr.ph391.i ], [ %13, %get_target_block.exit.i ] ; 3 uses
   %.3257388.i = phi ptr [ %.1.i268.i, %.lr.ph391.i ], [ %.1.i.i, %get_target_block.exit.i ] ; 11 uses
   %i.cic = load ptr, ptr %i.cj, align 8, !tbaa !46
   %i.cid = getelementptr inbounds nuw i8, ptr %.3257388.i, i64 12
@@ -1208,24 +1223,29 @@ bb.pj:                                            ; preds = %bb.pi, %bb.pg
 bb.pk:                                            ; preds = %bb.pj, %bb.pd, %bb.ow, %bb.oq, %bb.oj, %bb.od
   %.1253.in.i = phi ptr [ %i.cik, %bb.od ], [ %i.cjb, %bb.oj ], [ %i.cju, %bb.oq ], [ %i.ckl, %bb.ow ], [ %i.clf, %bb.pd ], [ %i.clx, %bb.pj ]
   %.1253.i = load i32, ptr %.1253.in.i, align 4, !tbaa !56 ; 4 uses
-  %.not436.i = icmp eq i64 %indvars.iv473.i, 0
-  br i1 %.not436.i, label %in_hitlist.exit.i, label %.lr.ph.i127
+  %.not436.i = icmp eq i32 %.3390.i, 0
+  br i1 %.not436.i, label %in_hitlist.exit.i, label %.lr.ph.preheader.i127
+
+.lr.ph.preheader.i127:                            ; preds = %bb.pk
+  %wide.trip.count.i = zext nneg i32 %.3390.i to i64 ; 2 uses
+  br label %.lr.ph.i127
 
 bb.pl:                                            ; preds = %.lr.ph.i127
   %indvars.iv.next.i129 = add nuw nsw i64 %indvars.iv.i128, 1 ; 2 uses
-  %exitcond.not.i130 = icmp eq i64 %indvars.iv.next.i129, %indvars.iv473.i
+  %exitcond.not.i130 = icmp eq i64 %indvars.iv.next.i129, %wide.trip.count.i
   br i1 %exitcond.not.i130, label %in_hitlist.exit.i, label %.lr.ph.i127, !llvm.loop !118
 
-.lr.ph.i127:                                      ; preds = %bb.pk, %bb.pl
-  %indvars.iv.i128 = phi i64 [ %indvars.iv.next.i129, %bb.pl ], [ 0, %bb.pk ] ; 2 uses
+.lr.ph.i127:                                      ; preds = %bb.pl, %.lr.ph.preheader.i127
+  %indvars.iv.i128 = phi i64 [ 0, %.lr.ph.preheader.i127 ], [ %indvars.iv.next.i129, %bb.pl ] ; 2 uses
   %i.cly = getelementptr inbounds nuw [4 x i8], ptr %.0.i95, i64 %indvars.iv.i128
   %i.clz = load i32, ptr %i.cly, align 4, !tbaa !56
   %i.cma = icmp eq i32 %i.clz, %.1253.i
   br i1 %i.cma, label %in_hitlist.exit.thread.loopexit.i, label %bb.pl
 
 in_hitlist.exit.i:                                ; preds = %bb.pl, %bb.pk
-  %indvars.iv.next474.i = add nuw nsw i64 %indvars.iv473.i, 1
-  %i.cmb = getelementptr inbounds nuw [4 x i8], ptr %.0.i95, i64 %indvars.iv473.i
+  %.pre-phi503.i = phi i64 [ 0, %bb.pk ], [ %wide.trip.count.i, %bb.pl ]
+  %13 = add nuw nsw i32 %.3390.i, 1
+  %i.cmb = getelementptr inbounds nuw [4 x i8], ptr %.0.i95, i64 %.pre-phi503.i
   store i32 %.1253.i, ptr %i.cmb, align 4, !tbaa !56
   %i.cmc = load ptr, ptr %.2313, align 8, !tbaa !54 ; 5 uses
   store i32 %.1253.i, ptr %i.cmc, align 4, !tbaa !56

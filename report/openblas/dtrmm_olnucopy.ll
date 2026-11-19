@@ -202,11 +202,18 @@ bb.v:                                             ; preds = %bb.u, %bb.t, %bb.s,
 
 .preheader145.split.split.preheader:              ; preds = %.preheader145.split
   %invariant.gep = getelementptr [8 x i8], ptr %2, i64 %i.h ; 2 uses
-  %min.iters.check = icmp ult i64 %i.a, 116
+  %min.iters.check = icmp ult i64 %i.a, 120
   br i1 %min.iters.check, label %.preheader145.split.split.preheader224, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.preheader145.split.split.preheader
   %i.ci = add nsw i64 %i.a, -1                    ; 4 uses
+  %mul.result = shl i64 %i.ci, 4                  ; 3 uses
+  %mul.overflow = icmp ugt i64 %i.ci, 1152921504606846975
+  %7 = getelementptr i8, ptr %6, i64 %mul.result
+  %8 = icmp ult ptr %7, %6
+  %scevgep = getelementptr i8, ptr %6, i64 8      ; 2 uses
+  %9 = getelementptr i8, ptr %scevgep, i64 %mul.result
+  %10 = icmp ult ptr %9, %scevgep
   %i.cj = shl i64 %3, 4                           ; 4 uses
   %i.ck = mul i64 %3, -16                         ; 2 uses
   %i.cl = mul i64 %5, %3
@@ -229,11 +236,9 @@ vector.scevcheck:                                 ; preds = %.preheader145.split
   %i.cy = add i64 %i.cx, %5
   %i.cz = shl i64 %i.cy, 3
   %scevgep180 = getelementptr i8, ptr %2, i64 %i.cz ; 2 uses
-  %mul.result182 = shl i64 %i.ci, 4
-  %mul.overflow183 = icmp ugt i64 %i.ci, 1152921504606846975
-  %i.da = getelementptr i8, ptr %scevgep180, i64 %mul.result182
+  %i.da = getelementptr i8, ptr %scevgep180, i64 %mul.result
   %i.db = icmp ult ptr %i.da, %scevgep180
-  %i.dc = or i1 %i.db, %mul.overflow183
+  %i.dc = or i1 %i.db, %mul.overflow
   %i.dd = add i64 %5, 1
   %i.de = mul i64 %3, %i.dd
   %i.df = add i64 %i.de, %4
@@ -250,9 +255,11 @@ vector.scevcheck:                                 ; preds = %.preheader145.split
   %i.dm = icmp ult ptr %i.dk, %scevgep184
   %i.dn = icmp ugt ptr %i.dl, %scevgep184
   %i.do = select i1 %i.dh, i1 %i.dn, i1 %i.dm
-  %i.dp = or i1 %i.do, %mul.overflow187
-  %i.dq = or i1 %i.cw, %i.dc
-  %i.dr = or i1 %i.dq, %i.dp
+  %11 = or i1 %i.do, %mul.overflow187
+  %12 = or i1 %10, %8
+  %i.dp = or i1 %12, %i.cw
+  %i.dq = or i1 %i.dp, %i.dc
+  %i.dr = or i1 %i.dq, %11
   br i1 %i.dr, label %.preheader145.split.split.preheader224, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %vector.scevcheck

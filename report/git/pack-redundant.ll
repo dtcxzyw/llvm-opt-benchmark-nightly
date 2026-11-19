@@ -131,7 +131,7 @@ bb.h:                                             ; preds = %.sink.split, %bb.e
 
 .loopexit:                                        ; preds = %bb.h, %bb.b, %bb.f
   %.033394 = phi i32 [ %.033400, %bb.b ], [ %.033400, %bb.f ], [ %.134.ph, %bb.h ]
-  %.238 = phi i32 [ %i.l, %bb.b ], [ %i.q, %bb.f ], [ %0, %bb.h ]
+  %.238 = phi i32 [ %i.l, %bb.b ], [ %i.q, %bb.f ], [ %0, %bb.h ] ; 2 uses
   %.not47 = icmp eq i32 %.033394, 0
   br i1 %.not47, label %.loopexit.thread, label %bb.i
 
@@ -144,7 +144,7 @@ bb.i:                                             ; preds = %.loopexit
   br i1 %.b, label %bb.j, label %.preheader
 
 .preheader:                                       ; preds = %bb.i
-  %i.r = sext i32 %.238 to i64                    ; 2 uses
+  %i.r = sext i32 %.238 to i64
   %i.s = getelementptr inbounds [8 x i8], ptr %1, i64 %i.r
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !100  ; 2 uses
   %.not48407 = icmp eq ptr %i.t, null
@@ -229,9 +229,9 @@ repo_for_each_pack_data_next.exit.i:              ; preds = %odb_source_files_do
   br i1 %.not2.i, label %load_all.exit, label %.lr.ph413, !llvm.loop !72
 
 .lr.ph409:                                        ; preds = %.preheader, %add_pack_file.exit
-  %indvars.iv574 = phi i64 [ %indvars.iv.next575, %add_pack_file.exit ], [ %i.r, %.preheader ]
   %6 = phi ptr [ %i.bp, %add_pack_file.exit ], [ %i.t, %.preheader ] ; 4 uses
-  %indvars.iv.next575 = add nsw i64 %indvars.iv574, 1 ; 2 uses
+  %.3408 = phi i32 [ %7, %add_pack_file.exit ], [ %.238, %.preheader ]
+  %7 = add nsw i32 %.3408, 1                      ; 2 uses
   %i.ap = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %6) #15
   %i.aq = icmp ult i64 %i.ap, 40
   br i1 %i.aq, label %bb.p, label %bb.q
@@ -329,7 +329,8 @@ repo_for_each_pack_data_next.exit.i64:            ; preds = %odb_source_files_do
 
 add_pack_file.exit:                               ; preds = %.lr.ph
   tail call fastcc void @add_pack(ptr noundef %i.bd)
-  %i.bo = getelementptr inbounds [8 x i8], ptr %1, i64 %indvars.iv.next575
+  %8 = sext i32 %7 to i64
+  %i.bo = getelementptr inbounds [8 x i8], ptr %1, i64 %8
   %i.bp = load ptr, ptr %i.bo, align 8, !tbaa !100 ; 2 uses
   %.not48 = icmp eq ptr %i.bp, null
   br i1 %.not48, label %load_all.exit, label %.lr.ph409, !llvm.loop !74

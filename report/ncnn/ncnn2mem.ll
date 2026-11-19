@@ -205,11 +205,7 @@ bb.at:                                            ; preds = %_ZNSt7__cxx1112basi
 .critedge550.preheader.i:                         ; preds = %bb.az, %bb.at
   %i.hy = load i32, ptr %i.o, align 4, !tbaa !55
   %.not228684.i = icmp sgt i32 %i.hy, 0
-  br i1 %.not228684.i, label %.lr.ph686.preheader.i, label %.thread505.i
-
-.lr.ph686.preheader.i:                            ; preds = %.critedge550.preheader.i
-  %20 = sext i32 %i.fe to i64
-  br label %.lr.ph686.i
+  br i1 %.not228684.i, label %.lr.ph686.i, label %.thread505.i
 
 .lr.ph683.i:                                      ; preds = %bb.at, %bb.az
   %.0143682.i = phi i32 [ %i.ji, %bb.az ], [ 0, %bb.at ]
@@ -326,9 +322,9 @@ bb.az:                                            ; preds = %._crit_edge.i.i25, 
   %.not224.i = icmp slt i32 %i.ji, %i.jj
   br i1 %.not224.i, label %.lr.ph683.i, label %.critedge550.preheader.i, !llvm.loop !38
 
-.lr.ph686.i:                                      ; preds = %.critedge550.i, %.lr.ph686.preheader.i
-  %indvars.iv.i = phi i64 [ %20, %.lr.ph686.preheader.i ], [ %indvars.iv.next.i, %.critedge550.i ] ; 3 uses
-  %.0142685.i = phi i32 [ 0, %.lr.ph686.preheader.i ], [ %i.le, %.critedge550.i ]
+.lr.ph686.i:                                      ; preds = %.critedge550.preheader.i, %.critedge550.i
+  %20 = phi i32 [ %22, %.critedge550.i ], [ %i.fe, %.critedge550.preheader.i ] ; 3 uses
+  %.0142685.i = phi i32 [ %i.le, %.critedge550.i ], [ 0, %.critedge550.preheader.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.s) #23
   %i.jk = invoke i32 (ptr, ptr, ...) @__isoc23_fscanf(ptr noundef nonnull %i.ca, ptr noundef nonnull @.str.18, ptr noundef nonnull %i.s)
           to label %bb.ba unwind label %bb.bb     ; 2 uses
@@ -414,8 +410,9 @@ bb.bh:                                            ; preds = %bb.bg, %bb.bf, %._c
   %i.kd = getelementptr inbounds nuw i8, ptr %i.kc, i64 %i.kb
   store i8 0, ptr %i.kd, align 1, !tbaa !30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #23
+  %21 = sext i32 %20 to i64
   %i.ke = load ptr, ptr @_ZL10blob_namesB5cxx11, align 8, !tbaa !20
-  %i.kf = getelementptr inbounds nuw [32 x i8], ptr %i.ke, i64 %indvars.iv.i ; 9 uses
+  %i.kf = getelementptr inbounds nuw [32 x i8], ptr %i.ke, i64 %21 ; 9 uses
   %i.kg = load ptr, ptr %i.kf, align 8, !tbaa !26 ; 6 uses
   %i.kh = getelementptr inbounds nuw i8, ptr %i.kf, i64 16 ; 4 uses
   %i.ki = icmp eq ptr %i.kg, %i.kh
@@ -504,11 +501,9 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i30
 
 .critedge550.i:                                   ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i300.i
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #23
-  %21 = trunc nsw i64 %indvars.iv.i to i32
-  %i.lc = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.ce, ptr noundef nonnull @.str.21, ptr noundef nonnull %i.s, i32 noundef %21) #23 ; 0 uses
+  %i.lc = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.ce, ptr noundef nonnull @.str.21, ptr noundef nonnull %i.s, i32 noundef %20) #23 ; 0 uses
   %i.ld = call i64 @fwrite(ptr noundef nonnull %i.k, i64 noundef 4, i64 noundef 1, ptr noundef %i.cd) ; 0 uses
-  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %22 = trunc nsw i64 %indvars.iv.next.i to i32   ; 2 uses
+  %22 = add nsw i32 %20, 1                        ; 3 uses
   store i32 %22, ptr %i.k, align 4, !tbaa !55
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s) #23
   %i.le = add nuw nsw i32 %.0142685.i, 1          ; 2 uses

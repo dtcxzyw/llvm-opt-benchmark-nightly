@@ -202,17 +202,11 @@ declare ptr @strerror(i32 noundef) local_unnamed_addr #10
 define internal fastcc void @dump_buffer(ptr nofree noundef readonly captures(none) %0, i64 noundef %1, i64 noundef %2) unnamed_addr #0 {
 bb.a:
   %.not40 = icmp eq i64 %2, 0
-  br i1 %.not40, label %._crit_edge, label %.lr.ph39.preheader
+  br i1 %.not40, label %._crit_edge, label %.lr.ph39
 
-.lr.ph39.preheader:                               ; preds = %bb.a
-  %3 = add i64 %2, -1
-  br label %.lr.ph39
-
-.lr.ph39:                                         ; preds = %.lr.ph39.preheader, %.critedge2
-  %indvars.iv45 = phi i64 [ %3, %.lr.ph39.preheader ], [ %indvars.iv.next46, %.critedge2 ] ; 2 uses
-  %.02338 = phi ptr [ %0, %.lr.ph39.preheader ], [ %i.f, %.critedge2 ] ; 2 uses
-  %.02637 = phi i64 [ 0, %.lr.ph39.preheader ], [ %i.w, %.critedge2 ] ; 3 uses
-  %umin = tail call i64 @llvm.umin.i64(i64 %indvars.iv45, i64 15)
+.lr.ph39:                                         ; preds = %bb.a, %.critedge2
+  %.02338 = phi ptr [ %i.f, %.critedge2 ], [ %0, %bb.a ] ; 2 uses
+  %.02637 = phi i64 [ %i.w, %.critedge2 ], [ 0, %bb.a ] ; 4 uses
   %i.a = add i64 %.02637, %1
   %i.b = tail call i32 (i32, ptr, ...) @__printf_chk(i32 noundef 1, ptr noundef nonnull @.str.34, i64 noundef %i.a) #24 ; 0 uses
   br label %bb.b
@@ -258,16 +252,18 @@ bb.e:                                             ; preds = %bb.c
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.d, %bb.e
-  %indvars.iv.next43 = add nuw nsw i64 %indvars.iv42, 1
+  %indvars.iv.next43 = add nuw nsw i64 %indvars.iv42, 1 ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %.036, i64 1
-  %exitcond.not = icmp eq i64 %indvars.iv42, %umin
-  br i1 %exitcond.not, label %.critedge2, label %bb.c, !llvm.loop !20
+  %3 = icmp samesign ult i64 %indvars.iv42, 15
+  %4 = or disjoint i64 %.02637, %indvars.iv.next43
+  %5 = icmp ult i64 %4, %2
+  %or.cond32 = select i1 %3, i1 %5, i1 false
+  br i1 %or.cond32, label %bb.c, label %.critedge2, !llvm.loop !20
 
 .critedge2:                                       ; preds = %bb.f
   %i.v = tail call i32 (i32, ptr, ...) @__printf_chk(i32 noundef 1, ptr noundef nonnull @.str.38) #24 ; 0 uses
   %i.w = add i64 %.02637, 16                      ; 2 uses
   %i.x = icmp ult i64 %i.w, %2
-  %indvars.iv.next46 = add i64 %indvars.iv45, -16
   br i1 %i.x, label %.lr.ph39, label %._crit_edge, !llvm.loop !21
 
 ._crit_edge:                                      ; preds = %.critedge2, %bb.a
@@ -669,9 +665,6 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #22
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #22
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare ptr @strcpy(ptr noalias returned writeonly, ptr noalias readonly captures(none)) #2

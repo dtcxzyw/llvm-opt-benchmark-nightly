@@ -202,9 +202,9 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %.backedge
-  %indvars.iv = phi i64 [ -1, %.lr.ph ], [ %indvars.iv.next, %.backedge ]
   %2 = phi ptr [ %i.j, %.lr.ph ], [ %i.r, %.backedge ] ; 2 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
+  %.021 = phi i32 [ -1, %.lr.ph ], [ %3, %.backedge ]
+  %3 = add nsw i32 %.021, 1                       ; 2 uses
   call void @slurm_msg_t_init(ptr noundef nonnull %1) #15
   %i.m = call i32 @unpack16(ptr noundef nonnull %i.k, ptr noundef nonnull %2) #15
   %.not17 = icmp eq i32 %i.m, 0
@@ -243,7 +243,8 @@ bb.i:                                             ; preds = %bb.g
   br i1 %i.x, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
-  call void @bit_set(ptr noundef %i.g, i64 noundef %indvars.iv.next) #15
+  %4 = sext i32 %3 to i64
+  call void @bit_set(ptr noundef %i.g, i64 noundef %4) #15
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.i, %bb.j, %bb.h

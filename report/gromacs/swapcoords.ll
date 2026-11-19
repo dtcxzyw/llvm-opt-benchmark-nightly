@@ -205,10 +205,10 @@ _ZNSt6vectorIfSaIfEE5clearEv.exit:                ; preds = %_ZNSt6vectorIiSaIiE
 
 bb.d:                                             ; preds = %.lr.ph, %bb.ak
   %i.bw = phi i32 [ 0, %.lr.ph ], [ %i.jd, %bb.ak ] ; 4 uses
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.ak ] ; 4 uses
-  %.0119.a = phi i32 [ 0, %.lr.ph ], [ %i.jf, %bb.ak ] ; 4 uses
+  %.0119 = phi i32 [ 0, %.lr.ph ], [ %i.jf, %bb.ak ] ; 4 uses
+  %.0119.a = phi i32 [ 0, %.lr.ph ], [ %17, %bb.ak ] ; 2 uses
   %i.bx = load i32, ptr %3, align 8, !tbaa !183
-  %i.by = sext i32 %.0119.a to i64                ; 3 uses
+  %i.by = sext i32 %.0119 to i64                  ; 3 uses
   %i.bz = load ptr, ptr %i.o, align 8, !tbaa !200
   %i.ca = getelementptr inbounds nuw [12 x i8], ptr %i.bz, i64 %i.by
   %i.cb = sext i32 %i.bx to i64                   ; 3 uses
@@ -258,7 +258,7 @@ bb.e:                                             ; preds = %_ZL25compartment_co
   br i1 %.not.i.i106, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  store i32 %.0119.a, ptr %i.cx, align 4, !tbaa !59
+  store i32 %.0119, ptr %i.cx, align 4, !tbaa !59
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cx, i64 4
   store ptr %i.cz, ptr %i.bf, align 8, !tbaa !186
   br label %_ZNSt6vectorIiSaIiEE9push_backERKi.exit.i
@@ -287,7 +287,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.g
   %i.dk = shl nuw nsw i64 %i.dj, 2
   %i.dl = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.dk) #27 ; 4 uses
   %i.dm = getelementptr inbounds i8, ptr %i.dl, i64 %i.dd ; 2 uses
-  store i32 %.0119.a, ptr %i.dm, align 4, !tbaa !59
+  store i32 %.0119, ptr %i.dm, align 4, !tbaa !59
   %i.dn = icmp sgt i64 %i.dd, 0
   br i1 %i.dn, label %bb.i, label %_ZNSt6vectorIiSaIiEE11_S_relocateEPiS2_S2_RS0_.exit16.i.i.i
 
@@ -403,14 +403,15 @@ bb.q:                                             ; preds = %bb.p
   %.sroa.011.0.copyload = load <2 x float>, ptr %i.fc, align 4 ; 2 uses
   %.sroa.212.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fc, i64 8
   %.sroa.212.0.copyload = load float, ptr %.sroa.212.0..sroa_idx, align 4, !tbaa !22 ; 2 uses
+  %16 = zext nneg i32 %.0119.a to i64             ; 3 uses
   %i.fd = load ptr, ptr %i.r, align 8, !tbaa !241
-  %i.fe = getelementptr inbounds nuw [4 x i8], ptr %i.fd, i64 %indvars.iv ; 9 uses
+  %i.fe = getelementptr inbounds nuw [4 x i8], ptr %i.fd, i64 %16 ; 9 uses
   %i.ff = load ptr, ptr %i.t, align 8, !tbaa !229
   %i.fg = load ptr, ptr %i.ff, align 8, !tbaa !241
-  %i.fh = getelementptr inbounds nuw [4 x i8], ptr %i.fg, i64 %indvars.iv ; 6 uses
+  %i.fh = getelementptr inbounds nuw [4 x i8], ptr %i.fg, i64 %16 ; 6 uses
   %i.fi = load ptr, ptr %i.u, align 8, !tbaa !235
   %i.fj = load ptr, ptr %i.fi, align 8, !tbaa !237
-  %i.fk = getelementptr inbounds nuw [4 x i8], ptr %i.fj, i64 %indvars.iv ; 5 uses
+  %i.fk = getelementptr inbounds nuw [4 x i8], ptr %i.fj, i64 %16 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #25
   %i.fl = load i32, ptr %3, align 8, !tbaa !183   ; 5 uses
   %i.fm = load ptr, ptr %i.l, align 8, !tbaa !197 ; 2 uses
@@ -665,8 +666,8 @@ bb.aj:                                            ; preds = %_ZL25compartment_co
 bb.ak:                                            ; preds = %_ZL11add_to_listiP16swap_compartmentf.exit, %bb.p, %_ZL23detect_flux_per_channelP9t_swapgrpi11CompartmentN3gmx11BasicVectorIfEEP6DomainS6_P14ChannelHistoryRK12t_swapcoordsPN10SwapCoords4ImplEfflbP8_IO_FILE.exit, %bb.aj
   %i.jd = phi i32 [ %i.bw, %_ZL11add_to_listiP16swap_compartmentf.exit ], [ %i.bw, %bb.p ], [ %i.bw, %_ZL23detect_flux_per_channelP9t_swapgrpi11CompartmentN3gmx11BasicVectorIfEEP6DomainS6_P14ChannelHistoryRK12t_swapcoordsPN10SwapCoords4ImplEfflbP8_IO_FILE.exit ], [ %i.jc, %bb.aj ]
   %i.je = load i32, ptr %i.ag, align 8, !tbaa !58
-  %i.jf = add nsw i32 %i.je, %.0119.a             ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %i.jf = add nsw i32 %i.je, %.0119               ; 2 uses
+  %17 = add nuw nsw i32 %.0119.a, 1
   %i.jg = call noundef i64 @_ZNK3gmx12LocalAtomSet14numAtomsGlobalEv(ptr noundef nonnull align 8 dereferenceable(8) %i.n)
   %i.jh = trunc i64 %i.jg to i32
   %i.ji = icmp slt i32 %i.jf, %i.jh

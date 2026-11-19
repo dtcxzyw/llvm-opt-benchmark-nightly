@@ -202,9 +202,9 @@ count_args.exit:                                  ; preds = %bb.e
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.j, %count_args.exit
-  %i.w = phi ptr [ %i.ad, %bb.j ], [ %.promoted6, %count_args.exit ] ; 3 uses
-  %i.x = phi i32 [ %i.ae, %bb.j ], [ %.promoted, %count_args.exit ] ; 4 uses
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.j ], [ 1, %count_args.exit ] ; 2 uses
+  %i.w = phi ptr [ %.promoted6, %count_args.exit ], [ %i.ad, %bb.j ] ; 3 uses
+  %i.x = phi i32 [ %.promoted, %count_args.exit ], [ %i.ae, %bb.j ] ; 4 uses
+  %.0.i4 = phi i32 [ 1, %count_args.exit ], [ %5, %bb.j ] ; 2 uses
   %i.y = icmp ult i32 %i.x, 41
   br i1 %i.y, label %bb.g, label %bb.h
 
@@ -226,11 +226,12 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.af = phi ptr [ %i.aa, %bb.g ], [ %i.w, %bb.h ]
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !16 ; 2 uses
   %.not.i4 = icmp eq ptr %i.ag, null
-  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %indvars.iv.i ; 2 uses
+  %4 = zext nneg i32 %.0.i4 to i64
+  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %4 ; 2 uses
   br i1 %.not.i4, label %copy_args.exit, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1
+  %5 = add nuw nsw i32 %.0.i4, 1
   store ptr %i.ag, ptr %i.ah, align 8, !tbaa !16
   br label %bb.f, !llvm.loop !2
 
@@ -327,9 +328,9 @@ count_args.exit:                                  ; preds = %bb.e
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.j, %count_args.exit
-  %i.w = phi ptr [ %i.ad, %bb.j ], [ %.promoted5, %count_args.exit ] ; 3 uses
-  %i.x = phi i32 [ %i.ae, %bb.j ], [ %.promoted, %count_args.exit ] ; 4 uses
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.j ], [ 1, %count_args.exit ] ; 2 uses
+  %i.w = phi ptr [ %.promoted5, %count_args.exit ], [ %i.ad, %bb.j ] ; 3 uses
+  %i.x = phi i32 [ %.promoted, %count_args.exit ], [ %i.ae, %bb.j ] ; 4 uses
+  %.0.i4 = phi i32 [ 1, %count_args.exit ], [ %5, %bb.j ] ; 2 uses
   %i.y = icmp ult i32 %i.x, 41
   br i1 %i.y, label %bb.g, label %bb.h
 
@@ -351,11 +352,12 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.af = phi ptr [ %i.aa, %bb.g ], [ %i.w, %bb.h ]
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !16 ; 2 uses
   %.not.i4 = icmp eq ptr %i.ag, null
-  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %indvars.iv.i ; 2 uses
+  %4 = zext nneg i32 %.0.i4 to i64
+  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %4 ; 2 uses
   br i1 %.not.i4, label %copy_args.exit, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1
+  %5 = add nuw nsw i32 %.0.i4, 1
   store ptr %i.ag, ptr %i.ah, align 8, !tbaa !16
   br label %bb.f, !llvm.loop !2
 
@@ -428,9 +430,9 @@ count_args.exit:                                  ; preds = %bb.e
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.j, %count_args.exit
-  %i.w = phi ptr [ %i.ad, %bb.j ], [ %.promoted7, %count_args.exit ] ; 3 uses
-  %i.x = phi i32 [ %i.ae, %bb.j ], [ %.promoted, %count_args.exit ] ; 4 uses
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.j ], [ 1, %count_args.exit ] ; 2 uses
+  %i.w = phi ptr [ %.promoted7, %count_args.exit ], [ %i.ad, %bb.j ] ; 3 uses
+  %i.x = phi i32 [ %.promoted, %count_args.exit ], [ %i.ae, %bb.j ] ; 4 uses
+  %.0.i5 = phi i32 [ 1, %count_args.exit ], [ %5, %bb.j ] ; 2 uses
   %i.y = icmp ult i32 %i.x, 41
   br i1 %i.y, label %bb.g, label %bb.h
 
@@ -452,11 +454,12 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.af = phi ptr [ %i.aa, %bb.g ], [ %i.w, %bb.h ]
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !16 ; 2 uses
   %.not.i5 = icmp eq ptr %i.ag, null
-  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %indvars.iv.i ; 2 uses
+  %4 = zext nneg i32 %.0.i5 to i64
+  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %4 ; 2 uses
   br i1 %.not.i5, label %copy_args.exit, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1
+  %5 = add nuw nsw i32 %.0.i5, 1
   store ptr %i.ag, ptr %i.ah, align 8, !tbaa !16
   br label %bb.f, !llvm.loop !2
 

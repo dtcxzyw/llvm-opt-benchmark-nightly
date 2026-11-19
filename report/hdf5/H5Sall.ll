@@ -202,13 +202,12 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %i.h = load i32, ptr %i.g, align 8, !tbaa !28
+  %i.h = load i32, ptr %i.g, align 8, !tbaa !28   ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.j = load i32, ptr %i.i, align 8, !tbaa !28   ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 64
-  %2 = sext i32 %i.h to i64                       ; 2 uses
-  %indvars.iv.next36 = add nsw i64 %2, -1         ; 2 uses
+  %.01432 = add nsw i32 %i.h, -1                  ; 2 uses
   %i.m = icmp sgt i32 %i.j, 0
   br i1 %i.m, label %.lr.ph39, label %.preheader
 
@@ -219,27 +218,27 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.d
-  %indvars.iv.next = add nsw i64 %indvars.iv.next38, -1 ; 2 uses
+  %.014 = add nsw i32 %.01434, -1                 ; 2 uses
   %i.q = trunc nuw i64 %i.u to i32
   %i.r = icmp sgt i32 %i.q, 0
   br i1 %i.r, label %bb.d, label %.preheader, !llvm.loop !44
 
 .preheader:                                       ; preds = %bb.c, %bb.b
-  %indvars.iv.lcssa = phi i64 [ %2, %bb.b ], [ %indvars.iv.next38, %bb.c ]
-  %indvars.iv.next.lcssa = phi i64 [ %indvars.iv.next36, %bb.b ], [ %indvars.iv.next, %bb.c ]
-  %i.s = icmp sgt i64 %indvars.iv.lcssa, 0
+  %.014.in.lcssa = phi i32 [ %i.h, %bb.b ], [ %.01434, %bb.c ]
+  %.014.lcssa = phi i32 [ %.01432, %bb.b ], [ %.014, %bb.c ]
+  %i.s = icmp sgt i32 %.014.in.lcssa, 0
   br i1 %i.s, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %.preheader
-  %3 = trunc nsw i64 %indvars.iv.next.lcssa to i32
   %i.t = load ptr, ptr %i.k, align 8, !tbaa !29
   br label %bb.f
 
 bb.d:                                             ; preds = %.lr.ph39, %bb.c
-  %indvars.iv.next38 = phi i64 [ %indvars.iv.next36, %.lr.ph39 ], [ %indvars.iv.next, %bb.c ] ; 3 uses
+  %.01434 = phi i32 [ %.01432, %.lr.ph39 ], [ %.014, %bb.c ] ; 3 uses
   %indvars.iv2437 = phi i64 [ %i.n, %.lr.ph39 ], [ %i.u, %bb.c ]
   %i.u = add nsw i64 %indvars.iv2437, -1          ; 3 uses
-  %i.v = getelementptr inbounds [8 x i8], ptr %i.o, i64 %indvars.iv.next38
+  %2 = sext i32 %.01434 to i64
+  %i.v = getelementptr inbounds [8 x i8], ptr %i.o, i64 %2
   %i.w = load i64, ptr %i.v, align 8, !tbaa !27
   %i.x = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %i.u
   %i.y = load i64, ptr %i.x, align 8, !tbaa !27
@@ -252,7 +251,7 @@ bb.e:                                             ; preds = %bb.f
   br i1 %i.aa, label %bb.f, label %.loopexit, !llvm.loop !45
 
 bb.f:                                             ; preds = %.lr.ph, %bb.e
-  %.118 = phi i32 [ %3, %.lr.ph ], [ %i.z, %bb.e ] ; 3 uses
+  %.118 = phi i32 [ %.014.lcssa, %.lr.ph ], [ %i.z, %bb.e ] ; 3 uses
   %i.ab = zext nneg i32 %.118 to i64
   %i.ac = getelementptr inbounds nuw [8 x i8], ptr %i.t, i64 %i.ab
   %i.ad = load i64, ptr %i.ac, align 8, !tbaa !27

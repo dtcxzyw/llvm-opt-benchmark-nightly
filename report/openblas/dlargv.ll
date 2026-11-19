@@ -17,25 +17,25 @@ bb.a:
   %i.e = load i32, ptr %6, align 4, !tbaa !9
   %i.f = load i32, ptr %4, align 4, !tbaa !9
   %i.g = load i32, ptr %2, align 4, !tbaa !9
-  %7 = sext i32 %i.f to i64
-  %i.h = sext i32 %i.g to i64
-  %i.i = sext i32 %i.e to i64
+  %i.h = sext i32 %i.f to i64
+  %i.i = sext i32 %i.g to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.i
-  %indvars.iv78 = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next79, %bb.i ] ; 5 uses
-  %indvars.iv76 = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next77, %bb.i ] ; 2 uses
-  %indvars.iv = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next, %bb.i ] ; 2 uses
+  %indvars.iv78 = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next77, %bb.i ] ; 2 uses
+  %indvars.iv76 = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next, %bb.i ] ; 2 uses
+  %.06673 = phi i32 [ 1, %.lr.ph ], [ %11, %bb.i ] ; 5 uses
   %.06772 = phi i32 [ 1, %.lr.ph ], [ %i.ag, %bb.i ] ; 2 uses
-  %i.j = getelementptr inbounds [8 x i8], ptr %i.c, i64 %indvars.iv76 ; 4 uses
+  %i.j = getelementptr inbounds [8 x i8], ptr %i.c, i64 %indvars.iv78 ; 4 uses
   %i.k = load double, ptr %i.j, align 8, !tbaa !11 ; 5 uses
-  %i.l = getelementptr inbounds [8 x i8], ptr %i.b, i64 %indvars.iv ; 4 uses
+  %i.l = getelementptr inbounds [8 x i8], ptr %i.b, i64 %indvars.iv76 ; 4 uses
   %i.m = load double, ptr %i.l, align 8, !tbaa !11 ; 6 uses
   %i.n = fcmp oeq double %i.m, 0.000000e+00
   br i1 %i.n, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.o = getelementptr inbounds [8 x i8], ptr %i.a, i64 %indvars.iv78
+  %7 = sext i32 %.06673 to i64
+  %i.o = getelementptr inbounds [8 x i8], ptr %i.a, i64 %7
   store double 1.000000e+00, ptr %i.o, align 8, !tbaa !11
   br label %bb.i
 
@@ -44,7 +44,8 @@ bb.d:                                             ; preds = %bb.b
   br i1 %i.p, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %i.q = getelementptr inbounds [8 x i8], ptr %i.a, i64 %indvars.iv78
+  %8 = sext i32 %.06673 to i64
+  %i.q = getelementptr inbounds [8 x i8], ptr %i.a, i64 %8
   store double 0.000000e+00, ptr %i.q, align 8, !tbaa !11
   store double 1.000000e+00, ptr %i.l, align 8, !tbaa !11
   store double %i.m, ptr %i.j, align 8, !tbaa !11
@@ -61,7 +62,8 @@ bb.g:                                             ; preds = %bb.f
   %i.v = tail call double @llvm.fmuladd.f64(double %i.u, double %i.u, double 1.000000e+00)
   %sqrt = tail call double @llvm.sqrt.f64(double %i.v) ; 2 uses
   %i.w = fdiv double 1.000000e+00, %sqrt          ; 2 uses
-  %i.x = getelementptr inbounds [8 x i8], ptr %i.a, i64 %indvars.iv78
+  %9 = sext i32 %.06673 to i64
+  %i.x = getelementptr inbounds [8 x i8], ptr %i.a, i64 %9
   store double %i.w, ptr %i.x, align 8, !tbaa !11
   %i.y = fmul double %i.u, %i.w
   store double %i.y, ptr %i.l, align 8, !tbaa !11
@@ -76,16 +78,17 @@ bb.h:                                             ; preds = %bb.f
   %i.ac = fdiv double 1.000000e+00, %sqrt70       ; 2 uses
   store double %i.ac, ptr %i.l, align 8, !tbaa !11
   %i.ad = fmul double %i.aa, %i.ac
-  %i.ae = getelementptr inbounds [8 x i8], ptr %i.a, i64 %indvars.iv78
+  %10 = sext i32 %.06673 to i64
+  %i.ae = getelementptr inbounds [8 x i8], ptr %i.a, i64 %10
   store double %i.ad, ptr %i.ae, align 8, !tbaa !11
   %i.af = fmul double %i.m, %sqrt70
   store double %i.af, ptr %i.j, align 8, !tbaa !11
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.e, %bb.h, %bb.g, %bb.c
-  %indvars.iv.next79 = add nsw i64 %indvars.iv78, %i.i
-  %indvars.iv.next = add nsw i64 %indvars.iv, %7
-  %indvars.iv.next77 = add nsw i64 %indvars.iv76, %i.h
+  %11 = add nsw i32 %i.e, %.06673
+  %indvars.iv.next = add nsw i64 %indvars.iv76, %i.h
+  %indvars.iv.next77 = add nsw i64 %indvars.iv78, %i.i
   %i.ag = add nuw i32 %.06772, 1
   %exitcond.not = icmp eq i32 %.06772, %i.d
   br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !8

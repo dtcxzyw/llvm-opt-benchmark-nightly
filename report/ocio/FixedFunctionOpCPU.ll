@@ -204,9 +204,18 @@ bb.a:
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %min.iters.check = icmp ult i64 %3, 4
-  br i1 %min.iters.check, label %.lr.ph.preheader90, label %vector.memcheck
+  br i1 %min.iters.check, label %.lr.ph.preheader90, label %vector.scevcheck
 
-vector.memcheck:                                  ; preds = %.lr.ph.preheader
+vector.scevcheck:                                 ; preds = %.lr.ph.preheader
+  %4 = add nsw i64 %3, -1                         ; 2 uses
+  %mul.result = shl i64 %4, 4
+  %mul.overflow = icmp ugt i64 %4, 1152921504606846975
+  %5 = getelementptr i8, ptr %2, i64 %mul.result
+  %6 = icmp ult ptr %5, %2
+  %7 = or i1 %6, %mul.overflow
+  br i1 %7, label %.lr.ph.preheader90, label %vector.memcheck
+
+vector.memcheck:                                  ; preds = %vector.scevcheck
   %i.b = shl i64 %3, 4                            ; 2 uses
   %i.c = getelementptr i8, ptr %2, i64 %i.b
   %i.d = getelementptr i8, ptr %1, i64 %i.b
@@ -216,7 +225,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.preheader
   br i1 %found.conflict, label %.lr.ph.preheader90, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %3, 9223372036854775804        ; 4 uses
+  %n.vec = and i64 %3, 2305843009213693948        ; 4 uses
   %i.e = shl i64 %n.vec, 4                        ; 2 uses
   %i.f = getelementptr i8, ptr %2, i64 %i.e
   %i.g = getelementptr i8, ptr %1, i64 %i.e
@@ -331,10 +340,10 @@ middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %3, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader90
 
-.lr.ph.preheader90:                               ; preds = %vector.memcheck, %.lr.ph.preheader, %middle.block
-  %.04576.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
-  %.04675.ph = phi ptr [ %2, %vector.memcheck ], [ %2, %.lr.ph.preheader ], [ %i.f, %middle.block ]
-  %.04774.ph = phi ptr [ %1, %vector.memcheck ], [ %1, %.lr.ph.preheader ], [ %i.g, %middle.block ]
+.lr.ph.preheader90:                               ; preds = %vector.memcheck, %vector.scevcheck, %.lr.ph.preheader, %middle.block
+  %.04576.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %vector.scevcheck ], [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
+  %.04675.ph = phi ptr [ %2, %vector.memcheck ], [ %2, %vector.scevcheck ], [ %2, %.lr.ph.preheader ], [ %i.f, %middle.block ]
+  %.04774.ph = phi ptr [ %1, %vector.memcheck ], [ %1, %vector.scevcheck ], [ %1, %.lr.ph.preheader ], [ %i.g, %middle.block ]
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph._crit_edge, %middle.block, %bb.a
@@ -438,9 +447,18 @@ bb.a:
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %min.iters.check = icmp ult i64 %3, 4
-  br i1 %min.iters.check, label %.lr.ph.preheader66, label %vector.memcheck
+  br i1 %min.iters.check, label %.lr.ph.preheader66, label %vector.scevcheck
 
-vector.memcheck:                                  ; preds = %.lr.ph.preheader
+vector.scevcheck:                                 ; preds = %.lr.ph.preheader
+  %4 = add nsw i64 %3, -1                         ; 2 uses
+  %mul.result = shl i64 %4, 4
+  %mul.overflow = icmp ugt i64 %4, 1152921504606846975
+  %5 = getelementptr i8, ptr %2, i64 %mul.result
+  %6 = icmp ult ptr %5, %2
+  %7 = or i1 %6, %mul.overflow
+  br i1 %7, label %.lr.ph.preheader66, label %vector.memcheck
+
+vector.memcheck:                                  ; preds = %vector.scevcheck
   %i.b = shl i64 %3, 4                            ; 2 uses
   %i.c = getelementptr i8, ptr %2, i64 %i.b
   %i.d = getelementptr i8, ptr %1, i64 %i.b
@@ -450,7 +468,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.preheader
   br i1 %found.conflict, label %.lr.ph.preheader66, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %3, 9223372036854775804        ; 4 uses
+  %n.vec = and i64 %3, 2305843009213693948        ; 4 uses
   %i.e = shl i64 %n.vec, 4                        ; 2 uses
   %i.f = getelementptr i8, ptr %1, i64 %i.e
   %i.g = getelementptr i8, ptr %2, i64 %i.e
@@ -575,10 +593,10 @@ middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %3, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader66
 
-.lr.ph.preheader66:                               ; preds = %vector.memcheck, %.lr.ph.preheader, %middle.block
-  %.058.ph = phi ptr [ %1, %vector.memcheck ], [ %1, %.lr.ph.preheader ], [ %i.f, %middle.block ]
-  %.04657.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
-  %.04756.ph = phi ptr [ %2, %vector.memcheck ], [ %2, %.lr.ph.preheader ], [ %i.g, %middle.block ]
+.lr.ph.preheader66:                               ; preds = %vector.memcheck, %vector.scevcheck, %.lr.ph.preheader, %middle.block
+  %.058.ph = phi ptr [ %1, %vector.memcheck ], [ %1, %vector.scevcheck ], [ %1, %.lr.ph.preheader ], [ %i.f, %middle.block ]
+  %.04657.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %vector.scevcheck ], [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
+  %.04756.ph = phi ptr [ %2, %vector.memcheck ], [ %2, %vector.scevcheck ], [ %2, %.lr.ph.preheader ], [ %i.g, %middle.block ]
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph, %middle.block, %bb.a
@@ -854,9 +872,18 @@ bb.a:
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %min.iters.check = icmp ult i64 %2, 4
-  br i1 %min.iters.check, label %.lr.ph.preheader113, label %vector.memcheck
+  br i1 %min.iters.check, label %.lr.ph.preheader113, label %vector.scevcheck
 
-vector.memcheck:                                  ; preds = %.lr.ph.preheader
+vector.scevcheck:                                 ; preds = %.lr.ph.preheader
+  %4 = add nsw i64 %2, -1                         ; 2 uses
+  %mul.result = shl i64 %4, 4
+  %mul.overflow = icmp ugt i64 %4, 1152921504606846975
+  %5 = getelementptr i8, ptr %1, i64 %mul.result
+  %6 = icmp ult ptr %5, %1
+  %7 = or i1 %6, %mul.overflow
+  br i1 %7, label %.lr.ph.preheader113, label %vector.memcheck
+
+vector.memcheck:                                  ; preds = %vector.scevcheck
   %i.b = shl i64 %2, 4                            ; 2 uses
   %i.c = getelementptr i8, ptr %1, i64 %i.b
   %i.d = getelementptr i8, ptr %0, i64 %i.b
@@ -866,7 +893,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.preheader
   br i1 %found.conflict, label %.lr.ph.preheader113, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %2, 9223372036854775804        ; 4 uses
+  %n.vec = and i64 %2, 2305843009213693948        ; 4 uses
   %i.e = shl i64 %n.vec, 4                        ; 2 uses
   %i.f = getelementptr i8, ptr %0, i64 %i.e
   %i.g = getelementptr i8, ptr %1, i64 %i.e
@@ -999,10 +1026,10 @@ middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %2, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader113
 
-.lr.ph.preheader113:                              ; preds = %vector.memcheck, %.lr.ph.preheader, %middle.block
-  %.04993.ph = phi ptr [ %0, %vector.memcheck ], [ %0, %.lr.ph.preheader ], [ %i.f, %middle.block ]
-  %.05092.ph = phi ptr [ %1, %vector.memcheck ], [ %1, %.lr.ph.preheader ], [ %i.g, %middle.block ]
-  %.05291.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
+.lr.ph.preheader113:                              ; preds = %vector.memcheck, %vector.scevcheck, %.lr.ph.preheader, %middle.block
+  %.04993.ph = phi ptr [ %0, %vector.memcheck ], [ %0, %vector.scevcheck ], [ %0, %.lr.ph.preheader ], [ %i.f, %middle.block ]
+  %.05092.ph = phi ptr [ %1, %vector.memcheck ], [ %1, %vector.scevcheck ], [ %1, %.lr.ph.preheader ], [ %i.g, %middle.block ]
+  %.05291.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %vector.scevcheck ], [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %bb.l, %middle.block, %bb.a
@@ -1138,9 +1165,18 @@ bb.a:
 
 .lr.ph.i.preheader:                               ; preds = %bb.a
   %min.iters.check = icmp ult i64 %3, 4
-  br i1 %min.iters.check, label %.lr.ph.i.preheader16, label %vector.memcheck
+  br i1 %min.iters.check, label %.lr.ph.i.preheader16, label %vector.scevcheck
 
-vector.memcheck:                                  ; preds = %.lr.ph.i.preheader
+vector.scevcheck:                                 ; preds = %.lr.ph.i.preheader
+  %4 = add nsw i64 %3, -1                         ; 2 uses
+  %mul.result = shl i64 %4, 4
+  %mul.overflow = icmp ugt i64 %4, 1152921504606846975
+  %5 = getelementptr i8, ptr %2, i64 %mul.result
+  %6 = icmp ult ptr %5, %2
+  %7 = or i1 %6, %mul.overflow
+  br i1 %7, label %.lr.ph.i.preheader16, label %vector.memcheck
+
+vector.memcheck:                                  ; preds = %vector.scevcheck
   %i.b = shl i64 %3, 4                            ; 2 uses
   %i.c = getelementptr i8, ptr %2, i64 %i.b
   %i.d = getelementptr i8, ptr %1, i64 %i.b
@@ -1150,7 +1186,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.i.preheader
   br i1 %found.conflict, label %.lr.ph.i.preheader16, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %3, 9223372036854775804        ; 4 uses
+  %n.vec = and i64 %3, 2305843009213693948        ; 4 uses
   %i.e = shl i64 %n.vec, 4                        ; 2 uses
   %i.f = getelementptr i8, ptr %1, i64 %i.e
   %i.g = getelementptr i8, ptr %2, i64 %i.e
@@ -1262,10 +1298,10 @@ middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %3, %n.vec
   br i1 %cmp.n, label %_ZN16OpenColorIO_v2_513applyRGBToHSYEPKvPvlNS_19FixedFunctionOpData5StyleE.exit, label %.lr.ph.i.preheader16
 
-.lr.ph.i.preheader16:                             ; preds = %vector.memcheck, %.lr.ph.i.preheader, %middle.block
-  %.04993.i.ph = phi ptr [ %1, %vector.memcheck ], [ %1, %.lr.ph.i.preheader ], [ %i.f, %middle.block ]
-  %.05092.i.ph = phi ptr [ %2, %vector.memcheck ], [ %2, %.lr.ph.i.preheader ], [ %i.g, %middle.block ]
-  %.05291.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i.preheader ], [ %n.vec, %middle.block ]
+.lr.ph.i.preheader16:                             ; preds = %vector.memcheck, %vector.scevcheck, %.lr.ph.i.preheader, %middle.block
+  %.04993.i.ph = phi ptr [ %1, %vector.memcheck ], [ %1, %vector.scevcheck ], [ %1, %.lr.ph.i.preheader ], [ %i.f, %middle.block ]
+  %.05092.i.ph = phi ptr [ %2, %vector.memcheck ], [ %2, %vector.scevcheck ], [ %2, %.lr.ph.i.preheader ], [ %i.g, %middle.block ]
+  %.05291.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %vector.scevcheck ], [ 0, %.lr.ph.i.preheader ], [ %n.vec, %middle.block ]
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader16, %bb.h
@@ -1409,9 +1445,18 @@ bb.a:
 
 .lr.ph.i.preheader:                               ; preds = %bb.a
   %min.iters.check = icmp ult i64 %3, 4
-  br i1 %min.iters.check, label %.lr.ph.i.preheader16, label %vector.memcheck
+  br i1 %min.iters.check, label %.lr.ph.i.preheader16, label %vector.scevcheck
 
-vector.memcheck:                                  ; preds = %.lr.ph.i.preheader
+vector.scevcheck:                                 ; preds = %.lr.ph.i.preheader
+  %4 = add nsw i64 %3, -1                         ; 2 uses
+  %mul.result = shl i64 %4, 4
+  %mul.overflow = icmp ugt i64 %4, 1152921504606846975
+  %5 = getelementptr i8, ptr %2, i64 %mul.result
+  %6 = icmp ult ptr %5, %2
+  %7 = or i1 %6, %mul.overflow
+  br i1 %7, label %.lr.ph.i.preheader16, label %vector.memcheck
+
+vector.memcheck:                                  ; preds = %vector.scevcheck
   %i.b = shl i64 %3, 4                            ; 2 uses
   %i.c = getelementptr i8, ptr %2, i64 %i.b
   %i.d = getelementptr i8, ptr %1, i64 %i.b
@@ -1421,7 +1466,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.i.preheader
   br i1 %found.conflict, label %.lr.ph.i.preheader16, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %3, 9223372036854775804        ; 4 uses
+  %n.vec = and i64 %3, 2305843009213693948        ; 4 uses
   %i.e = shl i64 %n.vec, 4                        ; 2 uses
   %i.f = getelementptr i8, ptr %1, i64 %i.e
   %i.g = getelementptr i8, ptr %2, i64 %i.e
@@ -1533,10 +1578,10 @@ middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %3, %n.vec
   br i1 %cmp.n, label %_ZN16OpenColorIO_v2_513applyRGBToHSYEPKvPvlNS_19FixedFunctionOpData5StyleE.exit, label %.lr.ph.i.preheader16
 
-.lr.ph.i.preheader16:                             ; preds = %vector.memcheck, %.lr.ph.i.preheader, %middle.block
-  %.04993.i.ph = phi ptr [ %1, %vector.memcheck ], [ %1, %.lr.ph.i.preheader ], [ %i.f, %middle.block ]
-  %.05092.i.ph = phi ptr [ %2, %vector.memcheck ], [ %2, %.lr.ph.i.preheader ], [ %i.g, %middle.block ]
-  %.05291.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i.preheader ], [ %n.vec, %middle.block ]
+.lr.ph.i.preheader16:                             ; preds = %vector.memcheck, %vector.scevcheck, %.lr.ph.i.preheader, %middle.block
+  %.04993.i.ph = phi ptr [ %1, %vector.memcheck ], [ %1, %vector.scevcheck ], [ %1, %.lr.ph.i.preheader ], [ %i.f, %middle.block ]
+  %.05092.i.ph = phi ptr [ %2, %vector.memcheck ], [ %2, %vector.scevcheck ], [ %2, %.lr.ph.i.preheader ], [ %i.g, %middle.block ]
+  %.05291.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %vector.scevcheck ], [ 0, %.lr.ph.i.preheader ], [ %n.vec, %middle.block ]
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader16, %bb.h
@@ -1939,9 +1984,18 @@ bb.a:
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %min.iters.check = icmp ult i64 %3, 4
-  br i1 %min.iters.check, label %.lr.ph.preheader53, label %vector.memcheck
+  br i1 %min.iters.check, label %.lr.ph.preheader53, label %vector.scevcheck
 
-vector.memcheck:                                  ; preds = %.lr.ph.preheader
+vector.scevcheck:                                 ; preds = %.lr.ph.preheader
+  %4 = add nsw i64 %3, -1                         ; 2 uses
+  %mul.result = shl i64 %4, 4
+  %mul.overflow = icmp ugt i64 %4, 1152921504606846975
+  %5 = getelementptr i8, ptr %2, i64 %mul.result
+  %6 = icmp ult ptr %5, %2
+  %7 = or i1 %6, %mul.overflow
+  br i1 %7, label %.lr.ph.preheader53, label %vector.memcheck
+
+vector.memcheck:                                  ; preds = %vector.scevcheck
   %i.b = shl i64 %3, 4                            ; 2 uses
   %i.c = getelementptr i8, ptr %2, i64 %i.b
   %i.d = getelementptr i8, ptr %1, i64 %i.b
@@ -1951,7 +2005,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.preheader
   br i1 %found.conflict, label %.lr.ph.preheader53, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %3, 9223372036854775804        ; 4 uses
+  %n.vec = and i64 %3, 2305843009213693948        ; 4 uses
   %i.e = shl i64 %n.vec, 4                        ; 2 uses
   %i.f = getelementptr i8, ptr %1, i64 %i.e
   %i.g = getelementptr i8, ptr %2, i64 %i.e
@@ -2046,10 +2100,10 @@ middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %3, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader53
 
-.lr.ph.preheader53:                               ; preds = %vector.memcheck, %.lr.ph.preheader, %middle.block
-  %.043.ph = phi ptr [ %1, %vector.memcheck ], [ %1, %.lr.ph.preheader ], [ %i.f, %middle.block ]
-  %.03842.ph = phi ptr [ %2, %vector.memcheck ], [ %2, %.lr.ph.preheader ], [ %i.g, %middle.block ]
-  %.03941.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
+.lr.ph.preheader53:                               ; preds = %vector.memcheck, %vector.scevcheck, %.lr.ph.preheader, %middle.block
+  %.043.ph = phi ptr [ %1, %vector.memcheck ], [ %1, %vector.scevcheck ], [ %1, %.lr.ph.preheader ], [ %i.f, %middle.block ]
+  %.03842.ph = phi ptr [ %2, %vector.memcheck ], [ %2, %vector.scevcheck ], [ %2, %.lr.ph.preheader ], [ %i.g, %middle.block ]
+  %.03941.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %vector.scevcheck ], [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %bb.d, %middle.block, %bb.a

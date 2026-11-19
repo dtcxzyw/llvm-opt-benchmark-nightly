@@ -205,8 +205,8 @@ _ZN4llvm9ListScopeD2Ev.exit:                      ; preds = %_ZN4llvm11raw_ostre
   ret void
 
 bb.b:                                             ; preds = %.lr.ph66, %_ZN4llvm11raw_ostreamlsEPKc.exit46
-  %indvars.iv = phi i64 [ 0, %.lr.ph66 ], [ %indvars.iv.next, %_ZN4llvm11raw_ostreamlsEPKc.exit46 ]
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %.064 = phi i32 [ 0, %.lr.ph66 ], [ %5, %_ZN4llvm11raw_ostreamlsEPKc.exit46 ]
+  %5 = add nuw nsw i32 %.064, 1                   ; 2 uses
   %i.aa = load ptr, ptr %i.f, align 8, !tbaa !136
   %i.ab = call { ptr, i64 } @_ZNK4llvm6object6Binary11getFileNameEv(ptr noundef nonnull align 8 dereferenceable(48) %i.aa) #24 ; 2 uses
   %i.ac = load ptr, ptr %i.t, align 8, !tbaa !237, !noalias !497 ; 2 uses
@@ -257,6 +257,7 @@ _ZN4llvm8ExpectedINS_9StringRefEED2Ev.exit:       ; preds = %bb.b
   br i1 %.not.i.i.i.i36.not59, label %_ZN4llvm11raw_ostreamlsEPKc.exit46.critedge, label %bb.c
 
 bb.c:                                             ; preds = %_ZN4llvm8ExpectedINS_9StringRefEED2Ev.exit
+  %6 = zext nneg i32 %5 to i64
   %.not.i40 = icmp eq i64 %.sroa.24.0.copyload.i, 0
   %i.az = load ptr, ptr %i.a, align 8, !tbaa !217, !nonnull !145, !align !161 ; 2 uses
   %i.ba = load ptr, ptr %i.az, align 8, !tbaa !73
@@ -286,7 +287,7 @@ bb.e:                                             ; preds = %bb.c
 
 _ZN4llvm11raw_ostreamlsEPKc.exit.peel:            ; preds = %bb.e, %bb.d
   %.0.i.i.peel = phi ptr [ %i.bo, %bb.e ], [ %i.bd, %bb.d ]
-  %i.bp = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostreamlsEl(ptr noundef nonnull align 8 dereferenceable(48) %.0.i.i.peel, i64 noundef %indvars.iv.next) #24 ; 4 uses
+  %i.bp = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostreamlsEl(ptr noundef nonnull align 8 dereferenceable(48) %.0.i.i.peel, i64 noundef %6) #24 ; 4 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 24
   %i.br = load ptr, ptr %i.bq, align 8, !tbaa !225
   %i.bs = getelementptr inbounds nuw i8, ptr %i.bp, i64 32 ; 3 uses

@@ -202,28 +202,28 @@ list_length.exit.i.i.preheader.i:                 ; preds = %bb.ar
   br i1 %i.ib, label %.lr.ph.i, label %.thread.i.i.i
 
 .lr.ph.i:                                         ; preds = %list_length.exit.i.i.preheader.i, %list_length.exit.i.i.i
-  %indvars.iv242.i50.i86.i = phi i64 [ %indvars.iv.next243.i.i.i.a, %list_length.exit.i.i.i ], [ 1, %list_length.exit.i.i.preheader.i ] ; 10 uses
-  %.0158.i51.i85.i = phi ptr [ %i.kd, %list_length.exit.i.i.i ], [ %i.hu, %list_length.exit.i.i.preheader.i ] ; 6 uses
-  %.0155.i52.i84.i = phi ptr [ %i.kb, %list_length.exit.i.i.i ], [ %i.hr, %list_length.exit.i.i.preheader.i ] ; 6 uses
-  %.0152.i53.i83.i = phi ptr [ %i.jz, %list_length.exit.i.i.i ], [ %i.ho, %list_length.exit.i.i.preheader.i ] ; 6 uses
-  %.0147.i54.i82.i = phi ptr [ %i.jv, %list_length.exit.i.i.i ], [ %i.hj, %list_length.exit.i.i.preheader.i ] ; 6 uses
+  %.0158.i50.i88.i = phi ptr [ %i.kd, %list_length.exit.i.i.i ], [ %i.hu, %list_length.exit.i.i.preheader.i ] ; 6 uses
+  %.0158.i51.i85.i = phi ptr [ %i.kb, %list_length.exit.i.i.i ], [ %i.hr, %list_length.exit.i.i.preheader.i ] ; 6 uses
+  %.0155.i52.i84.i = phi ptr [ %i.jz, %list_length.exit.i.i.i ], [ %i.ho, %list_length.exit.i.i.preheader.i ] ; 6 uses
+  %.0152.i53.i83.i = phi ptr [ %i.jv, %list_length.exit.i.i.i ], [ %i.hj, %list_length.exit.i.i.preheader.i ] ; 6 uses
+  %indvars.iv.i6284.i = phi i64 [ %indvars.iv.next243.i.i.i.a, %list_length.exit.i.i.i ], [ 1, %list_length.exit.i.i.preheader.i ] ; 10 uses
   %.0163.val178.i.i.i = load ptr, ptr %i.hw, align 8
-  %i.ic = getelementptr inbounds nuw [8 x i8], ptr %.0163.val178.i.i.i, i64 %indvars.iv242.i50.i86.i
+  %i.ic = getelementptr inbounds nuw [8 x i8], ptr %.0163.val178.i.i.i, i64 %indvars.iv.i6284.i
   %i.id = load ptr, ptr %i.ic, align 8
   %.0164.val177.i.i.i = load ptr, ptr %i.hx, align 8
-  %i.ie = getelementptr inbounds nuw [8 x i8], ptr %.0164.val177.i.i.i, i64 %indvars.iv242.i50.i86.i
+  %i.ie = getelementptr inbounds nuw [8 x i8], ptr %.0164.val177.i.i.i, i64 %indvars.iv.i6284.i
   %i.if = load ptr, ptr %i.ie, align 8            ; 2 uses
   %i.ig = load ptr, ptr %i.hy, align 8
   %i.ih = getelementptr i8, ptr %i.ig, i64 16
   %.val180.i.i.i = load ptr, ptr %i.ih, align 8
-  %i.ii = getelementptr inbounds nuw [8 x i8], ptr %.val180.i.i.i, i64 %indvars.iv242.i50.i86.i
+  %i.ii = getelementptr inbounds nuw [8 x i8], ptr %.val180.i.i.i, i64 %indvars.iv.i6284.i
   %i.ij = load i32, ptr %i.ii, align 8            ; 2 uses
   br i1 %.038.i.i, label %bb.at, label %bb.as
 
 bb.as:                                            ; preds = %.lr.ph.i
   %i.ik = call i32 @get_commutator(i32 noundef %i.ij) #6 ; 2 uses
   %i.il = icmp eq i32 %i.ik, 0
-  br i1 %i.il, label %.thread.i.i.i, label %bb.at
+  br i1 %i.il, label %.thread.i.loopexit.i.loopexit.i, label %bb.at
 
 bb.at:                                            ; preds = %bb.as, %.lr.ph.i
   %.0.i.i.i = phi i32 [ %i.ij, %.lr.ph.i ], [ %i.ik, %bb.as ] ; 3 uses
@@ -232,16 +232,16 @@ bb.at:                                            ; preds = %bb.as, %.lr.ph.i
   %i.io = load i32, ptr %i.in, align 8
   %i.ip = call ptr @pull_varnos(ptr noundef %0, ptr noundef %i.if) #6
   %i.iq = call zeroext i1 @bms_is_member(i32 noundef %i.io, ptr noundef %i.ip) #6
-  br i1 %i.iq, label %.thread.i.i.i, label %bb.au
+  br i1 %i.iq, label %.thread.i.loopexit.i.loopexit.i, label %bb.au
 
 bb.au:                                            ; preds = %bb.at
   %i.ir = call zeroext i1 @contain_volatile_functions(ptr noundef %i.if) #6
-  br i1 %i.ir, label %.thread.i.i.i, label %.preheader.i.i.i
+  br i1 %i.ir, label %.thread.i.loopexit.i.loopexit.i, label %.preheader.i.i.i
 
 .preheader.i.i.i:                                 ; preds = %bb.au
   %i.is = load i32, ptr %i.j, align 8
   %i.it = icmp sgt i32 %i.is, 0
-  br i1 %i.it, label %.lr.ph.i.i.i, label %.thread.i.i.i
+  br i1 %i.it, label %.lr.ph.i.i.i, label %.thread.i.loopexit.i.loopexit.i
 
 .lr.ph.i.i.i:                                     ; preds = %.preheader.i.i.i, %bb.ay
   %indvars.iv.i.i.i = phi i64 [ %indvars.iv.next.i.i.i, %bb.ay ], [ 0, %.preheader.i.i.i ] ; 4 uses
@@ -269,7 +269,7 @@ bb.ax:                                            ; preds = %bb.aw
   %i.jg = load ptr, ptr %i.hz, align 8
   %i.jh = getelementptr i8, ptr %i.jg, i64 16
   %.val179.i.i.i = load ptr, ptr %i.jh, align 8
-  %i.ji = getelementptr inbounds nuw [8 x i8], ptr %.val179.i.i.i, i64 %indvars.iv242.i50.i86.i
+  %i.ji = getelementptr inbounds nuw [8 x i8], ptr %.val179.i.i.i, i64 %indvars.iv.i6284.i
   %i.jj = load i32, ptr %i.ji, align 8
   %i.jk = icmp eq i32 %i.je, %i.jj
   br i1 %i.jk, label %._crit_edge.i.loopexit.i.i, label %bb.ay
@@ -293,7 +293,7 @@ bb.ay:                                            ; preds = %bb.ax, %bb.av, %.lr
   %.pre.i.i.i = phi i32 [ %i.jl, %._crit_edge.split.loop.exit.i.i.i ], [ %.pre.i.pre.i.i, %._crit_edge.i.loopexit.i.i ]
   %.0151.lcssa.ph.i.i.i = phi i32 [ %indvars.le.i.i.i, %._crit_edge.split.loop.exit.i.i.i ], [ %i.iu, %._crit_edge.i.loopexit.i.i ] ; 3 uses
   %i.jo = icmp slt i32 %.0151.lcssa.ph.i.i.i, %.pre.i.i.i
-  br i1 %i.jo, label %list_length.exit.i.i.i, label %.thread.i.i.i
+  br i1 %i.jo, label %list_length.exit.i.i.i, label %.thread.i.loopexit.i.loopexit.i
 
 list_length.exit.i.i.i:                           ; preds = %._crit_edge.i.i.i
   %i.jp = load ptr, ptr %i.hh, align 8
@@ -304,28 +304,36 @@ list_length.exit.i.i.i:                           ; preds = %._crit_edge.i.i.i
   %i.jt = getelementptr inbounds nuw [4 x i8], ptr %i.jr, i64 %i.js
   %i.ju = load i32, ptr %i.jt, align 4
   call void @get_op_opfamily_properties(i32 noundef %.0.i.i.i, i32 noundef %i.ju, i1 noundef zeroext false, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c) #6
-  %i.jv = call ptr @lappend_oid(ptr noundef %.0147.i54.i82.i, i32 noundef %.0.i.i.i) #6 ; 2 uses
+  %i.jv = call ptr @lappend_oid(ptr noundef %.0152.i53.i83.i, i32 noundef %.0.i.i.i) #6 ; 2 uses
   %i.jw = load ptr, ptr %i.o, align 8
   %i.jx = getelementptr inbounds nuw [4 x i8], ptr %i.jw, i64 %i.js
   %i.jy = load i32, ptr %i.jx, align 4
-  %i.jz = call ptr @lappend_oid(ptr noundef %.0152.i53.i83.i, i32 noundef %i.jy) #6 ; 2 uses
+  %i.jz = call ptr @lappend_oid(ptr noundef %.0155.i52.i84.i, i32 noundef %i.jy) #6 ; 2 uses
   %i.ka = load i32, ptr %i.b, align 4
-  %i.kb = call ptr @lappend_oid(ptr noundef %.0155.i52.i84.i, i32 noundef %i.ka) #6 ; 2 uses
+  %i.kb = call ptr @lappend_oid(ptr noundef %.0158.i51.i85.i, i32 noundef %i.ka) #6 ; 2 uses
   %i.kc = load i32, ptr %i.c, align 4
-  %i.kd = call ptr @lappend_oid(ptr noundef %.0158.i51.i85.i, i32 noundef %i.kc) #6 ; 2 uses
-  %indvars.iv.next243.i.i.i.a = add nuw nsw i64 %indvars.iv242.i50.i86.i, 1 ; 3 uses
+  %i.kd = call ptr @lappend_oid(ptr noundef %.0158.i50.i88.i, i32 noundef %i.kc) #6 ; 2 uses
+  %indvars.iv.next243.i.i.i.a = add nuw nsw i64 %indvars.iv.i6284.i, 1 ; 3 uses
   %i.ke = load i32, ptr %i.hv, align 4
   %i.kf = sext i32 %i.ke to i64
   %i.kg = icmp slt i64 %indvars.iv.next243.i.i.i.a, %i.kf
-  br i1 %i.kg, label %.lr.ph.i, label %.thread.i.i.i
+  br i1 %i.kg, label %.lr.ph.i, label %.thread.i.loopexit.i.loopexit.i
 
-.thread.i.i.i:                                    ; preds = %list_length.exit.i.i.i, %._crit_edge.i.i.i, %.preheader.i.i.i, %bb.au, %bb.at, %bb.as, %list_length.exit.i.i.preheader.i, %bb.ar
-  %indvars.iv242.i.lcssa.i.i = phi i64 [ 1, %bb.ar ], [ 1, %list_length.exit.i.i.preheader.i ], [ %indvars.iv242.i50.i86.i, %._crit_edge.i.i.i ], [ %indvars.iv242.i50.i86.i, %.preheader.i.i.i ], [ %indvars.iv242.i50.i86.i, %bb.au ], [ %indvars.iv242.i50.i86.i, %bb.at ], [ %indvars.iv242.i50.i86.i, %bb.as ], [ %indvars.iv.next243.i.i.i.a, %list_length.exit.i.i.i ] ; 2 uses
-  %.0158.i.lcssa.i.i = phi ptr [ %i.hu, %bb.ar ], [ %i.hu, %list_length.exit.i.i.preheader.i ], [ %.0158.i51.i85.i, %._crit_edge.i.i.i ], [ %.0158.i51.i85.i, %.preheader.i.i.i ], [ %.0158.i51.i85.i, %bb.au ], [ %.0158.i51.i85.i, %bb.at ], [ %.0158.i51.i85.i, %bb.as ], [ %i.kd, %list_length.exit.i.i.i ] ; 3 uses
-  %.0155.i.lcssa.i.i = phi ptr [ %i.hr, %bb.ar ], [ %i.hr, %list_length.exit.i.i.preheader.i ], [ %.0155.i52.i84.i, %._crit_edge.i.i.i ], [ %.0155.i52.i84.i, %.preheader.i.i.i ], [ %.0155.i52.i84.i, %bb.au ], [ %.0155.i52.i84.i, %bb.at ], [ %.0155.i52.i84.i, %bb.as ], [ %i.kb, %list_length.exit.i.i.i ] ; 3 uses
-  %.0152.i.lcssa.i.i = phi ptr [ %i.ho, %bb.ar ], [ %i.ho, %list_length.exit.i.i.preheader.i ], [ %.0152.i53.i83.i, %._crit_edge.i.i.i ], [ %.0152.i53.i83.i, %.preheader.i.i.i ], [ %.0152.i53.i83.i, %bb.au ], [ %.0152.i53.i83.i, %bb.at ], [ %.0152.i53.i83.i, %bb.as ], [ %i.jz, %list_length.exit.i.i.i ] ; 3 uses
-  %.0147.i.lcssa.i.i = phi ptr [ %i.hj, %bb.ar ], [ %i.hj, %list_length.exit.i.i.preheader.i ], [ %.0147.i54.i82.i, %._crit_edge.i.i.i ], [ %.0147.i54.i82.i, %.preheader.i.i.i ], [ %.0147.i54.i82.i, %bb.au ], [ %.0147.i54.i82.i, %bb.at ], [ %.0147.i54.i82.i, %bb.as ], [ %i.jv, %list_length.exit.i.i.i ] ; 2 uses
-  %4 = trunc nuw nsw i64 %indvars.iv242.i.lcssa.i.i to i32 ; 6 uses
+.thread.i.loopexit.i.loopexit.i:                  ; preds = %list_length.exit.i.i.i, %._crit_edge.i.i.i, %.preheader.i.i.i, %bb.au, %bb.at, %bb.as
+  %indvars.iv.i62.lcssa.ph.i = phi i64 [ %indvars.iv.next243.i.i.i.a, %list_length.exit.i.i.i ], [ %indvars.iv.i6284.i, %bb.as ], [ %indvars.iv.i6284.i, %bb.at ], [ %indvars.iv.i6284.i, %bb.au ], [ %indvars.iv.i6284.i, %.preheader.i.i.i ], [ %indvars.iv.i6284.i, %._crit_edge.i.i.i ]
+  %.0147.i53.i.lcssa.ph.i = phi ptr [ %i.jv, %list_length.exit.i.i.i ], [ %.0152.i53.i83.i, %bb.as ], [ %.0152.i53.i83.i, %bb.at ], [ %.0152.i53.i83.i, %bb.au ], [ %.0152.i53.i83.i, %.preheader.i.i.i ], [ %.0152.i53.i83.i, %._crit_edge.i.i.i ]
+  %.0152.i52.i.lcssa.ph.i = phi ptr [ %i.jz, %list_length.exit.i.i.i ], [ %.0155.i52.i84.i, %bb.as ], [ %.0155.i52.i84.i, %bb.at ], [ %.0155.i52.i84.i, %bb.au ], [ %.0155.i52.i84.i, %.preheader.i.i.i ], [ %.0155.i52.i84.i, %._crit_edge.i.i.i ]
+  %.0155.i51.i.lcssa.ph.i = phi ptr [ %i.kb, %list_length.exit.i.i.i ], [ %.0158.i51.i85.i, %bb.as ], [ %.0158.i51.i85.i, %bb.at ], [ %.0158.i51.i85.i, %bb.au ], [ %.0158.i51.i85.i, %.preheader.i.i.i ], [ %.0158.i51.i85.i, %._crit_edge.i.i.i ]
+  %.0158.i50.i.lcssa.ph.i = phi ptr [ %i.kd, %list_length.exit.i.i.i ], [ %.0158.i50.i88.i, %bb.as ], [ %.0158.i50.i88.i, %bb.at ], [ %.0158.i50.i88.i, %bb.au ], [ %.0158.i50.i88.i, %.preheader.i.i.i ], [ %.0158.i50.i88.i, %._crit_edge.i.i.i ]
+  %4 = trunc nuw nsw i64 %indvars.iv.i62.lcssa.ph.i to i32
+  br label %.thread.i.i.i
+
+.thread.i.i.i:                                    ; preds = %.thread.i.loopexit.i.loopexit.i, %list_length.exit.i.i.preheader.i, %bb.ar
+  %.0158.i.lcssa.i.i = phi ptr [ %i.hu, %bb.ar ], [ %i.hu, %list_length.exit.i.i.preheader.i ], [ %.0158.i50.i.lcssa.ph.i, %.thread.i.loopexit.i.loopexit.i ] ; 3 uses
+  %.0155.i.lcssa.i.i = phi ptr [ %i.hr, %bb.ar ], [ %i.hr, %list_length.exit.i.i.preheader.i ], [ %.0155.i51.i.lcssa.ph.i, %.thread.i.loopexit.i.loopexit.i ] ; 3 uses
+  %.0152.i.lcssa.i.i = phi ptr [ %i.ho, %bb.ar ], [ %i.ho, %list_length.exit.i.i.preheader.i ], [ %.0152.i52.i.lcssa.ph.i, %.thread.i.loopexit.i.loopexit.i ] ; 3 uses
+  %.0147.i.lcssa.i.i = phi ptr [ %i.hj, %bb.ar ], [ %i.hj, %list_length.exit.i.i.preheader.i ], [ %.0147.i53.i.lcssa.ph.i, %.thread.i.loopexit.i.loopexit.i ] ; 2 uses
+  %.0146.i.lcssa.i.i = phi i32 [ 1, %bb.ar ], [ 1, %list_length.exit.i.i.preheader.i ], [ %4, %.thread.i.loopexit.i.loopexit.i ] ; 7 uses
   %i.kh = load ptr, ptr %i.hy, align 8            ; 2 uses
   %.not.i185.i.i.i = icmp eq ptr %i.kh, null
   br i1 %.not.i185.i.i.i, label %.thread263.i.i.i, label %list_length.exit186.i.i.i
@@ -338,7 +346,7 @@ list_length.exit.i.i.i:                           ; preds = %._crit_edge.i.i.i
 list_length.exit186.i.i.i:                        ; preds = %.thread.i.i.i
   %i.kj = getelementptr inbounds nuw i8, ptr %i.kh, i64 4
   %i.kk = load i32, ptr %i.kj, align 4
-  %i.kl = icmp ne i32 %i.kk, %4                   ; 3 uses
+  %i.kl = icmp ne i32 %.0146.i.lcssa.i.i, %i.kk   ; 3 uses
   %i.km = getelementptr inbounds nuw i8, ptr %i.gv, i64 24
   %i.kn = zext i1 %i.kl to i8
   store i8 %i.kn, ptr %i.km, align 8
@@ -359,7 +367,7 @@ bb.ba:                                            ; preds = %bb.az, %.thread263.
   ]
 
 bb.bb:                                            ; preds = %bb.ba, %bb.ba
-  %i.kp = call ptr @list_truncate(ptr noundef %.0147.i.lcssa.i.i, i32 noundef %4) #6
+  %i.kp = call ptr @list_truncate(ptr noundef %.0147.i.lcssa.i.i, i32 noundef %.0146.i.lcssa.i.i) #6
   br label %.critedge.i.i.i
 
 bb.bc:                                            ; preds = %bb.ba
@@ -454,7 +462,7 @@ bb.bl:                                            ; preds = %bb.bk
 
 .critedge.i.i.i:                                  ; preds = %bb.bj, %bb.bi, %bb.be, %bb.bb, %bb.az
   %.1162.i.i.i = phi ptr [ %i.kp, %bb.bb ], [ %.0147.i.lcssa.i.i, %bb.az ], [ null, %bb.be ], [ %.0161.i.i.i, %bb.bi ], [ %.0161.i.i.i, %bb.bj ] ; 2 uses
-  %i.me = icmp samesign ugt i64 %indvars.iv242.i.lcssa.i.i, 1
+  %i.me = icmp samesign ugt i32 %.0146.i.lcssa.i.i, 1
   br i1 %i.me, label %bb.bm, label %bb.bn
 
 bb.bm:                                            ; preds = %.critedge.i.i.i
@@ -467,17 +475,17 @@ bb.bm:                                            ; preds = %.critedge.i.i.i
   store ptr %.1162.i.i.i, ptr %i.mi, align 8
   %i.mj = getelementptr inbounds nuw i8, ptr %i.gw, i64 16
   %i.mk = load ptr, ptr %i.mj, align 8
-  %i.ml = call ptr @list_copy_head(ptr noundef %i.mk, i32 noundef %4) #6
+  %i.ml = call ptr @list_copy_head(ptr noundef %i.mk, i32 noundef %.0146.i.lcssa.i.i) #6
   %i.mm = getelementptr inbounds nuw i8, ptr %i.mf, i64 16
   store ptr %i.ml, ptr %i.mm, align 8
   %i.mn = load ptr, ptr %i.hz, align 8
-  %i.mo = call ptr @list_copy_head(ptr noundef %i.mn, i32 noundef %4) #6
+  %i.mo = call ptr @list_copy_head(ptr noundef %i.mn, i32 noundef %.0146.i.lcssa.i.i) #6
   %i.mp = getelementptr inbounds nuw i8, ptr %i.mf, i64 24
   store ptr %i.mo, ptr %i.mp, align 8
-  %i.mq = call ptr @list_copy_head(ptr noundef %.0163.i.i.i, i32 noundef %4) #6
+  %i.mq = call ptr @list_copy_head(ptr noundef %.0163.i.i.i, i32 noundef %.0146.i.lcssa.i.i) #6
   %i.mr = getelementptr inbounds nuw i8, ptr %i.mf, i64 32
   store ptr %i.mq, ptr %i.mr, align 8
-  %i.ms = call ptr @list_copy_head(ptr noundef %.0164.i.i.i, i32 noundef %4) #6
+  %i.ms = call ptr @list_copy_head(ptr noundef %.0164.i.i.i, i32 noundef %.0146.i.lcssa.i.i) #6
   %i.mt = getelementptr inbounds nuw i8, ptr %i.mf, i64 40
   store ptr %i.ms, ptr %i.mt, align 8
   br label %.sink.split.i.i.i

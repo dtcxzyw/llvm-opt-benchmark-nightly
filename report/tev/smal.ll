@@ -203,7 +203,9 @@ bb.p:                                             ; preds = %bb.o
 
 iter.check:                                       ; preds = %bb.p
   %i.ed = zext i8 %i.cv to i64
-  %i.ee = sub i64 %i.ds, %indvar                  ; 7 uses
+  %3 = add nuw i64 %indvars.iv, 1
+  %umax = tail call i64 @llvm.umax.i64(i64 %3, i64 %i.ds)
+  %i.ee = sub i64 %umax, %indvar                  ; 7 uses
   %min.iters.check = icmp ult i64 %i.ee, 8
   br i1 %min.iters.check, label %.lr.ph151.preheader, label %vector.main.loop.iter.check
 
@@ -285,8 +287,8 @@ bb.q:                                             ; preds = %bb.p
   br i1 %or.cond, label %iter.check224, label %.loopexit
 
 iter.check224:                                    ; preds = %bb.q
-  %wide.trip.count = zext i32 %indvars.iv174 to i64
-  %i.fa = sub nsw i64 %indvars.iv, %i.ds          ; 7 uses
+  %wide.trip.count = zext i32 %indvars.iv174 to i64 ; 2 uses
+  %i.fa = sub nsw i64 %wide.trip.count, %i.ds     ; 7 uses
   %min.iters.check212 = icmp ult i64 %i.fa, 8
   br i1 %min.iters.check212, label %.lr.ph.preheader, label %vector.main.loop.iter.check213
 
@@ -297,7 +299,7 @@ vector.main.loop.iter.check213:                   ; preds = %iter.check224
 vector.ph215:                                     ; preds = %vector.main.loop.iter.check213
   %i.fb = and i64 %i.fa, 24
   %n.vec216 = and i64 %i.fa, -32                  ; 4 uses
-  %i.fc = add i64 %n.vec216, %i.ds
+  %i.fc = add nsw i64 %n.vec216, %i.ds
   %invariant.gep = getelementptr i8, ptr %i.ca, i64 %i.ds
   br label %vector.body217
 
@@ -327,7 +329,7 @@ vec.epilog.iter.check225:                         ; preds = %middle.block222
 vec.epilog.ph228:                                 ; preds = %vector.main.loop.iter.check213, %vec.epilog.iter.check225
   %vec.epilog.resume.val229 = phi i64 [ %n.vec216, %vec.epilog.iter.check225 ], [ 0, %vector.main.loop.iter.check213 ]
   %n.vec230 = and i64 %i.fa, -8                   ; 3 uses
-  %i.fi = add i64 %n.vec230, %i.ds
+  %i.fi = add nsw i64 %n.vec230, %i.ds
   %invariant.gep277 = getelementptr i8, ptr %i.ca, i64 %i.ds
   br label %vec.epilog.vector.body231
 
@@ -729,6 +731,9 @@ declare i32 @llvm.umax.i32(i32, i32) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.usub.sat.i32(i32, i32) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umax.i64(i64, i64) #6
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.experimental.cttz.elts.i64.v16i1(<16 x i1>, i1 immarg) #7

@@ -205,7 +205,7 @@ _ZN4pbrt20SobolIntervalToIndexEjmNS_6Point2IiEE.exit: ; preds = %bb.t, %bb.g, %.
   br i1 %.not12.i, label %_ZN4pbrt11SobolSampleINS_12NoRandomizerEEEfliT_.exit72, label %.lr.ph.i52
 
 .lr.ph.i52:                                       ; preds = %_ZN4pbrt20SobolIntervalToIndexEjmNS_6Point2IiEE.exit, %bb.v
-  %indvars.iv.i53 = phi i64 [ %indvars.iv.next.i55, %bb.v ], [ 0, %_ZN4pbrt20SobolIntervalToIndexEjmNS_6Point2IiEE.exit ] ; 2 uses
+  %.015.i = phi i32 [ %15, %bb.v ], [ 0, %_ZN4pbrt20SobolIntervalToIndexEjmNS_6Point2IiEE.exit ] ; 2 uses
   %.0914.i = phi i32 [ %.1.i54, %bb.v ], [ 0, %_ZN4pbrt20SobolIntervalToIndexEjmNS_6Point2IiEE.exit ] ; 2 uses
   %.01013.i = phi i64 [ %i.bk, %bb.v ], [ %.029.i, %_ZN4pbrt20SobolIntervalToIndexEjmNS_6Point2IiEE.exit ] ; 2 uses
   %i.bg = and i64 %.01013.i, 1
@@ -213,7 +213,8 @@ _ZN4pbrt20SobolIntervalToIndexEjmNS_6Point2IiEE.exit: ; preds = %bb.t, %bb.g, %.
   br i1 %.not11.i, label %bb.v, label %bb.u
 
 bb.u:                                             ; preds = %.lr.ph.i52
-  %i.bh = getelementptr inbounds nuw [4 x i8], ptr @_ZN4pbrt15SobolMatrices32E, i64 %indvars.iv.i53
+  %14 = zext nneg i32 %.015.i to i64
+  %i.bh = getelementptr inbounds nuw [4 x i8], ptr @_ZN4pbrt15SobolMatrices32E, i64 %14
   %i.bi = load i32, ptr %i.bh, align 4, !tbaa !20
   %i.bj = xor i32 %i.bi, %.0914.i
   br label %bb.v
@@ -221,7 +222,7 @@ bb.u:                                             ; preds = %.lr.ph.i52
 bb.v:                                             ; preds = %bb.u, %.lr.ph.i52
   %.1.i54 = phi i32 [ %i.bj, %bb.u ], [ %.0914.i, %.lr.ph.i52 ] ; 2 uses
   %i.bk = ashr i64 %.01013.i, 1                   ; 2 uses
-  %indvars.iv.next.i55 = add nuw nsw i64 %indvars.iv.i53, 1
+  %15 = add nuw nsw i32 %.015.i, 1
   %.not.i56 = icmp eq i64 %i.bk, 0
   br i1 %.not.i56, label %.lr.ph.i60, label %.lr.ph.i52, !llvm.loop !5
 
@@ -235,7 +236,7 @@ bb.v:                                             ; preds = %bb.u, %.lr.ph.i52
   br label %_ZN4pbrt11SobolSampleINS_12NoRandomizerEEEfliT_.exit72
 
 .lr.ph.i60:                                       ; preds = %bb.v, %bb.x
-  %indvars.iv.i61 = phi i64 [ %indvars.iv.next.i66, %bb.x ], [ 52, %bb.v ] ; 2 uses
+  %.015.i59 = phi i32 [ %17, %bb.x ], [ 52, %bb.v ] ; 2 uses
   %.0914.i62 = phi i32 [ %.1.i65, %bb.x ], [ 0, %bb.v ] ; 2 uses
   %.01013.i63 = phi i64 [ %i.bu, %bb.x ], [ %.029.i, %bb.v ] ; 2 uses
   %i.bq = and i64 %.01013.i63, 1
@@ -243,7 +244,8 @@ bb.v:                                             ; preds = %bb.u, %.lr.ph.i52
   br i1 %.not11.i64, label %bb.x, label %bb.w
 
 bb.w:                                             ; preds = %.lr.ph.i60
-  %i.br = getelementptr inbounds nuw [4 x i8], ptr @_ZN4pbrt15SobolMatrices32E, i64 %indvars.iv.i61
+  %16 = zext nneg i32 %.015.i59 to i64
+  %i.br = getelementptr inbounds nuw [4 x i8], ptr @_ZN4pbrt15SobolMatrices32E, i64 %16
   %i.bs = load i32, ptr %i.br, align 4, !tbaa !20
   %i.bt = xor i32 %i.bs, %.0914.i62
   br label %bb.x
@@ -251,7 +253,7 @@ bb.w:                                             ; preds = %.lr.ph.i60
 bb.x:                                             ; preds = %bb.w, %.lr.ph.i60
   %.1.i65 = phi i32 [ %i.bt, %bb.w ], [ %.0914.i62, %.lr.ph.i60 ] ; 2 uses
   %i.bu = ashr i64 %.01013.i63, 1                 ; 2 uses
-  %indvars.iv.next.i66 = add nuw nsw i64 %indvars.iv.i61, 1
+  %17 = add nuw nsw i32 %.015.i59, 1
   %.not.i67 = icmp eq i64 %i.bu, 0
   br i1 %.not.i67, label %._crit_edge.loopexit.i68, label %.lr.ph.i60, !llvm.loop !5
 
@@ -654,7 +656,7 @@ _ZN4pbrt20SobolIntervalToIndexEjmNS_6Point2IiEE.exit: ; preds = %bb.j, %_ZN4pbrt
   br i1 %.not12.i, label %_ZN4pbrt11SobolSampleINS_12NoRandomizerEEEfliT_.exit62, label %.lr.ph.i42
 
 .lr.ph.i42:                                       ; preds = %_ZN4pbrt20SobolIntervalToIndexEjmNS_6Point2IiEE.exit, %bb.l
-  %indvars.iv.i43 = phi i64 [ %indvars.iv.next.i45, %bb.l ], [ 0, %_ZN4pbrt20SobolIntervalToIndexEjmNS_6Point2IiEE.exit ] ; 2 uses
+  %.015.i = phi i32 [ %8, %bb.l ], [ 0, %_ZN4pbrt20SobolIntervalToIndexEjmNS_6Point2IiEE.exit ] ; 2 uses
   %.0914.i = phi i32 [ %.1.i44, %bb.l ], [ 0, %_ZN4pbrt20SobolIntervalToIndexEjmNS_6Point2IiEE.exit ] ; 2 uses
   %.01013.i = phi i64 [ %i.cb, %bb.l ], [ %.029.i, %_ZN4pbrt20SobolIntervalToIndexEjmNS_6Point2IiEE.exit ] ; 2 uses
   %i.bx = and i64 %.01013.i, 1
@@ -662,7 +664,8 @@ _ZN4pbrt20SobolIntervalToIndexEjmNS_6Point2IiEE.exit: ; preds = %bb.j, %_ZN4pbrt
   br i1 %.not11.i, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %.lr.ph.i42
-  %i.by = getelementptr inbounds nuw [4 x i8], ptr @_ZN4pbrt15SobolMatrices32E, i64 %indvars.iv.i43
+  %7 = zext nneg i32 %.015.i to i64
+  %i.by = getelementptr inbounds nuw [4 x i8], ptr @_ZN4pbrt15SobolMatrices32E, i64 %7
   %i.bz = load i32, ptr %i.by, align 4, !tbaa !20
   %i.ca = xor i32 %i.bz, %.0914.i
   br label %bb.l
@@ -670,7 +673,7 @@ bb.k:                                             ; preds = %.lr.ph.i42
 bb.l:                                             ; preds = %bb.k, %.lr.ph.i42
   %.1.i44 = phi i32 [ %i.ca, %bb.k ], [ %.0914.i, %.lr.ph.i42 ] ; 2 uses
   %i.cb = ashr i64 %.01013.i, 1                   ; 2 uses
-  %indvars.iv.next.i45 = add nuw nsw i64 %indvars.iv.i43, 1
+  %8 = add nuw nsw i32 %.015.i, 1
   %.not.i46 = icmp eq i64 %i.cb, 0
   br i1 %.not.i46, label %.lr.ph.i50, label %.lr.ph.i42, !llvm.loop !5
 
@@ -684,7 +687,7 @@ bb.l:                                             ; preds = %bb.k, %.lr.ph.i42
   br label %_ZN4pbrt11SobolSampleINS_12NoRandomizerEEEfliT_.exit62
 
 .lr.ph.i50:                                       ; preds = %bb.l, %bb.n
-  %indvars.iv.i51 = phi i64 [ %indvars.iv.next.i56, %bb.n ], [ 52, %bb.l ] ; 2 uses
+  %.015.i49 = phi i32 [ %10, %bb.n ], [ 52, %bb.l ] ; 2 uses
   %.0914.i52 = phi i32 [ %.1.i55, %bb.n ], [ 0, %bb.l ] ; 2 uses
   %.01013.i53 = phi i64 [ %i.cl, %bb.n ], [ %.029.i, %bb.l ] ; 2 uses
   %i.ch = and i64 %.01013.i53, 1
@@ -692,7 +695,8 @@ bb.l:                                             ; preds = %bb.k, %.lr.ph.i42
   br i1 %.not11.i54, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %.lr.ph.i50
-  %i.ci = getelementptr inbounds nuw [4 x i8], ptr @_ZN4pbrt15SobolMatrices32E, i64 %indvars.iv.i51
+  %9 = zext nneg i32 %.015.i49 to i64
+  %i.ci = getelementptr inbounds nuw [4 x i8], ptr @_ZN4pbrt15SobolMatrices32E, i64 %9
   %i.cj = load i32, ptr %i.ci, align 4, !tbaa !20
   %i.ck = xor i32 %i.cj, %.0914.i52
   br label %bb.n
@@ -700,7 +704,7 @@ bb.m:                                             ; preds = %.lr.ph.i50
 bb.n:                                             ; preds = %bb.m, %.lr.ph.i50
   %.1.i55 = phi i32 [ %i.ck, %bb.m ], [ %.0914.i52, %.lr.ph.i50 ] ; 2 uses
   %i.cl = ashr i64 %.01013.i53, 1                 ; 2 uses
-  %indvars.iv.next.i56 = add nuw nsw i64 %indvars.iv.i51, 1
+  %10 = add nuw nsw i32 %.015.i49, 1
   %.not.i57 = icmp eq i64 %i.cl, 0
   br i1 %.not.i57, label %._crit_edge.loopexit.i58, label %.lr.ph.i50, !llvm.loop !5
 

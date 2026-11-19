@@ -202,7 +202,8 @@ _foreach_by_job_callback.exit93:                  ; preds = %._foreach_by_job_ca
   br label %bb.s
 
 bb.s:                                             ; preds = %.lr.ph120, %.thread105
-  %indvars.iv = phi i64 [ 0, %.lr.ph120 ], [ %indvars.iv.next, %.thread105 ] ; 4 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph120 ], [ %2, %.thread105 ] ; 2 uses
+  %.0118 = phi i32 [ 0, %.lr.ph120 ], [ %1, %.thread105 ] ; 3 uses
   %i.ci = load ptr, ptr %i.be, align 8
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ci, i64 8
   %i.ck = load ptr, ptr %i.cj, align 8
@@ -212,8 +213,7 @@ bb.s:                                             ; preds = %.lr.ph120, %.thread
 
 bb.t:                                             ; preds = %bb.s
   %i.cm = load i32, ptr %i.cd, align 8
-  %1 = trunc nuw nsw i64 %indvars.iv to i32       ; 2 uses
-  %i.cn = tail call ptr @find_job_array_rec(i32 noundef %i.cm, i32 noundef %1) ; 5 uses
+  %i.cn = tail call ptr @find_job_array_rec(i32 noundef %i.cm, i32 noundef %.0118) ; 5 uses
   %.not77 = icmp eq ptr %i.cn, null
   br i1 %.not77, label %.thread105, label %bb.u
 
@@ -242,7 +242,7 @@ bb.x:                                             ; preds = %bb.w
   %i.cy = tail call i32 @slurm_bit_test(ptr noundef %i.cx, i64 noundef %indvars.iv) #24
   %.not80 = icmp eq i32 %i.cy, 0
   %i.cz = select i1 %.not80, i32 48, i32 49
-  tail call void (i32, ptr, ...) @log_var(i32 noundef 7, ptr noundef nonnull @.str.307, ptr noundef nonnull %.09.i, i32 noundef %1, i32 noundef %i.cz, ptr noundef nonnull %i.cn) #24
+  tail call void (i32, ptr, ...) @log_var(i32 noundef 7, ptr noundef nonnull @.str.307, ptr noundef nonnull %.09.i, i32 noundef %.0118, i32 noundef %i.cz, ptr noundef nonnull %i.cn) #24
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.w, %bb.x
@@ -278,12 +278,13 @@ _foreach_by_job_callback.exit99:                  ; preds = %_foreach_by_job_cal
   br i1 %.not81, label %.thread105, label %.thread
 
 .thread105:                                       ; preds = %_foreach_by_job_callback.exit99, %bb.v, %bb.t, %bb.s
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %1 = add nuw nsw i32 %.0118, 1                  ; 2 uses
+  %2 = zext nneg i32 %1 to i64                    ; 2 uses
   %i.di = load ptr, ptr %i.be, align 8
   %i.dj = getelementptr inbounds nuw i8, ptr %i.di, i64 8
   %i.dk = load ptr, ptr %i.dj, align 8
   %i.dl = tail call i64 @bit_size(ptr noundef %i.dk) #24
-  %i.dm = icmp sgt i64 %i.dl, %indvars.iv.next
+  %i.dm = icmp sgt i64 %i.dl, %2
   br i1 %i.dm, label %bb.s, label %.thread, !llvm.loop !95
 
 .thread.sink.split:                               ; preds = %bb.o, %bb.m

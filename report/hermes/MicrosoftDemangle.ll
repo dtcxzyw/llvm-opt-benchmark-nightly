@@ -205,8 +205,8 @@ bb.ax:                                            ; preds = %bb.r
   br label %bb.ay
 
 bb.ay:                                            ; preds = %_ZN12_GLOBAL__N_19Demangler19demangleCharLiteralER10StringView.exit, %bb.ax
-  %i.gf = phi ptr [ %i.hz, %_ZN12_GLOBAL__N_19Demangler19demangleCharLiteralER10StringView.exit ], [ %i.bz, %bb.ax ] ; 13 uses
-  %indvars.iv = phi i64 [ %indvars.iv.next, %_ZN12_GLOBAL__N_19Demangler19demangleCharLiteralER10StringView.exit ], [ 0, %bb.ax ] ; 4 uses
+  %i.gf = phi ptr [ %i.bz, %bb.ax ], [ %i.hz, %_ZN12_GLOBAL__N_19Demangler19demangleCharLiteralER10StringView.exit ] ; 13 uses
+  %.054 = phi i32 [ 0, %bb.ax ], [ %3, %_ZN12_GLOBAL__N_19Demangler19demangleCharLiteralER10StringView.exit ] ; 6 uses
   %i.gg = icmp eq ptr %i.gf, %i.ac
   br i1 %i.gg, label %_ZNK10StringView10startsWithEc.exit.thread.i, label %_ZNK10StringView10startsWithEc.exit.i65
 
@@ -319,16 +319,17 @@ bb.bj:                                            ; preds = %bb.bi
 _ZN12_GLOBAL__N_19Demangler19demangleCharLiteralER10StringView.exit: ; preds = %_ZNK10StringView10startsWithEc.exit.thread.i, %bb.bd, %bb.be, %bb.bh, %bb.bj, %.thread.i
   %i.hz = phi ptr [ %i.hy, %.thread.i ], [ %i.hc, %bb.bd ], [ %i.hk, %bb.be ], [ %i.hr, %bb.bh ], [ %i.hx, %bb.bj ], [ %i.gl, %_ZNK10StringView10startsWithEc.exit.thread.i ]
   %.1.i68 = phi i8 [ 0, %.thread.i ], [ %i.he, %bb.bd ], [ %i.hj, %bb.be ], [ %i.hq, %bb.bh ], [ %i.hw, %bb.bj ], [ %i.gm, %_ZNK10StringView10startsWithEc.exit.thread.i ]
-  %indvars.iv.next = add nuw i64 %indvars.iv, 1
-  %i.ia = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv
+  %3 = add nuw i32 %.054, 1
+  %4 = zext i32 %.054 to i64
+  %i.ia = getelementptr inbounds nuw i8, ptr %i.a, i64 %4
   store i8 %.1.i68, ptr %i.ia, align 1, !tbaa !34
   br label %bb.ay, !llvm.loop !163
 
 bb.bk:                                            ; preds = %_ZNK10StringView10startsWithEc.exit.i65
-  %3 = trunc nuw i64 %indvars.iv to i32           ; 3 uses
   %i.ib = getelementptr inbounds nuw i8, ptr %i.gf, i64 1
   store ptr %i.ib, ptr %1, align 8, !tbaa !74
-  %i.ic = icmp ugt i64 %.sroa.0.4.i, %indvars.iv
+  %5 = zext i32 %.054 to i64
+  %i.ic = icmp ugt i64 %.sroa.0.4.i, %5
   br i1 %i.ic, label %bb.bl, label %switch.lookup
 
 bb.bl:                                            ; preds = %bb.bk
@@ -338,18 +339,18 @@ bb.bl:                                            ; preds = %bb.bk
 
 switch.lookup:                                    ; preds = %bb.bl, %bb.bk
   %i.ie = trunc i64 %.sroa.0.4.i to i32
-  %i.if = call noundef i32 @_Z17guessCharByteSizePKhjj(ptr noundef nonnull %i.a, i32 noundef %3, i32 noundef %i.ie) ; 7 uses
+  %i.if = call noundef i32 @_Z17guessCharByteSizePKhjj(ptr noundef nonnull %i.a, i32 noundef %.054, i32 noundef %i.ie) ; 7 uses
   %i.ig = zext nneg i32 %i.if to i64
   %i.ih = getelementptr i8, ptr @switch.table._ZN12_GLOBAL__N_19Demangler21demangleStringLiteralER10StringView, i64 %i.ig
   %switch.gep = getelementptr i8, ptr %i.ih, i64 -1
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i32
   store i32 %switch.ext, ptr %i.aa, align 4, !tbaa !167
-  %.not98 = icmp ugt i32 %i.if, %3
+  %.not98 = icmp ugt i32 %i.if, %.054
   br i1 %.not98, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %switch.lookup
-  %i.ii = udiv i32 %3, %i.if
+  %i.ii = udiv i32 %.054, %i.if
   %i.ij = getelementptr inbounds nuw i8, ptr %.sink15.i, i64 40
   %i.ik = zext i32 %i.ii to i64
   %exitcond.not.i74 = icmp eq i32 %i.if, 1

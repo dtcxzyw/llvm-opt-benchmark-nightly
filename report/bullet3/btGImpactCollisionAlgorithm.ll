@@ -205,16 +205,13 @@ bb.c:                                             ; preds = %bb.b
   %i.jo = load i32, ptr %i.az, align 4            ; 2 uses
   %.not1997 = icmp ne i32 %i.jo, 0
   %or.cond.not = select i1 %i.jn, i1 %.not1997, i1 false
-  br i1 %or.cond.not, label %.lr.ph.preheader, label %.loopexit
+  br i1 %or.cond.not, label %.lr.ph, label %.loopexit
 
-.lr.ph.preheader:                                 ; preds = %bb.c
-  %10 = sext i32 %i.jo to i64
-  br label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZN27btGImpactCollisionAlgorithm15addContactPointEPK24btCollisionObjectWrapperS2_RK9btVector3S5_f.exit
-  %indvars.iv = phi i64 [ %10, %.lr.ph.preheader ], [ %indvars.iv.next, %_ZN27btGImpactCollisionAlgorithm15addContactPointEPK24btCollisionObjectWrapperS2_RK9btVector3S5_f.exit ]
-  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 3 uses
-  %i.jp = getelementptr inbounds [16 x i8], ptr %i.ba, i64 %indvars.iv.next
+.lr.ph:                                           ; preds = %bb.c, %_ZN27btGImpactCollisionAlgorithm15addContactPointEPK24btCollisionObjectWrapperS2_RK9btVector3S5_f.exit
+  %.098 = phi i32 [ %10, %_ZN27btGImpactCollisionAlgorithm15addContactPointEPK24btCollisionObjectWrapperS2_RK9btVector3S5_f.exit ], [ %i.jo, %bb.c ]
+  %10 = add nsw i32 %.098, -1                     ; 3 uses
+  %11 = sext i32 %10 to i64
+  %i.jp = getelementptr inbounds [16 x i8], ptr %i.ba, i64 %11
   %i.jq = load float, ptr %9, align 4, !tbaa !163
   %i.jr = fneg float %i.jq
   %i.js = load ptr, ptr %i.bc, align 8, !tbaa !26 ; 2 uses
@@ -255,7 +252,7 @@ _ZN27btGImpactCollisionAlgorithm15addContactPointEPK24btCollisionObjectWrapperS2
   %i.kr = getelementptr inbounds nuw i8, ptr %i.kq, i64 32
   %i.ks = load ptr, ptr %i.kr, align 8
   call void %i.ks(ptr noundef nonnull align 8 dereferenceable(52) %i.ko, ptr noundef nonnull align 4 dereferenceable(16) %i.bb, ptr noundef nonnull align 4 dereferenceable(16) %i.jp, float noundef %i.jr), !inline_history !85
-  %.not19 = icmp eq i64 %indvars.iv.next, 0
+  %.not19 = icmp eq i32 %10, 0
   br i1 %.not19, label %.loopexit, label %.lr.ph, !llvm.loop !157
 
 .loopexit:                                        ; preds = %_ZN27btGImpactCollisionAlgorithm15addContactPointEPK24btCollisionObjectWrapperS2_RK9btVector3S5_f.exit, %bb.c, %bb.b

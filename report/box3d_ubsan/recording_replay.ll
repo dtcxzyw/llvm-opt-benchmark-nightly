@@ -202,32 +202,28 @@ bb.bm:                                            ; preds = %bb.bk, %bb.bj
   %i.ju = load i32, ptr %i.js, align 4, !tbaa !226 ; 2 uses
   %i.jv = call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %i.jr, i32 %i.ju), !nosanitize !9 ; 2 uses
   %i.jw = extractvalue { i32, i1 } %i.jv, 1, !nosanitize !9
-  br i1 %i.jw, label %.split.us, label %.lr.ph3936, !prof !125, !nosanitize !9
+  br i1 %i.jw, label %.split.us, label %bb.bn, !prof !125, !nosanitize !9
 
-.lr.ph3936:                                       ; preds = %.lr.ph
-  %5 = sext i32 %i.jr to i64
-  br label %bb.bn
-
-bb.bn:                                            ; preds = %.lr.ph3936, %.lr.ph.split.us.split.us
-  %i.jx = phi { i32, i1 } [ %i.jv, %.lr.ph3936 ], [ %i.lj, %.lr.ph.split.us.split.us ]
-  %indvars.iv3935 = phi i64 [ %5, %.lr.ph3936 ], [ %indvars.iv.next, %.lr.ph.split.us.split.us ] ; 5 uses
-  %i.jy = phi i32 [ %i.jr, %.lr.ph3936 ], [ %i.lh, %.lr.ph.split.us.split.us ]
+bb.bn:                                            ; preds = %.lr.ph, %.lr.ph.split.us.split.us
+  %i.jx = phi { i32, i1 } [ %i.lj, %.lr.ph.split.us.split.us ], [ %i.jv, %.lr.ph ]
+  %.04551924.us.us3932 = phi i32 [ %6, %.lr.ph.split.us.split.us ], [ %i.jr, %.lr.ph ] ; 4 uses
+  %i.jy = phi i32 [ %i.lh, %.lr.ph.split.us.split.us ], [ %i.jr, %.lr.ph ]
   %i.jz = extractvalue { i32, i1 } %i.jx, 0, !nosanitize !9
-  %6 = sext i32 %i.jz to i64
-  %i.ka = icmp slt i64 %indvars.iv3935, %6
+  %i.ka = icmp slt i32 %.04551924.us.us3932, %i.jz
   br i1 %i.ka, label %bb.bo, label %.loopexit
 
 bb.bo:                                            ; preds = %bb.bn
   %i.kb = load ptr, ptr %i.p, align 8, !tbaa !113 ; 3 uses
-  %i.kc = getelementptr inbounds [112 x i8], ptr %i.kb, i64 %indvars.iv3935 ; 5 uses
-  %i.kd = mul nsw i64 %indvars.iv3935, 112
+  %5 = sext i32 %.04551924.us.us3932 to i64       ; 2 uses
+  %i.kc = getelementptr inbounds [112 x i8], ptr %i.kb, i64 %5 ; 5 uses
+  %i.kd = mul nsw i64 %5, 112
   %i.ke = ptrtoint ptr %i.kb to i64, !nosanitize !9 ; 3 uses
   %i.kf = add i64 %i.kd, %i.ke, !nosanitize !9    ; 3 uses
   %i.kg = icmp ne ptr %i.kb, null, !nosanitize !9 ; 2 uses
   %i.kh = icmp eq i64 %i.kf, 0
   %i.ki = xor i1 %i.kg, %i.kh
   %i.kj = icmp uge i64 %i.kf, %i.ke, !nosanitize !9
-  %i.kk = icmp slt i64 %indvars.iv3935, 0
+  %i.kk = icmp slt i32 %.04551924.us.us3932, 0
   %i.kl = xor i1 %i.kk, %i.kj
   %i.km = and i1 %i.ki, %i.kl, !nosanitize !9
   br i1 %i.km, label %bb.bp, label %.split1929.us, !prof !10, !nosanitize !9
@@ -280,7 +276,7 @@ bb.bt:                                            ; preds = %bb.br, %bb.bs
 
 .lr.ph.split.us.split.us:                         ; preds = %bb.bt, %bb.bq
   %i.lh = phi i32 [ %.pre, %bb.bt ], [ %i.jy, %bb.bq ] ; 3 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv3935, 1
+  %6 = add nsw i32 %.04551924.us.us3932, 1
   %i.li = load i32, ptr %i.js, align 4, !tbaa !226 ; 2 uses
   %i.lj = call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %i.lh, i32 %i.li), !nosanitize !9 ; 2 uses
   %i.lk = extractvalue { i32, i1 } %i.lj, 1, !nosanitize !9
@@ -683,31 +679,27 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.o, label %.lr.ph.split.us.split.us.split.us.preheader, label %.lr.ph.split, !prof !10, !nosanitize !9
 
 .lr.ph.split.us.split.us.split.us.preheader:      ; preds = %.lr.ph
-  br i1 %i.t, label %.split.us, label %.lr.ph224, !prof !125, !nosanitize !9
+  br i1 %i.t, label %.split.us, label %bb.f, !prof !125, !nosanitize !9
 
-.lr.ph224:                                        ; preds = %.lr.ph.split.us.split.us.split.us.preheader
-  %5 = sext i32 %i.k to i64
-  br label %bb.f
-
-bb.f:                                             ; preds = %.lr.ph224, %.lr.ph.split.us.split.us.split.us
-  %i.u = phi { i32, i1 } [ %i.s, %.lr.ph224 ], [ %i.ay, %.lr.ph.split.us.split.us.split.us ]
-  %indvars.iv165223 = phi i64 [ %5, %.lr.ph224 ], [ %indvars.iv.next166, %.lr.ph.split.us.split.us.split.us ] ; 5 uses
+bb.f:                                             ; preds = %.lr.ph.split.us.split.us.split.us.preheader, %.lr.ph.split.us.split.us.split.us
+  %i.u = phi { i32, i1 } [ %i.ay, %.lr.ph.split.us.split.us.split.us ], [ %i.s, %.lr.ph.split.us.split.us.split.us.preheader ]
+  %.065.us.us.us220 = phi i32 [ %6, %.lr.ph.split.us.split.us.split.us ], [ %i.k, %.lr.ph.split.us.split.us.split.us.preheader ] ; 4 uses
   %i.v = extractvalue { i32, i1 } %i.u, 0, !nosanitize !9
-  %6 = sext i32 %i.v to i64
-  %i.w = icmp slt i64 %indvars.iv165223, %6
+  %i.w = icmp slt i32 %.065.us.us.us220, %i.v
   br i1 %i.w, label %bb.g, label %.loopexit
 
 bb.g:                                             ; preds = %bb.f
   %i.x = load ptr, ptr %i.p, align 8, !tbaa !113  ; 3 uses
-  %i.y = getelementptr inbounds [112 x i8], ptr %i.x, i64 %indvars.iv165223 ; 2 uses
-  %i.z = mul nsw i64 %indvars.iv165223, 112
+  %5 = sext i32 %.065.us.us.us220 to i64          ; 2 uses
+  %i.y = getelementptr inbounds [112 x i8], ptr %i.x, i64 %5 ; 2 uses
+  %i.z = mul nsw i64 %5, 112
   %i.aa = ptrtoint ptr %i.x to i64, !nosanitize !9 ; 3 uses
   %i.ab = add i64 %i.z, %i.aa, !nosanitize !9     ; 3 uses
   %i.ac = icmp ne ptr %i.x, null, !nosanitize !9  ; 2 uses
   %i.ad = icmp eq i64 %i.ab, 0
   %i.ae = xor i1 %i.ac, %i.ad
   %i.af = icmp uge i64 %i.ab, %i.aa, !nosanitize !9
-  %i.ag = icmp slt i64 %indvars.iv165223, 0
+  %i.ag = icmp slt i32 %.065.us.us.us220, 0
   %i.ah = xor i1 %i.ag, %i.af
   %i.ai = and i1 %i.ae, %i.ah, !nosanitize !9
   br i1 %i.ai, label %bb.h, label %.split71.us, !prof !10, !nosanitize !9
@@ -744,7 +736,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   br label %.lr.ph.split.us.split.us.split.us
 
 .lr.ph.split.us.split.us.split.us:                ; preds = %bb.l, %bb.i
-  %indvars.iv.next166 = add nsw i64 %indvars.iv165223, 1
+  %6 = add nsw i32 %.065.us.us.us220, 1
   %i.aw = load i32, ptr %i.j, align 8, !tbaa !225 ; 2 uses
   %i.ax = load i32, ptr %i.l, align 4, !tbaa !226 ; 2 uses
   %i.ay = call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %i.aw, i32 %i.ax), !nosanitize !9 ; 2 uses

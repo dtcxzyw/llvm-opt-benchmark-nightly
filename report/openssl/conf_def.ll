@@ -202,15 +202,11 @@ is_keytype.exit:                                  ; preds = %bb.c
   %i.n = load i16, ptr %i.m, align 2, !tbaa !26   ; 4 uses
   %i.o = and i16 %i.n, 64
   %.not164 = icmp eq i16 %i.o, 0
-  br i1 %.not164, label %is_keytype.exit200, label %.preheader275.preheader
+  br i1 %.not164, label %is_keytype.exit200, label %.preheader275
 
-.preheader275.preheader:                          ; preds = %is_keytype.exit
-  %4 = sext i32 %.0140 to i64
-  br label %.preheader275
-
-.preheader275:                                    ; preds = %.preheader275.preheader, %is_keytype.exit194.thread
-  %indvars.iv = phi i64 [ %4, %.preheader275.preheader ], [ %indvars.iv.next, %is_keytype.exit194.thread ] ; 3 uses
-  %.0148.pn186 = phi ptr [ %.0148, %.preheader275.preheader ], [ %.2150, %is_keytype.exit194.thread ] ; 3 uses
+.preheader275:                                    ; preds = %is_keytype.exit, %is_keytype.exit194.thread
+  %.0148.pn186 = phi ptr [ %.2150, %is_keytype.exit194.thread ], [ %.0148, %is_keytype.exit ] ; 3 uses
+  %.1141 = phi i32 [ %4, %is_keytype.exit194.thread ], [ %.0140, %is_keytype.exit ] ; 3 uses
   %.1149 = getelementptr inbounds nuw i8, ptr %.0148.pn186, i64 1 ; 3 uses
   %i.p = load i8, ptr %.1149, align 1, !tbaa !23  ; 6 uses
   %i.q = icmp slt i8 %i.p, 0
@@ -250,15 +246,15 @@ is_keytype.exit194.thread:                        ; preds = %.preheader275, %bb.
   %i.ae = phi i8 [ %i.y, %is_keytype.exit197 ], [ %i.p, %is_keytype.exit194 ], [ %i.y, %bb.d ], [ %i.p, %.preheader275 ]
   %.2150 = phi ptr [ %i.x, %is_keytype.exit197 ], [ %.1149, %is_keytype.exit194 ], [ %i.x, %bb.d ], [ %.1149, %.preheader275 ]
   %i.af = load ptr, ptr %i.g, align 8, !tbaa !22
-  %indvars.iv.next = add nsw i64 %indvars.iv, 1
-  %i.ag = getelementptr inbounds i8, ptr %i.af, i64 %indvars.iv
+  %4 = add nsw i32 %.1141, 1
+  %5 = sext i32 %.1141 to i64
+  %i.ag = getelementptr inbounds i8, ptr %i.af, i64 %5
   store i8 %i.ae, ptr %i.ag, align 1, !tbaa !23
   br label %.preheader275, !llvm.loop !44
 
 .critedge:                                        ; preds = %is_keytype.exit191, %is_keytype.exit197
   %i.ah = phi i8 [ %i.p, %is_keytype.exit191 ], [ %i.y, %is_keytype.exit197 ]
   %i.ai = phi i64 [ 1, %is_keytype.exit191 ], [ 2, %is_keytype.exit197 ]
-  %5 = trunc nsw i64 %indvars.iv to i32
   %i.aj = getelementptr inbounds nuw i8, ptr %.0148.pn186, i64 %i.ai
   %i.ak = icmp eq i8 %i.ah, %i.i
   %spec.select.idx = zext i1 %i.ak to i64
@@ -268,15 +264,11 @@ is_keytype.exit194.thread:                        ; preds = %.preheader275, %bb.
 is_keytype.exit200:                               ; preds = %is_keytype.exit
   %i.al = and i16 %i.n, 1024
   %.not165 = icmp eq i16 %i.al, 0
-  br i1 %.not165, label %is_keytype.exit206, label %.preheader274.preheader
+  br i1 %.not165, label %is_keytype.exit206, label %.preheader274
 
-.preheader274.preheader:                          ; preds = %is_keytype.exit200
-  %6 = sext i32 %.0140 to i64
-  br label %.preheader274
-
-.preheader274:                                    ; preds = %.preheader274.preheader, %bb.f
-  %indvars.iv315 = phi i64 [ %6, %.preheader274.preheader ], [ %indvars.iv.next316, %bb.f ] ; 3 uses
-  %.0148.pn = phi ptr [ %.0148, %.preheader274.preheader ], [ %.5153, %bb.f ] ; 3 uses
+.preheader274:                                    ; preds = %is_keytype.exit200, %bb.f
+  %.0148.pn = phi ptr [ %.5153, %bb.f ], [ %.0148, %is_keytype.exit200 ] ; 3 uses
+  %.2142 = phi i32 [ %6, %bb.f ], [ %.0140, %is_keytype.exit200 ] ; 3 uses
   %.4152 = getelementptr inbounds nuw i8, ptr %.0148.pn, i64 1 ; 3 uses
   %i.am = load i8, ptr %.4152, align 1, !tbaa !23 ; 5 uses
   %i.an = icmp slt i8 %i.am, 0
@@ -305,14 +297,14 @@ bb.f:                                             ; preds = %bb.e, %is_keytype.e
   %i.ax = phi i8 [ %i.am, %is_keytype.exit203.thread ], [ %i.i, %bb.e ]
   %.5153 = phi ptr [ %.4152, %is_keytype.exit203.thread ], [ %i.au, %bb.e ]
   %i.ay = load ptr, ptr %i.g, align 8, !tbaa !22
-  %indvars.iv.next316 = add nsw i64 %indvars.iv315, 1
-  %i.az = getelementptr inbounds i8, ptr %i.ay, i64 %indvars.iv315
+  %6 = add nsw i32 %.2142, 1
+  %7 = sext i32 %.2142 to i64
+  %i.az = getelementptr inbounds i8, ptr %i.ay, i64 %7
   store i8 %i.ax, ptr %i.az, align 1, !tbaa !23
   br label %.preheader274, !llvm.loop !45
 
 bb.g:                                             ; preds = %bb.e, %is_keytype.exit203
   %.lcssa = phi i8 [ %i.i, %bb.e ], [ %i.am, %is_keytype.exit203 ]
-  %7 = trunc nsw i64 %indvars.iv315 to i32
   %i.ba = icmp eq i8 %.lcssa, %i.i
   %i.bb = getelementptr inbounds nuw i8, ptr %.0148.pn, i64 2
   %spec.select187 = select i1 %i.ba, ptr %i.bb, ptr %.4152
@@ -320,7 +312,7 @@ bb.g:                                             ; preds = %bb.e, %is_keytype.e
 
 .backedge:                                        ; preds = %bb.g, %.critedge, %.thread248, %bb.i
   %.0148.be = phi ptr [ %spec.select187, %bb.g ], [ %i.eb, %.thread248 ], [ %i.be, %bb.i ], [ %spec.select, %.critedge ]
-  %.0140.be = phi i32 [ %7, %bb.g ], [ %i.ed, %.thread248 ], [ %i.bo, %bb.i ], [ %5, %.critedge ]
+  %.0140.be = phi i32 [ %.2142, %bb.g ], [ %i.ed, %.thread248 ], [ %i.bo, %bb.i ], [ %.1141, %.critedge ]
   br label %bb.c
 
 is_keytype.exit206:                               ; preds = %is_keytype.exit200

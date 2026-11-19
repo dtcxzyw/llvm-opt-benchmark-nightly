@@ -205,7 +205,8 @@ vec.epilog.middle.block2010:                      ; preds = %vec.epilog.vector.b
 
 .loopexit1130:                                    ; preds = %.lr.ph.i.i.i573.prol.loopexit, %.lr.ph.i.i.i573, %middle.block1995, %vec.epilog.middle.block2010, %_ZN7Imf_3_412_GLOBAL__N_117writePascalStringERPcRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit
   %.27 = phi ptr [ %i.asq, %_ZN7Imf_3_412_GLOBAL__N_117writePascalStringERPcRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit ], [ %i.atf, %vec.epilog.middle.block2010 ], [ %i.asy, %middle.block1995 ], [ %.lcssa2144.unr, %.lr.ph.i.i.i573.prol.loopexit ], [ %i.auo, %.lr.ph.i.i.i573 ] ; 3 uses
-  %i.aup = getelementptr inbounds nuw i8, ptr %.sroa.0828.0.lcssa, i64 %.01461421
+  %19 = and i64 %.01461421, 4294967295
+  %i.aup = getelementptr inbounds nuw i8, ptr %.sroa.0828.0.lcssa, i64 %19
   %i.auq = load i8, ptr %i.aup, align 1, !tbaa !35 ; 2 uses
   %i.aur = getelementptr inbounds nuw i8, ptr %.27, i64 1
   store i8 %i.auq, ptr %.27, align 1, !tbaa !35
@@ -222,7 +223,7 @@ vec.epilog.middle.block2010:                      ; preds = %vec.epilog.vector.b
 
 ._crit_edge1417:                                  ; preds = %._crit_edge1409, %.loopexit1130
   %.2985.lcssa = phi ptr [ %i.auv, %.loopexit1130 ], [ %.4.lcssa, %._crit_edge1409 ] ; 2 uses
-  %i.auz = add nuw nsw i64 %.01461421, 1          ; 2 uses
+  %i.auz = add nuw i64 %.01461421, 1              ; 2 uses
   %i.ava = load ptr, ptr %i.h, align 8, !tbaa !43
   %i.avb = load ptr, ptr %0, align 8, !tbaa !42   ; 2 uses
   %i.avc = ptrtoint ptr %i.ava to i64

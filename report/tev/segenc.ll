@@ -204,7 +204,7 @@ bb.ar:                                            ; preds = %._crit_edge.i, %.lr
   %.2119163.i = phi i32 [ %.1118177.i, %.preheader153.lr.ph.i ], [ %.3120.i, %bb.bu ] ; 17 uses
   %.2123162.i = phi i32 [ %.1122176.i, %.preheader153.lr.ph.i ], [ %.3124.i, %bb.bu ] ; 33 uses
   %.1126161.i = phi i32 [ %.0125175.i, %.preheader153.lr.ph.i ], [ %.2127.i, %bb.bu ] ; 2 uses
-  %.0131160.i = phi i64 [ 0, %.preheader153.lr.ph.i ], [ %indvars.iv.next.i45, %bb.bu ]
+  %.0131160.i = phi i32 [ 0, %.preheader153.lr.ph.i ], [ %5, %bb.bu ]
   %i.oq = icmp samesign ult i64 %indvars.iv192.i, 4
   %i.or = add nuw i64 %indvars.iv192.i, 4294967292
   %i.os = lshr i64 %i.or, 1
@@ -222,13 +222,14 @@ bb.ar:                                            ; preds = %._crit_edge.i, %.lr
 
 bb.as:                                            ; preds = %.loopexit.i44, %.preheader153.i
   %indvars.iv187.i = phi i64 [ 0, %.preheader153.i ], [ %indvars.iv.next188.i, %.loopexit.i44 ] ; 3 uses
-  %indvars.iv.i43 = phi i64 [ %.0131160.i, %.preheader153.i ], [ %indvars.iv.next.i45, %.loopexit.i44 ] ; 2 uses
-  %.2158.i.a = phi i32 [ %.1167.i, %.preheader153.i ], [ %i.vo, %.loopexit.i44 ] ; 2 uses
+  %.2158.i = phi i32 [ %.1167.i, %.preheader153.i ], [ %i.vo, %.loopexit.i44 ] ; 2 uses
+  %.2158.i.a = phi i32 [ %.0131160.i, %.preheader153.i ], [ %5, %.loopexit.i44 ] ; 2 uses
   br i1 %i.oq, label %bb.at, label %bb.au
 
 bb.at:                                            ; preds = %bb.as
   %i.pb = load ptr, ptr %i.op, align 8, !tbaa !53
-  %i.pc = getelementptr inbounds [4 x i8], ptr @blkOffset, i64 %indvars.iv.i43
+  %4 = sext i32 %.2158.i.a to i64
+  %i.pc = getelementptr inbounds [4 x i8], ptr @blkOffset, i64 %4
   %i.pd = load i32, ptr %i.pc, align 4, !tbaa !35
   %i.pe = sext i32 %i.pd to i64
   %i.pf = getelementptr inbounds [4 x i8], ptr %i.pb, i64 %i.pe
@@ -258,7 +259,7 @@ bb.ax:                                            ; preds = %bb.aw
 
 bb.ay:                                            ; preds = %bb.ax, %bb.aw, %bb.av, %bb.at
   %.0106.i = phi ptr [ %i.pf, %bb.at ], [ %i.pk, %bb.av ], [ %i.po, %bb.ax ], [ null, %bb.aw ] ; 16 uses
-  %i.pp = and i32 %.2158.i.a, 1
+  %i.pp = and i32 %.2158.i, 1
   %i.pq = icmp eq i32 %i.pp, 0
   br i1 %i.pq, label %bb.az, label %bb.bp
 
@@ -603,8 +604,8 @@ bb.bp:                                            ; preds = %bb.ay
 
 .loopexit.i44:                                    ; preds = %.loopexit152.i, %.loopexit.loopexit.i, %bb.az
   %indvars.iv.next188.i = add nuw nsw i64 %indvars.iv187.i, 1 ; 2 uses
-  %i.vo = ashr i32 %.2158.i.a, 1                  ; 2 uses
-  %indvars.iv.next.i45 = add nsw i64 %indvars.iv.i43, 1 ; 2 uses
+  %i.vo = ashr i32 %.2158.i, 1                    ; 2 uses
+  %5 = add nsw i32 %.2158.i.a, 1                  ; 2 uses
   %exitcond.not.i46 = icmp eq i64 %indvars.iv.next188.i, 4
   br i1 %exitcond.not.i46, label %bb.bq, label %bb.as, !llvm.loop !90
 

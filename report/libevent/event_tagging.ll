@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libevent/original/event_tagging?download=true
 inline.NumInlined: 27
 inline.NumDeleted: 4
-loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumCompletelyUnrolled: 2
 loop-unroll.NumRuntimeUnrolled: 8
-loop-unroll.NumUnrolled: 11
+loop-unroll.NumUnrolled: 10
 begin_hunk_0_@evtag_encode_int:bb.a
 
 encode_int_internal.exit:                         ; preds = %bb.a, %._crit_edge.i
@@ -205,9 +205,8 @@ bb.e:                                             ; preds = %.preheader.peel.nex
   br i1 %.not41, label %bb.f, label %.thread
 
 bb.f:                                             ; preds = %.lr.ph
-  %3 = and i8 %i.z, 15
-  %i.ab = zext nneg i8 %3 to i32
-  %i.ac = shl nuw i32 %i.ab, 28
+  %i.ab = zext i8 %i.z to i32
+  %i.ac = shl i32 %i.ab, 28
   %i.ad = or disjoint i32 %i.ac, %i.x
   %.not42 = icmp sgt i8 %i.z, -1
   br i1 %.not42, label %.thread50, label %.thread, !llvm.loop !9

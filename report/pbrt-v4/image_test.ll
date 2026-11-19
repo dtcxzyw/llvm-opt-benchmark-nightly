@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %_ZNSt7__cxx1112basi
 
 .preheader1033:                                   ; preds = %bb.b, %.thread1001
   %.0581580 = phi i32 [ 0, %bb.b ], [ %i.qm, %.thread1001 ] ; 7 uses
-  %.0591579 = phi i64 [ 0, %bb.b ], [ %indvars.iv.next1594, %.thread1001 ]
+  %.0591579 = phi i32 [ 0, %bb.b ], [ %65, %.thread1001 ]
   br label %.preheader1021
 
 bb.c:                                             ; preds = %._crit_edge.i.i
@@ -260,12 +260,12 @@ bb.d:                                             ; preds = %_ZNSt7__cxx1112basi
 
 .preheader1021:                                   ; preds = %.preheader1033, %.critedge217
   %.0571578 = phi i32 [ 0, %.preheader1033 ], [ %i.ql, %.critedge217 ] ; 7 uses
-  %.1601577 = phi i64 [ %.0591579, %.preheader1033 ], [ %indvars.iv.next1594, %.critedge217 ]
+  %.1601577 = phi i32 [ %.0591579, %.preheader1033 ], [ %65, %.critedge217 ]
   br label %bb.e
 
 bb.e:                                             ; preds = %.preheader1021, %bb.cp
-  %indvars.iv1593 = phi i64 [ %.1601577, %.preheader1021 ], [ %indvars.iv.next1594, %bb.cp ] ; 3 uses
-  %indvars.iv = phi i64 [ 0, %.preheader1021 ], [ %indvars.iv.next, %bb.cp ] ; 7 uses
+  %indvars.iv1593 = phi i64 [ 0, %.preheader1021 ], [ %indvars.iv.next, %bb.cp ] ; 7 uses
+  %.2611574 = phi i32 [ %.1601577, %.preheader1021 ], [ %65, %bb.cp ] ; 3 uses
   %i.fe = load i32, ptr %i.g, align 4, !tbaa !75
   switch i32 %i.fe, label %bb.cp [
     i32 2, label %.preheader.preheader.i642
@@ -275,7 +275,8 @@ bb.e:                                             ; preds = %.preheader1021, %bb
 bb.f:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #25
-  %i.ff = getelementptr inbounds nuw [4 x i8], ptr %i.ej, i64 %indvars.iv1593
+  %63 = sext i32 %.2611574 to i64
+  %i.ff = getelementptr inbounds nuw [4 x i8], ptr %i.ej, i64 %63
   %i.fg = load float, ptr %i.ff, align 4, !tbaa !77 ; 2 uses
   %i.fh = call float @llvm.fabs.f32(float %i.fg)  ; 2 uses
   %i.fi = bitcast float %i.fh to i32              ; 5 uses
@@ -370,7 +371,7 @@ bb.n:                                             ; preds = %.preheader.preheade
   %i.gy = sext i32 %i.gx to i64
   %i.gz = load ptr, ptr %i.ag, align 8, !tbaa !70
   %i.ha = getelementptr i8, ptr %i.gz, i64 %i.gy
-  %i.hb = getelementptr i8, ptr %i.ha, i64 %indvars.iv ; 3 uses
+  %i.hb = getelementptr i8, ptr %i.ha, i64 %indvars.iv1593 ; 3 uses
   %i.hc = load i64, ptr %i.af, align 8, !tbaa !27 ; 2 uses
   %i.hd = and i64 %i.hc, 144115188075855871
   %i.he = inttoptr i64 %i.hd to ptr               ; 2 uses
@@ -411,7 +412,7 @@ bb.q:                                             ; preds = %.preheader.preheade
   %i.hq = sext i32 %i.hp to i64
   %i.hr = load ptr, ptr %i.ae, align 8, !tbaa !69
   %i.hs = getelementptr [2 x i8], ptr %i.hr, i64 %i.hq
-  %i.ht = getelementptr [2 x i8], ptr %i.hs, i64 %indvars.iv
+  %i.ht = getelementptr [2 x i8], ptr %i.hs, i64 %indvars.iv1593
   %i.hu = load i16, ptr %i.ht, align 2, !tbaa !92 ; 2 uses
   %i.hv = zext i16 %i.hu to i32
   %i.hw = shl nuw nsw i32 %i.hv, 13               ; 4 uses
@@ -453,7 +454,7 @@ bb.u:                                             ; preds = %.preheader.preheade
   %i.ip = sext i32 %i.io to i64
   %i.iq = load ptr, ptr %i.ad, align 8, !tbaa !66
   %i.ir = getelementptr [4 x i8], ptr %i.iq, i64 %i.ip
-  %i.is = getelementptr [4 x i8], ptr %i.ir, i64 %indvars.iv
+  %i.is = getelementptr [4 x i8], ptr %i.ir, i64 %indvars.iv1593
   %i.it = load float, ptr %i.is, align 4, !tbaa !77
   br label %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit
 
@@ -742,7 +743,8 @@ _ZN7testing15AssertionResultD2Ev.exit254:         ; preds = %_ZNSt7__cxx1112basi
 
 .preheader.preheader.i642:                        ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #25
-  %i.lb = getelementptr inbounds nuw [4 x i8], ptr %i.ej, i64 %indvars.iv1593 ; 2 uses
+  %64 = sext i32 %.2611574 to i64
+  %i.lb = getelementptr inbounds nuw [4 x i8], ptr %i.ej, i64 %64 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j) #25
   %.sroa.04.0.copyload.i256 = load i64, ptr %i.ab, align 4 ; 2 uses
   %.sroa.0.0.extract.trunc.i636 = trunc i64 %.sroa.04.0.copyload.i256 to i32 ; 5 uses
@@ -773,7 +775,7 @@ bb.ax:                                            ; preds = %.preheader.preheade
   %i.lm = sext i32 %i.ll to i64
   %i.ln = load ptr, ptr %i.ag, align 8, !tbaa !70
   %i.lo = getelementptr i8, ptr %i.ln, i64 %i.lm
-  %i.lp = getelementptr i8, ptr %i.lo, i64 %indvars.iv ; 3 uses
+  %i.lp = getelementptr i8, ptr %i.lo, i64 %indvars.iv1593 ; 3 uses
   %i.lq = load i64, ptr %i.af, align 8, !tbaa !27 ; 2 uses
   %i.lr = and i64 %i.lq, 144115188075855871
   %i.ls = inttoptr i64 %i.lr to ptr               ; 2 uses
@@ -813,7 +815,7 @@ bb.ba:                                            ; preds = %.preheader.preheade
   %i.me = sext i32 %i.md to i64
   %i.mf = load ptr, ptr %i.ae, align 8, !tbaa !69
   %i.mg = getelementptr [2 x i8], ptr %i.mf, i64 %i.me
-  %i.mh = getelementptr [2 x i8], ptr %i.mg, i64 %indvars.iv
+  %i.mh = getelementptr [2 x i8], ptr %i.mg, i64 %indvars.iv1593
   %i.mi = load i16, ptr %i.mh, align 2, !tbaa !92 ; 2 uses
   %i.mj = zext i16 %i.mi to i32
   %i.mk = shl nuw nsw i32 %i.mj, 13               ; 4 uses
@@ -855,7 +857,7 @@ bb.be:                                            ; preds = %.preheader.preheade
   %i.nd = sext i32 %i.nc to i64
   %i.ne = load ptr, ptr %i.ad, align 8, !tbaa !66
   %i.nf = getelementptr [4 x i8], ptr %i.ne, i64 %i.nd
-  %i.ng = getelementptr [4 x i8], ptr %i.nf, i64 %indvars.iv
+  %i.ng = getelementptr [4 x i8], ptr %i.nf, i64 %indvars.iv1593
   %i.nh = load float, ptr %i.ng, align 4, !tbaa !77
   br label %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit279
 
@@ -1229,8 +1231,8 @@ _ZN7testing15AssertionResultD2Ev.exit310:         ; preds = %.critedge215, %.noe
   br label %bb.cp
 
 bb.cp:                                            ; preds = %_ZN7testing15AssertionResultD2Ev.exit310, %bb.e, %_ZN7testing15AssertionResultD2Ev.exit304
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %indvars.iv.next1594 = add nsw i64 %indvars.iv1593, 1 ; 3 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv1593, 1 ; 2 uses
+  %65 = add nsw i32 %.2611574, 1                  ; 3 uses
   %exitcond = icmp eq i64 %indvars.iv.next, 3
   br i1 %exitcond, label %.critedge217, label %bb.e, !llvm.loop !337
 

@@ -204,8 +204,8 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.preheader, %bb.x
-  %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %bb.x ] ; 2 uses
-  %.026 = phi i16 [ 0, %.preheader ], [ %i.er, %bb.x ] ; 8 uses
+  %.027 = phi i32 [ %4, %bb.x ], [ 0, %.preheader ] ; 2 uses
+  %.026 = phi i16 [ %i.er, %bb.x ], [ 0, %.preheader ] ; 8 uses
   switch i16 %.026, label %bb.d [
     i16 384, label %.thread
     i16 8256, label %bb.c
@@ -335,7 +335,8 @@ bb.g:                                             ; preds = %_ZNK6icu_7813Collat
   %.0 = phi i32 [ %i.cc, %_ZNK6icu_7813CollationData7getCE32Ei.exit34 ], [ %i.au, %_ZNK6icu_7813CollationData7getCE32Ei.exit ], [ %i.bk, %_ZNK6icu_7813CollationData7getCE32Ei.exit.thread ]
   %i.ce = tail call noundef signext i8 @_ZN6icu_7825CollationFastLatinBuilder14getCEsFromCE32ERKNS_13CollationDataEijR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(7372) %0, ptr noundef nonnull align 8 dereferenceable(140) %.025, i32 noundef %i.cd, i32 noundef %.0, ptr noundef nonnull align 4 dereferenceable(4) %2)
   %.not30 = icmp eq i8 %i.ce, 0
-  %i.cf = getelementptr inbounds nuw [16 x i8], ptr %i.e, i64 %indvars.iv ; 3 uses
+  %3 = zext nneg i32 %.027 to i64
+  %i.cf = getelementptr inbounds nuw [16 x i8], ptr %i.e, i64 %3 ; 3 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %i.cf, i64 8 ; 2 uses
   br i1 %.not30, label %bb.u, label %bb.h
 
@@ -513,7 +514,7 @@ bb.w:                                             ; preds = %bb.v
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.w, %bb.v, %_ZN6icu_7825CollationFastLatinBuilder11addUniqueCEElR10UErrorCode.exit48
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %4 = add nuw nsw i32 %.027, 1
   %i.er = add i16 %.15189, 1
   br label %bb.b, !llvm.loop !49
 

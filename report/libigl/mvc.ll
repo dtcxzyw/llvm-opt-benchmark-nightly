@@ -205,7 +205,6 @@ _ZN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEC2IllEERKT_RKT0_.exit287: ; preds = %
   %i.to = add nsw i32 %i.c, -1                    ; 2 uses
   %i.tp = getelementptr inbounds nuw i8, ptr %16, i64 16
   %i.tq = getelementptr inbounds nuw i8, ptr %15, i64 16
-  %26 = sext i32 %i.to to i64
   br label %bb.bl
 
 .loopexit1128.loopexit:                           ; preds = %_ZNSt6vectorISt4pairIiiESaIS1_EE9push_backEOS1_.exit
@@ -221,7 +220,8 @@ _ZN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEC2IllEERKT_RKT0_.exit287: ; preds = %
   %.sroa.0696.1.lcssa = phi ptr [ %.sroa.0696.01379, %_ZNK5Eigen10MatrixBaseINS_13CwiseBinaryOpINS_8internal20scalar_difference_opIddEEKNS_5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEES9_EEE3dotISA_EENS_20ScalarBinaryOpTraitsIdNS2_6traitsIT_E6ScalarENS2_17scalar_product_opIdSH_EEE10ReturnTypeERKNS0_ISF_EE.exit ], [ %.sroa.0696.2, %.loopexit1128.loopexit ] ; 6 uses
   %.sroa.12702.1.lcssa = phi ptr [ %.sroa.12702.01380, %_ZNK5Eigen10MatrixBaseINS_13CwiseBinaryOpINS_8internal20scalar_difference_opIddEEKNS_5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEES9_EEE3dotISA_EENS_20ScalarBinaryOpTraitsIdNS2_6traitsIT_E6ScalarENS2_17scalar_product_opIdSH_EEE10ReturnTypeERKNS0_ISF_EE.exit ], [ %.sroa.12702.2, %.loopexit1128.loopexit ] ; 3 uses
   %.sroa.18705.1.lcssa = phi ptr [ %.sroa.18705.01381, %_ZNK5Eigen10MatrixBaseINS_13CwiseBinaryOpINS_8internal20scalar_difference_opIddEEKNS_5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEES9_EEE3dotISA_EENS_20ScalarBinaryOpTraitsIdNS2_6traitsIT_E6ScalarENS2_17scalar_product_opIdSH_EEE10ReturnTypeERKNS0_ISF_EE.exit ], [ %.sroa.18705.2, %.loopexit1128.loopexit ] ; 3 uses
-  %i.tt = icmp sgt i64 %i.tr, %indvars.iv.next1556
+  %26 = zext nneg i32 %27 to i64                  ; 2 uses
+  %i.tt = icmp sgt i64 %i.tr, %26
   br i1 %i.tt, label %bb.bl, label %.preheader1125, !llvm.loop !231
 
 .preheader1125:                                   ; preds = %.loopexit1128
@@ -313,23 +313,24 @@ bb.bk:                                            ; preds = %bb.bk, %.epil.prehe
 bb.bl:                                            ; preds = %.lr.ph1383, %.loopexit1128
   %i.uu = phi i64 [ %i.sp, %.lr.ph1383 ], [ %i.tr, %.loopexit1128 ] ; 4 uses
   %i.uv = phi i64 [ %i.sr, %.lr.ph1383 ], [ %i.ts, %.loopexit1128 ] ; 3 uses
-  %indvars.iv1555 = phi i64 [ 0, %.lr.ph1383 ], [ %indvars.iv.next1556, %.loopexit1128 ] ; 9 uses
+  %indvars.iv1555 = phi i64 [ 0, %.lr.ph1383 ], [ %26, %.loopexit1128 ] ; 4 uses
+  %storemerge1382 = phi i32 [ 0, %.lr.ph1383 ], [ %27, %.loopexit1128 ] ; 5 uses
   %.sroa.18705.01381 = phi ptr [ null, %.lr.ph1383 ], [ %.sroa.18705.1.lcssa, %.loopexit1128 ] ; 2 uses
   %.sroa.12702.01380 = phi ptr [ null, %.lr.ph1383 ], [ %.sroa.12702.1.lcssa, %.loopexit1128 ] ; 2 uses
   %.sroa.0696.01379 = phi ptr [ null, %.lr.ph1383 ], [ %.sroa.0696.1.lcssa, %.loopexit1128 ] ; 2 uses
   %.sroa.18719.01378 = phi ptr [ null, %.lr.ph1383 ], [ %.sroa.18719.1.lcssa, %.loopexit1128 ] ; 2 uses
   %.sroa.12716.01377 = phi ptr [ null, %.lr.ph1383 ], [ %.sroa.12716.1.lcssa, %.loopexit1128 ] ; 2 uses
   %.sroa.0710.01376 = phi ptr [ null, %.lr.ph1383 ], [ %.sroa.0710.1.lcssa, %.loopexit1128 ] ; 2 uses
-  %.not1119 = icmp eq i64 %indvars.iv1555, 0
-  %27 = trunc i64 %indvars.iv1555 to i32
-  %i.uw = add i32 %27, -1
+  %.not1119 = icmp eq i32 %storemerge1382, 0
+  %i.uw = add nsw i32 %storemerge1382, -1
   %i.ux = select i1 %.not1119, i32 %i.to, i32 %i.uw
   %i.uy = load ptr, ptr %16, align 8, !tbaa !17, !noalias !307 ; 2 uses
   %i.uz = getelementptr inbounds nuw [8 x i8], ptr %i.uy, i64 %indvars.iv1555 ; 4 uses
-  %i.va = icmp slt i64 %indvars.iv1555, %26
-  %indvars.iv.next1556 = add nuw nsw i64 %indvars.iv1555, 1 ; 3 uses
-  %28 = select i1 %i.va, i64 %indvars.iv.next1556, i64 0 ; 2 uses
-  %i.vb = getelementptr inbounds nuw [8 x i8], ptr %i.uy, i64 %28 ; 4 uses
+  %i.va = icmp slt i32 %storemerge1382, %i.to
+  %27 = add nuw nsw i32 %storemerge1382, 1        ; 3 uses
+  %28 = select i1 %i.va, i32 %27, i32 0
+  %29 = zext nneg i32 %28 to i64                  ; 2 uses
+  %i.vb = getelementptr inbounds nuw [8 x i8], ptr %i.uy, i64 %29 ; 4 uses
   %i.vc = load i64, ptr %i.tp, align 8, !tbaa !16, !noalias !308 ; 4 uses
   %i.vd = icmp eq i64 %i.vc, 0
   br i1 %i.vd, label %_ZNK5Eigen10MatrixBaseINS_13CwiseBinaryOpINS_8internal20scalar_difference_opIddEEKNS_5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEES9_EEE3dotISA_EENS_20ScalarBinaryOpTraitsIdNS2_6traitsIT_E6ScalarENS2_17scalar_product_opIdSH_EEE10ReturnTypeERKNS0_ISF_EE.exit, label %bb.bm
@@ -407,7 +408,8 @@ _ZNK5Eigen10MatrixBaseINS_13CwiseBinaryOpINS_8internal20scalar_difference_opIddE
   %i.wn = sext i32 %i.ux to i64
   %i.wo = getelementptr [8 x i8], ptr %.sroa.0725.0, i64 %indvars.iv1555
   %i.wp = getelementptr [8 x i8], ptr %.sroa.01038.0, i64 %indvars.iv1555
-  %.sroa.2.0.insert.shift.i334 = shl nuw nsw i64 %indvars.iv1555, 32 ; 2 uses
+  %.sroa.2.0.insert.ext.i333 = zext nneg i32 %storemerge1382 to i64
+  %.sroa.2.0.insert.shift.i334 = shl nuw nsw i64 %.sroa.2.0.insert.ext.i333, 32 ; 2 uses
   br label %bb.bn
 
 bb.bn:                                            ; preds = %.lr.ph1369, %_ZNSt6vectorISt4pairIiiESaIS1_EE9push_backEOS1_.exit
@@ -549,7 +551,7 @@ bb.bq:                                            ; preds = %.invoke2115.a
 
 .loopexit1733:                                    ; preds = %.lr.ph.i.i.i.i.i.i410.prol.loopexit, %.lr.ph.i.i.i.i.i.i410, %middle.block2068, %_ZN5Eigen8internal28check_rows_cols_for_overflowILin1EE3runIlEEvT_S4_.exit.i441
   %.sroa.0600.31068.ph = phi ptr [ null, %_ZN5Eigen8internal28check_rows_cols_for_overflowILin1EE3runIlEEvT_S4_.exit.i441 ], [ %i.xc, %middle.block2068 ], [ %i.xc, %.lr.ph.i.i.i.i.i.i410 ], [ %i.xc, %.lr.ph.i.i.i.i.i.i410.prol.loopexit ] ; 15 uses
-  %i.yt = getelementptr inbounds nuw [8 x i8], ptr %i.wr, i64 %28 ; 4 uses
+  %i.yt = getelementptr inbounds nuw [8 x i8], ptr %i.wr, i64 %29 ; 4 uses
   %i.yu = sdiv i64 9223372036854775807, %i.wv
   %i.yv = icmp slt i64 %i.yu, 1
   br i1 %i.yv, label %.invoke2117.a, label %_ZN5Eigen8internal28check_rows_cols_for_overflowILin1EE3runIlEEvT_S4_.exit.i457

@@ -205,8 +205,8 @@ bb.h:                                             ; preds = %.lr.ph51
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.v, %bb.h
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.v ], [ 0, %bb.h ] ; 3 uses
-  %.0.i = phi i32 [ %i.ap, %bb.v ], [ 0, %bb.h ]  ; 4 uses
+  %.093.i = phi i32 [ 0, %bb.h ], [ %5, %bb.v ]   ; 3 uses
+  %.0.i = phi i32 [ 0, %bb.h ], [ %i.ap, %bb.v ]  ; 4 uses
   %i.t = sext i32 %.0.i to i64
   %i.u = getelementptr inbounds i8, ptr %i.s, i64 %i.t ; 2 uses
   %i.v = load i8, ptr %i.u, align 1, !tbaa !165   ; 2 uses
@@ -326,14 +326,16 @@ bb.u:                                             ; preds = %bb.i
 bb.v:                                             ; preds = %bb.u, %bb.t, %bb.i
   %.sink.i = phi i8 [ %i.an, %bb.t ], [ %i.v, %bb.u ], [ 32, %bb.i ]
   %.1.i = phi i32 [ %i.z, %bb.t ], [ %.0.i, %bb.u ], [ %.0.i, %bb.i ]
-  %i.ao = getelementptr inbounds nuw i8, ptr %i.s, i64 %indvars.iv.i
+  %4 = zext nneg i32 %.093.i to i64
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.s, i64 %4
   store i8 %.sink.i, ptr %i.ao, align 1, !tbaa !165
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1
+  %5 = add nuw nsw i32 %.093.i, 1
   %i.ap = add nsw i32 %.1.i, 1
   br label %bb.i, !llvm.loop !3224
 
 _ZN4crow9qs_decodeEPc.exit:                       ; preds = %bb.i, %bb.i, %bb.i, %bb.i, %bb.j, %bb.k, %switch.early.test.i, %switch.early.test134.i
-  %i.aq = getelementptr inbounds nuw i8, ptr %i.s, i64 %indvars.iv.i
+  %6 = zext nneg i32 %.093.i to i64
+  %i.aq = getelementptr inbounds nuw i8, ptr %i.s, i64 %6
   store i8 0, ptr %i.aq, align 1, !tbaa !165
   br label %bb.w
 

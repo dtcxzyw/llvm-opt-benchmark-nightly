@@ -204,9 +204,9 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %define_value.exit, %._crit_edge
-  %i.n = phi i32 [ %.pre, %define_value.exit ], [ %i.c, %._crit_edge ]
-  %indvars.iv = phi i64 [ %indvars.iv.next, %define_value.exit ], [ 0, %._crit_edge ] ; 2 uses
-  %.1117 = phi ptr [ %i.bt, %define_value.exit ], [ %spec.store.select, %._crit_edge ] ; 10 uses
+  %i.n = phi i32 [ %i.c, %._crit_edge ], [ %.pre, %define_value.exit ]
+  %.0123 = phi i32 [ 0, %._crit_edge ], [ %5, %define_value.exit ] ; 2 uses
+  %.1117 = phi ptr [ %spec.store.select, %._crit_edge ], [ %i.bt, %define_value.exit ] ; 10 uses
   switch i32 %i.n, label %define_value.exit [
     i32 0, label %bb.s
     i32 3, label %bb.c
@@ -338,10 +338,11 @@ bb.r:                                             ; preds = %bb.q, %bb.p
 
 define_value.exit:                                ; preds = %bb.b, %bb.c, %bb.e, %bb.f, %bb.g, %bb.r
   %.1.i = phi i32 [ -1, %bb.b ], [ %i.bk, %bb.r ], [ %i.am, %bb.g ], [ -1, %bb.c ], [ %i.v, %bb.e ], [ %i.v, %bb.f ]
-  %i.bs = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %indvars.iv
+  %4 = zext nneg i32 %.0123 to i64
+  %i.bs = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %4
   store i32 %.1.i, ptr %i.bs, align 4, !tbaa !14
   %i.bt = getelementptr inbounds nuw i8, ptr %.1117, i64 48 ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %5 = add nuw nsw i32 %.0123, 1
   %.pre = load i32, ptr %i.bt, align 8, !tbaa !33
   br label %bb.b, !llvm.loop !94
 

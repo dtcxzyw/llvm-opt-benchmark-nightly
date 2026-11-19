@@ -204,7 +204,7 @@ bb.a:
   br i1 %.not4866, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a, %bb.g
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.g ], [ 7, %bb.a ] ; 2 uses
+  %4 = phi i32 [ %6, %bb.g ], [ 7, %bb.a ]        ; 2 uses
   %i.h = phi i64 [ %i.x, %bb.g ], [ %i.g, %bb.a ]
   %i.i = phi i32 [ %i.s, %bb.g ], [ %i.d, %bb.a ] ; 2 uses
   %i.j = icmp ugt i32 %i.i, 9
@@ -265,10 +265,11 @@ bb.g:                                             ; preds = %.lr.ph
   %i.s = add i32 %i.r, %i.i                       ; 2 uses
   %i.t = load i8, ptr %i.a, align 1, !tbaa !406   ; 2 uses
   %i.u = and i8 %i.t, 127
-  %i.v = zext nneg i8 %i.u to i64
-  %i.w = shl i64 %i.v, %indvars.iv
+  %5 = zext nneg i8 %i.u to i64
+  %i.v = zext nneg i32 %4 to i64
+  %i.w = shl i64 %5, %i.v
   %i.x = or i64 %i.w, %i.h                        ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 7
+  %6 = add nuw nsw i32 %4, 7
   %.not48 = icmp slt i8 %i.t, 0
   br i1 %.not48, label %.lr.ph, label %._crit_edge, !llvm.loop !1641
 

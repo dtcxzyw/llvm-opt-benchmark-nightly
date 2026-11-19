@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.c = load float, ptr %i.b, align 4, !noundef !9 ; 9 uses
   %i.d = and i64 %3, 2305843009213693948          ; 16 uses
   %i.e = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.d ; 6 uses
-  %i.f = shl nuw nsw i64 %3, 2                    ; 3 uses
+  %i.f = shl nuw nsw i64 %3, 2                    ; 4 uses
   %.idx = and i64 %i.f, 9223372036854775792       ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 %.idx ; 2 uses
   %i.h = icmp samesign eq i64 %.idx, 0
@@ -227,17 +227,28 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph168.split.us:                               ; preds = %.lr.ph168
   %i.q = add nuw nsw i64 %1, 4
-  %i.r = lshr i64 %i.q, 2                         ; 2 uses
+  %i.r = lshr i64 %i.q, 2                         ; 3 uses
   %i.s = lshr i64 %1, 2
   %i.t = add nsw i64 %i.f, -16
   %i.u = lshr i64 %i.t, 4
   %i.v = tail call i64 @llvm.umin.i64(i64 %i.s, i64 %i.u)
   %i.w = tail call i64 @llvm.umin.i64(i64 %i.v, i64 %i.r) ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %i.w, 4
-  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
-
-vector.ph:                                        ; preds = %.lr.ph168.split.us
   %6 = add nuw nsw i64 %i.w, 1                    ; 2 uses
+  %min.iters.check = icmp samesign ult i64 %i.w, 12
+  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
+
+vector.scevcheck:                                 ; preds = %.lr.ph168.split.us
+  %7 = lshr i64 %1, 2
+  %8 = add nsw i64 %i.f, -16
+  %9 = lshr i64 %8, 4
+  %umin358 = tail call i64 @llvm.umin.i64(i64 %7, i64 %9)
+  %umin359 = tail call i64 @llvm.umin.i64(i64 %umin358, i64 %i.r)
+  %mul = shl nuw nsw i64 %umin359, 4
+  %10 = getelementptr i8, ptr %2, i64 %mul
+  %11 = icmp ult ptr %10, %2
+  br i1 %11, label %scalar.ph.preheader, label %vector.ph
+
+vector.ph:                                        ; preds = %vector.scevcheck
   %i.x = and i64 %6, 3                            ; 2 uses
   %i.y = icmp eq i64 %i.x, 0
   %i.z = select i1 %i.y, i64 4, i64 %i.x
@@ -318,9 +329,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.ci = icmp eq i64 %index.next, %n.vec
   br i1 %i.ci, label %scalar.ph.preheader, label %vector.body, !llvm.loop !150
 
-scalar.ph.preheader:                              ; preds = %vector.body, %.lr.ph168.split.us
-  %.sroa.079.0166.us.ph = phi ptr [ %2, %.lr.ph168.split.us ], [ %i.ab, %vector.body ]
-  %.sroa.7.0165.us.ph = phi i64 [ 0, %.lr.ph168.split.us ], [ %n.vec, %vector.body ]
+scalar.ph.preheader:                              ; preds = %vector.body, %vector.scevcheck, %.lr.ph168.split.us
+  %.sroa.079.0166.us.ph = phi ptr [ %2, %vector.scevcheck ], [ %2, %.lr.ph168.split.us ], [ %i.ab, %vector.body ]
+  %.sroa.7.0165.us.ph = phi i64 [ 0, %vector.scevcheck ], [ 0, %.lr.ph168.split.us ], [ %n.vec, %vector.body ]
   %i.cj = insertelement <4 x float> poison, float %i.c, i64 0
   %i.ck = shufflevector <4 x float> %i.cj, <4 x float> poison, <4 x i32> zeroinitializer
   br label %scalar.ph
@@ -716,7 +727,7 @@ bb.b:                                             ; preds = %bb.a
   %i.c = load float, ptr %i.b, align 4, !noundef !9 ; 9 uses
   %i.d = and i64 %3, 2305843009213693948          ; 15 uses
   %i.e = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.d ; 6 uses
-  %i.f = shl nuw nsw i64 %3, 2                    ; 3 uses
+  %i.f = shl nuw nsw i64 %3, 2                    ; 4 uses
   %.idx = and i64 %i.f, 9223372036854775792       ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 %.idx ; 2 uses
   %i.h = icmp samesign eq i64 %.idx, 0
@@ -739,17 +750,28 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph173.split.us:                               ; preds = %.lr.ph173
   %invariant.gep = getelementptr [4 x i8], ptr %0, i64 %i.i ; 5 uses
   %i.q = add nuw nsw i64 %1, 4
-  %i.r = lshr i64 %i.q, 2                         ; 2 uses
+  %i.r = lshr i64 %i.q, 2                         ; 3 uses
   %i.s = lshr i64 %1, 2
   %i.t = add nsw i64 %i.f, -16
   %i.u = lshr i64 %i.t, 4
   %i.v = tail call i64 @llvm.umin.i64(i64 %i.s, i64 %i.u)
   %i.w = tail call i64 @llvm.umin.i64(i64 %i.v, i64 %i.r) ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %i.w, 4
-  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
-
-vector.ph:                                        ; preds = %.lr.ph173.split.us
   %6 = add nuw nsw i64 %i.w, 1                    ; 2 uses
+  %min.iters.check = icmp samesign ult i64 %i.w, 12
+  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
+
+vector.scevcheck:                                 ; preds = %.lr.ph173.split.us
+  %7 = lshr i64 %1, 2
+  %8 = add nsw i64 %i.f, -16
+  %9 = lshr i64 %8, 4
+  %umin355 = tail call i64 @llvm.umin.i64(i64 %7, i64 %9)
+  %umin356 = tail call i64 @llvm.umin.i64(i64 %umin355, i64 %i.r)
+  %mul = shl nuw nsw i64 %umin356, 4
+  %10 = getelementptr i8, ptr %2, i64 %mul
+  %11 = icmp ult ptr %10, %2
+  br i1 %11, label %scalar.ph.preheader, label %vector.ph
+
+vector.ph:                                        ; preds = %vector.scevcheck
   %i.x = and i64 %6, 3                            ; 2 uses
   %i.y = icmp eq i64 %i.x, 0
   %i.z = select i1 %i.y, i64 4, i64 %i.x
@@ -830,9 +852,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.ci = icmp eq i64 %index.next, %n.vec
   br i1 %i.ci, label %scalar.ph.preheader, label %vector.body, !llvm.loop !152
 
-scalar.ph.preheader:                              ; preds = %vector.body, %.lr.ph173.split.us
-  %.sroa.081.0171.us.ph = phi ptr [ %2, %.lr.ph173.split.us ], [ %i.ab, %vector.body ]
-  %.sroa.7.0170.us.ph = phi i64 [ 0, %.lr.ph173.split.us ], [ %n.vec, %vector.body ]
+scalar.ph.preheader:                              ; preds = %vector.body, %vector.scevcheck, %.lr.ph173.split.us
+  %.sroa.081.0171.us.ph = phi ptr [ %2, %vector.scevcheck ], [ %2, %.lr.ph173.split.us ], [ %i.ab, %vector.body ]
+  %.sroa.7.0170.us.ph = phi i64 [ 0, %vector.scevcheck ], [ 0, %.lr.ph173.split.us ], [ %n.vec, %vector.body ]
   %i.cj = insertelement <4 x float> poison, float %i.c, i64 0
   %i.ck = shufflevector <4 x float> %i.cj, <4 x float> poison, <4 x i32> zeroinitializer
   br label %scalar.ph
@@ -1229,7 +1251,7 @@ bb.b:                                             ; preds = %bb.a
   %i.c = load float, ptr %i.b, align 4, !noundef !9 ; 9 uses
   %i.d = and i64 %3, 2305843009213693948          ; 15 uses
   %i.e = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.d ; 6 uses
-  %i.f = shl nuw nsw i64 %3, 2                    ; 3 uses
+  %i.f = shl nuw nsw i64 %3, 2                    ; 4 uses
   %.idx = and i64 %i.f, 9223372036854775792       ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 %.idx ; 2 uses
   %i.h = icmp samesign eq i64 %.idx, 0
@@ -1252,17 +1274,28 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph178.split.us:                               ; preds = %.lr.ph178
   %invariant.gep = getelementptr [4 x i8], ptr %0, i64 %i.i ; 5 uses
   %i.q = add nuw nsw i64 %1, 4
-  %i.r = lshr i64 %i.q, 2                         ; 2 uses
+  %i.r = lshr i64 %i.q, 2                         ; 3 uses
   %i.s = lshr i64 %1, 2
   %i.t = add nsw i64 %i.f, -16
   %i.u = lshr i64 %i.t, 4
   %i.v = tail call i64 @llvm.umin.i64(i64 %i.s, i64 %i.u)
   %i.w = tail call i64 @llvm.umin.i64(i64 %i.v, i64 %i.r) ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %i.w, 4
-  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
-
-vector.ph:                                        ; preds = %.lr.ph178.split.us
   %6 = add nuw nsw i64 %i.w, 1                    ; 2 uses
+  %min.iters.check = icmp samesign ult i64 %i.w, 12
+  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
+
+vector.scevcheck:                                 ; preds = %.lr.ph178.split.us
+  %7 = lshr i64 %1, 2
+  %8 = add nsw i64 %i.f, -16
+  %9 = lshr i64 %8, 4
+  %umin363 = tail call i64 @llvm.umin.i64(i64 %7, i64 %9)
+  %umin364 = tail call i64 @llvm.umin.i64(i64 %umin363, i64 %i.r)
+  %mul = shl nuw nsw i64 %umin364, 4
+  %10 = getelementptr i8, ptr %2, i64 %mul
+  %11 = icmp ult ptr %10, %2
+  br i1 %11, label %scalar.ph.preheader, label %vector.ph
+
+vector.ph:                                        ; preds = %vector.scevcheck
   %i.x = and i64 %6, 3                            ; 2 uses
   %i.y = icmp eq i64 %i.x, 0
   %i.z = select i1 %i.y, i64 4, i64 %i.x
@@ -1343,9 +1376,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.ci = icmp eq i64 %index.next, %n.vec
   br i1 %i.ci, label %scalar.ph.preheader, label %vector.body, !llvm.loop !154
 
-scalar.ph.preheader:                              ; preds = %vector.body, %.lr.ph178.split.us
-  %.sroa.083.0176.us.ph = phi ptr [ %2, %.lr.ph178.split.us ], [ %i.ab, %vector.body ]
-  %.sroa.7.0175.us.ph = phi i64 [ 0, %.lr.ph178.split.us ], [ %n.vec, %vector.body ]
+scalar.ph.preheader:                              ; preds = %vector.body, %vector.scevcheck, %.lr.ph178.split.us
+  %.sroa.083.0176.us.ph = phi ptr [ %2, %vector.scevcheck ], [ %2, %.lr.ph178.split.us ], [ %i.ab, %vector.body ]
+  %.sroa.7.0175.us.ph = phi i64 [ 0, %vector.scevcheck ], [ 0, %.lr.ph178.split.us ], [ %n.vec, %vector.body ]
   %i.cj = insertelement <4 x float> poison, float %i.c, i64 0
   %i.ck = shufflevector <4 x float> %i.cj, <4 x float> poison, <4 x i32> zeroinitializer
   br label %scalar.ph
@@ -1745,7 +1778,7 @@ bb.b:                                             ; preds = %bb.a
   %i.c = load float, ptr %i.b, align 4, !noundef !9 ; 9 uses
   %i.d = and i64 %3, 2305843009213693948          ; 15 uses
   %i.e = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.d ; 6 uses
-  %i.f = shl nuw nsw i64 %3, 2                    ; 3 uses
+  %i.f = shl nuw nsw i64 %3, 2                    ; 4 uses
   %.idx = and i64 %i.f, 9223372036854775792       ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 %.idx ; 2 uses
   %i.h = icmp samesign eq i64 %.idx, 0
@@ -1768,17 +1801,28 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph170.split.us:                               ; preds = %.lr.ph170
   %invariant.gep = getelementptr [4 x i8], ptr %0, i64 %i.i ; 5 uses
   %i.q = add nuw nsw i64 %1, 4
-  %i.r = lshr i64 %i.q, 2                         ; 2 uses
+  %i.r = lshr i64 %i.q, 2                         ; 3 uses
   %i.s = lshr i64 %1, 2
   %i.t = add nsw i64 %i.f, -16
   %i.u = lshr i64 %i.t, 4
   %i.v = tail call i64 @llvm.umin.i64(i64 %i.s, i64 %i.u)
   %i.w = tail call i64 @llvm.umin.i64(i64 %i.v, i64 %i.r) ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %i.w, 4
-  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
-
-vector.ph:                                        ; preds = %.lr.ph170.split.us
   %6 = add nuw nsw i64 %i.w, 1                    ; 2 uses
+  %min.iters.check = icmp samesign ult i64 %i.w, 12
+  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
+
+vector.scevcheck:                                 ; preds = %.lr.ph170.split.us
+  %7 = lshr i64 %1, 2
+  %8 = add nsw i64 %i.f, -16
+  %9 = lshr i64 %8, 4
+  %umin343 = tail call i64 @llvm.umin.i64(i64 %7, i64 %9)
+  %umin344 = tail call i64 @llvm.umin.i64(i64 %umin343, i64 %i.r)
+  %mul = shl nuw nsw i64 %umin344, 4
+  %10 = getelementptr i8, ptr %2, i64 %mul
+  %11 = icmp ult ptr %10, %2
+  br i1 %11, label %scalar.ph.preheader, label %vector.ph
+
+vector.ph:                                        ; preds = %vector.scevcheck
   %i.x = and i64 %6, 3                            ; 2 uses
   %i.y = icmp eq i64 %i.x, 0
   %i.z = select i1 %i.y, i64 4, i64 %i.x
@@ -1859,9 +1903,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.ci = icmp eq i64 %index.next, %n.vec
   br i1 %i.ci, label %scalar.ph.preheader, label %vector.body, !llvm.loop !156
 
-scalar.ph.preheader:                              ; preds = %vector.body, %.lr.ph170.split.us
-  %.sroa.081.0168.us.ph = phi ptr [ %2, %.lr.ph170.split.us ], [ %i.ab, %vector.body ]
-  %.sroa.7.0167.us.ph = phi i64 [ 0, %.lr.ph170.split.us ], [ %n.vec, %vector.body ]
+scalar.ph.preheader:                              ; preds = %vector.body, %vector.scevcheck, %.lr.ph170.split.us
+  %.sroa.081.0168.us.ph = phi ptr [ %2, %vector.scevcheck ], [ %2, %.lr.ph170.split.us ], [ %i.ab, %vector.body ]
+  %.sroa.7.0167.us.ph = phi i64 [ 0, %vector.scevcheck ], [ 0, %.lr.ph170.split.us ], [ %n.vec, %vector.body ]
   %i.cj = insertelement <4 x float> poison, float %i.c, i64 0
   %i.ck = shufflevector <4 x float> %i.cj, <4 x float> poison, <4 x i32> zeroinitializer
   br label %scalar.ph
@@ -2264,13 +2308,13 @@ attributes #14 = { noreturn }
 !148 = distinct !{!148, !10}
 !149 = distinct !{!149, !7}
 !150 = distinct !{!150, !7, !8}
-!151 = distinct !{!151, !8, !7}
+!151 = distinct !{!151, !7}
 !152 = distinct !{!152, !7, !8}
-!153 = distinct !{!153, !8, !7}
+!153 = distinct !{!153, !7}
 !154 = distinct !{!154, !7, !8}
-!155 = distinct !{!155, !8, !7}
+!155 = distinct !{!155, !7}
 !156 = distinct !{!156, !7, !8}
-!157 = distinct !{!157, !8, !7}
+!157 = distinct !{!157, !7}
 !158 = distinct !{!158, !7}
 !159 = distinct !{!159, i1 true, !"_RINvYINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zip3ZipINtNtNtBc_5slice4iter7IterMutfEINtBU_4IterfEENtNtNtBa_6traits8iterator8Iterator3zipRSfECsa5QsYiPB8Gl_5image"}
 !160 = distinct !{!160, !159, !"_RINvYINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zip3ZipINtNtNtBc_5slice4iter7IterMutfEINtBU_4IterfEENtNtNtBa_6traits8iterator8Iterator3zipRSfECsa5QsYiPB8Gl_5image: argument 2"}

@@ -204,7 +204,7 @@ bb.ef:                                            ; preds = %bb.ee
 bb.eg:                                            ; preds = %bb.ee
   %i.ne = call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef %.sroa.0163.0.i) #31
   %i.nf = add nuw nsw i32 %.097.i, 1
-  %indvars.iv.next298.i = add nsw i32 %indvars.iv297.i, 1
+  %indvars.iv.next298.i = add i32 %indvars.iv297.i, 1
   br label %.preheader201.i, !llvm.loop !179
 
 _ZN7Imf_3_45ArrayIjE11resizeEraseEl.exit.i:       ; preds = %bb.ef
@@ -311,8 +311,8 @@ bb.ep:                                            ; preds = %bb.eo
           to label %.preheader195.i unwind label %.loopexit.split-lp197.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .preheader195.i:                                  ; preds = %bb.ep, %bb.ew
-  %indvars.iv294.i = phi i64 [ %indvars.iv.next295.i, %bb.ew ], [ 0, %bb.ep ] ; 2 uses
   %.sroa.0149.0.i = phi ptr [ %i.ok, %bb.ew ], [ %i.ob, %bb.ep ] ; 3 uses
+  %.095.i = phi i32 [ %24, %bb.ew ], [ 0, %bb.ep ] ; 2 uses
   %i.oc = invoke noundef nonnull align 8 dereferenceable(48) ptr @_ZNK7Imf_3_46Header8channelsEv(ptr noundef nonnull align 8 dereferenceable(49) %i.mk)
           to label %bb.eq unwind label %.loopexit.split-lp197.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -336,7 +336,8 @@ bb.et:                                            ; preds = %bb.en, %_ZN7Imf_3_4
 
 bb.eu:                                            ; preds = %bb.er
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #25
-  %i.of = getelementptr inbounds nuw [16 x i8], ptr %i.nk, i64 %indvars.iv294.i
+  %23 = zext nneg i32 %.095.i to i64
+  %i.of = getelementptr inbounds nuw [16 x i8], ptr %i.nk, i64 %23
   %i.og = getelementptr inbounds nuw i8, ptr %i.of, i64 8
   %i.oh = load ptr, ptr %i.og, align 8, !tbaa !94
   %i.oi = getelementptr inbounds [8 x i8], ptr %i.oh, i64 %i.ny
@@ -351,7 +352,7 @@ bb.ev:                                            ; preds = %bb.eu
 bb.ew:                                            ; preds = %bb.ev
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #25
   %i.ok = call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.0149.0.i) #31
-  %indvars.iv.next295.i = add nuw nsw i64 %indvars.iv294.i, 1
+  %24 = add nuw nsw i32 %.095.i, 1
   br label %.preheader195.i, !llvm.loop !181
 
 bb.ex:                                            ; preds = %bb.ev, %bb.eu
@@ -754,8 +755,8 @@ bb.gt:                                            ; preds = %bb.gs
   br label %bb.gu
 
 bb.gu:                                            ; preds = %bb.hb, %.preheader348.i
-  %indvars.iv650.i = phi i64 [ 0, %.preheader348.i ], [ %indvars.iv.next651.i, %bb.hb ] ; 2 uses
-  %.sroa.0238.0.i = phi ptr [ %i.yw, %.preheader348.i ], [ %i.zg, %bb.hb ] ; 3 uses
+  %.sroa.0238.0.i = phi ptr [ %i.zg, %bb.hb ], [ %i.yw, %.preheader348.i ] ; 3 uses
+  %.0160.i = phi i32 [ %26, %bb.hb ], [ 0, %.preheader348.i ] ; 2 uses
   %i.yz = invoke noundef nonnull align 8 dereferenceable(48) ptr @_ZNK7Imf_3_46Header8channelsEv(ptr noundef nonnull align 8 dereferenceable(49) %i.xb)
           to label %bb.gv unwind label %.loopexit.split-lp350.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -779,7 +780,8 @@ bb.gy:                                            ; preds = %bb.gr, %_ZN7Imf_3_4
 
 bb.gz:                                            ; preds = %bb.gw
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #25
-  %i.zc = getelementptr inbounds nuw [24 x i8], ptr %i.yc, i64 %indvars.iv650.i
+  %25 = zext nneg i32 %.0160.i to i64
+  %i.zc = getelementptr inbounds nuw [24 x i8], ptr %i.yc, i64 %25
   %i.zd = getelementptr inbounds nuw i8, ptr %i.zc, i64 16
   %i.ze = load ptr, ptr %i.zd, align 8, !tbaa !99
   invoke void @_ZN7Imf_3_49DeepSliceC1ENS_9PixelTypeEPcmmmiidbb(ptr noundef nonnull align 8 dereferenceable(56) %5, i32 noundef 2, ptr noundef %i.ze, i64 noundef 8, i64 noundef %i.yy, i64 noundef 4, i32 noundef 1, i32 noundef 1, double noundef 0.000000e+00, i1 noundef zeroext true, i1 noundef zeroext true)
@@ -793,7 +795,7 @@ bb.ha:                                            ; preds = %bb.gz
 bb.hb:                                            ; preds = %bb.ha
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #25
   %i.zg = call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.0238.0.i) #31
-  %indvars.iv.next651.i = add nuw nsw i64 %indvars.iv650.i, 1
+  %26 = add nuw nsw i32 %.0160.i, 1
   br label %bb.gu, !llvm.loop !192
 
 bb.hc:                                            ; preds = %bb.ha, %bb.gz
@@ -1196,7 +1198,7 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.h
   %i.t = tail call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef %.sroa.0156.0) #31
   %i.u = add nuw nsw i32 %.097, 1
-  %indvars.iv.next256 = add nsw i32 %indvars.iv255, 1
+  %indvars.iv.next256 = add i32 %indvars.iv255, 1
   br label %.preheader176, !llvm.loop !222
 
 _ZN7Imf_3_45ArrayIjE11resizeEraseEl.exit:         ; preds = %bb.i
@@ -1312,8 +1314,8 @@ bb.s:                                             ; preds = %bb.r
           to label %.preheader170 unwind label %.loopexit.split-lp172.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .preheader170:                                    ; preds = %bb.s, %bb.z
-  %indvars.iv252 = phi i64 [ %indvars.iv.next253, %bb.z ], [ 0, %bb.s ] ; 2 uses
   %.sroa.0144.0 = phi ptr [ %i.bi, %bb.z ], [ %i.az, %bb.s ] ; 3 uses
+  %.095 = phi i32 [ %7, %bb.z ], [ 0, %bb.s ]     ; 2 uses
   %i.ba = invoke noundef nonnull align 8 dereferenceable(48) ptr @_ZNK7Imf_3_46Header8channelsEv(ptr noundef nonnull align 8 dereferenceable(49) %i.a)
           to label %bb.t unwind label %.loopexit.split-lp172.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -1337,7 +1339,8 @@ bb.w:                                             ; preds = %bb.q, %_ZN7Imf_3_41
 
 bb.x:                                             ; preds = %bb.u
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #25
-  %i.bd = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %indvars.iv252
+  %6 = zext nneg i32 %.095 to i64
+  %i.bd = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %6
   %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 8
   %i.bf = load ptr, ptr %i.be, align 8, !tbaa !94
   %i.bg = getelementptr inbounds [8 x i8], ptr %i.bf, i64 %i.aw
@@ -1352,7 +1355,7 @@ bb.y:                                             ; preds = %bb.x
 bb.z:                                             ; preds = %bb.y
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #25
   %i.bi = call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.0144.0) #31
-  %indvars.iv.next253 = add nuw nsw i64 %indvars.iv252, 1
+  %7 = add nuw nsw i32 %.095, 1
   br label %.preheader170, !llvm.loop !224
 
 bb.aa:                                            ; preds = %bb.y, %bb.x
@@ -1755,8 +1758,8 @@ bb.v:                                             ; preds = %bb.u
   br label %bb.w
 
 bb.w:                                             ; preds = %.preheader348, %bb.ad
-  %indvars.iv650 = phi i64 [ 0, %.preheader348 ], [ %indvars.iv.next651, %bb.ad ] ; 2 uses
-  %.sroa.0238.0 = phi ptr [ %i.bb, %.preheader348 ], [ %i.bl, %bb.ad ] ; 3 uses
+  %.sroa.0238.0 = phi ptr [ %i.bl, %bb.ad ], [ %i.bb, %.preheader348 ] ; 3 uses
+  %.0160 = phi i32 [ %8, %bb.ad ], [ 0, %.preheader348 ] ; 2 uses
   %i.be = invoke noundef nonnull align 8 dereferenceable(48) ptr @_ZNK7Imf_3_46Header8channelsEv(ptr noundef nonnull align 8 dereferenceable(49) %i.a)
           to label %bb.x unwind label %.loopexit.split-lp350.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -1780,7 +1783,8 @@ bb.aa:                                            ; preds = %bb.t, %_ZN7Imf_3_41
 
 bb.ab:                                            ; preds = %bb.y
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #25
-  %i.bh = getelementptr inbounds nuw [24 x i8], ptr %i.ab, i64 %indvars.iv650
+  %7 = zext nneg i32 %.0160 to i64
+  %i.bh = getelementptr inbounds nuw [24 x i8], ptr %i.ab, i64 %7
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bh, i64 16
   %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !99
   invoke void @_ZN7Imf_3_49DeepSliceC1ENS_9PixelTypeEPcmmmiidbb(ptr noundef nonnull align 8 dereferenceable(56) %5, i32 noundef 2, ptr noundef %i.bj, i64 noundef 8, i64 noundef %i.bd, i64 noundef 4, i32 noundef 1, i32 noundef 1, double noundef 0.000000e+00, i1 noundef zeroext true, i1 noundef zeroext true)
@@ -1794,7 +1798,7 @@ bb.ac:                                            ; preds = %bb.ab
 bb.ad:                                            ; preds = %bb.ac
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #25
   %i.bl = call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.0238.0) #31
-  %indvars.iv.next651 = add nuw nsw i64 %indvars.iv650, 1
+  %8 = add nuw nsw i32 %.0160, 1
   br label %bb.w, !llvm.loop !235
 
 bb.ae:                                            ; preds = %bb.ac, %bb.ab

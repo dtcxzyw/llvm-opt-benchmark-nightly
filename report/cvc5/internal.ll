@@ -205,17 +205,18 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %.preheader, %_ZN7CaDiCaL8Internal18local_search_roundEi.exit
-  %indvars.iv = phi i64 [ 1, %.preheader ], [ %indvars.iv.next, %_ZN7CaDiCaL8Internal18local_search_roundEi.exit ] ; 5 uses
-  %.08.a = phi i32 [ 0, %.preheader ], [ %.0.i, %_ZN7CaDiCaL8Internal18local_search_roundEi.exit ] ; 2 uses
-  switch i32 %.08.a, label %.critedge [
+  %.08 = phi i32 [ %.0.i, %_ZN7CaDiCaL8Internal18local_search_roundEi.exit ], [ 0, %.preheader ] ; 2 uses
+  %.08.a = phi i32 [ %2, %_ZN7CaDiCaL8Internal18local_search_roundEi.exit ], [ 1, %.preheader ] ; 2 uses
+  switch i32 %.08, label %.critedge [
     i32 0, label %bb.d
     i32 10, label %bb.g
     i32 20, label %bb.h
   ]
 
 bb.d:                                             ; preds = %bb.c
+  %1 = zext nneg i32 %.08.a to i64                ; 4 uses
   %i.o = load i64, ptr %i.l, align 8, !tbaa !285
-  %.not13 = icmp slt i64 %i.o, %indvars.iv
+  %.not13 = icmp slt i64 %i.o, %1
   br i1 %.not13, label %.critedge, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -233,10 +234,10 @@ bb.f:                                             ; preds = %bb.e
   store i8 1, ptr %i.m, align 2, !tbaa !306
   %i.u = load i32, ptr %i.n, align 8, !tbaa !307
   %i.v = sext i32 %i.u to i64
-  %i.w = mul nsw i64 %indvars.iv, %i.v            ; 2 uses
-  %i.x = udiv i64 9223372036854775807, %indvars.iv
+  %i.w = mul nsw i64 %i.v, %1                     ; 2 uses
+  %i.x = udiv i64 9223372036854775807, %1
   %i.y = icmp sgt i64 %i.x, %i.w
-  %i.z = mul nsw i64 %i.w, %indvars.iv
+  %i.z = mul nsw i64 %i.w, %1
   %.09.i = select i1 %i.y, i64 %i.z, i64 9223372036854775807
   %i.aa = tail call noundef i32 @_ZN7CaDiCaL8Internal10walk_roundElb(ptr noundef nonnull align 8 dereferenceable(5704) %0, i64 noundef %.09.i, i1 noundef zeroext true)
   store i8 0, ptr %i.m, align 2, !tbaa !306
@@ -248,7 +249,7 @@ bb.f:                                             ; preds = %bb.e
 
 _ZN7CaDiCaL8Internal18local_search_roundEi.exit:  ; preds = %bb.e, %bb.f
   %.0.i = phi i32 [ 0, %bb.e ], [ %i.aa, %bb.f ]
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %2 = add nuw nsw i32 %.08.a, 1
   br label %bb.c, !llvm.loop !402
 
 bb.g:                                             ; preds = %bb.c
@@ -291,7 +292,7 @@ _ZN7CaDiCaL8Internal26produce_failed_assumptionsEv.exit: ; preds = %.lr.ph2.i, %
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.d, %bb.c, %bb.g, %_ZN7CaDiCaL8Internal26produce_failed_assumptionsEv.exit, %bb.b, %bb.a
-  %.09 = phi i32 [ 0, %bb.a ], [ %i.ad, %bb.g ], [ 0, %bb.b ], [ 20, %_ZN7CaDiCaL8Internal26produce_failed_assumptionsEv.exit ], [ 0, %bb.d ], [ %.08.a, %bb.c ]
+  %.09 = phi i32 [ 0, %bb.a ], [ %i.ad, %bb.g ], [ 0, %bb.b ], [ 20, %_ZN7CaDiCaL8Internal26produce_failed_assumptionsEv.exit ], [ 0, %bb.d ], [ %.08, %bb.c ]
   ret i32 %.09
 }
 

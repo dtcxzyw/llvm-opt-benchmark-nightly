@@ -204,9 +204,9 @@ bb.as:                                            ; preds = %_ZNSt7__cxx1112basi
   br i1 %4, label %bb.fv, label %.thread1951
 
 bb.at:                                            ; preds = %.lr.ph1514, %bb.fu
-  %indvars.iv = phi i64 [ 0, %.lr.ph1514 ], [ %indvars.iv.next, %bb.fu ] ; 4 uses
   %.01121512 = phi ptr [ %i.cl, %.lr.ph1514 ], [ %i.gy, %bb.fu ] ; 14 uses
   %.01131511 = phi i1 [ false, %.lr.ph1514 ], [ %.2115, %bb.fu ] ; 6 uses
+  %.01181510 = phi i32 [ 0, %.lr.ph1514 ], [ %79, %bb.fu ] ; 4 uses
   %i.gx = getelementptr inbounds nuw i8, ptr %.01121512, i64 8
   %i.gy = load ptr, ptr %i.gx, align 8, !tbaa !77 ; 5 uses
   %.not.i409 = icmp eq ptr %i.gy, null            ; 2 uses
@@ -609,8 +609,7 @@ bb.dx:                                            ; preds = %bb.dt
 
 bb.dy:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit593
   %i.ue = load i32, ptr %i.i, align 4, !tbaa !59  ; 2 uses
-  %77 = sext i32 %i.ue to i64
-  %.not323 = icmp slt i64 %indvars.iv, %77
+  %.not323 = icmp slt i32 %.01181510, %i.ue
   br i1 %.not323, label %bb.ft, label %bb.dz
 
 bb.dz:                                            ; preds = %bb.dy
@@ -697,7 +696,8 @@ _ZNSt6vectorISt4pairIP6AstVarP6AstArgESaIS5_EE17_M_realloc_insertIJRS2_S4_EEEvN9
 _ZNSt6vectorISt4pairIP6AstVarP6AstArgESaIS5_EE12emplace_backIJRS2_S4_EEERS5_DpOT_.exit: ; preds = %_ZNSt6vectorISt4pairIP6AstVarP6AstArgESaIS5_EE17_M_realloc_insertIJRS2_S4_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i, %bb.eb
   %i.vb = phi i32 [ %.pre1655.a, %_ZNSt6vectorISt4pairIP6AstVarP6AstArgESaIS5_EE17_M_realloc_insertIJRS2_S4_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i ], [ %i.ue, %bb.eb ]
   %i.vc = phi ptr [ %i.uu, %_ZNSt6vectorISt4pairIP6AstVarP6AstArgESaIS5_EE17_M_realloc_insertIJRS2_S4_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i ], [ %.pre1654, %bb.eb ]
-  %i.vd = getelementptr inbounds nuw [16 x i8], ptr %i.vc, i64 %indvars.iv
+  %77 = zext nneg i32 %.01181510 to i64
+  %i.vd = getelementptr inbounds nuw [16 x i8], ptr %i.vc, i64 %77
   %i.ve = getelementptr inbounds nuw i8, ptr %i.vd, i64 8
   store ptr %.01121512, ptr %i.ve, align 8, !tbaa !72
   %i.vf = add nsw i32 %i.vb, 1
@@ -1100,15 +1100,16 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit713: ; preds = %bb
   br label %thread-pre-split
 
 bb.ft:                                            ; preds = %bb.dy
+  %78 = zext nneg i32 %.01181510 to i64
   %i.abk = load ptr, ptr %20, align 16, !tbaa !587
-  %i.abl = getelementptr inbounds nuw [16 x i8], ptr %i.abk, i64 %indvars.iv
+  %i.abl = getelementptr inbounds nuw [16 x i8], ptr %i.abk, i64 %78
   %i.abm = getelementptr inbounds nuw i8, ptr %i.abl, i64 8
   store ptr %.01121512, ptr %i.abm, align 8, !tbaa !72
   br label %bb.fu
 
 bb.fu:                                            ; preds = %_ZN6AstArg12unlinkFrBackEP10VNRelinker.exit692.invoke, %bb.ds, %bb.bf, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit593, %_ZNSt6vectorISt4pairIP6AstVarP6AstArgESaIS5_EE12emplace_backIJRS2_S4_EEERS5_DpOT_.exit, %bb.ee, %bb.ft
   %.2115 = phi i1 [ %.01131511, %_ZN6AstArg12unlinkFrBackEP10VNRelinker.exit692.invoke ], [ %.01131511, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit593 ], [ %.01131511, %_ZNSt6vectorISt4pairIP6AstVarP6AstArgESaIS5_EE12emplace_backIJRS2_S4_EEERS5_DpOT_.exit ], [ %.01131511, %bb.ft ], [ %.01131511, %bb.ee ], [ true, %bb.ds ], [ %.01131511, %bb.bf ] ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %79 = add nuw nsw i32 %.01181510, 1
   br i1 %.not.i409, label %._crit_edge1515, label %bb.at, !llvm.loop !566
 
 .thread1951:                                      ; preds = %._crit_edge1515

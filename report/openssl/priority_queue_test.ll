@@ -204,16 +204,17 @@ bb.p:                                             ; preds = %._crit_edge88, %bb.
   br i1 %.not7389, label %._crit_edge93, label %.lr.ph92
 
 bb.q:                                             ; preds = %bb.r
-  %indvars.iv.next109 = add nuw nsw i64 %indvars.iv108, 1
+  %6 = add nuw nsw i32 %.290, 1
   %i.bc = tail call ptr @ossl_pqueue_peek(ptr noundef %i.v) #8
   %.not73 = icmp eq ptr %i.bc, null
   br i1 %.not73, label %._crit_edge93, label %.lr.ph92, !llvm.loop !21
 
 .lr.ph92:                                         ; preds = %bb.p, %bb.q
-  %indvars.iv108 = phi i64 [ %indvars.iv.next109, %bb.q ], [ 0, %bb.p ] ; 2 uses
+  %.290 = phi i32 [ %6, %bb.q ], [ 0, %bb.p ]     ; 2 uses
   %i.bd = tail call ptr @ossl_pqueue_peek(ptr noundef %i.v) #8
   %i.be = load i64, ptr %i.bd, align 8, !tbaa !13
-  %i.bf = getelementptr inbounds nuw [8 x i8], ptr @test_size_t_priority_queue_int.sorted, i64 %indvars.iv108 ; 2 uses
+  %7 = zext nneg i32 %.290 to i64
+  %i.bf = getelementptr inbounds nuw [8 x i8], ptr @test_size_t_priority_queue_int.sorted, i64 %7 ; 2 uses
   %i.bg = load i64, ptr %i.bf, align 8, !tbaa !13
   %i.bh = tail call i32 @test_size_t_eq(ptr noundef nonnull @.str.6, i32 noundef 111, ptr noundef nonnull @.str.21, ptr noundef nonnull @.str.25, i64 noundef %i.be, i64 noundef %i.bg) #8
   %.not75 = icmp eq i32 %i.bh, 0

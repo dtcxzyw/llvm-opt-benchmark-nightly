@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %_ZNSt6vectorIiSaIiE
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.aq
-  %.039 = phi i64 [ 0, %bb.j ], [ %indvars.iv.next.1, %bb.aq ]
+  %.039 = phi i32 [ 0, %bb.j ], [ %6, %bb.aq ]
   %i.ds = phi i1 [ true, %bb.j ], [ false, %bb.aq ]
   %i.dt = load i32, ptr %i.cz, align 4, !tbaa !23
   %i.du = add nsw i32 %i.dt, -1
@@ -213,12 +213,13 @@ bb.k:                                             ; preds = %bb.j, %bb.aq
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %_ZN20colvargrid_integrate8get_gradEPdRSt6vectorIiSaIiEE.exit.1
-  %.137 = phi i64 [ %.039, %bb.k ], [ %indvars.iv.next.1, %_ZN20colvargrid_integrate8get_gradEPdRSt6vectorIiSaIiEE.exit.1 ] ; 4 uses
+  %.137 = phi i32 [ %.039, %bb.k ], [ %6, %_ZN20colvargrid_integrate8get_gradEPdRSt6vectorIiSaIiEE.exit.1 ] ; 4 uses
   %i.dv = phi i1 [ true, %bb.k ], [ false, %_ZN20colvargrid_integrate8get_gradEPdRSt6vectorIiSaIiEE.exit.1 ]
   %i.dw = load i32, ptr %i.db, align 4, !tbaa !23
   %i.dx = add nsw i32 %i.dw, -1
   store i32 %i.dx, ptr %i.dc, align 4, !tbaa !23
-  %i.dy = getelementptr inbounds [8 x i8], ptr %i.e, i64 %.137 ; 3 uses
+  %3 = sext i32 %.137 to i64
+  %i.dy = getelementptr inbounds [8 x i8], ptr %i.e, i64 %3 ; 3 uses
   br i1 %.not20.i.i, label %_ZNK11colvar_gridIdE16wrap_detect_edgeERSt6vectorIiSaIiEE.exit.thread.i, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.l
@@ -284,7 +285,8 @@ _ZN20colvargrid_integrate8get_gradEPdRSt6vectorIiSaIiEE.exit.thread: ; preds = %
   %i.eu = load i32, ptr %i.dc, align 4, !tbaa !23
   %i.ev = add nsw i32 %i.eu, 1
   store i32 %i.ev, ptr %i.dc, align 4, !tbaa !23
-  %i.ew = getelementptr [8 x i8], ptr %i.e, i64 %.137
+  %4 = sext i32 %.137 to i64
+  %i.ew = getelementptr [8 x i8], ptr %i.e, i64 %4
   %i.ex = getelementptr i8, ptr %i.ew, i64 24
   br label %.lr.ph.i.i.1
 
@@ -562,7 +564,8 @@ _ZN20colvargrid_integrate8get_gradEPdRSt6vectorIiSaIiEE.exit: ; preds = %.lr.ph.
   %i.kc = load i32, ptr %i.dc, align 4, !tbaa !23
   %i.kd = add nsw i32 %i.kc, 1
   store i32 %i.kd, ptr %i.dc, align 4, !tbaa !23
-  %i.ke = getelementptr [8 x i8], ptr %i.e, i64 %.137
+  %5 = sext i32 %.137 to i64
+  %i.ke = getelementptr [8 x i8], ptr %i.e, i64 %5
   %i.kf = getelementptr i8, ptr %i.ke, i64 24     ; 2 uses
   br i1 %.not20.i.i, label %_ZNK11colvar_gridIdE16wrap_detect_edgeERSt6vectorIiSaIiEE.exit.thread.i.1, label %.lr.ph.i.i.1
 
@@ -949,7 +952,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %exitcond.not.i10.i.1.3, label %_ZN20colvargrid_integrate8get_gradEPdRSt6vectorIiSaIiEE.exit.1, label %.lr.ph.i9.i.1, !llvm.loop !246
 
 _ZN20colvargrid_integrate8get_gradEPdRSt6vectorIiSaIiEE.exit.1: ; preds = %.lr.ph.i9.i.1.prol.loopexit, %.lr.ph.i9.i.1, %middle.block, %_ZNK11colvar_gridIdE7addressERKSt6vectorIiSaIiEE.exit.i.i.1, %.preheader.i.1
-  %indvars.iv.next.1 = add nsw i64 %.137, 6       ; 2 uses
+  %6 = add nsw i32 %.137, 6                       ; 2 uses
   %i.ri = load <2 x i32>, ptr %i.da, align 4, !tbaa !23
   %i.rj = add nsw <2 x i32> %i.ri, splat (i32 1)
   store <2 x i32> %i.rj, ptr %i.da, align 4, !tbaa !23

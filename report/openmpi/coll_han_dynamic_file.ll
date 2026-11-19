@@ -156,15 +156,15 @@ bb.o:                                             ; preds = %bb.n
   br label %bb.de
 
 .lr.ph358:                                        ; preds = %bb.n, %bb.cw
-  %indvars.iv408 = phi i64 [ %indvars.iv.next409, %bb.cw ], [ 0, %bb.n ] ; 2 uses
+  %indvars.iv408 = phi i64 [ %7, %bb.cw ], [ 0, %bb.n ]
+  %.0195357 = phi i32 [ %0, %bb.cw ], [ 0, %bb.n ]
   %.0196356 = phi i32 [ %.7, %bb.cw ], [ 0, %bb.n ] ; 3 uses
   %i.an = getelementptr inbounds nuw [16 x i8], ptr %i.al, i64 %indvars.iv408 ; 3 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 4 ; 4 uses
   store i32 0, ptr %i.ao, align 4, !tbaa !25
   %i.ap = getelementptr inbounds nuw i8, ptr %i.an, i64 8 ; 2 uses
   store ptr null, ptr %i.ap, align 8, !tbaa !26
-  %indvars.iv.next409 = add nuw nsw i64 %indvars.iv408, 1 ; 3 uses
-  %0 = trunc nuw i64 %indvars.iv.next409 to i32
+  %0 = add nuw nsw i32 %.0195357, 1               ; 3 uses
   store i32 %0, ptr getelementptr inbounds nuw (i8, ptr @mca_coll_han_component, i64 664), align 8, !tbaa !20
   %i.aq = call i32 @ompi_coll_base_file_getnext_string(ptr noundef nonnull %i.v, ptr noundef nonnull @fileline, ptr noundef nonnull %i.b) #9
   %i.ar = icmp slt i32 %i.aq, 0
@@ -298,15 +298,15 @@ bb.ai:                                            ; preds = %bb.ah
   br label %bb.de
 
 .lr.ph354:                                        ; preds = %bb.ah, %.loopexit262
-  %indvars.iv405 = phi i64 [ %indvars.iv.next406, %.loopexit262 ], [ 0, %bb.ah ] ; 2 uses
+  %indvars.iv405 = phi i64 [ %6, %.loopexit262 ], [ 0, %bb.ah ]
+  %.0194353 = phi i32 [ %1, %.loopexit262 ], [ 0, %bb.ah ]
   %.1197352 = phi i32 [ %.6.ph, %.loopexit262 ], [ %.0196356, %bb.ah ] ; 3 uses
   %i.cm = getelementptr inbounds nuw [24 x i8], ptr %i.ck, i64 %indvars.iv405 ; 4 uses
   %i.cn = getelementptr inbounds nuw i8, ptr %i.cm, i64 8 ; 4 uses
   store i32 0, ptr %i.cn, align 8, !tbaa !30
   %i.co = getelementptr inbounds nuw i8, ptr %i.cm, i64 16 ; 2 uses
   store ptr null, ptr %i.co, align 8, !tbaa !31
-  %indvars.iv.next406 = add nuw nsw i64 %indvars.iv405, 1 ; 3 uses
-  %1 = trunc nuw i64 %indvars.iv.next406 to i32
+  %1 = add nuw nsw i32 %.0194353, 1               ; 3 uses
   store i32 %1, ptr %i.ao, align 4, !tbaa !25
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j) #9
   store ptr null, ptr %i.j, align 8, !tbaa !47
@@ -429,15 +429,15 @@ bb.ax:                                            ; preds = %bb.aw
   br label %bb.cu
 
 bb.ay:                                            ; preds = %.lr.ph350, %.loopexit
-  %indvars.iv402 = phi i64 [ 0, %.lr.ph350 ], [ %indvars.iv.next403, %.loopexit ] ; 3 uses
+  %indvars.iv402 = phi i64 [ 0, %.lr.ph350 ], [ %5, %.loopexit ]
+  %.0193349 = phi i32 [ 0, %.lr.ph350 ], [ %2, %.loopexit ] ; 2 uses
   %.2198348 = phi i32 [ %.1197352, %.lr.ph350 ], [ %.5201, %.loopexit ] ; 3 uses
   %i.ej = getelementptr inbounds nuw [24 x i8], ptr %i.eh, i64 %indvars.iv402 ; 5 uses
   %i.ek = getelementptr inbounds nuw i8, ptr %i.ej, i64 12 ; 4 uses
   store i32 0, ptr %i.ek, align 4, !tbaa !35
   %i.el = getelementptr inbounds nuw i8, ptr %i.ej, i64 16 ; 2 uses
   store ptr null, ptr %i.el, align 8, !tbaa !36
-  %indvars.iv.next403 = add nuw nsw i64 %indvars.iv402, 1 ; 3 uses
-  %2 = trunc nuw i64 %indvars.iv.next403 to i32
+  %2 = add nuw nsw i32 %.0193349, 1               ; 3 uses
   store i32 %2, ptr %i.cn, align 8, !tbaa !30
   %i.em = call i32 @ompi_coll_base_file_getnext_long(ptr noundef nonnull %i.v, ptr noundef nonnull @fileline, ptr noundef nonnull %i.f) #9
   %i.en = icmp slt i32 %i.em, 0
@@ -447,7 +447,7 @@ bb.ay:                                            ; preds = %.lr.ph350, %.loopex
   br i1 %or.cond20, label %bb.ba, label %bb.az
 
 bb.az:                                            ; preds = %bb.ay
-  %i.eq = icmp eq i64 %indvars.iv402, 0
+  %i.eq = icmp eq i32 %.0193349, 0
   %i.er = icmp samesign ugt i64 %i.eo, 1
   %or.cond22 = select i1 %i.eq, i1 %i.er, i1 false
   br i1 %or.cond22, label %bb.ba, label %bb.bc
@@ -521,19 +521,19 @@ bb.bj:                                            ; preds = %bb.bi
   br label %bb.cu
 
 .lr.ph:                                           ; preds = %bb.bi, %bb.ct
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.ct ], [ 0, %bb.bi ] ; 3 uses
+  %indvars.iv = phi i64 [ %4, %bb.ct ], [ 0, %bb.bi ]
+  %.0192347 = phi i32 [ %3, %bb.ct ], [ 0, %bb.bi ] ; 2 uses
   %.3199346 = phi i32 [ %i.ij, %bb.ct ], [ %.2198348, %bb.bi ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l) #9
   store ptr null, ptr %i.l, align 8, !tbaa !47
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
-  %3 = trunc nuw i64 %indvars.iv.next to i32
+  %3 = add nuw nsw i32 %.0192347, 1               ; 3 uses
   store i32 %3, ptr %i.ek, align 4, !tbaa !35
   %i.fu = call i32 @ompi_coll_base_file_getnext_size_t(ptr noundef nonnull %i.v, ptr noundef nonnull @fileline, ptr noundef nonnull %i.h) #9
   %i.fv = icmp slt i32 %i.fu, 0
   br i1 %i.fv, label %bb.bl, label %bb.bk
 
 bb.bk:                                            ; preds = %.lr.ph
-  %i.fw = icmp eq i64 %indvars.iv, 0
+  %i.fw = icmp eq i32 %.0192347, 0
   %i.fx = load i64, ptr %i.h, align 8
   %i.fy = icmp ugt i64 %i.fx, 1
   %or.cond26 = select i1 %i.fw, i1 %i.fy, i1 false
@@ -774,14 +774,16 @@ bb.ct:                                            ; preds = %bb.ci, %bb.cs
   %i.je = load ptr, ptr %i.l, align 8, !tbaa !47
   call void @free(ptr noundef %i.je) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l) #9
+  %4 = zext nneg i32 %3 to i64                    ; 2 uses
   %i.jf = load i64, ptr %i.g, align 8, !tbaa !53
-  %i.jg = icmp sgt i64 %i.jf, %indvars.iv.next
+  %i.jg = icmp sgt i64 %i.jf, %4
   br i1 %i.jg, label %.lr.ph, label %.loopexit, !llvm.loop !43
 
 .loopexit:                                        ; preds = %bb.ct, %bb.bg, %bb.bh
   %.5201 = phi i32 [ %.2198348, %bb.bh ], [ %.2198348, %bb.bg ], [ %i.ij, %bb.ct ] ; 2 uses
+  %5 = zext nneg i32 %2 to i64                    ; 2 uses
   %i.jh = load i64, ptr %i.e, align 8, !tbaa !53
-  %i.ji = icmp sgt i64 %i.jh, %indvars.iv.next403
+  %i.ji = icmp sgt i64 %i.jh, %5
   br i1 %i.ji, label %bb.ay, label %.loopexit262, !llvm.loop !44
 
 .thread253:                                       ; preds = %bb.ap, %bb.aj, %bb.ar, %bb.ba, %.thread248, %bb.bd, %bb.ak, %bb.as, %bb.bb, %bb.be
@@ -795,8 +797,9 @@ bb.cu:                                            ; preds = %bb.bj, %bb.ax
 .loopexit262:                                     ; preds = %.loopexit, %bb.av, %bb.au
   %.6.ph = phi i32 [ %.1197352, %bb.au ], [ %.1197352, %bb.av ], [ %.5201, %.loopexit ] ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j) #9
+  %6 = zext nneg i32 %1 to i64                    ; 2 uses
   %i.jj = load i64, ptr %i.d, align 8, !tbaa !53
-  %i.jk = icmp sgt i64 %i.jj, %indvars.iv.next406
+  %i.jk = icmp sgt i64 %i.jj, %6
   br i1 %i.jk, label %.lr.ph354, label %._crit_edge, !llvm.loop !45
 
 ._crit_edge:                                      ; preds = %.loopexit262
@@ -811,8 +814,9 @@ bb.cv:                                            ; preds = %._crit_edge
 
 bb.cw:                                            ; preds = %._crit_edge, %bb.cv, %bb.af, %bb.ag
   %.7 = phi i32 [ %.0196356, %bb.ag ], [ %.0196356, %bb.af ], [ %.6.ph, %bb.cv ], [ %.6.ph, %._crit_edge ] ; 2 uses
+  %7 = zext nneg i32 %0 to i64                    ; 2 uses
   %i.jm = load i64, ptr %i.a, align 8, !tbaa !53
-  %i.jn = icmp sgt i64 %i.jm, %indvars.iv.next409
+  %i.jn = icmp sgt i64 %i.jm, %7
   br i1 %i.jn, label %.lr.ph358, label %._crit_edge359, !llvm.loop !46
 
 ._crit_edge359:                                   ; preds = %bb.cw

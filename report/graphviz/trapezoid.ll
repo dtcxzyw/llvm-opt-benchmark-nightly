@@ -204,7 +204,7 @@ math_logstar_n.exit:                              ; preds = %.lr.ph.i
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph79, %._crit_edge75
-  %.04278 = phi i64 [ 1, %.lr.ph79 ], [ %indvars.iv92, %._crit_edge75 ]
+  %.04278 = phi i32 [ 1, %.lr.ph79 ], [ %.143, %._crit_edge75 ]
   %.04577 = phi i32 [ 1, %.lr.ph79 ], [ %i.nf, %._crit_edge75 ] ; 5 uses
   %i.lw = icmp samesign ugt i32 %.04577, 1
   br i1 %i.lw, label %.lr.ph.i54.preheader, label %math_N.exit
@@ -229,8 +229,8 @@ math_N.exit:                                      ; preds = %.lr.ph.i54, %bb.f
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.h, %math_N.exit
-  %indvars.iv92 = phi i64 [ %indvars.iv.next93, %bb.h ], [ %.04278, %math_N.exit ] ; 4 uses
-  %.1.in = phi i32 [ %.1, %bb.h ], [ %i.mc, %math_N.exit ] ; 2 uses
+  %.143 = phi i32 [ %.04278, %math_N.exit ], [ %5, %bb.h ] ; 4 uses
+  %.1.in = phi i32 [ %i.mc, %math_N.exit ], [ %.1, %bb.h ] ; 2 uses
   br label %.lr.ph.i56
 
 .lr.ph.i56:                                       ; preds = %bb.g, %.lr.ph.i56
@@ -250,8 +250,9 @@ math_N.exit60:                                    ; preds = %.lr.ph.i56
 
 bb.h:                                             ; preds = %math_N.exit60
   %.1 = add nsw i32 %.1.in, 1
-  %indvars.iv.next93 = add nsw i64 %indvars.iv92, 1
-  %i.mi = getelementptr inbounds [4 x i8], ptr %3, i64 %indvars.iv92
+  %5 = add nsw i32 %.143, 1
+  %6 = sext i32 %.143 to i64
+  %i.mi = getelementptr inbounds [4 x i8], ptr %3, i64 %6
   %i.mj = load i32, ptr %i.mi, align 4, !tbaa !9
   call fastcc void @add_segment(i32 noundef %i.mj, ptr noundef %2, ptr noundef nonnull %0, ptr noundef %4)
   br label %bb.g, !llvm.loop !58
@@ -296,18 +297,22 @@ find_new_roots.exit:                              ; preds = %.lr.ph74, %bb.i
 ._crit_edge75:                                    ; preds = %find_new_roots.exit
   %i.nf = add nuw i32 %.04577, 1
   %exitcond100.not = icmp eq i32 %.04577, %.045.i
-  br i1 %exitcond100.not, label %.lr.ph.i62, label %bb.f, !llvm.loop !60
+  br i1 %exitcond100.not, label %._crit_edge80, label %bb.f, !llvm.loop !60
 
-.lr.ph.i62:                                       ; preds = %._crit_edge75, %.lr.ph.i62
-  %.08.i63 = phi i32 [ %i.nh, %.lr.ph.i62 ], [ 0, %._crit_edge75 ]
-  %.067.i64 = phi double [ %i.ng, %.lr.ph.i62 ], [ %i.lu, %._crit_edge75 ]
+._crit_edge80:                                    ; preds = %._crit_edge75
+  %7 = sext i32 %.143 to i64
+  br label %.lr.ph.i62
+
+.lr.ph.i62:                                       ; preds = %._crit_edge80, %.lr.ph.i62
+  %.08.i63 = phi i32 [ %i.nh, %.lr.ph.i62 ], [ 0, %._crit_edge80 ]
+  %.067.i64 = phi double [ %i.ng, %.lr.ph.i62 ], [ %i.lu, %._crit_edge80 ]
   %i.ng = call double @log2(double noundef %.067.i64) #10 ; 2 uses
   %i.nh = add nuw nsw i32 %.08.i63, 1             ; 2 uses
   %exitcond.not.i65 = icmp eq i32 %i.nh, %.045.i
   br i1 %exitcond.not.i65, label %math_N.exit66, label %.lr.ph.i62, !llvm.loop !57
 
 math_N.exit66:                                    ; preds = %.lr.ph.i62, %._crit_edge80.thread
-  %.042.lcssa121 = phi i64 [ 1, %._crit_edge80.thread ], [ %indvars.iv92, %.lr.ph.i62 ]
+  %.042.lcssa121 = phi i64 [ 1, %._crit_edge80.thread ], [ %7, %.lr.ph.i62 ]
   %.pre-phi120 = phi double [ %.pre, %._crit_edge80.thread ], [ %i.lu, %.lr.ph.i62 ]
   %.06.lcssa.i61 = phi double [ %.pre, %._crit_edge80.thread ], [ %i.ng, %.lr.ph.i62 ]
   %i.ni = fdiv double %.pre-phi120, %.06.lcssa.i61

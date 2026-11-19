@@ -205,7 +205,7 @@ bb.a:
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define i32 @stbtt_PackFontRangesGatherRects(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef captures(none) %2, i32 noundef %3, ptr nofree noundef writeonly captures(none) %4) local_unnamed_addr #19 {
+define range(i32 -2147483647, -2147483648) i32 @stbtt_PackFontRangesGatherRects(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef captures(none) %2, i32 noundef %3, ptr nofree noundef writeonly captures(none) %4) local_unnamed_addr #19 {
 bb.a:
   %5 = alloca %struct.stbtt__csctx, align 8       ; 9 uses
   %i.a = icmp sgt i32 %3, 0
@@ -304,7 +304,6 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 .lr.ph:                                           ; preds = %bb.e
   %i.bm = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   %i.bn = getelementptr inbounds nuw i8, ptr %i.q, i64 4
-  %6 = sext i32 %.05489 to i64
   %i.bo = insertelement <2 x float> poison, float %i.bb, i64 0
   %i.bp = shufflevector <2 x float> %i.bo, <2 x float> poison, <2 x i32> zeroinitializer
   br label %bb.f
@@ -314,8 +313,8 @@ bb.f:                                             ; preds = %.lr.ph, %bb.u
   %.pre104113 = phi i32 [ %i.bk, %.lr.ph ], [ %.pre104114, %bb.u ] ; 4 uses
   %i.bq = phi i32 [ %i.bk, %.lr.ph ], [ %i.gm, %bb.u ]
   %indvars.iv95 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next96, %bb.u ] ; 3 uses
-  %indvars.iv = phi i64 [ %6, %.lr.ph ], [ %indvars.iv.next, %bb.u ] ; 3 uses
-  %.186.a = phi i32 [ %.090, %.lr.ph ], [ %.2, %bb.u ] ; 3 uses
+  %.186 = phi i32 [ %.090, %.lr.ph ], [ %.2, %bb.u ] ; 3 uses
+  %.186.a = phi i32 [ %.05489, %.lr.ph ], [ %8, %bb.u ] ; 3 uses
   %i.br = phi <2 x i32> [ %i.bd, %.lr.ph ], [ %i.gn, %bb.u ] ; 2 uses
   %i.bs = phi <2 x i32> [ %i.bd, %.lr.ph ], [ %i.go, %bb.u ] ; 5 uses
   %i.bt = phi <2 x i32> [ %i.bd, %.lr.ph ], [ %i.gp, %bb.u ] ; 4 uses
@@ -343,12 +342,13 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 bb.j:                                             ; preds = %bb.i
   %i.ce = load i32, ptr %i.f, align 8, !tbaa !312
   %i.cf = icmp ne i32 %i.ce, 0
-  %i.cg = icmp ne i32 %.186.a, 0
+  %i.cg = icmp ne i32 %.186, 0
   %or.cond = select i1 %i.cf, i1 true, i1 %i.cg
   br i1 %or.cond, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
-  %i.ch = getelementptr inbounds [24 x i8], ptr %4, i64 %indvars.iv ; 2 uses
+  %6 = sext i32 %.186.a to i64
+  %i.ch = getelementptr inbounds [24 x i8], ptr %4, i64 %6 ; 2 uses
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 8
   store i32 0, ptr %i.ci, align 4, !tbaa !259
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ch, i64 4
@@ -516,7 +516,8 @@ stbtt_GetGlyphBitmapBoxSubpixel.exit:             ; preds = %bb.o, %bb.n, %bb.s,
   %i.gc = phi <2 x i32> [ %i.fk, %stbtt_GetGlyphBox.exit ], [ %i.bt, %bb.s ], [ %i.bt, %bb.n ], [ %i.bt, %bb.o ] ; 3 uses
   %i.gd = phi <2 x i32> [ %i.fk, %stbtt_GetGlyphBox.exit ], [ %i.bs, %bb.s ], [ %i.bs, %bb.n ], [ %i.bs, %bb.o ]
   %i.ge = load i32, ptr %i.p, align 4, !tbaa !308
-  %i.gf = getelementptr inbounds [24 x i8], ptr %4, i64 %indvars.iv
+  %7 = sext i32 %.186.a to i64
+  %i.gf = getelementptr inbounds [24 x i8], ptr %4, i64 %7
   %i.gg = getelementptr inbounds nuw i8, ptr %i.gf, i64 4
   %i.gh = insertelement <2 x i32> poison, i32 %i.ge, i64 0
   %i.gi = shufflevector <2 x i32> %i.gh, <2 x i32> poison, <2 x i32> zeroinitializer
@@ -524,30 +525,26 @@ stbtt_GetGlyphBitmapBoxSubpixel.exit:             ; preds = %bb.o, %bb.n, %bb.s,
   %i.gk = add <2 x i32> %i.gj, %i.gb
   %i.gl = add <2 x i32> %i.gk, %i.gc
   store <2 x i32> %i.gl, ptr %i.gg, align 4, !tbaa !55
-  %spec.select = select i1 %i.cd, i32 1, i32 %.186.a
+  %spec.select = select i1 %i.cd, i32 1, i32 %.186
   br label %bb.u
 
 bb.u:                                             ; preds = %stbtt_GetGlyphBitmapBoxSubpixel.exit, %bb.k
   %.pre104.pre117 = phi i32 [ %.pre104.pre116, %bb.k ], [ %.pre104.pre118, %stbtt_GetGlyphBitmapBoxSubpixel.exit ]
   %.pre104114 = phi i32 [ %.pre104113, %bb.k ], [ %.pre104, %stbtt_GetGlyphBitmapBoxSubpixel.exit ]
   %i.gm = phi i32 [ %i.bq, %bb.k ], [ %.pre104, %stbtt_GetGlyphBitmapBoxSubpixel.exit ] ; 2 uses
-  %.2 = phi i32 [ %.186.a, %bb.k ], [ %spec.select, %stbtt_GetGlyphBitmapBoxSubpixel.exit ] ; 2 uses
+  %.2 = phi i32 [ %.186, %bb.k ], [ %spec.select, %stbtt_GetGlyphBitmapBoxSubpixel.exit ] ; 2 uses
   %i.gn = phi <2 x i32> [ %i.br, %bb.k ], [ %i.gc, %stbtt_GetGlyphBitmapBoxSubpixel.exit ]
   %i.go = phi <2 x i32> [ %i.bs, %bb.k ], [ %i.gd, %stbtt_GetGlyphBitmapBoxSubpixel.exit ]
   %i.gp = phi <2 x i32> [ %i.bt, %bb.k ], [ %i.gc, %stbtt_GetGlyphBitmapBoxSubpixel.exit ]
-  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
+  %8 = add nsw i32 %.186.a, 1                     ; 2 uses
   %indvars.iv.next96 = add nuw nsw i64 %indvars.iv95, 1 ; 2 uses
   %i.gq = sext i32 %i.gm to i64
   %i.gr = icmp slt i64 %indvars.iv.next96, %i.gq
-  br i1 %i.gr, label %bb.f, label %._crit_edge.loopexit, !llvm.loop !871
+  br i1 %i.gr, label %bb.f, label %._crit_edge, !llvm.loop !871
 
-._crit_edge.loopexit:                             ; preds = %bb.u
-  %7 = trunc nsw i64 %indvars.iv.next to i32
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.e
-  %.155.lcssa = phi i32 [ %.05489, %bb.e ], [ %7, %._crit_edge.loopexit ] ; 2 uses
-  %.1.lcssa = phi i32 [ %.090, %bb.e ], [ %.2, %._crit_edge.loopexit ]
+._crit_edge:                                      ; preds = %bb.u, %bb.e
+  %.155.lcssa = phi i32 [ %.05489, %bb.e ], [ %8, %bb.u ] ; 2 uses
+  %.1.lcssa = phi i32 [ %.090, %bb.e ], [ %.2, %bb.u ]
   %indvars.iv.next101 = add nuw nsw i64 %indvars.iv100, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next101, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge93, label %bb.b, !llvm.loop !872
@@ -950,19 +947,20 @@ bb.f:                                             ; preds = %bb.e
   %.0142229 = phi i32 [ 0, %.preheader.lr.ph ], [ %.2.lcssa, %bb.s ]
   %.0143228 = phi i32 [ 0, %.preheader.lr.ph ], [ %i.dp, %bb.s ]
   %.0145227 = phi i32 [ 0, %.preheader.lr.ph ], [ %i.cu, %bb.s ]
-  %.0147226 = phi i64 [ 0, %.preheader.lr.ph ], [ %indvars.iv.next249, %bb.s ]
+  %.0147226 = phi i32 [ 0, %.preheader.lr.ph ], [ %9, %bb.s ]
   %.2163225 = phi ptr [ %5, %.preheader.lr.ph ], [ %i.fi, %bb.s ] ; 3 uses
   br label %bb.g
 
 bb.g:                                             ; preds = %.preheader, %._crit_edge224
-  %indvars.iv248 = phi i64 [ %.0147226, %.preheader ], [ %indvars.iv.next249, %._crit_edge224 ] ; 2 uses
-  %.2160 = phi ptr [ %.2163225, %.preheader ], [ %i.fh, %._crit_edge224 ] ; 5 uses
-  %.1146 = phi i32 [ %.0145227, %.preheader ], [ %i.cu, %._crit_edge224 ] ; 2 uses
-  %.1144 = phi i32 [ %.0143228, %.preheader ], [ %i.dp, %._crit_edge224 ] ; 2 uses
-  %.1 = phi i32 [ %.0142229, %.preheader ], [ %.2.lcssa, %._crit_edge224 ] ; 2 uses
+  %.2160 = phi ptr [ %i.fh, %._crit_edge224 ], [ %.2163225, %.preheader ] ; 5 uses
+  %.1148 = phi i32 [ %9, %._crit_edge224 ], [ %.0147226, %.preheader ] ; 2 uses
+  %.1146 = phi i32 [ %i.cu, %._crit_edge224 ], [ %.0145227, %.preheader ] ; 2 uses
+  %.1144 = phi i32 [ %i.dp, %._crit_edge224 ], [ %.0143228, %.preheader ] ; 2 uses
+  %.1 = phi i32 [ %.2.lcssa, %._crit_edge224 ], [ %.0142229, %.preheader ] ; 2 uses
   %i.cb = load ptr, ptr %i.c, align 8, !tbaa !369
-  %indvars.iv.next249 = add nsw i64 %indvars.iv248, 1 ; 3 uses
-  %i.cc = getelementptr inbounds [184 x i8], ptr %i.cb, i64 %indvars.iv248 ; 4 uses
+  %9 = add nsw i32 %.1148, 1                      ; 3 uses
+  %10 = sext i32 %.1148 to i64
+  %i.cc = getelementptr inbounds [184 x i8], ptr %i.cb, i64 %10 ; 4 uses
   %i.cd = getelementptr inbounds nuw i8, ptr %.2160, i64 48
   %i.ce = load ptr, ptr %i.cd, align 8, !tbaa !337 ; 3 uses
   %i.cf = load i32, ptr %i.ce, align 4, !tbaa !55 ; 2 uses
@@ -1159,11 +1157,10 @@ bb.r:                                             ; preds = %.epil.preheader
   br i1 %.not184, label %bb.s, label %bb.g, !llvm.loop !968
 
 bb.s:                                             ; preds = %._crit_edge224
-  %9 = trunc nsw i64 %indvars.iv.next249 to i32
   %i.fi = load ptr, ptr %.2163225, align 8, !tbaa !356 ; 2 uses
-  %10 = icmp sgt i32 %6, %9
+  %11 = icmp slt i32 %9, %6
   %i.fj = icmp ne ptr %i.fi, null
-  %i.fk = select i1 %10, i1 %i.fj, i1 false
+  %i.fk = select i1 %11, i1 %i.fj, i1 false
   br i1 %i.fk, label %.preheader, label %._crit_edge230.loopexit, !llvm.loop !969
 
 ._crit_edge230.loopexit:                          ; preds = %bb.s
@@ -1267,16 +1264,17 @@ nk_zero.exit:                                     ; preds = %.lr.ph.preheader.i.
   br label %.preheader160
 
 .preheader160:                                    ; preds = %.preheader160.lr.ph, %bb.h
-  %.0133164 = phi i64 [ 0, %.preheader160.lr.ph ], [ %indvars.iv.next, %bb.h ]
+  %.0133164 = phi i32 [ 0, %.preheader160.lr.ph ], [ %8, %bb.h ]
   %.0139163 = phi ptr [ %6, %.preheader160.lr.ph ], [ %i.aq, %bb.h ] ; 3 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %.preheader160, %stbtt_PackSetOversampling.exit
-  %indvars.iv = phi i64 [ %.0133164, %.preheader160 ], [ %indvars.iv.next, %stbtt_PackSetOversampling.exit ] ; 2 uses
-  %.0137 = phi ptr [ %.0139163, %.preheader160 ], [ %i.ap, %stbtt_PackSetOversampling.exit ] ; 3 uses
+  %.0137 = phi ptr [ %i.ap, %stbtt_PackSetOversampling.exit ], [ %.0139163, %.preheader160 ] ; 3 uses
+  %.1134 = phi i32 [ %8, %stbtt_PackSetOversampling.exit ], [ %.0133164, %.preheader160 ] ; 2 uses
   %i.x = load ptr, ptr %i.u, align 8, !tbaa !369
-  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 3 uses
-  %i.y = getelementptr inbounds [184 x i8], ptr %i.x, i64 %indvars.iv ; 4 uses
+  %8 = add nsw i32 %.1134, 1                      ; 3 uses
+  %9 = sext i32 %.1134 to i64
+  %i.y = getelementptr inbounds [184 x i8], ptr %i.x, i64 %9 ; 4 uses
   %i.z = getelementptr inbounds nuw i8, ptr %.0137, i64 28
   %i.aa = load i8, ptr %i.z, align 4, !tbaa !340  ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %.0137, i64 27
@@ -1312,11 +1310,10 @@ stbtt_PackSetOversampling.exit:                   ; preds = %bb.f, %bb.g
   br i1 %.not146, label %bb.h, label %bb.d, !llvm.loop !975
 
 bb.h:                                             ; preds = %stbtt_PackSetOversampling.exit
-  %8 = trunc nsw i64 %indvars.iv.next to i32
   %i.aq = load ptr, ptr %.0139163, align 8, !tbaa !356 ; 2 uses
-  %9 = icmp sgt i32 %7, %8
+  %10 = icmp slt i32 %8, %7
   %i.ar = icmp ne ptr %i.aq, null
-  %i.as = select i1 %9, i1 %i.ar, i1 false
+  %i.as = select i1 %10, i1 %i.ar, i1 false
   br i1 %i.as, label %.preheader160, label %._crit_edge, !llvm.loop !976
 
 ._crit_edge:                                      ; preds = %bb.h, %nk_zero.exit
@@ -1348,17 +1345,18 @@ bb.h:                                             ; preds = %stbtt_PackSetOversa
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %bb.n
-  %.2177 = phi i64 [ 0, %.preheader.lr.ph ], [ %indvars.iv.next188, %bb.n ]
+  %.2177 = phi i32 [ 0, %.preheader.lr.ph ], [ %11, %bb.n ]
   %.0135176 = phi i32 [ 0, %.preheader.lr.ph ], [ %i.fn, %bb.n ]
   %.1140175 = phi ptr [ %6, %.preheader.lr.ph ], [ %i.fq, %bb.n ] ; 3 uses
   br label %bb.i
 
 bb.i:                                             ; preds = %.preheader, %._crit_edge173
-  %indvars.iv187 = phi i64 [ %.2177, %.preheader ], [ %indvars.iv.next188, %._crit_edge173 ] ; 2 uses
-  %.1138 = phi ptr [ %.1140175, %.preheader ], [ %i.fp, %._crit_edge173 ] ; 8 uses
-  %.1136.a = phi i32 [ %.0135176, %.preheader ], [ %i.fn, %._crit_edge173 ] ; 2 uses
-  %indvars.iv.next188 = add nsw i64 %indvars.iv187, 1 ; 3 uses
-  %i.bj = getelementptr inbounds [184 x i8], ptr %i.bc, i64 %indvars.iv187 ; 4 uses
+  %.1138 = phi ptr [ %i.fp, %._crit_edge173 ], [ %.1140175, %.preheader ] ; 8 uses
+  %.1136 = phi i32 [ %i.fn, %._crit_edge173 ], [ %.0135176, %.preheader ] ; 2 uses
+  %.1136.a = phi i32 [ %11, %._crit_edge173 ], [ %.2177, %.preheader ] ; 2 uses
+  %11 = add nsw i32 %.1136.a, 1                   ; 3 uses
+  %12 = sext i32 %.1136.a to i64
+  %i.bj = getelementptr inbounds [184 x i8], ptr %i.bc, i64 %12 ; 4 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %.1138, i64 56
   %i.bl = load ptr, ptr %i.bk, align 8, !tbaa !359 ; 9 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %.1138, i64 25
@@ -1410,7 +1408,7 @@ bb.j:                                             ; preds = %bb.i
   %i.cw = fmul <2 x float> %i.cv, %i.ct
   store <2 x float> %i.cw, ptr %i.cd, align 4, !tbaa !54
   %i.cx = getelementptr inbounds nuw i8, ptr %i.bl, i64 12
-  store i32 %.1136.a, ptr %i.cx, align 4, !tbaa !375
+  store i32 %.1136, ptr %i.cx, align 4, !tbaa !375
   %i.cy = getelementptr inbounds nuw i8, ptr %i.bl, i64 16
   store i32 0, ptr %i.cy, align 8, !tbaa !986
   br label %bb.k
@@ -1521,18 +1519,17 @@ bb.m:                                             ; preds = %.lr.ph, %bb.m
   %i.fl = load i32, ptr %i.fk, align 8, !tbaa !986
   %i.fm = add i32 %i.fl, %.0.lcssa
   store i32 %i.fm, ptr %i.fk, align 8, !tbaa !986
-  %i.fn = add i32 %.0.lcssa, %.1136.a             ; 2 uses
+  %i.fn = add i32 %.0.lcssa, %.1136               ; 2 uses
   %i.fo = getelementptr inbounds nuw i8, ptr %.1138, i64 72
   %i.fp = load ptr, ptr %i.fo, align 8, !tbaa !338 ; 2 uses
   %.not144 = icmp eq ptr %i.fp, %.1140175
   br i1 %.not144, label %bb.n, label %bb.i, !llvm.loop !980
 
 bb.n:                                             ; preds = %._crit_edge173
-  %10 = trunc nsw i64 %indvars.iv.next188 to i32
   %i.fq = load ptr, ptr %.1140175, align 8, !tbaa !356 ; 2 uses
-  %11 = icmp sgt i32 %7, %10
+  %13 = icmp slt i32 %11, %7
   %i.fr = icmp ne ptr %i.fq, null
-  %i.fs = select i1 %11, i1 %i.fr, i1 false
+  %i.fs = select i1 %13, i1 %i.fr, i1 false
   br i1 %i.fs, label %.preheader, label %.loopexit, !llvm.loop !981
 
 .loopexit:                                        ; preds = %bb.n, %._crit_edge, %bb.a

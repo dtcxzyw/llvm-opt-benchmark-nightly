@@ -205,11 +205,12 @@ _ZNSt12_Vector_baseISt4pairIPK10AstSenTreePS1_ESaIS5_EED2Ev.exit.i: ; preds = %b
   br label %.body
 
 bb.c:                                             ; preds = %.lr.ph, %bb.c
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.c ]
   %.02079 = phi ptr [ %.02076, %.lr.ph ], [ %.020, %bb.c ] ; 3 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %.078 = phi i32 [ 0, %.lr.ph ], [ %8, %bb.c ]
+  %8 = add nuw nsw i32 %.078, 1                   ; 2 uses
+  %.sroa.0.0.insert.ext.i = zext nneg i32 %8 to i64
   %i.t = getelementptr inbounds nuw i8, ptr %.02079, i64 104
-  store i64 %indvars.iv.next, ptr %i.t, align 8, !tbaa !148
+  store i64 %.sroa.0.0.insert.ext.i, ptr %i.t, align 8, !tbaa !148
   %i.u = getelementptr inbounds nuw i8, ptr %.02079, i64 112
   store i32 %i.h, ptr %i.u, align 8, !tbaa !149
   %i.v = getelementptr inbounds nuw i8, ptr %.02079, i64 8

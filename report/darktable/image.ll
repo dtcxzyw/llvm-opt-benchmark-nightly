@@ -204,12 +204,13 @@ bb.a:
   br i1 %.not20, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ 1, %bb.a ] ; 2 uses
+  %.022 = phi i32 [ %2, %.lr.ph ], [ 1, %bb.a ]   ; 2 uses
   %.01921 = phi ptr [ %i.o, %.lr.ph ], [ %i.l, %bb.a ] ; 3 uses
   %i.m = tail call i64 @luaA_type_add(ptr noundef %0, ptr noundef nonnull @.str.92, i64 noundef 4) #13
   %i.n = tail call i32 @luaA_push_type(ptr noundef %0, i64 noundef %i.m, ptr noundef nonnull %.01921) #13 ; 0 uses
-  tail call void @lua_seti(ptr noundef %0, i32 noundef -2, i64 noundef %indvars.iv) #13
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %1 = zext nneg i32 %.022 to i64
+  tail call void @lua_seti(ptr noundef %0, i32 noundef -2, i64 noundef %1) #13
+  %2 = add nuw nsw i32 %.022, 1
   %i.o = tail call ptr @g_list_delete_link(ptr noundef nonnull %.01921, ptr noundef nonnull %.01921) #13 ; 2 uses
   %.not = icmp eq ptr %i.o, null
   br i1 %.not, label %._crit_edge, label %.lr.ph

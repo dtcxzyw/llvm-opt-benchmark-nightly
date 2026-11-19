@@ -205,12 +205,11 @@ bb.s:                                             ; preds = %ExportYUVA.exit.i, 
 
 WebPRescalerHasPendingOutput.exit.lr.ph.i.i:      ; preds = %bb.s
   %i.er = getelementptr inbounds nuw i8, ptr %i.el, i64 3
-  %3 = sext i32 %.02426.i to i64
   br label %WebPRescalerHasPendingOutput.exit.i.i79
 
 WebPRescalerHasPendingOutput.exit.i.i79:          ; preds = %ConvertToYUVA.exit.i.i, %WebPRescalerHasPendingOutput.exit.lr.ph.i.i
-  %indvars.iv.i.i = phi i64 [ %3, %WebPRescalerHasPendingOutput.exit.lr.ph.i.i ], [ %indvars.iv.next.i.i, %ConvertToYUVA.exit.i.i ] ; 4 uses
-  %.019.i.i.a = phi i32 [ 0, %WebPRescalerHasPendingOutput.exit.lr.ph.i.i ], [ %i.gg, %ConvertToYUVA.exit.i.i ] ; 2 uses
+  %.019.i.i = phi i32 [ 0, %WebPRescalerHasPendingOutput.exit.lr.ph.i.i ], [ %i.gg, %ConvertToYUVA.exit.i.i ] ; 2 uses
+  %.019.i.i.a = phi i32 [ %.02426.i, %WebPRescalerHasPendingOutput.exit.lr.ph.i.i ], [ %4, %ConvertToYUVA.exit.i.i ] ; 4 uses
   %i.es = load i32, ptr %i.eo, align 8, !tbaa !198
   %i.et = icmp sgt i32 %i.es, 0
   br i1 %i.et, label %ExportYUVA.exit.i, label %bb.t
@@ -223,16 +222,16 @@ bb.t:                                             ; preds = %WebPRescalerHasPend
   %i.ew = getelementptr inbounds nuw i8, ptr %i.ev, i64 16
   %i.ex = load ptr, ptr @WebPConvertARGBToY, align 8, !tbaa !32
   %i.ey = load ptr, ptr %i.ew, align 8, !tbaa !200
+  %3 = sext i32 %.019.i.i.a to i64                ; 2 uses
   %i.ez = getelementptr inbounds nuw i8, ptr %i.ev, i64 48
   %i.fa = load i32, ptr %i.ez, align 8, !tbaa !201
   %i.fb = sext i32 %i.fa to i64
-  %i.fc = mul nsw i64 %indvars.iv.i.i, %i.fb
+  %i.fc = mul nsw i64 %i.fb, %3
   %i.fd = getelementptr inbounds i8, ptr %i.ey, i64 %i.fc
   tail call void %i.ex(ptr noundef %i.el, ptr noundef %i.fd, i32 noundef %i.en) #7, !inline_history !181
   %i.fe = getelementptr inbounds nuw i8, ptr %i.ev, i64 24
   %i.ff = load ptr, ptr %i.fe, align 8, !tbaa !202
-  %4 = trunc nsw i64 %indvars.iv.i.i to i32       ; 2 uses
-  %i.fg = ashr i32 %4, 1
+  %i.fg = ashr i32 %.019.i.i.a, 1
   %i.fh = sext i32 %i.fg to i64                   ; 2 uses
   %i.fi = getelementptr inbounds nuw i8, ptr %i.ev, i64 52
   %i.fj = load i32, ptr %i.fi, align 4, !tbaa !203
@@ -247,7 +246,7 @@ bb.t:                                             ; preds = %WebPRescalerHasPend
   %i.fs = mul nsw i64 %i.fr, %i.fh
   %i.ft = getelementptr inbounds i8, ptr %i.fo, i64 %i.fs
   %i.fu = load ptr, ptr @WebPConvertARGBToUV, align 8, !tbaa !32
-  %i.fv = and i32 %4, 1
+  %i.fv = and i32 %.019.i.i.a, 1
   %i.fw = xor i32 %i.fv, 1
   tail call void %i.fu(ptr noundef %i.el, ptr noundef %i.fm, ptr noundef %i.ft, i32 noundef %i.en, i32 noundef %i.fw) #7, !inline_history !181
   %i.fx = getelementptr inbounds nuw i8, ptr %i.ev, i64 40
@@ -259,22 +258,22 @@ bb.u:                                             ; preds = %bb.t
   %i.fz = getelementptr inbounds nuw i8, ptr %i.ev, i64 60
   %i.ga = load i32, ptr %i.fz, align 4, !tbaa !207
   %i.gb = sext i32 %i.ga to i64
-  %i.gc = mul nsw i64 %indvars.iv.i.i, %i.gb
+  %i.gc = mul nsw i64 %i.gb, %3
   %i.gd = getelementptr inbounds i8, ptr %i.fy, i64 %i.gc
   %i.ge = load ptr, ptr @WebPExtractAlpha, align 8, !tbaa !32
   %i.gf = tail call i32 %i.ge(ptr noundef nonnull %i.er, i32 noundef 0, i32 noundef %i.en, i32 noundef 1, ptr noundef nonnull %i.gd, i32 noundef 0) #7, !inline_history !181 ; 0 uses
   br label %ConvertToYUVA.exit.i.i
 
 ConvertToYUVA.exit.i.i:                           ; preds = %bb.u, %bb.t
-  %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i, 1
-  %i.gg = add nuw nsw i32 %.019.i.i.a, 1          ; 2 uses
+  %4 = add nsw i32 %.019.i.i.a, 1
+  %i.gg = add nuw nsw i32 %.019.i.i, 1            ; 2 uses
   %.val.i.i.i80 = load i32, ptr %i.ep, align 8, !tbaa !196
   %.val2.i.i.i81 = load i32, ptr %i.eq, align 8, !tbaa !197
   %.not3.i.i.i82 = icmp slt i32 %.val2.i.i.i81, %.val.i.i.i80
   br i1 %.not3.i.i.i82, label %WebPRescalerHasPendingOutput.exit.i.i79, label %ExportYUVA.exit.i, !llvm.loop !182
 
 ExportYUVA.exit.i:                                ; preds = %ConvertToYUVA.exit.i.i, %WebPRescalerHasPendingOutput.exit.i.i79, %bb.s
-  %.0.lcssa.i.i78 = phi i32 [ 0, %bb.s ], [ %i.gg, %ConvertToYUVA.exit.i.i ], [ %.019.i.i.a, %WebPRescalerHasPendingOutput.exit.i.i79 ]
+  %.0.lcssa.i.i78 = phi i32 [ 0, %bb.s ], [ %i.gg, %ConvertToYUVA.exit.i.i ], [ %.019.i.i, %WebPRescalerHasPendingOutput.exit.i.i79 ]
   %i.gh = add nsw i32 %.0.lcssa.i.i78, %.02426.i  ; 2 uses
   %i.gi = icmp slt i32 %i.ef, %i.bm
   br i1 %i.gi, label %bb.s, label %EmitRescaledRowsYUVA.exit, !llvm.loop !183

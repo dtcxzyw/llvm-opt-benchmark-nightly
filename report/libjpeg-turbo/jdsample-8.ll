@@ -203,14 +203,15 @@ bb.a:
   %i.h = phi i32 [ %i.ba, %.split.us ], [ %i.f, %.preheader.lr.ph ] ; 2 uses
   %i.i = phi i32 [ %i.bb, %.split.us ], [ %i.f, %.preheader.lr.ph ] ; 2 uses
   %i.j = phi i32 [ %i.bc, %.split.us ], [ 1, %.preheader.lr.ph ]
-  %indvars.iv = phi i64 [ %indvars.iv.next46, %.split.us ], [ 0, %.preheader.lr.ph ] ; 2 uses
-  %.02237.a = phi i32 [ %.us-phi, %.split.us ], [ 0, %.preheader.lr.ph ] ; 2 uses
-  %i.k = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv ; 4 uses
+  %.02237 = phi i32 [ %.us-phi, %.split.us ], [ 0, %.preheader.lr.ph ] ; 2 uses
+  %.02237.a = phi i32 [ %5, %.split.us ], [ 0, %.preheader.lr.ph ] ; 2 uses
+  %4 = zext nneg i32 %.02237.a to i64
+  %i.k = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %4 ; 4 uses
   %.not39 = icmp eq i32 %i.j, 0
   br i1 %.not39, label %.split.us, label %.preheader.split.preheader
 
 .preheader.split.preheader:                       ; preds = %.preheader
-  %i.l = sext i32 %.02237.a to i64                ; 2 uses
+  %i.l = sext i32 %.02237 to i64                  ; 2 uses
   %i.m = load ptr, ptr %i.k, align 8, !tbaa !48   ; 2 uses
   %.not40 = icmp eq i32 %i.i, 0
   br i1 %.not40, label %._crit_edge, label %.lr.ph.preheader
@@ -296,8 +297,8 @@ bb.a:
   %i.ba = phi i32 [ %i.ay, %._crit_edge.1 ], [ %i.h, %.preheader ]
   %i.bb = phi i32 [ %i.ay, %._crit_edge.1 ], [ %i.i, %.preheader ]
   %i.bc = phi i32 [ %i.ay, %._crit_edge.1 ], [ 0, %.preheader ]
-  %.us-phi = add i32 %.02237.a, 2                 ; 2 uses
-  %indvars.iv.next46 = add nuw nsw i64 %indvars.iv, 1
+  %.us-phi = add i32 %.02237, 2                   ; 2 uses
+  %5 = add nuw nsw i32 %.02237.a, 1
   %i.bd = icmp slt i32 %.us-phi, %i.az
   br i1 %i.bd, label %.preheader, label %._crit_edge38, !llvm.loop !101
 

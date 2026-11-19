@@ -204,12 +204,8 @@ bb.o:                                             ; preds = %_ZN7dropbox6oxygen2
   %.not7174 = icmp eq ptr %.sroa.067.073, %6
   br i1 %.not7174, label %._crit_edge, label %.lr.ph
 
-._crit_edge.loopexit:                             ; preds = %bb.x
-  %7 = trunc nuw i64 %indvars.iv.next to i32
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.preheader
-  %.039.lcssa = phi i32 [ 0, %.preheader ], [ %7, %._crit_edge.loopexit ] ; 2 uses
+._crit_edge:                                      ; preds = %bb.x, %.preheader
+  %.039.lcssa = phi i32 [ 0, %.preheader ], [ %8, %bb.x ] ; 2 uses
   %i.as = zext nneg i32 %.039.lcssa to i64
   %i.at = getelementptr inbounds nuw [8 x i8], ptr %i.ar, i64 %i.as
   store ptr null, ptr %i.at, align 8, !tbaa !150
@@ -266,14 +262,15 @@ bb.u:                                             ; preds = %bb.o
   br label %bb.ah
 
 .lr.ph:                                           ; preds = %.preheader, %bb.x
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.x ], [ 0, %.preheader ] ; 3 uses
   %.sroa.067.076 = phi ptr [ %.sroa.067.0, %bb.x ], [ %.sroa.067.073, %.preheader ] ; 3 uses
+  %.03975 = phi i32 [ %8, %bb.x ], [ 0, %.preheader ] ; 3 uses
   %i.bd = invoke noalias noundef nonnull dereferenceable(16) ptr @_Znwm(i64 noundef 16) #36
           to label %bb.v unwind label %bb.y       ; 3 uses
 
 bb.v:                                             ; preds = %.lr.ph
   %i.be = getelementptr inbounds nuw i8, ptr %.sroa.067.076, i64 16
-  %i.bf = getelementptr inbounds nuw [8 x i8], ptr %i.ar, i64 %indvars.iv
+  %7 = zext nneg i32 %.03975 to i64
+  %i.bf = getelementptr inbounds nuw [8 x i8], ptr %i.ar, i64 %7
   store ptr %i.bd, ptr %i.bf, align 8, !tbaa !150
   %i.bg = load ptr, ptr %i.be, align 8, !tbaa !91
   %i.bh = invoke noundef ptr @_Z9pj_strdupPKc(ptr noundef %i.bg)
@@ -289,17 +286,17 @@ bb.w:                                             ; preds = %bb.v
 bb.x:                                             ; preds = %bb.w
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bd, i64 8
   store ptr %i.bk, ptr %i.bl, align 8, !tbaa !312
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %8 = add nuw nsw i32 %.03975, 1                 ; 2 uses
   %.sroa.067.0 = load ptr, ptr %.sroa.067.076, align 8, !tbaa !219 ; 2 uses
   %.not71 = icmp eq ptr %.sroa.067.0, %6
-  br i1 %.not71, label %._crit_edge.loopexit, label %.lr.ph
+  br i1 %.not71, label %._crit_edge, label %.lr.ph
 
 bb.y:                                             ; preds = %bb.w, %bb.v, %.lr.ph
   %i.bm = landingpad { ptr, i32 }
           cleanup
           catch ptr @_ZTISt9exception
-  %8 = add nuw i64 %indvars.iv, 1
-  %9 = and i64 %8, 4294967295
+  %9 = add nuw nsw i32 %.03975, 1
+  %10 = zext nneg i32 %9 to i64
   br label %bb.ah
 
 bb.z:                                             ; preds = %._crit_edge
@@ -401,7 +398,7 @@ _ZN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj2io16AuthorityFactoryEEED2Ev.ex
 
 bb.ah:                                            ; preds = %bb.y, %bb.u
   %.043 = phi ptr [ %i.ar, %bb.y ], [ null, %bb.u ]
-  %.140 = phi i64 [ %9, %bb.y ], [ 1, %bb.u ]
+  %.140 = phi i64 [ %10, %bb.y ], [ 1, %bb.u ]
   %.pn54 = phi { ptr, i32 } [ %i.bm, %bb.y ], [ %i.bc, %bb.u ]
   call void @_ZNSt7__cxx1110_List_baseIN5osgeo4proj2io16AuthorityFactory17CelestialBodyInfoESaIS5_EED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %6) #33
   br label %bb.ai
@@ -804,14 +801,15 @@ _ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   br label %.split.us
 
 _ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread96.us: ; preds = %.lr.ph.split.us, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread.us
-  %indvars.iv = phi i64 [ %indvars.iv.next, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread.us ], [ 0, %.lr.ph.split.us ] ; 3 uses
   %.sroa.092.0103.us = phi ptr [ %.sroa.092.0.us, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread.us ], [ %.sroa.092.0100, %.lr.ph.split.us ] ; 9 uses
+  %.060102.us = phi i32 [ %10, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread.us ], [ 0, %.lr.ph.split.us ] ; 3 uses
   %i.cd = invoke noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #36
           to label %bb.x unwind label %.split.us.split ; 8 uses
 
 bb.x:                                             ; preds = %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread96.us
   %i.ce = getelementptr inbounds nuw i8, ptr %.sroa.092.0103.us, i64 16
-  %i.cf = getelementptr inbounds nuw [8 x i8], ptr %i.ar, i64 %indvars.iv
+  %9 = zext nneg i32 %.060102.us to i64
+  %i.cf = getelementptr inbounds nuw [8 x i8], ptr %i.ar, i64 %9
   store ptr %i.cd, ptr %i.cf, align 8, !tbaa !150
   %i.cg = load ptr, ptr %i.ce, align 8, !tbaa !91
   %i.ch = invoke noundef ptr @_Z9pj_strdupPKc(ptr noundef %i.cg)
@@ -867,24 +865,19 @@ _ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   %i.dh = zext nneg i8 %i.dg to i32
   %i.di = getelementptr inbounds nuw i8, ptr %i.cd, i64 48
   store i32 %i.dh, ptr %i.di, align 8, !tbaa !574
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %10 = add nuw nsw i32 %.060102.us, 1            ; 2 uses
   %.sroa.092.0.us = load ptr, ptr %.sroa.092.0103.us, align 8, !tbaa !219 ; 2 uses
   %.not97.us = icmp eq ptr %.sroa.092.0.us, %8
-  br i1 %.not97.us, label %._crit_edge.loopexit109, label %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread96.us
+  br i1 %.not97.us, label %._crit_edge, label %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread96.us
 
 .split.us.split:                                  ; preds = %bb.ac, %bb.aa, %bb.z, %bb.y, %bb.x, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread96.us
   %i.dj = landingpad { ptr, i32 }
           cleanup
           catch ptr @_ZTISt9exception
-  %9 = trunc nuw nsw i64 %indvars.iv to i32
   br label %.split.us
 
-._crit_edge.loopexit109:                          ; preds = %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread.us
-  %10 = trunc nuw i64 %indvars.iv.next to i32
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread.us.us, %._crit_edge.loopexit109, %.preheader
-  %.060.lcssa = phi i32 [ 0, %.preheader ], [ %.161.us.us, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread.us.us ], [ %10, %._crit_edge.loopexit109 ], [ %.161, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread ] ; 2 uses
+._crit_edge:                                      ; preds = %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread.us, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread.us.us, %.preheader
+  %.060.lcssa = phi i32 [ 0, %.preheader ], [ %10, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread.us ], [ %.161.us.us, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread.us.us ], [ %.161, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread ] ; 2 uses
   %i.dk = sext i32 %.060.lcssa to i64
   %i.dl = getelementptr inbounds [8 x i8], ptr %i.ar, i64 %i.dk
   store ptr null, ptr %i.dl, align 8, !tbaa !150
@@ -968,7 +961,7 @@ _ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   br label %.split.us
 
 .split.us:                                        ; preds = %.split.us.split, %.split.us.split.us, %.split
-  %.us-phi = phi i32 [ %.060102, %.split ], [ %9, %.split.us.split ], [ %.060102.us.us, %.split.us.split.us ]
+  %.us-phi = phi i32 [ %.060102, %.split ], [ %.060102.us, %.split.us.split ], [ %.060102.us.us, %.split.us.split.us ]
   %.us-phi104 = phi { ptr, i32 } [ %i.ed, %.split ], [ %i.dj, %.split.us.split ], [ %i.cc, %.split.us.split.us ]
   %i.ee = add nsw i32 %.us-phi, 1
   %i.ef = sext i32 %i.ee to i64

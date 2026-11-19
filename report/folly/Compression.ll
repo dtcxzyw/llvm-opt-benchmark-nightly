@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.bv, label %bb.n, label %.critedge56
 
 .lr.ph:                                           ; preds = %.preheader, %bb.l
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.l ], [ 0, %.preheader ] ; 3 uses
+  %.074 = phi i32 [ %2, %bb.l ], [ 0, %.preheader ] ; 3 uses
   %.273 = phi ptr [ %i.by, %bb.l ], [ %i.a, %.preheader ] ; 2 uses
   %.06472 = phi i64 [ %i.cc, %bb.l ], [ 0, %.preheader ] ; 2 uses
   %i.bw = load i8, ptr %.273, align 1, !tbaa !2427 ; 3 uses
@@ -215,16 +215,18 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %.lr.ph
   %i.bz = and i8 %i.bw, 127
-  %i.ca = zext nneg i8 %i.bz to i64
-  %i.cb = shl i64 %i.ca, %indvars.iv
+  %1 = zext nneg i8 %i.bz to i64
+  %i.ca = zext nneg i32 %.074 to i64
+  %i.cb = shl i64 %1, %i.ca
   %i.cc = or i64 %i.cb, %.06472
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 7
+  %2 = add nuw nsw i32 %.074, 7
   %.not = icmp eq ptr %i.by, %i.c
   br i1 %.not, label %.critedge56, label %.lr.ph, !llvm.loop !3100
 
 bb.m:                                             ; preds = %.lr.ph
   %i.cd = zext nneg i8 %i.bw to i64
-  %i.ce = shl i64 %i.cd, %indvars.iv
+  %3 = zext nneg i32 %.074 to i64
+  %i.ce = shl i64 %i.cd, %3
   %i.cf = or i64 %i.ce, %.06472
   br label %bb.n
 

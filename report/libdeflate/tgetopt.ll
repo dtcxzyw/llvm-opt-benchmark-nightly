@@ -34,28 +34,23 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph.preheader:                                 ; preds = %.thread, %bb.b
   %tgetopt.nextchar.promoted81 = phi ptr [ null, %.thread ], [ %tgetopt.nextchar.promoted.pre, %bb.b ] ; 2 uses
-  %3 = sext i32 %0 to i64
   %i.c = icmp ne ptr %tgetopt.nextchar.promoted81, null ; 2 uses
   %i.d = icmp slt i32 %i.a, %0                    ; 2 uses
   %i.e = or i1 %i.c, %i.d
-  br i1 %i.e, label %.lr.ph100, label %.critedge
+  br i1 %i.e, label %bb.c, label %.critedge
 
-.lr.ph100:                                        ; preds = %.lr.ph.preheader
-  %4 = sext i32 %i.a to i64
-  br label %bb.c
-
-bb.c:                                             ; preds = %.lr.ph100, %.lr.ph
-  %i.f = phi i1 [ %i.d, %.lr.ph100 ], [ %i.t, %.lr.ph ]
-  %i.g = phi i1 [ %i.c, %.lr.ph100 ], [ %i.s, %.lr.ph ]
-  %5 = phi ptr [ %tgetopt.nextchar.promoted81, %.lr.ph100 ], [ %i.r, %.lr.ph ] ; 2 uses
-  %indvars.iv99 = phi i64 [ %4, %.lr.ph100 ], [ %indvars.iv.next, %.lr.ph ] ; 5 uses
+bb.c:                                             ; preds = %.lr.ph.preheader, %.lr.ph
+  %i.f = phi i1 [ %i.t, %.lr.ph ], [ %i.d, %.lr.ph.preheader ]
+  %i.g = phi i1 [ %i.s, %.lr.ph ], [ %i.c, %.lr.ph.preheader ]
+  %3 = phi i32 [ %5, %.lr.ph ], [ %i.a, %.lr.ph.preheader ] ; 4 uses
+  %4 = phi ptr [ %i.r, %.lr.ph ], [ %tgetopt.nextchar.promoted81, %.lr.ph.preheader ] ; 2 uses
   br i1 %i.g, label %bb.h, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %indvars.iv.next = add nsw i64 %indvars.iv99, 1 ; 3 uses
-  %6 = trunc nsw i64 %indvars.iv.next to i32
-  store i32 %6, ptr @toptind, align 4, !tbaa !10
-  %i.h = getelementptr inbounds [8 x i8], ptr %1, i64 %indvars.iv99
+  %5 = add nsw i32 %3, 1                          ; 3 uses
+  store i32 %5, ptr @toptind, align 4, !tbaa !10
+  %6 = sext i32 %3 to i64                         ; 2 uses
+  %i.h = getelementptr inbounds [8 x i8], ptr %1, i64 %6
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !13   ; 3 uses
   %i.j = load i8, ptr %i.i, align 1, !tbaa !14
   %i.k = icmp eq i8 %i.j, 45
@@ -76,7 +71,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.p, label %..critedge_crit_edge.critedge, label %bb.g
 
 ..critedge_crit_edge.critedge:                    ; preds = %bb.f
-  %i.q = getelementptr inbounds [8 x i8], ptr %1, i64 %indvars.iv99
+  %i.q = getelementptr inbounds [8 x i8], ptr %1, i64 %6
   store ptr null, ptr %i.q, align 8, !tbaa !13
   br label %.critedge
 
@@ -87,13 +82,12 @@ bb.g:                                             ; preds = %bb.e, %bb.f
 .lr.ph:                                           ; preds = %bb.e, %bb.g, %bb.d
   %i.r = phi ptr [ null, %bb.e ], [ null, %bb.d ], [ %i.l, %bb.g ] ; 2 uses
   %i.s = icmp ne ptr %i.r, null                   ; 2 uses
-  %i.t = icmp slt i64 %indvars.iv.next, %3        ; 2 uses
+  %i.t = icmp slt i32 %5, %0                      ; 2 uses
   %i.u = select i1 %i.s, i1 true, i1 %i.t
   br i1 %i.u, label %bb.c, label %.critedge
 
 bb.h:                                             ; preds = %bb.c
-  %7 = trunc nsw i64 %indvars.iv99 to i32
-  %i.v = load i8, ptr %5, align 1, !tbaa !14      ; 6 uses
+  %i.v = load i8, ptr %4, align 1, !tbaa !14      ; 6 uses
   %i.w = sext i8 %i.v to i32                      ; 5 uses
   %i.x = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %2, i32 noundef %i.w) #3 ; 3 uses
   %i.y = icmp eq ptr %i.x, null
@@ -113,7 +107,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   br label %bb.ac
 
 bb.l:                                             ; preds = %bb.h
-  %i.aa = getelementptr inbounds nuw i8, ptr %5, i64 1 ; 9 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %4, i64 1 ; 9 uses
   store ptr %i.aa, ptr @tgetopt.nextchar, align 8, !tbaa !13
   store ptr null, ptr @toptarg, align 8, !tbaa !13
   %i.ab = getelementptr inbounds nuw i8, ptr %i.x, i64 1
@@ -141,10 +135,11 @@ bb.p:                                             ; preds = %bb.o
   br i1 %.not40, label %.thread82, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.ah = getelementptr [8 x i8], ptr %1, i64 %indvars.iv99 ; 2 uses
+  %7 = sext i32 %3 to i64
+  %i.ah = getelementptr [8 x i8], ptr %1, i64 %7  ; 2 uses
   %i.ai = getelementptr i8, ptr %i.ah, i64 -8
   store ptr null, ptr %i.ai, align 8, !tbaa !13
-  %i.aj = add nsw i32 %7, 1
+  %i.aj = add nsw i32 %3, 1
   store i32 %i.aj, ptr @toptind, align 4, !tbaa !10
   %i.ak = load ptr, ptr %i.ah, align 8, !tbaa !13
   store ptr %i.ak, ptr @toptarg, align 8, !tbaa !13

@@ -204,20 +204,21 @@ bb.j:                                             ; preds = %bb.i
   br label %.lr.ph172
 
 .lr.ph172:                                        ; preds = %.lr.ph172.preheader, %_ZN4ncnn6CpuSet6enableEi.exit119
-  %indvars.iv194 = phi i64 [ 0, %.lr.ph172.preheader ], [ %indvars.iv.next195, %_ZN4ncnn6CpuSet6enableEi.exit119 ] ; 10 uses
-  %indvars.iv = phi i64 [ %i.ax, %.lr.ph172.preheader ], [ %indvars.iv.next, %_ZN4ncnn6CpuSet6enableEi.exit119 ] ; 2 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
+  %indvars.iv194 = phi i64 [ %i.ax, %.lr.ph172.preheader ], [ %indvars.iv.next, %_ZN4ncnn6CpuSet6enableEi.exit119 ] ; 2 uses
+  %.070170 = phi i32 [ 0, %.lr.ph172.preheader ], [ %10, %_ZN4ncnn6CpuSet6enableEi.exit119 ] ; 6 uses
+  %indvars.iv.next = add nsw i64 %indvars.iv194, -1 ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %i.e, i64 %indvars.iv.next
   %i.az = load i8, ptr %i.ay, align 1, !tbaa !18  ; 4 uses
   %.not102 = trunc i8 %i.az to i1
-  %i.ba = icmp samesign ult i64 %indvars.iv194, 1024 ; 4 uses
+  %i.ba = icmp samesign ult i32 %.070170, 1024    ; 4 uses
   %or.cond146 = select i1 %.not102, i1 %i.ba, i1 false
   br i1 %or.cond146, label %bb.k, label %_ZN4ncnn6CpuSet6enableEi.exit
 
 bb.k:                                             ; preds = %.lr.ph172
-  %i.bb = and i64 %indvars.iv194, 60
+  %3 = zext nneg i32 %.070170 to i64              ; 2 uses
+  %i.bb = and i64 %3, 60
   %i.bc = shl nuw nsw i64 1, %i.bb
-  %i.bd = lshr i64 %indvars.iv194, 6
+  %i.bd = lshr i64 %3, 6
   %i.be = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.bd ; 2 uses
   %i.bf = load i64, ptr %i.be, align 8, !tbaa !10
   %i.bg = or i64 %i.bf, %i.bc
@@ -231,9 +232,11 @@ _ZN4ncnn6CpuSet6enableEi.exit:                    ; preds = %bb.k, %.lr.ph172
   br i1 %or.cond147, label %bb.l, label %_ZN4ncnn6CpuSet6enableEi.exit117
 
 bb.l:                                             ; preds = %_ZN4ncnn6CpuSet6enableEi.exit
-  %i.bi = and i64 %indvars.iv194, 60
-  %i.bj = shl nuw nsw i64 2, %i.bi
-  %i.bk = lshr i64 %indvars.iv194, 6
+  %4 = or disjoint i32 %.070170, 1
+  %5 = zext nneg i32 %4 to i64                    ; 2 uses
+  %i.bi = and i64 %5, 61
+  %i.bj = shl nuw nsw i64 1, %i.bi
+  %i.bk = lshr i64 %5, 6
   %i.bl = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.bk ; 2 uses
   %i.bm = load i64, ptr %i.bl, align 8, !tbaa !10
   %i.bn = or i64 %i.bm, %i.bj
@@ -247,9 +250,11 @@ _ZN4ncnn6CpuSet6enableEi.exit117:                 ; preds = %bb.l, %_ZN4ncnn6Cpu
   br i1 %or.cond148, label %bb.m, label %_ZN4ncnn6CpuSet6enableEi.exit118
 
 bb.m:                                             ; preds = %_ZN4ncnn6CpuSet6enableEi.exit117
-  %i.bp = and i64 %indvars.iv194, 60
-  %i.bq = shl nuw nsw i64 4, %i.bp
-  %i.br = lshr i64 %indvars.iv194, 6
+  %6 = or disjoint i32 %.070170, 2
+  %7 = zext nneg i32 %6 to i64                    ; 2 uses
+  %i.bp = and i64 %7, 62
+  %i.bq = shl nuw nsw i64 1, %i.bp
+  %i.br = lshr i64 %7, 6
   %i.bs = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.br ; 2 uses
   %i.bt = load i64, ptr %i.bs, align 8, !tbaa !10
   %i.bu = or i64 %i.bt, %i.bq
@@ -263,9 +268,11 @@ _ZN4ncnn6CpuSet6enableEi.exit118:                 ; preds = %bb.m, %_ZN4ncnn6Cpu
   br i1 %or.cond149, label %bb.n, label %_ZN4ncnn6CpuSet6enableEi.exit119
 
 bb.n:                                             ; preds = %_ZN4ncnn6CpuSet6enableEi.exit118
-  %i.bw = and i64 %indvars.iv194, 60
-  %i.bx = shl nuw i64 8, %i.bw
-  %i.by = lshr i64 %indvars.iv194, 6
+  %8 = or disjoint i32 %.070170, 3
+  %9 = zext nneg i32 %8 to i64                    ; 2 uses
+  %i.bw = and i64 %9, 63
+  %i.bx = shl nuw i64 1, %i.bw
+  %i.by = lshr i64 %9, 6
   %i.bz = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.by ; 2 uses
   %i.ca = load i64, ptr %i.bz, align 8, !tbaa !10
   %i.cb = or i64 %i.ca, %i.bx
@@ -273,8 +280,8 @@ bb.n:                                             ; preds = %_ZN4ncnn6CpuSet6ena
   br label %_ZN4ncnn6CpuSet6enableEi.exit119
 
 _ZN4ncnn6CpuSet6enableEi.exit119:                 ; preds = %bb.n, %_ZN4ncnn6CpuSet6enableEi.exit118
-  %indvars.iv.next195 = add nuw nsw i64 %indvars.iv194, 4
-  %i.cc = icmp samesign ugt i64 %indvars.iv, 1
+  %10 = add nuw nsw i32 %.070170, 4
+  %i.cc = icmp samesign ugt i64 %indvars.iv194, 1
   br i1 %i.cc, label %.lr.ph172, label %._crit_edge, !llvm.loop !45
 
 ._crit_edge:                                      ; preds = %_ZN4ncnn6CpuSet6enableEi.exit119, %bb.j

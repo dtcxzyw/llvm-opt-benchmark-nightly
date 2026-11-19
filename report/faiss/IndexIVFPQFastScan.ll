@@ -205,15 +205,24 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit57: ; preds = %bb.
   br label %bb.al
 
 bb.ak:                                            ; preds = %bb.ab
-  %i.bx = lshr exact i64 %0, 3                    ; 4 uses
+  %i.bx = lshr exact i64 %0, 3                    ; 5 uses
   %.not = icmp eq i64 %0, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.ak
   %min.iters.check = icmp ult i64 %0, 32
-  br i1 %min.iters.check, label %.lr.ph.preheader113, label %vector.memcheck
+  br i1 %min.iters.check, label %.lr.ph.preheader113, label %vector.scevcheck
 
-vector.memcheck:                                  ; preds = %.lr.ph.preheader
+vector.scevcheck:                                 ; preds = %.lr.ph.preheader
+  %9 = add nsw i64 %i.bx, -1                      ; 2 uses
+  %mul.result = shl i64 %9, 5
+  %mul.overflow = icmp ugt i64 %9, 576460752303423487
+  %10 = getelementptr i8, ptr %4, i64 %mul.result
+  %11 = icmp ult ptr %10, %4
+  %12 = or i1 %11, %mul.overflow
+  br i1 %12, label %.lr.ph.preheader113, label %vector.memcheck
+
+vector.memcheck:                                  ; preds = %vector.scevcheck
   %i.by = shl i64 %0, 2                           ; 3 uses
   %i.bz = getelementptr i8, ptr %4, i64 %i.by     ; 2 uses
   %i.ca = getelementptr i8, ptr %1, i64 %i.by
@@ -228,7 +237,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.preheader
   br i1 %conflict.rdx, label %.lr.ph.preheader113, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %i.bx, 2305843009213693948     ; 4 uses
+  %n.vec = and i64 %i.bx, 1152921504606846972     ; 4 uses
   %i.cc = shl i64 %n.vec, 5                       ; 3 uses
   %i.cd = getelementptr i8, ptr %4, i64 %i.cc
   %i.ce = getelementptr i8, ptr %3, i64 %i.cc
@@ -461,11 +470,11 @@ middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.bx, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader113
 
-.lr.ph.preheader113:                              ; preds = %vector.memcheck, %.lr.ph.preheader, %middle.block
-  %.082.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ] ; 3 uses
-  %.03481.ph = phi ptr [ %4, %vector.memcheck ], [ %4, %.lr.ph.preheader ], [ %i.cd, %middle.block ] ; 4 uses
-  %.03580.ph = phi ptr [ %3, %vector.memcheck ], [ %3, %.lr.ph.preheader ], [ %i.ce, %middle.block ] ; 4 uses
-  %.03679.ph = phi ptr [ %1, %vector.memcheck ], [ %1, %.lr.ph.preheader ], [ %i.cf, %middle.block ] ; 4 uses
+.lr.ph.preheader113:                              ; preds = %vector.memcheck, %vector.scevcheck, %.lr.ph.preheader, %middle.block
+  %.082.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %vector.scevcheck ], [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ] ; 3 uses
+  %.03481.ph = phi ptr [ %4, %vector.memcheck ], [ %4, %vector.scevcheck ], [ %4, %.lr.ph.preheader ], [ %i.cd, %middle.block ] ; 4 uses
+  %.03580.ph = phi ptr [ %3, %vector.memcheck ], [ %3, %vector.scevcheck ], [ %3, %.lr.ph.preheader ], [ %i.ce, %middle.block ] ; 4 uses
+  %.03679.ph = phi ptr [ %1, %vector.memcheck ], [ %1, %vector.scevcheck ], [ %1, %.lr.ph.preheader ], [ %i.cf, %middle.block ] ; 4 uses
   %.neg = or disjoint i64 %.082.ph, 1
   %i.kd = and i64 %0, 8
   %lcmp.mod.not = icmp eq i64 %i.kd, 0

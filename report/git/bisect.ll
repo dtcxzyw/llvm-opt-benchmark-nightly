@@ -197,13 +197,14 @@ bb.e:                                             ; preds = %bb.u, %.lr.ph.i
   %.pre.i.i.i120318.i.a = phi ptr [ %.pre.i.i.pre.i, %.lr.ph.i ], [ %.pre.i.i.i120319.i, %bb.u ]
   %.pre.i.i.i111310.i.a = phi ptr [ %.pre.i.i.pre.i, %.lr.ph.i ], [ %.pre.i.i.i111311.i, %bb.u ]
   %.pre.i.i.i = phi ptr [ %.pre.i.i.pre.i, %.lr.ph.i ], [ %.pre.i.i301.i, %bb.u ] ; 2 uses
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.u ] ; 2 uses
   %.075276.i = phi ptr [ %.1, %.lr.ph.i ], [ %i.ex, %bb.u ] ; 5 uses
-  %.076275.i.a = phi i32 [ 0, %.lr.ph.i ], [ %.177.i, %bb.u ] ; 4 uses
+  %.076275.i = phi i32 [ 0, %.lr.ph.i ], [ %.177.i, %bb.u ] ; 4 uses
+  %.076275.i.a = phi i32 [ 0, %.lr.ph.i ], [ %5, %bb.u ] ; 2 uses
   %i.s = load ptr, ptr %.075276.i, align 8, !tbaa !19 ; 3 uses
   %i.t = load i64, ptr %i.s, align 8
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1
-  %i.u = getelementptr inbounds nuw [4 x i8], ptr %i.o, i64 %indvars.iv.i
+  %5 = add nuw nsw i32 %.076275.i.a, 1
+  %6 = zext nneg i32 %.076275.i.a to i64
+  %i.u = getelementptr inbounds nuw [4 x i8], ptr %i.o, i64 %6
   %i.v = getelementptr i8, ptr %i.s, i64 72
   %.val.i = load i32, ptr %i.v, align 8, !tbaa !143 ; 2 uses
   %i.w = udiv i32 %.val.i, 65532                  ; 6 uses
@@ -421,7 +422,7 @@ weight_set.exit.i:                                ; preds = %bb.l, %bb.k
   %i.cl = getelementptr inbounds nuw [8 x i8], ptr %i.cj, i64 %i.ck
   %i.cm = load ptr, ptr %i.cl, align 8, !tbaa !148
   store i32 1, ptr %i.cm, align 4, !tbaa !16
-  %i.cn = add nsw i32 %.076275.i.a, 1
+  %i.cn = add nsw i32 %.076275.i, 1
   br label %bb.u
 
 bb.m:                                             ; preds = %count_interesting_parents.exit.i
@@ -611,7 +612,7 @@ bb.u:                                             ; preds = %weight_set.exit127.
   %.pre.i.i.i120319.i = phi ptr [ %.pre.i.i.i120322.i, %weight_set.exit127.i ], [ %.pre.i.i.i120.i, %count_interesting_parents.exit.thread.i ], [ %.pre.i.i.i334.i, %weight_set.exit.i ], [ %.pre.i.i.i120320.i, %weight_set.exit118.i ]
   %.pre.i.i.i111311.i = phi ptr [ %.pre.i.i.i120322.i, %weight_set.exit127.i ], [ %.pre.i.i.i111.i, %count_interesting_parents.exit.thread.i ], [ %.pre.i.i.i334.i, %weight_set.exit.i ], [ %.pre.i.i.i111312.i, %weight_set.exit118.i ]
   %.pre.i.i301.i = phi ptr [ %.pre.i.i.i120322.i, %weight_set.exit127.i ], [ %.pre.i.i302.i, %count_interesting_parents.exit.thread.i ], [ %.pre.i.i.i334.i, %weight_set.exit.i ], [ %.pre.i.i.i111312.i, %weight_set.exit118.i ]
-  %.177.i = phi i32 [ %.076275.i.a, %weight_set.exit127.i ], [ %.076275.i.a, %count_interesting_parents.exit.thread.i ], [ %i.cn, %weight_set.exit.i ], [ %.076275.i.a, %weight_set.exit118.i ] ; 2 uses
+  %.177.i = phi i32 [ %.076275.i, %weight_set.exit127.i ], [ %.076275.i, %count_interesting_parents.exit.thread.i ], [ %i.cn, %weight_set.exit.i ], [ %.076275.i, %weight_set.exit118.i ] ; 2 uses
   %i.ew = getelementptr inbounds nuw i8, ptr %.075276.i, i64 8
   %i.ex = load ptr, ptr %i.ew, align 8, !tbaa !20 ; 2 uses
   %.not.i = icmp eq ptr %i.ex, null

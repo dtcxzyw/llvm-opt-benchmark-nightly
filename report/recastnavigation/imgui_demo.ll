@@ -205,31 +205,22 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.i, label %.lr.ph177, label %.thread
 
 bb.c:                                             ; preds = %.lr.ph177
-  %indvars.iv.next150 = add i32 %indvars.iv149174, 1 ; 2 uses
   %i.j = icmp ugt ptr %i.k, %i.d
-  br i1 %i.j, label %.lr.ph177, label %.thread.loopexit
+  br i1 %i.j, label %.lr.ph177, label %.thread
 
 .lr.ph177:                                        ; preds = %bb.b, %bb.c
   %.083175 = phi ptr [ %i.k, %bb.c ], [ %i.h, %bb.b ] ; 5 uses
-  %indvars.iv149174 = phi i32 [ %indvars.iv.next150, %bb.c ], [ 0, %bb.b ] ; 5 uses
   %i.k = getelementptr inbounds i8, ptr %.083175, i64 -1 ; 4 uses
   %i.l = load i8, ptr %i.k, align 1, !tbaa !106
   switch i8 %i.l, label %bb.c [
-    i8 59, label %.thread.loopexit
-    i8 44, label %.thread.loopexit
-    i8 32, label %.thread.loopexit
-    i8 9, label %.thread.loopexit
+    i8 59, label %.thread
+    i8 44, label %.thread
+    i8 32, label %.thread
+    i8 9, label %.thread
   ]
 
-.thread.loopexit:                                 ; preds = %.lr.ph177, %.lr.ph177, %.lr.ph177, %.lr.ph177, %bb.c
-  %indvars.iv149.lcssa.ph = phi i32 [ %indvars.iv.next150, %bb.c ], [ %indvars.iv149174, %.lr.ph177 ], [ %indvars.iv149174, %.lr.ph177 ], [ %indvars.iv149174, %.lr.ph177 ], [ %indvars.iv149174, %.lr.ph177 ]
-  %.083.lcssa.ph = phi ptr [ %i.k, %bb.c ], [ %.083175, %.lr.ph177 ], [ %.083175, %.lr.ph177 ], [ %.083175, %.lr.ph177 ], [ %.083175, %.lr.ph177 ]
-  %2 = sext i32 %indvars.iv149.lcssa.ph to i64
-  br label %.thread
-
-.thread:                                          ; preds = %.thread.loopexit, %bb.b
-  %indvars.iv149.lcssa = phi i64 [ 0, %bb.b ], [ %2, %.thread.loopexit ]
-  %.083.lcssa = phi ptr [ %i.h, %bb.b ], [ %.083.lcssa.ph, %.thread.loopexit ] ; 6 uses
+.thread:                                          ; preds = %bb.c, %.lr.ph177, %.lr.ph177, %.lr.ph177, %.lr.ph177, %bb.b
+  %.083.lcssa = phi ptr [ %i.h, %bb.b ], [ %i.k, %bb.c ], [ %.083175, %.lr.ph177 ], [ %.083175, %.lr.ph177 ], [ %.083175, %.lr.ph177 ], [ %.083175, %.lr.ph177 ] ; 6 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 272 ; 2 uses
   %i.n = load i32, ptr %i.m, align 8, !tbaa !225  ; 2 uses
   %i.o = icmp sgt i32 %i.n, 0
@@ -371,7 +362,7 @@ _ZN17ExampleAppConsole8StrnicmpEPKcS1_i.exit:     ; preds = %toupper.exit.i, %_Z
   %i.bv = ptrtoint ptr %i.h to i64
   %i.bw = ptrtoint ptr %.083.lcssa to i64         ; 2 uses
   %i.bx = sub i64 %i.bv, %i.bw
-  %i.by = trunc i64 %i.bx to i32
+  %i.by = trunc i64 %i.bx to i32                  ; 2 uses
   %i.bz = icmp sgt i32 %.sroa.0.1, 0
   tail call void @llvm.assume(i1 %i.bz)
   %i.ca = zext nneg i32 %.sroa.0.1 to i64
@@ -382,8 +373,9 @@ _ZN17ExampleAppConsole8StrnicmpEPKcS1_i.exit:     ; preds = %toupper.exit.i, %_Z
   br label %toupper.exit.us.peel
 
 toupper.exit.us.peel:                             ; preds = %._crit_edge137.us, %.lr.ph136.us.preheader
-  %indvars.iv151 = phi i64 [ %indvars.iv149.lcssa, %.lr.ph136.us.preheader ], [ %indvars.iv.next152, %._crit_edge137.us ] ; 5 uses
-  %i.ce = getelementptr inbounds i8, ptr %i.cb, i64 %indvars.iv151
+  %.078.us = phi i32 [ %3, %._crit_edge137.us ], [ %i.by, %.lr.ph136.us.preheader ] ; 4 uses
+  %2 = sext i32 %.078.us to i64                   ; 2 uses
+  %i.ce = getelementptr inbounds i8, ptr %i.cb, i64 %2
   %i.cf = load i8, ptr %i.ce, align 1, !tbaa !106
   %i.cg = sext i8 %i.cf to i64
   %i.ch = getelementptr inbounds [4 x i8], ptr %i.cd, i64 %i.cg
@@ -401,7 +393,7 @@ bb.i:                                             ; preds = %toupper.exit.us, %.
 toupper.exit95.us:                                ; preds = %bb.i
   %i.ck = getelementptr inbounds nuw [8 x i8], ptr %.sroa.13.1, i64 %indvars.iv145
   %i.cl = load ptr, ptr %i.ck, align 8, !tbaa !88
-  %i.cm = getelementptr inbounds i8, ptr %i.cl, i64 %indvars.iv151
+  %i.cm = getelementptr inbounds i8, ptr %i.cl, i64 %2
   %i.cn = load i8, ptr %i.cm, align 1, !tbaa !106
   %i.co = tail call ptr @__ctype_toupper_loc() #28
   %i.cp = load ptr, ptr %i.co, align 8, !tbaa !224
@@ -417,11 +409,11 @@ toupper.exit.us:                                  ; preds = %toupper.exit95.us
   br i1 %i.ct, label %bb.i, label %._crit_edge137.us, !llvm.loop !507
 
 ._crit_edge137.us:                                ; preds = %toupper.exit.us, %toupper.exit.us.peel
-  %indvars.iv.next152 = add nsw i64 %indvars.iv151, 1
+  %3 = add nsw i32 %.078.us, 1
   br label %toupper.exit.us.peel
 
 .split140.us:                                     ; preds = %bb.i, %toupper.exit95.us
-  %i.cu = icmp sgt i64 %indvars.iv151, 0
+  %i.cu = icmp sgt i32 %.078.us, 0
   br i1 %i.cu, label %bb.j, label %.lr.ph143.preheader
 
 bb.j:                                             ; preds = %.split140.us
@@ -432,8 +424,8 @@ bb.j:                                             ; preds = %.split140.us
   tail call void @_ZN26ImGuiInputTextCallbackData11DeleteCharsEii(ptr noundef nonnull align 8 dereferenceable(64) %1, i32 noundef %i.cy, i32 noundef %i.by) #26
   %i.cz = load i32, ptr %i.e, align 4, !tbaa !201
   %i.da = load ptr, ptr %.sroa.13.1, align 8, !tbaa !88 ; 2 uses
-  %3 = and i64 %indvars.iv151, 4294967295
-  %i.db = getelementptr inbounds nuw i8, ptr %i.da, i64 %3
+  %4 = zext nneg i32 %.078.us to i64
+  %i.db = getelementptr inbounds nuw i8, ptr %i.da, i64 %4
   tail call void @_ZN26ImGuiInputTextCallbackData11InsertCharsEiPKcS1_(ptr noundef nonnull align 8 dereferenceable(64) %1, i32 noundef %i.cz, ptr noundef %i.da, ptr noundef nonnull %i.db) #26
   br label %.lr.ph143.preheader
 

@@ -203,7 +203,7 @@ ompi_datatype_copy_content_same_ddt.exit.i:       ; preds = %bb.t, %.lr.ph.i255.
 bb.u:                                             ; preds = %bb.ar, %ompi_datatype_copy_content_same_ddt.exit.i
   %.0209.i = phi i64 [ 0, %ompi_datatype_copy_content_same_ddt.exit.i ], [ %i.hx, %bb.ar ]
   %.0202.i = phi i64 [ %i.ab, %ompi_datatype_copy_content_same_ddt.exit.i ], [ %i.hw, %bb.ar ]
-  %.0200.i = phi i64 [ 0, %ompi_datatype_copy_content_same_ddt.exit.i ], [ %indvars.iv.next70.i, %bb.ar ] ; 2 uses
+  %.0200.i = phi i32 [ 0, %ompi_datatype_copy_content_same_ddt.exit.i ], [ %19, %bb.ar ] ; 2 uses
   %.0197.i = phi i1 [ true, %ompi_datatype_copy_content_same_ddt.exit.i ], [ %.2199.i, %bb.ar ]
   %i.dv = load i32, ptr %i.dh, align 8, !tbaa !106
   %i.dw = load i32, ptr getelementptr inbounds nuw (i8, ptr @mca_coll_sm_component, i64 288), align 8, !tbaa !107
@@ -246,22 +246,21 @@ bb.w:                                             ; preds = %bb.v
   %i.en = add i32 %i.el, 1
   store i32 %i.en, ptr %i.dh, align 8, !tbaa !106
   %i.eo = load i32, ptr getelementptr inbounds nuw (i8, ptr @mca_coll_sm_component, i64 308), align 4, !tbaa !112 ; 2 uses
-  %i.ep = mul i32 %i.eo, %i.dx
+  %i.ep = mul nsw i32 %i.eo, %i.dx
   %i.eq = add nuw nsw i32 %i.dx, 1
   %i.er = mul nsw i32 %i.eo, %i.eq
-  %12 = mul i64 %.0200.i, %i.dj
-  %13 = getelementptr inbounds nuw i8, ptr %1, i64 %12
-  %14 = sext i32 %i.ep to i64
-  %15 = sext i32 %i.er to i64
+  %12 = sext i32 %.0200.i to i64
+  %13 = mul i64 %i.dj, %12
+  %14 = getelementptr inbounds nuw i8, ptr %1, i64 %13
   br label %bb.x
 
 bb.x:                                             ; preds = %._crit_edge.i, %.loopexit28.i
-  %indvars.iv69.i = phi i64 [ %indvars.iv.next70.i, %._crit_edge.i ], [ %.0200.i, %.loopexit28.i ] ; 2 uses
-  %indvars.iv67.i = phi i64 [ %indvars.iv.next68.i, %._crit_edge.i ], [ %14, %.loopexit28.i ] ; 3 uses
-  %.1210.i = phi i64 [ %i.hx, %._crit_edge.i ], [ %.0209.i, %.loopexit28.i ]
-  %.0206.i = phi ptr [ %i.hy, %._crit_edge.i ], [ %13, %.loopexit28.i ] ; 4 uses
-  %.1203.i = phi i64 [ %i.hw, %._crit_edge.i ], [ %.0202.i, %.loopexit28.i ] ; 2 uses
-  %.1198.i = phi i1 [ %.2199.i, %._crit_edge.i ], [ %.0197.i, %.loopexit28.i ] ; 3 uses
+  %.0213.i = phi i32 [ %i.ep, %.loopexit28.i ], [ %18, %._crit_edge.i ] ; 3 uses
+  %indvars.iv67.i = phi i64 [ %.0209.i, %.loopexit28.i ], [ %i.hx, %._crit_edge.i ]
+  %.0206.i = phi ptr [ %14, %.loopexit28.i ], [ %i.hy, %._crit_edge.i ] ; 4 uses
+  %.1203.i = phi i64 [ %.0202.i, %.loopexit28.i ], [ %i.hw, %._crit_edge.i ] ; 2 uses
+  %.1201.i = phi i32 [ %.0200.i, %.loopexit28.i ], [ %19, %._crit_edge.i ] ; 2 uses
+  %.1198.i = phi i1 [ %.0197.i, %.loopexit28.i ], [ %.2199.i, %._crit_edge.i ] ; 3 uses
   br i1 %.not233.i89, label %bb.y, label %bb.ab
 
 bb.y:                                             ; preds = %bb.x
@@ -294,7 +293,8 @@ bb.aa:                                            ; preds = %.lr.ph.i260.i
 
 bb.ab:                                            ; preds = %bb.x
   %i.ey = load ptr, ptr %i.dk, align 8, !tbaa !113
-  %i.ez = getelementptr inbounds [16 x i8], ptr %i.ey, i64 %indvars.iv67.i ; 3 uses
+  %15 = sext i32 %.0213.i to i64
+  %i.ez = getelementptr inbounds [16 x i8], ptr %i.ey, i64 %15 ; 3 uses
   %i.fa = load ptr, ptr %i.ez, align 8, !tbaa !115
   %i.fb = load i32, ptr getelementptr inbounds nuw (i8, ptr @mca_coll_sm_component, i64 284), align 4, !tbaa !38
   %i.fc = mul nsw i32 %i.fb, %5
@@ -362,10 +362,12 @@ ompi_datatype_copy_content_same_ddt.exit269.i:    ; preds = %bb.aa, %.lr.ph.i260
   br i1 %i.do, label %.lr.ph.i, label %._crit_edge.i
 
 .lr.ph.i:                                         ; preds = %ompi_datatype_copy_content_same_ddt.exit269.i
+  %16 = sext i32 %.0213.i to i64
   %i.gb = trunc i64 %.1203.i to i32
   %i.gc = call i32 @llvm.smin.i32(i32 %i.gb, i32 %i.ds)
-  %i.gd = sext i32 %i.gc to i64
-  %i.ge = mul i64 %indvars.iv69.i, %i.dj
+  %17 = sext i32 %i.gc to i64
+  %i.gd = sext i32 %.1201.i to i64
+  %i.ge = mul i64 %i.dj, %i.gd
   %i.gf = getelementptr inbounds nuw i8, ptr %.0189.i, i64 %i.ge
   br label %bb.ag
 
@@ -376,7 +378,7 @@ bb.ag:                                            ; preds = %opal_convertor_set_
 
 bb.ah:                                            ; preds = %bb.ag
   %i.gh = load ptr, ptr %i.dk, align 8, !tbaa !113
-  %i.gi = getelementptr inbounds [16 x i8], ptr %i.gh, i64 %indvars.iv67.i ; 3 uses
+  %i.gi = getelementptr inbounds [16 x i8], ptr %i.gh, i64 %16 ; 3 uses
   %i.gj = load ptr, ptr %i.gi, align 8, !tbaa !115
   %i.gk = load i32, ptr getelementptr inbounds nuw (i8, ptr @mca_coll_sm_component, i64 284), align 4, !tbaa !38
   %i.gl = mul nsw i32 %i.gk, %5
@@ -475,19 +477,19 @@ bb.aq:                                            ; preds = %bb.ao
 
 opal_convertor_set_position.exit.i:               ; preds = %bb.aq, %bb.ap, %bb.an, %bb.am, %bb.ak, %bb.ag
   %.sink.i = phi ptr [ %i.hb, %bb.ak ], [ %i.gf, %bb.ag ], [ %.0208.i87, %bb.am ], [ %.0208.i87, %bb.an ], [ %.0208.i87, %bb.ap ], [ %.0208.i87, %bb.aq ]
-  call fastcc void @ompi_op_reduce(ptr noundef readonly %4, ptr noundef %.sink.i, ptr noundef %.0206.i, i64 noundef %i.gd, ptr noundef %3)
+  call fastcc void @ompi_op_reduce(ptr noundef readonly %4, ptr noundef %.sink.i, ptr noundef %.0206.i, i64 noundef %17, ptr noundef %3)
   %indvars.iv.next65.i = add nsw i64 %indvars.iv64.i, -1
   %i.hv = icmp sgt i64 %indvars.iv64.i, 0
   br i1 %i.hv, label %bb.ag, label %._crit_edge.i, !llvm.loop !25
 
 ._crit_edge.i:                                    ; preds = %opal_convertor_set_position.exit.i, %ompi_datatype_copy_content_same_ddt.exit269.i
   %i.hw = sub i64 %.1203.i, %i.y                  ; 2 uses
-  %i.hx = add i64 %.1210.i, %i.z                  ; 3 uses
-  %indvars.iv.next68.i = add nsw i64 %indvars.iv67.i, 1 ; 2 uses
-  %indvars.iv.next70.i = add nsw i64 %indvars.iv69.i, 1 ; 2 uses
+  %i.hx = add i64 %indvars.iv67.i, %i.z           ; 3 uses
+  %18 = add nsw i32 %.0213.i, 1                   ; 2 uses
+  %19 = add nsw i32 %.1201.i, 1                   ; 2 uses
   %i.hy = getelementptr inbounds nuw i8, ptr %.0206.i, i64 %i.dj
   %i.hz = icmp ult i64 %i.hx, %i.ac               ; 2 uses
-  %i.ia = icmp slt i64 %indvars.iv.next68.i, %15
+  %i.ia = icmp slt i32 %18, %i.er
   %i.ib = select i1 %i.hz, i1 %i.ia, i1 false
   br i1 %i.ib, label %bb.x, label %bb.ar, !llvm.loop !26
 

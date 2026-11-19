@@ -204,14 +204,14 @@ bb.x:                                             ; preds = %.lr.ph297
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %copy_color_mask.exit
-  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %copy_color_mask.exit ]
-  %3 = phi i8 [ %i.io, %.lr.ph.preheader ], [ %i.mx, %copy_color_mask.exit ]
-  %.2125287 = phi i8 [ %.1124294, %.lr.ph.preheader ], [ %.4, %copy_color_mask.exit ] ; 5 uses
-  %.2186286 = phi ptr [ %.1292, %.lr.ph.preheader ], [ %.4187, %copy_color_mask.exit ] ; 5 uses
-  %.2190285 = phi ptr [ %.1189291, %.lr.ph.preheader ], [ %.4192, %copy_color_mask.exit ] ; 5 uses
+  %3 = phi i8 [ %i.mx, %copy_color_mask.exit ], [ %i.io, %.lr.ph.preheader ]
+  %.0288 = phi i32 [ %4, %copy_color_mask.exit ], [ 0, %.lr.ph.preheader ]
+  %.2125287 = phi i8 [ %.4, %copy_color_mask.exit ], [ %.1124294, %.lr.ph.preheader ] ; 5 uses
+  %.2186286 = phi ptr [ %.4187, %copy_color_mask.exit ], [ %.1292, %.lr.ph.preheader ] ; 5 uses
+  %.2190285 = phi ptr [ %.4192, %copy_color_mask.exit ], [ %.1189291, %.lr.ph.preheader ] ; 5 uses
   %i.ip = load i32, ptr %i.ed, align 8, !tbaa !32 ; 4 uses
   %i.iq = shl nsw i32 %i.ip, 1                    ; 4 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %4 = add nuw nsw i32 %.0288, 1                  ; 2 uses
   switch i8 %3, label %copy_color_mask.exit [
     i8 2, label %bb.y
     i8 3, label %bb.z
@@ -527,7 +527,8 @@ copy_color_mask.exit:                             ; preds = %bb.bl, %bb.bk, %.th
   %.4192 = phi ptr [ %.2190285, %.lr.ph ], [ %.2190285, %bb.aq ], [ %.2190285, %.thread221 ], [ %.2190285, %bb.ap ], [ %.3191, %.thread251 ], [ %.3191, %bb.bk ], [ %.3191, %bb.bl ] ; 2 uses
   %.4187 = phi ptr [ %.2186286, %.lr.ph ], [ %.2186286, %bb.aq ], [ %.2186286, %.thread221 ], [ %.2186286, %bb.ap ], [ %.3, %.thread251 ], [ %.3, %bb.bk ], [ %.3, %bb.bl ] ; 2 uses
   %.4 = phi i8 [ %.2125287, %.lr.ph ], [ %.3126, %bb.aq ], [ %.3126, %.thread221 ], [ %.3126, %bb.ap ], [ %.2125287, %.thread251 ], [ %.2125287, %bb.bk ], [ %.2125287, %bb.bl ] ; 2 uses
-  %i.mw = getelementptr inbounds nuw i8, ptr %i.in, i64 %indvars.iv.next
+  %5 = zext nneg i32 %4 to i64
+  %i.mw = getelementptr inbounds nuw i8, ptr %i.in, i64 %5
   %i.mx = load i8, ptr %i.mw, align 1, !tbaa !41  ; 2 uses
   %.not158 = icmp eq i8 %i.mx, 0
   br i1 %.not158, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !66

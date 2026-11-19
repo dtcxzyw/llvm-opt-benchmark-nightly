@@ -202,11 +202,11 @@ bb.e:                                             ; preds = %bb.a
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph152, %bb.i
-  %indvars.iv = phi i64 [ 0, %.lr.ph152 ], [ %indvars.iv.next, %bb.i ] ; 3 uses
   %.sroa.034.0151 = phi <2 x float> [ zeroinitializer, %.lr.ph152 ], [ %.sroa.034.1, %bb.i ] ; 2 uses
-  %.0104150.a = phi i32 [ %i.au, %.lr.ph152 ], [ %i.ba, %bb.i ]
+  %.0104150 = phi i32 [ %i.au, %.lr.ph152 ], [ %i.ba, %bb.i ]
+  %.0104150.a = phi i32 [ 0, %.lr.ph152 ], [ %.1106, %bb.i ] ; 3 uses
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !136
-  %i.ax = sext i32 %.0104150.a to i64
+  %i.ax = sext i32 %.0104150 to i64
   %i.ay = getelementptr inbounds [296 x i8], ptr %i.aw, i64 %i.ax ; 3 uses
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 12
   %i.ba = load i32, ptr %i.az, align 4, !tbaa !148 ; 2 uses
@@ -216,7 +216,8 @@ bb.f:                                             ; preds = %.lr.ph152, %bb.i
   br i1 %i.bd, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  %i.be = getelementptr inbounds nuw [16 x i8], ptr %i.as, i64 %indvars.iv
+  %3 = zext nneg i32 %.0104150.a to i64
+  %i.be = getelementptr inbounds nuw [16 x i8], ptr %i.as, i64 %3
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.be, i8 0, i64 16, i1 false)
   br label %bb.i, !llvm.loop !220
 
@@ -235,14 +236,15 @@ bb.h:                                             ; preds = %bb.f
   %i.bl = shufflevector <2 x float> %i.bg, <2 x float> poison, <2 x i32> zeroinitializer
   %i.bm = fmul <2 x float> %i.bl, %.4..4..4..4.
   %i.bn = fadd <2 x float> %.sroa.034.0151, %i.bm
-  %i.bo = getelementptr inbounds nuw [16 x i8], ptr %i.as, i64 %indvars.iv
+  %4 = zext nneg i32 %.0104150.a to i64
+  %i.bo = getelementptr inbounds nuw [16 x i8], ptr %i.as, i64 %4
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.bo, ptr noundef nonnull align 8 dereferenceable(16) %2, i64 16, i1 false), !tbaa.struct !151
   call void @llvm.lifetime.end.p0(ptr nonnull %2)
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   %.sroa.034.1 = phi <2 x float> [ %.sroa.034.0151, %bb.g ], [ %i.bn, %bb.h ] ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %.1106 = add nuw nsw i32 %.0104150.a, 1
   %.not110 = icmp eq i32 %i.ba, -1
   br i1 %.not110, label %._crit_edge, label %bb.f
 

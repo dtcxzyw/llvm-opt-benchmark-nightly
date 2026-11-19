@@ -205,7 +205,7 @@ getKeysPrepareResult.exit:                        ; preds = %bb.f, %bb.k
   br i1 %.not46, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %getKeysPrepareResult.exit, %bb.o
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.o ], [ 0, %getKeysPrepareResult.exit ] ; 2 uses
+  %.03548 = phi i32 [ %5, %bb.o ], [ 0, %getKeysPrepareResult.exit ] ; 2 uses
   %.03647 = phi i32 [ %i.ap, %bb.o ], [ %i.e, %getKeysPrepareResult.exit ] ; 4 uses
   %.not41 = icmp sge i32 %.03647, %2
   %i.ag = icmp slt i32 %.03647, %i.e
@@ -231,21 +231,18 @@ bb.n:                                             ; preds = %bb.m
   unreachable
 
 bb.o:                                             ; preds = %.lr.ph
-  %i.an = getelementptr inbounds nuw [8 x i8], ptr %i.af, i64 %indvars.iv ; 2 uses
+  %4 = zext nneg i32 %.03548 to i64
+  %i.an = getelementptr inbounds nuw [8 x i8], ptr %i.af, i64 %4 ; 2 uses
   store i32 %.03647, ptr %i.an, align 4, !tbaa !261
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %5 = add nuw nsw i32 %.03548, 1                 ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 4
   store i32 0, ptr %i.ao, align 4, !tbaa !262
   %i.ap = add nsw i32 %.03647, %i.k               ; 2 uses
   %.not = icmp sgt i32 %i.ap, %.1
-  br i1 %.not, label %.loopexit.loopexit, label %.lr.ph, !llvm.loop !463
+  br i1 %.not, label %.loopexit, label %.lr.ph, !llvm.loop !463
 
-.loopexit.loopexit:                               ; preds = %bb.o
-  %4 = trunc nuw i64 %indvars.iv.next to i32
-  br label %.loopexit
-
-.loopexit:                                        ; preds = %.loopexit.loopexit, %getKeysPrepareResult.exit, %bb.m, %bb.l, %bb.a
-  %storemerge43 = phi i32 [ 0, %bb.a ], [ 0, %bb.l ], [ 0, %bb.m ], [ 0, %getKeysPrepareResult.exit ], [ %4, %.loopexit.loopexit ] ; 2 uses
+.loopexit:                                        ; preds = %bb.o, %getKeysPrepareResult.exit, %bb.m, %bb.l, %bb.a
+  %storemerge43 = phi i32 [ 0, %bb.a ], [ 0, %bb.l ], [ 0, %bb.m ], [ 0, %getKeysPrepareResult.exit ], [ %5, %bb.o ] ; 2 uses
   store i32 %storemerge43, ptr %3, align 8, !tbaa !253
   ret i32 %storemerge43
 }
