@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %.noexc.i.i, %_ZN5Ei
   br i1 %or.cond, label %vector.memcheck, label %scalar.ph.preheader
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.i
-  %i.r = add i64 %.sroa.9.48.copyload, %.sroa.758.48.copyload
+  %i.r = add i64 %.sroa.758.48.copyload, %.sroa.9.48.copyload
   %i.s = shl i64 %i.r, 3
   %i.t = add i64 %i.s, %i.h
   %i.u = sub i64 %i.t, %i.o
