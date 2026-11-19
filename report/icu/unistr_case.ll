@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %bb.b
   %i.q = sext i16 %i.p to i32
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 12
   %i.s = load i32, ptr %i.r, align 4
-  %i.t = select i1 %i.o, i32 %i.s, i32 %i.q       ; 4 uses
+  %i.t = select i1 %i.o, i32 %i.s, i32 %i.q       ; 2 uses
   %i.u = and i16 %i.n, 1
   %.not.i = icmp eq i16 %i.u, 0
   br i1 %.not.i, label %.sink.split.i.i, label %bb.d
@@ -224,15 +224,12 @@ bb.d:                                             ; preds = %bb.c
   %i.aa = load ptr, ptr %i.z, align 8
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 10
   %i.ac = select i1 %.not.i.i, ptr %i.aa, ptr %i.ab ; 2 uses
-  %2 = icmp slt i32 %i.t, 0
-  %spec.select14.i = tail call i32 @llvm.smin.i32(i32 %i.t, i32 0) ; 2 uses
-  %3 = sub nsw i32 %i.t, %spec.select14.i
-  %spec.select15.i = tail call i32 @llvm.smin.i32(i32 %i.t, i32 %3)
+  %spec.select14.i = tail call i32 @llvm.smin.i32(i32 %i.t, i32 0)
   %spec.select38.i.i = tail call i32 @llvm.smin.i32(i32 %i.l, i32 0)
   %.0.i.i = tail call i32 @llvm.smax.i32(i32 %i.l, i32 0) ; 2 uses
   %i.ad = icmp eq ptr %i.ac, null                 ; 2 uses
-  %4 = or i1 %2, %i.ad
-  %spec.select32.i.i = select i1 %4, i32 0, i32 %spec.select15.i ; 3 uses
+  %2 = tail call i32 @llvm.smax.i32(i32 %i.t, i32 0)
+  %spec.select32.i.i = select i1 %i.ad, i32 0, i32 %2 ; 2 uses
   %i.ae = and i16 %i.f, 2
   %.not.i.i.i = icmp eq i16 %i.ae, 0
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 10
@@ -242,10 +239,10 @@ bb.d:                                             ; preds = %bb.c
   %i.aj = sext i32 %spec.select38.i.i to i64
   %i.ak = getelementptr inbounds [2 x i8], ptr %i.ai, i64 %i.aj ; 2 uses
   %i.al = sext i32 %spec.select14.i to i64
-  %i.am = select i1 %i.ad, i64 0, i64 %i.al       ; 2 uses
-  %i.an = getelementptr inbounds [2 x i8], ptr %i.ac, i64 %i.am ; 3 uses
+  %i.am = select i1 %i.ad, i64 0, i64 %i.al
+  %i.an = getelementptr inbounds [2 x i8], ptr %i.ac, i64 %i.am ; 2 uses
   %.not29.i.i = icmp eq ptr %i.ak, %i.an
-  br i1 %.not29.i.i, label %5, label %bb.e
+  br i1 %.not29.i.i, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %.sink.split.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
@@ -255,18 +252,8 @@ bb.e:                                             ; preds = %.sink.split.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   br i1 %.not31.i.i, label %bb.g, label %_ZNK6icu_7813UnicodeString13doCaseCompareEiiRKS0_iij.exit
 
-5:                                                ; preds = %.sink.split.i.i.i
-  %6 = icmp slt i32 %spec.select32.i.i, 0
-  br i1 %6, label %7, label %bb.f
-
-7:                                                ; preds = %5
-  %8 = getelementptr inbounds [2 x i8], ptr %i.an, i64 %i.am
-  %9 = tail call i32 @u_strlen_78(ptr noundef %8)
-  br label %bb.f
-
-bb.f:                                             ; preds = %7, %5
-  %.122.i.i = phi i32 [ %9, %7 ], [ %spec.select32.i.i, %5 ]
-  %.not30.i.i = icmp eq i32 %.0.i.i, %.122.i.i
+bb.f:                                             ; preds = %.sink.split.i.i.i
+  %.not30.i.i = icmp eq i32 %.0.i.i, %spec.select32.i.i
   br i1 %.not30.i.i, label %bb.g, label %_ZNK6icu_7813UnicodeString13doCaseCompareEiiRKS0_iij.exit
 
 bb.g:                                             ; preds = %bb.f, %bb.e

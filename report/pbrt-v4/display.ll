@@ -205,14 +205,16 @@ bb.e:                                             ; preds = %.lr.ph131, %.crited
   %i.eg = phi ptr [ %i.eb, %.lr.ph131 ], [ %i.id, %.critedge ] ; 2 uses
   %i.eh = phi ptr [ %i.ec, %.lr.ph131 ], [ %i.ie, %.critedge ]
   %indvars.iv151.a = phi i64 [ %i.ef, %.lr.ph131 ], [ %indvars.iv.next152.a, %.critedge ] ; 3 uses
-  %4 = phi i32 [ %i.ed, %.lr.ph131 ], [ %i.if, %.critedge ]
-  %.056130 = phi i32 [ 0, %.lr.ph131 ], [ %5, %.critedge ] ; 5 uses
+  %indvars.iv151 = phi i64 [ 0, %.lr.ph131 ], [ %indvars.iv.next152, %.critedge ] ; 3 uses
+  %.056130 = phi i32 [ %i.ed, %.lr.ph131 ], [ %i.if, %.critedge ]
   %i.ei = load i32, ptr %i.dh, align 4, !tbaa !33
   %.sroa.speculated92 = call i32 @llvm.smin.i32(i32 %i.ei, i32 %i.ee) ; 3 uses
   %i.ej = sub nsw i32 %.sroa.speculated92, %.060134 ; 2 uses
-  %5 = add nuw nsw i32 %.056130, 128              ; 3 uses
-  %.sroa.speculated = call i32 @llvm.smin.i32(i32 %4, i32 %5) ; 3 uses
-  %i.ek = sub nsw i32 %.sroa.speculated, %.056130 ; 2 uses
+  %indvars.iv.next152 = add nuw nsw i64 %indvars.iv151, 128 ; 2 uses
+  %4 = trunc nuw i64 %indvars.iv.next152 to i32   ; 2 uses
+  %.sroa.speculated = call i32 @llvm.smin.i32(i32 %.056130, i32 %4) ; 2 uses
+  %5 = trunc nuw nsw i64 %indvars.iv151 to i32    ; 2 uses
+  %i.ek = sub nsw i32 %.sroa.speculated, %5       ; 2 uses
   %.not138 = icmp eq ptr %i.eh, %i.eg
   br i1 %.not138, label %._crit_edge, label %.lr.ph124
 
@@ -229,7 +231,7 @@ bb.f:                                             ; preds = %.lr.ph124, %bb.f
   %i.eq = load i32, ptr %i.ep, align 8, !tbaa !80
   %i.er = sext i32 %i.eq to i64
   %i.es = getelementptr inbounds i8, ptr %i.eo, i64 %i.er ; 4 uses
-  store i32 %.056130, ptr %i.es, align 1
+  store i32 %5, ptr %i.es, align 1
   %i.et = getelementptr inbounds nuw i8, ptr %i.es, i64 4
   store i32 %.060134, ptr %i.et, align 1
   %i.eu = getelementptr inbounds nuw i8, ptr %i.es, i64 8
@@ -249,17 +251,14 @@ bb.f:                                             ; preds = %.lr.ph124, %bb.f
   br i1 %i.fd, label %bb.f, label %._crit_edge, !llvm.loop !204
 
 ._crit_edge:                                      ; preds = %bb.f, %bb.e
-  %.sroa.speculated4.i.i = call i32 @llvm.smin.i32(i32 %.sroa.speculated, i32 %.056130)
   %.sroa.speculated.i.i = call i32 @llvm.smin.i32(i32 %.sroa.speculated92, i32 %.060134)
   %.sroa.2.0.insert.ext.i.i = zext i32 %.sroa.speculated.i.i to i64
   %.sroa.2.0.insert.shift.i.i = shl nuw i64 %.sroa.2.0.insert.ext.i.i, 32
-  %.sroa.09.0.insert.ext.i.i = zext i32 %.sroa.speculated4.i.i to i64
-  %.sroa.09.0.insert.insert.i.i = or disjoint i64 %.sroa.2.0.insert.shift.i.i, %.sroa.09.0.insert.ext.i.i
-  %.sroa.speculated4.i14.i = call i32 @llvm.smax.i32(i32 %.056130, i32 %.sroa.speculated)
+  %.sroa.09.0.insert.insert.i.i = or disjoint i64 %.sroa.2.0.insert.shift.i.i, %indvars.iv151
   %.sroa.speculated.i15.i = call i32 @llvm.smax.i32(i32 %.060134, i32 %.sroa.speculated92)
   %.sroa.2.0.insert.ext.i16.i = zext nneg i32 %.sroa.speculated.i15.i to i64
   %.sroa.2.0.insert.shift.i17.i = shl nuw nsw i64 %.sroa.2.0.insert.ext.i16.i, 32
-  %.sroa.09.0.insert.ext.i18.i = zext nneg i32 %.sroa.speculated4.i14.i to i64
+  %.sroa.09.0.insert.ext.i18.i = zext nneg i32 %.sroa.speculated to i64
   %.sroa.09.0.insert.insert.i19.i = or disjoint i64 %.sroa.2.0.insert.shift.i17.i, %.sroa.09.0.insert.ext.i18.i
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
@@ -414,7 +413,7 @@ bb.m:                                             ; preds = %bb.l, %_ZN4pbrt10Ha
   %i.ie = phi ptr [ %i.fg, %_ZNKSt8functionIFvN4pbrt7Bounds2IiEEN4pstd4spanINS4_IfEEEEEEclES2_S6_.exit ], [ %i.hx, %bb.m ] ; 2 uses
   %indvars.iv.next152.a = add nsw i64 %indvars.iv151.a, 1 ; 2 uses
   %i.if = load i32, ptr %i.dg, align 8, !tbaa !210 ; 3 uses
-  %.not68 = icmp slt i32 %5, %i.if
+  %.not68 = icmp sgt i32 %i.if, %4
   br i1 %.not68, label %bb.e, label %.critedge73.loopexit, !llvm.loop !207
 
 bb.n:                                             ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp

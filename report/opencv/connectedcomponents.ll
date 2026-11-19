@@ -204,8 +204,8 @@ bb.re:                                            ; preds = %.lr.ph3531, %._crit
   %i.dme = trunc nuw nsw i64 %i.dlv to i32        ; 2 uses
   %i.dmf = trunc nuw nsw i64 %i.dlv to i32        ; 2 uses
   %i.dmg = trunc nuw nsw i64 %indvars.iv3703 to i32 ; 2 uses
-  %i.dmh = trunc nuw nsw i64 %i.dlv to i32        ; 2 uses
-  %i.dmi = trunc nuw nsw i64 %i.dlv to i32        ; 2 uses
+  %i.dmh = trunc nuw nsw i64 %i.dlv to i32
+  %i.dmi = trunc nuw nsw i64 %i.dlv to i32
   %invariant.op = shl nuw i64 %i.dlv, 1
   %i.dmj = insertelement <2 x i64> poison, i64 %i.dlv, i64 1 ; 4 uses
   br label %bb.rf
@@ -608,8 +608,8 @@ bb.rx:                                            ; preds = %bb.rv
 bb.ry:                                            ; preds = %bb.rf
   %i.dvs = load ptr, ptr %i.dkz, align 8, !tbaa !55 ; 9 uses
   %i.dvt = load i32, ptr %i.dvs, align 4, !tbaa !33
-  %i.dvu = trunc nuw nsw i64 %indvars.iv3700 to i32 ; 4 uses
-  %..i3122 = tail call i32 @llvm.smin.i32(i32 %i.dvt, i32 %i.dvu) ; 3 uses
+  %i.dvu = trunc nuw nsw i64 %indvars.iv3700 to i32 ; 2 uses
+  %..i3122 = tail call i32 @llvm.smin.i32(i32 %i.dvt, i32 %i.dvu) ; 4 uses
   store i32 %..i3122, ptr %i.dvs, align 4, !tbaa !33
   %i.dvv = getelementptr inbounds nuw i8, ptr %i.dvs, i64 8 ; 5 uses
   %i.dvw = load i32, ptr %i.dvv, align 4, !tbaa !33
@@ -644,9 +644,8 @@ bb.ry:                                            ; preds = %bb.rf
 bb.rz:                                            ; preds = %bb.ry
   %i.dwr = getelementptr inbounds nuw [2 x i8], ptr %i.dls, i64 %i.dwn
   store i16 0, ptr %i.dwr, align 2, !tbaa !54
-  %11 = trunc nuw nsw i64 %i.dwn to i32           ; 4 uses
-  %..i3125 = tail call i32 @llvm.smin.i32(i32 %..i3122, i32 %11) ; 2 uses
-  store i32 %..i3125, ptr %i.dvs, align 4, !tbaa !33
+  store i32 %..i3122, ptr %i.dvs, align 4, !tbaa !33
+  %11 = trunc nuw nsw i64 %i.dwn to i32
   %i.dws = tail call i32 @llvm.umax.i32(i32 %i.dvx, i32 %11) ; 2 uses
   store i32 %i.dws, ptr %i.dvv, align 4, !tbaa !33
   store i32 %i.dwa, ptr %i.dvy, align 4, !tbaa !33
@@ -667,16 +666,11 @@ bb.sa:                                            ; preds = %bb.rz
   store i16 0, ptr %i.dwz, align 2, !tbaa !54
   %i.dxa = getelementptr inbounds nuw [2 x i8], ptr %i.dlt, i64 %i.dwn
   store i16 0, ptr %i.dxa, align 2, !tbaa !54
-  %..i3128 = tail call i32 @llvm.smin.i32(i32 %..i3125, i32 %i.dvu)
-  %12 = tail call i32 @llvm.umax.i32(i32 %i.dws, i32 %i.dvu)
-  %13 = tail call i32 @llvm.smin.i32(i32 %i.dwa, i32 %i.dmi)
   %i.dxb = tail call i32 @llvm.smax.i32(i32 %i.dwd, i32 %i.dmi)
   %i.dxc = add i64 %i.dwu, %indvars.iv3700
-  %..i3131 = tail call i32 @llvm.smin.i32(i32 %..i3128, i32 %11)
-  store i32 %..i3131, ptr %i.dvs, align 4, !tbaa !33
-  %14 = tail call i32 @llvm.umax.i32(i32 %12, i32 %11)
-  store i32 %14, ptr %i.dvv, align 4, !tbaa !33
-  store i32 %13, ptr %i.dvy, align 4, !tbaa !33
+  store i32 %..i3122, ptr %i.dvs, align 4, !tbaa !33
+  store i32 %i.dws, ptr %i.dvv, align 4, !tbaa !33
+  store i32 %i.dwa, ptr %i.dvy, align 4, !tbaa !33
   store i32 %i.dxb, ptr %i.dwb, align 4, !tbaa !33
   %i.dxd = add nsw i32 %i.dwf, 4
   store i32 %i.dxd, ptr %i.dwe, align 4, !tbaa !33
@@ -697,8 +691,7 @@ bb.sc:                                            ; preds = %bb.sb
   store i16 0, ptr %i.dxi, align 2, !tbaa !54
   store i32 %..i3122, ptr %i.dvs, align 4, !tbaa !33
   store i32 %i.dvx, ptr %i.dvv, align 4, !tbaa !33
-  %15 = tail call i32 @llvm.smin.i32(i32 %i.dwa, i32 %i.dmh)
-  store i32 %15, ptr %i.dvy, align 4, !tbaa !33
+  store i32 %i.dwa, ptr %i.dvy, align 4, !tbaa !33
   %i.dxj = tail call i32 @llvm.smax.i32(i32 %i.dwd, i32 %i.dmh)
   store i32 %i.dxj, ptr %i.dwb, align 4, !tbaa !33
   %i.dxk = add nsw i32 %i.dwf, 2
@@ -743,7 +736,7 @@ bb.se:                                            ; preds = %.lr.ph3538, %._crit
   %i.dyj = trunc nuw nsw i64 %i.dyb to i32        ; 2 uses
   %i.dyk = trunc nuw nsw i64 %indvars.iv3709 to i32 ; 2 uses
   %invariant.op4149 = shl nuw i64 %indvars.iv3709, 1
-  %i.dyl = trunc nuw nsw i64 %i.dyb to i32        ; 2 uses
+  %i.dyl = trunc nuw nsw i64 %i.dyb to i32
   %invariant.op4151 = shl nuw i64 %i.dyb, 1
   %i.dym = insertelement <2 x i64> poison, i64 %i.dyb, i64 1 ; 2 uses
   br label %bb.sf
@@ -1081,8 +1074,8 @@ bb.st:                                            ; preds = %bb.sf
   store i16 0, ptr %i.efz, align 2, !tbaa !54
   %i.ega = load ptr, ptr %i.dlh, align 8, !tbaa !55 ; 7 uses
   %i.egb = load i32, ptr %i.ega, align 4, !tbaa !33
-  %i.egc = trunc nuw nsw i64 %indvars.iv3706 to i32 ; 4 uses
-  %..i3161 = tail call i32 @llvm.smin.i32(i32 %i.egb, i32 %i.egc)
+  %i.egc = trunc nuw nsw i64 %indvars.iv3706 to i32 ; 2 uses
+  %..i3161 = tail call i32 @llvm.smin.i32(i32 %i.egb, i32 %i.egc) ; 2 uses
   %i.egd = getelementptr inbounds nuw i8, ptr %i.ega, i64 8 ; 3 uses
   %i.ege = load i32, ptr %i.egd, align 4, !tbaa !33
   %i.egf = tail call i32 @llvm.smax.i32(i32 %i.ege, i32 %i.egc)
@@ -1099,10 +1092,9 @@ bb.st:                                            ; preds = %bb.sf
   %i.egq = add i64 %i.egp, %indvars.iv3706
   %i.egr = getelementptr inbounds nuw i8, ptr %i.ego, i64 8 ; 3 uses
   %i.egs = load i64, ptr %i.egr, align 8, !tbaa !117
-  %16 = trunc nuw nsw i64 %i.efy to i32           ; 4 uses
-  %..i3164 = tail call i32 @llvm.smin.i32(i32 %..i3161, i32 %16) ; 2 uses
-  store i32 %..i3164, ptr %i.ega, align 4, !tbaa !33
-  %i.egt = tail call i32 @llvm.umax.i32(i32 %i.egf, i32 %16) ; 2 uses
+  store i32 %..i3161, ptr %i.ega, align 4, !tbaa !33
+  %12 = trunc nuw nsw i64 %i.efy to i32
+  %i.egt = tail call i32 @llvm.umax.i32(i32 %i.egf, i32 %12) ; 2 uses
   store i32 %i.egt, ptr %i.egd, align 4, !tbaa !33
   store i32 %i.egi, ptr %i.egg, align 4, !tbaa !33
   store i32 %i.egl, ptr %i.egj, align 4, !tbaa !33
@@ -1122,16 +1114,11 @@ bb.su:                                            ; preds = %bb.st
   store i16 0, ptr %i.egz, align 2, !tbaa !54
   %i.eha = getelementptr inbounds nuw [2 x i8], ptr %i.dxz, i64 %i.efy
   store i16 0, ptr %i.eha, align 2, !tbaa !54
-  %..i3167 = tail call i32 @llvm.smin.i32(i32 %..i3164, i32 %i.egc)
-  %17 = tail call i32 @llvm.umax.i32(i32 %i.egt, i32 %i.egc)
-  %18 = tail call i32 @llvm.smin.i32(i32 %i.egi, i32 %i.dyl)
   %i.ehb = tail call i32 @llvm.smax.i32(i32 %i.egl, i32 %i.dyl)
   %i.ehc = add i64 %i.egv, %indvars.iv3706
-  %..i3170 = tail call i32 @llvm.smin.i32(i32 %..i3167, i32 %16)
-  store i32 %..i3170, ptr %i.ega, align 4, !tbaa !33
-  %19 = tail call i32 @llvm.umax.i32(i32 %17, i32 %16)
-  store i32 %19, ptr %i.egd, align 4, !tbaa !33
-  store i32 %18, ptr %i.egg, align 4, !tbaa !33
+  store i32 %..i3161, ptr %i.ega, align 4, !tbaa !33
+  store i32 %i.egt, ptr %i.egd, align 4, !tbaa !33
+  store i32 %i.egi, ptr %i.egg, align 4, !tbaa !33
   store i32 %i.ehb, ptr %i.egj, align 4, !tbaa !33
   %i.ehd = add nsw i32 %i.egn, 4
   store i32 %i.ehd, ptr %i.egm, align 4, !tbaa !33
@@ -1208,8 +1195,8 @@ bb.sx:                                            ; preds = %.lr.ph3544, %._crit
   %i.eir = trunc nuw nsw i64 %indvars.iv3715 to i32 ; 2 uses
   %i.eis = trunc nuw nsw i64 %i.eil to i32        ; 2 uses
   %i.eit = trunc nuw nsw i64 %i.eil to i32        ; 2 uses
-  %i.eiu = trunc nuw nsw i64 %indvars.iv3715 to i32 ; 4 uses
-  %i.eiv = trunc nuw nsw i64 %i.eil to i32        ; 4 uses
+  %i.eiu = trunc nuw nsw i64 %indvars.iv3715 to i32 ; 2 uses
+  %i.eiv = trunc nuw nsw i64 %i.eil to i32
   %invariant.op4153 = add nuw i64 %indvars.iv3715, %i.eil
   %invariant.op4155 = add nuw i64 %indvars.iv3715, %i.eil
   %i.eiw = insertelement <2 x i64> poison, i64 %i.eil, i64 1 ; 2 uses
@@ -1554,7 +1541,7 @@ bb.tm:                                            ; preds = %bb.sy
   %i.eqo = tail call i32 @llvm.smax.i32(i32 %i.eqn, i32 %i.eql) ; 2 uses
   %i.eqp = getelementptr inbounds nuw i8, ptr %i.eqj, i64 4 ; 3 uses
   %i.eqq = load i32, ptr %i.eqp, align 4, !tbaa !33
-  %i.eqr = tail call i32 @llvm.smin.i32(i32 %i.eqq, i32 %i.eiu)
+  %i.eqr = tail call i32 @llvm.smin.i32(i32 %i.eqq, i32 %i.eiu) ; 2 uses
   %i.eqs = getelementptr inbounds nuw i8, ptr %i.eqj, i64 12 ; 3 uses
   %i.eqt = load i32, ptr %i.eqs, align 4, !tbaa !33
   %i.equ = tail call i32 @llvm.smax.i32(i32 %i.eqt, i32 %i.eiu)
@@ -1566,8 +1553,7 @@ bb.tm:                                            ; preds = %bb.sy
   %i.era = load i64, ptr %i.eqz, align 8, !tbaa !117
   store i32 %..i3197, ptr %i.eqj, align 4, !tbaa !33
   store i32 %i.eqo, ptr %i.eqm, align 4, !tbaa !33
-  %20 = tail call i32 @llvm.smin.i32(i32 %i.eqr, i32 %i.eiv) ; 2 uses
-  store i32 %20, ptr %i.eqp, align 4, !tbaa !33
+  store i32 %i.eqr, ptr %i.eqp, align 4, !tbaa !33
   %i.erb = tail call i32 @llvm.smax.i32(i32 %i.equ, i32 %i.eiv) ; 2 uses
   store i32 %i.erb, ptr %i.eqs, align 4, !tbaa !33
   %i.erc = add nsw i32 %i.eqw, 2
@@ -1588,17 +1574,12 @@ bb.tn:                                            ; preds = %bb.tm
   store i16 0, ptr %i.eri, align 2, !tbaa !54
   %i.erj = getelementptr inbounds nuw [2 x i8], ptr %i.eij, i64 %i.ere
   store i16 0, ptr %i.erj, align 2, !tbaa !54
-  %i.erk = trunc nuw nsw i64 %i.ere to i32        ; 2 uses
-  %..i3203 = tail call i32 @llvm.smin.i32(i32 %..i3197, i32 %i.erk)
-  %21 = tail call i32 @llvm.umax.i32(i32 %i.eqo, i32 %i.erk)
-  %22 = tail call i32 @llvm.smin.i32(i32 %20, i32 %i.eiu)
-  %i.erl = tail call i32 @llvm.smax.i32(i32 %i.erb, i32 %i.eiu)
-  store i32 %..i3203, ptr %i.eqj, align 4, !tbaa !33
-  store i32 %21, ptr %i.eqm, align 4, !tbaa !33
-  %23 = tail call i32 @llvm.smin.i32(i32 %22, i32 %i.eiv)
-  store i32 %23, ptr %i.eqp, align 4, !tbaa !33
-  %24 = tail call i32 @llvm.smax.i32(i32 %i.erl, i32 %i.eiv)
-  store i32 %24, ptr %i.eqs, align 4, !tbaa !33
+  %i.erk = trunc nuw nsw i64 %i.ere to i32
+  %i.erl = tail call i32 @llvm.umax.i32(i32 %i.eqo, i32 %i.erk)
+  store i32 %..i3197, ptr %i.eqj, align 4, !tbaa !33
+  store i32 %i.erl, ptr %i.eqm, align 4, !tbaa !33
+  store i32 %i.eqr, ptr %i.eqp, align 4, !tbaa !33
+  store i32 %i.erb, ptr %i.eqs, align 4, !tbaa !33
   %i.erm = add nsw i32 %i.eqw, 4
   store i32 %i.erm, ptr %i.eqv, align 4, !tbaa !33
   %reass.add4199 = shl nuw i64 %i.ere, 1
@@ -1641,7 +1622,7 @@ bb.tp:                                            ; preds = %.lr.ph3551, %._crit
   %i.esj = trunc nuw nsw i64 %i.esc to i32        ; 2 uses
   %i.esk = trunc nuw nsw i64 %i.esc to i32        ; 2 uses
   %i.esl = trunc nuw nsw i64 %indvars.iv3721 to i32 ; 2 uses
-  %i.esm = trunc nuw nsw i64 %i.esc to i32        ; 2 uses
+  %i.esm = trunc nuw nsw i64 %i.esc to i32
   %invariant.op41574201 = add nuw i64 %indvars.iv3721, %i.esc
   %invariant.op4161 = shl i64 %invariant.op41574201, 1
   %i.esn = insertelement <2 x i64> poison, i64 %i.esc, i64 1 ; 2 uses
@@ -1996,7 +1977,7 @@ bb.uf:                                            ; preds = %bb.tq
   store i16 0, ptr %i.fab, align 2, !tbaa !54
   %i.fac = load ptr, ptr %i.ehx, align 8, !tbaa !55 ; 6 uses
   %i.fad = load i32, ptr %i.fac, align 4, !tbaa !33
-  %i.fae = trunc nuw nsw i64 %indvars.iv3718 to i32 ; 4 uses
+  %i.fae = trunc nuw nsw i64 %indvars.iv3718 to i32 ; 2 uses
   %..i3233 = tail call i32 @llvm.smin.i32(i32 %i.fad, i32 %i.fae)
   %i.faf = getelementptr inbounds nuw i8, ptr %i.fac, i64 8 ; 2 uses
   %i.fag = load i32, ptr %i.faf, align 4, !tbaa !33
@@ -2014,20 +1995,14 @@ bb.uf:                                            ; preds = %bb.tq
   %i.fas = add i64 %i.far, %indvars.iv3718
   %i.fat = getelementptr inbounds nuw i8, ptr %i.faq, i64 8 ; 2 uses
   %i.fau = load i64, ptr %i.fat, align 8, !tbaa !117
-  %i.fav = trunc nuw nsw i64 %i.ezy to i32        ; 4 uses
-  %..i3236 = tail call i32 @llvm.smin.i32(i32 %..i3233, i32 %i.fav)
+  %i.fav = trunc nuw nsw i64 %i.ezy to i32
   %i.faw = tail call i32 @llvm.umax.i32(i32 %i.fah, i32 %i.fav)
   %i.fax = add i64 %i.fas, %i.ezy
-  %..i3239 = tail call i32 @llvm.smin.i32(i32 %..i3236, i32 %i.fae)
-  %25 = tail call i32 @llvm.umax.i32(i32 %i.faw, i32 %i.fae)
-  %26 = tail call i32 @llvm.smin.i32(i32 %i.fak, i32 %i.esm)
   %i.fay = tail call i32 @llvm.smax.i32(i32 %i.fan, i32 %i.esm)
   %i.faz = add i64 %i.fax, %indvars.iv3718
-  %..i3242 = tail call i32 @llvm.smin.i32(i32 %..i3239, i32 %i.fav)
-  store i32 %..i3242, ptr %i.fac, align 4, !tbaa !33
-  %27 = tail call i32 @llvm.umax.i32(i32 %25, i32 %i.fav)
-  store i32 %27, ptr %i.faf, align 4, !tbaa !33
-  store i32 %26, ptr %i.fai, align 4, !tbaa !33
+  store i32 %..i3233, ptr %i.fac, align 4, !tbaa !33
+  store i32 %i.faw, ptr %i.faf, align 4, !tbaa !33
+  store i32 %i.fak, ptr %i.fai, align 4, !tbaa !33
   store i32 %i.fay, ptr %i.fal, align 4, !tbaa !33
   %i.fba = add nsw i32 %i.fap, 4
   store i32 %i.fba, ptr %i.fao, align 4, !tbaa !33
@@ -2430,7 +2405,7 @@ bb.rz:                                            ; preds = %bb.ry
   %i.dwr = getelementptr inbounds nuw [4 x i8], ptr %i.dlr, i64 %i.dwn
   store i32 0, ptr %i.dwr, align 4, !tbaa !33
   %i.dws = load i32, ptr %i.dvs, align 4, !tbaa !33
-  %i.dwt = trunc nuw nsw i64 %i.dwn to i32        ; 4 uses
+  %i.dwt = trunc nuw nsw i64 %i.dwn to i32        ; 3 uses
   %..i3125 = tail call i32 @llvm.smin.i32(i32 %i.dws, i32 %i.dwt)
   store i32 %..i3125, ptr %i.dvs, align 4, !tbaa !33
   %i.dwu = load i32, ptr %i.dvv, align 4, !tbaa !33
@@ -2469,8 +2444,7 @@ bb.sa:                                            ; preds = %bb.rz
   %i.dxp = tail call i32 @llvm.smax.i32(i32 %i.dxo, i32 %i.dlx)
   %i.dxq = load i32, ptr %i.dwe, align 4, !tbaa !33
   %i.dxr = add i64 %i.dxc, %indvars.iv3702
-  %..i3131 = tail call i32 @llvm.smin.i32(i32 %..i3128, i32 %i.dwt)
-  store i32 %..i3131, ptr %i.dvs, align 4, !tbaa !33
+  store i32 %..i3128, ptr %i.dvs, align 4, !tbaa !33
   %i.dxs = tail call i32 @llvm.umax.i32(i32 %i.dxl, i32 %i.dwt)
   store i32 %i.dxs, ptr %i.dvv, align 4, !tbaa !33
   store i32 %i.dxn, ptr %i.dvy, align 4, !tbaa !33
@@ -2873,9 +2847,8 @@ bb.st:                                            ; preds = %bb.sf
   %i.eho = add i64 %i.ehn, %indvars.iv3708
   %i.ehp = getelementptr inbounds nuw i8, ptr %i.ehm, i64 8 ; 3 uses
   %i.ehq = load i64, ptr %i.ehp, align 8, !tbaa !117
-  %11 = trunc nuw nsw i64 %i.egw to i32           ; 4 uses
-  %..i3164 = tail call i32 @llvm.smin.i32(i32 %..i3161, i32 %11)
-  store i32 %..i3164, ptr %i.egy, align 4, !tbaa !33
+  store i32 %..i3161, ptr %i.egy, align 4, !tbaa !33
+  %11 = trunc nuw nsw i64 %i.egw to i32           ; 2 uses
   %i.ehr = tail call i32 @llvm.umax.i32(i32 %i.ehd, i32 %11)
   store i32 %i.ehr, ptr %i.ehb, align 4, !tbaa !33
   store i32 %i.ehg, ptr %i.ehe, align 4, !tbaa !33
@@ -2906,8 +2879,7 @@ bb.su:                                            ; preds = %bb.st
   %i.eif = tail call i32 @llvm.smax.i32(i32 %i.eie, i32 %i.dza)
   %i.eig = load i32, ptr %i.ehk, align 4, !tbaa !33
   %i.eih = add i64 %i.eht, %indvars.iv3708
-  %..i3170 = tail call i32 @llvm.smin.i32(i32 %..i3167, i32 %11)
-  store i32 %..i3170, ptr %i.egy, align 4, !tbaa !33
+  store i32 %..i3167, ptr %i.egy, align 4, !tbaa !33
   %i.eii = tail call i32 @llvm.umax.i32(i32 %i.eib, i32 %11)
   store i32 %i.eii, ptr %i.ehb, align 4, !tbaa !33
   store i32 %i.eid, ptr %i.ehe, align 4, !tbaa !33
@@ -2980,7 +2952,7 @@ bb.sx:                                            ; preds = %.lr.ph3544, %._crit
 .lr.ph3541:                                       ; preds = %bb.sx
   %i.ejr = or disjoint i64 %indvars.iv3717, 1     ; 9 uses
   %i.ejs = trunc nuw nsw i64 %indvars.iv3717 to i32 ; 4 uses
-  %i.ejt = trunc nuw nsw i64 %i.ejr to i32        ; 4 uses
+  %i.ejt = trunc nuw nsw i64 %i.ejr to i32        ; 2 uses
   %invariant.op4155 = add nuw i64 %indvars.iv3717, %i.ejr
   %invariant.op4157 = add nuw i64 %indvars.iv3717, %i.ejr
   %i.eju = trunc nuw nsw i64 %indvars.iv3717 to i32 ; 2 uses
@@ -3346,8 +3318,7 @@ bb.tm:                                            ; preds = %bb.sy
   %i.esh = load i64, ptr %i.esg, align 8, !tbaa !117
   store i32 %..i3197, ptr %i.erq, align 4, !tbaa !33
   store i32 %i.erv, ptr %i.ert, align 4, !tbaa !33
-  %12 = tail call i32 @llvm.smin.i32(i32 %i.ery, i32 %i.ejt)
-  store i32 %12, ptr %i.erw, align 4, !tbaa !33
+  store i32 %i.ery, ptr %i.erw, align 4, !tbaa !33
   %i.esi = tail call i32 @llvm.smax.i32(i32 %i.esb, i32 %i.ejt)
   store i32 %i.esi, ptr %i.erz, align 4, !tbaa !33
   %i.esj = add nsw i32 %i.esd, 2
@@ -3380,8 +3351,7 @@ bb.tn:                                            ; preds = %bb.tm
   %i.esz = load i32, ptr %i.esc, align 4, !tbaa !33
   store i32 %..i3203, ptr %i.erq, align 4, !tbaa !33
   store i32 %i.esu, ptr %i.ert, align 4, !tbaa !33
-  %13 = tail call i32 @llvm.smin.i32(i32 %i.esw, i32 %i.ejt)
-  store i32 %13, ptr %i.erw, align 4, !tbaa !33
+  store i32 %i.esw, ptr %i.erw, align 4, !tbaa !33
   %i.eta = tail call i32 @llvm.smax.i32(i32 %i.esy, i32 %i.ejt)
   store i32 %i.eta, ptr %i.erz, align 4, !tbaa !33
   %i.etb = add nsw i32 %i.esz, 2
@@ -3418,7 +3388,7 @@ bb.tp:                                            ; preds = %.lr.ph3551, %._crit
 .lr.ph3548:                                       ; preds = %bb.tp
   %i.etr = or disjoint i64 %indvars.iv3723, 1     ; 8 uses
   %i.ets = trunc nuw nsw i64 %indvars.iv3723 to i32 ; 2 uses
-  %i.ett = trunc nuw nsw i64 %i.etr to i32        ; 2 uses
+  %i.ett = trunc nuw nsw i64 %i.etr to i32
   %invariant.op41594203 = add nuw i64 %indvars.iv3723, %i.etr
   %invariant.op4163 = shl i64 %invariant.op41594203, 1
   %i.etu = trunc nuw nsw i64 %indvars.iv3723 to i32 ; 2 uses
@@ -3782,7 +3752,7 @@ bb.uf:                                            ; preds = %bb.tq
   store i32 0, ptr %i.fbr, align 4, !tbaa !33
   %i.fbs = load ptr, ptr %i.ejc, align 8, !tbaa !55 ; 6 uses
   %i.fbt = load i32, ptr %i.fbs, align 4, !tbaa !33
-  %i.fbu = trunc nuw nsw i64 %indvars.iv3720 to i32 ; 4 uses
+  %i.fbu = trunc nuw nsw i64 %indvars.iv3720 to i32 ; 2 uses
   %..i3233 = tail call i32 @llvm.smin.i32(i32 %i.fbt, i32 %i.fbu)
   %i.fbv = getelementptr inbounds nuw i8, ptr %i.fbs, i64 8 ; 2 uses
   %i.fbw = load i32, ptr %i.fbv, align 4, !tbaa !33
@@ -3800,20 +3770,14 @@ bb.uf:                                            ; preds = %bb.tq
   %i.fci = add i64 %i.fch, %indvars.iv3720
   %i.fcj = getelementptr inbounds nuw i8, ptr %i.fcg, i64 8 ; 2 uses
   %i.fck = load i64, ptr %i.fcj, align 8, !tbaa !117
-  %i.fcl = trunc nuw nsw i64 %i.fbo to i32        ; 4 uses
-  %..i3236 = tail call i32 @llvm.smin.i32(i32 %..i3233, i32 %i.fcl)
+  %i.fcl = trunc nuw nsw i64 %i.fbo to i32
   %i.fcm = tail call i32 @llvm.umax.i32(i32 %i.fbx, i32 %i.fcl)
   %i.fcn = add i64 %i.fci, %i.fbo
-  %..i3239 = tail call i32 @llvm.smin.i32(i32 %..i3236, i32 %i.fbu)
-  %14 = tail call i32 @llvm.umax.i32(i32 %i.fcm, i32 %i.fbu)
-  %15 = tail call i32 @llvm.smin.i32(i32 %i.fca, i32 %i.ett)
   %i.fco = tail call i32 @llvm.smax.i32(i32 %i.fcd, i32 %i.ett)
   %i.fcp = add i64 %i.fcn, %indvars.iv3720
-  %..i3242 = tail call i32 @llvm.smin.i32(i32 %..i3239, i32 %i.fcl)
-  store i32 %..i3242, ptr %i.fbs, align 4, !tbaa !33
-  %16 = tail call i32 @llvm.umax.i32(i32 %14, i32 %i.fcl)
-  store i32 %16, ptr %i.fbv, align 4, !tbaa !33
-  store i32 %15, ptr %i.fby, align 4, !tbaa !33
+  store i32 %..i3233, ptr %i.fbs, align 4, !tbaa !33
+  store i32 %i.fcm, ptr %i.fbv, align 4, !tbaa !33
+  store i32 %i.fca, ptr %i.fby, align 4, !tbaa !33
   store i32 %i.fco, ptr %i.fcb, align 4, !tbaa !33
   %i.fcq = add nsw i32 %i.fcf, 4
   store i32 %i.fcq, ptr %i.fce, align 4, !tbaa !33
@@ -4216,7 +4180,7 @@ bb.ajr:                                           ; preds = %.lr.ph5610, %bb.akp
   %i.fwj = trunc nuw nsw i64 %i.fwc to i32        ; 2 uses
   %i.fwk = trunc nuw nsw i64 %i.fwc to i32        ; 2 uses
   %i.fwl = trunc nuw nsw i64 %indvars.iv6023 to i32 ; 2 uses
-  %i.fwm = trunc nuw nsw i64 %i.fwc to i32        ; 2 uses
+  %i.fwm = trunc nuw nsw i64 %i.fwc to i32
   %invariant.op6746 = add nuw i64 %indvars.iv6023, %i.fwc
   %invariant.op6700 = shl i64 %invariant.op6746, 1
   %i.fwn = insertelement <2 x i64> poison, i64 %i.fwc, i64 1 ; 2 uses
@@ -4534,7 +4498,7 @@ bb.ake:                                           ; preds = %bb.akc
 bb.akf:                                           ; preds = %bb.ajs
   %i.gds = load ptr, ptr %i.fvp, align 8, !tbaa !55 ; 6 uses
   %i.gdt = load i32, ptr %i.gds, align 4, !tbaa !33
-  %i.gdu = trunc nuw nsw i64 %indvars.iv6020 to i32 ; 4 uses
+  %i.gdu = trunc nuw nsw i64 %indvars.iv6020 to i32 ; 2 uses
   %..i4966 = tail call i32 @llvm.smin.i32(i32 %i.gdt, i32 %i.gdu)
   %i.gdv = getelementptr inbounds nuw i8, ptr %i.gds, i64 8 ; 2 uses
   %i.gdw = load i32, ptr %i.gdv, align 4, !tbaa !33
@@ -4555,24 +4519,18 @@ bb.akf:                                           ; preds = %bb.ajs
   %i.gel = or disjoint i64 %indvars.iv6020, 1     ; 5 uses
   %i.gem = getelementptr inbounds nuw [2 x i8], ptr %i.fwa, i64 %i.gel
   store i16 0, ptr %i.gem, align 2, !tbaa !54
-  %i.gen = trunc nuw nsw i64 %i.gel to i32        ; 4 uses
-  %..i4969 = tail call i32 @llvm.smin.i32(i32 %..i4966, i32 %i.gen)
+  %i.gen = trunc nuw nsw i64 %i.gel to i32
   %i.geo = tail call i32 @llvm.smax.i32(i32 %i.gdx, i32 %i.gen)
   %i.gep = add i64 %i.gei, %i.gel
   %i.geq = getelementptr inbounds nuw [2 x i8], ptr %i.fwb, i64 %indvars.iv6020
   store i16 0, ptr %i.geq, align 2, !tbaa !54
-  %..i4972 = tail call i32 @llvm.smin.i32(i32 %..i4969, i32 %i.gdu)
-  %11 = tail call i32 @llvm.smax.i32(i32 %i.geo, i32 %i.gdu)
-  %12 = tail call i32 @llvm.smin.i32(i32 %i.gea, i32 %i.fwm)
   %i.ger = tail call i32 @llvm.smax.i32(i32 %i.ged, i32 %i.fwm)
   %i.ges = add i64 %i.gep, %indvars.iv6020
   %i.get = getelementptr inbounds nuw [2 x i8], ptr %i.fwb, i64 %i.gel
   store i16 0, ptr %i.get, align 2, !tbaa !54
-  %..i4975 = tail call i32 @llvm.smin.i32(i32 %..i4972, i32 %i.gen)
-  store i32 %..i4975, ptr %i.gds, align 4, !tbaa !33
-  %13 = tail call i32 @llvm.smax.i32(i32 %11, i32 %i.gen)
-  store i32 %13, ptr %i.gdv, align 4, !tbaa !33
-  store i32 %12, ptr %i.gdy, align 4, !tbaa !33
+  store i32 %..i4966, ptr %i.gds, align 4, !tbaa !33
+  store i32 %i.geo, ptr %i.gdv, align 4, !tbaa !33
+  store i32 %i.gea, ptr %i.gdy, align 4, !tbaa !33
   store i32 %i.ger, ptr %i.geb, align 4, !tbaa !33
   %i.geu = add nsw i32 %i.gef, 4
   store i32 %i.geu, ptr %i.gee, align 4, !tbaa !33
@@ -4788,10 +4746,9 @@ bb.ako:                                           ; preds = %bb.akh
   %i.gjr = or disjoint i64 %indvars.iv6023, 1     ; 2 uses
   store i32 %..i4990, ptr %i.gix, align 4, !tbaa !33
   store i32 %i.gjb, ptr %i.giz, align 4, !tbaa !33
-  %14 = trunc nuw nsw i64 %i.gjr to i32           ; 2 uses
-  %15 = tail call i32 @llvm.smin.i32(i32 %i.gjf, i32 %14)
-  store i32 %15, ptr %i.gjc, align 4, !tbaa !33
-  %i.gjs = tail call i32 @llvm.smax.i32(i32 %i.gji, i32 %14)
+  store i32 %i.gjf, ptr %i.gjc, align 4, !tbaa !33
+  %11 = trunc nuw nsw i64 %i.gjr to i32
+  %i.gjs = tail call i32 @llvm.smax.i32(i32 %i.gji, i32 %11)
   store i32 %i.gjs, ptr %i.gjg, align 4, !tbaa !33
   %i.gjt = add nsw i32 %i.gjk, 2
   store i32 %i.gjt, ptr %i.gjj, align 4, !tbaa !33
@@ -5032,10 +4989,9 @@ bb.aky:                                           ; preds = %bb.akr
   %i.gpi = or disjoint i64 %indvars.iv6026, 1     ; 3 uses
   %i.gpj = getelementptr inbounds nuw [2 x i8], ptr %i.gkk, i64 %i.gpi
   store i16 0, ptr %i.gpj, align 2, !tbaa !54
-  %16 = trunc nuw nsw i64 %i.gpi to i32           ; 2 uses
-  %..i5011 = tail call i32 @llvm.smin.i32(i32 %..i5008, i32 %16)
-  store i32 %..i5011, ptr %i.gop, align 4, !tbaa !33
-  %i.gpk = tail call i32 @llvm.smax.i32(i32 %i.gou, i32 %16)
+  store i32 %..i5008, ptr %i.gop, align 4, !tbaa !33
+  %12 = trunc nuw nsw i64 %i.gpi to i32
+  %i.gpk = tail call i32 @llvm.smax.i32(i32 %i.gou, i32 %12)
   store i32 %i.gpk, ptr %i.gos, align 4, !tbaa !33
   store i32 %i.gox, ptr %i.gov, align 4, !tbaa !33
   store i32 %i.gpa, ptr %i.goy, align 4, !tbaa !33
@@ -5438,7 +5394,7 @@ bb.y:                                             ; preds = %bb.x
   %i.pi = getelementptr inbounds nuw [4 x i8], ptr %i.dz, i64 %i.pe
   store i32 0, ptr %i.pi, align 4, !tbaa !33
   %i.pj = load i32, ptr %i.oj, align 4, !tbaa !33
-  %i.pk = trunc nuw nsw i64 %i.pe to i32          ; 4 uses
+  %i.pk = trunc nuw nsw i64 %i.pe to i32          ; 3 uses
   %..i837 = tail call i32 @llvm.smin.i32(i32 %i.pj, i32 %i.pk)
   store i32 %..i837, ptr %i.oj, align 4, !tbaa !33
   %i.pl = load i32, ptr %i.om, align 4, !tbaa !33
@@ -5476,8 +5432,7 @@ bb.z:                                             ; preds = %bb.y
   %i.qf = tail call i32 @llvm.smax.i32(i32 %i.qe, i32 %i.eg)
   %i.qg = load i32, ptr %i.ov, align 4, !tbaa !33
   %i.qh = add i64 %i.pt, %indvars.iv1204
-  %..i843 = tail call i32 @llvm.smin.i32(i32 %..i840, i32 %i.pk)
-  store i32 %..i843, ptr %i.oj, align 4, !tbaa !33
+  store i32 %..i840, ptr %i.oj, align 4, !tbaa !33
   %i.qi = tail call i32 @llvm.umax.i32(i32 %i.qb, i32 %i.pk)
   store i32 %i.qi, ptr %i.om, align 4, !tbaa !33
   store i32 %i.qd, ptr %i.op, align 4, !tbaa !33
@@ -5880,9 +5835,8 @@ bb.as:                                            ; preds = %bb.ae
   %i.aah = add i64 %i.aag, %indvars.iv1210
   %i.aai = getelementptr inbounds nuw i8, ptr %i.aaf, i64 8 ; 3 uses
   %i.aaj = load i64, ptr %i.aai, align 8, !tbaa !117
-  %2 = trunc nuw nsw i64 %i.zp to i32             ; 4 uses
-  %..i876 = tail call i32 @llvm.smin.i32(i32 %..i873, i32 %2)
-  store i32 %..i876, ptr %i.zr, align 4, !tbaa !33
+  store i32 %..i873, ptr %i.zr, align 4, !tbaa !33
+  %2 = trunc nuw nsw i64 %i.zp to i32             ; 2 uses
   %i.aak = tail call i32 @llvm.umax.i32(i32 %i.zw, i32 %2)
   store i32 %i.aak, ptr %i.zu, align 4, !tbaa !33
   store i32 %i.zz, ptr %i.zx, align 4, !tbaa !33
@@ -5912,8 +5866,7 @@ bb.at:                                            ; preds = %bb.as
   %i.aax = tail call i32 @llvm.smax.i32(i32 %i.aaw, i32 %i.ro)
   %i.aay = load i32, ptr %i.aad, align 4, !tbaa !33
   %i.aaz = add i64 %i.aam, %indvars.iv1210
-  %..i882 = tail call i32 @llvm.smin.i32(i32 %..i879, i32 %2)
-  store i32 %..i882, ptr %i.zr, align 4, !tbaa !33
+  store i32 %..i879, ptr %i.zr, align 4, !tbaa !33
   %i.aba = tail call i32 @llvm.umax.i32(i32 %i.aat, i32 %2)
   store i32 %i.aba, ptr %i.zu, align 4, !tbaa !33
   store i32 %i.aav, ptr %i.zx, align 4, !tbaa !33
@@ -6021,7 +5974,7 @@ bb.aw:                                            ; preds = %.lr.ph1166, %._crit
 .lr.ph1163:                                       ; preds = %bb.aw
   %i.adr = or disjoint i64 %indvars.iv1219, 1     ; 9 uses
   %i.ads = trunc nuw i64 %indvars.iv1219 to i32   ; 4 uses
-  %i.adt = trunc nuw i64 %i.adr to i32            ; 4 uses
+  %i.adt = trunc nuw i64 %i.adr to i32            ; 2 uses
   %invariant.op1300 = add nuw i64 %indvars.iv1219, %i.adr
   %invariant.op1302 = add nuw i64 %indvars.iv1219, %i.adr
   %i.adu = trunc nuw i64 %indvars.iv1219 to i32   ; 2 uses
@@ -6393,8 +6346,7 @@ bb.bl:                                            ; preds = %bb.ax
   %i.amr = load i64, ptr %i.amq, align 8, !tbaa !117
   store i32 %..i909, ptr %i.ama, align 4, !tbaa !33
   store i32 %i.amf, ptr %i.amd, align 4, !tbaa !33
-  %3 = tail call i32 @llvm.smin.i32(i32 %i.ami, i32 %i.adt)
-  store i32 %3, ptr %i.amg, align 4, !tbaa !33
+  store i32 %i.ami, ptr %i.amg, align 4, !tbaa !33
   %i.ams = tail call i32 @llvm.smax.i32(i32 %i.aml, i32 %i.adt)
   store i32 %i.ams, ptr %i.amj, align 4, !tbaa !33
   %i.amt = add nsw i32 %i.amn, 2
@@ -6427,8 +6379,7 @@ bb.bm:                                            ; preds = %bb.bl
   %i.anj = load i32, ptr %i.amm, align 4, !tbaa !33
   store i32 %..i915, ptr %i.ama, align 4, !tbaa !33
   store i32 %i.ane, ptr %i.amd, align 4, !tbaa !33
-  %4 = tail call i32 @llvm.smin.i32(i32 %i.ang, i32 %i.adt)
-  store i32 %4, ptr %i.amg, align 4, !tbaa !33
+  store i32 %i.ang, ptr %i.amg, align 4, !tbaa !33
   %i.ank = tail call i32 @llvm.smax.i32(i32 %i.ani, i32 %i.adt)
   store i32 %i.ank, ptr %i.amj, align 4, !tbaa !33
   %i.anl = add nsw i32 %i.anj, 2
@@ -6464,7 +6415,7 @@ bb.bn:                                            ; preds = %bb.bl, %bb.bm, %bb.
 .lr.ph1170:                                       ; preds = %.lr.ph1173.split
   %i.aoa = or disjoint i64 %indvars.iv1225, 1     ; 8 uses
   %i.aob = trunc nuw i64 %indvars.iv1225 to i32   ; 2 uses
-  %i.aoc = trunc nuw i64 %i.aoa to i32            ; 2 uses
+  %i.aoc = trunc nuw i64 %i.aoa to i32
   %invariant.op13041388 = add nuw i64 %indvars.iv1225, %i.aoa
   %invariant.op1308 = shl i64 %invariant.op13041388, 1
   %i.aod = trunc nuw i64 %indvars.iv1225 to i32   ; 2 uses
@@ -6806,7 +6757,7 @@ bb.cb:                                            ; preds = %bb.bo
   store i32 0, ptr %i.avy, align 4, !tbaa !33
   %i.avz = load ptr, ptr %i.add, align 8, !tbaa !55 ; 6 uses
   %i.awa = load i32, ptr %i.avz, align 4, !tbaa !33
-  %i.awb = trunc nuw nsw i64 %indvars.iv1222 to i32 ; 4 uses
+  %i.awb = trunc nuw nsw i64 %indvars.iv1222 to i32 ; 2 uses
   %..i945 = tail call i32 @llvm.smin.i32(i32 %i.awa, i32 %i.awb)
   %i.awc = getelementptr inbounds nuw i8, ptr %i.avz, i64 8 ; 2 uses
   %i.awd = load i32, ptr %i.awc, align 4, !tbaa !33
@@ -6824,20 +6775,14 @@ bb.cb:                                            ; preds = %bb.bo
   %i.awp = add i64 %i.awo, %indvars.iv1222
   %i.awq = getelementptr inbounds nuw i8, ptr %i.awn, i64 8 ; 2 uses
   %i.awr = load i64, ptr %i.awq, align 8, !tbaa !117
-  %i.aws = trunc nuw nsw i64 %i.avv to i32        ; 4 uses
-  %..i948 = tail call i32 @llvm.smin.i32(i32 %..i945, i32 %i.aws)
+  %i.aws = trunc nuw nsw i64 %i.avv to i32
   %i.awt = tail call i32 @llvm.umax.i32(i32 %i.awe, i32 %i.aws)
   %i.awu = add i64 %i.awp, %i.avv
-  %..i951 = tail call i32 @llvm.smin.i32(i32 %..i948, i32 %i.awb)
-  %5 = tail call i32 @llvm.umax.i32(i32 %i.awt, i32 %i.awb)
-  %6 = tail call i32 @llvm.smin.i32(i32 %i.awh, i32 %i.aoc)
   %i.awv = tail call i32 @llvm.smax.i32(i32 %i.awk, i32 %i.aoc)
   %i.aww = add i64 %i.awu, %indvars.iv1222
-  %..i954 = tail call i32 @llvm.smin.i32(i32 %..i951, i32 %i.aws)
-  store i32 %..i954, ptr %i.avz, align 4, !tbaa !33
-  %7 = tail call i32 @llvm.umax.i32(i32 %5, i32 %i.aws)
-  store i32 %7, ptr %i.awc, align 4, !tbaa !33
-  store i32 %6, ptr %i.awf, align 4, !tbaa !33
+  store i32 %..i945, ptr %i.avz, align 4, !tbaa !33
+  store i32 %i.awt, ptr %i.awc, align 4, !tbaa !33
+  store i32 %i.awh, ptr %i.awf, align 4, !tbaa !33
   store i32 %i.awv, ptr %i.awi, align 4, !tbaa !33
   %i.awx = add nsw i32 %i.awm, 4
   store i32 %i.awx, ptr %i.awl, align 4, !tbaa !33
@@ -7240,7 +7185,7 @@ bb.da:                                            ; preds = %bb.cz
   %i.bmk = getelementptr inbounds nuw [4 x i8], ptr %i.baw, i64 %i.bmg
   store i32 0, ptr %i.bmk, align 4, !tbaa !33
   %i.bml = load i32, ptr %i.bll, align 4, !tbaa !33
-  %i.bmm = trunc nuw nsw i64 %i.bmg to i32        ; 4 uses
+  %i.bmm = trunc nuw nsw i64 %i.bmg to i32        ; 3 uses
   %..i990 = tail call i32 @llvm.smin.i32(i32 %i.bml, i32 %i.bmm)
   store i32 %..i990, ptr %i.bll, align 4, !tbaa !33
   %i.bmn = load i32, ptr %i.blo, align 4, !tbaa !33
@@ -7279,8 +7224,7 @@ bb.db:                                            ; preds = %bb.da
   %i.bni = tail call i32 @llvm.smax.i32(i32 %i.bnh, i32 %i.bbd)
   %i.bnj = load i32, ptr %i.blx, align 4, !tbaa !33
   %i.bnk = add i64 %i.bmv, %indvars.iv
-  %..i996 = tail call i32 @llvm.smin.i32(i32 %..i993, i32 %i.bmm)
-  store i32 %..i996, ptr %i.bll, align 4, !tbaa !33
+  store i32 %..i993, ptr %i.bll, align 4, !tbaa !33
   %i.bnl = tail call i32 @llvm.umax.i32(i32 %i.bne, i32 %i.bmm)
   store i32 %i.bnl, ptr %i.blo, align 4, !tbaa !33
   store i32 %i.bng, ptr %i.blr, align 4, !tbaa !33
@@ -7683,10 +7627,9 @@ bb.du:                                            ; preds = %bb.dg
   %i.bxo = add i64 %i.bxn, %indvars.iv1186
   %i.bxp = getelementptr inbounds nuw i8, ptr %i.bxm, i64 8 ; 3 uses
   %i.bxq = load i64, ptr %i.bxp, align 8, !tbaa !117
-  %8 = trunc nuw nsw i64 %i.bww to i32            ; 4 uses
-  %..i1029 = tail call i32 @llvm.smin.i32(i32 %..i1026, i32 %8)
-  store i32 %..i1029, ptr %i.bwy, align 4, !tbaa !33
-  %i.bxr = tail call i32 @llvm.umax.i32(i32 %i.bxd, i32 %8)
+  store i32 %..i1026, ptr %i.bwy, align 4, !tbaa !33
+  %3 = trunc nuw nsw i64 %i.bww to i32            ; 2 uses
+  %i.bxr = tail call i32 @llvm.umax.i32(i32 %i.bxd, i32 %3)
   store i32 %i.bxr, ptr %i.bxb, align 4, !tbaa !33
   store i32 %i.bxg, ptr %i.bxe, align 4, !tbaa !33
   store i32 %i.bxj, ptr %i.bxh, align 4, !tbaa !33
@@ -7716,9 +7659,8 @@ bb.dv:                                            ; preds = %bb.du
   %i.byf = tail call i32 @llvm.smax.i32(i32 %i.bye, i32 %i.bos)
   %i.byg = load i32, ptr %i.bxk, align 4, !tbaa !33
   %i.byh = add i64 %i.bxt, %indvars.iv1186
-  %..i1035 = tail call i32 @llvm.smin.i32(i32 %..i1032, i32 %8)
-  store i32 %..i1035, ptr %i.bwy, align 4, !tbaa !33
-  %i.byi = tail call i32 @llvm.umax.i32(i32 %i.byb, i32 %8)
+  store i32 %..i1032, ptr %i.bwy, align 4, !tbaa !33
+  %i.byi = tail call i32 @llvm.umax.i32(i32 %i.byb, i32 %3)
   store i32 %i.byi, ptr %i.bxb, align 4, !tbaa !33
   store i32 %i.byd, ptr %i.bxe, align 4, !tbaa !33
   store i32 %i.byf, ptr %i.bxh, align 4, !tbaa !33
@@ -7818,7 +7760,7 @@ bb.dy:                                            ; preds = %.lr.ph1139, %._crit
 .lr.ph1136:                                       ; preds = %bb.dy
   %i.cat = or disjoint i64 %indvars.iv1195, 1     ; 9 uses
   %i.cau = trunc nsw i64 %indvars.iv1195 to i32   ; 4 uses
-  %i.cav = trunc nsw i64 %i.cat to i32            ; 4 uses
+  %i.cav = trunc nsw i64 %i.cat to i32            ; 2 uses
   %invariant.op1284 = add i64 %indvars.iv1195, %i.cat
   %invariant.op1286 = add i64 %indvars.iv1195, %i.cat
   %i.caw = trunc nsw i64 %indvars.iv1195 to i32   ; 2 uses
@@ -8189,8 +8131,7 @@ bb.en:                                            ; preds = %bb.dz
   %i.cjs = load i64, ptr %i.cjr, align 8, !tbaa !117
   store i32 %..i1062, ptr %i.cjb, align 4, !tbaa !33
   store i32 %i.cjg, ptr %i.cje, align 4, !tbaa !33
-  %9 = tail call i32 @llvm.smin.i32(i32 %i.cjj, i32 %i.cav)
-  store i32 %9, ptr %i.cjh, align 4, !tbaa !33
+  store i32 %i.cjj, ptr %i.cjh, align 4, !tbaa !33
   %i.cjt = tail call i32 @llvm.smax.i32(i32 %i.cjm, i32 %i.cav)
   store i32 %i.cjt, ptr %i.cjk, align 4, !tbaa !33
   %i.cju = add nsw i32 %i.cjo, 2
@@ -8223,8 +8164,7 @@ bb.eo:                                            ; preds = %bb.en
   %i.ckk = load i32, ptr %i.cjn, align 4, !tbaa !33
   store i32 %..i1068, ptr %i.cjb, align 4, !tbaa !33
   store i32 %i.ckf, ptr %i.cje, align 4, !tbaa !33
-  %10 = tail call i32 @llvm.smin.i32(i32 %i.ckh, i32 %i.cav)
-  store i32 %10, ptr %i.cjh, align 4, !tbaa !33
+  store i32 %i.ckh, ptr %i.cjh, align 4, !tbaa !33
   %i.ckl = tail call i32 @llvm.smax.i32(i32 %i.ckj, i32 %i.cav)
   store i32 %i.ckl, ptr %i.cjk, align 4, !tbaa !33
   %i.ckm = add nsw i32 %i.ckk, 2
@@ -8260,7 +8200,7 @@ bb.eq:                                            ; preds = %.lr.ph1146, %._crit
 .lr.ph1143:                                       ; preds = %bb.eq
   %i.clb = or disjoint i64 %indvars.iv1201, 1     ; 8 uses
   %i.clc = trunc nsw i64 %indvars.iv1201 to i32   ; 2 uses
-  %i.cld = trunc nsw i64 %i.clb to i32            ; 2 uses
+  %i.cld = trunc nsw i64 %i.clb to i32
   %invariant.op12881384 = add i64 %indvars.iv1201, %i.clb
   %invariant.op1292 = shl i64 %invariant.op12881384, 1
   %i.cle = trunc nsw i64 %indvars.iv1201 to i32   ; 2 uses
@@ -8601,7 +8541,7 @@ bb.fe:                                            ; preds = %bb.er
   store i32 0, ptr %i.csy, align 4, !tbaa !33
   %i.csz = load ptr, ptr %i.cae, align 8, !tbaa !55 ; 6 uses
   %i.cta = load i32, ptr %i.csz, align 4, !tbaa !33
-  %i.ctb = trunc nuw nsw i64 %indvars.iv1198 to i32 ; 4 uses
+  %i.ctb = trunc nuw nsw i64 %indvars.iv1198 to i32 ; 2 uses
   %..i1098 = tail call i32 @llvm.smin.i32(i32 %i.cta, i32 %i.ctb)
   %i.ctc = getelementptr inbounds nuw i8, ptr %i.csz, i64 8 ; 2 uses
   %i.ctd = load i32, ptr %i.ctc, align 4, !tbaa !33
@@ -8619,20 +8559,14 @@ bb.fe:                                            ; preds = %bb.er
   %i.ctp = add i64 %i.cto, %indvars.iv1198
   %i.ctq = getelementptr inbounds nuw i8, ptr %i.ctn, i64 8 ; 2 uses
   %i.ctr = load i64, ptr %i.ctq, align 8, !tbaa !117
-  %i.cts = trunc nuw nsw i64 %i.csv to i32        ; 4 uses
-  %..i1101 = tail call i32 @llvm.smin.i32(i32 %..i1098, i32 %i.cts)
+  %i.cts = trunc nuw nsw i64 %i.csv to i32
   %i.ctt = tail call i32 @llvm.umax.i32(i32 %i.cte, i32 %i.cts)
   %i.ctu = add i64 %i.ctp, %i.csv
-  %..i1104 = tail call i32 @llvm.smin.i32(i32 %..i1101, i32 %i.ctb)
-  %11 = tail call i32 @llvm.umax.i32(i32 %i.ctt, i32 %i.ctb)
-  %12 = tail call i32 @llvm.smin.i32(i32 %i.cth, i32 %i.cld)
   %i.ctv = tail call i32 @llvm.smax.i32(i32 %i.ctk, i32 %i.cld)
   %i.ctw = add i64 %i.ctu, %indvars.iv1198
-  %..i1107 = tail call i32 @llvm.smin.i32(i32 %..i1104, i32 %i.cts)
-  store i32 %..i1107, ptr %i.csz, align 4, !tbaa !33
-  %13 = tail call i32 @llvm.umax.i32(i32 %11, i32 %i.cts)
-  store i32 %13, ptr %i.ctc, align 4, !tbaa !33
-  store i32 %12, ptr %i.ctf, align 4, !tbaa !33
+  store i32 %..i1098, ptr %i.csz, align 4, !tbaa !33
+  store i32 %i.ctt, ptr %i.ctc, align 4, !tbaa !33
+  store i32 %i.cth, ptr %i.ctf, align 4, !tbaa !33
   store i32 %i.ctv, ptr %i.cti, align 4, !tbaa !33
   %i.ctx = add nsw i32 %i.ctm, 4
   store i32 %i.ctx, ptr %i.ctl, align 4, !tbaa !33
@@ -9035,7 +8969,7 @@ bb.y:                                             ; preds = %bb.x
   %i.pi = getelementptr inbounds nuw [4 x i8], ptr %i.dz, i64 %i.pe
   store i32 0, ptr %i.pi, align 4, !tbaa !33
   %i.pj = load i32, ptr %i.oj, align 4, !tbaa !33
-  %i.pk = trunc nuw nsw i64 %i.pe to i32          ; 4 uses
+  %i.pk = trunc nuw nsw i64 %i.pe to i32          ; 3 uses
   %..i837 = tail call i32 @llvm.smin.i32(i32 %i.pj, i32 %i.pk)
   store i32 %..i837, ptr %i.oj, align 4, !tbaa !33
   %i.pl = load i32, ptr %i.om, align 4, !tbaa !33
@@ -9073,8 +9007,7 @@ bb.z:                                             ; preds = %bb.y
   %i.qf = tail call i32 @llvm.smax.i32(i32 %i.qe, i32 %i.eg)
   %i.qg = load i32, ptr %i.ov, align 4, !tbaa !33
   %i.qh = add i64 %i.pt, %indvars.iv1204
-  %..i843 = tail call i32 @llvm.smin.i32(i32 %..i840, i32 %i.pk)
-  store i32 %..i843, ptr %i.oj, align 4, !tbaa !33
+  store i32 %..i840, ptr %i.oj, align 4, !tbaa !33
   %i.qi = tail call i32 @llvm.umax.i32(i32 %i.qb, i32 %i.pk)
   store i32 %i.qi, ptr %i.om, align 4, !tbaa !33
   store i32 %i.qd, ptr %i.op, align 4, !tbaa !33
@@ -9477,9 +9410,8 @@ bb.as:                                            ; preds = %bb.ae
   %i.aah = add i64 %i.aag, %indvars.iv1210
   %i.aai = getelementptr inbounds nuw i8, ptr %i.aaf, i64 8 ; 3 uses
   %i.aaj = load i64, ptr %i.aai, align 8, !tbaa !117
-  %2 = trunc nuw nsw i64 %i.zp to i32             ; 4 uses
-  %..i876 = tail call i32 @llvm.smin.i32(i32 %..i873, i32 %2)
-  store i32 %..i876, ptr %i.zr, align 4, !tbaa !33
+  store i32 %..i873, ptr %i.zr, align 4, !tbaa !33
+  %2 = trunc nuw nsw i64 %i.zp to i32             ; 2 uses
   %i.aak = tail call i32 @llvm.umax.i32(i32 %i.zw, i32 %2)
   store i32 %i.aak, ptr %i.zu, align 4, !tbaa !33
   store i32 %i.zz, ptr %i.zx, align 4, !tbaa !33
@@ -9509,8 +9441,7 @@ bb.at:                                            ; preds = %bb.as
   %i.aax = tail call i32 @llvm.smax.i32(i32 %i.aaw, i32 %i.ro)
   %i.aay = load i32, ptr %i.aad, align 4, !tbaa !33
   %i.aaz = add i64 %i.aam, %indvars.iv1210
-  %..i882 = tail call i32 @llvm.smin.i32(i32 %..i879, i32 %2)
-  store i32 %..i882, ptr %i.zr, align 4, !tbaa !33
+  store i32 %..i879, ptr %i.zr, align 4, !tbaa !33
   %i.aba = tail call i32 @llvm.umax.i32(i32 %i.aat, i32 %2)
   store i32 %i.aba, ptr %i.zu, align 4, !tbaa !33
   store i32 %i.aav, ptr %i.zx, align 4, !tbaa !33
@@ -9618,7 +9549,7 @@ bb.aw:                                            ; preds = %.lr.ph1166, %._crit
 .lr.ph1163:                                       ; preds = %bb.aw
   %i.adr = or disjoint i64 %indvars.iv1219, 1     ; 9 uses
   %i.ads = trunc nuw i64 %indvars.iv1219 to i32   ; 4 uses
-  %i.adt = trunc nuw i64 %i.adr to i32            ; 4 uses
+  %i.adt = trunc nuw i64 %i.adr to i32            ; 2 uses
   %invariant.op1300 = add nuw i64 %indvars.iv1219, %i.adr
   %invariant.op1302 = add nuw i64 %indvars.iv1219, %i.adr
   %i.adu = trunc nuw i64 %indvars.iv1219 to i32   ; 2 uses
@@ -9990,8 +9921,7 @@ bb.bl:                                            ; preds = %bb.ax
   %i.amr = load i64, ptr %i.amq, align 8, !tbaa !117
   store i32 %..i909, ptr %i.ama, align 4, !tbaa !33
   store i32 %i.amf, ptr %i.amd, align 4, !tbaa !33
-  %3 = tail call i32 @llvm.smin.i32(i32 %i.ami, i32 %i.adt)
-  store i32 %3, ptr %i.amg, align 4, !tbaa !33
+  store i32 %i.ami, ptr %i.amg, align 4, !tbaa !33
   %i.ams = tail call i32 @llvm.smax.i32(i32 %i.aml, i32 %i.adt)
   store i32 %i.ams, ptr %i.amj, align 4, !tbaa !33
   %i.amt = add nsw i32 %i.amn, 2
@@ -10024,8 +9954,7 @@ bb.bm:                                            ; preds = %bb.bl
   %i.anj = load i32, ptr %i.amm, align 4, !tbaa !33
   store i32 %..i915, ptr %i.ama, align 4, !tbaa !33
   store i32 %i.ane, ptr %i.amd, align 4, !tbaa !33
-  %4 = tail call i32 @llvm.smin.i32(i32 %i.ang, i32 %i.adt)
-  store i32 %4, ptr %i.amg, align 4, !tbaa !33
+  store i32 %i.ang, ptr %i.amg, align 4, !tbaa !33
   %i.ank = tail call i32 @llvm.smax.i32(i32 %i.ani, i32 %i.adt)
   store i32 %i.ank, ptr %i.amj, align 4, !tbaa !33
   %i.anl = add nsw i32 %i.anj, 2
@@ -10061,7 +9990,7 @@ bb.bn:                                            ; preds = %bb.bl, %bb.bm, %bb.
 .lr.ph1170:                                       ; preds = %.lr.ph1173.split
   %i.aoa = or disjoint i64 %indvars.iv1225, 1     ; 8 uses
   %i.aob = trunc nuw i64 %indvars.iv1225 to i32   ; 2 uses
-  %i.aoc = trunc nuw i64 %i.aoa to i32            ; 2 uses
+  %i.aoc = trunc nuw i64 %i.aoa to i32
   %invariant.op13041388 = add nuw i64 %indvars.iv1225, %i.aoa
   %invariant.op1308 = shl i64 %invariant.op13041388, 1
   %i.aod = trunc nuw i64 %indvars.iv1225 to i32   ; 2 uses
@@ -10403,7 +10332,7 @@ bb.cb:                                            ; preds = %bb.bo
   store i32 0, ptr %i.avy, align 4, !tbaa !33
   %i.avz = load ptr, ptr %i.add, align 8, !tbaa !55 ; 6 uses
   %i.awa = load i32, ptr %i.avz, align 4, !tbaa !33
-  %i.awb = trunc nuw nsw i64 %indvars.iv1222 to i32 ; 4 uses
+  %i.awb = trunc nuw nsw i64 %indvars.iv1222 to i32 ; 2 uses
   %..i945 = tail call i32 @llvm.smin.i32(i32 %i.awa, i32 %i.awb)
   %i.awc = getelementptr inbounds nuw i8, ptr %i.avz, i64 8 ; 2 uses
   %i.awd = load i32, ptr %i.awc, align 4, !tbaa !33
@@ -10421,20 +10350,14 @@ bb.cb:                                            ; preds = %bb.bo
   %i.awp = add i64 %i.awo, %indvars.iv1222
   %i.awq = getelementptr inbounds nuw i8, ptr %i.awn, i64 8 ; 2 uses
   %i.awr = load i64, ptr %i.awq, align 8, !tbaa !117
-  %i.aws = trunc nuw nsw i64 %i.avv to i32        ; 4 uses
-  %..i948 = tail call i32 @llvm.smin.i32(i32 %..i945, i32 %i.aws)
+  %i.aws = trunc nuw nsw i64 %i.avv to i32
   %i.awt = tail call i32 @llvm.umax.i32(i32 %i.awe, i32 %i.aws)
   %i.awu = add i64 %i.awp, %i.avv
-  %..i951 = tail call i32 @llvm.smin.i32(i32 %..i948, i32 %i.awb)
-  %5 = tail call i32 @llvm.umax.i32(i32 %i.awt, i32 %i.awb)
-  %6 = tail call i32 @llvm.smin.i32(i32 %i.awh, i32 %i.aoc)
   %i.awv = tail call i32 @llvm.smax.i32(i32 %i.awk, i32 %i.aoc)
   %i.aww = add i64 %i.awu, %indvars.iv1222
-  %..i954 = tail call i32 @llvm.smin.i32(i32 %..i951, i32 %i.aws)
-  store i32 %..i954, ptr %i.avz, align 4, !tbaa !33
-  %7 = tail call i32 @llvm.umax.i32(i32 %5, i32 %i.aws)
-  store i32 %7, ptr %i.awc, align 4, !tbaa !33
-  store i32 %6, ptr %i.awf, align 4, !tbaa !33
+  store i32 %..i945, ptr %i.avz, align 4, !tbaa !33
+  store i32 %i.awt, ptr %i.awc, align 4, !tbaa !33
+  store i32 %i.awh, ptr %i.awf, align 4, !tbaa !33
   store i32 %i.awv, ptr %i.awi, align 4, !tbaa !33
   %i.awx = add nsw i32 %i.awm, 4
   store i32 %i.awx, ptr %i.awl, align 4, !tbaa !33
@@ -10837,7 +10760,7 @@ bb.da:                                            ; preds = %bb.cz
   %i.bmk = getelementptr inbounds nuw [4 x i8], ptr %i.baw, i64 %i.bmg
   store i32 0, ptr %i.bmk, align 4, !tbaa !33
   %i.bml = load i32, ptr %i.bll, align 4, !tbaa !33
-  %i.bmm = trunc nuw nsw i64 %i.bmg to i32        ; 4 uses
+  %i.bmm = trunc nuw nsw i64 %i.bmg to i32        ; 3 uses
   %..i990 = tail call i32 @llvm.smin.i32(i32 %i.bml, i32 %i.bmm)
   store i32 %..i990, ptr %i.bll, align 4, !tbaa !33
   %i.bmn = load i32, ptr %i.blo, align 4, !tbaa !33
@@ -10876,8 +10799,7 @@ bb.db:                                            ; preds = %bb.da
   %i.bni = tail call i32 @llvm.smax.i32(i32 %i.bnh, i32 %i.bbd)
   %i.bnj = load i32, ptr %i.blx, align 4, !tbaa !33
   %i.bnk = add i64 %i.bmv, %indvars.iv
-  %..i996 = tail call i32 @llvm.smin.i32(i32 %..i993, i32 %i.bmm)
-  store i32 %..i996, ptr %i.bll, align 4, !tbaa !33
+  store i32 %..i993, ptr %i.bll, align 4, !tbaa !33
   %i.bnl = tail call i32 @llvm.umax.i32(i32 %i.bne, i32 %i.bmm)
   store i32 %i.bnl, ptr %i.blo, align 4, !tbaa !33
   store i32 %i.bng, ptr %i.blr, align 4, !tbaa !33
@@ -11280,10 +11202,9 @@ bb.du:                                            ; preds = %bb.dg
   %i.bxo = add i64 %i.bxn, %indvars.iv1186
   %i.bxp = getelementptr inbounds nuw i8, ptr %i.bxm, i64 8 ; 3 uses
   %i.bxq = load i64, ptr %i.bxp, align 8, !tbaa !117
-  %8 = trunc nuw nsw i64 %i.bww to i32            ; 4 uses
-  %..i1029 = tail call i32 @llvm.smin.i32(i32 %..i1026, i32 %8)
-  store i32 %..i1029, ptr %i.bwy, align 4, !tbaa !33
-  %i.bxr = tail call i32 @llvm.umax.i32(i32 %i.bxd, i32 %8)
+  store i32 %..i1026, ptr %i.bwy, align 4, !tbaa !33
+  %3 = trunc nuw nsw i64 %i.bww to i32            ; 2 uses
+  %i.bxr = tail call i32 @llvm.umax.i32(i32 %i.bxd, i32 %3)
   store i32 %i.bxr, ptr %i.bxb, align 4, !tbaa !33
   store i32 %i.bxg, ptr %i.bxe, align 4, !tbaa !33
   store i32 %i.bxj, ptr %i.bxh, align 4, !tbaa !33
@@ -11313,9 +11234,8 @@ bb.dv:                                            ; preds = %bb.du
   %i.byf = tail call i32 @llvm.smax.i32(i32 %i.bye, i32 %i.bos)
   %i.byg = load i32, ptr %i.bxk, align 4, !tbaa !33
   %i.byh = add i64 %i.bxt, %indvars.iv1186
-  %..i1035 = tail call i32 @llvm.smin.i32(i32 %..i1032, i32 %8)
-  store i32 %..i1035, ptr %i.bwy, align 4, !tbaa !33
-  %i.byi = tail call i32 @llvm.umax.i32(i32 %i.byb, i32 %8)
+  store i32 %..i1032, ptr %i.bwy, align 4, !tbaa !33
+  %i.byi = tail call i32 @llvm.umax.i32(i32 %i.byb, i32 %3)
   store i32 %i.byi, ptr %i.bxb, align 4, !tbaa !33
   store i32 %i.byd, ptr %i.bxe, align 4, !tbaa !33
   store i32 %i.byf, ptr %i.bxh, align 4, !tbaa !33
@@ -11415,7 +11335,7 @@ bb.dy:                                            ; preds = %.lr.ph1139, %._crit
 .lr.ph1136:                                       ; preds = %bb.dy
   %i.cat = or disjoint i64 %indvars.iv1195, 1     ; 9 uses
   %i.cau = trunc nsw i64 %indvars.iv1195 to i32   ; 4 uses
-  %i.cav = trunc nsw i64 %i.cat to i32            ; 4 uses
+  %i.cav = trunc nsw i64 %i.cat to i32            ; 2 uses
   %invariant.op1284 = add i64 %indvars.iv1195, %i.cat
   %invariant.op1286 = add i64 %indvars.iv1195, %i.cat
   %i.caw = trunc nsw i64 %indvars.iv1195 to i32   ; 2 uses
@@ -11786,8 +11706,7 @@ bb.en:                                            ; preds = %bb.dz
   %i.cjs = load i64, ptr %i.cjr, align 8, !tbaa !117
   store i32 %..i1062, ptr %i.cjb, align 4, !tbaa !33
   store i32 %i.cjg, ptr %i.cje, align 4, !tbaa !33
-  %9 = tail call i32 @llvm.smin.i32(i32 %i.cjj, i32 %i.cav)
-  store i32 %9, ptr %i.cjh, align 4, !tbaa !33
+  store i32 %i.cjj, ptr %i.cjh, align 4, !tbaa !33
   %i.cjt = tail call i32 @llvm.smax.i32(i32 %i.cjm, i32 %i.cav)
   store i32 %i.cjt, ptr %i.cjk, align 4, !tbaa !33
   %i.cju = add nsw i32 %i.cjo, 2
@@ -11820,8 +11739,7 @@ bb.eo:                                            ; preds = %bb.en
   %i.ckk = load i32, ptr %i.cjn, align 4, !tbaa !33
   store i32 %..i1068, ptr %i.cjb, align 4, !tbaa !33
   store i32 %i.ckf, ptr %i.cje, align 4, !tbaa !33
-  %10 = tail call i32 @llvm.smin.i32(i32 %i.ckh, i32 %i.cav)
-  store i32 %10, ptr %i.cjh, align 4, !tbaa !33
+  store i32 %i.ckh, ptr %i.cjh, align 4, !tbaa !33
   %i.ckl = tail call i32 @llvm.smax.i32(i32 %i.ckj, i32 %i.cav)
   store i32 %i.ckl, ptr %i.cjk, align 4, !tbaa !33
   %i.ckm = add nsw i32 %i.ckk, 2
@@ -11857,7 +11775,7 @@ bb.eq:                                            ; preds = %.lr.ph1146, %._crit
 .lr.ph1143:                                       ; preds = %bb.eq
   %i.clb = or disjoint i64 %indvars.iv1201, 1     ; 8 uses
   %i.clc = trunc nsw i64 %indvars.iv1201 to i32   ; 2 uses
-  %i.cld = trunc nsw i64 %i.clb to i32            ; 2 uses
+  %i.cld = trunc nsw i64 %i.clb to i32
   %invariant.op12881384 = add i64 %indvars.iv1201, %i.clb
   %invariant.op1292 = shl i64 %invariant.op12881384, 1
   %i.cle = trunc nsw i64 %indvars.iv1201 to i32   ; 2 uses
@@ -12198,7 +12116,7 @@ bb.fe:                                            ; preds = %bb.er
   store i32 0, ptr %i.csy, align 4, !tbaa !33
   %i.csz = load ptr, ptr %i.cae, align 8, !tbaa !55 ; 6 uses
   %i.cta = load i32, ptr %i.csz, align 4, !tbaa !33
-  %i.ctb = trunc nuw nsw i64 %indvars.iv1198 to i32 ; 4 uses
+  %i.ctb = trunc nuw nsw i64 %indvars.iv1198 to i32 ; 2 uses
   %..i1098 = tail call i32 @llvm.smin.i32(i32 %i.cta, i32 %i.ctb)
   %i.ctc = getelementptr inbounds nuw i8, ptr %i.csz, i64 8 ; 2 uses
   %i.ctd = load i32, ptr %i.ctc, align 4, !tbaa !33
@@ -12216,20 +12134,14 @@ bb.fe:                                            ; preds = %bb.er
   %i.ctp = add i64 %i.cto, %indvars.iv1198
   %i.ctq = getelementptr inbounds nuw i8, ptr %i.ctn, i64 8 ; 2 uses
   %i.ctr = load i64, ptr %i.ctq, align 8, !tbaa !117
-  %i.cts = trunc nuw nsw i64 %i.csv to i32        ; 4 uses
-  %..i1101 = tail call i32 @llvm.smin.i32(i32 %..i1098, i32 %i.cts)
+  %i.cts = trunc nuw nsw i64 %i.csv to i32
   %i.ctt = tail call i32 @llvm.umax.i32(i32 %i.cte, i32 %i.cts)
   %i.ctu = add i64 %i.ctp, %i.csv
-  %..i1104 = tail call i32 @llvm.smin.i32(i32 %..i1101, i32 %i.ctb)
-  %11 = tail call i32 @llvm.umax.i32(i32 %i.ctt, i32 %i.ctb)
-  %12 = tail call i32 @llvm.smin.i32(i32 %i.cth, i32 %i.cld)
   %i.ctv = tail call i32 @llvm.smax.i32(i32 %i.ctk, i32 %i.cld)
   %i.ctw = add i64 %i.ctu, %indvars.iv1198
-  %..i1107 = tail call i32 @llvm.smin.i32(i32 %..i1104, i32 %i.cts)
-  store i32 %..i1107, ptr %i.csz, align 4, !tbaa !33
-  %13 = tail call i32 @llvm.umax.i32(i32 %11, i32 %i.cts)
-  store i32 %13, ptr %i.ctc, align 4, !tbaa !33
-  store i32 %12, ptr %i.ctf, align 4, !tbaa !33
+  store i32 %..i1098, ptr %i.csz, align 4, !tbaa !33
+  store i32 %i.ctt, ptr %i.ctc, align 4, !tbaa !33
+  store i32 %i.cth, ptr %i.ctf, align 4, !tbaa !33
   store i32 %i.ctv, ptr %i.cti, align 4, !tbaa !33
   %i.ctx = add nsw i32 %i.ctm, 4
   store i32 %i.ctx, ptr %i.ctl, align 4, !tbaa !33
