@@ -204,7 +204,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #21
   store ptr %i.g, ptr %i.d, align 8, !tbaa !349
   %i.h = mul i64 %i.e, %2
-  %i.i = getelementptr [8 x i8], ptr %i.g, i64 %i.h ; 13 uses
+  %i.i = getelementptr [8 x i8], ptr %i.g, i64 %i.h ; 12 uses
   %.not216 = icmp eq i64 %i.e, 0
   br i1 %.not216, label %_ZN5boost7movelib7move_opclIPNS_9container3dtl4pairINS3_4test24movable_and_copyable_intES7_EES9_EET0_NS0_9forward_tET_SC_SA_.exit150, label %.lr.ph
 
@@ -213,18 +213,22 @@ bb.a:
   %i.k = select i1 %i.j, i64 0, i64 %4            ; 2 uses
   %i.l = add i64 %i.k, 1
   %.sroa.speculated = tail call i64 @llvm.umin.i64(i64 %i.l, i64 %i.e)
-  %.idx208 = shl i64 %2, 3                        ; 8 uses
+  %.idx208 = shl i64 %2, 3                        ; 9 uses
   %.not121 = icmp eq i64 %6, 0
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.e
   %.not2830.i = icmp eq i64 %2, 0
-  %i.n = shl i64 %3, 3                            ; 2 uses
+  %i.n = shl i64 %3, 3                            ; 3 uses
+  %17 = add i64 %i.n, %.idx208                    ; 2 uses
+  %scevgep = getelementptr i8, ptr %1, i64 %17
+  %18 = getelementptr i8, ptr %1, i64 %17
+  %scevgep340 = getelementptr i8, ptr %18, i64 -4
   %i.o = or disjoint i64 %i.n, 4                  ; 2 uses
   %scevgep.a = getelementptr i8, ptr %1, i64 %i.o ; 4 uses
   %i.p = mul i64 %2, %i.e
   %i.q = add i64 %i.p, %3
   %i.r = shl i64 %i.q, 3
   %i.s = getelementptr i8, ptr %1, i64 %i.r
-  %scevgep338 = getelementptr i8, ptr %i.s, i64 -4 ; 4 uses
+  %scevgep338 = getelementptr i8, ptr %i.s, i64 -4 ; 3 uses
   %scevgep339 = getelementptr i8, ptr %7, i64 %.idx208 ; 4 uses
   %i.t = shl i64 %3, 3                            ; 2 uses
   %i.u = add i64 %i.t, 8
@@ -252,8 +256,8 @@ bb.a:
   %bound1348 = icmp ult ptr %scevgep.a, %scevgep339
   %found.conflict349 = and i1 %bound0347, %bound1348
   %invariant.op = or i1 %i.ai, %found.conflict349
-  %bound0371.a = icmp ult ptr %i.g, %i.i
-  %bound1372.a = icmp ult ptr %scevgep.a, %scevgep338
+  %bound0371.a = icmp ult ptr %i.g, %scevgep
+  %bound1372.a = icmp ult ptr %scevgep.a, %scevgep340
   %found.conflict373.a = and i1 %bound0371.a, %bound1372.a
   %n.vec = and i64 %i.ae, 4611686018427387902     ; 3 uses
   %i.aj = shl i64 %n.vec, 3                       ; 3 uses
@@ -656,7 +660,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #21
   store ptr %i.g, ptr %i.d, align 8, !tbaa !349
   %i.h = mul i64 %i.e, %2
-  %i.i = getelementptr [8 x i8], ptr %i.g, i64 %i.h ; 13 uses
+  %i.i = getelementptr [8 x i8], ptr %i.g, i64 %i.h ; 12 uses
   %.not216 = icmp eq i64 %i.e, 0
   br i1 %.not216, label %_ZN5boost7movelib7move_opclIPNS_9container3dtl4pairINS3_4test24movable_and_copyable_intES7_EES9_EET0_NS0_9forward_tET_SC_SA_.exit150, label %.lr.ph
 
@@ -665,18 +669,22 @@ bb.a:
   %i.k = select i1 %i.j, i64 0, i64 %4            ; 2 uses
   %i.l = add i64 %i.k, 1
   %.sroa.speculated = tail call i64 @llvm.umin.i64(i64 %i.l, i64 %i.e)
-  %.idx208 = shl i64 %2, 3                        ; 8 uses
+  %.idx208 = shl i64 %2, 3                        ; 9 uses
   %.not121 = icmp eq i64 %6, 0
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.e
   %.not2830.i = icmp eq i64 %2, 0
-  %i.n = shl i64 %3, 3                            ; 2 uses
+  %i.n = shl i64 %3, 3                            ; 3 uses
+  %17 = add i64 %i.n, %.idx208                    ; 2 uses
+  %scevgep = getelementptr i8, ptr %1, i64 %17
+  %18 = getelementptr i8, ptr %1, i64 %17
+  %scevgep340 = getelementptr i8, ptr %18, i64 -4
   %i.o = or disjoint i64 %i.n, 4                  ; 2 uses
   %scevgep.a = getelementptr i8, ptr %1, i64 %i.o ; 4 uses
   %i.p = mul i64 %2, %i.e
   %i.q = add i64 %i.p, %3
   %i.r = shl i64 %i.q, 3
   %i.s = getelementptr i8, ptr %1, i64 %i.r
-  %scevgep338 = getelementptr i8, ptr %i.s, i64 -4 ; 4 uses
+  %scevgep338 = getelementptr i8, ptr %i.s, i64 -4 ; 3 uses
   %scevgep339 = getelementptr i8, ptr %7, i64 %.idx208 ; 4 uses
   %i.t = shl i64 %3, 3                            ; 2 uses
   %i.u = add i64 %i.t, 8
@@ -704,8 +712,8 @@ bb.a:
   %bound1348 = icmp ult ptr %scevgep.a, %scevgep339
   %found.conflict349 = and i1 %bound0347, %bound1348
   %invariant.op = or i1 %i.ai, %found.conflict349
-  %bound0371.a = icmp ult ptr %i.g, %i.i
-  %bound1372.a = icmp ult ptr %scevgep.a, %scevgep338
+  %bound0371.a = icmp ult ptr %i.g, %scevgep
+  %bound1372.a = icmp ult ptr %scevgep.a, %scevgep340
   %found.conflict373.a = and i1 %bound0371.a, %bound1372.a
   %n.vec = and i64 %i.ae, 4611686018427387902     ; 3 uses
   %i.aj = shl i64 %n.vec, 3                       ; 3 uses
@@ -1108,7 +1116,7 @@ bb.a:
   %i.d = udiv i64 %1, %i.b                        ; 2 uses
   %i.e = sub nuw i64 %1, %i.c                     ; 4 uses
   %.not = icmp ugt i64 %i.c, %2
-  %i.f = getelementptr [4 x i8], ptr %0, i64 %i.e ; 5 uses
+  %i.f = getelementptr [4 x i8], ptr %0, i64 %i.e ; 6 uses
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -1409,24 +1417,27 @@ _ZN5boost7movelib7move_opclIPNS_9container4test24movable_and_copyable_intES6_EET
   %.078.us = phi i64 [ %i.dc, %_ZN5boost7movelib14op_merge_rightIPNS_9container4test24movable_and_copyable_intENS2_3dtl23flat_tree_value_compareISt4lessIS4_ES4_NS_11move_detail8identityIS4_EEEENS0_7move_opEEEvT_SF_SF_SF_T0_T1_.exit66.us ], [ %i.e, %.lr.ph ] ; 2 uses
   %i.dc = sub i64 %.078.us, %i.b                  ; 3 uses
   %.idx80 = shl nuw nsw i64 %i.dc, 2              ; 2 uses
-  %i.dd = getelementptr i8, ptr %0, i64 %.idx80   ; 2 uses
+  %i.dd = getelementptr inbounds nuw i8, ptr %0, i64 %.idx80 ; 2 uses
   %.idx79 = shl nuw nsw i64 %.078.us, 2           ; 2 uses
   %.not28.i55.us = icmp eq i64 %.idx79, %.idx80
   br i1 %.not28.i55.us, label %_ZN5boost7movelib14op_merge_rightIPNS_9container4test24movable_and_copyable_intENS2_3dtl23flat_tree_value_compareISt4lessIS4_ES4_NS_11move_detail8identityIS4_EEEENS0_7move_opEEEvT_SF_SF_SF_T0_T1_.exit66.us, label %.lr.ph.i.i30.i58.us.preheader
 
 .lr.ph.i.i30.i58.us.preheader:                    ; preds = %._crit_edge.i52.us
-  %i.de = getelementptr i8, ptr %i.dd, i64 %.idx  ; 3 uses
-  %i.df = getelementptr i8, ptr %0, i64 %.idx79   ; 3 uses
+  %i.de = getelementptr i8, ptr %i.dd, i64 %.idx  ; 2 uses
+  %i.df = getelementptr inbounds nuw i8, ptr %0, i64 %.idx79 ; 2 uses
   %i.dg = udiv i64 %1, %i.b
-  %i.dh = shl nuw nsw i64 %i.dg, 3                ; 2 uses
+  %i.dh = shl nuw nsw i64 %i.dg, 3                ; 3 uses
   %i.di = add nsw i64 %i.dh, -4
-  %i.dj = mul i64 %2, %i.di
+  %3 = mul i64 %2, %i.di
+  %4 = getelementptr i8, ptr %0, i64 %3
+  %5 = or disjoint i64 %i.dh, 4
+  %i.dj = mul i64 %2, %5
   %i.dk = getelementptr i8, ptr %0, i64 %i.dj
   %i.dl = add nsw i64 %i.dh, -8
   %i.dm = mul i64 %2, %i.dl
   %i.dn = getelementptr i8, ptr %0, i64 %i.dm
-  %bound0276 = icmp ult ptr %i.dk, %i.df
-  %bound1277 = icmp ult ptr %i.dn, %i.de
+  %bound0276 = icmp ult ptr %4, %i.f
+  %bound1277 = icmp ult ptr %i.dn, %i.dk
   %found.conflict278 = and i1 %bound0276, %bound1277
   br i1 %found.conflict278, label %.lr.ph.i.i30.i58.us, label %vector.body281
 

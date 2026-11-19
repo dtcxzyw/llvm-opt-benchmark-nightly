@@ -11,7 +11,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind memory(readwrite, target_mem: none) uwtable
 define hidden range(i32 0, 2) i32 @get_homography(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [81 x double], align 16           ; 97 uses
+  %i.a = alloca [81 x double], align 16           ; 94 uses
   %i.b = alloca [9 x double], align 16            ; 21 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -202,7 +202,6 @@ bb.a:
   %i.em = tail call noalias dereferenceable_or_null(36) ptr @malloc(i64 noundef 36) #10 ; 12 uses
   %i.en = getelementptr inbounds nuw i8, ptr %i.em, i64 32
   store i32 8, ptr %i.en, align 4, !tbaa !34
-  %scevgep99 = getelementptr inbounds nuw i8, ptr %i.a, i64 648
   %scevgep115 = getelementptr inbounds nuw i8, ptr %i.a, i64 72
   br label %bb.b
 
@@ -212,19 +211,14 @@ bb.a:
   br i1 %exitcond146.not.i.i, label %gauss_solve.exit, label %bb.b
 
 bb.b:                                             ; preds = %.loopexit.i.i, %bb.a
-  %indvars.iv143.i.i = phi i64 [ 0, %bb.a ], [ %indvars.iv.next144.i.i, %.loopexit.i.i ] ; 23 uses
+  %indvars.iv143.i.i = phi i64 [ 0, %bb.a ], [ %indvars.iv.next144.i.i, %.loopexit.i.i ] ; 22 uses
   %indvars.iv.i.i = phi i64 [ 1, %bb.a ], [ %indvars.iv.next.i.i, %.loopexit.i.i ] ; 14 uses
   %i.eo = mul nuw nsw i64 %indvars.iv143.i.i, 72
   %i.ep = getelementptr nuw i8, ptr %i.a, i64 %i.eo
   %scevgep = getelementptr nuw i8, ptr %i.ep, i64 72
-  %i.eq = mul nuw nsw i64 %indvars.iv143.i.i, 80  ; 3 uses
-  %3 = shl nuw nsw i64 %indvars.iv143.i.i, 3
-  %4 = getelementptr i8, ptr %i.a, i64 %3
-  %scevgep97 = getelementptr i8, ptr %4, i64 584
-  %5 = getelementptr i8, ptr %i.a, i64 %i.eq
-  %scevgep98 = getelementptr i8, ptr %5, i64 72
+  %i.eq = mul nuw nsw i64 %indvars.iv143.i.i, 80  ; 2 uses
   %i.er = getelementptr i8, ptr %i.a, i64 %i.eq
-  %scevgep100 = getelementptr i8, ptr %i.er, i64 80 ; 2 uses
+  %scevgep100 = getelementptr i8, ptr %i.er, i64 80
   %indvars.iv.next144.i.i = add nuw nsw i64 %indvars.iv143.i.i, 1 ; 2 uses
   %i.es = icmp samesign ult i64 %indvars.iv143.i.i, 8 ; 2 uses
   %i.et = trunc nuw nsw i64 %indvars.iv143.i.i to i32 ; 3 uses
@@ -515,13 +509,9 @@ middle.block129:                                  ; preds = %vector.body124
   %invariant.gep157.i.i = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.fl ; 6 uses
   %i.iq = sub nuw nsw i64 8, %indvars.iv143.i.i   ; 2 uses
   %min.iters.check = icmp samesign ugt i64 %indvars.iv143.i.i, 4
-  %bound0 = icmp ult ptr %scevgep100, %scevgep97
-  %bound1 = icmp ult ptr %scevgep98, %scevgep99
-  %found.conflict = and i1 %bound0, %bound1
   %bound0101 = icmp ult ptr %scevgep100, %scevgep
   %bound1102 = icmp ult i64 %i.eq, 640
   %found.conflict103 = and i1 %bound0101, %bound1102
-  %conflict.rdx = or i1 %found.conflict, %found.conflict103
   %n.vec = and i64 %i.iq, 12                      ; 3 uses
   %i.ir = add nuw i64 %indvars.iv.i.i, %n.vec
   %cmp.n = icmp eq i64 %i.iq, %n.vec
@@ -532,7 +522,7 @@ middle.block129:                                  ; preds = %vector.body124
   %i.is = mul nuw nsw i64 %indvars.iv139.i.i, 9   ; 2 uses
   %gep162.i.i = getelementptr inbounds nuw [8 x i8], ptr %i.fi, i64 %i.is ; 6 uses
   %invariant.gep159.i.i = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.is ; 6 uses
-  %brmerge = select i1 %min.iters.check, i1 true, i1 %conflict.rdx
+  %brmerge = select i1 %min.iters.check, i1 true, i1 %found.conflict103
   br i1 %brmerge, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.preheader.i.i

@@ -205,7 +205,7 @@ bb.a:
   %.not = icmp eq i32 %8, 0                       ; 2 uses
   %i.m = sext i32 %4 to i64                       ; 4 uses
   %wide.trip.count338 = zext nneg i32 %i.g to i64 ; 4 uses
-  %wide.trip.count333 = zext nneg i32 %i.d to i64 ; 11 uses
+  %wide.trip.count333 = zext nneg i32 %i.d to i64 ; 13 uses
   %i.n = add nsw i64 %wide.trip.count338, -1
   %i.o = mul nsw i64 %i.n, %i.m                   ; 2 uses
   br i1 %.not, label %bb.c, label %bb.b
@@ -608,15 +608,16 @@ put_bits.exit273:                                 ; preds = %bb.x, %bb.ab
   %scevgep508 = getelementptr i8, ptr %i.ml, i64 10896
   %i.mm = add nsw i64 %wide.trip.count338, -1
   %i.mn = mul nsw i64 %i.mm, %i.m
-  %10 = add nsw i64 %i.mn, %wide.trip.count333    ; 2 uses
-  %scevgep509 = getelementptr i8, ptr %1, i64 %10
-  %scevgep510.a = getelementptr i8, ptr %3, i64 %10 ; 2 uses
+  %10 = getelementptr i8, ptr %3, i64 %i.mn
+  %scevgep510 = getelementptr i8, ptr %10, i64 %wide.trip.count333
+  %scevgep509 = getelementptr i8, ptr %1, i64 %wide.trip.count333
+  %scevgep510.a = getelementptr i8, ptr %3, i64 %wide.trip.count333
   %min.iters.check512 = icmp samesign ult i32 %5, 2
   %bound0514 = icmp ult ptr %3, %scevgep509
   %bound1515 = icmp ult ptr %1, %scevgep510.a
   %found.conflict516 = and i1 %bound0514, %bound1515
   %stride.check517 = icmp slt i32 %4, 0
-  %i.mo = or i1 %found.conflict516, %stride.check517
+  %i.mo = or i1 %stride.check517, %found.conflict516
   %n.vec523 = and i64 %wide.trip.count333, 504
   %broadcast.splatinsert = insertelement <8 x i32> poison, i32 %.3246, i64 0
   %broadcast.splat = shufflevector <8 x i32> %broadcast.splatinsert, <8 x i32> poison, <8 x i32> zeroinitializer
@@ -687,9 +688,9 @@ vector.memcheck513:                               ; preds = %.preheader
   %i.no = shl nsw i64 %i.nn, 1
   %i.np = getelementptr i8, ptr %scevgep508, i64 %i.no
   %bound0518 = icmp ult ptr %3, %i.np
-  %bound1519 = icmp ult ptr %invariant.gep409, %scevgep510.a
+  %bound1519 = icmp ult ptr %invariant.gep409, %scevgep510
   %found.conflict520 = and i1 %bound0518, %bound1519
-  %conflict.rdx521 = or i1 %i.mo, %found.conflict520
+  %conflict.rdx521 = or i1 %found.conflict520, %i.mo
   br i1 %conflict.rdx521, label %scalar.ph511.preheader, label %vector.body524
 
 vector.body524:                                   ; preds = %vector.memcheck513, %vector.body524

@@ -28,14 +28,15 @@ bb.a:
 
 .lr.ph33.i:                                       ; preds = %.lr.ph.i
   %i.b = shl i32 %4, 8
-  %5 = shl nuw nsw i64 %wide.trip.count.i, 9      ; 2 uses
-  %scevgep.a = getelementptr i8, ptr %2, i64 %5
-  %scevgep8 = getelementptr i8, ptr %1, i64 %5    ; 2 uses
+  %scevgep = getelementptr i8, ptr %2, i64 512
+  %scevgep.a = getelementptr i8, ptr %1, i64 512
+  %5 = shl nuw nsw i64 %wide.trip.count.i, 9
+  %scevgep8 = getelementptr i8, ptr %1, i64 %5
   %bound0 = icmp ult ptr %1, getelementptr inbounds nuw (i8, ptr @zetas, i64 256)
   %bound1 = icmp ugt ptr %scevgep8, getelementptr inbounds nuw (i8, ptr @zetas, i64 64)
   %found.conflict = and i1 %bound0, %bound1
-  %bound09 = icmp ult ptr %1, %scevgep.a
-  %bound110 = icmp ult ptr %2, %scevgep8
+  %bound09 = icmp ult ptr %1, %scevgep
+  %bound110 = icmp ult ptr %2, %scevgep.a
   %found.conflict11 = and i1 %bound09, %bound110
   %conflict.rdx = or i1 %found.conflict, %found.conflict11
   br label %vector.ph51
@@ -438,14 +439,13 @@ bb.a:
   br i1 %i.a, label %.lr.ph.preheader.i, label %._crit_edge.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.a
-  %wide.trip.count.i = zext nneg i32 %8 to i64    ; 3 uses
+  %wide.trip.count.i = zext nneg i32 %8 to i64    ; 2 uses
   br label %.lr.ph.i
 
 .lr.ph128.i:                                      ; preds = %.lr.ph.i
   %i.b = shl i32 %8, 8
-  %9 = shl nuw nsw i64 %wide.trip.count.i, 9      ; 2 uses
-  %scevgep = getelementptr i8, ptr %5, i64 %9
-  %scevgep9 = getelementptr i8, ptr %1, i64 %9
+  %scevgep = getelementptr i8, ptr %5, i64 512
+  %scevgep9 = getelementptr i8, ptr %1, i64 512
   %bound0 = icmp ult ptr %1, %scevgep
   %bound1 = icmp ult ptr %5, %scevgep9
   %found.conflict = and i1 %bound0, %bound1

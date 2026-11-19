@@ -205,9 +205,9 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.g = load i64, ptr %i.f, align 8, !tbaa !307  ; 3 uses
+  %i.g = load i64, ptr %i.f, align 8, !tbaa !307  ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.i = load i64, ptr %i.h, align 8, !tbaa !139  ; 7 uses
+  %i.i = load i64, ptr %i.h, align 8, !tbaa !139  ; 6 uses
   %i.j = icmp sgt i64 %i.g, 1
   br i1 %i.j, label %.lr.ph31, label %._crit_edge.split
 
@@ -218,30 +218,22 @@ bb.e:                                             ; preds = %bb.a
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !119
   %i.o = load ptr, ptr %1, align 8, !tbaa !301    ; 6 uses
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.q = load i64, ptr %i.p, align 8, !tbaa !139  ; 5 uses
+  %i.q = load i64, ptr %i.p, align 8, !tbaa !139  ; 3 uses
   %i.r = icmp sgt i64 %i.i, 0
   br i1 %i.r, label %.lr.ph.preheader, label %._crit_edge.split
 
 .lr.ph.preheader:                                 ; preds = %.lr.ph31
-  %i.s = add nsw i64 %i.g, -2                     ; 2 uses
+  %i.s = add nsw i64 %i.g, -2
   %i.t = shl i64 %i.q, 3                          ; 2 uses
-  %2 = shl i64 %i.g, 3
-  %3 = add i64 %2, -8
-  %4 = mul i64 %i.q, %3
-  %i.u = shl i64 %i.i, 3
-  %i.v = getelementptr i8, ptr %i.o, i64 %4
+  %i.u = shl i64 %i.i, 3                          ; 2 uses
+  %i.v = getelementptr i8, ptr %i.o, i64 %i.t
   %scevgep = getelementptr i8, ptr %i.v, i64 %i.u
   %scevgep36 = getelementptr i8, ptr %i.o, i64 %i.t
-  %5 = mul i64 %i.q, %i.s
-  %6 = add i64 %5, %i.i
-  %7 = shl i64 %6, 3
-  %scevgep37 = getelementptr i8, ptr %i.o, i64 %7
+  %scevgep37 = getelementptr i8, ptr %i.o, i64 %i.u
   %min.iters.check = icmp eq i64 %i.i, 1
   %bound0 = icmp ult ptr %i.o, %scevgep
   %bound1 = icmp ult ptr %scevgep36, %scevgep37
   %found.conflict = and i1 %bound0, %bound1
-  %stride.check = icmp slt i64 %i.t, 0
-  %8 = or i1 %found.conflict, %stride.check
   %n.vec = and i64 %i.i, 9223372036854775806      ; 3 uses
   %cmp.n = icmp eq i64 %i.i, %n.vec
   br label %.lr.ph
@@ -264,7 +256,7 @@ bb.e:                                             ; preds = %bb.a
   %i.ac = add nuw nsw i64 %.02830, 1              ; 2 uses
   %i.ad = mul nsw i64 %i.q, %i.ac
   %i.ae = getelementptr [8 x i8], ptr %i.o, i64 %i.ad ; 2 uses
-  %brmerge = select i1 %min.iters.check, i1 true, i1 %8
+  %brmerge = select i1 %min.iters.check, i1 true, i1 %found.conflict
   br i1 %brmerge, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph

@@ -205,8 +205,7 @@ bb.a:
   %reass.add202 = shl nsw i64 %2, 1               ; 5 uses
   %i.h = add nsw i64 %2, -5                       ; 2 uses
   %i.i = shl i64 %2, 4
-  %4 = mul i64 %3, %2
-  %i.j = shl i64 %4, 4                            ; 2 uses
+  %i.j = shl nsw i64 %2, 4                        ; 2 uses
   %scevgep335 = getelementptr i8, ptr %0, i64 %i.j
   %i.k = getelementptr i8, ptr %i.c, i64 %i.j
   %scevgep336 = getelementptr i8, ptr %i.k, i64 -32
@@ -511,7 +510,7 @@ vector.scevcheck:                                 ; preds = %.preheader223.prehe
   %op.rdx382 = or i1 %op.rdx381, %i.hi
   %op.rdx383 = or i1 %op.rdx382, %i.hk
   %op.rdx384 = or i1 %op.rdx383, %mul.overflow
-  %brmerge = or i1 %op.rdx384, %found.conflict
+  %brmerge = select i1 %op.rdx384, i1 true, i1 %found.conflict
   br i1 %brmerge, label %.preheader223.preheader385, label %vector.body
 
 vector.body:                                      ; preds = %vector.scevcheck, %vector.body

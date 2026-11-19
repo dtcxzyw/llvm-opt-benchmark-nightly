@@ -204,25 +204,34 @@ bb.b:                                             ; preds = %bb.a
 polybench_alloc_data.exit:                        ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #15
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32000000) %i.be, i8 0, i64 32000000, i1 false), !tbaa !24
-  %scevgep22 = getelementptr i8, ptr %i.be, i64 32000000
+  %4 = insertelement <2 x ptr> poison, ptr %i.be, i64 0
+  %5 = shufflevector <2 x ptr> %4, <2 x ptr> poison, <2 x i32> zeroinitializer
+  %6 = getelementptr i8, ptr %i.be, <2 x i64> <i64 32000000, i64 16000>
   br label %.preheader84
 
 .preheader84:                                     ; preds = %polybench_alloc_data.exit, %bb.c
   %indvars.iv132 = phi i64 [ 0, %polybench_alloc_data.exit ], [ %indvars.iv.next133, %bb.c ] ; 3 uses
-  %i.bj = shl nuw nsw i64 %indvars.iv132, 3
+  %i.bj = shl nuw nsw i64 %indvars.iv132, 3       ; 2 uses
   %i.bk = getelementptr i8, ptr %0, i64 %i.bj
-  %scevgep21 = getelementptr i8, ptr %i.bk, i64 31984008
+  %scevgep21 = getelementptr i8, ptr %0, i64 %i.bj
+  %7 = insertelement <2 x ptr> poison, ptr %scevgep21, i64 0
+  %8 = insertelement <2 x ptr> %7, ptr %i.bk, i64 1
+  %9 = getelementptr i8, <2 x ptr> %8, <2 x i64> <i64 31984008, i64 8>
   %invariant.gep96 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv132 ; 8 uses
-  %bound0 = icmp ult ptr %i.be, %scevgep21
-  %bound1 = icmp ult ptr %invariant.gep96, %scevgep22
-  %found.conflict = and i1 %bound0, %bound1
+  %10 = insertelement <2 x ptr> poison, ptr %invariant.gep96, i64 0
+  %11 = shufflevector <2 x ptr> %10, <2 x ptr> poison, <2 x i32> zeroinitializer
+  %12 = icmp ult <2 x ptr> %5, %9
+  %13 = icmp ult <2 x ptr> %11, %6
+  %14 = and <2 x i1> %12, %13
+  %15 = bitcast <2 x i1> %14 to i2
+  %.not = icmp eq i2 %15, 0
   br label %.preheader83
 
 .preheader83:                                     ; preds = %.preheader84, %middle.block31
   %indvars.iv128 = phi i64 [ 0, %.preheader84 ], [ %indvars.iv.next129, %middle.block31 ] ; 3 uses
   %gep97 = getelementptr inbounds nuw [16000 x i8], ptr %invariant.gep96, i64 %indvars.iv128 ; 3 uses
   %i.bl = getelementptr inbounds nuw [16000 x i8], ptr %i.be, i64 %indvars.iv128 ; 3 uses
-  br i1 %found.conflict, label %scalar.ph23, label %vector.ph26
+  br i1 %.not, label %vector.ph26, label %scalar.ph23
 
 vector.ph26:                                      ; preds = %.preheader83
   %i.bm = load double, ptr %gep97, align 8, !tbaa !24, !alias.scope !83

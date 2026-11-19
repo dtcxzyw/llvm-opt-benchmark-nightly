@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %bb.l
   %i.gt = shl nuw i32 1, %i.gs                    ; 4 uses
   %i.gu = add nsw i64 %indvars.iv.i30, -6         ; 2 uses
   %i.gv = trunc nuw nsw i64 %i.gu to i32          ; 2 uses
-  %i.gw = shl nuw nsw i32 1, %i.gv                ; 2 uses
+  %i.gw = shl nuw nsw i32 1, %i.gv
   br i1 %.not.i.i, label %Abc_TtSwapVars.exit.i, label %.preheader120.lr.ph.i.i
 
 .preheader120.lr.ph.i.i:                          ; preds = %bb.n
@@ -217,23 +217,20 @@ bb.n:                                             ; preds = %bb.l
   br i1 %or.cond.i.i, label %Abc_TtSwapVars.exit.i, label %.preheader120.us.us.preheader.i.i
 
 .preheader120.us.us.preheader.i.i:                ; preds = %.preheader120.lr.ph.i.i
-  %i.ha = shl i32 2, %i.gs                        ; 3 uses
+  %i.ha = shl i32 2, %i.gs
   %smax.i27.i = call i32 @llvm.smax.i32(i32 %i.gt, i32 1) ; 2 uses
-  %i.hb = sext i32 %i.ha to i64                   ; 5 uses
+  %i.hb = sext i32 %i.ha to i64
   %i.hc = sext i32 %i.gt to i64                   ; 2 uses
-  %i.hd = zext nneg i32 %i.gw to i64              ; 4 uses
+  %i.hd = zext nneg i32 %i.gw to i64              ; 3 uses
   %wide.trip.count.i28.i = zext nneg i32 %smax.i27.i to i64 ; 5 uses
-  %5 = shl nsw i64 %i.gz, 3
-  %umax = call i64 @llvm.umax.i64(i64 %i.hb, i64 1)
-  %smax = call i64 @llvm.smax.i64(i64 %i.hb, i64 %i.hd)
-  %6 = icmp slt i32 %i.ha, %i.gw
-  %umin = zext i1 %6 to i64                       ; 2 uses
-  %7 = or disjoint i64 %umin, %i.hb
-  %8 = sub i64 %smax, %7
+  %5 = add nuw nsw i64 %i.hd, %wide.trip.count.i28.i
+  %6 = shl nuw nsw i64 %5, 3
+  %7 = shl nsw i64 %i.gz, 3
+  %8 = add nsw i64 %i.hc, %wide.trip.count.i28.i
+  %9 = shl nsw i64 %8, 3
+  %10 = getelementptr i8, ptr %i.a, i64 %6
+  %11 = getelementptr i8, ptr %i.a, i64 %9
   %min.iters.check109 = icmp slt i32 %i.gt, 4
-  %invariant.op = add i64 %i.hc, %wide.trip.count.i28.i
-  %invariant.op139 = add i64 %i.hd, %wide.trip.count.i28.i
-  %stride.check = icmp slt i32 %i.ha, 0
   %n.vec112 = and i64 %wide.trip.count.i28.i, 2147483644
   %xtraiter133 = and i64 %wide.trip.count.i28.i, 1
   %i.he = icmp slt i32 %i.gt, 2
@@ -245,40 +242,28 @@ bb.n:                                             ; preds = %bb.l
 .preheader120.us.us.i.i:                          ; preds = %._crit_edge124.us.us.i.i, %.preheader120.us.us.preheader.i.i
   %indvar106 = phi i64 [ %indvar.next107, %._crit_edge124.us.us.i.i ], [ 0, %.preheader120.us.us.preheader.i.i ] ; 2 uses
   %.1125.us.us.i.i = phi ptr [ %i.hy, %._crit_edge124.us.us.i.i ], [ %i.a, %.preheader120.us.us.preheader.i.i ] ; 3 uses
-  %i.hf = mul i64 %5, %indvar106                  ; 2 uses
+  %i.hf = mul i64 %7, %indvar106                  ; 2 uses
+  %scevgep = getelementptr i8, ptr %10, i64 %i.hf
+  %scevgep108 = getelementptr i8, ptr %11, i64 %i.hf
   %invariant.gep.i29.i = getelementptr [8 x i8], ptr %.1125.us.us.i.i, i64 %i.hc ; 2 uses
   %invariant.gep167.i.i = getelementptr [8 x i8], ptr %.1125.us.us.i.i, i64 %i.hd ; 2 uses
-  %invariant.gep = getelementptr i8, ptr %i.a, i64 %i.hf
-  %invariant.gep141 = getelementptr i8, ptr %i.a, i64 %i.hf
+  %bound0 = icmp ult ptr %invariant.gep.i29.i, %scevgep
+  %bound1 = icmp ult ptr %invariant.gep167.i.i, %scevgep108
+  %found.conflict = and i1 %bound0, %bound1
   br label %.preheader119.us.us.i.i
 
 .preheader119.us.us.i.i:                          ; preds = %._crit_edge.us.us.i.i, %.preheader120.us.us.i.i
   %indvars.iv146.i.i = phi i64 [ %indvars.iv.next147.i.i, %._crit_edge.us.us.i.i ], [ 0, %.preheader120.us.us.i.i ] ; 3 uses
   %gep.i30.i = getelementptr [8 x i8], ptr %invariant.gep.i29.i, i64 %indvars.iv146.i.i ; 4 uses
   %gep168.i.i = getelementptr [8 x i8], ptr %invariant.gep167.i.i, i64 %indvars.iv146.i.i ; 4 uses
-  br i1 %min.iters.check109, label %scalar.ph108.preheader, label %vector.memcheck110
-
-scalar.ph108.preheader:                           ; preds = %vector.memcheck110, %.preheader119.us.us.i.i
-  br i1 %i.he, label %scalar.ph108.epil.preheader, label %scalar.ph108
+  %brmerge = select i1 %min.iters.check109, i1 true, i1 %found.conflict
+  br i1 %brmerge, label %vector.memcheck110, label %vector.body113
 
 vector.memcheck110:                               ; preds = %.preheader119.us.us.i.i
-  %9 = udiv i64 %8, %umax
-  %10 = add i64 %9, %umin
-  %11 = mul i64 %10, %i.hb                        ; 2 uses
-  %.reass = add i64 %11, %invariant.op
-  %12 = shl i64 %.reass, 3
-  %gep = getelementptr i8, ptr %invariant.gep, i64 %12
-  %.reass140 = add i64 %11, %invariant.op139
-  %13 = shl i64 %.reass140, 3
-  %gep142 = getelementptr i8, ptr %invariant.gep141, i64 %13
-  %bound0 = icmp ult ptr %invariant.gep.i29.i, %gep142
-  %bound1 = icmp ult ptr %invariant.gep167.i.i, %gep
-  %found.conflict = and i1 %bound0, %bound1
-  %14 = or i1 %found.conflict, %stride.check
-  br i1 %14, label %scalar.ph108.preheader, label %vector.body113
+  br i1 %i.he, label %scalar.ph108.epil.preheader, label %scalar.ph108
 
-vector.body113:                                   ; preds = %vector.memcheck110, %vector.body113
-  %index114 = phi i64 [ %index.next119, %vector.body113 ], [ 0, %vector.memcheck110 ] ; 3 uses
+vector.body113:                                   ; preds = %.preheader119.us.us.i.i, %vector.body113
+  %index114 = phi i64 [ %index.next119, %vector.body113 ], [ 0, %.preheader119.us.us.i.i ] ; 3 uses
   %i.hg = getelementptr [8 x i8], ptr %gep.i30.i, i64 %index114 ; 3 uses
   %i.hh = getelementptr i8, ptr %i.hg, i64 16     ; 2 uses
   %wide.load115 = load <2 x i64>, ptr %i.hg, align 8, !tbaa !45, !alias.scope !101, !noalias !102
@@ -295,9 +280,9 @@ vector.body113:                                   ; preds = %vector.memcheck110,
   %i.hk = icmp eq i64 %index.next119, %n.vec112
   br i1 %i.hk, label %._crit_edge.us.us.i.i, label %vector.body113, !llvm.loop !96
 
-scalar.ph108:                                     ; preds = %scalar.ph108.preheader, %scalar.ph108
-  %indvars.iv.i31.i = phi i64 [ %indvars.iv.next.i32.i.1, %scalar.ph108 ], [ 0, %scalar.ph108.preheader ] ; 4 uses
-  %niter138 = phi i64 [ %niter138.next.1, %scalar.ph108 ], [ 0, %scalar.ph108.preheader ]
+scalar.ph108:                                     ; preds = %vector.memcheck110, %scalar.ph108
+  %indvars.iv.i31.i = phi i64 [ %indvars.iv.next.i32.i.1, %scalar.ph108 ], [ 0, %vector.memcheck110 ] ; 4 uses
+  %niter138 = phi i64 [ %niter138.next.1, %scalar.ph108 ], [ 0, %vector.memcheck110 ]
   %i.hl = getelementptr [8 x i8], ptr %gep.i30.i, i64 %indvars.iv.i31.i ; 2 uses
   %i.hm = load i64, ptr %i.hl, align 8, !tbaa !45
   %i.hn = getelementptr [8 x i8], ptr %gep168.i.i, i64 %indvars.iv.i31.i ; 2 uses
@@ -319,8 +304,8 @@ scalar.ph108:                                     ; preds = %scalar.ph108.prehea
 ._crit_edge.us.us.i.i.loopexit.unr-lcssa:         ; preds = %scalar.ph108
   br i1 %lcmp.mod135.not, label %._crit_edge.us.us.i.i, label %scalar.ph108.epil.preheader
 
-scalar.ph108.epil.preheader:                      ; preds = %._crit_edge.us.us.i.i.loopexit.unr-lcssa, %scalar.ph108.preheader
-  %indvars.iv.i31.i.epil.init = phi i64 [ 0, %scalar.ph108.preheader ], [ %indvars.iv.next.i32.i.1, %._crit_edge.us.us.i.i.loopexit.unr-lcssa ] ; 2 uses
+scalar.ph108.epil.preheader:                      ; preds = %._crit_edge.us.us.i.i.loopexit.unr-lcssa, %vector.memcheck110
+  %indvars.iv.i31.i.epil.init = phi i64 [ 0, %vector.memcheck110 ], [ %indvars.iv.next.i32.i.1, %._crit_edge.us.us.i.i.loopexit.unr-lcssa ] ; 2 uses
   call void @llvm.assume(i1 %lcmp.mod136)
   %i.ht = getelementptr [8 x i8], ptr %gep.i30.i, i64 %indvars.iv.i31.i.epil.init ; 2 uses
   %i.hu = load i64, ptr %i.ht, align 8, !tbaa !45
@@ -430,12 +415,6 @@ declare i32 @llvm.smax.i32(i32, i32) #13
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #15
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smax.i64(i64, i64) #13
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #13
 
 attributes #0 = { nofree norecurse nosync nounwind memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

@@ -204,15 +204,14 @@ bb.bh:                                            ; preds = %bb.bg, %power_law_g
   %i.pf = getelementptr inbounds nuw i8, ptr %2, i64 44 ; 8 uses
   %i.pg = getelementptr inbounds nuw i8, ptr %2, i64 20 ; 5 uses
   %i.ph = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 2 uses
-  %i.pi = zext nneg i32 %0 to i64                 ; 83 uses
+  %i.pi = zext nneg i32 %0 to i64                 ; 82 uses
   %i.pj = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   %i.pk = getelementptr inbounds nuw i8, ptr %i.g, i64 16
   %i.pl = getelementptr inbounds nuw i8, ptr %9, i64 8
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %8, i64 4
   %i.pm = getelementptr inbounds nuw i8, ptr %8, i64 8
   %i.pn = getelementptr inbounds nuw i8, ptr %8, i64 176 ; 5 uses
-  %13 = shl nuw nsw i64 %i.pi, 3                  ; 12 uses
-  %i.po = shl nuw nsw i64 %i.pi, 3
+  %i.po = shl nuw nsw i64 %i.pi, 3                ; 13 uses
   %i.pp = shl nuw nsw i64 %i.pi, 3
   %i.pq = shl nuw nsw i64 %i.pi, 3
   %i.pr = shl nuw nsw i64 %i.pi, 3
@@ -290,7 +289,7 @@ bb.bh:                                            ; preds = %bb.bg, %power_law_g
 
 bb.bi:                                            ; preds = %prolongate.exit, %bb.bh
   %.0141 = phi ptr [ %i.mk, %bb.bh ], [ %i.aol, %prolongate.exit ] ; 6 uses
-  %.1 = phi ptr [ %.0140, %bb.bh ], [ %.0, %prolongate.exit ] ; 38 uses
+  %.1 = phi ptr [ %.0140, %bb.bh ], [ %.0, %prolongate.exit ] ; 37 uses
   %i.qe = load i32, ptr %i.pb, align 4, !tbaa !22
   switch i32 %i.qe, label %._crit_edge [
     i32 0, label %bb.bj
@@ -546,15 +545,13 @@ bb.bv:                                            ; preds = %bb.bu, %bb.bt
 
 gv_calloc.exit.preheader.i:                       ; preds = %bb.bv
   %i.tv = getelementptr inbounds nuw i8, ptr %i.rd, i64 8
-  %wide.trip.count220.i = zext nneg i32 %i.ra to i64 ; 3 uses
-  %14 = mul i64 %i.pr, %wide.trip.count220.i      ; 2 uses
-  %scevgep636 = getelementptr i8, ptr %i.tt, i64 %14
-  %scevgep637.a = getelementptr i8, ptr %.1, i64 %14
-  %scevgep684.a = getelementptr i8, ptr %.1, i64 %13
+  %wide.trip.count220.i = zext nneg i32 %i.ra to i64 ; 2 uses
+  %scevgep637.a = getelementptr i8, ptr %i.tt, i64 %i.po
+  %scevgep684.a = getelementptr i8, ptr %.1, i64 %i.po ; 2 uses
   %broadcast.splatinsert700 = insertelement <2 x double> poison, double %i.tq, i64 0
   %broadcast.splat701 = shufflevector <2 x double> %broadcast.splatinsert700, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
-  %bound0641 = icmp ult ptr %.1, %scevgep636
-  %bound1642 = icmp ult ptr %i.tt, %scevgep637.a
+  %bound0641 = icmp ult ptr %.1, %scevgep637.a
+  %bound1642 = icmp ult ptr %i.tt, %scevgep684.a
   %found.conflict643 = and i1 %bound0641, %bound1642
   br label %.lr.ph196.preheader.i
 
@@ -590,7 +587,7 @@ bb.bw:                                            ; preds = %bb.bv
   %i.uc = phi i32 [ %.pre.i194, %.lr.ph196.preheader.i ], [ %i.ub, %.loopexit185.i ] ; 2 uses
   %indvars.iv217.i = phi i64 [ 0, %.lr.ph196.preheader.i ], [ %indvars.iv.next218.i, %.loopexit185.i ] ; 5 uses
   %i.ud = mul i64 %i.ps, %indvars.iv217.i
-  %i.ue = add i64 %13, %i.ud                      ; 2 uses
+  %i.ue = add i64 %i.po, %i.ud                    ; 2 uses
   %scevgep683 = getelementptr i8, ptr %.1, i64 %i.ue
   %scevgep685 = getelementptr i8, ptr %i.tt, i64 %i.ue ; 2 uses
   %i.uf = mul i64 %indvars.iv217.i, %i.pi         ; 2 uses
@@ -993,15 +990,15 @@ bb.df:                                            ; preds = %bb.de, %bb.dd
 gv_calloc.exit.preheader.i208:                    ; preds = %bb.df
   %i.add = uitofp nneg i32 %i.aai to double
   %wide.trip.count324.i = zext i32 %i.aai to i64  ; 3 uses
-  %scevgep = getelementptr i8, ptr %i.adb, i64 %13 ; 5 uses
-  %scevgep484 = getelementptr i8, ptr %.1, i64 %13
-  %scevgep525 = getelementptr i8, ptr %.1, i64 %13
-  %scevgep562 = getelementptr i8, ptr %.1, i64 %13 ; 2 uses
-  %i.ade = mul i64 %i.pp, %wide.trip.count324.i
+  %scevgep = getelementptr i8, ptr %i.adb, i64 %i.po ; 5 uses
+  %scevgep484 = getelementptr i8, ptr %.1, i64 %i.po
+  %scevgep525 = getelementptr i8, ptr %.1, i64 %i.po
+  %scevgep562 = getelementptr i8, ptr %.1, i64 %i.po ; 2 uses
+  %i.ade = mul i64 %i.pq, %wide.trip.count324.i
   %scevgep564 = getelementptr i8, ptr %.1, i64 %i.ade
   %i.adf = insertelement <2 x double> poison, double %i.add, i64 0
   %i.adg = shufflevector <2 x double> %i.adf, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.adh = getelementptr i8, ptr %.1, i64 %13
+  %i.adh = getelementptr i8, ptr %.1, i64 %i.po
   %broadcast.splatinsert616 = insertelement <2 x double> poison, double %i.ada, i64 0
   %broadcast.splat617 = shufflevector <2 x double> %broadcast.splatinsert616, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.adi = insertelement <2 x ptr> poison, ptr %i.adb, i64 0
@@ -1020,7 +1017,7 @@ gv_calloc.exit.preheader.i208:                    ; preds = %bb.df
 
 bb.dg:                                            ; preds = %bb.df
   %i.ads = load ptr, ptr @stderr, align 8, !tbaa !27
-  %i.adt = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.ads, ptr noundef nonnull @.str.25, i64 noundef %13) #21 ; 0 uses
+  %i.adt = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.ads, ptr noundef nonnull @.str.25, i64 noundef %i.po) #21 ; 0 uses
   call fastcc void @graphviz_exit() #24
   unreachable
 
@@ -1052,7 +1049,7 @@ bb.dh:                                            ; preds = %gv_calloc.exit.i209
   %indvars.iv321.i = phi i64 [ 0, %.preheader240.preheader.i ], [ %indvars.iv.next322.i, %.loopexit235.i ] ; 13 uses
   %.1204263.i = phi double [ 0.000000e+00, %.preheader240.preheader.i ], [ %i.alt, %.loopexit235.i ]
   %i.adx = phi <2 x double> [ zeroinitializer, %.preheader240.preheader.i ], [ %i.akz, %.loopexit235.i ] ; 2 uses
-  %i.ady = mul i64 %i.pq, %indvars.iv321.i
+  %i.ady = mul i64 %i.pr, %indvars.iv321.i
   %scevgep601 = getelementptr i8, ptr %i.adh, i64 %i.ady
   %i.adz = trunc i64 %indvars.iv321.i to i32
   %i.aea = mul i32 %0, %i.adz
@@ -1064,7 +1061,7 @@ bb.dh:                                            ; preds = %gv_calloc.exit.i209
   %i.aef = zext i32 %i.aee to i64
   %i.aeg = shl nuw nsw i64 %i.aef, 3
   %scevgep526 = getelementptr i8, ptr %scevgep525, i64 %i.aeg
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.adb, i8 0, i64 %13, i1 false), !tbaa !12
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.adb, i8 0, i64 %i.po, i1 false), !tbaa !12
   %i.aeh = getelementptr inbounds nuw [4 x i8], ptr %i.aap, i64 %indvars.iv321.i
   %i.aei = load i32, ptr %i.aeh, align 4, !tbaa !39 ; 2 uses
   %indvars.iv.next322.i = add nuw nsw i64 %indvars.iv321.i, 1 ; 3 uses
@@ -1247,7 +1244,7 @@ bb.dk:                                            ; preds = %._crit_edge.i212
   %i.ahn = and i64 %i.aha, 4294967295
   %wide.trip.count304.i = zext nneg i32 %i.ahe to i64 ; 2 uses
   %invariant.gep358.i = getelementptr inbounds nuw [8 x i8], ptr %.1, i64 %i.ahn ; 5 uses
-  %i.aho = mul i64 %i.po, %wide.trip.count304.i
+  %i.aho = mul i64 %i.pp, %wide.trip.count304.i
   %scevgep524 = getelementptr i8, ptr %i.ahm, i64 %i.aho
   %i.ahp = insertelement <2 x ptr> poison, ptr %scevgep526, i64 0
   %i.ahq = insertelement <2 x ptr> %i.ahp, ptr %scevgep524, i64 1
@@ -1650,14 +1647,14 @@ gv_calloc.exit.preheader.i.i:                     ; preds = %gv_calloc.exit264
 
 bb.eu:                                            ; preds = %gv_calloc.exit264
   %i.apr = load ptr, ptr @stderr, align 8, !tbaa !27
-  %i.aps = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.apr, ptr noundef nonnull @.str.25, i64 noundef %13) #21 ; 0 uses
+  %i.aps = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.apr, ptr noundef nonnull @.str.25, i64 noundef %i.po) #21 ; 0 uses
   call fastcc void @graphviz_exit() #24
   unreachable
 
 .preheader.i.i:                                   ; preds = %gv_calloc.exit.i.i, %.preheader.preheader.i.i
   %i.apt = phi i32 [ %.pre.i.i275, %.preheader.preheader.i.i ], [ %i.apv, %gv_calloc.exit.i.i ] ; 2 uses
   %indvars.iv75.i.i = phi i64 [ 0, %.preheader.preheader.i.i ], [ %indvars.iv.next76.i.i, %gv_calloc.exit.i.i ] ; 3 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.apn, i8 0, i64 %13, i1 false), !tbaa !12
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.apn, i8 0, i64 %i.po, i1 false), !tbaa !12
   %indvars.iv.next76.i.i = add nuw nsw i64 %indvars.iv75.i.i, 1 ; 3 uses
   %i.apu = getelementptr inbounds nuw [4 x i8], ptr %i.apk, i64 %indvars.iv.next76.i.i
   %i.apv = load i32, ptr %i.apu, align 4, !tbaa !39 ; 3 uses
@@ -1894,7 +1891,7 @@ bb.fc:                                            ; preds = %bb.fb, %bb.fa
 
 bb.fd:                                            ; preds = %bb.fc
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %i.a, i8 0, i64 %13, i1 false), !tbaa !12
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %i.a, i8 0, i64 %i.po, i1 false), !tbaa !12
   %wide.trip.count83.i = zext nneg i32 %i.i to i64 ; 5 uses
   %min.iters.check715 = icmp ult i32 %0, 4
   %n.vec717 = and i64 %i.pi, 2147483644           ; 3 uses

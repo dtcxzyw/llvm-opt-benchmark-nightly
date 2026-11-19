@@ -41,8 +41,8 @@ bb.a:
   %i.af = insertelement <2 x ptr> %i.ae, ptr %1, i64 1 ; 2 uses
   %i.ag = insertelement <2 x ptr> poison, ptr %2, i64 0
   %i.ah = insertelement <2 x ptr> %i.ag, ptr %0, i64 1 ; 2 uses
-  %i.ai = getelementptr i8, <2 x ptr> %i.af, <2 x i64> <i64 2093048, i64 2097144>
-  %i.aj = getelementptr i8, <2 x ptr> %i.ah, i64 2093048
+  %i.ai = getelementptr i8, <2 x ptr> %i.af, <2 x i64> <i64 8184, i64 12280>
+  %i.aj = getelementptr i8, <2 x ptr> %i.ah, i64 8184
   %i.ak = getelementptr i8, <2 x ptr> %i.ah, i64 4104
   %i.al = getelementptr i8, <2 x ptr> %i.af, <2 x i64> <i64 4104, i64 8>
   %i.am = shufflevector <2 x ptr> %i.w, <2 x ptr> %i.y, <2 x i32> <i32 1, i32 3>

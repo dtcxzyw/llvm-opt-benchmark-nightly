@@ -205,8 +205,8 @@ bb.dt:                                            ; preds = %bb.ds
   %.val72 = load i32, ptr %i.aim, align 4, !tbaa !187
   %i.ain = getelementptr i8, ptr %5, i64 12
   %.val73 = load i32, ptr %i.ain, align 4, !tbaa !188 ; 2 uses
-  %.8.val.fr.i = freeze i32 %.val72               ; 8 uses
-  %i.aio = sext i32 %.8.val.fr.i to i64           ; 2 uses
+  %.8.val.fr.i = freeze i32 %.val72               ; 7 uses
+  %i.aio = sext i32 %.8.val.fr.i to i64
   %.not16.i = icmp eq i32 %.val73, 0
   br i1 %.not16.i, label %process_lcms2_bm.exit, label %.lr.ph8.i
 
@@ -217,24 +217,19 @@ bb.dt:                                            ; preds = %bb.ds
   %i.aiq = getelementptr inbounds nuw i8, ptr %.val, i64 32 ; 2 uses
   %i.air = getelementptr inbounds nuw i8, ptr %.val, i64 40 ; 3 uses
   %i.ais = getelementptr inbounds nuw i8, ptr %.val, i64 24 ; 2 uses
-  %wide.trip.count45.i = zext i32 %.val73 to i64  ; 3 uses
+  %wide.trip.count45.i = zext i32 %.val73 to i64  ; 2 uses
   br i1 %.not17.i, label %.lr.ph8.split.split.i, label %.lr.ph.us.preheader.i
 
 .lr.ph.us.preheader.i:                            ; preds = %.lr.ph8.i
   %wide.trip.count.i = zext i32 %.8.val.fr.i to i64 ; 6 uses
-  %6 = add nuw nsw i64 %wide.trip.count45.i, 1152921504606846975
-  %7 = mul i64 %6, %i.aio
-  %8 = add i64 %7, %wide.trip.count.i
-  %i.ait = shl i64 %8, 4
-  %i.aiu = add i64 %i.ait, -4                     ; 2 uses
+  %i.ait = shl nuw nsw i64 %wide.trip.count.i, 4
+  %i.aiu = add nsw i64 %i.ait, -4                 ; 2 uses
   %scevgep213.a = getelementptr i8, ptr %2, i64 %i.aiu
   %scevgep214 = getelementptr i8, ptr %3, i64 %i.aiu
   %min.iters.check216 = icmp ult i32 %.8.val.fr.i, 9
   %bound0218 = icmp ult ptr %3, %scevgep213.a
   %bound1219 = icmp ult ptr %2, %scevgep214
   %found.conflict220 = and i1 %bound0218, %bound1219
-  %stride.check221 = icmp slt i32 %.8.val.fr.i, 0
-  %9 = or i1 %found.conflict220, %stride.check221
   %i.aiv = and i64 %wide.trip.count.i, 7          ; 2 uses
   %i.aiw = icmp eq i64 %i.aiv, 0
   %i.aix = select i1 %i.aiw, i64 8, i64 %i.aiv
@@ -252,7 +247,7 @@ bb.dt:                                            ; preds = %bb.ds
   %i.aja = mul i64 %i.aiz, %i.aio                 ; 2 uses
   %i.ajb = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.aja ; 2 uses
   %i.ajc = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.aja ; 11 uses
-  %brmerge = select i1 %min.iters.check216, i1 true, i1 %9
+  %brmerge = select i1 %min.iters.check216, i1 true, i1 %found.conflict220
   br i1 %brmerge, label %scalar.ph215.preheader, label %vector.body224
 
 vector.body224:                                   ; preds = %.lr.ph.us.i, %vector.body224

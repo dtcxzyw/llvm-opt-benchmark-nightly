@@ -205,9 +205,8 @@ _ZNSt6vectorIfN3gmx9AllocatorIfNS0_23AlignedAllocationPolicyEEEE6resizeEm.exit.i
 .preheader89.lr.ph.i.i:                           ; preds = %_ZNSt6vectorIfN3gmx9AllocatorIfNS0_23AlignedAllocationPolicyEEEE6resizeEm.exit.i.i
   %i.nh = load ptr, ptr %i.bm, align 8, !tbaa !76 ; 15 uses
   %i.ni = load ptr, ptr %i.mr, align 8, !tbaa !91 ; 15 uses
-  %i.nj = zext nneg i32 %i.mq to i64              ; 12 uses
-  %23 = mul nuw nsw i64 %i.nj, %i.nj
-  %i.nk = shl i64 %23, 3                          ; 2 uses
+  %i.nj = zext nneg i32 %i.mq to i64              ; 11 uses
+  %i.nk = shl nuw nsw i64 %i.nj, 3                ; 2 uses
   %scevgep = getelementptr i8, ptr %i.nh, i64 %i.nk
   %scevgep189 = getelementptr i8, ptr %i.ni, i64 %i.nk
   %min.iters.check190 = icmp ult i32 %i.mq, 4

@@ -204,7 +204,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #23
   store ptr %i.g, ptr %i.d, align 8, !tbaa !262
   %i.h = mul i64 %i.e, %2
-  %i.i = getelementptr [8 x i8], ptr %i.g, i64 %i.h ; 13 uses
+  %i.i = getelementptr [8 x i8], ptr %i.g, i64 %i.h ; 12 uses
   %.not216 = icmp eq i64 %i.e, 0
   br i1 %.not216, label %_ZN5boost7movelib7move_opclIPSt4pairINS_9container4test24movable_and_copyable_intES6_ES8_EET0_NS0_9forward_tET_SB_S9_.exit150, label %.lr.ph
 
@@ -213,18 +213,22 @@ bb.a:
   %i.k = select i1 %i.j, i64 0, i64 %4            ; 2 uses
   %i.l = add i64 %i.k, 1
   %.sroa.speculated = tail call i64 @llvm.umin.i64(i64 %i.l, i64 %i.e)
-  %.idx208 = shl i64 %2, 3                        ; 8 uses
+  %.idx208 = shl i64 %2, 3                        ; 9 uses
   %.not121 = icmp eq i64 %6, 0
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.e
   %.not2830.i = icmp eq i64 %2, 0
-  %i.n = shl i64 %3, 3                            ; 2 uses
+  %i.n = shl i64 %3, 3                            ; 3 uses
+  %17 = add i64 %i.n, %.idx208                    ; 2 uses
+  %scevgep = getelementptr i8, ptr %1, i64 %17
+  %18 = getelementptr i8, ptr %1, i64 %17
+  %scevgep340 = getelementptr i8, ptr %18, i64 -4
   %i.o = or disjoint i64 %i.n, 4                  ; 2 uses
   %scevgep.a = getelementptr i8, ptr %1, i64 %i.o ; 4 uses
   %i.p = mul i64 %2, %i.e
   %i.q = add i64 %i.p, %3
   %i.r = shl i64 %i.q, 3
   %i.s = getelementptr i8, ptr %1, i64 %i.r
-  %scevgep338 = getelementptr i8, ptr %i.s, i64 -4 ; 4 uses
+  %scevgep338 = getelementptr i8, ptr %i.s, i64 -4 ; 3 uses
   %scevgep339 = getelementptr i8, ptr %7, i64 %.idx208 ; 4 uses
   %i.t = shl i64 %3, 3                            ; 2 uses
   %i.u = add i64 %i.t, 8
@@ -252,8 +256,8 @@ bb.a:
   %bound1348 = icmp ult ptr %scevgep.a, %scevgep339
   %found.conflict349 = and i1 %bound0347, %bound1348
   %invariant.op = or i1 %i.ai, %found.conflict349
-  %bound0371.a = icmp ult ptr %i.g, %i.i
-  %bound1372.a = icmp ult ptr %scevgep.a, %scevgep338
+  %bound0371.a = icmp ult ptr %i.g, %scevgep
+  %bound1372.a = icmp ult ptr %scevgep.a, %scevgep340
   %found.conflict373.a = and i1 %bound0371.a, %bound1372.a
   %n.vec = and i64 %i.ae, 4611686018427387902     ; 3 uses
   %i.aj = shl i64 %n.vec, 3                       ; 3 uses
@@ -656,7 +660,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #23
   store ptr %i.g, ptr %i.d, align 8, !tbaa !262
   %i.h = mul i64 %i.e, %2
-  %i.i = getelementptr [8 x i8], ptr %i.g, i64 %i.h ; 13 uses
+  %i.i = getelementptr [8 x i8], ptr %i.g, i64 %i.h ; 12 uses
   %.not216 = icmp eq i64 %i.e, 0
   br i1 %.not216, label %_ZN5boost7movelib7move_opclIPSt4pairINS_9container4test24movable_and_copyable_intES6_ES8_EET0_NS0_9forward_tET_SB_S9_.exit150, label %.lr.ph
 
@@ -665,18 +669,22 @@ bb.a:
   %i.k = select i1 %i.j, i64 0, i64 %4            ; 2 uses
   %i.l = add i64 %i.k, 1
   %.sroa.speculated = tail call i64 @llvm.umin.i64(i64 %i.l, i64 %i.e)
-  %.idx208 = shl i64 %2, 3                        ; 8 uses
+  %.idx208 = shl i64 %2, 3                        ; 9 uses
   %.not121 = icmp eq i64 %6, 0
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.e
   %.not2830.i = icmp eq i64 %2, 0
-  %i.n = shl i64 %3, 3                            ; 2 uses
+  %i.n = shl i64 %3, 3                            ; 3 uses
+  %17 = add i64 %i.n, %.idx208                    ; 2 uses
+  %scevgep = getelementptr i8, ptr %1, i64 %17
+  %18 = getelementptr i8, ptr %1, i64 %17
+  %scevgep340 = getelementptr i8, ptr %18, i64 -4
   %i.o = or disjoint i64 %i.n, 4                  ; 2 uses
   %scevgep.a = getelementptr i8, ptr %1, i64 %i.o ; 4 uses
   %i.p = mul i64 %2, %i.e
   %i.q = add i64 %i.p, %3
   %i.r = shl i64 %i.q, 3
   %i.s = getelementptr i8, ptr %1, i64 %i.r
-  %scevgep338 = getelementptr i8, ptr %i.s, i64 -4 ; 4 uses
+  %scevgep338 = getelementptr i8, ptr %i.s, i64 -4 ; 3 uses
   %scevgep339 = getelementptr i8, ptr %7, i64 %.idx208 ; 4 uses
   %i.t = shl i64 %3, 3                            ; 2 uses
   %i.u = add i64 %i.t, 8
@@ -704,8 +712,8 @@ bb.a:
   %bound1348 = icmp ult ptr %scevgep.a, %scevgep339
   %found.conflict349 = and i1 %bound0347, %bound1348
   %invariant.op = or i1 %i.ai, %found.conflict349
-  %bound0371.a = icmp ult ptr %i.g, %i.i
-  %bound1372.a = icmp ult ptr %scevgep.a, %scevgep338
+  %bound0371.a = icmp ult ptr %i.g, %scevgep
+  %bound1372.a = icmp ult ptr %scevgep.a, %scevgep340
   %found.conflict373.a = and i1 %bound0371.a, %bound1372.a
   %n.vec = and i64 %i.ae, 4611686018427387902     ; 3 uses
   %i.aj = shl i64 %n.vec, 3                       ; 3 uses

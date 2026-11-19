@@ -205,7 +205,7 @@ define internal void @_ZN2cv4gapi12_GLOBAL__N_118fillConstBorderRowIhEEvPhiiiNS_
 bb.a:
   %i.a = sub i32 %1, %3
   %i.b = mul i32 %i.a, %2
-  %i.c = sext i32 %i.b to i64                     ; 2 uses
+  %i.c = sext i32 %i.b to i64                     ; 3 uses
   %i.d = getelementptr i8, ptr %0, i64 %i.c       ; 4 uses
   %i.e = icmp sgt i32 %3, 0
   %i.f = icmp sgt i32 %2, 0
@@ -213,24 +213,27 @@ bb.a:
   br i1 %or.cond, label %.preheader.preheader, label %._crit_edge28.split
 
 .preheader.preheader:                             ; preds = %bb.a
-  %i.g = zext nneg i32 %2 to i64                  ; 6 uses
+  %i.g = zext nneg i32 %2 to i64                  ; 8 uses
   %wide.trip.count33 = zext nneg i32 %3 to i64    ; 2 uses
+  %5 = mul nuw nsw i64 %wide.trip.count33, %i.g   ; 2 uses
+  %6 = getelementptr i8, ptr %0, i64 %5
+  %scevgep = getelementptr i8, ptr %6, i64 %i.c
   %i.h = shl nuw nsw i64 %i.g, 3
   %scevgep.a = getelementptr i8, ptr %4, i64 %i.h ; 2 uses
-  %5 = mul nuw nsw i64 %wide.trip.count33, %i.g   ; 2 uses
-  %i.i = getelementptr i8, ptr %0, i64 %5
-  %scevgep45 = getelementptr i8, ptr %i.i, i64 %i.c ; 2 uses
-  %scevgep46 = getelementptr i8, ptr %0, i64 %5   ; 2 uses
+  %scevgep48 = getelementptr i8, ptr %0, i64 %5
+  %i.i = getelementptr i8, ptr %0, i64 %i.c
+  %scevgep45 = getelementptr i8, ptr %i.i, i64 %i.g
+  %scevgep46 = getelementptr i8, ptr %0, i64 %i.g
   %min.iters.check = icmp ult i32 %2, 4
   %bound0 = icmp ult ptr %0, %scevgep45
   %bound1 = icmp ult ptr %i.d, %scevgep46
   %found.conflict = and i1 %bound0, %bound1
   %bound047 = icmp ult ptr %0, %scevgep.a
-  %bound148 = icmp ult ptr %4, %scevgep46
+  %bound148 = icmp ult ptr %4, %scevgep48
   %found.conflict49 = and i1 %bound047, %bound148
   %conflict.rdx = or i1 %found.conflict, %found.conflict49
   %bound050 = icmp ult ptr %i.d, %scevgep.a
-  %bound151 = icmp ult ptr %4, %scevgep45
+  %bound151 = icmp ult ptr %4, %scevgep
   %found.conflict52 = and i1 %bound050, %bound151
   %conflict.rdx53 = or i1 %conflict.rdx, %found.conflict52
   %n.vec = and i64 %i.g, 2147483646               ; 3 uses

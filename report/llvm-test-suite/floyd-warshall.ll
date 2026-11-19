@@ -177,11 +177,9 @@ middle.block:                                     ; preds = %vector.body
   br i1 %exitcond30.not.i, label %.preheader34.i.preheader, label %.preheader.i, !llvm.loop !31
 
 .preheader34.i.preheader:                         ; preds = %middle.block
-  %scevgep90 = getelementptr i8, ptr %i.d, i64 31360000
   %i.ae = insertelement <2 x ptr> poison, ptr %i.d, i64 0
   %i.af = shufflevector <2 x ptr> %i.ae, <2 x ptr> poison, <2 x i32> zeroinitializer
-  %2 = insertelement <2 x ptr> poison, ptr %scevgep90, i64 0
-  %3 = shufflevector <2 x ptr> %2, <2 x ptr> poison, <2 x i32> zeroinitializer
+  %2 = getelementptr i8, ptr %i.d, <2 x i64> <i64 11200, i64 31360000>
   br label %.preheader34.i
 
 .preheader34.i:                                   ; preds = %.preheader34.i.preheader, %bb.d
@@ -192,13 +190,13 @@ middle.block:                                     ; preds = %vector.body
   %i.aj = getelementptr i8, ptr %i.d, i64 %i.ai
   %i.ak = insertelement <2 x ptr> poison, ptr %i.aj, i64 0
   %i.al = insertelement <2 x ptr> %i.ak, ptr %i.ah, i64 1
-  %i.am = getelementptr i8, <2 x ptr> %i.al, <2 x i64> <i64 31348804, i64 11200>
+  %i.am = getelementptr i8, <2 x ptr> %i.al, <2 x i64> <i64 4, i64 11200>
   %scevgep89 = getelementptr nuw i8, ptr %i.d, i64 %i.ai
   %i.an = getelementptr inbounds nuw [11200 x i8], ptr %i.d, i64 %indvars.iv43.i ; 4 uses
   %i.ao = insertelement <2 x ptr> poison, ptr %scevgep89, i64 0
   %i.ap = insertelement <2 x ptr> %i.ao, ptr %i.an, i64 1
   %i.aq = icmp ult <2 x ptr> %i.af, %i.am
-  %i.ar = icmp ult <2 x ptr> %i.ap, %3
+  %i.ar = icmp ult <2 x ptr> %i.ap, %2
   %i.as = and <2 x i1> %i.aq, %i.ar
   %i.at = bitcast <2 x i1> %i.as to i2
   %.not = icmp eq i2 %i.at, 0
@@ -307,11 +305,9 @@ middle.block113:                                  ; preds = %vector.body108
   br i1 %exitcond30.not.i31, label %.preheader34.i33.preheader, label %.preheader.i22, !llvm.loop !31
 
 .preheader34.i33.preheader:                       ; preds = %middle.block113
-  %scevgep129 = getelementptr i8, ptr %i.i, i64 31360000
   %i.ck = insertelement <2 x ptr> poison, ptr %i.i, i64 0
   %i.cl = shufflevector <2 x ptr> %i.ck, <2 x ptr> poison, <2 x i32> zeroinitializer
-  %4 = insertelement <2 x ptr> poison, ptr %scevgep129, i64 0
-  %5 = shufflevector <2 x ptr> %4, <2 x ptr> poison, <2 x i32> zeroinitializer
+  %3 = getelementptr i8, ptr %i.i, <2 x i64> <i64 11200, i64 31360000>
   br label %.preheader34.i33
 
 .preheader34.i33:                                 ; preds = %.preheader34.i33.preheader, %bb.e
@@ -322,13 +318,13 @@ middle.block113:                                  ; preds = %vector.body108
   %i.cp = getelementptr i8, ptr %i.i, i64 %i.co
   %i.cq = insertelement <2 x ptr> poison, ptr %i.cp, i64 0
   %i.cr = insertelement <2 x ptr> %i.cq, ptr %i.cn, i64 1
-  %i.cs = getelementptr i8, <2 x ptr> %i.cr, <2 x i64> <i64 31348804, i64 11200>
+  %i.cs = getelementptr i8, <2 x ptr> %i.cr, <2 x i64> <i64 4, i64 11200>
   %scevgep128 = getelementptr nuw i8, ptr %i.i, i64 %i.co
   %i.ct = getelementptr inbounds nuw [11200 x i8], ptr %i.i, i64 %indvars.iv43.i34 ; 4 uses
   %i.cu = insertelement <2 x ptr> poison, ptr %scevgep128, i64 0
   %i.cv = insertelement <2 x ptr> %i.cu, ptr %i.ct, i64 1
   %i.cw = icmp ult <2 x ptr> %i.cl, %i.cs
-  %i.cx = icmp ult <2 x ptr> %i.cv, %5
+  %i.cx = icmp ult <2 x ptr> %i.cv, %3
   %i.cy = and <2 x i1> %i.cw, %i.cx
   %i.cz = bitcast <2 x i1> %i.cy to i2
   %.not152 = icmp eq i2 %i.cz, 0

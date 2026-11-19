@@ -23,10 +23,10 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @_pqsort(ptr noundef %0, i64 noundef %1, i64 noundef %2, ptr nofree noundef readonly captures(none) %3, ptr nofree noundef readnone captures(address) %4, ptr nofree noundef readnone captures(address) %5) unnamed_addr #0 !guid !106 {
 bb.a:
-  %i.a = sub i64 0, %2                            ; 11 uses
+  %i.a = sub i64 0, %2                            ; 10 uses
   %i.b = icmp ne i64 %2, 8
   %i.c = zext i1 %i.b to i32
-  %i.d = lshr i64 %2, 3                           ; 25 uses
+  %i.d = lshr i64 %2, 3                           ; 24 uses
   %i.e = and i64 %2, -8                           ; 8 uses
   %min.iters.check846 = icmp ult i64 %2, 4
   %min.iters.check852 = icmp ult i64 %2, 32
@@ -92,7 +92,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.at, %bb.a
   %.0214 = phi i64 [ %1, %bb.a ], [ %i.yd, %bb.at ] ; 9 uses
-  %.0 = phi ptr [ %0, %bb.a ], [ %i.xz, %bb.at ]  ; 62 uses
+  %.0 = phi ptr [ %0, %bb.a ], [ %i.xz, %bb.at ]  ; 63 uses
   %i.z = ptrtoint ptr %.0 to i64                  ; 2 uses
   %i.aa = or i64 %2, %i.z
   %i.ab = and i64 %i.aa, 7
@@ -155,10 +155,10 @@ swapfunc.exit.us.us:                              ; preds = %.lr.ph364.us
 
 .preheader.us373.preheader:                       ; preds = %.preheader.lr.ph.split
   %i.at = and i64 %2, -8                          ; 2 uses
-  %min.iters.check935 = icmp ult i64 %2, 32
+  %6 = getelementptr i8, ptr %.0, i64 %i.at
   %i.au = getelementptr i8, ptr %.0, i64 %2
   %i.av = getelementptr i8, ptr %i.au, i64 %i.at
-  %6 = getelementptr i8, ptr %.0, i64 %i.at
+  %min.iters.check934 = icmp ult i64 %2, 32
   %n.vec941 = and i64 %i.d, 2305843009213693948   ; 3 uses
   %i.aw = shl nuw i64 %n.vec941, 3                ; 2 uses
   %i.ax = and i64 %i.d, 3
@@ -167,35 +167,30 @@ swapfunc.exit.us.us:                              ; preds = %.lr.ph364.us
 
 .preheader.us373:                                 ; preds = %.preheader.us373.preheader, %.critedge.us376
   %indvar932 = phi i64 [ 0, %.preheader.us373.preheader ], [ %indvar.next933, %.critedge.us376 ] ; 2 uses
-  %.0222369.us374 = phi ptr [ %.0222368, %.preheader.us373.preheader ], [ %.0222.us377, %.critedge.us376 ] ; 3 uses
-  %i.ay = mul i64 %2, %indvar932                  ; 2 uses
+  %.0222369.us374 = phi ptr [ %.0222368, %.preheader.us373.preheader ], [ %.0222.us377, %.critedge.us376 ] ; 4 uses
+  %i.ay = mul i64 %2, %indvar932                  ; 3 uses
+  %scevgep = getelementptr i8, ptr %6, i64 %i.ay
+  %scevgep931 = getelementptr i8, ptr %.0, i64 %i.ay
+  %scevgep932 = getelementptr i8, ptr %i.av, i64 %i.ay
   %i.az = icmp ugt ptr %.0222369.us374, %.0
   br i1 %i.az, label %.lr.ph364.us375.preheader, label %.critedge.us376
 
 .lr.ph364.us375.preheader:                        ; preds = %.preheader.us373
-  %7 = getelementptr i8, ptr %i.av, i64 %i.ay
-  %8 = getelementptr i8, ptr %6, i64 %i.ay
+  %bound0936 = icmp ult ptr %.0222369.us374, %scevgep
+  %bound1937 = icmp ult ptr %scevgep931, %scevgep932
+  %found.conflict938 = and i1 %bound0936, %bound1937
   br label %.lr.ph364.us375
 
 .lr.ph364.us375:                                  ; preds = %.lr.ph364.us375.preheader, %swapfunc.exit.loopexit.us.us
-  %indvar930 = phi i64 [ %indvar.next931, %swapfunc.exit.loopexit.us.us ], [ 0, %.lr.ph364.us375.preheader ] ; 2 uses
-  %.0225363.us366.us = phi ptr [ %i.ba, %swapfunc.exit.loopexit.us.us ], [ %.0222369.us374, %.lr.ph364.us375.preheader ] ; 7 uses
-  %i.ba = getelementptr inbounds i8, ptr %.0225363.us366.us, i64 %i.a ; 8 uses
+  %.0225363.us366.us = phi ptr [ %i.ba, %swapfunc.exit.loopexit.us.us ], [ %.0222369.us374, %.lr.ph364.us375.preheader ] ; 5 uses
+  %i.ba = getelementptr inbounds i8, ptr %.0225363.us366.us, i64 %i.a ; 6 uses
   %i.bb = tail call i32 %3(ptr noundef nonnull %i.ba, ptr noundef nonnull %.0225363.us366.us) #2
   %i.bc = icmp sgt i32 %i.bb, 0
-  br i1 %i.bc, label %.preheader381.preheader, label %.critedge.us376
+  br i1 %i.bc, label %vector.memcheck936, label %.critedge.us376
 
-.preheader381.preheader:                          ; preds = %.lr.ph364.us375
-  br i1 %min.iters.check935, label %.preheader381.preheader956, label %vector.memcheck936
-
-vector.memcheck936:                               ; preds = %.preheader381.preheader
-  %9 = mul i64 %indvar930, %i.a                   ; 2 uses
-  %10 = getelementptr i8, ptr %7, i64 %9
-  %11 = getelementptr i8, ptr %8, i64 %9
-  %bound0937 = icmp ult ptr %.0225363.us366.us, %11
-  %bound1938 = icmp ult ptr %i.ba, %10
-  %found.conflict939 = and i1 %bound0937, %bound1938
-  br i1 %found.conflict939, label %.preheader381.preheader956, label %vector.ph940
+vector.memcheck936:                               ; preds = %.lr.ph364.us375
+  %brmerge = select i1 %min.iters.check934, i1 true, i1 %found.conflict938
+  br i1 %brmerge, label %.preheader381.preheader956, label %vector.ph940
 
 vector.ph940:                                     ; preds = %vector.memcheck936
   %i.bd = getelementptr i8, ptr %i.ba, i64 %i.aw
@@ -224,10 +219,10 @@ vector.body942:                                   ; preds = %vector.body942, %ve
 middle.block951:                                  ; preds = %vector.body942
   br i1 %cmp.n952, label %swapfunc.exit.loopexit.us.us, label %.preheader381.preheader956
 
-.preheader381.preheader956:                       ; preds = %vector.memcheck936, %.preheader381.preheader, %middle.block951
-  %.022.i.us.us.ph = phi ptr [ %i.ba, %vector.memcheck936 ], [ %i.ba, %.preheader381.preheader ], [ %i.bd, %middle.block951 ] ; 2 uses
-  %.021.i.us.us.ph = phi ptr [ %.0225363.us366.us, %vector.memcheck936 ], [ %.0225363.us366.us, %.preheader381.preheader ], [ %i.be, %middle.block951 ] ; 2 uses
-  %.0.i.us.us.ph = phi i64 [ %i.d, %vector.memcheck936 ], [ %i.d, %.preheader381.preheader ], [ %i.ax, %middle.block951 ] ; 4 uses
+.preheader381.preheader956:                       ; preds = %vector.memcheck936, %middle.block951
+  %.022.i.us.us.ph = phi ptr [ %i.bd, %middle.block951 ], [ %i.ba, %vector.memcheck936 ] ; 2 uses
+  %.021.i.us.us.ph = phi ptr [ %i.be, %middle.block951 ], [ %.0225363.us366.us, %vector.memcheck936 ] ; 2 uses
+  %.0.i.us.us.ph = phi i64 [ %i.ax, %middle.block951 ], [ %i.d, %vector.memcheck936 ] ; 4 uses
   %i.bj = add nsw i64 %.0.i.us.us.ph, -1
   %xtraiter1022 = and i64 %.0.i.us.us.ph, 3       ; 2 uses
   %lcmp.mod1023.not = icmp eq i64 %xtraiter1022, 0
@@ -290,7 +285,6 @@ middle.block951:                                  ; preds = %vector.body942
 
 swapfunc.exit.loopexit.us.us:                     ; preds = %.preheader381.prol.loopexit, %.preheader381, %middle.block951
   %i.ch = icmp ugt ptr %i.ba, %.0
-  %indvar.next931 = add i64 %indvar930, 1
   br i1 %i.ch, label %.lr.ph364.us375, label %.critedge.us376, !llvm.loop !14
 
 .critedge.us376:                                  ; preds = %swapfunc.exit.loopexit.us.us, %.lr.ph364.us375, %.preheader.us373

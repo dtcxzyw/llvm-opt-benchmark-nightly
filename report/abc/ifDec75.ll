@@ -205,8 +205,7 @@ define range(i32 0, 2) i32 @If_CutPerformCheck75(ptr noundef %0, ptr nofree noun
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = alloca i32, align 4                      ; 4 uses
-  %i.c = alloca [4 x i64], align 16               ; 21 uses
-  %5 = ptrtoaddr ptr %i.c to i64                  ; 3 uses
+  %i.c = alloca [4 x i64], align 16               ; 20 uses
   %i.d = alloca [1000 x i8], align 16             ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #7
   %i.e = load <2 x i64>, ptr %1, align 8, !tbaa !15
@@ -416,7 +415,7 @@ bb.g:                                             ; preds = %._crit_edge.i
 .lr.ph61.i.i:                                     ; preds = %bb.g
   %i.bw = select i1 %i.o, i32 1, i32 %.fr.i.i     ; 4 uses
   %i.bx = sext i32 %i.bw to i64
-  %.idx65.i.i.i = shl nsw i64 %i.bx, 3            ; 2 uses
+  %.idx65.i.i.i = shl nsw i64 %i.bx, 3
   %i.by = getelementptr inbounds i8, ptr %i.c, i64 %.idx65.i.i.i ; 2 uses
   %i.bz = icmp sgt i32 %i.bw, 0
   %wide.trip.count73.i.i.i = zext i32 %i.bw to i64 ; 3 uses
@@ -424,7 +423,6 @@ bb.g:                                             ; preds = %._crit_edge.i
 
 .lr.ph61.split.us.split.us.preheader.i.i:         ; preds = %.lr.ph61.i.i
   %wide.trip.count106.i.i = zext nneg i32 %3 to i64
-  %6 = add i64 %.idx65.i.i.i, %5
   %min.iters.check = icmp ult i32 %i.bw, 4
   %n.vec = and i64 %wide.trip.count73.i.i.i, 2147483644 ; 3 uses
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count73.i.i.i
@@ -464,43 +462,26 @@ bb.h:                                             ; preds = %.lr.ph.us.us.i.i
   %i.ci = shl nuw i32 1, %i.ch
   %i.cj = select i1 %i.cf, i32 1, i32 %i.ci       ; 7 uses
   %i.ck = icmp sgt i32 %i.cj, 0
-  %i.cl = shl i32 %i.cj, 2                        ; 2 uses
-  %i.cm = sext i32 %i.cl to i64                   ; 3 uses
+  %i.cl = shl nsw i32 %i.cj, 2
+  %i.cm = sext i32 %i.cl to i64
   br i1 %i.ck, label %.preheader.us.preheader.i.us.us.us.us.i.i, label %Abc_TtSwapAdjacent.exit.us.us.us.us.i.i
 
 .preheader.us.preheader.i.us.us.us.us.i.i:        ; preds = %.preheader.lr.ph.i.us.us.us.us.i.i
   %i.cn = shl nuw nsw i32 %i.cj, 1
   %i.co = zext nneg i32 %i.cj to i64              ; 6 uses
-  %7 = zext nneg i32 %i.cn to i64                 ; 2 uses
-  %8 = shl nsw i64 %i.cm, 3                       ; 4 uses
-  %9 = add i64 %8, %5
-  %umax = call i64 @llvm.umax.i64(i64 %6, i64 %9)
-  %10 = sub i64 %umax, %5                         ; 2 uses
-  %11 = icmp ne i64 %10, %8
-  %umin = zext i1 %11 to i64                      ; 2 uses
-  %12 = or disjoint i64 %8, %umin
-  %13 = sub i64 %10, %12
-  %umax71 = call i64 @llvm.umax.i64(i64 %8, i64 1)
-  %14 = udiv i64 %13, %umax71
-  %15 = add i64 %14, %umin
-  %16 = shl i64 %15, 3
-  %17 = mul i64 %16, %i.cm                        ; 2 uses
+  %umin = zext nneg i32 %i.cn to i64              ; 2 uses
   %i.cp = shl nuw nsw i64 %i.co, 3                ; 2 uses
-  %i.cq = shl nuw nsw i64 %7, 3                   ; 2 uses
-  %18 = getelementptr i8, ptr %i.c, i64 %17
-  %i.cr = getelementptr i8, ptr %18, i64 %i.cp
+  %i.cq = shl nuw nsw i64 %umin, 3                ; 2 uses
+  %i.cr = getelementptr i8, ptr %i.c, i64 %i.cp
   %scevgep = getelementptr i8, ptr %i.cr, i64 %i.cq
   %scevgep72.a = getelementptr i8, ptr %i.c, i64 %i.cq
   %i.cs = shl nuw nsw i64 %i.co, 4
-  %19 = getelementptr i8, ptr %i.c, i64 %17
-  %scevgep73 = getelementptr i8, ptr %19, i64 %i.cs
+  %scevgep73 = getelementptr i8, ptr %i.c, i64 %i.cs
   %scevgep74 = getelementptr i8, ptr %i.c, i64 %i.cp
   %min.iters.check76 = icmp ult i32 %i.cj, 4
   %bound0 = icmp ult ptr %scevgep74, %scevgep
   %bound1 = icmp ult ptr %scevgep72.a, %scevgep73
   %found.conflict = and i1 %bound0, %bound1
-  %stride.check = icmp slt i32 %i.cl, 0
-  %20 = or i1 %found.conflict, %stride.check
   %n.vec78 = and i64 %i.co, 2147483644
   %xtraiter = and i64 %i.co, 1
   %i.ct = icmp eq i32 %i.cj, 1
@@ -512,8 +493,8 @@ bb.h:                                             ; preds = %.lr.ph.us.us.i.i
 .preheader.us.i.us.us.us.us.i.i:                  ; preds = %._crit_edge.us.i.us.us.us.us.i.i, %.preheader.us.preheader.i.us.us.us.us.i.i
   %.061.us.i.us.us.us.us.i.i = phi ptr [ %i.df, %._crit_edge.us.i.us.us.us.us.i.i ], [ %i.c, %.preheader.us.preheader.i.us.us.us.us.i.i ] ; 3 uses
   %invariant.gep.i.us.us.us.us.i.i = getelementptr inbounds nuw [8 x i8], ptr %.061.us.i.us.us.us.us.i.i, i64 %i.co ; 4 uses
-  %invariant.gep80.i.us.us.us.us.i.i = getelementptr inbounds nuw [8 x i8], ptr %.061.us.i.us.us.us.us.i.i, i64 %7 ; 4 uses
-  %brmerge = select i1 %min.iters.check76, i1 true, i1 %20
+  %invariant.gep80.i.us.us.us.us.i.i = getelementptr inbounds nuw [8 x i8], ptr %.061.us.i.us.us.us.us.i.i, i64 %umin ; 4 uses
+  %brmerge = select i1 %min.iters.check76, i1 true, i1 %found.conflict
   br i1 %brmerge, label %scalar.ph75.preheader, label %vector.body79
 
 scalar.ph75.preheader:                            ; preds = %.preheader.us.i.us.us.us.us.i.i
@@ -766,9 +747,6 @@ declare i32 @llvm.smax.i32(i32, i32) #5
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #6
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #5
 
 attributes #0 = { nofree nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

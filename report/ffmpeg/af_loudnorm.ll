@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.a, %bb.d
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(232) %i.t, ptr noundef nonnull align 8 dereferenceable(232) %i.w, i64 232, i1 false)
   %i.x = load ptr, ptr %1, align 8, !tbaa !64     ; 15 uses
   %i.y = ptrtoaddr ptr %i.x to i64
-  %i.z = load ptr, ptr %.0307, align 8, !tbaa !64 ; 9 uses
+  %i.z = load ptr, ptr %.0307, align 8, !tbaa !64 ; 10 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.k, i64 96
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !63 ; 8 uses
   %i.ac = ptrtoaddr ptr %i.ab to i64
@@ -307,21 +307,23 @@ thread-pre-split.thread567:                       ; preds = %.lr.ph, %bb.g, %.lr
   br i1 %i.cg, label %.preheader368.preheader, label %._crit_edge388.split
 
 .preheader368.preheader:                          ; preds = %.preheader368.lr.ph
-  %wide.trip.count = zext nneg i32 %i.cf to i64   ; 6 uses
+  %wide.trip.count = zext nneg i32 %i.cf to i64   ; 7 uses
   %scevgep807 = getelementptr i8, ptr %i.k, i64 72
   %i.cj = add nsw i32 %i.cc, -1
   %i.ck = zext i32 %i.cj to i64
   %i.cl = mul nuw nsw i64 %i.ci, %i.ck
+  %2 = shl nuw nsw i64 %wide.trip.count, 3        ; 2 uses
   %i.cm = add nuw i64 %i.cl, %wide.trip.count
-  %i.cn = shl i64 %i.cm, 3                        ; 2 uses
-  %scevgep808 = getelementptr i8, ptr %i.x, i64 %i.cn
-  %scevgep809.a = getelementptr i8, ptr %i.z, i64 %i.cn ; 2 uses
+  %i.cn = shl i64 %i.cm, 3
+  %scevgep809 = getelementptr i8, ptr %i.z, i64 %i.cn
+  %scevgep808 = getelementptr i8, ptr %i.x, i64 %2
+  %scevgep809.a = getelementptr i8, ptr %i.z, i64 %2
   %min.iters.check811 = icmp ult i32 %i.cf, 6
   %bound0813 = icmp ult ptr %i.z, %scevgep808
   %bound1814 = icmp ult ptr %i.x, %scevgep809.a
   %found.conflict815 = and i1 %bound0813, %bound1814
   %bound0816 = icmp ult ptr %i.z, %scevgep807
-  %bound1817 = icmp ult ptr %i.ch, %scevgep809.a
+  %bound1817 = icmp ult ptr %i.ch, %scevgep809
   %found.conflict818 = and i1 %bound0816, %bound1817
   %conflict.rdx819 = or i1 %found.conflict815, %found.conflict818
   %n.vec821 = and i64 %wide.trip.count, 2147483644 ; 3 uses

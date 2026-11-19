@@ -204,26 +204,20 @@ bb.p:                                             ; preds = %bb.o, %bb.n, %bb.m
   br i1 %or.cond99.i, label %.preheader101.us.preheader.i, label %.lr.ph120.split.i
 
 .preheader101.us.preheader.i:                     ; preds = %.lr.ph120.i
-  %i.cr = sext i32 %i.cp to i64                   ; 8 uses
+  %i.cr = sext i32 %i.cp to i64                   ; 7 uses
   %i.cs = sext i32 %.086.i to i64
-  %wide.trip.count199.i = zext nneg i32 %i.cm to i64 ; 3 uses
-  %wide.trip.count189.i = zext i32 %i.cp to i64   ; 8 uses
+  %wide.trip.count199.i = zext nneg i32 %i.cm to i64
+  %wide.trip.count189.i = zext i32 %i.cp to i64   ; 9 uses
   br i1 %i.cq, label %.preheader101.us.i.preheader, label %calculate_sums.exit
 
 .preheader101.us.i.preheader:                     ; preds = %.preheader101.us.preheader.i
-  %i.ct = shl nuw nsw i64 %wide.trip.count199.i, 3
-  %3 = add nsw i64 %i.ct, -16
-  %4 = mul i64 %3, %i.cr
-  %i.cu = shl nuw nsw i64 %wide.trip.count189.i, 3 ; 2 uses
-  %5 = getelementptr i8, ptr %i.cg, i64 %4
-  %scevgep = getelementptr i8, ptr %5, i64 %i.cu
+  %i.ct = shl nuw nsw i64 %wide.trip.count189.i, 3
+  %3 = sub nsw i64 %wide.trip.count189.i, %i.cr
+  %i.cu = shl nsw i64 %3, 3
+  %scevgep = getelementptr i8, ptr %i.cg, i64 %i.cu
   %i.cv = mul nsw i64 %i.cr, -8
-  %scevgep107 = getelementptr i8, ptr %i.cg, i64 %i.cv
-  %6 = shl nuw nsw i64 %wide.trip.count199.i, 3
-  %7 = add nsw i64 %6, -8
-  %8 = mul i64 %7, %i.cr
-  %i.cw = getelementptr i8, ptr %i.cg, i64 %8
-  %scevgep108 = getelementptr i8, ptr %i.cw, i64 %i.cu
+  %i.cw = getelementptr i8, ptr %i.cg, i64 %i.cv
+  %scevgep108 = getelementptr i8, ptr %i.cg, i64 %i.ct
   %xtraiter138 = and i64 %wide.trip.count189.i, 3 ; 3 uses
   %i.cx = icmp ult i32 %i.cp, 4
   %unroll_iter142 = and i64 %wide.trip.count189.i, 2147483644
@@ -231,7 +225,7 @@ bb.p:                                             ; preds = %bb.o, %bb.n, %bb.m
   %lcmp.mod141 = icmp ne i64 %xtraiter138, 0
   %min.iters.check = icmp ult i32 %i.cp, 4
   %bound0 = icmp ult ptr %i.cg, %scevgep
-  %bound1 = icmp ult ptr %scevgep107, %scevgep108
+  %bound1 = icmp ult ptr %i.cw, %scevgep108
   %found.conflict = and i1 %bound0, %bound1
   %n.vec = and i64 %wide.trip.count189.i, 2147483644 ; 3 uses
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count189.i

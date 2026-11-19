@@ -205,24 +205,19 @@ bb.a:
   %i.e = zext nneg i32 %i.d to i64                ; 9 uses
   %i.f = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.e
   store i32 %i.d, ptr %i.f, align 4, !tbaa !14
-  %i.g = zext nneg i32 %2 to i64                  ; 56 uses
-  %i.h = shl nuw nsw i64 %i.g, 3                  ; 4 uses
+  %i.g = zext nneg i32 %2 to i64                  ; 55 uses
+  %i.h = shl nuw nsw i64 %i.g, 3                  ; 2 uses
   %i.i = shl nuw nsw i64 %i.g, 3
-  %3 = add nuw nsw i64 %i.h, 8                    ; 2 uses
-  %i.j = add nsw i64 %i.h, -8
-  %4 = mul nuw nsw i64 %i.j, %i.g
+  %i.j = add nuw nsw i64 %i.h, 8                  ; 2 uses
   %i.k = mul nuw nsw i64 %i.g, %i.g
   %i.l = shl nuw nsw i64 %i.k, 3
-  %scevgep12 = getelementptr i8, ptr %0, i64 %i.l ; 2 uses
+  %scevgep12 = getelementptr i8, ptr %0, i64 %i.l
   %i.m = shl nuw nsw i64 %i.g, 3                  ; 3 uses
   %i.n = add nuw nsw i64 %i.m, 8
   %scevgep43 = getelementptr i8, ptr %0, i64 %i.m
   %i.o = add nsw i64 %i.g, -2
-  %5 = getelementptr i8, ptr %0, i64 %i.h
-  %6 = getelementptr i8, ptr %0, i64 %4
-  %7 = getelementptr i8, ptr %6, i64 8
   %i.p = getelementptr i8, ptr %0, i64 %i.h
-  %i.q = getelementptr i8, ptr %0, i64 %3
+  %i.q = getelementptr i8, ptr %0, i64 %i.j
   br label %bb.b
 
 .loopexit.i:                                      ; preds = %._crit_edge121.i, %.preheader111.i
@@ -244,20 +239,17 @@ bb.a:
   br label %.lr.ph.preheader.i9
 
 bb.b:                                             ; preds = %.loopexit.i, %bb.a
-  %indvars.iv147.i = phi i64 [ 0, %bb.a ], [ %indvars.iv.next148.i, %.loopexit.i ] ; 16 uses
+  %indvars.iv147.i = phi i64 [ 0, %bb.a ], [ %indvars.iv.next148.i, %.loopexit.i ] ; 15 uses
   %indvars.iv.i = phi i64 [ 1, %bb.a ], [ %indvars.iv.next.i, %.loopexit.i ] ; 15 uses
   %i.y = xor i64 %indvars.iv147.i, -1
   %i.z = add nsw i64 %i.y, %i.g                   ; 2 uses
   %i.aa = sub nsw i64 %i.o, %indvars.iv147.i      ; 2 uses
   %i.ab = mul i64 %i.i, %indvars.iv147.i
-  %scevgep = getelementptr i8, ptr %5, i64 %i.ab
-  %i.ac = mul i64 %3, %indvars.iv147.i            ; 3 uses
-  %8 = getelementptr i8, ptr %0, i64 %i.ac
-  %scevgep9 = getelementptr i8, ptr %8, i64 8
-  %9 = shl nuw nsw i64 %indvars.iv147.i, 3
-  %scevgep10 = getelementptr i8, ptr %7, i64 %9
-  %scevgep11 = getelementptr i8, ptr %i.p, i64 %i.ac
-  %scevgep13 = getelementptr i8, ptr %i.q, i64 %i.ac ; 2 uses
+  %scevgep = getelementptr i8, ptr %i.p, i64 %i.ab
+  %i.ac = mul i64 %i.j, %indvars.iv147.i          ; 2 uses
+  %scevgep10 = getelementptr i8, ptr %0, i64 %i.ac
+  %scevgep11 = getelementptr i8, ptr %scevgep10, i64 8
+  %scevgep13 = getelementptr i8, ptr %i.q, i64 %i.ac
   %i.ad = xor i64 %indvars.iv147.i, -1
   %i.ae = add nsw i64 %i.ad, %i.g                 ; 10 uses
   %indvars149.i = trunc i64 %indvars.iv147.i to i32 ; 4 uses
@@ -567,13 +559,9 @@ middle.block58:                                   ; preds = %vector.body51
 .preheader.preheader.i:                           ; preds = %.lr.ph118.i.prol.loopexit, %.lr.ph118.i, %middle.block58, %._crit_edge116.i
   %invariant.gep161.i = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.ax ; 7 uses
   %min.iters.check = icmp ult i64 %i.ae, 4
-  %bound0 = icmp ult ptr %scevgep13, %scevgep10
-  %bound1 = icmp ult ptr %scevgep11, %scevgep12
-  %found.conflict = and i1 %bound0, %bound1
   %bound014 = icmp ult ptr %scevgep13, %scevgep
-  %bound115 = icmp ult ptr %scevgep9, %scevgep12
+  %bound115 = icmp ult ptr %scevgep11, %scevgep12
   %found.conflict16 = and i1 %bound014, %bound115
-  %conflict.rdx = or i1 %found.conflict, %found.conflict16
   %min.iters.check17 = icmp ult i64 %i.ae, 16
   %i.ey = and i64 %i.ae, 12
   %n.vec = and i64 %i.ae, -16                     ; 4 uses
@@ -590,7 +578,7 @@ iter.check:                                       ; preds = %._crit_edge121.i, %
   %i.fb = mul nuw nsw i64 %indvars.iv142.i, %i.g  ; 2 uses
   %gep166.i = getelementptr inbounds nuw [8 x i8], ptr %i.au, i64 %i.fb ; 7 uses
   %invariant.gep163.i = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.fb ; 7 uses
-  %brmerge = select i1 %min.iters.check, i1 true, i1 %conflict.rdx
+  %brmerge = select i1 %min.iters.check, i1 true, i1 %found.conflict16
   br i1 %brmerge, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check

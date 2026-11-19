@@ -205,17 +205,17 @@ declare float @cbrtf(float noundef) local_unnamed_addr #25
 define internal fastcc void @edge_enhance_1d(ptr nofree noundef nonnull readonly captures(none) %0, ptr nofree noundef nonnull captures(none) %1, i32 noundef %2, i32 noundef %3, i32 noundef range(i32 256, 513) %4) unnamed_addr #15 {
 bb.a:
   %i.a = icmp eq i32 %4, 256                      ; 8 uses
-  %i.b = add i32 %3, -1                           ; 2 uses
+  %i.b = add nsw i32 %3, -1                       ; 2 uses
   %i.c = icmp sgt i32 %3, 2
   br i1 %i.c, label %.lr.ph, label %.preheader87
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.d = sext i32 %2 to i64                       ; 13 uses
+  %i.d = sext i32 %2 to i64                       ; 10 uses
   %i.e = icmp sgt i32 %2, 2
   br i1 %i.e, label %.preheader88.lr.ph.preheader, label %.preheader.lr.ph
 
 .preheader88.lr.ph.preheader:                     ; preds = %.lr.ph
-  %wide.trip.count = zext i32 %i.b to i64         ; 4 uses
+  %wide.trip.count = zext nneg i32 %i.b to i64
   %i.f = sub nsw i64 0, %i.d                      ; 2 uses
   %i.g = sub nsw i64 1, %i.d                      ; 2 uses
   %.sroa.speculated174 = select i1 %i.a, double 0.000000e+00, double 2.000000e+00 ; 2 uses
@@ -224,38 +224,29 @@ bb.a:
   %.sroa.speculated166 = select i1 %i.a, double -2.000000e+00, double 0.000000e+00 ; 2 uses
   %.sroa.speculated162 = select i1 %i.a, double 0.000000e+00, double -2.000000e+00 ; 2 uses
   %i.i = add nsw i32 %2, -2                       ; 3 uses
-  %5 = add nuw nsw i64 %wide.trip.count, 2305843009213693950
-  %6 = mul i64 %5, %i.d
   %i.j = add nsw i32 %2, -3
-  %i.k = zext i32 %i.j to i64                     ; 3 uses
-  %7 = shl nuw nsw i64 %i.k, 3                    ; 2 uses
-  %8 = add i64 %6, %i.k
-  %i.l = shl i64 %8, 3
+  %i.k = zext i32 %i.j to i64
+  %i.l = shl nuw nsw i64 %i.k, 3                  ; 4 uses
   %i.m = getelementptr i8, ptr %0, i64 %i.l
   %scevgep = getelementptr i8, ptr %i.m, i64 24
-  %i.n = shl nuw nsw i64 %wide.trip.count, 3
-  %9 = add nsw i64 %i.n, -8
-  %10 = mul i64 %9, %i.d                          ; 2 uses
-  %i.o = getelementptr i8, ptr %0, i64 %10
-  %i.p = getelementptr i8, ptr %i.o, i64 %7
+  %i.n = shl nuw nsw i64 %i.d, 3                  ; 4 uses
+  %i.o = getelementptr i8, ptr %0, i64 %i.n
+  %i.p = getelementptr i8, ptr %i.o, i64 %i.l
   %scevgep202 = getelementptr i8, ptr %i.p, i64 24
-  %11 = shl nuw nsw i64 %i.d, 3                   ; 2 uses
-  %scevgep203 = getelementptr i8, ptr %0, i64 %11
-  %12 = mul nuw nsw i64 %i.d, %wide.trip.count
-  %13 = add nuw i64 %12, %i.k
-  %i.q = shl i64 %13, 3
+  %scevgep203 = getelementptr i8, ptr %0, i64 %i.n
+  %i.q = shl nuw nsw i64 %i.d, 4                  ; 2 uses
   %i.r = getelementptr i8, ptr %0, i64 %i.q
-  %scevgep204.a = getelementptr i8, ptr %i.r, i64 24
-  %14 = shl nuw nsw i64 %i.d, 4
-  %scevgep205 = getelementptr i8, ptr %0, i64 %14
-  %i.s = getelementptr i8, ptr %1, i64 %10
-  %i.t = getelementptr i8, ptr %i.s, i64 %7
+  %scevgep204.a = getelementptr i8, ptr %i.r, i64 %i.l
+  %scevgep204 = getelementptr i8, ptr %scevgep204.a, i64 24
+  %scevgep205 = getelementptr i8, ptr %0, i64 %i.q
+  %i.s = getelementptr i8, ptr %1, i64 %i.n
+  %i.t = getelementptr i8, ptr %i.s, i64 %i.l
   %scevgep206 = getelementptr i8, ptr %i.t, i64 16 ; 3 uses
-  %i.u = getelementptr i8, ptr %1, i64 %11
+  %i.u = getelementptr i8, ptr %1, i64 %i.n
   %scevgep207 = getelementptr i8, ptr %i.u, i64 8 ; 3 uses
   %i.v = zext i32 %i.i to i64                     ; 2 uses
   %min.iters.check = icmp ult i32 %i.i, 4
-  %bound0 = icmp ult ptr %scevgep207, %scevgep204.a
+  %bound0 = icmp ult ptr %scevgep207, %scevgep204
   %bound1 = icmp ult ptr %scevgep205, %scevgep206
   %found.conflict = and i1 %bound0, %bound1
   %bound0208 = icmp ult ptr %scevgep207, %scevgep202

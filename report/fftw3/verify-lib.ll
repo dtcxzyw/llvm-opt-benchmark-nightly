@@ -204,7 +204,7 @@ bb.a:
   %i.f = zext nneg i32 %2 to i64                  ; 3 uses
   %i.g = zext nneg i32 %4 to i64
   %wide.trip.count79 = zext nneg i32 %3 to i64    ; 2 uses
-  %wide.trip.count69 = zext i32 %i.c to i64       ; 2 uses
+  %wide.trip.count69 = zext i32 %i.c to i64
   %i.h = mul nuw nsw i64 %i.e, %i.f
   %i.i = add nuw nsw i64 %wide.trip.count79, 1152921504606846975
   %i.j = mul i64 %i.i, %i.f
@@ -214,8 +214,6 @@ bb.a:
   %scevgep99 = getelementptr i8, ptr %1, i64 %i.m
   %i.n = shl nuw nsw i64 %i.e, 4
   %scevgep100 = getelementptr i8, ptr %0, i64 %i.n
-  %5 = shl nuw nsw i64 %wide.trip.count69, 4      ; 2 uses
-  %6 = add nuw nsw i64 %5, 16
   %i.o = shl nuw nsw i64 %i.e, 4
   %i.p = shl nuw nsw i64 %i.e, 4
   %min.iters.check131 = icmp ult i32 %4, 4
@@ -234,13 +232,13 @@ bb.a:
   %i.r = mul i32 %2, %i.q
   %i.s = zext i32 %i.r to i64                     ; 3 uses
   %i.t = shl nuw nsw i64 %i.s, 4                  ; 2 uses
-  %i.u = add nuw nsw i64 %6, %i.t
+  %i.u = add nuw nsw i64 %i.t, 32
   %i.v = mul i64 %i.u, %i.e
   %scevgep126 = getelementptr i8, ptr %1, i64 %i.v
   %i.w = add nuw nsw i64 %i.s, 1
   %i.x = mul i64 %i.o, %i.w
   %scevgep127 = getelementptr nuw i8, ptr %1, i64 %i.x
-  %i.y = add nuw nsw i64 %5, %i.t
+  %i.y = add nuw nsw i64 %i.t, 16
   %i.z = mul i64 %i.y, %i.e
   %scevgep128 = getelementptr i8, ptr %0, i64 %i.z
   %i.aa = mul i64 %i.p, %i.s
@@ -634,10 +632,9 @@ bb.a:
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph.split
   %i.g = zext nneg i32 %4 to i64                  ; 8 uses
-  %i.h = zext nneg i32 %2 to i64                  ; 4 uses
+  %i.h = zext nneg i32 %2 to i64                  ; 3 uses
   %wide.trip.count58 = zext nneg i32 %3 to i64
-  %6 = mul nuw nsw i64 %i.g, %i.h
-  %i.i = shl i64 %6, 4
+  %i.i = shl nuw nsw i64 %i.g, 4
   %i.j = mul nuw nsw i64 %i.g, %i.h
   %i.k = shl i64 %i.j, 4
   %min.iters.check = icmp eq i32 %4, 1
@@ -1040,20 +1037,19 @@ bb.a:
   %i.ab = icmp sgt i32 %i.w, 0
   %or.cond.i135.us = and i1 %i.aa, %i.ab
   %i.ac = icmp sgt i32 %i.x, 0                    ; 6 uses
-  %i.ad = zext i32 %i.x to i64                    ; 73 uses
-  %i.ae = zext i32 %i.w to i64                    ; 13 uses
+  %i.ad = zext i32 %i.x to i64                    ; 72 uses
+  %i.ae = zext i32 %i.w to i64                    ; 11 uses
   %wide.trip.count58.i144.us = zext i32 %.0111244.us to i64 ; 10 uses
   %i.af = icmp slt i32 %.0111244.us, 1            ; 2 uses
   %i.ag = icmp sgt i32 %i.w, 1                    ; 2 uses
   %i.ah = add i32 %i.w, -1                        ; 5 uses
   %i.ai = sext i32 %i.w to i64                    ; 6 uses
-  %wide.trip.count69.i175.us = zext i32 %i.ah to i64 ; 4 uses
+  %wide.trip.count69.i175.us = zext nneg i32 %i.ah to i64 ; 2 uses
   %i.aj = icmp slt i32 %i.w, 1
   %or.cond.i.us.not258 = or i1 %i.af, %i.aj
   %brmerge = select i1 %i.j, i1 true, i1 %i.af
   %brmerge255 = select i1 %i.j, i1 true, i1 %or.cond.i.us.not258
-  %i.ak = shl nuw nsw i64 %i.ae, 4
-  %14 = mul i64 %i.ak, %i.ad
+  %i.ak = shl nuw nsw i64 %i.ad, 4
   %i.al = shl nuw nsw i64 %i.ae, 4
   %i.am = mul i64 %i.al, %i.ad                    ; 2 uses
   %i.an = shl nuw nsw i64 %wide.trip.count58.i144.us, 4
@@ -1061,8 +1057,6 @@ bb.a:
   %i.ap = mul i64 %i.ao, %i.ae
   %i.aq = add i64 %i.ap, 16
   %i.ar = mul i64 %i.aq, %i.ad
-  %15 = shl nuw nsw i64 %wide.trip.count69.i175.us, 4 ; 2 uses
-  %16 = add nuw nsw i64 %15, 16
   %i.as = shl nuw nsw i64 %i.ad, 4
   %i.at = shl nuw nsw i64 %i.ad, 4
   %i.au = shl nsw i64 %i.ai, 4
@@ -1079,8 +1073,6 @@ bb.a:
   %i.bf = mul i64 %i.be, %i.ae
   %i.bg = add i64 %i.bf, 16
   %i.bh = mul i64 %i.bg, %i.ad
-  %17 = shl nuw nsw i64 %wide.trip.count69.i175.us, 4 ; 2 uses
-  %18 = add nuw nsw i64 %17, 16
   %i.bi = shl nuw nsw i64 %i.ad, 4
   %i.bj = shl nuw nsw i64 %i.ad, 4
   %i.bk = shl nsw i64 %i.ai, 4
@@ -1090,8 +1082,7 @@ bb.a:
   %i.bo = mul i64 %i.bn, %i.ai
   %i.bp = add i64 %i.bo, 16
   %i.bq = mul i64 %i.bp, %i.ad
-  %i.br = shl nuw nsw i64 %i.ae, 4
-  %19 = mul i64 %i.br, %i.ad
+  %i.br = shl nuw nsw i64 %i.ad, 4                ; 2 uses
   %i.bs = shl nuw nsw i64 %i.ae, 4
   %i.bt = mul i64 %i.bs, %i.ad
   %xtraiter = and i32 %i.w, 3                     ; 3 uses
@@ -1108,6 +1099,7 @@ bb.a:
   %i.bw = getelementptr i8, ptr %9, i64 %i.bq
   %i.bx = getelementptr i8, ptr %9, i64 %i.bh
   %min.iters.check481 = icmp ult i32 %i.x, 4
+  %14 = getelementptr i8, ptr %10, i64 %i.br
   %stride.check486 = icmp slt i64 %i.bl, 0
   %n.vec488 = and i64 %i.ad, 2147483646           ; 3 uses
   %cmp.n495 = icmp eq i64 %n.vec488, %i.ad
@@ -1169,7 +1161,7 @@ arand.exit.us:                                    ; preds = %.lr.ph.i.us, %bb.b
 .lr.ph.us:                                        ; preds = %.preheader223.us, %aphase_shift.exit158.us
   %indvars.iv = phi i64 [ %indvars.iv.next, %aphase_shift.exit158.us ], [ 0, %.preheader223.us ] ; 3 uses
   %i.ci = mul i64 %i.s, %indvars.iv               ; 2 uses
-  %i.cj = add i64 %19, %i.ci
+  %i.cj = add i64 %i.br, %i.ci
   %.pre287 = mul nsw i64 %indvars.iv, %i.m        ; 3 uses
   br i1 %.not, label %.lr.ph.us._crit_edge, label %bb.c
 
@@ -1445,7 +1437,7 @@ aphase_shift.exit158.us:                          ; preds = %._crit_edge42.split
   br i1 %i.ac, label %.preheader47.i164.us.preheader, label %arol.exit193.us
 
 .preheader47.i164.us.preheader:                   ; preds = %.preheader47.lr.ph.split.i160.us
-  %invariant.gep.a = getelementptr i8, ptr %10, i64 %i.ge
+  %invariant.gep.a = getelementptr i8, ptr %14, i64 %i.ge
   br label %.preheader47.i164.us
 
 .preheader47.i164.us:                             ; preds = %.preheader47.i164.us.preheader, %._crit_edge51.i169.us
@@ -1461,8 +1453,7 @@ aphase_shift.exit158.us:                          ; preds = %._crit_edge42.split
   br i1 %min.iters.check481, label %scalar.ph480.preheader, label %vector.memcheck482
 
 vector.memcheck482:                               ; preds = %.preheader47.i164.us
-  %20 = add nsw i64 %i.ad, %i.gn
-  %i.gr = shl nsw i64 %20, 4
+  %i.gr = shl nsw i64 %i.gn, 4
   %gep.a = getelementptr i8, ptr %invariant.gep.a, i64 %i.gr
   %bound0483 = icmp ult ptr %i.go, %scevgep479
   %bound1484 = icmp ult ptr %i.gi, %gep.a
@@ -1576,13 +1567,13 @@ scalar.ph480:                                     ; preds = %scalar.ph480.prol.l
   %i.ih = mul i32 %i.w, %i.ig
   %i.ii = zext i32 %i.ih to i64                   ; 3 uses
   %i.ij = shl nuw nsw i64 %i.ii, 4                ; 2 uses
-  %i.ik = add nuw nsw i64 %18, %i.ij
+  %i.ik = add nuw nsw i64 %i.ij, 32
   %i.il = mul i64 %i.ik, %i.ad
   %scevgep451 = getelementptr i8, ptr %i.gi, i64 %i.il
   %i.im = add nuw nsw i64 %i.ii, 1
   %i.in = mul i64 %i.bi, %i.im
   %scevgep452 = getelementptr nuw i8, ptr %i.gi, i64 %i.in
-  %i.io = add nuw nsw i64 %17, %i.ij
+  %i.io = add nuw nsw i64 %i.ij, 16
   %i.ip = mul i64 %i.io, %i.ad
   %scevgep453 = getelementptr i8, ptr %i.gh, i64 %i.ip
   %i.iq = mul i64 %i.bj, %i.ii
@@ -1985,13 +1976,13 @@ scalar.ph400:                                     ; preds = %scalar.ph400.prol.l
   %i.re = mul i32 %i.w, %i.rd
   %i.rf = zext i32 %i.re to i64                   ; 3 uses
   %i.rg = shl nuw nsw i64 %i.rf, 4                ; 2 uses
-  %i.rh = add nuw nsw i64 %16, %i.rg
+  %i.rh = add nuw nsw i64 %i.rg, 32
   %i.ri = mul i64 %i.rh, %i.ad
   %scevgep371 = getelementptr i8, ptr %i.pe, i64 %i.ri
   %i.rj = add nuw nsw i64 %i.rf, 1
   %i.rk = mul i64 %i.as, %i.rj
   %scevgep372 = getelementptr nuw i8, ptr %i.pe, i64 %i.rk
-  %i.rl = add nuw nsw i64 %15, %i.rg
+  %i.rl = add nuw nsw i64 %i.rg, 16
   %i.rm = mul i64 %i.rl, %i.ad
   %scevgep373 = getelementptr i8, ptr %i.pd, i64 %i.rm
   %i.rn = mul i64 %i.at, %i.rf
@@ -2235,7 +2226,7 @@ arol.exit.us:                                     ; preds = %._crit_edge51.i.us,
 .preheader.lr.ph.split.i.us:                      ; preds = %._crit_edge234.us, %aphase_shift.exit.us
   %indvars.iv278 = phi i64 [ %indvars.iv.next279, %aphase_shift.exit.us ], [ 0, %._crit_edge234.us ] ; 3 uses
   %i.vi = mul i64 %i.n, %indvars.iv278            ; 2 uses
-  %i.vj = add i64 %14, %i.vi
+  %i.vj = add i64 %i.ak, %i.vi
   %i.vk = mul nsw i64 %indvars.iv278, %i.m        ; 2 uses
   %i.vl = getelementptr inbounds [16 x i8], ptr %10, i64 %i.vk ; 4 uses
   %i.vm = getelementptr inbounds [16 x i8], ptr %9, i64 %i.vk ; 4 uses

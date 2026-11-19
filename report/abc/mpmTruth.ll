@@ -205,7 +205,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %spec.select = tail call i32 @llvm.smax.i32(i32 %3, i32 %2) ; 8 uses
-  %spec.select117 = tail call i32 @llvm.smin.i32(i32 %3, i32 %2) ; 10 uses
+  %spec.select117 = tail call i32 @llvm.smin.i32(i32 %3, i32 %2) ; 8 uses
   %i.b = icmp slt i32 %1, 7
   br i1 %i.b, label %bb.c, label %bb.d
 
@@ -430,39 +430,24 @@ bb.h:                                             ; preds = %bb.f
 
 .preheader120.lr.ph:                              ; preds = %bb.h
   %i.dr = add nsw i32 %spec.select, -6            ; 2 uses
-  %i.ds = shl nuw nsw i32 1, %i.dr                ; 2 uses
+  %i.ds = shl nuw nsw i32 1, %i.dr
   %i.dt = add nsw i32 %spec.select117, -6         ; 5 uses
   %i.du = shl nuw nsw i32 1, %i.dt
-  %i.dv = shl nuw nsw i32 2, %i.dt                ; 2 uses
+  %i.dv = shl nuw nsw i32 2, %i.dt
   %i.dw = shl nuw nsw i32 2, %i.dr
   %i.dx = zext nneg i32 %i.dw to i64
-  %i.dy = zext nneg i32 %i.dv to i64              ; 3 uses
+  %i.dy = zext nneg i32 %i.dv to i64
   %i.dz = zext nneg i32 %i.du to i64              ; 6 uses
-  %i.ea = zext nneg i32 %i.ds to i64              ; 4 uses
-  %4 = shl nuw nsw i64 %i.dz, 4
-  %umax = tail call i64 @llvm.umax.i64(i64 %i.ea, i64 %i.dy)
-  %5 = icmp samesign ult i32 %i.dv, %i.ds
-  %umin = zext i1 %5 to i64                       ; 2 uses
-  %6 = or disjoint i64 %umin, %i.dy
-  %7 = sub nsw i64 %umax, %6
+  %i.ea = zext nneg i32 %i.ds to i64              ; 3 uses
+  %4 = add nuw nsw i64 %i.ea, %i.dz
+  %5 = shl nuw nsw i64 %4, 3
+  %6 = shl nuw nsw i64 %i.dz, 4
   %i.eb = add nsw i32 %spec.select, -5
-  %8 = zext i32 %i.eb to i64
-  %9 = add nuw nsw i64 %8, 3
+  %i.ec = zext i32 %i.eb to i64
+  %i.ed = add nuw nsw i64 %i.ec, 3
+  %i.ee = getelementptr i8, ptr %0, i64 %5
+  %i.ef = getelementptr i8, ptr %0, i64 %6
   %min.iters.check = icmp ult i32 %i.dt, 2
-  %10 = add nsw i32 %spec.select117, -5
-  %i.ec = zext nneg i32 %10 to i64
-  %11 = lshr i64 %7, %i.ec
-  %i.ed = add i64 %11, %umin
-  %12 = add nsw i32 %spec.select117, -5
-  %13 = zext nneg i32 %12 to i64
-  %14 = shl i64 %i.ed, %13                        ; 2 uses
-  %15 = shl i64 %14, 3
-  %i.ee = getelementptr i8, ptr %0, i64 %15
-  %i.ef = getelementptr i8, ptr %i.ee, i64 %4
-  %16 = add i64 %14, %i.ea
-  %17 = add i64 %16, %i.dz
-  %18 = shl i64 %17, 3
-  %19 = getelementptr i8, ptr %0, i64 %18
   %n.vec = and i64 %i.dz, 2147483644
   %xtraiter = and i64 %i.dz, 1
   %i.eg = icmp eq i32 %i.dt, 0
@@ -474,13 +459,13 @@ bb.h:                                             ; preds = %bb.f
 .preheader120:                                    ; preds = %.preheader120.lr.ph, %bb.i
   %indvar = phi i64 [ 0, %.preheader120.lr.ph ], [ %indvar.next, %bb.i ] ; 2 uses
   %.1124 = phi ptr [ %0, %.preheader120.lr.ph ], [ %i.fa, %bb.i ] ; 3 uses
-  %i.eh = shl i64 %indvar, %9                     ; 2 uses
+  %i.eh = shl i64 %indvar, %i.ed                  ; 2 uses
+  %scevgep = getelementptr i8, ptr %i.ee, i64 %i.eh
+  %scevgep164 = getelementptr i8, ptr %i.ef, i64 %i.eh
   %invariant.gep = getelementptr inbounds nuw [8 x i8], ptr %.1124, i64 %i.dz ; 2 uses
   %invariant.gep157 = getelementptr inbounds nuw [8 x i8], ptr %.1124, i64 %i.ea ; 2 uses
-  %20 = getelementptr i8, ptr %i.ef, i64 %i.eh
-  %21 = getelementptr i8, ptr %19, i64 %i.eh
-  %bound0 = icmp ult ptr %invariant.gep, %21
-  %bound1 = icmp ult ptr %invariant.gep157, %20
+  %bound0 = icmp ult ptr %invariant.gep, %scevgep
+  %bound1 = icmp ult ptr %invariant.gep157, %scevgep164
   %found.conflict = and i1 %bound0, %bound1
   br label %.preheader119
 
@@ -588,9 +573,6 @@ declare void @llvm.assume(i1 noundef) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #6
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #6
 
 attributes #0 = { nounwind memory(readwrite, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

@@ -205,13 +205,13 @@ bb.b:                                             ; preds = %.lr.ph92, %._crit_e
   %indvars.iv119 = phi i64 [ %indvars.iv.next120, %._crit_edge.us.us.us ], [ 0, %.preheader67.lr.ph.split.us.us.split.us ] ; 2 uses
   %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.al, i64 %indvars.iv119
   %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !20 ; 8 uses
-  %scevgep = getelementptr i8, ptr %i.ap, i64 128 ; 2 uses
-  %scevgep183 = getelementptr i8, ptr %scevgep, i64 %i.ac ; 3 uses
+  %scevgep = getelementptr i8, ptr %i.ap, i64 128 ; 3 uses
+  %scevgep183 = getelementptr i8, ptr %scevgep, i64 %i.ac ; 2 uses
   %scevgep184 = getelementptr nuw i8, ptr %i.ap, i64 2 ; 4 uses
-  %scevgep185 = getelementptr i8, ptr %i.ap, i64 126 ; 2 uses
-  %scevgep186 = getelementptr i8, ptr %scevgep185, i64 %i.ac ; 3 uses
-  %bound0187 = icmp ult ptr %i.ap, %scevgep183
-  %bound1188 = icmp ult ptr %scevgep184, %scevgep186
+  %scevgep185 = getelementptr i8, ptr %i.ap, i64 126 ; 3 uses
+  %scevgep186 = getelementptr i8, ptr %scevgep185, i64 %i.ac ; 2 uses
+  %bound0187 = icmp ult ptr %i.ap, %scevgep
+  %bound1188 = icmp ult ptr %scevgep184, %scevgep185
   %found.conflict189 = and i1 %bound0187, %bound1188
   br label %vector.memcheck
 
@@ -321,13 +321,13 @@ middle.block:                                     ; preds = %vector.body, %scala
   %indvars.iv111 = phi i64 [ %indvars.iv.next112, %.loopexit.us.us ], [ 0, %.preheader67.lr.ph.us ] ; 2 uses
   %i.cb = getelementptr inbounds nuw [8 x i8], ptr %i.al, i64 %indvars.iv111 ; 2 uses
   %i.cc = load ptr, ptr %i.cb, align 8, !tbaa !20 ; 8 uses
-  %scevgep247 = getelementptr i8, ptr %i.cc, i64 128 ; 2 uses
-  %scevgep248 = getelementptr i8, ptr %scevgep247, i64 %i.af ; 3 uses
+  %scevgep247 = getelementptr i8, ptr %i.cc, i64 128 ; 3 uses
+  %scevgep248 = getelementptr i8, ptr %scevgep247, i64 %i.af ; 2 uses
   %scevgep249 = getelementptr nuw i8, ptr %i.cc, i64 2 ; 4 uses
-  %scevgep250 = getelementptr i8, ptr %i.cc, i64 126 ; 2 uses
-  %scevgep251 = getelementptr i8, ptr %scevgep250, i64 %i.af ; 3 uses
-  %bound0257 = icmp ult ptr %i.cc, %scevgep248
-  %bound1258 = icmp ult ptr %scevgep249, %scevgep251
+  %scevgep250 = getelementptr i8, ptr %i.cc, i64 126 ; 3 uses
+  %scevgep251 = getelementptr i8, ptr %scevgep250, i64 %i.af ; 2 uses
+  %bound0257 = icmp ult ptr %i.cc, %scevgep247
+  %bound1258 = icmp ult ptr %scevgep249, %scevgep250
   %found.conflict259 = and i1 %bound0257, %bound1258
   br label %vector.memcheck253
 

@@ -46,7 +46,7 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   br i1 %i.l, label %.preheader.lr.ph, label %._crit_edge45.split
 
 .preheader.lr.ph:                                 ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit
-  %i.m = load i64, ptr %i.c, align 8, !tbaa !13   ; 32 uses
+  %i.m = load i64, ptr %i.c, align 8, !tbaa !13   ; 33 uses
   %i.n = icmp sgt i64 %i.m, 0
   br i1 %i.n, label %.preheader.lr.ph.split, label %._crit_edge45.split
 
@@ -57,7 +57,7 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   %i.r = load ptr, ptr %1, align 8, !tbaa !16, !noalias !38 ; 11 uses
   %i.s = load i64, ptr %i.p, align 8, !tbaa !17, !noalias !38 ; 6 uses
   %i.t = icmp eq i64 %i.s, 0
-  %i.u = load ptr, ptr %3, align 8, !tbaa !16     ; 9 uses
+  %i.u = load ptr, ptr %3, align 8, !tbaa !16     ; 10 uses
   %i.v = load i64, ptr %i.o, align 8, !tbaa !13   ; 21 uses
   br i1 %i.t, label %.preheader.lr.ph.split.split.us, label %.preheader.lr.ph.split.split
 
@@ -404,19 +404,20 @@ _ZNK5Eigen10MatrixBaseINS_13CwiseBinaryOpINS_8internal20scalar_difference_opIddE
 .preheader.us54.preheader:                        ; preds = %.preheader.lr.ph.split.split.split
   %i.eh = shl i64 %i.m, 3                         ; 2 uses
   %scevgep = getelementptr i8, ptr %i.r, i64 %i.eh
-  %i.ei = shl i64 %i.k, 3                         ; 2 uses
-  %scevgep128 = getelementptr i8, ptr %i.q, i64 %i.ei
-  %i.ej = getelementptr i8, ptr %i.u, i64 %i.eh
-  %i.ek = getelementptr i8, ptr %i.ej, i64 %i.ei
-  %scevgep129 = getelementptr i8, ptr %i.ek, i64 -8 ; 2 uses
+  %4 = add nuw i64 %i.m, %i.k
+  %i.ei = shl i64 %4, 3
+  %scevgep128 = getelementptr i8, ptr %i.u, i64 %i.ei
+  %i.ej = getelementptr i8, ptr %scevgep128, i64 -8
+  %i.ek = getelementptr i8, ptr %i.q, i64 8
+  %scevgep129 = getelementptr i8, ptr %i.u, i64 %i.eh
   %min.iters.check = icmp ugt i64 %i.m, 5
   %ident.check.not = icmp eq i64 %i.v, 1
   %or.cond159 = select i1 %min.iters.check, i1 %ident.check.not, i1 false
-  %bound0 = icmp ult ptr %i.u, %scevgep128
+  %bound0 = icmp ult ptr %i.u, %i.ek
   %bound1 = icmp ult ptr %i.q, %scevgep129
   %found.conflict = and i1 %bound0, %bound1
   %bound0130 = icmp ult ptr %i.u, %scevgep
-  %bound1131 = icmp ult ptr %i.r, %scevgep129
+  %bound1131 = icmp ult ptr %i.r, %i.ej
   %found.conflict132 = and i1 %bound0130, %bound1131
   %conflict.rdx = or i1 %found.conflict, %found.conflict132
   %n.vec = and i64 %i.m, 9223372036854775804      ; 3 uses

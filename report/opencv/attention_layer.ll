@@ -204,7 +204,7 @@ bb.a:
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !114  ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %.val, i64 8
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !235, !nonnull !113, !align !144
-  %i.g = load i64, ptr %i.f, align 8, !tbaa !62   ; 4 uses
+  %i.g = load i64, ptr %i.f, align 8, !tbaa !62   ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %.val, i64 16
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !236, !nonnull !113, !align !144
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !114  ; 3 uses
@@ -216,25 +216,19 @@ bb.a:
 
 .lr.ph.preheader.i.i.i:                           ; preds = %.lr.ph4.i.i.i
   %i.n = sext i32 %.val2 to i64                   ; 2 uses
-  %wide.trip.count.i.i.i = sext i32 %.val3 to i64 ; 2 uses
-  %2 = shl nsw i64 %wide.trip.count.i.i.i, 2
-  %3 = add nsw i64 %2, -4
-  %4 = mul i64 %i.g, %3
+  %wide.trip.count.i.i.i = sext i32 %.val3 to i64
+  %2 = mul i64 %i.g, %i.n
+  %3 = shl i64 %2, 2                              ; 3 uses
   %i.o = shl i64 %i.m, 3
-  %i.p = add i64 %4, %i.o                         ; 2 uses
+  %i.p = add i64 %3, %i.o                         ; 2 uses
   %scevgep = getelementptr i8, ptr %i.j, i64 %i.p
-  %5 = mul i64 %i.g, %i.n
-  %6 = shl i64 %5, 2                              ; 2 uses
-  %scevgep7 = getelementptr i8, ptr %i.j, i64 %6
+  %scevgep7 = getelementptr i8, ptr %i.j, i64 %3
   %scevgep8 = getelementptr i8, ptr %i.d, i64 %i.p
-  %scevgep9 = getelementptr i8, ptr %i.d, i64 %6
+  %scevgep9 = getelementptr i8, ptr %i.d, i64 %3
   %min.iters.check = icmp ult i64 %i.m, 4
   %bound0 = icmp ult ptr %scevgep9, %scevgep
   %bound1 = icmp ult ptr %scevgep7, %scevgep8
   %found.conflict = and i1 %bound0, %bound1
-  %.mask = and i64 %i.g, 2305843009213693952
-  %stride.check = icmp ne i64 %.mask, 0
-  %7 = or i1 %found.conflict, %stride.check
   %n.vec = and i64 %i.m, -4                       ; 3 uses
   %cmp.n = icmp eq i64 %i.m, %n.vec
   br label %.lr.ph.i.i.i
@@ -244,7 +238,7 @@ bb.a:
   %i.q = mul i64 %indvars.iv.i.i.i, %i.g          ; 2 uses
   %i.r = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %i.q ; 2 uses
   %i.s = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %i.q ; 3 uses
-  %brmerge = select i1 %min.iters.check, i1 true, i1 %7
+  %brmerge = select i1 %min.iters.check, i1 true, i1 %found.conflict
   br i1 %brmerge, label %scalar.ph.preheader, label %vector.body
 
 vector.body:                                      ; preds = %.lr.ph.i.i.i, %vector.body
