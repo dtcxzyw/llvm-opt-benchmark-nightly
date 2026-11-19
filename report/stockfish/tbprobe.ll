@@ -205,7 +205,7 @@ _ZN9Stockfish12_GLOBAL__N_111set_dtz_mapERNS0_7TBTableILNS0_6TBTypeE1EEEPhNS_4Fi
   %i.bcz = shl nuw nsw i8 %i.it, 1
   %i.bda = zext nneg i8 %i.bcz to i64             ; 2 uses
   %i.bdb = mul nuw nsw i64 %i.bcx, %i.bda
-  %scevgep.i.i = getelementptr nuw i8, ptr %scevgep190.i.i.i, i64 %i.bdb
+  %scevgep.i.i = getelementptr i8, ptr %scevgep190.i.i.i, i64 %i.bdb
   %i.bdc = add nuw nsw i64 %i.bda, 2
   %i.bdd = mul nuw nsw i64 %i.bdc, %i.bcx
   %scevgep97.i.i = getelementptr i8, ptr %scevgep190.i.i.i, i64 %i.bdd

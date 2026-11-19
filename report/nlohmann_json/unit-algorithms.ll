@@ -205,14 +205,14 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %4 = sext i32 %2 to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZN8nlohmann16json_abi_v3_12_06detail9iter_implINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEEppEv.exit
-  %indvars.iv = phi i64 [ %4, %.lr.ph ], [ %indvars.iv.next, %_ZN8nlohmann16json_abi_v3_12_06detail9iter_implINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEEppEv.exit ] ; 2 uses
+  %.02 = phi i32 [ %2, %.lr.ph ], [ %5, %_ZN8nlohmann16json_abi_v3_12_06detail9iter_implINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEEppEv.exit ] ; 2 uses
   store i64 0, ptr %3, align 8
+  %4 = sext i32 %.02 to i64
   store i8 5, ptr %3, align 8, !tbaa !21
-  store i64 %indvars.iv, ptr %i.b, align 8, !tbaa !22
+  store i64 %4, ptr %i.b, align 8, !tbaa !22
   %i.f = invoke noundef nonnull align 8 dereferenceable(16) ptr @_ZNK8nlohmann16json_abi_v3_12_06detail9iter_implINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEEdeEv(ptr noundef nonnull align 8 dereferenceable(32) %0)
           to label %bb.c unwind label %bb.g       ; 3 uses
 
@@ -237,7 +237,7 @@ bb.d:                                             ; preds = %bb.c
   unreachable
 
 _ZN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES3_IhSaIhEEvED2Ev.exit: ; preds = %bb.c
-  %indvars.iv.next = add nsw i64 %indvars.iv, 1
+  %5 = add nsw i32 %.02, 1
   %i.m = load ptr, ptr %0, align 8, !tbaa !40
   %i.n = load i8, ptr %i.m, align 8, !tbaa !21
   switch i8 %i.n, label %bb.f [

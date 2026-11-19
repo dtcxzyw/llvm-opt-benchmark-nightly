@@ -205,7 +205,7 @@ bb.x:                                             ; preds = %_RNvXs4_NtNtCs1xwej
   %.sroa.15.16.copyload = load i64, ptr %.sroa.15.16..sroa.7.0..sroa_idx2.i.sroa_idx, align 8, !noalias !27910
   %.sroa.16.16..sroa.7.0..sroa_idx2.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.fw, i64 56
   %.sroa.16.16.copyload = load i8, ptr %.sroa.16.16..sroa.7.0..sroa_idx2.i.sroa_idx, align 8, !noalias !27910
-  %i.fy = add nuw i64 %i.fv, 1                    ; 3 uses
+  %i.fy = add i64 %i.fv, 1                        ; 3 uses
   store i64 %i.fy, ptr %.sroa.228.0..sroa_idx, align 8, !alias.scope !27910
   %i.fz = icmp eq i64 %.sroa.0.0.copyload1.i, 2
   br i1 %i.fz, label %bb.bn, label %bb.bo
