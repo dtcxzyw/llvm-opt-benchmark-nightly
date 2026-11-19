@@ -95,7 +95,6 @@ target triple = "x86_64-unknown-linux-gnu"
 @79 = private unnamed_addr constant [13 x i8] c"InFileWrapper", align 1, !guid !7
 @80 = private unnamed_addr constant [7 x i8] c"file_id", align 1, !guid !7
 @81 = private unnamed_addr constant [5 x i8] c"value", align 1, !guid !7
-@switch.table._RINvNtNtCsqiF3OZxLbD_3mbe8expander11transcriber14expand_subtreeNCNvMNtCs33K2ylI4knu_10hir_expand11declarativeNtB14_24DeclarativeMacroExpander6expand0EB16_.273 = private unnamed_addr constant [3 x i64] [i64 576460752303423488, i64 384307168202282326, i64 288230376151711744], align 8
 
 ; Function Attrs: nonlazybind uwtable
 define hidden { ptr, i32 } @_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionINtNtCs9GitHPCrz2Q_5rowan3api11SyntaxTokenNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEE3zipNtNtCsdovh4xi6v3I_4span7hygiene13SyntaxContextECs33K2ylI4knu_10hir_expand(ptr noundef %0, i32 noundef range(i32 0, 2) %1, i32 %2) unnamed_addr #0 personality ptr @rust_eh_personality !guid !47 {
@@ -498,7 +497,6 @@ bb.a:
   %i.ca = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 10 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 10 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 7 uses
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   %i.cd = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 2 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %2, i64 64 ; 2 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
@@ -901,12 +899,7 @@ bb.bk:                                            ; preds = %bb.bj
   call void @llvm.lifetime.start.p0(ptr nonnull %i.z), !noalias !1122
   store ptr null, ptr %i.z, align 8, !noalias !1122
   call void @llvm.lifetime.start.p0(ptr nonnull %i.y), !noalias !1122
-  %4 = load i64, ptr %3, align 8, !range !20, !alias.scope !1120, !noundef !8
-  %i.hy = load i64, ptr %i.cd, align 8, !alias.scope !1120, !noundef !8 ; 3 uses
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RINvNtNtCsqiF3OZxLbD_3mbe8expander11transcriber14expand_subtreeNCNvMNtCs33K2ylI4knu_10hir_expand11declarativeNtB14_24DeclarativeMacroExpander6expand0EB16_.273, i64 %4
-  %switch.load = load i64, ptr %switch.gep, align 8
-  %5 = icmp ult i64 %i.hy, %switch.load
-  call void @llvm.assume(i1 %5)
+  %i.hy = load i64, ptr %i.cd, align 8, !alias.scope !1120, !noundef !8 ; 2 uses
   %i.hz = load i64, ptr %i.ce, align 8, !alias.scope !1120, !noundef !8 ; 3 uses
   %i.ia = icmp ult i64 %i.hz, 1152921504606846976
   call void @llvm.assume(i1 %i.ia)
@@ -1024,12 +1017,7 @@ bb.bv:                                            ; preds = %bb.bu
           to label %switch.lookup unwind label %.thread269.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !inline_history !883
 
 switch.lookup:                                    ; preds = %bb.bv
-  %6 = load i64, ptr %3, align 8, !range !20, !alias.scope !1120, !noundef !8
-  %i.ji = load i64, ptr %i.cd, align 8, !alias.scope !1120, !noundef !8 ; 4 uses
-  %switch.gep694 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RINvNtNtCsqiF3OZxLbD_3mbe8expander11transcriber14expand_subtreeNCNvMNtCs33K2ylI4knu_10hir_expand11declarativeNtB14_24DeclarativeMacroExpander6expand0EB16_.273, i64 %6
-  %switch.load695 = load i64, ptr %switch.gep694, align 8
-  %7 = icmp ult i64 %i.ji, %switch.load695
-  call void @llvm.assume(i1 %7)
+  %i.ji = load i64, ptr %i.cd, align 8, !alias.scope !1120, !noundef !8 ; 3 uses
   %i.jj = load i64, ptr %i.ce, align 8, !alias.scope !1120, !noundef !8 ; 4 uses
   %i.jk = icmp ult i64 %i.jj, 1152921504606846976
   call void @llvm.assume(i1 %i.jk)
@@ -1432,7 +1420,6 @@ bb.a:
   %i.cn = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 10 uses
   %i.co = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 10 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 7 uses
-  %4 = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   %i.cq = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 2 uses
   %i.cr = getelementptr inbounds nuw i8, ptr %2, i64 64 ; 2 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
@@ -1835,12 +1822,7 @@ bb.bm:                                            ; preds = %bb.bl
   call void @llvm.lifetime.start.p0(ptr nonnull %i.z), !noalias !1543
   store ptr null, ptr %i.z, align 8, !noalias !1543
   call void @llvm.lifetime.start.p0(ptr nonnull %i.y), !noalias !1543
-  %5 = load i64, ptr %4, align 8, !range !20, !alias.scope !1541, !noundef !8
-  %i.iq = load i64, ptr %i.cq, align 8, !alias.scope !1541, !noundef !8 ; 3 uses
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RINvNtNtCsqiF3OZxLbD_3mbe8expander11transcriber14expand_subtreeNCNvMNtCs33K2ylI4knu_10hir_expand11declarativeNtB14_24DeclarativeMacroExpander6expand0EB16_.273, i64 %5
-  %switch.load = load i64, ptr %switch.gep, align 8
-  %6 = icmp ult i64 %i.iq, %switch.load
-  call void @llvm.assume(i1 %6)
+  %i.iq = load i64, ptr %i.cq, align 8, !alias.scope !1541, !noundef !8 ; 2 uses
   %i.ir = load i64, ptr %i.cr, align 8, !alias.scope !1541, !noundef !8 ; 3 uses
   %i.is = icmp ult i64 %i.ir, 1152921504606846976
   call void @llvm.assume(i1 %i.is)
@@ -1958,12 +1940,7 @@ bb.bx:                                            ; preds = %bb.bw
           to label %switch.lookup unwind label %.thread332.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !1548, !inline_history !1279
 
 switch.lookup:                                    ; preds = %bb.bx
-  %7 = load i64, ptr %4, align 8, !range !20, !alias.scope !1541, !noundef !8
-  %i.ka = load i64, ptr %i.cq, align 8, !alias.scope !1541, !noundef !8 ; 4 uses
-  %switch.gep763 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RINvNtNtCsqiF3OZxLbD_3mbe8expander11transcriber14expand_subtreeNCNvMNtCs33K2ylI4knu_10hir_expand11declarativeNtB14_24DeclarativeMacroExpander6expand0EB16_.273, i64 %7
-  %switch.load764 = load i64, ptr %switch.gep763, align 8
-  %8 = icmp ult i64 %i.ka, %switch.load764
-  call void @llvm.assume(i1 %8)
+  %i.ka = load i64, ptr %i.cq, align 8, !alias.scope !1541, !noundef !8 ; 3 uses
   %i.kb = load i64, ptr %i.cr, align 8, !alias.scope !1541, !noundef !8 ; 4 uses
   %i.kc = icmp ult i64 %i.kb, 1152921504606846976
   call void @llvm.assume(i1 %i.kc)

@@ -205,7 +205,6 @@ $_ZGVZN4mlir6detail14TypeIDResolverINS_5xegpu20DistributeLayoutAttrEvE13resolveT
 @_ZGVZN4mlir6detail14TypeIDResolverINS_10ShapedTypeEvE13resolveTypeIDEvE2id = linkonce_odr global i64 0, comdat, align 8
 @.str.11 = private unnamed_addr constant [67 x i8] c"StringRef llvm::getTypeName() [DesiredTypeName = mlir::ShapedType]\00", align 1
 @_ZN4mlir6detail14TypeIDResolverINS_10VectorTypeEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
-@_ZN4mlir6detail14TypeIDResolverINS_5xegpu14TensorDescTypeEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @.str.12 = private unnamed_addr constant [90 x i8] c"StringRef llvm::getTypeName() [DesiredTypeName = (anonymous namespace)::UnrollCreateNdOp]\00", align 1
 @.str.13 = private unnamed_addr constant [26 x i8] c"vector::_M_realloc_insert\00", align 1
 @_ZTVN12_GLOBAL__N_118UnrollPrefetchNdOpE = internal unnamed_addr constant { [7 x ptr] } { [7 x ptr] [ptr null, ptr null, ptr @_ZN12_GLOBAL__N_113UnrollPatternIN4mlir5xegpu12PrefetchNdOpEED2Ev, ptr @_ZN12_GLOBAL__N_118UnrollPrefetchNdOpD0Ev, ptr @_ZNK4mlir6detail31OpOrInterfaceRewritePatternBaseINS_5xegpu12PrefetchNdOpEE15matchAndRewriteEPNS_9OperationERNS_15PatternRewriterE, ptr @_ZN4mlir14RewritePattern6anchorEv, ptr @_ZNK12_GLOBAL__N_118UnrollPrefetchNdOp15matchAndRewriteEN4mlir5xegpu12PrefetchNdOpERNS1_15PatternRewriterE] }, align 8
@@ -608,7 +607,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #18
   %i.b = load ptr, ptr %3, align 8, !tbaa !128
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 144
-  %.sroa.0.0.copyload.i.i.i.i.i.i = load ptr, ptr %i.c, align 8, !tbaa !130 ; 2 uses
+  %.sroa.0.0.copyload.i.i.i.i.i.i = load ptr, ptr %i.c, align 8, !tbaa !130
   %i.d = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_10VectorTypeEvE2idE ; 2 uses
   %spec.select.i.i = select i1 %i.d, ptr %3, ptr null
   store ptr %spec.select.i.i, ptr %9, align 8
@@ -625,8 +624,6 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #18
-  %17 = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_5xegpu14TensorDescTypeEvE2idE
-  tail call void @llvm.assume(i1 %17)
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #18
   %i.j = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #18
@@ -1029,7 +1026,7 @@ bb.a:
   %i.c = inttoptr i64 %i.b to ptr
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !128
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 144
-  %.sroa.0.0.copyload.i.i.i.i.i.i = load ptr, ptr %i.e, align 8, !tbaa !130 ; 2 uses
+  %.sroa.0.0.copyload.i.i.i.i.i.i = load ptr, ptr %i.e, align 8, !tbaa !130
   %i.f = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_10VectorTypeEvE2idE
   br i1 %i.f, label %bb.b, label %bb.c
 
@@ -1039,8 +1036,6 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.f
 
 bb.c:                                             ; preds = %bb.a
-  %14 = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_5xegpu14TensorDescTypeEvE2idE
-  tail call void @llvm.assume(i1 %14)
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #18
   %i.h = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #18
@@ -1443,7 +1438,7 @@ bb.at:                                            ; preds = %_ZN4llvm11SmallVect
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #18
   %i.lj = load ptr, ptr %i.lc, align 8, !tbaa !128
   %i.lk = getelementptr inbounds nuw i8, ptr %i.lj, i64 144
-  %.sroa.0.0.copyload.i.i.i.i.i.i.i = load ptr, ptr %i.lk, align 8, !tbaa !130 ; 2 uses
+  %.sroa.0.0.copyload.i.i.i.i.i.i.i = load ptr, ptr %i.lk, align 8, !tbaa !130
   %i.ll = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_10VectorTypeEvE2idE ; 2 uses
   %spec.select.i.i.i = select i1 %i.ll, ptr %i.lc, ptr null
   store ptr %spec.select.i.i.i, ptr %4, align 8
@@ -1460,8 +1455,6 @@ bb.au:                                            ; preds = %bb.at
 
 bb.av:                                            ; preds = %bb.at
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
-  %48 = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_5xegpu14TensorDescTypeEvE2idE
-  call void @llvm.assume(i1 %48)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #18
   %i.lr = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #18
@@ -1603,7 +1596,7 @@ bb.a:
   %i.c = inttoptr i64 %i.b to ptr
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !128
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 144
-  %.sroa.0.0.copyload.i.i.i.i.i.i = load ptr, ptr %i.e, align 8, !tbaa !130 ; 2 uses
+  %.sroa.0.0.copyload.i.i.i.i.i.i = load ptr, ptr %i.e, align 8, !tbaa !130
   %i.f = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_10VectorTypeEvE2idE
   br i1 %i.f, label %bb.b, label %bb.c
 
@@ -1613,8 +1606,6 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.f
 
 bb.c:                                             ; preds = %bb.a
-  %14 = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_5xegpu14TensorDescTypeEvE2idE
-  tail call void @llvm.assume(i1 %14)
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #18
   %i.h = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #18
@@ -2017,7 +2008,7 @@ bb.a:
   %i.c = inttoptr i64 %i.b to ptr
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !128
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 144
-  %.sroa.0.0.copyload.i.i.i.i.i.i = load ptr, ptr %i.e, align 8, !tbaa !130 ; 2 uses
+  %.sroa.0.0.copyload.i.i.i.i.i.i = load ptr, ptr %i.e, align 8, !tbaa !130
   %i.f = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_10VectorTypeEvE2idE
   br i1 %i.f, label %bb.b, label %bb.c
 
@@ -2027,8 +2018,6 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.f
 
 bb.c:                                             ; preds = %bb.a
-  %14 = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_5xegpu14TensorDescTypeEvE2idE
-  tail call void @llvm.assume(i1 %14)
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #18
   %i.h = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #18
@@ -2431,7 +2420,7 @@ _ZN4llvm23SmallVectorTemplateBaseIN4mlir5ValueELb1EE9push_backES2_.exit.us209.us
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #18
   %i.mi = load ptr, ptr %.sroa.01.0.copyload, align 8, !tbaa !128
   %i.mj = getelementptr inbounds nuw i8, ptr %i.mi, i64 144
-  %.sroa.0.0.copyload.i.i.i.i.i.i.i = load ptr, ptr %i.mj, align 8, !tbaa !130 ; 2 uses
+  %.sroa.0.0.copyload.i.i.i.i.i.i.i = load ptr, ptr %i.mj, align 8, !tbaa !130
   %i.mk = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_10VectorTypeEvE2idE ; 2 uses
   %spec.select.i.i.i = select i1 %i.mk, ptr %.sroa.01.0.copyload, ptr null
   store ptr %spec.select.i.i.i, ptr %5, align 8
@@ -2448,8 +2437,6 @@ bb.ar:                                            ; preds = %._crit_edge221.spli
 
 bb.as:                                            ; preds = %._crit_edge221.split
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #18
-  %37 = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_5xegpu14TensorDescTypeEvE2idE
-  call void @llvm.assume(i1 %37)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #18
   %i.mq = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #18
@@ -2847,7 +2834,7 @@ _ZN4llvm11SmallVectorIN4mlir4TypeELj6EEC2EmRKS2_.exit: ; preds = %.lr.ph.prehead
   %i.at = inttoptr i64 %i.as to ptr
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !128, !noalias !804
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 144
-  %.sroa.0.0.copyload.i.i.i.i.i.i.i = load ptr, ptr %i.av, align 8, !tbaa !130, !noalias !804 ; 2 uses
+  %.sroa.0.0.copyload.i.i.i.i.i.i.i = load ptr, ptr %i.av, align 8, !tbaa !130, !noalias !804
   %i.aw = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_10VectorTypeEvE2idE
   br i1 %i.aw, label %bb.d, label %bb.e
 
@@ -2857,8 +2844,6 @@ bb.d:                                             ; preds = %_ZN4llvm11SmallVect
   br label %_ZNK12_GLOBAL__N_113UnrollPatternIN4mlir5xegpu6DpasOpEE4packENS1_5ValueENS1_9TypeRangeEN4llvm8ArrayRefIlEENS1_8LocationERNS1_15PatternRewriterE.exit
 
 bb.e:                                             ; preds = %_ZN4llvm11SmallVectorIN4mlir4TypeELj6EEC2EmRKS2_.exit
-  %19 = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_5xegpu14TensorDescTypeEvE2idE
-  call void @llvm.assume(i1 %19)
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #18, !noalias !804
   %i.ay = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #18, !noalias !804
@@ -3261,7 +3246,7 @@ _ZN4llvm23SmallVectorTemplateBaseIN4mlir5ValueELb1EE9push_backES2_.exit.us292.us
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #18
   %i.pa = load ptr, ptr %.sroa.01.0.copyload, align 8, !tbaa !128
   %i.pb = getelementptr inbounds nuw i8, ptr %i.pa, i64 144
-  %.sroa.0.0.copyload.i.i.i.i.i.i.i = load ptr, ptr %i.pb, align 8, !tbaa !130 ; 2 uses
+  %.sroa.0.0.copyload.i.i.i.i.i.i.i = load ptr, ptr %i.pb, align 8, !tbaa !130
   %i.pc = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_10VectorTypeEvE2idE ; 2 uses
   %spec.select.i.i.i = select i1 %i.pc, ptr %.sroa.01.0.copyload, ptr null
   store ptr %spec.select.i.i.i, ptr %5, align 8
@@ -3278,8 +3263,6 @@ bb.be:                                            ; preds = %._crit_edge302.spli
 
 bb.bf:                                            ; preds = %._crit_edge302.split
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #18
-  %40 = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_5xegpu14TensorDescTypeEvE2idE
-  call void @llvm.assume(i1 %40)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #18
   %i.pi = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #18
@@ -3653,7 +3636,7 @@ _ZN4llvm11SmallVectorIN4mlir4TypeELj6EEC2EmRKS2_.exit: ; preds = %.lr.ph.prehead
   %i.at = inttoptr i64 %i.as to ptr
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !128, !noalias !828
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 144
-  %.sroa.0.0.copyload.i.i.i.i.i.i.i = load ptr, ptr %i.av, align 8, !tbaa !130, !noalias !828 ; 2 uses
+  %.sroa.0.0.copyload.i.i.i.i.i.i.i = load ptr, ptr %i.av, align 8, !tbaa !130, !noalias !828
   %i.aw = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_10VectorTypeEvE2idE
   br i1 %i.aw, label %bb.d, label %bb.e
 
@@ -3663,8 +3646,6 @@ bb.d:                                             ; preds = %_ZN4llvm11SmallVect
   br label %_ZNK12_GLOBAL__N_113UnrollPatternIN4mlir5xegpu8DpasMxOpEE4packENS1_5ValueENS1_9TypeRangeEN4llvm8ArrayRefIlEENS1_8LocationERNS1_15PatternRewriterE.exit
 
 bb.e:                                             ; preds = %_ZN4llvm11SmallVectorIN4mlir4TypeELj6EEC2EmRKS2_.exit
-  %19 = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_5xegpu14TensorDescTypeEvE2idE
-  call void @llvm.assume(i1 %19)
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #18, !noalias !828
   %i.ay = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #18, !noalias !828
@@ -4067,7 +4048,7 @@ bb.q:                                             ; preds = %bb.p, %_ZN4mlir6det
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #18
   %i.eq = load ptr, ptr %i.ej, align 8, !tbaa !128
   %i.er = getelementptr inbounds nuw i8, ptr %i.eq, i64 144
-  %.sroa.0.0.copyload.i.i.i.i.i.i.i = load ptr, ptr %i.er, align 8, !tbaa !130 ; 2 uses
+  %.sroa.0.0.copyload.i.i.i.i.i.i.i = load ptr, ptr %i.er, align 8, !tbaa !130
   %i.es = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_10VectorTypeEvE2idE ; 2 uses
   %spec.select.i.i.i = select i1 %i.es, ptr %i.ej, ptr null
   store ptr %spec.select.i.i.i, ptr %4, align 8
@@ -4084,8 +4065,6 @@ bb.r:                                             ; preds = %._crit_edge61
 
 bb.s:                                             ; preds = %._crit_edge61
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
-  %30 = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_5xegpu14TensorDescTypeEvE2idE
-  call void @llvm.assume(i1 %30)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #18
   %i.ey = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #18
@@ -4488,7 +4467,7 @@ _ZNK12_GLOBAL__N_113UnrollPatternIN4mlir5xegpu13StoreMatrixOpEE16getUnrolledType
   %i.cz = inttoptr i64 %i.cy to ptr
   %i.da = load ptr, ptr %i.cz, align 8, !tbaa !128, !noalias !880
   %i.db = getelementptr inbounds nuw i8, ptr %i.da, i64 144
-  %.sroa.0.0.copyload.i.i.i.i.i.i.i = load ptr, ptr %i.db, align 8, !tbaa !130, !noalias !880 ; 2 uses
+  %.sroa.0.0.copyload.i.i.i.i.i.i.i = load ptr, ptr %i.db, align 8, !tbaa !130, !noalias !880
   %i.dc = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_10VectorTypeEvE2idE
   br i1 %i.dc, label %bb.m, label %bb.n
 
@@ -4498,8 +4477,6 @@ bb.m:                                             ; preds = %_ZNK12_GLOBAL__N_11
   br label %_ZNK12_GLOBAL__N_113UnrollPatternIN4mlir5xegpu13StoreMatrixOpEE4packENS1_5ValueENS1_9TypeRangeEN4llvm8ArrayRefIlEENS1_8LocationERNS1_15PatternRewriterE.exit
 
 bb.n:                                             ; preds = %_ZNK12_GLOBAL__N_113UnrollPatternIN4mlir5xegpu13StoreMatrixOpEE16getUnrolledTypesENS1_10ShapedTypeEN4llvm8ArrayRefIlEE.exit
-  %28 = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_5xegpu14TensorDescTypeEvE2idE
-  call void @llvm.assume(i1 %28)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #18, !noalias !880
   %i.de = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #18, !noalias !880
@@ -4902,7 +4879,7 @@ bb.ba:                                            ; preds = %bb.az, %bb.ay
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #18
   %i.no = load ptr, ptr %i.nh, align 8, !tbaa !128
   %i.np = getelementptr inbounds nuw i8, ptr %i.no, i64 144
-  %.sroa.0.0.copyload.i.i.i.i.i.i.i = load ptr, ptr %i.np, align 8, !tbaa !130 ; 2 uses
+  %.sroa.0.0.copyload.i.i.i.i.i.i.i = load ptr, ptr %i.np, align 8, !tbaa !130
   %i.nq = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_10VectorTypeEvE2idE ; 2 uses
   %spec.select.i.i.i = select i1 %i.nq, ptr %i.nh, ptr null
   store ptr %spec.select.i.i.i, ptr %4, align 8
@@ -4919,8 +4896,6 @@ bb.bb:                                            ; preds = %._crit_edge293
 
 bb.bc:                                            ; preds = %._crit_edge293
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
-  %44 = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_5xegpu14TensorDescTypeEvE2idE
-  call void @llvm.assume(i1 %44)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #18
   %i.nw = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #18
@@ -5163,7 +5138,7 @@ bb.a:
   %i.c = inttoptr i64 %i.b to ptr
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !128
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 144
-  %.sroa.0.0.copyload.i.i.i.i.i.i = load ptr, ptr %i.e, align 8, !tbaa !130 ; 2 uses
+  %.sroa.0.0.copyload.i.i.i.i.i.i = load ptr, ptr %i.e, align 8, !tbaa !130
   %i.f = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_10VectorTypeEvE2idE
   br i1 %i.f, label %bb.b, label %bb.c
 
@@ -5173,8 +5148,6 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.f
 
 bb.c:                                             ; preds = %bb.a
-  %14 = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_5xegpu14TensorDescTypeEvE2idE
-  tail call void @llvm.assume(i1 %14)
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #18
   %i.h = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #18
@@ -5577,7 +5550,7 @@ bb.a:
   %i.c = inttoptr i64 %i.b to ptr
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !128
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 144
-  %.sroa.0.0.copyload.i.i.i.i.i.i = load ptr, ptr %i.e, align 8, !tbaa !130 ; 2 uses
+  %.sroa.0.0.copyload.i.i.i.i.i.i = load ptr, ptr %i.e, align 8, !tbaa !130
   %i.f = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_10VectorTypeEvE2idE
   br i1 %i.f, label %bb.b, label %bb.c
 
@@ -5587,8 +5560,6 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.f
 
 bb.c:                                             ; preds = %bb.a
-  %14 = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_5xegpu14TensorDescTypeEvE2idE
-  tail call void @llvm.assume(i1 %14)
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #18
   %i.h = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #18
@@ -5991,7 +5962,7 @@ bb.a:
   %i.c = inttoptr i64 %i.b to ptr
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !128
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 144
-  %.sroa.0.0.copyload.i.i.i.i.i.i = load ptr, ptr %i.e, align 8, !tbaa !130 ; 2 uses
+  %.sroa.0.0.copyload.i.i.i.i.i.i = load ptr, ptr %i.e, align 8, !tbaa !130
   %i.f = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_10VectorTypeEvE2idE
   br i1 %i.f, label %bb.b, label %bb.c
 
@@ -6001,8 +5972,6 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.f
 
 bb.c:                                             ; preds = %bb.a
-  %14 = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_5xegpu14TensorDescTypeEvE2idE
-  tail call void @llvm.assume(i1 %14)
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #18
   %i.h = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #18
@@ -6134,7 +6103,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #18
   %i.b = load ptr, ptr %3, align 8, !tbaa !128
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 144
-  %.sroa.0.0.copyload.i.i.i.i.i.i = load ptr, ptr %i.c, align 8, !tbaa !130 ; 2 uses
+  %.sroa.0.0.copyload.i.i.i.i.i.i = load ptr, ptr %i.c, align 8, !tbaa !130
   %i.d = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_10VectorTypeEvE2idE ; 2 uses
   %spec.select.i.i = select i1 %i.d, ptr %3, ptr null
   store ptr %spec.select.i.i, ptr %9, align 8
@@ -6151,8 +6120,6 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #18
-  %17 = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_5xegpu14TensorDescTypeEvE2idE
-  tail call void @llvm.assume(i1 %17)
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #18
   %i.j = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #18

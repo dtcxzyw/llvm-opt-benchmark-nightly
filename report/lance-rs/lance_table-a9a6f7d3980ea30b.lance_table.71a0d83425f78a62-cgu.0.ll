@@ -205,7 +205,6 @@ begin_hunk_0
 @switch.table._RNvMNtNtCs9KQ7US1M400_11lance_table11transaction14manifest_buildNtNtB4_7builder11Transaction32build_manifest_with_read_version = private unnamed_addr constant [16 x ptr] [ptr @565, ptr @566, ptr @567, ptr @568, ptr @569, ptr @570, ptr @571, ptr @572, ptr @573, ptr @574, ptr @575, ptr @576, ptr @577, ptr @578, ptr @579, ptr @580], align 8
 @switch.table._RNvMNtNtCs9KQ7US1M400_11lance_table11transaction14manifest_buildNtNtB4_7builder11Transaction32build_manifest_with_read_version.5631 = private unnamed_addr constant [16 x i8] c"\06\06\09\0B\07\0F\0B\05\07\10\06\07\0C\11\05\0B", align 8
 @switch.table._RNvMs1_NtCs9KQ7US1M400_11lance_table6rowidsNtB5_13RowIdSequence21mask_to_offset_ranges = private unnamed_addr constant [3 x i8] c"(( ", align 8
-@switch.table._RNvMs1_NtCs9KQ7US1M400_11lance_table6rowidsNtB5_13RowIdSequence21mask_to_offset_ranges.5632 = private unnamed_addr constant [3 x i64] [i64 4611686018427387904, i64 2305843009213693952, i64 1152921504606846976], align 8
 @switch.table._RNvMs3_NtNtCsgczF5crJ4sT_3std2io5errorNtB5_5Error4kind = private unnamed_addr constant [122 x i8] c"\01\00)#))\22)))\0D&\01))\1C\0C\1F)\0E\0F\14)))\1D\1B\18\19\11 \0B))\1E!)$\10\12))))))))))))))))))))))))))))))))))))))))))))))))))))))$))\08\09\0A\05)\06\03))\07))\16\02)\04)'\13)))))\1A", align 1
 @switch.table._RNvNtNtCs9KQ7US1M400_11lance_table11transaction8validate18validate_operation = private unnamed_addr constant [16 x ptr] [ptr @565, ptr @566, ptr poison, ptr @568, ptr @569, ptr @570, ptr @571, ptr @572, ptr @573, ptr @574, ptr @575, ptr @576, ptr @577, ptr @578, ptr poison, ptr @580], align 8
 @switch.table._RNvNtNtCs9KQ7US1M400_11lance_table11transaction8validate18validate_operation.5633 = private unnamed_addr constant [16 x i8] [i8 6, i8 6, i8 poison, i8 11, i8 7, i8 15, i8 11, i8 5, i8 7, i8 16, i8 6, i8 7, i8 12, i8 17, i8 poison, i8 11], align 8
@@ -608,16 +607,12 @@ bb.fn:                                            ; preds = %.loopexit.split-lp.
   unreachable
 
 _RINvMsj_NtCs40k4W9msRzi_5alloc3vecINtB6_3VecINtNtNtCscI6d9CVNmLh_4core3ops5range5RangeyEE16extend_desugaredINtNtCs9KQ7US1M400_11lance_table6rowids16GroupingIteratorINtNtNtNtBN_4iter8adapters10filter_map9FilterMapINtNtB2H_9enumerate9EnumerateINtNtB8_5boxed3BoxDNtNtNtB2J_6traits12double_ended19DoubleEndedIteratorp4ItemyEL_EENCNvMs1_B1K_NtB1K_13RowIdSequence21mask_to_offset_rangess0_0EEEB1M_.exit: ; preds = %_RNvXs_NtCs40k4W9msRzi_5alloc5allocNtB4_6GlobalNtNtCscI6d9CVNmLh_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i.i, %bb.fh
-  %i.vi = load i64, ptr %.sroa.034.0, align 8, !range !103, !noundef !97 ; 2 uses
+  %i.vi = load i64, ptr %.sroa.034.0, align 8, !range !103, !noundef !97
   %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvMs1_NtCs9KQ7US1M400_11lance_table6rowidsNtB5_13RowIdSequence21mask_to_offset_ranges, i64 %i.vi
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
-  %switch.gep1181 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvMs1_NtCs9KQ7US1M400_11lance_table6rowidsNtB5_13RowIdSequence21mask_to_offset_ranges.5632, i64 %i.vi
-  %switch.load1182 = load i64, ptr %switch.gep1181, align 8
   %i.vj = getelementptr inbounds nuw i8, ptr %.sroa.012.0731, i64 %switch.ext
-  %i.vk = load i64, ptr %i.vj, align 8, !noundef !97 ; 2 uses
-  %3 = icmp ult i64 %i.vk, %switch.load1182
-  call void @llvm.assume(i1 %3)
+  %i.vk = load i64, ptr %i.vj, align 8, !noundef !97
   %i.vl = add i64 %i.vk, %.sroa.0.0483730
   br label %bb.bz
 

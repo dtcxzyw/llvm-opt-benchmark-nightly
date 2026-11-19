@@ -204,7 +204,6 @@ $_ZTVN4llvm2cl11OptionValueIbEE = comdat any
 @_ZN4llvm3Any6TypeIdIPKNS_6ModuleEE2IdE = external global i8, align 1
 @_ZN4llvm3Any6TypeIdIPKNS_8FunctionEE2IdE = external global i8, align 1
 @_ZN4llvm3Any6TypeIdIPKNS_13LazyCallGraph3SCCEE2IdE = external global i8, align 1
-@_ZN4llvm3Any6TypeIdIPKNS_4LoopEE2IdE = external global i8, align 1
 @_ZN4llvm22BlockFrequencyAnalysis3KeyE = external global %"struct.llvm::AnalysisKey", align 8
 @llvm.global_ctors = appending global [1 x { i32, ptr, ptr }] [{ i32, ptr, ptr } { i32 65535, ptr @_GLOBAL__sub_I_SampleProfileProbe.cpp, ptr null }]
 
@@ -607,9 +606,7 @@ bb.l:                                             ; preds = %_ZNK4llvm3Any3isaIP
   %i.cn = load ptr, ptr %i.ca, align 8, !tbaa !17
   %i.co = getelementptr inbounds nuw i8, ptr %i.cn, i64 24
   %i.cp = load ptr, ptr %i.co, align 8
-  %i.cq = call noundef ptr %i.cp(ptr noundef nonnull align 8 dereferenceable(8) %i.ca) #24, !inline_history !241
-  %7 = icmp eq ptr %i.cq, @_ZN4llvm3Any6TypeIdIPKNS_4LoopEE2IdE
-  call void @llvm.assume(i1 %7)
+  %i.cq = call noundef ptr %i.cp(ptr noundef nonnull align 8 dereferenceable(8) %i.ca) #24, !inline_history !241 ; 0 uses
   %i.cr = load ptr, ptr %3, align 8, !tbaa !74
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cr, i64 8
   %i.ct = load ptr, ptr %i.cs, align 8, !tbaa !249

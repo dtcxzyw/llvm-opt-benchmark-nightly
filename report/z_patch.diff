@@ -1,0 +1,920 @@
+diff --git a/llvm/docs/ReleaseNotes.md b/llvm/docs/ReleaseNotes.md
+index 4857ef3a2003f3..469b38d69750ce 100644
+--- a/llvm/docs/ReleaseNotes.md
++++ b/llvm/docs/ReleaseNotes.md
+@@ -307,6 +307,10 @@ Makes programs 10x faster by doing Special New Thing.
+ - The IR Outliner has been removed, due to lack of a maintainer and the presence
+   of correctness issues.
+ 
++- GlobalDCE has a new `drop-assumes` option, enabled late in the optimization
++  pipeline. With it, globals whose only uses feed `llvm.assume` are removed
++  together with those uses, so they are no longer emitted into the object file.
++
+ ### Changes to Vectorizers
+ 
+ ### Changes to the AArch64 Backend
+diff --git a/llvm/include/llvm/Transforms/IPO/GlobalDCE.h b/llvm/include/llvm/Transforms/IPO/GlobalDCE.h
+index 488f9d1b189528..4274d3ca24e856 100644
+--- a/llvm/include/llvm/Transforms/IPO/GlobalDCE.h
++++ b/llvm/include/llvm/Transforms/IPO/GlobalDCE.h
+@@ -30,6 +30,7 @@ class Comdat;
+ class Constant;
+ class Function;
+ class GlobalVariable;
++class Instruction;
+ class Metadata;
+ class Module;
+ class Value;
+@@ -38,7 +39,8 @@ class ModulePass;
+ /// Pass to remove unused function declarations.
+ class GlobalDCEPass : public OptionalPassInfoMixin<GlobalDCEPass> {
+ public:
+-  GlobalDCEPass(bool InLTOPostLink = false) : InLTOPostLink(InLTOPostLink) {}
++  GlobalDCEPass(bool InLTOPostLink = false, bool DropAssumes = false)
++      : InLTOPostLink(InLTOPostLink), DropAssumes(DropAssumes) {}
+ 
+   LLVM_ABI PreservedAnalyses run(Module &M, ModuleAnalysisManager &);
+ 
+@@ -49,8 +51,16 @@ class GlobalDCEPass : public OptionalPassInfoMixin<GlobalDCEPass> {
+ private:
+   bool InLTOPostLink = false;
+ 
++  /// Do not keep globals alive for uses that only feed llvm.assume, and drop
++  /// those uses from the assumptions.
++  bool DropAssumes = false;
++
+   SmallPtrSet<GlobalValue*, 32> AliveGlobals;
+ 
++  /// Instructions that are only used, directly or transitively, by
++  /// llvm.assume, including the assumptions themselves.
++  SmallPtrSet<Instruction *, 32> EphemeralValues;
++
+   /// Global -> Global that uses this global.
+   DenseMap<GlobalValue *, SmallPtrSet<GlobalValue *, 4>> GVDependencies;
+ 
+@@ -92,6 +102,10 @@ class GlobalDCEPass : public OptionalPassInfoMixin<GlobalDCEPass> {
+   void ScanVTableLoad(Function *Caller, Metadata *TypeId, uint64_t CallOffset);
+ 
+   void ComputeDependencies(Value *V, SmallPtrSetImpl<GlobalValue *> &U);
++
++  // Assumptions on dead globals.
++  void collectEphemeralValues(Module &M);
++  bool dropAssumesOnDeadGlobals(Module &M, FunctionAnalysisManager *FAM);
+ };
+ 
+ LLVM_ABI ModulePass *createGlobalDCEPass();
+diff --git a/llvm/lib/Passes/PassBuilder.cpp b/llvm/lib/Passes/PassBuilder.cpp
+index f4059f74e3e96e..6fce5dc7efb1f6 100644
+--- a/llvm/lib/Passes/PassBuilder.cpp
++++ b/llvm/lib/Passes/PassBuilder.cpp
+@@ -935,9 +935,27 @@ Expected<LoopUnrollOptions> parseLoopUnrollOptions(StringRef Params) {
+   return UnrollOpts;
+ }
+ 
+-Expected<bool> parseGlobalDCEPassOptions(StringRef Params) {
+-  return PassBuilder::parseSinglePassOption(
+-      Params, "vfe-linkage-unit-visibility", "GlobalDCE");
++struct GlobalDCEPassOptions {
++  bool InLTOPostLink = false;
++  bool DropAssumes = false;
++};
++
++Expected<GlobalDCEPassOptions> parseGlobalDCEPassOptions(StringRef Params) {
++  GlobalDCEPassOptions Result;
++  while (!Params.empty()) {
++    StringRef ParamName;
++    std::tie(ParamName, Params) = Params.split(';');
++
++    if (ParamName == "vfe-linkage-unit-visibility")
++      Result.InLTOPostLink = true;
++    else if (ParamName == "drop-assumes")
++      Result.DropAssumes = true;
++    else
++      return make_error<StringError>(
++          formatv("invalid GlobalDCE pass parameter '{}'", ParamName).str(),
++          inconvertibleErrorCode());
++  }
++  return Result;
+ }
+ 
+ Expected<bool> parseCGProfilePassOptions(StringRef Params) {
+diff --git a/llvm/lib/Passes/PassBuilderPipelines.cpp b/llvm/lib/Passes/PassBuilderPipelines.cpp
+index 109982b678bbc9..42eb07a7125c96 100644
+--- a/llvm/lib/Passes/PassBuilderPipelines.cpp
++++ b/llvm/lib/Passes/PassBuilderPipelines.cpp
+@@ -1612,7 +1612,10 @@ PassBuilder::buildModuleOptimizationPipeline(OptimizationLevel Level,
+   // FIXME: It would seem like these should come first in the optimization
+   // pipeline and maybe be the bottom of the canonicalization pipeline? Weird
+   // ordering here.
+-  MPM.addPass(GlobalDCEPass());
++  // Globals that only assumptions refer to are dropped with those assumptions,
++  // except before an LTO link, which can still make use of them.
++  MPM.addPass(GlobalDCEPass(/*InLTOPostLink=*/false,
++                            /*DropAssumes=*/!isLTOPreLink(LTOPhase)));
+   MPM.addPass(ConstantMergePass());
+ 
+   // Merge functions if requested. It has a better chance to merge functions
+@@ -2291,8 +2294,9 @@ PassBuilder::buildLTODefaultPipeline(OptimizationLevel Level,
+   // Drop bodies of available eternally objects to improve GlobalDCE.
+   MPM.addPass(EliminateAvailableExternallyPass());
+ 
+-  // Now that we have optimized the program, discard unreachable functions.
+-  MPM.addPass(GlobalDCEPass(/*InLTOPostLink=*/true));
++  // Now that we have optimized the program, discard unreachable functions, and
++  // the globals that only assumptions refer to.
++  MPM.addPass(GlobalDCEPass(/*InLTOPostLink=*/true, /*DropAssumes=*/true));
+ 
+   if (*PTO.MergeFunctions)
+     MPM.addPass(MergeFunctionsPass());
+diff --git a/llvm/lib/Passes/PassRegistry.def b/llvm/lib/Passes/PassRegistry.def
+index 3e16a2f6a9d238..a4552c1e47e6c2 100644
+--- a/llvm/lib/Passes/PassRegistry.def
++++ b/llvm/lib/Passes/PassRegistry.def
+@@ -221,8 +221,10 @@ MODULE_PASS_WITH_PARAMS(
+     parseEmbedBitcodePassOptions, "thinlto;emit-summary")
+ MODULE_PASS_WITH_PARAMS(
+     "globaldce", "GlobalDCEPass",
+-    [](bool InLTOPostLink) { return GlobalDCEPass(InLTOPostLink); },
+-    parseGlobalDCEPassOptions, "vfe-linkage-unit-visibility")
++    [](GlobalDCEPassOptions Opts) {
++      return GlobalDCEPass(Opts.InLTOPostLink, Opts.DropAssumes);
++    },
++    parseGlobalDCEPassOptions, "vfe-linkage-unit-visibility;drop-assumes")
+ MODULE_PASS_WITH_PARAMS(
+     "hwasan", "HWAddressSanitizerPass",
+     [](HWAddressSanitizerOptions Opts) { return HWAddressSanitizerPass(Opts); },
+diff --git a/llvm/lib/Transforms/IPO/GlobalDCE.cpp b/llvm/lib/Transforms/IPO/GlobalDCE.cpp
+index 90d0085b426e5b..ebbd25b39901cf 100644
+--- a/llvm/lib/Transforms/IPO/GlobalDCE.cpp
++++ b/llvm/lib/Transforms/IPO/GlobalDCE.cpp
+@@ -28,6 +28,7 @@
+ #include "llvm/Transforms/IPO.h"
+ #include "llvm/Transforms/Utils/CtorUtils.h"
+ #include "llvm/Transforms/Utils/GlobalStatus.h"
++#include "llvm/Transforms/Utils/Local.h"
+ 
+ using namespace llvm;
+ 
+@@ -60,6 +61,7 @@ INITIALIZE_PASS(GlobalDCELegacyPass, "globaldce", "Dead Global Elimination",
+ // Public interface to the GlobalDCEPass.
+ ModulePass *llvm::createGlobalDCEPass() { return new GlobalDCELegacyPass(); }
+ 
++STATISTIC(NumAssumeUses, "Number of assumption uses of dead globals dropped");
+ STATISTIC(NumAliases  , "Number of global aliases removed");
+ STATISTIC(NumFunctions, "Number of functions removed");
+ STATISTIC(NumIFuncs,    "Number of indirect functions removed");
+@@ -82,11 +84,118 @@ static bool isEmptyFunction(Function *F) {
+   return false;
+ }
+ 
++/// Returns true if I can be erased once all of its users are erased.
++static bool canBeEphemeral(const Instruction *I) {
++  if (I->mayHaveSideEffects() || I->isTerminator() || I->isEHPad())
++    return false;
++  // Type tests have special semantics, keep them.
++  if (auto *II = dyn_cast<IntrinsicInst>(I))
++    return II->getIntrinsicID() != Intrinsic::type_test &&
++           II->getIntrinsicID() != Intrinsic::public_type_test;
++  return true;
++}
++
++/// Collect the assumptions and the instructions whose uses are all, directly
++/// or transitively, in assumptions.
++void GlobalDCEPass::collectEphemeralValues(Module &M) {
++  Function *AssumeFn = Intrinsic::getDeclarationIfExists(&M, Intrinsic::assume);
++  if (!AssumeFn)
++    return;
++
++  SmallVector<Instruction *, 16> Worklist;
++  for (User *U : AssumeFn->users())
++    if (auto *Assume = dyn_cast<AssumeInst>(U))
++      Worklist.push_back(Assume);
++
++  // An instruction becomes ephemeral when its last non-ephemeral use is found
++  // to be ephemeral. Uses in a cycle are never all ephemeral.
++  DenseMap<Instruction *, unsigned> NumOtherUses;
++  while (!Worklist.empty()) {
++    Instruction *I = Worklist.pop_back_val();
++    if (!EphemeralValues.insert(I).second)
++      continue;
++    for (Value *Op : I->operands()) {
++      auto *OpI = dyn_cast<Instruction>(Op);
++      if (!OpI || !canBeEphemeral(OpI))
++        continue;
++      auto It = NumOtherUses.try_emplace(OpI, OpI->getNumUses()).first;
++      if (--It->second == 0)
++        Worklist.push_back(OpI);
++    }
++  }
++}
++
++/// Drop the uses of dead globals from the assumptions in live functions, and
++/// erase the instructions that only computed them.
++bool GlobalDCEPass::dropAssumesOnDeadGlobals(Module &M,
++                                             FunctionAnalysisManager *FAM) {
++  SmallVector<Use *, 8> AssumeUses;
++  SmallSetVector<Instruction *, 8> DeadInsts;
++  SmallPtrSet<Constant *, 8> VisitedConstants;
++  SmallVector<Value *, 16> Worklist;
++  for (GlobalValue &GV : M.global_values())
++    if (!AliveGlobals.contains(&GV))
++      Worklist.push_back(&GV);
++
++  while (!Worklist.empty()) {
++    Value *V = Worklist.pop_back_val();
++    for (Use &U : V->uses()) {
++      User *Usr = U.getUser();
++      if (auto *I = dyn_cast<Instruction>(Usr)) {
++        if (!AliveGlobals.contains(I->getFunction()))
++          continue;
++        assert(EphemeralValues.contains(I) && "dead global used by live code");
++        if (isa<AssumeInst>(I))
++          AssumeUses.push_back(&U);
++        else if (DeadInsts.insert(I))
++          Worklist.push_back(I);
++      } else if (auto *C = dyn_cast<Constant>(Usr)) {
++        if (!isa<GlobalValue>(C) && VisitedConstants.insert(C).second)
++          Worklist.push_back(C);
++      }
++    }
++  }
++  if (AssumeUses.empty())
++    return false;
++
++  SmallSetVector<Function *, 4> ChangedFunctions;
++  SmallVector<WeakTrackingVH, 16> MaybeDead;
++  for (Use *U : AssumeUses) {
++    auto *Assume = cast<AssumeInst>(U->getUser());
++    Value::dropDroppableUse(*U);
++    ChangedFunctions.insert(Assume->getFunction());
++    MaybeDead.push_back(Assume);
++  }
++  NumAssumeUses += AssumeUses.size();
++
++  for (Instruction *I : DeadInsts)
++    for (Value *Op : I->operands())
++      if (auto *OpI = dyn_cast<Instruction>(Op);
++          OpI && !DeadInsts.contains(OpI))
++        MaybeDead.push_back(OpI);
++  for (Instruction *I : DeadInsts)
++    I->dropAllReferences();
++  for (Instruction *I : DeadInsts)
++    I->eraseFromParent();
++  RecursivelyDeleteTriviallyDeadInstructionsPermissive(MaybeDead);
++
++  if (FAM) {
++    PreservedAnalyses PA;
++    PA.preserveSet<CFGAnalyses>();
++    for (Function *F : ChangedFunctions)
++      FAM->invalidate(*F, PA);
++  }
++  return true;
++}
++
+ /// Compute the set of GlobalValue that depends from V.
+ /// The recursion stops as soon as a GlobalValue is met.
+ void GlobalDCEPass::ComputeDependencies(Value *V,
+                                         SmallPtrSetImpl<GlobalValue *> &Deps) {
+   if (auto *I = dyn_cast<Instruction>(V)) {
++    // A use that only feeds assumptions does not keep a global alive.
++    if (EphemeralValues.contains(I))
++      return;
+     Function *Parent = I->getParent()->getParent();
+     Deps.insert(Parent);
+   } else if (auto *GV = dyn_cast<GlobalValue>(V)) {
+@@ -109,8 +218,13 @@ void GlobalDCEPass::ComputeDependencies(Value *V,
+ 
+ void GlobalDCEPass::UpdateGVDependencies(GlobalValue &GV) {
+   SmallPtrSet<GlobalValue *, 8> Deps;
+-  for (User *User : GV.users())
+-    ComputeDependencies(User, Deps);
++  for (Use &U : GV.uses()) {
++    // A called function is needed even if the call only feeds assumptions.
++    if (auto *CB = dyn_cast<CallBase>(U.getUser()); CB && CB->isCallee(&U))
++      Deps.insert(CB->getFunction());
++    else
++      ComputeDependencies(U.getUser(), Deps);
++  }
+   Deps.erase(&GV); // Remove self-reference.
+   for (GlobalValue *GVU : Deps) {
+     // If this is a dep from a vtable to a virtual function, and we have
+@@ -322,6 +436,10 @@ PreservedAnalyses GlobalDCEPass::run(Module &M, ModuleAnalysisManager &MAM) {
+   // might call, if we have that information.
+   AddVirtualFunctionDependencies(M);
+ 
++  // Uses that only feed assumptions do not keep globals alive.
++  if (DropAssumes)
++    collectEphemeralValues(M);
++
+   // Loop over the module, adding globals which are obviously necessary.
+   for (GlobalObject &GO : M.global_objects()) {
+     GO.removeDeadConstantUsers();
+@@ -392,6 +510,10 @@ PreservedAnalyses GlobalDCEPass::run(Module &M, ModuleAnalysisManager &MAM) {
+   // through the program, deleting those which are not alive.
+   //
+ 
++  // Live functions can still refer to dead globals in their assumptions.
++  if (DropAssumes)
++    Changed |= dropAssumesOnDeadGlobals(M, FAM);
++
+   // The first pass is to drop initializers of global variables which are dead.
+   std::vector<GlobalVariable *> DeadGlobalVars; // Keep track of dead globals
+   for (GlobalVariable &GV : M.globals())
+@@ -484,6 +606,7 @@ PreservedAnalyses GlobalDCEPass::run(Module &M, ModuleAnalysisManager &MAM) {
+   ComdatMembers.clear();
+   TypeIdMap.clear();
+   VFESafeVTables.clear();
++  EphemeralValues.clear();
+ 
+   if (!Changed)
+     return PreservedAnalyses::all();
+@@ -498,6 +621,10 @@ void GlobalDCEPass::printPipeline(
+     raw_ostream &OS, function_ref<StringRef(StringRef)> MapClassName2PassName) {
+   static_cast<PassInfoMixin<GlobalDCEPass> *>(this)->printPipeline(
+       OS, MapClassName2PassName);
+-  if (InLTOPostLink)
++  if (InLTOPostLink && DropAssumes)
++    OS << "<vfe-linkage-unit-visibility;drop-assumes>";
++  else if (InLTOPostLink)
+     OS << "<vfe-linkage-unit-visibility>";
++  else if (DropAssumes)
++    OS << "<drop-assumes>";
+ }
+diff --git a/llvm/test/Other/new-pm-print-pipeline.ll b/llvm/test/Other/new-pm-print-pipeline.ll
+index a8fcf113e49b2b..76ae23b0b01f8e 100644
+--- a/llvm/test/Other/new-pm-print-pipeline.ll
++++ b/llvm/test/Other/new-pm-print-pipeline.ll
+@@ -115,6 +115,9 @@
+ ; RUN: opt -disable-output -disable-verify -print-pipeline-passes -passes='globaldce<vfe-linkage-unit-visibility>' < %s | FileCheck %s --match-full-lines --check-prefixes=CHECK-35
+ ; CHECK-35: globaldce<vfe-linkage-unit-visibility>
+ 
++; RUN: opt -disable-output -disable-verify -print-pipeline-passes -passes='globaldce<drop-assumes;vfe-linkage-unit-visibility>' < %s | FileCheck %s --match-full-lines --check-prefixes=CHECK-GLOBALDCE-BOTH
++; CHECK-GLOBALDCE-BOTH: globaldce<vfe-linkage-unit-visibility;drop-assumes>
++
+ ; RUN: opt -disable-output -disable-verify -print-pipeline-passes -passes='speculative-execution<only-if-divergent-target>' < %s | FileCheck %s --match-full-lines --check-prefixes=CHECK-36
+ ; CHECK-36: function(speculative-execution<only-if-divergent-target>)
+ 
+diff --git a/llvm/test/Transforms/GlobalDCE/assume-only-uses.ll b/llvm/test/Transforms/GlobalDCE/assume-only-uses.ll
+new file mode 100644
+index 00000000000000..7e3114671470e1
+--- /dev/null
++++ b/llvm/test/Transforms/GlobalDCE/assume-only-uses.ll
+@@ -0,0 +1,474 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --check-globals all --version 6
++; RUN: opt -passes='globaldce<drop-assumes>' -S < %s | FileCheck %s --check-prefixes=CHECK,DROP
++; RUN: opt -passes=globaldce -S < %s | FileCheck %s --check-prefixes=CHECK,KEEP
++
++; With drop-assumes, a global that is only used by values feeding llvm.assume
++; is dead, and its uses are dropped from the assumptions.
++
++@str = private unnamed_addr constant [4 x i8] c"STR\00"
++@limits = internal constant [2 x i32] [i32 10, i32 20]
++@table = internal constant [2 x double] [double 1.500000e+00, double 3.500000e+00]
++@shared = internal constant i32 5
++@bundle = internal global [2 x i32] zeroinitializer, align 4
++@bundle.mixed = internal global [2 x i32] zeroinitializer, align 4
++@constexpr = internal constant [4 x i32] [i32 1, i32 2, i32 3, i32 4]
++@phi.a = internal constant i32 1
++@phi.b = internal constant i32 2
++@type.test = internal constant [1 x ptr] zeroinitializer
++@unused_use = internal constant i32 7
++@checked = internal constant [2 x i32] [i32 10, i32 20]
++@live = internal constant [2 x i32] [i32 10, i32 20]
++@external = constant [2 x i32] [i32 10, i32 20]
++@escaped = internal constant [2 x i32] [i32 10, i32 20]
++@stored = internal constant [4 x i8] c"STR\00"
++
++declare void @llvm.assume(i1)
++declare i1 @llvm.type.test(ptr, metadata)
++declare void @use(ptr)
++declare void @report()
++
++;.
++; DROP: @type.test = internal constant [1 x ptr] zeroinitializer
++; DROP: @unused_use = internal constant i32 7
++; DROP: @checked = internal constant [2 x i32] [i32 10, i32 20]
++; DROP: @live = internal constant [2 x i32] [i32 10, i32 20]
++; DROP: @external = constant [2 x i32] [i32 10, i32 20]
++; DROP: @escaped = internal constant [2 x i32] [i32 10, i32 20]
++; DROP: @stored = internal constant [4 x i8] c"STR\00"
++;.
++; KEEP: @str = private unnamed_addr constant [4 x i8] c"STR\00"
++; KEEP: @limits = internal constant [2 x i32] [i32 10, i32 20]
++; KEEP: @table = internal constant [2 x double] [double 1.500000e+00, double 3.500000e+00]
++; KEEP: @shared = internal constant i32 5
++; KEEP: @bundle = internal global [2 x i32] zeroinitializer, align 4
++; KEEP: @bundle.mixed = internal global [2 x i32] zeroinitializer, align 4
++; KEEP: @constexpr = internal constant [4 x i32] [i32 1, i32 2, i32 3, i32 4]
++; KEEP: @phi.a = internal constant i32 1
++; KEEP: @phi.b = internal constant i32 2
++; KEEP: @type.test = internal constant [1 x ptr] zeroinitializer
++; KEEP: @unused_use = internal constant i32 7
++; KEEP: @checked = internal constant [2 x i32] [i32 10, i32 20]
++; KEEP: @live = internal constant [2 x i32] [i32 10, i32 20]
++; KEEP: @external = constant [2 x i32] [i32 10, i32 20]
++; KEEP: @escaped = internal constant [2 x i32] [i32 10, i32 20]
++; KEEP: @stored = internal constant [4 x i8] c"STR\00"
++;.
++define i8 @address_compare(ptr %p) {
++; DROP-LABEL: define i8 @address_compare(
++; DROP-SAME: ptr [[P:%.*]]) {
++; DROP-NEXT:    [[V:%.*]] = load i8, ptr [[P]], align 1
++; DROP-NEXT:    ret i8 [[V]]
++;
++; KEEP-LABEL: define i8 @address_compare(
++; KEEP-SAME: ptr [[P:%.*]]) {
++; KEEP-NEXT:    [[CMP:%.*]] = icmp ne ptr [[P]], @str
++; KEEP-NEXT:    call void @llvm.assume(i1 [[CMP]])
++; KEEP-NEXT:    [[V:%.*]] = load i8, ptr [[P]], align 1
++; KEEP-NEXT:    ret i8 [[V]]
++;
++  %cmp = icmp ne ptr %p, @str
++  call void @llvm.assume(i1 %cmp)
++  %v = load i8, ptr %p, align 1
++  ret i8 %v
++}
++
++define i32 @load_variable_index(ptr %p, i16 %i) {
++; DROP-LABEL: define i32 @load_variable_index(
++; DROP-SAME: ptr [[P:%.*]], i16 [[I:%.*]]) {
++; DROP-NEXT:    [[V:%.*]] = load i32, ptr [[P]], align 4
++; DROP-NEXT:    ret i32 [[V]]
++;
++; KEEP-LABEL: define i32 @load_variable_index(
++; KEEP-SAME: ptr [[P:%.*]], i16 [[I:%.*]]) {
++; KEEP-NEXT:    [[V:%.*]] = load i32, ptr [[P]], align 4
++; KEEP-NEXT:    [[IDX:%.*]] = and i16 [[I]], 1
++; KEEP-NEXT:    [[GEP:%.*]] = getelementptr inbounds [2 x i32], ptr @limits, i16 0, i16 [[IDX]]
++; KEEP-NEXT:    [[LIM:%.*]] = load i32, ptr [[GEP]], align 4
++; KEEP-NEXT:    [[CMP:%.*]] = icmp ne i32 [[V]], [[LIM]]
++; KEEP-NEXT:    call void @llvm.assume(i1 [[CMP]])
++; KEEP-NEXT:    ret i32 [[V]]
++;
++  %v = load i32, ptr %p, align 4
++  %idx = and i16 %i, 1
++  %gep = getelementptr inbounds [2 x i32], ptr @limits, i16 0, i16 %idx
++  %lim = load i32, ptr %gep, align 4
++  %cmp = icmp ne i32 %v, %lim
++  call void @llvm.assume(i1 %cmp)
++  ret i32 %v
++}
++
++; Only the assumption that refers to the global is dropped.
++define i1 @split_compare(ptr %p, i16 %i) {
++; DROP-LABEL: define i1 @split_compare(
++; DROP-SAME: ptr [[P:%.*]], i16 [[I:%.*]]) {
++; DROP-NEXT:    [[RE:%.*]] = load double, ptr [[P]], align 8
++; DROP-NEXT:    [[CMP_I:%.*]] = fcmp oeq double [[RE]], 0.000000e+00
++; DROP-NEXT:    call void @llvm.assume(i1 [[CMP_I]])
++; DROP-NEXT:    [[POS:%.*]] = fcmp ogt double [[RE]], 0.000000e+00
++; DROP-NEXT:    ret i1 [[POS]]
++;
++; KEEP-LABEL: define i1 @split_compare(
++; KEEP-SAME: ptr [[P:%.*]], i16 [[I:%.*]]) {
++; KEEP-NEXT:    [[RE:%.*]] = load double, ptr [[P]], align 8
++; KEEP-NEXT:    [[GEP:%.*]] = getelementptr inbounds [2 x double], ptr @table, i16 0, i16 [[I]]
++; KEEP-NEXT:    [[T:%.*]] = load double, ptr [[GEP]], align 8
++; KEEP-NEXT:    [[CMP_R:%.*]] = fcmp oeq double [[RE]], [[T]]
++; KEEP-NEXT:    call void @llvm.assume(i1 [[CMP_R]])
++; KEEP-NEXT:    [[CMP_I:%.*]] = fcmp oeq double [[RE]], 0.000000e+00
++; KEEP-NEXT:    call void @llvm.assume(i1 [[CMP_I]])
++; KEEP-NEXT:    [[POS:%.*]] = fcmp ogt double [[RE]], 0.000000e+00
++; KEEP-NEXT:    ret i1 [[POS]]
++;
++  %re = load double, ptr %p, align 8
++  %gep = getelementptr inbounds [2 x double], ptr @table, i16 0, i16 %i
++  %t = load double, ptr %gep, align 8
++  %cmp.r = fcmp oeq double %re, %t
++  call void @llvm.assume(i1 %cmp.r)
++  %cmp.i = fcmp oeq double %re, 0.000000e+00
++  call void @llvm.assume(i1 %cmp.i)
++  %pos = fcmp ogt double %re, 0.000000e+00
++  ret i1 %pos
++}
++
++; A global that is used in assumptions in several functions is dead.
++define i32 @shared_first(ptr %p) {
++; DROP-LABEL: define i32 @shared_first(
++; DROP-SAME: ptr [[P:%.*]]) {
++; DROP-NEXT:    [[V:%.*]] = load i32, ptr [[P]], align 4
++; DROP-NEXT:    ret i32 [[V]]
++;
++; KEEP-LABEL: define i32 @shared_first(
++; KEEP-SAME: ptr [[P:%.*]]) {
++; KEEP-NEXT:    [[V:%.*]] = load i32, ptr [[P]], align 4
++; KEEP-NEXT:    [[S:%.*]] = load i32, ptr @shared, align 4
++; KEEP-NEXT:    [[LT:%.*]] = icmp slt i32 [[V]], [[S]]
++; KEEP-NEXT:    call void @llvm.assume(i1 [[LT]])
++; KEEP-NEXT:    [[NE:%.*]] = icmp ne i32 [[V]], [[S]]
++; KEEP-NEXT:    call void @llvm.assume(i1 [[NE]])
++; KEEP-NEXT:    ret i32 [[V]]
++;
++  %v = load i32, ptr %p, align 4
++  %s = load i32, ptr @shared, align 4
++  %lt = icmp slt i32 %v, %s
++  call void @llvm.assume(i1 %lt)
++  %ne = icmp ne i32 %v, %s
++  call void @llvm.assume(i1 %ne)
++  ret i32 %v
++}
++
++define i32 @shared_second(ptr %p) {
++; DROP-LABEL: define i32 @shared_second(
++; DROP-SAME: ptr [[P:%.*]]) {
++; DROP-NEXT:    [[V:%.*]] = load i32, ptr [[P]], align 4
++; DROP-NEXT:    ret i32 [[V]]
++;
++; KEEP-LABEL: define i32 @shared_second(
++; KEEP-SAME: ptr [[P:%.*]]) {
++; KEEP-NEXT:    [[V:%.*]] = load i32, ptr [[P]], align 4
++; KEEP-NEXT:    [[S:%.*]] = load i32, ptr @shared, align 4
++; KEEP-NEXT:    [[CMP:%.*]] = icmp sgt i32 [[V]], [[S]]
++; KEEP-NEXT:    call void @llvm.assume(i1 [[CMP]])
++; KEEP-NEXT:    ret i32 [[V]]
++;
++  %v = load i32, ptr %p, align 4
++  %s = load i32, ptr @shared, align 4
++  %cmp = icmp sgt i32 %v, %s
++  call void @llvm.assume(i1 %cmp)
++  ret i32 %v
++}
++
++define void @bundle_operand() {
++; DROP-LABEL: define void @bundle_operand() {
++; DROP-NEXT:    ret void
++;
++; KEEP-LABEL: define void @bundle_operand() {
++; KEEP-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr @bundle, i64 4) ]
++; KEEP-NEXT:    ret void
++;
++  call void @llvm.assume(i1 true) [ "align"(ptr @bundle, i64 4) ]
++  ret void
++}
++
++; Only the bundle that refers to the global is dropped.
++define void @bundle_mixed(ptr %p) {
++; DROP-LABEL: define void @bundle_mixed(
++; DROP-SAME: ptr [[P:%.*]]) {
++; DROP-NEXT:    call void @llvm.assume(i1 true) [ "ignore"(ptr poison, i64 4), "nonnull"(ptr [[P]]) ]
++; DROP-NEXT:    ret void
++;
++; KEEP-LABEL: define void @bundle_mixed(
++; KEEP-SAME: ptr [[P:%.*]]) {
++; KEEP-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr @bundle.mixed, i64 4), "nonnull"(ptr [[P]]) ]
++; KEEP-NEXT:    ret void
++;
++  call void @llvm.assume(i1 true) [ "align"(ptr @bundle.mixed, i64 4), "nonnull"(ptr %p) ]
++  ret void
++}
++
++define i32 @constant_expression(ptr %p) {
++; DROP-LABEL: define i32 @constant_expression(
++; DROP-SAME: ptr [[P:%.*]]) {
++; DROP-NEXT:    [[V:%.*]] = load i32, ptr [[P]], align 4
++; DROP-NEXT:    ret i32 [[V]]
++;
++; KEEP-LABEL: define i32 @constant_expression(
++; KEEP-SAME: ptr [[P:%.*]]) {
++; KEEP-NEXT:    [[V:%.*]] = load i32, ptr [[P]], align 4
++; KEEP-NEXT:    [[LIM:%.*]] = load i32, ptr getelementptr inbounds (i8, ptr @constexpr, i64 8), align 4
++; KEEP-NEXT:    [[CMP:%.*]] = icmp ne i32 [[V]], [[LIM]]
++; KEEP-NEXT:    call void @llvm.assume(i1 [[CMP]])
++; KEEP-NEXT:    ret i32 [[V]]
++;
++  %v = load i32, ptr %p, align 4
++  %lim = load i32, ptr getelementptr inbounds (i8, ptr @constexpr, i64 8), align 4
++  %cmp = icmp ne i32 %v, %lim
++  call void @llvm.assume(i1 %cmp)
++  ret i32 %v
++}
++
++define i32 @phi(ptr %p, i1 %c) {
++; DROP-LABEL: define i32 @phi(
++; DROP-SAME: ptr [[P:%.*]], i1 [[C:%.*]]) {
++; DROP-NEXT:  [[ENTRY:.*:]]
++; DROP-NEXT:    [[V:%.*]] = load i32, ptr [[P]], align 4
++; DROP-NEXT:    br i1 [[C]], label %[[A:.*]], label %[[B:.*]]
++; DROP:       [[A]]:
++; DROP-NEXT:    br label %[[JOIN:.*]]
++; DROP:       [[B]]:
++; DROP-NEXT:    br label %[[JOIN]]
++; DROP:       [[JOIN]]:
++; DROP-NEXT:    ret i32 [[V]]
++;
++; KEEP-LABEL: define i32 @phi(
++; KEEP-SAME: ptr [[P:%.*]], i1 [[C:%.*]]) {
++; KEEP-NEXT:  [[ENTRY:.*:]]
++; KEEP-NEXT:    [[V:%.*]] = load i32, ptr [[P]], align 4
++; KEEP-NEXT:    br i1 [[C]], label %[[A:.*]], label %[[B:.*]]
++; KEEP:       [[A]]:
++; KEEP-NEXT:    [[VA:%.*]] = load i32, ptr @phi.a, align 4
++; KEEP-NEXT:    br label %[[JOIN:.*]]
++; KEEP:       [[B]]:
++; KEEP-NEXT:    [[VB:%.*]] = load i32, ptr @phi.b, align 4
++; KEEP-NEXT:    br label %[[JOIN]]
++; KEEP:       [[JOIN]]:
++; KEEP-NEXT:    [[LIM:%.*]] = phi i32 [ [[VA]], %[[A]] ], [ [[VB]], %[[B]] ]
++; KEEP-NEXT:    [[CMP:%.*]] = icmp slt i32 [[V]], [[LIM]]
++; KEEP-NEXT:    call void @llvm.assume(i1 [[CMP]])
++; KEEP-NEXT:    ret i32 [[V]]
++;
++entry:
++  %v = load i32, ptr %p, align 4
++  br i1 %c, label %a, label %b
++
++a:
++  %va = load i32, ptr @phi.a, align 4
++  br label %join
++
++b:
++  %vb = load i32, ptr @phi.b, align 4
++  br label %join
++
++join:
++  %lim = phi i32 [ %va, %a ], [ %vb, %b ]
++  %cmp = icmp slt i32 %v, %lim
++  call void @llvm.assume(i1 %cmp)
++  ret i32 %v
++}
++
++; Type tests are kept.
++define void @type_test() {
++; CHECK-LABEL: define void @type_test() {
++; CHECK-NEXT:    [[T:%.*]] = call i1 @llvm.type.test(ptr @type.test, metadata !"typeid")
++; CHECK-NEXT:    call void @llvm.assume(i1 [[T]])
++; CHECK-NEXT:    ret void
++;
++  %t = call i1 @llvm.type.test(ptr @type.test, metadata !"typeid")
++  call void @llvm.assume(i1 %t)
++  ret void
++}
++
++; An instruction without users keeps the global.
++define void @unused_load() {
++; CHECK-LABEL: define void @unused_load() {
++; CHECK-NEXT:    [[V:%.*]] = load i32, ptr @unused_use, align 4
++; CHECK-NEXT:    ret void
++;
++  %v = load i32, ptr @unused_use, align 4
++  ret void
++}
++
++; A function whose address is only compared in an assumption is dead.
++define internal void @compared() {
++; KEEP-LABEL: define internal void @compared() {
++; KEEP-NEXT:    ret void
++;
++  ret void
++}
++
++define void @function_address(ptr %fp) {
++; DROP-LABEL: define void @function_address(
++; DROP-SAME: ptr [[FP:%.*]]) {
++; DROP-NEXT:    call void [[FP]]()
++; DROP-NEXT:    ret void
++;
++; KEEP-LABEL: define void @function_address(
++; KEEP-SAME: ptr [[FP:%.*]]) {
++; KEEP-NEXT:    [[CMP:%.*]] = icmp ne ptr [[FP]], @compared
++; KEEP-NEXT:    call void @llvm.assume(i1 [[CMP]])
++; KEEP-NEXT:    call void [[FP]]()
++; KEEP-NEXT:    ret void
++;
++  %cmp = icmp ne ptr %fp, @compared
++  call void @llvm.assume(i1 %cmp)
++  call void %fp()
++  ret void
++}
++
++; A function that is called in an assumption is kept, with the assumption.
++define internal i1 @is_nonnull(ptr %p) memory(none) nounwind willreturn {
++; CHECK-LABEL: define internal i1 @is_nonnull(
++; CHECK-SAME: ptr [[P:%.*]]) #[[ATTR2:[0-9]+]] {
++; CHECK-NEXT:    [[CMP:%.*]] = icmp ne ptr [[P]], null
++; CHECK-NEXT:    ret i1 [[CMP]]
++;
++  %cmp = icmp ne ptr %p, null
++  ret i1 %cmp
++}
++
++define void @called_in_assume(ptr %p) {
++; CHECK-LABEL: define void @called_in_assume(
++; CHECK-SAME: ptr [[P:%.*]]) {
++; CHECK-NEXT:    [[VALID:%.*]] = call i1 @is_nonnull(ptr [[P]])
++; CHECK-NEXT:    call void @llvm.assume(i1 [[VALID]])
++; CHECK-NEXT:    ret void
++;
++  %valid = call i1 @is_nonnull(ptr %p)
++  call void @llvm.assume(i1 %valid)
++  ret void
++}
++
++; A call that may not return is not part of the assumption.
++define internal i1 @may_not_return(ptr %p) memory(none) {
++; CHECK-LABEL: define internal i1 @may_not_return(
++; CHECK-SAME: ptr [[P:%.*]]) #[[ATTR3:[0-9]+]] {
++; CHECK-NEXT:    [[CMP:%.*]] = icmp ne ptr [[P]], null
++; CHECK-NEXT:    ret i1 [[CMP]]
++;
++  %cmp = icmp ne ptr %p, null
++  ret i1 %cmp
++}
++
++define void @called_may_not_return(ptr %p) {
++; CHECK-LABEL: define void @called_may_not_return(
++; CHECK-SAME: ptr [[P:%.*]]) {
++; CHECK-NEXT:    [[VALID:%.*]] = call i1 @may_not_return(ptr [[P]])
++; CHECK-NEXT:    call void @llvm.assume(i1 [[VALID]])
++; CHECK-NEXT:    ret void
++;
++  %valid = call i1 @may_not_return(ptr %p)
++  call void @llvm.assume(i1 %valid)
++  ret void
++}
++
++; -fsanitize=builtin checks the condition before the assumption, so the global
++; stays.
++define i32 @checked_assume(ptr %p, i16 %i) {
++; CHECK-LABEL: define i32 @checked_assume(
++; CHECK-SAME: ptr [[P:%.*]], i16 [[I:%.*]]) {
++; CHECK-NEXT:    [[V:%.*]] = load i32, ptr [[P]], align 4
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds [2 x i32], ptr @checked, i16 0, i16 [[I]]
++; CHECK-NEXT:    [[LIM:%.*]] = load i32, ptr [[GEP]], align 4
++; CHECK-NEXT:    [[CMP:%.*]] = icmp ne i32 [[V]], [[LIM]]
++; CHECK-NEXT:    br i1 [[CMP]], label %[[CONT:.*]], label %[[HANDLER:.*]]
++; CHECK:       [[HANDLER]]:
++; CHECK-NEXT:    call void @report()
++; CHECK-NEXT:    br label %[[CONT]]
++; CHECK:       [[CONT]]:
++; CHECK-NEXT:    call void @llvm.assume(i1 [[CMP]])
++; CHECK-NEXT:    ret i32 [[V]]
++;
++  %v = load i32, ptr %p, align 4
++  %gep = getelementptr inbounds [2 x i32], ptr @checked, i16 0, i16 %i
++  %lim = load i32, ptr %gep, align 4
++  %cmp = icmp ne i32 %v, %lim
++  br i1 %cmp, label %cont, label %handler
++
++handler:
++  call void @report()
++  br label %cont
++
++cont:
++  call void @llvm.assume(i1 %cmp)
++  ret i32 %v
++}
++
++; The global is also read outside the assumption, so the assumption stays.
++define i32 @also_used(ptr %p, i16 %i) {
++; CHECK-LABEL: define i32 @also_used(
++; CHECK-SAME: ptr [[P:%.*]], i16 [[I:%.*]]) {
++; CHECK-NEXT:    [[V:%.*]] = load i32, ptr [[P]], align 4
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds [2 x i32], ptr @live, i16 0, i16 [[I]]
++; CHECK-NEXT:    [[LIM:%.*]] = load i32, ptr [[GEP]], align 4
++; CHECK-NEXT:    [[CMP:%.*]] = icmp ne i32 [[V]], [[LIM]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[CMP]])
++; CHECK-NEXT:    [[SUM:%.*]] = add i32 [[V]], [[LIM]]
++; CHECK-NEXT:    ret i32 [[SUM]]
++;
++  %v = load i32, ptr %p, align 4
++  %gep = getelementptr inbounds [2 x i32], ptr @live, i16 0, i16 %i
++  %lim = load i32, ptr %gep, align 4
++  %cmp = icmp ne i32 %v, %lim
++  call void @llvm.assume(i1 %cmp)
++  %sum = add i32 %v, %lim
++  ret i32 %sum
++}
++
++; A global with external linkage is kept, with the assumption.
++define i32 @external_global(ptr %p) {
++; CHECK-LABEL: define i32 @external_global(
++; CHECK-SAME: ptr [[P:%.*]]) {
++; CHECK-NEXT:    [[CMP:%.*]] = icmp ne ptr [[P]], @external
++; CHECK-NEXT:    call void @llvm.assume(i1 [[CMP]])
++; CHECK-NEXT:    [[V:%.*]] = load i32, ptr [[P]], align 4
++; CHECK-NEXT:    ret i32 [[V]]
++;
++  %cmp = icmp ne ptr %p, @external
++  call void @llvm.assume(i1 %cmp)
++  %v = load i32, ptr %p, align 4
++  ret i32 %v
++}
++
++; The address escapes through a call, so the global and the assumption stay.
++define void @escaped_address() {
++; CHECK-LABEL: define void @escaped_address() {
++; CHECK-NEXT:    call void @use(ptr @escaped)
++; CHECK-NEXT:    [[CMP:%.*]] = icmp ne ptr @escaped, null
++; CHECK-NEXT:    call void @llvm.assume(i1 [[CMP]])
++; CHECK-NEXT:    ret void
++;
++  call void @use(ptr @escaped)
++  %cmp = icmp ne ptr @escaped, null
++  call void @llvm.assume(i1 %cmp)
++  ret void
++}
++
++define void @stored_address(ptr %out) {
++; CHECK-LABEL: define void @stored_address(
++; CHECK-SAME: ptr [[OUT:%.*]]) {
++; CHECK-NEXT:    store ptr @stored, ptr [[OUT]], align 8
++; CHECK-NEXT:    ret void
++;
++  store ptr @stored, ptr %out, align 8
++  ret void
++}
++;.
++; DROP: attributes #[[ATTR0:[0-9]+]] = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
++; DROP: attributes #[[ATTR1:[0-9]+]] = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
++; DROP: attributes #[[ATTR2]] = { nounwind willreturn memory(none) }
++; DROP: attributes #[[ATTR3]] = { memory(none) }
++;.
++; KEEP: attributes #[[ATTR0:[0-9]+]] = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
++; KEEP: attributes #[[ATTR1:[0-9]+]] = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
++; KEEP: attributes #[[ATTR2]] = { nounwind willreturn memory(none) }
++; KEEP: attributes #[[ATTR3]] = { memory(none) }
++;.
+diff --git a/llvm/test/Transforms/PhaseOrdering/assume-only-globals.ll b/llvm/test/Transforms/PhaseOrdering/assume-only-globals.ll
+new file mode 100644
+index 00000000000000..211a7f48a0e8a2
+--- /dev/null
++++ b/llvm/test/Transforms/PhaseOrdering/assume-only-globals.ll
+@@ -0,0 +1,78 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --check-globals all --version 6
++; RUN: opt -passes='default<O2>' -S < %s | FileCheck %s --check-prefixes=CHECK,DROP
++; RUN: opt -passes='lto<O2>' -S < %s | FileCheck %s --check-prefixes=CHECK,DROP
++; RUN: opt -passes='lto-pre-link<O2>' -S < %s | FileCheck %s --check-prefixes=CHECK,KEEP
++
++; Strings that are only referred to by assumptions are not emitted. Before an
++; LTO link they are kept, since the assumptions can still be useful there.
++
++; int a1(const char *p) { __builtin_assume(p != "ASSUMESTR"); return *p; }
++; int main(void) { return a1("MAINSTR"); }
++
++@.str = private unnamed_addr constant [10 x i8] c"ASSUMESTR\00", align 1
++@.str.1 = private unnamed_addr constant [8 x i8] c"MAINSTR\00", align 1
++
++;.
++; KEEP: @.str = private unnamed_addr constant [10 x i8] c"ASSUMESTR\00", align 1, !guid [[META0:![0-9]+]]
++; KEEP: @.str.1 = private unnamed_addr constant [8 x i8] c"MAINSTR\00", align 1, !guid [[META1:![0-9]+]]
++;.
++define i32 @a1(ptr noundef %p) {
++; DROP-LABEL: define range(i32 -128, 128) i32 @a1(
++; DROP-SAME: ptr nofree noundef readonly captures(address) [[P:%.*]]) local_unnamed_addr #[[ATTR0:[0-9]+]] {
++; DROP-NEXT:  [[ENTRY:.*:]]
++; DROP-NEXT:    [[TMP0:%.*]] = load i8, ptr [[P]], align 1
++; DROP-NEXT:    [[CONV:%.*]] = sext i8 [[TMP0]] to i32
++; DROP-NEXT:    ret i32 [[CONV]]
++;
++; KEEP-LABEL: define range(i32 -128, 128) i32 @a1(
++; KEEP-SAME: ptr nofree noundef readonly captures(address) [[P:%.*]]) local_unnamed_addr #[[ATTR0:[0-9]+]] !guid [[META2:![0-9]+]] {
++; KEEP-NEXT:  [[ENTRY:.*:]]
++; KEEP-NEXT:    [[CMP:%.*]] = icmp ne ptr [[P]], @.str
++; KEEP-NEXT:    tail call void @llvm.assume(i1 [[CMP]])
++; KEEP-NEXT:    [[TMP0:%.*]] = load i8, ptr [[P]], align 1
++; KEEP-NEXT:    [[CONV:%.*]] = sext i8 [[TMP0]] to i32
++; KEEP-NEXT:    ret i32 [[CONV]]
++;
++entry:
++  %cmp = icmp ne ptr %p, @.str
++  call void @llvm.assume(i1 %cmp)
++  %0 = load i8, ptr %p, align 1
++  %conv = sext i8 %0 to i32
++  ret i32 %conv
++}
++
++define i32 @main() {
++; DROP-LABEL: define noundef range(i32 -128, 128) i32 @main(
++; DROP-SAME: ) local_unnamed_addr #[[ATTR1:[0-9]+]] {
++; DROP-NEXT:  [[ENTRY:.*:]]
++; DROP-NEXT:    ret i32 77
++;
++; KEEP-LABEL: define noundef range(i32 -128, 128) i32 @main(
++; KEEP-SAME: ) local_unnamed_addr #[[ATTR1:[0-9]+]] !guid [[META3:![0-9]+]] {
++; KEEP-NEXT:  [[ENTRY:.*:]]
++; KEEP-NEXT:    [[CMP_I:%.*]] = icmp ne ptr @.str.1, @.str
++; KEEP-NEXT:    tail call void @llvm.assume(i1 [[CMP_I]])
++; KEEP-NEXT:    ret i32 77
++;
++entry:
++  %call = call i32 @a1(ptr noundef @.str.1)
++  ret i32 %call
++}
++
++declare void @llvm.assume(i1 noundef)
++;.
++; KEEP: attributes #[[ATTR0]] = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read, inaccessiblemem: write) }
++; KEEP: attributes #[[ATTR1]] = { mustprogress nofree norecurse nosync nounwind willreturn memory(inaccessiblemem: write) }
++; KEEP: attributes #[[ATTR2:[0-9]+]] = { mustprogress nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
++;.
++; DROP: attributes #[[ATTR0]] = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read, inaccessiblemem: write) }
++; DROP: attributes #[[ATTR1]] = { mustprogress nofree norecurse nosync nounwind willreturn memory(inaccessiblemem: write) }
++; DROP: attributes #[[ATTR2:[0-9]+]] = { mustprogress nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
++;.
++; KEEP: [[META0]] = !{i64 9170336258527473138}
++; KEEP: [[META1]] = !{i64 1468077888392345652}
++; KEEP: [[META2]] = !{i64 -5935117360456823926}
++; KEEP: [[META3]] = !{i64 -2624081020897602054}
++;.
++;; NOTE: These prefixes are unused and the list is autogenerated. Do not add tests below this line:
++; CHECK: {{.*}}

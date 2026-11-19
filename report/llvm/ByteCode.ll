@@ -205,7 +205,6 @@ $_ZGVZN4mlir6detail14TypeIDResolverINS_7OpTrait23AttrSizedResultSegmentsIZNS_6Ty
 @_ZN4mlir6detail14TypeIDResolverINS_10pdl_interp13SwitchTypesOpEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_10pdl_interp20SwitchOperandCountOpEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_10pdl_interp21SwitchOperationNameOpEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
-@_ZN4mlir6detail14TypeIDResolverINS_10pdl_interp19SwitchResultCountOpEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @.str.49 = private unnamed_addr constant [49 x i8] c"cannot create std::vector larger than max_size()\00", align 1
 @_ZZN4mlir6detail14TypeIDResolverINS_20InferTypeOpInterfaceEvE13resolveTypeIDEvE2id = linkonce_odr local_unnamed_addr global %"class.mlir::TypeID" zeroinitializer, comdat, align 8
 @_ZGVZN4mlir6detail14TypeIDResolverINS_20InferTypeOpInterfaceEvE13resolveTypeIDEvE2id = linkonce_odr global i64 0, comdat, align 8
@@ -608,7 +607,7 @@ bb.a:
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 48
   %.sroa.0.0.copyload.i.i.i.i.i.i.i.i = load ptr, ptr %i.k, align 8, !tbaa !134
   %i.l = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
-  %i.m = load ptr, ptr %i.l, align 8, !tbaa !137  ; 38 uses
+  %i.m = load ptr, ptr %i.l, align 8, !tbaa !137  ; 37 uses
   %.not = icmp eq ptr %i.m, @_ZN4mlir6detail14TypeIDResolverINS_10pdl_interp17ApplyConstraintOpEvE2idE
   br i1 %.not, label %bb.b, label %"_ZN4llvm10TypeSwitchIPN4mlir9OperationEvE4CaseINS1_10pdl_interp17ApplyConstraintOpERZN12_GLOBAL__N_19Generator8generateES3_RNS8_14ByteCodeWriterEE3$_0EERS4_OT0_.exit"
 
@@ -1011,8 +1010,6 @@ _ZN12_GLOBAL__N_114ByteCodeWriter6appendEPN4mlir5BlockE.exit.i.i.i.i.i.i.i642: ;
   br i1 %.not.i4.i.i.i.i.i.i, label %"_ZN4llvm10TypeSwitchIPN4mlir9OperationEvE4CaseINS1_10pdl_interp19SwitchResultCountOpERZN12_GLOBAL__N_19Generator8generateES3_RNS8_14ByteCodeWriterEE3$_0EERS4_OT0_.exit", label %.lr.ph.i3.i.i.i.i.i.i
 
 "_ZN4llvm10TypeSwitchIPN4mlir9OperationEvE4CaseINS1_10pdl_interp21SwitchOperationNameOpERZN12_GLOBAL__N_19Generator8generateES3_RNS8_14ByteCodeWriterEE3$_0EERS4_OT0_.exit": ; preds = %"_ZN4llvm10TypeSwitchIPN4mlir9OperationEvE4CaseINS1_10pdl_interp20SwitchOperandCountOpERZN12_GLOBAL__N_19Generator8generateES3_RNS8_14ByteCodeWriterEE3$_0EERS4_OT0_.exit"
-  %.not820 = icmp eq ptr %i.m, @_ZN4mlir6detail14TypeIDResolverINS_10pdl_interp19SwitchResultCountOpEvE2idE
-  tail call void @llvm.assume(i1 %.not820)
   %i.ccv = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.ccw = load ptr, ptr %i.ccv, align 8, !tbaa !357
   %i.ccx = getelementptr inbounds nuw i8, ptr %i.ccw, i64 24

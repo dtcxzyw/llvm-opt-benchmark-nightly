@@ -48,7 +48,6 @@ target triple = "x86_64-unknown-linux-gnu"
 @37 = private unnamed_addr constant [23 x i8] c"\07Dense([\C0\08, ... x \C0\02])\00", align 1
 @38 = private unnamed_addr constant [23 x i8] c"\08Sparse([\C0\08, ... x \C0\01)\00", align 1
 @switch.table._RNvMsi_NtNtCs5QaNqjAn6vc_5shard10operations9point_opsNtB5_21VectorStructPersisted8is_empty = private unnamed_addr constant [3 x i8] c"\18\10\18", align 8
-@switch.table._RNvMsi_NtNtCs5QaNqjAn6vc_5shard10operations9point_opsNtB5_21VectorStructPersisted8is_empty.41 = private unnamed_addr constant [3 x i64] [i64 2305843009213693952, i64 2305843009213693952, i64 384307168202282326], align 8
 
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RINvMs0_NtNtCs5QaNqjAn6vc_5shard10operations9point_opsNtB6_29PointInsertOperationsInternal16retain_point_idsNCNvNtNtNtBa_6update6points6upsert32retain_conditional_upsert_points0EBa_(ptr noalias nofree noundef align 8 dereferenceable(104) %0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(64) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
@@ -451,16 +450,12 @@ switch.lookup:                                    ; preds = %bb.e
   call void @llvm.assume(i1 %i.p)
   %i.q = xor i64 %i.o, -9223372036854775808
   %i.r = icmp slt i64 %i.o, 0
-  %i.s = select i1 %i.r, i64 %i.q, i64 1          ; 2 uses
+  %i.s = select i1 %i.r, i64 %i.q, i64 1
   %switch.gep = getelementptr inbounds i8, ptr @switch.table._RNvMsi_NtNtCs5QaNqjAn6vc_5shard10operations9point_opsNtB5_21VectorStructPersisted8is_empty, i64 %i.s
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
-  %switch.gep6 = getelementptr inbounds [8 x i8], ptr @switch.table._RNvMsi_NtNtCs5QaNqjAn6vc_5shard10operations9point_opsNtB5_21VectorStructPersisted8is_empty.41, i64 %i.s
-  %switch.load7 = load i64, ptr %switch.gep6, align 8
   %i.t = getelementptr inbounds nuw i8, ptr %i.n, i64 %switch.ext
-  %i.u = load i64, ptr %i.t, align 8, !alias.scope !388, !noundef !5 ; 2 uses
-  %1 = icmp ult i64 %i.u, %switch.load7
-  call void @llvm.assume(i1 %1)
+  %i.u = load i64, ptr %i.t, align 8, !alias.scope !388, !noundef !5
   %.sroa.0.0.in.i.i.not.i = icmp eq i64 %i.u, 0
   br i1 %.sroa.0.0.in.i.i.not.i, label %bb.e, label %_RINvYINtNtNtNtCsG258MDvU3F_3std11collections4hash3map6ValuesNtNtCsexYYUdYSQU6_5alloc6string6StringNtNtNtCs5QaNqjAn6vc_5shard10operations9point_ops15VectorPersistedENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB2C_3all5checkRB1y_NCNvMsi_B1A_NtB1A_21VectorStructPersisted8is_empty0E0INtNtNtB2K_3ops12control_flow11ControlFlowuEEB1E_.exit
 
