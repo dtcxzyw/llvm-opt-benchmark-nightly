@@ -108,7 +108,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #16
   store ptr null, ptr %i.c, align 8, !tbaa !20
   %i.d = call i32 @posix_memalign(ptr noundef nonnull %i.c, i64 noundef 4096, i64 noundef 32000000) #16
-  %i.e = load ptr, ptr %i.c, align 8, !tbaa !20   ; 14 uses
+  %i.e = load ptr, ptr %i.c, align 8, !tbaa !20   ; 15 uses
   %i.f = ptrtoaddr ptr %i.e to i64                ; 3 uses
   %i.g = icmp eq ptr %i.e, null
   %i.h = icmp ne i32 %i.d, 0
@@ -272,25 +272,34 @@ bb.e:                                             ; preds = %bb.d
 polybench_alloc_data.exit.i:                      ; preds = %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #16
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32000000) %i.bc, i8 0, i64 32000000, i1 false), !tbaa !18
-  %scevgep104 = getelementptr i8, ptr %i.bc, i64 32000000
+  %2 = insertelement <2 x ptr> poison, ptr %i.bc, i64 0
+  %3 = shufflevector <2 x ptr> %2, <2 x ptr> poison, <2 x i32> zeroinitializer
+  %4 = getelementptr i8, ptr %i.bc, <2 x i64> <i64 32000000, i64 16000>
   br label %.preheader84.i
 
 .preheader84.i:                                   ; preds = %bb.f, %polybench_alloc_data.exit.i
   %indvars.iv127.i = phi i64 [ 0, %polybench_alloc_data.exit.i ], [ %indvars.iv.next128.i, %bb.f ] ; 3 uses
-  %i.bh = shl nuw nsw i64 %indvars.iv127.i, 3
+  %i.bh = shl nuw nsw i64 %indvars.iv127.i, 3     ; 2 uses
   %i.bi = getelementptr i8, ptr %i.e, i64 %i.bh
-  %scevgep = getelementptr i8, ptr %i.bi, i64 31984008
+  %scevgep = getelementptr i8, ptr %i.e, i64 %i.bh
+  %5 = insertelement <2 x ptr> poison, ptr %scevgep, i64 0
+  %6 = insertelement <2 x ptr> %5, ptr %i.bi, i64 1
+  %7 = getelementptr i8, <2 x ptr> %6, <2 x i64> <i64 31984008, i64 8>
   %invariant.gep94.i = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %indvars.iv127.i ; 8 uses
-  %bound0 = icmp ult ptr %i.bc, %scevgep
-  %bound1 = icmp ult ptr %invariant.gep94.i, %scevgep104
-  %found.conflict = and i1 %bound0, %bound1
+  %8 = insertelement <2 x ptr> poison, ptr %invariant.gep94.i, i64 0
+  %9 = shufflevector <2 x ptr> %8, <2 x ptr> poison, <2 x i32> zeroinitializer
+  %10 = icmp ult <2 x ptr> %3, %7
+  %11 = icmp ult <2 x ptr> %9, %4
+  %12 = and <2 x i1> %10, %11
+  %13 = bitcast <2 x i1> %12 to i2
+  %.not = icmp eq i2 %13, 0
   br label %.preheader83.i
 
 .preheader83.i:                                   ; preds = %middle.block112, %.preheader84.i
   %indvars.iv123.i = phi i64 [ 0, %.preheader84.i ], [ %indvars.iv.next124.i, %middle.block112 ] ; 3 uses
   %gep95.i = getelementptr inbounds nuw [16000 x i8], ptr %invariant.gep94.i, i64 %indvars.iv123.i ; 3 uses
   %i.bj = getelementptr inbounds nuw [16000 x i8], ptr %i.bc, i64 %indvars.iv123.i ; 3 uses
-  br i1 %found.conflict, label %scalar.ph105, label %vector.ph107
+  br i1 %.not, label %vector.ph107, label %scalar.ph105
 
 vector.ph107:                                     ; preds = %.preheader83.i
   %i.bk = load double, ptr %gep95.i, align 8, !tbaa !18, !alias.scope !61

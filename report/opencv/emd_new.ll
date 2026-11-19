@@ -204,7 +204,7 @@ _ZN12_GLOBAL__N_19EMDSolver8calcCostERKN2cv3MatES4_iPFfPKfS6_iES4_.exit.i: ; pre
   br i1 %i.wr, label %.lr.ph184.preheader.i.i, label %._crit_edge185.thread.i.i
 
 .lr.ph184.preheader.i.i:                          ; preds = %._crit_edge.i55.i
-  %wide.trip.count273.i.i = zext nneg i32 %i.wg to i64 ; 14 uses
+  %wide.trip.count273.i.i = zext nneg i32 %i.wg to i64 ; 15 uses
   %xtraiter670 = and i64 %wide.trip.count273.i.i, 3 ; 3 uses
   %i.ws = icmp ult i32 %i.wg, 4
   br i1 %i.ws, label %.lr.ph184.i.i.epil.preheader, label %.lr.ph184.preheader.i.i.new
@@ -393,20 +393,22 @@ bb.dt:                                            ; preds = %.epil.preheader
   br i1 %niter669.ncmp.3, label %.preheader176.i.i.preheader.loopexit640.unr-lcssa, label %.preheader178.i.i, !llvm.loop !80
 
 .preheader177.i.i:                                ; preds = %._crit_edge190.us.i.i
-  %i.yv = load ptr, ptr %i.pn, align 8, !tbaa !173 ; 4 uses
+  %i.yv = load ptr, ptr %i.pn, align 8, !tbaa !173 ; 5 uses
   %i.yw = shl nuw nsw i64 %wide.trip.count273.i.i, 4
   %i.yx = getelementptr i8, ptr %i.wp, i64 %i.yw
   %scevgep578 = getelementptr i8, ptr %i.yx, i64 -12
   %i.yy = mul nuw nsw i64 %wide.trip.count273.i.i, %wide.trip.count288.i.i
-  %i.yz = shl i64 %i.yy, 2                        ; 2 uses
+  %52 = shl i64 %i.yy, 2
+  %scevgep580 = getelementptr i8, ptr %i.yv, i64 %52
+  %i.yz = shl nuw nsw i64 %wide.trip.count273.i.i, 2 ; 2 uses
   %scevgep579 = getelementptr i8, ptr %.val171.us.i.i, i64 %i.yz
-  %scevgep580.a = getelementptr i8, ptr %i.yv, i64 %i.yz ; 2 uses
+  %scevgep580.a = getelementptr i8, ptr %i.yv, i64 %i.yz
   %min.iters.check582 = icmp ult i32 %i.wg, 9
   %bound0584 = icmp ult ptr %i.yv, %scevgep579
   %bound1585 = icmp ult ptr %.val171.us.i.i, %scevgep580.a
   %found.conflict586 = and i1 %bound0584, %bound1585
   %bound0587 = icmp ult ptr %i.yv, %scevgep578
-  %bound1588 = icmp ult ptr %i.wp, %scevgep580.a
+  %bound1588 = icmp ult ptr %i.wp, %scevgep580
   %found.conflict589 = and i1 %bound0587, %bound1588
   %conflict.rdx = or i1 %found.conflict586, %found.conflict589
   %i.za = and i64 %wide.trip.count273.i.i, 7      ; 2 uses

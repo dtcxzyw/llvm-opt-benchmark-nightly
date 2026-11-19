@@ -205,7 +205,7 @@ bb.a:
   %i.d = udiv i64 %1, %i.b                        ; 2 uses
   %i.e = sub nuw i64 %1, %i.c                     ; 4 uses
   %.not = icmp ugt i64 %i.c, %2
-  %i.f = getelementptr [4 x i8], ptr %0, i64 %i.e ; 5 uses
+  %i.f = getelementptr [4 x i8], ptr %0, i64 %i.e ; 6 uses
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -516,24 +516,27 @@ _ZN5boost7movelib7swap_opclIPiS3_EET0_NS0_10backward_tET_S6_S4_.exit: ; preds = 
   %.078.us = phi i64 [ %i.dg, %_ZN5boost7movelib14op_merge_rightIPiNS_9container3dtl23flat_tree_value_compareISt4lessIiEiNS_11move_detail8identityIiEEEENS0_7swap_opEEEvT_SD_SD_SD_T0_T1_.exit66.us ], [ %i.e, %.lr.ph ] ; 2 uses
   %i.dg = sub i64 %.078.us, %i.b                  ; 3 uses
   %.idx80 = shl nuw nsw i64 %i.dg, 2              ; 2 uses
-  %i.dh = getelementptr i8, ptr %0, i64 %.idx80   ; 2 uses
+  %i.dh = getelementptr inbounds nuw i8, ptr %0, i64 %.idx80 ; 2 uses
   %.idx79 = shl nuw nsw i64 %.078.us, 2           ; 2 uses
   %.not28.i55.us = icmp eq i64 %.idx79, %.idx80
   br i1 %.not28.i55.us, label %_ZN5boost7movelib14op_merge_rightIPiNS_9container3dtl23flat_tree_value_compareISt4lessIiEiNS_11move_detail8identityIiEEEENS0_7swap_opEEEvT_SD_SD_SD_T0_T1_.exit66.us, label %.lr.ph.i.i30.i58.us.preheader
 
 .lr.ph.i.i30.i58.us.preheader:                    ; preds = %._crit_edge.i52.us
-  %i.di = getelementptr i8, ptr %i.dh, i64 %.idx  ; 3 uses
-  %i.dj = getelementptr i8, ptr %0, i64 %.idx79   ; 3 uses
+  %i.di = getelementptr i8, ptr %i.dh, i64 %.idx  ; 2 uses
+  %i.dj = getelementptr inbounds nuw i8, ptr %0, i64 %.idx79 ; 2 uses
   %i.dk = udiv i64 %1, %i.b
-  %i.dl = shl nuw nsw i64 %i.dk, 3                ; 2 uses
+  %i.dl = shl nuw nsw i64 %i.dk, 3                ; 3 uses
   %i.dm = add nsw i64 %i.dl, -8
   %i.dn = mul i64 %2, %i.dm
   %i.do = getelementptr i8, ptr %0, i64 %i.dn
   %i.dp = add nsw i64 %i.dl, -4
-  %i.dq = mul i64 %2, %i.dp
+  %3 = mul i64 %2, %i.dp
+  %4 = getelementptr i8, ptr %0, i64 %3
+  %5 = or disjoint i64 %i.dl, 4
+  %i.dq = mul i64 %2, %5
   %i.dr = getelementptr i8, ptr %0, i64 %i.dq
-  %bound0298 = icmp ult ptr %i.do, %i.di
-  %bound1299 = icmp ult ptr %i.dr, %i.dj
+  %bound0298 = icmp ult ptr %i.do, %i.dr
+  %bound1299 = icmp ult ptr %4, %i.f
   %found.conflict300 = and i1 %bound0298, %bound1299
   br i1 %found.conflict300, label %.lr.ph.i.i30.i58.us, label %vector.body303
 
@@ -936,7 +939,7 @@ bb.a:
   %i.d = udiv i64 %1, %i.b                        ; 2 uses
   %i.e = sub nuw i64 %1, %i.c                     ; 4 uses
   %.not = icmp ugt i64 %i.c, %2
-  %i.f = getelementptr [4 x i8], ptr %0, i64 %i.e ; 5 uses
+  %i.f = getelementptr [4 x i8], ptr %0, i64 %i.e ; 6 uses
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -1237,24 +1240,27 @@ _ZN5boost7movelib7move_opclIPNS_9container4test11movable_intES6_EET0_NS0_10backw
   %.078.us = phi i64 [ %i.dc, %_ZN5boost7movelib14op_merge_rightIPNS_9container4test11movable_intENS2_3dtl23flat_tree_value_compareISt4lessIS4_ES4_NS_11move_detail8identityIS4_EEEENS0_7move_opEEEvT_SF_SF_SF_T0_T1_.exit66.us ], [ %i.e, %.lr.ph ] ; 2 uses
   %i.dc = sub i64 %.078.us, %i.b                  ; 3 uses
   %.idx80 = shl nuw nsw i64 %i.dc, 2              ; 2 uses
-  %i.dd = getelementptr i8, ptr %0, i64 %.idx80   ; 2 uses
+  %i.dd = getelementptr inbounds nuw i8, ptr %0, i64 %.idx80 ; 2 uses
   %.idx79 = shl nuw nsw i64 %.078.us, 2           ; 2 uses
   %.not28.i55.us = icmp eq i64 %.idx79, %.idx80
   br i1 %.not28.i55.us, label %_ZN5boost7movelib14op_merge_rightIPNS_9container4test11movable_intENS2_3dtl23flat_tree_value_compareISt4lessIS4_ES4_NS_11move_detail8identityIS4_EEEENS0_7move_opEEEvT_SF_SF_SF_T0_T1_.exit66.us, label %.lr.ph.i.i30.i58.us.preheader
 
 .lr.ph.i.i30.i58.us.preheader:                    ; preds = %._crit_edge.i52.us
-  %i.de = getelementptr i8, ptr %i.dd, i64 %.idx  ; 3 uses
-  %i.df = getelementptr i8, ptr %0, i64 %.idx79   ; 3 uses
+  %i.de = getelementptr i8, ptr %i.dd, i64 %.idx  ; 2 uses
+  %i.df = getelementptr inbounds nuw i8, ptr %0, i64 %.idx79 ; 2 uses
   %i.dg = udiv i64 %1, %i.b
-  %i.dh = shl nuw nsw i64 %i.dg, 3                ; 2 uses
+  %i.dh = shl nuw nsw i64 %i.dg, 3                ; 3 uses
   %i.di = add nsw i64 %i.dh, -4
-  %i.dj = mul i64 %2, %i.di
+  %3 = mul i64 %2, %i.di
+  %4 = getelementptr i8, ptr %0, i64 %3
+  %5 = or disjoint i64 %i.dh, 4
+  %i.dj = mul i64 %2, %5
   %i.dk = getelementptr i8, ptr %0, i64 %i.dj
   %i.dl = add nsw i64 %i.dh, -8
   %i.dm = mul i64 %2, %i.dl
   %i.dn = getelementptr i8, ptr %0, i64 %i.dm
-  %bound0276 = icmp ult ptr %i.dk, %i.df
-  %bound1277 = icmp ult ptr %i.dn, %i.de
+  %bound0276 = icmp ult ptr %4, %i.f
+  %bound1277 = icmp ult ptr %i.dn, %i.dk
   %found.conflict278 = and i1 %bound0276, %bound1277
   br i1 %found.conflict278, label %.lr.ph.i.i30.i58.us, label %vector.body281
 
@@ -1657,7 +1663,7 @@ bb.a:
   %i.d = udiv i64 %1, %i.b                        ; 2 uses
   %i.e = sub nuw i64 %1, %i.c                     ; 4 uses
   %.not = icmp ugt i64 %i.c, %2
-  %i.f = getelementptr [4 x i8], ptr %0, i64 %i.e ; 5 uses
+  %i.f = getelementptr [4 x i8], ptr %0, i64 %i.e ; 6 uses
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -1958,24 +1964,27 @@ _ZN5boost7movelib7move_opclIPNS_9container4test24movable_and_copyable_intES6_EET
   %.078.us = phi i64 [ %i.dc, %_ZN5boost7movelib14op_merge_rightIPNS_9container4test24movable_and_copyable_intENS2_3dtl23flat_tree_value_compareISt4lessIS4_ES4_NS_11move_detail8identityIS4_EEEENS0_7move_opEEEvT_SF_SF_SF_T0_T1_.exit66.us ], [ %i.e, %.lr.ph ] ; 2 uses
   %i.dc = sub i64 %.078.us, %i.b                  ; 3 uses
   %.idx80 = shl nuw nsw i64 %i.dc, 2              ; 2 uses
-  %i.dd = getelementptr i8, ptr %0, i64 %.idx80   ; 2 uses
+  %i.dd = getelementptr inbounds nuw i8, ptr %0, i64 %.idx80 ; 2 uses
   %.idx79 = shl nuw nsw i64 %.078.us, 2           ; 2 uses
   %.not28.i55.us = icmp eq i64 %.idx79, %.idx80
   br i1 %.not28.i55.us, label %_ZN5boost7movelib14op_merge_rightIPNS_9container4test24movable_and_copyable_intENS2_3dtl23flat_tree_value_compareISt4lessIS4_ES4_NS_11move_detail8identityIS4_EEEENS0_7move_opEEEvT_SF_SF_SF_T0_T1_.exit66.us, label %.lr.ph.i.i30.i58.us.preheader
 
 .lr.ph.i.i30.i58.us.preheader:                    ; preds = %._crit_edge.i52.us
-  %i.de = getelementptr i8, ptr %i.dd, i64 %.idx  ; 3 uses
-  %i.df = getelementptr i8, ptr %0, i64 %.idx79   ; 3 uses
+  %i.de = getelementptr i8, ptr %i.dd, i64 %.idx  ; 2 uses
+  %i.df = getelementptr inbounds nuw i8, ptr %0, i64 %.idx79 ; 2 uses
   %i.dg = udiv i64 %1, %i.b
-  %i.dh = shl nuw nsw i64 %i.dg, 3                ; 2 uses
+  %i.dh = shl nuw nsw i64 %i.dg, 3                ; 3 uses
   %i.di = add nsw i64 %i.dh, -4
-  %i.dj = mul i64 %2, %i.di
+  %3 = mul i64 %2, %i.di
+  %4 = getelementptr i8, ptr %0, i64 %3
+  %5 = or disjoint i64 %i.dh, 4
+  %i.dj = mul i64 %2, %5
   %i.dk = getelementptr i8, ptr %0, i64 %i.dj
   %i.dl = add nsw i64 %i.dh, -8
   %i.dm = mul i64 %2, %i.dl
   %i.dn = getelementptr i8, ptr %0, i64 %i.dm
-  %bound0276 = icmp ult ptr %i.dk, %i.df
-  %bound1277 = icmp ult ptr %i.dn, %i.de
+  %bound0276 = icmp ult ptr %4, %i.f
+  %bound1277 = icmp ult ptr %i.dn, %i.dk
   %found.conflict278 = and i1 %bound0276, %bound1277
   br i1 %found.conflict278, label %.lr.ph.i.i30.i58.us, label %vector.body281
 
@@ -2378,7 +2387,7 @@ bb.a:
   %i.d = udiv i64 %1, %i.b                        ; 2 uses
   %i.e = sub nuw i64 %1, %i.c                     ; 4 uses
   %.not = icmp ugt i64 %i.c, %2
-  %i.f = getelementptr [4 x i8], ptr %0, i64 %i.e ; 5 uses
+  %i.f = getelementptr [4 x i8], ptr %0, i64 %i.e ; 6 uses
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -2679,24 +2688,27 @@ _ZN5boost7movelib7move_opclIPNS_9container4test24movable_and_copyable_intES6_EET
   %.078.us = phi i64 [ %i.dc, %_ZN5boost7movelib14op_merge_rightIPNS_9container4test24movable_and_copyable_intENS2_3dtl23flat_tree_value_compareINS3_16less_transparentES4_NS_11move_detail8identityIS4_EEEENS0_7move_opEEEvT_SE_SE_SE_T0_T1_.exit66.us ], [ %i.e, %.lr.ph ] ; 2 uses
   %i.dc = sub i64 %.078.us, %i.b                  ; 3 uses
   %.idx80 = shl nuw nsw i64 %i.dc, 2              ; 2 uses
-  %i.dd = getelementptr i8, ptr %0, i64 %.idx80   ; 2 uses
+  %i.dd = getelementptr inbounds nuw i8, ptr %0, i64 %.idx80 ; 2 uses
   %.idx79 = shl nuw nsw i64 %.078.us, 2           ; 2 uses
   %.not28.i55.us = icmp eq i64 %.idx79, %.idx80
   br i1 %.not28.i55.us, label %_ZN5boost7movelib14op_merge_rightIPNS_9container4test24movable_and_copyable_intENS2_3dtl23flat_tree_value_compareINS3_16less_transparentES4_NS_11move_detail8identityIS4_EEEENS0_7move_opEEEvT_SE_SE_SE_T0_T1_.exit66.us, label %.lr.ph.i.i30.i58.us.preheader
 
 .lr.ph.i.i30.i58.us.preheader:                    ; preds = %._crit_edge.i52.us
-  %i.de = getelementptr i8, ptr %i.dd, i64 %.idx  ; 3 uses
-  %i.df = getelementptr i8, ptr %0, i64 %.idx79   ; 3 uses
+  %i.de = getelementptr i8, ptr %i.dd, i64 %.idx  ; 2 uses
+  %i.df = getelementptr inbounds nuw i8, ptr %0, i64 %.idx79 ; 2 uses
   %i.dg = udiv i64 %1, %i.b
-  %i.dh = shl nuw nsw i64 %i.dg, 3                ; 2 uses
+  %i.dh = shl nuw nsw i64 %i.dg, 3                ; 3 uses
   %i.di = add nsw i64 %i.dh, -4
-  %i.dj = mul i64 %2, %i.di
+  %3 = mul i64 %2, %i.di
+  %4 = getelementptr i8, ptr %0, i64 %3
+  %5 = or disjoint i64 %i.dh, 4
+  %i.dj = mul i64 %2, %5
   %i.dk = getelementptr i8, ptr %0, i64 %i.dj
   %i.dl = add nsw i64 %i.dh, -8
   %i.dm = mul i64 %2, %i.dl
   %i.dn = getelementptr i8, ptr %0, i64 %i.dm
-  %bound0276 = icmp ult ptr %i.dk, %i.df
-  %bound1277 = icmp ult ptr %i.dn, %i.de
+  %bound0276 = icmp ult ptr %4, %i.f
+  %bound1277 = icmp ult ptr %i.dn, %i.dk
   %found.conflict278 = and i1 %bound0276, %bound1277
   br i1 %found.conflict278, label %.lr.ph.i.i30.i58.us, label %vector.body281
 

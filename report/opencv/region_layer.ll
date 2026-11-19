@@ -204,7 +204,7 @@ bb.bj:                                            ; preds = %bb.bf
   %i.fo = getelementptr inbounds nuw i8, ptr %i.ch, i64 24
   %i.fp = load ptr, ptr %i.fo, align 8, !tbaa !119 ; 16 uses
   %i.fq = getelementptr inbounds nuw i8, ptr %i.ci, i64 24
-  %i.fr = load ptr, ptr %i.fq, align 8, !tbaa !119 ; 19 uses
+  %i.fr = load ptr, ptr %i.fq, align 8, !tbaa !119 ; 20 uses
   %i.fs = load i32, ptr %i.ap, align 8, !tbaa !49
   %i.ft = icmp eq i32 %i.fs, 0
   br i1 %i.ft, label %.preheader348, label %.loopexit347
@@ -347,19 +347,19 @@ bb.br:                                            ; preds = %.lr.ph355, %bb.br
   %i.ht = icmp sgt i32 %i.hs, 0                   ; 2 uses
   %i.hu = zext nneg i32 %i.dd to i64              ; 2 uses
   %i.hv = zext nneg i32 %i.hm to i64              ; 2 uses
-  %i.hw = sext i32 %i.dh to i64                   ; 4 uses
+  %i.hw = sext i32 %i.dh to i64                   ; 3 uses
   %wide.trip.count464 = zext nneg i32 %i.cm to i64 ; 2 uses
   %wide.trip.count459 = zext nneg i32 %i.dd to i64 ; 4 uses
   %wide.trip.count454 = zext nneg i32 %i.cv to i64 ; 2 uses
   %wide.trip.count449 = zext nneg i32 %i.hm to i64 ; 7 uses
-  %wide.trip.count444 = zext i32 %i.hs to i64     ; 12 uses
+  %wide.trip.count444 = zext i32 %i.hs to i64     ; 11 uses
   %i.hx = add nsw i64 %wide.trip.count449, -1     ; 2 uses
+  %27 = shl nuw nsw i64 %wide.trip.count444, 2    ; 3 uses
+  %28 = shl nsw i64 %i.hw, 2                      ; 2 uses
   br i1 %i.hr, label %.preheader342.us.us.preheader, label %.preheader342.us.preheader
 
 .preheader342.us.preheader:                       ; preds = %.preheader342.lr.ph.split.split.us.split
   %i.hy = mul i64 %i.ba, %i.hx
-  %27 = shl nuw nsw i64 %wide.trip.count444, 2
-  %28 = shl nsw i64 %i.hw, 2
   %i.hz = mul i64 %i.bb, %wide.trip.count449
   %i.ia = mul i64 %i.bc, %wide.trip.count459
   %i.ib = mul i64 %i.ia, %wide.trip.count449
@@ -376,13 +376,13 @@ bb.br:                                            ; preds = %.lr.ph355, %bb.br
 
 .preheader342.us.us.preheader:                    ; preds = %.preheader342.lr.ph.split.split.us.split
   %i.ig = mul i64 %i.ax, %i.hx
-  %29 = add i64 %i.ig, 20
-  %30 = shl nuw nsw i64 %wide.trip.count444, 2
-  %31 = add i64 %29, %30
-  %32 = shl nsw i64 %i.hw, 2
-  %33 = mul i64 %i.ay, %wide.trip.count449
-  %34 = mul i64 %i.az, %wide.trip.count459
-  %35 = mul i64 %34, %wide.trip.count449
+  %29 = mul i64 %i.ay, %wide.trip.count449
+  %30 = mul i64 %i.az, %wide.trip.count459
+  %31 = mul i64 %30, %wide.trip.count449
+  %32 = add nuw nsw i64 %27, 20
+  %33 = getelementptr i8, ptr %i.fr, i64 %i.ig
+  %34 = getelementptr i8, ptr %33, i64 20
+  %35 = getelementptr i8, ptr %34, i64 %27
   %min.iters.check = icmp ult i32 %i.hs, 8
   %n.vec = and i64 %wide.trip.count444, 2147483640 ; 3 uses
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count444
@@ -393,30 +393,33 @@ bb.br:                                            ; preds = %.lr.ph355, %bb.br
 
 .preheader342.us.us:                              ; preds = %.preheader342.us.us.preheader, %._crit_edge375.split.us.split381.us.us.us
   %indvars.iv461 = phi i64 [ %indvars.iv.next462, %._crit_edge375.split.us.split381.us.us.us ], [ 0, %.preheader342.us.us.preheader ] ; 3 uses
-  %i.ii = mul i64 %32, %indvars.iv461             ; 2 uses
-  %i.ij = add i64 %31, %i.ii
+  %i.ii = mul i64 %28, %indvars.iv461             ; 3 uses
+  %i.ij = add i64 %32, %i.ii
   %i.ik = add i64 %i.ii, 20
   %i.il = mul nsw i64 %indvars.iv461, %i.hw
+  %36 = getelementptr i8, ptr %35, i64 %i.ii
   br label %.preheader341.us.us.us.us
 
 .preheader341.us.us.us.us:                        ; preds = %._crit_edge369.split371.us.us.us.us.us, %.preheader342.us.us
   %indvars.iv456 = phi i64 [ %indvars.iv.next457, %._crit_edge369.split371.us.us.us.us.us ], [ 0, %.preheader342.us.us ] ; 4 uses
-  %i.im = mul i64 %33, %indvars.iv456             ; 2 uses
+  %i.im = mul i64 %29, %indvars.iv456             ; 3 uses
   %i.in = add i64 %i.ij, %i.im
   %i.io = add i64 %i.ik, %i.im
   %i.ip = trunc nuw nsw i64 %indvars.iv456 to i32
   %i.iq = uitofp nneg i32 %i.ip to float
+  %37 = getelementptr i8, ptr %36, i64 %i.im
   %i.ir = insertelement <2 x float> poison, float %i.iq, i64 0
   br label %.preheader.us.us.us.us.us
 
 .preheader.us.us.us.us.us:                        ; preds = %._crit_edge367.split.us.us.us.us.us.us, %.preheader341.us.us.us.us
   %indvars.iv451 = phi i64 [ %indvars.iv.next452, %._crit_edge367.split.us.us.us.us.us.us ], [ 0, %.preheader341.us.us.us.us ] ; 4 uses
-  %i.is = mul i64 %35, %indvars.iv451             ; 2 uses
+  %i.is = mul i64 %31, %indvars.iv451             ; 3 uses
+  %scevgep = getelementptr i8, ptr %37, i64 %i.is
   %i.it = add i64 %i.in, %i.is                    ; 2 uses
   %scevgep.a = getelementptr i8, ptr %i.fp, i64 %i.it
   %i.iu = add i64 %i.io, %i.is                    ; 2 uses
   %scevgep541 = getelementptr i8, ptr %i.fp, i64 %i.iu
-  %scevgep542 = getelementptr i8, ptr %i.fr, i64 %i.it ; 2 uses
+  %scevgep542 = getelementptr i8, ptr %i.fr, i64 %i.it
   %scevgep543 = getelementptr i8, ptr %i.fr, i64 %i.iu ; 2 uses
   %i.iv = mul nuw nsw i64 %indvars.iv451, %i.hu
   %i.iw = add nuw nsw i64 %i.iv, %indvars.iv456
@@ -427,11 +430,11 @@ bb.br:                                            ; preds = %.lr.ph355, %bb.br
   %bound0 = icmp ult ptr %scevgep543, %scevgep.a
   %bound1 = icmp ult ptr %scevgep541, %scevgep542
   %found.conflict = and i1 %bound0, %bound1
-  %36 = or i1 %found.conflict, %stride.check
-  %bound0544 = icmp ult ptr %scevgep543, %i.at
-  %bound1545 = icmp ult ptr %i.au, %scevgep542
-  %found.conflict546 = and i1 %bound0544, %bound1545
-  %conflict.rdx = or i1 %36, %found.conflict546
+  %bound0546 = icmp ult ptr %scevgep543, %i.at
+  %bound0544 = icmp ult ptr %i.au, %scevgep
+  %found.conflict548 = and i1 %bound0546, %bound0544
+  %38 = or i1 %found.conflict548, %stride.check
+  %conflict.rdx = or i1 %found.conflict, %38
   br label %bb.bs
 
 bb.bs:                                            ; preds = %.loopexit.us.us.us.us.us.us, %.preheader.us.us.us.us.us
