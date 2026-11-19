@@ -203,13 +203,13 @@ middle.block:                                     ; preds = %vector.body, %scala
   br i1 %exitcond25.not.i, label %.preheader57.i.preheader, label %.preheader.i, !llvm.loop !32
 
 .preheader57.i.preheader:                         ; preds = %middle.block
-  %scevgep = getelementptr i8, ptr %i.q, i64 13519992
+  %scevgep = getelementptr i8, ptr %i.q, i64 31192
   %scevgep96 = getelementptr i8, ptr %i.q, i64 8
-  %scevgep97 = getelementptr i8, ptr %i.e, i64 13509592
+  %scevgep97 = getelementptr i8, ptr %i.e, i64 20792
   %scevgep98 = getelementptr i8, ptr %i.e, i64 10408
-  %scevgep118 = getelementptr i8, ptr %i.e, i64 13519992
+  %scevgep118 = getelementptr i8, ptr %i.e, i64 31192
   %scevgep119 = getelementptr i8, ptr %i.e, i64 8
-  %scevgep120 = getelementptr i8, ptr %i.q, i64 13509592
+  %scevgep120 = getelementptr i8, ptr %i.q, i64 20792
   %scevgep121 = getelementptr i8, ptr %i.q, i64 10408
   %bound0124 = icmp ult ptr %scevgep121, %scevgep118
   %bound1125 = icmp ult ptr %scevgep119, %scevgep120
@@ -457,13 +457,13 @@ middle.block150:                                  ; preds = %vector.body145, %sc
   br i1 %exitcond25.not.i38, label %.preheader57.i40.preheader, label %.preheader.i32, !llvm.loop !32
 
 .preheader57.i40.preheader:                       ; preds = %middle.block150
-  %scevgep159 = getelementptr i8, ptr %i.q, i64 13519992
+  %scevgep159 = getelementptr i8, ptr %i.q, i64 31192
   %scevgep160 = getelementptr i8, ptr %i.q, i64 8
-  %scevgep161 = getelementptr i8, ptr %i.k, i64 13509592
+  %scevgep161 = getelementptr i8, ptr %i.k, i64 20792
   %scevgep162 = getelementptr i8, ptr %i.k, i64 10408
-  %scevgep186 = getelementptr i8, ptr %i.k, i64 13519992
+  %scevgep186 = getelementptr i8, ptr %i.k, i64 31192
   %scevgep187 = getelementptr i8, ptr %i.k, i64 8
-  %scevgep188 = getelementptr i8, ptr %i.q, i64 13509592
+  %scevgep188 = getelementptr i8, ptr %i.q, i64 20792
   %scevgep189 = getelementptr i8, ptr %i.q, i64 10408
   %bound0192 = icmp ult ptr %scevgep189, %scevgep186
   %bound1193 = icmp ult ptr %scevgep187, %scevgep188
