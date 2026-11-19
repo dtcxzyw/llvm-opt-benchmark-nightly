@@ -11,8 +11,6 @@ target triple = "x86_64-pc-linux-gnu"
 module asm(target_features: "+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87", target_cpu: "x86-64")
     ".globl _ZSt21ios_base_library_initv"
 
-%"struct.folly::f14::detail::F14EmptyTagVector" = type { %"struct.std::array.4", i8 }
-%"struct.std::array.4" = type { [15 x i8] }
 %"struct.folly::c_array" = type { [20 x i64] }
 %"struct.folly::c_array.14" = type { [100 x i16] }
 %"struct.folly::c_array.15" = type { [7 x i8] }
@@ -114,8 +112,6 @@ $_ZTSN5folly9TypeErrorE = comdat any
 
 $_ZTVN5folly9TypeErrorE = comdat any
 
-$_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance = comdat any
-
 $_ZTIN5folly17BadExpectedAccessIvEE = comdat any
 
 $_ZTSN5folly17BadExpectedAccessIvEE = comdat any
@@ -150,7 +146,6 @@ $_ZTVN5folly17BadExpectedAccessINS_14ConversionCodeEEE = comdat any
 @_ZTVN5folly9TypeErrorE = linkonce_odr constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr @_ZTIN5folly9TypeErrorE, ptr @_ZNSt13runtime_errorD2Ev, ptr @_ZN5folly9TypeErrorD0Ev, ptr @_ZNKSt13runtime_error4whatEv] }, comdat, align 8
 @.str = private unnamed_addr constant [50 x i8] c"basic_string: construction from null is not valid\00", align 1
 @.str.1 = private unnamed_addr constant [24 x i8] c"basic_string::_M_create\00", align 1
-@_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance = linkonce_odr constant %"struct.folly::f14::detail::F14EmptyTagVector" { %"struct.std::array.4" zeroinitializer, i8 -1 }, comdat, align 16
 @_ZN5folly7dynamic8TypeInfoINS0_10ObjectImplEE4nameE = external local_unnamed_addr constant ptr, align 8
 @_ZN5folly7dynamic8TypeInfoINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE4nameE = external local_unnamed_addr constant ptr, align 8
 @_ZTIN5folly17BadExpectedAccessIvEE = linkonce_odr constant { ptr, ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv120__si_class_type_infoE, i64 2), ptr @_ZTSN5folly17BadExpectedAccessIvEE, ptr @_ZTISt9exception }, comdat, align 8
@@ -553,7 +548,7 @@ thread-pre-split.i.i.i:                           ; preds = %bb.b, %bb.c
   br i1 %.not2.i.i.i, label %bb.d, label %_ZN5folly6detail14IteratorFacadeINS_7dynamic19const_item_iteratorEKSt4pairIKS2_S2_ESt20forward_iterator_tagEppEv.exit, !prof !34
 
 bb.d:                                             ; preds = %.critedge.i.i.i.i
-  %i.p = getelementptr inbounds i8, ptr %.017.i.i.i.i, i64 -128 ; 4 uses
+  %i.p = getelementptr inbounds i8, ptr %.017.i.i.i.i, i64 -128 ; 3 uses
   %i.q = load <16 x i8>, ptr %i.p, align 16, !tbaa !32
   %i.r = icmp eq <16 x i8> %i.q, zeroinitializer
   %i.s = bitcast <16 x i1> %i.r to i16
@@ -569,8 +564,6 @@ bb.e:                                             ; preds = %bb.d
   %i.x = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.w, i1 true)
   %i.y = xor i32 %i.x, 31
   %i.z = zext nneg i32 %i.y to i64                ; 2 uses
-  %4 = icmp ne ptr %i.p, @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance
-  tail call void @llvm.assume(i1 %4)
   %i.aa = shl nuw nsw i64 %i.z, 3
   %i.ab = getelementptr i8, ptr %i.p, i64 %i.aa
   %i.ac = getelementptr i8, ptr %i.ab, i64 16
@@ -973,7 +966,7 @@ thread-pre-split.i.i.i.i:                         ; preds = %bb.y, %bb.z
   br i1 %.not2.i.i.i.i, label %bb.aa, label %"_ZSt9__find_ifIN5folly7dynamic19const_item_iteratorEN9__gnu_cxx5__ops12_Iter_negateIZNS0_27compareDynamicWithToleranceERKS1_S7_dE3$_0EEET_SA_SA_T0_St18input_iterator_tag.exit", !prof !34
 
 bb.aa:                                            ; preds = %.critedge.i.i.i.i.i
-  %i.ce = getelementptr inbounds i8, ptr %.017.i.i.i.i.i, i64 -128 ; 4 uses
+  %i.ce = getelementptr inbounds i8, ptr %.017.i.i.i.i.i, i64 -128 ; 3 uses
   %i.cf = load <16 x i8>, ptr %i.ce, align 16, !tbaa !32
   %i.cg = icmp eq <16 x i8> %i.cf, zeroinitializer
   %i.ch = bitcast <16 x i1> %i.cg to i16
@@ -989,8 +982,6 @@ bb.ab:                                            ; preds = %bb.aa
   %i.cm = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.cl, i1 true)
   %i.cn = xor i32 %i.cm, 31
   %i.co = zext nneg i32 %i.cn to i64              ; 2 uses
-  %5 = icmp ne ptr %i.ce, @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance
-  tail call void @llvm.assume(i1 %5)
   %i.cp = shl nuw nsw i64 %i.co, 3
   %i.cq = getelementptr i8, ptr %i.ce, i64 %i.cp
   %i.cr = getelementptr i8, ptr %i.cq, i64 16

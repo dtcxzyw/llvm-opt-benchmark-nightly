@@ -202,7 +202,6 @@ begin_hunk_0
 @1036 = private unnamed_addr constant [28 x i8] c"failed to write whole buffer", align 1, !guid !6
 @1037 = private unnamed_addr constant <{ ptr, [9 x i8], [7 x i8] }> <{ ptr @1036, [9 x i8] c"\1C\00\00\00\00\00\00\00\17", [7 x i8] undef }>, align 8, !guid !6
 @1038 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @62, [16 x i8] c"q\00\00\00\00\00\00\00H\07\00\00$\00\00\00" }>, align 8, !guid !6
-@switch.table._RNvMs7_NtNtNtCs844E4pPEVZX_17influxdb3_catalog7catalog8versions2v1NtB5_12InnerCatalog19apply_catalog_batch.263 = private unnamed_addr constant [5 x i64] [i64 104811045873349726, i64 60680079189834052, i64 88686269585142076, i64 768614336404564651, i64 384307168202282326], align 8
 @switch.table._RNvXs11_CsaXLCtUcOqO5_15influxdb3_authzNtB6_12ResourceTypeNtNtCs4NRVxsYgnAr_4core3fmt5Debug3fmt = private unnamed_addr constant [4 x i8] c"\08\05\06\08", align 8
 @switch.table._RNvXs11_CsaXLCtUcOqO5_15influxdb3_authzNtB6_12ResourceTypeNtNtCs4NRVxsYgnAr_4core3fmt5Debug3fmt.265 = private unnamed_addr constant [4 x ptr] [ptr @177, ptr @223, ptr @611, ptr @612], align 8
 @switch.table._RNvXs1g_NtCs4NRVxsYgnAr_4core3fmtRNtNtNtNtCs844E4pPEVZX_17influxdb3_catalog3log8versions2v313ErrorBehaviorNtB6_5Debug3fmtBE_ = private unnamed_addr constant [3 x ptr] [ptr @768, ptr @769, ptr @770], align 8
@@ -605,14 +604,9 @@ switch.lookup:                                    ; preds = %bb.d
   %i.dj = getelementptr inbounds nuw i8, ptr %i.cx, i64 8
   store ptr inttoptr (i64 39 to ptr), ptr %i.dj, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cw)
-  %.val125 = load i64, ptr %2, align 8, !range !105, !noundef !85
   %i.dk = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %.val126 = load i64, ptr %i.dk, align 8         ; 2 uses
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvMs7_NtNtNtCs844E4pPEVZX_17influxdb3_catalog7catalog8versions2v1NtB5_12InnerCatalog19apply_catalog_batch.263, i64 %.val125
-  %switch.load = load i64, ptr %switch.gep, align 8
-  %4 = icmp ult i64 %.val126, %switch.load
-  tail call void @llvm.assume(i1 %4)
-  store i64 %.val126, ptr %i.cw, align 8
+  %switch.load = load i64, ptr %i.dk, align 8
+  store i64 %switch.load, ptr %i.cw, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cv)
   %i.dl = getelementptr inbounds nuw i8, ptr %1, i64 752
   %.val128 = load i64, ptr %i.dl, align 8, !noundef !85
@@ -745,14 +739,9 @@ switch.lookup871:                                 ; preds = %bb.l
   %i.fc = getelementptr inbounds nuw i8, ptr %i.cq, i64 8
   store ptr inttoptr (i64 39 to ptr), ptr %i.fc, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cp)
-  %.val123 = load i64, ptr %2, align 8, !range !105, !noundef !85
   %i.fd = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %.val124 = load i64, ptr %i.fd, align 8         ; 2 uses
-  %switch.gep872 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvMs7_NtNtNtCs844E4pPEVZX_17influxdb3_catalog7catalog8versions2v1NtB5_12InnerCatalog19apply_catalog_batch.263, i64 %.val123
-  %switch.load873 = load i64, ptr %switch.gep872, align 8
-  %5 = icmp ult i64 %.val124, %switch.load873
-  call void @llvm.assume(i1 %5)
-  store i64 %.val124, ptr %i.cp, align 8
+  %switch.load873 = load i64, ptr %i.fd, align 8
+  store i64 %switch.load873, ptr %i.cp, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.co)
   %i.fe = getelementptr inbounds nuw i8, ptr %1, i64 752
   %.val127 = load i64, ptr %i.fe, align 8, !noundef !85

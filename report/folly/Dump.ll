@@ -8,8 +8,6 @@ begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
 
-%"struct.folly::f14::detail::F14EmptyTagVector" = type { %"struct.std::array.32", i8 }
-%"struct.std::array.32" = type { [15 x i8] }
 %"struct.folly::c_array" = type { [20 x i64] }
 %"struct.folly::c_array.36" = type { [100 x i16] }
 %"class.std::unique_ptr" = type { %"struct.std::__uniq_ptr_data" }
@@ -115,8 +113,6 @@ $_ZTSN5folly9TypeErrorE = comdat any
 
 $_ZTVN5folly9TypeErrorE = comdat any
 
-$_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance = comdat any
-
 @_ZN5folly4bser6kMagicE = local_unnamed_addr constant [2 x i8] c"\00\01", align 1
 @.str = private unnamed_addr constant [22 x i8] c"serialized data size \00", align 1
 @.str.1 = private unnamed_addr constant [35 x i8] c" is too large to represent as BSER\00", align 1
@@ -130,7 +126,6 @@ $_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance = comdat any
 @.str.21 = private unnamed_addr constant [24 x i8] c"basic_string::_M_create\00", align 1
 @_ZN5folly7dynamic8TypeInfoINS0_10ObjectImplEE4nameE = external local_unnamed_addr constant ptr, align 8
 @.str.23 = private unnamed_addr constant [49 x i8] c"cannot create std::vector larger than max_size()\00", align 1
-@_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance = linkonce_odr constant %"struct.folly::f14::detail::F14EmptyTagVector" { %"struct.std::array.32" zeroinitializer, i8 -1 }, comdat, align 16
 @_ZN5folly7dynamic8TypeInfoISt6vectorIS0_SaIS0_EEE4nameE = external local_unnamed_addr constant ptr, align 8
 @.str.26 = private unnamed_addr constant [36 x i8] c"IOBufQueue: chain length not cached\00", align 1
 @_ZTISt16invalid_argument = external constant ptr
@@ -533,7 +528,7 @@ _ZN5folly6detail14IteratorFacadeINS_7dynamic19const_item_iteratorEKSt4pairIKS2_S
   br label %_ZSt10__distanceIN5folly7dynamic19const_item_iteratorEENSt15iterator_traitsIT_E15difference_typeES4_S4_St18input_iterator_tag.exit.i
 
 bb.l:                                             ; preds = %.critedge.i.i.i.i.i.i
-  %i.bs = getelementptr inbounds i8, ptr %.017.i.i.i.i.i.i, i64 -128 ; 4 uses
+  %i.bs = getelementptr inbounds i8, ptr %.017.i.i.i.i.i.i, i64 -128 ; 3 uses
   %i.bt = load <16 x i8>, ptr %i.bs, align 16, !tbaa !63
   %i.bu = icmp eq <16 x i8> %i.bt, zeroinitializer
   %i.bv = bitcast <16 x i1> %i.bu to i16
@@ -549,8 +544,6 @@ bb.m:                                             ; preds = %bb.l
   %i.ca = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.bz, i1 true)
   %i.cb = xor i32 %i.ca, 31
   %i.cc = zext nneg i32 %i.cb to i64              ; 2 uses
-  %4 = icmp ne ptr %i.bs, @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance
-  tail call void @llvm.assume(i1 %4)
   %i.cd = shl nuw nsw i64 %i.cc, 3
   %i.ce = getelementptr i8, ptr %i.bs, i64 %i.cd
   %i.cf = getelementptr i8, ptr %i.ce, i64 16
@@ -758,7 +751,7 @@ thread-pre-split.i.i.i:                           ; preds = %.lr.ph119, %bb.y
   br i1 %.not2.i.i.i, label %bb.z, label %_ZN5folly4bserL16bserEncodeObjectERKNS_7dynamicERNS_2io13QueueAppenderERKNS0_18serialization_optsE.exit, !prof !55
 
 bb.z:                                             ; preds = %.critedge.i.i.i.i
-  %i.ef = getelementptr inbounds i8, ptr %.017.i.i.i.i, i64 -128 ; 4 uses
+  %i.ef = getelementptr inbounds i8, ptr %.017.i.i.i.i, i64 -128 ; 3 uses
   %i.eg = load <16 x i8>, ptr %i.ef, align 16, !tbaa !63
   %i.eh = icmp eq <16 x i8> %i.eg, zeroinitializer
   %i.ei = bitcast <16 x i1> %i.eh to i16
@@ -774,8 +767,6 @@ bb.aa:                                            ; preds = %bb.z
   %i.en = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.em, i1 true)
   %i.eo = xor i32 %i.en, 31
   %i.ep = zext nneg i32 %i.eo to i64              ; 2 uses
-  %5 = icmp ne ptr %i.ef, @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance
-  tail call void @llvm.assume(i1 %5)
   %i.eq = shl nuw nsw i64 %i.ep, 3
   %i.er = getelementptr i8, ptr %i.ef, i64 %i.eq
   %i.es = getelementptr i8, ptr %i.er, i64 16
@@ -1178,7 +1169,7 @@ thread-pre-split.i.i.i:                           ; preds = %_ZSt10_ConstructISt
   br i1 %.not2.i.i.i, label %bb.d, label %_ZN5folly6detail14IteratorFacadeINS_7dynamic19const_item_iteratorEKSt4pairIKS2_S2_ESt20forward_iterator_tagEppEv.exit, !prof !55
 
 bb.d:                                             ; preds = %.critedge.i.i.i.i
-  %i.p = getelementptr inbounds i8, ptr %.017.i.i.i.i, i64 -128 ; 4 uses
+  %i.p = getelementptr inbounds i8, ptr %.017.i.i.i.i, i64 -128 ; 3 uses
   %i.q = load <16 x i8>, ptr %i.p, align 16, !tbaa !63
   %i.r = icmp eq <16 x i8> %i.q, zeroinitializer
   %i.s = bitcast <16 x i1> %i.r to i16
@@ -1194,8 +1185,6 @@ bb.e:                                             ; preds = %bb.d
   %i.x = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.w, i1 true)
   %i.y = xor i32 %i.x, 31
   %i.z = zext nneg i32 %i.y to i64                ; 2 uses
-  %5 = icmp ne ptr %i.p, @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance
-  tail call void @llvm.assume(i1 %5)
   %i.aa = shl nuw nsw i64 %i.z, 3
   %i.ab = getelementptr i8, ptr %i.p, i64 %i.aa
   %i.ac = getelementptr i8, ptr %i.ab, i64 16

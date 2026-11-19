@@ -8,8 +8,6 @@ begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
 
-%"struct.folly::f14::detail::F14EmptyTagVector" = type { %"struct.std::array.104", i8 }
-%"struct.std::array.104" = type { [15 x i8] }
 %"struct.folly::detail::safe_assert_arg" = type { ptr, ptr, i32, ptr, ptr }
 %"struct.folly::c_array" = type { [2 x i8] }
 %"class.folly::ParkingLot" = type { i64 }
@@ -325,8 +323,6 @@ $_ZTIN5folly13BlockingQueueINS_21CPUThreadPoolExecutor7CPUTaskEEE = comdat any
 
 $_ZTSN5folly13BlockingQueueINS_21CPUThreadPoolExecutor7CPUTaskEEE = comdat any
 
-$_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance = comdat any
-
 $_ZZN5folly3f146detail8F14TableINS1_21VectorContainerPolicyIPvNS_8FunctionIKFlvEEEvvvSt17integral_constantIbLb1EEEEE10rehashImplEmmmmmE30__folly_detail_safe_assert_arg = comdat any
 
 $_ZN5folly6detail21safe_assert_msg_typesINS0_22safe_assert_msg_type_sIJLNS0_20safe_assert_msg_typeE1EEEEE5valueE = comdat any
@@ -422,7 +418,6 @@ $_ZZNSt19_Sp_make_shared_tag5_S_tiEvE5__tag = comdat any
 @_ZTISt9bad_alloc = external constant ptr
 @.str.6 = private unnamed_addr constant [24 x i8] c"Check failed: inserted \00", align 1
 @.str.7 = private unnamed_addr constant [23 x i8] c"sem already subscribed\00", align 1
-@_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance = linkonce_odr constant %"struct.folly::f14::detail::F14EmptyTagVector" { %"struct.std::array.104" zeroinitializer, i8 -1 }, comdat, align 16
 @.str.8 = private unnamed_addr constant [11 x i8] c"rehashImpl\00", align 1
 @_ZZN5folly3f146detail8F14TableINS1_21VectorContainerPolicyIPvNS_8FunctionIKFlvEEEvvvSt17integral_constantIbLb1EEEEE10rehashImplEmmmmmE30__folly_detail_safe_assert_arg = linkonce_odr constant %"struct.folly::detail::safe_assert_arg" { ptr @.str.9, ptr @.str.10, i32 2479, ptr @.str.8, ptr @_ZN5folly6detail21safe_assert_msg_typesINS0_22safe_assert_msg_type_sIJLNS0_20safe_assert_msg_typeE1EEEEE5valueE }, comdat, align 8
 @.str.9 = private unnamed_addr constant [33 x i8] c"hp.second == srcChunk->tag(srcI)\00", align 1
@@ -825,7 +820,7 @@ bb.k:                                             ; preds = %bb.m, %bb.j
   %.025.i46.i.i.i.i.i.i = phi i64 [ %i.bd, %bb.j ], [ %i.cr, %bb.m ] ; 2 uses
   %i.bs = and i64 %.025.i46.i.i.i.i.i.i, %i.bo
   %i.bt = shl nuw nsw i64 %i.bs, 6
-  %i.bu = getelementptr inbounds nuw i8, ptr %i.bq, i64 %i.bt ; 3 uses
+  %i.bu = getelementptr inbounds nuw i8, ptr %i.bq, i64 %i.bt ; 2 uses
   %i.bv = load <16 x i8>, ptr %i.bu, align 16, !noalias !3597 ; 2 uses
   %i.bw = icmp eq <16 x i8> %i.bv, %i.bl
   %i.bx = bitcast <16 x i1> %i.bw to i16
@@ -836,8 +831,6 @@ bb.k:                                             ; preds = %bb.m, %bb.j
   br i1 %.not36.i.i.i.i.i.i, label %.loopexit.i.i.i.i.i.i, label %.preheader.i.i.i.i.i.i
 
 .preheader.i.i.i.i.i.i:                           ; preds = %bb.k
-  %5 = icmp ne ptr %i.bu, @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance
-  call void @llvm.assume(i1 %5)
   br label %bb.l
 
 bb.l:                                             ; preds = %.critedge.i.i.i.i.i.i.i, %.preheader.i.i.i.i.i.i
@@ -954,7 +947,7 @@ bb.r:                                             ; preds = %_ZN5folly3f146detai
 
 bb.s:                                             ; preds = %bb.r, %_ZN5folly3f146detail8F14TableINS1_21VectorContainerPolicyIPvNS_8FunctionIKFlvEEEvvvSt17integral_constantIbLb1EEEEE16reserveForInsertEm.exit.i.i.i.i.i.i
   %.sroa.03.0.in.i.i.i.i.i.i = phi i16 [ %i.di, %_ZN5folly3f146detail8F14TableINS1_21VectorContainerPolicyIPvNS_8FunctionIKFlvEEEvvvSt17integral_constantIbLb1EEEEE16reserveForInsertEm.exit.i.i.i.i.i.i ], [ %i.dx, %bb.r ]
-  %.1.i.i.i.i.i.i = phi ptr [ %i.de, %_ZN5folly3f146detail8F14TableINS1_21VectorContainerPolicyIPvNS_8FunctionIKFlvEEEvvvSt17integral_constantIbLb1EEEEE16reserveForInsertEm.exit.i.i.i.i.i.i ], [ %i.dy, %bb.r ] ; 3 uses
+  %.1.i.i.i.i.i.i = phi ptr [ %i.de, %_ZN5folly3f146detail8F14TableINS1_21VectorContainerPolicyIPvNS_8FunctionIKFlvEEEvvvSt17integral_constantIbLb1EEEEE16reserveForInsertEm.exit.i.i.i.i.i.i ], [ %i.dy, %bb.r ] ; 2 uses
   %i.ec = call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.sroa.03.0.in.i.i.i.i.i.i, i1 true)
   %i.ed = zext nneg i16 %i.ec to i64              ; 2 uses
   %i.ee = getelementptr inbounds nuw i8, ptr %.1.i.i.i.i.i.i, i64 %i.ed ; 2 uses
@@ -1073,8 +1066,6 @@ _ZNSt10unique_ptrIN5folly12_GLOBAL__N_131StripedEDFPriorityBlockingQueueINS0_21C
   %i.fd = shl nuw nsw i64 %i.ed, 2
   %i.fe = getelementptr i8, ptr %.1.i.i.i.i.i.i, i64 %i.fd
   %i.ff = getelementptr i8, ptr %i.fe, i64 16     ; 2 uses
-  %6 = icmp ne ptr %.1.i.i.i.i.i.i, @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance
-  call void @llvm.assume(i1 %6)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ff) ]
   %.val.i.i.i.i.i.i.i.i = load ptr, ptr %i.as, align 8, !tbaa !1692, !noalias !3597, !nonnull !184, !noundef !184
   %.val1.i.i.i.i.i.i.i.i = load i64, ptr %i.be, align 8, !tbaa !1680, !noalias !3597 ; 3 uses
@@ -1477,7 +1468,7 @@ bb.a:
   store i64 %2, ptr %i.b, align 8, !tbaa !1669
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #34
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  %i.l = load ptr, ptr %i.k, align 8, !tbaa !1686 ; 5 uses
+  %i.l = load ptr, ptr %i.k, align 8, !tbaa !1686 ; 4 uses
   store ptr %i.l, ptr %i.c, align 8, !tbaa !1705
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #34
   %i.m = add i64 %2, -1
@@ -1678,7 +1669,6 @@ bb.c:                                             ; preds = %_ZN5folly3f146detai
   br i1 %or.cond, label %.lr.ph131, label %bb.h
 
 .lr.ph131:                                        ; preds = %bb.c
-  %8 = icmp ne ptr %i.l, @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph131, %bb.g
@@ -1704,7 +1694,6 @@ _ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit:  ; preds = %bb.e
   %i.co = shl i64 %.042129, 2
   %i.cp = getelementptr i8, ptr %i.ag, i64 %i.co
   %i.cq = getelementptr i8, ptr %i.cp, i64 16
-  call void @llvm.assume(i1 %8)
   %i.cr = shl i64 %.044128, 2
   %i.cs = getelementptr i8, ptr %i.l, i64 %i.cr
   %i.ct = getelementptr i8, ptr %i.cs, i64 16
@@ -1768,7 +1757,7 @@ bb.l:                                             ; preds = %bb.k
 .lr.ph127:                                        ; preds = %.lr.ph127.preheader, %.loopexit110
   %.034126.pn = phi ptr [ %.034126, %.loopexit110 ], [ %i.dc, %.lr.ph127.preheader ]
   %.0125 = phi i64 [ %.1.lcssa, %.loopexit110 ], [ %i.db, %.lr.ph127.preheader ] ; 2 uses
-  %.034126 = getelementptr i8, ptr %.034126.pn, i64 -64 ; 6 uses
+  %.034126 = getelementptr i8, ptr %.034126.pn, i64 -64 ; 5 uses
   %i.dd = load <16 x i8>, ptr %.034126, align 16, !tbaa !196
   %i.de = icmp eq <16 x i8> %i.dd, zeroinitializer
   %i.df = bitcast <16 x i1> %i.de to i16
@@ -1779,8 +1768,6 @@ bb.l:                                             ; preds = %bb.k
   br i1 %cond, label %.loopexit110, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph127
-  %9 = icmp ne ptr %.034126, @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance
-  call void @llvm.assume(i1 %9)
   %i.di = load ptr, ptr %0, align 8, !tbaa !1692
   br label %bb.m
 
@@ -1907,7 +1894,7 @@ _ZN5folly3f146detail8F14ChunkIjE25incrOutboundOverflowCountEv.exit.i: ; preds = 
   %.0.lcssa.i = phi i8 [ 0, %bb.r ], [ 16, %_ZN5folly3f146detail8F14ChunkIjE25incrOutboundOverflowCountEv.exit.i ]
   %.pn.i = phi i64 [ %i.fe, %bb.r ], [ %i.fq, %_ZN5folly3f146detail8F14ChunkIjE25incrOutboundOverflowCountEv.exit.i ]
   %.lcssa.i = phi i8 [ %i.fg, %bb.r ], [ %i.fs, %_ZN5folly3f146detail8F14ChunkIjE25incrOutboundOverflowCountEv.exit.i ] ; 2 uses
-  %.lcssa21.i = getelementptr inbounds nuw i8, ptr %i.fc, i64 %.pn.i ; 4 uses
+  %.lcssa21.i = getelementptr inbounds nuw i8, ptr %i.fc, i64 %.pn.i ; 3 uses
   %i.fu = getelementptr inbounds nuw i8, ptr %.0101157, i64 %.lcssa22.i
   %i.fv = add nuw nsw i8 %.lcssa.i, 1
   store i8 %i.fv, ptr %i.fu, align 1, !tbaa !196
@@ -1931,8 +1918,6 @@ bb.u:                                             ; preds = %._crit_edge.i
   %i.ge = shl nuw nsw i64 %i.fw, 2
   %i.gf = getelementptr i8, ptr %.lcssa21.i, i64 %i.ge
   %i.gg = getelementptr i8, ptr %i.gf, i64 16     ; 2 uses
-  %10 = icmp ne ptr %.lcssa21.i, @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance
-  call void @llvm.assume(i1 %10)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.gg) ]
   %i.gh = load i32, ptr %i.ec, align 4, !tbaa !197
   store i32 %i.gh, ptr %i.gg, align 4, !tbaa !197
@@ -2335,7 +2320,7 @@ bb.c:                                             ; preds = %bb.b, %bb.e
   %.025.i.i41 = phi i64 [ %i.o, %bb.b ], [ %i.az, %bb.e ] ; 2 uses
   %i.aa = and i64 %.025.i.i41, %i.w
   %i.ab = shl nuw nsw i64 %i.aa, 6
-  %i.ac = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.ab ; 3 uses
+  %i.ac = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.ab ; 2 uses
   %i.ad = load <16 x i8>, ptr %i.ac, align 16     ; 2 uses
   %i.ae = icmp eq <16 x i8> %i.ad, %i.t
   %i.af = bitcast <16 x i1> %i.ae to i16
@@ -2346,8 +2331,6 @@ bb.c:                                             ; preds = %bb.b, %bb.e
   br i1 %.not, label %.loopexit, label %.preheader
 
 .preheader:                                       ; preds = %bb.c
-  %3 = icmp ne ptr %i.ac, @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance
-  tail call void @llvm.assume(i1 %3)
   br label %bb.d
 
 bb.d:                                             ; preds = %.preheader, %.critedge.i.i
@@ -2458,7 +2441,7 @@ bb.d:                                             ; preds = %.loopexit, %bb.c
   %.025.i = phi i64 [ %i.ab, %bb.c ], [ %i.be, %.loopexit ] ; 2 uses
   %i.al = and i64 %.025.i, %i.ai
   %i.am = shl nuw nsw i64 %i.al, 6
-  %i.an = getelementptr inbounds nuw i8, ptr %i.ak, i64 %i.am ; 3 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %i.ak, i64 %i.am ; 2 uses
   %i.ao = load <16 x i8>, ptr %i.an, align 16
   %i.ap = icmp eq <16 x i8> %i.ao, %i.ag
   %i.aq = bitcast <16 x i1> %i.ap to i16
@@ -2468,8 +2451,6 @@ bb.d:                                             ; preds = %.loopexit, %bb.c
   br i1 %.not45, label %.loopexit, label %.preheader
 
 .preheader:                                       ; preds = %bb.d
-  %5 = icmp ne ptr %i.an, @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance
-  call void @llvm.assume(i1 %5)
   br label %bb.e
 
 bb.e:                                             ; preds = %.preheader, %.critedge.i

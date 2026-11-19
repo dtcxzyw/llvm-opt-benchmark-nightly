@@ -151,7 +151,6 @@ $_ZTVN3re26Regexp6WalkerIiEE = comdat any
 @.str.29 = private unnamed_addr constant [3 x i8] c"Pc\00", align 1, !guid !52
 @constinit = private unnamed_addr constant [10 x ptr] [ptr @.str.20, ptr @.str.21, ptr @.str.22, ptr @.str.23, ptr @.str.24, ptr @.str.25, ptr @.str.26, ptr @.str.27, ptr @.str.28, ptr @.str.29], align 8, !guid !53
 @_ZN3re214unicode_groupsE = external local_unnamed_addr global [0 x %"struct.re2::UGroup"], align 8
-@_ZN3re218num_unicode_groupsE = external local_unnamed_addr constant i32, align 4
 @.str.30 = private unnamed_addr constant [21 x i8] c"basic_string::append\00", align 1, !guid !54
 @.str.31 = private unnamed_addr constant [10 x i8] c"Walk NULL\00", align 1, !guid !55
 @.str.32 = private unnamed_addr constant [48 x i8] c"cannot create std::deque larger than max_size()\00", align 1, !guid !56
@@ -554,8 +553,6 @@ bb.a:
   %0 = alloca %"class.re2::CharClassBuilder", align 8 ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %0) #33
   call void @_ZN3re216CharClassBuilderC1Ev(ptr noundef nonnull align 8 dereferenceable(64) %0)
-  %1 = load i32, ptr @_ZN3re218num_unicode_groupsE, align 4, !tbaa !57
-  %wide.trip.count.i = zext nneg i32 %1 to i64    ; 2 uses
   br label %.lr.ph.preheader.i
 
 bb.b:                                             ; preds = %_ZN3re2L9AddUGroupEPNS_16CharClassBuilderEPKNS_6UGroupEiNS_6Regexp10ParseFlagsE.exit
@@ -578,9 +575,7 @@ bb.b:                                             ; preds = %_ZN3re2L9AddUGroupE
 
 .lr.ph.i.us:                                      ; preds = %.lr.ph.preheader.i.split.us, %.lr.ph.i.us
   %indvars.iv.i.us7 = phi i64 [ %indvars.iv.next.i.us, %.lr.ph.i.us ], [ 0, %.lr.ph.preheader.i.split.us ]
-  %indvars.iv.next.i.us = add nuw nsw i64 %indvars.iv.i.us7, 1 ; 3 uses
-  %exitcond.not.i.us = icmp ne i64 %indvars.iv.next.i.us, %wide.trip.count.i
-  call void @llvm.assume(i1 %exitcond.not.i.us)
+  %indvars.iv.next.i.us = add nuw nsw i64 %indvars.iv.i.us7, 1 ; 2 uses
   %i.g = getelementptr inbounds nuw [48 x i8], ptr @_ZN3re214unicode_groupsE, i64 %indvars.iv.next.i.us ; 2 uses
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !161
   %char018 = load i8, ptr %i.h, align 1
@@ -601,9 +596,7 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i: ; preds = %.lr.ph.i
   br i1 %i.n, label %_ZN3re2L11LookupGroupESt17basic_string_viewIcSt11char_traitsIcEEPKNS_6UGroupEi.exit, label %bb.c
 
 bb.c:                                             ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i, %.lr.ph.i
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %exitcond.not.i = icmp ne i64 %indvars.iv.next.i, %wide.trip.count.i
-  call void @llvm.assume(i1 %exitcond.not.i)
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1
   br label %.lr.ph.i
 
 _ZN3re2L11LookupGroupESt17basic_string_viewIcSt11char_traitsIcEEPKNS_6UGroupEi.exit: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i, %.lr.ph.i.us, %.lr.ph.preheader.i.split.us

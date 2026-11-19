@@ -204,7 +204,6 @@ $_ZSt19piecewise_construct = comdat any
 @_ZN4mlir6detail14TypeIDResolverINS_16FileLineColRangeEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_8FusedLocEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_7NameLocEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
-@_ZN4mlir6detail14TypeIDResolverINS_9OpaqueLocEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_10UnknownLocEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_4LLVM16DISubprogramAttrEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_4LLVM19DICompositeTypeAttrEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
@@ -224,7 +223,6 @@ $_ZSt19piecewise_construct = comdat any
 @_ZN4mlir6detail14TypeIDResolverINS_4LLVM14DINullTypeAttrEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_4LLVM16DIStringTypeAttrEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_4LLVM14DISubrangeAttrEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
-@_ZN4mlir6detail14TypeIDResolverINS_4LLVM20DISubroutineTypeAttrEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @switch.table._ZN4mlir4LLVM6detail16DebugTranslation13translateImplENS0_19DICompositeTypeAttrE = private unnamed_addr constant [22 x i8] c"\01\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\01", align 4
 
 @_ZN4mlir4LLVM6detail16DebugTranslationC1EPNS_9OperationERN4llvm6ModuleE = unnamed_addr alias void (ptr, ptr, ptr), ptr @_ZN4mlir4LLVM6detail16DebugTranslationC2EPNS_9OperationERN4llvm6ModuleE
@@ -627,7 +625,7 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f, %.thread
   %i.aq = load ptr, ptr %1, align 8, !tbaa !71
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 144
-  %.sroa.0.0.copyload.i.i.i.i.i.i.i.i = load ptr, ptr %i.ar, align 8, !tbaa !73 ; 20 uses
+  %.sroa.0.0.copyload.i.i.i.i.i.i.i.i = load ptr, ptr %i.ar, align 8, !tbaa !73 ; 19 uses
   %i.as = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_4LLVM15DIBasicTypeAttrEvE2idE
   br i1 %i.as, label %"_ZN4llvm10TypeSwitchIN4mlir4LLVM10DINodeAttrEPNS_6DINodeEE4CaseINS2_15DIBasicTypeAttrERZNS2_6detail16DebugTranslation9translateES3_E3$_0EERS6_OT0_.exit.thread", label %"_ZN4llvm10TypeSwitchIN4mlir4LLVM10DINodeAttrEPNS_6DINodeEE4CaseINS2_15DIBasicTypeAttrERZNS2_6detail16DebugTranslation9translateES3_E3$_0EERS6_OT0_.exit"
 
@@ -928,8 +926,6 @@ bb.ad:                                            ; preds = %"_ZN4llvm10TypeSwit
   br label %"_ZN4llvm10TypeSwitchIN4mlir4LLVM10DINodeAttrEPNS_6DINodeEE4CaseINS2_14DISubrangeAttrERZNS2_6detail16DebugTranslation9translateES3_E3$_0EERS6_OT0_.exit.thread"
 
 "_ZN4llvm10TypeSwitchIN4mlir4LLVM10DINodeAttrEPNS_6DINodeEE4CaseINS2_14DISubrangeAttrERZNS2_6detail16DebugTranslation9translateES3_E3$_0EERS6_OT0_.exit": ; preds = %"_ZN4llvm10TypeSwitchIN4mlir4LLVM10DINodeAttrEPNS_6DINodeEE4CaseINS2_16DISubprogramAttrERZNS2_6detail16DebugTranslation9translateES3_E3$_0EERS6_OT0_.exit"
-  %16 = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_4LLVM20DISubroutineTypeAttrEvE2idE
-  call void @llvm.assume(i1 %16)
   %i.fe = call noundef ptr @_ZN4mlir4LLVM6detail16DebugTranslation13translateImplENS0_20DISubroutineTypeAttrE(ptr noundef nonnull align 8 dereferenceable(440) %0, ptr nonnull %1), !inline_history !301
   br label %"_ZN4llvm10TypeSwitchIN4mlir4LLVM10DINodeAttrEPNS_6DINodeEE4CaseINS2_14DISubrangeAttrERZNS2_6detail16DebugTranslation9translateES3_E3$_0EERS6_OT0_.exit.thread"
 
@@ -1332,7 +1328,7 @@ bb.a:
   %9 = alloca %"class.std::tuple.366", align 8    ; 6 uses
   %i.b = load ptr, ptr %1, align 8, !tbaa !71
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 144
-  %.sroa.0.0.copyload.i.i.i.i.i.i.i = load ptr, ptr %i.c, align 8, !tbaa !73 ; 6 uses
+  %.sroa.0.0.copyload.i.i.i.i.i.i.i = load ptr, ptr %i.c, align 8, !tbaa !73 ; 5 uses
   %i.d = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_10UnknownLocEvE2idE
   br i1 %i.d, label %bb.v, label %bb.b
 
@@ -1545,9 +1541,7 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.o
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #15
-  %10 = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_9OpaqueLocEvE2idE
   store ptr %1, ptr %8, align 8
-  tail call void @llvm.assume(i1 %10)
   %i.cq = call ptr @_ZNK4mlir9OpaqueLoc19getFallbackLocationEv(ptr noundef nonnull align 8 dereferenceable(8) %8) #15
   %i.cr = call noundef ptr @_ZN4mlir4LLVM6detail16DebugTranslation12translateLocENS_8LocationEPN4llvm12DILocalScopeEPNS4_10DILocationE(ptr noundef nonnull align 8 dereferenceable(440) %0, ptr %i.cq, ptr noundef %2, ptr noundef %3)
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #15

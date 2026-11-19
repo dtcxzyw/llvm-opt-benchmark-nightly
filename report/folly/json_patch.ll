@@ -11,8 +11,6 @@ target triple = "x86_64-pc-linux-gnu"
 %"struct.folly::c_array" = type { [20 x i64] }
 %"struct.folly::c_array.37" = type { [100 x i16] }
 %"struct.folly::variadic_noop_fn" = type { i8 }
-%"struct.folly::f14::detail::F14EmptyTagVector" = type { %"struct.std::array.88", i8 }
-%"struct.std::array.88" = type { [15 x i8] }
 %"struct.folly::detail::safe_assert_arg" = type { ptr, ptr, i32, ptr, ptr }
 %"struct.folly::c_array.91" = type { [2 x i8] }
 %"struct.std::piecewise_construct_t" = type { i8 }
@@ -225,8 +223,6 @@ $_ZTVN5folly17BadExpectedAccessINS_7dynamic29json_pointer_resolution_errorIS1_EE
 
 $_ZN5folly13variadic_noopE = comdat any
 
-$_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance = comdat any
-
 $_ZZN5folly3f146detail8F14ChunkIPSt4pairIKNS_7dynamicES4_EE8clearTagEmE30__folly_detail_safe_assert_arg = comdat any
 
 $_ZN5folly6detail21safe_assert_msg_typesINS0_22safe_assert_msg_type_sIJLNS0_20safe_assert_msg_typeE1EEEEE5valueE = comdat any
@@ -273,7 +269,6 @@ $_ZZN5folly3f146detail8F14ChunkIPSt4pairIKNS_7dynamicES4_EE6setTagEmmE30__folly_
 @_ZTVN5folly17BadExpectedAccessINS_7dynamic29json_pointer_resolution_errorIS1_EEEE = linkonce_odr constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr @_ZTIN5folly17BadExpectedAccessINS_7dynamic29json_pointer_resolution_errorIS1_EEEE, ptr @_ZNSt9exceptionD2Ev, ptr @_ZN5folly17BadExpectedAccessINS_7dynamic29json_pointer_resolution_errorIS1_EEED0Ev, ptr @_ZNK5folly17BadExpectedAccessIvE4whatEv] }, comdat, align 8
 @_ZN5folly7dynamic8TypeInfoINS0_10ObjectImplEE4nameE = external local_unnamed_addr constant ptr, align 8
 @_ZN5folly13variadic_noopE = linkonce_odr constant %"struct.folly::variadic_noop_fn" zeroinitializer, comdat, align 1
-@_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance = linkonce_odr constant %"struct.folly::f14::detail::F14EmptyTagVector" { %"struct.std::array.88" zeroinitializer, i8 -1 }, comdat, align 16
 @.str.25 = private unnamed_addr constant [9 x i8] c"clearTag\00", align 1
 @_ZZN5folly3f146detail8F14ChunkIPSt4pairIKNS_7dynamicES4_EE8clearTagEmE30__folly_detail_safe_assert_arg = linkonce_odr constant %"struct.folly::detail::safe_assert_arg" { ptr @.str.26, ptr @.str.27, i32 784, ptr @.str.25, ptr @_ZN5folly6detail21safe_assert_msg_typesINS0_22safe_assert_msg_type_sIJLNS0_20safe_assert_msg_typeE1EEEEE5valueE }, comdat, align 8
 @.str.26 = private unnamed_addr constant [18 x i8] c"tags_[index] != 0\00", align 1
@@ -676,7 +671,7 @@ bb.c:                                             ; preds = %bb.b, %bb.f
   %.026.i42 = phi i64 [ %i.i, %bb.b ], [ %i.bd, %bb.f ] ; 2 uses
   %i.u = and i64 %.026.i42, %i.s
   %i.v = shl nuw nsw i64 %i.u, 7
-  %i.w = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.v ; 4 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.v ; 3 uses
   %i.x = getelementptr i8, ptr %i.w, i64 80
   call void @llvm.prefetch.p0(ptr %i.x, i32 0, i32 3, i32 1)
   %i.y = load <16 x i8>, ptr %i.w, align 16       ; 2 uses
@@ -689,8 +684,6 @@ bb.c:                                             ; preds = %bb.b, %bb.f
   br i1 %.not, label %.loopexit, label %.preheader
 
 .preheader:                                       ; preds = %bb.c
-  %3 = icmp ne ptr %i.w, @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance
-  call void @llvm.assume(i1 %3)
   br label %bb.d
 
 bb.d:                                             ; preds = %.preheader, %.critedge.i
@@ -817,7 +810,7 @@ thread-pre-split.i.i:                             ; preds = %bb.c, %bb.d
 
 .critedge.i.i.i:                                  ; preds = %.critedge.i.i.i.preheader, %.critedge.i.i.i
   %.017.i.i.i = phi ptr [ %i.x, %.critedge.i.i.i ], [ %i.q, %.critedge.i.i.i.preheader ]
-  %i.x = getelementptr inbounds i8, ptr %.017.i.i.i, i64 -128 ; 4 uses
+  %i.x = getelementptr inbounds i8, ptr %.017.i.i.i, i64 -128 ; 3 uses
   %i.y = load <16 x i8>, ptr %i.x, align 16, !tbaa !50
   %i.z = icmp eq <16 x i8> %i.y, zeroinitializer
   %i.aa = bitcast <16 x i1> %i.z to i16
@@ -831,8 +824,6 @@ bb.e:                                             ; preds = %.critedge.i.i.i
   %i.ae = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.ad, i1 true)
   %i.af = xor i32 %i.ae, 31
   %i.ag = zext nneg i32 %i.af to i64              ; 2 uses
-  %5 = icmp ne ptr %i.x, @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance
-  tail call void @llvm.assume(i1 %5)
   %i.ah = shl nuw nsw i64 %i.ag, 3
   %i.ai = getelementptr i8, ptr %i.x, i64 %i.ah
   %i.aj = getelementptr i8, ptr %i.ai, i64 16
@@ -1233,7 +1224,7 @@ bb.c:                                             ; preds = %bb.b, %bb.f
   %.026.i82 = phi i64 [ %2, %bb.b ], [ %i.as, %bb.f ] ; 2 uses
   %i.m = and i64 %.026.i82, %i.k
   %i.n = shl nuw nsw i64 %i.m, 7
-  %i.o = getelementptr inbounds nuw i8, ptr %.pre, i64 %i.n ; 4 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %.pre, i64 %i.n ; 3 uses
   %i.p = getelementptr i8, ptr %i.o, i64 80
   tail call void @llvm.prefetch.p0(ptr %i.p, i32 0, i32 3, i32 1)
   %i.q = load <16 x i8>, ptr %i.o, align 16       ; 2 uses
@@ -1246,8 +1237,6 @@ bb.c:                                             ; preds = %bb.b, %bb.f
   br i1 %.not72, label %.loopexit, label %.preheader
 
 .preheader:                                       ; preds = %bb.c
-  %8 = icmp ne ptr %i.o, @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance
-  tail call void @llvm.assume(i1 %8)
   br label %bb.d
 
 bb.d:                                             ; preds = %.preheader, %.critedge.i
@@ -1378,7 +1367,7 @@ bb.k:                                             ; preds = %_ZN5folly3f146detai
 
 bb.l:                                             ; preds = %bb.k, %_ZN5folly3f146detail8F14TableINS1_19NodeContainerPolicyINS_7dynamicES4_NS_6detail13DynamicHasherENS5_15DynamicKeyEqualEvEEE16reserveForInsertEm.exit
   %.sroa.038.0.in = phi i16 [ %i.bi, %_ZN5folly3f146detail8F14TableINS1_19NodeContainerPolicyINS_7dynamicES4_NS_6detail13DynamicHasherENS5_15DynamicKeyEqualEvEEE16reserveForInsertEm.exit ], [ %i.bx, %bb.k ]
-  %.1 = phi ptr [ %i.be, %_ZN5folly3f146detail8F14TableINS1_19NodeContainerPolicyINS_7dynamicES4_NS_6detail13DynamicHasherENS5_15DynamicKeyEqualEvEEE16reserveForInsertEm.exit ], [ %i.by, %bb.k ] ; 3 uses
+  %.1 = phi ptr [ %i.be, %_ZN5folly3f146detail8F14TableINS1_19NodeContainerPolicyINS_7dynamicES4_NS_6detail13DynamicHasherENS5_15DynamicKeyEqualEvEEE16reserveForInsertEm.exit ], [ %i.by, %bb.k ] ; 2 uses
   %i.cc = tail call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.sroa.038.0.in, i1 true)
   %i.cd = zext nneg i16 %i.cc to i64              ; 4 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %.1, i64 %i.cd ; 2 uses
@@ -1396,8 +1385,6 @@ _ZN5folly3f146detail8F14ChunkIPSt4pairIKNS_7dynamicES4_EE6setTagEmm.exit: ; pred
   %i.ci = shl nuw nsw i64 %i.cd, 3
   %i.cj = getelementptr i8, ptr %.1, i64 %i.ci
   %i.ck = getelementptr i8, ptr %i.cj, i64 16     ; 3 uses
-  %9 = icmp ne ptr %.1, @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance
-  tail call void @llvm.assume(i1 %9)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ck) ]
   tail call void @_ZN5folly3f146detail8F14TableINS1_19NodeContainerPolicyINS_7dynamicES4_NS_6detail13DynamicHasherENS5_15DynamicKeyEqualEvEEE13insertAtBlankIJRKSt21piecewise_construct_tSt5tupleIJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEESE_IJEEEEEvNS1_11F14ItemIterIPNS1_8F14ChunkIPSt4pairIKS4_S4_EEEEESR_ImmEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %1, ptr nonnull %i.ck, i64 %i.cd, i64 %2, i64 %3, ptr noundef nonnull align 1 dereferenceable(1) %5, ptr noundef nonnull align 8 dereferenceable(8) %6, ptr noundef nonnull align 1 dereferenceable(1) %7)
   br label %bb.n
@@ -1543,7 +1530,7 @@ bb.a:
   store i64 %1, ptr %i.a, align 8, !tbaa !68
   store i64 %2, ptr %i.b, align 8, !tbaa !68
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #27
-  %i.k = load ptr, ptr %0, align 8, !tbaa !98     ; 5 uses
+  %i.k = load ptr, ptr %0, align 8, !tbaa !98     ; 4 uses
   store ptr %i.k, ptr %i.c, align 8, !tbaa !108
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #27
   %i.l = mul i64 %3, %2
@@ -1567,7 +1554,7 @@ bb.a:
   store i64 %.0.i72, ptr %i.g, align 8, !tbaa !68
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #27
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #27
-  %i.v = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %.0.i72) #33 ; 16 uses
+  %i.v = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %.0.i72) #33 ; 15 uses
   store ptr %i.v, ptr %i.h, align 8, !tbaa !82
   store i8 0, ptr %i.i, align 1, !tbaa !69
   %.not.i = icmp eq i64 %4, 0                     ; 2 uses
@@ -1688,7 +1675,6 @@ bb.b:                                             ; preds = %_ZN5folly3f146detai
   br i1 %or.cond, label %bb.c, label %bb.j
 
 bb.c:                                             ; preds = %bb.b
-  %8 = icmp ne ptr %i.k, @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.h
@@ -1714,7 +1700,6 @@ bb.g:                                             ; preds = %bb.e
   %i.bn = shl i64 %.055152, 3
   %i.bo = getelementptr i8, ptr %i.v, i64 %i.bn
   %i.bp = getelementptr i8, ptr %i.bo, i64 16     ; 2 uses
-  call void @llvm.assume(i1 %8)
   %i.bq = shl i64 %.057151, 3
   %i.br = getelementptr i8, ptr %i.k, i64 %i.bq
   %i.bs = getelementptr i8, ptr %i.br, i64 16     ; 2 uses
@@ -1736,8 +1721,6 @@ bb.i:                                             ; preds = %bb.h
   %i.by = shl i64 %i.bx, 3
   %i.bz = getelementptr i8, ptr %i.v, i64 %i.by
   %i.ca = getelementptr i8, ptr %i.bz, i64 16     ; 2 uses
-  %9 = icmp ne ptr %i.v, @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance
-  call void @llvm.assume(i1 %9)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ca) ]
   %i.cb = and i64 %i.bx, 255                      ; 2 uses
   %i.cc = icmp samesign ult i64 %i.cb, 16
@@ -1803,7 +1786,7 @@ bb.o:                                             ; preds = %bb.m
 .lr.ph150:                                        ; preds = %.lr.ph150.preheader, %.loopexit
   %.043149.pn = phi ptr [ %.043149, %.loopexit ], [ %i.cm, %.lr.ph150.preheader ]
   %.042148 = phi i64 [ %.1.lcssa, %.loopexit ], [ %i.cl, %.lr.ph150.preheader ] ; 2 uses
-  %.043149 = getelementptr i8, ptr %.043149.pn, i64 -128 ; 6 uses
+  %.043149 = getelementptr i8, ptr %.043149.pn, i64 -128 ; 5 uses
   %i.cn = load <16 x i8>, ptr %.043149, align 16, !tbaa !50
   %i.co = icmp eq <16 x i8> %i.cn, zeroinitializer
   %i.cp = bitcast <16 x i1> %i.co to i16
@@ -1814,8 +1797,6 @@ bb.o:                                             ; preds = %bb.m
   br i1 %cond, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph150
-  %10 = icmp ne ptr %.043149, @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance
-  call void @llvm.assume(i1 %10)
   br label %bb.p
 
 bb.p:                                             ; preds = %.lr.ph, %_ZN5folly3f146detail13DenseMaskIter4nextEv.exit
@@ -1934,7 +1915,7 @@ _ZN5folly3f146detail8F14ChunkIPSt4pairIKNS_7dynamicES4_EE25incrOutboundOverflowC
   %.0.lcssa.i = phi i8 [ 0, %bb.v ], [ 16, %_ZN5folly3f146detail8F14ChunkIPSt4pairIKNS_7dynamicES4_EE25incrOutboundOverflowCountEv.exit.i ]
   %.pn.i = phi i64 [ %i.dz, %bb.v ], [ %i.el, %_ZN5folly3f146detail8F14ChunkIPSt4pairIKNS_7dynamicES4_EE25incrOutboundOverflowCountEv.exit.i ]
   %.lcssa.i = phi i8 [ %i.eb, %bb.v ], [ %i.en, %_ZN5folly3f146detail8F14ChunkIPSt4pairIKNS_7dynamicES4_EE25incrOutboundOverflowCountEv.exit.i ] ; 2 uses
-  %.lcssa21.i = getelementptr inbounds nuw i8, ptr %i.dx, i64 %.pn.i ; 4 uses
+  %.lcssa21.i = getelementptr inbounds nuw i8, ptr %i.dx, i64 %.pn.i ; 3 uses
   %i.ep = getelementptr inbounds nuw i8, ptr %.0125176, i64 %.lcssa22.i
   %i.eq = add nuw nsw i8 %.lcssa.i, 1
   store i8 %i.eq, ptr %i.ep, align 1, !tbaa !50
@@ -1958,8 +1939,6 @@ bb.y:                                             ; preds = %._crit_edge.i
   %i.ez = shl nuw nsw i64 %i.er, 3
   %i.fa = getelementptr i8, ptr %.lcssa21.i, i64 %i.ez
   %i.fb = getelementptr i8, ptr %i.fa, i64 16     ; 2 uses
-  %11 = icmp ne ptr %.lcssa21.i, @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance
-  call void @llvm.assume(i1 %11)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.fb) ]
   %i.fc = load ptr, ptr %i.dj, align 8, !tbaa !90
   store ptr %i.fc, ptr %i.fb, align 8, !tbaa !90
@@ -1985,14 +1964,12 @@ bb.z:                                             ; preds = %._crit_edge, %bb.z
 bb.aa:                                            ; preds = %bb.z
   %i.fj = load ptr, ptr %0, align 8, !tbaa !98
   %i.fk = shl nsw i64 %.0, 7
-  %i.fl = getelementptr inbounds i8, ptr %i.fj, i64 %i.fk ; 2 uses
+  %i.fl = getelementptr inbounds i8, ptr %i.fj, i64 %i.fk
   %i.fm = zext nneg i8 %i.fh to i64
   %i.fn = add nsw i64 %i.fm, -1                   ; 2 uses
   %i.fo = shl nuw nsw i64 %i.fn, 3
   %i.fp = getelementptr i8, ptr %i.fl, i64 %i.fo
   %i.fq = getelementptr i8, ptr %i.fp, i64 16     ; 2 uses
-  %12 = icmp ne ptr %i.fl, @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance
-  call void @llvm.assume(i1 %12)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.fq) ]
   %i.fr = icmp ult i8 %i.fh, 17
   call void @llvm.assume(i1 %i.fr)
