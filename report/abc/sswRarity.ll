@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/abc/original/sswRarity?download=true
 inline.NumInlined: 245
 inline.NumDeleted: 61
-loop-unroll.NumCompletelyUnrolled: 9
+loop-unroll.NumCompletelyUnrolled: 8
 loop-unroll.NumRuntimeUnrolled: 9
-loop-unroll.NumUnrolled: 25
+loop-unroll.NumUnrolled: 24
 begin_hunk_0_@TransposeTest:vector.ph
   store <2 x i64> zeroinitializer, ptr %i.v, align 16, !tbaa !50
   %i.w = getelementptr inbounds nuw i8, ptr %i.a, i64 320
@@ -205,7 +205,7 @@ bb.r:                                             ; preds = %bb.q
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define void @Ssw_RarTranspose(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #8 {
 bb.a:
-  %i.a = alloca [64 x i64], align 16              ; 46 uses
+  %i.a = alloca [64 x i64], align 16              ; 14 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #22
   %i.b = load ptr, ptr %0, align 8, !tbaa !43
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 4
@@ -215,7 +215,7 @@ bb.a:
 
 .preheader36.lr.ph:                               ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %i.g = load i32, ptr %i.f, align 4, !tbaa !64   ; 4 uses
+  %i.g = load i32, ptr %i.f, align 4, !tbaa !64   ; 3 uses
   %i.h = icmp sgt i32 %i.g, 0
   %i.i = getelementptr i8, ptr %0, i64 40
   br i1 %i.h, label %.preheader36.lr.ph.split, label %._crit_edge41.split
@@ -233,44 +233,12 @@ bb.a:
   %i.q = zext nneg i32 %i.g to i64                ; 4 uses
   %wide.trip.count54 = zext nneg i32 %i.d to i64
   %wide.trip.count = zext nneg i32 %i.g to i64
-  %ident.check.not = icmp eq i32 %i.g, 1
-  %1 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 48
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 64
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 80
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 96
-  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 112
-  %8 = getelementptr inbounds nuw i8, ptr %i.a, i64 128
-  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 144
-  %10 = getelementptr inbounds nuw i8, ptr %i.a, i64 160
-  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 176
-  %12 = getelementptr inbounds nuw i8, ptr %i.a, i64 192
-  %13 = getelementptr inbounds nuw i8, ptr %i.a, i64 208
-  %14 = getelementptr inbounds nuw i8, ptr %i.a, i64 224
-  %15 = getelementptr inbounds nuw i8, ptr %i.a, i64 240
-  %16 = getelementptr inbounds nuw i8, ptr %i.a, i64 256
-  %17 = getelementptr inbounds nuw i8, ptr %i.a, i64 272
-  %18 = getelementptr inbounds nuw i8, ptr %i.a, i64 288
-  %19 = getelementptr inbounds nuw i8, ptr %i.a, i64 304
-  %20 = getelementptr inbounds nuw i8, ptr %i.a, i64 320
-  %21 = getelementptr inbounds nuw i8, ptr %i.a, i64 336
-  %22 = getelementptr inbounds nuw i8, ptr %i.a, i64 352
-  %23 = getelementptr inbounds nuw i8, ptr %i.a, i64 368
-  %24 = getelementptr inbounds nuw i8, ptr %i.a, i64 384
-  %25 = getelementptr inbounds nuw i8, ptr %i.a, i64 400
-  %26 = getelementptr inbounds nuw i8, ptr %i.a, i64 416
-  %27 = getelementptr inbounds nuw i8, ptr %i.a, i64 432
-  %28 = getelementptr inbounds nuw i8, ptr %i.a, i64 448
-  %29 = getelementptr inbounds nuw i8, ptr %i.a, i64 464
-  %30 = getelementptr inbounds nuw i8, ptr %i.a, i64 480
-  %31 = getelementptr inbounds nuw i8, ptr %i.a, i64 496
   br label %.preheader36
 
 .preheader36:                                     ; preds = %.preheader36.lr.ph.split, %._crit_edge
   %indvars.iv51 = phi i64 [ 0, %.preheader36.lr.ph.split ], [ %indvars.iv.next52, %._crit_edge ] ; 3 uses
-  %i.r = shl nuw nsw i64 %indvars.iv51, 6         ; 16 uses
-  %i.s = or disjoint i64 %i.r, 63                 ; 5 uses
+  %i.r = shl nuw nsw i64 %indvars.iv51, 6
+  %i.s = or disjoint i64 %i.r, 63                 ; 4 uses
   br label %.preheader35
 
 .preheader35:                                     ; preds = %.preheader36, %middle.block
@@ -442,192 +410,46 @@ bb.d:                                             ; preds = %bb.b, %bb.c
   store i64 %i.du, ptr %i.dn, align 8, !tbaa !50
   %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 4
   %i.dv = icmp samesign ult i64 %indvars.iv.next.i, 62
-  br i1 %i.dv, label %.preheader.5.i, label %transpose64.exit.preheader, !llvm.loop !1
+  br i1 %i.dv, label %.preheader.5.i, label %vector.body, !llvm.loop !1
 
-transpose64.exit.preheader:                       ; preds = %.preheader.5.i
-  %invariant.gep = getelementptr [8 x i8], ptr %.val34, i64 %indvars.iv47 ; 20 uses
-  br i1 %ident.check.not, label %vector.body, label %transpose64.exit
+vector.body:                                      ; preds = %.preheader.5.i
+  %i.dw = getelementptr [8 x i8], ptr %.val34, i64 %indvars.iv47 ; 4 uses
+  br label %transpose64.exit
 
-vector.body:                                      ; preds = %transpose64.exit.preheader
-  %wide.load = load <2 x i64>, ptr %i.a, align 16, !tbaa !50
-  %wide.load58 = load <2 x i64>, ptr %1, align 16, !tbaa !50
-  %32 = getelementptr [8 x i8], ptr %invariant.gep, i64 %i.s ; 2 uses
-  %33 = getelementptr i8, ptr %32, i64 -8
-  %34 = getelementptr i8, ptr %32, i64 -24
-  %reverse = shufflevector <2 x i64> %wide.load, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  %reverse59 = shufflevector <2 x i64> %wide.load58, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x i64> %reverse, ptr %33, align 8, !tbaa !50
-  store <2 x i64> %reverse59, ptr %34, align 8, !tbaa !50
-  %wide.load.1 = load <2 x i64>, ptr %2, align 16, !tbaa !50
-  %wide.load58.1 = load <2 x i64>, ptr %3, align 16, !tbaa !50
-  %35 = getelementptr [8 x i8], ptr %invariant.gep, i64 %i.r ; 2 uses
-  %36 = getelementptr i8, ptr %35, i64 464
-  %37 = getelementptr i8, ptr %35, i64 448
-  %reverse.1 = shufflevector <2 x i64> %wide.load.1, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  %reverse59.1 = shufflevector <2 x i64> %wide.load58.1, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x i64> %reverse.1, ptr %36, align 8, !tbaa !50
-  store <2 x i64> %reverse59.1, ptr %37, align 8, !tbaa !50
-  %wide.load.2 = load <2 x i64>, ptr %4, align 16, !tbaa !50
-  %wide.load58.2 = load <2 x i64>, ptr %5, align 16, !tbaa !50
-  %38 = getelementptr [8 x i8], ptr %invariant.gep, i64 %i.r ; 2 uses
-  %39 = getelementptr i8, ptr %38, i64 432
-  %40 = getelementptr i8, ptr %38, i64 416
-  %reverse.2 = shufflevector <2 x i64> %wide.load.2, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  %reverse59.2 = shufflevector <2 x i64> %wide.load58.2, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x i64> %reverse.2, ptr %39, align 8, !tbaa !50
-  store <2 x i64> %reverse59.2, ptr %40, align 8, !tbaa !50
-  %wide.load.3 = load <2 x i64>, ptr %6, align 16, !tbaa !50
-  %wide.load58.3 = load <2 x i64>, ptr %7, align 16, !tbaa !50
-  %41 = getelementptr [8 x i8], ptr %invariant.gep, i64 %i.r ; 2 uses
-  %42 = getelementptr i8, ptr %41, i64 400
-  %43 = getelementptr i8, ptr %41, i64 384
-  %reverse.3 = shufflevector <2 x i64> %wide.load.3, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  %reverse59.3 = shufflevector <2 x i64> %wide.load58.3, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x i64> %reverse.3, ptr %42, align 8, !tbaa !50
-  store <2 x i64> %reverse59.3, ptr %43, align 8, !tbaa !50
-  %wide.load.4 = load <2 x i64>, ptr %8, align 16, !tbaa !50
-  %wide.load58.4 = load <2 x i64>, ptr %9, align 16, !tbaa !50
-  %44 = getelementptr [8 x i8], ptr %invariant.gep, i64 %i.r ; 2 uses
-  %45 = getelementptr i8, ptr %44, i64 368
-  %46 = getelementptr i8, ptr %44, i64 352
-  %reverse.4 = shufflevector <2 x i64> %wide.load.4, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  %reverse59.4 = shufflevector <2 x i64> %wide.load58.4, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x i64> %reverse.4, ptr %45, align 8, !tbaa !50
-  store <2 x i64> %reverse59.4, ptr %46, align 8, !tbaa !50
-  %wide.load.5 = load <2 x i64>, ptr %10, align 16, !tbaa !50
-  %wide.load58.5 = load <2 x i64>, ptr %11, align 16, !tbaa !50
-  %47 = getelementptr [8 x i8], ptr %invariant.gep, i64 %i.r ; 2 uses
-  %48 = getelementptr i8, ptr %47, i64 336
-  %49 = getelementptr i8, ptr %47, i64 320
-  %reverse.5 = shufflevector <2 x i64> %wide.load.5, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  %reverse59.5 = shufflevector <2 x i64> %wide.load58.5, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x i64> %reverse.5, ptr %48, align 8, !tbaa !50
-  store <2 x i64> %reverse59.5, ptr %49, align 8, !tbaa !50
-  %wide.load.6 = load <2 x i64>, ptr %12, align 16, !tbaa !50
-  %wide.load58.6 = load <2 x i64>, ptr %13, align 16, !tbaa !50
-  %50 = getelementptr [8 x i8], ptr %invariant.gep, i64 %i.r ; 2 uses
-  %51 = getelementptr i8, ptr %50, i64 304
-  %52 = getelementptr i8, ptr %50, i64 288
-  %reverse.6 = shufflevector <2 x i64> %wide.load.6, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  %reverse59.6 = shufflevector <2 x i64> %wide.load58.6, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x i64> %reverse.6, ptr %51, align 8, !tbaa !50
-  store <2 x i64> %reverse59.6, ptr %52, align 8, !tbaa !50
-  %wide.load.7 = load <2 x i64>, ptr %14, align 16, !tbaa !50
-  %wide.load58.7 = load <2 x i64>, ptr %15, align 16, !tbaa !50
-  %53 = getelementptr [8 x i8], ptr %invariant.gep, i64 %i.r ; 2 uses
-  %54 = getelementptr i8, ptr %53, i64 272
-  %55 = getelementptr i8, ptr %53, i64 256
-  %reverse.7 = shufflevector <2 x i64> %wide.load.7, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  %reverse59.7 = shufflevector <2 x i64> %wide.load58.7, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x i64> %reverse.7, ptr %54, align 8, !tbaa !50
-  store <2 x i64> %reverse59.7, ptr %55, align 8, !tbaa !50
-  %wide.load.8 = load <2 x i64>, ptr %16, align 16, !tbaa !50
-  %wide.load58.8 = load <2 x i64>, ptr %17, align 16, !tbaa !50
-  %56 = getelementptr [8 x i8], ptr %invariant.gep, i64 %i.r ; 2 uses
-  %57 = getelementptr i8, ptr %56, i64 240
-  %58 = getelementptr i8, ptr %56, i64 224
-  %reverse.8 = shufflevector <2 x i64> %wide.load.8, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  %reverse59.8 = shufflevector <2 x i64> %wide.load58.8, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x i64> %reverse.8, ptr %57, align 8, !tbaa !50
-  store <2 x i64> %reverse59.8, ptr %58, align 8, !tbaa !50
-  %wide.load.9 = load <2 x i64>, ptr %18, align 16, !tbaa !50
-  %wide.load58.9 = load <2 x i64>, ptr %19, align 16, !tbaa !50
-  %59 = getelementptr [8 x i8], ptr %invariant.gep, i64 %i.r ; 2 uses
-  %60 = getelementptr i8, ptr %59, i64 208
-  %61 = getelementptr i8, ptr %59, i64 192
-  %reverse.9 = shufflevector <2 x i64> %wide.load.9, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  %reverse59.9 = shufflevector <2 x i64> %wide.load58.9, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x i64> %reverse.9, ptr %60, align 8, !tbaa !50
-  store <2 x i64> %reverse59.9, ptr %61, align 8, !tbaa !50
-  %wide.load.10 = load <2 x i64>, ptr %20, align 16, !tbaa !50
-  %wide.load58.10 = load <2 x i64>, ptr %21, align 16, !tbaa !50
-  %62 = getelementptr [8 x i8], ptr %invariant.gep, i64 %i.r ; 2 uses
-  %63 = getelementptr i8, ptr %62, i64 176
-  %64 = getelementptr i8, ptr %62, i64 160
-  %reverse.10 = shufflevector <2 x i64> %wide.load.10, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  %reverse59.10 = shufflevector <2 x i64> %wide.load58.10, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x i64> %reverse.10, ptr %63, align 8, !tbaa !50
-  store <2 x i64> %reverse59.10, ptr %64, align 8, !tbaa !50
-  %wide.load.11 = load <2 x i64>, ptr %22, align 16, !tbaa !50
-  %wide.load58.11 = load <2 x i64>, ptr %23, align 16, !tbaa !50
-  %65 = getelementptr [8 x i8], ptr %invariant.gep, i64 %i.r ; 2 uses
-  %66 = getelementptr i8, ptr %65, i64 144
-  %67 = getelementptr i8, ptr %65, i64 128
-  %reverse.11 = shufflevector <2 x i64> %wide.load.11, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  %reverse59.11 = shufflevector <2 x i64> %wide.load58.11, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x i64> %reverse.11, ptr %66, align 8, !tbaa !50
-  store <2 x i64> %reverse59.11, ptr %67, align 8, !tbaa !50
-  %wide.load.12 = load <2 x i64>, ptr %24, align 16, !tbaa !50
-  %wide.load58.12 = load <2 x i64>, ptr %25, align 16, !tbaa !50
-  %68 = getelementptr [8 x i8], ptr %invariant.gep, i64 %i.r ; 2 uses
-  %69 = getelementptr i8, ptr %68, i64 112
-  %70 = getelementptr i8, ptr %68, i64 96
-  %reverse.12 = shufflevector <2 x i64> %wide.load.12, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  %reverse59.12 = shufflevector <2 x i64> %wide.load58.12, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x i64> %reverse.12, ptr %69, align 8, !tbaa !50
-  store <2 x i64> %reverse59.12, ptr %70, align 8, !tbaa !50
-  %wide.load.13 = load <2 x i64>, ptr %26, align 16, !tbaa !50
-  %wide.load58.13 = load <2 x i64>, ptr %27, align 16, !tbaa !50
-  %71 = getelementptr [8 x i8], ptr %invariant.gep, i64 %i.r ; 2 uses
-  %72 = getelementptr i8, ptr %71, i64 80
-  %73 = getelementptr i8, ptr %71, i64 64
-  %reverse.13 = shufflevector <2 x i64> %wide.load.13, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  %reverse59.13 = shufflevector <2 x i64> %wide.load58.13, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x i64> %reverse.13, ptr %72, align 8, !tbaa !50
-  store <2 x i64> %reverse59.13, ptr %73, align 8, !tbaa !50
-  %wide.load.14 = load <2 x i64>, ptr %28, align 16, !tbaa !50
-  %wide.load58.14 = load <2 x i64>, ptr %29, align 16, !tbaa !50
-  %74 = getelementptr [8 x i8], ptr %invariant.gep, i64 %i.r ; 2 uses
-  %75 = getelementptr i8, ptr %74, i64 48
-  %76 = getelementptr i8, ptr %74, i64 32
-  %reverse.14 = shufflevector <2 x i64> %wide.load.14, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  %reverse59.14 = shufflevector <2 x i64> %wide.load58.14, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x i64> %reverse.14, ptr %75, align 8, !tbaa !50
-  store <2 x i64> %reverse59.14, ptr %76, align 8, !tbaa !50
-  %wide.load.15 = load <2 x i64>, ptr %30, align 16, !tbaa !50
-  %wide.load58.15 = load <2 x i64>, ptr %31, align 16, !tbaa !50
-  %i.dw = getelementptr [8 x i8], ptr %invariant.gep, i64 %i.r ; 2 uses
-  %77 = getelementptr i8, ptr %i.dw, i64 16
-  %reverse.15 = shufflevector <2 x i64> %wide.load.15, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  %reverse59.15 = shufflevector <2 x i64> %wide.load58.15, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x i64> %reverse.15, ptr %77, align 8, !tbaa !50
-  store <2 x i64> %reverse59.15, ptr %i.dw, align 8, !tbaa !50
-  br label %middle.block
-
-transpose64.exit:                                 ; preds = %transpose64.exit.preheader, %transpose64.exit
-  %indvars.iv43 = phi i64 [ %indvars.iv.next44.3, %transpose64.exit ], [ 0, %transpose64.exit.preheader ] ; 6 uses
+transpose64.exit:                                 ; preds = %transpose64.exit, %vector.body
+  %indvars.iv43 = phi i64 [ 0, %vector.body ], [ %indvars.iv.next44.3, %transpose64.exit ] ; 6 uses
   %i.dx = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv43
   %i.dy = load i64, ptr %i.dx, align 16, !tbaa !50
   %i.dz = sub nuw nsw i64 %i.s, %indvars.iv43
   %i.ea = mul nuw nsw i64 %i.dz, %i.q
-  %gep = getelementptr [8 x i8], ptr %invariant.gep, i64 %i.ea
+  %gep = getelementptr [8 x i8], ptr %i.dw, i64 %i.ea
   store i64 %i.dy, ptr %gep, align 8, !tbaa !50
   %indvars.iv.next44 = or disjoint i64 %indvars.iv43, 1 ; 2 uses
   %i.eb = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv.next44
   %i.ec = load i64, ptr %i.eb, align 8, !tbaa !50
   %i.ed = sub nuw nsw i64 %i.s, %indvars.iv.next44
   %i.ee = mul nuw nsw i64 %i.ed, %i.q
-  %gep.1 = getelementptr [8 x i8], ptr %invariant.gep, i64 %i.ee
+  %gep.1 = getelementptr [8 x i8], ptr %i.dw, i64 %i.ee
   store i64 %i.ec, ptr %gep.1, align 8, !tbaa !50
   %indvars.iv.next44.1 = or disjoint i64 %indvars.iv43, 2 ; 2 uses
   %i.ef = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv.next44.1
   %i.eg = load i64, ptr %i.ef, align 16, !tbaa !50
   %i.eh = sub nuw nsw i64 %i.s, %indvars.iv.next44.1
   %i.ei = mul nuw nsw i64 %i.eh, %i.q
-  %gep.2 = getelementptr [8 x i8], ptr %invariant.gep, i64 %i.ei
+  %gep.2 = getelementptr [8 x i8], ptr %i.dw, i64 %i.ei
   store i64 %i.eg, ptr %gep.2, align 8, !tbaa !50
   %indvars.iv.next44.2 = or disjoint i64 %indvars.iv43, 3 ; 2 uses
   %i.ej = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv.next44.2
   %i.ek = load i64, ptr %i.ej, align 8, !tbaa !50
   %i.el = sub nuw nsw i64 %i.s, %indvars.iv.next44.2
   %i.em = mul nuw nsw i64 %i.el, %i.q
-  %gep.3 = getelementptr [8 x i8], ptr %invariant.gep, i64 %i.em
+  %gep.3 = getelementptr [8 x i8], ptr %i.dw, i64 %i.em
   store i64 %i.ek, ptr %gep.3, align 8, !tbaa !50
   %indvars.iv.next44.3 = add nuw nsw i64 %indvars.iv43, 4 ; 2 uses
   %exitcond46.not.3 = icmp eq i64 %indvars.iv.next44.3, 64
   br i1 %exitcond46.not.3, label %middle.block, label %transpose64.exit, !llvm.loop !129
 
-middle.block:                                     ; preds = %transpose64.exit, %vector.body
+middle.block:                                     ; preds = %transpose64.exit
   %indvars.iv.next48 = add nuw nsw i64 %indvars.iv47, 1 ; 2 uses
   %exitcond50.not = icmp eq i64 %indvars.iv.next48, %wide.trip.count
   br i1 %exitcond50.not, label %._crit_edge, label %.preheader35, !llvm.loop !130
@@ -657,7 +479,7 @@ bb.a:
   %.val62 = load ptr, ptr %i.b, align 8, !tbaa !44
   %i.e = load ptr, ptr %i.a, align 8, !tbaa !32
   %i.f = getelementptr i8, ptr %i.e, i64 48
-  %.val66 = load ptr, ptr %i.f, align 8, !tbaa !69
+  %.val66 = load ptr, ptr %i.f, align 8, !tbaa !68
   %i.g = getelementptr i8, ptr %.val66, i64 36
   %.val54 = load i32, ptr %i.g, align 4, !tbaa !49
   %i.h = mul i32 %.val61.val, %.val54
@@ -1060,7 +882,7 @@ bb.e:                                             ; preds = %.lr.ph.i
 
 Ssw_RarManObjsAreEqual.exit:                      ; preds = %.lr.ph.i
   %i.aw = getelementptr i8, ptr %i.n, i64 48
-  %.val146 = load ptr, ptr %i.aw, align 8, !tbaa !69
+  %.val146 = load ptr, ptr %i.aw, align 8, !tbaa !68
   %i.ax = icmp eq ptr %i.x, %.val146
   br i1 %i.ax, label %bb.f, label %bb.p
 
@@ -1463,7 +1285,7 @@ bb.ai:                                            ; preds = %.lr.ph.i186
 
 Ssw_RarManObjsAreEqual.exit191:                   ; preds = %.lr.ph.i186
   %i.jw = getelementptr i8, ptr %i.fu, i64 48
-  %.val145 = load ptr, ptr %i.jw, align 8, !tbaa !69
+  %.val145 = load ptr, ptr %i.jw, align 8, !tbaa !68
   %i.jx = icmp eq ptr %i.jd, %.val145
   br i1 %i.jx, label %bb.aj, label %bb.at
 
@@ -1684,7 +1506,7 @@ bb.bg:                                            ; preds = %bb.bf
 Ssw_ObjIsConst1Cand.exit:                         ; preds = %bb.bf, %bb.bg
   %i.na = phi ptr [ %i.mz, %bb.bg ], [ null, %bb.bf ]
   %i.nb = getelementptr i8, ptr %i.mk, i64 48
-  %.val.i = load ptr, ptr %i.nb, align 8, !tbaa !69
+  %.val.i = load ptr, ptr %i.nb, align 8, !tbaa !68
   %.not224 = icmp eq ptr %i.na, %.val.i
   br i1 %.not224, label %bb.bh, label %bb.bq
 
@@ -2087,7 +1909,7 @@ bb.l:                                             ; preds = %bb.l, %.lr.ph.i156
 bb.m:                                             ; preds = %.critedge8.i, %.lr.ph120.i
   %.0119.i = phi i32 [ %i.by, %.lr.ph120.i ], [ %.1.lcssa.i, %.critedge8.i ] ; 2 uses
   %.073118.i = phi i32 [ 0, %.lr.ph120.i ], [ %i.gl, %.critedge8.i ] ; 2 uses
-  %.val85.i = load ptr, ptr %i.bz, align 8, !tbaa !69
+  %.val85.i = load ptr, ptr %i.bz, align 8, !tbaa !68
   %i.cg = getelementptr inbounds nuw i8, ptr %.val85.i, i64 24 ; 2 uses
   %i.ch = load i64, ptr %i.cg, align 8
   %i.ci = or i64 %i.ch, 32
@@ -2490,8 +2312,8 @@ attributes #26 = { nounwind allocsize(0,1) }
 !65 = !{!31, !27, i64 48}
 !66 = !{!41, !28, i64 24}
 !67 = !{!41, !13, i64 112}
-!68 = !{!"llvm.loop.isvectorized", i32 1}
-!69 = !{!41, !34, i64 48}
+!68 = !{!41, !34, i64 48}
+!69 = !{!"llvm.loop.isvectorized", i32 1}
 !70 = !{!"llvm.loop.unroll.runtime.disable"}
 !71 = !{!"llvm.loop.unroll.disable"}
 !72 = !{!31, !13, i64 96}
@@ -2551,39 +2373,39 @@ attributes #26 = { nounwind allocsize(0,1) }
 !126 = distinct !{!126, !22}
 !127 = distinct !{!127, !22}
 !128 = distinct !{!128, !22}
-!129 = distinct !{!129, !22, !68}
+!129 = distinct !{!129, !22}
 !130 = distinct !{!130, !22}
 !131 = distinct !{!131, !22}
-!132 = distinct !{!132, !22, !68, !70}
-!133 = distinct !{!133, !22, !68}
+!132 = distinct !{!132, !22, !69, !70}
+!133 = distinct !{!133, !22, !69}
 !134 = distinct !{!134, !22}
-!135 = distinct !{!135, !22, !68, !70}
+!135 = distinct !{!135, !22, !69, !70}
 !136 = distinct !{!136, !71}
-!137 = distinct !{!137, !22, !68}
+!137 = distinct !{!137, !22, !69}
 !138 = distinct !{!138, !22}
 !139 = distinct !{!139, !22}
-!140 = distinct !{!140, !22, !68, !70}
+!140 = distinct !{!140, !22, !69, !70}
 !141 = distinct !{!141, !71}
-!142 = distinct !{!142, !22, !68}
+!142 = distinct !{!142, !22, !69}
 !143 = distinct !{!143, !22}
 !144 = distinct !{!144, !22}
 !145 = !{!18, !16, i64 88}
 !146 = !{!18, !13, i64 44}
 !147 = distinct !{!147, !22}
-!148 = distinct !{!148, !22, !68, !70}
+!148 = distinct !{!148, !22, !69, !70}
 !149 = distinct !{!149, !71}
-!150 = distinct !{!150, !22, !68}
+!150 = distinct !{!150, !22, !69}
 !151 = distinct !{!151, !22}
-!152 = distinct !{!152, !22, !68, !70}
-!153 = distinct !{!153, !22, !68}
+!152 = distinct !{!152, !22, !69, !70}
+!153 = distinct !{!153, !22, !69}
 !154 = distinct !{!154, !22}
 !155 = distinct !{!155, !22}
 !156 = !{!34, !34, i64 0}
 !157 = !{!41, !13, i64 312}
 !158 = !{!35, !13, i64 32}
 !159 = distinct !{!159, !22}
-!160 = distinct !{!160, !22, !68, !70}
-!161 = distinct !{!161, !22, !70, !68}
+!160 = distinct !{!160, !22, !69, !70}
+!161 = distinct !{!161, !22, !70, !69}
 !162 = distinct !{!162, !22}
 !163 = distinct !{!163, !22}
 !164 = !{!18, !16, i64 96}
@@ -2605,8 +2427,8 @@ attributes #26 = { nounwind allocsize(0,1) }
 !180 = !{!41, !28, i64 416}
 !181 = !{!26, !26, i64 0}
 !182 = !{!28, !28, i64 0}
-!183 = distinct !{!183, !22, !68, !70}
-!184 = distinct !{!184, !22, !70, !68}
+!183 = distinct !{!183, !22, !69, !70}
+!184 = distinct !{!184, !22, !70, !69}
 !185 = distinct !{!185, !22}
 !186 = distinct !{!186, !22}
 !187 = !{!18, !13, i64 68}

@@ -205,14 +205,17 @@ bb.b:                                             ; preds = %bb.a
   %factor.op.mul = mul i64 %i.w, %i.x
   %i.y = sext i32 %i.u to i64
   %i.z = mul i64 %i.x, %i.y
-  %.val38 = load i32, ptr %i.p, align 4, !tbaa !31 ; 2 uses
-  %i.aa = sext i32 %.val38 to i64                 ; 33 uses
+  %.val38 = load i32, ptr %i.p, align 4, !tbaa !31
+  %i.aa = sext i32 %.val38 to i64                 ; 35 uses
   %i.ab = sext i32 %i.t to i64
   %i.ac = zext nneg i32 %i.m to i64
   %i.ad = sext i32 %i.k to i64
   %i.ae = sext i32 %i.l to i64
   %i.af = add nsw i32 %i.j, 1
-  %ident.check.not = icmp eq i32 %.val38, 1
+  %broadcast.splatinsert379 = insertelement <16 x i64> poison, i64 %i.aa, i64 0
+  %broadcast.splat380 = shufflevector <16 x i64> %broadcast.splatinsert379, <16 x i64> poison, <16 x i32> zeroinitializer ; 2 uses
+  %broadcast.splatinsert402 = insertelement <4 x i64> poison, i64 %i.aa, i64 0
+  %broadcast.splat403 = shufflevector <4 x i64> %broadcast.splatinsert402, <4 x i64> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %.noexc.lr.ph
 
 .noexc.lr.ph:                                     ; preds = %.lr.ph.split, %._crit_edge
@@ -233,6 +236,12 @@ bb.b:                                             ; preds = %bb.a
   %invariant.op382.i = add nsw i64 %i.ap, -3
   %i.aq = add nsw i32 %.sroa.speculated60, -2
   %invariant.op383.i = add nsw i64 %i.ap, -1      ; 3 uses
+  %broadcast.splatinsert = insertelement <16 x i64> poison, i64 %i.ag, i64 0
+  %broadcast.splat = shufflevector <16 x i64> %broadcast.splatinsert, <16 x i64> poison, <16 x i32> zeroinitializer ; 2 uses
+  %invariant.op = add <16 x i64> %broadcast.splat, splat (i64 1)
+  %broadcast.splatinsert400 = insertelement <4 x i64> poison, i64 %i.ag, i64 0
+  %broadcast.splat401 = shufflevector <4 x i64> %broadcast.splatinsert400, <4 x i64> poison, <4 x i32> zeroinitializer ; 2 uses
+  %invariant.op687 = add <4 x i64> %broadcast.splat401, splat (i64 1)
   br label %.noexc
 
 ._crit_edge:                                      ; preds = %_ZN4ncnn3MatD2Ev.exit
@@ -635,7 +644,7 @@ vec.epilog.middle.block576:                       ; preds = %vec.epilog.vector.b
   br i1 %i.nn, label %.lr.ph213.i, label %.preheader3.i
 
 .lr.ph213.i:                                      ; preds = %.preheader5.i
-  %invariant.gep216.i = getelementptr [4 x i8], ptr %.val, i64 %indvars.iv ; 6 uses
+  %invariant.gep216.i = getelementptr [4 x i8], ptr %.val, i64 %indvars.iv ; 8 uses
   %i.no = icmp sgt i32 %.sroa.speculated, 1
   br i1 %i.no, label %.lr.ph199.us.preheader.i, label %.lr.ph213.split.i
 
@@ -890,9 +899,8 @@ iter.check389:                                    ; preds = %.lr.ph213.split.i
   %i.qu = add i64 %smax, %i.qt                    ; 3 uses
   %i.qv = lshr i64 %i.qu, 1
   %i.qw = add nuw i64 %i.qv, 1                    ; 5 uses
-  %min.iters.check374 = icmp ugt i64 %i.qu, 5
-  %or.cond = select i1 %min.iters.check374, i1 %ident.check.not, i1 false
-  br i1 %or.cond, label %vector.main.loop.iter.check375, label %._crit_edge209.us231.i.preheader
+  %min.iters.check374 = icmp ult i64 %i.qu, 6
+  br i1 %min.iters.check374, label %._crit_edge209.us231.i.preheader, label %vector.main.loop.iter.check375
 
 vector.main.loop.iter.check375:                   ; preds = %iter.check389
   %min.iters.check376 = icmp ult i64 %i.qu, 30
@@ -902,24 +910,33 @@ vector.ph377:                                     ; preds = %vector.main.loop.it
   %i.qx = and i64 %i.qw, 12
   %n.vec378 = and i64 %i.qw, -16                  ; 5 uses
   %i.qy = shl i64 %n.vec378, 1
-  %i.qz = add i64 %i.qy, %i.qr                    ; 2 uses
+  %i.qz = add i64 %i.qy, %i.qr                    ; 3 uses
   %i.ra = shl i64 %n.vec378, 2
   %i.rb = getelementptr i8, ptr %.6.lcssa.i, i64 %i.ra ; 2 uses
-  %invariant.gep = getelementptr [4 x i8], ptr %invariant.gep216.i, i64 %i.qr
-  %invariant.gep673 = getelementptr [4 x i8], ptr %invariant.gep, i64 %i.ag
+  %broadcast.splatinsert381 = insertelement <16 x i64> poison, i64 %i.qr, i64 0
+  %broadcast.splat382 = shufflevector <16 x i64> %broadcast.splatinsert381, <16 x i64> poison, <16 x i32> zeroinitializer
+  %induction = add nuw nsw <16 x i64> %broadcast.splat382, <i64 0, i64 2, i64 4, i64 6, i64 8, i64 10, i64 12, i64 14, i64 16, i64 18, i64 20, i64 22, i64 24, i64 26, i64 28, i64 30>
   br label %vector.body379
 
 vector.body379:                                   ; preds = %vector.ph377, %vector.body379
-  %index380 = phi i64 [ 0, %vector.ph377 ], [ %index.next386, %vector.body379 ] ; 3 uses
+  %index380 = phi i64 [ 0, %vector.ph377 ], [ %index.next386, %vector.body379 ] ; 2 uses
+  %vec.ind = phi <16 x i64> [ %induction, %vector.ph377 ], [ %vec.ind.next, %vector.body379 ] ; 3 uses
   %i.rc = shl i64 %index380, 2
   %next.gep381 = getelementptr i8, ptr %.6.lcssa.i, i64 %i.rc
-  %.idx = shl i64 %index380, 3
-  %gep674 = getelementptr i8, ptr %invariant.gep673, i64 %.idx
-  %wide.vec382 = load <32 x i32>, ptr %gep674, align 4, !tbaa !22
-  %i.rd = lshr <32 x i32> %wide.vec382, splat (i32 16)
+  %9 = add nsw <16 x i64> %vec.ind, %broadcast.splat
+  %.reass686 = add <16 x i64> %vec.ind, %invariant.op
+  %10 = mul nsw <16 x i64> %.reass686, %broadcast.splat380
+  %wide.gep = getelementptr [4 x i8], ptr %invariant.gep216.i, <16 x i64> %10
+  %wide.masked.gather = call <16 x i32> @llvm.masked.gather.v16i32.v16p0(<16 x ptr> align 4 %wide.gep, <16 x i1> splat (i1 true), <16 x i32> poison), !tbaa !22
+  %11 = mul nsw <16 x i64> %9, %broadcast.splat380
+  %wide.gep386 = getelementptr [4 x i8], ptr %invariant.gep216.i, <16 x i64> %11
+  %wide.masked.gather387 = call <16 x i32> @llvm.masked.gather.v16i32.v16p0(<16 x ptr> align 4 %wide.gep386, <16 x i1> splat (i1 true), <16 x i32> poison), !tbaa !22
+  %12 = shufflevector <16 x i32> %wide.masked.gather387, <16 x i32> %wide.masked.gather, <32 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23, i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31>
+  %i.rd = lshr <32 x i32> %12, splat (i32 16)
   %interleaved.vec385 = trunc nuw <32 x i32> %i.rd to <32 x i16>
   store <32 x i16> %interleaved.vec385, ptr %next.gep381, align 2, !tbaa !24
   %index.next386 = add nuw i64 %index380, 16      ; 2 uses
+  %vec.ind.next = add nuw nsw <16 x i64> %vec.ind, splat (i64 32)
   %i.re = icmp eq i64 %index.next386, %n.vec378
   br i1 %i.re, label %middle.block387, label %vector.body379, !llvm.loop !381
 
@@ -933,26 +950,36 @@ vec.epilog.iter.check390:                         ; preds = %middle.block387
 
 vec.epilog.ph393:                                 ; preds = %vector.main.loop.iter.check375, %vec.epilog.iter.check390
   %vec.epilog.resume.val394 = phi i64 [ %n.vec378, %vec.epilog.iter.check390 ], [ 0, %vector.main.loop.iter.check375 ]
+  %bc.resume.val398 = phi i64 [ %i.qz, %vec.epilog.iter.check390 ], [ %i.qr, %vector.main.loop.iter.check375 ]
   %n.vec395 = and i64 %i.qw, -4                   ; 4 uses
   %i.rf = shl i64 %n.vec395, 1
   %i.rg = add i64 %i.rf, %i.qr                    ; 2 uses
   %i.rh = shl i64 %n.vec395, 2
   %i.ri = getelementptr i8, ptr %.6.lcssa.i, i64 %i.rh ; 2 uses
-  %invariant.gep675 = getelementptr [4 x i8], ptr %invariant.gep216.i, i64 %i.qr
-  %invariant.gep676 = getelementptr [4 x i8], ptr %invariant.gep675, i64 %i.ag
+  %broadcast.splatinsert404 = insertelement <4 x i64> poison, i64 %bc.resume.val398, i64 0
+  %broadcast.splat405 = shufflevector <4 x i64> %broadcast.splatinsert404, <4 x i64> poison, <4 x i32> zeroinitializer
+  %induction406 = add nuw nsw <4 x i64> %broadcast.splat405, <i64 0, i64 2, i64 4, i64 6>
   br label %vec.epilog.vector.body396
 
 vec.epilog.vector.body396:                        ; preds = %vec.epilog.vector.body396, %vec.epilog.ph393
-  %index397 = phi i64 [ %vec.epilog.resume.val394, %vec.epilog.ph393 ], [ %index.next403, %vec.epilog.vector.body396 ] ; 3 uses
+  %index397 = phi i64 [ %vec.epilog.resume.val394, %vec.epilog.ph393 ], [ %index.next403, %vec.epilog.vector.body396 ] ; 2 uses
+  %vec.ind409 = phi <4 x i64> [ %induction406, %vec.epilog.ph393 ], [ %vec.ind.next417, %vec.epilog.vector.body396 ] ; 3 uses
   %i.rj = shl i64 %index397, 2
   %next.gep398 = getelementptr i8, ptr %.6.lcssa.i, i64 %i.rj
-  %.idx588 = shl i64 %index397, 3
-  %gep677 = getelementptr i8, ptr %invariant.gep676, i64 %.idx588
-  %wide.vec399 = load <8 x i32>, ptr %gep677, align 4, !tbaa !22
-  %i.rk = lshr <8 x i32> %wide.vec399, splat (i32 16)
+  %13 = add nsw <4 x i64> %vec.ind409, %broadcast.splat401
+  %.reass688 = add <4 x i64> %vec.ind409, %invariant.op687
+  %14 = mul nsw <4 x i64> %.reass688, %broadcast.splat403
+  %wide.gep411 = getelementptr [4 x i8], ptr %invariant.gep216.i, <4 x i64> %14
+  %wide.masked.gather412 = call <4 x i32> @llvm.masked.gather.v4i32.v4p0(<4 x ptr> align 4 %wide.gep411, <4 x i1> splat (i1 true), <4 x i32> poison), !tbaa !22
+  %15 = mul nsw <4 x i64> %13, %broadcast.splat403
+  %wide.gep413 = getelementptr [4 x i8], ptr %invariant.gep216.i, <4 x i64> %15
+  %wide.masked.gather414 = call <4 x i32> @llvm.masked.gather.v4i32.v4p0(<4 x ptr> align 4 %wide.gep413, <4 x i1> splat (i1 true), <4 x i32> poison), !tbaa !22
+  %16 = shufflevector <4 x i32> %wide.masked.gather414, <4 x i32> %wide.masked.gather412, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
+  %i.rk = lshr <8 x i32> %16, splat (i32 16)
   %interleaved.vec402 = trunc nuw <8 x i32> %i.rk to <8 x i16>
   store <8 x i16> %interleaved.vec402, ptr %next.gep398, align 2, !tbaa !24
   %index.next403 = add nuw i64 %index397, 4       ; 2 uses
+  %vec.ind.next417 = add nuw nsw <4 x i64> %vec.ind409, splat (i64 8)
   %i.rl = icmp eq i64 %index.next403, %n.vec395
   br i1 %i.rl, label %vec.epilog.middle.block404, label %vec.epilog.vector.body396, !llvm.loop !382
 
@@ -1354,6 +1381,12 @@ declare <16 x float> @llvm.masked.gather.v16f32.v16p0(<16 x ptr>, <16 x i1>, <16
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(read)
 declare <4 x float> @llvm.masked.gather.v4f32.v4p0(<4 x ptr>, <4 x i1>, <4 x float>) #3
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(read)
+declare <16 x i32> @llvm.masked.gather.v16i32.v16p0(<16 x ptr>, <16 x i1>, <16 x i32>) #3
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(read)
+declare <4 x i32> @llvm.masked.gather.v4i32.v4p0(<4 x ptr>, <4 x i1>, <4 x i32>) #3
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare <31 x float> @llvm.masked.load.v31f32.p0(ptr captures(none), <31 x i1>, <31 x float>) #25
@@ -1757,7 +1790,7 @@ begin_hunk_3_@llvm.exp.v4f32
 !380 = distinct !{!380, !19, !25, !26}
 !381 = distinct !{!381, !19, !25, !26}
 !382 = distinct !{!382, !19, !25, !26}
-!383 = distinct !{!383, !19, !25}
+!383 = distinct !{!383, !19, !26, !25}
 !384 = distinct !{!384, !19, !25, !26}
 !385 = distinct !{!385, !19, !25, !26}
 !386 = distinct !{!386, !19, !25, !26}
