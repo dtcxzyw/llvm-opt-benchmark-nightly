@@ -205,7 +205,7 @@ bb.a:
   %i.a = icmp slt i32 %1, 6
   %i.b = add nsw i32 %1, -5
   %i.c = shl nuw i32 1, %i.b
-  %i.d = select i1 %i.a, i32 1, i32 %i.c          ; 33 uses
+  %i.d = select i1 %i.a, i32 1, i32 %i.c          ; 32 uses
   switch i32 %2, label %bb.b [
     i32 0, label %.preheader70
     i32 1, label %.preheader72
@@ -608,34 +608,24 @@ bb.b:                                             ; preds = %bb.a
 
 .preheader.lr.ph:                                 ; preds = %bb.b
   %.not = icmp eq i32 %i.lq, 31
-  %i.lt = shl i32 2, %i.lq                        ; 3 uses
-  %i.lu = sext i32 %i.lt to i64                   ; 2 uses
+  %i.lt = shl i32 2, %i.lq                        ; 2 uses
+  %i.lu = sext i32 %i.lt to i64
   br i1 %.not, label %.loopexit, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %i.lv = sext i32 %i.lr to i64                   ; 2 uses
   %smax = tail call i32 @llvm.smax.i32(i32 %i.lr, i32 1) ; 2 uses
   %wide.trip.count122 = zext nneg i32 %smax to i64 ; 4 uses
-  %3 = shl nsw i64 %i.lv, 2                       ; 2 uses
-  %scevgep = getelementptr i8, ptr %0, i64 %3
-  %i.lw = shl nuw nsw i64 %wide.trip.count122, 2  ; 2 uses
-  %4 = add nsw i32 %i.d, -1
-  %min.iters.check187 = icmp slt i32 %i.lr, 40
-  %5 = add i32 %2, -4
-  %6 = lshr i32 %4, %5
-  %7 = zext i32 %6 to i64
-  %8 = mul nsw i64 %7, %i.lu
-  %i.lx = shl i64 %8, 2                           ; 2 uses
-  %i.ly = getelementptr i8, ptr %0, i64 %i.lx
-  %i.lz = getelementptr i8, ptr %i.ly, i64 %i.lw
-  %i.ma = getelementptr i8, ptr %0, i64 %i.lx
-  %i.mb = getelementptr i8, ptr %i.ma, i64 %3
-  %9 = getelementptr i8, ptr %i.mb, i64 %i.lw
-  %bound0 = icmp ult ptr %0, %9
-  %bound1 = icmp ult ptr %scevgep, %i.lz
+  %i.lw = shl nsw i64 %i.lv, 2                    ; 2 uses
+  %i.lx = shl nuw nsw i64 %wide.trip.count122, 2  ; 2 uses
+  %i.ly = getelementptr i8, ptr %0, i64 %i.lw
+  %i.lz = getelementptr i8, ptr %i.ly, i64 %i.lx
+  %i.ma = getelementptr i8, ptr %0, i64 %i.lw
+  %i.mb = getelementptr i8, ptr %0, i64 %i.lx
+  %min.iters.check189 = icmp slt i32 %i.lr, 8
+  %bound0 = icmp ult ptr %0, %i.lz
+  %bound1 = icmp ult ptr %i.ma, %i.mb
   %found.conflict = and i1 %bound0, %bound1
-  %stride.check = icmp slt i32 %i.lt, 0
-  %10 = or i1 %found.conflict, %stride.check
   %n.vec189 = and i64 %wide.trip.count122, 2147483640
   %xtraiter = and i64 %wide.trip.count122, 1
   %i.mc = icmp slt i32 %i.lr, 2
@@ -648,7 +638,7 @@ bb.b:                                             ; preds = %bb.a
   %.092 = phi i32 [ %i.mx, %._crit_edge ], [ 0, %.preheader.preheader ]
   %.06791 = phi ptr [ %i.mw, %._crit_edge ], [ %0, %.preheader.preheader ] ; 6 uses
   %invariant.gep = getelementptr [4 x i8], ptr %.06791, i64 %i.lv ; 4 uses
-  %brmerge = select i1 %min.iters.check187, i1 true, i1 %10
+  %brmerge = select i1 %min.iters.check189, i1 true, i1 %found.conflict
   br i1 %brmerge, label %scalar.ph186.preheader, label %vector.body190
 
 scalar.ph186.preheader:                           ; preds = %.preheader
@@ -1051,7 +1041,7 @@ bb.a:
   %i.a = icmp slt i32 %1, 6
   %i.b = add nsw i32 %1, -5
   %i.c = shl nuw i32 1, %i.b
-  %i.d = select i1 %i.a, i32 1, i32 %i.c          ; 33 uses
+  %i.d = select i1 %i.a, i32 1, i32 %i.c          ; 32 uses
   switch i32 %2, label %bb.b [
     i32 0, label %.preheader70
     i32 1, label %.preheader72
@@ -1454,34 +1444,24 @@ bb.b:                                             ; preds = %bb.a
 
 .preheader.lr.ph:                                 ; preds = %bb.b
   %.not = icmp eq i32 %i.lq, 31
-  %i.lt = shl i32 2, %i.lq                        ; 3 uses
-  %i.lu = sext i32 %i.lt to i64                   ; 2 uses
+  %i.lt = shl i32 2, %i.lq                        ; 2 uses
+  %i.lu = sext i32 %i.lt to i64
   br i1 %.not, label %.loopexit, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %i.lv = sext i32 %i.lr to i64                   ; 2 uses
   %smax = tail call i32 @llvm.smax.i32(i32 %i.lr, i32 1) ; 2 uses
   %wide.trip.count122 = zext nneg i32 %smax to i64 ; 4 uses
-  %3 = shl nsw i64 %i.lv, 2                       ; 2 uses
-  %scevgep = getelementptr i8, ptr %0, i64 %3
-  %i.lw = shl nuw nsw i64 %wide.trip.count122, 2  ; 2 uses
-  %4 = add nsw i32 %i.d, -1
-  %min.iters.check187 = icmp slt i32 %i.lr, 40
-  %5 = add i32 %2, -4
-  %6 = lshr i32 %4, %5
-  %7 = zext i32 %6 to i64
-  %8 = mul nsw i64 %7, %i.lu
-  %i.lx = shl i64 %8, 2                           ; 2 uses
-  %i.ly = getelementptr i8, ptr %0, i64 %i.lx
-  %i.lz = getelementptr i8, ptr %i.ly, i64 %i.lw
-  %i.ma = getelementptr i8, ptr %0, i64 %i.lx
-  %i.mb = getelementptr i8, ptr %i.ma, i64 %3
-  %9 = getelementptr i8, ptr %i.mb, i64 %i.lw
-  %bound0 = icmp ult ptr %0, %9
-  %bound1 = icmp ult ptr %scevgep, %i.lz
+  %i.lw = shl nsw i64 %i.lv, 2                    ; 2 uses
+  %i.lx = shl nuw nsw i64 %wide.trip.count122, 2  ; 2 uses
+  %i.ly = getelementptr i8, ptr %0, i64 %i.lw
+  %i.lz = getelementptr i8, ptr %i.ly, i64 %i.lx
+  %i.ma = getelementptr i8, ptr %0, i64 %i.lw
+  %i.mb = getelementptr i8, ptr %0, i64 %i.lx
+  %min.iters.check189 = icmp slt i32 %i.lr, 8
+  %bound0 = icmp ult ptr %0, %i.lz
+  %bound1 = icmp ult ptr %i.ma, %i.mb
   %found.conflict = and i1 %bound0, %bound1
-  %stride.check = icmp slt i32 %i.lt, 0
-  %10 = or i1 %found.conflict, %stride.check
   %n.vec189 = and i64 %wide.trip.count122, 2147483640
   %xtraiter = and i64 %wide.trip.count122, 1
   %i.mc = icmp slt i32 %i.lr, 2
@@ -1494,7 +1474,7 @@ bb.b:                                             ; preds = %bb.a
   %.092 = phi i32 [ %i.mx, %._crit_edge ], [ 0, %.preheader.preheader ]
   %.06791 = phi ptr [ %i.mw, %._crit_edge ], [ %0, %.preheader.preheader ] ; 6 uses
   %invariant.gep = getelementptr [4 x i8], ptr %.06791, i64 %i.lv ; 4 uses
-  %brmerge = select i1 %min.iters.check187, i1 true, i1 %10
+  %brmerge = select i1 %min.iters.check189, i1 true, i1 %found.conflict
   br i1 %brmerge, label %scalar.ph186.preheader, label %vector.body190
 
 scalar.ph186.preheader:                           ; preds = %.preheader
@@ -1897,7 +1877,7 @@ bb.a:
   %i.a = icmp slt i32 %1, 6
   %i.b = add nsw i32 %1, -5
   %i.c = shl nuw i32 1, %i.b
-  %i.d = select i1 %i.a, i32 1, i32 %i.c          ; 33 uses
+  %i.d = select i1 %i.a, i32 1, i32 %i.c          ; 32 uses
   switch i32 %2, label %bb.b [
     i32 0, label %.preheader71
     i32 1, label %.preheader73
@@ -2300,34 +2280,24 @@ bb.b:                                             ; preds = %bb.a
 
 .preheader.lr.ph:                                 ; preds = %bb.b
   %.not = icmp eq i32 %i.jx, 31
-  %i.ka = shl i32 2, %i.jx                        ; 3 uses
-  %i.kb = sext i32 %i.ka to i64                   ; 2 uses
+  %i.ka = shl i32 2, %i.jx                        ; 2 uses
+  %i.kb = sext i32 %i.ka to i64
   br i1 %.not, label %.loopexit, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %i.kc = sext i32 %i.jy to i64                   ; 2 uses
   %smax = tail call i32 @llvm.smax.i32(i32 %i.jy, i32 1) ; 2 uses
   %wide.trip.count123 = zext nneg i32 %smax to i64 ; 4 uses
-  %3 = shl nsw i64 %i.kc, 2                       ; 2 uses
-  %scevgep = getelementptr i8, ptr %0, i64 %3
-  %i.kd = shl nuw nsw i64 %wide.trip.count123, 2  ; 2 uses
-  %4 = add nsw i32 %i.d, -1
-  %min.iters.check188 = icmp slt i32 %i.jy, 44
-  %5 = add i32 %2, -4
-  %6 = lshr i32 %4, %5
-  %7 = zext i32 %6 to i64
-  %8 = mul nsw i64 %7, %i.kb
-  %i.ke = shl i64 %8, 2                           ; 2 uses
-  %i.kf = getelementptr i8, ptr %0, i64 %i.ke
-  %i.kg = getelementptr i8, ptr %i.kf, i64 %i.kd
-  %i.kh = getelementptr i8, ptr %0, i64 %i.ke
-  %i.ki = getelementptr i8, ptr %i.kh, i64 %3
-  %9 = getelementptr i8, ptr %i.ki, i64 %i.kd
-  %bound0 = icmp ult ptr %0, %9
-  %bound1 = icmp ult ptr %scevgep, %i.kg
+  %i.kd = shl nsw i64 %i.kc, 2                    ; 2 uses
+  %i.ke = shl nuw nsw i64 %wide.trip.count123, 2  ; 2 uses
+  %i.kf = getelementptr i8, ptr %0, i64 %i.kd
+  %i.kg = getelementptr i8, ptr %i.kf, i64 %i.ke
+  %i.kh = getelementptr i8, ptr %0, i64 %i.kd
+  %i.ki = getelementptr i8, ptr %0, i64 %i.ke
+  %min.iters.check190 = icmp slt i32 %i.jy, 8
+  %bound0 = icmp ult ptr %0, %i.kg
+  %bound1 = icmp ult ptr %i.kh, %i.ki
   %found.conflict = and i1 %bound0, %bound1
-  %stride.check = icmp slt i32 %i.ka, 0
-  %10 = or i1 %found.conflict, %stride.check
   %n.vec190 = and i64 %wide.trip.count123, 2147483640
   %xtraiter = and i64 %wide.trip.count123, 1
   %i.kj = icmp slt i32 %i.jy, 2
@@ -2340,7 +2310,7 @@ bb.b:                                             ; preds = %bb.a
   %.093 = phi i32 [ %i.kz, %._crit_edge ], [ 0, %.preheader.preheader ]
   %.06892 = phi ptr [ %i.ky, %._crit_edge ], [ %0, %.preheader.preheader ] ; 6 uses
   %invariant.gep = getelementptr [4 x i8], ptr %.06892, i64 %i.kc ; 4 uses
-  %brmerge = select i1 %min.iters.check188, i1 true, i1 %10
+  %brmerge = select i1 %min.iters.check190, i1 true, i1 %found.conflict
   br i1 %brmerge, label %scalar.ph187.preheader, label %vector.body191
 
 scalar.ph187.preheader:                           ; preds = %.preheader

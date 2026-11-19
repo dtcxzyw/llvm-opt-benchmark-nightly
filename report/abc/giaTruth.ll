@@ -205,8 +205,7 @@ bb.aw:                                            ; preds = %Vec_WecPushLevel.ex
   br label %bb.cl
 
 bb.ax:                                            ; preds = %bb.al
-  %i.fr = call ptr @Gia_ObjComputeTruthTableCut(ptr noundef nonnull %0, ptr noundef nonnull %i.ds, ptr noundef nonnull %i.i) ; 16 uses
-  %3 = ptrtoaddr ptr %i.fr to i64                 ; 3 uses
+  %i.fr = call ptr @Gia_ObjComputeTruthTableCut(ptr noundef nonnull %0, ptr noundef nonnull %i.ds, ptr noundef nonnull %i.i) ; 15 uses
   %.val100 = load i32, ptr %i.j, align 4, !tbaa !42 ; 10 uses
   %i.fs = icmp sgt i32 %.val100, 0
   br i1 %i.fs, label %.lr.ph.i, label %Abc_TtMinimumBase.exit.thread
@@ -401,7 +400,7 @@ bb.bc:                                            ; preds = %._crit_edge.i
 .lr.ph61.i.i:                                     ; preds = %bb.bc
   %i.ic = select i1 %i.ft, i32 1, i32 %.fr.i.i    ; 4 uses
   %i.id = sext i32 %i.ic to i64
-  %.idx65.i.i.i = shl nsw i64 %i.id, 3            ; 2 uses
+  %.idx65.i.i.i = shl nsw i64 %i.id, 3
   %i.ie = getelementptr inbounds i8, ptr %i.fr, i64 %.idx65.i.i.i ; 2 uses
   %i.if = icmp sgt i32 %i.ic, 0
   %wide.trip.count73.i.i.i = zext i32 %i.ic to i64 ; 3 uses
@@ -409,7 +408,6 @@ bb.bc:                                            ; preds = %._crit_edge.i
 
 .lr.ph61.split.us.split.us.preheader.i.i:         ; preds = %.lr.ph61.i.i
   %wide.trip.count106.i.i = zext nneg i32 %.val100 to i64
-  %4 = add i64 %.idx65.i.i.i, %3
   %min.iters.check = icmp ult i32 %i.ic, 4
   %n.vec = and i64 %wide.trip.count73.i.i.i, 2147483644 ; 3 uses
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count73.i.i.i
@@ -449,43 +447,26 @@ bb.bd:                                            ; preds = %.lr.ph.us.us.i.i
   %i.io = shl nuw i32 1, %i.in
   %i.ip = select i1 %i.il, i32 1, i32 %i.io       ; 7 uses
   %i.iq = icmp sgt i32 %i.ip, 0
-  %i.ir = shl i32 %i.ip, 2                        ; 2 uses
-  %i.is = sext i32 %i.ir to i64                   ; 3 uses
+  %i.ir = shl nsw i32 %i.ip, 2
+  %i.is = sext i32 %i.ir to i64
   br i1 %i.iq, label %.preheader.us.preheader.i.us.us.us.us.i.i, label %Abc_TtSwapAdjacent.exit.us.us.us.us.i.i
 
 .preheader.us.preheader.i.us.us.us.us.i.i:        ; preds = %.preheader.lr.ph.i.us.us.us.us.i.i
   %i.it = shl nuw nsw i32 %i.ip, 1
   %i.iu = zext nneg i32 %i.ip to i64              ; 6 uses
-  %5 = zext nneg i32 %i.it to i64                 ; 2 uses
-  %6 = shl nsw i64 %i.is, 3                       ; 4 uses
-  %7 = add i64 %6, %3
-  %umax = call i64 @llvm.umax.i64(i64 %4, i64 %7)
-  %8 = sub i64 %umax, %3                          ; 2 uses
-  %9 = icmp ne i64 %8, %6
-  %umin = zext i1 %9 to i64                       ; 2 uses
-  %10 = or disjoint i64 %6, %umin
-  %11 = sub i64 %8, %10
-  %umax358 = call i64 @llvm.umax.i64(i64 %6, i64 1)
-  %12 = udiv i64 %11, %umax358
-  %13 = add i64 %12, %umin
-  %14 = shl i64 %13, 3
-  %15 = mul i64 %14, %i.is                        ; 2 uses
+  %umin = zext nneg i32 %i.it to i64              ; 2 uses
   %i.iv = shl nuw nsw i64 %i.iu, 3                ; 2 uses
-  %i.iw = shl nuw nsw i64 %5, 3                   ; 2 uses
-  %16 = getelementptr i8, ptr %i.fr, i64 %15
-  %i.ix = getelementptr i8, ptr %16, i64 %i.iv
+  %i.iw = shl nuw nsw i64 %umin, 3                ; 2 uses
+  %i.ix = getelementptr i8, ptr %i.fr, i64 %i.iv
   %scevgep = getelementptr i8, ptr %i.ix, i64 %i.iw
   %scevgep359.a = getelementptr i8, ptr %i.fr, i64 %i.iw
   %i.iy = shl nuw nsw i64 %i.iu, 4
-  %17 = getelementptr i8, ptr %i.fr, i64 %15
-  %scevgep360 = getelementptr i8, ptr %17, i64 %i.iy
+  %scevgep360 = getelementptr i8, ptr %i.fr, i64 %i.iy
   %scevgep361 = getelementptr i8, ptr %i.fr, i64 %i.iv
   %min.iters.check363 = icmp ult i32 %i.ip, 4
   %bound0 = icmp ult ptr %scevgep361, %scevgep
   %bound1 = icmp ult ptr %scevgep359.a, %scevgep360
   %found.conflict = and i1 %bound0, %bound1
-  %stride.check = icmp slt i32 %i.ir, 0
-  %18 = or i1 %found.conflict, %stride.check
   %n.vec365 = and i64 %i.iu, 2147483644
   %xtraiter = and i64 %i.iu, 1
   %i.iz = icmp eq i32 %i.ip, 1
@@ -497,8 +478,8 @@ bb.bd:                                            ; preds = %.lr.ph.us.us.i.i
 .preheader.us.i.us.us.us.us.i.i:                  ; preds = %._crit_edge.us.i.us.us.us.us.i.i, %.preheader.us.preheader.i.us.us.us.us.i.i
   %.061.us.i.us.us.us.us.i.i = phi ptr [ %i.jl, %._crit_edge.us.i.us.us.us.us.i.i ], [ %i.fr, %.preheader.us.preheader.i.us.us.us.us.i.i ] ; 3 uses
   %invariant.gep.i.us.us.us.us.i.i = getelementptr inbounds nuw [8 x i8], ptr %.061.us.i.us.us.us.us.i.i, i64 %i.iu ; 4 uses
-  %invariant.gep80.i.us.us.us.us.i.i = getelementptr inbounds nuw [8 x i8], ptr %.061.us.i.us.us.us.us.i.i, i64 %5 ; 4 uses
-  %brmerge = select i1 %min.iters.check363, i1 true, i1 %18
+  %invariant.gep80.i.us.us.us.us.i.i = getelementptr inbounds nuw [8 x i8], ptr %.061.us.i.us.us.us.us.i.i, i64 %umin ; 4 uses
+  %brmerge = select i1 %min.iters.check363, i1 true, i1 %found.conflict
   br i1 %brmerge, label %scalar.ph362.preheader, label %vector.body366
 
 scalar.ph362.preheader:                           ; preds = %.preheader.us.i.us.us.us.us.i.i

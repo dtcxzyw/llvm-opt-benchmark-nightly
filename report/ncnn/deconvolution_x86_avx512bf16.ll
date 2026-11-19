@@ -205,32 +205,25 @@ bb.a:
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %6, i8 0, i64 28, i1 false)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %i.e, i8 0, i64 28, i1 false)
   call void @_ZN4ncnn3Mat6createEimPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %6, i32 noundef %i.c, i64 noundef 4, ptr noundef null)
-  %i.g = mul nsw i32 %3, %2                       ; 3 uses
+  %i.g = mul nsw i32 %3, %2                       ; 2 uses
   %i.h = icmp sgt i32 %i.g, 0
   br i1 %i.h, label %.preheader1818.lr.ph, label %._crit_edge1823.split
 
 .preheader1818.lr.ph:                             ; preds = %bb.a
   %i.i = icmp sgt i32 %i.a, 0
-  %i.j = sext i32 %i.a to i64                     ; 6 uses
+  %i.j = sext i32 %i.a to i64                     ; 4 uses
   br i1 %i.i, label %.preheader1818.preheader, label %._crit_edge1823.split
 
 .preheader1818.preheader:                         ; preds = %.preheader1818.lr.ph
   %i.k = load ptr, ptr %6, align 8, !tbaa !19     ; 3 uses
   %i.l = load ptr, ptr %0, align 8, !tbaa !19     ; 3 uses
-  %wide.trip.count = zext nneg i32 %i.a to i64    ; 10 uses
-  %8 = add nsw i32 %i.g, -1
-  %9 = zext i32 %8 to i64                         ; 2 uses
-  %10 = mul nuw nsw i64 %i.j, %9
-  %11 = add nuw i64 %10, %wide.trip.count
-  %i.m = shl i64 %11, 2
+  %wide.trip.count = zext nneg i32 %i.a to i64    ; 9 uses
+  %i.m = shl nuw nsw i64 %wide.trip.count, 2      ; 2 uses
   %scevgep = getelementptr i8, ptr %i.l, i64 %i.m
-  %i.n = shl nuw nsw i64 %9, 2
-  %12 = add nuw nsw i64 %i.n, 4
-  %13 = mul i64 %12, %i.j
-  %scevgep2932 = getelementptr i8, ptr %i.k, i64 %13
-  %i.o = sub nsw i64 %i.j, %wide.trip.count
-  %14 = shl nsw i64 %i.o, 2
-  %scevgep2933 = getelementptr i8, ptr %i.k, i64 %14
+  %i.n = shl nuw nsw i64 %i.j, 2                  ; 2 uses
+  %scevgep2932 = getelementptr i8, ptr %i.k, i64 %i.n
+  %i.o = sub nsw i64 %i.n, %i.m
+  %scevgep2933 = getelementptr i8, ptr %i.k, i64 %i.o
   %min.iters.check = icmp ult i32 %i.a, 8
   %bound0 = icmp ult ptr %scevgep2933, %scevgep
   %bound1 = icmp ult ptr %i.l, %scevgep2932

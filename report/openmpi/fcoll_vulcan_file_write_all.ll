@@ -205,7 +205,7 @@ bb.q:                                             ; preds = %bb.p
 .lr.ph592:                                        ; preds = %.preheader559
   %i.er = load i32, ptr %i.ak, align 8, !tbaa !45 ; 3 uses
   %i.es = icmp sgt i32 %i.er, 0
-  %i.et = zext nneg i32 %i.ep to i64              ; 9 uses
+  %i.et = zext nneg i32 %i.ep to i64              ; 7 uses
   br i1 %i.es, label %.lr.ph589.us.preheader, label %.lr.ph592.split.preheader
 
 .lr.ph592.split.preheader:                        ; preds = %.lr.ph592
@@ -215,12 +215,9 @@ bb.q:                                             ; preds = %bb.p
 
 .lr.ph589.us.preheader:                           ; preds = %.lr.ph592
   %wide.trip.count679 = zext nneg i32 %i.er to i64 ; 6 uses
-  %5 = shl nuw nsw i64 %i.et, 3
-  %6 = add nuw nsw i64 %i.et, %wide.trip.count679
-  %i.ev = shl nuw nsw i64 %6, 3
-  %7 = getelementptr i8, ptr %i.ej, i64 %i.ev
-  %scevgep = getelementptr i8, ptr %7, i64 -8
-  %scevgep824 = getelementptr i8, ptr %i.el, i64 %5
+  %i.ev = shl nuw nsw i64 %wide.trip.count679, 3
+  %scevgep = getelementptr i8, ptr %i.ej, i64 %i.ev
+  %scevgep824 = getelementptr i8, ptr %i.el, i64 8
   %min.iters.check826 = icmp ugt i32 %i.er, 3
   %ident.check.not = icmp eq i32 %i.ep, 1
   %or.cond871 = and i1 %min.iters.check826, %ident.check.not

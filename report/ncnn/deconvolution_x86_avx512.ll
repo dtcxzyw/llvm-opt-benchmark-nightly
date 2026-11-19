@@ -205,32 +205,25 @@ bb.dc:                                            ; preds = %bb.al
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %2, i8 0, i64 28, i1 false)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %i.lu, i8 0, i64 28, i1 false)
   call void @_ZN4ncnn3Mat6createEimPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %2, i32 noundef %i.ls, i64 noundef 4, ptr noundef null)
-  %i.lw = mul nsw i32 %i.bx, %i.bs                ; 3 uses
+  %i.lw = mul nsw i32 %i.bx, %i.bs                ; 2 uses
   %i.lx = icmp sgt i32 %i.lw, 0
   br i1 %i.lx, label %.preheader1818.lr.ph.i, label %._crit_edge1823.split.i
 
 .preheader1818.lr.ph.i:                           ; preds = %bb.dc
   %i.ly = icmp sgt i32 %i.bn, 0
-  %i.lz = sext i32 %i.bn to i64                   ; 5 uses
+  %i.lz = sext i32 %i.bn to i64                   ; 3 uses
   br i1 %i.ly, label %.preheader1818.preheader.i, label %._crit_edge1823.split.i
 
 .preheader1818.preheader.i:                       ; preds = %.preheader1818.lr.ph.i
   %i.ma = load ptr, ptr %2, align 8, !tbaa !20    ; 3 uses
   %i.mb = load ptr, ptr %i.lp, align 8, !tbaa !20 ; 3 uses
-  %wide.trip.count.i = zext nneg i32 %i.bn to i64 ; 10 uses
-  %15 = add nsw i32 %i.lw, -1
-  %16 = zext i32 %15 to i64                       ; 2 uses
-  %17 = mul nuw nsw i64 %i.lz, %16
-  %18 = add nuw i64 %17, %wide.trip.count.i
-  %i.mc = shl i64 %18, 2
+  %wide.trip.count.i = zext nneg i32 %i.bn to i64 ; 9 uses
+  %i.mc = shl nuw nsw i64 %wide.trip.count.i, 2   ; 2 uses
   %scevgep = getelementptr i8, ptr %i.mb, i64 %i.mc
-  %i.md = shl nuw nsw i64 %16, 2
-  %19 = add nuw nsw i64 %i.md, 4
-  %20 = mul i64 %19, %i.lz
-  %scevgep452 = getelementptr i8, ptr %i.ma, i64 %20
-  %i.me = sub nsw i64 %i.lz, %wide.trip.count.i
-  %21 = shl nsw i64 %i.me, 2
-  %scevgep453 = getelementptr i8, ptr %i.ma, i64 %21
+  %i.md = shl nuw nsw i64 %i.lz, 2                ; 2 uses
+  %scevgep452 = getelementptr i8, ptr %i.ma, i64 %i.md
+  %i.me = sub nsw i64 %i.md, %i.mc
+  %scevgep453 = getelementptr i8, ptr %i.ma, i64 %i.me
   %min.iters.check = icmp ult i32 %i.bn, 8
   %bound0 = icmp ult ptr %scevgep453, %scevgep
   %bound1 = icmp ult ptr %i.mb, %scevgep452
@@ -633,32 +626,25 @@ bb.c:                                             ; preds = %bb.a
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %6, i8 0, i64 28, i1 false)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %i.f, i8 0, i64 28, i1 false)
   call void @_ZN4ncnn3Mat6createEimPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %6, i32 noundef %i.d, i64 noundef 4, ptr noundef null)
-  %i.h = mul nsw i32 %3, %2                       ; 3 uses
+  %i.h = mul nsw i32 %3, %2                       ; 2 uses
   %i.i = icmp sgt i32 %i.h, 0
   br i1 %i.i, label %.preheader1824.lr.ph, label %._crit_edge1829.split
 
 .preheader1824.lr.ph:                             ; preds = %bb.c
   %i.j = icmp sgt i32 %i.b, 0
-  %i.k = sext i32 %i.b to i64                     ; 6 uses
+  %i.k = sext i32 %i.b to i64                     ; 4 uses
   br i1 %i.j, label %.preheader1824.preheader, label %._crit_edge1829.split
 
 .preheader1824.preheader:                         ; preds = %.preheader1824.lr.ph
   %i.l = load ptr, ptr %6, align 8, !tbaa !20     ; 3 uses
   %i.m = load ptr, ptr %0, align 8, !tbaa !20     ; 3 uses
-  %wide.trip.count = zext nneg i32 %i.b to i64    ; 10 uses
-  %8 = add nsw i32 %i.h, -1
-  %9 = zext i32 %8 to i64                         ; 2 uses
-  %10 = mul nuw nsw i64 %i.k, %9
-  %11 = add nuw i64 %10, %wide.trip.count
-  %i.n = shl i64 %11, 2
+  %wide.trip.count = zext nneg i32 %i.b to i64    ; 9 uses
+  %i.n = shl nuw nsw i64 %wide.trip.count, 2      ; 2 uses
   %scevgep = getelementptr i8, ptr %i.m, i64 %i.n
-  %i.o = shl nuw nsw i64 %9, 2
-  %12 = add nuw nsw i64 %i.o, 4
-  %13 = mul i64 %12, %i.k
-  %scevgep2938 = getelementptr i8, ptr %i.l, i64 %13
-  %i.p = sub nsw i64 %i.k, %wide.trip.count
-  %14 = shl nsw i64 %i.p, 2
-  %scevgep2939 = getelementptr i8, ptr %i.l, i64 %14
+  %i.o = shl nuw nsw i64 %i.k, 2                  ; 2 uses
+  %scevgep2938 = getelementptr i8, ptr %i.l, i64 %i.o
+  %i.p = sub nsw i64 %i.o, %i.n
+  %scevgep2939 = getelementptr i8, ptr %i.l, i64 %i.p
   %min.iters.check = icmp ult i32 %i.b, 8
   %bound0 = icmp ult ptr %scevgep2939, %scevgep
   %bound1 = icmp ult ptr %i.m, %scevgep2938

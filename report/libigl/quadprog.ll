@@ -205,7 +205,7 @@ _ZN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEaSINS_7ProductINS_5BlockIKNS0_IdLin1ELi
 define internal fastcc noundef zeroext i1 @"_ZZN3igl8copyleft8quadprogERKN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEERKNS2_IdLin1ELi1ELi0ELin1ELi1EEES5_S8_S5_S8_RS6_ENK3$_4clERS3_SB_S9_RiRd"(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, ptr nofree captures(none) %.0.val, i64 %.8.val, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %1, ptr nofree noundef nonnull align 4 captures(none) dereferenceable(4) %2, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(8) %3) unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = trunc i64 %.8.val to i32                 ; 2 uses
-  %i.b = load i32, ptr %2, align 4, !tbaa !40     ; 3 uses
+  %i.b = load i32, ptr %2, align 4, !tbaa !40     ; 2 uses
   %i.c = add nsw i32 %i.b, 1                      ; 4 uses
   %.not.not19 = icmp slt i32 %i.c, %i.a
   %.pre30 = load ptr, ptr %1, align 8, !tbaa !30  ; 3 uses
@@ -220,33 +220,24 @@ bb.a:
   %sext = shl i64 %.8.val, 32
   %i.e = ashr exact i64 %sext, 32                 ; 3 uses
   %i.f = sext i32 %i.c to i64                     ; 2 uses
-  %wide.trip.count = and i64 %.8.val, 2147483647  ; 5 uses
-  %4 = mul i64 %.8.val, -8
-  %5 = sext i32 %i.b to i64                       ; 2 uses
-  %i.g = shl nsw i64 %5, 3
-  %6 = add nsw i64 %i.g, 8
-  %7 = mul i64 %.8.val, %6
-  %8 = shl nuw nsw i64 %wide.trip.count, 3
-  %i.h = getelementptr i8, ptr %.0.val, i64 %7
-  %scevgep = getelementptr i8, ptr %i.h, i64 %8
-  %i.i = add nsw i64 %i.e, 2305843009213693951
+  %wide.trip.count = and i64 %.8.val, 2147483647  ; 4 uses
+  %4 = add nsw i64 %i.e, 2305843009213693951
+  %5 = mul i64 %.8.val, %4
+  %i.g = shl i64 %5, 3                            ; 2 uses
+  %6 = shl nuw nsw i64 %wide.trip.count, 3        ; 2 uses
+  %7 = getelementptr i8, ptr %.0.val, i64 %i.g
+  %i.h = getelementptr i8, ptr %7, i64 %6
+  %scevgep = getelementptr i8, ptr %.0.val, i64 %i.g
+  %i.i = add nsw i64 %i.e, 2305843009213693950
   %i.j = mul i64 %.8.val, %i.i
-  %i.k = shl i64 %i.j, 3
+  %i.k = shl i64 %i.j, 3                          ; 2 uses
   %scevgep44 = getelementptr i8, ptr %.0.val, i64 %i.k
-  %9 = mul i64 %.8.val, %5
-  %10 = add i64 %9, %wide.trip.count
-  %11 = shl i64 %10, 3
-  %scevgep45 = getelementptr i8, ptr %.0.val, i64 %11
-  %12 = add nsw i64 %i.e, 2305843009213693950
-  %13 = mul i64 %.8.val, %12
-  %14 = shl i64 %13, 3
-  %scevgep46 = getelementptr i8, ptr %.0.val, i64 %14
+  %scevgep45 = getelementptr i8, ptr %scevgep44, i64 %6
+  %scevgep46 = getelementptr i8, ptr %.0.val, i64 %i.k
   %min.iters.check = icmp samesign ult i64 %wide.trip.count, 2
-  %bound0 = icmp ult ptr %scevgep46, %scevgep
-  %bound1 = icmp ult ptr %scevgep44, %scevgep45
+  %bound0 = icmp ult ptr %scevgep46, %i.h
+  %bound1 = icmp ult ptr %scevgep, %scevgep45
   %found.conflict = and i1 %bound0, %bound1
-  %stride.check = icmp slt i64 %4, 0
-  %15 = or i1 %found.conflict, %stride.check
   %n.vec = and i64 %.8.val, 2147483646            ; 3 uses
   %cmp.n = icmp eq i64 %wide.trip.count, %n.vec
   br label %bb.b
@@ -313,7 +304,7 @@ bb.g:                                             ; preds = %"_ZZN3igl8copyleft8
 .lr.ph:                                           ; preds = %bb.g
   %i.an = mul nsw i64 %.8.val, %i.l               ; 2 uses
   %i.ao = mul nsw i64 %.8.val, %indvars.iv.next26 ; 2 uses
-  %brmerge = select i1 %min.iters.check, i1 true, i1 %15
+  %brmerge = select i1 %min.iters.check, i1 true, i1 %found.conflict
   br i1 %brmerge, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph

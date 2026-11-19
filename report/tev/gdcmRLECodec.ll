@@ -204,8 +204,8 @@ bb.bj:                                            ; preds = %bb.bi
   br i1 %.not600, label %.thread428.thread440, label %.lr.ph575
 
 .lr.ph575:                                        ; preds = %bb.bj
-  %i.fx = zext i16 %i.fw to i64                   ; 7 uses
-  %i.fy = udiv i64 %.1232421, %i.fx               ; 25 uses
+  %i.fx = zext i16 %i.fw to i64                   ; 2 uses
+  %i.fy = udiv i64 %.1232421, %i.fx               ; 17 uses
   %i.fz = and i64 %i.fy, 3
   %i.ga = icmp eq i64 %i.fz, 0
   %i.gb = lshr i64 %i.fy, 2                       ; 14 uses
@@ -218,22 +218,16 @@ bb.bj:                                            ; preds = %bb.bi
 
 .preheader448.preheader:                          ; preds = %.lr.ph575
   %wide.trip.count = zext i16 %i.fw to i64
-  %13 = add nsw i64 %i.fx, -1                     ; 4 uses
   %scevgep796 = getelementptr i8, ptr %.0218433, i64 1
   %scevgep835 = getelementptr i8, ptr %.0218433, i64 2
   %scevgep872 = getelementptr i8, ptr %.0218433, i64 3
   %umax873 = call i64 @llvm.umax.i64(i64 %i.gb, i64 1) ; 4 uses
   %min.iters.check874 = icmp ult i64 %i.fy, 36
-  %14 = mul i64 %i.fy, %13
   %i.gg = getelementptr i8, ptr %.0224, i64 %i.gb
-  %15 = getelementptr i8, ptr %i.gg, i64 %14
-  %16 = mul i64 %i.fy, %i.fx
-  %i.gh = getelementptr i8, ptr %.0218433, i64 %16
+  %i.gh = getelementptr i8, ptr %.0218433, i64 %i.fy
   %bound0876 = icmp ult ptr %.0224, %i.gh
-  %bound1877 = icmp ult ptr %scevgep872, %15
+  %bound1877 = icmp ult ptr %scevgep872, %i.gg
   %found.conflict878 = and i1 %bound0876, %bound1877
-  %stride.check879 = icmp slt i64 %i.fy, 0
-  %17 = or i1 %found.conflict878, %stride.check879
   %min.iters.check881 = icmp ult i64 %i.fy, 68
   %i.gi = and i64 %umax873, 15                    ; 2 uses
   %i.gj = icmp eq i64 %i.gi, 0
@@ -247,18 +241,13 @@ bb.bj:                                            ; preds = %bb.bi
   %umax836 = call i64 @llvm.umax.i64(i64 %i.gb, i64 1) ; 4 uses
   %min.iters.check837 = icmp ult i64 %i.fy, 36
   %i.go = getelementptr i8, ptr %.0224, i64 %i.gb
-  %18 = mul i64 %i.fy, %13
   %i.gp = shl nuw nsw i64 %i.gb, 1
-  %19 = getelementptr i8, ptr %.0224, i64 %i.gp
-  %i.gq = getelementptr i8, ptr %19, i64 %18
-  %20 = mul i64 %i.fy, %i.fx
-  %i.gr = getelementptr i8, ptr %.0218433, i64 %20
+  %i.gq = getelementptr i8, ptr %.0224, i64 %i.gp
+  %i.gr = getelementptr i8, ptr %.0218433, i64 %i.fy
   %i.gs = getelementptr i8, ptr %i.gr, i64 -1
   %bound0839 = icmp ult ptr %i.go, %i.gs
   %bound1840 = icmp ult ptr %scevgep835, %i.gq
   %found.conflict841 = and i1 %bound0839, %bound1840
-  %stride.check842 = icmp slt i64 %i.fy, 0
-  %21 = or i1 %found.conflict841, %stride.check842
   %min.iters.check844 = icmp ult i64 %i.fy, 68
   %i.gt = and i64 %umax836, 15                    ; 2 uses
   %i.gu = icmp eq i64 %i.gt, 0
@@ -272,18 +261,13 @@ bb.bj:                                            ; preds = %bb.bi
   %umax797 = call i64 @llvm.umax.i64(i64 %i.gb, i64 1) ; 4 uses
   %min.iters.check798 = icmp ult i64 %i.fy, 36
   %i.gz = getelementptr i8, ptr %.0224, i64 %i.gd
-  %22 = mul i64 %i.fy, %13
   %i.ha = getelementptr i8, ptr %.0224, i64 %i.gb
-  %23 = getelementptr i8, ptr %i.ha, i64 %22
-  %i.hb = getelementptr i8, ptr %23, i64 %i.gd
-  %24 = mul i64 %i.fy, %i.fx
-  %i.hc = getelementptr i8, ptr %.0218433, i64 %24
+  %i.hb = getelementptr i8, ptr %i.ha, i64 %i.gd
+  %i.hc = getelementptr i8, ptr %.0218433, i64 %i.fy
   %i.hd = getelementptr i8, ptr %i.hc, i64 -2
   %bound0800 = icmp ult ptr %i.gz, %i.hd
   %bound1801 = icmp ult ptr %scevgep796, %i.hb
   %found.conflict802 = and i1 %bound0800, %bound1801
-  %stride.check803 = icmp slt i64 %i.fy, 0
-  %25 = or i1 %found.conflict802, %stride.check803
   %min.iters.check805 = icmp ult i64 %i.fy, 68
   %i.he = and i64 %umax797, 15                    ; 2 uses
   %i.hf = icmp eq i64 %i.he, 0
@@ -297,18 +281,13 @@ bb.bj:                                            ; preds = %bb.bi
   %umax758 = call i64 @llvm.umax.i64(i64 %i.gb, i64 1) ; 4 uses
   %min.iters.check759 = icmp ult i64 %i.fy, 36
   %i.hk = getelementptr i8, ptr %.0224, i64 %i.gf
-  %26 = mul i64 %i.fy, %13
   %i.hl = getelementptr i8, ptr %.0224, i64 %i.gb
-  %27 = getelementptr i8, ptr %i.hl, i64 %i.gf
-  %i.hm = getelementptr i8, ptr %27, i64 %26
-  %28 = mul i64 %i.fy, %i.fx
-  %i.hn = getelementptr i8, ptr %.0218433, i64 %28
+  %i.hm = getelementptr i8, ptr %i.hl, i64 %i.gf
+  %i.hn = getelementptr i8, ptr %.0218433, i64 %i.fy
   %i.ho = getelementptr i8, ptr %i.hn, i64 -3
   %bound0761 = icmp ult ptr %i.hk, %i.ho
   %bound1762 = icmp ult ptr %.0218433, %i.hm
   %found.conflict763 = and i1 %bound0761, %bound1762
-  %stride.check764 = icmp slt i64 %i.fy, 0
-  %29 = or i1 %found.conflict763, %stride.check764
   %min.iters.check766 = icmp ult i64 %i.fy, 68
   %i.hp = and i64 %umax758, 15                    ; 2 uses
   %i.hq = icmp eq i64 %i.hp, 0
@@ -329,7 +308,7 @@ bb.bj:                                            ; preds = %bb.bi
   br i1 %.not601, label %._crit_edge, label %iter.check888
 
 iter.check888:                                    ; preds = %.preheader448
-  %brmerge = select i1 %min.iters.check874, i1 true, i1 %17
+  %brmerge = select i1 %min.iters.check874, i1 true, i1 %found.conflict878
   br i1 %brmerge, label %.lr.ph.preheader, label %vector.main.loop.iter.check880
 
 vector.main.loop.iter.check880:                   ; preds = %iter.check888
@@ -503,7 +482,7 @@ bb.bl:                                            ; preds = %bb.bk
 
 iter.check851:                                    ; preds = %.lr.ph
   %invariant.gep = getelementptr i8, ptr %i.hw, i64 %i.gb ; 3 uses
-  %brmerge933 = select i1 %min.iters.check837, i1 true, i1 %21
+  %brmerge933 = select i1 %min.iters.check837, i1 true, i1 %found.conflict841
   br i1 %brmerge933, label %.lr.ph564.preheader, label %vector.main.loop.iter.check843
 
 vector.main.loop.iter.check843:                   ; preds = %iter.check851
@@ -670,7 +649,7 @@ vec.epilog.vector.body858:                        ; preds = %vec.epilog.vector.b
 
 iter.check812:                                    ; preds = %.lr.ph564
   %invariant.gep567 = getelementptr inbounds nuw i8, ptr %i.hw, i64 %i.gd ; 3 uses
-  %brmerge934 = select i1 %min.iters.check798, i1 true, i1 %25
+  %brmerge934 = select i1 %min.iters.check798, i1 true, i1 %found.conflict802
   br i1 %brmerge934, label %vec.epilog.scalar.ph814.preheader, label %vector.main.loop.iter.check804
 
 vector.main.loop.iter.check804:                   ; preds = %iter.check812
@@ -837,7 +816,7 @@ vec.epilog.vector.body819:                        ; preds = %vec.epilog.vector.b
 
 iter.check773:                                    ; preds = %vec.epilog.scalar.ph814
   %invariant.gep571 = getelementptr inbounds nuw i8, ptr %i.hw, i64 %i.gf ; 3 uses
-  %brmerge935 = select i1 %min.iters.check759, i1 true, i1 %29
+  %brmerge935 = select i1 %min.iters.check759, i1 true, i1 %found.conflict763
   br i1 %brmerge935, label %vec.epilog.scalar.ph775.preheader, label %vector.main.loop.iter.check765
 
 vector.main.loop.iter.check765:                   ; preds = %iter.check773
@@ -1043,8 +1022,8 @@ bb.bp:                                            ; preds = %bb.bo
   br i1 %.not605, label %.thread428.thread440, label %.lr.ph585
 
 .lr.ph585:                                        ; preds = %bb.bp
-  %i.acc = zext i16 %i.acb to i64                 ; 6 uses
-  %i.acd = udiv i64 %.1232421, %i.acc             ; 13 uses
+  %i.acc = zext i16 %i.acb to i64                 ; 2 uses
+  %i.acd = udiv i64 %.1232421, %i.acc             ; 10 uses
   %i.ace = and i64 %i.acd, 1
   %i.acf = icmp eq i64 %i.ace, 0
   %i.acg = lshr i64 %i.acd, 1                     ; 7 uses
@@ -1056,20 +1035,14 @@ bb.bp:                                            ; preds = %bb.bo
 
 .preheader444.us.preheader:                       ; preds = %.lr.ph585.split
   %wide.trip.count625 = zext i16 %i.acb to i64
-  %30 = add nsw i64 %i.acc, -1
   %scevgep = getelementptr i8, ptr %.0218430439, i64 1
   %umax721 = call i64 @llvm.umax.i64(i64 %i.acg, i64 1) ; 4 uses
   %min.iters.check722 = icmp ult i64 %i.acd, 18
-  %31 = mul i64 %i.acd, %30
   %i.ach = getelementptr i8, ptr %.0224, i64 %i.acg
-  %32 = getelementptr i8, ptr %i.ach, i64 %31
-  %33 = mul i64 %i.acd, %i.acc
-  %i.aci = getelementptr i8, ptr %.0218430439, i64 %33
+  %i.aci = getelementptr i8, ptr %.0218430439, i64 %i.acd
   %bound0724 = icmp ult ptr %.0224, %i.aci
-  %bound1725 = icmp ult ptr %scevgep, %32
+  %bound1725 = icmp ult ptr %scevgep, %i.ach
   %found.conflict726 = and i1 %bound0724, %bound1725
-  %stride.check727 = icmp slt i64 %i.acd, 0
-  %34 = or i1 %found.conflict726, %stride.check727
   %min.iters.check729 = icmp ult i64 %i.acd, 34
   %i.acj = and i64 %umax721, 15                   ; 2 uses
   %i.ack = icmp eq i64 %i.acj, 0
@@ -1083,16 +1056,12 @@ bb.bp:                                            ; preds = %bb.bo
   %umax = call i64 @llvm.umax.i64(i64 %i.acg, i64 1) ; 4 uses
   %min.iters.check = icmp ult i64 %i.acd, 18
   %i.acp = getelementptr i8, ptr %.0224, i64 %i.acg
-  %35 = mul i64 %i.acd, %i.acc
-  %i.acq = getelementptr i8, ptr %.0224, i64 %35
-  %36 = mul i64 %i.acd, %i.acc
-  %i.acr = getelementptr i8, ptr %.0218430439, i64 %36
+  %i.acq = getelementptr i8, ptr %.0224, i64 %i.acd
+  %i.acr = getelementptr i8, ptr %.0218430439, i64 %i.acd
   %i.acs = getelementptr i8, ptr %i.acr, i64 -1
   %bound0 = icmp ult ptr %i.acp, %i.acs
   %bound1 = icmp ult ptr %.0218430439, %i.acq
   %found.conflict = and i1 %bound0, %bound1
-  %stride.check = icmp slt i64 %i.acd, 0
-  %37 = or i1 %found.conflict, %stride.check
   %min.iters.check709 = icmp ult i64 %i.acd, 34
   %i.act = and i64 %umax, 15                      ; 2 uses
   %i.acu = icmp eq i64 %i.act, 0
@@ -1110,7 +1079,7 @@ iter.check736:                                    ; preds = %.preheader444.us.pr
   %i.acz = mul i64 %i.acd, %indvars.iv622         ; 2 uses
   %i.ada = getelementptr inbounds nuw i8, ptr %.0224, i64 %i.acz ; 4 uses
   %i.adb = getelementptr inbounds nuw i8, ptr %.0218430439, i64 %i.acz ; 50 uses
-  %brmerge936 = select i1 %min.iters.check722, i1 true, i1 %34
+  %brmerge936 = select i1 %min.iters.check722, i1 true, i1 %found.conflict726
   br i1 %brmerge936, label %vec.epilog.scalar.ph738.preheader, label %vector.main.loop.iter.check728
 
 vector.main.loop.iter.check728:                   ; preds = %iter.check736
@@ -1293,7 +1262,7 @@ vec.epilog.scalar.ph738:                          ; preds = %vec.epilog.scalar.p
 
 iter.check:                                       ; preds = %vec.epilog.scalar.ph738
   %invariant.gep578.us = getelementptr i8, ptr %i.ada, i64 %i.acg ; 3 uses
-  %brmerge937 = select i1 %min.iters.check, i1 true, i1 %37
+  %brmerge937 = select i1 %min.iters.check, i1 true, i1 %found.conflict
   br i1 %brmerge937, label %.lr.ph581.us.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
