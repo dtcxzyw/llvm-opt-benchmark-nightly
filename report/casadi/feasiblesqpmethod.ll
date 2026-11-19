@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 5575
 inline.NumDeleted: 707
 loop-unroll.NumCompletelyUnrolled: 20
-loop-unroll.NumRuntimeUnrolled: 152
-loop-unroll.NumUnrolled: 172
+loop-unroll.NumRuntimeUnrolled: 153
+loop-unroll.NumUnrolled: 173
 begin_hunk_0_@_ZN6casadi10casadi_cvxIdEEixPT_S1_S1_xxS2_Px:bb.a
   call void @llvm.assume(i1 %lcmp.mod240)
   br label %bb.j
@@ -205,6 +205,7 @@ bb.k:                                             ; preds = %.lr.ph145, %bb.k
   %i.dx = sub nuw nsw i64 -8, %i.dw
   %i.dy = mul i64 %0, -8
   %i.dz = shl i64 %0, 3
+  %ident.check.not = icmp eq i64 %0, 1
   br label %.lr.ph160
 
 .lr.ph160:                                        ; preds = %.lr.ph160.preheader, %._crit_edge156
@@ -235,7 +236,7 @@ bb.k:                                             ; preds = %.lr.ph145, %bb.k
   %i.et = add i64 %i.es, %i.eh
   %i.eu = mul i64 %i.dz, %i.et
   %i.ev = add nsw i64 %i.ea, -3
-  %i.ew = add i64 %i.ev, %i.eh
+  %i.ew = add i64 %i.ev, %i.eh                    ; 2 uses
   %i.ex = add i64 %i.ea, %i.eh
   %i.ey = sub i64 %0, %i.ex
   %i.ez = getelementptr i8, ptr %1, i64 %i.eu
@@ -245,18 +246,21 @@ bb.k:                                             ; preds = %.lr.ph145, %bb.k
 
 bb.l:                                             ; preds = %.lr.ph155, %_ZN6casadi23casadi_cvx_givens_applyIdEEvxPT_S1_S1_x.exit
   %.0121153 = phi ptr [ %i.ef, %.lr.ph155 ], [ %i.fd, %_ZN6casadi23casadi_cvx_givens_applyIdEEvxPT_S1_S1_x.exit ] ; 2 uses
-  %.2126152 = phi i64 [ 0, %.lr.ph155 ], [ %i.ja, %_ZN6casadi23casadi_cvx_givens_applyIdEEvxPT_S1_S1_x.exit ] ; 7 uses
+  %.2126152 = phi i64 [ 0, %.lr.ph155 ], [ %i.ja, %_ZN6casadi23casadi_cvx_givens_applyIdEEvxPT_S1_S1_x.exit ] ; 8 uses
   %i.fc = getelementptr inbounds i8, ptr %.0121153, i64 -8
   %i.fd = getelementptr inbounds i8, ptr %.0121153, i64 -16 ; 2 uses
-  %i.fe = load double, ptr %i.fc, align 8, !tbaa !155 ; 7 uses
-  %i.ff = load double, ptr %i.fd, align 8, !tbaa !155 ; 8 uses
-  %i.fg = sub i64 %i.ei, %.2126152                ; 5 uses
-  %i.fh = add i64 %i.fg, -2                       ; 4 uses
-  %i.fi = getelementptr inbounds [8 x i8], ptr %1, i64 %i.fh ; 3 uses
+  %i.fe = load double, ptr %i.fc, align 8, !tbaa !155 ; 8 uses
+  %i.ff = load double, ptr %i.fd, align 8, !tbaa !155 ; 9 uses
+  %i.fg = sub i64 %i.ei, %.2126152                ; 7 uses
+  %i.fh = add i64 %i.fg, -2                       ; 5 uses
+  %i.fi = getelementptr [8 x i8], ptr %1, i64 %i.fh ; 6 uses
   %i.fj = icmp sgt i64 %i.fg, 2
-  br i1 %i.fj, label %.lr.ph.i.preheader, label %._crit_edge.i
+  br i1 %i.fj, label %.lr.ph.i.lver.check, label %._crit_edge.i
 
-.lr.ph.i.preheader:                               ; preds = %bb.l
+.lr.ph.i.lver.check:                              ; preds = %bb.l
+  br i1 %ident.check.not, label %.lr.ph.i.ph, label %.lr.ph.i.preheader
+
+.lr.ph.i.preheader:                               ; preds = %.lr.ph.i.lver.check
   %xtraiter255 = and i64 %i.fg, 1
   %i.fk = icmp eq i64 %i.ew, %.2126152
   br i1 %i.fk, label %.lr.ph.i.epil.preheader.a, label %.lr.ph.i.preheader.new
@@ -294,6 +298,74 @@ bb.l:                                             ; preds = %.lr.ph155, %_ZN6cas
   %niter261.ncmp.1 = icmp eq i64 %niter261.next.1, %unroll_iter260
   br i1 %niter261.ncmp.1, label %._crit_edge.i.loopexit.unr-lcssa.a, label %.lr.ph.i.a, !llvm.loop !1305
 
+.lr.ph.i.ph:                                      ; preds = %.lr.ph.i.lver.check
+  %load_initial = load double, ptr %i.fi, align 8 ; 2 uses
+  %8 = insertelement <2 x double> poison, double %i.ff, i64 0
+  %9 = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> zeroinitializer ; 3 uses
+  %10 = insertelement <2 x double> poison, double %i.fe, i64 0
+  %11 = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> zeroinitializer ; 3 uses
+  %xtraiter266 = and i64 %i.fg, 1
+  %12 = icmp eq i64 %i.ew, %.2126152
+  br i1 %12, label %.lr.ph.i.epil.preheader, label %.lr.ph.i.ph.new
+
+.lr.ph.i.ph.new:                                  ; preds = %.lr.ph.i.ph
+  %unroll_iter271 = and i64 %i.fh, -2
+  br label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.i.ph.new
+  %store_forwarded = phi double [ %load_initial, %.lr.ph.i.ph.new ], [ %34, %.lr.ph.i ] ; 2 uses
+  %.080.i = phi ptr [ %i.fi, %.lr.ph.i.ph.new ], [ %33, %.lr.ph.i ] ; 3 uses
+  %niter272 = phi i64 [ 0, %.lr.ph.i.ph.new ], [ %niter272.next.1, %.lr.ph.i ]
+  %13 = getelementptr inbounds nuw i8, ptr %.080.i, i64 8
+  %14 = load double, ptr %13, align 8, !tbaa !155 ; 2 uses
+  %15 = fneg double %store_forwarded
+  %16 = insertelement <2 x double> poison, double %14, i64 0
+  %17 = insertelement <2 x double> %16, double %15, i64 1
+  %18 = fmul <2 x double> %11, %17
+  %19 = insertelement <2 x double> poison, double %store_forwarded, i64 0
+  %20 = insertelement <2 x double> %19, double %14, i64 1
+  %21 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %9, <2 x double> %20, <2 x double> %18) ; 2 uses
+  store <2 x double> %21, ptr %.080.i, align 8, !tbaa !155
+  %22 = getelementptr inbounds nuw [8 x i8], ptr %.080.i, i64 %0 ; 3 uses
+  %23 = extractelement <2 x double> %21, i64 1    ; 2 uses
+  %24 = getelementptr inbounds nuw i8, ptr %22, i64 8
+  %25 = load double, ptr %24, align 8, !tbaa !155 ; 2 uses
+  %26 = fneg double %23
+  %27 = insertelement <2 x double> poison, double %25, i64 0
+  %28 = insertelement <2 x double> %27, double %26, i64 1
+  %29 = fmul <2 x double> %11, %28
+  %30 = insertelement <2 x double> poison, double %23, i64 0
+  %31 = insertelement <2 x double> %30, double %25, i64 1
+  %32 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %9, <2 x double> %31, <2 x double> %29) ; 2 uses
+  store <2 x double> %32, ptr %22, align 8, !tbaa !155
+  %33 = getelementptr inbounds nuw [8 x i8], ptr %22, i64 %0 ; 3 uses
+  %34 = extractelement <2 x double> %32, i64 1    ; 2 uses
+  %niter272.next.1 = add i64 %niter272, 2         ; 2 uses
+  %niter272.ncmp.1 = icmp eq i64 %niter272.next.1, %unroll_iter271
+  br i1 %niter272.ncmp.1, label %._crit_edge.i.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !1305
+
+._crit_edge.i.loopexit.unr-lcssa:                 ; preds = %.lr.ph.i
+  %lcmp.mod268.not = icmp eq i64 %xtraiter266, 0
+  br i1 %lcmp.mod268.not, label %._crit_edge.i, label %.lr.ph.i.epil.preheader
+
+.lr.ph.i.epil.preheader:                          ; preds = %._crit_edge.i.loopexit.unr-lcssa, %.lr.ph.i.ph
+  %store_forwarded.epil.init = phi double [ %load_initial, %.lr.ph.i.ph ], [ %34, %._crit_edge.i.loopexit.unr-lcssa ] ; 2 uses
+  %.080.i.epil.init = phi ptr [ %i.fi, %.lr.ph.i.ph ], [ %33, %._crit_edge.i.loopexit.unr-lcssa ] ; 3 uses
+  %lcmp.mod270 = trunc i64 %i.fg to i1
+  call void @llvm.assume(i1 %lcmp.mod270)
+  %35 = getelementptr inbounds nuw i8, ptr %.080.i.epil.init, i64 8
+  %36 = load double, ptr %35, align 8, !tbaa !155 ; 2 uses
+  %37 = fneg double %store_forwarded.epil.init
+  %38 = insertelement <2 x double> poison, double %36, i64 0
+  %39 = insertelement <2 x double> %38, double %37, i64 1
+  %40 = fmul <2 x double> %11, %39
+  %41 = insertelement <2 x double> poison, double %store_forwarded.epil.init, i64 0
+  %42 = insertelement <2 x double> %41, double %36, i64 1
+  %43 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %9, <2 x double> %42, <2 x double> %40)
+  store <2 x double> %43, ptr %.080.i.epil.init, align 8, !tbaa !155
+  %44 = getelementptr inbounds nuw [8 x i8], ptr %.080.i.epil.init, i64 %0
+  br label %._crit_edge.i
+
 ._crit_edge.i.loopexit.unr-lcssa.a:               ; preds = %.lr.ph.i.a
   %lcmp.mod257.not = icmp eq i64 %xtraiter255, 0
   br i1 %lcmp.mod257.not, label %._crit_edge.i, label %.lr.ph.i.epil.preheader.a
@@ -315,8 +387,8 @@ bb.l:                                             ; preds = %.lr.ph155, %_ZN6cas
   %i.go = getelementptr inbounds [8 x i8], ptr %.080.i.epil.init.a, i64 %0
   br label %._crit_edge.i
 
-._crit_edge.i:                                    ; preds = %.lr.ph.i.epil.preheader.a, %._crit_edge.i.loopexit.unr-lcssa.a, %bb.l
-  %.0.lcssa.i = phi ptr [ %i.fi, %bb.l ], [ %i.ge, %._crit_edge.i.loopexit.unr-lcssa.a ], [ %i.go, %.lr.ph.i.epil.preheader.a ] ; 3 uses
+._crit_edge.i:                                    ; preds = %.lr.ph.i.epil.preheader.a, %._crit_edge.i.loopexit.unr-lcssa.a, %.lr.ph.i.epil.preheader, %._crit_edge.i.loopexit.unr-lcssa, %bb.l
+  %.0.lcssa.i = phi ptr [ %i.fi, %bb.l ], [ %44, %.lr.ph.i.epil.preheader ], [ %33, %._crit_edge.i.loopexit.unr-lcssa ], [ %i.ge, %._crit_edge.i.loopexit.unr-lcssa.a ], [ %i.go, %.lr.ph.i.epil.preheader.a ] ; 3 uses
   %i.gp = getelementptr [8 x i8], ptr %.0.lcssa.i, i64 %0
   %i.gq = getelementptr i8, ptr %i.gp, i64 8      ; 2 uses
   %i.gr = load double, ptr %i.gq, align 8, !tbaa !155 ; 2 uses
