@@ -202,15 +202,11 @@ bb.ey:                                            ; preds = %bb.ex
   br label %.body368
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store9PutResultNtB2q_5ErrorENtNtB4_6marker4SendEL_EEECs1ElB0qm0ygX_13influxdb3_wal.exit: ; preds = %bb.ew, %bb.ev
-  %i.qz = load i64, ptr %i.qk, align 8, !range !54, !noundef !47 ; 3 uses
-  %.not = icmp eq i64 %i.qz, -1
-  br i1 %.not, label %bb.fd, label %3
-
-3:                                                ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store9PutResultNtB2q_5ErrorENtNtB4_6marker4SendEL_EEECs1ElB0qm0ygX_13influxdb3_wal.exit
-  %4 = icmp ne i64 %i.qz, -9223372036854775800
-  call void @llvm.assume(i1 %4)
-  %5 = icmp eq i64 %i.qz, -9223372036854775797
-  br i1 %5, label %.noexc223, label %.noexc
+  %i.qz = load i64, ptr %i.qk, align 8, !range !54, !noundef !47 ; 2 uses
+  switch i64 %i.qz, label %.noexc [
+    i64 -1, label %bb.fd
+    i64 -9223372036854775797, label %.noexc223
+  ]
 
 bb.ez:                                            ; preds = %bb.fd
   store i8 0, ptr %i.ql, align 2
@@ -613,7 +609,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc4sync3ArcNtCs1El
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs6Y3vYp7Mdwn_18object_store_utils21self_verifying_create8PutNonceECs1ElB0qm0ygX_13influxdb3_wal(ptr noalias noundef align 8 dereferenceable(24) %i.vp) #25
           to label %.body508 unwind label %bb.ad
 
-.noexc223:                                        ; preds = %3
+.noexc223:                                        ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store9PutResultNtB2q_5ErrorENtNtB4_6marker4SendEL_EEECs1ElB0qm0ygX_13influxdb3_wal.exit
   %i.vq = getelementptr inbounds nuw i8, ptr %1, i64 344
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.qg, ptr noundef nonnull align 8 dereferenceable(24) %i.vq, i64 24, i1 false)
   %i.vr = getelementptr inbounds nuw i8, ptr %1, i64 664 ; 3 uses
@@ -1016,7 +1012,9 @@ bb.jd:                                            ; preds = %.loopexit.split-lp.
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtCseCDlJsl44RV_5tokio4sync7oneshot6SenderNtNtCs1ElB0qm0ygX_13influxdb3_wal12object_store11WriteResultEEB1q_(ptr noalias noundef align 8 dereferenceable(8) %i.bt) #25
           to label %bb.jc unwind label %bb.ad
 
-.noexc:                                           ; preds = %3
+.noexc:                                           ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store9PutResultNtB2q_5ErrorENtNtB4_6marker4SendEL_EEECs1ElB0qm0ygX_13influxdb3_wal.exit
+  %3 = icmp ne i64 %i.qz, -9223372036854775800
+  call void @llvm.assume(i1 %3)
   store i8 0, ptr %i.ql, align 2
   %i.aah = getelementptr inbounds nuw i8, ptr %1, i64 408 ; 4 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.aah, ptr noundef nonnull align 8 dereferenceable(72) %i.qk, i64 72, i1 false)
@@ -1419,17 +1417,13 @@ bb.cg:                                            ; preds = %bb.cf
   br label %.body233
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultuNtCs1LivM9IBWqb_12object_store5ErrorENtNtB4_6marker4SendEL_EEECs1ElB0qm0ygX_13influxdb3_wal.exit: ; preds = %bb.ce, %bb.cd
-  %i.lp = load i64, ptr %i.la, align 8, !range !54, !noundef !47 ; 3 uses
-  %.not = icmp eq i64 %i.lp, -1
-  br i1 %.not, label %bb.ch, label %2
+  %i.lp = load i64, ptr %i.la, align 8, !range !54, !noundef !47 ; 2 uses
+  switch i64 %i.lp, label %.noexc132 [
+    i64 -1, label %bb.ch
+    i64 -9223372036854775802, label %.noexc135
+  ]
 
-2:                                                ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultuNtCs1LivM9IBWqb_12object_store5ErrorENtNtB4_6marker4SendEL_EEECs1ElB0qm0ygX_13influxdb3_wal.exit
-  %3 = icmp ne i64 %i.lp, -9223372036854775800
-  call void @llvm.assume(i1 %3)
-  %4 = icmp eq i64 %i.lp, -9223372036854775802
-  br i1 %4, label %.noexc135, label %.noexc132
-
-bb.ch:                                            ; preds = %bb.ei, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultuNtCs1LivM9IBWqb_12object_store5ErrorENtNtB4_6marker4SendEL_EEECs1ElB0qm0ygX_13influxdb3_wal.exit
+bb.ch:                                            ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultuNtCs1LivM9IBWqb_12object_store5ErrorENtNtB4_6marker4SendEL_EEECs1ElB0qm0ygX_13influxdb3_wal.exit, %bb.ei
   store i8 0, ptr %i.lb, align 8
   %i.lq = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 3 uses
   invoke void @_RNvXso_NtCscdodAO9FK5_5alloc3vecINtB5_3VechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCs1ElB0qm0ygX_13influxdb3_wal(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.lq)
@@ -1458,7 +1452,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECs
   %.pre379 = load i64, ptr %.phi.trans.insert378, align 8, !alias.scope !1009
   br label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs1LivM9IBWqb_12object_store4path4PathECs1ElB0qm0ygX_13influxdb3_wal.exit
 
-.noexc135:                                        ; preds = %2
+.noexc135:                                        ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultuNtCs1LivM9IBWqb_12object_store5ErrorENtNtB4_6marker4SendEL_EEECs1ElB0qm0ygX_13influxdb3_wal.exit
   %i.lt = getelementptr inbounds nuw i8, ptr %0, i64 128
   %i.lu = load ptr, ptr %i.lt, align 8, !nonnull !47, !noundef !47
   %i.lv = getelementptr inbounds nuw i8, ptr %0, i64 136
@@ -1731,7 +1725,9 @@ bb.di:                                            ; preds = %bb.dg
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtB4_5error5ErrorNtNtB4_6marker4SendNtB1v_4SyncEL_EECs1ElB0qm0ygX_13influxdb3_wal(ptr %.val, ptr nonnull %.val160) #25
           to label %.body231 unwind label %bb.fm
 
-.noexc132:                                        ; preds = %2
+.noexc132:                                        ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultuNtCs1LivM9IBWqb_12object_store5ErrorENtNtB4_6marker4SendEL_EEECs1ElB0qm0ygX_13influxdb3_wal.exit
+  %2 = icmp ne i64 %i.lp, -9223372036854775800
+  call void @llvm.assume(i1 %2)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.x)
   store i8 0, ptr %i.lb, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.x, ptr noundef nonnull align 8 dereferenceable(72) %i.la, i64 72, i1 false)

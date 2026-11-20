@@ -202,25 +202,22 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCskMyW5b6jnKh_12alloc_stdlib10heap_
 define internal fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCs6EFb6a2W5dE_10actix_http8encoding7decoder7DecoderINtNtBI_7payload7PayloadINtNtB4_3pin3PinINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtCs3aP4uAeNgCL_12futures_core6stream6Streamp4ItemINtNtB4_6result6ResultNtNtCs14kzo5Se9zC_5bytes5bytes5BytesNtNtBI_5error12PayloadErrorEEL_EEEEECsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %.val = load i64, ptr %i.a, align 8, !range !108, !noundef !7 ; 2 uses
+  %.val = load i64, ptr %i.a, align 8, !range !108, !noundef !7
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %.val2 = load ptr, ptr %i.b, align 8            ; 7 uses
-  %1 = icmp eq i64 %.val, -1
-  br i1 %1, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs6EFb6a2W5dE_10actix_http8encoding7decoder14ContentDecoderEECsl8OoimOLbh_6qdrant.exit, label %2
-
-2:                                                ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2) ]
+  %.val2 = load ptr, ptr %i.b, align 8            ; 10 uses
   switch i64 %.val, label %default.unreachable [
+    i64 -1, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs6EFb6a2W5dE_10actix_http8encoding7decoder14ContentDecoderEECsl8OoimOLbh_6qdrant.exit
     i64 0, label %bb.d
     i64 1, label %bb.f
     i64 2, label %bb.h
     i64 3, label %bb.b
   ]
 
-default.unreachable:                              ; preds = %2
+default.unreachable:                              ; preds = %bb.a
   unreachable
 
-bb.b:                                             ; preds = %2
+bb.b:                                             ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2) ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsef1ZxLeSXfJ_4zstd6stream5write7DecoderNtNtCs6EFb6a2W5dE_10actix_http8encoding6WriterEECsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull align 8 dereferenceable(88) %.val2)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs6EFb6a2W5dE_10actix_http8encoding7decoder14ContentDecoderECsl8OoimOLbh_6qdrant.exit.i unwind label %bb.c
 
@@ -236,7 +233,8 @@ bb.c:                                             ; preds = %bb.b
           cleanup
   br label %common.resume.i.i
 
-bb.d:                                             ; preds = %2
+bb.d:                                             ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2) ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsl0S4h5MD44r_6flate24zlib5write11ZlibDecoderNtNtCs6EFb6a2W5dE_10actix_http8encoding6WriterEECsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull align 8 dereferenceable(80) %.val2)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs6EFb6a2W5dE_10actix_http8encoding7decoder14ContentDecoderECsl8OoimOLbh_6qdrant.exit.i unwind label %bb.e
 
@@ -245,7 +243,8 @@ bb.e:                                             ; preds = %bb.d
           cleanup
   br label %common.resume.i.i
 
-bb.f:                                             ; preds = %2
+bb.f:                                             ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2) ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsl0S4h5MD44r_6flate22gz5write9GzDecoderNtNtCs6EFb6a2W5dE_10actix_http8encoding6WriterEECsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull align 8 dereferenceable(232) %.val2)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs6EFb6a2W5dE_10actix_http8encoding7decoder14ContentDecoderECsl8OoimOLbh_6qdrant.exit.i unwind label %bb.g
 
@@ -254,7 +253,8 @@ bb.g:                                             ; preds = %bb.f
           cleanup
   br label %common.resume.i.i
 
-bb.h:                                             ; preds = %2
+bb.h:                                             ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2) ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsp2A78R5H4l_19brotli_decompressor6writer18DecompressorWriterNtNtCs6EFb6a2W5dE_10actix_http8encoding6WriterEECsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull align 8 dereferenceable(2664) %.val2)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs6EFb6a2W5dE_10actix_http8encoding7decoder14ContentDecoderECsl8OoimOLbh_6qdrant.exit.i unwind label %bb.i
 

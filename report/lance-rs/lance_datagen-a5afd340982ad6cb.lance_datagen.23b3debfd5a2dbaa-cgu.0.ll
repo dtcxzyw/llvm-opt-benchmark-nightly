@@ -205,7 +205,7 @@ bb.r:                                             ; preds = %_RNvMs4_NtCs40k4W9m
 
 .lr.ph337:                                        ; preds = %bb.r
   %i.bn = ptrtoint ptr %i.bj to i64
-  %i.bo = icmp samesign ne i64 %i.bi, 0           ; 3 uses
+  %i.bo = icmp ne i64 %i.bi, 0                    ; 3 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bg, i64 1 ; 2 uses
   br label %bb.s
 
@@ -220,7 +220,7 @@ bb.s:                                             ; preds = %.lr.ph337, %bb.ab
 
 bb.t:                                             ; preds = %bb.s
   %i.br = icmp ne ptr %.sroa.10.0336, %i.bj       ; 2 uses
-  %brmerge = select i1 %i.br, i1 true, i1 %i.bo
+  %brmerge = or i1 %i.br, %i.bo
   br i1 %brmerge, label %_RNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters4takeINtB4_4TakeINtNtB6_4skip4SkipINtNtB6_5cycle5CycleINtNtNtBa_5slice4iter4IterbEEEENtNtNtB8_6traits8iterator8Iterator4nextCs342JT7D9NXi_13lance_datagen.exit.thread6.i, label %_RNvYINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters5cycle5CycleINtNtNtBb_5slice4iter4IterbEENtNtNtB9_6traits8iterator8Iterator3nthCs342JT7D9NXi_13lance_datagen.exit.thread.thread
 
 _RNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters4takeINtB4_4TakeINtNtB6_4skip4SkipINtNtB6_5cycle5CycleINtNtNtBa_5slice4iter4IterbEEEENtNtNtB8_6traits8iterator8Iterator4nextCs342JT7D9NXi_13lance_datagen.exit.thread6.i: ; preds = %bb.t
@@ -292,7 +292,7 @@ bb.v:                                             ; preds = %_RNvYINtNtNtNtCscI6
   invoke void @_RNvXsK_NtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_arrayINtB5_14PrimitiveArrayNtNtB9_5types11Float16TypeEINtNtCscI6d9CVNmLh_4core7convert4FromINtNtCs40k4W9msRzi_5alloc3vec3VecNtNtCs2k6O4uMwKJm_4half8binary163f16EE4from(ptr noalias noundef nonnull sret([96 x i8]) align 8 captures(address) dereferenceable(96) %i.l, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.k)
           to label %bb.w unwind label %.body87
 
-_RNvYINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters5cycle5CycleINtNtNtBb_5slice4iter4IterbEENtNtNtB9_6traits8iterator8Iterator3nthCs342JT7D9NXi_13lance_datagen.exit.thread.thread: ; preds = %.preheader.i.i, %bb.u, %bb.t, %_RNvYINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters5cycle5CycleINtNtNtBb_5slice4iter4IterbEENtNtNtB9_6traits8iterator8Iterator3nthCs342JT7D9NXi_13lance_datagen.exit.thread
+_RNvYINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters5cycle5CycleINtNtNtBb_5slice4iter4IterbEENtNtNtB9_6traits8iterator8Iterator3nthCs342JT7D9NXi_13lance_datagen.exit.thread.thread: ; preds = %bb.u, %.preheader.i.i, %bb.t, %_RNvYINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters5cycle5CycleINtNtNtBb_5slice4iter4IterbEENtNtNtB9_6traits8iterator8Iterator3nthCs342JT7D9NXi_13lance_datagen.exit.thread
   invoke void @_RNvNtNtCscI6d9CVNmLh_4core9panicking11panic_const23panic_const_rem_by_zero(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @650) #37
           to label %bb.p unwind label %bb.af
 
@@ -435,7 +435,7 @@ bb.ap:                                            ; preds = %_RNvMs4_NtCs40k4W9m
 
 .lr.ph330:                                        ; preds = %bb.ap
   %i.dv = ptrtoint ptr %i.dr to i64
-  %i.dw = icmp samesign ne i64 %i.dq, 0           ; 3 uses
+  %i.dw = icmp ne i64 %i.dq, 0                    ; 3 uses
   %i.dx = getelementptr inbounds nuw i8, ptr %i.do, i64 1 ; 2 uses
   br label %bb.aq
 
@@ -450,8 +450,8 @@ bb.aq:                                            ; preds = %.lr.ph330, %bb.az
 
 bb.ar:                                            ; preds = %bb.aq
   %i.dz = icmp ne ptr %.sroa.10192.0329, %i.dr    ; 2 uses
-  %brmerge344 = select i1 %i.dz, i1 true, i1 %i.dw
-  br i1 %brmerge344, label %_RNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters4takeINtB4_4TakeINtNtB6_4skip4SkipINtNtB6_5cycle5CycleINtNtNtBa_5slice4iter4IterbEEEENtNtNtB8_6traits8iterator8Iterator4nextCs342JT7D9NXi_13lance_datagen.exit.thread6.i107, label %_RNvYINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters5cycle5CycleINtNtNtBb_5slice4iter4IterbEENtNtNtB9_6traits8iterator8Iterator3nthCs342JT7D9NXi_13lance_datagen.exit154.thread.thread
+  %brmerge349 = or i1 %i.dz, %i.dw
+  br i1 %brmerge349, label %_RNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters4takeINtB4_4TakeINtNtB6_4skip4SkipINtNtB6_5cycle5CycleINtNtNtBa_5slice4iter4IterbEEEENtNtNtB8_6traits8iterator8Iterator4nextCs342JT7D9NXi_13lance_datagen.exit.thread6.i107, label %_RNvYINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters5cycle5CycleINtNtNtBb_5slice4iter4IterbEENtNtNtB9_6traits8iterator8Iterator3nthCs342JT7D9NXi_13lance_datagen.exit154.thread.thread
 
 _RNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters4takeINtB4_4TakeINtNtB6_4skip4SkipINtNtB6_5cycle5CycleINtNtNtBa_5slice4iter4IterbEEEENtNtNtB8_6traits8iterator8Iterator4nextCs342JT7D9NXi_13lance_datagen.exit.thread6.i107: ; preds = %bb.ar
   %.sroa.10192.0329.mux = select i1 %i.dz, ptr %.sroa.10192.0329, ptr %i.do ; 2 uses
@@ -522,7 +522,7 @@ bb.at:                                            ; preds = %_RNvYINtNtNtNtCscI6
   invoke void @_RNvXsM_NtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_arrayINtB5_14PrimitiveArrayNtNtB9_5types11Float32TypeEINtNtCscI6d9CVNmLh_4core7convert4FromINtNtCs40k4W9msRzi_5alloc3vec3VecfEE4from(ptr noalias noundef nonnull sret([96 x i8]) align 8 captures(address) dereferenceable(96) %i.j, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.i)
           to label %bb.au unwind label %.body87
 
-_RNvYINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters5cycle5CycleINtNtNtBb_5slice4iter4IterbEENtNtNtB9_6traits8iterator8Iterator3nthCs342JT7D9NXi_13lance_datagen.exit154.thread.thread: ; preds = %.preheader.i.i137, %bb.as, %bb.ar, %_RNvYINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters5cycle5CycleINtNtNtBb_5slice4iter4IterbEENtNtNtB9_6traits8iterator8Iterator3nthCs342JT7D9NXi_13lance_datagen.exit154.thread
+_RNvYINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters5cycle5CycleINtNtNtBb_5slice4iter4IterbEENtNtNtB9_6traits8iterator8Iterator3nthCs342JT7D9NXi_13lance_datagen.exit154.thread.thread: ; preds = %bb.as, %.preheader.i.i137, %bb.ar, %_RNvYINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters5cycle5CycleINtNtNtBb_5slice4iter4IterbEENtNtNtB9_6traits8iterator8Iterator3nthCs342JT7D9NXi_13lance_datagen.exit154.thread
   invoke void @_RNvNtNtCscI6d9CVNmLh_4core9panicking11panic_const23panic_const_rem_by_zero(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @653) #37
           to label %bb.p unwind label %bb.bd
 
@@ -655,7 +655,7 @@ bb.bm:                                            ; preds = %_RNvMs4_NtCs40k4W9m
   %i.fu = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.fv = load ptr, ptr %i.fu, align 8, !nonnull !12, !noundef !12 ; 6 uses
   %i.fw = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.fx = load i64, ptr %i.fw, align 8, !noundef !12 ; 6 uses
+  %i.fx = load i64, ptr %i.fw, align 8, !noundef !12 ; 7 uses
   %i.fy = getelementptr inbounds nuw i8, ptr %i.fv, i64 %i.fx ; 3 uses
   %i.fz = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
   %i.ga = load i64, ptr %i.fz, align 8, !noundef !12 ; 2 uses
@@ -738,6 +738,8 @@ bb.bn:                                            ; preds = %_RNvYINtNtNtNtCscI6
           to label %bb.bo unwind label %.body87
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph, %_RNvYINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters5cycle5CycleINtNtNtBb_5slice4iter4IterbEENtNtNtB9_6traits8iterator8Iterator3nthCs342JT7D9NXi_13lance_datagen.exit174.thread
+  %4 = icmp sgt i64 %i.fx, -1
+  call void @llvm.assume(i1 %4)
   invoke void @_RNvNtNtCscI6d9CVNmLh_4core9panicking11panic_const23panic_const_rem_by_zero(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @656) #37
           to label %bb.p unwind label %bb.by
 

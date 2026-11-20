@@ -204,15 +204,11 @@ bb.a:
   %.sroa.5 = alloca [24 x i8], align 8            ; 3 uses
   %i.c = alloca [64 x i8], align 8                ; 9 uses
   call void @_RNvXs3_NtNtNtCsh036I4OHgIr_6uucore8features6parser10num_parserNtNtB9_18extendedbigdecimal18ExtendedBigDecimalNtB5_14ExtendedParser14extended_parse(ptr noalias nofree noundef nonnull sret([64 x i8]) align 8 captures(address) dereferenceable(64) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2) #19
-  %i.d = load i64, ptr %i.c, align 8, !range !598, !noundef !4 ; 3 uses
-  %.not = icmp eq i64 %i.d, -1
-  br i1 %.not, label %bb.b, label %3
-
-3:                                                ; preds = %bb.a
-  %4 = icmp ne i64 %i.d, -9223372036854775807
-  call void @llvm.assume(i1 %4)
-  %5 = icmp eq i64 %i.d, -9223372036854775805
-  br i1 %5, label %bb.g, label %bb.bh
+  %i.d = load i64, ptr %i.c, align 8, !range !598, !noundef !4 ; 2 uses
+  switch i64 %i.d, label %bb.bh [
+    i64 -1, label %bb.b
+    i64 -9223372036854775805, label %bb.g
+  ]
 
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 8
@@ -269,7 +265,7 @@ bb.f:                                             ; preds = %bb.e
   call void @_RNvCsjSVV5GABoor_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.8.0.copyload, i64 noundef %i.j, i64 noundef range(i64 1, -9223372036854775807) 8) #19
   br label %.thread39
 
-bb.g:                                             ; preds = %3
+bb.g:                                             ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %.sroa.014.0.copyload = load i64, ptr %i.k, align 8
   %.sroa.417.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 16
@@ -672,10 +668,12 @@ _RNvNtCskTxFPE6q5z6_6uu_seq11numberparse18compute_num_digits.exit: ; preds = %_R
 .thread39:                                        ; preds = %bb.bh, %bb.d, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.f, %_RNvNtCskTxFPE6q5z6_6uu_seq11numberparse18compute_num_digits.exit
   ret void
 
-bb.bh:                                            ; preds = %3
+bb.bh:                                            ; preds = %bb.a
   %i.ja = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 0, ptr %i.ja, align 8
   store i64 2, ptr %0, align 8
+  %3 = icmp ne i64 %i.d, -9223372036854775807
+  call void @llvm.assume(i1 %3)
   call fastcc void @_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtNtNtCsh036I4OHgIr_6uucore8features6parser10num_parser19ExtendedParserErrorNtNtBI_18extendedbigdecimal18ExtendedBigDecimalEECskTxFPE6q5z6_6uu_seq(ptr noalias nofree noundef align 8 dereferenceable(64) %i.c) #19
   br label %.thread39
 }

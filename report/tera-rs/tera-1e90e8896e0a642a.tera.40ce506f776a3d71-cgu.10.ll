@@ -205,7 +205,7 @@ bb.a:
   %i.d = add nsw i8 %i.b, -2, !dbg !22563
   %i.e = icmp samesign ugt i8 %i.b, 1, !dbg !22563
   %narrow = select i1 %i.e, i8 %i.d, i8 8, !dbg !22563 ; 5 uses
-  %.pr = load i8, ptr %1, align 8, !dbg !22563    ; 23 uses
+  %.pr = load i8, ptr %1, align 8, !dbg !22563    ; 25 uses
   switch i8 %narrow, label %thread-pre-split [
     i8 0, label %bb.b
     i8 1, label %bb.c
@@ -217,7 +217,7 @@ bb.a:
     i8 11, label %bb.i
   ], !dbg !22564
 
-thread-pre-split:                                 ; preds = %bb.a, %bb.i, %bb.h, %bb.g, %bb.f, %bb.d, %bb.c, %bb.b
+thread-pre-split:                                 ; preds = %bb.a, %bb.f
   %i.f = icmp ne i8 %.pr, 10, !dbg !22563
   tail call void @llvm.assume(i1 %i.f), !dbg !22563
   %i.g = icmp eq i8 %.pr, 7, !dbg !22564
@@ -226,20 +226,26 @@ thread-pre-split:                                 ; preds = %bb.a, %bb.i, %bb.h,
 bb.b:                                             ; preds = %bb.a
   %i.h = icmp ne i8 %.pr, 10, !dbg !22563
   tail call void @llvm.assume(i1 %i.h), !dbg !22563
-  %2 = icmp eq i8 %.pr, 2, !dbg !22564
-  br i1 %2, label %_RNvXs2_NtNtCsf3Ta7LF998c_4core5slice3cmpNtNtCs5yXxDE1DkoT_4tera5value5ValueINtB5_14SlicePartialEqBC_E17equal_same_lengthBG_.exit, label %thread-pre-split, !dbg !22564
+  switch i8 %.pr, label %bb.as [
+    i8 2, label %_RNvXs2_NtNtCsf3Ta7LF998c_4core5slice3cmpNtNtCs5yXxDE1DkoT_4tera5value5ValueINtB5_14SlicePartialEqBC_E17equal_same_lengthBG_.exit
+    i8 7, label %bb.al
+  ], !dbg !22564
 
 bb.c:                                             ; preds = %bb.a
   %i.i = icmp ne i8 %.pr, 10, !dbg !22563
   tail call void @llvm.assume(i1 %i.i), !dbg !22563
-  %3 = icmp eq i8 %.pr, 3, !dbg !22564
-  br i1 %3, label %_RNvXs2_NtNtCsf3Ta7LF998c_4core5slice3cmpNtNtCs5yXxDE1DkoT_4tera5value5ValueINtB5_14SlicePartialEqBC_E17equal_same_lengthBG_.exit, label %thread-pre-split, !dbg !22564
+  switch i8 %.pr, label %bb.as [
+    i8 3, label %_RNvXs2_NtNtCsf3Ta7LF998c_4core5slice3cmpNtNtCs5yXxDE1DkoT_4tera5value5ValueINtB5_14SlicePartialEqBC_E17equal_same_lengthBG_.exit
+    i8 7, label %bb.al
+  ], !dbg !22564
 
 bb.d:                                             ; preds = %bb.a
   %i.j = icmp ne i8 %.pr, 10, !dbg !22563
   tail call void @llvm.assume(i1 %i.j), !dbg !22563
-  %4 = icmp eq i8 %.pr, 4, !dbg !22564
-  br i1 %4, label %bb.j, label %thread-pre-split, !dbg !22564
+  switch i8 %.pr, label %bb.as [
+    i8 4, label %bb.j
+    i8 7, label %bb.al
+  ], !dbg !22564
 
 bb.e:                                             ; preds = %bb.a
   %i.k = icmp ne i8 %.pr, 10, !dbg !22563
@@ -258,22 +264,28 @@ bb.f:                                             ; preds = %bb.a
 bb.g:                                             ; preds = %bb.a
   %i.q = icmp ne i8 %.pr, 10, !dbg !22563
   tail call void @llvm.assume(i1 %i.q), !dbg !22563
-  %5 = icmp eq i8 %.pr, 11, !dbg !22564
-  br i1 %5, label %bb.ac, label %thread-pre-split, !dbg !22564
+  switch i8 %.pr, label %bb.as [
+    i8 11, label %bb.ac
+    i8 7, label %bb.al
+  ], !dbg !22564
 
 bb.h:                                             ; preds = %bb.a
   %i.r = icmp ne i8 %.pr, 10, !dbg !22563
   tail call void @llvm.assume(i1 %i.r), !dbg !22563
-  %6 = icmp eq i8 %.pr, 12, !dbg !22564
-  br i1 %6, label %bb.af, label %thread-pre-split, !dbg !22564
+  switch i8 %.pr, label %bb.as [
+    i8 12, label %bb.af
+    i8 7, label %bb.al
+  ], !dbg !22564
 
 bb.i:                                             ; preds = %bb.a
   %i.s = icmp ne i8 %.pr, 10, !dbg !22563
   tail call void @llvm.assume(i1 %i.s), !dbg !22563
-  %7 = icmp eq i8 %.pr, 13, !dbg !22564
-  br i1 %7, label %bb.ai, label %thread-pre-split, !dbg !22564
+  switch i8 %.pr, label %bb.as [
+    i8 13, label %bb.ai
+    i8 7, label %bb.al
+  ], !dbg !22564
 
-_RNvXs2_NtNtCsf3Ta7LF998c_4core5slice3cmpNtNtCs5yXxDE1DkoT_4tera5value5ValueINtB5_14SlicePartialEqBC_E17equal_same_lengthBG_.exit: ; preds = %.lr.ph, %bb.ae, %bb.bq, %bb.bf, %bb.k, %bb.br, %bb.ah, %bb.ag, %bb.bg, %bb.as, %bb.at, %bb.aj, %bb.ai, %bb.af, %bb.ad, %bb.ac, %_RNvMNtCs5yXxDE1DkoT_4tera5valueNtB2_11SmartString6as_str.exit75, %bb.c, %bb.b, %bb.ak, %bb.ab, %_RNvNtCs5yXxDE1DkoT_4tera5value17cmp_f64_to_number.exit86, %_RNvNtCs5yXxDE1DkoT_4tera5value17cmp_f64_to_number.exit, %bb.j
+_RNvXs2_NtNtCsf3Ta7LF998c_4core5slice3cmpNtNtCs5yXxDE1DkoT_4tera5value5ValueINtB5_14SlicePartialEqBC_E17equal_same_lengthBG_.exit: ; preds = %.lr.ph, %bb.c, %bb.b, %bb.ae, %bb.bq, %bb.bf, %bb.k, %bb.br, %bb.ah, %bb.ag, %bb.bg, %bb.as, %bb.at, %bb.aj, %bb.ai, %bb.af, %bb.ad, %bb.ac, %_RNvMNtCs5yXxDE1DkoT_4tera5valueNtB2_11SmartString6as_str.exit75, %bb.ak, %bb.ab, %_RNvNtCs5yXxDE1DkoT_4tera5value17cmp_f64_to_number.exit86, %_RNvNtCs5yXxDE1DkoT_4tera5value17cmp_f64_to_number.exit, %bb.j
   %.sroa.0.0 = phi i1 [ %i.fc, %_RNvNtCs5yXxDE1DkoT_4tera5value17cmp_f64_to_number.exit86 ], [ false, %bb.aj ], [ %spec.select, %bb.k ], [ false, %bb.as ], [ false, %bb.ag ], [ true, %bb.ai ], [ true, %bb.b ], [ %i.x, %bb.j ], [ true, %bb.c ], [ %spec.select108, %bb.bq ], [ %i.bg, %_RNvNtCs5yXxDE1DkoT_4tera5value17cmp_f64_to_number.exit ], [ %i.ce, %bb.ab ], [ %i.hj, %bb.br ], [ false, %_RNvMNtCs5yXxDE1DkoT_4tera5valueNtB2_11SmartString6as_str.exit75 ], [ %spec.select107, %bb.bf ], [ true, %bb.ac ], [ false, %bb.ad ], [ %i.dj, %bb.ah ], [ true, %bb.af ], [ %i.dy, %bb.ak ], [ false, %bb.at ], [ false, %bb.bg ], [ true, %bb.ae ], [ %i.cv, %.lr.ph ], !dbg !22171
   ret i1 %.sroa.0.0, !dbg !22565
 
@@ -676,7 +688,9 @@ bb.ak:                                            ; preds = %bb.aj
   %i.dy = icmp eq i32 %bcmp, 0, !dbg !22660
   br label %_RNvXs2_NtNtCsf3Ta7LF998c_4core5slice3cmpNtNtCs5yXxDE1DkoT_4tera5value5ValueINtB5_14SlicePartialEqBC_E17equal_same_lengthBG_.exit, !dbg !22661
 
-bb.al:                                            ; preds = %thread-pre-split
+bb.al:                                            ; preds = %bb.i, %bb.h, %bb.g, %bb.d, %bb.c, %bb.b, %thread-pre-split
+  %2 = icmp ne i8 %.pr, 10, !dbg !22563
+  tail call void @llvm.assume(i1 %2), !dbg !22563
     #dbg_value(ptr %1, !22140, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !22550)
   %i.dz = getelementptr inbounds nuw i8, ptr %1, i64 8, !dbg !22662
   %i.ea = load double, ptr %i.dz, align 8, !dbg !22662, !noundef !1568 ; 9 uses
@@ -786,7 +800,9 @@ _RNvNtCs5yXxDE1DkoT_4tera5value17cmp_f64_to_number.exit86: ; preds = %bb.al, %_R
   %i.fc = icmp eq i8 %.sroa.0.0.i80, 0, !dbg !22685
   br label %_RNvXs2_NtNtCsf3Ta7LF998c_4core5slice3cmpNtNtCs5yXxDE1DkoT_4tera5value5ValueINtB5_14SlicePartialEqBC_E17equal_same_lengthBG_.exit, !dbg !22686
 
-bb.as:                                            ; preds = %thread-pre-split
+bb.as:                                            ; preds = %bb.i, %bb.h, %bb.g, %bb.d, %bb.c, %bb.b, %thread-pre-split
+  %3 = icmp ne i8 %.pr, 10, !dbg !22563
+  tail call void @llvm.assume(i1 %3), !dbg !22563
   switch i8 %narrow, label %_RNvXs2_NtNtCsf3Ta7LF998c_4core5slice3cmpNtNtCs5yXxDE1DkoT_4tera5value5ValueINtB5_14SlicePartialEqBC_E17equal_same_lengthBG_.exit [
     i8 3, label %bb.at
     i8 4, label %bb.at
@@ -1189,7 +1205,7 @@ bb.a:
   %i.c = add nsw i8 %i.a, -2, !dbg !23661
   %i.d = icmp samesign ugt i8 %i.a, 1, !dbg !23661
   %narrow = select i1 %i.d, i8 %i.c, i8 8, !dbg !23661 ; 5 uses
-  %.pr = load i8, ptr %1, align 8, !dbg !23661    ; 21 uses
+  %.pr = load i8, ptr %1, align 8, !dbg !23661    ; 23 uses
   switch i8 %narrow, label %thread-pre-split [
     i8 0, label %bb.b
     i8 1, label %bb.c
@@ -1200,29 +1216,35 @@ bb.a:
     i8 11, label %bb.h
   ], !dbg !23662
 
-thread-pre-split:                                 ; preds = %bb.a, %bb.h, %bb.g, %bb.f, %bb.d, %bb.c, %bb.b
+thread-pre-split:                                 ; preds = %bb.a, %bb.f
+  %2 = icmp eq i8 %.pr, 7, !dbg !23662
   %i.e = icmp ne i8 %.pr, 10, !dbg !23661
   tail call void @llvm.assume(i1 %i.e), !dbg !23661
-  %2 = icmp eq i8 %.pr, 7, !dbg !23662
   br i1 %2, label %bb.am, label %bb.ax, !dbg !23662
 
 bb.b:                                             ; preds = %bb.a
   %i.f = icmp ne i8 %.pr, 10, !dbg !23661
   tail call void @llvm.assume(i1 %i.f), !dbg !23661
-  %3 = icmp eq i8 %.pr, 2, !dbg !23662
-  br i1 %3, label %_RNvNtCs5yXxDE1DkoT_4tera5value17cmp_f64_to_number.exit, label %thread-pre-split, !dbg !23662
+  switch i8 %.pr, label %.thread168 [
+    i8 2, label %_RNvNtCs5yXxDE1DkoT_4tera5value17cmp_f64_to_number.exit
+    i8 7, label %.thread
+  ], !dbg !23662
 
 bb.c:                                             ; preds = %bb.a
   %i.g = icmp ne i8 %.pr, 10, !dbg !23661
   tail call void @llvm.assume(i1 %i.g), !dbg !23661
-  %4 = icmp eq i8 %.pr, 3, !dbg !23662
-  br i1 %4, label %_RNvNtCs5yXxDE1DkoT_4tera5value17cmp_f64_to_number.exit, label %thread-pre-split, !dbg !23662
+  switch i8 %.pr, label %.thread168 [
+    i8 3, label %_RNvNtCs5yXxDE1DkoT_4tera5value17cmp_f64_to_number.exit
+    i8 7, label %.thread
+  ], !dbg !23662
 
 bb.d:                                             ; preds = %bb.a
   %i.h = icmp ne i8 %.pr, 10, !dbg !23661
   tail call void @llvm.assume(i1 %i.h), !dbg !23661
-  %5 = icmp eq i8 %.pr, 4, !dbg !23662
-  br i1 %5, label %bb.i, label %thread-pre-split, !dbg !23662
+  switch i8 %.pr, label %.thread168 [
+    i8 4, label %bb.i
+    i8 7, label %.thread
+  ], !dbg !23662
 
 bb.e:                                             ; preds = %bb.a
   %i.i = icmp ne i8 %.pr, 10, !dbg !23661
@@ -1240,17 +1262,21 @@ bb.f:                                             ; preds = %bb.a
 bb.g:                                             ; preds = %bb.a
   %i.n = icmp ne i8 %.pr, 10, !dbg !23661
   tail call void @llvm.assume(i1 %i.n), !dbg !23661
-  %6 = icmp eq i8 %.pr, 11, !dbg !23662
-  br i1 %6, label %bb.aj, label %thread-pre-split, !dbg !23662
+  switch i8 %.pr, label %.thread168 [
+    i8 11, label %bb.aj
+    i8 7, label %.thread
+  ], !dbg !23662
 
 bb.h:                                             ; preds = %bb.a
   %i.o = icmp ne i8 %.pr, 10, !dbg !23661
   tail call void @llvm.assume(i1 %i.o), !dbg !23661
-  %7 = icmp eq i8 %.pr, 13, !dbg !23662
-  br i1 %7, label %bb.al, label %thread-pre-split, !dbg !23662
+  switch i8 %.pr, label %.thread168 [
+    i8 13, label %bb.al
+    i8 7, label %.thread
+  ], !dbg !23662
 
-_RNvNtCs5yXxDE1DkoT_4tera5value17cmp_f64_to_number.exit: ; preds = %.lr.ph, %.sink.split.i97, %bb.bt, %bb.ar, %bb.au, %bb.as, %.sink.split.i.i82, %bb.av, %_RNvMs7_NtCs5yXxDE1DkoT_4tera5valueNtB5_5Value7as_i128.exit.thread21.i87, %bb.at, %bb.aw, %_RNvNtCs5yXxDE1DkoT_4tera5value17cmp_f64_to_number.exit90, %bb.am, %bb.bm, %bb.bp, %._crit_edge, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %.sink.split.i.i, %_RNvMs7_NtCs5yXxDE1DkoT_4tera5valueNtB5_5Value7as_i128.exit.thread21.i, %bb.k, %bb.z, %bb.y, %bb.bk, %bb.bl, %bb.ax, %bb.ay, %bb.w, %bb.v, %bb.c, %bb.b, %bb.bv, %.sink.split.i142, %bb.al, %_RNvMNtCs5yXxDE1DkoT_4tera5valueNtB2_11SmartString6as_str.exit79, %bb.i
-  %.sroa.0.0 = phi i8 [ 1, %bb.v ], [ -1, %bb.as ], [ %i.hc, %bb.bv ], [ -2, %bb.bm ], [ -2, %bb.ax ], [ %i.hb, %.sink.split.i142 ], [ -1, %bb.bl ], [ %i.dr, %bb.al ], [ 0, %bb.b ], [ %i.t, %bb.i ], [ 0, %bb.c ], [ -2, %bb.ay ], [ %i.ch, %_RNvMNtCs5yXxDE1DkoT_4tera5valueNtB2_11SmartString6as_str.exit79 ], [ -2, %bb.k ], [ 1, %bb.ar ], [ 1, %bb.bk ], [ %spec.select, %bb.y ], [ %spec.select75, %bb.z ], [ %., %bb.w ], [ -2, %bb.am ], [ -2, %.sink.split.i97 ], [ -2, %bb.bp ], [ 1, %bb.q ], [ %spec.store.select.i, %bb.r ], [ 1, %.sink.split.i.i ], [ -1, %bb.p ], [ 1, %bb.t ], [ %spec.store.select2.i, %bb.u ], [ 1, %_RNvMs7_NtCs5yXxDE1DkoT_4tera5valueNtB5_5Value7as_i128.exit.thread21.i ], [ -1, %bb.s ], [ %i.cw, %._crit_edge ], [ %.sroa.0.0.i84.neg, %_RNvNtCs5yXxDE1DkoT_4tera5value17cmp_f64_to_number.exit90 ], [ -1, %bb.aw ], [ -1, %bb.at ], [ -1, %_RNvMs7_NtCs5yXxDE1DkoT_4tera5valueNtB5_5Value7as_i128.exit.thread21.i87 ], [ -1, %bb.av ], [ -1, %.sink.split.i.i82 ], [ 1, %bb.au ], [ -2, %bb.bt ], [ %i.cz, %.lr.ph ], !dbg !23302
+_RNvNtCs5yXxDE1DkoT_4tera5value17cmp_f64_to_number.exit: ; preds = %.lr.ph, %.thread168, %.thread, %bb.c, %bb.b, %.sink.split.i97, %bb.bt, %bb.ar, %bb.au, %bb.as, %.sink.split.i.i82, %bb.av, %_RNvMs7_NtCs5yXxDE1DkoT_4tera5valueNtB5_5Value7as_i128.exit.thread21.i87, %bb.at, %bb.aw, %_RNvNtCs5yXxDE1DkoT_4tera5value17cmp_f64_to_number.exit90, %bb.am, %bb.bm, %bb.bp, %._crit_edge, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %.sink.split.i.i, %_RNvMs7_NtCs5yXxDE1DkoT_4tera5valueNtB5_5Value7as_i128.exit.thread21.i, %bb.k, %bb.z, %bb.y, %bb.bk, %bb.bl, %bb.ax, %bb.ay, %bb.w, %bb.v, %bb.bv, %.sink.split.i142, %bb.al, %_RNvMNtCs5yXxDE1DkoT_4tera5valueNtB2_11SmartString6as_str.exit79, %bb.i
+  %.sroa.0.0 = phi i8 [ 1, %bb.v ], [ -1, %bb.as ], [ %i.hc, %bb.bv ], [ -2, %bb.bm ], [ -2, %bb.ax ], [ %i.hb, %.sink.split.i142 ], [ -1, %bb.bl ], [ %i.dr, %bb.al ], [ 0, %bb.b ], [ %i.t, %bb.i ], [ 0, %bb.c ], [ -2, %bb.ay ], [ %i.ch, %_RNvMNtCs5yXxDE1DkoT_4tera5valueNtB2_11SmartString6as_str.exit79 ], [ -2, %bb.k ], [ 1, %bb.ar ], [ 1, %bb.bk ], [ %spec.select, %bb.y ], [ %spec.select75, %bb.z ], [ %., %bb.w ], [ -2, %bb.am ], [ -2, %.sink.split.i97 ], [ -2, %bb.bp ], [ 1, %bb.q ], [ %spec.store.select.i, %bb.r ], [ 1, %.sink.split.i.i ], [ -1, %bb.p ], [ 1, %bb.t ], [ %spec.store.select2.i, %bb.u ], [ 1, %_RNvMs7_NtCs5yXxDE1DkoT_4tera5valueNtB5_5Value7as_i128.exit.thread21.i ], [ -1, %bb.s ], [ %i.cw, %._crit_edge ], [ %.sroa.0.0.i84.neg, %_RNvNtCs5yXxDE1DkoT_4tera5value17cmp_f64_to_number.exit90 ], [ -1, %bb.aw ], [ -1, %bb.at ], [ -1, %_RNvMs7_NtCs5yXxDE1DkoT_4tera5valueNtB5_5Value7as_i128.exit.thread21.i87 ], [ -1, %bb.av ], [ -1, %.sink.split.i.i82 ], [ 1, %bb.au ], [ -2, %bb.bt ], [ -2, %.thread168 ], [ -2, %.thread ], [ %i.cz, %.lr.ph ], !dbg !23302
   ret i8 %.sroa.0.0, !dbg !23663
 
 bb.i:                                             ; preds = %bb.d
@@ -1653,29 +1679,46 @@ bb.al:                                            ; preds = %bb.h
   %i.dr = tail call i8 @llvm.scmp.i8.i64(i64 %spec.store.select3, i64 0), !dbg !23761
   br label %_RNvNtCs5yXxDE1DkoT_4tera5value17cmp_f64_to_number.exit, !dbg !23762
 
+.thread:                                          ; preds = %bb.h, %bb.g, %bb.d, %bb.c, %bb.b
+  %3 = icmp ne i8 %.pr, 10, !dbg !23661
+  tail call void @llvm.assume(i1 %3), !dbg !23661
+    #dbg_value(ptr %1, !23217, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !23621)
+    #dbg_value(double poison, !6176, !DIExpression(), !23092)
+    #dbg_value(double poison, !6182, !DIExpression(), !23094)
+    #dbg_value(double poison, !6189, !DIExpression(), !23096)
+    #dbg_value(double poison, !6192, !DIExpression(), !23098)
+    #dbg_value(double poison, !6198, !DIExpression(), !23100)
+    #dbg_value(double poison, !6201, !DIExpression(), !23104)
+    #dbg_value(double poison, !6189, !DIExpression(), !23106)
+    #dbg_value(double poison, !6192, !DIExpression(), !23108)
+    #dbg_value(double poison, !6198, !DIExpression(), !23110)
+    #dbg_value(ptr %0, !6179, !DIExpression(), !23092)
+    #dbg_value(ptr %0, !6021, !DIExpression(), !23112)
+  br label %_RNvNtCs5yXxDE1DkoT_4tera5value17cmp_f64_to_number.exit, !dbg !23763
+
 bb.am:                                            ; preds = %thread-pre-split
     #dbg_value(ptr %1, !23217, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !23621)
-  %i.ds = getelementptr inbounds nuw i8, ptr %1, i64 8, !dbg !23763
-  %i.dt = load double, ptr %i.ds, align 8, !dbg !23763, !noundef !1568 ; 10 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !23622), !dbg !23764
-    #dbg_value(double %i.dt, !6176, !DIExpression(), !23094)
-    #dbg_value(double %i.dt, !6182, !DIExpression(), !23096)
-    #dbg_value(double %i.dt, !6189, !DIExpression(), !23098)
-    #dbg_value(double %i.dt, !6192, !DIExpression(), !23100)
-    #dbg_value(double %i.dt, !6198, !DIExpression(), !23102)
-    #dbg_value(double %i.dt, !6201, !DIExpression(), !23106)
-    #dbg_value(double %i.dt, !6189, !DIExpression(), !23108)
-    #dbg_value(double %i.dt, !6192, !DIExpression(), !23110)
-    #dbg_value(double %i.dt, !6198, !DIExpression(), !23112)
-    #dbg_value(ptr %0, !6179, !DIExpression(), !23094)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !23623), !dbg !23765
-    #dbg_value(ptr %0, !6021, !DIExpression(), !23116)
+  %i.ds = getelementptr inbounds nuw i8, ptr %1, i64 8, !dbg !23764
+  %i.dt = load double, ptr %i.ds, align 8, !dbg !23764, !noundef !1568 ; 10 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !23622), !dbg !23765
+    #dbg_value(double %i.dt, !6176, !DIExpression(), !23092)
+    #dbg_value(double %i.dt, !6182, !DIExpression(), !23094)
+    #dbg_value(double %i.dt, !6189, !DIExpression(), !23096)
+    #dbg_value(double %i.dt, !6192, !DIExpression(), !23098)
+    #dbg_value(double %i.dt, !6198, !DIExpression(), !23100)
+    #dbg_value(double %i.dt, !6201, !DIExpression(), !23104)
+    #dbg_value(double %i.dt, !6189, !DIExpression(), !23106)
+    #dbg_value(double %i.dt, !6192, !DIExpression(), !23108)
+    #dbg_value(double %i.dt, !6198, !DIExpression(), !23110)
+    #dbg_value(ptr %0, !6179, !DIExpression(), !23092)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !23623), !dbg !23766
+    #dbg_value(ptr %0, !6021, !DIExpression(), !23112)
   switch i8 %narrow, label %_RNvNtCs5yXxDE1DkoT_4tera5value17cmp_f64_to_number.exit [
     i8 3, label %bb.an
     i8 4, label %bb.ao
     i8 6, label %bb.ap
     i8 7, label %bb.aq
-  ], !dbg !23766
+  ], !dbg !23763
 
 bb.an:                                            ; preds = %bb.am
     #dbg_value(ptr %0, !6025, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !23117)
@@ -1707,7 +1750,7 @@ _RNvMs7_NtCs5yXxDE1DkoT_4tera5valueNtB5_5Value7as_i128.exit.thread21.i87: ; pred
     #dbg_value(ptr poison, !6214, !DIExpression(), !23125)
     #dbg_value(i128 %i.ec, !6231, !DIExpression(), !23126)
     #dbg_value(i128 %i.ec, !6213, !DIExpression(), !23127)
-    #dbg_value(i128 %i.ec, !6204, !DIExpression(), !23106)
+    #dbg_value(i128 %i.ec, !6204, !DIExpression(), !23104)
   %i.ee = fcmp uno double %i.dt, 0.000000e+00, !dbg !23773
   br i1 %i.ee, label %_RNvNtCs5yXxDE1DkoT_4tera5value17cmp_f64_to_number.exit, label %bb.au, !dbg !23774
 
@@ -1721,7 +1764,7 @@ bb.aq:                                            ; preds = %bb.am
 .sink.split.i.i82:                                ; preds = %bb.aq, %bb.ap, %bb.ao, %bb.an
   %.sroa.5.0.ph.i83 = phi i128 [ %i.dw, %bb.an ], [ %i.dz, %bb.ao ], [ %i.eh, %bb.aq ], [ %i.ec, %bb.ap ] ; 2 uses
     #dbg_value(i128 %.sroa.5.0.ph.i83, !6180, !DIExpression(), !23129)
-    #dbg_value(i128 %.sroa.5.0.ph.i83, !6185, !DIExpression(), !23096)
+    #dbg_value(i128 %.sroa.5.0.ph.i83, !6185, !DIExpression(), !23094)
   %i.ei = fcmp uno double %i.dt, 0.000000e+00, !dbg !23777
   br i1 %i.ei, label %_RNvNtCs5yXxDE1DkoT_4tera5value17cmp_f64_to_number.exit, label %bb.ar, !dbg !23778
 
@@ -1769,6 +1812,11 @@ _RNvNtCs5yXxDE1DkoT_4tera5value17cmp_f64_to_number.exit90: ; preds = %bb.aw, %bb
   %.sroa.0.0.i84.neg = phi i8 [ %i.eu, %bb.aw ], [ %i.en, %bb.at ], !dbg !23791
     #dbg_value(i8 poison, !23626, !DIExpression(), !23639)
   br label %_RNvNtCs5yXxDE1DkoT_4tera5value17cmp_f64_to_number.exit, !dbg !23792
+
+.thread168:                                       ; preds = %bb.h, %bb.g, %bb.d, %bb.c, %bb.b
+  %4 = icmp ne i8 %.pr, 10, !dbg !23661
+  tail call void @llvm.assume(i1 %4), !dbg !23661
+  br label %_RNvNtCs5yXxDE1DkoT_4tera5value17cmp_f64_to_number.exit, !dbg !23662
 
 bb.ax:                                            ; preds = %thread-pre-split
   switch i8 %narrow, label %_RNvNtCs5yXxDE1DkoT_4tera5value17cmp_f64_to_number.exit [
@@ -2172,51 +2220,51 @@ begin_hunk_4_@llvm.smin.i128
 !23088 = distinct !DISubprogram(name: "non_null<alloc::alloc::Global, u8>", linkageName: "_RINvMs2_NtCsgCecv3eZDcN_5alloc7raw_vecNtB6_11RawVecInner8non_nullhECs5yXxDE1DkoT_4tera", scope: !5, file: !2965, line: 626, type: !3219, scopeLine: 626, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !277, templateParams: !3220, declaration: !3221)
 !23089 = distinct !DISubprogram(name: "ptr<u8, alloc::alloc::Global>", linkageName: "_RNvMs0_NtCsgCecv3eZDcN_5alloc7raw_vecINtB5_6RawVechE3ptrCs5yXxDE1DkoT_4tera", scope: !6, file: !2965, line: 304, type: !3225, scopeLine: 304, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !277, templateParams: !1604, declaration: !3226)
 !23090 = distinct !DISubprogram(name: "ptr<alloc::alloc::Global, u8>", linkageName: "_RINvMs2_NtCsgCecv3eZDcN_5alloc7raw_vecNtB6_11RawVecInner3ptrhECs5yXxDE1DkoT_4tera", scope: !5, file: !2965, line: 621, type: !3228, scopeLine: 621, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !277, templateParams: !3220, declaration: !3229)
-!23091 = distinct !{!23091, i1 true, !"_RNvNtCs5yXxDE1DkoT_4tera5value17cmp_f64_to_number"}
-!23092 = distinct !{!23092, !23091, !"_RNvNtCs5yXxDE1DkoT_4tera5value17cmp_f64_to_number: argument 0"}
-!23093 = distinct !DILocation(line: 328, column: 40, scope: !22885)
-!23094 = distinct !DILocation(line: 0, scope: !1259, inlinedAt: !23093)
-!23095 = distinct !DILocation(line: 231, column: 14, scope: !1258, inlinedAt: !23093)
-!23096 = distinct !DILocation(line: 0, scope: !1262, inlinedAt: !23095)
-!23097 = distinct !DILocation(line: 238, column: 10, scope: !1262, inlinedAt: !23095)
-!23098 = distinct !DILocation(line: 0, scope: !1263, inlinedAt: !23097)
-!23099 = distinct !DILocation(line: 248, column: 19, scope: !1262, inlinedAt: !23095)
-!23100 = distinct !DILocation(line: 0, scope: !1264, inlinedAt: !23099)
-!23101 = distinct !DILocation(line: 50, column: 9, scope: !1264, inlinedAt: !23099)
-!23102 = distinct !DILocation(line: 0, scope: !1265, inlinedAt: !23101)
-!23103 = distinct !DILocation(line: 233, column: 25, scope: !1259, inlinedAt: !23093)
-!23104 = distinct !DILocation(line: 1165, column: 29, scope: !1276, inlinedAt: !23103)
-!23105 = distinct !DILocation(line: 233, column: 33, scope: !1270, inlinedAt: !23104)
-!23106 = distinct !DILocation(line: 0, scope: !1268, inlinedAt: !23105)
-!23107 = distinct !DILocation(line: 256, column: 10, scope: !1268, inlinedAt: !23105)
-!23108 = distinct !DILocation(line: 0, scope: !1263, inlinedAt: !23107)
-!23109 = distinct !DILocation(line: 266, column: 19, scope: !1268, inlinedAt: !23105)
-!23110 = distinct !DILocation(line: 0, scope: !1264, inlinedAt: !23109)
-!23111 = distinct !DILocation(line: 50, column: 9, scope: !6233, inlinedAt: !23109)
-!23112 = distinct !DILocation(line: 0, scope: !1265, inlinedAt: !23111)
-!23113 = distinct !{!23113, i1 true, !"_RNvMs7_NtCs5yXxDE1DkoT_4tera5valueNtB5_5Value7as_i128"}
-!23114 = distinct !{!23114, !23113, !"_RNvMs7_NtCs5yXxDE1DkoT_4tera5valueNtB5_5Value7as_i128: argument 1"}
-!23115 = distinct !DILocation(line: 230, column: 28, scope: !1258, inlinedAt: !23093)
-!23116 = distinct !DILocation(line: 0, scope: !1225, inlinedAt: !23115)
-!23117 = distinct !DILocation(line: 578, column: 29, scope: !1224, inlinedAt: !23115)
-!23118 = distinct !DILocation(line: 579, column: 29, scope: !1223, inlinedAt: !23115)
-!23119 = distinct !DILocation(line: 580, column: 30, scope: !1222, inlinedAt: !23115)
-!23120 = distinct !{!23120, !23113, !"_RNvMs7_NtCs5yXxDE1DkoT_4tera5valueNtB5_5Value7as_i128: argument 0"}
-!23121 = distinct !DILocation(line: 580, column: 36, scope: !1222, inlinedAt: !23115)
+!23091 = distinct !DILocation(line: 328, column: 40, scope: !22885)
+!23092 = distinct !DILocation(line: 0, scope: !1259, inlinedAt: !23091)
+!23093 = distinct !DILocation(line: 231, column: 14, scope: !1258, inlinedAt: !23091)
+!23094 = distinct !DILocation(line: 0, scope: !1262, inlinedAt: !23093)
+!23095 = distinct !DILocation(line: 238, column: 10, scope: !1262, inlinedAt: !23093)
+!23096 = distinct !DILocation(line: 0, scope: !1263, inlinedAt: !23095)
+!23097 = distinct !DILocation(line: 248, column: 19, scope: !1262, inlinedAt: !23093)
+!23098 = distinct !DILocation(line: 0, scope: !1264, inlinedAt: !23097)
+!23099 = distinct !DILocation(line: 50, column: 9, scope: !1264, inlinedAt: !23097)
+!23100 = distinct !DILocation(line: 0, scope: !1265, inlinedAt: !23099)
+!23101 = distinct !DILocation(line: 233, column: 25, scope: !1259, inlinedAt: !23091)
+!23102 = distinct !DILocation(line: 1165, column: 29, scope: !1276, inlinedAt: !23101)
+!23103 = distinct !DILocation(line: 233, column: 33, scope: !1270, inlinedAt: !23102)
+!23104 = distinct !DILocation(line: 0, scope: !1268, inlinedAt: !23103)
+!23105 = distinct !DILocation(line: 256, column: 10, scope: !1268, inlinedAt: !23103)
+!23106 = distinct !DILocation(line: 0, scope: !1263, inlinedAt: !23105)
+!23107 = distinct !DILocation(line: 266, column: 19, scope: !1268, inlinedAt: !23103)
+!23108 = distinct !DILocation(line: 0, scope: !1264, inlinedAt: !23107)
+!23109 = distinct !DILocation(line: 50, column: 9, scope: !6233, inlinedAt: !23107)
+!23110 = distinct !DILocation(line: 0, scope: !1265, inlinedAt: !23109)
+!23111 = distinct !DILocation(line: 230, column: 28, scope: !1258, inlinedAt: !23091)
+!23112 = distinct !DILocation(line: 0, scope: !1225, inlinedAt: !23111)
+!23113 = distinct !{!23113, i1 true, !"_RNvNtCs5yXxDE1DkoT_4tera5value17cmp_f64_to_number"}
+!23114 = distinct !{!23114, !23113, !"_RNvNtCs5yXxDE1DkoT_4tera5value17cmp_f64_to_number: argument 0"}
+!23115 = distinct !{!23115, i1 true, !"_RNvMs7_NtCs5yXxDE1DkoT_4tera5valueNtB5_5Value7as_i128"}
+!23116 = distinct !{!23116, !23115, !"_RNvMs7_NtCs5yXxDE1DkoT_4tera5valueNtB5_5Value7as_i128: argument 1"}
+!23117 = distinct !DILocation(line: 578, column: 29, scope: !1224, inlinedAt: !23111)
+!23118 = distinct !DILocation(line: 579, column: 29, scope: !1223, inlinedAt: !23111)
+!23119 = distinct !DILocation(line: 580, column: 30, scope: !1222, inlinedAt: !23111)
+!23120 = distinct !{!23120, !23115, !"_RNvMs7_NtCs5yXxDE1DkoT_4tera5valueNtB5_5Value7as_i128: argument 0"}
+!23121 = distinct !DILocation(line: 580, column: 36, scope: !1222, inlinedAt: !23111)
 !23122 = distinct !DILocation(line: 0, scope: !1230, inlinedAt: !23121)
-!23123 = distinct !DILocation(line: 0, scope: !1275, inlinedAt: !23103)
-!23124 = distinct !DILocation(line: 1160, column: 34, scope: !1275, inlinedAt: !23103)
-!23125 = distinct !DILocation(line: 229, column: 22, scope: !1270, inlinedAt: !23104)
-!23126 = distinct !DILocation(line: 0, scope: !1276, inlinedAt: !23103)
-!23127 = distinct !DILocation(line: 0, scope: !1270, inlinedAt: !23104)
-!23128 = distinct !DILocation(line: 581, column: 30, scope: !1221, inlinedAt: !23115)
-!23129 = distinct !DILocation(line: 0, scope: !1258, inlinedAt: !23093)
-!23130 = distinct !DILocation(line: 0, scope: !1261, inlinedAt: !23095)
-!23131 = distinct !DILocation(line: 249, column: 27, scope: !1261, inlinedAt: !23095)
+!23123 = distinct !DILocation(line: 0, scope: !1275, inlinedAt: !23101)
+!23124 = distinct !DILocation(line: 1160, column: 34, scope: !1275, inlinedAt: !23101)
+!23125 = distinct !DILocation(line: 229, column: 22, scope: !1270, inlinedAt: !23102)
+!23126 = distinct !DILocation(line: 0, scope: !1276, inlinedAt: !23101)
+!23127 = distinct !DILocation(line: 0, scope: !1270, inlinedAt: !23102)
+!23128 = distinct !DILocation(line: 581, column: 30, scope: !1221, inlinedAt: !23111)
+!23129 = distinct !DILocation(line: 0, scope: !1258, inlinedAt: !23091)
+!23130 = distinct !DILocation(line: 0, scope: !1261, inlinedAt: !23093)
+!23131 = distinct !DILocation(line: 249, column: 27, scope: !1261, inlinedAt: !23093)
 !23132 = distinct !DILocation(line: 2347, column: 24, scope: !1277, inlinedAt: !23131)
 !23133 = distinct !DILocation(line: 2347, column: 31, scope: !1277, inlinedAt: !23131)
-!23134 = distinct !DILocation(line: 0, scope: !1267, inlinedAt: !23105)
-!23135 = distinct !DILocation(line: 267, column: 27, scope: !1267, inlinedAt: !23105)
+!23134 = distinct !DILocation(line: 0, scope: !1267, inlinedAt: !23103)
+!23135 = distinct !DILocation(line: 267, column: 27, scope: !1267, inlinedAt: !23103)
 !23136 = distinct !DILocation(line: 2347, column: 24, scope: !1278, inlinedAt: !23135)
 !23137 = distinct !DILocation(line: 2347, column: 31, scope: !1278, inlinedAt: !23135)
 !23138 = distinct !DILexicalBlock(scope: !23139, file: !3710, line: 1165, column: 13)
@@ -2619,10 +2667,10 @@ begin_hunk_5_@llvm.smin.i128
 !23619 = !DILocation(line: 0, scope: !22899, inlinedAt: !23276)
 !23620 = !DILocation(line: 0, scope: !22898, inlinedAt: !23276)
 !23621 = !DILocation(line: 328, column: 33, scope: !22885)
-!23622 = !{!23092}
-!23623 = !{!23114}
-!23624 = !{!23114, !23092}
-!23625 = !{!23120, !23114, !23092}
+!23622 = !{!23114}
+!23623 = !{!23116}
+!23624 = !{!23116, !23114}
+!23625 = !{!23120, !23116, !23114}
 !23626 = !DILocalVariable(name: "self", arg: 1, scope: !23139, file: !3710, line: 1160, type: !1257)
 !23627 = !{!1497, !1497}
 !23628 = !DISubroutineType(types: !23627)
@@ -2760,35 +2808,35 @@ begin_hunk_5_@llvm.smin.i128
 !23760 = !DILocation(line: 340, column: 12, scope: !22898, inlinedAt: !23276)
 !23761 = !DILocation(line: 2348, column: 21, scope: !22894, inlinedAt: !23277)
 !23762 = !DILocation(line: 314, column: 78, scope: !22893)
-!23763 = !DILocation(line: 328, column: 58, scope: !22885)
-!23764 = !DILocation(line: 328, column: 40, scope: !22885)
-!23765 = !DILocation(line: 230, column: 28, scope: !1258, inlinedAt: !23093)
-!23766 = !DILocation(line: 577, column: 9, scope: !1225, inlinedAt: !23115)
-!23767 = !DILocation(line: 578, column: 40, scope: !1224, inlinedAt: !23115)
-!23768 = !DILocation(line: 578, column: 50, scope: !1225, inlinedAt: !23115)
-!23769 = !DILocation(line: 579, column: 40, scope: !1223, inlinedAt: !23115)
-!23770 = !DILocation(line: 579, column: 50, scope: !1225, inlinedAt: !23115)
-!23771 = !DILocation(line: 580, column: 51, scope: !1222, inlinedAt: !23115)
+!23763 = !DILocation(line: 577, column: 9, scope: !1225, inlinedAt: !23111)
+!23764 = !DILocation(line: 328, column: 58, scope: !22885)
+!23765 = !DILocation(line: 328, column: 40, scope: !22885)
+!23766 = !DILocation(line: 230, column: 28, scope: !1258, inlinedAt: !23091)
+!23767 = !DILocation(line: 578, column: 40, scope: !1224, inlinedAt: !23111)
+!23768 = !DILocation(line: 578, column: 50, scope: !1225, inlinedAt: !23111)
+!23769 = !DILocation(line: 579, column: 40, scope: !1223, inlinedAt: !23111)
+!23770 = !DILocation(line: 579, column: 50, scope: !1225, inlinedAt: !23111)
+!23771 = !DILocation(line: 580, column: 51, scope: !1222, inlinedAt: !23111)
 !23772 = !DILocation(line: 384, column: 20, scope: !1230, inlinedAt: !23121)
-!23773 = !DILocation(line: 667, column: 9, scope: !1263, inlinedAt: !23107)
-!23774 = !DILocation(line: 256, column: 8, scope: !1268, inlinedAt: !23105)
-!23775 = !DILocation(line: 581, column: 41, scope: !1221, inlinedAt: !23115)
-!23776 = !DILocation(line: 581, column: 44, scope: !1225, inlinedAt: !23115)
-!23777 = !DILocation(line: 667, column: 9, scope: !1263, inlinedAt: !23097)
-!23778 = !DILocation(line: 238, column: 8, scope: !1262, inlinedAt: !23095)
-!23779 = !DILocation(line: 241, column: 8, scope: !1262, inlinedAt: !23095)
-!23780 = !DILocation(line: 244, column: 8, scope: !1262, inlinedAt: !23095)
-!23781 = !DILocation(line: 1921, column: 9, scope: !1265, inlinedAt: !23101)
-!23782 = !DILocation(line: 249, column: 11, scope: !1261, inlinedAt: !23095)
+!23773 = !DILocation(line: 667, column: 9, scope: !1263, inlinedAt: !23105)
+!23774 = !DILocation(line: 256, column: 8, scope: !1268, inlinedAt: !23103)
+!23775 = !DILocation(line: 581, column: 41, scope: !1221, inlinedAt: !23111)
+!23776 = !DILocation(line: 581, column: 44, scope: !1225, inlinedAt: !23111)
+!23777 = !DILocation(line: 667, column: 9, scope: !1263, inlinedAt: !23095)
+!23778 = !DILocation(line: 238, column: 8, scope: !1262, inlinedAt: !23093)
+!23779 = !DILocation(line: 241, column: 8, scope: !1262, inlinedAt: !23093)
+!23780 = !DILocation(line: 244, column: 8, scope: !1262, inlinedAt: !23093)
+!23781 = !DILocation(line: 1921, column: 9, scope: !1265, inlinedAt: !23099)
+!23782 = !DILocation(line: 249, column: 11, scope: !1261, inlinedAt: !23093)
 !23783 = !DILocation(line: 2348, column: 21, scope: !1277, inlinedAt: !23131)
-!23784 = !DILocation(line: 249, column: 5, scope: !1261, inlinedAt: !23095)
-!23785 = !DILocation(line: 259, column: 8, scope: !1268, inlinedAt: !23105)
-!23786 = !DILocation(line: 262, column: 8, scope: !1268, inlinedAt: !23105)
-!23787 = !DILocation(line: 1921, column: 9, scope: !1265, inlinedAt: !23111)
-!23788 = !DILocation(line: 267, column: 11, scope: !1267, inlinedAt: !23105)
+!23784 = !DILocation(line: 249, column: 5, scope: !1261, inlinedAt: !23093)
+!23785 = !DILocation(line: 259, column: 8, scope: !1268, inlinedAt: !23103)
+!23786 = !DILocation(line: 262, column: 8, scope: !1268, inlinedAt: !23103)
+!23787 = !DILocation(line: 1921, column: 9, scope: !1265, inlinedAt: !23109)
+!23788 = !DILocation(line: 267, column: 11, scope: !1267, inlinedAt: !23103)
 !23789 = !DILocation(line: 2348, column: 21, scope: !1278, inlinedAt: !23135)
-!23790 = !DILocation(line: 267, column: 5, scope: !1267, inlinedAt: !23105)
-!23791 = !DILocation(line: 0, scope: !1259, inlinedAt: !23093)
+!23790 = !DILocation(line: 267, column: 5, scope: !1267, inlinedAt: !23103)
+!23791 = !DILocation(line: 0, scope: !1259, inlinedAt: !23091)
 !23792 = !DILocation(line: 1164, column: 9, scope: !23139, inlinedAt: !23638)
 !23793 = !DILocation(line: 332, column: 30, scope: !22893)
 !23794 = !DILocation(line: 588, column: 9, scope: !1289, inlinedAt: !23142)

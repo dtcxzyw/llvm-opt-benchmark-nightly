@@ -205,14 +205,10 @@ bb.es:                                            ; preds = %bb.fp, %.thread.i.i
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store9PutResultNtB2q_5ErrorENtNtB4_6marker4SendEL_EEECs92BnbMq7p8c_15influxdb3_write.exit.i.i.i.i.i: ; preds = %bb.ep, %bb.eo
   %i.vt = load i64, ptr %i.y, align 8, !range !67, !noalias !2149, !noundef !54 ; 3 uses
-  %.not.i47.i.i.i.i = icmp eq i64 %i.vt, -1
-  br i1 %.not.i47.i.i.i.i, label %.thread.i.i108.i.i.i, label %3
-
-3:                                                ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store9PutResultNtB2q_5ErrorENtNtB4_6marker4SendEL_EEECs92BnbMq7p8c_15influxdb3_write.exit.i.i.i.i.i
-  %4 = icmp ne i64 %i.vt, -9223372036854775800
-  call void @llvm.assume(i1 %4)
-  %5 = icmp eq i64 %i.vt, -9223372036854775797
-  br i1 %5, label %bb.fp, label %.noexc.i.i104.i.i.i
+  switch i64 %i.vt, label %.noexc.i.i104.i.i.i [
+    i64 -1, label %.thread.i.i108.i.i.i
+    i64 -9223372036854775797, label %bb.fp
+  ]
 
 .thread94.i.i.i.i.i:                              ; preds = %_RNCNCNvMNtNtNtCs844E4pPEVZX_17influxdb3_catalog12object_store8versions2v3NtB6_18ObjectStoreCatalog17put_if_not_exists00Cs92BnbMq7p8c_15influxdb3_write.exit.i.i.i.i, %bb.ff, %bb.fa, %bb.ez
   %.sroa.078.0.copyload.i.i.i.i.i = load i64, ptr %i.s, align 8, !noalias !2149 ; 2 uses
@@ -237,7 +233,9 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc
   %.not2699.i.i.i.i.i = icmp eq i64 %.pr98.i.i.i.i.i, -1
   br i1 %.not2699.i.i.i.i.i, label %.thread.i.i108.i.i.i, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store9PutResultNtBZ_5ErrorEECs92BnbMq7p8c_15influxdb3_write.exit.i.i.i.i.i
 
-.noexc.i.i104.i.i.i:                              ; preds = %3
+.noexc.i.i104.i.i.i:                              ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store9PutResultNtB2q_5ErrorENtNtB4_6marker4SendEL_EEECs92BnbMq7p8c_15influxdb3_write.exit.i.i.i.i.i
+  %3 = icmp ne i64 %i.vt, -9223372036854775800
+  call void @llvm.assume(i1 %3)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.s), !noalias !2149
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.s, ptr noundef nonnull align 8 dereferenceable(72) %i.y, i64 72, i1 false), !noalias !2149
   %i.vv = load atomic i64, ptr @_RNvNtCs4BfJs7E7SEE_12tracing_core8metadata9MAX_LEVEL monotonic, align 8, !noalias !2149
@@ -477,32 +475,32 @@ _RNCNCNvMNtNtNtCs844E4pPEVZX_17influxdb3_catalog12object_store8versions2v3NtB6_1
   br label %.thread94.i.i.i.i.i
 
 .thread.i.i108.i.i.i:                             ; preds = %.thread94.i.i.i.i.i, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store9PutResultNtB2q_5ErrorENtNtB4_6marker4SendEL_EEECs92BnbMq7p8c_15influxdb3_write.exit.i.i.i.i.i
-  %.sroa.6.i.i.i.i.sroa.6.2.i = phi i64 [ undef, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store9PutResultNtB2q_5ErrorENtNtB4_6marker4SendEL_EEECs92BnbMq7p8c_15influxdb3_write.exit.i.i.i.i.i ], [ %.sroa.6.i.i.i.i.sroa.6.0.copyload.i, %.thread94.i.i.i.i.i ]
-  %.sroa.6.i.i.i.i.sroa.7.2.i = phi ptr [ undef, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store9PutResultNtB2q_5ErrorENtNtB4_6marker4SendEL_EEECs92BnbMq7p8c_15influxdb3_write.exit.i.i.i.i.i ], [ %.sroa.6.i.i.i.i.sroa.7.0.copyload.i, %.thread94.i.i.i.i.i ]
-  %.sroa.6.i.i.i.i.sroa.10.2.i = phi i64 [ undef, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store9PutResultNtB2q_5ErrorENtNtB4_6marker4SendEL_EEECs92BnbMq7p8c_15influxdb3_write.exit.i.i.i.i.i ], [ %.sroa.6.i.i.i.i.sroa.10.0.copyload.i, %.thread94.i.i.i.i.i ]
-  %.sroa.6.i.i.i.i.sroa.11.2.i = phi i32 [ undef, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store9PutResultNtB2q_5ErrorENtNtB4_6marker4SendEL_EEECs92BnbMq7p8c_15influxdb3_write.exit.i.i.i.i.i ], [ %.sroa.6.i.i.i.i.sroa.11.0.copyload.i, %.thread94.i.i.i.i.i ]
-  %.sroa.6.i.i.i.i.sroa.12.2.i = phi i32 [ undef, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store9PutResultNtB2q_5ErrorENtNtB4_6marker4SendEL_EEECs92BnbMq7p8c_15influxdb3_write.exit.i.i.i.i.i ], [ %.sroa.6.i.i.i.i.sroa.12.0.copyload.i, %.thread94.i.i.i.i.i ]
-  %.sroa.03.088.i.i.i.i.i = phi i64 [ -1, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store9PutResultNtB2q_5ErrorENtNtB4_6marker4SendEL_EEECs92BnbMq7p8c_15influxdb3_write.exit.i.i.i.i.i ], [ %.sroa.078.0.copyload.i.i.i.i.i, %.thread94.i.i.i.i.i ]
-  %.sroa.4.086.i.i.i.i.i = phi i8 [ 0, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store9PutResultNtB2q_5ErrorENtNtB4_6marker4SendEL_EEECs92BnbMq7p8c_15influxdb3_write.exit.i.i.i.i.i ], [ %.sroa.579.0.copyload.i.i.i.i.i, %.thread94.i.i.i.i.i ]
-  %i.yd = phi <2 x i64> [ undef, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store9PutResultNtB2q_5ErrorENtNtB4_6marker4SendEL_EEECs92BnbMq7p8c_15influxdb3_write.exit.i.i.i.i.i ], [ %i.vu, %.thread94.i.i.i.i.i ]
+  %.sroa.6.i.i.i.i.sroa.6.2.i = phi i64 [ %.sroa.6.i.i.i.i.sroa.6.0.copyload.i, %.thread94.i.i.i.i.i ], [ undef, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store9PutResultNtB2q_5ErrorENtNtB4_6marker4SendEL_EEECs92BnbMq7p8c_15influxdb3_write.exit.i.i.i.i.i ]
+  %.sroa.6.i.i.i.i.sroa.7.2.i = phi ptr [ %.sroa.6.i.i.i.i.sroa.7.0.copyload.i, %.thread94.i.i.i.i.i ], [ undef, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store9PutResultNtB2q_5ErrorENtNtB4_6marker4SendEL_EEECs92BnbMq7p8c_15influxdb3_write.exit.i.i.i.i.i ]
+  %.sroa.6.i.i.i.i.sroa.10.2.i = phi i64 [ %.sroa.6.i.i.i.i.sroa.10.0.copyload.i, %.thread94.i.i.i.i.i ], [ undef, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store9PutResultNtB2q_5ErrorENtNtB4_6marker4SendEL_EEECs92BnbMq7p8c_15influxdb3_write.exit.i.i.i.i.i ]
+  %.sroa.6.i.i.i.i.sroa.11.2.i = phi i32 [ %.sroa.6.i.i.i.i.sroa.11.0.copyload.i, %.thread94.i.i.i.i.i ], [ undef, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store9PutResultNtB2q_5ErrorENtNtB4_6marker4SendEL_EEECs92BnbMq7p8c_15influxdb3_write.exit.i.i.i.i.i ]
+  %.sroa.6.i.i.i.i.sroa.12.2.i = phi i32 [ %.sroa.6.i.i.i.i.sroa.12.0.copyload.i, %.thread94.i.i.i.i.i ], [ undef, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store9PutResultNtB2q_5ErrorENtNtB4_6marker4SendEL_EEECs92BnbMq7p8c_15influxdb3_write.exit.i.i.i.i.i ]
+  %.sroa.03.088.i.i.i.i.i = phi i64 [ %.sroa.078.0.copyload.i.i.i.i.i, %.thread94.i.i.i.i.i ], [ %i.vt, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store9PutResultNtB2q_5ErrorENtNtB4_6marker4SendEL_EEECs92BnbMq7p8c_15influxdb3_write.exit.i.i.i.i.i ]
+  %.sroa.4.086.i.i.i.i.i = phi i8 [ %.sroa.579.0.copyload.i.i.i.i.i, %.thread94.i.i.i.i.i ], [ 0, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store9PutResultNtB2q_5ErrorENtNtB4_6marker4SendEL_EEECs92BnbMq7p8c_15influxdb3_write.exit.i.i.i.i.i ]
+  %i.yd = phi <2 x i64> [ %i.vu, %.thread94.i.i.i.i.i ], [ undef, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store9PutResultNtB2q_5ErrorENtNtB4_6marker4SendEL_EEECs92BnbMq7p8c_15influxdb3_write.exit.i.i.i.i.i ]
   %i.ye = getelementptr inbounds nuw i8, ptr %i.y, i64 8
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtCs1LivM9IBWqb_12object_store9PutResultECs92BnbMq7p8c_15influxdb3_write(ptr noalias noundef align 8 dereferenceable(48) %i.ye)
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store9PutResultNtBZ_5ErrorEECs92BnbMq7p8c_15influxdb3_write.exit.i.i.i.i.i unwind label %bb.es, !noalias !2150
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store9PutResultNtBZ_5ErrorEECs92BnbMq7p8c_15influxdb3_write.exit.i.i.i.i.i: ; preds = %bb.fp, %.thread.i.i108.i.i.i, %.thread94.i.i.i.i.i
-  %.sroa.6.i.i.i.i.sroa.6.1.i = phi i64 [ %.sroa.6.i.i.i.i.sroa.6.2.i, %.thread.i.i108.i.i.i ], [ undef, %bb.fp ], [ %.sroa.6.i.i.i.i.sroa.6.0.copyload.i, %.thread94.i.i.i.i.i ]
-  %.sroa.6.i.i.i.i.sroa.7.1.i = phi ptr [ %.sroa.6.i.i.i.i.sroa.7.2.i, %.thread.i.i108.i.i.i ], [ undef, %bb.fp ], [ %.sroa.6.i.i.i.i.sroa.7.0.copyload.i, %.thread94.i.i.i.i.i ]
-  %.sroa.6.i.i.i.i.sroa.10.1.i = phi i64 [ %.sroa.6.i.i.i.i.sroa.10.2.i, %.thread.i.i108.i.i.i ], [ undef, %bb.fp ], [ %.sroa.6.i.i.i.i.sroa.10.0.copyload.i, %.thread94.i.i.i.i.i ]
-  %.sroa.6.i.i.i.i.sroa.11.1.i = phi i32 [ %.sroa.6.i.i.i.i.sroa.11.2.i, %.thread.i.i108.i.i.i ], [ undef, %bb.fp ], [ %.sroa.6.i.i.i.i.sroa.11.0.copyload.i, %.thread94.i.i.i.i.i ]
-  %.sroa.6.i.i.i.i.sroa.12.1.i = phi i32 [ %.sroa.6.i.i.i.i.sroa.12.2.i, %.thread.i.i108.i.i.i ], [ undef, %bb.fp ], [ %.sroa.6.i.i.i.i.sroa.12.0.copyload.i, %.thread94.i.i.i.i.i ]
-  %.sroa.03.087.i.i.i.i.i = phi i64 [ %.sroa.03.088.i.i.i.i.i, %.thread.i.i108.i.i.i ], [ -1, %bb.fp ], [ %.sroa.078.0.copyload.i.i.i.i.i, %.thread94.i.i.i.i.i ] ; 4 uses
-  %.sroa.4.085.i.i.i.i.i = phi i8 [ %.sroa.4.086.i.i.i.i.i, %.thread.i.i108.i.i.i ], [ 1, %bb.fp ], [ %.sroa.579.0.copyload.i.i.i.i.i, %.thread94.i.i.i.i.i ] ; 4 uses
-  %i.yf = phi <2 x i64> [ %i.yd, %.thread.i.i108.i.i.i ], [ undef, %bb.fp ], [ %i.vu, %.thread94.i.i.i.i.i ]
+  %.sroa.6.i.i.i.i.sroa.6.1.i = phi i64 [ %.sroa.6.i.i.i.i.sroa.6.2.i, %.thread.i.i108.i.i.i ], [ %.sroa.6.i.i.i.i.sroa.6.0.copyload.i, %.thread94.i.i.i.i.i ], [ undef, %bb.fp ]
+  %.sroa.6.i.i.i.i.sroa.7.1.i = phi ptr [ %.sroa.6.i.i.i.i.sroa.7.2.i, %.thread.i.i108.i.i.i ], [ %.sroa.6.i.i.i.i.sroa.7.0.copyload.i, %.thread94.i.i.i.i.i ], [ undef, %bb.fp ]
+  %.sroa.6.i.i.i.i.sroa.10.1.i = phi i64 [ %.sroa.6.i.i.i.i.sroa.10.2.i, %.thread.i.i108.i.i.i ], [ %.sroa.6.i.i.i.i.sroa.10.0.copyload.i, %.thread94.i.i.i.i.i ], [ undef, %bb.fp ]
+  %.sroa.6.i.i.i.i.sroa.11.1.i = phi i32 [ %.sroa.6.i.i.i.i.sroa.11.2.i, %.thread.i.i108.i.i.i ], [ %.sroa.6.i.i.i.i.sroa.11.0.copyload.i, %.thread94.i.i.i.i.i ], [ undef, %bb.fp ]
+  %.sroa.6.i.i.i.i.sroa.12.1.i = phi i32 [ %.sroa.6.i.i.i.i.sroa.12.2.i, %.thread.i.i108.i.i.i ], [ %.sroa.6.i.i.i.i.sroa.12.0.copyload.i, %.thread94.i.i.i.i.i ], [ undef, %bb.fp ]
+  %.sroa.03.087.i.i.i.i.i = phi i64 [ %.sroa.03.088.i.i.i.i.i, %.thread.i.i108.i.i.i ], [ %.sroa.078.0.copyload.i.i.i.i.i, %.thread94.i.i.i.i.i ], [ -1, %bb.fp ] ; 4 uses
+  %.sroa.4.085.i.i.i.i.i = phi i8 [ %.sroa.4.086.i.i.i.i.i, %.thread.i.i108.i.i.i ], [ %.sroa.579.0.copyload.i.i.i.i.i, %.thread94.i.i.i.i.i ], [ 1, %bb.fp ] ; 4 uses
+  %i.yf = phi <2 x i64> [ %i.yd, %.thread.i.i108.i.i.i ], [ %i.vu, %.thread94.i.i.i.i.i ], [ undef, %bb.fp ]
   %i.yg = getelementptr inbounds nuw i8, ptr %1, i64 728
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtCs1LivM9IBWqb_12object_store7PutModeECs92BnbMq7p8c_15influxdb3_write(ptr noalias noundef align 8 dereferenceable(48) %i.yg)
           to label %bb.fv unwind label %bb.fq, !noalias !2150
 
-bb.fp:                                            ; preds = %3
+bb.fp:                                            ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store9PutResultNtB2q_5ErrorENtNtB4_6marker4SendEL_EEECs92BnbMq7p8c_15influxdb3_write.exit.i.i.i.i.i
   invoke void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtCs1LivM9IBWqb_12object_store5ErrorECs92BnbMq7p8c_15influxdb3_write(ptr noalias noundef nonnull align 8 dereferenceable(72) %i.y)
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store9PutResultNtBZ_5ErrorEECs92BnbMq7p8c_15influxdb3_write.exit.i.i.i.i.i unwind label %bb.es, !noalias !2150
 

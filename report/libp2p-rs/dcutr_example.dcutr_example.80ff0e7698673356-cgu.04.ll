@@ -205,9 +205,11 @@ bb.nb:                                            ; preds = %bb.lq
   br label %.thread227
 
 bb.nc:                                            ; preds = %bb.lq
-  %i.afo = load i8, ptr %i.cw, align 8, !range !38, !noundef !8 ; 5 uses
-  %3 = icmp eq i8 %i.afo, -1
-  br i1 %3, label %bb.nd, label %4
+  %i.afo = load i8, ptr %i.cw, align 8, !range !38, !noundef !8 ; 4 uses
+  switch i8 %i.afo, label %bb.nl [
+    i8 -1, label %bb.nd
+    i8 6, label %bb.nh
+  ]
 
 bb.nd:                                            ; preds = %bb.nc
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.552)
@@ -234,13 +236,7 @@ bb.ng:                                            ; preds = %bb.nd
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsjouRnuJWSBB_5yamux10connection7cleanup7CleanupECsb4DWTO89qhm_13dcutr_example(ptr noalias nofree noundef align 8 dereferenceable(48) %.sroa.6.0..sroa_idx)
           to label %bb.nr unwind label %bb.na
 
-4:                                                ; preds = %bb.nc
-  %5 = icmp ne i8 %i.afo, 4
-  call void @llvm.assume(i1 %5)
-  %6 = icmp eq i8 %i.afo, 6
-  br i1 %6, label %bb.nh, label %bb.nl
-
-bb.nh:                                            ; preds = %4
+bb.nh:                                            ; preds = %bb.nc
   %i.aft = load i64, ptr %1, align 8, !range !26, !alias.scope !2984, !noundef !8 ; 2 uses
   %i.afu = icmp slt i64 %i.aft, -9223372036854775804
   %i.afv = add i64 %i.aft, -9223372036854775807
@@ -263,7 +259,9 @@ bb.nk:                                            ; preds = %bb.nh
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsjouRnuJWSBB_5yamux10connection7cleanup7CleanupECsb4DWTO89qhm_13dcutr_example(ptr noalias nofree noundef align 8 dereferenceable(48) %.sroa.6.0..sroa_idx)
           to label %bb.ns unwind label %bb.np
 
-bb.nl:                                            ; preds = %4
+bb.nl:                                            ; preds = %bb.nc
+  %3 = icmp ne i8 %i.afo, 4
+  call void @llvm.assume(i1 %3)
   %.sroa.5169.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cw, i64 1
   %.sroa.5171.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cw, i64 8
   %.sroa.5171.0.copyload = load ptr, ptr %.sroa.5171.0..sroa_idx, align 8 ; 2 uses
@@ -666,9 +664,11 @@ bb.nb:                                            ; preds = %bb.lq
   br label %.thread227
 
 bb.nc:                                            ; preds = %bb.lq
-  %i.afh = load i8, ptr %i.cw, align 8, !range !38, !noundef !8 ; 5 uses
-  %3 = icmp eq i8 %i.afh, -1
-  br i1 %3, label %bb.nd, label %4
+  %i.afh = load i8, ptr %i.cw, align 8, !range !38, !noundef !8 ; 4 uses
+  switch i8 %i.afh, label %bb.nl [
+    i8 -1, label %bb.nd
+    i8 6, label %bb.nh
+  ]
 
 bb.nd:                                            ; preds = %bb.nc
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.552)
@@ -693,13 +693,7 @@ bb.ng:                                            ; preds = %bb.nd
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsjouRnuJWSBB_5yamux10connection7cleanup7CleanupECsb4DWTO89qhm_13dcutr_example(ptr noalias nofree noundef align 8 dereferenceable(48) %.sroa.6.0..sroa_idx)
           to label %bb.nr unwind label %bb.na
 
-4:                                                ; preds = %bb.nc
-  %5 = icmp ne i8 %i.afh, 4
-  call void @llvm.assume(i1 %5)
-  %6 = icmp eq i8 %i.afh, 6
-  br i1 %6, label %bb.nh, label %bb.nl
-
-bb.nh:                                            ; preds = %4
+bb.nh:                                            ; preds = %bb.nc
   %i.afk = load i64, ptr %1, align 8, !range !28, !alias.scope !3325, !noundef !8
   %i.afl = call i64 @llvm.usub.sat.i64(i64 %i.afk, i64 5)
   switch i64 %i.afl, label %bb.ns [
@@ -720,7 +714,9 @@ bb.nk:                                            ; preds = %bb.nh
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsjouRnuJWSBB_5yamux10connection7cleanup7CleanupECsb4DWTO89qhm_13dcutr_example(ptr noalias nofree noundef align 8 dereferenceable(48) %.sroa.6.0..sroa_idx)
           to label %bb.ns unwind label %bb.np
 
-bb.nl:                                            ; preds = %4
+bb.nl:                                            ; preds = %bb.nc
+  %3 = icmp ne i8 %i.afh, 4
+  call void @llvm.assume(i1 %3)
   %.sroa.5169.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cw, i64 1
   %.sroa.5171.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cw, i64 8
   %.sroa.5171.0.copyload = load ptr, ptr %.sroa.5171.0..sroa_idx, align 8 ; 2 uses

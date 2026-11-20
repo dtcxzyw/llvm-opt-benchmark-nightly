@@ -202,36 +202,35 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCsgZ49sUHp3tW_5alloc6string6Str
 ; Function Attrs: nonlazybind uwtable
 define internal fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtNtNtNtCsabmDd0H9iBj_19polars_arrow_format3ipc9generated4root3org6apache5arrow7flatbuf13MessageHeaderEEB1i_(i64 %.0.val, ptr %.8.val) unnamed_addr #0 personality ptr @rust_eh_personality !dbg !627 !guid !651 {
 bb.a:
-  %0 = icmp eq i64 %.0.val, 5, !dbg !652
-  br i1 %0, label %bb.b, label %bb.c, !dbg !652
-
-bb.b:                                             ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtNtNtNtNtCsabmDd0H9iBj_19polars_arrow_format3ipc9generated4root3org6apache5arrow7flatbuf13MessageHeaderEBW_.exit, %bb.a
-  ret void, !dbg !652
-
-bb.c:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
-  switch i64 %.0.val, label %1 [
+  switch i64 %.0.val, label %bb.c [
+    i64 5, label %bb.b
     i64 0, label %bb.d
     i64 1, label %bb.e
     i64 2, label %bb.h
     i64 3, label %bb.j
-  ], !dbg !653
+  ], !dbg !652
 
-1:                                                ; preds = %bb.c
+bb.b:                                             ; preds = %bb.a, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtNtNtNtNtCsabmDd0H9iBj_19polars_arrow_format3ipc9generated4root3org6apache5arrow7flatbuf13MessageHeaderEBW_.exit
+  ret void, !dbg !652
+
+bb.c:                                             ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtNtNtNtNtCsabmDd0H9iBj_19polars_arrow_format3ipc9generated4root3org6apache5arrow7flatbuf12SparseTensorEBW_(ptr noalias noundef nonnull align 8 dereferenceable(80) %.8.val)
-          to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtNtNtNtNtCsabmDd0H9iBj_19polars_arrow_format3ipc9generated4root3org6apache5arrow7flatbuf13MessageHeaderEBW_.exit unwind label %bb.k, !dbg !654
+          to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtNtNtNtNtCsabmDd0H9iBj_19polars_arrow_format3ipc9generated4root3org6apache5arrow7flatbuf13MessageHeaderEBW_.exit unwind label %bb.k, !dbg !653
 
 common.resume.i:                                  ; preds = %bb.k, %bb.i, %bb.g
   %.sink.i = phi i64 [ 80, %bb.k ], [ 88, %bb.i ], [ 24, %bb.g ]
   %common.resume.op.i = phi { ptr, i32 } [ %i.e, %bb.k ], [ %i.d, %bb.i ], [ %i.c, %bb.g ]
-  tail call void @_RNvCs9MrPpZx4smZ_7___rustc14___rust_dealloc(ptr noundef nonnull %.8.val, i64 noundef %.sink.i, i64 noundef 8) #14, !dbg !653
-  resume { ptr, i32 } %common.resume.op.i, !dbg !653
+  tail call void @_RNvCs9MrPpZx4smZ_7___rustc14___rust_dealloc(ptr noundef nonnull %.8.val, i64 noundef %.sink.i, i64 noundef 8) #14, !dbg !654
+  resume { ptr, i32 } %common.resume.op.i, !dbg !654
 
-bb.d:                                             ; preds = %bb.c
+bb.d:                                             ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtNtNtNtNtCsabmDd0H9iBj_19polars_arrow_format3ipc9generated4root3org6apache5arrow7flatbuf6SchemaEBW_(ptr noalias noundef nonnull align 8 dereferenceable(80) %.8.val)
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtNtNtNtNtCsabmDd0H9iBj_19polars_arrow_format3ipc9generated4root3org6apache5arrow7flatbuf13MessageHeaderEBW_.exit unwind label %bb.k, !dbg !655
 
-bb.e:                                             ; preds = %bb.c
+bb.e:                                             ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
   %i.a = getelementptr i8, ptr %.8.val, i64 8, !dbg !656
   %.val.i.i = load ptr, ptr %i.a, align 8, !dbg !656, !align !275, !noundef !262 ; 4 uses
   %i.b = icmp eq ptr %.val.i.i, null, !dbg !657
@@ -251,7 +250,8 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc5boxed3Box
   tail call void @_RNvCs9MrPpZx4smZ_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i, i64 noundef 88, i64 noundef 8) #14, !dbg !660
   br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtNtNtNtNtCsabmDd0H9iBj_19polars_arrow_format3ipc9generated4root3org6apache5arrow7flatbuf13MessageHeaderEBW_.exit, !dbg !657
 
-bb.h:                                             ; preds = %bb.c
+bb.h:                                             ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtNtNtNtNtCsabmDd0H9iBj_19polars_arrow_format3ipc9generated4root3org6apache5arrow7flatbuf11RecordBatchEBW_(ptr noalias noundef nonnull align 8 dereferenceable(88) %.8.val)
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtNtNtNtNtCsabmDd0H9iBj_19polars_arrow_format3ipc9generated4root3org6apache5arrow7flatbuf13MessageHeaderEBW_.exit unwind label %bb.i, !dbg !661
 
@@ -260,18 +260,19 @@ bb.i:                                             ; preds = %bb.h
           cleanup
   br label %common.resume.i, !dbg !661
 
-bb.j:                                             ; preds = %bb.c
+bb.j:                                             ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtNtNtNtNtCsabmDd0H9iBj_19polars_arrow_format3ipc9generated4root3org6apache5arrow7flatbuf6TensorEBW_(ptr noalias noundef nonnull align 8 dereferenceable(80) %.8.val)
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtNtNtNtNtCsabmDd0H9iBj_19polars_arrow_format3ipc9generated4root3org6apache5arrow7flatbuf13MessageHeaderEBW_.exit unwind label %bb.k, !dbg !662
 
-bb.k:                                             ; preds = %bb.j, %bb.d, %1
+bb.k:                                             ; preds = %bb.j, %bb.d, %bb.c
   %i.e = landingpad { ptr, i32 }
           cleanup
   br label %common.resume.i, !dbg !662
 
-_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtNtNtNtNtCsabmDd0H9iBj_19polars_arrow_format3ipc9generated4root3org6apache5arrow7flatbuf13MessageHeaderEBW_.exit: ; preds = %1, %bb.d, %bb.e, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxNtNtNtNtNtNtNtNtCsabmDd0H9iBj_19polars_arrow_format3ipc9generated4root3org6apache5arrow7flatbuf11RecordBatchEEB1v_.exit.i.i.i.i, %bb.h, %bb.j
-  %.sink1.i = phi i64 [ 88, %bb.h ], [ 24, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxNtNtNtNtNtNtNtNtCsabmDd0H9iBj_19polars_arrow_format3ipc9generated4root3org6apache5arrow7flatbuf11RecordBatchEEB1v_.exit.i.i.i.i ], [ 80, %bb.d ], [ 80, %1 ], [ 24, %bb.e ], [ 80, %bb.j ]
-  tail call void @_RNvCs9MrPpZx4smZ_7___rustc14___rust_dealloc(ptr noundef nonnull %.8.val, i64 noundef %.sink1.i, i64 noundef 8) #14, !dbg !653
+_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtNtNtNtNtCsabmDd0H9iBj_19polars_arrow_format3ipc9generated4root3org6apache5arrow7flatbuf13MessageHeaderEBW_.exit: ; preds = %bb.c, %bb.d, %bb.e, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxNtNtNtNtNtNtNtNtCsabmDd0H9iBj_19polars_arrow_format3ipc9generated4root3org6apache5arrow7flatbuf11RecordBatchEEB1v_.exit.i.i.i.i, %bb.h, %bb.j
+  %.sink1.i = phi i64 [ 88, %bb.h ], [ 24, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxNtNtNtNtNtNtNtNtCsabmDd0H9iBj_19polars_arrow_format3ipc9generated4root3org6apache5arrow7flatbuf11RecordBatchEEB1v_.exit.i.i.i.i ], [ 80, %bb.d ], [ 80, %bb.c ], [ 24, %bb.e ], [ 80, %bb.j ]
+  tail call void @_RNvCs9MrPpZx4smZ_7___rustc14___rust_dealloc(ptr noundef nonnull %.8.val, i64 noundef %.sink1.i, i64 noundef 8) #14, !dbg !654
   br label %bb.b, !dbg !652
 }
 
@@ -674,13 +675,13 @@ begin_hunk_1_@llvm.memset.p0.i64
 !625 = !DILocation(line: 810, column: 1, scope: !50, inlinedAt: !620)
 !626 = !DILocation(line: 810, column: 1, scope: !50, inlinedAt: !621)
 !627 = distinct !DISubprogram(name: "drop_in_place<core::option::Option<polars_arrow_format::ipc::generated::root::org::apache::arrow::flatbuf::MessageHeader>>", linkageName: "_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtNtNtNtNtNtCsabmDd0H9iBj_19polars_arrow_format3ipc9generated4root3org6apache5arrow7flatbuf13MessageHeaderEEB1i_", scope: !261, file: !259, line: 810, type: !265, scopeLine: 810, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !262)
-!628 = distinct !DISubprogram(name: "drop_in_place<polars_arrow_format::ipc::generated::root::org::apache::arrow::flatbuf::MessageHeader>", linkageName: "_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtNtNtNtNtCsabmDd0H9iBj_19polars_arrow_format3ipc9generated4root3org6apache5arrow7flatbuf13MessageHeaderEBW_", scope: !261, file: !259, line: 810, type: !265, scopeLine: 810, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !262)
-!629 = distinct !DILocation(line: 810, column: 1, scope: !627)
-!630 = distinct !DISubprogram(name: "drop_in_place<alloc::boxed::Box<polars_arrow_format::ipc::generated::root::org::apache::arrow::flatbuf::SparseTensor, alloc::alloc::Global>>", linkageName: "_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxNtNtNtNtNtNtNtNtCsabmDd0H9iBj_19polars_arrow_format3ipc9generated4root3org6apache5arrow7flatbuf12SparseTensorEEB1v_", scope: !261, file: !259, line: 810, type: !265, scopeLine: 810, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !262)
-!631 = distinct !DILocation(line: 810, column: 1, scope: !628, inlinedAt: !629)
-!632 = distinct !DILocation(line: 810, column: 1, scope: !628, inlinedAt: !629)
+!628 = distinct !DISubprogram(name: "drop_in_place<alloc::boxed::Box<polars_arrow_format::ipc::generated::root::org::apache::arrow::flatbuf::SparseTensor, alloc::alloc::Global>>", linkageName: "_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxNtNtNtNtNtNtNtNtCsabmDd0H9iBj_19polars_arrow_format3ipc9generated4root3org6apache5arrow7flatbuf12SparseTensorEEB1v_", scope: !261, file: !259, line: 810, type: !265, scopeLine: 810, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !262)
+!629 = distinct !DISubprogram(name: "drop_in_place<polars_arrow_format::ipc::generated::root::org::apache::arrow::flatbuf::MessageHeader>", linkageName: "_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtNtNtNtNtCsabmDd0H9iBj_19polars_arrow_format3ipc9generated4root3org6apache5arrow7flatbuf13MessageHeaderEBW_", scope: !261, file: !259, line: 810, type: !265, scopeLine: 810, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !262)
+!630 = distinct !DILocation(line: 810, column: 1, scope: !627)
+!631 = distinct !DILocation(line: 810, column: 1, scope: !629, inlinedAt: !630)
+!632 = distinct !DILocation(line: 810, column: 1, scope: !629, inlinedAt: !630)
 !633 = distinct !DISubprogram(name: "drop_in_place<alloc::boxed::Box<polars_arrow_format::ipc::generated::root::org::apache::arrow::flatbuf::DictionaryBatch, alloc::alloc::Global>>", linkageName: "_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxNtNtNtNtNtNtNtNtCsabmDd0H9iBj_19polars_arrow_format3ipc9generated4root3org6apache5arrow7flatbuf15DictionaryBatchEEB1v_", scope: !261, file: !259, line: 810, type: !265, scopeLine: 810, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !262)
-!634 = distinct !DILocation(line: 810, column: 1, scope: !628, inlinedAt: !629)
+!634 = distinct !DILocation(line: 810, column: 1, scope: !629, inlinedAt: !630)
 !635 = distinct !DILocation(line: 810, column: 1, scope: !633, inlinedAt: !634)
 !636 = distinct !DILocation(line: 810, column: 1, scope: !51, inlinedAt: !635)
 !637 = distinct !DILocation(line: 810, column: 1, scope: !22, inlinedAt: !636)
@@ -694,13 +695,13 @@ begin_hunk_1_@llvm.memset.p0.i64
 !645 = distinct !DILocation(line: 462, column: 23, scope: !27, inlinedAt: !644)
 !646 = distinct !DILocation(line: 344, column: 9, scope: !26, inlinedAt: !645)
 !647 = distinct !DILocation(line: 229, column: 22, scope: !25, inlinedAt: !646)
-!648 = distinct !DILocation(line: 810, column: 1, scope: !628, inlinedAt: !629)
+!648 = distinct !DILocation(line: 810, column: 1, scope: !629, inlinedAt: !630)
 !649 = distinct !DISubprogram(name: "drop_in_place<alloc::boxed::Box<polars_arrow_format::ipc::generated::root::org::apache::arrow::flatbuf::Tensor, alloc::alloc::Global>>", linkageName: "_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxNtNtNtNtNtNtNtNtCsabmDd0H9iBj_19polars_arrow_format3ipc9generated4root3org6apache5arrow7flatbuf6TensorEEB1v_", scope: !261, file: !259, line: 810, type: !265, scopeLine: 810, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !262)
-!650 = distinct !DILocation(line: 810, column: 1, scope: !628, inlinedAt: !629)
+!650 = distinct !DILocation(line: 810, column: 1, scope: !629, inlinedAt: !630)
 !651 = !{i64 565796188072121006}
 !652 = !DILocation(line: 810, column: 1, scope: !627)
-!653 = !DILocation(line: 810, column: 1, scope: !628, inlinedAt: !629)
-!654 = !DILocation(line: 810, column: 1, scope: !630, inlinedAt: !631)
+!653 = !DILocation(line: 810, column: 1, scope: !628, inlinedAt: !631)
+!654 = !DILocation(line: 810, column: 1, scope: !629, inlinedAt: !630)
 !655 = !DILocation(line: 810, column: 1, scope: !43, inlinedAt: !632)
 !656 = !DILocation(line: 810, column: 1, scope: !633, inlinedAt: !634)
 !657 = !DILocation(line: 810, column: 1, scope: !22, inlinedAt: !636)

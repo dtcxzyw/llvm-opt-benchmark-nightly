@@ -205,20 +205,37 @@ bb.bl:                                            ; preds = %bb.bk
   %i.ge = add nsw i64 %i.gc, -15
   %i.gf = icmp sgt i64 %i.gc, 14
   %i.gg = select i1 %i.gf, i64 %i.ge, i64 2
-  switch i64 %i.gg, label %9 [
+  switch i64 %i.gg, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes8LifetimeEECsiU5vK8fN4ZC_11ide_assists.exit [
     i64 2, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes5LabelECsiU5vK8fN4ZC_11ide_assists.exit.loopexit
     i64 3, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes5LabelECsiU5vK8fN4ZC_11ide_assists.exit
     i64 6, label %bb.bm
   ]
+
+_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes8LifetimeEECsiU5vK8fN4ZC_11ide_assists.exit: ; preds = %bb.bn, %bb.bl
+  %cond = icmp eq i64 %i.gc, 21
+  br i1 %cond, label %bb.cl, label %bb.cn
 
 bb.bm:                                            ; preds = %bb.bl
   %.val263 = load ptr, ptr %i.cx, align 8, !nonnull !19, !noundef !19 ; 5 uses
   %i.gh = invoke fastcc noundef ptr @_RINvNtNtCsjJXvCMGntp8_6syntax3ast7support5childNtNtNtB4_9generated5nodes8LifetimeECsiU5vK8fN4ZC_11ide_assists(ptr nonnull %.val263)
           to label %bb.bn unwind label %.thread1433 ; 3 uses
 
+6:                                                ; preds = %bb.bq, %bb.bp
+  %.sroa.081.2.ph = phi i1 [ true, %bb.bp ], [ false, %bb.bq ] ; 2 uses
+  %lpad.loopexit.split-lp993 = landingpad { ptr, i32 }
+          cleanup                                 ; 3 uses
+  %cond981 = icmp eq i64 %i.gc, 21
+  br i1 %cond981, label %bb.ch, label %bb.ci
+
+.thread1433:                                      ; preds = %bb.bm
+  %lpad.loopexit992 = landingpad { ptr, i32 }
+          cleanup                                 ; 2 uses
+  %cond9811436 = icmp eq i64 %i.gc, 21
+  br i1 %cond9811436, label %.thread1440, label %bb.ci
+
 bb.bn:                                            ; preds = %bb.bm
   %.not136 = icmp eq ptr %i.gh, null
-  br i1 %.not136, label %9, label %bb.bo
+  br i1 %.not136, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes8LifetimeEECsiU5vK8fN4ZC_11ide_assists.exit, label %bb.bo
 
 bb.bo:                                            ; preds = %bb.bn
   %i.gi = getelementptr inbounds nuw i8, ptr %i.gh, i64 48 ; 2 uses
@@ -395,19 +412,6 @@ bb.cg:                                            ; preds = %bb.cf
   invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %.sroa.0692.21187) #32
           to label %.body302 unwind label %bb.ay
 
-6:                                                ; preds = %bb.bp, %bb.bq
-  %.sroa.081.2.ph = phi i1 [ true, %bb.bp ], [ false, %bb.bq ] ; 2 uses
-  %lpad.loopexit.split-lp993 = landingpad { ptr, i32 }
-          cleanup                                 ; 3 uses
-  %7 = icmp eq i64 %i.gc, 21
-  br i1 %7, label %bb.ch, label %bb.ci
-
-.thread1433:                                      ; preds = %bb.bm
-  %lpad.loopexit992 = landingpad { ptr, i32 }
-          cleanup                                 ; 2 uses
-  %8 = icmp eq i64 %i.gc, 21
-  br i1 %8, label %.thread1440, label %bb.ci
-
 bb.ch:                                            ; preds = %6
   br i1 %.sroa.081.2.ph, label %.thread1440, label %.body302
 
@@ -430,11 +434,7 @@ bb.cj:                                            ; preds = %.thread1440
   invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %.val263) #32
           to label %.thread858 unwind label %bb.ay
 
-9:                                                ; preds = %bb.bl, %bb.bn
-  %10 = icmp eq i64 %i.gc, 21
-  br i1 %10, label %bb.cl, label %bb.cn
-
-_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes5LabelECsiU5vK8fN4ZC_11ide_assists.exit371: ; preds = %bb.cl, %bb.cm, %bb.bk, %bb.cn
+_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes5LabelECsiU5vK8fN4ZC_11ide_assists.exit371: ; preds = %bb.bk, %bb.cl, %bb.cm, %bb.cn
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bn)
   %i.ia = load i32, ptr %i.dj, align 8, !noundef !19
   %i.ib = add i32 %i.ia, -1                       ; 2 uses
@@ -446,7 +446,7 @@ bb.ck:                                            ; preds = %_RINvNtCshzWfHUSfYa
   invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %.sroa.0692.21187) #32
           to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes9BlockExprECsiU5vK8fN4ZC_11ide_assists.exit368 unwind label %.loopexit.split-lp.loopexit.split-lp
 
-bb.cl:                                            ; preds = %9
+bb.cl:                                            ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes8LifetimeEECsiU5vK8fN4ZC_11ide_assists.exit
   %.val264 = load ptr, ptr %i.cx, align 8, !nonnull !19, !noundef !19 ; 2 uses
   %i.id = getelementptr inbounds nuw i8, ptr %.val264, i64 48 ; 2 uses
   %i.ie = load i32, ptr %i.id, align 4, !noundef !19
@@ -459,7 +459,7 @@ bb.cm:                                            ; preds = %bb.cl
   invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %.val264) #32
           to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes5LabelECsiU5vK8fN4ZC_11ide_assists.exit371 unwind label %bb.bj
 
-bb.cn:                                            ; preds = %9
+bb.cn:                                            ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes8LifetimeEECsiU5vK8fN4ZC_11ide_assists.exit
   invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtCsjJXvCMGntp8_6syntax3ast8expr_ext13BlockModifierECsiU5vK8fN4ZC_11ide_assists(ptr noalias nofree noundef align 8 dereferenceable(32) %i.bn)
           to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes5LabelECsiU5vK8fN4ZC_11ide_assists.exit371 unwind label %bb.bj
 

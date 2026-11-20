@@ -204,17 +204,13 @@ bb.dm:                                            ; preds = %bb.dk, %bb.dh
   call void @llvm.experimental.noalias.scope.decl(metadata !15047)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(720) %i.d, ptr noundef nonnull align 8 dereferenceable(720) %.val28.i.i, i64 720, i1 false), !alias.scope !15048, !noalias !15045
   store i64 -1, ptr %.val28.i.i, align 8, !alias.scope !15049, !noalias !15045
-  %i.jm = load i64, ptr %i.d, align 8, !range !84, !noalias !15046, !noundef !27 ; 3 uses
-  %.not13.i.i = icmp eq i64 %i.jm, -1
-  br i1 %.not13.i.i, label %.thread.i.i, label %3
+  %i.jm = load i64, ptr %i.d, align 8, !range !84, !noalias !15046, !noundef !27 ; 2 uses
+  switch i64 %i.jm, label %bb.dy [
+    i64 -1, label %.thread.i.i
+    i64 5, label %bb.dn
+  ]
 
-3:                                                ; preds = %bb.dm
-  %4 = icmp ne i64 %i.jm, 4
-  call void @llvm.assume(i1 %4)
-  %5 = icmp eq i64 %i.jm, 5
-  br i1 %5, label %bb.dn, label %bb.dy
-
-bb.dn:                                            ; preds = %3
+bb.dn:                                            ; preds = %bb.dm
   %i.jn = getelementptr inbounds nuw i8, ptr %.val28.i.i, i64 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !15046
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(608) %i.a, ptr noundef nonnull align 8 dereferenceable(608) %i.jn, i64 608, i1 false), !noalias !15045
@@ -297,7 +293,9 @@ bb.dx:                                            ; preds = %bb.dz, %bb.dv, %bb.
   invoke void @_RNvNtCskKLDkoKarTP_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @11, i64 noundef 40, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @661) #24
           to label %bb.ea unwind label %bb.dz, !noalias !15045
 
-bb.dy:                                            ; preds = %3
+bb.dy:                                            ; preds = %bb.dm
+  %3 = icmp ne i64 %i.jm, 4
+  call void @llvm.assume(i1 %3)
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsPYQCUnoTxQ_10collection6shards5shard5ShardECsgGgPqgSfnMH_7storage(ptr noalias nofree noundef align 8 dereferenceable(720) %i.d)
           to label %.thread.i.i unwind label %bb.dl, !noalias !15045
 
@@ -700,17 +698,13 @@ bb.ah:                                            ; preds = %bb.t
   tail call void @llvm.experimental.noalias.scope.decl(metadata !17588)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(720) %i.j, ptr noundef nonnull align 8 dereferenceable(720) %.val96, i64 720, i1 false), !alias.scope !17589
   store i64 -1, ptr %.val96, align 8, !alias.scope !17590
-  %i.ck = load i64, ptr %i.j, align 8, !range !84, !noundef !27 ; 3 uses
-  %.not67 = icmp eq i64 %i.ck, -1
-  br i1 %.not67, label %.thread, label %3
+  %i.ck = load i64, ptr %i.j, align 8, !range !84, !noundef !27 ; 2 uses
+  switch i64 %i.ck, label %bb.bd [
+    i64 -1, label %.thread
+    i64 2, label %bb.ai
+  ]
 
-3:                                                ; preds = %bb.ah
-  %4 = icmp ne i64 %i.ck, 4
-  tail call void @llvm.assume(i1 %4)
-  %5 = icmp eq i64 %i.ck, 2
-  br i1 %5, label %bb.ai, label %bb.bd
-
-bb.ai:                                            ; preds = %3
+bb.ai:                                            ; preds = %bb.ah
   %i.cl = getelementptr inbounds nuw i8, ptr %.val96, i64 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(400) %i.i, ptr noundef nonnull align 8 dereferenceable(400) %i.cl, i64 400, i1 false)
@@ -902,7 +896,9 @@ bb.bc:                                            ; preds = %bb.bb
   invoke void @_RNvNtCskKLDkoKarTP_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @11, i64 noundef 40, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @623) #24
           to label %bb.bf unwind label %bb.be
 
-bb.bd:                                            ; preds = %3
+bb.bd:                                            ; preds = %bb.ah
+  %3 = icmp ne i64 %i.ck, 4
+  tail call void @llvm.assume(i1 %3)
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsPYQCUnoTxQ_10collection6shards5shard5ShardECsgGgPqgSfnMH_7storage(ptr noalias nofree noundef align 8 dereferenceable(720) %i.j)
           to label %.thread unwind label %bb.ag
 
@@ -1305,17 +1301,13 @@ bb.ap:                                            ; preds = %bb.ak, %bb.an
   call void @llvm.experimental.noalias.scope.decl(metadata !18268)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(720) %i.l, ptr noundef nonnull align 8 dereferenceable(720) %.val47, i64 720, i1 false), !alias.scope !18269
   store i64 -1, ptr %.val47, align 8, !alias.scope !18270
-  %i.cb = load i64, ptr %i.l, align 8, !range !84, !noundef !27 ; 3 uses
-  %.not17 = icmp eq i64 %i.cb, -1
-  br i1 %.not17, label %.thread, label %3
+  %i.cb = load i64, ptr %i.l, align 8, !range !84, !noundef !27 ; 2 uses
+  switch i64 %i.cb, label %bb.bm [
+    i64 -1, label %.thread
+    i64 5, label %bb.aq
+  ]
 
-3:                                                ; preds = %bb.ap
-  %4 = icmp ne i64 %i.cb, 4
-  call void @llvm.assume(i1 %4)
-  %5 = icmp eq i64 %i.cb, 5
-  br i1 %5, label %bb.aq, label %bb.bm
-
-bb.aq:                                            ; preds = %3
+bb.aq:                                            ; preds = %bb.ap
   %i.cc = getelementptr inbounds nuw i8, ptr %.val47, i64 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(608) %i.h, ptr noundef nonnull align 8 dereferenceable(608) %i.cc, i64 608, i1 false)
@@ -1491,7 +1483,9 @@ bb.bl:                                            ; preds = %bb.bk
   invoke void @_RNvNtCskKLDkoKarTP_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @11, i64 noundef 40, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @667) #24
           to label %bb.bo unwind label %bb.bn
 
-bb.bm:                                            ; preds = %3
+bb.bm:                                            ; preds = %bb.ap
+  %3 = icmp ne i64 %i.cb, 4
+  call void @llvm.assume(i1 %3)
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsPYQCUnoTxQ_10collection6shards5shard5ShardECsgGgPqgSfnMH_7storage(ptr noalias nofree noundef align 8 dereferenceable(720) %i.l)
           to label %.thread unwind label %bb.ao
 

@@ -204,8 +204,8 @@ bb.d:                                             ; preds = %bb.b
   invoke void @_RNvXs_NtNtCslmvYCXbQjWR_6common12universal_io8io_uringNtB4_9IoUringFsNtNtNtB6_6traits8file_ops20UniversalReadFileOps6exists(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.k, i64 noundef %i.m)
           to label %bb.f unwind label %.thread.i, !noalias !3299
 
-bb.e:                                             ; preds = %bb.v, %5, %4, %bb.o, %.thread.i
-  %.pn.i = phi { ptr, i32 } [ %i.am, %bb.v ], [ %i.am, %4 ], [ %i.am, %5 ], [ %i.am, %bb.o ], [ %i.v, %.thread.i ]
+bb.e:                                             ; preds = %bb.v, %bb.u, %3, %bb.o, %.thread.i
+  %.pn.i = phi { ptr, i32 } [ %i.am, %bb.v ], [ %i.am, %3 ], [ %i.am, %bb.u ], [ %i.am, %bb.o ], [ %i.v, %.thread.i ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNCNvXNtNtNtCsl8OoimOLbh_6qdrant5tonic3api16storage_read_apiINtBI_18StorageReadServiceNtNtNtCslmvYCXbQjWR_6common12universal_io8io_uring11IoUringFileENtNtNtNtCshMzyYDJGtjv_3api4grpc6qdrant19storage_read_server11StorageRead11file_exists00EBO_(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.d) #16
           to label %.body.thread unwind label %bb.w, !noalias !3300
 
@@ -297,9 +297,11 @@ bb.o:                                             ; preds = %bb.r, %.noexc.i, %b
   %.sroa.02.0.i = phi i1 [ true, %bb.k ], [ false, %bb.r ], [ true, %.noexc.i ]
   %i.am = landingpad { ptr, i32 }
           cleanup                                 ; 4 uses
-  %i.an = load i64, ptr %i.c, align 8, !range !34, !noalias !3299, !noundef !8 ; 3 uses
-  %.not15.i = icmp eq i64 %i.an, -1
-  br i1 %.not15.i, label %bb.e, label %bb.u
+  %i.an = load i64, ptr %i.c, align 8, !range !34, !noalias !3299, !noundef !8 ; 2 uses
+  switch i64 %i.an, label %bb.u [
+    i64 -1, label %bb.e
+    i64 -9223372036854775808, label %3
+  ]
 
 _RNvMs1_NtNtCskKLDkoKarTP_4core2io5errorNtB5_5Error4kind.exit.i: ; preds = %bb.n, %bb.m, %bb.l, %.noexc.i
   %.sroa.0.0.i.i = phi i8 [ %i.al, %bb.n ], [ %switch.idx.cast.i.i.i.i, %bb.l ], [ %i.aj, %bb.m ], [ %i.ae, %.noexc.i ]
@@ -365,25 +367,21 @@ bb.t:                                             ; preds = %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !3299
   br label %_RNCNCNvXNtNtNtCsl8OoimOLbh_6qdrant5tonic3api16storage_read_apiINtB6_18StorageReadServiceNtNtNtCslmvYCXbQjWR_6common12universal_io8io_uring11IoUringFileENtNtNtNtCshMzyYDJGtjv_3api4grpc6qdrant19storage_read_server11StorageRead11file_exists00Bc_.exit
 
+3:                                                ; preds = %bb.o
+  br i1 %.sroa.02.0.i, label %bb.v, label %bb.e
+
 bb.u:                                             ; preds = %bb.o
   %i.ba = icmp ne i64 %i.an, -9223372036854775797
   call void @llvm.assume(i1 %i.ba)
-  %3 = icmp eq i64 %i.an, -9223372036854775808
-  br i1 %3, label %4, label %5
-
-4:                                                ; preds = %bb.u
-  br i1 %.sroa.02.0.i, label %bb.v, label %bb.e
-
-5:                                                ; preds = %bb.u
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCslmvYCXbQjWR_6common12universal_io5error16UniversalIoErrorECsl8OoimOLbh_6qdrant(ptr noalias nofree noundef align 8 dereferenceable(32) %i.c) #16
           to label %bb.e unwind label %bb.w, !noalias !3299
 
-bb.v:                                             ; preds = %4
+bb.v:                                             ; preds = %3
   %.val.i = load ptr, ptr %i.w, align 8, !noalias !3299, !nonnull !8, !noundef !8
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsl8OoimOLbh_6qdrant(ptr nonnull %.val.i) #16
           to label %bb.e unwind label %bb.w, !noalias !3299
 
-bb.w:                                             ; preds = %bb.v, %5, %bb.e
+bb.w:                                             ; preds = %bb.v, %bb.u, %bb.e
   %i.bb = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #17, !noalias !3300

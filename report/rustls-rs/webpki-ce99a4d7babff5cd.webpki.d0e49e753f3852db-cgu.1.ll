@@ -204,22 +204,20 @@ bb.n:                                             ; preds = %bb.m
   %.sroa.10.sroa.8.0.copyload21.i.i1022 = load ptr, ptr %.sroa.10.sroa.8.0..sroa.10.0..sroa_idx7.sroa_idx.i.i6, align 8, !noalias !152, !nonnull !5, !noundef !5
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !155
   call fastcc void @_RNvNtNtCshVVPy9isBpn_6webpki12subject_name8dns_name33presented_id_matches_reference_id(ptr noalias nofree noundef align 8 captures(none) dereferenceable(56) %i.a, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.10.sroa.8.0.copyload21.i.i1022, i64 noundef %.sroa.10.sroa.9.0.copyload22.i.i1123, i8 noundef 2, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.0.0.i, i64 noundef %.sroa.3.0.i), !noalias !155
-  %i.bl = load i64, ptr %i.a, align 8, !range !4, !noalias !155, !noundef !5 ; 4 uses
-  %.not4.i.i.i.i = icmp eq i64 %i.bl, -1
-  br i1 %.not4.i.i.i.i, label %.thread.i.i.i.i, label %3
-
-3:                                                ; preds = %bb.n
-  %4 = icmp ne i64 %i.bl, -9223372036854775804
-  call void @llvm.assume(i1 %4)
-  %5 = icmp eq i64 %i.bl, -9223372036854775790
-  br i1 %5, label %bb.p, label %bb.o
+  %i.bl = load i64, ptr %i.a, align 8, !range !4, !noalias !155, !noundef !5 ; 3 uses
+  switch i64 %i.bl, label %bb.o [
+    i64 -1, label %.thread.i.i.i.i
+    i64 -9223372036854775790, label %bb.p
+  ]
 
 .thread.i.i.i.i:                                  ; preds = %bb.n
   %i.bm = load i8, ptr %i.bf, align 8, !range !7, !noalias !155, !noundef !5
   %i.bn = trunc nuw i8 %i.bm to i1
   br i1 %i.bn, label %_RNCNvNtNtCshVVPy9isBpn_6webpki12subject_name8dns_name16verify_dns_names0B7_.exit.i.i.i, label %_RNCNvNtNtCshVVPy9isBpn_6webpki12subject_name8dns_name16verify_dns_names0B7_.exit.i.thread42.i.i
 
-bb.o:                                             ; preds = %3
+bb.o:                                             ; preds = %bb.n
+  %3 = icmp ne i64 %i.bl, -9223372036854775804
+  call void @llvm.assume(i1 %3)
   %.sroa.9.sroa.0.0.copyload8.i.i.i = load i8, ptr %i.bf, align 8, !noalias !156
   %.sroa.9.sroa.5.0..sroa.9.0..sroa_idx4.sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 9
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.9.sroa.5.i.i.i, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.9.sroa.5.0..sroa.9.0..sroa_idx4.sroa_idx.i.i.i, i64 7, i1 false), !noalias !152
@@ -231,7 +229,7 @@ bb.o:                                             ; preds = %3
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.9.sroa.8.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.9.sroa.8.0..sroa.9.0..sroa_idx4.sroa_idx.i.i.i, i64 24, i1 false), !noalias !152
   br label %_RNCNvNtNtCshVVPy9isBpn_6webpki12subject_name8dns_name16verify_dns_names0B7_.exit.i.i.i
 
-bb.p:                                             ; preds = %3
+bb.p:                                             ; preds = %bb.n
   call fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCshVVPy9isBpn_6webpki5error5ErrorEBF_(ptr noalias nofree noundef align 8 dereferenceable(56) %i.a), !noalias !155
   br label %_RNCNvNtNtCshVVPy9isBpn_6webpki12subject_name8dns_name16verify_dns_names0B7_.exit.i.thread42.i.i
 

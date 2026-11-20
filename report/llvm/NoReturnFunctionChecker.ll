@@ -202,11 +202,17 @@ bb.l:                                             ; preds = %_ZN4llvm16dyn_cast_
   %i.cp = load ptr, ptr %i.co, align 8, !tbaa !47 ; 2 uses
   %i.cq = getelementptr inbounds nuw i8, ptr %i.cp, i64 16 ; 30 uses
   %i.cr = load i64, ptr %i.cp, align 8, !tbaa !49 ; 2 uses
-  %5 = and i64 %i.cr, 4294967295                  ; 3 uses
-  %trunc.i = trunc i64 %i.cr to i32               ; 3 uses
-  switch i32 %trunc.i, label %6 [
+  %trunc.i = trunc i64 %i.cr to i32
+  switch i32 %trunc.i, label %bb.aa [
     i32 4, label %bb.m
     i32 5, label %bb.n
+    i32 6, label %bb.p
+    i32 7, label %bb.r
+    i32 8, label %bb.s
+    i32 9, label %bb.u
+    i32 12, label %bb.w
+    i32 13, label %bb.x
+    i32 14, label %bb.y
   ]
 
 bb.m:                                             ; preds = %bb.l
@@ -242,11 +248,7 @@ bb.o:                                             ; preds = %bb.n
   %.not.i.i46.i = icmp eq i32 %i.dm, 0
   br i1 %.not.i.i46.i, label %.thread236.i, label %_ZNK12_GLOBAL__N_123NoReturnFunctionChecker13checkPostCallERKN5clang4ento9CallEventERNS2_14CheckerContextE.exit
 
-6:                                                ; preds = %bb.l
-  %.not.i.i.i.i52.i = icmp eq i64 %5, 6
-  br i1 %.not.i.i.i.i52.i, label %bb.p, label %7
-
-bb.p:                                             ; preds = %6
+bb.p:                                             ; preds = %bb.l
   %i.dn = load i32, ptr %i.cq, align 1
   %i.do = xor i32 %i.dn, 1702064961
   %i.dp = getelementptr i8, ptr %i.cq, i64 4
@@ -272,13 +274,7 @@ bb.q:                                             ; preds = %bb.p
   %.not.i.i62.i = icmp eq i32 %i.ee, 0
   br i1 %.not.i.i62.i, label %.thread236.i, label %_ZNK12_GLOBAL__N_123NoReturnFunctionChecker13checkPostCallERKN5clang4ento9CallEventERNS2_14CheckerContextE.exit
 
-7:                                                ; preds = %6
-  switch i32 %trunc.i, label %8 [
-    i32 7, label %bb.r
-    i32 8, label %bb.s
-  ]
-
-bb.r:                                             ; preds = %7
+bb.r:                                             ; preds = %bb.l
   %i.ef = load i32, ptr %i.cq, align 1
   %i.eg = xor i32 %i.ef, 1718842209
   %i.eh = getelementptr i8, ptr %i.cq, i64 3
@@ -290,7 +286,7 @@ bb.r:                                             ; preds = %7
   %.not.i.i70.i = icmp eq i32 %i.em, 0
   br i1 %.not.i.i70.i, label %.thread236.i, label %_ZNK12_GLOBAL__N_123NoReturnFunctionChecker13checkPostCallERKN5clang4ento9CallEventERNS2_14CheckerContextE.exit
 
-bb.s:                                             ; preds = %7
+bb.s:                                             ; preds = %bb.l
   %i.en = load i64, ptr %i.cq, align 1
   %i.eo = icmp ne i64 %i.en, 8245935278391255652
   %i.ep = zext i1 %i.eo to i32
@@ -304,11 +300,7 @@ bb.t:                                             ; preds = %bb.s
   %.not.i.i86.i = icmp eq i32 %i.es, 0
   br i1 %.not.i.i86.i, label %.thread236.i, label %bb.v
 
-8:                                                ; preds = %7
-  %.not.i.i.i.i92.i = icmp eq i64 %5, 9
-  br i1 %.not.i.i.i.i92.i, label %bb.u, label %9
-
-bb.u:                                             ; preds = %8
+bb.u:                                             ; preds = %bb.l
   %i.et = load i64, ptr %i.cq, align 1
   %i.eu = xor i64 %i.et, 8390880602276061023
   %i.ev = getelementptr i8, ptr %i.cq, i64 8
@@ -328,14 +320,7 @@ bb.v:                                             ; preds = %bb.t
   %.not.i.i102.i = icmp eq i32 %i.fe, 0
   br i1 %.not.i.i102.i, label %.thread236.i, label %_ZNK12_GLOBAL__N_123NoReturnFunctionChecker13checkPostCallERKN5clang4ento9CallEventERNS2_14CheckerContextE.exit
 
-9:                                                ; preds = %8
-  switch i32 %trunc.i, label %bb.aa [
-    i32 12, label %bb.w
-    i32 13, label %bb.x
-    i32 14, label %bb.y
-  ]
-
-bb.w:                                             ; preds = %9
+bb.w:                                             ; preds = %bb.l
   %i.ff = load i64, ptr %i.cq, align 1
   %i.fg = xor i64 %i.ff, 8390880602276061023
   %i.fh = getelementptr i8, ptr %i.cq, i64 8
@@ -348,7 +333,7 @@ bb.w:                                             ; preds = %9
   %.not.i.i110.i = icmp eq i32 %i.fn, 0
   br i1 %.not.i.i110.i, label %.thread236.i, label %_ZNK12_GLOBAL__N_123NoReturnFunctionChecker13checkPostCallERKN5clang4ento9CallEventERNS2_14CheckerContextE.exit
 
-bb.x:                                             ; preds = %9
+bb.x:                                             ; preds = %bb.l
   %i.fo = load i64, ptr %i.cq, align 1
   %i.fp = xor i64 %i.fo, 8390880602276061023
   %i.fq = getelementptr i8, ptr %i.cq, i64 5
@@ -360,7 +345,7 @@ bb.x:                                             ; preds = %9
   %.not.i.i118.i = icmp eq i32 %i.fv, 0
   br i1 %.not.i.i118.i, label %.thread236.i, label %_ZNK12_GLOBAL__N_123NoReturnFunctionChecker13checkPostCallERKN5clang4ento9CallEventERNS2_14CheckerContextE.exit
 
-bb.y:                                             ; preds = %9
+bb.y:                                             ; preds = %bb.l
   %i.fw = load i64, ptr %i.cq, align 1
   %i.fx = xor i64 %i.fw, 7016438221977580644
   %i.fy = getelementptr i8, ptr %i.cq, i64 6
@@ -384,7 +369,8 @@ bb.z:                                             ; preds = %bb.y
   %.not.i.i134.i = icmp eq i32 %i.gl, 0
   br i1 %.not.i.i134.i, label %.thread236.i, label %_ZNK12_GLOBAL__N_123NoReturnFunctionChecker13checkPostCallERKN5clang4ento9CallEventERNS2_14CheckerContextE.exit
 
-bb.aa:                                            ; preds = %9
+bb.aa:                                            ; preds = %bb.l
+  %5 = and i64 %i.cr, 4294967295
   %.not.i.i.i.i140.i = icmp eq i64 %5, 26
   br i1 %.not.i.i.i.i140.i, label %bb.ab, label %_ZNK12_GLOBAL__N_123NoReturnFunctionChecker13checkPostCallERKN5clang4ento9CallEventERNS2_14CheckerContextE.exit
 
