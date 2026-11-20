@@ -205,7 +205,7 @@ bb.a:
   br i1 %i.c, label %bb.m, label %.preheader126.preheader
 
 .preheader126.preheader:                          ; preds = %bb.a
-  %i.d = trunc nuw nsw i64 %3 to i32              ; 3 uses
+  %i.d = trunc nuw nsw i64 %3 to i32              ; 4 uses
   br label %.preheader126
 
 .preheader126:                                    ; preds = %.preheader126.preheader, %bb.b
@@ -307,9 +307,9 @@ _ZL14lodepng_memcpyPvPKvm.exit121:                ; preds = %bb.f, %.lr.ph.prehe
 
 bb.g:                                             ; preds = %.lr.ph134
   %i.ap = add i32 %.2133, 1                       ; 2 uses
-  %i.aq = add nuw nsw i32 %.192132, 1             ; 2 uses
-  %i.ar = zext i32 %i.aq to i64                   ; 2 uses
-  %5 = icmp samesign ugt i64 %3, %i.ar
+  %i.aq = add nuw nsw i32 %.192132, 1             ; 3 uses
+  %i.ar = zext i32 %i.aq to i64
+  %5 = icmp ult i32 %i.aq, %i.d
   br i1 %5, label %.lr.ph134, label %.critedge5, !llvm.loop !520
 
 .critedge5:                                       ; preds = %.lr.ph134, %bb.g, %_ZL14lodepng_memcpyPvPKvm.exit121
