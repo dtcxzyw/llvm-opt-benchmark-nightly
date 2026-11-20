@@ -204,8 +204,11 @@ bb.j:                                             ; preds = %bb.h
 
 bb.k:                                             ; preds = %bb.s, %bb.j
   %i.ar = load i128, ptr %i.m, align 16, !range !113, !noundef !40 ; 3 uses
-  %.not71 = icmp eq i128 %i.ar, 50
-  br i1 %.not71, label %bb.t, label %4
+  %trunc = trunc nuw i128 %i.ar to i6
+  switch i6 %trunc, label %bb.ae [
+    i6 -14, label %bb.t
+    i6 3, label %bb.ad
+  ]
 
 bb.l:                                             ; preds = %bb.az, %.body82, %bb.an, %.body, %bb.p, %bb.i
   %i.as = landingpad { ptr, i32 }
@@ -276,12 +279,6 @@ bb.s:                                             ; preds = %bb.q
   call fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs1N9T06jgEdt_11arrow_array12record_batch11RecordBatchECs14kWLkQVSKO_14deltalake_core(ptr noalias noundef align 8 dereferenceable(40) %i.j)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
   br label %bb.k
-
-4:                                                ; preds = %bb.k
-  %5 = icmp ne i128 %i.ar, 10
-  call void @llvm.assume(i1 %5)
-  %6 = icmp eq i128 %i.ar, 3
-  br i1 %6, label %bb.ad, label %bb.ae
 
 bb.t:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
@@ -355,7 +352,9 @@ bb.ac:                                            ; preds = %bb.z
   call void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsjhHCjzi9uUI_17datafusion_common6scalar11ScalarValueECs14kWLkQVSKO_14deltalake_core(ptr noalias noundef nonnull align 16 dereferenceable(64) %i.m)
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs90oH6M0AZ2B_22datafusion_expr_common14columnar_value13ColumnarValueECs14kWLkQVSKO_14deltalake_core.exit
 
-bb.ad:                                            ; preds = %4
+bb.ad:                                            ; preds = %bb.k
+  %4 = icmp ne i128 %i.ar, 10
+  call void @llvm.assume(i1 %4)
   %i.bu = getelementptr inbounds nuw i8, ptr %i.m, i64 16
   %i.bv = load i8, ptr %i.bu, align 16, !range !54, !noundef !40
   switch i8 %i.bv, label %bb.ah [
@@ -363,7 +362,9 @@ bb.ad:                                            ; preds = %4
     i8 0, label %bb.ag
   ]
 
-bb.ae:                                            ; preds = %4
+bb.ae:                                            ; preds = %bb.k
+  %5 = icmp ne i128 %i.ar, 10
+  call void @llvm.assume(i1 %5)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %0, ptr noundef nonnull align 16 dereferenceable(64) %i.m, i64 64, i1 false)
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs90oH6M0AZ2B_22datafusion_expr_common14columnar_value13ColumnarValueECs14kWLkQVSKO_14deltalake_core.exit
 

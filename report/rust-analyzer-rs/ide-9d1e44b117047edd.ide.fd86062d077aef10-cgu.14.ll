@@ -205,17 +205,13 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtCsjJXvCMGntp8_6syntax3ast8node_ext
   br label %_RNCNvNtCslLuZgPVt6hg_3ide6rename16find_definitionss3_0B5_.exit.i.i.i.i
 
 bb.cs:                                            ; preds = %bb.af
-  %i.li = load i32, ptr %i.ac, align 8, !range !710, !noalias !705, !noundef !6 ; 3 uses
-  %.not134.i.i.i.i.i = icmp eq i32 %i.li, -1
-  br i1 %.not134.i.i.i.i.i, label %.sink.split.i.i.i.i.i, label %4
+  %i.li = load i32, ptr %i.ac, align 8, !range !710, !noalias !705, !noundef !6 ; 2 uses
+  switch i32 %i.li, label %.thread499.i.i.i.i.i [
+    i32 -1, label %.sink.split.i.i.i.i.i
+    i32 3, label %bb.ct
+  ]
 
-4:                                                ; preds = %bb.cs
-  %5 = icmp ne i32 %i.li, 4
-  call void @llvm.assume(i1 %5)
-  %6 = icmp eq i32 %i.li, 3
-  br i1 %6, label %bb.ct, label %.sink.split.i.i.i.i.i
-
-bb.ct:                                            ; preds = %4
+bb.ct:                                            ; preds = %bb.cs
   %i.lj = load <2 x i32>, ptr %.sroa.4130.sroa.4.sroa.8.0..sroa.4130.sroa.4.0..sroa.4130.0..sroa_idx.sroa_idx.sroa_idx.i.i.i.i.i, align 8, !noalias !705
   %.sroa.4130.sroa.4.sroa.7.0.copyload.i.i.i.i.i = load i64, ptr %.sroa.4130.sroa.4.sroa.7.0..sroa.4130.sroa.4.0..sroa.4130.0..sroa_idx.sroa_idx.sroa_idx.i.i.i.i.i, align 8, !noalias !705
   %.sroa.4130.sroa.4.sroa.6.0.copyload.i.i.i.i.i = load ptr, ptr %.sroa.4130.sroa.4.sroa.6.0..sroa.4130.sroa.4.0..sroa.4130.0..sroa_idx.sroa_idx.sroa_idx.i.i.i.i.i, align 8, !noalias !705
@@ -227,7 +223,7 @@ bb.ct:                                            ; preds = %4
   %.not.i189.i.i.i.i.i = icmp eq i8 %.sroa.4130.sroa.3.0.copyload.i.i.i.i.i, -1
   br i1 %.not.i189.i.i.i.i.i, label %bb.cu, label %_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionNtNtCs6oosyzwIepl_6ide_db4defs10DefinitionE7or_elseNCNCNvNtCslLuZgPVt6hg_3ide6rename16find_definitionss3_0s7_0EB1F_.exit.thread.i.i.i.i.i
 
-.sink.split.i.i.i.i.i:                            ; preds = %4, %bb.cs
+.sink.split.i.i.i.i.i:                            ; preds = %.thread499.i.i.i.i.i, %bb.cs
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ac), !noalias !705
   br label %bb.cu
 
@@ -240,6 +236,11 @@ bb.cu:                                            ; preds = %.sink.split.i.i.i.i
   %i.lk = load i32, ptr %i.d, align 8, !range !732, !noalias !737, !noundef !6
   %cond.i.i.i.i.i = icmp eq i32 %i.lk, 3
   br i1 %cond.i.i.i.i.i, label %_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionNtNtCs6oosyzwIepl_6ide_db4defs10DefinitionE7or_elseNCNCNvNtCslLuZgPVt6hg_3ide6rename16find_definitionss3_0s7_0EB1F_.exit.i.i.i.i.i, label %_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionNtNtCs6oosyzwIepl_6ide_db4defs10DefinitionE7or_elseNCNCNvNtCslLuZgPVt6hg_3ide6rename16find_definitionss3_0s7_0EB1F_.exit.thread526.i.i.i.i.i
+
+.thread499.i.i.i.i.i:                             ; preds = %bb.cs
+  %4 = icmp ne i32 %i.li, 4
+  call void @llvm.assume(i1 %4)
+  br label %.sink.split.i.i.i.i.i
 
 _RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionNtNtCs6oosyzwIepl_6ide_db4defs10DefinitionE7or_elseNCNCNvNtCslLuZgPVt6hg_3ide6rename16find_definitionss3_0s7_0EB1F_.exit.thread526.i.i.i.i.i: ; preds = %.noexc190.i.i.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !736

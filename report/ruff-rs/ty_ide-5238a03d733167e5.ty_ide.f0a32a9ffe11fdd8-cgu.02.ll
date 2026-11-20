@@ -204,7 +204,7 @@ _RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsoTR8nlGN3X_18t
   call void @llvm.experimental.noalias.scope.decl(metadata !1140)
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 48
   store ptr %i.u, ptr %.sroa.4.0..sroa_idx.i, align 8, !alias.scope !1140, !noalias !1138
-  %.sroa.032.0.copyload33.i = load i32, ptr %i.t, align 8, !noalias !1141 ; 6 uses
+  %.sroa.032.0.copyload33.i = load i32, ptr %i.t, align 8, !noalias !1141 ; 5 uses
   %.sroa.7.0..sroa_idx34.i = getelementptr inbounds nuw i8, ptr %i.t, i64 4
   %.sroa.7.sroa.0.0.copyload.i = load i32, ptr %.sroa.7.0..sroa_idx34.i, align 4, !noalias !1141 ; 4 uses
   %.sroa.7.sroa.5.0..sroa.7.0..sroa_idx34.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.t, i64 8
@@ -223,16 +223,12 @@ _RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsoTR8nlGN3X_18t
 bb.c:                                             ; preds = %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsoTR8nlGN3X_18ty_python_semantic14semantic_model10CompletionENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCskEUeM34gmJU_6ty_ide.exit.i
   %.sroa.7.sroa.9.0..sroa.7.0..sroa_idx34.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.t, i64 32
   %.sroa.7.sroa.9.0.copyload.i = load i64, ptr %.sroa.7.sroa.9.0..sroa.7.0..sroa_idx34.sroa_idx.i, align 8, !noalias !1141 ; 7 uses
-  %.not.i.i = icmp eq i32 %.sroa.032.0.copyload33.i, -1
-  br i1 %.not.i.i, label %bb.n, label %4
+  switch i32 %.sroa.032.0.copyload33.i, label %4 [
+    i32 -1, label %bb.n
+    i32 14, label %bb.d
+  ]
 
-4:                                                ; preds = %bb.c
-  %5 = icmp ne i32 %.sroa.032.0.copyload33.i, 17
-  call void @llvm.assume(i1 %5)
-  %6 = icmp eq i32 %.sroa.032.0.copyload33.i, 14
-  br i1 %6, label %bb.d, label %bb.m
-
-bb.d:                                             ; preds = %4
+bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !1142
   invoke void @_RINvMs9_NvNtCsoTR8nlGN3X_18ty_python_semantic5typessh_1__NtB8_17ModuleLiteralType6moduleDNtNtCs4o81Y09oZk1_10ty_project2db2DbEL_ECskEUeM34gmJU_6ty_ide(ptr noalias noundef nonnull sret([12 x i8]) align 4 captures(none) dereferenceable(12) %i.h, i32 noundef %.sroa.7.sroa.0.0.copyload.i, i32 noundef %.sroa.7.sroa.5.0.copyload.i, ptr noundef nonnull %0, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(296) %1)
           to label %.noexc.i unwind label %bb.af, !noalias !1137
@@ -290,6 +286,11 @@ bb.i:                                             ; preds = %.noexc19.i
   %lpad.thr_comm.split-lp.i = landingpad { ptr, i32 }
           cleanup
   br label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsoTR8nlGN3X_18ty_python_semantic14semantic_model10CompletionECskEUeM34gmJU_6ty_ide.exit.i
+
+4:                                                ; preds = %bb.c
+  %5 = icmp ne i32 %.sroa.032.0.copyload33.i, 17
+  call void @llvm.assume(i1 %5)
+  br label %bb.m
 
 bb.j:                                             ; preds = %.noexc20.i, %.noexc19.i, %bb.g, %.noexc18.i, %.noexc17.i
   %.sroa.0.0.i.i.i = phi i8 [ 1, %.noexc17.i ], [ 3, %.noexc19.i ], [ %spec.select.i.i.i, %.noexc20.i ], [ %..i.i.i, %bb.g ], [ 5, %.noexc18.i ]
