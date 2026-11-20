@@ -1,0 +1,1680 @@
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/qemu/original/tcg-op?download=true
+inline.NumInlined: 724
+inline.NumDeleted: 64
+begin_hunk_0_@tcg_gen_and_i64:bb.a
+  %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.c
+  %i.e = ptrtoint ptr %i.d to i64
+  %i.f = ptrtoint ptr %1 to i64
+  %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.f
+  %i.h = ptrtoint ptr %i.g to i64
+  %i.i = ptrtoint ptr %2 to i64
+  %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.i
+  %i.k = ptrtoint ptr %i.j to i64
+  %i.l = tail call ptr @tcg_gen_op3(i32 noundef 8, i32 noundef 1, i64 noundef %i.e, i64 noundef %i.h, i64 noundef %i.k) ; 0 uses
+  ret void
+}
+
+; Function Attrs: nounwind sspstrong uwtable
+define dso_local void @tcg_gen_or_i64(ptr noundef %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #2 {
+bb.a:
+  %i.a = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx)
+  %i.b = load ptr, ptr %i.a, align 8              ; 3 uses
+  %i.c = ptrtoint ptr %0 to i64
+  %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.c
+  %i.e = ptrtoint ptr %i.d to i64
+  %i.f = ptrtoint ptr %1 to i64
+  %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.f
+  %i.h = ptrtoint ptr %i.g to i64
+  %i.i = ptrtoint ptr %2 to i64
+  %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.i
+  %i.k = ptrtoint ptr %i.j to i64
+  %i.l = tail call ptr @tcg_gen_op3(i32 noundef 42, i32 noundef 1, i64 noundef %i.e, i64 noundef %i.h, i64 noundef %i.k) ; 0 uses
+  ret void
+}
+
+; Function Attrs: nounwind sspstrong uwtable
+define dso_local void @tcg_gen_xor_i64(ptr noundef %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #2 {
+bb.a:
+  %i.a = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx)
+  %i.b = load ptr, ptr %i.a, align 8              ; 3 uses
+  %i.c = ptrtoint ptr %0 to i64
+  %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.c
+  %i.e = ptrtoint ptr %i.d to i64
+  %i.f = ptrtoint ptr %1 to i64
+  %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.f
+  %i.h = ptrtoint ptr %i.g to i64
+  %i.i = ptrtoint ptr %2 to i64
+  %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.i
+  %i.k = ptrtoint ptr %i.j to i64
+  %i.l = tail call ptr @tcg_gen_op3(i32 noundef 58, i32 noundef 1, i64 noundef %i.e, i64 noundef %i.h, i64 noundef %i.k) ; 0 uses
+  ret void
+}
+
+; Function Attrs: nounwind sspstrong uwtable
+define dso_local void @tcg_gen_shl_i64(ptr noundef %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #2 {
+bb.a:
+  %i.a = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx)
+  %i.b = load ptr, ptr %i.a, align 8              ; 3 uses
+  %i.c = ptrtoint ptr %0 to i64
+  %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.c
+  %i.e = ptrtoint ptr %i.d to i64
+  %i.f = ptrtoint ptr %1 to i64
+  %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.f
+  %i.h = ptrtoint ptr %i.g to i64
+  %i.i = ptrtoint ptr %2 to i64
+  %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.i
+  %i.k = ptrtoint ptr %i.j to i64
+  %i.l = tail call ptr @tcg_gen_op3(i32 noundef 51, i32 noundef 1, i64 noundef %i.e, i64 noundef %i.h, i64 noundef %i.k) ; 0 uses
+  ret void
+}
+
+; Function Attrs: nounwind sspstrong uwtable
+define dso_local void @tcg_gen_shr_i64(ptr noundef %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #2 {
+bb.a:
+  %i.a = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx)
+  %i.b = load ptr, ptr %i.a, align 8              ; 3 uses
+  %i.c = ptrtoint ptr %0 to i64
+  %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.c
+  %i.e = ptrtoint ptr %i.d to i64
+  %i.f = ptrtoint ptr %1 to i64
+  %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.f
+  %i.h = ptrtoint ptr %i.g to i64
+  %i.i = ptrtoint ptr %2 to i64
+  %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.i
+  %i.k = ptrtoint ptr %i.j to i64
+  %i.l = tail call ptr @tcg_gen_op3(i32 noundef 52, i32 noundef 1, i64 noundef %i.e, i64 noundef %i.h, i64 noundef %i.k) ; 0 uses
+  ret void
+}
+
+; Function Attrs: nounwind sspstrong uwtable
+define dso_local void @tcg_gen_sar_i64(ptr noundef %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #2 {
+bb.a:
+  %i.a = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx)
+  %i.b = load ptr, ptr %i.a, align 8              ; 3 uses
+  %i.c = ptrtoint ptr %0 to i64
+  %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.c
+  %i.e = ptrtoint ptr %i.d to i64
+  %i.f = ptrtoint ptr %1 to i64
+  %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.f
+  %i.h = ptrtoint ptr %i.g to i64
+  %i.i = ptrtoint ptr %2 to i64
+  %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.i
+  %i.k = ptrtoint ptr %i.j to i64
+  %i.l = tail call ptr @tcg_gen_op3(i32 noundef 48, i32 noundef 1, i64 noundef %i.e, i64 noundef %i.h, i64 noundef %i.k) ; 0 uses
+  ret void
+}
+
+; Function Attrs: nounwind sspstrong uwtable
+define dso_local void @tcg_gen_subfi_i64(ptr noundef %0, i64 noundef %1, ptr noundef %2) local_unnamed_addr #2 {
+bb.a:
+  %i.a = icmp eq i64 %1, 0
+  br i1 %i.a, label %bb.b, label %bb.c
+
+bb.b:                                             ; preds = %bb.a
+  %i.b = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx)
+  %i.c = load ptr, ptr %i.b, align 8              ; 2 uses
+  %i.d = ptrtoint ptr %0 to i64
+  %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.d
+  %i.f = ptrtoint ptr %i.e to i64
+  %i.g = ptrtoint ptr %2 to i64
+  %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.g
+  %i.i = ptrtoint ptr %i.h to i64
+  %i.j = tail call ptr @tcg_gen_op2(i32 noundef 38, i32 noundef 1, i64 noundef %i.f, i64 noundef %i.i) ; 0 uses
+  br label %bb.d
+
+bb.c:                                             ; preds = %bb.a
+  %i.k = tail call ptr @tcg_constant_i64(i64 noundef %1) #6
+  %i.l = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx)
+  %i.m = load ptr, ptr %i.l, align 8              ; 3 uses
+  %i.n = ptrtoint ptr %0 to i64
+  %i.o = getelementptr inbounds nuw i8, ptr %i.m, i64 %i.n
+  %i.p = ptrtoint ptr %i.o to i64
+  %i.q = ptrtoint ptr %i.k to i64
+  %i.r = getelementptr inbounds nuw i8, ptr %i.m, i64 %i.q
+  %i.s = ptrtoint ptr %i.r to i64
+  %i.t = ptrtoint ptr %2 to i64
+  %i.u = getelementptr inbounds nuw i8, ptr %i.m, i64 %i.t
+  %i.v = ptrtoint ptr %i.u to i64
+  %i.w = tail call ptr @tcg_gen_op3(i32 noundef 57, i32 noundef 1, i64 noundef %i.p, i64 noundef %i.s, i64 noundef %i.v) ; 0 uses
+  br label %bb.d
+
+bb.d:                                             ; preds = %bb.c, %bb.b
+  ret void
+}
+
+; Function Attrs: nounwind sspstrong uwtable
+define dso_local void @tcg_gen_neg_i64(ptr noundef %0, ptr noundef %1) local_unnamed_addr #2 {
+bb.a:
+  %i.a = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx)
+  %i.b = load ptr, ptr %i.a, align 8              ; 2 uses
+  %i.c = ptrtoint ptr %0 to i64
+  %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.c
+  %i.e = ptrtoint ptr %i.d to i64
+  %i.f = ptrtoint ptr %1 to i64
+  %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.f
+  %i.h = ptrtoint ptr %i.g to i64
+  %i.i = tail call ptr @tcg_gen_op2(i32 noundef 38, i32 noundef 1, i64 noundef %i.e, i64 noundef %i.h) ; 0 uses
+  ret void
+}
+
+; Function Attrs: nounwind sspstrong uwtable
+define dso_local void @tcg_gen_subi_i64(ptr noundef %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #2 {
+bb.a:
+  %i.a = icmp eq i64 %2, 0
+  br i1 %i.a, label %bb.b, label %bb.d
+
+bb.b:                                             ; preds = %bb.a
+  %.not.i.i = icmp eq ptr %0, %1
+  br i1 %.not.i.i, label %tcg_gen_addi_i64.exit, label %bb.c
+
+bb.c:                                             ; preds = %bb.b
+  %i.b = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx)
+  %i.c = load ptr, ptr %i.b, align 8              ; 2 uses
+  %i.d = ptrtoint ptr %0 to i64
+  %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.d
+  %i.f = ptrtoint ptr %i.e to i64
+  %i.g = ptrtoint ptr %1 to i64
+  %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.g
+  %i.i = ptrtoint ptr %i.h to i64
+  %i.j = tail call ptr @tcg_gen_op2(i32 noundef 6, i32 noundef 1, i64 noundef %i.f, i64 noundef %i.i) ; 0 uses
+  br label %tcg_gen_addi_i64.exit
+
+bb.d:                                             ; preds = %bb.a
+  %i.k = sub i64 0, %2
+  %i.l = tail call ptr @tcg_constant_i64(i64 noundef %i.k) #6
+  %i.m = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx)
+  %i.n = load ptr, ptr %i.m, align 8              ; 3 uses
+  %i.o = ptrtoint ptr %0 to i64
+  %i.p = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.o
+  %i.q = ptrtoint ptr %i.p to i64
+  %i.r = ptrtoint ptr %1 to i64
+  %i.s = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.r
+  %i.t = ptrtoint ptr %i.s to i64
+  %i.u = ptrtoint ptr %i.l to i64
+  %i.v = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.u
+  %i.w = ptrtoint ptr %i.v to i64
+  %i.x = tail call ptr @tcg_gen_op3(i32 noundef 7, i32 noundef 1, i64 noundef %i.q, i64 noundef %i.t, i64 noundef %i.w) ; 0 uses
+  br label %tcg_gen_addi_i64.exit
+
+tcg_gen_addi_i64.exit:                            ; preds = %bb.b, %bb.c, %bb.d
+  ret void
+}
+
+; Function Attrs: nounwind sspstrong uwtable
+define dso_local void @tcg_gen_andi_i64(ptr noundef %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #2 {
+  br label %tailrecurse
+
+tailrecurse:                                      ; preds = %6, %3
+  %.tr28 = phi i64 [ %2, %3 ], [ %7, %6 ]         ; 5 uses
+  switch i64 %.tr28, label %bb.e [
+    i64 0, label %bb.a
+    i64 -1, label %bb.c
+  ]
+
+bb.a:                                             ; preds = %tailrecurse
+  %i.a = tail call ptr @tcg_constant_i64(i64 noundef 0) #6 ; 2 uses
+  %.not.i.i = icmp eq ptr %0, %i.a
+  br i1 %.not.i.i, label %tcg_gen_movi_i64.exit, label %bb.b
+
+bb.b:                                             ; preds = %bb.a
+  %i.b = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx)
+  %i.c = load ptr, ptr %i.b, align 8              ; 2 uses
+  %i.d = ptrtoint ptr %0 to i64
+  %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.d
+  %i.f = ptrtoint ptr %i.e to i64
+  %i.g = ptrtoint ptr %i.a to i64
+  %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.g
+  %i.i = ptrtoint ptr %i.h to i64
+  %i.j = tail call ptr @tcg_gen_op2(i32 noundef 6, i32 noundef 1, i64 noundef %i.f, i64 noundef %i.i) ; 0 uses
+  br label %tcg_gen_movi_i64.exit
+
+bb.c:                                             ; preds = %tailrecurse
+  %.not.i = icmp eq ptr %0, %1
+  br i1 %.not.i, label %tcg_gen_movi_i64.exit, label %bb.d
+
+bb.d:                                             ; preds = %bb.c
+  %i.k = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx)
+  %i.l = load ptr, ptr %i.k, align 8              ; 2 uses
+  %i.m = ptrtoint ptr %0 to i64
+  %i.n = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.m
+  %i.o = ptrtoint ptr %i.n to i64
+  %i.p = ptrtoint ptr %1 to i64
+  %i.q = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.p
+  %i.r = ptrtoint ptr %i.q to i64
+  %i.s = tail call ptr @tcg_gen_op2(i32 noundef 6, i32 noundef 1, i64 noundef %i.o, i64 noundef %i.r) ; 0 uses
+  br label %tcg_gen_movi_i64.exit
+
+bb.e:                                             ; preds = %tailrecurse
+  %i.t = add nuw i64 %.tr28, 1
+  %i.u = and i64 %i.t, %.tr28
+  %.not = icmp eq i64 %i.u, 0
+  br i1 %.not, label %bb.f, label %tcg_gen_extract_i64.exit
+
+bb.f:                                             ; preds = %bb.e
+  %i.v = xor i64 %.tr28, -1
+  %i.w = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.v, i1 false) ; 5 uses
+  %i.x = trunc nuw nsw i64 %i.w to i32            ; 2 uses
+  switch i32 %i.x, label %tcg_gen_extract_i64.exit [
+    i32 32, label %tcg_target_extract_valid.exit15.thread
+    i32 16, label %tcg_target_extract_valid.exit15
+    i32 8, label %tcg_target_extract_valid.exit15
+  ]
+
+tcg_target_extract_valid.exit15.thread:           ; preds = %bb.f
+  %4 = icmp ne i64 %i.w, 0
+  tail call void @llvm.assume(i1 %4)
+  br label %.loopexit
+
+tcg_target_extract_valid.exit15:                  ; preds = %bb.f, %bb.f
+  %5 = icmp ne i64 %i.w, 0
+  tail call void @llvm.assume(i1 %5)
+  switch i32 %i.x, label %6 [
+    i32 16, label %.loopexit
+    i32 8, label %.loopexit
+  ]
+
+.loopexit:                                        ; preds = %tcg_target_extract_valid.exit15, %tcg_target_extract_valid.exit15, %tcg_target_extract_valid.exit15.thread
+  %i.y = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx)
+  %i.z = load ptr, ptr %i.y, align 8              ; 2 uses
+  %i.aa = ptrtoint ptr %0 to i64
+  %i.ab = getelementptr inbounds nuw i8, ptr %i.z, i64 %i.aa
+  %i.ac = ptrtoint ptr %i.ab to i64
+  %i.ad = ptrtoint ptr %1 to i64
+  %i.ae = getelementptr inbounds nuw i8, ptr %i.z, i64 %i.ad
+  %i.af = ptrtoint ptr %i.ae to i64
+  %i.ag = tail call noundef ptr @tcg_gen_op4(i32 noundef 22, i32 noundef 1, i64 noundef %i.ac, i64 noundef %i.af, i64 noundef 0, i64 noundef %i.w) ; 0 uses
+  br label %tcg_gen_movi_i64.exit
+
+6:                                                ; preds = %tcg_target_extract_valid.exit15
+  %notmask.i = shl nsw i64 -1, %i.w
+  %7 = xor i64 %notmask.i, -1
+  br label %tailrecurse
+
+tcg_gen_extract_i64.exit:                         ; preds = %bb.f, %bb.e
+  %i.ah = tail call ptr @tcg_constant_i64(i64 noundef %.tr28) #6
+  %i.ai = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx)
+  %i.aj = load ptr, ptr %i.ai, align 8            ; 3 uses
+  %i.ak = ptrtoint ptr %0 to i64
+  %i.al = getelementptr inbounds nuw i8, ptr %i.aj, i64 %i.ak
+  %i.am = ptrtoint ptr %i.al to i64
+  %i.an = ptrtoint ptr %1 to i64
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.aj, i64 %i.an
+  %i.ap = ptrtoint ptr %i.ao to i64
+  %i.aq = ptrtoint ptr %i.ah to i64
+  %i.ar = getelementptr inbounds nuw i8, ptr %i.aj, i64 %i.aq
+  %i.as = ptrtoint ptr %i.ar to i64
+  %i.at = tail call ptr @tcg_gen_op3(i32 noundef 8, i32 noundef 1, i64 noundef %i.am, i64 noundef %i.ap, i64 noundef %i.as) ; 0 uses
+  br label %tcg_gen_movi_i64.exit
+
+tcg_gen_movi_i64.exit:                            ; preds = %.loopexit, %bb.d, %bb.c, %bb.b, %bb.a, %tcg_gen_extract_i64.exit
+  ret void
+}
+
+; Function Attrs: nounwind sspstrong uwtable
+define dso_local void @tcg_gen_extract_i64(ptr noundef %0, ptr noundef %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #2 {
+bb.a:
+  %i.a = icmp samesign ult i32 %2, 64
+  tail call void @llvm.assume(i1 %i.a)
+  %i.b = icmp ne i32 %3, 0
+  tail call void @llvm.assume(i1 %i.b)
+  %i.c = add nuw nsw i32 %3, %2                   ; 4 uses
+  %i.d = icmp samesign ult i32 %i.c, 65
+  tail call void @llvm.assume(i1 %i.d)
+  switch i32 %i.c, label %bb.f [
+    i32 64, label %bb.b
+    i32 32, label %tcg_target_extract_valid.exit.thread
+  ]
+
+bb.b:                                             ; preds = %bb.a
+  %i.e = icmp eq i32 %3, 64
+  br i1 %i.e, label %bb.c, label %bb.e
+
+bb.c:                                             ; preds = %bb.b
+  %.not.i.i = icmp eq ptr %0, %1
+  br i1 %.not.i.i, label %tcg_gen_shri_i64.exit, label %bb.d
+
+bb.d:                                             ; preds = %bb.c
+  %i.f = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx)
+  %i.g = load ptr, ptr %i.f, align 8              ; 2 uses
+  %i.h = ptrtoint ptr %0 to i64
+  %i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.h
+  %i.j = ptrtoint ptr %i.i to i64
+  %i.k = ptrtoint ptr %1 to i64
+  %i.l = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.k
+  %i.m = ptrtoint ptr %i.l to i64
+  %i.n = tail call ptr @tcg_gen_op2(i32 noundef 6, i32 noundef 1, i64 noundef %i.j, i64 noundef %i.m) ; 0 uses
+  br label %tcg_gen_shri_i64.exit
+
+bb.e:                                             ; preds = %bb.b
+  %i.o = sub nuw nsw i32 64, %3
+  %i.p = zext nneg i32 %i.o to i64
+  %i.q = tail call ptr @tcg_constant_i64(i64 noundef %i.p) #6
+  %i.r = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx)
+  %i.s = load ptr, ptr %i.r, align 8              ; 3 uses
+  %i.t = ptrtoint ptr %0 to i64
+  %i.u = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.t
+  %i.v = ptrtoint ptr %i.u to i64
+  %i.w = ptrtoint ptr %1 to i64
+  %i.x = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.w
+  %i.y = ptrtoint ptr %i.x to i64
+  %i.z = ptrtoint ptr %i.q to i64
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.z
+  %i.ab = ptrtoint ptr %i.aa to i64
+  %i.ac = tail call ptr @tcg_gen_op3(i32 noundef 52, i32 noundef 1, i64 noundef %i.v, i64 noundef %i.y, i64 noundef %i.ab) ; 0 uses
+  br label %tcg_gen_shri_i64.exit
+
+bb.f:                                             ; preds = %bb.a
+  switch i32 %2, label %tcg_target_extract_valid.exit47 [
+    i32 0, label %tcg_target_extract_valid.exit
+    i32 8, label %.split
+  ]
+
+.split:                                           ; preds = %bb.f
+  %i.ad = icmp eq i32 %3, 8
+  br i1 %i.ad, label %tcg_target_extract_valid.exit.thread, label %tcg_target_extract_valid.exit47
+
+tcg_target_extract_valid.exit:                    ; preds = %bb.f
+  switch i32 %3, label %.thread [
+    i32 16, label %tcg_target_extract_valid.exit.thread
+    i32 8, label %tcg_target_extract_valid.exit.thread
+  ]
+
+.thread:                                          ; preds = %tcg_target_extract_valid.exit
+  %i.ae = zext nneg i32 %3 to i64
+  %notmask62 = shl nsw i64 -1, %i.ae
+  %i.af = xor i64 %notmask62, -1
+  tail call void @tcg_gen_andi_i64(ptr noundef %0, ptr noundef %1, i64 noundef %i.af)
+  br label %tcg_gen_shri_i64.exit
+
+tcg_target_extract_valid.exit.thread:             ; preds = %tcg_target_extract_valid.exit, %tcg_target_extract_valid.exit, %bb.a, %.split
+  %i.ag = zext nneg i32 %2 to i64
+  %i.ah = zext nneg i32 %3 to i64
+  %i.ai = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx)
+  %i.aj = load ptr, ptr %i.ai, align 8            ; 2 uses
+  %i.ak = ptrtoint ptr %0 to i64
+  %i.al = getelementptr inbounds nuw i8, ptr %i.aj, i64 %i.ak
+  %i.am = ptrtoint ptr %i.al to i64
+  %i.an = ptrtoint ptr %1 to i64
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.aj, i64 %i.an
+  %i.ap = ptrtoint ptr %i.ao to i64
+  %i.aq = tail call noundef ptr @tcg_gen_op4(i32 noundef 22, i32 noundef 1, i64 noundef %i.am, i64 noundef %i.ap, i64 noundef range(i64 0, 4294967296) %i.ag, i64 noundef %i.ah) ; 0 uses
+  br label %tcg_gen_shri_i64.exit
+
+tcg_target_extract_valid.exit47:                  ; preds = %bb.f, %.split
+  %.pn = zext nneg i32 %3 to i64
+  %.in = shl nsw i64 -1, %.pn
+  %i.ar = xor i64 %.in, -1                        ; 2 uses
+  switch i32 %i.c, label %bb.g [
+    i32 16, label %tcg_gen_shri_i64.exit50
+    i32 8, label %tcg_gen_shri_i64.exit50
+  ]
+
+tcg_gen_shri_i64.exit50:                          ; preds = %tcg_target_extract_valid.exit47, %tcg_target_extract_valid.exit47
+  %i.as = zext nneg i32 %i.c to i64
+  %i.at = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx) ; 2 uses
+  %i.au = load ptr, ptr %i.at, align 8            ; 2 uses
+  %i.av = ptrtoint ptr %0 to i64                  ; 2 uses
+  %i.aw = getelementptr inbounds nuw i8, ptr %i.au, i64 %i.av
+  %i.ax = ptrtoint ptr %i.aw to i64
+  %i.ay = ptrtoint ptr %1 to i64
+  %i.az = getelementptr inbounds nuw i8, ptr %i.au, i64 %i.ay
+  %i.ba = ptrtoint ptr %i.az to i64
+  %i.bb = tail call noundef ptr @tcg_gen_op4(i32 noundef 22, i32 noundef 1, i64 noundef %i.ax, i64 noundef %i.ba, i64 noundef 0, i64 noundef %i.as) ; 0 uses
+  %i.bc = zext nneg i32 %2 to i64
+  %i.bd = tail call ptr @tcg_constant_i64(i64 noundef %i.bc) #6
+  %i.be = load ptr, ptr %i.at, align 8            ; 2 uses
+  %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 %i.av
+  %i.bg = ptrtoint ptr %i.bf to i64               ; 2 uses
+  %i.bh = ptrtoint ptr %i.bd to i64
+  %i.bi = getelementptr inbounds nuw i8, ptr %i.be, i64 %i.bh
+  %i.bj = ptrtoint ptr %i.bi to i64
+  %i.bk = tail call ptr @tcg_gen_op3(i32 noundef 52, i32 noundef 1, i64 noundef %i.bg, i64 noundef %i.bg, i64 noundef %i.bj) ; 0 uses
+  br label %tcg_gen_shri_i64.exit
+
+bb.g:                                             ; preds = %tcg_target_extract_valid.exit47
+  %i.bl = tail call zeroext i1 @tcg_op_imm_match(i32 noundef 8, i32 noundef 1, i64 noundef %i.ar) #6
+  br i1 %i.bl, label %tcg_gen_shri_i64.exit53, label %bb.h
+
+tcg_gen_shri_i64.exit53:                          ; preds = %bb.g
+  %i.bm = zext nneg i32 %2 to i64
+  %i.bn = tail call ptr @tcg_constant_i64(i64 noundef %i.bm) #6
+  %i.bo = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx)
+  %i.bp = load ptr, ptr %i.bo, align 8            ; 3 uses
+  %i.bq = ptrtoint ptr %0 to i64
+  %i.br = getelementptr inbounds nuw i8, ptr %i.bp, i64 %i.bq
+  %i.bs = ptrtoint ptr %i.br to i64
+  %i.bt = ptrtoint ptr %1 to i64
+  %i.bu = getelementptr inbounds nuw i8, ptr %i.bp, i64 %i.bt
+  %i.bv = ptrtoint ptr %i.bu to i64
+  %i.bw = ptrtoint ptr %i.bn to i64
+  %i.bx = getelementptr inbounds nuw i8, ptr %i.bp, i64 %i.bw
+  %i.by = ptrtoint ptr %i.bx to i64
+  %i.bz = tail call ptr @tcg_gen_op3(i32 noundef 52, i32 noundef 1, i64 noundef %i.bs, i64 noundef %i.bv, i64 noundef %i.by) ; 0 uses
+  tail call void @tcg_gen_andi_i64(ptr noundef %0, ptr noundef %0, i64 noundef %i.ar)
+  br label %tcg_gen_shri_i64.exit
+
+bb.h:                                             ; preds = %bb.g
+  %i.ca = sub nuw nsw i32 64, %3                  ; 3 uses
+  %i.cb = icmp eq i32 %i.ca, %2
+  br i1 %i.cb, label %bb.i, label %bb.k
+
+bb.i:                                             ; preds = %bb.h
+  %.not.i.i55 = icmp eq ptr %0, %1
+  br i1 %.not.i.i55, label %tcg_gen_shli_i64.exit, label %bb.j
+
+bb.j:                                             ; preds = %bb.i
+  %i.cc = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx)
+  %i.cd = load ptr, ptr %i.cc, align 8            ; 2 uses
+  %i.ce = ptrtoint ptr %0 to i64
+  %i.cf = getelementptr inbounds nuw i8, ptr %i.cd, i64 %i.ce
+  %i.cg = ptrtoint ptr %i.cf to i64
+  %i.ch = ptrtoint ptr %1 to i64
+  %i.ci = getelementptr inbounds nuw i8, ptr %i.cd, i64 %i.ch
+  %i.cj = ptrtoint ptr %i.ci to i64
+  %i.ck = tail call ptr @tcg_gen_op2(i32 noundef 6, i32 noundef 1, i64 noundef %i.cg, i64 noundef %i.cj) ; 0 uses
+  br label %tcg_gen_shli_i64.exit
+
+bb.k:                                             ; preds = %bb.h
+  %i.cl = sub nuw nsw i32 %i.ca, %2
+  %i.cm = zext nneg i32 %i.cl to i64
+  %i.cn = tail call ptr @tcg_constant_i64(i64 noundef %i.cm) #6
+  %i.co = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx)
+  %i.cp = load ptr, ptr %i.co, align 8            ; 3 uses
+  %i.cq = ptrtoint ptr %0 to i64
+  %i.cr = getelementptr inbounds nuw i8, ptr %i.cp, i64 %i.cq
+  %i.cs = ptrtoint ptr %i.cr to i64
+  %i.ct = ptrtoint ptr %1 to i64
+  %i.cu = getelementptr inbounds nuw i8, ptr %i.cp, i64 %i.ct
+  %i.cv = ptrtoint ptr %i.cu to i64
+  %i.cw = ptrtoint ptr %i.cn to i64
+  %i.cx = getelementptr inbounds nuw i8, ptr %i.cp, i64 %i.cw
+  %i.cy = ptrtoint ptr %i.cx to i64
+  %i.cz = tail call ptr @tcg_gen_op3(i32 noundef 51, i32 noundef 1, i64 noundef %i.cs, i64 noundef %i.cv, i64 noundef %i.cy) ; 0 uses
+  br label %tcg_gen_shli_i64.exit
+
+end_hunk_0
+begin_hunk_1_@tcg_gen_bswap32_i64:bb.a
+  %i.cl = tail call ptr @tcg_gen_op3(i32 noundef %., i32 noundef 1, i64 noundef %i.ch, i64 noundef %i.ch, i64 noundef %i.ck) ; 0 uses
+  %i.cm = load ptr, ptr %i.r, align 8             ; 3 uses
+  %i.cn = getelementptr inbounds nuw i8, ptr %i.cm, i64 %i.bc
+  %i.co = ptrtoint ptr %i.cn to i64
+  %i.cp = getelementptr inbounds nuw i8, ptr %i.cm, i64 %i.t
+  %i.cq = ptrtoint ptr %i.cp to i64
+  %i.cr = getelementptr inbounds nuw i8, ptr %i.cm, i64 %i.ae
+  %i.cs = ptrtoint ptr %i.cr to i64
+  %i.ct = tail call ptr @tcg_gen_op3(i32 noundef 42, i32 noundef 1, i64 noundef %i.co, i64 noundef %i.cq, i64 noundef %i.cs) ; 0 uses
+  tail call void @tcg_temp_free_i64(ptr noundef %i.n) #6
+  tail call void @tcg_temp_free_i64(ptr noundef %i.o) #6
+  br label %bb.f
+
+bb.f:                                             ; preds = %bb.e, %bb.d
+  ret void
+}
+
+; Function Attrs: nounwind sspstrong uwtable
+define dso_local void @tcg_gen_bswap64_i64(ptr noundef %0, ptr noundef %1) local_unnamed_addr #2 {
+bb.a:
+  %i.a = tail call zeroext i1 @tcg_op_supported(i32 noundef 12, i32 noundef 1, i32 noundef 0) #6
+  br i1 %i.a, label %bb.b, label %bb.c
+
+bb.b:                                             ; preds = %bb.a
+  %i.b = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx)
+  %i.c = load ptr, ptr %i.b, align 8              ; 2 uses
+  %i.d = ptrtoint ptr %0 to i64
+  %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.d
+  %i.f = ptrtoint ptr %i.e to i64
+  %i.g = ptrtoint ptr %1 to i64
+  %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.g
+  %i.i = ptrtoint ptr %i.h to i64
+  %i.j = tail call ptr @tcg_gen_op3(i32 noundef 12, i32 noundef 1, i64 noundef %i.f, i64 noundef %i.i, i64 noundef 0) ; 0 uses
+  br label %bb.f
+
+bb.c:                                             ; preds = %bb.a
+  %i.k = tail call ptr @tcg_temp_ebb_new_i64() #6 ; 2 uses
+  %i.l = tail call ptr @tcg_temp_ebb_new_i64() #6 ; 2 uses
+  %i.m = tail call ptr @tcg_temp_ebb_new_i64() #6 ; 5 uses
+  %i.n = tail call ptr @tcg_constant_i64(i64 noundef 71777214294589695) #6 ; 2 uses
+  %.not.i.i = icmp eq ptr %i.m, %i.n
+  %.pre = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx) ; 15 uses
+  br i1 %.not.i.i, label %.tcg_gen_movi_i64.exit_crit_edge, label %bb.d
+
+.tcg_gen_movi_i64.exit_crit_edge:                 ; preds = %bb.c
+  %.pre42 = ptrtoint ptr %i.m to i64
+  br label %tcg_gen_movi_i64.exit
+
+bb.d:                                             ; preds = %bb.c
+  %i.o = load ptr, ptr %.pre, align 8             ; 2 uses
+  %i.p = ptrtoint ptr %i.m to i64                 ; 2 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.p
+  %i.r = ptrtoint ptr %i.q to i64
+  %i.s = ptrtoint ptr %i.n to i64
+  %i.t = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.s
+  %i.u = ptrtoint ptr %i.t to i64
+  %i.v = tail call ptr @tcg_gen_op2(i32 noundef 6, i32 noundef 1, i64 noundef %i.r, i64 noundef %i.u) ; 0 uses
+  br label %tcg_gen_movi_i64.exit
+
+tcg_gen_movi_i64.exit:                            ; preds = %.tcg_gen_movi_i64.exit_crit_edge, %bb.d
+  %.pre-phi43 = phi i64 [ %.pre42, %.tcg_gen_movi_i64.exit_crit_edge ], [ %i.p, %bb.d ] ; 5 uses
+  %i.w = tail call ptr @tcg_constant_i64(i64 noundef 8) #6
+  %i.x = load ptr, ptr %.pre, align 8             ; 3 uses
+  %i.y = ptrtoint ptr %i.k to i64                 ; 8 uses
+  %i.z = getelementptr inbounds nuw i8, ptr %i.x, i64 %i.y
+  %i.aa = ptrtoint ptr %i.z to i64
+  %i.ab = ptrtoint ptr %1 to i64                  ; 2 uses
+  %i.ac = getelementptr inbounds nuw i8, ptr %i.x, i64 %i.ab
+  %i.ad = ptrtoint ptr %i.ac to i64
+  %i.ae = ptrtoint ptr %i.w to i64
+  %i.af = getelementptr inbounds nuw i8, ptr %i.x, i64 %i.ae
+  %i.ag = ptrtoint ptr %i.af to i64
+  %i.ah = tail call ptr @tcg_gen_op3(i32 noundef 52, i32 noundef 1, i64 noundef %i.aa, i64 noundef %i.ad, i64 noundef %i.ag) ; 0 uses
+  %i.ai = load ptr, ptr %.pre, align 8            ; 3 uses
+  %i.aj = ptrtoint ptr %i.l to i64                ; 8 uses
+  %i.ak = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.aj
+  %i.al = ptrtoint ptr %i.ak to i64
+  %i.am = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.ab
+  %i.an = ptrtoint ptr %i.am to i64
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.ai, i64 %.pre-phi43
+  %i.ap = ptrtoint ptr %i.ao to i64
+  %i.aq = tail call ptr @tcg_gen_op3(i32 noundef 8, i32 noundef 1, i64 noundef %i.al, i64 noundef %i.an, i64 noundef %i.ap) ; 0 uses
+  %i.ar = load ptr, ptr %.pre, align 8            ; 2 uses
+  %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 %i.y
+  %i.at = ptrtoint ptr %i.as to i64               ; 2 uses
+  %i.au = getelementptr inbounds nuw i8, ptr %i.ar, i64 %.pre-phi43
+  %i.av = ptrtoint ptr %i.au to i64
+  %i.aw = tail call ptr @tcg_gen_op3(i32 noundef 8, i32 noundef 1, i64 noundef %i.at, i64 noundef %i.at, i64 noundef %i.av) ; 0 uses
+  %i.ax = tail call ptr @tcg_constant_i64(i64 noundef 8) #6
+  %i.ay = load ptr, ptr %.pre, align 8            ; 2 uses
+  %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 %i.aj
+  %i.ba = ptrtoint ptr %i.az to i64               ; 2 uses
+  %i.bb = ptrtoint ptr %i.ax to i64
+  %i.bc = getelementptr inbounds nuw i8, ptr %i.ay, i64 %i.bb
+  %i.bd = ptrtoint ptr %i.bc to i64
+  %i.be = tail call ptr @tcg_gen_op3(i32 noundef 51, i32 noundef 1, i64 noundef %i.ba, i64 noundef %i.ba, i64 noundef %i.bd) ; 0 uses
+  %i.bf = load ptr, ptr %.pre, align 8            ; 3 uses
+  %i.bg = ptrtoint ptr %0 to i64                  ; 7 uses
+  %i.bh = getelementptr inbounds nuw i8, ptr %i.bf, i64 %i.bg
+  %i.bi = ptrtoint ptr %i.bh to i64
+  %i.bj = getelementptr inbounds nuw i8, ptr %i.bf, i64 %i.y
+  %i.bk = ptrtoint ptr %i.bj to i64
+  %i.bl = getelementptr inbounds nuw i8, ptr %i.bf, i64 %i.aj
+  %i.bm = ptrtoint ptr %i.bl to i64
+  %i.bn = tail call ptr @tcg_gen_op3(i32 noundef 42, i32 noundef 1, i64 noundef %i.bi, i64 noundef %i.bk, i64 noundef %i.bm) ; 0 uses
+  %i.bo = tail call ptr @tcg_constant_i64(i64 noundef 281470681808895) #6 ; 2 uses
+  %.not.i.i40 = icmp eq ptr %i.m, %i.bo
+  br i1 %.not.i.i40, label %tcg_gen_movi_i64.exit41, label %bb.e
+
+bb.e:                                             ; preds = %tcg_gen_movi_i64.exit
+  %i.bp = load ptr, ptr %.pre, align 8            ; 2 uses
+  %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 %.pre-phi43
+  %i.br = ptrtoint ptr %i.bq to i64
+  %i.bs = ptrtoint ptr %i.bo to i64
+  %i.bt = getelementptr inbounds nuw i8, ptr %i.bp, i64 %i.bs
+  %i.bu = ptrtoint ptr %i.bt to i64
+  %i.bv = tail call ptr @tcg_gen_op2(i32 noundef 6, i32 noundef 1, i64 noundef %i.br, i64 noundef %i.bu) ; 0 uses
+  br label %tcg_gen_movi_i64.exit41
+
+tcg_gen_movi_i64.exit41:                          ; preds = %tcg_gen_movi_i64.exit, %bb.e
+  %i.bw = tail call ptr @tcg_constant_i64(i64 noundef 16) #6
+  %i.bx = load ptr, ptr %.pre, align 8            ; 3 uses
+  %i.by = getelementptr inbounds nuw i8, ptr %i.bx, i64 %i.y
+  %i.bz = ptrtoint ptr %i.by to i64
+  %i.ca = getelementptr inbounds nuw i8, ptr %i.bx, i64 %i.bg
+  %i.cb = ptrtoint ptr %i.ca to i64
+  %i.cc = ptrtoint ptr %i.bw to i64
+  %i.cd = getelementptr inbounds nuw i8, ptr %i.bx, i64 %i.cc
+  %i.ce = ptrtoint ptr %i.cd to i64
+  %i.cf = tail call ptr @tcg_gen_op3(i32 noundef 52, i32 noundef 1, i64 noundef %i.bz, i64 noundef %i.cb, i64 noundef %i.ce) ; 0 uses
+  %i.cg = load ptr, ptr %.pre, align 8            ; 3 uses
+  %i.ch = getelementptr inbounds nuw i8, ptr %i.cg, i64 %i.aj
+  %i.ci = ptrtoint ptr %i.ch to i64
+  %i.cj = getelementptr inbounds nuw i8, ptr %i.cg, i64 %i.bg
+  %i.ck = ptrtoint ptr %i.cj to i64
+  %i.cl = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.pre-phi43
+  %i.cm = ptrtoint ptr %i.cl to i64
+  %i.cn = tail call ptr @tcg_gen_op3(i32 noundef 8, i32 noundef 1, i64 noundef %i.ci, i64 noundef %i.ck, i64 noundef %i.cm) ; 0 uses
+  %i.co = load ptr, ptr %.pre, align 8            ; 2 uses
+  %i.cp = getelementptr inbounds nuw i8, ptr %i.co, i64 %i.y
+  %i.cq = ptrtoint ptr %i.cp to i64               ; 2 uses
+  %i.cr = getelementptr inbounds nuw i8, ptr %i.co, i64 %.pre-phi43
+  %i.cs = ptrtoint ptr %i.cr to i64
+  %i.ct = tail call ptr @tcg_gen_op3(i32 noundef 8, i32 noundef 1, i64 noundef %i.cq, i64 noundef %i.cq, i64 noundef %i.cs) ; 0 uses
+  %i.cu = tail call ptr @tcg_constant_i64(i64 noundef 16) #6
+  %i.cv = load ptr, ptr %.pre, align 8            ; 2 uses
+  %i.cw = getelementptr inbounds nuw i8, ptr %i.cv, i64 %i.aj
+  %i.cx = ptrtoint ptr %i.cw to i64               ; 2 uses
+  %i.cy = ptrtoint ptr %i.cu to i64
+  %i.cz = getelementptr inbounds nuw i8, ptr %i.cv, i64 %i.cy
+  %i.da = ptrtoint ptr %i.cz to i64
+  %i.db = tail call ptr @tcg_gen_op3(i32 noundef 51, i32 noundef 1, i64 noundef %i.cx, i64 noundef %i.cx, i64 noundef %i.da) ; 0 uses
+  %i.dc = load ptr, ptr %.pre, align 8            ; 3 uses
+  %i.dd = getelementptr inbounds nuw i8, ptr %i.dc, i64 %i.bg
+  %i.de = ptrtoint ptr %i.dd to i64
+  %i.df = getelementptr inbounds nuw i8, ptr %i.dc, i64 %i.y
+  %i.dg = ptrtoint ptr %i.df to i64
+  %i.dh = getelementptr inbounds nuw i8, ptr %i.dc, i64 %i.aj
+  %i.di = ptrtoint ptr %i.dh to i64
+  %i.dj = tail call ptr @tcg_gen_op3(i32 noundef 42, i32 noundef 1, i64 noundef %i.de, i64 noundef %i.dg, i64 noundef %i.di) ; 0 uses
+  %i.dk = tail call ptr @tcg_constant_i64(i64 noundef 32) #6
+  %i.dl = load ptr, ptr %.pre, align 8            ; 3 uses
+  %i.dm = getelementptr inbounds nuw i8, ptr %i.dl, i64 %i.y
+  %i.dn = ptrtoint ptr %i.dm to i64
+  %i.do = getelementptr inbounds nuw i8, ptr %i.dl, i64 %i.bg
+  %i.dp = ptrtoint ptr %i.do to i64
+  %i.dq = ptrtoint ptr %i.dk to i64
+  %i.dr = getelementptr inbounds nuw i8, ptr %i.dl, i64 %i.dq
+  %i.ds = ptrtoint ptr %i.dr to i64
+  %i.dt = tail call ptr @tcg_gen_op3(i32 noundef 52, i32 noundef 1, i64 noundef %i.dn, i64 noundef %i.dp, i64 noundef %i.ds) ; 0 uses
+  %i.du = tail call ptr @tcg_constant_i64(i64 noundef 32) #6
+  %i.dv = load ptr, ptr %.pre, align 8            ; 3 uses
+  %i.dw = getelementptr inbounds nuw i8, ptr %i.dv, i64 %i.aj
+  %i.dx = ptrtoint ptr %i.dw to i64
+  %i.dy = getelementptr inbounds nuw i8, ptr %i.dv, i64 %i.bg
+  %i.dz = ptrtoint ptr %i.dy to i64
+  %i.ea = ptrtoint ptr %i.du to i64
+  %i.eb = getelementptr inbounds nuw i8, ptr %i.dv, i64 %i.ea
+  %i.ec = ptrtoint ptr %i.eb to i64
+  %i.ed = tail call ptr @tcg_gen_op3(i32 noundef 51, i32 noundef 1, i64 noundef %i.dx, i64 noundef %i.dz, i64 noundef %i.ec) ; 0 uses
+  %i.ee = load ptr, ptr %.pre, align 8            ; 3 uses
+  %i.ef = getelementptr inbounds nuw i8, ptr %i.ee, i64 %i.bg
+  %i.eg = ptrtoint ptr %i.ef to i64
+  %i.eh = getelementptr inbounds nuw i8, ptr %i.ee, i64 %i.y
+  %i.ei = ptrtoint ptr %i.eh to i64
+  %i.ej = getelementptr inbounds nuw i8, ptr %i.ee, i64 %i.aj
+  %i.ek = ptrtoint ptr %i.ej to i64
+  %i.el = tail call ptr @tcg_gen_op3(i32 noundef 42, i32 noundef 1, i64 noundef %i.eg, i64 noundef %i.ei, i64 noundef %i.ek) ; 0 uses
+  tail call void @tcg_temp_free_i64(ptr noundef %i.k) #6
+  tail call void @tcg_temp_free_i64(ptr noundef %i.l) #6
+  tail call void @tcg_temp_free_i64(ptr noundef %i.m) #6
+  br label %bb.f
+
+bb.f:                                             ; preds = %tcg_gen_movi_i64.exit41, %bb.b
+  ret void
+}
+
+; Function Attrs: nounwind sspstrong uwtable
+define dso_local void @tcg_gen_hswap_i64(ptr noundef %0, ptr noundef %1) local_unnamed_addr #2 {
+bb.a:
+  %i.a = tail call ptr @tcg_temp_ebb_new_i64() #6 ; 3 uses
+  %i.b = tail call ptr @tcg_temp_ebb_new_i64() #6 ; 7 uses
+  %i.c = tail call zeroext i1 @tcg_op_supported(i32 noundef 46, i32 noundef 1, i32 noundef 0) #6
+  %i.d = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx) ; 4 uses
+  br i1 %i.c, label %bb.b, label %bb.c
+
+bb.b:                                             ; preds = %bb.a
+  %i.e = tail call ptr @tcg_constant_i64(i64 noundef 32) #6
+  %i.f = load ptr, ptr %i.d, align 8              ; 3 uses
+  %i.g = ptrtoint ptr %i.b to i64                 ; 2 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.g
+  %i.i = ptrtoint ptr %i.h to i64
+  %i.j = ptrtoint ptr %1 to i64
+  %i.k = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.j
+  %i.l = ptrtoint ptr %i.k to i64
+  %i.m = ptrtoint ptr %i.e to i64
+  %i.n = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.m
+  %i.o = ptrtoint ptr %i.n to i64
+  %i.p = tail call ptr @tcg_gen_op3(i32 noundef 46, i32 noundef 1, i64 noundef %i.i, i64 noundef %i.l, i64 noundef %i.o) ; 0 uses
+  br label %tcg_gen_rotli_i64.exit
+
+bb.c:                                             ; preds = %bb.a
+  tail call void @tcg_gen_rotri_i64(ptr noundef %i.b, ptr noundef %1, i64 noundef 32)
+  %.pre16 = ptrtoint ptr %i.b to i64
+  br label %tcg_gen_rotli_i64.exit
+
+tcg_gen_rotli_i64.exit:                           ; preds = %bb.b, %bb.c
+  %.pre-phi17 = phi i64 [ %i.g, %bb.b ], [ %.pre16, %bb.c ] ; 2 uses
+  tail call void @tcg_gen_andi_i64(ptr noundef %i.a, ptr noundef %i.b, i64 noundef 281470681808895)
+  %i.q = tail call ptr @tcg_constant_i64(i64 noundef 16) #6
+  %i.r = load ptr, ptr %i.d, align 8              ; 2 uses
+  %i.s = ptrtoint ptr %i.a to i64                 ; 2 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %i.r, i64 %i.s
+  %i.u = ptrtoint ptr %i.t to i64                 ; 2 uses
+  %i.v = ptrtoint ptr %i.q to i64
+  %i.w = getelementptr inbounds nuw i8, ptr %i.r, i64 %i.v
+  %i.x = ptrtoint ptr %i.w to i64
+  %i.y = tail call ptr @tcg_gen_op3(i32 noundef 51, i32 noundef 1, i64 noundef %i.u, i64 noundef %i.u, i64 noundef %i.x) ; 0 uses
+  %i.z = tail call ptr @tcg_constant_i64(i64 noundef 16) #6
+  %i.aa = load ptr, ptr %i.d, align 8             ; 2 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 %.pre-phi17
+  %i.ac = ptrtoint ptr %i.ab to i64               ; 2 uses
+  %i.ad = ptrtoint ptr %i.z to i64
+  %i.ae = getelementptr inbounds nuw i8, ptr %i.aa, i64 %i.ad
+  %i.af = ptrtoint ptr %i.ae to i64
+  %i.ag = tail call ptr @tcg_gen_op3(i32 noundef 52, i32 noundef 1, i64 noundef %i.ac, i64 noundef %i.ac, i64 noundef %i.af) ; 0 uses
+  tail call void @tcg_gen_andi_i64(ptr noundef %i.b, ptr noundef %i.b, i64 noundef 281470681808895)
+  %i.ah = load ptr, ptr %i.d, align 8             ; 3 uses
+  %i.ai = ptrtoint ptr %0 to i64
+  %i.aj = getelementptr inbounds nuw i8, ptr %i.ah, i64 %i.ai
+  %i.ak = ptrtoint ptr %i.aj to i64
+  %i.al = getelementptr inbounds nuw i8, ptr %i.ah, i64 %i.s
+  %i.am = ptrtoint ptr %i.al to i64
+  %i.an = getelementptr inbounds nuw i8, ptr %i.ah, i64 %.pre-phi17
+  %i.ao = ptrtoint ptr %i.an to i64
+  %i.ap = tail call ptr @tcg_gen_op3(i32 noundef 42, i32 noundef 1, i64 noundef %i.ak, i64 noundef %i.am, i64 noundef %i.ao) ; 0 uses
+  tail call void @tcg_temp_free_i64(ptr noundef %i.a) #6
+  tail call void @tcg_temp_free_i64(ptr noundef %i.b) #6
+  ret void
+}
+
+; Function Attrs: nounwind sspstrong uwtable
+define dso_local void @tcg_gen_rotli_i64(ptr noundef %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #2 {
+bb.a:
+  %or.cond = icmp ult i64 %2, 64
+  tail call void @llvm.assume(i1 %or.cond)
+  %i.a = icmp eq i64 %2, 0
+  br i1 %i.a, label %bb.b, label %bb.d
+
+bb.b:                                             ; preds = %bb.a
+  %.not.i = icmp eq ptr %0, %1
+  br i1 %.not.i, label %tcg_gen_mov_i64.exit, label %bb.c
+
+bb.c:                                             ; preds = %bb.b
+  %i.b = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx)
+  %i.c = load ptr, ptr %i.b, align 8              ; 2 uses
+  %i.d = ptrtoint ptr %0 to i64
+  %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.d
+  %i.f = ptrtoint ptr %i.e to i64
+  %i.g = ptrtoint ptr %1 to i64
+  %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.g
+  %i.i = ptrtoint ptr %i.h to i64
+  %i.j = tail call ptr @tcg_gen_op2(i32 noundef 6, i32 noundef 1, i64 noundef %i.f, i64 noundef %i.i) ; 0 uses
+  br label %tcg_gen_mov_i64.exit
+
+bb.d:                                             ; preds = %bb.a
+  %i.k = tail call zeroext i1 @tcg_op_supported(i32 noundef 46, i32 noundef 1, i32 noundef 0) #6
+  br i1 %i.k, label %bb.e, label %bb.f
+
+bb.e:                                             ; preds = %bb.d
+  %i.l = tail call ptr @tcg_constant_i64(i64 noundef %2) #6
+  %i.m = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx)
+  %i.n = load ptr, ptr %i.m, align 8              ; 3 uses
+  %i.o = ptrtoint ptr %0 to i64
+  %i.p = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.o
+  %i.q = ptrtoint ptr %i.p to i64
+  %i.r = ptrtoint ptr %1 to i64
+  %i.s = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.r
+  %i.t = ptrtoint ptr %i.s to i64
+  %i.u = ptrtoint ptr %i.l to i64
+  %i.v = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.u
+  %i.w = ptrtoint ptr %i.v to i64
+  %i.x = tail call ptr @tcg_gen_op3(i32 noundef 46, i32 noundef 1, i64 noundef %i.q, i64 noundef %i.t, i64 noundef %i.w) ; 0 uses
+  br label %tcg_gen_mov_i64.exit
+
+bb.f:                                             ; preds = %bb.d
+  %i.y = sub nsw i64 0, %2
+  %i.z = and i64 %i.y, 63
+  tail call void @tcg_gen_rotri_i64(ptr noundef %0, ptr noundef %1, i64 noundef %i.z)
+  br label %tcg_gen_mov_i64.exit
+
+tcg_gen_mov_i64.exit:                             ; preds = %bb.c, %bb.b, %bb.e, %bb.f
+  ret void
+}
+
+; Function Attrs: nounwind sspstrong uwtable
+define dso_local void @tcg_gen_wswap_i64(ptr noundef %0, ptr noundef %1) local_unnamed_addr #2 {
+bb.a:
+  %i.a = tail call zeroext i1 @tcg_op_supported(i32 noundef 46, i32 noundef 1, i32 noundef 0) #6
+  br i1 %i.a, label %bb.b, label %bb.c
+
+bb.b:                                             ; preds = %bb.a
+  %i.b = tail call ptr @tcg_constant_i64(i64 noundef 32) #6
+  %i.c = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx)
+  %i.d = load ptr, ptr %i.c, align 8              ; 3 uses
+  %i.e = ptrtoint ptr %0 to i64
+  %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.e
+  %i.g = ptrtoint ptr %i.f to i64
+  %i.h = ptrtoint ptr %1 to i64
+  %i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.h
+  %i.j = ptrtoint ptr %i.i to i64
+  %i.k = ptrtoint ptr %i.b to i64
+  %i.l = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.k
+  %i.m = ptrtoint ptr %i.l to i64
+  %i.n = tail call ptr @tcg_gen_op3(i32 noundef 46, i32 noundef 1, i64 noundef %i.g, i64 noundef %i.j, i64 noundef %i.m) ; 0 uses
+  br label %tcg_gen_rotli_i64.exit
+
+bb.c:                                             ; preds = %bb.a
+  tail call void @tcg_gen_rotri_i64(ptr noundef %0, ptr noundef %1, i64 noundef 32)
+  br label %tcg_gen_rotli_i64.exit
+
+tcg_gen_rotli_i64.exit:                           ; preds = %bb.b, %bb.c
+  ret void
+}
+
+; Function Attrs: nounwind sspstrong uwtable
+define dso_local void @tcg_gen_not_i64(ptr noundef %0, ptr noundef %1) local_unnamed_addr #2 {
+bb.a:
+  %i.a = tail call zeroext i1 @tcg_op_supported(i32 noundef 41, i32 noundef 1, i32 noundef 0) #6
+  br i1 %i.a, label %bb.b, label %bb.c
+
+bb.b:                                             ; preds = %bb.a
+  %i.b = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx)
+  %i.c = load ptr, ptr %i.b, align 8              ; 2 uses
+  %i.d = ptrtoint ptr %0 to i64
+  %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.d
+  %i.f = ptrtoint ptr %i.e to i64
+  %i.g = ptrtoint ptr %1 to i64
+  %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.g
+  %i.i = ptrtoint ptr %i.h to i64
+  %i.j = tail call ptr @tcg_gen_op2(i32 noundef 41, i32 noundef 1, i64 noundef %i.f, i64 noundef %i.i) ; 0 uses
+  br label %tcg_gen_xori_i64.exit
+
+bb.c:                                             ; preds = %bb.a
+  %i.k = tail call zeroext i1 @tcg_op_supported(i32 noundef 41, i32 noundef 1, i32 noundef 0) #6
+  br i1 %i.k, label %bb.d, label %bb.e
+
+bb.d:                                             ; preds = %bb.c
+  %i.l = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx)
+  %i.m = load ptr, ptr %i.l, align 8              ; 2 uses
+  %i.n = ptrtoint ptr %0 to i64
+  %i.o = getelementptr inbounds nuw i8, ptr %i.m, i64 %i.n
+  %i.p = ptrtoint ptr %i.o to i64
+  %i.q = ptrtoint ptr %1 to i64
+  %i.r = getelementptr inbounds nuw i8, ptr %i.m, i64 %i.q
+  %i.s = ptrtoint ptr %i.r to i64
+  %i.t = tail call ptr @tcg_gen_op2(i32 noundef 41, i32 noundef 1, i64 noundef %i.p, i64 noundef %i.s) ; 0 uses
+  br label %tcg_gen_xori_i64.exit
+
+bb.e:                                             ; preds = %bb.c
+  %i.u = tail call ptr @tcg_constant_i64(i64 noundef -1) #6
+  %i.v = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx)
+  %i.w = load ptr, ptr %i.v, align 8              ; 3 uses
+  %i.x = ptrtoint ptr %0 to i64
+  %i.y = getelementptr inbounds nuw i8, ptr %i.w, i64 %i.x
+  %i.z = ptrtoint ptr %i.y to i64
+  %i.aa = ptrtoint ptr %1 to i64
+  %i.ab = getelementptr inbounds nuw i8, ptr %i.w, i64 %i.aa
+  %i.ac = ptrtoint ptr %i.ab to i64
+  %i.ad = ptrtoint ptr %i.u to i64
+  %i.ae = getelementptr inbounds nuw i8, ptr %i.w, i64 %i.ad
+  %i.af = ptrtoint ptr %i.ae to i64
+  %i.ag = tail call ptr @tcg_gen_op3(i32 noundef 58, i32 noundef 1, i64 noundef %i.z, i64 noundef %i.ac, i64 noundef %i.af) ; 0 uses
+  br label %tcg_gen_xori_i64.exit
+
+tcg_gen_xori_i64.exit:                            ; preds = %bb.e, %bb.d, %bb.b
+  ret void
+}
+
+; Function Attrs: nounwind sspstrong uwtable
+define dso_local void @tcg_gen_andc_i64(ptr noundef %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #2 {
+bb.a:
+  %i.a = tail call zeroext i1 @tcg_op_supported(i32 noundef 9, i32 noundef 1, i32 noundef 0) #6
+  br i1 %i.a, label %bb.b, label %bb.c
+
+bb.b:                                             ; preds = %bb.a
+  %i.b = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx)
+  %i.c = load ptr, ptr %i.b, align 8              ; 3 uses
+  %i.d = ptrtoint ptr %0 to i64
+  %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.d
+  %i.f = ptrtoint ptr %i.e to i64
+  %i.g = ptrtoint ptr %1 to i64
+  %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.g
+  %i.i = ptrtoint ptr %i.h to i64
+  %i.j = ptrtoint ptr %2 to i64
+  %i.k = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.j
+  %i.l = ptrtoint ptr %i.k to i64
+  %i.m = tail call ptr @tcg_gen_op3(i32 noundef 9, i32 noundef 1, i64 noundef %i.f, i64 noundef %i.i, i64 noundef %i.l) ; 0 uses
+  br label %bb.d
+
+bb.c:                                             ; preds = %bb.a
+  %i.n = tail call ptr @tcg_temp_ebb_new_i64() #6 ; 3 uses
+  tail call void @tcg_gen_not_i64(ptr noundef %i.n, ptr noundef %2)
+  %i.o = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx)
+  %i.p = load ptr, ptr %i.o, align 8              ; 3 uses
+  %i.q = ptrtoint ptr %0 to i64
+  %i.r = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.q
+  %i.s = ptrtoint ptr %i.r to i64
+  %i.t = ptrtoint ptr %1 to i64
+  %i.u = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.t
+  %i.v = ptrtoint ptr %i.u to i64
+  %i.w = ptrtoint ptr %i.n to i64
+  %i.x = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.w
+  %i.y = ptrtoint ptr %i.x to i64
+  %i.z = tail call ptr @tcg_gen_op3(i32 noundef 8, i32 noundef 1, i64 noundef %i.s, i64 noundef %i.v, i64 noundef %i.y) ; 0 uses
+  tail call void @tcg_temp_free_i64(ptr noundef %i.n) #6
+  br label %bb.d
+
+bb.d:                                             ; preds = %bb.c, %bb.b
+  ret void
+}
+
+; Function Attrs: nounwind sspstrong uwtable
+define dso_local void @tcg_gen_eqv_i64(ptr noundef %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #2 {
+bb.a:
+  %i.a = tail call zeroext i1 @tcg_op_supported(i32 noundef 21, i32 noundef 1, i32 noundef 0) #6
+  %i.b = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx)
+end_hunk_1
+begin_hunk_2_@tcg_gen_add2_i64:bb.a
+  %i.bl = ptrtoint ptr %i.bk to i64
+  %i.bm = tail call ptr @tcg_gen_op3(i32 noundef 7, i32 noundef 1, i64 noundef %i.bf, i64 noundef %i.bi, i64 noundef %i.bl) ; 0 uses
+  %i.bn = load ptr, ptr %i.ah, align 8            ; 2 uses
+  %i.bo = getelementptr inbounds nuw i8, ptr %i.bn, i64 %i.bd
+  %i.bp = ptrtoint ptr %i.bo to i64               ; 2 uses
+  %i.bq = getelementptr inbounds nuw i8, ptr %i.bn, i64 %i.au
+  %i.br = ptrtoint ptr %i.bq to i64
+  %i.bs = tail call ptr @tcg_gen_op3(i32 noundef 7, i32 noundef 1, i64 noundef %i.bp, i64 noundef %i.bp, i64 noundef %i.br) ; 0 uses
+  %.not.i25 = icmp eq ptr %0, %i.b
+  br i1 %.not.i25, label %tcg_gen_mov_i64.exit26, label %bb.e
+
+bb.e:                                             ; preds = %bb.d
+  %i.bt = load ptr, ptr %i.ah, align 8            ; 2 uses
+  %i.bu = ptrtoint ptr %0 to i64
+  %i.bv = getelementptr inbounds nuw i8, ptr %i.bt, i64 %i.bu
+  %i.bw = ptrtoint ptr %i.bv to i64
+  %i.bx = getelementptr inbounds nuw i8, ptr %i.bt, i64 %i.aj
+  %i.by = ptrtoint ptr %i.bx to i64
+  %i.bz = tail call ptr @tcg_gen_op2(i32 noundef 6, i32 noundef 1, i64 noundef %i.bw, i64 noundef %i.by) ; 0 uses
+  br label %tcg_gen_mov_i64.exit26
+
+tcg_gen_mov_i64.exit26:                           ; preds = %bb.d, %bb.e
+  tail call void @tcg_temp_free_i64(ptr noundef %i.b) #6
+  br label %tcg_gen_mov_i64.exit
+
+tcg_gen_mov_i64.exit:                             ; preds = %bb.c, %bb.b, %tcg_gen_mov_i64.exit26
+  %.sink = phi ptr [ %i.ag, %tcg_gen_mov_i64.exit26 ], [ %i.b, %bb.b ], [ %i.b, %bb.c ]
+  tail call void @tcg_temp_free_i64(ptr noundef %.sink) #6
+  ret void
+}
+
+; Function Attrs: nounwind sspstrong uwtable
+define dso_local void @tcg_gen_addcio_i64(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4) local_unnamed_addr #2 {
+bb.a:
+  %i.a = tail call zeroext i1 @tcg_op_supported(i32 noundef 61, i32 noundef 1, i32 noundef 0) #6
+  %i.b = tail call ptr @tcg_temp_ebb_new_i64() #6 ; 4 uses
+  br i1 %i.a, label %bb.b, label %bb.c
+
+bb.b:                                             ; preds = %bb.a
+  %i.c = tail call ptr @tcg_constant_i64(i64 noundef 0) #6
+  %i.d = tail call ptr @tcg_constant_i64(i64 noundef -1) #6
+  %i.e = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx) ; 3 uses
+  %i.f = load ptr, ptr %i.e, align 8              ; 3 uses
+  %i.g = ptrtoint ptr %i.b to i64
+  %i.h = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.g
+  %i.i = ptrtoint ptr %i.h to i64
+  %i.j = ptrtoint ptr %4 to i64
+  %i.k = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.j
+  %i.l = ptrtoint ptr %i.k to i64
+  %i.m = ptrtoint ptr %i.d to i64
+  %i.n = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.m
+  %i.o = ptrtoint ptr %i.n to i64
+  %i.p = tail call ptr @tcg_gen_op3(i32 noundef 59, i32 noundef 1, i64 noundef %i.i, i64 noundef %i.l, i64 noundef %i.o) ; 0 uses
+  %i.q = load ptr, ptr %i.e, align 8              ; 3 uses
+  %i.r = ptrtoint ptr %0 to i64
+  %i.s = getelementptr inbounds nuw i8, ptr %i.q, i64 %i.r
+  %i.t = ptrtoint ptr %i.s to i64
+  %i.u = ptrtoint ptr %2 to i64
+  %i.v = getelementptr inbounds nuw i8, ptr %i.q, i64 %i.u
+  %i.w = ptrtoint ptr %i.v to i64
+  %i.x = ptrtoint ptr %3 to i64
+  %i.y = getelementptr inbounds nuw i8, ptr %i.q, i64 %i.x
+  %i.z = ptrtoint ptr %i.y to i64
+  %i.aa = tail call ptr @tcg_gen_op3(i32 noundef 62, i32 noundef 1, i64 noundef %i.t, i64 noundef %i.w, i64 noundef %i.z) ; 0 uses
+  %i.ab = load ptr, ptr %i.e, align 8             ; 2 uses
+  %i.ac = ptrtoint ptr %1 to i64
+  %i.ad = getelementptr inbounds nuw i8, ptr %i.ab, i64 %i.ac
+  %i.ae = ptrtoint ptr %i.ad to i64
+  %i.af = ptrtoint ptr %i.c to i64
+  %i.ag = getelementptr inbounds nuw i8, ptr %i.ab, i64 %i.af
+  %i.ah = ptrtoint ptr %i.ag to i64               ; 2 uses
+  %i.ai = tail call ptr @tcg_gen_op3(i32 noundef 61, i32 noundef 1, i64 noundef %i.ae, i64 noundef %i.ah, i64 noundef %i.ah) ; 0 uses
+  br label %bb.d
+
+bb.c:                                             ; preds = %bb.a
+  %i.aj = tail call ptr @tcg_temp_ebb_new_i64() #6 ; 2 uses
+  %i.ak = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx) ; 5 uses
+  %i.al = load ptr, ptr %i.ak, align 8            ; 3 uses
+  %i.am = ptrtoint ptr %i.b to i64                ; 5 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %i.al, i64 %i.am
+  %i.ao = ptrtoint ptr %i.an to i64
+  %i.ap = ptrtoint ptr %2 to i64                  ; 2 uses
+  %i.aq = getelementptr inbounds nuw i8, ptr %i.al, i64 %i.ap
+  %i.ar = ptrtoint ptr %i.aq to i64
+  %i.as = ptrtoint ptr %3 to i64
+  %i.at = getelementptr inbounds nuw i8, ptr %i.al, i64 %i.as
+  %i.au = ptrtoint ptr %i.at to i64
+  %i.av = tail call ptr @tcg_gen_op3(i32 noundef 7, i32 noundef 1, i64 noundef %i.ao, i64 noundef %i.ar, i64 noundef %i.au) ; 0 uses
+  %i.aw = load ptr, ptr %i.ak, align 8            ; 3 uses
+  %i.ax = ptrtoint ptr %i.aj to i64               ; 2 uses
+  %i.ay = getelementptr inbounds nuw i8, ptr %i.aw, i64 %i.ax
+  %i.az = ptrtoint ptr %i.ay to i64
+  %i.ba = getelementptr inbounds nuw i8, ptr %i.aw, i64 %i.am
+  %i.bb = ptrtoint ptr %i.ba to i64
+  %i.bc = getelementptr inbounds nuw i8, ptr %i.aw, i64 %i.ap
+  %i.bd = ptrtoint ptr %i.bc to i64
+  %i.be = tail call ptr @tcg_gen_op4(i32 noundef 49, i32 noundef 1, i64 noundef %i.az, i64 noundef %i.bb, i64 noundef %i.bd, i64 noundef range(i64 -9223372036854775808, 4294967296) 10) ; 0 uses
+  %i.bf = load ptr, ptr %i.ak, align 8            ; 3 uses
+  %i.bg = ptrtoint ptr %0 to i64                  ; 2 uses
+  %i.bh = getelementptr inbounds nuw i8, ptr %i.bf, i64 %i.bg
+  %i.bi = ptrtoint ptr %i.bh to i64
+  %i.bj = getelementptr inbounds nuw i8, ptr %i.bf, i64 %i.am
+  %i.bk = ptrtoint ptr %i.bj to i64
+  %i.bl = ptrtoint ptr %4 to i64
+  %i.bm = getelementptr inbounds nuw i8, ptr %i.bf, i64 %i.bl
+  %i.bn = ptrtoint ptr %i.bm to i64
+  %i.bo = tail call ptr @tcg_gen_op3(i32 noundef 7, i32 noundef 1, i64 noundef %i.bi, i64 noundef %i.bk, i64 noundef %i.bn) ; 0 uses
+  %i.bp = load ptr, ptr %i.ak, align 8            ; 2 uses
+  %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 %i.am
+  %i.br = ptrtoint ptr %i.bq to i64               ; 2 uses
+  %i.bs = getelementptr inbounds nuw i8, ptr %i.bp, i64 %i.bg
+  %i.bt = ptrtoint ptr %i.bs to i64
+  %i.bu = tail call ptr @tcg_gen_op4(i32 noundef 49, i32 noundef 1, i64 noundef %i.br, i64 noundef %i.bt, i64 noundef %i.br, i64 noundef range(i64 -9223372036854775808, 4294967296) 10) ; 0 uses
+  %i.bv = load ptr, ptr %i.ak, align 8            ; 3 uses
+  %i.bw = ptrtoint ptr %1 to i64
+  %i.bx = getelementptr inbounds nuw i8, ptr %i.bv, i64 %i.bw
+  %i.by = ptrtoint ptr %i.bx to i64
+  %i.bz = getelementptr inbounds nuw i8, ptr %i.bv, i64 %i.am
+  %i.ca = ptrtoint ptr %i.bz to i64
+  %i.cb = getelementptr inbounds nuw i8, ptr %i.bv, i64 %i.ax
+  %i.cc = ptrtoint ptr %i.cb to i64
+  %i.cd = tail call ptr @tcg_gen_op3(i32 noundef 42, i32 noundef 1, i64 noundef %i.by, i64 noundef %i.ca, i64 noundef %i.cc) ; 0 uses
+  tail call void @tcg_temp_free_i64(ptr noundef %i.b) #6
+  br label %bb.d
+
+bb.d:                                             ; preds = %bb.c, %bb.b
+  %.sink = phi ptr [ %i.aj, %bb.c ], [ %i.b, %bb.b ]
+  tail call void @tcg_temp_free_i64(ptr noundef %.sink) #6
+  ret void
+}
+
+; Function Attrs: nounwind sspstrong uwtable
+define dso_local void @tcg_gen_addN_i64(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef readonly captures(none) %3) local_unnamed_addr #2 {
+._crit_edge:
+  %i.a = icmp sgt i32 %0, 2
+  tail call void @llvm.assume(i1 %i.a)
+  %i.b = add nsw i32 %0, -1                       ; 2 uses
+  %i.c = tail call zeroext i1 @tcg_op_supported(i32 noundef 61, i32 noundef 1, i32 noundef 0) #6
+  br i1 %i.c, label %.lr.ph88.preheader, label %bb.a
+
+.lr.ph88.preheader:                               ; preds = %._crit_edge
+  %i.d = load ptr, ptr %1, align 8
+  %i.e = load ptr, ptr %2, align 8
+  %i.f = load ptr, ptr %3, align 8
+  %i.g = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx) ; 3 uses
+  %i.h = load ptr, ptr %i.g, align 8              ; 3 uses
+  %i.i = ptrtoint ptr %i.d to i64
+  %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.i
+  %i.k = ptrtoint ptr %i.j to i64
+  %i.l = ptrtoint ptr %i.e to i64
+  %i.m = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.l
+  %i.n = ptrtoint ptr %i.m to i64
+  %i.o = ptrtoint ptr %i.f to i64
+  %i.p = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.o
+  %i.q = ptrtoint ptr %i.p to i64
+  %i.r = tail call ptr @tcg_gen_op3(i32 noundef 59, i32 noundef 1, i64 noundef %i.k, i64 noundef %i.n, i64 noundef %i.q) ; 0 uses
+  %wide.trip.count100 = zext nneg i32 %i.b to i64 ; 4 uses
+  br label %.lr.ph88
+
+._crit_edge89:                                    ; preds = %.lr.ph88
+  %.phi.trans.insert113 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %wide.trip.count100
+  %.pre114 = load ptr, ptr %.phi.trans.insert113, align 8
+  %.phi.trans.insert109 = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %wide.trip.count100
+  %.pre110 = load ptr, ptr %.phi.trans.insert109, align 8
+  %.phi.trans.insert107 = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %wide.trip.count100
+  %.pre108 = load ptr, ptr %.phi.trans.insert107, align 8
+  %i.s = load ptr, ptr %i.g, align 8              ; 3 uses
+  %i.t = ptrtoint ptr %.pre114 to i64
+  %i.u = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.t
+  %i.v = ptrtoint ptr %i.u to i64
+  %i.w = ptrtoint ptr %.pre108 to i64
+  %i.x = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.w
+  %i.y = ptrtoint ptr %i.x to i64
+  %i.z = ptrtoint ptr %.pre110 to i64
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.z
+  %i.ab = ptrtoint ptr %i.aa to i64
+  %i.ac = tail call ptr @tcg_gen_op3(i32 noundef 61, i32 noundef 1, i64 noundef %i.v, i64 noundef %i.y, i64 noundef %i.ab) ; 0 uses
+  br label %bb.c
+
+.lr.ph88:                                         ; preds = %.lr.ph88.preheader, %.lr.ph88
+  %indvars.iv97 = phi i64 [ 1, %.lr.ph88.preheader ], [ %indvars.iv.next98, %.lr.ph88 ] ; 4 uses
+  %i.ad = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv97
+  %i.ae = load ptr, ptr %i.ad, align 8
+  %i.af = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv97
+  %i.ag = load ptr, ptr %i.af, align 8
+  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv97
+  %i.ai = load ptr, ptr %i.ah, align 8
+  %i.aj = load ptr, ptr %i.g, align 8             ; 3 uses
+  %i.ak = ptrtoint ptr %i.ae to i64
+  %i.al = getelementptr inbounds nuw i8, ptr %i.aj, i64 %i.ak
+  %i.am = ptrtoint ptr %i.al to i64
+  %i.an = ptrtoint ptr %i.ag to i64
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.aj, i64 %i.an
+  %i.ap = ptrtoint ptr %i.ao to i64
+  %i.aq = ptrtoint ptr %i.ai to i64
+  %i.ar = getelementptr inbounds nuw i8, ptr %i.aj, i64 %i.aq
+  %i.as = ptrtoint ptr %i.ar to i64
+  %i.at = tail call ptr @tcg_gen_op3(i32 noundef 62, i32 noundef 1, i64 noundef %i.am, i64 noundef %i.ap, i64 noundef %i.as) ; 0 uses
+  %indvars.iv.next98 = add nuw nsw i64 %indvars.iv97, 1 ; 2 uses
+  %exitcond101.not = icmp eq i64 %indvars.iv.next98, %wide.trip.count100
+  br i1 %exitcond101.not, label %._crit_edge89, label %.lr.ph88, !llvm.loop !10
+
+bb.a:                                             ; preds = %._crit_edge
+  %i.au = tail call ptr @tcg_temp_ebb_new_i64() #6 ; 3 uses
+  %i.av = tail call ptr @tcg_temp_ebb_new_i64() #6 ; 2 uses
+  %i.aw = load ptr, ptr %2, align 8
+  %i.ax = load ptr, ptr %3, align 8
+  %i.ay = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx) ; 10 uses
+  %i.az = load ptr, ptr %i.ay, align 8            ; 3 uses
+  %i.ba = ptrtoint ptr %i.au to i64               ; 8 uses
+  %i.bb = getelementptr inbounds nuw i8, ptr %i.az, i64 %i.ba
+  %i.bc = ptrtoint ptr %i.bb to i64
+  %i.bd = ptrtoint ptr %i.aw to i64
+  %i.be = getelementptr inbounds nuw i8, ptr %i.az, i64 %i.bd
+  %i.bf = ptrtoint ptr %i.be to i64
+  %i.bg = ptrtoint ptr %i.ax to i64
+  %i.bh = getelementptr inbounds nuw i8, ptr %i.az, i64 %i.bg
+  %i.bi = ptrtoint ptr %i.bh to i64
+  %i.bj = tail call ptr @tcg_gen_op3(i32 noundef 7, i32 noundef 1, i64 noundef %i.bc, i64 noundef %i.bf, i64 noundef %i.bi) ; 0 uses
+  %i.bk = load ptr, ptr %2, align 8
+  %i.bl = load ptr, ptr %i.ay, align 8            ; 3 uses
+  %i.bm = ptrtoint ptr %i.av to i64               ; 5 uses
+  %i.bn = getelementptr inbounds nuw i8, ptr %i.bl, i64 %i.bm
+  %i.bo = ptrtoint ptr %i.bn to i64
+  %i.bp = getelementptr inbounds nuw i8, ptr %i.bl, i64 %i.ba
+  %i.bq = ptrtoint ptr %i.bp to i64
+  %i.br = ptrtoint ptr %i.bk to i64
+  %i.bs = getelementptr inbounds nuw i8, ptr %i.bl, i64 %i.br
+  %i.bt = ptrtoint ptr %i.bs to i64
+  %i.bu = tail call ptr @tcg_gen_op4(i32 noundef 49, i32 noundef 1, i64 noundef %i.bo, i64 noundef %i.bq, i64 noundef %i.bt, i64 noundef range(i64 -9223372036854775808, 4294967296) 10) ; 0 uses
+  %i.bv = load ptr, ptr %1, align 8               ; 2 uses
+  %.not.i = icmp eq ptr %i.bv, %i.au
+  br i1 %.not.i, label %.lr.ph84.preheader, label %bb.b
+
+bb.b:                                             ; preds = %bb.a
+  %i.bw = load ptr, ptr %i.ay, align 8            ; 2 uses
+  %i.bx = ptrtoint ptr %i.bv to i64
+  %i.by = getelementptr inbounds nuw i8, ptr %i.bw, i64 %i.bx
+  %i.bz = ptrtoint ptr %i.by to i64
+  %i.ca = getelementptr inbounds nuw i8, ptr %i.bw, i64 %i.ba
+  %i.cb = ptrtoint ptr %i.ca to i64
+  %i.cc = tail call ptr @tcg_gen_op2(i32 noundef 6, i32 noundef 1, i64 noundef %i.bz, i64 noundef %i.cb) ; 0 uses
+  br label %.lr.ph84.preheader
+
+.lr.ph84.preheader:                               ; preds = %bb.b, %bb.a
+  %wide.trip.count = zext nneg i32 %i.b to i64    ; 5 uses
+  br label %.lr.ph84
+
+._crit_edge85:                                    ; preds = %.lr.ph84
+  %.phi.trans.insert111 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %wide.trip.count
+  %.pre112 = load ptr, ptr %.phi.trans.insert111, align 8
+  %.phi.trans.insert103 = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %wide.trip.count
+  %.pre104 = load ptr, ptr %.phi.trans.insert103, align 8
+  %.phi.trans.insert = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %wide.trip.count
+  %.pre102 = load ptr, ptr %.phi.trans.insert, align 8
+  %i.cd = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %wide.trip.count
+  %i.ce = load ptr, ptr %i.ay, align 8            ; 3 uses
+  %i.cf = ptrtoint ptr %.pre112 to i64
+  %i.cg = getelementptr inbounds nuw i8, ptr %i.ce, i64 %i.cf
+  %i.ch = ptrtoint ptr %i.cg to i64
+  %i.ci = ptrtoint ptr %.pre102 to i64
+  %i.cj = getelementptr inbounds nuw i8, ptr %i.ce, i64 %i.ci
+  %i.ck = ptrtoint ptr %i.cj to i64
+  %i.cl = ptrtoint ptr %.pre104 to i64
+  %i.cm = getelementptr inbounds nuw i8, ptr %i.ce, i64 %i.cl
+  %i.cn = ptrtoint ptr %i.cm to i64
+  %i.co = tail call ptr @tcg_gen_op3(i32 noundef 7, i32 noundef 1, i64 noundef %i.ch, i64 noundef %i.ck, i64 noundef %i.cn) ; 0 uses
+  %i.cp = load ptr, ptr %i.cd, align 8
+  %i.cq = load ptr, ptr %i.ay, align 8            ; 2 uses
+  %i.cr = ptrtoint ptr %i.cp to i64
+  %i.cs = getelementptr inbounds nuw i8, ptr %i.cq, i64 %i.cr
+  %i.ct = ptrtoint ptr %i.cs to i64               ; 2 uses
+  %i.cu = getelementptr inbounds nuw i8, ptr %i.cq, i64 %i.bm
+  %i.cv = ptrtoint ptr %i.cu to i64
+  %i.cw = tail call ptr @tcg_gen_op3(i32 noundef 7, i32 noundef 1, i64 noundef %i.ct, i64 noundef %i.ct, i64 noundef %i.cv) ; 0 uses
+  tail call void @tcg_temp_free_i64(ptr noundef %i.au) #6
+  tail call void @tcg_temp_free_i64(ptr noundef %i.av) #6
+  br label %bb.c
+
+.lr.ph84:                                         ; preds = %.lr.ph84.preheader, %.lr.ph84
+  %indvars.iv = phi i64 [ 1, %.lr.ph84.preheader ], [ %indvars.iv.next, %.lr.ph84 ] ; 4 uses
+  %i.cx = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv
+  %i.cy = load ptr, ptr %i.cx, align 8
+  %i.cz = load ptr, ptr %i.ay, align 8            ; 3 uses
+  %i.da = getelementptr inbounds nuw i8, ptr %i.cz, i64 %i.ba
+  %i.db = ptrtoint ptr %i.da to i64
+  %i.dc = ptrtoint ptr %i.cy to i64
+  %i.dd = getelementptr inbounds nuw i8, ptr %i.cz, i64 %i.dc
+  %i.de = ptrtoint ptr %i.dd to i64
+  %i.df = getelementptr inbounds nuw i8, ptr %i.cz, i64 %i.bm
+  %i.dg = ptrtoint ptr %i.df to i64
+  %i.dh = tail call ptr @tcg_gen_op3(i32 noundef 7, i32 noundef 1, i64 noundef %i.db, i64 noundef %i.de, i64 noundef %i.dg) ; 0 uses
+  %i.di = load ptr, ptr %i.ay, align 8            ; 2 uses
+  %i.dj = getelementptr inbounds nuw i8, ptr %i.di, i64 %i.bm
+  %i.dk = ptrtoint ptr %i.dj to i64               ; 2 uses
+  %i.dl = getelementptr inbounds nuw i8, ptr %i.di, i64 %i.ba
+  %i.dm = ptrtoint ptr %i.dl to i64
+  %i.dn = tail call ptr @tcg_gen_op4(i32 noundef 49, i32 noundef 1, i64 noundef %i.dk, i64 noundef %i.dm, i64 noundef %i.dk, i64 noundef range(i64 -9223372036854775808, 4294967296) 10) ; 0 uses
+  %i.do = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv ; 2 uses
+  %i.dp = load ptr, ptr %i.do, align 8
+  %i.dq = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv
+  %i.dr = load ptr, ptr %i.dq, align 8
+  %i.ds = load ptr, ptr %i.ay, align 8            ; 3 uses
+  %i.dt = ptrtoint ptr %i.dp to i64
+  %i.du = getelementptr inbounds nuw i8, ptr %i.ds, i64 %i.dt
+  %i.dv = ptrtoint ptr %i.du to i64
+  %i.dw = ptrtoint ptr %i.dr to i64
+  %i.dx = getelementptr inbounds nuw i8, ptr %i.ds, i64 %i.dw
+  %i.dy = ptrtoint ptr %i.dx to i64
+  %i.dz = getelementptr inbounds nuw i8, ptr %i.ds, i64 %i.ba
+  %i.ea = ptrtoint ptr %i.dz to i64
+  %i.eb = tail call ptr @tcg_gen_op3(i32 noundef 7, i32 noundef 1, i64 noundef %i.dv, i64 noundef %i.dy, i64 noundef %i.ea) ; 0 uses
+  %i.ec = load ptr, ptr %i.do, align 8
+  %i.ed = load ptr, ptr %i.ay, align 8            ; 2 uses
+  %i.ee = getelementptr inbounds nuw i8, ptr %i.ed, i64 %i.ba
+  %i.ef = ptrtoint ptr %i.ee to i64               ; 2 uses
+  %i.eg = ptrtoint ptr %i.ec to i64
+  %i.eh = getelementptr inbounds nuw i8, ptr %i.ed, i64 %i.eg
+  %i.ei = ptrtoint ptr %i.eh to i64
+  %i.ej = tail call ptr @tcg_gen_op4(i32 noundef 49, i32 noundef 1, i64 noundef %i.ef, i64 noundef %i.ei, i64 noundef %i.ef, i64 noundef range(i64 -9223372036854775808, 4294967296) 10) ; 0 uses
+  %i.ek = load ptr, ptr %i.ay, align 8            ; 2 uses
+  %i.el = getelementptr inbounds nuw i8, ptr %i.ek, i64 %i.bm
+  %i.em = ptrtoint ptr %i.el to i64               ; 2 uses
+  %i.en = getelementptr inbounds nuw i8, ptr %i.ek, i64 %i.ba
+  %i.eo = ptrtoint ptr %i.en to i64
+  %i.ep = tail call ptr @tcg_gen_op3(i32 noundef 42, i32 noundef 1, i64 noundef %i.em, i64 noundef %i.em, i64 noundef %i.eo) ; 0 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond.not, label %._crit_edge85, label %.lr.ph84, !llvm.loop !11
+
+bb.c:                                             ; preds = %._crit_edge85, %._crit_edge89
+  ret void
+}
+
+; Function Attrs: nounwind sspstrong uwtable
+define dso_local void @tcg_gen_sub2_i64(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5) local_unnamed_addr #2 {
+bb.a:
+  %i.a = tail call zeroext i1 @tcg_op_supported(i32 noundef 65, i32 noundef 1, i32 noundef 0) #6
+  %i.b = tail call ptr @tcg_temp_ebb_new_i64() #6 ; 7 uses
+  br i1 %i.a, label %bb.b, label %bb.d
+
+bb.b:                                             ; preds = %bb.a
+  %i.c = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx) ; 3 uses
+  %i.d = load ptr, ptr %i.c, align 8              ; 3 uses
+  %i.e = ptrtoint ptr %i.b to i64                 ; 2 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.e
+  %i.g = ptrtoint ptr %i.f to i64
+  %i.h = ptrtoint ptr %2 to i64
+  %i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.h
+  %i.j = ptrtoint ptr %i.i to i64
+  %i.k = ptrtoint ptr %4 to i64
+  %i.l = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.k
+  %i.m = ptrtoint ptr %i.l to i64
+  %i.n = tail call ptr @tcg_gen_op3(i32 noundef 63, i32 noundef 1, i64 noundef %i.g, i64 noundef %i.j, i64 noundef %i.m) ; 0 uses
+  %i.o = load ptr, ptr %i.c, align 8              ; 3 uses
+  %i.p = ptrtoint ptr %1 to i64
+  %i.q = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.p
+  %i.r = ptrtoint ptr %i.q to i64
+  %i.s = ptrtoint ptr %3 to i64
+  %i.t = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.s
+  %i.u = ptrtoint ptr %i.t to i64
+  %i.v = ptrtoint ptr %5 to i64
+  %i.w = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.v
+  %i.x = ptrtoint ptr %i.w to i64
+  %i.y = tail call ptr @tcg_gen_op3(i32 noundef 65, i32 noundef 1, i64 noundef %i.r, i64 noundef %i.u, i64 noundef %i.x) ; 0 uses
+  %.not.i = icmp eq ptr %0, %i.b
+  br i1 %.not.i, label %tcg_gen_mov_i64.exit, label %bb.c
+
+bb.c:                                             ; preds = %bb.b
+  %i.z = load ptr, ptr %i.c, align 8              ; 2 uses
+  %i.aa = ptrtoint ptr %0 to i64
+  %i.ab = getelementptr inbounds nuw i8, ptr %i.z, i64 %i.aa
+  %i.ac = ptrtoint ptr %i.ab to i64
+  %i.ad = getelementptr inbounds nuw i8, ptr %i.z, i64 %i.e
+  %i.ae = ptrtoint ptr %i.ad to i64
+  %i.af = tail call ptr @tcg_gen_op2(i32 noundef 6, i32 noundef 1, i64 noundef %i.ac, i64 noundef %i.ae) ; 0 uses
+  br label %tcg_gen_mov_i64.exit
+
+bb.d:                                             ; preds = %bb.a
+  %i.ag = tail call ptr @tcg_temp_ebb_new_i64() #6 ; 2 uses
+  %i.ah = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx) ; 5 uses
+  %i.ai = load ptr, ptr %i.ah, align 8            ; 3 uses
+  %i.aj = ptrtoint ptr %i.b to i64                ; 2 uses
+  %i.ak = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.aj
+  %i.al = ptrtoint ptr %i.ak to i64
+  %i.am = ptrtoint ptr %2 to i64                  ; 2 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.am
+  %i.ao = ptrtoint ptr %i.an to i64
+  %i.ap = ptrtoint ptr %4 to i64                  ; 2 uses
+  %i.aq = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.ap
+  %i.ar = ptrtoint ptr %i.aq to i64
+  %i.as = tail call ptr @tcg_gen_op3(i32 noundef 57, i32 noundef 1, i64 noundef %i.al, i64 noundef %i.ao, i64 noundef %i.ar) ; 0 uses
+  %i.at = load ptr, ptr %i.ah, align 8            ; 3 uses
+  %i.au = ptrtoint ptr %i.ag to i64               ; 2 uses
+  %i.av = getelementptr inbounds nuw i8, ptr %i.at, i64 %i.au
+  %i.aw = ptrtoint ptr %i.av to i64
+  %i.ax = getelementptr inbounds nuw i8, ptr %i.at, i64 %i.am
+  %i.ay = ptrtoint ptr %i.ax to i64
+  %i.az = getelementptr inbounds nuw i8, ptr %i.at, i64 %i.ap
+  %i.ba = ptrtoint ptr %i.az to i64
+  %i.bb = tail call ptr @tcg_gen_op4(i32 noundef 49, i32 noundef 1, i64 noundef %i.aw, i64 noundef %i.ay, i64 noundef %i.ba, i64 noundef range(i64 -9223372036854775808, 4294967296) 10) ; 0 uses
+  %i.bc = load ptr, ptr %i.ah, align 8            ; 3 uses
+  %i.bd = ptrtoint ptr %1 to i64                  ; 2 uses
+  %i.be = getelementptr inbounds nuw i8, ptr %i.bc, i64 %i.bd
+  %i.bf = ptrtoint ptr %i.be to i64
+  %i.bg = ptrtoint ptr %3 to i64
+  %i.bh = getelementptr inbounds nuw i8, ptr %i.bc, i64 %i.bg
+  %i.bi = ptrtoint ptr %i.bh to i64
+  %i.bj = ptrtoint ptr %5 to i64
+  %i.bk = getelementptr inbounds nuw i8, ptr %i.bc, i64 %i.bj
+  %i.bl = ptrtoint ptr %i.bk to i64
+  %i.bm = tail call ptr @tcg_gen_op3(i32 noundef 57, i32 noundef 1, i64 noundef %i.bf, i64 noundef %i.bi, i64 noundef %i.bl) ; 0 uses
+  %i.bn = load ptr, ptr %i.ah, align 8            ; 2 uses
+  %i.bo = getelementptr inbounds nuw i8, ptr %i.bn, i64 %i.bd
+  %i.bp = ptrtoint ptr %i.bo to i64               ; 2 uses
+  %i.bq = getelementptr inbounds nuw i8, ptr %i.bn, i64 %i.au
+  %i.br = ptrtoint ptr %i.bq to i64
+  %i.bs = tail call ptr @tcg_gen_op3(i32 noundef 57, i32 noundef 1, i64 noundef %i.bp, i64 noundef %i.bp, i64 noundef %i.br) ; 0 uses
+  %.not.i25 = icmp eq ptr %0, %i.b
+  br i1 %.not.i25, label %tcg_gen_mov_i64.exit26, label %bb.e
+
+bb.e:                                             ; preds = %bb.d
+  %i.bt = load ptr, ptr %i.ah, align 8            ; 2 uses
+  %i.bu = ptrtoint ptr %0 to i64
+  %i.bv = getelementptr inbounds nuw i8, ptr %i.bt, i64 %i.bu
+  %i.bw = ptrtoint ptr %i.bv to i64
+  %i.bx = getelementptr inbounds nuw i8, ptr %i.bt, i64 %i.aj
+  %i.by = ptrtoint ptr %i.bx to i64
+  %i.bz = tail call ptr @tcg_gen_op2(i32 noundef 6, i32 noundef 1, i64 noundef %i.bw, i64 noundef %i.by) ; 0 uses
+  br label %tcg_gen_mov_i64.exit26
+
+tcg_gen_mov_i64.exit26:                           ; preds = %bb.d, %bb.e
+  tail call void @tcg_temp_free_i64(ptr noundef %i.b) #6
+  br label %tcg_gen_mov_i64.exit
+
+tcg_gen_mov_i64.exit:                             ; preds = %bb.c, %bb.b, %tcg_gen_mov_i64.exit26
+  %.sink = phi ptr [ %i.ag, %tcg_gen_mov_i64.exit26 ], [ %i.b, %bb.b ], [ %i.b, %bb.c ]
+  tail call void @tcg_temp_free_i64(ptr noundef %.sink) #6
+  ret void
+}
+
+; Function Attrs: nounwind sspstrong uwtable
+define dso_local void @tcg_gen_mulu2_i64(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #2 {
+bb.a:
+  %i.a = tail call zeroext i1 @tcg_op_supported(i32 noundef 35, i32 noundef 1, i32 noundef 0) #6
+  br i1 %i.a, label %bb.b, label %bb.c
+
+bb.b:                                             ; preds = %bb.a
+  %i.b = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx)
+  %i.c = load ptr, ptr %i.b, align 8              ; 4 uses
+  %i.d = ptrtoint ptr %0 to i64
+  %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.d
+  %i.f = ptrtoint ptr %i.e to i64
+  %i.g = ptrtoint ptr %1 to i64
+  %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.g
+  %i.i = ptrtoint ptr %i.h to i64
+  %i.j = ptrtoint ptr %2 to i64
+  %i.k = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.j
+  %i.l = ptrtoint ptr %i.k to i64
+  %i.m = ptrtoint ptr %3 to i64
+  %i.n = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.m
+  %i.o = ptrtoint ptr %i.n to i64
+  %i.p = tail call ptr @tcg_gen_op4(i32 noundef 35, i32 noundef 1, i64 noundef %i.f, i64 noundef %i.i, i64 noundef %i.l, i64 noundef %i.o) ; 0 uses
+  br label %bb.h
+
+bb.c:                                             ; preds = %bb.a
+  %i.q = tail call zeroext i1 @tcg_op_supported(i32 noundef 36, i32 noundef 1, i32 noundef 0) #6
+  %i.r = tail call ptr @tcg_temp_ebb_new_i64() #6 ; 5 uses
+  %i.s = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx) ; 5 uses
+  %i.t = load ptr, ptr %i.s, align 8              ; 3 uses
+  %i.u = ptrtoint ptr %i.r to i64                 ; 3 uses
+  %i.v = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.u
+  %i.w = ptrtoint ptr %i.v to i64
+  %i.x = ptrtoint ptr %2 to i64                   ; 3 uses
+  %i.y = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.x
+  %i.z = ptrtoint ptr %i.y to i64
+  %i.aa = ptrtoint ptr %3 to i64                  ; 3 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.aa
+  %i.ac = ptrtoint ptr %i.ab to i64
+  %i.ad = tail call ptr @tcg_gen_op3(i32 noundef 32, i32 noundef 1, i64 noundef %i.w, i64 noundef %i.z, i64 noundef %i.ac) ; 0 uses
+  br i1 %i.q, label %bb.d, label %bb.f
+
+bb.d:                                             ; preds = %bb.c
+  %i.ae = load ptr, ptr %i.s, align 8             ; 3 uses
+  %i.af = ptrtoint ptr %1 to i64
+  %i.ag = getelementptr inbounds nuw i8, ptr %i.ae, i64 %i.af
+  %i.ah = ptrtoint ptr %i.ag to i64
+  %i.ai = getelementptr inbounds nuw i8, ptr %i.ae, i64 %i.x
+  %i.aj = ptrtoint ptr %i.ai to i64
+  %i.ak = getelementptr inbounds nuw i8, ptr %i.ae, i64 %i.aa
+  %i.al = ptrtoint ptr %i.ak to i64
+  %i.am = tail call ptr @tcg_gen_op3(i32 noundef 36, i32 noundef 1, i64 noundef %i.ah, i64 noundef %i.aj, i64 noundef %i.al) ; 0 uses
+  %.not.i = icmp eq ptr %0, %i.r
+  br i1 %.not.i, label %tcg_gen_mov_i64.exit, label %bb.e
+
+bb.e:                                             ; preds = %bb.d
+  %i.an = load ptr, ptr %i.s, align 8             ; 2 uses
+  %i.ao = ptrtoint ptr %0 to i64
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.an, i64 %i.ao
+  %i.aq = ptrtoint ptr %i.ap to i64
+  %i.ar = getelementptr inbounds nuw i8, ptr %i.an, i64 %i.u
+  %i.as = ptrtoint ptr %i.ar to i64
+  %i.at = tail call ptr @tcg_gen_op2(i32 noundef 6, i32 noundef 1, i64 noundef %i.aq, i64 noundef %i.as) ; 0 uses
+  br label %tcg_gen_mov_i64.exit
+
+tcg_gen_mov_i64.exit:                             ; preds = %bb.d, %bb.e
+  tail call void @tcg_temp_free_i64(ptr noundef %i.r) #6
+  br label %bb.h
+
+bb.f:                                             ; preds = %bb.c
+  %i.au = load ptr, ptr @helper_info_muluh_i64, align 8
+  %i.av = load ptr, ptr %i.s, align 8             ; 3 uses
+  %i.aw = ptrtoint ptr %1 to i64
+  %i.ax = getelementptr inbounds nuw i8, ptr %i.av, i64 %i.aw
+  %i.ay = getelementptr inbounds nuw i8, ptr %i.av, i64 %i.x
+  %i.az = getelementptr inbounds nuw i8, ptr %i.av, i64 %i.aa
+  tail call void @tcg_gen_call2(ptr noundef %i.au, ptr noundef nonnull @helper_info_muluh_i64, ptr noundef %i.ax, ptr noundef %i.ay, ptr noundef %i.az) #6
+  %.not.i22 = icmp eq ptr %0, %i.r
+  br i1 %.not.i22, label %tcg_gen_mov_i64.exit23, label %bb.g
+
+bb.g:                                             ; preds = %bb.f
+  %i.ba = load ptr, ptr %i.s, align 8             ; 2 uses
+  %i.bb = ptrtoint ptr %0 to i64
+  %i.bc = getelementptr inbounds nuw i8, ptr %i.ba, i64 %i.bb
+  %i.bd = ptrtoint ptr %i.bc to i64
+  %i.be = getelementptr inbounds nuw i8, ptr %i.ba, i64 %i.u
+  %i.bf = ptrtoint ptr %i.be to i64
+  %i.bg = tail call ptr @tcg_gen_op2(i32 noundef 6, i32 noundef 1, i64 noundef %i.bd, i64 noundef %i.bf) ; 0 uses
+  br label %tcg_gen_mov_i64.exit23
+end_hunk_2
+begin_hunk_3_@tcg_gen_mov_i128:bb.a
+bb.a:
+  %.not = icmp eq ptr %0, %1
+  br i1 %.not, label %tcg_gen_mov_i64.exit8, label %tcg_gen_mov_i64.exit
+
+tcg_gen_mov_i64.exit:                             ; preds = %bb.a
+  %i.a = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx) ; 2 uses
+  %i.b = load ptr, ptr %i.a, align 8              ; 2 uses
+  %i.c = ptrtoint ptr %0 to i64                   ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.c
+  %i.e = ptrtoint ptr %i.d to i64
+  %i.f = ptrtoint ptr %1 to i64                   ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.f
+  %i.h = ptrtoint ptr %i.g to i64
+  %i.i = tail call ptr @tcg_gen_op2(i32 noundef 6, i32 noundef 1, i64 noundef %i.e, i64 noundef %i.h) ; 0 uses
+  %i.j = load ptr, ptr %i.a, align 8              ; 2 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 %i.c
+  %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 56
+  %i.m = ptrtoint ptr %i.l to i64
+  %i.n = getelementptr inbounds nuw i8, ptr %i.j, i64 %i.f
+  %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 56
+  %i.p = ptrtoint ptr %i.o to i64
+  %i.q = tail call ptr @tcg_gen_op2(i32 noundef 6, i32 noundef 1, i64 noundef %i.m, i64 noundef %i.p) ; 0 uses
+  br label %tcg_gen_mov_i64.exit8
+
+tcg_gen_mov_i64.exit8:                            ; preds = %tcg_gen_mov_i64.exit, %bb.a
+  ret void
+}
+
+; Function Attrs: nounwind sspstrong uwtable
+define dso_local void @tcg_gen_ld_i128(ptr noundef %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #2 {
+bb.a:
+  %i.a = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx) ; 2 uses
+  %i.b = load ptr, ptr %i.a, align 8              ; 2 uses
+  %i.c = ptrtoint ptr %0 to i64                   ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.c
+  %i.e = ptrtoint ptr %i.d to i64
+  %i.f = ptrtoint ptr %1 to i64                   ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.f
+  %i.h = ptrtoint ptr %i.g to i64
+  %i.i = tail call ptr @tcg_gen_op3(i32 noundef 30, i32 noundef 1, i64 noundef %i.e, i64 noundef %i.h, i64 noundef %2) ; 0 uses
+  %i.j = add i64 %2, 8
+  %i.k = load ptr, ptr %i.a, align 8              ; 2 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.c
+  %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 56
+  %i.n = ptrtoint ptr %i.m to i64
+  %i.o = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.f
+  %i.p = ptrtoint ptr %i.o to i64
+  %i.q = tail call ptr @tcg_gen_op3(i32 noundef 30, i32 noundef 1, i64 noundef %i.n, i64 noundef %i.p, i64 noundef %i.j) ; 0 uses
+  ret void
+}
+
+; Function Attrs: nounwind sspstrong uwtable
+define dso_local void @tcg_gen_st_i128(ptr noundef %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #2 {
+bb.a:
+  %i.a = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx) ; 2 uses
+  %i.b = load ptr, ptr %i.a, align 8              ; 2 uses
+  %i.c = ptrtoint ptr %0 to i64                   ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.c
+  %i.e = ptrtoint ptr %i.d to i64
+  %i.f = ptrtoint ptr %1 to i64                   ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.f
+  %i.h = ptrtoint ptr %i.g to i64
+  %i.i = tail call ptr @tcg_gen_op3(i32 noundef 56, i32 noundef 1, i64 noundef %i.e, i64 noundef %i.h, i64 noundef %2) ; 0 uses
+  %i.j = add i64 %2, 8
+  %i.k = load ptr, ptr %i.a, align 8              ; 2 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.c
+  %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 56
+  %i.n = ptrtoint ptr %i.m to i64
+  %i.o = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.f
+  %i.p = ptrtoint ptr %i.o to i64
+  %i.q = tail call ptr @tcg_gen_op3(i32 noundef 56, i32 noundef 1, i64 noundef %i.n, i64 noundef %i.p, i64 noundef %i.j) ; 0 uses
+  ret void
+}
+
+; Function Attrs: nounwind sspstrong uwtable
+define dso_local void @tcg_gen_exit_tb(ptr noundef %0, i32 noundef %1) local_unnamed_addr #2 {
+bb.a:
+  %.not.i = icmp eq ptr %0, null
+  br i1 %.not.i, label %.sink.split, label %bb.b
+
+bb.b:                                             ; preds = %bb.a
+  %i.a = load i64, ptr @tcg_splitwx_diff, align 8
+  %i.b = getelementptr inbounds i8, ptr %0, i64 %i.a ; 2 uses
+  %i.c = icmp ult i32 %1, 2
+  br i1 %i.c, label %bb.c, label %.sink.split
+
+.sink.split:                                      ; preds = %bb.b, %bb.a
+  %.sink6 = phi i32 [ 0, %bb.a ], [ 3, %bb.b ]
+  %.ph = phi ptr [ null, %bb.a ], [ %i.b, %bb.b ]
+  %i.d = icmp eq i32 %1, %.sink6
+  tail call void @llvm.assume(i1 %i.d)
+  br label %bb.c
+
+bb.c:                                             ; preds = %.sink.split, %bb.b
+  %i.e = phi ptr [ %i.b, %bb.b ], [ %.ph, %.sink.split ]
+  %i.f = ptrtoint ptr %i.e to i64
+  %i.g = zext nneg i32 %1 to i64
+  %i.h = add i64 %i.f, %i.g
+  %i.i = tail call noundef ptr @tcg_gen_op1(i32 noundef 72, i32 noundef 0, i64 noundef %i.h) ; 0 uses
+  ret void
+}
+
+; Function Attrs: nounwind sspstrong uwtable
+define dso_local void @tcg_gen_goto_tb(i32 noundef %0) local_unnamed_addr #2 {
+bb.a:
+  %i.a = icmp ult i32 %0, 2
+  tail call void @llvm.assume(i1 %i.a)
+  tail call void @plugin_gen_disable_mem_helpers() #6
+  %i.b = zext nneg i32 %0 to i64
+  %i.c = tail call noundef ptr @tcg_gen_op1(i32 noundef 73, i32 noundef 0, i64 noundef %i.b) ; 0 uses
+  ret void
+}
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare nonnull ptr @llvm.threadlocal.address.p0(ptr nonnull) #3
+
+declare void @plugin_gen_disable_mem_helpers() local_unnamed_addr #1
+
+; Function Attrs: nounwind sspstrong uwtable
+define dso_local void @tcg_gen_lookup_and_goto_ptr() local_unnamed_addr #2 {
+bb.a:
+  %i.a = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx) ; 3 uses
+  %i.b = load ptr, ptr %i.a, align 8
+  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 104
+  %i.d = load ptr, ptr %i.c, align 8
+  %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 20
+  %i.f = load i32, ptr %i.e, align 4
+  %i.g = and i32 %i.f, 1024
+  %.not = icmp eq i32 %i.g, 0
+  br i1 %.not, label %bb.c, label %bb.b
+
+bb.b:                                             ; preds = %bb.a
+  %i.h = tail call noundef ptr @tcg_gen_op1(i32 noundef 72, i32 noundef 0, i64 noundef 0) ; 0 uses
+  br label %bb.d
+
+bb.c:                                             ; preds = %bb.a
+  tail call void @plugin_gen_disable_mem_helpers() #6
+  %i.i = tail call ptr @tcg_temp_ebb_new_ptr() #6 ; 2 uses
+  %i.j = load ptr, ptr @tcg_env, align 8
+  %i.k = load ptr, ptr @helper_info_lookup_tb_ptr, align 8
+  %i.l = load ptr, ptr %i.a, align 8              ; 2 uses
+  %i.m = ptrtoint ptr %i.i to i64                 ; 2 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.m
+  %i.o = ptrtoint ptr %i.j to i64
+  %i.p = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.o
+  tail call void @tcg_gen_call1(ptr noundef %i.k, ptr noundef nonnull @helper_info_lookup_tb_ptr, ptr noundef %i.n, ptr noundef %i.p) #6
+  %i.q = load ptr, ptr %i.a, align 8
+  %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 %i.m
+  %i.s = ptrtoint ptr %i.r to i64
+  %i.t = tail call noundef ptr @tcg_gen_op1(i32 noundef 74, i32 noundef 1, i64 noundef %i.s) ; 0 uses
+  tail call void @tcg_temp_free_ptr(ptr noundef %i.i) #6
+  br label %bb.d
+
+bb.d:                                             ; preds = %bb.c, %bb.b
+  ret void
+}
+
+declare ptr @tcg_temp_ebb_new_ptr() local_unnamed_addr #1
+
+declare void @tcg_temp_free_ptr(ptr noundef) local_unnamed_addr #1
+
+declare ptr @tcg_malloc_internal(ptr noundef, i32 noundef) local_unnamed_addr #1
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.cttz.i32(i32, i1 immarg) #3
+
+declare void @tcg_gen_call2(ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #1
+
+declare void @tcg_gen_call1(ptr noundef, ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #1
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.cttz.i64(i64, i1 immarg) #3
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
+declare void @llvm.assume(i1 noundef) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.ctpop.i64(i64) #5
+
+attributes #0 = { noinline nounwind sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
+attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
+attributes #2 = { nounwind sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
+attributes #3 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #4 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #5 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #6 = { nounwind }
+
+!llvm.module.flags = !{!0, !1, !2, !3, !4, !5}
+!llvm.ident = !{!6}
+
+!0 = !{i32 7, !"Dwarf Version", i32 5}
+!1 = !{i32 2, !"Debug Info Version", i32 3}
+!2 = !{i32 8, !"PIC Level", i32 2}
+!3 = !{i32 7, !"PIE Level", i32 2}
+!4 = !{i32 7, !"uwtable", i32 2}
+!5 = !{i32 7, !"debug-info-assignment-tracking", i1 true}
+!6 = !{!"Ubuntu clang version 24.0.0 (++20260815081758+83e1178daa12-1~exp1~20260815201912.1788)"}
+!7 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!8 = !{ptr @tcg_gen_extract_i32}
+!9 = !{ptr @tcg_gen_extract_i64}
+!10 = distinct !{!10, !12}
+!11 = distinct !{!11, !12}
+!12 = !{!"llvm.loop.mustprogress"}
+end_hunk_3
