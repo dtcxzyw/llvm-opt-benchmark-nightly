@@ -202,19 +202,17 @@ bb.g:                                             ; preds = %bb.b, %bb.f
   %i.af = load i32, ptr @ett_cyclic_setup_attribs, align 4
   %i.ag = tail call ptr @proto_item_add_subtree(ptr noundef %i.ae, i32 noundef %i.af)
   %i.ah = and i32 %i.a, 65535                     ; 2 uses
-  %.1134 = add i16 %.0118, 1                      ; 2 uses
+  %.1134 = add i16 %.0118, 1
   %i.ai = zext i16 %.1134 to i32                  ; 2 uses
   %i.aj = icmp samesign ugt i32 %i.ah, %i.ai
   br i1 %i.aj, label %.lr.ph137, label %.loopexit
 
 .lr.ph137:                                        ; preds = %bb.g, %.lr.ph137
-  %i.ak = phi i32 [ %5, %.lr.ph137 ], [ %i.ai, %bb.g ]
-  %.1135 = phi i16 [ %.1, %.lr.ph137 ], [ %.1134, %bb.g ]
+  %i.ak = phi i32 [ %indvars.iv.next142, %.lr.ph137 ], [ %i.ai, %bb.g ] ; 2 uses
   %i.al = load i32, ptr @hf_ecmp_cyclic_setup_attrib, align 4
   %i.am = tail call ptr @proto_tree_add_item(ptr noundef %i.ag, i32 noundef %i.al, ptr noundef %3, i32 noundef %i.ak, i32 noundef 1, i32 noundef 0) ; 0 uses
-  %.1 = add nuw i16 %.1135, 1                     ; 2 uses
-  %5 = zext i16 %.1 to i32                        ; 2 uses
-  %i.an = icmp samesign ugt i32 %i.ah, %5
+  %indvars.iv.next142 = add nuw nsw i32 %i.ak, 1  ; 2 uses
+  %i.an = icmp samesign ugt i32 %i.ah, %indvars.iv.next142
   br i1 %i.an, label %.lr.ph137, label %.loopexit, !llvm.loop !17
 
 bb.h:                                             ; preds = %bb.b
@@ -320,7 +318,7 @@ bb.l:                                             ; preds = %bb.j
 
 bb.m:                                             ; preds = %bb.j
   %i.cs = load i32, ptr @hf_ecmp_cyclic_setup_attrib_count, align 4
-  %i.ct = add i16 %1, 4                           ; 2 uses
+  %i.ct = add i16 %1, 4
   %i.cu = zext i16 %i.bm to i32
   %i.cv = tail call ptr @proto_tree_add_item(ptr noundef %4, i32 noundef %i.cs, ptr noundef %3, i32 noundef %i.cu, i32 noundef 1, i32 noundef 0)
   %i.cw = load i32, ptr @ett_cyclic_setup_attribs, align 4
@@ -331,13 +329,11 @@ bb.m:                                             ; preds = %bb.j
   br i1 %i.da, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %bb.m, %.lr.ph
-  %i.db = phi i32 [ %7, %.lr.ph ], [ %i.cz, %bb.m ]
-  %.4124 = phi i16 [ %6, %.lr.ph ], [ %i.ct, %bb.m ]
+  %i.db = phi i32 [ %indvars.iv.next, %.lr.ph ], [ %i.cz, %bb.m ] ; 2 uses
   %i.dc = load i32, ptr @hf_ecmp_cyclic_setup_attrib, align 4
-  %6 = add nuw i16 %.4124, 1                      ; 2 uses
+  %indvars.iv.next = add nuw nsw i32 %i.db, 1     ; 2 uses
   %i.dd = tail call ptr @proto_tree_add_item(ptr noundef %i.cx, i32 noundef %i.dc, ptr noundef %3, i32 noundef %i.db, i32 noundef 1, i32 noundef 0) ; 0 uses
-  %7 = zext i16 %6 to i32                         ; 2 uses
-  %i.de = icmp samesign ugt i32 %i.cy, %7
+  %i.de = icmp samesign ugt i32 %i.cy, %indvars.iv.next
   br i1 %i.de, label %.lr.ph, label %.loopexit, !llvm.loop !20
 
 bb.n:                                             ; preds = %bb.j, %bb.j, %bb.j

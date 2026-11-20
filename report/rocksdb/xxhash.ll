@@ -205,10 +205,6 @@ bb.b:                                             ; preds = %bb.a
   %i.m = extractvalue { i64, i64 } %i.k, 1        ; 2 uses
   %i.n = tail call noundef i64 @llvm.bswap.i64(i64 %i.l) ; 3 uses
   %i.o = tail call noundef i64 @llvm.bswap.i64(i64 %i.m) ; 2 uses
-  %min.iters.check = icmp ult i64 %1, 64
-  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
-
-vector.ph:                                        ; preds = %.lr.ph53
   %n.vec = and i64 %i.j, 1152921504606846972      ; 3 uses
   %broadcast.splatinsert = insertelement <4 x i64> poison, i64 %i.n, i64 0
   %broadcast.splat = shufflevector <4 x i64> %broadcast.splatinsert, <4 x i64> poison, <4 x i32> zeroinitializer ; 2 uses
@@ -217,9 +213,9 @@ vector.ph:                                        ; preds = %.lr.ph53
   %invariant.op = xor <4 x i64> %broadcast.splat60, %broadcast.splat
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %vec.ind = phi <4 x i64> [ <i64 0, i64 1, i64 2, i64 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
+vector.body:                                      ; preds = %vector.body, %.lr.ph53
+  %index = phi i64 [ 0, %.lr.ph53 ], [ %index.next, %vector.body ] ; 2 uses
+  %vec.ind = phi <4 x i64> [ <i64 0, i64 1, i64 2, i64 3>, %.lr.ph53 ], [ %vec.ind.next, %vector.body ] ; 3 uses
   %i.p = sub nuw nsw <4 x i64> splat (i64 6455697860950631241), %vec.ind
   %i.q = add nuw nsw <4 x i64> %vec.ind, splat (i64 -4466874330221494952)
   %.reass62 = xor <4 x i64> %i.p, %invariant.op
@@ -271,13 +267,12 @@ middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.j, %n.vec
   br i1 %cmp.n, label %._crit_edge54, label %scalar.ph.preheader
 
-scalar.ph.preheader:                              ; preds = %.lr.ph53, %middle.block
-  %.03751.ph = phi i64 [ 0, %.lr.ph53 ], [ %n.vec, %middle.block ]
+scalar.ph.preheader:                              ; preds = %middle.block
   %invariant.op63 = xor i64 %i.o, %i.n
   br label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
-  %.03751 = phi i64 [ %i.ch, %scalar.ph ], [ %.03751.ph, %scalar.ph.preheader ] ; 4 uses
+  %.03751 = phi i64 [ %i.ch, %scalar.ph ], [ %n.vec, %scalar.ph.preheader ] ; 4 uses
   %i.ba = sub nuw nsw i64 6455697860950631241, %.03751
   %i.bb = add nuw nsw i64 %.03751, -4466874330221494952
   %.reass.reass = xor i64 %i.ba, %invariant.op63
