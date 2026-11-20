@@ -204,10 +204,10 @@ bb.j:                                             ; preds = %fls.exit.i, %bb.i
   %i.ay = mul i32 %i.aw, %i.ae
   %i.az = udiv i32 %i.ay, 100
   %i.ba = sub i32 %i.ax, %i.az
-  %2 = icmp sgt i32 %i.ba, 0
-  %3 = icmp samesign ult i32 %.033.i, 10
-  %or.cond.i = select i1 %2, i1 %3, i1 false, !prof !41
-  br i1 %or.cond.i, label %bb.k, label %._crit_edge.i, !prof !41
+  %2 = icmp slt i32 %i.ba, 1
+  %exitcond.not.i = icmp eq i32 %.033.i, 10
+  %or.cond.i = select i1 %2, i1 true, i1 %exitcond.not.i, !prof !41
+  br i1 %or.cond.i, label %._crit_edge.i, label %bb.k, !prof !41
 
 bb.k:                                             ; preds = %bb.j
   %i.bb = add nuw nsw i32 %.033.i, 1
@@ -497,6 +497,6 @@ attributes #12 = { nounwind memory(none) }
 !38 = !{i64 6294}
 !39 = !{!"branch_weights", i32 1999, i32 1}
 !40 = !{i64 1709038}
-!41 = !{!"branch_weights", i32 1, i32 4001}
+!41 = !{!"branch_weights", i32 4001, i32 1}
 !42 = !{!"branch_weights", i32 1, i32 0}
 end_hunk_0
