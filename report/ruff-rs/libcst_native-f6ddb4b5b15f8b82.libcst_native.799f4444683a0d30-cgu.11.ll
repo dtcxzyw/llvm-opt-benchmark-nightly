@@ -39,15 +39,13 @@ target triple = "x86_64-unknown-linux-gnu"
 ; Function Attrs: nonlazybind uwtable
 define internal fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtCslbOqntPwjz2_11peg_runtime10RuleResultNtNtNtCsarohYtwVpE2_13libcst_native5nodes10expression23DeflatedNameOrAttributeEEB1n_(i64 %.0.val, ptr %.8.val) unnamed_addr #0 personality ptr @rust_eh_personality !guid !29 {
 bb.a:
-  %.not = icmp eq i64 %.0.val, 2
-  br i1 %.not, label %bb.f, label %bb.b
+  switch i64 %.0.val, label %bb.d [
+    i64 2, label %bb.f
+    i64 0, label %bb.b
+  ]
 
 bb.b:                                             ; preds = %bb.a
-  %0 = icmp eq i64 %.0.val, 0
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
-  br i1 %0, label %1, label %bb.d
-
-1:                                                ; preds = %bb.b
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsarohYtwVpE2_13libcst_native5nodes10expression12DeflatedNameEBH_(ptr noalias noundef nonnull align 8 dereferenceable(64) %.8.val)
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsarohYtwVpE2_13libcst_native5nodes10expression23DeflatedNameOrAttributeEBH_.exit unwind label %bb.c
 
@@ -57,12 +55,13 @@ common.resume.i:                                  ; preds = %bb.e, %bb.c
   tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.8.val, i64 noundef %.sink.i, i64 noundef 8) #19
   resume { ptr, i32 } %common.resume.op.i
 
-bb.c:                                             ; preds = %1
+bb.c:                                             ; preds = %bb.b
   %i.a = landingpad { ptr, i32 }
           cleanup
   br label %common.resume.i
 
-bb.d:                                             ; preds = %bb.b
+bb.d:                                             ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsarohYtwVpE2_13libcst_native5nodes10expression17DeflatedAttributeEBH_(ptr noalias noundef nonnull align 8 dereferenceable(128) %.8.val)
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsarohYtwVpE2_13libcst_native5nodes10expression23DeflatedNameOrAttributeEBH_.exit unwind label %bb.e, !inline_history !0
 
@@ -71,12 +70,12 @@ bb.e:                                             ; preds = %bb.d
           cleanup
   br label %common.resume.i
 
-_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsarohYtwVpE2_13libcst_native5nodes10expression23DeflatedNameOrAttributeEBH_.exit: ; preds = %1, %bb.d
-  %.sink1.i = phi i64 [ 64, %1 ], [ 128, %bb.d ]
+_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsarohYtwVpE2_13libcst_native5nodes10expression23DeflatedNameOrAttributeEBH_.exit: ; preds = %bb.b, %bb.d
+  %.sink1.i = phi i64 [ 64, %bb.b ], [ 128, %bb.d ]
   tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.8.val, i64 noundef %.sink1.i, i64 noundef 8) #19
   br label %bb.f
 
-bb.f:                                             ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsarohYtwVpE2_13libcst_native5nodes10expression23DeflatedNameOrAttributeEBH_.exit, %bb.a
+bb.f:                                             ; preds = %bb.a, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsarohYtwVpE2_13libcst_native5nodes10expression23DeflatedNameOrAttributeEBH_.exit
   ret void
 }
 
@@ -308,18 +307,16 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsarohYtwVpE2_13libcst_native5node
 bb.x:                                             ; preds = %bb.b
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !83)
-  %.val.i.i = load i64, ptr %i.ag, align 8, !range !21, !alias.scope !84, !noundef !17 ; 2 uses
+  %.val.i.i = load i64, ptr %i.ag, align 8, !range !21, !alias.scope !84, !noundef !17
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %.val2.i.i = load ptr, ptr %i.ah, align 8, !alias.scope !84 ; 5 uses
-  %1 = icmp eq i64 %.val.i.i, 2
-  br i1 %1, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsarohYtwVpE2_13libcst_native5nodes10expression23DeflatedNameOrAttributeEEB13_.exit.i.i, label %bb.y
+  %.val2.i.i = load ptr, ptr %i.ah, align 8, !alias.scope !84 ; 6 uses
+  switch i64 %.val.i.i, label %bb.aa [
+    i64 2, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsarohYtwVpE2_13libcst_native5nodes10expression23DeflatedNameOrAttributeEEB13_.exit.i.i
+    i64 0, label %bb.y
+  ]
 
 bb.y:                                             ; preds = %bb.x
-  %2 = icmp eq i64 %.val.i.i, 0
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i.i) ]
-  br i1 %2, label %3, label %bb.aa
-
-3:                                                ; preds = %bb.y
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsarohYtwVpE2_13libcst_native5nodes10expression12DeflatedNameEBH_(ptr noalias noundef nonnull align 8 dereferenceable(64) %.val2.i.i)
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsarohYtwVpE2_13libcst_native5nodes10expression23DeflatedNameOrAttributeEBH_.exit.i.i.i unwind label %bb.z, !noalias !84
 
@@ -331,12 +328,13 @@ common.resume.i.i.i.i:                            ; preds = %bb.ab, %bb.z
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsarohYtwVpE2_13libcst_native5nodes9statement19DeflatedImportNamesEBH_(ptr noalias noundef align 8 dereferenceable(24) %i.ai) #21
           to label %.body3.i.i unwind label %bb.ai
 
-bb.z:                                             ; preds = %3
+bb.z:                                             ; preds = %bb.y
   %i.aj = landingpad { ptr, i32 }
           cleanup
   br label %common.resume.i.i.i.i
 
-bb.aa:                                            ; preds = %bb.y
+bb.aa:                                            ; preds = %bb.x
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i.i) ]
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsarohYtwVpE2_13libcst_native5nodes10expression17DeflatedAttributeEBH_(ptr noalias noundef nonnull align 8 dereferenceable(128) %.val2.i.i)
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsarohYtwVpE2_13libcst_native5nodes10expression23DeflatedNameOrAttributeEBH_.exit.i.i.i unwind label %bb.ab, !noalias !84, !inline_history !0
 
@@ -345,8 +343,8 @@ bb.ab:                                            ; preds = %bb.aa
           cleanup
   br label %common.resume.i.i.i.i
 
-_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsarohYtwVpE2_13libcst_native5nodes10expression23DeflatedNameOrAttributeEBH_.exit.i.i.i: ; preds = %bb.aa, %3
-  %.sink1.i.i.i.i = phi i64 [ 64, %3 ], [ 128, %bb.aa ]
+_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsarohYtwVpE2_13libcst_native5nodes10expression23DeflatedNameOrAttributeEBH_.exit.i.i.i: ; preds = %bb.aa, %bb.y
+  %.sink1.i.i.i.i = phi i64 [ 64, %bb.y ], [ 128, %bb.aa ]
   tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val2.i.i, i64 noundef %.sink1.i.i.i.i, i64 noundef 8) #19, !noalias !84
   br label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsarohYtwVpE2_13libcst_native5nodes10expression23DeflatedNameOrAttributeEEB13_.exit.i.i
 

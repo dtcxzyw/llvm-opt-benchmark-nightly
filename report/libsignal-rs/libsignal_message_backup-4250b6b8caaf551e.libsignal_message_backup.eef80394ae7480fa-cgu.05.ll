@@ -204,21 +204,19 @@ bb.e:                                             ; preds = %_RINvNtCsgxBkk5gSRh
 ; Function Attrs: nonlazybind uwtable
 define noundef nonnull align 8 ptr @_RNvMs_NtNtNtCskw1zp9IbpTW_24libsignal_message_backup5proto6backup24group_change_chat_updateNtB4_6Update26mut_groupV2MigrationUpdate(ptr noalias nofree noundef align 8 dereferenceable(112) %0) unnamed_addr #0 personality ptr @rust_eh_personality !guid !251 {
 bb.a:
-  %i.a = load i64, ptr %0, align 8, !range !9, !noundef !7 ; 3 uses
-  %.not = icmp eq i64 %i.a, -1
-  br i1 %.not, label %.thread19, label %bb.b
+  %i.a = load i64, ptr %0, align 8, !range !9, !noundef !7 ; 2 uses
+  switch i64 %i.a, label %bb.b [
+    i64 -1, label %.thread19
+    i64 -9223372036854775780, label %bb.d
+  ]
 
 bb.b:                                             ; preds = %bb.a
   %i.b = icmp ne i64 %i.a, -9223372036854775791
   tail call void @llvm.assume(i1 %i.b)
-  %1 = icmp eq i64 %i.a, -9223372036854775780
-  br i1 %1, label %bb.d, label %2
-
-2:                                                ; preds = %bb.b
   invoke fastcc void @_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtNtNtCskw1zp9IbpTW_24libsignal_message_backup5proto6backup24group_change_chat_update6update6UpdateEBL_(ptr noalias nofree noundef nonnull align 8 dereferenceable(96) %0)
           to label %.thread19 unwind label %bb.c
 
-bb.c:                                             ; preds = %2
+bb.c:                                             ; preds = %bb.b
   %i.c = landingpad { ptr, i32 }
           cleanup
   store i64 -9223372036854775780, ptr %0, align 8
@@ -226,13 +224,13 @@ bb.c:                                             ; preds = %2
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.53.0..sroa_idx, i8 0, i64 16, i1 false)
   resume { ptr, i32 } %i.c
 
-.thread19:                                        ; preds = %bb.a, %2
+.thread19:                                        ; preds = %bb.a, %bb.b
   store i64 -9223372036854775780, ptr %0, align 8
   %.sroa.53.0..sroa_idx4 = getelementptr inbounds nuw i8, ptr %0, i64 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.53.0..sroa_idx4, i8 0, i64 16, i1 false)
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.b, %.thread19
+bb.d:                                             ; preds = %bb.a, %.thread19
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   ret ptr %i.d
 }
@@ -635,21 +633,19 @@ bb.e:                                             ; preds = %_RINvNtCsgxBkk5gSRh
 ; Function Attrs: nonlazybind uwtable
 define noundef nonnull align 8 ptr @_RNvMs_NtNtNtCskw1zp9IbpTW_24libsignal_message_backup5proto6backup24group_change_chat_updateNtB4_6Update37mut_groupV2MigrationSelfInvitedUpdate(ptr noalias nofree noundef align 8 dereferenceable(112) %0) unnamed_addr #0 personality ptr @rust_eh_personality !guid !458 {
 bb.a:
-  %i.a = load i64, ptr %0, align 8, !range !9, !noundef !7 ; 3 uses
-  %.not = icmp eq i64 %i.a, -1
-  br i1 %.not, label %.thread19, label %bb.b
+  %i.a = load i64, ptr %0, align 8, !range !9, !noundef !7 ; 2 uses
+  switch i64 %i.a, label %bb.b [
+    i64 -1, label %.thread19
+    i64 -9223372036854775779, label %bb.d
+  ]
 
 bb.b:                                             ; preds = %bb.a
   %i.b = icmp ne i64 %i.a, -9223372036854775791
   tail call void @llvm.assume(i1 %i.b)
-  %1 = icmp eq i64 %i.a, -9223372036854775779
-  br i1 %1, label %bb.d, label %2
-
-2:                                                ; preds = %bb.b
   invoke fastcc void @_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtNtNtCskw1zp9IbpTW_24libsignal_message_backup5proto6backup24group_change_chat_update6update6UpdateEBL_(ptr noalias nofree noundef nonnull align 8 dereferenceable(96) %0)
           to label %.thread19 unwind label %bb.c
 
-bb.c:                                             ; preds = %2
+bb.c:                                             ; preds = %bb.b
   %i.c = landingpad { ptr, i32 }
           cleanup
   store i64 -9223372036854775779, ptr %0, align 8
@@ -657,13 +653,13 @@ bb.c:                                             ; preds = %2
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.53.0..sroa_idx, i8 0, i64 16, i1 false)
   resume { ptr, i32 } %i.c
 
-.thread19:                                        ; preds = %bb.a, %2
+.thread19:                                        ; preds = %bb.a, %bb.b
   store i64 -9223372036854775779, ptr %0, align 8
   %.sroa.53.0..sroa_idx4 = getelementptr inbounds nuw i8, ptr %0, i64 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.53.0..sroa_idx4, i8 0, i64 16, i1 false)
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.b, %.thread19
+bb.d:                                             ; preds = %bb.a, %.thread19
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   ret ptr %i.d
 }

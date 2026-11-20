@@ -204,17 +204,13 @@ bb.z:                                             ; preds = %bb.u, %bb.x
   call void @llvm.experimental.noalias.scope.decl(metadata !49477)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(720) %i.d, ptr noundef nonnull align 8 dereferenceable(720) %.val24, i64 720, i1 false), !alias.scope !49478
   store i64 -1, ptr %.val24, align 8, !alias.scope !49479
-  %i.av = load i64, ptr %i.d, align 8, !range !122, !noundef !38 ; 3 uses
-  %.not13 = icmp eq i64 %i.av, -1
-  br i1 %.not13, label %.thread, label %2
+  %i.av = load i64, ptr %i.d, align 8, !range !122, !noundef !38 ; 2 uses
+  switch i64 %i.av, label %bb.al [
+    i64 -1, label %.thread
+    i64 5, label %bb.aa
+  ]
 
-2:                                                ; preds = %bb.z
-  %3 = icmp ne i64 %i.av, 4
-  call void @llvm.assume(i1 %3)
-  %4 = icmp eq i64 %i.av, 5
-  br i1 %4, label %bb.aa, label %bb.al
-
-bb.aa:                                            ; preds = %2
+bb.aa:                                            ; preds = %bb.z
   %i.aw = getelementptr inbounds nuw i8, ptr %.val24, i64 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(608) %i.a, ptr noundef nonnull align 8 dereferenceable(608) %i.aw, i64 608, i1 false)
@@ -297,7 +293,9 @@ bb.ak:                                            ; preds = %bb.ai, %bb.ab, %bb.
   invoke void @_RNvNtCskKLDkoKarTP_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @24, i64 noundef 40, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @714) #29
           to label %bb.an unwind label %bb.am
 
-bb.al:                                            ; preds = %2
+bb.al:                                            ; preds = %bb.z
+  %2 = icmp ne i64 %i.av, 4
+  call void @llvm.assume(i1 %2)
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsPYQCUnoTxQ_10collection6shards5shard5ShardECsl8OoimOLbh_6qdrant(ptr noalias nofree noundef align 8 dereferenceable(720) %i.d)
           to label %.thread unwind label %bb.y
 

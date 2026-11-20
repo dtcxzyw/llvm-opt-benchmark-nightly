@@ -202,9 +202,12 @@ bb.g:                                             ; preds = %_ZNK5clang4Type21is
 
 bb.h:                                             ; preds = %bb.g
   %i.ar = load ptr, ptr %i.a, align 8, !tbaa !59, !nonnull !60, !align !61 ; 6 uses
-  switch i32 %i.ao, label %3 [
+  switch i32 %i.ao, label %.unreachabledefault [
     i32 4, label %bb.i
     i32 0, label %bb.j
+    i32 2, label %bb.k
+    i32 1, label %bb.l
+    i32 3, label %bb.m
   ]
 
 bb.i:                                             ; preds = %bb.h
@@ -231,16 +234,9 @@ bb.j:                                             ; preds = %bb.h
   %i.bf = tail call noundef zeroext i1 %i.be(ptr noundef nonnull align 8 dereferenceable(112) %0, ptr %.fca.0.extract50, i8 %.fca.1.extract51) #21
   br label %_ZNK5clang4ento4SVal5getAsINS0_6nonloc9SymbolValEEESt8optionalIT_Ev.exit
 
-3:                                                ; preds = %bb.h
-  %4 = icmp ult i32 %i.ao, 4
-  tail call void @llvm.assume(i1 %4)
-  switch i32 %i.ao, label %.unreachabledefault [
-    i32 2, label %bb.k
-    i32 1, label %bb.l
-    i32 3, label %bb.m
-  ]
-
-bb.k:                                             ; preds = %3
+bb.k:                                             ; preds = %bb.h
+  %3 = icmp ult i32 %i.ao, 4
+  tail call void @llvm.assume(i1 %3)
   %i.bg = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.bh = load ptr, ptr %i.bg, align 8, !tbaa !112
   %i.bi = tail call { ptr, i8 } @_ZN5clang4ento11SValBuilder13makeSymbolValEPKNS0_7SymExprE(ptr noundef nonnull align 8 dereferenceable(412) %i.ar, ptr noundef %i.bh) ; 2 uses
@@ -252,7 +248,9 @@ bb.k:                                             ; preds = %3
   %i.bm = tail call noundef zeroext i1 %i.bl(ptr noundef nonnull align 8 dereferenceable(112) %0, ptr %.fca.0.extract34, i8 %.fca.1.extract35) #21
   br label %_ZNK5clang4ento4SVal5getAsINS0_6nonloc9SymbolValEEESt8optionalIT_Ev.exit
 
-bb.l:                                             ; preds = %3
+bb.l:                                             ; preds = %bb.h
+  %4 = icmp ult i32 %i.ao, 4
+  tail call void @llvm.assume(i1 %4)
   %i.bn = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !115
   %i.bp = tail call { ptr, i8 } @_ZN5clang4ento11SValBuilder13makeSymbolValEPKNS0_7SymExprE(ptr noundef nonnull align 8 dereferenceable(412) %i.ar, ptr noundef %i.bo) ; 2 uses
@@ -264,10 +262,10 @@ bb.l:                                             ; preds = %3
   %i.bt = tail call noundef zeroext i1 %i.bs(ptr noundef nonnull align 8 dereferenceable(112) %0, ptr %.fca.0.extract22, i8 %.fca.1.extract23) #21
   br label %_ZNK5clang4ento4SVal5getAsINS0_6nonloc9SymbolValEEESt8optionalIT_Ev.exit
 
-.unreachabledefault:                              ; preds = %3
+.unreachabledefault:                              ; preds = %bb.h
   unreachable
 
-bb.m:                                             ; preds = %3
+bb.m:                                             ; preds = %bb.h
   %i.bu = icmp eq i32 %i.ao, 3
   tail call void @llvm.assume(i1 %i.bu)
   %i.bv = getelementptr inbounds nuw i8, ptr %1, i64 40

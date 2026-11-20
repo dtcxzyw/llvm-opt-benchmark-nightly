@@ -205,16 +205,14 @@ bb.af:                                            ; preds = %bb.ah, %bb.ab, %bb.
 
 bb.ag:                                            ; preds = %bb.ae
   %i.cr = extractvalue { ptr, i8 } %i.cp, 0       ; 2 uses
-  %i.cs = extractvalue { ptr, i8 } %i.cp, 1       ; 2 uses
-  %.not103 = icmp eq i8 %i.cs, 2
-  br i1 %.not103, label %bb.ab, label %9
+  %i.cs = extractvalue { ptr, i8 } %i.cp, 1
+  switch i8 %i.cs, label %bb.ah [
+    i8 2, label %bb.ab
+    i8 0, label %bb.ak
+  ]
 
-9:                                                ; preds = %bb.ag
+bb.ah:                                            ; preds = %bb.ag
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cr) ]
-  %10 = trunc nuw i8 %i.cs to i1
-  br i1 %10, label %bb.ah, label %bb.ak
-
-bb.ah:                                            ; preds = %9
   %i.ct = getelementptr inbounds nuw i8, ptr %6, i64 40
   %i.cu = load ptr, ptr %i.ct, align 8, !nonnull !60, !noundef !60 ; 2 uses
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cu, i64 16 ; 3 uses
@@ -231,18 +229,18 @@ bb.ai:                                            ; preds = %.noexc
 .noexc115:                                        ; preds = %bb.ai
   %i.cy = extractvalue { ptr, i64 } %i.cx, 0
   %i.cz = extractvalue { ptr, i64 } %i.cx, 1
-  br label %11
+  br label %bb.ak
 
 bb.aj:                                            ; preds = %.noexc
   %i.da = load ptr, ptr %i.cv, align 8, !nonnull !60, !noundef !60
   %i.db = getelementptr inbounds nuw i8, ptr %i.cu, i64 32
   %i.dc = load i64, ptr %i.db, align 8, !noundef !60
-  br label %11
+  br label %bb.ak
 
-bb.ak:                                            ; preds = %9, %11
-  %.sroa.5.sroa.0.0 = phi ptr [ %.pre-phi194, %11 ], [ undef, %9 ]
-  %.sroa.5.sroa.4.0 = phi i64 [ %.merged.i114, %11 ], [ undef, %9 ]
-  %.sroa.051.0 = phi ptr [ %1, %11 ], [ null, %9 ]
+bb.ak:                                            ; preds = %bb.ag, %.noexc115, %bb.aj
+  %.sroa.5.sroa.0.0 = phi ptr [ %i.cy, %.noexc115 ], [ %i.da, %bb.aj ], [ undef, %bb.ag ]
+  %.sroa.5.sroa.4.0 = phi i64 [ %i.cz, %.noexc115 ], [ %i.dc, %bb.aj ], [ undef, %bb.ag ]
+  %.sroa.051.0 = phi ptr [ %1, %.noexc115 ], [ %1, %bb.aj ], [ null, %bb.ag ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   store ptr %.sroa.051.0, ptr %i.g, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.g, i64 8
@@ -263,12 +261,6 @@ bb.ak:                                            ; preds = %9, %11
   store ptr %i.i, ptr %i.dd, align 8
   invoke void %i.cr(ptr noalias noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %0, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(56) %i.g, ptr noalias noundef nonnull align 8 %i.f, i64 noundef 2)
           to label %bb.al unwind label %bb.af
-
-11:                                               ; preds = %bb.aj, %.noexc115
-  %.pre-phi194 = phi ptr [ %i.da, %bb.aj ], [ %i.cy, %.noexc115 ] ; 2 uses
-  %.merged.i114 = phi i64 [ %i.dc, %bb.aj ], [ %i.cz, %.noexc115 ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.pre-phi194) ]
-  br label %bb.ak
 
 bb.al:                                            ; preds = %bb.ak
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
@@ -672,17 +664,19 @@ bb.km:                                            ; preds = %.thread3209
           to label %bb.kn unwind label %bb.ky     ; 2 uses
 
 bb.kn:                                            ; preds = %bb.km
-  %i.aib = extractvalue { ptr, i8 } %i.aia, 0     ; 2 uses
-  %i.aic = extractvalue { ptr, i8 } %i.aia, 1     ; 2 uses
-  %.not792 = icmp eq i8 %i.aic, 2
-  br i1 %.not792, label %bb.le, label %bb.ko
+  %i.aib = extractvalue { ptr, i8 } %i.aia, 0     ; 3 uses
+  %i.aic = extractvalue { ptr, i8 } %i.aia, 1
+  switch i8 %i.aic, label %bb.kp [
+    i8 2, label %bb.le
+    i8 0, label %bb.ko
+  ]
 
 bb.ko:                                            ; preds = %bb.kn
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aib) ]
-  %3 = trunc nuw i8 %i.aic to i1
-  br i1 %3, label %bb.kp, label %bb.kt
+  br label %bb.kt
 
-bb.kp:                                            ; preds = %bb.ko
+bb.kp:                                            ; preds = %bb.kn
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aib) ]
   %i.aid = load ptr, ptr %i.ahn, align 8, !nonnull !60, !align !61, !noundef !60
   %i.aie = load ptr, ptr %i.fa, align 8, !nonnull !60, !noundef !60
   %i.aif = getelementptr inbounds nuw i8, ptr %i.aie, i64 40
@@ -717,7 +711,7 @@ bb.ks:                                            ; preds = %bb.kr, %.noexc959
   %i.aiq = load <2 x i16>, ptr %.sroa.01.0.i1124.le7070, align 2
   br label %bb.kt
 
-bb.kt:                                            ; preds = %bb.ks, %bb.ko
+bb.kt:                                            ; preds = %bb.ko, %bb.ks
   %.sroa.0501.0 = phi ptr [ %i.aid, %bb.ks ], [ null, %bb.ko ]
   %.sroa.6503.sroa.0.0 = phi ptr [ %.pre-phi3056, %bb.ks ], [ undef, %bb.ko ]
   %.sroa.6503.sroa.5.0 = phi i64 [ %.merged.i957, %bb.ks ], [ undef, %bb.ko ]
@@ -817,7 +811,7 @@ bb.ld:                                            ; preds = %bb.lc
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ah)
   br label %bb.le
 
-bb.le:                                            ; preds = %bb.kf, %bb.kg, %bb.kj, %bb.ld, %bb.kn
+bb.le:                                            ; preds = %bb.kf, %bb.kg, %bb.kj, %bb.kn, %bb.ld
   %i.ajh = load ptr, ptr %i.fa, align 8, !nonnull !60, !align !61, !noundef !60 ; 3 uses
   %i.aji = getelementptr inbounds nuw i8, ptr %i.ajh, i64 48 ; 2 uses
   %i.ajj = getelementptr inbounds nuw i8, ptr %i.ajh, i64 128 ; 2 uses

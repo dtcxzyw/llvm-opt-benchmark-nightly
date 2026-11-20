@@ -204,16 +204,15 @@ _RNvMs4_NtCs9GitHPCrz2Q_5rowan6cursorNtB5_10SyntaxNode20preorder_with_tokens.exi
   br i1 %.not11.not.i, label %.loopexit44, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.noexc17
-  %.sroa.55.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  %.sroa.55.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   br label %bb.m
 
 bb.m:                                             ; preds = %.noexc20, %.lr.ph.i
   %i.y = phi i64 [ %i.x, %.lr.ph.i ], [ %i.ay, %.noexc20 ]
-  %.sroa.55.0.copyload.i = load i64, ptr %.sroa.55.0..sroa_idx.i.a, align 8, !noalias !632 ; 2 uses
-  %.sroa.6.0.copyload.i = load ptr, ptr %.sroa.6.0..sroa_idx.i, align 8, !noalias !632 ; 10 uses
+  %.sroa.6.0.copyload.i = load ptr, ptr %.sroa.55.0..sroa_idx.i.a, align 8, !noalias !632 ; 11 uses
   %i.z = trunc nuw i64 %i.y to i1
-  br i1 %i.z, label %bb.n, label %_RNCNvMs4_NtCs9GitHPCrz2Q_5rowan6cursorNtB7_10SyntaxNode23descendants_with_tokens0Cs3smBju6uAx0_7ide_ssr.exit.i.i
+  br i1 %i.z, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %bb.m
   %i.aa = getelementptr inbounds nuw i8, ptr %.sroa.6.0.copyload.i, i64 48 ; 2 uses
@@ -223,16 +222,15 @@ bb.n:                                             ; preds = %bb.m
   %i.ad = icmp eq i32 %i.ac, 0
   br i1 %i.ad, label %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters10filter_map19filter_map_try_foldINtNtCs9GitHPCrz2Q_5rowan13utility_types9WalkEventINtB1h_11NodeOrTokenNtNtB1j_6cursor10SyntaxNodeNtB2o_11SyntaxTokenEEB22_uINtNtNtBa_3ops12control_flow11ControlFlowuENCNvMs4_B2o_B2m_23descendants_with_tokens0NCINvNtB6_3map12map_try_foldB22_IB23_INtNtB1j_3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEINtB5e_11SyntaxTokenB5A_EEuB3d_NvYB56_INtNtBa_7convert4FromB22_E4fromNCINvNvNtNtNtB8_6traits8iterator8Iterator3any5checkB56_NCNvMs_NtCs3smBju6uAx0_7ide_ssr9resolvingNtB8y_8Resolver20resolve_pattern_trees_0E0E0E0B8A_.exit.thread.sink.split.i, label %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters10filter_map19filter_map_try_foldINtNtCs9GitHPCrz2Q_5rowan13utility_types9WalkEventINtB1h_11NodeOrTokenNtNtB1j_6cursor10SyntaxNodeNtB2o_11SyntaxTokenEEB22_uINtNtNtBa_3ops12control_flow11ControlFlowuENCNvMs4_B2o_B2m_23descendants_with_tokens0NCINvNtB6_3map12map_try_foldB22_IB23_INtNtB1j_3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEINtB5e_11SyntaxTokenB5A_EEuB3d_NvYB56_INtNtBa_7convert4FromB22_E4fromNCINvNvNtNtNtB8_6traits8iterator8Iterator3any5checkB56_NCNvMs_NtCs3smBju6uAx0_7ide_ssr9resolvingNtB8y_8Resolver20resolve_pattern_trees_0E0E0E0B8A_.exit.thread.i
 
-_RNCNvMs4_NtCs9GitHPCrz2Q_5rowan6cursorNtB7_10SyntaxNode23descendants_with_tokens0Cs3smBju6uAx0_7ide_ssr.exit.i.i: ; preds = %bb.m
-  %.not.i.i = icmp eq i64 %.sroa.55.0.copyload.i, 2
-  br i1 %.not.i.i, label %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters10filter_map19filter_map_try_foldINtNtCs9GitHPCrz2Q_5rowan13utility_types9WalkEventINtB1h_11NodeOrTokenNtNtB1j_6cursor10SyntaxNodeNtB2o_11SyntaxTokenEEB22_uINtNtNtBa_3ops12control_flow11ControlFlowuENCNvMs4_B2o_B2m_23descendants_with_tokens0NCINvNtB6_3map12map_try_foldB22_IB23_INtNtB1j_3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEINtB5e_11SyntaxTokenB5A_EEuB3d_NvYB56_INtNtBa_7convert4FromB22_E4fromNCINvNvNtNtNtB8_6traits8iterator8Iterator3any5checkB56_NCNvMs_NtCs3smBju6uAx0_7ide_ssr9resolvingNtB8y_8Resolver20resolve_pattern_trees_0E0E0E0B8A_.exit.thread.i, label %bb.o
-
-bb.o:                                             ; preds = %_RNCNvMs4_NtCs9GitHPCrz2Q_5rowan6cursorNtB7_10SyntaxNode23descendants_with_tokens0Cs3smBju6uAx0_7ide_ssr.exit.i.i
-  %3 = trunc nuw i64 %.sroa.55.0.copyload.i to i1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload.i) ]
-  br i1 %3, label %bb.p, label %bb.u
+bb.o:                                             ; preds = %bb.m
+  %.sroa.55.0.copyload.i = load i64, ptr %.sroa.6.0..sroa_idx.i, align 8, !noalias !632
+  switch i64 %.sroa.55.0.copyload.i, label %bb.p [
+    i64 2, label %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters10filter_map19filter_map_try_foldINtNtCs9GitHPCrz2Q_5rowan13utility_types9WalkEventINtB1h_11NodeOrTokenNtNtB1j_6cursor10SyntaxNodeNtB2o_11SyntaxTokenEEB22_uINtNtNtBa_3ops12control_flow11ControlFlowuENCNvMs4_B2o_B2m_23descendants_with_tokens0NCINvNtB6_3map12map_try_foldB22_IB23_INtNtB1j_3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEINtB5e_11SyntaxTokenB5A_EEuB3d_NvYB56_INtNtBa_7convert4FromB22_E4fromNCINvNvNtNtNtB8_6traits8iterator8Iterator3any5checkB56_NCNvMs_NtCs3smBju6uAx0_7ide_ssr9resolvingNtB8y_8Resolver20resolve_pattern_trees_0E0E0E0B8A_.exit.thread.i
+    i64 0, label %bb.u
+  ]
 
 bb.p:                                             ; preds = %bb.o
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload.i) ]
   %i.ae = load i64, ptr %.sroa.6.0.copyload.i, align 8, !range !8, !noalias !634, !noundef !5
   %i.af = getelementptr inbounds nuw i8, ptr %.sroa.6.0.copyload.i, i64 8
   %i.ag = load ptr, ptr %i.af, align 8, !noalias !634, !nonnull !5, !noundef !5
@@ -276,6 +274,7 @@ bb.t:                                             ; preds = %bb.r
   unreachable
 
 bb.u:                                             ; preds = %bb.o
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload.i) ]
   %i.at = getelementptr inbounds nuw i8, ptr %.sroa.6.0.copyload.i, i64 48 ; 2 uses
   %i.au = load i32, ptr %i.at, align 4, !noalias !635, !noundef !5
   %i.av = add i32 %i.au, -1                       ; 2 uses
@@ -291,7 +290,7 @@ _RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters10filter_map19filter_map_try_foldI
   invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %.sroa.6.0.copyload.i) #27
           to label %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters10filter_map19filter_map_try_foldINtNtCs9GitHPCrz2Q_5rowan13utility_types9WalkEventINtB1h_11NodeOrTokenNtNtB1j_6cursor10SyntaxNodeNtB2o_11SyntaxTokenEEB22_uINtNtNtBa_3ops12control_flow11ControlFlowuENCNvMs4_B2o_B2m_23descendants_with_tokens0NCINvNtB6_3map12map_try_foldB22_IB23_INtNtB1j_3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEINtB5e_11SyntaxTokenB5A_EEuB3d_NvYB56_INtNtBa_7convert4FromB22_E4fromNCINvNvNtNtNtB8_6traits8iterator8Iterator3any5checkB56_NCNvMs_NtCs3smBju6uAx0_7ide_ssr9resolvingNtB8y_8Resolver20resolve_pattern_trees_0E0E0E0B8A_.exit.thread.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
-_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters10filter_map19filter_map_try_foldINtNtCs9GitHPCrz2Q_5rowan13utility_types9WalkEventINtB1h_11NodeOrTokenNtNtB1j_6cursor10SyntaxNodeNtB2o_11SyntaxTokenEEB22_uINtNtNtBa_3ops12control_flow11ControlFlowuENCNvMs4_B2o_B2m_23descendants_with_tokens0NCINvNtB6_3map12map_try_foldB22_IB23_INtNtB1j_3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEINtB5e_11SyntaxTokenB5A_EEuB3d_NvYB56_INtNtBa_7convert4FromB22_E4fromNCINvNvNtNtNtB8_6traits8iterator8Iterator3any5checkB56_NCNvMs_NtCs3smBju6uAx0_7ide_ssr9resolvingNtB8y_8Resolver20resolve_pattern_trees_0E0E0E0B8A_.exit.thread.i: ; preds = %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters10filter_map19filter_map_try_foldINtNtCs9GitHPCrz2Q_5rowan13utility_types9WalkEventINtB1h_11NodeOrTokenNtNtB1j_6cursor10SyntaxNodeNtB2o_11SyntaxTokenEEB22_uINtNtNtBa_3ops12control_flow11ControlFlowuENCNvMs4_B2o_B2m_23descendants_with_tokens0NCINvNtB6_3map12map_try_foldB22_IB23_INtNtB1j_3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEINtB5e_11SyntaxTokenB5A_EEuB3d_NvYB56_INtNtBa_7convert4FromB22_E4fromNCINvNvNtNtNtB8_6traits8iterator8Iterator3any5checkB56_NCNvMs_NtCs3smBju6uAx0_7ide_ssr9resolvingNtB8y_8Resolver20resolve_pattern_trees_0E0E0E0B8A_.exit.thread.sink.split.i, %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters10filter_map19filter_map_try_foldINtNtCs9GitHPCrz2Q_5rowan13utility_types9WalkEventINtB1h_11NodeOrTokenNtNtB1j_6cursor10SyntaxNodeNtB2o_11SyntaxTokenEEB22_uINtNtNtBa_3ops12control_flow11ControlFlowuENCNvMs4_B2o_B2m_23descendants_with_tokens0NCINvNtB6_3map12map_try_foldB22_IB23_INtNtB1j_3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEINtB5e_11SyntaxTokenB5A_EEuB3d_NvYB56_INtNtBa_7convert4FromB22_E4fromNCINvNvNtNtNtB8_6traits8iterator8Iterator3any5checkB56_NCNvMs_NtCs3smBju6uAx0_7ide_ssr9resolvingNtB8y_8Resolver20resolve_pattern_trees_0E0E0E0B8A_.exit.i, %bb.u, %_RNCNvMs4_NtCs9GitHPCrz2Q_5rowan6cursorNtB7_10SyntaxNode23descendants_with_tokens0Cs3smBju6uAx0_7ide_ssr.exit.i.i, %bb.n
+_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters10filter_map19filter_map_try_foldINtNtCs9GitHPCrz2Q_5rowan13utility_types9WalkEventINtB1h_11NodeOrTokenNtNtB1j_6cursor10SyntaxNodeNtB2o_11SyntaxTokenEEB22_uINtNtNtBa_3ops12control_flow11ControlFlowuENCNvMs4_B2o_B2m_23descendants_with_tokens0NCINvNtB6_3map12map_try_foldB22_IB23_INtNtB1j_3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEINtB5e_11SyntaxTokenB5A_EEuB3d_NvYB56_INtNtBa_7convert4FromB22_E4fromNCINvNvNtNtNtB8_6traits8iterator8Iterator3any5checkB56_NCNvMs_NtCs3smBju6uAx0_7ide_ssr9resolvingNtB8y_8Resolver20resolve_pattern_trees_0E0E0E0B8A_.exit.thread.i: ; preds = %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters10filter_map19filter_map_try_foldINtNtCs9GitHPCrz2Q_5rowan13utility_types9WalkEventINtB1h_11NodeOrTokenNtNtB1j_6cursor10SyntaxNodeNtB2o_11SyntaxTokenEEB22_uINtNtNtBa_3ops12control_flow11ControlFlowuENCNvMs4_B2o_B2m_23descendants_with_tokens0NCINvNtB6_3map12map_try_foldB22_IB23_INtNtB1j_3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEINtB5e_11SyntaxTokenB5A_EEuB3d_NvYB56_INtNtBa_7convert4FromB22_E4fromNCINvNvNtNtNtB8_6traits8iterator8Iterator3any5checkB56_NCNvMs_NtCs3smBju6uAx0_7ide_ssr9resolvingNtB8y_8Resolver20resolve_pattern_trees_0E0E0E0B8A_.exit.thread.sink.split.i, %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters10filter_map19filter_map_try_foldINtNtCs9GitHPCrz2Q_5rowan13utility_types9WalkEventINtB1h_11NodeOrTokenNtNtB1j_6cursor10SyntaxNodeNtB2o_11SyntaxTokenEEB22_uINtNtNtBa_3ops12control_flow11ControlFlowuENCNvMs4_B2o_B2m_23descendants_with_tokens0NCINvNtB6_3map12map_try_foldB22_IB23_INtNtB1j_3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEINtB5e_11SyntaxTokenB5A_EEuB3d_NvYB56_INtNtBa_7convert4FromB22_E4fromNCINvNvNtNtNtB8_6traits8iterator8Iterator3any5checkB56_NCNvMs_NtCs3smBju6uAx0_7ide_ssr9resolvingNtB8y_8Resolver20resolve_pattern_trees_0E0E0E0B8A_.exit.i, %bb.u, %bb.o, %bb.n
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !632
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !632
   invoke void @_RNvXsp_NtCs9GitHPCrz2Q_5rowan6cursorNtB5_18PreorderWithTokensNtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator4next(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %i.f)

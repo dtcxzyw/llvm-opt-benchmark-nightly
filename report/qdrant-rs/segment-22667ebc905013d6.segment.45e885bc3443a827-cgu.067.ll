@@ -204,15 +204,11 @@ bb.f:                                             ; preds = %_RINvNtCskKLDkoKarT
   br label %_RNCNvXNtNtNtCs607s0NAIaWN_7segment5index20struct_payload_index13payload_indexNtB6_18StructPayloadIndexNtNtB8_18payload_index_base12PayloadIndex7flusher0Ba_.exit
 
 bb.g:                                             ; preds = %bb.d
-  %i.ae = load i64, ptr %i.e, align 8, !range !11, !noalias !2014, !noundef !4 ; 3 uses
-  %.not12.i = icmp eq i64 %i.ae, -1
-  br i1 %.not12.i, label %.thread34.i, label %2
-
-2:                                                ; preds = %bb.g
-  %3 = icmp ne i64 %i.ae, -9223372036854775791
-  call void @llvm.assume(i1 %3)
-  %4 = icmp eq i64 %i.ae, -9223372036854775798
-  br i1 %4, label %bb.k, label %bb.i
+  %i.ae = load i64, ptr %i.e, align 8, !range !11, !noalias !2014, !noundef !4
+  switch i64 %i.ae, label %bb.i [
+    i64 -1, label %.thread34.i
+    i64 -9223372036854775798, label %bb.k
+  ]
 
 bb.h:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECs607s0NAIaWN_7segment.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !2014
@@ -220,7 +216,7 @@ bb.h:                                             ; preds = %_RINvNtCskKLDkoKarT
   %.not15.i = icmp eq i64 %.pr.i, -1
   br i1 %.not15.i, label %.thread34.i, label %bb.r
 
-bb.i:                                             ; preds = %2
+bb.i:                                             ; preds = %bb.g
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull align 8 dereferenceable(96) %i.e, i64 96, i1 false), !noalias !2013
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !2014
   invoke void @_RNvXse_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterINtNtB9_5boxed3BoxDINtNtNtCskKLDkoKarTP_4core3ops8function6FnOnceuEp6OutputINtNtB1m_6result6ResultuNtNtNtCs607s0NAIaWN_7segment6common15operation_error14OperationErrorENtNtB1m_6marker4SendEL_EENtNtB1k_4drop4Drop4dropB2D_(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.f)
@@ -232,7 +228,7 @@ bb.j:                                             ; preds = %bb.l
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECs607s0NAIaWN_7segment(ptr noalias nofree noundef align 8 dereferenceable(24) %i.d) #18
           to label %.body.i unwind label %bb.t, !noalias !2014
 
-bb.k:                                             ; preds = %2
+bb.k:                                             ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !2014
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.d, ptr noundef nonnull align 8 dereferenceable(24) %i.o, i64 24, i1 false), !noalias !2014
   %i.ag = load atomic i64, ptr @_RNvCs7A8gjpeJ2x1_3log20MAX_LOG_LEVEL_FILTER monotonic, align 8, !noalias !2014 ; 2 uses

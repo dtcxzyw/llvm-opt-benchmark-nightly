@@ -202,20 +202,17 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.val.i.i.i = load i64, ptr %i.w, align 8, !range !29, !alias.scope !380, !noundef !9 ; 2 uses
+  %.val.i.i.i = load i64, ptr %i.w, align 8, !range !29, !alias.scope !380, !noundef !9
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %.val1.i.i.i = load ptr, ptr %i.x, align 8, !alias.scope !380 ; 9 uses
-  %.not.i.i.i.i = icmp eq i64 %.val.i.i.i, -1
+  %.val1.i.i.i = load ptr, ptr %i.x, align 8, !alias.scope !380, !nonnull !9, !noundef !9 ; 7 uses
   %i.y = ptrtoint ptr %.val1.i.i.i to i64         ; 4 uses
   %i.z = and i64 %i.y, 3                          ; 3 uses
-  br i1 %.not.i.i.i.i, label %bb.r, label %1
+  switch i64 %.val.i.i.i, label %bb.o [
+    i64 -1, label %bb.r
+    i64 2, label %bb.l
+  ]
 
-1:                                                ; preds = %bb.k
-  %2 = icmp eq i64 %.val.i.i.i, 2
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1.i.i.i) ]
-  br i1 %2, label %bb.l, label %bb.o
-
-bb.l:                                             ; preds = %1
+bb.l:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !381
   switch i64 %i.z, label %default.unreachable [
     i64 2, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECshke30g4Hb4g_20ipfs_private_example.exit.i.i.i.i.i
@@ -245,7 +242,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECshke30g4Hb4g_2
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !381
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtCscu2bAJ62uie_6either6EitherNtNtNtB4_2io5error5ErrorIBC_IBC_IBC_IBC_B16_NtCsinjenlOLFM6_11libp2p_pnet9PnetErrorEB16_EINtNtNtCsdTHTBGblh3Z_11libp2p_core7upgrade5error12UpgradeErrorNtCshuexzQAPOo_12libp2p_noise5ErrorEEIB2y_B16_EEEECshke30g4Hb4g_20ipfs_private_example.exit
 
-bb.o:                                             ; preds = %1
+bb.o:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !383
   switch i64 %i.z, label %default.unreachable [
     i64 2, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCsinjenlOLFM6_11libp2p_pnet9PnetErrorECshke30g4Hb4g_20ipfs_private_example.exit.i.i.i.i.i
@@ -276,7 +273,6 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCsinjenlOLFM6_11libp2p_pnet9PnetErrorE
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtCscu2bAJ62uie_6either6EitherNtNtNtB4_2io5error5ErrorIBC_IBC_IBC_IBC_B16_NtCsinjenlOLFM6_11libp2p_pnet9PnetErrorEB16_EINtNtNtCsdTHTBGblh3Z_11libp2p_core7upgrade5error12UpgradeErrorNtCshuexzQAPOo_12libp2p_noise5ErrorEEIB2y_B16_EEEECshke30g4Hb4g_20ipfs_private_example.exit
 
 bb.r:                                             ; preds = %bb.k
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1.i.i.i) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !385
   switch i64 %i.z, label %default.unreachable [
     i64 2, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECshke30g4Hb4g_20ipfs_private_example.exit.i.i.i.i
