@@ -205,7 +205,7 @@ bb.al:                                            ; preds = %bb.ak
   %narrow.i.i.1 = or i1 %i.cn, %i.co              ; 2 uses
   %.sroa.0.0.i7.i.1 = zext i1 %narrow.i.i.1 to i64 ; 2 uses
   store i64 %i.cm, ptr %i.ch, align 8, !alias.scope !2312
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN12malachite_nz7natural10arithmetic3add41limbs_slice_add_same_length_in_place_left17he348e9debbe58765E.exit.unr-lcssa, label %.preheader.i
 

@@ -205,7 +205,7 @@ _RNvMNtCscgRAwXFJnXP_4core5sliceSTmINtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked
   %i.gg = getelementptr inbounds nuw i8, ptr %i.gb, i64 4, !dbg !52969
   store i16 %i.ge, ptr %i.gg, align 4, !dbg !52969, !alias.scope !52777
   %i.gh = add nuw nsw i64 %.sroa.0.016.i72, 2, !dbg !52970 ; 2 uses
-  %niter210.next.1 = add i64 %niter210, 2, !dbg !52965 ; 2 uses
+  %niter210.next.1 = add nuw nsw i64 %niter210, 2, !dbg !52965 ; 2 uses
   %niter210.ncmp.1 = icmp eq i64 %niter210.next.1, %unroll_iter209, !dbg !52965
   br i1 %niter210.ncmp.1, label %_RINvNvMNtCscgRAwXFJnXP_4core5sliceSp7reverse7revswapTmINtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops13compare_inner7NonNullNtNtCs2mZqlW55729_12polars_utils7float164pf16EEEBZ_.exit74.loopexit.unr-lcssa, label %_RNvMNtCscgRAwXFJnXP_4core5sliceSTmINtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops13compare_inner7NonNullNtNtCs2mZqlW55729_12polars_utils7float164pf16EE12split_at_mutBF_.exit11.i71, !dbg !52965
 
@@ -608,7 +608,7 @@ _RNvMNtCscgRAwXFJnXP_4core5sliceSTmINtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked
   %i.gg = getelementptr inbounds nuw i8, ptr %i.gb, i64 4, !dbg !53446
   store i8 %i.ge, ptr %i.gg, align 4, !dbg !53446, !alias.scope !53254
   %i.gh = add nuw nsw i64 %.sroa.0.016.i72, 2, !dbg !53447 ; 2 uses
-  %niter210.next.1 = add i64 %niter210, 2, !dbg !53442 ; 2 uses
+  %niter210.next.1 = add nuw nsw i64 %niter210, 2, !dbg !53442 ; 2 uses
   %niter210.ncmp.1 = icmp eq i64 %niter210.next.1, %unroll_iter209, !dbg !53442
   br i1 %niter210.ncmp.1, label %_RINvNvMNtCscgRAwXFJnXP_4core5sliceSp7reverse7revswapTmINtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops13compare_inner7NonNullaEEEBZ_.exit74.loopexit.unr-lcssa, label %_RNvMNtCscgRAwXFJnXP_4core5sliceSTmINtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops13compare_inner7NonNullaEE12split_at_mutBF_.exit11.i71, !dbg !53442
 
@@ -1011,7 +1011,7 @@ _RNvMNtCscgRAwXFJnXP_4core5sliceSTmINtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked
   %i.fk = getelementptr inbounds nuw i8, ptr %i.fg, i64 8, !dbg !53885
   store double %i.fj, ptr %i.fk, align 8, !dbg !53885, !alias.scope !53711
   %i.fl = add nuw nsw i64 %.sroa.0.016.i68, 2, !dbg !53886 ; 2 uses
-  %niter206.next.1 = add i64 %niter206, 2, !dbg !53881 ; 2 uses
+  %niter206.next.1 = add nuw nsw i64 %niter206, 2, !dbg !53881 ; 2 uses
   %niter206.ncmp.1 = icmp eq i64 %niter206.next.1, %unroll_iter205, !dbg !53881
   br i1 %niter206.ncmp.1, label %_RINvNvMNtCscgRAwXFJnXP_4core5sliceSp7reverse7revswapTmINtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops13compare_inner7NonNulldEEEBZ_.exit70.loopexit.unr-lcssa, label %_RNvMNtCscgRAwXFJnXP_4core5sliceSTmINtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops13compare_inner7NonNulldEE12split_at_mutBF_.exit11.i67, !dbg !53881
 
@@ -1414,7 +1414,7 @@ _RNvMNtCscgRAwXFJnXP_4core5sliceSTmINtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked
   %i.gg = getelementptr inbounds nuw i8, ptr %i.gb, i64 4, !dbg !54843
   store i8 %i.ge, ptr %i.gg, align 4, !dbg !54843, !alias.scope !54651
   %i.gh = add nuw nsw i64 %.sroa.0.016.i72, 2, !dbg !54844 ; 2 uses
-  %niter210.next.1 = add i64 %niter210, 2, !dbg !54839 ; 2 uses
+  %niter210.next.1 = add nuw nsw i64 %niter210, 2, !dbg !54839 ; 2 uses
   %niter210.ncmp.1 = icmp eq i64 %niter210.next.1, %unroll_iter209, !dbg !54839
   br i1 %niter210.ncmp.1, label %_RINvNvMNtCscgRAwXFJnXP_4core5sliceSp7reverse7revswapTmINtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops13compare_inner7NonNullhEEEBZ_.exit74.loopexit.unr-lcssa, label %_RNvMNtCscgRAwXFJnXP_4core5sliceSTmINtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops13compare_inner7NonNullhEE12split_at_mutBF_.exit11.i71, !dbg !54839
 
@@ -1817,7 +1817,7 @@ _RNvMNtCscgRAwXFJnXP_4core5sliceSTmINtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked
   %i.fk = getelementptr inbounds nuw i8, ptr %i.fg, i64 16, !dbg !56244
   store i128 %i.fj, ptr %i.fk, align 16, !dbg !56244, !alias.scope !56070
   %i.fl = add nuw nsw i64 %.sroa.0.016.i68, 2, !dbg !56245 ; 2 uses
-  %niter206.next.1 = add i64 %niter206, 2, !dbg !56240 ; 2 uses
+  %niter206.next.1 = add nuw nsw i64 %niter206, 2, !dbg !56240 ; 2 uses
   %niter206.ncmp.1 = icmp eq i64 %niter206.next.1, %unroll_iter205, !dbg !56240
   br i1 %niter206.ncmp.1, label %_RINvNvMNtCscgRAwXFJnXP_4core5sliceSp7reverse7revswapTmINtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops13compare_inner7NonNullnEEEBZ_.exit70.loopexit.unr-lcssa, label %_RNvMNtCscgRAwXFJnXP_4core5sliceSTmINtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops13compare_inner7NonNullnEE12split_at_mutBF_.exit11.i67, !dbg !56240
 
@@ -2220,7 +2220,7 @@ _RNvMNtCscgRAwXFJnXP_4core5sliceSTmINtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked
   %i.fk = getelementptr inbounds nuw i8, ptr %i.fg, i64 16, !dbg !56683
   store i128 %i.fj, ptr %i.fk, align 16, !dbg !56683, !alias.scope !56509
   %i.fl = add nuw nsw i64 %.sroa.0.016.i68, 2, !dbg !56684 ; 2 uses
-  %niter206.next.1 = add i64 %niter206, 2, !dbg !56679 ; 2 uses
+  %niter206.next.1 = add nuw nsw i64 %niter206, 2, !dbg !56679 ; 2 uses
   %niter206.ncmp.1 = icmp eq i64 %niter206.next.1, %unroll_iter205, !dbg !56679
   br i1 %niter206.ncmp.1, label %_RINvNvMNtCscgRAwXFJnXP_4core5sliceSp7reverse7revswapTmINtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops13compare_inner7NonNulloEEEBZ_.exit70.loopexit.unr-lcssa, label %_RNvMNtCscgRAwXFJnXP_4core5sliceSTmINtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops13compare_inner7NonNulloEE12split_at_mutBF_.exit11.i67, !dbg !56679
 
@@ -2623,7 +2623,7 @@ _RNvMNtCscgRAwXFJnXP_4core5sliceSTmINtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked
   %i.gg = getelementptr inbounds nuw i8, ptr %i.gb, i64 4, !dbg !57160
   store i16 %i.ge, ptr %i.gg, align 4, !dbg !57160, !alias.scope !56968
   %i.gh = add nuw nsw i64 %.sroa.0.016.i72, 2, !dbg !57161 ; 2 uses
-  %niter210.next.1 = add i64 %niter210, 2, !dbg !57156 ; 2 uses
+  %niter210.next.1 = add nuw nsw i64 %niter210, 2, !dbg !57156 ; 2 uses
   %niter210.ncmp.1 = icmp eq i64 %niter210.next.1, %unroll_iter209, !dbg !57156
   br i1 %niter210.ncmp.1, label %_RINvNvMNtCscgRAwXFJnXP_4core5sliceSp7reverse7revswapTmINtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops13compare_inner7NonNullsEEEBZ_.exit74.loopexit.unr-lcssa, label %_RNvMNtCscgRAwXFJnXP_4core5sliceSTmINtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops13compare_inner7NonNullsEE12split_at_mutBF_.exit11.i71, !dbg !57156
 
@@ -3026,7 +3026,7 @@ _RNvMNtCscgRAwXFJnXP_4core5sliceSTmINtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked
   %i.gg = getelementptr inbounds nuw i8, ptr %i.gb, i64 4, !dbg !57637
   store i16 %i.ge, ptr %i.gg, align 4, !dbg !57637, !alias.scope !57445
   %i.gh = add nuw nsw i64 %.sroa.0.016.i72, 2, !dbg !57638 ; 2 uses
-  %niter210.next.1 = add i64 %niter210, 2, !dbg !57633 ; 2 uses
+  %niter210.next.1 = add nuw nsw i64 %niter210, 2, !dbg !57633 ; 2 uses
   %niter210.ncmp.1 = icmp eq i64 %niter210.next.1, %unroll_iter209, !dbg !57633
   br i1 %niter210.ncmp.1, label %_RINvNvMNtCscgRAwXFJnXP_4core5sliceSp7reverse7revswapTmINtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops13compare_inner7NonNulltEEEBZ_.exit74.loopexit.unr-lcssa, label %_RNvMNtCscgRAwXFJnXP_4core5sliceSTmINtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops13compare_inner7NonNulltEE12split_at_mutBF_.exit11.i71, !dbg !57633
 
@@ -3429,7 +3429,7 @@ _RNvMNtCscgRAwXFJnXP_4core5sliceSTmINtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked
   %i.fk = getelementptr inbounds nuw i8, ptr %i.fg, i64 8, !dbg !58554
   store i64 %i.fj, ptr %i.fk, align 8, !dbg !58554, !alias.scope !58380
   %i.fl = add nuw nsw i64 %.sroa.0.016.i68, 2, !dbg !58555 ; 2 uses
-  %niter206.next.1 = add i64 %niter206, 2, !dbg !58550 ; 2 uses
+  %niter206.next.1 = add nuw nsw i64 %niter206, 2, !dbg !58550 ; 2 uses
   %niter206.ncmp.1 = icmp eq i64 %niter206.next.1, %unroll_iter205, !dbg !58550
   br i1 %niter206.ncmp.1, label %_RINvNvMNtCscgRAwXFJnXP_4core5sliceSp7reverse7revswapTmINtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops13compare_inner7NonNullxEEEBZ_.exit70.loopexit.unr-lcssa, label %_RNvMNtCscgRAwXFJnXP_4core5sliceSTmINtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops13compare_inner7NonNullxEE12split_at_mutBF_.exit11.i67, !dbg !58550
 
@@ -3832,7 +3832,7 @@ _RNvMNtCscgRAwXFJnXP_4core5sliceSTmINtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked
   %i.fk = getelementptr inbounds nuw i8, ptr %i.fg, i64 8, !dbg !58993
   store i64 %i.fj, ptr %i.fk, align 8, !dbg !58993, !alias.scope !58819
   %i.fl = add nuw nsw i64 %.sroa.0.016.i68, 2, !dbg !58994 ; 2 uses
-  %niter206.next.1 = add i64 %niter206, 2, !dbg !58989 ; 2 uses
+  %niter206.next.1 = add nuw nsw i64 %niter206, 2, !dbg !58989 ; 2 uses
   %niter206.ncmp.1 = icmp eq i64 %niter206.next.1, %unroll_iter205, !dbg !58989
   br i1 %niter206.ncmp.1, label %_RINvNvMNtCscgRAwXFJnXP_4core5sliceSp7reverse7revswapTmINtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops13compare_inner7NonNullyEEEBZ_.exit70.loopexit.unr-lcssa, label %_RNvMNtCscgRAwXFJnXP_4core5sliceSTmINtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops13compare_inner7NonNullyEE12split_at_mutBF_.exit11.i67, !dbg !58989
 
@@ -4235,7 +4235,7 @@ _RNvMNtCscgRAwXFJnXP_4core5sliceSTmNtNtCs2mZqlW55729_12polars_utils7float164pf16
   %i.fv = getelementptr inbounds nuw i8, ptr %i.fq, i64 4, !dbg !59423
   store i16 %i.ft, ptr %i.fv, align 4, !dbg !59423, !alias.scope !59258
   %i.fw = add nuw nsw i64 %.sroa.0.016.i65, 2, !dbg !59424 ; 2 uses
-  %niter196.next.1 = add i64 %niter196, 2, !dbg !59419 ; 2 uses
+  %niter196.next.1 = add nuw nsw i64 %niter196, 2, !dbg !59419 ; 2 uses
   %niter196.ncmp.1 = icmp eq i64 %niter196.next.1, %unroll_iter195, !dbg !59419
   br i1 %niter196.ncmp.1, label %_RINvNvMNtCscgRAwXFJnXP_4core5sliceSp7reverse7revswapTmNtNtCs2mZqlW55729_12polars_utils7float164pf16EECs1LHh8CLbVkQ_11polars_core.exit67.loopexit.unr-lcssa, label %_RNvMNtCscgRAwXFJnXP_4core5sliceSTmNtNtCs2mZqlW55729_12polars_utils7float164pf16E12split_at_mutCs1LHh8CLbVkQ_11polars_core.exit11.i64, !dbg !59419
 
@@ -4638,7 +4638,7 @@ _RNvMNtCscgRAwXFJnXP_4core5sliceSTmNtNtCs2mZqlW55729_12polars_utils7float164pf16
   %i.fv = getelementptr inbounds nuw i8, ptr %i.fq, i64 4, !dbg !59854
   store i16 %i.ft, ptr %i.fv, align 4, !dbg !59854, !alias.scope !59689
   %i.fw = add nuw nsw i64 %.sroa.0.016.i63, 2, !dbg !59855 ; 2 uses
-  %niter194.next.1 = add i64 %niter194, 2, !dbg !59850 ; 2 uses
+  %niter194.next.1 = add nuw nsw i64 %niter194, 2, !dbg !59850 ; 2 uses
   %niter194.ncmp.1 = icmp eq i64 %niter194.next.1, %unroll_iter193, !dbg !59850
   br i1 %niter194.ncmp.1, label %_RINvNvMNtCscgRAwXFJnXP_4core5sliceSp7reverse7revswapTmNtNtCs2mZqlW55729_12polars_utils7float164pf16EECs1LHh8CLbVkQ_11polars_core.exit65.loopexit.unr-lcssa, label %_RNvMNtCscgRAwXFJnXP_4core5sliceSTmNtNtCs2mZqlW55729_12polars_utils7float164pf16E12split_at_mutCs1LHh8CLbVkQ_11polars_core.exit11.i62, !dbg !59850
 
@@ -5041,7 +5041,7 @@ _RNvMNtCscgRAwXFJnXP_4core5sliceSTmaE12split_at_mutCs1LHh8CLbVkQ_11polars_core.e
   %i.fo = getelementptr inbounds nuw i8, ptr %i.fj, i64 4, !dbg !62548
   store i8 %i.fm, ptr %i.fo, align 4, !dbg !62548, !alias.scope !62393
   %i.fp = add nuw nsw i64 %.sroa.0.016.i63, 2, !dbg !62549 ; 2 uses
-  %niter181.next.1 = add i64 %niter181, 2, !dbg !62544 ; 2 uses
+  %niter181.next.1 = add nuw nsw i64 %niter181, 2, !dbg !62544 ; 2 uses
   %niter181.ncmp.1 = icmp eq i64 %niter181.next.1, %unroll_iter180, !dbg !62544
   br i1 %niter181.ncmp.1, label %_RINvNvMNtCscgRAwXFJnXP_4core5sliceSp7reverse7revswapTmaEECs1LHh8CLbVkQ_11polars_core.exit65.loopexit.unr-lcssa, label %_RNvMNtCscgRAwXFJnXP_4core5sliceSTmaE12split_at_mutCs1LHh8CLbVkQ_11polars_core.exit11.i62, !dbg !62544
 
@@ -5444,7 +5444,7 @@ _RNvMNtCscgRAwXFJnXP_4core5sliceSTmaE12split_at_mutCs1LHh8CLbVkQ_11polars_core.e
   %i.fo = getelementptr inbounds nuw i8, ptr %i.fj, i64 4, !dbg !62958
   store i8 %i.fm, ptr %i.fo, align 4, !dbg !62958, !alias.scope !62803
   %i.fp = add nuw nsw i64 %.sroa.0.016.i63, 2, !dbg !62959 ; 2 uses
-  %niter181.next.1 = add i64 %niter181, 2, !dbg !62954 ; 2 uses
+  %niter181.next.1 = add nuw nsw i64 %niter181, 2, !dbg !62954 ; 2 uses
   %niter181.ncmp.1 = icmp eq i64 %niter181.next.1, %unroll_iter180, !dbg !62954
   br i1 %niter181.ncmp.1, label %_RINvNvMNtCscgRAwXFJnXP_4core5sliceSp7reverse7revswapTmaEECs1LHh8CLbVkQ_11polars_core.exit65.loopexit.unr-lcssa, label %_RNvMNtCscgRAwXFJnXP_4core5sliceSTmaE12split_at_mutCs1LHh8CLbVkQ_11polars_core.exit11.i62, !dbg !62954
 
@@ -5847,7 +5847,7 @@ _RNvMNtCscgRAwXFJnXP_4core5sliceSTmbE12split_at_mutCs1LHh8CLbVkQ_11polars_core.e
   %i.fq = getelementptr inbounds nuw i8, ptr %i.fl, i64 4, !dbg !63372
   store i8 %i.fo, ptr %i.fq, align 4, !dbg !63372, !alias.scope !63216
   %i.fr = add nuw nsw i64 %.sroa.0.016.i63, 2, !dbg !63373 ; 2 uses
-  %niter181.next.1 = add i64 %niter181, 2, !dbg !63368 ; 2 uses
+  %niter181.next.1 = add nuw nsw i64 %niter181, 2, !dbg !63368 ; 2 uses
   %niter181.ncmp.1 = icmp eq i64 %niter181.next.1, %unroll_iter180, !dbg !63368
   br i1 %niter181.ncmp.1, label %_RINvNvMNtCscgRAwXFJnXP_4core5sliceSp7reverse7revswapTmbEECs1LHh8CLbVkQ_11polars_core.exit65.loopexit.unr-lcssa, label %_RNvMNtCscgRAwXFJnXP_4core5sliceSTmbE12split_at_mutCs1LHh8CLbVkQ_11polars_core.exit11.i62, !dbg !63368
 
@@ -6250,7 +6250,7 @@ _RNvMNtCscgRAwXFJnXP_4core5sliceSTmbE12split_at_mutCs1LHh8CLbVkQ_11polars_core.e
   %i.fq = getelementptr inbounds nuw i8, ptr %i.fl, i64 4, !dbg !63787
   store i8 %i.fo, ptr %i.fq, align 4, !dbg !63787, !alias.scope !63631
   %i.fr = add nuw nsw i64 %.sroa.0.016.i63, 2, !dbg !63788 ; 2 uses
-  %niter181.next.1 = add i64 %niter181, 2, !dbg !63783 ; 2 uses
+  %niter181.next.1 = add nuw nsw i64 %niter181, 2, !dbg !63783 ; 2 uses
   %niter181.ncmp.1 = icmp eq i64 %niter181.next.1, %unroll_iter180, !dbg !63783
   br i1 %niter181.ncmp.1, label %_RINvNvMNtCscgRAwXFJnXP_4core5sliceSp7reverse7revswapTmbEECs1LHh8CLbVkQ_11polars_core.exit65.loopexit.unr-lcssa, label %_RNvMNtCscgRAwXFJnXP_4core5sliceSTmbE12split_at_mutCs1LHh8CLbVkQ_11polars_core.exit11.i62, !dbg !63783
 
@@ -6653,7 +6653,7 @@ _RNvMNtCscgRAwXFJnXP_4core5sliceSTmdE12split_at_mutCs1LHh8CLbVkQ_11polars_core.e
   %i.eu = getelementptr inbounds nuw i8, ptr %i.eq, i64 8, !dbg !64164
   store double %i.et, ptr %i.eu, align 8, !dbg !64164, !alias.scope !64025
   %i.ev = add nuw nsw i64 %.sroa.0.016.i59, 2, !dbg !64165 ; 2 uses
-  %niter177.next.1 = add i64 %niter177, 2, !dbg !64160 ; 2 uses
+  %niter177.next.1 = add nuw nsw i64 %niter177, 2, !dbg !64160 ; 2 uses
   %niter177.ncmp.1 = icmp eq i64 %niter177.next.1, %unroll_iter176, !dbg !64160
   br i1 %niter177.ncmp.1, label %_RINvNvMNtCscgRAwXFJnXP_4core5sliceSp7reverse7revswapTmdEECs1LHh8CLbVkQ_11polars_core.exit61.loopexit.unr-lcssa, label %_RNvMNtCscgRAwXFJnXP_4core5sliceSTmdE12split_at_mutCs1LHh8CLbVkQ_11polars_core.exit11.i58, !dbg !64160
 
@@ -7056,7 +7056,7 @@ _RNvMNtCscgRAwXFJnXP_4core5sliceSTmdE12split_at_mutCs1LHh8CLbVkQ_11polars_core.e
   %i.eu = getelementptr inbounds nuw i8, ptr %i.eq, i64 8, !dbg !64542
   store double %i.et, ptr %i.eu, align 8, !dbg !64542, !alias.scope !64403
   %i.ev = add nuw nsw i64 %.sroa.0.016.i59, 2, !dbg !64543 ; 2 uses
-  %niter177.next.1 = add i64 %niter177, 2, !dbg !64538 ; 2 uses
+  %niter177.next.1 = add nuw nsw i64 %niter177, 2, !dbg !64538 ; 2 uses
   %niter177.ncmp.1 = icmp eq i64 %niter177.next.1, %unroll_iter176, !dbg !64538
   br i1 %niter177.ncmp.1, label %_RINvNvMNtCscgRAwXFJnXP_4core5sliceSp7reverse7revswapTmdEECs1LHh8CLbVkQ_11polars_core.exit61.loopexit.unr-lcssa, label %_RNvMNtCscgRAwXFJnXP_4core5sliceSTmdE12split_at_mutCs1LHh8CLbVkQ_11polars_core.exit11.i58, !dbg !64538
 
@@ -7459,7 +7459,7 @@ _RNvMNtCscgRAwXFJnXP_4core5sliceSTmhE12split_at_mutCs1LHh8CLbVkQ_11polars_core.e
   %i.fo = getelementptr inbounds nuw i8, ptr %i.fj, i64 4, !dbg !65797
   store i8 %i.fm, ptr %i.fo, align 4, !dbg !65797, !alias.scope !65642
   %i.fp = add nuw nsw i64 %.sroa.0.016.i63, 2, !dbg !65798 ; 2 uses
-  %niter181.next.1 = add i64 %niter181, 2, !dbg !65793 ; 2 uses
+  %niter181.next.1 = add nuw nsw i64 %niter181, 2, !dbg !65793 ; 2 uses
   %niter181.ncmp.1 = icmp eq i64 %niter181.next.1, %unroll_iter180, !dbg !65793
   br i1 %niter181.ncmp.1, label %_RINvNvMNtCscgRAwXFJnXP_4core5sliceSp7reverse7revswapTmhEECs1LHh8CLbVkQ_11polars_core.exit65.loopexit.unr-lcssa, label %_RNvMNtCscgRAwXFJnXP_4core5sliceSTmhE12split_at_mutCs1LHh8CLbVkQ_11polars_core.exit11.i62, !dbg !65793
 
@@ -7862,7 +7862,7 @@ _RNvMNtCscgRAwXFJnXP_4core5sliceSTmhE12split_at_mutCs1LHh8CLbVkQ_11polars_core.e
   %i.fo = getelementptr inbounds nuw i8, ptr %i.fj, i64 4, !dbg !66207
   store i8 %i.fm, ptr %i.fo, align 4, !dbg !66207, !alias.scope !66052
   %i.fp = add nuw nsw i64 %.sroa.0.016.i63, 2, !dbg !66208 ; 2 uses
-  %niter181.next.1 = add i64 %niter181, 2, !dbg !66203 ; 2 uses
+  %niter181.next.1 = add nuw nsw i64 %niter181, 2, !dbg !66203 ; 2 uses
   %niter181.ncmp.1 = icmp eq i64 %niter181.next.1, %unroll_iter180, !dbg !66203
   br i1 %niter181.ncmp.1, label %_RINvNvMNtCscgRAwXFJnXP_4core5sliceSp7reverse7revswapTmhEECs1LHh8CLbVkQ_11polars_core.exit65.loopexit.unr-lcssa, label %_RNvMNtCscgRAwXFJnXP_4core5sliceSTmhE12split_at_mutCs1LHh8CLbVkQ_11polars_core.exit11.i62, !dbg !66203
 
@@ -8265,7 +8265,7 @@ _RNvMNtCscgRAwXFJnXP_4core5sliceSTmnE12split_at_mutCs1LHh8CLbVkQ_11polars_core.e
   %i.es = getelementptr inbounds nuw i8, ptr %i.eo, i64 16, !dbg !68232
   store i128 %i.er, ptr %i.es, align 16, !dbg !68232, !alias.scope !68095
   %i.et = add nuw nsw i64 %.sroa.0.016.i59, 2, !dbg !68233 ; 2 uses
-  %niter177.next.1 = add i64 %niter177, 2, !dbg !68228 ; 2 uses
+  %niter177.next.1 = add nuw nsw i64 %niter177, 2, !dbg !68228 ; 2 uses
   %niter177.ncmp.1 = icmp eq i64 %niter177.next.1, %unroll_iter176, !dbg !68228
   br i1 %niter177.ncmp.1, label %_RINvNvMNtCscgRAwXFJnXP_4core5sliceSp7reverse7revswapTmnEECs1LHh8CLbVkQ_11polars_core.exit61.loopexit.unr-lcssa, label %_RNvMNtCscgRAwXFJnXP_4core5sliceSTmnE12split_at_mutCs1LHh8CLbVkQ_11polars_core.exit11.i58, !dbg !68228
 
@@ -8668,7 +8668,7 @@ _RNvMNtCscgRAwXFJnXP_4core5sliceSTmnE12split_at_mutCs1LHh8CLbVkQ_11polars_core.e
   %i.es = getelementptr inbounds nuw i8, ptr %i.eo, i64 16, !dbg !68601
   store i128 %i.er, ptr %i.es, align 16, !dbg !68601, !alias.scope !68464
   %i.et = add nuw nsw i64 %.sroa.0.016.i59, 2, !dbg !68602 ; 2 uses
-  %niter177.next.1 = add i64 %niter177, 2, !dbg !68597 ; 2 uses
+  %niter177.next.1 = add nuw nsw i64 %niter177, 2, !dbg !68597 ; 2 uses
   %niter177.ncmp.1 = icmp eq i64 %niter177.next.1, %unroll_iter176, !dbg !68597
   br i1 %niter177.ncmp.1, label %_RINvNvMNtCscgRAwXFJnXP_4core5sliceSp7reverse7revswapTmnEECs1LHh8CLbVkQ_11polars_core.exit61.loopexit.unr-lcssa, label %_RNvMNtCscgRAwXFJnXP_4core5sliceSTmnE12split_at_mutCs1LHh8CLbVkQ_11polars_core.exit11.i58, !dbg !68597
 
@@ -9071,7 +9071,7 @@ _RNvMNtCscgRAwXFJnXP_4core5sliceSTmoE12split_at_mutCs1LHh8CLbVkQ_11polars_core.e
   %i.es = getelementptr inbounds nuw i8, ptr %i.eo, i64 16, !dbg !68970
   store i128 %i.er, ptr %i.es, align 16, !dbg !68970, !alias.scope !68833
   %i.et = add nuw nsw i64 %.sroa.0.016.i59, 2, !dbg !68971 ; 2 uses
-  %niter177.next.1 = add i64 %niter177, 2, !dbg !68966 ; 2 uses
+  %niter177.next.1 = add nuw nsw i64 %niter177, 2, !dbg !68966 ; 2 uses
   %niter177.ncmp.1 = icmp eq i64 %niter177.next.1, %unroll_iter176, !dbg !68966
   br i1 %niter177.ncmp.1, label %_RINvNvMNtCscgRAwXFJnXP_4core5sliceSp7reverse7revswapTmoEECs1LHh8CLbVkQ_11polars_core.exit61.loopexit.unr-lcssa, label %_RNvMNtCscgRAwXFJnXP_4core5sliceSTmoE12split_at_mutCs1LHh8CLbVkQ_11polars_core.exit11.i58, !dbg !68966
 
@@ -9474,7 +9474,7 @@ _RNvMNtCscgRAwXFJnXP_4core5sliceSTmoE12split_at_mutCs1LHh8CLbVkQ_11polars_core.e
   %i.es = getelementptr inbounds nuw i8, ptr %i.eo, i64 16, !dbg !69339
   store i128 %i.er, ptr %i.es, align 16, !dbg !69339, !alias.scope !69202
   %i.et = add nuw nsw i64 %.sroa.0.016.i59, 2, !dbg !69340 ; 2 uses
-  %niter177.next.1 = add i64 %niter177, 2, !dbg !69335 ; 2 uses
+  %niter177.next.1 = add nuw nsw i64 %niter177, 2, !dbg !69335 ; 2 uses
   %niter177.ncmp.1 = icmp eq i64 %niter177.next.1, %unroll_iter176, !dbg !69335
   br i1 %niter177.ncmp.1, label %_RINvNvMNtCscgRAwXFJnXP_4core5sliceSp7reverse7revswapTmoEECs1LHh8CLbVkQ_11polars_core.exit61.loopexit.unr-lcssa, label %_RNvMNtCscgRAwXFJnXP_4core5sliceSTmoE12split_at_mutCs1LHh8CLbVkQ_11polars_core.exit11.i58, !dbg !69335
 
@@ -9877,7 +9877,7 @@ _RNvMNtCscgRAwXFJnXP_4core5sliceSTmsE12split_at_mutCs1LHh8CLbVkQ_11polars_core.e
   %i.fo = getelementptr inbounds nuw i8, ptr %i.fj, i64 4, !dbg !69749
   store i16 %i.fm, ptr %i.fo, align 4, !dbg !69749, !alias.scope !69594
   %i.fp = add nuw nsw i64 %.sroa.0.016.i63, 2, !dbg !69750 ; 2 uses
-  %niter181.next.1 = add i64 %niter181, 2, !dbg !69745 ; 2 uses
+  %niter181.next.1 = add nuw nsw i64 %niter181, 2, !dbg !69745 ; 2 uses
   %niter181.ncmp.1 = icmp eq i64 %niter181.next.1, %unroll_iter180, !dbg !69745
   br i1 %niter181.ncmp.1, label %_RINvNvMNtCscgRAwXFJnXP_4core5sliceSp7reverse7revswapTmsEECs1LHh8CLbVkQ_11polars_core.exit65.loopexit.unr-lcssa, label %_RNvMNtCscgRAwXFJnXP_4core5sliceSTmsE12split_at_mutCs1LHh8CLbVkQ_11polars_core.exit11.i62, !dbg !69745
 
@@ -10280,7 +10280,7 @@ _RNvMNtCscgRAwXFJnXP_4core5sliceSTmsE12split_at_mutCs1LHh8CLbVkQ_11polars_core.e
   %i.fo = getelementptr inbounds nuw i8, ptr %i.fj, i64 4, !dbg !70159
   store i16 %i.fm, ptr %i.fo, align 4, !dbg !70159, !alias.scope !70004
   %i.fp = add nuw nsw i64 %.sroa.0.016.i63, 2, !dbg !70160 ; 2 uses
-  %niter181.next.1 = add i64 %niter181, 2, !dbg !70155 ; 2 uses
+  %niter181.next.1 = add nuw nsw i64 %niter181, 2, !dbg !70155 ; 2 uses
   %niter181.ncmp.1 = icmp eq i64 %niter181.next.1, %unroll_iter180, !dbg !70155
   br i1 %niter181.ncmp.1, label %_RINvNvMNtCscgRAwXFJnXP_4core5sliceSp7reverse7revswapTmsEECs1LHh8CLbVkQ_11polars_core.exit65.loopexit.unr-lcssa, label %_RNvMNtCscgRAwXFJnXP_4core5sliceSTmsE12split_at_mutCs1LHh8CLbVkQ_11polars_core.exit11.i62, !dbg !70155
 
@@ -10683,7 +10683,7 @@ _RNvMNtCscgRAwXFJnXP_4core5sliceSTmtE12split_at_mutCs1LHh8CLbVkQ_11polars_core.e
   %i.fo = getelementptr inbounds nuw i8, ptr %i.fj, i64 4, !dbg !70569
   store i16 %i.fm, ptr %i.fo, align 4, !dbg !70569, !alias.scope !70414
   %i.fp = add nuw nsw i64 %.sroa.0.016.i63, 2, !dbg !70570 ; 2 uses
-  %niter181.next.1 = add i64 %niter181, 2, !dbg !70565 ; 2 uses
+  %niter181.next.1 = add nuw nsw i64 %niter181, 2, !dbg !70565 ; 2 uses
   %niter181.ncmp.1 = icmp eq i64 %niter181.next.1, %unroll_iter180, !dbg !70565
   br i1 %niter181.ncmp.1, label %_RINvNvMNtCscgRAwXFJnXP_4core5sliceSp7reverse7revswapTmtEECs1LHh8CLbVkQ_11polars_core.exit65.loopexit.unr-lcssa, label %_RNvMNtCscgRAwXFJnXP_4core5sliceSTmtE12split_at_mutCs1LHh8CLbVkQ_11polars_core.exit11.i62, !dbg !70565
 
@@ -11086,7 +11086,7 @@ _RNvMNtCscgRAwXFJnXP_4core5sliceSTmtE12split_at_mutCs1LHh8CLbVkQ_11polars_core.e
   %i.fo = getelementptr inbounds nuw i8, ptr %i.fj, i64 4, !dbg !70979
   store i16 %i.fm, ptr %i.fo, align 4, !dbg !70979, !alias.scope !70824
   %i.fp = add nuw nsw i64 %.sroa.0.016.i63, 2, !dbg !70980 ; 2 uses
-  %niter181.next.1 = add i64 %niter181, 2, !dbg !70975 ; 2 uses
+  %niter181.next.1 = add nuw nsw i64 %niter181, 2, !dbg !70975 ; 2 uses
   %niter181.ncmp.1 = icmp eq i64 %niter181.next.1, %unroll_iter180, !dbg !70975
   br i1 %niter181.ncmp.1, label %_RINvNvMNtCscgRAwXFJnXP_4core5sliceSp7reverse7revswapTmtEECs1LHh8CLbVkQ_11polars_core.exit65.loopexit.unr-lcssa, label %_RNvMNtCscgRAwXFJnXP_4core5sliceSTmtE12split_at_mutCs1LHh8CLbVkQ_11polars_core.exit11.i62, !dbg !70975
 
@@ -11489,7 +11489,7 @@ _RNvMNtCscgRAwXFJnXP_4core5sliceSTmxE12split_at_mutCs1LHh8CLbVkQ_11polars_core.e
   %i.es = getelementptr inbounds nuw i8, ptr %i.eo, i64 8, !dbg !71348
   store i64 %i.er, ptr %i.es, align 8, !dbg !71348, !alias.scope !71211
   %i.et = add nuw nsw i64 %.sroa.0.016.i59, 2, !dbg !71349 ; 2 uses
-  %niter177.next.1 = add i64 %niter177, 2, !dbg !71344 ; 2 uses
+  %niter177.next.1 = add nuw nsw i64 %niter177, 2, !dbg !71344 ; 2 uses
   %niter177.ncmp.1 = icmp eq i64 %niter177.next.1, %unroll_iter176, !dbg !71344
   br i1 %niter177.ncmp.1, label %_RINvNvMNtCscgRAwXFJnXP_4core5sliceSp7reverse7revswapTmxEECs1LHh8CLbVkQ_11polars_core.exit61.loopexit.unr-lcssa, label %_RNvMNtCscgRAwXFJnXP_4core5sliceSTmxE12split_at_mutCs1LHh8CLbVkQ_11polars_core.exit11.i58, !dbg !71344
 
@@ -11892,7 +11892,7 @@ _RNvMNtCscgRAwXFJnXP_4core5sliceSTmxE12split_at_mutCs1LHh8CLbVkQ_11polars_core.e
   %i.es = getelementptr inbounds nuw i8, ptr %i.eo, i64 8, !dbg !71717
   store i64 %i.er, ptr %i.es, align 8, !dbg !71717, !alias.scope !71580
   %i.et = add nuw nsw i64 %.sroa.0.016.i59, 2, !dbg !71718 ; 2 uses
-  %niter177.next.1 = add i64 %niter177, 2, !dbg !71713 ; 2 uses
+  %niter177.next.1 = add nuw nsw i64 %niter177, 2, !dbg !71713 ; 2 uses
   %niter177.ncmp.1 = icmp eq i64 %niter177.next.1, %unroll_iter176, !dbg !71713
   br i1 %niter177.ncmp.1, label %_RINvNvMNtCscgRAwXFJnXP_4core5sliceSp7reverse7revswapTmxEECs1LHh8CLbVkQ_11polars_core.exit61.loopexit.unr-lcssa, label %_RNvMNtCscgRAwXFJnXP_4core5sliceSTmxE12split_at_mutCs1LHh8CLbVkQ_11polars_core.exit11.i58, !dbg !71713
 
@@ -12295,7 +12295,7 @@ _RNvMNtCscgRAwXFJnXP_4core5sliceSTmyE12split_at_mutCs1LHh8CLbVkQ_11polars_core.e
   %i.es = getelementptr inbounds nuw i8, ptr %i.eo, i64 8, !dbg !72086
   store i64 %i.er, ptr %i.es, align 8, !dbg !72086, !alias.scope !71949
   %i.et = add nuw nsw i64 %.sroa.0.016.i59, 2, !dbg !72087 ; 2 uses
-  %niter177.next.1 = add i64 %niter177, 2, !dbg !72082 ; 2 uses
+  %niter177.next.1 = add nuw nsw i64 %niter177, 2, !dbg !72082 ; 2 uses
   %niter177.ncmp.1 = icmp eq i64 %niter177.next.1, %unroll_iter176, !dbg !72082
   br i1 %niter177.ncmp.1, label %_RINvNvMNtCscgRAwXFJnXP_4core5sliceSp7reverse7revswapTmyEECs1LHh8CLbVkQ_11polars_core.exit61.loopexit.unr-lcssa, label %_RNvMNtCscgRAwXFJnXP_4core5sliceSTmyE12split_at_mutCs1LHh8CLbVkQ_11polars_core.exit11.i58, !dbg !72082
 
@@ -12698,7 +12698,7 @@ _RNvMNtCscgRAwXFJnXP_4core5sliceSTmyE12split_at_mutCs1LHh8CLbVkQ_11polars_core.e
   %i.es = getelementptr inbounds nuw i8, ptr %i.eo, i64 8, !dbg !72455
   store i64 %i.er, ptr %i.es, align 8, !dbg !72455, !alias.scope !72318
   %i.et = add nuw nsw i64 %.sroa.0.016.i59, 2, !dbg !72456 ; 2 uses
-  %niter177.next.1 = add i64 %niter177, 2, !dbg !72451 ; 2 uses
+  %niter177.next.1 = add nuw nsw i64 %niter177, 2, !dbg !72451 ; 2 uses
   %niter177.ncmp.1 = icmp eq i64 %niter177.next.1, %unroll_iter176, !dbg !72451
   br i1 %niter177.ncmp.1, label %_RINvNvMNtCscgRAwXFJnXP_4core5sliceSp7reverse7revswapTmyEECs1LHh8CLbVkQ_11polars_core.exit61.loopexit.unr-lcssa, label %_RNvMNtCscgRAwXFJnXP_4core5sliceSTmyE12split_at_mutCs1LHh8CLbVkQ_11polars_core.exit11.i58, !dbg !72451
 
