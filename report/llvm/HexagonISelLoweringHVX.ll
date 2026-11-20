@@ -205,6 +205,7 @@ _ZNK4llvm3MVT20getVectorNumElementsEv.exit:       ; preds = %_ZNK4llvm21HexagonT
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %9, i64 8
   %i.av = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 2 uses
   %.sroa.4.0..sroa_idx108 = getelementptr inbounds nuw i8, ptr %9, i64 24
+  %14 = trunc nuw nsw i32 %spec.select.i to i16
   br label %bb.f
 
 _ZN4llvm3MVT11getVectorVTES0_j.exit:              ; preds = %_ZNK4llvm3MVT20getVectorNumElementsEv.exit97, %_ZNK4llvm3MVT20getVectorNumElementsEv.exit
@@ -336,9 +337,8 @@ _ZNK4llvm3MVT20getVectorNumElementsEv.exit97:     ; preds = %_ZNK4llvm21HexagonT
   %i.cu = getelementptr [2 x i8], ptr @_ZZNK4llvm3MVT23getVectorMinNumElementsEvE10NElemTable, i64 %i.ct
   %i.cv = getelementptr i8, ptr %i.cu, i64 -2
   %i.cw = load i16, ptr %i.cv, align 2, !tbaa !151
-  %.0 = zext i16 %i.cw to i32
-  %14 = icmp samesign ugt i32 %spec.select.i, %.0
-  br i1 %14, label %bb.f, label %_ZN4llvm3MVT11getVectorVTES0_j.exit, !llvm.loop !728
+  %15 = icmp ult i16 %i.cw, %14
+  br i1 %15, label %bb.f, label %_ZN4llvm3MVT11getVectorVTES0_j.exit, !llvm.loop !728
 }
 
 ; Function Attrs: mustprogress nounwind uwtable

@@ -205,7 +205,7 @@ bb.gx:                                            ; preds = %bb.gw
 
 .preheader118.lr.ph.us.preheader.i:               ; preds = %.lr.ph.i
   %i.wu = add nsw i32 %.058.i, -1
-  %i.wv = zext i32 %.058.i to i64                 ; 3 uses
+  %i.wv = zext nneg i32 %.058.i to i64            ; 3 uses
   %i.ww = zext nneg i32 %i.wu to i64
   %i.wx = zext nneg i32 %i.cj to i64
   %wide.trip.count145.i = zext nneg i32 %i.rh to i64
@@ -213,7 +213,7 @@ bb.gx:                                            ; preds = %bb.gw
   %xtraiter1601 = and i64 %i.wv, 3                ; 3 uses
   %i.wy = add nsw i32 %.058.i, -1
   %i.wz = icmp ult i32 %i.wy, 3
-  %unroll_iter = and i64 %i.wv, 4294967292
+  %unroll_iter = and i64 %i.wv, 2147483644
   %lcmp.mod1602.not = icmp eq i64 %xtraiter1601, 0
   %lcmp.mod1604 = icmp ne i64 %xtraiter1601, 0
   br label %.preheader118.lr.ph.us.i
@@ -616,7 +616,7 @@ bb.bu:                                            ; preds = %bb.bt
 
 .preheader118.lr.ph.us.preheader.i:               ; preds = %.lr.ph.i
   %i.jx = add nsw i32 %.058.i, -1
-  %i.jy = zext i32 %.058.i to i64                 ; 3 uses
+  %i.jy = zext nneg i32 %.058.i to i64            ; 3 uses
   %i.jz = zext nneg i32 %i.jx to i64
   %i.ka = zext nneg i32 %i.p to i64
   %wide.trip.count145.i = zext nneg i32 %i.eg to i64
@@ -624,7 +624,7 @@ bb.bu:                                            ; preds = %bb.bt
   %xtraiter = and i64 %i.jy, 3                    ; 3 uses
   %i.kb = add nsw i32 %.058.i, -1
   %i.kc = icmp ult i32 %i.kb, 3
-  %unroll_iter = and i64 %i.jy, 4294967292
+  %unroll_iter = and i64 %i.jy, 2147483644
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod731 = icmp ne i64 %xtraiter, 0
   br label %.preheader118.lr.ph.us.i
