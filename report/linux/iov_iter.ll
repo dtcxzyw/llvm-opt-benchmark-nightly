@@ -202,18 +202,21 @@ bb.h:                                             ; preds = %get_contig_folio_le
   %i.bx = and i32 %i.bw, 65535                    ; 2 uses
   %i.by = zext i16 %i.bp to i32
   %i.bz = icmp samesign ugt i32 %i.bx, %i.by
-  br i1 %i.bz, label %.lr.ph.a, label %.loopexit
+  br i1 %i.bz, label %.lr.ph, label %.loopexit
 
-.lr.ph.a:                                         ; preds = %.preheader, %.lr.ph.a
-  %.355 = phi i16 [ %6, %.lr.ph.a ], [ %i.bp, %.preheader ] ; 2 uses
-  %6 = add nuw i16 %.355, 1                       ; 2 uses
-  %7 = zext i16 %.355 to i64
-  %i.ca = getelementptr [8 x i8], ptr %i.n, i64 %7
+.lr.ph:                                           ; preds = %.preheader
+  %6 = zext i16 %i.bp to i64
+  %wide.trip.count = zext nneg i32 %i.bx to i64
+  br label %.lr.ph.a
+
+.lr.ph.a:                                         ; preds = %.lr.ph, %.lr.ph.a
+  %indvars.iv = phi i64 [ %6, %.lr.ph ], [ %indvars.iv.next, %.lr.ph.a ] ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %i.ca = getelementptr [8 x i8], ptr %i.n, i64 %indvars.iv
   %i.cb = load ptr, ptr %i.ca, align 8
   tail call void @unpin_user_page(ptr noundef %i.cb) #13
-  %8 = zext i16 %6 to i32
-  %9 = icmp samesign ugt i32 %i.bx, %8
-  br i1 %9, label %.lr.ph.a, label %.loopexit, !llvm.loop !170
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond.not, label %.loopexit, label %.lr.ph.a, !llvm.loop !170
 
 .loopexit:                                        ; preds = %.lr.ph.a, %bb.h, %.preheader, %bb.b
   %.042 = phi i64 [ %i.l, %bb.b ], [ %i.j, %bb.h ], [ %i.j, %.preheader ], [ %i.j, %.lr.ph.a ]

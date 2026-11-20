@@ -204,11 +204,15 @@ _ZNK4llvm14SmallBitVector4sizeEv.exit:            ; preds = %bb.e, %bb.f
   %i.ag = getelementptr inbounds nuw i8, ptr %i.g, i64 8 ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.g, i64 32 ; 2 uses
   %i.ai = and i64 %i.m, 4294967295                ; 2 uses
-  br i1 %i.q, label %.split.us, label %.lr.ph.split
+  br i1 %i.q, label %.split.us.preheader, label %.lr.ph.split
 
-.split.us:                                        ; preds = %.lr.ph, %.critedge.us
-  %i.aj = phi i64 [ %i.ba, %.critedge.us ], [ %i.y, %.lr.ph ] ; 3 uses
-  %i.ak = phi i32 [ %i.az, %.critedge.us ], [ %.promoted, %.lr.ph ] ; 2 uses
+.split.us.preheader:                              ; preds = %.lr.ph
+  %5 = trunc nuw i64 %i.w to i32
+  br label %.split.us
+
+.split.us:                                        ; preds = %.split.us.preheader, %.critedge.us
+  %i.aj = phi i64 [ %i.ba, %.critedge.us ], [ %i.y, %.split.us.preheader ] ; 3 uses
+  %i.ak = phi i32 [ %i.az, %.critedge.us ], [ %.promoted, %.split.us.preheader ] ; 2 uses
   %i.al = lshr i64 %i.ae, %i.aj
   %i.am = trunc i64 %i.al to i1
   br i1 %i.am, label %.critedge.us, label %bb.g
@@ -230,15 +234,16 @@ bb.g:                                             ; preds = %.split.us
   br i1 %.not.us, label %.split38.us, label %.critedge.us
 
 .critedge.us:                                     ; preds = %bb.g, %.split.us
-  %i.az = add nuw i32 %i.ak, 1                    ; 3 uses
+  %i.az = add nuw i32 %i.ak, 1                    ; 4 uses
   store i32 %i.az, ptr %i.x, align 8, !tbaa !52
-  %i.ba = zext i32 %i.az to i64                   ; 2 uses
-  %5 = icmp samesign ugt i64 %i.w, %i.ba
-  br i1 %5, label %.split.us, label %._crit_edge, !llvm.loop !579
+  %i.ba = zext i32 %i.az to i64
+  %6 = icmp ult i32 %i.az, %5
+  br i1 %6, label %.split.us, label %._crit_edge, !llvm.loop !579
 
 .lr.ph.split:                                     ; preds = %.lr.ph
   %i.bb = inttoptr i64 %i.p to ptr
   %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !37
+  %7 = trunc nuw i64 %i.w to i32
   br label %_ZNK4llvm14SmallBitVector4testEj.exit
 
 _ZNK4llvm14SmallBitVector4testEj.exit:            ; preds = %.lr.ph.split, %.critedge
@@ -307,11 +312,11 @@ _ZN4llvm14SmallBitVector3setEj.exit:              ; preds = %bb.i, %bb.j
   br label %bb.o
 
 .critedge:                                        ; preds = %bb.h, %_ZNK4llvm14SmallBitVector4testEj.exit
-  %i.cq = add nuw i32 %i.be, 1                    ; 3 uses
+  %i.cq = add nuw i32 %i.be, 1                    ; 4 uses
   store i32 %i.cq, ptr %i.x, align 8, !tbaa !52
-  %i.cr = zext i32 %i.cq to i64                   ; 2 uses
-  %6 = icmp samesign ugt i64 %i.w, %i.cr
-  br i1 %6, label %_ZNK4llvm14SmallBitVector4testEj.exit, label %._crit_edge, !llvm.loop !579
+  %i.cr = zext i32 %i.cq to i64
+  %8 = icmp ult i32 %i.cq, %7
+  br i1 %8, label %_ZNK4llvm14SmallBitVector4testEj.exit, label %._crit_edge, !llvm.loop !579
 
 ._crit_edge:                                      ; preds = %.critedge, %.critedge.us, %_ZNK4llvm14SmallBitVector4sizeEv.exit
   %i.cs = call { ptr, i32 } @_ZN4llvm12SelectionDAG20CreateStackTemporaryENS_3EVTEj(ptr noundef nonnull align 8 dereferenceable(920) %i.c, i16 %1, ptr %2, i32 noundef 1) #18 ; 2 uses
