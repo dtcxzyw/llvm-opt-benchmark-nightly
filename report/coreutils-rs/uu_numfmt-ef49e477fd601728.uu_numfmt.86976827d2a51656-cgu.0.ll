@@ -204,8 +204,8 @@ bb.mw:                                            ; preds = %_RINvNtCs6JMX4GRUq9
   br label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCs7tKScEop1B6_5alloc6string6StringECsbyqtxyC5WYI_9uu_numfmt.exit104.i
 
 bb.mx:                                            ; preds = %bb.le
-  %5 = trunc nuw i8 %i.em to i1
-  br i1 %5, label %bb.lj, label %.thread.i63
+  %cond.i = icmp eq i8 %i.em, 0
+  br i1 %cond.i, label %.thread.i63, label %bb.lj
 
 bb.my:                                            ; preds = %bb.li
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q), !noalias !2396

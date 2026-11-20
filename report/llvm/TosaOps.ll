@@ -205,8 +205,8 @@ bb.a:
     i64 8, label %_ZN4llvmneENS_9StringRefES0_.exit.i.i62
     i64 11, label %_ZN4llvmneENS_9StringRefES0_.exit.i.i71
     i64 12, label %_ZN4llvmneENS_9StringRefES0_.exit.i.i89
-    i64 10, label %_ZN4llvmneENS_9StringRefES0_.exit.i.i152
     i64 9, label %_ZN4llvmneENS_9StringRefES0_.exit.i.i125
+    i64 10, label %_ZN4llvmneENS_9StringRefES0_.exit.i.i152
   ]
 
 _ZN4llvmneENS_9StringRefES0_.exit.i.i:            ; preds = %bb.a

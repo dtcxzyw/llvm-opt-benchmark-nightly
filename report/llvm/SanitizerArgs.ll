@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d
   br label %_ZN4llvm12StringSwitchIiiE4CaseENS_13StringLiteralEi.exit37.us
 
 _ZN4llvm12StringSwitchIiiE4CaseENS_13StringLiteralEi.exit37.us: ; preds = %bb.e, %bb.d, %.thread109.us, %bb.c, %_ZN4llvm9StringRefC2EPKc.exit.us, %bb.b
-  %.sroa.12.3.us = phi i64 [ 0, %bb.b ], [ 0, %_ZN4llvm9StringRefC2EPKc.exit.us ], [ %spec.select.us, %.thread109.us ], [ %spec.select113.us, %bb.e ], [ 4294967300, %bb.c ], [ 4294967297, %bb.d ]
+  %.sroa.12.3.us = phi i64 [ 0, %bb.b ], [ %spec.select113.us, %bb.e ], [ %spec.select.us, %.thread109.us ], [ 0, %_ZN4llvm9StringRefC2EPKc.exit.us ], [ 4294967300, %bb.c ], [ 4294967297, %bb.d ]
   %spec.select.i.us117 = tail call i64 @llvm.umax.i64(i64 %.sroa.12.3.us, i64 4294967296)
   %spec.select.i.us = trunc i64 %spec.select.i.us117 to i32
   %i.at = or i32 %.013115.us, %spec.select.i.us   ; 2 uses
@@ -284,8 +284,8 @@ bb.h:                                             ; preds = %_ZN4llvm9StringRefC
   %spec.select = select i1 %.not.i.i35, i64 8589934591, i64 0
   br label %_ZN4llvm12StringSwitchIiiE4CaseENS_13StringLiteralEi.exit37
 
-_ZN4llvm12StringSwitchIiiE4CaseENS_13StringLiteralEi.exit37: ; preds = %bb.g, %bb.f, %_ZN4llvm9StringRefC2EPKc.exit, %.thread109, %.lr.ph.split, %bb.h
-  %.sroa.12.3 = phi i64 [ 0, %.lr.ph.split ], [ 0, %_ZN4llvm9StringRefC2EPKc.exit ], [ %spec.select, %.thread109 ], [ %spec.select113, %bb.g ], [ 4294967300, %bb.h ], [ 4294967297, %bb.f ]
+_ZN4llvm12StringSwitchIiiE4CaseENS_13StringLiteralEi.exit37: ; preds = %bb.g, %_ZN4llvm9StringRefC2EPKc.exit, %bb.f, %.thread109, %.lr.ph.split, %bb.h
+  %.sroa.12.3 = phi i64 [ 0, %.lr.ph.split ], [ %spec.select113, %bb.g ], [ %spec.select, %.thread109 ], [ 0, %_ZN4llvm9StringRefC2EPKc.exit ], [ 4294967300, %bb.h ], [ 4294967297, %bb.f ]
   %spec.select.i118 = call i64 @llvm.umax.i64(i64 %.sroa.12.3, i64 4294967296)
   %spec.select.i = trunc i64 %spec.select.i118 to i32 ; 2 uses
   %i.cg = icmp eq i32 %spec.select.i, 0

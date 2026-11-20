@@ -205,14 +205,10 @@ bb.r:                                             ; preds = %_RNvXs1_NtCs4NRVxsY
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store9PutResultNtB2q_5ErrorENtNtB4_6marker4SendEL_EEECs844E4pPEVZX_17influxdb3_catalog.exit: ; preds = %bb.o, %bb.n
   %i.bx = load i64, ptr %i.ae, align 8, !range !59, !noundef !42 ; 3 uses
-  %.not = icmp eq i64 %i.bx, -1
-  br i1 %.not, label %.noexc75, label %2
-
-2:                                                ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store9PutResultNtB2q_5ErrorENtNtB4_6marker4SendEL_EEECs844E4pPEVZX_17influxdb3_catalog.exit
-  %3 = icmp ne i64 %i.bx, -9223372036854775800
-  call void @llvm.assume(i1 %3)
-  %4 = icmp eq i64 %i.bx, -9223372036854775795
-  br i1 %4, label %bb.ci, label %.noexc
+  switch i64 %i.bx, label %.noexc [
+    i64 -1, label %.noexc75
+    i64 -9223372036854775795, label %bb.ci
+  ]
 
 .noexc75:                                         ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store9PutResultNtB2q_5ErrorENtNtB4_6marker4SendEL_EEECs844E4pPEVZX_17influxdb3_catalog.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ab)
@@ -584,7 +580,9 @@ bb.bi:                                            ; preds = %bb.cp, %.body140, %
   call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #34
   unreachable
 
-.noexc:                                           ; preds = %2
+.noexc:                                           ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store9PutResultNtB2q_5ErrorENtNtB4_6marker4SendEL_EEECs844E4pPEVZX_17influxdb3_catalog.exit
+  %2 = icmp ne i64 %i.bx, -9223372036854775800
+  call void @llvm.assume(i1 %2)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.k, ptr noundef nonnull align 8 dereferenceable(72) %i.ae, i64 72, i1 false)
   %i.ey = load atomic i64, ptr @_RNvNtCs4BfJs7E7SEE_12tracing_core8metadata9MAX_LEVEL monotonic, align 8
@@ -791,7 +789,9 @@ bb.ch:                                            ; preds = %bb.cg
   invoke void @_RNvMsn_NtCscdodAO9FK5_5alloc4syncINtB5_3ArcDNtCs1LivM9IBWqb_12object_store11ObjectStoreEL_E9drop_slowBI_(ptr noalias noundef nonnull align 8 dereferenceable(16) %i.gk)
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc4sync3ArcDNtCs1LivM9IBWqb_12object_store11ObjectStoreEL_EECs844E4pPEVZX_17influxdb3_catalog.exit139 unwind label %bb.cj
 
-bb.ci:                                            ; preds = %2
+bb.ci:                                            ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store9PutResultNtB2q_5ErrorENtNtB4_6marker4SendEL_EEECs844E4pPEVZX_17influxdb3_catalog.exit
+  %3 = icmp ne i64 %i.bx, -9223372036854775800
+  call void @llvm.assume(i1 %3)
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtCs1LivM9IBWqb_12object_store5ErrorECs844E4pPEVZX_17influxdb3_catalog(ptr noalias noundef align 8 dereferenceable(72) %i.ae)
           to label %bb.cg unwind label %bb.r
 

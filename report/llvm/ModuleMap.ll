@@ -205,10 +205,10 @@ bb.n:                                             ; preds = %_ZN5clang22isValidA
     i64 6, label %bb.w
     i64 3, label %bb.aa
     i64 12, label %bb.aj
-    i64 10, label %bb.aw
     i64 9, label %bb.ax
     i64 14, label %bb.ay
     i64 13, label %bb.az
+    i64 10, label %bb.aw
     i64 11, label %bb.bm
     i64 16, label %bb.bl
     i64 18, label %bb.ck
@@ -218,11 +218,11 @@ bb.n:                                             ; preds = %_ZN5clang22isValidA
     i64 28, label %bb.co
     i64 25, label %bb.cn
     i64 20, label %bb.cv
+    i64 30, label %bb.db
     i64 15, label %bb.cz
-    i64 23, label %bb.cx
     i64 27, label %bb.cw
     i64 26, label %bb.cy
-    i64 30, label %bb.db
+    i64 23, label %bb.cx
     i64 24, label %bb.dg
     i64 22, label %bb.dj
     i64 37, label %bb.dk

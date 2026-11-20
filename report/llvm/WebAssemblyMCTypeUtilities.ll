@@ -204,7 +204,7 @@ _ZN4llvm12StringSwitchINS_11WebAssembly9BlockTypeES2_E4CaseENS_13StringLiteralES
   %spec.select254 = select i1 %.not.i.i64, i64 4294967360, i64 0
   br label %_ZN4llvm12StringSwitchINS_11WebAssembly9BlockTypeES2_E4CaseENS_13StringLiteralES2_.exit66
 
-_ZN4llvm12StringSwitchINS_11WebAssembly9BlockTypeES2_E4CaseENS_13StringLiteralES2_.exit66: ; preds = %bb.a, %bb.b, %bb.c, %_ZN4llvm12StringSwitchINS_11WebAssembly9BlockTypeES2_E4CaseENS_13StringLiteralES2_.exit58.thread221.thread238, %bb.i, %bb.d, %bb.e, %bb.g, %bb.f, %_ZN4llvm12StringSwitchINS_11WebAssembly9BlockTypeES2_E4CaseENS_13StringLiteralES2_.exit58.thread221.thread, %bb.h
+_ZN4llvm12StringSwitchINS_11WebAssembly9BlockTypeES2_E4CaseENS_13StringLiteralES2_.exit66: ; preds = %bb.b, %bb.c, %bb.a, %_ZN4llvm12StringSwitchINS_11WebAssembly9BlockTypeES2_E4CaseENS_13StringLiteralES2_.exit58.thread221.thread238, %bb.i, %bb.d, %bb.e, %bb.g, %bb.f, %_ZN4llvm12StringSwitchINS_11WebAssembly9BlockTypeES2_E4CaseENS_13StringLiteralES2_.exit58.thread221.thread, %bb.h
   %.sroa.22.8 = phi i64 [ 0, %_ZN4llvm12StringSwitchINS_11WebAssembly9BlockTypeES2_E4CaseENS_13StringLiteralES2_.exit58.thread221.thread ], [ 4294967419, %bb.f ], [ 4294967408, %bb.g ], [ %spec.select254, %_ZN4llvm12StringSwitchINS_11WebAssembly9BlockTypeES2_E4CaseENS_13StringLiteralES2_.exit58.thread221.thread238 ], [ %spec.select, %bb.i ], [ 4294967421, %bb.d ], [ 4294967407, %bb.h ], [ 4294967420, %bb.e ], [ 0, %bb.a ], [ 4294967422, %bb.c ], [ 4294967423, %bb.b ]
   %spec.select.i256 = tail call i64 @llvm.umax.i64(i64 %.sroa.22.8, i64 4294967296)
   %spec.select.i = trunc i64 %spec.select.i256 to i32
