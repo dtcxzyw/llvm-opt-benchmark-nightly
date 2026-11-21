@@ -205,19 +205,22 @@ bb.s:                                             ; preds = %bb.q
   %i.ea = getelementptr inbounds nuw i8, ptr %1, i64 24
   store i64 %i.dz, ptr %i.ea, align 8, !tbaa !67
   %.not241372 = icmp sgt i32 %.0177, %.0176
-  br i1 %.not241372, label %._crit_edge375, label %.preheader.lr.ph.a
+  br i1 %.not241372, label %._crit_edge375, label %.preheader.lr.ph
 
-.preheader.lr.ph.a:                               ; preds = %.loopexit
-  %.not242364.a = icmp sgt i32 %.0175, %.0174
-  %i.eb = sext i32 %.0173 to i64
-  %.not243357 = icmp sgt i32 %.0173, %.0172
+.preheader.lr.ph:                                 ; preds = %.loopexit
+  %.not242364 = icmp sgt i32 %.0175, %.0174
+  %2 = sext i32 %.0173 to i64
+  br i1 %.not242364, label %._crit_edge375, label %.preheader.lr.ph.a
+
+.preheader.lr.ph.a:                               ; preds = %.preheader.lr.ph
+  %.not242364.a = icmp sgt i32 %.0173, %.0172
+  %i.eb = sext i32 %.0175 to i64
+  %3 = add i32 %.0174, 1
+  %4 = add i32 %.0176, 1
   br i1 %.not242364.a, label %._crit_edge375, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph.a
-  %2 = sext i32 %.0175 to i64
-  %3 = add i32 %.0174, 1
   %i.ec = sext i32 %.0177 to i64
-  %4 = add i32 %.0176, 1
   %i.ed = sub i32 %.0172, %.0173                  ; 2 uses
   %i.ee = zext i32 %i.ed to i64
   %i.ef = add nuw nsw i64 %i.ee, 1                ; 2 uses
@@ -231,15 +234,15 @@ bb.s:                                             ; preds = %bb.q
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge368
   %indvars.iv462 = phi i64 [ %i.ec, %.preheader.preheader ], [ %indvars.iv.next463, %._crit_edge368 ] ; 2 uses
-  %.0374 = phi i64 [ 0, %.preheader.preheader ], [ %.us-phi, %._crit_edge368 ] ; 2 uses
+  %.0374 = phi i64 [ 0, %.preheader.preheader ], [ %spec.select.lcssa, %._crit_edge368 ]
   %i.ej = getelementptr inbounds [8 x i8], ptr %i.d, i64 %indvars.iv462
   %i.ek = load ptr, ptr %i.ej, align 8, !tbaa !51
-  %invariant.gep370 = getelementptr [2 x i8], ptr %i.ek, i64 %i.eb
-  br i1 %.not243357, label %._crit_edge368, label %.lr.ph362
+  %invariant.gep370 = getelementptr [2 x i8], ptr %i.ek, i64 %2
+  br label %.lr.ph362
 
 .lr.ph362:                                        ; preds = %.preheader, %._crit_edge363
-  %indvars.iv457 = phi i64 [ %indvars.iv.next458, %._crit_edge363 ], [ %2, %.preheader ] ; 2 uses
-  %.1366 = phi i64 [ %spec.select.lcssa, %._crit_edge363 ], [ %.0374, %.preheader ] ; 2 uses
+  %indvars.iv457 = phi i64 [ %i.eb, %.preheader ], [ %indvars.iv.next458, %._crit_edge363 ] ; 2 uses
+  %.1366 = phi i64 [ %.0374, %.preheader ], [ %spec.select.lcssa, %._crit_edge363 ] ; 2 uses
   %gep371 = getelementptr [64 x i8], ptr %invariant.gep370, i64 %indvars.iv457 ; 3 uses
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
@@ -292,21 +295,20 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br i1 %exitcond456.not, label %._crit_edge363, label %scalar.ph, !llvm.loop !124
 
 ._crit_edge363:                                   ; preds = %scalar.ph, %middle.block
-  %spec.select.lcssa = phi i64 [ %i.ew, %middle.block ], [ %spec.select, %scalar.ph ] ; 2 uses
+  %spec.select.lcssa = phi i64 [ %i.ew, %middle.block ], [ %spec.select, %scalar.ph ] ; 3 uses
   %indvars.iv.next458 = add nsw i64 %indvars.iv457, 1 ; 2 uses
   %lftr.wideiv460 = trunc i64 %indvars.iv.next458 to i32
   %exitcond461.not = icmp eq i32 %3, %lftr.wideiv460
   br i1 %exitcond461.not, label %._crit_edge368, label %.lr.ph362, !llvm.loop !125
 
-._crit_edge368:                                   ; preds = %._crit_edge363, %.preheader
-  %.us-phi = phi i64 [ %.0374, %.preheader ], [ %spec.select.lcssa, %._crit_edge363 ] ; 2 uses
+._crit_edge368:                                   ; preds = %._crit_edge363
   %indvars.iv.next463 = add nsw i64 %indvars.iv462, 1 ; 2 uses
   %lftr.wideiv465 = trunc i64 %indvars.iv.next463 to i32
   %exitcond466.not = icmp eq i32 %4, %lftr.wideiv465
   br i1 %exitcond466.not, label %._crit_edge375, label %.preheader, !llvm.loop !126
 
-._crit_edge375:                                   ; preds = %._crit_edge368, %.preheader.lr.ph.a, %.loopexit
-  %.0.lcssa = phi i64 [ 0, %.loopexit ], [ 0, %.preheader.lr.ph.a ], [ %.us-phi, %._crit_edge368 ]
+._crit_edge375:                                   ; preds = %._crit_edge368, %.preheader.lr.ph.a, %.preheader.lr.ph, %.loopexit
+  %.0.lcssa = phi i64 [ 0, %.loopexit ], [ 0, %.preheader.lr.ph ], [ 0, %.preheader.lr.ph.a ], [ %spec.select.lcssa, %._crit_edge368 ]
   %i.fb = getelementptr inbounds nuw i8, ptr %1, i64 32
   store i64 %.0.lcssa, ptr %i.fb, align 8, !tbaa !66
   ret void

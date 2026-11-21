@@ -205,15 +205,15 @@ _ZN2cv3dnn12cpu_baselineL18loadScalarResidualEPKfiiiiiPf.exit.i.split.us.i.i: ; 
   br label %.preheader.split.us.i.us.i.i
 
 .preheader.split.us.i.us.i.i:                     ; preds = %..loopexit_crit_edge.us.i.us.i.i, %.preheader.i.us.i.i
-  %i.na = phi float [ %i.wb, %..loopexit_crit_edge.us.i.us.i.i ], [ %i.mo, %.preheader.i.us.i.i ] ; 2 uses
-  %i.nb = phi float [ %i.wc, %..loopexit_crit_edge.us.i.us.i.i ], [ %i.mp, %.preheader.i.us.i.i ] ; 2 uses
-  %i.nc = phi float [ %i.wd, %..loopexit_crit_edge.us.i.us.i.i ], [ %i.mq, %.preheader.i.us.i.i ] ; 2 uses
-  %i.nd = phi float [ %i.we, %..loopexit_crit_edge.us.i.us.i.i ], [ %i.mr, %.preheader.i.us.i.i ] ; 2 uses
-  %i.ne = phi float [ %i.wf, %..loopexit_crit_edge.us.i.us.i.i ], [ %i.ms, %.preheader.i.us.i.i ] ; 2 uses
-  %i.nf = phi float [ %i.wg, %..loopexit_crit_edge.us.i.us.i.i ], [ %i.mt, %.preheader.i.us.i.i ] ; 2 uses
-  %i.ng = phi float [ %i.wh, %..loopexit_crit_edge.us.i.us.i.i ], [ %i.mu, %.preheader.i.us.i.i ] ; 2 uses
-  %i.nh = phi float [ %i.wi, %..loopexit_crit_edge.us.i.us.i.i ], [ %i.mv, %.preheader.i.us.i.i ] ; 2 uses
-  %indvars.iv243.i.us.i.i = phi i64 [ %indvars.iv.next244.i.us.i.i, %..loopexit_crit_edge.us.i.us.i.i ], [ 0, %.preheader.i.us.i.i ] ; 3 uses
+  %i.na = phi float [ %i.mo, %.preheader.i.us.i.i ], [ %i.wb, %..loopexit_crit_edge.us.i.us.i.i ] ; 2 uses
+  %i.nb = phi float [ %i.mp, %.preheader.i.us.i.i ], [ %i.wc, %..loopexit_crit_edge.us.i.us.i.i ] ; 2 uses
+  %i.nc = phi float [ %i.mq, %.preheader.i.us.i.i ], [ %i.wd, %..loopexit_crit_edge.us.i.us.i.i ] ; 2 uses
+  %i.nd = phi float [ %i.mr, %.preheader.i.us.i.i ], [ %i.we, %..loopexit_crit_edge.us.i.us.i.i ] ; 2 uses
+  %i.ne = phi float [ %i.ms, %.preheader.i.us.i.i ], [ %i.wf, %..loopexit_crit_edge.us.i.us.i.i ] ; 2 uses
+  %i.nf = phi float [ %i.mt, %.preheader.i.us.i.i ], [ %i.wg, %..loopexit_crit_edge.us.i.us.i.i ] ; 2 uses
+  %i.ng = phi float [ %i.mu, %.preheader.i.us.i.i ], [ %i.wh, %..loopexit_crit_edge.us.i.us.i.i ] ; 2 uses
+  %i.nh = phi float [ %i.mv, %.preheader.i.us.i.i ], [ %i.wi, %..loopexit_crit_edge.us.i.us.i.i ] ; 2 uses
+  %indvars.iv243.i.us.i.i = phi i64 [ 0, %.preheader.i.us.i.i ], [ %indvars.iv.next244.i.us.i.i, %..loopexit_crit_edge.us.i.us.i.i ] ; 3 uses
   %i.ni = trunc nuw nsw i64 %indvars.iv243.i.us.i.i to i32
   %i.nj = add nsw i32 %i.lx, %i.ni                ; 2 uses
   %.not192.us.i.us.i.i = icmp ult i32 %i.nj, %i.ci

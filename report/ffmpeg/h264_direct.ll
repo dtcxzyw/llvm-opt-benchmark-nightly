@@ -204,12 +204,14 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 31068
   %i.j = load i32, ptr %i.i, align 4, !tbaa !60
-  %i.k = icmp ne i32 %i.j, 3
+  %.fr = freeze i32 %i.j
+  %i.k = icmp ne i32 %.fr, 3
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.b, %bb.c
-  %i.l = phi i32 [ %i.h, %bb.b ], [ %i.f, %bb.c ] ; 3 uses
+  %i.l = phi i32 [ %i.h, %bb.b ], [ %i.f, %bb.c ]
   %i.m = phi i1 [ true, %bb.b ], [ %i.k, %bb.c ]  ; 4 uses
+  %.fr82 = freeze i32 %i.l                        ; 3 uses
   %i.n = zext nneg i32 %3 to i64                  ; 3 uses
   %i.o = getelementptr inbounds nuw [192 x i8], ptr %2, i64 %i.n ; 5 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(192) %i.o, i8 0, i64 192, i1 false)
@@ -226,15 +228,15 @@ bb.d:                                             ; preds = %bb.b, %bb.c
   br i1 %i.y, label %.lr.ph62, label %.split67.us
 
 .lr.ph62:                                         ; preds = %bb.d
-  %i.z = icmp slt i32 %i.d, %i.l
+  %i.z = icmp slt i32 %i.d, %.fr82
   %i.aa = zext nneg i32 %i.d to i64               ; 2 uses
-  %7 = icmp ne i32 %4, 0
-  %or.cond = select i1 %7, i1 %i.m, i1 false
   br i1 %i.z, label %.lr.ph62.split.us.preheader, label %.split67.us
 
 .lr.ph62.split.us.preheader:                      ; preds = %.lr.ph62
+  %7 = icmp ne i32 %4, 0
+  %or.cond.us = and i1 %7, %i.m
   %i.ab = sext i32 %4 to i64
-  %wide.trip.count = zext i32 %i.l to i64
+  %wide.trip.count = zext i32 %.fr82 to i64
   %invariant.gep = getelementptr [4 x i8], ptr %i.o, i64 %i.ab
   br label %.lr.ph62.split.us
 
@@ -259,7 +261,7 @@ bb.f:                                             ; preds = %.lr.ph62.split.us
   %.0.us = phi i32 [ %i.ae, %bb.e ], [ %spec.select, %bb.f ]
   br label %bb.g
 
-bb.g:                                             ; preds = %.lr.ph.us, %bb.h
+bb.g:                                             ; preds = %bb.h, %.lr.ph.us
   %indvars.iv = phi i64 [ %i.aa, %.lr.ph.us ], [ %indvars.iv.next, %bb.h ] ; 3 uses
   %i.ai = getelementptr inbounds nuw [56 x i8], ptr %i.a, i64 %indvars.iv ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 48
@@ -296,7 +298,7 @@ bb.j:                                             ; preds = %bb.i
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i
-  br i1 %or.cond, label %..loopexit_crit_edge.us, label %bb.l
+  br i1 %or.cond.us, label %..loopexit_crit_edge.us, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   %i.az = getelementptr inbounds nuw [4 x i8], ptr %i.o, i64 %indvars.iv73
@@ -315,11 +317,11 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.bd, label %.lr.ph62.1, label %.split67.us
 
 .lr.ph62.1:                                       ; preds = %._crit_edge
-  %8 = icmp ne i32 %4, 1
-  %or.cond.1 = select i1 %8, i1 %i.m, i1 false
-  %9 = xor i32 %4, 1
-  %i.be = sext i32 %9 to i64
-  %wide.trip.count.1 = zext i32 %i.l to i64
+  %8 = xor i32 %4, 1
+  %9 = icmp ne i32 %4, 1
+  %or.cond.us.1 = and i1 %9, %i.m
+  %i.be = sext i32 %8 to i64
+  %wide.trip.count.1 = zext i32 %.fr82 to i64
   %invariant.gep81 = getelementptr [4 x i8], ptr %i.o, i64 %i.be
   br label %.lr.ph62.split.us.1
 
@@ -381,7 +383,7 @@ bb.r:                                             ; preds = %bb.q
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.r, %bb.q
-  br i1 %or.cond.1, label %..loopexit_crit_edge.us.1, label %bb.t
+  br i1 %or.cond.us.1, label %..loopexit_crit_edge.us.1, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
   %i.cc = getelementptr inbounds nuw [4 x i8], ptr %i.o, i64 %indvars.iv73.1

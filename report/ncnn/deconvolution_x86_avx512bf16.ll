@@ -205,10 +205,10 @@ _ZN4ncnn3MatD2Ev.exit2340:                        ; preds = %bb.c, %bb.b
 .preheader6929.us:                                ; preds = %.preheader6929.us.preheader, %._crit_edge.us
   %indvars.iv8192 = phi i64 [ 0, %.preheader6929.us.preheader ], [ %indvars.iv.next8193, %._crit_edge.us ] ; 20 uses
   %.018316976.us = phi ptr [ %i.ee, %.preheader6929.us.preheader ], [ %i.ahy, %._crit_edge.us ] ; 2 uses
-  %.165366974.us = phi <8 x float> [ %.06535, %.preheader6929.us.preheader ], [ %.us-phi6969.us, %._crit_edge.us ] ; 2 uses
-  %.065466973.us = phi <8 x float> [ zeroinitializer, %.preheader6929.us.preheader ], [ %.us-phi6968.us, %._crit_edge.us ] ; 2 uses
-  %.065696972.us = phi <8 x float> [ zeroinitializer, %.preheader6929.us.preheader ], [ %.us-phi6967.us, %._crit_edge.us ] ; 2 uses
-  %.065876971.us = phi <8 x float> [ zeroinitializer, %.preheader6929.us.preheader ], [ %.us-phi6966.us, %._crit_edge.us ] ; 2 uses
+  %.165366974.us = phi <8 x float> [ %.06535, %.preheader6929.us.preheader ], [ %.us-phi6969.us, %._crit_edge.us ] ; 3 uses
+  %.065466973.us = phi <8 x float> [ zeroinitializer, %.preheader6929.us.preheader ], [ %.us-phi6968.us, %._crit_edge.us ] ; 3 uses
+  %.065696972.us = phi <8 x float> [ zeroinitializer, %.preheader6929.us.preheader ], [ %.us-phi6967.us, %._crit_edge.us ] ; 3 uses
+  %.065876971.us = phi <8 x float> [ zeroinitializer, %.preheader6929.us.preheader ], [ %.us-phi6966.us, %._crit_edge.us ] ; 3 uses
   %i.eo = or disjoint i64 %indvars.iv8192, 15
   %i.ep = lshr exact i64 %indvars.iv8192, 4
   %i.eq = lshr exact i64 %indvars.iv8192, 3       ; 2 uses
@@ -231,14 +231,17 @@ _ZN4ncnn3MatD2Ev.exit2340:                        ; preds = %bb.c, %bb.b
   %i.fh = or disjoint i64 %indvars.iv8192, 12
   %i.fi = or disjoint i64 %indvars.iv8192, 13
   %i.fj = or disjoint i64 %indvars.iv8192, 14
-  br i1 %i.ei, label %.lr.ph6953.split.us.us, label %._crit_edge.us
+  br i1 %i.ei, label %.lr.ph6953.split.us.us.preheader, label %._crit_edge.us
 
-.lr.ph6953.split.us.us:                           ; preds = %.preheader6929.us, %..loopexit6924_crit_edge.us.us
-  %indvars.iv8187 = phi i64 [ %indvars.iv.next8188, %..loopexit6924_crit_edge.us.us ], [ 0, %.preheader6929.us ] ; 3 uses
-  %.265376951.us.us = phi <8 x float> [ %.8.us.us, %..loopexit6924_crit_edge.us.us ], [ %.165366974.us, %.preheader6929.us ] ; 4 uses
-  %.165476950.us.us = phi <8 x float> [ %.76553.us.us, %..loopexit6924_crit_edge.us.us ], [ %.065466973.us, %.preheader6929.us ] ; 4 uses
-  %.165706949.us.us = phi <8 x float> [ %.76576.us.us, %..loopexit6924_crit_edge.us.us ], [ %.065696972.us, %.preheader6929.us ] ; 4 uses
-  %.165886948.us.us = phi <8 x float> [ %.76594.us.us, %..loopexit6924_crit_edge.us.us ], [ %.065876971.us, %.preheader6929.us ] ; 4 uses
+.lr.ph6953.split.us.us.preheader:                 ; preds = %.preheader6929.us
+  br i1 %i.ck, label %.lr.ph6953.split.us.us, label %._crit_edge.us
+
+.lr.ph6953.split.us.us:                           ; preds = %.lr.ph6953.split.us.us.preheader, %..loopexit6924_crit_edge.us.us
+  %indvars.iv8187 = phi i64 [ %indvars.iv.next8188, %..loopexit6924_crit_edge.us.us ], [ 0, %.lr.ph6953.split.us.us.preheader ] ; 3 uses
+  %.265376951.us.us = phi <8 x float> [ %.8.us.us.us, %..loopexit6924_crit_edge.us.us ], [ %.165366974.us, %.lr.ph6953.split.us.us.preheader ] ; 3 uses
+  %.165476950.us.us = phi <8 x float> [ %.76553.us.us.us, %..loopexit6924_crit_edge.us.us ], [ %.065466973.us, %.lr.ph6953.split.us.us.preheader ] ; 3 uses
+  %.165706949.us.us = phi <8 x float> [ %.76576.us.us.us, %..loopexit6924_crit_edge.us.us ], [ %.065696972.us, %.lr.ph6953.split.us.us.preheader ] ; 3 uses
+  %.165886948.us.us = phi <8 x float> [ %.76594.us.us.us, %..loopexit6924_crit_edge.us.us ], [ %.065876971.us, %.lr.ph6953.split.us.us.preheader ] ; 3 uses
   %i.fk = trunc i64 %indvars.iv8187 to i32
   %i.fl = mul i32 %i.em, %i.fk
   %.reass6958.us.us = add i32 %i.fl, %invariant.op6957 ; 3 uses
@@ -256,14 +259,14 @@ bb.d:                                             ; preds = %.lr.ph6953.split.us
 .preheader6923.us.us:                             ; preds = %bb.d
   %i.fp = mul nuw nsw i64 %indvars.iv8187, %i.en
   %i.fq = sext i32 %i.fo to i64                   ; 5 uses
-  br i1 %i.ck, label %.lr.ph.split.us.us.us, label %..loopexit6924_crit_edge.us.us
+  br label %.lr.ph.split.us.us.us
 
 .lr.ph.split.us.us.us:                            ; preds = %.preheader6923.us.us, %bb.f
-  %indvars.iv = phi i64 [ %indvars.iv.next.a, %bb.f ], [ 0, %.preheader6923.us.us ] ; 3 uses
-  %.365386940.us.us.us = phi <8 x float> [ %.7.us.us.us, %bb.f ], [ %.265376951.us.us, %.preheader6923.us.us ] ; 7 uses
-  %.265486939.us.us.us = phi <8 x float> [ %.66552.us.us.us, %bb.f ], [ %.165476950.us.us, %.preheader6923.us.us ] ; 7 uses
-  %.265716938.us.us.us = phi <8 x float> [ %.66575.us.us.us, %bb.f ], [ %.165706949.us.us, %.preheader6923.us.us ] ; 7 uses
-  %.265896937.us.us.us = phi <8 x float> [ %.66593.us.us.us, %bb.f ], [ %.165886948.us.us, %.preheader6923.us.us ] ; 7 uses
+  %indvars.iv = phi i64 [ 0, %.preheader6923.us.us ], [ %indvars.iv.next.a, %bb.f ] ; 3 uses
+  %.365386940.us.us.us = phi <8 x float> [ %.265376951.us.us, %.preheader6923.us.us ], [ %.7.us.us.us, %bb.f ] ; 7 uses
+  %.265486939.us.us.us = phi <8 x float> [ %.165476950.us.us, %.preheader6923.us.us ], [ %.66552.us.us.us, %bb.f ] ; 7 uses
+  %.265716938.us.us.us = phi <8 x float> [ %.165706949.us.us, %.preheader6923.us.us ], [ %.66575.us.us.us, %bb.f ] ; 7 uses
+  %.265896937.us.us.us = phi <8 x float> [ %.165886948.us.us, %.preheader6923.us.us ], [ %.66593.us.us.us, %bb.f ] ; 7 uses
   %i.fr = trunc i64 %indvars.iv to i32
   %i.fs = mul i32 %i.el, %i.fr
   %.reass.us.us.us = add i32 %i.fs, %invariant.op ; 3 uses
@@ -666,20 +669,20 @@ bb.f:                                             ; preds = %_ZN4ncnn3MatD2Ev.ex
   %exitcond.not.a = icmp eq i64 %indvars.iv.next.a, %i.en
   br i1 %exitcond.not.a, label %..loopexit6924_crit_edge.us.us, label %.lr.ph.split.us.us.us, !llvm.loop !49
 
-..loopexit6924_crit_edge.us.us:                   ; preds = %bb.f, %.preheader6923.us.us, %bb.d, %.lr.ph6953.split.us.us
-  %.76594.us.us = phi nsz <8 x float> [ %.165886948.us.us, %.lr.ph6953.split.us.us ], [ %.165886948.us.us, %bb.d ], [ %.165886948.us.us, %.preheader6923.us.us ], [ %.66593.us.us.us, %bb.f ] ; 2 uses
-  %.76576.us.us = phi nsz <8 x float> [ %.165706949.us.us, %.lr.ph6953.split.us.us ], [ %.165706949.us.us, %bb.d ], [ %.165706949.us.us, %.preheader6923.us.us ], [ %.66575.us.us.us, %bb.f ] ; 2 uses
-  %.76553.us.us = phi nsz <8 x float> [ %.165476950.us.us, %.lr.ph6953.split.us.us ], [ %.165476950.us.us, %bb.d ], [ %.165476950.us.us, %.preheader6923.us.us ], [ %.66552.us.us.us, %bb.f ] ; 2 uses
-  %.8.us.us = phi nsz <8 x float> [ %.265376951.us.us, %.lr.ph6953.split.us.us ], [ %.265376951.us.us, %bb.d ], [ %.265376951.us.us, %.preheader6923.us.us ], [ %.7.us.us.us, %bb.f ] ; 2 uses
+..loopexit6924_crit_edge.us.us:                   ; preds = %bb.f, %bb.d, %.lr.ph6953.split.us.us
+  %.76594.us.us.us = phi nsz <8 x float> [ %.165886948.us.us, %.lr.ph6953.split.us.us ], [ %.165886948.us.us, %bb.d ], [ %.66593.us.us.us, %bb.f ] ; 2 uses
+  %.76576.us.us.us = phi nsz <8 x float> [ %.165706949.us.us, %.lr.ph6953.split.us.us ], [ %.165706949.us.us, %bb.d ], [ %.66575.us.us.us, %bb.f ] ; 2 uses
+  %.76553.us.us.us = phi nsz <8 x float> [ %.165476950.us.us, %.lr.ph6953.split.us.us ], [ %.165476950.us.us, %bb.d ], [ %.66552.us.us.us, %bb.f ] ; 2 uses
+  %.8.us.us.us = phi nsz <8 x float> [ %.265376951.us.us, %.lr.ph6953.split.us.us ], [ %.265376951.us.us, %bb.d ], [ %.7.us.us.us, %bb.f ] ; 2 uses
   %indvars.iv.next8188 = add nuw nsw i64 %indvars.iv8187, 1 ; 2 uses
   %exitcond8191.not = icmp eq i64 %indvars.iv.next8188, %wide.trip.count8190
   br i1 %exitcond8191.not, label %._crit_edge.us, label %.lr.ph6953.split.us.us, !llvm.loop !50
 
-._crit_edge.us:                                   ; preds = %..loopexit6924_crit_edge.us.us, %.preheader6929.us
-  %.us-phi6966.us = phi <8 x float> [ %.065876971.us, %.preheader6929.us ], [ %.76594.us.us, %..loopexit6924_crit_edge.us.us ] ; 2 uses
-  %.us-phi6967.us = phi <8 x float> [ %.065696972.us, %.preheader6929.us ], [ %.76576.us.us, %..loopexit6924_crit_edge.us.us ] ; 2 uses
-  %.us-phi6968.us = phi <8 x float> [ %.065466973.us, %.preheader6929.us ], [ %.76553.us.us, %..loopexit6924_crit_edge.us.us ] ; 2 uses
-  %.us-phi6969.us = phi <8 x float> [ %.165366974.us, %.preheader6929.us ], [ %.8.us.us, %..loopexit6924_crit_edge.us.us ] ; 2 uses
+._crit_edge.us:                                   ; preds = %..loopexit6924_crit_edge.us.us, %.lr.ph6953.split.us.us.preheader, %.preheader6929.us
+  %.us-phi6966.us = phi <8 x float> [ %.065876971.us, %.preheader6929.us ], [ %.065876971.us, %.lr.ph6953.split.us.us.preheader ], [ %.76594.us.us.us, %..loopexit6924_crit_edge.us.us ] ; 2 uses
+  %.us-phi6967.us = phi <8 x float> [ %.065696972.us, %.preheader6929.us ], [ %.065696972.us, %.lr.ph6953.split.us.us.preheader ], [ %.76576.us.us.us, %..loopexit6924_crit_edge.us.us ] ; 2 uses
+  %.us-phi6968.us = phi <8 x float> [ %.065466973.us, %.preheader6929.us ], [ %.065466973.us, %.lr.ph6953.split.us.us.preheader ], [ %.76553.us.us.us, %..loopexit6924_crit_edge.us.us ] ; 2 uses
+  %.us-phi6969.us = phi <8 x float> [ %.165366974.us, %.preheader6929.us ], [ %.165366974.us, %.lr.ph6953.split.us.us.preheader ], [ %.8.us.us.us, %..loopexit6924_crit_edge.us.us ] ; 2 uses
   %i.ahy = getelementptr inbounds [2 x i8], ptr %.018316976.us, i64 %i.dm ; 2 uses
   %indvars.iv.next8193 = add nuw nsw i64 %indvars.iv8192, 16 ; 2 uses
   %i.ahz = icmp slt i64 %indvars.iv.next8193, %invariant.op8777
@@ -1082,7 +1085,7 @@ _ZN4ncnn3MatD2Ev.exit2237.lr.ph:                  ; preds = %._crit_edge7513
   %.fr8043 = freeze i32 %i.blv                    ; 8 uses
   %i.blw = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.blx = load i32, ptr %i.blw, align 8, !tbaa !16
-  %i.bly = mul i32 %i.blx, %.fr8043               ; 14 uses
+  %i.bly = mul i32 %i.blx, %.fr8043               ; 15 uses
   %i.blz = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 12 uses
   %i.bma = load i32, ptr %i.blz, align 4, !tbaa !22 ; 6 uses
   %i.bmb = getelementptr inbounds nuw i8, ptr %0, i64 48
@@ -1100,7 +1103,7 @@ _ZN4ncnn3MatD2Ev.exit2237.lr.ph:                  ; preds = %._crit_edge7513
   %i.bmm = icmp slt i32 %i.bme, 1
   %i.bmn = icmp sgt i32 %i.bly, 15
   %i.bmo = call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %.fr8043)
-  %13 = icmp eq i32 %i.bmo, 1
+  %13 = icmp ne i32 %i.bmo, 1
   %i.bmp = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %.fr8043, i1 true)
   %i.bmq = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 11 uses
   %i.bmr = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 11 uses
@@ -1279,10 +1282,10 @@ _ZN4ncnn3MatD2Ev.exit2280:                        ; preds = %bb.aj, %bb.ai
 .preheader6909.us:                                ; preds = %.preheader6909.us.preheader, %._crit_edge7243.us
   %indvars.iv8275 = phi i64 [ 0, %.preheader6909.us.preheader ], [ %indvars.iv.next8276, %._crit_edge7243.us ] ; 20 uses
   %.019617267.us = phi ptr [ %i.bqd, %.preheader6909.us.preheader ], [ %i.dap, %._crit_edge7243.us ] ; 2 uses
-  %.066547265.us = phi <4 x float> [ zeroinitializer, %.preheader6909.us.preheader ], [ %.us-phi7260.us, %._crit_edge7243.us ] ; 2 uses
-  %.066727264.us = phi <4 x float> [ zeroinitializer, %.preheader6909.us.preheader ], [ %.us-phi7259.us, %._crit_edge7243.us ] ; 2 uses
-  %.066907263.us = phi <4 x float> [ zeroinitializer, %.preheader6909.us.preheader ], [ %.us-phi7258.us, %._crit_edge7243.us ] ; 2 uses
-  %.167147262.us = phi <4 x float> [ %.06713, %.preheader6909.us.preheader ], [ %.us-phi7257.us, %._crit_edge7243.us ] ; 2 uses
+  %.066547265.us = phi <4 x float> [ zeroinitializer, %.preheader6909.us.preheader ], [ %.us-phi7260.us, %._crit_edge7243.us ] ; 3 uses
+  %.066727264.us = phi <4 x float> [ zeroinitializer, %.preheader6909.us.preheader ], [ %.us-phi7259.us, %._crit_edge7243.us ] ; 3 uses
+  %.066907263.us = phi <4 x float> [ zeroinitializer, %.preheader6909.us.preheader ], [ %.us-phi7258.us, %._crit_edge7243.us ] ; 3 uses
+  %.167147262.us = phi <4 x float> [ %.06713, %.preheader6909.us.preheader ], [ %.us-phi7257.us, %._crit_edge7243.us ] ; 3 uses
   %i.bqn = or disjoint i64 %indvars.iv8275, 15
   %i.bqo = lshr exact i64 %indvars.iv8275, 4
   %i.bqp = lshr exact i64 %indvars.iv8275, 3      ; 2 uses
@@ -1305,14 +1308,17 @@ _ZN4ncnn3MatD2Ev.exit2280:                        ; preds = %bb.aj, %bb.ai
   %i.brg = or disjoint i64 %indvars.iv8275, 12
   %i.brh = or disjoint i64 %indvars.iv8275, 13
   %i.bri = or disjoint i64 %indvars.iv8275, 14
-  br i1 %i.bqh, label %.lr.ph7242.split.us.us, label %._crit_edge7243.us
+  br i1 %i.bqh, label %.lr.ph7242.split.us.us.preheader, label %._crit_edge7243.us
 
-.lr.ph7242.split.us.us:                           ; preds = %.preheader6909.us, %..loopexit6904_crit_edge.us.us
-  %indvars.iv8270 = phi i64 [ %indvars.iv.next8271, %..loopexit6904_crit_edge.us.us ], [ 0, %.preheader6909.us ] ; 3 uses
-  %.166557240.us.us = phi <4 x float> [ %.76661.us.us, %..loopexit6904_crit_edge.us.us ], [ %.066547265.us, %.preheader6909.us ] ; 4 uses
-  %.166737239.us.us = phi <4 x float> [ %.76679.us.us, %..loopexit6904_crit_edge.us.us ], [ %.066727264.us, %.preheader6909.us ] ; 4 uses
-  %.166917238.us.us = phi <4 x float> [ %.76697.us.us, %..loopexit6904_crit_edge.us.us ], [ %.066907263.us, %.preheader6909.us ] ; 4 uses
-  %.267157237.us.us = phi <4 x float> [ %.86721.us.us, %..loopexit6904_crit_edge.us.us ], [ %.167147262.us, %.preheader6909.us ] ; 4 uses
+.lr.ph7242.split.us.us.preheader:                 ; preds = %.preheader6909.us
+  br i1 %i.boj, label %.lr.ph7242.split.us.us, label %._crit_edge7243.us
+
+.lr.ph7242.split.us.us:                           ; preds = %.lr.ph7242.split.us.us.preheader, %..loopexit6904_crit_edge.us.us
+  %indvars.iv8270 = phi i64 [ %indvars.iv.next8271, %..loopexit6904_crit_edge.us.us ], [ 0, %.lr.ph7242.split.us.us.preheader ] ; 3 uses
+  %.166557240.us.us = phi <4 x float> [ %.76661.us.us.us, %..loopexit6904_crit_edge.us.us ], [ %.066547265.us, %.lr.ph7242.split.us.us.preheader ] ; 3 uses
+  %.166737239.us.us = phi <4 x float> [ %.76679.us.us.us, %..loopexit6904_crit_edge.us.us ], [ %.066727264.us, %.lr.ph7242.split.us.us.preheader ] ; 3 uses
+  %.166917238.us.us = phi <4 x float> [ %.76697.us.us.us, %..loopexit6904_crit_edge.us.us ], [ %.066907263.us, %.lr.ph7242.split.us.us.preheader ] ; 3 uses
+  %.267157237.us.us = phi <4 x float> [ %.86721.us.us.us, %..loopexit6904_crit_edge.us.us ], [ %.167147262.us, %.lr.ph7242.split.us.us.preheader ] ; 3 uses
   %i.brj = trunc i64 %indvars.iv8270 to i32
   %i.brk = mul i32 %i.bql, %i.brj
   %.reass7249.us.us = add i32 %i.brk, %invariant.op7248 ; 3 uses
@@ -1330,14 +1336,14 @@ bb.ak:                                            ; preds = %.lr.ph7242.split.us
 .preheader6903.us.us:                             ; preds = %bb.ak
   %i.bro = mul nuw nsw i64 %indvars.iv8270, %i.bqm
   %i.brp = sext i32 %i.brn to i64                 ; 5 uses
-  br i1 %i.boj, label %.lr.ph.split.us.us.us7282, label %..loopexit6904_crit_edge.us.us
+  br label %.lr.ph.split.us.us.us7282
 
-.lr.ph.split.us.us.us7282:                        ; preds = %.preheader6903.us.us, %bb.am
-  %indvars.iv8265 = phi i64 [ %indvars.iv.next8266, %bb.am ], [ 0, %.preheader6903.us.us ] ; 3 uses
-  %.266567225.us.us.us = phi <4 x float> [ %.66660.us.us.us, %bb.am ], [ %.166557240.us.us, %.preheader6903.us.us ] ; 7 uses
-  %.266747224.us.us.us = phi <4 x float> [ %.66678.us.us.us, %bb.am ], [ %.166737239.us.us, %.preheader6903.us.us ] ; 7 uses
-  %.266927223.us.us.us = phi <4 x float> [ %.66696.us.us.us, %bb.am ], [ %.166917238.us.us, %.preheader6903.us.us ] ; 7 uses
-  %.367167222.us.us.us = phi <4 x float> [ %.76720.us.us.us, %bb.am ], [ %.267157237.us.us, %.preheader6903.us.us ] ; 7 uses
+.lr.ph.split.us.us.us7282:                        ; preds = %bb.am, %.preheader6903.us.us
+  %indvars.iv8265 = phi i64 [ 0, %.preheader6903.us.us ], [ %indvars.iv.next8266, %bb.am ] ; 3 uses
+  %.266567225.us.us.us = phi <4 x float> [ %.166557240.us.us, %.preheader6903.us.us ], [ %.66660.us.us.us, %bb.am ] ; 7 uses
+  %.266747224.us.us.us = phi <4 x float> [ %.166737239.us.us, %.preheader6903.us.us ], [ %.66678.us.us.us, %bb.am ] ; 7 uses
+  %.266927223.us.us.us = phi <4 x float> [ %.166917238.us.us, %.preheader6903.us.us ], [ %.66696.us.us.us, %bb.am ] ; 7 uses
+  %.367167222.us.us.us = phi <4 x float> [ %.267157237.us.us, %.preheader6903.us.us ], [ %.76720.us.us.us, %bb.am ] ; 7 uses
   %i.brq = trunc i64 %indvars.iv8265 to i32
   %i.brr = mul i32 %i.bqk, %i.brq
   %.reass.us.us7256.us = add i32 %i.brr, %invariant.op7231 ; 3 uses
@@ -1740,20 +1746,20 @@ bb.am:                                            ; preds = %_ZN4ncnn3MatD2Ev.ex
   %exitcond8269.not = icmp eq i64 %indvars.iv.next8266, %i.bqm
   br i1 %exitcond8269.not, label %..loopexit6904_crit_edge.us.us, label %.lr.ph.split.us.us.us7282, !llvm.loop !99
 
-..loopexit6904_crit_edge.us.us:                   ; preds = %bb.am, %.preheader6903.us.us, %bb.ak, %.lr.ph7242.split.us.us
-  %.86721.us.us = phi nsz <4 x float> [ %.267157237.us.us, %.lr.ph7242.split.us.us ], [ %.267157237.us.us, %bb.ak ], [ %.267157237.us.us, %.preheader6903.us.us ], [ %.76720.us.us.us, %bb.am ] ; 2 uses
-  %.76697.us.us = phi nsz <4 x float> [ %.166917238.us.us, %.lr.ph7242.split.us.us ], [ %.166917238.us.us, %bb.ak ], [ %.166917238.us.us, %.preheader6903.us.us ], [ %.66696.us.us.us, %bb.am ] ; 2 uses
-  %.76679.us.us = phi nsz <4 x float> [ %.166737239.us.us, %.lr.ph7242.split.us.us ], [ %.166737239.us.us, %bb.ak ], [ %.166737239.us.us, %.preheader6903.us.us ], [ %.66678.us.us.us, %bb.am ] ; 2 uses
-  %.76661.us.us = phi nsz <4 x float> [ %.166557240.us.us, %.lr.ph7242.split.us.us ], [ %.166557240.us.us, %bb.ak ], [ %.166557240.us.us, %.preheader6903.us.us ], [ %.66660.us.us.us, %bb.am ] ; 2 uses
+..loopexit6904_crit_edge.us.us:                   ; preds = %bb.am, %bb.ak, %.lr.ph7242.split.us.us
+  %.86721.us.us.us = phi nsz <4 x float> [ %.267157237.us.us, %.lr.ph7242.split.us.us ], [ %.267157237.us.us, %bb.ak ], [ %.76720.us.us.us, %bb.am ] ; 2 uses
+  %.76697.us.us.us = phi nsz <4 x float> [ %.166917238.us.us, %.lr.ph7242.split.us.us ], [ %.166917238.us.us, %bb.ak ], [ %.66696.us.us.us, %bb.am ] ; 2 uses
+  %.76679.us.us.us = phi nsz <4 x float> [ %.166737239.us.us, %.lr.ph7242.split.us.us ], [ %.166737239.us.us, %bb.ak ], [ %.66678.us.us.us, %bb.am ] ; 2 uses
+  %.76661.us.us.us = phi nsz <4 x float> [ %.166557240.us.us, %.lr.ph7242.split.us.us ], [ %.166557240.us.us, %bb.ak ], [ %.66660.us.us.us, %bb.am ] ; 2 uses
   %indvars.iv.next8271 = add nuw nsw i64 %indvars.iv8270, 1 ; 2 uses
   %exitcond8274.not = icmp eq i64 %indvars.iv.next8271, %wide.trip.count8273
   br i1 %exitcond8274.not, label %._crit_edge7243.us, label %.lr.ph7242.split.us.us, !llvm.loop !100
 
-._crit_edge7243.us:                               ; preds = %..loopexit6904_crit_edge.us.us, %.preheader6909.us
-  %.us-phi7257.us = phi <4 x float> [ %.167147262.us, %.preheader6909.us ], [ %.86721.us.us, %..loopexit6904_crit_edge.us.us ] ; 2 uses
-  %.us-phi7258.us = phi <4 x float> [ %.066907263.us, %.preheader6909.us ], [ %.76697.us.us, %..loopexit6904_crit_edge.us.us ] ; 2 uses
-  %.us-phi7259.us = phi <4 x float> [ %.066727264.us, %.preheader6909.us ], [ %.76679.us.us, %..loopexit6904_crit_edge.us.us ] ; 2 uses
-  %.us-phi7260.us = phi <4 x float> [ %.066547265.us, %.preheader6909.us ], [ %.76661.us.us, %..loopexit6904_crit_edge.us.us ] ; 2 uses
+._crit_edge7243.us:                               ; preds = %..loopexit6904_crit_edge.us.us, %.lr.ph7242.split.us.us.preheader, %.preheader6909.us
+  %.us-phi7257.us = phi <4 x float> [ %.167147262.us, %.preheader6909.us ], [ %.167147262.us, %.lr.ph7242.split.us.us.preheader ], [ %.86721.us.us.us, %..loopexit6904_crit_edge.us.us ] ; 2 uses
+  %.us-phi7258.us = phi <4 x float> [ %.066907263.us, %.preheader6909.us ], [ %.066907263.us, %.lr.ph7242.split.us.us.preheader ], [ %.76697.us.us.us, %..loopexit6904_crit_edge.us.us ] ; 2 uses
+  %.us-phi7259.us = phi <4 x float> [ %.066727264.us, %.preheader6909.us ], [ %.066727264.us, %.lr.ph7242.split.us.us.preheader ], [ %.76679.us.us.us, %..loopexit6904_crit_edge.us.us ] ; 2 uses
+  %.us-phi7260.us = phi <4 x float> [ %.066547265.us, %.preheader6909.us ], [ %.066547265.us, %.lr.ph7242.split.us.us.preheader ], [ %.76661.us.us.us, %..loopexit6904_crit_edge.us.us ] ; 2 uses
   %i.dap = getelementptr inbounds [2 x i8], ptr %.019617267.us, i64 %i.bpl ; 2 uses
   %indvars.iv.next8276 = add nuw nsw i64 %indvars.iv8275, 16 ; 2 uses
   %i.daq = icmp slt i64 %indvars.iv.next8276, %invariant.op8778
@@ -2156,7 +2162,7 @@ _ZN4ncnn3MatD2Ev.exit2218.lr.ph:                  ; preds = %._crit_edge7786.spl
   %.fr8050 = freeze i32 %i.egf                    ; 8 uses
   %i.egg = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.egh = load i32, ptr %i.egg, align 8, !tbaa !16
-  %i.egi = mul i32 %i.egh, %.fr8050               ; 14 uses
+  %i.egi = mul i32 %i.egh, %.fr8050               ; 15 uses
   %i.egj = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 12 uses
   %i.egk = load i32, ptr %i.egj, align 4, !tbaa !22 ; 6 uses
   %i.egl = getelementptr inbounds nuw i8, ptr %0, i64 48
@@ -2174,7 +2180,7 @@ _ZN4ncnn3MatD2Ev.exit2218.lr.ph:                  ; preds = %._crit_edge7786.spl
   %i.egw = icmp slt i32 %i.ego, 1
   %i.egx = icmp sgt i32 %i.egi, 15
   %i.egy = call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %.fr8050)
-  %14 = icmp eq i32 %i.egy, 1
+  %14 = icmp ne i32 %i.egy, 1
   %i.egz = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %.fr8050, i1 true)
   %i.eha = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 11 uses
   %i.ehb = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 11 uses
@@ -2256,7 +2262,7 @@ _ZN4ncnn3MatD2Ev.exit2237:                        ; preds = %_ZN4ncnn3MatD2Ev.ex
   %i.eiy = shl i32 %i.eit, 3
   %i.eiz = sext i32 %i.eiy to i64                 ; 3 uses
   %i.eja = shl i32 %i.eit, 2
-  %i.ejb = sext i32 %i.eja to i64                 ; 2 uses
+  %i.ejb = sext i32 %i.eja to i64                 ; 3 uses
   %i.ejc = shl nsw i32 %i.eit, 1
   %i.ejd = sext i32 %i.ejc to i64
   %i.eje = mul nsw i64 %i.bnb, %i.eiv
@@ -2297,7 +2303,7 @@ _ZN4ncnn3MatD2Ev.exit2235:                        ; preds = %bb.bq, %bb.bp
   %i.eji = load i32, ptr %i.f, align 4            ; 2 uses
   %i.ejj = load i32, ptr %i.a, align 4
   %.fr8044 = freeze i32 %i.ejj                    ; 2 uses
-  %15 = icmp sgt i32 %.fr8044, 0
+  %15 = icmp slt i32 %.fr8044, 1
   %i.ejk = load i32, ptr %i.i, align 4
   %.neg6820 = add nuw nsw i32 %.019317777, 1
   %invariant.op7523 = sub i32 %.neg6820, %i.ejk
@@ -2308,6 +2314,7 @@ _ZN4ncnn3MatD2Ev.exit2235:                        ; preds = %bb.bq, %bb.bp
   %i.ejm = load i32, ptr %i.c, align 4
   %i.ejn = load i32, ptr %i.d, align 4
   %i.ejo = zext i32 %.fr8044 to i64               ; 2 uses
+  %brmerge8908 = select i1 %15, i1 true, i1 %13
   br label %.preheader6892.us
 
 .preheader6892.us:                                ; preds = %.preheader6892.us.preheader, %._crit_edge7532.us
@@ -2322,7 +2329,7 @@ _ZN4ncnn3MatD2Ev.exit2235:                        ; preds = %bb.bq, %bb.bp
   %i.ejt = or disjoint i64 %i.ejs, 1
   %i.eju = or disjoint i64 %i.ejs, 2
   %i.ejv = or disjoint i64 %i.ejs, 3
-  br i1 %15, label %.lr.ph7531.split.us.us.preheader, label %._crit_edge7532.us
+  br i1 %brmerge8908, label %._crit_edge7532.us, label %.lr.ph7531.split.us.us.preheader
 
 .lr.ph7531.split.us.us.preheader:                 ; preds = %.preheader6892.us
   %i.ejw = or disjoint i64 %indvars.iv8362, 1
@@ -2342,10 +2349,10 @@ _ZN4ncnn3MatD2Ev.exit2235:                        ; preds = %bb.bq, %bb.bp
   %i.ekk = or disjoint i64 %indvars.iv8362, 15
   br label %.lr.ph7531.split.us.us
 
-.lr.ph7531.split.us.us:                           ; preds = %.lr.ph7531.split.us.us.preheader, %..loopexit6887_crit_edge.us.us
+.lr.ph7531.split.us.us:                           ; preds = %..loopexit6887_crit_edge.us.us, %.lr.ph7531.split.us.us.preheader
   %indvars.iv8357 = phi i64 [ 0, %.lr.ph7531.split.us.us.preheader ], [ %indvars.iv.next8358, %..loopexit6887_crit_edge.us.us ] ; 3 uses
-  %.166397529.us.us = phi <16 x float> [ %.066387548.us, %.lr.ph7531.split.us.us.preheader ], [ %.76645.us.us, %..loopexit6887_crit_edge.us.us ] ; 4 uses
-  %.166477528.us.us = phi <16 x float> [ %.066467547.us, %.lr.ph7531.split.us.us.preheader ], [ %.76653.us.us, %..loopexit6887_crit_edge.us.us ] ; 4 uses
+  %.166397529.us.us = phi <16 x float> [ %.066387548.us, %.lr.ph7531.split.us.us.preheader ], [ %.76645.us.us.us, %..loopexit6887_crit_edge.us.us ] ; 3 uses
+  %.166477528.us.us = phi <16 x float> [ %.066467547.us, %.lr.ph7531.split.us.us.preheader ], [ %.76653.us.us.us, %..loopexit6887_crit_edge.us.us ] ; 3 uses
   %i.ekl = trunc i64 %indvars.iv8357 to i32
   %i.ekm = mul i32 %i.ejn, %i.ekl
   %.reass.us7536.us = add i32 %i.ekm, %invariant.op7535 ; 3 uses
@@ -2363,12 +2370,12 @@ bb.br:                                            ; preds = %.lr.ph7531.split.us
 .preheader6886.us.us:                             ; preds = %bb.br
   %i.ekq = mul nuw nsw i64 %indvars.iv8357, %i.ejo
   %i.ekr = sext i32 %i.ekp to i64                 ; 4 uses
-  br i1 %13, label %.lr.ph.split.us.us.us7564, label %..loopexit6887_crit_edge.us.us
+  br label %.lr.ph.split.us.us.us7564
 
-.lr.ph.split.us.us.us7564:                        ; preds = %.preheader6886.us.us, %bb.bt
-  %indvars.iv8352 = phi i64 [ %indvars.iv.next8353, %bb.bt ], [ 0, %.preheader6886.us.us ] ; 3 uses
-  %.266407519.us.us.us = phi <16 x float> [ %.66644.us.us.us, %bb.bt ], [ %.166397529.us.us, %.preheader6886.us.us ] ; 7 uses
-  %.266487518.us.us.us = phi <16 x float> [ %.66652.us.us.us, %bb.bt ], [ %.166477528.us.us, %.preheader6886.us.us ] ; 7 uses
+.lr.ph.split.us.us.us7564:                        ; preds = %bb.bt, %.preheader6886.us.us
+  %indvars.iv8352 = phi i64 [ 0, %.preheader6886.us.us ], [ %indvars.iv.next8353, %bb.bt ] ; 3 uses
+  %.266407519.us.us.us = phi <16 x float> [ %.166397529.us.us, %.preheader6886.us.us ], [ %.66644.us.us.us, %bb.bt ] ; 7 uses
+  %.266487518.us.us.us = phi <16 x float> [ %.166477528.us.us, %.preheader6886.us.us ], [ %.66652.us.us.us, %bb.bt ] ; 7 uses
   %i.eks = trunc i64 %indvars.iv8352 to i32
   %i.ekt = mul i32 %i.ejm, %i.eks
   %.reass7524.us.us.us = add i32 %i.ekt, %invariant.op7523 ; 3 uses
@@ -2650,16 +2657,16 @@ bb.bt:                                            ; preds = %_ZN4ncnn3MatD2Ev.ex
   %exitcond8356.not = icmp eq i64 %indvars.iv.next8353, %i.ejo
   br i1 %exitcond8356.not, label %..loopexit6887_crit_edge.us.us, label %.lr.ph.split.us.us.us7564, !llvm.loop !143
 
-..loopexit6887_crit_edge.us.us:                   ; preds = %bb.bt, %.preheader6886.us.us, %bb.br, %.lr.ph7531.split.us.us
-  %.76653.us.us = phi nsz <16 x float> [ %.166477528.us.us, %.lr.ph7531.split.us.us ], [ %.166477528.us.us, %bb.br ], [ %.166477528.us.us, %.preheader6886.us.us ], [ %.66652.us.us.us, %bb.bt ] ; 2 uses
-  %.76645.us.us = phi nsz <16 x float> [ %.166397529.us.us, %.lr.ph7531.split.us.us ], [ %.166397529.us.us, %bb.br ], [ %.166397529.us.us, %.preheader6886.us.us ], [ %.66644.us.us.us, %bb.bt ] ; 2 uses
+..loopexit6887_crit_edge.us.us:                   ; preds = %bb.bt, %bb.br, %.lr.ph7531.split.us.us
+  %.76653.us.us.us = phi nsz <16 x float> [ %.166477528.us.us, %.lr.ph7531.split.us.us ], [ %.166477528.us.us, %bb.br ], [ %.66652.us.us.us, %bb.bt ] ; 2 uses
+  %.76645.us.us.us = phi nsz <16 x float> [ %.166397529.us.us, %.lr.ph7531.split.us.us ], [ %.166397529.us.us, %bb.br ], [ %.66644.us.us.us, %bb.bt ] ; 2 uses
   %indvars.iv.next8358 = add nuw nsw i64 %indvars.iv8357, 1 ; 2 uses
   %exitcond8361.not = icmp eq i64 %indvars.iv.next8358, %wide.trip.count8360
   br i1 %exitcond8361.not, label %._crit_edge7532.us, label %.lr.ph7531.split.us.us, !llvm.loop !144
 
 ._crit_edge7532.us:                               ; preds = %..loopexit6887_crit_edge.us.us, %.preheader6892.us
-  %.us-phi7544.us = phi <16 x float> [ %.066467547.us, %.preheader6892.us ], [ %.76653.us.us, %..loopexit6887_crit_edge.us.us ] ; 2 uses
-  %.us-phi7545.us = phi <16 x float> [ %.066387548.us, %.preheader6892.us ], [ %.76645.us.us, %..loopexit6887_crit_edge.us.us ] ; 2 uses
+  %.us-phi7544.us = phi <16 x float> [ %.066467547.us, %.preheader6892.us ], [ %.76653.us.us.us, %..loopexit6887_crit_edge.us.us ] ; 2 uses
+  %.us-phi7545.us = phi <16 x float> [ %.066387548.us, %.preheader6892.us ], [ %.76645.us.us.us, %..loopexit6887_crit_edge.us.us ] ; 2 uses
   %i.eql = getelementptr inbounds [2 x i8], ptr %.018947549.us, i64 %i.eiv ; 2 uses
   %indvars.iv.next8363 = add nuw nsw i64 %indvars.iv8362, 16 ; 3 uses
   %i.eqm = icmp slt i64 %indvars.iv.next8363, %invariant.op8779
@@ -3062,7 +3069,7 @@ bb.ce:                                            ; preds = %_ZN4ncnn3MatD2Ev.ex
 ._crit_edge7668:                                  ; preds = %.preheader6890.preheader, %.preheader6890.us.preheader, %._crit_edge7668.loopexit, %._crit_edge7598
   %.06623.lcssa = phi <4 x float> [ zeroinitializer, %._crit_edge7598 ], [ %.46627.us.us.us, %._crit_edge7668.loopexit ], [ zeroinitializer, %.preheader6890.us.preheader ], [ zeroinitializer, %.preheader6890.preheader ] ; 2 uses
   %.06618.lcssa = phi <4 x float> [ zeroinitializer, %._crit_edge7598 ], [ %.46622.us.us.us, %._crit_edge7668.loopexit ], [ zeroinitializer, %.preheader6890.us.preheader ], [ zeroinitializer, %.preheader6890.preheader ] ; 2 uses
-  %.21896.lcssa = phi ptr [ %.11895.lcssa, %._crit_edge7598 ], [ %i.fbl, %._crit_edge7668.loopexit ], [ %scevgep8384, %.preheader6890.us.preheader ], [ %scevgep8383, %.preheader6890.preheader ] ; 3 uses
+  %.21896.lcssa = phi ptr [ %.11895.lcssa, %._crit_edge7598 ], [ %i.fbl, %._crit_edge7668.loopexit ], [ %scevgep8384, %.preheader6890.us.preheader ], [ %scevgep8383, %.preheader6890.preheader ] ; 4 uses
   %.21891.lcssa = phi i32 [ %.11890.lcssa, %._crit_edge7598 ], [ %i.fbp, %._crit_edge7668.loopexit ], [ %i.exq, %.preheader6890.us.preheader ], [ %i.exh, %.preheader6890.preheader ] ; 5 uses
   %i.fbq = shufflevector <4 x float> %.06623.lcssa, <4 x float> poison, <4 x i32> <i32 2, i32 3, i32 poison, i32 poison>
   %i.fbr = fadd fast <4 x float> %i.fbq, %.06623.lcssa ; 2 uses
@@ -3079,7 +3086,7 @@ bb.ce:                                            ; preds = %_ZN4ncnn3MatD2Ev.ex
   %i.fcc = shufflevector <4 x float> %i.fbr, <4 x float> %i.fbv, <2 x i32> <i32 1, i32 5>
   %i.fcd = fadd fast <2 x float> %i.fcb, %i.fcc
   %i.fce = shufflevector <4 x float> %i.fbr, <4 x float> %i.fbv, <2 x i32> <i32 0, i32 4>
-  %i.fcf = fadd fast <2 x float> %i.fcd, %i.fce   ; 3 uses
+  %i.fcf = fadd fast <2 x float> %i.fcd, %i.fce   ; 4 uses
   %i.fcg = or disjoint i32 %.21891.lcssa, 1
   %i.fch = icmp slt i32 %i.fcg, %i.bly
   br i1 %i.fch, label %.preheader6889.lr.ph, label %.preheader6893
@@ -3088,9 +3095,6 @@ bb.ce:                                            ; preds = %_ZN4ncnn3MatD2Ev.ex
   %i.fci = load i32, ptr %i.j, align 4
   %invariant.op7708 = sub i32 %.neg6818, %i.fci
   %i.fcj = load i32, ptr %i.f, align 4            ; 2 uses
-  %16 = load i32, ptr %i.a, align 4
-  %.fr8047 = freeze i32 %16                       ; 2 uses
-  %17 = icmp sgt i32 %.fr8047, 0
   %i.fck = load i32, ptr %i.i, align 4
   %.neg6808 = add nuw nsw i32 %.019317777, 1
   %invariant.op7699 = sub i32 %.neg6808, %i.fck
@@ -3111,24 +3115,24 @@ bb.ce:                                            ; preds = %_ZN4ncnn3MatD2Ev.ex
 
 .preheader6889.us.preheader:                      ; preds = %.preheader6889.lr.ph
   %i.fcu = load i32, ptr %i.c, align 4
+  %16 = load i32, ptr %i.a, align 4
+  %.fr8047 = freeze i32 %16                       ; 2 uses
+  %17 = icmp sgt i32 %.fr8047, 0
   %i.fcv = load i32, ptr %i.d, align 4
   %i.fcw = zext i32 %.fr8047 to i64               ; 2 uses
-  %i.fcx = zext i32 %.21891.lcssa to i64
-  br label %.preheader6889.us.a
+  %i.fcx = zext i32 %.21891.lcssa to i64          ; 2 uses
+  br i1 %17, label %.preheader6889.us.a, label %._crit_edge7705.us
 
-.preheader6889.us.a:                              ; preds = %.preheader6889.us.preheader, %._crit_edge7705.us
-  %indvars.iv8421 = phi i64 [ %i.fcx, %.preheader6889.us.preheader ], [ %indvars.iv.next8422, %._crit_edge7705.us ] ; 3 uses
-  %.318977716.us.a = phi ptr [ %.21896.lcssa, %.preheader6889.us.preheader ], [ %i.fey, %._crit_edge7705.us ] ; 2 uses
-  %i.fcy = phi <2 x float> [ %i.fcf, %.preheader6889.us.preheader ], [ %19, %._crit_edge7705.us ] ; 2 uses
-  br i1 %17, label %.lr.ph7704.split.us.us.preheader, label %._crit_edge7705.us
-
-.lr.ph7704.split.us.us.preheader:                 ; preds = %.preheader6889.us.a
+.preheader6889.us.a:                              ; preds = %.preheader6889.us.preheader, %._crit_edge7705.us.loopexit.us
+  %indvars.iv8421 = phi i64 [ %indvars.iv.next8430.us, %._crit_edge7705.us.loopexit.us ], [ %i.fcx, %.preheader6889.us.preheader ] ; 3 uses
+  %.318977716.us.a = phi ptr [ %19, %._crit_edge7705.us.loopexit.us ], [ %.21896.lcssa, %.preheader6889.us.preheader ] ; 2 uses
+  %i.fcy = phi <2 x float> [ %i.fex, %._crit_edge7705.us.loopexit.us ], [ %i.fcf, %.preheader6889.us.preheader ]
   %18 = or disjoint i64 %indvars.iv8421, 1
   br label %.lr.ph7704.split.us.us
 
-.lr.ph7704.split.us.us:                           ; preds = %.lr.ph7704.split.us.us.preheader, %..loopexit6881_crit_edge.us.us
-  %indvars.iv8416 = phi i64 [ 0, %.lr.ph7704.split.us.us.preheader ], [ %indvars.iv.next8417, %..loopexit6881_crit_edge.us.us ] ; 3 uses
-  %i.fcz = phi <2 x float> [ %i.fcy, %.lr.ph7704.split.us.us.preheader ], [ %i.fex, %..loopexit6881_crit_edge.us.us ] ; 3 uses
+.lr.ph7704.split.us.us:                           ; preds = %..loopexit6881_crit_edge.us.us, %.preheader6889.us.a
+  %indvars.iv8416 = phi i64 [ 0, %.preheader6889.us.a ], [ %indvars.iv.next8417, %..loopexit6881_crit_edge.us.us ] ; 3 uses
+  %i.fcz = phi <2 x float> [ %i.fcy, %.preheader6889.us.a ], [ %i.fex, %..loopexit6881_crit_edge.us.us ] ; 3 uses
   %i.fda = trunc i64 %indvars.iv8416 to i32
   %i.fdb = mul i32 %i.fcv, %i.fda
   %.reass7709.us.us = add i32 %i.fdb, %invariant.op7708 ; 3 uses
@@ -3217,28 +3221,40 @@ _ZN4ncnn3MatD2Ev.exit2220.us.us:                  ; preds = %bb.ch
   br i1 %exitcond8415.not, label %..loopexit6881_crit_edge.us.us, label %bb.cg, !llvm.loop !164
 
 ..loopexit6881_crit_edge.us.us:                   ; preds = %.loopexit6877.us.us, %bb.cf, %.lr.ph7704.split.us.us
-  %i.fex = phi <2 x float> [ %i.fcz, %.lr.ph7704.split.us.us ], [ %i.fcz, %bb.cf ], [ %i.few, %.loopexit6877.us.us ] ; 2 uses
+  %i.fex = phi <2 x float> [ %i.fcz, %.lr.ph7704.split.us.us ], [ %i.fcz, %bb.cf ], [ %i.few, %.loopexit6877.us.us ] ; 3 uses
   %indvars.iv.next8417 = add nuw nsw i64 %indvars.iv8416, 1 ; 2 uses
   %exitcond8420.not = icmp eq i64 %indvars.iv.next8417, %wide.trip.count8419
-  br i1 %exitcond8420.not, label %._crit_edge7705.us, label %.lr.ph7704.split.us.us, !llvm.loop !165
+  br i1 %exitcond8420.not, label %._crit_edge7705.us.loopexit.us, label %.lr.ph7704.split.us.us, !llvm.loop !165
 
-._crit_edge7705.us:                               ; preds = %..loopexit6881_crit_edge.us.us, %.preheader6889.us.a
-  %19 = phi <2 x float> [ %i.fcy, %.preheader6889.us.a ], [ %i.fex, %..loopexit6881_crit_edge.us.us ] ; 2 uses
-  %i.fey = getelementptr inbounds [2 x i8], ptr %.318977716.us.a, i64 %i.ejb ; 2 uses
-  %indvars.iv.next8422 = add nuw nsw i64 %indvars.iv8421, 2 ; 3 uses
+._crit_edge7705.us.loopexit.us:                   ; preds = %..loopexit6881_crit_edge.us.us
+  %19 = getelementptr inbounds [2 x i8], ptr %.318977716.us.a, i64 %i.ejb ; 2 uses
+  %indvars.iv.next8430.us = add nuw nsw i64 %indvars.iv8421, 2 ; 3 uses
+  %20 = trunc i64 %indvars.iv.next8430.us to i32
+  %21 = or i32 %20, 1
+  %22 = icmp slt i32 %21, %i.bly
+  br i1 %22, label %.preheader6889.us.a, label %.preheader6893.loopexit, !llvm.loop !166
+
+._crit_edge7705.us:                               ; preds = %.preheader6889.us.preheader, %._crit_edge7705.us
+  %indvars.iv8429 = phi i64 [ %indvars.iv.next8422, %._crit_edge7705.us ], [ %i.fcx, %.preheader6889.us.preheader ]
+  %.318977716.us = phi ptr [ %i.fey, %._crit_edge7705.us ], [ %.21896.lcssa, %.preheader6889.us.preheader ]
+  %i.fey = getelementptr inbounds [2 x i8], ptr %.318977716.us, i64 %i.ejb ; 2 uses
+  %indvars.iv.next8422 = add nuw nsw i64 %indvars.iv8429, 2 ; 3 uses
   %i.fez = trunc i64 %indvars.iv.next8422 to i32
   %i.ffa = or i32 %i.fez, 1
   %i.ffb = icmp slt i32 %i.ffa, %i.bly
-  br i1 %i.ffb, label %.preheader6889.us.a, label %.preheader6893.loopexit, !llvm.loop !166
+  br i1 %i.ffb, label %._crit_edge7705.us, label %.preheader6893.loopexit, !llvm.loop !166
 
-.preheader6893.loopexit:                          ; preds = %._crit_edge7705.us
-  %i.ffc = trunc nuw i64 %indvars.iv.next8422 to i32
+.preheader6893.loopexit:                          ; preds = %._crit_edge7705.us, %._crit_edge7705.us.loopexit.us
+  %.us-phi8434 = phi ptr [ %19, %._crit_edge7705.us.loopexit.us ], [ %i.fey, %._crit_edge7705.us ]
+  %.us-phi8435 = phi i64 [ %indvars.iv.next8430.us, %._crit_edge7705.us.loopexit.us ], [ %indvars.iv.next8422, %._crit_edge7705.us ]
+  %23 = phi <2 x float> [ %i.fex, %._crit_edge7705.us.loopexit.us ], [ %i.fcf, %._crit_edge7705.us ]
+  %i.ffc = trunc nuw i64 %.us-phi8435 to i32
   br label %.preheader6893
 
 .preheader6893:                                   ; preds = %.preheader6889.preheader, %.preheader6893.loopexit, %._crit_edge7668
-  %.31897.lcssa = phi ptr [ %.21896.lcssa, %._crit_edge7668 ], [ %i.fey, %.preheader6893.loopexit ], [ %scevgep8407, %.preheader6889.preheader ]
+  %.31897.lcssa = phi ptr [ %.21896.lcssa, %._crit_edge7668 ], [ %.us-phi8434, %.preheader6893.loopexit ], [ %scevgep8407, %.preheader6889.preheader ]
   %.31892.lcssa = phi i32 [ %.21891.lcssa, %._crit_edge7668 ], [ %i.ffc, %.preheader6893.loopexit ], [ %i.fct, %.preheader6889.preheader ] ; 2 uses
-  %i.ffd = phi <2 x float> [ %i.fcf, %._crit_edge7668 ], [ %19, %.preheader6893.loopexit ], [ %i.fcf, %.preheader6889.preheader ] ; 3 uses
+  %i.ffd = phi <2 x float> [ %i.fcf, %._crit_edge7668 ], [ %23, %.preheader6893.loopexit ], [ %i.fcf, %.preheader6889.preheader ] ; 3 uses
   %i.ffe = icmp slt i32 %.31892.lcssa, %i.bly
   br i1 %i.ffe, label %.preheader6888.lr.ph, label %._crit_edge7761
 
@@ -3533,7 +3549,7 @@ _ZN4ncnn3MatD2Ev.exit2218:                        ; preds = %_ZN4ncnn3MatD2Ev.ex
   %i.fky = shl i32 %i.fkt, 2
   %i.fkz = sext i32 %i.fky to i64                 ; 3 uses
   %i.fla = shl i32 %i.fkt, 1
-  %i.flb = sext i32 %i.fla to i64                 ; 2 uses
+  %i.flb = sext i32 %i.fla to i64                 ; 3 uses
   %i.flc = sext i32 %i.fkt to i64
   %i.fld = mul nsw i64 %i.ehl, %i.fkv
   %scevgep8445 = getelementptr i8, ptr %i.fkq, i64 %i.fld
@@ -3572,7 +3588,7 @@ _ZN4ncnn3MatD2Ev.exit2217:                        ; preds = %bb.ct, %bb.cs
   %i.flg = load i32, ptr %i.f, align 4            ; 2 uses
   %i.flh = load i32, ptr %i.a, align 4
   %.fr8051 = freeze i32 %i.flh                    ; 2 uses
-  %20 = icmp sgt i32 %.fr8051, 0
+  %24 = icmp slt i32 %.fr8051, 1
   %i.fli = load i32, ptr %i.i, align 4
   %.neg6800 = add nuw nsw i32 %.018688011, 1
   %invariant.op7802 = sub i32 %.neg6800, %i.fli
@@ -3583,6 +3599,7 @@ _ZN4ncnn3MatD2Ev.exit2217:                        ; preds = %bb.ct, %bb.cs
   %i.flk = load i32, ptr %i.c, align 4
   %i.fll = load i32, ptr %i.d, align 4
   %i.flm = zext i32 %.fr8051 to i64               ; 2 uses
+  %brmerge8919 = select i1 %24, i1 true, i1 %14
   br label %.preheader6874.us
 
 .preheader6874.us:                                ; preds = %.preheader6874.us.preheader, %._crit_edge7809.us
@@ -3596,7 +3613,7 @@ _ZN4ncnn3MatD2Ev.exit2217:                        ; preds = %bb.ct, %bb.cs
   %i.flr = or disjoint i64 %i.flq, 1
   %i.fls = or disjoint i64 %i.flq, 2
   %i.flt = or disjoint i64 %i.flq, 3
-  br i1 %20, label %.lr.ph7808.split.us.us.preheader, label %._crit_edge7809.us
+  br i1 %brmerge8919, label %._crit_edge7809.us, label %.lr.ph7808.split.us.us.preheader
 
 .lr.ph7808.split.us.us.preheader:                 ; preds = %.preheader6874.us
   %i.flu = or disjoint i64 %indvars.iv8460, 1
@@ -3616,9 +3633,9 @@ _ZN4ncnn3MatD2Ev.exit2217:                        ; preds = %bb.ct, %bb.cs
   %i.fmi = or disjoint i64 %indvars.iv8460, 15
   br label %.lr.ph7808.split.us.us
 
-.lr.ph7808.split.us.us:                           ; preds = %.lr.ph7808.split.us.us.preheader, %..loopexit6869_crit_edge.us.us
+.lr.ph7808.split.us.us:                           ; preds = %..loopexit6869_crit_edge.us.us, %.lr.ph7808.split.us.us.preheader
   %indvars.iv8455 = phi i64 [ 0, %.lr.ph7808.split.us.us.preheader ], [ %indvars.iv.next8456, %..loopexit6869_crit_edge.us.us ] ; 3 uses
-  %.166117806.us.us = phi <16 x float> [ %.066107822.us, %.lr.ph7808.split.us.us.preheader ], [ %.76617.us.us, %..loopexit6869_crit_edge.us.us ] ; 4 uses
+  %.166117806.us.us = phi <16 x float> [ %.066107822.us, %.lr.ph7808.split.us.us.preheader ], [ %.76617.us.us.us, %..loopexit6869_crit_edge.us.us ] ; 3 uses
   %i.fmj = trunc i64 %indvars.iv8455 to i32
   %i.fmk = mul i32 %i.fll, %i.fmj
   %.reass7812.us.us = add i32 %i.fmk, %invariant.op7811 ; 3 uses
@@ -3636,11 +3653,11 @@ bb.cu:                                            ; preds = %.lr.ph7808.split.us
 .preheader6868.us.us:                             ; preds = %bb.cu
   %i.fmo = mul nuw nsw i64 %indvars.iv8455, %i.flm
   %i.fmp = sext i32 %i.fmn to i64                 ; 4 uses
-  br i1 %14, label %.lr.ph.split.us.us.us7838, label %..loopexit6869_crit_edge.us.us
+  br label %.lr.ph.split.us.us.us7838
 
-.lr.ph.split.us.us.us7838:                        ; preds = %.preheader6868.us.us, %bb.cw
-  %indvars.iv8450 = phi i64 [ %indvars.iv.next8451, %bb.cw ], [ 0, %.preheader6868.us.us ] ; 3 uses
-  %.266127799.us.us.us = phi <16 x float> [ %.66616.us.us.us, %bb.cw ], [ %.166117806.us.us, %.preheader6868.us.us ] ; 7 uses
+.lr.ph.split.us.us.us7838:                        ; preds = %bb.cw, %.preheader6868.us.us
+  %indvars.iv8450 = phi i64 [ 0, %.preheader6868.us.us ], [ %indvars.iv.next8451, %bb.cw ] ; 3 uses
+  %.266127799.us.us.us = phi <16 x float> [ %.166117806.us.us, %.preheader6868.us.us ], [ %.66616.us.us.us, %bb.cw ] ; 7 uses
   %i.fmq = trunc i64 %indvars.iv8450 to i32
   %i.fmr = mul i32 %i.flk, %i.fmq
   %.reass7803.us.us.us = add i32 %i.fmr, %invariant.op7802 ; 3 uses
@@ -3912,14 +3929,14 @@ bb.cw:                                            ; preds = %_ZN4ncnn3MatD2Ev.ex
   %exitcond8454.not = icmp eq i64 %indvars.iv.next8451, %i.flm
   br i1 %exitcond8454.not, label %..loopexit6869_crit_edge.us.us, label %.lr.ph.split.us.us.us7838, !llvm.loop !183
 
-..loopexit6869_crit_edge.us.us:                   ; preds = %bb.cw, %.preheader6868.us.us, %bb.cu, %.lr.ph7808.split.us.us
-  %.76617.us.us = phi nsz <16 x float> [ %.166117806.us.us, %.lr.ph7808.split.us.us ], [ %.166117806.us.us, %bb.cu ], [ %.166117806.us.us, %.preheader6868.us.us ], [ %.66616.us.us.us, %bb.cw ] ; 2 uses
+..loopexit6869_crit_edge.us.us:                   ; preds = %bb.cw, %bb.cu, %.lr.ph7808.split.us.us
+  %.76617.us.us.us = phi nsz <16 x float> [ %.166117806.us.us, %.lr.ph7808.split.us.us ], [ %.166117806.us.us, %bb.cu ], [ %.66616.us.us.us, %bb.cw ] ; 2 uses
   %indvars.iv.next8456 = add nuw nsw i64 %indvars.iv8455, 1 ; 2 uses
   %exitcond8459.not = icmp eq i64 %indvars.iv.next8456, %wide.trip.count8458
   br i1 %exitcond8459.not, label %._crit_edge7809.us, label %.lr.ph7808.split.us.us, !llvm.loop !184
 
 ._crit_edge7809.us:                               ; preds = %..loopexit6869_crit_edge.us.us, %.preheader6874.us
-  %.us-phi7820.us = phi <16 x float> [ %.066107822.us, %.preheader6874.us ], [ %.76617.us.us, %..loopexit6869_crit_edge.us.us ] ; 2 uses
+  %.us-phi7820.us = phi <16 x float> [ %.066107822.us, %.preheader6874.us ], [ %.76617.us.us.us, %..loopexit6869_crit_edge.us.us ] ; 2 uses
   %i.fso = getelementptr inbounds [2 x i8], ptr %.018487823.us, i64 %i.fkv ; 2 uses
   %indvars.iv.next8461 = add nuw nsw i64 %indvars.iv8460, 16 ; 3 uses
   %i.fsp = icmp slt i64 %indvars.iv.next8461, %invariant.op8780
@@ -4322,14 +4339,14 @@ bb.dh:                                            ; preds = %_ZN4ncnn3MatD2Ev.ex
 
 ._crit_edge7924:                                  ; preds = %.preheader6872.preheader, %.preheader6872.us.preheader, %._crit_edge7924.loopexit, %._crit_edge7866
   %.06541.lcssa = phi <4 x float> [ zeroinitializer, %._crit_edge7866 ], [ %.46545.us.us.us, %._crit_edge7924.loopexit ], [ zeroinitializer, %.preheader6872.us.preheader ], [ zeroinitializer, %.preheader6872.preheader ] ; 2 uses
-  %.21850.lcssa = phi ptr [ %.11849.lcssa, %._crit_edge7866 ], [ %i.gcj, %._crit_edge7924.loopexit ], [ %scevgep8482, %.preheader6872.us.preheader ], [ %scevgep8481, %.preheader6872.preheader ] ; 3 uses
+  %.21850.lcssa = phi ptr [ %.11849.lcssa, %._crit_edge7866 ], [ %i.gcj, %._crit_edge7924.loopexit ], [ %scevgep8482, %.preheader6872.us.preheader ], [ %scevgep8481, %.preheader6872.preheader ] ; 4 uses
   %.21845.lcssa = phi i32 [ %.11844.lcssa, %._crit_edge7866 ], [ %i.gcn, %._crit_edge7924.loopexit ], [ %i.fzc, %.preheader6872.us.preheader ], [ %i.fyt, %.preheader6872.preheader ] ; 5 uses
   %i.gco = shufflevector <4 x float> %.06541.lcssa, <4 x float> %i.fyc, <4 x i32> <i32 3, i32 2, i32 7, i32 6>
   %i.gcp = shufflevector <4 x float> %.06541.lcssa, <4 x float> %i.fyc, <4 x i32> <i32 1, i32 0, i32 5, i32 4>
   %i.gcq = fadd fast <4 x float> %i.gco, %i.gcp
   %op.rdx = call fast float @llvm.vector.reduce.fadd.v4f32(float %i.fsz, <4 x float> %i.gcq)
   %op.rdx8916 = call fast float @llvm.vector.reduce.fadd.v8f32(float %.01853, <8 x float> %i.fta)
-  %op.rdx8917 = fadd fast float %op.rdx, %op.rdx8916 ; 3 uses
+  %op.rdx8917 = fadd fast float %op.rdx, %op.rdx8916 ; 4 uses
   %i.gcr = or disjoint i32 %.21845.lcssa, 1
   %i.gcs = icmp slt i32 %i.gcr, %i.egi
   br i1 %i.gcs, label %.preheader6871.lr.ph, label %.preheader6875
@@ -4338,9 +4355,6 @@ bb.dh:                                            ; preds = %_ZN4ncnn3MatD2Ev.ex
   %i.gct = load i32, ptr %i.j, align 4
   %invariant.op7958 = sub i32 %.neg6798, %i.gct
   %i.gcu = load i32, ptr %i.f, align 4            ; 2 uses
-  %21 = load i32, ptr %i.a, align 4
-  %.fr8054 = freeze i32 %21                       ; 2 uses
-  %22 = icmp sgt i32 %.fr8054, 0
   %i.gcv = load i32, ptr %i.i, align 4
   %.neg6788 = add nuw nsw i32 %.018688011, 1
   %invariant.op7951 = sub i32 %.neg6788, %i.gcv
@@ -4361,24 +4375,24 @@ bb.dh:                                            ; preds = %_ZN4ncnn3MatD2Ev.ex
 
 .preheader6871.us.preheader:                      ; preds = %.preheader6871.lr.ph
   %i.gdf = load i32, ptr %i.c, align 4
+  %25 = load i32, ptr %i.a, align 4
+  %.fr8054 = freeze i32 %25                       ; 2 uses
+  %26 = icmp sgt i32 %.fr8054, 0
   %i.gdg = load i32, ptr %i.d, align 4
   %i.gdh = zext i32 %.fr8054 to i64               ; 2 uses
-  %i.gdi = zext i32 %.21845.lcssa to i64
-  br label %.preheader6871.us.a
+  %i.gdi = zext i32 %.21845.lcssa to i64          ; 2 uses
+  br i1 %26, label %.preheader6871.us.a, label %._crit_edge7956.us
 
-.preheader6871.us.a:                              ; preds = %.preheader6871.us.preheader, %._crit_edge7956.us
-  %indvars.iv8519 = phi i64 [ %i.gdi, %.preheader6871.us.preheader ], [ %indvars.iv.next8520, %._crit_edge7956.us ] ; 3 uses
-  %.318517963.us.a = phi ptr [ %.21850.lcssa, %.preheader6871.us.preheader ], [ %i.gfa, %._crit_edge7956.us ] ; 2 uses
-  %.118547962.us = phi float [ %op.rdx8917, %.preheader6871.us.preheader ], [ %.us-phi7960.us, %._crit_edge7956.us ] ; 2 uses
-  br i1 %22, label %.lr.ph7955.split.us.us.preheader, label %._crit_edge7956.us
-
-.lr.ph7955.split.us.us.preheader:                 ; preds = %.preheader6871.us.a
-  %23 = or disjoint i64 %indvars.iv8519, 1
+.preheader6871.us.a:                              ; preds = %.preheader6871.us.preheader, %._crit_edge7956.us.loopexit.us
+  %indvars.iv8519 = phi i64 [ %indvars.iv.next8534.us, %._crit_edge7956.us.loopexit.us ], [ %i.gdi, %.preheader6871.us.preheader ] ; 3 uses
+  %.318517963.us.a = phi ptr [ %28, %._crit_edge7956.us.loopexit.us ], [ %.21850.lcssa, %.preheader6871.us.preheader ] ; 2 uses
+  %.118547962.us = phi float [ %.81861.us.us, %._crit_edge7956.us.loopexit.us ], [ %op.rdx8917, %.preheader6871.us.preheader ]
+  %27 = or disjoint i64 %indvars.iv8519, 1
   br label %.lr.ph7955.split.us.us
 
-.lr.ph7955.split.us.us:                           ; preds = %.lr.ph7955.split.us.us.preheader, %..loopexit6863_crit_edge.us.us
-  %indvars.iv8514 = phi i64 [ 0, %.lr.ph7955.split.us.us.preheader ], [ %indvars.iv.next8515, %..loopexit6863_crit_edge.us.us ] ; 3 uses
-  %.218557953.us.us = phi float [ %.118547962.us, %.lr.ph7955.split.us.us.preheader ], [ %.81861.us.us, %..loopexit6863_crit_edge.us.us ] ; 3 uses
+.lr.ph7955.split.us.us:                           ; preds = %..loopexit6863_crit_edge.us.us, %.preheader6871.us.a
+  %indvars.iv8514 = phi i64 [ 0, %.preheader6871.us.a ], [ %indvars.iv.next8515, %..loopexit6863_crit_edge.us.us ] ; 3 uses
+  %.218557953.us.us = phi float [ %.118547962.us, %.preheader6871.us.a ], [ %.81861.us.us, %..loopexit6863_crit_edge.us.us ] ; 3 uses
   %i.gdj = trunc i64 %indvars.iv8514 to i32
   %i.gdk = mul i32 %i.gdg, %i.gdj
   %.reass7959.us.us = add i32 %i.gdk, %invariant.op7958 ; 3 uses
@@ -4442,7 +4456,7 @@ _ZN4ncnn3MatD2Ev.exit2202.us.us:                  ; preds = %bb.dk
   %i.gem = bitcast i32 %i.gel to float
   %i.gen = fmul fast float %i.gem, %i.gei
   %i.geo = fadd fast float %i.gen, %.318567948.us.us
-  %.reass7943.us.us.1 = mul i64 %factor.op.mul7942.us.us, %23
+  %.reass7943.us.us.1 = mul i64 %factor.op.mul7942.us.us, %27
   %gep7945.us.us.1 = getelementptr i8, ptr %invariant.gep7944.us.us, i64 %.reass7943.us.us.1
   %i.gep = load i16, ptr %gep7945.us.us.1, align 2, !tbaa !28
   %i.geq = zext i16 %i.gep to i32
@@ -4464,27 +4478,39 @@ _ZN4ncnn3MatD2Ev.exit2202.us.us:                  ; preds = %bb.dk
   br i1 %exitcond8513.not, label %..loopexit6863_crit_edge.us.us, label %bb.dj, !llvm.loop !204
 
 ..loopexit6863_crit_edge.us.us:                   ; preds = %.loopexit.us.us, %bb.di, %.lr.ph7955.split.us.us
-  %.81861.us.us = phi nsz float [ %.218557953.us.us, %.lr.ph7955.split.us.us ], [ %.218557953.us.us, %bb.di ], [ %.61859.us.us, %.loopexit.us.us ] ; 2 uses
+  %.81861.us.us = phi nsz float [ %.218557953.us.us, %.lr.ph7955.split.us.us ], [ %.218557953.us.us, %bb.di ], [ %.61859.us.us, %.loopexit.us.us ] ; 3 uses
   %indvars.iv.next8515 = add nuw nsw i64 %indvars.iv8514, 1 ; 2 uses
   %exitcond8518.not = icmp eq i64 %indvars.iv.next8515, %wide.trip.count8517
-  br i1 %exitcond8518.not, label %._crit_edge7956.us, label %.lr.ph7955.split.us.us, !llvm.loop !205
+  br i1 %exitcond8518.not, label %._crit_edge7956.us.loopexit.us, label %.lr.ph7955.split.us.us, !llvm.loop !205
 
-._crit_edge7956.us:                               ; preds = %..loopexit6863_crit_edge.us.us, %.preheader6871.us.a
-  %.us-phi7960.us = phi float [ %.118547962.us, %.preheader6871.us.a ], [ %.81861.us.us, %..loopexit6863_crit_edge.us.us ] ; 2 uses
-  %i.gfa = getelementptr inbounds [2 x i8], ptr %.318517963.us.a, i64 %i.flb ; 2 uses
-  %indvars.iv.next8520 = add nuw nsw i64 %indvars.iv8519, 2 ; 3 uses
+._crit_edge7956.us.loopexit.us:                   ; preds = %..loopexit6863_crit_edge.us.us
+  %28 = getelementptr inbounds [2 x i8], ptr %.318517963.us.a, i64 %i.flb ; 2 uses
+  %indvars.iv.next8534.us = add nuw nsw i64 %indvars.iv8519, 2 ; 3 uses
+  %29 = trunc i64 %indvars.iv.next8534.us to i32
+  %30 = or i32 %29, 1
+  %31 = icmp slt i32 %30, %i.egi
+  br i1 %31, label %.preheader6871.us.a, label %.preheader6875.loopexit, !llvm.loop !206
+
+._crit_edge7956.us:                               ; preds = %.preheader6871.us.preheader, %._crit_edge7956.us
+  %indvars.iv8533 = phi i64 [ %indvars.iv.next8520, %._crit_edge7956.us ], [ %i.gdi, %.preheader6871.us.preheader ]
+  %.318517963.us = phi ptr [ %i.gfa, %._crit_edge7956.us ], [ %.21850.lcssa, %.preheader6871.us.preheader ]
+  %i.gfa = getelementptr inbounds [2 x i8], ptr %.318517963.us, i64 %i.flb ; 2 uses
+  %indvars.iv.next8520 = add nuw nsw i64 %indvars.iv8533, 2 ; 3 uses
   %i.gfb = trunc i64 %indvars.iv.next8520 to i32
   %i.gfc = or i32 %i.gfb, 1
   %i.gfd = icmp slt i32 %i.gfc, %i.egi
-  br i1 %i.gfd, label %.preheader6871.us.a, label %.preheader6875.loopexit, !llvm.loop !206
+  br i1 %i.gfd, label %._crit_edge7956.us, label %.preheader6875.loopexit, !llvm.loop !206
 
-.preheader6875.loopexit:                          ; preds = %._crit_edge7956.us
-  %i.gfe = trunc nuw i64 %indvars.iv.next8520 to i32
+.preheader6875.loopexit:                          ; preds = %._crit_edge7956.us, %._crit_edge7956.us.loopexit.us
+  %.us-phi8536 = phi float [ %.81861.us.us, %._crit_edge7956.us.loopexit.us ], [ %op.rdx8917, %._crit_edge7956.us ]
+  %.us-phi8537 = phi ptr [ %28, %._crit_edge7956.us.loopexit.us ], [ %i.gfa, %._crit_edge7956.us ]
+  %.us-phi8538 = phi i64 [ %indvars.iv.next8534.us, %._crit_edge7956.us.loopexit.us ], [ %indvars.iv.next8520, %._crit_edge7956.us ]
+  %i.gfe = trunc nuw i64 %.us-phi8538 to i32
   br label %.preheader6875
 
 .preheader6875:                                   ; preds = %.preheader6871.preheader, %.preheader6875.loopexit, %._crit_edge7924
-  %.11854.lcssa = phi float [ %op.rdx8917, %._crit_edge7924 ], [ %.us-phi7960.us, %.preheader6875.loopexit ], [ %op.rdx8917, %.preheader6871.preheader ] ; 3 uses
-  %.31851.lcssa = phi ptr [ %.21850.lcssa, %._crit_edge7924 ], [ %i.gfa, %.preheader6875.loopexit ], [ %scevgep8505, %.preheader6871.preheader ]
+  %.11854.lcssa = phi float [ %op.rdx8917, %._crit_edge7924 ], [ %.us-phi8536, %.preheader6875.loopexit ], [ %op.rdx8917, %.preheader6871.preheader ] ; 3 uses
+  %.31851.lcssa = phi ptr [ %.21850.lcssa, %._crit_edge7924 ], [ %.us-phi8537, %.preheader6875.loopexit ], [ %scevgep8505, %.preheader6871.preheader ]
   %.31846.lcssa = phi i32 [ %.21845.lcssa, %._crit_edge7924 ], [ %i.gfe, %.preheader6875.loopexit ], [ %i.gde, %.preheader6871.preheader ] ; 2 uses
   %i.gff = icmp slt i32 %.31846.lcssa, %i.egi
   br i1 %i.gff, label %.preheader6870.lr.ph, label %._crit_edge7999
