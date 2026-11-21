@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/assimp/original/FBXConverter?download=true
 inline.NumInlined: 7596
 inline.NumDeleted: 2895
-loop-unroll.NumCompletelyUnrolled: 14
+loop-unroll.NumCompletelyUnrolled: 15
 loop-unroll.NumRuntimeUnrolled: 15
-loop-unroll.NumUnrolled: 29
+loop-unroll.NumUnrolled: 30
 begin_hunk_0_@_ZN6Assimp3FBX12FBXConverter24ConvertWeightsToSkeletonEP6aiMeshRKNS0_12MeshGeometryERK12aiMatrix4x4tIfEP6aiNodejPSt6vectorIjSaIjEERNS0_21SkeletonBoneContainerE:bb.a
   %i.cu = getelementptr inbounds nuw i8, ptr %i.cr, i64 216
   %i.cv = load i32, ptr %i.cu, align 8
@@ -205,7 +205,7 @@ bb.a:
   %.sroa.0 = alloca ptr, align 8                  ; 9 uses
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 17 uses
   %i.c = alloca i32, align 4                      ; 7 uses
-  %i.d = tail call noundef ptr @_ZN6Assimp3FBX12FBXConverter14SetupEmptyMeshERKNS0_8GeometryEP6aiNode(ptr noundef nonnull align 8 dereferenceable(529) %0, ptr noundef nonnull align 8 dereferenceable(120) %1, ptr noundef %5) ; 42 uses
+  %i.d = tail call noundef ptr @_ZN6Assimp3FBX12FBXConverter14SetupEmptyMeshERKNS0_8GeometryEP6aiNode(ptr noundef nonnull align 8 dereferenceable(529) %0, ptr noundef nonnull align 8 dereferenceable(120) %1, ptr noundef %5) ; 48 uses
   %i.e = tail call noundef nonnull align 8 dereferenceable(24) ptr @_ZNK6Assimp3FBX12MeshGeometry18GetMaterialIndicesEv(ptr noundef nonnull align 8 dereferenceable(1000) %1) ; 3 uses
   %i.f = tail call noundef nonnull align 8 dereferenceable(24) ptr @_ZNK6Assimp3FBX12MeshGeometry11GetVerticesEv(ptr noundef nonnull align 8 dereferenceable(1000) %1)
   %i.g = tail call noundef nonnull align 8 dereferenceable(24) ptr @_ZNK6Assimp3FBX12MeshGeometry18GetFaceIndexCountsEv(ptr noundef nonnull align 8 dereferenceable(1000) %1) ; 2 uses
@@ -329,7 +329,7 @@ _ZNSt6vectorIjSaIjEE6resizeEm.exit:               ; preds = %bb.h, %._ZNSt6vecto
           to label %bb.i unwind label %bb.v       ; 2 uses
 
 bb.i:                                             ; preds = %_ZNSt6vectorIjSaIjEE6resizeEm.exit
-  %i.au = icmp eq i32 %.0231.lcssa, 0             ; 20 uses
+  %i.au = icmp eq i32 %.0231.lcssa, 0             ; 13 uses
   br i1 %i.au, label %.loopexit465, label %.loopexit465.loopexit
 
 .loopexit465.loopexit:                            ; preds = %bb.i
@@ -732,32 +732,62 @@ bb.aw:                                            ; preds = %bb.av
 
 .critedge:                                        ; preds = %.loopexit456.7, %bb.au, %bb.ar, %bb.ao, %bb.al, %bb.ai, %bb.af, %bb.ac, %bb.z
   %.0199.lcssa = phi i64 [ 0, %bb.z ], [ 8, %.loopexit456.7 ], [ 1, %bb.ac ], [ 7, %bb.au ], [ 2, %bb.af ], [ 5, %bb.ao ], [ 3, %bb.ai ], [ 6, %bb.ar ], [ 4, %bb.al ]
-  %i.hx = shl nuw nsw i64 %.pre-phi, 4            ; 16 uses
-  %i.hy = getelementptr inbounds nuw i8, ptr %i.d, i64 48 ; 2 uses
+  %i.hx = shl nuw nsw i64 %.pre-phi, 4            ; 24 uses
+  %i.hy = getelementptr inbounds nuw i8, ptr %i.d, i64 48 ; 3 uses
+  br i1 %i.au, label %.critedge.split.us, label %bb.bi
+
+.critedge.split.us:                               ; preds = %.critedge
   %10 = invoke noundef nonnull align 8 dereferenceable(24) ptr @_ZNK6Assimp3FBX12MeshGeometry15GetVertexColorsEj(ptr noundef nonnull align 8 dereferenceable(1000) %1, i32 noundef 0)
           to label %bb.ax unwind label %.loopexit.split-lp438.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
-bb.ax:                                            ; preds = %.critedge
+bb.ax:                                            ; preds = %.critedge.split.us
   %i.hz = load ptr, ptr %10, align 8
   %i.ia = getelementptr inbounds nuw i8, ptr %10, i64 8
   %i.ib = load ptr, ptr %i.ia, align 8
-  %i.ic = icmp eq ptr %i.hz, %i.ib                ; 2 uses
+  %i.ic = icmp eq ptr %i.hz, %i.ib
   br i1 %i.ic, label %.critedge283, label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ax
   %i.id = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.hx) #30
+          to label %.loopexit452.us unwind label %.loopexit.split-lp438.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+
+.loopexit452.us:                                  ; preds = %bb.ay
+  store ptr %i.id, ptr %i.hy, align 8
+  %11 = invoke noundef nonnull align 8 dereferenceable(24) ptr @_ZNK6Assimp3FBX12MeshGeometry15GetVertexColorsEj(ptr noundef nonnull align 8 dereferenceable(1000) %1, i32 noundef 1)
           to label %bb.az unwind label %.loopexit.split-lp438.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
-bb.az:                                            ; preds = %bb.ay
-  br i1 %i.au, label %.loopexit452, label %.loopexit452.loopexit.a
+bb.az:                                            ; preds = %.loopexit452.us
+  %12 = load ptr, ptr %11, align 8
+  %13 = getelementptr inbounds nuw i8, ptr %11, i64 8
+  %14 = load ptr, ptr %13, align 8
+  %15 = icmp eq ptr %12, %14
+  br i1 %15, label %.critedge283, label %16
 
-.loopexit452.loopexit.a:                          ; preds = %bb.az
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.id, i8 0, i64 %i.hx, i1 false)
-  br label %.loopexit452
+16:                                               ; preds = %bb.az
+  %17 = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.hx) #30
+          to label %.loopexit452.us.1 unwind label %.loopexit.split-lp438.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
-.loopexit452:                                     ; preds = %.loopexit452.loopexit.a, %bb.az
-  store ptr %i.id, ptr %i.hy, align 8
-  %i.ie = invoke noundef nonnull align 8 dereferenceable(24) ptr @_ZNK6Assimp3FBX12MeshGeometry15GetVertexColorsEj(ptr noundef nonnull align 8 dereferenceable(1000) %1, i32 noundef 1)
+.loopexit452.us.1:                                ; preds = %16
+  %18 = getelementptr inbounds nuw i8, ptr %i.d, i64 56
+  store ptr %17, ptr %18, align 8
+  %19 = invoke noundef nonnull align 8 dereferenceable(24) ptr @_ZNK6Assimp3FBX12MeshGeometry15GetVertexColorsEj(ptr noundef nonnull align 8 dereferenceable(1000) %1, i32 noundef 2)
+          to label %.loopexit452.loopexit.a unwind label %.loopexit.split-lp438.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
+
+.loopexit452.loopexit.a:                          ; preds = %.loopexit452.us.1
+  %20 = load ptr, ptr %19, align 8
+  %21 = getelementptr inbounds nuw i8, ptr %19, i64 8
+  %22 = load ptr, ptr %21, align 8
+  %23 = icmp eq ptr %20, %22
+  br i1 %23, label %.critedge283, label %24
+
+24:                                               ; preds = %.loopexit452.loopexit.a
+  %25 = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.hx) #30
+          to label %.loopexit452 unwind label %.loopexit.split-lp438.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+
+.loopexit452:                                     ; preds = %24
+  %26 = getelementptr inbounds nuw i8, ptr %i.d, i64 64
+  store ptr %25, ptr %26, align 8
+  %i.ie = invoke noundef nonnull align 8 dereferenceable(24) ptr @_ZNK6Assimp3FBX12MeshGeometry15GetVertexColorsEj(ptr noundef nonnull align 8 dereferenceable(1000) %1, i32 noundef 3)
           to label %bb.ba unwind label %.loopexit.split-lp438.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
 bb.ba:                                            ; preds = %.loopexit452
@@ -769,19 +799,29 @@ bb.ba:                                            ; preds = %.loopexit452
 
 bb.bb:                                            ; preds = %bb.ba
   %i.ij = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.hx) #30
-          to label %bb.bc unwind label %.loopexit.split-lp438.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
+          to label %bb.bc unwind label %.loopexit.split-lp438.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.bc:                                            ; preds = %bb.bb
-  br i1 %i.au, label %.loopexit452.1, label %.loopexit452.loopexit.1.a
+  %27 = getelementptr inbounds nuw i8, ptr %i.d, i64 72
+  store ptr %i.ij, ptr %27, align 8
+  %28 = invoke noundef nonnull align 8 dereferenceable(24) ptr @_ZNK6Assimp3FBX12MeshGeometry15GetVertexColorsEj(ptr noundef nonnull align 8 dereferenceable(1000) %1, i32 noundef 4)
+          to label %.loopexit452.loopexit.1.a unwind label %.loopexit.split-lp438.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
 .loopexit452.loopexit.1.a:                        ; preds = %bb.bc
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ij, i8 0, i64 %i.hx, i1 false)
-  br label %.loopexit452.1
+  %29 = load ptr, ptr %28, align 8
+  %30 = getelementptr inbounds nuw i8, ptr %28, i64 8
+  %31 = load ptr, ptr %30, align 8
+  %32 = icmp eq ptr %29, %31
+  br i1 %32, label %.critedge283, label %33
 
-.loopexit452.1:                                   ; preds = %.loopexit452.loopexit.1.a, %bb.bc
-  %i.ik = getelementptr inbounds nuw i8, ptr %i.d, i64 56
-  store ptr %i.ij, ptr %i.ik, align 8
-  %i.il = invoke noundef nonnull align 8 dereferenceable(24) ptr @_ZNK6Assimp3FBX12MeshGeometry15GetVertexColorsEj(ptr noundef nonnull align 8 dereferenceable(1000) %1, i32 noundef 2)
+33:                                               ; preds = %.loopexit452.loopexit.1.a
+  %34 = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.hx) #30
+          to label %.loopexit452.1 unwind label %.loopexit.split-lp438.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+
+.loopexit452.1:                                   ; preds = %33
+  %i.ik = getelementptr inbounds nuw i8, ptr %i.d, i64 80
+  store ptr %34, ptr %i.ik, align 8
+  %i.il = invoke noundef nonnull align 8 dereferenceable(24) ptr @_ZNK6Assimp3FBX12MeshGeometry15GetVertexColorsEj(ptr noundef nonnull align 8 dereferenceable(1000) %1, i32 noundef 5)
           to label %bb.bd unwind label %.loopexit.split-lp438.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
 bb.bd:                                            ; preds = %.loopexit452.1
@@ -793,19 +833,29 @@ bb.bd:                                            ; preds = %.loopexit452.1
 
 bb.be:                                            ; preds = %bb.bd
   %i.iq = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.hx) #30
-          to label %bb.bf unwind label %.loopexit.split-lp438.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
+          to label %bb.bf unwind label %.loopexit.split-lp438.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.bf:                                            ; preds = %bb.be
-  br i1 %i.au, label %.loopexit452.2, label %.loopexit452.loopexit.2.a
+  %35 = getelementptr inbounds nuw i8, ptr %i.d, i64 88
+  store ptr %i.iq, ptr %35, align 8
+  %36 = invoke noundef nonnull align 8 dereferenceable(24) ptr @_ZNK6Assimp3FBX12MeshGeometry15GetVertexColorsEj(ptr noundef nonnull align 8 dereferenceable(1000) %1, i32 noundef 6)
+          to label %.loopexit452.loopexit.2.a unwind label %.loopexit.split-lp438.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
 .loopexit452.loopexit.2.a:                        ; preds = %bb.bf
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.iq, i8 0, i64 %i.hx, i1 false)
-  br label %.loopexit452.2
+  %37 = load ptr, ptr %36, align 8
+  %38 = getelementptr inbounds nuw i8, ptr %36, i64 8
+  %39 = load ptr, ptr %38, align 8
+  %40 = icmp eq ptr %37, %39
+  br i1 %40, label %.critedge283, label %41
 
-.loopexit452.2:                                   ; preds = %.loopexit452.loopexit.2.a, %bb.bf
-  %i.ir = getelementptr inbounds nuw i8, ptr %i.d, i64 64
-  store ptr %i.iq, ptr %i.ir, align 8
-  %i.is = invoke noundef nonnull align 8 dereferenceable(24) ptr @_ZNK6Assimp3FBX12MeshGeometry15GetVertexColorsEj(ptr noundef nonnull align 8 dereferenceable(1000) %1, i32 noundef 3)
+41:                                               ; preds = %.loopexit452.loopexit.2.a
+  %42 = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.hx) #30
+          to label %.loopexit452.2 unwind label %.loopexit.split-lp438.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+
+.loopexit452.2:                                   ; preds = %41
+  %i.ir = getelementptr inbounds nuw i8, ptr %i.d, i64 96
+  store ptr %42, ptr %i.ir, align 8
+  %i.is = invoke noundef nonnull align 8 dereferenceable(24) ptr @_ZNK6Assimp3FBX12MeshGeometry15GetVertexColorsEj(ptr noundef nonnull align 8 dereferenceable(1000) %1, i32 noundef 7)
           to label %bb.bg unwind label %.loopexit.split-lp438.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
 bb.bg:                                            ; preds = %.loopexit452.2
@@ -817,19 +867,27 @@ bb.bg:                                            ; preds = %.loopexit452.2
 
 bb.bh:                                            ; preds = %bb.bg
   %i.ix = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.hx) #30
-          to label %bb.bi unwind label %.loopexit.split-lp438.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
+          to label %.loopexit452.7 unwind label %.loopexit.split-lp438.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
-bb.bi:                                            ; preds = %bb.bh
-  br i1 %i.au, label %.loopexit452.3, label %.loopexit452.loopexit.3.a
+bb.bi:                                            ; preds = %.critedge
+  %43 = invoke noundef nonnull align 8 dereferenceable(24) ptr @_ZNK6Assimp3FBX12MeshGeometry15GetVertexColorsEj(ptr noundef nonnull align 8 dereferenceable(1000) %1, i32 noundef 0)
+          to label %.loopexit452.loopexit.3.a unwind label %.loopexit.split-lp438.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
 .loopexit452.loopexit.3.a:                        ; preds = %bb.bi
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ix, i8 0, i64 %i.hx, i1 false)
-  br label %.loopexit452.3
+  %44 = load ptr, ptr %43, align 8
+  %45 = getelementptr inbounds nuw i8, ptr %43, i64 8
+  %46 = load ptr, ptr %45, align 8
+  %47 = icmp eq ptr %44, %46
+  br i1 %47, label %.critedge283, label %48
 
-.loopexit452.3:                                   ; preds = %.loopexit452.loopexit.3.a, %bb.bi
-  %11 = getelementptr inbounds nuw i8, ptr %i.d, i64 72
-  store ptr %i.ix, ptr %11, align 8
-  %i.iy = invoke noundef nonnull align 8 dereferenceable(24) ptr @_ZNK6Assimp3FBX12MeshGeometry15GetVertexColorsEj(ptr noundef nonnull align 8 dereferenceable(1000) %1, i32 noundef 4)
+48:                                               ; preds = %.loopexit452.loopexit.3.a
+  %49 = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.hx) #30
+          to label %.loopexit452.3 unwind label %.loopexit.split-lp438.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
+
+.loopexit452.3:                                   ; preds = %48
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %49, i8 0, i64 %i.hx, i1 false)
+  store ptr %49, ptr %i.hy, align 8
+  %i.iy = invoke noundef nonnull align 8 dereferenceable(24) ptr @_ZNK6Assimp3FBX12MeshGeometry15GetVertexColorsEj(ptr noundef nonnull align 8 dereferenceable(1000) %1, i32 noundef 1)
           to label %bb.bj unwind label %.loopexit.split-lp438.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
 bb.bj:                                            ; preds = %.loopexit452.3
@@ -844,16 +902,28 @@ bb.bk:                                            ; preds = %bb.bj
           to label %bb.bl unwind label %.loopexit.split-lp438.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
 bb.bl:                                            ; preds = %bb.bk
-  br i1 %i.au, label %.loopexit452.4, label %.loopexit452.loopexit.4.a
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.jd, i8 0, i64 %i.hx, i1 false)
+  %50 = getelementptr inbounds nuw i8, ptr %i.d, i64 56
+  store ptr %i.jd, ptr %50, align 8
+  %51 = invoke noundef nonnull align 8 dereferenceable(24) ptr @_ZNK6Assimp3FBX12MeshGeometry15GetVertexColorsEj(ptr noundef nonnull align 8 dereferenceable(1000) %1, i32 noundef 2)
+          to label %.loopexit452.loopexit.4.a unwind label %.loopexit.split-lp438.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
 .loopexit452.loopexit.4.a:                        ; preds = %bb.bl
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.jd, i8 0, i64 %i.hx, i1 false)
-  br label %.loopexit452.4
+  %52 = load ptr, ptr %51, align 8
+  %53 = getelementptr inbounds nuw i8, ptr %51, i64 8
+  %54 = load ptr, ptr %53, align 8
+  %55 = icmp eq ptr %52, %54
+  br i1 %55, label %.critedge283, label %56
 
-.loopexit452.4:                                   ; preds = %.loopexit452.loopexit.4.a, %bb.bl
-  %i.je = getelementptr inbounds nuw i8, ptr %i.d, i64 80
-  store ptr %i.jd, ptr %i.je, align 8
-  %i.jf = invoke noundef nonnull align 8 dereferenceable(24) ptr @_ZNK6Assimp3FBX12MeshGeometry15GetVertexColorsEj(ptr noundef nonnull align 8 dereferenceable(1000) %1, i32 noundef 5)
+56:                                               ; preds = %.loopexit452.loopexit.4.a
+  %57 = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.hx) #30
+          to label %.loopexit452.4 unwind label %.loopexit.split-lp438.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
+
+.loopexit452.4:                                   ; preds = %56
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %57, i8 0, i64 %i.hx, i1 false)
+  %i.je = getelementptr inbounds nuw i8, ptr %i.d, i64 64
+  store ptr %57, ptr %i.je, align 8
+  %i.jf = invoke noundef nonnull align 8 dereferenceable(24) ptr @_ZNK6Assimp3FBX12MeshGeometry15GetVertexColorsEj(ptr noundef nonnull align 8 dereferenceable(1000) %1, i32 noundef 3)
           to label %bb.bm unwind label %.loopexit.split-lp438.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
 bb.bm:                                            ; preds = %.loopexit452.4
@@ -868,16 +938,28 @@ bb.bn:                                            ; preds = %bb.bm
           to label %bb.bo unwind label %.loopexit.split-lp438.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
 bb.bo:                                            ; preds = %bb.bn
-  br i1 %i.au, label %.loopexit452.5, label %.loopexit452.loopexit.5.a
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.jk, i8 0, i64 %i.hx, i1 false)
+  %58 = getelementptr inbounds nuw i8, ptr %i.d, i64 72
+  store ptr %i.jk, ptr %58, align 8
+  %59 = invoke noundef nonnull align 8 dereferenceable(24) ptr @_ZNK6Assimp3FBX12MeshGeometry15GetVertexColorsEj(ptr noundef nonnull align 8 dereferenceable(1000) %1, i32 noundef 4)
+          to label %.loopexit452.loopexit.5.a unwind label %.loopexit.split-lp438.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
 .loopexit452.loopexit.5.a:                        ; preds = %bb.bo
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.jk, i8 0, i64 %i.hx, i1 false)
-  br label %.loopexit452.5
+  %60 = load ptr, ptr %59, align 8
+  %61 = getelementptr inbounds nuw i8, ptr %59, i64 8
+  %62 = load ptr, ptr %61, align 8
+  %63 = icmp eq ptr %60, %62
+  br i1 %63, label %.critedge283, label %64
 
-.loopexit452.5:                                   ; preds = %.loopexit452.loopexit.5.a, %bb.bo
-  %i.jl = getelementptr inbounds nuw i8, ptr %i.d, i64 88
-  store ptr %i.jk, ptr %i.jl, align 8
-  %i.jm = invoke noundef nonnull align 8 dereferenceable(24) ptr @_ZNK6Assimp3FBX12MeshGeometry15GetVertexColorsEj(ptr noundef nonnull align 8 dereferenceable(1000) %1, i32 noundef 6)
+64:                                               ; preds = %.loopexit452.loopexit.5.a
+  %65 = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.hx) #30
+          to label %.loopexit452.5 unwind label %.loopexit.split-lp438.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
+
+.loopexit452.5:                                   ; preds = %64
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %65, i8 0, i64 %i.hx, i1 false)
+  %i.jl = getelementptr inbounds nuw i8, ptr %i.d, i64 80
+  store ptr %65, ptr %i.jl, align 8
+  %i.jm = invoke noundef nonnull align 8 dereferenceable(24) ptr @_ZNK6Assimp3FBX12MeshGeometry15GetVertexColorsEj(ptr noundef nonnull align 8 dereferenceable(1000) %1, i32 noundef 5)
           to label %bb.bp unwind label %.loopexit.split-lp438.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
 bb.bp:                                            ; preds = %.loopexit452.5
@@ -892,15 +974,27 @@ bb.bq:                                            ; preds = %bb.bp
           to label %bb.br unwind label %.loopexit.split-lp438.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
 bb.br:                                            ; preds = %bb.bq
-  br i1 %i.au, label %.loopexit452.6, label %.loopexit452.loopexit.6.a
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.jr, i8 0, i64 %i.hx, i1 false)
+  %66 = getelementptr inbounds nuw i8, ptr %i.d, i64 88
+  store ptr %i.jr, ptr %66, align 8
+  %67 = invoke noundef nonnull align 8 dereferenceable(24) ptr @_ZNK6Assimp3FBX12MeshGeometry15GetVertexColorsEj(ptr noundef nonnull align 8 dereferenceable(1000) %1, i32 noundef 6)
+          to label %.loopexit452.loopexit.6.a unwind label %.loopexit.split-lp438.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
 .loopexit452.loopexit.6.a:                        ; preds = %bb.br
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.jr, i8 0, i64 %i.hx, i1 false)
-  br label %.loopexit452.6
+  %68 = load ptr, ptr %67, align 8
+  %69 = getelementptr inbounds nuw i8, ptr %67, i64 8
+  %70 = load ptr, ptr %69, align 8
+  %71 = icmp eq ptr %68, %70
+  br i1 %71, label %.critedge283, label %72
 
-.loopexit452.6:                                   ; preds = %.loopexit452.loopexit.6.a, %bb.br
+72:                                               ; preds = %.loopexit452.loopexit.6.a
+  %73 = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.hx) #30
+          to label %.loopexit452.6 unwind label %.loopexit.split-lp438.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
+
+.loopexit452.6:                                   ; preds = %72
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %73, i8 0, i64 %i.hx, i1 false)
   %i.js = getelementptr inbounds nuw i8, ptr %i.d, i64 96
-  store ptr %i.jr, ptr %i.js, align 8
+  store ptr %73, ptr %i.js, align 8
   %i.jt = invoke noundef nonnull align 8 dereferenceable(24) ptr @_ZNK6Assimp3FBX12MeshGeometry15GetVertexColorsEj(ptr noundef nonnull align 8 dereferenceable(1000) %1, i32 noundef 7)
           to label %bb.bs unwind label %.loopexit.split-lp438.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
@@ -913,22 +1007,21 @@ bb.bs:                                            ; preds = %.loopexit452.6
 
 bb.bt:                                            ; preds = %bb.bs
   %i.jy = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.hx) #30
-          to label %12 unwind label %.loopexit.split-lp438.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
+          to label %.loopexit452.loopexit.7 unwind label %.loopexit.split-lp438.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
-12:                                               ; preds = %bb.bt
-  br i1 %i.au, label %.loopexit452.7, label %.loopexit452.loopexit.7
-
-.loopexit452.loopexit.7:                          ; preds = %12
+.loopexit452.loopexit.7:                          ; preds = %bb.bt
   call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.jy, i8 0, i64 %i.hx, i1 false)
   br label %.loopexit452.7
 
-.loopexit452.7:                                   ; preds = %.loopexit452.loopexit.7, %12
+.loopexit452.7:                                   ; preds = %bb.bh, %.loopexit452.loopexit.7
+  %.sink = phi ptr [ %i.jy, %.loopexit452.loopexit.7 ], [ %i.ix, %bb.bh ]
   %i.jz = getelementptr inbounds nuw i8, ptr %i.d, i64 104
-  store ptr %i.jy, ptr %i.jz, align 8
+  store ptr %.sink, ptr %i.jz, align 8
   br label %.critedge283
 
-.critedge283:                                     ; preds = %.loopexit452.7, %bb.bs, %bb.bp, %bb.bm, %bb.bj, %bb.bg, %bb.bd, %bb.ba, %bb.ax
-  %.0195.lcssa = phi i64 [ 0, %bb.ax ], [ 8, %.loopexit452.7 ], [ 1, %bb.ba ], [ 7, %bb.bs ], [ 2, %bb.bd ], [ 5, %bb.bm ], [ 3, %bb.bg ], [ 6, %bb.bp ], [ 4, %bb.bj ]
+.critedge283:                                     ; preds = %.loopexit452.7, %.loopexit452.loopexit.3.a, %bb.bj, %.loopexit452.loopexit.4.a, %bb.bm, %.loopexit452.loopexit.5.a, %bb.bp, %.loopexit452.loopexit.6.a, %bb.bs, %bb.ax, %bb.az, %.loopexit452.loopexit.a, %bb.ba, %.loopexit452.loopexit.1.a, %bb.bd, %.loopexit452.loopexit.2.a, %bb.bg
+  %.not666 = phi i1 [ false, %.loopexit452.loopexit.1.a ], [ true, %bb.ax ], [ false, %.loopexit452.loopexit.6.a ], [ false, %bb.az ], [ false, %bb.bg ], [ false, %.loopexit452.loopexit.a ], [ false, %bb.bd ], [ false, %bb.ba ], [ false, %.loopexit452.loopexit.2.a ], [ true, %.loopexit452.loopexit.3.a ], [ false, %.loopexit452.loopexit.5.a ], [ false, %bb.bj ], [ false, %bb.bs ], [ false, %.loopexit452.loopexit.4.a ], [ false, %bb.bp ], [ false, %bb.bm ], [ false, %.loopexit452.7 ]
+  %.us-phi738 = phi i64 [ 4, %.loopexit452.loopexit.1.a ], [ 0, %bb.ax ], [ 6, %.loopexit452.loopexit.6.a ], [ 1, %bb.az ], [ 7, %bb.bg ], [ 2, %.loopexit452.loopexit.a ], [ 5, %bb.bd ], [ 3, %bb.ba ], [ 6, %.loopexit452.loopexit.2.a ], [ 0, %.loopexit452.loopexit.3.a ], [ 4, %.loopexit452.loopexit.5.a ], [ 1, %bb.bj ], [ 7, %bb.bs ], [ 2, %.loopexit452.loopexit.4.a ], [ 5, %bb.bp ], [ 3, %bb.bm ], [ 8, %.loopexit452.7 ]
   %i.ka = load ptr, ptr %i.e, align 8             ; 2 uses
   %i.kb = load ptr, ptr %i.r, align 8             ; 2 uses
   %.not419613 = icmp eq ptr %i.ka, %i.kb
@@ -1134,7 +1227,7 @@ bb.cj:                                            ; preds = %bb.ci, %bb.ch
   br i1 %i.fr, label %.preheader436, label %.lr.ph601
 
 .preheader436:                                    ; preds = %bb.ck, %bb.cj
-  br i1 %i.ic, label %._crit_edge604, label %.lr.ph603
+  br i1 %.not666, label %._crit_edge604, label %.lr.ph603
 
 .lr.ph601:                                        ; preds = %bb.cj, %bb.ck
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.ck ], [ 0, %bb.cj ] ; 3 uses
@@ -1177,7 +1270,7 @@ bb.cl:                                            ; preds = %.lr.ph603
   %i.nd = getelementptr inbounds nuw [16 x i8], ptr %i.nc, i64 %.pre765
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.nd, ptr noundef nonnull align 4 dereferenceable(16) %i.na, i64 16, i1 false)
   %indvars.iv.next740 = add nuw nsw i64 %indvars.iv739, 1 ; 2 uses
-  %exitcond743.not = icmp eq i64 %indvars.iv.next740, %.0195.lcssa
+  %exitcond743.not = icmp eq i64 %indvars.iv.next740, %.us-phi738
   br i1 %exitcond743.not, label %._crit_edge604, label %.lr.ph603, !llvm.loop !545
 
 .loopexit445:                                     ; preds = %._crit_edge604, %bb.by, %bb.bv
@@ -1196,7 +1289,7 @@ bb.cn:                                            ; preds = %bb.cm
   invoke void @_ZN6Assimp3FBX12FBXConverter14ConvertWeightsEP6aiMeshRKNS0_12MeshGeometryERK12aiMatrix4x4tIfEP6aiNodejPSt6vectorIjSaIjEE(ptr noundef nonnull align 8 dereferenceable(529) %0, ptr noundef nonnull %i.d, ptr noundef nonnull align 8 dereferenceable(1000) %1, ptr noundef nonnull align 4 dereferenceable(64) %3, ptr noundef %5, i32 noundef %4, ptr noundef nonnull %7)
           to label %bb.co unwind label %.loopexit.split-lp438.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
-.loopexit.split-lp438.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %.critedge.i, %.lr.ph603, %.lr.ph601, %bb.bw, %.critedge, %bb.ay, %.loopexit452, %bb.bb, %.loopexit452.1, %bb.be, %.loopexit452.2, %bb.bh, %.loopexit452.3, %bb.bk, %.loopexit452.4, %bb.bn, %.loopexit452.5, %bb.bq, %.loopexit452.6, %bb.bt, %bb.av, %.loopexit456.6, %bb.as, %.loopexit456.5, %bb.ap, %.loopexit456.4, %bb.am, %.loopexit456.3, %bb.aj, %.loopexit456.2, %bb.ag, %.loopexit456.1, %bb.ad, %.loopexit456, %bb.y, %bb.aa
+.loopexit.split-lp438.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %.critedge.i, %.lr.ph603, %.lr.ph601, %bb.bw, %bb.bi, %48, %.loopexit452.3, %bb.bk, %bb.bl, %56, %.loopexit452.4, %bb.bn, %bb.bo, %64, %.loopexit452.5, %bb.bq, %bb.br, %72, %.loopexit452.6, %bb.bt, %bb.bh, %.loopexit452.2, %41, %bb.bf, %bb.be, %.loopexit452.1, %33, %bb.bc, %bb.bb, %.loopexit452, %24, %.loopexit452.us.1, %16, %.loopexit452.us, %bb.ay, %.critedge.split.us, %bb.av, %.loopexit456.6, %bb.as, %.loopexit456.5, %bb.ap, %.loopexit456.4, %bb.am, %.loopexit456.3, %bb.aj, %.loopexit456.2, %bb.ag, %.loopexit456.1, %bb.ad, %.loopexit456, %bb.y, %bb.aa
   %lpad.loopexit.split-lp973 = landingpad { ptr, i32 }
           cleanup
   br label %.body

@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 999
 inline.NumDeleted: 129
 loop-unroll.NumCompletelyUnrolled: 23
-loop-unroll.NumRuntimeUnrolled: 156
-loop-unroll.NumUnrolled: 184
+loop-unroll.NumRuntimeUnrolled: 157
+loop-unroll.NumUnrolled: 185
 begin_hunk_0_@bary_sq_fast:bb.a
 
 bb.e:                                             ; preds = %._crit_edge105
@@ -205,29 +205,135 @@ rb_alloc_tmp_buffer2.exit:                        ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.b, %rb_alloc_tmp_buffer2.exit, %bb.d, %._crit_edge
-  %.1110 = phi i64 [ %7, %._crit_edge ], [ %7, %bb.b ], [ %3, %rb_alloc_tmp_buffer2.exit ], [ %3, %bb.d ] ; 5 uses
-  %.1 = phi ptr [ %6, %._crit_edge ], [ %6, %bb.b ], [ %i.s, %rb_alloc_tmp_buffer2.exit ], [ %i.n, %bb.d ] ; 6 uses
+  %.1110 = phi i64 [ %7, %._crit_edge ], [ %7, %bb.b ], [ %3, %rb_alloc_tmp_buffer2.exit ], [ %3, %bb.d ] ; 6 uses
+  %.1 = phi ptr [ %6, %._crit_edge ], [ %6, %bb.b ], [ %i.s, %rb_alloc_tmp_buffer2.exit ], [ %i.n, %bb.d ] ; 7 uses
   %.not150 = icmp eq i64 %5, 0
   br i1 %.not150, label %._crit_edge143, label %.lr.ph142
 
 .lr.ph142:                                        ; preds = %bb.g
   %i.t = icmp ult i64 %.1110, %3
-  %9 = icmp ugt i64 %3, 4611686018427387903
   %i.u = shl nuw i64 %3, 2
   %i.v = getelementptr [4 x i8], ptr %.1, i64 %3
   %i.w = sub nuw i64 %.1110, %3
-  br i1 %i.t, label %.lr.ph142.split.us.preheader.a, label %.lr.ph142.split.preheader.a
+  br i1 %i.t, label %.lr.ph142.split.us.preheader, label %.lr.ph142.split.preheader
 
-.lr.ph142.split.preheader.a:                      ; preds = %.lr.ph142
-  %i.x = add i64 %3, -1
-  br label %.lr.ph142.split
-
-.lr.ph142.split.us.preheader.a:                   ; preds = %.lr.ph142
-  %i.y = add i64 %3, -1
+.lr.ph142.split.us.preheader:                     ; preds = %.lr.ph142
+  %9 = add i64 %3, -1
   br label %.lr.ph142.split.us
 
-.lr.ph142.split.us:                               ; preds = %.lr.ph142.split.us.preheader.a, %bary_add.exit126.us
-  %.0107140.us = phi i64 [ %i.bo, %bary_add.exit126.us ], [ 0, %.lr.ph142.split.us.preheader.a ] ; 5 uses
+.lr.ph142.split.preheader:                        ; preds = %.lr.ph142
+  %10 = icmp ugt i64 %3, 4611686018427387903
+  br i1 %10, label %.lr.ph142.split.us.preheader.a, label %.lr.ph142.split.preheader.a, !prof !102
+
+.lr.ph142.split.preheader.a:                      ; preds = %.lr.ph142.split.preheader
+  %11 = add nsw i64 %3, -1
+  %i.x = add nsw i64 %3, -1
+  br label %.lr.ph142.split
+
+.lr.ph142.split.us.preheader.a:                   ; preds = %.lr.ph142.split.preheader
+  %i.y = add i64 %3, -1
+  br label %.lr.ph142.split.us155
+
+.lr.ph142.split.us155:                            ; preds = %.lr.ph142.split.us.preheader.a, %bary_add.exit126.us165
+  %.0107140.us156 = phi i64 [ %53, %bary_add.exit126.us165 ], [ 0, %.lr.ph142.split.us.preheader.a ] ; 5 uses
+  %12 = sub nuw i64 %5, %.0107140.us156
+  %13 = call i64 @llvm.umin.i64(i64 %3, i64 %12)  ; 7 uses
+  %14 = add i64 %13, %3                           ; 6 uses
+  %15 = shl i64 %14, 1
+  %16 = sub i64 %1, %.0107140.us156
+  %.not118.us157 = icmp ugt i64 %15, %16
+  br i1 %.not118.us157, label %.split.us166, label %17
+
+17:                                               ; preds = %.lr.ph142.split.us155
+  %18 = getelementptr [4 x i8], ptr %0, i64 %.0107140.us156 ; 4 uses
+  %19 = getelementptr [4 x i8], ptr %18, i64 %3   ; 2 uses
+  %20 = getelementptr [4 x i8], ptr %19, i64 %13  ; 4 uses
+  %21 = getelementptr [4 x i8], ptr %4, i64 %.0107140.us156
+  call void %8(ptr noundef %20, i64 noundef %14, ptr noundef %2, i64 noundef %3, ptr noundef %21, i64 noundef %13, ptr noundef %.1, i64 noundef %.1110) #23, !callees !153
+  %.not119134.us158 = icmp eq i64 %13, 0
+  br i1 %.not119134.us158, label %._crit_edge139.us159, label %.lr.ph138.preheader.us
+
+._crit_edge139.us159:                             ; preds = %.lr.ph138.preheader.us, %17
+  %.not.i.i.us160 = icmp eq i64 %14, 0
+  br i1 %.not.i.i.us160, label %bary_add.exit126.us165, label %.lr.ph.i.i.us161.preheader
+
+.lr.ph.i.i.us161.preheader:                       ; preds = %._crit_edge139.us159
+  %xtraiter210 = and i64 %14, 1
+  %22 = sub i64 0, %13
+  %23 = icmp eq i64 %i.y, %22
+  br i1 %23, label %.lr.ph.i.i.us161.epil.preheader, label %.lr.ph.i.i.us161.preheader.new
+
+.lr.ph.i.i.us161.preheader.new:                   ; preds = %.lr.ph.i.i.us161.preheader
+  %unroll_iter213 = and i64 %14, -2
+  br label %.lr.ph.i.i.us161
+
+.lr.ph.i.i.us161:                                 ; preds = %.lr.ph.i.i.us161, %.lr.ph.i.i.us161.preheader.new
+  %.05779.i.i.us162 = phi i64 [ 0, %.lr.ph.i.i.us161.preheader.new ], [ %45, %.lr.ph.i.i.us161 ] ; 4 uses
+  %.05878.i.i.us163 = phi i64 [ 0, %.lr.ph.i.i.us161.preheader.new ], [ %44, %.lr.ph.i.i.us161 ]
+  %niter214 = phi i64 [ 0, %.lr.ph.i.i.us161.preheader.new ], [ %niter214.next.1, %.lr.ph.i.i.us161 ]
+  %24 = getelementptr [4 x i8], ptr %18, i64 %.05779.i.i.us162 ; 2 uses
+  %25 = load i32, ptr %24, align 4, !tbaa !44
+  %26 = zext i32 %25 to i64
+  %27 = getelementptr [4 x i8], ptr %20, i64 %.05779.i.i.us162
+  %28 = load i32, ptr %27, align 4, !tbaa !44
+  %29 = zext i32 %28 to i64
+  %30 = add nuw nsw i64 %.05878.i.i.us163, %26
+  %31 = add nuw nsw i64 %30, %29                  ; 2 uses
+  %32 = trunc i64 %31 to i32
+  store i32 %32, ptr %24, align 4, !tbaa !44
+  %33 = lshr i64 %31, 32
+  %34 = or disjoint i64 %.05779.i.i.us162, 1      ; 2 uses
+  %35 = getelementptr [4 x i8], ptr %18, i64 %34  ; 2 uses
+  %36 = load i32, ptr %35, align 4, !tbaa !44
+  %37 = zext i32 %36 to i64
+  %38 = getelementptr [4 x i8], ptr %20, i64 %34
+  %39 = load i32, ptr %38, align 4, !tbaa !44
+  %40 = zext i32 %39 to i64
+  %41 = add nuw nsw i64 %33, %37
+  %42 = add nuw nsw i64 %41, %40                  ; 2 uses
+  %43 = trunc i64 %42 to i32
+  store i32 %43, ptr %35, align 4, !tbaa !44
+  %44 = lshr i64 %42, 32                          ; 2 uses
+  %45 = add nuw i64 %.05779.i.i.us162, 2          ; 2 uses
+  %niter214.next.1 = add i64 %niter214, 2         ; 2 uses
+  %niter214.ncmp.1 = icmp eq i64 %niter214.next.1, %unroll_iter213
+  br i1 %niter214.ncmp.1, label %bary_add.exit126.us165.loopexit.unr-lcssa, label %.lr.ph.i.i.us161, !llvm.loop !3
+
+.split.us166:                                     ; preds = %.lr.ph142.split.us155
+  call void @ruby_malloc_size_overflow(i64 noundef 4, i64 noundef %3) #25
+  unreachable
+
+bary_add.exit126.us165.loopexit.unr-lcssa:        ; preds = %.lr.ph.i.i.us161
+  %lcmp.mod211.not = icmp eq i64 %xtraiter210, 0
+  br i1 %lcmp.mod211.not, label %bary_add.exit126.us165, label %.lr.ph.i.i.us161.epil.preheader
+
+.lr.ph.i.i.us161.epil.preheader:                  ; preds = %bary_add.exit126.us165.loopexit.unr-lcssa, %.lr.ph.i.i.us161.preheader
+  %.05779.i.i.us162.epil.init = phi i64 [ 0, %.lr.ph.i.i.us161.preheader ], [ %45, %bary_add.exit126.us165.loopexit.unr-lcssa ] ; 2 uses
+  %.05878.i.i.us163.epil.init = phi i64 [ 0, %.lr.ph.i.i.us161.preheader ], [ %44, %bary_add.exit126.us165.loopexit.unr-lcssa ]
+  %lcmp.mod212 = trunc i64 %14 to i1
+  call void @llvm.assume(i1 %lcmp.mod212)
+  %46 = getelementptr [4 x i8], ptr %18, i64 %.05779.i.i.us162.epil.init ; 2 uses
+  %47 = load i32, ptr %46, align 4, !tbaa !44
+  %48 = getelementptr [4 x i8], ptr %20, i64 %.05779.i.i.us162.epil.init
+  %49 = load i32, ptr %48, align 4, !tbaa !44
+  %50 = trunc nuw nsw i64 %.05878.i.i.us163.epil.init to i32
+  %51 = add i32 %47, %50
+  %52 = add i32 %51, %49
+  store i32 %52, ptr %46, align 4, !tbaa !44
+  br label %bary_add.exit126.us165
+
+bary_add.exit126.us165:                           ; preds = %.lr.ph.i.i.us161.epil.preheader, %bary_add.exit126.us165.loopexit.unr-lcssa, %._crit_edge139.us159
+  %53 = add i64 %13, %.0107140.us156              ; 2 uses
+  %54 = icmp ugt i64 %5, %53
+  br i1 %54, label %.lr.ph142.split.us155, label %._crit_edge143, !llvm.loop !148
+
+.lr.ph138.preheader.us:                           ; preds = %17
+  %55 = shl nuw i64 %13, 2
+  call void @llvm.memset.p0.i64(ptr align 4 %19, i8 0, i64 %55, i1 false), !tbaa !44
+  br label %._crit_edge139.us159
+
+.lr.ph142.split.us:                               ; preds = %.lr.ph142.split.us.preheader, %bary_add.exit126.us
+  %.0107140.us = phi i64 [ %i.bo, %bary_add.exit126.us ], [ 0, %.lr.ph142.split.us.preheader ] ; 5 uses
   %i.z = sub nuw i64 %5, %.0107140.us
   %i.aa = call i64 @llvm.umin.i64(i64 %3, i64 %i.z) ; 7 uses
   %i.ab = add i64 %i.aa, %3                       ; 6 uses
@@ -257,7 +363,7 @@ bb.h:                                             ; preds = %.lr.ph142.split.us
 .lr.ph.i.i.us.preheader:                          ; preds = %._crit_edge139.us
   %xtraiter189 = and i64 %i.ab, 1
   %i.aj = sub i64 0, %i.aa
-  %i.ak = icmp eq i64 %i.y, %i.aj
+  %i.ak = icmp eq i64 %9, %i.aj
   br i1 %i.ak, label %.lr.ph.i.i.us.epil.preheader, label %.lr.ph.i.i.us.preheader.new
 
 .lr.ph.i.i.us.preheader.new:                      ; preds = %.lr.ph.i.i.us.preheader
@@ -323,9 +429,9 @@ bary_add.exit126.us:                              ; preds = %.lr.ph.i.i.us.epil.
 .lr.ph142.split:                                  ; preds = %.lr.ph142.split.preheader.a, %bary_add.exit126
   %.0107140 = phi i64 [ %i.gr, %bary_add.exit126 ], [ 0, %.lr.ph142.split.preheader.a ] ; 7 uses
   %i.bq = sub nuw i64 %5, %.0107140
-  %i.br = call i64 @llvm.umin.i64(i64 %3, i64 %i.bq) ; 8 uses
-  %i.bs = add i64 %i.br, %3                       ; 15 uses
-  %i.bt = shl i64 %i.bs, 1
+  %i.br = call i64 @llvm.umin.i64(i64 %3, i64 %i.bq) ; 12 uses
+  %i.bs = add nuw nsw i64 %i.br, %3               ; 14 uses
+  %i.bt = shl nuw i64 %i.bs, 1
   %i.bu = sub i64 %1, %.0107140
   %.not118 = icmp ugt i64 %i.bt, %i.bu
   %i.bv = getelementptr [4 x i8], ptr %0, i64 %.0107140 ; 21 uses
@@ -350,12 +456,12 @@ bb.i:                                             ; preds = %.lr.ph142.split
 
 .lr.ph.i.i.preheader:                             ; preds = %._crit_edge139
   %xtraiter = and i64 %i.bs, 1
-  %i.ca = sub i64 0, %i.br
-  %i.cb = icmp eq i64 %i.x, %i.ca
+  %i.ca = sub nsw i64 0, %i.br
+  %i.cb = icmp eq i64 %11, %i.ca
   br i1 %i.cb, label %.lr.ph.i.i.epil.preheader, label %.lr.ph.i.i.preheader.new
 
 .lr.ph.i.i.preheader.new:                         ; preds = %.lr.ph.i.i.preheader
-  %unroll_iter = and i64 %i.bs, -2
+  %unroll_iter = and i64 %i.bs, 9223372036854775806
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.lr.ph.i.i.preheader.new
@@ -391,28 +497,21 @@ bb.i:                                             ; preds = %.lr.ph142.split
   br i1 %niter.ncmp.1, label %bary_add.exit126.loopexit.unr-lcssa, label %.lr.ph.i.i, !llvm.loop !3
 
 bb.j:                                             ; preds = %.lr.ph142.split
-  br i1 %9, label %10, label %rbimpl_size_mul_or_raise.exit, !prof !102
+  br i1 %.not131, label %ruby_nonempty_memcpy.exit, label %bb.k
 
 .split.us:                                        ; preds = %.lr.ph142.split.us
   call void (ptr, ...) @rb_bug(ptr noundef nonnull @.str.19, i64 noundef %.1110, i64 noundef %3) #27
   unreachable
 
-10:                                               ; preds = %bb.j
-  call void @ruby_malloc_size_overflow(i64 noundef 4, i64 noundef %3) #25
-  unreachable
-
-rbimpl_size_mul_or_raise.exit:                    ; preds = %bb.j
-  br i1 %.not131, label %ruby_nonempty_memcpy.exit, label %bb.k
-
-bb.k:                                             ; preds = %rbimpl_size_mul_or_raise.exit
+bb.k:                                             ; preds = %bb.j
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 %.1, ptr noundef nonnull readonly align 1 %i.bv, i64 noundef range(i64 1, 0) %i.u, i1 noundef false) #23
   br label %ruby_nonempty_memcpy.exit
 
-ruby_nonempty_memcpy.exit:                        ; preds = %rbimpl_size_mul_or_raise.exit, %bb.k
+ruby_nonempty_memcpy.exit:                        ; preds = %bb.j, %bb.k
   %i.cy = getelementptr [4 x i8], ptr %4, i64 %.0107140
   call void %8(ptr noundef %i.bv, i64 noundef %i.bs, ptr noundef %2, i64 noundef %3, ptr noundef %i.cy, i64 noundef %i.br, ptr noundef %i.v, i64 noundef %i.w) #23, !callees !153
-  %11 = icmp ugt i64 %i.bs, %3
-  br i1 %11, label %bb.l, label %bb.m
+  %.not = icmp eq i64 %i.br, 0
+  br i1 %.not, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %ruby_nonempty_memcpy.exit
   br label %bb.m
@@ -420,7 +519,7 @@ bb.l:                                             ; preds = %ruby_nonempty_memcp
 bb.m:                                             ; preds = %bb.l, %ruby_nonempty_memcpy.exit
   %.064.i.i = phi i64 [ %3, %bb.l ], [ %i.bs, %ruby_nonempty_memcpy.exit ] ; 8 uses
   %.063.i.i = phi ptr [ %i.bv, %bb.l ], [ %.1, %ruby_nonempty_memcpy.exit ] ; 12 uses
-  %.062.i.i = phi i64 [ %i.bs, %bb.l ], [ %3, %ruby_nonempty_memcpy.exit ] ; 12 uses
+  %.062.i.i = phi i64 [ %i.bs, %bb.l ], [ %3, %ruby_nonempty_memcpy.exit ] ; 9 uses
   %.061.i.i = phi ptr [ %.1, %bb.l ], [ %i.bv, %ruby_nonempty_memcpy.exit ] ; 3 uses
   %.063.i.i174 = ptrtoaddr ptr %.063.i.i to i64
   %.not.i.i120 = icmp eq i64 %.064.i.i, 0
@@ -432,7 +531,7 @@ bb.m:                                             ; preds = %bb.l, %ruby_nonempt
   br i1 %i.cz, label %.lr.ph.i.i121.epil.preheader, label %.lr.ph.i.i121.preheader.new
 
 .lr.ph.i.i121.preheader.new:                      ; preds = %.lr.ph.i.i121.preheader
-  %unroll_iter185 = and i64 %.064.i.i, 4611686018427387902
+  %unroll_iter185 = and i64 %.064.i.i, -2
   br label %.lr.ph.i.i121
 
 .preheader72.i.i.loopexit.unr-lcssa:              ; preds = %.lr.ph.i.i121
@@ -493,7 +592,7 @@ bb.m:                                             ; preds = %bb.l, %ruby_nonempt
   store i32 %i.eg, ptr %i.eh, align 4, !tbaa !44
   %i.ei = lshr i64 %i.ef, 32                      ; 3 uses
   %i.ej = add nuw i64 %.05779.i.i122, 2           ; 2 uses
-  %niter186.next.1 = add i64 %niter186, 2         ; 2 uses
+  %niter186.next.1 = add nuw i64 %niter186, 2     ; 2 uses
   %niter186.ncmp.1 = icmp eq i64 %niter186.next.1, %unroll_iter185
   br i1 %niter186.ncmp.1, label %.preheader72.i.i.loopexit.unr-lcssa, label %.lr.ph.i.i121, !llvm.loop !3
 
@@ -545,7 +644,8 @@ bb.o:                                             ; preds = %.lr.ph83.i.i
   br i1 %i.ez, label %.lr.ph91.i.i.preheader, label %.preheader.i.i
 
 .lr.ph91.i.i.preheader:                           ; preds = %.preheader69.i.i
-  %i.fa = sub nuw i64 %.062.i.i, %.3.i.i          ; 3 uses
+  %56 = add nuw nsw i64 %3, %i.br
+  %i.fa = sub i64 %56, %.3.i.i                    ; 3 uses
   %min.iters.check = icmp ult i64 %i.fa, 8
   br i1 %min.iters.check, label %.lr.ph91.i.i.preheader176, label %vector.memcheck
 
@@ -582,8 +682,11 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph91.i.i.preheader176:                        ; preds = %vector.memcheck, %.lr.ph91.i.i.preheader, %middle.block
   %.490.i.i.ph = phi i64 [ %.3.i.i, %vector.memcheck ], [ %.3.i.i, %.lr.ph91.i.i.preheader ], [ %i.fe, %middle.block ] ; 4 uses
-  %i.fl = sub i64 %.062.i.i, %.490.i.i.ph
-  %xtraiter187 = and i64 %i.fl, 3                 ; 2 uses
+  %57 = add nuw nsw i64 %3, %i.br
+  %58 = sub i64 %57, %.490.i.i.ph
+  %59 = add nsw i64 %i.x, %i.br
+  %i.fl = sub i64 %59, %.490.i.i.ph
+  %xtraiter187 = and i64 %58, 3                   ; 2 uses
   %lcmp.mod188.not = icmp eq i64 %xtraiter187, 0
   br i1 %lcmp.mod188.not, label %.lr.ph91.i.i.prol.loopexit, label %.lr.ph91.i.i.prol
 
@@ -601,9 +704,8 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph91.i.i.prol.loopexit:                       ; preds = %.lr.ph91.i.i.prol, %.lr.ph91.i.i.preheader176
   %.490.i.i.unr = phi i64 [ %.490.i.i.ph, %.lr.ph91.i.i.preheader176 ], [ %i.fp, %.lr.ph91.i.i.prol ]
-  %12 = sub i64 %.490.i.i.ph, %.062.i.i
-  %13 = icmp ugt i64 %12, -4
-  br i1 %13, label %.preheader.i.i, label %.lr.ph91.i.i
+  %60 = icmp ult i64 %i.fl, 3
+  br i1 %60, label %.preheader.i.i, label %.lr.ph91.i.i
 
 .preheader.i.i:                                   ; preds = %.lr.ph91.i.i.prol.loopexit, %.lr.ph91.i.i, %middle.block, %.preheader69.i.i
   %.4.lcssa.i.i = phi i64 [ %.3.i.i, %.preheader69.i.i ], [ %.062.i.i, %middle.block ], [ %.062.i.i, %.lr.ph91.i.i ], [ %.062.i.i, %.lr.ph91.i.i.prol.loopexit ] ; 3 uses
@@ -667,7 +769,7 @@ bary_add.exit126:                                 ; preds = %.lr.ph.i.i.epil.pre
   %i.gs = icmp ugt i64 %5, %i.gr
   br i1 %i.gs, label %.lr.ph142.split, label %._crit_edge143, !llvm.loop !148
 
-._crit_edge143:                                   ; preds = %bary_add.exit126, %bary_add.exit126.us, %bb.g
+._crit_edge143:                                   ; preds = %bary_add.exit126, %bary_add.exit126.us165, %bary_add.exit126.us, %bb.g
   %i.gt = add i64 %3, %5                          ; 2 uses
   %.not116144 = icmp eq i64 %1, %i.gt
   br i1 %.not116144, label %._crit_edge149, label %.lr.ph148.preheader
