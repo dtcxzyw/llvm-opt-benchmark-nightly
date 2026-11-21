@@ -205,7 +205,7 @@ bb.a:
   %i.ae = load i32, ptr %i.b, align 4, !tbaa !32  ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %.val, i64 32
   %i.ag = getelementptr inbounds nuw i8, ptr %.val, i64 40
-  %i.ah = getelementptr inbounds nuw i8, ptr %.val, i64 48 ; 4 uses
+  %i.ah = getelementptr inbounds nuw i8, ptr %.val, i64 48
   %i.ai = getelementptr inbounds nuw i8, ptr %.val, i64 56
   %i.aj = icmp slt i32 %i.ae, 1
   %i.ak = icmp slt i32 %i.ad, 1
@@ -375,7 +375,9 @@ bb.a:
   %i.eq = add i64 %i.eh, %i.ep                    ; 8 uses
   %i.er = load ptr, ptr %i.ag, align 8, !tbaa !175, !nonnull !67, !align !171
   %i.es = load i64, ptr %i.er, align 8, !tbaa !65
-  %i.et = load ptr, ptr %i.ai, align 8, !tbaa !176, !nonnull !67, !align !171
+  %2 = load ptr, ptr %i.ah, align 8, !tbaa !176, !nonnull !67, !align !171
+  %3 = load ptr, ptr %2, align 8, !tbaa !68       ; 4 uses
+  %i.et = load ptr, ptr %i.ai, align 8, !tbaa !177, !nonnull !67, !align !171
   %i.eu = load ptr, ptr %i.et, align 8, !tbaa !68 ; 8 uses
   switch i64 %i.es, label %bb.e [
     i64 1, label %bb.b
@@ -388,14 +390,12 @@ bb.b:                                             ; preds = %.preheader19.i.i.i
   br i1 %brmerge491.i.i.i, label %.loopexit.i.i.i, label %.preheader13.us.us.i.preheader.i.i
 
 .preheader13.us.us.i.preheader.i.i:               ; preds = %bb.b
-  %2 = load ptr, ptr %i.ah, align 8, !tbaa !177, !nonnull !67, !align !171
-  %3 = load ptr, ptr %2, align 8, !tbaa !68
   %i.ew = getelementptr i8, ptr %i.eu, i64 %i.bb
   %scevgep51 = getelementptr i8, ptr %i.ew, i64 %wide.trip.count.i.i.i
   %scevgep52 = getelementptr i8, ptr %scevgep51, i64 %i.eq
   br label %.preheader13.us.us.i.i.i
 
-.preheader13.us.us.i.i.i:                         ; preds = %._crit_edge.split213.us.split.us.us.us.i.loopexit.i.i, %.preheader13.us.us.i.preheader.i.i
+.preheader13.us.us.i.i.i:                         ; preds = %.preheader13.us.us.i.preheader.i.i, %._crit_edge.split213.us.split.us.us.us.i.loopexit.i.i
   %indvars.iv410.i.i.i = phi i64 [ %indvars.iv.next411.i.i.i, %._crit_edge.split213.us.split.us.us.us.i.loopexit.i.i ], [ 0, %.preheader13.us.us.i.preheader.i.i ] ; 2 uses
   %.0185218.us.us.i.i.i = phi ptr [ %i.gt, %._crit_edge.split213.us.split.us.us.us.i.loopexit.i.i ], [ %3, %.preheader13.us.us.i.preheader.i.i ]
   br label %.preheader9.us.us.us.us.us.us.i.i.i
@@ -567,8 +567,6 @@ bb.c:                                             ; preds = %.preheader19.i.i.i
   br i1 %brmerge491.i.i.i, label %.loopexit.i.i.i, label %.preheader14.us.us.i.preheader.i.i
 
 .preheader14.us.us.i.preheader.i.i:               ; preds = %bb.c
-  %4 = load ptr, ptr %i.ah, align 8, !tbaa !177, !nonnull !67, !align !171
-  %5 = load ptr, ptr %4, align 8, !tbaa !68
   %i.gv = add i64 %i.bi, %i.eq
   %i.gw = shl i64 %i.gv, 1
   %i.gx = shl i64 %i.eo, 1
@@ -578,9 +576,9 @@ bb.c:                                             ; preds = %.preheader19.i.i.i
   %i.hb = getelementptr i8, ptr %i.eu, i64 %i.gw
   br label %.preheader14.us.us.i.i.i
 
-.preheader14.us.us.i.i.i:                         ; preds = %._crit_edge.split139.us.split.us.us.us.i.loopexit.i.i, %.preheader14.us.us.i.preheader.i.i
+.preheader14.us.us.i.i.i:                         ; preds = %.preheader14.us.us.i.preheader.i.i, %._crit_edge.split139.us.split.us.us.us.i.loopexit.i.i
   %indvars.iv382.i.i.i = phi i64 [ %indvars.iv.next383.i.i.i, %._crit_edge.split139.us.split.us.us.us.i.loopexit.i.i ], [ 0, %.preheader14.us.us.i.preheader.i.i ] ; 3 uses
-  %.0173144.us.us.i.i.i = phi ptr [ %i.it, %._crit_edge.split139.us.split.us.us.us.i.loopexit.i.i ], [ %5, %.preheader14.us.us.i.preheader.i.i ]
+  %.0173144.us.us.i.i.i = phi ptr [ %i.it, %._crit_edge.split139.us.split.us.us.us.i.loopexit.i.i ], [ %3, %.preheader14.us.us.i.preheader.i.i ]
   %i.hc = mul i64 %i.gx, %indvars.iv382.i.i.i
   %i.hd = mul i64 %indvars.iv382.i.i.i, %i.eo
   %i.he = getelementptr [2 x i8], ptr %i.gu, i64 %i.hd
@@ -745,8 +743,6 @@ bb.d:                                             ; preds = %.preheader19.i.i.i
   br i1 %brmerge491.i.i.i, label %.loopexit.i.i.i, label %.preheader15.us.us.us.us.i.preheader.i.i
 
 .preheader15.us.us.us.us.i.preheader.i.i:         ; preds = %bb.d
-  %6 = load ptr, ptr %i.ah, align 8, !tbaa !177, !nonnull !67, !align !171
-  %7 = load ptr, ptr %6, align 8, !tbaa !68
   %i.iv = add i64 %i.bp, %i.eq
   %i.iw = shl i64 %i.iv, 2
   %i.ix = shl i64 %i.eo, 2
@@ -756,9 +752,9 @@ bb.d:                                             ; preds = %.preheader19.i.i.i
   %i.jb = getelementptr i8, ptr %i.eu, i64 %i.iw
   br label %.preheader15.us.us.us.us.i.i.i
 
-.preheader15.us.us.us.us.i.i.i:                   ; preds = %._crit_edge.split.us.split.us.split.us.split.us.us.us.us.us.i.i.i, %.preheader15.us.us.us.us.i.preheader.i.i
+.preheader15.us.us.us.us.i.i.i:                   ; preds = %.preheader15.us.us.us.us.i.preheader.i.i, %._crit_edge.split.us.split.us.split.us.split.us.us.us.us.us.i.i.i
   %indvars.iv354.i.i.i = phi i64 [ %indvars.iv.next355.i.i.i, %._crit_edge.split.us.split.us.split.us.split.us.us.us.us.us.i.i.i ], [ 0, %.preheader15.us.us.us.us.i.preheader.i.i ] ; 3 uses
-  %.016172.us.us.us.us.i.i.i = phi ptr [ %i.kq, %._crit_edge.split.us.split.us.split.us.split.us.us.us.us.us.i.i.i ], [ %7, %.preheader15.us.us.us.us.i.preheader.i.i ]
+  %.016172.us.us.us.us.i.i.i = phi ptr [ %i.kq, %._crit_edge.split.us.split.us.split.us.split.us.us.us.us.us.i.i.i ], [ %3, %.preheader15.us.us.us.us.i.preheader.i.i ]
   %i.jc = mul i64 %i.ix, %indvars.iv354.i.i.i
   %i.jd = mul i64 %indvars.iv354.i.i.i, %i.eo
   %i.je = getelementptr [4 x i8], ptr %i.iu, i64 %i.jd
@@ -900,16 +896,14 @@ bb.e:                                             ; preds = %.preheader19.i.i.i
   br i1 %brmerge491.i.i.i, label %.loopexit.i.i.i, label %.preheader12.i.preheader.i.i
 
 .preheader12.i.preheader.i.i:                     ; preds = %bb.e
-  %8 = load ptr, ptr %i.ah, align 8, !tbaa !177, !nonnull !67, !align !171
-  %9 = load ptr, ptr %8, align 8, !tbaa !68
   %scevgep37 = getelementptr i8, ptr %i.eu, i64 %i.ax
   %i.ks = shl i64 %i.eq, 3
   %scevgep38 = getelementptr i8, ptr %scevgep37, i64 %i.ks
   br label %.preheader12.i.i.i
 
-.preheader12.i.i.i:                               ; preds = %._crit_edge.i.loopexit.i.i, %.preheader12.i.preheader.i.i
+.preheader12.i.i.i:                               ; preds = %.preheader12.i.preheader.i.i, %._crit_edge.i.loopexit.i.i
   %indvars.iv438.i.i.i = phi i64 [ %indvars.iv.next439.i.i.i, %._crit_edge.i.loopexit.i.i ], [ 0, %.preheader12.i.preheader.i.i ] ; 3 uses
-  %.0153293.i.i.i = phi ptr [ %i.mp, %._crit_edge.i.loopexit.i.i ], [ %9, %.preheader12.i.preheader.i.i ]
+  %.0153293.i.i.i = phi ptr [ %i.mp, %._crit_edge.i.loopexit.i.i ], [ %3, %.preheader12.i.preheader.i.i ]
   %i.kt = shl nuw nsw i64 %indvars.iv438.i.i.i, 3
   br label %.preheader8.us.us.us.us.i.i.i
 
@@ -1312,8 +1306,8 @@ attributes #21 = { noreturn nounwind }
 !173 = !{!167, !61, i64 24}
 !174 = !{!167, !61, i64 32}
 !175 = !{!167, !75, i64 40}
-!176 = !{!167, !78, i64 56}
-!177 = !{!167, !78, i64 48}
+!176 = !{!167, !78, i64 48}
+!177 = !{!167, !78, i64 56}
 !178 = !{!121}
 !179 = !{!122}
 !180 = !{!"branch_weights", i32 4, i32 28}
