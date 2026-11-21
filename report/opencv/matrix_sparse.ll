@@ -205,8 +205,8 @@ _ZNK2cv8MatShapeixEm.exit.split:                  ; preds = %_ZNK2cv8MatShapeixE
   br i1 %i.al, label %.lr.ph.lr.ph, label %._crit_edge70
 
 .lr.ph.lr.ph:                                     ; preds = %_ZNK2cv8MatShapeixEm.exit.split
-  %6 = zext nneg i32 %i.ak to i64                 ; 2 uses
   %.not = icmp sgt i32 %i.i, %i.k
+  %6 = zext nneg i32 %i.ak to i64                 ; 2 uses
   br i1 %.not, label %.split.us, label %_ZNK2cv8MatShapeixEm.exit51.us76
 
 _ZNK2cv8MatShapeixEm.exit51.us76:                 ; preds = %.lr.ph.lr.ph, %_ZNK2cv8MatShapeixEm.exit51.us76.backedge
