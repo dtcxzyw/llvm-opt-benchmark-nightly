@@ -202,11 +202,11 @@ _ZdvRK12inf_rationalRK8rational.exit:             ; preds = %_ZN8rationaldVERKS_
   store ptr null, ptr %i.bs, align 8, !tbaa !16
   %i.bu = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 2 uses
   %i.bv = load i8, ptr %i.bu, align 4             ; 2 uses
-  %i.bw = and i8 %i.bv, 3
-  %14 = or disjoint i8 %i.bw, %i.c
-  store i8 %14, ptr %i.a, align 4
-  %15 = and i8 %i.bv, -4
-  store i8 %15, ptr %i.bu, align 4
+  %i.bw = and i8 %i.bv, -4
+  %14 = and i8 %i.bv, 3
+  %15 = or disjoint i8 %14, %i.c
+  store i8 %15, ptr %i.a, align 4
+  store i8 %i.bw, ptr %i.bu, align 4
   %i.bx = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
   %i.by = load i32, ptr %i.bx, align 8, !tbaa !15
   store i32 %i.by, ptr %i.e, align 8, !tbaa !15
@@ -217,11 +217,11 @@ _ZdvRK12inf_rationalRK8rational.exit:             ; preds = %_ZN8rationaldVERKS_
   store ptr null, ptr %i.bz, align 8, !tbaa !16
   %i.cb = getelementptr inbounds nuw i8, ptr %3, i64 20 ; 2 uses
   %i.cc = load i8, ptr %i.cb, align 4             ; 2 uses
-  %i.cd = and i8 %i.cc, 3
-  %16 = or disjoint i8 %i.cd, %i.h
-  store i8 %16, ptr %i.f, align 4
-  %17 = and i8 %i.cc, -4
-  store i8 %17, ptr %i.cb, align 4
+  %i.cd = and i8 %i.cc, -4
+  %16 = and i8 %i.cc, 3
+  %17 = or disjoint i8 %16, %i.h
+  store i8 %17, ptr %i.f, align 4
+  store i8 %i.cd, ptr %i.cb, align 4
   %i.ce = load i32, ptr %i.bo, align 8, !tbaa !15
   store i32 %i.ce, ptr %i.j, align 8, !tbaa !15
   store i32 0, ptr %i.bo, align 8, !tbaa !15
@@ -231,11 +231,11 @@ _ZdvRK12inf_rationalRK8rational.exit:             ; preds = %_ZN8rationaldVERKS_
   store ptr null, ptr %i.cf, align 8, !tbaa !16
   %i.ch = getelementptr inbounds nuw i8, ptr %3, i64 36 ; 2 uses
   %i.ci = load i8, ptr %i.ch, align 4             ; 2 uses
-  %i.cj = and i8 %i.ci, 3
-  %18 = or disjoint i8 %i.cj, %i.m
-  store i8 %18, ptr %i.k, align 4
-  %19 = and i8 %i.ci, -4
-  store i8 %19, ptr %i.ch, align 4
+  %i.cj = and i8 %i.ci, -4
+  %18 = and i8 %i.ci, 3
+  %19 = or disjoint i8 %18, %i.m
+  store i8 %19, ptr %i.k, align 4
+  store i8 %i.cj, ptr %i.ch, align 4
   %i.ck = getelementptr inbounds nuw i8, ptr %3, i64 48 ; 3 uses
   %i.cl = load i32, ptr %i.ck, align 8, !tbaa !15
   store i32 %i.cl, ptr %i.o, align 8, !tbaa !15
@@ -246,11 +246,11 @@ _ZdvRK12inf_rationalRK8rational.exit:             ; preds = %_ZN8rationaldVERKS_
   store ptr null, ptr %i.cm, align 8, !tbaa !16
   %i.co = getelementptr inbounds nuw i8, ptr %3, i64 52 ; 2 uses
   %i.cp = load i8, ptr %i.co, align 4             ; 2 uses
-  %i.cq = and i8 %i.cp, 3
-  %20 = or disjoint i8 %i.cq, %i.r
-  store i8 %20, ptr %i.p, align 4
-  %21 = and i8 %i.cp, -4
-  store i8 %21, ptr %i.co, align 4
+  %i.cq = and i8 %i.cp, -4
+  %20 = and i8 %i.cp, 3
+  %21 = or disjoint i8 %20, %i.r
+  store i8 %21, ptr %i.p, align 4
+  store i8 %i.cq, ptr %i.co, align 4
   %i.cr = load ptr, ptr @_ZN8rational13g_mpq_managerE, align 8, !tbaa !10 ; 2 uses
   invoke void @_ZN11mpz_managerILb1EE3delEPS0_R3mpz(ptr noundef %i.cr, ptr noundef nonnull align 8 dereferenceable(32) %i.bo)
           to label %.noexc.i.i unwind label %bb.m
@@ -562,11 +562,11 @@ _ZdvRK12inf_rationalRK8rational.exit57:           ; preds = %_ZN8rationaldVERKS_
   store ptr null, ptr %i.fm, align 8, !tbaa !16
   %i.fo = getelementptr inbounds nuw i8, ptr %8, i64 4 ; 2 uses
   %i.fp = load i8, ptr %i.fo, align 4             ; 2 uses
-  %i.fq = and i8 %i.fp, 3
-  %22 = or disjoint i8 %i.fq, %i.c
-  store i8 %22, ptr %i.a, align 4
-  %23 = and i8 %i.fp, -4
-  store i8 %23, ptr %i.fo, align 4
+  %i.fq = and i8 %i.fp, -4
+  %22 = and i8 %i.fp, 3
+  %23 = or disjoint i8 %22, %i.c
+  store i8 %23, ptr %i.a, align 4
+  store i8 %i.fq, ptr %i.fo, align 4
   %i.fr = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 3 uses
   %i.fs = load i32, ptr %i.fr, align 8, !tbaa !15
   store i32 %i.fs, ptr %i.e, align 8, !tbaa !15
@@ -577,11 +577,11 @@ _ZdvRK12inf_rationalRK8rational.exit57:           ; preds = %_ZN8rationaldVERKS_
   store ptr null, ptr %i.ft, align 8, !tbaa !16
   %i.fv = getelementptr inbounds nuw i8, ptr %8, i64 20 ; 2 uses
   %i.fw = load i8, ptr %i.fv, align 4             ; 2 uses
-  %i.fx = and i8 %i.fw, 3
-  %24 = or disjoint i8 %i.fx, %i.h
-  store i8 %24, ptr %i.f, align 4
-  %25 = and i8 %i.fw, -4
-  store i8 %25, ptr %i.fv, align 4
+  %i.fx = and i8 %i.fw, -4
+  %24 = and i8 %i.fw, 3
+  %25 = or disjoint i8 %24, %i.h
+  store i8 %25, ptr %i.f, align 4
+  store i8 %i.fx, ptr %i.fv, align 4
   %i.fy = load i32, ptr %i.fi, align 8, !tbaa !15
   store i32 %i.fy, ptr %i.j, align 8, !tbaa !15
   store i32 0, ptr %i.fi, align 8, !tbaa !15
@@ -591,11 +591,11 @@ _ZdvRK12inf_rationalRK8rational.exit57:           ; preds = %_ZN8rationaldVERKS_
   store ptr null, ptr %i.fz, align 8, !tbaa !16
   %i.gb = getelementptr inbounds nuw i8, ptr %8, i64 36 ; 2 uses
   %i.gc = load i8, ptr %i.gb, align 4             ; 2 uses
-  %i.gd = and i8 %i.gc, 3
-  %26 = or disjoint i8 %i.gd, %i.m
-  store i8 %26, ptr %i.k, align 4
-  %27 = and i8 %i.gc, -4
-  store i8 %27, ptr %i.gb, align 4
+  %i.gd = and i8 %i.gc, -4
+  %26 = and i8 %i.gc, 3
+  %27 = or disjoint i8 %26, %i.m
+  store i8 %27, ptr %i.k, align 4
+  store i8 %i.gd, ptr %i.gb, align 4
   %i.ge = getelementptr inbounds nuw i8, ptr %8, i64 48 ; 3 uses
   %i.gf = load i32, ptr %i.ge, align 8, !tbaa !15
   store i32 %i.gf, ptr %i.o, align 8, !tbaa !15
@@ -606,11 +606,11 @@ _ZdvRK12inf_rationalRK8rational.exit57:           ; preds = %_ZN8rationaldVERKS_
   store ptr null, ptr %i.gg, align 8, !tbaa !16
   %i.gi = getelementptr inbounds nuw i8, ptr %8, i64 52 ; 2 uses
   %i.gj = load i8, ptr %i.gi, align 4             ; 2 uses
-  %i.gk = and i8 %i.gj, 3
-  %28 = or disjoint i8 %i.gk, %i.r
-  store i8 %28, ptr %i.p, align 4
-  %29 = and i8 %i.gj, -4
-  store i8 %29, ptr %i.gi, align 4
+  %i.gk = and i8 %i.gj, -4
+  %28 = and i8 %i.gj, 3
+  %29 = or disjoint i8 %28, %i.r
+  store i8 %29, ptr %i.p, align 4
+  store i8 %i.gk, ptr %i.gi, align 4
   %i.gl = load ptr, ptr @_ZN8rational13g_mpq_managerE, align 8, !tbaa !10 ; 2 uses
   invoke void @_ZN11mpz_managerILb1EE3delEPS0_R3mpz(ptr noundef %i.gl, ptr noundef nonnull align 8 dereferenceable(32) %i.fi)
           to label %.noexc.i.i58 unwind label %bb.am
@@ -802,11 +802,11 @@ _ZdvRK12inf_rationalRK8rational.exit74:           ; preds = %_ZN8rationaldVERKS_
   store ptr null, ptr %i.hp, align 8, !tbaa !16
   %i.hr = getelementptr inbounds nuw i8, ptr %13, i64 4 ; 2 uses
   %i.hs = load i8, ptr %i.hr, align 4             ; 2 uses
-  %i.ht = and i8 %i.hs, 3
-  %30 = or disjoint i8 %i.ht, %i.c
-  store i8 %30, ptr %i.a, align 4
-  %31 = and i8 %i.hs, -4
-  store i8 %31, ptr %i.hr, align 4
+  %i.ht = and i8 %i.hs, -4
+  %30 = and i8 %i.hs, 3
+  %31 = or disjoint i8 %30, %i.c
+  store i8 %31, ptr %i.a, align 4
+  store i8 %i.ht, ptr %i.hr, align 4
   %i.hu = getelementptr inbounds nuw i8, ptr %13, i64 16 ; 3 uses
   %i.hv = load i32, ptr %i.hu, align 8, !tbaa !15
   store i32 %i.hv, ptr %i.e, align 8, !tbaa !15
@@ -817,11 +817,11 @@ _ZdvRK12inf_rationalRK8rational.exit74:           ; preds = %_ZN8rationaldVERKS_
   store ptr null, ptr %i.hw, align 8, !tbaa !16
   %i.hy = getelementptr inbounds nuw i8, ptr %13, i64 20 ; 2 uses
   %i.hz = load i8, ptr %i.hy, align 4             ; 2 uses
-  %i.ia = and i8 %i.hz, 3
-  %32 = or disjoint i8 %i.ia, %i.h
-  store i8 %32, ptr %i.f, align 4
-  %33 = and i8 %i.hz, -4
-  store i8 %33, ptr %i.hy, align 4
+  %i.ia = and i8 %i.hz, -4
+  %32 = and i8 %i.hz, 3
+  %33 = or disjoint i8 %32, %i.h
+  store i8 %33, ptr %i.f, align 4
+  store i8 %i.ia, ptr %i.hy, align 4
   %i.ib = load i32, ptr %i.hl, align 8, !tbaa !15
   store i32 %i.ib, ptr %i.j, align 8, !tbaa !15
   store i32 0, ptr %i.hl, align 8, !tbaa !15
@@ -831,11 +831,11 @@ _ZdvRK12inf_rationalRK8rational.exit74:           ; preds = %_ZN8rationaldVERKS_
   store ptr null, ptr %i.ic, align 8, !tbaa !16
   %i.ie = getelementptr inbounds nuw i8, ptr %13, i64 36 ; 2 uses
   %i.if = load i8, ptr %i.ie, align 4             ; 2 uses
-  %i.ig = and i8 %i.if, 3
-  %34 = or disjoint i8 %i.ig, %i.m
-  store i8 %34, ptr %i.k, align 4
-  %35 = and i8 %i.if, -4
-  store i8 %35, ptr %i.ie, align 4
+  %i.ig = and i8 %i.if, -4
+  %34 = and i8 %i.if, 3
+  %35 = or disjoint i8 %34, %i.m
+  store i8 %35, ptr %i.k, align 4
+  store i8 %i.ig, ptr %i.ie, align 4
   %i.ih = getelementptr inbounds nuw i8, ptr %13, i64 48 ; 3 uses
   %i.ii = load i32, ptr %i.ih, align 8, !tbaa !15
   store i32 %i.ii, ptr %i.o, align 8, !tbaa !15
@@ -846,11 +846,11 @@ _ZdvRK12inf_rationalRK8rational.exit74:           ; preds = %_ZN8rationaldVERKS_
   store ptr null, ptr %i.ij, align 8, !tbaa !16
   %i.il = getelementptr inbounds nuw i8, ptr %13, i64 52 ; 2 uses
   %i.im = load i8, ptr %i.il, align 4             ; 2 uses
-  %i.in = and i8 %i.im, 3
-  %36 = or disjoint i8 %i.in, %i.r
-  store i8 %36, ptr %i.p, align 4
-  %37 = and i8 %i.im, -4
-  store i8 %37, ptr %i.il, align 4
+  %i.in = and i8 %i.im, -4
+  %36 = and i8 %i.im, 3
+  %37 = or disjoint i8 %36, %i.r
+  store i8 %37, ptr %i.p, align 4
+  store i8 %i.in, ptr %i.il, align 4
   %i.io = load ptr, ptr @_ZN8rational13g_mpq_managerE, align 8, !tbaa !10 ; 2 uses
   invoke void @_ZN11mpz_managerILb1EE3delEPS0_R3mpz(ptr noundef %i.io, ptr noundef nonnull align 8 dereferenceable(32) %i.hl)
           to label %.noexc.i.i75 unwind label %bb.bb
@@ -1253,11 +1253,11 @@ _ZdvRK12inf_rationalRK8rational.exit:             ; preds = %_ZN8rationaldVERKS_
   store ptr null, ptr %i.bs, align 8, !tbaa !16
   %i.bu = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 2 uses
   %i.bv = load i8, ptr %i.bu, align 4             ; 2 uses
-  %i.bw = and i8 %i.bv, 3
-  %14 = or disjoint i8 %i.bw, %i.c
-  store i8 %14, ptr %i.a, align 4
-  %15 = and i8 %i.bv, -4
-  store i8 %15, ptr %i.bu, align 4
+  %i.bw = and i8 %i.bv, -4
+  %14 = and i8 %i.bv, 3
+  %15 = or disjoint i8 %14, %i.c
+  store i8 %15, ptr %i.a, align 4
+  store i8 %i.bw, ptr %i.bu, align 4
   %i.bx = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
   %i.by = load i32, ptr %i.bx, align 8, !tbaa !15
   store i32 %i.by, ptr %i.e, align 8, !tbaa !15
@@ -1268,11 +1268,11 @@ _ZdvRK12inf_rationalRK8rational.exit:             ; preds = %_ZN8rationaldVERKS_
   store ptr null, ptr %i.bz, align 8, !tbaa !16
   %i.cb = getelementptr inbounds nuw i8, ptr %3, i64 20 ; 2 uses
   %i.cc = load i8, ptr %i.cb, align 4             ; 2 uses
-  %i.cd = and i8 %i.cc, 3
-  %16 = or disjoint i8 %i.cd, %i.h
-  store i8 %16, ptr %i.f, align 4
-  %17 = and i8 %i.cc, -4
-  store i8 %17, ptr %i.cb, align 4
+  %i.cd = and i8 %i.cc, -4
+  %16 = and i8 %i.cc, 3
+  %17 = or disjoint i8 %16, %i.h
+  store i8 %17, ptr %i.f, align 4
+  store i8 %i.cd, ptr %i.cb, align 4
   %i.ce = load i32, ptr %i.bo, align 8, !tbaa !15
   store i32 %i.ce, ptr %i.j, align 8, !tbaa !15
   store i32 0, ptr %i.bo, align 8, !tbaa !15
@@ -1282,11 +1282,11 @@ _ZdvRK12inf_rationalRK8rational.exit:             ; preds = %_ZN8rationaldVERKS_
   store ptr null, ptr %i.cf, align 8, !tbaa !16
   %i.ch = getelementptr inbounds nuw i8, ptr %3, i64 36 ; 2 uses
   %i.ci = load i8, ptr %i.ch, align 4             ; 2 uses
-  %i.cj = and i8 %i.ci, 3
-  %18 = or disjoint i8 %i.cj, %i.m
-  store i8 %18, ptr %i.k, align 4
-  %19 = and i8 %i.ci, -4
-  store i8 %19, ptr %i.ch, align 4
+  %i.cj = and i8 %i.ci, -4
+  %18 = and i8 %i.ci, 3
+  %19 = or disjoint i8 %18, %i.m
+  store i8 %19, ptr %i.k, align 4
+  store i8 %i.cj, ptr %i.ch, align 4
   %i.ck = getelementptr inbounds nuw i8, ptr %3, i64 48 ; 3 uses
   %i.cl = load i32, ptr %i.ck, align 8, !tbaa !15
   store i32 %i.cl, ptr %i.o, align 8, !tbaa !15
@@ -1297,11 +1297,11 @@ _ZdvRK12inf_rationalRK8rational.exit:             ; preds = %_ZN8rationaldVERKS_
   store ptr null, ptr %i.cm, align 8, !tbaa !16
   %i.co = getelementptr inbounds nuw i8, ptr %3, i64 52 ; 2 uses
   %i.cp = load i8, ptr %i.co, align 4             ; 2 uses
-  %i.cq = and i8 %i.cp, 3
-  %20 = or disjoint i8 %i.cq, %i.r
-  store i8 %20, ptr %i.p, align 4
-  %21 = and i8 %i.cp, -4
-  store i8 %21, ptr %i.co, align 4
+  %i.cq = and i8 %i.cp, -4
+  %20 = and i8 %i.cp, 3
+  %21 = or disjoint i8 %20, %i.r
+  store i8 %21, ptr %i.p, align 4
+  store i8 %i.cq, ptr %i.co, align 4
   %i.cr = load ptr, ptr @_ZN8rational13g_mpq_managerE, align 8, !tbaa !10 ; 2 uses
   invoke void @_ZN11mpz_managerILb1EE3delEPS0_R3mpz(ptr noundef %i.cr, ptr noundef nonnull align 8 dereferenceable(32) %i.bo)
           to label %.noexc.i.i unwind label %bb.m
@@ -1613,11 +1613,11 @@ _ZdvRK12inf_rationalRK8rational.exit57:           ; preds = %_ZN8rationaldVERKS_
   store ptr null, ptr %i.fn, align 8, !tbaa !16
   %i.fp = getelementptr inbounds nuw i8, ptr %8, i64 4 ; 2 uses
   %i.fq = load i8, ptr %i.fp, align 4             ; 2 uses
-  %i.fr = and i8 %i.fq, 3
-  %22 = or disjoint i8 %i.fr, %i.c
-  store i8 %22, ptr %i.a, align 4
-  %23 = and i8 %i.fq, -4
-  store i8 %23, ptr %i.fp, align 4
+  %i.fr = and i8 %i.fq, -4
+  %22 = and i8 %i.fq, 3
+  %23 = or disjoint i8 %22, %i.c
+  store i8 %23, ptr %i.a, align 4
+  store i8 %i.fr, ptr %i.fp, align 4
   %i.fs = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 3 uses
   %i.ft = load i32, ptr %i.fs, align 8, !tbaa !15
   store i32 %i.ft, ptr %i.e, align 8, !tbaa !15
@@ -1628,11 +1628,11 @@ _ZdvRK12inf_rationalRK8rational.exit57:           ; preds = %_ZN8rationaldVERKS_
   store ptr null, ptr %i.fu, align 8, !tbaa !16
   %i.fw = getelementptr inbounds nuw i8, ptr %8, i64 20 ; 2 uses
   %i.fx = load i8, ptr %i.fw, align 4             ; 2 uses
-  %i.fy = and i8 %i.fx, 3
-  %24 = or disjoint i8 %i.fy, %i.h
-  store i8 %24, ptr %i.f, align 4
-  %25 = and i8 %i.fx, -4
-  store i8 %25, ptr %i.fw, align 4
+  %i.fy = and i8 %i.fx, -4
+  %24 = and i8 %i.fx, 3
+  %25 = or disjoint i8 %24, %i.h
+  store i8 %25, ptr %i.f, align 4
+  store i8 %i.fy, ptr %i.fw, align 4
   %i.fz = load i32, ptr %i.fj, align 8, !tbaa !15
   store i32 %i.fz, ptr %i.j, align 8, !tbaa !15
   store i32 0, ptr %i.fj, align 8, !tbaa !15
@@ -1642,11 +1642,11 @@ _ZdvRK12inf_rationalRK8rational.exit57:           ; preds = %_ZN8rationaldVERKS_
   store ptr null, ptr %i.ga, align 8, !tbaa !16
   %i.gc = getelementptr inbounds nuw i8, ptr %8, i64 36 ; 2 uses
   %i.gd = load i8, ptr %i.gc, align 4             ; 2 uses
-  %i.ge = and i8 %i.gd, 3
-  %26 = or disjoint i8 %i.ge, %i.m
-  store i8 %26, ptr %i.k, align 4
-  %27 = and i8 %i.gd, -4
-  store i8 %27, ptr %i.gc, align 4
+  %i.ge = and i8 %i.gd, -4
+  %26 = and i8 %i.gd, 3
+  %27 = or disjoint i8 %26, %i.m
+  store i8 %27, ptr %i.k, align 4
+  store i8 %i.ge, ptr %i.gc, align 4
   %i.gf = getelementptr inbounds nuw i8, ptr %8, i64 48 ; 3 uses
   %i.gg = load i32, ptr %i.gf, align 8, !tbaa !15
   store i32 %i.gg, ptr %i.o, align 8, !tbaa !15
@@ -1657,11 +1657,11 @@ _ZdvRK12inf_rationalRK8rational.exit57:           ; preds = %_ZN8rationaldVERKS_
   store ptr null, ptr %i.gh, align 8, !tbaa !16
   %i.gj = getelementptr inbounds nuw i8, ptr %8, i64 52 ; 2 uses
   %i.gk = load i8, ptr %i.gj, align 4             ; 2 uses
-  %i.gl = and i8 %i.gk, 3
-  %28 = or disjoint i8 %i.gl, %i.r
-  store i8 %28, ptr %i.p, align 4
-  %29 = and i8 %i.gk, -4
-  store i8 %29, ptr %i.gj, align 4
+  %i.gl = and i8 %i.gk, -4
+  %28 = and i8 %i.gk, 3
+  %29 = or disjoint i8 %28, %i.r
+  store i8 %29, ptr %i.p, align 4
+  store i8 %i.gl, ptr %i.gj, align 4
   %i.gm = load ptr, ptr @_ZN8rational13g_mpq_managerE, align 8, !tbaa !10 ; 2 uses
   invoke void @_ZN11mpz_managerILb1EE3delEPS0_R3mpz(ptr noundef %i.gm, ptr noundef nonnull align 8 dereferenceable(32) %i.fj)
           to label %.noexc.i.i58 unwind label %bb.am
@@ -1853,11 +1853,11 @@ _ZdvRK12inf_rationalRK8rational.exit74:           ; preds = %_ZN8rationaldVERKS_
   store ptr null, ptr %i.hq, align 8, !tbaa !16
   %i.hs = getelementptr inbounds nuw i8, ptr %13, i64 4 ; 2 uses
   %i.ht = load i8, ptr %i.hs, align 4             ; 2 uses
-  %i.hu = and i8 %i.ht, 3
-  %30 = or disjoint i8 %i.hu, %i.c
-  store i8 %30, ptr %i.a, align 4
-  %31 = and i8 %i.ht, -4
-  store i8 %31, ptr %i.hs, align 4
+  %i.hu = and i8 %i.ht, -4
+  %30 = and i8 %i.ht, 3
+  %31 = or disjoint i8 %30, %i.c
+  store i8 %31, ptr %i.a, align 4
+  store i8 %i.hu, ptr %i.hs, align 4
   %i.hv = getelementptr inbounds nuw i8, ptr %13, i64 16 ; 3 uses
   %i.hw = load i32, ptr %i.hv, align 8, !tbaa !15
   store i32 %i.hw, ptr %i.e, align 8, !tbaa !15
@@ -1868,11 +1868,11 @@ _ZdvRK12inf_rationalRK8rational.exit74:           ; preds = %_ZN8rationaldVERKS_
   store ptr null, ptr %i.hx, align 8, !tbaa !16
   %i.hz = getelementptr inbounds nuw i8, ptr %13, i64 20 ; 2 uses
   %i.ia = load i8, ptr %i.hz, align 4             ; 2 uses
-  %i.ib = and i8 %i.ia, 3
-  %32 = or disjoint i8 %i.ib, %i.h
-  store i8 %32, ptr %i.f, align 4
-  %33 = and i8 %i.ia, -4
-  store i8 %33, ptr %i.hz, align 4
+  %i.ib = and i8 %i.ia, -4
+  %32 = and i8 %i.ia, 3
+  %33 = or disjoint i8 %32, %i.h
+  store i8 %33, ptr %i.f, align 4
+  store i8 %i.ib, ptr %i.hz, align 4
   %i.ic = load i32, ptr %i.hm, align 8, !tbaa !15
   store i32 %i.ic, ptr %i.j, align 8, !tbaa !15
   store i32 0, ptr %i.hm, align 8, !tbaa !15
@@ -1882,11 +1882,11 @@ _ZdvRK12inf_rationalRK8rational.exit74:           ; preds = %_ZN8rationaldVERKS_
   store ptr null, ptr %i.id, align 8, !tbaa !16
   %i.if = getelementptr inbounds nuw i8, ptr %13, i64 36 ; 2 uses
   %i.ig = load i8, ptr %i.if, align 4             ; 2 uses
-  %i.ih = and i8 %i.ig, 3
-  %34 = or disjoint i8 %i.ih, %i.m
-  store i8 %34, ptr %i.k, align 4
-  %35 = and i8 %i.ig, -4
-  store i8 %35, ptr %i.if, align 4
+  %i.ih = and i8 %i.ig, -4
+  %34 = and i8 %i.ig, 3
+  %35 = or disjoint i8 %34, %i.m
+  store i8 %35, ptr %i.k, align 4
+  store i8 %i.ih, ptr %i.if, align 4
   %i.ii = getelementptr inbounds nuw i8, ptr %13, i64 48 ; 3 uses
   %i.ij = load i32, ptr %i.ii, align 8, !tbaa !15
   store i32 %i.ij, ptr %i.o, align 8, !tbaa !15
@@ -1897,11 +1897,11 @@ _ZdvRK12inf_rationalRK8rational.exit74:           ; preds = %_ZN8rationaldVERKS_
   store ptr null, ptr %i.ik, align 8, !tbaa !16
   %i.im = getelementptr inbounds nuw i8, ptr %13, i64 52 ; 2 uses
   %i.in = load i8, ptr %i.im, align 4             ; 2 uses
-  %i.io = and i8 %i.in, 3
-  %36 = or disjoint i8 %i.io, %i.r
-  store i8 %36, ptr %i.p, align 4
-  %37 = and i8 %i.in, -4
-  store i8 %37, ptr %i.im, align 4
+  %i.io = and i8 %i.in, -4
+  %36 = and i8 %i.in, 3
+  %37 = or disjoint i8 %36, %i.r
+  store i8 %37, ptr %i.p, align 4
+  store i8 %i.io, ptr %i.im, align 4
   %i.ip = load ptr, ptr @_ZN8rational13g_mpq_managerE, align 8, !tbaa !10 ; 2 uses
   invoke void @_ZN11mpz_managerILb1EE3delEPS0_R3mpz(ptr noundef %i.ip, ptr noundef nonnull align 8 dereferenceable(32) %i.hm)
           to label %.noexc.i.i75 unwind label %bb.bb

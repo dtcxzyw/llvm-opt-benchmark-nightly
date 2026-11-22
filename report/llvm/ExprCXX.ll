@@ -204,7 +204,7 @@ _ZN5clang4ExprC2ENS_4Stmt9StmtClassENS_8QualTypeENS_13ExprValueKindENS_14ExprObj
   %i.s = load i8, ptr %i.r, align 8, !tbaa !116, !range !111, !noundef !71
   %i.t = trunc nuw i8 %i.s to i1                  ; 2 uses
   %i.u = select i1 %i.t, i32 1048576, i32 0       ; 3 uses
-  %i.v = or disjoint i32 %i.u, %i.q               ; 2 uses
+  %i.v = or disjoint i32 %i.q, %i.u               ; 2 uses
   store i32 %i.v, ptr %0, align 8
   %i.w = getelementptr inbounds nuw i8, ptr %4, i64 12
   %i.x = load i32, ptr %i.w, align 4, !tbaa !208

@@ -205,13 +205,13 @@ _Z5floorRK8rational.exit:                         ; preds = %.noexc.i.invoke
   store ptr %i.jk, ptr %i.jj, align 8, !tbaa !701
   %i.jm = load i8, ptr %i.f, align 4              ; 2 uses
   %i.jn = getelementptr inbounds nuw i8, ptr %6, i64 20
-  %i.jo = and i8 %i.is, 2
-  %i.jp = and i8 %i.jm, -4
-  %7 = or disjoint i8 %i.jo, %i.jp
-  %8 = and i8 %i.is, -4
-  store i8 %7, ptr %i.f, align 4
+  %i.jo = and i8 %i.jm, -4
+  %i.jp = and i8 %i.is, -4
+  %7 = and i8 %i.is, 2
+  %8 = or disjoint i8 %7, %i.jo
+  store i8 %8, ptr %i.f, align 4
   %i.jq = and i8 %i.jm, 3
-  %i.jr = or disjoint i8 %8, %i.jq
+  %i.jr = or disjoint i8 %i.jp, %i.jq
   store i8 %i.jr, ptr %i.jn, align 4
   %i.js = load ptr, ptr @_ZN8rational13g_mpq_managerE, align 8, !tbaa !700 ; 2 uses
   invoke void @_ZN11mpz_managerILb1EE3delEPS0_R3mpz(ptr noundef %i.js, ptr noundef nonnull align 8 dereferenceable(32) %6)
