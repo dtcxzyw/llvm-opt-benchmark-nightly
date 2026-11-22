@@ -204,29 +204,29 @@ bb.n:                                             ; preds = %.noexc26, %bb.l
   %i.ck = load ptr, ptr %i.bf, align 8, !tbaa !141
   %i.cl = load i8, ptr %i.ax, align 4             ; 2 uses
   %i.cm = load i8, ptr %i.bc, align 4             ; 2 uses
-  %i.cn = and i8 %i.cl, -4
-  %i.co = and i8 %i.cm, -4
+  %4 = and i8 %i.cl, -4
+  %i.cn = and i8 %i.cm, -4
+  %i.co = and i8 %i.cm, 3
+  %5 = and i8 %i.cl, 3
   store i32 %i.ci, ptr %i.am, align 8, !tbaa !115
   store i32 %i.cg, ptr %i.aw, align 8, !tbaa !115
   store ptr %i.ck, ptr %i.aq, align 8, !tbaa !141
   store ptr %i.cf, ptr %i.ba, align 8, !tbaa !141
-  %4 = and i8 %i.ce, -4
-  %i.cp = and i8 %i.cm, 3
-  %i.cq = or disjoint i8 %4, %i.cp
+  %i.cp = and i8 %i.ce, -4
+  %i.cq = or disjoint i8 %i.cp, %i.co
   store i8 %i.cq, ptr %i.an, align 4
   %i.cr = and i8 %i.ce, 3
-  %i.cs = or disjoint i8 %i.cr, %i.cn
+  %i.cs = or disjoint i8 %i.cr, %4
   store i8 %i.cs, ptr %i.ax, align 4
   store i32 %i.ch, ptr %i.ar, align 8, !tbaa !115
   store i32 %i.cd, ptr %i.bb, align 8, !tbaa !115
   store ptr %i.cj, ptr %i.av, align 8, !tbaa !141
   store ptr %i.cc, ptr %i.bf, align 8, !tbaa !141
-  %5 = and i8 %i.cb, -4
-  %i.ct = and i8 %i.cl, 3
-  %i.cu = or disjoint i8 %5, %i.ct
+  %i.ct = and i8 %i.cb, -4
+  %i.cu = or disjoint i8 %i.ct, %5
   store i8 %i.cu, ptr %i.as, align 4
   %i.cv = and i8 %i.cb, 3
-  %i.cw = or disjoint i8 %i.cv, %i.co
+  %i.cw = or disjoint i8 %i.cv, %i.cn
   store i8 %i.cw, ptr %i.bc, align 4
   %i.cx = load i32, ptr %i.af, align 8, !tbaa !87
   %i.cy = load ptr, ptr %i.ai, align 8, !tbaa !86
@@ -629,12 +629,10 @@ bb.c:                                             ; preds = %bb.a
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !93, !nonnull !78, !align !80
   tail call void @_ZN11mpz_managerILb0EE7big_setER3mpzRKS1_(ptr noundef nonnull align 8 dereferenceable(600) %i.m, ptr noundef nonnull align 8 dereferenceable(20) %i.c, ptr noundef nonnull align 8 dereferenceable(20) %i.b)
   %.pre.i = load i32, ptr %i.b, align 8, !tbaa !115
-  %.pre1.i = load i8, ptr %i.d, align 4           ; 2 uses
-  %.pre2.i = and i8 %.pre1.i, 1
+  %.pre1.i = load i8, ptr %i.d, align 4
   br label %_ZN22basic_interval_managerI12mpbq_managerLb0EE16init_mul_max_minEv.exit
 
 _ZN22basic_interval_managerI12mpbq_managerLb0EE16init_mul_max_minEv.exit: ; preds = %bb.b, %bb.c
-  %.pre-phi.i = phi i8 [ 0, %bb.b ], [ %.pre2.i, %bb.c ]
   %i.n = phi i8 [ %i.e, %bb.b ], [ %.pre1.i, %bb.c ] ; 2 uses
   %i.o = phi i32 [ %i.h, %bb.b ], [ %.pre.i, %bb.c ]
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
@@ -653,14 +651,13 @@ _ZN22basic_interval_managerI12mpbq_managerLb0EE16init_mul_max_minEv.exit: ; pred
   store ptr %i.w, ptr %i.v, align 8, !tbaa !141
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 7 uses
   %i.z = load i8, ptr %i.y, align 4               ; 2 uses
-  %i.aa = and i8 %i.n, 2
-  %i.ab = and i8 %i.z, -4
-  %i.ac = and i8 %i.n, -4
-  %4 = or disjoint i8 %i.aa, %.pre-phi.i
-  %i.ad = or disjoint i8 %4, %i.ab
+  %i.aa = and i8 %i.z, -4
+  %i.ab = and i8 %i.n, -4
+  %i.ac = and i8 %i.n, 3
+  %i.ad = or disjoint i8 %i.aa, %i.ac
   store i8 %i.ad, ptr %i.y, align 4
   %i.ae = and i8 %i.z, 3
-  %i.af = or disjoint i8 %i.ae, %i.ac
+  %i.af = or disjoint i8 %i.ae, %i.ab
   store i8 %i.af, ptr %i.d, align 4
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 4 uses
   %i.ah = load i32, ptr %i.ag, align 8, !tbaa !115
