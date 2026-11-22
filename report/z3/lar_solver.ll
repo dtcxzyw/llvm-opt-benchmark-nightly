@@ -205,7 +205,6 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 3 uses
   %i.b = load i8, ptr %i.a, align 4
   %i.c = and i8 %i.b, -4                          ; 2 uses
-  store i8 %i.c, ptr %i.a, align 4
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.e = load i32, ptr %0, align 4, !tbaa !246    ; 2 uses
   store i32 %i.e, ptr %1, align 8, !tbaa !246
@@ -215,7 +214,10 @@ bb.a:
   store ptr %i.g, ptr %i.d, align 8, !tbaa !302
   store ptr null, ptr %i.f, align 8, !tbaa !302
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
-  %i.i = load i8, ptr %i.h, align 4               ; 2 uses
+  %i.i = load i8, ptr %i.h, align 4               ; 3 uses
+  %2 = and i8 %i.i, 2
+  %3 = or disjoint i8 %2, %i.c
+  store i8 %3, ptr %i.a, align 4
   %i.j = and i8 %i.i, -4                          ; 2 uses
   store i8 %i.j, ptr %i.h, align 4
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
@@ -224,7 +226,6 @@ bb.a:
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 3 uses
   %i.n = load i8, ptr %i.m, align 4
   %i.o = and i8 %i.n, -4                          ; 2 uses
-  store i8 %i.o, ptr %i.m, align 4
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   store ptr null, ptr %i.p, align 8, !tbaa !242
   %i.q = load i32, ptr %i.l, align 8, !tbaa !246
@@ -233,7 +234,10 @@ bb.a:
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !302
   store ptr null, ptr %i.r, align 8, !tbaa !302
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 2 uses
-  %i.u = load i8, ptr %i.t, align 4               ; 2 uses
+  %i.u = load i8, ptr %i.t, align 4               ; 3 uses
+  %4 = and i8 %i.u, 2
+  %5 = or disjoint i8 %4, %i.o
+  store i8 %5, ptr %i.m, align 4
   %i.v = and i8 %i.u, -4                          ; 2 uses
   store i8 %i.v, ptr %i.t, align 4
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 32
