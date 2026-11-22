@@ -205,16 +205,14 @@ _ZN11mpz_managerILb1EE7big_remERK3mpzS3_RS1_.exit.i: ; preds = %bb.bj, %bb.bi, %
   %.pre197 = load i32, ptr %6, align 8, !tbaa !36
   %.pre198 = load i32, ptr %7, align 8, !tbaa !36
   %.pre199 = load i8, ptr %i.cw, align 4          ; 2 uses
-  %.pre200 = load i8, ptr %i.da, align 4          ; 2 uses
+  %.pre200 = load i8, ptr %i.da, align 4
   %.pre201 = load i32, ptr %10, align 8, !tbaa !36
   %.pre202 = load i8, ptr %i.dm, align 4
-  %.pre208 = and i8 %.pre199, 1
-  %.pre210 = and i8 %.pre200, 1
+  %.pre210 = and i8 %.pre199, 1
   br label %_ZN11mpz_managerILb1EE3remERK3mpzS3_RS1_.exit
 
 _ZN11mpz_managerILb1EE3remERK3mpzS3_RS1_.exit:    ; preds = %bb.bg, %_ZN11mpz_managerILb1EE7big_remERK3mpzS3_RS1_.exit.i
-  %.pre-phi211 = phi i8 [ 0, %bb.bg ], [ %.pre210, %_ZN11mpz_managerILb1EE7big_remERK3mpzS3_RS1_.exit.i ] ; 2 uses
-  %.pre-phi209 = phi i8 [ 0, %bb.bg ], [ %.pre208, %_ZN11mpz_managerILb1EE7big_remERK3mpzS3_RS1_.exit.i ]
+  %.pre-phi211 = phi i8 [ 0, %bb.bg ], [ %.pre210, %_ZN11mpz_managerILb1EE7big_remERK3mpzS3_RS1_.exit.i ]
   %i.ii = phi i8 [ %i.ib, %bb.bg ], [ %.pre202, %_ZN11mpz_managerILb1EE7big_remERK3mpzS3_RS1_.exit.i ] ; 2 uses
   %i.ij = phi i32 [ %i.hz, %bb.bg ], [ %.pre201, %_ZN11mpz_managerILb1EE7big_remERK3mpzS3_RS1_.exit.i ] ; 3 uses
   %i.ik = phi i8 [ %i.ho, %bb.bg ], [ %.pre200, %_ZN11mpz_managerILb1EE7big_remERK3mpzS3_RS1_.exit.i ] ; 2 uses
@@ -226,11 +224,10 @@ _ZN11mpz_managerILb1EE3remERK3mpzS3_RS1_.exit:    ; preds = %bb.bg, %_ZN11mpz_ma
   %i.ip = load ptr, ptr %i.dd, align 8, !tbaa !44 ; 2 uses
   store ptr %i.ip, ptr %i.cz, align 8, !tbaa !44
   %i.iq = and i8 %i.il, 2
-  %i.ir = and i8 %i.ik, 2
-  %i.is = and i8 %i.il, -4
-  %11 = or disjoint i8 %i.ir, %i.is
-  %i.it = and i8 %i.ik, -4
-  %i.iu = or disjoint i8 %11, %.pre-phi211        ; 3 uses
+  %i.ir = and i8 %i.il, -4
+  %i.is = and i8 %i.ik, -4
+  %i.it = and i8 %i.ik, 3
+  %i.iu = or disjoint i8 %i.it, %i.ir             ; 3 uses
   store i8 %i.iu, ptr %i.cw, align 4
   store i32 %i.ij, ptr %7, align 8, !tbaa !36
   store i32 %i.in, ptr %10, align 8, !tbaa !36
@@ -240,15 +237,14 @@ _ZN11mpz_managerILb1EE3remERK3mpzS3_RS1_.exit:    ; preds = %bb.bg, %_ZN11mpz_ma
   %i.iw = and i8 %i.ii, -4
   %i.ix = or disjoint i8 %i.iw, %i.iq
   %i.iy = and i8 %i.ii, 3
-  %i.iz = or disjoint i8 %i.it, %i.iy             ; 2 uses
+  %i.iz = or disjoint i8 %i.iy, %i.is             ; 2 uses
   store i8 %i.iz, ptr %i.da, align 4
-  %i.ja = or disjoint i8 %i.ix, %.pre-phi209
+  %i.ja = or disjoint i8 %i.ix, %.pre-phi211
   store i8 %i.ja, ptr %i.dm, align 4
   %i.jb = icmp eq i32 %i.ij, 0
   br i1 %i.jb, label %._crit_edge191, label %bb.bf, !llvm.loop !153
 
 ._crit_edge191:                                   ; preds = %_ZN11mpz_managerILb1EE3remERK3mpzS3_RS1_.exit, %.preheader.._crit_edge191_crit_edge
-  %.pre-phi = phi i8 [ 1, %.preheader.._crit_edge191_crit_edge ], [ %.pre-phi211, %_ZN11mpz_managerILb1EE3remERK3mpzS3_RS1_.exit ]
   %i.jc = phi i8 [ %i.fx, %.preheader.._crit_edge191_crit_edge ], [ %i.iu, %_ZN11mpz_managerILb1EE3remERK3mpzS3_RS1_.exit ] ; 2 uses
   %i.jd = phi ptr [ %.pre204, %.preheader.._crit_edge191_crit_edge ], [ %i.ip, %_ZN11mpz_managerILb1EE3remERK3mpzS3_RS1_.exit ]
   %i.je = phi i32 [ %.pre203, %.preheader.._crit_edge191_crit_edge ], [ %i.im, %_ZN11mpz_managerILb1EE3remERK3mpzS3_RS1_.exit ]
@@ -261,14 +257,13 @@ _ZN11mpz_managerILb1EE3remERK3mpzS3_RS1_.exit:    ; preds = %bb.bg, %_ZN11mpz_ma
   store ptr %i.jh, ptr %i.cz, align 8, !tbaa !44
   %i.ji = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 2 uses
   %i.jj = load i8, ptr %i.ji, align 4             ; 2 uses
-  %i.jk = and i8 %i.jc, 2
-  %i.jl = and i8 %i.jj, -4
-  %12 = or disjoint i8 %i.jk, %i.jl
-  %i.jm = and i8 %i.jc, -4
-  %i.jn = or disjoint i8 %12, %.pre-phi
+  %i.jk = and i8 %i.jj, -4
+  %i.jl = and i8 %i.jc, -4
+  %i.jm = and i8 %i.jc, 3
+  %i.jn = or disjoint i8 %i.jm, %i.jk
   store i8 %i.jn, ptr %i.ji, align 4
   %i.jo = and i8 %i.jj, 3
-  %i.jp = or disjoint i8 %i.jm, %i.jo
+  %i.jp = or disjoint i8 %i.jl, %i.jo
   store i8 %i.jp, ptr %i.cw, align 4
   br label %_ZN11mpz_managerILb1EE3setER3mpzj.exit102
 
@@ -381,7 +376,7 @@ _ZN11mpz_managerILb1EE3remERK3mpzS3_RS1_.exit105: ; preds = %._crit_edge.thread,
   %i.ln = load i8, ptr %i.de, align 4             ; 2 uses
   %i.lo = and i8 %i.ln, -4
   %i.lp = and i8 %i.ln, 3
-  %i.lq = or disjoint i8 %i.li, %i.lp             ; 2 uses
+  %i.lq = or disjoint i8 %i.lp, %i.li             ; 2 uses
   store i8 %i.lq, ptr %i.da, align 4
   %i.lr = and i8 %i.lf, 3
   %i.ls = or disjoint i8 %i.lo, %i.lr
@@ -784,7 +779,7 @@ define weak_odr hidden noundef zeroext i1 @_ZN11mpz_managerILb1EE4rootER3mpzj(pt
 bb.a:
   %3 = alloca %class.mpz, align 8                 ; 18 uses
   %4 = alloca %class.mpz, align 8                 ; 18 uses
-  %5 = alloca %class.mpz, align 8                 ; 22 uses
+  %5 = alloca %class.mpz, align 8                 ; 21 uses
   %6 = alloca %class.mpz, align 8                 ; 8 uses
   %7 = alloca %class.mpz, align 8                 ; 6 uses
   %8 = alloca %class.mpz, align 8                 ; 6 uses
@@ -1187,7 +1182,6 @@ bb.an:                                            ; preds = %bb.al
 
 bb.ao:                                            ; preds = %bb.an
   %i.hy = load i32, ptr %3, align 8, !tbaa !36
-  store i32 %i.hy, ptr %5, align 8, !tbaa !36
   store i32 %i.hx, ptr %3, align 8, !tbaa !36
   %i.hz = load ptr, ptr %i.n, align 8, !tbaa !44
   %i.ia = load ptr, ptr %i.f, align 8, !tbaa !44
@@ -1205,7 +1199,6 @@ bb.ao:                                            ; preds = %bb.an
 
 bb.ap:                                            ; preds = %bb.an
   %i.ij = load i32, ptr %4, align 8, !tbaa !36
-  store i32 %i.ij, ptr %5, align 8, !tbaa !36
   store i32 %i.hx, ptr %4, align 8, !tbaa !36
   %i.ik = load ptr, ptr %i.n, align 8, !tbaa !44
   %i.il = load ptr, ptr %i.j, align 8, !tbaa !44
@@ -1222,8 +1215,10 @@ bb.ap:                                            ; preds = %bb.an
   br label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap, %bb.ao
+  %.sink40 = phi i32 [ %i.hy, %bb.ao ], [ %i.ij, %bb.ap ]
   %.sink40.a = phi ptr [ %i.ia, %bb.ao ], [ %i.il, %bb.ap ]
   %.sink = phi i8 [ %i.ig, %bb.ao ], [ %i.ir, %bb.ap ]
+  store i32 %.sink40, ptr %5, align 8, !tbaa !36
   store ptr %.sink40.a, ptr %i.n, align 8, !tbaa !44
   store i8 %.sink, ptr %i.k, align 4
   br label %.preheader, !llvm.loop !210
@@ -1626,16 +1621,14 @@ _ZN11mpz_managerILb0EE7big_remERK3mpzS3_RS1_.exit.i: ; preds = %bb.bj, %bb.bi, %
   %.pre197 = load i32, ptr %6, align 8, !tbaa !36
   %.pre198 = load i32, ptr %7, align 8, !tbaa !36
   %.pre199 = load i8, ptr %i.cw, align 4          ; 2 uses
-  %.pre200 = load i8, ptr %i.da, align 4          ; 2 uses
+  %.pre200 = load i8, ptr %i.da, align 4
   %.pre201 = load i32, ptr %10, align 8, !tbaa !36
   %.pre202 = load i8, ptr %i.dm, align 4
-  %.pre208 = and i8 %.pre199, 1
-  %.pre210 = and i8 %.pre200, 1
+  %.pre210 = and i8 %.pre199, 1
   br label %_ZN11mpz_managerILb0EE3remERK3mpzS3_RS1_.exit
 
 _ZN11mpz_managerILb0EE3remERK3mpzS3_RS1_.exit:    ; preds = %bb.bg, %_ZN11mpz_managerILb0EE7big_remERK3mpzS3_RS1_.exit.i
-  %.pre-phi211 = phi i8 [ 0, %bb.bg ], [ %.pre210, %_ZN11mpz_managerILb0EE7big_remERK3mpzS3_RS1_.exit.i ] ; 2 uses
-  %.pre-phi209 = phi i8 [ 0, %bb.bg ], [ %.pre208, %_ZN11mpz_managerILb0EE7big_remERK3mpzS3_RS1_.exit.i ]
+  %.pre-phi211 = phi i8 [ 0, %bb.bg ], [ %.pre210, %_ZN11mpz_managerILb0EE7big_remERK3mpzS3_RS1_.exit.i ]
   %i.in = phi i8 [ %i.ib, %bb.bg ], [ %.pre202, %_ZN11mpz_managerILb0EE7big_remERK3mpzS3_RS1_.exit.i ] ; 2 uses
   %i.io = phi i32 [ %i.hz, %bb.bg ], [ %.pre201, %_ZN11mpz_managerILb0EE7big_remERK3mpzS3_RS1_.exit.i ] ; 3 uses
   %i.ip = phi i8 [ %i.ho, %bb.bg ], [ %.pre200, %_ZN11mpz_managerILb0EE7big_remERK3mpzS3_RS1_.exit.i ] ; 2 uses
@@ -1647,11 +1640,10 @@ _ZN11mpz_managerILb0EE3remERK3mpzS3_RS1_.exit:    ; preds = %bb.bg, %_ZN11mpz_ma
   %i.iu = load ptr, ptr %i.dd, align 8, !tbaa !44 ; 2 uses
   store ptr %i.iu, ptr %i.cz, align 8, !tbaa !44
   %i.iv = and i8 %i.iq, 2
-  %i.iw = and i8 %i.ip, 2
-  %i.ix = and i8 %i.iq, -4
-  %11 = or disjoint i8 %i.iw, %i.ix
-  %i.iy = and i8 %i.ip, -4
-  %i.iz = or disjoint i8 %11, %.pre-phi211        ; 3 uses
+  %i.iw = and i8 %i.iq, -4
+  %i.ix = and i8 %i.ip, -4
+  %i.iy = and i8 %i.ip, 3
+  %i.iz = or disjoint i8 %i.iy, %i.iw             ; 3 uses
   store i8 %i.iz, ptr %i.cw, align 4
   store i32 %i.io, ptr %7, align 8, !tbaa !36
   store i32 %i.is, ptr %10, align 8, !tbaa !36
@@ -1661,15 +1653,14 @@ _ZN11mpz_managerILb0EE3remERK3mpzS3_RS1_.exit:    ; preds = %bb.bg, %_ZN11mpz_ma
   %i.jb = and i8 %i.in, -4
   %i.jc = or disjoint i8 %i.jb, %i.iv
   %i.jd = and i8 %i.in, 3
-  %i.je = or disjoint i8 %i.iy, %i.jd             ; 2 uses
+  %i.je = or disjoint i8 %i.jd, %i.ix             ; 2 uses
   store i8 %i.je, ptr %i.da, align 4
-  %i.jf = or disjoint i8 %i.jc, %.pre-phi209
+  %i.jf = or disjoint i8 %i.jc, %.pre-phi211
   store i8 %i.jf, ptr %i.dm, align 4
   %i.jg = icmp eq i32 %i.io, 0
   br i1 %i.jg, label %._crit_edge191, label %bb.bf, !llvm.loop !241
 
 ._crit_edge191:                                   ; preds = %_ZN11mpz_managerILb0EE3remERK3mpzS3_RS1_.exit, %.preheader.._crit_edge191_crit_edge
-  %.pre-phi = phi i8 [ 1, %.preheader.._crit_edge191_crit_edge ], [ %.pre-phi211, %_ZN11mpz_managerILb0EE3remERK3mpzS3_RS1_.exit ]
   %i.jh = phi i8 [ %i.fx, %.preheader.._crit_edge191_crit_edge ], [ %i.iz, %_ZN11mpz_managerILb0EE3remERK3mpzS3_RS1_.exit ] ; 2 uses
   %i.ji = phi ptr [ %.pre204, %.preheader.._crit_edge191_crit_edge ], [ %i.iu, %_ZN11mpz_managerILb0EE3remERK3mpzS3_RS1_.exit ]
   %i.jj = phi i32 [ %.pre203, %.preheader.._crit_edge191_crit_edge ], [ %i.ir, %_ZN11mpz_managerILb0EE3remERK3mpzS3_RS1_.exit ]
@@ -1682,14 +1673,13 @@ _ZN11mpz_managerILb0EE3remERK3mpzS3_RS1_.exit:    ; preds = %bb.bg, %_ZN11mpz_ma
   store ptr %i.jm, ptr %i.cz, align 8, !tbaa !44
   %i.jn = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 2 uses
   %i.jo = load i8, ptr %i.jn, align 4             ; 2 uses
-  %i.jp = and i8 %i.jh, 2
-  %i.jq = and i8 %i.jo, -4
-  %12 = or disjoint i8 %i.jp, %i.jq
-  %i.jr = and i8 %i.jh, -4
-  %i.js = or disjoint i8 %12, %.pre-phi
+  %i.jp = and i8 %i.jo, -4
+  %i.jq = and i8 %i.jh, -4
+  %i.jr = and i8 %i.jh, 3
+  %i.js = or disjoint i8 %i.jr, %i.jp
   store i8 %i.js, ptr %i.jn, align 4
   %i.jt = and i8 %i.jo, 3
-  %i.ju = or disjoint i8 %i.jr, %i.jt
+  %i.ju = or disjoint i8 %i.jq, %i.jt
   store i8 %i.ju, ptr %i.cw, align 4
   br label %_ZN11mpz_managerILb0EE3setER3mpzj.exit102
 
@@ -1807,7 +1797,7 @@ _ZN11mpz_managerILb0EE3remERK3mpzS3_RS1_.exit105: ; preds = %._crit_edge.thread,
   %i.lx = load i8, ptr %i.de, align 4             ; 2 uses
   %i.ly = and i8 %i.lx, -4
   %i.lz = and i8 %i.lx, 3
-  %i.ma = or disjoint i8 %i.ls, %i.lz             ; 2 uses
+  %i.ma = or disjoint i8 %i.lz, %i.ls             ; 2 uses
   store i8 %i.ma, ptr %i.da, align 4
   %i.mb = and i8 %i.lp, 3
   %i.mc = or disjoint i8 %i.ly, %i.mb
@@ -2210,7 +2200,7 @@ define weak_odr hidden noundef zeroext i1 @_ZN11mpz_managerILb0EE4rootER3mpzj(pt
 bb.a:
   %3 = alloca %class.mpz, align 8                 ; 18 uses
   %4 = alloca %class.mpz, align 8                 ; 18 uses
-  %5 = alloca %class.mpz, align 8                 ; 22 uses
+  %5 = alloca %class.mpz, align 8                 ; 21 uses
   %6 = alloca %class.mpz, align 8                 ; 8 uses
   %7 = alloca %class.mpz, align 8                 ; 6 uses
   %8 = alloca %class.mpz, align 8                 ; 6 uses
@@ -2613,7 +2603,6 @@ bb.an:                                            ; preds = %bb.al
 
 bb.ao:                                            ; preds = %bb.an
   %i.hy = load i32, ptr %3, align 8, !tbaa !36
-  store i32 %i.hy, ptr %5, align 8, !tbaa !36
   store i32 %i.hx, ptr %3, align 8, !tbaa !36
   %i.hz = load ptr, ptr %i.n, align 8, !tbaa !44
   %i.ia = load ptr, ptr %i.f, align 8, !tbaa !44
@@ -2631,7 +2620,6 @@ bb.ao:                                            ; preds = %bb.an
 
 bb.ap:                                            ; preds = %bb.an
   %i.ij = load i32, ptr %4, align 8, !tbaa !36
-  store i32 %i.ij, ptr %5, align 8, !tbaa !36
   store i32 %i.hx, ptr %4, align 8, !tbaa !36
   %i.ik = load ptr, ptr %i.n, align 8, !tbaa !44
   %i.il = load ptr, ptr %i.j, align 8, !tbaa !44
@@ -2648,8 +2636,10 @@ bb.ap:                                            ; preds = %bb.an
   br label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap, %bb.ao
+  %.sink40 = phi i32 [ %i.hy, %bb.ao ], [ %i.ij, %bb.ap ]
   %.sink40.a = phi ptr [ %i.ia, %bb.ao ], [ %i.il, %bb.ap ]
   %.sink = phi i8 [ %i.ig, %bb.ao ], [ %i.ir, %bb.ap ]
+  store i32 %.sink40, ptr %5, align 8, !tbaa !36
   store ptr %.sink40.a, ptr %i.n, align 8, !tbaa !44
   store i8 %.sink, ptr %i.k, align 4
   br label %.preheader, !llvm.loop !298

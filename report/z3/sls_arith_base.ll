@@ -205,13 +205,13 @@ bb.s:                                             ; preds = %_Z3modRK8rationalS1
   store ptr %i.ej, ptr %i.ei, align 8, !tbaa !410
   %i.el = load i8, ptr %i.n, align 4              ; 2 uses
   %i.em = getelementptr inbounds nuw i8, ptr %6, i64 20
-  %i.en = and i8 %.sink, 2
-  %i.eo = and i8 %i.el, -4
-  %30 = or disjoint i8 %i.en, %i.eo
-  %31 = and i8 %.sink, -4
-  store i8 %30, ptr %i.n, align 4
+  %i.en = and i8 %i.el, -4
+  %i.eo = and i8 %.sink, -4
+  %30 = and i8 %.sink, 2
+  %31 = or disjoint i8 %30, %i.en
+  store i8 %31, ptr %i.n, align 4
   %i.ep = and i8 %i.el, 3
-  %i.eq = or disjoint i8 %31, %i.ep
+  %i.eq = or disjoint i8 %i.eo, %i.ep
   store i8 %i.eq, ptr %i.em, align 4
   %i.er = load ptr, ptr @_ZN8rational13g_mpq_managerE, align 8, !tbaa !84 ; 2 uses
   invoke void @_ZN11mpz_managerILb1EE3delEPS0_R3mpz(ptr noundef %i.er, ptr noundef nonnull align 8 dereferenceable(32) %6)
@@ -614,13 +614,13 @@ bb.bw:                                            ; preds = %_Z3divRK8rationalS1
   store ptr %i.oz, ptr %i.oy, align 8, !tbaa !410
   %i.pb = load i8, ptr %i.n, align 4              ; 2 uses
   %i.pc = getelementptr inbounds nuw i8, ptr %13, i64 20
-  %i.pd = and i8 %.sink312, 2
-  %i.pe = and i8 %i.pb, -4
-  %32 = or disjoint i8 %i.pd, %i.pe
-  %33 = and i8 %.sink312, -4
-  store i8 %32, ptr %i.n, align 4
+  %i.pd = and i8 %i.pb, -4
+  %i.pe = and i8 %.sink312, -4
+  %32 = and i8 %.sink312, 2
+  %33 = or disjoint i8 %32, %i.pd
+  store i8 %33, ptr %i.n, align 4
   %i.pf = and i8 %i.pb, 3
-  %i.pg = or disjoint i8 %33, %i.pf
+  %i.pg = or disjoint i8 %i.pe, %i.pf
   store i8 %i.pg, ptr %i.pc, align 4
   %i.ph = load ptr, ptr @_ZN8rational13g_mpq_managerE, align 8, !tbaa !84 ; 2 uses
   invoke void @_ZN11mpz_managerILb1EE3delEPS0_R3mpz(ptr noundef %i.ph, ptr noundef nonnull align 8 dereferenceable(32) %13)

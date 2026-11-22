@@ -205,10 +205,10 @@ _ZN8rationalD2Ev.exit:                            ; preds = %.noexc.i
   store ptr %i.ap, ptr %i.z, align 8, !tbaa !217
   store ptr null, ptr %i.ag, align 8, !tbaa !217
   %i.aq = load i8, ptr %i.ad, align 4             ; 2 uses
-  %i.ar = and i8 %i.aq, 3
-  store i8 %i.ar, ptr %i.y, align 4
-  %4 = and i8 %i.aq, -4
-  store i8 %4, ptr %i.ad, align 4
+  %i.ar = and i8 %i.aq, -4
+  %4 = and i8 %i.aq, 3
+  store i8 %4, ptr %i.y, align 4
+  store i8 %i.ar, ptr %i.ad, align 4
   store i32 1, ptr %i.aa, align 8, !tbaa !87
   store i32 1, ptr %i.ah, align 8, !tbaa !87
   %i.as = load ptr, ptr %i.al, align 8, !tbaa !217
