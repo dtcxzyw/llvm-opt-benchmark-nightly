@@ -205,13 +205,11 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.d = load i64, ptr %0, align 8, !tbaa !31
   %i.e = sub nuw nsw i32 64, %i.b
-  %i.f = zext nneg i32 %i.e to i64                ; 4 uses
+  %i.f = zext nneg i32 %i.e to i64                ; 2 uses
   %i.g = shl i64 %i.d, %i.f
-  %2 = ashr exact i64 %i.g, %i.f
   %i.h = load i64, ptr %1, align 8, !tbaa !31
   %i.i = shl i64 %i.h, %i.f
-  %3 = ashr exact i64 %i.i, %i.f
-  %i.j = tail call i32 @llvm.scmp.i32.i64(i64 %2, i64 %3)
+  %i.j = tail call i32 @llvm.scmp.i32.i64(i64 %i.g, i64 %i.i)
   br label %_ZN4llvh5APInt9tcCompareEPKmS2_j.exit
 
 bb.c:                                             ; preds = %bb.a
