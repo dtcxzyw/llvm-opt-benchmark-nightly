@@ -1,0 +1,492 @@
+diff --git a/llvm/include/llvm/Analysis/LazyValueInfo.h b/llvm/include/llvm/Analysis/LazyValueInfo.h
+index 23f4d04018cf2d..e8bceb0f43fed0 100644
+--- a/llvm/include/llvm/Analysis/LazyValueInfo.h
++++ b/llvm/include/llvm/Analysis/LazyValueInfo.h
+@@ -85,8 +85,12 @@ namespace llvm {
+                                       bool UseBlockValue);
+ 
+     /// Determine whether the specified value is known to be a constant at the
+-    /// specified instruction. Return null if not.
+-    LLVM_ABI Constant *getConstant(Value *V, Instruction *CtxI);
++    /// specified instruction. Return null if not. If \p U is provided and the
++    /// constant was derived from an equality predicate, the constant is
++    /// returned only if it may replace \p V at that use, as the two may differ
++    /// in pointer provenance.
++    LLVM_ABI Constant *getConstant(Value *V, Instruction *CtxI,
++                                   const Use *U = nullptr);
+ 
+     /// Return the ConstantRange constraint that is known to hold for the
+     /// specified value at the specified instruction. This may only be called
+@@ -103,7 +107,8 @@ namespace llvm {
+     /// constant on the specified edge.  Return null if not.
+     LLVM_ABI Constant *getConstantOnEdge(Value *V, BasicBlock *FromBB,
+                                          BasicBlock *ToBB,
+-                                         Instruction *CtxI = nullptr);
++                                         Instruction *CtxI = nullptr,
++                                         const Use *U = nullptr);
+ 
+     /// Return the ConstantRage constraint that is known to hold for the
+     /// specified value on the specified edge. This may be only be called
+diff --git a/llvm/include/llvm/Transforms/Scalar/JumpThreading.h b/llvm/include/llvm/Transforms/Scalar/JumpThreading.h
+index 92f6d750fc6d1f..316484ed7af700 100644
+--- a/llvm/include/llvm/Transforms/Scalar/JumpThreading.h
++++ b/llvm/include/llvm/Transforms/Scalar/JumpThreading.h
+@@ -150,7 +150,7 @@ class JumpThreadingPass : public OptionalPassInfoMixin<JumpThreadingPass> {
+ 
+   LLVM_ABI Constant *evaluateOnPredecessorEdge(BasicBlock *BB,
+                                                BasicBlock *PredPredBB,
+-                                               Value *cond,
++                                               Value *Cond,
+                                                const DataLayout &DL);
+   LLVM_ABI bool maybethreadThroughTwoBasicBlocks(BasicBlock *BB, Value *Cond);
+   LLVM_ABI void threadThroughTwoBasicBlocks(BasicBlock *PredPredBB,
+@@ -219,8 +219,9 @@ class JumpThreadingPass : public OptionalPassInfoMixin<JumpThreadingPass> {
+ 
+   // Internal overload of evaluateOnPredecessorEdge().
+   Constant *evaluateOnPredecessorEdge(BasicBlock *BB, BasicBlock *PredPredBB,
+-                                      Value *cond, const DataLayout &DL,
+-                                      SmallPtrSet<Value *, 8> &Visited);
++                                      Value *Cond, const DataLayout &DL,
++                                      SmallPtrSet<Value *, 8> &Visited,
++                                      const Use *U = nullptr);
+ };
+ 
+ } // end namespace llvm
+diff --git a/llvm/lib/Analysis/LazyValueInfo.cpp b/llvm/lib/Analysis/LazyValueInfo.cpp
+index 4b06917cf0735b..4e3afb8e8a57c5 100644
+--- a/llvm/lib/Analysis/LazyValueInfo.cpp
++++ b/llvm/lib/Analysis/LazyValueInfo.cpp
+@@ -18,6 +18,7 @@
+ #include "llvm/Analysis/AssumptionCache.h"
+ #include "llvm/Analysis/ConstantFolding.h"
+ #include "llvm/Analysis/InstructionSimplify.h"
++#include "llvm/Analysis/Loads.h"
+ #include "llvm/Analysis/Passes.h"
+ #include "llvm/Analysis/TargetLibraryInfo.h"
+ #include "llvm/Analysis/ValueLattice.h"
+@@ -1397,9 +1398,14 @@ std::optional<ValueLatticeElement> LazyValueInfoImpl::getValueFromICmpCondition(
+ 
+   if (isa<Constant>(RHS)) {
+     if (ICI->isEquality() && LHS == Val) {
+-      if (EdgePred == ICmpInst::ICMP_EQ)
+-        return ValueLatticeElement::get(cast<Constant>(RHS));
+-      else if (!isa<UndefValue>(RHS))
++      if (EdgePred == ICmpInst::ICMP_EQ) {
++        auto Result = ValueLatticeElement::get(cast<Constant>(RHS));
++        // Record the fact that the constant ptr may have different provenance.
++        if (Val->getType()->isPtrOrPtrVectorTy())
++          Result.setMayHaveDifferentProvenance(true);
++        return Result;
++      }
++      if (!isa<UndefValue>(RHS))
+         return ValueLatticeElement::getNot(cast<Constant>(RHS));
+     }
+   }
+@@ -2033,22 +2039,42 @@ static bool isKnownNonConstant(Value *V) {
+   return false;
+ }
+ 
+-Constant *LazyValueInfo::getConstant(Value *V, Instruction *CtxI) {
++/// Return the constant \p V is known to be equal to from \p Result, if any.
++/// A pointer constant derived from an equality condition may differ from \p V
++/// in provenance. Such a constant is only returned if \p U, the use of \p V it
++/// is to be substituted in, is provided, and the replacement is valid for that
++/// use.
++static Constant *getConstantFromLattice(const ValueLatticeElement &Result,
++                                        Value *V, const Use *U,
++                                        const DataLayout &DL) {
++  Constant *C = nullptr;
++  if (Result.isConstant())
++    C = Result.getConstant();
++  else if (Result.isConstantRange())
++    if (const APInt *SingleVal = Result.getConstantRange().getSingleElement())
++      C = ConstantInt::get(V->getType(), *SingleVal);
++  if (!C)
++    return nullptr;
++
++  if (Result.mayHaveDifferentProvenance()) {
++    if (!U)
++      return nullptr;
++    assert(U->get() == V && "Must be a use of V.");
++    if (!canReplacePointersInUseIfEqual(*U, C, DL))
++      return nullptr;
++  }
++  return C;
++}
++
++Constant *LazyValueInfo::getConstant(Value *V, Instruction *CtxI,
++                                     const Use *U) {
+   // Bail out early if V is known not to be a Constant.
+   if (isKnownNonConstant(V))
+     return nullptr;
+ 
+   BasicBlock *BB = CtxI->getParent();
+   ValueLatticeElement Result = getOrCreateImpl().getValueInBlock(V, BB, CtxI);
+-
+-  if (Result.isConstant())
+-    return Result.getConstant();
+-  if (Result.isConstantRange()) {
+-    const ConstantRange &CR = Result.getConstantRange();
+-    if (const APInt *SingleVal = CR.getSingleElement())
+-      return ConstantInt::get(V->getType(), *SingleVal);
+-  }
+-  return nullptr;
++  return getConstantFromLattice(Result, V, U, BB->getDataLayout());
+ }
+ 
+ ConstantRange LazyValueInfo::getConstantRange(Value *V, Instruction *CtxI,
+@@ -2067,19 +2093,11 @@ ConstantRange LazyValueInfo::getConstantRangeAtUse(const Use &U,
+ /// Determine whether the specified value is known to be a
+ /// constant on the specified edge. Return null if not.
+ Constant *LazyValueInfo::getConstantOnEdge(Value *V, BasicBlock *FromBB,
+-                                           BasicBlock *ToBB,
+-                                           Instruction *CtxI) {
++                                           BasicBlock *ToBB, Instruction *CtxI,
++                                           const Use *U) {
+   ValueLatticeElement Result =
+       getOrCreateImpl().getValueOnEdge(V, FromBB, ToBB, CtxI);
+-
+-  if (Result.isConstant())
+-    return Result.getConstant();
+-  if (Result.isConstantRange()) {
+-    const ConstantRange &CR = Result.getConstantRange();
+-    if (const APInt *SingleVal = CR.getSingleElement())
+-      return ConstantInt::get(V->getType(), *SingleVal);
+-  }
+-  return nullptr;
++  return getConstantFromLattice(Result, V, U, ToBB->getDataLayout());
+ }
+ 
+ ConstantRange LazyValueInfo::getConstantRangeOnEdge(Value *V,
+diff --git a/llvm/lib/Transforms/Scalar/CorrelatedValuePropagation.cpp b/llvm/lib/Transforms/Scalar/CorrelatedValuePropagation.cpp
+index eea73f4ec67353..f77975c8298720 100644
+--- a/llvm/lib/Transforms/Scalar/CorrelatedValuePropagation.cpp
++++ b/llvm/lib/Transforms/Scalar/CorrelatedValuePropagation.cpp
+@@ -18,6 +18,7 @@
+ #include "llvm/Analysis/GlobalsModRef.h"
+ #include "llvm/Analysis/InstructionSimplify.h"
+ #include "llvm/Analysis/LazyValueInfo.h"
++#include "llvm/Analysis/Loads.h"
+ #include "llvm/Analysis/ValueTracking.h"
+ #include "llvm/IR/Attributes.h"
+ #include "llvm/IR/BasicBlock.h"
+@@ -144,19 +145,19 @@ class CVPImpl {
+   bool processReturn(ReturnInst *RI);
+ 
+   // Helpers.
+-  Constant *getConstantAt(Value *V, Instruction *At);
++  Constant *getConstantAt(Value *V, Instruction *At, const Use *U = nullptr);
+   bool simplifyCommonValuePhi(PHINode *P);
+   bool constantFoldCmp(CmpInst *Cmp);
+   bool willNotOverflow(BinaryOpIntrinsic *BO);
+-  Value *getValueOnEdge(Value *Incoming, BasicBlock *From, BasicBlock *To,
+-                        Instruction *CtxI);
++  Value *getValueOnEdge(const Use &IncomingUse, BasicBlock *From,
++                        BasicBlock *To, Instruction *CtxI);
+   NoWrapFlags inferNoWrapFromUses(BinaryOperator *BinOp, bool WantNSW,
+                                   bool WantNUW);
+ };
+ } // end anonymous namespace
+ 
+-Constant *CVPImpl::getConstantAt(Value *V, Instruction *At) {
+-  if (Constant *C = LVI->getConstant(V, At))
++Constant *CVPImpl::getConstantAt(Value *V, Instruction *At, const Use *U) {
++  if (Constant *C = LVI->getConstant(V, At, U))
+     return C;
+ 
+   // TODO: The following really should be sunk inside LVI's core algorithm, or
+@@ -243,10 +244,20 @@ bool CVPImpl::simplifyCommonValuePhi(PHINode *P) {
+   // We have a phi with exactly 1 variable incoming value and 1 or more constant
+   // incoming values. See if all constant incoming values can be mapped back to
+   // the same incoming variable value.
++  const DataLayout &DL = P->getDataLayout();
+   for (auto &IncomingConstant : IncomingConstants) {
+     Constant *C = IncomingConstant.first;
+-    BasicBlock *IncomingBB = P->getIncomingBlock(IncomingConstant.second);
+-    if (C != LVI->getConstantOnEdge(CommonValue, IncomingBB, ToBB, P))
++    unsigned Idx = IncomingConstant.second;
++    BasicBlock *IncomingBB = P->getIncomingBlock(Idx);
++    // Is CommonValue equal to the incoming constant on this edge?
++    Constant *Res = LVI->getPredicateOnEdge(ICmpInst::ICMP_EQ, CommonValue, C,
++                                            IncomingBB, ToBB, P);
++    if (!Res || !Res->isOneValue())
++      return false;
++
++    // The constant incoming pointer may not be freely substituted with
++    // CommonValue if their provenance differs.
++    if (!canReplacePointersInUseIfEqual(P->getOperandUse(Idx), CommonValue, DL))
+       return false;
+   }
+ 
+@@ -264,9 +275,11 @@ bool CVPImpl::simplifyCommonValuePhi(PHINode *P) {
+   return true;
+ }
+ 
+-Value *CVPImpl::getValueOnEdge(Value *Incoming, BasicBlock *From,
++Value *CVPImpl::getValueOnEdge(const Use &IncomingUse, BasicBlock *From,
+                                BasicBlock *To, Instruction *CtxI) {
+-  if (Constant *C = LVI->getConstantOnEdge(Incoming, From, To, CtxI))
++  Value *Incoming = IncomingUse.get();
++  if (Constant *C =
++          LVI->getConstantOnEdge(Incoming, From, To, CtxI, &IncomingUse))
+     return C;
+ 
+   // Look if the incoming value is a select with a scalar condition for which
+@@ -317,11 +330,11 @@ bool CVPImpl::processPHI(PHINode *P) {
+ 
+   BasicBlock *BB = P->getParent();
+   for (unsigned I = 0, E = P->getNumIncomingValues(); I < E; ++I) {
+-    Value *Incoming = P->getIncomingValue(I);
+-    if (isa<Constant>(Incoming))
++    const Use &IncomingUse = P->getOperandUse(I);
++    if (isa<Constant>(IncomingUse.get()))
+       continue;
+ 
+-    Value *V = getValueOnEdge(Incoming, P->getIncomingBlock(I), BB, P);
++    Value *V = getValueOnEdge(IncomingUse, P->getIncomingBlock(I), BB, P);
+     if (V) {
+       P->setIncomingValue(I, V);
+       Changed = true;
+@@ -776,7 +789,7 @@ bool CVPImpl::processCallSite(CallBase &CB) {
+       if (V->getType()->isVectorTy()) continue;
+       if (isa<Constant>(V)) continue;
+ 
+-      Constant *C = LVI->getConstant(V, &CB);
++      Constant *C = LVI->getConstant(V, &CB, &U);
+       if (!C) continue;
+       U.set(C);
+       Changed = true;
+@@ -1393,7 +1406,7 @@ bool CVPImpl::processReturn(ReturnInst *RI) {
+ 
+   if (isa<Constant>(RetVal))
+     return false; // nothing to do
+-  if (Constant *C = getConstantAt(RetVal, RI)) {
++  if (Constant *C = getConstantAt(RetVal, RI, &RI->getOperandUse(0))) {
+     ++NumReturns;
+     RI->replaceUsesOfWith(RetVal, C);
+     return true;
+diff --git a/llvm/lib/Transforms/Scalar/JumpThreading.cpp b/llvm/lib/Transforms/Scalar/JumpThreading.cpp
+index 7f49cb33901d27..ed867ba3d8b999 100644
+--- a/llvm/lib/Transforms/Scalar/JumpThreading.cpp
++++ b/llvm/lib/Transforms/Scalar/JumpThreading.cpp
+@@ -1504,7 +1504,7 @@ Constant *JumpThreadingPass::evaluateOnPredecessorEdge(BasicBlock *BB,
+ 
+ Constant *JumpThreadingPass::evaluateOnPredecessorEdge(
+     BasicBlock *BB, BasicBlock *PredPredBB, Value *V, const DataLayout &DL,
+-    SmallPtrSet<Value *, 8> &Visited) {
++    SmallPtrSet<Value *, 8> &Visited, const Use *U) {
+   if (!Visited.insert(V).second)
+     return nullptr;
+   llvm::scope_exit _([&Visited, V]() { Visited.erase(V); });
+@@ -1519,7 +1519,7 @@ Constant *JumpThreadingPass::evaluateOnPredecessorEdge(
+   // Consult LVI if V is not an instruction in BB or PredBB.
+   Instruction *I = dyn_cast<Instruction>(V);
+   if (!I || (I->getParent() != BB && I->getParent() != PredBB)) {
+-    return LVI->getConstantOnEdge(V, PredPredBB, PredBB, nullptr);
++    return LVI->getConstantOnEdge(V, PredPredBB, PredBB, nullptr, U);
+   }
+ 
+   // Look into a PHI argument.
+@@ -1536,10 +1536,14 @@ Constant *JumpThreadingPass::evaluateOnPredecessorEdge(
+   // instructions in unreachable code and check before going into recursion.
+   if (CmpInst *CondCmp = dyn_cast<CmpInst>(V)) {
+     if (CondCmp->getParent() == BB) {
+-      Constant *Op0 = evaluateOnPredecessorEdge(
+-          BB, PredPredBB, CondCmp->getOperand(0), DL, Visited);
+-      Constant *Op1 = evaluateOnPredecessorEdge(
+-          BB, PredPredBB, CondCmp->getOperand(1), DL, Visited);
++      // Pass the uses of the operands as well, so as to allow folding of
++      // comparisons, which do not expose pointer provenance.
++      Constant *Op0 =
++          evaluateOnPredecessorEdge(BB, PredPredBB, CondCmp->getOperand(0), DL,
++                                    Visited, &CondCmp->getOperandUse(0));
++      Constant *Op1 =
++          evaluateOnPredecessorEdge(BB, PredPredBB, CondCmp->getOperand(1), DL,
++                                    Visited, &CondCmp->getOperandUse(1));
+       if (Op0 && Op1) {
+         return ConstantFoldCompareInstOperands(CondCmp->getPredicate(), Op0,
+                                                Op1, DL);
+diff --git a/llvm/test/Transforms/CorrelatedValuePropagation/assume-equality-pointers.ll b/llvm/test/Transforms/CorrelatedValuePropagation/assume-equality-pointers.ll
+new file mode 100644
+index 00000000000000..a831a80135e42b
+--- /dev/null
++++ b/llvm/test/Transforms/CorrelatedValuePropagation/assume-equality-pointers.ll
+@@ -0,0 +1,117 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt < %s -passes=correlated-propagation -S | FileCheck %s
++
++; Ensure the replacement of one pointer with another is subject to the approximations of
++; canReplacePointersInUseIfEqual(). In the following cases, replacing a pointer with an
++; inttoptr constant (which may have non-existent provenance), or with a global ptr (whose
++; provenance is confined to the bounds of its object) would be an invalid refinement.
++
++@g = global i64 0
++
++define ptr @assume_ptr_equality(ptr %x) {
++; CHECK-LABEL: define ptr @assume_ptr_equality(
++; CHECK-SAME: ptr [[X:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C:%.*]] = icmp eq ptr [[X]], inttoptr (i64 12345678 to ptr)
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C]])
++; CHECK-NEXT:    ret ptr [[X]]
++;
++entry:
++  %c = icmp eq ptr %x, inttoptr (i64 12345678 to ptr)
++  call void @llvm.assume(i1 %c)
++  ret ptr %x
++}
++
++define ptr @assume_ptr_equality_return_value(ptr %p) {
++; CHECK-LABEL: define ptr @assume_ptr_equality_return_value(
++; CHECK-SAME: ptr [[P:%.*]]) {
++; CHECK-NEXT:    [[C:%.*]] = icmp eq ptr [[P]], inttoptr (i64 -1 to ptr)
++; CHECK-NEXT:    br i1 [[C]], label %[[BB_IF:.*]], label %[[BB_ELSE:.*]]
++; CHECK:       [[BB_IF]]:
++; CHECK-NEXT:    ret ptr [[P]]
++; CHECK:       [[BB_ELSE]]:
++; CHECK-NEXT:    ret ptr null
++;
++  %c = icmp eq ptr %p, inttoptr (i64 -1 to ptr)
++  br i1 %c, label %bb.if, label %bb.else
++
++bb.if:
++  ret ptr %p
++
++bb.else:
++  ret ptr null
++}
++
++define ptr @assume_ptr_equality_phi_node(ptr %p) {
++; CHECK-LABEL: define ptr @assume_ptr_equality_phi_node(
++; CHECK-SAME: ptr [[P:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[C:%.*]] = icmp eq ptr [[P]], @g
++; CHECK-NEXT:    br i1 [[C]], label %[[JOIN:.*]], label %[[BB_ELSE:.*]]
++; CHECK:       [[BB_ELSE]]:
++; CHECK-NEXT:    br label %[[JOIN]]
++; CHECK:       [[JOIN]]:
++; CHECK-NEXT:    [[PHI:%.*]] = phi ptr [ [[P]], %[[ENTRY]] ], [ @g, %[[BB_ELSE]] ]
++; CHECK-NEXT:    ret ptr [[PHI]]
++;
++entry:
++  %c = icmp eq ptr %p, @g
++  br i1 %c, label %join, label %bb.else
++
++bb.else:
++  br label %join
++
++join:
++  %phi = phi ptr [ %p, %entry ], [ @g, %bb.else ]
++  ret ptr %phi
++}
++
++define ptr @assume_ptr_equality_common_value_phi_node(ptr %p) {
++; CHECK-LABEL: define ptr @assume_ptr_equality_common_value_phi_node(
++; CHECK-SAME: ptr [[P:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[C:%.*]] = icmp eq ptr [[P]], inttoptr (i64 -1 to ptr)
++; CHECK-NEXT:    br i1 [[C]], label %[[JOIN:.*]], label %[[BB_ELSE:.*]]
++; CHECK:       [[BB_ELSE]]:
++; CHECK-NEXT:    br label %[[JOIN]]
++; CHECK:       [[JOIN]]:
++; CHECK-NEXT:    [[PHI:%.*]] = phi ptr [ inttoptr (i64 -1 to ptr), %[[ENTRY]] ], [ [[P]], %[[BB_ELSE]] ]
++; CHECK-NEXT:    ret ptr [[PHI]]
++;
++entry:
++  %c = icmp eq ptr %p, inttoptr (i64 -1 to ptr)
++  br i1 %c, label %join, label %bb.else
++
++bb.else:
++  br label %join
++
++join:
++  %phi = phi ptr [ inttoptr (i64 -1 to ptr), %entry ], [ %p, %bb.else ]
++  ret ptr %phi
++}
++
++; Replacing the pointer in the last comparison would continue being allowed.
++define i1 @assume_ptr_equality_phi_node_replacement_valid(ptr %p, ptr %q) {
++; CHECK-LABEL: define i1 @assume_ptr_equality_phi_node_replacement_valid(
++; CHECK-SAME: ptr [[P:%.*]], ptr [[Q:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C:%.*]] = icmp eq ptr [[P]], @g
++; CHECK-NEXT:    br i1 [[C]], label %[[JOIN:.*]], label %[[BB_ELSE:.*]]
++; CHECK:       [[BB_ELSE]]:
++; CHECK-NEXT:    br label %[[JOIN]]
++; CHECK:       [[JOIN]]:
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq ptr @g, [[Q]]
++; CHECK-NEXT:    ret i1 [[CMP]]
++;
++entry:
++  %c = icmp eq ptr %p, @g
++  br i1 %c, label %join, label %bb.else
++
++bb.else:
++  br label %join
++
++join:
++  %phi = phi ptr [ %p, %entry ], [ @g, %bb.else ]
++  %cmp = icmp eq ptr %phi, %q
++  ret i1 %cmp
++}
+diff --git a/llvm/test/Transforms/CorrelatedValuePropagation/phi-common-val.ll b/llvm/test/Transforms/CorrelatedValuePropagation/phi-common-val.ll
+index 7e712947e37ad9..0639a7b9606d9a 100644
+--- a/llvm/test/Transforms/CorrelatedValuePropagation/phi-common-val.ll
++++ b/llvm/test/Transforms/CorrelatedValuePropagation/phi-common-val.ll
+@@ -216,3 +216,56 @@ join2:
+   %phi = phi i8 [ 0, %join1 ], [ %y, %else2 ]
+   ret i8 %phi
+ }
++
++@g = global i32 0
++
++; Replacing the PN w/ the incoming non-constant (%p) is fine here, as we are merely
++; comparing addresses (icmp doesn't inspect the provenance of pointer %phi).
++define i1 @common_value_phi_global_valid_replacement(ptr %p, ptr %q) {
++; CHECK-LABEL: @common_value_phi_global_valid_replacement(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[C:%.*]] = icmp eq ptr [[P:%.*]], @g
++; CHECK-NEXT:    br i1 [[C]], label [[JOIN:%.*]], label [[ELSE:%.*]]
++; CHECK:       else:
++; CHECK-NEXT:    br label [[JOIN]]
++; CHECK:       join:
++; CHECK-NEXT:    [[RV:%.*]] = icmp eq ptr [[P]], [[Q:%.*]]
++; CHECK-NEXT:    ret i1 [[RV]]
++;
++entry:
++  %c = icmp eq ptr %p, @g
++  br i1 %c, label %join, label %else
++
++else:
++  br label %join
++
++join:
++  %phi = phi ptr [ @g, %entry ], [ %p, %else ]
++  %rv = icmp eq ptr %phi, %q
++  ret i1 %rv
++}
++
++; The PN cannot be simplified here to %x (the common value), as on the edge through
++; which the constant 1 flows into the PN (i.e., entry to join), %x is known zero, not one.
++define i32 @common_value_phi_wrong_constant(i32 %x) {
++; CHECK-LABEL: @common_value_phi_wrong_constant(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[C:%.*]] = icmp eq i32 [[X:%.*]], 0
++; CHECK-NEXT:    br i1 [[C]], label [[JOIN:%.*]], label [[ELSE:%.*]]
++; CHECK:       else:
++; CHECK-NEXT:    br label [[JOIN]]
++; CHECK:       join:
++; CHECK-NEXT:    [[PHI:%.*]] = phi i32 [ 1, [[ENTRY:%.*]] ], [ [[X]], [[ELSE]] ]
++; CHECK-NEXT:    ret i32 [[PHI]]
++;
++entry:
++  %c = icmp eq i32 %x, 0
++  br i1 %c, label %join, label %else
++
++else:
++  br label %join
++
++join:
++  %phi = phi i32 [ 1, %entry ], [ %x, %else ]
++  ret i32 %phi
++}
