@@ -204,7 +204,7 @@ trace_vtd_fault_disabled.exit:                    ; preds = %bb.f, %bb.e, %bb.d,
 ; Function Attrs: nounwind sspstrong uwtable
 define internal fastcc void @vtd_report_frcd_fault(ptr nofree noundef captures(none) %0, i64 noundef range(i64 0, 65536) %1, i64 noundef range(i64 4294967296, 4683743612465315840) %2, i64 noundef range(i64 0, -4095) %3) unnamed_addr #0 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 1972 ; 8 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 1972 ; 7 uses
   %.val.i = load i32, ptr %i.a, align 1           ; 2 uses
   %i.b = zext i32 %.val.i to i64                  ; 2 uses
   %i.c = and i64 %i.b, 1
@@ -327,13 +327,9 @@ bb.q:                                             ; preds = %vtd_set_frcd_and_up
 
 bb.r:                                             ; preds = %vtd_record_frcd.exit
   %i.af = load i16, ptr %i.j, align 2             ; 2 uses
-  %4 = zext i16 %i.af to i32
-  %5 = shl nuw nsw i32 %4, 8
-  %6 = and i32 %5, 65280
-  %.val.i29 = load i32, ptr %i.a, align 2
-  %7 = and i32 %.val.i29, -65281                  ; 2 uses
-  %8 = or disjoint i32 %6, %7
-  store i32 %8, ptr %i.a, align 2
+  %4 = trunc i16 %i.af to i8
+  %5 = getelementptr i8, ptr %0, i64 1973
+  store i8 %4, ptr %5, align 1
   %i.ag = icmp eq i16 %i.af, 0
   br i1 %i.ag, label %bb.t, label %bb.s
 
@@ -345,7 +341,8 @@ bb.t:                                             ; preds = %bb.r
   %.val.i.i30 = load i64, ptr %i.f, align 2
   %i.ah = or i64 %.val.i.i30, -9223372036854775808
   store i64 %i.ah, ptr %i.f, align 2
-  %.sink.i.i32 = or i32 %7, 2
+  %.val.i8.i.i31 = load i32, ptr %i.a, align 2
+  %.sink.i.i32 = or i32 %.val.i8.i.i31, 2
   store i32 %.sink.i.i32, ptr %i.a, align 2
   %i.ai = load i32, ptr @trace_events_enabled_count, align 4
   %.not.i.i.i33 = icmp eq i32 %i.ai, 0

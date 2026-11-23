@@ -204,17 +204,17 @@ bb.ay:                                            ; preds = %._crit_edge73.i
   %i.ig = zext i32 %i.if to i64
   %i.ih = getelementptr inbounds nuw [4 x i8], ptr %.val4, i64 %i.ig ; 2 uses
   %i.ii = load i32, ptr %i.ih, align 4, !tbaa !16
+  %.sroa.8.0.extract.shift.i = and i32 %i.ii, -16777216
   %i.ij = udiv i32 %.268.us.i.lcssa.lcssa, %.271.us.i.lcssa.lcssa
-  %7 = shl i32 %i.ij, 16
-  %8 = and i32 %7, 16711680
-  %9 = and i32 %i.ii, -16777216
-  %10 = or disjoint i32 %8, %9
-  %11 = udiv i32 %.265.us.i.lcssa.lcssa, %.271.us.i.lcssa.lcssa
-  %i.ik = shl i32 %11, 8
+  %7 = udiv i32 %.265.us.i.lcssa.lcssa, %.271.us.i.lcssa.lcssa
+  %8 = udiv i32 %.2.us.i.lcssa.lcssa, %.271.us.i.lcssa.lcssa
+  %.sroa.7.0.insert.ext.i = shl i32 %i.ij, 16
+  %.sroa.7.0.insert.shift.i = and i32 %.sroa.7.0.insert.ext.i, 16711680
+  %.sroa.7.0.insert.insert.i = or disjoint i32 %.sroa.7.0.insert.shift.i, %.sroa.8.0.extract.shift.i
+  %i.ik = shl i32 %7, 8
   %i.il = and i32 %i.ik, 65280
-  %i.im = or disjoint i32 %10, %i.il
-  %12 = udiv i32 %.2.us.i.lcssa.lcssa, %.271.us.i.lcssa.lcssa
-  %i.in = and i32 %12, 255
+  %i.im = or disjoint i32 %.sroa.7.0.insert.insert.i, %i.il
+  %i.in = and i32 %8, 255
   %i.io = or disjoint i32 %i.im, %i.in
   store i32 %i.io, ptr %i.ih, align 4, !tbaa !16
   %i.ip = load i32, ptr %6, align 8, !tbaa !50
@@ -617,17 +617,17 @@ bb.cw:                                            ; preds = %._crit_edge207.i
           to label %_ZZL33imageCleanTransparentWithInliningILb0EEvPN5video6IImageEjENKUljjE_clEjj.exit118.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !inline_history !38
 
 _ZZL33imageCleanTransparentWithInliningILb0EEvPN5video6IImageEjENKUljjE_clEjj.exit118.i: ; preds = %bb.cw
+  %.sroa.8.0.extract.shift.i36 = and i32 %i.ql, -16777216
   %i.qm = udiv i32 %.268.us.i32, %.271.us.i31
-  %13 = shl i32 %i.qm, 16
-  %14 = and i32 %13, 16711680
-  %15 = and i32 %i.ql, -16777216
-  %16 = or disjoint i32 %14, %15
-  %17 = udiv i32 %.265.us.i33, %.271.us.i31
-  %i.qn = shl i32 %17, 8
+  %9 = udiv i32 %.265.us.i33, %.271.us.i31
+  %10 = udiv i32 %.2.us.i34, %.271.us.i31
+  %.sroa.7.0.insert.ext.i37 = shl i32 %i.qm, 16
+  %.sroa.7.0.insert.shift.i38 = and i32 %.sroa.7.0.insert.ext.i37, 16711680
+  %.sroa.7.0.insert.insert.i39 = or disjoint i32 %.sroa.7.0.insert.shift.i38, %.sroa.8.0.extract.shift.i36
+  %i.qn = shl i32 %9, 8
   %i.qo = and i32 %i.qn, 65280
-  %i.qp = or disjoint i32 %16, %i.qo
-  %18 = udiv i32 %.2.us.i34, %.271.us.i31
-  %i.qq = and i32 %18, 255
+  %i.qp = or disjoint i32 %.sroa.7.0.insert.insert.i39, %i.qo
+  %i.qq = and i32 %10, 255
   %i.qr = or disjoint i32 %i.qp, %i.qq
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
   store i32 %i.qr, ptr %2, align 4
@@ -1030,7 +1030,7 @@ _ZL23imageAverageColorInlineILb1EEN5video6SColorEPKNS0_6IImageE.exit: ; preds = 
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_Z14imageScaleNNAAPN5video6IImageERKN4core4rectIiEES1_(ptr noundef %0, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(16) %1, ptr noundef %2) local_unnamed_addr #0 {
 bb.a:
-  %3 = alloca %"class.video::SColor", align 4     ; 6 uses
+  %3 = alloca %"class.video::SColor", align 4     ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #9
   store i32 0, ptr %3, align 4, !tbaa !63
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 12
@@ -1057,6 +1057,8 @@ bb.a:
   %i.q = extractelement <2 x float> %i.l, i64 1   ; 2 uses
   %i.r = fadd nsz float %i.q, %i.f                ; 4 uses
   %i.s = fdiv nsz <2 x float> %i.l, %i.n          ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 2 ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %3, i64 1 ; 2 uses
   br i1 %.not160, label %._crit_edge159.split, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
@@ -1106,12 +1108,12 @@ _Z8rangelimIfifET_RKS0_RKT0_RKT1_.exit:           ; preds = %.preheader, %._crit
   %i.as = fcmp nsz ogt float %.0.i, %.0.i93       ; 2 uses
   %.0128 = select nsz i1 %i.as, float %.0.i93, float %.0.i ; 3 uses
   %.0127 = select nsz i1 %i.as, float %.0.i, float %.0.i93 ; 4 uses
-  br i1 %i.ai, label %.lr.ph146, label %._crit_edge147.thread
+  br i1 %i.ai, label %.lr.ph146, label %._crit_edge146.thread
 
 .lr.ph146:                                        ; preds = %_Z8rangelimIfifET_RKS0_RKT0_RKT1_.exit
   %i.at = call nsz noundef float @llvm.floor.f32(float %.0128) ; 2 uses
   %i.au = fcmp nsz olt float %i.at, %.0127
-  br i1 %i.au, label %.lr.ph.us, label %._crit_edge147.thread
+  br i1 %i.au, label %.lr.ph.us, label %._crit_edge146.thread
 
 .lr.ph.us:                                        ; preds = %.lr.ph146, %._crit_edge.us
   %.085141.us = phi float [ %i.bu, %._crit_edge.us ], [ 0.000000e+00, %.lr.ph146 ]
@@ -1153,8 +1155,8 @@ bb.b:                                             ; preds = %.lr.ph.us, %bb.b
   store i32 %i.bt, ptr %3, align 4, !tbaa !16
   %i.bu = fadd nsz float %.186130.us, %i.bo       ; 4 uses
   %i.bv = bitcast i32 %i.bt to <4 x i8>
-  %4 = shufflevector <4 x i8> %i.bv, <4 x i8> poison, <4 x i32> <i32 1, i32 2, i32 0, i32 3>
-  %i.bw = uitofp <4 x i8> %4 to <4 x float>
+  %6 = shufflevector <4 x i8> %i.bv, <4 x i8> poison, <4 x i32> <i32 2, i32 1, i32 0, i32 3>
+  %i.bw = uitofp <4 x i8> %6 to <4 x float>
   %i.bx = insertelement <4 x float> poison, float %i.bo, i64 0
   %i.by = shufflevector <4 x float> %i.bx, <4 x float> poison, <4 x i32> zeroinitializer
   %i.bz = call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.by, <4 x float> %i.bw, <4 x float> %i.bf) ; 3 uses
@@ -1167,21 +1169,43 @@ bb.b:                                             ; preds = %.lr.ph.us, %bb.b
 
 ._crit_edge147:                                   ; preds = %._crit_edge.us
   %i.cc = fcmp nsz ogt float %i.bu, 0.000000e+00
-  br i1 %i.cc, label %bb.c, label %._crit_edge147.thread
+  br i1 %i.cc, label %bb.c, label %._crit_edge146.thread
 
 bb.c:                                             ; preds = %._crit_edge147
   %i.cd = insertelement <4 x float> poison, float %i.bu, i64 0
   %i.ce = shufflevector <4 x float> %i.cd, <4 x float> poison, <4 x i32> zeroinitializer
   %i.cf = fdiv nsz <4 x float> %i.bz, %i.ce
-  %i.cg = fadd nsz <4 x float> %i.cf, splat (float 5.000000e-01)
-  %5 = fptoui <4 x float> %i.cg to <4 x i32>
-  %6 = shufflevector <4 x i32> %5, <4 x i32> poison, <4 x i32> <i32 2, i32 0, i32 1, i32 3>
-  %7 = trunc <4 x i32> %6 to <4 x i8>
-  %8 = bitcast <4 x i8> %7 to i32
+  %i.cg = fadd nsz <4 x float> %i.cf, splat (float 5.000000e-01) ; 4 uses
+  %7 = extractelement <4 x float> %i.cg, i64 0
+  %8 = fptoui float %7 to i32
+  %9 = trunc i32 %8 to i8
+  store i8 %9, ptr %4, align 2, !tbaa !63
+  %10 = extractelement <4 x float> %i.cg, i64 1
+  %11 = fptoui float %10 to i32
+  %12 = trunc i32 %11 to i8
+  store i8 %12, ptr %5, align 1, !tbaa !63
+  %13 = extractelement <4 x float> %i.cg, i64 2
+  %14 = fptoui float %13 to i32
+  %15 = trunc i32 %14 to i8
+  store i8 %15, ptr %3, align 4, !tbaa !63
+  %16 = extractelement <4 x float> %i.cg, i64 3
+  %17 = fptoui float %16 to i32
+  %18 = shl i32 %17, 24
+  %19 = load i32, ptr %3, align 4, !tbaa !63
+  %20 = and i32 %19, 16777215
+  %21 = or disjoint i32 %20, %18
   br label %._crit_edge147.thread
 
-._crit_edge147.thread:                            ; preds = %.lr.ph146, %_Z8rangelimIfifET_RKS0_RKT0_RKT1_.exit, %._crit_edge147, %bb.c
-  %storemerge = phi i32 [ %8, %bb.c ], [ 0, %._crit_edge147 ], [ 0, %_Z8rangelimIfifET_RKS0_RKT0_RKT1_.exit ], [ 0, %.lr.ph146 ]
+._crit_edge146.thread:                            ; preds = %.lr.ph146, %_Z8rangelimIfifET_RKS0_RKT0_RKT1_.exit, %._crit_edge147
+  store i8 0, ptr %4, align 2, !tbaa !63
+  store i8 0, ptr %5, align 1, !tbaa !63
+  store i8 0, ptr %3, align 4, !tbaa !63
+  %22 = load i32, ptr %3, align 4, !tbaa !63
+  %23 = and i32 %22, 16777215
+  br label %._crit_edge147.thread
+
+._crit_edge147.thread:                            ; preds = %._crit_edge146.thread, %bb.c
+  %storemerge = phi i32 [ %23, %._crit_edge146.thread ], [ %21, %bb.c ]
   store i32 %storemerge, ptr %3, align 4, !tbaa !63
   %i.ch = load ptr, ptr %2, align 8, !tbaa !27
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 24

@@ -204,7 +204,7 @@ rb_long2num_inline.exit36:                        ; preds = %wv2timet.exit
   %i.el = zext nneg i32 %i.ek to i64
   %i.em = shl nuw nsw i64 %i.el, 41
   %.masked.masked = or disjoint i64 %.masked48, %i.du
-  %.masked50 = or i64 %i.eb, %.masked.masked
+  %.masked50 = or i64 %.masked.masked, %i.eb
   %i.en = or i64 %.masked50, %i.eg
   %i.eo = or disjoint i64 %i.en, %i.em
   store i64 %i.eo, ptr %i.cu, align 8
@@ -607,7 +607,7 @@ rb_long2num_inline.exit:                          ; preds = %wv2timet.exit
   %i.cl = zext nneg i32 %i.ck to i64
   %i.cm = shl nuw nsw i64 %i.cl, 41
   %.masked.masked = or disjoint i64 %.masked50, %i.bv
-  %.masked52 = or i64 %i.cb, %.masked.masked
+  %.masked52 = or i64 %.masked.masked, %i.cb
   %i.cn = or i64 %.masked52, %i.cg
   %i.co = or disjoint i64 %i.cn, %i.cm
   store i64 %i.co, ptr %i.av, align 8

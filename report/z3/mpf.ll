@@ -205,11 +205,11 @@ bb.aj:                                            ; preds = %bb.ai
   store ptr %i.fr, ptr %i.fm, align 8, !tbaa !20
   store ptr null, ptr %i.ej, align 8, !tbaa !20
   %i.fs = load i8, ptr %i.eg, align 4             ; 2 uses
-  %i.ft = and i8 %i.fs, 3
-  %24 = or disjoint i8 %i.ft, %i.fl
-  store i8 %24, ptr %i.fj, align 4
-  %25 = and i8 %i.fs, -4
-  store i8 %25, ptr %i.eg, align 4
+  %i.ft = and i8 %i.fs, -4
+  %24 = and i8 %i.fs, 3
+  %25 = or disjoint i8 %24, %i.fl
+  store i8 %25, ptr %i.fj, align 4
+  store i8 %i.ft, ptr %i.eg, align 4
   br label %bb.aq
 
 bb.ak:                                            ; preds = %bb.aa, %bb.z

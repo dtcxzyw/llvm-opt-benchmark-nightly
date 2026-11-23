@@ -204,7 +204,7 @@ _ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS
 declare i32 @__cxa_atexit(ptr, ptr, ptr) local_unnamed_addr #18
 
 ; Function Attrs: uwtable
-define dso_local noundef zeroext i1 @_Z16parseColorStringRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERN5video6SColorEbh(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr nofree noundef nonnull writeonly align 4 captures(none) dereferenceable(4) %1, i1 noundef zeroext %2, i8 noundef zeroext %3) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
+define dso_local noundef zeroext i1 @_Z16parseColorStringRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERN5video6SColorEbh(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr nofree noundef nonnull align 4 captures(none) dereferenceable(4) %1, i1 noundef zeroext %2, i8 noundef zeroext %3) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = alloca ptr, align 8                      ; 4 uses
@@ -215,7 +215,7 @@ bb.a:
   %6 = alloca %"class.std::__cxx11::basic_string.0", align 8 ; 14 uses
   %7 = alloca %"class.std::__cxx11::basic_string.0", align 8 ; 14 uses
   %8 = alloca %"class.std::__cxx11::basic_string.0", align 8 ; 14 uses
-  %i.e = alloca [4 x i8], align 4                 ; 9 uses
+  %i.e = alloca [4 x i8], align 1                 ; 9 uses
   %i.f = load ptr, ptr %0, align 8, !tbaa !58     ; 3 uses
   %i.g = load i8, ptr %i.f, align 1, !tbaa !73
   %i.h = icmp eq i8 %i.g, 35
@@ -225,12 +225,12 @@ bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val10 = load i64, ptr %i.i, align 8, !tbaa !59 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #2
-  store i8 0, ptr %i.e, align 4, !tbaa !73
-  %i.j = getelementptr inbounds nuw i8, ptr %i.e, i64 1
+  store i8 0, ptr %i.e, align 1, !tbaa !73
+  %i.j = getelementptr inbounds nuw i8, ptr %i.e, i64 1 ; 2 uses
   store i8 0, ptr %i.j, align 1, !tbaa !73
-  %i.k = getelementptr inbounds nuw i8, ptr %i.e, i64 2
-  store i8 0, ptr %i.k, align 2, !tbaa !73
-  %i.l = getelementptr inbounds nuw i8, ptr %i.e, i64 3
+  %i.k = getelementptr inbounds nuw i8, ptr %i.e, i64 2 ; 2 uses
+  store i8 0, ptr %i.k, align 1, !tbaa !73
+  %i.l = getelementptr inbounds nuw i8, ptr %i.e, i64 3 ; 2 uses
   store i8 %3, ptr %i.l, align 1, !tbaa !73
   switch i64 %.val10, label %bb.c [
     i64 9, label %.lr.ph.split.us.i.preheader
@@ -351,9 +351,21 @@ bb.r:                                             ; preds = %bb.q, %bb.o, %.lr.p
   br i1 %exitcond.not.i, label %.critedge45.i, label %.lr.ph.split.i, !llvm.loop !120
 
 .critedge45.i:                                    ; preds = %bb.m, %bb.r
-  %9 = load <4 x i8>, ptr %i.e, align 4, !tbaa !73
-  %10 = shufflevector <4 x i8> %9, <4 x i8> poison, <4 x i32> <i32 2, i32 1, i32 0, i32 3>
-  store <4 x i8> %10, ptr %1, align 4, !tbaa !131
+  %9 = load i8, ptr %i.e, align 1, !tbaa !73
+  %10 = getelementptr inbounds nuw i8, ptr %1, i64 2
+  store i8 %9, ptr %10, align 2, !tbaa !131
+  %11 = load i8, ptr %i.j, align 1, !tbaa !73
+  %12 = getelementptr inbounds nuw i8, ptr %1, i64 1
+  store i8 %11, ptr %12, align 1, !tbaa !131
+  %13 = load i8, ptr %i.k, align 1, !tbaa !73
+  store i8 %13, ptr %1, align 4, !tbaa !131
+  %14 = load i8, ptr %i.l, align 1, !tbaa !73
+  %15 = zext i8 %14 to i32
+  %16 = shl nuw i32 %15, 24
+  %17 = load i32, ptr %1, align 4, !tbaa !131
+  %18 = and i32 %17, 16777215
+  %19 = or disjoint i32 %18, %16
+  store i32 %19, ptr %1, align 4, !tbaa !131
   br label %_ZL19parseHexColorStringRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERN5video6SColorEh.exit
 
 _ZL19parseHexColorStringRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERN5video6SColorEh.exit: ; preds = %bb.e, %bb.j, %bb.p, %bb.c, %.critedge45.i

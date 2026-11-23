@@ -205,18 +205,15 @@ bb.cp:                                            ; preds = %bb.cn
 
 bb.cq:                                            ; preds = %bb.cp
   %i.py = load i32, ptr %i.b, align 4, !tbaa !1809
-  %13 = load i64, ptr %4, align 8
   %i.pz = shl i32 %i.py, 8
   %i.qa = and i32 %i.pz, 65280
-  %14 = zext nneg i32 %i.qa to i64
-  %15 = and i64 %13, -16776961
-  %16 = or disjoint i64 %15, %14
   %i.qb = load i32, ptr %i.c, align 4, !tbaa !1809
   %i.qc = shl i32 %i.qb, 16
-  %17 = and i32 %i.qc, 16711680
-  %18 = zext nneg i32 %17 to i64
-  %19 = or disjoint i64 %16, %18
-  store i64 %19, ptr %4, align 8
+  %13 = or disjoint i32 %i.qa, %i.qc
+  %14 = lshr exact i32 %13, 8
+  %15 = trunc i32 %14 to i16
+  %16 = getelementptr inbounds nuw i8, ptr %4, i64 1
+  store i16 %15, ptr %16, align 1
   %i.qd = load ptr, ptr %i.iq, align 16, !tbaa !74 ; 2 uses
   %i.qe = getelementptr inbounds nuw i8, ptr %i.qd, i64 8
   %.sroa.0.0.copyload.i.i442 = load i64, ptr %i.qe, align 8, !tbaa !75
@@ -243,18 +240,15 @@ bb.cs:                                            ; preds = %bb.cp
 
 bb.ct:                                            ; preds = %bb.cs
   %i.qj = load i32, ptr %i.b, align 4, !tbaa !1809
-  %20 = load i64, ptr %4, align 8
   %i.qk = shl i32 %i.qj, 8
   %i.ql = and i32 %i.qk, 65280
-  %21 = zext nneg i32 %i.ql to i64
-  %22 = and i64 %20, -16776961
-  %23 = or disjoint i64 %22, %21
   %i.qm = load i32, ptr %i.c, align 4, !tbaa !1809
   %i.qn = shl i32 %i.qm, 16
-  %24 = and i32 %i.qn, 16711680
-  %25 = zext nneg i32 %24 to i64
-  %26 = or disjoint i64 %23, %25
-  store i64 %26, ptr %4, align 8
+  %17 = or disjoint i32 %i.ql, %i.qn
+  %18 = lshr exact i32 %17, 8
+  %19 = trunc i32 %18 to i16
+  %20 = getelementptr inbounds nuw i8, ptr %4, i64 1
+  store i16 %19, ptr %20, align 1
   %i.qo = load ptr, ptr %i.iq, align 16, !tbaa !74 ; 2 uses
   %i.qp = getelementptr inbounds nuw i8, ptr %i.qo, i64 8
   %.sroa.0.0.copyload.i.i449 = load i64, ptr %i.qp, align 8, !tbaa !75

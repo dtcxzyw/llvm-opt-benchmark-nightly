@@ -204,13 +204,9 @@ bb.g:                                             ; preds = %trace_aspeed_i2c_bu
   br label %aspeed_i2c_bus_new_write.exit
 
 bb.h:                                             ; preds = %trace_aspeed_i2c_bus_write.exit.i
-  %4 = trunc i64 %2 to i32
-  %i.s = getelementptr inbounds nuw i8, ptr %0, i64 1416 ; 2 uses
-  %5 = load i32, ptr %i.s, align 8
-  %6 = and i32 %4, 255
-  %7 = and i32 %5, -256
-  %8 = or disjoint i32 %7, %6
-  store i32 %8, ptr %i.s, align 8
+  %i.s = getelementptr inbounds nuw i8, ptr %0, i64 1416
+  %4 = trunc i64 %2 to i8
+  store i8 %4, ptr %i.s, align 8
   br label %aspeed_i2c_bus_new_write.exit
 
 bb.i:                                             ; preds = %trace_aspeed_i2c_bus_write.exit.i
@@ -613,13 +609,9 @@ bb.cl:                                            ; preds = %trace_aspeed_i2c_bu
   br label %aspeed_i2c_bus_new_write.exit
 
 bb.cm:                                            ; preds = %trace_aspeed_i2c_bus_write.exit.i12
-  %9 = trunc i64 %2 to i32
-  %i.jj = getelementptr inbounds nuw i8, ptr %0, i64 1440 ; 2 uses
-  %10 = load i32, ptr %i.jj, align 16
-  %11 = and i32 %9, 255
-  %12 = and i32 %10, -256
-  %13 = or disjoint i32 %12, %11
-  store i32 %13, ptr %i.jj, align 16
+  %i.jj = getelementptr inbounds nuw i8, ptr %0, i64 1440
+  %5 = trunc i64 %2 to i8
+  store i8 %5, ptr %i.jj, align 16
   br label %aspeed_i2c_bus_new_write.exit
 
 bb.cn:                                            ; preds = %trace_aspeed_i2c_bus_write.exit.i12

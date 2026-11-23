@@ -204,7 +204,7 @@ isKint.exit.i:                                    ; preds = %bb.ae
 
 bb.af:                                            ; preds = %isKint.exit.i
   %i.ep = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.eq = load i64, ptr %i.ep, align 8, !tbaa !25 ; 3 uses
+  %i.eq = load i64, ptr %i.ep, align 8, !tbaa !25 ; 4 uses
   %i.er = sub i64 128, %i.eq
   %i.es = sub i64 127, %i.eq
   %i.et = or i64 %i.er, %i.es
@@ -212,7 +212,7 @@ bb.af:                                            ; preds = %isKint.exit.i
   br i1 %or.cond.not.i, label %finishbinexpneg.exit, label %finishbinexpneg.exit.thread
 
 finishbinexpneg.exit:                             ; preds = %bb.af
-  %i.eu = trunc i64 %i.eq to i32                  ; 2 uses
+  %i.eu = trunc i64 %i.eq to i32
   %i.ev = sub i32 127, %i.eu
   tail call fastcc void @finishbinexpval(ptr noundef %0, ptr noundef %2, ptr noundef nonnull readonly %3, i32 noundef 21, i32 noundef %i.ev, i32 noundef 0, i32 noundef %4, i32 noundef 47, i32 noundef 7)
   %i.ew = load ptr, ptr %0, align 8, !tbaa !47
@@ -222,14 +222,10 @@ finishbinexpneg.exit:                             ; preds = %bb.af
   %i.fa = load i32, ptr %i.ez, align 8, !tbaa !45
   %i.fb = sext i32 %i.fa to i64
   %i.fc = getelementptr [4 x i8], ptr %i.ey, i64 %i.fb
-  %11 = getelementptr i8, ptr %i.fc, i64 -4       ; 2 uses
-  %12 = load i32, ptr %11, align 4, !tbaa !57
-  %13 = and i32 %12, -16711681
-  %14 = shl i32 %i.eu, 16
-  %15 = add i32 %14, 8323072
-  %16 = and i32 %15, 16711680
-  %17 = or disjoint i32 %13, %16
-  store i32 %17, ptr %11, align 4, !tbaa !57
+  %11 = trunc i64 %i.eq to i8
+  %12 = add i8 %11, 127
+  %13 = getelementptr i8, ptr %i.fc, i64 -2
+  store i8 %12, ptr %13, align 2, !tbaa !57
   br label %codeconcat.exit
 
 finishbinexpneg.exit.thread:                      ; preds = %bb.af, %bb.ae, %isKint.exit.i, %bb.c, %bb.c, %bb.c, %bb.c
@@ -632,7 +628,7 @@ isKint.exit:                                      ; preds = %bb.a
 
 bb.b:                                             ; preds = %isKint.exit
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.h = load i64, ptr %i.g, align 8, !tbaa !25   ; 3 uses
+  %i.h = load i64, ptr %i.g, align 8, !tbaa !25   ; 4 uses
   %i.i = sub i64 128, %i.h
   %i.j = sub i64 127, %i.h
   %i.k = or i64 %i.i, %i.j
@@ -640,7 +636,7 @@ bb.b:                                             ; preds = %isKint.exit
   br i1 %or.cond.not, label %bb.c, label %isKint.exit.thread
 
 bb.c:                                             ; preds = %bb.b
-  %i.l = trunc i64 %i.h to i32                    ; 2 uses
+  %i.l = trunc i64 %i.h to i32
   %i.m = sub i32 127, %i.l
   tail call fastcc void @finishbinexpval(ptr noundef %0, ptr noundef %1, ptr noundef nonnull %2, i32 noundef %3, i32 noundef %i.m, i32 noundef 0, i32 noundef %4, i32 noundef 47, i32 noundef %5)
   %i.n = load ptr, ptr %0, align 8, !tbaa !47
@@ -650,14 +646,10 @@ bb.c:                                             ; preds = %bb.b
   %i.r = load i32, ptr %i.q, align 8, !tbaa !45
   %i.s = sext i32 %i.r to i64
   %i.t = getelementptr [4 x i8], ptr %i.p, i64 %i.s
-  %6 = getelementptr i8, ptr %i.t, i64 -4         ; 2 uses
-  %7 = load i32, ptr %6, align 4, !tbaa !57
-  %8 = and i32 %7, -16711681
-  %9 = shl i32 %i.l, 16
-  %10 = add i32 %9, 8323072
-  %11 = and i32 %10, 16711680
-  %12 = or disjoint i32 %8, %11
-  store i32 %12, ptr %6, align 4, !tbaa !57
+  %6 = trunc i64 %i.h to i8
+  %7 = add i8 %6, 127
+  %8 = getelementptr i8, ptr %i.t, i64 -2
+  store i8 %7, ptr %8, align 2, !tbaa !57
   br label %isKint.exit.thread
 
 isKint.exit.thread:                               ; preds = %bb.a, %bb.c, %bb.b, %isKint.exit

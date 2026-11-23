@@ -205,52 +205,50 @@ _ZNK14NodeDefManager3getERK7MapNode.exit:         ; preds = %bb.b, %bb.c
   %i.ah = phi ptr [ %i.ag, %bb.c ], [ %i.ac, %bb.b ] ; 3 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 1392
   %i.aj = load i32, ptr %i.ai, align 8, !tbaa !247 ; 5 uses
+  %.sroa.10.0.extract.shift = lshr i32 %i.aj, 8   ; 2 uses
+  %.sroa.11.0.extract.shift = lshr i32 %i.aj, 16  ; 2 uses
+  %.sroa.12.0.extract.shift = lshr i32 %i.aj, 24  ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ah, i64 1396
   %i.al = load i8, ptr %i.ak, align 4, !tbaa !898, !range !174, !noundef !175
   %i.am = trunc nuw i8 %i.al to i1
+  %3 = insertelement <2 x i32> poison, i32 %.sroa.10.0.extract.shift, i64 0
+  %4 = insertelement <2 x i32> %3, i32 %i.aj, i64 1
   br i1 %i.am, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %_ZNK14NodeDefManager3getERK7MapNode.exit
-  %3 = lshr i32 %i.aj, 16
+  %5 = and i32 %.sroa.11.0.extract.shift, 255
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 452
   %i.ao = load i32, ptr %i.an, align 4, !tbaa !160 ; 3 uses
-  %i.ap = lshr i32 %i.aj, 8
-  %4 = and i32 %i.aj, 255
-  %i.aq = and i32 %i.ao, 255
-  %i.ar = mul nuw nsw i32 %i.aq, %4
+  %i.ap = lshr i32 %i.ao, 16
+  %i.aq = and i32 %i.ap, 255
+  %i.ar = mul nuw nsw i32 %i.aq, %5
   %i.as = uitofp nsz nneg i32 %i.ar to float
   %i.at = fdiv nsz float %i.as, 2.550000e+02
   %i.au = fadd nsz float %i.at, 5.000000e-01
   %i.av = tail call nsz noundef float @llvm.floor.f32(float %i.au)
   %i.aw = fptosi float %i.av to i32
-  %i.ax = and i32 %3, 255
-  %i.ay = lshr i32 %i.ao, 16
-  %i.az = and i32 %i.ay, 255
-  %5 = mul nuw nsw i32 %i.az, %i.ax
-  %6 = uitofp nsz nneg i32 %5 to float
-  %7 = and i32 %i.ap, 255
-  %8 = lshr i32 %i.ao, 8
-  %i.ba = and i32 %8, 255
-  %i.bb = mul nuw nsw i32 %i.ba, %7
+  %6 = tail call noundef range(i32 -2147483648, 256) i32 @llvm.smin.i32(i32 %i.aw, i32 255)
+  %i.ax = and i32 %.sroa.10.0.extract.shift, 255
+  %i.ay = lshr i32 %i.ao, 8
+  %i.az = and i32 %i.aj, 255
+  %7 = and i32 %i.ay, 255
+  %8 = mul nuw nsw i32 %7, %i.ax
+  %9 = uitofp nsz nneg i32 %8 to float
+  %i.ba = and i32 %i.ao, 255
+  %i.bb = mul nuw nsw i32 %i.ba, %i.az
   %i.bc = uitofp nsz nneg i32 %i.bb to float
-  %i.bd = insertelement <2 x float> poison, float %i.bc, i64 0
-  %i.be = insertelement <2 x float> %i.bd, float %6, i64 1
+  %i.bd = insertelement <2 x float> poison, float %9, i64 0
+  %i.be = insertelement <2 x float> %i.bd, float %i.bc, i64 1
   %i.bf = fdiv nsz <2 x float> %i.be, splat (float 2.550000e+02)
   %i.bg = fadd nsz <2 x float> %i.bf, splat (float 5.000000e-01)
   %i.bh = tail call nsz <2 x float> @llvm.floor.v2f32(<2 x float> %i.bg)
-  %9 = insertelement <4 x i32> poison, i32 %i.aw, i64 0
-  %10 = insertelement <4 x i32> %9, i32 %i.aj, i64 1
-  %11 = shufflevector <2 x float> %i.bh, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %12 = fptosi <4 x float> %11 to <4 x i32>
-  %13 = shufflevector <4 x i32> %10, <4 x i32> %12, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
-  %14 = tail call <4 x i32> @llvm.smin.v4i32(<4 x i32> %13, <4 x i32> <i32 255, i32 2147483647, i32 255, i32 255>)
-  %15 = shl nuw nsw <4 x i32> %14, <i32 0, i32 0, i32 8, i32 16>
-  %16 = and <4 x i32> %15, <i32 255, i32 -16777216, i32 65280, i32 16711680>
-  %17 = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %16)
+  %10 = fptosi <2 x float> %i.bh to <2 x i32>
+  %11 = tail call <2 x i32> @llvm.smin.v2i32(<2 x i32> %10, <2 x i32> splat (i32 255))
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %_ZNK14NodeDefManager3getERK7MapNode.exit
-  %.sroa.014.0 = phi i32 [ %17, %bb.d ], [ %i.aj, %_ZNK14NodeDefManager3getERK7MapNode.exit ] ; 2 uses
+  %.sroa.014.0 = phi i32 [ %6, %bb.d ], [ %.sroa.11.0.extract.shift, %_ZNK14NodeDefManager3getERK7MapNode.exit ]
+  %12 = phi <2 x i32> [ %11, %bb.d ], [ %4, %_ZNK14NodeDefManager3getERK7MapNode.exit ]
   %i.bi = getelementptr inbounds nuw i8, ptr %i.ah, i64 1400
   %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !594
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 1248
@@ -269,11 +267,24 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.bs, label %bb.g, label %.thread
 
 bb.g:                                             ; preds = %bb.f, %bb.e
-  %.not = icmp ult i32 %.sroa.014.0, 16777216
+  %.not = icmp eq i32 %.sroa.12.0.extract.shift, 0
   br i1 %.not, label %bb.h, label %.thread
 
 .thread:                                          ; preds = %bb.f, %bb.g
-  %.sroa.014.126 = phi i32 [ %.sroa.014.0, %bb.g ], [ -16777216, %bb.f ]
+  %.sroa.12.0104 = phi i32 [ %.sroa.12.0.extract.shift, %bb.g ], [ 255, %bb.f ]
+  %.sroa.014.126 = phi i32 [ %.sroa.014.0, %bb.g ], [ 0, %bb.f ]
+  %13 = phi <2 x i32> [ %12, %bb.g ], [ zeroinitializer, %bb.f ] ; 2 uses
+  %.sroa.12.0.insert.shift91 = shl nuw i32 %.sroa.12.0104, 24
+  %.sroa.11.0.insert.ext69 = shl i32 %.sroa.014.126, 16
+  %.sroa.11.0.insert.shift70 = and i32 %.sroa.11.0.insert.ext69, 16711680
+  %.sroa.11.0.insert.insert72 = or disjoint i32 %.sroa.12.0.insert.shift91, %.sroa.11.0.insert.shift70
+  %14 = extractelement <2 x i32> %13, i64 0
+  %.sroa.10.0.insert.ext48 = shl i32 %14, 8
+  %.sroa.10.0.insert.shift49 = and i32 %.sroa.10.0.insert.ext48, 65280
+  %15 = extractelement <2 x i32> %13, i64 1
+  %.sroa.014.0.insert.ext28 = and i32 %15, 255
+  %16 = or disjoint i32 %.sroa.10.0.insert.shift49, %.sroa.014.0.insert.ext28
+  %.sroa.014.0.insert.insert30 = or disjoint i32 %.sroa.11.0.insert.insert72, %16
   %i.bt = getelementptr inbounds nuw i8, ptr %0, i64 344
   %i.bu = load ptr, ptr %i.bt, align 8, !tbaa !108 ; 2 uses
   %i.bv = load ptr, ptr %i.bu, align 8, !tbaa !58
@@ -294,7 +305,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.cg = load ptr, ptr %i.by, align 8, !tbaa !58
   %i.ch = getelementptr inbounds nuw i8, ptr %i.cg, i64 424
   %i.ci = load ptr, ptr %i.ch, align 8
-  call void %i.ci(ptr noundef nonnull align 8 dereferenceable(8) %i.by, i32 %.sroa.014.126, ptr noundef nonnull align 4 dereferenceable(16) %2, ptr noundef null)
+  call void %i.ci(ptr noundef nonnull align 8 dereferenceable(8) %i.by, i32 %.sroa.014.0.insert.insert30, ptr noundef nonnull align 4 dereferenceable(16) %2, ptr noundef null)
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #2
   br label %bb.h
 
@@ -697,6 +708,9 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #19
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smin.i32(i32, i32) #19
+
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i16> @llvm.abs.v2i16(<2 x i16>, i1 immarg) #29
 
@@ -710,10 +724,7 @@ declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #
 declare <2 x float> @llvm.floor.v2f32(<2 x float>) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <4 x i32> @llvm.smin.v4i32(<4 x i32>, <4 x i32>) #19
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #19
+declare <2 x i32> @llvm.smin.v2i32(<2 x i32>, <2 x i32>) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i48 @llvm.vector.reduce.or.v2i48(<2 x i48>) #19

@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d, %bb.c
   %.088 = phi i32 [ %i.s, %bb.d ], [ -1, %bb.c ]  ; 2 uses
-  %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 64 ; 4 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 64 ; 6 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.b, i64 72
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !894
   %i.w = icmp eq ptr %i.v, null
@@ -406,10 +406,13 @@ bb.x:                                             ; preds = %bb.t
   br i1 %or.cond5, label %bb.y, label %.loopexit
 
 bb.y:                                             ; preds = %bb.x
+  %4 = load i32, ptr %i.t, align 8
   %i.cj = shl i32 %i.by, 8
-  %i.ck = and i32 %i.ac, 255
-  %i.cl = or disjoint i32 %i.cj, %i.ck
+  %i.ck = and i32 %4, 255
+  %i.cl = or disjoint i32 %i.ck, %i.cj
   store i32 %i.cl, ptr %i.t, align 8
+  %5 = trunc i32 %i.ac to i8
+  store i8 %5, ptr %i.t, align 8
   %i.cm = icmp eq i32 %i.ad, -16777216
   br i1 %i.cm, label %_ZNK3smt7context10get_theoryEi.exit122, label %bb.z
 
@@ -812,11 +815,11 @@ bb.n:                                             ; preds = %._crit_edge
   br label %_ZN6vectorISt4pairIPN3smt5enodeEjELb1EjE5resetEv.exit
 
 _ZN6vectorISt4pairIPN3smt5enodeEjELb1EjE5resetEv.exit: ; preds = %._crit_edge, %bb.n
-  %i.cc = getelementptr inbounds nuw i8, ptr %i.c, i64 64 ; 7 uses
+  %i.cc = getelementptr inbounds nuw i8, ptr %i.c, i64 64 ; 8 uses
   %i.cd = getelementptr inbounds nuw i8, ptr %i.c, i64 72 ; 2 uses
   %i.ce = load ptr, ptr %i.cd, align 8, !tbaa !894
   %i.cf = icmp eq ptr %i.ce, null
-  %i.cg = load i32, ptr %i.cc, align 8            ; 4 uses
+  %i.cg = load i32, ptr %i.cc, align 8            ; 5 uses
   br i1 %i.cf, label %bb.v, label %bb.x
 
 bb.o:                                             ; preds = %.lr.ph129, %bb.u
@@ -943,7 +946,9 @@ _ZNK6vectorIPN3smt6theoryELb0EjE4sizeEv.exit.i.i.i: ; preds = %bb.v
   br i1 %.not92, label %_ZN3smt7context19restore_theory_varsEPNS_5enodeES2_.exit, label %bb.w
 
 bb.w:                                             ; preds = %_ZNK6vectorIPN3smt6theoryELb0EjE4sizeEv.exit.i.i.i
-  store i32 -1, ptr %i.cc, align 8
+  %4 = or i32 %i.cg, -256
+  store i32 %4, ptr %i.cc, align 8
+  store i8 -1, ptr %i.cc, align 8
   br label %_ZN3smt7context19restore_theory_varsEPNS_5enodeES2_.exit
 
 bb.x:                                             ; preds = %_ZN6vectorISt4pairIPN3smt5enodeEjELb1EjE5resetEv.exit

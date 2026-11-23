@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
   %i.gm = load i8, ptr %i.b, align 1, !tbaa !323, !range !110, !noundef !111
   %i.gn = zext nneg i8 %i.gm to i64
   %i.go = shl nuw nsw i64 %i.gn, 16
-  %i.gp = or disjoint i64 %i.go, %i.gl
+  %i.gp = or disjoint i64 %i.gl, %i.go
   store i64 %i.gp, ptr %i.t, align 8
   %i.gq = call noundef zeroext i1 @_ZNK4llvm6Record20getValueAsBitOrUnsetENS_9StringRefERb(ptr noundef nonnull align 8 dereferenceable(192) %1, ptr nonnull @.str.88, i64 8, ptr noundef nonnull align 1 dereferenceable(1) %i.b) #16
   %i.gr = load i64, ptr %i.t, align 8
@@ -212,7 +212,7 @@ bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
   %i.gv = load i8, ptr %i.b, align 1, !tbaa !323, !range !110, !noundef !111
   %i.gw = zext nneg i8 %i.gv to i64
   %i.gx = shl nuw nsw i64 %i.gw, 18
-  %i.gy = or disjoint i64 %i.gx, %i.gu
+  %i.gy = or disjoint i64 %i.gu, %i.gx
   store i64 %i.gy, ptr %i.t, align 8
   %i.gz = call noundef zeroext i1 @_ZNK4llvm6Record13getValueAsBitENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(192) %1, ptr nonnull @.str.89, i64 19) #16
   %i.ha = load i64, ptr %i.t, align 8
@@ -228,7 +228,7 @@ bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
   %i.hj = load i8, ptr %i.b, align 1, !tbaa !323, !range !110, !noundef !111
   %i.hk = zext nneg i8 %i.hj to i64
   %i.hl = shl nuw nsw i64 %i.hk, 31
-  %i.hm = or disjoint i64 %i.hl, %i.hi
+  %i.hm = or disjoint i64 %i.hi, %i.hl
   store i64 %i.hm, ptr %i.t, align 8
   %i.hn = call noundef zeroext i1 @_ZNK4llvm6Record13getValueAsBitENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(192) %1, ptr nonnull @.str.91, i64 16) #16
   %i.ho = load i64, ptr %i.t, align 8

@@ -110,16 +110,14 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.y = getelementptr i8, ptr %0, i64 1268       ; 2 uses
-  %i.z = load i32, ptr %i.y, align 4              ; 2 uses
+  %i.z = load i32, ptr %i.y, align 4
   %i.aa = shl i32 %i.z, 1
   %i.ab = and i32 %i.aa, 510
   %i.ac = getelementptr i8, ptr %0, i64 1192
   %i.ad = load i32, ptr %i.ac, align 8
   %i.ae = tail call i32 @llvm.umin.i32(i32 %i.ab, i32 %i.ad)
-  %1 = and i32 %i.ae, 255
-  %2 = and i32 %i.z, -256
-  %3 = or disjoint i32 %1, %2
-  store i32 %3, ptr %i.y, align 4
+  %1 = trunc i32 %i.ae to i8
+  store i8 %1, ptr %i.y, align 4
   br label %bb.k
 
 bb.j:                                             ; preds = %bb.h
