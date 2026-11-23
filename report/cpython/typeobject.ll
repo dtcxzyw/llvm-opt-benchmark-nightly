@@ -205,7 +205,7 @@ lookup_tp_dict.exit.i:                            ; preds = %bb.i, %bb.h
   br i1 %i.aj, label %_PyType_GetSlotNames.exit.thread, label %bb.j
 
 bb.j:                                             ; preds = %lookup_tp_dict.exit.i
-  %i.ak = load ptr, ptr %i.b, align 8, !tbaa !588 ; 4 uses
+  %i.ak = load ptr, ptr %i.b, align 8, !tbaa !588 ; 5 uses
   %.not.i158 = icmp eq ptr %i.ak, null
   br i1 %.not.i158, label %bb.o, label %bb.k
 
@@ -283,7 +283,7 @@ Py_DECREF.exit16thread-pre-split.i:               ; preds = %bb.r, %bb.q
   br label %Py_DECREF.exit16.i
 
 Py_DECREF.exit16.i:                               ; preds = %Py_DECREF.exit16thread-pre-split.i, %import_copyreg.exit.thread29.i
-  %i.bh = phi ptr [ %.pr.i, %Py_DECREF.exit16thread-pre-split.i ], [ %i.bd, %import_copyreg.exit.thread29.i ] ; 4 uses
+  %i.bh = phi ptr [ %.pr.i, %Py_DECREF.exit16thread-pre-split.i ], [ %i.bd, %import_copyreg.exit.thread29.i ] ; 5 uses
   %i.bi = icmp eq ptr %i.bh, null
   br i1 %i.bi, label %_PyType_GetSlotNames.exit.thread, label %bb.s
 
@@ -336,7 +336,7 @@ bb.x:                                             ; preds = %bb.w
   br label %.critedge97
 
 _PyType_GetSlotNames.exit.thread163:              ; preds = %bb.t, %bb.l, %bb.k, %bb.s
-  %.0.i165 = phi ptr [ @_Py_NoneStruct, %bb.k ], [ @_Py_NoneStruct, %bb.s ], [ %i.ak, %bb.l ], [ %i.bh, %bb.t ] ; 20 uses
+  %.0.i165 = phi ptr [ %i.bh, %bb.s ], [ %i.ak, %bb.k ], [ %i.ak, %bb.l ], [ %i.bh, %bb.t ] ; 20 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #21
   br i1 %.not, label %.critedge, label %bb.y
 
@@ -739,7 +739,7 @@ PyType_IsSubtype.exit.thread:                     ; preds = %bb.i, %bb.o, %bb.n,
   store ptr %0, ptr %i.a, align 16, !tbaa !588
   %i.ai = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %1, ptr %i.ai, align 8, !tbaa !588
-  %i.aj = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 62288), ptr noundef %i.a, i64 noundef 2) ; 5 uses
+  %i.aj = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 62288), ptr noundef %i.a, i64 noundef 2) ; 6 uses
   %.not49 = icmp eq ptr %i.aj, @_Py_NotImplementedStruct
   br i1 %.not49, label %bb.p, label %Py_DECREF.exit53.thread75
 
@@ -777,7 +777,7 @@ bb.t:                                             ; preds = %Py_DECREF.exit53
   br label %Py_DECREF.exit53.thread75
 
 Py_DECREF.exit53.thread75:                        ; preds = %bb.l, %bb.p, %PyType_IsSubtype.exit.thread68, %PyType_IsSubtype.exit.thread, %Py_DECREF.exit53, %bb.t
-  %.339 = phi ptr [ %i.ao, %bb.t ], [ @_Py_NotImplementedStruct, %Py_DECREF.exit53 ], [ %i.ae, %bb.l ], [ @_Py_NotImplementedStruct, %bb.p ], [ null, %PyType_IsSubtype.exit.thread68 ], [ %i.aj, %PyType_IsSubtype.exit.thread ]
+  %.339 = phi ptr [ %i.ao, %bb.t ], [ @_Py_NotImplementedStruct, %Py_DECREF.exit53 ], [ %i.ae, %bb.l ], [ %i.aj, %bb.p ], [ null, %PyType_IsSubtype.exit.thread68 ], [ %i.aj, %PyType_IsSubtype.exit.thread ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #21
   ret ptr %.339
 }
@@ -972,7 +972,7 @@ PyType_IsSubtype.exit.thread:                     ; preds = %bb.i, %bb.o, %bb.n,
   store ptr %0, ptr %i.a, align 16, !tbaa !588
   %i.ak = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %1, ptr %i.ak, align 8, !tbaa !588
-  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 70608), ptr noundef %i.a, i64 noundef 2) ; 5 uses
+  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 70608), ptr noundef %i.a, i64 noundef 2) ; 6 uses
   %.not49 = icmp eq ptr %i.al, @_Py_NotImplementedStruct
   br i1 %.not49, label %bb.p, label %Py_DECREF.exit53.thread75
 
@@ -1010,7 +1010,7 @@ bb.t:                                             ; preds = %Py_DECREF.exit53
   br label %Py_DECREF.exit53.thread75
 
 Py_DECREF.exit53.thread75:                        ; preds = %bb.l, %bb.p, %PyType_IsSubtype.exit.thread68, %PyType_IsSubtype.exit.thread, %Py_DECREF.exit53, %bb.t
-  %.339 = phi ptr [ %i.aq, %bb.t ], [ @_Py_NotImplementedStruct, %Py_DECREF.exit53 ], [ %i.ag, %bb.l ], [ @_Py_NotImplementedStruct, %bb.p ], [ null, %PyType_IsSubtype.exit.thread68 ], [ %i.al, %PyType_IsSubtype.exit.thread ]
+  %.339 = phi ptr [ %i.aq, %bb.t ], [ @_Py_NotImplementedStruct, %Py_DECREF.exit53 ], [ %i.ag, %bb.l ], [ %i.al, %bb.p ], [ null, %PyType_IsSubtype.exit.thread68 ], [ %i.al, %PyType_IsSubtype.exit.thread ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #21
   ret ptr %.339
 }
@@ -1135,7 +1135,7 @@ PyType_IsSubtype.exit.thread:                     ; preds = %bb.i, %bb.o, %bb.n,
   store ptr %0, ptr %i.a, align 16, !tbaa !588
   %i.ak = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %1, ptr %i.ak, align 8, !tbaa !588
-  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 67816), ptr noundef %i.a, i64 noundef 2) ; 5 uses
+  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 67816), ptr noundef %i.a, i64 noundef 2) ; 6 uses
   %.not49 = icmp eq ptr %i.al, @_Py_NotImplementedStruct
   br i1 %.not49, label %bb.p, label %Py_DECREF.exit53.thread75
 
@@ -1173,7 +1173,7 @@ bb.t:                                             ; preds = %Py_DECREF.exit53
   br label %Py_DECREF.exit53.thread75
 
 Py_DECREF.exit53.thread75:                        ; preds = %bb.l, %bb.p, %PyType_IsSubtype.exit.thread68, %PyType_IsSubtype.exit.thread, %Py_DECREF.exit53, %bb.t
-  %.339 = phi ptr [ %i.aq, %bb.t ], [ @_Py_NotImplementedStruct, %Py_DECREF.exit53 ], [ %i.ag, %bb.l ], [ @_Py_NotImplementedStruct, %bb.p ], [ null, %PyType_IsSubtype.exit.thread68 ], [ %i.al, %PyType_IsSubtype.exit.thread ]
+  %.339 = phi ptr [ %i.aq, %bb.t ], [ @_Py_NotImplementedStruct, %Py_DECREF.exit53 ], [ %i.ag, %bb.l ], [ %i.al, %bb.p ], [ null, %PyType_IsSubtype.exit.thread68 ], [ %i.al, %PyType_IsSubtype.exit.thread ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #21
   ret ptr %.339
 }
@@ -1298,7 +1298,7 @@ PyType_IsSubtype.exit.thread:                     ; preds = %bb.i, %bb.o, %bb.n,
   store ptr %0, ptr %i.a, align 16, !tbaa !588
   %i.ak = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %1, ptr %i.ak, align 8, !tbaa !588
-  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 67656), ptr noundef %i.a, i64 noundef 2) ; 5 uses
+  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 67656), ptr noundef %i.a, i64 noundef 2) ; 6 uses
   %.not49 = icmp eq ptr %i.al, @_Py_NotImplementedStruct
   br i1 %.not49, label %bb.p, label %Py_DECREF.exit53.thread75
 
@@ -1336,7 +1336,7 @@ bb.t:                                             ; preds = %Py_DECREF.exit53
   br label %Py_DECREF.exit53.thread75
 
 Py_DECREF.exit53.thread75:                        ; preds = %bb.l, %bb.p, %PyType_IsSubtype.exit.thread68, %PyType_IsSubtype.exit.thread, %Py_DECREF.exit53, %bb.t
-  %.339 = phi ptr [ %i.aq, %bb.t ], [ @_Py_NotImplementedStruct, %Py_DECREF.exit53 ], [ %i.ag, %bb.l ], [ @_Py_NotImplementedStruct, %bb.p ], [ null, %PyType_IsSubtype.exit.thread68 ], [ %i.al, %PyType_IsSubtype.exit.thread ]
+  %.339 = phi ptr [ %i.aq, %bb.t ], [ @_Py_NotImplementedStruct, %Py_DECREF.exit53 ], [ %i.ag, %bb.l ], [ %i.al, %bb.p ], [ null, %PyType_IsSubtype.exit.thread68 ], [ %i.al, %PyType_IsSubtype.exit.thread ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #21
   ret ptr %.339
 }
@@ -1461,7 +1461,7 @@ PyType_IsSubtype.exit.thread:                     ; preds = %bb.i, %bb.o, %bb.n,
   store ptr %0, ptr %i.a, align 16, !tbaa !588
   %i.ak = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %1, ptr %i.ak, align 8, !tbaa !588
-  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 64440), ptr noundef %i.a, i64 noundef 2) ; 5 uses
+  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 64440), ptr noundef %i.a, i64 noundef 2) ; 6 uses
   %.not49 = icmp eq ptr %i.al, @_Py_NotImplementedStruct
   br i1 %.not49, label %bb.p, label %Py_DECREF.exit53.thread75
 
@@ -1499,7 +1499,7 @@ bb.t:                                             ; preds = %Py_DECREF.exit53
   br label %Py_DECREF.exit53.thread75
 
 Py_DECREF.exit53.thread75:                        ; preds = %bb.l, %bb.p, %PyType_IsSubtype.exit.thread68, %PyType_IsSubtype.exit.thread, %Py_DECREF.exit53, %bb.t
-  %.339 = phi ptr [ %i.aq, %bb.t ], [ @_Py_NotImplementedStruct, %Py_DECREF.exit53 ], [ %i.ag, %bb.l ], [ @_Py_NotImplementedStruct, %bb.p ], [ null, %PyType_IsSubtype.exit.thread68 ], [ %i.al, %PyType_IsSubtype.exit.thread ]
+  %.339 = phi ptr [ %i.aq, %bb.t ], [ @_Py_NotImplementedStruct, %Py_DECREF.exit53 ], [ %i.ag, %bb.l ], [ %i.al, %bb.p ], [ null, %PyType_IsSubtype.exit.thread68 ], [ %i.al, %PyType_IsSubtype.exit.thread ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #21
   ret ptr %.339
 }
@@ -1629,7 +1629,7 @@ PyType_IsSubtype.exit.thread.i:                   ; preds = %bb.j, %bb.p, %bb.o,
   store ptr %0, ptr %i.a, align 16, !tbaa !588
   %i.am = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %1, ptr %i.am, align 8, !tbaa !588
-  %i.an = call fastcc ptr @vectorcall_maybe(ptr noundef %i.g, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 68664), ptr noundef %i.a, i64 noundef 2), !inline_history !1175 ; 5 uses
+  %i.an = call fastcc ptr @vectorcall_maybe(ptr noundef %i.g, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 68664), ptr noundef %i.a, i64 noundef 2), !inline_history !1175 ; 6 uses
   %.not49.i = icmp eq ptr %i.an, @_Py_NotImplementedStruct
   br i1 %.not49.i, label %bb.q, label %slot_nb_power_binary.exit
 
@@ -1667,7 +1667,7 @@ bb.u:                                             ; preds = %Py_DECREF.exit53.i
   br label %slot_nb_power_binary.exit
 
 slot_nb_power_binary.exit:                        ; preds = %PyType_IsSubtype.exit.thread68.i, %bb.m, %PyType_IsSubtype.exit.thread.i, %bb.q, %Py_DECREF.exit53.i, %bb.u
-  %.339.i = phi ptr [ %i.as, %bb.u ], [ @_Py_NotImplementedStruct, %Py_DECREF.exit53.i ], [ %i.ai, %bb.m ], [ @_Py_NotImplementedStruct, %bb.q ], [ null, %PyType_IsSubtype.exit.thread68.i ], [ %i.an, %PyType_IsSubtype.exit.thread.i ]
+  %.339.i = phi ptr [ %i.as, %bb.u ], [ @_Py_NotImplementedStruct, %Py_DECREF.exit53.i ], [ %i.ai, %bb.m ], [ %i.an, %bb.q ], [ null, %PyType_IsSubtype.exit.thread68.i ], [ %i.an, %PyType_IsSubtype.exit.thread.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #21
   br label %bb.ap
 
@@ -1789,7 +1789,7 @@ PyType_IsSubtype.exit.thread:                     ; preds = %bb.ad, %bb.aj, %bb.
   store ptr %1, ptr %i.ca, align 8, !tbaa !588
   %i.cb = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store ptr %2, ptr %i.cb, align 16, !tbaa !588
-  %i.cc = call fastcc ptr @vectorcall_maybe(ptr noundef %i.at, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 68664), ptr noundef %i.b, i64 noundef 3) ; 5 uses
+  %i.cc = call fastcc ptr @vectorcall_maybe(ptr noundef %i.at, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 68664), ptr noundef %i.b, i64 noundef 3) ; 6 uses
   %.not57 = icmp eq ptr %i.cc, @_Py_NotImplementedStruct
   br i1 %.not57, label %bb.ak, label %Py_DECREF.exit61.thread86
 
@@ -1829,7 +1829,7 @@ bb.ao:                                            ; preds = %Py_DECREF.exit61
   br label %Py_DECREF.exit61.thread86
 
 Py_DECREF.exit61.thread86:                        ; preds = %bb.ag, %bb.ak, %PyType_IsSubtype.exit.thread79, %PyType_IsSubtype.exit.thread, %Py_DECREF.exit61, %bb.ao
-  %.345 = phi ptr [ %i.ci, %bb.ao ], [ @_Py_NotImplementedStruct, %Py_DECREF.exit61 ], [ %i.bw, %bb.ag ], [ @_Py_NotImplementedStruct, %bb.ak ], [ null, %PyType_IsSubtype.exit.thread79 ], [ %i.cc, %PyType_IsSubtype.exit.thread ]
+  %.345 = phi ptr [ %i.ci, %bb.ao ], [ @_Py_NotImplementedStruct, %Py_DECREF.exit61 ], [ %i.bw, %bb.ag ], [ %i.cc, %bb.ak ], [ null, %PyType_IsSubtype.exit.thread79 ], [ %i.cc, %PyType_IsSubtype.exit.thread ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #21
   br label %bb.ap
 
@@ -2222,7 +2222,7 @@ PyType_IsSubtype.exit.thread:                     ; preds = %bb.i, %bb.o, %bb.n,
   store ptr %0, ptr %i.a, align 16, !tbaa !588
   %i.ak = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %1, ptr %i.ak, align 8, !tbaa !588
-  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 67328), ptr noundef %i.a, i64 noundef 2) ; 5 uses
+  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 67328), ptr noundef %i.a, i64 noundef 2) ; 6 uses
   %.not49 = icmp eq ptr %i.al, @_Py_NotImplementedStruct
   br i1 %.not49, label %bb.p, label %Py_DECREF.exit53.thread75
 
@@ -2260,7 +2260,7 @@ bb.t:                                             ; preds = %Py_DECREF.exit53
   br label %Py_DECREF.exit53.thread75
 
 Py_DECREF.exit53.thread75:                        ; preds = %bb.l, %bb.p, %PyType_IsSubtype.exit.thread68, %PyType_IsSubtype.exit.thread, %Py_DECREF.exit53, %bb.t
-  %.339 = phi ptr [ %i.aq, %bb.t ], [ @_Py_NotImplementedStruct, %Py_DECREF.exit53 ], [ %i.ag, %bb.l ], [ @_Py_NotImplementedStruct, %bb.p ], [ null, %PyType_IsSubtype.exit.thread68 ], [ %i.al, %PyType_IsSubtype.exit.thread ]
+  %.339 = phi ptr [ %i.aq, %bb.t ], [ @_Py_NotImplementedStruct, %Py_DECREF.exit53 ], [ %i.ag, %bb.l ], [ %i.al, %bb.p ], [ null, %PyType_IsSubtype.exit.thread68 ], [ %i.al, %PyType_IsSubtype.exit.thread ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #21
   ret ptr %.339
 }
@@ -2385,7 +2385,7 @@ PyType_IsSubtype.exit.thread:                     ; preds = %bb.i, %bb.o, %bb.n,
   store ptr %0, ptr %i.a, align 16, !tbaa !588
   %i.ak = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %1, ptr %i.ak, align 8, !tbaa !588
-  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 69776), ptr noundef %i.a, i64 noundef 2) ; 5 uses
+  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 69776), ptr noundef %i.a, i64 noundef 2) ; 6 uses
   %.not49 = icmp eq ptr %i.al, @_Py_NotImplementedStruct
   br i1 %.not49, label %bb.p, label %Py_DECREF.exit53.thread75
 
@@ -2423,7 +2423,7 @@ bb.t:                                             ; preds = %Py_DECREF.exit53
   br label %Py_DECREF.exit53.thread75
 
 Py_DECREF.exit53.thread75:                        ; preds = %bb.l, %bb.p, %PyType_IsSubtype.exit.thread68, %PyType_IsSubtype.exit.thread, %Py_DECREF.exit53, %bb.t
-  %.339 = phi ptr [ %i.aq, %bb.t ], [ @_Py_NotImplementedStruct, %Py_DECREF.exit53 ], [ %i.ag, %bb.l ], [ @_Py_NotImplementedStruct, %bb.p ], [ null, %PyType_IsSubtype.exit.thread68 ], [ %i.al, %PyType_IsSubtype.exit.thread ]
+  %.339 = phi ptr [ %i.aq, %bb.t ], [ @_Py_NotImplementedStruct, %Py_DECREF.exit53 ], [ %i.ag, %bb.l ], [ %i.al, %bb.p ], [ null, %PyType_IsSubtype.exit.thread68 ], [ %i.al, %PyType_IsSubtype.exit.thread ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #21
   ret ptr %.339
 }
@@ -2548,7 +2548,7 @@ PyType_IsSubtype.exit.thread:                     ; preds = %bb.i, %bb.o, %bb.n,
   store ptr %0, ptr %i.a, align 16, !tbaa !588
   %i.ak = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %1, ptr %i.ak, align 8, !tbaa !588
-  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 62552), ptr noundef %i.a, i64 noundef 2) ; 5 uses
+  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 62552), ptr noundef %i.a, i64 noundef 2) ; 6 uses
   %.not49 = icmp eq ptr %i.al, @_Py_NotImplementedStruct
   br i1 %.not49, label %bb.p, label %Py_DECREF.exit53.thread75
 
@@ -2586,7 +2586,7 @@ bb.t:                                             ; preds = %Py_DECREF.exit53
   br label %Py_DECREF.exit53.thread75
 
 Py_DECREF.exit53.thread75:                        ; preds = %bb.l, %bb.p, %PyType_IsSubtype.exit.thread68, %PyType_IsSubtype.exit.thread, %Py_DECREF.exit53, %bb.t
-  %.339 = phi ptr [ %i.aq, %bb.t ], [ @_Py_NotImplementedStruct, %Py_DECREF.exit53 ], [ %i.ag, %bb.l ], [ @_Py_NotImplementedStruct, %bb.p ], [ null, %PyType_IsSubtype.exit.thread68 ], [ %i.al, %PyType_IsSubtype.exit.thread ]
+  %.339 = phi ptr [ %i.aq, %bb.t ], [ @_Py_NotImplementedStruct, %Py_DECREF.exit53 ], [ %i.ag, %bb.l ], [ %i.al, %bb.p ], [ null, %PyType_IsSubtype.exit.thread68 ], [ %i.al, %PyType_IsSubtype.exit.thread ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #21
   ret ptr %.339
 }
@@ -2711,7 +2711,7 @@ PyType_IsSubtype.exit.thread:                     ; preds = %bb.i, %bb.o, %bb.n,
   store ptr %0, ptr %i.a, align 16, !tbaa !588
   %i.ak = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %1, ptr %i.ak, align 8, !tbaa !588
-  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 71424), ptr noundef %i.a, i64 noundef 2) ; 5 uses
+  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 71424), ptr noundef %i.a, i64 noundef 2) ; 6 uses
   %.not49 = icmp eq ptr %i.al, @_Py_NotImplementedStruct
   br i1 %.not49, label %bb.p, label %Py_DECREF.exit53.thread75
 
@@ -2749,7 +2749,7 @@ bb.t:                                             ; preds = %Py_DECREF.exit53
   br label %Py_DECREF.exit53.thread75
 
 Py_DECREF.exit53.thread75:                        ; preds = %bb.l, %bb.p, %PyType_IsSubtype.exit.thread68, %PyType_IsSubtype.exit.thread, %Py_DECREF.exit53, %bb.t
-  %.339 = phi ptr [ %i.aq, %bb.t ], [ @_Py_NotImplementedStruct, %Py_DECREF.exit53 ], [ %i.ag, %bb.l ], [ @_Py_NotImplementedStruct, %bb.p ], [ null, %PyType_IsSubtype.exit.thread68 ], [ %i.al, %PyType_IsSubtype.exit.thread ]
+  %.339 = phi ptr [ %i.aq, %bb.t ], [ @_Py_NotImplementedStruct, %Py_DECREF.exit53 ], [ %i.ag, %bb.l ], [ %i.al, %bb.p ], [ null, %PyType_IsSubtype.exit.thread68 ], [ %i.al, %PyType_IsSubtype.exit.thread ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #21
   ret ptr %.339
 }
@@ -2874,7 +2874,7 @@ PyType_IsSubtype.exit.thread:                     ; preds = %bb.i, %bb.o, %bb.n,
   store ptr %0, ptr %i.a, align 16, !tbaa !588
   %i.ak = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %1, ptr %i.ak, align 8, !tbaa !588
-  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 68288), ptr noundef %i.a, i64 noundef 2) ; 5 uses
+  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 68288), ptr noundef %i.a, i64 noundef 2) ; 6 uses
   %.not49 = icmp eq ptr %i.al, @_Py_NotImplementedStruct
   br i1 %.not49, label %bb.p, label %Py_DECREF.exit53.thread75
 
@@ -2912,7 +2912,7 @@ bb.t:                                             ; preds = %Py_DECREF.exit53
   br label %Py_DECREF.exit53.thread75
 
 Py_DECREF.exit53.thread75:                        ; preds = %bb.l, %bb.p, %PyType_IsSubtype.exit.thread68, %PyType_IsSubtype.exit.thread, %Py_DECREF.exit53, %bb.t
-  %.339 = phi ptr [ %i.aq, %bb.t ], [ @_Py_NotImplementedStruct, %Py_DECREF.exit53 ], [ %i.ag, %bb.l ], [ @_Py_NotImplementedStruct, %bb.p ], [ null, %PyType_IsSubtype.exit.thread68 ], [ %i.al, %PyType_IsSubtype.exit.thread ]
+  %.339 = phi ptr [ %i.aq, %bb.t ], [ @_Py_NotImplementedStruct, %Py_DECREF.exit53 ], [ %i.ag, %bb.l ], [ %i.al, %bb.p ], [ null, %PyType_IsSubtype.exit.thread68 ], [ %i.al, %PyType_IsSubtype.exit.thread ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #21
   ret ptr %.339
 }
@@ -3189,7 +3189,7 @@ PyType_IsSubtype.exit.thread:                     ; preds = %bb.i, %bb.o, %bb.n,
   store ptr %0, ptr %i.a, align 16, !tbaa !588
   %i.ak = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %1, ptr %i.ak, align 8, !tbaa !588
-  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 64928), ptr noundef %i.a, i64 noundef 2) ; 5 uses
+  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 64928), ptr noundef %i.a, i64 noundef 2) ; 6 uses
   %.not49 = icmp eq ptr %i.al, @_Py_NotImplementedStruct
   br i1 %.not49, label %bb.p, label %Py_DECREF.exit53.thread75
 
@@ -3227,7 +3227,7 @@ bb.t:                                             ; preds = %Py_DECREF.exit53
   br label %Py_DECREF.exit53.thread75
 
 Py_DECREF.exit53.thread75:                        ; preds = %bb.l, %bb.p, %PyType_IsSubtype.exit.thread68, %PyType_IsSubtype.exit.thread, %Py_DECREF.exit53, %bb.t
-  %.339 = phi ptr [ %i.aq, %bb.t ], [ @_Py_NotImplementedStruct, %Py_DECREF.exit53 ], [ %i.ag, %bb.l ], [ @_Py_NotImplementedStruct, %bb.p ], [ null, %PyType_IsSubtype.exit.thread68 ], [ %i.al, %PyType_IsSubtype.exit.thread ]
+  %.339 = phi ptr [ %i.aq, %bb.t ], [ @_Py_NotImplementedStruct, %Py_DECREF.exit53 ], [ %i.ag, %bb.l ], [ %i.al, %bb.p ], [ null, %PyType_IsSubtype.exit.thread68 ], [ %i.al, %PyType_IsSubtype.exit.thread ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #21
   ret ptr %.339
 }
@@ -3352,7 +3352,7 @@ PyType_IsSubtype.exit.thread:                     ; preds = %bb.i, %bb.o, %bb.n,
   store ptr %0, ptr %i.a, align 16, !tbaa !588
   %i.ak = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %1, ptr %i.ak, align 8, !tbaa !588
-  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 70784), ptr noundef %i.a, i64 noundef 2) ; 5 uses
+  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 70784), ptr noundef %i.a, i64 noundef 2) ; 6 uses
   %.not49 = icmp eq ptr %i.al, @_Py_NotImplementedStruct
   br i1 %.not49, label %bb.p, label %Py_DECREF.exit53.thread75
 
@@ -3390,7 +3390,7 @@ bb.t:                                             ; preds = %Py_DECREF.exit53
   br label %Py_DECREF.exit53.thread75
 
 Py_DECREF.exit53.thread75:                        ; preds = %bb.l, %bb.p, %PyType_IsSubtype.exit.thread68, %PyType_IsSubtype.exit.thread, %Py_DECREF.exit53, %bb.t
-  %.339 = phi ptr [ %i.aq, %bb.t ], [ @_Py_NotImplementedStruct, %Py_DECREF.exit53 ], [ %i.ag, %bb.l ], [ @_Py_NotImplementedStruct, %bb.p ], [ null, %PyType_IsSubtype.exit.thread68 ], [ %i.al, %PyType_IsSubtype.exit.thread ]
+  %.339 = phi ptr [ %i.aq, %bb.t ], [ @_Py_NotImplementedStruct, %Py_DECREF.exit53 ], [ %i.ag, %bb.l ], [ %i.al, %bb.p ], [ null, %PyType_IsSubtype.exit.thread68 ], [ %i.al, %PyType_IsSubtype.exit.thread ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #21
   ret ptr %.339
 }
@@ -3552,7 +3552,7 @@ PyType_IsSubtype.exit.thread:                     ; preds = %bb.i, %bb.o, %bb.n,
   store ptr %0, ptr %i.a, align 16, !tbaa !588
   %i.ak = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %1, ptr %i.ak, align 8, !tbaa !588
-  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 67544), ptr noundef %i.a, i64 noundef 2) ; 5 uses
+  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 67544), ptr noundef %i.a, i64 noundef 2) ; 6 uses
   %.not49 = icmp eq ptr %i.al, @_Py_NotImplementedStruct
   br i1 %.not49, label %bb.p, label %Py_DECREF.exit53.thread75
 
@@ -3590,7 +3590,7 @@ bb.t:                                             ; preds = %Py_DECREF.exit53
   br label %Py_DECREF.exit53.thread75
 
 Py_DECREF.exit53.thread75:                        ; preds = %bb.l, %bb.p, %PyType_IsSubtype.exit.thread68, %PyType_IsSubtype.exit.thread, %Py_DECREF.exit53, %bb.t
-  %.339 = phi ptr [ %i.aq, %bb.t ], [ @_Py_NotImplementedStruct, %Py_DECREF.exit53 ], [ %i.ag, %bb.l ], [ @_Py_NotImplementedStruct, %bb.p ], [ null, %PyType_IsSubtype.exit.thread68 ], [ %i.al, %PyType_IsSubtype.exit.thread ]
+  %.339 = phi ptr [ %i.aq, %bb.t ], [ @_Py_NotImplementedStruct, %Py_DECREF.exit53 ], [ %i.ag, %bb.l ], [ %i.al, %bb.p ], [ null, %PyType_IsSubtype.exit.thread68 ], [ %i.al, %PyType_IsSubtype.exit.thread ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #21
   ret ptr %.339
 }

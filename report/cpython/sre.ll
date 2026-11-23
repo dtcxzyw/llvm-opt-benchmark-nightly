@@ -205,12 +205,14 @@ Py_DECREF.exit61.thread.i:                        ; preds = %bb.aa, %bb.z, %bb.y
 
 _Py_NewRef.exit.sink.split.i:                     ; preds = %.split51.i, %.split.i
   %.sink27.i = phi i32 [ %i.bo, %.split.i ], [ %i.bw, %.split51.i ]
+  %.sink26.i = phi ptr [ @_Py_NoneStruct, %.split.i ], [ %i.i, %.split51.i ] ; 2 uses
   %i.by = add nuw i32 %.sink27.i, 1
-  store i32 %i.by, ptr %i.i, align 8, !tbaa !221
+  store i32 %i.by, ptr %.sink26.i, align 8, !tbaa !221
   br label %_Py_NewRef.exit.i
 
 _Py_NewRef.exit.i:                                ; preds = %_Py_NewRef.exit.sink.split.i, %.split51.i, %.split.i
-  store ptr %i.i, ptr %i.aq, align 8, !tbaa !245
+  %phi.call.i = phi ptr [ %i.i, %.split51.i ], [ @_Py_NoneStruct, %.split.i ], [ %.sink26.i, %_Py_NewRef.exit.sink.split.i ]
+  store ptr %phi.call.i, ptr %i.aq, align 8, !tbaa !245
   %i.bz = getelementptr i8, ptr %i.ao, i64 56
   store i32 %i.l, ptr %i.bz, align 8, !tbaa !246
   %i.ca = getelementptr i8, ptr %i.ao, i64 24     ; 2 uses

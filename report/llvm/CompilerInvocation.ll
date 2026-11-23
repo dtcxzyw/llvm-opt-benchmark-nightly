@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
   %.0912.i.i.i.i.i = phi ptr [ %i.u, %_ZN4llvm16CachedHashStringD2Ev.exit.i.i.i.i.i ], [ %i.i, %bb.d ] ; 4 uses
   %i.k = getelementptr inbounds nuw i8, ptr %.0912.i.i.i.i.i, i64 8 ; 2 uses
   %i.l = load <2 x i32>, ptr %i.k, align 8, !tbaa !251
-  %i.m = load ptr, ptr %.0912.i.i.i.i.i, align 8, !tbaa !634
+  %i.m = load ptr, ptr %.0912.i.i.i.i.i, align 8, !tbaa !634 ; 2 uses
   %i.n = icmp eq ptr %i.m, inttoptr (i64 -4096 to ptr)
   br i1 %i.n, label %_ZN4llvm16CachedHashStringC2ERKS0_.exit.i.i.i.i.i, label %bb.e
 
@@ -218,7 +218,7 @@ bb.e:                                             ; preds = %.lr.ph.i.i.i.i.i
   br label %_ZN4llvm16CachedHashStringC2ERKS0_.exit.i.i.i.i.i
 
 _ZN4llvm16CachedHashStringC2ERKS0_.exit.i.i.i.i.i: ; preds = %bb.e, %.lr.ph.i.i.i.i.i
-  %.sroa.0.0.i.i.i.i.i = phi ptr [ %i.q, %bb.e ], [ inttoptr (i64 -4096 to ptr), %.lr.ph.i.i.i.i.i ]
+  %.sroa.0.0.i.i.i.i.i = phi ptr [ %i.q, %bb.e ], [ %i.m, %.lr.ph.i.i.i.i.i ]
   %i.s = load ptr, ptr %.0813.i.i.i.i.i, align 8, !tbaa !282 ; 2 uses
   store ptr %.sroa.0.0.i.i.i.i.i, ptr %.0813.i.i.i.i.i, align 8, !tbaa !282
   %i.t = getelementptr inbounds nuw i8, ptr %.0813.i.i.i.i.i, i64 8
@@ -453,7 +453,7 @@ bb.o:                                             ; preds = %bb.n
   %.0912.i.i.i.i.i34 = phi ptr [ %i.cp, %_ZN4llvm16CachedHashStringD2Ev.exit.i.i.i.i.i38 ], [ %i.ce, %bb.o ] ; 4 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %.0912.i.i.i.i.i34, i64 8 ; 2 uses
   %i.cg = load <2 x i32>, ptr %i.cf, align 8, !tbaa !251
-  %i.ch = load ptr, ptr %.0912.i.i.i.i.i34, align 8, !tbaa !634
+  %i.ch = load ptr, ptr %.0912.i.i.i.i.i34, align 8, !tbaa !634 ; 2 uses
   %i.ci = icmp eq ptr %i.ch, inttoptr (i64 -4096 to ptr)
   br i1 %i.ci, label %_ZN4llvm16CachedHashStringC2ERKS0_.exit.i.i.i.i.i35, label %bb.p
 
@@ -466,7 +466,7 @@ bb.p:                                             ; preds = %.lr.ph.i.i.i.i.i31
   br label %_ZN4llvm16CachedHashStringC2ERKS0_.exit.i.i.i.i.i35
 
 _ZN4llvm16CachedHashStringC2ERKS0_.exit.i.i.i.i.i35: ; preds = %bb.p, %.lr.ph.i.i.i.i.i31
-  %.sroa.0.0.i.i.i.i.i36 = phi ptr [ %i.cl, %bb.p ], [ inttoptr (i64 -4096 to ptr), %.lr.ph.i.i.i.i.i31 ]
+  %.sroa.0.0.i.i.i.i.i36 = phi ptr [ %i.cl, %bb.p ], [ %i.ch, %.lr.ph.i.i.i.i.i31 ]
   %i.cn = load ptr, ptr %.0813.i.i.i.i.i33, align 8, !tbaa !282 ; 2 uses
   store ptr %.sroa.0.0.i.i.i.i.i36, ptr %.0813.i.i.i.i.i33, align 8, !tbaa !282
   %i.co = getelementptr inbounds nuw i8, ptr %.0813.i.i.i.i.i33, i64 8

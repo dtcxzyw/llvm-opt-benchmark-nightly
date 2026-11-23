@@ -204,7 +204,7 @@ bb.a:
   %2 = alloca [16 x %struct.path], align 16       ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %0) #15
   tail call void @mutex_lock(ptr noundef @audit_filter_mutex) #16
-  %i.a = load ptr, ptr @tree_list, align 8        ; 4 uses
+  %i.a = load ptr, ptr @tree_list, align 8        ; 5 uses
   %i.b = getelementptr i8, ptr %i.a, i64 8
   store ptr %0, ptr %i.b, align 8
   store ptr %i.a, ptr %0, align 8
@@ -349,7 +349,7 @@ put_tree.exit:                                    ; preds = %bb.i, %bb.j, %refco
   call void @mutex_lock(ptr noundef @audit_filter_mutex) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #15
-  %.pr = load ptr, ptr %0, align 8                ; 2 uses
+  %.pr = load ptr, ptr %0, align 8                ; 3 uses
   %.not = icmp eq ptr %.pr, @tree_list
   br i1 %.not, label %._crit_edge43.loopexit, label %.lr.ph42, !llvm.loop !29
 
@@ -359,8 +359,10 @@ put_tree.exit:                                    ; preds = %bb.i, %bb.j, %refco
 
 ._crit_edge43:                                    ; preds = %._crit_edge43.loopexit, %bb.a
   %i.ap = phi ptr [ @tree_list, %bb.a ], [ %.pre, %._crit_edge43.loopexit ] ; 2 uses
-  store ptr %i.ap, ptr getelementptr inbounds nuw (i8, ptr @tree_list, i64 8), align 8
-  store volatile ptr @tree_list, ptr %i.ap, align 8
+  %.lcssa = phi ptr [ %i.a, %bb.a ], [ %.pr, %._crit_edge43.loopexit ] ; 2 uses
+  %3 = getelementptr i8, ptr %.lcssa, i64 8
+  store ptr %i.ap, ptr %3, align 8
+  store volatile ptr %.lcssa, ptr %i.ap, align 8
   store ptr inttoptr (i64 -2401263026318606080 to ptr), ptr %0, align 8
   store ptr inttoptr (i64 -2401263026318606046 to ptr), ptr %i.c, align 8
   call void @mutex_unlock(ptr noundef @audit_filter_mutex) #16
@@ -763,7 +765,7 @@ put_tree.exit67:                                  ; preds = %bb.p, %refcount_dec
 
 .loopexit:                                        ; preds = %thread-pre-split, %bb.f, %put_tree.exit67
   %.2 = phi i32 [ %i.ab, %put_tree.exit67 ], [ 0, %bb.f ], [ 0, %thread-pre-split ] ; 2 uses
-  %i.as = load ptr, ptr %i.i, align 8             ; 2 uses
+  %i.as = load ptr, ptr %i.i, align 8             ; 3 uses
   %.not5989 = icmp eq ptr %i.as, @tree_list
   br i1 %.not5989, label %._crit_edge92, label %.lr.ph91
 
@@ -855,15 +857,16 @@ bb.ad:                                            ; preds = %refcount_dec_and_te
 
 put_tree.exit75:                                  ; preds = %bb.ab, %bb.ac, %refcount_dec_and_test.exit.i73, %bb.ad
   call void @mutex_lock(ptr noundef @audit_filter_mutex) #16
-  %i.bm = load ptr, ptr %i.i, align 8             ; 2 uses
+  %i.bm = load ptr, ptr %i.i, align 8             ; 3 uses
   %.not59 = icmp eq ptr %i.bm, @tree_list
   br i1 %.not59, label %._crit_edge92, label %bb.w, !llvm.loop !52
 
 ._crit_edge92:                                    ; preds = %put_tree.exit75, %.loopexit
+  %.lcssa = phi ptr [ %i.as, %.loopexit ], [ %i.bm, %put_tree.exit75 ] ; 2 uses
   %i.bn = load ptr, ptr %3, align 8               ; 2 uses
   %i.bo = getelementptr i8, ptr %i.bn, i64 8
-  store ptr @tree_list, ptr %i.bo, align 8
-  store volatile ptr %i.bn, ptr @tree_list, align 8
+  store ptr %.lcssa, ptr %i.bo, align 8
+  store volatile ptr %i.bn, ptr %.lcssa, align 8
   store ptr inttoptr (i64 -2401263026318606080 to ptr), ptr %3, align 8
   store ptr inttoptr (i64 -2401263026318606046 to ptr), ptr %i.i, align 8
   %i.bp = load ptr, ptr %i.j, align 8             ; 2 uses

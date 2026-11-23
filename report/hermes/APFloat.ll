@@ -204,7 +204,8 @@ bb.j:                                             ; preds = %_ZN4llvh7APFloatC2E
   br label %_ZN4llvh6detail9IEEEFloatD2Ev.exit.i.i
 
 _ZN4llvh6detail9IEEEFloatD2Ev.exit.i.i:           ; preds = %bb.j, %_ZN4llvh7APFloatC2ENS_6detail9IEEEFloatERKNS_12fltSemanticsE.exit.i.i
-  store ptr %i.cc, ptr %i.cr, align 16, !tbaa !90
+  %.sink6.i.i.i = phi ptr [ %i.cc, %bb.j ], [ @_ZN4llvhL18semPPCDoubleDoubleE, %_ZN4llvh7APFloatC2ENS_6detail9IEEEFloatERKNS_12fltSemanticsE.exit.i.i ]
+  store ptr %.sink6.i.i.i, ptr %i.cr, align 16, !tbaa !90
   %i.cu = getelementptr inbounds nuw i8, ptr %i.cq, i64 24
   store i64 %i.ce, ptr %i.cu, align 8, !tbaa !55
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cq, i64 66
@@ -607,7 +608,8 @@ bb.c:                                             ; preds = %bb.a
   br label %_ZN4llvh7APFloatC2EOS0_.exit
 
 _ZN4llvh7APFloatC2EOS0_.exit:                     ; preds = %bb.b, %bb.c
-  store ptr %i.d, ptr %i.b, align 16, !tbaa !90
+  %.sink6 = phi ptr [ @_ZN4llvhL18semPPCDoubleDoubleE, %bb.c ], [ %i.d, %bb.b ]
+  store ptr %.sink6, ptr %i.b, align 16, !tbaa !90
   %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   store i64 %i.f, ptr %i.n, align 8, !tbaa !55
   store ptr @_ZN4llvhL8semBogusE, ptr %i.c, align 8, !tbaa !90
@@ -635,8 +637,9 @@ bb.e:                                             ; preds = %_ZN4llvh7APFloatC2E
   br label %_ZN4llvh7APFloatC2EOS0_.exit5
 
 _ZN4llvh7APFloatC2EOS0_.exit5:                    ; preds = %bb.d, %bb.e
+  %.sink8 = phi ptr [ @_ZN4llvhL18semPPCDoubleDoubleE, %bb.e ], [ %i.p, %bb.d ]
   %i.z = getelementptr inbounds nuw i8, ptr %i.a, i64 48
-  store ptr %i.p, ptr %i.z, align 16, !tbaa !90
+  store ptr %.sink8, ptr %i.z, align 16, !tbaa !90
   %i.aa = getelementptr inbounds nuw i8, ptr %i.a, i64 56
   store i64 %i.r, ptr %i.aa, align 8, !tbaa !55
   %i.ab = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -1039,7 +1042,8 @@ bb.c:                                             ; preds = %bb.a
   br label %_ZN4llvh7APFloatC2EOS0_.exit.i
 
 _ZN4llvh7APFloatC2EOS0_.exit.i:                   ; preds = %bb.c, %bb.b
-  store ptr %i.k, ptr %i.i, align 16, !tbaa !90
+  %.sink6.i = phi ptr [ @_ZN4llvhL18semPPCDoubleDoubleE, %bb.c ], [ %i.k, %bb.b ]
+  store ptr %.sink6.i, ptr %i.i, align 16, !tbaa !90
   %i.u = getelementptr inbounds nuw i8, ptr %i.h, i64 24
   store i64 %i.m, ptr %i.u, align 8, !tbaa !55
   store ptr @_ZN4llvhL8semBogusE, ptr %i.j, align 8, !tbaa !90
@@ -1067,8 +1071,9 @@ bb.e:                                             ; preds = %_ZN4llvh7APFloatC2E
   br label %_ZN4llvh7APFloatD2Ev.exit
 
 _ZN4llvh7APFloatD2Ev.exit:                        ; preds = %bb.d, %bb.e
+  %.sink8.i = phi ptr [ @_ZN4llvhL18semPPCDoubleDoubleE, %bb.e ], [ %i.w, %bb.d ]
   %i.ag = getelementptr inbounds nuw i8, ptr %i.h, i64 48
-  store ptr %i.w, ptr %i.ag, align 16, !tbaa !90
+  store ptr %.sink8.i, ptr %i.ag, align 16, !tbaa !90
   %i.ah = getelementptr inbounds nuw i8, ptr %i.h, i64 56
   store i64 %i.y, ptr %i.ah, align 8, !tbaa !55
   %i.ai = getelementptr inbounds nuw i8, ptr %i.h, i64 8
@@ -1254,7 +1259,8 @@ bb.e:                                             ; preds = %_ZN4llvh7APFloatC2E
   br label %_ZN4llvh6detail9IEEEFloatD2Ev.exit.i.i
 
 _ZN4llvh6detail9IEEEFloatD2Ev.exit.i.i:           ; preds = %bb.e, %_ZN4llvh7APFloatC2ENS_6detail9IEEEFloatERKNS_12fltSemanticsE.exit.i.i
-  store ptr %i.ag, ptr %i.au, align 16, !tbaa !90
+  %.sink6.i.i.i = phi ptr [ %i.ag, %bb.e ], [ @_ZN4llvhL18semPPCDoubleDoubleE, %_ZN4llvh7APFloatC2ENS_6detail9IEEEFloatERKNS_12fltSemanticsE.exit.i.i ]
+  store ptr %.sink6.i.i.i, ptr %i.au, align 16, !tbaa !90
   %i.ax = getelementptr inbounds nuw i8, ptr %i.at, i64 24
   store i64 %i.ai, ptr %i.ax, align 8, !tbaa !55
   %i.ay = getelementptr inbounds nuw i8, ptr %i.at, i64 66
@@ -1452,7 +1458,8 @@ bb.l:                                             ; preds = %bb.k
   br label %_ZN4llvh7APFloatC2EOS0_.exit.i
 
 _ZN4llvh7APFloatC2EOS0_.exit.i:                   ; preds = %bb.k, %bb.l
-  store ptr %i.an, ptr %i.al, align 16, !tbaa !90
+  %.sink6.i = phi ptr [ %i.an, %bb.l ], [ @_ZN4llvhL18semPPCDoubleDoubleE, %bb.k ]
+  store ptr %.sink6.i, ptr %i.al, align 16, !tbaa !90
   %i.ax = getelementptr inbounds nuw i8, ptr %i.ak, i64 24
   store i64 %i.ap, ptr %i.ax, align 8, !tbaa !55
   %i.ay = load ptr, ptr %i.d, align 8, !tbaa !55  ; 2 uses
@@ -1474,8 +1481,9 @@ bb.m:                                             ; preds = %_ZN4llvh7APFloatC2E
   br label %_ZN4llvh7APFloatD2Ev.exit12
 
 _ZN4llvh7APFloatD2Ev.exit12:                      ; preds = %_ZN4llvh7APFloatC2EOS0_.exit.i, %bb.m
+  %.sink8.i = phi ptr [ %i.ay, %bb.m ], [ @_ZN4llvhL18semPPCDoubleDoubleE, %_ZN4llvh7APFloatC2EOS0_.exit.i ]
   %i.bi = getelementptr inbounds nuw i8, ptr %i.ak, i64 48
-  store ptr %i.ay, ptr %i.bi, align 16, !tbaa !90
+  store ptr %.sink8.i, ptr %i.bi, align 16, !tbaa !90
   %i.bj = getelementptr inbounds nuw i8, ptr %i.ak, i64 56
   store i64 %i.ba, ptr %i.bj, align 8, !tbaa !55
   %i.bk = getelementptr inbounds nuw i8, ptr %i.ak, i64 8
@@ -1542,7 +1550,8 @@ bb.d:                                             ; preds = %_ZN4llvh7APFloatC2E
   br label %_ZN4llvh6detail9IEEEFloatD2Ev.exit.i.i
 
 _ZN4llvh6detail9IEEEFloatD2Ev.exit.i.i:           ; preds = %bb.d, %_ZN4llvh7APFloatC2ENS_6detail9IEEEFloatERKNS_12fltSemanticsE.exit.i.i
-  store ptr %i.e, ptr %i.t, align 16, !tbaa !90
+  %.sink6.i.i.i = phi ptr [ %i.e, %bb.d ], [ @_ZN4llvhL18semPPCDoubleDoubleE, %_ZN4llvh7APFloatC2ENS_6detail9IEEEFloatERKNS_12fltSemanticsE.exit.i.i ]
+  store ptr %.sink6.i.i.i, ptr %i.t, align 16, !tbaa !90
   %i.w = getelementptr inbounds nuw i8, ptr %i.s, i64 24
   store i64 %i.g, ptr %i.w, align 8, !tbaa !55
   %i.x = getelementptr inbounds nuw i8, ptr %i.s, i64 66
@@ -1654,7 +1663,8 @@ bb.c:                                             ; preds = %_ZN4llvh7APFloatC2E
   br label %_ZN4llvh6detail9IEEEFloatD2Ev.exit
 
 _ZN4llvh6detail9IEEEFloatD2Ev.exit:               ; preds = %_ZN4llvh7APFloatC2ENS_6detail9IEEEFloatERKNS_12fltSemanticsE.exit, %bb.c
-  store ptr %i.s, ptr %i.aa, align 16, !tbaa !90
+  %.sink6.i = phi ptr [ %i.s, %bb.c ], [ @_ZN4llvhL18semPPCDoubleDoubleE, %_ZN4llvh7APFloatC2ENS_6detail9IEEEFloatERKNS_12fltSemanticsE.exit ]
+  store ptr %.sink6.i, ptr %i.aa, align 16, !tbaa !90
   %i.ae = getelementptr inbounds nuw i8, ptr %i.z, i64 24
   store i64 %i.u, ptr %i.ae, align 8, !tbaa !55
   %i.af = getelementptr inbounds nuw i8, ptr %i.z, i64 66

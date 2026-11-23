@@ -204,7 +204,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.d, ptr align 1 %.0.val, i64 %i.c, i1 false)
-  %i.f = tail call ptr @mmap64(ptr noundef %.0.val, i64 noundef %i.c, i32 noundef 7, i32 noundef 50, i32 noundef -1, i64 noundef 0) #26 ; 4 uses
+  %i.f = tail call ptr @mmap64(ptr noundef %.0.val, i64 noundef %i.c, i32 noundef 7, i32 noundef 50, i32 noundef -1, i64 noundef 0) #26 ; 5 uses
   %i.g = icmp eq ptr %i.f, inttoptr (i64 -1 to ptr)
   br i1 %i.g, label %bb.g, label %bb.c
 
@@ -229,7 +229,7 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZN4node12_GLOBAL__N_116MemoryMapPointer7SetNameEPvmPKc.exit
 
 bb.g:                                             ; preds = %bb.d, %bb.c, %bb.b, %bb.a
-  %.sroa.6.0 = phi ptr [ null, %bb.a ], [ inttoptr (i64 -1 to ptr), %bb.b ], [ %i.f, %bb.c ], [ %i.f, %bb.d ]
+  %.sroa.6.0 = phi ptr [ null, %bb.a ], [ %i.f, %bb.b ], [ %i.f, %bb.c ], [ %i.f, %bb.d ]
   %.sroa.0.0 = phi i64 [ 0, %bb.a ], [ %i.c, %bb.b ], [ %i.c, %bb.c ], [ %i.c, %bb.d ]
   %i.m = tail call ptr @__errno_location() #33
   %i.n = load i32, ptr %i.m, align 4

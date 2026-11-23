@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %strbuf_addch.exit, 
 
 bb.g:                                             ; preds = %.lr.ph, %bb.o
   %.024 = phi ptr [ %i.p, %.lr.ph ], [ %i.ai, %bb.o ]
-  %i.u = phi ptr [ %i.o, %.lr.ph ], [ %i.ah, %bb.o ] ; 3 uses
+  %i.u = phi ptr [ %i.o, %.lr.ph ], [ %i.ah, %bb.o ] ; 4 uses
   %i.v = ptrtoint ptr %.024 to i64
   %i.w = ptrtoint ptr %i.u to i64
   %i.x = sub i64 %i.v, %i.w                       ; 4 uses
@@ -240,7 +240,7 @@ bb.l:                                             ; preds = %bb.k
   unreachable
 
 strbuf_setlen.exit21:                             ; preds = %bb.j, %bb.k
-  %.val17 = phi ptr [ %.val17.pre, %bb.j ], [ @strbuf_slopbuf, %bb.k ] ; 3 uses
+  %.val17 = phi ptr [ %.val17.pre, %bb.j ], [ %i.u, %bb.k ] ; 3 uses
   %.val = phi i64 [ %.val.pre, %bb.j ], [ %i.x, %bb.k ]
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #25
   store ptr %.val17, ptr %i.r, align 8, !tbaa !122
@@ -643,7 +643,7 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.l
   store i64 %.021, ptr %i.j, align 8, !tbaa !25
-  %i.ak = load ptr, ptr %i.i, align 8, !tbaa !26  ; 2 uses
+  %i.ak = load ptr, ptr %i.i, align 8, !tbaa !26  ; 3 uses
   %.not9.i = icmp eq ptr %i.ak, @strbuf_slopbuf
   br i1 %.not9.i, label %bb.p, label %bb.o
 
@@ -664,7 +664,7 @@ bb.q:                                             ; preds = %bb.p
   unreachable
 
 strbuf_setlen.exit:                               ; preds = %bb.o, %bb.p
-  %.val34 = phi ptr [ %.val34.pre, %bb.o ], [ @strbuf_slopbuf, %bb.p ] ; 3 uses
+  %.val34 = phi ptr [ %.val34.pre, %bb.o ], [ %i.ak, %bb.p ] ; 3 uses
   %.val = phi i64 [ %.val.pre, %bb.o ], [ %.021, %bb.p ]
   %i.an = getelementptr inbounds nuw i8, ptr %4, i64 80
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #25

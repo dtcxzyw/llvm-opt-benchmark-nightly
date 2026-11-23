@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %_ZNKSt3mapIN2cv3ccm
   %.0811.i.i.i.i = phi ptr [ %.19.i.i.i.i, %.lr.ph.i.i.i.i ], [ getelementptr inbounds nuw (i8, ptr @_ZZN2cv3ccm3XYZ3getENS0_13IllumObserverEE6xyz_cs, i64 8), %bb.e ]
   %i.l = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 32
   %i.m = tail call noundef zeroext i1 @_ZNK2cv3ccm13IllumObserverltERKS1_(ptr noundef nonnull align 8 dereferenceable(72) %i.l, ptr noundef nonnull align 8 dereferenceable(72) %1) ; 2 uses
-  %.19.i.i.i.i = select i1 %i.m, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 5 uses
+  %.19.i.i.i.i = select i1 %i.m, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 6 uses
   %.1.in.v.i.i.i.i = select i1 %i.m, i64 24, i64 16
   %.1.in.i.i.i.i = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 %.1.in.v.i.i.i.i
   %.1.i.i.i.i = load ptr, ptr %.1.in.i.i.i.i, align 8, !tbaa !110 ; 2 uses
@@ -221,7 +221,7 @@ bb.f:                                             ; preds = %_ZNSt3mapIN2cv3ccm1
   br i1 %i.p, label %.critedge.i, label %_ZNSt3mapIN2cv3ccm13IllumObserverESt10shared_ptrINS1_3XYZEESt4lessIS2_ESaISt4pairIKS2_S5_EEEixERS9_.exit
 
 .critedge.i:                                      ; preds = %bb.f, %_ZNSt3mapIN2cv3ccm13IllumObserverESt10shared_ptrINS1_3XYZEESt4lessIS2_ESaISt4pairIKS2_S5_EEE11lower_boundERS9_.exit.i, %bb.e
-  %.08.lcssa.i.i.i11.i = phi ptr [ %.19.i.i.i.i, %bb.f ], [ getelementptr inbounds nuw (i8, ptr @_ZZN2cv3ccm3XYZ3getENS0_13IllumObserverEE6xyz_cs, i64 8), %_ZNSt3mapIN2cv3ccm13IllumObserverESt10shared_ptrINS1_3XYZEESt4lessIS2_ESaISt4pairIKS2_S5_EEE11lower_boundERS9_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZZN2cv3ccm3XYZ3getENS0_13IllumObserverEE6xyz_cs, i64 8), %bb.e ]
+  %.08.lcssa.i.i.i11.i = phi ptr [ %.19.i.i.i.i, %bb.f ], [ %.19.i.i.i.i, %_ZNSt3mapIN2cv3ccm13IllumObserverESt10shared_ptrINS1_3XYZEESt4lessIS2_ESaISt4pairIKS2_S5_EEE11lower_boundERS9_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZZN2cv3ccm3XYZ3getENS0_13IllumObserverEE6xyz_cs, i64 8), %bb.e ]
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #31
   store ptr %1, ptr %7, align 8, !tbaa !159
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #31
@@ -276,7 +276,7 @@ _ZNKSt3mapIN2cv3ccm13IllumObserverESt10shared_ptrINS1_3XYZEESt4lessIS2_ESaISt4pa
           to label %.noexc unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
 .noexc:                                           ; preds = %.lr.ph.i.i.i.i4
-  %.19.i.i.i.i7 = select i1 %i.ad, ptr %.0811.i.i.i.i6, ptr %.012.i.i.i.i5 ; 5 uses
+  %.19.i.i.i.i7 = select i1 %i.ad, ptr %.0811.i.i.i.i6, ptr %.012.i.i.i.i5 ; 6 uses
   %.1.in.v.i.i.i.i8 = select i1 %i.ad, i64 24, i64 16
   %.1.in.i.i.i.i9 = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i5, i64 %.1.in.v.i.i.i.i8
   %.1.i.i.i.i10 = load ptr, ptr %.1.in.i.i.i.i9, align 8, !tbaa !110 ; 2 uses
@@ -296,7 +296,7 @@ bb.j:                                             ; preds = %_ZNSt3mapIN2cv3ccm1
   br i1 %i.ag, label %.critedge.i14, label %bb.k
 
 .critedge.i14:                                    ; preds = %.noexc16, %_ZNSt3mapIN2cv3ccm13IllumObserverESt10shared_ptrINS1_3XYZEESt4lessIS2_ESaISt4pairIKS2_S5_EEE11lower_boundERS9_.exit.i12, %_ZNKSt3mapIN2cv3ccm13IllumObserverESt10shared_ptrINS1_3XYZEESt4lessIS2_ESaISt4pairIKS2_S5_EEE5countERS9_.exit.thread
-  %.08.lcssa.i.i.i11.i15 = phi ptr [ %.19.i.i.i.i7, %.noexc16 ], [ getelementptr inbounds nuw (i8, ptr @_ZZN2cv3ccm3XYZ3getENS0_13IllumObserverEE6xyz_cs, i64 8), %_ZNSt3mapIN2cv3ccm13IllumObserverESt10shared_ptrINS1_3XYZEESt4lessIS2_ESaISt4pairIKS2_S5_EEE11lower_boundERS9_.exit.i12 ], [ getelementptr inbounds nuw (i8, ptr @_ZZN2cv3ccm3XYZ3getENS0_13IllumObserverEE6xyz_cs, i64 8), %_ZNKSt3mapIN2cv3ccm13IllumObserverESt10shared_ptrINS1_3XYZEESt4lessIS2_ESaISt4pairIKS2_S5_EEE5countERS9_.exit.thread ]
+  %.08.lcssa.i.i.i11.i15 = phi ptr [ %.19.i.i.i.i7, %.noexc16 ], [ %.19.i.i.i.i7, %_ZNSt3mapIN2cv3ccm13IllumObserverESt10shared_ptrINS1_3XYZEESt4lessIS2_ESaISt4pairIKS2_S5_EEE11lower_boundERS9_.exit.i12 ], [ getelementptr inbounds nuw (i8, ptr @_ZZN2cv3ccm3XYZ3getENS0_13IllumObserverEE6xyz_cs, i64 8), %_ZNKSt3mapIN2cv3ccm13IllumObserverESt10shared_ptrINS1_3XYZEESt4lessIS2_ESaISt4pairIKS2_S5_EEE5countERS9_.exit.thread ]
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #31
   store ptr %1, ptr %4, align 8, !tbaa !159
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #31
@@ -406,7 +406,7 @@ _ZNSt10shared_ptrIN2cv3ccm3XYZEEaSERKS3_.exit:    ; preds = %bb.k, %_ZNSt16_Sp_c
           to label %.noexc34 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
 .noexc34:                                         ; preds = %.lr.ph.i.i.i.i22
-  %.19.i.i.i.i25 = select i1 %i.bk, ptr %.0811.i.i.i.i24, ptr %.012.i.i.i.i23 ; 5 uses
+  %.19.i.i.i.i25 = select i1 %i.bk, ptr %.0811.i.i.i.i24, ptr %.012.i.i.i.i23 ; 6 uses
   %.1.in.v.i.i.i.i26 = select i1 %i.bk, i64 24, i64 16
   %.1.in.i.i.i.i27 = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i23, i64 %.1.in.v.i.i.i.i26
   %.1.i.i.i.i28 = load ptr, ptr %.1.in.i.i.i.i27, align 8, !tbaa !110 ; 2 uses
@@ -426,7 +426,7 @@ bb.v:                                             ; preds = %_ZNSt3mapIN2cv3ccm1
   br i1 %i.bn, label %.critedge.i32, label %bb.w
 
 .critedge.i32:                                    ; preds = %.noexc35, %_ZNSt3mapIN2cv3ccm13IllumObserverESt10shared_ptrINS1_3XYZEESt4lessIS2_ESaISt4pairIKS2_S5_EEE11lower_boundERS9_.exit.i30, %_ZNSt10shared_ptrIN2cv3ccm3XYZEEaSERKS3_.exit
-  %.08.lcssa.i.i.i11.i33 = phi ptr [ %.19.i.i.i.i25, %.noexc35 ], [ getelementptr inbounds nuw (i8, ptr @_ZZN2cv3ccm3XYZ3getENS0_13IllumObserverEE6xyz_cs, i64 8), %_ZNSt3mapIN2cv3ccm13IllumObserverESt10shared_ptrINS1_3XYZEESt4lessIS2_ESaISt4pairIKS2_S5_EEE11lower_boundERS9_.exit.i30 ], [ getelementptr inbounds nuw (i8, ptr @_ZZN2cv3ccm3XYZ3getENS0_13IllumObserverEE6xyz_cs, i64 8), %_ZNSt10shared_ptrIN2cv3ccm3XYZEEaSERKS3_.exit ]
+  %.08.lcssa.i.i.i11.i33 = phi ptr [ %.19.i.i.i.i25, %.noexc35 ], [ %.19.i.i.i.i25, %_ZNSt3mapIN2cv3ccm13IllumObserverESt10shared_ptrINS1_3XYZEESt4lessIS2_ESaISt4pairIKS2_S5_EEE11lower_boundERS9_.exit.i30 ], [ getelementptr inbounds nuw (i8, ptr @_ZZN2cv3ccm3XYZ3getENS0_13IllumObserverEE6xyz_cs, i64 8), %_ZNSt10shared_ptrIN2cv3ccm3XYZEEaSERKS3_.exit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #31
   store ptr %1, ptr %2, align 8, !tbaa !159
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #31
@@ -829,7 +829,7 @@ bb.e:                                             ; preds = %_ZNKSt3mapIN2cv3ccm
   %.0811.i.i.i.i = phi ptr [ %.19.i.i.i.i, %.lr.ph.i.i.i.i ], [ getelementptr inbounds nuw (i8, ptr @_ZZN2cv3ccm3Lab3getENS0_13IllumObserverEE6lab_cs, i64 8), %bb.e ]
   %i.l = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 32
   %i.m = tail call noundef zeroext i1 @_ZNK2cv3ccm13IllumObserverltERKS1_(ptr noundef nonnull align 8 dereferenceable(72) %i.l, ptr noundef nonnull align 8 dereferenceable(72) %1) ; 2 uses
-  %.19.i.i.i.i = select i1 %i.m, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 5 uses
+  %.19.i.i.i.i = select i1 %i.m, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 6 uses
   %.1.in.v.i.i.i.i = select i1 %i.m, i64 24, i64 16
   %.1.in.i.i.i.i = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 %.1.in.v.i.i.i.i
   %.1.i.i.i.i = load ptr, ptr %.1.in.i.i.i.i, align 8, !tbaa !110 ; 2 uses
@@ -846,7 +846,7 @@ bb.f:                                             ; preds = %_ZNSt3mapIN2cv3ccm1
   br i1 %i.p, label %.critedge.i, label %_ZNSt3mapIN2cv3ccm13IllumObserverESt10shared_ptrINS1_3LabEESt4lessIS2_ESaISt4pairIKS2_S5_EEEixERS9_.exit
 
 .critedge.i:                                      ; preds = %bb.f, %_ZNSt3mapIN2cv3ccm13IllumObserverESt10shared_ptrINS1_3LabEESt4lessIS2_ESaISt4pairIKS2_S5_EEE11lower_boundERS9_.exit.i, %bb.e
-  %.08.lcssa.i.i.i11.i = phi ptr [ %.19.i.i.i.i, %bb.f ], [ getelementptr inbounds nuw (i8, ptr @_ZZN2cv3ccm3Lab3getENS0_13IllumObserverEE6lab_cs, i64 8), %_ZNSt3mapIN2cv3ccm13IllumObserverESt10shared_ptrINS1_3LabEESt4lessIS2_ESaISt4pairIKS2_S5_EEE11lower_boundERS9_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZZN2cv3ccm3Lab3getENS0_13IllumObserverEE6lab_cs, i64 8), %bb.e ]
+  %.08.lcssa.i.i.i11.i = phi ptr [ %.19.i.i.i.i, %bb.f ], [ %.19.i.i.i.i, %_ZNSt3mapIN2cv3ccm13IllumObserverESt10shared_ptrINS1_3LabEESt4lessIS2_ESaISt4pairIKS2_S5_EEE11lower_boundERS9_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZZN2cv3ccm3Lab3getENS0_13IllumObserverEE6lab_cs, i64 8), %bb.e ]
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #31
   store ptr %1, ptr %6, align 8, !tbaa !159
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #31
@@ -973,7 +973,7 @@ _ZN2cv3ccm13IllumObserverD2Ev.exit:               ; preds = %_ZNSt7__cxx1112basi
           to label %.noexc unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
 .noexc:                                           ; preds = %.lr.ph.i.i.i.i12
-  %.19.i.i.i.i15 = select i1 %i.bd, ptr %.0811.i.i.i.i14, ptr %.012.i.i.i.i13 ; 5 uses
+  %.19.i.i.i.i15 = select i1 %i.bd, ptr %.0811.i.i.i.i14, ptr %.012.i.i.i.i13 ; 6 uses
   %.1.in.v.i.i.i.i16 = select i1 %i.bd, i64 24, i64 16
   %.1.in.i.i.i.i17 = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i13, i64 %.1.in.v.i.i.i.i16
   %.1.i.i.i.i18 = load ptr, ptr %.1.in.i.i.i.i17, align 8, !tbaa !110 ; 2 uses
@@ -993,7 +993,7 @@ bb.q:                                             ; preds = %_ZNSt3mapIN2cv3ccm1
   br i1 %i.bg, label %.critedge.i22, label %bb.r
 
 .critedge.i22:                                    ; preds = %.noexc24, %_ZNSt3mapIN2cv3ccm13IllumObserverESt10shared_ptrINS1_3LabEESt4lessIS2_ESaISt4pairIKS2_S5_EEE11lower_boundERS9_.exit.i20, %_ZN2cv3ccm13IllumObserverD2Ev.exit
-  %.08.lcssa.i.i.i11.i23 = phi ptr [ %.19.i.i.i.i15, %.noexc24 ], [ getelementptr inbounds nuw (i8, ptr @_ZZN2cv3ccm3Lab3getENS0_13IllumObserverEE6lab_cs, i64 8), %_ZNSt3mapIN2cv3ccm13IllumObserverESt10shared_ptrINS1_3LabEESt4lessIS2_ESaISt4pairIKS2_S5_EEE11lower_boundERS9_.exit.i20 ], [ getelementptr inbounds nuw (i8, ptr @_ZZN2cv3ccm3Lab3getENS0_13IllumObserverEE6lab_cs, i64 8), %_ZN2cv3ccm13IllumObserverD2Ev.exit ]
+  %.08.lcssa.i.i.i11.i23 = phi ptr [ %.19.i.i.i.i15, %.noexc24 ], [ %.19.i.i.i.i15, %_ZNSt3mapIN2cv3ccm13IllumObserverESt10shared_ptrINS1_3LabEESt4lessIS2_ESaISt4pairIKS2_S5_EEE11lower_boundERS9_.exit.i20 ], [ getelementptr inbounds nuw (i8, ptr @_ZZN2cv3ccm3Lab3getENS0_13IllumObserverEE6lab_cs, i64 8), %_ZN2cv3ccm13IllumObserverD2Ev.exit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #31
   store ptr %1, ptr %4, align 8, !tbaa !159
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #31
@@ -1096,7 +1096,7 @@ _ZNSt10shared_ptrIN2cv3ccm3LabEEaSERKS3_.exit:    ; preds = %bb.r, %_ZNSt16_Sp_c
           to label %.noexc42 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
 .noexc42:                                         ; preds = %.lr.ph.i.i.i.i30
-  %.19.i.i.i.i33 = select i1 %i.ch, ptr %.0811.i.i.i.i32, ptr %.012.i.i.i.i31 ; 5 uses
+  %.19.i.i.i.i33 = select i1 %i.ch, ptr %.0811.i.i.i.i32, ptr %.012.i.i.i.i31 ; 6 uses
   %.1.in.v.i.i.i.i34 = select i1 %i.ch, i64 24, i64 16
   %.1.in.i.i.i.i35 = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i31, i64 %.1.in.v.i.i.i.i34
   %.1.i.i.i.i36 = load ptr, ptr %.1.in.i.i.i.i35, align 8, !tbaa !110 ; 2 uses
@@ -1116,7 +1116,7 @@ bb.ab:                                            ; preds = %_ZNSt3mapIN2cv3ccm1
   br i1 %i.ck, label %.critedge.i40, label %bb.ac
 
 .critedge.i40:                                    ; preds = %.noexc43, %_ZNSt3mapIN2cv3ccm13IllumObserverESt10shared_ptrINS1_3LabEESt4lessIS2_ESaISt4pairIKS2_S5_EEE11lower_boundERS9_.exit.i38, %_ZNSt10shared_ptrIN2cv3ccm3LabEEaSERKS3_.exit
-  %.08.lcssa.i.i.i11.i41 = phi ptr [ %.19.i.i.i.i33, %.noexc43 ], [ getelementptr inbounds nuw (i8, ptr @_ZZN2cv3ccm3Lab3getENS0_13IllumObserverEE6lab_cs, i64 8), %_ZNSt3mapIN2cv3ccm13IllumObserverESt10shared_ptrINS1_3LabEESt4lessIS2_ESaISt4pairIKS2_S5_EEE11lower_boundERS9_.exit.i38 ], [ getelementptr inbounds nuw (i8, ptr @_ZZN2cv3ccm3Lab3getENS0_13IllumObserverEE6lab_cs, i64 8), %_ZNSt10shared_ptrIN2cv3ccm3LabEEaSERKS3_.exit ]
+  %.08.lcssa.i.i.i11.i41 = phi ptr [ %.19.i.i.i.i33, %.noexc43 ], [ %.19.i.i.i.i33, %_ZNSt3mapIN2cv3ccm13IllumObserverESt10shared_ptrINS1_3LabEESt4lessIS2_ESaISt4pairIKS2_S5_EEE11lower_boundERS9_.exit.i38 ], [ getelementptr inbounds nuw (i8, ptr @_ZZN2cv3ccm3Lab3getENS0_13IllumObserverEE6lab_cs, i64 8), %_ZNSt10shared_ptrIN2cv3ccm3LabEEaSERKS3_.exit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #31
   store ptr %1, ptr %2, align 8, !tbaa !159
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #31

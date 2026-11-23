@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not114, label %strbuf_strip_suffix.exit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.c, %strbuf_setlen.exit
-  %i.cf = phi ptr [ %i.cq, %strbuf_setlen.exit ], [ %.pre123, %bb.c ] ; 7 uses
+  %i.cf = phi ptr [ %i.cq, %strbuf_setlen.exit ], [ %.pre123, %bb.c ] ; 9 uses
   %i.cg = phi i64 [ %i.cp, %strbuf_setlen.exit ], [ %i.ce, %bb.c ] ; 4 uses
   %i.ch = getelementptr i8, ptr %i.cf, i64 %i.cg
   %i.ci = getelementptr i8, ptr %i.ch, i64 -1
@@ -246,7 +246,7 @@ bb.i:                                             ; preds = %bb.h
 
 strbuf_setlen.exit:                               ; preds = %bb.g, %bb.h
   %i.cp = phi i64 [ %.pre122, %bb.g ], [ %i.ck, %bb.h ] ; 2 uses
-  %i.cq = phi ptr [ %.pre, %bb.g ], [ @strbuf_slopbuf, %bb.h ] ; 2 uses
+  %i.cq = phi ptr [ %.pre, %bb.g ], [ %i.cf, %bb.h ] ; 2 uses
   %.not = icmp eq i64 %i.cp, 0
   br i1 %.not, label %strbuf_strip_suffix.exit, label %.lr.ph, !llvm.loop !67
 
@@ -294,7 +294,7 @@ bb.p:                                             ; preds = %bb.o
   unreachable
 
 strbuf_strip_suffix.exit:                         ; preds = %strbuf_setlen.exit, %bb.c, %.critedge, %bb.j, %bb.n, %bb.o
-  %i.db = phi ptr [ %i.cf, %.critedge ], [ %i.cf, %bb.j ], [ %.pre124, %bb.n ], [ @strbuf_slopbuf, %bb.o ], [ %.pre123, %bb.c ], [ %i.cq, %strbuf_setlen.exit ]
+  %i.db = phi ptr [ %i.cf, %.critedge ], [ %i.cf, %bb.j ], [ %.pre124, %bb.n ], [ %i.cf, %bb.o ], [ %.pre123, %bb.c ], [ %i.cq, %strbuf_setlen.exit ]
   %i.dc = call ptr @strrchr(ptr noundef nonnull dereferenceable(1) %i.db, i32 noundef 47) #18 ; 2 uses
   %.not51 = icmp eq ptr %i.dc, null
   br i1 %.not51, label %bb.q, label %bb.r
@@ -697,7 +697,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not15, label %bb.d, label %.split12
 
 bb.d:                                             ; preds = %bb.c
-  %i.l = load ptr, ptr %i.f, align 8, !tbaa !19   ; 4 uses
+  %i.l = load ptr, ptr %i.f, align 8, !tbaa !19   ; 5 uses
   %i.m = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.n = load i64, ptr %i.m, align 8, !tbaa !34   ; 2 uses
   %i.o = icmp ult i64 %i.n, 5
@@ -748,7 +748,7 @@ bb.k:                                             ; preds = %bb.j
   unreachable
 
 strbuf_strip_suffix.exit:                         ; preds = %bb.d, %bb.e, %bb.i, %bb.j
-  %i.ad = phi ptr [ %i.l, %bb.d ], [ %i.l, %bb.e ], [ %.pre, %bb.i ], [ @strbuf_slopbuf, %bb.j ]
+  %i.ad = phi ptr [ %i.l, %bb.d ], [ %i.l, %bb.e ], [ %.pre, %bb.i ], [ %i.l, %bb.j ]
   %i.ae = call ptr @strbuf_realpath_forgiving(ptr noundef nonnull %3, ptr noundef %i.ad, i32 noundef 1) #17 ; 0 uses
   %i.af = load ptr, ptr %i.f, align 8, !tbaa !19
   %i.ag = call i32 (ptr, ...) @run_git(ptr noundef nonnull @.str.122, ptr noundef nonnull @.str.129, ptr noundef nonnull @.str.134, ptr noundef nonnull @.str.131, ptr noundef nonnull @.str.132, ptr noundef %i.af, ptr noundef null)
@@ -757,7 +757,7 @@ strbuf_strip_suffix.exit:                         ; preds = %bb.d, %bb.e, %bb.i,
   %.inv.i = icmp slt i32 %i.ai, 0
   %i.aj = icmp slt i32 %i.ag, 0
   %i.ak = select i1 %.inv.i, i1 true, i1 %i.aj
-  %i.al = load ptr, ptr %i.i, align 8, !tbaa !19  ; 4 uses
+  %i.al = load ptr, ptr %i.i, align 8, !tbaa !19  ; 5 uses
   %i.am = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
   %i.an = load i64, ptr %i.am, align 8, !tbaa !34 ; 2 uses
   %i.ao = icmp ult i64 %i.an, 5
@@ -808,7 +808,7 @@ bb.r:                                             ; preds = %bb.q
   unreachable
 
 bb.s:                                             ; preds = %bb.q, %bb.p, %bb.l, %strbuf_strip_suffix.exit
-  %i.bd = phi ptr [ @strbuf_slopbuf, %bb.q ], [ %.pre28, %bb.p ], [ %i.al, %bb.l ], [ %i.al, %strbuf_strip_suffix.exit ]
+  %i.bd = phi ptr [ %i.al, %bb.q ], [ %.pre28, %bb.p ], [ %i.al, %bb.l ], [ %i.al, %strbuf_strip_suffix.exit ]
   %i.be = call ptr @strbuf_realpath_forgiving(ptr noundef nonnull %4, ptr noundef %i.bd, i32 noundef 1) #17 ; 0 uses
   %i.bf = load ptr, ptr %i.i, align 8, !tbaa !19
   %i.bg = call i32 (ptr, ...) @run_git(ptr noundef nonnull @.str.122, ptr noundef nonnull @.str.129, ptr noundef nonnull @.str.134, ptr noundef nonnull @.str.131, ptr noundef nonnull @.str.132, ptr noundef %i.bf, ptr noundef null)

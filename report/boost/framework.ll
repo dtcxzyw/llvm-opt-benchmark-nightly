@@ -204,7 +204,7 @@ _ZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEv.exit.i: ; preds 
   %i.eq = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 32
   %i.er = load i64, ptr %i.eq, align 8, !tbaa !37
   %i.es = icmp ult i64 %i.er, %.0                 ; 2 uses
-  %.19.i.i.i.i = select i1 %i.es, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 5 uses
+  %.19.i.i.i.i = select i1 %i.es, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 6 uses
   %.1.in.v.i.i.i.i = select i1 %i.es, i64 24, i64 16
   %.1.in.i.i.i.i = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 %.1.in.v.i.i.i.i
   %.1.i.i.i.i = load ptr, ptr %.1.in.i.i.i.i, align 8, !tbaa !92 ; 2 uses
@@ -222,7 +222,7 @@ bb.ak:                                            ; preds = %_ZNSt3mapImPN5boost
   br i1 %i.ew, label %.critedge.i, label %.noexc45
 
 .critedge.i:                                      ; preds = %bb.ak, %_ZNSt3mapImPN5boost9unit_test9test_unitESt4lessImESaISt4pairIKmS3_EEE11lower_boundERS7_.exit.i, %_ZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEv.exit.i
-  %.08.lcssa.i.i.i14.i = phi ptr [ %.19.i.i.i.i, %bb.ak ], [ getelementptr inbounds nuw (i8, ptr @_ZZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEvE8the_inst, i64 48), %_ZNSt3mapImPN5boost9unit_test9test_unitESt4lessImESaISt4pairIKmS3_EEE11lower_boundERS7_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEvE8the_inst, i64 48), %_ZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEv.exit.i ]
+  %.08.lcssa.i.i.i14.i = phi ptr [ %.19.i.i.i.i, %bb.ak ], [ %.19.i.i.i.i, %_ZNSt3mapImPN5boost9unit_test9test_unitESt4lessImESaISt4pairIKmS3_EEE11lower_boundERS7_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEvE8the_inst, i64 48), %_ZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEv.exit.i ]
   %i.ex = invoke noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #27
           to label %.noexc55 unwind label %.loopexit.split-lp65.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 6 uses
 
@@ -625,7 +625,7 @@ bb.p:                                             ; preds = %bb.p, %.lr.ph.i.i.i
   %i.cc = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 32
   %i.cd = load i32, ptr %i.cc, align 4, !tbaa !189
   %i.ce = icmp slt i32 %i.cd, %i.cb               ; 2 uses
-  %.19.i.i.i.i = select i1 %i.ce, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 5 uses
+  %.19.i.i.i.i = select i1 %i.ce, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 6 uses
   %.1.in.v.i.i.i.i = select i1 %i.ce, i64 24, i64 16
   %.1.in.i.i.i.i = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 %.1.in.v.i.i.i.i
   %.1.i.i.i.i = load ptr, ptr %.1.in.i.i.i.i, align 8, !tbaa !92 ; 2 uses
@@ -643,7 +643,7 @@ bb.q:                                             ; preds = %_ZNSt3mapIN5boost9u
   br i1 %i.ci, label %.critedge.i, label %bb.r
 
 .critedge.i:                                      ; preds = %bb.q, %_ZNSt3mapIN5boost9unit_test13output_formatENS1_14runtime_config13stream_holderESt4lessIS2_ESaISt4pairIKS2_S4_EEE11lower_boundERS8_.exit.i, %_ZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEv.exit
-  %.08.lcssa.i.i.i11.i = phi ptr [ %.19.i.i.i.i, %bb.q ], [ getelementptr inbounds nuw (i8, ptr @_ZZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEvE8the_inst, i64 296), %_ZNSt3mapIN5boost9unit_test13output_formatENS1_14runtime_config13stream_holderESt4lessIS2_ESaISt4pairIKS2_S4_EEE11lower_boundERS8_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEvE8the_inst, i64 296), %_ZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEv.exit ]
+  %.08.lcssa.i.i.i11.i = phi ptr [ %.19.i.i.i.i, %bb.q ], [ %.19.i.i.i.i, %_ZNSt3mapIN5boost9unit_test13output_formatENS1_14runtime_config13stream_holderESt4lessIS2_ESaISt4pairIKS2_S4_EEE11lower_boundERS8_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEvE8the_inst, i64 296), %_ZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEv.exit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #24
   store ptr %i.h, ptr %3, align 8, !tbaa !165
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #24
@@ -1046,7 +1046,7 @@ _ZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEv.exit328: ; preds
   %i.rh = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i331, i64 32
   %i.ri = load i32, ptr %i.rh, align 4, !tbaa !189
   %i.rj = icmp slt i32 %i.ri, %i.lq               ; 2 uses
-  %.19.i.i.i.i333 = select i1 %i.rj, ptr %.0811.i.i.i.i332, ptr %.012.i.i.i.i331 ; 5 uses
+  %.19.i.i.i.i333 = select i1 %i.rj, ptr %.0811.i.i.i.i332, ptr %.012.i.i.i.i331 ; 6 uses
   %.1.in.v.i.i.i.i334 = select i1 %i.rj, i64 24, i64 16
   %.1.in.i.i.i.i335 = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i331, i64 %.1.in.v.i.i.i.i334
   %.1.i.i.i.i336 = load ptr, ptr %.1.in.i.i.i.i335, align 8, !tbaa !92 ; 2 uses
@@ -1064,7 +1064,7 @@ bb.ea:                                            ; preds = %_ZNSt3mapIN5boost9u
   br i1 %i.rn, label %.critedge.i340, label %bb.ej
 
 .critedge.i340:                                   ; preds = %bb.ea, %_ZNSt3mapIN5boost9unit_test13output_formatENS1_14runtime_config13stream_holderESt4lessIS2_ESaISt4pairIKS2_S4_EEE11lower_boundERS8_.exit.i338, %_ZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEv.exit328
-  %.08.lcssa.i.i.i11.i341 = phi ptr [ %.19.i.i.i.i333, %bb.ea ], [ getelementptr inbounds nuw (i8, ptr @_ZZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEvE8the_inst, i64 296), %_ZNSt3mapIN5boost9unit_test13output_formatENS1_14runtime_config13stream_holderESt4lessIS2_ESaISt4pairIKS2_S4_EEE11lower_boundERS8_.exit.i338 ], [ getelementptr inbounds nuw (i8, ptr @_ZZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEvE8the_inst, i64 296), %_ZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEv.exit328 ]
+  %.08.lcssa.i.i.i11.i341 = phi ptr [ %.19.i.i.i.i333, %bb.ea ], [ %.19.i.i.i.i333, %_ZNSt3mapIN5boost9unit_test13output_formatENS1_14runtime_config13stream_holderESt4lessIS2_ESaISt4pairIKS2_S4_EEE11lower_boundERS8_.exit.i338 ], [ getelementptr inbounds nuw (i8, ptr @_ZZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEvE8the_inst, i64 296), %_ZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEv.exit328 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %0) #24
   store ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEvE8the_inst, i64 288), ptr %0, align 8, !tbaa !197
   %i.ro = invoke noalias noundef nonnull dereferenceable(64) ptr @_Znwm(i64 noundef 64) #27
@@ -1467,7 +1467,7 @@ _ZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEv.exit.i94: ; pred
   %i.w = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i142, i64 32
   %i.x = load i64, ptr %i.w, align 8, !tbaa !37
   %i.y = icmp ult i64 %i.x, %i.p                  ; 2 uses
-  %.19.i.i.i.i144 = select i1 %i.y, ptr %.0811.i.i.i.i143, ptr %.012.i.i.i.i142 ; 5 uses
+  %.19.i.i.i.i144 = select i1 %i.y, ptr %.0811.i.i.i.i143, ptr %.012.i.i.i.i142 ; 6 uses
   %.1.in.v.i.i.i.i145 = select i1 %i.y, i64 24, i64 16
   %.1.in.i.i.i.i146 = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i142, i64 %.1.in.v.i.i.i.i145
   %.1.i.i.i.i147 = load ptr, ptr %.1.in.i.i.i.i146, align 8, !tbaa !92 ; 2 uses
@@ -1485,7 +1485,7 @@ bb.g:                                             ; preds = %_ZNSt3mapImPN5boost
   br i1 %i.ac, label %.critedge.i151, label %_ZNSt3mapImPN5boost9unit_test9test_unitESt4lessImESaISt4pairIKmS3_EEEixERS7_.exit158
 
 .critedge.i151:                                   ; preds = %bb.g, %_ZNSt3mapImPN5boost9unit_test9test_unitESt4lessImESaISt4pairIKmS3_EEE11lower_boundERS7_.exit.i149, %_ZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEv.exit.i94
-  %.08.lcssa.i.i.i14.i152 = phi ptr [ %.19.i.i.i.i144, %bb.g ], [ getelementptr inbounds nuw (i8, ptr @_ZZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEvE8the_inst, i64 48), %_ZNSt3mapImPN5boost9unit_test9test_unitESt4lessImESaISt4pairIKmS3_EEE11lower_boundERS7_.exit.i149 ], [ getelementptr inbounds nuw (i8, ptr @_ZZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEvE8the_inst, i64 48), %_ZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEv.exit.i94 ]
+  %.08.lcssa.i.i.i14.i152 = phi ptr [ %.19.i.i.i.i144, %bb.g ], [ %.19.i.i.i.i144, %_ZNSt3mapImPN5boost9unit_test9test_unitESt4lessImESaISt4pairIKmS3_EEE11lower_boundERS7_.exit.i149 ], [ getelementptr inbounds nuw (i8, ptr @_ZZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEvE8the_inst, i64 48), %_ZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEv.exit.i94 ]
   %i.ad = tail call noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #27 ; 6 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 32 ; 3 uses
   store i64 %i.p, ptr %i.ae, align 8, !tbaa !95
@@ -1606,7 +1606,7 @@ _ZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEv.exit.i88: ; pred
   %i.bi = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i123, i64 32
   %i.bj = load i64, ptr %i.bi, align 8, !tbaa !37
   %i.bk = icmp ult i64 %i.bj, %.02431.i           ; 2 uses
-  %.19.i.i.i.i125 = select i1 %i.bk, ptr %.0811.i.i.i.i124, ptr %.012.i.i.i.i123 ; 5 uses
+  %.19.i.i.i.i125 = select i1 %i.bk, ptr %.0811.i.i.i.i124, ptr %.012.i.i.i.i123 ; 6 uses
   %.1.in.v.i.i.i.i126 = select i1 %i.bk, i64 24, i64 16
   %.1.in.i.i.i.i127 = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i123, i64 %.1.in.v.i.i.i.i126
   %.1.i.i.i.i128 = load ptr, ptr %.1.in.i.i.i.i127, align 8, !tbaa !92 ; 2 uses
@@ -1624,7 +1624,7 @@ bb.s:                                             ; preds = %_ZNSt3mapImPN5boost
   br i1 %i.bo, label %.critedge.i132, label %_ZNSt3mapImPN5boost9unit_test9test_unitESt4lessImESaISt4pairIKmS3_EEEixERS7_.exit139
 
 .critedge.i132:                                   ; preds = %bb.s, %_ZNSt3mapImPN5boost9unit_test9test_unitESt4lessImESaISt4pairIKmS3_EEE11lower_boundERS7_.exit.i130, %_ZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEv.exit.i88
-  %.08.lcssa.i.i.i14.i133 = phi ptr [ %.19.i.i.i.i125, %bb.s ], [ getelementptr inbounds nuw (i8, ptr @_ZZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEvE8the_inst, i64 48), %_ZNSt3mapImPN5boost9unit_test9test_unitESt4lessImESaISt4pairIKmS3_EEE11lower_boundERS7_.exit.i130 ], [ getelementptr inbounds nuw (i8, ptr @_ZZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEvE8the_inst, i64 48), %_ZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEv.exit.i88 ]
+  %.08.lcssa.i.i.i14.i133 = phi ptr [ %.19.i.i.i.i125, %bb.s ], [ %.19.i.i.i.i125, %_ZNSt3mapImPN5boost9unit_test9test_unitESt4lessImESaISt4pairIKmS3_EEE11lower_boundERS7_.exit.i130 ], [ getelementptr inbounds nuw (i8, ptr @_ZZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEvE8the_inst, i64 48), %_ZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEv.exit.i88 ]
   %i.bp = tail call noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #27 ; 6 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 32 ; 3 uses
   store i64 %.02431.i, ptr %i.bq, align 8, !tbaa !95
@@ -1750,7 +1750,7 @@ _ZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEv.exit.i82: ; pred
   %i.cv = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i104, i64 32
   %i.cw = load i64, ptr %i.cv, align 8, !tbaa !37
   %i.cx = icmp ult i64 %i.cw, %i.co               ; 2 uses
-  %.19.i.i.i.i106 = select i1 %i.cx, ptr %.0811.i.i.i.i105, ptr %.012.i.i.i.i104 ; 5 uses
+  %.19.i.i.i.i106 = select i1 %i.cx, ptr %.0811.i.i.i.i105, ptr %.012.i.i.i.i104 ; 6 uses
   %.1.in.v.i.i.i.i107 = select i1 %i.cx, i64 24, i64 16
   %.1.in.i.i.i.i108 = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i104, i64 %.1.in.v.i.i.i.i107
   %.1.i.i.i.i109 = load ptr, ptr %.1.in.i.i.i.i108, align 8, !tbaa !92 ; 2 uses
@@ -1768,7 +1768,7 @@ bb.ae:                                            ; preds = %_ZNSt3mapImPN5boost
   br i1 %i.db, label %.critedge.i113, label %_ZNSt3mapImPN5boost9unit_test9test_unitESt4lessImESaISt4pairIKmS3_EEEixERS7_.exit120
 
 .critedge.i113:                                   ; preds = %bb.ae, %_ZNSt3mapImPN5boost9unit_test9test_unitESt4lessImESaISt4pairIKmS3_EEE11lower_boundERS7_.exit.i111, %_ZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEv.exit.i82
-  %.08.lcssa.i.i.i14.i114 = phi ptr [ %.19.i.i.i.i106, %bb.ae ], [ getelementptr inbounds nuw (i8, ptr @_ZZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEvE8the_inst, i64 48), %_ZNSt3mapImPN5boost9unit_test9test_unitESt4lessImESaISt4pairIKmS3_EEE11lower_boundERS7_.exit.i111 ], [ getelementptr inbounds nuw (i8, ptr @_ZZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEvE8the_inst, i64 48), %_ZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEv.exit.i82 ]
+  %.08.lcssa.i.i.i14.i114 = phi ptr [ %.19.i.i.i.i106, %bb.ae ], [ %.19.i.i.i.i106, %_ZNSt3mapImPN5boost9unit_test9test_unitESt4lessImESaISt4pairIKmS3_EEE11lower_boundERS7_.exit.i111 ], [ getelementptr inbounds nuw (i8, ptr @_ZZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEvE8the_inst, i64 48), %_ZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEv.exit.i82 ]
   %i.dc = tail call noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #27 ; 6 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %i.dc, i64 32 ; 3 uses
   store i64 %i.co, ptr %i.dd, align 8, !tbaa !95
@@ -1882,7 +1882,7 @@ _ZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEv.exit.i: ; preds 
   %i.ef = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 32
   %i.eg = load i64, ptr %i.ef, align 8, !tbaa !37
   %i.eh = icmp ult i64 %i.eg, %.1.i               ; 2 uses
-  %.19.i.i.i.i = select i1 %i.eh, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 5 uses
+  %.19.i.i.i.i = select i1 %i.eh, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 6 uses
   %.1.in.v.i.i.i.i = select i1 %i.eh, i64 24, i64 16
   %.1.in.i.i.i.i = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 %.1.in.v.i.i.i.i
   %.1.i.i.i.i = load ptr, ptr %.1.in.i.i.i.i, align 8, !tbaa !92 ; 2 uses
@@ -1900,7 +1900,7 @@ bb.aq:                                            ; preds = %_ZNSt3mapImPN5boost
   br i1 %i.el, label %.critedge.i, label %_ZNSt3mapImPN5boost9unit_test9test_unitESt4lessImESaISt4pairIKmS3_EEEixERS7_.exit
 
 .critedge.i:                                      ; preds = %bb.aq, %_ZNSt3mapImPN5boost9unit_test9test_unitESt4lessImESaISt4pairIKmS3_EEE11lower_boundERS7_.exit.i, %_ZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEv.exit.i
-  %.08.lcssa.i.i.i14.i = phi ptr [ %.19.i.i.i.i, %bb.aq ], [ getelementptr inbounds nuw (i8, ptr @_ZZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEvE8the_inst, i64 48), %_ZNSt3mapImPN5boost9unit_test9test_unitESt4lessImESaISt4pairIKmS3_EEE11lower_boundERS7_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEvE8the_inst, i64 48), %_ZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEv.exit.i ]
+  %.08.lcssa.i.i.i14.i = phi ptr [ %.19.i.i.i.i, %bb.aq ], [ %.19.i.i.i.i, %_ZNSt3mapImPN5boost9unit_test9test_unitESt4lessImESaISt4pairIKmS3_EEE11lower_boundERS7_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEvE8the_inst, i64 48), %_ZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEv.exit.i ]
   %i.em = tail call noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #27 ; 6 uses
   %i.en = getelementptr inbounds nuw i8, ptr %i.em, i64 32 ; 3 uses
   store i64 %.1.i, ptr %i.en, align 8, !tbaa !95
@@ -2303,7 +2303,7 @@ _ZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEv.exit.i: ; preds 
   %i.ay = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 32
   %i.az = load i64, ptr %i.ay, align 8, !tbaa !37
   %i.ba = icmp ult i64 %i.az, %i.ar               ; 2 uses
-  %.19.i.i.i.i = select i1 %i.ba, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 5 uses
+  %.19.i.i.i.i = select i1 %i.ba, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 6 uses
   %.1.in.v.i.i.i.i = select i1 %i.ba, i64 24, i64 16
   %.1.in.i.i.i.i = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 %.1.in.v.i.i.i.i
   %.1.i.i.i.i = load ptr, ptr %.1.in.i.i.i.i, align 8, !tbaa !92 ; 2 uses
@@ -2321,7 +2321,7 @@ bb.h:                                             ; preds = %_ZNSt3mapImPN5boost
   br i1 %i.be, label %.critedge.i, label %_ZNSt3mapImPN5boost9unit_test9test_unitESt4lessImESaISt4pairIKmS3_EEEixERS7_.exit
 
 .critedge.i:                                      ; preds = %bb.h, %_ZNSt3mapImPN5boost9unit_test9test_unitESt4lessImESaISt4pairIKmS3_EEE11lower_boundERS7_.exit.i, %_ZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEv.exit.i
-  %.08.lcssa.i.i.i14.i = phi ptr [ %.19.i.i.i.i, %bb.h ], [ getelementptr inbounds nuw (i8, ptr @_ZZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEvE8the_inst, i64 48), %_ZNSt3mapImPN5boost9unit_test9test_unitESt4lessImESaISt4pairIKmS3_EEE11lower_boundERS7_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEvE8the_inst, i64 48), %_ZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEv.exit.i ]
+  %.08.lcssa.i.i.i14.i = phi ptr [ %.19.i.i.i.i, %bb.h ], [ %.19.i.i.i.i, %_ZNSt3mapImPN5boost9unit_test9test_unitESt4lessImESaISt4pairIKmS3_EEE11lower_boundERS7_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEvE8the_inst, i64 48), %_ZN5boost9unit_test9framework4impl12_GLOBAL__N_111s_frk_stateEv.exit.i ]
   %i.bf = call noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #27 ; 6 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bf, i64 32 ; 3 uses
   store i64 %i.ar, ptr %i.bg, align 8, !tbaa !95

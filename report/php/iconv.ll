@@ -204,7 +204,7 @@ bb.v:                                             ; preds = %bb.u
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.v, %bb.u
-  %i.aw = call noalias ptr @iconv_open(ptr noundef %3, ptr noundef nonnull %i.k) #16 ; 2 uses
+  %i.aw = call noalias ptr @iconv_open(ptr noundef %3, ptr noundef nonnull %i.k) #16 ; 5 uses
   %i.ax = icmp eq ptr %i.aw, inttoptr (i64 -1 to ptr)
   br i1 %i.ax, label %bb.x, label %select.unfold
 
@@ -257,13 +257,13 @@ bb.y:                                             ; preds = %bb.x
 
 .thread:                                          ; preds = %bb.s, %bb.q, %bb.t, %._crit_edge, %bb.y
   %.3274.ph = phi i32 [ %.364, %bb.y ], [ 7, %bb.s ], [ 7, %bb.q ], [ %i.at, %bb.t ], [ %i.bp, %._crit_edge ]
-  %.1263.ph = phi ptr [ inttoptr (i64 -1 to ptr), %bb.y ], [ %.0262473, %bb.s ], [ %.0262473, %bb.q ], [ %.0262473, %bb.t ], [ inttoptr (i64 -1 to ptr), %._crit_edge ]
+  %.1263.ph = phi ptr [ %i.aw, %bb.y ], [ %.0262473, %bb.s ], [ %.0262473, %bb.q ], [ %.0262473, %bb.t ], [ %i.aw, %._crit_edge ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k) #16
   br label %.loopexit
 
 select.unfold:                                    ; preds = %bb.t, %._crit_edge, %bb.w
   %.3274 = phi i32 [ 0, %._crit_edge ], [ %.0271472, %bb.w ], [ 0, %bb.t ]
-  %.1263 = phi ptr [ inttoptr (i64 -1 to ptr), %._crit_edge ], [ %i.aw, %bb.w ], [ %.0262473, %bb.t ]
+  %.1263 = phi ptr [ %i.aw, %._crit_edge ], [ %i.aw, %bb.w ], [ %.0262473, %bb.t ]
   %.4259 = phi ptr [ %.3258, %._crit_edge ], [ %.0255474, %bb.w ], [ %.0255474, %bb.t ]
   %.3252 = phi i64 [ %.2251, %._crit_edge ], [ %.0249475, %bb.w ], [ %.0249475, %bb.t ]
   %.5247 = phi i32 [ 12, %._crit_edge ], [ %.2244, %bb.w ], [ %.371, %bb.t ]

@@ -204,7 +204,7 @@ bb.k:                                             ; preds = %.epil.preheader
 }
 
 ; Function Attrs: nofree nounwind memory(readwrite, argmem: read, target_mem: none) uwtable
-define noundef ptr @Abc_CexDup(ptr nofree noundef readonly captures(address) %0, i32 noundef %1) local_unnamed_addr #3 {
+define noundef ptr @Abc_CexDup(ptr nofree noundef readonly captures(address, ret: address, provenance) %0, i32 noundef %1) local_unnamed_addr #3 {
 bb.a:
   %i.a = icmp eq ptr %0, inttoptr (i64 1 to ptr)
   br i1 %i.a, label %.loopexit, label %bb.b
@@ -282,7 +282,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   br i1 %exitcond.not, label %.loopexit, label %bb.c, !llvm.loop !0
 
 .loopexit:                                        ; preds = %bb.e, %bb.b, %bb.a
-  %.023 = phi ptr [ inttoptr (i64 1 to ptr), %bb.a ], [ %calloc.i, %bb.b ], [ %calloc.i, %bb.e ]
+  %.023 = phi ptr [ %0, %bb.a ], [ %calloc.i, %bb.b ], [ %calloc.i, %bb.e ]
   ret ptr %.023
 }
 
@@ -685,7 +685,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: nofree nounwind memory(readwrite, target_mem: none) uwtable
-define noundef ptr @Abc_CexTransformPhase(ptr nofree noundef readonly captures(address) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #9 {
+define noundef ptr @Abc_CexTransformPhase(ptr nofree noundef captures(address, ret: address, provenance) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #9 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.b = load i32, ptr %i.a, align 4, !tbaa !12   ; 3 uses
@@ -773,7 +773,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 Abc_CexDup.exit:                                  ; preds = %bb.e, %.Abc_CexDup.exit_crit_edge, %bb.b
   %.pre-phi = phi i32 [ %.pre16, %.Abc_CexDup.exit_crit_edge ], [ %i.i, %bb.b ], [ %i.i, %bb.e ]
   %i.av = phi i32 [ %.pre15, %.Abc_CexDup.exit_crit_edge ], [ %i.z, %bb.b ], [ %i.z, %bb.e ]
-  %.023.i = phi ptr [ inttoptr (i64 1 to ptr), %.Abc_CexDup.exit_crit_edge ], [ %calloc.i.i, %bb.b ], [ %calloc.i.i, %bb.e ] ; 5 uses
+  %.023.i = phi ptr [ %0, %.Abc_CexDup.exit_crit_edge ], [ %calloc.i.i, %bb.b ], [ %calloc.i.i, %bb.e ] ; 5 uses
   %i.aw = sdiv i32 %i.b, %1
   %i.ax = getelementptr inbounds nuw i8, ptr %.023.i, i64 12
   store i32 %1, ptr %i.ax, align 4, !tbaa !12

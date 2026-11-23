@@ -206,7 +206,7 @@ bb.dq:                                            ; preds = %.loopexit.split-lp.
 bb.dr:                                            ; preds = %.noexc119.i
   %i.nn = getelementptr inbounds i8, ptr %i.mw, i64 -8
   call void @llvm.experimental.noalias.scope.decl(metadata !163387)
-  %.val.i122.i = load ptr, ptr %i.nn, align 8, !alias.scope !163387, !noalias !163353, !nonnull !411, !noundef !411 ; 3 uses
+  %.val.i122.i = load ptr, ptr %i.nn, align 8, !alias.scope !163387, !noalias !163353, !nonnull !411, !noundef !411 ; 4 uses
   %i.no = icmp eq ptr %.val.i122.i, inttoptr (i64 -1 to ptr)
   br i1 %i.no, label %_RNvMs1_NtCscI6d9CVNmLh_4core6optionINtB5_6OptionRINtNtCs40k4W9msRzi_5alloc4sync4WeakNtNtCsjjbR6Jfsbqw_8lance_io12object_store11ObjectStoreEE6clonedCsfR8GmIBoxTX_21lance_namespace_impls.exit.i, label %bb.ds
 
@@ -221,7 +221,7 @@ bb.dt:                                            ; preds = %bb.ds
   unreachable
 
 _RNvMs1_NtCscI6d9CVNmLh_4core6optionINtB5_6OptionRINtNtCs40k4W9msRzi_5alloc4sync4WeakNtNtCsjjbR6Jfsbqw_8lance_io12object_store11ObjectStoreEE6clonedCsfR8GmIBoxTX_21lance_namespace_impls.exit.i: ; preds = %._crit_edge.i.i.i.i, %bb.ds, %bb.dr, %bb.dm
-  %.sroa.02.0.i.i = phi ptr [ %.val.i122.i, %bb.ds ], [ inttoptr (i64 -1 to ptr), %bb.dr ], [ null, %bb.dm ], [ null, %._crit_edge.i.i.i.i ] ; 15 uses
+  %.sroa.02.0.i.i = phi ptr [ %.val.i122.i, %bb.ds ], [ %.val.i122.i, %bb.dr ], [ null, %bb.dm ], [ null, %._crit_edge.i.i.i.i ] ; 15 uses
   %i.ns = atomicrmw add ptr %i.lm, i32 -1 release, align 4, !noalias !163353
   %i.nt = add i32 %i.ns, -1                       ; 2 uses
   %i.nu = and i32 %i.nt, -1073741825

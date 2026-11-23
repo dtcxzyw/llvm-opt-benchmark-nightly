@@ -42,7 +42,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.f, label %bb.i, label %bb.k
 
 bb.f:                                             ; preds = %bb.d
-  %i.g = call ptr @signal(i32 noundef %0, ptr noundef %1) #6 ; 3 uses
+  %i.g = call ptr @signal(i32 noundef %0, ptr noundef %1) #6 ; 4 uses
   %.not25 = icmp eq ptr %i.g, inttoptr (i64 -1 to ptr)
   br i1 %.not25, label %bb.k, label %bb.g
 
@@ -68,7 +68,7 @@ bb.j:                                             ; preds = %bb.i
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.i, %bb.j, %bb.g, %bb.f, %bb.e
-  %.019 = phi ptr [ inttoptr (i64 2 to ptr), %bb.e ], [ inttoptr (i64 -1 to ptr), %bb.f ], [ %i.g, %bb.g ], [ inttoptr (i64 -1 to ptr), %bb.j ], [ inttoptr (i64 -1 to ptr), %bb.i ]
+  %.019 = phi ptr [ inttoptr (i64 2 to ptr), %bb.e ], [ %i.g, %bb.f ], [ %i.g, %bb.g ], [ inttoptr (i64 -1 to ptr), %bb.j ], [ inttoptr (i64 -1 to ptr), %bb.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #4
   ret ptr %.019
 }

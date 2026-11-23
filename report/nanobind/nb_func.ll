@@ -205,12 +205,12 @@ bb.ba:                                            ; preds = %_ZN8nanobind6detail
   br i1 %.not258.us, label %.thread321, label %bb.bb, !prof !6
 
 bb.bb:                                            ; preds = %bb.ba, %bb.az
-  %.3238.us = phi ptr [ %spec.select.us, %bb.az ], [ %i.hh, %bb.ba ] ; 5 uses
+  %.3238.us = phi ptr [ %spec.select.us, %bb.az ], [ %i.hh, %bb.ba ] ; 6 uses
   %.not259.us = icmp eq ptr %.3238.us, inttoptr (i64 1 to ptr)
   br i1 %.not259.us, label %.thread309.us, label %.split402.us
 
 .thread309.us:                                    ; preds = %bb.bb, %._crit_edge387.us, %.thread288.us, %bb.s
-  %.5240313.us = phi ptr [ inttoptr (i64 1 to ptr), %bb.bb ], [ %.1236389.us, %bb.s ], [ %.1236389.us, %.thread288.us ], [ %.1236389.us, %._crit_edge387.us ] ; 3 uses
+  %.5240313.us = phi ptr [ %.3238.us, %bb.bb ], [ %.1236389.us, %bb.s ], [ %.1236389.us, %.thread288.us ], [ %.1236389.us, %._crit_edge387.us ] ; 3 uses
   %i.hp = add nuw i64 %.0214390.us, 1             ; 2 uses
   %exitcond435.not = icmp eq i64 %i.hp, %.val
   br i1 %exitcond435.not, label %._crit_edge392.us, label %bb.s, !llvm.loop !44
@@ -613,12 +613,12 @@ bb.h:                                             ; preds = %_ZN8nanobind6detail
   br i1 %.not84.us154, label %.thread112, label %bb.i, !prof !6
 
 bb.i:                                             ; preds = %bb.h, %bb.g
-  %.378.us155 = phi ptr [ %spec.select.us153, %bb.g ], [ %i.ba, %bb.h ] ; 2 uses
+  %.378.us155 = phi ptr [ %spec.select.us153, %bb.g ], [ %i.ba, %bb.h ] ; 3 uses
   %.not85.us156 = icmp eq ptr %.378.us155, inttoptr (i64 1 to ptr)
   br i1 %.not85.us156, label %bb.j, label %.split142.us
 
 bb.j:                                             ; preds = %bb.i, %.lr.ph136.split.us148
-  %.479.us157 = phi ptr [ inttoptr (i64 1 to ptr), %bb.i ], [ %.176134.us150, %.lr.ph136.split.us148 ] ; 2 uses
+  %.479.us157 = phi ptr [ %.378.us155, %bb.i ], [ %.176134.us150, %.lr.ph136.split.us148 ] ; 2 uses
   %i.bi = add nuw i64 %.067135.us149, 1           ; 2 uses
   %exitcond192.not = icmp eq i64 %i.bi, %.val.fr
   br i1 %exitcond192.not, label %._crit_edge137.us, label %.lr.ph136.split.us148, !llvm.loop !51
@@ -677,12 +677,12 @@ bb.p:                                             ; preds = %_ZN8nanobind6detail
   br i1 %.not84.us.us, label %.thread112, label %bb.q, !prof !6
 
 bb.q:                                             ; preds = %bb.p, %bb.o
-  %.378.us.us = phi ptr [ %spec.select.us.us, %bb.o ], [ %i.bv, %bb.p ] ; 2 uses
+  %.378.us.us = phi ptr [ %spec.select.us.us, %bb.o ], [ %i.bv, %bb.p ] ; 3 uses
   %.not85.us.us = icmp eq ptr %.378.us.us, inttoptr (i64 1 to ptr)
   br i1 %.not85.us.us, label %bb.r, label %.split142.us
 
 bb.r:                                             ; preds = %bb.q, %.lr.ph136.split.us.us
-  %.479.us.us = phi ptr [ inttoptr (i64 1 to ptr), %bb.q ], [ %.176134.us.us, %.lr.ph136.split.us.us ] ; 2 uses
+  %.479.us.us = phi ptr [ %.378.us.us, %bb.q ], [ %.176134.us.us, %.lr.ph136.split.us.us ] ; 2 uses
   %i.cd = add nuw i64 %.067135.us.us, 1           ; 2 uses
   %exitcond193.not = icmp eq i64 %i.cd, %.val.fr
   br i1 %exitcond193.not, label %._crit_edge137.us, label %.lr.ph136.split.us.us, !llvm.loop !51
@@ -1085,12 +1085,12 @@ bb.s:                                             ; preds = %_ZN8nanobind6detail
   br i1 %.not127.us, label %.thread36, label %bb.t, !prof !6
 
 bb.t:                                             ; preds = %bb.s, %bb.r
-  %.3117.us = phi ptr [ %spec.select.us, %bb.r ], [ %i.df, %bb.s ] ; 5 uses
+  %.3117.us = phi ptr [ %spec.select.us, %bb.r ], [ %i.df, %bb.s ] ; 6 uses
   %.not128.us = icmp eq ptr %.3117.us, inttoptr (i64 1 to ptr)
   br i1 %.not128.us, label %bb.u, label %.split104.us
 
 bb.u:                                             ; preds = %bb.t, %.thread.us, %bb.d
-  %.5119.us = phi ptr [ %.111579.us, %bb.d ], [ inttoptr (i64 1 to ptr), %bb.t ], [ %.111579.us, %.thread.us ] ; 3 uses
+  %.5119.us = phi ptr [ %.111579.us, %bb.d ], [ %.3117.us, %bb.t ], [ %.111579.us, %.thread.us ] ; 3 uses
   %i.dn = add nuw i64 %.010380.us, 1              ; 2 uses
   %exitcond125.not = icmp eq i64 %i.dn, %.val
   br i1 %exitcond125.not, label %._crit_edge.us, label %bb.d, !llvm.loop !76

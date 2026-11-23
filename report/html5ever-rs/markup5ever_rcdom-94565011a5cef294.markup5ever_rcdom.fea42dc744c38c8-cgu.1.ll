@@ -202,14 +202,13 @@ bb.d:                                             ; preds = %_RNvMst_NtCskKLDkoK
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j)
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 5 uses
-  %i.ac = load ptr, ptr %i.ab, align 8, !noundef !4 ; 10 uses
+  %i.ac = load ptr, ptr %i.ab, align 8, !noundef !4 ; 11 uses
   store ptr %i.ac, ptr %i.j, align 8
   store ptr null, ptr %i.ab, align 8
   %magicptr.i = ptrtoint ptr %i.ac to i64
-  switch i64 %magicptr.i, label %bb.e [
-    i64 0, label %_RNvXs1e_NtCsexYYUdYSQU6_5alloc2rcINtB6_4WeakNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeENtNtCskKLDkoKarTP_4core5clone5Clone5cloneBI_.exit.thread.i
-    i64 -1, label %_RNvXs1e_NtCsexYYUdYSQU6_5alloc2rcINtB6_4WeakNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeENtNtCskKLDkoKarTP_4core5clone5Clone5cloneBI_.exit.thread.fold.split.i
-  ]
+  %magicptr.off.i = add i64 %magicptr.i, -1
+  %switch.i = icmp ult i64 %magicptr.off.i, -2
+  br i1 %switch.i, label %bb.e, label %_RNvXs1e_NtCsexYYUdYSQU6_5alloc2rcINtB6_4WeakNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeENtNtCskKLDkoKarTP_4core5clone5Clone5cloneBI_.exit.thread.i
 
 bb.e:                                             ; preds = %bb.d
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 8 ; 2 uses
@@ -225,13 +224,9 @@ bb.f:                                             ; preds = %bb.e
   tail call void @llvm.trap()
   unreachable
 
-_RNvXs1e_NtCsexYYUdYSQU6_5alloc2rcINtB6_4WeakNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeENtNtCskKLDkoKarTP_4core5clone5Clone5cloneBI_.exit.thread.fold.split.i: ; preds = %bb.d
-  br label %_RNvXs1e_NtCsexYYUdYSQU6_5alloc2rcINtB6_4WeakNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeENtNtCskKLDkoKarTP_4core5clone5Clone5cloneBI_.exit.thread.i
-
-_RNvXs1e_NtCsexYYUdYSQU6_5alloc2rcINtB6_4WeakNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeENtNtCskKLDkoKarTP_4core5clone5Clone5cloneBI_.exit.thread.i: ; preds = %_RNvXs1e_NtCsexYYUdYSQU6_5alloc2rcINtB6_4WeakNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeENtNtCskKLDkoKarTP_4core5clone5Clone5cloneBI_.exit.thread.fold.split.i, %bb.d
-  %.sroa.0.0.ph.i = phi ptr [ null, %bb.d ], [ inttoptr (i64 -1 to ptr), %_RNvXs1e_NtCsexYYUdYSQU6_5alloc2rcINtB6_4WeakNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeENtNtCskKLDkoKarTP_4core5clone5Clone5cloneBI_.exit.thread.fold.split.i ]
+_RNvXs1e_NtCsexYYUdYSQU6_5alloc2rcINtB6_4WeakNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeENtNtCskKLDkoKarTP_4core5clone5Clone5cloneBI_.exit.thread.i: ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
-  store ptr %.sroa.0.0.ph.i, ptr %i.ab, align 8
+  store ptr %i.ac, ptr %i.ab, align 8
   br label %bb.j
 
 _RNvXs1e_NtCsexYYUdYSQU6_5alloc2rcINtB6_4WeakNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeENtNtCskKLDkoKarTP_4core5clone5Clone5cloneBI_.exit.i: ; preds = %bb.e
@@ -634,14 +629,13 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n)
   %i.v = getelementptr inbounds nuw i8, ptr %i.q, i64 96 ; 5 uses
-  %i.w = load ptr, ptr %i.v, align 8, !noundef !4 ; 6 uses
+  %i.w = load ptr, ptr %i.v, align 8, !noundef !4 ; 7 uses
   store ptr %i.w, ptr %i.n, align 8
   store ptr null, ptr %i.v, align 8
   %magicptr.i.i = ptrtoint ptr %i.w to i64
-  switch i64 %magicptr.i.i, label %bb.c [
-    i64 0, label %_RNvMCs1mImOlsSUsK_17markup5ever_rcdomNtB2_4Node6parent.exit.i
-    i64 -1, label %_RNvXs1e_NtCsexYYUdYSQU6_5alloc2rcINtB6_4WeakNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeENtNtCskKLDkoKarTP_4core5clone5Clone5cloneBI_.exit.thread.fold.split.i.i
-  ]
+  %magicptr.off.i.i = add i64 %magicptr.i.i, -1
+  %switch.i.i = icmp ult i64 %magicptr.off.i.i, -2
+  br i1 %switch.i.i, label %bb.c, label %_RNvMCs1mImOlsSUsK_17markup5ever_rcdomNtB2_4Node6parent.exit.i
 
 bb.c:                                             ; preds = %bb.b
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 8 ; 2 uses
@@ -656,9 +650,6 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   tail call void @llvm.trap()
   unreachable
-
-_RNvXs1e_NtCsexYYUdYSQU6_5alloc2rcINtB6_4WeakNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeENtNtCskKLDkoKarTP_4core5clone5Clone5cloneBI_.exit.thread.fold.split.i.i: ; preds = %bb.b
-  br label %_RNvMCs1mImOlsSUsK_17markup5ever_rcdomNtB2_4Node6parent.exit.i
 
 _RNvXs1e_NtCsexYYUdYSQU6_5alloc2rcINtB6_4WeakNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeENtNtCskKLDkoKarTP_4core5clone5Clone5cloneBI_.exit.i.i: ; preds = %bb.c
   %.pr.i.i = load ptr, ptr %i.v, align 8          ; 2 uses
@@ -693,10 +684,9 @@ _RNvMCs1mImOlsSUsK_17markup5ever_rcdomNtB2_4Node6parent.exit.thread.i: ; preds =
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n)
   br label %bb.h
 
-_RNvMCs1mImOlsSUsK_17markup5ever_rcdomNtB2_4Node6parent.exit.i: ; preds = %_RNvXs1e_NtCsexYYUdYSQU6_5alloc2rcINtB6_4WeakNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeENtNtCskKLDkoKarTP_4core5clone5Clone5cloneBI_.exit.thread.fold.split.i.i, %bb.b
-  %.sroa.0.0.ph.i.i = phi ptr [ null, %bb.b ], [ inttoptr (i64 -1 to ptr), %_RNvXs1e_NtCsexYYUdYSQU6_5alloc2rcINtB6_4WeakNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeENtNtCskKLDkoKarTP_4core5clone5Clone5cloneBI_.exit.thread.fold.split.i.i ]
+_RNvMCs1mImOlsSUsK_17markup5ever_rcdomNtB2_4Node6parent.exit.i: ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m)
-  store ptr %.sroa.0.0.ph.i.i, ptr %i.v, align 8
+  store ptr %i.w, ptr %i.v, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n)
   %.not.i = icmp eq ptr %i.w, null
@@ -750,14 +740,13 @@ bb.k:                                             ; preds = %.preheader.i
   %.sroa.01.1.i = phi i1 [ %.sroa.01.0.i, %.preheader.i ], [ %.sroa.01.0.i, %bb.k ], [ true, %bb.s ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k)
   %i.ao = getelementptr inbounds nuw i8, ptr %i.ai, i64 96 ; 5 uses
-  %i.ap = load ptr, ptr %i.ao, align 8, !noundef !4 ; 6 uses
+  %i.ap = load ptr, ptr %i.ao, align 8, !noundef !4 ; 7 uses
   store ptr %i.ap, ptr %i.k, align 8
   store ptr null, ptr %i.ao, align 8
   %magicptr.i17.i = ptrtoint ptr %i.ap to i64
-  switch i64 %magicptr.i17.i, label %bb.l [
-    i64 0, label %bb.u
-    i64 -1, label %_RNvXs1e_NtCsexYYUdYSQU6_5alloc2rcINtB6_4WeakNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeENtNtCskKLDkoKarTP_4core5clone5Clone5cloneBI_.exit.thread.fold.split.i18.i
-  ]
+  %magicptr.off.i18.i = add i64 %magicptr.i17.i, -1
+  %switch.i19.i = icmp ult i64 %magicptr.off.i18.i, -2
+  br i1 %switch.i19.i, label %bb.l, label %bb.u
 
 bb.l:                                             ; preds = %.thread45.i
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 8 ; 2 uses
@@ -772,9 +761,6 @@ bb.l:                                             ; preds = %.thread45.i
 bb.m:                                             ; preds = %bb.l
   call void @llvm.trap()
   unreachable
-
-_RNvXs1e_NtCsexYYUdYSQU6_5alloc2rcINtB6_4WeakNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeENtNtCskKLDkoKarTP_4core5clone5Clone5cloneBI_.exit.thread.fold.split.i18.i: ; preds = %.thread45.i
-  br label %bb.u
 
 _RNvXs1e_NtCsexYYUdYSQU6_5alloc2rcINtB6_4WeakNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeENtNtCskKLDkoKarTP_4core5clone5Clone5cloneBI_.exit.i21.i: ; preds = %bb.l
   %.pr.i22.i = load ptr, ptr %i.ao, align 8       ; 2 uses
@@ -839,10 +825,9 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc2rc2RcNtCs1mImO
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
   br label %bb.v
 
-bb.u:                                             ; preds = %_RNvXs1e_NtCsexYYUdYSQU6_5alloc2rcINtB6_4WeakNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeENtNtCskKLDkoKarTP_4core5clone5Clone5cloneBI_.exit.thread.fold.split.i18.i, %.thread45.i
-  %.sroa.0.0.ph.i20.i = phi ptr [ null, %.thread45.i ], [ inttoptr (i64 -1 to ptr), %_RNvXs1e_NtCsexYYUdYSQU6_5alloc2rcINtB6_4WeakNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeENtNtCskKLDkoKarTP_4core5clone5Clone5cloneBI_.exit.thread.fold.split.i18.i ]
+bb.u:                                             ; preds = %.thread45.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j)
-  store ptr %.sroa.0.0.ph.i20.i, ptr %i.ao, align 8
+  store ptr %i.ap, ptr %i.ao, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
   %.not14.i = icmp eq ptr %i.ap, null

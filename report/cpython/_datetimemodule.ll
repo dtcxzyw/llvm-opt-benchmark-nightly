@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.f
 
 datetime_dst.exit:                                ; preds = %bb.f, %bb.g
   %i.p = phi ptr [ %i.o, %bb.g ], [ @_Py_NoneStruct, %bb.f ]
-  %i.q = tail call fastcc ptr @call_tzinfo_method(ptr noundef %i.p, ptr noundef nonnull @.str.12, ptr noundef nonnull %1) ; 8 uses
+  %i.q = tail call fastcc ptr @call_tzinfo_method(ptr noundef %i.p, ptr noundef nonnull @.str.12, ptr noundef nonnull %1) ; 9 uses
   %i.r = icmp eq ptr %i.q, null
   br i1 %i.r, label %bb.ab, label %bb.h
 
@@ -249,7 +249,7 @@ bb.n:                                             ; preds = %Py_DECREF.exit63
 
 bb.o:                                             ; preds = %Py_DECREF.exit63, %bb.n
   %i.ad = phi ptr [ %i.ac, %bb.n ], [ @_Py_NoneStruct, %Py_DECREF.exit63 ]
-  %i.ae = tail call fastcc ptr @call_tzinfo_method(ptr noundef %i.ad, ptr noundef nonnull @.str.12, ptr noundef nonnull %i.v) ; 10 uses
+  %i.ae = tail call fastcc ptr @call_tzinfo_method(ptr noundef %i.ad, ptr noundef nonnull @.str.12, ptr noundef nonnull %i.v) ; 11 uses
   %i.af = icmp eq ptr %i.ae, null
   br i1 %i.af, label %bb.ab, label %bb.p
 
@@ -344,7 +344,7 @@ bb.aa:                                            ; preds = %bb.z
 .sink.split:                                      ; preds = %bb.p, %bb.h, %bb.e
   %.str.22.sink = phi ptr [ @.str.23, %bb.h ], [ @.str.22, %bb.e ], [ @.str.24, %bb.p ]
   %.1.ph = phi ptr [ null, %bb.h ], [ null, %bb.e ], [ %i.v, %bb.p ]
-  %.033.ph = phi ptr [ @_Py_NoneStruct, %bb.h ], [ null, %bb.e ], [ @_Py_NoneStruct, %bb.p ]
+  %.033.ph = phi ptr [ %i.q, %bb.h ], [ null, %bb.e ], [ %i.ae, %bb.p ]
   %.032.ph = phi ptr [ null, %bb.h ], [ null, %bb.e ], [ %i.t, %bb.p ]
   %i.bb = load ptr, ptr @PyExc_ValueError, align 8, !tbaa !429
   tail call void @PyErr_SetString(ptr noundef %i.bb, ptr noundef nonnull %.str.22.sink) #16
@@ -640,7 +640,7 @@ check_delta_day_range.exit.i:                     ; preds = %normalize_d_s_us.ex
 
 bb.b:                                             ; preds = %check_delta_day_range.exit.i
   %i.aj = load ptr, ptr getelementptr inbounds nuw (i8, ptr @PyDateTime_DeltaType, i64 304), align 8, !tbaa !416
-  %i.ak = tail call ptr %i.aj(ptr noundef nonnull @PyDateTime_DeltaType, i64 noundef 0) #16, !inline_history !417 ; 7 uses
+  %i.ak = tail call ptr %i.aj(ptr noundef nonnull @PyDateTime_DeltaType, i64 noundef 0) #16, !inline_history !417 ; 8 uses
   %.not15.i = icmp eq ptr %i.ak, null
   br i1 %.not15.i, label %Py_INCREF.exit, label %new_delta_ex.exit
 
@@ -657,17 +657,18 @@ new_delta_ex.exit:                                ; preds = %bb.b
   br i1 %i.ap, label %new_delta_ex.exit.thread22, label %Py_INCREF.exit
 
 new_delta_ex.exit.thread22:                       ; preds = %PyObject_TypeCheck.exit16, %PyObject_TypeCheck.exit, %new_delta_ex.exit
-  %i.aq = load i32, ptr @_Py_NotImplementedStruct, align 8, !tbaa !423 ; 2 uses
+  %.024 = phi ptr [ %i.ak, %new_delta_ex.exit ], [ @_Py_NotImplementedStruct, %PyObject_TypeCheck.exit ], [ @_Py_NotImplementedStruct, %PyObject_TypeCheck.exit16 ] ; 4 uses
+  %i.aq = load i32, ptr %.024, align 8, !tbaa !423 ; 2 uses
   %i.ar = icmp ugt i32 %i.aq, -1073741825
   br i1 %i.ar, label %Py_INCREF.exit, label %bb.c
 
 bb.c:                                             ; preds = %new_delta_ex.exit.thread22
   %i.as = add nuw i32 %i.aq, 1
-  store i32 %i.as, ptr @_Py_NotImplementedStruct, align 8, !tbaa !423
+  store i32 %i.as, ptr %.024, align 8, !tbaa !423
   br label %Py_INCREF.exit
 
 Py_INCREF.exit:                                   ; preds = %bb.b, %check_delta_day_range.exit.thread.i, %check_delta_day_range.exit.i, %bb.c, %new_delta_ex.exit.thread22, %new_delta_ex.exit
-  %.020 = phi ptr [ @_Py_NotImplementedStruct, %bb.c ], [ %i.ak, %new_delta_ex.exit ], [ @_Py_NotImplementedStruct, %new_delta_ex.exit.thread22 ], [ null, %bb.b ], [ null, %check_delta_day_range.exit.thread.i ], [ @zero_delta, %check_delta_day_range.exit.i ]
+  %.020 = phi ptr [ %.024, %bb.c ], [ %i.ak, %new_delta_ex.exit ], [ %.024, %new_delta_ex.exit.thread22 ], [ null, %bb.b ], [ null, %check_delta_day_range.exit.thread.i ], [ @zero_delta, %check_delta_day_range.exit.i ]
   ret ptr %.020
 }
 
@@ -1070,7 +1071,7 @@ check_delta_day_range.exit.i:                     ; preds = %normalize_d_s_us.ex
 
 bb.b:                                             ; preds = %check_delta_day_range.exit.i
   %i.aj = load ptr, ptr getelementptr inbounds nuw (i8, ptr @PyDateTime_DeltaType, i64 304), align 8, !tbaa !416
-  %i.ak = tail call ptr %i.aj(ptr noundef nonnull @PyDateTime_DeltaType, i64 noundef 0) #16, !inline_history !417 ; 7 uses
+  %i.ak = tail call ptr %i.aj(ptr noundef nonnull @PyDateTime_DeltaType, i64 noundef 0) #16, !inline_history !417 ; 8 uses
   %.not15.i = icmp eq ptr %i.ak, null
   br i1 %.not15.i, label %Py_INCREF.exit, label %new_delta_ex.exit
 
@@ -1087,17 +1088,18 @@ new_delta_ex.exit:                                ; preds = %bb.b
   br i1 %i.ap, label %new_delta_ex.exit.thread22, label %Py_INCREF.exit
 
 new_delta_ex.exit.thread22:                       ; preds = %PyObject_TypeCheck.exit16, %PyObject_TypeCheck.exit, %new_delta_ex.exit
-  %i.aq = load i32, ptr @_Py_NotImplementedStruct, align 8, !tbaa !423 ; 2 uses
+  %.024 = phi ptr [ %i.ak, %new_delta_ex.exit ], [ @_Py_NotImplementedStruct, %PyObject_TypeCheck.exit ], [ @_Py_NotImplementedStruct, %PyObject_TypeCheck.exit16 ] ; 4 uses
+  %i.aq = load i32, ptr %.024, align 8, !tbaa !423 ; 2 uses
   %i.ar = icmp ugt i32 %i.aq, -1073741825
   br i1 %i.ar, label %Py_INCREF.exit, label %bb.c
 
 bb.c:                                             ; preds = %new_delta_ex.exit.thread22
   %i.as = add nuw i32 %i.aq, 1
-  store i32 %i.as, ptr @_Py_NotImplementedStruct, align 8, !tbaa !423
+  store i32 %i.as, ptr %.024, align 8, !tbaa !423
   br label %Py_INCREF.exit
 
 Py_INCREF.exit:                                   ; preds = %bb.b, %check_delta_day_range.exit.thread.i, %check_delta_day_range.exit.i, %bb.c, %new_delta_ex.exit.thread22, %new_delta_ex.exit
-  %.020 = phi ptr [ @_Py_NotImplementedStruct, %bb.c ], [ %i.ak, %new_delta_ex.exit ], [ @_Py_NotImplementedStruct, %new_delta_ex.exit.thread22 ], [ null, %bb.b ], [ null, %check_delta_day_range.exit.thread.i ], [ @zero_delta, %check_delta_day_range.exit.i ]
+  %.020 = phi ptr [ %.024, %bb.c ], [ %i.ak, %new_delta_ex.exit ], [ %.024, %new_delta_ex.exit.thread22 ], [ null, %bb.b ], [ null, %check_delta_day_range.exit.thread.i ], [ @zero_delta, %check_delta_day_range.exit.i ]
   ret ptr %.020
 }
 
@@ -1240,22 +1242,23 @@ PyObject_TypeCheck.exit34.thread:                 ; preds = %bb.r, %PyObject_Typ
   br label %multiply_int_timedelta.exit
 
 multiply_int_timedelta.exit:                      ; preds = %bb.q, %bb.p, %bb.o, %bb.h, %bb.g, %bb.f, %PyObject_TypeCheck.exit34.thread, %PyObject_TypeCheck.exit27.thread
-  %.0 = phi ptr [ %i.m, %bb.g ], [ %i.r, %PyObject_TypeCheck.exit27.thread ], [ %i.ab, %bb.p ], [ %i.m, %bb.h ], [ %i.ag, %PyObject_TypeCheck.exit34.thread ], [ %i.ab, %bb.q ], [ %i.ab, %bb.o ], [ %i.m, %bb.f ] ; 2 uses
+  %.0 = phi ptr [ %i.m, %bb.g ], [ %i.r, %PyObject_TypeCheck.exit27.thread ], [ %i.ab, %bb.p ], [ %i.m, %bb.h ], [ %i.ag, %PyObject_TypeCheck.exit34.thread ], [ %i.ab, %bb.q ], [ %i.ab, %bb.o ], [ %i.m, %bb.f ] ; 3 uses
   %i.ah = icmp eq ptr %.0, @_Py_NotImplementedStruct
   br i1 %i.ah, label %multiply_int_timedelta.exit.thread41, label %Py_INCREF.exit
 
 multiply_int_timedelta.exit.thread41:             ; preds = %PyObject_TypeCheck.exit27, %PyObject_TypeCheck.exit34, %multiply_int_timedelta.exit
-  %i.ai = load i32, ptr @_Py_NotImplementedStruct, align 8, !tbaa !423 ; 2 uses
+  %.043 = phi ptr [ %.0, %multiply_int_timedelta.exit ], [ @_Py_NotImplementedStruct, %PyObject_TypeCheck.exit34 ], [ @_Py_NotImplementedStruct, %PyObject_TypeCheck.exit27 ] ; 4 uses
+  %i.ai = load i32, ptr %.043, align 8, !tbaa !423 ; 2 uses
   %i.aj = icmp ugt i32 %i.ai, -1073741825
   br i1 %i.aj, label %Py_INCREF.exit, label %bb.s
 
 bb.s:                                             ; preds = %multiply_int_timedelta.exit.thread41
   %i.ak = add nuw i32 %i.ai, 1
-  store i32 %i.ak, ptr @_Py_NotImplementedStruct, align 8, !tbaa !423
+  store i32 %i.ak, ptr %.043, align 8, !tbaa !423
   br label %Py_INCREF.exit
 
 Py_INCREF.exit:                                   ; preds = %bb.k, %Py_DECREF.exit13.i29, %bb.b, %Py_DECREF.exit13.i, %bb.s, %multiply_int_timedelta.exit.thread41, %multiply_int_timedelta.exit
-  %.039 = phi ptr [ @_Py_NotImplementedStruct, %bb.s ], [ %.0, %multiply_int_timedelta.exit ], [ @_Py_NotImplementedStruct, %multiply_int_timedelta.exit.thread41 ], [ null, %Py_DECREF.exit13.i ], [ null, %bb.b ], [ null, %Py_DECREF.exit13.i29 ], [ null, %bb.k ]
+  %.039 = phi ptr [ %.043, %bb.s ], [ %.0, %multiply_int_timedelta.exit ], [ %.043, %multiply_int_timedelta.exit.thread41 ], [ null, %Py_DECREF.exit13.i ], [ null, %bb.b ], [ null, %Py_DECREF.exit13.i29 ], [ null, %bb.k ]
   ret ptr %.039
 }
 
@@ -1658,22 +1661,23 @@ PyObject_TypeCheck.exit16.thread:                 ; preds = %bb.i, %PyObject_Typ
   br label %divide_timedelta_int.exit
 
 divide_timedelta_int.exit:                        ; preds = %bb.h, %bb.g, %bb.f, %PyObject_TypeCheck.exit16.thread
-  %.0 = phi ptr [ %i.m, %bb.g ], [ %i.r, %PyObject_TypeCheck.exit16.thread ], [ %i.m, %bb.h ], [ %i.m, %bb.f ] ; 2 uses
+  %.0 = phi ptr [ %i.m, %bb.g ], [ %i.r, %PyObject_TypeCheck.exit16.thread ], [ %i.m, %bb.h ], [ %i.m, %bb.f ] ; 3 uses
   %i.s = icmp eq ptr %.0, @_Py_NotImplementedStruct
   br i1 %i.s, label %divide_timedelta_int.exit.thread, label %Py_INCREF.exit
 
 divide_timedelta_int.exit.thread:                 ; preds = %PyObject_TypeCheck.exit16, %PyObject_TypeCheck.exit, %divide_timedelta_int.exit
-  %i.t = load i32, ptr @_Py_NotImplementedStruct, align 8, !tbaa !423 ; 2 uses
+  %.021 = phi ptr [ %.0, %divide_timedelta_int.exit ], [ @_Py_NotImplementedStruct, %PyObject_TypeCheck.exit ], [ @_Py_NotImplementedStruct, %PyObject_TypeCheck.exit16 ] ; 4 uses
+  %i.t = load i32, ptr %.021, align 8, !tbaa !423 ; 2 uses
   %i.u = icmp ugt i32 %i.t, -1073741825
   br i1 %i.u, label %Py_INCREF.exit, label %bb.j
 
 bb.j:                                             ; preds = %divide_timedelta_int.exit.thread
   %i.v = add nuw i32 %i.t, 1
-  store i32 %i.v, ptr @_Py_NotImplementedStruct, align 8, !tbaa !423
+  store i32 %i.v, ptr %.021, align 8, !tbaa !423
   br label %Py_INCREF.exit
 
 Py_INCREF.exit:                                   ; preds = %bb.b, %Py_DECREF.exit13.i, %bb.j, %divide_timedelta_int.exit.thread, %divide_timedelta_int.exit
-  %.020 = phi ptr [ @_Py_NotImplementedStruct, %bb.j ], [ %.0, %divide_timedelta_int.exit ], [ @_Py_NotImplementedStruct, %divide_timedelta_int.exit.thread ], [ null, %Py_DECREF.exit13.i ], [ null, %bb.b ]
+  %.020 = phi ptr [ %.021, %bb.j ], [ %.0, %divide_timedelta_int.exit ], [ %.021, %divide_timedelta_int.exit.thread ], [ null, %Py_DECREF.exit13.i ], [ null, %bb.b ]
   ret ptr %.020
 }
 
@@ -1851,22 +1855,23 @@ bb.u:                                             ; preds = %bb.t
   br label %truedivide_timedelta_timedelta.exit
 
 truedivide_timedelta_timedelta.exit:              ; preds = %bb.u, %bb.t, %bb.s, %Py_DECREF.exit16.sink.split.i, %bb.h, %Py_DECREF.exit14.i, %PyObject_TypeCheck.exit23.thread
-  %.0 = phi ptr [ %i.am, %bb.s ], [ %i.t, %PyObject_TypeCheck.exit23.thread ], [ %.0.ph.i, %Py_DECREF.exit16.sink.split.i ], [ %i.l, %Py_DECREF.exit14.i ], [ %i.l, %bb.h ], [ %i.am, %bb.t ], [ %i.am, %bb.u ] ; 2 uses
+  %.0 = phi ptr [ %i.am, %bb.s ], [ %i.t, %PyObject_TypeCheck.exit23.thread ], [ %.0.ph.i, %Py_DECREF.exit16.sink.split.i ], [ %i.l, %Py_DECREF.exit14.i ], [ %i.l, %bb.h ], [ %i.am, %bb.t ], [ %i.am, %bb.u ] ; 3 uses
   %i.aq = icmp eq ptr %.0, @_Py_NotImplementedStruct
   br i1 %i.aq, label %truedivide_timedelta_timedelta.exit.thread32, label %Py_INCREF.exit
 
 truedivide_timedelta_timedelta.exit.thread32:     ; preds = %bb.j, %PyObject_TypeCheck.exit, %truedivide_timedelta_timedelta.exit
-  %i.ar = load i32, ptr @_Py_NotImplementedStruct, align 8, !tbaa !423 ; 2 uses
+  %.034 = phi ptr [ %.0, %truedivide_timedelta_timedelta.exit ], [ @_Py_NotImplementedStruct, %PyObject_TypeCheck.exit ], [ @_Py_NotImplementedStruct, %bb.j ] ; 4 uses
+  %i.ar = load i32, ptr %.034, align 8, !tbaa !423 ; 2 uses
   %i.as = icmp ugt i32 %i.ar, -1073741825
   br i1 %i.as, label %Py_INCREF.exit, label %bb.v
 
 bb.v:                                             ; preds = %truedivide_timedelta_timedelta.exit.thread32
   %i.at = add nuw i32 %i.ar, 1
-  store i32 %i.at, ptr @_Py_NotImplementedStruct, align 8, !tbaa !423
+  store i32 %i.at, ptr %.034, align 8, !tbaa !423
   br label %Py_INCREF.exit
 
 Py_INCREF.exit:                                   ; preds = %bb.k, %Py_DECREF.exit13.i, %bb.d, %bb.c, %PyObject_TypeCheck.exit21.thread, %bb.v, %truedivide_timedelta_timedelta.exit.thread32, %truedivide_timedelta_timedelta.exit
-  %.030 = phi ptr [ @_Py_NotImplementedStruct, %bb.v ], [ %.0, %truedivide_timedelta_timedelta.exit ], [ @_Py_NotImplementedStruct, %truedivide_timedelta_timedelta.exit.thread32 ], [ null, %PyObject_TypeCheck.exit21.thread ], [ null, %bb.c ], [ null, %bb.d ], [ null, %Py_DECREF.exit13.i ], [ null, %bb.k ]
+  %.030 = phi ptr [ %.034, %bb.v ], [ %.0, %truedivide_timedelta_timedelta.exit ], [ %.034, %truedivide_timedelta_timedelta.exit.thread32 ], [ null, %PyObject_TypeCheck.exit21.thread ], [ null, %bb.c ], [ null, %bb.d ], [ null, %Py_DECREF.exit13.i ], [ null, %bb.k ]
   ret ptr %.030
 }
 
@@ -2269,7 +2274,7 @@ bb.a:
 define internal nonnull ptr @date_richcompare(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2) #0 !guid !542 {
 bb.a:
   %i.a = getelementptr i8, ptr %1, i64 8          ; 2 uses
-  %.val7 = load ptr, ptr %i.a, align 8, !tbaa !430 ; 2 uses
+  %.val7 = load ptr, ptr %i.a, align 8, !tbaa !430 ; 3 uses
   %.not.i = icmp eq ptr %.val7, @PyDateTime_DateType
   br i1 %.not.i, label %PyObject_TypeCheck.exit9, label %PyObject_TypeCheck.exit
 
@@ -2284,7 +2289,7 @@ bb.b:                                             ; preds = %PyObject_TypeCheck.
   br i1 %.not.i8, label %diff_to_bool.exit, label %PyObject_TypeCheck.exit9
 
 PyObject_TypeCheck.exit9:                         ; preds = %bb.a, %bb.b
-  %.val14 = phi ptr [ %.val.pr, %bb.b ], [ @PyDateTime_DateType, %bb.a ]
+  %.val14 = phi ptr [ %.val.pr, %bb.b ], [ %.val7, %bb.a ]
   %i.c = tail call i32 @PyType_IsSubtype(ptr noundef %.val14, ptr noundef nonnull @PyDateTime_DateTimeType) #16
   %.not = icmp eq i32 %i.c, 0
   br i1 %.not, label %bb.c, label %diff_to_bool.exit
@@ -2687,7 +2692,7 @@ bb.ak:                                            ; preds = %bb.aj
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #16
   store ptr %.0.i.i206, ptr %i.c, align 16, !tbaa !429
   store ptr %3, ptr %i.n, align 8, !tbaa !429
-  %i.br = call ptr @PyObject_VectorcallMethod(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 103552), ptr noundef nonnull %i.c, i64 noundef -9223372036854775806, ptr noundef null) #16, !inline_history !581 ; 12 uses
+  %i.br = call ptr @PyObject_VectorcallMethod(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 103552), ptr noundef nonnull %i.c, i64 noundef -9223372036854775806, ptr noundef null) #16, !inline_history !581 ; 13 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #16
   %i.bs = icmp eq ptr %i.br, null                 ; 2 uses
   %i.bt = icmp eq ptr %i.br, @_Py_NoneStruct      ; 2 uses
@@ -2805,7 +2810,7 @@ make_Zreplacement.exit.thread231:                 ; preds = %bb.ay
   br label %.thread239
 
 make_Zreplacement.exit:                           ; preds = %bb.aq
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_NoneStruct) #16, !inline_history !581
+  call void @_Py_Dealloc(ptr noundef nonnull %i.br) #16, !inline_history !581
   br label %make_Zreplacement.exit.thread229
 
 bb.az:                                            ; preds = %PyUnicode_READ_CHAR.exit, %bb.af
@@ -3208,22 +3213,23 @@ PyObject_TypeCheck.exit126.thread:                ; preds = %bb.aq, %PyObject_Ty
   br label %Py_DECREF.exit
 
 Py_DECREF.exit:                                   ; preds = %bb.ap, %bb.ao, %Py_DECREF.exit83, %new_delta_ex.exit, %PyObject_TypeCheck.exit126.thread
-  %.2 = phi ptr [ %i.gt, %bb.ao ], [ %i.hb, %PyObject_TypeCheck.exit126.thread ], [ %i.gt, %bb.ap ], [ %.0.i123, %new_delta_ex.exit ], [ %i.gt, %Py_DECREF.exit83 ] ; 2 uses
+  %.2 = phi ptr [ %i.gt, %bb.ao ], [ %i.hb, %PyObject_TypeCheck.exit126.thread ], [ %i.gt, %bb.ap ], [ %.0.i123, %new_delta_ex.exit ], [ %i.gt, %Py_DECREF.exit83 ] ; 3 uses
   %i.hc = icmp eq ptr %.2, @_Py_NotImplementedStruct
   br i1 %i.hc, label %Py_DECREF.exit.thread, label %.critedge
 
 Py_DECREF.exit.thread:                            ; preds = %PyObject_TypeCheck.exit126, %PyObject_TypeCheck.exit, %Py_DECREF.exit
-  %i.hd = load i32, ptr @_Py_NotImplementedStruct, align 8, !tbaa !423 ; 2 uses
+  %.2139 = phi ptr [ %.2, %Py_DECREF.exit ], [ @_Py_NotImplementedStruct, %PyObject_TypeCheck.exit ], [ @_Py_NotImplementedStruct, %PyObject_TypeCheck.exit126 ] ; 4 uses
+  %i.hd = load i32, ptr %.2139, align 8, !tbaa !423 ; 2 uses
   %i.he = icmp ugt i32 %i.hd, -1073741825
   br i1 %i.he, label %.critedge, label %bb.ar
 
 bb.ar:                                            ; preds = %Py_DECREF.exit.thread
   %i.hf = add nuw i32 %i.hd, 1
-  store i32 %i.hf, ptr @_Py_NotImplementedStruct, align 8, !tbaa !423
+  store i32 %i.hf, ptr %.2139, align 8, !tbaa !423
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.aj, %check_delta_day_range.exit.thread.i, %bb.ar, %Py_DECREF.exit.thread, %bb.aa, %bb.z, %Py_DECREF.exit91, %bb.t, %bb.s, %Py_DECREF.exit95, %bb.n, %bb.m, %bb.l, %datetime_utcoffset.exit, %Py_DECREF.exit
-  %.1 = phi ptr [ %.2, %Py_DECREF.exit ], [ null, %bb.aa ], [ null, %bb.t ], [ null, %bb.n ], [ @_Py_NotImplementedStruct, %bb.ar ], [ null, %datetime_utcoffset.exit ], [ null, %bb.l ], [ null, %bb.m ], [ null, %Py_DECREF.exit95 ], [ null, %bb.s ], [ null, %Py_DECREF.exit91 ], [ null, %bb.z ], [ @_Py_NotImplementedStruct, %Py_DECREF.exit.thread ], [ null, %check_delta_day_range.exit.thread.i ], [ null, %bb.aj ]
+  %.1 = phi ptr [ %.2, %Py_DECREF.exit ], [ null, %bb.aa ], [ null, %bb.t ], [ null, %bb.n ], [ %.2139, %bb.ar ], [ null, %datetime_utcoffset.exit ], [ null, %bb.l ], [ null, %bb.m ], [ null, %Py_DECREF.exit95 ], [ null, %bb.s ], [ null, %Py_DECREF.exit91 ], [ null, %bb.z ], [ %.2139, %Py_DECREF.exit.thread ], [ null, %check_delta_day_range.exit.thread.i ], [ null, %bb.aj ]
   ret ptr %.1
 }
 
@@ -3464,7 +3470,7 @@ bb.c:                                             ; preds = %bb.b, %.thread
   br i1 %.not26, label %.thread31, label %bb.d
 
 bb.d:                                             ; preds = %.thread29
-  %i.n = load ptr, ptr %i.k, align 8, !tbaa !429  ; 4 uses
+  %i.n = load ptr, ptr %i.k, align 8, !tbaa !429  ; 5 uses
   %.not34 = icmp eq ptr %i.n, @_Py_NoneStruct
   br i1 %.not34, label %.thread31, label %bb.e
 
@@ -3489,7 +3495,7 @@ check_tzinfo_subclass.exit.i:                     ; preds = %PyObject_TypeCheck.
 
 .thread31:                                        ; preds = %.thread29, %PyObject_TypeCheck.exit.i.i, %bb.e, %bb.d
   %i.u = phi i1 [ true, %PyObject_TypeCheck.exit.i.i ], [ false, %bb.d ], [ true, %bb.e ], [ false, %.thread29 ]
-  %.033 = phi ptr [ %i.n, %PyObject_TypeCheck.exit.i.i ], [ @_Py_NoneStruct, %bb.d ], [ %i.n, %bb.e ], [ @_Py_NoneStruct, %.thread29 ] ; 2 uses
+  %.033 = phi ptr [ %i.n, %PyObject_TypeCheck.exit.i.i ], [ %i.n, %bb.d ], [ %i.n, %bb.e ], [ @_Py_NoneStruct, %.thread29 ] ; 2 uses
   %i.v = phi ptr [ @_PyTime_gmtime, %PyObject_TypeCheck.exit.i.i ], [ @_PyTime_localtime, %bb.d ], [ @_PyTime_gmtime, %bb.e ], [ @_PyTime_localtime, %.thread29 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #16
   %i.w = call i32 @PyTime_Time(ptr noundef nonnull %i.b) #16, !inline_history !647
@@ -3892,7 +3898,7 @@ bb.c:                                             ; preds = %bb.b, %.thread
   br i1 %.not26, label %.thread31, label %bb.d
 
 bb.d:                                             ; preds = %.thread29
-  %i.k = load ptr, ptr %i.h, align 8, !tbaa !429  ; 4 uses
+  %i.k = load ptr, ptr %i.h, align 8, !tbaa !429  ; 5 uses
   %i.l = icmp eq ptr %i.k, @_Py_NoneStruct
   br i1 %i.l, label %.thread31, label %bb.e
 
@@ -3917,7 +3923,7 @@ check_tzinfo_subclass.exit.i:                     ; preds = %PyObject_TypeCheck.
 
 .thread31:                                        ; preds = %.thread29, %PyObject_TypeCheck.exit.i.i, %bb.e, %bb.d
   %i.s = phi i1 [ true, %bb.d ], [ false, %PyObject_TypeCheck.exit.i.i ], [ false, %bb.e ], [ true, %.thread29 ]
-  %.033 = phi ptr [ @_Py_NoneStruct, %bb.d ], [ %i.k, %PyObject_TypeCheck.exit.i.i ], [ %i.k, %bb.e ], [ @_Py_NoneStruct, %.thread29 ] ; 5 uses
+  %.033 = phi ptr [ %i.k, %bb.d ], [ %i.k, %PyObject_TypeCheck.exit.i.i ], [ %i.k, %bb.e ], [ @_Py_NoneStruct, %.thread29 ] ; 5 uses
   %i.t = getelementptr i8, ptr %0, i64 24
   %i.u = load i8, ptr %i.t, align 8, !tbaa !442
   %.not.i = icmp eq i8 %i.u, 0

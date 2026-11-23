@@ -204,10 +204,9 @@ bb.as:                                            ; preds = %bb.ar
   %i.dw = getelementptr inbounds nuw i8, ptr %i.dt, i64 8
   %.val144.i = load ptr, ptr %i.dw, align 8, !noalias !9377, !noundef !17 ; 4 uses
   %magicptr.i.i = ptrtoint ptr %.val144.i to i64
-  switch i64 %magicptr.i.i, label %bb.at [
-    i64 0, label %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEE8and_thenINtBL_3ArcB1h_ENCNCNvMs_NtB1j_10rtp_senderNtB2P_12RTCRtpSender4send00ECs4KPtkQIfQGm_13libp2p_webrtc.exit.thread.i
-    i64 -1, label %_RNvXs4_NtCskKLDkoKarTP_4core6optionINtB5_6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEENtNtB7_5clone5Clone5cloneCs4KPtkQIfQGm_13libp2p_webrtc.exit.thread406.i
-  ]
+  %magicptr.off.i.i = add i64 %magicptr.i.i, -1
+  %switch.i.i = icmp ult i64 %magicptr.off.i.i, -2
+  br i1 %switch.i.i, label %bb.at, label %_RNvXs4_NtCskKLDkoKarTP_4core6optionINtB5_6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEENtNtB7_5clone5Clone5cloneCs4KPtkQIfQGm_13libp2p_webrtc.exit.i
 
 bb.at:                                            ; preds = %bb.as
   %i.dx = getelementptr inbounds nuw i8, ptr %.val144.i, i64 8
@@ -219,14 +218,17 @@ bb.au:                                            ; preds = %bb.at
   call void @llvm.trap()
   unreachable
 
-_RNvXs4_NtCskKLDkoKarTP_4core6optionINtB5_6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEENtNtB7_5clone5Clone5cloneCs4KPtkQIfQGm_13libp2p_webrtc.exit.i: ; preds = %bb.at
+_RNvXs4_NtCskKLDkoKarTP_4core6optionINtB5_6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEENtNtB7_5clone5Clone5cloneCs4KPtkQIfQGm_13libp2p_webrtc.exit.i: ; preds = %bb.at, %bb.as
   %.not.i.i = icmp eq ptr %.val144.i, null
   br i1 %.not.i.i, label %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEE8and_thenINtBL_3ArcB1h_ENCNCNvMs_NtB1j_10rtp_senderNtB2P_12RTCRtpSender4send00ECs4KPtkQIfQGm_13libp2p_webrtc.exit.thread.i, label %_RNvXs4_NtCskKLDkoKarTP_4core6optionINtB5_6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEENtNtB7_5clone5Clone5cloneCs4KPtkQIfQGm_13libp2p_webrtc.exit.thread406.i
 
-_RNvXs4_NtCskKLDkoKarTP_4core6optionINtB5_6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEENtNtB7_5clone5Clone5cloneCs4KPtkQIfQGm_13libp2p_webrtc.exit.thread406.i: ; preds = %_RNvXs4_NtCskKLDkoKarTP_4core6optionINtB5_6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEENtNtB7_5clone5Clone5cloneCs4KPtkQIfQGm_13libp2p_webrtc.exit.i, %bb.as
-  %.sroa.0.0.i409.i = phi ptr [ %.val144.i, %_RNvXs4_NtCskKLDkoKarTP_4core6optionINtB5_6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEENtNtB7_5clone5Clone5cloneCs4KPtkQIfQGm_13libp2p_webrtc.exit.i ], [ inttoptr (i64 -1 to ptr), %bb.as ]
+_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEE8and_thenINtBL_3ArcB1h_ENCNCNvMs_NtB1j_10rtp_senderNtB2P_12RTCRtpSender4send00ECs4KPtkQIfQGm_13libp2p_webrtc.exit.thread.i: ; preds = %_RNvXs4_NtCskKLDkoKarTP_4core6optionINtB5_6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEENtNtB7_5clone5Clone5cloneCs4KPtkQIfQGm_13libp2p_webrtc.exit.i
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 560
+  br label %bb.bd
+
+_RNvXs4_NtCskKLDkoKarTP_4core6optionINtB5_6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEENtNtB7_5clone5Clone5cloneCs4KPtkQIfQGm_13libp2p_webrtc.exit.thread406.i: ; preds = %_RNvXs4_NtCskKLDkoKarTP_4core6optionINtB5_6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEENtNtB7_5clone5Clone5cloneCs4KPtkQIfQGm_13libp2p_webrtc.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n), !noalias !9376
-  store ptr %.sroa.0.0.i409.i, ptr %i.n, align 8, !noalias !9376
+  store ptr %.val144.i, ptr %i.n, align 8, !noalias !9376
   %i.ea = invoke noundef ptr @_RNvMsK_NtCsexYYUdYSQU6_5alloc4syncINtB5_4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverE7upgradeCs4KPtkQIfQGm_13libp2p_webrtc(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.n)
           to label %_RNCNCNvMs_NtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver10rtp_senderNtB8_12RTCRtpSender4send00Cs4KPtkQIfQGm_13libp2p_webrtc.exit.i.i unwind label %bb.av, !noalias !9377 ; 5 uses
 
@@ -245,10 +247,6 @@ bb.aw:                                            ; preds = %bb.av
 _RNCNCNvMs_NtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver10rtp_senderNtB8_12RTCRtpSender4send00Cs4KPtkQIfQGm_13libp2p_webrtc.exit.i.i: ; preds = %_RNvXs4_NtCskKLDkoKarTP_4core6optionINtB5_6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEENtNtB7_5clone5Clone5cloneCs4KPtkQIfQGm_13libp2p_webrtc.exit.thread406.i
   invoke void @_RNvXsO_NtCsexYYUdYSQU6_5alloc4syncINtB5_4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCs4KPtkQIfQGm_13libp2p_webrtc(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.n)
           to label %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEE8and_thenINtBL_3ArcB1h_ENCNCNvMs_NtB1j_10rtp_senderNtB2P_12RTCRtpSender4send00ECs4KPtkQIfQGm_13libp2p_webrtc.exit.i unwind label %bb.be, !noalias !9377
-
-_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEE8and_thenINtBL_3ArcB1h_ENCNCNvMs_NtB1j_10rtp_senderNtB2P_12RTCRtpSender4send00ECs4KPtkQIfQGm_13libp2p_webrtc.exit.thread.i: ; preds = %_RNvXs4_NtCskKLDkoKarTP_4core6optionINtB5_6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEENtNtB7_5clone5Clone5cloneCs4KPtkQIfQGm_13libp2p_webrtc.exit.i, %bb.as
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 560
-  br label %bb.bd
 
 _RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEE8and_thenINtBL_3ArcB1h_ENCNCNvMs_NtB1j_10rtp_senderNtB2P_12RTCRtpSender4send00ECs4KPtkQIfQGm_13libp2p_webrtc.exit.i: ; preds = %_RNCNCNvMs_NtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver10rtp_senderNtB8_12RTCRtpSender4send00Cs4KPtkQIfQGm_13libp2p_webrtc.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n), !noalias !9376
@@ -652,14 +650,9 @@ bb.aa:                                            ; preds = %bb.z
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bt, i64 8
   %.val39 = load ptr, ptr %i.bw, align 8, !noundef !17 ; 4 uses
   %magicptr.i = ptrtoint ptr %.val39 to i64
-  switch i64 %magicptr.i, label %bb.ab [
-    i64 0, label %_RNvXs4_NtCskKLDkoKarTP_4core6optionINtB5_6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEENtNtB7_5clone5Clone5cloneCs4KPtkQIfQGm_13libp2p_webrtc.exit.thread
-    i64 -1, label %_RNvXs4_NtCskKLDkoKarTP_4core6optionINtB5_6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEENtNtB7_5clone5Clone5cloneCs4KPtkQIfQGm_13libp2p_webrtc.exit.thread101
-  ]
-
-_RNvXs4_NtCskKLDkoKarTP_4core6optionINtB5_6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEENtNtB7_5clone5Clone5cloneCs4KPtkQIfQGm_13libp2p_webrtc.exit.thread: ; preds = %bb.aa
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 48
-  br label %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEE8and_thenINtBL_3ArcB1h_ENCNCNvMs_NtB1j_10rtp_senderNtB2P_12RTCRtpSender14get_parameters0s_0ECs4KPtkQIfQGm_13libp2p_webrtc.exit
+  %magicptr.off.i = add i64 %magicptr.i, -1
+  %switch.i = icmp ult i64 %magicptr.off.i, -2
+  br i1 %switch.i, label %bb.ab, label %_RNvXs4_NtCskKLDkoKarTP_4core6optionINtB5_6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEENtNtB7_5clone5Clone5cloneCs4KPtkQIfQGm_13libp2p_webrtc.exit
 
 bb.ab:                                            ; preds = %bb.aa
   %i.bx = getelementptr inbounds nuw i8, ptr %.val39, i64 8
@@ -671,10 +664,6 @@ bb.ac:                                            ; preds = %bb.ab
   call void @llvm.trap()
   unreachable
 
-_RNvXs4_NtCskKLDkoKarTP_4core6optionINtB5_6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEENtNtB7_5clone5Clone5cloneCs4KPtkQIfQGm_13libp2p_webrtc.exit.thread101: ; preds = %bb.aa
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 48
-  br label %bb.ae
-
 bb.ad:                                            ; preds = %_RNCNCNvMs_NtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver10rtp_senderNtB8_12RTCRtpSender14get_parameters0s_0Cs4KPtkQIfQGm_13libp2p_webrtc.exit.i
   %i.ca = landingpad { ptr, i32 }
           cleanup
@@ -685,16 +674,14 @@ bb.ad:                                            ; preds = %_RNCNCNvMs_NtNtCsbC
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCslqlypCAacxc_11webrtc_util4sync10MutexGuardINtNtB4_6option6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEEEECs4KPtkQIfQGm_13libp2p_webrtc(ptr nonnull %i.bt, i8 %i.bv) #29
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEEECs4KPtkQIfQGm_13libp2p_webrtc.exit unwind label %bb.au
 
-_RNvXs4_NtCskKLDkoKarTP_4core6optionINtB5_6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEENtNtB7_5clone5Clone5cloneCs4KPtkQIfQGm_13libp2p_webrtc.exit: ; preds = %bb.ab
-  %i.cb = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 2 uses
+_RNvXs4_NtCskKLDkoKarTP_4core6optionINtB5_6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEENtNtB7_5clone5Clone5cloneCs4KPtkQIfQGm_13libp2p_webrtc.exit: ; preds = %bb.ab, %bb.aa
+  %i.cb = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 4 uses
   %.not.i = icmp eq ptr %.val39, null
   br i1 %.not.i, label %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEE8and_thenINtBL_3ArcB1h_ENCNCNvMs_NtB1j_10rtp_senderNtB2P_12RTCRtpSender14get_parameters0s_0ECs4KPtkQIfQGm_13libp2p_webrtc.exit, label %bb.ae
 
-bb.ae:                                            ; preds = %_RNvXs4_NtCskKLDkoKarTP_4core6optionINtB5_6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEENtNtB7_5clone5Clone5cloneCs4KPtkQIfQGm_13libp2p_webrtc.exit.thread101, %_RNvXs4_NtCskKLDkoKarTP_4core6optionINtB5_6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEENtNtB7_5clone5Clone5cloneCs4KPtkQIfQGm_13libp2p_webrtc.exit
-  %5 = phi ptr [ %4, %_RNvXs4_NtCskKLDkoKarTP_4core6optionINtB5_6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEENtNtB7_5clone5Clone5cloneCs4KPtkQIfQGm_13libp2p_webrtc.exit.thread101 ], [ %i.cb, %_RNvXs4_NtCskKLDkoKarTP_4core6optionINtB5_6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEENtNtB7_5clone5Clone5cloneCs4KPtkQIfQGm_13libp2p_webrtc.exit ]
-  %.sroa.0.0.i50104 = phi ptr [ inttoptr (i64 -1 to ptr), %_RNvXs4_NtCskKLDkoKarTP_4core6optionINtB5_6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEENtNtB7_5clone5Clone5cloneCs4KPtkQIfQGm_13libp2p_webrtc.exit.thread101 ], [ %.val39, %_RNvXs4_NtCskKLDkoKarTP_4core6optionINtB5_6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEENtNtB7_5clone5Clone5cloneCs4KPtkQIfQGm_13libp2p_webrtc.exit ]
+bb.ae:                                            ; preds = %_RNvXs4_NtCskKLDkoKarTP_4core6optionINtB5_6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEENtNtB7_5clone5Clone5cloneCs4KPtkQIfQGm_13libp2p_webrtc.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  store ptr %.sroa.0.0.i50104, ptr %i.a, align 8
+  store ptr %.val39, ptr %i.a, align 8
   %i.cc = invoke noundef ptr @_RNvMsK_NtCsexYYUdYSQU6_5alloc4syncINtB5_4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverE7upgradeCs4KPtkQIfQGm_13libp2p_webrtc(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.a)
           to label %_RNCNCNvMs_NtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver10rtp_senderNtB8_12RTCRtpSender14get_parameters0s_0Cs4KPtkQIfQGm_13libp2p_webrtc.exit.i unwind label %bb.af
 
@@ -718,10 +705,9 @@ _RNCNCNvMs_NtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver10rtp_senderNtB8_12RTCRtpSe
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEE8and_thenINtBL_3ArcB1h_ENCNCNvMs_NtB1j_10rtp_senderNtB2P_12RTCRtpSender14get_parameters0s_0ECs4KPtkQIfQGm_13libp2p_webrtc.exit
 
-_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEE8and_thenINtBL_3ArcB1h_ENCNCNvMs_NtB1j_10rtp_senderNtB2P_12RTCRtpSender14get_parameters0s_0ECs4KPtkQIfQGm_13libp2p_webrtc.exit: ; preds = %.noexc53.a, %_RNvXs4_NtCskKLDkoKarTP_4core6optionINtB5_6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEENtNtB7_5clone5Clone5cloneCs4KPtkQIfQGm_13libp2p_webrtc.exit, %_RNvXs4_NtCskKLDkoKarTP_4core6optionINtB5_6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEENtNtB7_5clone5Clone5cloneCs4KPtkQIfQGm_13libp2p_webrtc.exit.thread
-  %6 = phi ptr [ %5, %.noexc53.a ], [ %i.cb, %_RNvXs4_NtCskKLDkoKarTP_4core6optionINtB5_6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEENtNtB7_5clone5Clone5cloneCs4KPtkQIfQGm_13libp2p_webrtc.exit ], [ %3, %_RNvXs4_NtCskKLDkoKarTP_4core6optionINtB5_6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEENtNtB7_5clone5Clone5cloneCs4KPtkQIfQGm_13libp2p_webrtc.exit.thread ] ; 4 uses
-  %.sroa.02.0.i = phi ptr [ %i.cc, %.noexc53.a ], [ null, %_RNvXs4_NtCskKLDkoKarTP_4core6optionINtB5_6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEENtNtB7_5clone5Clone5cloneCs4KPtkQIfQGm_13libp2p_webrtc.exit ], [ null, %_RNvXs4_NtCskKLDkoKarTP_4core6optionINtB5_6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEENtNtB7_5clone5Clone5cloneCs4KPtkQIfQGm_13libp2p_webrtc.exit.thread ]
-  store ptr %.sroa.02.0.i, ptr %6, align 8
+_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEE8and_thenINtBL_3ArcB1h_ENCNCNvMs_NtB1j_10rtp_senderNtB2P_12RTCRtpSender14get_parameters0s_0ECs4KPtkQIfQGm_13libp2p_webrtc.exit: ; preds = %.noexc53.a, %_RNvXs4_NtCskKLDkoKarTP_4core6optionINtB5_6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEENtNtB7_5clone5Clone5cloneCs4KPtkQIfQGm_13libp2p_webrtc.exit
+  %.sroa.02.0.i = phi ptr [ %i.cc, %.noexc53.a ], [ null, %_RNvXs4_NtCskKLDkoKarTP_4core6optionINtB5_6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEENtNtB7_5clone5Clone5cloneCs4KPtkQIfQGm_13libp2p_webrtc.exit ]
+  store ptr %.sroa.02.0.i, ptr %i.cb, align 8
   %i.cf = getelementptr inbounds nuw i8, ptr %i.bt, i64 4
   br i1 %i.bu, label %_RNvMNtNtCsG258MDvU3F_3std4sync6poisonNtB2_4Flag4done.exit.i.i.i, label %bb.ah
 
@@ -755,7 +741,7 @@ bb.al:                                            ; preds = %bb.ak, %bb.ai
   %i.cm = landingpad { ptr, i32 }
           cleanup                                 ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !11650)
-  %i.cn = load ptr, ptr %6, align 8, !alias.scope !11650, !noundef !17 ; 2 uses
+  %i.cn = load ptr, ptr %i.cb, align 8, !alias.scope !11650, !noundef !17 ; 2 uses
   %i.co = icmp eq ptr %i.cn, null
   br i1 %i.co, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEEECs4KPtkQIfQGm_13libp2p_webrtc.exit, label %bb.am
 
@@ -766,11 +752,11 @@ bb.am:                                            ; preds = %bb.al
 
 bb.an:                                            ; preds = %bb.am
   fence acquire
-  invoke void @_RNvMsn_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverE9drop_slowBK_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %6) #26
+  invoke void @_RNvMsn_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverE9drop_slowBK_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.cb) #26
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEEECs4KPtkQIfQGm_13libp2p_webrtc.exit unwind label %bb.au
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCslqlypCAacxc_11webrtc_util4sync10MutexGuardINtNtB4_6option6OptionINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver17RTCRtpTransceiverEEEECs4KPtkQIfQGm_13libp2p_webrtc.exit: ; preds = %_RNvMNtNtCsG258MDvU3F_3std4sync6poisonNtB2_4Flag4done.exit.i.i.i, %bb.ak
-  %i.cr = load ptr, ptr %6, align 8, !noundef !17 ; 2 uses
+  %i.cr = load ptr, ptr %i.cb, align 8, !noundef !17 ; 2 uses
   %.not13 = icmp eq ptr %i.cr, null
   br i1 %.not13, label %bb.ap, label %bb.ao
 

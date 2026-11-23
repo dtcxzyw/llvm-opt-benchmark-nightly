@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c
   unreachable
 
 _Z6isBoolP7_object.exit:                          ; preds = %_ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit.i
-  %.val.i = load ptr, ptr %i.f, align 8, !tbaa !26 ; 3 uses
+  %.val.i = load ptr, ptr %i.f, align 8, !tbaa !26 ; 4 uses
   %i.j = icmp eq ptr %.val.i, @PyBool_Type
   br i1 %i.j, label %_Z6isBoolP7_object.exit.thread, label %bb.e
 
@@ -219,15 +219,13 @@ bb.e:                                             ; preds = %_Z6isBoolP7_object.
 
 _ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit: ; preds = %bb.e
   %i.m = tail call i32 @PyType_IsSubtype(ptr noundef %.val.i, ptr noundef nonnull @PyFloat_Type)
-  %.not52 = icmp eq i32 %i.m, 0
+  %.not52 = icmp ne i32 %i.m, 0
   %.val.pre57 = load ptr, ptr %i.f, align 8, !tbaa !26 ; 3 uses
-  br i1 %.not52, label %3, label %_ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit.thread
-
-3:                                                ; preds = %_ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit
   %.not.i41 = icmp eq ptr %.val.pre57, @PyComplex_Type
-  br i1 %.not.i41, label %_ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit.thread, label %_ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit42
+  %or.cond62 = select i1 %.not52, i1 true, i1 %.not.i41
+  br i1 %or.cond62, label %_ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit.thread, label %_ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit42
 
-_ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit42: ; preds = %3
+_ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit42: ; preds = %_ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit
   %i.n = tail call i32 @PyType_IsSubtype(ptr noundef %.val.pre57, ptr noundef nonnull @PyComplex_Type)
   %.not = icmp eq i32 %i.n, 0
   %.val.pre = load ptr, ptr %i.f, align 8, !tbaa !26 ; 6 uses
@@ -242,8 +240,8 @@ bb.f:                                             ; preds = %_ZL18PyObject_TypeC
   %or.cond56 = or i1 %.not53, %.not26
   br i1 %or.cond56, label %_ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit.thread, label %bb.i
 
-_ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit.thread: ; preds = %3, %bb.e, %bb.f, %_ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit42, %_ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit
-  %.val = phi ptr [ @PyComplex_Type, %3 ], [ @PyFloat_Type, %bb.e ], [ %.val.pre, %bb.f ], [ %.val.pre, %_ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit42 ], [ %.val.pre57, %_ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit ]
+_ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit.thread: ; preds = %bb.e, %bb.f, %_ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit42, %_ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit
+  %.val = phi ptr [ %.val.pre57, %_ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit ], [ %.val.i, %bb.e ], [ %.val.pre, %bb.f ], [ %.val.pre, %_ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit42 ]
   %i.q = getelementptr i8, ptr %.val, i64 168
   %.val33 = load i64, ptr %i.q, align 8, !tbaa !34
   %i.r = and i64 %.val33, 16777216
@@ -429,7 +427,7 @@ bb.d:                                             ; preds = %bb.c
   unreachable
 
 _Z6isBoolP7_object.exit:                          ; preds = %_ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit.i
-  %.val.i = load ptr, ptr %i.f, align 8, !tbaa !26 ; 3 uses
+  %.val.i = load ptr, ptr %i.f, align 8, !tbaa !26 ; 4 uses
   %i.j = icmp eq ptr %.val.i, @PyBool_Type
   br i1 %i.j, label %_Z6isBoolP7_object.exit.thread, label %bb.e
 
@@ -444,15 +442,13 @@ bb.e:                                             ; preds = %_Z6isBoolP7_object.
 
 _ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit: ; preds = %bb.e
   %i.m = tail call i32 @PyType_IsSubtype(ptr noundef %.val.i, ptr noundef nonnull @PyFloat_Type)
-  %.not54 = icmp eq i32 %i.m, 0
+  %.not54 = icmp ne i32 %i.m, 0
   %.val.pre59 = load ptr, ptr %i.f, align 8, !tbaa !26 ; 3 uses
-  br i1 %.not54, label %3, label %_ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit.thread
-
-3:                                                ; preds = %_ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit
   %.not.i43 = icmp eq ptr %.val.pre59, @PyComplex_Type
-  br i1 %.not.i43, label %_ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit.thread, label %_ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit44
+  %or.cond64 = select i1 %.not54, i1 true, i1 %.not.i43
+  br i1 %or.cond64, label %_ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit.thread, label %_ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit44
 
-_ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit44: ; preds = %3
+_ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit44: ; preds = %_ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit
   %i.n = tail call i32 @PyType_IsSubtype(ptr noundef %.val.pre59, ptr noundef nonnull @PyComplex_Type)
   %.not = icmp eq i32 %i.n, 0
   %.val.pre = load ptr, ptr %i.f, align 8, !tbaa !26 ; 6 uses
@@ -467,8 +463,8 @@ bb.f:                                             ; preds = %_ZL18PyObject_TypeC
   %or.cond58 = or i1 %.not55, %.not28
   br i1 %or.cond58, label %_ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit.thread, label %bb.i
 
-_ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit.thread: ; preds = %3, %bb.e, %bb.f, %_ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit44, %_ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit
-  %.val = phi ptr [ @PyComplex_Type, %3 ], [ @PyFloat_Type, %bb.e ], [ %.val.pre, %bb.f ], [ %.val.pre, %_ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit44 ], [ %.val.pre59, %_ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit ]
+_ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit.thread: ; preds = %bb.e, %bb.f, %_ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit44, %_ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit
+  %.val = phi ptr [ %.val.pre59, %_ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit ], [ %.val.i, %bb.e ], [ %.val.pre, %bb.f ], [ %.val.pre, %_ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit44 ]
   %i.q = getelementptr i8, ptr %.val, i64 168
   %.val35 = load i64, ptr %i.q, align 8, !tbaa !34
   %i.r = and i64 %.val35, 16777216

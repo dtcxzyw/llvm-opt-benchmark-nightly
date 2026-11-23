@@ -171,16 +171,16 @@ bb.q:                                             ; preds = %bb.m, %bb.l, %bb.k,
 ._crit_edge:                                      ; preds = %bb.p, %bb.q, %bb.g
   %.lcssa = phi ptr [ %i.w, %bb.g ], [ %i.by, %bb.q ], [ %i.ah, %bb.p ]
   %i.cb = getelementptr inbounds nuw i8, ptr %.lcssa, i64 32
-  %i.cc = load ptr, ptr %i.cb, align 8            ; 3 uses
+  %i.cc = load ptr, ptr %i.cb, align 8            ; 4 uses
   %i.cd = icmp eq ptr %i.cc, @BlitNtoN
   br i1 %i.cd, label %bb.r, label %.thread
 
 bb.r:                                             ; preds = %._crit_edge
-  %i.ce = load i8, ptr %i.q, align 1              ; 3 uses
+  %i.ce = load i8, ptr %i.q, align 1              ; 2 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %i.e, i64 5
   %i.cg = load i8, ptr %i.cf, align 1
   %i.ch = icmp eq i8 %i.ce, %i.cg
-  br i1 %i.ch, label %bb.s, label %bb.y
+  br i1 %i.ch, label %bb.s, label %bb.x
 
 bb.s:                                             ; preds = %bb.r
   %i.ci = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -188,7 +188,7 @@ bb.s:                                             ; preds = %bb.r
   %i.ck = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.cl = load i32, ptr %i.ck, align 4
   %i.cm = icmp eq i32 %i.cj, %i.cl
-  br i1 %i.cm, label %bb.t, label %bb.y
+  br i1 %i.cm, label %bb.t, label %bb.x
 
 bb.t:                                             ; preds = %bb.s
   %i.cn = getelementptr inbounds nuw i8, ptr %i.b, i64 12
@@ -196,7 +196,7 @@ bb.t:                                             ; preds = %bb.s
   %i.cp = getelementptr inbounds nuw i8, ptr %i.e, i64 12
   %i.cq = load i32, ptr %i.cp, align 4
   %i.cr = icmp eq i32 %i.co, %i.cq
-  br i1 %i.cr, label %bb.u, label %bb.y
+  br i1 %i.cr, label %bb.u, label %bb.x
 
 bb.u:                                             ; preds = %bb.t
   %i.cs = getelementptr inbounds nuw i8, ptr %i.b, i64 16
@@ -204,11 +204,11 @@ bb.u:                                             ; preds = %bb.t
   %i.cu = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   %i.cv = load i32, ptr %i.cu, align 4
   %i.cw = icmp eq i32 %i.ct, %i.cv
-  br i1 %i.cw, label %bb.v, label %bb.y
+  br i1 %i.cw, label %bb.v, label %bb.x
 
 bb.v:                                             ; preds = %bb.u
   %i.cx = icmp eq i32 %.0, 4
-  br i1 %i.cx, label %bb.w, label %bb.x
+  br i1 %i.cx, label %bb.w, label %1
 
 bb.w:                                             ; preds = %bb.v
   %i.cy = getelementptr inbounds nuw i8, ptr %i.b, i64 20
@@ -218,16 +218,21 @@ bb.w:                                             ; preds = %bb.v
   %SDL_BlitCopy.BlitNtoNCopyAlpha = select i1 %i.db, ptr @SDL_BlitCopy, ptr @BlitNtoNCopyAlpha
   br label %.thread
 
-bb.x:                                             ; preds = %bb.v
-  %switch.selectcmp = icmp eq i8 %i.ce, 2
-  %switch.select = select i1 %switch.selectcmp, ptr @Blit2to2MaskAlpha, ptr @BlitNtoN
-  %switch.selectcmp104 = icmp eq i8 %i.ce, 4
-  %switch.select105 = select i1 %switch.selectcmp104, ptr @Blit4to4MaskAlpha, ptr %switch.select
+1:                                                ; preds = %bb.v
+  switch i8 %i.ce, label %bb.y [
+    i8 4, label %.thread
+    i8 2, label %2
+  ]
+
+2:                                                ; preds = %1
   br label %.thread
 
-bb.y:                                             ; preds = %bb.u, %bb.t, %bb.s, %bb.r
-  %1 = icmp eq i32 %.0, 4
-  %spec.select = select i1 %1, ptr @BlitNtoNCopyAlpha, ptr %i.cc
+bb.x:                                             ; preds = %bb.u, %bb.t, %bb.s, %bb.r
+  %switch.selectcmp104 = icmp eq i32 %.0, 4
+  %switch.select105 = select i1 %switch.selectcmp104, ptr @BlitNtoNCopyAlpha, ptr %i.cc
+  br label %.thread
+
+bb.y:                                             ; preds = %1
   br label %.thread
 
 bb.z:                                             ; preds = %bb.b
@@ -256,8 +261,8 @@ bb.ac:                                            ; preds = %bb.ab
 bb.ad:                                            ; preds = %bb.ac, %bb.ab
   br label %.thread
 
-.thread:                                          ; preds = %bb.x, %bb.f, %bb.y, %bb.b, %bb.ac, %bb.aa, %bb.c, %bb.w, %._crit_edge, %bb.a, %bb.ad
-  %.079 = phi ptr [ @BlitNtoNKey, %bb.ad ], [ @BlitNtoNKeyCopyAlpha, %bb.ac ], [ null, %bb.a ], [ null, %bb.b ], [ @Blit2to2Key, %bb.aa ], [ null, %bb.c ], [ %SDL_BlitCopy.BlitNtoNCopyAlpha, %bb.w ], [ %i.cc, %._crit_edge ], [ %spec.select, %bb.y ], [ %switch.select105, %bb.x ], [ null, %bb.f ]
+.thread:                                          ; preds = %bb.f, %bb.x, %bb.b, %bb.ac, %bb.aa, %bb.c, %1, %bb.y, %bb.w, %2, %._crit_edge, %bb.a, %bb.ad
+  %.079 = phi ptr [ @BlitNtoNKey, %bb.ad ], [ @BlitNtoNKeyCopyAlpha, %bb.ac ], [ null, %bb.a ], [ null, %bb.b ], [ @Blit2to2Key, %bb.aa ], [ null, %bb.c ], [ %SDL_BlitCopy.BlitNtoNCopyAlpha, %bb.w ], [ %i.cc, %._crit_edge ], [ %switch.select105, %bb.x ], [ @Blit2to2MaskAlpha, %2 ], [ @Blit4to4MaskAlpha, %1 ], [ %i.cc, %bb.y ], [ null, %bb.f ]
   ret ptr %.079
 }
 

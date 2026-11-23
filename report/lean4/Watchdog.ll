@@ -204,7 +204,7 @@ bb.ek:                                            ; preds = %bb.ej
 
 lean_inc.exit517:                                 ; preds = %bb.ek, %bb.ej, %bb.ei, %bb.eg
   %i.gs = getelementptr inbounds nuw i8, ptr %i.fw, i64 16
-  %i.gt = load ptr, ptr %i.gs, align 8, !tbaa !14 ; 13 uses
+  %i.gt = load ptr, ptr %i.gs, align 8, !tbaa !14 ; 11 uses
   %.val.i.i692 = load i32, ptr %i.gt, align 4, !tbaa !10 ; 3 uses
   %i.gu = icmp sgt i32 %.val.i.i692, 0
   br i1 %i.gu, label %bb.el, label %bb.em, !prof !11
@@ -607,6 +607,7 @@ bb.hs:                                            ; preds = %bb.hr
   br label %bb.sf
 
 lean_string_dec_eq.exit.thread1065:               ; preds = %lean_dec_ref_known.exit708, %lean_string_dec_eq.exit
+  %.lcssa1295 = phi ptr [ @l_Lean_Server_Watchdog_mainLoop___closed__8_value, %lean_dec_ref_known.exit708 ], [ %i.gt, %lean_string_dec_eq.exit ] ; 3 uses
   br i1 %.not.i514, label %bb.ht, label %lean_dec.exit466
 
 bb.ht:                                            ; preds = %lean_string_dec_eq.exit.thread1065
@@ -628,13 +629,13 @@ bb.hw:                                            ; preds = %bb.hv
   br label %lean_dec.exit466
 
 lean_dec.exit466:                                 ; preds = %bb.hw, %bb.hv, %bb.hu, %lean_string_dec_eq.exit.thread1065
-  %i.lp = load i32, ptr %i.gt, align 4, !tbaa !10 ; 3 uses
+  %i.lp = load i32, ptr %.lcssa1295, align 4, !tbaa !10 ; 3 uses
   %i.lq = icmp sgt i32 %i.lp, 1
   br i1 %i.lq, label %bb.hx, label %bb.hy, !prof !11
 
 bb.hx:                                            ; preds = %lean_dec.exit466
   %i.lr = add nsw i32 %i.lp, -1
-  store i32 %i.lr, ptr %i.gt, align 4, !tbaa !10
+  store i32 %i.lr, ptr %.lcssa1295, align 4, !tbaa !10
   br label %lean_dec_ref.exit570
 
 bb.hy:                                            ; preds = %lean_dec.exit466
@@ -642,7 +643,7 @@ bb.hy:                                            ; preds = %lean_dec.exit466
   br i1 %.not.i569, label %lean_dec_ref.exit570, label %bb.hz
 
 bb.hz:                                            ; preds = %bb.hy
-  tail call void @lean_dec_ref_cold(ptr noundef nonnull %i.gt) #12
+  tail call void @lean_dec_ref_cold(ptr noundef nonnull %.lcssa1295) #12
   br label %lean_dec_ref.exit570
 
 lean_dec_ref.exit570:                             ; preds = %bb.hx, %bb.hy, %bb.hz

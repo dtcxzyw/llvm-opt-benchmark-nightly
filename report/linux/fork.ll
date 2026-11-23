@@ -204,7 +204,7 @@ class_get_unused_fd_destructor.exit:              ; preds = %bb.h, %bb.f, %bb.i,
 declare dso_local ptr @pidfs_alloc_file(ptr noundef, i32 noundef) local_unnamed_addr #0
 
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
-define dso_local ptr @copy_process(ptr nofree noundef readnone captures(address) %0, i32 noundef %1, i32 noundef %2, ptr noundef %3) local_unnamed_addr #1 align 16 prefalign(16) {
+define dso_local ptr @copy_process(ptr noundef %0, i32 noundef %1, i32 noundef %2, ptr noundef %3) local_unnamed_addr #1 align 16 prefalign(16) {
 bb.a:
   %4 = alloca %struct.multiprocess_signals, align 8 ; 9 uses
   %i.a = alloca ptr, align 8                      ; 6 uses
@@ -607,7 +607,7 @@ bb.bi:                                            ; preds = %bb.bh
   br label %bb.db
 
 bb.bj:                                            ; preds = %bb.bh, %bb.bg
-  %.0327 = phi ptr [ %i.gn, %bb.bh ], [ @init_struct_pid, %bb.bg ] ; 12 uses
+  %.0327 = phi ptr [ %i.gn, %bb.bh ], [ %0, %bb.bg ] ; 12 uses
   br i1 %.not371, label %.thread458, label %bb.bk
 
 bb.bk:                                            ; preds = %bb.bj

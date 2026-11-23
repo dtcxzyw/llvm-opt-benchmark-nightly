@@ -205,7 +205,7 @@ bb.kv:                                            ; preds = %bb.kv, %.lr.ph.i.i.
   %i.brf = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 32
   %i.brg = load i8, ptr %i.brf, align 1, !tbaa !31
   %i.brh = icmp ult i8 %i.brg, %i.bre             ; 2 uses
-  %.19.i.i.i.i = select i1 %i.brh, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 5 uses
+  %.19.i.i.i.i = select i1 %i.brh, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 6 uses
   %.1.in.v.i.i.i.i = select i1 %i.brh, i64 24, i64 16
   %.1.in.i.i.i.i = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 %.1.in.v.i.i.i.i
   %.1.i.i.i.i = load ptr, ptr %.1.in.i.i.i.i, align 8, !tbaa !29 ; 2 uses
@@ -223,7 +223,7 @@ bb.kw:                                            ; preds = %_ZNSt3mapIN3igl7tin
   br i1 %i.brl, label %.critedge.i, label %bb.kx
 
 .critedge.i:                                      ; preds = %bb.kw, %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i, %bb.ku
-  %.08.lcssa.i.i.i11.i = phi ptr [ %.19.i.i.i.i, %bb.kw ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %bb.ku ]
+  %.08.lcssa.i.i.i11.i = phi ptr [ %.19.i.i.i.i, %bb.kw ], [ %.19.i.i.i.i, %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %bb.ku ]
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #32
   store ptr %i.bqx, ptr %15, align 8, !tbaa !94
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #32
@@ -276,7 +276,7 @@ bb.lc:                                            ; preds = %bb.lc, %.lr.ph.i.i.
   %i.bsa = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i1243, i64 32
   %i.bsb = load i8, ptr %i.bsa, align 1, !tbaa !31
   %i.bsc = icmp ult i8 %i.bsb, %i.brz             ; 2 uses
-  %.19.i.i.i.i1245 = select i1 %i.bsc, ptr %.0811.i.i.i.i1244, ptr %.012.i.i.i.i1243 ; 5 uses
+  %.19.i.i.i.i1245 = select i1 %i.bsc, ptr %.0811.i.i.i.i1244, ptr %.012.i.i.i.i1243 ; 6 uses
   %.1.in.v.i.i.i.i1246 = select i1 %i.bsc, i64 24, i64 16
   %.1.in.i.i.i.i1247 = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i1243, i64 %.1.in.v.i.i.i.i1246
   %.1.i.i.i.i1248 = load ptr, ptr %.1.in.i.i.i.i1247, align 8, !tbaa !29 ; 2 uses
@@ -294,7 +294,7 @@ bb.ld:                                            ; preds = %_ZNSt3mapIN3igl7tin
   br i1 %i.bsg, label %.critedge.i1252, label %bb.le
 
 .critedge.i1252:                                  ; preds = %bb.ld, %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i1250, %bb.lb
-  %.08.lcssa.i.i.i11.i1253 = phi ptr [ %.19.i.i.i.i1245, %bb.ld ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i1250 ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %bb.lb ]
+  %.08.lcssa.i.i.i11.i1253 = phi ptr [ %.19.i.i.i.i1245, %bb.ld ], [ %.19.i.i.i.i1245, %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i1250 ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %bb.lb ]
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #32
   store ptr %i.brv, ptr %13, align 8, !tbaa !94
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #32
@@ -697,7 +697,7 @@ bb.kv:                                            ; preds = %bb.kv, %.lr.ph.i.i.
   %i.brf = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 32
   %i.brg = load i8, ptr %i.brf, align 1, !tbaa !31
   %i.brh = icmp ult i8 %i.brg, %i.bre             ; 2 uses
-  %.19.i.i.i.i = select i1 %i.brh, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 5 uses
+  %.19.i.i.i.i = select i1 %i.brh, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 6 uses
   %.1.in.v.i.i.i.i = select i1 %i.brh, i64 24, i64 16
   %.1.in.i.i.i.i = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 %.1.in.v.i.i.i.i
   %.1.i.i.i.i = load ptr, ptr %.1.in.i.i.i.i, align 8, !tbaa !29 ; 2 uses
@@ -715,7 +715,7 @@ bb.kw:                                            ; preds = %_ZNSt3mapIN3igl7tin
   br i1 %i.brl, label %.critedge.i, label %bb.kx
 
 .critedge.i:                                      ; preds = %bb.kw, %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i, %bb.ku
-  %.08.lcssa.i.i.i11.i = phi ptr [ %.19.i.i.i.i, %bb.kw ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %bb.ku ]
+  %.08.lcssa.i.i.i11.i = phi ptr [ %.19.i.i.i.i, %bb.kw ], [ %.19.i.i.i.i, %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %bb.ku ]
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #32
   store ptr %i.bqx, ptr %15, align 8, !tbaa !94
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #32
@@ -768,7 +768,7 @@ bb.lc:                                            ; preds = %bb.lc, %.lr.ph.i.i.
   %i.bsa = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i1243, i64 32
   %i.bsb = load i8, ptr %i.bsa, align 1, !tbaa !31
   %i.bsc = icmp ult i8 %i.bsb, %i.brz             ; 2 uses
-  %.19.i.i.i.i1245 = select i1 %i.bsc, ptr %.0811.i.i.i.i1244, ptr %.012.i.i.i.i1243 ; 5 uses
+  %.19.i.i.i.i1245 = select i1 %i.bsc, ptr %.0811.i.i.i.i1244, ptr %.012.i.i.i.i1243 ; 6 uses
   %.1.in.v.i.i.i.i1246 = select i1 %i.bsc, i64 24, i64 16
   %.1.in.i.i.i.i1247 = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i1243, i64 %.1.in.v.i.i.i.i1246
   %.1.i.i.i.i1248 = load ptr, ptr %.1.in.i.i.i.i1247, align 8, !tbaa !29 ; 2 uses
@@ -786,7 +786,7 @@ bb.ld:                                            ; preds = %_ZNSt3mapIN3igl7tin
   br i1 %i.bsg, label %.critedge.i1252, label %bb.le
 
 .critedge.i1252:                                  ; preds = %bb.ld, %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i1250, %bb.lb
-  %.08.lcssa.i.i.i11.i1253 = phi ptr [ %.19.i.i.i.i1245, %bb.ld ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i1250 ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %bb.lb ]
+  %.08.lcssa.i.i.i11.i1253 = phi ptr [ %.19.i.i.i.i1245, %bb.ld ], [ %.19.i.i.i.i1245, %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i1250 ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %bb.lb ]
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #32
   store ptr %i.brv, ptr %13, align 8, !tbaa !94
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #32
@@ -1189,7 +1189,7 @@ bb.kv:                                            ; preds = %bb.kv, %.lr.ph.i.i.
   %i.brf = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 32
   %i.brg = load i8, ptr %i.brf, align 1, !tbaa !31
   %i.brh = icmp ult i8 %i.brg, %i.bre             ; 2 uses
-  %.19.i.i.i.i = select i1 %i.brh, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 5 uses
+  %.19.i.i.i.i = select i1 %i.brh, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 6 uses
   %.1.in.v.i.i.i.i = select i1 %i.brh, i64 24, i64 16
   %.1.in.i.i.i.i = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 %.1.in.v.i.i.i.i
   %.1.i.i.i.i = load ptr, ptr %.1.in.i.i.i.i, align 8, !tbaa !29 ; 2 uses
@@ -1207,7 +1207,7 @@ bb.kw:                                            ; preds = %_ZNSt3mapIN3igl7tin
   br i1 %i.brl, label %.critedge.i, label %bb.kx
 
 .critedge.i:                                      ; preds = %bb.kw, %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i, %bb.ku
-  %.08.lcssa.i.i.i11.i = phi ptr [ %.19.i.i.i.i, %bb.kw ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %bb.ku ]
+  %.08.lcssa.i.i.i11.i = phi ptr [ %.19.i.i.i.i, %bb.kw ], [ %.19.i.i.i.i, %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %bb.ku ]
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #32
   store ptr %i.bqx, ptr %15, align 8, !tbaa !94
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #32
@@ -1260,7 +1260,7 @@ bb.lc:                                            ; preds = %bb.lc, %.lr.ph.i.i.
   %i.bsa = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i1243, i64 32
   %i.bsb = load i8, ptr %i.bsa, align 1, !tbaa !31
   %i.bsc = icmp ult i8 %i.bsb, %i.brz             ; 2 uses
-  %.19.i.i.i.i1245 = select i1 %i.bsc, ptr %.0811.i.i.i.i1244, ptr %.012.i.i.i.i1243 ; 5 uses
+  %.19.i.i.i.i1245 = select i1 %i.bsc, ptr %.0811.i.i.i.i1244, ptr %.012.i.i.i.i1243 ; 6 uses
   %.1.in.v.i.i.i.i1246 = select i1 %i.bsc, i64 24, i64 16
   %.1.in.i.i.i.i1247 = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i1243, i64 %.1.in.v.i.i.i.i1246
   %.1.i.i.i.i1248 = load ptr, ptr %.1.in.i.i.i.i1247, align 8, !tbaa !29 ; 2 uses
@@ -1278,7 +1278,7 @@ bb.ld:                                            ; preds = %_ZNSt3mapIN3igl7tin
   br i1 %i.bsg, label %.critedge.i1252, label %bb.le
 
 .critedge.i1252:                                  ; preds = %bb.ld, %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i1250, %bb.lb
-  %.08.lcssa.i.i.i11.i1253 = phi ptr [ %.19.i.i.i.i1245, %bb.ld ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i1250 ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %bb.lb ]
+  %.08.lcssa.i.i.i11.i1253 = phi ptr [ %.19.i.i.i.i1245, %bb.ld ], [ %.19.i.i.i.i1245, %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i1250 ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %bb.lb ]
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #32
   store ptr %i.brv, ptr %13, align 8, !tbaa !94
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #32
@@ -1681,7 +1681,7 @@ bb.kv:                                            ; preds = %bb.kv, %.lr.ph.i.i.
   %i.brf = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 32
   %i.brg = load i8, ptr %i.brf, align 1, !tbaa !31
   %i.brh = icmp ult i8 %i.brg, %i.bre             ; 2 uses
-  %.19.i.i.i.i = select i1 %i.brh, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 5 uses
+  %.19.i.i.i.i = select i1 %i.brh, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 6 uses
   %.1.in.v.i.i.i.i = select i1 %i.brh, i64 24, i64 16
   %.1.in.i.i.i.i = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 %.1.in.v.i.i.i.i
   %.1.i.i.i.i = load ptr, ptr %.1.in.i.i.i.i, align 8, !tbaa !29 ; 2 uses
@@ -1699,7 +1699,7 @@ bb.kw:                                            ; preds = %_ZNSt3mapIN3igl7tin
   br i1 %i.brl, label %.critedge.i, label %bb.kx
 
 .critedge.i:                                      ; preds = %bb.kw, %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i, %bb.ku
-  %.08.lcssa.i.i.i11.i = phi ptr [ %.19.i.i.i.i, %bb.kw ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %bb.ku ]
+  %.08.lcssa.i.i.i11.i = phi ptr [ %.19.i.i.i.i, %bb.kw ], [ %.19.i.i.i.i, %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %bb.ku ]
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #32
   store ptr %i.bqx, ptr %15, align 8, !tbaa !94
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #32
@@ -1752,7 +1752,7 @@ bb.lc:                                            ; preds = %bb.lc, %.lr.ph.i.i.
   %i.bsa = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i1243, i64 32
   %i.bsb = load i8, ptr %i.bsa, align 1, !tbaa !31
   %i.bsc = icmp ult i8 %i.bsb, %i.brz             ; 2 uses
-  %.19.i.i.i.i1245 = select i1 %i.bsc, ptr %.0811.i.i.i.i1244, ptr %.012.i.i.i.i1243 ; 5 uses
+  %.19.i.i.i.i1245 = select i1 %i.bsc, ptr %.0811.i.i.i.i1244, ptr %.012.i.i.i.i1243 ; 6 uses
   %.1.in.v.i.i.i.i1246 = select i1 %i.bsc, i64 24, i64 16
   %.1.in.i.i.i.i1247 = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i1243, i64 %.1.in.v.i.i.i.i1246
   %.1.i.i.i.i1248 = load ptr, ptr %.1.in.i.i.i.i1247, align 8, !tbaa !29 ; 2 uses
@@ -1770,7 +1770,7 @@ bb.ld:                                            ; preds = %_ZNSt3mapIN3igl7tin
   br i1 %i.bsg, label %.critedge.i1252, label %bb.le
 
 .critedge.i1252:                                  ; preds = %bb.ld, %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i1250, %bb.lb
-  %.08.lcssa.i.i.i11.i1253 = phi ptr [ %.19.i.i.i.i1245, %bb.ld ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i1250 ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %bb.lb ]
+  %.08.lcssa.i.i.i11.i1253 = phi ptr [ %.19.i.i.i.i1245, %bb.ld ], [ %.19.i.i.i.i1245, %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i1250 ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %bb.lb ]
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #32
   store ptr %i.brv, ptr %13, align 8, !tbaa !94
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #32
@@ -2173,7 +2173,7 @@ bb.kv:                                            ; preds = %bb.kv, %.lr.ph.i.i.
   %i.brf = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 32
   %i.brg = load i8, ptr %i.brf, align 1, !tbaa !31
   %i.brh = icmp ult i8 %i.brg, %i.bre             ; 2 uses
-  %.19.i.i.i.i = select i1 %i.brh, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 5 uses
+  %.19.i.i.i.i = select i1 %i.brh, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 6 uses
   %.1.in.v.i.i.i.i = select i1 %i.brh, i64 24, i64 16
   %.1.in.i.i.i.i = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 %.1.in.v.i.i.i.i
   %.1.i.i.i.i = load ptr, ptr %.1.in.i.i.i.i, align 8, !tbaa !29 ; 2 uses
@@ -2191,7 +2191,7 @@ bb.kw:                                            ; preds = %_ZNSt3mapIN3igl7tin
   br i1 %i.brl, label %.critedge.i, label %bb.kx
 
 .critedge.i:                                      ; preds = %bb.kw, %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i, %bb.ku
-  %.08.lcssa.i.i.i11.i = phi ptr [ %.19.i.i.i.i, %bb.kw ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %bb.ku ]
+  %.08.lcssa.i.i.i11.i = phi ptr [ %.19.i.i.i.i, %bb.kw ], [ %.19.i.i.i.i, %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %bb.ku ]
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #32
   store ptr %i.bqx, ptr %15, align 8, !tbaa !94
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #32
@@ -2244,7 +2244,7 @@ bb.lc:                                            ; preds = %bb.lc, %.lr.ph.i.i.
   %i.bsa = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i1243, i64 32
   %i.bsb = load i8, ptr %i.bsa, align 1, !tbaa !31
   %i.bsc = icmp ult i8 %i.bsb, %i.brz             ; 2 uses
-  %.19.i.i.i.i1245 = select i1 %i.bsc, ptr %.0811.i.i.i.i1244, ptr %.012.i.i.i.i1243 ; 5 uses
+  %.19.i.i.i.i1245 = select i1 %i.bsc, ptr %.0811.i.i.i.i1244, ptr %.012.i.i.i.i1243 ; 6 uses
   %.1.in.v.i.i.i.i1246 = select i1 %i.bsc, i64 24, i64 16
   %.1.in.i.i.i.i1247 = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i1243, i64 %.1.in.v.i.i.i.i1246
   %.1.i.i.i.i1248 = load ptr, ptr %.1.in.i.i.i.i1247, align 8, !tbaa !29 ; 2 uses
@@ -2262,7 +2262,7 @@ bb.ld:                                            ; preds = %_ZNSt3mapIN3igl7tin
   br i1 %i.bsg, label %.critedge.i1252, label %bb.le
 
 .critedge.i1252:                                  ; preds = %bb.ld, %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i1250, %bb.lb
-  %.08.lcssa.i.i.i11.i1253 = phi ptr [ %.19.i.i.i.i1245, %bb.ld ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i1250 ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %bb.lb ]
+  %.08.lcssa.i.i.i11.i1253 = phi ptr [ %.19.i.i.i.i1245, %bb.ld ], [ %.19.i.i.i.i1245, %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i1250 ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %bb.lb ]
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #32
   store ptr %i.brv, ptr %13, align 8, !tbaa !94
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #32
@@ -2665,7 +2665,7 @@ bb.kv:                                            ; preds = %bb.kv, %.lr.ph.i.i.
   %i.brf = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 32
   %i.brg = load i8, ptr %i.brf, align 1, !tbaa !31
   %i.brh = icmp ult i8 %i.brg, %i.bre             ; 2 uses
-  %.19.i.i.i.i = select i1 %i.brh, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 5 uses
+  %.19.i.i.i.i = select i1 %i.brh, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 6 uses
   %.1.in.v.i.i.i.i = select i1 %i.brh, i64 24, i64 16
   %.1.in.i.i.i.i = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 %.1.in.v.i.i.i.i
   %.1.i.i.i.i = load ptr, ptr %.1.in.i.i.i.i, align 8, !tbaa !29 ; 2 uses
@@ -2683,7 +2683,7 @@ bb.kw:                                            ; preds = %_ZNSt3mapIN3igl7tin
   br i1 %i.brl, label %.critedge.i, label %bb.kx
 
 .critedge.i:                                      ; preds = %bb.kw, %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i, %bb.ku
-  %.08.lcssa.i.i.i11.i = phi ptr [ %.19.i.i.i.i, %bb.kw ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %bb.ku ]
+  %.08.lcssa.i.i.i11.i = phi ptr [ %.19.i.i.i.i, %bb.kw ], [ %.19.i.i.i.i, %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %bb.ku ]
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #32
   store ptr %i.bqx, ptr %15, align 8, !tbaa !94
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #32
@@ -2736,7 +2736,7 @@ bb.lc:                                            ; preds = %bb.lc, %.lr.ph.i.i.
   %i.bsa = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i1243, i64 32
   %i.bsb = load i8, ptr %i.bsa, align 1, !tbaa !31
   %i.bsc = icmp ult i8 %i.bsb, %i.brz             ; 2 uses
-  %.19.i.i.i.i1245 = select i1 %i.bsc, ptr %.0811.i.i.i.i1244, ptr %.012.i.i.i.i1243 ; 5 uses
+  %.19.i.i.i.i1245 = select i1 %i.bsc, ptr %.0811.i.i.i.i1244, ptr %.012.i.i.i.i1243 ; 6 uses
   %.1.in.v.i.i.i.i1246 = select i1 %i.bsc, i64 24, i64 16
   %.1.in.i.i.i.i1247 = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i1243, i64 %.1.in.v.i.i.i.i1246
   %.1.i.i.i.i1248 = load ptr, ptr %.1.in.i.i.i.i1247, align 8, !tbaa !29 ; 2 uses
@@ -2754,7 +2754,7 @@ bb.ld:                                            ; preds = %_ZNSt3mapIN3igl7tin
   br i1 %i.bsg, label %.critedge.i1252, label %bb.le
 
 .critedge.i1252:                                  ; preds = %bb.ld, %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i1250, %bb.lb
-  %.08.lcssa.i.i.i11.i1253 = phi ptr [ %.19.i.i.i.i1245, %bb.ld ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i1250 ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %bb.lb ]
+  %.08.lcssa.i.i.i11.i1253 = phi ptr [ %.19.i.i.i.i1245, %bb.ld ], [ %.19.i.i.i.i1245, %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i1250 ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %bb.lb ]
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #32
   store ptr %i.brv, ptr %13, align 8, !tbaa !94
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #32
@@ -3157,7 +3157,7 @@ bb.kv:                                            ; preds = %bb.kv, %.lr.ph.i.i.
   %i.brf = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 32
   %i.brg = load i8, ptr %i.brf, align 1, !tbaa !31
   %i.brh = icmp ult i8 %i.brg, %i.bre             ; 2 uses
-  %.19.i.i.i.i = select i1 %i.brh, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 5 uses
+  %.19.i.i.i.i = select i1 %i.brh, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 6 uses
   %.1.in.v.i.i.i.i = select i1 %i.brh, i64 24, i64 16
   %.1.in.i.i.i.i = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 %.1.in.v.i.i.i.i
   %.1.i.i.i.i = load ptr, ptr %.1.in.i.i.i.i, align 8, !tbaa !29 ; 2 uses
@@ -3175,7 +3175,7 @@ bb.kw:                                            ; preds = %_ZNSt3mapIN3igl7tin
   br i1 %i.brl, label %.critedge.i, label %bb.kx
 
 .critedge.i:                                      ; preds = %bb.kw, %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i, %bb.ku
-  %.08.lcssa.i.i.i11.i = phi ptr [ %.19.i.i.i.i, %bb.kw ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %bb.ku ]
+  %.08.lcssa.i.i.i11.i = phi ptr [ %.19.i.i.i.i, %bb.kw ], [ %.19.i.i.i.i, %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %bb.ku ]
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #32
   store ptr %i.bqx, ptr %15, align 8, !tbaa !94
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #32
@@ -3228,7 +3228,7 @@ bb.lc:                                            ; preds = %bb.lc, %.lr.ph.i.i.
   %i.bsa = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i1243, i64 32
   %i.bsb = load i8, ptr %i.bsa, align 1, !tbaa !31
   %i.bsc = icmp ult i8 %i.bsb, %i.brz             ; 2 uses
-  %.19.i.i.i.i1245 = select i1 %i.bsc, ptr %.0811.i.i.i.i1244, ptr %.012.i.i.i.i1243 ; 5 uses
+  %.19.i.i.i.i1245 = select i1 %i.bsc, ptr %.0811.i.i.i.i1244, ptr %.012.i.i.i.i1243 ; 6 uses
   %.1.in.v.i.i.i.i1246 = select i1 %i.bsc, i64 24, i64 16
   %.1.in.i.i.i.i1247 = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i1243, i64 %.1.in.v.i.i.i.i1246
   %.1.i.i.i.i1248 = load ptr, ptr %.1.in.i.i.i.i1247, align 8, !tbaa !29 ; 2 uses
@@ -3246,7 +3246,7 @@ bb.ld:                                            ; preds = %_ZNSt3mapIN3igl7tin
   br i1 %i.bsg, label %.critedge.i1252, label %bb.le
 
 .critedge.i1252:                                  ; preds = %bb.ld, %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i1250, %bb.lb
-  %.08.lcssa.i.i.i11.i1253 = phi ptr [ %.19.i.i.i.i1245, %bb.ld ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i1250 ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %bb.lb ]
+  %.08.lcssa.i.i.i11.i1253 = phi ptr [ %.19.i.i.i.i1245, %bb.ld ], [ %.19.i.i.i.i1245, %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i1250 ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %bb.lb ]
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #32
   store ptr %i.brv, ptr %13, align 8, !tbaa !94
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #32
@@ -3649,7 +3649,7 @@ bb.kv:                                            ; preds = %bb.kv, %.lr.ph.i.i.
   %i.brf = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 32
   %i.brg = load i8, ptr %i.brf, align 1, !tbaa !31
   %i.brh = icmp ult i8 %i.brg, %i.bre             ; 2 uses
-  %.19.i.i.i.i = select i1 %i.brh, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 5 uses
+  %.19.i.i.i.i = select i1 %i.brh, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 6 uses
   %.1.in.v.i.i.i.i = select i1 %i.brh, i64 24, i64 16
   %.1.in.i.i.i.i = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 %.1.in.v.i.i.i.i
   %.1.i.i.i.i = load ptr, ptr %.1.in.i.i.i.i, align 8, !tbaa !29 ; 2 uses
@@ -3667,7 +3667,7 @@ bb.kw:                                            ; preds = %_ZNSt3mapIN3igl7tin
   br i1 %i.brl, label %.critedge.i, label %bb.kx
 
 .critedge.i:                                      ; preds = %bb.kw, %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i, %bb.ku
-  %.08.lcssa.i.i.i11.i = phi ptr [ %.19.i.i.i.i, %bb.kw ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %bb.ku ]
+  %.08.lcssa.i.i.i11.i = phi ptr [ %.19.i.i.i.i, %bb.kw ], [ %.19.i.i.i.i, %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %bb.ku ]
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #32
   store ptr %i.bqx, ptr %15, align 8, !tbaa !94
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #32
@@ -3720,7 +3720,7 @@ bb.lc:                                            ; preds = %bb.lc, %.lr.ph.i.i.
   %i.bsa = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i1243, i64 32
   %i.bsb = load i8, ptr %i.bsa, align 1, !tbaa !31
   %i.bsc = icmp ult i8 %i.bsb, %i.brz             ; 2 uses
-  %.19.i.i.i.i1245 = select i1 %i.bsc, ptr %.0811.i.i.i.i1244, ptr %.012.i.i.i.i1243 ; 5 uses
+  %.19.i.i.i.i1245 = select i1 %i.bsc, ptr %.0811.i.i.i.i1244, ptr %.012.i.i.i.i1243 ; 6 uses
   %.1.in.v.i.i.i.i1246 = select i1 %i.bsc, i64 24, i64 16
   %.1.in.i.i.i.i1247 = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i1243, i64 %.1.in.v.i.i.i.i1246
   %.1.i.i.i.i1248 = load ptr, ptr %.1.in.i.i.i.i1247, align 8, !tbaa !29 ; 2 uses
@@ -3738,7 +3738,7 @@ bb.ld:                                            ; preds = %_ZNSt3mapIN3igl7tin
   br i1 %i.bsg, label %.critedge.i1252, label %bb.le
 
 .critedge.i1252:                                  ; preds = %bb.ld, %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i1250, %bb.lb
-  %.08.lcssa.i.i.i11.i1253 = phi ptr [ %.19.i.i.i.i1245, %bb.ld ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i1250 ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %bb.lb ]
+  %.08.lcssa.i.i.i11.i1253 = phi ptr [ %.19.i.i.i.i1245, %bb.ld ], [ %.19.i.i.i.i1245, %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i1250 ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %bb.lb ]
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #32
   store ptr %i.brv, ptr %13, align 8, !tbaa !94
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #32
@@ -4141,7 +4141,7 @@ bb.kv:                                            ; preds = %bb.kv, %.lr.ph.i.i.
   %i.brf = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 32
   %i.brg = load i8, ptr %i.brf, align 1, !tbaa !31
   %i.brh = icmp ult i8 %i.brg, %i.bre             ; 2 uses
-  %.19.i.i.i.i = select i1 %i.brh, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 5 uses
+  %.19.i.i.i.i = select i1 %i.brh, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 6 uses
   %.1.in.v.i.i.i.i = select i1 %i.brh, i64 24, i64 16
   %.1.in.i.i.i.i = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 %.1.in.v.i.i.i.i
   %.1.i.i.i.i = load ptr, ptr %.1.in.i.i.i.i, align 8, !tbaa !29 ; 2 uses
@@ -4159,7 +4159,7 @@ bb.kw:                                            ; preds = %_ZNSt3mapIN3igl7tin
   br i1 %i.brl, label %.critedge.i, label %bb.kx
 
 .critedge.i:                                      ; preds = %bb.kw, %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i, %bb.ku
-  %.08.lcssa.i.i.i11.i = phi ptr [ %.19.i.i.i.i, %bb.kw ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %bb.ku ]
+  %.08.lcssa.i.i.i11.i = phi ptr [ %.19.i.i.i.i, %bb.kw ], [ %.19.i.i.i.i, %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %bb.ku ]
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #32
   store ptr %i.bqx, ptr %15, align 8, !tbaa !94
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #32
@@ -4212,7 +4212,7 @@ bb.lc:                                            ; preds = %bb.lc, %.lr.ph.i.i.
   %i.bsa = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i1243, i64 32
   %i.bsb = load i8, ptr %i.bsa, align 1, !tbaa !31
   %i.bsc = icmp ult i8 %i.bsb, %i.brz             ; 2 uses
-  %.19.i.i.i.i1245 = select i1 %i.bsc, ptr %.0811.i.i.i.i1244, ptr %.012.i.i.i.i1243 ; 5 uses
+  %.19.i.i.i.i1245 = select i1 %i.bsc, ptr %.0811.i.i.i.i1244, ptr %.012.i.i.i.i1243 ; 6 uses
   %.1.in.v.i.i.i.i1246 = select i1 %i.bsc, i64 24, i64 16
   %.1.in.i.i.i.i1247 = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i1243, i64 %.1.in.v.i.i.i.i1246
   %.1.i.i.i.i1248 = load ptr, ptr %.1.in.i.i.i.i1247, align 8, !tbaa !29 ; 2 uses
@@ -4230,7 +4230,7 @@ bb.ld:                                            ; preds = %_ZNSt3mapIN3igl7tin
   br i1 %i.bsg, label %.critedge.i1252, label %bb.le
 
 .critedge.i1252:                                  ; preds = %bb.ld, %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i1250, %bb.lb
-  %.08.lcssa.i.i.i11.i1253 = phi ptr [ %.19.i.i.i.i1245, %bb.ld ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i1250 ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %bb.lb ]
+  %.08.lcssa.i.i.i11.i1253 = phi ptr [ %.19.i.i.i.i1245, %bb.ld ], [ %.19.i.i.i.i1245, %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i1250 ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %bb.lb ]
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #32
   store ptr %i.brv, ptr %13, align 8, !tbaa !94
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #32
@@ -4633,7 +4633,7 @@ bb.kv:                                            ; preds = %bb.kv, %.lr.ph.i.i.
   %i.brf = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 32
   %i.brg = load i8, ptr %i.brf, align 1, !tbaa !31
   %i.brh = icmp ult i8 %i.brg, %i.bre             ; 2 uses
-  %.19.i.i.i.i = select i1 %i.brh, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 5 uses
+  %.19.i.i.i.i = select i1 %i.brh, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 6 uses
   %.1.in.v.i.i.i.i = select i1 %i.brh, i64 24, i64 16
   %.1.in.i.i.i.i = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 %.1.in.v.i.i.i.i
   %.1.i.i.i.i = load ptr, ptr %.1.in.i.i.i.i, align 8, !tbaa !29 ; 2 uses
@@ -4651,7 +4651,7 @@ bb.kw:                                            ; preds = %_ZNSt3mapIN3igl7tin
   br i1 %i.brl, label %.critedge.i, label %bb.kx
 
 .critedge.i:                                      ; preds = %bb.kw, %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i, %bb.ku
-  %.08.lcssa.i.i.i11.i = phi ptr [ %.19.i.i.i.i, %bb.kw ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %bb.ku ]
+  %.08.lcssa.i.i.i11.i = phi ptr [ %.19.i.i.i.i, %bb.kw ], [ %.19.i.i.i.i, %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %bb.ku ]
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #32
   store ptr %i.bqx, ptr %15, align 8, !tbaa !94
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #32
@@ -4704,7 +4704,7 @@ bb.lc:                                            ; preds = %bb.lc, %.lr.ph.i.i.
   %i.bsa = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i1243, i64 32
   %i.bsb = load i8, ptr %i.bsa, align 1, !tbaa !31
   %i.bsc = icmp ult i8 %i.bsb, %i.brz             ; 2 uses
-  %.19.i.i.i.i1245 = select i1 %i.bsc, ptr %.0811.i.i.i.i1244, ptr %.012.i.i.i.i1243 ; 5 uses
+  %.19.i.i.i.i1245 = select i1 %i.bsc, ptr %.0811.i.i.i.i1244, ptr %.012.i.i.i.i1243 ; 6 uses
   %.1.in.v.i.i.i.i1246 = select i1 %i.bsc, i64 24, i64 16
   %.1.in.i.i.i.i1247 = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i1243, i64 %.1.in.v.i.i.i.i1246
   %.1.i.i.i.i1248 = load ptr, ptr %.1.in.i.i.i.i1247, align 8, !tbaa !29 ; 2 uses
@@ -4722,7 +4722,7 @@ bb.ld:                                            ; preds = %_ZNSt3mapIN3igl7tin
   br i1 %i.bsg, label %.critedge.i1252, label %bb.le
 
 .critedge.i1252:                                  ; preds = %bb.ld, %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i1250, %bb.lb
-  %.08.lcssa.i.i.i11.i1253 = phi ptr [ %.19.i.i.i.i1245, %bb.ld ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i1250 ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %bb.lb ]
+  %.08.lcssa.i.i.i11.i1253 = phi ptr [ %.19.i.i.i.i1245, %bb.ld ], [ %.19.i.i.i.i1245, %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i1250 ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %bb.lb ]
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #32
   store ptr %i.brv, ptr %13, align 8, !tbaa !94
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #32
@@ -5125,7 +5125,7 @@ bb.kv:                                            ; preds = %bb.kv, %.lr.ph.i.i.
   %i.brf = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 32
   %i.brg = load i8, ptr %i.brf, align 1, !tbaa !31
   %i.brh = icmp ult i8 %i.brg, %i.bre             ; 2 uses
-  %.19.i.i.i.i = select i1 %i.brh, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 5 uses
+  %.19.i.i.i.i = select i1 %i.brh, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 6 uses
   %.1.in.v.i.i.i.i = select i1 %i.brh, i64 24, i64 16
   %.1.in.i.i.i.i = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 %.1.in.v.i.i.i.i
   %.1.i.i.i.i = load ptr, ptr %.1.in.i.i.i.i, align 8, !tbaa !29 ; 2 uses
@@ -5143,7 +5143,7 @@ bb.kw:                                            ; preds = %_ZNSt3mapIN3igl7tin
   br i1 %i.brl, label %.critedge.i, label %bb.kx
 
 .critedge.i:                                      ; preds = %bb.kw, %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i, %bb.ku
-  %.08.lcssa.i.i.i11.i = phi ptr [ %.19.i.i.i.i, %bb.kw ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %bb.ku ]
+  %.08.lcssa.i.i.i11.i = phi ptr [ %.19.i.i.i.i, %bb.kw ], [ %.19.i.i.i.i, %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %bb.ku ]
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #32
   store ptr %i.bqx, ptr %15, align 8, !tbaa !94
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #32
@@ -5196,7 +5196,7 @@ bb.lc:                                            ; preds = %bb.lc, %.lr.ph.i.i.
   %i.bsa = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i1243, i64 32
   %i.bsb = load i8, ptr %i.bsa, align 1, !tbaa !31
   %i.bsc = icmp ult i8 %i.bsb, %i.brz             ; 2 uses
-  %.19.i.i.i.i1245 = select i1 %i.bsc, ptr %.0811.i.i.i.i1244, ptr %.012.i.i.i.i1243 ; 5 uses
+  %.19.i.i.i.i1245 = select i1 %i.bsc, ptr %.0811.i.i.i.i1244, ptr %.012.i.i.i.i1243 ; 6 uses
   %.1.in.v.i.i.i.i1246 = select i1 %i.bsc, i64 24, i64 16
   %.1.in.i.i.i.i1247 = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i1243, i64 %.1.in.v.i.i.i.i1246
   %.1.i.i.i.i1248 = load ptr, ptr %.1.in.i.i.i.i1247, align 8, !tbaa !29 ; 2 uses
@@ -5214,7 +5214,7 @@ bb.ld:                                            ; preds = %_ZNSt3mapIN3igl7tin
   br i1 %i.bsg, label %.critedge.i1252, label %bb.le
 
 .critedge.i1252:                                  ; preds = %bb.ld, %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i1250, %bb.lb
-  %.08.lcssa.i.i.i11.i1253 = phi ptr [ %.19.i.i.i.i1245, %bb.ld ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i1250 ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %bb.lb ]
+  %.08.lcssa.i.i.i11.i1253 = phi ptr [ %.19.i.i.i.i1245, %bb.ld ], [ %.19.i.i.i.i1245, %_ZNSt3mapIN3igl7tinyply4TypeENS1_12PropertyInfoESt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i1250 ], [ getelementptr inbounds nuw (i8, ptr @_ZN3igl7tinyplyL13PropertyTableE, i64 8), %bb.lb ]
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #32
   store ptr %i.brv, ptr %13, align 8, !tbaa !94
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #32

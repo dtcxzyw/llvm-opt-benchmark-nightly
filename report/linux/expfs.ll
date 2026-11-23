@@ -202,12 +202,12 @@ declare dso_local i64 @strlen(ptr noundef captures(none)) local_unnamed_addr #5
 define dso_local ptr @exportfs_decode_fh(ptr noundef %0, ptr noundef %1, i32 noundef %2, i32 noundef %3, ptr nofree noundef readonly captures(address_is_null) %4, ptr noundef %5) #0 align 16 prefalign(16) {
 bb.a:
   %i.a = tail call ptr @exportfs_decode_fh_raw(ptr noundef %0, ptr noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef 0, ptr noundef %4, ptr noundef %5) #10 ; 4 uses
-  %.not.i = icmp eq ptr %i.a, null
-  %6 = icmp ugt ptr %i.a, inttoptr (i64 -4096 to ptr)
-  %spec.select.i = or i1 %.not.i, %6
+  %.not.i = icmp ne ptr %i.a, null
+  %6 = icmp ule ptr %i.a, inttoptr (i64 -4096 to ptr)
+  %spec.select.i.not11 = and i1 %.not.i, %6
   %i.b = icmp eq ptr %i.a, inttoptr (i64 -12 to ptr)
-  %spec.select = select i1 %i.b, ptr inttoptr (i64 -12 to ptr), ptr inttoptr (i64 -116 to ptr)
-  %.0 = select i1 %spec.select.i, ptr %spec.select, ptr %i.a
+  %or.cond = or i1 %i.b, %spec.select.i.not11
+  %.0 = select i1 %or.cond, ptr %i.a, ptr inttoptr (i64 -116 to ptr)
   ret ptr %.0
 }
 

@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.cd
 
 bb.f:                                             ; preds = %bb.c
-  %i.m = call ptr @php_stream_locate_url_wrapper(ptr noundef nonnull %i.g, ptr noundef nonnull %i.a, i32 noundef 0) #14 ; 2 uses
+  %i.m = call ptr @php_stream_locate_url_wrapper(ptr noundef nonnull %i.g, ptr noundef nonnull %i.a, i32 noundef 0) #14 ; 3 uses
   %i.n = icmp eq ptr %i.m, @php_plain_files_wrapper
   br i1 %i.n, label %bb.g, label %.critedge
 
@@ -247,7 +247,7 @@ bb.k:                                             ; preds = %.critedge391
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.f, %bb.k, %bb.a
-  %.0353 = phi ptr [ @php_plain_files_wrapper, %bb.k ], [ %i.m, %bb.f ], [ null, %bb.a ] ; 6 uses
+  %.0353 = phi ptr [ %i.m, %bb.k ], [ %i.m, %bb.f ], [ null, %bb.a ] ; 6 uses
   %switch.tableidx555 = add i32 %1, -8            ; 2 uses
   %i.w = icmp ult i32 %switch.tableidx555, 11
   br i1 %i.w, label %switch.lookup556, label %bb.l
@@ -362,7 +362,7 @@ bb.w:                                             ; preds = %switch.early.test
   br label %bb.cd
 
 bb.x:                                             ; preds = %bb.v
-  %i.av = call ptr @php_stream_locate_url_wrapper(ptr noundef nonnull %i.as, ptr noundef nonnull %i.a, i32 noundef 0) #14 ; 3 uses
+  %i.av = call ptr @php_stream_locate_url_wrapper(ptr noundef nonnull %i.as, ptr noundef nonnull %i.a, i32 noundef 0) #14 ; 4 uses
   %i.aw = icmp eq ptr %i.av, @php_plain_files_wrapper
   br i1 %i.aw, label %bb.y, label %bb.aa
 
@@ -382,7 +382,7 @@ bb.aa:                                            ; preds = %bb.x
   br i1 %.not381, label %bb.ac, label %.thread490
 
 .thread490:                                       ; preds = %bb.y, %zend_string_equal_content.exit399.thread, %bb.aa
-  %.1354493 = phi ptr [ %i.av, %bb.aa ], [ @php_plain_files_wrapper, %bb.y ], [ %.0353, %zend_string_equal_content.exit399.thread ] ; 4 uses
+  %.1354493 = phi ptr [ %i.av, %bb.aa ], [ %i.av, %bb.y ], [ %.0353, %zend_string_equal_content.exit399.thread ] ; 4 uses
   %i.ba = load ptr, ptr %.1354493, align 8, !tbaa !60
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 24
   %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !80 ; 2 uses

@@ -205,7 +205,7 @@ select.unfold143:                                 ; preds = %.noexc115, %_ZNSt8_
           to label %.noexc117 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
 .noexc117:                                        ; preds = %.lr.ph.i.i.i.i
-  %.19.i.i.i.i = select i1 %i.cy, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 5 uses
+  %.19.i.i.i.i = select i1 %i.cy, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 6 uses
   %.1.in.v.i.i.i.i = select i1 %i.cy, i64 24, i64 16
   %.1.in.i.i.i.i = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 %.1.in.v.i.i.i.i
   %.1.i.i.i.i = load ptr, ptr %.1.in.i.i.i.i, align 8, !tbaa !144 ; 2 uses
@@ -225,7 +225,7 @@ bb.r:                                             ; preds = %_ZNSt3mapISt5tupleI
   br i1 %i.db, label %.critedge.i, label %bb.s
 
 .critedge.i:                                      ; preds = %_ZNSt5mutex4lockEv.exit101, %.noexc118, %_ZNSt3mapISt5tupleIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_fEEPN4pbrt19GPUFloatPtexTextureESt4lessIS7_ESaISt4pairIKS7_SA_EEE11lower_boundERSE_.exit.i, %select.unfold143
-  %.08.lcssa.i.i.i11.i = phi ptr [ %.19.i.i.i.i, %.noexc118 ], [ getelementptr inbounds nuw (i8, ptr @_ZN4pbrtL21ptexFloatTextureCacheB5cxx11E, i64 8), %_ZNSt3mapISt5tupleIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_fEEPN4pbrt19GPUFloatPtexTextureESt4lessIS7_ESaISt4pairIKS7_SA_EEE11lower_boundERSE_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZN4pbrtL21ptexFloatTextureCacheB5cxx11E, i64 8), %select.unfold143 ], [ getelementptr inbounds nuw (i8, ptr @_ZN4pbrtL21ptexFloatTextureCacheB5cxx11E, i64 8), %_ZNSt5mutex4lockEv.exit101 ]
+  %.08.lcssa.i.i.i11.i = phi ptr [ %.19.i.i.i.i, %.noexc118 ], [ %.19.i.i.i.i, %_ZNSt3mapISt5tupleIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_fEEPN4pbrt19GPUFloatPtexTextureESt4lessIS7_ESaISt4pairIKS7_SA_EEE11lower_boundERSE_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZN4pbrtL21ptexFloatTextureCacheB5cxx11E, i64 8), %select.unfold143 ], [ getelementptr inbounds nuw (i8, ptr @_ZN4pbrtL21ptexFloatTextureCacheB5cxx11E, i64 8), %_ZNSt5mutex4lockEv.exit101 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #26
   store ptr %15, ptr %4, align 8, !tbaa !156
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #26
@@ -628,7 +628,7 @@ select.unfold143:                                 ; preds = %.noexc115, %_ZNSt8_
           to label %.noexc117 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
 .noexc117:                                        ; preds = %.lr.ph.i.i.i.i
-  %.19.i.i.i.i = select i1 %i.cs, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 5 uses
+  %.19.i.i.i.i = select i1 %i.cs, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 6 uses
   %.1.in.v.i.i.i.i = select i1 %i.cs, i64 24, i64 16
   %.1.in.i.i.i.i = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 %.1.in.v.i.i.i.i
   %.1.i.i.i.i = load ptr, ptr %.1.in.i.i.i.i, align 8, !tbaa !144 ; 2 uses
@@ -648,7 +648,7 @@ bb.q:                                             ; preds = %_ZNSt3mapISt5tupleI
   br i1 %i.cv, label %.critedge.i, label %bb.r
 
 .critedge.i:                                      ; preds = %_ZNSt5mutex4lockEv.exit101, %.noexc118, %_ZNSt3mapISt5tupleIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_fEEPN4pbrt22GPUSpectrumPtexTextureESt4lessIS7_ESaISt4pairIKS7_SA_EEE11lower_boundERSE_.exit.i, %select.unfold143
-  %.08.lcssa.i.i.i11.i = phi ptr [ %.19.i.i.i.i, %.noexc118 ], [ getelementptr inbounds nuw (i8, ptr @_ZN4pbrtL24ptexSpectrumTextureCacheB5cxx11E, i64 8), %_ZNSt3mapISt5tupleIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_fEEPN4pbrt22GPUSpectrumPtexTextureESt4lessIS7_ESaISt4pairIKS7_SA_EEE11lower_boundERSE_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZN4pbrtL24ptexSpectrumTextureCacheB5cxx11E, i64 8), %select.unfold143 ], [ getelementptr inbounds nuw (i8, ptr @_ZN4pbrtL24ptexSpectrumTextureCacheB5cxx11E, i64 8), %_ZNSt5mutex4lockEv.exit101 ]
+  %.08.lcssa.i.i.i11.i = phi ptr [ %.19.i.i.i.i, %.noexc118 ], [ %.19.i.i.i.i, %_ZNSt3mapISt5tupleIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_fEEPN4pbrt22GPUSpectrumPtexTextureESt4lessIS7_ESaISt4pairIKS7_SA_EEE11lower_boundERSE_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZN4pbrtL24ptexSpectrumTextureCacheB5cxx11E, i64 8), %select.unfold143 ], [ getelementptr inbounds nuw (i8, ptr @_ZN4pbrtL24ptexSpectrumTextureCacheB5cxx11E, i64 8), %_ZNSt5mutex4lockEv.exit101 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #26
   store ptr %16, ptr %5, align 8, !tbaa !156
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #26

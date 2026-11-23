@@ -166,7 +166,7 @@ bb.b:                                             ; preds = %.lr.ph.split
 ; Function Attrs: nofree norecurse nosync nounwind memory(read, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local ptr @rbt_leftmost(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #2 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8                ; 2 uses
+  %i.a = load ptr, ptr %0, align 8                ; 3 uses
   %.not11 = icmp eq ptr %i.a, @sentinel
   br i1 %.not11, label %._crit_edge, label %.lr.ph
 
@@ -178,7 +178,7 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !6
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
-  %.0.lcssa = phi ptr [ @sentinel, %bb.a ], [ %.0812, %.lr.ph ] ; 2 uses
+  %.0.lcssa = phi ptr [ %i.a, %bb.a ], [ %.0812, %.lr.ph ] ; 2 uses
   %.not10 = icmp eq ptr %.0.lcssa, @sentinel
   %..0 = select i1 %.not10, ptr null, ptr %.0.lcssa
   ret ptr %..0
@@ -285,10 +285,10 @@ bb.i:                                             ; preds = %bb.f, %bb.g, %bb.h
   br i1 %i.ag, label %.lr.ph52, label %rbt_insert_fixup.exit, !llvm.loop !8
 
 .lr.ph52:                                         ; preds = %.lr.ph.i.preheader, %.lr.ph.i
-  %i.ah = phi ptr [ %i.ae, %.lr.ph.i ], [ %i.aa, %.lr.ph.i.preheader ] ; 18 uses
+  %i.ah = phi ptr [ %i.ae, %.lr.ph.i ], [ %i.aa, %.lr.ph.i.preheader ] ; 20 uses
   %i.ai = phi ptr [ %i.ad, %.lr.ph.i ], [ %i.s, %.lr.ph.i.preheader ] ; 4 uses
   %.063.i51 = phi ptr [ %.5.i, %.lr.ph.i ], [ %i.p, %.lr.ph.i.preheader ] ; 6 uses
-  %i.aj = getelementptr inbounds nuw i8, ptr %i.ah, i64 24 ; 5 uses
+  %i.aj = getelementptr inbounds nuw i8, ptr %i.ah, i64 24 ; 7 uses
   %i.ak = load ptr, ptr %i.aj, align 8            ; 4 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 8
   %i.am = load ptr, ptr %i.al, align 8            ; 3 uses
@@ -372,7 +372,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s, %bb.r
   br i1 %.not27.i.i, label %.rbt_rotate_left.exit_crit_edge.i, label %bb.v
 
 .rbt_rotate_left.exit_crit_edge.i:                ; preds = %bb.u
-  %.pre68.i = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sentinel, i64 24), align 8
+  %.pre68.i = load ptr, ptr %i.aj, align 8
   br label %rbt_rotate_left.exit.i
 
 bb.v:                                             ; preds = %bb.u
@@ -381,7 +381,7 @@ bb.v:                                             ; preds = %bb.u
 
 rbt_rotate_left.exit.i:                           ; preds = %bb.v, %.rbt_rotate_left.exit_crit_edge.i, %bb.l
   %i.bj = phi ptr [ %i.ah, %bb.l ], [ %.pre68.i, %.rbt_rotate_left.exit_crit_edge.i ], [ %i.az, %bb.v ]
-  %.1.i = phi ptr [ %.063.i51, %bb.l ], [ @sentinel, %.rbt_rotate_left.exit_crit_edge.i ], [ %i.ah, %bb.v ] ; 3 uses
+  %.1.i = phi ptr [ %.063.i51, %bb.l ], [ %i.ah, %.rbt_rotate_left.exit_crit_edge.i ], [ %i.ah, %bb.v ] ; 3 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %.1.i, i64 24 ; 2 uses
   store i8 0, ptr %i.bj, align 8
   %i.bl = load ptr, ptr %i.bk, align 8
@@ -522,7 +522,7 @@ bb.aq:                                            ; preds = %bb.ap, %bb.ao, %bb.
   br i1 %.not27.i52.i, label %.rbt_rotate_right.exit53_crit_edge.i, label %bb.ar
 
 .rbt_rotate_right.exit53_crit_edge.i:             ; preds = %bb.aq
-  %.pre.i = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sentinel, i64 24), align 8
+  %.pre.i = load ptr, ptr %i.aj, align 8
   br label %rbt_rotate_right.exit53.i
 
 bb.ar:                                            ; preds = %bb.aq
@@ -531,7 +531,7 @@ bb.ar:                                            ; preds = %bb.aq
 
 rbt_rotate_right.exit53.i:                        ; preds = %bb.ar, %.rbt_rotate_right.exit53_crit_edge.i, %bb.ah
   %i.cu = phi ptr [ %i.ah, %bb.ah ], [ %.pre.i, %.rbt_rotate_right.exit53_crit_edge.i ], [ %i.ck, %bb.ar ]
-  %.3.i = phi ptr [ %.063.i51, %bb.ah ], [ @sentinel, %.rbt_rotate_right.exit53_crit_edge.i ], [ %i.ah, %bb.ar ] ; 3 uses
+  %.3.i = phi ptr [ %.063.i51, %bb.ah ], [ %i.ah, %.rbt_rotate_right.exit53_crit_edge.i ], [ %i.ah, %bb.ar ] ; 3 uses
   %i.cv = getelementptr inbounds nuw i8, ptr %.3.i, i64 24 ; 2 uses
   store i8 0, ptr %i.cu, align 8
   %i.cw = load ptr, ptr %i.cv, align 8

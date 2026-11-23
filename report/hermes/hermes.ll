@@ -205,6 +205,7 @@ _ZN6hermes2vm9ArrayImpl12setElementAtENS0_6HandleIS1_EERNS0_7RuntimeEjNS2_INS0_1
   br label %bb.l
 
 bb.i:                                             ; preds = %bb.c, %._crit_edge
+  %.sroa.048.0 = phi ptr [ %i.s, %._crit_edge ], [ inttoptr (i64 -1 to ptr), %bb.c ]
   %i.bf = load ptr, ptr %1, align 8, !tbaa !776   ; 3 uses
   %i.bg = load ptr, ptr %i.k, align 8, !tbaa !775 ; 2 uses
   %.not4.i.i.i = icmp eq ptr %i.bf, %i.bg
@@ -393,7 +394,7 @@ _ZN4llvh11SmallVectorItLj16EED2Ev.exit39:         ; preds = %bb.y, %bb.x
           to label %bb.aa unwind label %bb.ab
 
 bb.z:                                             ; preds = %bb.v, %_ZN4llvh11SmallVectorItLj16EED2Ev.exit, %bb.n, %_ZNSt6vectorIN8facebook3jsi10PropNameIDESaIS2_EED2Ev.exit
-  %.sroa.048.1 = phi ptr [ %i.s, %_ZNSt6vectorIN8facebook3jsi10PropNameIDESaIS2_EED2Ev.exit ], [ inttoptr (i64 -1 to ptr), %bb.n ], [ inttoptr (i64 -1 to ptr), %_ZN4llvh11SmallVectorItLj16EED2Ev.exit ], [ inttoptr (i64 -1 to ptr), %bb.v ]
+  %.sroa.048.1 = phi ptr [ %.sroa.048.0, %_ZNSt6vectorIN8facebook3jsi10PropNameIDESaIS2_EED2Ev.exit ], [ inttoptr (i64 -1 to ptr), %bb.n ], [ inttoptr (i64 -1 to ptr), %_ZN4llvh11SmallVectorItLj16EED2Ev.exit ], [ inttoptr (i64 -1 to ptr), %bb.v ]
   ret ptr %.sroa.048.1
 
 bb.aa:                                            ; preds = %_ZN4llvh11SmallVectorItLj16EED2Ev.exit39, %bb.w

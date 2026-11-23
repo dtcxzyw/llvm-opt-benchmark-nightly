@@ -202,7 +202,7 @@ bb.a:
   %i.c = and i8 %i.b, 1
   %.not = icmp eq i8 %i.c, 0
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 696 ; 3 uses
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !19   ; 5 uses
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !19   ; 7 uses
   %.not86 = icmp eq ptr %i.e, null                ; 2 uses
   br i1 %.not, label %bb.i, label %bb.b
 
@@ -249,7 +249,7 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.d, %bb.c
-  %i.ac = phi ptr [ %.pre, %bb.f ], [ @aesni_ctr32_encrypt_blocks, %bb.d ], [ %i.e, %bb.c ]
+  %i.ac = phi ptr [ %.pre, %bb.f ], [ %i.e, %bb.d ], [ %i.e, %bb.c ]
   %.177 = phi i64 [ %i.ab, %bb.f ], [ 0, %bb.d ], [ 0, %bb.c ] ; 3 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 248
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 %.177
@@ -308,7 +308,7 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.k, %bb.j
-  %i.bh = phi ptr [ %.pre101, %bb.m ], [ @aesni_ctr32_encrypt_blocks, %bb.k ], [ %i.e, %bb.j ]
+  %i.bh = phi ptr [ %.pre101, %bb.m ], [ %i.e, %bb.k ], [ %i.e, %bb.j ]
   %.1 = phi i64 [ %i.bg, %bb.m ], [ 0, %bb.k ], [ 0, %bb.j ] ; 3 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 248
   %i.bj = getelementptr inbounds nuw i8, ptr %1, i64 %.1

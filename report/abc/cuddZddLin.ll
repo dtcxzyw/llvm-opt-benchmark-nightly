@@ -154,7 +154,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.bl, label %bb.h, label %bb.o
 
 bb.h:                                             ; preds = %bb.g
-  %i.bm = tail call fastcc ptr @cuddZddLinearDown(ptr noundef nonnull %0, i32 noundef %1, i32 noundef %2, ptr noundef null) ; 8 uses
+  %i.bm = tail call fastcc ptr @cuddZddLinearDown(ptr noundef nonnull %0, i32 noundef %1, i32 noundef %2, ptr noundef null) ; 9 uses
   %magicptr174.i = ptrtoint ptr %i.bm to i64
   switch i64 %magicptr174.i, label %.lr.ph.i.i [
     i64 -1, label %cuddZddLinearBackward.exit.thread.i
@@ -224,7 +224,7 @@ bb.o:                                             ; preds = %bb.g
   br i1 %i.cm, label %bb.p, label %bb.w
 
 bb.p:                                             ; preds = %bb.o
-  %i.cn = tail call fastcc ptr @cuddZddLinearUp(ptr noundef nonnull %0, i32 noundef %2, i32 noundef %1, ptr noundef null) ; 8 uses
+  %i.cn = tail call fastcc ptr @cuddZddLinearUp(ptr noundef nonnull %0, i32 noundef %2, i32 noundef %1, ptr noundef null) ; 9 uses
   %magicptr175.i = ptrtoint ptr %i.cn to i64
   switch i64 %magicptr175.i, label %.lr.ph.i122.i [
     i64 -1, label %cuddZddLinearBackward.exit.thread.i
@@ -296,13 +296,13 @@ bb.w:                                             ; preds = %bb.o
   br i1 %i.dp, label %bb.x, label %bb.af
 
 bb.x:                                             ; preds = %bb.w
-  %i.dq = tail call fastcc ptr @cuddZddLinearDown(ptr noundef nonnull %0, i32 noundef %i.bh, i32 noundef %2, ptr noundef null) ; 9 uses
+  %i.dq = tail call fastcc ptr @cuddZddLinearDown(ptr noundef nonnull %0, i32 noundef %i.bh, i32 noundef %2, ptr noundef null) ; 10 uses
   %i.dr = icmp eq ptr %i.dq, inttoptr (i64 -1 to ptr)
   br i1 %i.dr, label %cuddZddLinearBackward.exit.thread.i, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
   %i.ds = tail call fastcc ptr @cuddZddUndoMoves(ptr noundef nonnull %0, ptr noundef %i.dq)
-  %i.dt = tail call fastcc ptr @cuddZddLinearUp(ptr noundef nonnull %0, i32 noundef %i.bh, i32 noundef %1, ptr noundef %i.ds) ; 8 uses
+  %i.dt = tail call fastcc ptr @cuddZddLinearUp(ptr noundef nonnull %0, i32 noundef %i.bh, i32 noundef %1, ptr noundef %i.ds) ; 9 uses
   %magicptr176.i = ptrtoint ptr %i.dt to i64
   switch i64 %magicptr176.i, label %.lr.ph.i137.i [
     i64 -1, label %cuddZddLinearBackward.exit.thread.i
@@ -368,13 +368,13 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac
   br i1 %.not29.i146.i, label %cuddZddLinearBackward.exit.i, label %.lr.ph38.i143.i, !llvm.loop !46
 
 bb.af:                                            ; preds = %bb.w
-  %i.et = tail call fastcc ptr @cuddZddLinearUp(ptr noundef nonnull %0, i32 noundef %i.bh, i32 noundef %1, ptr noundef null) ; 9 uses
+  %i.et = tail call fastcc ptr @cuddZddLinearUp(ptr noundef nonnull %0, i32 noundef %i.bh, i32 noundef %1, ptr noundef null) ; 10 uses
   %i.eu = icmp eq ptr %i.et, inttoptr (i64 -1 to ptr)
   br i1 %i.eu, label %cuddZddLinearBackward.exit.thread.i, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
   %i.ev = tail call fastcc ptr @cuddZddUndoMoves(ptr noundef nonnull %0, ptr noundef %i.et)
-  %i.ew = tail call fastcc ptr @cuddZddLinearDown(ptr noundef nonnull %0, i32 noundef %i.bh, i32 noundef %2, ptr noundef %i.ev) ; 8 uses
+  %i.ew = tail call fastcc ptr @cuddZddLinearDown(ptr noundef nonnull %0, i32 noundef %i.bh, i32 noundef %2, ptr noundef %i.ev) ; 9 uses
   %magicptr177.i = ptrtoint ptr %i.ew to i64
   switch i64 %magicptr177.i, label %.lr.ph.i152.i [
     i64 -1, label %cuddZddLinearBackward.exit.thread.i
@@ -487,8 +487,8 @@ bb.ao:                                            ; preds = %bb.ao, %.lr.ph194.i
   br i1 %.not118.i, label %..loopexit_crit_edge.i, label %bb.ao, !llvm.loop !48
 
 cuddZddLinearBackward.exit.thread.i:              ; preds = %bb.ag, %bb.af, %bb.y, %bb.x, %bb.p, %bb.h, %bb.al, %bb.aj, %bb.ai, %bb.ad, %bb.ab, %bb.aa, %bb.u, %bb.s, %bb.r, %bb.m, %bb.k, %bb.j
-  %.295.i = phi ptr [ %i.dt, %bb.ad ], [ null, %bb.m ], [ %i.et, %bb.al ], [ %i.cn, %bb.u ], [ null, %bb.j ], [ null, %bb.k ], [ %i.cn, %bb.r ], [ %i.cn, %bb.s ], [ %i.dt, %bb.aa ], [ %i.dt, %bb.ab ], [ %i.et, %bb.ai ], [ %i.et, %bb.aj ], [ %i.et, %bb.ag ], [ inttoptr (i64 -1 to ptr), %bb.p ], [ null, %bb.x ], [ null, %bb.h ], [ inttoptr (i64 -1 to ptr), %bb.af ], [ inttoptr (i64 -1 to ptr), %bb.y ] ; 2 uses
-  %.2.i = phi ptr [ %i.dq, %bb.ad ], [ %i.bm, %bb.m ], [ %i.ew, %bb.al ], [ null, %bb.u ], [ %i.bm, %bb.j ], [ %i.bm, %bb.k ], [ null, %bb.r ], [ null, %bb.s ], [ %i.dq, %bb.aa ], [ %i.dq, %bb.ab ], [ %i.ew, %bb.ai ], [ %i.ew, %bb.aj ], [ inttoptr (i64 -1 to ptr), %bb.ag ], [ null, %bb.p ], [ inttoptr (i64 -1 to ptr), %bb.x ], [ inttoptr (i64 -1 to ptr), %bb.h ], [ null, %bb.af ], [ %i.dq, %bb.y ] ; 2 uses
+  %.295.i = phi ptr [ %i.dt, %bb.ad ], [ null, %bb.m ], [ %i.et, %bb.al ], [ %i.cn, %bb.u ], [ null, %bb.j ], [ null, %bb.k ], [ %i.cn, %bb.r ], [ %i.cn, %bb.s ], [ %i.dt, %bb.aa ], [ %i.dt, %bb.ab ], [ %i.et, %bb.ai ], [ %i.et, %bb.aj ], [ %i.et, %bb.ag ], [ %i.cn, %bb.p ], [ null, %bb.x ], [ null, %bb.h ], [ %i.et, %bb.af ], [ %i.dt, %bb.y ] ; 2 uses
+  %.2.i = phi ptr [ %i.dq, %bb.ad ], [ %i.bm, %bb.m ], [ %i.ew, %bb.al ], [ null, %bb.u ], [ %i.bm, %bb.j ], [ %i.bm, %bb.k ], [ null, %bb.r ], [ null, %bb.s ], [ %i.dq, %bb.aa ], [ %i.dq, %bb.ab ], [ %i.ew, %bb.ai ], [ %i.ew, %bb.aj ], [ %i.ew, %bb.ag ], [ null, %bb.p ], [ %i.dq, %bb.x ], [ %i.bm, %bb.h ], [ null, %bb.af ], [ %i.dq, %bb.y ] ; 2 uses
   %magicptr.i = ptrtoint ptr %.2.i to i64
   %magicptr.off.i = add i64 %magicptr.i, -1
   %switch.i = icmp ult i64 %magicptr.off.i, -2

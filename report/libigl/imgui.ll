@@ -205,7 +205,7 @@ bb.a:
   br label %tailrecurse
 
 tailrecurse:                                      ; preds = %bb.o, %bb.a
-  %.tr70 = phi ptr [ %1, %bb.a ], [ %i.h, %bb.o ] ; 5 uses
+  %.tr70 = phi ptr [ %1, %bb.a ], [ %i.h, %bb.o ] ; 6 uses
   %.tr71 = phi ptr [ %2, %bb.a ], [ %i.az, %bb.o ] ; 2 uses
   %i.b = load ptr, ptr @GImGui, align 8, !tbaa !99 ; 8 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 7184
@@ -248,7 +248,7 @@ bb.c:                                             ; preds = %.lr.ph.i
   br i1 %exitcond.not.i, label %_ZN5ImGui19FindRenderedTextEndEPKcS1_.exit, label %.lr.ph.i, !llvm.loop !19
 
 _ZN5ImGui19FindRenderedTextEndEPKcS1_.exit:       ; preds = %.critedge2.i, %bb.c, %.lr.ph.i, %bb.b, %tailrecurse
-  %.056 = phi ptr [ %.tr71, %tailrecurse ], [ inttoptr (i64 -1 to ptr), %bb.b ], [ %.015.i, %bb.c ], [ %scevgep.i, %.critedge2.i ], [ %.015.i, %.lr.ph.i ] ; 3 uses
+  %.056 = phi ptr [ %.tr71, %tailrecurse ], [ %.tr70, %bb.b ], [ %.015.i, %bb.c ], [ %scevgep.i, %.critedge2.i ], [ %.015.i, %.lr.ph.i ] ; 3 uses
   br i1 %.not65, label %.thread68, label %bb.d
 
 bb.d:                                             ; preds = %_ZN5ImGui19FindRenderedTextEndEPKcS1_.exit
@@ -651,7 +651,7 @@ bb.c:                                             ; preds = %.lr.ph.i
   br i1 %exitcond.not.i, label %_ZN5ImGui19FindRenderedTextEndEPKcS1_.exit, label %.lr.ph.i, !llvm.loop !19
 
 _ZN5ImGui19FindRenderedTextEndEPKcS1_.exit:       ; preds = %.critedge2.i, %bb.c, %.lr.ph.i, %bb.b, %bb.a
-  %.080 = phi ptr [ %6, %bb.a ], [ inttoptr (i64 -1 to ptr), %bb.b ], [ %.015.i, %bb.c ], [ %scevgep.i, %.critedge2.i ], [ %.015.i, %.lr.ph.i ] ; 7 uses
+  %.080 = phi ptr [ %6, %bb.a ], [ %5, %bb.b ], [ %.015.i, %bb.c ], [ %scevgep.i, %.critedge2.i ], [ %.015.i, %.lr.ph.i ] ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #39
   %.not = icmp eq ptr %7, null
   br i1 %.not, label %bb.e, label %bb.d
@@ -1054,7 +1054,7 @@ bb.pl:                                            ; preds = %.lr.ph.i.i109.i
   br i1 %exitcond.not.i.i113.i, label %_ZN5ImGui19FindRenderedTextEndEPKcS1_.exit.i106.i, label %.lr.ph.i.i109.i, !llvm.loop !19
 
 _ZN5ImGui19FindRenderedTextEndEPKcS1_.exit.i106.i: ; preds = %.critedge2.i.i112.i, %bb.pl, %.lr.ph.i.i109.i, %bb.pk
-  %.0.lcssa.i.i.i = phi ptr [ inttoptr (i64 -1 to ptr), %bb.pk ], [ %.015.i.i110.i, %bb.pl ], [ %scevgep.i.i108.i, %.critedge2.i.i112.i ], [ %.015.i.i110.i, %.lr.ph.i.i109.i ] ; 3 uses
+  %.0.lcssa.i.i.i = phi ptr [ %0, %bb.pk ], [ %.015.i.i110.i, %bb.pl ], [ %scevgep.i.i108.i, %.critedge2.i.i112.i ], [ %.015.i.i110.i, %.lr.ph.i.i109.i ] ; 3 uses
   %i.dbo = ptrtoint ptr %.0.lcssa.i.i.i to i64
   %i.dbp = ptrtoint ptr %0 to i64
   %i.dbq = sub i64 %i.dbo, %i.dbp
@@ -1457,7 +1457,7 @@ bb.i:                                             ; preds = %bb.h, %_ZN6ImRect12
   %i.hq = or i32 %i.hi, %i.hp
   %i.hr = extractelement <2 x i32> %i.ho, i64 1
   %i.hs = or i32 %i.hq, %i.hr
-  %i.ht = load ptr, ptr %i.bi, align 8, !tbaa !313 ; 5 uses
+  %i.ht = load ptr, ptr %i.bi, align 8, !tbaa !313 ; 6 uses
   %.not243 = icmp eq ptr %i.ht, inttoptr (i64 -1 to ptr)
   br i1 %.not243, label %_ZN5ImGui19FindRenderedTextEndEPKcS1_.exit, label %.lr.ph.preheader.i
 
@@ -1487,7 +1487,7 @@ bb.j:                                             ; preds = %.lr.ph.i
   br i1 %exitcond.not.i, label %_ZN5ImGui19FindRenderedTextEndEPKcS1_.exit, label %.lr.ph.i, !llvm.loop !19
 
 _ZN5ImGui19FindRenderedTextEndEPKcS1_.exit:       ; preds = %.lr.ph.i, %bb.j, %.critedge2.i, %bb.i
-  %.0.lcssa.i = phi ptr [ inttoptr (i64 -1 to ptr), %bb.i ], [ %.015.i, %bb.j ], [ %scevgep.i, %.critedge2.i ], [ %.015.i, %.lr.ph.i ]
+  %.0.lcssa.i = phi ptr [ %i.ht, %bb.i ], [ %.015.i, %bb.j ], [ %scevgep.i, %.critedge2.i ], [ %.015.i, %.lr.ph.i ]
   call void @_ZN10ImDrawList7AddTextEPK6ImFontfRK6ImVec2jPKcS7_fPK6ImVec4(ptr noundef nonnull align 8 dereferenceable(196) %i.gj, ptr noundef %i.gk, float noundef %i.gl, ptr noundef nonnull align 4 dereferenceable(8) %4, i32 noundef %i.hs, ptr noundef %i.ht, ptr noundef %.0.lcssa.i, float noundef 0.000000e+00, ptr noundef null)
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #39
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #39

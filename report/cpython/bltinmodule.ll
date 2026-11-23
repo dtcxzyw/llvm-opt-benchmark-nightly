@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.d, %bb.e
   %.027 = phi ptr [ %i.p, %bb.e ], [ @_Py_NoneStruct, %bb.d ] ; 2 uses
   %i.s = getelementptr i8, ptr %i.m, i64 16
-  %i.t = load ptr, ptr %i.s, align 8, !tbaa !306  ; 3 uses
+  %i.t = load ptr, ptr %i.s, align 8, !tbaa !306  ; 4 uses
   %i.u = call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_Py_tss_tstate)
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !312  ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
@@ -224,7 +224,7 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %.thread39, %bb.g, %bb.f
   %.not.i45 = phi i1 [ true, %.thread39 ], [ false, %bb.g ], [ true, %bb.f ] ; 2 uses
   %i.y = phi ptr [ %i.r, %.thread39 ], [ %i.v, %bb.g ], [ %i.v, %bb.f ] ; 3 uses
-  %.044 = phi ptr [ @_Py_NoneStruct, %.thread39 ], [ %i.t, %bb.g ], [ @_Py_NoneStruct, %bb.f ] ; 3 uses
+  %.044 = phi ptr [ @_Py_NoneStruct, %.thread39 ], [ %i.t, %bb.g ], [ %i.t, %bb.f ] ; 3 uses
   %.143 = phi ptr [ %.1.ph, %.thread39 ], [ %.027, %bb.g ], [ %.027, %bb.f ] ; 6 uses
   %.not55.i = icmp eq ptr %.143, @_Py_NoneStruct
   br i1 %.not55.i, label %.critedge64.i, label %bb.j
@@ -627,7 +627,7 @@ bb.g:                                             ; preds = %bb.f
   br label %Py_DECREF.exit187.thread10.i
 
 bb.h:                                             ; preds = %bb.f
-  %i.j = tail call ptr @PySys_GetAttr(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 100896)) #10 ; 22 uses
+  %i.j = tail call ptr @PySys_GetAttr(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 100896)) #10 ; 23 uses
   %i.k = icmp eq ptr %i.j, null
   br i1 %i.k, label %Py_DECREF.exit187.thread10.i, label %bb.i
 
@@ -641,7 +641,7 @@ bb.j:                                             ; preds = %bb.i
   br label %Py_DECREF.exit187.thread10.i
 
 bb.k:                                             ; preds = %bb.i
-  %i.n = tail call ptr @PySys_GetAttr(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 100800)) #10 ; 15 uses
+  %i.n = tail call ptr @PySys_GetAttr(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 100800)) #10 ; 16 uses
   %i.o = icmp eq ptr %i.n, null
   br i1 %i.o, label %Py_DECREF.exit187.thread10.i, label %bb.l
 
@@ -1044,8 +1044,8 @@ bb.cl:                                            ; preds = %Py_DECREF.exit183.i
   br i1 %i.ev, label %Py_DECREF.exit.sink.split.i, label %builtin_input_impl.exit
 
 Py_DECREF.exit187.thread10.i:                     ; preds = %bb.cd, %Py_XDECREF.exit, %bb.br, %bb.ab, %bb.u, %bb.n, %bb.m, %bb.k, %bb.j, %bb.h, %bb.g
-  %.0113.ph.i = phi ptr [ %i.j, %bb.u ], [ %i.j, %bb.ab ], [ null, %bb.g ], [ %i.j, %bb.cd ], [ %i.j, %bb.n ], [ %i.j, %bb.m ], [ %i.j, %bb.k ], [ @_Py_NoneStruct, %bb.j ], [ null, %bb.h ], [ %i.j, %bb.br ], [ %i.j, %Py_XDECREF.exit ] ; 4 uses
-  %.0112.ph.i = phi ptr [ %i.n, %bb.u ], [ %i.n, %bb.ab ], [ null, %bb.g ], [ %i.n, %bb.cd ], [ %i.n, %bb.n ], [ @_Py_NoneStruct, %bb.m ], [ null, %bb.k ], [ null, %bb.j ], [ null, %bb.h ], [ %i.n, %bb.br ], [ %i.n, %Py_XDECREF.exit ] ; 4 uses
+  %.0113.ph.i = phi ptr [ %i.j, %bb.u ], [ %i.j, %bb.ab ], [ null, %bb.g ], [ %i.j, %bb.cd ], [ %i.j, %bb.n ], [ %i.j, %bb.m ], [ %i.j, %bb.k ], [ %i.j, %bb.j ], [ null, %bb.h ], [ %i.j, %bb.br ], [ %i.j, %Py_XDECREF.exit ] ; 4 uses
+  %.0112.ph.i = phi ptr [ %i.n, %bb.u ], [ %i.n, %bb.ab ], [ null, %bb.g ], [ %i.n, %bb.cd ], [ %i.n, %bb.n ], [ %i.n, %bb.m ], [ null, %bb.k ], [ null, %bb.j ], [ null, %bb.h ], [ %i.n, %bb.br ], [ %i.n, %Py_XDECREF.exit ] ; 4 uses
   %i.ew = load i32, ptr %i.f, align 8, !tbaa !293 ; 2 uses
   %.not.i.i.i = icmp sgt i32 %i.ew, -1
   br i1 %.not.i.i.i, label %bb.cm, label %Py_XDECREF.exit.i
@@ -1448,7 +1448,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   %.075 = phi i32 [ %.0, %bb.l ], [ 0, %bb.h ], [ 0, %bb.f ], [ 0, %bb.d ], [ 0, %bb.b ], [ 0, %.thread104 ]
   %.13673 = phi ptr [ %.035, %bb.l ], [ %i.j, %bb.h ], [ @_Py_NoneStruct, %bb.f ], [ @_Py_NoneStruct, %bb.d ], [ @_Py_NoneStruct, %bb.b ], [ @_Py_NoneStruct, %.thread104 ]
   %.13871 = phi ptr [ %.037, %bb.l ], [ %.037, %bb.h ], [ %i.g, %bb.f ], [ @_Py_NoneStruct, %bb.d ], [ @_Py_NoneStruct, %bb.b ], [ @_Py_NoneStruct, %.thread104 ]
-  %i.t = call ptr @PySys_GetAttr(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 100896)) #10 ; 5 uses
+  %i.t = call ptr @PySys_GetAttr(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 100896)) #10 ; 6 uses
   %i.u = icmp eq ptr %i.t, null
   br i1 %i.u, label %builtin_print_impl.exit, label %bb.m
 
@@ -1677,7 +1677,7 @@ bb.ar:                                            ; preds = %bb.aq
   br i1 %i.cl, label %Py_DECREF.exit71.sink.split.i, label %builtin_print_impl.exit
 
 Py_DECREF.exit71.sink.split.i:                    ; preds = %bb.ar, %bb.ap, %bb.al, %bb.ag, %bb.ae, %bb.x, %bb.t, %bb.o
-  %.042.sink.i = phi ptr [ %.042.i, %bb.ap ], [ %.042.i, %bb.al ], [ %.042.i, %bb.ag ], [ %.042.i, %bb.ae ], [ %.042.i, %bb.x ], [ %.042.i, %bb.t ], [ @_Py_NoneStruct, %bb.o ], [ %.042.i, %bb.ar ]
+  %.042.sink.i = phi ptr [ %.042.i, %bb.ap ], [ %.042.i, %bb.al ], [ %.042.i, %bb.ag ], [ %.042.i, %bb.ae ], [ %.042.i, %bb.x ], [ %.042.i, %bb.t ], [ %i.t, %bb.o ], [ %.042.i, %bb.ar ]
   %.041.ph.i = phi ptr [ null, %bb.ap ], [ null, %bb.al ], [ null, %bb.ag ], [ null, %bb.ae ], [ null, %bb.x ], [ null, %bb.t ], [ @_Py_NoneStruct, %bb.o ], [ @_Py_NoneStruct, %bb.ar ]
   call void @_Py_Dealloc(ptr noundef nonnull %.042.sink.i) #10
   br label %builtin_print_impl.exit

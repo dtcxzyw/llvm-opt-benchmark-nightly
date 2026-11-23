@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.h
   %i.ab = tail call i32 @EVP_CIPHER_CTX_is_encrypting(ptr noundef %0) #7
   %.not108.i = icmp eq i32 %i.ab, 0
   %i.ac = getelementptr inbounds nuw i8, ptr %i.g, i64 744 ; 3 uses
-  %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !107 ; 5 uses
+  %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !107 ; 7 uses
   %.not109.i = icmp eq ptr %i.ad, null            ; 2 uses
   br i1 %.not108.i, label %bb.q, label %bb.j
 
@@ -241,7 +241,7 @@ bb.n:                                             ; preds = %bb.m
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.l, %bb.k
-  %i.ar = phi ptr [ %.pre.i, %bb.n ], [ @aesni_ctr32_encrypt_blocks, %bb.l ], [ %i.ad, %bb.k ]
+  %i.ar = phi ptr [ %.pre.i, %bb.n ], [ %i.ad, %bb.l ], [ %i.ad, %bb.k ]
   %.093.i = phi i64 [ %i.an, %bb.n ], [ 0, %bb.l ], [ 0, %bb.k ] ; 3 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.y, i64 %.093.i
   %i.at = getelementptr inbounds nuw i8, ptr %i.z, i64 %.093.i
@@ -294,7 +294,7 @@ bb.u:                                             ; preds = %bb.t
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %bb.s, %bb.r
-  %i.bm = phi ptr [ %.pre131.i, %bb.u ], [ @aesni_ctr32_encrypt_blocks, %bb.s ], [ %i.ad, %bb.r ]
+  %i.bm = phi ptr [ %.pre131.i, %bb.u ], [ %i.ad, %bb.s ], [ %i.ad, %bb.r ]
   %.0.i = phi i64 [ %i.bi, %bb.u ], [ 0, %bb.s ], [ 0, %bb.r ] ; 3 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %i.y, i64 %.0.i
   %i.bo = getelementptr inbounds nuw i8, ptr %i.z, i64 %.0.i
@@ -357,7 +357,7 @@ bb.ae:                                            ; preds = %bb.ac
   %i.ce = tail call i32 @EVP_CIPHER_CTX_is_encrypting(ptr noundef %0) #7
   %.not130 = icmp eq i32 %i.ce, 0
   %i.cf = getelementptr inbounds nuw i8, ptr %i.a, i64 744 ; 3 uses
-  %i.cg = load ptr, ptr %i.cf, align 8, !tbaa !107 ; 5 uses
+  %i.cg = load ptr, ptr %i.cf, align 8, !tbaa !107 ; 7 uses
   %.not131 = icmp eq ptr %i.cg, null              ; 2 uses
   br i1 %.not130, label %bb.al, label %bb.af
 
@@ -404,7 +404,7 @@ bb.aj:                                            ; preds = %bb.ai
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.aj, %bb.ah, %bb.ag
-  %i.de = phi ptr [ %.pre, %bb.aj ], [ @aesni_ctr32_encrypt_blocks, %bb.ah ], [ %i.cg, %bb.ag ]
+  %i.de = phi ptr [ %.pre, %bb.aj ], [ %i.cg, %bb.ah ], [ %i.cg, %bb.ag ]
   %.1111 = phi i64 [ %i.dd, %bb.aj ], [ 0, %bb.ah ], [ 0, %bb.ag ] ; 3 uses
   %i.df = getelementptr inbounds nuw i8, ptr %i.a, i64 256
   %i.dg = getelementptr inbounds nuw i8, ptr %2, i64 %.1111
@@ -463,7 +463,7 @@ bb.ap:                                            ; preds = %bb.ao
   br label %.critedge143
 
 .critedge143:                                     ; preds = %bb.ap, %bb.an, %bb.am
-  %i.ej = phi ptr [ %.pre146, %bb.ap ], [ @aesni_ctr32_encrypt_blocks, %bb.an ], [ %i.cg, %bb.am ]
+  %i.ej = phi ptr [ %.pre146, %bb.ap ], [ %i.cg, %bb.an ], [ %i.cg, %bb.am ]
   %.1 = phi i64 [ %i.ei, %bb.ap ], [ 0, %bb.an ], [ 0, %bb.am ] ; 3 uses
   %i.ek = getelementptr inbounds nuw i8, ptr %i.a, i64 256
   %i.el = getelementptr inbounds nuw i8, ptr %2, i64 %.1
