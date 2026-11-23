@@ -205,6 +205,7 @@ bb.df:                                            ; preds = %_RINvXsC_NtCsgkljs9
   %.sroa.201225.0 = phi i64 [ %.sroa.201225.16.copyload, %bb.de ], [ %.sroa.22.0258.i, %_RINvXsC_NtCsgkljs906P5b_3nom8internalTNCNvMs2_NtNtNtCs7gfv9tzbXmh_6yara_x7modules6dotnet6parserNtBI_6Dotnet11coded_indexs_0INtB6_3MapIB1Y_NCNvBE_5index0NcNtBI_11StringIndex0ENCNvBE_18parse_type_ref_row0EIB1Y_B27_NCB2O_s_0EEINtB6_6ParserRShE7processINtB6_7OutputMNtB6_4EmitB4c_NtB6_9StreamingEEBO_.exit.i.thread.i ]
   %.sroa.161222.0 = phi i64 [ %.sroa.161222.16.copyload, %bb.de ], [ %.sroa.19.0259.i, %_RINvXsC_NtCsgkljs906P5b_3nom8internalTNCNvMs2_NtNtNtCs7gfv9tzbXmh_6yara_x7modules6dotnet6parserNtBI_6Dotnet11coded_indexs_0INtB6_3MapIB1Y_NCNvBE_5index0NcNtBI_11StringIndex0ENCNvBE_18parse_type_ref_row0EIB1Y_B27_NCB2O_s_0EEINtB6_6ParserRShE7processINtB6_7OutputMNtB6_4EmitB4c_NtB6_9StreamingEEBO_.exit.i.thread.i ]
   %.sroa.111221.0 = phi i64 [ %.sroa.111221.16.copyload, %bb.de ], [ %.sroa.16.0260.i, %_RINvXsC_NtCsgkljs906P5b_3nom8internalTNCNvMs2_NtNtNtCs7gfv9tzbXmh_6yara_x7modules6dotnet6parserNtBI_6Dotnet11coded_indexs_0INtB6_3MapIB1Y_NCNvBE_5index0NcNtBI_11StringIndex0ENCNvBE_18parse_type_ref_row0EIB1Y_B27_NCB2O_s_0EEINtB6_6ParserRShE7processINtB6_7OutputMNtB6_4EmitB4c_NtB6_9StreamingEEBO_.exit.i.thread.i ]
+  %.sroa.61220.0 = phi ptr [ inttoptr (i64 1 to ptr), %bb.de ], [ %.sroa.1269.0261.i, %_RINvXsC_NtCsgkljs906P5b_3nom8internalTNCNvMs2_NtNtNtCs7gfv9tzbXmh_6yara_x7modules6dotnet6parserNtBI_6Dotnet11coded_indexs_0INtB6_3MapIB1Y_NCNvBE_5index0NcNtBI_11StringIndex0ENCNvBE_18parse_type_ref_row0EIB1Y_B27_NCB2O_s_0EEINtB6_6ParserRShE7processINtB6_7OutputMNtB6_4EmitB4c_NtB6_9StreamingEEBO_.exit.i.thread.i ]
   invoke void @_RNvXsp_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtNtNtCs7gfv9tzbXmh_6yara_x7modules6dotnet6parser7TypeRefENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropBN_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.aa)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtNtCs7gfv9tzbXmh_6yara_x7modules6dotnet6parser7TypeRefEEB1g_.exit.i unwind label %bb.dg, !noalias !8571
 
@@ -238,7 +239,7 @@ bb.di:                                            ; preds = %.loopexit.split-lp.
 
 bb.dj:                                            ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtNtCs7gfv9tzbXmh_6yara_x7modules6dotnet6parser7TypeRefEEB1g_.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aa), !noalias !8567
-  store ptr %.sroa.1269.0261.i, ptr %0, align 8
+  store ptr %.sroa.61220.0, ptr %0, align 8
   %.sroa.4431.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.111221.0, ptr %.sroa.4431.0..sroa_idx, align 8
   %.sroa.5432.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16

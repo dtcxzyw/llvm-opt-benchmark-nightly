@@ -206,7 +206,7 @@ _ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt
   br i1 %.not18.i227, label %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit231.thread, label %.lr.ph.i228
 
 .lr.ph.i228:                                      ; preds = %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit226, %bb.k
-  %.sroa.013.019.i229 = phi ptr [ %i.aj, %bb.k ], [ %.pre742, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit226 ] ; 4 uses
+  %.sroa.013.019.i229 = phi ptr [ %i.aj, %bb.k ], [ %.pre742, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit226 ] ; 5 uses
   %i.ag = load ptr, ptr %.sroa.013.019.i229, align 8, !tbaa !245
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !247
   %i.ai = call noundef zeroext i1 @_ZN5osgeo4proj8internal8ci_equalERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_(ptr noundef nonnull align 8 dereferenceable(32) %i.ah, ptr noundef nonnull align 8 dereferenceable(32) @_ZN5osgeo4proj2io12WKTConstants3CS_B5cxx11E) #41
@@ -222,7 +222,8 @@ _ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt
   br i1 %i.ak, label %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit231.thread, label %bb.r
 
 _ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit231.thread: ; preds = %bb.k, %bb.i, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit226, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit231
-  %i.al = phi ptr [ @_ZN5osgeo4proj2ioL9null_nodeE, %bb.i ], [ %.ph, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit231 ], [ %.ph, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit226 ], [ %.ph, %bb.k ] ; 4 uses
+  %64 = phi ptr [ %.ph, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit231 ], [ %.ph, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit226 ], [ @_ZN5osgeo4proj2ioL9null_nodeE, %bb.i ], [ %.ph, %bb.k ] ; 4 uses
+  %i.al = phi ptr [ %.sroa.013.019.i229, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit231 ], [ @_ZN5osgeo4proj2ioL9null_nodeE, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit226 ], [ @_ZN5osgeo4proj2ioL9null_nodeE, %bb.i ], [ @_ZN5osgeo4proj2ioL9null_nodeE, %bb.k ] ; 4 uses
   %i.am = call noundef zeroext i1 @_ZN5osgeo4proj8internal8ci_equalERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_(ptr noundef nonnull align 8 dereferenceable(32) %i.e, ptr noundef nonnull align 8 dereferenceable(32) @_ZN5osgeo4proj2io12WKTConstants6GEOGCSB5cxx11E) #41
   br i1 %i.am, label %bb.r, label %bb.l
 
@@ -251,16 +252,16 @@ bb.q:                                             ; preds = %bb.o
   br label %bb.qb
 
 bb.r:                                             ; preds = %bb.n, %bb.m, %bb.l, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit231.thread, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit231
-  %i.ar = phi ptr [ %i.al, %bb.n ], [ %i.al, %bb.m ], [ %i.al, %bb.l ], [ %i.al, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit231.thread ], [ %.ph, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit231 ]
+  %i.ar = phi ptr [ %64, %bb.n ], [ %64, %bb.m ], [ %64, %bb.l ], [ %64, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit231.thread ], [ %.ph, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit231 ]
   %i.as = phi i1 [ true, %bb.n ], [ true, %bb.m ], [ true, %bb.l ], [ true, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit231.thread ], [ false, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit231 ] ; 2 uses
-  %i.at = phi ptr [ @_ZN5osgeo4proj2ioL9null_nodeE, %bb.n ], [ @_ZN5osgeo4proj2ioL9null_nodeE, %bb.m ], [ @_ZN5osgeo4proj2ioL9null_nodeE, %bb.l ], [ @_ZN5osgeo4proj2ioL9null_nodeE, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit231.thread ], [ %.sroa.013.019.i229, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit231 ]
+  %i.at = phi ptr [ %i.al, %bb.n ], [ %i.al, %bb.m ], [ %i.al, %bb.l ], [ %i.al, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit231.thread ], [ %.sroa.013.019.i229, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit231 ]
   %i.au = load ptr, ptr %i.f, align 8, !tbaa !249 ; 2 uses
   %i.av = load ptr, ptr %i.h, align 8, !tbaa !249 ; 2 uses
   %.not25.i = icmp eq ptr %i.au, %i.av
   br i1 %.not25.i, label %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESB_.exit.thread, label %.lr.ph.i232
 
 .lr.ph.i232:                                      ; preds = %bb.r, %bb.t
-  %.sroa.017.026.i = phi ptr [ %i.ba, %bb.t ], [ %i.au, %bb.r ] ; 4 uses
+  %.sroa.017.026.i = phi ptr [ %i.ba, %bb.t ], [ %i.au, %bb.r ] ; 5 uses
   %i.aw = load ptr, ptr %.sroa.017.026.i, align 8, !tbaa !245
   %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !247 ; 2 uses
   %i.ay = call noundef zeroext i1 @_ZN5osgeo4proj8internal8ci_equalERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_(ptr noundef nonnull align 8 dereferenceable(32) %i.ax, ptr noundef nonnull align 8 dereferenceable(32) @_ZN5osgeo4proj2io12WKTConstants6PRIMEMB5cxx11E) #41
@@ -280,6 +281,7 @@ _ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt
   br i1 %i.bb, label %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESB_.exit.thread, label %bb.ag
 
 _ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESB_.exit.thread: ; preds = %bb.t, %bb.r, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESB_.exit
+  %65 = phi ptr [ %.sroa.017.026.i, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESB_.exit ], [ @_ZN5osgeo4proj2ioL9null_nodeE, %bb.r ], [ @_ZN5osgeo4proj2ioL9null_nodeE, %bb.t ] ; 2 uses
   %i.bc = call noundef zeroext i1 @_ZN5osgeo4proj8internal8ci_equalERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_(ptr noundef nonnull align 8 dereferenceable(32) %i.e, ptr noundef nonnull align 8 dereferenceable(32) @_ZN5osgeo4proj2io12WKTConstants6GEOGCSB5cxx11E) #41
   br i1 %i.bc, label %bb.v, label %bb.u
 
@@ -461,7 +463,7 @@ bb.af:                                            ; preds = %bb.ab, %bb.z
 
 bb.ag:                                            ; preds = %bb.u, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESB_.exit
   %i.db = phi i1 [ true, %bb.u ], [ true, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ false, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESB_.exit ]
-  %i.dc = phi ptr [ @_ZN5osgeo4proj2ioL9null_nodeE, %bb.u ], [ @_ZN5osgeo4proj2ioL9null_nodeE, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %.sroa.017.026.i, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESB_.exit ]
+  %i.dc = phi ptr [ %65, %bb.u ], [ %65, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %.sroa.017.026.i, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESB_.exit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #41
   %i.dd = call noundef zeroext i1 @_ZN5osgeo4proj8internal8ci_equalERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_(ptr noundef nonnull align 8 dereferenceable(32) %i.e, ptr noundef nonnull align 8 dereferenceable(32) @_ZN5osgeo4proj2io12WKTConstants6GEOGCSB5cxx11E) #41
   %i.de = select i1 %i.dd, i32 2, i32 0
@@ -864,7 +866,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %.not18.i163, label %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit167.thread, label %.lr.ph.i164
 
 .lr.ph.i164:                                      ; preds = %bb.m, %bb.n
-  %.sroa.013.019.i165 = phi ptr [ %i.aj, %bb.n ], [ %i.ae, %bb.m ] ; 4 uses
+  %.sroa.013.019.i165 = phi ptr [ %i.aj, %bb.n ], [ %i.ae, %bb.m ] ; 5 uses
   %i.ag = load ptr, ptr %.sroa.013.019.i165, align 8, !tbaa !245
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !247
   %i.ai = call noundef zeroext i1 @_ZN5osgeo4proj8internal8ci_equalERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_(ptr noundef nonnull align 8 dereferenceable(32) %i.ah, ptr noundef nonnull align 8 dereferenceable(32) @_ZN5osgeo4proj2io12WKTConstants3CS_B5cxx11E) #41
@@ -880,6 +882,7 @@ _ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt
   br i1 %i.ak, label %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit167.thread, label %bb.t
 
 _ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit167.thread: ; preds = %bb.n, %bb.m, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit167
+  %68 = phi ptr [ %.sroa.013.019.i165, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit167 ], [ @_ZN5osgeo4proj2ioL9null_nodeE, %bb.m ], [ @_ZN5osgeo4proj2ioL9null_nodeE, %bb.n ] ; 2 uses
   %i.al = call noundef zeroext i1 @_ZN5osgeo4proj8internal8ci_equalERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_(ptr noundef nonnull align 8 dereferenceable(32) %i.b, ptr noundef nonnull align 8 dereferenceable(32) @_ZN5osgeo4proj2io12WKTConstants6PROJCSB5cxx11E) #41
   br i1 %i.al, label %bb.t, label %bb.o
 
@@ -906,7 +909,7 @@ bb.s:                                             ; preds = %bb.p
 
 bb.t:                                             ; preds = %bb.o, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit167.thread, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit167
   %i.ap = phi i1 [ true, %bb.o ], [ true, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit167.thread ], [ false, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit167 ] ; 2 uses
-  %i.aq = phi ptr [ @_ZN5osgeo4proj2ioL9null_nodeE, %bb.o ], [ @_ZN5osgeo4proj2ioL9null_nodeE, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit167.thread ], [ %.sroa.013.019.i165, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit167 ]
+  %i.aq = phi ptr [ %68, %bb.o ], [ %68, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit167.thread ], [ %.sroa.013.019.i165, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit167 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #41
   %i.ar = load ptr, ptr %i.c, align 8, !tbaa !251
   %i.as = load ptr, ptr %i.ar, align 8, !tbaa !245, !noalias !1432
@@ -1309,7 +1312,7 @@ _ZNSt12__shared_ptrIN5osgeo4proj5datum13PrimeMeridianELN9__gnu_cxx12_Lock_policy
   br i1 %.not18.i473, label %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit477.thread, label %.lr.ph.i474
 
 .lr.ph.i474:                                      ; preds = %.critedge416, %bb.ae
-  %.sroa.013.019.i475 = phi ptr [ %i.du, %bb.ae ], [ %i.dp, %.critedge416 ] ; 4 uses
+  %.sroa.013.019.i475 = phi ptr [ %i.du, %bb.ae ], [ %i.dp, %.critedge416 ] ; 5 uses
   %i.dr = load ptr, ptr %.sroa.013.019.i475, align 8, !tbaa !245
   %i.ds = load ptr, ptr %i.dr, align 8, !tbaa !247
   %i.dt = call noundef zeroext i1 @_ZN5osgeo4proj8internal8ci_equalERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_(ptr noundef nonnull align 8 dereferenceable(32) %i.ds, ptr noundef nonnull align 8 dereferenceable(32) @_ZN5osgeo4proj2io12WKTConstants3CS_B5cxx11E) #41
@@ -1325,6 +1328,7 @@ _ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt
   br i1 %i.dv, label %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit477.thread, label %bb.as
 
 _ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit477.thread: ; preds = %bb.ae, %.critedge416, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit477
+  %100 = phi ptr [ %.sroa.013.019.i475, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit477 ], [ @_ZN5osgeo4proj2ioL9null_nodeE, %.critedge416 ], [ @_ZN5osgeo4proj2ioL9null_nodeE, %bb.ae ] ; 3 uses
   %i.dw = call noundef zeroext i1 @_ZN5osgeo4proj8internal8ci_equalERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_(ptr noundef nonnull align 8 dereferenceable(32) %i.d, ptr noundef nonnull align 8 dereferenceable(32) @_ZN5osgeo4proj2io12WKTConstants7VERT_CSB5cxx11E) #41
   br i1 %i.dw, label %bb.as, label %bb.af
 
@@ -1430,7 +1434,7 @@ bb.ar:                                            ; preds = %bb.ah
   br label %bb.up
 
 bb.as:                                            ; preds = %bb.ag, %bb.af, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit477.thread, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit477
-  %i.eo = phi ptr [ @_ZN5osgeo4proj2ioL9null_nodeE, %bb.ag ], [ @_ZN5osgeo4proj2ioL9null_nodeE, %bb.af ], [ @_ZN5osgeo4proj2ioL9null_nodeE, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit477.thread ], [ %.sroa.013.019.i475, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit477 ]
+  %i.eo = phi ptr [ %100, %bb.ag ], [ %100, %bb.af ], [ %100, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit477.thread ], [ %.sroa.013.019.i475, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit477 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %20) #41
   call void @llvm.lifetime.start.p0(ptr nonnull %21) #41
   invoke void @_ZN5osgeo4proj2io9WKTParser7Private7buildCSERKN7dropbox6oxygen2nnISt10unique_ptrINS1_7WKTNodeESt14default_deleteIS8_EEEESE_RKNS0_6common13UnitOfMeasureE(ptr dead_on_unwind nonnull writable sret(%"class.dropbox::oxygen::nn.298") align 8 %21, ptr noundef nonnull align 8 dereferenceable(176) %1, ptr noundef nonnull align 8 dereferenceable(8) %i.eo, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull align 8 dereferenceable(24) @_ZN5osgeo4proj6common13UnitOfMeasure4NONEE)
@@ -1833,7 +1837,7 @@ bb.a:
   br i1 %.not18.i, label %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.a, %bb.b
-  %.sroa.013.019.i = phi ptr [ %i.j, %bb.b ], [ %i.d, %bb.a ] ; 4 uses
+  %.sroa.013.019.i = phi ptr [ %i.j, %bb.b ], [ %i.d, %bb.a ] ; 5 uses
   %i.g = load ptr, ptr %.sroa.013.019.i, align 8, !tbaa !245
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !247
   %i.i = tail call noundef zeroext i1 @_ZN5osgeo4proj8internal8ci_equalERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_(ptr noundef nonnull align 8 dereferenceable(32) %i.h, ptr noundef nonnull align 8 dereferenceable(32) @_ZN5osgeo4proj2io12WKTConstants3CS_B5cxx11E) #41
@@ -1849,6 +1853,7 @@ _ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt
   br i1 %i.k, label %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread, label %bb.d
 
 _ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread: ; preds = %bb.b, %bb.a, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit
+  %7 = phi ptr [ %.sroa.013.019.i, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit ], [ @_ZN5osgeo4proj2ioL9null_nodeE, %bb.a ], [ @_ZN5osgeo4proj2ioL9null_nodeE, %bb.b ]
   %i.l = load ptr, ptr %2, align 8, !tbaa !245
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !247
   %i.n = tail call noundef zeroext i1 @_ZN5osgeo4proj8internal8ci_equalERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_(ptr noundef nonnull align 8 dereferenceable(32) %i.m, ptr noundef nonnull align 8 dereferenceable(32) @_ZN5osgeo4proj2io12WKTConstants11BASETIMECRSB5cxx11E) #41
@@ -1859,7 +1864,7 @@ bb.c:                                             ; preds = %_ZNK5osgeo4proj2io7
   unreachable
 
 bb.d:                                             ; preds = %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit
-  %i.o = phi ptr [ @_ZN5osgeo4proj2ioL9null_nodeE, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread ], [ %.sroa.013.019.i, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit ]
+  %i.o = phi ptr [ %7, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread ], [ %.sroa.013.019.i, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #41
   call void @_ZN5osgeo4proj2io9WKTParser7Private7buildCSERKN7dropbox6oxygen2nnISt10unique_ptrINS1_7WKTNodeESt14default_deleteIS8_EEEESE_RKNS0_6common13UnitOfMeasureE(ptr dead_on_unwind nonnull writable sret(%"class.dropbox::oxygen::nn.298") align 8 %3, ptr noundef nonnull align 8 dereferenceable(176) %1, ptr noundef nonnull align 8 dereferenceable(8) %i.o, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull align 8 dereferenceable(24) @_ZN5osgeo4proj6common13UnitOfMeasure4NONEE)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #41
@@ -2262,7 +2267,7 @@ bb.f:                                             ; preds = %_ZNK5osgeo4proj2io7
   br i1 %.not18.i, label %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread, label %.lr.ph.i19
 
 .lr.ph.i19:                                       ; preds = %bb.f, %bb.g
-  %.sroa.013.019.i = phi ptr [ %i.t, %bb.g ], [ %i.o, %bb.f ] ; 4 uses
+  %.sroa.013.019.i = phi ptr [ %i.t, %bb.g ], [ %i.o, %bb.f ] ; 5 uses
   %i.q = load ptr, ptr %.sroa.013.019.i, align 8, !tbaa !245
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !247
   %i.s = tail call noundef zeroext i1 @_ZN5osgeo4proj8internal8ci_equalERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_(ptr noundef nonnull align 8 dereferenceable(32) %i.r, ptr noundef nonnull align 8 dereferenceable(32) @_ZN5osgeo4proj2io12WKTConstants3CS_B5cxx11E) #41
@@ -2278,6 +2283,7 @@ _ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt
   br i1 %i.u, label %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread, label %bb.i
 
 _ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread: ; preds = %bb.g, %bb.f, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit
+  %5 = phi ptr [ %.sroa.013.019.i, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit ], [ @_ZN5osgeo4proj2ioL9null_nodeE, %bb.f ], [ @_ZN5osgeo4proj2ioL9null_nodeE, %bb.g ]
   %i.v = tail call noundef zeroext i1 @_ZN5osgeo4proj8internal8ci_equalERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_(ptr noundef nonnull align 8 dereferenceable(32) %i.b, ptr noundef nonnull align 8 dereferenceable(32) @_ZN5osgeo4proj2io12WKTConstants10BASEENGCRSB5cxx11E) #41
   br i1 %i.v, label %bb.i, label %bb.h
 
@@ -2286,7 +2292,7 @@ bb.h:                                             ; preds = %_ZNK5osgeo4proj2io7
   unreachable
 
 bb.i:                                             ; preds = %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit
-  %i.w = phi ptr [ @_ZN5osgeo4proj2ioL9null_nodeE, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread ], [ %.sroa.013.019.i, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit ]
+  %i.w = phi ptr [ %5, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread ], [ %.sroa.013.019.i, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #41
   call void @_ZN5osgeo4proj2io9WKTParser7Private7buildCSERKN7dropbox6oxygen2nnISt10unique_ptrINS1_7WKTNodeESt14default_deleteIS8_EEEESE_RKNS0_6common13UnitOfMeasureE(ptr dead_on_unwind nonnull writable sret(%"class.dropbox::oxygen::nn.298") align 8 %3, ptr noundef nonnull align 8 dereferenceable(176) %1, ptr noundef nonnull align 8 dereferenceable(8) %i.w, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull align 8 dereferenceable(24) @_ZN5osgeo4proj6common13UnitOfMeasure4NONEE)
   %i.x = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZN5osgeo4proj2io9WKTParser7Private15buildPropertiesERKN7dropbox6oxygen2nnISt10unique_ptrINS1_7WKTNodeESt14default_deleteIS8_EEEEbb(ptr noundef nonnull align 8 dereferenceable(176) %1, ptr noundef nonnull align 8 dereferenceable(8) %2, i1 noundef zeroext false, i1 noundef zeroext true)
@@ -2689,7 +2695,7 @@ bb.a:
   br i1 %.not18.i, label %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.a, %bb.b
-  %.sroa.013.019.i = phi ptr [ %i.j, %bb.b ], [ %i.d, %bb.a ] ; 4 uses
+  %.sroa.013.019.i = phi ptr [ %i.j, %bb.b ], [ %i.d, %bb.a ] ; 5 uses
   %i.g = load ptr, ptr %.sroa.013.019.i, align 8, !tbaa !245
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !247
   %i.i = tail call noundef zeroext i1 @_ZN5osgeo4proj8internal8ci_equalERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_(ptr noundef nonnull align 8 dereferenceable(32) %i.h, ptr noundef nonnull align 8 dereferenceable(32) @_ZN5osgeo4proj2io12WKTConstants3CS_B5cxx11E) #41
@@ -2705,6 +2711,7 @@ _ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt
   br i1 %i.k, label %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread, label %bb.d
 
 _ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread: ; preds = %bb.b, %bb.a, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit
+  %7 = phi ptr [ %.sroa.013.019.i, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit ], [ @_ZN5osgeo4proj2ioL9null_nodeE, %bb.a ], [ @_ZN5osgeo4proj2ioL9null_nodeE, %bb.b ]
   %i.l = load ptr, ptr %2, align 8, !tbaa !245
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !247
   %i.n = tail call noundef zeroext i1 @_ZN5osgeo4proj8internal8ci_equalERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_(ptr noundef nonnull align 8 dereferenceable(32) %i.m, ptr noundef nonnull align 8 dereferenceable(32) @_ZN5osgeo4proj2io12WKTConstants12BASEPARAMCRSB5cxx11E) #41
@@ -2715,7 +2722,7 @@ bb.c:                                             ; preds = %_ZNK5osgeo4proj2io7
   unreachable
 
 bb.d:                                             ; preds = %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit
-  %i.o = phi ptr [ @_ZN5osgeo4proj2ioL9null_nodeE, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread ], [ %.sroa.013.019.i, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit ]
+  %i.o = phi ptr [ %7, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread ], [ %.sroa.013.019.i, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #41
   call void @_ZN5osgeo4proj2io9WKTParser7Private7buildCSERKN7dropbox6oxygen2nnISt10unique_ptrINS1_7WKTNodeESt14default_deleteIS8_EEEESE_RKNS0_6common13UnitOfMeasureE(ptr dead_on_unwind nonnull writable sret(%"class.dropbox::oxygen::nn.298") align 8 %3, ptr noundef nonnull align 8 dereferenceable(176) %1, ptr noundef nonnull align 8 dereferenceable(8) %i.o, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull align 8 dereferenceable(24) @_ZN5osgeo4proj6common13UnitOfMeasure4NONEE)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #41
@@ -3118,7 +3125,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %.not18.i35, label %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit39.thread, label %.lr.ph.i36
 
 .lr.ph.i36:                                       ; preds = %bb.i, %bb.j
-  %.sroa.013.019.i37 = phi ptr [ %i.al, %bb.j ], [ %i.ag, %bb.i ] ; 4 uses
+  %.sroa.013.019.i37 = phi ptr [ %i.al, %bb.j ], [ %i.ag, %bb.i ] ; 5 uses
   %i.ai = load ptr, ptr %.sroa.013.019.i37, align 8, !tbaa !245
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !247
   %i.ak = call noundef zeroext i1 @_ZN5osgeo4proj8internal8ci_equalERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_(ptr noundef nonnull align 8 dereferenceable(32) %i.aj, ptr noundef nonnull align 8 dereferenceable(32) @_ZN5osgeo4proj2io12WKTConstants3CS_B5cxx11E) #41
@@ -3134,6 +3141,7 @@ _ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt
   br i1 %i.am, label %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit39.thread, label %bb.p
 
 _ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit39.thread: ; preds = %bb.j, %bb.i, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit39
+  %9 = phi ptr [ %.sroa.013.019.i37, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit39 ], [ @_ZN5osgeo4proj2ioL9null_nodeE, %bb.i ], [ @_ZN5osgeo4proj2ioL9null_nodeE, %bb.j ]
   %i.an = call noundef zeroext i1 @_ZN5osgeo4proj8internal8ci_equalERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_(ptr noundef nonnull align 8 dereferenceable(32) %i.b, ptr noundef nonnull align 8 dereferenceable(32) @_ZN5osgeo4proj2io12WKTConstants6PROJCSB5cxx11E) #41
   br i1 %i.an, label %bb.p, label %bb.k
 
@@ -3160,7 +3168,7 @@ bb.o:                                             ; preds = %bb.k
   br label %bb.bl
 
 bb.p:                                             ; preds = %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit39.thread, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit39
-  %i.ar = phi ptr [ @_ZN5osgeo4proj2ioL9null_nodeE, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit39.thread ], [ %.sroa.013.019.i37, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit39 ]
+  %i.ar = phi ptr [ %9, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit39.thread ], [ %.sroa.013.019.i37, %_ZNK5osgeo4proj2io7WKTNode7Private12lookForChildERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit39 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #41
   invoke void @_ZN5osgeo4proj2io9WKTParser7Private7buildCSERKN7dropbox6oxygen2nnISt10unique_ptrINS1_7WKTNodeESt14default_deleteIS8_EEEESE_RKNS0_6common13UnitOfMeasureE(ptr dead_on_unwind nonnull writable sret(%"class.dropbox::oxygen::nn.298") align 8 %6, ptr noundef nonnull align 8 dereferenceable(176) %1, ptr noundef nonnull align 8 dereferenceable(8) %i.ar, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull align 8 dereferenceable(24) @_ZN5osgeo4proj6common13UnitOfMeasure4NONEE)
           to label %bb.q unwind label %bb.al

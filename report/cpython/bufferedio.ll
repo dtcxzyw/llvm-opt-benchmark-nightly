@@ -202,7 +202,7 @@ bb.ap:                                            ; preds = %_PyVectorcall_Funct
   br label %_PyObject_CallNoArgs.exit.i.i
 
 _PyObject_CallNoArgs.exit.i.i:                    ; preds = %bb.ap, %_PyVectorcall_FunctionInline.exit.thread.i.i.i.i
-  %.0.i.i.i.i = phi ptr [ %i.cy, %_PyVectorcall_FunctionInline.exit.thread.i.i.i.i ], [ %i.da, %bb.ap ] ; 8 uses
+  %.0.i.i.i.i = phi ptr [ %i.cy, %_PyVectorcall_FunctionInline.exit.thread.i.i.i.i ], [ %i.da, %bb.ap ] ; 11 uses
   %i.db = load ptr, ptr %i.c, align 8, !tbaa !161 ; 3 uses
   %i.dc = load i32, ptr %i.db, align 8, !tbaa !165 ; 2 uses
   %.not.i71.i.i = icmp sgt i32 %i.dc, -1
@@ -348,7 +348,7 @@ bb.bk:                                            ; preds = %bb.bj
   br label %bb.ay
 
 bb.bl:                                            ; preds = %bb.bi, %.thread101.i.i, %bb.aw, %.thread99.i.i, %bb.av
-  %.2.i.i = phi ptr [ %.0.i.i.i.i, %.thread99.i.i ], [ %i.ee, %bb.bi ], [ %.0.i.i.i.i, %bb.aw ], [ null, %.thread101.i.i ], [ @_Py_NoneStruct, %bb.av ] ; 2 uses
+  %.2.i.i = phi ptr [ %.0.i.i.i.i, %.thread99.i.i ], [ %i.ee, %bb.bi ], [ %.0.i.i.i.i, %bb.aw ], [ null, %.thread101.i.i ], [ %.0.i.i.i.i, %bb.av ] ; 2 uses
   %.035.i.i = phi ptr [ %.0.i.i.i.i, %.thread99.i.i ], [ %i.ee, %bb.bi ], [ %.pre.i.i, %bb.aw ], [ %i.dv, %.thread101.i.i ], [ %i.bl, %bb.av ] ; 2 uses
   %.0.i54.i = phi ptr [ null, %.thread99.i.i ], [ %i.dk, %bb.bi ], [ null, %bb.aw ], [ %i.dk, %.thread101.i.i ], [ null, %bb.av ] ; 2 uses
   %.not.i84.i.i = icmp eq ptr %.035.i.i, null
@@ -356,8 +356,8 @@ bb.bl:                                            ; preds = %bb.bi, %.thread101.
 
 .thread153.i.i:                                   ; preds = %bb.bl, %bb.av
   %.0160.i.i = phi ptr [ %.0.i54.i, %bb.bl ], [ null, %bb.av ] ; 2 uses
-  %.035159.i.i = phi ptr [ %.035.i.i, %bb.bl ], [ @_Py_NoneStruct, %bb.av ] ; 4 uses
-  %.2158.i.i = phi ptr [ %.2.i.i, %bb.bl ], [ @_Py_NoneStruct, %bb.av ] ; 2 uses
+  %.035159.i.i = phi ptr [ %.035.i.i, %bb.bl ], [ %.0.i.i.i.i, %bb.av ] ; 4 uses
+  %.2158.i.i = phi ptr [ %.2.i.i, %bb.bl ], [ %.0.i.i.i.i, %bb.av ] ; 2 uses
   %i.ei = load i32, ptr %.035159.i.i, align 8, !tbaa !165 ; 2 uses
   %i.ej = icmp ugt i32 %i.ei, -1073741825
   br i1 %i.ej, label %Py_XINCREF.exit.i.i, label %bb.bm
@@ -464,7 +464,7 @@ bb.ca:                                            ; preds = %bb.bz
   %i.fd = getelementptr i8, ptr %0, i64 64        ; 3 uses
   %i.fe = load i64, ptr %i.fd, align 8, !tbaa !225
   %i.ff = getelementptr i8, ptr %i.fc, i64 %i.fe
-  %i.fg = call ptr @PyBytes_FromStringAndSize(ptr noundef %i.ff, i64 noundef %i.t) #9 ; 3 uses
+  %i.fg = call ptr @PyBytes_FromStringAndSize(ptr noundef %i.ff, i64 noundef %i.t) #9 ; 4 uses
   %.not18.i.i = icmp eq ptr %i.fg, null
   br i1 %.not18.i.i, label %_io__Buffered_read_impl.exit, label %_bufferedreader_read_fast.exit.i
 
@@ -476,18 +476,19 @@ _bufferedreader_read_fast.exit.i:                 ; preds = %bb.ca
   br i1 %.not44.i, label %_bufferedreader_read_fast.exit.thread.i, label %_io__Buffered_read_impl.exit
 
 _bufferedreader_read_fast.exit.thread.i:          ; preds = %_bufferedreader_read_fast.exit.i, %bb.bz
-  %i.fj = load i32, ptr @_Py_NoneStruct, align 8, !tbaa !165 ; 2 uses
+  %.0.i5762.i = phi ptr [ %i.fg, %_bufferedreader_read_fast.exit.i ], [ @_Py_NoneStruct, %bb.bz ] ; 3 uses
+  %i.fj = load i32, ptr %.0.i5762.i, align 8, !tbaa !165 ; 2 uses
   %.not.i.i = icmp sgt i32 %i.fj, -1
   br i1 %.not.i.i, label %bb.cb, label %Py_DECREF.exit.i
 
 bb.cb:                                            ; preds = %_bufferedreader_read_fast.exit.thread.i
   %i.fk = add nsw i32 %i.fj, -1                   ; 2 uses
-  store i32 %i.fk, ptr @_Py_NoneStruct, align 8, !tbaa !165
+  store i32 %i.fk, ptr %.0.i5762.i, align 8, !tbaa !165
   %i.fl = icmp eq i32 %i.fk, 0
   br i1 %i.fl, label %bb.cc, label %Py_DECREF.exit.i
 
 bb.cc:                                            ; preds = %bb.cb
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_NoneStruct) #9
+  call void @_Py_Dealloc(ptr noundef nonnull %.0.i5762.i) #9
   br label %Py_DECREF.exit.i
 
 Py_DECREF.exit.i:                                 ; preds = %bb.cc, %bb.cb, %_bufferedreader_read_fast.exit.thread.i

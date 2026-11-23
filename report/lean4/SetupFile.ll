@@ -117,7 +117,7 @@ lean_obj_tag.exit:                                ; preds = %bb.b, %bb.c
 
 bb.d:                                             ; preds = %lean_obj_tag.exit
   %i.k = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %i.l = load ptr, ptr %i.k, align 8, !tbaa !13   ; 22 uses
+  %i.l = load ptr, ptr %i.k, align 8, !tbaa !13   ; 19 uses
   %.val106 = load i32, ptr %i.c, align 8, !tbaa !10
   %i.m = icmp eq i32 %.val106, 1                  ; 2 uses
   br i1 %i.m, label %lean_dec.exit86, label %bb.e
@@ -450,19 +450,20 @@ lean_alloc_ctor.exit:                             ; preds = %bb.bc
   br label %bb.bv
 
 lean_string_dec_eq.exit.thread126:                ; preds = %lean_dec.exit86, %lean_string_dec_eq.exit
-  %i.cb = ptrtoint ptr %i.l to i64
+  %.lcssa149 = phi ptr [ @l___private_Lean_Server_FileWorker_SetupFile_0__Lean_Server_FileWorker_runLakeSetupFile_processStderr___redArg___closed__0_value, %lean_dec.exit86 ], [ %i.l, %lean_string_dec_eq.exit ] ; 4 uses
+  %i.cb = ptrtoint ptr %.lcssa149 to i64
   %i.cc = and i64 %i.cb, 1
   %.not.i78 = icmp eq i64 %i.cc, 0
   br i1 %.not.i78, label %bb.be, label %lean_dec.exit
 
 bb.be:                                            ; preds = %lean_string_dec_eq.exit.thread126
-  %i.cd = load i32, ptr %i.l, align 4, !tbaa !10  ; 3 uses
+  %i.cd = load i32, ptr %.lcssa149, align 4, !tbaa !10 ; 3 uses
   %i.ce = icmp sgt i32 %i.cd, 1
   br i1 %i.ce, label %bb.bf, label %bb.bg, !prof !11
 
 bb.bf:                                            ; preds = %bb.be
   %i.cf = add nsw i32 %i.cd, -1
-  store i32 %i.cf, ptr %i.l, align 4, !tbaa !10
+  store i32 %i.cf, ptr %.lcssa149, align 4, !tbaa !10
   br label %lean_dec.exit
 
 bb.bg:                                            ; preds = %bb.be
@@ -470,7 +471,7 @@ bb.bg:                                            ; preds = %bb.be
   br i1 %.not.i94, label %lean_dec.exit, label %bb.bh
 
 bb.bh:                                            ; preds = %bb.bg
-  tail call void @lean_dec_ref_cold(ptr noundef nonnull %i.l) #5
+  tail call void @lean_dec_ref_cold(ptr noundef nonnull %.lcssa149) #5
   br label %lean_dec.exit
 
 lean_dec.exit:                                    ; preds = %bb.bh, %bb.bg, %bb.bf, %lean_string_dec_eq.exit.thread126

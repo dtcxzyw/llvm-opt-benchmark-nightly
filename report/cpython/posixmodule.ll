@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %.thread
 
 bb.f:                                             ; preds = %bb.e
   %i.s = getelementptr i8, ptr %i.p, i64 8
-  %i.t = load ptr, ptr %i.s, align 8, !tbaa !1581 ; 4 uses
+  %i.t = load ptr, ptr %i.s, align 8, !tbaa !1581 ; 5 uses
   %.not53 = icmp eq ptr %i.t, null
   br i1 %.not53, label %.thread70, label %bb.g
 
@@ -214,7 +214,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not54, label %.thread81, label %.thread70
 
 .thread70:                                        ; preds = %bb.f, %bb.g
-  %.03675 = phi ptr [ %i.t, %bb.g ], [ @_Py_NoneStruct, %bb.f ] ; 2 uses
+  %.03675 = phi ptr [ %i.t, %bb.g ], [ @_Py_NoneStruct, %bb.f ] ; 4 uses
   %.03774 = phi i64 [ %i.u, %bb.g ], [ %i.j, %bb.f ] ; 2 uses
   %i.v = getelementptr i8, ptr %i.p, i64 16
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !1581 ; 7 uses
@@ -399,11 +399,12 @@ bb.ab:                                            ; preds = %bb.aa
 .thread100:                                       ; preds = %.thread81, %.thread81.thread, %bb.w
   %i.bz = phi i32 [ %i.am, %bb.w ], [ -100, %.thread81.thread ], [ -100, %.thread81 ]
   %.08892106 = phi i32 [ %.0, %bb.w ], [ 1, %.thread81.thread ], [ 1, %.thread81 ]
+  %.036698698104 = phi ptr [ %.03675, %bb.w ], [ @_Py_NoneStruct, %.thread81.thread ], [ %i.t, %.thread81 ]
   store i32 1, ptr %5, align 8, !tbaa !1620
   br label %bb.ac
 
 bb.ac:                                            ; preds = %.thread100, %bb.ab, %bb.v
-  %.036698697 = phi ptr [ @_Py_NoneStruct, %.thread100 ], [ @_Py_NoneStruct, %bb.ab ], [ %.036698699, %bb.v ]
+  %.036698697 = phi ptr [ %.036698698104, %.thread100 ], [ %.03675, %bb.ab ], [ %.036698699, %bb.v ]
   %.08891 = phi i32 [ %.08892106, %.thread100 ], [ %.0, %bb.ab ], [ %.08893, %bb.v ] ; 2 uses
   %i.ca = phi i32 [ %i.bz, %.thread100 ], [ %i.am, %bb.ab ], [ %i.ap, %bb.v ] ; 3 uses
   %i.cb = phi ptr [ @_Py_NoneStruct, %.thread100 ], [ %i.w, %bb.ab ], [ %i.bk, %bb.v ]
@@ -806,7 +807,7 @@ Py_DECREF.exit194:                                ; preds = %bb.bf, %bb.be, %bb.
   br label %bb.bh
 
 bb.bh:                                            ; preds = %Py_DECREF.exit194, %bb.ao, %bb.ah, %bb.l
-  %.3 = phi ptr [ @_Py_NoneStruct, %bb.l ], [ %.1132, %bb.ah ], [ %.1132, %Py_DECREF.exit194 ], [ %.1132, %bb.ao ]
+  %.3 = phi ptr [ %0, %bb.l ], [ %.1132, %bb.ah ], [ %.1132, %Py_DECREF.exit194 ], [ %.1132, %bb.ao ]
   %i.ev = getelementptr i8, ptr %1, i64 64
   store i32 0, ptr %i.ev, align 8, !tbaa !1913
   %i.ew = load i64, ptr %i.a, align 8, !tbaa !1617
