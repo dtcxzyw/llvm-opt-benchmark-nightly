@@ -204,8 +204,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
+  store i8 0, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
   %i.d = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
-  %i.e = and i16 %i.d, -512
+  %i.e = and i16 %i.d, -257
   store i16 %i.e, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 16), i8 0, i64 24, i1 false)
   %i.f = tail call i32 @__cxa_atexit(ptr nonnull @_ZN4Json5ValueD2Ev, ptr nonnull @_ZZN4Json5Value13nullSingletonEvE10nullStatic, ptr nonnull @__dso_handle) #36 ; 0 uses
@@ -350,7 +351,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress uwtable
-define dso_local void @_ZNK4Json17ValueIteratorBase3keyEv(ptr dead_on_unwind noalias writable sret(%"class.Json::Value") align 8 initializes((16, 40)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(9) %1) local_unnamed_addr #8 align 2 personality ptr @__gxx_personality_v0 {
+define dso_local void @_ZNK4Json17ValueIteratorBase3keyEv(ptr dead_on_unwind noalias writable sret(%"class.Json::Value") align 8 initializes((8, 9), (16, 40)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(9) %1) local_unnamed_addr #8 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %2 = alloca %"class.Json::Value::CZString", align 8 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #36
@@ -370,11 +371,11 @@ bb.b:                                             ; preds = %bb.a
 
 _ZN4Json5ValueC2EPKcS2_.exit.thread:              ; preds = %bb.b
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  store i8 4, ptr %i.i, align 8
   %3 = load i16, ptr %i.i, align 8
-  %4 = and i16 %3, -512
-  %5 = or disjoint i16 %4, 4
-  store i16 %5, ptr %i.i, align 8
+  %4 = and i16 %3, -257
+  store i16 %4, ptr %i.i, align 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.h, i8 0, i64 24, i1 false)
   store ptr %i.c, ptr %0, align 8, !tbaa !33
   br label %_ZN4Json5Value8CZStringD2Ev.exit
@@ -382,10 +383,10 @@ _ZN4Json5ValueC2EPKcS2_.exit.thread:              ; preds = %bb.b
 bb.c:                                             ; preds = %bb.b
   %i.j = lshr i32 %i.e, 2
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %6 = load i16, ptr %i.l, align 8
-  %7 = and i16 %6, -512
-  %i.m = or disjoint i16 %7, 260
+  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  store i8 4, ptr %i.l, align 8
+  %5 = load i16, ptr %i.l, align 8
+  %i.m = or i16 %5, 256
   store i16 %i.m, ptr %i.l, align 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.k, i8 0, i64 24, i1 false)
   %i.n = invoke fastcc noundef ptr @_ZN4JsonL29duplicateAndPrefixStringValueEPKcj(ptr noundef nonnull %i.c, i32 noundef %i.j)
@@ -400,11 +401,11 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.a
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.r = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %8 = load i16, ptr %i.r, align 8
-  %9 = and i16 %8, -512
-  %10 = or disjoint i16 %9, 2
-  store i16 %10, ptr %i.r, align 8
+  %i.r = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  store i8 2, ptr %i.r, align 8
+  %6 = load i16, ptr %i.r, align 8
+  %7 = and i16 %6, -257
+  store i16 %7, ptr %i.r, align 8
   %i.s = zext i32 %i.e to i64
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.q, i8 0, i64 24, i1 false)
   store i64 %i.s, ptr %0, align 8, !tbaa !33
@@ -807,16 +808,15 @@ bb.i:                                             ; preds = %bb.h, %bb.c, %bb.b
 }
 
 ; Function Attrs: mustprogress uwtable
-define dso_local void @_ZN4Json5ValueC2ENS_9ValueTypeE(ptr noundef nonnull align 8 dereferenceable(40) initializes((16, 40)) %0, i32 noundef %1) unnamed_addr #8 align 2 personality ptr @__gxx_personality_v0 {
+define dso_local void @_ZN4Json5ValueC2ENS_9ValueTypeE(ptr noundef nonnull align 8 dereferenceable(40) initializes((8, 9), (16, 40)) %0, i32 noundef %1) unnamed_addr #8 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %2 = trunc i32 %1 to i16
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %3 = and i16 %2, 255
-  %4 = load i16, ptr %i.b, align 8
-  %5 = and i16 %4, -512
-  %6 = or disjoint i16 %5, %3
-  store i16 %6, ptr %i.b, align 8
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %2 = trunc i32 %1 to i8
+  store i8 %2, ptr %i.b, align 8
+  %3 = load i16, ptr %i.b, align 8
+  %4 = and i16 %3, -257
+  store i16 %4, ptr %i.b, align 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.a, i8 0, i64 24, i1 false)
   switch i32 %1, label %bb.i [
     i32 5, label %bb.h
@@ -871,16 +871,15 @@ bb.i:                                             ; preds = %bb.a, %bb.h, %bb.g,
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local void @_ZN4Json5Value9initBasicENS_9ValueTypeEb(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(40) initializes((24, 40)) %0, i32 noundef %1, i1 noundef zeroext %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define dso_local void @_ZN4Json5Value9initBasicENS_9ValueTypeEb(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(40) initializes((8, 9), (24, 40)) %0, i32 noundef %1, i1 noundef zeroext %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = trunc i32 %1 to i16
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %4 = and i16 %3, 255
-  %5 = load i16, ptr %i.a, align 8
-  %6 = and i16 %5, -512
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %3 = trunc i32 %1 to i8
+  store i8 %3, ptr %i.a, align 8
+  %4 = load i16, ptr %i.a, align 8
   %i.b = select i1 %2, i16 256, i16 0
-  %7 = or disjoint i16 %i.b, %4
-  %i.c = or disjoint i16 %7, %6
+  %5 = and i16 %4, -257
+  %i.c = or disjoint i16 %5, %i.b
   store i16 %i.c, ptr %i.a, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !55   ; 8 uses
@@ -996,14 +995,14 @@ _ZNSt10unique_ptrISt5arrayINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEL
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define dso_local void @_ZN4Json5ValueC2Ei(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(40) initializes((0, 8), (16, 40)) %0, i32 noundef %1) unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
+define dso_local void @_ZN4Json5ValueC2Ei(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(40) initializes((0, 9), (16, 40)) %0, i32 noundef %1) unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  store i8 1, ptr %i.b, align 8
   %2 = load i16, ptr %i.b, align 8
-  %3 = and i16 %2, -512
-  %4 = or disjoint i16 %3, 1
-  store i16 %4, ptr %i.b, align 8
+  %3 = and i16 %2, -257
+  store i16 %3, ptr %i.b, align 8
   %i.c = sext i32 %1 to i64
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.a, i8 0, i64 24, i1 false)
   store i64 %i.c, ptr %0, align 8, !tbaa !33
@@ -1011,14 +1010,14 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define dso_local void @_ZN4Json5ValueC2Ej(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(40) initializes((0, 8), (16, 40)) %0, i32 noundef %1) unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
+define dso_local void @_ZN4Json5ValueC2Ej(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(40) initializes((0, 9), (16, 40)) %0, i32 noundef %1) unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  store i8 2, ptr %i.b, align 8
   %2 = load i16, ptr %i.b, align 8
-  %3 = and i16 %2, -512
-  %4 = or disjoint i16 %3, 2
-  store i16 %4, ptr %i.b, align 8
+  %3 = and i16 %2, -257
+  store i16 %3, ptr %i.b, align 8
   %i.c = zext i32 %1 to i64
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.a, i8 0, i64 24, i1 false)
   store i64 %i.c, ptr %0, align 8, !tbaa !33
@@ -1026,57 +1025,57 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define dso_local void @_ZN4Json5ValueC2El(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(40) initializes((0, 8), (16, 40)) %0, i64 noundef %1) unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
+define dso_local void @_ZN4Json5ValueC2El(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(40) initializes((0, 9), (16, 40)) %0, i64 noundef %1) unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  store i8 1, ptr %i.b, align 8
   %2 = load i16, ptr %i.b, align 8
-  %3 = and i16 %2, -512
-  %4 = or disjoint i16 %3, 1
-  store i16 %4, ptr %i.b, align 8
+  %3 = and i16 %2, -257
+  store i16 %3, ptr %i.b, align 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.a, i8 0, i64 24, i1 false)
   store i64 %1, ptr %0, align 8, !tbaa !33
   ret void
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define dso_local void @_ZN4Json5ValueC2Em(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(40) initializes((0, 8), (16, 40)) %0, i64 noundef %1) unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
+define dso_local void @_ZN4Json5ValueC2Em(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(40) initializes((0, 9), (16, 40)) %0, i64 noundef %1) unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  store i8 2, ptr %i.b, align 8
   %2 = load i16, ptr %i.b, align 8
-  %3 = and i16 %2, -512
-  %4 = or disjoint i16 %3, 2
-  store i16 %4, ptr %i.b, align 8
+  %3 = and i16 %2, -257
+  store i16 %3, ptr %i.b, align 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.a, i8 0, i64 24, i1 false)
   store i64 %1, ptr %0, align 8, !tbaa !33
   ret void
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define dso_local void @_ZN4Json5ValueC2Ed(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(40) initializes((0, 8), (16, 40)) %0, double noundef %1) unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
+define dso_local void @_ZN4Json5ValueC2Ed(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(40) initializes((0, 9), (16, 40)) %0, double noundef %1) unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  store i8 3, ptr %i.b, align 8
   %2 = load i16, ptr %i.b, align 8
-  %3 = and i16 %2, -512
-  %4 = or disjoint i16 %3, 3
-  store i16 %4, ptr %i.b, align 8
+  %3 = and i16 %2, -257
+  store i16 %3, ptr %i.b, align 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.a, i8 0, i64 24, i1 false)
   store double %1, ptr %0, align 8, !tbaa !33
   ret void
 }
 
 ; Function Attrs: mustprogress uwtable
-define dso_local void @_ZN4Json5ValueC2EPKc(ptr noundef nonnull align 8 dereferenceable(40) initializes((16, 40)) %0, ptr nofree noundef readonly captures(address_is_null) %1) unnamed_addr #8 align 2 personality ptr @__gxx_personality_v0 {
+define dso_local void @_ZN4Json5ValueC2EPKc(ptr noundef nonnull align 8 dereferenceable(40) initializes((8, 9), (16, 40)) %0, ptr nofree noundef readonly captures(address_is_null) %1) unnamed_addr #8 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %2 = alloca %"class.std::__cxx11::basic_ostringstream", align 8 ; 6 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  store i8 4, ptr %i.b, align 8
   %4 = load i16, ptr %i.b, align 8
-  %5 = and i16 %4, -512
-  %i.c = or disjoint i16 %5, 260
+  %i.c = or i16 %4, 256
   store i16 %i.c, ptr %i.b, align 8
   %.not = icmp eq ptr %1, null
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.a, i8 0, i64 24, i1 false)
@@ -1303,13 +1302,13 @@ bb.p:                                             ; preds = %_ZNSt7__cxx1112basi
 declare i64 @strlen(ptr noundef captures(none)) local_unnamed_addr #19
 
 ; Function Attrs: mustprogress uwtable
-define dso_local void @_ZN4Json5ValueC2EPKcS2_(ptr noundef nonnull align 8 dereferenceable(40) initializes((16, 40)) %0, ptr noundef %1, ptr noundef %2) unnamed_addr #8 align 2 personality ptr @__gxx_personality_v0 {
+define dso_local void @_ZN4Json5ValueC2EPKcS2_(ptr noundef nonnull align 8 dereferenceable(40) initializes((8, 9), (16, 40)) %0, ptr noundef %1, ptr noundef %2) unnamed_addr #8 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  store i8 4, ptr %i.b, align 8
   %3 = load i16, ptr %i.b, align 8
-  %4 = and i16 %3, -512
-  %i.c = or disjoint i16 %4, 260
+  %i.c = or i16 %3, 256
   store i16 %i.c, ptr %i.b, align 8
   %i.d = ptrtoint ptr %2 to i64
   %i.e = ptrtoint ptr %1 to i64
@@ -1331,13 +1330,13 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: mustprogress uwtable
-define dso_local void @_ZN4Json5ValueC2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(40) initializes((16, 40)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %1) unnamed_addr #8 align 2 personality ptr @__gxx_personality_v0 {
+define dso_local void @_ZN4Json5ValueC2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(40) initializes((8, 9), (16, 40)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %1) unnamed_addr #8 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  store i8 4, ptr %i.b, align 8
   %2 = load i16, ptr %i.b, align 8
-  %3 = and i16 %2, -512
-  %i.c = or disjoint i16 %3, 260
+  %i.c = or i16 %2, 256
   store i16 %i.c, ptr %i.b, align 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.a, i8 0, i64 24, i1 false)
   %i.d = load ptr, ptr %1, align 8, !tbaa !40
@@ -1359,14 +1358,14 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define dso_local void @_ZN4Json5ValueC2ERKNS_12StaticStringE(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(40) initializes((0, 8), (16, 40)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %1) unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
+define dso_local void @_ZN4Json5ValueC2ERKNS_12StaticStringE(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(40) initializes((0, 9), (16, 40)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %1) unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  store i8 4, ptr %i.b, align 8
   %2 = load i16, ptr %i.b, align 8
-  %3 = and i16 %2, -512
-  %4 = or disjoint i16 %3, 4
-  store i16 %4, ptr %i.b, align 8
+  %3 = and i16 %2, -257
+  store i16 %3, ptr %i.b, align 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.a, i8 0, i64 24, i1 false)
   %i.c = load ptr, ptr %1, align 8, !tbaa !57
   store ptr %i.c, ptr %0, align 8, !tbaa !33
@@ -1374,14 +1373,14 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define dso_local void @_ZN4Json5ValueC2Eb(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(40) initializes((0, 1), (16, 40)) %0, i1 noundef zeroext %1) unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
+define dso_local void @_ZN4Json5ValueC2Eb(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(40) initializes((0, 1), (8, 9), (16, 40)) %0, i1 noundef zeroext %1) unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  store i8 5, ptr %i.b, align 8
   %2 = load i16, ptr %i.b, align 8
-  %3 = and i16 %2, -512
-  %4 = or disjoint i16 %3, 5
-  store i16 %4, ptr %i.b, align 8
+  %3 = and i16 %2, -257
+  store i16 %3, ptr %i.b, align 8
   %i.c = zext i1 %1 to i8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.a, i8 0, i64 24, i1 false)
   store i8 %i.c, ptr %0, align 8, !tbaa !33
@@ -1389,7 +1388,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress uwtable
-define dso_local void @_ZN4Json5ValueC2ERKS0_(ptr noundef nonnull align 8 dereferenceable(40) initializes((16, 24)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #8 align 2 personality ptr @__gxx_personality_v0 {
+define dso_local void @_ZN4Json5ValueC2ERKS0_(ptr noundef nonnull align 8 dereferenceable(40) initializes((8, 9), (16, 24)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #8 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   store ptr null, ptr %i.a, align 8, !tbaa !59
@@ -1416,18 +1415,18 @@ bb.d:                                             ; preds = %bb.b, %bb.a
 }
 
 ; Function Attrs: mustprogress uwtable
-define dso_local void @_ZN4Json5Value10dupPayloadERKS0_(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(40) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) local_unnamed_addr #8 align 2 personality ptr @__gxx_personality_v0 {
+define dso_local void @_ZN4Json5Value10dupPayloadERKS0_(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(40) initializes((8, 9)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) local_unnamed_addr #8 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %2 = alloca %"struct.std::_Rb_tree<Json::Value::CZString, std::pair<const Json::Value::CZString, Json::Value>, std::_Select1st<std::pair<const Json::Value::CZString, Json::Value>>, std::less<Json::Value::CZString>>::_Alloc_node", align 8 ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.b = load i16, ptr %i.a, align 8              ; 2 uses
-  %3 = and i16 %i.b, 255
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
-  %5 = load i16, ptr %4, align 8
-  %6 = and i16 %5, -512
-  %7 = or disjoint i16 %6, %3
-  store i16 %7, ptr %4, align 8
-  %trunc = trunc i16 %i.b to i8
+  %i.b = load i16, ptr %i.a, align 8
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
+  %4 = trunc i16 %i.b to i8
+  store i8 %4, ptr %3, align 8
+  %5 = load i16, ptr %3, align 8                  ; 2 uses
+  %6 = and i16 %5, -257
+  store i16 %6, ptr %3, align 8
+  %trunc = trunc i16 %5 to i8
   switch i8 %trunc, label %bb.i [
     i8 0, label %bb.b
     i8 1, label %bb.b
@@ -1460,9 +1459,9 @@ _ZN4JsonL20decodePrefixedStringEbPKcPjPS1_.exit:  ; preds = %bb.d
   %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 4
   %i.i = tail call fastcc noundef ptr @_ZN4JsonL29duplicateAndPrefixStringValueEPKcj(ptr noundef nonnull %i.h, i32 noundef %i.g)
   store ptr %i.i, ptr %0, align 8, !tbaa !33
-  %i.j = load i16, ptr %4, align 8
+  %i.j = load i16, ptr %3, align 8
   %i.k = or i16 %i.j, 256
-  store i16 %i.k, ptr %4, align 8
+  store i16 %i.k, ptr %3, align 8
   br label %bb.i
 
 bb.e:                                             ; preds = %bb.d, %bb.c
@@ -1548,12 +1547,13 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local void @_ZN4Json5ValueC2EOS0_(ptr noundef nonnull align 8 dereferenceable(40) initializes((16, 40)) %0, ptr noundef nonnull align 8 dereferenceable(40) %1) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define dso_local void @_ZN4Json5ValueC2EOS0_(ptr noundef nonnull align 8 dereferenceable(40) initializes((8, 9), (16, 40)) %0, ptr noundef nonnull align 8 dereferenceable(40) %1) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
+  store i8 0, ptr %i.b, align 8
   %i.c = load i16, ptr %i.b, align 8
-  %i.d = and i16 %i.c, -512
+  %i.d = and i16 %i.c, -257
   store i16 %i.d, ptr %i.b, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
@@ -1956,11 +1956,11 @@ bb.h:                                             ; preds = %_ZNSt7__cxx1112basi
 bb.i:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #36
   %i.l = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 3 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 4 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 5 uses
+  store i8 6, ptr %i.m, align 8
   %8 = load i16, ptr %i.m, align 8
-  %9 = and i16 %8, -512
-  %10 = or disjoint i16 %9, 6
-  store i16 %10, ptr %i.m, align 8
+  %9 = and i16 %8, -257
+  store i16 %9, ptr %i.m, align 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, i8 0, i64 24, i1 false)
   %i.n = invoke noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #42
           to label %_ZN4Json5ValueC2ENS_9ValueTypeE.exit unwind label %bb.j ; 6 uses
@@ -2277,11 +2277,11 @@ bb.h:                                             ; preds = %_ZNSt7__cxx1112basi
 bb.i:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #36
   %i.l = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 3 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 4 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 5 uses
+  store i8 6, ptr %i.m, align 8
   %11 = load i16, ptr %i.m, align 8
-  %12 = and i16 %11, -512
-  %13 = or disjoint i16 %12, 6
-  store i16 %13, ptr %i.m, align 8
+  %12 = and i16 %11, -257
+  store i16 %12, ptr %i.m, align 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, i8 0, i64 24, i1 false)
   %i.n = invoke noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #42
           to label %_ZN4Json5ValueC2ENS_9ValueTypeE.exit unwind label %bb.j ; 6 uses
@@ -2459,8 +2459,9 @@ bb.u:                                             ; preds = %.critedge
   br i1 %.not.i18, label %_ZN4Json5Value13nullSingletonEv.exit, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
+  store i8 0, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
   %i.bg = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
-  %i.bh = and i16 %i.bg, -512
+  %i.bh = and i16 %i.bg, -257
   store i16 %i.bh, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 16), i8 0, i64 24, i1 false)
   %i.bi = call i32 @__cxa_atexit(ptr nonnull @_ZN4Json5ValueD2Ev, ptr nonnull @_ZZN4Json5Value13nullSingletonEvE10nullStatic, ptr nonnull @__dso_handle) #36 ; 0 uses
@@ -2728,8 +2729,9 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not.i, label %_ZN4Json5Value13nullSingletonEv.exit, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
+  store i8 0, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
   %i.o = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
-  %i.p = and i16 %i.o, -512
+  %i.p = and i16 %i.o, -257
   store i16 %i.p, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 16), i8 0, i64 24, i1 false)
   %i.q = tail call i32 @__cxa_atexit(ptr nonnull @_ZN4Json5ValueD2Ev, ptr nonnull @_ZZN4Json5Value13nullSingletonEvE10nullStatic, ptr nonnull @__dso_handle) #36 ; 0 uses
@@ -2831,8 +2833,9 @@ bb.r:                                             ; preds = %bb.q
   br i1 %.not.i16, label %_ZN4Json5Value8CZStringD2Ev.exit, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
+  store i8 0, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
   %i.aq = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
-  %i.ar = and i16 %i.aq, -512
+  %i.ar = and i16 %i.aq, -257
   store i16 %i.ar, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 16), i8 0, i64 24, i1 false)
   %i.as = tail call i32 @__cxa_atexit(ptr nonnull @_ZN4Json5ValueD2Ev, ptr nonnull @_ZZN4Json5Value13nullSingletonEvE10nullStatic, ptr nonnull @__dso_handle) #36 ; 0 uses
@@ -3151,11 +3154,11 @@ bb.h:                                             ; preds = %_ZNSt7__cxx1112basi
 bb.i:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #36
   %i.l = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 3 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 4 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 5 uses
+  store i8 7, ptr %i.m, align 8
   %7 = load i16, ptr %i.m, align 8
-  %8 = and i16 %7, -512
-  %9 = or disjoint i16 %8, 7
-  store i16 %9, ptr %i.m, align 8
+  %8 = and i16 %7, -257
+  store i16 %8, ptr %i.m, align 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, i8 0, i64 24, i1 false)
   %i.n = invoke noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #42
           to label %_ZN4Json5ValueC2ENS_9ValueTypeE.exit unwind label %bb.j ; 6 uses
@@ -3299,8 +3302,9 @@ bb.p:                                             ; preds = %.critedge
   br i1 %.not.i20, label %_ZN4Json5Value13nullSingletonEv.exit, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
+  store i8 0, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
   %i.bh = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
-  %i.bi = and i16 %i.bh, -512
+  %i.bi = and i16 %i.bh, -257
   store i16 %i.bi, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 16), i8 0, i64 24, i1 false)
   %i.bj = call i32 @__cxa_atexit(ptr nonnull @_ZN4Json5ValueD2Ev, ptr nonnull @_ZZN4Json5Value13nullSingletonEvE10nullStatic, ptr nonnull @__dso_handle) #36 ; 0 uses
@@ -3471,11 +3475,11 @@ bb.h:                                             ; preds = %_ZNSt7__cxx1112basi
 bb.i:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #36
   %i.l = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 3 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 4 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 5 uses
+  store i8 7, ptr %i.m, align 8
   %12 = load i16, ptr %i.m, align 8
-  %13 = and i16 %12, -512
-  %14 = or disjoint i16 %13, 7
-  store i16 %14, ptr %i.m, align 8
+  %13 = and i16 %12, -257
+  store i16 %13, ptr %i.m, align 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, i8 0, i64 24, i1 false)
   %i.n = invoke noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #42
           to label %_ZN4Json5ValueC2ENS_9ValueTypeE.exit unwind label %bb.j ; 6 uses
@@ -3716,8 +3720,9 @@ bb.w:                                             ; preds = %.critedge
   br i1 %.not.i21, label %_ZN4Json5Value13nullSingletonEv.exit, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
+  store i8 0, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
   %i.cc = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
-  %i.cd = and i16 %i.cc, -512
+  %i.cd = and i16 %i.cc, -257
   store i16 %i.cd, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 16), i8 0, i64 24, i1 false)
   %i.ce = call i32 @__cxa_atexit(ptr nonnull @_ZN4Json5ValueD2Ev, ptr nonnull @_ZZN4Json5Value13nullSingletonEvE10nullStatic, ptr nonnull @__dso_handle) #36 ; 0 uses
@@ -3816,7 +3821,7 @@ _ZN4Json5Value8CZStringD2Ev.exit30:               ; preds = %.body38, %bb.v, %_Z
 }
 
 ; Function Attrs: mustprogress uwtable
-define dso_local void @_ZNK4Json5Value3getEjRKS0_(ptr dead_on_unwind noalias writable sret(%"class.Json::Value") align 8 initializes((16, 24)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1, i32 noundef %2, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %3) local_unnamed_addr #8 align 2 personality ptr @__gxx_personality_v0 {
+define dso_local void @_ZNK4Json5Value3getEjRKS0_(ptr dead_on_unwind noalias writable sret(%"class.Json::Value") align 8 initializes((8, 9), (16, 24)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1, i32 noundef %2, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %3) local_unnamed_addr #8 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = tail call noundef nonnull align 8 dereferenceable(40) ptr @_ZNK4Json5ValueixEj(ptr noundef nonnull align 8 dereferenceable(40) %1, i32 noundef %2) ; 2 uses
   %i.b = load atomic i8, ptr @_ZGVZN4Json5Value13nullSingletonEvE10nullStatic acquire, align 8
@@ -3829,8 +3834,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i, label %_ZN4Json5Value13nullSingletonEv.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
+  store i8 0, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
   %i.e = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
-  %i.f = and i16 %i.e, -512
+  %i.f = and i16 %i.e, -257
   store i16 %i.f, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 16), i8 0, i64 24, i1 false)
   %i.g = tail call i32 @__cxa_atexit(ptr nonnull @_ZN4Json5ValueD2Ev, ptr nonnull @_ZZN4Json5Value13nullSingletonEvE10nullStatic, ptr nonnull @__dso_handle) #36 ; 0 uses
@@ -4233,8 +4239,9 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i, label %_ZN4Json5Value13nullSingletonEv.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
+  store i8 0, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
   %i.g = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
-  %i.h = and i16 %i.g, -512
+  %i.h = and i16 %i.g, -257
   store i16 %i.h, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 16), i8 0, i64 24, i1 false)
   %i.i = tail call i32 @__cxa_atexit(ptr nonnull @_ZN4Json5ValueD2Ev, ptr nonnull @_ZZN4Json5Value13nullSingletonEvE10nullStatic, ptr nonnull @__dso_handle) #36 ; 0 uses
@@ -4268,8 +4275,9 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i, label %_ZN4Json5Value13nullSingletonEv.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
+  store i8 0, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
   %i.i = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
-  %i.j = and i16 %i.i, -512
+  %i.j = and i16 %i.i, -257
   store i16 %i.j, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 16), i8 0, i64 24, i1 false)
   %i.k = tail call i32 @__cxa_atexit(ptr nonnull @_ZN4Json5ValueD2Ev, ptr nonnull @_ZZN4Json5Value13nullSingletonEvE10nullStatic, ptr nonnull @__dso_handle) #36 ; 0 uses
@@ -4430,11 +4438,11 @@ bb.h:                                             ; preds = %_ZNSt7__cxx1112basi
 bb.i:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #36
   %i.m = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 3 uses
-  %i.n = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 4 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 5 uses
+  store i8 6, ptr %i.n, align 8
   %5 = load i16, ptr %i.n, align 8
-  %6 = and i16 %5, -512
-  %7 = or disjoint i16 %6, 6
-  store i16 %7, ptr %i.n, align 8
+  %6 = and i16 %5, -257
+  store i16 %6, ptr %i.n, align 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.m, i8 0, i64 24, i1 false)
   %i.o = invoke noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #42
           to label %_ZN4Json5ValueC2ENS_9ValueTypeE.exit unwind label %bb.j ; 6 uses
@@ -4718,7 +4726,7 @@ bb.k:                                             ; preds = %_ZNK4Json5Value4siz
 }
 
 ; Function Attrs: mustprogress uwtable
-define dso_local void @_ZNK4Json5Value3getEPKcS2_RKS0_(ptr dead_on_unwind noalias writable sret(%"class.Json::Value") align 8 initializes((16, 24)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1, ptr noundef %2, ptr noundef %3, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %4) local_unnamed_addr #8 align 2 personality ptr @__gxx_personality_v0 {
+define dso_local void @_ZNK4Json5Value3getEPKcS2_RKS0_(ptr dead_on_unwind noalias writable sret(%"class.Json::Value") align 8 initializes((8, 9), (16, 24)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1, ptr noundef %2, ptr noundef %3, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %4) local_unnamed_addr #8 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = tail call noundef ptr @_ZNK4Json5Value4findEPKcS2_(ptr noundef nonnull align 8 dereferenceable(40) %1, ptr noundef %2, ptr noundef %3) ; 2 uses
   %.not = icmp eq ptr %i.a, null
@@ -4748,7 +4756,7 @@ _ZN4Json5ValueC2ERKS0_.exit:                      ; preds = %bb.b
 }
 
 ; Function Attrs: mustprogress uwtable
-define dso_local void @_ZNK4Json5Value3getEPKcRKS0_(ptr dead_on_unwind noalias writable sret(%"class.Json::Value") align 8 initializes((16, 24)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1, ptr noundef %2, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %3) local_unnamed_addr #8 align 2 personality ptr @__gxx_personality_v0 {
+define dso_local void @_ZNK4Json5Value3getEPKcRKS0_(ptr dead_on_unwind noalias writable sret(%"class.Json::Value") align 8 initializes((8, 9), (16, 24)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1, ptr noundef %2, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %3) local_unnamed_addr #8 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %2) #37
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 %i.a
@@ -4781,7 +4789,7 @@ _ZNK4Json5Value3getEPKcS2_RKS0_.exit:             ; preds = %bb.b
 }
 
 ; Function Attrs: mustprogress uwtable
-define dso_local void @_ZNK4Json5Value3getERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKS0_(ptr dead_on_unwind noalias writable sret(%"class.Json::Value") align 8 initializes((16, 24)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %2, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %3) local_unnamed_addr #8 align 2 personality ptr @__gxx_personality_v0 {
+define dso_local void @_ZNK4Json5Value3getERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKS0_(ptr dead_on_unwind noalias writable sret(%"class.Json::Value") align 8 initializes((8, 9), (16, 24)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %2, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %3) local_unnamed_addr #8 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = load ptr, ptr %2, align 8, !tbaa !40     ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -5184,8 +5192,9 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not.i.i, label %_ZNK4Json5ValueixERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
+  store i8 0, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
   %i.ao = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
-  %i.ap = and i16 %i.ao, -512
+  %i.ap = and i16 %i.ao, -257
   store i16 %i.ap, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 16), i8 0, i64 24, i1 false)
   %i.aq = tail call i32 @__cxa_atexit(ptr nonnull @_ZN4Json5ValueD2Ev, ptr nonnull @_ZZN4Json5Value13nullSingletonEvE10nullStatic, ptr nonnull @__dso_handle) #36 ; 0 uses
@@ -5204,8 +5213,9 @@ bb.m:                                             ; preds = %_ZNK4Json5ValueixER
   br i1 %.not.i31, label %_ZN4Json5Value13nullSingletonEv.exit32, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
+  store i8 0, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
   %i.au = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
-  %i.av = and i16 %i.au, -512
+  %i.av = and i16 %i.au, -257
   store i16 %i.av, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 16), i8 0, i64 24, i1 false)
   %i.aw = tail call i32 @__cxa_atexit(ptr nonnull @_ZN4Json5ValueD2Ev, ptr nonnull @_ZZN4Json5Value13nullSingletonEvE10nullStatic, ptr nonnull @__dso_handle) #36 ; 0 uses
@@ -5233,8 +5243,9 @@ _ZN4Json5Value13nullSingletonEv.exit:             ; preds = %.lr.ph, %_ZN4Json5V
   br i1 %.not, label %_ZN4Json5Value13nullSingletonEv.exit.thread, label %.lr.ph
 
 _ZN4Json5Value13nullSingletonEv.exit.thread.sink.split: ; preds = %bb.p, %bb.h, %bb.d
+  store i8 0, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
   %i.bc = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
-  %i.bd = and i16 %i.bc, -512
+  %i.bd = and i16 %i.bc, -257
   store i16 %i.bd, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 16), i8 0, i64 24, i1 false)
   %i.be = tail call i32 @__cxa_atexit(ptr nonnull @_ZN4Json5ValueD2Ev, ptr nonnull @_ZZN4Json5Value13nullSingletonEvE10nullStatic, ptr nonnull @__dso_handle) #36 ; 0 uses
@@ -5359,8 +5370,9 @@ bb.m:                                             ; preds = %bb.l
   br i1 %.not.i.i, label %_ZNK4Json5ValueixERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
+  store i8 0, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
   %i.aq = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
-  %i.ar = and i16 %i.aq, -512
+  %i.ar = and i16 %i.aq, -257
   store i16 %i.ar, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 16), i8 0, i64 24, i1 false)
   %i.as = tail call i32 @__cxa_atexit(ptr nonnull @_ZN4Json5ValueD2Ev, ptr nonnull @_ZZN4Json5Value13nullSingletonEvE10nullStatic, ptr nonnull @__dso_handle) #36 ; 0 uses
@@ -5379,8 +5391,9 @@ bb.o:                                             ; preds = %_ZNK4Json5ValueixER
   br i1 %.not.i27, label %_ZN4Json5Value13nullSingletonEv.exit, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
+  store i8 0, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
   %i.aw = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
-  %i.ax = and i16 %i.aw, -512
+  %i.ax = and i16 %i.aw, -257
   store i16 %i.ax, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 16), i8 0, i64 24, i1 false)
   %i.ay = tail call i32 @__cxa_atexit(ptr nonnull @_ZN4Json5ValueD2Ev, ptr nonnull @_ZZN4Json5Value13nullSingletonEvE10nullStatic, ptr nonnull @__dso_handle) #36 ; 0 uses
@@ -5783,8 +5796,11 @@ bb.a:
   store i32 %i.d, ptr %i.e, align 8, !tbaa !33
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 48 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 64 ; 2 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 56 ; 3 uses
-  store i16 0, ptr %i.h, align 8
+  %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 56 ; 5 uses
+  store i8 0, ptr %i.h, align 8
+  %4 = load i16, ptr %i.h, align 8
+  %5 = and i16 %4, -257
+  store i16 %5, ptr %i.h, align 8
   %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 72 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.g, i8 0, i64 24, i1 false)
@@ -5945,9 +5961,10 @@ bb.e:                                             ; preds = %bb.b
 bb.f:                                             ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 64
-  %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 56 ; 2 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 56 ; 3 uses
+  store i8 0, ptr %i.m, align 8
   %i.n = load i16, ptr %i.m, align 8
-  %i.o = and i16 %i.n, -512
+  %i.o = and i16 %i.n, -257
   store i16 %i.o, ptr %i.m, align 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, i8 0, i64 24, i1 false)
   store ptr %i.a, ptr %i.k, align 8, !tbaa !100
@@ -6350,8 +6367,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i.i, label %__cxx_global_var_init.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
+  store i8 0, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
   %i.d = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
-  %i.e = and i16 %i.d, -512
+  %i.e = and i16 %i.d, -257
   store i16 %i.e, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 16), i8 0, i64 24, i1 false)
   %i.f = tail call i32 @__cxa_atexit(ptr nonnull @_ZN4Json5ValueD2Ev, ptr nonnull @_ZZN4Json5Value13nullSingletonEvE10nullStatic, ptr nonnull @__dso_handle) #36 ; 0 uses
@@ -6370,8 +6388,9 @@ bb.d:                                             ; preds = %__cxx_global_var_in
   br i1 %.not.i.i1, label %__cxx_global_var_init.1.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
+  store i8 0, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
   %i.j = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
-  %i.k = and i16 %i.j, -512
+  %i.k = and i16 %i.j, -257
   store i16 %i.k, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 8), align 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) getelementptr inbounds nuw (i8, ptr @_ZZN4Json5Value13nullSingletonEvE10nullStatic, i64 16), i8 0, i64 24, i1 false)
   %i.l = tail call i32 @__cxa_atexit(ptr nonnull @_ZN4Json5ValueD2Ev, ptr nonnull @_ZZN4Json5Value13nullSingletonEvE10nullStatic, ptr nonnull @__dso_handle) #36 ; 0 uses

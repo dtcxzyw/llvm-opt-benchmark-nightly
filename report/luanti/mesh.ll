@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a
   %.sink = phi float [ %i.e, %bb.b ], [ %i.b, %bb.c ]
   %i.j = tail call nsz float @llvm.fmuladd.f32(float %i.a, float 6.708200e-01, float %.sink)
   %i.k = tail call nsz float @llvm.fmuladd.f32(float %i.c, float 8.366600e-01, float %i.j) ; 3 uses
-  %i.l = load i32, ptr %0, align 4, !tbaa !19     ; 4 uses
+  %i.l = load i32, ptr %0, align 4, !tbaa !19
   %i.m = lshr i32 %i.l, 16
   %i.n = and i32 %i.m, 255
   %i.o = uitofp nsz nneg i32 %i.n to float
@@ -215,9 +215,11 @@ bb.c:                                             ; preds = %bb.a
   %i.s = fptosi float %i.r to i32
   %i.t = tail call i32 @llvm.smax.i32(i32 %i.s, i32 0)
   %i.u = tail call i32 @llvm.umin.i32(i32 %i.t, i32 255)
-  %3 = shl nuw nsw i32 %i.u, 16
-  %4 = and i32 %i.l, -16777216
-  %i.v = lshr i32 %i.l, 8
+  %3 = trunc nuw i32 %i.u to i8
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 2
+  store i8 %3, ptr %4, align 2, !tbaa !19
+  %5 = load i32, ptr %0, align 4, !tbaa !19
+  %i.v = lshr i32 %5, 8
   %i.w = and i32 %i.v, 255
   %i.x = uitofp nsz nneg i32 %i.w to float
   %i.y = fmul nsz float %i.k, %i.x
@@ -226,10 +228,11 @@ bb.c:                                             ; preds = %bb.a
   %i.ab = fptosi float %i.aa to i32
   %i.ac = tail call i32 @llvm.smax.i32(i32 %i.ab, i32 0)
   %i.ad = tail call i32 @llvm.umin.i32(i32 %i.ac, i32 255)
-  %5 = shl nuw nsw i32 %i.ad, 8
-  %6 = or disjoint i32 %3, %5
-  %7 = or disjoint i32 %6, %4
-  %i.ae = and i32 %i.l, 255
+  %6 = trunc nuw i32 %i.ad to i8
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 1
+  store i8 %6, ptr %7, align 1, !tbaa !19
+  %8 = load i32, ptr %0, align 4, !tbaa !19
+  %i.ae = and i32 %8, 255
   %i.af = uitofp nsz nneg i32 %i.ae to float
   %i.ag = fmul nsz float %i.k, %i.af
   %i.ah = fadd nsz float %i.ag, 5.000000e-01
@@ -237,8 +240,8 @@ bb.c:                                             ; preds = %bb.a
   %i.aj = fptosi float %i.ai to i32
   %i.ak = tail call i32 @llvm.smax.i32(i32 %i.aj, i32 0)
   %i.al = tail call i32 @llvm.umin.i32(i32 %i.ak, i32 255)
-  %8 = or disjoint i32 %7, %i.al
-  store i32 %8, ptr %0, align 4, !tbaa !19
+  %9 = trunc nuw i32 %i.al to i8
+  store i8 %9, ptr %0, align 4, !tbaa !19
   br label %bb.d
 
 bb.d:                                             ; preds = %.sink.split, %bb.c
@@ -641,13 +644,7 @@ bb.a:
   %i.z = fneg nsz float %.sroa.4.8.vec.extract
   %i.aa = fneg nsz float %4
   %i.ab = lshr i32 %1, 16
-  %5 = and i32 %i.ab, 255
-  %6 = uitofp nsz nneg i32 %5 to float
-  %7 = and i32 %1, -16777216
-  %8 = lshr i32 %1, 8
-  %9 = and i32 %8, 255
-  %10 = uitofp nsz nneg i32 %9 to float
-  %i.ac = and i32 %1, 255
+  %i.ac = and i32 %i.ab, 255
   %i.ad = uitofp nsz nneg i32 %i.ac to float
   br label %bb.b
 
@@ -656,8 +653,8 @@ bb.b:                                             ; preds = %"_ZZ18colorizeMeshB
   %i.ae = trunc nuw i64 %indvars.iv.i to i32
   %i.af = mul i32 %i.h, %i.ae
   %i.ag = zext i32 %i.af to i64
-  %i.ah = getelementptr inbounds nuw i8, ptr %i.x, i64 %i.ag ; 3 uses
-  %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 24 ; 2 uses
+  %i.ah = getelementptr inbounds nuw i8, ptr %i.x, i64 %i.ag ; 5 uses
+  %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 24 ; 4 uses
   store i32 %1, ptr %i.ai, align 4, !tbaa !22
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ah, i64 12 ; 2 uses
   %i.ak = load <2 x float>, ptr %i.aj, align 4, !tbaa !21 ; 4 uses
@@ -707,30 +704,39 @@ _ZN4core8vector3dIfE9normalizeEv.exit.i.i:        ; preds = %bb.c, %_ZNK4core8ve
   %i.bp = fadd nsz float %2, %i.bo                ; 2 uses
   %i.bq = fcmp nsz olt float %i.bp, 1.000000e+00
   %.sroa.speculated.i.i = select i1 %i.bq, float %i.bp, float 1.000000e+00 ; 3 uses
-  %i.br = fmul nsz float %.sroa.speculated.i.i, %6
+  %i.br = fmul nsz float %.sroa.speculated.i.i, %i.ad
   %i.bs = fadd nsz float %i.br, 5.000000e-01
   %i.bt = tail call nsz noundef float @llvm.floor.f32(float %i.bs)
   %i.bu = fptosi float %i.bt to i32
   %i.bv = tail call i32 @llvm.smax.i32(i32 %i.bu, i32 0)
   %i.bw = tail call i32 @llvm.umin.i32(i32 %i.bv, i32 255)
-  %11 = shl nuw nsw i32 %i.bw, 16
+  %5 = trunc nuw i32 %i.bw to i8
+  %6 = getelementptr inbounds nuw i8, ptr %i.ah, i64 26
+  store i8 %5, ptr %6, align 2, !tbaa !19
+  %7 = load i32, ptr %i.ai, align 4, !tbaa !19
+  %8 = lshr i32 %7, 8
+  %9 = and i32 %8, 255
+  %10 = uitofp nsz nneg i32 %9 to float
   %i.bx = fmul nsz float %.sroa.speculated.i.i, %10
   %i.by = fadd nsz float %i.bx, 5.000000e-01
   %i.bz = tail call nsz noundef float @llvm.floor.f32(float %i.by)
   %i.ca = fptosi float %i.bz to i32
   %i.cb = tail call i32 @llvm.smax.i32(i32 %i.ca, i32 0)
   %i.cc = tail call i32 @llvm.umin.i32(i32 %i.cb, i32 255)
-  %12 = shl nuw nsw i32 %i.cc, 8
-  %13 = or disjoint i32 %11, %12
-  %14 = or disjoint i32 %13, %7
-  %i.cd = fmul nsz float %.sroa.speculated.i.i, %i.ad
+  %11 = trunc nuw i32 %i.cc to i8
+  %12 = getelementptr inbounds nuw i8, ptr %i.ah, i64 25
+  store i8 %11, ptr %12, align 1, !tbaa !19
+  %13 = load i32, ptr %i.ai, align 4, !tbaa !19
+  %14 = and i32 %13, 255
+  %15 = uitofp nsz nneg i32 %14 to float
+  %i.cd = fmul nsz float %.sroa.speculated.i.i, %15
   %i.ce = fadd nsz float %i.cd, 5.000000e-01
   %i.cf = tail call nsz noundef float @llvm.floor.f32(float %i.ce)
   %i.cg = fptosi float %i.cf to i32
   %i.ch = tail call i32 @llvm.smax.i32(i32 %i.cg, i32 0)
   %i.ci = tail call i32 @llvm.umin.i32(i32 %i.ch, i32 255)
-  %15 = or disjoint i32 %14, %i.ci
-  store i32 %15, ptr %i.ai, align 4, !tbaa !19
+  %16 = trunc nuw i32 %i.ci to i8
+  store i8 %16, ptr %i.ai, align 4, !tbaa !19
   br label %"_ZZ18colorizeMeshBufferPN5scene11IMeshBufferEN5video6SColorEfN4core8vector3dIfEEENK3$_0clINS2_9S3DVertexEEEDaPT_.exit.i"
 
 "_ZZ18colorizeMeshBufferPN5scene11IMeshBufferEN5video6SColorEfN4core8vector3dIfEEENK3$_0clINS2_9S3DVertexEEEDaPT_.exit.i": ; preds = %_ZN4core8vector3dIfE9normalizeEv.exit.i.i, %bb.b

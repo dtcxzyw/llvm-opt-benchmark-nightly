@@ -204,8 +204,9 @@ _ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit.thread: ; preds = 
   %i.ac = getelementptr inbounds nuw i8, ptr %4, i64 8
   store i32 3, ptr %i.ac, align 8, !tbaa !306
   %i.ad = call noundef i32 @_ZN6hermes2vm7Runtime14raiseTypeErrorERKNS0_11TwineChar16E(ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr noundef nonnull align 8 dereferenceable(48) %4) #11
-  %i.ae = and i32 %i.ad, 255
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #11
+  %i.ae = and i32 %i.ad, 255
+  %5 = or disjoint i32 %i.ae, 256
   br label %bb.f
 
 bb.c:                                             ; preds = %_ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit
@@ -241,7 +242,7 @@ _ZN6hermes2vm12JSTypedArrayIaLNS0_8CellKindE35EE2atERNS0_7RuntimeEj.exit: ; pred
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.c, %_ZN6hermes2vm12JSTypedArrayIaLNS0_8CellKindE35EE2atERNS0_7RuntimeEj.exit, %_ZN6hermes2vm19_setOwnValueEncoderILNS0_8CellKindE35EE6encodeERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE.exit, %_ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit.thread
-  %.sroa.014.0 = phi i32 [ %i.ae, %_ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit.thread ], [ 0, %_ZN6hermes2vm19_setOwnValueEncoderILNS0_8CellKindE35EE6encodeERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE.exit ], [ 257, %_ZN6hermes2vm12JSTypedArrayIaLNS0_8CellKindE35EE2atERNS0_7RuntimeEj.exit ], [ 257, %bb.c ]
+  %.sroa.014.0 = phi i32 [ %5, %_ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit.thread ], [ 256, %_ZN6hermes2vm19_setOwnValueEncoderILNS0_8CellKindE35EE6encodeERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE.exit ], [ 257, %_ZN6hermes2vm12JSTypedArrayIaLNS0_8CellKindE35EE2atERNS0_7RuntimeEj.exit ], [ 257, %bb.c ]
   ret i32 %.sroa.014.0
 }
 
@@ -644,8 +645,9 @@ _ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit.thread: ; preds = 
   %i.ac = getelementptr inbounds nuw i8, ptr %4, i64 8
   store i32 3, ptr %i.ac, align 8, !tbaa !306
   %i.ad = call noundef i32 @_ZN6hermes2vm7Runtime14raiseTypeErrorERKNS0_11TwineChar16E(ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr noundef nonnull align 8 dereferenceable(48) %4) #11
-  %i.ae = and i32 %i.ad, 255
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #11
+  %i.ae = and i32 %i.ad, 255
+  %5 = or disjoint i32 %i.ae, 256
   br label %bb.f
 
 bb.c:                                             ; preds = %_ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit
@@ -681,7 +683,7 @@ _ZN6hermes2vm12JSTypedArrayIsLNS0_8CellKindE36EE2atERNS0_7RuntimeEj.exit: ; pred
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.c, %_ZN6hermes2vm12JSTypedArrayIsLNS0_8CellKindE36EE2atERNS0_7RuntimeEj.exit, %_ZN6hermes2vm19_setOwnValueEncoderILNS0_8CellKindE36EE6encodeERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE.exit, %_ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit.thread
-  %.sroa.014.0 = phi i32 [ %i.ae, %_ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit.thread ], [ 0, %_ZN6hermes2vm19_setOwnValueEncoderILNS0_8CellKindE36EE6encodeERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE.exit ], [ 257, %_ZN6hermes2vm12JSTypedArrayIsLNS0_8CellKindE36EE2atERNS0_7RuntimeEj.exit ], [ 257, %bb.c ]
+  %.sroa.014.0 = phi i32 [ %5, %_ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit.thread ], [ 256, %_ZN6hermes2vm19_setOwnValueEncoderILNS0_8CellKindE36EE6encodeERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE.exit ], [ 257, %_ZN6hermes2vm12JSTypedArrayIsLNS0_8CellKindE36EE2atERNS0_7RuntimeEj.exit ], [ 257, %bb.c ]
   ret i32 %.sroa.014.0
 }
 
@@ -1084,8 +1086,9 @@ _ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit.thread: ; preds = 
   %i.ab = getelementptr inbounds nuw i8, ptr %4, i64 8
   store i32 3, ptr %i.ab, align 8, !tbaa !306
   %i.ac = call noundef i32 @_ZN6hermes2vm7Runtime14raiseTypeErrorERKNS0_11TwineChar16E(ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr noundef nonnull align 8 dereferenceable(48) %4) #11
-  %i.ad = and i32 %i.ac, 255
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #11
+  %i.ad = and i32 %i.ac, 255
+  %5 = or disjoint i32 %i.ad, 256
   br label %bb.f
 
 bb.c:                                             ; preds = %_ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit
@@ -1121,7 +1124,7 @@ _ZN6hermes2vm12JSTypedArrayIiLNS0_8CellKindE37EE2atERNS0_7RuntimeEj.exit: ; pred
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.c, %_ZN6hermes2vm12JSTypedArrayIiLNS0_8CellKindE37EE2atERNS0_7RuntimeEj.exit, %_ZN6hermes2vm19_setOwnValueEncoderILNS0_8CellKindE37EE6encodeERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE.exit, %_ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit.thread
-  %.sroa.014.0 = phi i32 [ %i.ad, %_ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit.thread ], [ 0, %_ZN6hermes2vm19_setOwnValueEncoderILNS0_8CellKindE37EE6encodeERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE.exit ], [ 257, %_ZN6hermes2vm12JSTypedArrayIiLNS0_8CellKindE37EE2atERNS0_7RuntimeEj.exit ], [ 257, %bb.c ]
+  %.sroa.014.0 = phi i32 [ %5, %_ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit.thread ], [ 256, %_ZN6hermes2vm19_setOwnValueEncoderILNS0_8CellKindE37EE6encodeERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE.exit ], [ 257, %_ZN6hermes2vm12JSTypedArrayIiLNS0_8CellKindE37EE2atERNS0_7RuntimeEj.exit ], [ 257, %bb.c ]
   ret i32 %.sroa.014.0
 }
 
@@ -1524,8 +1527,9 @@ _ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit.thread: ; preds = 
   %i.ac = getelementptr inbounds nuw i8, ptr %4, i64 8
   store i32 3, ptr %i.ac, align 8, !tbaa !306
   %i.ad = call noundef i32 @_ZN6hermes2vm7Runtime14raiseTypeErrorERKNS0_11TwineChar16E(ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr noundef nonnull align 8 dereferenceable(48) %4) #11
-  %i.ae = and i32 %i.ad, 255
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #11
+  %i.ae = and i32 %i.ad, 255
+  %5 = or disjoint i32 %i.ae, 256
   br label %bb.f
 
 bb.c:                                             ; preds = %_ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit
@@ -1561,7 +1565,7 @@ _ZN6hermes2vm12JSTypedArrayIhLNS0_8CellKindE38EE2atERNS0_7RuntimeEj.exit: ; pred
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.c, %_ZN6hermes2vm12JSTypedArrayIhLNS0_8CellKindE38EE2atERNS0_7RuntimeEj.exit, %_ZN6hermes2vm19_setOwnValueEncoderILNS0_8CellKindE38EE6encodeERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE.exit, %_ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit.thread
-  %.sroa.014.0 = phi i32 [ %i.ae, %_ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit.thread ], [ 0, %_ZN6hermes2vm19_setOwnValueEncoderILNS0_8CellKindE38EE6encodeERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE.exit ], [ 257, %_ZN6hermes2vm12JSTypedArrayIhLNS0_8CellKindE38EE2atERNS0_7RuntimeEj.exit ], [ 257, %bb.c ]
+  %.sroa.014.0 = phi i32 [ %5, %_ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit.thread ], [ 256, %_ZN6hermes2vm19_setOwnValueEncoderILNS0_8CellKindE38EE6encodeERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE.exit ], [ 257, %_ZN6hermes2vm12JSTypedArrayIhLNS0_8CellKindE38EE2atERNS0_7RuntimeEj.exit ], [ 257, %bb.c ]
   ret i32 %.sroa.014.0
 }
 
@@ -1964,8 +1968,9 @@ _ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit.thread: ; preds = 
   %i.v = getelementptr inbounds nuw i8, ptr %4, i64 8
   store i32 3, ptr %i.v, align 8, !tbaa !306
   %i.w = call noundef i32 @_ZN6hermes2vm7Runtime14raiseTypeErrorERKNS0_11TwineChar16E(ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr noundef nonnull align 8 dereferenceable(48) %4) #11
-  %i.x = and i32 %i.w, 255
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #11
+  %i.x = and i32 %i.w, 255
+  %5 = or disjoint i32 %i.x, 256
   br label %bb.e
 
 bb.b:                                             ; preds = %_ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit
@@ -2001,7 +2006,7 @@ _ZN6hermes2vm12JSTypedArrayIhLNS0_8CellKindE39EE2atERNS0_7RuntimeEj.exit: ; pred
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.b, %_ZN6hermes2vm12JSTypedArrayIhLNS0_8CellKindE39EE2atERNS0_7RuntimeEj.exit, %_ZN6hermes2vm19_setOwnValueEncoderILNS0_8CellKindE39EE6encodeERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE.exit, %_ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit.thread
-  %.sroa.014.0 = phi i32 [ %i.x, %_ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit.thread ], [ 0, %_ZN6hermes2vm19_setOwnValueEncoderILNS0_8CellKindE39EE6encodeERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE.exit ], [ 257, %_ZN6hermes2vm12JSTypedArrayIhLNS0_8CellKindE39EE2atERNS0_7RuntimeEj.exit ], [ 257, %bb.b ]
+  %.sroa.014.0 = phi i32 [ %5, %_ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit.thread ], [ 256, %_ZN6hermes2vm19_setOwnValueEncoderILNS0_8CellKindE39EE6encodeERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE.exit ], [ 257, %_ZN6hermes2vm12JSTypedArrayIhLNS0_8CellKindE39EE2atERNS0_7RuntimeEj.exit ], [ 257, %bb.b ]
   ret i32 %.sroa.014.0
 }
 
@@ -2404,8 +2409,9 @@ _ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit.thread: ; preds = 
   %i.ac = getelementptr inbounds nuw i8, ptr %4, i64 8
   store i32 3, ptr %i.ac, align 8, !tbaa !306
   %i.ad = call noundef i32 @_ZN6hermes2vm7Runtime14raiseTypeErrorERKNS0_11TwineChar16E(ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr noundef nonnull align 8 dereferenceable(48) %4) #11
-  %i.ae = and i32 %i.ad, 255
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #11
+  %i.ae = and i32 %i.ad, 255
+  %5 = or disjoint i32 %i.ae, 256
   br label %bb.f
 
 bb.c:                                             ; preds = %_ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit
@@ -2441,7 +2447,7 @@ _ZN6hermes2vm12JSTypedArrayItLNS0_8CellKindE40EE2atERNS0_7RuntimeEj.exit: ; pred
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.c, %_ZN6hermes2vm12JSTypedArrayItLNS0_8CellKindE40EE2atERNS0_7RuntimeEj.exit, %_ZN6hermes2vm19_setOwnValueEncoderILNS0_8CellKindE40EE6encodeERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE.exit, %_ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit.thread
-  %.sroa.014.0 = phi i32 [ %i.ae, %_ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit.thread ], [ 0, %_ZN6hermes2vm19_setOwnValueEncoderILNS0_8CellKindE40EE6encodeERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE.exit ], [ 257, %_ZN6hermes2vm12JSTypedArrayItLNS0_8CellKindE40EE2atERNS0_7RuntimeEj.exit ], [ 257, %bb.c ]
+  %.sroa.014.0 = phi i32 [ %5, %_ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit.thread ], [ 256, %_ZN6hermes2vm19_setOwnValueEncoderILNS0_8CellKindE40EE6encodeERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE.exit ], [ 257, %_ZN6hermes2vm12JSTypedArrayItLNS0_8CellKindE40EE2atERNS0_7RuntimeEj.exit ], [ 257, %bb.c ]
   ret i32 %.sroa.014.0
 }
 
@@ -2844,8 +2850,9 @@ _ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit.thread: ; preds = 
   %i.ab = getelementptr inbounds nuw i8, ptr %4, i64 8
   store i32 3, ptr %i.ab, align 8, !tbaa !306
   %i.ac = call noundef i32 @_ZN6hermes2vm7Runtime14raiseTypeErrorERKNS0_11TwineChar16E(ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr noundef nonnull align 8 dereferenceable(48) %4) #11
-  %i.ad = and i32 %i.ac, 255
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #11
+  %i.ad = and i32 %i.ac, 255
+  %5 = or disjoint i32 %i.ad, 256
   br label %bb.f
 
 bb.c:                                             ; preds = %_ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit
@@ -2881,7 +2888,7 @@ _ZN6hermes2vm12JSTypedArrayIjLNS0_8CellKindE41EE2atERNS0_7RuntimeEj.exit: ; pred
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.c, %_ZN6hermes2vm12JSTypedArrayIjLNS0_8CellKindE41EE2atERNS0_7RuntimeEj.exit, %_ZN6hermes2vm19_setOwnValueEncoderILNS0_8CellKindE41EE6encodeERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE.exit, %_ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit.thread
-  %.sroa.014.0 = phi i32 [ %i.ad, %_ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit.thread ], [ 0, %_ZN6hermes2vm19_setOwnValueEncoderILNS0_8CellKindE41EE6encodeERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE.exit ], [ 257, %_ZN6hermes2vm12JSTypedArrayIjLNS0_8CellKindE41EE2atERNS0_7RuntimeEj.exit ], [ 257, %bb.c ]
+  %.sroa.014.0 = phi i32 [ %5, %_ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit.thread ], [ 256, %_ZN6hermes2vm19_setOwnValueEncoderILNS0_8CellKindE41EE6encodeERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE.exit ], [ 257, %_ZN6hermes2vm12JSTypedArrayIjLNS0_8CellKindE41EE2atERNS0_7RuntimeEj.exit ], [ 257, %bb.c ]
   ret i32 %.sroa.014.0
 }
 
@@ -3284,8 +3291,9 @@ _ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit.thread: ; preds = 
   %i.v = getelementptr inbounds nuw i8, ptr %4, i64 8
   store i32 3, ptr %i.v, align 8, !tbaa !306
   %i.w = call noundef i32 @_ZN6hermes2vm7Runtime14raiseTypeErrorERKNS0_11TwineChar16E(ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr noundef nonnull align 8 dereferenceable(48) %4) #11
-  %i.x = and i32 %i.w, 255
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #11
+  %i.x = and i32 %i.w, 255
+  %5 = or disjoint i32 %i.x, 256
   br label %bb.e
 
 bb.b:                                             ; preds = %_ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit
@@ -3321,7 +3329,7 @@ _ZN6hermes2vm12JSTypedArrayIfLNS0_8CellKindE42EE2atERNS0_7RuntimeEj.exit: ; pred
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.b, %_ZN6hermes2vm12JSTypedArrayIfLNS0_8CellKindE42EE2atERNS0_7RuntimeEj.exit, %_ZN6hermes2vm19_setOwnValueEncoderILNS0_8CellKindE42EE6encodeERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE.exit, %_ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit.thread
-  %.sroa.014.0 = phi i32 [ %i.x, %_ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit.thread ], [ 0, %_ZN6hermes2vm19_setOwnValueEncoderILNS0_8CellKindE42EE6encodeERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE.exit ], [ 257, %_ZN6hermes2vm12JSTypedArrayIfLNS0_8CellKindE42EE2atERNS0_7RuntimeEj.exit ], [ 257, %bb.b ]
+  %.sroa.014.0 = phi i32 [ %5, %_ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit.thread ], [ 256, %_ZN6hermes2vm19_setOwnValueEncoderILNS0_8CellKindE42EE6encodeERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE.exit ], [ 257, %_ZN6hermes2vm12JSTypedArrayIfLNS0_8CellKindE42EE2atERNS0_7RuntimeEj.exit ], [ 257, %bb.b ]
   ret i32 %.sroa.014.0
 }
 
@@ -3724,8 +3732,9 @@ _ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit.thread: ; preds = 
   %i.t = getelementptr inbounds nuw i8, ptr %4, i64 8
   store i32 3, ptr %i.t, align 8, !tbaa !306
   %i.u = call noundef i32 @_ZN6hermes2vm7Runtime14raiseTypeErrorERKNS0_11TwineChar16E(ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr noundef nonnull align 8 dereferenceable(48) %4) #11
-  %i.v = and i32 %i.u, 255
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #11
+  %i.v = and i32 %i.u, 255
+  %5 = or disjoint i32 %i.v, 256
   br label %bb.e
 
 bb.b:                                             ; preds = %_ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit
@@ -3761,7 +3770,7 @@ _ZN6hermes2vm12JSTypedArrayIdLNS0_8CellKindE43EE2atERNS0_7RuntimeEj.exit: ; pred
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.b, %_ZN6hermes2vm12JSTypedArrayIdLNS0_8CellKindE43EE2atERNS0_7RuntimeEj.exit, %_ZN6hermes2vm19_setOwnValueEncoderILNS0_8CellKindE43EE6encodeERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE.exit, %_ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit.thread
-  %.sroa.014.0 = phi i32 [ %i.v, %_ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit.thread ], [ 0, %_ZN6hermes2vm19_setOwnValueEncoderILNS0_8CellKindE43EE6encodeERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE.exit ], [ 257, %_ZN6hermes2vm12JSTypedArrayIdLNS0_8CellKindE43EE2atERNS0_7RuntimeEj.exit ], [ 257, %bb.b ]
+  %.sroa.014.0 = phi i32 [ %5, %_ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit.thread ], [ 256, %_ZN6hermes2vm19_setOwnValueEncoderILNS0_8CellKindE43EE6encodeERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE.exit ], [ 257, %_ZN6hermes2vm12JSTypedArrayIdLNS0_8CellKindE43EE2atERNS0_7RuntimeEj.exit ], [ 257, %bb.b ]
   ret i32 %.sroa.014.0
 }
 
@@ -4164,8 +4173,9 @@ _ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit.thread: ; preds = 
   %i.al = getelementptr inbounds nuw i8, ptr %6, i64 8
   store i32 3, ptr %i.al, align 8, !tbaa !306
   %i.am = call noundef i32 @_ZN6hermes2vm7Runtime14raiseTypeErrorERKNS0_11TwineChar16E(ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr noundef nonnull align 8 dereferenceable(48) %6) #11
-  %i.an = and i32 %i.am, 255
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #11
+  %i.an = and i32 %i.am, 255
+  %7 = or disjoint i32 %i.an, 256
   br label %_ZN6hermes2vm19_setOwnValueEncoderILNS0_8CellKindE44EE6encodeERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE.exit.thread
 
 bb.d:                                             ; preds = %_ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit
@@ -4201,7 +4211,7 @@ _ZN6hermes2vm12JSTypedArrayIlLNS0_8CellKindE44EE2atERNS0_7RuntimeEj.exit: ; pred
   br label %_ZN6hermes2vm19_setOwnValueEncoderILNS0_8CellKindE44EE6encodeERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE.exit.thread
 
 _ZN6hermes2vm19_setOwnValueEncoderILNS0_8CellKindE44EE6encodeERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE.exit.thread: ; preds = %bb.a, %bb.d, %_ZN6hermes2vm12JSTypedArrayIlLNS0_8CellKindE44EE2atERNS0_7RuntimeEj.exit, %_ZN6hermes2vm19_setOwnValueEncoderILNS0_8CellKindE44EE6encodeERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE.exit, %_ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit.thread
-  %.sroa.014.0 = phi i32 [ %i.an, %_ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit.thread ], [ 0, %_ZN6hermes2vm19_setOwnValueEncoderILNS0_8CellKindE44EE6encodeERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE.exit ], [ 257, %bb.d ], [ 257, %_ZN6hermes2vm12JSTypedArrayIlLNS0_8CellKindE44EE2atERNS0_7RuntimeEj.exit ], [ 0, %bb.a ]
+  %.sroa.014.0 = phi i32 [ %7, %_ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit.thread ], [ 256, %_ZN6hermes2vm19_setOwnValueEncoderILNS0_8CellKindE44EE6encodeERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE.exit ], [ 257, %bb.d ], [ 257, %_ZN6hermes2vm12JSTypedArrayIlLNS0_8CellKindE44EE2atERNS0_7RuntimeEj.exit ], [ 256, %bb.a ]
   ret i32 %.sroa.014.0
 }
 
@@ -4604,8 +4614,9 @@ _ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit.thread: ; preds = 
   %i.al = getelementptr inbounds nuw i8, ptr %6, i64 8
   store i32 3, ptr %i.al, align 8, !tbaa !306
   %i.am = call noundef i32 @_ZN6hermes2vm7Runtime14raiseTypeErrorERKNS0_11TwineChar16E(ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr noundef nonnull align 8 dereferenceable(48) %6) #11
-  %i.an = and i32 %i.am, 255
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #11
+  %i.an = and i32 %i.am, 255
+  %7 = or disjoint i32 %i.an, 256
   br label %_ZN6hermes2vm19_setOwnValueEncoderILNS0_8CellKindE45EE6encodeERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE.exit.thread
 
 bb.d:                                             ; preds = %_ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit
@@ -4641,7 +4652,7 @@ _ZN6hermes2vm12JSTypedArrayImLNS0_8CellKindE45EE2atERNS0_7RuntimeEj.exit: ; pred
   br label %_ZN6hermes2vm19_setOwnValueEncoderILNS0_8CellKindE45EE6encodeERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE.exit.thread
 
 _ZN6hermes2vm19_setOwnValueEncoderILNS0_8CellKindE45EE6encodeERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE.exit.thread: ; preds = %bb.a, %bb.d, %_ZN6hermes2vm12JSTypedArrayImLNS0_8CellKindE45EE2atERNS0_7RuntimeEj.exit, %_ZN6hermes2vm19_setOwnValueEncoderILNS0_8CellKindE45EE6encodeERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE.exit, %_ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit.thread
-  %.sroa.014.0 = phi i32 [ %i.an, %_ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit.thread ], [ 0, %_ZN6hermes2vm19_setOwnValueEncoderILNS0_8CellKindE45EE6encodeERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE.exit ], [ 257, %bb.d ], [ 257, %_ZN6hermes2vm12JSTypedArrayImLNS0_8CellKindE45EE2atERNS0_7RuntimeEj.exit ], [ 0, %bb.a ]
+  %.sroa.014.0 = phi i32 [ %7, %_ZNK6hermes2vm16JSTypedArrayBase8attachedERNS0_7RuntimeE.exit.thread ], [ 256, %_ZN6hermes2vm19_setOwnValueEncoderILNS0_8CellKindE45EE6encodeERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE.exit ], [ 257, %bb.d ], [ 257, %_ZN6hermes2vm12JSTypedArrayImLNS0_8CellKindE45EE2atERNS0_7RuntimeEj.exit ], [ 256, %bb.a ]
   ret i32 %.sroa.014.0
 }
 

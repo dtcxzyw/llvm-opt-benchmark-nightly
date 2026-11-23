@@ -205,15 +205,16 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %._cri
   store ptr %i.am, ptr %i.aj, align 8, !tbaa !113
   store ptr null, ptr %i.al, align 8, !tbaa !113
   %i.an = getelementptr inbounds nuw i8, ptr %3, i64 12 ; 2 uses
-  %i.ao = load i8, ptr %i.an, align 4             ; 3 uses
-  %i.ap = and i8 %i.ao, 3
+  %i.ao = load i8, ptr %i.an, align 4             ; 2 uses
+  %i.ap = and i8 %i.ao, 3                         ; 2 uses
   store i8 %i.ap, ptr %i.ai, align 4
   %i.aq = and i8 %i.ao, -4
   store i8 %i.aq, ptr %i.an, align 4
   %i.ar = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 3 uses
   %i.as = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
   store i32 0, ptr %i.ar, align 8, !tbaa !41
-  %i.at = getelementptr inbounds nuw i8, ptr %4, i64 28
+  %i.at = getelementptr inbounds nuw i8, ptr %4, i64 28 ; 2 uses
+  store i8 0, ptr %i.at, align 4
   %i.au = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
   store ptr null, ptr %i.au, align 8, !tbaa !42
   %i.av = load i32, ptr %i.as, align 8, !tbaa !68
@@ -223,6 +224,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %._cri
   store ptr null, ptr %i.aw, align 8, !tbaa !113
   %i.ay = getelementptr inbounds nuw i8, ptr %3, i64 28 ; 2 uses
   %i.az = load i8, ptr %i.ay, align 4             ; 2 uses
+  %5 = and i8 %i.az, 3
   %i.ba = and i8 %i.az, -4
   store i8 %i.ba, ptr %i.ay, align 4
   %i.bb = icmp samesign ugt i64 %.1, %1
@@ -298,9 +300,8 @@ bb.k:                                             ; preds = %_ZN6vectorIP4exprLb
   store ptr %i.bw, ptr %i.aj, align 8, !tbaa !113
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bn, i64 12 ; 2 uses
   %i.by = load i8, ptr %i.bx, align 4             ; 2 uses
-  %5 = and i8 %i.by, -4
-  %i.bz = and i8 %i.ao, 3
-  %i.ca = or disjoint i8 %i.bz, %5
+  %i.bz = and i8 %i.by, -4
+  %i.ca = or disjoint i8 %i.ap, %i.bz
   store i8 %i.ca, ptr %i.bx, align 4
   %i.cb = and i8 %i.by, 3
   store i8 %i.cb, ptr %i.ai, align 4
@@ -314,9 +315,8 @@ bb.k:                                             ; preds = %_ZN6vectorIP4exprLb
   store ptr %i.cf, ptr %i.au, align 8, !tbaa !113
   %i.cg = getelementptr inbounds nuw i8, ptr %i.bn, i64 28 ; 2 uses
   %i.ch = load i8, ptr %i.cg, align 4             ; 2 uses
-  %6 = and i8 %i.ch, -4
-  %i.ci = and i8 %i.az, 3
-  %i.cj = or disjoint i8 %i.ci, %6
+  %i.ci = and i8 %i.ch, -4
+  %i.cj = or disjoint i8 %5, %i.ci
   store i8 %i.cj, ptr %i.cg, align 4
   %i.ck = and i8 %i.ch, 3
   store i8 %i.ck, ptr %i.at, align 4
@@ -474,7 +474,6 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 12 ; 3 uses
   %i.e = load i8, ptr %i.d, align 4
   %i.f = and i8 %i.e, -4                          ; 2 uses
-  store i8 %i.f, ptr %i.d, align 4
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   %i.h = load i32, ptr %i.c, align 8, !tbaa !68   ; 2 uses
   store i32 %i.h, ptr %i.b, align 8, !tbaa !68
@@ -484,7 +483,10 @@ bb.a:
   store ptr %i.j, ptr %i.g, align 8, !tbaa !113
   store ptr null, ptr %i.i, align 8, !tbaa !113
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
-  %i.l = load i8, ptr %i.k, align 4               ; 2 uses
+  %i.l = load i8, ptr %i.k, align 4               ; 3 uses
+  %3 = and i8 %i.l, 2
+  %4 = or disjoint i8 %3, %i.f
+  store i8 %4, ptr %i.d, align 4
   %i.m = and i8 %i.l, -4
   store i8 %i.m, ptr %i.k, align 4
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 3 uses

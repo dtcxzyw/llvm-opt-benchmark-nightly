@@ -204,8 +204,9 @@ _ZN6hermes2vm15HandleRootOwner10makeHandleENS0_11HermesValueE.exit: ; preds = %b
   %.sroa.0.0.copyload.i.i.i147 = load i64, ptr %i.fz, align 8, !tbaa !46
   %i.ga = trunc i64 %.sroa.0.0.copyload.i.i.i147 to i32
   %i.gb = tail call noundef i32 @_ZN6hermes2vm8JSObject20defineNewOwnPropertyENS0_6HandleIS1_EERNS0_7RuntimeENS0_8SymbolIDENS0_13PropertyFlagsENS2_INS0_11HermesValueEEE(ptr nonnull %0, ptr noundef nonnull align 8 dereferenceable(9816) %1, i32 %i.ga, i16 14, ptr nonnull %3) #13
-  %5 = icmp eq i32 %i.gb, 0
-  %6 = select i1 %5, i32 0, i32 257, !prof !44
+  %5 = icmp ne i32 %i.gb, 0
+  %6 = zext i1 %5 to i32
+  %7 = or disjoint i32 %6, 256
   br label %bb.at
 
 bb.ak:                                            ; preds = %bb.ag
@@ -327,7 +328,7 @@ _ZN6hermes2vm9ArrayImpl17setIndexedStorageERNS0_11PointerBaseEPNS0_18SegmentedAr
   br label %bb.at
 
 bb.at:                                            ; preds = %_ZN6hermes2vm15HandleRootOwner10makeHandleENS0_11HermesValueE.exit, %_ZNK6hermes2vm18SegmentedArrayBaseINS0_13HermesValue32EE4sizeERNS0_11PointerBaseE.exit, %bb.al, %bb.ad, %_ZN6hermes2vm9ArrayImpl17setIndexedStorageERNS0_11PointerBaseEPNS0_18SegmentedArrayBaseINS0_13HermesValue32EEERNS0_7HadesGCE.exit163
-  %.sroa.0182.2 = phi i32 [ %6, %_ZN6hermes2vm15HandleRootOwner10makeHandleENS0_11HermesValueE.exit ], [ 257, %_ZN6hermes2vm9ArrayImpl17setIndexedStorageERNS0_11PointerBaseEPNS0_18SegmentedArrayBaseINS0_13HermesValue32EEERNS0_7HadesGCE.exit163 ], [ 0, %bb.ad ], [ 0, %bb.al ], [ 0, %_ZNK6hermes2vm18SegmentedArrayBaseINS0_13HermesValue32EE4sizeERNS0_11PointerBaseE.exit ]
+  %.sroa.0182.2 = phi i32 [ %7, %_ZN6hermes2vm15HandleRootOwner10makeHandleENS0_11HermesValueE.exit ], [ 257, %_ZN6hermes2vm9ArrayImpl17setIndexedStorageERNS0_11PointerBaseEPNS0_18SegmentedArrayBaseINS0_13HermesValue32EEERNS0_7HadesGCE.exit163 ], [ 256, %bb.ad ], [ 256, %bb.al ], [ 256, %_ZNK6hermes2vm18SegmentedArrayBaseINS0_13HermesValue32EE4sizeERNS0_11PointerBaseE.exit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #13
   br label %bb.au
 
@@ -730,7 +731,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden range(i32 0, 258) i32 @_ZN6hermes2vm7JSArray9setLengthENS0_6HandleIS1_EERNS0_7RuntimeENS2_INS0_11HermesValueEEENS0_11PropOpFlagsE(ptr %0, ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr %2, i32 %3) local_unnamed_addr #0 align 2 !guid !147 {
+define hidden range(i32 0, 512) i32 @_ZN6hermes2vm7JSArray9setLengthENS0_6HandleIS1_EERNS0_7RuntimeENS2_INS0_11HermesValueEEENS0_11PropOpFlagsE(ptr %0, ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr %2, i32 %3) local_unnamed_addr #0 align 2 !guid !147 {
 bb.a:
   %4 = alloca %"class.hermes::vm::TwineChar16", align 8 ; 8 uses
   %i.a = load i64, ptr %2, align 8                ; 2 uses
@@ -809,17 +810,20 @@ _ZN6hermes2vm11TwineChar16C2EPKc.exit:            ; preds = %_ZN6hermes16truncat
   %i.ai = getelementptr inbounds nuw i8, ptr %4, i64 8
   store i32 3, ptr %i.ai, align 8, !tbaa !53
   %i.aj = call noundef i32 @_ZN6hermes2vm7Runtime15raiseRangeErrorERKNS0_11TwineChar16E(ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr noundef nonnull align 8 dereferenceable(48) %4) #13
-  %5 = and i32 %i.aj, 255
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #13
   br label %.critedge
 
 bb.i:                                             ; preds = %_ZN6hermes16truncateToUInt32Ed.exit
-  %i.ak = tail call i32 @_ZN6hermes2vm7JSArray9setLengthENS0_6HandleIS1_EERNS0_7RuntimeEjNS0_11PropOpFlagsE(ptr %0, ptr noundef nonnull align 8 dereferenceable(9816) %1, i32 noundef %.1, i32 %3)
+  %i.ak = tail call i32 @_ZN6hermes2vm7JSArray9setLengthENS0_6HandleIS1_EERNS0_7RuntimeEjNS0_11PropOpFlagsE(ptr %0, ptr noundef nonnull align 8 dereferenceable(9816) %1, i32 noundef %.1, i32 %3) ; 2 uses
+  %5 = and i32 %i.ak, 256
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.d, %bb.g, %bb.i, %_ZN6hermes2vm11TwineChar16C2EPKc.exit
-  %.sroa.028.1 = phi i32 [ %5, %_ZN6hermes2vm11TwineChar16C2EPKc.exit ], [ %i.ak, %bb.i ], [ 0, %bb.d ], [ 0, %bb.g ]
-  ret i32 %.sroa.028.1
+  %.sroa.028.sroa.0.1 = phi i32 [ %i.aj, %_ZN6hermes2vm11TwineChar16C2EPKc.exit ], [ %i.ak, %bb.i ], [ 0, %bb.g ], [ 0, %bb.d ]
+  %.sroa.028.1 = phi i32 [ 0, %_ZN6hermes2vm11TwineChar16C2EPKc.exit ], [ %5, %bb.i ], [ 0, %bb.g ], [ 0, %bb.d ]
+  %.sroa.028.sroa.0.0.insert.ext = and i32 %.sroa.028.sroa.0.1, 255
+  %.sroa.028.sroa.0.0.insert.insert = or disjoint i32 %.sroa.028.1, %.sroa.028.sroa.0.0.insert.ext
+  ret i32 %.sroa.028.sroa.0.0.insert.insert
 }
 
 declare { i32, i64 } @_ZN6hermes2vm12toNumber_RJSERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE(ptr noundef nonnull align 8 dereferenceable(9816), ptr) local_unnamed_addr #1
@@ -1207,12 +1211,12 @@ _ZN6hermes2vm11TwineChar16C2EPKc.exit:            ; preds = %bb.v
   store i32 3, ptr %i.ez, align 8, !tbaa !53
   call void @_ZN6hermes2vmplERKNS0_11TwineChar16ES3_(ptr dead_on_unwind nonnull writable sret(%"class.hermes::vm::TwineChar16") align 8 %7, ptr noundef nonnull align 8 dereferenceable(48) %8, ptr noundef nonnull align 8 dereferenceable(48) %11)
   %i.fa = call noundef i32 @_ZN6hermes2vm7Runtime14raiseTypeErrorERKNS0_11TwineChar16E(ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr noundef nonnull align 8 dereferenceable(48) %7) #13
-  %12 = and i32 %i.fa, 255
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #13
+  %12 = and i32 %i.fa, 255
   br label %bb.w
 
 bb.w:                                             ; preds = %_ZN6hermes2vm7JSArray9putLengthEPS1_RNS0_7RuntimeENS0_13HermesValue32E.exit45, %bb.v, %bb.t, %_ZN6hermes2vm11TwineChar16C2EPKc.exit
