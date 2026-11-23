@@ -202,6 +202,7 @@ bb.b:                                             ; preds = %bb.a
   %i.bb = load i64, ptr %i.ba, align 8            ; 4 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.bd = load ptr, ptr %i.bc, align 8, !nonnull !4 ; 2 uses
+  %2 = lshr i64 4294967295, %i.al
   %.sroa.4189.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.o, i64 8 ; 2 uses
   %.sroa.448.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.z, i64 8
   br label %bb.c
@@ -224,7 +225,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.bh, label %.loopexit413, label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph462, %.backedge
-  %.sroa.040.0461 = phi i64 [ 0, %.lr.ph462 ], [ %.sroa.040.0.be, %.backedge ] ; 3 uses
+  %.sroa.040.0461 = phi i64 [ 0, %.lr.ph462 ], [ %.sroa.040.0.be, %.backedge ] ; 4 uses
   %i.bi = add nuw i64 %.sroa.040.0461, 1          ; 2 uses
   %i.bj = shl i64 %.sroa.040.0461, %i.al          ; 3 uses
   %i.bk = trunc i64 %i.bj to i32                  ; 2 uses
@@ -414,7 +415,7 @@ bb.n:                                             ; preds = %bb.c
   br i1 %i.ea, label %bb.c, label %._crit_edge.loopexit
 
 bb.o:                                             ; preds = %bb.n
-  %i.eb = and i64 %i.bj, 4294967295               ; 4 uses
+  %i.eb = and i64 %i.bj, 4294967295               ; 3 uses
   store i64 %i.eb, ptr %i.y, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.x)
   store ptr %i.y, ptr %i.x, align 8
@@ -592,8 +593,8 @@ bb.z:                                             ; preds = %bb.y
   br i1 %.not463, label %._crit_edge.split.us, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.z
-  %2 = lshr i64 %i.eb, %i.al
-  %i.fq = add nsw i64 %2, -2                      ; 3 uses
+  %3 = and i64 %2, %.sroa.040.0461
+  %i.fq = add nsw i64 %3, -2                      ; 3 uses
   %i.fr = icmp ult i64 %i.fq, %i.bb
   %i.fs = getelementptr inbounds nuw [24 x i8], ptr %i.bd, i64 %i.fq ; 2 uses
   %i.ft = getelementptr inbounds nuw i8, ptr %i.fs, i64 16 ; 2 uses
