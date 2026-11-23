@@ -204,17 +204,15 @@ bb.cq:                                            ; preds = %bb.cp
 bb.cr:                                            ; preds = %bb.cp
   %i.ke = getelementptr inbounds nuw i8, ptr %1, i64 2319
   %i.kf = load i8, ptr %i.ke, align 1, !alias.scope !5945, !noalias !5923, !noundef !12
-  %.not.i.i.i.i.i.i = icmp sgt i8 %i.kf, -1
+  %.not.i.i.i.i.i.i = icmp slt i8 %i.kf, 0
   %i.kg = getelementptr inbounds nuw i8, ptr %1, i64 2312
-  %.val.i.i.i.i.i.i = load ptr, ptr %i.kc, align 8, !alias.scope !5945, !noalias !5923 ; 5 uses
+  %.val.i.i.i.i.i.i = load ptr, ptr %i.kc, align 8, !alias.scope !5945, !noalias !5923 ; 4 uses
   %.val21.i.i.i.i.i.i = load i64, ptr %i.kg, align 8, !alias.scope !5945, !noalias !5923 ; 2 uses
-  br i1 %.not.i.i.i.i.i.i, label %3, label %_RNvXs6_NtCs9zPlAsQS9gd_4ecow3vecINtB5_6EcoVechENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsl8OoimOLbh_6qdrant.exit.i.i.i.i.i.i
-
-3:                                                ; preds = %bb.cr
   %.not.i.i.i.i.i.i.i.i = icmp eq ptr %.val.i.i.i.i.i.i, inttoptr (i64 16 to ptr)
-  br i1 %.not.i.i.i.i.i.i.i.i, label %_RNvXs6_NtCs9zPlAsQS9gd_4ecow3vecINtB5_6EcoVechENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsl8OoimOLbh_6qdrant.exit.i.i.i.i.i.i, label %bb.cs
+  %or.cond = select i1 %.not.i.i.i.i.i.i, i1 true, i1 %.not.i.i.i.i.i.i.i.i
+  br i1 %or.cond, label %_RNvXs6_NtCs9zPlAsQS9gd_4ecow3vecINtB5_6EcoVechENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsl8OoimOLbh_6qdrant.exit.i.i.i.i.i.i, label %bb.cs
 
-bb.cs:                                            ; preds = %3
+bb.cs:                                            ; preds = %bb.cr
   %i.kh = getelementptr inbounds i8, ptr %.val.i.i.i.i.i.i, i64 -16
   %i.ki = atomicrmw add ptr %i.kh, i64 1 monotonic, align 8, !noalias !5946
   %i.kj = icmp slt i64 %i.ki, 0
@@ -229,9 +227,8 @@ bb.cs:                                            ; preds = %3
 .cont.i.i:                                        ; preds = %.invoke.i.i
   unreachable
 
-_RNvXs6_NtCs9zPlAsQS9gd_4ecow3vecINtB5_6EcoVechENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsl8OoimOLbh_6qdrant.exit.i.i.i.i.i.i: ; preds = %bb.cr, %bb.cs, %3
-  %.sroa.06.0.i.i.i.i.i.i = phi ptr [ %.val.i.i.i.i.i.i, %bb.cs ], [ inttoptr (i64 16 to ptr), %3 ], [ %.val.i.i.i.i.i.i, %bb.cr ]
-  store ptr %.sroa.06.0.i.i.i.i.i.i, ptr %.sink.i.sroa.gep16.i.i.i.i.i, align 8, !alias.scope !5943, !noalias !5942
+_RNvXs6_NtCs9zPlAsQS9gd_4ecow3vecINtB5_6EcoVechENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsl8OoimOLbh_6qdrant.exit.i.i.i.i.i.i: ; preds = %bb.cr, %bb.cs
+  store ptr %.val.i.i.i.i.i.i, ptr %.sink.i.sroa.gep16.i.i.i.i.i, align 8, !alias.scope !5943, !noalias !5942
   br label %_RNvXsen_NtCs607s0NAIaWN_7segment5typesNtB6_8ShardKeyNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i.i.i.i
 
 _RNvXsen_NtCs607s0NAIaWN_7segment5typesNtB6_8ShardKeyNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i.i.i.i: ; preds = %_RNvXs6_NtCs9zPlAsQS9gd_4ecow3vecINtB5_6EcoVechENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsl8OoimOLbh_6qdrant.exit.i.i.i.i.i.i, %bb.cq

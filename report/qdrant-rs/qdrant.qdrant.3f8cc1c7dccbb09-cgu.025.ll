@@ -204,17 +204,15 @@ bb.ed:                                            ; preds = %.noexc7.i
 bb.ee:                                            ; preds = %.noexc7.i
   %i.pf = getelementptr inbounds nuw i8, ptr %.val, i64 31
   %i.pg = load i8, ptr %i.pf, align 1, !alias.scope !8353, !noundef !23
-  %.not.i.i28.i.i.i = icmp sgt i8 %i.pg, -1
+  %.not.i.i28.i.i.i = icmp slt i8 %i.pg, 0
   %i.ph = getelementptr inbounds nuw i8, ptr %.val, i64 24
-  %.val.i.i37.i.i.i = load ptr, ptr %i.pd, align 8, !alias.scope !8353 ; 5 uses
+  %.val.i.i37.i.i.i = load ptr, ptr %i.pd, align 8, !alias.scope !8353 ; 4 uses
   %.val21.i.i38.i.i.i = load i64, ptr %i.ph, align 8, !alias.scope !8353 ; 2 uses
-  br i1 %.not.i.i28.i.i.i, label %2, label %_RNvXs6_NtCs9zPlAsQS9gd_4ecow3vecINtB5_6EcoVechENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsl8OoimOLbh_6qdrant.exit.i.i31.i.i.i
-
-2:                                                ; preds = %bb.ee
   %.not.i.i.i.i39.i.i.i = icmp eq ptr %.val.i.i37.i.i.i, inttoptr (i64 16 to ptr)
-  br i1 %.not.i.i.i.i39.i.i.i, label %_RNvXs6_NtCs9zPlAsQS9gd_4ecow3vecINtB5_6EcoVechENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsl8OoimOLbh_6qdrant.exit.i.i31.i.i.i, label %bb.ef
+  %or.cond = select i1 %.not.i.i28.i.i.i, i1 true, i1 %.not.i.i.i.i39.i.i.i
+  br i1 %or.cond, label %_RNvXs6_NtCs9zPlAsQS9gd_4ecow3vecINtB5_6EcoVechENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsl8OoimOLbh_6qdrant.exit.i.i31.i.i.i, label %bb.ef
 
-bb.ef:                                            ; preds = %2
+bb.ef:                                            ; preds = %bb.ee
   %i.pi = getelementptr inbounds i8, ptr %.val.i.i37.i.i.i, i64 -16
   %i.pj = atomicrmw add ptr %i.pi, i64 1 monotonic, align 8, !noalias !8354
   %i.pk = icmp slt i64 %i.pj, 0
@@ -227,9 +225,8 @@ bb.eg:                                            ; preds = %bb.ef
 .noexc.i40.i.i.i:                                 ; preds = %bb.eg
   unreachable
 
-_RNvXs6_NtCs9zPlAsQS9gd_4ecow3vecINtB5_6EcoVechENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsl8OoimOLbh_6qdrant.exit.i.i31.i.i.i: ; preds = %bb.ee, %bb.ef, %2
-  %.sroa.06.0.i.i33.i.i.i = phi ptr [ %.val.i.i37.i.i.i, %bb.ef ], [ inttoptr (i64 16 to ptr), %2 ], [ %.val.i.i37.i.i.i, %bb.ee ]
-  store ptr %.sroa.06.0.i.i33.i.i.i, ptr %.sink.i.sroa.gep4.i.i.i.i, align 8, !alias.scope !8351, !noalias !8350
+_RNvXs6_NtCs9zPlAsQS9gd_4ecow3vecINtB5_6EcoVechENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsl8OoimOLbh_6qdrant.exit.i.i31.i.i.i: ; preds = %bb.ee, %bb.ef
+  store ptr %.val.i.i37.i.i.i, ptr %.sink.i.sroa.gep4.i.i.i.i, align 8, !alias.scope !8351, !noalias !8350
   br label %bb.ei
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs607s0NAIaWN_7segment5types8ShardKeyECsl8OoimOLbh_6qdrant.exit.i.i.i.i: ; preds = %bb.ek, %bb.ej, %bb.eh
@@ -632,17 +629,15 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 23
   %i.f = load i8, ptr %i.e, align 1, !noundef !23
-  %.not = icmp sgt i8 %i.f, -1
+  %.not = icmp slt i8 %i.f, 0
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %.val = load ptr, ptr %i.c, align 8             ; 5 uses
+  %.val = load ptr, ptr %i.c, align 8             ; 4 uses
   %.val21 = load i64, ptr %i.g, align 8           ; 2 uses
-  br i1 %.not, label %2, label %_RNvXs6_NtCs9zPlAsQS9gd_4ecow3vecINtB5_6EcoVechENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsl8OoimOLbh_6qdrant.exit
-
-2:                                                ; preds = %bb.c
   %.not.i.i = icmp eq ptr %.val, inttoptr (i64 16 to ptr)
-  br i1 %.not.i.i, label %_RNvXs6_NtCs9zPlAsQS9gd_4ecow3vecINtB5_6EcoVechENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsl8OoimOLbh_6qdrant.exit, label %bb.d
+  %or.cond = select i1 %.not, i1 true, i1 %.not.i.i
+  br i1 %or.cond, label %_RNvXs6_NtCs9zPlAsQS9gd_4ecow3vecINtB5_6EcoVechENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsl8OoimOLbh_6qdrant.exit, label %bb.d
 
-bb.d:                                             ; preds = %2
+bb.d:                                             ; preds = %bb.c
   %i.h = getelementptr inbounds i8, ptr %.val, i64 -16
   %i.i = atomicrmw add ptr %i.h, i64 1 monotonic, align 8
   %i.j = icmp slt i64 %i.i, 0
@@ -652,10 +647,9 @@ bb.e:                                             ; preds = %bb.d
   tail call void @_RINvNtCs9zPlAsQS9gd_4ecow3vec18ref_count_overflowhECsl8OoimOLbh_6qdrant(ptr noundef nonnull %.val, i64 noundef %.val21) #28
   unreachable
 
-_RNvXs6_NtCs9zPlAsQS9gd_4ecow3vecINtB5_6EcoVechENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsl8OoimOLbh_6qdrant.exit: ; preds = %bb.c, %bb.d, %2
-  %.sroa.06.0 = phi ptr [ %.val, %bb.d ], [ inttoptr (i64 16 to ptr), %2 ], [ %.val, %bb.c ]
+_RNvXs6_NtCs9zPlAsQS9gd_4ecow3vecINtB5_6EcoVechENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsl8OoimOLbh_6qdrant.exit: ; preds = %bb.c, %bb.d
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %.sroa.06.0, ptr %i.k, align 8
+  store ptr %.val, ptr %i.k, align 8
   br label %bb.f
 
 bb.f:                                             ; preds = %_RNvXs6_NtCs9zPlAsQS9gd_4ecow3vecINtB5_6EcoVechENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsl8OoimOLbh_6qdrant.exit, %bb.b

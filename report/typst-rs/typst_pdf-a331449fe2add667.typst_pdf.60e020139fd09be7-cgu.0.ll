@@ -205,17 +205,15 @@ bb.f:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2576)
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 15
   %i.aj = load i8, ptr %i.ai, align 1, !alias.scope !2577, !noalias !2578, !noundef !10
-  %.not.i.i.i.i.i.i.i = icmp sgt i8 %i.aj, -1
+  %.not.i.i.i.i.i.i.i = icmp slt i8 %i.aj, 0
   %.val.i.i.i.i.i.i.i = load ptr, ptr %i.ah, align 8, !alias.scope !2579, !noalias !2578 ; 5 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ah, i64 8
   %.val10.i.i.i.i.i.i.i = load i64, ptr %i.ak, align 8, !alias.scope !2579, !noalias !2578 ; 2 uses
-  br i1 %.not.i.i.i.i.i.i.i, label %3, label %bb.j
-
-3:                                                ; preds = %.lr.ph.split.i
   %.not.i.i.i.i.i.i.i.i.i = icmp eq ptr %.val.i.i.i.i.i.i.i, inttoptr (i64 16 to ptr)
-  br i1 %.not.i.i.i.i.i.i.i.i.i, label %bb.j, label %bb.g
+  %or.cond.i.i.i.i.i.i = select i1 %.not.i.i.i.i.i.i.i, i1 true, i1 %.not.i.i.i.i.i.i.i.i.i
+  br i1 %or.cond.i.i.i.i.i.i, label %bb.j, label %bb.g
 
-bb.g:                                             ; preds = %3
+bb.g:                                             ; preds = %.lr.ph.split.i
   %i.al = getelementptr inbounds i8, ptr %.val.i.i.i.i.i.i.i, i64 -16
   %i.am = atomicrmw add ptr %i.al, i64 1 monotonic, align 8, !noalias !2580
   %i.an = icmp slt i64 %i.am, 0
@@ -239,8 +237,7 @@ bb.i:                                             ; preds = %bb.h
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCsakL8LGkl72C_4ecow3vec8IntoIterNtNtBG_6string9EcoStringEECs8jFhWeO2DFb_9typst_pdf(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %i.a)
           to label %.body unwind label %bb.o, !noalias !2561
 
-bb.j:                                             ; preds = %bb.g, %3, %.lr.ph.split.i
-  %.sroa.8.0.ph.i = phi ptr [ %.val.i.i.i.i.i.i.i, %bb.g ], [ inttoptr (i64 16 to ptr), %3 ], [ %.val.i.i.i.i.i.i.i, %.lr.ph.split.i ] ; 2 uses
+bb.j:                                             ; preds = %bb.g, %.lr.ph.split.i
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2569)
   %i.ap = load i64, ptr %i.q, align 8, !alias.scope !2565, !noundef !10
   %.val.i.i = load ptr, ptr %i.c, align 8, !alias.scope !2565, !nonnull !10, !noundef !10 ; 2 uses
@@ -255,7 +252,7 @@ bb.j:                                             ; preds = %bb.g, %3, %.lr.ph.s
 bb.k:                                             ; preds = %.split.i, %.split.us.i
   %.us-phi.i = phi i64 [ %i.af, %.split.i ], [ %i.t, %.split.us.i ]
   %.us-phi29.i = phi i64 [ %.val10.i.i.i.i.i.i.i, %.split.i ], [ %.sroa.5.0.copyload3.i.i.i.us.i, %.split.us.i ]
-  %.us-phi30.i = phi ptr [ %.sroa.8.0.ph.i, %.split.i ], [ %.sroa.0.0.copyload1.i.i.i.us.i, %.split.us.i ]
+  %.us-phi30.i = phi ptr [ %.val.i.i.i.i.i.i.i, %.split.i ], [ %.sroa.0.0.copyload1.i.i.i.us.i, %.split.us.i ]
   %.us-phi31.i = phi { ptr, i32 } [ %i.aq, %.split.i ], [ %i.ac, %.split.us.i ]
   store i64 %.us-phi.i, ptr %i.g, align 8, !noalias !2561
   %.sroa.714.31.extract.shift.i = lshr i64 %.us-phi29.i, 56
@@ -295,7 +292,7 @@ bb.n:                                             ; preds = %_RINvMNtCs3oUPovFnL
   %.sroa.412.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ax, i64 8
   store i64 0, ptr %.sroa.412.0..sroa_idx.i, align 8, !noalias !2572
   %.sroa.513.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ax, i64 16
-  store ptr %.sroa.8.0.ph.i, ptr %.sroa.513.0..sroa_idx.i, align 8, !noalias !2572
+  store ptr %.val.i.i.i.i.i.i.i, ptr %.sroa.513.0..sroa_idx.i, align 8, !noalias !2572
   %.sroa.714.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ax, i64 24
   store i64 %.val10.i.i.i.i.i.i.i, ptr %.sroa.714.0..sroa_idx.i, align 8, !noalias !2572
   %i.ay = add i64 %i.aw, 1
@@ -698,11 +695,13 @@ bb.ak:                                            ; preds = %bb.l
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ar, i64 8
   %i.ck = getelementptr inbounds nuw i8, ptr %i.ar, i64 23
   %i.cl = load i8, ptr %i.ck, align 1, !alias.scope !8848, !noundef !10
-  %.not.i = icmp sgt i8 %i.cl, -1
+  %.not.i = icmp slt i8 %i.cl, 0
   %i.cm = getelementptr inbounds nuw i8, ptr %i.ar, i64 16
-  %.val53.i = load ptr, ptr %i.cj, align 8, !alias.scope !8848 ; 5 uses
+  %.val53.i = load ptr, ptr %i.cj, align 8, !alias.scope !8848 ; 4 uses
   %.val54.i = load i64, ptr %i.cm, align 8, !alias.scope !8848
-  br i1 %.not.i, label %2, label %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVechENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i
+  %.not.i.i59.i = icmp eq ptr %.val53.i, inttoptr (i64 16 to ptr)
+  %or.cond24 = select i1 %.not.i, i1 true, i1 %.not.i.i59.i
+  br i1 %or.cond24, label %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVechENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i, label %bb.bx
 
 bb.al:                                            ; preds = %bb.l
   %i.cn = getelementptr inbounds nuw i8, ptr %i.ar, i64 8 ; 2 uses
@@ -908,27 +907,25 @@ bb.bk:                                            ; preds = %bb.bj
   %i.ef = getelementptr inbounds nuw i8, ptr %i.ar, i64 8
   %i.eg = getelementptr inbounds nuw i8, ptr %i.ar, i64 23
   %i.eh = load i8, ptr %i.eg, align 1, !alias.scope !8851, !noundef !10
-  %.not.i.i = icmp sgt i8 %i.eh, -1
+  %.not.i.i = icmp slt i8 %i.eh, 0
   %i.ei = getelementptr inbounds nuw i8, ptr %i.ar, i64 16
   %.val.i.i = load ptr, ptr %i.ef, align 8, !alias.scope !8851 ; 5 uses
-  %.val23.i.i = load i64, ptr %i.ei, align 8, !alias.scope !8851 ; 3 uses
-  br i1 %.not.i.i, label %1, label %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVechENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i.i
+  %.val23.i.i = load i64, ptr %i.ei, align 8, !alias.scope !8851 ; 2 uses
+  %.not.i.i.i.i = icmp eq ptr %.val.i.i, inttoptr (i64 16 to ptr)
+  %or.cond = select i1 %.not.i.i, i1 true, i1 %.not.i.i.i.i
+  br i1 %or.cond, label %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVechENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i.i, label %bb.bl
 
-_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVechENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i.i: ; preds = %bb.bk, %bb.bl, %1, %bb.bj
-  %.sroa.5.sroa.0.0.i.i = phi ptr [ undef, %bb.bj ], [ %.val.i.i, %bb.bl ], [ inttoptr (i64 16 to ptr), %1 ], [ %.val.i.i, %bb.bk ]
-  %.sroa.5.sroa.4.0.i.i = phi i64 [ undef, %bb.bj ], [ %.val23.i.i, %bb.bl ], [ %.val23.i.i, %1 ], [ %.val23.i.i, %bb.bk ]
-  %.sroa.0.0.i.i = phi i64 [ 0, %bb.bj ], [ 1, %bb.bl ], [ 1, %1 ], [ 1, %bb.bk ]
+_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVechENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i.i: ; preds = %bb.bk, %bb.bl, %bb.bj
+  %.sroa.5.sroa.0.0.i.i = phi ptr [ undef, %bb.bj ], [ %.val.i.i, %bb.bl ], [ %.val.i.i, %bb.bk ]
+  %.sroa.5.sroa.4.0.i.i = phi i64 [ undef, %bb.bj ], [ %.val23.i.i, %bb.bl ], [ %.val23.i.i, %bb.bk ]
+  %.sroa.0.0.i.i = phi i64 [ 0, %bb.bj ], [ 1, %bb.bl ], [ 1, %bb.bk ]
   %i.ej = getelementptr inbounds nuw i8, ptr %i.ar, i64 24
   %i.ek = load ptr, ptr %i.ej, align 8, !alias.scope !8851, !nonnull !10, !noundef !10 ; 2 uses
   %i.el = atomicrmw add ptr %i.ek, i64 1 monotonic, align 8, !noalias !8852
   %i.em = icmp slt i64 %i.el, 0
   br i1 %i.em, label %bb.bm, label %_RNvXs3_NtNtCsdaEETE4DqmE_13typst_library11foundations6moduleNtB5_6ModuleNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i
 
-1:                                                ; preds = %bb.bk
-  %.not.i.i.i.i = icmp eq ptr %.val.i.i, inttoptr (i64 16 to ptr)
-  br i1 %.not.i.i.i.i, label %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVechENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i.i, label %bb.bl
-
-bb.bl:                                            ; preds = %1
+bb.bl:                                            ; preds = %bb.bk
   %i.en = getelementptr inbounds i8, ptr %.val.i.i, i64 -16
   %i.eo = atomicrmw add ptr %i.en, i64 1 monotonic, align 8, !noalias !8852
   %i.ep = icmp slt i64 %i.eo, 0
@@ -1025,19 +1022,14 @@ bb.bw:                                            ; preds = %bb.bu
   call void @llvm.trap()
   unreachable
 
-2:                                                ; preds = %bb.ak
-  %.not.i.i59.i = icmp eq ptr %.val53.i, inttoptr (i64 16 to ptr)
-  br i1 %.not.i.i59.i, label %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVechENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i, label %bb.bx
-
-bb.bx:                                            ; preds = %2
+bb.bx:                                            ; preds = %bb.ak
   %i.ff = getelementptr inbounds i8, ptr %.val53.i, i64 -16
   %i.fg = atomicrmw add ptr %i.ff, i64 1 monotonic, align 8, !noalias !8849
   %i.fh = icmp slt i64 %i.fg, 0
   br i1 %i.fh, label %.invoke, label %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVechENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i, !prof !13
 
-_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVechENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i: ; preds = %bb.ak, %bb.bx, %2
-  %.sroa.017.0.i = phi ptr [ %.val53.i, %bb.bx ], [ inttoptr (i64 16 to ptr), %2 ], [ %.val53.i, %bb.ak ]
-  store ptr %.sroa.017.0.i, ptr %i.aj, align 8, !alias.scope !8847
+_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVechENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i: ; preds = %bb.ak, %bb.bx
+  store ptr %.val53.i, ptr %i.aj, align 8, !alias.scope !8847
   store i64 %.val54.i, ptr %i.ak, align 8, !alias.scope !8847
   store i64 17, ptr %i.a, align 8, !alias.scope !8847
   br label %_RNvXsj_NtNtCsdaEETE4DqmE_13typst_library11foundations5valueNtB5_5ValueNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit
@@ -1440,7 +1432,7 @@ bb.g:                                             ; preds = %bb.d
   br label %bb.l
 
 bb.h:                                             ; preds = %bb.f
-  %.val = load ptr, ptr %0, align 8, !nonnull !10, !noundef !10 ; 4 uses
+  %.val = load ptr, ptr %0, align 8, !nonnull !10, !noundef !10 ; 5 uses
   %.val27 = load i64, ptr %i.p, align 8           ; 2 uses
   %.not.i.i = icmp eq ptr %.val, inttoptr (i64 16 to ptr)
   br i1 %.not.i.i, label %bb.l, label %bb.i
@@ -1465,7 +1457,7 @@ bb.k:                                             ; preds = %bb.f
 
 bb.l:                                             ; preds = %bb.h, %bb.i, %bb.k, %bb.g
   %.sroa.515.0 = phi i64 [ %.sroa.515.0.copyload, %bb.g ], [ %.sroa.420.0.copyload, %bb.k ], [ %.val27, %bb.i ], [ %.val27, %bb.h ]
-  %.sroa.013.0 = phi ptr [ %.sroa.013.0.copyload, %bb.g ], [ %.sroa.019.0.copyload, %bb.k ], [ %.val, %bb.i ], [ inttoptr (i64 16 to ptr), %bb.h ]
+  %.sroa.013.0 = phi ptr [ %.sroa.013.0.copyload, %bb.g ], [ %.sroa.019.0.copyload, %bb.k ], [ %.val, %bb.i ], [ %.val, %bb.h ]
   store ptr %.sroa.013.0, ptr %i.d, align 8
   %.sroa.3.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   store i64 %.sroa.515.0, ptr %.sroa.3.sroa.4.0..sroa_idx, align 8
@@ -1591,7 +1583,7 @@ bb.g:                                             ; preds = %bb.d
   br label %bb.l
 
 bb.h:                                             ; preds = %bb.f
-  %.val = load ptr, ptr %0, align 8, !nonnull !10, !noundef !10 ; 4 uses
+  %.val = load ptr, ptr %0, align 8, !nonnull !10, !noundef !10 ; 5 uses
   %.val27 = load i64, ptr %i.p, align 8           ; 2 uses
   %.not.i.i = icmp eq ptr %.val, inttoptr (i64 16 to ptr)
   br i1 %.not.i.i, label %bb.l, label %bb.i
@@ -1616,7 +1608,7 @@ bb.k:                                             ; preds = %bb.f
 
 bb.l:                                             ; preds = %bb.h, %bb.i, %bb.k, %bb.g
   %.sroa.515.0 = phi i64 [ %.sroa.515.0.copyload, %bb.g ], [ %.sroa.420.0.copyload, %bb.k ], [ %.val27, %bb.i ], [ %.val27, %bb.h ]
-  %.sroa.013.0 = phi ptr [ %.sroa.013.0.copyload, %bb.g ], [ %.sroa.019.0.copyload, %bb.k ], [ %.val, %bb.i ], [ inttoptr (i64 16 to ptr), %bb.h ]
+  %.sroa.013.0 = phi ptr [ %.sroa.013.0.copyload, %bb.g ], [ %.sroa.019.0.copyload, %bb.k ], [ %.val, %bb.i ], [ %.val, %bb.h ]
   store ptr %.sroa.013.0, ptr %i.d, align 8
   %.sroa.3.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   store i64 %.sroa.515.0, ptr %.sroa.3.sroa.4.0..sroa_idx, align 8
@@ -2019,17 +2011,15 @@ bb.k:                                             ; preds = %_RNvMNtCsakL8LGkl72
   tail call void @llvm.experimental.noalias.scope.decl(metadata !11899)
   %i.y = getelementptr inbounds nuw i8, ptr %.sroa.033.056, i64 31
   %i.z = load i8, ptr %i.y, align 1, !alias.scope !11900, !noalias !11901, !noundef !10
-  %.not.i.i.i.i = icmp sgt i8 %i.z, -1
+  %.not.i.i.i.i = icmp slt i8 %i.z, 0
   %.val.i.i.i.i = load ptr, ptr %i.x, align 8, !alias.scope !11902, !noalias !11901 ; 5 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %.sroa.033.056, i64 24
   %.val10.i.i.i.i = load i64, ptr %i.aa, align 8, !alias.scope !11902, !noalias !11901 ; 2 uses
-  br i1 %.not.i.i.i.i, label %2, label %bb.n
-
-2:                                                ; preds = %.lr.ph
   %.not.i.i.i.i.i.i = icmp eq ptr %.val.i.i.i.i, inttoptr (i64 16 to ptr)
-  br i1 %.not.i.i.i.i.i.i, label %bb.n, label %bb.l
+  %or.cond.i.i.i = select i1 %.not.i.i.i.i, i1 true, i1 %.not.i.i.i.i.i.i
+  br i1 %or.cond.i.i.i, label %bb.n, label %bb.l
 
-bb.l:                                             ; preds = %2
+bb.l:                                             ; preds = %.lr.ph
   %i.ab = getelementptr inbounds i8, ptr %.val.i.i.i.i, i64 -16
   %i.ac = atomicrmw add ptr %i.ab, i64 1 monotonic, align 8, !noalias !11903
   %i.ad = icmp slt i64 %i.ac, 0
@@ -2042,8 +2032,7 @@ bb.m:                                             ; preds = %bb.l
 .noexc30:                                         ; preds = %bb.m
   unreachable
 
-bb.n:                                             ; preds = %bb.l, %2, %.lr.ph
-  %.sroa.0.0.i.i.i = phi ptr [ inttoptr (i64 16 to ptr), %2 ], [ %.val.i.i.i.i, %bb.l ], [ %.val.i.i.i.i, %.lr.ph ] ; 2 uses
+bb.n:                                             ; preds = %bb.l, %.lr.ph
   %i.ae = load <2 x i64>, ptr %.sroa.033.056, align 8, !alias.scope !11896, !noalias !11901
   tail call void @llvm.experimental.noalias.scope.decl(metadata !11904)
   %i.af = load i64, ptr %i.s, align 8, !alias.scope !11904, !noundef !10
@@ -2056,7 +2045,7 @@ bb.o:                                             ; preds = %_RINvMNtCs3oUPovFnL
           cleanup
   %.sroa.739.31.extract.shift = lshr i64 %.val10.i.i.i.i, 56
   %.sroa.739.31.extract.trunc = trunc nuw i64 %.sroa.739.31.extract.shift to i8
-  invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs5PEMdK7bMAG_12typst_syntax4span7SpannedNtNtCsakL8LGkl72C_4ecow6string9EcoStringNtBE_8DiagSpanEECs8jFhWeO2DFb_9typst_pdf(ptr %.sroa.0.0.i.i.i, i8 %.sroa.739.31.extract.trunc) #44
+  invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs5PEMdK7bMAG_12typst_syntax4span7SpannedNtNtCsakL8LGkl72C_4ecow6string9EcoStringNtBE_8DiagSpanEECs8jFhWeO2DFb_9typst_pdf(ptr %.val.i.i.i.i, i8 %.sroa.739.31.extract.trunc) #44
           to label %.thread unwind label %bb.q, !noalias !11905, !inline_history !11895
 
 bb.p:                                             ; preds = %bb.n
@@ -2083,7 +2072,7 @@ bb.q:                                             ; preds = %bb.o
   %i.an = getelementptr inbounds nuw [32 x i8], ptr %i.al, i64 %i.am ; 3 uses
   store <2 x i64> %i.ae, ptr %i.an, align 8, !noalias !11905
   %.sroa.542.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.an, i64 16
-  store ptr %.sroa.0.0.i.i.i, ptr %.sroa.542.0..sroa_idx, align 8, !noalias !11905
+  store ptr %.val.i.i.i.i, ptr %.sroa.542.0..sroa_idx, align 8, !noalias !11905
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.an, i64 24
   store i64 %.val10.i.i.i.i, ptr %.sroa.6.0..sroa_idx, align 8, !noalias !11905
   %i.ao = add i64 %i.am, 1                        ; 2 uses
@@ -2260,17 +2249,15 @@ bb.l:                                             ; preds = %.lr.ph, %.noexc26
   tail call void @llvm.experimental.noalias.scope.decl(metadata !11923)
   %i.z = getelementptr inbounds nuw i8, ptr %.sroa.038.056, i64 15
   %i.aa = load i8, ptr %i.z, align 1, !alias.scope !11924, !noalias !11925, !noundef !10
-  %.not.i.i.i33 = icmp sgt i8 %i.aa, -1
-  %.val.i.i.i34 = load ptr, ptr %.sroa.038.056, align 8, !alias.scope !11926, !noalias !11925 ; 5 uses
+  %.not.i.i.i33 = icmp slt i8 %i.aa, 0
+  %.val.i.i.i34 = load ptr, ptr %.sroa.038.056, align 8, !alias.scope !11926, !noalias !11925 ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %.sroa.038.056, i64 8
   %.val10.i.i.i = load i64, ptr %i.ab, align 8, !alias.scope !11926, !noalias !11925
-  br i1 %.not.i.i.i33, label %2, label %bb.o
-
-2:                                                ; preds = %bb.l
   %.not.i.i.i.i.i = icmp eq ptr %.val.i.i.i34, inttoptr (i64 16 to ptr)
-  br i1 %.not.i.i.i.i.i, label %bb.o, label %bb.m
+  %or.cond.i.i = select i1 %.not.i.i.i33, i1 true, i1 %.not.i.i.i.i.i
+  br i1 %or.cond.i.i, label %bb.o, label %bb.m
 
-bb.m:                                             ; preds = %2
+bb.m:                                             ; preds = %bb.l
   %i.ac = getelementptr inbounds i8, ptr %.val.i.i.i34, i64 -16
   %i.ad = atomicrmw add ptr %i.ac, i64 1 monotonic, align 8, !noalias !11927
   %i.ae = icmp slt i64 %i.ad, 0
@@ -2283,9 +2270,8 @@ bb.n:                                             ; preds = %bb.m
 .noexc35:                                         ; preds = %bb.n
   unreachable
 
-bb.o:                                             ; preds = %bb.m, %2, %bb.l
-  %.sroa.541.0.ph = phi ptr [ %.val.i.i.i34, %bb.l ], [ %.val.i.i.i34, %bb.m ], [ inttoptr (i64 16 to ptr), %2 ]
-  store ptr %.sroa.541.0.ph, ptr %i.a, align 8
+bb.o:                                             ; preds = %bb.m, %bb.l
+  store ptr %.val.i.i.i34, ptr %i.a, align 8
   store i64 %.val10.i.i.i, ptr %.sroa.7.8..sroa_idx, align 8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !11928)
   %i.af = load i64, ptr %i.u, align 8, !alias.scope !11928, !noundef !10
@@ -2609,17 +2595,15 @@ bb.l:                                             ; preds = %.lr.ph, %.noexc26
   %i.ac = getelementptr inbounds nuw i8, ptr %.sroa.034.058, i64 48
   %i.ad = getelementptr inbounds nuw i8, ptr %.sroa.034.058, i64 63
   %i.ae = load i8, ptr %i.ad, align 1, !alias.scope !11942, !noalias !11943, !noundef !10
-  %.not.i.i28 = icmp sgt i8 %i.ae, -1
+  %.not.i.i28 = icmp slt i8 %i.ae, 0
   %i.af = getelementptr inbounds nuw i8, ptr %.sroa.034.058, i64 56
-  %.val22.i.i = load ptr, ptr %i.ac, align 8, !alias.scope !11942, !noalias !11943 ; 5 uses
+  %.val22.i.i = load ptr, ptr %i.ac, align 8, !alias.scope !11942, !noalias !11943 ; 4 uses
   %.val23.i.i = load i64, ptr %i.af, align 8, !alias.scope !11942, !noalias !11943
-  br i1 %.not.i.i28, label %2, label %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVechENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i.i
-
-2:                                                ; preds = %bb.l
   %.not.i.i.i.i = icmp eq ptr %.val22.i.i, inttoptr (i64 16 to ptr)
-  br i1 %.not.i.i.i.i, label %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVechENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i.i, label %bb.m
+  %or.cond = select i1 %.not.i.i28, i1 true, i1 %.not.i.i.i.i
+  br i1 %or.cond, label %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVechENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i.i, label %bb.m
 
-bb.m:                                             ; preds = %2
+bb.m:                                             ; preds = %bb.l
   %i.ag = getelementptr inbounds i8, ptr %.val22.i.i, i64 -16
   %i.ah = atomicrmw add ptr %i.ag, i64 1 monotonic, align 8, !noalias !11944
   %i.ai = icmp slt i64 %i.ah, 0
@@ -2632,9 +2616,8 @@ bb.n:                                             ; preds = %bb.m
 .noexc29:                                         ; preds = %bb.n
   unreachable
 
-_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVechENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i.i: ; preds = %bb.l, %bb.m, %2
-  %.sroa.06.0.i.i = phi ptr [ %.val22.i.i, %bb.m ], [ inttoptr (i64 16 to ptr), %2 ], [ %.val22.i.i, %bb.l ]
-  store ptr %.sroa.06.0.i.i, ptr %i.a, align 8, !noalias !11944
+_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVechENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i.i: ; preds = %bb.l, %bb.m
+  store ptr %.val22.i.i, ptr %i.a, align 8, !noalias !11944
   store i64 %.val23.i.i, ptr %.sroa.58.0..sroa_idx9.i.i, align 8, !noalias !11944
   %i.aj = getelementptr inbounds nuw i8, ptr %.sroa.034.058, i64 16
   %.val24.i.i = load ptr, ptr %i.aj, align 8, !alias.scope !11942, !noalias !11943, !nonnull !10, !noundef !10 ; 5 uses
@@ -3037,7 +3020,7 @@ bb.sf:                                            ; preds = %bb.sc
   br label %bb.sk
 
 bb.sg:                                            ; preds = %bb.se
-  %.val.i.i = load ptr, ptr %i.cjj, align 8, !noalias !16273, !nonnull !10, !noundef !10 ; 4 uses
+  %.val.i.i = load ptr, ptr %i.cjj, align 8, !noalias !16273, !nonnull !10, !noundef !10 ; 5 uses
   %.val27.i.i = load i64, ptr %i.cjs, align 8, !noalias !16273 ; 2 uses
   %.not.i.i.i185.i = icmp eq ptr %.val.i.i, inttoptr (i64 16 to ptr)
   br i1 %.not.i.i.i185.i, label %bb.sk, label %bb.sh
@@ -3062,7 +3045,7 @@ bb.sj:                                            ; preds = %bb.se
 
 bb.sk:                                            ; preds = %bb.sj, %bb.sh, %bb.sg, %bb.sf
   %.sroa.515.0.i.i = phi i64 [ %.sroa.515.0.copyload.i.i, %bb.sf ], [ %.sroa.420.0.copyload.i.i, %bb.sj ], [ %.val27.i.i, %bb.sh ], [ %.val27.i.i, %bb.sg ]
-  %.sroa.013.0.i.i = phi ptr [ %.sroa.013.0.copyload.i.i, %bb.sf ], [ %.sroa.019.0.copyload.i.i, %bb.sj ], [ %.val.i.i, %bb.sh ], [ inttoptr (i64 16 to ptr), %bb.sg ]
+  %.sroa.013.0.i.i = phi ptr [ %.sroa.013.0.copyload.i.i, %bb.sf ], [ %.sroa.019.0.copyload.i.i, %bb.sj ], [ %.val.i.i, %bb.sh ], [ %.val.i.i, %bb.sg ]
   store ptr %.sroa.013.0.i.i, ptr %i.dg, align 8, !noalias !16265
   store i64 %.sroa.515.0.i.i, ptr %.sroa.3.sroa.4.0..sroa_idx.i.i, align 8, !noalias !16265
   call void @llvm.lifetime.start.p0(ptr nonnull %i.df), !noalias !16265
@@ -3465,7 +3448,7 @@ bb.fc:                                            ; preds = %bb.ez
   br label %bb.fh
 
 bb.fd:                                            ; preds = %bb.fb
-  %.val.i.i128 = load ptr, ptr %i.afb, align 8, !nonnull !10, !noundef !10 ; 4 uses
+  %.val.i.i128 = load ptr, ptr %i.afb, align 8, !nonnull !10, !noundef !10 ; 5 uses
   %.val27.i.i = load i64, ptr %i.afo, align 8     ; 2 uses
   %.not.i.i.i.i129 = icmp eq ptr %.val.i.i128, inttoptr (i64 16 to ptr)
   br i1 %.not.i.i.i.i129, label %bb.fh, label %bb.fe
@@ -3490,7 +3473,7 @@ bb.fg:                                            ; preds = %bb.fb
 
 bb.fh:                                            ; preds = %bb.fg, %bb.fe, %bb.fd, %bb.fc
   %.sroa.515.0.i.i = phi i64 [ %.sroa.515.0.copyload.i.i, %bb.fc ], [ %.sroa.420.0.copyload.i.i, %bb.fg ], [ %.val27.i.i, %bb.fe ], [ %.val27.i.i, %bb.fd ]
-  %.sroa.013.0.i.i = phi ptr [ %.sroa.013.0.copyload.i.i, %bb.fc ], [ %.sroa.019.0.copyload.i.i, %bb.fg ], [ %.val.i.i128, %bb.fe ], [ inttoptr (i64 16 to ptr), %bb.fd ]
+  %.sroa.013.0.i.i = phi ptr [ %.sroa.013.0.copyload.i.i, %bb.fc ], [ %.sroa.019.0.copyload.i.i, %bb.fg ], [ %.val.i.i128, %bb.fe ], [ %.val.i.i128, %bb.fd ]
   store ptr %.sroa.013.0.i.i, ptr %i.ft, align 8, !noalias !18006
   %.sroa.3.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.ft, i64 8
   store i64 %.sroa.515.0.i.i, ptr %.sroa.3.sroa.4.0..sroa_idx.i.i, align 8, !noalias !18006
@@ -3893,7 +3876,7 @@ bb.n:                                             ; preds = %bb.l
 
 bb.o:                                             ; preds = %bb.n
   tail call void @llvm.experimental.noalias.scope.decl(metadata !21402)
-  %.val.i = load ptr, ptr %i.i, align 8, !alias.scope !21402, !nonnull !10, !noundef !10 ; 4 uses
+  %.val.i = load ptr, ptr %i.i, align 8, !alias.scope !21402, !nonnull !10, !noundef !10 ; 5 uses
   %.not.i.i.i = icmp eq ptr %.val.i, inttoptr (i64 16 to ptr)
   br i1 %.not.i.i.i, label %.thread50, label %bb.p
 
@@ -3921,7 +3904,7 @@ bb.r:                                             ; preds = %.thread
 
 .thread50:                                        ; preds = %bb.r, %bb.p, %bb.o
   %.sroa.5.sroa.3.0.ph.ph = phi i64 [ %.sroa.414.0.copyload.i, %bb.r ], [ %i.ab, %bb.o ], [ %i.ab, %bb.p ]
-  %.sroa.5.sroa.0.0.ph.ph = phi ptr [ %.sroa.013.0.copyload.i, %bb.r ], [ inttoptr (i64 16 to ptr), %bb.o ], [ %.val.i, %bb.p ]
+  %.sroa.5.sroa.0.0.ph.ph = phi ptr [ %.sroa.013.0.copyload.i, %bb.r ], [ %.val.i, %bb.o ], [ %.val.i, %bb.p ]
   %i.ah = icmp ugt i64 %2, 4294967295
   %i.ai = trunc nuw i64 %2 to i32
   %.sroa.06.04054 = select i1 %i.ah, i32 0, i32 %i.ai

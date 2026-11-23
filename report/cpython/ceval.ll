@@ -204,12 +204,11 @@ bb.bhi:                                           ; preds = %bb.bhe
   br label %.sink.split.i
 
 .sink.split.i:                                    ; preds = %.sink.split.sink.split.i, %bb.bhh
-  %7 = phi ptr [ @_Py_NoneStruct, %bb.bhh ], [ %i.jiq, %.sink.split.sink.split.i ]
   %.val210.sink.i = phi ptr [ %.val225.i, %bb.bhh ], [ %.val208.pre.i, %.sink.split.sink.split.i ]
   %.0153.ph.i = phi ptr [ null, %bb.bhh ], [ %.0153.ph.ph.i, %.sink.split.sink.split.i ]
   %i.jml = getelementptr i8, ptr %.val210.sink.i, i64 48
   %i.jmm = load ptr, ptr %i.jml, align 8, !tbaa !256
-  call void %i.jmm(ptr noundef nonnull %7) #21, !inline_history !424
+  call void %i.jmm(ptr noundef nonnull %i.jiq) #21, !inline_history !424
   br label %bb.bhj
 
 bb.bhj:                                           ; preds = %.sink.split.i, %bb.bhg, %bb.bhf, %bb.bhd, %bb.bhb, %bb.bha
@@ -612,7 +611,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.a
   %i.n = getelementptr i8, ptr %i.a, i64 8        ; 2 uses
-  %i.o = load ptr, ptr %i.n, align 8, !tbaa !245
+  %i.o = load ptr, ptr %i.n, align 8, !tbaa !245  ; 2 uses
   %i.p = icmp eq ptr %i.o, @PyCoro_Type
   br i1 %i.p, label %bb.g, label %_PyEval_FormatAwaitableError.exit
 
@@ -646,7 +645,7 @@ bb.k:                                             ; preds = %bb.j
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j
-  %.val = phi ptr [ %.val.pre, %bb.k ], [ @PyCoro_Type, %bb.j ]
+  %.val = phi ptr [ %.val.pre, %bb.k ], [ %i.o, %bb.j ]
   %i.z = getelementptr i8, ptr %.val, i64 48
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !256
   tail call void %i.aa(ptr noundef nonnull %i.a) #21

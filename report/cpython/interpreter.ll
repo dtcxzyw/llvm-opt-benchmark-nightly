@@ -204,7 +204,7 @@ PyStackRef_CLOSE.exit10834:                       ; preds = %PyStackRef_CLOSE.ex
   %.4.val10170 = load ptr, ptr %i.dje, align 8, !tbaa !80
   %i.dkj = getelementptr i8, ptr %.4.val10170, i64 -16 ; 3 uses
   %i.dkk = icmp slt i32 %i.djw, 0
-  %i.dkl = load ptr, ptr %i.d, align 8            ; 3 uses
+  %i.dkl = load ptr, ptr %i.d, align 8            ; 4 uses
   %i.dkm = icmp eq ptr %i.dkl, null
   %or.cond15 = select i1 %i.dkk, i1 true, i1 %i.dkm
   br i1 %or.cond15, label %.loopexit.loopexit, label %bb.xa
@@ -221,7 +221,7 @@ bb.xb:                                            ; preds = %bb.xa
   br label %bb.xc
 
 bb.xc:                                            ; preds = %bb.xb, %bb.xa
-  %i.dko = phi ptr [ @_Py_NoneStruct, %bb.xa ], [ %.pre13259, %bb.xb ] ; 2 uses
+  %i.dko = phi ptr [ %i.dkl, %bb.xa ], [ %.pre13259, %bb.xb ] ; 2 uses
   %.149054 = phi ptr [ %i.dkj, %bb.xa ], [ %.4.val10169, %bb.xb ] ; 3 uses
   %i.dkp = load ptr, ptr %i.e, align 8, !tbaa !81 ; 2 uses
   %i.dkq = getelementptr i8, ptr %i.dkp, i64 6
@@ -624,12 +624,11 @@ bb.bgo:                                           ; preds = %bb.bgk
   br label %.sink.split.i
 
 .sink.split.i:                                    ; preds = %.sink.split.sink.split.i, %bb.bgn
-  %6 = phi ptr [ @_Py_NoneStruct, %bb.bgn ], [ %i.jer, %.sink.split.sink.split.i ]
   %.val210.sink.i = phi ptr [ %.val225.i, %bb.bgn ], [ %.val208.pre.i, %.sink.split.sink.split.i ]
   %.0153.ph.i = phi ptr [ null, %bb.bgn ], [ %.0153.ph.ph.i, %.sink.split.sink.split.i ]
   %i.jim = getelementptr i8, ptr %.val210.sink.i, i64 48
   %i.jin = load ptr, ptr %i.jim, align 8, !tbaa !79
-  call void %i.jin(ptr noundef nonnull %6) #8, !inline_history !109
+  call void %i.jin(ptr noundef nonnull %i.jer) #8, !inline_history !109
   br label %bb.bgp
 
 bb.bgp:                                           ; preds = %.sink.split.i, %bb.bgm, %bb.bgl, %bb.bgj, %bb.bgh, %bb.bgg

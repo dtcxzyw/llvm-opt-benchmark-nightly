@@ -202,7 +202,7 @@ bb.m:                                             ; preds = %_PyStackRef_FromPyO
   br label %_PyEval_EvalFrame.exit.i
 
 _PyEval_EvalFrame.exit.i:                         ; preds = %bb.m, %bb.l
-  %phi.call.i = phi ptr [ %i.aj, %bb.m ], [ %i.ai, %bb.l ] ; 6 uses
+  %phi.call.i = phi ptr [ %i.aj, %bb.m ], [ %i.ai, %bb.l ] ; 7 uses
   %i.ak = getelementptr i8, ptr %i.n, i64 1000
   %i.al = load i32, ptr %i.ak, align 8, !tbaa !294
   %i.am = icmp eq i32 %i.al, 1
@@ -239,7 +239,7 @@ bb.s:                                             ; preds = %bb.r
   br label %Py_DECREF.exit.i
 
 Py_DECREF.exit.i:                                 ; preds = %bb.s, %bb.r, %bb.q, %bb.p, %bb.o
-  %.1.i = phi ptr [ @_Py_NoneStruct, %bb.p ], [ %phi.call.i, %bb.o ], [ null, %bb.q ], [ null, %bb.r ], [ null, %bb.s ] ; 2 uses
+  %.1.i = phi ptr [ %phi.call.i, %bb.p ], [ %phi.call.i, %bb.o ], [ null, %bb.q ], [ null, %bb.r ], [ null, %bb.s ] ; 2 uses
   store ptr %.1.i, ptr %2, align 8, !tbaa !150
   %.not37.i = icmp eq ptr %.1.i, null
   %i.at = sext i1 %.not37.i to i32
@@ -530,23 +530,18 @@ bb.w:                                             ; preds = %_PyStackRef_FromPyO
   br label %_PyEval_EvalFrame.exit.i
 
 _PyEval_EvalFrame.exit.i:                         ; preds = %bb.w, %bb.v
-  %phi.call.i = phi ptr [ %i.bj, %bb.v ], [ %i.bk, %bb.w ] ; 7 uses
+  %phi.call.i = phi ptr [ %i.bj, %bb.v ], [ %i.bk, %bb.w ] ; 5 uses
   %i.bl = getelementptr i8, ptr %i.ar, i64 1000
   %i.bm = load i32, ptr %i.bl, align 8, !tbaa !294
-  %i.bn = icmp eq i32 %i.bm, 1
-  br i1 %i.bn, label %gen_send_ex2.exit.thread, label %2
+  %2 = icmp eq i32 %i.bm, 1
+  %i.bn = icmp eq ptr %phi.call.i, null           ; 2 uses
+  br i1 %2, label %gen_send_ex2.exit.thread, label %gen_send_ex2.exit
 
-2:                                                ; preds = %_PyEval_EvalFrame.exit.i
-  %3 = icmp eq ptr %phi.call.i, @_Py_NoneStruct
-  br i1 %3, label %gen_clear_frame.exit, label %gen_send_ex2.exit
-
-gen_send_ex2.exit:                                ; preds = %2
-  %cond = icmp eq ptr %phi.call.i, null
-  br i1 %cond, label %bb.aa, label %gen_clear_frame.exit
+gen_send_ex2.exit:                                ; preds = %_PyEval_EvalFrame.exit.i
+  br i1 %i.bn, label %bb.aa, label %gen_clear_frame.exit
 
 gen_send_ex2.exit.thread:                         ; preds = %_PyEval_EvalFrame.exit.i
-  %.not = icmp eq ptr %phi.call.i, null
-  br i1 %.not, label %bb.aa, label %bb.x
+  br i1 %i.bn, label %bb.aa, label %bb.x
 
 bb.x:                                             ; preds = %gen_send_ex2.exit.thread
   %i.bo = getelementptr i8, ptr %0, i64 8
@@ -584,8 +579,8 @@ bb.ab:                                            ; preds = %bb.aa
   tail call void @PyErr_Clear() #7
   br label %gen_clear_frame.exit
 
-gen_clear_frame.exit:                             ; preds = %gen_send_ex2.exit, %2, %Py_DECREF.exit, %bb.ab, %bb.aa, %bb.q, %bb.p, %bb.o, %bb.n, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a, %bb.f
-  %.3 = phi ptr [ @_Py_NoneStruct, %bb.e ], [ @_Py_NoneStruct, %bb.a ], [ null, %bb.f ], [ @_Py_NoneStruct, %bb.q ], [ @_Py_NoneStruct, %bb.b ], [ @_Py_NoneStruct, %bb.c ], [ @_Py_NoneStruct, %bb.d ], [ @_Py_NoneStruct, %bb.n ], [ @_Py_NoneStruct, %bb.o ], [ @_Py_NoneStruct, %bb.p ], [ null, %bb.aa ], [ null, %Py_DECREF.exit ], [ @_Py_NoneStruct, %bb.ab ], [ %phi.call.i, %gen_send_ex2.exit ], [ @_Py_NoneStruct, %2 ]
+gen_clear_frame.exit:                             ; preds = %gen_send_ex2.exit, %Py_DECREF.exit, %bb.ab, %bb.aa, %bb.q, %bb.p, %bb.o, %bb.n, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a, %bb.f
+  %.3 = phi ptr [ @_Py_NoneStruct, %bb.e ], [ @_Py_NoneStruct, %bb.a ], [ null, %bb.f ], [ @_Py_NoneStruct, %bb.q ], [ @_Py_NoneStruct, %bb.b ], [ @_Py_NoneStruct, %bb.c ], [ @_Py_NoneStruct, %bb.d ], [ @_Py_NoneStruct, %bb.n ], [ @_Py_NoneStruct, %bb.o ], [ @_Py_NoneStruct, %bb.p ], [ null, %bb.aa ], [ null, %Py_DECREF.exit ], [ @_Py_NoneStruct, %bb.ab ], [ %phi.call.i, %gen_send_ex2.exit ]
   ret ptr %.3
 }
 
