@@ -204,7 +204,7 @@ frozenset___contains___impl.exit:                 ; preds = %bb.g, %bb.h, %bb.i,
 define internal ptr @frozenset_copy(ptr nofree noundef captures(address, ret: address, provenance) %0, ptr nofree readnone captures(none) %1) #0 !guid !317 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 8
-  %.val.i = load ptr, ptr %i.a, align 8, !tbaa !107 ; 3 uses
+  %.val.i = load ptr, ptr %i.a, align 8, !tbaa !107 ; 4 uses
   %.not.i = icmp eq ptr %.val.i, @PyFrozenSet_Type
   br i1 %.not.i, label %bb.b, label %bb.d
 
@@ -229,10 +229,10 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
-  %.0.i.i.i = phi ptr [ %PyFrozenSet_Type.PySet_Type.i.i.i, %bb.e ], [ @PySet_Type, %bb.d ] ; 2 uses
+  %.0.i.i.i = phi ptr [ %PyFrozenSet_Type.PySet_Type.i.i.i, %bb.e ], [ %.val.i, %bb.d ] ; 2 uses
   %i.f = getelementptr i8, ptr %.0.i.i.i, i64 304
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !152
-  %i.h = tail call ptr %i.g(ptr noundef nonnull %.0.i.i.i, i64 noundef 0) #12, !inline_history !315 ; 13 uses
+  %i.h = tail call ptr %i.g(ptr noundef %.0.i.i.i, i64 noundef 0) #12, !inline_history !315 ; 13 uses
   %i.i = icmp eq ptr %i.h, null
   br i1 %i.i, label %frozenset_copy_impl.exit, label %bb.g
 

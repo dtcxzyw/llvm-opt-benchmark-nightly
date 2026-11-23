@@ -205,7 +205,7 @@ bb.bm:                                            ; preds = %bb.bm, %.lr.ph.i.i.
   %i.kg = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 32
   %i.kh = load i8, ptr %i.kg, align 1, !tbaa !1090
   %i.ki = icmp ult i8 %i.kh, %i.kf                ; 2 uses
-  %.19.i.i.i.i = select i1 %i.ki, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 5 uses
+  %.19.i.i.i.i = select i1 %i.ki, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 6 uses
   %.1.in.v.i.i.i.i = select i1 %i.ki, i64 24, i64 16
   %.1.in.i.i.i.i = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 %.1.in.v.i.i.i.i
   %.1.i.i.i.i = load ptr, ptr %.1.in.i.i.i.i, align 8, !tbaa !863 ; 2 uses
@@ -223,7 +223,7 @@ bb.bn:                                            ; preds = %_ZNSt3mapIN7rocksdb
   br i1 %i.km, label %.critedge.i, label %bb.bo
 
 .critedge.i:                                      ; preds = %bb.bn, %_ZNSt3mapIN7rocksdb11TemperatureENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS1_ESaISt4pairIKS1_S7_EEE11lower_boundERSB_.exit.i, %bb.bl
-  %.08.lcssa.i.i.i11.i = phi ptr [ %.19.i.i.i.i, %bb.bn ], [ getelementptr inbounds nuw (i8, ptr @_ZN7rocksdb13OptionsHelper21temperature_to_stringB5cxx11E, i64 8), %_ZNSt3mapIN7rocksdb11TemperatureENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS1_ESaISt4pairIKS1_S7_EEE11lower_boundERSB_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZN7rocksdb13OptionsHelper21temperature_to_stringB5cxx11E, i64 8), %bb.bl ]
+  %.08.lcssa.i.i.i11.i = phi ptr [ %.19.i.i.i.i, %bb.bn ], [ %.19.i.i.i.i, %_ZNSt3mapIN7rocksdb11TemperatureENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS1_ESaISt4pairIKS1_S7_EEE11lower_boundERSB_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZN7rocksdb13OptionsHelper21temperature_to_stringB5cxx11E, i64 8), %bb.bl ]
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #37
   store ptr %i.kd, ptr %14, align 8, !tbaa !395
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #37

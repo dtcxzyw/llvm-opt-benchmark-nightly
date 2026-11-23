@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %i.y = getelementptr i8, ptr %i.h, i64 1016
-  %i.z = load ptr, ptr %i.y, align 8              ; 2 uses
+  %i.z = load ptr, ptr %i.y, align 8              ; 3 uses
   %magicptr.i = ptrtoint ptr %i.z to i64
   switch i64 %magicptr.i, label %tty_audit_buf_get.exit [
     i64 -3, label %tty_audit_buf_ref.exit.thread.i
@@ -213,7 +213,7 @@ tty_audit_buf_ref.exit.thread.i:                  ; preds = %bb.e
   tail call void asm sideeffect "498: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 498b - ., 3; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 498) #8, !srcloc !13
   tail call void asm sideeffect "1:\09 ud2 \0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${0:c} - .\09# bug_entry::format\0A\09.long ${1:c} - .\09# bug_entry::file\0A\09.word ${2:c}\09# bug_entry::line\0A\09.word ${3:c}\09# bug_entry::flags\0A\09.org 2b + ${4:c}\0A.popsection\0A.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 1b - ., 8; .popsection", "i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr @.str.2, ptr @.str.3, i32 30, i32 2305, i64 16) #8, !srcloc !14
   tail call void asm sideeffect "499: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 499b - ., 4; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 499) #8, !srcloc !15
-  br label %tty_audit_buf_get.exit.thread
+  br label %tty_audit_buf_get.exit
 
 bb.f:                                             ; preds = %bb.e
   %i.aa = load ptr, ptr getelementptr inbounds nuw (i8, ptr @kmalloc_caches, i64 48), align 16
@@ -276,8 +276,8 @@ bb.n:                                             ; preds = %bb.m
   tail call void asm sideeffect "499: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 499b - ., 4; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 499) #8, !srcloc !15
   br label %tty_audit_buf_get.exit.thread
 
-tty_audit_buf_get.exit:                           ; preds = %bb.e, %bb.m
-  %.0.i = phi ptr [ %i.z, %bb.e ], [ %i.an, %bb.m ] ; 12 uses
+tty_audit_buf_get.exit:                           ; preds = %bb.e, %tty_audit_buf_ref.exit.thread.i, %bb.m
+  %.0.i = phi ptr [ %i.z, %tty_audit_buf_ref.exit.thread.i ], [ %i.an, %bb.m ], [ %i.z, %bb.e ] ; 12 uses
   %.not.i = icmp eq ptr %.0.i, null
   %i.ap = icmp ugt ptr %.0.i, inttoptr (i64 -4096 to ptr)
   %spec.select.i = or i1 %.not.i, %i.ap
@@ -386,7 +386,7 @@ bb.y:                                             ; preds = %bb.x
   tail call void @mutex_unlock(ptr noundef nonnull %.0.i) #10
   br label %tty_audit_buf_get.exit.thread
 
-tty_audit_buf_get.exit.thread:                    ; preds = %bb.d, %bb.n, %tty_audit_buf_ref.exit.thread.i, %bb.i, %tty_audit_buf_get.exit, %bb.c, %bb.a, %bb.y
+tty_audit_buf_get.exit.thread:                    ; preds = %bb.d, %bb.n, %bb.i, %tty_audit_buf_get.exit, %bb.c, %bb.a, %bb.y
   ret void
 }
 

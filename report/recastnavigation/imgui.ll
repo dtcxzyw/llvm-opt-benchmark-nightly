@@ -205,7 +205,7 @@ bb.a:
   br label %tailrecurse
 
 tailrecurse:                                      ; preds = %bb.o, %bb.a
-  %.tr70 = phi ptr [ %1, %bb.a ], [ %i.h, %bb.o ] ; 5 uses
+  %.tr70 = phi ptr [ %1, %bb.a ], [ %i.h, %bb.o ] ; 6 uses
   %.tr71 = phi ptr [ %2, %bb.a ], [ %i.az, %bb.o ] ; 2 uses
   %i.b = load ptr, ptr @GImGui, align 8, !tbaa !245 ; 8 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 5184
@@ -248,7 +248,7 @@ bb.c:                                             ; preds = %.lr.ph.i
   br i1 %exitcond.not.i, label %_ZN5ImGui19FindRenderedTextEndEPKcS1_.exit, label %.lr.ph.i, !llvm.loop !18
 
 _ZN5ImGui19FindRenderedTextEndEPKcS1_.exit:       ; preds = %.critedge2.i, %bb.c, %.lr.ph.i, %bb.b, %tailrecurse
-  %.056 = phi ptr [ %.tr71, %tailrecurse ], [ inttoptr (i64 -1 to ptr), %bb.b ], [ %.015.i, %bb.c ], [ %scevgep.i, %.critedge2.i ], [ %.015.i, %.lr.ph.i ] ; 3 uses
+  %.056 = phi ptr [ %.tr71, %tailrecurse ], [ %.tr70, %bb.b ], [ %.015.i, %bb.c ], [ %scevgep.i, %.critedge2.i ], [ %.015.i, %.lr.ph.i ] ; 3 uses
   br i1 %.not65, label %.thread68, label %bb.d
 
 bb.d:                                             ; preds = %_ZN5ImGui19FindRenderedTextEndEPKcS1_.exit
@@ -651,7 +651,7 @@ bb.c:                                             ; preds = %.lr.ph.i
   br i1 %exitcond.not.i, label %_ZN5ImGui19FindRenderedTextEndEPKcS1_.exit, label %.lr.ph.i, !llvm.loop !18
 
 _ZN5ImGui19FindRenderedTextEndEPKcS1_.exit:       ; preds = %.critedge2.i, %bb.c, %.lr.ph.i, %bb.b, %bb.a
-  %.0 = phi ptr [ %5, %bb.a ], [ inttoptr (i64 -1 to ptr), %bb.b ], [ %.015.i, %bb.c ], [ %scevgep.i, %.critedge2.i ], [ %.015.i, %.lr.ph.i ] ; 5 uses
+  %.0 = phi ptr [ %5, %bb.a ], [ %4, %bb.b ], [ %.015.i, %bb.c ], [ %scevgep.i, %.critedge2.i ], [ %.015.i, %.lr.ph.i ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #35
   %.not = icmp eq ptr %6, null
   br i1 %.not, label %bb.e, label %bb.d
@@ -1054,7 +1054,7 @@ bb.pj:                                            ; preds = %.lr.ph.i.i112.i
   br i1 %exitcond.not.i.i116.i, label %_ZN5ImGui19FindRenderedTextEndEPKcS1_.exit.i109.i, label %.lr.ph.i.i112.i, !llvm.loop !18
 
 _ZN5ImGui19FindRenderedTextEndEPKcS1_.exit.i109.i: ; preds = %.critedge2.i.i115.i, %bb.pj, %.lr.ph.i.i112.i, %bb.pi
-  %.0.lcssa.i.i.i = phi ptr [ inttoptr (i64 -1 to ptr), %bb.pi ], [ %.015.i.i113.i, %.lr.ph.i.i112.i ], [ %scevgep.i.i111.i, %.critedge2.i.i115.i ], [ %.015.i.i113.i, %bb.pj ] ; 3 uses
+  %.0.lcssa.i.i.i = phi ptr [ %0, %bb.pi ], [ %.015.i.i113.i, %.lr.ph.i.i112.i ], [ %scevgep.i.i111.i, %.critedge2.i.i115.i ], [ %.015.i.i113.i, %bb.pj ] ; 3 uses
   %i.dfe = ptrtoint ptr %.0.lcssa.i.i.i to i64
   %i.dff = ptrtoint ptr %0 to i64
   %i.dfg = sub i64 %i.dfe, %i.dff
@@ -1457,7 +1457,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.hf = extractelement <2 x i32> %i.hc, i64 1
   %i.hg = or i32 %i.he, %i.hf
   %i.hh = getelementptr inbounds nuw i8, ptr %i.bk, i64 8
-  %i.hi = load ptr, ptr %i.hh, align 8, !tbaa !333 ; 5 uses
+  %i.hi = load ptr, ptr %i.hh, align 8, !tbaa !333 ; 6 uses
   %.not193 = icmp eq ptr %i.hi, inttoptr (i64 -1 to ptr)
   br i1 %.not193, label %_ZN5ImGui19FindRenderedTextEndEPKcS1_.exit, label %.lr.ph.preheader.i
 
@@ -1487,7 +1487,7 @@ bb.g:                                             ; preds = %.lr.ph.i
   br i1 %exitcond.not.i, label %_ZN5ImGui19FindRenderedTextEndEPKcS1_.exit, label %.lr.ph.i, !llvm.loop !18
 
 _ZN5ImGui19FindRenderedTextEndEPKcS1_.exit:       ; preds = %.lr.ph.i, %bb.g, %.critedge2.i, %bb.f
-  %.0.lcssa.i = phi ptr [ inttoptr (i64 -1 to ptr), %bb.f ], [ %.015.i, %bb.g ], [ %scevgep.i, %.critedge2.i ], [ %.015.i, %.lr.ph.i ]
+  %.0.lcssa.i = phi ptr [ %i.hi, %bb.f ], [ %.015.i, %bb.g ], [ %scevgep.i, %.critedge2.i ], [ %.015.i, %.lr.ph.i ]
   call void @_ZN10ImDrawList7AddTextEP6ImFontfRK6ImVec2jPKcS6_fPK6ImVec4(ptr noundef nonnull align 8 dereferenceable(224) %i.fx, ptr noundef %i.fy, float noundef %i.fz, ptr noundef nonnull align 4 dereferenceable(8) %4, i32 noundef %i.hg, ptr noundef %i.hi, ptr noundef %.0.lcssa.i, float noundef 0.000000e+00, ptr noundef null) #35
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #35
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #35
@@ -1890,7 +1890,7 @@ _ZN5ImGui19FindRenderedTextEndEPKcS1_.exit.i28.loopexit: ; preds = %.lr.ph.i.i31
 
 _ZN5ImGui19FindRenderedTextEndEPKcS1_.exit.i28:   ; preds = %_ZN5ImGui19FindRenderedTextEndEPKcS1_.exit.i28.loopexit, %_ZN5ImGui20ColorConvertHSVtoRGBEfffRfS0_S0_.exit
   %.pre-phi = phi i64 [ %.pre, %_ZN5ImGui19FindRenderedTextEndEPKcS1_.exit.i28.loopexit ], [ %i.p, %_ZN5ImGui20ColorConvertHSVtoRGBEfffRfS0_S0_.exit ]
-  %.0.lcssa.i.i = phi ptr [ %.0.lcssa.i.i.ph, %_ZN5ImGui19FindRenderedTextEndEPKcS1_.exit.i28.loopexit ], [ inttoptr (i64 -1 to ptr), %_ZN5ImGui20ColorConvertHSVtoRGBEfffRfS0_S0_.exit ] ; 2 uses
+  %.0.lcssa.i.i = phi ptr [ %.0.lcssa.i.i.ph, %_ZN5ImGui19FindRenderedTextEndEPKcS1_.exit.i28.loopexit ], [ %0, %_ZN5ImGui20ColorConvertHSVtoRGBEfffRfS0_S0_.exit ] ; 2 uses
   %i.gh = sub i64 %.pre-phi, %i.p
   %i.gi = and i64 %i.gh, 4294967295
   %i.gj = icmp eq i64 %i.gi, 0

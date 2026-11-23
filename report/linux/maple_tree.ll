@@ -205,8 +205,7 @@ mas_state_walk.exit.thread:                       ; preds = %mas_state_walk.exit
   br label %.critedge.backedge
 
 .critedge.backedge:                               ; preds = %.critedge.fold.split, %.lr.ph
-  %.be = phi i1 [ true, %.critedge.fold.split ], [ false, %.lr.ph ]
-  %.1.be = phi ptr [ inttoptr (i64 1030 to ptr), %.critedge.fold.split ], [ null, %.lr.ph ]
+  %.1.be = phi ptr [ %i.cv, %.critedge.fold.split ], [ null, %.lr.ph ] ; 2 uses
   %.val = load i32, ptr %i.h, align 8
   %i.cr = icmp eq i32 %.val, 0
   %i.cs = load i64, ptr %i.c, align 8
@@ -215,7 +214,7 @@ mas_state_walk.exit.thread:                       ; preds = %mas_state_walk.exit
   br i1 %i.cu, label %.lr.ph, label %.critedge._crit_edge
 
 .lr.ph:                                           ; preds = %.critedge.preheader, %.critedge.backedge
-  %i.cv = call fastcc ptr @mas_next_slot(ptr noundef nonnull %3, i64 noundef %2, i1 noundef zeroext false) #19, !srcloc !236 ; 2 uses
+  %i.cv = call fastcc ptr @mas_next_slot(ptr noundef nonnull %3, i64 noundef %2, i1 noundef zeroext false) #19, !srcloc !236 ; 3 uses
   %magicptr = ptrtoint ptr %i.cv to i64
   switch i64 %magicptr, label %.thread [
     i64 0, label %.critedge.backedge
@@ -223,7 +222,8 @@ mas_state_walk.exit.thread:                       ; preds = %mas_state_walk.exit
   ], !prof !69
 
 .critedge._crit_edge:                             ; preds = %.critedge.backedge
-  br i1 %.be, label %.thread29, label %.thread, !prof !237
+  %4 = icmp eq ptr %.1.be, inttoptr (i64 1030 to ptr)
+  br i1 %4, label %.thread29, label %.thread, !prof !237
 
 .thread29:                                        ; preds = %.critedge._crit_edge
   call void @__rcu_read_unlock() #16

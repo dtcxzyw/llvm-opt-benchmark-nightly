@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.c
   %i.em = call i64 @llvm.bswap.i64(i64 %i.ek)
   %i.en = call i64 @llvm.bswap.i64(i64 %i.el)
   %i.eo = icmp ult i64 %i.em, %i.en               ; 2 uses
-  %.19.i.i.i.i = select i1 %i.eo, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 5 uses
+  %.19.i.i.i.i = select i1 %i.eo, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 6 uses
   %.1.in.v.i.i.i.i = select i1 %i.eo, i64 24, i64 16
   %.1.in.i.i.i.i = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 %.1.in.v.i.i.i.i
   %.1.i.i.i.i = load ptr, ptr %.1.in.i.i.i.i, align 8, !tbaa !91 ; 2 uses
@@ -223,7 +223,7 @@ bb.e:                                             ; preds = %_ZNSt3mapIN4llvm6ob
   br i1 %i.ev, label %.critedge.i, label %_ZNSt3mapIN4llvm6object10SectionRefENS0_11SmallVectorIS2_Lj1EEESt4lessIS2_ESaISt4pairIKS2_S4_EEEixERS8_.exit
 
 .critedge.i:                                      ; preds = %bb.e, %_ZNSt3mapIN4llvm6object10SectionRefENS0_11SmallVectorIS2_Lj1EEESt4lessIS2_ESaISt4pairIKS2_S4_EEE11lower_boundERS8_.exit.i, %bb.d
-  %.08.lcssa.i.i.i11.i = phi ptr [ %.19.i.i.i.i, %bb.e ], [ getelementptr inbounds nuw (i8, ptr @_ZL15SectionRelocMap, i64 8), %_ZNSt3mapIN4llvm6object10SectionRefENS0_11SmallVectorIS2_Lj1EEESt4lessIS2_ESaISt4pairIKS2_S4_EEE11lower_boundERS8_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZL15SectionRelocMap, i64 8), %bb.d ]
+  %.08.lcssa.i.i.i11.i = phi ptr [ %.19.i.i.i.i, %bb.e ], [ %.19.i.i.i.i, %_ZNSt3mapIN4llvm6object10SectionRefENS0_11SmallVectorIS2_Lj1EEESt4lessIS2_ESaISt4pairIKS2_S4_EEE11lower_boundERS8_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZL15SectionRelocMap, i64 8), %bb.d ]
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #24
   store ptr %24, ptr %3, align 8, !tbaa !93
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #24
@@ -626,7 +626,7 @@ bb.a:
   %i.g = tail call i64 @llvm.bswap.i64(i64 %i.e)
   %i.h = tail call i64 @llvm.bswap.i64(i64 %i.f)
   %i.i = icmp ult i64 %i.g, %i.h                  ; 2 uses
-  %.19.i.i.i.i = select i1 %i.i, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 5 uses
+  %.19.i.i.i.i = select i1 %i.i, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 6 uses
   %.1.in.v.i.i.i.i = select i1 %i.i, i64 24, i64 16
   %.1.in.i.i.i.i = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 %.1.in.v.i.i.i.i
   %.1.i.i.i.i = load ptr, ptr %.1.in.i.i.i.i, align 8, !tbaa !91 ; 2 uses
@@ -647,7 +647,7 @@ bb.b:                                             ; preds = %_ZNSt3mapIN4llvm6ob
   br i1 %i.p, label %.critedge.i, label %_ZNSt3mapIN4llvm6object10SectionRefENS0_11SmallVectorIS2_Lj1EEESt4lessIS2_ESaISt4pairIKS2_S4_EEEixERS8_.exit
 
 .critedge.i:                                      ; preds = %bb.b, %_ZNSt3mapIN4llvm6object10SectionRefENS0_11SmallVectorIS2_Lj1EEESt4lessIS2_ESaISt4pairIKS2_S4_EEE11lower_boundERS8_.exit.i, %bb.a
-  %.08.lcssa.i.i.i11.i = phi ptr [ %.19.i.i.i.i, %bb.b ], [ getelementptr inbounds nuw (i8, ptr @_ZL15SectionRelocMap, i64 8), %_ZNSt3mapIN4llvm6object10SectionRefENS0_11SmallVectorIS2_Lj1EEESt4lessIS2_ESaISt4pairIKS2_S4_EEE11lower_boundERS8_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZL15SectionRelocMap, i64 8), %bb.a ]
+  %.08.lcssa.i.i.i11.i = phi ptr [ %.19.i.i.i.i, %bb.b ], [ %.19.i.i.i.i, %_ZNSt3mapIN4llvm6object10SectionRefENS0_11SmallVectorIS2_Lj1EEESt4lessIS2_ESaISt4pairIKS2_S4_EEE11lower_boundERS8_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZL15SectionRelocMap, i64 8), %bb.a ]
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #24
   store ptr %1, ptr %8, align 8, !tbaa !93
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #24
@@ -954,7 +954,7 @@ bb.a:
   %i.g = tail call i64 @llvm.bswap.i64(i64 %i.e)
   %i.h = tail call i64 @llvm.bswap.i64(i64 %i.f)
   %i.i = icmp ult i64 %i.g, %i.h                  ; 2 uses
-  %.19.i.i.i.i = select i1 %i.i, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 5 uses
+  %.19.i.i.i.i = select i1 %i.i, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 6 uses
   %.1.in.v.i.i.i.i = select i1 %i.i, i64 24, i64 16
   %.1.in.i.i.i.i = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 %.1.in.v.i.i.i.i
   %.1.i.i.i.i = load ptr, ptr %.1.in.i.i.i.i, align 8, !tbaa !91 ; 2 uses
@@ -975,7 +975,7 @@ bb.b:                                             ; preds = %_ZNSt3mapIN4llvm6ob
   br i1 %i.p, label %.critedge.i, label %_ZNSt3mapIN4llvm6object10SectionRefENS0_11SmallVectorIS2_Lj1EEESt4lessIS2_ESaISt4pairIKS2_S4_EEEixERS8_.exit
 
 .critedge.i:                                      ; preds = %bb.b, %_ZNSt3mapIN4llvm6object10SectionRefENS0_11SmallVectorIS2_Lj1EEESt4lessIS2_ESaISt4pairIKS2_S4_EEE11lower_boundERS8_.exit.i, %bb.a
-  %.08.lcssa.i.i.i11.i = phi ptr [ %.19.i.i.i.i, %bb.b ], [ getelementptr inbounds nuw (i8, ptr @_ZL15SectionRelocMap, i64 8), %_ZNSt3mapIN4llvm6object10SectionRefENS0_11SmallVectorIS2_Lj1EEESt4lessIS2_ESaISt4pairIKS2_S4_EEE11lower_boundERS8_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZL15SectionRelocMap, i64 8), %bb.a ]
+  %.08.lcssa.i.i.i11.i = phi ptr [ %.19.i.i.i.i, %bb.b ], [ %.19.i.i.i.i, %_ZNSt3mapIN4llvm6object10SectionRefENS0_11SmallVectorIS2_Lj1EEESt4lessIS2_ESaISt4pairIKS2_S4_EEE11lower_boundERS8_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZL15SectionRelocMap, i64 8), %bb.a ]
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #24
   store ptr %1, ptr %8, align 8, !tbaa !93
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #24

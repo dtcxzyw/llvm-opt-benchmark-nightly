@@ -52,7 +52,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c, %bb.b
   %.019 = phi i32 [ %i.n, %bb.c ], [ 0, %bb.b ]
-  %i.o = load ptr, ptr @g_wdactivelist, align 8   ; 3 uses
+  %i.o = load ptr, ptr @g_wdactivelist, align 8   ; 4 uses
   %.not.i24 = icmp eq ptr %i.o, @g_wdactivelist
   br i1 %.not.i24, label %wd_insert.exit, label %.lr.ph
 
@@ -64,12 +64,12 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %.not21.i, label %wd_insert.exit, label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph
-  %i.r = load ptr, ptr %.0.i25, align 8           ; 2 uses
+  %i.r = load ptr, ptr %.0.i25, align 8           ; 3 uses
   %.not.i = icmp eq ptr %i.r, @g_wdactivelist
   br i1 %.not.i, label %wd_insert.exit, label %.lr.ph, !llvm.loop !11
 
 wd_insert.exit:                                   ; preds = %.lr.ph, %bb.e, %bb.d
-  %.0.i.lcssa = phi ptr [ @g_wdactivelist, %bb.d ], [ @g_wdactivelist, %bb.e ], [ %.0.i25, %.lr.ph ] ; 3 uses
+  %.0.i.lcssa = phi ptr [ %i.o, %bb.d ], [ %i.r, %bb.e ], [ %.0.i25, %.lr.ph ] ; 3 uses
   %i.s = getelementptr inbounds nuw i8, ptr %.0.i.lcssa, i64 8 ; 3 uses
   %i.t = load ptr, ptr %i.s, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 8

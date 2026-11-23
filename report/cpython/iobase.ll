@@ -202,12 +202,12 @@ declare void @PyObject_CallFinalizer(ptr noundef) local_unnamed_addr #1
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #2
 
 ; Function Attrs: nounwind uwtable
-define hidden noundef ptr @_PyIOBase_check_seekable(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr nofree noundef readnone captures(address) %2) local_unnamed_addr #0 !guid !120 {
+define hidden ptr @_PyIOBase_check_seekable(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr nofree noundef readnone captures(address) %2) local_unnamed_addr #0 !guid !120 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %1, ptr %i.a, align 8, !tbaa !86
-  %i.b = call ptr @PyObject_VectorcallMethod(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 98744), ptr noundef nonnull %i.a, i64 noundef -9223372036854775807, ptr noundef null) #6 ; 8 uses
+  %i.b = call ptr @PyObject_VectorcallMethod(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 98744), ptr noundef nonnull %i.a, i64 noundef -9223372036854775807, ptr noundef null) #6 ; 12 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.c = icmp eq ptr %i.b, null
   br i1 %i.c, label %Py_DECREF.exit, label %bb.b
@@ -257,17 +257,17 @@ bb.i:                                             ; preds = %bb.h
   br label %Py_DECREF.exit
 
 Py_DECREF.exit:                                   ; preds = %bb.i, %bb.h, %bb.g, %bb.f, %bb.a, %Py_DECREF.exit14
-  %.0 = phi ptr [ null, %bb.a ], [ null, %Py_DECREF.exit14 ], [ @_Py_TrueStruct, %bb.f ], [ @_Py_TrueStruct, %bb.g ], [ @_Py_TrueStruct, %bb.h ], [ @_Py_TrueStruct, %bb.i ]
+  %.0 = phi ptr [ null, %bb.a ], [ null, %Py_DECREF.exit14 ], [ %i.b, %bb.f ], [ %i.b, %bb.g ], [ %i.b, %bb.h ], [ %i.b, %bb.i ]
   ret ptr %.0
 }
 
 ; Function Attrs: nounwind uwtable
-define hidden noundef ptr @_PyIOBase_check_readable(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr nofree noundef readnone captures(address) %2) local_unnamed_addr #0 !guid !121 {
+define hidden ptr @_PyIOBase_check_readable(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr nofree noundef readnone captures(address) %2) local_unnamed_addr #0 !guid !121 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %1, ptr %i.a, align 8, !tbaa !86
-  %i.b = call ptr @PyObject_VectorcallMethod(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 96896), ptr noundef nonnull %i.a, i64 noundef -9223372036854775807, ptr noundef null) #6 ; 8 uses
+  %i.b = call ptr @PyObject_VectorcallMethod(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 96896), ptr noundef nonnull %i.a, i64 noundef -9223372036854775807, ptr noundef null) #6 ; 12 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.c = icmp eq ptr %i.b, null
   br i1 %i.c, label %Py_DECREF.exit, label %bb.b
@@ -317,17 +317,17 @@ bb.i:                                             ; preds = %bb.h
   br label %Py_DECREF.exit
 
 Py_DECREF.exit:                                   ; preds = %bb.i, %bb.h, %bb.g, %bb.f, %bb.a, %Py_DECREF.exit14
-  %.0 = phi ptr [ null, %bb.a ], [ null, %Py_DECREF.exit14 ], [ @_Py_TrueStruct, %bb.f ], [ @_Py_TrueStruct, %bb.g ], [ @_Py_TrueStruct, %bb.h ], [ @_Py_TrueStruct, %bb.i ]
+  %.0 = phi ptr [ null, %bb.a ], [ null, %Py_DECREF.exit14 ], [ %i.b, %bb.f ], [ %i.b, %bb.g ], [ %i.b, %bb.h ], [ %i.b, %bb.i ]
   ret ptr %.0
 }
 
 ; Function Attrs: nounwind uwtable
-define hidden noundef ptr @_PyIOBase_check_writable(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr nofree noundef readnone captures(address) %2) local_unnamed_addr #0 !guid !122 {
+define hidden ptr @_PyIOBase_check_writable(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr nofree noundef readnone captures(address) %2) local_unnamed_addr #0 !guid !122 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %1, ptr %i.a, align 8, !tbaa !86
-  %i.b = call ptr @PyObject_VectorcallMethod(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 104776), ptr noundef nonnull %i.a, i64 noundef -9223372036854775807, ptr noundef null) #6 ; 8 uses
+  %i.b = call ptr @PyObject_VectorcallMethod(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 104776), ptr noundef nonnull %i.a, i64 noundef -9223372036854775807, ptr noundef null) #6 ; 12 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.c = icmp eq ptr %i.b, null
   br i1 %i.c, label %Py_DECREF.exit, label %bb.b
@@ -377,7 +377,7 @@ bb.i:                                             ; preds = %bb.h
   br label %Py_DECREF.exit
 
 Py_DECREF.exit:                                   ; preds = %bb.i, %bb.h, %bb.g, %bb.f, %bb.a, %Py_DECREF.exit14
-  %.0 = phi ptr [ null, %bb.a ], [ null, %Py_DECREF.exit14 ], [ @_Py_TrueStruct, %bb.f ], [ @_Py_TrueStruct, %bb.g ], [ @_Py_TrueStruct, %bb.h ], [ @_Py_TrueStruct, %bb.i ]
+  %.0 = phi ptr [ null, %bb.a ], [ null, %Py_DECREF.exit14 ], [ %i.b, %bb.f ], [ %i.b, %bb.g ], [ %i.b, %bb.h ], [ %i.b, %bb.i ]
   ret ptr %.0
 }
 
@@ -780,7 +780,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noundef ptr @iobase_check_seekable(ptr noundef %0, ptr nofree noundef readnone captures(address) %1) #0 !guid !150 {
+define internal ptr @iobase_check_seekable(ptr noundef %0, ptr nofree noundef readnone captures(address) %1) #0 !guid !150 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = getelementptr i8, ptr %0, i64 8
@@ -790,7 +790,7 @@ bb.a:
   %.val.i = load ptr, ptr %i.d, align 8, !tbaa !114
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %0, ptr %i.a, align 8, !tbaa !86
-  %i.e = call ptr @PyObject_VectorcallMethod(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 98744), ptr noundef nonnull %i.a, i64 noundef -9223372036854775807, ptr noundef null) #6 ; 8 uses
+  %i.e = call ptr @PyObject_VectorcallMethod(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 98744), ptr noundef nonnull %i.a, i64 noundef -9223372036854775807, ptr noundef null) #6 ; 12 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.f = icmp eq ptr %i.e, null
   br i1 %i.f, label %_PyIOBase_check_seekable.exit, label %bb.b
@@ -840,12 +840,12 @@ bb.i:                                             ; preds = %bb.h
   br label %_PyIOBase_check_seekable.exit
 
 _PyIOBase_check_seekable.exit:                    ; preds = %bb.a, %Py_DECREF.exit14.i, %bb.f, %bb.g, %bb.h, %bb.i
-  %.0.i = phi ptr [ null, %bb.a ], [ null, %Py_DECREF.exit14.i ], [ @_Py_TrueStruct, %bb.f ], [ @_Py_TrueStruct, %bb.g ], [ @_Py_TrueStruct, %bb.h ], [ @_Py_TrueStruct, %bb.i ]
+  %.0.i = phi ptr [ null, %bb.a ], [ null, %Py_DECREF.exit14.i ], [ %i.e, %bb.f ], [ %i.e, %bb.g ], [ %i.e, %bb.h ], [ %i.e, %bb.i ]
   ret ptr %.0.i
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noundef ptr @iobase_check_readable(ptr noundef %0, ptr nofree noundef readnone captures(address) %1) #0 !guid !151 {
+define internal ptr @iobase_check_readable(ptr noundef %0, ptr nofree noundef readnone captures(address) %1) #0 !guid !151 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = getelementptr i8, ptr %0, i64 8
@@ -855,7 +855,7 @@ bb.a:
   %.val.i = load ptr, ptr %i.d, align 8, !tbaa !114
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %0, ptr %i.a, align 8, !tbaa !86
-  %i.e = call ptr @PyObject_VectorcallMethod(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 96896), ptr noundef nonnull %i.a, i64 noundef -9223372036854775807, ptr noundef null) #6 ; 8 uses
+  %i.e = call ptr @PyObject_VectorcallMethod(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 96896), ptr noundef nonnull %i.a, i64 noundef -9223372036854775807, ptr noundef null) #6 ; 12 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.f = icmp eq ptr %i.e, null
   br i1 %i.f, label %_PyIOBase_check_readable.exit, label %bb.b
@@ -905,12 +905,12 @@ bb.i:                                             ; preds = %bb.h
   br label %_PyIOBase_check_readable.exit
 
 _PyIOBase_check_readable.exit:                    ; preds = %bb.a, %Py_DECREF.exit14.i, %bb.f, %bb.g, %bb.h, %bb.i
-  %.0.i = phi ptr [ null, %bb.a ], [ null, %Py_DECREF.exit14.i ], [ @_Py_TrueStruct, %bb.f ], [ @_Py_TrueStruct, %bb.g ], [ @_Py_TrueStruct, %bb.h ], [ @_Py_TrueStruct, %bb.i ]
+  %.0.i = phi ptr [ null, %bb.a ], [ null, %Py_DECREF.exit14.i ], [ %i.e, %bb.f ], [ %i.e, %bb.g ], [ %i.e, %bb.h ], [ %i.e, %bb.i ]
   ret ptr %.0.i
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noundef ptr @iobase_check_writable(ptr noundef %0, ptr nofree noundef readnone captures(address) %1) #0 !guid !152 {
+define internal ptr @iobase_check_writable(ptr noundef %0, ptr nofree noundef readnone captures(address) %1) #0 !guid !152 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = getelementptr i8, ptr %0, i64 8
@@ -920,7 +920,7 @@ bb.a:
   %.val.i = load ptr, ptr %i.d, align 8, !tbaa !114
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %0, ptr %i.a, align 8, !tbaa !86
-  %i.e = call ptr @PyObject_VectorcallMethod(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 104776), ptr noundef nonnull %i.a, i64 noundef -9223372036854775807, ptr noundef null) #6 ; 8 uses
+  %i.e = call ptr @PyObject_VectorcallMethod(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 104776), ptr noundef nonnull %i.a, i64 noundef -9223372036854775807, ptr noundef null) #6 ; 12 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.f = icmp eq ptr %i.e, null
   br i1 %i.f, label %_PyIOBase_check_writable.exit, label %bb.b
@@ -970,7 +970,7 @@ bb.i:                                             ; preds = %bb.h
   br label %_PyIOBase_check_writable.exit
 
 _PyIOBase_check_writable.exit:                    ; preds = %bb.a, %Py_DECREF.exit14.i, %bb.f, %bb.g, %bb.h, %bb.i
-  %.0.i = phi ptr [ null, %bb.a ], [ null, %Py_DECREF.exit14.i ], [ @_Py_TrueStruct, %bb.f ], [ @_Py_TrueStruct, %bb.g ], [ @_Py_TrueStruct, %bb.h ], [ @_Py_TrueStruct, %bb.i ]
+  %.0.i = phi ptr [ null, %bb.a ], [ null, %Py_DECREF.exit14.i ], [ %i.e, %bb.f ], [ %i.e, %bb.g ], [ %i.e, %bb.h ], [ %i.e, %bb.i ]
   ret ptr %.0.i
 }
 
@@ -1373,7 +1373,7 @@ bb.a:
   br i1 %i.b, label %_io__RawIOBase_readall_impl.exit, label %.preheader.i
 
 .preheader.i:                                     ; preds = %bb.a, %.preheader.i.backedge
-  %i.c = tail call ptr (ptr, ptr, ptr, ...) @_PyObject_CallMethod(ptr noundef %0, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 96800), ptr noundef nonnull @.str.47, i32 noundef 131072) #6 ; 18 uses
+  %i.c = tail call ptr (ptr, ptr, ptr, ...) @_PyObject_CallMethod(ptr noundef %0, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 96800), ptr noundef nonnull @.str.47, i32 noundef 131072) #6 ; 19 uses
   %.not.i = icmp eq ptr %i.c, null
   br i1 %.not.i, label %bb.b, label %bb.d
 
@@ -1507,7 +1507,7 @@ bb.w:                                             ; preds = %.sink.split.i, %bb.
   br label %_io__RawIOBase_readall_impl.exit
 
 _io__RawIOBase_readall_impl.exit:                 ; preds = %bb.a, %bb.c, %bb.f, %Py_DECREF.exit31.i, %Py_DECREF.exit27.i, %bb.w
-  %.2.i = phi ptr [ %i.ae, %bb.w ], [ null, %bb.a ], [ null, %bb.c ], [ null, %Py_DECREF.exit31.i ], [ null, %Py_DECREF.exit27.i ], [ @_Py_NoneStruct, %bb.f ]
+  %.2.i = phi ptr [ %i.ae, %bb.w ], [ null, %bb.a ], [ null, %bb.c ], [ null, %Py_DECREF.exit31.i ], [ null, %Py_DECREF.exit27.i ], [ %i.c, %bb.f ]
   ret ptr %.2.i
 }
 

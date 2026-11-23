@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.bt, label %bb.i, label %bb.l
 
 bb.i:                                             ; preds = %bb.h
-  %i.bu = tail call fastcc ptr @ddSiftingDown(ptr noundef nonnull %0, i32 noundef %1, i32 noundef %2) ; 6 uses
+  %i.bu = tail call fastcc ptr @ddSiftingDown(ptr noundef nonnull %0, i32 noundef %1, i32 noundef %2) ; 7 uses
   %magicptr173.i = ptrtoint ptr %i.bu to i64
   switch i64 %magicptr173.i, label %.lr.ph.i.i [
     i64 -1, label %ddSiftingBackward.exit.i
@@ -248,7 +248,7 @@ bb.l:                                             ; preds = %bb.h
   br i1 %i.ci, label %bb.m, label %bb.p
 
 bb.m:                                             ; preds = %bb.l
-  %i.cj = tail call fastcc ptr @ddSiftingUp(ptr noundef nonnull %0, i32 noundef %2, i32 noundef %1) ; 6 uses
+  %i.cj = tail call fastcc ptr @ddSiftingUp(ptr noundef nonnull %0, i32 noundef %2, i32 noundef %1) ; 7 uses
   %magicptr174.i = ptrtoint ptr %i.cj to i64
   switch i64 %magicptr174.i, label %.lr.ph.i127.i [
     i64 -1, label %ddSiftingBackward.exit.i
@@ -308,7 +308,7 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.r, %bb.q
   %.097.i = phi i32 [ %i.dc, %bb.r ], [ %i.bh, %bb.q ]
-  %i.dd = tail call fastcc ptr @ddSiftingUp(ptr noundef nonnull %0, i32 noundef %.097.i, i32 noundef %1) ; 6 uses
+  %i.dd = tail call fastcc ptr @ddSiftingUp(ptr noundef nonnull %0, i32 noundef %.097.i, i32 noundef %1) ; 7 uses
   %magicptr175.i = ptrtoint ptr %i.dd to i64
   switch i64 %magicptr175.i, label %.lr.ph.i140.i [
     i64 -1, label %ddSiftingBackward.exit.i
@@ -361,7 +361,7 @@ bb.w:                                             ; preds = %bb.v
 
 bb.x:                                             ; preds = %bb.w, %bb.v
   %.198.i = phi i32 [ %i.ds, %bb.w ], [ %i.bh, %bb.v ]
-  %i.dt = tail call fastcc ptr @ddSiftingDown(ptr noundef nonnull %0, i32 noundef %.198.i, i32 noundef %2) ; 6 uses
+  %i.dt = tail call fastcc ptr @ddSiftingDown(ptr noundef nonnull %0, i32 noundef %.198.i, i32 noundef %2) ; 7 uses
   %magicptr176.i = ptrtoint ptr %i.dt to i64
   switch i64 %magicptr176.i, label %.lr.ph.i153.i [
     i64 -1, label %ddSiftingBackward.exit.i
@@ -448,8 +448,8 @@ bb.ab:                                            ; preds = %bb.ab, %.lr.ph193.i
   br i1 %.not121.i, label %..loopexit_crit_edge.i, label %bb.ab, !llvm.loop !99
 
 ddSiftingBackward.exit.i:                         ; preds = %bb.x, %bb.v, %bb.s, %bb.q, %bb.m, %bb.i, %bb.y, %bb.t, %bb.n, %bb.j
-  %.294.i = phi ptr [ %i.dr, %bb.y ], [ null, %bb.j ], [ %i.dd, %bb.t ], [ %i.cj, %bb.n ], [ %i.dr, %bb.x ], [ %i.dr, %bb.v ], [ inttoptr (i64 -1 to ptr), %bb.s ], [ null, %bb.q ], [ inttoptr (i64 -1 to ptr), %bb.m ], [ null, %bb.i ] ; 2 uses
-  %.2.i = phi ptr [ %i.dt, %bb.y ], [ %i.bu, %bb.j ], [ %i.da, %bb.t ], [ null, %bb.n ], [ inttoptr (i64 -1 to ptr), %bb.x ], [ null, %bb.v ], [ %i.da, %bb.s ], [ %i.da, %bb.q ], [ null, %bb.m ], [ inttoptr (i64 -1 to ptr), %bb.i ] ; 2 uses
+  %.294.i = phi ptr [ %i.dr, %bb.y ], [ null, %bb.j ], [ %i.dd, %bb.t ], [ %i.cj, %bb.n ], [ %i.dr, %bb.x ], [ %i.dr, %bb.v ], [ %i.dd, %bb.s ], [ null, %bb.q ], [ %i.cj, %bb.m ], [ null, %bb.i ] ; 2 uses
+  %.2.i = phi ptr [ %i.dt, %bb.y ], [ %i.bu, %bb.j ], [ %i.da, %bb.t ], [ null, %bb.n ], [ %i.dt, %bb.x ], [ null, %bb.v ], [ %i.da, %bb.s ], [ %i.da, %bb.q ], [ null, %bb.m ], [ %i.bu, %bb.i ] ; 2 uses
   %magicptr123.i = ptrtoint ptr %.2.i to i64
   %magicptr123.off.i = add i64 %magicptr123.i, -1
   %switch.i = icmp ult i64 %magicptr123.off.i, -2

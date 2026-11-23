@@ -204,10 +204,10 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.di, label %bb.k, label %bb.r
 
 bb.k:                                             ; preds = %bb.j
-  %i.dj = tail call fastcc ptr @ddLinearAndSiftingDown(ptr noundef nonnull %0, i32 noundef %1, i32 noundef %2, ptr noundef null) ; 8 uses
+  %i.dj = tail call fastcc ptr @ddLinearAndSiftingDown(ptr noundef nonnull %0, i32 noundef %1, i32 noundef %2, ptr noundef null) ; 9 uses
   %magicptr.i = ptrtoint ptr %i.dj to i64
   switch i64 %magicptr.i, label %.lr.ph.i.i [
-    i64 -1, label %.lr.ph.i
+    i64 -1, label %ddLinearAndSiftingBackward.exit.thread.i
     i64 0, label %ddLinearAndSiftingAux.exit.thread
   ]
 
@@ -274,10 +274,10 @@ bb.r:                                             ; preds = %bb.j
   br i1 %i.ej, label %bb.s, label %bb.z
 
 bb.s:                                             ; preds = %bb.r
-  %i.ek = tail call fastcc ptr @ddLinearAndSiftingUp(ptr noundef nonnull %0, i32 noundef %2, i32 noundef %1, ptr noundef null) ; 8 uses
+  %i.ek = tail call fastcc ptr @ddLinearAndSiftingUp(ptr noundef nonnull %0, i32 noundef %2, i32 noundef %1, ptr noundef null) ; 9 uses
   %magicptr169.i = ptrtoint ptr %i.ek to i64
   switch i64 %magicptr169.i, label %.lr.ph.i117.i [
-    i64 -1, label %.lr.ph184.i
+    i64 -1, label %.preheader172.i
     i64 0, label %ddLinearAndSiftingAux.exit.thread
   ]
 
@@ -346,13 +346,13 @@ bb.z:                                             ; preds = %bb.r
   br i1 %i.fm, label %bb.aa, label %bb.ai
 
 bb.aa:                                            ; preds = %bb.z
-  %i.fn = tail call fastcc ptr @ddLinearAndSiftingDown(ptr noundef nonnull %0, i32 noundef %i.dc, i32 noundef %2, ptr noundef null) ; 9 uses
+  %i.fn = tail call fastcc ptr @ddLinearAndSiftingDown(ptr noundef nonnull %0, i32 noundef %i.dc, i32 noundef %2, ptr noundef null) ; 10 uses
   %i.fo = icmp eq ptr %i.fn, inttoptr (i64 -1 to ptr)
   br i1 %i.fo, label %.lr.ph.i, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
   %i.fp = tail call fastcc ptr @ddUndoMoves(ptr noundef nonnull %0, ptr noundef %i.fn)
-  %i.fq = tail call fastcc ptr @ddLinearAndSiftingUp(ptr noundef nonnull %0, i32 noundef %i.dc, i32 noundef %1, ptr noundef %i.fp) ; 8 uses
+  %i.fq = tail call fastcc ptr @ddLinearAndSiftingUp(ptr noundef nonnull %0, i32 noundef %i.dc, i32 noundef %1, ptr noundef %i.fp) ; 9 uses
   %magicptr170.i = ptrtoint ptr %i.fq to i64
   switch i64 %magicptr170.i, label %.lr.ph.i132.i [
     i64 -1, label %ddLinearAndSiftingBackward.exit.thread.i
@@ -418,16 +418,16 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af
   br i1 %.not29.i141.i, label %ddLinearAndSiftingBackward.exit.i, label %.lr.ph38.i138.i, !llvm.loop !62
 
 bb.ai:                                            ; preds = %bb.z
-  %i.gq = tail call fastcc ptr @ddLinearAndSiftingUp(ptr noundef nonnull %0, i32 noundef %i.dc, i32 noundef %1, ptr noundef null) ; 9 uses
+  %i.gq = tail call fastcc ptr @ddLinearAndSiftingUp(ptr noundef nonnull %0, i32 noundef %i.dc, i32 noundef %1, ptr noundef null) ; 10 uses
   %i.gr = icmp eq ptr %i.gq, inttoptr (i64 -1 to ptr)
   br i1 %i.gr, label %.lr.ph184.i, label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai
   %i.gs = tail call fastcc ptr @ddUndoMoves(ptr noundef nonnull %0, ptr noundef %i.gq)
-  %i.gt = tail call fastcc ptr @ddLinearAndSiftingDown(ptr noundef nonnull %0, i32 noundef %i.dc, i32 noundef %2, ptr noundef %i.gs) ; 8 uses
+  %i.gt = tail call fastcc ptr @ddLinearAndSiftingDown(ptr noundef nonnull %0, i32 noundef %i.dc, i32 noundef %2, ptr noundef %i.gs) ; 9 uses
   %magicptr171.i = ptrtoint ptr %i.gt to i64
   switch i64 %magicptr171.i, label %.lr.ph.i147.i [
-    i64 -1, label %.lr.ph.i
+    i64 -1, label %ddLinearAndSiftingBackward.exit.thread.i
     i64 0, label %.preheader.i67
   ]
 
@@ -536,15 +536,15 @@ bb.ar:                                            ; preds = %bb.ar, %.lr.ph192.i
   %.not113.i = icmp eq ptr %i.ia, null
   br i1 %.not113.i, label %..loopexit_crit_edge.i, label %bb.ar, !llvm.loop !64
 
-ddLinearAndSiftingBackward.exit.thread.i:         ; preds = %bb.ab, %bb.ao, %bb.am, %bb.al, %bb.ag, %bb.ae, %bb.ad, %bb.p, %bb.n, %bb.m
-  %.290.i = phi ptr [ null, %bb.p ], [ %i.fq, %bb.ag ], [ %i.gq, %bb.ao ], [ null, %bb.m ], [ null, %bb.n ], [ %i.fq, %bb.ad ], [ %i.fq, %bb.ae ], [ %i.gq, %bb.al ], [ %i.gq, %bb.am ], [ inttoptr (i64 -1 to ptr), %bb.ab ] ; 2 uses
-  %.2.i = phi ptr [ %i.dj, %bb.p ], [ %i.fn, %bb.ag ], [ %i.gt, %bb.ao ], [ %i.dj, %bb.m ], [ %i.dj, %bb.n ], [ %i.fn, %bb.ad ], [ %i.fn, %bb.ae ], [ %i.gt, %bb.al ], [ %i.gt, %bb.am ], [ %i.fn, %bb.ab ] ; 2 uses
+ddLinearAndSiftingBackward.exit.thread.i:         ; preds = %bb.aj, %bb.ab, %bb.k, %bb.ao, %bb.am, %bb.al, %bb.ag, %bb.ae, %bb.ad, %bb.p, %bb.n, %bb.m
+  %.290.i = phi ptr [ %i.fq, %bb.ag ], [ null, %bb.p ], [ %i.gq, %bb.ao ], [ null, %bb.m ], [ null, %bb.n ], [ %i.fq, %bb.ad ], [ %i.fq, %bb.ae ], [ %i.gq, %bb.al ], [ %i.gq, %bb.am ], [ %i.gq, %bb.aj ], [ %i.fq, %bb.ab ], [ null, %bb.k ] ; 2 uses
+  %.2.i = phi ptr [ %i.fn, %bb.ag ], [ %i.dj, %bb.p ], [ %i.gt, %bb.ao ], [ %i.dj, %bb.m ], [ %i.dj, %bb.n ], [ %i.fn, %bb.ad ], [ %i.fn, %bb.ae ], [ %i.gt, %bb.al ], [ %i.gt, %bb.am ], [ %i.gt, %bb.aj ], [ %i.fn, %bb.ab ], [ %i.dj, %bb.k ] ; 2 uses
   %.not114180.i = icmp eq ptr %.2.i, null
   br i1 %.not114180.i, label %.preheader172.i, label %.lr.ph.i
 
-.lr.ph.i:                                         ; preds = %bb.aj, %bb.aa, %bb.k, %ddLinearAndSiftingBackward.exit.thread.i
-  %.2225.i = phi ptr [ %.2.i, %ddLinearAndSiftingBackward.exit.thread.i ], [ inttoptr (i64 -1 to ptr), %bb.k ], [ inttoptr (i64 -1 to ptr), %bb.aa ], [ inttoptr (i64 -1 to ptr), %bb.aj ]
-  %.290224.i = phi ptr [ %.290.i, %ddLinearAndSiftingBackward.exit.thread.i ], [ %i.gq, %bb.aj ], [ null, %bb.aa ], [ null, %bb.k ]
+.lr.ph.i:                                         ; preds = %bb.aa, %ddLinearAndSiftingBackward.exit.thread.i
+  %.2225.i = phi ptr [ %.2.i, %ddLinearAndSiftingBackward.exit.thread.i ], [ %i.fn, %bb.aa ]
+  %.290224.i = phi ptr [ %.290.i, %ddLinearAndSiftingBackward.exit.thread.i ], [ null, %bb.aa ]
   %.promoted.i = load ptr, ptr %i.cw, align 8, !tbaa !48
   br label %bb.as
 
@@ -552,13 +552,13 @@ ddLinearAndSiftingBackward.exit.thread.i:         ; preds = %bb.ab, %bb.ao, %bb.
   store ptr %.3181.i, ptr %i.cw, align 8, !tbaa !48
   br label %.preheader172.i
 
-.preheader172.i:                                  ; preds = %bb.x, %bb.v, %bb.u, %..preheader172_crit_edge.i, %ddLinearAndSiftingBackward.exit.thread.i
-  %.290217.i = phi ptr [ %.290.i, %ddLinearAndSiftingBackward.exit.thread.i ], [ %.290224.i, %..preheader172_crit_edge.i ], [ %i.ek, %bb.u ], [ %i.ek, %bb.v ], [ %i.ek, %bb.x ] ; 2 uses
-  %.not115182.i = icmp eq ptr %.290217.i, null
+.preheader172.i:                                  ; preds = %bb.s, %bb.x, %bb.v, %bb.u, %..preheader172_crit_edge.i, %ddLinearAndSiftingBackward.exit.thread.i
+  %.290219.i = phi ptr [ %.290.i, %ddLinearAndSiftingBackward.exit.thread.i ], [ %.290224.i, %..preheader172_crit_edge.i ], [ %i.ek, %bb.x ], [ %i.ek, %bb.u ], [ %i.ek, %bb.v ], [ %i.ek, %bb.s ] ; 2 uses
+  %.not115182.i = icmp eq ptr %.290219.i, null
   br i1 %.not115182.i, label %ddLinearAndSiftingAux.exit, label %.lr.ph184.i
 
-.lr.ph184.i:                                      ; preds = %bb.ai, %bb.s, %.preheader172.i
-  %.290217230.i = phi ptr [ %.290217.i, %.preheader172.i ], [ inttoptr (i64 -1 to ptr), %bb.s ], [ inttoptr (i64 -1 to ptr), %bb.ai ]
+.lr.ph184.i:                                      ; preds = %bb.ai, %.preheader172.i
+  %.290219230.i = phi ptr [ %.290219.i, %.preheader172.i ], [ %i.gq, %bb.ai ]
   %.promoted185.i = load ptr, ptr %i.cw, align 8, !tbaa !48
   br label %bb.at
 
@@ -576,7 +576,7 @@ bb.as:                                            ; preds = %bb.as, %.lr.ph.i
 
 bb.at:                                            ; preds = %bb.at, %.lr.ph184.i
   %i.ii = phi ptr [ %.promoted185.i, %.lr.ph184.i ], [ %.391183.i, %bb.at ]
-  %.391183.i = phi ptr [ %.290217230.i, %.lr.ph184.i ], [ %i.ik, %bb.at ] ; 5 uses
+  %.391183.i = phi ptr [ %.290219230.i, %.lr.ph184.i ], [ %i.ik, %bb.at ] ; 5 uses
   %i.ij = getelementptr inbounds nuw i8, ptr %.391183.i, i64 16
   %i.ik = load ptr, ptr %i.ij, align 8, !tbaa !44 ; 2 uses
   %i.il = getelementptr inbounds nuw i8, ptr %.391183.i, i64 4

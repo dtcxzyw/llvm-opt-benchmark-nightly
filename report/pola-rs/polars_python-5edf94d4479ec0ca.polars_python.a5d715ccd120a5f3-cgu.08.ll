@@ -205,7 +205,7 @@ bb.z:                                             ; preds = %bb.x
           to label %bb.bh unwind label %.loopexit.split-lp.loopexit.split-lp, !dbg !247244
 
 .body84:                                          ; preds = %.loopexit.split-lp.loopexit.split-lp, %bb.bj, %bb.ax, %bb.ah, %bb.be
-  %.pn64 = phi { ptr, i32 } [ %i.bz, %bb.ah ], [ %.pn107, %bb.be ], [ %i.dd, %bb.bj ], [ %i.cq, %bb.ax ], [ %lpad.loopexit.split-lp223, %.loopexit.split-lp.loopexit.split-lp ]
+  %.pn64 = phi { ptr, i32 } [ %i.cq, %bb.ax ], [ %.pn107, %bb.be ], [ %i.bz, %bb.ah ], [ %i.dd, %bb.bj ], [ %lpad.loopexit.split-lp223, %.loopexit.split-lp.loopexit.split-lp ]
   call void @_Py_DecRef(ptr noundef nonnull %.sroa.212.0.copyload) #49, !dbg !247245
   br label %bb.p, !dbg !247246
 

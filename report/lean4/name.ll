@@ -202,7 +202,7 @@ _ZN4lean4name4kindEP11lean_object.exit:           ; preds = %bb.b, %bb.c
   %.0.i.i.i = phi i32 [ %i.g, %bb.b ], [ %i.i, %bb.c ]
   %i.j = icmp eq i32 %.0.i.i.i, 1
   %i.k = getelementptr inbounds nuw i8, ptr %.015, i64 16
-  %i.l = load ptr, ptr %i.k, align 8, !tbaa !13   ; 10 uses
+  %i.l = load ptr, ptr %i.k, align 8, !tbaa !13   ; 11 uses
   br i1 %i.j, label %bb.d, label %bb.g
 
 bb.d:                                             ; preds = %_ZN4lean4name4kindEP11lean_object.exit
@@ -273,7 +273,7 @@ _ZN4leaneqERKNS_3natEj.exit.i:                    ; preds = %.critedge.i.i.i.i.i
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %.preheader.i.preheader, %_ZN4lean10object_refD2Ev.exit8.i
-  %i.x = phi ptr [ %.1.i.i.i.i, %_ZN4lean10object_refD2Ev.exit8.i ], [ %.ph, %.preheader.i.preheader ] ; 4 uses
+  %i.x = phi ptr [ %.1.i.i.i.i, %_ZN4lean10object_refD2Ev.exit8.i ], [ %.ph, %.preheader.i.preheader ] ; 5 uses
   %.04.i = phi i32 [ %i.az, %_ZN4lean10object_refD2Ev.exit8.i ], [ 0, %.preheader.i.preheader ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #20
   store ptr inttoptr (i64 1 to ptr), ptr %2, align 8, !tbaa !13
@@ -411,12 +411,12 @@ bb.z:                                             ; preds = %.critedge.i.i.i.i
   br label %.body
 
 _ZN4leanL10num_digitsENS_3natE.exit.loopexit:     ; preds = %.split22.i, %_ZN4leanneERKNS_3natEj.exit.i
-  %.pre31 = phi ptr [ inttoptr (i64 1 to ptr), %.split22.i ], [ %.pre31.pre, %_ZN4leanneERKNS_3natEj.exit.i ]
+  %.pre31 = phi ptr [ %i.x, %.split22.i ], [ %.pre31.pre, %_ZN4leanneERKNS_3natEj.exit.i ]
   %i.bb = zext nneg i32 %.04.i to i64
   br label %_ZN4leanL10num_digitsENS_3natE.exit
 
 _ZN4leanL10num_digitsENS_3natE.exit:              ; preds = %_ZN4leanL10num_digitsENS_3natE.exit.loopexit, %_ZN4leaneqERKNS_3natEj.exit.i, %.split.i
-  %i.bc = phi ptr [ %.pre32, %_ZN4leaneqERKNS_3natEj.exit.i ], [ inttoptr (i64 1 to ptr), %.split.i ], [ %.pre31, %_ZN4leanL10num_digitsENS_3natE.exit.loopexit ] ; 4 uses
+  %i.bc = phi ptr [ %.pre32, %_ZN4leaneqERKNS_3natEj.exit.i ], [ %i.l, %.split.i ], [ %.pre31, %_ZN4leanL10num_digitsENS_3natE.exit.loopexit ] ; 4 uses
   %.0.i = phi i64 [ 1, %_ZN4leaneqERKNS_3natEj.exit.i ], [ 1, %.split.i ], [ %i.bb, %_ZN4leanL10num_digitsENS_3natE.exit.loopexit ] ; 4 uses
   %i.bd = ptrtoint ptr %i.bc to i64
   %i.be = and i64 %i.bd, 1
