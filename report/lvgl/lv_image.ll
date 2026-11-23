@@ -202,7 +202,7 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: nounwind uwtable
 define void @lv_image_set_src(ptr noundef %0, ptr noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %2 = alloca %struct.lv_image_header_t, align 8  ; 7 uses
+  %2 = alloca %struct.lv_image_header_t, align 8  ; 6 uses
   %3 = alloca %struct.lv_text_attributes_t, align 4 ; 7 uses
   %4 = alloca %struct.lv_point_t, align 4         ; 5 uses
   %.not = icmp eq ptr %0, null
@@ -378,19 +378,13 @@ bb.t:                                             ; preds = %bb.s
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #5
   call void @lv_text_get_size_attributes(ptr noundef nonnull %4, ptr noundef %1, ptr noundef %i.ax, ptr noundef nonnull %3) #5
   %i.bf = load i32, ptr %4, align 4, !tbaa !25
-  %5 = load i64, ptr %2, align 8
   %i.bg = and i32 %i.bf, 65535
-  %6 = zext nneg i32 %i.bg to i64
-  %7 = shl nuw nsw i64 %6, 32
-  %8 = and i64 %5, 4294967295
-  %9 = or disjoint i64 %7, %8
   %i.bh = getelementptr inbounds nuw i8, ptr %4, i64 4
   %i.bi = load i32, ptr %i.bh, align 4, !tbaa !27
-  %10 = and i32 %i.bi, 65535
-  %11 = zext nneg i32 %10 to i64
-  %12 = shl nuw i64 %11, 48
-  %13 = or disjoint i64 %12, %9
-  store i64 %13, ptr %2, align 8
+  %5 = shl i32 %i.bi, 16
+  %6 = or disjoint i32 %i.bg, %5
+  %7 = getelementptr inbounds nuw i8, ptr %2, i64 4
+  store i32 %6, ptr %7, align 4
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #5
   br label %.thread

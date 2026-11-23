@@ -204,7 +204,7 @@ _Z7readU16RSi.exit:                               ; preds = %_ZNSt7__cxx1112basi
   br i1 %.not, label %bb.r, label %bb.n
 
 bb.n:                                             ; preds = %_Z7readU16RSi.exit
-  %i.bz = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 6 uses
+  %i.bz = getelementptr inbounds nuw i8, ptr %0, i64 36
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #32
   store i8 0, ptr %i.e, align 1
   %i.ca = call noundef nonnull align 8 dereferenceable(16) ptr @_ZNSi4readEPcl(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull %i.e, i64 noundef 1) ; 0 uses
@@ -225,12 +225,8 @@ bb.o:                                             ; preds = %bb.n
 _Z6readU8RSi.exit32:                              ; preds = %bb.n
   %i.ci = load i8, ptr %i.e, align 1, !tbaa !56
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #32
-  %7 = zext i8 %i.ci to i32
-  %8 = shl nuw nsw i32 %7, 16
-  %9 = load i32, ptr %i.bz, align 4, !tbaa !95
-  %10 = and i32 %9, -16711681
-  %11 = or disjoint i32 %10, %8
-  store i32 %11, ptr %i.bz, align 4, !tbaa !95
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 38
+  store i8 %i.ci, ptr %7, align 2, !tbaa !95
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #32
   store i8 0, ptr %i.d, align 1
   %i.cj = call noundef nonnull align 8 dereferenceable(16) ptr @_ZNSi4readEPcl(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull %i.d, i64 noundef 1) ; 0 uses
@@ -251,12 +247,8 @@ bb.p:                                             ; preds = %_Z6readU8RSi.exit32
 _Z6readU8RSi.exit34:                              ; preds = %_Z6readU8RSi.exit32
   %i.cr = load i8, ptr %i.d, align 1, !tbaa !56
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #32
-  %12 = zext i8 %i.cr to i32
-  %13 = shl nuw nsw i32 %12, 8
-  %14 = load i32, ptr %i.bz, align 4, !tbaa !95
-  %15 = and i32 %14, -65281
-  %16 = or disjoint i32 %15, %13
-  store i32 %16, ptr %i.bz, align 4, !tbaa !95
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 37
+  store i8 %i.cr, ptr %8, align 1, !tbaa !95
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #32
   store i8 0, ptr %i.c, align 1
   %i.cs = call noundef nonnull align 8 dereferenceable(16) ptr @_ZNSi4readEPcl(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull %i.c, i64 noundef 1) ; 0 uses
@@ -277,11 +269,7 @@ bb.q:                                             ; preds = %_Z6readU8RSi.exit34
 _Z6readU8RSi.exit36:                              ; preds = %_Z6readU8RSi.exit34
   %i.da = load i8, ptr %i.c, align 1, !tbaa !56
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #32
-  %17 = zext i8 %i.da to i32
-  %18 = load i32, ptr %i.bz, align 4, !tbaa !95
-  %19 = and i32 %18, -256
-  %20 = or disjoint i32 %19, %17
-  store i32 %20, ptr %i.bz, align 4, !tbaa !95
+  store i8 %i.da, ptr %i.bz, align 4, !tbaa !95
   br label %bb.r
 
 bb.r:                                             ; preds = %_Z6readU8RSi.exit36, %_Z7readU16RSi.exit
@@ -684,7 +672,7 @@ _ZN15ContentFeatures18setAlphaFromLegacyEh.exit:  ; preds = %bb.ak, %bb.al, %bb.
   %.sink.i = phi i8 [ %i.ir, %bb.am ], [ %i.iq, %bb.al ], [ %i.ip, %bb.ak ]
   %i.is = getelementptr inbounds nuw i8, ptr %0, i64 1296 ; 2 uses
   store i8 %.sink.i, ptr %i.is, align 8, !tbaa !142
-  %i.it = getelementptr inbounds nuw i8, ptr %0, i64 1300 ; 6 uses
+  %i.it = getelementptr inbounds nuw i8, ptr %0, i64 1300
   call void @llvm.lifetime.start.p0(ptr nonnull %i.af) #32
   store i8 0, ptr %i.af, align 1
   %i.iu = call noundef nonnull align 8 dereferenceable(16) ptr @_ZNSi4readEPcl(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull %i.af, i64 noundef 1) ; 0 uses
@@ -705,12 +693,8 @@ bb.an:                                            ; preds = %_ZN15ContentFeature
 _Z6readU8RSi.exit181:                             ; preds = %_ZN15ContentFeatures18setAlphaFromLegacyEh.exit
   %i.jc = load i8, ptr %i.af, align 1, !tbaa !56
   call void @llvm.lifetime.end.p0(ptr nonnull %i.af) #32
-  %16 = zext i8 %i.jc to i32
-  %17 = shl nuw nsw i32 %16, 16
-  %18 = load i32, ptr %i.it, align 4, !tbaa !95
-  %19 = and i32 %18, -16711681
-  %20 = or disjoint i32 %19, %17
-  store i32 %20, ptr %i.it, align 4, !tbaa !95
+  %16 = getelementptr inbounds nuw i8, ptr %0, i64 1302
+  store i8 %i.jc, ptr %16, align 2, !tbaa !95
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ae) #32
   store i8 0, ptr %i.ae, align 1
   %i.jd = call noundef nonnull align 8 dereferenceable(16) ptr @_ZNSi4readEPcl(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull %i.ae, i64 noundef 1) ; 0 uses
@@ -731,12 +715,8 @@ bb.ao:                                            ; preds = %_Z6readU8RSi.exit18
 _Z6readU8RSi.exit183:                             ; preds = %_Z6readU8RSi.exit181
   %i.jl = load i8, ptr %i.ae, align 1, !tbaa !56
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ae) #32
-  %21 = zext i8 %i.jl to i32
-  %22 = shl nuw nsw i32 %21, 8
-  %23 = load i32, ptr %i.it, align 4, !tbaa !95
-  %24 = and i32 %23, -65281
-  %25 = or disjoint i32 %24, %22
-  store i32 %25, ptr %i.it, align 4, !tbaa !95
+  %17 = getelementptr inbounds nuw i8, ptr %0, i64 1301
+  store i8 %i.jl, ptr %17, align 1, !tbaa !95
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ad) #32
   store i8 0, ptr %i.ad, align 1
   %i.jm = call noundef nonnull align 8 dereferenceable(16) ptr @_ZNSi4readEPcl(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull %i.ad, i64 noundef 1) ; 0 uses
@@ -757,11 +737,7 @@ bb.ap:                                            ; preds = %_Z6readU8RSi.exit18
 _Z6readU8RSi.exit185:                             ; preds = %_Z6readU8RSi.exit183
   %i.ju = load i8, ptr %i.ad, align 1, !tbaa !56
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ad) #32
-  %26 = zext i8 %i.ju to i32
-  %27 = load i32, ptr %i.it, align 4, !tbaa !95
-  %28 = and i32 %27, -256
-  %29 = or disjoint i32 %28, %26
-  store i32 %29, ptr %i.it, align 4, !tbaa !95
+  store i8 %i.ju, ptr %i.it, align 4, !tbaa !95
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #32
   call void @_Z19deSerializeString16B5cxx11RSi(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %12, ptr noundef nonnull align 8 dereferenceable(16) %1)
   %i.jv = getelementptr inbounds nuw i8, ptr %0, i64 1304 ; 4 uses

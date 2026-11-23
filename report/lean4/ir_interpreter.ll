@@ -204,14 +204,10 @@ _ZN4lean2ir11interpreter3varERKNS_3natE.exit131:  ; preds = %bb.af, %bb.ag
   %i.jb = getelementptr inbounds nuw i8, ptr %i.ix, i64 16
   %i.jc = load ptr, ptr %i.jb, align 8, !tbaa !19
   %i.jd = ptrtoint ptr %i.jc to i64
-  %3 = trunc i64 %i.jd to i32
-  %4 = getelementptr inbounds nuw i8, ptr %i.ja, i64 4 ; 2 uses
-  %5 = load i32, ptr %4, align 4
-  %6 = shl i32 %3, 23
-  %7 = and i32 %6, -16777216
-  %8 = and i32 %5, 16777215
-  %9 = or disjoint i32 %7, %8
-  store i32 %9, ptr %4, align 4
+  %3 = lshr i64 %i.jd, 1
+  %4 = trunc i64 %3 to i8
+  %5 = getelementptr i8, ptr %i.ja, i64 7
+  store i8 %4, ptr %5, align 1
   %i.je = load ptr, ptr %.sroa.0229.0, align 8, !tbaa !19
   %i.jf = getelementptr inbounds nuw i8, ptr %i.je, i64 24
   br label %.thread284.backedge
@@ -614,14 +610,10 @@ bb.r:                                             ; preds = %bb.q
   %i.cd = getelementptr inbounds nuw i8, ptr %i.cc, i64 16
   %i.ce = load ptr, ptr %i.cd, align 8, !tbaa !19
   %i.cf = ptrtoint ptr %i.ce to i64
-  %5 = trunc i64 %i.cf to i32
-  %6 = getelementptr inbounds nuw i8, ptr %i.br, i64 4 ; 2 uses
-  %7 = load i32, ptr %6, align 4
-  %8 = shl i32 %5, 23
-  %9 = and i32 %8, -16777216
-  %10 = and i32 %7, 16777215
-  %11 = or disjoint i32 %9, %10
-  store i32 %11, ptr %6, align 4
+  %5 = lshr i64 %i.cf, 1
+  %6 = trunc i64 %5 to i8
+  %7 = getelementptr i8, ptr %i.br, i64 7
+  store i8 %6, ptr %7, align 1
   %.pre271 = load ptr, ptr %1, align 8, !tbaa !19
   br label %bb.s
 

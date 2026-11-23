@@ -205,12 +205,10 @@ bb.c:                                             ; preds = %bb.a
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !339, !nonnull !98, !align !99
   tail call void @_ZN11mpz_managerILb0EE7big_setER3mpzRKS1_(ptr noundef nonnull align 8 dereferenceable(600) %i.m, ptr noundef nonnull align 8 dereferenceable(20) %i.c, ptr noundef nonnull align 8 dereferenceable(20) %i.b)
   %.pre.i = load i32, ptr %i.b, align 8, !tbaa !69
-  %.pre1.i = load i8, ptr %i.d, align 4           ; 2 uses
-  %.pre2.i = and i8 %.pre1.i, 1
+  %.pre1.i = load i8, ptr %i.d, align 4
   br label %_ZN22basic_interval_managerI12mpbq_managerLb0EE16init_mul_max_minEv.exit
 
 _ZN22basic_interval_managerI12mpbq_managerLb0EE16init_mul_max_minEv.exit: ; preds = %bb.b, %bb.c
-  %.pre-phi.i = phi i8 [ 0, %bb.b ], [ %.pre2.i, %bb.c ]
   %i.n = phi i8 [ %i.e, %bb.b ], [ %.pre1.i, %bb.c ] ; 2 uses
   %i.o = phi i32 [ %i.h, %bb.b ], [ %.pre.i, %bb.c ]
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
@@ -229,14 +227,13 @@ _ZN22basic_interval_managerI12mpbq_managerLb0EE16init_mul_max_minEv.exit: ; pred
   store ptr %i.w, ptr %i.v, align 8, !tbaa !205
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 7 uses
   %i.z = load i8, ptr %i.y, align 4               ; 2 uses
-  %i.aa = and i8 %i.n, 2
-  %i.ab = and i8 %i.z, -4
-  %i.ac = and i8 %i.n, -4
-  %4 = or disjoint i8 %i.aa, %.pre-phi.i
-  %i.ad = or disjoint i8 %4, %i.ab
+  %i.aa = and i8 %i.z, -4
+  %i.ab = and i8 %i.n, -4
+  %i.ac = and i8 %i.n, 3
+  %i.ad = or disjoint i8 %i.aa, %i.ac
   store i8 %i.ad, ptr %i.y, align 4
   %i.ae = and i8 %i.z, 3
-  %i.af = or disjoint i8 %i.ae, %i.ac
+  %i.af = or disjoint i8 %i.ae, %i.ab
   store i8 %i.af, ptr %i.d, align 4
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 4 uses
   %i.ah = load i32, ptr %i.ag, align 8, !tbaa !69

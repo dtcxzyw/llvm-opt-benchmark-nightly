@@ -205,15 +205,11 @@ _ZN13mpzzp_manager2ltERK3mpzS2_.exit66._crit_edge: ; preds = %_ZN13mpzzp_manager
   %.pre77 = load i32, ptr %3, align 8, !tbaa !52
   %.pre78 = load i32, ptr %i.q, align 8, !tbaa !52
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %3, i64 4
-  %.pre79 = load i8, ptr %.phi.trans.insert, align 4 ; 2 uses
-  %.pre80 = load i8, ptr %i.r, align 4            ; 2 uses
-  %.pre81 = and i8 %.pre79, 1
-  %.pre82 = and i8 %.pre80, 1
+  %.pre79 = load i8, ptr %.phi.trans.insert, align 4
+  %.pre80 = load i8, ptr %i.r, align 4
   br label %bb.am
 
 bb.am:                                            ; preds = %_ZN13mpzzp_manager2ltERK3mpzS2_.exit66._crit_edge, %.split72
-  %.pre-phi83 = phi i8 [ %.pre82, %_ZN13mpzzp_manager2ltERK3mpzS2_.exit66._crit_edge ], [ 0, %.split72 ]
-  %.pre-phi = phi i8 [ %.pre81, %_ZN13mpzzp_manager2ltERK3mpzS2_.exit66._crit_edge ], [ 0, %.split72 ]
   %i.eu = phi i8 [ %.pre80, %_ZN13mpzzp_manager2ltERK3mpzS2_.exit66._crit_edge ], [ %i.ei, %.split72 ] ; 2 uses
   %i.ev = phi i8 [ %.pre79, %_ZN13mpzzp_manager2ltERK3mpzS2_.exit66._crit_edge ], [ %i.em, %.split72 ] ; 2 uses
   %i.ew = phi i32 [ %.pre78, %_ZN13mpzzp_manager2ltERK3mpzS2_.exit66._crit_edge ], [ %i.ep, %.split72 ]
@@ -226,15 +222,13 @@ bb.am:                                            ; preds = %_ZN13mpzzp_manager2
   store ptr %i.fa, ptr %i.ey, align 8, !tbaa !62
   store ptr %i.ez, ptr %i.u, align 8, !tbaa !62
   %i.fb = getelementptr inbounds nuw i8, ptr %3, i64 4
-  %11 = and i8 %i.ev, 2
-  %i.fc = and i8 %i.eu, 2
-  %i.fd = and i8 %i.ev, -4
-  %12 = or disjoint i8 %i.fc, %i.fd
-  %i.fe = and i8 %i.eu, -4
-  %i.ff = or disjoint i8 %i.fe, %11
-  %13 = or disjoint i8 %12, %.pre-phi83
-  store i8 %13, ptr %i.fb, align 4
-  %i.fg = or disjoint i8 %i.ff, %.pre-phi
+  %i.fc = and i8 %i.ev, -4
+  %i.fd = and i8 %i.eu, -4
+  %i.fe = and i8 %i.eu, 3
+  %i.ff = or disjoint i8 %i.fe, %i.fc
+  store i8 %i.ff, ptr %i.fb, align 4
+  %11 = and i8 %i.ev, 3
+  %i.fg = or disjoint i8 %i.fd, %11
   store i8 %i.fg, ptr %i.r, align 4
   br label %bb.ap
 

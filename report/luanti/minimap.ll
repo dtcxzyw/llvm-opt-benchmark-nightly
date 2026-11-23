@@ -205,7 +205,7 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZN7Minimap29blitMinimapPixelsToImageRadarEPN5video6IImageE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(192) %0, ptr noundef %1) local_unnamed_addr #3 align 2 {
 bb.a:
-  %2 = alloca %"class.video::SColor", align 4     ; 7 uses
+  %2 = alloca %"class.video::SColor", align 4     ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #33
   store i32 -268435456, ptr %2, align 4, !tbaa !212
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -213,13 +213,17 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 42
   %i.d = load i16, ptr %i.c, align 2, !tbaa !96   ; 2 uses
   %.not19 = icmp eq i16 %i.d, 0
-  br i1 %.not19, label %._crit_edge18, label %.preheader
+  br i1 %.not19, label %._crit_edge18, label %.preheader.lr.ph
 
-.preheader:                                       ; preds = %bb.a, %._crit_edge
-  %.pre = phi i16 [ %.pre21, %._crit_edge ], [ %i.d, %bb.a ] ; 2 uses
-  %i.e = phi ptr [ %i.h, %._crit_edge ], [ %i.b, %bb.a ] ; 2 uses
-  %i.f = phi i32 [ %i.j, %._crit_edge ], [ 0, %bb.a ] ; 2 uses
-  %.01117 = phi i16 [ %i.i, %._crit_edge ], [ 0, %bb.a ]
+.preheader.lr.ph:                                 ; preds = %bb.a
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 1
+  br label %.preheader
+
+.preheader:                                       ; preds = %.preheader.lr.ph, %._crit_edge
+  %.pre = phi i16 [ %i.d, %.preheader.lr.ph ], [ %.pre21, %._crit_edge ] ; 2 uses
+  %i.e = phi ptr [ %i.b, %.preheader.lr.ph ], [ %i.h, %._crit_edge ] ; 2 uses
+  %i.f = phi i32 [ 0, %.preheader.lr.ph ], [ %i.j, %._crit_edge ] ; 2 uses
+  %.01117 = phi i16 [ 0, %.preheader.lr.ph ], [ %i.i, %._crit_edge ]
   %.not20 = icmp eq i16 %.pre, 0
   br i1 %.not20, label %._crit_edge, label %.lr.ph.preheader
 
@@ -252,7 +256,7 @@ bb.a:
   %i.t = getelementptr i8, ptr %i.s, i64 106
   %i.u = load i16, ptr %i.t, align 2, !tbaa !100  ; 2 uses
   %.not = icmp eq i16 %i.u, 0
-  br i1 %.not, label %8, label %bb.b
+  br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
   %i.v = zext i16 %i.u to i32
@@ -263,21 +267,12 @@ bb.b:                                             ; preds = %.lr.ph
   %i.aa = call nsz noundef float @llvm.floor.f32(float %i.z)
   %i.ab = fptosi float %i.aa to i32
   %i.ac = call noundef i32 @llvm.smin.i32(i32 %i.ab, i32 255)
-  %3 = shl nuw nsw i32 %i.ac, 8
-  %4 = and i32 %3, 65280
-  %5 = load i32, ptr %2, align 4, !tbaa !212
-  %6 = and i32 %5, -65281
-  %7 = or disjoint i32 %6, %4
+  %4 = trunc nuw i32 %i.ac to i8
   br label %bb.c
 
-8:                                                ; preds = %.lr.ph
-  %9 = load i32, ptr %2, align 4, !tbaa !212
-  %10 = and i32 %9, -65281
-  br label %bb.c
-
-bb.c:                                             ; preds = %8, %bb.b
-  %storemerge = phi i32 [ %7, %bb.b ], [ %10, %8 ]
-  store i32 %storemerge, ptr %2, align 4, !tbaa !212
+bb.c:                                             ; preds = %.lr.ph, %bb.b
+  %storemerge = phi i8 [ %4, %bb.b ], [ 0, %.lr.ph ]
+  store i8 %storemerge, ptr %3, align 1, !tbaa !212
   %i.ad = xor i32 %i.o, -1
   %i.ae = add nsw i32 %i.m, %i.ad
   %i.af = load ptr, ptr %1, align 8, !tbaa !20
@@ -297,7 +292,7 @@ bb.c:                                             ; preds = %8, %bb.b
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZN7Minimap31blitMinimapPixelsToImageSurfaceEPN5video6IImageES2_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(192) %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #3 align 2 {
 bb.a:
-  %3 = alloca %"class.video::SColor", align 4     ; 7 uses
+  %3 = alloca %"class.video::SColor", align 4     ; 15 uses
   %4 = alloca %"class.video::SColor", align 4     ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #33
   store i32 0, ptr %3, align 4, !tbaa !212
@@ -310,6 +305,8 @@ bb.a:
 
 .preheader.lr.ph:                                 ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 40
+  %5 = getelementptr inbounds nuw i8, ptr %3, i64 2
+  %6 = getelementptr inbounds nuw i8, ptr %3, i64 1
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %._crit_edge
@@ -387,6 +384,8 @@ bb.d:                                             ; preds = %_ZNK14NodeDefManage
 
 bb.e:                                             ; preds = %bb.d
   %i.at = getelementptr inbounds nuw i8, ptr %i.am, i64 564
+  %7 = load i32, ptr %i.at, align 4, !tbaa !196   ; 2 uses
+  store i32 %7, ptr %3, align 4, !tbaa !196
   br label %bb.i
 
 bb.f:                                             ; preds = %_ZNK14NodeDefManager3getERK7MapNode.exit
@@ -397,6 +396,8 @@ bb.f:                                             ; preds = %_ZNK14NodeDefManage
 
 bb.g:                                             ; preds = %bb.f
   %i.ax = getelementptr inbounds nuw i8, ptr %i.am, i64 180
+  %8 = load i32, ptr %i.ax, align 4, !tbaa !196   ; 2 uses
+  store i32 %8, ptr %3, align 4, !tbaa !196
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.d, %bb.f
@@ -405,17 +406,17 @@ bb.h:                                             ; preds = %bb.d, %bb.f
   %i.ba = getelementptr inbounds nuw i8, ptr %i.u, i64 3
   %i.bb = load i8, ptr %i.ba, align 1, !tbaa !375
   call void @_ZNK11NodeVisuals8getColorEhPN5video6SColorE(ptr noundef nonnull align 8 dereferenceable(1288) %i.az, i8 noundef zeroext %i.bb, ptr noundef nonnull %3)
+  %.pre = load i32, ptr %3, align 4, !tbaa !212
   %.pre43 = load ptr, ptr %i.a, align 8, !tbaa !157
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.g, %bb.h, %bb.e
   %i.bc = phi ptr [ %i.o, %bb.g ], [ %.pre43, %bb.h ], [ %i.o, %bb.e ]
-  %.in = phi ptr [ %i.ax, %bb.g ], [ %3, %bb.h ], [ %i.at, %bb.e ]
-  %5 = load i32, ptr %.in, align 4, !tbaa !196    ; 3 uses
+  %9 = phi i32 [ %8, %bb.g ], [ %.pre, %bb.h ], [ %7, %bb.e ]
   %i.bd = getelementptr inbounds nuw i8, ptr %i.am, i64 1400
   %i.be = load ptr, ptr %i.bd, align 8, !tbaa !374
   %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 1264
-  %i.bg = lshr i32 %5, 16
+  %i.bg = lshr i32 %9, 16
   %i.bh = and i32 %i.bg, 255
   %i.bi = load i32, ptr %i.bf, align 4, !tbaa !212 ; 3 uses
   %i.bj = lshr i32 %i.bi, 16
@@ -423,28 +424,29 @@ bb.i:                                             ; preds = %bb.g, %bb.h, %bb.e
   %i.bl = mul nuw nsw i32 %i.bk, %i.bh
   %.lhs.trunc = trunc nuw i32 %i.bl to i16
   %i.bm = udiv i16 %.lhs.trunc, 255
-  %.zext = zext nneg i16 %i.bm to i32
-  %6 = shl nuw nsw i32 %.zext, 16
-  %i.bn = lshr i32 %5, 8
+  %10 = trunc nuw i16 %i.bm to i8
+  store i8 %10, ptr %5, align 2, !tbaa !212
+  %11 = load i32, ptr %3, align 4, !tbaa !212
+  %i.bn = lshr i32 %11, 8
   %i.bo = and i32 %i.bn, 255
   %i.bp = lshr i32 %i.bi, 8
   %i.bq = and i32 %i.bp, 255
-  %i.br = mul nuw nsw i32 %i.bq, %i.bo
+  %i.br = mul nuw nsw i32 %i.bo, %i.bq
   %.lhs.trunc34 = trunc nuw i32 %i.br to i16
   %i.bs = udiv i16 %.lhs.trunc34, 255
-  %.zext35 = zext nneg i16 %i.bs to i32
-  %7 = shl nuw nsw i32 %.zext35, 8
-  %8 = and i32 %7, 65280
-  %i.bt = and i32 %5, 255
+  %12 = trunc nuw i16 %i.bs to i8
+  store i8 %12, ptr %6, align 1, !tbaa !212
+  %13 = load i32, ptr %3, align 4, !tbaa !212
+  %i.bt = and i32 %13, 255
   %i.bu = and i32 %i.bi, 255
-  %i.bv = mul nuw nsw i32 %i.bu, %i.bt
+  %i.bv = mul nuw nsw i32 %i.bt, %i.bu
   %.lhs.trunc36 = trunc nuw i32 %i.bv to i16
   %i.bw = udiv i16 %.lhs.trunc36, 255
-  %.zext37 = zext nneg i16 %i.bw to i32
-  %.masked38 = and i32 %6, 16711680
-  %.masked = or i32 %8, %.zext37
-  %9 = or disjoint i32 %.masked, %.masked38
-  %i.bx = or disjoint i32 %9, -268435456
+  %14 = trunc nuw i16 %i.bw to i8
+  store i8 %14, ptr %3, align 4, !tbaa !212
+  %15 = load i32, ptr %3, align 4, !tbaa !212
+  %16 = and i32 %15, 16777215
+  %i.bx = or disjoint i32 %16, -268435456
   store i32 %i.bx, ptr %3, align 4, !tbaa !212
   %i.by = getelementptr inbounds nuw i8, ptr %i.bc, i64 42
   %i.bz = load i16, ptr %i.by, align 2, !tbaa !96
@@ -742,7 +744,7 @@ bb.s:                                             ; preds = %_ZNSt7__cxx1112basi
 ; Function Attrs: mustprogress uwtable
 define dso_local noundef ptr @_ZN7Minimap17getMinimapTextureEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(192) %0) local_unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %1 = alloca %"class.video::SColor", align 4     ; 7 uses
+  %1 = alloca %"class.video::SColor", align 4     ; 5 uses
   %2 = alloca %"class.core::dimension2d", align 4 ; 7 uses
   %3 = alloca %"class.core::dimension2d", align 4 ; 5 uses
   %4 = alloca %"class.video::SColor", align 4     ; 4 uses
@@ -813,13 +815,17 @@ bb.f:                                             ; preds = %bb.d
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ac, i64 42
   %i.af = load i16, ptr %i.ae, align 2, !tbaa !96 ; 2 uses
   %.not19.i = icmp eq i16 %i.af, 0
-  br i1 %.not19.i, label %_ZN7Minimap29blitMinimapPixelsToImageRadarEPN5video6IImageE.exit, label %.preheader.i
+  br i1 %.not19.i, label %_ZN7Minimap29blitMinimapPixelsToImageRadarEPN5video6IImageE.exit, label %.preheader.lr.ph.i
 
-.preheader.i:                                     ; preds = %bb.f, %._crit_edge.i
-  %.pre.i = phi i16 [ %.pre21.i, %._crit_edge.i ], [ %i.af, %bb.f ] ; 2 uses
-  %i.ag = phi ptr [ %i.aj, %._crit_edge.i ], [ %i.ac, %bb.f ] ; 2 uses
-  %i.ah = phi i32 [ %i.al, %._crit_edge.i ], [ 0, %bb.f ] ; 2 uses
-  %.01117.i = phi i16 [ %i.ak, %._crit_edge.i ], [ 0, %bb.f ]
+.preheader.lr.ph.i:                               ; preds = %bb.f
+  %9 = getelementptr inbounds nuw i8, ptr %1, i64 1
+  br label %.preheader.i
+
+.preheader.i:                                     ; preds = %._crit_edge.i, %.preheader.lr.ph.i
+  %.pre.i = phi i16 [ %i.af, %.preheader.lr.ph.i ], [ %.pre21.i, %._crit_edge.i ] ; 2 uses
+  %i.ag = phi ptr [ %i.ac, %.preheader.lr.ph.i ], [ %i.aj, %._crit_edge.i ] ; 2 uses
+  %i.ah = phi i32 [ 0, %.preheader.lr.ph.i ], [ %i.al, %._crit_edge.i ] ; 2 uses
+  %.01117.i = phi i16 [ 0, %.preheader.lr.ph.i ], [ %i.ak, %._crit_edge.i ]
   %.not20.i = icmp eq i16 %.pre.i, 0
   br i1 %.not20.i, label %._crit_edge.i, label %.lr.ph.preheader.i
 
@@ -848,7 +854,7 @@ bb.f:                                             ; preds = %bb.d
   %i.av = getelementptr i8, ptr %i.au, i64 106
   %i.aw = load i16, ptr %i.av, align 2, !tbaa !100 ; 2 uses
   %.not.i = icmp eq i16 %i.aw, 0
-  br i1 %.not.i, label %14, label %bb.g
+  br i1 %.not.i, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph.i
   %i.ax = zext i16 %i.aw to i32
@@ -859,21 +865,12 @@ bb.g:                                             ; preds = %.lr.ph.i
   %i.bc = call nsz noundef float @llvm.floor.f32(float %i.bb)
   %i.bd = fptosi float %i.bc to i32
   %i.be = call noundef i32 @llvm.smin.i32(i32 %i.bd, i32 255)
-  %9 = shl nuw nsw i32 %i.be, 8
-  %10 = and i32 %9, 65280
-  %11 = load i32, ptr %1, align 4, !tbaa !212
-  %12 = and i32 %11, -65281
-  %13 = or disjoint i32 %12, %10
+  %10 = trunc nuw i32 %i.be to i8
   br label %bb.h
 
-14:                                               ; preds = %.lr.ph.i
-  %15 = load i32, ptr %1, align 4, !tbaa !212
-  %16 = and i32 %15, -65281
-  br label %bb.h
-
-bb.h:                                             ; preds = %14, %bb.g
-  %storemerge.i = phi i32 [ %13, %bb.g ], [ %16, %14 ]
-  store i32 %storemerge.i, ptr %1, align 4, !tbaa !212
+bb.h:                                             ; preds = %bb.g, %.lr.ph.i
+  %storemerge.i = phi i8 [ %10, %bb.g ], [ 0, %.lr.ph.i ]
+  store i8 %storemerge.i, ptr %9, align 1, !tbaa !212
   %i.bf = xor i32 %i.aq, -1
   %i.bg = add nsw i32 %i.ao, %i.bf
   %i.bh = load ptr, ptr %i.q, align 8, !tbaa !20

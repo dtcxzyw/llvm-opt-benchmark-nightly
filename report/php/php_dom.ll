@@ -202,12 +202,9 @@ bb.c:                                             ; preds = %dom_get_doc_props.e
 bb.d:                                             ; preds = %bb.c, %dom_get_doc_props.exit.i
   %i.ab = getelementptr inbounds nuw i8, ptr %i.b, i64 44
   %i.ac = load i16, ptr %i.ab, align 4
-  %4 = and i16 %i.ac, 255
-  %i.ad = getelementptr inbounds nuw i8, ptr %i.d, i64 44 ; 2 uses
-  %5 = load i16, ptr %i.ad, align 4
-  %6 = and i16 %5, -256
-  %7 = or disjoint i16 %6, %4
-  store i16 %7, ptr %i.ad, align 4
+  %i.ad = getelementptr inbounds nuw i8, ptr %i.d, i64 44
+  %4 = trunc i16 %i.ac to i8
+  store i8 %4, ptr %i.ad, align 4
   %i.ae = getelementptr inbounds nuw i8, ptr %i.b, i64 32
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !167
   %i.ag = getelementptr inbounds nuw i8, ptr %i.d, i64 32

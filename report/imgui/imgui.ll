@@ -205,25 +205,19 @@ bb.pi:                                            ; preds = %bb.ph, %bb.pg
 bb.pj:                                            ; preds = %bb.pi
   %i.dcl = getelementptr inbounds nuw i8, ptr %i.kb, i64 239
   %i.dcm = load i32, ptr %i.dcl, align 1
-  %31 = shl i32 %i.dcm, 24
-  %32 = ashr exact i32 %31, 24
+  %31 = trunc i32 %i.dcm to i8
   br label %bb.pl
 
 bb.pk:                                            ; preds = %bb.pi
   %i.dcn = getelementptr inbounds nuw i8, ptr %i.j, i64 130
   %i.dco = load i8, ptr %i.dcn, align 2, !tbaa !1477, !range !100, !noundef !236
   %i.dcp = xor i8 %i.dco, 1
-  %not. = zext nneg i8 %i.dcp to i32
   br label %bb.pl
 
 bb.pl:                                            ; preds = %bb.pk, %bb.pj
-  %33 = phi i32 [ %32, %bb.pj ], [ %not., %bb.pk ]
-  %i.dcq = getelementptr inbounds nuw i8, ptr %i.dch, i64 239 ; 2 uses
-  %34 = load i32, ptr %i.dcq, align 1
-  %35 = and i32 %33, 255
-  %36 = and i32 %34, -256
-  %37 = or disjoint i32 %36, %35
-  store i32 %37, ptr %i.dcq, align 1
+  %32 = phi i8 [ %31, %bb.pj ], [ %i.dcp, %bb.pk ]
+  %i.dcq = getelementptr inbounds nuw i8, ptr %i.dch, i64 239
+  store i8 %32, ptr %i.dcq, align 1
   %i.dcr = getelementptr inbounds nuw i8, ptr %i.dch, i64 480
   %i.dcs = load ptr, ptr @GImGui, align 8, !tbaa !227 ; 10 uses
   %i.dct = load <2 x float>, ptr %30, align 8, !tbaa !75 ; 2 uses
