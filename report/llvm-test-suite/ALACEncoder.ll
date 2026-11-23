@@ -204,13 +204,12 @@ bb.i:                                             ; preds = %bb.h
   %i.z = load i32, ptr %i.x, align 4, !tbaa !7
   %i.aa = zext i32 %i.z to i64
   %i.ab = mul i32 %.055, 3
-  %i.ac = zext i32 %i.ab to i64                   ; 2 uses
-  %7 = shl i64 7, %i.ac
-  %8 = and i64 %7, %i.aa
-  %9 = lshr i64 %8, %i.ac
-  %10 = trunc nuw i64 %9 to i32                   ; 3 uses
-  call void @BitBufferWrite(ptr noundef nonnull %6, i32 noundef %10, i32 noundef 3)
-  switch i32 %10, label %bb.m [
+  %i.ac = zext nneg i32 %i.ab to i64
+  %7 = lshr i64 %i.aa, %i.ac
+  %8 = trunc nuw i64 %7 to i32
+  %9 = and i32 %8, 7                              ; 3 uses
+  call void @BitBufferWrite(ptr noundef nonnull %6, i32 noundef %9, i32 noundef 3)
+  switch i32 %9, label %bb.m [
     i32 0, label %bb.j
     i32 1, label %bb.k
     i32 3, label %bb.l
@@ -241,7 +240,7 @@ bb.l:                                             ; preds = %bb.i
   br label %bb.n
 
 bb.m:                                             ; preds = %bb.i
-  %i.ap = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.2, i32 noundef %10) ; 0 uses
+  %i.ap = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.2, i32 noundef %9) ; 0 uses
   br label %.thread
 
 bb.n:                                             ; preds = %bb.l, %bb.k, %bb.j

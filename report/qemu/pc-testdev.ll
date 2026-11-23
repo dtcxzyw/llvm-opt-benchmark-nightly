@@ -110,15 +110,14 @@ bb.a:
   %i.a = shl i32 %2, 3
   %.tr = trunc i64 %1 to i32
   %i.b = shl i32 %.tr, 3
-  %i.c = and i32 %i.b, 24                         ; 2 uses
+  %i.c = and i32 %i.b, 24
   %i.d = sub i32 32, %i.a
   %i.e = lshr i32 -1, %i.d
-  %3 = shl i32 %i.e, %i.c
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 1520
   %i.g = load i32, ptr %i.f, align 16
-  %4 = and i32 %i.g, %3
-  %5 = lshr i32 %4, %i.c
-  %i.h = zext i32 %5 to i64
+  %3 = lshr i32 %i.g, %i.c
+  %4 = and i32 %3, %i.e
+  %i.h = zext i32 %4 to i64
   ret i64 %i.h
 }
 

@@ -204,11 +204,10 @@ bb.u:                                             ; preds = %bb.s
 
 get_comment_key_flags.exit.i.i.i.i.i:             ; preds = %bb.u, %bb.t
   %.0.i.i.i.i.i.i.i = phi i32 [ %i.bw, %bb.u ], [ %i.bs, %bb.t ]
-  %i.bx = shl i32 %i.bq, 1                        ; 2 uses
-  %5 = shl i32 3, %i.bx
-  %i.by = and i32 %.0.i.i.i.i.i.i.i, %5
-  %6 = lshr i32 %i.by, %i.bx
-  %i.bz = icmp eq i32 %6, 2
+  %i.bx = shl i32 %i.bq, 1
+  %5 = lshr i32 %.0.i.i.i.i.i.i.i, %i.bx
+  %i.by = and i32 %5, 3
+  %i.bz = icmp eq i32 %i.by, 2
   br i1 %i.bz, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %get_comment_key_flags.exit.i.i.i.i.i

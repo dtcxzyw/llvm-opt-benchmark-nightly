@@ -205,12 +205,11 @@ bb.h:                                             ; preds = %.lr.ph27.split.spli
 bb.i:                                             ; preds = %bb.g
   %i.ab = mul i8 %1, %.sroa.5.023
   %i.ac = sub i8 0, %i.ab
-  %i.ad = and i8 %i.ac, 7                         ; 2 uses
-  %5 = shl i8 %i.c, %i.ad
+  %i.ad = and i8 %i.ac, 7
   %i.ae = load i8, ptr %.sroa.03.025, align 1, !noundef !5
-  %6 = and i8 %i.ae, %5
-  %7 = lshr i8 %6, %i.ad
-  %i.af = mul i8 %7, %i.e
+  %5 = lshr i8 %i.ae, %i.ad
+  %6 = and i8 %5, %i.c
+  %i.af = mul i8 %6, %i.e
   %i.ag = load i64, ptr %i.a, align 8, !range !9, !alias.scope !878, !noundef !5
   %i.ah = icmp eq i64 %i.x, %i.ag
   br i1 %i.ah, label %bb.j, label %_RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VechE8push_mutCsa5QsYiPB8Gl_5image.exit
