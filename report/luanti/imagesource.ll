@@ -205,18 +205,22 @@ declare noundef zeroext i1 @_Z16parseColorStringRKNSt7__cxx1112basic_stringIcSt1
 ; Function Attrs: mustprogress uwtable
 define internal fastcc void @_ZL8brightenPN5video6IImageE(ptr noundef nonnull %0) unnamed_addr #4 {
 bb.a:
-  %1 = alloca %"class.video::SColor", align 4     ; 4 uses
+  %1 = alloca %"class.video::SColor", align 4     ; 9 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 12
   %.sroa.0.0.copyload = load i32, ptr %i.a, align 4, !tbaa !108 ; 2 uses
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.sroa.4.0.copyload = load i32, ptr %.sroa.4.0..sroa_idx, align 4, !tbaa !108 ; 2 uses
-  %2 = icmp ne i32 %.sroa.4.0.copyload, 0
-  %3 = icmp ne i32 %.sroa.0.0.copyload, 0
-  %or.cond = select i1 %2, i1 %3, i1 false
-  br i1 %or.cond, label %.preheader, label %._crit_edge15.split
+  %.not = icmp eq i32 %.sroa.4.0.copyload, 0
+  br i1 %.not, label %._crit_edge15.split, label %.preheader.lr.ph
 
-.preheader:                                       ; preds = %bb.a, %._crit_edge
-  %.01114 = phi i32 [ %i.b, %._crit_edge ], [ 0, %bb.a ] ; 3 uses
+.preheader.lr.ph:                                 ; preds = %bb.a
+  %.not16 = icmp eq i32 %.sroa.0.0.copyload, 0
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 2
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 1
+  br i1 %.not16, label %._crit_edge15.split, label %.preheader
+
+.preheader:                                       ; preds = %.preheader.lr.ph, %._crit_edge
+  %.01114 = phi i32 [ %i.b, %._crit_edge ], [ 0, %.preheader.lr.ph ] ; 3 uses
   br label %bb.b
 
 ._crit_edge:                                      ; preds = %bb.b
@@ -230,34 +234,30 @@ bb.b:                                             ; preds = %.preheader, %bb.b
   %i.c = load ptr, ptr %0, align 8, !tbaa !41
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %i.e = load ptr, ptr %i.d, align 8
-  %i.f = call i32 %i.e(ptr noundef nonnull align 8 dereferenceable(41) %0, i32 noundef %.013, i32 noundef %.01114) ; 4 uses
+  %i.f = call i32 %i.e(ptr noundef nonnull align 8 dereferenceable(41) %0, i32 noundef %.013, i32 noundef %.01114) ; 2 uses
+  store i32 %i.f, ptr %1, align 4
   %i.g = lshr i32 %i.f, 16
   %i.h = and i32 %i.g, 255
   %i.i = uitofp nsz nneg i32 %i.h to float
   %i.j = call nsz float @llvm.fmuladd.f32(float %i.i, float 5.000000e-01, float 1.275000e+02)
   %i.k = fptoui float %i.j to i32
-  %4 = shl i32 %i.k, 16
-  %5 = and i32 %4, 16711680
-  %6 = and i32 %i.f, -16777216
-  %i.l = lshr i32 %i.f, 8
-  %7 = and i32 %i.l, 255
-  %8 = uitofp nsz nneg i32 %7 to float
-  %i.m = and i32 %i.f, 255
+  %4 = trunc i32 %i.k to i8
+  store i8 %4, ptr %2, align 2, !tbaa !104
+  %5 = load i32, ptr %1, align 4, !tbaa !104
+  %i.l = lshr i32 %5, 8
+  %i.m = and i32 %i.l, 255
   %i.n = uitofp nsz nneg i32 %i.m to float
-  %9 = insertelement <2 x float> poison, float %8, i64 0
-  %10 = insertelement <2 x float> %9, float %i.n, i64 1
-  %11 = call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %10, <2 x float> splat (float 5.000000e-01), <2 x float> splat (float 1.275000e+02)) ; 2 uses
-  %12 = extractelement <2 x float> %11, i64 0
-  %i.o = fptoui float %12 to i32
-  %13 = shl i32 %i.o, 8
-  %14 = and i32 %13, 65280
-  %15 = extractelement <2 x float> %11, i64 1
-  %16 = fptoui float %15 to i32
-  %17 = and i32 %16, 255
-  %18 = or disjoint i32 %17, %6
-  %19 = or disjoint i32 %18, %14
-  %20 = or disjoint i32 %19, %5
-  store i32 %20, ptr %1, align 4, !tbaa !104
+  %6 = call nsz float @llvm.fmuladd.f32(float %i.n, float 5.000000e-01, float 1.275000e+02)
+  %i.o = fptoui float %6 to i32
+  %7 = trunc i32 %i.o to i8
+  store i8 %7, ptr %3, align 1, !tbaa !104
+  %8 = load i32, ptr %1, align 4, !tbaa !104
+  %9 = and i32 %8, 255
+  %10 = uitofp nsz nneg i32 %9 to float
+  %11 = call nsz float @llvm.fmuladd.f32(float %10, float 5.000000e-01, float 1.275000e+02)
+  %12 = fptoui float %11 to i32
+  %13 = trunc i32 %12 to i8
+  store i8 %13, ptr %1, align 4, !tbaa !104
   %i.p = load ptr, ptr %0, align 8, !tbaa !41
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 24
   %i.r = load ptr, ptr %i.q, align 8
@@ -267,7 +267,7 @@ bb.b:                                             ; preds = %.preheader, %bb.b
   %exitcond.not = icmp eq i32 %i.s, %.sroa.0.0.copyload
   br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !189
 
-._crit_edge15.split:                              ; preds = %._crit_edge, %bb.a
+._crit_edge15.split:                              ; preds = %._crit_edge, %.preheader.lr.ph, %bb.a
   ret void
 }
 
@@ -670,27 +670,27 @@ bb.g:                                             ; preds = %._crit_edge16
   %.02811 = phi i16 [ 0, %.lr.ph12.split ], [ %i.dd, %._crit_edge ] ; 3 uses
   %.110 = phi ptr [ %.03014, %.lr.ph12.split ], [ %i.dc, %._crit_edge ] ; 2 uses
   %i.cb = load i32, ptr %.110, align 4, !tbaa !108 ; 4 uses
+  %.sroa.10.0.extract.shift = and i32 %i.cb, -16777216
   %i.cc = lshr i32 %i.cb, 16
   %i.cd = and i32 %i.cc, 255
   %i.ce = mul nuw nsw i32 %i.ar, %i.cd
-  %9 = and i32 %i.ce, 16711680
-  %i.cf = and i32 %i.cb, -16777216
+  %i.cf = and i32 %i.ce, 33488896
   %i.cg = lshr i32 %i.cb, 8
   %i.ch = and i32 %i.cg, 255
   %i.ci = mul nuw nsw i32 %i.ch, %i.c
-  %i.cj = and i32 %i.ci, 65280
+  %i.cj = and i32 %i.ci, 130816
   %i.ck = and i32 %i.cb, 255
   %i.cl = mul nuw nsw i32 %i.ck, %i.c
   %i.cm = lshr i32 %i.cl, 8
-  %10 = or disjoint i32 %i.cm, %i.cf
-  %11 = or disjoint i32 %10, %i.cj
-  %12 = or disjoint i32 %11, %9                   ; 3 uses
-  %13 = shl i16 %.02811, 2
-  %14 = add i16 %i.bf, %13
-  %15 = mul i16 %.02811, %5
-  %16 = add i16 %i.bh, %15
-  %i.cn = sext i16 %16 to i32                     ; 3 uses
-  %i.co = sext i16 %14 to i32                     ; 3 uses
+  %9 = shl i16 %.02811, 2
+  %10 = add i16 %i.bf, %9
+  %11 = mul i16 %.02811, %5
+  %12 = add i16 %i.bh, %11
+  %invariant.op = or i32 %i.cf, %i.cj
+  %.sroa.9.0.insert.insert37 = or disjoint i32 %i.cm, %.sroa.10.0.extract.shift
+  %.sroa.0.0.insert.insert.reass = or i32 %.sroa.9.0.insert.insert37, %invariant.op ; 3 uses
+  %i.cn = sext i16 %12 to i32                     ; 3 uses
+  %i.co = sext i16 %10 to i32                     ; 3 uses
   br i1 %lcmp.mod.not.not, label %.prol.loopexit.unr-lcssa, label %.prol.loopexit
 
 .prol.loopexit.unr-lcssa:                         ; preds = %.lr.ph
@@ -707,7 +707,7 @@ bb.g:                                             ; preds = %._crit_edge16
   %i.cz = add i32 %i.cx, %i.cy
   %i.da = zext i32 %i.cz to i64
   %i.db = getelementptr inbounds nuw [4 x i8], ptr %i.bm, i64 %i.da
-  store i32 %12, ptr %i.db, align 4, !tbaa !108
+  store i32 %.sroa.0.0.insert.insert.reass, ptr %i.db, align 4, !tbaa !108
   br label %.prol.loopexit
 
 .prol.loopexit:                                   ; preds = %.prol.loopexit.unr-lcssa, %.lr.ph
@@ -738,7 +738,7 @@ bb.g:                                             ; preds = %._crit_edge16
   %i.ds = add i32 %i.dq, %i.dr
   %i.dt = zext i32 %i.ds to i64
   %i.du = getelementptr inbounds nuw [4 x i8], ptr %i.bm, i64 %i.dt
-  store i32 %12, ptr %i.du, align 4, !tbaa !108
+  store i32 %.sroa.0.0.insert.insert.reass, ptr %i.du, align 4, !tbaa !108
   %i.dv = getelementptr inbounds nuw i8, ptr %.09, i64 4
   %i.dw = getelementptr inbounds nuw i8, ptr %.09, i64 6
   %i.dx = load i16, ptr %i.dw, align 2, !tbaa !239
@@ -754,7 +754,7 @@ bb.g:                                             ; preds = %._crit_edge16
   %i.eh = add i32 %i.ef, %i.eg
   %i.ei = zext i32 %i.eh to i64
   %i.ej = getelementptr inbounds nuw [4 x i8], ptr %i.bm, i64 %i.ei
-  store i32 %12, ptr %i.ej, align 4, !tbaa !108
+  store i32 %.sroa.0.0.insert.insert.reass, ptr %i.ej, align 4, !tbaa !108
   %i.ek = getelementptr inbounds nuw i8, ptr %.09, i64 8 ; 2 uses
   %.not.1 = icmp eq ptr %i.ek, %i.as
   br i1 %.not.1, label %._crit_edge, label %.lr.ph.new
@@ -1157,9 +1157,6 @@ declare i16 @llvm.umin.i16(i16, i16) #10
 declare i16 @llvm.umax.i16(i16, i16) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #10
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -1170,6 +1167,9 @@ declare <2 x i32> @llvm.smax.v2i32(<2 x i32>, <2 x i32>) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i32> @llvm.smin.v2i32(<2 x i32>, <2 x i32>) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #10
 
 attributes #0 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

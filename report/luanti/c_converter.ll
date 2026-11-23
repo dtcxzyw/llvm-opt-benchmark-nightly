@@ -202,6 +202,7 @@ bb.az:                                            ; preds = %_ZNSt7__cxx1112basi
   %i.ix = call nsz double @llvm.minnum.f64(double %i.iw, double 2.550000e+02)
   %i.iy = call nsz double @llvm.maxnum.f64(double %i.ix, double 0.000000e+00)
   %i.iz = fptoui double %i.iy to i32
+  call void @lua_settop(ptr noundef %0, i32 noundef -2)
   %i.ja = call nsz <2 x double> @llvm.maxnum.v2f64(<2 x double> %i.iv, <2 x double> zeroinitializer)
   %i.jb = fptoui <2 x double> %i.ja to <2 x i32>
   %i.jc = shl <2 x i32> %i.jb, <i32 16, i32 8>
@@ -211,7 +212,6 @@ bb.az:                                            ; preds = %_ZNSt7__cxx1112basi
   %i.jg = shufflevector <4 x i32> %i.jf, <4 x i32> %i.je, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.jh = and <4 x i32> %i.jg, <i32 16711680, i32 65280, i32 255, i32 -1>
   %i.ji = call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %i.jh)
-  call void @lua_settop(ptr noundef %0, i32 noundef -2)
   ret i32 %i.ji
 
 bb.ba:                                            ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i100, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit102, %bb.s, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit206, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit168, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit130

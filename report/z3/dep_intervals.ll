@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.h, %bb.i, %bb.e,
   %i.fg = load i32, ptr %i.b, align 4, !tbaa !61
   %i.fh = icmp eq i32 %i.fg, 2
   %i.fi = select i1 %i.fh, i8 8, i8 0
-  %i.fj = or disjoint i8 %i.fi, %i.ff
+  %i.fj = or disjoint i8 %i.ff, %i.fi
   store i8 %i.fj, ptr %i.fb, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
@@ -608,7 +608,7 @@ bb.a:
   %i.ad = load i32, ptr %i.b, align 4, !tbaa !61
   %i.ae = icmp eq i32 %i.ad, 2
   %i.af = select i1 %i.ae, i8 8, i8 0
-  %i.ag = or disjoint i8 %i.af, %i.ac             ; 2 uses
+  %i.ag = or disjoint i8 %i.ac, %i.af             ; 2 uses
   store i8 %i.ag, ptr %i.y, align 8
   %i.ah = load i8, ptr %i.e, align 8
   %i.ai = trunc i8 %i.ah to i1
@@ -1011,7 +1011,7 @@ bb.s:                                             ; preds = %bb.p, %_ZNK16interv
   %i.ls = load i32, ptr %i.b, align 4, !tbaa !61
   %i.lt = icmp eq i32 %i.ls, 2
   %i.lu = select i1 %i.lt, i8 8, i8 0
-  %i.lv = or disjoint i8 %i.lu, %i.lr
+  %i.lv = or disjoint i8 %i.lr, %i.lu
   store i8 %i.lv, ptr %i.ln, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
@@ -1414,7 +1414,7 @@ bb.v:                                             ; preds = %bb.n, %bb.o, %bb.l,
   %i.kj = load i32, ptr %i.b, align 4, !tbaa !61
   %i.kk = icmp eq i32 %i.kj, 2
   %i.kl = select i1 %i.kk, i8 8, i8 0
-  %i.km = or disjoint i8 %i.kl, %i.ki
+  %i.km = or disjoint i8 %i.ki, %i.kl
   store i8 %i.km, ptr %i.ke, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19

@@ -58,14 +58,14 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 _ZN3euf6egraph16push_plugin_undoEj.exit:          ; preds = %bb.b, %bb.c
   %i.k = phi i32 [ %.pre2.i.i, %bb.c ], [ %i.g, %bb.b ]
   %i.l = phi ptr [ %.pre.i.i, %bb.c ], [ %i.d, %bb.b ]
-  %2 = and i32 %1, 255
+  %2 = trunc i32 %1 to i8
   %i.m = zext i32 %i.k to i64
   %i.n = getelementptr inbounds nuw [32 x i8], ptr %i.l, i64 %i.m ; 3 uses
   store i32 15, ptr %i.n, align 8, !tbaa !53
   %i.o = getelementptr i8, ptr %i.n, i64 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.o, i8 0, i64 16, i1 false)
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.n, i64 24
-  store i32 %2, ptr %.sroa.5.0..sroa_idx.i, align 8
+  store i8 %2, ptr %.sroa.5.0..sroa_idx.i, align 8
   %i.p = load ptr, ptr %i.c, align 8, !tbaa !16
   %i.q = getelementptr inbounds i8, ptr %i.p, i64 -4 ; 2 uses
   %i.r = load i32, ptr %i.q, align 4, !tbaa !17

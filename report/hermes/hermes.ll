@@ -205,7 +205,7 @@ bb.am:                                            ; preds = %_ZN4llvh11SmallVect
 }
 
 ; Function Attrs: mustprogress uwtable
-define internal range(i32 0, 258) i32 @_ZN8facebook6hermes12_GLOBAL__N_117HermesRuntimeImpl8JsiProxy3setEN6hermes2vm8SymbolIDENS5_11HermesValueE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %0, i32 %1, i64 %2) unnamed_addr #6 align 2 personality ptr @__gxx_personality_v0 !guid !1766 {
+define internal range(i32 256, 512) i32 @_ZN8facebook6hermes12_GLOBAL__N_117HermesRuntimeImpl8JsiProxy3setEN6hermes2vm8SymbolIDENS5_11HermesValueE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %0, i32 %1, i64 %2) unnamed_addr #6 align 2 personality ptr @__gxx_personality_v0 !guid !1766 {
 bb.a:
   %3 = alloca %"class.facebook::jsi::PropNameID", align 8 ; 7 uses
   %4 = alloca %"class.facebook::jsi::Value", align 8 ; 7 uses
@@ -409,7 +409,6 @@ bb.q:                                             ; preds = %bb.p
           to label %bb.r unwind label %bb.ae
 
 bb.r:                                             ; preds = %bb.q
-  %20 = and i32 %i.bm, 255
   call void @llvm.lifetime.end.p0(ptr nonnull %19) #45
   call void @llvm.lifetime.end.p0(ptr nonnull %18) #45
   call void @llvm.lifetime.end.p0(ptr nonnull %17) #45
@@ -485,7 +484,6 @@ bb.x:                                             ; preds = %bb.w
           to label %bb.y unwind label %bb.aa
 
 bb.y:                                             ; preds = %bb.x
-  %21 = and i32 %i.cf, 255
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #45
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #45
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #45
@@ -564,7 +562,7 @@ bb.ai:                                            ; preds = %_ZN4llvh11SmallVect
   br label %bb.al
 
 bb.aj:                                            ; preds = %bb.i, %_ZN4llvh11SmallVectorItLj16EED2Ev.exit, %bb.y, %bb.e
-  %.sroa.0.0 = phi i32 [ 257, %bb.e ], [ 0, %bb.i ], [ %20, %_ZN4llvh11SmallVectorItLj16EED2Ev.exit ], [ %21, %bb.y ]
+  %.sroa.0.0 = phi i32 [ 1, %bb.e ], [ 0, %bb.i ], [ %i.bm, %_ZN4llvh11SmallVectorItLj16EED2Ev.exit ], [ %i.cf, %bb.y ]
   %i.co = load ptr, ptr %3, align 8, !tbaa !615   ; 3 uses
   %.not.i = icmp eq ptr %i.co, null
   br i1 %.not.i, label %_ZN8facebook3jsi7PointerD2Ev.exit, label %bb.ak
@@ -577,7 +575,9 @@ bb.ak:                                            ; preds = %bb.aj
 
 _ZN8facebook3jsi7PointerD2Ev.exit:                ; preds = %bb.aj, %bb.ak
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #45
-  ret i32 %.sroa.0.0
+  %.sroa.0.sroa.0.0.insert.ext52 = and i32 %.sroa.0.0, 255
+  %.sroa.0.sroa.0.0.insert.insert54 = or disjoint i32 %.sroa.0.sroa.0.0.insert.ext52, 256
+  ret i32 %.sroa.0.sroa.0.0.insert.insert54
 
 bb.al:                                            ; preds = %bb.ai, %_ZN4llvh11SmallVectorItLj16EED2Ev.exit48, %bb.ab
   %.pn39.pn = phi { ptr, i32 } [ %.pn32.pn, %_ZN4llvh11SmallVectorItLj16EED2Ev.exit48 ], [ %.pn29, %bb.ab ], [ %i.cn, %bb.ai ]
