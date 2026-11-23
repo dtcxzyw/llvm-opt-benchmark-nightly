@@ -204,7 +204,7 @@ bb.a:
 }
 
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
-define dso_local i64 @__sbitmap_queue_get_batch(ptr nofree noundef captures(address) %0, i32 noundef %1, ptr nofree noundef writeonly captures(none) %2) local_unnamed_addr #0 align 16 prefalign(16) {
+define dso_local range(i64 0, -9223372036854775808) i64 @__sbitmap_queue_get_batch(ptr nofree noundef captures(address) %0, i32 noundef %1, ptr nofree noundef writeonly captures(none) %2) local_unnamed_addr #0 align 16 prefalign(16) {
 bb.a:
   %i.a = alloca i64, align 8                      ; 9 uses
   %i.b = getelementptr i8, ptr %0, i64 12         ; 2 uses
@@ -250,7 +250,7 @@ update_alloc_hint_before_get.exit:                ; preds = %bb.b, %get_random_u
   %i.s = sext i32 %1 to i64
   %i.t = zext nneg i32 %1 to i64
   %notmask52 = shl nsw i64 -1, %i.t
-  %i.u = xor i64 %notmask52, -1
+  %i.u = xor i64 %notmask52, -1                   ; 2 uses
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph, %bb.p
@@ -312,7 +312,7 @@ find_first_zero_bit.exit:                         ; preds = %sbitmap_deferred_cl
   br i1 %.not, label %bb.p, label %bb.i
 
 bb.i:                                             ; preds = %find_first_zero_bit.exit
-  %i.av = shl i64 %i.u, %i.at                     ; 3 uses
+  %i.av = shl i64 %i.u, %i.at                     ; 2 uses
   %i.aw = load i64, ptr %i.a, align 8             ; 2 uses
   %i.ax = or i64 %i.aw, %i.av
   %i.ay = call { i8, i64 } asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock cmpxchgq $3, $1", "={@ccz},=*m,={ax},r,*m,2,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.x, i64 %i.ax, ptr elementtype(i64) %i.x, i64 %i.aw) #12, !srcloc !40 ; 2 uses
@@ -337,8 +337,8 @@ arch_atomic64_try_cmpxchg.exit:                   ; preds = %bb.i, %arch_atomic6
 ._crit_edge:                                      ; preds = %arch_atomic64_try_cmpxchg.exit, %bb.i
   %i.bj = load i64, ptr %i.a, align 8
   %i.bk = xor i64 %i.bj, -1
-  %3 = and i64 %i.av, %i.bk
-  %4 = lshr i64 %3, %i.at                         ; 2 uses
+  %3 = lshr i64 %i.bk, %i.at
+  %4 = and i64 %3, %i.u                           ; 2 uses
   %.not53 = icmp eq i64 %4, 0
   br i1 %.not53, label %bb.p, label %bb.j
 
