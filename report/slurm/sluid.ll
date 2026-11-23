@@ -188,11 +188,10 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.b, %bb.a
   %indvars.iv.i = phi i64 [ 0, %bb.a ], [ %indvars.iv.next.i, %bb.b ] ; 3 uses
-  %i.c = mul nuw nsw i64 %indvars.iv.i, 5         ; 2 uses
-  %1 = shl i64 31, %i.c
-  %i.d = and i64 %1, %0
-  %2 = lshr i64 %i.d, %i.c
-  %i.e = getelementptr inbounds nuw i8, ptr @cb32map, i64 %2
+  %i.c = mul nuw nsw i64 %indvars.iv.i, 5
+  %1 = lshr i64 %0, %i.c
+  %i.d = and i64 %1, 31
+  %i.e = getelementptr inbounds nuw i8, ptr @cb32map, i64 %i.d
   %i.f = load i8, ptr %i.e, align 1
   %i.g = sub nuw nsw i64 13, %indvars.iv.i
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.g
@@ -221,11 +220,10 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b, %bb.c
   %indvars.iv = phi i64 [ 0, %bb.b ], [ %indvars.iv.next, %bb.c ] ; 3 uses
-  %i.c = mul nuw nsw i64 %indvars.iv, 5           ; 2 uses
-  %3 = shl i64 31, %i.c
-  %i.d = and i64 %3, %0
-  %4 = lshr i64 %i.d, %i.c
-  %i.e = getelementptr inbounds nuw i8, ptr @cb32map, i64 %4
+  %i.c = mul nuw nsw i64 %indvars.iv, 5
+  %3 = lshr i64 %0, %i.c
+  %i.d = and i64 %3, 31
+  %i.e = getelementptr inbounds nuw i8, ptr @cb32map, i64 %i.d
   %i.f = load i8, ptr %i.e, align 1
   %i.g = sub nuw nsw i64 13, %indvars.iv
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 %i.g

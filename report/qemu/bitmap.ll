@@ -204,28 +204,11 @@ define dso_local void @bitmap_copy_with_src_offset(ptr noundef %0, ptr nofree no
 bb.a:
   %i.a = lshr i64 %2, 6                           ; 2 uses
   %i.b = getelementptr [8 x i8], ptr %1, i64 %i.a ; 8 uses
-  %i.c = and i64 %2, 63                           ; 7 uses
+  %i.c = and i64 %2, 63                           ; 6 uses
   %.not = icmp eq i64 %i.c, 0
   br i1 %.not, label %4, label %bb.b
 
-4:                                                ; preds = %bb.a
-  %5 = icmp ult i64 %3, 65
-  br i1 %5, label %6, label %8
-
-6:                                                ; preds = %4
-  %7 = load i64, ptr %i.b, align 8
-  store i64 %7, ptr %0, align 8
-  br label %bitmap_copy.exit
-
-8:                                                ; preds = %4
-  %9 = add i64 %3, 63
-  %10 = lshr i64 %9, 3
-  %11 = and i64 %10, 2305843009213693944
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 %0, ptr noundef nonnull readonly align 1 %i.b, i64 noundef range(i64 0, 2305843009213693945) %11, i1 noundef false) #10
-  br label %bitmap_copy.exit
-
 bb.b:                                             ; preds = %bb.a
-  %notmask = shl nsw i64 -1, %i.c                 ; 3 uses
   %i.d = icmp ugt i64 %3, 63
   %i.e = sub nuw nsw i64 64, %i.c                 ; 5 uses
   br i1 %i.d, label %.lr.ph.preheader, label %._crit_edge
@@ -234,7 +217,7 @@ bb.b:                                             ; preds = %bb.a
   %i.f = add i64 %3, -64                          ; 3 uses
   %i.g = lshr i64 %i.f, 6
   %i.h = add nuw nsw i64 %i.g, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.f, 576
+  %min.iters.check = icmp ult i64 %i.f, 704
   br i1 %min.iters.check, label %.lr.ph.preheader68, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
@@ -258,8 +241,6 @@ vector.ph:                                        ; preds = %vector.memcheck
   %i.s = shl nuw nsw i64 %n.vec, 3                ; 2 uses
   %i.t = getelementptr i8, ptr %i.b, i64 %i.s     ; 2 uses
   %i.u = getelementptr i8, ptr %0, i64 %i.s       ; 2 uses
-  %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %notmask, i64 0
-  %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer
   %broadcast.splatinsert60.a = insertelement <2 x i64> poison, i64 %i.c, i64 0
   %broadcast.splat61.a = shufflevector <2 x i64> %broadcast.splatinsert60.a, <2 x i64> poison, <2 x i32> zeroinitializer
   %broadcast.splatinsert62 = insertelement <2 x i64> poison, i64 %i.e, i64 0
@@ -272,8 +253,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %next.gep = getelementptr i8, ptr %i.b, i64 %i.v ; 2 uses
   %next.gep64 = getelementptr i8, ptr %0, i64 %i.v ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep, align 8, !alias.scope !45
-  %12 = and <2 x i64> %wide.load, %broadcast.splat
-  %i.w = lshr <2 x i64> %12, %broadcast.splat61.a ; 2 uses
+  %i.w = lshr <2 x i64> %wide.load, %broadcast.splat61.a ; 2 uses
   store <2 x i64> %i.w, ptr %next.gep64, align 8, !alias.scope !46, !noalias !45
   %i.x = getelementptr inbounds nuw i8, ptr %next.gep, i64 8
   %wide.load65 = load <2 x i64>, ptr %i.x, align 8, !alias.scope !45
@@ -294,13 +274,28 @@ middle.block:                                     ; preds = %vector.body
   %.04046.ph = phi ptr [ %0, %vector.memcheck ], [ %0, %.lr.ph.preheader ], [ %i.u, %middle.block ]
   br label %.lr.ph
 
+4:                                                ; preds = %bb.a
+  %5 = icmp ult i64 %3, 65
+  br i1 %5, label %6, label %8
+
+6:                                                ; preds = %4
+  %7 = load i64, ptr %i.b, align 8
+  store i64 %7, ptr %0, align 8
+  br label %bitmap_copy.exit
+
+8:                                                ; preds = %4
+  %9 = add i64 %3, 63
+  %10 = lshr i64 %9, 3
+  %11 = and i64 %10, 2305843009213693944
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 %0, ptr noundef nonnull readonly align 1 %i.b, i64 noundef range(i64 0, 2305843009213693945) %11, i1 noundef false) #10
+  br label %bitmap_copy.exit
+
 .lr.ph:                                           ; preds = %.lr.ph.preheader68, %.lr.ph
   %.048 = phi i64 [ %i.ai, %.lr.ph ], [ %.048.ph, %.lr.ph.preheader68 ]
   %.03947 = phi ptr [ %i.ad, %.lr.ph ], [ %.03947.ph, %.lr.ph.preheader68 ] ; 2 uses
   %.04046 = phi ptr [ %i.ah, %.lr.ph ], [ %.04046.ph, %.lr.ph.preheader68 ] ; 3 uses
   %i.ab = load i64, ptr %.03947, align 8
-  %13 = and i64 %i.ab, %notmask
-  %i.ac = lshr i64 %13, %i.c                      ; 2 uses
+  %i.ac = lshr i64 %i.ab, %i.c                    ; 2 uses
   store i64 %i.ac, ptr %.04046, align 8
   %i.ad = getelementptr inbounds nuw i8, ptr %.03947, i64 8 ; 3 uses
   %i.ae = load i64, ptr %i.ad, align 8
@@ -321,8 +316,7 @@ middle.block:                                     ; preds = %vector.body
 
 bb.c:                                             ; preds = %._crit_edge
   %i.al = load i64, ptr %.039.lcssa, align 8
-  %14 = and i64 %i.al, %notmask
-  %i.am = lshr i64 %14, %i.c                      ; 2 uses
+  %i.am = lshr i64 %i.al, %i.c                    ; 2 uses
   store i64 %i.am, ptr %.040.lcssa, align 8
   %i.an = sub nuw nsw i64 %.0.lcssa, %i.e
   %notmask45 = shl nsw i64 -1, %i.an
@@ -378,8 +372,7 @@ bb.d:                                             ; preds = %bb.b
   br label %bitmap_copy.exit
 
 bb.e:                                             ; preds = %bb.a
-  %i.i = sub nuw nsw i64 64, %i.c                 ; 8 uses
-  %notmask = shl nsw i64 -1, %i.i                 ; 3 uses
+  %i.i = sub nuw nsw i64 64, %i.c                 ; 6 uses
   %notmask46 = shl nsw i64 -1, %i.c
   %i.j = xor i64 %notmask46, -1
   %i.k = load i64, ptr %i.b, align 8
@@ -400,8 +393,7 @@ bb.e:                                             ; preds = %bb.a
   %i.r = or i64 %i.l, %i.q
   store i64 %i.r, ptr %i.b, align 8
   %i.s = load i64, ptr %1, align 8
-  %4 = and i64 %i.s, %notmask
-  %i.t = lshr i64 %4, %i.i                        ; 3 uses
+  %i.t = lshr i64 %i.s, %i.i                      ; 3 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 3 uses
   store i64 %i.t, ptr %i.u, align 8
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
@@ -430,8 +422,7 @@ bb.e:                                             ; preds = %bb.a
   %i.ab = or i64 %i.y, %i.aa
   store i64 %i.ab, ptr %.04350, align 8
   %i.ac = load i64, ptr %.04251, align 8
-  %5 = and i64 %i.ac, %notmask
-  %i.ad = lshr i64 %5, %i.i                       ; 2 uses
+  %i.ad = lshr i64 %i.ac, %i.i                    ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %.04350, i64 8 ; 2 uses
   store i64 %i.ad, ptr %i.ae, align 8
   %i.af = getelementptr inbounds nuw i8, ptr %.04251, i64 8 ; 2 uses
@@ -440,8 +431,7 @@ bb.e:                                             ; preds = %bb.a
   %i.ai = or disjoint i64 %i.ad, %i.ah
   store i64 %i.ai, ptr %i.ae, align 8
   %i.aj = load i64, ptr %i.af, align 8
-  %6 = and i64 %i.aj, %notmask
-  %i.ak = lshr i64 %6, %i.i                       ; 3 uses
+  %i.ak = lshr i64 %i.aj, %i.i                    ; 3 uses
   %i.al = getelementptr inbounds nuw i8, ptr %.04350, i64 16 ; 3 uses
   store i64 %i.ak, ptr %i.al, align 8
   %i.am = getelementptr inbounds nuw i8, ptr %.04251, i64 16 ; 2 uses
@@ -465,12 +455,11 @@ bb.f:                                             ; preds = %._crit_edge
   %i.au = sub nuw nsw i64 %.0.lcssa, %i.i
   %notmask49 = shl nsw i64 -1, %i.au
   %i.av = xor i64 %notmask49, -1
-  %7 = shl i64 %i.av, %i.i
   %i.aw = load i64, ptr %.042.lcssa, align 8
-  %8 = and i64 %i.aw, %7
-  %9 = lshr i64 %8, %i.i
+  %4 = lshr i64 %i.aw, %i.i
+  %5 = and i64 %4, %i.av
   %i.ax = getelementptr inbounds nuw i8, ptr %.043.lcssa, i64 8
-  store i64 %9, ptr %i.ax, align 8
+  store i64 %5, ptr %i.ax, align 8
   br label %bitmap_copy.exit
 
 bb.g:                                             ; preds = %._crit_edge

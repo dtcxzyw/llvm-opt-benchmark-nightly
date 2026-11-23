@@ -204,10 +204,8 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.k
   %i.bu = add nuw nsw i32 %i.au, %i.bh
-  %i.bv = zext nneg i32 %i.bu to i64              ; 2 uses
-  %5 = shl nsw i64 -1, %i.bv
-  %6 = and i64 %i.bd, %5
-  %i.bw = lshr i64 %6, %i.bv
+  %i.bv = zext nneg i32 %i.bu to i64
+  %i.bw = lshr i64 %i.bd, %i.bv
   %i.bx = udiv i64 %i.bw, 3
   %i.by = zext nneg i32 %i.bj to i64
   %i.bz = shl i64 %i.bx, %i.by

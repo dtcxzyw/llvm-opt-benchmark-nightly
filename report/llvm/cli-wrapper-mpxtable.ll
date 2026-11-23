@@ -204,10 +204,8 @@ _ZNSt6vectorIhSaIhEEC2EmRKS0_.exit:               ; preds = %_ZNSt12_Vector_base
   %i.n = phi ptr [ %i.ae, %_ZNSt6vectorIhSaIhEE9push_backEOh.exit.i ], [ null, %_ZNSt6vectorIhSaIhEEC2EmRKS0_.exit ] ; 3 uses
   %i.o = phi ptr [ %.sroa.748.0, %_ZNSt6vectorIhSaIhEE9push_backEOh.exit.i ], [ null, %_ZNSt6vectorIhSaIhEEC2EmRKS0_.exit ] ; 3 uses
   %.07.i = phi i64 [ %i.af, %_ZNSt6vectorIhSaIhEE9push_backEOh.exit.i ], [ 0, %_ZNSt6vectorIhSaIhEEC2EmRKS0_.exit ] ; 2 uses
-  %10 = shl i64 %.07.i, 3                         ; 2 uses
-  %i.p = shl i64 255, %10
-  %11 = and i64 %i.p, %2
-  %i.q = lshr i64 %11, %10
+  %i.p = shl i64 %.07.i, 3
+  %i.q = lshr i64 %2, %i.p
   %i.r = trunc i64 %i.q to i8                     ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.o, %i.n
   br i1 %.not.i.i.i, label %bb.f, label %bb.e
@@ -289,10 +287,8 @@ _ZL8uIntToU8mm.exit:                              ; preds = %_ZL8uIntToU8mm.exit
   %i.ak = phi ptr [ %i.bb, %_ZNSt6vectorIhSaIhEE9push_backEOh.exit.i24 ], [ null, %_ZL8uIntToU8mm.exit ] ; 3 uses
   %i.al = phi ptr [ %.sroa.7.0, %_ZNSt6vectorIhSaIhEE9push_backEOh.exit.i24 ], [ null, %_ZL8uIntToU8mm.exit ] ; 3 uses
   %.07.i22 = phi i64 [ %i.bc, %_ZNSt6vectorIhSaIhEE9push_backEOh.exit.i24 ], [ 0, %_ZL8uIntToU8mm.exit ] ; 2 uses
-  %12 = shl i64 %.07.i22, 3                       ; 2 uses
-  %i.am = shl i64 255, %12
-  %13 = and i64 %i.am, %i.ai
-  %i.an = lshr i64 %13, %12
+  %i.am = shl i64 %.07.i22, 3
+  %i.an = lshr i64 %i.ai, %i.am
   %i.ao = trunc i64 %i.an to i8                   ; 2 uses
   %.not.i.i.i23 = icmp eq ptr %i.al, %i.ak
   br i1 %.not.i.i.i23, label %bb.k, label %bb.j

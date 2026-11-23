@@ -205,10 +205,10 @@ bb.c:                                             ; preds = %bb.b
   %i.l = sext i32 %spec.select to i64
   %i.m = getelementptr [8 x i8], ptr %i.k, i64 %i.l
   %i.n = getelementptr i8, ptr %i.m, i64 -8
-  %i.o = load i64, ptr %i.n, align 8, !tbaa !44   ; 6 uses
+  %i.o = load i64, ptr %i.n, align 8, !tbaa !44   ; 9 uses
   %i.p = zext i32 %i.i to i64                     ; 8 uses
   %i.q = xor i64 %i.o, -1                         ; 4 uses
-  %i.r = shl i64 %i.o, %i.p                       ; 5 uses
+  %i.r = shl i64 %i.o, %i.p
   %i.s = xor i64 %i.r, -1                         ; 4 uses
   %min.iters.check243 = icmp ult i32 %i.d, 4
   br i1 %min.iters.check243, label %scalar.ph242, label %vector.ph244
@@ -217,19 +217,15 @@ vector.ph244:                                     ; preds = %.lr.ph
   %i.t = and i32 %i.d, 2147483644
   %n.vec245 = zext nneg i32 %i.t to i64
   %broadcast.splatinsert246 = insertelement <2 x i64> poison, i64 %i.o, i64 0
-  %broadcast.splat247 = shufflevector <2 x i64> %broadcast.splatinsert246, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %broadcast.splat247 = shufflevector <2 x i64> %broadcast.splatinsert246, <2 x i64> poison, <2 x i32> zeroinitializer ; 4 uses
   %broadcast.splatinsert248 = insertelement <2 x i64> poison, i64 %i.p, i64 0
   %broadcast.splat249 = shufflevector <2 x i64> %broadcast.splatinsert248, <2 x i64> poison, <2 x i32> zeroinitializer ; 4 uses
   %broadcast.splatinsert250 = insertelement <2 x i64> poison, i64 %i.q, i64 0
-  %broadcast.splat251 = shufflevector <2 x i64> %broadcast.splatinsert250, <2 x i64> poison, <2 x i32> zeroinitializer ; 4 uses
-  %broadcast.splatinsert252 = insertelement <2 x i64> poison, i64 %i.r, i64 0
-  %broadcast.splat253.a = shufflevector <2 x i64> %broadcast.splatinsert252, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %broadcast.splat253.a = shufflevector <2 x i64> %broadcast.splatinsert250, <2 x i64> poison, <2 x i32> zeroinitializer ; 4 uses
   %broadcast.splatinsert254 = insertelement <2 x i64> poison, i64 %i.s, i64 0
   %broadcast.splat255 = shufflevector <2 x i64> %broadcast.splatinsert254, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
-  %invariant.op273 = and <2 x i64> %broadcast.splat251, %broadcast.splat253.a
-  %invariant.op275 = and <2 x i64> %broadcast.splat251, %broadcast.splat253.a
-  %invariant.op277 = and <2 x i64> %broadcast.splat251, %broadcast.splat255
-  %invariant.op279 = and <2 x i64> %broadcast.splat251, %broadcast.splat255
+  %invariant.op277 = and <2 x i64> %broadcast.splat253.a, %broadcast.splat255
+  %invariant.op279 = and <2 x i64> %broadcast.splat253.a, %broadcast.splat255
   br label %vector.body256
 
 vector.body256:                                   ; preds = %vector.body256, %vector.ph244
@@ -242,16 +238,18 @@ vector.body256:                                   ; preds = %vector.body256, %ve
   %i.x = and <2 x i64> %broadcast.splat247, %wide.load259
   %i.y = shl <2 x i64> %i.w, %broadcast.splat249
   %i.z = shl <2 x i64> %i.x, %broadcast.splat249
-  %.reass274.a = and <2 x i64> %wide.load258, %invariant.op273
-  %.reass276 = and <2 x i64> %wide.load259, %invariant.op275
+  %.reass274.a = and <2 x i64> %wide.load258, %broadcast.splat253.a
+  %.reass276 = and <2 x i64> %wide.load259, %broadcast.splat253.a
   %i.aa = lshr <2 x i64> %.reass274.a, %broadcast.splat249
   %i.ab = lshr <2 x i64> %.reass276, %broadcast.splat249
+  %6 = and <2 x i64> %i.aa, %broadcast.splat247
+  %7 = and <2 x i64> %i.ab, %broadcast.splat247
   %.reass278 = and <2 x i64> %wide.load258, %invariant.op277
   %.reass280 = and <2 x i64> %wide.load259, %invariant.op279
   %i.ac = or <2 x i64> %.reass278, %i.y
   %i.ad = or <2 x i64> %.reass280, %i.z
-  %i.ae = or <2 x i64> %i.ac, %i.aa
-  %i.af = or <2 x i64> %i.ad, %i.ab
+  %i.ae = or <2 x i64> %i.ac, %6
+  %i.af = or <2 x i64> %i.ad, %7
   store <2 x i64> %i.ae, ptr %i.u, align 8, !tbaa !44
   store <2 x i64> %i.af, ptr %i.v, align 8, !tbaa !44
   %index.next260 = add nuw i64 %index257, 4       ; 2 uses
@@ -263,11 +261,11 @@ scalar.ph242:                                     ; preds = %.lr.ph
   %i.ai = and i64 %i.o, %i.ah
   %i.aj = shl i64 %i.ai, %i.p
   %i.ak = and i64 %i.ah, %i.q                     ; 2 uses
-  %6 = and i64 %i.ak, %i.r
-  %7 = lshr i64 %6, %i.p
+  %8 = lshr i64 %i.ak, %i.p
+  %9 = and i64 %8, %i.o
   %i.al = and i64 %i.ak, %i.s
   %i.am = or i64 %i.al, %i.aj
-  %i.an = or i64 %i.am, %7
+  %i.an = or i64 %i.am, %9
   store i64 %i.an, ptr %0, align 8, !tbaa !44
   %exitcond199.not = icmp eq i32 %i.d, 1
   br i1 %exitcond199.not, label %.loopexit, label %scalar.ph242.1
@@ -278,11 +276,11 @@ scalar.ph242.1:                                   ; preds = %scalar.ph242
   %i.aq = and i64 %i.o, %i.ap
   %i.ar = shl i64 %i.aq, %i.p
   %i.as = and i64 %i.ap, %i.q                     ; 2 uses
-  %8 = and i64 %i.as, %i.r
-  %9 = lshr i64 %8, %i.p
+  %10 = lshr i64 %i.as, %i.p
+  %11 = and i64 %10, %i.o
   %i.at = and i64 %i.as, %i.s
   %i.au = or i64 %i.at, %i.ar
-  %i.av = or i64 %i.au, %9
+  %i.av = or i64 %i.au, %11
   store i64 %i.av, ptr %i.ao, align 8, !tbaa !44
   %exitcond199.not.1 = icmp eq i32 %i.d, 2
   br i1 %exitcond199.not.1, label %.loopexit, label %scalar.ph242.2
@@ -293,11 +291,11 @@ scalar.ph242.2:                                   ; preds = %scalar.ph242.1
   %i.ay = and i64 %i.o, %i.ax
   %i.az = shl i64 %i.ay, %i.p
   %i.ba = and i64 %i.ax, %i.q                     ; 2 uses
-  %10 = and i64 %i.ba, %i.r
-  %11 = lshr i64 %10, %i.p
+  %12 = lshr i64 %i.ba, %i.p
+  %13 = and i64 %12, %i.o
   %i.bb = and i64 %i.ba, %i.s
   %i.bc = or i64 %i.bb, %i.az
-  %i.bd = or i64 %i.bc, %11
+  %i.bd = or i64 %i.bc, %13
   store i64 %i.bd, ptr %i.aw, align 8, !tbaa !44
   br label %.loopexit
 

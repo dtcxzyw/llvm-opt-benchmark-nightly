@@ -205,7 +205,7 @@ bb.cr:                                            ; preds = %_ZN4absl12lts_20260
   br i1 %i.ow, label %_ZN4absl12lts_2026052619str_format_internal12_GLOBAL__N_112FormatARoundImEEvbRKNS2_11FormatStateEPhPT_Pi.exit.i, label %bb.cs
 
 bb.cs:                                            ; preds = %bb.cr
-  %i.ox = shl nuw nsw i64 %i.ov, 2                ; 5 uses
+  %i.ox = shl nuw nsw i64 %i.ov, 2                ; 4 uses
   %i.oy = sub nuw nsw i64 64, %i.ox
   %i.oz = lshr i64 -1, %i.oy                      ; 2 uses
   %i.pa = and i64 %.2.i, %i.oz                    ; 2 uses
@@ -217,9 +217,7 @@ bb.cs:                                            ; preds = %bb.cr
 
 .split.i.i:                                       ; preds = %bb.cs
   %i.pe = icmp eq i64 %i.ov, 16
-  %12 = shl i64 15, %i.ox
-  %13 = and i64 %.2.i, %12
-  %i.pf = lshr i64 %13, %i.ox
+  %i.pf = lshr i64 %.2.i, %i.ox
   %i.pg = trunc i64 %i.pf to i8
   %i.ph = select i1 %i.pe, i8 %.058.i, i8 %i.pg
   %i.pi = trunc i8 %i.ph to i1

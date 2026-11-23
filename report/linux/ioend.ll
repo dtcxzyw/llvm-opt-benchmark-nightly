@@ -202,16 +202,15 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.c, %bb.e
   %.050 = phi i32 [ %i.m, %bb.c ], [ %i.s, %bb.e ]
-  %3 = shl i32 %.050, 9
   %i.t = getelementptr i8, ptr %0, i64 24         ; 2 uses
   %i.u = load ptr, ptr %i.t, align 8
   %i.v = getelementptr i8, ptr %i.u, i64 134
   %.val58 = load i8, ptr %i.v, align 2
   %i.w = zext nneg i8 %.val58 to i32
   %.neg = shl nsw i32 -1, %i.w
-  %4 = and i32 %.neg, %3
-  %5 = lshr exact i32 %4, 9
-  %i.x = call ptr @bio_split(ptr noundef %i.b, i32 noundef %5, i32 noundef 3136, ptr noundef @iomap_ioend_split_bioset) #12 ; 17 uses
+  %3 = lshr i32 %.neg, 9
+  %4 = and i32 %3, %.050
+  %i.x = call ptr @bio_split(ptr noundef %i.b, i32 noundef %4, i32 noundef 3136, ptr noundef @iomap_ioend_split_bioset) #12 ; 17 uses
   %i.y = icmp ugt ptr %i.x, inttoptr (i64 -4096 to ptr)
   br i1 %i.y, label %bb.i, label %bb.g
 
