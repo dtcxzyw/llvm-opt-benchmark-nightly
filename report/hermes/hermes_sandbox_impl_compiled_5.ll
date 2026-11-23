@@ -204,7 +204,7 @@ bb.ay:                                            ; preds = %bb.ar, %bb.aq, %bb.
   br i1 %.not3071, label %bb.az, label %bb.be
 
 bb.az:                                            ; preds = %bb.ay
-  %i.ij = zext i32 %.32860 to i64
+  %i.ij = zext i32 %.32860 to i64                 ; 2 uses
   %.val3341 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.ik = getelementptr inbounds nuw i8, ptr %.val3341, i64 %i.ij
   %.0.copyload.i3456 = load i8, ptr %i.ik, align 1 ; 2 uses
@@ -213,31 +213,36 @@ bb.az:                                            ; preds = %bb.ay
   br i1 %.not3072, label %bb.ba, label %bb.be
 
 bb.ba:                                            ; preds = %bb.az
-  %i.il = add nuw i32 %.32860, 1                  ; 2 uses
+  %i.il = add nuw i32 %.32860, 1
   %.not3073 = icmp ult i32 %i.il, %.62888
   br i1 %.not3073, label %bb.bb, label %.loopexit3595
 
 bb.bb:                                            ; preds = %bb.ba
   %i.im = add i32 %.62888, -1
+  %4 = add nuw nsw i64 %i.ij, 1
+  %5 = zext i32 %.62888 to i64
   br label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bd, %bb.bb
-  %.52873 = phi i32 [ %i.il, %bb.bb ], [ %5, %bb.bd ] ; 3 uses
-  %4 = zext i32 %.52873 to i64
+  %indvars.iv3633 = phi i64 [ %indvars.iv.next3634, %bb.bd ], [ %4, %bb.bb ] ; 3 uses
   %.val3340 = load ptr, ptr %i.d, align 8, !tbaa !18
-  %i.in = getelementptr inbounds nuw i8, ptr %.val3340, i64 %4
+  %i.in = getelementptr inbounds nuw i8, ptr %.val3340, i64 %indvars.iv3633
   %.0.copyload.i3457 = load i8, ptr %i.in, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i8 %.0.copyload.i3457) #8, !srcloc !21
   %i.io = icmp eq i8 %.0.copyload.i3457, 48
-  br i1 %i.io, label %bb.bd, label %.loopexit3595
+  br i1 %i.io, label %bb.bd, label %.loopexit3595.loopexit.split.loop.exit3705
 
 bb.bd:                                            ; preds = %bb.bc
-  %5 = add i32 %.52873, 1                         ; 2 uses
-  %.not3074 = icmp eq i32 %.62888, %5
+  %indvars.iv.next3634 = add nuw nsw i64 %indvars.iv3633, 1 ; 2 uses
+  %.not3074 = icmp eq i64 %indvars.iv.next3634, %5
   br i1 %.not3074, label %.loopexit3595, label %bb.bc
 
-.loopexit3595:                                    ; preds = %bb.bc, %bb.bd, %bb.ba
-  %.42861 = phi i32 [ %.32860, %bb.ba ], [ %.52873, %bb.bc ], [ %i.im, %bb.bd ] ; 2 uses
+.loopexit3595.loopexit.split.loop.exit3705:       ; preds = %bb.bc
+  %6 = trunc nuw i64 %indvars.iv3633 to i32
+  br label %.loopexit3595
+
+.loopexit3595:                                    ; preds = %bb.bd, %.loopexit3595.loopexit.split.loop.exit3705, %bb.ba
+  %.42861 = phi i32 [ %.32860, %bb.ba ], [ %6, %.loopexit3595.loopexit.split.loop.exit3705 ], [ %i.im, %bb.bd ] ; 2 uses
   %.val3168 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.ip = getelementptr inbounds nuw i8, ptr %.val3168, i64 %i.cg
   store i32 %.42861, ptr %i.ip, align 1

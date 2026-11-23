@@ -205,8 +205,7 @@ _tw32_flush.exit:                                 ; preds = %bb.j, %bb.k
   %i.ea = getelementptr i8, ptr %.1, i64 520      ; 2 uses
   %i.eb = load ptr, ptr %i.ea, align 8
   %i.ec = getelementptr i8, ptr %i.eb, i64 16
-  %i.ed = load i16, ptr %i.ec, align 4            ; 2 uses
-  %3 = zext i16 %i.ed to i32                      ; 2 uses
+  %i.ed = load i16, ptr %i.ec, align 4            ; 3 uses
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #28, !srcloc !77
   %i.ee = getelementptr i8, ptr %.0161, i64 712
   %i.ef = load i32, ptr %i.ee, align 8
@@ -229,6 +228,7 @@ bb.l:                                             ; preds = %_tw32_flush.exit
   br label %.loopexit250.sink.split
 
 bb.m:                                             ; preds = %_tw32_flush.exit
+  %3 = zext i16 %i.ed to i32
   %i.er = load i32, ptr %i.da, align 64
   %i.es = add i32 %i.er, 1
   store i32 %i.es, ptr %i.da, align 64
@@ -360,21 +360,22 @@ bb.r:                                             ; preds = %tg3_tx_skb_unmap.ex
   %i.hi = getelementptr i8, ptr %0, i64 1024
   %i.hj = getelementptr i8, ptr %0, i64 1016      ; 2 uses
   %i.hk = zext nneg i32 %.0168 to i64
+  %4 = zext i16 %i.ed to i64
+  %5 = zext nneg i32 %i.fg to i64
   %invariant.op = sub i32 -4, %.0168
   br label %bb.s
 
 .loopexit:                                        ; preds = %bb.ad, %dma_sync_single_for_cpu.exit
   %.lcssa = phi i32 [ %.lcssa258261, %dma_sync_single_for_cpu.exit ], [ %i.in, %bb.ad ]
-  %.not194 = icmp eq i32 %4, %i.fg
+  %.not194 = icmp eq i64 %indvars.iv.next300, %5
   br i1 %.not194, label %.loopexit250, label %bb.s, !llvm.loop !443
 
 bb.s:                                             ; preds = %.lr.ph265, %.loopexit
-  %.0159263 = phi i32 [ %3, %.lr.ph265 ], [ %4, %.loopexit ] ; 2 uses
+  %indvars.iv299 = phi i64 [ %4, %.lr.ph265 ], [ %indvars.iv.next300, %.loopexit ] ; 2 uses
   %.lcssa258261 = phi i32 [ %.0168, %.lr.ph265 ], [ %.lcssa, %.loopexit ] ; 3 uses
   %i.hl = load ptr, ptr %i.hg, align 8
-  %4 = add i32 %.0159263, 1                       ; 2 uses
-  %5 = zext i32 %.0159263 to i64
-  %i.hm = getelementptr [32 x i8], ptr %i.hl, i64 %5 ; 5 uses
+  %indvars.iv.next300 = add nuw nsw i64 %indvars.iv299, 1 ; 2 uses
+  %i.hm = getelementptr [32 x i8], ptr %i.hl, i64 %indvars.iv299 ; 5 uses
   %i.hn = getelementptr i8, ptr %i.hm, i64 28
   %i.ho = load i32, ptr %i.hn, align 4            ; 2 uses
   %i.hp = and i32 %i.ho, 65535
