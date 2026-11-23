@@ -1,0 +1,87 @@
+diff --git a/llvm/lib/Analysis/InstructionSimplify.cpp b/llvm/lib/Analysis/InstructionSimplify.cpp
+index e287e0e7d58a86..cd43ceae385bcc 100644
+--- a/llvm/lib/Analysis/InstructionSimplify.cpp
++++ b/llvm/lib/Analysis/InstructionSimplify.cpp
+@@ -3862,6 +3862,15 @@ static Value *simplifyICmpWithIntrinsicOnLHS(CmpPredicate Pred, Value *LHS,
+         return ConstantInt::getFalse(getCompareTy(II));
+     }
+     return nullptr;
++
++  case Intrinsic::ctpop:
++    if (match(RHS, m_Specific(II->getArgOperand(0)))) {
++      if (Pred == ICmpInst::ICMP_ULE)
++        return ConstantInt::getTrue(getCompareTy(II));
++      if (Pred == ICmpInst::ICMP_UGT)
++        return ConstantInt::getFalse(getCompareTy(II));
++    }
++    return nullptr;
+   default:
+     return nullptr;
+   }
+diff --git a/llvm/test/Transforms/InstSimplify/ctpop-icmp.ll b/llvm/test/Transforms/InstSimplify/ctpop-icmp.ll
+new file mode 100644
+index 00000000000000..0025e195cfe9c3
+--- /dev/null
++++ b/llvm/test/Transforms/InstSimplify/ctpop-icmp.ll
+@@ -0,0 +1,61 @@
++; RUN: opt -passes=instsimplify -S < %s | FileCheck %s
++
++declare i8 @llvm.ctpop.i8(i8)
++
++define i1 @ctpop_ule_operand_i8(i8 %x) {
++; CHECK-LABEL: @ctpop_ule_operand_i8(
++; CHECK: ret i1 true
++
++  %pop = call i8 @llvm.ctpop.i8(i8 %x)
++  %cmp = icmp ule i8 %pop, %x
++  ret i1 %cmp
++}
++
++declare i32 @llvm.ctpop.i32(i32)
++
++define i1 @ctpop_ule_operand_i32(i32 %x) {
++; CHECK-LABEL: @ctpop_ule_operand_i32(
++; CHECK: ret i1 true
++
++  %pop = call i32 @llvm.ctpop.i32(i32 %x)
++  %cmp = icmp ule i32 %pop, %x
++  ret i1 %cmp
++}
++
++declare i64 @llvm.ctpop.i64(i64)
++
++define i1 @ctpop_ule_operand_i64(i64 %x) {
++; CHECK-LABEL: @ctpop_ule_operand_i64(
++; CHECK: ret i1 true
++
++  %pop = call i64 @llvm.ctpop.i64(i64 %x)
++  %cmp = icmp ule i64 %pop, %x
++  ret i1 %cmp
++}
++
++define i1 @ctpop_ugt_operand_i8(i8 %x) {
++; CHECK-LABEL: @ctpop_ugt_operand_i8(
++; CHECK: ret i1 false
++
++  %pop = call i8 @llvm.ctpop.i8(i8 %x)
++  %cmp = icmp ugt i8 %pop, %x
++  ret i1 %cmp
++}
++
++define i1 @ctpop_ugt_operand_i32(i32 %x) {
++; CHECK-LABEL: @ctpop_ugt_operand_i32(
++; CHECK: ret i1 false
++
++  %pop = call i32 @llvm.ctpop.i32(i32 %x)
++  %cmp = icmp ugt i32 %pop, %x
++  ret i1 %cmp
++}
++
++define i1 @ctpop_ugt_operand_i64(i64 %x) {
++; CHECK-LABEL: @ctpop_ugt_operand_i64(
++; CHECK: ret i1 false
++
++  %pop = call i64 @llvm.ctpop.i64(i64 %x)
++  %cmp = icmp ugt i64 %pop, %x
++  ret i1 %cmp
++}
