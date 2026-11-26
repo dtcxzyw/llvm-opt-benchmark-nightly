@@ -205,7 +205,7 @@ _RINvYINtNtNtCsfu0rQaTkGUu_12clap_builder4util8flat_map4IterNtNtB8_2id2IdNtNtNtN
 _RNvMNtNtCsfu0rQaTkGUu_12clap_builder6parser9validatorNtB2_9Validator22is_missing_required_ok.exit.i.i: ; preds = %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6parser9validatorNtB2_9Validator22is_missing_required_ok.exit.i.i.backedge, %_RINvYINtNtNtCsfu0rQaTkGUu_12clap_builder4util8flat_map4IterNtNtB8_2id2IdNtNtNtNtBa_6parser7matches11matched_arg10MatchedArgENtNtNtNtCsj6eKBz9Db1c_4core4iter6traits8iterator8Iterator8try_folduNCINvNtNtB24_8adapters6filter15filter_try_foldTRBV_RB18_EuINtNtNtB26_3ops12control_flow11ControlFlowuENCNvMNtB1e_9validatorNtB4M_9Validator17validate_required0NCINvNvB1Y_3any5checkB3N_NCB4J_s_0E0E0B3Z_EBa_.exit.i.i
   %i.csp = phi ptr [ inttoptr (i64 8 to ptr), %_RINvYINtNtNtCsfu0rQaTkGUu_12clap_builder4util8flat_map4IterNtNtB8_2id2IdNtNtNtNtBa_6parser7matches11matched_arg10MatchedArgENtNtNtNtCsj6eKBz9Db1c_4core4iter6traits8iterator8Iterator8try_folduNCINvNtNtB24_8adapters6filter15filter_try_foldTRBV_RB18_EuINtNtNtB26_3ops12control_flow11ControlFlowuENCNvMNtB1e_9validatorNtB4M_9Validator17validate_required0NCINvNvB1Y_3any5checkB3N_NCB4J_s_0E0E0B3Z_EBa_.exit.i.i ], [ %.be4707, %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6parser9validatorNtB2_9Validator22is_missing_required_ok.exit.i.i.backedge ] ; 7 uses
   %i.csq = phi i64 [ 0, %_RINvYINtNtNtCsfu0rQaTkGUu_12clap_builder4util8flat_map4IterNtNtB8_2id2IdNtNtNtNtBa_6parser7matches11matched_arg10MatchedArgENtNtNtNtCsj6eKBz9Db1c_4core4iter6traits8iterator8Iterator8try_folduNCINvNtNtB24_8adapters6filter15filter_try_foldTRBV_RB18_EuINtNtNtB26_3ops12control_flow11ControlFlowuENCNvMNtB1e_9validatorNtB4M_9Validator17validate_required0NCINvNvB1Y_3any5checkB3N_NCB4J_s_0E0E0B3Z_EBa_.exit.i.i ], [ %.be4708, %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6parser9validatorNtB2_9Validator22is_missing_required_ok.exit.i.i.backedge ] ; 12 uses
-  %.sroa.0277.0.i.i = phi ptr [ %.val69.i.i, %_RINvYINtNtNtCsfu0rQaTkGUu_12clap_builder4util8flat_map4IterNtNtB8_2id2IdNtNtNtNtBa_6parser7matches11matched_arg10MatchedArgENtNtNtNtCsj6eKBz9Db1c_4core4iter6traits8iterator8Iterator8try_folduNCINvNtNtB24_8adapters6filter15filter_try_foldTRBV_RB18_EuINtNtNtB26_3ops12control_flow11ControlFlowuENCNvMNtB1e_9validatorNtB4M_9Validator17validate_required0NCINvNvB1Y_3any5checkB3N_NCB4J_s_0E0E0B3Z_EBa_.exit.i.i ], [ %i.cth, %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6parser9validatorNtB2_9Validator22is_missing_required_ok.exit.i.i.backedge ] ; 5 uses
+  %.sroa.0277.0.i.i = phi ptr [ %.val69.i.i, %_RINvYINtNtNtCsfu0rQaTkGUu_12clap_builder4util8flat_map4IterNtNtB8_2id2IdNtNtNtNtBa_6parser7matches11matched_arg10MatchedArgENtNtNtNtCsj6eKBz9Db1c_4core4iter6traits8iterator8Iterator8try_folduNCINvNtNtB24_8adapters6filter15filter_try_foldTRBV_RB18_EuINtNtNtB26_3ops12control_flow11ControlFlowuENCNvMNtB1e_9validatorNtB4M_9Validator17validate_required0NCINvNvB1Y_3any5checkB3N_NCB4J_s_0E0E0B3Z_EBa_.exit.i.i ], [ %.val49.pre.i.i.a, %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6parser9validatorNtB2_9Validator22is_missing_required_ok.exit.i.i.backedge ] ; 5 uses
   %.sroa.04.0.i.i = phi i64 [ 0, %_RINvYINtNtNtCsfu0rQaTkGUu_12clap_builder4util8flat_map4IterNtNtB8_2id2IdNtNtNtNtBa_6parser7matches11matched_arg10MatchedArgENtNtNtNtCsj6eKBz9Db1c_4core4iter6traits8iterator8Iterator8try_folduNCINvNtNtB24_8adapters6filter15filter_try_foldTRBV_RB18_EuINtNtNtB26_3ops12control_flow11ControlFlowuENCNvMNtB1e_9validatorNtB4M_9Validator17validate_required0NCINvNvB1Y_3any5checkB3N_NCB4J_s_0E0E0B3Z_EBa_.exit.i.i ], [ %.sroa.04.0.i.i.be, %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6parser9validatorNtB2_9Validator22is_missing_required_ok.exit.i.i.backedge ] ; 11 uses
   br i1 %.not24.i.i.i, label %.split.us.i.i, label %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6parser11arg_matcherNtB2_10ArgMatcher14check_explicit.exit162.i.i
 
@@ -219,12 +219,10 @@ _RNvMNtNtCsfu0rQaTkGUu_12clap_builder6parser9validatorNtB2_9Validator22is_missin
   call void @llvm.experimental.noalias.scope.decl(metadata !10680)
   %.phi.trans.insert673.phi.trans.insert.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0277.0.i.i, i64 24
   %.val49.pre.pre.pre.i.i = load ptr, ptr %.phi.trans.insert673.phi.trans.insert.i.i, align 8, !noalias !10666
-  %.phi.trans.insert.i.phi.trans.insert.i = getelementptr i8, ptr %.sroa.0277.0.i.i, i64 32
-  %.val50.pre.i.pre.i = load i64, ptr %.phi.trans.insert.i.phi.trans.insert.i, align 8, !noalias !10666
   br label %.loopexit348.i.i
 
 _RNvMNtNtCsfu0rQaTkGUu_12clap_builder6parser11arg_matcherNtB2_10ArgMatcher14check_explicit.exit162.i.i: ; preds = %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6parser9validatorNtB2_9Validator22is_missing_required_ok.exit.i.i, %bb.qi
-  %.sroa.0277.1.i.i = phi ptr [ %i.csu, %bb.qi ], [ %.sroa.0277.0.i.i, %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6parser9validatorNtB2_9Validator22is_missing_required_ok.exit.i.i ] ; 4 uses
+  %.sroa.0277.1.i.i = phi ptr [ %i.csu, %bb.qi ], [ %.sroa.0277.0.i.i, %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6parser9validatorNtB2_9Validator22is_missing_required_ok.exit.i.i ] ; 6 uses
   %i.cst = icmp eq ptr %.sroa.0277.1.i.i, %i.cse
   br i1 %i.cst, label %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterINtNtNtCsfu0rQaTkGUu_12clap_builder4util5graph5ChildNtNtBO_2id2IdEENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtB1U_8adapters3map12map_try_foldRBJ_RB1z_uINtNtNtBa_3ops12control_flow11ControlFlowB3l_ENCNvMs_BM_INtBM_10ChildGraphB1z_E4iter0NCINvNvB1O_4find5checkB3l_QNCNvMNtNtBQ_6parser9validatorNtB5k_9Validator17validate_requireds0_0E0E0B3r_EBQ_.exit.i.i, label %.lr.ph.i.i.i152.preheader.i.i
 
@@ -235,7 +233,7 @@ _RNvMNtNtCsfu0rQaTkGUu_12clap_builder6parser11arg_matcherNtB2_10ArgMatcher14chec
   call void @llvm.experimental.noalias.scope.decl(metadata !10680)
   %.val.i.i.i.i.i.i45.i = load ptr, ptr %i.csv, align 8, !alias.scope !10681, !noalias !10682 ; 4 uses
   %i.csw = getelementptr inbounds nuw i8, ptr %.sroa.0277.1.i.i, i64 32
-  %.val1.i.i.i.i.i.i46.i = load i64, ptr %i.csw, align 8, !alias.scope !10681, !noalias !10682 ; 4 uses
+  %.val1.i.i.i.i.i.i46.i = load i64, ptr %i.csw, align 8, !alias.scope !10681, !noalias !10682 ; 2 uses
   br label %.lr.ph.i.i.i152.i.i
 
 .lr.ph.i.i.i152.i.i:                              ; preds = %_RNvXsm_NtNtCsfu0rQaTkGUu_12clap_builder4util2idNtB5_2IdNtNtCsj6eKBz9Db1c_4core3cmp9PartialEq2eq.exit.backedge.i.i.i156.i.i, %.lr.ph.i.i.i152.preheader.i.i
@@ -275,14 +273,16 @@ bb.qi:                                            ; preds = %bb.qg
   br i1 %cond.i.i161.i.i, label %.loopexit348.i.i, label %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6parser11arg_matcherNtB2_10ArgMatcher14check_explicit.exit162.i.i
 
 .loopexit348.i.i:                                 ; preds = %bb.qi, %_RNvXsm_NtNtCsfu0rQaTkGUu_12clap_builder4util2idNtB5_2IdNtNtCsj6eKBz9Db1c_4core3cmp9PartialEq2eq.exit.backedge.i.i.i156.i.i, %.loopexit351.split.us.i.i
-  %.val50.pre.i.i = phi i64 [ %.val1.i.i.i.i.i.i46.i, %_RNvXsm_NtNtCsfu0rQaTkGUu_12clap_builder4util2idNtB5_2IdNtNtCsj6eKBz9Db1c_4core3cmp9PartialEq2eq.exit.backedge.i.i.i156.i.i ], [ %.val50.pre.i.pre.i, %.loopexit351.split.us.i.i ], [ %.val1.i.i.i.i.i.i46.i, %bb.qi ] ; 7 uses
-  %.val49.pre.i.i.a = phi ptr [ %.val.i.i.i.i.i.i45.i, %_RNvXsm_NtNtCsfu0rQaTkGUu_12clap_builder4util2idNtB5_2IdNtNtCsj6eKBz9Db1c_4core3cmp9PartialEq2eq.exit.backedge.i.i.i156.i.i ], [ %.val49.pre.pre.pre.i.i, %.loopexit351.split.us.i.i ], [ %.val.i.i.i.i.i.i45.i, %bb.qi ] ; 2 uses
-  %i.cth = phi ptr [ %i.csu, %_RNvXsm_NtNtCsfu0rQaTkGUu_12clap_builder4util2idNtB5_2IdNtNtCsj6eKBz9Db1c_4core3cmp9PartialEq2eq.exit.backedge.i.i.i156.i.i ], [ %i.css, %.loopexit351.split.us.i.i ], [ %i.csu, %bb.qi ]
+  %.val49.pre.i.i = phi ptr [ %.val.i.i.i.i.i.i45.i, %_RNvXsm_NtNtCsfu0rQaTkGUu_12clap_builder4util2idNtB5_2IdNtNtCsj6eKBz9Db1c_4core3cmp9PartialEq2eq.exit.backedge.i.i.i156.i.i ], [ %.val49.pre.pre.pre.i.i, %.loopexit351.split.us.i.i ], [ %.val.i.i.i.i.i.i45.i, %bb.qi ] ; 2 uses
+  %.val49.pre.i.i.a = phi ptr [ %i.csu, %_RNvXsm_NtNtCsfu0rQaTkGUu_12clap_builder4util2idNtB5_2IdNtNtCsj6eKBz9Db1c_4core3cmp9PartialEq2eq.exit.backedge.i.i.i156.i.i ], [ %i.css, %.loopexit351.split.us.i.i ], [ %i.csu, %bb.qi ]
+  %i.cth = phi ptr [ %.sroa.0277.1.i.i, %_RNvXsm_NtNtCsfu0rQaTkGUu_12clap_builder4util2idNtB5_2IdNtNtCsj6eKBz9Db1c_4core3cmp9PartialEq2eq.exit.backedge.i.i.i156.i.i ], [ %.sroa.0277.0.i.i, %.loopexit351.split.us.i.i ], [ %.sroa.0277.1.i.i, %bb.qi ]
   %.val.i47.i = load ptr, ptr %i.csf, align 8, !noalias !10666, !nonnull !10, !noundef !10 ; 2 uses
   %.val46.i.i = load i64, ptr %i.csg, align 8, !noalias !10666, !noundef !10 ; 2 uses
   %.idx.i86.i.i = mul nuw nsw i64 %.val46.i.i, 600
   %i.cti = getelementptr inbounds nuw i8, ptr %.val.i47.i, i64 %.idx.i86.i.i
   %i.ctj = icmp eq i64 %.val46.i.i, 0
+  %.phi.trans.insert.i.i = getelementptr i8, ptr %i.cth, i64 32
+  %.val50.pre.i.i = load i64, ptr %.phi.trans.insert.i.i, align 8, !noalias !10666 ; 7 uses
   br i1 %i.ctj, label %.loopexit350.i.i, label %.lr.ph.i.i87.i.i
 
 .lr.ph.i.i87.i.i:                                 ; preds = %.loopexit348.i.i, %_RNCNvMs5_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB7_7Command4find0Bb_.exit.thread.i.i.i.i
@@ -296,7 +296,7 @@ bb.qi:                                            ; preds = %bb.qg
 _RNCNvMs5_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB7_7Command4find0Bb_.exit.i.i.i.i: ; preds = %.lr.ph.i.i87.i.i
   %i.ctp = getelementptr i8, ptr %i.ctk, i64 536
   %i.ctq = load ptr, ptr %i.ctp, align 8, !noalias !10687, !nonnull !10, !noundef !10 ; 3 uses
-  %bcmp.i.i.i.i.i = call i32 @bcmp(ptr nonnull %i.ctq, ptr nonnull %.val49.pre.i.i.a, i64 %.val50.pre.i.i), !noalias !10687
+  %bcmp.i.i.i.i.i = call i32 @bcmp(ptr nonnull %i.ctq, ptr nonnull %.val49.pre.i.i, i64 %.val50.pre.i.i), !noalias !10687
   %i.ctr = icmp eq i32 %bcmp.i.i.i.i.i, 0
   br i1 %i.ctr, label %_RNvMs5_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB5_7Command4find.exit.i.i, label %_RNCNvMs5_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB7_7Command4find0Bb_.exit.thread.i.i.i.i
 
@@ -699,7 +699,7 @@ _RNvMs5_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB5_7Command4find.exit.
 _RNCNvMs5_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB7_7Command10find_group0Bb_.exit.i.i.i.i: ; preds = %.lr.ph.i.i128.i.i
   %i.dlz = getelementptr inbounds nuw i8, ptr %i.dlu, i64 72
   %i.dma = load ptr, ptr %i.dlz, align 8, !noalias !10816, !nonnull !10, !noundef !10
-  %bcmp.i.i.i130.i.i = call i32 @bcmp(ptr nonnull %i.dma, ptr nonnull readonly %.val49.pre.i.i.a, i64 %.val50.pre.i.i), !noalias !10816
+  %bcmp.i.i.i130.i.i = call i32 @bcmp(ptr nonnull %i.dma, ptr nonnull readonly %.val49.pre.i.i, i64 %.val50.pre.i.i), !noalias !10816
   %i.dmb = icmp eq i32 %bcmp.i.i.i130.i.i, 0
   br i1 %i.dmb, label %_RNvMs5_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB5_7Command10find_group.exit.i.i, label %_RNCNvMs5_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB7_7Command10find_group0Bb_.exit.thread.i.i.i.i
 

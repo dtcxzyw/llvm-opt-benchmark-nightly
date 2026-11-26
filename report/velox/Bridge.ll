@@ -205,7 +205,6 @@ bb.ag:                                            ; preds = %bb.af
   %i.il = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 3 uses
   %i.im = load ptr, ptr %i.il, align 8, !tbaa !1491
   %wide.trip.count.i.i = zext nneg i32 %i.ij to i64
-  %.pre.i.i = load i32, ptr %.pre.i, align 4, !tbaa !1492
   br label %bb.ai
 
 bb.ah:                                            ; preds = %bb.ai
@@ -214,12 +213,13 @@ bb.ah:                                            ; preds = %bb.ai
   br i1 %exitcond.not.i.i, label %.loopexit97.i, label %bb.ai, !llvm.loop !3023
 
 bb.ai:                                            ; preds = %bb.ah, %.lr.ph.i38.i
-  %70 = phi i32 [ %.pre.i.i, %.lr.ph.i38.i ], [ %i.ip, %bb.ah ]
   %indvars.iv.i.i = phi i64 [ 1, %.lr.ph.i38.i ], [ %indvars.iv.next.i.i, %bb.ah ] ; 3 uses
-  %i.in = getelementptr [4 x i8], ptr %i.im, i64 %indvars.iv.i.i
-  %71 = getelementptr i8, ptr %i.in, i64 -4
-  %i.io = load i32, ptr %71, align 4, !tbaa !1492
-  %i.ip = add nsw i32 %i.io, %70                  ; 2 uses
+  %70 = add nsw i64 %indvars.iv.i.i, -1           ; 2 uses
+  %i.in = getelementptr inbounds [4 x i8], ptr %.pre.i, i64 %70
+  %71 = load i32, ptr %i.in, align 4, !tbaa !1492
+  %72 = getelementptr inbounds [4 x i8], ptr %i.im, i64 %70
+  %i.io = load i32, ptr %72, align 4, !tbaa !1492
+  %i.ip = add nsw i32 %i.io, %71
   %i.iq = getelementptr inbounds nuw [4 x i8], ptr %.pre.i, i64 %indvars.iv.i.i
   %i.ir = load i32, ptr %i.iq, align 4, !tbaa !1492
   %.not.i39.i = icmp eq i32 %i.ip, %i.ir
@@ -622,22 +622,22 @@ bb.fa:                                            ; preds = %bb.ez
   %i.aio = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 3 uses
   %i.aip = load ptr, ptr %i.aio, align 8, !tbaa !1491
   %wide.trip.count.i.i174 = zext nneg i32 %i.aim to i64
-  %.pre.i.i175 = load i32, ptr %.pre.i172, align 4, !tbaa !1492
   br label %bb.fc
 
 bb.fb:                                            ; preds = %bb.fc
-  %indvars.iv.next.i.i260 = add nuw nsw i64 %indvars.iv.i.i176, 1 ; 2 uses
+  %indvars.iv.next.i.i260 = add nuw nsw i64 %indvars.iv.i.i175, 1 ; 2 uses
   %exitcond.not.i.i261 = icmp eq i64 %indvars.iv.next.i.i260, %wide.trip.count.i.i174
   br i1 %exitcond.not.i.i261, label %.loopexit97.i262, label %bb.fc, !llvm.loop !3060
 
 bb.fc:                                            ; preds = %bb.fb, %.lr.ph.i38.i173
-  %72 = phi i32 [ %.pre.i.i175, %.lr.ph.i38.i173 ], [ %i.ais, %bb.fb ]
-  %indvars.iv.i.i176 = phi i64 [ 1, %.lr.ph.i38.i173 ], [ %indvars.iv.next.i.i260, %bb.fb ] ; 3 uses
-  %i.aiq = getelementptr [4 x i8], ptr %i.aip, i64 %indvars.iv.i.i176
-  %73 = getelementptr i8, ptr %i.aiq, i64 -4
-  %i.air = load i32, ptr %73, align 4, !tbaa !1492
-  %i.ais = add nsw i32 %i.air, %72                ; 2 uses
-  %i.ait = getelementptr inbounds nuw [4 x i8], ptr %.pre.i172, i64 %indvars.iv.i.i176
+  %indvars.iv.i.i175 = phi i64 [ 1, %.lr.ph.i38.i173 ], [ %indvars.iv.next.i.i260, %bb.fb ] ; 3 uses
+  %73 = add nsw i64 %indvars.iv.i.i175, -1        ; 2 uses
+  %i.aiq = getelementptr inbounds [4 x i8], ptr %.pre.i172, i64 %73
+  %74 = load i32, ptr %i.aiq, align 4, !tbaa !1492
+  %75 = getelementptr inbounds [4 x i8], ptr %i.aip, i64 %73
+  %i.air = load i32, ptr %75, align 4, !tbaa !1492
+  %i.ais = add nsw i32 %i.air, %74
+  %i.ait = getelementptr inbounds nuw [4 x i8], ptr %.pre.i172, i64 %indvars.iv.i.i175
   %i.aiu = load i32, ptr %i.ait, align 4, !tbaa !1492
   %.not.i39.i177 = icmp eq i32 %i.ais, %i.aiu
   br i1 %.not.i39.i177, label %bb.fb, label %.preheader.i.i180

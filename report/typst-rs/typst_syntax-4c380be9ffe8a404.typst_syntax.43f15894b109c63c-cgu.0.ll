@@ -205,7 +205,7 @@ _RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters5chainINtB4_5ChainINtNtB6_6filter6
 _RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters5chainINtB4_5ChainINtNtB6_6filter6FilterINtNtB6_4skip4SkipINtNtNtBa_5slice4iter4IterReEENCNvMs1_NtCs5PEMdK7bMAG_12typst_syntax5lexerNtB2f_5Lexer10blocky_raw0EINtNtBa_6option8IntoIterRB23_EENtNtNtB8_6traits8iterator8Iterator4nextB2h_.exit.i.i.thread.thread.i.i: ; preds = %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters5chainINtB4_5ChainINtNtB6_6filter6FilterINtNtB6_4skip4SkipINtNtNtBa_5slice4iter4IterReEENCNvMs1_NtCs5PEMdK7bMAG_12typst_syntax5lexerNtB2f_5Lexer10blocky_raw0EINtNtBa_6option8IntoIterRB23_EENtNtNtB8_6traits8iterator8Iterator4nextB2h_.exit.i.i.i.i
   %.val.i.i.pre.i.i = load ptr, ptr %i.ado, align 8, !noalias !2754 ; 2 uses
   %.phi.trans.insert.i.i = getelementptr i8, ptr %i.adn, i64 -8
-  %.val3.i.i.pre.i.i = load i64, ptr %.phi.trans.insert.i.i, align 8, !noalias !2754 ; 2 uses
+  %.val3.i.i.pre.i.i = load i64, ptr %.phi.trans.insert.i.i, align 8, !noalias !2754, !noundef !20 ; 2 uses
   %i.afy = getelementptr inbounds nuw i8, ptr %.val.i.i.pre.i.i, i64 %.val3.i.i.pre.i.i
   %.not.i18.i.i.i.i.i.i266.i.i = icmp samesign eq i64 %.val3.i.i.pre.i.i, 0
   br i1 %.not.i18.i.i.i.i.i.i266.i.i, label %_RINvXs1_NtNtNtCs3oUPovFnLWP_4core4iter8adapters6filterINtB6_6FilterINtNtB8_4skip4SkipINtNtNtBc_5slice4iter4IterReEENCNvMs1_NtCs5PEMdK7bMAG_12typst_syntax5lexerNtB1X_5Lexer10blocky_raw0ENtNtNtBa_6traits8iterator8Iterator4foldjQNCINvNtB8_3map8map_foldRB1L_jjNCB1R_s_0NvYjNtNtBc_3cmp3Ord3minE0EB1Z_.exit.i.i.i.thread.i.i, label %.lr.ph.i.i.i.i.i.i.preheader.i.i

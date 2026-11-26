@@ -205,7 +205,7 @@ declare noundef i32 @dup2(i32 noundef, i32 noundef) unnamed_addr #2
 declare noundef i32 @kill(i32 noundef, i32 noundef) unnamed_addr #2
 
 ; Function Attrs: nofree nounwind nonlazybind uwtable
-declare noundef ptr @ctermid(ptr noundef captures(none)) unnamed_addr #32
+declare noundef ptr @ctermid(ptr noundef) unnamed_addr #32
 
 ; Function Attrs: nofree nounwind nonlazybind uwtable
 declare noundef i32 @open(ptr noundef readonly captures(none), i32 noundef, ...) unnamed_addr #32

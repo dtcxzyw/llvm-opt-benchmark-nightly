@@ -202,14 +202,14 @@ bb.u:                                             ; preds = %bb.t
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.v, %bb.u
-  %.0319.a = phi i32 [ %i.jw, %bb.u ], [ %12, %bb.v ]
+  %.0319.a = phi i32 [ %i.jt, %bb.u ], [ %i.kc, %bb.v ] ; 3 uses
+  %.0319 = phi i32 [ %i.jw, %bb.u ], [ %.0319.a, %bb.v ]
   %.0316 = phi double [ %i.jv, %bb.u ], [ %.0, %bb.v ]
-  %12 = phi i32 [ %i.jt, %bb.u ], [ %i.kc, %bb.v ] ; 3 uses
-  %i.jx = sext i32 %12 to i64                     ; 2 uses
+  %i.jx = sext i32 %.0319.a to i64                ; 2 uses
   %.0.in = getelementptr [8 x i8], ptr %i.jp, i64 %i.jx ; 2 uses
   %.0 = load double, ptr %.0.in, align 8, !tbaa !27 ; 2 uses
   store double %.0316, ptr %.0.in, align 8, !tbaa !27
-  %i.jy = add nsw i32 %.0319.a, %i.iw
+  %i.jy = add nsw i32 %.0319, %i.iw
   %i.jz = sext i32 %i.jy to i64
   %i.ka = getelementptr inbounds [8 x i8], ptr %i.w, i64 %i.jz
   store double 0.000000e+00, ptr %i.ka, align 8, !tbaa !27
@@ -221,7 +221,7 @@ bb.v:                                             ; preds = %bb.v, %bb.u
 
 bb.w:                                             ; preds = %bb.v
   store double %.0, ptr %gep467, align 8, !tbaa !27
-  %i.ke = add nsw i32 %12, %i.iw
+  %i.ke = add nsw i32 %.0319.a, %i.iw
   %i.kf = sext i32 %i.ke to i64
   %i.kg = getelementptr inbounds [8 x i8], ptr %i.w, i64 %i.kf
   store double 0.000000e+00, ptr %i.kg, align 8, !tbaa !27

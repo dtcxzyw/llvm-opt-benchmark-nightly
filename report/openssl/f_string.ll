@@ -122,7 +122,7 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph128
   %i.h = add nsw i32 %.078123, -1                 ; 3 uses
   %i.i = zext nneg i32 %i.h to i64
-  %i.j = getelementptr inbounds nuw i8, ptr %2, i64 %i.i ; 2 uses
+  %i.j = getelementptr i8, ptr %2, i64 %i.i       ; 2 uses
   store i8 0, ptr %i.j, align 1, !tbaa !14
   %i.k = icmp eq i32 %i.h, 0
   br i1 %i.k, label %.loopexit, label %..thread_crit_edge

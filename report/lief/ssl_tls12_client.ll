@@ -202,9 +202,9 @@ bb.j:                                             ; preds = %bb.g
   br label %ssl_parse_server_hello.exit
 
 bb.k:                                             ; preds = %bb.f
-  %i.ak = load ptr, ptr %0, align 8, !tbaa !21
+  %i.ak = load ptr, ptr %0, align 8, !tbaa !21    ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 9
-  %i.am = load i8, ptr %i.al, align 1, !tbaa !31  ; 2 uses
+  %i.am = load i8, ptr %i.al, align 1, !tbaa !31
   %i.an = icmp eq i8 %i.am, 1
   br i1 %i.an, label %bb.l, label %bb.w
 
@@ -286,14 +286,14 @@ bb.v:                                             ; preds = %bb.l
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bs, i64 1368
   store i16 0, ptr %i.bu, align 8, !tbaa !66
   %.val236.pre.i = load ptr, ptr %0, align 8, !tbaa !21
-  %.phi.trans.insert.i = getelementptr i8, ptr %.val236.pre.i, i64 9
-  %.val236.val.pre.i = load i8, ptr %.phi.trans.insert.i, align 1, !tbaa !31
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.v, %bb.k
-  %.val236.val.i = phi i8 [ %.val236.val.pre.i, %bb.v ], [ %i.am, %bb.k ] ; 2 uses
+  %.val236.i = phi ptr [ %.val236.pre.i, %bb.v ], [ %i.ak, %bb.k ]
   %i.bv = getelementptr inbounds nuw i8, ptr %0, i64 304 ; 2 uses
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !67
+  %3 = getelementptr i8, ptr %.val236.i, i64 9
+  %.val236.val.i = load i8, ptr %3, align 1, !tbaa !31 ; 2 uses
   %i.bx = icmp eq i8 %.val236.val.i, 1
   %..i.i = select i1 %i.bx, i64 12, i64 4         ; 2 uses
   %i.by = add nuw nsw i64 %..i.i, 38
