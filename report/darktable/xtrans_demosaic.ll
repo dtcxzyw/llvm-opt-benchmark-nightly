@@ -1,7 +1,7 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/darktable/original/xtrans_demosaic?download=true
 loop-unroll.NumCompletelyUnrolled: 32
-loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 35
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 34
 begin_hunk_0_@_ZN6LibRaw18xtrans_interpolateEi:bb.a
 bb.az:                                            ; preds = %.lr.ph
   %i.aat = load ptr, ptr %i.e, align 8, !tbaa !119
@@ -203,10 +203,8 @@ bb.bf:                                            ; preds = %.loopexit1145, %bb.
   %i.afd = getelementptr inbounds nuw i8, ptr %i.c, i64 80
   %i.afe = getelementptr inbounds nuw i8, ptr %i.c, i64 84
   %gep1254.1.5 = getelementptr inbounds nuw i8, ptr %i.c, i64 84
-  %xtraiter = and i64 %wide.trip.count, 4         ; 2 uses
-  %unroll_iter = and i64 %wide.trip.count, 8
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  %lcmp.mod1877 = icmp ne i64 %xtraiter, 0
+  %unroll_iter = and i64 %wide.trip.count, 8      ; 3 uses
+  %lcmp.mod.not = icmp eq i64 %unroll_iter, 0
   %trip.count.minus.1 = add nsw i64 %wide.trip.count1566, -1
   %broadcast.splatinsert = insertelement <4 x i64> poison, i64 %trip.count.minus.1, i64 0
   %broadcast.splat = shufflevector <4 x i64> %broadcast.splatinsert, <4 x i64> poison, <4 x i32> zeroinitializer ; 2 uses
@@ -609,85 +607,56 @@ scalar.ph.a:                                      ; preds = %scalar.ph.preheader
 
 .preheader1128:                                   ; preds = %.preheader1134, %bb.du
   %indvars.iv1543 = phi i64 [ 4, %.preheader1134 ], [ %i.cse, %bb.du ] ; 7 uses
-  %invariant.gep1308 = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep1306, i64 %indvars.iv1543 ; 9 uses
+  %invariant.gep1308 = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep1306, i64 %indvars.iv1543 ; 2 uses
   br i1 %i.jz, label %.preheader1128.new, label %.epil.preheader
 
-._crit_edge1320:                                  ; preds = %bb.du
-  %2 = icmp samesign ult i64 %i.cri, %i.cnn
-  br i1 %2, label %.preheader1134, label %._crit_edge1322.split, !llvm.loop !38
-
 .preheader1128.new:                               ; preds = %.preheader1128, %.preheader1128.new
-  %indvars.iv1525 = phi i64 [ %indvars.iv.next1526.7, %.preheader1128.new ], [ 0, %.preheader1128 ] ; 9 uses
-  %.08661311 = phi float [ %spec.select1054.7, %.preheader1128.new ], [ f0x7F7FFFFF, %.preheader1128 ] ; 2 uses
-  %niter = phi i64 [ %niter.next.7, %.preheader1128.new ], [ 0, %.preheader1128 ]
-  %gep1309 = getelementptr inbounds nuw [1048576 x i8], ptr %invariant.gep1308, i64 %indvars.iv1525
-  %3 = load float, ptr %gep1309, align 4, !tbaa !121 ; 2 uses
-  %4 = fcmp reassoc nsz arcp contract afn ogt float %.08661311, %3
-  %spec.select1054 = select nsz i1 %4, float %3, float %.08661311 ; 2 uses
-  %5 = getelementptr inbounds nuw [1048576 x i8], ptr %invariant.gep1308, i64 %indvars.iv1525
-  %gep1309.1 = getelementptr inbounds nuw i8, ptr %5, i64 1048576
-  %6 = load float, ptr %gep1309.1, align 4, !tbaa !121 ; 2 uses
-  %7 = fcmp reassoc nsz arcp contract afn ogt float %spec.select1054, %6
-  %spec.select1054.1 = select nsz i1 %7, float %6, float %spec.select1054 ; 2 uses
-  %8 = getelementptr inbounds nuw [1048576 x i8], ptr %invariant.gep1308, i64 %indvars.iv1525
-  %gep1309.2 = getelementptr inbounds nuw i8, ptr %8, i64 2097152
-  %9 = load float, ptr %gep1309.2, align 4, !tbaa !121 ; 2 uses
-  %10 = fcmp reassoc nsz arcp contract afn ogt float %spec.select1054.1, %9
-  %spec.select1054.2 = select nsz i1 %10, float %9, float %spec.select1054.1 ; 2 uses
-  %11 = getelementptr inbounds nuw [1048576 x i8], ptr %invariant.gep1308, i64 %indvars.iv1525
-  %gep1309.3 = getelementptr inbounds nuw i8, ptr %11, i64 3145728
-  %12 = load float, ptr %gep1309.3, align 4, !tbaa !121 ; 2 uses
-  %13 = fcmp reassoc nsz arcp contract afn ogt float %spec.select1054.2, %12
-  %spec.select1054.3 = select nsz i1 %13, float %12, float %spec.select1054.2 ; 2 uses
-  %14 = getelementptr inbounds nuw [1048576 x i8], ptr %invariant.gep1308, i64 %indvars.iv1525
-  %gep1309.4 = getelementptr inbounds nuw i8, ptr %14, i64 4194304
-  %15 = load float, ptr %gep1309.4, align 4, !tbaa !121 ; 2 uses
-  %16 = fcmp reassoc nsz arcp contract afn ogt float %spec.select1054.3, %15
-  %spec.select1054.4 = select nsz i1 %16, float %15, float %spec.select1054.3 ; 2 uses
-  %17 = getelementptr inbounds nuw [1048576 x i8], ptr %invariant.gep1308, i64 %indvars.iv1525
-  %gep1309.5 = getelementptr inbounds nuw i8, ptr %17, i64 5242880
-  %18 = load float, ptr %gep1309.5, align 4, !tbaa !121 ; 2 uses
-  %19 = fcmp reassoc nsz arcp contract afn ogt float %spec.select1054.4, %18
-  %spec.select1054.5 = select nsz i1 %19, float %18, float %spec.select1054.4 ; 2 uses
-  %20 = getelementptr inbounds nuw [1048576 x i8], ptr %invariant.gep1308, i64 %indvars.iv1525
-  %gep1309.6 = getelementptr inbounds nuw i8, ptr %20, i64 6291456
-  %21 = load float, ptr %gep1309.6, align 4, !tbaa !121 ; 2 uses
-  %22 = fcmp reassoc nsz arcp contract afn ogt float %spec.select1054.5, %21
-  %spec.select1054.6 = select nsz i1 %22, float %21, float %spec.select1054.5 ; 2 uses
-  %23 = getelementptr inbounds nuw [1048576 x i8], ptr %invariant.gep1308, i64 %indvars.iv1525
-  %gep1309.7 = getelementptr inbounds nuw i8, ptr %23, i64 7340032
-  %24 = load float, ptr %gep1309.7, align 4, !tbaa !121 ; 2 uses
-  %25 = fcmp reassoc nsz arcp contract afn ogt float %spec.select1054.6, %24
-  %spec.select1054.7 = select nsz i1 %25, float %24, float %spec.select1054.6 ; 3 uses
-  %indvars.iv.next1526.7 = add nuw nsw i64 %indvars.iv1525, 8 ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
-  %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
-  br i1 %niter.ncmp.7, label %.unr-lcssa, label %.preheader1128.new, !llvm.loop !39
+  %niter = phi i64 [ %index.next1806, %.preheader1128.new ], [ 0, %.preheader1128 ] ; 2 uses
+  %vec.ind1805 = phi <8 x i64> [ %vec.ind.next1807, %.preheader1128.new ], [ <i64 0, i64 1, i64 2, i64 3, i64 4, i64 5, i64 6, i64 7>, %.preheader1128 ] ; 2 uses
+  %vec.phi = phi <8 x float> [ %4, %.preheader1128.new ], [ splat (float f0x7F7FFFFF), %.preheader1128 ] ; 3 uses
+  %wide.gep = getelementptr inbounds nuw [1048576 x i8], ptr %invariant.gep1308, <8 x i64> %vec.ind1805
+  %wide.masked.gather = tail call <8 x float> @llvm.masked.gather.v8f32.v8p0(<8 x ptr> align 4 %wide.gep, <8 x i1> splat (i1 true), <8 x float> poison), !tbaa !121
+  %2 = freeze <8 x float> %wide.masked.gather     ; 3 uses
+  %3 = fcmp reassoc nsz arcp contract afn ogt <8 x float> %vec.phi, %2
+  %4 = select nsz <8 x i1> %3, <8 x float> %2, <8 x float> %vec.phi ; 2 uses
+  %index.next1806 = add nuw i64 %niter, 8         ; 2 uses
+  %5 = tail call <8 x i1> @llvm.is.fpclass.v8f32(<8 x float> %2, /* (nan nzero) */ i32 35)
+  %6 = bitcast <8 x i1> %5 to i8
+  %7 = icmp ne i8 %6, 0                           ; 4 uses
+  %8 = icmp eq i64 %index.next1806, %unroll_iter
+  %9 = or i1 %7, %8
+  %vec.ind.next1807 = add nuw nsw <8 x i64> %vec.ind1805, splat (i64 8)
+  br i1 %9, label %.unr-lcssa, label %.preheader1128.new, !llvm.loop !38
 
 .unr-lcssa:                                       ; preds = %.preheader1128.new
-  br i1 %lcmp.mod.not, label %.epilog-lcssa.a, label %.epil.preheader
+  %10 = select i1 %7, <8 x float> %vec.phi, <8 x float> %4
+  %11 = select i1 %7, i64 %niter, i64 %unroll_iter
+  %12 = tail call nnan nsz float @llvm.vector.reduce.fmin.v8f32(<8 x float> %10) ; 2 uses
+  %.not1832 = or i1 %lcmp.mod.not, %7
+  br i1 %.not1832, label %.epil.preheader, label %.epilog-lcssa.a
 
-.epil.preheader:                                  ; preds = %.unr-lcssa, %.preheader1128
-  %indvars.iv1525.epil.init = phi i64 [ 0, %.preheader1128 ], [ %indvars.iv.next1526.7, %.unr-lcssa ]
-  %.08661311.epil.init = phi float [ f0x7F7FFFFF, %.preheader1128 ], [ %spec.select1054.7, %.unr-lcssa ]
-  tail call void @llvm.assume(i1 %lcmp.mod1877)
+.epil.preheader:                                  ; preds = %.preheader1128, %.unr-lcssa
+  %indvars.iv1525.epil.init = phi i64 [ 0, %.preheader1128 ], [ %11, %.unr-lcssa ]
+  %.08661311.epil.init = phi float [ f0x7F7FFFFF, %.preheader1128 ], [ %12, %.unr-lcssa ]
   br label %bb.dt
 
-bb.dt:                                            ; preds = %bb.dt, %.epil.preheader
-  %indvars.iv1525.epil = phi i64 [ %indvars.iv1525.epil.init, %.epil.preheader ], [ %indvars.iv.next1526.epil, %bb.dt ] ; 2 uses
-  %.08661311.epil = phi float [ %.08661311.epil.init, %.epil.preheader ], [ %spec.select1054.epil, %bb.dt ] ; 2 uses
-  %epil.iter = phi i64 [ 0, %.epil.preheader ], [ %epil.iter.next.a, %bb.dt ]
+._crit_edge1320:                                  ; preds = %bb.du
+  %13 = icmp samesign ult i64 %i.cri, %i.cnn
+  br i1 %13, label %.preheader1134, label %._crit_edge1322.split, !llvm.loop !39
+
+bb.dt:                                            ; preds = %.epil.preheader, %bb.dt
+  %indvars.iv1525.epil = phi i64 [ %epil.iter.next.a, %bb.dt ], [ %indvars.iv1525.epil.init, %.epil.preheader ] ; 2 uses
+  %.08661311.epil = phi float [ %spec.select1054.epil, %bb.dt ], [ %.08661311.epil.init, %.epil.preheader ] ; 2 uses
   %gep1309.epil = getelementptr inbounds nuw [1048576 x i8], ptr %invariant.gep1308, i64 %indvars.iv1525.epil
   %i.csa = load float, ptr %gep1309.epil, align 4, !tbaa !121 ; 2 uses
   %i.csb = fcmp reassoc nsz arcp contract afn ogt float %.08661311.epil, %i.csa
   %spec.select1054.epil = select nsz i1 %i.csb, float %i.csa, float %.08661311.epil ; 2 uses
-  %indvars.iv.next1526.epil = add nuw nsw i64 %indvars.iv1525.epil, 1
-  %epil.iter.next.a = add i64 %epil.iter, 1       ; 2 uses
-  %epil.iter.cmp.not.a = icmp eq i64 %epil.iter.next.a, 4
+  %epil.iter.next.a = add nuw nsw i64 %indvars.iv1525.epil, 1 ; 2 uses
+  %epil.iter.cmp.not.a = icmp eq i64 %epil.iter.next.a, %wide.trip.count
   br i1 %epil.iter.cmp.not.a, label %.epilog-lcssa.a, label %bb.dt, !llvm.loop !40
 
 .epilog-lcssa.a:                                  ; preds = %bb.dt, %.unr-lcssa
-  %spec.select1054.lcssa = phi float [ %spec.select1054.7, %.unr-lcssa ], [ %spec.select1054.epil, %bb.dt ]
+  %spec.select1054.lcssa = phi float [ %12, %.unr-lcssa ], [ %spec.select1054.epil, %bb.dt ]
   %i.csc = fmul reassoc nsz arcp contract afn float %spec.select1054.lcssa, 8.000000e+00 ; 9 uses
   %invariant.gep1316 = getelementptr inbounds nuw i8, ptr %invariant.gep1314, i64 %indvars.iv1543
   %i.csd = add nsw i64 %indvars.iv1543, -1        ; 3 uses
@@ -1090,17 +1059,23 @@ declare <4 x i32> @llvm.masked.load.v4i32.p0(ptr captures(none), <4 x i1>, <4 x 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.masked.store.v4i32.p0(<4 x i32>, ptr captures(none), <4 x i1>) #2
 
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(read)
+declare <8 x float> @llvm.masked.gather.v8f32.v8p0(<8 x ptr>, <8 x i1>, <8 x float>) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fmin.v8f32(<8 x float>) #5
+
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <8 x i1> @llvm.is.fpclass.v8f32(<8 x float>, i32 immarg) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #5
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.masked.store.v3i16.p0(<3 x i16>, ptr captures(none), <3 x i1>) #2
-
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #8
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="icelake-server" "target-features"="+64bit,+adx,+aes,+avx,+avx2,+avx512bitalg,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512ifma,+avx512vbmi,+avx512vbmi2,+avx512vl,+avx512vnni,+avx512vpopcntdq,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+gfni,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdpid,+rdrnd,+rdseed,+sahf,+sha,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+vaes,+vpclmulqdq,+wbnoinvd,+x87,+xsave,+xsavec,+xsaveopt,+xsaves,-amx-avx512,-amx-bf16,-amx-complex,-amx-fp16,-amx-fp8,-amx-int8,-amx-movrs,-amx-tile,-avx10.1,-avx10.2,-avx512bf16,-avx512bmm,-avx512fp16,-avx512vp2intersect,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-ccmp,-cf,-cldemote,-clzero,-cmpccxadd,-egpr,-enqcmd,-fma4,-hreset,-jmpabs,-kl,-lwp,-movdir64b,-movdiri,-movrs,-mwaitx,-ndd,-nf,-pconfig,-ppx,-prefetchi,-ptwrite,-push2pop2,-raoint,-rdpru,-rtm,-serialize,-sgx,-sha512,-shstk,-sm3,-sm4,-sse4a,-tbm,-tsxldtrk,-uintr,-usermsr,-waitpkg,-widekl,-xop,-zu" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -1110,7 +1085,7 @@ attributes #4 = { "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "st
 attributes #5 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #6 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #7 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
-attributes #8 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #8 = { nocallback nofree nosync nounwind willreturn memory(read) }
 attributes #9 = { nounwind }
 attributes #10 = { noreturn }
 
@@ -1156,9 +1131,9 @@ attributes #10 = { noreturn }
 !35 = distinct !{!35, !118}
 !36 = distinct !{!36, !118}
 !37 = distinct !{!37, !118, !123, !122}
-!38 = distinct !{!38, !118}
+!38 = distinct !{!38, !118, !122, !123}
 !39 = distinct !{!39, !118}
-!40 = distinct !{!40, !124}
+!40 = distinct !{!40, !118, !123, !122}
 !41 = distinct !{!41, !118}
 !42 = distinct !{!42, !118}
 !43 = distinct !{!43, !118}
