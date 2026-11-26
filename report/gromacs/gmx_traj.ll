@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 452
 inline.NumDeleted: 175
 loop-unroll.NumCompletelyUnrolled: 24
-loop-unroll.NumRuntimeUnrolled: 15
-loop-unroll.NumUnrolled: 39
+loop-unroll.NumRuntimeUnrolled: 14
+loop-unroll.NumUnrolled: 38
 begin_hunk_0_@_Z8gmx_trajiPPc:bb.a
 
 ._crit_edge.1.i:                                  ; preds = %.preheader.1.i, %.preheader47.1.i
@@ -205,7 +205,7 @@ bb.fo:                                            ; preds = %bb.fn, %.loopexit78
 
 bb.fp:                                            ; preds = %bb.fo
   %i.adp = load i32, ptr %.0774, align 4, !tbaa !11 ; 5 uses
-  %i.adq = load ptr, ptr %.0775, align 8, !tbaa !33 ; 6 uses
+  %i.adq = load ptr, ptr %.0775, align 8, !tbaa !33 ; 3 uses
   %i.adr = load ptr, ptr %i.wl, align 8, !tbaa !157 ; 6 uses
   %i.ads = load float, ptr @_ZZ8gmx_trajiPPcE8binwidth, align 4, !tbaa !47 ; 2 uses
   %i.adt = icmp eq ptr %.0762, null
@@ -216,102 +216,128 @@ bb.fp:                                            ; preds = %bb.fo
   br i1 %i.adu, label %.lr.ph.preheader.i, label %._crit_edge.i572
 
 .lr.ph.preheader.i:                               ; preds = %.preheader.i571
-  %wide.trip.count.i573 = zext nneg i32 %i.adp to i64 ; 2 uses
-  %xtraiter1366 = and i64 %wide.trip.count.i573, 3 ; 3 uses
-  %i.adv = icmp ult i32 %i.adp, 4
+  %wide.trip.count.i573 = zext nneg i32 %i.adp to i64 ; 3 uses
+  %i.adv = icmp ult i32 %i.adp, 32
   br i1 %i.adv, label %.lr.ph.i.epil.preheader, label %.lr.ph.preheader.i.new
 
 .lr.ph.preheader.i.new:                           ; preds = %.lr.ph.preheader.i
-  %unroll_iter.a = and i64 %wide.trip.count.i573, 2147483644
+  %unroll_iter.a = and i64 %wide.trip.count.i573, 2147483616 ; 3 uses
   br label %.lr.ph.i.a
 
 .lr.ph.i.a:                                       ; preds = %.lr.ph.i.a, %.lr.ph.preheader.i.new
-  %indvars.iv.i574.a = phi i64 [ 0, %.lr.ph.preheader.i.new ], [ %indvars.iv.next.i575.3, %.lr.ph.i.a ] ; 5 uses
-  %.04041.i = phi float [ 0.000000e+00, %.lr.ph.preheader.i.new ], [ %.sroa.speculated.i.3, %.lr.ph.i.a ] ; 2 uses
-  %niter = phi i64 [ 0, %.lr.ph.preheader.i.new ], [ %niter.next.3, %.lr.ph.i.a ]
-  %i.adw = getelementptr inbounds nuw [4 x i8], ptr %i.adq, i64 %indvars.iv.i574.a
-  %34 = load i32, ptr %i.adw, align 4, !tbaa !11
-  %35 = sext i32 %34 to i64
-  %36 = getelementptr inbounds [12 x i8], ptr %i.adr, i64 %35 ; 3 uses
-  %37 = load float, ptr %36, align 4, !tbaa !47   ; 2 uses
-  %38 = getelementptr inbounds nuw i8, ptr %36, i64 4
-  %39 = load float, ptr %38, align 4, !tbaa !47   ; 2 uses
-  %40 = fmul float %39, %39
-  %41 = call float @llvm.fmuladd.f32(float %37, float %37, float %40)
-  %42 = getelementptr inbounds nuw i8, ptr %36, i64 8
-  %43 = load float, ptr %42, align 4, !tbaa !47   ; 2 uses
-  %44 = call noundef float @llvm.fmuladd.f32(float %43, float %43, float %41)
-  %sqrt.i.i = call noundef float @llvm.sqrt.f32(float %44) ; 2 uses
-  %45 = fcmp olt float %sqrt.i.i, %.04041.i
-  %.sroa.speculated.i = select i1 %45, float %.04041.i, float %sqrt.i.i ; 2 uses
-  %46 = getelementptr inbounds nuw [4 x i8], ptr %i.adq, i64 %indvars.iv.i574.a
-  %47 = getelementptr inbounds nuw i8, ptr %46, i64 4
-  %48 = load i32, ptr %47, align 4, !tbaa !11
-  %49 = sext i32 %48 to i64
-  %50 = getelementptr inbounds [12 x i8], ptr %i.adr, i64 %49 ; 3 uses
-  %51 = load float, ptr %50, align 4, !tbaa !47   ; 2 uses
-  %52 = getelementptr inbounds nuw i8, ptr %50, i64 4
-  %53 = load float, ptr %52, align 4, !tbaa !47   ; 2 uses
-  %54 = fmul float %53, %53
-  %55 = call float @llvm.fmuladd.f32(float %51, float %51, float %54)
-  %56 = getelementptr inbounds nuw i8, ptr %50, i64 8
-  %57 = load float, ptr %56, align 4, !tbaa !47   ; 2 uses
-  %58 = call noundef float @llvm.fmuladd.f32(float %57, float %57, float %55)
-  %sqrt.i.i.1 = call noundef float @llvm.sqrt.f32(float %58) ; 2 uses
-  %59 = fcmp olt float %sqrt.i.i.1, %.sroa.speculated.i
-  %.sroa.speculated.i.1 = select i1 %59, float %.sroa.speculated.i, float %sqrt.i.i.1 ; 2 uses
-  %60 = getelementptr inbounds nuw [4 x i8], ptr %i.adq, i64 %indvars.iv.i574.a
-  %61 = getelementptr inbounds nuw i8, ptr %60, i64 8
-  %62 = load i32, ptr %61, align 4, !tbaa !11
-  %63 = sext i32 %62 to i64
-  %64 = getelementptr inbounds [12 x i8], ptr %i.adr, i64 %63 ; 3 uses
-  %65 = load float, ptr %64, align 4, !tbaa !47   ; 2 uses
-  %66 = getelementptr inbounds nuw i8, ptr %64, i64 4
-  %67 = load float, ptr %66, align 4, !tbaa !47   ; 2 uses
-  %68 = fmul float %67, %67
-  %69 = call float @llvm.fmuladd.f32(float %65, float %65, float %68)
-  %70 = getelementptr inbounds nuw i8, ptr %64, i64 8
-  %71 = load float, ptr %70, align 4, !tbaa !47   ; 2 uses
-  %72 = call noundef float @llvm.fmuladd.f32(float %71, float %71, float %69)
-  %sqrt.i.i.2 = call noundef float @llvm.sqrt.f32(float %72) ; 2 uses
-  %73 = fcmp olt float %sqrt.i.i.2, %.sroa.speculated.i.1
-  %.sroa.speculated.i.2 = select i1 %73, float %.sroa.speculated.i.1, float %sqrt.i.i.2 ; 2 uses
-  %74 = getelementptr inbounds nuw [4 x i8], ptr %i.adq, i64 %indvars.iv.i574.a
-  %75 = getelementptr inbounds nuw i8, ptr %74, i64 12
-  %76 = load i32, ptr %75, align 4, !tbaa !11
-  %77 = sext i32 %76 to i64
-  %78 = getelementptr inbounds [12 x i8], ptr %i.adr, i64 %77 ; 3 uses
-  %79 = load float, ptr %78, align 4, !tbaa !47   ; 2 uses
-  %80 = getelementptr inbounds nuw i8, ptr %78, i64 4
-  %81 = load float, ptr %80, align 4, !tbaa !47   ; 2 uses
-  %82 = fmul float %81, %81
-  %83 = call float @llvm.fmuladd.f32(float %79, float %79, float %82)
-  %84 = getelementptr inbounds nuw i8, ptr %78, i64 8
-  %85 = load float, ptr %84, align 4, !tbaa !47   ; 2 uses
-  %86 = call noundef float @llvm.fmuladd.f32(float %85, float %85, float %83)
-  %sqrt.i.i.3 = call noundef float @llvm.sqrt.f32(float %86) ; 2 uses
-  %87 = fcmp olt float %sqrt.i.i.3, %.sroa.speculated.i.2
-  %.sroa.speculated.i.3 = select i1 %87, float %.sroa.speculated.i.2, float %sqrt.i.i.3 ; 3 uses
-  %indvars.iv.next.i575.3 = add nuw nsw i64 %indvars.iv.i574.a, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
-  %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter.a
-  br i1 %niter.ncmp.3, label %._crit_edge.loopexit.i.unr-lcssa, label %.lr.ph.i.a, !llvm.loop !82
+  %indvars.iv.i574.a = phi i64 [ 0, %.lr.ph.preheader.i.new ], [ %indvars.iv.next.i575.3, %.lr.ph.i.a ] ; 3 uses
+  %vec.phi = phi <8 x float> [ zeroinitializer, %.lr.ph.preheader.i.new ], [ %61, %.lr.ph.i.a ] ; 3 uses
+  %vec.phi1299 = phi <8 x float> [ zeroinitializer, %.lr.ph.preheader.i.new ], [ %62, %.lr.ph.i.a ] ; 3 uses
+  %vec.phi1300 = phi <8 x float> [ zeroinitializer, %.lr.ph.preheader.i.new ], [ %63, %.lr.ph.i.a ] ; 3 uses
+  %vec.phi1301 = phi <8 x float> [ zeroinitializer, %.lr.ph.preheader.i.new ], [ %64, %.lr.ph.i.a ] ; 3 uses
+  %i.adw = getelementptr inbounds nuw [4 x i8], ptr %i.adq, i64 %indvars.iv.i574.a ; 4 uses
+  %34 = getelementptr inbounds nuw i8, ptr %i.adw, i64 32
+  %35 = getelementptr inbounds nuw i8, ptr %i.adw, i64 64
+  %36 = getelementptr inbounds nuw i8, ptr %i.adw, i64 96
+  %wide.load = load <8 x i32>, ptr %i.adw, align 4, !tbaa !11
+  %wide.load1302 = load <8 x i32>, ptr %34, align 4, !tbaa !11
+  %wide.load1303 = load <8 x i32>, ptr %35, align 4, !tbaa !11
+  %wide.load1304 = load <8 x i32>, ptr %36, align 4, !tbaa !11
+  %37 = sext <8 x i32> %wide.load to <8 x i64>
+  %38 = sext <8 x i32> %wide.load1302 to <8 x i64>
+  %39 = sext <8 x i32> %wide.load1303 to <8 x i64>
+  %40 = sext <8 x i32> %wide.load1304 to <8 x i64>
+  %wide.gep1305 = getelementptr inbounds [12 x i8], ptr %i.adr, <8 x i64> %37 ; 3 uses
+  %wide.gep1306 = getelementptr inbounds [12 x i8], ptr %i.adr, <8 x i64> %38 ; 3 uses
+  %wide.gep1307 = getelementptr inbounds [12 x i8], ptr %i.adr, <8 x i64> %39 ; 3 uses
+  %wide.gep1308 = getelementptr inbounds [12 x i8], ptr %i.adr, <8 x i64> %40 ; 3 uses
+  %wide.masked.gather1309 = call <8 x float> @llvm.masked.gather.v8f32.v8p0(<8 x ptr> align 4 %wide.gep1305, <8 x i1> splat (i1 true), <8 x float> poison), !tbaa !47 ; 2 uses
+  %wide.masked.gather1310 = call <8 x float> @llvm.masked.gather.v8f32.v8p0(<8 x ptr> align 4 %wide.gep1306, <8 x i1> splat (i1 true), <8 x float> poison), !tbaa !47 ; 2 uses
+  %wide.masked.gather1311 = call <8 x float> @llvm.masked.gather.v8f32.v8p0(<8 x ptr> align 4 %wide.gep1307, <8 x i1> splat (i1 true), <8 x float> poison), !tbaa !47 ; 2 uses
+  %wide.masked.gather1312 = call <8 x float> @llvm.masked.gather.v8f32.v8p0(<8 x ptr> align 4 %wide.gep1308, <8 x i1> splat (i1 true), <8 x float> poison), !tbaa !47 ; 2 uses
+  %wide.gep1313 = getelementptr inbounds nuw i8, <8 x ptr> %wide.gep1305, i64 4
+  %wide.gep1314 = getelementptr inbounds nuw i8, <8 x ptr> %wide.gep1306, i64 4
+  %wide.gep1315 = getelementptr inbounds nuw i8, <8 x ptr> %wide.gep1307, i64 4
+  %wide.gep1316 = getelementptr inbounds nuw i8, <8 x ptr> %wide.gep1308, i64 4
+  %wide.masked.gather1317 = call <8 x float> @llvm.masked.gather.v8f32.v8p0(<8 x ptr> align 4 %wide.gep1313, <8 x i1> splat (i1 true), <8 x float> poison), !tbaa !47 ; 2 uses
+  %wide.masked.gather1318 = call <8 x float> @llvm.masked.gather.v8f32.v8p0(<8 x ptr> align 4 %wide.gep1314, <8 x i1> splat (i1 true), <8 x float> poison), !tbaa !47 ; 2 uses
+  %wide.masked.gather1319 = call <8 x float> @llvm.masked.gather.v8f32.v8p0(<8 x ptr> align 4 %wide.gep1315, <8 x i1> splat (i1 true), <8 x float> poison), !tbaa !47 ; 2 uses
+  %wide.masked.gather1320 = call <8 x float> @llvm.masked.gather.v8f32.v8p0(<8 x ptr> align 4 %wide.gep1316, <8 x i1> splat (i1 true), <8 x float> poison), !tbaa !47 ; 2 uses
+  %41 = fmul <8 x float> %wide.masked.gather1317, %wide.masked.gather1317
+  %42 = fmul <8 x float> %wide.masked.gather1318, %wide.masked.gather1318
+  %43 = fmul <8 x float> %wide.masked.gather1319, %wide.masked.gather1319
+  %44 = fmul <8 x float> %wide.masked.gather1320, %wide.masked.gather1320
+  %45 = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %wide.masked.gather1309, <8 x float> %wide.masked.gather1309, <8 x float> %41)
+  %46 = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %wide.masked.gather1310, <8 x float> %wide.masked.gather1310, <8 x float> %42)
+  %47 = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %wide.masked.gather1311, <8 x float> %wide.masked.gather1311, <8 x float> %43)
+  %48 = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %wide.masked.gather1312, <8 x float> %wide.masked.gather1312, <8 x float> %44)
+  %wide.gep1321 = getelementptr inbounds nuw i8, <8 x ptr> %wide.gep1305, i64 8
+  %wide.gep1322 = getelementptr inbounds nuw i8, <8 x ptr> %wide.gep1306, i64 8
+  %wide.gep1323 = getelementptr inbounds nuw i8, <8 x ptr> %wide.gep1307, i64 8
+  %wide.gep1324 = getelementptr inbounds nuw i8, <8 x ptr> %wide.gep1308, i64 8
+  %wide.masked.gather1325 = call <8 x float> @llvm.masked.gather.v8f32.v8p0(<8 x ptr> align 4 %wide.gep1321, <8 x i1> splat (i1 true), <8 x float> poison), !tbaa !47 ; 2 uses
+  %wide.masked.gather1326 = call <8 x float> @llvm.masked.gather.v8f32.v8p0(<8 x ptr> align 4 %wide.gep1322, <8 x i1> splat (i1 true), <8 x float> poison), !tbaa !47 ; 2 uses
+  %wide.masked.gather1327 = call <8 x float> @llvm.masked.gather.v8f32.v8p0(<8 x ptr> align 4 %wide.gep1323, <8 x i1> splat (i1 true), <8 x float> poison), !tbaa !47 ; 2 uses
+  %wide.masked.gather1328 = call <8 x float> @llvm.masked.gather.v8f32.v8p0(<8 x ptr> align 4 %wide.gep1324, <8 x i1> splat (i1 true), <8 x float> poison), !tbaa !47 ; 2 uses
+  %49 = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %wide.masked.gather1325, <8 x float> %wide.masked.gather1325, <8 x float> %45)
+  %50 = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %wide.masked.gather1326, <8 x float> %wide.masked.gather1326, <8 x float> %46)
+  %51 = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %wide.masked.gather1327, <8 x float> %wide.masked.gather1327, <8 x float> %47)
+  %52 = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %wide.masked.gather1328, <8 x float> %wide.masked.gather1328, <8 x float> %48)
+  %.fr = freeze <8 x float> %49                   ; 2 uses
+  %53 = call <8 x float> @llvm.sqrt.v8f32(<8 x float> %.fr) ; 3 uses
+  %.fr1359 = freeze <8 x float> %50               ; 2 uses
+  %54 = call <8 x float> @llvm.sqrt.v8f32(<8 x float> %.fr1359) ; 3 uses
+  %.fr1360 = freeze <8 x float> %51               ; 2 uses
+  %55 = call <8 x float> @llvm.sqrt.v8f32(<8 x float> %.fr1360) ; 3 uses
+  %.fr1361 = freeze <8 x float> %52               ; 2 uses
+  %56 = call <8 x float> @llvm.sqrt.v8f32(<8 x float> %.fr1361) ; 3 uses
+  %57 = fcmp olt <8 x float> %53, %vec.phi
+  %58 = fcmp olt <8 x float> %54, %vec.phi1299
+  %59 = fcmp olt <8 x float> %55, %vec.phi1300
+  %60 = fcmp olt <8 x float> %56, %vec.phi1301
+  %61 = select <8 x i1> %57, <8 x float> %vec.phi, <8 x float> %53 ; 2 uses
+  %62 = select <8 x i1> %58, <8 x float> %vec.phi1299, <8 x float> %54 ; 2 uses
+  %63 = select <8 x i1> %59, <8 x float> %vec.phi1300, <8 x float> %55 ; 2 uses
+  %64 = select <8 x i1> %60, <8 x float> %vec.phi1301, <8 x float> %56 ; 2 uses
+  %indvars.iv.next.i575.3 = add nuw i64 %indvars.iv.i574.a, 32 ; 2 uses
+  %65 = fcmp ult <8 x float> %.fr, zeroinitializer
+  %66 = fcmp ult <8 x float> %.fr1359, zeroinitializer
+  %67 = fcmp ult <8 x float> %.fr1360, zeroinitializer
+  %68 = fcmp ult <8 x float> %.fr1361, zeroinitializer
+  %69 = call <8 x i1> @llvm.is.fpclass.v8f32(<8 x float> %53, /* (nzero) */ i32 32)
+  %70 = call <8 x i1> @llvm.is.fpclass.v8f32(<8 x float> %54, /* (nzero) */ i32 32)
+  %71 = call <8 x i1> @llvm.is.fpclass.v8f32(<8 x float> %55, /* (nzero) */ i32 32)
+  %72 = call <8 x i1> @llvm.is.fpclass.v8f32(<8 x float> %56, /* (nzero) */ i32 32)
+  %73 = or <8 x i1> %65, %69
+  %74 = or <8 x i1> %66, %70
+  %75 = or <8 x i1> %67, %71
+  %76 = or <8 x i1> %68, %72
+  %77 = or <8 x i1> %73, %74
+  %78 = or <8 x i1> %77, %75
+  %79 = or <8 x i1> %78, %76
+  %80 = bitcast <8 x i1> %79 to i8
+  %81 = icmp ne i8 %80, 0                         ; 7 uses
+  %niter.ncmp.3 = icmp eq i64 %indvars.iv.next.i575.3, %unroll_iter.a
+  %82 = or i1 %81, %niter.ncmp.3
+  br i1 %82, label %._crit_edge.loopexit.i.unr-lcssa, label %.lr.ph.i.a, !llvm.loop !82
 
 ._crit_edge.loopexit.i.unr-lcssa:                 ; preds = %.lr.ph.i.a
-  %lcmp.mod1367.not = icmp eq i64 %xtraiter1366, 0
-  br i1 %lcmp.mod1367.not, label %._crit_edge.loopexit.i, label %.lr.ph.i.epil.preheader
+  %83 = select i1 %81, <8 x float> %vec.phi, <8 x float> %61
+  %84 = select i1 %81, <8 x float> %vec.phi1299, <8 x float> %62
+  %85 = select i1 %81, <8 x float> %vec.phi1300, <8 x float> %63
+  %86 = select i1 %81, <8 x float> %vec.phi1301, <8 x float> %64
+  %87 = select i1 %81, i64 %indvars.iv.i574.a, i64 %unroll_iter.a
+  %rdx.minmax = call nnan <8 x float> @llvm.maxnum.v8f32(<8 x float> %83, <8 x float> %84)
+  %rdx.minmax1331 = call nnan <8 x float> @llvm.maxnum.v8f32(<8 x float> %rdx.minmax, <8 x float> %85)
+  %rdx.minmax1332 = call nnan <8 x float> @llvm.maxnum.v8f32(<8 x float> %rdx.minmax1331, <8 x float> %86)
+  %88 = call nnan float @llvm.vector.reduce.fmax.v8f32(<8 x float> %rdx.minmax1332) ; 2 uses
+  %cmp.n1333 = icmp ne i64 %unroll_iter.a, %wide.trip.count.i573
+  %.not1362 = or i1 %cmp.n1333, %81
+  br i1 %.not1362, label %.lr.ph.i.epil.preheader, label %._crit_edge.loopexit.i
 
-.lr.ph.i.epil.preheader:                          ; preds = %._crit_edge.loopexit.i.unr-lcssa, %.lr.ph.preheader.i
-  %indvars.iv.i574.epil.init = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i575.3, %._crit_edge.loopexit.i.unr-lcssa ]
-  %.04041.i.epil.init = phi float [ 0.000000e+00, %.lr.ph.preheader.i ], [ %.sroa.speculated.i.3, %._crit_edge.loopexit.i.unr-lcssa ]
-  %lcmp.mod1369 = icmp ne i64 %xtraiter1366, 0
-  call void @llvm.assume(i1 %lcmp.mod1369)
+.lr.ph.i.epil.preheader:                          ; preds = %.lr.ph.preheader.i, %._crit_edge.loopexit.i.unr-lcssa
+  %indvars.iv.i574.epil.init = phi i64 [ 0, %.lr.ph.preheader.i ], [ %87, %._crit_edge.loopexit.i.unr-lcssa ]
+  %.04041.i.epil.init = phi float [ 0.000000e+00, %.lr.ph.preheader.i ], [ %88, %._crit_edge.loopexit.i.unr-lcssa ]
   br label %.lr.ph.i.epil
 
-.lr.ph.i.epil:                                    ; preds = %.lr.ph.i.epil, %.lr.ph.i.epil.preheader
-  %indvars.iv.i574.epil = phi i64 [ %indvars.iv.i574.epil.init, %.lr.ph.i.epil.preheader ], [ %indvars.iv.next.i575.epil, %.lr.ph.i.epil ] ; 2 uses
-  %.04041.i.epil = phi float [ %.04041.i.epil.init, %.lr.ph.i.epil.preheader ], [ %.sroa.speculated.i.epil, %.lr.ph.i.epil ] ; 2 uses
-  %epil.iter = phi i64 [ 0, %.lr.ph.i.epil.preheader ], [ %epil.iter.next.a, %.lr.ph.i.epil ]
+.lr.ph.i.epil:                                    ; preds = %.lr.ph.i.epil.preheader, %.lr.ph.i.epil
+  %indvars.iv.i574.epil = phi i64 [ %epil.iter.next.a, %.lr.ph.i.epil ], [ %indvars.iv.i574.epil.init, %.lr.ph.i.epil.preheader ] ; 2 uses
+  %.04041.i.epil = phi float [ %.sroa.speculated.i.epil, %.lr.ph.i.epil ], [ %.04041.i.epil.init, %.lr.ph.i.epil.preheader ] ; 2 uses
   %i.adx = getelementptr inbounds nuw [4 x i8], ptr %i.adq, i64 %indvars.iv.i574.epil
   %i.ady = load i32, ptr %i.adx, align 4, !tbaa !11
   %i.adz = sext i32 %i.ady to i64
@@ -327,13 +353,12 @@ bb.fp:                                            ; preds = %bb.fo
   %sqrt.i.i.epil = call noundef float @llvm.sqrt.f32(float %i.aei) ; 2 uses
   %i.aej = fcmp olt float %sqrt.i.i.epil, %.04041.i.epil
   %.sroa.speculated.i.epil = select i1 %i.aej, float %.04041.i.epil, float %sqrt.i.i.epil ; 2 uses
-  %indvars.iv.next.i575.epil = add nuw nsw i64 %indvars.iv.i574.epil, 1
-  %epil.iter.next.a = add i64 %epil.iter, 1       ; 2 uses
-  %epil.iter.cmp.not.a = icmp eq i64 %epil.iter.next.a, %xtraiter1366
+  %epil.iter.next.a = add nuw nsw i64 %indvars.iv.i574.epil, 1 ; 2 uses
+  %epil.iter.cmp.not.a = icmp eq i64 %epil.iter.next.a, %wide.trip.count.i573
   br i1 %epil.iter.cmp.not.a, label %._crit_edge.loopexit.i, label %.lr.ph.i.epil, !llvm.loop !83
 
 ._crit_edge.loopexit.i:                           ; preds = %.lr.ph.i.epil, %._crit_edge.loopexit.i.unr-lcssa
-  %.sroa.speculated.i.lcssa = phi float [ %.sroa.speculated.i.3, %._crit_edge.loopexit.i.unr-lcssa ], [ %.sroa.speculated.i.epil, %.lr.ph.i.epil ]
+  %.sroa.speculated.i.lcssa = phi float [ %88, %._crit_edge.loopexit.i.unr-lcssa ], [ %.sroa.speculated.i.epil, %.lr.ph.i.epil ]
   %i.aek = fmul float %.sroa.speculated.i.lcssa, 2.000000e+00
   br label %._crit_edge.i572
 
@@ -736,6 +761,21 @@ declare float @llvm.sqrt.f32(float) #15
 declare <8 x float> @llvm.masked.gather.v8f32.v8p0(<8 x ptr>, <8 x i1>, <8 x float>) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <8 x float> @llvm.fmuladd.v8f32(<8 x float>, <8 x float>, <8 x float>) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <8 x float> @llvm.sqrt.v8f32(<8 x float>) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <8 x float> @llvm.maxnum.v8f32(<8 x float>, <8 x float>) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fmax.v8f32(<8 x float>) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <8 x i1> @llvm.is.fpclass.v8f32(<8 x float>, i32 immarg) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -860,8 +900,8 @@ attributes #28 = { builtin allocsize(0) }
 !79 = distinct !{!79, !34, !142, !143}
 !80 = distinct !{!80, !48}
 !81 = distinct !{!81, !34, !142}
-!82 = distinct !{!82, !34}
-!83 = distinct !{!83, !48}
+!82 = distinct !{!82, !34, !142, !143}
+!83 = distinct !{!83, !34, !143, !142}
 !84 = distinct !{!84, !34}
 !85 = distinct !{!85, !34}
 !86 = distinct !{!86, !34}

@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/opencv/original/activation_kernels?download=true
 inline.NumInlined: 111
 inline.NumDeleted: 66
-loop-unroll.NumRuntimeUnrolled: 9
-loop-unroll.NumUnrolled: 9
+loop-unroll.NumRuntimeUnrolled: 8
+loop-unroll.NumUnrolled: 8
 begin_hunk_0_@_ZN2cv3dnn12cpu_baselineL14activationClipEPKvPvmPKf:bb.a
 .lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol, %.lr.ph.preheader18
   %.014.unr = phi i64 [ %.014.ph, %.lr.ph.preheader18 ], [ %i.y, %.lr.ph.prol ]
@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZN2cv10AutoBufferIfLm264EEC2Em.exit.i.i.i
 
 _ZN2cv10AutoBufferIfLm264EEC2Em.exit.i.i.i:       ; preds = %bb.b, %bb.a
-  %i.i = phi ptr [ %i.c, %bb.a ], [ %i.h, %bb.b ] ; 19 uses
+  %i.i = phi ptr [ %i.c, %bb.a ], [ %i.h, %bb.b ] ; 16 uses
   %i.j = load i32, ptr %1, align 4, !tbaa !25     ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.l = load i32, ptr %i.k, align 4, !tbaa !26   ; 2 uses
@@ -328,119 +328,116 @@ scalar.ph39.prol.loopexit:                        ; preds = %scalar.ph39.prol, %
   %.04253.i.i.i.unr = phi i64 [ %.04253.i.i.i.ph, %scalar.ph39.preheader ], [ %i.bm, %scalar.ph39.prol ]
   %i.bn = sub nsw i64 %.04253.i.i.i.ph, %i.al
   %i.bo = icmp ugt i64 %i.bn, -4
-  br i1 %i.bo, label %.preheader50.i.i.i, label %scalar.ph39
+  br i1 %i.bo, label %.preheader50.i.i.i, label %.lr.ph57.i.i.i.a
 
-.preheader50.i.i.i:                               ; preds = %scalar.ph39.prol.loopexit, %scalar.ph39, %middle.block50
+.preheader50.i.i.i:                               ; preds = %scalar.ph39.prol.loopexit, %.lr.ph57.i.i.i.a, %middle.block50
   %i.bp = icmp sgt i32 %i.ag, 0
   br i1 %i.bp, label %.lr.ph57.preheader.i.i.i, label %.lr.ph68.i.i.i
 
 .lr.ph57.preheader.i.i.i:                         ; preds = %.preheader50.i.i.i
-  %wide.trip.count.i.i.i = zext nneg i32 %i.ag to i64 ; 2 uses
-  %xtraiter58 = and i64 %wide.trip.count.i.i.i, 3 ; 3 uses
-  %i.bq = icmp ult i32 %i.ag, 4
-  br i1 %i.bq, label %.lr.ph57.i.i.i.epil.preheader, label %.lr.ph57.preheader.i.i.i.new
+  %wide.trip.count.i.i.i = zext nneg i32 %i.ag to i64 ; 3 uses
+  %i.bq = icmp ult i32 %i.ag, 8
+  br i1 %i.bq, label %.lr.ph61.i.i.i.a, label %.lr.ph57.preheader.i.i.i.new
 
 .lr.ph57.preheader.i.i.i.new:                     ; preds = %.lr.ph57.preheader.i.i.i
-  %unroll_iter = and i64 %wide.trip.count.i.i.i, 2147483644
-  br label %.lr.ph57.i.i.i.a
+  %unroll_iter = and i64 %wide.trip.count.i.i.i, 2147483640 ; 3 uses
+  br label %scalar.ph39
 
-scalar.ph39:                                      ; preds = %scalar.ph39.prol.loopexit, %scalar.ph39
-  %.04253.i.i.i.a = phi i64 [ %24, %scalar.ph39 ], [ %.04253.i.i.i.unr, %scalar.ph39.prol.loopexit ] ; 6 uses
-  %3 = add i64 %.04253.i.i.i.a, %i.aq
-  %4 = mul i64 %3, %i.as
-  %5 = getelementptr [4 x i8], ptr %i.at, i64 %4
-  %6 = load float, ptr %5, align 4, !tbaa !9
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %.04253.i.i.i.a
-  store float %6, ptr %7, align 4, !tbaa !9
-  %8 = add nuw i64 %.04253.i.i.i.a, 1             ; 2 uses
-  %9 = add i64 %8, %i.aq
-  %10 = mul i64 %9, %i.as
-  %11 = getelementptr [4 x i8], ptr %i.at, i64 %10
-  %12 = load float, ptr %11, align 4, !tbaa !9
-  %i.br = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %8
-  store float %12, ptr %i.br, align 4, !tbaa !9
-  %13 = add nuw i64 %.04253.i.i.i.a, 2            ; 2 uses
-  %14 = add i64 %13, %i.aq
-  %15 = mul i64 %14, %i.as
-  %16 = getelementptr [4 x i8], ptr %i.at, i64 %15
-  %17 = load float, ptr %16, align 4, !tbaa !9
-  %18 = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %13
-  store float %17, ptr %18, align 4, !tbaa !9
-  %19 = add nuw i64 %.04253.i.i.i.a, 3            ; 2 uses
-  %i.bs = add i64 %19, %i.aq
-  %20 = mul i64 %i.bs, %i.as
-  %21 = getelementptr [4 x i8], ptr %i.at, i64 %20
-  %22 = load float, ptr %21, align 4, !tbaa !9
-  %23 = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %19
-  store float %22, ptr %23, align 4, !tbaa !9
-  %24 = add nuw i64 %.04253.i.i.i.a, 4            ; 2 uses
-  %exitcond.not.i.i.i.3 = icmp eq i64 %24, %i.al
-  br i1 %exitcond.not.i.i.i.3, label %.preheader50.i.i.i, label %scalar.ph39, !llvm.loop !76
+scalar.ph39:                                      ; preds = %scalar.ph39, %.lr.ph57.preheader.i.i.i.new
+  %.04253.i.i.i.a = phi i64 [ 0, %.lr.ph57.preheader.i.i.i.new ], [ %i.bs, %scalar.ph39 ] ; 3 uses
+  %vec.phi = phi <4 x float> [ splat (float f0xFF7FFFFF), %.lr.ph57.preheader.i.i.i.new ], [ %8, %scalar.ph39 ] ; 3 uses
+  %vec.phi41 = phi <4 x float> [ splat (float f0xFF7FFFFF), %.lr.ph57.preheader.i.i.i.new ], [ %9, %scalar.ph39 ] ; 3 uses
+  %i.br = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %.04253.i.i.i.a ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %i.br, i64 16
+  %wide.load42 = load <4 x float>, ptr %i.br, align 4, !tbaa !9
+  %wide.load43 = load <4 x float>, ptr %3, align 4, !tbaa !9
+  %4 = freeze <4 x float> %wide.load42            ; 3 uses
+  %5 = freeze <4 x float> %wide.load43            ; 3 uses
+  %6 = fcmp olt <4 x float> %vec.phi, %4
+  %7 = fcmp olt <4 x float> %vec.phi41, %5
+  %8 = select <4 x i1> %6, <4 x float> %4, <4 x float> %vec.phi ; 2 uses
+  %9 = select <4 x i1> %7, <4 x float> %5, <4 x float> %vec.phi41 ; 2 uses
+  %i.bs = add nuw i64 %.04253.i.i.i.a, 8          ; 2 uses
+  %10 = call <4 x i1> @llvm.is.fpclass.v4f32(<4 x float> %4, /* (nan nzero) */ i32 35)
+  %11 = call <4 x i1> @llvm.is.fpclass.v4f32(<4 x float> %5, /* (nan nzero) */ i32 35)
+  %12 = or <4 x i1> %10, %11
+  %13 = bitcast <4 x i1> %12 to i4
+  %14 = icmp ne i4 %13, 0                         ; 5 uses
+  %15 = icmp eq i64 %i.bs, %unroll_iter
+  %16 = or i1 %14, %15
+  br i1 %16, label %.lr.ph57.i.i.i.epil, label %scalar.ph39, !llvm.loop !76
 
-.lr.ph61.i.i.i.unr-lcssa:                         ; preds = %.lr.ph57.i.i.i.a
-  %lcmp.mod59.not = icmp eq i64 %xtraiter58, 0
-  br i1 %lcmp.mod59.not, label %.lr.ph61.i.i.i.a, label %.lr.ph57.i.i.i.epil.preheader
+.lr.ph57.i.i.i.epil:                              ; preds = %scalar.ph39
+  %17 = select i1 %14, <4 x float> %vec.phi, <4 x float> %8
+  %18 = select i1 %14, <4 x float> %vec.phi41, <4 x float> %9
+  %19 = select i1 %14, i64 %.04253.i.i.i.a, i64 %unroll_iter
+  %rdx.minmax = call nnan <4 x float> @llvm.maxnum.v4f32(<4 x float> %17, <4 x float> %18)
+  %20 = call nnan float @llvm.vector.reduce.fmax.v4f32(<4 x float> %rdx.minmax) ; 2 uses
+  %cmp.n46 = icmp ne i64 %unroll_iter, %wide.trip.count.i.i.i
+  %.not = or i1 %cmp.n46, %14
+  br i1 %.not, label %.lr.ph61.i.i.i.a, label %.lr.ph61.i.i.i
 
-.lr.ph57.i.i.i.epil.preheader:                    ; preds = %.lr.ph61.i.i.i.unr-lcssa, %.lr.ph57.preheader.i.i.i
-  %indvars.iv.i.i.i.epil.init = phi i64 [ 0, %.lr.ph57.preheader.i.i.i ], [ %indvars.iv.next.i.i.i.3, %.lr.ph61.i.i.i.unr-lcssa ]
-  %.04755.i.i.i.epil.init = phi float [ f0xFF7FFFFF, %.lr.ph57.preheader.i.i.i ], [ %.sroa.speculated.i.i.i.3, %.lr.ph61.i.i.i.unr-lcssa ]
-  %lcmp.mod61 = icmp ne i64 %xtraiter58, 0
-  call void @llvm.assume(i1 %lcmp.mod61)
-  br label %.lr.ph57.i.i.i.epil
+.lr.ph61.i.i.i.a:                                 ; preds = %.lr.ph57.preheader.i.i.i, %.lr.ph57.i.i.i.epil
+  %indvars.iv.i.i.i.ph = phi i64 [ 0, %.lr.ph57.preheader.i.i.i ], [ %19, %.lr.ph57.i.i.i.epil ]
+  %.04755.i.i.i.ph = phi float [ f0xFF7FFFFF, %.lr.ph57.preheader.i.i.i ], [ %20, %.lr.ph57.i.i.i.epil ]
+  br label %.lr.ph57.i.i.i
 
-.lr.ph57.i.i.i.epil:                              ; preds = %.lr.ph57.i.i.i.epil, %.lr.ph57.i.i.i.epil.preheader
-  %indvars.iv.i.i.i.epil = phi i64 [ %indvars.iv.i.i.i.epil.init, %.lr.ph57.i.i.i.epil.preheader ], [ %indvars.iv.next.i.i.i.epil, %.lr.ph57.i.i.i.epil ] ; 2 uses
-  %.04755.i.i.i.epil = phi float [ %.04755.i.i.i.epil.init, %.lr.ph57.i.i.i.epil.preheader ], [ %.sroa.speculated.i.i.i.epil, %.lr.ph57.i.i.i.epil ] ; 2 uses
-  %epil.iter = phi i64 [ 0, %.lr.ph57.i.i.i.epil.preheader ], [ %epil.iter.next, %.lr.ph57.i.i.i.epil ]
-  %25 = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv.i.i.i.epil
-  %26 = load float, ptr %25, align 4, !tbaa !9    ; 2 uses
-  %27 = fcmp olt float %.04755.i.i.i.epil, %26
-  %.sroa.speculated.i.i.i.epil = select i1 %27, float %26, float %.04755.i.i.i.epil ; 2 uses
-  %indvars.iv.next.i.i.i.epil = add nuw nsw i64 %indvars.iv.i.i.i.epil, 1
-  %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
-  %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter58
-  br i1 %epil.iter.cmp.not, label %.lr.ph61.i.i.i.a, label %.lr.ph57.i.i.i.epil, !llvm.loop !77
+.lr.ph57.i.i.i.a:                                 ; preds = %scalar.ph39.prol.loopexit, %.lr.ph57.i.i.i.a
+  %indvars.iv.i.i.i.a = phi i64 [ %niter.next.3, %.lr.ph57.i.i.i.a ], [ %.04253.i.i.i.unr, %scalar.ph39.prol.loopexit ] ; 6 uses
+  %21 = add i64 %indvars.iv.i.i.i.a, %i.aq
+  %22 = mul i64 %21, %i.as
+  %i.bt = getelementptr [4 x i8], ptr %i.at, i64 %22
+  %i.bu = load float, ptr %i.bt, align 4, !tbaa !9
+  %23 = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv.i.i.i.a
+  store float %i.bu, ptr %23, align 4, !tbaa !9
+  %24 = add nuw i64 %indvars.iv.i.i.i.a, 1        ; 2 uses
+  %25 = add i64 %24, %i.aq
+  %26 = mul i64 %25, %i.as
+  %27 = getelementptr [4 x i8], ptr %i.at, i64 %26
+  %28 = load float, ptr %27, align 4, !tbaa !9
+  %i.bv = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %24
+  store float %28, ptr %i.bv, align 4, !tbaa !9
+  %29 = add nuw i64 %indvars.iv.i.i.i.a, 2        ; 2 uses
+  %30 = add i64 %29, %i.aq
+  %31 = mul i64 %30, %i.as
+  %i.bw = getelementptr [4 x i8], ptr %i.at, i64 %31
+  %32 = load float, ptr %i.bw, align 4, !tbaa !9
+  %33 = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %29
+  store float %32, ptr %33, align 4, !tbaa !9
+  %34 = add nuw i64 %indvars.iv.i.i.i.a, 3        ; 2 uses
+  %indvars.iv.next.i.i.i.3 = add i64 %34, %i.aq
+  %35 = mul i64 %indvars.iv.next.i.i.i.3, %i.as
+  %36 = getelementptr [4 x i8], ptr %i.at, i64 %35
+  %37 = load float, ptr %36, align 4, !tbaa !9
+  %38 = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %34
+  store float %37, ptr %38, align 4, !tbaa !9
+  %niter.next.3 = add nuw i64 %indvars.iv.i.i.i.a, 4 ; 2 uses
+  %niter.ncmp.3 = icmp eq i64 %niter.next.3, %i.al
+  br i1 %niter.ncmp.3, label %.preheader50.i.i.i, label %.lr.ph57.i.i.i.a, !llvm.loop !77
 
-.lr.ph61.i.i.i.a:                                 ; preds = %.lr.ph57.i.i.i.epil, %.lr.ph61.i.i.i.unr-lcssa
-  %.sroa.speculated.i.i.i.lcssa = phi float [ %.sroa.speculated.i.i.i.3, %.lr.ph61.i.i.i.unr-lcssa ], [ %.sroa.speculated.i.i.i.epil, %.lr.ph57.i.i.i.epil ]
-  %28 = load ptr, ptr %i.ab, align 8, !tbaa !100, !nonnull !88, !align !96
+.lr.ph61.i.i.i:                                   ; preds = %.lr.ph57.i.i.i, %.lr.ph57.i.i.i.epil
+  %.sroa.speculated.i.i.i.lcssa = phi float [ %20, %.lr.ph57.i.i.i.epil ], [ %.sroa.speculated.i.i.i, %.lr.ph57.i.i.i ]
+  %39 = load ptr, ptr %i.ab, align 8, !tbaa !100, !nonnull !88, !align !96
   br label %bb.e
 
-.lr.ph57.i.i.i.a:                                 ; preds = %.lr.ph57.i.i.i.a, %.lr.ph57.preheader.i.i.i.new
-  %indvars.iv.i.i.i.a = phi i64 [ 0, %.lr.ph57.preheader.i.i.i.new ], [ %indvars.iv.next.i.i.i.3, %.lr.ph57.i.i.i.a ] ; 5 uses
-  %.04755.i.i.i = phi float [ f0xFF7FFFFF, %.lr.ph57.preheader.i.i.i.new ], [ %.sroa.speculated.i.i.i.3, %.lr.ph57.i.i.i.a ] ; 2 uses
-  %niter = phi i64 [ 0, %.lr.ph57.preheader.i.i.i.new ], [ %niter.next.3, %.lr.ph57.i.i.i.a ]
-  %i.bt = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv.i.i.i.a
-  %i.bu = load float, ptr %i.bt, align 4, !tbaa !9 ; 2 uses
-  %29 = fcmp olt float %.04755.i.i.i, %i.bu
-  %.sroa.speculated.i.i.i = select i1 %29, float %i.bu, float %.04755.i.i.i ; 2 uses
-  %30 = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv.i.i.i.a
-  %31 = getelementptr inbounds nuw i8, ptr %30, i64 4
-  %32 = load float, ptr %31, align 4, !tbaa !9    ; 2 uses
-  %33 = fcmp olt float %.sroa.speculated.i.i.i, %32
-  %.sroa.speculated.i.i.i.1 = select i1 %33, float %32, float %.sroa.speculated.i.i.i ; 2 uses
-  %i.bv = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv.i.i.i.a
-  %34 = getelementptr inbounds nuw i8, ptr %i.bv, i64 8
-  %35 = load float, ptr %34, align 4, !tbaa !9    ; 2 uses
-  %36 = fcmp olt float %.sroa.speculated.i.i.i.1, %35
-  %.sroa.speculated.i.i.i.2 = select i1 %36, float %35, float %.sroa.speculated.i.i.i.1 ; 2 uses
-  %i.bw = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv.i.i.i.a
-  %37 = getelementptr inbounds nuw i8, ptr %i.bw, i64 12
-  %38 = load float, ptr %37, align 4, !tbaa !9    ; 2 uses
-  %39 = fcmp olt float %.sroa.speculated.i.i.i.2, %38
-  %.sroa.speculated.i.i.i.3 = select i1 %39, float %38, float %.sroa.speculated.i.i.i.2 ; 3 uses
-  %indvars.iv.next.i.i.i.3 = add nuw nsw i64 %indvars.iv.i.i.i.a, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
-  %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
-  br i1 %niter.ncmp.3, label %.lr.ph61.i.i.i.unr-lcssa, label %.lr.ph57.i.i.i.a, !llvm.loop !78
+.lr.ph57.i.i.i:                                   ; preds = %.lr.ph61.i.i.i.a, %.lr.ph57.i.i.i
+  %indvars.iv.i.i.i = phi i64 [ %indvars.iv.next.i.i.i, %.lr.ph57.i.i.i ], [ %indvars.iv.i.i.i.ph, %.lr.ph61.i.i.i.a ] ; 2 uses
+  %.04755.i.i.i = phi float [ %.sroa.speculated.i.i.i, %.lr.ph57.i.i.i ], [ %.04755.i.i.i.ph, %.lr.ph61.i.i.i.a ] ; 2 uses
+  %40 = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv.i.i.i
+  %41 = load float, ptr %40, align 4, !tbaa !9    ; 2 uses
+  %42 = fcmp olt float %.04755.i.i.i, %41
+  %.sroa.speculated.i.i.i = select i1 %42, float %41, float %.04755.i.i.i ; 2 uses
+  %indvars.iv.next.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i, 1 ; 2 uses
+  %exitcond77.not.i.i.i = icmp eq i64 %indvars.iv.next.i.i.i, %wide.trip.count.i.i.i
+  br i1 %exitcond77.not.i.i.i, label %.lr.ph61.i.i.i, label %.lr.ph57.i.i.i, !llvm.loop !78
 
-bb.e:                                             ; preds = %bb.e, %.lr.ph61.i.i.i.a
-  %indvars.iv78.i.i.i = phi i64 [ 0, %.lr.ph61.i.i.i.a ], [ %indvars.iv.next79.i.i.i, %bb.e ] ; 2 uses
-  %.060.i.i.i = phi float [ 0.000000e+00, %.lr.ph61.i.i.i.a ], [ %i.cd, %bb.e ]
+bb.e:                                             ; preds = %bb.e, %.lr.ph61.i.i.i
+  %indvars.iv78.i.i.i = phi i64 [ 0, %.lr.ph61.i.i.i ], [ %indvars.iv.next79.i.i.i, %bb.e ] ; 2 uses
+  %.060.i.i.i = phi float [ 0.000000e+00, %.lr.ph61.i.i.i ], [ %i.cd, %bb.e ]
   %i.bx = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv78.i.i.i ; 2 uses
   %i.by = load float, ptr %i.bx, align 4, !tbaa !9
   %i.bz = fsub float %i.by, %.sroa.speculated.i.i.i.lcssa
-  %i.ca = load float, ptr %28, align 4, !tbaa !9
+  %i.ca = load float, ptr %39, align 4, !tbaa !9
   %i.cb = fmul float %i.bz, %i.ca
   %i.cc = call float @expf(float noundef %i.cb) #18 ; 2 uses
   store float %i.cc, ptr %i.bx, align 4, !tbaa !9
@@ -721,6 +718,15 @@ declare float @llvm.fabs.f32(float) #14
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #14
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x float> @llvm.maxnum.v4f32(<4 x float>, <4 x float>) #14
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fmax.v4f32(<4 x float>) #14
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i1> @llvm.is.fpclass.v4f32(<4 x float>, i32 immarg) #14
+
 attributes #0 = { mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
@@ -825,9 +831,9 @@ attributes #22 = { noreturn nounwind }
 !73 = distinct !{null}
 !74 = distinct !{!74, !10, !11, !12}
 !75 = distinct !{!75, !43}
-!76 = distinct !{!76, !10, !11}
-!77 = distinct !{!77, !43}
-!78 = distinct !{!78, !10}
+!76 = distinct !{!76, !10, !11, !12}
+!77 = distinct !{!77, !10, !11}
+!78 = distinct !{!78, !10, !12, !11}
 !79 = distinct !{!79, !10}
 !80 = distinct !{!80, !10, !11, !12}
 !81 = distinct !{!81, !10, !11, !12}

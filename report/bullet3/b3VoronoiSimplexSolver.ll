@@ -202,18 +202,144 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define dso_local noundef float @_ZN22b3VoronoiSimplexSolver9maxVertexEv(ptr nofree noundef nonnull readonly align 16 captures(none) dereferenceable(385) %0) local_unnamed_addr #3 align 2 {
 bb.a:
-  %i.a = load i32, ptr %0, align 16, !tbaa !16    ; 2 uses
+  %i.a = load i32, ptr %0, align 16, !tbaa !16    ; 3 uses
   %i.b = icmp sgt i32 %i.a, 0
   br i1 %i.b, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %wide.trip.count = zext nneg i32 %i.a to i64
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 9 uses
+  %wide.trip.count = zext nneg i32 %i.a to i64    ; 3 uses
+  %min.iters.check = icmp ult i32 %i.a, 9
+  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
+
+vector.ph:                                        ; preds = %.lr.ph
+  %1 = and i64 %wide.trip.count, 7                ; 2 uses
+  %2 = icmp eq i64 %1, 0
+  %3 = select i1 %2, i64 8, i64 %1
+  %n.vec = sub nsw i64 %wide.trip.count, %3       ; 2 uses
+  br label %vector.body
+
+vector.body:                                      ; preds = %vector.body, %vector.ph
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 10 uses
+  %vec.phi = phi <4 x float> [ zeroinitializer, %vector.ph ], [ %93, %vector.body ] ; 3 uses
+  %vec.phi13 = phi <4 x float> [ zeroinitializer, %vector.ph ], [ %94, %vector.body ] ; 3 uses
+  %4 = getelementptr inbounds nuw [16 x i8], ptr %i.c, i64 %index ; 3 uses
+  %5 = getelementptr inbounds nuw [16 x i8], ptr %i.c, i64 %index ; 3 uses
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 16
+  %7 = getelementptr inbounds nuw [16 x i8], ptr %i.c, i64 %index ; 3 uses
+  %8 = getelementptr inbounds nuw i8, ptr %7, i64 32
+  %9 = getelementptr inbounds nuw [16 x i8], ptr %i.c, i64 %index ; 3 uses
+  %10 = getelementptr inbounds nuw i8, ptr %9, i64 48
+  %11 = getelementptr inbounds nuw [16 x i8], ptr %i.c, i64 %index ; 3 uses
+  %12 = getelementptr inbounds nuw i8, ptr %11, i64 64
+  %13 = getelementptr inbounds nuw [16 x i8], ptr %i.c, i64 %index ; 3 uses
+  %14 = getelementptr inbounds nuw i8, ptr %13, i64 80
+  %15 = getelementptr inbounds nuw [16 x i8], ptr %i.c, i64 %index ; 3 uses
+  %16 = getelementptr inbounds nuw i8, ptr %15, i64 96
+  %17 = getelementptr inbounds nuw [16 x i8], ptr %i.c, i64 %index ; 3 uses
+  %18 = getelementptr inbounds nuw i8, ptr %17, i64 112
+  %19 = load float, ptr %4, align 16, !tbaa !17
+  %20 = load float, ptr %6, align 16, !tbaa !17
+  %21 = load float, ptr %8, align 16, !tbaa !17
+  %22 = load float, ptr %10, align 16, !tbaa !17
+  %23 = insertelement <4 x float> poison, float %19, i64 0
+  %24 = insertelement <4 x float> %23, float %20, i64 1
+  %25 = insertelement <4 x float> %24, float %21, i64 2
+  %26 = insertelement <4 x float> %25, float %22, i64 3 ; 2 uses
+  %27 = load float, ptr %12, align 16, !tbaa !17
+  %28 = load float, ptr %14, align 16, !tbaa !17
+  %29 = load float, ptr %16, align 16, !tbaa !17
+  %30 = load float, ptr %18, align 16, !tbaa !17
+  %31 = insertelement <4 x float> poison, float %27, i64 0
+  %32 = insertelement <4 x float> %31, float %28, i64 1
+  %33 = insertelement <4 x float> %32, float %29, i64 2
+  %34 = insertelement <4 x float> %33, float %30, i64 3 ; 2 uses
+  %35 = getelementptr inbounds nuw i8, ptr %4, i64 4
+  %36 = getelementptr inbounds nuw i8, ptr %5, i64 20
+  %37 = getelementptr inbounds nuw i8, ptr %7, i64 36
+  %38 = getelementptr inbounds nuw i8, ptr %9, i64 52
+  %39 = getelementptr inbounds nuw i8, ptr %11, i64 68
+  %40 = getelementptr inbounds nuw i8, ptr %13, i64 84
+  %41 = getelementptr inbounds nuw i8, ptr %15, i64 100
+  %42 = getelementptr inbounds nuw i8, ptr %17, i64 116
+  %43 = load float, ptr %35, align 4, !tbaa !17
+  %44 = load float, ptr %36, align 4, !tbaa !17
+  %45 = load float, ptr %37, align 4, !tbaa !17
+  %46 = load float, ptr %38, align 4, !tbaa !17
+  %47 = insertelement <4 x float> poison, float %43, i64 0
+  %48 = insertelement <4 x float> %47, float %44, i64 1
+  %49 = insertelement <4 x float> %48, float %45, i64 2
+  %50 = insertelement <4 x float> %49, float %46, i64 3 ; 2 uses
+  %51 = load float, ptr %39, align 4, !tbaa !17
+  %52 = load float, ptr %40, align 4, !tbaa !17
+  %53 = load float, ptr %41, align 4, !tbaa !17
+  %54 = load float, ptr %42, align 4, !tbaa !17
+  %55 = insertelement <4 x float> poison, float %51, i64 0
+  %56 = insertelement <4 x float> %55, float %52, i64 1
+  %57 = insertelement <4 x float> %56, float %53, i64 2
+  %58 = insertelement <4 x float> %57, float %54, i64 3 ; 2 uses
+  %59 = fmul <4 x float> %50, %50
+  %60 = fmul <4 x float> %58, %58
+  %61 = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %26, <4 x float> %26, <4 x float> %59)
+  %62 = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %34, <4 x float> %34, <4 x float> %60)
+  %63 = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %64 = getelementptr inbounds nuw i8, ptr %5, i64 24
+  %65 = getelementptr inbounds nuw i8, ptr %7, i64 40
+  %66 = getelementptr inbounds nuw i8, ptr %9, i64 56
+  %67 = getelementptr inbounds nuw i8, ptr %11, i64 72
+  %68 = getelementptr inbounds nuw i8, ptr %13, i64 88
+  %69 = getelementptr inbounds nuw i8, ptr %15, i64 104
+  %70 = getelementptr inbounds nuw i8, ptr %17, i64 120
+  %71 = load float, ptr %63, align 8, !tbaa !17
+  %72 = load float, ptr %64, align 8, !tbaa !17
+  %73 = load float, ptr %65, align 8, !tbaa !17
+  %74 = load float, ptr %66, align 8, !tbaa !17
+  %75 = insertelement <4 x float> poison, float %71, i64 0
+  %76 = insertelement <4 x float> %75, float %72, i64 1
+  %77 = insertelement <4 x float> %76, float %73, i64 2
+  %78 = insertelement <4 x float> %77, float %74, i64 3 ; 2 uses
+  %79 = load float, ptr %67, align 8, !tbaa !17
+  %80 = load float, ptr %68, align 8, !tbaa !17
+  %81 = load float, ptr %69, align 8, !tbaa !17
+  %82 = load float, ptr %70, align 8, !tbaa !17
+  %83 = insertelement <4 x float> poison, float %79, i64 0
+  %84 = insertelement <4 x float> %83, float %80, i64 1
+  %85 = insertelement <4 x float> %84, float %81, i64 2
+  %86 = insertelement <4 x float> %85, float %82, i64 3 ; 2 uses
+  %87 = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %78, <4 x float> %78, <4 x float> %61)
+  %88 = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %86, <4 x float> %86, <4 x float> %62)
+  %89 = freeze <4 x float> %87                    ; 3 uses
+  %90 = freeze <4 x float> %88                    ; 3 uses
+  %91 = fcmp olt <4 x float> %vec.phi, %89
+  %92 = fcmp olt <4 x float> %vec.phi13, %90
+  %93 = select <4 x i1> %91, <4 x float> %89, <4 x float> %vec.phi ; 2 uses
+  %94 = select <4 x i1> %92, <4 x float> %90, <4 x float> %vec.phi13 ; 2 uses
+  %index.next = add nuw i64 %index, 8             ; 2 uses
+  %95 = tail call <4 x i1> @llvm.is.fpclass.v4f32(<4 x float> %89, /* (nan nzero) */ i32 35)
+  %96 = tail call <4 x i1> @llvm.is.fpclass.v4f32(<4 x float> %90, /* (nan nzero) */ i32 35)
+  %97 = or <4 x i1> %95, %96
+  %98 = bitcast <4 x i1> %97 to i4
+  %99 = icmp ne i4 %98, 0                         ; 4 uses
+  %100 = icmp eq i64 %index.next, %n.vec
+  %101 = or i1 %99, %100
+  br i1 %101, label %middle.block, label %vector.body, !llvm.loop !27
+
+middle.block:                                     ; preds = %vector.body
+  %102 = select i1 %99, <4 x float> %vec.phi, <4 x float> %93
+  %103 = select i1 %99, <4 x float> %vec.phi13, <4 x float> %94
+  %104 = select i1 %99, i64 %index, i64 %n.vec
+  %rdx.minmax = tail call nnan <4 x float> @llvm.maxnum.v4f32(<4 x float> %102, <4 x float> %103)
+  %105 = tail call nnan float @llvm.vector.reduce.fmax.v4f32(<4 x float> %rdx.minmax)
+  br label %scalar.ph.preheader
+
+scalar.ph.preheader:                              ; preds = %.lr.ph, %middle.block
+  %indvars.iv.ph = phi i64 [ 0, %.lr.ph ], [ %104, %middle.block ]
+  %.011.ph = phi float [ 0.000000e+00, %.lr.ph ], [ %105, %middle.block ]
   br label %bb.b
 
-bb.b:                                             ; preds = %.lr.ph, %bb.b
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.b ] ; 2 uses
-  %.011 = phi float [ 0.000000e+00, %.lr.ph ], [ %.1, %bb.b ] ; 2 uses
+bb.b:                                             ; preds = %scalar.ph.preheader, %bb.b
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.b ], [ %indvars.iv.ph, %scalar.ph.preheader ] ; 2 uses
+  %.011 = phi float [ %.1, %bb.b ], [ %.011.ph, %scalar.ph.preheader ] ; 2 uses
   %i.d = getelementptr inbounds nuw [16 x i8], ptr %i.c, i64 %indvars.iv ; 3 uses
   %i.e = load float, ptr %i.d, align 16, !tbaa !17 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 4
@@ -227,7 +353,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %.1 = select i1 %i.m, float %i.l, float %.011   ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !27
+  br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !28
 
 ._crit_edge:                                      ; preds = %bb.b, %bb.a
   %.0.lcssa = phi float [ 0.000000e+00, %bb.a ], [ %.1, %bb.b ]
@@ -262,7 +388,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.l = load i32, ptr %0, align 16, !tbaa !16    ; 2 uses
   %i.m = sext i32 %i.l to i64
   %i.n = icmp slt i64 %indvars.iv.next, %i.m
-  br i1 %i.n, label %bb.b, label %._crit_edge, !llvm.loop !28
+  br i1 %i.n, label %bb.b, label %._crit_edge, !llvm.loop !31
 
 ._crit_edge:                                      ; preds = %bb.b, %bb.a
   %.lcssa = phi i32 [ %i.a, %bb.a ], [ %i.l, %bb.b ]
@@ -325,7 +451,7 @@ _ZNK9b3Vector3eqERKS_.exit.thread:                ; preds = %_ZNK9b3Vector3eqERK
   %i.w = phi i1 [ %.0812, %bb.b ], [ %spec.select, %_ZNK9b3Vector3eqERKS_.exit ], [ %.0812, %bb.d ], [ %.0812, %bb.c ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !29
+  br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !32
 
 ._crit_edge:                                      ; preds = %_ZNK9b3Vector3eqERKS_.exit.thread, %.._crit_edge_crit_edge
   %i.x = phi float [ %.pre, %.._crit_edge_crit_edge ], [ %i.e, %_ZNK9b3Vector3eqERKS_.exit.thread ]
@@ -448,6 +574,18 @@ declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <3 x float> @llvm.fmuladd.v3f32(<3 x float>, <3 x float>, <3 x float>) #5
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x float> @llvm.maxnum.v4f32(<4 x float>, <4 x float>) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fmax.v4f32(<4 x float>) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i1> @llvm.is.fpclass.v4f32(<4 x float>, i32 immarg) #5
+
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="64" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -489,7 +627,10 @@ attributes #8 = { nounwind }
 !24 = !{}
 !25 = !{!15, !11, i64 372}
 !26 = !{!14, !11, i64 36}
-!27 = distinct !{!27, !22}
-!28 = distinct !{!28, !22}
-!29 = distinct !{!29, !22}
+!27 = distinct !{!27, !22, !29, !30}
+!28 = distinct !{!28, !22, !30, !29}
+!29 = !{!"llvm.loop.isvectorized", i32 1}
+!30 = !{!"llvm.loop.unroll.runtime.disable"}
+!31 = distinct !{!31, !22}
+!32 = distinct !{!32, !22}
 end_hunk_0

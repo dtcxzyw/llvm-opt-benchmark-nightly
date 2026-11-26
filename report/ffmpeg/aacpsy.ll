@@ -1,7 +1,7 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ffmpeg/original/aacpsy?download=true
 inline.NumInlined: 16
 inline.NumDeleted: 10
-loop-unroll.NumCompletelyUnrolled: 9
+loop-unroll.NumCompletelyUnrolled: 10
 loop-unroll.NumRuntimeUnrolled: 2
 loop-unroll.NumUnrolled: 12
 begin_hunk_0_@psy_3gpp_init:bb.a
@@ -205,54 +205,202 @@ psy_hp_filter.exit.preheader:                     ; preds = %vector.body
   %i.bn = extractelement <2 x float> %foldExtExtBinop, i64 0 ; 4 uses
   br label %.preheader134
 
-.preheader134:                                    ; preds = %psy_hp_filter.exit.preheader, %bb.g
+.preheader134:                                    ; preds = %bb.g, %psy_hp_filter.exit.preheader
   %indvars.iv = phi i64 [ 0, %psy_hp_filter.exit.preheader ], [ %indvars.iv.next, %bb.g ] ; 5 uses
-  %.098141 = phi ptr [ %i.a, %psy_hp_filter.exit.preheader ], [ %scevgep156, %bb.g ] ; 3 uses
-  br label %bb.b
+  %.098141 = phi ptr [ %i.a, %psy_hp_filter.exit.preheader ], [ %scevgep156, %bb.g ] ; 18 uses
+  %6 = getelementptr inbounds nuw i8, ptr %.098141, i64 16
+  %wide.load411 = load <4 x float>, ptr %.098141, align 16, !tbaa !48
+  %wide.load412 = load <4 x float>, ptr %6, align 16, !tbaa !48
+  %wide.load411.fr = freeze <4 x float> %wide.load411 ; 2 uses
+  %7 = tail call nsz <4 x float> @llvm.fabs.v4f32(<4 x float> %wide.load411.fr) ; 2 uses
+  %wide.load412.fr = freeze <4 x float> %wide.load412 ; 2 uses
+  %8 = tail call nsz <4 x float> @llvm.fabs.v4f32(<4 x float> %wide.load412.fr) ; 2 uses
+  %9 = fcmp nsz olt <4 x float> %7, splat (float 1.000000e+00)
+  %10 = fcmp nsz olt <4 x float> %8, splat (float 1.000000e+00)
+  %11 = select nsz <4 x i1> %9, <4 x float> splat (float 1.000000e+00), <4 x float> %7 ; 4 uses
+  %12 = select nsz <4 x i1> %10, <4 x float> splat (float 1.000000e+00), <4 x float> %8 ; 4 uses
+  %13 = fcmp uno <4 x float> %wide.load411.fr, %wide.load412.fr
+  %14 = bitcast <4 x i1> %13 to i4
+  %.not423 = icmp eq i4 %14, 0
+  br i1 %.not423, label %vector.body408.1, label %middle.block414
 
-bb.b:                                             ; preds = %bb.b, %.preheader134
-  %.095138 = phi float [ 1.000000e+00, %.preheader134 ], [ %.095..1, %bb.b ] ; 2 uses
-  %.199.idx137 = phi i64 [ 0, %.preheader134 ], [ %.199.add.1, %bb.b ] ; 3 uses
+vector.body408.1:                                 ; preds = %.preheader134
+  %15 = getelementptr inbounds nuw i8, ptr %.098141, i64 32
+  %16 = getelementptr inbounds nuw i8, ptr %.098141, i64 48
+  %wide.load411.1 = load <4 x float>, ptr %15, align 16, !tbaa !48
+  %wide.load412.1 = load <4 x float>, ptr %16, align 16, !tbaa !48
+  %wide.load411.fr.1 = freeze <4 x float> %wide.load411.1 ; 2 uses
+  %17 = tail call nsz <4 x float> @llvm.fabs.v4f32(<4 x float> %wide.load411.fr.1) ; 2 uses
+  %wide.load412.fr.1 = freeze <4 x float> %wide.load412.1 ; 2 uses
+  %18 = tail call nsz <4 x float> @llvm.fabs.v4f32(<4 x float> %wide.load412.fr.1) ; 2 uses
+  %19 = fcmp nsz ogt <4 x float> %11, %17
+  %20 = fcmp nsz ogt <4 x float> %12, %18
+  %21 = select nsz <4 x i1> %19, <4 x float> %11, <4 x float> %17 ; 4 uses
+  %22 = select nsz <4 x i1> %20, <4 x float> %12, <4 x float> %18 ; 4 uses
+  %23 = fcmp uno <4 x float> %wide.load411.fr.1, %wide.load412.fr.1
+  %24 = bitcast <4 x i1> %23 to i4
+  %.not424 = icmp eq i4 %24, 0
+  br i1 %.not424, label %vector.body408.2, label %middle.block414
+
+vector.body408.2:                                 ; preds = %vector.body408.1
+  %25 = getelementptr inbounds nuw i8, ptr %.098141, i64 64
+  %26 = getelementptr inbounds nuw i8, ptr %.098141, i64 80
+  %wide.load411.2 = load <4 x float>, ptr %25, align 16, !tbaa !48
+  %wide.load412.2 = load <4 x float>, ptr %26, align 16, !tbaa !48
+  %wide.load411.fr.2 = freeze <4 x float> %wide.load411.2 ; 2 uses
+  %27 = tail call nsz <4 x float> @llvm.fabs.v4f32(<4 x float> %wide.load411.fr.2) ; 2 uses
+  %wide.load412.fr.2 = freeze <4 x float> %wide.load412.2 ; 2 uses
+  %28 = tail call nsz <4 x float> @llvm.fabs.v4f32(<4 x float> %wide.load412.fr.2) ; 2 uses
+  %29 = fcmp nsz ogt <4 x float> %21, %27
+  %30 = fcmp nsz ogt <4 x float> %22, %28
+  %31 = select nsz <4 x i1> %29, <4 x float> %21, <4 x float> %27 ; 4 uses
+  %32 = select nsz <4 x i1> %30, <4 x float> %22, <4 x float> %28 ; 4 uses
+  %33 = fcmp uno <4 x float> %wide.load411.fr.2, %wide.load412.fr.2
+  %34 = bitcast <4 x i1> %33 to i4
+  %.not425 = icmp eq i4 %34, 0
+  br i1 %.not425, label %vector.body408.3, label %middle.block414
+
+vector.body408.3:                                 ; preds = %vector.body408.2
+  %35 = getelementptr inbounds nuw i8, ptr %.098141, i64 96
+  %36 = getelementptr inbounds nuw i8, ptr %.098141, i64 112
+  %wide.load411.3 = load <4 x float>, ptr %35, align 16, !tbaa !48
+  %wide.load412.3 = load <4 x float>, ptr %36, align 16, !tbaa !48
+  %wide.load411.fr.3 = freeze <4 x float> %wide.load411.3 ; 2 uses
+  %37 = tail call nsz <4 x float> @llvm.fabs.v4f32(<4 x float> %wide.load411.fr.3) ; 2 uses
+  %wide.load412.fr.3 = freeze <4 x float> %wide.load412.3 ; 2 uses
+  %38 = tail call nsz <4 x float> @llvm.fabs.v4f32(<4 x float> %wide.load412.fr.3) ; 2 uses
+  %39 = fcmp nsz ogt <4 x float> %31, %37
+  %40 = fcmp nsz ogt <4 x float> %32, %38
+  %41 = select nsz <4 x i1> %39, <4 x float> %31, <4 x float> %37 ; 4 uses
+  %42 = select nsz <4 x i1> %40, <4 x float> %32, <4 x float> %38 ; 4 uses
+  %43 = fcmp uno <4 x float> %wide.load411.fr.3, %wide.load412.fr.3
+  %44 = bitcast <4 x i1> %43 to i4
+  %.not426 = icmp eq i4 %44, 0
+  br i1 %.not426, label %vector.body408.4, label %middle.block414
+
+vector.body408.4:                                 ; preds = %vector.body408.3
+  %45 = getelementptr inbounds nuw i8, ptr %.098141, i64 128
+  %46 = getelementptr inbounds nuw i8, ptr %.098141, i64 144
+  %wide.load411.4 = load <4 x float>, ptr %45, align 16, !tbaa !48
+  %wide.load412.4 = load <4 x float>, ptr %46, align 16, !tbaa !48
+  %wide.load411.fr.4 = freeze <4 x float> %wide.load411.4 ; 2 uses
+  %47 = tail call nsz <4 x float> @llvm.fabs.v4f32(<4 x float> %wide.load411.fr.4) ; 2 uses
+  %wide.load412.fr.4 = freeze <4 x float> %wide.load412.4 ; 2 uses
+  %48 = tail call nsz <4 x float> @llvm.fabs.v4f32(<4 x float> %wide.load412.fr.4) ; 2 uses
+  %49 = fcmp nsz ogt <4 x float> %41, %47
+  %50 = fcmp nsz ogt <4 x float> %42, %48
+  %51 = select nsz <4 x i1> %49, <4 x float> %41, <4 x float> %47 ; 4 uses
+  %52 = select nsz <4 x i1> %50, <4 x float> %42, <4 x float> %48 ; 4 uses
+  %53 = fcmp uno <4 x float> %wide.load411.fr.4, %wide.load412.fr.4
+  %54 = bitcast <4 x i1> %53 to i4
+  %.not427 = icmp eq i4 %54, 0
+  br i1 %.not427, label %vector.body408.5, label %middle.block414
+
+vector.body408.5:                                 ; preds = %vector.body408.4
+  %55 = getelementptr inbounds nuw i8, ptr %.098141, i64 160
+  %56 = getelementptr inbounds nuw i8, ptr %.098141, i64 176
+  %wide.load411.5 = load <4 x float>, ptr %55, align 16, !tbaa !48
+  %wide.load412.5 = load <4 x float>, ptr %56, align 16, !tbaa !48
+  %wide.load411.fr.5 = freeze <4 x float> %wide.load411.5 ; 2 uses
+  %57 = tail call nsz <4 x float> @llvm.fabs.v4f32(<4 x float> %wide.load411.fr.5) ; 2 uses
+  %wide.load412.fr.5 = freeze <4 x float> %wide.load412.5 ; 2 uses
+  %58 = tail call nsz <4 x float> @llvm.fabs.v4f32(<4 x float> %wide.load412.fr.5) ; 2 uses
+  %59 = fcmp nsz ogt <4 x float> %51, %57
+  %60 = fcmp nsz ogt <4 x float> %52, %58
+  %61 = select nsz <4 x i1> %59, <4 x float> %51, <4 x float> %57 ; 4 uses
+  %62 = select nsz <4 x i1> %60, <4 x float> %52, <4 x float> %58 ; 4 uses
+  %63 = fcmp uno <4 x float> %wide.load411.fr.5, %wide.load412.fr.5
+  %64 = bitcast <4 x i1> %63 to i4
+  %.not428 = icmp eq i4 %64, 0
+  br i1 %.not428, label %bb.b, label %middle.block414
+
+bb.b:                                             ; preds = %vector.body408.5
+  %65 = getelementptr inbounds nuw i8, ptr %.098141, i64 192
+  %66 = getelementptr inbounds nuw i8, ptr %.098141, i64 208
+  %wide.load411.6 = load <4 x float>, ptr %65, align 16, !tbaa !48
+  %wide.load412.6 = load <4 x float>, ptr %66, align 16, !tbaa !48
+  %wide.load411.fr.6 = freeze <4 x float> %wide.load411.6 ; 2 uses
+  %67 = tail call nsz <4 x float> @llvm.fabs.v4f32(<4 x float> %wide.load411.fr.6) ; 2 uses
+  %wide.load412.fr.6 = freeze <4 x float> %wide.load412.6 ; 2 uses
+  %68 = tail call nsz <4 x float> @llvm.fabs.v4f32(<4 x float> %wide.load412.fr.6) ; 2 uses
+  %69 = fcmp nsz ogt <4 x float> %61, %67
+  %70 = fcmp nsz ogt <4 x float> %62, %68
+  %71 = select nsz <4 x i1> %69, <4 x float> %61, <4 x float> %67 ; 4 uses
+  %72 = select nsz <4 x i1> %70, <4 x float> %62, <4 x float> %68 ; 4 uses
+  %73 = fcmp uno <4 x float> %wide.load411.fr.6, %wide.load412.fr.6
+  %74 = bitcast <4 x i1> %73 to i4
+  %.not429 = icmp eq i4 %74, 0
+  br i1 %.not429, label %vector.body408.7, label %middle.block414
+
+vector.body408.7:                                 ; preds = %bb.b
+  %75 = getelementptr inbounds nuw i8, ptr %.098141, i64 224
+  %76 = getelementptr inbounds nuw i8, ptr %.098141, i64 240
+  %wide.load411.7 = load <4 x float>, ptr %75, align 16, !tbaa !48
+  %wide.load412.7 = load <4 x float>, ptr %76, align 16, !tbaa !48
+  %wide.load411.fr.7 = freeze <4 x float> %wide.load411.7 ; 2 uses
+  %77 = tail call nsz <4 x float> @llvm.fabs.v4f32(<4 x float> %wide.load411.fr.7) ; 2 uses
+  %wide.load412.fr.7 = freeze <4 x float> %wide.load412.7 ; 2 uses
+  %78 = tail call nsz <4 x float> @llvm.fabs.v4f32(<4 x float> %wide.load412.fr.7) ; 2 uses
+  %79 = fcmp nsz ogt <4 x float> %71, %77
+  %80 = fcmp nsz ogt <4 x float> %72, %78
+  %81 = select nsz <4 x i1> %79, <4 x float> %71, <4 x float> %77
+  %82 = select nsz <4 x i1> %80, <4 x float> %72, <4 x float> %78
+  %83 = fcmp uno <4 x float> %wide.load411.fr.7, %wide.load412.fr.7
+  %84 = bitcast <4 x i1> %83 to i4
+  %85 = icmp ne i4 %84, 0
+  br label %middle.block414
+
+middle.block414:                                  ; preds = %vector.body408.7, %bb.b, %vector.body408.5, %vector.body408.4, %vector.body408.3, %vector.body408.2, %vector.body408.1, %.preheader134
+  %index409.lcssa = phi i64 [ 0, %.preheader134 ], [ 32, %vector.body408.1 ], [ 64, %vector.body408.2 ], [ 96, %vector.body408.3 ], [ 128, %vector.body408.4 ], [ 160, %vector.body408.5 ], [ 192, %bb.b ], [ 224, %vector.body408.7 ]
+  %vec.phi.lcssa = phi <4 x float> [ splat (float 1.000000e+00), %.preheader134 ], [ %11, %vector.body408.1 ], [ %21, %vector.body408.2 ], [ %31, %vector.body408.3 ], [ %41, %vector.body408.4 ], [ %51, %vector.body408.5 ], [ %61, %bb.b ], [ %71, %vector.body408.7 ]
+  %vec.phi410.lcssa = phi <4 x float> [ splat (float 1.000000e+00), %.preheader134 ], [ %12, %vector.body408.1 ], [ %22, %vector.body408.2 ], [ %32, %vector.body408.3 ], [ %42, %vector.body408.4 ], [ %52, %vector.body408.5 ], [ %62, %bb.b ], [ %72, %vector.body408.7 ]
+  %.lcssa421 = phi <4 x float> [ %11, %.preheader134 ], [ %21, %vector.body408.1 ], [ %31, %vector.body408.2 ], [ %41, %vector.body408.3 ], [ %51, %vector.body408.4 ], [ %61, %vector.body408.5 ], [ %71, %bb.b ], [ %81, %vector.body408.7 ]
+  %.lcssa420 = phi <4 x float> [ %12, %.preheader134 ], [ %22, %vector.body408.1 ], [ %32, %vector.body408.2 ], [ %42, %vector.body408.3 ], [ %52, %vector.body408.4 ], [ %62, %vector.body408.5 ], [ %72, %bb.b ], [ %82, %vector.body408.7 ]
+  %.lcssa = phi i1 [ true, %.preheader134 ], [ true, %vector.body408.1 ], [ true, %vector.body408.2 ], [ true, %vector.body408.3 ], [ true, %vector.body408.4 ], [ true, %vector.body408.5 ], [ true, %bb.b ], [ %85, %vector.body408.7 ] ; 3 uses
+  %86 = select i1 %.lcssa, <4 x float> %vec.phi.lcssa, <4 x float> %.lcssa421
+  %87 = select i1 %.lcssa, <4 x float> %vec.phi410.lcssa, <4 x float> %.lcssa420
+  %rdx.minmax = tail call nnan nsz <4 x float> @llvm.maxnum.v4f32(<4 x float> %86, <4 x float> %87)
+  %88 = tail call nnan nsz float @llvm.vector.reduce.fmax.v4f32(<4 x float> %rdx.minmax) ; 2 uses
+  br i1 %.lcssa, label %scalar.ph, label %bb.c
+
+scalar.ph:                                        ; preds = %middle.block414, %scalar.ph
+  %.095138 = phi float [ %.095., %scalar.ph ], [ %88, %middle.block414 ] ; 2 uses
+  %.199.idx137 = phi i64 [ %.199.add, %scalar.ph ], [ %index409.lcssa, %middle.block414 ] ; 3 uses
   %.199.ptr139 = getelementptr inbounds nuw i8, ptr %.098141, i64 %.199.idx137
-  %6 = load float, ptr %.199.ptr139, align 8, !tbaa !48
-  %7 = tail call nsz float @llvm.fabs.f32(float %6) ; 2 uses
-  %8 = fcmp nsz ogt float %.095138, %7
-  %.095. = select nsz i1 %8, float %.095138, float %7 ; 2 uses
-  %.199.add = or disjoint i64 %.199.idx137, 4     ; 2 uses
-  %.199.ptr139.1 = getelementptr inbounds nuw i8, ptr %.098141, i64 %.199.add
-  %9 = load float, ptr %.199.ptr139.1, align 4, !tbaa !48
-  %10 = tail call nsz float @llvm.fabs.f32(float %9) ; 2 uses
-  %11 = fcmp nsz ogt float %.095., %10
-  %.095..1 = select nsz i1 %11, float %.095., float %10 ; 7 uses
-  %.199.add.1 = add nuw nsw i64 %.199.idx137, 8
-  %12 = icmp samesign ult i64 %.199.add, 252
-  br i1 %12, label %bb.b, label %bb.c, !llvm.loop !75
+  %89 = load float, ptr %.199.ptr139, align 4, !tbaa !48
+  %90 = tail call nsz float @llvm.fabs.f32(float %89) ; 2 uses
+  %91 = fcmp nsz ogt float %.095138, %90
+  %.095. = select nsz i1 %91, float %.095138, float %90 ; 2 uses
+  %.199.add = add nuw nsw i64 %.199.idx137, 4
+  %92 = icmp samesign ult i64 %.199.idx137, 252
+  br i1 %92, label %scalar.ph, label %bb.c, !llvm.loop !75
 
-bb.c:                                             ; preds = %bb.b
+bb.c:                                             ; preds = %scalar.ph, %middle.block414
+  %.095..lcssa = phi float [ %88, %middle.block414 ], [ %.095., %scalar.ph ] ; 6 uses
   %scevgep156 = getelementptr i8, ptr %.098141, i64 256
   %i.bo = add nuw nsw i64 %indvars.iv, 2          ; 2 uses
   %i.bp = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.bo
-  store float %.095..1, ptr %i.bp, align 4, !tbaa !48
+  store float %.095..lcssa, ptr %i.bp, align 4, !tbaa !48
   %i.bq = getelementptr inbounds nuw [4 x i8], ptr %i.be, i64 %indvars.iv
-  store float %.095..1, ptr %i.bq, align 4, !tbaa !48
+  store float %.095..lcssa, ptr %i.bq, align 4, !tbaa !48
   %i.br = lshr i64 %indvars.iv, 1
   %i.bs = and i64 %i.br, 2147483647
   %i.bt = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %i.bs
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 4 ; 2 uses
   %i.bv = load float, ptr %i.bu, align 4, !tbaa !48
-  %i.bw = fadd nsz float %.095..1, %i.bv
+  %i.bw = fadd nsz float %.095..lcssa, %i.bv
   store float %i.bw, ptr %i.bu, align 4, !tbaa !48
   %i.bx = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv
   %i.by = load float, ptr %i.bx, align 4, !tbaa !48 ; 4 uses
-  %i.bz = fcmp nsz ogt float %.095..1, %i.by
+  %i.bz = fcmp nsz ogt float %.095..lcssa, %i.by
   br i1 %i.bz, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.ca = fdiv nsz float %.095..1, %i.by
+  %i.ca = fdiv nsz float %.095..lcssa, %i.by
   br label %bb.g
 
 bb.e:                                             ; preds = %bb.c
-  %i.cb = fmul nsz float %.095..1, 1.000000e+01   ; 2 uses
+  %i.cb = fmul nsz float %.095..lcssa, 1.000000e+01 ; 2 uses
   %i.cc = fcmp nsz ogt float %i.by, %i.cb
   br i1 %i.cc, label %bb.f, label %bb.g
 
@@ -655,6 +803,15 @@ declare <4 x double> @llvm.exp2.v4f64(<4 x double>) #6
 declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x float> @llvm.fabs.v4f32(<4 x float>) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x float> @llvm.maxnum.v4f32(<4 x float>, <4 x float>) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fmax.v4f32(<4 x float>) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -762,7 +919,7 @@ attributes #12 = { cold }
 !72 = !{!45, !26, i64 3624}
 !73 = !{!55, !26, i64 4}
 !74 = distinct !{!74, !57, !61, !62}
-!75 = distinct !{!75, !57}
+!75 = distinct !{!75, !57, !62, !61}
 !76 = distinct !{!76, !57}
 !77 = !{!63, !6, i64 9308}
 !78 = !{!63, !6, i64 9304}

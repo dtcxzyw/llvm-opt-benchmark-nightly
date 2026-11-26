@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i85, label %bb.d, label %_ZNKSt14default_deleteIiEclEPi.exit.i86
 
 _ZNKSt14default_deleteIiEclEPi.exit.i86:          ; preds = %bb.c
-  call void @_ZdlPvm(ptr noundef nonnull %i.q, i64 noundef 4) #30
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.q, i64 noundef 4) #30
   br label %bb.d
 
 bb.d:                                             ; preds = %_ZNKSt14default_deleteIiEclEPi.exit.i86, %bb.c
@@ -608,7 +608,7 @@ bb.aj:                                            ; preds = %bb.b
   br i1 %.not.i96, label %_ZNSt10unique_ptrIiSt14default_deleteIiEED2Ev.exit98, label %_ZNKSt14default_deleteIiEclEPi.exit.i97
 
 _ZNKSt14default_deleteIiEclEPi.exit.i97:          ; preds = %bb.aj
-  call void @_ZdlPvm(ptr noundef nonnull %i.gh, i64 noundef 4) #30
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.gh, i64 noundef 4) #30
   br label %_ZNSt10unique_ptrIiSt14default_deleteIiEED2Ev.exit98
 
 _ZNSt10unique_ptrIiSt14default_deleteIiEED2Ev.exit98: ; preds = %_ZNKSt14default_deleteIiEclEPi.exit.i97, %bb.aj, %bb.ai
@@ -1011,7 +1011,7 @@ _ZNSt10unique_ptrIiSt14default_deleteIiEED2Ev.exit95: ; preds = %_ZNSt10unique_p
 }
 
 ; Function Attrs: mustprogress uwtable
-define internal fastcc void @_ZN4absl12lts_202605268StatusOrIN12_GLOBAL__N_113InPlaceHelperEE7emplaceIiJSt10unique_ptrIiSt14default_deleteIiEEETnNSt9enable_ifIXsr3std16is_constructibleIS3_RSt16initializer_listIT_EDpOT0_EE5valueEiE4typeELi0EEERS3_SD_SH_(ptr nofree noundef nonnull align 8 captures(ret: address, provenance) dereferenceable(40) initializes((16, 24)) %0, ptr nofree nonnull readonly captures(none) %1, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(8) %2) unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
+define internal fastcc void @_ZN4absl12lts_202605268StatusOrIN12_GLOBAL__N_113InPlaceHelperEE7emplaceIiJSt10unique_ptrIiSt14default_deleteIiEEETnNSt9enable_ifIXsr3std16is_constructibleIS3_RSt16initializer_listIT_EDpOT0_EE5valueEiE4typeELi0EEERS3_SD_SH_(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(40) initializes((16, 24)) %0, ptr nofree nonnull readonly captures(none) %1, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(8) %2) unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %.val = load i64, ptr %0, align 8, !tbaa !130
   %i.a = icmp eq i64 %.val, 1

@@ -205,7 +205,7 @@ bb.r:                                             ; preds = %_ZSt13move_backward
 }
 
 ; Function Attrs: mustprogress uwtable
-define internal fastcc void @"_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPP11ggml_tensorSt6vectorIS3_SaIS3_EEEES4_NS0_5__ops15_Iter_comp_iterIZN18llama_model_loader13load_all_dataEP12ggml_contextRSt13unordered_mapIjP19ggml_backend_bufferSt4hashIjESt8equal_toIjESaISt4pairIKjSG_EEEPS5_ISt10unique_ptrI11llama_mlockSt14default_deleteISS_EESaISV_EEPFbfPvESZ_E3$_1EEET0_T_S15_S15_S15_S14_T1_"(ptr %0, ptr %1, ptr %2, ptr %3, ptr nofree noundef writeonly captures(ret: address, provenance) %4) unnamed_addr #2 {
+define internal fastcc void @"_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPP11ggml_tensorSt6vectorIS3_SaIS3_EEEES4_NS0_5__ops15_Iter_comp_iterIZN18llama_model_loader13load_all_dataEP12ggml_contextRSt13unordered_mapIjP19ggml_backend_bufferSt4hashIjESt8equal_toIjESaISt4pairIKjSG_EEEPS5_ISt10unique_ptrI11llama_mlockSt14default_deleteISS_EESaISV_EEPFbfPvESZ_E3$_1EEET0_T_S15_S15_S15_S14_T1_"(ptr %0, ptr %1, ptr %2, ptr %3, ptr nofree noundef writeonly captures(none) %4) unnamed_addr #2 {
 bb.a:
   %i.a = icmp ne ptr %0, %1
   %i.b = icmp ne ptr %2, %3
@@ -329,7 +329,7 @@ _ZSt4moveIN9__gnu_cxx17__normal_iteratorIPP11ggml_tensorSt6vectorIS3_SaIS3_EEEES
 }
 
 ; Function Attrs: mustprogress uwtable
-define internal fastcc void @"_ZSt12__move_mergeIPP11ggml_tensorN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEENS3_5__ops15_Iter_comp_iterIZN18llama_model_loader13load_all_dataEP12ggml_contextRSt13unordered_mapIjP19ggml_backend_bufferSt4hashIjESt8equal_toIjESaISt4pairIKjSG_EEEPS5_ISt10unique_ptrI11llama_mlockSt14default_deleteISS_EESaISV_EEPFbfPvESZ_E3$_1EEET0_T_S15_S15_S15_S14_T1_"(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr nofree writeonly captures(ret: address, provenance) %4) unnamed_addr #2 {
+define internal fastcc void @"_ZSt12__move_mergeIPP11ggml_tensorN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEENS3_5__ops15_Iter_comp_iterIZN18llama_model_loader13load_all_dataEP12ggml_contextRSt13unordered_mapIjP19ggml_backend_bufferSt4hashIjESt8equal_toIjESaISt4pairIKjSG_EEEPS5_ISt10unique_ptrI11llama_mlockSt14default_deleteISS_EESaISV_EEPFbfPvESZ_E3$_1EEET0_T_S15_S15_S15_S14_T1_"(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr nofree writeonly captures(none) %4) unnamed_addr #2 {
 bb.a:
   %i.a = icmp ne ptr %0, %1
   %i.b = icmp ne ptr %2, %3

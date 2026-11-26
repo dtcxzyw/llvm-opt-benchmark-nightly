@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 170
 inline.NumDeleted: 81
 loop-unroll.NumCompletelyUnrolled: 3
-loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 5
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@_Z11gmx_g_angleiPPc:bb.a
   %i.bp = invoke noundef zeroext i1 @_Z8opt2bSetPKciPK8t_filenm(ptr noundef nonnull @.str.51, i32 noundef 9, ptr noundef nonnull %4)
           to label %bb.k unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
@@ -205,7 +205,7 @@ _ZL13gmx_snew_implIPfEvPKcS2_iRPT_m.exit:         ; preds = %bb.aw, %bb.av
   %.0387 = phi ptr [ null, %bb.av ], [ %i.cy, %bb.aw ] ; 11 uses
   %i.cz = sext i32 %i.bw to i64
   %i.da = invoke noundef ptr @_Z11save_callocPKcS0_imm(ptr noundef nonnull @.str.63, ptr noundef nonnull @.str.53, i32 noundef 297, i64 noundef range(i64 -2147483648, 2147483648) %i.cz, i64 noundef 4)
-          to label %_ZL13gmx_snew_implIiEvPKcS1_iRPT_m.exit unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 15 uses
+          to label %_ZL13gmx_snew_implIiEvPKcS1_iRPT_m.exit unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 8 uses
 
 _ZL13gmx_snew_implIiEvPKcS1_iRPT_m.exit:          ; preds = %_ZL13gmx_snew_implIPfEvPKcS2_iRPT_m.exit
   %i.db = invoke noundef ptr @_Z6ftp2fniiPK8t_filenm(i32 noundef 1, i32 noundef 9, ptr noundef nonnull %4)
@@ -608,7 +608,7 @@ bb.dl:                                            ; preds = %bb.dh, %bb.dg
   %i.ux = sitofp i32 %i.uw to float
   %i.uy = load float, ptr @_ZZ11gmx_g_angleiPPcE8binwidth, align 4, !tbaa !61
   %i.uz = fmul float %i.uy, %i.ux
-  %i.va = fdiv float 1.000000e+00, %i.uz          ; 11 uses
+  %i.va = fdiv float 1.000000e+00, %i.uz          ; 4 uses
   br i1 %spec.select, label %.preheader, label %bb.do
 
 .preheader:                                       ; preds = %bb.dl
@@ -616,119 +616,110 @@ bb.dl:                                            ; preds = %bb.dh, %bb.dg
   br i1 %.not264447, label %._crit_edge451, label %.lr.ph450.preheader
 
 .lr.ph450.preheader:                              ; preds = %.preheader
-  %wide.trip.count529 = zext nneg i32 %i.bw to i64 ; 2 uses
-  %xtraiter755 = and i64 %wide.trip.count529, 7   ; 3 uses
-  %i.vb = icmp ult i32 %i.bw, 8
-  br i1 %i.vb, label %.lr.ph450.epil.preheader, label %.lr.ph450.preheader.new
+  %wide.trip.count529 = zext nneg i32 %i.bw to i64 ; 3 uses
+  %i.vb = icmp ult i32 %i.bw, 32
+  br i1 %i.vb, label %.lr.ph450.preheader753, label %._crit_edge451.loopexit.a
 
-.lr.ph450.preheader.new:                          ; preds = %.lr.ph450.preheader
-  %unroll_iter759 = and i64 %wide.trip.count529, 2147483640
+._crit_edge451.loopexit.a:                        ; preds = %.lr.ph450.preheader
+  %n.vec734 = and i64 %wide.trip.count529, 2147483616 ; 3 uses
+  %broadcast.splatinsert735 = insertelement <8 x float> poison, float %i.va, i64 0
+  %broadcast.splat736 = shufflevector <8 x float> %broadcast.splatinsert735, <8 x float> poison, <8 x i32> zeroinitializer ; 4 uses
   br label %.lr.ph450.a
 
-._crit_edge451.loopexit.unr-lcssa:                ; preds = %.lr.ph450.a
-  %lcmp.mod756.not = icmp eq i64 %xtraiter755, 0
-  br i1 %lcmp.mod756.not, label %._crit_edge451.loopexit.a, label %.lr.ph450.epil.preheader
+.lr.ph450.a:                                      ; preds = %.lr.ph450.a, %._crit_edge451.loopexit.a
+  %niter760 = phi i64 [ 0, %._crit_edge451.loopexit.a ], [ %index.next746, %.lr.ph450.a ] ; 3 uses
+  %vec.phi = phi <8 x float> [ zeroinitializer, %._crit_edge451.loopexit.a ], [ %33, %.lr.ph450.a ] ; 3 uses
+  %vec.phi739 = phi <8 x float> [ zeroinitializer, %._crit_edge451.loopexit.a ], [ %34, %.lr.ph450.a ] ; 3 uses
+  %vec.phi740 = phi <8 x float> [ zeroinitializer, %._crit_edge451.loopexit.a ], [ %35, %.lr.ph450.a ] ; 3 uses
+  %vec.phi741 = phi <8 x float> [ zeroinitializer, %._crit_edge451.loopexit.a ], [ %36, %.lr.ph450.a ] ; 3 uses
+  %i.vc = getelementptr inbounds nuw [4 x i8], ptr %i.da, i64 %niter760 ; 4 uses
+  %i.vd = getelementptr inbounds nuw i8, ptr %i.vc, i64 32
+  %i.ve = getelementptr inbounds nuw i8, ptr %i.vc, i64 64
+  %i.vf = getelementptr inbounds nuw i8, ptr %i.vc, i64 96
+  %wide.load742 = load <8 x i32>, ptr %i.vc, align 4, !tbaa !49
+  %wide.load743 = load <8 x i32>, ptr %i.vd, align 4, !tbaa !49
+  %wide.load744 = load <8 x i32>, ptr %i.ve, align 4, !tbaa !49
+  %wide.load745 = load <8 x i32>, ptr %i.vf, align 4, !tbaa !49
+  %17 = sitofp <8 x i32> %wide.load742 to <8 x float>
+  %18 = sitofp <8 x i32> %wide.load743 to <8 x float>
+  %19 = sitofp <8 x i32> %wide.load744 to <8 x float>
+  %20 = sitofp <8 x i32> %wide.load745 to <8 x float>
+  %21 = fmul <8 x float> %broadcast.splat736, %17
+  %22 = fmul <8 x float> %broadcast.splat736, %18
+  %23 = fmul <8 x float> %broadcast.splat736, %19
+  %24 = fmul <8 x float> %broadcast.splat736, %20
+  %25 = freeze <8 x float> %21                    ; 3 uses
+  %26 = freeze <8 x float> %22                    ; 3 uses
+  %27 = freeze <8 x float> %23                    ; 3 uses
+  %28 = freeze <8 x float> %24                    ; 3 uses
+  %29 = fcmp olt <8 x float> %vec.phi, %25
+  %30 = fcmp olt <8 x float> %vec.phi739, %26
+  %31 = fcmp olt <8 x float> %vec.phi740, %27
+  %32 = fcmp olt <8 x float> %vec.phi741, %28
+  %33 = select <8 x i1> %29, <8 x float> %25, <8 x float> %vec.phi ; 2 uses
+  %34 = select <8 x i1> %30, <8 x float> %26, <8 x float> %vec.phi739 ; 2 uses
+  %35 = select <8 x i1> %31, <8 x float> %27, <8 x float> %vec.phi740 ; 2 uses
+  %36 = select <8 x i1> %32, <8 x float> %28, <8 x float> %vec.phi741 ; 2 uses
+  %index.next746 = add nuw i64 %niter760, 32      ; 2 uses
+  %37 = call <8 x i1> @llvm.is.fpclass.v8f32(<8 x float> %25, /* (nan nzero) */ i32 35)
+  %38 = call <8 x i1> @llvm.is.fpclass.v8f32(<8 x float> %26, /* (nan nzero) */ i32 35)
+  %39 = call <8 x i1> @llvm.is.fpclass.v8f32(<8 x float> %27, /* (nan nzero) */ i32 35)
+  %40 = call <8 x i1> @llvm.is.fpclass.v8f32(<8 x float> %28, /* (nan nzero) */ i32 35)
+  %41 = or <8 x i1> %37, %38
+  %42 = or <8 x i1> %41, %39
+  %43 = or <8 x i1> %42, %40
+  %44 = bitcast <8 x i1> %43 to i8
+  %45 = icmp ne i8 %44, 0                         ; 7 uses
+  %46 = icmp eq i64 %index.next746, %n.vec734
+  %47 = or i1 %45, %46
+  br i1 %47, label %middle.block747, label %.lr.ph450.a, !llvm.loop !46
 
-.lr.ph450.epil.preheader:                         ; preds = %._crit_edge451.loopexit.unr-lcssa, %.lr.ph450.preheader
-  %indvars.iv526.epil.init = phi i64 [ 0, %.lr.ph450.preheader ], [ %indvars.iv.next527.7, %._crit_edge451.loopexit.unr-lcssa ]
-  %.0386448.epil.init = phi float [ 0.000000e+00, %.lr.ph450.preheader ], [ %.sroa.speculated.7, %._crit_edge451.loopexit.unr-lcssa ]
-  %lcmp.mod758 = icmp ne i64 %xtraiter755, 0
-  call void @llvm.assume(i1 %lcmp.mod758)
-  br label %.lr.ph450.epil
+middle.block747:                                  ; preds = %.lr.ph450.a
+  %48 = select i1 %45, <8 x float> %vec.phi, <8 x float> %33
+  %49 = select i1 %45, <8 x float> %vec.phi739, <8 x float> %34
+  %50 = select i1 %45, <8 x float> %vec.phi740, <8 x float> %35
+  %51 = select i1 %45, <8 x float> %vec.phi741, <8 x float> %36
+  %52 = select i1 %45, i64 %niter760, i64 %n.vec734
+  %rdx.minmax = call nnan <8 x float> @llvm.maxnum.v8f32(<8 x float> %48, <8 x float> %49)
+  %rdx.minmax748 = call nnan <8 x float> @llvm.maxnum.v8f32(<8 x float> %rdx.minmax, <8 x float> %50)
+  %rdx.minmax749 = call nnan <8 x float> @llvm.maxnum.v8f32(<8 x float> %rdx.minmax748, <8 x float> %51)
+  %53 = call nnan float @llvm.vector.reduce.fmax.v8f32(<8 x float> %rdx.minmax749) ; 2 uses
+  %cmp.n750 = icmp ne i64 %n.vec734, %wide.trip.count529
+  %.not752 = or i1 %cmp.n750, %45
+  br i1 %.not752, label %.lr.ph450.preheader753, label %._crit_edge451.loopexit
 
-.lr.ph450.epil:                                   ; preds = %.lr.ph450.epil, %.lr.ph450.epil.preheader
-  %indvars.iv526.epil = phi i64 [ %indvars.iv526.epil.init, %.lr.ph450.epil.preheader ], [ %indvars.iv.next527.epil, %.lr.ph450.epil ] ; 2 uses
-  %.0386448.epil = phi float [ %.0386448.epil.init, %.lr.ph450.epil.preheader ], [ %.sroa.speculated.epil, %.lr.ph450.epil ] ; 2 uses
-  %epil.iter = phi i64 [ 0, %.lr.ph450.epil.preheader ], [ %epil.iter.next, %.lr.ph450.epil ]
-  %17 = getelementptr inbounds nuw [4 x i8], ptr %i.da, i64 %indvars.iv526.epil
-  %18 = load i32, ptr %17, align 4, !tbaa !49
-  %19 = sitofp i32 %18 to float
-  %20 = fmul float %i.va, %19                     ; 2 uses
-  %21 = fcmp olt float %.0386448.epil, %20
-  %.sroa.speculated.epil = select i1 %21, float %20, float %.0386448.epil ; 2 uses
-  %indvars.iv.next527.epil = add nuw nsw i64 %indvars.iv526.epil, 1
-  %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
-  %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter755
-  br i1 %epil.iter.cmp.not, label %._crit_edge451.loopexit.a, label %.lr.ph450.epil, !llvm.loop !46
+.lr.ph450.preheader753:                           ; preds = %.lr.ph450.preheader, %middle.block747
+  %indvars.iv526.ph = phi i64 [ 0, %.lr.ph450.preheader ], [ %52, %middle.block747 ]
+  %.0386448.ph = phi float [ 0.000000e+00, %.lr.ph450.preheader ], [ %53, %middle.block747 ]
+  br label %.lr.ph450
 
-._crit_edge451.loopexit.a:                        ; preds = %.lr.ph450.epil, %._crit_edge451.loopexit.unr-lcssa
-  %.sroa.speculated.lcssa = phi float [ %.sroa.speculated.7, %._crit_edge451.loopexit.unr-lcssa ], [ %.sroa.speculated.epil, %.lr.ph450.epil ]
-  %22 = fpext float %.sroa.speculated.lcssa to double
-  %23 = fmul double %22, 1.050000e+00
+._crit_edge451.loopexit:                          ; preds = %.lr.ph450, %middle.block747
+  %.sroa.speculated.lcssa = phi float [ %53, %middle.block747 ], [ %.sroa.speculated, %.lr.ph450 ]
+  %54 = fpext float %.sroa.speculated.lcssa to double
+  %55 = fmul double %54, 1.050000e+00
   br label %._crit_edge451
 
-._crit_edge451:                                   ; preds = %._crit_edge451.loopexit.a, %.preheader
-  %.0386.lcssa = phi double [ 0.000000e+00, %.preheader ], [ %23, %._crit_edge451.loopexit.a ]
-  %24 = load ptr, ptr %i.n, align 8, !tbaa !69
-  %25 = invoke noundef zeroext i1 @_Z31output_env_get_print_xvgr_codesPK16gmx_output_env_t(ptr noundef %24)
+._crit_edge451:                                   ; preds = %._crit_edge451.loopexit, %.preheader
+  %.0386.lcssa = phi double [ 0.000000e+00, %.preheader ], [ %55, %._crit_edge451.loopexit ]
+  %56 = load ptr, ptr %i.n, align 8, !tbaa !69
+  %57 = invoke noundef zeroext i1 @_Z31output_env_get_print_xvgr_codesPK16gmx_output_env_t(ptr noundef %56)
           to label %bb.dm unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
-.lr.ph450.a:                                      ; preds = %.lr.ph450.a, %.lr.ph450.preheader.new
-  %indvars.iv526 = phi i64 [ 0, %.lr.ph450.preheader.new ], [ %indvars.iv.next527.7, %.lr.ph450.a ] ; 9 uses
-  %.0386448 = phi float [ 0.000000e+00, %.lr.ph450.preheader.new ], [ %.sroa.speculated.7, %.lr.ph450.a ] ; 2 uses
-  %niter760 = phi i64 [ 0, %.lr.ph450.preheader.new ], [ %niter760.next.7, %.lr.ph450.a ]
-  %26 = getelementptr inbounds nuw [4 x i8], ptr %i.da, i64 %indvars.iv526
-  %27 = load i32, ptr %26, align 4, !tbaa !49
-  %28 = sitofp i32 %27 to float
-  %29 = fmul float %i.va, %28                     ; 2 uses
-  %30 = fcmp olt float %.0386448, %29
-  %.sroa.speculated = select i1 %30, float %29, float %.0386448 ; 2 uses
-  %i.vc = getelementptr inbounds nuw [4 x i8], ptr %i.da, i64 %indvars.iv526
-  %i.vd = getelementptr inbounds nuw i8, ptr %i.vc, i64 4
-  %31 = load i32, ptr %i.vd, align 4, !tbaa !49
-  %32 = sitofp i32 %31 to float
-  %33 = fmul float %i.va, %32                     ; 2 uses
-  %34 = fcmp olt float %.sroa.speculated, %33
-  %.sroa.speculated.1 = select i1 %34, float %33, float %.sroa.speculated ; 2 uses
-  %35 = getelementptr inbounds nuw [4 x i8], ptr %i.da, i64 %indvars.iv526
-  %i.ve = getelementptr inbounds nuw i8, ptr %35, i64 8
-  %36 = load i32, ptr %i.ve, align 4, !tbaa !49
-  %37 = sitofp i32 %36 to float
-  %38 = fmul float %i.va, %37                     ; 2 uses
-  %39 = fcmp olt float %.sroa.speculated.1, %38
-  %.sroa.speculated.2 = select i1 %39, float %38, float %.sroa.speculated.1 ; 2 uses
-  %40 = getelementptr inbounds nuw [4 x i8], ptr %i.da, i64 %indvars.iv526
-  %i.vf = getelementptr inbounds nuw i8, ptr %40, i64 12
-  %41 = load i32, ptr %i.vf, align 4, !tbaa !49
-  %42 = sitofp i32 %41 to float
-  %43 = fmul float %i.va, %42                     ; 2 uses
-  %44 = fcmp olt float %.sroa.speculated.2, %43
-  %.sroa.speculated.3 = select i1 %44, float %43, float %.sroa.speculated.2 ; 2 uses
-  %45 = getelementptr inbounds nuw [4 x i8], ptr %i.da, i64 %indvars.iv526
-  %46 = getelementptr inbounds nuw i8, ptr %45, i64 16
-  %47 = load i32, ptr %46, align 4, !tbaa !49
-  %48 = sitofp i32 %47 to float
-  %49 = fmul float %i.va, %48                     ; 2 uses
-  %50 = fcmp olt float %.sroa.speculated.3, %49
-  %.sroa.speculated.4 = select i1 %50, float %49, float %.sroa.speculated.3 ; 2 uses
-  %51 = getelementptr inbounds nuw [4 x i8], ptr %i.da, i64 %indvars.iv526
-  %52 = getelementptr inbounds nuw i8, ptr %51, i64 20
-  %53 = load i32, ptr %52, align 4, !tbaa !49
-  %54 = sitofp i32 %53 to float
-  %55 = fmul float %i.va, %54                     ; 2 uses
-  %56 = fcmp olt float %.sroa.speculated.4, %55
-  %.sroa.speculated.5 = select i1 %56, float %55, float %.sroa.speculated.4 ; 2 uses
-  %57 = getelementptr inbounds nuw [4 x i8], ptr %i.da, i64 %indvars.iv526
-  %58 = getelementptr inbounds nuw i8, ptr %57, i64 24
+.lr.ph450:                                        ; preds = %.lr.ph450.preheader753, %.lr.ph450
+  %indvars.iv526 = phi i64 [ %indvars.iv.next527, %.lr.ph450 ], [ %indvars.iv526.ph, %.lr.ph450.preheader753 ] ; 2 uses
+  %.0386448 = phi float [ %.sroa.speculated, %.lr.ph450 ], [ %.0386448.ph, %.lr.ph450.preheader753 ] ; 2 uses
+  %58 = getelementptr inbounds nuw [4 x i8], ptr %i.da, i64 %indvars.iv526
   %59 = load i32, ptr %58, align 4, !tbaa !49
   %60 = sitofp i32 %59 to float
   %61 = fmul float %i.va, %60                     ; 2 uses
-  %62 = fcmp olt float %.sroa.speculated.5, %61
-  %.sroa.speculated.6 = select i1 %62, float %61, float %.sroa.speculated.5 ; 2 uses
-  %63 = getelementptr inbounds nuw [4 x i8], ptr %i.da, i64 %indvars.iv526
-  %64 = getelementptr inbounds nuw i8, ptr %63, i64 28
-  %65 = load i32, ptr %64, align 4, !tbaa !49
-  %66 = sitofp i32 %65 to float
-  %67 = fmul float %i.va, %66                     ; 2 uses
-  %68 = fcmp olt float %.sroa.speculated.6, %67
-  %.sroa.speculated.7 = select i1 %68, float %67, float %.sroa.speculated.6 ; 3 uses
-  %indvars.iv.next527.7 = add nuw nsw i64 %indvars.iv526, 8 ; 2 uses
-  %niter760.next.7 = add i64 %niter760, 8         ; 2 uses
-  %niter760.ncmp.7 = icmp eq i64 %niter760.next.7, %unroll_iter759
-  br i1 %niter760.ncmp.7, label %._crit_edge451.loopexit.unr-lcssa, label %.lr.ph450.a, !llvm.loop !47
+  %62 = fcmp olt float %.0386448, %61
+  %.sroa.speculated = select i1 %62, float %61, float %.0386448 ; 2 uses
+  %indvars.iv.next527 = add nuw nsw i64 %indvars.iv526, 1 ; 2 uses
+  %exitcond530.not = icmp eq i64 %indvars.iv.next527, %wide.trip.count529
+  br i1 %exitcond530.not, label %._crit_edge451.loopexit, label %.lr.ph450, !llvm.loop !47
 
 bb.dm:                                            ; preds = %._crit_edge451
-  br i1 %25, label %bb.dn, label %bb.do
+  br i1 %57, label %bb.dn, label %bb.do
 
 bb.dn:                                            ; preds = %bb.dm
   %fwrite265 = call i64 @fwrite(ptr nonnull @.str.85, i64 9, i64 1, ptr %i.ts) ; 0 uses
@@ -1131,6 +1122,15 @@ declare <8 x float> @llvm.fabs.v8f32(<8 x float>) #11
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fabs.v4f32(<4 x float>) #11
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <8 x float> @llvm.maxnum.v8f32(<8 x float>, <8 x float>) #11
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fmax.v8f32(<8 x float>) #11
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <8 x i1> @llvm.is.fpclass.v8f32(<8 x float>, i32 immarg) #11
+
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
@@ -1202,8 +1202,8 @@ attributes #19 = { cold nounwind }
 !43 = distinct !{!43, !24}
 !44 = distinct !{!44, !24}
 !45 = distinct !{!45, !24}
-!46 = distinct !{!46, !75}
-!47 = distinct !{!47, !24}
+!46 = distinct !{!46, !24, !72, !73}
+!47 = distinct !{!47, !24, !73, !72}
 !48 = distinct !{!48, !24}
 !49 = !{!7, !7, i64 0}
 !50 = !{!"_ZTSNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12_Vector_implE", !14, i64 0}
@@ -1231,5 +1231,4 @@ attributes #19 = { cold nounwind }
 !72 = !{!"llvm.loop.isvectorized", i32 1}
 !73 = !{!"llvm.loop.unroll.runtime.disable"}
 !74 = !{!"branch_weights", i32 4, i32 28}
-!75 = !{!"llvm.loop.unroll.disable"}
 end_hunk_2

@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 8
 inline.NumDeleted: 6
 loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumRuntimeUnrolled: 3
-loop-unroll.NumUnrolled: 4
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@ff_aac_search_for_is:bb.a
 bb.p:                                             ; preds = %bb.o
   %i.dk = load i8, ptr %i.cl, align 1, !tbaa !21  ; 2 uses
@@ -205,7 +205,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 38688 ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 39712 ; 5 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 40736 ; 3 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %1, i64 41760 ; 10 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %1, i64 41760 ; 7 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %0, i8 0, i64 24, i1 false)
   %i.g = fcmp nsz ole float %8, 0.000000e+00
   %i.h = fcmp nsz ole float %6, 0.000000e+00
@@ -332,69 +332,66 @@ bb.b:                                             ; preds = %.lr.ph185, %._crit_
   br i1 %.not.i, label %find_max_val.exit, label %.preheader.us.preheader.i
 
 .preheader.us.preheader.i:                        ; preds = %._crit_edge
-  %wide.trip.count.i = zext i8 %i.cj to i64       ; 2 uses
-  %xtraiter = and i64 %wide.trip.count.i, 3       ; 3 uses
-  %i.cl = icmp ult i8 %i.cj, 4
+  %wide.trip.count.i = zext i8 %i.cj to i64       ; 3 uses
+  %i.cl = icmp ult i8 %i.cj, 8
   br i1 %i.cl, label %.preheader.us.i.epil.preheader, label %.preheader.us.preheader.i.new
 
 .preheader.us.preheader.i.new:                    ; preds = %.preheader.us.preheader.i
-  %unroll_iter.a = and i64 %wide.trip.count.i, 252
+  %unroll_iter.a = and i64 %wide.trip.count.i, 248 ; 3 uses
   br label %.preheader.us.i.a
 
 .preheader.us.i.a:                                ; preds = %.preheader.us.i.a, %.preheader.us.preheader.i.new
-  %indvars.iv.i = phi i64 [ 0, %.preheader.us.preheader.i.new ], [ %indvars.iv.next.i.3, %.preheader.us.i.a ] ; 5 uses
-  %.117.us.i = phi float [ 0.000000e+00, %.preheader.us.preheader.i.new ], [ %.1..us.i.3, %.preheader.us.i.a ] ; 2 uses
-  %niter.a = phi i64 [ 0, %.preheader.us.preheader.i.new ], [ %niter.next.3, %.preheader.us.i.a ]
-  %10 = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %indvars.iv.i
-  %11 = load float, ptr %10, align 4, !tbaa !49   ; 2 uses
-  %12 = fcmp nsz ogt float %.117.us.i, %11
-  %.1..us.i = select nsz i1 %12, float %.117.us.i, float %11 ; 2 uses
-  %i.cm = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %indvars.iv.i
-  %i.cn = getelementptr inbounds nuw i8, ptr %i.cm, i64 4
-  %13 = load float, ptr %i.cn, align 4, !tbaa !49 ; 2 uses
-  %14 = fcmp nsz ogt float %.1..us.i, %13
-  %.1..us.i.1 = select nsz i1 %14, float %.1..us.i, float %13 ; 2 uses
-  %15 = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %indvars.iv.i
-  %16 = getelementptr inbounds nuw i8, ptr %15, i64 8
-  %17 = load float, ptr %16, align 4, !tbaa !49   ; 2 uses
-  %18 = fcmp nsz ogt float %.1..us.i.1, %17
-  %.1..us.i.2 = select nsz i1 %18, float %.1..us.i.1, float %17 ; 2 uses
-  %19 = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %indvars.iv.i
-  %20 = getelementptr inbounds nuw i8, ptr %19, i64 12
-  %21 = load float, ptr %20, align 4, !tbaa !49   ; 2 uses
-  %22 = fcmp nsz ogt float %.1..us.i.2, %21
-  %.1..us.i.3 = select nsz i1 %22, float %.1..us.i.2, float %21 ; 3 uses
-  %indvars.iv.next.i.3 = add nuw nsw i64 %indvars.iv.i, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter.a, 4             ; 2 uses
-  %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter.a
-  br i1 %niter.ncmp.3, label %find_max_val.exit.loopexit.unr-lcssa, label %.preheader.us.i.a, !llvm.loop !75
+  %niter.a = phi i64 [ 0, %.preheader.us.preheader.i.new ], [ %index.next, %.preheader.us.i.a ] ; 3 uses
+  %vec.phi = phi <4 x float> [ zeroinitializer, %.preheader.us.preheader.i.new ], [ %14, %.preheader.us.i.a ] ; 3 uses
+  %vec.phi216 = phi <4 x float> [ zeroinitializer, %.preheader.us.preheader.i.new ], [ %15, %.preheader.us.i.a ] ; 3 uses
+  %i.cm = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %niter.a ; 2 uses
+  %i.cn = getelementptr inbounds nuw i8, ptr %i.cm, i64 16
+  %wide.load = load <4 x float>, ptr %i.cm, align 4, !tbaa !49
+  %wide.load217 = load <4 x float>, ptr %i.cn, align 4, !tbaa !49
+  %10 = freeze <4 x float> %wide.load             ; 3 uses
+  %11 = freeze <4 x float> %wide.load217          ; 3 uses
+  %12 = fcmp nsz ogt <4 x float> %vec.phi, %10
+  %13 = fcmp nsz ogt <4 x float> %vec.phi216, %11
+  %14 = select nsz <4 x i1> %12, <4 x float> %vec.phi, <4 x float> %10 ; 2 uses
+  %15 = select nsz <4 x i1> %13, <4 x float> %vec.phi216, <4 x float> %11 ; 2 uses
+  %index.next = add nuw i64 %niter.a, 8           ; 2 uses
+  %16 = tail call <4 x i1> @llvm.is.fpclass.v4f32(<4 x float> %10, /* (nan nzero) */ i32 35)
+  %17 = tail call <4 x i1> @llvm.is.fpclass.v4f32(<4 x float> %11, /* (nan nzero) */ i32 35)
+  %18 = or <4 x i1> %16, %17
+  %19 = bitcast <4 x i1> %18 to i4
+  %20 = icmp ne i4 %19, 0                         ; 5 uses
+  %21 = icmp eq i64 %index.next, %unroll_iter.a
+  %22 = or i1 %20, %21
+  br i1 %22, label %find_max_val.exit.loopexit.unr-lcssa, label %.preheader.us.i.a, !llvm.loop !75
 
 find_max_val.exit.loopexit.unr-lcssa:             ; preds = %.preheader.us.i.a
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %find_max_val.exit, label %.preheader.us.i.epil.preheader
+  %23 = select i1 %20, <4 x float> %vec.phi, <4 x float> %14
+  %24 = select i1 %20, <4 x float> %vec.phi216, <4 x float> %15
+  %25 = select i1 %20, i64 %niter.a, i64 %unroll_iter.a
+  %rdx.minmax = tail call nnan nsz <4 x float> @llvm.maxnum.v4f32(<4 x float> %23, <4 x float> %24)
+  %26 = tail call nnan nsz float @llvm.vector.reduce.fmax.v4f32(<4 x float> %rdx.minmax) ; 2 uses
+  %cmp.n = icmp ne i64 %unroll_iter.a, %wide.trip.count.i
+  %.not218 = or i1 %cmp.n, %20
+  br i1 %.not218, label %.preheader.us.i.epil.preheader, label %find_max_val.exit
 
-.preheader.us.i.epil.preheader:                   ; preds = %find_max_val.exit.loopexit.unr-lcssa, %.preheader.us.preheader.i
-  %indvars.iv.i.epil.init = phi i64 [ 0, %.preheader.us.preheader.i ], [ %indvars.iv.next.i.3, %find_max_val.exit.loopexit.unr-lcssa ]
-  %.117.us.i.epil.init = phi float [ 0.000000e+00, %.preheader.us.preheader.i ], [ %.1..us.i.3, %find_max_val.exit.loopexit.unr-lcssa ]
-  %lcmp.mod220 = icmp ne i64 %xtraiter, 0
-  tail call void @llvm.assume(i1 %lcmp.mod220)
+.preheader.us.i.epil.preheader:                   ; preds = %.preheader.us.preheader.i, %find_max_val.exit.loopexit.unr-lcssa
+  %indvars.iv.i.epil.init = phi i64 [ 0, %.preheader.us.preheader.i ], [ %25, %find_max_val.exit.loopexit.unr-lcssa ]
+  %.117.us.i.epil.init = phi float [ 0.000000e+00, %.preheader.us.preheader.i ], [ %26, %find_max_val.exit.loopexit.unr-lcssa ]
   br label %.preheader.us.i.epil
 
-.preheader.us.i.epil:                             ; preds = %.preheader.us.i.epil, %.preheader.us.i.epil.preheader
-  %indvars.iv.i.epil = phi i64 [ %indvars.iv.i.epil.init, %.preheader.us.i.epil.preheader ], [ %indvars.iv.next.i.epil, %.preheader.us.i.epil ] ; 2 uses
-  %.117.us.i.epil = phi float [ %.117.us.i.epil.init, %.preheader.us.i.epil.preheader ], [ %.1..us.i.epil, %.preheader.us.i.epil ] ; 2 uses
-  %epil.iter = phi i64 [ 0, %.preheader.us.i.epil.preheader ], [ %epil.iter.next, %.preheader.us.i.epil ]
+.preheader.us.i.epil:                             ; preds = %.preheader.us.i.epil.preheader, %.preheader.us.i.epil
+  %indvars.iv.i.epil = phi i64 [ %epil.iter.next, %.preheader.us.i.epil ], [ %indvars.iv.i.epil.init, %.preheader.us.i.epil.preheader ] ; 2 uses
+  %.117.us.i.epil = phi float [ %.1..us.i.epil, %.preheader.us.i.epil ], [ %.117.us.i.epil.init, %.preheader.us.i.epil.preheader ] ; 2 uses
   %i.co = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %indvars.iv.i.epil
   %i.cp = load float, ptr %i.co, align 4, !tbaa !49 ; 2 uses
   %i.cq = fcmp nsz ogt float %.117.us.i.epil, %i.cp
   %.1..us.i.epil = select nsz i1 %i.cq, float %.117.us.i.epil, float %i.cp ; 2 uses
-  %indvars.iv.next.i.epil = add nuw nsw i64 %indvars.iv.i.epil, 1
-  %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
-  %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
+  %epil.iter.next = add nuw nsw i64 %indvars.iv.i.epil, 1 ; 2 uses
+  %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %wide.trip.count.i
   br i1 %epil.iter.cmp.not, label %find_max_val.exit, label %.preheader.us.i.epil, !llvm.loop !76
 
-find_max_val.exit:                                ; preds = %find_max_val.exit.loopexit.unr-lcssa, %.preheader.us.i.epil, %._crit_edge
-  %.us-phi.i = phi float [ 0.000000e+00, %._crit_edge ], [ %.1..us.i.3, %find_max_val.exit.loopexit.unr-lcssa ], [ %.1..us.i.epil, %.preheader.us.i.epil ]
+find_max_val.exit:                                ; preds = %.preheader.us.i.epil, %find_max_val.exit.loopexit.unr-lcssa, %._crit_edge
+  %.us-phi.i = phi float [ 0.000000e+00, %._crit_edge ], [ %26, %find_max_val.exit.loopexit.unr-lcssa ], [ %.1..us.i.epil, %.preheader.us.i.epil ]
   %i.cr = sub nsw i32 308, %i.ay
   %i.cs = sext i32 %i.cr to i64
   %i.ct = getelementptr inbounds [4 x i8], ptr @ff_aac_pow34sf_tab, i64 %i.cs
@@ -526,18 +523,18 @@ find_min_book.exit:                               ; preds = %find_max_val.exit, 
   %.0163.lcssa = phi float [ 0.000000e+00, %.preheader ], [ %i.fq, %._crit_edge180 ] ; 3 uses
   %i.fu = fcmp nsz ole float %.0163.lcssa, %.0164.lcssa
   %i.fv = zext i1 %i.fu to i32
-  store i32 %i.fv, ptr %0, align 4, !tbaa !86
+  store i32 %i.fv, ptr %0, align 4, !tbaa !87
   %i.fw = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i32 %9, ptr %i.fw, align 4, !tbaa !87
+  store i32 %9, ptr %i.fw, align 4, !tbaa !88
   %i.fx = fsub nsz float %.0163.lcssa, %.0164.lcssa
   %i.fy = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store float %i.fx, ptr %i.fy, align 4, !tbaa !88
+  store float %i.fx, ptr %i.fy, align 4, !tbaa !89
   %i.fz = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store float %.0164.lcssa, ptr %i.fz, align 4, !tbaa !89
+  store float %.0164.lcssa, ptr %i.fz, align 4, !tbaa !90
   %i.ga = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store float %.0163.lcssa, ptr %i.ga, align 4, !tbaa !90
+  store float %.0163.lcssa, ptr %i.ga, align 4, !tbaa !91
   %i.gb = getelementptr inbounds nuw i8, ptr %0, i64 20
-  store float %8, ptr %i.gb, align 4, !tbaa !91
+  store float %8, ptr %i.gb, align 4, !tbaa !92
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.a, %._crit_edge186
@@ -563,6 +560,15 @@ declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x float> @llvm.maxnum.v4f32(<4 x float>, <4 x float>) #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fmax.v4f32(<4 x float>) #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i1> @llvm.is.fpclass.v4f32(<4 x float>, i32 immarg) #2
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -651,8 +657,8 @@ attributes #6 = { nounwind }
 !72 = !{!"llvm.loop.unswitch.partial.disable"}
 !73 = !{!69, !5, i64 8}
 !74 = distinct !{!74, !23}
-!75 = distinct !{!75, !23}
-!76 = distinct !{!76, !84}
+!75 = distinct !{!75, !23, !84, !85}
+!76 = distinct !{!76, !23, !85, !84}
 !77 = distinct !{!77, !23}
 !78 = distinct !{!78, !23}
 !79 = !{!46, !34, i64 38160}
@@ -660,12 +666,13 @@ attributes #6 = { nounwind }
 !81 = !{!"FFPsyBand", !6, i64 0, !12, i64 4, !12, i64 8, !12, i64 12}
 !82 = !{!81, !12, i64 8}
 !83 = !{!46, !9, i64 567080}
-!84 = !{!"llvm.loop.unroll.disable"}
-!85 = !{!"AACISError", !6, i64 0, !6, i64 4, !12, i64 8, !12, i64 12, !12, i64 16, !12, i64 20}
-!86 = !{!85, !6, i64 0}
-!87 = !{!85, !6, i64 4}
-!88 = !{!85, !12, i64 8}
-!89 = !{!85, !12, i64 12}
-!90 = !{!85, !12, i64 16}
-!91 = !{!85, !12, i64 20}
+!84 = !{!"llvm.loop.isvectorized", i32 1}
+!85 = !{!"llvm.loop.unroll.runtime.disable"}
+!86 = !{!"AACISError", !6, i64 0, !6, i64 4, !12, i64 8, !12, i64 12, !12, i64 16, !12, i64 20}
+!87 = !{!86, !6, i64 0}
+!88 = !{!86, !6, i64 4}
+!89 = !{!86, !12, i64 8}
+!90 = !{!86, !12, i64 12}
+!91 = !{!86, !12, i64 16}
+!92 = !{!86, !12, i64 20}
 end_hunk_0
