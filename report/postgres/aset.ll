@@ -204,9 +204,9 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.g = getelementptr inbounds i8, ptr %0, i64 -24
-  %i.h = load ptr, ptr %i.g, align 8              ; 2 uses
+  %i.h = load ptr, ptr %i.g, align 8
   %i.i = getelementptr inbounds i8, ptr %0, i64 -16
-  %i.j = load ptr, ptr %i.i, align 8
+  %i.j = load ptr, ptr %i.i, align 8              ; 2 uses
   %.not73 = icmp eq ptr %i.h, %i.j
   br i1 %.not73, label %bb.f, label %bb.e
 
@@ -243,7 +243,7 @@ bb.i:                                             ; preds = %MemoryContextCheckS
   br label %bb.x
 
 bb.j:                                             ; preds = %MemoryContextCheckSize.exit
-  %i.v = ptrtoint ptr %i.h to i64
+  %i.v = ptrtoint ptr %i.j to i64
   %i.w = ptrtoint ptr %i.c to i64
   %i.x = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
   %i.y = load i64, ptr %i.x, align 8

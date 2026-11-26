@@ -206,7 +206,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #57
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #57
   %i.o = call fastcc i32 @fts3PoslistPhraseMerge(ptr noundef %i.b, i32 noundef %i.i, i32 noundef 0, i32 noundef 0, ptr noundef nonnull %2, ptr noundef nonnull %i.e) ; 0 uses
-  %i.p = load ptr, ptr %i.b, align 8, !tbaa !737  ; 8 uses
+  %i.p = load ptr, ptr %i.b, align 8, !tbaa !737  ; 9 uses
   store ptr %i.p, ptr %i.c, align 8, !tbaa !737
   store ptr %i.p, ptr %i.d, align 8, !tbaa !737
   store ptr %i.n, ptr %2, align 8, !tbaa !737
@@ -285,7 +285,7 @@ fts3PoslistCopy.exit24.i:                         ; preds = %.lr.ph.i20.i, %bb.f
   %.0.lcssa.i23.i = phi ptr [ %i.p, %bb.f ], [ %i.al, %.lr.ph.i20.i ]
   %i.aq = getelementptr inbounds nuw i8, ptr %.0.lcssa.i23.i, i64 1
   %i.ar = ptrtoint ptr %i.aq to i64
-  %i.as = ptrtoint ptr %1 to i64
+  %i.as = ptrtoint ptr %i.p to i64
   %i.at = sub i64 %i.ar, %i.as
   %i.au = shl i64 %i.at, 32
   %i.av = ashr exact i64 %i.au, 32                ; 2 uses

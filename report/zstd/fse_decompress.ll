@@ -205,7 +205,7 @@ bb.t:                                             ; preds = %BIT_initDStream.exi
 
 bb.u:                                             ; preds = %bb.t
   %i.cz = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 2 uses
-  %i.da = load ptr, ptr %i.cz, align 8, !tbaa !23 ; 8 uses
+  %i.da = load ptr, ptr %i.cz, align 8, !tbaa !23 ; 7 uses
   %i.db = load ptr, ptr %i.ap, align 8, !tbaa !22 ; 4 uses
   %.not.i28.i = icmp ult ptr %i.da, %i.db
   br i1 %.not.i28.i, label %bb.w, label %bb.v
@@ -222,7 +222,7 @@ bb.v:                                             ; preds = %bb.u
   br label %BIT_reloadDStream.exit34.i.thread
 
 bb.w:                                             ; preds = %bb.u
-  %i.dh = load ptr, ptr %i.an, align 8, !tbaa !21 ; 6 uses
+  %i.dh = load ptr, ptr %i.an, align 8, !tbaa !21 ; 7 uses
   %i.di = icmp eq ptr %i.da, %i.dh
   br i1 %i.di, label %.BIT_reloadDStream.exit34_crit_edge.i, label %BIT_reloadDStream.exit34.i
 
@@ -232,7 +232,7 @@ bb.w:                                             ; preds = %bb.u
 
 BIT_reloadDStream.exit34.i.thread:                ; preds = %.BIT_reloadDStream.exit34_crit_edge.i, %bb.v
   %.promoted219.i.ph = phi ptr [ %i.df, %bb.v ], [ %i.da, %.BIT_reloadDStream.exit34_crit_edge.i ]
-  %.ph153 = phi ptr [ %.pre.i, %bb.v ], [ %i.da, %.BIT_reloadDStream.exit34_crit_edge.i ] ; 2 uses
+  %.ph153 = phi ptr [ %.pre.i, %bb.v ], [ %i.dh, %.BIT_reloadDStream.exit34_crit_edge.i ] ; 2 uses
   %.promoted212.i.ph = phi i64 [ %.val.i72.i, %bb.v ], [ %.promoted212.pre.i, %.BIT_reloadDStream.exit34_crit_edge.i ]
   %.promoted.i.ph = phi i32 [ %i.dg, %bb.v ], [ %i.cx, %.BIT_reloadDStream.exit34_crit_edge.i ]
   %.promoted215.i157 = load i64, ptr %9, align 8
@@ -613,7 +613,7 @@ bb.ap:                                            ; preds = %bb.ao
 
 bb.aq:                                            ; preds = %bb.ap
   %i.ky = getelementptr inbounds nuw i8, ptr %11, i64 16 ; 2 uses
-  %i.kz = load ptr, ptr %i.ky, align 8, !tbaa !23 ; 8 uses
+  %i.kz = load ptr, ptr %i.ky, align 8, !tbaa !23 ; 7 uses
   %i.la = getelementptr inbounds nuw i8, ptr %11, i64 32
   %i.lb = load ptr, ptr %i.la, align 8, !tbaa !22 ; 4 uses
   %.not.i56.i = icmp ult ptr %i.kz, %i.lb
@@ -633,7 +633,7 @@ bb.ar:                                            ; preds = %bb.aq
 
 bb.as:                                            ; preds = %bb.aq
   %i.lh = getelementptr inbounds nuw i8, ptr %11, i64 24
-  %i.li = load ptr, ptr %i.lh, align 8, !tbaa !21 ; 6 uses
+  %i.li = load ptr, ptr %i.lh, align 8, !tbaa !21 ; 7 uses
   %i.lj = icmp eq ptr %i.kz, %i.li
   br i1 %i.lj, label %.BIT_reloadDStream.exit62_crit_edge.i, label %BIT_reloadDStream.exit62.i
 
@@ -643,7 +643,7 @@ bb.as:                                            ; preds = %bb.aq
 
 BIT_reloadDStream.exit62.i.thread:                ; preds = %.BIT_reloadDStream.exit62_crit_edge.i, %bb.ar
   %.promoted259.i.ph = phi ptr [ %i.lf, %bb.ar ], [ %i.kz, %.BIT_reloadDStream.exit62_crit_edge.i ]
-  %.ph164 = phi ptr [ %.pre390.i, %bb.ar ], [ %i.kz, %.BIT_reloadDStream.exit62_crit_edge.i ] ; 2 uses
+  %.ph164 = phi ptr [ %.pre390.i, %bb.ar ], [ %i.li, %.BIT_reloadDStream.exit62_crit_edge.i ] ; 2 uses
   %.promoted253.i.ph = phi i64 [ %.val.i125.i, %bb.ar ], [ %.promoted253.pre.i, %.BIT_reloadDStream.exit62_crit_edge.i ]
   %.promoted251.i.ph = phi i32 [ %i.lg, %bb.ar ], [ %i.kw, %.BIT_reloadDStream.exit62_crit_edge.i ]
   %.promoted255.i168 = load i64, ptr %12, align 8
@@ -1046,7 +1046,7 @@ bb.r:                                             ; preds = %BIT_initDStream.exi
 
 bb.s:                                             ; preds = %bb.r
   %i.cy = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 2 uses
-  %i.cz = load ptr, ptr %i.cy, align 8, !tbaa !23 ; 8 uses
+  %i.cz = load ptr, ptr %i.cy, align 8, !tbaa !23 ; 7 uses
   %i.da = load ptr, ptr %i.ao, align 8, !tbaa !22 ; 4 uses
   %.not.i28 = icmp ult ptr %i.cz, %i.da
   br i1 %.not.i28, label %bb.u, label %bb.t
@@ -1063,7 +1063,7 @@ bb.t:                                             ; preds = %bb.s
   br label %BIT_reloadDStream.exit34
 
 bb.u:                                             ; preds = %bb.s
-  %i.dg = load ptr, ptr %i.am, align 8, !tbaa !21 ; 4 uses
+  %i.dg = load ptr, ptr %i.am, align 8, !tbaa !21 ; 5 uses
   %i.dh = icmp eq ptr %i.cz, %i.dg
   br i1 %i.dh, label %.BIT_reloadDStream.exit34_crit_edge, label %bb.v
 
@@ -1093,7 +1093,7 @@ bb.v:                                             ; preds = %bb.u
 
 BIT_reloadDStream.exit34:                         ; preds = %.BIT_reloadDStream.exit34_crit_edge, %bb.t, %bb.v
   %.promoted219 = phi ptr [ %i.cz, %.BIT_reloadDStream.exit34_crit_edge ], [ %i.de, %bb.t ], [ %i.dt, %bb.v ]
-  %i.dw = phi ptr [ %i.cz, %.BIT_reloadDStream.exit34_crit_edge ], [ %.pre, %bb.t ], [ %i.dg, %bb.v ] ; 7 uses
+  %i.dw = phi ptr [ %i.dg, %.BIT_reloadDStream.exit34_crit_edge ], [ %.pre, %bb.t ], [ %i.dg, %bb.v ] ; 7 uses
   %.promoted212 = phi i64 [ %.promoted212.pre, %.BIT_reloadDStream.exit34_crit_edge ], [ %.val.i72, %bb.t ], [ %.val66, %bb.v ] ; 2 uses
   %.promoted = phi i32 [ %i.cw, %.BIT_reloadDStream.exit34_crit_edge ], [ %i.df, %bb.t ], [ %i.dv, %bb.v ] ; 3 uses
   %.promoted215 = load i64, ptr %8, align 8       ; 2 uses
@@ -1431,7 +1431,7 @@ bb.ao:                                            ; preds = %bb.an
 
 bb.ap:                                            ; preds = %bb.ao
   %i.kl = getelementptr inbounds nuw i8, ptr %10, i64 16 ; 2 uses
-  %i.km = load ptr, ptr %i.kl, align 8, !tbaa !23 ; 8 uses
+  %i.km = load ptr, ptr %i.kl, align 8, !tbaa !23 ; 7 uses
   %i.kn = getelementptr inbounds nuw i8, ptr %10, i64 32
   %i.ko = load ptr, ptr %i.kn, align 8, !tbaa !22 ; 4 uses
   %.not.i56 = icmp ult ptr %i.km, %i.ko
@@ -1451,7 +1451,7 @@ bb.aq:                                            ; preds = %bb.ap
 
 bb.ar:                                            ; preds = %bb.ap
   %i.ku = getelementptr inbounds nuw i8, ptr %10, i64 24
-  %i.kv = load ptr, ptr %i.ku, align 8, !tbaa !21 ; 4 uses
+  %i.kv = load ptr, ptr %i.ku, align 8, !tbaa !21 ; 5 uses
   %i.kw = icmp eq ptr %i.km, %i.kv
   br i1 %i.kw, label %.BIT_reloadDStream.exit62_crit_edge, label %bb.as
 
@@ -1481,7 +1481,7 @@ bb.as:                                            ; preds = %bb.ar
 
 BIT_reloadDStream.exit62:                         ; preds = %.BIT_reloadDStream.exit62_crit_edge, %bb.aq, %bb.as
   %.promoted259 = phi ptr [ %i.km, %.BIT_reloadDStream.exit62_crit_edge ], [ %i.ks, %bb.aq ], [ %i.li, %bb.as ]
-  %i.ll = phi ptr [ %i.km, %.BIT_reloadDStream.exit62_crit_edge ], [ %.pre390, %bb.aq ], [ %i.kv, %bb.as ] ; 7 uses
+  %i.ll = phi ptr [ %i.kv, %.BIT_reloadDStream.exit62_crit_edge ], [ %.pre390, %bb.aq ], [ %i.kv, %bb.as ] ; 7 uses
   %.promoted253 = phi i64 [ %.promoted253.pre, %.BIT_reloadDStream.exit62_crit_edge ], [ %.val.i125, %bb.aq ], [ %.val, %bb.as ] ; 2 uses
   %.promoted251 = phi i32 [ %i.kj, %.BIT_reloadDStream.exit62_crit_edge ], [ %i.kt, %bb.aq ], [ %i.lk, %bb.as ] ; 3 uses
   %.promoted255 = load i64, ptr %11, align 8      ; 2 uses
