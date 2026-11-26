@@ -205,19 +205,20 @@ bb.a:
   %21 = alloca %"class.cv::_InputArray", align 8  ; 8 uses
   %22 = alloca %"class.cv::Mat", align 8          ; 7 uses
   %23 = alloca %"class.cv::_InputArray", align 8  ; 8 uses
-  %.sroa.0304.0.extract.trunc = trunc i64 %5 to i32
+  %.sroa.5.0.extract.shift = lshr i64 %3, 32
   %.sroa.8.0.extract.shift = lshr i64 %5, 32
-  %.sroa.8.0.extract.trunc = trunc nuw i64 %.sroa.8.0.extract.shift to i32
+  %.sroa.080.0.extract.trunc = trunc i64 %3 to i32
+  %.sroa.8.0.extract.trunc = trunc nuw i64 %.sroa.5.0.extract.shift to i32
+  %.sroa.0322.0.extract.trunc = trunc i64 %5 to i32 ; 2 uses
+  %.sroa.7.0.extract.trunc = trunc nuw i64 %.sroa.8.0.extract.shift to i32 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #20
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %8, i8 0, i64 32, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #20
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %9, i8 0, i64 32, i1 false)
-  %24 = mul nsw i32 %.sroa.8.0.extract.trunc, %.sroa.0304.0.extract.trunc
-  %.not = icmp eq i32 %24, 0
-  %25 = select i1 %.not, i64 %3, i64 %5           ; 4 uses
-  %.sroa.0304.0.extract.trunc309 = trunc i64 %25 to i32 ; 6 uses
-  %.sroa.8.0.extract.shift310 = lshr i64 %25, 32
-  %.sroa.8.0.extract.trunc311 = trunc nuw i64 %.sroa.8.0.extract.shift310 to i32 ; 6 uses
+  %24 = mul nsw i32 %.sroa.7.0.extract.trunc, %.sroa.0322.0.extract.trunc
+  %.not = icmp eq i32 %24, 0                      ; 2 uses
+  %..copy.fca.0.load.sroa.speculated = select i1 %.not, i32 %.sroa.080.0.extract.trunc, i32 %.sroa.0322.0.extract.trunc ; 8 uses
+  %..copy.fca.1.load.sroa.speculated = select i1 %.not, i32 %.sroa.8.0.extract.trunc, i32 %.sroa.7.0.extract.trunc ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #20
   %i.a = tail call noundef i32 @_ZNK2cv11_InputArray4kindEv(ptr noundef nonnull align 8 dereferenceable(24) %1), !noalias !289
   %i.b = icmp eq i32 %i.a, 65536
@@ -312,7 +313,8 @@ bb.m:                                             ; preds = %bb.l
   %.sink.i = getelementptr inbounds nuw i8, ptr %i.t, i64 %.sink.idx.i
   %i.z = getelementptr inbounds nuw i8, ptr %.sink.i, i64 16
   %i.aa = load double, ptr %i.z, align 8, !tbaa !31
-  %26 = bitcast i64 %25 to <2 x i32>
+  %25 = insertelement <2 x i32> poison, i32 %..copy.fca.0.load.sroa.speculated, i64 0
+  %26 = insertelement <2 x i32> %25, i32 %..copy.fca.1.load.sroa.speculated, i64 1
   %i.ab = add nsw <2 x i32> %26, splat (i32 -1)
   %i.ac = sitofp <2 x i32> %i.ab to <2 x double>
   %i.ad = fmul nnan <2 x double> %i.ac, splat (double 5.000000e-01) ; 7 uses
@@ -433,8 +435,8 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.db, label %_ZN2cvaNIiEERNS_5Rect_IT_EES4_RKS3_.exit, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.dc = icmp slt i32 %.sroa.0304.0.extract.trunc309, 1
-  %i.dd = icmp slt i32 %.sroa.8.0.extract.trunc311, 1
+  %i.dc = icmp slt i32 %..copy.fca.0.load.sroa.speculated, 1
+  %i.dd = icmp slt i32 %..copy.fca.1.load.sroa.speculated, 1
   %i.de = select i1 %i.dc, i1 true, i1 %i.dd
   br i1 %i.de, label %_ZN2cvaNIiEERNS_5Rect_IT_EES4_RKS3_.exit, label %bb.q
 
@@ -457,13 +459,13 @@ bb.s:                                             ; preds = %bb.r
   br i1 %i.dm, label %_ZN2cvaNIiEERNS_5Rect_IT_EES4_RKS3_.exit, label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %bb.r, %bb.s
-  %.sroa.speculated233 = phi i32 [ %.sroa.8.0.extract.trunc311, %bb.s ], [ %i.cy, %bb.r ]
-  %.neg49.pre-phi.i = phi i32 [ %i.dl, %bb.s ], [ %.sroa.8.0.extract.trunc311, %bb.r ]
+  %.sroa.speculated233 = phi i32 [ %..copy.fca.1.load.sroa.speculated, %bb.s ], [ %i.cy, %bb.r ]
+  %.neg49.pre-phi.i = phi i32 [ %i.dl, %bb.s ], [ %..copy.fca.1.load.sroa.speculated, %bb.r ]
   %i.dn = phi i32 [ 0, %bb.s ], [ %i.cu, %bb.r ]  ; 2 uses
-  %.sroa.speculated245 = select i1 %i.df, i32 %i.cw, i32 %.sroa.0304.0.extract.trunc309
+  %.sroa.speculated245 = select i1 %i.df, i32 %i.cw, i32 %..copy.fca.0.load.sroa.speculated
   %.neg.i = sub i32 %i.dg, %i.dh
   %i.do = add i32 %.neg.i, %.sroa.speculated245
-  %.sroa.speculated239 = select i1 %i.df, i32 %.sroa.0304.0.extract.trunc309, i32 %i.cw
+  %.sroa.speculated239 = select i1 %i.df, i32 %..copy.fca.0.load.sroa.speculated, i32 %i.cw
   %.sroa.speculated53.i = call i32 @llvm.smin.i32(i32 %.sroa.speculated239, i32 %i.do) ; 2 uses
   %i.dp = sub nsw i32 %.neg49.pre-phi.i, %i.dn
   %.sroa.speculated.i = call i32 @llvm.smin.i32(i32 %.sroa.speculated233, i32 %i.dp) ; 2 uses
@@ -529,8 +531,9 @@ bb.w:                                             ; preds = %bb.v
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %18) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %18) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %17) #20
-  %27 = bitcast i64 %25 to <2 x i32>
-  %i.ea = add nsw <2 x i32> %27, splat (i32 -1)
+  %27 = insertelement <2 x i32> poison, i32 %..copy.fca.0.load.sroa.speculated, i64 0
+  %28 = insertelement <2 x i32> %27, i32 %..copy.fca.1.load.sroa.speculated, i64 1
+  %i.ea = add nsw <2 x i32> %28, splat (i32 -1)
   %i.eb = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 2 uses
   %i.ec = sitofp <2 x i32> %i.ea to <2 x double>  ; 2 uses
   %i.ed = load <2 x double>, ptr %i.eb, align 16, !tbaa !31
@@ -621,8 +624,8 @@ bb.y:                                             ; preds = %bb.x
   br i1 %i.gd, label %_ZN2cvaNIiEERNS_5Rect_IT_EES4_RKS3_.exit138, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
-  %i.ge = icmp slt i32 %.sroa.0304.0.extract.trunc309, 1
-  %i.gf = icmp slt i32 %.sroa.8.0.extract.trunc311, 1
+  %i.ge = icmp slt i32 %..copy.fca.0.load.sroa.speculated, 1
+  %i.gf = icmp slt i32 %..copy.fca.1.load.sroa.speculated, 1
   %i.gg = select i1 %i.ge, i1 true, i1 %i.gf
   br i1 %i.gg, label %_ZN2cvaNIiEERNS_5Rect_IT_EES4_RKS3_.exit138, label %bb.aa
 
@@ -645,13 +648,13 @@ bb.ac:                                            ; preds = %bb.ab
   br i1 %i.go, label %_ZN2cvaNIiEERNS_5Rect_IT_EES4_RKS3_.exit138, label %._crit_edge.i130
 
 ._crit_edge.i130:                                 ; preds = %bb.ab, %bb.ac
-  %.sroa.speculated = phi i32 [ %.sroa.8.0.extract.trunc311, %bb.ac ], [ %i.ga, %bb.ab ]
-  %.neg49.pre-phi.i134 = phi i32 [ %i.gn, %bb.ac ], [ %.sroa.8.0.extract.trunc311, %bb.ab ]
+  %.sroa.speculated = phi i32 [ %..copy.fca.1.load.sroa.speculated, %bb.ac ], [ %i.ga, %bb.ab ]
+  %.neg49.pre-phi.i134 = phi i32 [ %i.gn, %bb.ac ], [ %..copy.fca.1.load.sroa.speculated, %bb.ab ]
   %i.gp = phi i32 [ 0, %bb.ac ], [ %i.fw, %bb.ab ] ; 2 uses
-  %.sroa.speculated172 = select i1 %i.gh, i32 %i.fy, i32 %.sroa.0304.0.extract.trunc309
+  %.sroa.speculated172 = select i1 %i.gh, i32 %i.fy, i32 %..copy.fca.0.load.sroa.speculated
   %.neg.i135 = sub i32 %i.gi, %i.gj
   %i.gq = add i32 %.neg.i135, %.sroa.speculated172
-  %.sroa.speculated166 = select i1 %i.gh, i32 %.sroa.0304.0.extract.trunc309, i32 %i.fy
+  %.sroa.speculated166 = select i1 %i.gh, i32 %..copy.fca.0.load.sroa.speculated, i32 %i.fy
   %.sroa.speculated53.i136 = call i32 @llvm.smin.i32(i32 %.sroa.speculated166, i32 %i.gq) ; 2 uses
   %.sroa.15189.8.insert.ext = zext nneg i32 %.sroa.speculated53.i136 to i64
   %i.gr = sub nsw i32 %.neg49.pre-phi.i134, %i.gp

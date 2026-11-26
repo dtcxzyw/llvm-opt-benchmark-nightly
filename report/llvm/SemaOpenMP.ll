@@ -205,7 +205,7 @@ _ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit162: ; p
   br i1 %.not145, label %bb.gh, label %bb.l
 
 bb.l:                                             ; preds = %_ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit162
-  %.val146 = load i32, ptr %24, align 4           ; 5 uses
+  %.val146 = load i32, ptr %24, align 4, !tbaa !268 ; 5 uses
   %i.ef = select i1 %spec.select479, i32 %.sroa.0.0.i, i32 %.val146 ; 7 uses
   store i32 %i.ef, ptr %24, align 4, !tbaa !268
   call void @llvm.lifetime.start.p0(ptr nonnull %27) #36
