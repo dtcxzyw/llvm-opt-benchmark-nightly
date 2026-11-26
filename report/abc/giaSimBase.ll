@@ -205,9 +205,9 @@ Gia_ManSimPatAssignInputs2.exit:                  ; preds = %.lr.ph.split.us.i, 
 
 .lr.ph.split.split.us.preheader:                  ; preds = %.lr.ph
   %wide.trip.count = zext nneg i32 %.val40 to i64
-  %i.cu = shl nuw nsw i64 %wide.trip.count.i48, 4
-  %i.cv = shl nuw nsw i64 %wide.trip.count.i48, 3
-  %min.iters.check103 = icmp ult i32 %.fr66, 14
+  %i.cu = shl nuw nsw i64 %wide.trip.count.i48, 3
+  %i.cv = shl nuw nsw i64 %wide.trip.count.i48, 4
+  %min.iters.check103 = icmp ult i32 %.fr66, 10
   %n.vec114 = and i64 %wide.trip.count.i48, 2147483644 ; 3 uses
   %cmp.n123 = icmp eq i64 %n.vec114, %wide.trip.count.i48
   %xtraiter144 = and i64 %wide.trip.count.i48, 1
@@ -259,7 +259,7 @@ Gia_ManSimPatAssignInputs2.exit:                  ; preds = %.lr.ph.split.us.i, 
   br i1 %min.iters.check103, label %.lr.ph.i49.us.preheader, label %vector.memcheck104
 
 vector.memcheck104:                               ; preds = %.lr.ph.preheader.i.us
-  %i.ee = mul i64 %indvars.iv, %i.cu              ; 3 uses
+  %i.ee = mul i64 %indvars.iv, %i.cv              ; 3 uses
   %i.ef = shl nsw i64 %i.dk, 3                    ; 2 uses
   %i.eg = sub i64 %i.ef, %i.ee
   %diff.check106 = icmp ugt i64 %i.eg, -32
@@ -267,7 +267,7 @@ vector.memcheck104:                               ; preds = %.lr.ph.preheader.i.
   %i.ei = sub i64 %i.eh, %i.ee
   %diff.check107.a = icmp ugt i64 %i.ei, -32
   %conflict.rdx108.a = or i1 %diff.check106, %diff.check107.a
-  %i.ej = add i64 %i.cv, %i.ee                    ; 2 uses
+  %i.ej = add i64 %i.cu, %i.ee                    ; 2 uses
   %i.ek = sub i64 %i.ef, %i.ej
   %diff.check109 = icmp ugt i64 %i.ek, -32
   %conflict.rdx110 = or i1 %conflict.rdx108.a, %diff.check109

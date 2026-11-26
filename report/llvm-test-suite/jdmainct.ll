@@ -204,7 +204,7 @@ bb.o:                                             ; preds = %._crit_edge.i51, %.
   %i.ed = sext i32 %i.eb to i64                   ; 4 uses
   %i.ee = zext nneg i32 %i.dt to i64              ; 8 uses
   %i.ef = sext i32 %i.ec to i64                   ; 4 uses
-  %min.iters.check90 = icmp ult i32 %i.dt, 32
+  %min.iters.check90 = icmp ult i32 %i.dt, 30
   br i1 %min.iters.check90, label %scalar.ph89.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i52

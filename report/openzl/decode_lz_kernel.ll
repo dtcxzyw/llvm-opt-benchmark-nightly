@@ -204,7 +204,7 @@ ZS_overlapCopy8.exit:                             ; preds = %bb.h, %bb.i
   br i1 %.not12.i, label %.preheader.preheader, label %.loopexit
 
 .preheader.preheader:                             ; preds = %ZS_overlapCopy8.exit
-  %i.cu = getelementptr i8, ptr %i.bv, i64 8      ; 8 uses
+  %i.cu = getelementptr i8, ptr %i.bv, i64 8      ; 7 uses
   %i.cv = add i64 %.0101.i, %i.a                  ; 2 uses
   %i.cw = add i64 %i.cv, %i.z
   %i.cx = add i64 %i.cw, %i.w
@@ -217,7 +217,7 @@ ZS_overlapCopy8.exit:                             ; preds = %bb.h, %bb.i
   %i.de = sub i64 %i.db, %i.dd                    ; 2 uses
   %i.df = lshr i64 %i.de, 4
   %i.dg = add nuw nsw i64 %i.df, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.de, 464
+  %min.iters.check = icmp ult i64 %i.de, 400
   br i1 %min.iters.check, label %.preheader.preheader125, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.preheader.preheader
@@ -233,32 +233,28 @@ vector.memcheck:                                  ; preds = %.preheader.preheade
   %i.dp = and i64 %i.do, -16                      ; 3 uses
   %i.dq = add i64 %.0101.i, %i.dp
   %i.dr = add i64 %i.dq, %i.w                     ; 2 uses
-  %3 = getelementptr i8, ptr %scevgep104, i64 %i.dr ; 3 uses
-  %4 = getelementptr i8, ptr %scevgep104, i64 %i.ad ; 3 uses
-  %i.ds = getelementptr i8, ptr %scevgep, i64 %i.dr ; 3 uses
+  %i.ds = getelementptr i8, ptr %scevgep104, i64 %i.dr ; 2 uses
   %i.dt = getelementptr i8, ptr %.2, i64 8        ; 2 uses
   %i.du = getelementptr i8, ptr %.2, i64 %i.dp
   %i.dv = getelementptr i8, ptr %i.du, i64 16     ; 2 uses
   %i.dw = getelementptr i8, ptr %.2, i64 16       ; 2 uses
   %i.dx = getelementptr i8, ptr %.2, i64 %i.dp
   %i.dy = getelementptr i8, ptr %i.dx, i64 24     ; 2 uses
-  %bound0 = icmp ult ptr %i.cu, %i.ds
-  %bound1 = icmp ult ptr %4, %3
-  %found.conflict = and i1 %bound0, %bound1
+  %3 = getelementptr i8, ptr %scevgep104, i64 %i.ad ; 2 uses
+  %4 = getelementptr i8, ptr %scevgep, i64 %i.dr  ; 2 uses
   %bound0105 = icmp ult ptr %i.cu, %i.dv
-  %bound1106 = icmp ult ptr %i.dt, %3
+  %bound1106 = icmp ult ptr %i.dt, %i.ds
   %found.conflict107 = and i1 %bound0105, %bound1106
-  %conflict.rdx = or i1 %found.conflict, %found.conflict107
   %bound0108.a = icmp ult ptr %i.cu, %i.dy
-  %bound1109.a = icmp ult ptr %i.dw, %3
+  %bound1109.a = icmp ult ptr %i.dw, %i.ds
   %found.conflict110.a = and i1 %bound0108.a, %bound1109.a
-  %conflict.rdx111.a = or i1 %conflict.rdx, %found.conflict110.a
-  %bound0112 = icmp ult ptr %4, %i.dv
-  %bound1113 = icmp ult ptr %i.dt, %i.ds
+  %conflict.rdx111.a = or i1 %found.conflict107, %found.conflict110.a
+  %bound0112 = icmp ult ptr %3, %i.dv
+  %bound1113 = icmp ult ptr %i.dt, %4
   %found.conflict114 = and i1 %bound0112, %bound1113
   %conflict.rdx115 = or i1 %conflict.rdx111.a, %found.conflict114
-  %bound0116 = icmp ult ptr %4, %i.dy
-  %bound1117 = icmp ult ptr %i.dw, %i.ds
+  %bound0116 = icmp ult ptr %3, %i.dy
+  %bound1117 = icmp ult ptr %i.dw, %4
   %found.conflict118 = and i1 %bound0116, %bound1117
   %conflict.rdx119 = or i1 %conflict.rdx115, %found.conflict118
   br i1 %conflict.rdx119, label %.preheader.preheader125, label %vector.ph
@@ -282,11 +278,11 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.ef = getelementptr inbounds nuw i8, ptr %next.gep120, i64 8
   %wide.load = load <2 x i64>, ptr %i.ee, align 1
   %wide.load123 = load <2 x i64>, ptr %i.ef, align 1
-  store <2 x i64> %wide.load, ptr %next.gep121, align 1
-  store <2 x i64> %wide.load123, ptr %next.gep122, align 1
+  store <2 x i64> %wide.load, ptr %next.gep121, align 1, !noalias !59
+  store <2 x i64> %wide.load123, ptr %next.gep122, align 1, !noalias !59
   %index.next = add nuw i64 %index, 2             ; 2 uses
   %i.eg = icmp eq i64 %index.next, %n.vec
-  br i1 %i.eg, label %middle.block, label %vector.body, !llvm.loop !53
+  br i1 %i.eg, label %middle.block, label %vector.body, !llvm.loop !56
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.dg, %n.vec
@@ -309,7 +305,7 @@ middle.block:                                     ; preds = %vector.body
   store i64 %i.ek, ptr %i.ei, align 1
   %i.el = getelementptr inbounds nuw i8, ptr %.1, i64 16 ; 2 uses
   %i.em = icmp ult ptr %i.el, %i.bx
-  br i1 %i.em, label %.preheader, label %.loopexit, !llvm.loop !54
+  br i1 %i.em, label %.preheader, label %.loopexit, !llvm.loop !57
 
 .preheader47:                                     ; preds = %bb.f
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.bv, ptr noundef nonnull align 1 dereferenceable(16) %i.bw, i64 16, i1 false)
@@ -409,7 +405,7 @@ bb.l:                                             ; preds = %bb.k
   %i.ga = add nuw nsw i64 %.0.i.epil, 32
   %epil.iter130.next = add i64 %epil.iter130, 1   ; 2 uses
   %epil.iter130.cmp.not = icmp eq i64 %epil.iter130.next, %xtraiter129
-  br i1 %epil.iter130.cmp.not, label %.loopexit, label %.preheader49.epil, !llvm.loop !55
+  br i1 %epil.iter130.cmp.not, label %.loopexit, label %.preheader49.epil, !llvm.loop !58
 
 .loopexit:                                        ; preds = %.loopexit.loopexit127.unr-lcssa, %.preheader49.epil, %bb.j, %.preheader, %middle.block, %bb.k, %ZS_overlapCopy8.exit
   %i.gb = add nsw i64 %.093.i, 1                  ; 3 uses
@@ -559,7 +555,7 @@ bb.c:                                             ; preds = %bb.b
   %i.bq = add nuw nsw i64 %.090.i.epil, 32
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %.loopexit52, label %.preheader51.epil, !llvm.loop !56
+  br i1 %epil.iter.cmp.not, label %.loopexit52, label %.preheader51.epil, !llvm.loop !60
 
 .loopexit52:                                      ; preds = %.loopexit52.loopexit.unr-lcssa, %.preheader51.epil, %bb.b
   %i.br = sub nsw i64 %i.ad, %i.ac                ; 3 uses
@@ -625,7 +621,7 @@ ZS_overlapCopy8.exit:                             ; preds = %bb.h, %bb.i
   br i1 %.not12.i, label %.preheader.preheader, label %.loopexit
 
 .preheader.preheader:                             ; preds = %ZS_overlapCopy8.exit
-  %i.cu = getelementptr i8, ptr %i.bv, i64 8      ; 8 uses
+  %i.cu = getelementptr i8, ptr %i.bv, i64 8      ; 7 uses
   %i.cv = add i64 %.0101.i, %i.a                  ; 2 uses
   %i.cw = add i64 %i.cv, %i.z
   %i.cx = add i64 %i.cw, %i.w
@@ -638,7 +634,7 @@ ZS_overlapCopy8.exit:                             ; preds = %bb.h, %bb.i
   %i.de = sub i64 %i.db, %i.dd                    ; 2 uses
   %i.df = lshr i64 %i.de, 4
   %i.dg = add nuw nsw i64 %i.df, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.de, 464
+  %min.iters.check = icmp ult i64 %i.de, 400
   br i1 %min.iters.check, label %.preheader.preheader126, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.preheader.preheader
@@ -654,32 +650,28 @@ vector.memcheck:                                  ; preds = %.preheader.preheade
   %i.dp = and i64 %i.do, -16                      ; 3 uses
   %i.dq = add i64 %.0101.i, %i.dp
   %i.dr = add i64 %i.dq, %i.w                     ; 2 uses
-  %3 = getelementptr i8, ptr %scevgep105, i64 %i.dr ; 3 uses
-  %4 = getelementptr i8, ptr %scevgep105, i64 %i.ad ; 3 uses
-  %i.ds = getelementptr i8, ptr %scevgep, i64 %i.dr ; 3 uses
+  %i.ds = getelementptr i8, ptr %scevgep105, i64 %i.dr ; 2 uses
   %i.dt = getelementptr i8, ptr %.2, i64 8        ; 2 uses
   %i.du = getelementptr i8, ptr %.2, i64 %i.dp
   %i.dv = getelementptr i8, ptr %i.du, i64 16     ; 2 uses
   %i.dw = getelementptr i8, ptr %.2, i64 16       ; 2 uses
   %i.dx = getelementptr i8, ptr %.2, i64 %i.dp
   %i.dy = getelementptr i8, ptr %i.dx, i64 24     ; 2 uses
-  %bound0 = icmp ult ptr %i.cu, %i.ds
-  %bound1 = icmp ult ptr %4, %3
-  %found.conflict = and i1 %bound0, %bound1
+  %3 = getelementptr i8, ptr %scevgep105, i64 %i.ad ; 2 uses
+  %4 = getelementptr i8, ptr %scevgep, i64 %i.dr  ; 2 uses
   %bound0106 = icmp ult ptr %i.cu, %i.dv
-  %bound1107 = icmp ult ptr %i.dt, %3
+  %bound1107 = icmp ult ptr %i.dt, %i.ds
   %found.conflict108 = and i1 %bound0106, %bound1107
-  %conflict.rdx = or i1 %found.conflict, %found.conflict108
   %bound0109.a = icmp ult ptr %i.cu, %i.dy
-  %bound1110.a = icmp ult ptr %i.dw, %3
+  %bound1110.a = icmp ult ptr %i.dw, %i.ds
   %found.conflict111.a = and i1 %bound0109.a, %bound1110.a
-  %conflict.rdx112.a = or i1 %conflict.rdx, %found.conflict111.a
-  %bound0113 = icmp ult ptr %4, %i.dv
-  %bound1114 = icmp ult ptr %i.dt, %i.ds
+  %conflict.rdx112.a = or i1 %found.conflict108, %found.conflict111.a
+  %bound0113 = icmp ult ptr %3, %i.dv
+  %bound1114 = icmp ult ptr %i.dt, %4
   %found.conflict115 = and i1 %bound0113, %bound1114
   %conflict.rdx116 = or i1 %conflict.rdx112.a, %found.conflict115
-  %bound0117 = icmp ult ptr %4, %i.dy
-  %bound1118 = icmp ult ptr %i.dw, %i.ds
+  %bound0117 = icmp ult ptr %3, %i.dy
+  %bound1118 = icmp ult ptr %i.dw, %4
   %found.conflict119 = and i1 %bound0117, %bound1118
   %conflict.rdx120 = or i1 %conflict.rdx116, %found.conflict119
   br i1 %conflict.rdx120, label %.preheader.preheader126, label %vector.ph
@@ -703,11 +695,11 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.ef = getelementptr inbounds nuw i8, ptr %next.gep121, i64 8
   %wide.load = load <2 x i64>, ptr %i.ee, align 1
   %wide.load124 = load <2 x i64>, ptr %i.ef, align 1
-  store <2 x i64> %wide.load, ptr %next.gep122, align 1
-  store <2 x i64> %wide.load124, ptr %next.gep123, align 1
+  store <2 x i64> %wide.load, ptr %next.gep122, align 1, !noalias !67
+  store <2 x i64> %wide.load124, ptr %next.gep123, align 1, !noalias !67
   %index.next = add nuw i64 %index, 2             ; 2 uses
   %i.eg = icmp eq i64 %index.next, %n.vec
-  br i1 %i.eg, label %middle.block, label %vector.body, !llvm.loop !57
+  br i1 %i.eg, label %middle.block, label %vector.body, !llvm.loop !64
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.dg, %n.vec
@@ -730,7 +722,7 @@ middle.block:                                     ; preds = %vector.body
   store i64 %i.ek, ptr %i.ei, align 1
   %i.el = getelementptr inbounds nuw i8, ptr %.1, i64 16 ; 2 uses
   %i.em = icmp ult ptr %i.el, %i.bx
-  br i1 %i.em, label %.preheader, label %.loopexit, !llvm.loop !58
+  br i1 %i.em, label %.preheader, label %.loopexit, !llvm.loop !65
 
 .preheader47:                                     ; preds = %bb.f
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.bv, ptr noundef nonnull align 1 dereferenceable(16) %i.bw, i64 16, i1 false)
@@ -830,7 +822,7 @@ bb.l:                                             ; preds = %bb.k
   %i.ga = add nuw nsw i64 %.0.i.epil, 32
   %epil.iter131.next = add i64 %epil.iter131, 1   ; 2 uses
   %epil.iter131.cmp.not = icmp eq i64 %epil.iter131.next, %xtraiter130
-  br i1 %epil.iter131.cmp.not, label %.loopexit, label %.preheader49.epil, !llvm.loop !59
+  br i1 %epil.iter131.cmp.not, label %.loopexit, label %.preheader49.epil, !llvm.loop !66
 
 .loopexit:                                        ; preds = %.loopexit.loopexit128.unr-lcssa, %.preheader49.epil, %bb.j, %.preheader, %middle.block, %bb.k, %ZS_overlapCopy8.exit
   %i.gb = add nsw i64 %.093.i, 1                  ; 3 uses
@@ -871,15 +863,15 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.c = load i64, ptr %i.b, align 8, !tbaa !25
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !61
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !69
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.g = load i64, ptr %i.f, align 8, !tbaa !19   ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 32
-  %i.i = load ptr, ptr %i.h, align 8, !tbaa !62
+  %i.i = load ptr, ptr %i.h, align 8, !tbaa !70
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 40
   %i.k = load i64, ptr %i.j, align 8, !tbaa !20   ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 48
-  %i.m = load ptr, ptr %i.l, align 8, !tbaa !63
+  %i.m = load ptr, ptr %i.l, align 8, !tbaa !71
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 56
   %i.o = load i64, ptr %i.n, align 8, !tbaa !21   ; 3 uses
   %i.p = mul nsw i64 %i.k, %3
@@ -1101,7 +1093,7 @@ bb.t:                                             ; preds = %bb.s
   %i.cd = add nuw nsw i64 %.079, 2                ; 2 uses
   %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !60
+  br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !68
 
 bb.u:                                             ; preds = %bb.t, %bb.s, %bb.r, %bb.n, %bb.o, %ZL_readN.exit78, %._crit_edge
   %.058 = phi i32 [ 0, %._crit_edge ], [ 2, %ZL_readN.exit78 ], [ 1, %bb.n ], [ 3, %bb.r ], [ 4, %bb.s ], [ 1, %bb.o ], [ 5, %bb.t ]
@@ -1190,15 +1182,23 @@ attributes #8 = { nounwind }
 !50 = !{!26, !17, i64 8}
 !51 = !{ptr @ZL_Lz_decode_u16Loop, ptr @ZL_Lz_decode_u32Loop}
 !52 = distinct !{!52, !39}
-!53 = distinct !{!53, !23, !42, !43}
-!54 = distinct !{!54, !23, !42}
-!55 = distinct !{!55, !39}
-!56 = distinct !{!56, !39}
-!57 = distinct !{!57, !23, !42, !43}
-!58 = distinct !{!58, !23, !42}
-!59 = distinct !{!59, !39}
-!60 = distinct !{!60, !23}
-!61 = !{!18, !15, i64 16}
-!62 = !{!18, !15, i64 32}
-!63 = !{!18, !15, i64 48}
+!53 = distinct !{!53, i1 false, !"LVerDomain"}
+!54 = distinct !{!54, !53}
+!55 = distinct !{!55, !53}
+!56 = distinct !{!56, !23, !42, !43}
+!57 = distinct !{!57, !23, !42}
+!58 = distinct !{!58, !39}
+!59 = !{!55, !54}
+!60 = distinct !{!60, !39}
+!61 = distinct !{!61, i1 false, !"LVerDomain"}
+!62 = distinct !{!62, !61}
+!63 = distinct !{!63, !61}
+!64 = distinct !{!64, !23, !42, !43}
+!65 = distinct !{!65, !23, !42}
+!66 = distinct !{!66, !39}
+!67 = !{!63, !62}
+!68 = distinct !{!68, !23}
+!69 = !{!18, !15, i64 16}
+!70 = !{!18, !15, i64 32}
+!71 = !{!18, !15, i64 48}
 end_hunk_0

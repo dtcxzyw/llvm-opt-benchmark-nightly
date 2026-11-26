@@ -27,7 +27,7 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph.preheader:                                 ; preds = %bb.b
   %i.j = zext nneg i32 %i.a to i64                ; 5 uses
   %smax = tail call i32 @llvm.smax.i32(i32 %i.a, i32 2) ; 4 uses
-  %wide.trip.count = zext nneg i32 %smax to i64   ; 5 uses
+  %wide.trip.count = zext nneg i32 %smax to i64   ; 4 uses
   %i.k = add nsw i64 %wide.trip.count, -1         ; 2 uses
   %xtraiter = and i64 %i.k, 3
   %i.l = icmp slt i32 %3, 3
@@ -159,17 +159,13 @@ middle.block:                                     ; preds = %vector.body
   br i1 %min.iters.check337, label %.lr.ph197.preheader387, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph197.preheader
-  %4 = shl nuw nsw i64 %wide.trip.count, 3
-  %5 = or disjoint i64 %4, 11
-  %diff.check = icmp samesign ult i64 %5, 15
   %i.bk = mul nuw nsw i64 %wide.trip.count, 12    ; 2 uses
   %i.bl = add nsw i64 %i.bk, -5
   %diff.check339 = icmp ult i64 %i.bl, 15
-  %conflict.rdx340 = or i1 %diff.check, %diff.check339
   %i.bm = shl nuw nsw i64 %wide.trip.count227, 2
   %i.bn = add nuw nsw i64 %i.bk, %i.bm
   %i.bo = icmp samesign ult i64 %i.bn, 20
-  %conflict.rdx344 = or i1 %conflict.rdx340, %i.bo
+  %conflict.rdx344 = or i1 %diff.check339, %i.bo
   %i.bp = shl nuw nsw i64 %wide.trip.count, 2
   %i.bq = or disjoint i64 %i.bp, 3
   %diff.check345.a = icmp samesign ult i64 %i.bq, 15

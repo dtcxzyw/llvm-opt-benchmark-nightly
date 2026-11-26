@@ -204,11 +204,10 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph209.preheader:                              ; preds = %bb.b
   %wide.trip.count231 = zext nneg i32 %.val173 to i64 ; 5 uses
-  %min.iters.check346 = icmp ult i32 %.val173, 44
+  %min.iters.check346 = icmp ult i32 %.val173, 40
   br i1 %min.iters.check346, label %.lr.ph209.preheader381, label %vector.memcheck347
 
 vector.memcheck347:                               ; preds = %.lr.ph209.preheader
-  %2 = shl nuw nsw i64 %i.m, 3
   %i.ag = shl nsw i64 %i.k, 3                     ; 4 uses
   %i.ah = add i64 %i.ag, %.val172340              ; 2 uses
   %i.ai = sub i64 %.248341, %i.ah
@@ -224,6 +223,7 @@ vector.memcheck347:                               ; preds = %.lr.ph209.preheader
   %i.an = sub i64 %i.am, %.239344
   %diff.check355 = icmp ugt i64 %i.an, -32
   %conflict.rdx356 = or i1 %conflict.rdx354, %diff.check355
+  %2 = shl nuw nsw i64 %i.m, 3
   %i.ao = add i64 %2, %.val172340
   %i.ap = add i64 %i.ao, %i.ag                    ; 4 uses
   %i.aq = sub i64 %.248341, %i.ap
@@ -382,11 +382,10 @@ bb.d:                                             ; preds = %bb.c
 
 .lr.ph207.preheader:                              ; preds = %bb.d
   %wide.trip.count226 = zext nneg i32 %.val159 to i64 ; 5 uses
-  %min.iters.check294 = icmp ult i32 %.val159, 40
+  %min.iters.check294 = icmp ult i32 %.val159, 36
   br i1 %min.iters.check294, label %.lr.ph207.preheader382, label %vector.memcheck295
 
 vector.memcheck295:                               ; preds = %.lr.ph207.preheader
-  %3 = shl nuw nsw i64 %i.dd, 3
   %i.do = shl nsw i64 %i.db, 3                    ; 3 uses
   %i.dp = add i64 %i.do, %.val158290
   %i.dq = sub i64 %.291, %i.dp
@@ -395,6 +394,7 @@ vector.memcheck295:                               ; preds = %.lr.ph207.preheader
   %i.ds = sub i64 %i.dr, %.247292
   %diff.check299 = icmp ugt i64 %i.ds, -32
   %conflict.rdx300 = or i1 %diff.check297, %diff.check299
+  %3 = shl nuw nsw i64 %i.dd, 3
   %i.dt = add i64 %3, %.val158290
   %i.du = add i64 %i.dt, %i.do                    ; 2 uses
   %i.dv = sub i64 %.291, %i.du
@@ -560,7 +560,7 @@ Gia_ObjIsPi.exit.thread:                          ; preds = %Gia_ObjIsPi.exit
 
 .lr.ph203.preheader:                              ; preds = %Gia_ObjIsPi.exit.thread
   %wide.trip.count218 = zext nneg i32 %.val151 to i64 ; 5 uses
-  %min.iters.check260 = icmp ult i32 %.val151, 36
+  %min.iters.check260 = icmp ult i32 %.val151, 30
   br i1 %min.iters.check260, label %.lr.ph203.preheader385, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph203.preheader

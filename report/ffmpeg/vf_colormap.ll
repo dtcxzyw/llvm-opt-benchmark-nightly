@@ -205,25 +205,16 @@ bb.a:
   br i1 %i.d, label %.lr.ph125.preheader, label %.critedge
 
 .lr.ph125.preheader:                              ; preds = %bb.a
-  %i.e = zext nneg i32 %2 to i64                  ; 28 uses
+  %i.e = zext nneg i32 %2 to i64                  ; 26 uses
   %i.f = zext nneg i32 %2 to i64                  ; 2 uses
   %i.g = add nuw i32 %2, 1
-  %i.h = shl nuw nsw i64 %i.e, 3                  ; 4 uses
-  %scevgep = getelementptr i8, ptr %0, i64 %i.h
-  %3 = add nsw i64 %i.h, -8
-  %4 = mul i64 %3, %i.e
-  %5 = add nuw nsw i64 %i.h, 8                    ; 2 uses
+  %i.h = shl nuw nsw i64 %i.e, 3                  ; 3 uses
+  %scevgep = getelementptr i8, ptr %0, i64 %i.h   ; 2 uses
   %i.i = mul nuw nsw i64 %i.e, %i.e
   %i.j = shl i64 %i.i, 3
-  %scevgep188 = getelementptr i8, ptr %0, i64 %i.j ; 2 uses
-  %6 = shl nuw nsw i64 %i.e, 3                    ; 3 uses
-  %i.k = add nuw nsw i64 %6, 8
-  %scevgep206 = getelementptr i8, ptr %0, i64 %6
+  %scevgep188 = getelementptr i8, ptr %0, i64 %i.j
+  %i.k = add nuw nsw i64 %i.h, 8                  ; 2 uses
   %i.l = add nsw i64 %i.e, -2                     ; 2 uses
-  %7 = getelementptr i8, ptr %0, i64 %4
-  %8 = getelementptr i8, ptr %7, i64 8
-  %9 = getelementptr i8, ptr %0, i64 %i.h
-  %10 = getelementptr i8, ptr %0, i64 %5
   %i.m = add nsw i64 %i.e, -1
   %i.n = add nsw i64 %i.e, -1
   br label %.lr.ph125
@@ -244,14 +235,13 @@ bb.a:
   %i.t = zext i32 %i.s to i64
   %i.u = shl nuw nsw i64 %i.t, 3                  ; 2 uses
   %scevgep183 = getelementptr i8, ptr %scevgep, i64 %i.u
-  %i.v = shl nuw nsw i64 %indvars.iv152, 3        ; 2 uses
+  %i.v = shl nuw nsw i64 %indvars.iv152, 3
   %i.w = getelementptr i8, ptr %0, i64 %i.v
   %scevgep184 = getelementptr i8, ptr %i.w, i64 8
   %scevgep185 = getelementptr i8, ptr %scevgep184, i64 %i.u
-  %scevgep186 = getelementptr i8, ptr %8, i64 %i.v
-  %i.x = mul i64 %5, %indvars.iv152               ; 2 uses
-  %scevgep187 = getelementptr i8, ptr %9, i64 %i.x
-  %scevgep189 = getelementptr i8, ptr %10, i64 %i.x ; 2 uses
+  %3 = add nuw i64 %indvars.iv152, 1
+  %i.x = mul i64 %i.k, %3
+  %scevgep189 = getelementptr i8, ptr %0, i64 %i.x
   %indvars154 = trunc i64 %indvars.iv152 to i32   ; 5 uses
   %indvars.iv.next153 = add nuw nsw i64 %indvars.iv152, 1 ; 3 uses
   %i.y = icmp samesign ult i64 %indvars.iv.next153, %i.f ; 2 uses
@@ -385,12 +375,12 @@ vector.memcheck209:                               ; preds = %.lr.ph118.preheader
   %i.cb = getelementptr i8, ptr %0, i64 %i.bz
   %i.cc = getelementptr i8, ptr %i.cb, i64 8
   %i.cd = getelementptr i8, ptr %i.cc, i64 %i.ca
-  %i.ce = getelementptr i8, ptr %scevgep206, i64 %i.ca
+  %i.ce = getelementptr i8, ptr %scevgep, i64 %i.ca
   %i.cf = mul i64 %indvars.iv152, %i.k
   %i.cg = getelementptr i8, ptr %0, i64 %i.cf
   %i.ch = getelementptr i8, ptr %i.cg, i64 8
   %i.ci = add nuw i64 %indvars.iv152, 1
-  %i.cj = mul i64 %6, %i.ci
+  %i.cj = mul i64 %i.h, %i.ci
   %i.ck = getelementptr i8, ptr %0, i64 %i.cj
   %bound0210 = icmp ult ptr %i.cd, %i.ck
   %bound1211 = icmp ult ptr %i.ch, %i.ce
@@ -501,14 +491,10 @@ middle.block222:                                  ; preds = %vector.body215
   %invariant.gep167 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.dm ; 4 uses
   %i.dn = xor i64 %indvars.iv152, -1
   %i.do = add nsw i64 %i.dn, %i.e                 ; 3 uses
-  %min.iters.check = icmp ult i64 %i.do, 4
-  %bound0 = icmp ult ptr %scevgep189, %scevgep186
-  %bound1.a = icmp ult ptr %scevgep187, %scevgep188
-  %found.conflict = and i1 %bound0, %bound1.a
+  %bound1.a = icmp ult i64 %i.do, 4
   %bound0190 = icmp ult ptr %scevgep189, %scevgep183
   %bound1191 = icmp ult ptr %scevgep185, %scevgep188
   %found.conflict192 = and i1 %bound0190, %bound1191
-  %conflict.rdx = or i1 %found.conflict, %found.conflict192
   %n.vec = and i64 %i.do, -4                      ; 3 uses
   %i.dp = add i64 %indvars.iv, %n.vec
   %cmp.n = icmp eq i64 %i.do, %n.vec
@@ -519,30 +505,27 @@ middle.block222:                                  ; preds = %vector.body215
   %i.dq = mul nuw nsw i64 %indvars.iv147, %i.e    ; 2 uses
   %gep172 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep171, i64 %i.dq ; 4 uses
   %invariant.gep169 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.dq ; 4 uses
-  %brmerge = select i1 %min.iters.check, i1 true, i1 %conflict.rdx
-  br i1 %brmerge, label %scalar.ph.preheader, label %vector.ph
+  %brmerge = select i1 %bound1.a, i1 true, i1 %found.conflict192
+  br i1 %brmerge, label %scalar.ph.preheader, label %vector.body
 
-vector.ph:                                        ; preds = %.preheader
-  %11 = load double, ptr %gep172, align 8, !tbaa !44, !alias.scope !146
-  %broadcast.splatinsert = insertelement <2 x double> poison, double %11, i64 0
-  %broadcast.splat = shufflevector <2 x double> %broadcast.splatinsert, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
-  br label %vector.body
-
-vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+vector.body:                                      ; preds = %.preheader, %vector.body
+  %index = phi i64 [ %index.next, %vector.body ], [ 0, %.preheader ] ; 2 uses
   %i.dr = add nuw i64 %indvars.iv, %index         ; 2 uses
+  %4 = load double, ptr %gep172, align 8, !tbaa !44, !alias.scope !146
+  %broadcast.splatinsert = insertelement <2 x double> poison, double %4, i64 0
+  %broadcast.splat = shufflevector <2 x double> %broadcast.splatinsert, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.ds = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep167, i64 %i.dr ; 2 uses
   %i.dt = getelementptr inbounds nuw i8, ptr %i.ds, i64 16
   %wide.load = load <2 x double>, ptr %i.ds, align 8, !tbaa !44, !alias.scope !147
   %wide.load193 = load <2 x double>, ptr %i.dt, align 8, !tbaa !44, !alias.scope !147
   %i.du = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep169, i64 %i.dr ; 3 uses
   %i.dv = getelementptr inbounds nuw i8, ptr %i.du, i64 16 ; 2 uses
-  %wide.load194 = load <2 x double>, ptr %i.du, align 8, !tbaa !44, !alias.scope !148, !noalias !149
-  %wide.load195 = load <2 x double>, ptr %i.dv, align 8, !tbaa !44, !alias.scope !148, !noalias !149
+  %wide.load194 = load <2 x double>, ptr %i.du, align 8, !tbaa !44, !alias.scope !148, !noalias !147
+  %wide.load195 = load <2 x double>, ptr %i.dv, align 8, !tbaa !44, !alias.scope !148, !noalias !147
   %i.dw = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %broadcast.splat, <2 x double> %wide.load, <2 x double> %wide.load194)
   %i.dx = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %broadcast.splat, <2 x double> %wide.load193, <2 x double> %wide.load195)
-  store <2 x double> %i.dw, ptr %i.du, align 8, !tbaa !44, !alias.scope !148, !noalias !149
-  store <2 x double> %i.dx, ptr %i.dv, align 8, !tbaa !44, !alias.scope !148, !noalias !149
+  store <2 x double> %i.dw, ptr %i.du, align 8, !tbaa !44, !alias.scope !148, !noalias !147
+  store <2 x double> %i.dx, ptr %i.dv, align 8, !tbaa !44, !alias.scope !148, !noalias !147
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.dy = icmp eq i64 %index.next, %n.vec
   br i1 %i.dy, label %middle.block, label %vector.body, !llvm.loop !141
@@ -806,5 +789,4 @@ attributes #14 = { nounwind willreturn memory(none) }
 !146 = !{!138}
 !147 = !{!139}
 !148 = !{!140}
-!149 = !{!138, !139}
 end_hunk_0

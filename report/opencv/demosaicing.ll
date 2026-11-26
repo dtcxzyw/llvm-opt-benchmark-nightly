@@ -205,18 +205,17 @@ bb.a:
   %i.bk = zext nneg i32 %i.bj to i64              ; 3 uses
   %min.iters.check = icmp samesign ult i32 %i.d, 3
   %i.bl = add nsw i64 %i.bi, -1
-  %diff.check = icmp ult i64 %i.bl, 31
-  %diff.check272 = icmp samesign ult i32 %i.d, 31
-  %conflict.rdx = or i1 %diff.check, %diff.check272
+  %diff.check272 = icmp ult i64 %i.bl, 31
   %i.bm = add nsw i64 %i.bh, -1
   %diff.check273.a = icmp ult i64 %i.bm, 31
-  %conflict.rdx274.a = or i1 %conflict.rdx, %diff.check273.a
+  %conflict.rdx274.a = or i1 %diff.check272, %diff.check273.a
   %i.bn = add nsw i64 %i.bi, %i.bk
   %diff.check275 = icmp ult i64 %i.bn, 31
   %conflict.rdx276 = or i1 %conflict.rdx274.a, %diff.check275
   %i.bo = sub nsw i64 %i.bh, %i.bi
   %diff.check277 = icmp ugt i64 %i.bo, -32
   %conflict.rdx278 = or i1 %conflict.rdx276, %diff.check277
+  %min.iters.check275 = icmp samesign ult i32 %i.d, 31
   %i.bp = and i64 %i.g, 28
   %n.vec = and i64 %i.g, 224                      ; 6 uses
   %i.bq = sub nsw i64 0, %i.bg
@@ -528,9 +527,12 @@ iter.check:                                       ; preds = %bb.e, %.loopexit
   %invariant.gep = getelementptr i8, ptr %.5, i64 %i.bh ; 12 uses
   %invariant.gep255 = getelementptr i8, ptr %.5, i64 %i.bi ; 12 uses
   %brmerge = select i1 %min.iters.check, i1 true, i1 %conflict.rdx278
-  br i1 %brmerge, label %vec.epilog.scalar.ph.preheader, label %vector.body
+  br i1 %brmerge, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
-vector.body:                                      ; preds = %iter.check
+vector.main.loop.iter.check:                      ; preds = %iter.check
+  br i1 %min.iters.check275, label %vec.epilog.ph, label %vector.body
+
+vector.body:                                      ; preds = %vector.main.loop.iter.check
   %i.kh = getelementptr inbounds i8, ptr %.5, i64 %i.bq ; 2 uses
   %i.ki = getelementptr inbounds nuw i8, ptr %i.kh, i64 16
   %wide.load = load <16 x i8>, ptr %i.kh, align 1, !tbaa !18
@@ -607,10 +609,14 @@ middle.block:                                     ; preds = %vector.body.3, %vec
   br i1 %cmp.n, label %.loopexit289, label %vec.epilog.iter.check
 
 vec.epilog.iter.check:                            ; preds = %middle.block
-  br i1 %min.epilog.iters.check, label %vec.epilog.scalar.ph.preheader, label %vec.epilog.vector.body, !prof !41
+  br i1 %min.epilog.iters.check, label %vec.epilog.scalar.ph.preheader, label %vec.epilog.ph, !prof !41
 
-vec.epilog.vector.body:                           ; preds = %vec.epilog.iter.check, %vec.epilog.vector.body
-  %index284 = phi i64 [ %index.next287, %vec.epilog.vector.body ], [ %n.vec, %vec.epilog.iter.check ] ; 5 uses
+vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
+  %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
+  br label %vec.epilog.vector.body
+
+vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
+  %index284 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next287, %vec.epilog.vector.body ] ; 5 uses
   %i.lk = sub nsw i64 %index284, %i.bg
   %i.ll = getelementptr inbounds i8, ptr %.5, i64 %i.lk
   %wide.load285 = load <4 x i8>, ptr %i.ll, align 1, !tbaa !18
@@ -788,19 +794,15 @@ bb.a:
   %i.bj = sext i32 %i.bg to i64                   ; 2 uses
   %i.bk = sext i32 %i.bh to i64                   ; 3 uses
   %i.bl = and i32 %i.c, 127
-  %i.bm = zext nneg i32 %i.bl to i64              ; 4 uses
-  %2 = shl nuw nsw i64 %i.bm, 1
+  %i.bm = zext nneg i32 %i.bl to i64              ; 3 uses
   %min.iters.check = icmp samesign ult i32 %i.d, 3
   %i.bn = shl nsw i64 %i.bk, 1                    ; 2 uses
   %i.bo = add nsw i64 %i.bn, -1
-  %diff.check = icmp ult i64 %i.bo, 31
-  %3 = or disjoint i64 %2, 1
-  %diff.check269 = icmp samesign ult i64 %3, 31
-  %conflict.rdx = or i1 %diff.check, %diff.check269
+  %diff.check269 = icmp ult i64 %i.bo, 31
   %i.bp = shl nsw i64 %i.bj, 1                    ; 2 uses
   %i.bq = add nsw i64 %i.bp, -1
   %diff.check270.a = icmp ult i64 %i.bq, 31
-  %conflict.rdx271.a = or i1 %conflict.rdx, %diff.check270.a
+  %conflict.rdx271.a = or i1 %diff.check269, %diff.check270.a
   %i.br = add nsw i64 %i.bk, %i.bm
   %i.bs = shl nsw i64 %i.br, 1
   %i.bt = or disjoint i64 %i.bs, 1

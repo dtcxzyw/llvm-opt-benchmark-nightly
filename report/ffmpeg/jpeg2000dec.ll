@@ -205,7 +205,7 @@ vector.memcheck:                                  ; preds = %bb.d
   %i.aq = trunc nuw nsw i16 %i.ap to i8
   store i8 %i.aq, ptr %2, align 2, !tbaa !43
   %i.ar = and i16 %i.ao, 2047
-  %i.as = getelementptr inbounds nuw i8, ptr %2, i64 100 ; 5 uses
+  %i.as = getelementptr inbounds nuw i8, ptr %2, i64 100 ; 16 uses
   store i16 %i.ar, ptr %i.as, align 2, !tbaa !61
   %i.at = getelementptr i8, ptr %2, i64 1         ; 2 uses
   %i.au = getelementptr i8, ptr %2, i64 99        ; 2 uses
@@ -223,93 +223,126 @@ vector.memcheck:                                  ; preds = %bb.d
 vector.body:                                      ; preds = %vector.memcheck
   %broadcast.splatinsert = insertelement <8 x i16> poison, i16 %i.ap, i64 0
   %broadcast.splat = shufflevector <8 x i16> %broadcast.splatinsert, <8 x i16> poison, <8 x i32> zeroinitializer ; 12 uses
-  %3 = load i16, ptr %i.as, align 2, !tbaa !61, !alias.scope !274
-  %broadcast.splatinsert95 = insertelement <8 x i16> poison, i16 %3, i64 0
-  %broadcast.splat96 = shufflevector <8 x i16> %broadcast.splatinsert95, <8 x i16> poison, <8 x i32> zeroinitializer ; 12 uses
-  %4 = add nsw <8 x i16> %broadcast.splat, <i16 0, i16 0, i16 0, i16 -1, i16 -1, i16 -1, i16 -2, i16 -2>
-  %5 = tail call <8 x i16> @llvm.smax.v8i16(<8 x i16> %4, <8 x i16> zeroinitializer)
-  %6 = trunc nuw nsw <8 x i16> %5 to <8 x i8>
-  %7 = getelementptr inbounds nuw i8, ptr %2, i64 1
-  store <8 x i8> %6, ptr %7, align 1, !tbaa !43, !alias.scope !275, !noalias !276
+  %3 = add nsw <8 x i16> %broadcast.splat, <i16 0, i16 0, i16 0, i16 -1, i16 -1, i16 -1, i16 -2, i16 -2>
+  %4 = tail call <8 x i16> @llvm.smax.v8i16(<8 x i16> %3, <8 x i16> zeroinitializer)
+  %5 = trunc nuw nsw <8 x i16> %4 to <8 x i8>
+  %6 = getelementptr inbounds nuw i8, ptr %2, i64 1
+  store <8 x i8> %5, ptr %6, align 1, !tbaa !43, !alias.scope !274, !noalias !275
+  %7 = load i16, ptr %i.as, align 2, !tbaa !61, !alias.scope !276
+  %broadcast.splatinsert94 = insertelement <8 x i16> poison, i16 %7, i64 0
+  %broadcast.splat95 = shufflevector <8 x i16> %broadcast.splatinsert94, <8 x i16> poison, <8 x i32> zeroinitializer
   %i.ax = getelementptr inbounds nuw i8, ptr %2, i64 102
-  store <8 x i16> %broadcast.splat96, ptr %i.ax, align 2, !tbaa !61, !alias.scope !277, !noalias !274
+  store <8 x i16> %broadcast.splat95, ptr %i.ax, align 2, !tbaa !61, !alias.scope !277
   %i.ay = add nsw <8 x i16> %broadcast.splat, <i16 -2, i16 -3, i16 -3, i16 -3, i16 -4, i16 -4, i16 -4, i16 -5>
   %i.az = tail call <8 x i16> @llvm.smax.v8i16(<8 x i16> %i.ay, <8 x i16> zeroinitializer)
   %i.ba = trunc nuw nsw <8 x i16> %i.az to <8 x i8>
   %i.bb = getelementptr inbounds nuw i8, ptr %2, i64 9
-  store <8 x i8> %i.ba, ptr %i.bb, align 1, !tbaa !43, !alias.scope !275, !noalias !276
+  store <8 x i8> %i.ba, ptr %i.bb, align 1, !tbaa !43, !alias.scope !274, !noalias !275
+  %8 = load i16, ptr %i.as, align 2, !tbaa !61, !alias.scope !276
+  %broadcast.splatinsert94.1 = insertelement <8 x i16> poison, i16 %8, i64 0
+  %broadcast.splat95.1 = shufflevector <8 x i16> %broadcast.splatinsert94.1, <8 x i16> poison, <8 x i32> zeroinitializer
   %i.bc = getelementptr inbounds nuw i8, ptr %2, i64 118
-  store <8 x i16> %broadcast.splat96, ptr %i.bc, align 2, !tbaa !61, !alias.scope !277, !noalias !274
+  store <8 x i16> %broadcast.splat95.1, ptr %i.bc, align 2, !tbaa !61, !alias.scope !277
   %i.bd = add nsw <8 x i16> %broadcast.splat, <i16 -5, i16 -5, i16 -6, i16 -6, i16 -6, i16 -7, i16 -7, i16 -7>
   %i.be = tail call <8 x i16> @llvm.smax.v8i16(<8 x i16> %i.bd, <8 x i16> zeroinitializer)
   %i.bf = trunc nuw nsw <8 x i16> %i.be to <8 x i8>
   %i.bg = getelementptr inbounds nuw i8, ptr %2, i64 17
-  store <8 x i8> %i.bf, ptr %i.bg, align 1, !tbaa !43, !alias.scope !275, !noalias !276
+  store <8 x i8> %i.bf, ptr %i.bg, align 1, !tbaa !43, !alias.scope !274, !noalias !275
+  %9 = load i16, ptr %i.as, align 2, !tbaa !61, !alias.scope !276
+  %broadcast.splatinsert94.2 = insertelement <8 x i16> poison, i16 %9, i64 0
+  %broadcast.splat95.2 = shufflevector <8 x i16> %broadcast.splatinsert94.2, <8 x i16> poison, <8 x i32> zeroinitializer
   %i.bh = getelementptr inbounds nuw i8, ptr %2, i64 134
-  store <8 x i16> %broadcast.splat96, ptr %i.bh, align 2, !tbaa !61, !alias.scope !277, !noalias !274
+  store <8 x i16> %broadcast.splat95.2, ptr %i.bh, align 2, !tbaa !61, !alias.scope !277
   %i.bi = add nsw <8 x i16> %broadcast.splat, <i16 -8, i16 -8, i16 -8, i16 -9, i16 -9, i16 -9, i16 -10, i16 -10>
   %i.bj = tail call <8 x i16> @llvm.smax.v8i16(<8 x i16> %i.bi, <8 x i16> zeroinitializer)
   %i.bk = trunc nuw nsw <8 x i16> %i.bj to <8 x i8>
   %i.bl = getelementptr inbounds nuw i8, ptr %2, i64 25
-  store <8 x i8> %i.bk, ptr %i.bl, align 1, !tbaa !43, !alias.scope !275, !noalias !276
+  store <8 x i8> %i.bk, ptr %i.bl, align 1, !tbaa !43, !alias.scope !274, !noalias !275
+  %10 = load i16, ptr %i.as, align 2, !tbaa !61, !alias.scope !276
+  %broadcast.splatinsert94.3 = insertelement <8 x i16> poison, i16 %10, i64 0
+  %broadcast.splat95.3 = shufflevector <8 x i16> %broadcast.splatinsert94.3, <8 x i16> poison, <8 x i32> zeroinitializer
   %i.bm = getelementptr inbounds nuw i8, ptr %2, i64 150
-  store <8 x i16> %broadcast.splat96, ptr %i.bm, align 2, !tbaa !61, !alias.scope !277, !noalias !274
+  store <8 x i16> %broadcast.splat95.3, ptr %i.bm, align 2, !tbaa !61, !alias.scope !277
   %i.bn = add nsw <8 x i16> %broadcast.splat, <i16 -10, i16 -11, i16 -11, i16 -11, i16 -12, i16 -12, i16 -12, i16 -13>
   %i.bo = tail call <8 x i16> @llvm.smax.v8i16(<8 x i16> %i.bn, <8 x i16> zeroinitializer)
   %i.bp = trunc nuw nsw <8 x i16> %i.bo to <8 x i8>
   %i.bq = getelementptr inbounds nuw i8, ptr %2, i64 33
-  store <8 x i8> %i.bp, ptr %i.bq, align 1, !tbaa !43, !alias.scope !275, !noalias !276
+  store <8 x i8> %i.bp, ptr %i.bq, align 1, !tbaa !43, !alias.scope !274, !noalias !275
+  %11 = load i16, ptr %i.as, align 2, !tbaa !61, !alias.scope !276
+  %broadcast.splatinsert94.4 = insertelement <8 x i16> poison, i16 %11, i64 0
+  %broadcast.splat95.4 = shufflevector <8 x i16> %broadcast.splatinsert94.4, <8 x i16> poison, <8 x i32> zeroinitializer
   %i.br = getelementptr inbounds nuw i8, ptr %2, i64 166
-  store <8 x i16> %broadcast.splat96, ptr %i.br, align 2, !tbaa !61, !alias.scope !277, !noalias !274
+  store <8 x i16> %broadcast.splat95.4, ptr %i.br, align 2, !tbaa !61, !alias.scope !277
   %i.bs = add nsw <8 x i16> %broadcast.splat, <i16 -13, i16 -13, i16 -14, i16 -14, i16 -14, i16 -15, i16 -15, i16 -15>
   %i.bt = tail call <8 x i16> @llvm.smax.v8i16(<8 x i16> %i.bs, <8 x i16> zeroinitializer)
   %i.bu = trunc nuw nsw <8 x i16> %i.bt to <8 x i8>
   %i.bv = getelementptr inbounds nuw i8, ptr %2, i64 41
-  store <8 x i8> %i.bu, ptr %i.bv, align 1, !tbaa !43, !alias.scope !275, !noalias !276
+  store <8 x i8> %i.bu, ptr %i.bv, align 1, !tbaa !43, !alias.scope !274, !noalias !275
+  %12 = load i16, ptr %i.as, align 2, !tbaa !61, !alias.scope !276
+  %broadcast.splatinsert94.5 = insertelement <8 x i16> poison, i16 %12, i64 0
+  %broadcast.splat95.5 = shufflevector <8 x i16> %broadcast.splatinsert94.5, <8 x i16> poison, <8 x i32> zeroinitializer
   %i.bw = getelementptr inbounds nuw i8, ptr %2, i64 182
-  store <8 x i16> %broadcast.splat96, ptr %i.bw, align 2, !tbaa !61, !alias.scope !277, !noalias !274
+  store <8 x i16> %broadcast.splat95.5, ptr %i.bw, align 2, !tbaa !61, !alias.scope !277
   %i.bx = add nsw <8 x i16> %broadcast.splat, <i16 -16, i16 -16, i16 -16, i16 -17, i16 -17, i16 -17, i16 -18, i16 -18>
   %i.by = tail call <8 x i16> @llvm.smax.v8i16(<8 x i16> %i.bx, <8 x i16> zeroinitializer)
   %i.bz = trunc nuw nsw <8 x i16> %i.by to <8 x i8>
   %i.ca = getelementptr inbounds nuw i8, ptr %2, i64 49
-  store <8 x i8> %i.bz, ptr %i.ca, align 1, !tbaa !43, !alias.scope !275, !noalias !276
+  store <8 x i8> %i.bz, ptr %i.ca, align 1, !tbaa !43, !alias.scope !274, !noalias !275
+  %13 = load i16, ptr %i.as, align 2, !tbaa !61, !alias.scope !276
+  %broadcast.splatinsert94.6 = insertelement <8 x i16> poison, i16 %13, i64 0
+  %broadcast.splat95.6 = shufflevector <8 x i16> %broadcast.splatinsert94.6, <8 x i16> poison, <8 x i32> zeroinitializer
   %i.cb = getelementptr inbounds nuw i8, ptr %2, i64 198
-  store <8 x i16> %broadcast.splat96, ptr %i.cb, align 2, !tbaa !61, !alias.scope !277, !noalias !274
+  store <8 x i16> %broadcast.splat95.6, ptr %i.cb, align 2, !tbaa !61, !alias.scope !277
   %i.cc = add nsw <8 x i16> %broadcast.splat, <i16 -18, i16 -19, i16 -19, i16 -19, i16 -20, i16 -20, i16 -20, i16 -21>
   %i.cd = tail call <8 x i16> @llvm.smax.v8i16(<8 x i16> %i.cc, <8 x i16> zeroinitializer)
   %i.ce = trunc nuw nsw <8 x i16> %i.cd to <8 x i8>
   %i.cf = getelementptr inbounds nuw i8, ptr %2, i64 57
-  store <8 x i8> %i.ce, ptr %i.cf, align 1, !tbaa !43, !alias.scope !275, !noalias !276
+  store <8 x i8> %i.ce, ptr %i.cf, align 1, !tbaa !43, !alias.scope !274, !noalias !275
+  %14 = load i16, ptr %i.as, align 2, !tbaa !61, !alias.scope !276
+  %broadcast.splatinsert94.7 = insertelement <8 x i16> poison, i16 %14, i64 0
+  %broadcast.splat95.7 = shufflevector <8 x i16> %broadcast.splatinsert94.7, <8 x i16> poison, <8 x i32> zeroinitializer
   %i.cg = getelementptr inbounds nuw i8, ptr %2, i64 214
-  store <8 x i16> %broadcast.splat96, ptr %i.cg, align 2, !tbaa !61, !alias.scope !277, !noalias !274
+  store <8 x i16> %broadcast.splat95.7, ptr %i.cg, align 2, !tbaa !61, !alias.scope !277
   %i.ch = add nsw <8 x i16> %broadcast.splat, <i16 -21, i16 -21, i16 -22, i16 -22, i16 -22, i16 -23, i16 -23, i16 -23>
   %i.ci = tail call <8 x i16> @llvm.smax.v8i16(<8 x i16> %i.ch, <8 x i16> zeroinitializer)
   %i.cj = trunc nuw nsw <8 x i16> %i.ci to <8 x i8>
   %i.ck = getelementptr inbounds nuw i8, ptr %2, i64 65
-  store <8 x i8> %i.cj, ptr %i.ck, align 1, !tbaa !43, !alias.scope !275, !noalias !276
+  store <8 x i8> %i.cj, ptr %i.ck, align 1, !tbaa !43, !alias.scope !274, !noalias !275
+  %15 = load i16, ptr %i.as, align 2, !tbaa !61, !alias.scope !276
+  %broadcast.splatinsert94.8 = insertelement <8 x i16> poison, i16 %15, i64 0
+  %broadcast.splat95.8 = shufflevector <8 x i16> %broadcast.splatinsert94.8, <8 x i16> poison, <8 x i32> zeroinitializer
   %i.cl = getelementptr inbounds nuw i8, ptr %2, i64 230
-  store <8 x i16> %broadcast.splat96, ptr %i.cl, align 2, !tbaa !61, !alias.scope !277, !noalias !274
+  store <8 x i16> %broadcast.splat95.8, ptr %i.cl, align 2, !tbaa !61, !alias.scope !277
   %i.cm = add nsw <8 x i16> %broadcast.splat, <i16 -24, i16 -24, i16 -24, i16 -25, i16 -25, i16 -25, i16 -26, i16 -26>
   %i.cn = tail call <8 x i16> @llvm.smax.v8i16(<8 x i16> %i.cm, <8 x i16> zeroinitializer)
   %i.co = trunc nuw nsw <8 x i16> %i.cn to <8 x i8>
   %i.cp = getelementptr inbounds nuw i8, ptr %2, i64 73
-  store <8 x i8> %i.co, ptr %i.cp, align 1, !tbaa !43, !alias.scope !275, !noalias !276
+  store <8 x i8> %i.co, ptr %i.cp, align 1, !tbaa !43, !alias.scope !274, !noalias !275
+  %16 = load i16, ptr %i.as, align 2, !tbaa !61, !alias.scope !276
+  %broadcast.splatinsert94.9 = insertelement <8 x i16> poison, i16 %16, i64 0
+  %broadcast.splat95.9 = shufflevector <8 x i16> %broadcast.splatinsert94.9, <8 x i16> poison, <8 x i32> zeroinitializer
   %i.cq = getelementptr inbounds nuw i8, ptr %2, i64 246
-  store <8 x i16> %broadcast.splat96, ptr %i.cq, align 2, !tbaa !61, !alias.scope !277, !noalias !274
+  store <8 x i16> %broadcast.splat95.9, ptr %i.cq, align 2, !tbaa !61, !alias.scope !277
   %i.cr = add nsw <8 x i16> %broadcast.splat, <i16 -26, i16 -27, i16 -27, i16 -27, i16 -28, i16 -28, i16 -28, i16 -29>
   %i.cs = tail call <8 x i16> @llvm.smax.v8i16(<8 x i16> %i.cr, <8 x i16> zeroinitializer)
   %i.ct = trunc nuw nsw <8 x i16> %i.cs to <8 x i8>
   %i.cu = getelementptr inbounds nuw i8, ptr %2, i64 81
-  store <8 x i8> %i.ct, ptr %i.cu, align 1, !tbaa !43, !alias.scope !275, !noalias !276
+  store <8 x i8> %i.ct, ptr %i.cu, align 1, !tbaa !43, !alias.scope !274, !noalias !275
+  %17 = load i16, ptr %i.as, align 2, !tbaa !61, !alias.scope !276
+  %broadcast.splatinsert94.10 = insertelement <8 x i16> poison, i16 %17, i64 0
+  %broadcast.splat95.10 = shufflevector <8 x i16> %broadcast.splatinsert94.10, <8 x i16> poison, <8 x i32> zeroinitializer
   %i.cv = getelementptr inbounds nuw i8, ptr %2, i64 262
-  store <8 x i16> %broadcast.splat96, ptr %i.cv, align 2, !tbaa !61, !alias.scope !277, !noalias !274
+  store <8 x i16> %broadcast.splat95.10, ptr %i.cv, align 2, !tbaa !61, !alias.scope !277
   %i.cw = add nsw <8 x i16> %broadcast.splat, <i16 -29, i16 -29, i16 -30, i16 -30, i16 -30, i16 -31, i16 -31, i16 -31>
   %i.cx = tail call <8 x i16> @llvm.smax.v8i16(<8 x i16> %i.cw, <8 x i16> zeroinitializer)
   %i.cy = trunc nuw nsw <8 x i16> %i.cx to <8 x i8>
   %i.cz = getelementptr inbounds nuw i8, ptr %2, i64 89
-  store <8 x i8> %i.cy, ptr %i.cz, align 1, !tbaa !43, !alias.scope !275, !noalias !276
+  store <8 x i8> %i.cy, ptr %i.cz, align 1, !tbaa !43, !alias.scope !274, !noalias !275
+  %18 = load i16, ptr %i.as, align 2, !tbaa !61, !alias.scope !276
+  %broadcast.splatinsert94.11 = insertelement <8 x i16> poison, i16 %18, i64 0
+  %broadcast.splat95.11 = shufflevector <8 x i16> %broadcast.splatinsert94.11, <8 x i16> poison, <8 x i32> zeroinitializer
   %i.da = getelementptr inbounds nuw i8, ptr %2, i64 278
-  store <8 x i16> %broadcast.splat96, ptr %i.da, align 2, !tbaa !61, !alias.scope !277, !noalias !274
+  store <8 x i16> %broadcast.splat95.11, ptr %i.da, align 2, !tbaa !61, !alias.scope !277
   br label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %vector.body, %vector.memcheck
@@ -712,8 +745,8 @@ begin_hunk_1_@llvm.experimental.cttz.elts.i64.v16i1
 !272 = distinct !{!272, !47}
 !273 = !{!98, !5, i64 298}
 !274 = !{!268}
-!275 = !{!269}
-!276 = !{!270, !268}
+!275 = !{!270, !269}
+!276 = !{!269}
 !277 = !{!270}
 !278 = distinct !{!278, !47}
 !279 = distinct !{!279, !47}

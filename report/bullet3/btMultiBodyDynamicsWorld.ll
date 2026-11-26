@@ -204,15 +204,11 @@ bb.bg:                                            ; preds = %"_ZZN24btMultiBodyD
   br i1 %min.iters.check1089, label %.lr.ph.i365.preheader, label %vector.memcheck1090
 
 vector.memcheck1090:                              ; preds = %.lr.ph.preheader.i363
-  %i.um = sext i32 %i.mj to i64                   ; 2 uses
+  %i.um = sext i32 %i.mj to i64
   %i.un = shl nsw i64 %i.um, 2
-  %8 = add nsw i64 %i.un, 23
-  %diff.check1091 = icmp ult i64 %8, 31
-  %.neg = mul nsw i64 %i.um, -12
-  %i.uo = add nsw i64 %.neg, -73
+  %i.uo = add nsw i64 %i.un, 23
   %diff.check1092 = icmp ult i64 %i.uo, 31
-  %conflict.rdx1093 = or i1 %diff.check1091, %diff.check1092
-  br i1 %conflict.rdx1093, label %.lr.ph.i365.preheader, label %vector.ph1094
+  br i1 %diff.check1092, label %.lr.ph.i365.preheader, label %vector.ph1094
 
 vector.ph1094:                                    ; preds = %vector.memcheck1090
   %n.vec1095 = and i64 %wide.trip.count.i364, 2147483640 ; 3 uses
@@ -601,15 +597,11 @@ bb.bi:                                            ; preds = %"_ZZN24btMultiBodyD
   br i1 %min.iters.check1017, label %.lr.ph.i392.preheader, label %vector.memcheck1018
 
 vector.memcheck1018:                              ; preds = %.lr.ph.preheader.i390
-  %i.zz = sext i32 %i.mj to i64                   ; 2 uses
+  %i.zz = sext i32 %i.mj to i64
   %i.aaa = shl nsw i64 %i.zz, 3
-  %9 = add nsw i64 %i.aaa, 47
-  %diff.check1019 = icmp ult i64 %9, 31
-  %.neg1191 = mul nsw i64 %i.zz, -12
-  %i.aab = add nsw i64 %.neg1191, -73
+  %i.aab = add nsw i64 %i.aaa, 47
   %diff.check1020 = icmp ult i64 %i.aab, 31
-  %conflict.rdx1021 = or i1 %diff.check1019, %diff.check1020
-  br i1 %conflict.rdx1021, label %.lr.ph.i392.preheader, label %vector.ph1022
+  br i1 %diff.check1020, label %.lr.ph.i392.preheader, label %vector.ph1022
 
 vector.ph1022:                                    ; preds = %vector.memcheck1018
   %n.vec1023 = and i64 %wide.trip.count.i391, 2147483640 ; 3 uses
@@ -997,13 +989,10 @@ bb.bk:                                            ; preds = %"_ZZN24btMultiBodyD
 
 vector.memcheck946:                               ; preds = %.lr.ph.preheader.i419
   %i.afk = sext i32 %i.mj to i64
-  %i.afl = mul nsw i64 %i.afk, 12                 ; 2 uses
-  %10 = add nsw i64 %i.afl, 71
-  %diff.check947 = icmp ult i64 %10, 31
-  %i.afm = add nsw i64 %i.afl, 103
+  %i.afl = mul nsw i64 %i.afk, 12
+  %i.afm = add nsw i64 %i.afl, 71
   %diff.check948 = icmp ult i64 %i.afm, 31
-  %conflict.rdx949 = or i1 %diff.check947, %diff.check948
-  br i1 %conflict.rdx949, label %.lr.ph.i421.preheader, label %vector.ph950
+  br i1 %diff.check948, label %.lr.ph.i421.preheader, label %vector.ph950
 
 vector.ph950:                                     ; preds = %vector.memcheck946
   %n.vec951 = and i64 %wide.trip.count.i420, 2147483640 ; 3 uses
