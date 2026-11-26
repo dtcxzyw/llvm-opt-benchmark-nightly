@@ -71,11 +71,11 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal fastcc void @_ZL16sha256_transformP14sha256_context(ptr nofree noundef captures(none) %0) unnamed_addr #1 {
 .preheader.preheader:
-  %i.a = alloca [64 x i32], align 16              ; 11 uses
+  %i.a = alloca [64 x i32], align 16              ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.c = load <4 x i32>, ptr %i.b, align 4, !tbaa !8
-  %i.d = tail call <4 x i32> @llvm.bswap.v4i32(<4 x i32> %i.c) ; 2 uses
+  %i.d = tail call <4 x i32> @llvm.bswap.v4i32(<4 x i32> %i.c)
   store <4 x i32> %i.d, ptr %i.a, align 16, !tbaa !8
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 16
@@ -92,7 +92,6 @@ define internal fastcc void @_ZL16sha256_transformP14sha256_context(ptr nofree n
   %i.o = load <4 x i32>, ptr %i.m, align 4, !tbaa !8
   %i.p = tail call <4 x i32> @llvm.bswap.v4i32(<4 x i32> %i.o)
   store <4 x i32> %i.p, ptr %i.n, align 16, !tbaa !8
-  %1 = extractelement <4 x i32> %i.d, i64 0
   br label %.preheader
 
 bb.a:                                             ; preds = %.preheader
@@ -114,8 +113,7 @@ bb.a:                                             ; preds = %.preheader
   br label %bb.c
 
 .preheader:                                       ; preds = %.preheader.preheader, %.preheader
-  %2 = phi i32 [ %1, %.preheader.preheader ], [ %i.at, %.preheader ]
-  %indvars.iv = phi i64 [ 16, %.preheader.preheader ], [ %indvars.iv.next, %.preheader ] ; 5 uses
+  %indvars.iv = phi i64 [ 16, %.preheader.preheader ], [ %indvars.iv.next, %.preheader ] ; 6 uses
   %i.af = getelementptr [4 x i8], ptr %i.a, i64 %indvars.iv
   %i.ag = getelementptr i8, ptr %i.af, i64 -8
   %i.ah = load i32, ptr %i.ag, align 4, !tbaa !8  ; 5 uses
@@ -130,13 +128,16 @@ bb.a:                                             ; preds = %.preheader
   %i.aq = add i32 %i.am, %i.ap
   %i.ar = getelementptr [4 x i8], ptr %i.a, i64 %indvars.iv
   %i.as = getelementptr i8, ptr %i.ar, i64 -60
-  %i.at = load i32, ptr %i.as, align 4, !tbaa !8  ; 6 uses
+  %i.at = load i32, ptr %i.as, align 4, !tbaa !8  ; 5 uses
   %i.au = tail call i32 @llvm.fshl.i32(i32 %i.at, i32 %i.at, i32 25)
   %i.av = tail call i32 @llvm.fshl.i32(i32 %i.at, i32 %i.at, i32 14)
   %i.aw = xor i32 %i.au, %i.av
   %i.ax = lshr i32 %i.at, 3
   %i.ay = xor i32 %i.aw, %i.ax
-  %i.az = add i32 %i.aq, %2
+  %1 = getelementptr [4 x i8], ptr %i.a, i64 %indvars.iv
+  %2 = getelementptr i8, ptr %1, i64 -64
+  %3 = load i32, ptr %2, align 4, !tbaa !8
+  %i.az = add i32 %i.aq, %3
   %i.ba = add i32 %i.az, %i.ay
   %i.bb = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv
   store i32 %i.ba, ptr %i.bb, align 4, !tbaa !8

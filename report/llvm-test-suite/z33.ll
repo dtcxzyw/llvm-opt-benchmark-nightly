@@ -202,7 +202,7 @@ define dso_local ptr @DbLoad(ptr noundef %0, i32 noundef %1, i32 noundef %2, ptr
 bb.a:
   %i.a = alloca ptr, align 8                      ; 5 uses
   %i.b = alloca i32, align 4                      ; 4 uses
-  %i.c = alloca [512 x i8], align 16              ; 30 uses
+  %i.c = alloca [512 x i8], align 16              ; 29 uses
   %i.d = alloca [512 x i8], align 16              ; 8 uses
   %i.e = alloca i32, align 4                      ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
@@ -605,7 +605,7 @@ bb.av:                                            ; preds = %bb.bo
 bb.aw:                                            ; preds = %bb.ax, %.lr.ph380
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.ax ], [ 9, %.lr.ph380 ] ; 4 uses
   %i.gf = getelementptr inbounds nuw i8, ptr %i.c, i64 %indvars.iv
-  %i.gg = load i8, ptr %i.gf, align 1, !tbaa !72  ; 2 uses
+  %i.gg = load i8, ptr %i.gf, align 1, !tbaa !72
   switch i8 %i.gg, label %bb.ax [
     i8 32, label %.critedge
     i8 0, label %.critedge
@@ -624,22 +624,22 @@ bb.ay:                                            ; preds = %.critedge
   br label %bb.az
 
 bb.az:                                            ; preds = %bb.ba, %bb.ay
-  %5 = phi i8 [ %.pre, %bb.ba ], [ %i.gg, %bb.ay ]
   %indvars.iv323 = phi i32 [ %indvars.iv.next324, %bb.ba ], [ 1, %bb.ay ] ; 2 uses
   %.0183 = phi ptr [ %i.go, %bb.ba ], [ %i.gi, %bb.ay ] ; 3 uses
   %.1 = phi i32 [ %i.gs, %bb.ba ], [ %i.gh, %bb.ay ] ; 2 uses
   %.0174 = phi i32 [ %i.gj, %bb.ba ], [ 0, %bb.ay ] ; 2 uses
-  switch i8 %5, label %bb.ba [
+  %5 = sext i32 %.1 to i64
+  %6 = getelementptr inbounds i8, ptr %i.c, i64 %5 ; 2 uses
+  %7 = load i8, ptr %6, align 1, !tbaa !72
+  switch i8 %7, label %bb.ba [
     i8 10, label %.critedge7
     i8 0, label %.critedge7
   ]
 
 bb.ba:                                            ; preds = %bb.az
-  %6 = sext i32 %.1 to i64
-  %7 = getelementptr inbounds i8, ptr %i.c, i64 %6
   call void @PushScope(ptr noundef %.0183, i32 noundef 0, i32 noundef 0) #11
   %i.gj = add nuw nsw i32 %.0174, 1
-  %i.gk = getelementptr i8, ptr %7, i64 1
+  %i.gk = getelementptr i8, ptr %6, i64 1
   %i.gl = call i32 (ptr, ptr, ...) @__isoc99_sscanf(ptr noundef %i.gk, ptr noundef nonnull @.str.46, ptr noundef nonnull %i.d) #11 ; 0 uses
   %i.gm = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.d) #13
   %i.gn = trunc i64 %i.gm to i32
@@ -647,11 +647,8 @@ bb.ba:                                            ; preds = %bb.az
   %i.gp = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.d) #13
   %i.gq = trunc i64 %i.gp to i32
   %i.gr = add i32 %.1, 1
-  %i.gs = add i32 %i.gr, %i.gq                    ; 2 uses
+  %i.gs = add i32 %i.gr, %i.gq
   %indvars.iv.next324 = add nuw i32 %indvars.iv323, 1
-  %.phi.trans.insert = sext i32 %i.gs to i64
-  %.phi.trans.insert325 = getelementptr inbounds i8, ptr %i.c, i64 %.phi.trans.insert
-  %.pre = load i8, ptr %.phi.trans.insert325, align 1, !tbaa !72
   br label %bb.az, !llvm.loop !112
 
 .critedge7:                                       ; preds = %bb.az, %bb.az

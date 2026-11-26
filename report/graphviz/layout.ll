@@ -204,9 +204,9 @@ bb.dj:                                            ; preds = %bb.dg, %bb.di, %bb.
   br i1 %.not44.i, label %._crit_edge.i143, label %.lr.ph.i141
 
 ._crit_edge.i143:                                 ; preds = %.lr.ph.i141, %._crit_edge196
-  %i.ace = load ptr, ptr %i.ac, align 8, !tbaa !17
+  %i.ace = load ptr, ptr %i.ac, align 8, !tbaa !17 ; 2 uses
   %i.acf = getelementptr inbounds nuw i8, ptr %i.ace, i64 160
-  %i.acg = load ptr, ptr %i.acf, align 8, !tbaa !38 ; 2 uses
+  %i.acg = load ptr, ptr %i.acf, align 8, !tbaa !38
   %i.ach = load ptr, ptr %i.acg, align 8, !tbaa !142 ; 2 uses
   %.not.i144 = icmp eq ptr %i.ach, null
   br i1 %.not.i144, label %bb.dl, label %bb.dk
@@ -231,13 +231,13 @@ bb.dj:                                            ; preds = %bb.dg, %bb.di, %bb.
 bb.dk:                                            ; preds = %._crit_edge.i143
   call void @free(ptr noundef nonnull %i.ach) #18
   %.val30.pre.i = load ptr, ptr %i.ac, align 8, !tbaa !17
-  %.phi.trans.insert.i = getelementptr i8, ptr %.val30.pre.i, i64 160
-  %.val30.val.pre.i = load ptr, ptr %.phi.trans.insert.i, align 8, !tbaa !38
   br label %bb.dl
 
 bb.dl:                                            ; preds = %bb.dk, %._crit_edge.i143
-  %.val30.val.i.a = phi ptr [ %.val30.val.pre.i, %bb.dk ], [ %i.acg, %._crit_edge.i143 ]
-  call void @free(ptr noundef %.val30.val.i.a) #18
+  %.val30.val.i.a = phi ptr [ %.val30.pre.i, %bb.dk ], [ %i.ace, %._crit_edge.i143 ]
+  %7 = getelementptr i8, ptr %.val30.val.i.a, i64 160
+  %.val30.val.i = load ptr, ptr %7, align 8, !tbaa !38
+  call void @free(ptr noundef %.val30.val.i) #18
   %i.acr = call i32 @agdelrec(ptr noundef nonnull %i.w, ptr noundef nonnull @.str.3) #18 ; 0 uses
   %i.acs = call ptr @agfstnode(ptr noundef nonnull %i.w) #18 ; 2 uses
   %.not2839.i = icmp eq ptr %i.acs, null

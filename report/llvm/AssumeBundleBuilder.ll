@@ -202,7 +202,7 @@ bb.bi:                                            ; preds = %_ZN4llvm16dyn_cast_
   br i1 %i.vj, label %.lr.ph.i.i.i.i.i8, label %.loopexit.i.i.i.i7, !prof !226
 
 .lr.ph.i.i.i.i.i8:                                ; preds = %bb.bi, %bb.bj
-  %i.vk = phi ptr [ %i.vu, %bb.bj ], [ %i.vd, %bb.bi ] ; 6 uses
+  %i.vk = phi ptr [ %i.vu, %bb.bj ], [ %i.vd, %bb.bi ] ; 4 uses
   %.024.i.i.i.i.i = phi i32 [ %i.vs, %bb.bj ], [ %i.vb, %bb.bi ]
   %i.vl = load ptr, ptr %i.vk, align 8, !tbaa !273
   %i.vm = icmp eq ptr %i.uf, %i.vl
@@ -210,7 +210,7 @@ bb.bi:                                            ; preds = %_ZN4llvm16dyn_cast_
   %i.vo = load i32, ptr %i.vn, align 8
   %i.vp = icmp eq i32 %i.ug, %i.vo
   %i.vq = select i1 %i.vm, i1 %i.vp, i1 false
-  br i1 %i.vq, label %_ZN4llvm12DenseMapBaseINS_13SmallDenseMapISt4pairIPNS_5ValueENS_9Attribute8AttrKindEENS_11SmallVectorIZN12_GLOBAL__N_114AssumeSimplify22dropRedundantKnowledgeEvE8MapValueLj2EEELj16ENS_12DenseMapInfoIS7_vEENS_6detail12DenseMapPairIS7_SC_EEEES7_SC_SE_SH_EixEOS7_.exit.i.i, label %bb.bj, !prof !208
+  br i1 %i.vq, label %_ZN4llvm12DenseMapBaseINS_13SmallDenseMapISt4pairIPNS_5ValueENS_9Attribute8AttrKindEENS_11SmallVectorIZN12_GLOBAL__N_114AssumeSimplify22dropRedundantKnowledgeEvE8MapValueLj2EEELj16ENS_12DenseMapInfoIS7_vEENS_6detail12DenseMapPairIS7_SC_EEEES7_SC_SE_SH_EixEOS7_.exit.loopexit.i.i, label %bb.bj, !prof !208
 
 bb.bj:                                            ; preds = %.lr.ph.i.i.i.i.i8
   %i.vr = add nuw i32 %.024.i.i.i.i.i, 1
@@ -342,23 +342,29 @@ _ZN4llvm12DenseMapBaseINS_13SmallDenseMapISt4pairIPNS_5ValueENS_9Attribute8AttrK
   store ptr %i.uf, ptr %i.yc, align 8
   %.sroa.8.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.yc, i64 8
   store i32 %i.ug, ptr %.sroa.8.0..sroa_idx.i.i, align 8
-  %i.yw = getelementptr inbounds nuw i8, ptr %i.yc, i64 16 ; 2 uses
-  %i.yx = getelementptr inbounds nuw i8, ptr %i.yc, i64 32
+  %i.yw = getelementptr inbounds nuw i8, ptr %i.yc, i64 16
+  %i.yx = getelementptr inbounds nuw i8, ptr %i.yc, i64 32 ; 2 uses
   store ptr %i.yx, ptr %i.yw, align 8, !tbaa !25
-  %i.yy = getelementptr inbounds nuw i8, ptr %i.yc, i64 24 ; 2 uses
+  %i.yy = getelementptr inbounds nuw i8, ptr %i.yc, i64 24
   store i32 0, ptr %i.yy, align 8, !tbaa !48
   %i.yz = getelementptr inbounds nuw i8, ptr %i.yc, i64 28
   store i32 2, ptr %i.yz, align 4, !tbaa !49
-  br label %._crit_edge.i.i
+  br label %_ZN4llvm12DenseMapBaseINS_13SmallDenseMapISt4pairIPNS_5ValueENS_9Attribute8AttrKindEENS_11SmallVectorIZN12_GLOBAL__N_114AssumeSimplify22dropRedundantKnowledgeEvE8MapValueLj2EEELj16ENS_12DenseMapInfoIS7_vEENS_6detail12DenseMapPairIS7_SC_EEEES7_SC_SE_SH_EixEOS7_.exit.i.i
 
-_ZN4llvm12DenseMapBaseINS_13SmallDenseMapISt4pairIPNS_5ValueENS_9Attribute8AttrKindEENS_11SmallVectorIZN12_GLOBAL__N_114AssumeSimplify22dropRedundantKnowledgeEvE8MapValueLj2EEELj16ENS_12DenseMapInfoIS7_vEENS_6detail12DenseMapPairIS7_SC_EEEES7_SC_SE_SH_EixEOS7_.exit.i.i: ; preds = %.lr.ph.i.i.i.i.i8
-  %.phi.trans.insert.i.i = getelementptr inbounds nuw i8, ptr %i.vk, i64 16 ; 3 uses
-  %.val.pre.i.i = load ptr, ptr %.phi.trans.insert.i.i, align 8, !tbaa !25 ; 2 uses
-  %.phi.trans.insert378.i.i = getelementptr i8, ptr %i.vk, i64 24 ; 3 uses
+_ZN4llvm12DenseMapBaseINS_13SmallDenseMapISt4pairIPNS_5ValueENS_9Attribute8AttrKindEENS_11SmallVectorIZN12_GLOBAL__N_114AssumeSimplify22dropRedundantKnowledgeEvE8MapValueLj2EEELj16ENS_12DenseMapInfoIS7_vEENS_6detail12DenseMapPairIS7_SC_EEEES7_SC_SE_SH_EixEOS7_.exit.loopexit.i.i: ; preds = %.lr.ph.i.i.i.i.i8
+  %.phi.trans.insert.i.i = getelementptr inbounds nuw i8, ptr %i.vk, i64 16
+  %.val.pre.i.i = load ptr, ptr %.phi.trans.insert.i.i, align 8, !tbaa !25
+  br label %_ZN4llvm12DenseMapBaseINS_13SmallDenseMapISt4pairIPNS_5ValueENS_9Attribute8AttrKindEENS_11SmallVectorIZN12_GLOBAL__N_114AssumeSimplify22dropRedundantKnowledgeEvE8MapValueLj2EEELj16ENS_12DenseMapInfoIS7_vEENS_6detail12DenseMapPairIS7_SC_EEEES7_SC_SE_SH_EixEOS7_.exit.i.i
+
+_ZN4llvm12DenseMapBaseINS_13SmallDenseMapISt4pairIPNS_5ValueENS_9Attribute8AttrKindEENS_11SmallVectorIZN12_GLOBAL__N_114AssumeSimplify22dropRedundantKnowledgeEvE8MapValueLj2EEELj16ENS_12DenseMapInfoIS7_vEENS_6detail12DenseMapPairIS7_SC_EEEES7_SC_SE_SH_EixEOS7_.exit.i.i: ; preds = %_ZN4llvm12DenseMapBaseINS_13SmallDenseMapISt4pairIPNS_5ValueENS_9Attribute8AttrKindEENS_11SmallVectorIZN12_GLOBAL__N_114AssumeSimplify22dropRedundantKnowledgeEvE8MapValueLj2EEELj16ENS_12DenseMapInfoIS7_vEENS_6detail12DenseMapPairIS7_SC_EEEES7_SC_SE_SH_EixEOS7_.exit.loopexit.i.i, %_ZN4llvm12DenseMapBaseINS_13SmallDenseMapISt4pairIPNS_5ValueENS_9Attribute8AttrKindEENS_11SmallVectorIZN12_GLOBAL__N_114AssumeSimplify22dropRedundantKnowledgeEvE8MapValueLj2EEELj16ENS_12DenseMapInfoIS7_vEENS_6detail12DenseMapPairIS7_SC_EEEES7_SC_SE_SH_EixEOS7_.exit.thread.i.i
+  %.val.i.i = phi ptr [ %i.yx, %_ZN4llvm12DenseMapBaseINS_13SmallDenseMapISt4pairIPNS_5ValueENS_9Attribute8AttrKindEENS_11SmallVectorIZN12_GLOBAL__N_114AssumeSimplify22dropRedundantKnowledgeEvE8MapValueLj2EEELj16ENS_12DenseMapInfoIS7_vEENS_6detail12DenseMapPairIS7_SC_EEEES7_SC_SE_SH_EixEOS7_.exit.thread.i.i ], [ %.val.pre.i.i, %_ZN4llvm12DenseMapBaseINS_13SmallDenseMapISt4pairIPNS_5ValueENS_9Attribute8AttrKindEENS_11SmallVectorIZN12_GLOBAL__N_114AssumeSimplify22dropRedundantKnowledgeEvE8MapValueLj2EEELj16ENS_12DenseMapInfoIS7_vEENS_6detail12DenseMapPairIS7_SC_EEEES7_SC_SE_SH_EixEOS7_.exit.loopexit.i.i ] ; 2 uses
+  %.sroa.0.0.i.i.i.i = phi ptr [ %i.yc, %_ZN4llvm12DenseMapBaseINS_13SmallDenseMapISt4pairIPNS_5ValueENS_9Attribute8AttrKindEENS_11SmallVectorIZN12_GLOBAL__N_114AssumeSimplify22dropRedundantKnowledgeEvE8MapValueLj2EEELj16ENS_12DenseMapInfoIS7_vEENS_6detail12DenseMapPairIS7_SC_EEEES7_SC_SE_SH_EixEOS7_.exit.thread.i.i ], [ %i.vk, %_ZN4llvm12DenseMapBaseINS_13SmallDenseMapISt4pairIPNS_5ValueENS_9Attribute8AttrKindEENS_11SmallVectorIZN12_GLOBAL__N_114AssumeSimplify22dropRedundantKnowledgeEvE8MapValueLj2EEELj16ENS_12DenseMapInfoIS7_vEENS_6detail12DenseMapPairIS7_SC_EEEES7_SC_SE_SH_EixEOS7_.exit.loopexit.i.i ] ; 3 uses
+  %17 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i, i64 16 ; 2 uses
+  %.phi.trans.insert378.i.i = getelementptr i8, ptr %.sroa.0.0.i.i.i.i, i64 24 ; 4 uses
   %.val64.pre.i.i = load i32, ptr %.phi.trans.insert378.i.i, align 8, !tbaa !48 ; 2 uses
   %i.za = zext i32 %.val64.pre.i.i to i64
   %.idx356.i.i = mul nuw nsw i64 %i.za, 24
-  %i.zb = getelementptr inbounds nuw i8, ptr %.val.pre.i.i, i64 %.idx356.i.i
+  %i.zb = getelementptr inbounds nuw i8, ptr %.val.i.i, i64 %.idx356.i.i
   %.not61344.i.i = icmp eq i32 %.val64.pre.i.i, 0
   br i1 %.not61344.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i
 
@@ -367,33 +373,30 @@ _ZN4llvm12DenseMapBaseINS_13SmallDenseMapISt4pairIPNS_5ValueENS_9Attribute8AttrK
   %i.zd = getelementptr inbounds nuw i8, ptr %.054347.i.i, i64 12 ; 2 uses
   br label %bb.bp
 
-._crit_edge.i.i:                                  ; preds = %bb.cw, %_ZN4llvm12DenseMapBaseINS_13SmallDenseMapISt4pairIPNS_5ValueENS_9Attribute8AttrKindEENS_11SmallVectorIZN12_GLOBAL__N_114AssumeSimplify22dropRedundantKnowledgeEvE8MapValueLj2EEELj16ENS_12DenseMapInfoIS7_vEENS_6detail12DenseMapPairIS7_SC_EEEES7_SC_SE_SH_EixEOS7_.exit.i.i, %_ZN4llvm12DenseMapBaseINS_13SmallDenseMapISt4pairIPNS_5ValueENS_9Attribute8AttrKindEENS_11SmallVectorIZN12_GLOBAL__N_114AssumeSimplify22dropRedundantKnowledgeEvE8MapValueLj2EEELj16ENS_12DenseMapInfoIS7_vEENS_6detail12DenseMapPairIS7_SC_EEEES7_SC_SE_SH_EixEOS7_.exit.thread.i.i
-  %17 = phi ptr [ %i.yy, %_ZN4llvm12DenseMapBaseINS_13SmallDenseMapISt4pairIPNS_5ValueENS_9Attribute8AttrKindEENS_11SmallVectorIZN12_GLOBAL__N_114AssumeSimplify22dropRedundantKnowledgeEvE8MapValueLj2EEELj16ENS_12DenseMapInfoIS7_vEENS_6detail12DenseMapPairIS7_SC_EEEES7_SC_SE_SH_EixEOS7_.exit.thread.i.i ], [ %.phi.trans.insert378.i.i, %_ZN4llvm12DenseMapBaseINS_13SmallDenseMapISt4pairIPNS_5ValueENS_9Attribute8AttrKindEENS_11SmallVectorIZN12_GLOBAL__N_114AssumeSimplify22dropRedundantKnowledgeEvE8MapValueLj2EEELj16ENS_12DenseMapInfoIS7_vEENS_6detail12DenseMapPairIS7_SC_EEEES7_SC_SE_SH_EixEOS7_.exit.i.i ], [ %.phi.trans.insert378.i.i, %bb.cw ] ; 3 uses
-  %18 = phi ptr [ %i.yw, %_ZN4llvm12DenseMapBaseINS_13SmallDenseMapISt4pairIPNS_5ValueENS_9Attribute8AttrKindEENS_11SmallVectorIZN12_GLOBAL__N_114AssumeSimplify22dropRedundantKnowledgeEvE8MapValueLj2EEELj16ENS_12DenseMapInfoIS7_vEENS_6detail12DenseMapPairIS7_SC_EEEES7_SC_SE_SH_EixEOS7_.exit.thread.i.i ], [ %.phi.trans.insert.i.i, %_ZN4llvm12DenseMapBaseINS_13SmallDenseMapISt4pairIPNS_5ValueENS_9Attribute8AttrKindEENS_11SmallVectorIZN12_GLOBAL__N_114AssumeSimplify22dropRedundantKnowledgeEvE8MapValueLj2EEELj16ENS_12DenseMapInfoIS7_vEENS_6detail12DenseMapPairIS7_SC_EEEES7_SC_SE_SH_EixEOS7_.exit.i.i ], [ %.phi.trans.insert.i.i, %bb.cw ] ; 2 uses
-  %.sroa.0.0.i.i441.i.i = phi ptr [ %i.yc, %_ZN4llvm12DenseMapBaseINS_13SmallDenseMapISt4pairIPNS_5ValueENS_9Attribute8AttrKindEENS_11SmallVectorIZN12_GLOBAL__N_114AssumeSimplify22dropRedundantKnowledgeEvE8MapValueLj2EEELj16ENS_12DenseMapInfoIS7_vEENS_6detail12DenseMapPairIS7_SC_EEEES7_SC_SE_SH_EixEOS7_.exit.thread.i.i ], [ %i.vk, %_ZN4llvm12DenseMapBaseINS_13SmallDenseMapISt4pairIPNS_5ValueENS_9Attribute8AttrKindEENS_11SmallVectorIZN12_GLOBAL__N_114AssumeSimplify22dropRedundantKnowledgeEvE8MapValueLj2EEELj16ENS_12DenseMapInfoIS7_vEENS_6detail12DenseMapPairIS7_SC_EEEES7_SC_SE_SH_EixEOS7_.exit.i.i ], [ %i.vk, %bb.cw ]
+._crit_edge.i.i:                                  ; preds = %bb.cw, %_ZN4llvm12DenseMapBaseINS_13SmallDenseMapISt4pairIPNS_5ValueENS_9Attribute8AttrKindEENS_11SmallVectorIZN12_GLOBAL__N_114AssumeSimplify22dropRedundantKnowledgeEvE8MapValueLj2EEELj16ENS_12DenseMapInfoIS7_vEENS_6detail12DenseMapPairIS7_SC_EEEES7_SC_SE_SH_EixEOS7_.exit.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #18
   store ptr %i.ha, ptr %15, align 8, !tbaa !502
   %i.ze = load i64, ptr %i.dw, align 8, !tbaa !265
   store i64 %i.ze, ptr %i.ed, align 8, !tbaa !503
   store ptr %.054347.i.i, ptr %i.ee, align 8, !tbaa !504
-  %i.zf = load i32, ptr %17, align 8, !tbaa !48   ; 2 uses
-  %i.zg = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i441.i.i, i64 28
+  %i.zf = load i32, ptr %.phi.trans.insert378.i.i, align 8, !tbaa !48 ; 2 uses
+  %i.zg = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i, i64 28
   %i.zh = load i32, ptr %i.zg, align 4, !tbaa !49
   %.not.i101.i.i = icmp ult i32 %i.zf, %i.zh
   br i1 %.not.i101.i.i, label %bb.bo, label %bb.bn, !prof !208
 
 bb.bn:                                            ; preds = %._crit_edge.i.i
-  call fastcc void @_ZN4llvm23SmallVectorTemplateBaseIZN12_GLOBAL__N_114AssumeSimplify22dropRedundantKnowledgeEvE8MapValueLb1EE15growAndPushBackERKS3_(ptr noundef nonnull align 8 dereferenceable(16) %18, ptr noundef nonnull readonly align 8 dereferenceable(24) %15)
+  call fastcc void @_ZN4llvm23SmallVectorTemplateBaseIZN12_GLOBAL__N_114AssumeSimplify22dropRedundantKnowledgeEvE8MapValueLb1EE15growAndPushBackERKS3_(ptr noundef nonnull align 8 dereferenceable(16) %17, ptr noundef nonnull readonly align 8 dereferenceable(24) %15)
   br label %_ZN4llvm23SmallVectorTemplateBaseIZN12_GLOBAL__N_114AssumeSimplify22dropRedundantKnowledgeEvE8MapValueLb1EE9push_backERKS3_.exit.i.i
 
 bb.bo:                                            ; preds = %._crit_edge.i.i
   %i.zi = zext i32 %i.zf to i64
-  %.val.i.i.i = load ptr, ptr %18, align 8, !tbaa !25
+  %.val.i.i.i = load ptr, ptr %17, align 8, !tbaa !25
   %i.zj = getelementptr inbounds nuw [24 x i8], ptr %.val.i.i.i, i64 %i.zi
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(24) %i.zj, ptr noundef nonnull readonly align 8 dereferenceable(24) %15, i64 24, i1 false)
-  %i.zk = load i32, ptr %17, align 8, !tbaa !48
+  %i.zk = load i32, ptr %.phi.trans.insert378.i.i, align 8, !tbaa !48
   %i.zl = add i32 %i.zk, 1
-  store i32 %i.zl, ptr %17, align 8, !tbaa !48
+  store i32 %i.zl, ptr %.phi.trans.insert378.i.i, align 8, !tbaa !48
   br label %_ZN4llvm23SmallVectorTemplateBaseIZN12_GLOBAL__N_114AssumeSimplify22dropRedundantKnowledgeEvE8MapValueLb1EE9push_backERKS3_.exit.i.i
 
 _ZN4llvm23SmallVectorTemplateBaseIZN12_GLOBAL__N_114AssumeSimplify22dropRedundantKnowledgeEvE8MapValueLb1EE9push_backERKS3_.exit.i.i: ; preds = %bb.bo, %bb.bn
@@ -401,7 +404,7 @@ _ZN4llvm23SmallVectorTemplateBaseIZN12_GLOBAL__N_114AssumeSimplify22dropRedundan
   br label %bb.cx
 
 bb.bp:                                            ; preds = %bb.cw, %.lr.ph.i.i
-  %.0345.i.i = phi ptr [ %.val.pre.i.i, %.lr.ph.i.i ], [ %i.aiz, %bb.cw ] ; 6 uses
+  %.0345.i.i = phi ptr [ %.val.i.i, %.lr.ph.i.i ], [ %i.aiz, %bb.cw ] ; 6 uses
   %i.zm = load ptr, ptr %.0345.i.i, align 8, !tbaa !502
   %i.zn = load ptr, ptr %i.bv, align 8, !tbaa !482
   %i.zo = call noundef zeroext i1 @_ZN4llvm23isValidAssumeForContextEPKNS_11InstructionES2_PKNS_13DominatorTreeEb(ptr noundef %i.zm, ptr noundef nonnull %i.ha, ptr noundef %i.zn, i1 noundef zeroext false) #18

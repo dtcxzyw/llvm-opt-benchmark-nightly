@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.i
   br label %bb.ct
 
 cf2_hintmask_setAll.exit.thread:                  ; preds = %cf2_hintmask_setAll.exit, %cf2_hintmask_setCounts.exit.i, %bb.d
-  %i.af = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 6 uses
+  %i.af = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 5 uses
   store i32 0, ptr %i.af, align 8, !tbaa !414
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 36
   store i32 0, ptr %i.ag, align 4, !tbaa !415
@@ -608,7 +608,7 @@ bb.ay:                                            ; preds = %bb.ax
   %i.hh = getelementptr inbounds nuw i8, ptr %i.hg, i64 56
   %i.hi = load i32, ptr %i.hh, align 8, !tbaa !417
   %i.hj = icmp slt i32 %i.hi, 0
-  br i1 %i.hj, label %bb.az, label %.loopexit184
+  br i1 %i.hj, label %bb.az, label %.loopexit184.thread
 
 bb.az:                                            ; preds = %bb.ay, %bb.ax, %bb.aw
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #19
@@ -623,7 +623,7 @@ bb.az:                                            ; preds = %bb.ay, %bb.ax, %bb.
   call fastcc void @cf2_hintmap_insertHint(ptr noundef nonnull %0, ptr noundef nonnull %11, ptr noundef nonnull %12)
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #19
-  br label %.loopexit184
+  br label %.loopexit184.thread
 
 bb.ba:                                            ; preds = %.lr.ph214, %bb.br
   %.2213 = phi i32 [ 128, %.lr.ph214 ], [ %.3, %bb.br ] ; 2 uses
@@ -816,35 +816,24 @@ bb.br:                                            ; preds = %cf2_hint_init.exit1
   %.3 = select i1 %i.jx, i32 128, i32 %i.jz
   %i.ka = add nuw i64 %.198210, 1                 ; 2 uses
   %exitcond235.not = icmp eq i64 %i.ka, %.val120
-  br i1 %exitcond235.not, label %.loopexit184, label %bb.ba, !llvm.loop !726
+  br i1 %exitcond235.not, label %.loopexit184.thread, label %bb.ba, !llvm.loop !726
 
-.loopexit184:                                     ; preds = %bb.br, %bb.ay, %bb.az
-  %15 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %16 = load ptr, ptr %15, align 8, !tbaa !352
-  %17 = getelementptr inbounds nuw i8, ptr %16, i64 32
-  store i64 0, ptr %17, align 8, !tbaa !391
-  %18 = load i32, ptr %i.af, align 8, !tbaa !414  ; 2 uses
-  %.not173.i = icmp eq i32 %18, 0
-  br i1 %.not173.i, label %.loopexit, label %.lr.ph.i161
-
-.loopexit184.thread:                              ; preds = %._crit_edge.thread
-  %i.kb = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.kc = load ptr, ptr %i.kb, align 8, !tbaa !352
+.loopexit184.thread:                              ; preds = %bb.br, %._crit_edge.thread, %bb.ay, %bb.az
+  %i.kb = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
+  %i.kc = load ptr, ptr %i.kb, align 8, !tbaa !352 ; 2 uses
   %i.kd = getelementptr inbounds nuw i8, ptr %i.kc, i64 32
   store i64 0, ptr %i.kd, align 8, !tbaa !391
   %i.ke = load i32, ptr %i.af, align 8, !tbaa !414 ; 2 uses
   %.not173.i275 = icmp eq i32 %i.ke, 0
-  br i1 %.not173.i275, label %.loopexit, label %.lr.ph.i161
+  br i1 %.not173.i275, label %._crit_edge.i163, label %.lr.ph.i161
 
-.lr.ph.i161:                                      ; preds = %.loopexit184.thread, %.loopexit184
-  %19 = phi i32 [ %i.ke, %.loopexit184.thread ], [ %18, %.loopexit184 ]
-  %20 = phi ptr [ %i.kb, %.loopexit184.thread ], [ %15, %.loopexit184 ] ; 2 uses
-  %i.kf = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
+.lr.ph.i161:                                      ; preds = %.loopexit184.thread
+  %i.kf = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.kg = getelementptr inbounds nuw i8, ptr %6, i64 8
   br label %bb.bs
 
 bb.bs:                                            ; preds = %bb.cj, %.lr.ph.i161
-  %i.kh = phi i32 [ %19, %.lr.ph.i161 ], [ %i.nc, %bb.cj ]
+  %i.kh = phi i32 [ %i.ke, %.lr.ph.i161 ], [ %i.nc, %bb.cj ]
   %.0132169.i = phi i64 [ 0, %.lr.ph.i161 ], [ %i.nb, %bb.cj ] ; 7 uses
   %i.ki = getelementptr inbounds nuw [32 x i8], ptr %i.kf, i64 %.0132169.i ; 8 uses
   %.val158.i = load i32, ptr %i.ki, align 8, !tbaa !416 ; 2 uses
@@ -932,7 +921,7 @@ bb.cb:                                            ; preds = %.thread162.i
   store i64 %i.kl, ptr %6, align 8, !tbaa !736
   %i.lv = sub nsw i32 %i.la, %.0131165.i
   store i32 %i.lv, ptr %i.kg, align 8, !tbaa !737
-  %i.lw = load ptr, ptr %20, align 8, !tbaa !352
+  %i.lw = load ptr, ptr %i.kb, align 8, !tbaa !352
   call fastcc void @cf2_arrstack_push(ptr noundef %i.lw, ptr noundef %6)
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #19
   br label %.thread.i168
@@ -1002,23 +991,29 @@ bb.ci:                                            ; preds = %bb.ch
 bb.cj:                                            ; preds = %bb.ci, %bb.ch, %bb.cg
   %.1.i162 = phi i64 [ %.0132169.i, %bb.cg ], [ %i.kk, %bb.ci ], [ %i.kk, %bb.ch ]
   %i.nb = add i64 %.1.i162, 1                     ; 2 uses
-  %i.nc = load i32, ptr %i.af, align 8, !tbaa !414 ; 4 uses
+  %i.nc = load i32, ptr %i.af, align 8, !tbaa !414 ; 3 uses
   %i.nd = zext i32 %i.nc to i64
   %i.ne = icmp ult i64 %i.nb, %i.nd
-  br i1 %i.ne, label %bb.bs, label %._crit_edge.i163, !llvm.loop !727
+  br i1 %i.ne, label %bb.bs, label %._crit_edge.loopexit.i, !llvm.loop !727
 
-._crit_edge.i163:                                 ; preds = %bb.cj
-  %.pre.i164 = load ptr, ptr %20, align 8, !tbaa !352 ; 3 uses
-  %.phi.trans.insert.i165 = getelementptr i8, ptr %.pre.i164, i64 32
+._crit_edge.loopexit.i:                           ; preds = %bb.cj
+  %.pre.i163 = load ptr, ptr %i.kb, align 8, !tbaa !352
+  br label %._crit_edge.i163
+
+._crit_edge.i163:                                 ; preds = %._crit_edge.loopexit.i, %.loopexit184.thread
+  %15 = phi i32 [ %i.nc, %._crit_edge.loopexit.i ], [ 0, %.loopexit184.thread ] ; 2 uses
+  %16 = phi ptr [ %.pre.i163, %._crit_edge.loopexit.i ], [ %i.kc, %.loopexit184.thread ] ; 3 uses
+  %.phi.trans.insert.i165 = getelementptr i8, ptr %16, i64 32
   %.val.pre.i = load i64, ptr %.phi.trans.insert.i165, align 8, !tbaa !391 ; 2 uses
   %.not170.i = icmp eq i64 %.val.pre.i, 0
   br i1 %.not170.i, label %cf2_hintmap_adjustHints.exit, label %cf2_arrstack_getPointer.exit.lr.ph.i
 
 cf2_arrstack_getPointer.exit.lr.ph.i:             ; preds = %._crit_edge.i163
-  %i.nf = getelementptr inbounds nuw i8, ptr %.pre.i164, i64 48
+  %i.nf = getelementptr inbounds nuw i8, ptr %16, i64 48
   %i.ng = load ptr, ptr %i.nf, align 8, !tbaa !395
-  %i.nh = getelementptr inbounds nuw i8, ptr %.pre.i164, i64 16
+  %i.nh = getelementptr inbounds nuw i8, ptr %16, i64 16
   %i.ni = load i64, ptr %i.nh, align 8, !tbaa !336
+  %17 = getelementptr inbounds nuw i8, ptr %0, i64 40
   br label %cf2_arrstack_getPointer.exit.i166
 
 cf2_arrstack_getPointer.exit.i166:                ; preds = %bb.cm, %cf2_arrstack_getPointer.exit.lr.ph.i
@@ -1027,7 +1022,7 @@ cf2_arrstack_getPointer.exit.i166:                ; preds = %bb.cm, %cf2_arrstac
   %i.nk = mul i64 %i.nj, %i.ni
   %i.nl = getelementptr inbounds nuw i8, ptr %i.ng, i64 %i.nk ; 2 uses
   %i.nm = load i64, ptr %i.nl, align 8, !tbaa !736
-  %i.nn = getelementptr [32 x i8], ptr %i.kf, i64 %i.nm ; 4 uses
+  %i.nn = getelementptr [32 x i8], ptr %17, i64 %i.nm ; 4 uses
   %i.no = getelementptr i8, ptr %i.nn, i64 52
   %i.np = load i32, ptr %i.no, align 4, !tbaa !419
   %i.nq = getelementptr inbounds nuw i8, ptr %i.nn, i64 20 ; 2 uses
@@ -1058,7 +1053,7 @@ bb.cm:                                            ; preds = %bb.cl, %bb.ck, %cf2
   br i1 %.not.i167, label %cf2_hintmap_adjustHints.exit, label %cf2_arrstack_getPointer.exit.i166, !llvm.loop !728
 
 cf2_hintmap_adjustHints.exit:                     ; preds = %bb.cm, %._crit_edge.i163
-  %.not219 = icmp eq i32 %i.nc, 0
+  %.not219 = icmp eq i32 %15, 0
   %or.cond291 = or i1 %.not, %.not219
   br i1 %or.cond291, label %.loopexit, label %.lr.ph216
 
@@ -1070,7 +1065,7 @@ cf2_hintmap_adjustHints.exit:                     ; preds = %bb.cm, %._crit_edge
   br label %bb.cn
 
 bb.cn:                                            ; preds = %.lr.ph216, %bb.cs
-  %i.oe = phi i32 [ %i.nc, %.lr.ph216 ], [ %i.ou, %bb.cs ]
+  %i.oe = phi i32 [ %15, %.lr.ph216 ], [ %i.ou, %bb.cs ]
   %.299215 = phi i64 [ 0, %.lr.ph216 ], [ %i.ov, %bb.cs ] ; 2 uses
   %i.of = getelementptr inbounds nuw [32 x i8], ptr %i.oa, i64 %.299215 ; 4 uses
   %.val126 = load i32, ptr %i.of, align 8, !tbaa !416 ; 4 uses
@@ -1125,7 +1120,7 @@ bb.cs:                                            ; preds = %bb.cn, %cf2_arrstac
   %i.ox = icmp samesign ult i64 %i.ov, %i.ow
   br i1 %i.ox, label %bb.cn, label %.loopexit, !llvm.loop !729
 
-.loopexit:                                        ; preds = %bb.cs, %.loopexit184, %.loopexit184.thread, %cf2_hintmap_adjustHints.exit
+.loopexit:                                        ; preds = %bb.cs, %cf2_hintmap_adjustHints.exit
   %i.oy = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i8 1, ptr %i.oy, align 8, !tbaa !402
   %i.oz = getelementptr inbounds nuw i8, ptr %3, i64 9

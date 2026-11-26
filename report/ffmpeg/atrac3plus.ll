@@ -205,7 +205,7 @@ bb.bs:                                            ; preds = %bb.br
   %i.afj = tail call i32 @llvm.bswap.i32(i32 %i.afi)
   %i.afk = and i32 %i.afd, 7
   %i.afl = shl i32 %i.afj, %i.afk
-  %i.afm = lshr i32 %i.afl, 27                    ; 2 uses
+  %i.afm = lshr i32 %i.afl, 27
   %i.afn = add i32 %i.afd, 5
   %i.afo = tail call i32 @llvm.umin.i32(i32 %i.afe, i32 %i.afn)
   store i32 %i.afo, ptr %i.c, align 8, !tbaa !19
@@ -220,7 +220,6 @@ bb.bs:                                            ; preds = %bb.br
   br label %bb.bt
 
 bb.bt:                                            ; preds = %bb.bt, %.lr.ph.i.i67
-  %4 = phi i32 [ %i.afm, %.lr.ph.i.i67 ], [ %i.agt, %bb.bt ]
   %indvars.iv.i.i69 = phi i64 [ 1, %.lr.ph.i.i67 ], [ %indvars.iv.next.i.i70, %bb.bt ] ; 4 uses
   %i.afr = getelementptr inbounds nuw [4 x i8], ptr %i.afq, i64 %indvars.iv.i.i69
   %i.afs = load i32, ptr %i.afr, align 4, !tbaa !9
@@ -228,6 +227,9 @@ bb.bt:                                            ; preds = %bb.bt, %.lr.ph.i.i6
   %i.afu = load i32, ptr %i.aft, align 4, !tbaa !9
   %.not.i232.i = icmp sgt i32 %i.afs, %i.afu
   %i.afv = select i1 %.not.i232.i, ptr getelementptr inbounds nuw (i8, ptr @gain_vlc_tabs, i64 216), ptr getelementptr inbounds nuw (i8, ptr @gain_vlc_tabs, i64 168) ; 2 uses
+  %4 = getelementptr [4 x i8], ptr %i.afp, i64 %indvars.iv.i.i69 ; 2 uses
+  %5 = getelementptr i8, ptr %4, i64 -4
+  %6 = load i32, ptr %5, align 4, !tbaa !9
   %i.afw = getelementptr inbounds nuw i8, ptr %i.afv, i64 8
   %i.afx = load ptr, ptr %i.afw, align 16, !tbaa !17
   %i.afy = load i32, ptr %i.afv, align 8, !tbaa !25
@@ -252,9 +254,8 @@ bb.bt:                                            ; preds = %bb.bt, %.lr.ph.i.i6
   %i.agr = add i32 %i.afz, %i.agn
   %i.ags = tail call i32 @llvm.umin.i32(i32 %i.agq, i32 %i.agr)
   store i32 %i.ags, ptr %i.c, align 8, !tbaa !19
-  %i.agt = add nsw i32 %4, %i.agp                 ; 2 uses
-  %5 = getelementptr inbounds nuw [4 x i8], ptr %i.afp, i64 %indvars.iv.i.i69
-  store i32 %i.agt, ptr %5, align 4, !tbaa !9
+  %i.agt = add nsw i32 %6, %i.agp
+  store i32 %i.agt, ptr %4, align 4, !tbaa !9
   %indvars.iv.next.i.i70 = add nuw nsw i64 %indvars.iv.i.i69, 1 ; 2 uses
   %exitcond.not.i.i71 = icmp eq i64 %indvars.iv.next.i.i70, %wide.trip.count.i.i68
   br i1 %exitcond.not.i.i71, label %gainc_loc_mode1.exit.i, label %bb.bt, !llvm.loop !207
@@ -392,7 +393,7 @@ bb.by:                                            ; preds = %bb.bx, %bb.bw
   %i.ais = tail call i32 @llvm.bswap.i32(i32 %i.air)
   %i.ait = and i32 %i.ain, 7
   %i.aiu = shl i32 %i.ais, %i.ait
-  %i.aiv = lshr i32 %i.aiu, 27                    ; 2 uses
+  %i.aiv = lshr i32 %i.aiu, 27
   %i.aiw = add i32 %i.ain, 5
   %i.aix = tail call i32 @llvm.umin.i32(i32 %.pre400.i, i32 %i.aiw)
   store i32 %i.aix, ptr %i.c, align 8, !tbaa !19
@@ -407,7 +408,6 @@ bb.by:                                            ; preds = %bb.bx, %bb.bw
   br label %bb.bz
 
 bb.bz:                                            ; preds = %bb.bz, %.lr.ph.i235.i
-  %6 = phi i32 [ %i.aiv, %.lr.ph.i235.i ], [ %i.akc, %bb.bz ]
   %indvars.iv.i237.i = phi i64 [ 1, %.lr.ph.i235.i ], [ %indvars.iv.next.i239.i, %bb.bz ] ; 4 uses
   %i.aja = getelementptr inbounds nuw [4 x i8], ptr %i.aiz, i64 %indvars.iv.i237.i
   %i.ajb = load i32, ptr %i.aja, align 4, !tbaa !9
@@ -415,6 +415,9 @@ bb.bz:                                            ; preds = %bb.bz, %.lr.ph.i235
   %i.ajd = load i32, ptr %i.ajc, align 4, !tbaa !9
   %.not.i238.i = icmp sgt i32 %i.ajb, %i.ajd
   %i.aje = select i1 %.not.i238.i, ptr getelementptr inbounds nuw (i8, ptr @gain_vlc_tabs, i64 216), ptr getelementptr inbounds nuw (i8, ptr @gain_vlc_tabs, i64 168) ; 2 uses
+  %7 = getelementptr [4 x i8], ptr %i.aiy, i64 %indvars.iv.i237.i ; 2 uses
+  %8 = getelementptr i8, ptr %7, i64 -4
+  %9 = load i32, ptr %8, align 4, !tbaa !9
   %i.ajf = getelementptr inbounds nuw i8, ptr %i.aje, i64 8
   %i.ajg = load ptr, ptr %i.ajf, align 16, !tbaa !17
   %i.ajh = load i32, ptr %i.aje, align 8, !tbaa !25
@@ -439,8 +442,7 @@ bb.bz:                                            ; preds = %bb.bz, %.lr.ph.i235
   %i.aka = add i32 %i.aji, %i.ajw
   %i.akb = tail call i32 @llvm.umin.i32(i32 %i.ajz, i32 %i.aka)
   store i32 %i.akb, ptr %i.c, align 8, !tbaa !19
-  %i.akc = add nsw i32 %6, %i.ajy                 ; 2 uses
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %i.aiy, i64 %indvars.iv.i237.i
+  %i.akc = add nsw i32 %9, %i.ajy
   store i32 %i.akc, ptr %7, align 4, !tbaa !9
   %indvars.iv.next.i239.i = add nuw nsw i64 %indvars.iv.i237.i, 1 ; 2 uses
   %exitcond.not.i240.i = icmp eq i64 %indvars.iv.next.i239.i, %wide.trip.count.i236.i

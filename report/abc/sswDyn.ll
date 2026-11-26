@@ -202,18 +202,22 @@ bb.a:
   %i.ad = load ptr, ptr %i.aa, align 8, !tbaa !82
   tail call void @Ssw_ManCollectPis_rec(ptr noundef %i.w, ptr noundef %i.ad)
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 4 uses
-  %i.af = load ptr, ptr %i.ae, align 8, !tbaa !83
+  %i.af = load ptr, ptr %i.ae, align 8, !tbaa !83 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 4
   store i32 0, ptr %i.ag, align 4, !tbaa !54
   %i.ah = load ptr, ptr %i.aa, align 8, !tbaa !82 ; 2 uses
   %i.ai = getelementptr i8, ptr %i.ah, i64 4
   %.val5259 = load i32, ptr %i.ai, align 4, !tbaa !45
   %i.aj = icmp sgt i32 %.val5259, 0
-  br i1 %i.aj, label %.lr.ph, label %.critedge2
+  br i1 %i.aj, label %.lr.ph, label %.critedge.preheader
 
-.critedge.preheader:                              ; preds = %.lr.ph
-  %.pre = load ptr, ptr %i.ae, align 8, !tbaa !83 ; 2 uses
-  %.phi.trans.insert = getelementptr i8, ptr %.pre, i64 4
+.critedge.preheader.loopexit:                     ; preds = %.lr.ph
+  %.pre = load ptr, ptr %i.ae, align 8, !tbaa !83
+  br label %.critedge.preheader
+
+.critedge.preheader:                              ; preds = %.critedge.preheader.loopexit, %bb.a
+  %3 = phi ptr [ %.pre, %.critedge.preheader.loopexit ], [ %i.af, %bb.a ] ; 2 uses
+  %.phi.trans.insert = getelementptr i8, ptr %3, i64 4
   %.val5361.pre = load i32, ptr %.phi.trans.insert, align 4, !tbaa !54
   %i.ak = icmp sgt i32 %.val5361.pre, 0
   br i1 %i.ak, label %.lr.ph63, label %.critedge2
@@ -237,10 +241,10 @@ bb.a:
   %.val52 = load i32, ptr %i.as, align 4, !tbaa !45
   %i.at = sext i32 %.val52 to i64
   %i.au = icmp slt i64 %indvars.iv.next, %i.at
-  br i1 %i.au, label %.lr.ph, label %.critedge.preheader, !llvm.loop !80
+  br i1 %i.au, label %.lr.ph, label %.critedge.preheader.loopexit, !llvm.loop !80
 
 bb.b:                                             ; preds = %.lr.ph63, %.critedge
-  %i.av = phi ptr [ %.pre, %.lr.ph63 ], [ %i.bv, %.critedge ] ; 2 uses
+  %i.av = phi ptr [ %3, %.lr.ph63 ], [ %i.bv, %.critedge ] ; 2 uses
   %indvars.iv65 = phi i64 [ 0, %.lr.ph63 ], [ %indvars.iv.next66, %.critedge ] ; 2 uses
   %i.aw = getelementptr i8, ptr %i.av, i64 8
   %.val54 = load ptr, ptr %i.aw, align 8, !tbaa !55
@@ -294,7 +298,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.by = icmp slt i64 %indvars.iv.next66, %i.bx
   br i1 %i.by, label %bb.b, label %.critedge2, !llvm.loop !81
 
-.critedge2:                                       ; preds = %.critedge, %bb.a, %.critedge.preheader
+.critedge2:                                       ; preds = %.critedge, %.critedge.preheader
   %i.bz = load ptr, ptr %i.x, align 8, !tbaa !59
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bz, i64 16
   %i.cb = load ptr, ptr %i.ca, align 8, !tbaa !62 ; 3 uses

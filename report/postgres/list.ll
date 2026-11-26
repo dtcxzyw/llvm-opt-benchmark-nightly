@@ -123,7 +123,7 @@ bb.b:                                             ; preds = %bb.a
   store i32 1, ptr %i.c, align 4
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store i32 5, ptr %i.d, align 8
-  %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 2 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store ptr %i.e, ptr %i.f, align 8
   br label %bb.g
@@ -176,21 +176,22 @@ enlarge_list.exit.i:                              ; preds = %bb.f, %bb.e
   br label %new_tail_cell.exit
 
 new_tail_cell.exit:                               ; preds = %bb.c, %enlarge_list.exit.i
-  %i.af = phi i32 [ %.pre.i, %enlarge_list.exit.i ], [ %i.h, %bb.c ] ; 2 uses
+  %i.af = phi i32 [ %.pre.i, %enlarge_list.exit.i ], [ %i.h, %bb.c ]
   %i.ag = add i32 %i.af, 1
   store i32 %i.ag, ptr %i.g, align 4
-  %.phi.trans.insert = getelementptr i8, ptr %0, i64 16
-  %.0.val6.pre = load ptr, ptr %.phi.trans.insert, align 8
-  %2 = sext i32 %i.af to i64
   br label %bb.g
 
 bb.g:                                             ; preds = %new_tail_cell.exit, %bb.b
-  %.0.val6.a = phi ptr [ %i.e, %bb.b ], [ %.0.val6.pre, %new_tail_cell.exit ]
-  %.0.val = phi i64 [ 0, %bb.b ], [ %2, %new_tail_cell.exit ]
-  %.0 = phi ptr [ %i.b, %bb.b ], [ %0, %new_tail_cell.exit ]
-  %i.ah = getelementptr inbounds [8 x i8], ptr %.0.val6.a, i64 %.0.val
+  %.0.val6.a = phi ptr [ %i.b, %bb.b ], [ %0, %new_tail_cell.exit ] ; 3 uses
+  %2 = getelementptr i8, ptr %.0.val6.a, i64 4
+  %.0.val = load i32, ptr %2, align 4
+  %3 = getelementptr i8, ptr %.0.val6.a, i64 16
+  %.0.val6 = load ptr, ptr %3, align 8
+  %4 = add i32 %.0.val, -1
+  %5 = sext i32 %4 to i64
+  %i.ah = getelementptr inbounds [8 x i8], ptr %.0.val6, i64 %5
   store ptr %1, ptr %i.ah, align 8
-  ret ptr %.0
+  ret ptr %.0.val6.a
 }
 
 ; Function Attrs: nounwind uwtable
@@ -206,7 +207,7 @@ bb.b:                                             ; preds = %bb.a
   store i32 1, ptr %i.c, align 4
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store i32 5, ptr %i.d, align 8
-  %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 2 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store ptr %i.e, ptr %i.f, align 8
   br label %bb.g
@@ -259,21 +260,22 @@ enlarge_list.exit.i:                              ; preds = %bb.f, %bb.e
   br label %new_tail_cell.exit
 
 new_tail_cell.exit:                               ; preds = %bb.c, %enlarge_list.exit.i
-  %i.af = phi i32 [ %.pre.i, %enlarge_list.exit.i ], [ %i.h, %bb.c ] ; 2 uses
+  %i.af = phi i32 [ %.pre.i, %enlarge_list.exit.i ], [ %i.h, %bb.c ]
   %i.ag = add i32 %i.af, 1
   store i32 %i.ag, ptr %i.g, align 4
-  %.phi.trans.insert = getelementptr i8, ptr %0, i64 16
-  %.0.val5.pre = load ptr, ptr %.phi.trans.insert, align 8
-  %2 = sext i32 %i.af to i64
   br label %bb.g
 
 bb.g:                                             ; preds = %new_tail_cell.exit, %bb.b
-  %.0.val5.a = phi ptr [ %i.e, %bb.b ], [ %.0.val5.pre, %new_tail_cell.exit ]
-  %.0.val = phi i64 [ 0, %bb.b ], [ %2, %new_tail_cell.exit ]
-  %.0 = phi ptr [ %i.b, %bb.b ], [ %0, %new_tail_cell.exit ]
-  %i.ah = getelementptr inbounds [8 x i8], ptr %.0.val5.a, i64 %.0.val
+  %.0.val5.a = phi ptr [ %i.b, %bb.b ], [ %0, %new_tail_cell.exit ] ; 3 uses
+  %2 = getelementptr i8, ptr %.0.val5.a, i64 4
+  %.0.val = load i32, ptr %2, align 4
+  %3 = getelementptr i8, ptr %.0.val5.a, i64 16
+  %.0.val5 = load ptr, ptr %3, align 8
+  %4 = add i32 %.0.val, -1
+  %5 = sext i32 %4 to i64
+  %i.ah = getelementptr inbounds [8 x i8], ptr %.0.val5, i64 %5
   store i32 %1, ptr %i.ah, align 8
-  ret ptr %.0
+  ret ptr %.0.val5.a
 }
 
 ; Function Attrs: nounwind uwtable
@@ -289,7 +291,7 @@ bb.b:                                             ; preds = %bb.a
   store i32 1, ptr %i.c, align 4
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store i32 5, ptr %i.d, align 8
-  %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 2 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store ptr %i.e, ptr %i.f, align 8
   br label %bb.g
@@ -342,21 +344,22 @@ enlarge_list.exit.i:                              ; preds = %bb.f, %bb.e
   br label %new_tail_cell.exit
 
 new_tail_cell.exit:                               ; preds = %bb.c, %enlarge_list.exit.i
-  %i.af = phi i32 [ %.pre.i, %enlarge_list.exit.i ], [ %i.h, %bb.c ] ; 2 uses
+  %i.af = phi i32 [ %.pre.i, %enlarge_list.exit.i ], [ %i.h, %bb.c ]
   %i.ag = add i32 %i.af, 1
   store i32 %i.ag, ptr %i.g, align 4
-  %.phi.trans.insert = getelementptr i8, ptr %0, i64 16
-  %.0.val5.pre = load ptr, ptr %.phi.trans.insert, align 8
-  %2 = sext i32 %i.af to i64
   br label %bb.g
 
 bb.g:                                             ; preds = %new_tail_cell.exit, %bb.b
-  %.0.val5.a = phi ptr [ %i.e, %bb.b ], [ %.0.val5.pre, %new_tail_cell.exit ]
-  %.0.val = phi i64 [ 0, %bb.b ], [ %2, %new_tail_cell.exit ]
-  %.0 = phi ptr [ %i.b, %bb.b ], [ %0, %new_tail_cell.exit ]
-  %i.ah = getelementptr inbounds [8 x i8], ptr %.0.val5.a, i64 %.0.val
+  %.0.val5.a = phi ptr [ %i.b, %bb.b ], [ %0, %new_tail_cell.exit ] ; 3 uses
+  %2 = getelementptr i8, ptr %.0.val5.a, i64 4
+  %.0.val = load i32, ptr %2, align 4
+  %3 = getelementptr i8, ptr %.0.val5.a, i64 16
+  %.0.val5 = load ptr, ptr %3, align 8
+  %4 = add i32 %.0.val, -1
+  %5 = sext i32 %4 to i64
+  %i.ah = getelementptr inbounds [8 x i8], ptr %.0.val5, i64 %5
   store i32 %1, ptr %i.ah, align 8
-  ret ptr %.0
+  ret ptr %.0.val5.a
 }
 
 ; Function Attrs: nounwind uwtable
@@ -372,7 +375,7 @@ bb.b:                                             ; preds = %bb.a
   store i32 1, ptr %i.c, align 4
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store i32 5, ptr %i.d, align 8
-  %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 2 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store ptr %i.e, ptr %i.f, align 8
   br label %bb.g
@@ -425,21 +428,22 @@ enlarge_list.exit.i:                              ; preds = %bb.f, %bb.e
   br label %new_tail_cell.exit
 
 new_tail_cell.exit:                               ; preds = %bb.c, %enlarge_list.exit.i
-  %i.af = phi i32 [ %.pre.i, %enlarge_list.exit.i ], [ %i.h, %bb.c ] ; 2 uses
+  %i.af = phi i32 [ %.pre.i, %enlarge_list.exit.i ], [ %i.h, %bb.c ]
   %i.ag = add i32 %i.af, 1
   store i32 %i.ag, ptr %i.g, align 4
-  %.phi.trans.insert = getelementptr i8, ptr %0, i64 16
-  %.0.val5.pre = load ptr, ptr %.phi.trans.insert, align 8
-  %2 = sext i32 %i.af to i64
   br label %bb.g
 
 bb.g:                                             ; preds = %new_tail_cell.exit, %bb.b
-  %.0.val5.a = phi ptr [ %i.e, %bb.b ], [ %.0.val5.pre, %new_tail_cell.exit ]
-  %.0.val = phi i64 [ 0, %bb.b ], [ %2, %new_tail_cell.exit ]
-  %.0 = phi ptr [ %i.b, %bb.b ], [ %0, %new_tail_cell.exit ]
-  %i.ah = getelementptr inbounds [8 x i8], ptr %.0.val5.a, i64 %.0.val
+  %.0.val5.a = phi ptr [ %i.b, %bb.b ], [ %0, %new_tail_cell.exit ] ; 3 uses
+  %2 = getelementptr i8, ptr %.0.val5.a, i64 4
+  %.0.val = load i32, ptr %2, align 4
+  %3 = getelementptr i8, ptr %.0.val5.a, i64 16
+  %.0.val5 = load ptr, ptr %3, align 8
+  %4 = add i32 %.0.val, -1
+  %5 = sext i32 %4 to i64
+  %i.ah = getelementptr inbounds [8 x i8], ptr %.0.val5, i64 %5
   store i32 %1, ptr %i.ah, align 8
-  ret ptr %.0
+  ret ptr %.0.val5.a
 }
 
 ; Function Attrs: nounwind uwtable
@@ -628,7 +632,7 @@ bb.b:                                             ; preds = %bb.a
   store i32 1, ptr %i.c, align 4
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store i32 5, ptr %i.d, align 8
-  %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 2 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store ptr %i.e, ptr %i.f, align 8
   br label %bb.g
@@ -682,7 +686,7 @@ enlarge_list.exit.i:                              ; preds = %bb.f, %bb.e
 
 new_head_cell.exit:                               ; preds = %bb.c, %enlarge_list.exit.i
   %i.af = phi i32 [ %.pre.i, %enlarge_list.exit.i ], [ %i.h, %bb.c ]
-  %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
+  %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.ah = load ptr, ptr %i.ag, align 8            ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 8
   %i.aj = sext i32 %i.af to i64
@@ -691,14 +695,14 @@ new_head_cell.exit:                               ; preds = %bb.c, %enlarge_list
   %i.al = load i32, ptr %i.g, align 4
   %i.am = add i32 %i.al, 1
   store i32 %i.am, ptr %i.g, align 4
-  %.0.val.pre = load ptr, ptr %i.ag, align 8
   br label %bb.g
 
 bb.g:                                             ; preds = %new_head_cell.exit, %bb.b
-  %.0.val.a = phi ptr [ %i.e, %bb.b ], [ %.0.val.pre, %new_head_cell.exit ]
-  %.0 = phi ptr [ %i.b, %bb.b ], [ %1, %new_head_cell.exit ]
-  store ptr %0, ptr %.0.val.a, align 8
-  ret ptr %.0
+  %.0.val.a = phi ptr [ %i.b, %bb.b ], [ %1, %new_head_cell.exit ] ; 2 uses
+  %2 = getelementptr i8, ptr %.0.val.a, i64 16
+  %.0.val = load ptr, ptr %2, align 8
+  store ptr %0, ptr %.0.val, align 8
+  ret ptr %.0.val.a
 }
 
 ; Function Attrs: nounwind uwtable
@@ -714,7 +718,7 @@ bb.b:                                             ; preds = %bb.a
   store i32 1, ptr %i.c, align 4
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store i32 5, ptr %i.d, align 8
-  %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 2 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store ptr %i.e, ptr %i.f, align 8
   br label %bb.g
@@ -768,7 +772,7 @@ enlarge_list.exit.i:                              ; preds = %bb.f, %bb.e
 
 new_head_cell.exit:                               ; preds = %bb.c, %enlarge_list.exit.i
   %i.af = phi i32 [ %.pre.i, %enlarge_list.exit.i ], [ %i.h, %bb.c ]
-  %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
+  %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.ah = load ptr, ptr %i.ag, align 8            ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 8
   %i.aj = sext i32 %i.af to i64
@@ -777,14 +781,14 @@ new_head_cell.exit:                               ; preds = %bb.c, %enlarge_list
   %i.al = load i32, ptr %i.g, align 4
   %i.am = add i32 %i.al, 1
   store i32 %i.am, ptr %i.g, align 4
-  %.0.val.pre = load ptr, ptr %i.ag, align 8
   br label %bb.g
 
 bb.g:                                             ; preds = %new_head_cell.exit, %bb.b
-  %.0.val.a = phi ptr [ %i.e, %bb.b ], [ %.0.val.pre, %new_head_cell.exit ]
-  %.0 = phi ptr [ %i.b, %bb.b ], [ %1, %new_head_cell.exit ]
-  store i32 %0, ptr %.0.val.a, align 8
-  ret ptr %.0
+  %.0.val.a = phi ptr [ %i.b, %bb.b ], [ %1, %new_head_cell.exit ] ; 2 uses
+  %2 = getelementptr i8, ptr %.0.val.a, i64 16
+  %.0.val = load ptr, ptr %2, align 8
+  store i32 %0, ptr %.0.val, align 8
+  ret ptr %.0.val.a
 }
 
 ; Function Attrs: nounwind uwtable
@@ -800,7 +804,7 @@ bb.b:                                             ; preds = %bb.a
   store i32 1, ptr %i.c, align 4
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store i32 5, ptr %i.d, align 8
-  %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 2 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store ptr %i.e, ptr %i.f, align 8
   br label %bb.g
@@ -854,7 +858,7 @@ enlarge_list.exit.i:                              ; preds = %bb.f, %bb.e
 
 new_head_cell.exit:                               ; preds = %bb.c, %enlarge_list.exit.i
   %i.af = phi i32 [ %.pre.i, %enlarge_list.exit.i ], [ %i.h, %bb.c ]
-  %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
+  %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.ah = load ptr, ptr %i.ag, align 8            ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 8
   %i.aj = sext i32 %i.af to i64
@@ -863,14 +867,14 @@ new_head_cell.exit:                               ; preds = %bb.c, %enlarge_list
   %i.al = load i32, ptr %i.g, align 4
   %i.am = add i32 %i.al, 1
   store i32 %i.am, ptr %i.g, align 4
-  %.0.val.pre = load ptr, ptr %i.ag, align 8
   br label %bb.g
 
 bb.g:                                             ; preds = %new_head_cell.exit, %bb.b
-  %.0.val.a = phi ptr [ %i.e, %bb.b ], [ %.0.val.pre, %new_head_cell.exit ]
-  %.0 = phi ptr [ %i.b, %bb.b ], [ %1, %new_head_cell.exit ]
-  store i32 %0, ptr %.0.val.a, align 8
-  ret ptr %.0
+  %.0.val.a = phi ptr [ %i.b, %bb.b ], [ %1, %new_head_cell.exit ] ; 2 uses
+  %2 = getelementptr i8, ptr %.0.val.a, i64 16
+  %.0.val = load ptr, ptr %2, align 8
+  store i32 %0, ptr %.0.val, align 8
+  ret ptr %.0.val.a
 }
 
 ; Function Attrs: nounwind uwtable

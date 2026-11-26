@@ -205,9 +205,7 @@ bb.i:                                             ; preds = %bb.g, %bb.h
   br i1 %.not54, label %.thread, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.h, %bb.i
-  %.pr69 = phi ptr [ %.pr.pre, %bb.i ], [ %i.w, %bb.h ] ; 2 uses
-  %.phi.trans.insert = getelementptr i8, ptr %.pr69, i64 16
-  %.pre = load i64, ptr %.phi.trans.insert, align 8, !tbaa !1008
+  %.pr69 = phi ptr [ %.pr.pre, %bb.i ], [ %i.w, %bb.h ]
   %.pre60 = ptrtoint ptr %1 to i64
   br label %bb.n
 
@@ -266,13 +264,14 @@ rb_long2int_inline.exit:                          ; preds = %rb_parser_enc_assoc
 
 bb.n:                                             ; preds = %._crit_edge, %rb_long2int_inline.exit
   %.pre-phi = phi i64 [ %.pre60, %._crit_edge ], [ %i.bn, %rb_long2int_inline.exit ] ; 2 uses
-  %4 = phi i64 [ %.pre, %._crit_edge ], [ 0, %rb_long2int_inline.exit ] ; 4 uses
   %i.bt = phi ptr [ %.pr69, %._crit_edge ], [ %i.az, %rb_long2int_inline.exit ] ; 3 uses
   %i.bu = ptrtoint ptr %2 to i64                  ; 2 uses
   %i.bv = sub i64 %i.bu, %.pre-phi                ; 3 uses
   store i32 0, ptr %i.bt, align 8, !tbaa !1009
+  %4 = getelementptr i8, ptr %i.bt, i64 16        ; 3 uses
+  %5 = load i64, ptr %4, align 8, !tbaa !1008     ; 4 uses
   %i.bw = sub i64 9223372036854775807, %i.bv
-  %i.bx = icmp sgt i64 %4, %i.bw
+  %i.bx = icmp sgt i64 %5, %i.bw
   br i1 %i.bx, label %bb.o, label %ruby_nonempty_memcpy.exit.i
 
 bb.o:                                             ; preds = %bb.n
@@ -280,27 +279,26 @@ bb.o:                                             ; preds = %bb.n
   br label %rb_parser_str_buf_cat.exit
 
 ruby_nonempty_memcpy.exit.i:                      ; preds = %bb.n
-  %5 = getelementptr i8, ptr %i.bt, i64 16        ; 2 uses
   %i.by = getelementptr i8, ptr %i.bt, i64 24     ; 3 uses
   %i.bz = load ptr, ptr %i.by, align 8, !tbaa !1007 ; 4 uses
   %.not.i55 = icmp ult ptr %1, %i.bz
-  %i.ca = getelementptr i8, ptr %i.bz, i64 %4
+  %i.ca = getelementptr i8, ptr %i.bz, i64 %5
   %.not40.i = icmp ugt ptr %1, %i.ca
   %or.cond.i = or i1 %.not.i55, %.not40.i
   %i.cb = ptrtoint ptr %i.bz to i64
   %i.cc = sub i64 %.pre-phi, %i.cb
   %.0.i = select i1 %or.cond.i, i64 -1, i64 %i.cc ; 2 uses
-  %i.cd = add i64 %4, %i.bv                       ; 4 uses
+  %i.cd = add i64 %5, %i.bv                       ; 4 uses
   %i.ce = add i64 %i.cd, 1
   %i.cf = tail call nonnull ptr @ruby_xrealloc2(ptr noundef %i.bz, i64 noundef %i.ce, i64 noundef 1) #38 ; 3 uses
   store ptr %i.cf, ptr %i.by, align 8, !tbaa !1007
-  store i64 %i.cd, ptr %5, align 8, !tbaa !1008
+  store i64 %i.cd, ptr %4, align 8, !tbaa !1008
   %.not41.i = icmp eq i64 %.0.i, -1
   %i.cg = getelementptr i8, ptr %i.cf, i64 %.0.i
   %spec.select.i = select i1 %.not41.i, ptr %1, ptr %i.cg
-  %i.ch = getelementptr i8, ptr %i.cf, i64 %4
+  %i.ch = getelementptr i8, ptr %i.cf, i64 %5
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 %i.ch, ptr noundef nonnull readonly align 1 %spec.select.i, i64 noundef range(i64 1, 0) %i.bv, i1 noundef false) #31
-  store i64 %i.cd, ptr %5, align 8, !tbaa !1008
+  store i64 %i.cd, ptr %4, align 8, !tbaa !1008
   %i.ci = load ptr, ptr %i.by, align 8, !tbaa !1007
   %i.cj = getelementptr i8, ptr %i.ci, i64 %i.cd
   store i8 0, ptr %i.cj, align 1, !tbaa !1000

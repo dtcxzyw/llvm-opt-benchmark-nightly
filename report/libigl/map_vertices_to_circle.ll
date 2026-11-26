@@ -204,7 +204,7 @@ _ZNSt6vectorIdSaIdEEC2EmRKS0_.exit:               ; preds = %_ZSt6fill_nIPdmdET_
   %i.cc = load i64, ptr %i.w, align 8, !tbaa !29  ; 7 uses
   %i.cd = icmp sgt i64 %i.cc, 1
   %.pre345 = load ptr, ptr %1, align 8, !tbaa !30 ; 4 uses
-  %.pre346 = load ptr, ptr %0, align 8, !tbaa !14, !noalias !35 ; 5 uses
+  %.pre346 = load ptr, ptr %0, align 8, !tbaa !14, !noalias !35 ; 4 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.cf = load i64, ptr %i.ce, align 8, !tbaa !15, !noalias !35 ; 8 uses
   br i1 %i.cd, label %.lr.ph316, label %._crit_edge317
@@ -289,10 +289,6 @@ _ZNSt6vectorIdSaIdEEC2EmRKS0_.exit:               ; preds = %_ZSt6fill_nIPdmdET_
 
 .lr.ph316.split:                                  ; preds = %.lr.ph316
   %i.di = load i64, ptr %i.a, align 8, !tbaa !13  ; 3 uses
-  %.pre342 = load i32, ptr %.pre345, align 4, !tbaa !26 ; 2 uses
-  %.phi.trans.insert = sext i32 %.pre342 to i64
-  %.phi.trans.insert343 = getelementptr inbounds [8 x i8], ptr %.pre346, i64 %.phi.trans.insert
-  %.pre344 = load double, ptr %.phi.trans.insert343, align 8, !tbaa !34
   %i.dj = add i64 %i.cf, -1                       ; 3 uses
   %xtraiter = and i64 %i.dj, 1
   %i.dk = icmp eq i64 %i.cf, 2
@@ -307,18 +303,20 @@ bb.m:                                             ; preds = %_ZNSt6vectorIdSaIdE
   br label %bb.s
 
 bb.n:                                             ; preds = %.lr.ph316.split, %.loopexit
-  %i.dm = phi double [ %.pre344, %.lr.ph316.split ], [ %i.dt, %.loopexit ]
-  %3 = phi i32 [ %.pre342, %.lr.ph316.split ], [ %i.dq, %.loopexit ]
-  %4 = phi double [ 0.000000e+00, %.lr.ph316.split ], [ %i.ew, %.loopexit ]
-  %indvars.iv330 = phi i64 [ 1, %.lr.ph316.split ], [ %indvars.iv.next331, %.loopexit ] ; 3 uses
-  %i.dn = sext i32 %3 to i64
-  %i.do = getelementptr inbounds [8 x i8], ptr %.pre346, i64 %i.dn ; 3 uses
+  %i.dm = phi double [ 0.000000e+00, %.lr.ph316.split ], [ %i.ew, %.loopexit ]
+  %indvars.iv330 = phi i64 [ 1, %.lr.ph316.split ], [ %indvars.iv.next331, %.loopexit ] ; 4 uses
+  %3 = getelementptr [4 x i8], ptr %.pre345, i64 %indvars.iv330
+  %4 = getelementptr i8, ptr %3, i64 -4
+  %5 = load i32, ptr %4, align 4, !tbaa !26
+  %i.dn = sext i32 %5 to i64
+  %i.do = getelementptr inbounds [8 x i8], ptr %.pre346, i64 %i.dn ; 4 uses
   %i.dp = getelementptr inbounds nuw [4 x i8], ptr %.pre345, i64 %indvars.iv330
-  %i.dq = load i32, ptr %i.dp, align 4, !tbaa !26 ; 2 uses
+  %i.dq = load i32, ptr %i.dp, align 4, !tbaa !26
   %i.dr = sext i32 %i.dq to i64
   %i.ds = getelementptr inbounds [8 x i8], ptr %.pre346, i64 %i.dr ; 4 uses
-  %i.dt = load double, ptr %i.ds, align 8, !tbaa !34 ; 2 uses
-  %i.du = fsub double %i.dm, %i.dt                ; 2 uses
+  %6 = load double, ptr %i.do, align 8, !tbaa !34
+  %i.dt = load double, ptr %i.ds, align 8, !tbaa !34
+  %i.du = fsub double %6, %i.dt                   ; 2 uses
   %i.dv = fmul double %i.du, %i.du                ; 3 uses
   br i1 %i.ch, label %.lr.ph.i.i.i.i.i.preheader, label %.loopexit
 
@@ -371,7 +369,7 @@ bb.n:                                             ; preds = %.lr.ph316.split, %.
 .loopexit:                                        ; preds = %.lr.ph.i.i.i.i.i.epil.preheader, %.loopexit.loopexit.unr-lcssa, %bb.n
   %.0.i.i.i = phi double [ %i.dv, %bb.n ], [ %i.em, %.loopexit.loopexit.unr-lcssa ], [ %i.ev, %.lr.ph.i.i.i.i.i.epil.preheader ]
   %.scalar.i = tail call noundef double @llvm.sqrt.f64(double %.0.i.i.i)
-  %i.ew = fadd double %4, %.scalar.i              ; 2 uses
+  %i.ew = fadd double %i.dm, %.scalar.i           ; 2 uses
   %i.ex = getelementptr inbounds nuw [8 x i8], ptr %i.ax, i64 %indvars.iv330
   store double %i.ew, ptr %i.ex, align 8, !tbaa !34
   %indvars.iv.next331 = add nuw nsw i64 %indvars.iv330, 1 ; 2 uses

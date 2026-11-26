@@ -204,14 +204,15 @@ middle.block417:                                  ; preds = %vector.body410
 ._crit_edge309:                                   ; preds = %.lr.ph308, %middle.block417, %.preheader276
   %.0.lcssa = phi i64 [ 0, %.preheader276 ], [ %i.ha, %middle.block417 ], [ %i.he, %.lr.ph308 ]
   %i.hf = shl nsw i64 %i.aq, 3
-  %i.hg = call ptr @ADIOI_Malloc_fn(i64 noundef %i.hf, i32 noundef 691, ptr noundef nonnull @.str) #7 ; 8 uses
-  %i.hh = call ptr @ADIOI_Malloc_fn(i64 noundef %.0.lcssa, i32 noundef 692, ptr noundef nonnull @.str) #7 ; 3 uses
+  %i.hg = call ptr @ADIOI_Malloc_fn(i64 noundef %i.hf, i32 noundef 691, ptr noundef nonnull @.str) #7 ; 9 uses
+  %i.hh = call ptr @ADIOI_Malloc_fn(i64 noundef %.0.lcssa, i32 noundef 692, ptr noundef nonnull @.str) #7
   store ptr %i.hh, ptr %i.hg, align 8, !tbaa !40
   %i.hi = icmp sgt i32 %14, 1
   br i1 %i.hi, label %.lr.ph313.preheader, label %._crit_edge314
 
 .lr.ph313.preheader:                              ; preds = %._crit_edge309
   %wide.trip.count359 = zext nneg i32 %14 to i64
+  %load_initial = load ptr, ptr %i.hg, align 8    ; 2 uses
   %i.hj = add nsw i64 %wide.trip.count359, -1     ; 2 uses
   %xtraiter435 = and i64 %i.hj, 3                 ; 3 uses
   %i.hk = add nsw i32 %14, -2
@@ -223,7 +224,7 @@ middle.block417:                                  ; preds = %vector.body410
   br label %.lr.ph313
 
 .lr.ph313:                                        ; preds = %.lr.ph313, %.lr.ph313.preheader.new
-  %i.hm = phi ptr [ %i.hh, %.lr.ph313.preheader.new ], [ %i.ij, %.lr.ph313 ]
+  %i.hm = phi ptr [ %load_initial, %.lr.ph313.preheader.new ], [ %i.ij, %.lr.ph313 ]
   %indvars.iv356 = phi i64 [ 1, %.lr.ph313.preheader.new ], [ %indvars.iv.next357.3, %.lr.ph313 ] ; 6 uses
   %niter439 = phi i64 [ 0, %.lr.ph313.preheader.new ], [ %niter439.next.3, %.lr.ph313 ]
   %i.hn = getelementptr [4 x i8], ptr %6, i64 %indvars.iv356
@@ -267,7 +268,7 @@ middle.block417:                                  ; preds = %vector.body410
   br i1 %lcmp.mod436.not, label %._crit_edge314, label %.lr.ph313.epil.preheader
 
 .lr.ph313.epil.preheader:                         ; preds = %._crit_edge314.loopexit.unr-lcssa, %.lr.ph313.preheader
-  %.epil.init = phi ptr [ %i.hh, %.lr.ph313.preheader ], [ %i.ij, %._crit_edge314.loopexit.unr-lcssa ]
+  %.epil.init = phi ptr [ %load_initial, %.lr.ph313.preheader ], [ %i.ij, %._crit_edge314.loopexit.unr-lcssa ]
   %indvars.iv356.epil.init = phi i64 [ 1, %.lr.ph313.preheader ], [ %indvars.iv.next357.3, %._crit_edge314.loopexit.unr-lcssa ]
   %lcmp.mod437 = icmp ne i64 %xtraiter435, 0
   call void @llvm.assume(i1 %lcmp.mod437)

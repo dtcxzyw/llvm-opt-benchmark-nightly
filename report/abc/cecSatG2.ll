@@ -205,7 +205,7 @@ bb.a:
   %i.d = getelementptr i8, ptr %2, i64 4
   %.val46 = load i32, ptr %i.d, align 4, !tbaa !50 ; 2 uses
   %i.e = icmp sgt i32 %.val46, 0
-  br i1 %i.e, label %.lr.ph, label %.critedge2
+  br i1 %i.e, label %.lr.ph, label %.critedge.preheader
 
 .lr.ph:                                           ; preds = %bb.a
   %i.f = getelementptr i8, ptr %2, i64 8
@@ -217,9 +217,13 @@ bb.a:
   %i.l = zext nneg i32 %.val46 to i64
   br label %bb.b
 
-.critedge.preheader:                              ; preds = %bb.m
-  %.pre71 = load ptr, ptr %i.a, align 8, !tbaa !140 ; 3 uses
-  %.phi.trans.insert72 = getelementptr i8, ptr %.pre71, i64 4
+.critedge.preheader.loopexit:                     ; preds = %bb.m
+  %.pre71 = load ptr, ptr %i.a, align 8, !tbaa !140
+  br label %.critedge.preheader
+
+.critedge.preheader:                              ; preds = %.critedge.preheader.loopexit, %bb.a
+  %3 = phi ptr [ %.pre71, %.critedge.preheader.loopexit ], [ %i.b, %bb.a ] ; 3 uses
+  %.phi.trans.insert72 = getelementptr i8, ptr %3, i64 4
   %.val59.pre = load i32, ptr %.phi.trans.insert72, align 4, !tbaa !50
   %i.m = icmp sgt i32 %.val59.pre, 0
   br i1 %i.m, label %.lr.ph61, label %.critedge2
@@ -557,10 +561,10 @@ bb.m:                                             ; preds = %Vec_IntPush.exit, %
   store i32 %i.es, ptr %i.ex, align 4, !tbaa !52
   store i32 %i.r, ptr %i.eu, align 4, !tbaa !52
   %i.ey = icmp samesign ugt i64 %indvars.iv, 1
-  br i1 %i.ey, label %bb.b, label %.critedge.preheader, !llvm.loop !244
+  br i1 %i.ey, label %bb.b, label %.critedge.preheader.loopexit, !llvm.loop !244
 
 bb.n:                                             ; preds = %.lr.ph61, %.critedge
-  %i.ez = phi ptr [ %.pre71, %.lr.ph61 ], [ %i.fy, %.critedge ] ; 2 uses
+  %i.ez = phi ptr [ %3, %.lr.ph61 ], [ %i.fy, %.critedge ] ; 2 uses
   %i.fa = phi ptr [ %.pre77, %.lr.ph61 ], [ %i.fz, %.critedge ] ; 2 uses
   %i.fb = phi ptr [ %.pre75.a, %.lr.ph61 ], [ %i.ga, %.critedge ] ; 2 uses
   %indvars.iv66 = phi i64 [ 0, %.lr.ph61 ], [ %indvars.iv.next67, %.critedge ] ; 2 uses
@@ -619,8 +623,8 @@ bb.o:                                             ; preds = %.lr.ph57, %bb.o
   %i.gd = icmp slt i64 %indvars.iv.next67, %i.gc
   br i1 %i.gd, label %bb.n, label %.critedge2, !llvm.loop !246
 
-.critedge2:                                       ; preds = %.critedge, %bb.a, %.critedge.preheader
-  %.lcssa58 = phi ptr [ %.pre71, %.critedge.preheader ], [ %i.b, %bb.a ], [ %i.fy, %.critedge ]
+.critedge2:                                       ; preds = %.critedge, %.critedge.preheader
+  %.lcssa58 = phi ptr [ %3, %.critedge.preheader ], [ %i.fy, %.critedge ]
   %i.ge = getelementptr i8, ptr %.lcssa58, i64 4
   store i32 0, ptr %i.ge, align 4, !tbaa !50
   ret void

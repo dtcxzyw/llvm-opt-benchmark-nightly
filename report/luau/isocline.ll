@@ -205,9 +205,9 @@ bb.x:                                             ; preds = %completions_apply_l
   br label %edit_complete_longest_prefix.exit
 
 edit_complete_longest_prefix.exit:                ; preds = %bb.x, %completions_apply_longest_prefix.exit.thread.i, %bb.n
-  %i.dt = load ptr, ptr %i.n, align 8, !tbaa !122 ; 2 uses
+  %i.dt = load ptr, ptr %i.n, align 8, !tbaa !122 ; 3 uses
   %i.du = getelementptr inbounds nuw i8, ptr %i.dt, i64 24
-  %i.dv = load i64, ptr %i.du, align 8, !tbaa !126 ; 3 uses
+  %i.dv = load i64, ptr %i.du, align 8, !tbaa !126 ; 2 uses
   %i.dw = icmp slt i64 %i.dv, 1
   br i1 %i.dw, label %completions_sort.exit, label %bb.y
 
@@ -216,12 +216,12 @@ bb.y:                                             ; preds = %edit_complete_longe
   %i.dy = load ptr, ptr %i.dx, align 8, !tbaa !189
   call void @qsort(ptr noundef %i.dy, i64 noundef %i.dv, i64 noundef 40, ptr noundef nonnull @completion_compare) #28
   %.pre = load ptr, ptr %i.n, align 8, !tbaa !122
-  %.phi.trans.insert = getelementptr i8, ptr %.pre, i64 24
-  %.val197.i.pre = load i64, ptr %.phi.trans.insert, align 8, !tbaa !126
   br label %completions_sort.exit
 
 completions_sort.exit:                            ; preds = %edit_complete_longest_prefix.exit, %bb.y
-  %.val197.i = phi i64 [ %i.dv, %edit_complete_longest_prefix.exit ], [ %.val197.i.pre, %bb.y ] ; 12 uses
+  %5 = phi ptr [ %i.dt, %edit_complete_longest_prefix.exit ], [ %.pre, %bb.y ]
+  %6 = getelementptr i8, ptr %5, i64 24
+  %.val197.i = load i64, ptr %6, align 8, !tbaa !126 ; 12 uses
   %i.dz = getelementptr inbounds nuw i8, ptr %0, i64 108 ; 3 uses
   %i.ea = load i8, ptr %i.dz, align 4, !tbaa !172, !range !136, !noundef !137
   %i.eb = xor i8 %i.ea, 1
@@ -325,7 +325,7 @@ completions_get_display.exit.i.i:                 ; preds = %bb.ac
 
 completions_get_display.exit.i.thread.i:          ; preds = %completions_get_display.exit.i.i, %bb.ac
   %.0.i.i198625.i = phi ptr [ %i.fr, %completions_get_display.exit.i.i ], [ %i.fq, %bb.ac ] ; 6 uses
-  %i.ft = load i8, ptr %.0.i.i198625.i, align 1, !tbaa !48 ; 2 uses
+  %i.ft = load i8, ptr %.0.i.i198625.i, align 1, !tbaa !48
   %i.fu = icmp eq i8 %i.ft, 0
   br i1 %i.fu, label %bbcode_column_width.exit284.i, label %bb.ad
 
@@ -342,21 +342,23 @@ ic_strlen.exit.i.i277.i:                          ; preds = %bb.ad
   br i1 %i.ga, label %bbcode_column_width.exit284.i, label %.lr.ph.i.i.i278.i
 
 .lr.ph.i.i.i278.i:                                ; preds = %ic_strlen.exit.i.i277.i, %bb.al
-  %5 = phi i8 [ %i.hj, %bb.al ], [ %i.ft, %ic_strlen.exit.i.i277.i ]
   %.019.i.i.i279.i = phi i64 [ %i.hg, %bb.al ], [ 0, %ic_strlen.exit.i.i277.i ] ; 3 uses
   %.01218.i.i.i280.i = phi i64 [ %i.hh, %bb.al ], [ 0, %ic_strlen.exit.i.i277.i ] ; 6 uses
   %i.gb = icmp sgt i64 %i.fz, %.01218.i.i.i280.i
   br i1 %i.gb, label %bb.ae, label %bbcode_column_width.exit284.i
 
 bb.ae:                                            ; preds = %.lr.ph.i.i.i278.i
-  %i.gc = getelementptr inbounds i8, ptr %.0.i.i198625.i, i64 %.01218.i.i.i280.i ; 6 uses
+  %i.gc = getelementptr inbounds i8, ptr %.0.i.i198625.i, i64 %.01218.i.i.i280.i ; 7 uses
   %i.gd = sub nsw i64 %i.fz, %.01218.i.i.i280.i   ; 7 uses
-  %6 = icmp sgt i64 %i.gd, 1
-  %.not66.i.i490.i = icmp eq i8 %5, 27
-  %or.cond1064.i = and i1 %.not66.i.i490.i, %6
-  br i1 %or.cond1064.i, label %bb.af, label %skip_esc.exit.i491.i
+  %7 = icmp slt i64 %i.gd, 2
+  br i1 %7, label %skip_esc.exit.i491.i, label %8
 
-bb.af:                                            ; preds = %bb.ae
+8:                                                ; preds = %bb.ae
+  %9 = load i8, ptr %i.gc, align 1, !tbaa !48
+  %.not66.i.i490.i = icmp eq i8 %9, 27
+  br i1 %.not66.i.i490.i, label %bb.af, label %skip_esc.exit.i491.i
+
+bb.af:                                            ; preds = %8
   %i.ge = getelementptr inbounds nuw i8, ptr %i.gc, i64 1
   %i.gf = load i8, ptr %i.ge, align 1, !tbaa !48
   %.fr89.i.i496.i = freeze i8 %i.gf               ; 2 uses
@@ -415,7 +417,7 @@ bb.aj:                                            ; preds = %bb.ai, %bb.ah
   %i.gu = add nuw nsw i64 %.05475.us76.i.i504.i, 2
   br label %str_next_ofs.exit512.thread.i
 
-skip_esc.exit.i491.i:                             ; preds = %bb.ae
+skip_esc.exit.i491.i:                             ; preds = %8, %bb.ae
   %i.gv = add nsw i64 %.01218.i.i.i280.i, 1       ; 2 uses
   %i.gw = icmp sgt i64 %i.fz, %i.gv
   br i1 %i.gw, label %.lr.ph.i492.i, label %str_next_ofs.exit512.thread.i
@@ -451,7 +453,7 @@ bb.al:                                            ; preds = %str_next_ofs.exit51
   %i.hg = add nsw i64 %i.hf, %.019.i.i.i279.i     ; 2 uses
   %i.hh = add nuw nsw i64 %.2.i489627.i, %.01218.i.i.i280.i ; 2 uses
   %i.hi = getelementptr inbounds nuw i8, ptr %.0.i.i198625.i, i64 %i.hh
-  %i.hj = load i8, ptr %i.hi, align 1, !tbaa !48  ; 2 uses
+  %i.hj = load i8, ptr %i.hi, align 1, !tbaa !48
   %.not.i.i.i283.i = icmp eq i8 %i.hj, 0
   br i1 %.not.i.i.i283.i, label %bbcode_column_width.exit284.i, label %.lr.ph.i.i.i278.i, !llvm.loop !7
 
@@ -473,26 +475,28 @@ ic_strlen.exit.i12.i263.i:                        ; preds = %bb.am
   br i1 %i.hs, label %sbuf_len.exit.i.i271.i, label %bb.an
 
 bb.an:                                            ; preds = %ic_strlen.exit.i12.i263.i
-  %i.ht = load i8, ptr %spec.select.i264.i, align 1, !tbaa !48 ; 2 uses
+  %i.ht = load i8, ptr %spec.select.i264.i, align 1, !tbaa !48
   %.not17.i.i13.i265.i = icmp eq i8 %i.ht, 0
   br i1 %.not17.i.i13.i265.i, label %sbuf_len.exit.i.i271.i, label %.lr.ph.i.i14.i266.i
 
 .lr.ph.i.i14.i266.i:                              ; preds = %bb.an, %bb.av
-  %7 = phi i8 [ %i.jc, %bb.av ], [ %i.ht, %bb.an ]
   %.019.i.i15.i267.i = phi i64 [ %i.iz, %bb.av ], [ 0, %bb.an ] ; 3 uses
   %.01218.i.i16.i268.i = phi i64 [ %i.ja, %bb.av ], [ 0, %bb.an ] ; 6 uses
   %i.hu = icmp sgt i64 %i.hr, %.01218.i.i16.i268.i
   br i1 %i.hu, label %bb.ao, label %sbuf_len.exit.i.i271.i
 
 bb.ao:                                            ; preds = %.lr.ph.i.i14.i266.i
-  %i.hv = getelementptr inbounds i8, ptr %spec.select.i264.i, i64 %.01218.i.i16.i268.i ; 6 uses
+  %i.hv = getelementptr inbounds i8, ptr %spec.select.i264.i, i64 %.01218.i.i16.i268.i ; 7 uses
   %i.hw = sub nsw i64 %i.hr, %.01218.i.i16.i268.i ; 7 uses
-  %8 = icmp sgt i64 %i.hw, 1
-  %.not66.i.i464.i = icmp eq i8 %7, 27
-  %or.cond1065.i = and i1 %.not66.i.i464.i, %8
-  br i1 %or.cond1065.i, label %bb.ap, label %skip_esc.exit.i465.i
+  %10 = icmp slt i64 %i.hw, 2
+  br i1 %10, label %skip_esc.exit.i465.i, label %11
 
-bb.ap:                                            ; preds = %bb.ao
+11:                                               ; preds = %bb.ao
+  %12 = load i8, ptr %i.hv, align 1, !tbaa !48
+  %.not66.i.i464.i = icmp eq i8 %12, 27
+  br i1 %.not66.i.i464.i, label %bb.ap, label %skip_esc.exit.i465.i
+
+bb.ap:                                            ; preds = %11
   %i.hx = getelementptr inbounds nuw i8, ptr %i.hv, i64 1
   %i.hy = load i8, ptr %i.hx, align 1, !tbaa !48
   %.fr89.i.i470.i = freeze i8 %i.hy               ; 2 uses
@@ -551,7 +555,7 @@ bb.at:                                            ; preds = %bb.as, %bb.ar
   %i.in = add nuw nsw i64 %.05475.us76.i.i478.i, 2
   br label %str_next_ofs.exit486.thread.i
 
-skip_esc.exit.i465.i:                             ; preds = %bb.ao
+skip_esc.exit.i465.i:                             ; preds = %11, %bb.ao
   %i.io = add nsw i64 %.01218.i.i16.i268.i, 1     ; 2 uses
   %i.ip = icmp sgt i64 %i.hr, %i.io
   br i1 %i.ip, label %.lr.ph.i466.i, label %str_next_ofs.exit486.thread.i
@@ -587,7 +591,7 @@ bb.av:                                            ; preds = %str_next_ofs.exit48
   %i.iz = add nsw i64 %i.iy, %.019.i.i15.i267.i   ; 2 uses
   %i.ja = add nuw nsw i64 %.2.i463631.i, %.01218.i.i16.i268.i ; 2 uses
   %i.jb = getelementptr inbounds nuw i8, ptr %spec.select.i264.i, i64 %i.ja
-  %i.jc = load i8, ptr %i.jb, align 1, !tbaa !48  ; 2 uses
+  %i.jc = load i8, ptr %i.jb, align 1, !tbaa !48
   %.not.i.i20.i276.i = icmp eq i8 %i.jc, 0
   br i1 %.not.i.i20.i276.i, label %sbuf_len.exit.i.i271.i, label %.lr.ph.i.i14.i266.i, !llvm.loop !7
 
@@ -608,7 +612,7 @@ bbcode_column_width.exit284.i:                    ; preds = %.lr.ph.i.i.i278.i, 
 
 bb.aw:                                            ; preds = %bbcode_column_width.exit284.i
   %i.jd = load ptr, ptr %i.eh, align 8, !tbaa !148 ; 2 uses
-  %i.je = load i8, ptr %i.fo, align 1, !tbaa !48  ; 2 uses
+  %i.je = load i8, ptr %i.fo, align 1, !tbaa !48
   %i.jf = icmp eq i8 %i.je, 0
   br i1 %i.jf, label %bbcode_column_width.exit.i, label %bb.ax
 
@@ -625,21 +629,23 @@ ic_strlen.exit.i.i.i:                             ; preds = %bb.ax
   br i1 %i.jl, label %bbcode_column_width.exit.i, label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %ic_strlen.exit.i.i.i, %bb.bf
-  %9 = phi i8 [ %i.ku, %bb.bf ], [ %i.je, %ic_strlen.exit.i.i.i ]
   %.019.i.i.i.i = phi i64 [ %i.kr, %bb.bf ], [ 0, %ic_strlen.exit.i.i.i ] ; 3 uses
   %.01218.i.i.i.i = phi i64 [ %i.ks, %bb.bf ], [ 0, %ic_strlen.exit.i.i.i ] ; 6 uses
   %i.jm = icmp sgt i64 %i.jk, %.01218.i.i.i.i
   br i1 %i.jm, label %bb.ay, label %bbcode_column_width.exit.i
 
 bb.ay:                                            ; preds = %.lr.ph.i.i.i.i
-  %i.jn = getelementptr inbounds i8, ptr %i.fo, i64 %.01218.i.i.i.i ; 6 uses
+  %i.jn = getelementptr inbounds i8, ptr %i.fo, i64 %.01218.i.i.i.i ; 7 uses
   %i.jo = sub nsw i64 %i.jk, %.01218.i.i.i.i      ; 7 uses
-  %10 = icmp sgt i64 %i.jo, 1
-  %.not66.i.i438.i = icmp eq i8 %9, 27
-  %or.cond1066.i = and i1 %.not66.i.i438.i, %10
-  br i1 %or.cond1066.i, label %bb.az, label %skip_esc.exit.i439.i
+  %13 = icmp slt i64 %i.jo, 2
+  br i1 %13, label %skip_esc.exit.i439.i, label %14
 
-bb.az:                                            ; preds = %bb.ay
+14:                                               ; preds = %bb.ay
+  %15 = load i8, ptr %i.jn, align 1, !tbaa !48
+  %.not66.i.i438.i = icmp eq i8 %15, 27
+  br i1 %.not66.i.i438.i, label %bb.az, label %skip_esc.exit.i439.i
+
+bb.az:                                            ; preds = %14
   %i.jp = getelementptr inbounds nuw i8, ptr %i.jn, i64 1
   %i.jq = load i8, ptr %i.jp, align 1, !tbaa !48
   %.fr89.i.i444.i = freeze i8 %i.jq               ; 2 uses
@@ -698,7 +704,7 @@ bb.bd:                                            ; preds = %bb.bc, %bb.bb
   %i.kf = add nuw nsw i64 %.05475.us76.i.i452.i, 2
   br label %str_next_ofs.exit460.thread.i
 
-skip_esc.exit.i439.i:                             ; preds = %bb.ay
+skip_esc.exit.i439.i:                             ; preds = %14, %bb.ay
   %i.kg = add nsw i64 %.01218.i.i.i.i, 1          ; 2 uses
   %i.kh = icmp sgt i64 %i.jk, %i.kg
   br i1 %i.kh, label %.lr.ph.i440.i, label %str_next_ofs.exit460.thread.i
@@ -734,7 +740,7 @@ bb.bf:                                            ; preds = %str_next_ofs.exit46
   %i.kr = add nsw i64 %i.kq, %.019.i.i.i.i        ; 2 uses
   %i.ks = add nuw nsw i64 %.2.i437635.i, %.01218.i.i.i.i ; 2 uses
   %i.kt = getelementptr inbounds nuw i8, ptr %i.fo, i64 %i.ks
-  %i.ku = load i8, ptr %i.kt, align 1, !tbaa !48  ; 2 uses
+  %i.ku = load i8, ptr %i.kt, align 1, !tbaa !48
   %.not.i.i.i262.i = icmp eq i8 %i.ku, 0
   br i1 %.not.i.i.i262.i, label %bbcode_column_width.exit.i, label %.lr.ph.i.i.i.i, !llvm.loop !7
 
@@ -756,26 +762,28 @@ ic_strlen.exit.i12.i.i:                           ; preds = %bb.bg
   br i1 %i.ld, label %sbuf_len.exit.i.i.i, label %bb.bh
 
 bb.bh:                                            ; preds = %ic_strlen.exit.i12.i.i
-  %i.le = load i8, ptr %spec.select.i260.i, align 1, !tbaa !48 ; 2 uses
+  %i.le = load i8, ptr %spec.select.i260.i, align 1, !tbaa !48
   %.not17.i.i13.i.i = icmp eq i8 %i.le, 0
   br i1 %.not17.i.i13.i.i, label %sbuf_len.exit.i.i.i, label %.lr.ph.i.i14.i.i
 
 .lr.ph.i.i14.i.i:                                 ; preds = %bb.bh, %bb.bp
-  %11 = phi i8 [ %i.mn, %bb.bp ], [ %i.le, %bb.bh ]
   %.019.i.i15.i.i = phi i64 [ %i.mk, %bb.bp ], [ 0, %bb.bh ] ; 3 uses
   %.01218.i.i16.i.i = phi i64 [ %i.ml, %bb.bp ], [ 0, %bb.bh ] ; 6 uses
   %i.lf = icmp sgt i64 %i.lc, %.01218.i.i16.i.i
   br i1 %i.lf, label %bb.bi, label %sbuf_len.exit.i.i.i
 
 bb.bi:                                            ; preds = %.lr.ph.i.i14.i.i
-  %i.lg = getelementptr inbounds i8, ptr %spec.select.i260.i, i64 %.01218.i.i16.i.i ; 6 uses
+  %i.lg = getelementptr inbounds i8, ptr %spec.select.i260.i, i64 %.01218.i.i16.i.i ; 7 uses
   %i.lh = sub nsw i64 %i.lc, %.01218.i.i16.i.i    ; 7 uses
-  %12 = icmp sgt i64 %i.lh, 1
-  %.not66.i.i.i = icmp eq i8 %11, 27
-  %or.cond1067.i = and i1 %.not66.i.i.i, %12
-  br i1 %or.cond1067.i, label %bb.bj, label %skip_esc.exit.i.i
+  %16 = icmp slt i64 %i.lh, 2
+  br i1 %16, label %skip_esc.exit.i.i, label %17
 
-bb.bj:                                            ; preds = %bb.bi
+17:                                               ; preds = %bb.bi
+  %18 = load i8, ptr %i.lg, align 1, !tbaa !48
+  %.not66.i.i.i = icmp eq i8 %18, 27
+  br i1 %.not66.i.i.i, label %bb.bj, label %skip_esc.exit.i.i
+
+bb.bj:                                            ; preds = %17
   %i.li = getelementptr inbounds nuw i8, ptr %i.lg, i64 1
   %i.lj = load i8, ptr %i.li, align 1, !tbaa !48
   %.fr89.i.i.i = freeze i8 %i.lj                  ; 2 uses
@@ -834,7 +842,7 @@ bb.bn:                                            ; preds = %bb.bm, %bb.bl
   %i.ly = add nuw nsw i64 %.05475.us76.i.i.i, 2
   br label %str_next_ofs.exit.thread.i
 
-skip_esc.exit.i.i:                                ; preds = %bb.bi
+skip_esc.exit.i.i:                                ; preds = %17, %bb.bi
   %i.lz = add nsw i64 %.01218.i.i16.i.i, 1        ; 2 uses
   %i.ma = icmp sgt i64 %i.lc, %i.lz
   br i1 %i.ma, label %.lr.ph.i431.i, label %str_next_ofs.exit.thread.i
@@ -870,7 +878,7 @@ bb.bp:                                            ; preds = %str_next_ofs.exit.i
   %i.mk = add nsw i64 %i.mj, %.019.i.i15.i.i      ; 2 uses
   %i.ml = add nuw nsw i64 %.2.i639.i, %.01218.i.i16.i.i ; 2 uses
   %i.mm = getelementptr inbounds nuw i8, ptr %spec.select.i260.i, i64 %i.ml
-  %i.mn = load i8, ptr %i.mm, align 1, !tbaa !48  ; 2 uses
+  %i.mn = load i8, ptr %i.mm, align 1, !tbaa !48
   %.not.i.i20.i.i = icmp eq i8 %i.mn, 0
   br i1 %.not.i.i20.i.i, label %sbuf_len.exit.i.i.i, label %.lr.ph.i.i14.i.i, !llvm.loop !7
 
@@ -1238,7 +1246,7 @@ completions_get_display.exit.i210.i:              ; preds = %bb.cn
 
 completions_get_display.exit.i210.thread.i:       ; preds = %completions_get_display.exit.i210.i, %bb.cn
   %.0.i.i211655.i = phi ptr [ %i.rv, %completions_get_display.exit.i210.i ], [ %i.ru, %bb.cn ] ; 6 uses
-  %i.rx = load i8, ptr %.0.i.i211655.i, align 1, !tbaa !48 ; 2 uses
+  %i.rx = load i8, ptr %.0.i.i211655.i, align 1, !tbaa !48
   %i.ry = icmp eq i8 %i.rx, 0
   br i1 %i.ry, label %bbcode_column_width.exit371.i, label %bb.co
 
@@ -1255,21 +1263,23 @@ ic_strlen.exit.i.i364.i:                          ; preds = %bb.co
   br i1 %i.se, label %bbcode_column_width.exit371.i, label %.lr.ph.i.i.i365.i
 
 .lr.ph.i.i.i365.i:                                ; preds = %ic_strlen.exit.i.i364.i, %bb.cw
-  %13 = phi i8 [ %i.tn, %bb.cw ], [ %i.rx, %ic_strlen.exit.i.i364.i ]
   %.019.i.i.i366.i = phi i64 [ %i.tk, %bb.cw ], [ 0, %ic_strlen.exit.i.i364.i ] ; 3 uses
   %.01218.i.i.i367.i = phi i64 [ %i.tl, %bb.cw ], [ 0, %ic_strlen.exit.i.i364.i ] ; 6 uses
   %i.sf = icmp sgt i64 %i.sd, %.01218.i.i.i367.i
   br i1 %i.sf, label %bb.cp, label %bbcode_column_width.exit371.i
 
 bb.cp:                                            ; preds = %.lr.ph.i.i.i365.i
-  %i.sg = getelementptr inbounds i8, ptr %.0.i.i211655.i, i64 %.01218.i.i.i367.i ; 6 uses
+  %i.sg = getelementptr inbounds i8, ptr %.0.i.i211655.i, i64 %.01218.i.i.i367.i ; 7 uses
   %i.sh = sub nsw i64 %i.sd, %.01218.i.i.i367.i   ; 7 uses
-  %14 = icmp sgt i64 %i.sh, 1
-  %.not66.i.i594.i = icmp eq i8 %13, 27
-  %or.cond1068.i = and i1 %.not66.i.i594.i, %14
-  br i1 %or.cond1068.i, label %bb.cq, label %skip_esc.exit.i595.i
+  %19 = icmp slt i64 %i.sh, 2
+  br i1 %19, label %skip_esc.exit.i595.i, label %20
 
-bb.cq:                                            ; preds = %bb.cp
+20:                                               ; preds = %bb.cp
+  %21 = load i8, ptr %i.sg, align 1, !tbaa !48
+  %.not66.i.i594.i = icmp eq i8 %21, 27
+  br i1 %.not66.i.i594.i, label %bb.cq, label %skip_esc.exit.i595.i
+
+bb.cq:                                            ; preds = %20
   %i.si = getelementptr inbounds nuw i8, ptr %i.sg, i64 1
   %i.sj = load i8, ptr %i.si, align 1, !tbaa !48
   %.fr89.i.i600.i = freeze i8 %i.sj               ; 2 uses
@@ -1328,7 +1338,7 @@ bb.cu:                                            ; preds = %bb.ct, %bb.cs
   %i.sy = add nuw nsw i64 %.05475.us76.i.i608.i, 2
   br label %str_next_ofs.exit616.thread.i
 
-skip_esc.exit.i595.i:                             ; preds = %bb.cp
+skip_esc.exit.i595.i:                             ; preds = %20, %bb.cp
   %i.sz = add nsw i64 %.01218.i.i.i367.i, 1       ; 2 uses
   %i.ta = icmp sgt i64 %i.sd, %i.sz
   br i1 %i.ta, label %.lr.ph.i596.i, label %str_next_ofs.exit616.thread.i
@@ -1364,7 +1374,7 @@ bb.cw:                                            ; preds = %str_next_ofs.exit61
   %i.tk = add nsw i64 %i.tj, %.019.i.i.i366.i     ; 2 uses
   %i.tl = add nuw nsw i64 %.2.i593657.i, %.01218.i.i.i367.i ; 2 uses
   %i.tm = getelementptr inbounds nuw i8, ptr %.0.i.i211655.i, i64 %i.tl
-  %i.tn = load i8, ptr %i.tm, align 1, !tbaa !48  ; 2 uses
+  %i.tn = load i8, ptr %i.tm, align 1, !tbaa !48
   %.not.i.i.i370.i = icmp eq i8 %i.tn, 0
   br i1 %.not.i.i.i370.i, label %bbcode_column_width.exit371.i, label %.lr.ph.i.i.i365.i, !llvm.loop !7
 
@@ -1386,26 +1396,28 @@ ic_strlen.exit.i12.i350.i:                        ; preds = %bb.cx
   br i1 %i.tw, label %sbuf_len.exit.i.i358.i, label %bb.cy
 
 bb.cy:                                            ; preds = %ic_strlen.exit.i12.i350.i
-  %i.tx = load i8, ptr %spec.select.i351.i, align 1, !tbaa !48 ; 2 uses
+  %i.tx = load i8, ptr %spec.select.i351.i, align 1, !tbaa !48
   %.not17.i.i13.i352.i = icmp eq i8 %i.tx, 0
   br i1 %.not17.i.i13.i352.i, label %sbuf_len.exit.i.i358.i, label %.lr.ph.i.i14.i353.i
 
 .lr.ph.i.i14.i353.i:                              ; preds = %bb.cy, %bb.dg
-  %15 = phi i8 [ %i.vg, %bb.dg ], [ %i.tx, %bb.cy ]
   %.019.i.i15.i354.i = phi i64 [ %i.vd, %bb.dg ], [ 0, %bb.cy ] ; 3 uses
   %.01218.i.i16.i355.i = phi i64 [ %i.ve, %bb.dg ], [ 0, %bb.cy ] ; 6 uses
   %i.ty = icmp sgt i64 %i.tv, %.01218.i.i16.i355.i
   br i1 %i.ty, label %bb.cz, label %sbuf_len.exit.i.i358.i
 
 bb.cz:                                            ; preds = %.lr.ph.i.i14.i353.i
-  %i.tz = getelementptr inbounds i8, ptr %spec.select.i351.i, i64 %.01218.i.i16.i355.i ; 6 uses
+  %i.tz = getelementptr inbounds i8, ptr %spec.select.i351.i, i64 %.01218.i.i16.i355.i ; 7 uses
   %i.ua = sub nsw i64 %i.tv, %.01218.i.i16.i355.i ; 7 uses
-  %16 = icmp sgt i64 %i.ua, 1
-  %.not66.i.i568.i = icmp eq i8 %15, 27
-  %or.cond1069.i = and i1 %.not66.i.i568.i, %16
-  br i1 %or.cond1069.i, label %bb.da, label %skip_esc.exit.i569.i
+  %22 = icmp slt i64 %i.ua, 2
+  br i1 %22, label %skip_esc.exit.i569.i, label %23
 
-bb.da:                                            ; preds = %bb.cz
+23:                                               ; preds = %bb.cz
+  %24 = load i8, ptr %i.tz, align 1, !tbaa !48
+  %.not66.i.i568.i = icmp eq i8 %24, 27
+  br i1 %.not66.i.i568.i, label %bb.da, label %skip_esc.exit.i569.i
+
+bb.da:                                            ; preds = %23
   %i.ub = getelementptr inbounds nuw i8, ptr %i.tz, i64 1
   %i.uc = load i8, ptr %i.ub, align 1, !tbaa !48
   %.fr89.i.i574.i = freeze i8 %i.uc               ; 2 uses
@@ -1464,7 +1476,7 @@ bb.de:                                            ; preds = %bb.dd, %bb.dc
   %i.ur = add nuw nsw i64 %.05475.us76.i.i582.i, 2
   br label %str_next_ofs.exit590.thread.i
 
-skip_esc.exit.i569.i:                             ; preds = %bb.cz
+skip_esc.exit.i569.i:                             ; preds = %23, %bb.cz
   %i.us = add nsw i64 %.01218.i.i16.i355.i, 1     ; 2 uses
   %i.ut = icmp sgt i64 %i.tv, %i.us
   br i1 %i.ut, label %.lr.ph.i570.i, label %str_next_ofs.exit590.thread.i
@@ -1500,7 +1512,7 @@ bb.dg:                                            ; preds = %str_next_ofs.exit59
   %i.vd = add nsw i64 %i.vc, %.019.i.i15.i354.i   ; 2 uses
   %i.ve = add nuw nsw i64 %.2.i567661.i, %.01218.i.i16.i355.i ; 2 uses
   %i.vf = getelementptr inbounds nuw i8, ptr %spec.select.i351.i, i64 %i.ve
-  %i.vg = load i8, ptr %i.vf, align 1, !tbaa !48  ; 2 uses
+  %i.vg = load i8, ptr %i.vf, align 1, !tbaa !48
   %.not.i.i20.i363.i = icmp eq i8 %i.vg, 0
   br i1 %.not.i.i20.i363.i, label %sbuf_len.exit.i.i358.i, label %.lr.ph.i.i14.i353.i, !llvm.loop !7
 
@@ -1521,7 +1533,7 @@ bbcode_column_width.exit371.i:                    ; preds = %.lr.ph.i.i.i365.i, 
 
 bb.dh:                                            ; preds = %bbcode_column_width.exit371.i
   %i.vh = load ptr, ptr %i.eh, align 8, !tbaa !148 ; 2 uses
-  %i.vi = load i8, ptr %i.rs, align 1, !tbaa !48  ; 2 uses
+  %i.vi = load i8, ptr %i.rs, align 1, !tbaa !48
   %i.vj = icmp eq i8 %i.vi, 0
   br i1 %i.vj, label %bbcode_column_width.exit349.i, label %bb.di
 
@@ -1538,21 +1550,23 @@ ic_strlen.exit.i.i342.i:                          ; preds = %bb.di
   br i1 %i.vp, label %bbcode_column_width.exit349.i, label %.lr.ph.i.i.i343.i
 
 .lr.ph.i.i.i343.i:                                ; preds = %ic_strlen.exit.i.i342.i, %bb.dq
-  %17 = phi i8 [ %i.wy, %bb.dq ], [ %i.vi, %ic_strlen.exit.i.i342.i ]
   %.019.i.i.i344.i = phi i64 [ %i.wv, %bb.dq ], [ 0, %ic_strlen.exit.i.i342.i ] ; 3 uses
   %.01218.i.i.i345.i = phi i64 [ %i.ww, %bb.dq ], [ 0, %ic_strlen.exit.i.i342.i ] ; 6 uses
   %i.vq = icmp sgt i64 %i.vo, %.01218.i.i.i345.i
   br i1 %i.vq, label %bb.dj, label %bbcode_column_width.exit349.i
 
 bb.dj:                                            ; preds = %.lr.ph.i.i.i343.i
-  %i.vr = getelementptr inbounds i8, ptr %i.rs, i64 %.01218.i.i.i345.i ; 6 uses
+  %i.vr = getelementptr inbounds i8, ptr %i.rs, i64 %.01218.i.i.i345.i ; 7 uses
   %i.vs = sub nsw i64 %i.vo, %.01218.i.i.i345.i   ; 7 uses
-  %18 = icmp sgt i64 %i.vs, 1
-  %.not66.i.i542.i = icmp eq i8 %17, 27
-  %or.cond1070.i = and i1 %.not66.i.i542.i, %18
-  br i1 %or.cond1070.i, label %bb.dk, label %skip_esc.exit.i543.i
+  %25 = icmp slt i64 %i.vs, 2
+  br i1 %25, label %skip_esc.exit.i543.i, label %26
 
-bb.dk:                                            ; preds = %bb.dj
+26:                                               ; preds = %bb.dj
+  %27 = load i8, ptr %i.vr, align 1, !tbaa !48
+  %.not66.i.i542.i = icmp eq i8 %27, 27
+  br i1 %.not66.i.i542.i, label %bb.dk, label %skip_esc.exit.i543.i
+
+bb.dk:                                            ; preds = %26
   %i.vt = getelementptr inbounds nuw i8, ptr %i.vr, i64 1
   %i.vu = load i8, ptr %i.vt, align 1, !tbaa !48
   %.fr89.i.i548.i = freeze i8 %i.vu               ; 2 uses
@@ -1611,7 +1625,7 @@ bb.do:                                            ; preds = %bb.dn, %bb.dm
   %i.wj = add nuw nsw i64 %.05475.us76.i.i556.i, 2
   br label %str_next_ofs.exit564.thread.i
 
-skip_esc.exit.i543.i:                             ; preds = %bb.dj
+skip_esc.exit.i543.i:                             ; preds = %26, %bb.dj
   %i.wk = add nsw i64 %.01218.i.i.i345.i, 1       ; 2 uses
   %i.wl = icmp sgt i64 %i.vo, %i.wk
   br i1 %i.wl, label %.lr.ph.i544.i, label %str_next_ofs.exit564.thread.i
@@ -1647,7 +1661,7 @@ bb.dq:                                            ; preds = %str_next_ofs.exit56
   %i.wv = add nsw i64 %i.wu, %.019.i.i.i344.i     ; 2 uses
   %i.ww = add nuw nsw i64 %.2.i541665.i, %.01218.i.i.i345.i ; 2 uses
   %i.wx = getelementptr inbounds nuw i8, ptr %i.rs, i64 %i.ww
-  %i.wy = load i8, ptr %i.wx, align 1, !tbaa !48  ; 2 uses
+  %i.wy = load i8, ptr %i.wx, align 1, !tbaa !48
   %.not.i.i.i348.i = icmp eq i8 %i.wy, 0
   br i1 %.not.i.i.i348.i, label %bbcode_column_width.exit349.i, label %.lr.ph.i.i.i343.i, !llvm.loop !7
 
@@ -1669,26 +1683,28 @@ ic_strlen.exit.i12.i328.i:                        ; preds = %bb.dr
   br i1 %i.xh, label %sbuf_len.exit.i.i336.i, label %bb.ds
 
 bb.ds:                                            ; preds = %ic_strlen.exit.i12.i328.i
-  %i.xi = load i8, ptr %spec.select.i329.i, align 1, !tbaa !48 ; 2 uses
+  %i.xi = load i8, ptr %spec.select.i329.i, align 1, !tbaa !48
   %.not17.i.i13.i330.i = icmp eq i8 %i.xi, 0
   br i1 %.not17.i.i13.i330.i, label %sbuf_len.exit.i.i336.i, label %.lr.ph.i.i14.i331.i
 
 .lr.ph.i.i14.i331.i:                              ; preds = %bb.ds, %bb.ea
-  %19 = phi i8 [ %i.yr, %bb.ea ], [ %i.xi, %bb.ds ]
   %.019.i.i15.i332.i = phi i64 [ %i.yo, %bb.ea ], [ 0, %bb.ds ] ; 3 uses
   %.01218.i.i16.i333.i = phi i64 [ %i.yp, %bb.ea ], [ 0, %bb.ds ] ; 6 uses
   %i.xj = icmp sgt i64 %i.xg, %.01218.i.i16.i333.i
   br i1 %i.xj, label %bb.dt, label %sbuf_len.exit.i.i336.i
 
 bb.dt:                                            ; preds = %.lr.ph.i.i14.i331.i
-  %i.xk = getelementptr inbounds i8, ptr %spec.select.i329.i, i64 %.01218.i.i16.i333.i ; 6 uses
+  %i.xk = getelementptr inbounds i8, ptr %spec.select.i329.i, i64 %.01218.i.i16.i333.i ; 7 uses
   %i.xl = sub nsw i64 %i.xg, %.01218.i.i16.i333.i ; 7 uses
-  %20 = icmp sgt i64 %i.xl, 1
-  %.not66.i.i516.i = icmp eq i8 %19, 27
-  %or.cond1071.i = and i1 %.not66.i.i516.i, %20
-  br i1 %or.cond1071.i, label %bb.du, label %skip_esc.exit.i517.i
+  %28 = icmp slt i64 %i.xl, 2
+  br i1 %28, label %skip_esc.exit.i517.i, label %29
 
-bb.du:                                            ; preds = %bb.dt
+29:                                               ; preds = %bb.dt
+  %30 = load i8, ptr %i.xk, align 1, !tbaa !48
+  %.not66.i.i516.i = icmp eq i8 %30, 27
+  br i1 %.not66.i.i516.i, label %bb.du, label %skip_esc.exit.i517.i
+
+bb.du:                                            ; preds = %29
   %i.xm = getelementptr inbounds nuw i8, ptr %i.xk, i64 1
   %i.xn = load i8, ptr %i.xm, align 1, !tbaa !48
   %.fr89.i.i522.i = freeze i8 %i.xn               ; 2 uses
@@ -1747,7 +1763,7 @@ bb.dy:                                            ; preds = %bb.dx, %bb.dw
   %i.yc = add nuw nsw i64 %.05475.us76.i.i530.i, 2
   br label %str_next_ofs.exit538.thread.i
 
-skip_esc.exit.i517.i:                             ; preds = %bb.dt
+skip_esc.exit.i517.i:                             ; preds = %29, %bb.dt
   %i.yd = add nsw i64 %.01218.i.i16.i333.i, 1     ; 2 uses
   %i.ye = icmp sgt i64 %i.xg, %i.yd
   br i1 %i.ye, label %.lr.ph.i518.i, label %str_next_ofs.exit538.thread.i
@@ -1783,7 +1799,7 @@ bb.ea:                                            ; preds = %str_next_ofs.exit53
   %i.yo = add nsw i64 %i.yn, %.019.i.i15.i332.i   ; 2 uses
   %i.yp = add nuw nsw i64 %.2.i515669.i, %.01218.i.i16.i333.i ; 2 uses
   %i.yq = getelementptr inbounds nuw i8, ptr %spec.select.i329.i, i64 %i.yp
-  %i.yr = load i8, ptr %i.yq, align 1, !tbaa !48  ; 2 uses
+  %i.yr = load i8, ptr %i.yq, align 1, !tbaa !48
   %.not.i.i20.i341.i = icmp eq i8 %i.yr, 0
   br i1 %.not.i.i20.i341.i, label %sbuf_len.exit.i.i336.i, label %.lr.ph.i.i14.i331.i, !llvm.loop !7
 

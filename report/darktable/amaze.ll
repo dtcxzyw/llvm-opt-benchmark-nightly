@@ -37,7 +37,7 @@ bb.a:
   %i.v = getelementptr inbounds nuw i8, ptr %i.i, i64 1076736 ; 7 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.i, i64 1179264 ; 14 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.i, i64 1230592 ; 14 uses
-  %i.y = getelementptr i8, ptr %i.i, i64 1281920  ; 245 uses
+  %i.y = getelementptr i8, ptr %i.i, i64 1281920  ; 244 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.i, i64 461440 ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.i, i64 1384448 ; 12 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.i, i64 1397376 ; 4 uses
@@ -440,25 +440,20 @@ begin_hunk_1_@amaze_demosaic:bb.a
   %indvars.iv4255 = phi i32 [ %indvars.iv.next4256, %._crit_edge3980 ], [ 320, %.lr.ph3979.preheader ] ; 2 uses
   %.032363981 = phi i32 [ %i.dku, %._crit_edge3980 ], [ 2, %.lr.ph3979.preheader ]
   %i.djh = or disjoint i32 %indvars.iv4255, 2
-  %i.dji = zext i32 %i.djh to i64                 ; 4 uses
-  %.phi.trans.insert = getelementptr [4 x i8], ptr %i.y, i64 %i.dji
-  %.pre = load float, ptr %.phi.trans.insert, align 8, !tbaa !289 ; 2 uses
+  %i.dji = zext i32 %i.djh to i64                 ; 3 uses
   br i1 %min.iters.check5440, label %scalar.ph5439.preheader, label %vector.ph5441
 
 vector.ph5441:                                    ; preds = %.lr.ph3979
   %i.djj = add nuw nsw i64 %n.vec5442, %i.dji
-  %vector.recur.init5445 = insertelement <8 x float> poison, float %.pre, i64 7
   br label %vector.body5443
 
 vector.body5443:                                  ; preds = %vector.body5443, %vector.ph5441
   %index5444 = phi i64 [ 0, %vector.ph5441 ], [ %index.next5455, %vector.body5443 ] ; 2 uses
-  %vector.recur5446 = phi <8 x float> [ %vector.recur.init5445, %vector.ph5441 ], [ %wide.load5447.a, %vector.body5443 ]
   %i.djk = add nuw i64 %index5444, %i.dji         ; 5 uses
   %i.djl = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %i.djk
   %i.djm = getelementptr inbounds nuw i8, ptr %i.djl, i64 4
-  %wide.load5447.a = load <8 x float>, ptr %i.djm, align 4, !tbaa !289 ; 4 uses
-  %6 = shufflevector <8 x float> %vector.recur5446, <8 x float> %wide.load5447.a, <8 x i32> <i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14> ; 4 uses
-  %i.djn = getelementptr [4 x i8], ptr %i.y, i64 %i.djk ; 7 uses
+  %wide.load5447.a = load <8 x float>, ptr %i.djm, align 4, !tbaa !289
+  %i.djn = getelementptr [4 x i8], ptr %i.y, i64 %i.djk ; 8 uses
   %i.djo = getelementptr i8, ptr %i.djn, i64 -4
   %wide.load5448.a = load <8 x float>, ptr %i.djo, align 4, !tbaa !289
   %i.djp = fsub reassoc nsz arcp contract afn <8 x float> %wide.load5447.a, %wide.load5448.a ; 3 uses
@@ -470,12 +465,13 @@ vector.body5443:                                  ; preds = %vector.body5443, %v
   %i.djt = fsub reassoc nsz arcp contract afn <8 x float> %wide.load5449.a, %wide.load5450.a ; 3 uses
   %i.dju = tail call reassoc nsz arcp contract afn <8 x float> @llvm.fabs.v8f32(<8 x float> %i.djt)
   %i.djv = getelementptr inbounds nuw i8, ptr %i.djn, i64 1280
-  %wide.load5451.a = load <8 x float>, ptr %i.djv, align 8, !tbaa !289
-  %i.djw = fsub reassoc nsz arcp contract afn <8 x float> %wide.load5451.a, %6
+  %wide.load5447 = load <8 x float>, ptr %i.djv, align 8, !tbaa !289
+  %wide.load5451.a = load <8 x float>, ptr %i.djn, align 8, !tbaa !289 ; 4 uses
+  %i.djw = fsub reassoc nsz arcp contract afn <8 x float> %wide.load5447, %wide.load5451.a
   %i.djx = tail call reassoc nsz arcp contract afn <8 x float> @llvm.fabs.v8f32(<8 x float> %i.djw)
   %i.djy = getelementptr i8, ptr %i.djn, i64 -1280
   %wide.load5452 = load <8 x float>, ptr %i.djy, align 8, !tbaa !289
-  %i.djz = fsub reassoc nsz arcp contract afn <8 x float> %6, %wide.load5452
+  %i.djz = fsub reassoc nsz arcp contract afn <8 x float> %wide.load5451.a, %wide.load5452
   %i.dka = tail call reassoc nsz arcp contract afn <8 x float> @llvm.fabs.v8f32(<8 x float> %i.djz)
   %i.dkb = fadd reassoc nsz arcp contract afn <8 x float> %i.dju, splat (float f0x3727C5AC)
   %i.dkc = fadd reassoc nsz arcp contract afn <8 x float> %i.dkb, %i.djx
@@ -484,11 +480,11 @@ vector.body5443:                                  ; preds = %vector.body5443, %v
   store <8 x float> %i.dkd, ptr %i.dke, align 8, !tbaa !289
   %i.dkf = getelementptr inbounds nuw i8, ptr %i.djn, i64 8
   %wide.load5453 = load <8 x float>, ptr %i.dkf, align 16, !tbaa !289
-  %i.dkg = fsub reassoc nsz arcp contract afn <8 x float> %wide.load5453, %6
+  %i.dkg = fsub reassoc nsz arcp contract afn <8 x float> %wide.load5453, %wide.load5451.a
   %i.dkh = tail call reassoc nsz arcp contract afn <8 x float> @llvm.fabs.v8f32(<8 x float> %i.dkg)
   %i.dki = getelementptr i8, ptr %i.djn, i64 -8
   %wide.load5454 = load <8 x float>, ptr %i.dki, align 32, !tbaa !289
-  %i.dkj = fsub reassoc nsz arcp contract afn <8 x float> %6, %wide.load5454
+  %i.dkj = fsub reassoc nsz arcp contract afn <8 x float> %wide.load5451.a, %wide.load5454
   %i.dkk = tail call reassoc nsz arcp contract afn <8 x float> @llvm.fabs.v8f32(<8 x float> %i.dkj)
   %i.dkl = fadd reassoc nsz arcp contract afn <8 x float> %i.djq, splat (float f0x3727C5AC)
   %i.dkm = fadd reassoc nsz arcp contract afn <8 x float> %i.dkl, %i.dkh
@@ -505,11 +501,9 @@ vector.body5443:                                  ; preds = %vector.body5443, %v
   br i1 %i.dkt, label %middle.block5456, label %vector.body5443, !llvm.loop !217
 
 middle.block5456:                                 ; preds = %vector.body5443
-  %vector.recur.extract5457 = extractelement <8 x float> %wide.load5447.a, i64 7
   br i1 %cmp.n5458, label %._crit_edge3980, label %scalar.ph5439.preheader
 
 scalar.ph5439.preheader:                          ; preds = %.lr.ph3979, %middle.block5456
-  %.ph7833 = phi float [ %.pre, %.lr.ph3979 ], [ %vector.recur.extract5457, %middle.block5456 ]
   %indvars.iv4257.ph = phi i64 [ %i.dji, %.lr.ph3979 ], [ %i.djj, %middle.block5456 ]
   %.032353976.ph = phi i32 [ 2, %.lr.ph3979 ], [ %i.diy, %middle.block5456 ]
   br label %scalar.ph5439
@@ -521,13 +515,12 @@ scalar.ph5439.preheader:                          ; preds = %.lr.ph3979, %middle
   br i1 %i.dkv, label %.lr.ph3979, label %.preheader3927, !llvm.loop !218
 
 scalar.ph5439:                                    ; preds = %scalar.ph5439.preheader, %scalar.ph5439
-  %7 = phi float [ %i.dkx, %scalar.ph5439 ], [ %.ph7833, %scalar.ph5439.preheader ] ; 4 uses
   %indvars.iv4257 = phi i64 [ %indvars.iv.next4258, %scalar.ph5439 ], [ %indvars.iv4257.ph, %scalar.ph5439.preheader ] ; 5 uses
   %.032353976 = phi i32 [ %i.dml, %scalar.ph5439 ], [ %.032353976.ph, %scalar.ph5439.preheader ]
   %indvars.iv.next4258 = add nuw nsw i64 %indvars.iv4257, 1 ; 2 uses
   %i.dkw = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %indvars.iv.next4258
-  %i.dkx = load float, ptr %i.dkw, align 4, !tbaa !289 ; 2 uses
-  %i.dky = getelementptr [4 x i8], ptr %i.y, i64 %indvars.iv4257 ; 7 uses
+  %i.dkx = load float, ptr %i.dkw, align 4, !tbaa !289
+  %i.dky = getelementptr [4 x i8], ptr %i.y, i64 %indvars.iv4257 ; 8 uses
   %i.dkz = getelementptr i8, ptr %i.dky, i64 -4
   %i.dla = load float, ptr %i.dkz, align 4, !tbaa !289
   %i.dlb = fsub reassoc nsz arcp contract afn float %i.dkx, %i.dla ; 3 uses
@@ -539,12 +532,13 @@ scalar.ph5439:                                    ; preds = %scalar.ph5439.prehe
   %i.dlh = fsub reassoc nsz arcp contract afn float %i.dle, %i.dlg ; 3 uses
   %i.dli = tail call reassoc nsz arcp contract afn float @llvm.fabs.f32(float %i.dlh)
   %i.dlj = getelementptr inbounds nuw i8, ptr %i.dky, i64 1280
-  %i.dlk = load float, ptr %i.dlj, align 4, !tbaa !289
-  %i.dll = fsub reassoc nsz arcp contract afn float %i.dlk, %7
+  %6 = load float, ptr %i.dlj, align 4, !tbaa !289
+  %i.dlk = load float, ptr %i.dky, align 4, !tbaa !289 ; 4 uses
+  %i.dll = fsub reassoc nsz arcp contract afn float %6, %i.dlk
   %i.dlm = tail call reassoc nsz arcp contract afn float @llvm.fabs.f32(float %i.dll)
   %i.dln = getelementptr i8, ptr %i.dky, i64 -1280
   %i.dlo = load float, ptr %i.dln, align 4, !tbaa !289
-  %i.dlp = fsub reassoc nsz arcp contract afn float %7, %i.dlo
+  %i.dlp = fsub reassoc nsz arcp contract afn float %i.dlk, %i.dlo
   %i.dlq = tail call reassoc nsz arcp contract afn float @llvm.fabs.f32(float %i.dlp)
   %i.dlr = fadd reassoc nsz arcp contract afn float %i.dli, f0x3727C5AC
   %i.dls = fadd reassoc nsz arcp contract afn float %i.dlr, %i.dlm
@@ -553,11 +547,11 @@ scalar.ph5439:                                    ; preds = %scalar.ph5439.prehe
   store float %i.dlt, ptr %i.dlu, align 4, !tbaa !289
   %i.dlv = getelementptr inbounds nuw i8, ptr %i.dky, i64 8
   %i.dlw = load float, ptr %i.dlv, align 4, !tbaa !289
-  %i.dlx = fsub reassoc nsz arcp contract afn float %i.dlw, %7
+  %i.dlx = fsub reassoc nsz arcp contract afn float %i.dlw, %i.dlk
   %i.dly = tail call reassoc nsz arcp contract afn float @llvm.fabs.f32(float %i.dlx)
   %i.dlz = getelementptr i8, ptr %i.dky, i64 -8
   %i.dma = load float, ptr %i.dlz, align 4, !tbaa !289
-  %i.dmb = fsub reassoc nsz arcp contract afn float %7, %i.dma
+  %i.dmb = fsub reassoc nsz arcp contract afn float %i.dlk, %i.dma
   %i.dmc = tail call reassoc nsz arcp contract afn float @llvm.fabs.f32(float %i.dmb)
   %i.dmd = fadd reassoc nsz arcp contract afn float %i.dlc, f0x3727C5AC
   %i.dme = fadd reassoc nsz arcp contract afn float %i.dmd, %i.dly

@@ -202,7 +202,8 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.j
   %i.ah = getelementptr inbounds nuw i8, ptr %i.af, i64 1
   %i.ai = call i64 @strtol(ptr noundef nonnull %i.ah, ptr noundef nonnull %i.a, i32 noundef 10) #16
-  %i.aj = trunc i64 %i.ai to i32                  ; 8 uses
+  %.fr = freeze i64 %i.ai
+  %i.aj = trunc i64 %.fr to i32                   ; 8 uses
   %i.ak = load ptr, ptr %i.a, align 8
   %i.al = load i8, ptr %i.ak, align 1
   %.not70 = icmp eq i8 %i.al, 0
@@ -211,7 +212,7 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.k
   %i.am = icmp slt i32 %i.ae, %i.z
   %i.an = icmp slt i32 %i.aj, 1
-  %or.cond = select i1 %i.am, i1 true, i1 %i.an
+  %or.cond = or i1 %i.am, %i.an
   br i1 %or.cond, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l

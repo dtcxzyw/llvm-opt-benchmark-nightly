@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.lr.ph
   br i1 %i.h, label %.lr.ph72.preheader, label %._crit_edge73
 
 .lr.ph72.preheader:                               ; preds = %.preheader
-  %.pre = load float, ptr %i.f, align 4, !tbaa !12 ; 2 uses
+  %.pre = load float, ptr %i.f, align 4           ; 2 uses
   %i.i = add nsw i64 %wide.trip.count, -1         ; 3 uses
   %xtraiter = and i64 %i.i, 1
   %i.j = icmp eq i32 %0, 2
@@ -315,7 +315,7 @@ bb.b:                                             ; preds = %.lr.ph
   %i.bm = phi float [ %.pre, %.lr.ph72.preheader.new ], [ %i.cs, %.lr.ph72 ]
   %indvars.iv82 = phi i64 [ 1, %.lr.ph72.preheader.new ], [ %indvars.iv.next83.1, %.lr.ph72 ] ; 5 uses
   %niter = phi i64 [ 0, %.lr.ph72.preheader.new ], [ %niter.next.1, %.lr.ph72 ]
-  %.idx92.a = mul i64 %indvars.iv82, 12
+  %.idx92.a = mul nuw i64 %indvars.iv82, 12
   %i.bn = getelementptr i8, ptr %1, i64 %.idx92.a ; 2 uses
   %i.bo = getelementptr i8, ptr %i.bn, i64 -4
   %i.bp = load float, ptr %i.bo, align 4, !tbaa !12

@@ -205,14 +205,13 @@ bb.b:                                             ; preds = %.lr.ph
 
 bb.c:                                             ; preds = %bb.b
   %i.aa = trunc nsw i64 %i.y to i32
-  %i.ab = sub nsw i32 8, %i.aa                    ; 2 uses
-  %5 = shl i32 %i.w, %i.ab
-  %i.ac = and i32 %5, 255
-  %6 = lshr i32 %i.ac, %i.ab
+  %i.ab = sub nsw i32 8, %i.aa
+  %5 = lshr i32 255, %i.ab
+  %i.ac = and i32 %i.w, %5
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b, %.lr.ph
-  %.047.in = phi i32 [ %6, %bb.c ], [ %i.w, %bb.b ], [ %i.w, %.lr.ph ] ; 2 uses
+  %.047.in = phi i32 [ %i.ac, %bb.c ], [ %i.w, %bb.b ], [ %i.w, %.lr.ph ] ; 2 uses
   %i.ad = icmp eq i64 %.04957, 0
   %i.ae = zext nneg i8 %i.q to i32
   br i1 %i.ad, label %bb.e, label %bb.f
@@ -615,14 +614,13 @@ bb.b:                                             ; preds = %.lr.ph.i
 
 bb.c:                                             ; preds = %bb.b
   %i.aa = trunc nsw i64 %i.y to i32
-  %i.ab = sub nsw i32 8, %i.aa                    ; 2 uses
-  %5 = shl i32 %i.w, %i.ab
-  %i.ac = and i32 %5, 255
-  %6 = lshr i32 %i.ac, %i.ab
+  %i.ab = sub nsw i32 8, %i.aa
+  %5 = lshr i32 255, %i.ab
+  %i.ac = and i32 %i.w, %5
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b, %.lr.ph.i
-  %.047.in.i = phi i32 [ %6, %bb.c ], [ %i.w, %bb.b ], [ %i.w, %.lr.ph.i ] ; 2 uses
+  %.047.in.i = phi i32 [ %i.ac, %bb.c ], [ %i.w, %bb.b ], [ %i.w, %.lr.ph.i ] ; 2 uses
   %i.ad = icmp eq i64 %.04957.i, 0
   %i.ae = zext nneg i8 %i.q to i32
   br i1 %i.ad, label %bb.e, label %bb.f

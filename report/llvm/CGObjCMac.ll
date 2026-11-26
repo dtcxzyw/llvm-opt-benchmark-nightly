@@ -205,30 +205,34 @@ bb.a:
   store i64 0, ptr %i.b, align 8, !tbaa !1189
   store i8 0, ptr %i.a, align 8, !tbaa !307
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 216 ; 2 uses
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !1177
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !1177 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 268
   %i.f = load i32, ptr %i.e, align 4, !tbaa !1185
   %i.g = icmp eq i32 %i.f, 5
-  br i1 %i.g, label %bb.b, label %.thread.a
+  br i1 %i.g, label %.thread.a, label %bb.b
 
 .thread.a:                                        ; preds = %bb.a
-  %i.h = getelementptr inbounds nuw i8, ptr %2, i64 138
-  %i.i = load i8, ptr %i.h, align 2, !tbaa !307
-  br label %_ZL29getLinkageTypeForObjCMetadataRN5clang7CodeGen13CodeGenModuleEN4llvm9StringRefE.exit
-
-bb.b:                                             ; preds = %bb.a
   %4 = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %3, i64 noundef 0, i64 noundef 0, ptr noundef nonnull @.str.108, i64 noundef 20) #28 ; 0 uses
   %.pre = load ptr, ptr %3, align 8, !tbaa !1188  ; 2 uses
   %.pre11 = load i64, ptr %i.b, align 8, !tbaa !1189 ; 2 uses
   %.val.pre = load ptr, ptr %i.c, align 8, !tbaa !1177
-  %.phi.trans.insert = getelementptr i8, ptr %.val.pre, i64 268
+  %i.h = getelementptr inbounds nuw i8, ptr %2, i64 138
+  %i.i = load i8, ptr %i.h, align 2, !tbaa !307   ; 4 uses
+  %5 = getelementptr i8, ptr %.val.pre, i64 268
+  %.val.val = load i32, ptr %5, align 4, !tbaa !1185
+  %6 = icmp eq i32 %.val.val, 5
+  br i1 %6, label %bb.c, label %_ZL29getLinkageTypeForObjCMetadataRN5clang7CodeGen13CodeGenModuleEN4llvm9StringRefE.exit
+
+bb.b:                                             ; preds = %bb.a
+  %7 = getelementptr inbounds nuw i8, ptr %2, i64 138
+  %8 = load i8, ptr %7, align 2, !tbaa !307
+  %.phi.trans.insert = getelementptr i8, ptr %i.d, i64 268
   %.val.val.pre = load i32, ptr %.phi.trans.insert, align 4, !tbaa !1185
   %i.j = icmp eq i32 %.val.val.pre, 5
-  %5 = getelementptr inbounds nuw i8, ptr %2, i64 138
-  %6 = load i8, ptr %5, align 2, !tbaa !307       ; 4 uses
-  br i1 %i.j, label %bb.c, label %_ZL29getLinkageTypeForObjCMetadataRN5clang7CodeGen13CodeGenModuleEN4llvm9StringRefE.exit
+  %spec.select = select i1 %i.j, i32 7, i32 8
+  br label %_ZL29getLinkageTypeForObjCMetadataRN5clang7CodeGen13CodeGenModuleEN4llvm9StringRefE.exit
 
-bb.c:                                             ; preds = %bb.b
+bb.c:                                             ; preds = %.thread.a
   %i.k = icmp eq i64 %.pre11, 0
   br i1 %i.k, label %_ZL29getLinkageTypeForObjCMetadataRN5clang7CodeGen13CodeGenModuleEN4llvm9StringRefE.exit, label %bb.d
 
@@ -250,9 +254,9 @@ _ZNK4llvm9StringRef11starts_withES0_.exit.i:      ; preds = %bb.d
   %spec.select.a = select i1 %i.u, i32 7, i32 8
   br label %_ZL29getLinkageTypeForObjCMetadataRN5clang7CodeGen13CodeGenModuleEN4llvm9StringRefE.exit
 
-_ZL29getLinkageTypeForObjCMetadataRN5clang7CodeGen13CodeGenModuleEN4llvm9StringRefE.exit: ; preds = %_ZNK4llvm9StringRef11starts_withES0_.exit.i, %bb.b, %bb.d, %.thread.a, %bb.c
-  %.in = phi i8 [ %6, %bb.c ], [ %6, %_ZNK4llvm9StringRef11starts_withES0_.exit.i ], [ %i.i, %.thread.a ], [ %6, %bb.d ], [ %6, %bb.b ]
-  %.0.i = phi i32 [ 7, %bb.c ], [ %spec.select.a, %_ZNK4llvm9StringRef11starts_withES0_.exit.i ], [ 8, %.thread.a ], [ 8, %bb.d ], [ 8, %bb.b ]
+_ZL29getLinkageTypeForObjCMetadataRN5clang7CodeGen13CodeGenModuleEN4llvm9StringRefE.exit: ; preds = %_ZNK4llvm9StringRef11starts_withES0_.exit.i, %bb.b, %.thread.a, %bb.d, %bb.c
+  %.in = phi i8 [ %i.i, %.thread.a ], [ %i.i, %_ZNK4llvm9StringRef11starts_withES0_.exit.i ], [ %i.i, %bb.c ], [ %8, %bb.b ], [ %i.i, %bb.d ]
+  %.0.i = phi i32 [ 8, %.thread.a ], [ %spec.select.a, %_ZNK4llvm9StringRef11starts_withES0_.exit.i ], [ 7, %bb.c ], [ %spec.select, %bb.b ], [ 8, %bb.d ]
   %i.v = zext i8 %.in to i64
   %i.w = load ptr, ptr %0, align 8, !tbaa !1227, !nonnull !315, !align !316
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 48

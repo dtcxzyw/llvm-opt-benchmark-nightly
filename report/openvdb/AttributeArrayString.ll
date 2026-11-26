@@ -204,13 +204,13 @@ bb.a:
   %i.b = load i64, ptr %i.a, align 8, !tbaa !161  ; 2 uses
   %i.c = lshr i64 %i.b, 3                         ; 9 uses
   %i.d = shl nuw nsw i64 %i.c, 1                  ; 3 uses
-  %i.e = load ptr, ptr %1, align 8, !tbaa !208    ; 9 uses
+  %i.e = load ptr, ptr %1, align 8, !tbaa !208    ; 11 uses
   %i.f = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %i.c
-  %i.g = load i32, ptr %i.e, align 4, !tbaa !54   ; 5 uses
-  %i.h = load i32, ptr %i.f, align 4, !tbaa !54   ; 5 uses
+  %i.g = load i32, ptr %i.e, align 4, !tbaa !54   ; 3 uses
+  %i.h = load i32, ptr %i.f, align 4, !tbaa !54   ; 3 uses
   %i.i = icmp ult i32 %i.g, %i.h
   %i.j = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %i.d
-  %i.k = load i32, ptr %i.j, align 4, !tbaa !54   ; 6 uses
+  %i.k = load i32, ptr %i.j, align 4, !tbaa !54   ; 4 uses
   br i1 %i.i, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
@@ -220,7 +220,6 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.m = icmp ult i32 %i.g, %i.k
   %i.n = select i1 %i.m, i64 %i.d, i64 0
-  %3 = tail call i32 @llvm.umax.i32(i32 %i.g, i32 %i.k)
   br label %_ZNK3tbb6detail2d116quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEESt4lessIjEE15median_of_threeERKS9_mmm.exit
 
 bb.d:                                             ; preds = %bb.a
@@ -230,22 +229,20 @@ bb.d:                                             ; preds = %bb.a
 bb.e:                                             ; preds = %bb.d
   %i.p = icmp ult i32 %i.k, %i.g
   %i.q = select i1 %i.p, i64 %i.d, i64 0
-  %4 = tail call i32 @llvm.umin.i32(i32 %i.k, i32 %i.g)
   br label %_ZNK3tbb6detail2d116quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEESt4lessIjEE15median_of_threeERKS9_mmm.exit
 
 _ZNK3tbb6detail2d116quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEESt4lessIjEE15median_of_threeERKS9_mmm.exit: ; preds = %bb.b, %bb.c, %bb.d, %bb.e
-  %5 = phi i32 [ %3, %bb.c ], [ %4, %bb.e ], [ %i.h, %bb.b ], [ %i.h, %bb.d ] ; 3 uses
-  %i.r = phi i64 [ %i.n, %bb.c ], [ %i.q, %bb.e ], [ %i.c, %bb.b ], [ %i.c, %bb.d ] ; 2 uses
+  %i.r = phi i64 [ %i.n, %bb.c ], [ %i.q, %bb.e ], [ %i.c, %bb.b ], [ %i.c, %bb.d ] ; 3 uses
   %i.s = mul nuw nsw i64 %i.c, 3                  ; 3 uses
   %i.t = shl nuw nsw i64 %i.c, 2                  ; 3 uses
   %i.u = mul nuw i64 %i.c, 5                      ; 3 uses
   %i.v = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %i.s
   %i.w = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %i.t
-  %i.x = load i32, ptr %i.v, align 4, !tbaa !54   ; 5 uses
-  %i.y = load i32, ptr %i.w, align 4, !tbaa !54   ; 5 uses
+  %i.x = load i32, ptr %i.v, align 4, !tbaa !54   ; 3 uses
+  %i.y = load i32, ptr %i.w, align 4, !tbaa !54   ; 3 uses
   %i.z = icmp ult i32 %i.x, %i.y
   %i.aa = getelementptr inbounds [4 x i8], ptr %i.e, i64 %i.u
-  %i.ab = load i32, ptr %i.aa, align 4, !tbaa !54 ; 6 uses
+  %i.ab = load i32, ptr %i.aa, align 4, !tbaa !54 ; 4 uses
   br i1 %i.z, label %bb.f, label %bb.h
 
 bb.f:                                             ; preds = %_ZNK3tbb6detail2d116quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEESt4lessIjEE15median_of_threeERKS9_mmm.exit
@@ -255,7 +252,6 @@ bb.f:                                             ; preds = %_ZNK3tbb6detail2d11
 bb.g:                                             ; preds = %bb.f
   %i.ad = icmp ult i32 %i.x, %i.ab
   %i.ae = select i1 %i.ad, i64 %i.u, i64 %i.s
-  %6 = tail call i32 @llvm.umax.i32(i32 %i.x, i32 %i.ab)
   br label %_ZNK3tbb6detail2d116quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEESt4lessIjEE15median_of_threeERKS9_mmm.exit13
 
 bb.h:                                             ; preds = %_ZNK3tbb6detail2d116quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEESt4lessIjEE15median_of_threeERKS9_mmm.exit
@@ -265,12 +261,10 @@ bb.h:                                             ; preds = %_ZNK3tbb6detail2d11
 bb.i:                                             ; preds = %bb.h
   %i.ag = icmp ult i32 %i.ab, %i.x
   %i.ah = select i1 %i.ag, i64 %i.u, i64 %i.s
-  %7 = tail call i32 @llvm.umin.i32(i32 %i.ab, i32 %i.x)
   br label %_ZNK3tbb6detail2d116quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEESt4lessIjEE15median_of_threeERKS9_mmm.exit13
 
 _ZNK3tbb6detail2d116quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEESt4lessIjEE15median_of_threeERKS9_mmm.exit13: ; preds = %bb.f, %bb.g, %bb.h, %bb.i
-  %8 = phi i32 [ %6, %bb.g ], [ %7, %bb.i ], [ %i.y, %bb.f ], [ %i.y, %bb.h ] ; 3 uses
-  %i.ai = phi i64 [ %i.ae, %bb.g ], [ %i.ah, %bb.i ], [ %i.t, %bb.f ], [ %i.t, %bb.h ] ; 2 uses
+  %i.ai = phi i64 [ %i.ae, %bb.g ], [ %i.ah, %bb.i ], [ %i.t, %bb.f ], [ %i.t, %bb.h ] ; 3 uses
   %i.aj = mul nuw i64 %i.c, 6                     ; 3 uses
   %i.ak = mul nuw i64 %i.c, 7                     ; 3 uses
   %i.al = add i64 %i.b, -1                        ; 3 uses
@@ -306,11 +300,15 @@ bb.m:                                             ; preds = %bb.l
 _ZNK3tbb6detail2d116quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEESt4lessIjEE15median_of_threeERKS9_mmm.exit14: ; preds = %bb.j, %bb.k, %bb.l, %bb.m
   %i.bb = phi i32 [ %i.aw, %bb.k ], [ %i.ba, %bb.m ], [ %i.ap, %bb.j ], [ %i.ap, %bb.l ] ; 4 uses
   %i.bc = phi i64 [ %i.av, %bb.k ], [ %i.az, %bb.m ], [ %i.ak, %bb.j ], [ %i.ak, %bb.l ] ; 2 uses
-  %i.bd = icmp ult i32 %5, %8
+  %3 = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %i.r
+  %4 = getelementptr inbounds [4 x i8], ptr %i.e, i64 %i.ai
+  %5 = load i32, ptr %3, align 4, !tbaa !54       ; 3 uses
+  %6 = load i32, ptr %4, align 4, !tbaa !54       ; 3 uses
+  %i.bd = icmp ult i32 %5, %6
   br i1 %i.bd, label %bb.n, label %bb.p
 
 bb.n:                                             ; preds = %_ZNK3tbb6detail2d116quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEESt4lessIjEE15median_of_threeERKS9_mmm.exit14
-  %i.be = icmp ult i32 %8, %i.bb
+  %i.be = icmp ult i32 %6, %i.bb
   br i1 %i.be, label %_ZNK3tbb6detail2d116quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEESt4lessIjEE15median_of_threeERKS9_mmm.exit15, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
@@ -319,7 +317,7 @@ bb.o:                                             ; preds = %bb.n
   br label %_ZNK3tbb6detail2d116quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEESt4lessIjEE15median_of_threeERKS9_mmm.exit15
 
 bb.p:                                             ; preds = %_ZNK3tbb6detail2d116quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEESt4lessIjEE15median_of_threeERKS9_mmm.exit14
-  %i.bh = icmp ult i32 %i.bb, %8
+  %i.bh = icmp ult i32 %i.bb, %6
   br i1 %i.bh, label %_ZNK3tbb6detail2d116quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEESt4lessIjEE15median_of_threeERKS9_mmm.exit15, label %bb.q
 
 bb.q:                                             ; preds = %bb.p

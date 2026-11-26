@@ -205,7 +205,7 @@ _ZNK8WasmEdge6SymbolIFPK25WasmEdge_PluginDescriptorvEEclIJEEEDaDpT_.exit: ; pred
 
 bb.z:                                             ; preds = %_ZNK8WasmEdge6SymbolIFPK25WasmEdge_PluginDescriptorvEEclIJEEEDaDpT_.exit
   %i.bm = invoke noalias noundef nonnull dereferenceable(136) ptr @_Znwm(i64 noundef 136) #33
-          to label %.noexc28 unwind label %bb.cx, !noalias !516 ; 16 uses
+          to label %.noexc28 unwind label %bb.cx, !noalias !516 ; 17 uses
 
 .noexc28:                                         ; preds = %bb.z
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 56
@@ -608,7 +608,7 @@ _ZZN8WasmEdge6Plugin12_GLOBAL__N_118CAPIPluginRegisterC1EPK25WasmEdge_PluginDesc
 
 .loopexit:                                        ; preds = %_ZZN8WasmEdge6Plugin12_GLOBAL__N_118CAPIPluginRegisterC1EPK25WasmEdge_PluginDescriptorENKUlT_PT0_PT1_E_clISt15in_place_type_tINS_2PO6OptionIPaNSE_6ParserIaEEEEEaKaEEDaS6_S8_SA_.exit.i.i, %._crit_edge.i.i
   %i.tv = getelementptr inbounds nuw i8, ptr %i.bm, i64 128
-  %i.tw = call noundef zeroext i1 @_ZN8WasmEdge6Plugin6Plugin14registerPluginEPKNS1_16PluginDescriptorE(ptr noundef nonnull align 8 dereferenceable(129) %i.bm) #29, !noalias !516 ; 2 uses
+  %i.tw = call noundef zeroext i1 @_ZN8WasmEdge6Plugin6Plugin14registerPluginEPKNS1_16PluginDescriptorE(ptr noundef nonnull align 8 dereferenceable(129) %i.bm) #29, !noalias !516
   %i.tx = zext i1 %i.tw to i8
   store i8 %i.tx, ptr %i.tv, align 8, !tbaa !554, !noalias !516
   %i.ty = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZN8WasmEdge6Plugin12_GLOBAL__N_119CAPIPluginRegistersE, i64 8), align 8, !tbaa !43 ; 6 uses
@@ -621,7 +621,7 @@ bb.bw:                                            ; preds = %.loopexit
   store i64 %i.ua, ptr %i.ty, align 8, !tbaa !45
   %i.ub = getelementptr inbounds nuw i8, ptr %i.ty, i64 8
   store ptr %i.ub, ptr getelementptr inbounds nuw (i8, ptr @_ZN8WasmEdge6Plugin12_GLOBAL__N_119CAPIPluginRegistersE, i64 8), align 8, !tbaa !43
-  br label %_ZNSt10unique_ptrIN8WasmEdge6Plugin12_GLOBAL__N_118CAPIPluginRegisterESt14default_deleteIS3_EED2Ev.exit.a
+  br label %_ZNSt10unique_ptrIN8WasmEdge6Plugin12_GLOBAL__N_118CAPIPluginRegisterESt14default_deleteIS3_EED2Ev.exit
 
 bb.bx:                                            ; preds = %.loopexit
   %i.uc = load ptr, ptr @_ZN8WasmEdge6Plugin12_GLOBAL__N_119CAPIPluginRegistersE, align 8, !tbaa !42 ; 7 uses
@@ -730,13 +730,17 @@ _ZNSt6vectorISt10unique_ptrIN8WasmEdge6Plugin12_GLOBAL__N_118CAPIPluginRegisterE
   %i.vf = getelementptr inbounds nuw [8 x i8], ptr %i.uo, i64 %i.um
   store ptr %i.vf, ptr getelementptr inbounds nuw (i8, ptr @_ZN8WasmEdge6Plugin12_GLOBAL__N_119CAPIPluginRegistersE, i64 16), align 8, !tbaa !54
   %.val18.pre = load ptr, ptr %.0.lcssa.i.i.i.i.i, align 8, !tbaa !45
-  %.phi.trans.insert = getelementptr i8, ptr %.val18.pre, i64 128
-  %.val19.pre = load i8, ptr %.phi.trans.insert, align 8, !tbaa !554, !range !110
-  %4 = trunc nuw i8 %.val19.pre to i1
+  br label %_ZNSt10unique_ptrIN8WasmEdge6Plugin12_GLOBAL__N_118CAPIPluginRegisterESt14default_deleteIS3_EED2Ev.exit
+
+_ZNSt10unique_ptrIN8WasmEdge6Plugin12_GLOBAL__N_118CAPIPluginRegisterESt14default_deleteIS3_EED2Ev.exit: ; preds = %bb.bw, %_ZNSt6vectorISt10unique_ptrIN8WasmEdge6Plugin12_GLOBAL__N_118CAPIPluginRegisterESt14default_deleteIS4_EESaIS7_EE17_M_realloc_insertIJS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_S9_EEDpOT_.exit.i
+  %.val18 = phi ptr [ %.val18.pre, %_ZNSt6vectorISt10unique_ptrIN8WasmEdge6Plugin12_GLOBAL__N_118CAPIPluginRegisterESt14default_deleteIS4_EESaIS7_EE17_M_realloc_insertIJS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_S9_EEDpOT_.exit.i ], [ %i.bm, %bb.bw ]
+  %4 = getelementptr i8, ptr %.val18, i64 128
+  %.val19 = load i8, ptr %4, align 8, !tbaa !554, !range !110, !noundef !111
+  %5 = trunc nuw i8 %.val19 to i1
   br label %_ZNSt10unique_ptrIN8WasmEdge6Plugin12_GLOBAL__N_118CAPIPluginRegisterESt14default_deleteIS3_EED2Ev.exit.a
 
-_ZNSt10unique_ptrIN8WasmEdge6Plugin12_GLOBAL__N_118CAPIPluginRegisterESt14default_deleteIS3_EED2Ev.exit.a: ; preds = %_ZNSt6vectorISt10unique_ptrIN8WasmEdge6Plugin12_GLOBAL__N_118CAPIPluginRegisterESt14default_deleteIS4_EESaIS7_EE17_M_realloc_insertIJS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_S9_EEDpOT_.exit.i, %bb.bw, %_ZNK8WasmEdge6SymbolIFPK25WasmEdge_PluginDescriptorvEEclIJEEEDaDpT_.exit
-  %.112 = phi i1 [ false, %_ZNK8WasmEdge6SymbolIFPK25WasmEdge_PluginDescriptorvEEclIJEEEDaDpT_.exit ], [ %4, %_ZNSt6vectorISt10unique_ptrIN8WasmEdge6Plugin12_GLOBAL__N_118CAPIPluginRegisterESt14default_deleteIS4_EESaIS7_EE17_M_realloc_insertIJS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_S9_EEDpOT_.exit.i ], [ %i.tw, %bb.bw ]
+_ZNSt10unique_ptrIN8WasmEdge6Plugin12_GLOBAL__N_118CAPIPluginRegisterESt14default_deleteIS3_EED2Ev.exit.a: ; preds = %_ZNSt10unique_ptrIN8WasmEdge6Plugin12_GLOBAL__N_118CAPIPluginRegisterESt14default_deleteIS3_EED2Ev.exit, %_ZNK8WasmEdge6SymbolIFPK25WasmEdge_PluginDescriptorvEEclIJEEEDaDpT_.exit
+  %.112 = phi i1 [ %5, %_ZNSt10unique_ptrIN8WasmEdge6Plugin12_GLOBAL__N_118CAPIPluginRegisterESt14default_deleteIS3_EED2Ev.exit ], [ false, %_ZNK8WasmEdge6SymbolIFPK25WasmEdge_PluginDescriptorvEEclIJEEEDaDpT_.exit ]
   %i.vg = load atomic i64, ptr %i.bc acquire, align 8 ; 2 uses
   %i.vh = icmp eq i64 %i.vg, 4294967297
   %i.vi = trunc i64 %i.vg to i32                  ; 2 uses

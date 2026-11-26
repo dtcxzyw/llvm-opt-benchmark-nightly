@@ -204,8 +204,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a, %bb.b
   %i.c = phi ptr [ %i.b, %bb.b ], [ null, %bb.a ] ; 4 uses
   %i.d = tail call i32 @intel_encoder_to_phy(ptr noundef %0) #10
-  %1 = shl i32 %i.d, 1                            ; 2 uses
-  %i.e = shl i32 3, %1
+  %i.e = shl i32 %i.d, 1
   tail call void @intel_dmc_wl_get(ptr noundef %i.c, i32 1458816) #10
   %.val.i.i = load ptr, ptr %i.c, align 8
   %i.f = tail call ptr @to_intel_uncore(ptr noundef %.val.i.i) #10 ; 2 uses
@@ -213,9 +212,9 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.h = load ptr, ptr %i.g, align 8
   %i.i = tail call i32 %i.h(ptr noundef %i.f, i32 1458816, i1 noundef zeroext true) #10, !inline_history !64
   tail call void @intel_dmc_wl_put(ptr noundef %i.c, i32 1458816) #10
-  %2 = and i32 %i.i, %i.e
-  %3 = lshr i32 %2, %1
-  %i.j = tail call ptr @intel_get_dpll_by_id(ptr noundef %i.c, i32 noundef %3) #10
+  %1 = lshr i32 %i.i, %i.e
+  %2 = and i32 %1, 3
+  %i.j = tail call ptr @intel_get_dpll_by_id(ptr noundef %i.c, i32 noundef %2) #10
   ret ptr %i.j
 }
 
@@ -618,11 +617,10 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.m, label %skl_ddi_get_pll.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.n = add i32 %i.j, 1                          ; 2 uses
-  %2 = shl i32 3, %i.n
-  %i.o = and i32 %i.i, %2
-  %3 = lshr i32 %i.o, %i.n
-  %i.p = tail call ptr @intel_get_dpll_by_id(ptr noundef %i.c, i32 noundef %3) #10
+  %i.n = add i32 %i.j, 1
+  %2 = lshr i32 %i.i, %i.n
+  %i.o = and i32 %2, 3
+  %i.p = tail call ptr @intel_get_dpll_by_id(ptr noundef %i.c, i32 noundef %i.o) #10
   br label %skl_ddi_get_pll.exit
 
 skl_ddi_get_pll.exit:                             ; preds = %bb.c, %bb.d

@@ -205,18 +205,23 @@ bb.ae:                                            ; preds = %.lr.ph288
           to label %bb.ai unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 
 bb.af:                                            ; preds = %.lr.ph288, %.lr.ph288, %.lr.ph288
-  %i.ee = getelementptr i8, ptr %i.cx, i64 %.0287
+  %i.ee = getelementptr i8, ptr %i.cx, i64 %.0287 ; 2 uses
   %i.ef = getelementptr i8, ptr %i.ee, i64 -1
   %i.eg = load i8, ptr %i.ef, align 1, !tbaa !62
   %.not98 = icmp eq i8 %i.eg, 92
-  br i1 %.not98, label %.invoke434, label %bb.ag
+  br i1 %.not98, label %7, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
   %i.eh = getelementptr inbounds nuw i8, ptr %i.cx, i64 %.080292
   br label %.invoke435
 
-.invoke434:                                       ; preds = %.lr.ph288, %bb.af
-  %i.ei = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc(ptr noundef nonnull align 8 dereferenceable(32) %5, i8 noundef signext %i.cw)
+7:                                                ; preds = %bb.af
+  %8 = load i8, ptr %i.ee, align 1, !tbaa !62
+  br label %.invoke434
+
+.invoke434:                                       ; preds = %.lr.ph288, %7
+  %9 = phi i8 [ %8, %7 ], [ %i.cw, %.lr.ph288 ]
+  %i.ei = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc(ptr noundef nonnull align 8 dereferenceable(32) %5, i8 noundef signext %9)
           to label %bb.ai unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 
 bb.ah:                                            ; preds = %.lr.ph288

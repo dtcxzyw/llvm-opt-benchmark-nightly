@@ -204,7 +204,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.d = load ptr, ptr @PyExc_OSError, align 8, !tbaa !1581
-  %2 = tail call ptr @PyErr_SetFromErrno(ptr noundef %i.d) #19
+  %2 = call ptr @PyErr_SetFromErrno(ptr noundef %i.d) #19
   br label %os_ctermid_impl.exit
 
 bb.c:                                             ; preds = %bb.a
@@ -607,7 +607,7 @@ declare noundef i32 @chown(ptr noundef readonly captures(none), i32 noundef, i32
 declare i32 @chroot(ptr noundef) local_unnamed_addr #4
 
 ; Function Attrs: nofree nounwind
-declare noundef ptr @ctermid(ptr noundef captures(none)) local_unnamed_addr #10
+declare noundef ptr @ctermid(ptr noundef) local_unnamed_addr #10
 
 ; Function Attrs: nounwind uwtable
 define internal fastcc ptr @posix_getcwd(i32 noundef range(i32 0, 2) %0) unnamed_addr #0 !guid !1942 {

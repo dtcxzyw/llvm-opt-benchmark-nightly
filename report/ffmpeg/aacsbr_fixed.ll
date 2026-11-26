@@ -205,7 +205,7 @@ declare void @ff_psdsp_init_fixed(ptr noundef) local_unnamed_addr #1
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc void @sbr_make_f_tablelim(ptr noundef %0) unnamed_addr #6 {
 bb.a:
-  %i.a = alloca [7 x i16], align 2                ; 11 uses
+  %i.a = alloca [7 x i16], align 2                ; 12 uses
   %i.b = alloca [64 x [2 x ptr]], align 16        ; 7 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 44
   %i.d = load i32, ptr %i.c, align 4, !tbaa !43   ; 2 uses
@@ -222,7 +222,7 @@ bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 347844 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.l = load i32, ptr %i.k, align 4, !tbaa !14
-  %i.m = trunc i32 %i.l to i16                    ; 3 uses
+  %i.m = trunc i32 %i.l to i16
   store i16 %i.m, ptr %i.a, align 2, !tbaa !58
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 347904 ; 3 uses
   %i.o = load i32, ptr %i.n, align 16, !tbaa !64  ; 3 uses
@@ -230,7 +230,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not190235, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.b
-  %1 = getelementptr i8, ptr %0, i64 347907       ; 5 uses
+  %load_initial = load i16, ptr %i.a, align 2     ; 2 uses
   %i.p = zext nneg i32 %i.o to i64                ; 2 uses
   %xtraiter = and i64 %i.p, 3                     ; 3 uses
   %i.q = icmp ult i32 %i.o, 4
@@ -238,10 +238,14 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph.new:                                       ; preds = %.lr.ph
   %unroll_iter = and i64 %i.p, 2147483644
+  %1 = getelementptr i8, ptr %0, i64 347907
+  %2 = getelementptr i8, ptr %0, i64 347907
+  %3 = getelementptr i8, ptr %0, i64 347907
+  %4 = getelementptr i8, ptr %0, i64 347907
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.c, %.lr.ph.new
-  %i.r = phi i16 [ %i.m, %.lr.ph.new ], [ %i.ak, %bb.c ]
+  %i.r = phi i16 [ %load_initial, %.lr.ph.new ], [ %i.ak, %bb.c ]
   %indvars.iv = phi i64 [ 1, %.lr.ph.new ], [ %indvars.iv.next.3, %bb.c ] ; 6 uses
   %niter = phi i64 [ 0, %.lr.ph.new ], [ %niter.next.3, %bb.c ]
   %i.s = getelementptr i8, ptr %1, i64 %indvars.iv
@@ -251,28 +255,28 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.new
   %i.w = getelementptr inbounds nuw [2 x i8], ptr %i.a, i64 %indvars.iv
   store i16 %i.v, ptr %i.w, align 2, !tbaa !58
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %i.x = getelementptr i8, ptr %1, i64 %indvars.iv.next
+  %i.x = getelementptr i8, ptr %2, i64 %indvars.iv.next
   %i.y = load i8, ptr %i.x, align 1, !tbaa !13
   %i.z = zext i8 %i.y to i16
   %i.aa = add i16 %i.v, %i.z                      ; 2 uses
   %i.ab = getelementptr inbounds nuw [2 x i8], ptr %i.a, i64 %indvars.iv.next
   store i16 %i.aa, ptr %i.ab, align 2, !tbaa !58
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %i.ac = getelementptr i8, ptr %1, i64 %indvars.iv.next.1
+  %i.ac = getelementptr i8, ptr %3, i64 %indvars.iv.next.1
   %i.ad = load i8, ptr %i.ac, align 1, !tbaa !13
   %i.ae = zext i8 %i.ad to i16
   %i.af = add i16 %i.aa, %i.ae                    ; 2 uses
   %i.ag = getelementptr inbounds nuw [2 x i8], ptr %i.a, i64 %indvars.iv.next.1
   store i16 %i.af, ptr %i.ag, align 2, !tbaa !58
   %indvars.iv.next.2 = add nuw nsw i64 %indvars.iv, 3 ; 2 uses
-  %i.ah = getelementptr i8, ptr %1, i64 %indvars.iv.next.2
+  %i.ah = getelementptr i8, ptr %4, i64 %indvars.iv.next.2
   %i.ai = load i8, ptr %i.ah, align 1, !tbaa !13
   %i.aj = zext i8 %i.ai to i16
   %i.ak = add i16 %i.af, %i.aj                    ; 3 uses
   %i.al = getelementptr inbounds nuw [2 x i8], ptr %i.a, i64 %indvars.iv.next.2
   store i16 %i.ak, ptr %i.al, align 2, !tbaa !58
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
+  %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge.loopexit.unr-lcssa, label %bb.c, !llvm.loop !223
 
@@ -281,17 +285,18 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.new
   br i1 %lcmp.mod.not, label %._crit_edge, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph
-  %.epil.init = phi i16 [ %i.m, %.lr.ph ], [ %i.ak, %._crit_edge.loopexit.unr-lcssa ]
+  %.epil.init = phi i16 [ %load_initial, %.lr.ph ], [ %i.ak, %._crit_edge.loopexit.unr-lcssa ]
   %indvars.iv.epil.init = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next.3, %._crit_edge.loopexit.unr-lcssa ]
   %lcmp.mod312 = icmp ne i64 %xtraiter, 0
   tail call void @llvm.assume(i1 %lcmp.mod312)
+  %5 = getelementptr i8, ptr %0, i64 347907
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.d, %.epil.preheader
   %i.am = phi i16 [ %.epil.init, %.epil.preheader ], [ %i.aq, %bb.d ]
   %indvars.iv.epil = phi i64 [ %indvars.iv.epil.init, %.epil.preheader ], [ %indvars.iv.next.epil, %bb.d ] ; 3 uses
   %epil.iter = phi i64 [ 0, %.epil.preheader ], [ %epil.iter.next, %bb.d ]
-  %i.an = getelementptr i8, ptr %1, i64 %indvars.iv.epil
+  %i.an = getelementptr i8, ptr %5, i64 %indvars.iv.epil
   %i.ao = load i8, ptr %i.an, align 1, !tbaa !13
   %i.ap = zext i8 %i.ao to i16
   %i.aq = add i16 %i.am, %i.ap                    ; 2 uses

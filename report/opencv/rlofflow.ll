@@ -204,7 +204,8 @@ bb.bl:                                            ; preds = %_ZNSt12_Vector_base
   %i.et = zext i1 %i.es to i32                    ; 2 uses
   %i.eu = add i32 %i.eq, %i.et
   %i.ev = sub i32 %i.er, %i.eu
-  %i.ew = udiv i32 %i.ev, %.sroa.0.0.extract.trunc.i
+  %69 = call i32 @llvm.umax.i32(i32 %.sroa.0.0.extract.trunc.i, i32 1)
+  %i.ew = udiv i32 %i.ev, %69
   %i.ex = add i32 %i.ew, %i.et                    ; 2 uses
   %i.ey = zext i32 %i.ex to i64
   %i.ez = add nuw nsw i64 %i.ey, 1                ; 2 uses
@@ -606,6 +607,9 @@ declare float @llvm.sqrt.f32(float) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umax.i32(i32, i32) #15
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
 attributes #1 = { nobuiltin allocsize(0) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }

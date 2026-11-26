@@ -41,7 +41,7 @@ bb.b:                                             ; preds = %.lr.ph122, %bb.r
 bb.c:                                             ; preds = %bb.b
   %i.k = add nsw i32 %.081116, -1                 ; 3 uses
   %i.l = zext nneg i32 %i.k to i64                ; 2 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %2, i64 %i.l ; 2 uses
+  %i.m = getelementptr i8, ptr %2, i64 %i.l       ; 2 uses
   store i8 0, ptr %i.m, align 1, !tbaa !13
   %i.n = icmp eq i32 %i.k, 0
   br i1 %i.n, label %.loopexit, label %..thread_crit_edge
@@ -61,7 +61,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %.thread
   %i.q = add nsw i32 %.08696, -1                  ; 3 uses
   %i.r = zext nneg i32 %i.q to i64                ; 2 uses
-  %i.s = getelementptr inbounds nuw i8, ptr %2, i64 %i.r ; 2 uses
+  %i.s = getelementptr i8, ptr %2, i64 %i.r       ; 2 uses
   store i8 0, ptr %i.s, align 1, !tbaa !13
   %i.t = icmp eq i32 %i.q, 0
   br i1 %i.t, label %.loopexit, label %..thread97_crit_edge

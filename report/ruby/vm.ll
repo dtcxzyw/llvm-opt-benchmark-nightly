@@ -205,20 +205,103 @@ bb.d:                                             ; preds = %rb_vm_get_ruby_leve
   %i.t = icmp eq ptr %2, null
   %i.u = icmp ne ptr %i.n, null
   %or.cond = and i1 %i.t, %i.u
-  br i1 %or.cond, label %vm_block_ep.exit.a, label %vm_block_ep.exit.i
+  br i1 %or.cond, label %tailrecurse.i, label %18
 
-vm_block_ep.exit.a:                               ; preds = %bb.d
-  %i.v = getelementptr inbounds nuw i8, ptr %5, i64 8
+tailrecurse.i:                                    ; preds = %bb.d, %10
+  %.tr.i = phi ptr [ %14, %10 ], [ %5, %bb.d ]    ; 3 uses
+  %6 = getelementptr i8, ptr %.tr.i, i64 24
+  %.val.i23 = load i32, ptr %6, align 8, !tbaa !696
+  switch i32 %.val.i23, label %15 [
+    i32 0, label %7
+    i32 1, label %7
+    i32 3, label %10
+    i32 2, label %vm_block_ep.exit
+  ]
+
+7:                                                ; preds = %tailrecurse.i, %tailrecurse.i
+  %8 = getelementptr i8, ptr %.tr.i, i64 8
+  %9 = load ptr, ptr %8, align 8, !tbaa !403
+  br label %vm_block_ep.exit
+
+10:                                               ; preds = %tailrecurse.i
+  %11 = load i64, ptr %.tr.i, align 8, !tbaa !403
+  %12 = inttoptr i64 %11 to ptr
+  %13 = getelementptr i8, ptr %12, i64 32
+  %14 = load ptr, ptr %13, align 8, !tbaa !694
+  br label %tailrecurse.i
+
+15:                                               ; preds = %tailrecurse.i
+  unreachable
+
+vm_block_ep.exit:                                 ; preds = %tailrecurse.i, %7
+  %.0.i = phi ptr [ %9, %7 ], [ null, %tailrecurse.i ]
+  %16 = tail call fastcc ptr @vm_get_cref(ptr noundef %.0.i)
+  %17 = tail call fastcc ptr @vm_cref_dup(ptr noundef nonnull %16)
+  br label %18
+
+18:                                               ; preds = %vm_block_ep.exit, %bb.d
+  %.0 = phi ptr [ %17, %vm_block_ep.exit ], [ %2, %bb.d ]
+  br label %tailrecurse.i.i
+
+tailrecurse.i.i:                                  ; preds = %22, %18
+  %.tr.i.i = phi ptr [ %5, %18 ], [ %26, %22 ]    ; 3 uses
+  %19 = getelementptr i8, ptr %.tr.i.i, i64 24
+  %.val.i.i = load i32, ptr %19, align 8, !tbaa !696
+  switch i32 %.val.i.i, label %27 [
+    i32 0, label %20
+    i32 1, label %20
+    i32 3, label %22
+    i32 2, label %vm_block_self.exit.i
+  ]
+
+20:                                               ; preds = %tailrecurse.i.i, %tailrecurse.i.i
+  %21 = load i64, ptr %.tr.i.i, align 8, !tbaa !403
+  br label %vm_block_self.exit.i
+
+22:                                               ; preds = %tailrecurse.i.i
+  %23 = load i64, ptr %.tr.i.i, align 8, !tbaa !403
+  %24 = inttoptr i64 %23 to ptr
+  %25 = getelementptr i8, ptr %24, i64 32
+  %26 = load ptr, ptr %25, align 8, !tbaa !694
+  br label %tailrecurse.i.i
+
+27:                                               ; preds = %tailrecurse.i.i
+  unreachable
+
+vm_block_self.exit.i:                             ; preds = %tailrecurse.i.i, %20
+  %.0.i.i = phi i64 [ %21, %20 ], [ 36, %tailrecurse.i.i ]
+  br label %tailrecurse.i9.i
+
+tailrecurse.i9.i:                                 ; preds = %31, %vm_block_self.exit.i
+  %.tr.i10.i = phi ptr [ %5, %vm_block_self.exit.i ], [ %35, %31 ] ; 3 uses
+  %28 = getelementptr i8, ptr %.tr.i10.i, i64 24
+  %.val.i11.i = load i32, ptr %28, align 8, !tbaa !696
+  switch i32 %.val.i11.i, label %36 [
+    i32 0, label %vm_block_ep.exit.a
+    i32 1, label %vm_block_ep.exit.a
+    i32 3, label %31
+    i32 2, label %vm_block_ep.exit.i
+  ]
+
+vm_block_ep.exit.a:                               ; preds = %tailrecurse.i9.i, %tailrecurse.i9.i
+  %i.v = getelementptr i8, ptr %.tr.i10.i, i64 8
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !403
-  %6 = tail call fastcc ptr @vm_get_cref(ptr noundef %i.w)
-  %7 = tail call fastcc ptr @vm_cref_dup(ptr noundef nonnull %6)
+  %29 = ptrtoint ptr %i.w to i64
+  %30 = or i64 %29, 1
   br label %vm_block_ep.exit.i
 
-vm_block_ep.exit.i:                               ; preds = %vm_block_ep.exit.a, %bb.d
-  %.0 = phi ptr [ %7, %vm_block_ep.exit.a ], [ %2, %bb.d ]
-  %8 = load i64, ptr %5, align 8, !tbaa !403
-  %9 = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %10 = load ptr, ptr %9, align 8, !tbaa !403
+31:                                               ; preds = %tailrecurse.i9.i
+  %32 = load i64, ptr %.tr.i10.i, align 8, !tbaa !403
+  %33 = inttoptr i64 %32 to ptr
+  %34 = getelementptr i8, ptr %33, i64 32
+  %35 = load ptr, ptr %34, align 8, !tbaa !694
+  br label %tailrecurse.i9.i
+
+36:                                               ; preds = %tailrecurse.i9.i
+  unreachable
+
+vm_block_ep.exit.i:                               ; preds = %tailrecurse.i9.i, %vm_block_ep.exit.a
+  %.0.i12.i = phi i64 [ %30, %vm_block_ep.exit.a ], [ 1, %tailrecurse.i9.i ]
   %i.x = getelementptr i8, ptr %i.q, i64 16
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !497  ; 3 uses
   %i.z = getelementptr i8, ptr %i.y, i64 8
@@ -289,13 +372,11 @@ bb.e:                                             ; preds = %vm_block_ep.exit.i
 
 vm_set_eval_stack.exit:                           ; preds = %.lr.ph.i.i, %middle.block, %.preheader.i.i
   %.0.lcssa.i.i = phi ptr [ %i.ad, %.preheader.i.i ], [ %i.aq, %middle.block ], [ %i.av, %.lr.ph.i.i ] ; 4 uses
-  %11 = ptrtoint ptr %10 to i64
-  %12 = or i64 %11, 1
   %i.ax = ptrtoint ptr %.0 to i64
   %i.ay = getelementptr i8, ptr %.0.lcssa.i.i, i64 8
   store i64 %i.ax, ptr %.0.lcssa.i.i, align 8, !tbaa !389
   %i.az = getelementptr i8, ptr %.0.lcssa.i.i, i64 16 ; 2 uses
-  store i64 %12, ptr %i.ay, align 8, !tbaa !389
+  store i64 %.0.i12.i, ptr %i.ay, align 8, !tbaa !389
   %i.ba = getelementptr i8, ptr %.0.lcssa.i.i, i64 24
   store i64 2004287521, ptr %i.az, align 8, !tbaa !389
   store ptr %i.aa, ptr %i.ai, align 8, !tbaa !451
@@ -304,7 +385,7 @@ vm_set_eval_stack.exit:                           ; preds = %.lr.ph.i.i, %middle
   %.sroa.3.0..sroa_idx.i.i = getelementptr i8, ptr %i.ab, i64 -40
   store ptr %i.q, ptr %.sroa.3.0..sroa_idx.i.i, align 8, !tbaa !452
   %.sroa.4.0..sroa_idx.i.i = getelementptr i8, ptr %i.ab, i64 -32
-  store i64 %8, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !tbaa !389
+  store i64 %.0.i.i, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !tbaa !389
   %.sroa.5.0..sroa_idx.i.i = getelementptr i8, ptr %i.ab, i64 -24
   store ptr %i.az, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !tbaa !451
   %.sroa.6.0..sroa_idx.i.i = getelementptr i8, ptr %i.ab, i64 -16

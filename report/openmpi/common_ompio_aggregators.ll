@@ -204,7 +204,7 @@ bb.a:
   br i1 %i.d, label %bb.i, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = tail call noalias ptr @malloc(i64 noundef %i.b) #11 ; 10 uses
+  %i.e = tail call noalias ptr @malloc(i64 noundef %i.b) #11 ; 11 uses
   %i.f = icmp eq ptr %i.e, null
   br i1 %i.f, label %bb.c, label %bb.d
 
@@ -284,6 +284,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br i1 %.not80, label %._crit_edge69, label %.lr.ph68.preheader
 
 .lr.ph68.preheader:                               ; preds = %.loopexit
+  %load_initial = load i32, ptr %i.e, align 4     ; 2 uses
   %i.y = add nsw i64 %wide.trip.count, -1         ; 2 uses
   %xtraiter = and i64 %i.y, 3                     ; 3 uses
   %i.z = add nsw i32 %2, -2
@@ -295,7 +296,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br label %.lr.ph68
 
 .lr.ph68:                                         ; preds = %.lr.ph68, %.lr.ph68.preheader.new
-  %i.ab = phi i32 [ 0, %.lr.ph68.preheader.new ], [ %i.au, %.lr.ph68 ]
+  %i.ab = phi i32 [ %load_initial, %.lr.ph68.preheader.new ], [ %i.au, %.lr.ph68 ]
   %indvars.iv71 = phi i64 [ 1, %.lr.ph68.preheader.new ], [ %indvars.iv.next72.3, %.lr.ph68 ] ; 6 uses
   %niter = phi i64 [ 0, %.lr.ph68.preheader.new ], [ %niter.next.3, %.lr.ph68 ]
   %i.ac = getelementptr [4 x i8], ptr %i.c, i64 %indvars.iv71
@@ -335,7 +336,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br i1 %lcmp.mod.not, label %._crit_edge69, label %.lr.ph68.epil.preheader
 
 .lr.ph68.epil.preheader:                          ; preds = %._crit_edge69.loopexit.unr-lcssa, %.lr.ph68.preheader
-  %.epil.init = phi i32 [ 0, %.lr.ph68.preheader ], [ %i.au, %._crit_edge69.loopexit.unr-lcssa ]
+  %.epil.init = phi i32 [ %load_initial, %.lr.ph68.preheader ], [ %i.au, %._crit_edge69.loopexit.unr-lcssa ]
   %indvars.iv71.epil.init = phi i64 [ 1, %.lr.ph68.preheader ], [ %indvars.iv.next72.3, %._crit_edge69.loopexit.unr-lcssa ]
   %lcmp.mod86 = icmp ne i64 %xtraiter, 0
   tail call void @llvm.assume(i1 %lcmp.mod86)

@@ -204,9 +204,9 @@ _ZNK4llvm4User10getOperandEj.exit39:              ; preds = %bb.q
   %i.bh = zext nneg i32 %i.bg to i64
   %i.bi = sub nsw i64 0, %i.bh
   %i.bj = getelementptr inbounds [32 x i8], ptr %0, i64 %i.bi
-  %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !73
+  %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !73 ; 2 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 8
-  %i.bm = load ptr, ptr %i.bl, align 8, !tbaa !74 ; 2 uses
+  %i.bm = load ptr, ptr %i.bl, align 8, !tbaa !74
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 8
   %i.bo = load i32, ptr %i.bn, align 8
   %i.bp = and i32 %i.bo, 255
@@ -216,9 +216,9 @@ _ZNK4llvm4User10getOperandEj.exit39:              ; preds = %bb.q
 _ZNK4llvm4User10getOperandEj.exit39.thread:       ; preds = %bb.q
   %i.br = getelementptr inbounds i8, ptr %0, i64 -8
   %i.bs = load ptr, ptr %i.br, align 8, !tbaa !68
-  %i.bt = load ptr, ptr %i.bs, align 8, !tbaa !73
+  %i.bt = load ptr, ptr %i.bs, align 8, !tbaa !73 ; 2 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 8
-  %i.bv = load ptr, ptr %i.bu, align 8, !tbaa !74 ; 2 uses
+  %i.bv = load ptr, ptr %i.bu, align 8, !tbaa !74
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bv, i64 8
   %i.bx = load i32, ptr %i.bw, align 8
   %i.by = and i32 %i.bx, 255
@@ -226,8 +226,10 @@ _ZNK4llvm4User10getOperandEj.exit39.thread:       ; preds = %bb.q
   br i1 %i.bz, label %_ZN12_GLOBAL__N_117TypePromotionImpl15isSupportedTypeEPN4llvm5ValueE.exit30.thread, label %_ZNK4llvm4User10getOperandEj.exit41
 
 _ZNK4llvm4User10getOperandEj.exit41:              ; preds = %_ZNK4llvm4User10getOperandEj.exit39, %_ZNK4llvm4User10getOperandEj.exit39.thread
-  %.val25.a = phi ptr [ %i.bv, %_ZNK4llvm4User10getOperandEj.exit39.thread ], [ %i.bm, %_ZNK4llvm4User10getOperandEj.exit39 ]
-  %i.ca = tail call noundef i32 @_ZNK4llvm4Type19getScalarSizeInBitsEv(ptr noundef nonnull readonly align 8 dereferenceable(24) %.val25.a) #23
+  %.val25.a = phi ptr [ %i.bt, %_ZNK4llvm4User10getOperandEj.exit39.thread ], [ %i.bk, %_ZNK4llvm4User10getOperandEj.exit39 ]
+  %2 = getelementptr i8, ptr %.val25.a, i64 8
+  %.val25 = load ptr, ptr %2, align 8, !tbaa !74
+  %i.ca = tail call noundef i32 @_ZNK4llvm4Type19getScalarSizeInBitsEv(ptr noundef nonnull readonly align 8 dereferenceable(24) %.val25) #23
   %i.cb = icmp eq i32 %i.ca, %.0.val
   br label %_ZN12_GLOBAL__N_117TypePromotionImpl15isSupportedTypeEPN4llvm5ValueE.exit30.thread
 

@@ -204,8 +204,8 @@ bb.n:                                             ; preds = %bb.m
 define dso_local void @agrep(ptr nofree readnone captures(none) %0, i32 noundef %1, ptr noundef %2, ptr noundef %3, i32 noundef %4) local_unnamed_addr #3 !guid !92 {
 bb.a:
   %i.a = alloca [2048 x [2 x i32]], align 16      ; 10 uses
-  %i.b = alloca [21 x i32], align 16              ; 21 uses
-  %i.c = alloca [21 x i32], align 16              ; 20 uses
+  %i.b = alloca [21 x i32], align 16              ; 24 uses
+  %i.c = alloca [21 x i32], align 16              ; 23 uses
   %i.d = add i32 %4, 1                            ; 2 uses
   %i.e = sdiv i32 %1, %i.d                        ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #21
@@ -608,33 +608,36 @@ bb.l:                                             ; preds = %.lr.ph275, %._crit_
   %i.ft = zext i8 %i.fr to i64
   %i.fu = getelementptr inbounds nuw [4 x i8], ptr @Mask, i64 %i.ft
   %i.fv = load i32, ptr %i.fu, align 4, !tbaa !20 ; 4 uses
-  %i.fw = load i32, ptr %i.c, align 16, !tbaa !20 ; 3 uses
+  %i.fw = load i32, ptr %i.c, align 16, !tbaa !20
   %i.fx = lshr i32 %i.fw, 1
-  %i.fy = or i32 %i.fx, %i.fv                     ; 3 uses
+  %i.fy = or i32 %i.fx, %i.fv
   store i32 %i.fy, ptr %i.b, align 16, !tbaa !20
   br i1 %.not176245, label %._crit_edge, label %.lr.ph252.preheader
 
 .lr.ph252.preheader:                              ; preds = %.loopexit222
+  %load_initial349 = load i32, ptr %i.b, align 16 ; 2 uses
   br i1 %i.ev, label %.lr.ph252.epil.preheader, label %.lr.ph252
 
 .lr.ph252:                                        ; preds = %.lr.ph252.preheader, %.lr.ph252
-  %5 = phi i32 [ %i.gq, %.lr.ph252 ], [ %i.fy, %.lr.ph252.preheader ]
-  %i.fz = phi i32 [ %i.gk, %.lr.ph252 ], [ %i.fw, %.lr.ph252.preheader ] ; 2 uses
-  %indvars.iv292 = phi i64 [ %indvars.iv.next293.1, %.lr.ph252 ], [ 1, %.lr.ph252.preheader ] ; 4 uses
+  %i.fz = phi i32 [ %i.gq, %.lr.ph252 ], [ %load_initial349, %.lr.ph252.preheader ]
+  %indvars.iv292 = phi i64 [ %indvars.iv.next293.1, %.lr.ph252 ], [ 1, %.lr.ph252.preheader ] ; 5 uses
   %niter367 = phi i64 [ %niter367.next.1, %.lr.ph252 ], [ 0, %.lr.ph252.preheader ]
   %i.ga = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv292
   %i.gb = load i32, ptr %i.ga, align 4, !tbaa !20 ; 3 uses
   %i.gc = lshr i32 %i.gb, 1
   %i.gd = or i32 %i.gc, %i.fv
-  %i.ge = and i32 %5, %i.fz
+  %5 = getelementptr [4 x i8], ptr %i.c, i64 %indvars.iv292
+  %6 = getelementptr i8, ptr %5, i64 -4
+  %7 = load i32, ptr %6, align 4, !tbaa !20       ; 2 uses
+  %i.ge = and i32 %i.fz, %7
   %i.gf = lshr i32 %i.ge, 1
   %i.gg = and i32 %i.gd, %i.gf
-  %i.gh = and i32 %i.gg, %i.fz                    ; 2 uses
+  %i.gh = and i32 %i.gg, %7                       ; 2 uses
   %i.gi = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv292
   store i32 %i.gh, ptr %i.gi, align 4, !tbaa !20
   %indvars.iv.next293 = add nuw nsw i64 %indvars.iv292, 1 ; 2 uses
   %i.gj = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv.next293
-  %i.gk = load i32, ptr %i.gj, align 4, !tbaa !20 ; 3 uses
+  %i.gk = load i32, ptr %i.gj, align 4, !tbaa !20
   %i.gl = lshr i32 %i.gk, 1
   %i.gm = or i32 %i.gl, %i.fv
   %i.gn = and i32 %i.gh, %i.gb
@@ -652,18 +655,20 @@ bb.l:                                             ; preds = %.lr.ph275, %._crit_
   br i1 %lcmp.mod364.not, label %._crit_edge, label %.lr.ph252.epil.preheader
 
 .lr.ph252.epil.preheader:                         ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph252.preheader
-  %.epil.init = phi i32 [ %i.fy, %.lr.ph252.preheader ], [ %i.gq, %._crit_edge.loopexit.unr-lcssa ]
-  %.epil.init363 = phi i32 [ %i.fw, %.lr.ph252.preheader ], [ %i.gk, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses
-  %indvars.iv292.epil.init = phi i64 [ 1, %.lr.ph252.preheader ], [ %indvars.iv.next293.1, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses
+  %.epil.init363 = phi i32 [ %load_initial349, %.lr.ph252.preheader ], [ %i.gq, %._crit_edge.loopexit.unr-lcssa ]
+  %indvars.iv292.epil.init = phi i64 [ 1, %.lr.ph252.preheader ], [ %indvars.iv.next293.1, %._crit_edge.loopexit.unr-lcssa ] ; 3 uses
   tail call void @llvm.assume(i1 %lcmp.mod365)
   %i.gs = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv292.epil.init
   %i.gt = load i32, ptr %i.gs, align 4, !tbaa !20
   %i.gu = lshr i32 %i.gt, 1
   %i.gv = or i32 %i.gu, %i.fv
-  %i.gw = and i32 %.epil.init, %.epil.init363
+  %8 = getelementptr [4 x i8], ptr %i.c, i64 %indvars.iv292.epil.init
+  %9 = getelementptr i8, ptr %8, i64 -4
+  %10 = load i32, ptr %9, align 4, !tbaa !20      ; 2 uses
+  %i.gw = and i32 %.epil.init363, %10
   %i.gx = lshr i32 %i.gw, 1
   %i.gy = and i32 %i.gv, %i.gx
-  %i.gz = and i32 %i.gy, %.epil.init363
+  %i.gz = and i32 %i.gy, %10
   %i.ha = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv292.epil.init
   store i32 %i.gz, ptr %i.ha, align 4, !tbaa !20
   br label %._crit_edge
@@ -799,33 +804,36 @@ s_output.exit:                                    ; preds = %s_output.exit.loope
   %i.io = zext i8 %i.im to i64
   %i.ip = getelementptr inbounds nuw [4 x i8], ptr @Mask, i64 %i.io
   %i.iq = load i32, ptr %i.ip, align 4, !tbaa !20 ; 4 uses
-  %i.ir = load i32, ptr %i.b, align 16, !tbaa !20 ; 3 uses
+  %i.ir = load i32, ptr %i.b, align 16, !tbaa !20
   %i.is = lshr i32 %i.ir, 1
-  %i.it = or i32 %i.is, %i.iq                     ; 3 uses
+  %i.it = or i32 %i.is, %i.iq
   store i32 %i.it, ptr %i.c, align 16, !tbaa !20
   br i1 %.not176245, label %._crit_edge263, label %.lr.ph262.preheader
 
 .lr.ph262.preheader:                              ; preds = %.loopexit219
+  %load_initial351 = load i32, ptr %i.c, align 16 ; 2 uses
   br i1 %i.ew, label %.lr.ph262.epil.preheader, label %.lr.ph262
 
 .lr.ph262:                                        ; preds = %.lr.ph262.preheader, %.lr.ph262
-  %6 = phi i32 [ %i.jl, %.lr.ph262 ], [ %i.it, %.lr.ph262.preheader ]
-  %i.iu = phi i32 [ %i.jf, %.lr.ph262 ], [ %i.ir, %.lr.ph262.preheader ] ; 2 uses
-  %indvars.iv303 = phi i64 [ %indvars.iv.next304.1, %.lr.ph262 ], [ 1, %.lr.ph262.preheader ] ; 4 uses
+  %i.iu = phi i32 [ %i.jl, %.lr.ph262 ], [ %load_initial351, %.lr.ph262.preheader ]
+  %indvars.iv303 = phi i64 [ %indvars.iv.next304.1, %.lr.ph262 ], [ 1, %.lr.ph262.preheader ] ; 5 uses
   %niter377 = phi i64 [ %niter377.next.1, %.lr.ph262 ], [ 0, %.lr.ph262.preheader ]
   %i.iv = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv303
   %i.iw = load i32, ptr %i.iv, align 4, !tbaa !20 ; 3 uses
   %i.ix = lshr i32 %i.iw, 1
   %i.iy = or i32 %i.ix, %i.iq
-  %i.iz = and i32 %6, %i.iu
+  %11 = getelementptr [4 x i8], ptr %i.b, i64 %indvars.iv303
+  %12 = getelementptr i8, ptr %11, i64 -4
+  %13 = load i32, ptr %12, align 4, !tbaa !20     ; 2 uses
+  %i.iz = and i32 %i.iu, %13
   %i.ja = lshr i32 %i.iz, 1
   %i.jb = and i32 %i.iy, %i.ja
-  %i.jc = and i32 %i.jb, %i.iu                    ; 2 uses
+  %i.jc = and i32 %i.jb, %13                      ; 2 uses
   %i.jd = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv303
   store i32 %i.jc, ptr %i.jd, align 4, !tbaa !20
   %indvars.iv.next304 = add nuw nsw i64 %indvars.iv303, 1 ; 2 uses
   %i.je = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv.next304
-  %i.jf = load i32, ptr %i.je, align 4, !tbaa !20 ; 3 uses
+  %i.jf = load i32, ptr %i.je, align 4, !tbaa !20
   %i.jg = lshr i32 %i.jf, 1
   %i.jh = or i32 %i.jg, %i.iq
   %i.ji = and i32 %i.jc, %i.iw
@@ -843,18 +851,20 @@ s_output.exit:                                    ; preds = %s_output.exit.loope
   br i1 %lcmp.mod374.not, label %._crit_edge263, label %.lr.ph262.epil.preheader
 
 .lr.ph262.epil.preheader:                         ; preds = %._crit_edge263.loopexit.unr-lcssa, %.lr.ph262.preheader
-  %.epil.init371 = phi i32 [ %i.it, %.lr.ph262.preheader ], [ %i.jl, %._crit_edge263.loopexit.unr-lcssa ]
-  %.epil.init373 = phi i32 [ %i.ir, %.lr.ph262.preheader ], [ %i.jf, %._crit_edge263.loopexit.unr-lcssa ] ; 2 uses
-  %indvars.iv303.epil.init = phi i64 [ 1, %.lr.ph262.preheader ], [ %indvars.iv.next304.1, %._crit_edge263.loopexit.unr-lcssa ] ; 2 uses
+  %.epil.init373 = phi i32 [ %load_initial351, %.lr.ph262.preheader ], [ %i.jl, %._crit_edge263.loopexit.unr-lcssa ]
+  %indvars.iv303.epil.init = phi i64 [ 1, %.lr.ph262.preheader ], [ %indvars.iv.next304.1, %._crit_edge263.loopexit.unr-lcssa ] ; 3 uses
   tail call void @llvm.assume(i1 %lcmp.mod375)
   %i.jn = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv303.epil.init
   %i.jo = load i32, ptr %i.jn, align 4, !tbaa !20
   %i.jp = lshr i32 %i.jo, 1
   %i.jq = or i32 %i.jp, %i.iq
-  %i.jr = and i32 %.epil.init371, %.epil.init373
+  %14 = getelementptr [4 x i8], ptr %i.b, i64 %indvars.iv303.epil.init
+  %15 = getelementptr i8, ptr %14, i64 -4
+  %16 = load i32, ptr %15, align 4, !tbaa !20     ; 2 uses
+  %i.jr = and i32 %.epil.init373, %16
   %i.js = lshr i32 %i.jr, 1
   %i.jt = and i32 %i.jq, %i.js
-  %i.ju = and i32 %i.jt, %.epil.init373
+  %i.ju = and i32 %i.jt, %16
   %i.jv = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv303.epil.init
   store i32 %i.ju, ptr %i.jv, align 4, !tbaa !20
   br label %._crit_edge263

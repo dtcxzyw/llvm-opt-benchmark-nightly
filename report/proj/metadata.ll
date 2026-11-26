@@ -204,7 +204,7 @@ bb.a:
   %i.g = add i8 %i.e, -65
   %or.cond.i = icmp ult i8 %i.g, 26
   %i.h = add nuw nsw i8 %i.e, 32
-  %i.i = select i1 %or.cond.i, i8 %i.h, i8 %i.e   ; 5 uses
+  %i.i = select i1 %or.cond.i, i8 %i.h, i8 %i.e   ; 7 uses
   switch i8 %i.i, label %bb.j [
     i8 32, label %bb.b
     i8 49, label %bb.d
@@ -342,22 +342,35 @@ bb.p:                                             ; preds = %bb.k
   br i1 %.not.i44, label %.thread150, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.bc = getelementptr i8, ptr %i.c, i64 %storemerge168 ; 6 uses
+  %i.bc = getelementptr i8, ptr %i.c, i64 %storemerge168 ; 7 uses
   %i.bd = getelementptr i8, ptr %i.bc, i64 -1
   %i.be = load i8, ptr %i.bd, align 1, !tbaa !38
   switch i8 %i.be, label %.thread150 [
-    i8 95, label %.lr.ph.i.i46.preheader.a
-    i8 47, label %.lr.ph.i.i46.preheader.a
-    i8 46, label %.lr.ph.i.i46.preheader.a
-    i8 45, label %.lr.ph.i.i46.preheader.a
-    i8 41, label %.lr.ph.i.i46.preheader.a
-    i8 40, label %.lr.ph.i.i46.preheader.a
-    i8 38, label %.lr.ph.i.i46.preheader.a
-    i8 32, label %.lr.ph.i.i46.preheader.a
-    i8 44, label %.lr.ph.i.i46.preheader.a
+    i8 95, label %3
+    i8 47, label %3
+    i8 46, label %3
+    i8 45, label %3
+    i8 41, label %3
+    i8 40, label %3
+    i8 38, label %3
+    i8 32, label %3
+    i8 44, label %3
   ]
 
-.lr.ph.i.i46.preheader.a:                         ; preds = %bb.q, %bb.q, %bb.q, %bb.q, %bb.q, %bb.q, %bb.q, %bb.q, %bb.q
+3:                                                ; preds = %bb.q, %bb.q, %bb.q, %bb.q, %bb.q, %bb.q, %bb.q, %bb.q, %bb.q
+  %4 = load i8, ptr %i.bc, align 1, !tbaa !38     ; 4 uses
+  %.not17.i.i45 = icmp eq i8 %4, 0
+  br i1 %.not17.i.i45, label %.thread150, label %.lr.ph.i.i46.preheader
+
+.lr.ph.i.i46.preheader:                           ; preds = %3
+  %5 = add i8 %4, -65
+  %or.cond.i.i.i49 = icmp ult i8 %5, 26
+  %6 = add nuw nsw i8 %4, 32
+  %7 = select i1 %or.cond.i.i.i49, i8 %6, i8 %4
+  %.not14.i.i51 = icmp eq i8 %7, 104
+  br i1 %.not14.i.i51, label %.lr.ph.i.i46.preheader.a, label %.thread150
+
+.lr.ph.i.i46.preheader.a:                         ; preds = %.lr.ph.i.i46.preheader
   %i.bf = getelementptr inbounds nuw i8, ptr %i.bc, i64 1
   %i.bg = load i8, ptr %i.bf, align 1, !tbaa !38  ; 4 uses
   %.not.i.i52 = icmp eq i8 %i.bg, 0
@@ -436,27 +449,40 @@ bb.v:                                             ; preds = %bb.k
   br i1 %.not.i61, label %.thread150, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  %i.cf = getelementptr i8, ptr %i.c, i64 %storemerge168 ; 5 uses
+  %i.cf = getelementptr i8, ptr %i.c, i64 %storemerge168 ; 6 uses
   %i.cg = getelementptr i8, ptr %i.cf, i64 -1
   %i.ch = load i8, ptr %i.cg, align 1, !tbaa !38  ; 2 uses
-  switch i8 %i.ch, label %_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.i.a [
-    i8 95, label %.lr.ph.i.i63.preheader
-    i8 47, label %.lr.ph.i.i63.preheader
-    i8 46, label %.lr.ph.i.i63.preheader
-    i8 45, label %.lr.ph.i.i63.preheader
-    i8 41, label %.lr.ph.i.i63.preheader
-    i8 40, label %.lr.ph.i.i63.preheader
-    i8 38, label %.lr.ph.i.i63.preheader
-    i8 32, label %.lr.ph.i.i63.preheader
-    i8 44, label %.lr.ph.i.i63.preheader
+  switch i8 %i.ch, label %_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.i [
+    i8 95, label %_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.thread.i
+    i8 47, label %_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.thread.i
+    i8 46, label %_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.thread.i
+    i8 45, label %_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.thread.i
+    i8 41, label %_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.thread.i
+    i8 40, label %_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.thread.i
+    i8 38, label %_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.thread.i
+    i8 32, label %_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.thread.i
+    i8 44, label %_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.thread.i
   ]
 
-_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.i.a: ; preds = %bb.w
-  %i.ci = add i8 %i.ch, -48
-  %i.cj = icmp ult i8 %i.ci, 10
-  br i1 %i.cj, label %.lr.ph.i.i63.preheader, label %.thread150
+_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.i: ; preds = %bb.w
+  %8 = add i8 %i.ch, -48
+  %9 = icmp ult i8 %8, 10
+  br i1 %9, label %_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.thread.i, label %.thread150
 
-.lr.ph.i.i63.preheader:                           ; preds = %_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.i.a, %bb.w, %bb.w, %bb.w, %bb.w, %bb.w, %bb.w, %bb.w, %bb.w, %bb.w
+_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.thread.i: ; preds = %_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.i, %bb.w, %bb.w, %bb.w, %bb.w, %bb.w, %bb.w, %bb.w, %bb.w, %bb.w
+  %10 = load i8, ptr %i.cf, align 1, !tbaa !38    ; 4 uses
+  %.not17.i.i62 = icmp eq i8 %10, 0
+  br i1 %.not17.i.i62, label %.thread150, label %_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.i.a
+
+_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.i.a: ; preds = %_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.thread.i
+  %i.ci = add i8 %10, -65
+  %i.cj = icmp ult i8 %i.ci, 26
+  %11 = add nuw nsw i8 %10, 32
+  %12 = select i1 %i.cj, i8 %11, i8 %10
+  %.not14.i.i68 = icmp eq i8 %12, 110
+  br i1 %.not14.i.i68, label %.lr.ph.i.i63.preheader, label %.thread150
+
+.lr.ph.i.i63.preheader:                           ; preds = %_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.i.a
   %i.ck = getelementptr inbounds nuw i8, ptr %i.cf, i64 1
   %i.cl = load i8, ptr %i.ck, align 1, !tbaa !38  ; 4 uses
   %.not.i.i69 = icmp eq i8 %i.cl, 0
@@ -544,7 +570,7 @@ bb.aa:                                            ; preds = %_ZNKSt7__cxx1112bas
 "_ZZN5osgeo4proj8metadata10Identifier16canonicalizeNameERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEbENK3$_1clEcPKcRmSD_RS8_.exit": ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i, %.noexc
   %i.dm = phi ptr [ %.pre.i.i, %.noexc ], [ %i.dg, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i ]
   %i.dn = getelementptr inbounds nuw i8, ptr %i.dm, i64 %i.de
-  store i8 110, ptr %i.dn, align 1, !tbaa !38
+  store i8 %i.i, ptr %i.dn, align 1, !tbaa !38
   store i64 %i.df, ptr %i.b, align 8, !tbaa !41
   %i.do = load ptr, ptr %0, align 8, !tbaa !37
   %i.dp = getelementptr inbounds nuw i8, ptr %i.do, i64 %i.df
@@ -557,27 +583,40 @@ bb.ab:                                            ; preds = %bb.k
   br i1 %.not.i76, label %.thread150, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
-  %i.dr = getelementptr i8, ptr %i.c, i64 %storemerge168 ; 5 uses
+  %i.dr = getelementptr i8, ptr %i.c, i64 %storemerge168 ; 6 uses
   %i.ds = getelementptr i8, ptr %i.dr, i64 -1
   %i.dt = load i8, ptr %i.ds, align 1, !tbaa !38  ; 2 uses
-  switch i8 %i.dt, label %_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.i96.a [
-    i8 95, label %.lr.ph.i.i79.preheader
-    i8 47, label %.lr.ph.i.i79.preheader
-    i8 46, label %.lr.ph.i.i79.preheader
-    i8 45, label %.lr.ph.i.i79.preheader
-    i8 41, label %.lr.ph.i.i79.preheader
-    i8 40, label %.lr.ph.i.i79.preheader
-    i8 38, label %.lr.ph.i.i79.preheader
-    i8 32, label %.lr.ph.i.i79.preheader
-    i8 44, label %.lr.ph.i.i79.preheader
+  switch i8 %i.dt, label %_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.i96 [
+    i8 95, label %_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.thread.i77
+    i8 47, label %_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.thread.i77
+    i8 46, label %_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.thread.i77
+    i8 45, label %_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.thread.i77
+    i8 41, label %_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.thread.i77
+    i8 40, label %_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.thread.i77
+    i8 38, label %_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.thread.i77
+    i8 32, label %_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.thread.i77
+    i8 44, label %_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.thread.i77
   ]
 
-_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.i96.a: ; preds = %bb.ac
-  %i.du = add i8 %i.dt, -48
-  %i.dv = icmp ult i8 %i.du, 10
-  br i1 %i.dv, label %.lr.ph.i.i79.preheader, label %.thread150
+_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.i96: ; preds = %bb.ac
+  %13 = add i8 %i.dt, -48
+  %14 = icmp ult i8 %13, 10
+  br i1 %14, label %_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.thread.i77, label %.thread150
 
-.lr.ph.i.i79.preheader:                           ; preds = %_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.i96.a, %bb.ac, %bb.ac, %bb.ac, %bb.ac, %bb.ac, %bb.ac, %bb.ac, %bb.ac, %bb.ac
+_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.thread.i77: ; preds = %_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.i96, %bb.ac, %bb.ac, %bb.ac, %bb.ac, %bb.ac, %bb.ac, %bb.ac, %bb.ac, %bb.ac
+  %15 = load i8, ptr %i.dr, align 1, !tbaa !38    ; 4 uses
+  %.not17.i.i78 = icmp eq i8 %15, 0
+  br i1 %.not17.i.i78, label %.thread150, label %_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.i96.a
+
+_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.i96.a: ; preds = %_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.thread.i77
+  %i.du = add i8 %15, -65
+  %i.dv = icmp ult i8 %i.du, 26
+  %16 = add nuw nsw i8 %15, 32
+  %17 = select i1 %i.dv, i8 %16, i8 %15
+  %.not14.i.i84 = icmp eq i8 %17, 115
+  br i1 %.not14.i.i84, label %.lr.ph.i.i79.preheader, label %.thread150
+
+.lr.ph.i.i79.preheader:                           ; preds = %_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.i96.a
   %i.dw = getelementptr inbounds nuw i8, ptr %i.dr, i64 1
   %i.dx = load i8, ptr %i.dw, align 1, !tbaa !38  ; 4 uses
   %.not.i.i85 = icmp eq i8 %i.dx, 0
@@ -665,7 +704,7 @@ bb.ag:                                            ; preds = %_ZNKSt7__cxx1112bas
 bb.ah:                                            ; preds = %.noexc97, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i92
   %i.ey = phi ptr [ %.pre.i.i94, %.noexc97 ], [ %i.es, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i92 ]
   %i.ez = getelementptr inbounds nuw i8, ptr %i.ey, i64 %i.eq
-  store i8 115, ptr %i.ez, align 1, !tbaa !38
+  store i8 %i.i, ptr %i.ez, align 1, !tbaa !38
   store i64 %i.er, ptr %i.b, align 8, !tbaa !41
   %i.fa = load ptr, ptr %0, align 8, !tbaa !37
   %i.fb = getelementptr inbounds nuw i8, ptr %i.fa, i64 %i.er
@@ -735,7 +774,7 @@ bb.al:                                            ; preds = %_ZNKSt7__cxx1112bas
   %i.fz = add i64 %i.fy, %i.fx
   br label %.thread145
 
-.thread150:                                       ; preds = %bb.af, %bb.ae, %bb.ad, %.lr.ph.i.i79.preheader, %bb.z, %bb.y, %bb.x, %.lr.ph.i.i63.preheader, %bb.u, %bb.t, %bb.s, %bb.r, %.lr.ph.i.i46.preheader.a, %bb.o, %bb.n, %.lr.ph.i.i, %.lr.ph.i.i.1, %.lr.ph.i.i.2, %.lr.ph.i.i.3, %.lr.ph.i.i46.1, %.lr.ph.i.i46.2, %.lr.ph.i.i46.3, %.lr.ph.i.i46.4, %.lr.ph.i.i46.5, %.lr.ph.i.i63.1, %.lr.ph.i.i63.2, %.lr.ph.i.i63.3, %.lr.ph.i.i63.4, %.lr.ph.i.i79.4, %.lr.ph.i.i79.3, %.lr.ph.i.i79.2, %.lr.ph.i.i79.1, %bb.m, %bb.l, %bb.q, %bb.p, %bb.ai, %bb.v, %_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.i.a, %_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.i96.a, %bb.ab, %.loopexit
+.thread150:                                       ; preds = %bb.af, %bb.ae, %bb.ad, %.lr.ph.i.i79.preheader, %bb.z, %bb.y, %bb.x, %.lr.ph.i.i63.preheader, %bb.u, %bb.t, %bb.s, %bb.r, %.lr.ph.i.i46.preheader.a, %bb.o, %bb.n, %.lr.ph.i.i, %.lr.ph.i.i.1, %.lr.ph.i.i.2, %.lr.ph.i.i.3, %.lr.ph.i.i46.preheader, %.lr.ph.i.i46.1, %.lr.ph.i.i46.2, %.lr.ph.i.i46.3, %.lr.ph.i.i46.4, %.lr.ph.i.i46.5, %_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.i.a, %.lr.ph.i.i63.1, %.lr.ph.i.i63.2, %.lr.ph.i.i63.3, %.lr.ph.i.i63.4, %.lr.ph.i.i79.4, %.lr.ph.i.i79.3, %.lr.ph.i.i79.2, %.lr.ph.i.i79.1, %_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.i96.a, %3, %bb.m, %bb.l, %bb.q, %bb.p, %bb.ai, %_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.thread.i77, %_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.thread.i, %bb.v, %_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.i, %_ZN5osgeo4proj8metadataL13isIgnoredCharEc.exit.i96, %bb.ab, %.loopexit
   %i.ga = getelementptr inbounds nuw i8, ptr %i.c, i64 %storemerge168 ; 10 uses
   %i.gb = load i8, ptr %i.ga, align 1, !tbaa !38  ; 4 uses
   %.not17.i = icmp eq i8 %i.gb, 0

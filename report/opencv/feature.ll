@@ -205,7 +205,7 @@ bb.u:                                             ; preds = %bb.t
 
 _ZN2cv10AutoBufferIiLm264EEC2Em.exit:             ; preds = %.noexc, %bb.t
   %i.bj = phi ptr [ %i.bi, %.noexc ], [ %i.bd, %bb.t ]
-  %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 4 ; 5 uses
+  %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 4 ; 4 uses
   %i.bl = sext i32 %i.aa to i64                   ; 2 uses
   %i.bm = getelementptr inbounds [4 x i8], ptr %i.bk, i64 %i.bl
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 8 ; 3 uses
@@ -395,23 +395,18 @@ bb.ae:                                            ; preds = %.lr.ph235, %.loopex
   %i.em = load i64, ptr %i.cx, align 8, !tbaa !24
   %i.en = mul i64 %i.em, %indvars.iv272           ; 2 uses
   %i.eo = getelementptr i8, ptr %i.el, i64 %i.en  ; 5 uses
-  br i1 %i.cy, label %.lr.ph228.preheader, label %._crit_edge229
+  br i1 %i.cy, label %.lr.ph228, label %._crit_edge229
 
-.lr.ph228.preheader:                              ; preds = %bb.ae
-  %.pre = load i32, ptr %i.bk, align 4, !tbaa !54
-  br label %.lr.ph228
-
-.lr.ph228:                                        ; preds = %.lr.ph228.preheader, %.lr.ph228
-  %25 = phi i32 [ %.pre, %.lr.ph228.preheader ], [ %i.eq, %.lr.ph228 ]
-  %indvars.iv262 = phi i64 [ 0, %.lr.ph228.preheader ], [ %indvars.iv.next263, %.lr.ph228 ] ; 4 uses
+.lr.ph228:                                        ; preds = %bb.ae, %.lr.ph228
+  %indvars.iv262 = phi i64 [ %indvars.iv.next263, %.lr.ph228 ], [ 0, %bb.ae ] ; 4 uses
   %indvars.iv.next263 = add nuw nsw i64 %indvars.iv262, 1 ; 3 uses
   %i.ep = getelementptr inbounds nuw [4 x i8], ptr %i.bk, i64 %indvars.iv.next263
-  %i.eq = load i32, ptr %i.ep, align 4, !tbaa !54 ; 2 uses
+  %i.eq = load i32, ptr %i.ep, align 4, !tbaa !54
   %i.er = sext i32 %i.eq to i64
   %i.es = getelementptr inbounds i8, ptr %i.dw, i64 %i.er
   %i.et = load i8, ptr %i.es, align 1, !tbaa !23
   %i.eu = zext i8 %i.et to i32
-  %i.ev = getelementptr [4 x i8], ptr %i.bk, i64 %indvars.iv262
+  %i.ev = getelementptr [4 x i8], ptr %i.bk, i64 %indvars.iv262 ; 2 uses
   %i.ew = getelementptr i8, ptr %i.ev, i64 -4
   %i.ex = load i32, ptr %i.ew, align 4, !tbaa !54
   %i.ey = sext i32 %i.ex to i64
@@ -422,6 +417,7 @@ bb.ae:                                            ; preds = %.lr.ph235, %.loopex
   %i.fd = sitofp i32 %i.fc to float
   %i.fe = getelementptr inbounds nuw [4 x i8], ptr %i.cg, i64 %indvars.iv262
   store float %i.fd, ptr %i.fe, align 4, !tbaa !90
+  %25 = load i32, ptr %i.ev, align 4, !tbaa !54
   %i.ff = sext i32 %25 to i64                     ; 2 uses
   %i.fg = getelementptr inbounds i8, ptr %i.eg, i64 %i.ff
   %i.fh = load i8, ptr %i.fg, align 1, !tbaa !23

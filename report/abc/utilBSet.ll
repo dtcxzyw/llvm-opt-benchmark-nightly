@@ -205,7 +205,7 @@ bb.a:
   %i.c = tail call noalias dereferenceable_or_null(16000) ptr @calloc(i64 noundef 1000, i64 noundef 16) #31
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %i.c, ptr %i.d, align 8, !tbaa !62
-  %i.e = sub nsw i32 %5, %3                       ; 7 uses
+  %i.e = sub nsw i32 %5, %3                       ; 8 uses
   %i.f = sub nsw i32 %2, %3                       ; 6 uses
   %i.g = add i32 %i.f, -1
   %or.cond.i.i = icmp ult i32 %i.g, 15
@@ -213,7 +213,7 @@ bb.a:
   %i.h = icmp sgt i32 %i.f, 0
   %wide.trip.count.i = zext i32 %i.f to i64       ; 3 uses
   %.not.i.i = icmp eq i32 %spec.store.select.i.i, 0
-  %i.i = tail call noalias dereferenceable_or_null(16) ptr @malloc(i64 noundef 16) #30 ; 6 uses
+  %i.i = tail call noalias dereferenceable_or_null(16) ptr @malloc(i64 noundef 16) #30 ; 7 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 4
   store i32 %spec.store.select.i.i, ptr %i.i, align 8, !tbaa !37
   br i1 %.not.i.i, label %Vec_IntAlloc.exit.i, label %bb.b
@@ -270,7 +270,9 @@ middle.block:                                     ; preds = %vector.body
   br i1 %exitcond.not.i, label %Vec_IntStartNatural.exit, label %.lr.ph.i, !llvm.loop !197
 
 Vec_IntStartNatural.exit:                         ; preds = %.lr.ph.i, %middle.block, %Vec_IntAlloc.exit.i
-  %.not = icmp sgt i32 %2, %5
+  %11 = getelementptr i8, ptr %i.i, i64 4
+  %.0.val = load i32, ptr %11, align 4, !tbaa !34
+  %.not = icmp sgt i32 %.0.val, %i.e
   br i1 %.not, label %Vec_WecFreeP.exit, label %Vec_WecFreeP.exit38
 
 Vec_WecFreeP.exit:                                ; preds = %Vec_IntStartNatural.exit

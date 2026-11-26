@@ -203,7 +203,7 @@ bb.h:                                             ; preds = %bb.f
   %i.r = getelementptr inbounds nuw i8, ptr %i.b, i64 120
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !63   ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 24
-  %i.u = load ptr, ptr %i.t, align 8, !tbaa !119  ; 8 uses
+  %i.u = load ptr, ptr %i.t, align 8, !tbaa !119  ; 10 uses
   %i.v = sext i32 %1 to i64                       ; 3 uses
   %i.w = getelementptr inbounds [8 x i8], ptr %i.u, i64 %i.v
   %i.x = load double, ptr %i.w, align 8, !tbaa !58
@@ -296,14 +296,11 @@ bb.k:                                             ; preds = %bb.h
   br i1 %exitcond188.not, label %._crit_edge, label %.lr.ph161, !llvm.loop !249
 
 ._crit_edge:                                      ; preds = %.lr.ph161, %middle.block282
-  %.lcssa = phi i32 [ %i.ap, %middle.block282 ], [ %i.ax, %.lr.ph161 ] ; 4 uses
+  %.lcssa = phi i32 [ %i.ap, %middle.block282 ], [ %i.ax, %.lr.ph161 ] ; 3 uses
   %i.ay = icmp eq i32 %.lcssa, -1
   br i1 %i.ay, label %._crit_edge.thread, label %.lr.ph165.preheader
 
 .lr.ph165.preheader:                              ; preds = %._crit_edge
-  %.phi.trans.insert = sext i32 %.lcssa to i64
-  %.phi.trans.insert194 = getelementptr inbounds [8 x i8], ptr %i.u, i64 %.phi.trans.insert
-  %.pre = load double, ptr %.phi.trans.insert194, align 8, !tbaa !58 ; 2 uses
   %xtraiter293 = and i64 %wide.trip.count187, 1
   %i.az = icmp eq i32 %1, 1
   br i1 %i.az, label %.lr.ph165.epil.preheader, label %.lr.ph165.preheader.new
@@ -313,29 +310,32 @@ bb.k:                                             ; preds = %bb.h
   br label %.lr.ph165
 
 .lr.ph165:                                        ; preds = %.lr.ph165, %.lr.ph165.preheader.new
-  %3 = phi double [ %.pre, %.lr.ph165.preheader.new ], [ %5, %.lr.ph165 ] ; 2 uses
-  %indvars.iv189.a = phi i64 [ 0, %.lr.ph165.preheader.new ], [ %indvars.iv.next190.1, %.lr.ph165 ] ; 4 uses
-  %.1124164 = phi i32 [ %.lcssa, %.lr.ph165.preheader.new ], [ %.2125.1, %.lr.ph165 ]
-  %niter = phi i64 [ 0, %.lr.ph165.preheader.new ], [ %niter.next.1, %.lr.ph165 ]
-  %i.ba = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %indvars.iv189.a
-  %i.bb = load double, ptr %i.ba, align 8, !tbaa !58 ; 3 uses
-  %i.bc = fcmp ogt double %i.bb, %3
-  %i.bd = fcmp une double %i.bb, 0.000000e+00
-  %or.cond148 = and i1 %i.bd, %i.bc               ; 2 uses
-  %i.be = trunc nuw nsw i64 %indvars.iv189.a to i32
-  %.2125 = select i1 %or.cond148, i32 %i.be, i32 %.1124164
-  %indvars.iv.next190 = or disjoint i64 %indvars.iv189.a, 1 ; 2 uses
-  %4 = select i1 %or.cond148, double %i.bb, double %3 ; 2 uses
-  %i.bf = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %indvars.iv.next190
-  %i.bg = load double, ptr %i.bf, align 8, !tbaa !58 ; 3 uses
-  %i.bh = fcmp ogt double %i.bg, %4
-  %i.bi = fcmp une double %i.bg, 0.000000e+00
-  %or.cond148.1 = and i1 %i.bi, %i.bh             ; 2 uses
+  %indvars.iv189 = phi i64 [ 0, %.lr.ph165.preheader.new ], [ %indvars.iv.next190.1, %.lr.ph165 ] ; 4 uses
+  %.1124164 = phi i32 [ %.lcssa, %.lr.ph165.preheader.new ], [ %.2125.1, %.lr.ph165 ] ; 2 uses
+  %indvars.iv189.a = phi i64 [ 0, %.lr.ph165.preheader.new ], [ %niter.next.1, %.lr.ph165 ]
+  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %indvars.iv189
+  %4 = load double, ptr %3, align 8, !tbaa !58    ; 2 uses
+  %5 = sext i32 %.1124164 to i64
+  %i.ba = getelementptr inbounds [8 x i8], ptr %i.u, i64 %5
+  %i.bb = load double, ptr %i.ba, align 8, !tbaa !58
+  %i.bc = fcmp ogt double %4, %i.bb
+  %i.bd = fcmp une double %4, 0.000000e+00
+  %or.cond148 = and i1 %i.bd, %i.bc
+  %i.be = trunc nuw nsw i64 %indvars.iv189 to i32
+  %.2125 = select i1 %or.cond148, i32 %i.be, i32 %.1124164 ; 2 uses
+  %indvars.iv.next190 = or disjoint i64 %indvars.iv189, 1 ; 2 uses
+  %6 = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %indvars.iv.next190
+  %7 = load double, ptr %6, align 8, !tbaa !58    ; 2 uses
+  %8 = sext i32 %.2125 to i64
+  %i.bf = getelementptr inbounds [8 x i8], ptr %i.u, i64 %8
+  %i.bg = load double, ptr %i.bf, align 8, !tbaa !58
+  %i.bh = fcmp ogt double %7, %i.bg
+  %i.bi = fcmp une double %7, 0.000000e+00
+  %or.cond148.1 = and i1 %i.bi, %i.bh
   %i.bj = trunc nuw nsw i64 %indvars.iv.next190 to i32
   %.2125.1 = select i1 %or.cond148.1, i32 %i.bj, i32 %.2125 ; 3 uses
-  %indvars.iv.next190.1 = add nuw nsw i64 %indvars.iv189.a, 2 ; 2 uses
-  %5 = select i1 %or.cond148.1, double %i.bg, double %4 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %indvars.iv.next190.1 = add nuw nsw i64 %indvars.iv189, 2 ; 2 uses
+  %niter.next.1 = add i64 %indvars.iv189.a, 2     ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge166.unr-lcssa, label %.lr.ph165
 
@@ -344,15 +344,17 @@ bb.k:                                             ; preds = %bb.h
   br i1 %lcmp.mod294.not, label %._crit_edge166, label %.lr.ph165.epil.preheader
 
 .lr.ph165.epil.preheader:                         ; preds = %._crit_edge166.unr-lcssa, %.lr.ph165.preheader
-  %.epil.init = phi double [ %.pre, %.lr.ph165.preheader ], [ %5, %._crit_edge166.unr-lcssa ]
   %indvars.iv189.epil.init = phi i64 [ 0, %.lr.ph165.preheader ], [ %indvars.iv.next190.1, %._crit_edge166.unr-lcssa ] ; 2 uses
-  %.1124164.epil.init = phi i32 [ %.lcssa, %.lr.ph165.preheader ], [ %.2125.1, %._crit_edge166.unr-lcssa ]
+  %.1124164.epil.init = phi i32 [ %.lcssa, %.lr.ph165.preheader ], [ %.2125.1, %._crit_edge166.unr-lcssa ] ; 2 uses
   %lcmp.mod296 = trunc i32 %1 to i1
   tail call void @llvm.assume(i1 %lcmp.mod296)
-  %i.bk = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %indvars.iv189.epil.init
-  %i.bl = load double, ptr %i.bk, align 8, !tbaa !58 ; 2 uses
-  %i.bm = fcmp ogt double %i.bl, %.epil.init
-  %i.bn = fcmp une double %i.bl, 0.000000e+00
+  %9 = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %indvars.iv189.epil.init
+  %10 = load double, ptr %9, align 8, !tbaa !58   ; 2 uses
+  %11 = sext i32 %.1124164.epil.init to i64
+  %i.bk = getelementptr inbounds [8 x i8], ptr %i.u, i64 %11
+  %i.bl = load double, ptr %i.bk, align 8, !tbaa !58
+  %i.bm = fcmp ogt double %10, %i.bl
+  %i.bn = fcmp une double %10, 0.000000e+00
   %or.cond148.epil = and i1 %i.bn, %i.bm
   %i.bo = trunc nuw nsw i64 %indvars.iv189.epil.init to i32
   %.2125.epil = select i1 %or.cond148.epil, i32 %i.bo, i32 %.1124164.epil.init

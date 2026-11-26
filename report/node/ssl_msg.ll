@@ -205,13 +205,13 @@ bb.aa:                                            ; preds = %.thread.i, %bb.q
 .critedge:                                        ; preds = %bb.m, %bb.y, %ssl_load_buffered_message.exit, %bb.k, %bb.l
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #19
   %i.cx = load ptr, ptr %i.l, align 8, !tbaa !322 ; 4 uses
-  %i.cy = load ptr, ptr %0, align 8, !tbaa !277
+  %i.cy = load ptr, ptr %0, align 8, !tbaa !277   ; 4 uses
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cy, i64 9
-  %i.da = load i8, ptr %i.cz, align 1, !tbaa !289 ; 2 uses
+  %i.da = load i8, ptr %i.cz, align 1, !tbaa !289
   %.not.i.i = icmp ne i8 %i.da, 1
   %i.db = icmp eq ptr %i.cx, null
   %or.cond.i.i = select i1 %.not.i.i, i1 true, i1 %i.db
-  br i1 %or.cond.i.i, label %3, label %bb.ab
+  br i1 %or.cond.i.i, label %bb.aj, label %bb.ab
 
 bb.ab:                                            ; preds = %.critedge
   %i.dc = getelementptr inbounds nuw i8, ptr %i.cx, i64 1848
@@ -221,13 +221,13 @@ bb.ab:                                            ; preds = %.critedge
   %i.dg = getelementptr inbounds nuw i8, ptr %i.cx, i64 1864
   %i.dh = load i32, ptr %i.dg, align 8, !tbaa !450
   %i.di = icmp eq ptr %i.dd, null
-  br i1 %i.di, label %.thread149.i, label %bb.ac
+  br i1 %i.di, label %bb.aj, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
   %.val31.i.i = load i64, ptr %i.j, align 8, !tbaa !320
   %.val32.i.i = load i64, ptr %i.k, align 8, !tbaa !319
   %.not33.i.i = icmp ugt i64 %.val31.i.i, %.val32.i.i
-  br i1 %.not33.i.i, label %.thread149.i, label %bb.ad
+  br i1 %.not33.i.i, label %bb.aj, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
   call void (ptr, i32, ptr, i32, ptr, ...) @mbedtls_debug_print_msg(ptr noundef nonnull %0, i32 noundef 2, ptr noundef nonnull @.str, i32 noundef 4870, ptr noundef nonnull @.str.212) #19
@@ -279,26 +279,19 @@ bb.ai:                                            ; preds = %bb.ah
 ssl_free_buffered_record.exit.i.i:                ; preds = %bb.ai, %bb.ah, %bb.ag, %bb.ae
   call void (ptr, i32, ptr, i32, ptr, ...) @mbedtls_debug_print_msg(ptr noundef nonnull %0, i32 noundef 2, ptr noundef nonnull @.str, i32 noundef 4892, ptr noundef nonnull @.str.215) #19
   %.val.pre.i = load ptr, ptr %0, align 8, !tbaa !277
-  %.phi.trans.insert.i = getelementptr i8, ptr %.val.pre.i, i64 9
-  %.val.val.pre.i = load i8, ptr %.phi.trans.insert.i, align 1, !tbaa !289
-  br label %3
+  br label %bb.aj
 
 ssl_load_buffered_record.exit.i:                  ; preds = %bb.af
   call void (ptr, i32, ptr, i32, ptr, ...) @mbedtls_debug_print_msg(ptr noundef nonnull %0, i32 noundef 1, ptr noundef nonnull @.str, i32 noundef 4881, ptr noundef nonnull @.str.26) #19
   br label %ssl_get_next_record.exit.thread
 
-3:                                                ; preds = %ssl_free_buffered_record.exit.i.i, %.critedge
-  %.val.val.i = phi i8 [ %i.da, %.critedge ], [ %.val.val.pre.i, %ssl_free_buffered_record.exit.i.i ]
-  %.val.val.fr.i = freeze i8 %.val.val.i
-  %4 = icmp eq i8 %.val.val.fr.i, 1
-  br i1 %4, label %.thread149.i, label %bb.aj
-
-.thread149.i:                                     ; preds = %3, %bb.ac, %bb.ab
-  br label %bb.aj
-
-bb.aj:                                            ; preds = %.thread149.i, %3
-  %5 = phi i64 [ 13, %.thread149.i ], [ 5, %3 ]
-  %i.dz = call i32 @mbedtls_ssl_fetch_input(ptr noundef nonnull %0, i64 noundef %5) ; 3 uses
+bb.aj:                                            ; preds = %ssl_free_buffered_record.exit.i.i, %bb.ac, %bb.ab, %.critedge
+  %.val.i = phi ptr [ %i.cy, %.critedge ], [ %i.cy, %bb.ac ], [ %i.cy, %bb.ab ], [ %.val.pre.i, %ssl_free_buffered_record.exit.i.i ]
+  %3 = getelementptr i8, ptr %.val.i, i64 9
+  %.val.val.i = load i8, ptr %3, align 1, !tbaa !289
+  %4 = icmp eq i8 %.val.val.i, 1
+  %..i.i = select i1 %4, i64 13, i64 5
+  %i.dz = call i32 @mbedtls_ssl_fetch_input(ptr noundef nonnull %0, i64 noundef %..i.i) ; 3 uses
   %.not88.i = icmp eq i32 %i.dz, 0
   br i1 %.not88.i, label %bb.al, label %bb.ak
 

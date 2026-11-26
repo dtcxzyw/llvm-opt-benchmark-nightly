@@ -202,10 +202,11 @@ bb.i:                                             ; preds = %instanceof_function
   br label %bb.af
 
 instanceof_function.exit.thread:                  ; preds = %instanceof_function.exit.instanceof_function.exit.thread_crit_edge, %bb.h
-  %.val.a = phi ptr [ %.pre167, %instanceof_function.exit.instanceof_function.exit.thread_crit_edge ], [ %i.s, %bb.h ] ; 3 uses
-  %i.z = phi ptr [ %.pre, %instanceof_function.exit.instanceof_function.exit.thread_crit_edge ], [ %i.q, %bb.h ]
+  %.val.a = phi ptr [ %.pre167, %instanceof_function.exit.instanceof_function.exit.thread_crit_edge ], [ %i.s, %bb.h ]
+  %i.z = phi ptr [ %.pre, %instanceof_function.exit.instanceof_function.exit.thread_crit_edge ], [ %i.q, %bb.h ] ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.j, i64 16 ; 2 uses
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !112
+  %3 = getelementptr i8, ptr %i.z, i64 16
   %i.ac = icmp eq ptr %i.ab, %.val.a
   br i1 %i.ac, label %bb.j, label %.critedge132
 
@@ -267,8 +268,9 @@ bb.o:                                             ; preds = %.sink.split, %bb.l,
 
 .critedge132:                                     ; preds = %bb.j, %bb.k, %instanceof_function.exit.thread
   %i.bb = load ptr, ptr %i.t, align 8, !tbaa !41
+  %.val = load ptr, ptr %3, align 8, !tbaa !51    ; 2 uses
   %i.bc = load ptr, ptr %i.j, align 8, !tbaa !211 ; 4 uses
-  %.not.i136 = icmp eq ptr %i.bb, %.val.a
+  %.not.i136 = icmp eq ptr %i.bb, %.val
   %.not120 = icmp eq ptr %i.bc, null              ; 2 uses
   br i1 %.not.i136, label %reflection_property_get_effective_prop.exit, label %bb.p
 
@@ -283,7 +285,7 @@ bb.q:                                             ; preds = %bb.p
   br i1 %.not10.i, label %bb.r, label %reflection_property_get_effective_prop.exit.thread
 
 bb.r:                                             ; preds = %bb.q, %bb.p
-  %i.bg = getelementptr inbounds nuw i8, ptr %.val.a, i64 120
+  %i.bg = getelementptr inbounds nuw i8, ptr %.val, i64 120
   %i.bh = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %i.bi = load ptr, ptr %i.bh, align 8, !tbaa !212
   %i.bj = tail call ptr @zend_hash_find(ptr noundef nonnull %i.bg, ptr noundef %i.bi) #11 ; 2 uses

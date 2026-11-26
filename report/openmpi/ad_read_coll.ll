@@ -204,14 +204,15 @@ bb.d:                                             ; preds = %bb.b, %bb.c
 bb.e:                                             ; preds = %._crit_edge
   %i.bi = sext i32 %11 to i64
   %i.bj = shl nsw i64 %i.bi, 3
-  %i.bk = tail call ptr @ADIOI_Malloc_fn(i64 noundef %i.bj, i32 noundef 812, ptr noundef nonnull @.str) #6 ; 10 uses
-  %i.bl = tail call ptr @ADIOI_Malloc_fn(i64 noundef %.0.lcssa, i32 noundef 813, ptr noundef nonnull @.str) #6 ; 3 uses
+  %i.bk = tail call ptr @ADIOI_Malloc_fn(i64 noundef %i.bj, i32 noundef 812, ptr noundef nonnull @.str) #6 ; 11 uses
+  %i.bl = tail call ptr @ADIOI_Malloc_fn(i64 noundef %.0.lcssa, i32 noundef 813, ptr noundef nonnull @.str) #6
   store ptr %i.bl, ptr %i.bk, align 8, !tbaa !45
   %i.bm = icmp sgt i32 %11, 1
   br i1 %i.bm, label %.lr.ph183.preheader, label %.preheader
 
 .lr.ph183.preheader:                              ; preds = %bb.e
   %wide.trip.count204 = zext nneg i32 %11 to i64
+  %load_initial = load ptr, ptr %i.bk, align 8    ; 2 uses
   %i.bn = add nsw i64 %wide.trip.count204, -1     ; 2 uses
   %xtraiter = and i64 %i.bn, 3                    ; 3 uses
   %i.bo = add nsw i32 %11, -2
@@ -230,7 +231,7 @@ bb.e:                                             ; preds = %._crit_edge
   br i1 %lcmp.mod.not, label %.lr.ph186, label %.lr.ph183.epil.preheader
 
 .lr.ph183.epil.preheader:                         ; preds = %.lr.ph186.loopexit.unr-lcssa, %.lr.ph183.preheader
-  %.epil.init = phi ptr [ %i.bl, %.lr.ph183.preheader ], [ %i.cw, %.lr.ph186.loopexit.unr-lcssa ]
+  %.epil.init = phi ptr [ %load_initial, %.lr.ph183.preheader ], [ %i.cw, %.lr.ph186.loopexit.unr-lcssa ]
   %indvars.iv201.epil.init = phi i64 [ 1, %.lr.ph183.preheader ], [ %indvars.iv.next202.3, %.lr.ph186.loopexit.unr-lcssa ]
   %lcmp.mod263 = icmp ne i64 %xtraiter, 0
   tail call void @llvm.assume(i1 %lcmp.mod263)
@@ -259,7 +260,7 @@ bb.e:                                             ; preds = %._crit_edge
   br label %bb.f
 
 .lr.ph183:                                        ; preds = %.lr.ph183, %.lr.ph183.preheader.new
-  %i.bz = phi ptr [ %i.bl, %.lr.ph183.preheader.new ], [ %i.cw, %.lr.ph183 ]
+  %i.bz = phi ptr [ %load_initial, %.lr.ph183.preheader.new ], [ %i.cw, %.lr.ph183 ]
   %indvars.iv201 = phi i64 [ 1, %.lr.ph183.preheader.new ], [ %indvars.iv.next202.3, %.lr.ph183 ] ; 6 uses
   %niter = phi i64 [ 0, %.lr.ph183.preheader.new ], [ %niter.next.3, %.lr.ph183 ]
   %i.ca = getelementptr [4 x i8], ptr %6, i64 %indvars.iv201

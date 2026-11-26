@@ -205,10 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.ad = zext nneg i32 %2 to i64                 ; 3 uses
   %i.ae = shl nuw nsw i64 %i.ad, 3
   %i.af = alloca i8, i64 %i.ae, align 16          ; 3 uses
-  %i.ag = add nsw i32 %2, -1                      ; 4 uses
-  %.phi.trans.insert = zext nneg i32 %i.ag to i64
-  %.phi.trans.insert171 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %.phi.trans.insert
-  %4 = load <2 x float>, ptr %.phi.trans.insert171, align 4, !tbaa !15
+  %i.ag = add nsw i32 %2, -1                      ; 2 uses
   %i.ah = zext nneg i32 %i.ag to i64
   br label %.lr.ph134
 
@@ -250,20 +247,18 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.new
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
   %.promoted139 = load ptr, ptr %i.bc, align 8, !tbaa !86
   %.promoted141 = load ptr, ptr %i.bd, align 8, !tbaa !88
-  %.phi.trans.insert174 = zext nneg i32 %i.ag to i64
-  %.phi.trans.insert175 = getelementptr inbounds nuw [8 x i8], ptr %i.af, i64 %.phi.trans.insert174
-  %5 = load <2 x float>, ptr %.phi.trans.insert175, align 8, !tbaa !15
   %i.be = insertelement <2 x float> poison, float %i.bb, i64 0
   %i.bf = shufflevector <2 x float> %i.be, <2 x float> poison, <2 x i32> zeroinitializer
   br label %bb.g
 
 .lr.ph134:                                        ; preds = %.lr.ph134.preheader, %bb.e
   %indvars.iv = phi i64 [ 0, %.lr.ph134.preheader ], [ %indvars.iv.next, %bb.e ] ; 3 uses
-  %.0122131 = phi i64 [ %i.ah, %.lr.ph134.preheader ], [ %indvars.iv, %bb.e ]
-  %6 = phi <2 x float> [ %4, %.lr.ph134.preheader ], [ %i.bh, %bb.e ]
+  %.0122131 = phi i64 [ %i.ah, %.lr.ph134.preheader ], [ %indvars.iv, %bb.e ] ; 2 uses
+  %4 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %.0122131
   %i.bg = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv
-  %i.bh = load <2 x float>, ptr %i.bg, align 4, !tbaa !15 ; 2 uses
-  %i.bi = fsub <2 x float> %i.bh, %6              ; 5 uses
+  %5 = load <2 x float>, ptr %i.bg, align 4, !tbaa !15
+  %i.bh = load <2 x float>, ptr %4, align 4, !tbaa !15
+  %i.bi = fsub <2 x float> %5, %i.bh              ; 5 uses
   %foldExtExtBinop = fmul <2 x float> %i.bi, %i.bi
   %i.bj = extractelement <2 x float> %foldExtExtBinop, i64 1
   %i.bk = extractelement <2 x float> %i.bi, i64 0 ; 2 uses
@@ -303,11 +298,13 @@ bb.g:                                             ; preds = %.lr.ph137, %bb.i
   %indvars.iv159 = phi i64 [ 0, %.lr.ph137 ], [ %indvars.iv.next160, %bb.i ] ; 5 uses
   %i.bz = phi ptr [ %.promoted141, %.lr.ph137 ], [ %i.dq, %bb.i ] ; 7 uses
   %i.ca = phi ptr [ %.promoted139, %.lr.ph137 ], [ %i.da, %bb.i ] ; 7 uses
-  %.0118135 = phi i32 [ %i.ag, %.lr.ph137 ], [ %i.dr, %bb.i ]
-  %7 = phi <2 x float> [ %5, %.lr.ph137 ], [ %i.cc, %bb.i ]
+  %.0118135 = phi i32 [ %i.ag, %.lr.ph137 ], [ %i.dr, %bb.i ] ; 2 uses
+  %6 = sext i32 %.0118135 to i64
+  %7 = getelementptr inbounds [8 x i8], ptr %i.af, i64 %6
   %i.cb = getelementptr inbounds nuw [8 x i8], ptr %i.af, i64 %indvars.iv159
-  %i.cc = load <2 x float>, ptr %i.cb, align 8, !tbaa !15 ; 2 uses
-  %i.cd = fadd <2 x float> %7, %i.cc
+  %8 = load <2 x float>, ptr %7, align 8, !tbaa !15
+  %i.cc = load <2 x float>, ptr %i.cb, align 8, !tbaa !15
+  %i.cd = fadd <2 x float> %8, %i.cc
   %i.ce = fmul <2 x float> %i.cd, splat (float 5.000000e-01) ; 5 uses
   %foldExtExtBinop193 = fmul <2 x float> %i.ce, %i.ce
   %i.cf = extractelement <2 x float> %foldExtExtBinop193, i64 1
@@ -710,49 +707,47 @@ middle.block1203:                                 ; preds = %vector.body1198
   br i1 %i.bns, label %.lr.ph10.preheader.i.i.i.i, label %._crit_edge11.i.i.i.i
 
 .lr.ph10.preheader.i.i.i.i:                       ; preds = %.lr.ph16.i.i.i.i
-  %i.bnt = add nsw i32 %i.bnq, -1                 ; 2 uses
-  %.phi.trans.insert.i.i.i.i = zext nneg i32 %i.bnt to i64
-  %.phi.trans.insert32.i.i.i.i = getelementptr inbounds nuw [8 x i8], ptr %i.bno, i64 %.phi.trans.insert.i.i.i.i
-  %.phi.trans.insert33.i.i.i.i = getelementptr inbounds nuw i8, ptr %.phi.trans.insert32.i.i.i.i, i64 4
-  %.pre.i.i.i.i = load float, ptr %.phi.trans.insert33.i.i.i.i, align 4, !tbaa !247
+  %i.bnt = add nsw i32 %i.bnq, -1
   br label %.lr.ph10.i.i.i.i
 
 .lr.ph10.i.i.i.i:                                 ; preds = %.lr.ph10._crit_edge.i.i.i.i, %.lr.ph10.preheader.i.i.i.i
   %i.bnu = phi i32 [ %i.bnq, %.lr.ph10.preheader.i.i.i.i ], [ %i.bom, %.lr.ph10._crit_edge.i.i.i.i ]
-  %8 = phi float [ %.pre.i.i.i.i, %.lr.ph10.preheader.i.i.i.i ], [ %i.bnx, %.lr.ph10._crit_edge.i.i.i.i ] ; 2 uses
   %indvars.iv24.i28.i.i.i = phi i64 [ 0, %.lr.ph10.preheader.i.i.i.i ], [ %indvars.iv.next25.i29.i.i.i, %.lr.ph10._crit_edge.i.i.i.i ] ; 5 uses
-  %.0857.i.i.i.i.a = phi i32 [ %i.bnt, %.lr.ph10.preheader.i.i.i.i ], [ %.pre-phi.i.i.i.i, %.lr.ph10._crit_edge.i.i.i.i ]
-  %.26.i.i.i.i = phi i32 [ %.18813.i.i.i.i, %.lr.ph10.preheader.i.i.i.i ], [ %.3.i.i.i.i, %.lr.ph10._crit_edge.i.i.i.i ] ; 3 uses
+  %.0857.i.i.i.i = phi i32 [ %i.bnt, %.lr.ph10.preheader.i.i.i.i ], [ %.pre-phi.i.i.i.i, %.lr.ph10._crit_edge.i.i.i.i ]
+  %.0857.i.i.i.i.a = phi i32 [ %.18813.i.i.i.i, %.lr.ph10.preheader.i.i.i.i ], [ %.3.i.i.i.i, %.lr.ph10._crit_edge.i.i.i.i ] ; 3 uses
+  %8 = sext i32 %.0857.i.i.i.i to i64             ; 3 uses
+  %9 = getelementptr inbounds [8 x i8], ptr %i.bno, i64 %8
+  %10 = getelementptr inbounds nuw i8, ptr %9, i64 4
+  %11 = load float, ptr %10, align 4, !tbaa !247  ; 2 uses
   %i.bnv = getelementptr inbounds nuw [8 x i8], ptr %i.bno, i64 %indvars.iv24.i28.i.i.i
   %i.bnw = getelementptr inbounds nuw i8, ptr %i.bnv, i64 4
-  %i.bnx = load float, ptr %i.bnw, align 4, !tbaa !247 ; 3 uses
-  %i.bny = fcmp oeq float %8, %i.bnx
+  %i.bnx = load float, ptr %i.bnw, align 4, !tbaa !247 ; 2 uses
+  %i.bny = fcmp oeq float %11, %i.bnx
   br i1 %i.bny, label %.lr.ph10._crit_edge.i.i.i.i, label %bb.id
 
 bb.id:                                            ; preds = %.lr.ph10.i.i.i.i
-  %i.bnz = sext i32 %.26.i.i.i.i to i64
+  %i.bnz = sext i32 %.0857.i.i.i.i.a to i64
   %i.boa = getelementptr inbounds [20 x i8], ptr %i.bnl, i64 %i.bnz ; 2 uses
   %i.bob = getelementptr inbounds nuw i8, ptr %i.boa, i64 16
-  %i.boc = fcmp ogt float %8, %i.bnx              ; 3 uses
+  %i.boc = fcmp ogt float %11, %i.bnx             ; 3 uses
   %spec.store.select.i.i.i.i = zext i1 %i.boc to i32
   store i32 %spec.store.select.i.i.i.i, ptr %i.bob, align 4, !tbaa !487
-  %9 = sext i32 %.0857.i.i.i.i.a to i64           ; 2 uses
-  %i.bod = select i1 %i.boc, i64 %9, i64 %indvars.iv24.i28.i.i.i
+  %i.bod = select i1 %i.boc, i64 %8, i64 %indvars.iv24.i28.i.i.i
   %i.boe = getelementptr inbounds [8 x i8], ptr %i.bno, i64 %i.bod
-  %i.bof = select i1 %i.boc, i64 %indvars.iv24.i28.i.i.i, i64 %9
+  %i.bof = select i1 %i.boc, i64 %indvars.iv24.i28.i.i.i, i64 %8
   %i.bog = getelementptr inbounds [8 x i8], ptr %i.bno, i64 %i.bof
   %i.boh = load <2 x float>, ptr %i.boe, align 4, !tbaa !15
   %i.boi = load <2 x float>, ptr %i.bog, align 4, !tbaa !15
   %i.boj = shufflevector <2 x float> %i.boh, <2 x float> %i.boi, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.bok = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.boj, <4 x float> %i.bbg, <4 x float> zeroinitializer)
   store <4 x float> %i.bok, ptr %i.boa, align 4, !tbaa !15
-  %i.bol = add nsw i32 %.26.i.i.i.i, 1
+  %i.bol = add nsw i32 %.0857.i.i.i.i.a, 1
   %.pre34.i.i.i.i = load i32, ptr %i.bnp, align 4, !tbaa !112
   br label %.lr.ph10._crit_edge.i.i.i.i
 
 .lr.ph10._crit_edge.i.i.i.i:                      ; preds = %bb.id, %.lr.ph10.i.i.i.i
   %i.bom = phi i32 [ %.pre34.i.i.i.i, %bb.id ], [ %i.bnu, %.lr.ph10.i.i.i.i ] ; 2 uses
-  %.3.i.i.i.i = phi i32 [ %i.bol, %bb.id ], [ %.26.i.i.i.i, %.lr.ph10.i.i.i.i ] ; 2 uses
+  %.3.i.i.i.i = phi i32 [ %i.bol, %bb.id ], [ %.0857.i.i.i.i.a, %.lr.ph10.i.i.i.i ] ; 2 uses
   %.pre-phi.i.i.i.i = trunc i64 %indvars.iv24.i28.i.i.i to i32
   %indvars.iv.next25.i29.i.i.i = add nuw nsw i64 %indvars.iv24.i28.i.i.i, 1 ; 2 uses
   %i.bon = sext i32 %i.bom to i64

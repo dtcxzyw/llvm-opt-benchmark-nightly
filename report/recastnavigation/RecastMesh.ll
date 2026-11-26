@@ -204,7 +204,7 @@ bb.ee:                                            ; preds = %bb.ed
   %gep = getelementptr [2 x i8], ptr %invariant.gep, i64 %indvars.iv1012 ; 2 uses
   %i.baj = load i16, ptr %gep, align 2, !tbaa !77
   %.not401 = icmp eq i16 %i.baj, -1
-  %i.bak = add nuw nsw i64 %indvars.iv1012, 1     ; 4 uses
+  %i.bak = add nuw nsw i64 %indvars.iv1012, 1     ; 5 uses
   br i1 %.not401, label %bb.ef, label %._crit_edge1027
 
 bb.ef:                                            ; preds = %bb.ee
@@ -213,21 +213,22 @@ bb.ef:                                            ; preds = %bb.ee
 
 bb.eg:                                            ; preds = %bb.ef
   %i.bal = getelementptr inbounds nuw [2 x i8], ptr %i.baf, i64 %i.bak
-  %i.bam = load i16, ptr %i.bal, align 2, !tbaa !77 ; 2 uses
+  %i.bam = load i16, ptr %i.bal, align 2, !tbaa !77
   %i.ban = icmp eq i16 %i.bam, -1
   br i1 %i.ban, label %bb.eh, label %bb.ei
 
 bb.eh:                                            ; preds = %bb.eg, %bb.ef
-  %.pre1025 = load i16, ptr %i.baf, align 2, !tbaa !77
   br label %bb.ei
 
 bb.ei:                                            ; preds = %bb.eh, %bb.eg
-  %4 = phi i16 [ %.pre1025, %bb.eh ], [ %i.bam, %bb.eg ]
+  %.0 = phi i64 [ 0, %bb.eh ], [ %i.bak, %bb.eg ]
   %i.bao = load ptr, ptr %3, align 8, !tbaa !68   ; 2 uses
   %i.bap = zext i16 %i.bah to i64
   %.idx = mul nuw nsw i64 %i.bap, 6
   %i.baq = getelementptr inbounds nuw i8, ptr %i.bao, i64 %.idx ; 2 uses
-  %i.bar = zext i16 %4 to i64
+  %4 = getelementptr inbounds [2 x i8], ptr %i.baf, i64 %.0
+  %5 = load i16, ptr %4, align 2, !tbaa !77
+  %i.bar = zext i16 %5 to i64
   %.idx403 = mul nuw nsw i64 %i.bar, 6
   %i.bas = getelementptr inbounds nuw i8, ptr %i.bao, i64 %.idx403 ; 4 uses
   %i.bat = load i16, ptr %i.baq, align 2, !tbaa !77 ; 2 uses

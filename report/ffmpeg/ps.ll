@@ -205,7 +205,7 @@ bb.be:                                            ; preds = %bb.bd
   %i.ws = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i.i.i, i64 1412
   %i.wt = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i.i.i, i64 3412
   %i.wu = load ptr, ptr %i.sq, align 8, !tbaa !55 ; 3 uses
-  %i.wv = load ptr, ptr %i.sw, align 8, !tbaa !56 ; 4 uses
+  %i.wv = load ptr, ptr %i.sw, align 8, !tbaa !56 ; 5 uses
   %i.ww = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i.i.i, i64 5412
   %i.wx = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i.i.i, i64 7412
   %i.wy = getelementptr inbounds nuw i8, ptr %i.vx, i64 1998242 ; 2 uses
@@ -358,7 +358,7 @@ bb.bl:                                            ; preds = %bb.bl, %bb.bk
   %i.zj = zext i16 %i.zd to i32                   ; 2 uses
   %i.zk = zext i16 %i.zf to i32                   ; 2 uses
   %i.zl = trunc nuw nsw i64 %indvars.iv.i.i.i.i.i.i.i.i.i to i32 ; 2 uses
-  %i.zm = load i16, ptr %i.wv, align 2, !tbaa !48 ; 2 uses
+  %i.zm = load i16, ptr %i.wv, align 2, !tbaa !48
   %i.zn = icmp ult i16 %i.zm, %i.zf
   br i1 %i.zn, label %.lr.ph.i.i.i.i.i.i.i.i.i, label %bb.bm
 
@@ -366,7 +366,7 @@ bb.bl:                                            ; preds = %bb.bl, %bb.bk
   %indvars.iv17.i.i.i.i.i.i.i.i.i = phi i64 [ %indvars.iv.next18.i.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i.i ], [ 0, %.preheader1.i.i.i.i.i.i.i.i.i ]
   %indvars.iv.next18.i.i.i.i.i.i.i.i.i = add nuw nsw i64 %indvars.iv17.i.i.i.i.i.i.i.i.i, 1 ; 3 uses
   %i.zo = getelementptr inbounds nuw [2 x i8], ptr %i.wv, i64 %indvars.iv.next18.i.i.i.i.i.i.i.i.i
-  %i.zp = load i16, ptr %i.zo, align 2, !tbaa !48 ; 2 uses
+  %i.zp = load i16, ptr %i.zo, align 2, !tbaa !48
   %i.zq = icmp ult i16 %i.zp, %i.zf
   br i1 %i.zq, label %.lr.ph.i.i.i.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i.i.i.i, !llvm.loop !94
 
@@ -375,7 +375,6 @@ bb.bl:                                            ; preds = %bb.bl, %bb.bk
   br label %bb.bm
 
 bb.bm:                                            ; preds = %._crit_edge.i.i.i.i.i.i.i.i.i, %.preheader1.i.i.i.i.i.i.i.i.i
-  %2 = phi i16 [ %i.zp, %._crit_edge.i.i.i.i.i.i.i.i.i ], [ %i.zm, %.preheader1.i.i.i.i.i.i.i.i.i ]
   %.014.i.i.i.i.i.i.i.i = phi i32 [ %i.zr, %._crit_edge.i.i.i.i.i.i.i.i.i ], [ 0, %.preheader1.i.i.i.i.i.i.i.i.i ] ; 4 uses
   %i.zs = getelementptr inbounds nuw [2 x i8], ptr %i.ww, i64 %indvars.iv.i.i.i.i.i.i.i
   %i.zt = load i16, ptr %i.zs, align 2, !tbaa !48
@@ -395,8 +394,10 @@ bb.bm:                                            ; preds = %._crit_edge.i.i.i.i
   %i.zz = load i16, ptr %i.zy, align 2, !tbaa !48
   %i.aaa = zext i16 %i.zz to i32                  ; 3 uses
   %i.aab = add nuw nsw i32 %i.aaa, %i.zk          ; 2 uses
-  %i.aac = sext i32 %.014.i.i.i.i.i.i.i.i to i64  ; 3 uses
-  %i.aad = zext i16 %2 to i32
+  %i.aac = sext i32 %.014.i.i.i.i.i.i.i.i to i64  ; 4 uses
+  %2 = getelementptr inbounds [2 x i8], ptr %i.wv, i64 %i.aac
+  %3 = load i16, ptr %2, align 2, !tbaa !48
+  %i.aad = zext i16 %3 to i32
   %.not2910.i.i.i.i.i.i.i.i.i = icmp samesign ult i32 %i.aab, %i.aad
   br i1 %.not2910.i.i.i.i.i.i.i.i.i, label %subpic_tiles.exit.thread.i.i.i.i.i.i.i.i, label %.lr.ph11.i.i.i.i.i.i.i.i.i
 

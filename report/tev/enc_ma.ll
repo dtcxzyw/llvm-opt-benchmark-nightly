@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZN3jxl6N_SSE413FindBestSplitERNS_11TreeSamplesEfRKNSt3__16vectorINS_21ModularMultiplierInfoENS3_9allocatorIS5_EEEENS3_5arrayINSB_IjLm2EEELm2EEEfPNS4_INS_20PropertyDecisionNodeENS6_ISE_EEEE(ptr noundef nonnull align 8 dereferenceable(304) %0, float noundef %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %2, i64 %3, i64 %4, float noundef %5, ptr noundef %6) #6 {
 _ZNSt3__16vectorIZN3jxl6N_SSE413FindBestSplitERNS1_11TreeSamplesEfRKNS0_INS1_21ModularMultiplierInfoENS_9allocatorIS5_EEEENS_5arrayINSB_IjLm2EEELm2EEEfPNS0_INS1_20PropertyDecisionNodeENS6_ISE_EEEEE8NodeInfoNS6_ISI_EEE9push_backB8nn180100EOSI_.exit:
-  %7 = alloca %struct.SplitInfo, align 8          ; 13 uses
+  %7 = alloca %struct.SplitInfo, align 8          ; 11 uses
   %8 = alloca %struct.SplitInfo, align 8          ; 11 uses
   %9 = alloca %struct.SplitInfo, align 8          ; 13 uses
   %10 = alloca %struct.SplitInfo, align 8         ; 12 uses
@@ -608,7 +608,7 @@ bb.m:                                             ; preds = %bb.l
   store i32 %i.jw, ptr %i.bd, align 8, !tbaa !240
   store i64 %.2796.ph, ptr %13, align 8, !tbaa !239
   %i.jx = fmul float %i.hk, 5.000000e-01
-  %i.jy = fsub float %i.jx, %1                    ; 6 uses
+  %i.jy = fsub float %i.jx, %1                    ; 2 uses
   store float %i.jy, ptr %i.bg, align 4, !tbaa !244
   store float %i.jy, ptr %i.bf, align 8, !tbaa !245
   %i.jz = load ptr, ptr %6, align 8, !tbaa !31
@@ -1011,12 +1011,12 @@ bb.br:                                            ; preds = %bb.bq
   br label %bb.bs
 
 bb.bs:                                            ; preds = %bb.br, %bb.bq
-  %.4 = phi ptr [ %.3, %bb.bq ], [ %spec.select427, %bb.br ] ; 3 uses
+  %.4 = phi ptr [ %.3, %bb.bq ], [ %spec.select427, %bb.br ]
   %.val436 = load float, ptr %i.ac, align 8, !tbaa !245
   %.val437 = load float, ptr %i.ad, align 4, !tbaa !244
   %i.age = fadd float %.val436, %.val437
   %i.agf = fadd float %1, %i.age
-  %i.agg = fcmp olt float %i.agf, %i.hk           ; 3 uses
+  %i.agg = fcmp olt float %i.agf, %i.hk
   %spec.select428 = select i1 %i.agg, ptr %7, ptr %.4
   %.not.i.i546 = icmp eq ptr %.sroa.0.0, null
   br i1 %.not.i.i546, label %_ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit, label %bb.bt
@@ -1102,12 +1102,6 @@ bb.bz:                                            ; preds = %_ZNSt3__16vectorIiN
 
 _ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit557: ; preds = %_ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit555, %bb.bz
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #37
-  %spec.select428.sroa.sel.v = select i1 %i.agg, ptr %7, ptr %.4
-  %spec.select428.sroa.sel = getelementptr i8, ptr %spec.select428.sroa.sel.v, i64 24
-  %.6.val.pre = load float, ptr %spec.select428.sroa.sel, align 8, !tbaa !245
-  %spec.select428.sroa.sel1331.v = select i1 %i.agg, ptr %7, ptr %.4
-  %spec.select428.sroa.sel1331 = getelementptr i8, ptr %spec.select428.sroa.sel1331.v, i64 28
-  %.6.val435.pre = load float, ptr %spec.select428.sroa.sel1331, align 4, !tbaa !244
   br label %.thread817
 
 .thread817.loopexit:                              ; preds = %scalar.ph1221, %middle.block1232, %.preheader841
@@ -1121,9 +1115,11 @@ _ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit557: ; preds = %_ZNSt3__1
   br label %.thread817
 
 .thread817:                                       ; preds = %.thread817.loopexit842, %.thread817.loopexit, %_ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit557
-  %.6.val435 = phi float [ %.6.val435.pre, %_ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit557 ], [ %i.jy, %.thread817.loopexit ], [ %i.jy, %.thread817.loopexit842 ]
-  %.6.val = phi float [ %.6.val.pre, %_ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit557 ], [ %i.jy, %.thread817.loopexit ], [ %i.jy, %.thread817.loopexit842 ]
-  %.6 = phi ptr [ %spec.select428, %_ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit557 ], [ %13, %.thread817.loopexit ], [ %13, %.thread817.loopexit842 ] ; 8 uses
+  %.6 = phi ptr [ %spec.select428, %_ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit557 ], [ %13, %.thread817.loopexit ], [ %13, %.thread817.loopexit842 ] ; 10 uses
+  %18 = getelementptr i8, ptr %.6, i64 24
+  %.6.val = load float, ptr %18, align 8, !tbaa !245
+  %19 = getelementptr i8, ptr %.6, i64 28
+  %.6.val435 = load float, ptr %19, align 4, !tbaa !244
   %i.ahd = fadd float %.6.val, %.6.val435
   %i.ahe = fadd float %1, %i.ahd
   %i.ahf = fcmp olt float %i.ahe, %i.hk
@@ -1526,7 +1522,7 @@ bb.f:                                             ; preds = %bb.e
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZN3jxl6N_AVX213FindBestSplitERNS_11TreeSamplesEfRKNSt3__16vectorINS_21ModularMultiplierInfoENS3_9allocatorIS5_EEEENS3_5arrayINSB_IjLm2EEELm2EEEfPNS4_INS_20PropertyDecisionNodeENS6_ISE_EEEE(ptr noundef nonnull align 8 dereferenceable(304) %0, float noundef %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %2, i64 %3, i64 %4, float noundef %5, ptr noundef %6) #12 {
 _ZNSt3__16vectorIZN3jxl6N_AVX213FindBestSplitERNS1_11TreeSamplesEfRKNS0_INS1_21ModularMultiplierInfoENS_9allocatorIS5_EEEENS_5arrayINSB_IjLm2EEELm2EEEfPNS0_INS1_20PropertyDecisionNodeENS6_ISE_EEEEE8NodeInfoNS6_ISI_EEE9push_backB8nn180100EOSI_.exit:
-  %7 = alloca %struct.SplitInfo.100, align 8      ; 13 uses
+  %7 = alloca %struct.SplitInfo.100, align 8      ; 11 uses
   %8 = alloca %struct.SplitInfo.100, align 8      ; 11 uses
   %9 = alloca %struct.SplitInfo.100, align 8      ; 13 uses
   %10 = alloca %struct.SplitInfo.100, align 8     ; 12 uses
@@ -1929,7 +1925,7 @@ bb.m:                                             ; preds = %bb.l
   store i32 %i.kn, ptr %i.bd, align 8, !tbaa !361
   store i64 %.2796.ph, ptr %13, align 8, !tbaa !360
   %i.ko = fmul float %i.ib, 5.000000e-01
-  %i.kp = fsub float %i.ko, %1                    ; 6 uses
+  %i.kp = fsub float %i.ko, %1                    ; 2 uses
   store float %i.kp, ptr %i.bg, align 4, !tbaa !365
   store float %i.kp, ptr %i.bf, align 8, !tbaa !366
   %i.kq = load ptr, ptr %6, align 8, !tbaa !31
@@ -2332,12 +2328,12 @@ bb.br:                                            ; preds = %bb.bq
   br label %bb.bs
 
 bb.bs:                                            ; preds = %bb.br, %bb.bq
-  %.4 = phi ptr [ %.3, %bb.bq ], [ %spec.select427, %bb.br ] ; 3 uses
+  %.4 = phi ptr [ %.3, %bb.bq ], [ %spec.select427, %bb.br ]
   %.val436 = load float, ptr %i.ac, align 8, !tbaa !366
   %.val437 = load float, ptr %i.ad, align 4, !tbaa !365
   %i.amw = fadd float %.val436, %.val437
   %i.amx = fadd float %1, %i.amw
-  %i.amy = fcmp olt float %i.amx, %i.ib           ; 3 uses
+  %i.amy = fcmp olt float %i.amx, %i.ib
   %spec.select428 = select i1 %i.amy, ptr %7, ptr %.4
   %.not.i.i546 = icmp eq ptr %.sroa.0.0, null
   br i1 %.not.i.i546, label %_ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit, label %bb.bt
@@ -2423,12 +2419,6 @@ bb.bz:                                            ; preds = %_ZNSt3__16vectorIiN
 
 _ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit557: ; preds = %_ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit555, %bb.bz
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #37
-  %spec.select428.sroa.sel.v = select i1 %i.amy, ptr %7, ptr %.4
-  %spec.select428.sroa.sel = getelementptr i8, ptr %spec.select428.sroa.sel.v, i64 24
-  %.6.val.pre = load float, ptr %spec.select428.sroa.sel, align 8, !tbaa !366
-  %spec.select428.sroa.sel1675.v = select i1 %i.amy, ptr %7, ptr %.4
-  %spec.select428.sroa.sel1675 = getelementptr i8, ptr %spec.select428.sroa.sel1675.v, i64 28
-  %.6.val435.pre = load float, ptr %spec.select428.sroa.sel1675, align 4, !tbaa !365
   br label %.thread817
 
 .thread817.loopexit:                              ; preds = %vec.epilog.scalar.ph1453, %middle.block1446, %vec.epilog.middle.block1466, %.preheader841
@@ -2442,9 +2432,11 @@ _ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit557: ; preds = %_ZNSt3__1
   br label %.thread817
 
 .thread817:                                       ; preds = %.thread817.loopexit842, %.thread817.loopexit, %_ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit557
-  %.6.val435 = phi float [ %.6.val435.pre, %_ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit557 ], [ %i.kp, %.thread817.loopexit ], [ %i.kp, %.thread817.loopexit842 ]
-  %.6.val = phi float [ %.6.val.pre, %_ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit557 ], [ %i.kp, %.thread817.loopexit ], [ %i.kp, %.thread817.loopexit842 ]
-  %.6 = phi ptr [ %spec.select428, %_ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit557 ], [ %13, %.thread817.loopexit ], [ %13, %.thread817.loopexit842 ] ; 8 uses
+  %.6 = phi ptr [ %spec.select428, %_ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit557 ], [ %13, %.thread817.loopexit ], [ %13, %.thread817.loopexit842 ] ; 10 uses
+  %18 = getelementptr i8, ptr %.6, i64 24
+  %.6.val = load float, ptr %18, align 8, !tbaa !366
+  %19 = getelementptr i8, ptr %.6, i64 28
+  %.6.val435 = load float, ptr %19, align 4, !tbaa !365
   %i.anv = fadd float %.6.val, %.6.val435
   %i.anw = fadd float %1, %i.anv
   %i.anx = fcmp olt float %i.anw, %i.ib
@@ -2847,7 +2839,7 @@ bb.f:                                             ; preds = %bb.e
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZN3jxl6N_SSE213FindBestSplitERNS_11TreeSamplesEfRKNSt3__16vectorINS_21ModularMultiplierInfoENS3_9allocatorIS5_EEEENS3_5arrayINSB_IjLm2EEELm2EEEfPNS4_INS_20PropertyDecisionNodeENS6_ISE_EEEE(ptr noundef nonnull align 8 dereferenceable(304) %0, float noundef %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %2, i64 %3, i64 %4, float noundef %5, ptr noundef %6) #17 {
 _ZNSt3__16vectorIZN3jxl6N_SSE213FindBestSplitERNS1_11TreeSamplesEfRKNS0_INS1_21ModularMultiplierInfoENS_9allocatorIS5_EEEENS_5arrayINSB_IjLm2EEELm2EEEfPNS0_INS1_20PropertyDecisionNodeENS6_ISE_EEEEE8NodeInfoNS6_ISI_EEE9push_backB8nn180100EOSI_.exit:
-  %7 = alloca %struct.SplitInfo.119, align 8      ; 13 uses
+  %7 = alloca %struct.SplitInfo.119, align 8      ; 11 uses
   %8 = alloca %struct.SplitInfo.119, align 8      ; 11 uses
   %9 = alloca %struct.SplitInfo.119, align 8      ; 12 uses
   %10 = alloca %struct.SplitInfo.119, align 8     ; 11 uses
@@ -3250,7 +3242,7 @@ bb.m:                                             ; preds = %bb.l
   store i32 %i.jt, ptr %i.bb, align 8, !tbaa !462
   store i64 %.2798.ph, ptr %13, align 8, !tbaa !461
   %i.ju = fmul float %i.hh, 5.000000e-01
-  %i.jv = fsub float %i.ju, %1                    ; 6 uses
+  %i.jv = fsub float %i.ju, %1                    ; 2 uses
   store float %i.jv, ptr %i.be, align 4, !tbaa !466
   store float %i.jv, ptr %i.bd, align 8, !tbaa !467
   %i.jw = load ptr, ptr %6, align 8, !tbaa !31
@@ -3653,12 +3645,12 @@ bb.br:                                            ; preds = %bb.bq
   br label %bb.bs
 
 bb.bs:                                            ; preds = %bb.br, %bb.bq
-  %.4 = phi ptr [ %.3, %bb.bq ], [ %spec.select426, %bb.br ] ; 3 uses
+  %.4 = phi ptr [ %.3, %bb.bq ], [ %spec.select426, %bb.br ]
   %.val435 = load float, ptr %i.ac, align 8, !tbaa !467
   %.val436 = load float, ptr %i.ad, align 4, !tbaa !466
   %i.agc = fadd float %.val435, %.val436
   %i.agd = fadd float %1, %i.agc
-  %i.age = fcmp olt float %i.agd, %i.hh           ; 3 uses
+  %i.age = fcmp olt float %i.agd, %i.hh
   %spec.select427 = select i1 %i.age, ptr %7, ptr %.4
   %.not.i.i548 = icmp eq ptr %.sroa.0.0, null
   br i1 %.not.i.i548, label %_ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit, label %bb.bt
@@ -3744,12 +3736,6 @@ bb.bz:                                            ; preds = %_ZNSt3__16vectorIiN
 
 _ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit559: ; preds = %_ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit557, %bb.bz
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #37
-  %spec.select427.sroa.sel.v = select i1 %i.age, ptr %7, ptr %.4
-  %spec.select427.sroa.sel = getelementptr i8, ptr %spec.select427.sroa.sel.v, i64 24
-  %.6.val.pre = load float, ptr %spec.select427.sroa.sel, align 8, !tbaa !467
-  %spec.select427.sroa.sel1335.v = select i1 %i.age, ptr %7, ptr %.4
-  %spec.select427.sroa.sel1335 = getelementptr i8, ptr %spec.select427.sroa.sel1335.v, i64 28
-  %.6.val434.pre = load float, ptr %spec.select427.sroa.sel1335, align 4, !tbaa !466
   br label %.thread819
 
 .thread819.loopexit:                              ; preds = %scalar.ph1225, %middle.block1236, %.preheader843
@@ -3763,9 +3749,11 @@ _ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit559: ; preds = %_ZNSt3__1
   br label %.thread819
 
 .thread819:                                       ; preds = %.thread819.loopexit844, %.thread819.loopexit, %_ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit559
-  %.6.val434 = phi float [ %.6.val434.pre, %_ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit559 ], [ %i.jv, %.thread819.loopexit ], [ %i.jv, %.thread819.loopexit844 ]
-  %.6.val = phi float [ %.6.val.pre, %_ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit559 ], [ %i.jv, %.thread819.loopexit ], [ %i.jv, %.thread819.loopexit844 ]
-  %.6 = phi ptr [ %spec.select427, %_ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit559 ], [ %13, %.thread819.loopexit ], [ %13, %.thread819.loopexit844 ] ; 8 uses
+  %.6 = phi ptr [ %spec.select427, %_ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit559 ], [ %13, %.thread819.loopexit ], [ %13, %.thread819.loopexit844 ] ; 10 uses
+  %18 = getelementptr i8, ptr %.6, i64 24
+  %.6.val = load float, ptr %18, align 8, !tbaa !467
+  %19 = getelementptr i8, ptr %.6, i64 28
+  %.6.val434 = load float, ptr %19, align 4, !tbaa !466
   %i.ahb = fadd float %.6.val, %.6.val434
   %i.ahc = fadd float %1, %i.ahb
   %i.ahd = fcmp olt float %i.ahc, %i.hh

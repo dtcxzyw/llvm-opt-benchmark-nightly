@@ -204,7 +204,7 @@ bb.z:                                             ; preds = %bb.v
   br i1 %i.fp, label %.lr.ph191, label %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i132._crit_edge
 
 .lr.ph191:                                        ; preds = %bb.z, %_ZN21QCPStatisticalBoxDataaSEOS_.exit.i143
-  %.sroa.0.0.i127190 = phi ptr [ %.sroa.0.0.i127, %_ZN21QCPStatisticalBoxDataaSEOS_.exit.i143 ], [ %.sroa.0.0.i127188, %bb.z ] ; 5 uses
+  %.sroa.0.0.i127190 = phi ptr [ %.sroa.0.0.i127, %_ZN21QCPStatisticalBoxDataaSEOS_.exit.i143 ], [ %.sroa.0.0.i127188, %bb.z ] ; 4 uses
   %.sroa.013.0.i126189 = phi ptr [ %.sroa.0.0.i127190, %_ZN21QCPStatisticalBoxDataaSEOS_.exit.i143 ], [ %.sroa.021.032.i88, %bb.z ] ; 5 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef align 8 dereferenceable(48) dereferenceable_or_null(72) %.sroa.013.0.i126189, ptr noundef align 8 dereferenceable(72) %.sroa.0.0.i127190, i64 48, i1 false)
   %i.fq = getelementptr i8, ptr %.sroa.013.0.i126189, i64 48 ; 2 uses
@@ -233,20 +233,15 @@ _ZN21QCPStatisticalBoxDataaSEOS_.exit.i143:       ; preds = %bb.aa, %_ZN17QArray
   %.sroa.0.0.i127 = getelementptr i8, ptr %.sroa.0.0.i127190, i64 -72 ; 2 uses
   %i.fy = load double, ptr %.sroa.0.0.i127, align 8
   %i.fz = fcmp olt double %i.ek, %i.fy
-  br i1 %i.fz, label %.lr.ph191, label %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i132._crit_edge.loopexit, !llvm.loop !77
+  br i1 %i.fz, label %.lr.ph191, label %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i132._crit_edge, !llvm.loop !77
 
-_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i132._crit_edge.loopexit: ; preds = %_ZN21QCPStatisticalBoxDataaSEOS_.exit.i143
-  %.phi.trans.insert203 = getelementptr i8, ptr %.sroa.0.0.i127190, i64 48
-  %.pre204 = load ptr, ptr %.phi.trans.insert203, align 8
-  br label %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i132._crit_edge
-
-_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i132._crit_edge: ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i132._crit_edge.loopexit, %bb.z
-  %3 = phi ptr [ null, %bb.z ], [ %.pre204, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i132._crit_edge.loopexit ] ; 3 uses
-  %.sroa.013.0.i126.lcssa = phi ptr [ %.sroa.021.032.i88, %bb.z ], [ %.sroa.0.0.i127190, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i132._crit_edge.loopexit ] ; 4 uses
+_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i132._crit_edge: ; preds = %_ZN21QCPStatisticalBoxDataaSEOS_.exit.i143, %bb.z
+  %.sroa.013.0.i126.lcssa = phi ptr [ %.sroa.021.032.i88, %bb.z ], [ %.sroa.0.0.i127190, %_ZN21QCPStatisticalBoxDataaSEOS_.exit.i143 ] ; 4 uses
   store double %i.ek, ptr %.sroa.013.0.i126.lcssa, align 8
   %.sroa.6174.0..sroa.013.0.i126.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.013.0.i126.lcssa, i64 8
   store <5 x double> %.sroa.6174.sroa.0.0.copyload, ptr %.sroa.6174.0..sroa.013.0.i126.sroa_idx, align 8
-  %i.ga = getelementptr i8, ptr %.sroa.013.0.i126.lcssa, i64 48
+  %i.ga = getelementptr i8, ptr %.sroa.013.0.i126.lcssa, i64 48 ; 2 uses
+  %3 = load ptr, ptr %i.ga, align 8               ; 3 uses
   store <2 x ptr> %i.fl, ptr %i.ga, align 8
   %i.gb = getelementptr i8, ptr %.sroa.013.0.i126.lcssa, i64 64
   store i64 %i.fn, ptr %i.gb, align 8
@@ -287,7 +282,7 @@ _ZSt16__insertion_sortIN5QListI21QCPStatisticalBoxDataE8iteratorEN9__gnu_cxx5__o
   br i1 %i.gi, label %.lr.ph196, label %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i._crit_edge
 
 .lr.ph196:                                        ; preds = %.lr.ph.i.i.i.i, %_ZN21QCPStatisticalBoxDataaSEOS_.exit.i
-  %.sroa.0.0.i195 = phi ptr [ %.sroa.0.0.i, %_ZN21QCPStatisticalBoxDataaSEOS_.exit.i ], [ %.sroa.0.0.i193, %.lr.ph.i.i.i.i ] ; 5 uses
+  %.sroa.0.0.i195 = phi ptr [ %.sroa.0.0.i, %_ZN21QCPStatisticalBoxDataaSEOS_.exit.i ], [ %.sroa.0.0.i193, %.lr.ph.i.i.i.i ] ; 4 uses
   %.sroa.013.0.i194 = phi ptr [ %.sroa.0.0.i195, %_ZN21QCPStatisticalBoxDataaSEOS_.exit.i ], [ %.sroa.0.09.i.i.i.i, %.lr.ph.i.i.i.i ] ; 5 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef align 8 dereferenceable(48) dereferenceable_or_null(72) %.sroa.013.0.i194, ptr noundef align 8 dereferenceable(72) %.sroa.0.0.i195, i64 48, i1 false)
   %i.gj = getelementptr i8, ptr %.sroa.013.0.i194, i64 48 ; 2 uses
@@ -316,20 +311,15 @@ _ZN21QCPStatisticalBoxDataaSEOS_.exit.i:          ; preds = %bb.ac, %_ZN17QArray
   %.sroa.0.0.i = getelementptr i8, ptr %.sroa.0.0.i195, i64 -72 ; 2 uses
   %i.gr = load double, ptr %.sroa.0.0.i, align 8
   %i.gs = fcmp olt double %.sroa.0155.0.copyload, %i.gr
-  br i1 %i.gs, label %.lr.ph196, label %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i._crit_edge.loopexit, !llvm.loop !77
+  br i1 %i.gs, label %.lr.ph196, label %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i._crit_edge, !llvm.loop !77
 
-_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i._crit_edge.loopexit: ; preds = %_ZN21QCPStatisticalBoxDataaSEOS_.exit.i
-  %.phi.trans.insert205 = getelementptr i8, ptr %.sroa.0.0.i195, i64 48
-  %.pre206 = load ptr, ptr %.phi.trans.insert205, align 8
-  br label %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i._crit_edge
-
-_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i._crit_edge: ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i._crit_edge.loopexit, %.lr.ph.i.i.i.i
-  %4 = phi ptr [ null, %.lr.ph.i.i.i.i ], [ %.pre206, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i._crit_edge.loopexit ] ; 3 uses
-  %.sroa.013.0.i.lcssa = phi ptr [ %.sroa.0.09.i.i.i.i, %.lr.ph.i.i.i.i ], [ %.sroa.0.0.i195, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i._crit_edge.loopexit ] ; 4 uses
+_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i._crit_edge: ; preds = %_ZN21QCPStatisticalBoxDataaSEOS_.exit.i, %.lr.ph.i.i.i.i
+  %.sroa.013.0.i.lcssa = phi ptr [ %.sroa.0.09.i.i.i.i, %.lr.ph.i.i.i.i ], [ %.sroa.0.0.i195, %_ZN21QCPStatisticalBoxDataaSEOS_.exit.i ] ; 4 uses
   store double %.sroa.0155.0.copyload, ptr %.sroa.013.0.i.lcssa, align 8
   %.sroa.6.0..sroa.013.0.i.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.013.0.i.lcssa, i64 8
   store <5 x double> %.sroa.6.sroa.0.0.copyload, ptr %.sroa.6.0..sroa.013.0.i.sroa_idx, align 8
-  %i.gt = getelementptr i8, ptr %.sroa.013.0.i.lcssa, i64 48
+  %i.gt = getelementptr i8, ptr %.sroa.013.0.i.lcssa, i64 48 ; 2 uses
+  %4 = load ptr, ptr %i.gt, align 8               ; 3 uses
   store <2 x ptr> %i.ge, ptr %i.gt, align 8
   %i.gu = getelementptr i8, ptr %.sroa.013.0.i.lcssa, i64 64
   store i64 %i.gg, ptr %i.gu, align 8
@@ -450,7 +440,7 @@ bb.ai:                                            ; preds = %bb.ae
   br i1 %i.ie, label %.lr.ph, label %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i113._crit_edge
 
 .lr.ph:                                           ; preds = %bb.ai, %_ZN21QCPStatisticalBoxDataaSEOS_.exit.i124
-  %.sroa.0.0.i108187 = phi ptr [ %.sroa.0.0.i108, %_ZN21QCPStatisticalBoxDataaSEOS_.exit.i124 ], [ %.sroa.0.0.i108185, %bb.ai ] ; 5 uses
+  %.sroa.0.0.i108187 = phi ptr [ %.sroa.0.0.i108, %_ZN21QCPStatisticalBoxDataaSEOS_.exit.i124 ], [ %.sroa.0.0.i108185, %bb.ai ] ; 4 uses
   %.sroa.013.0.i107186 = phi ptr [ %.sroa.0.0.i108187, %_ZN21QCPStatisticalBoxDataaSEOS_.exit.i124 ], [ %.sroa.021.032.i, %bb.ai ] ; 5 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef align 8 dereferenceable(48) dereferenceable_or_null(72) %.sroa.013.0.i107186, ptr noundef align 8 dereferenceable(72) %.sroa.0.0.i108187, i64 48, i1 false)
   %i.if = getelementptr i8, ptr %.sroa.013.0.i107186, i64 48 ; 2 uses
@@ -479,20 +469,15 @@ _ZN21QCPStatisticalBoxDataaSEOS_.exit.i124:       ; preds = %bb.aj, %_ZN17QArray
   %.sroa.0.0.i108 = getelementptr i8, ptr %.sroa.0.0.i108187, i64 -72 ; 2 uses
   %i.in = load double, ptr %.sroa.0.0.i108, align 8
   %i.io = fcmp olt double %i.gz, %i.in
-  br i1 %i.io, label %.lr.ph, label %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i113._crit_edge.loopexit, !llvm.loop !77
+  br i1 %i.io, label %.lr.ph, label %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i113._crit_edge, !llvm.loop !77
 
-_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i113._crit_edge.loopexit: ; preds = %_ZN21QCPStatisticalBoxDataaSEOS_.exit.i124
-  %.phi.trans.insert = getelementptr i8, ptr %.sroa.0.0.i108187, i64 48
-  %.pre202 = load ptr, ptr %.phi.trans.insert, align 8
-  br label %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i113._crit_edge
-
-_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i113._crit_edge: ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i113._crit_edge.loopexit, %bb.ai
-  %5 = phi ptr [ null, %bb.ai ], [ %.pre202, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i113._crit_edge.loopexit ] ; 3 uses
-  %.sroa.013.0.i107.lcssa = phi ptr [ %.sroa.021.032.i, %bb.ai ], [ %.sroa.0.0.i108187, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i113._crit_edge.loopexit ] ; 4 uses
+_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i113._crit_edge: ; preds = %_ZN21QCPStatisticalBoxDataaSEOS_.exit.i124, %bb.ai
+  %.sroa.013.0.i107.lcssa = phi ptr [ %.sroa.021.032.i, %bb.ai ], [ %.sroa.0.0.i108187, %_ZN21QCPStatisticalBoxDataaSEOS_.exit.i124 ] ; 4 uses
   store double %i.gz, ptr %.sroa.013.0.i107.lcssa, align 8
   %.sroa.6164.0..sroa.013.0.i107.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.013.0.i107.lcssa, i64 8
   store <5 x double> %.sroa.6164.sroa.0.0.copyload, ptr %.sroa.6164.0..sroa.013.0.i107.sroa_idx, align 8
-  %i.ip = getelementptr i8, ptr %.sroa.013.0.i107.lcssa, i64 48
+  %i.ip = getelementptr i8, ptr %.sroa.013.0.i107.lcssa, i64 48 ; 2 uses
+  %5 = load ptr, ptr %i.ip, align 8               ; 3 uses
   store <2 x ptr> %i.ia, ptr %i.ip, align 8
   %i.iq = getelementptr i8, ptr %.sroa.013.0.i107.lcssa, i64 64
   store i64 %i.ic, ptr %i.iq, align 8
@@ -895,7 +880,7 @@ bb.h:                                             ; preds = %bb.d
   br i1 %i.bt, label %.lr.ph106, label %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i60._crit_edge
 
 .lr.ph106:                                        ; preds = %bb.h, %_ZN21QCPStatisticalBoxDataaSEOS_.exit.i71
-  %.sroa.0.0.i55105 = phi ptr [ %.sroa.0.0.i55, %_ZN21QCPStatisticalBoxDataaSEOS_.exit.i71 ], [ %.sroa.0.0.i55103, %bb.h ] ; 5 uses
+  %.sroa.0.0.i55105 = phi ptr [ %.sroa.0.0.i55, %_ZN21QCPStatisticalBoxDataaSEOS_.exit.i71 ], [ %.sroa.0.0.i55103, %bb.h ] ; 4 uses
   %.sroa.013.0.i54104 = phi ptr [ %.sroa.0.0.i55105, %_ZN21QCPStatisticalBoxDataaSEOS_.exit.i71 ], [ %.sroa.021.032.i16, %bb.h ] ; 5 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef align 8 dereferenceable(48) dereferenceable_or_null(72) %.sroa.013.0.i54104, ptr noundef align 8 dereferenceable(72) %.sroa.0.0.i55105, i64 48, i1 false)
   %i.bu = getelementptr i8, ptr %.sroa.013.0.i54104, i64 48 ; 2 uses
@@ -924,20 +909,15 @@ _ZN21QCPStatisticalBoxDataaSEOS_.exit.i71:        ; preds = %bb.i, %_ZN17QArrayD
   %.sroa.0.0.i55 = getelementptr i8, ptr %.sroa.0.0.i55105, i64 -72 ; 2 uses
   %i.cc = load double, ptr %.sroa.0.0.i55, align 8
   %i.cd = fcmp olt double %i.ao, %i.cc
-  br i1 %i.cd, label %.lr.ph106, label %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i60._crit_edge.loopexit, !llvm.loop !77
+  br i1 %i.cd, label %.lr.ph106, label %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i60._crit_edge, !llvm.loop !77
 
-_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i60._crit_edge.loopexit: ; preds = %_ZN21QCPStatisticalBoxDataaSEOS_.exit.i71
-  %.phi.trans.insert116 = getelementptr i8, ptr %.sroa.0.0.i55105, i64 48
-  %.pre117 = load ptr, ptr %.phi.trans.insert116, align 8
-  br label %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i60._crit_edge
-
-_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i60._crit_edge: ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i60._crit_edge.loopexit, %bb.h
-  %1 = phi ptr [ null, %bb.h ], [ %.pre117, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i60._crit_edge.loopexit ] ; 3 uses
-  %.sroa.013.0.i54.lcssa = phi ptr [ %.sroa.021.032.i16, %bb.h ], [ %.sroa.0.0.i55105, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i60._crit_edge.loopexit ] ; 4 uses
+_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i60._crit_edge: ; preds = %_ZN21QCPStatisticalBoxDataaSEOS_.exit.i71, %bb.h
+  %.sroa.013.0.i54.lcssa = phi ptr [ %.sroa.021.032.i16, %bb.h ], [ %.sroa.0.0.i55105, %_ZN21QCPStatisticalBoxDataaSEOS_.exit.i71 ] ; 4 uses
   store double %i.ao, ptr %.sroa.013.0.i54.lcssa, align 8
   %.sroa.691.0..sroa.013.0.i54.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.013.0.i54.lcssa, i64 8
   store <5 x double> %.sroa.691.sroa.0.0.copyload, ptr %.sroa.691.0..sroa.013.0.i54.sroa_idx, align 8
-  %i.ce = getelementptr i8, ptr %.sroa.013.0.i54.lcssa, i64 48
+  %i.ce = getelementptr i8, ptr %.sroa.013.0.i54.lcssa, i64 48 ; 2 uses
+  %1 = load ptr, ptr %i.ce, align 8               ; 3 uses
   store <2 x ptr> %i.bp, ptr %i.ce, align 8
   %i.cf = getelementptr i8, ptr %.sroa.013.0.i54.lcssa, i64 64
   store i64 %i.br, ptr %i.cf, align 8
@@ -978,7 +958,7 @@ _ZSt16__insertion_sortIN5QListI21QCPStatisticalBoxDataE8iteratorEN9__gnu_cxx5__o
   br i1 %i.cm, label %.lr.ph111, label %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i._crit_edge
 
 .lr.ph111:                                        ; preds = %.lr.ph.i.i.i.i, %_ZN21QCPStatisticalBoxDataaSEOS_.exit.i
-  %.sroa.0.0.i110 = phi ptr [ %.sroa.0.0.i, %_ZN21QCPStatisticalBoxDataaSEOS_.exit.i ], [ %.sroa.0.0.i108, %.lr.ph.i.i.i.i ] ; 5 uses
+  %.sroa.0.0.i110 = phi ptr [ %.sroa.0.0.i, %_ZN21QCPStatisticalBoxDataaSEOS_.exit.i ], [ %.sroa.0.0.i108, %.lr.ph.i.i.i.i ] ; 4 uses
   %.sroa.013.0.i109 = phi ptr [ %.sroa.0.0.i110, %_ZN21QCPStatisticalBoxDataaSEOS_.exit.i ], [ %.sroa.0.09.i.i.i.i, %.lr.ph.i.i.i.i ] ; 5 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef align 8 dereferenceable(48) dereferenceable_or_null(72) %.sroa.013.0.i109, ptr noundef align 8 dereferenceable(72) %.sroa.0.0.i110, i64 48, i1 false)
   %i.cn = getelementptr i8, ptr %.sroa.013.0.i109, i64 48 ; 2 uses
@@ -1007,20 +987,15 @@ _ZN21QCPStatisticalBoxDataaSEOS_.exit.i:          ; preds = %bb.k, %_ZN17QArrayD
   %.sroa.0.0.i = getelementptr i8, ptr %.sroa.0.0.i110, i64 -72 ; 2 uses
   %i.cv = load double, ptr %.sroa.0.0.i, align 8
   %i.cw = fcmp olt double %.sroa.0.0.copyload, %i.cv
-  br i1 %i.cw, label %.lr.ph111, label %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i._crit_edge.loopexit, !llvm.loop !77
+  br i1 %i.cw, label %.lr.ph111, label %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i._crit_edge, !llvm.loop !77
 
-_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i._crit_edge.loopexit: ; preds = %_ZN21QCPStatisticalBoxDataaSEOS_.exit.i
-  %.phi.trans.insert118 = getelementptr i8, ptr %.sroa.0.0.i110, i64 48
-  %.pre119 = load ptr, ptr %.phi.trans.insert118, align 8
-  br label %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i._crit_edge
-
-_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i._crit_edge: ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i._crit_edge.loopexit, %.lr.ph.i.i.i.i
-  %2 = phi ptr [ null, %.lr.ph.i.i.i.i ], [ %.pre119, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i._crit_edge.loopexit ] ; 3 uses
-  %.sroa.013.0.i.lcssa = phi ptr [ %.sroa.0.09.i.i.i.i, %.lr.ph.i.i.i.i ], [ %.sroa.0.0.i110, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i._crit_edge.loopexit ] ; 4 uses
+_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i._crit_edge: ; preds = %_ZN21QCPStatisticalBoxDataaSEOS_.exit.i, %.lr.ph.i.i.i.i
+  %.sroa.013.0.i.lcssa = phi ptr [ %.sroa.0.09.i.i.i.i, %.lr.ph.i.i.i.i ], [ %.sroa.0.0.i110, %_ZN21QCPStatisticalBoxDataaSEOS_.exit.i ] ; 4 uses
   store double %.sroa.0.0.copyload, ptr %.sroa.013.0.i.lcssa, align 8
   %.sroa.6.0..sroa.013.0.i.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.013.0.i.lcssa, i64 8
   store <5 x double> %.sroa.6.sroa.0.0.copyload, ptr %.sroa.6.0..sroa.013.0.i.sroa_idx, align 8
-  %i.cx = getelementptr i8, ptr %.sroa.013.0.i.lcssa, i64 48
+  %i.cx = getelementptr i8, ptr %.sroa.013.0.i.lcssa, i64 48 ; 2 uses
+  %2 = load ptr, ptr %i.cx, align 8               ; 3 uses
   store <2 x ptr> %i.ci, ptr %i.cx, align 8
   %i.cy = getelementptr i8, ptr %.sroa.013.0.i.lcssa, i64 64
   store i64 %i.ck, ptr %i.cy, align 8
@@ -1141,7 +1116,7 @@ bb.q:                                             ; preds = %bb.m
   br i1 %i.ei, label %.lr.ph, label %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i41._crit_edge
 
 .lr.ph:                                           ; preds = %bb.q, %_ZN21QCPStatisticalBoxDataaSEOS_.exit.i52
-  %.sroa.0.0.i36102 = phi ptr [ %.sroa.0.0.i36, %_ZN21QCPStatisticalBoxDataaSEOS_.exit.i52 ], [ %.sroa.0.0.i36100, %bb.q ] ; 5 uses
+  %.sroa.0.0.i36102 = phi ptr [ %.sroa.0.0.i36, %_ZN21QCPStatisticalBoxDataaSEOS_.exit.i52 ], [ %.sroa.0.0.i36100, %bb.q ] ; 4 uses
   %.sroa.013.0.i35101 = phi ptr [ %.sroa.0.0.i36102, %_ZN21QCPStatisticalBoxDataaSEOS_.exit.i52 ], [ %.sroa.021.032.i, %bb.q ] ; 5 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef align 8 dereferenceable(48) dereferenceable_or_null(72) %.sroa.013.0.i35101, ptr noundef align 8 dereferenceable(72) %.sroa.0.0.i36102, i64 48, i1 false)
   %i.ej = getelementptr i8, ptr %.sroa.013.0.i35101, i64 48 ; 2 uses
@@ -1170,20 +1145,15 @@ _ZN21QCPStatisticalBoxDataaSEOS_.exit.i52:        ; preds = %bb.r, %_ZN17QArrayD
   %.sroa.0.0.i36 = getelementptr i8, ptr %.sroa.0.0.i36102, i64 -72 ; 2 uses
   %i.er = load double, ptr %.sroa.0.0.i36, align 8
   %i.es = fcmp olt double %i.dd, %i.er
-  br i1 %i.es, label %.lr.ph, label %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i41._crit_edge.loopexit, !llvm.loop !77
+  br i1 %i.es, label %.lr.ph, label %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i41._crit_edge, !llvm.loop !77
 
-_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i41._crit_edge.loopexit: ; preds = %_ZN21QCPStatisticalBoxDataaSEOS_.exit.i52
-  %.phi.trans.insert = getelementptr i8, ptr %.sroa.0.0.i36102, i64 48
-  %.pre115 = load ptr, ptr %.phi.trans.insert, align 8
-  br label %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i41._crit_edge
-
-_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i41._crit_edge: ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i41._crit_edge.loopexit, %bb.q
-  %3 = phi ptr [ null, %bb.q ], [ %.pre115, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i41._crit_edge.loopexit ] ; 3 uses
-  %.sroa.013.0.i35.lcssa = phi ptr [ %.sroa.021.032.i, %bb.q ], [ %.sroa.0.0.i36102, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i41._crit_edge.loopexit ] ; 4 uses
+_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRK21QCPStatisticalBoxDataS4_EEclIS2_N5QListIS2_E8iteratorEEEbRT_T0_.exit.i41._crit_edge: ; preds = %_ZN21QCPStatisticalBoxDataaSEOS_.exit.i52, %bb.q
+  %.sroa.013.0.i35.lcssa = phi ptr [ %.sroa.021.032.i, %bb.q ], [ %.sroa.0.0.i36102, %_ZN21QCPStatisticalBoxDataaSEOS_.exit.i52 ] ; 4 uses
   store double %i.dd, ptr %.sroa.013.0.i35.lcssa, align 8
   %.sroa.681.0..sroa.013.0.i35.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.013.0.i35.lcssa, i64 8
   store <5 x double> %.sroa.681.sroa.0.0.copyload, ptr %.sroa.681.0..sroa.013.0.i35.sroa_idx, align 8
-  %i.et = getelementptr i8, ptr %.sroa.013.0.i35.lcssa, i64 48
+  %i.et = getelementptr i8, ptr %.sroa.013.0.i35.lcssa, i64 48 ; 2 uses
+  %3 = load ptr, ptr %i.et, align 8               ; 3 uses
   store <2 x ptr> %i.ee, ptr %i.et, align 8
   %i.eu = getelementptr i8, ptr %.sroa.013.0.i35.lcssa, i64 64
   store i64 %i.eg, ptr %i.eu, align 8

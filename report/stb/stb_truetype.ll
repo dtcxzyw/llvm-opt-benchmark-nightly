@@ -204,36 +204,35 @@ middle.block:                                     ; preds = %vector.body
   br i1 %i.ak, label %.lr.ph98.us.preheader, label %._crit_edge99.split.us.us
 
 .lr.ph98.us.preheader:                            ; preds = %.lr.ph104.split.us
-  %i.al = add nsw i32 %i.ai, -1                   ; 2 uses
+  %i.al = add nsw i32 %i.ai, -1
   %wide.trip.count128 = zext nneg i32 %i.ai to i64
-  %.phi.trans.insert137 = zext nneg i32 %i.al to i64
-  %.phi.trans.insert138 = getelementptr inbounds nuw [8 x i8], ptr %i.ag, i64 %.phi.trans.insert137
-  %.phi.trans.insert139 = getelementptr inbounds nuw i8, ptr %.phi.trans.insert138, i64 4
-  %.pre140 = load float, ptr %.phi.trans.insert139, align 4, !tbaa !112
   br label %.lr.ph98.us
 
 .lr.ph98.us:                                      ; preds = %.lr.ph98.us.preheader, %.lr.ph98.us._crit_edge
-  %12 = phi float [ %.pre140, %.lr.ph98.us.preheader ], [ %i.ao, %.lr.ph98.us._crit_edge ] ; 2 uses
   %indvars.iv125 = phi i64 [ 0, %.lr.ph98.us.preheader ], [ %indvars.iv.next126, %.lr.ph98.us._crit_edge ] ; 5 uses
-  %.08595.us.us.a = phi i32 [ %i.al, %.lr.ph98.us.preheader ], [ %.pre-phi, %.lr.ph98.us._crit_edge ] ; 2 uses
-  %.294.us.us = phi i32 [ %.188101.us, %.lr.ph98.us.preheader ], [ %.3.us.us, %.lr.ph98.us._crit_edge ] ; 3 uses
+  %.08595.us.us = phi i32 [ %i.al, %.lr.ph98.us.preheader ], [ %.pre-phi, %.lr.ph98.us._crit_edge ] ; 3 uses
+  %.08595.us.us.a = phi i32 [ %.188101.us, %.lr.ph98.us.preheader ], [ %.3.us.us, %.lr.ph98.us._crit_edge ] ; 3 uses
+  %12 = sext i32 %.08595.us.us to i64
+  %13 = getelementptr inbounds [8 x i8], ptr %i.ag, i64 %12
+  %14 = getelementptr inbounds nuw i8, ptr %13, i64 4
+  %15 = load float, ptr %14, align 4, !tbaa !112  ; 2 uses
   %i.am = getelementptr inbounds nuw [8 x i8], ptr %i.ag, i64 %indvars.iv125
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 4
-  %i.ao = load float, ptr %i.an, align 4, !tbaa !112 ; 3 uses
-  %i.ap = fcmp oeq float %12, %i.ao
+  %i.ao = load float, ptr %i.an, align 4, !tbaa !112 ; 2 uses
+  %i.ap = fcmp oeq float %15, %i.ao
   br i1 %i.ap, label %.lr.ph98.us._crit_edge, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph98.us
-  %i.aq = sext i32 %.294.us.us to i64
+  %i.aq = sext i32 %.08595.us.us.a to i64
   %i.ar = getelementptr inbounds [20 x i8], ptr %i.p, i64 %i.aq ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 16
-  %i.at = fcmp olt float %12, %i.ao               ; 3 uses
+  %i.at = fcmp olt float %15, %i.ao               ; 3 uses
   %spec.store.select = zext i1 %i.at to i32
   store i32 %spec.store.select, ptr %i.as, align 4, !tbaa !99
-  %i.au = sext i32 %.08595.us.us.a to i64
+  %i.au = sext i32 %.08595.us.us to i64
   %i.av = select i1 %i.at, i64 %i.au, i64 %indvars.iv125
   %i.aw = getelementptr inbounds [8 x i8], ptr %i.ag, i64 %i.av
-  %i.ax = sext i32 %.08595.us.us.a to i64
+  %i.ax = sext i32 %.08595.us.us to i64
   %i.ay = select i1 %i.at, i64 %indvars.iv125, i64 %i.ax
   %i.az = getelementptr inbounds [8 x i8], ptr %i.ag, i64 %i.ay
   %i.ba = load <2 x float>, ptr %i.aw, align 4, !tbaa !80
@@ -241,11 +240,11 @@ bb.b:                                             ; preds = %.lr.ph98.us
   %i.bc = shufflevector <2 x float> %i.ba, <2 x float> %i.bb, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.bd = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.bc, <4 x float> %i.ab, <4 x float> %i.ae)
   store <4 x float> %i.bd, ptr %i.ar, align 4, !tbaa !80
-  %i.be = add nsw i32 %.294.us.us, 1
+  %i.be = add nsw i32 %.08595.us.us.a, 1
   br label %.lr.ph98.us._crit_edge
 
 .lr.ph98.us._crit_edge:                           ; preds = %.lr.ph98.us, %bb.b
-  %.3.us.us = phi i32 [ %i.be, %bb.b ], [ %.294.us.us, %.lr.ph98.us ] ; 2 uses
+  %.3.us.us = phi i32 [ %i.be, %bb.b ], [ %.08595.us.us.a, %.lr.ph98.us ] ; 2 uses
   %.pre-phi = trunc i64 %indvars.iv125 to i32
   %indvars.iv.next126 = add nuw nsw i64 %indvars.iv125, 1 ; 2 uses
   %exitcond129.not = icmp eq i64 %indvars.iv.next126, %wide.trip.count128
@@ -270,36 +269,35 @@ bb.b:                                             ; preds = %.lr.ph98.us
   br i1 %i.bk, label %.lr.ph98.preheader, label %._crit_edge99.split
 
 .lr.ph98.preheader:                               ; preds = %.lr.ph104.split
-  %i.bl = add nsw i32 %i.bi, -1                   ; 2 uses
+  %i.bl = add nsw i32 %i.bi, -1
   %wide.trip.count118 = zext nneg i32 %i.bi to i64
-  %.phi.trans.insert = zext nneg i32 %i.bl to i64
-  %.phi.trans.insert135 = getelementptr inbounds nuw [8 x i8], ptr %i.bg, i64 %.phi.trans.insert
-  %.phi.trans.insert136 = getelementptr inbounds nuw i8, ptr %.phi.trans.insert135, i64 4
-  %.pre = load float, ptr %.phi.trans.insert136, align 4, !tbaa !112
   br label %.lr.ph98
 
 .lr.ph98:                                         ; preds = %.lr.ph98.preheader, %.lr.ph98._crit_edge
-  %13 = phi float [ %.pre, %.lr.ph98.preheader ], [ %i.bo, %.lr.ph98._crit_edge ] ; 2 uses
   %indvars.iv115 = phi i64 [ 0, %.lr.ph98.preheader ], [ %indvars.iv.next116, %.lr.ph98._crit_edge ] ; 5 uses
-  %.08595.a = phi i32 [ %i.bl, %.lr.ph98.preheader ], [ %.pre-phi143, %.lr.ph98._crit_edge ] ; 2 uses
-  %.294 = phi i32 [ %.188101, %.lr.ph98.preheader ], [ %.3, %.lr.ph98._crit_edge ] ; 3 uses
+  %.08595 = phi i32 [ %i.bl, %.lr.ph98.preheader ], [ %.pre-phi143, %.lr.ph98._crit_edge ] ; 3 uses
+  %.08595.a = phi i32 [ %.188101, %.lr.ph98.preheader ], [ %.3, %.lr.ph98._crit_edge ] ; 3 uses
+  %16 = sext i32 %.08595 to i64
+  %17 = getelementptr inbounds [8 x i8], ptr %i.bg, i64 %16
+  %18 = getelementptr inbounds nuw i8, ptr %17, i64 4
+  %19 = load float, ptr %18, align 4, !tbaa !112  ; 2 uses
   %i.bm = getelementptr inbounds nuw [8 x i8], ptr %i.bg, i64 %indvars.iv115
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 4
-  %i.bo = load float, ptr %i.bn, align 4, !tbaa !112 ; 3 uses
-  %i.bp = fcmp oeq float %13, %i.bo
+  %i.bo = load float, ptr %i.bn, align 4, !tbaa !112 ; 2 uses
+  %i.bp = fcmp oeq float %19, %i.bo
   br i1 %i.bp, label %.lr.ph98._crit_edge, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph98
-  %i.bq = sext i32 %.294 to i64
+  %i.bq = sext i32 %.08595.a to i64
   %i.br = getelementptr inbounds [20 x i8], ptr %i.p, i64 %i.bq ; 2 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %i.br, i64 16
-  %i.bt = fcmp ogt float %13, %i.bo               ; 3 uses
+  %i.bt = fcmp ogt float %19, %i.bo               ; 3 uses
   %spec.store.select109 = zext i1 %i.bt to i32
   store i32 %spec.store.select109, ptr %i.bs, align 4, !tbaa !99
-  %i.bu = sext i32 %.08595.a to i64
+  %i.bu = sext i32 %.08595 to i64
   %i.bv = select i1 %i.bt, i64 %i.bu, i64 %indvars.iv115
   %i.bw = getelementptr inbounds [8 x i8], ptr %i.bg, i64 %i.bv
-  %i.bx = sext i32 %.08595.a to i64
+  %i.bx = sext i32 %.08595 to i64
   %i.by = select i1 %i.bt, i64 %indvars.iv115, i64 %i.bx
   %i.bz = getelementptr inbounds [8 x i8], ptr %i.bg, i64 %i.by
   %i.ca = load <2 x float>, ptr %i.bw, align 4, !tbaa !80
@@ -307,11 +305,11 @@ bb.c:                                             ; preds = %.lr.ph98
   %i.cc = shufflevector <2 x float> %i.ca, <2 x float> %i.cb, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.cd = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.cc, <4 x float> %i.v, <4 x float> %i.y)
   store <4 x float> %i.cd, ptr %i.br, align 4, !tbaa !80
-  %i.ce = add nsw i32 %.294, 1
+  %i.ce = add nsw i32 %.08595.a, 1
   br label %.lr.ph98._crit_edge
 
 .lr.ph98._crit_edge:                              ; preds = %.lr.ph98, %bb.c
-  %.3 = phi i32 [ %i.ce, %bb.c ], [ %.294, %.lr.ph98 ] ; 2 uses
+  %.3 = phi i32 [ %i.ce, %bb.c ], [ %.08595.a, %.lr.ph98 ] ; 2 uses
   %.pre-phi143 = trunc i64 %indvars.iv115 to i32
   %indvars.iv.next116 = add nuw nsw i64 %indvars.iv115, 1 ; 2 uses
   %exitcond119.not = icmp eq i64 %indvars.iv.next116, %wide.trip.count118

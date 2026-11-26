@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.f
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.h, %bb.i
-  %.044 = phi ptr [ %i.x, %bb.h ], [ null, %bb.i ] ; 9 uses
+  %.044 = phi ptr [ %i.x, %bb.h ], [ null, %bb.i ] ; 10 uses
   %.043 = phi ptr [ %i.ae, %bb.h ], [ null, %bb.i ] ; 9 uses
   %i.ai = call i32 @PMPI_Gather(ptr noundef nonnull %i.b, i32 noundef 1, ptr noundef nonnull @ompi_mpi_int, ptr noundef %.043, i32 noundef 1, ptr noundef nonnull @ompi_mpi_int, i32 noundef 0, ptr noundef %1) #11 ; 0 uses
   %i.aj = load i32, ptr %i.d, align 4, !tbaa !11
@@ -236,7 +236,7 @@ bb.j:                                             ; preds = %bb.h, %bb.i
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.preheader54
   %.0.lcssa = phi i64 [ 0, %.preheader54 ], [ %i.au, %._crit_edge.loopexit ]
-  %i.av = call ptr @ADIOI_Malloc_fn(i64 noundef %.0.lcssa, i32 noundef 191, ptr noundef nonnull @.str) #11 ; 4 uses
+  %i.av = call ptr @ADIOI_Malloc_fn(i64 noundef %.0.lcssa, i32 noundef 191, ptr noundef nonnull @.str) #11 ; 2 uses
   store ptr %i.av, ptr %.044, align 8, !tbaa !18
   %i.aw = icmp eq ptr %i.av, null
   br i1 %i.aw, label %bb.k, label %.preheader
@@ -248,6 +248,7 @@ bb.j:                                             ; preds = %bb.h, %bb.i
 
 .lr.ph58.preheader:                               ; preds = %.preheader
   %wide.trip.count = zext nneg i32 %i.ax to i64
+  %load_initial = load ptr, ptr %.044, align 8    ; 2 uses
   %i.az = add nsw i64 %wide.trip.count, -1        ; 2 uses
   %xtraiter = and i64 %i.az, 3                    ; 3 uses
   %i.ba = add nsw i32 %i.ax, -2
@@ -264,7 +265,7 @@ bb.k:                                             ; preds = %._crit_edge
   br label %bb.q
 
 .lr.ph58:                                         ; preds = %.lr.ph58, %.lr.ph58.preheader.new
-  %i.bd = phi ptr [ %i.av, %.lr.ph58.preheader.new ], [ %i.ca, %.lr.ph58 ]
+  %i.bd = phi ptr [ %load_initial, %.lr.ph58.preheader.new ], [ %i.ca, %.lr.ph58 ]
   %indvars.iv66 = phi i64 [ 1, %.lr.ph58.preheader.new ], [ %indvars.iv.next67.3, %.lr.ph58 ] ; 6 uses
   %niter = phi i64 [ 0, %.lr.ph58.preheader.new ], [ %niter.next.3, %.lr.ph58 ]
   %i.be = getelementptr [4 x i8], ptr %.043, i64 %indvars.iv66
@@ -308,7 +309,7 @@ bb.k:                                             ; preds = %._crit_edge
   br i1 %lcmp.mod.not, label %._crit_edge59, label %.lr.ph58.epil.preheader
 
 .lr.ph58.epil.preheader:                          ; preds = %._crit_edge59.loopexit.unr-lcssa, %.lr.ph58.preheader
-  %.epil.init = phi ptr [ %i.av, %.lr.ph58.preheader ], [ %i.ca, %._crit_edge59.loopexit.unr-lcssa ]
+  %.epil.init = phi ptr [ %load_initial, %.lr.ph58.preheader ], [ %i.ca, %._crit_edge59.loopexit.unr-lcssa ]
   %indvars.iv66.epil.init = phi i64 [ 1, %.lr.ph58.preheader ], [ %indvars.iv.next67.3, %._crit_edge59.loopexit.unr-lcssa ]
   %lcmp.mod77 = icmp ne i64 %xtraiter, 0
   call void @llvm.assume(i1 %lcmp.mod77)

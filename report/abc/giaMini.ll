@@ -205,7 +205,7 @@ Vec_IntAlloc.exit.i112:                           ; preds = %Vec_IntAlloc.exit.i
   %i.w = tail call noalias dereferenceable_or_null(16) ptr @malloc(i64 noundef 16) #28 ; 5 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 4
   store i32 %spec.store.select.i.i, ptr %i.w, align 8, !tbaa !39
-  %i.y = tail call noalias ptr @malloc(i64 noundef %i.l) #28 ; 5 uses
+  %i.y = tail call noalias ptr @malloc(i64 noundef %i.l) #28 ; 3 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.w, i64 8
   store ptr %i.y, ptr %i.z, align 8, !tbaa !18
   store i32 %.val96, ptr %i.x, align 4, !tbaa !40
@@ -246,7 +246,7 @@ Vec_IntAlloc.exit.i118:                           ; preds = %Vec_IntAlloc.exit.i
   %i.am = tail call noalias dereferenceable_or_null(16) ptr @malloc(i64 noundef 16) #28 ; 5 uses
   %i.an = getelementptr i8, ptr %i.am, i64 4
   store i32 %spec.store.select.i.i, ptr %i.am, align 8, !tbaa !39
-  %i.ao = tail call noalias ptr @malloc(i64 noundef %i.l) #28 ; 4 uses
+  %i.ao = tail call noalias ptr @malloc(i64 noundef %i.l) #28 ; 3 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.am, i64 8
   store ptr %i.ao, ptr %i.ap, align 8, !tbaa !18
   store i32 %.val96, ptr %i.an, align 4, !tbaa !40
@@ -260,12 +260,10 @@ bb.e:                                             ; preds = %Vec_IntAlloc.exit.i
   br label %Vec_IntStart.exit121
 
 Vec_IntStart.exit121:                             ; preds = %Vec_IntAlloc.exit.thread.i120, %Vec_IntAlloc.exit.i118, %bb.e
-  %.val83 = phi ptr [ null, %Vec_IntAlloc.exit.thread.i120 ], [ %i.y, %Vec_IntAlloc.exit.i118 ], [ %i.y, %bb.e ] ; 3 uses
-  %.val84 = phi ptr [ null, %Vec_IntAlloc.exit.thread.i120 ], [ null, %Vec_IntAlloc.exit.i118 ], [ %i.ao, %bb.e ] ; 2 uses
   %.val98 = phi ptr [ null, %Vec_IntAlloc.exit.thread.i120 ], [ %i.m, %Vec_IntAlloc.exit.i118 ], [ %i.m, %bb.e ]
-  %i.as = phi ptr [ %i.aj, %Vec_IntAlloc.exit.thread.i120 ], [ %i.am, %Vec_IntAlloc.exit.i118 ], [ %i.am, %bb.e ] ; 2 uses
+  %i.as = phi ptr [ %i.aj, %Vec_IntAlloc.exit.thread.i120 ], [ %i.am, %Vec_IntAlloc.exit.i118 ], [ %i.am, %bb.e ] ; 4 uses
   %i.at = phi ptr [ %i.ad, %Vec_IntAlloc.exit.thread.i120 ], [ %i.q, %Vec_IntAlloc.exit.i118 ], [ %i.q, %bb.e ] ; 5 uses
-  %i.au = phi ptr [ %i.ag, %Vec_IntAlloc.exit.thread.i120 ], [ %i.w, %Vec_IntAlloc.exit.i118 ], [ %i.w, %bb.e ] ; 2 uses
+  %i.au = phi ptr [ %i.ag, %Vec_IntAlloc.exit.thread.i120 ], [ %i.w, %Vec_IntAlloc.exit.i118 ], [ %i.w, %bb.e ] ; 4 uses
   %i.av = tail call noalias dereferenceable_or_null(16) ptr @malloc(i64 noundef 16) #28 ; 6 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 4 ; 4 uses
   store i32 0, ptr %i.aw, align 4, !tbaa !40
@@ -280,7 +278,11 @@ Vec_IntStart.exit121:                             ; preds = %Vec_IntAlloc.exit.t
 .lr.ph:                                           ; preds = %Vec_IntStart.exit121
   %i.bb = udiv i32 %.val96, 3
   %i.bc = getelementptr i8, ptr %i.f, i64 8
-  %.val87.a = load ptr, ptr %i.bc, align 8, !tbaa !18
+  %.val87 = load ptr, ptr %i.bc, align 8, !tbaa !18
+  %0 = getelementptr i8, ptr %i.as, i64 8
+  %.val101 = load ptr, ptr %0, align 8, !tbaa !18
+  %1 = getelementptr i8, ptr %i.au, i64 8
+  %.val87.a = load ptr, ptr %1, align 8, !tbaa !18 ; 2 uses
   %wide.trip.count = zext nneg i32 %i.bb to i64
   br label %bb.f
 
@@ -289,13 +291,17 @@ Vec_IntStart.exit121:                             ; preds = %Vec_IntAlloc.exit.t
   br i1 %i.bd, label %.critedge.lr.ph, label %.critedge9
 
 .critedge.lr.ph:                                  ; preds = %bb.f, %.preheader145
+  %2 = getelementptr i8, ptr %i.as, i64 8
+  %.val84 = load ptr, ptr %2, align 8, !tbaa !18
+  %3 = getelementptr i8, ptr %i.au, i64 8
+  %.val83 = load ptr, ptr %3, align 8, !tbaa !18
   %wide.trip.count158 = zext nneg i32 %.val96 to i64
   br label %.critedge
 
 bb.f:                                             ; preds = %.lr.ph, %bb.f
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.f ] ; 3 uses
   %.idx = mul nuw nsw i64 %indvars.iv, 12
-  %i.be = getelementptr inbounds nuw i8, ptr %.val87.a, i64 %.idx ; 3 uses
+  %i.be = getelementptr inbounds nuw i8, ptr %.val87, i64 %.idx ; 3 uses
   %i.bf = load i32, ptr %i.be, align 4, !tbaa !16
   %i.bg = getelementptr inbounds nuw i8, ptr %i.be, i64 4
   %i.bh = load i32, ptr %i.bg, align 4, !tbaa !16
@@ -305,17 +311,17 @@ bb.f:                                             ; preds = %.lr.ph, %bb.f
   %i.bl = getelementptr inbounds [4 x i8], ptr %.val98, i64 %i.bk
   %i.bm = trunc nuw nsw i64 %indvars.iv to i32
   store i32 %i.bm, ptr %i.bl, align 4, !tbaa !16
-  %i.bn = getelementptr inbounds [4 x i8], ptr %.val84, i64 %i.bk ; 2 uses
+  %i.bn = getelementptr inbounds [4 x i8], ptr %.val101, i64 %i.bk ; 2 uses
   %i.bo = load i32, ptr %i.bn, align 4, !tbaa !16
   %i.bp = add nsw i32 %i.bo, 1
   store i32 %i.bp, ptr %i.bn, align 4, !tbaa !16
   %i.bq = sext i32 %i.bh to i64
-  %i.br = getelementptr inbounds [4 x i8], ptr %.val83, i64 %i.bq ; 2 uses
+  %i.br = getelementptr inbounds [4 x i8], ptr %.val87.a, i64 %i.bq ; 2 uses
   %i.bs = load i32, ptr %i.br, align 4, !tbaa !16
   %i.bt = add nsw i32 %i.bs, 1
   store i32 %i.bt, ptr %i.br, align 4, !tbaa !16
   %i.bu = sext i32 %i.bj to i64
-  %i.bv = getelementptr inbounds [4 x i8], ptr %.val83, i64 %i.bu ; 2 uses
+  %i.bv = getelementptr inbounds [4 x i8], ptr %.val87.a, i64 %i.bu ; 2 uses
   %i.bw = load i32, ptr %i.bv, align 4, !tbaa !16
   %i.bx = add nsw i32 %i.bw, 1
   store i32 %i.bx, ptr %i.bv, align 4, !tbaa !16

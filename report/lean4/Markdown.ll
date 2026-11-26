@@ -204,69 +204,19 @@ bb.n:                                             ; preds = %bb.m
   br label %lean_dec.exit94
 
 l___private_Init_While_0__whileM_erased___at___00__private_Lean_DocString_Markdown_0__Lean_Doc_escape_spec__1___redArg___lam__0.exit: ; preds = %lean_alloc_ctor.exit.i135, %lean_alloc_ctor.exit.i
-  %.sink262 = phi ptr [ %i.cc, %lean_alloc_ctor.exit.i ], [ %i.cl, %lean_alloc_ctor.exit.i135 ] ; 6 uses
-  %.sink = phi ptr [ %i.bx, %lean_alloc_ctor.exit.i ], [ %i.cg, %lean_alloc_ctor.exit.i135 ] ; 16 uses
+  %.sink262 = phi ptr [ %i.cc, %lean_alloc_ctor.exit.i ], [ %i.cl, %lean_alloc_ctor.exit.i135 ] ; 4 uses
+  %.sink = phi ptr [ %i.bx, %lean_alloc_ctor.exit.i ], [ %i.cg, %lean_alloc_ctor.exit.i135 ] ; 9 uses
   %i.s = getelementptr inbounds nuw i8, ptr %.sink262, i64 4
   store i32 1, ptr %.sink262, align 4, !tbaa !12
   store i32 16842768, ptr %i.s, align 4
   %i.t = getelementptr inbounds nuw i8, ptr %.sink262, i64 8
   store ptr %.sink, ptr %i.t, align 8, !tbaa !10
-  %2 = ptrtoint ptr %.sink262 to i64
-  %3 = and i64 %2, 8589934591
-  %or.cond = icmp eq i64 %3, 1
   %i.u = ptrtoint ptr %.sink to i64
   %i.v = and i64 %i.u, 1
-  %.not.i84 = icmp eq i64 %i.v, 0                 ; 2 uses
-  br i1 %or.cond, label %4, label %lean_obj_tag.exit.thread
-
-4:                                                ; preds = %l___private_Init_While_0__whileM_erased___at___00__private_Lean_DocString_Markdown_0__Lean_Doc_escape_spec__1___redArg___lam__0.exit
-  br i1 %.not.i84, label %5, label %lean_dec.exit.i
-
-5:                                                ; preds = %4
-  %.val.i.i110 = load i32, ptr %.sink, align 4, !tbaa !12 ; 3 uses
-  %6 = icmp sgt i32 %.val.i.i110, 0
-  br i1 %6, label %7, label %9, !prof !13
-
-7:                                                ; preds = %5
-  %8 = add nuw i32 %.val.i.i110, 1                ; 2 uses
-  store i32 %8, ptr %.sink, align 4, !tbaa !12
-  br label %12
-
-9:                                                ; preds = %5
-  %.not.i.i111 = icmp eq i32 %.val.i.i110, 0
-  br i1 %.not.i.i111, label %lean_dec.exit.i, label %10
-
-10:                                               ; preds = %9
-  %11 = atomicrmw add ptr %.sink, i32 -1 monotonic, align 4 ; 0 uses
-  %.pr223 = load i32, ptr %.sink, align 4, !tbaa !12
-  br label %12
-
-12:                                               ; preds = %7, %10
-  %13 = phi i32 [ %8, %7 ], [ %.pr223, %10 ]      ; 3 uses
-  %14 = icmp sgt i32 %13, 1
-  br i1 %14, label %15, label %17, !prof !26
-
-15:                                               ; preds = %12
-  %16 = add nsw i32 %13, -1
-  store i32 %16, ptr %.sink, align 4, !tbaa !12
-  br label %lean_dec.exit.i
-
-17:                                               ; preds = %12
-  %.not.i7.i = icmp eq i32 %13, 0
-  br i1 %.not.i7.i, label %lean_dec.exit.i, label %18
-
-18:                                               ; preds = %17
-  tail call void @lean_dec_ref_cold(ptr noundef nonnull %.sink) #8
-  br label %lean_dec.exit.i
-
-lean_dec.exit.i:                                  ; preds = %9, %4, %18, %17, %15
-  tail call void @lean_free_object(ptr noundef nonnull %.sink262) #8
-  br label %bb.aw
-
-lean_obj_tag.exit.thread:                         ; preds = %l___private_Init_While_0__whileM_erased___at___00__private_Lean_DocString_Markdown_0__Lean_Doc_escape_spec__1___redArg___lam__0.exit
+  %.not.i84 = icmp eq i64 %i.v, 0
   br i1 %.not.i84, label %bb.o, label %lean_dec_ref_known.exit
 
-bb.o:                                             ; preds = %lean_obj_tag.exit.thread
+bb.o:                                             ; preds = %l___private_Init_While_0__whileM_erased___at___00__private_Lean_DocString_Markdown_0__Lean_Doc_escape_spec__1___redArg___lam__0.exit
   %.val.i.i115 = load i32, ptr %.sink, align 4, !tbaa !12 ; 3 uses
   %i.w = icmp sgt i32 %.val.i.i115, 0
   br i1 %i.w, label %bb.p, label %bb.q, !prof !13
@@ -545,12 +495,12 @@ lean_alloc_ctor.exit137:                          ; preds = %bb.au
   store ptr %i.f, ptr %i.cr, align 8, !tbaa !10
   br label %bb.aw
 
-lean_dec_ref_known.exit:                          ; preds = %bb.q, %bb.t, %bb.u, %bb.v, %lean_obj_tag.exit.thread
+lean_dec_ref_known.exit:                          ; preds = %bb.q, %bb.t, %bb.u, %bb.v, %l___private_Init_While_0__whileM_erased___at___00__private_Lean_DocString_Markdown_0__Lean_Doc_escape_spec__1___redArg___lam__0.exit
   tail call void @lean_free_object(ptr noundef nonnull %.sink262) #8
   br label %bb.b
 
-bb.aw:                                            ; preds = %lean_dec.exit.i, %lean_alloc_ctor.exit137, %bb.at
-  %.3.ph = phi ptr [ %.077, %bb.at ], [ %i.cn, %lean_alloc_ctor.exit137 ], [ %.sink, %lean_dec.exit.i ]
+bb.aw:                                            ; preds = %lean_alloc_ctor.exit137, %bb.at
+  %.3.ph = phi ptr [ %.077, %bb.at ], [ %i.cn, %lean_alloc_ctor.exit137 ]
   ret ptr %.3.ph
 }
 

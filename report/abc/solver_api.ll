@@ -204,11 +204,11 @@ bb.a:
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 3 uses
-  %i.m = load ptr, ptr %i.l, align 8, !tbaa !72
+  %i.m = load ptr, ptr %i.l, align 8, !tbaa !72   ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 4
   store i32 0, ptr %i.n, align 4, !tbaa !93
   %.not56 = icmp eq i32 %2, 0
-  br i1 %.not56, label %._crit_edge55.thread, label %.lr.ph54
+  br i1 %.not56, label %._crit_edge55, label %.lr.ph54
 
 .lr.ph54:                                         ; preds = %._crit_edge
   %i.o = getelementptr i8, ptr %0, i64 104
@@ -298,23 +298,27 @@ bb.i:                                             ; preds = %vec_uint_push_back.
   %.1 = phi i32 [ %i.q, %vec_uint_push_back.exit ], [ %.052, %bb.d ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge55, label %bb.b, !llvm.loop !145
+  br i1 %exitcond.not, label %._crit_edge55.loopexit, label %bb.b, !llvm.loop !145
 
-._crit_edge55:                                    ; preds = %bb.i
-  %.pre58 = load ptr, ptr %i.l, align 8, !tbaa !72 ; 3 uses
-  %.phi.trans.insert = getelementptr i8, ptr %.pre58, i64 4
+._crit_edge55.loopexit:                           ; preds = %bb.i
+  %.pre58 = load ptr, ptr %i.l, align 8, !tbaa !72
+  br label %._crit_edge55
+
+._crit_edge55:                                    ; preds = %._crit_edge55.loopexit, %._crit_edge
+  %3 = phi ptr [ %.pre58, %._crit_edge55.loopexit ], [ %i.m, %._crit_edge ] ; 3 uses
+  %.phi.trans.insert = getelementptr i8, ptr %3, i64 4
   %.val43.pre = load i32, ptr %.phi.trans.insert, align 4, !tbaa !93
   switch i32 %.val43.pre, label %bb.n [
     i32 0, label %._crit_edge55.thread
     i32 1, label %bb.j
   ]
 
-._crit_edge55.thread:                             ; preds = %._crit_edge, %._crit_edge55
+._crit_edge55.thread:                             ; preds = %._crit_edge55
   store i32 0, ptr %0, align 8, !tbaa !35
   br label %clause_watch.exit
 
 bb.j:                                             ; preds = %._crit_edge55
-  %i.ay = getelementptr i8, ptr %.pre58, i64 8
+  %i.ay = getelementptr i8, ptr %3, i64 8
   %.val44 = load ptr, ptr %i.ay, align 8, !tbaa !79
   %i.az = load i32, ptr %.val44, align 4, !tbaa !10 ; 3 uses
   %i.ba = lshr i32 %i.az, 1
@@ -405,7 +409,7 @@ solver_enqueue.exit:                              ; preds = %bb.j, %bb.l, %vec_u
   br label %clause_watch.exit
 
 bb.n:                                             ; preds = %._crit_edge55
-  %i.cw = tail call i32 @solver_clause_create(ptr noundef nonnull %0, ptr noundef nonnull %.pre58, i32 noundef 0) #30 ; 2 uses
+  %i.cw = tail call i32 @solver_clause_create(ptr noundef nonnull %0, ptr noundef nonnull %3, i32 noundef 0) #30 ; 2 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.cy = load ptr, ptr %i.cx, align 8, !tbaa !40
   %.not.i.i = icmp ne i32 %i.cw, -1

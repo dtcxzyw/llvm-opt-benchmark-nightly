@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.aq, %bb.b
   %i.n = phi i32 [ 0, %bb.b ], [ 6, %bb.aq ]      ; 4 uses
-  %.047 = phi ptr [ %i.g, %bb.b ], [ %.249, %bb.aq ] ; 19 uses
+  %.047 = phi ptr [ %i.g, %bb.b ], [ %.249, %bb.aq ] ; 18 uses
   %.045 = phi i32 [ %i.k, %bb.b ], [ %.2, %bb.aq ] ; 2 uses
   %i.o = call noundef ptr @strchr(ptr noundef nonnull dereferenceable(1) %.047, i32 noundef 10) #23 ; 2 uses
   %cond = icmp eq ptr %i.o, null
@@ -333,9 +333,7 @@ bb.s:                                             ; preds = %bb.q, %bb.p, %bb.n,
   store i8 0, ptr %i.aw, align 1, !tbaa !111
   %i.ax = trunc i64 %i.af to i32
   %i.ay = add nsw i32 %i.ax, 1                    ; 2 uses
-  %i.az = sext i32 %i.ay to i64                   ; 2 uses
-  %.249.phi.trans.insert = getelementptr inbounds i8, ptr %.047, i64 %i.az
-  %.pre = load i8, ptr %.249.phi.trans.insert, align 1, !tbaa !111
+  %i.az = sext i32 %i.ay to i64
   br label %bb.ao
 
 .lr.ph:                                           ; preds = %bb.l, %bb.d
@@ -542,7 +540,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.al
 bb.am:                                            ; preds = %bb.am, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
   %indvars.iv268 = phi i64 [ %indvars.iv.next269, %bb.am ], [ %i.da, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ] ; 4 uses
   %i.db = getelementptr inbounds nuw i8, ptr %.047, i64 %indvars.iv268
-  %i.dc = load i8, ptr %i.db, align 1, !tbaa !111 ; 2 uses
+  %i.dc = load i8, ptr %i.db, align 1, !tbaa !111
   %i.dd = sext i8 %i.dc to i64
   %i.de = getelementptr inbounds [2 x i8], ptr %i.cz, i64 %i.dd
   %i.df = load i16, ptr %i.de, align 2, !tbaa !148
@@ -579,11 +577,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit115: ; preds = %.l
   br label %bb.ao
 
 bb.ao:                                            ; preds = %.loopexit, %bb.s
-  %10 = phi i8 [ %.pre, %bb.s ], [ %i.dc, %.loopexit ]
   %.pn243 = phi i64 [ %i.az, %bb.s ], [ %indvars.iv268, %.loopexit ]
   %.pn211 = phi i32 [ %i.ay, %bb.s ], [ %i.dm, %.loopexit ]
-  %.249 = getelementptr inbounds i8, ptr %.047, i64 %.pn243
+  %.249 = getelementptr inbounds i8, ptr %.047, i64 %.pn243 ; 2 uses
   %.2 = sub nsw i32 %.045, %.pn211
+  %10 = load i8, ptr %.249, align 1, !tbaa !111
   %i.dn = icmp eq i8 %10, 0
   br i1 %i.dn, label %.loopexit218, label %bb.ap
 

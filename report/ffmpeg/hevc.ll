@@ -205,7 +205,7 @@ bb.a:
   %i.b = alloca [16 x i8], align 16               ; 21 uses
   %i.c = alloca [16 x i8], align 16               ; 10 uses
   %i.d = alloca [64 x i8], align 16               ; 13 uses
-  %i.e = alloca [17 x i8], align 16               ; 13 uses
+  %i.e = alloca [17 x i8], align 16               ; 14 uses
   %5 = alloca %struct.GetBitContext, align 8      ; 22 uses
   %i.f = alloca i32, align 4                      ; 4 uses
   %i.g = and i32 %3, 2
@@ -608,6 +608,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %i.aav, label %.lr.ph103.i.i.preheader, label %._crit_edge104.i.i
 
 .lr.ph103.i.i.preheader:                          ; preds = %._crit_edge94.thread.i.i
+  %load_initial = load i8, ptr %i.e, align 16     ; 2 uses
   %i.aaw = add nsw i64 %wide.trip.count138.i.i, -1 ; 2 uses
   %xtraiter396 = and i64 %i.aaw, 3                ; 3 uses
   %i.aax = add i8 %.169.15.i.i, -2
@@ -619,7 +620,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br label %.lr.ph103.i.i
 
 .lr.ph103.i.i:                                    ; preds = %.lr.ph103.i.i, %.lr.ph103.i.i.preheader.new
-  %i.aaz = phi i8 [ 0, %.lr.ph103.i.i.preheader.new ], [ %i.abs, %.lr.ph103.i.i ]
+  %i.aaz = phi i8 [ %load_initial, %.lr.ph103.i.i.preheader.new ], [ %i.abs, %.lr.ph103.i.i ]
   %indvars.iv135.i.i = phi i64 [ 1, %.lr.ph103.i.i.preheader.new ], [ %indvars.iv.next136.i.i.3, %.lr.ph103.i.i ] ; 7 uses
   %niter402 = phi i64 [ 0, %.lr.ph103.i.i.preheader.new ], [ %niter402.next.3, %.lr.ph103.i.i ]
   %i.aba = getelementptr i8, ptr %i.c, i64 %indvars.iv135.i.i
@@ -658,16 +659,16 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %lcmp.mod399.not, label %._crit_edge104.thread.i.i, label %.lr.ph103.i.i.epil.preheader
 
 .lr.ph103.i.i.epil.preheader:                     ; preds = %._crit_edge104.thread.i.i.unr-lcssa, %.lr.ph103.i.i.preheader
-  %.epil.init398 = phi i8 [ 0, %.lr.ph103.i.i.preheader ], [ %i.abs, %._crit_edge104.thread.i.i.unr-lcssa ]
+  %.epil.init398 = phi i8 [ %load_initial, %.lr.ph103.i.i.preheader ], [ %i.abs, %._crit_edge104.thread.i.i.unr-lcssa ]
   %indvars.iv135.i.i.epil.init = phi i64 [ 1, %.lr.ph103.i.i.preheader ], [ %indvars.iv.next136.i.i.3, %._crit_edge104.thread.i.i.unr-lcssa ]
   %lcmp.mod400 = icmp ne i64 %xtraiter396, 0
   call void @llvm.assume(i1 %lcmp.mod400)
   br label %.lr.ph103.i.i.epil
 
 .lr.ph103.i.i.epil:                               ; preds = %.lr.ph103.i.i.epil, %.lr.ph103.i.i.epil.preheader
-  %i.abu = phi i8 [ %i.aby, %.lr.ph103.i.i.epil ], [ %.epil.init398, %.lr.ph103.i.i.epil.preheader ]
-  %indvars.iv135.i.i.epil = phi i64 [ %indvars.iv.next136.i.i.epil, %.lr.ph103.i.i.epil ], [ %indvars.iv135.i.i.epil.init, %.lr.ph103.i.i.epil.preheader ] ; 3 uses
-  %epil.iter = phi i64 [ %epil.iter.next, %.lr.ph103.i.i.epil ], [ 0, %.lr.ph103.i.i.epil.preheader ]
+  %i.abu = phi i8 [ %.epil.init398, %.lr.ph103.i.i.epil.preheader ], [ %i.aby, %.lr.ph103.i.i.epil ]
+  %indvars.iv135.i.i.epil = phi i64 [ %indvars.iv135.i.i.epil.init, %.lr.ph103.i.i.epil.preheader ], [ %indvars.iv.next136.i.i.epil, %.lr.ph103.i.i.epil ] ; 3 uses
+  %epil.iter = phi i64 [ 0, %.lr.ph103.i.i.epil.preheader ], [ %epil.iter.next, %.lr.ph103.i.i.epil ]
   %i.abv = getelementptr i8, ptr %i.c, i64 %indvars.iv135.i.i.epil
   %i.abw = getelementptr i8, ptr %i.abv, i64 -1
   %i.abx = load i8, ptr %i.abw, align 1, !tbaa !13

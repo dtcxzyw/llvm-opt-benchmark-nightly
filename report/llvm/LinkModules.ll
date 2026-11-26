@@ -202,10 +202,10 @@ bb.z:                                             ; preds = %.loopexit.i.i
   %.val7.i.pre.i.i = load ptr, ptr %i.di, align 8, !tbaa !74
   br label %_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_6ComdatESt4pairINS2_13SelectionKindEN12_GLOBAL__N_18LinkFromEENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S9_EEEES4_S9_SB_SE_EixERKS4_.exit.thread
 
-_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_6ComdatESt4pairINS2_13SelectionKindEN12_GLOBAL__N_18LinkFromEENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S9_EEEES4_S9_SB_SE_EixERKS4_.exit.thread: ; preds = %.loopexit.i.i, %bb.z
+_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_6ComdatESt4pairINS2_13SelectionKindEN12_GLOBAL__N_18LinkFromEENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S9_EEEES4_S9_SB_SE_EixERKS4_.exit.thread: ; preds = %bb.z, %.loopexit.i.i
   %.val7.i.i.i = phi ptr [ %.val7.i.pre.i.i, %bb.z ], [ %i.dj, %.loopexit.i.i ]
   %.val4.i.i.i = phi ptr [ %.val4.i.pre.i.i, %bb.z ], [ %i.dl, %.loopexit.i.i ]
-  %i.ew = phi ptr [ %.pre.i.i.i, %bb.z ], [ %.lcssa9.sink.i.ph.i.i, %.loopexit.i.i ] ; 4 uses
+  %i.ew = phi ptr [ %.pre.i.i.i, %bb.z ], [ %.lcssa9.sink.i.ph.i.i, %.loopexit.i.i ] ; 5 uses
   %i.ex = ptrtoint ptr %i.ew to i64
   %i.ey = ptrtoint ptr %.val7.i.i.i to i64
   %i.ez = sub i64 %i.ex, %i.ey
@@ -227,10 +227,11 @@ _ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_6ComdatESt4pairINS2_13SelectionKindEN12
   store i32 0, ptr %i.fj, align 8, !tbaa !201
   %i.fk = getelementptr inbounds nuw i8, ptr %i.ew, i64 12
   store i32 0, ptr %i.fk, align 4, !tbaa !202
-  br label %bb.aj
+  br label %_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_6ComdatESt4pairINS2_13SelectionKindEN12_GLOBAL__N_18LinkFromEENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S9_EEEES4_S9_SB_SE_EixERKS4_.exit
 
-_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_6ComdatESt4pairINS2_13SelectionKindEN12_GLOBAL__N_18LinkFromEENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S9_EEEES4_S9_SB_SE_EixERKS4_.exit: ; preds = %.lr.ph.i.i.i
-  %.phi.trans.insert = getelementptr i8, ptr %i.ee, i64 12
+_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_6ComdatESt4pairINS2_13SelectionKindEN12_GLOBAL__N_18LinkFromEENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S9_EEEES4_S9_SB_SE_EixERKS4_.exit: ; preds = %.lr.ph.i.i.i, %_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_6ComdatESt4pairINS2_13SelectionKindEN12_GLOBAL__N_18LinkFromEENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S9_EEEES4_S9_SB_SE_EixERKS4_.exit.thread
+  %.sroa.0.0.i.i91 = phi ptr [ %i.ew, %_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_6ComdatESt4pairINS2_13SelectionKindEN12_GLOBAL__N_18LinkFromEENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S9_EEEES4_S9_SB_SE_EixERKS4_.exit.thread ], [ %i.ee, %.lr.ph.i.i.i ]
+  %.phi.trans.insert = getelementptr i8, ptr %.sroa.0.0.i.i91, i64 12
   %.val68.pre = load i32, ptr %.phi.trans.insert, align 4, !tbaa !202 ; 2 uses
   %i.fl = icmp eq i32 %.val68.pre, 0
   br i1 %i.fl, label %bb.aj, label %.critedge64
@@ -320,8 +321,8 @@ bb.ai:                                            ; preds = %_ZN4llvm23SmallVect
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #16
   br label %bb.aj
 
-bb.aj:                                            ; preds = %_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_6ComdatESt4pairINS2_13SelectionKindEN12_GLOBAL__N_18LinkFromEENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S9_EEEES4_S9_SB_SE_EixERKS4_.exit.thread, %switch.early.test, %switch.early.test, %switch.early.test, %bb.t, %bb.ai, %_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_6ComdatESt4pairINS2_13SelectionKindEN12_GLOBAL__N_18LinkFromEENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S9_EEEES4_S9_SB_SE_EixERKS4_.exit, %bb.u, %bb.g, %bb.f
-  %.3 = phi i1 [ false, %switch.early.test ], [ false, %bb.u ], [ false, %bb.g ], [ false, %bb.f ], [ %.1, %bb.ai ], [ false, %_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_6ComdatESt4pairINS2_13SelectionKindEN12_GLOBAL__N_18LinkFromEENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S9_EEEES4_S9_SB_SE_EixERKS4_.exit ], [ false, %bb.t ], [ false, %switch.early.test ], [ false, %switch.early.test ], [ false, %_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_6ComdatESt4pairINS2_13SelectionKindEN12_GLOBAL__N_18LinkFromEENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S9_EEEES4_S9_SB_SE_EixERKS4_.exit.thread ]
+bb.aj:                                            ; preds = %switch.early.test, %switch.early.test, %switch.early.test, %bb.t, %bb.ai, %_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_6ComdatESt4pairINS2_13SelectionKindEN12_GLOBAL__N_18LinkFromEENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S9_EEEES4_S9_SB_SE_EixERKS4_.exit, %bb.u, %bb.g, %bb.f
+  %.3 = phi i1 [ false, %switch.early.test ], [ false, %bb.u ], [ false, %bb.g ], [ false, %bb.f ], [ %.1, %bb.ai ], [ false, %_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_6ComdatESt4pairINS2_13SelectionKindEN12_GLOBAL__N_18LinkFromEENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S9_EEEES4_S9_SB_SE_EixERKS4_.exit ], [ false, %bb.t ], [ false, %switch.early.test ], [ false, %switch.early.test ]
   ret i1 %.3
 }
 

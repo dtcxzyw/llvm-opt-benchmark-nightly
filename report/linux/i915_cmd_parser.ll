@@ -204,16 +204,16 @@ check_cmd.exit:                                   ; preds = %bb.bq, %bb.s
   %.086 = phi i32 [ 0, %bb.s ], [ %i.jp, %bb.bq ] ; 3 uses
   %.084 = phi ptr [ %6, %bb.s ], [ %.0.i108116, %bb.bq ] ; 3 uses
   %.078 = phi ptr [ %.0.i, %bb.s ], [ %i.jo, %bb.bq ] ; 20 uses
-  %i.cu = load i32, ptr %.078, align 4            ; 8 uses
+  %i.cu = load i32, ptr %.078, align 4            ; 7 uses
   %i.cv = icmp eq i32 %i.cu, 83886080
   br i1 %i.cv, label %.loopexit, label %bb.t
 
 bb.t:                                             ; preds = %check_cmd.exit
   %i.cw = getelementptr i8, ptr %.084, i64 4
-  %i.cx = load i32, ptr %i.cw, align 4            ; 2 uses
+  %i.cx = load i32, ptr %i.cw, align 4
   %i.cy = xor i32 %i.cx, %i.cu
   %i.cz = getelementptr i8, ptr %.084, i64 8
-  %i.da = load i32, ptr %i.cz, align 4            ; 2 uses
+  %i.da = load i32, ptr %i.cz, align 4
   %i.db = and i32 %i.cy, %i.da
   %i.dc = icmp eq i32 %i.db, 0
   br i1 %i.dc, label %find_cmd.exit.thread, label %bb.u
@@ -240,10 +240,10 @@ bb.u:                                             ; preds = %bb.t
   %.02031.i.i = phi ptr [ %i.du, %select.unfold.i.i ], [ %i.dk, %bb.u ] ; 2 uses
   %i.dl = load ptr, ptr %.02031.i.i, align 8      ; 4 uses
   %i.dm = getelementptr i8, ptr %i.dl, i64 4
-  %i.dn = load i32, ptr %i.dm, align 4            ; 2 uses
+  %i.dn = load i32, ptr %i.dm, align 4
   %i.do = xor i32 %i.dn, %i.cu
   %i.dp = getelementptr i8, ptr %i.dl, i64 8
-  %i.dq = load i32, ptr %i.dp, align 4            ; 2 uses
+  %i.dq = load i32, ptr %i.dp, align 4
   %i.dr = and i32 %i.do, %i.dq
   %.not25.i.i = icmp eq i32 %i.dr, 0
   br i1 %.not25.i.i, label %find_cmd_in_table.exit.i, label %select.unfold.i.i
@@ -280,9 +280,7 @@ find_cmd.exit.thread117:                          ; preds = %find_cmd_in_table.e
   br label %.loopexit
 
 find_cmd.exit.thread:                             ; preds = %bb.t, %bb.v, %find_cmd_in_table.exit.i
-  %.val104 = phi i32 [ %i.dq, %find_cmd_in_table.exit.i ], [ -65536, %bb.v ], [ %i.da, %bb.t ] ; 4 uses
-  %.val103 = phi i32 [ %i.dn, %find_cmd_in_table.exit.i ], [ %i.cu, %bb.v ], [ %i.cx, %bb.t ] ; 4 uses
-  %.0.i108116 = phi ptr [ %i.dl, %find_cmd_in_table.exit.i ], [ %6, %bb.v ], [ %.084, %bb.t ] ; 22 uses
+  %.0.i108116 = phi ptr [ %i.dl, %find_cmd_in_table.exit.i ], [ %6, %bb.v ], [ %.084, %bb.t ] ; 26 uses
   %i.dy = load i32, ptr %.0.i108116, align 4      ; 5 uses
   %i.dz = and i32 %i.dy, 1
   %.not95 = icmp eq i32 %i.dz, 0
@@ -351,19 +349,12 @@ bb.ae:                                            ; preds = %bb.ad
   %.val.i = load ptr, ptr %i.cr, align 8
   %.val100.i = load i32, ptr %i.cs, align 8       ; 2 uses
   %i.ey = icmp sgt i32 %.val100.i, 0
-  br i1 %i.ey, label %.lr.ph.i.preheader.us.i.preheader, label %.lr.ph.split.i
+  %7 = getelementptr i8, ptr %.0.i108116, i64 4
+  %8 = getelementptr i8, ptr %.0.i108116, i64 8
+  br i1 %i.ey, label %.lr.ph.i.preheader.us.i, label %.lr.ph.split.i
 
-.lr.ph.i.preheader.us.i.preheader:                ; preds = %.lr.ph.i111
-  %7 = and i32 %.val104, 343932929
-  %8 = icmp eq i32 %.val103, %7
-  %9 = and i32 %.val104, 352321537
-  %10 = icmp eq i32 %.val103, %9
-  %11 = and i32 %.val104, 285212673
-  %12 = icmp eq i32 %.val103, %11
-  br label %.lr.ph.i.preheader.us.i
-
-.lr.ph.i.preheader.us.i:                          ; preds = %.lr.ph.i.preheader.us.i.preheader, %bb.ao
-  %.075124.us.i = phi i32 [ %i.gg, %bb.ao ], [ %i.eu, %.lr.ph.i.preheader.us.i.preheader ] ; 4 uses
+.lr.ph.i.preheader.us.i:                          ; preds = %.lr.ph.i111, %bb.ao
+  %.075124.us.i = phi i32 [ %i.gg, %bb.ao ], [ %i.eu, %.lr.ph.i111 ] ; 4 uses
   %i.ez = zext i32 %.075124.us.i to i64
   %i.fa = getelementptr [4 x i8], ptr %.078, i64 %i.ez
   %i.fb = load i32, ptr %i.fa, align 4
@@ -425,13 +416,21 @@ bb.ai:                                            ; preds = %find_reg.exit.us.i
   br i1 %.not92.us.i, label %bb.ao, label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai
-  br i1 %8, label %.split.us.i, label %bb.ak
+  %.val105.us.i = load i32, ptr %7, align 4       ; 3 uses
+  %.val106.us.i = load i32, ptr %8, align 4       ; 3 uses
+  %9 = and i32 %.val106.us.i, 343932929
+  %10 = icmp eq i32 %.val105.us.i, %9
+  br i1 %10, label %.split.us.i, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj
-  br i1 %10, label %.split127.us.i, label %bb.al
+  %11 = and i32 %.val106.us.i, 352321537
+  %12 = icmp eq i32 %.val105.us.i, %11
+  br i1 %12, label %.split127.us.i, label %bb.al
 
 bb.al:                                            ; preds = %bb.ak
-  br i1 %12, label %bb.am, label %bb.ao
+  %13 = and i32 %.val106.us.i, 285212673
+  %14 = icmp eq i32 %.val105.us.i, %13
+  br i1 %14, label %bb.am, label %bb.ao
 
 bb.am:                                            ; preds = %bb.al
   %i.fx = add i32 %.075124.us.i, 2
@@ -615,6 +614,10 @@ bb.bc:                                            ; preds = %bb.bb
   br i1 %.not98.2.i, label %bb.bd, label %bb.au
 
 bb.bd:                                            ; preds = %.critedge.thread.i, %bb.aa, %bb.ba, %bb.bc, %.thread110.1.i, %.thread110.i, %.preheader.i
+  %15 = getelementptr i8, ptr %.0.i108116, i64 4
+  %.val103 = load i32, ptr %15, align 4
+  %16 = getelementptr i8, ptr %.0.i108116, i64 8
+  %.val104 = load i32, ptr %16, align 4
   %i.iy = and i32 %.val104, 411041792
   %i.iz = icmp eq i32 %.val103, %i.iy
   br i1 %i.iz, label %bb.be, label %bb.bo
