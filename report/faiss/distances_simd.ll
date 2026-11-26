@@ -205,7 +205,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #17
   %i.g = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 4 uses
-  store ptr %i.g, ptr %7, align 8, !tbaa !111
+  store ptr %i.g, ptr %7, align 8, !tbaa !118
   %i.h = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 2 uses
   store i64 0, ptr %i.h, align 8, !tbaa !24
   store i8 0, ptr %i.g, align 8, !tbaa !25
@@ -568,7 +568,7 @@ bb.j:                                             ; preds = %bb.j, %.epil.prehea
   %i.ez = add i64 %i.et, %i.f                     ; 2 uses
   %niter669.next.3 = add i32 %niter669, 4         ; 2 uses
   %niter669.ncmp.3 = icmp eq i32 %niter669.next.3, %unroll_iter668
-  br i1 %niter669.ncmp.3, label %._crit_edge.us.1.unr-lcssa, label %._crit_edge.us.new, !llvm.loop !98
+  br i1 %niter669.ncmp.3, label %._crit_edge.us.1.unr-lcssa, label %._crit_edge.us.new, !llvm.loop !100
 
 ._crit_edge.us.1.unr-lcssa:                       ; preds = %._crit_edge.us.new
   br i1 %lcmp.mod666.not, label %._crit_edge.us.1, label %.epil.preheader663
@@ -591,7 +591,7 @@ bb.k:                                             ; preds = %bb.k, %.epil.prehea
   %i.fe = add i64 %.064143.us.1.epil, %i.f
   %epil.iter665.next = add i32 %epil.iter665, 1   ; 2 uses
   %epil.iter665.cmp.not = icmp eq i32 %epil.iter665.next, %xtraiter664
-  br i1 %epil.iter665.cmp.not, label %._crit_edge.us.1, label %bb.k, !llvm.loop !100
+  br i1 %epil.iter665.cmp.not, label %._crit_edge.us.1, label %bb.k, !llvm.loop !101
 
 ._crit_edge.us.1:                                 ; preds = %bb.k, %._crit_edge.us.1.unr-lcssa
   %i.ff = load <2 x float>, ptr %i.b, align 32    ; 2 uses
@@ -634,7 +634,7 @@ bb.k:                                             ; preds = %bb.k, %.epil.prehea
   %i.ge = add i64 %i.fy, %i.f                     ; 2 uses
   %niter676.next.3 = add i32 %niter676, 4         ; 2 uses
   %niter676.ncmp.3 = icmp eq i32 %niter676.next.3, %unroll_iter675
-  br i1 %niter676.ncmp.3, label %._crit_edge.us.2.unr-lcssa, label %._crit_edge.us.1.new, !llvm.loop !98
+  br i1 %niter676.ncmp.3, label %._crit_edge.us.2.unr-lcssa, label %._crit_edge.us.1.new, !llvm.loop !102
 
 ._crit_edge.us.2.unr-lcssa:                       ; preds = %._crit_edge.us.1.new
   br i1 %lcmp.mod673.not, label %._crit_edge.us.2, label %.epil.preheader670
@@ -657,7 +657,7 @@ bb.l:                                             ; preds = %bb.l, %.epil.prehea
   %i.gj = add i64 %.064143.us.2.epil, %i.f
   %epil.iter672.next = add i32 %epil.iter672, 1   ; 2 uses
   %epil.iter672.cmp.not = icmp eq i32 %epil.iter672.next, %xtraiter671
-  br i1 %epil.iter672.cmp.not, label %._crit_edge.us.2, label %bb.l, !llvm.loop !101
+  br i1 %epil.iter672.cmp.not, label %._crit_edge.us.2, label %bb.l, !llvm.loop !103
 
 ._crit_edge.us.2:                                 ; preds = %bb.l, %._crit_edge.us.2.unr-lcssa
   %i.gk = load <4 x float>, ptr %i.b, align 32    ; 2 uses
@@ -700,7 +700,7 @@ bb.l:                                             ; preds = %bb.l, %.epil.prehea
   %i.hj = add i64 %i.hd, %i.f                     ; 2 uses
   %niter683.next.3 = add i32 %niter683, 4         ; 2 uses
   %niter683.ncmp.3 = icmp eq i32 %niter683.next.3, %unroll_iter682
-  br i1 %niter683.ncmp.3, label %._crit_edge.us.3.unr-lcssa, label %._crit_edge.us.2.new, !llvm.loop !98
+  br i1 %niter683.ncmp.3, label %._crit_edge.us.3.unr-lcssa, label %._crit_edge.us.2.new, !llvm.loop !104
 
 ._crit_edge.us.3.unr-lcssa:                       ; preds = %._crit_edge.us.2.new
   br i1 %lcmp.mod680.not, label %._crit_edge.us.3, label %.epil.preheader677
@@ -723,7 +723,7 @@ bb.m:                                             ; preds = %bb.m, %.epil.prehea
   %i.ho = add i64 %.064143.us.3.epil, %i.f
   %epil.iter679.next = add i32 %epil.iter679, 1   ; 2 uses
   %epil.iter679.cmp.not = icmp eq i32 %epil.iter679.next, %xtraiter678
-  br i1 %epil.iter679.cmp.not, label %._crit_edge.us.3, label %bb.m, !llvm.loop !102
+  br i1 %epil.iter679.cmp.not, label %._crit_edge.us.3, label %bb.m, !llvm.loop !105
 
 ._crit_edge.us.3:                                 ; preds = %bb.m, %._crit_edge.us.3.unr-lcssa
   %i.hp = load <4 x float>, ptr %i.b, align 32    ; 2 uses
@@ -766,7 +766,7 @@ bb.m:                                             ; preds = %bb.m, %.epil.prehea
   %i.io = add i64 %i.ii, %i.f                     ; 2 uses
   %niter690.next.3 = add i32 %niter690, 4         ; 2 uses
   %niter690.ncmp.3 = icmp eq i32 %niter690.next.3, %unroll_iter689
-  br i1 %niter690.ncmp.3, label %._crit_edge.us.4.unr-lcssa, label %._crit_edge.us.3.new, !llvm.loop !98
+  br i1 %niter690.ncmp.3, label %._crit_edge.us.4.unr-lcssa, label %._crit_edge.us.3.new, !llvm.loop !106
 
 ._crit_edge.us.4.unr-lcssa:                       ; preds = %._crit_edge.us.3.new
   br i1 %lcmp.mod687.not, label %._crit_edge.us.4, label %.epil.preheader684
@@ -789,7 +789,7 @@ bb.n:                                             ; preds = %bb.n, %.epil.prehea
   %i.it = add i64 %.064143.us.4.epil, %i.f
   %epil.iter686.next = add i32 %epil.iter686, 1   ; 2 uses
   %epil.iter686.cmp.not = icmp eq i32 %epil.iter686.next, %xtraiter685
-  br i1 %epil.iter686.cmp.not, label %._crit_edge.us.4, label %bb.n, !llvm.loop !103
+  br i1 %epil.iter686.cmp.not, label %._crit_edge.us.4, label %bb.n, !llvm.loop !107
 
 ._crit_edge.us.4:                                 ; preds = %bb.n, %._crit_edge.us.4.unr-lcssa
   %i.iu = load <2 x float>, ptr %i.b, align 32    ; 2 uses
@@ -832,7 +832,7 @@ bb.n:                                             ; preds = %bb.n, %.epil.prehea
   %i.jt = add i64 %i.jn, %i.f                     ; 2 uses
   %niter697.next.3 = add i32 %niter697, 4         ; 2 uses
   %niter697.ncmp.3 = icmp eq i32 %niter697.next.3, %unroll_iter696
-  br i1 %niter697.ncmp.3, label %._crit_edge.us.5.unr-lcssa, label %._crit_edge.us.4.new, !llvm.loop !98
+  br i1 %niter697.ncmp.3, label %._crit_edge.us.5.unr-lcssa, label %._crit_edge.us.4.new, !llvm.loop !108
 
 ._crit_edge.us.5.unr-lcssa:                       ; preds = %._crit_edge.us.4.new
   br i1 %lcmp.mod694.not, label %._crit_edge.us.5, label %.epil.preheader691
@@ -855,7 +855,7 @@ bb.o:                                             ; preds = %bb.o, %.epil.prehea
   %i.jy = add i64 %.064143.us.5.epil, %i.f
   %epil.iter693.next = add i32 %epil.iter693, 1   ; 2 uses
   %epil.iter693.cmp.not = icmp eq i32 %epil.iter693.next, %xtraiter692
-  br i1 %epil.iter693.cmp.not, label %._crit_edge.us.5, label %bb.o, !llvm.loop !104
+  br i1 %epil.iter693.cmp.not, label %._crit_edge.us.5, label %bb.o, !llvm.loop !109
 
 ._crit_edge.us.5:                                 ; preds = %bb.o, %._crit_edge.us.5.unr-lcssa
   %i.jz = load <2 x float>, ptr %i.b, align 32    ; 2 uses
@@ -898,7 +898,7 @@ bb.o:                                             ; preds = %bb.o, %.epil.prehea
   %i.ky = add i64 %i.ks, %i.f                     ; 2 uses
   %niter704.next.3 = add i32 %niter704, 4         ; 2 uses
   %niter704.ncmp.3 = icmp eq i32 %niter704.next.3, %unroll_iter703
-  br i1 %niter704.ncmp.3, label %._crit_edge.us.6.unr-lcssa, label %._crit_edge.us.5.new, !llvm.loop !98
+  br i1 %niter704.ncmp.3, label %._crit_edge.us.6.unr-lcssa, label %._crit_edge.us.5.new, !llvm.loop !110
 
 ._crit_edge.us.6.unr-lcssa:                       ; preds = %._crit_edge.us.5.new
   br i1 %lcmp.mod701.not, label %._crit_edge.us.6, label %.epil.preheader698
@@ -921,7 +921,7 @@ bb.p:                                             ; preds = %bb.p, %.epil.prehea
   %i.ld = add i64 %.064143.us.6.epil, %i.f
   %epil.iter700.next = add i32 %epil.iter700, 1   ; 2 uses
   %epil.iter700.cmp.not = icmp eq i32 %epil.iter700.next, %xtraiter699
-  br i1 %epil.iter700.cmp.not, label %._crit_edge.us.6, label %bb.p, !llvm.loop !105
+  br i1 %epil.iter700.cmp.not, label %._crit_edge.us.6, label %bb.p, !llvm.loop !111
 
 ._crit_edge.us.6:                                 ; preds = %bb.p, %._crit_edge.us.6.unr-lcssa
   %i.le = load <4 x float>, ptr %i.b, align 32    ; 2 uses
@@ -964,7 +964,7 @@ bb.p:                                             ; preds = %bb.p, %.epil.prehea
   %i.md = add i64 %i.lx, %i.f                     ; 2 uses
   %niter711.next.3 = add i32 %niter711, 4         ; 2 uses
   %niter711.ncmp.3 = icmp eq i32 %niter711.next.3, %unroll_iter710
-  br i1 %niter711.ncmp.3, label %._crit_edge.us.7.unr-lcssa, label %._crit_edge.us.6.new, !llvm.loop !98
+  br i1 %niter711.ncmp.3, label %._crit_edge.us.7.unr-lcssa, label %._crit_edge.us.6.new, !llvm.loop !112
 
 ._crit_edge.us.7.unr-lcssa:                       ; preds = %._crit_edge.us.6.new
   br i1 %lcmp.mod708.not, label %._crit_edge.us.7, label %.epil.preheader705
@@ -987,7 +987,7 @@ bb.q:                                             ; preds = %bb.q, %.epil.prehea
   %i.mi = add i64 %.064143.us.7.epil, %i.f
   %epil.iter707.next = add i32 %epil.iter707, 1   ; 2 uses
   %epil.iter707.cmp.not = icmp eq i32 %epil.iter707.next, %xtraiter706
-  br i1 %epil.iter707.cmp.not, label %._crit_edge.us.7, label %bb.q, !llvm.loop !106
+  br i1 %epil.iter707.cmp.not, label %._crit_edge.us.7, label %bb.q, !llvm.loop !113
 
 ._crit_edge.us.7:                                 ; preds = %bb.q, %._crit_edge.us.7.unr-lcssa
   %i.mj = load <4 x float>, ptr %i.b, align 32    ; 2 uses
@@ -1101,7 +1101,7 @@ bb.q:                                             ; preds = %bb.q, %.epil.prehea
 ._crit_edge:                                      ; preds = %_ZN5faiss12_GLOBAL__N_116pq2_8cents_tableILNS_9SIMDLevelE0ELb1EEEvPKNS_16simd8float32_tplIXT_EEES4_Pfmm.exit, %.preheader
   %indvars.iv.next169 = add nuw nsw i64 %indvars.iv168, 8 ; 2 uses
   %i.qb = icmp ugt i64 %1, %indvars.iv.next169
-  br i1 %i.qb, label %.preheader140, label %..loopexit_crit_edge, !llvm.loop !107
+  br i1 %i.qb, label %.preheader140, label %..loopexit_crit_edge, !llvm.loop !114
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZN5faiss12_GLOBAL__N_116pq2_8cents_tableILNS_9SIMDLevelE0ELb1EEEvPKNS_16simd8float32_tplIXT_EEES4_Pfmm.exit
   %.0148 = phi i64 [ %i.us, %_ZN5faiss12_GLOBAL__N_116pq2_8cents_tableILNS_9SIMDLevelE0ELb1EEEvPKNS_16simd8float32_tplIXT_EEES4_Pfmm.exit ], [ 0, %.lr.ph.preheader ] ; 4 uses
@@ -1121,13 +1121,13 @@ bb.r:                                             ; preds = %.lr.ph
 
 bb.s:                                             ; preds = %.lr.ph
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 32 dereferenceable(32) %i.a, i8 0, i64 32, i1 false), !noalias !112
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 32 dereferenceable(32) %i.a, i8 0, i64 32, i1 false), !noalias !119
   br i1 %i.al, label %.lr.ph.preheader.i, label %_ZN5faiss12_GLOBAL__N_125load_simd8float32_partialILNS_9SIMDLevelE0EEENS_16simd8float32_tplIXT_EEEPKfi.exit
 
 .lr.ph.preheader.i:                               ; preds = %bb.s
   %i.qh = mul i64 %.0148, %0
   %gep150 = getelementptr [4 x i8], ptr %invariant.gep149, i64 %i.qh
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 32 %i.a, ptr readonly align 4 %gep150, i64 %i.an, i1 false), !tbaa !14, !noalias !112
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 32 %i.a, ptr readonly align 4 %gep150, i64 %i.an, i1 false), !tbaa !14, !noalias !119
   %.0. = load <2 x float>, ptr %i.a, align 32
   %.8. = load <2 x float>, ptr %.8..8..8..sroa_idx, align 8
   %.16. = load <2 x float>, ptr %.16..16..16..sroa_idx, align 16
@@ -1305,7 +1305,7 @@ _ZN5faiss12_GLOBAL__N_116pq2_8cents_tableILNS_9SIMDLevelE0ELb1EEEvPKNS_16simd8fl
 _ZN5faiss12_GLOBAL__N_116pq2_8cents_tableILNS_9SIMDLevelE0ELb1EEEvPKNS_16simd8float32_tplIXT_EEES4_Pfmm.exit: ; preds = %_ZN5faiss12_GLOBAL__N_116pq2_8cents_tableILNS_9SIMDLevelE0ELb1EEEvPKNS_16simd8float32_tplIXT_EEES4_Pfmm.exit.sink.split, %bb.w, %bb.u
   %i.us = add nuw i64 %.0148, 1                   ; 2 uses
   %exitcond167.not = icmp eq i64 %i.us, %3
-  br i1 %exitcond167.not, label %._crit_edge, label %.lr.ph, !llvm.loop !110
+  br i1 %exitcond167.not, label %._crit_edge, label %.lr.ph, !llvm.loop !117
 
 bb.y:                                             ; preds = %bb.g
   unreachable
@@ -1397,7 +1397,7 @@ declare void @__cxa_free_exception(ptr) local_unnamed_addr
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr void @_ZN5faiss14FaissExceptionD2Ev(ptr noundef nonnull align 8 dead_on_return(40) dereferenceable(40) %0) unnamed_addr #9 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN5faiss14FaissExceptionE, i64 16), ptr %0, align 8, !tbaa !114
+  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN5faiss14FaissExceptionE, i64 16), ptr %0, align 8, !tbaa !121
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !26   ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
@@ -1467,7 +1467,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c
   %.0 = phi i64 [ %spec.store.select.i, %bb.e ], [ %i.f, %bb.d ], [ %i.f, %bb.c ] ; 2 uses
   %i.q = add nuw i64 %.0, 1                       ; 2 uses
   %i.r = icmp slt i64 %i.q, 0
-  br i1 %i.r, label %bb.g, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit, !prof !115
+  br i1 %i.r, label %bb.g, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit, !prof !122
 
 bb.g:                                             ; preds = %bb.f
   tail call void @_ZSt17__throw_bad_allocv() #18
@@ -1613,7 +1613,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <4 x float> %i.k, ptr %i.m, align 4, !tbaa !14
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.n = icmp eq i64 %index.next, %n.vec
-  br i1 %i.n, label %middle.block, label %vector.body, !llvm.loop !116
+  br i1 %i.n, label %middle.block, label %vector.body, !llvm.loop !123
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %0, %n.vec
@@ -1664,7 +1664,7 @@ middle.block:                                     ; preds = %vector.body
   store float %i.ah, ptr %i.ai, align 4, !tbaa !14
   %i.aj = add nuw i64 %.09, 2                     ; 2 uses
   %exitcond.not.1 = icmp eq i64 %i.aj, %0
-  br i1 %exitcond.not.1, label %._crit_edge, label %.lr.ph, !llvm.loop !117
+  br i1 %exitcond.not.1, label %._crit_edge, label %.lr.ph, !llvm.loop !124
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
@@ -1713,7 +1713,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <4 x float> %i.h, ptr %i.j, align 4, !tbaa !14
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.k = icmp eq i64 %index.next, %n.vec
-  br i1 %i.k, label %middle.block, label %vector.body, !llvm.loop !118
+  br i1 %i.k, label %middle.block, label %vector.body, !llvm.loop !125
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %6, %n.vec
@@ -1736,7 +1736,7 @@ middle.block:                                     ; preds = %vector.body
   %i.p = add nuw i64 %.02738.prol, 1              ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter71
-  br i1 %prol.iter.cmp.not, label %.preheader.prol.loopexit, label %.preheader.prol, !llvm.loop !119
+  br i1 %prol.iter.cmp.not, label %.preheader.prol.loopexit, label %.preheader.prol, !llvm.loop !126
 
 .preheader.prol.loopexit:                         ; preds = %.preheader.prol, %.preheader.preheader59
   %.02738.unr = phi i64 [ %.02738.ph, %.preheader.preheader59 ], [ %i.p, %.preheader.prol ]
@@ -1765,7 +1765,7 @@ middle.block:                                     ; preds = %vector.body
   %i.v = add nuw i64 %.02833.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %.preheader31.thread, label %.lr.ph.epil, !llvm.loop !120
+  br i1 %epil.iter.cmp.not, label %.preheader31.thread, label %.lr.ph.epil, !llvm.loop !127
 
 .preheader31.thread:                              ; preds = %.lr.ph.epil, %.preheader31.thread.unr-lcssa
   %.lcssa61 = phi float [ %i.cb, %.preheader31.thread.unr-lcssa ], [ %i.u, %.lr.ph.epil ]
@@ -1843,7 +1843,7 @@ bb.b:                                             ; preds = %bb.b, %.epil.prehea
   %i.bg = add nuw i64 %.035.us.epil, 1
   %epil.iter65.next = add i64 %epil.iter65, 1     ; 2 uses
   %epil.iter65.cmp.not = icmp eq i64 %epil.iter65.next, %xtraiter64
-  br i1 %epil.iter65.cmp.not, label %._crit_edge.us, label %bb.b, !llvm.loop !121
+  br i1 %epil.iter65.cmp.not, label %._crit_edge.us, label %bb.b, !llvm.loop !128
 
 ._crit_edge.us:                                   ; preds = %bb.b, %._crit_edge.us.unr-lcssa
   %.lcssa = phi float [ %i.ay, %._crit_edge.us.unr-lcssa ], [ %i.bf, %bb.b ]
@@ -1908,7 +1908,7 @@ bb.b:                                             ; preds = %bb.b, %.epil.prehea
   store float %i.cu, ptr %i.cv, align 4, !tbaa !14
   %i.cw = add nuw i64 %.02738, 4                  ; 2 uses
   %exitcond46.not.3 = icmp eq i64 %i.cw, %6
-  br i1 %exitcond46.not.3, label %._crit_edge39, label %.preheader, !llvm.loop !122
+  br i1 %exitcond46.not.3, label %._crit_edge39, label %.preheader, !llvm.loop !129
 
 ._crit_edge39:                                    ; preds = %._crit_edge.us, %.preheader.prol.loopexit, %.preheader, %middle.block, %.preheader31.thread, %.preheader31
   ret void
@@ -1932,7 +1932,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw [4 x i8], ptr %.0910, i64 %3
   %i.d = add nuw i64 %.011, 1                     ; 2 uses
   %exitcond.not = icmp eq i64 %i.d, %4
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !123
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !130
 }
 
 declare noundef float @_ZN5faiss18fvec_inner_productEPKfS1_m(ptr noundef, ptr noundef, i64 noundef) local_unnamed_addr #8
@@ -2025,7 +2025,7 @@ bb.a:
   %i.p = add nuw i64 %.020, 2                     ; 2 uses
   %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !124
+  br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !131
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
@@ -2074,7 +2074,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <4 x float> %i.h, ptr %i.j, align 4, !tbaa !14
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.k = icmp eq i64 %index.next, %n.vec
-  br i1 %i.k, label %middle.block, label %vector.body, !llvm.loop !125
+  br i1 %i.k, label %middle.block, label %vector.body, !llvm.loop !132
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %6, %n.vec
@@ -2097,7 +2097,7 @@ middle.block:                                     ; preds = %vector.body
   %i.p = add nuw i64 %.02738.i.prol, 1            ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter48
-  br i1 %prol.iter.cmp.not, label %.preheader.i.prol.loopexit, label %.preheader.i.prol, !llvm.loop !126
+  br i1 %prol.iter.cmp.not, label %.preheader.i.prol.loopexit, label %.preheader.i.prol, !llvm.loop !133
 
 .preheader.i.prol.loopexit:                       ; preds = %.preheader.i.prol, %.preheader.i.preheader36
   %.02738.i.unr = phi i64 [ %.02738.i.ph, %.preheader.i.preheader36 ], [ %i.p, %.preheader.i.prol ]
@@ -2126,7 +2126,7 @@ middle.block:                                     ; preds = %vector.body
   %i.v = add nuw i64 %.02833.i.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %.preheader31.thread.i, label %.lr.ph.i.epil, !llvm.loop !127
+  br i1 %epil.iter.cmp.not, label %.preheader31.thread.i, label %.lr.ph.i.epil, !llvm.loop !134
 
 .preheader31.thread.i:                            ; preds = %.lr.ph.i.epil, %.preheader31.thread.i.unr-lcssa
   %.lcssa38 = phi float [ %i.cb, %.preheader31.thread.i.unr-lcssa ], [ %i.u, %.lr.ph.i.epil ]
@@ -2204,7 +2204,7 @@ bb.b:                                             ; preds = %bb.b, %.epil.prehea
   %i.bg = add nuw i64 %.035.us.i.epil, 1
   %epil.iter42.next = add i64 %epil.iter42, 1     ; 2 uses
   %epil.iter42.cmp.not = icmp eq i64 %epil.iter42.next, %xtraiter41
-  br i1 %epil.iter42.cmp.not, label %._crit_edge.us.i, label %bb.b, !llvm.loop !128
+  br i1 %epil.iter42.cmp.not, label %._crit_edge.us.i, label %bb.b, !llvm.loop !135
 
 ._crit_edge.us.i:                                 ; preds = %bb.b, %._crit_edge.us.i.unr-lcssa
   %.lcssa = phi float [ %i.ay, %._crit_edge.us.i.unr-lcssa ], [ %i.bf, %bb.b ]
@@ -2269,7 +2269,7 @@ bb.b:                                             ; preds = %bb.b, %.epil.prehea
   store float %i.cu, ptr %i.cv, align 4, !tbaa !14
   %i.cw = add nuw i64 %.02738.i, 4                ; 2 uses
   %exitcond46.not.i.3 = icmp eq i64 %i.cw, %6
-  br i1 %exitcond46.not.i.3, label %.lr.ph.preheader, label %.preheader.i, !llvm.loop !129
+  br i1 %exitcond46.not.i.3, label %.lr.ph.preheader, label %.preheader.i, !llvm.loop !136
 
 .lr.ph.preheader:                                 ; preds = %._crit_edge.us.i, %.preheader.i.prol.loopexit, %.preheader.i, %middle.block
   %xtraiter50 = and i64 %6, 1
@@ -2319,7 +2319,7 @@ bb.b:                                             ; preds = %bb.b, %.epil.prehea
   %i.di = add nuw i64 %.024, 2                    ; 2 uses
   %niter56.next.1 = add i64 %niter56, 2           ; 2 uses
   %niter56.ncmp.1 = icmp eq i64 %niter56.next.1, %unroll_iter55
-  br i1 %niter56.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !130
+  br i1 %niter56.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !137
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
@@ -2394,7 +2394,7 @@ bb.a:
   %i.aa = add nuw i64 %.022, 2                    ; 2 uses
   %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !131
+  br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !138
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
@@ -2554,33 +2554,33 @@ attributes #20 = { builtin allocsize(0) }
 !95 = !{!88}
 !96 = !{!89}
 !97 = distinct !{!97, !15}
-!98 = distinct !{!98, !15}
+!98 = distinct !{!98, !15, !16}
 !99 = distinct !{!99, !19}
-!100 = distinct !{!100, !19}
+!100 = distinct !{!100, !15, !16}
 !101 = distinct !{!101, !19}
-!102 = distinct !{!102, !19}
+!102 = distinct !{!102, !15, !16}
 !103 = distinct !{!103, !19}
-!104 = distinct !{!104, !19}
+!104 = distinct !{!104, !15, !16}
 !105 = distinct !{!105, !19}
-!106 = distinct !{!106, !19}
-!107 = distinct !{!107, !15}
-!108 = distinct !{!108, i1 true, !"_ZN5faiss12_GLOBAL__N_125load_simd8float32_partialILNS_9SIMDLevelE0EEENS_16simd8float32_tplIXT_EEEPKfi"}
-!109 = distinct !{!109, !108, !"_ZN5faiss12_GLOBAL__N_125load_simd8float32_partialILNS_9SIMDLevelE0EEENS_16simd8float32_tplIXT_EEEPKfi: argument 0"}
-!110 = distinct !{!110, !15}
-!111 = !{!22, !21, i64 0}
-!112 = !{!109}
-!113 = !{!"vtable pointer", !8, i64 0}
-!114 = !{!113, !113, i64 0}
-!115 = !{!"branch_weights", !"expected", i32 1, i32 2000}
-!116 = distinct !{!116, !15, !16, !17}
-!117 = distinct !{!117, !15, !16}
-!118 = distinct !{!118, !15, !16, !17}
-!119 = distinct !{!119, !19}
-!120 = distinct !{!120, !19}
-!121 = distinct !{!121, !19}
-!122 = distinct !{!122, !15, !16}
-!123 = distinct !{!123, !15}
-!124 = distinct !{!124, !15}
+!106 = distinct !{!106, !15, !16}
+!107 = distinct !{!107, !19}
+!108 = distinct !{!108, !15, !16}
+!109 = distinct !{!109, !19}
+!110 = distinct !{!110, !15, !16}
+!111 = distinct !{!111, !19}
+!112 = distinct !{!112, !15, !16}
+!113 = distinct !{!113, !19}
+!114 = distinct !{!114, !15}
+!115 = distinct !{!115, i1 true, !"_ZN5faiss12_GLOBAL__N_125load_simd8float32_partialILNS_9SIMDLevelE0EEENS_16simd8float32_tplIXT_EEEPKfi"}
+!116 = distinct !{!116, !115, !"_ZN5faiss12_GLOBAL__N_125load_simd8float32_partialILNS_9SIMDLevelE0EEENS_16simd8float32_tplIXT_EEEPKfi: argument 0"}
+!117 = distinct !{!117, !15}
+!118 = !{!22, !21, i64 0}
+!119 = !{!116}
+!120 = !{!"vtable pointer", !8, i64 0}
+!121 = !{!120, !120, i64 0}
+!122 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!123 = distinct !{!123, !15, !16, !17}
+!124 = distinct !{!124, !15, !16}
 !125 = distinct !{!125, !15, !16, !17}
 !126 = distinct !{!126, !19}
 !127 = distinct !{!127, !19}
@@ -2588,4 +2588,11 @@ attributes #20 = { builtin allocsize(0) }
 !129 = distinct !{!129, !15, !16}
 !130 = distinct !{!130, !15}
 !131 = distinct !{!131, !15}
+!132 = distinct !{!132, !15, !16, !17}
+!133 = distinct !{!133, !19}
+!134 = distinct !{!134, !19}
+!135 = distinct !{!135, !19}
+!136 = distinct !{!136, !15, !16}
+!137 = distinct !{!137, !15}
+!138 = distinct !{!138, !15}
 end_hunk_0

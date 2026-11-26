@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e, %.thread101, %bb.c
   %ident.check151 = phi i1 [ true, %bb.c ], [ false, %.thread101 ], [ false, %bb.e ]
-  %i.ap = phi i64 [ 2, %bb.c ], [ 1, %.thread101 ], [ 1, %bb.e ] ; 6 uses
+  %i.ap = phi i64 [ 2, %bb.c ], [ 1, %.thread101 ], [ 1, %bb.e ] ; 5 uses
   %.093 = phi i32 [ %i.z, %bb.c ], [ %i.k, %.thread101 ], [ %i.k, %bb.e ]
   %.192 = phi ptr [ %i.y, %bb.c ], [ %i.al, %.thread101 ], [ %i.ak, %bb.e ] ; 8 uses
   %.190 = phi i32 [ %i.w, %bb.c ], [ %i.ao, %.thread101 ], [ %i.ai, %bb.e ] ; 2 uses
@@ -235,7 +235,6 @@ bb.f:                                             ; preds = %bb.e, %.thread101, 
   %i.bc = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.ap, i1 true)
   %i.bd = or i1 %ident.check150, %ident.check151
   %i.be = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.ap, i1 true)
-  %factor.op.mul = mul i64 %i.ap, -2
   %i.bf = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.ap, i1 true)
   %ident.check.not = icmp eq i64 %1, 2
   br label %.lr.ph.us
@@ -289,7 +288,7 @@ vector.memcheck:                                  ; preds = %vector.scevcheck149
   %i.ci = sub i64 %i.ch, %i.ca
   %i.cj = getelementptr i8, ptr %.192, i64 %i.ci
   %i.ck = getelementptr i8, ptr %scevgep, i64 %i.ch
-  %.reass = mul i64 %factor.op.mul, %i.bz
+  %.reass = mul i64 %i.bz, -2
   %i.cl = shl nuw nsw i64 %i.bj, 1
   %i.cm = sub i64 %.reass, %i.cl
   %i.cn = getelementptr i8, ptr %.192, i64 %i.cm

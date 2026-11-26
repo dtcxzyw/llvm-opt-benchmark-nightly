@@ -203,10 +203,329 @@ define internal fastcc void @ivi_mc_8x8_delta(ptr nofree noundef captures(none) 
 bb.a:
   switch i32 %4, label %.loopexit [
     i32 0, label %.preheader.preheader
-    i32 1, label %.preheader82
-    i32 2, label %.preheader85
-    i32 3, label %.preheader88
+    i32 1, label %.preheader82.lver.check
+    i32 2, label %.preheader85.lver.check
+    i32 3, label %.preheader88.lver.check
   ]
+
+.preheader88.lver.check:                          ; preds = %bb.a
+  %ident.check137 = icmp ne i64 %1, 1
+  %ident.check138 = icmp ne i64 %3, 1
+  %5 = or i1 %ident.check137, %ident.check138
+  br i1 %5, label %.preheader88.lver.orig, label %.preheader88.ph
+
+.preheader88.lver.orig:                           ; preds = %.preheader88.lver.check, %.preheader88.lver.orig
+  %.pn.lver.orig = phi ptr [ %.196.lver.orig, %.preheader88.lver.orig ], [ %2, %.preheader88.lver.check ] ; 10 uses
+  %.37195.lver.orig = phi i32 [ %149, %.preheader88.lver.orig ], [ 0, %.preheader88.lver.check ]
+  %.37594.lver.orig = phi ptr [ %150, %.preheader88.lver.orig ], [ %0, %.preheader88.lver.check ] ; 10 uses
+  %.196.lver.orig = getelementptr [2 x i8], ptr %.pn.lver.orig, i64 %3 ; 10 uses
+  %6 = load i16, ptr %.pn.lver.orig, align 2, !tbaa !29
+  %7 = sext i16 %6 to i32
+  %8 = getelementptr inbounds nuw i8, ptr %.pn.lver.orig, i64 2 ; 2 uses
+  %9 = load i16, ptr %8, align 2, !tbaa !29
+  %10 = sext i16 %9 to i32
+  %11 = add nsw i32 %10, %7
+  %12 = load i16, ptr %.196.lver.orig, align 2, !tbaa !29
+  %13 = sext i16 %12 to i32
+  %14 = add nsw i32 %11, %13
+  %15 = getelementptr inbounds nuw i8, ptr %.196.lver.orig, i64 2 ; 2 uses
+  %16 = load i16, ptr %15, align 2, !tbaa !29
+  %17 = sext i16 %16 to i32
+  %18 = add nsw i32 %14, %17
+  %19 = lshr i32 %18, 2
+  %20 = load i16, ptr %.37594.lver.orig, align 2, !tbaa !29
+  %21 = trunc i32 %19 to i16
+  %22 = add i16 %20, %21
+  store i16 %22, ptr %.37594.lver.orig, align 2, !tbaa !29
+  %23 = load i16, ptr %8, align 2, !tbaa !29
+  %24 = sext i16 %23 to i32
+  %25 = getelementptr inbounds nuw i8, ptr %.pn.lver.orig, i64 4 ; 2 uses
+  %26 = load i16, ptr %25, align 2, !tbaa !29
+  %27 = sext i16 %26 to i32
+  %28 = add nsw i32 %27, %24
+  %29 = load i16, ptr %15, align 2, !tbaa !29
+  %30 = sext i16 %29 to i32
+  %31 = add nsw i32 %28, %30
+  %32 = getelementptr inbounds nuw i8, ptr %.196.lver.orig, i64 4 ; 2 uses
+  %33 = load i16, ptr %32, align 2, !tbaa !29
+  %34 = sext i16 %33 to i32
+  %35 = add nsw i32 %31, %34
+  %36 = lshr i32 %35, 2
+  %37 = getelementptr inbounds nuw i8, ptr %.37594.lver.orig, i64 2 ; 2 uses
+  %38 = load i16, ptr %37, align 2, !tbaa !29
+  %39 = trunc i32 %36 to i16
+  %40 = add i16 %38, %39
+  store i16 %40, ptr %37, align 2, !tbaa !29
+  %41 = load i16, ptr %25, align 2, !tbaa !29
+  %42 = sext i16 %41 to i32
+  %43 = getelementptr inbounds nuw i8, ptr %.pn.lver.orig, i64 6 ; 2 uses
+  %44 = load i16, ptr %43, align 2, !tbaa !29
+  %45 = sext i16 %44 to i32
+  %46 = add nsw i32 %45, %42
+  %47 = load i16, ptr %32, align 2, !tbaa !29
+  %48 = sext i16 %47 to i32
+  %49 = add nsw i32 %46, %48
+  %50 = getelementptr inbounds nuw i8, ptr %.196.lver.orig, i64 6 ; 2 uses
+  %51 = load i16, ptr %50, align 2, !tbaa !29
+  %52 = sext i16 %51 to i32
+  %53 = add nsw i32 %49, %52
+  %54 = lshr i32 %53, 2
+  %55 = getelementptr inbounds nuw i8, ptr %.37594.lver.orig, i64 4 ; 2 uses
+  %56 = load i16, ptr %55, align 2, !tbaa !29
+  %57 = trunc i32 %54 to i16
+  %58 = add i16 %56, %57
+  store i16 %58, ptr %55, align 2, !tbaa !29
+  %59 = load i16, ptr %43, align 2, !tbaa !29
+  %60 = sext i16 %59 to i32
+  %61 = getelementptr inbounds nuw i8, ptr %.pn.lver.orig, i64 8 ; 2 uses
+  %62 = load i16, ptr %61, align 2, !tbaa !29
+  %63 = sext i16 %62 to i32
+  %64 = add nsw i32 %63, %60
+  %65 = load i16, ptr %50, align 2, !tbaa !29
+  %66 = sext i16 %65 to i32
+  %67 = add nsw i32 %64, %66
+  %68 = getelementptr inbounds nuw i8, ptr %.196.lver.orig, i64 8 ; 2 uses
+  %69 = load i16, ptr %68, align 2, !tbaa !29
+  %70 = sext i16 %69 to i32
+  %71 = add nsw i32 %67, %70
+  %72 = lshr i32 %71, 2
+  %73 = getelementptr inbounds nuw i8, ptr %.37594.lver.orig, i64 6 ; 2 uses
+  %74 = load i16, ptr %73, align 2, !tbaa !29
+  %75 = trunc i32 %72 to i16
+  %76 = add i16 %74, %75
+  store i16 %76, ptr %73, align 2, !tbaa !29
+  %77 = load i16, ptr %61, align 2, !tbaa !29
+  %78 = sext i16 %77 to i32
+  %79 = getelementptr inbounds nuw i8, ptr %.pn.lver.orig, i64 10 ; 2 uses
+  %80 = load i16, ptr %79, align 2, !tbaa !29
+  %81 = sext i16 %80 to i32
+  %82 = add nsw i32 %81, %78
+  %83 = load i16, ptr %68, align 2, !tbaa !29
+  %84 = sext i16 %83 to i32
+  %85 = add nsw i32 %82, %84
+  %86 = getelementptr inbounds nuw i8, ptr %.196.lver.orig, i64 10 ; 2 uses
+  %87 = load i16, ptr %86, align 2, !tbaa !29
+  %88 = sext i16 %87 to i32
+  %89 = add nsw i32 %85, %88
+  %90 = lshr i32 %89, 2
+  %91 = getelementptr inbounds nuw i8, ptr %.37594.lver.orig, i64 8 ; 2 uses
+  %92 = load i16, ptr %91, align 2, !tbaa !29
+  %93 = trunc i32 %90 to i16
+  %94 = add i16 %92, %93
+  store i16 %94, ptr %91, align 2, !tbaa !29
+  %95 = load i16, ptr %79, align 2, !tbaa !29
+  %96 = sext i16 %95 to i32
+  %97 = getelementptr inbounds nuw i8, ptr %.pn.lver.orig, i64 12 ; 2 uses
+  %98 = load i16, ptr %97, align 2, !tbaa !29
+  %99 = sext i16 %98 to i32
+  %100 = add nsw i32 %99, %96
+  %101 = load i16, ptr %86, align 2, !tbaa !29
+  %102 = sext i16 %101 to i32
+  %103 = add nsw i32 %100, %102
+  %104 = getelementptr inbounds nuw i8, ptr %.196.lver.orig, i64 12 ; 2 uses
+  %105 = load i16, ptr %104, align 2, !tbaa !29
+  %106 = sext i16 %105 to i32
+  %107 = add nsw i32 %103, %106
+  %108 = lshr i32 %107, 2
+  %109 = getelementptr inbounds nuw i8, ptr %.37594.lver.orig, i64 10 ; 2 uses
+  %110 = load i16, ptr %109, align 2, !tbaa !29
+  %111 = trunc i32 %108 to i16
+  %112 = add i16 %110, %111
+  store i16 %112, ptr %109, align 2, !tbaa !29
+  %113 = load i16, ptr %97, align 2, !tbaa !29
+  %114 = sext i16 %113 to i32
+  %115 = getelementptr inbounds nuw i8, ptr %.pn.lver.orig, i64 14 ; 2 uses
+  %116 = load i16, ptr %115, align 2, !tbaa !29
+  %117 = sext i16 %116 to i32
+  %118 = add nsw i32 %117, %114
+  %119 = load i16, ptr %104, align 2, !tbaa !29
+  %120 = sext i16 %119 to i32
+  %121 = add nsw i32 %118, %120
+  %122 = getelementptr inbounds nuw i8, ptr %.196.lver.orig, i64 14 ; 2 uses
+  %123 = load i16, ptr %122, align 2, !tbaa !29
+  %124 = sext i16 %123 to i32
+  %125 = add nsw i32 %121, %124
+  %126 = lshr i32 %125, 2
+  %127 = getelementptr inbounds nuw i8, ptr %.37594.lver.orig, i64 12 ; 2 uses
+  %128 = load i16, ptr %127, align 2, !tbaa !29
+  %129 = trunc i32 %126 to i16
+  %130 = add i16 %128, %129
+  store i16 %130, ptr %127, align 2, !tbaa !29
+  %131 = load i16, ptr %115, align 2, !tbaa !29
+  %132 = sext i16 %131 to i32
+  %133 = getelementptr inbounds nuw i8, ptr %.pn.lver.orig, i64 16
+  %134 = load i16, ptr %133, align 2, !tbaa !29
+  %135 = sext i16 %134 to i32
+  %136 = add nsw i32 %135, %132
+  %137 = load i16, ptr %122, align 2, !tbaa !29
+  %138 = sext i16 %137 to i32
+  %139 = add nsw i32 %136, %138
+  %140 = getelementptr inbounds nuw i8, ptr %.196.lver.orig, i64 16
+  %141 = load i16, ptr %140, align 2, !tbaa !29
+  %142 = sext i16 %141 to i32
+  %143 = add nsw i32 %139, %142
+  %144 = lshr i32 %143, 2
+  %145 = getelementptr inbounds nuw i8, ptr %.37594.lver.orig, i64 14 ; 2 uses
+  %146 = load i16, ptr %145, align 2, !tbaa !29
+  %147 = trunc i32 %144 to i16
+  %148 = add i16 %146, %147
+  store i16 %148, ptr %145, align 2, !tbaa !29
+  %149 = add nuw nsw i32 %.37195.lver.orig, 1     ; 2 uses
+  %150 = getelementptr inbounds [2 x i8], ptr %.37594.lver.orig, i64 %1
+  %exitcond.not.lver.orig = icmp eq i32 %149, 8
+  br i1 %exitcond.not.lver.orig, label %.loopexit, label %.preheader88.lver.orig, !llvm.loop !65
+
+.preheader88.ph:                                  ; preds = %.preheader88.lver.check
+  %scevgep140 = getelementptr i8, ptr %0, i64 12
+  %load_initial141 = load i16, ptr %scevgep140, align 2
+  br label %.preheader88
+
+.preheader85.lver.check:                          ; preds = %bb.a
+  %ident.check131 = icmp ne i64 %1, 1
+  %ident.check132 = icmp ne i64 %3, 1
+  %151 = or i1 %ident.check131, %ident.check132
+  br i1 %151, label %.preheader85.lver.orig, label %.preheader85.ph
+
+.preheader85.lver.orig:                           ; preds = %.preheader85.lver.check, %.preheader85.lver.orig
+  %.pn111.lver.orig = phi ptr [ %.0102.lver.orig, %.preheader85.lver.orig ], [ %2, %.preheader85.lver.check ] ; 9 uses
+  %.270101.lver.orig = phi i32 [ %245, %.preheader85.lver.orig ], [ 0, %.preheader85.lver.check ]
+  %.274100.lver.orig = phi ptr [ %246, %.preheader85.lver.orig ], [ %0, %.preheader85.lver.check ] ; 10 uses
+  %.0102.lver.orig = getelementptr [2 x i8], ptr %.pn111.lver.orig, i64 %3 ; 9 uses
+  %152 = load i16, ptr %.pn111.lver.orig, align 2, !tbaa !29
+  %153 = sext i16 %152 to i32
+  %154 = load i16, ptr %.0102.lver.orig, align 2, !tbaa !29
+  %155 = sext i16 %154 to i32
+  %156 = add nsw i32 %155, %153
+  %157 = lshr i32 %156, 1
+  %158 = load i16, ptr %.274100.lver.orig, align 2, !tbaa !29
+  %159 = trunc i32 %157 to i16
+  %160 = add i16 %158, %159
+  store i16 %160, ptr %.274100.lver.orig, align 2, !tbaa !29
+  %161 = getelementptr inbounds nuw i8, ptr %.pn111.lver.orig, i64 2
+  %162 = load i16, ptr %161, align 2, !tbaa !29
+  %163 = sext i16 %162 to i32
+  %164 = getelementptr inbounds nuw i8, ptr %.0102.lver.orig, i64 2
+  %165 = load i16, ptr %164, align 2, !tbaa !29
+  %166 = sext i16 %165 to i32
+  %167 = add nsw i32 %166, %163
+  %168 = lshr i32 %167, 1
+  %169 = getelementptr inbounds nuw i8, ptr %.274100.lver.orig, i64 2 ; 2 uses
+  %170 = load i16, ptr %169, align 2, !tbaa !29
+  %171 = trunc i32 %168 to i16
+  %172 = add i16 %170, %171
+  store i16 %172, ptr %169, align 2, !tbaa !29
+  %173 = getelementptr inbounds nuw i8, ptr %.pn111.lver.orig, i64 4
+  %174 = load i16, ptr %173, align 2, !tbaa !29
+  %175 = sext i16 %174 to i32
+  %176 = getelementptr inbounds nuw i8, ptr %.0102.lver.orig, i64 4
+  %177 = load i16, ptr %176, align 2, !tbaa !29
+  %178 = sext i16 %177 to i32
+  %179 = add nsw i32 %178, %175
+  %180 = lshr i32 %179, 1
+  %181 = getelementptr inbounds nuw i8, ptr %.274100.lver.orig, i64 4 ; 2 uses
+  %182 = load i16, ptr %181, align 2, !tbaa !29
+  %183 = trunc i32 %180 to i16
+  %184 = add i16 %182, %183
+  store i16 %184, ptr %181, align 2, !tbaa !29
+  %185 = getelementptr inbounds nuw i8, ptr %.pn111.lver.orig, i64 6
+  %186 = load i16, ptr %185, align 2, !tbaa !29
+  %187 = sext i16 %186 to i32
+  %188 = getelementptr inbounds nuw i8, ptr %.0102.lver.orig, i64 6
+  %189 = load i16, ptr %188, align 2, !tbaa !29
+  %190 = sext i16 %189 to i32
+  %191 = add nsw i32 %190, %187
+  %192 = lshr i32 %191, 1
+  %193 = getelementptr inbounds nuw i8, ptr %.274100.lver.orig, i64 6 ; 2 uses
+  %194 = load i16, ptr %193, align 2, !tbaa !29
+  %195 = trunc i32 %192 to i16
+  %196 = add i16 %194, %195
+  store i16 %196, ptr %193, align 2, !tbaa !29
+  %197 = getelementptr inbounds nuw i8, ptr %.pn111.lver.orig, i64 8
+  %198 = load i16, ptr %197, align 2, !tbaa !29
+  %199 = sext i16 %198 to i32
+  %200 = getelementptr inbounds nuw i8, ptr %.0102.lver.orig, i64 8
+  %201 = load i16, ptr %200, align 2, !tbaa !29
+  %202 = sext i16 %201 to i32
+  %203 = add nsw i32 %202, %199
+  %204 = lshr i32 %203, 1
+  %205 = getelementptr inbounds nuw i8, ptr %.274100.lver.orig, i64 8 ; 2 uses
+  %206 = load i16, ptr %205, align 2, !tbaa !29
+  %207 = trunc i32 %204 to i16
+  %208 = add i16 %206, %207
+  store i16 %208, ptr %205, align 2, !tbaa !29
+  %209 = getelementptr inbounds nuw i8, ptr %.pn111.lver.orig, i64 10
+  %210 = load i16, ptr %209, align 2, !tbaa !29
+  %211 = sext i16 %210 to i32
+  %212 = getelementptr inbounds nuw i8, ptr %.0102.lver.orig, i64 10
+  %213 = load i16, ptr %212, align 2, !tbaa !29
+  %214 = sext i16 %213 to i32
+  %215 = add nsw i32 %214, %211
+  %216 = lshr i32 %215, 1
+  %217 = getelementptr inbounds nuw i8, ptr %.274100.lver.orig, i64 10 ; 2 uses
+  %218 = load i16, ptr %217, align 2, !tbaa !29
+  %219 = trunc i32 %216 to i16
+  %220 = add i16 %218, %219
+  store i16 %220, ptr %217, align 2, !tbaa !29
+  %221 = getelementptr inbounds nuw i8, ptr %.pn111.lver.orig, i64 12
+  %222 = load i16, ptr %221, align 2, !tbaa !29
+  %223 = sext i16 %222 to i32
+  %224 = getelementptr inbounds nuw i8, ptr %.0102.lver.orig, i64 12
+  %225 = load i16, ptr %224, align 2, !tbaa !29
+  %226 = sext i16 %225 to i32
+  %227 = add nsw i32 %226, %223
+  %228 = lshr i32 %227, 1
+  %229 = getelementptr inbounds nuw i8, ptr %.274100.lver.orig, i64 12 ; 2 uses
+  %230 = load i16, ptr %229, align 2, !tbaa !29
+  %231 = trunc i32 %228 to i16
+  %232 = add i16 %230, %231
+  store i16 %232, ptr %229, align 2, !tbaa !29
+  %233 = getelementptr inbounds nuw i8, ptr %.pn111.lver.orig, i64 14
+  %234 = load i16, ptr %233, align 2, !tbaa !29
+  %235 = sext i16 %234 to i32
+  %236 = getelementptr inbounds nuw i8, ptr %.0102.lver.orig, i64 14
+  %237 = load i16, ptr %236, align 2, !tbaa !29
+  %238 = sext i16 %237 to i32
+  %239 = add nsw i32 %238, %235
+  %240 = lshr i32 %239, 1
+  %241 = getelementptr inbounds nuw i8, ptr %.274100.lver.orig, i64 14 ; 2 uses
+  %242 = load i16, ptr %241, align 2, !tbaa !29
+  %243 = trunc i32 %240 to i16
+  %244 = add i16 %242, %243
+  store i16 %244, ptr %241, align 2, !tbaa !29
+  %245 = add nuw nsw i32 %.270101.lver.orig, 1    ; 2 uses
+  %246 = getelementptr inbounds [2 x i8], ptr %.274100.lver.orig, i64 %1
+  %exitcond118.not.lver.orig = icmp eq i32 %245, 8
+  br i1 %exitcond118.not.lver.orig, label %.loopexit, label %.preheader85.lver.orig, !llvm.loop !66
+
+.preheader85.ph:                                  ; preds = %.preheader85.lver.check
+  %scevgep134 = getelementptr i8, ptr %0, i64 12
+  %load_initial135 = load i16, ptr %scevgep134, align 2
+  br label %.preheader85
+
+.preheader82.lver.check:                          ; preds = %bb.a
+  %ident.check = icmp ne i64 %1, 1
+  %ident.check129 = icmp ne i64 %3, 1
+  %247 = or i1 %ident.check, %ident.check129
+  br i1 %247, label %.preheader82.lver.orig, label %.preheader82.ph
+
+.preheader82.lver.orig:                           ; preds = %.preheader82.lver.check, %.preheader82.rtcont
+  %.169106.lver.orig = phi i32 [ %.rtmerge, %.preheader82.rtcont ], [ 0, %.preheader82.lver.check ]
+  %.173105.lver.orig = phi ptr [ %.rtmerge131, %.preheader82.rtcont ], [ %0, %.preheader82.lver.check ] ; 13 uses
+  %.177104.lver.orig = phi ptr [ %.rtmerge132, %.preheader82.rtcont ], [ %2, %.preheader82.lver.check ] ; 13 uses
+  %.177104.lver.orig143 = ptrtoaddr ptr %.177104.lver.orig to i64 ; 2 uses
+  %248 = add i64 %.177104.lver.orig143, 18
+  %.173105.lver.orig144 = ptrtoaddr ptr %.173105.lver.orig to i64 ; 2 uses
+  %249 = add i64 %.173105.lver.orig144, 16
+  %rt.bound0 = icmp ugt i64 %248, %.173105.lver.orig144
+  %rt.bound1 = icmp ugt i64 %249, %.177104.lver.orig143
+  %rt.conflict = and i1 %rt.bound0, %rt.bound1
+  %rt.guard = freeze i1 %rt.conflict
+  br i1 %rt.guard, label %.preheader82.rtscalar, label %.preheader82.rtvec, !prof !37
+
+.preheader82.ph:                                  ; preds = %.preheader82.lver.check
+  %scevgep = getelementptr i8, ptr %0, i64 12
+  %load_initial = load i16, ptr %scevgep, align 2
+  br label %.preheader82
 
 .preheader.preheader:                             ; preds = %bb.a
   %i.a = load i16, ptr %2, align 2, !tbaa !29
@@ -593,24 +912,116 @@ bb.a:
   store i16 %i.lf, ptr %i.ld, align 2, !tbaa !29
   br label %.loopexit
 
-.preheader82:                                     ; preds = %bb.a, %.preheader82.rtcont
-  %.169106 = phi i32 [ %.rtmerge, %.preheader82.rtcont ], [ 0, %bb.a ]
-  %.173105 = phi ptr [ %.rtmerge131, %.preheader82.rtcont ], [ %0, %bb.a ] ; 13 uses
-  %.177104 = phi ptr [ %.rtmerge132, %.preheader82.rtcont ], [ %2, %bb.a ] ; 13 uses
-  %.177104129 = ptrtoaddr ptr %.177104 to i64     ; 2 uses
-  %5 = add i64 %.177104129, 18
-  %.173105130 = ptrtoaddr ptr %.173105 to i64     ; 2 uses
-  %6 = add i64 %.173105130, 16
-  %rt.bound0 = icmp ugt i64 %5, %.173105130
-  %rt.bound1 = icmp ugt i64 %6, %.177104129
-  %rt.conflict = and i1 %rt.bound0, %rt.bound1
-  %rt.guard = freeze i1 %rt.conflict
-  br i1 %rt.guard, label %.preheader82.rtscalar, label %.preheader82.rtvec, !prof !37
+.preheader82:                                     ; preds = %.preheader82.ph, %.preheader82
+  %store_forwarded = phi i16 [ %load_initial, %.preheader82.ph ], [ %335, %.preheader82 ]
+  %.169106 = phi i32 [ 0, %.preheader82.ph ], [ %336, %.preheader82 ]
+  %.173105 = phi ptr [ %0, %.preheader82.ph ], [ %337, %.preheader82 ] ; 10 uses
+  %.177104 = phi ptr [ %2, %.preheader82.ph ], [ %338, %.preheader82 ] ; 10 uses
+  %250 = load i16, ptr %.177104, align 2, !tbaa !29
+  %251 = sext i16 %250 to i32
+  %252 = getelementptr inbounds nuw i8, ptr %.177104, i64 2 ; 2 uses
+  %253 = load i16, ptr %252, align 2, !tbaa !29
+  %254 = sext i16 %253 to i32
+  %255 = add nsw i32 %254, %251
+  %256 = lshr i32 %255, 1
+  %257 = load i16, ptr %.173105, align 2, !tbaa !29
+  %258 = trunc i32 %256 to i16
+  %259 = add i16 %257, %258
+  store i16 %259, ptr %.173105, align 2, !tbaa !29
+  %260 = load i16, ptr %252, align 2, !tbaa !29
+  %261 = sext i16 %260 to i32
+  %262 = getelementptr inbounds nuw i8, ptr %.177104, i64 4 ; 2 uses
+  %263 = load i16, ptr %262, align 2, !tbaa !29
+  %264 = sext i16 %263 to i32
+  %265 = add nsw i32 %264, %261
+  %266 = lshr i32 %265, 1
+  %267 = getelementptr inbounds nuw i8, ptr %.173105, i64 2 ; 2 uses
+  %268 = load i16, ptr %267, align 2, !tbaa !29
+  %269 = trunc i32 %266 to i16
+  %270 = add i16 %268, %269
+  store i16 %270, ptr %267, align 2, !tbaa !29
+  %271 = load i16, ptr %262, align 2, !tbaa !29
+  %272 = sext i16 %271 to i32
+  %273 = getelementptr inbounds nuw i8, ptr %.177104, i64 6 ; 2 uses
+  %274 = load i16, ptr %273, align 2, !tbaa !29
+  %275 = sext i16 %274 to i32
+  %276 = add nsw i32 %275, %272
+  %277 = lshr i32 %276, 1
+  %278 = getelementptr inbounds nuw i8, ptr %.173105, i64 4 ; 2 uses
+  %279 = load i16, ptr %278, align 2, !tbaa !29
+  %280 = trunc i32 %277 to i16
+  %281 = add i16 %279, %280
+  store i16 %281, ptr %278, align 2, !tbaa !29
+  %282 = load i16, ptr %273, align 2, !tbaa !29
+  %283 = sext i16 %282 to i32
+  %284 = getelementptr inbounds nuw i8, ptr %.177104, i64 8 ; 2 uses
+  %285 = load i16, ptr %284, align 2, !tbaa !29
+  %286 = sext i16 %285 to i32
+  %287 = add nsw i32 %286, %283
+  %288 = lshr i32 %287, 1
+  %289 = getelementptr inbounds nuw i8, ptr %.173105, i64 6 ; 2 uses
+  %290 = load i16, ptr %289, align 2, !tbaa !29
+  %291 = trunc i32 %288 to i16
+  %292 = add i16 %290, %291
+  store i16 %292, ptr %289, align 2, !tbaa !29
+  %293 = load i16, ptr %284, align 2, !tbaa !29
+  %294 = sext i16 %293 to i32
+  %295 = getelementptr inbounds nuw i8, ptr %.177104, i64 10 ; 2 uses
+  %296 = load i16, ptr %295, align 2, !tbaa !29
+  %297 = sext i16 %296 to i32
+  %298 = add nsw i32 %297, %294
+  %299 = lshr i32 %298, 1
+  %300 = getelementptr inbounds nuw i8, ptr %.173105, i64 8 ; 2 uses
+  %301 = load i16, ptr %300, align 2, !tbaa !29
+  %302 = trunc i32 %299 to i16
+  %303 = add i16 %301, %302
+  store i16 %303, ptr %300, align 2, !tbaa !29
+  %304 = load i16, ptr %295, align 2, !tbaa !29
+  %305 = sext i16 %304 to i32
+  %306 = getelementptr inbounds nuw i8, ptr %.177104, i64 12 ; 2 uses
+  %307 = load i16, ptr %306, align 2, !tbaa !29
+  %308 = sext i16 %307 to i32
+  %309 = add nsw i32 %308, %305
+  %310 = lshr i32 %309, 1
+  %311 = getelementptr inbounds nuw i8, ptr %.173105, i64 10 ; 2 uses
+  %312 = load i16, ptr %311, align 2, !tbaa !29
+  %313 = trunc i32 %310 to i16
+  %314 = add i16 %312, %313
+  store i16 %314, ptr %311, align 2, !tbaa !29
+  %315 = load i16, ptr %306, align 2, !tbaa !29
+  %316 = sext i16 %315 to i32
+  %317 = getelementptr inbounds nuw i8, ptr %.177104, i64 14 ; 2 uses
+  %318 = load i16, ptr %317, align 2, !tbaa !29
+  %319 = sext i16 %318 to i32
+  %320 = add nsw i32 %319, %316
+  %321 = lshr i32 %320, 1
+  %322 = getelementptr inbounds nuw i8, ptr %.173105, i64 12
+  %323 = trunc i32 %321 to i16
+  %324 = add i16 %store_forwarded, %323
+  store i16 %324, ptr %322, align 2, !tbaa !29
+  %325 = load i16, ptr %317, align 2, !tbaa !29
+  %326 = sext i16 %325 to i32
+  %327 = getelementptr inbounds nuw i8, ptr %.177104, i64 16
+  %328 = load i16, ptr %327, align 2, !tbaa !29
+  %329 = sext i16 %328 to i32
+  %330 = add nsw i32 %329, %326
+  %331 = lshr i32 %330, 1
+  %332 = getelementptr inbounds nuw i8, ptr %.173105, i64 14 ; 2 uses
+  %333 = load i16, ptr %332, align 2, !tbaa !29
+  %334 = trunc i32 %331 to i16
+  %335 = add i16 %333, %334                       ; 2 uses
+  store i16 %335, ptr %332, align 2, !tbaa !29
+  %336 = add nuw nsw i32 %.169106, 1              ; 2 uses
+  %337 = getelementptr inbounds nuw [2 x i8], ptr %.173105, i64 %1
+  %338 = getelementptr inbounds nuw [2 x i8], ptr %.177104, i64 %3
+  %exitcond121.not = icmp eq i32 %336, 8
+  br i1 %exitcond121.not, label %.loopexit, label %.preheader82, !llvm.loop !67
 
-.preheader85:                                     ; preds = %bb.a, %.preheader85
-  %.pn111 = phi ptr [ %.0102, %.preheader85 ], [ %2, %bb.a ] ; 9 uses
-  %.270101 = phi i32 [ %i.ou, %.preheader85 ], [ 0, %bb.a ]
-  %.274100 = phi ptr [ %i.ov, %.preheader85 ], [ %0, %bb.a ] ; 10 uses
+.preheader85:                                     ; preds = %.preheader85.ph, %.preheader85
+  %store_forwarded136 = phi i16 [ %load_initial135, %.preheader85.ph ], [ %i.ot, %.preheader85 ]
+  %.pn111 = phi ptr [ %2, %.preheader85.ph ], [ %.0102, %.preheader85 ] ; 9 uses
+  %.270101 = phi i32 [ 0, %.preheader85.ph ], [ %i.ou, %.preheader85 ]
+  %.274100 = phi ptr [ %0, %.preheader85.ph ], [ %i.ov, %.preheader85 ] ; 10 uses
   %.0102 = getelementptr [2 x i8], ptr %.pn111, i64 %3 ; 9 uses
   %i.lg = load i16, ptr %.pn111, align 2, !tbaa !29
   %i.lh = sext i16 %i.lg to i32
@@ -695,10 +1106,9 @@ bb.a:
   %i.oc = sext i16 %i.ob to i32
   %i.od = add nsw i32 %i.oc, %i.nz
   %i.oe = lshr i32 %i.od, 1
-  %i.of = getelementptr inbounds nuw i8, ptr %.274100, i64 12 ; 2 uses
-  %7 = load i16, ptr %i.of, align 2, !tbaa !29
+  %i.of = getelementptr inbounds nuw i8, ptr %.274100, i64 12
   %i.og = trunc i32 %i.oe to i16
-  %i.oh = add i16 %7, %i.og
+  %i.oh = add i16 %store_forwarded136, %i.og
   store i16 %i.oh, ptr %i.of, align 2, !tbaa !29
   %i.oi = getelementptr inbounds nuw i8, ptr %.pn111, i64 14
   %i.oj = load i16, ptr %i.oi, align 2, !tbaa !29
@@ -711,17 +1121,18 @@ bb.a:
   %i.oq = getelementptr inbounds nuw i8, ptr %.274100, i64 14 ; 2 uses
   %i.or = load i16, ptr %i.oq, align 2, !tbaa !29
   %i.os = trunc i32 %i.op to i16
-  %i.ot = add i16 %i.or, %i.os
+  %i.ot = add i16 %i.or, %i.os                    ; 2 uses
   store i16 %i.ot, ptr %i.oq, align 2, !tbaa !29
   %i.ou = add nuw nsw i32 %.270101, 1             ; 2 uses
-  %i.ov = getelementptr inbounds [2 x i8], ptr %.274100, i64 %1
+  %i.ov = getelementptr inbounds nuw [2 x i8], ptr %.274100, i64 %1
   %exitcond118.not = icmp eq i32 %i.ou, 8
-  br i1 %exitcond118.not, label %.loopexit, label %.preheader85, !llvm.loop !65
+  br i1 %exitcond118.not, label %.loopexit, label %.preheader85, !llvm.loop !66
 
-.preheader88:                                     ; preds = %bb.a, %.preheader88
-  %.pn = phi ptr [ %.196, %.preheader88 ], [ %2, %bb.a ] ; 10 uses
-  %.37195 = phi i32 [ %i.ui, %.preheader88 ], [ 0, %bb.a ]
-  %.37594 = phi ptr [ %i.uj, %.preheader88 ], [ %0, %bb.a ] ; 10 uses
+.preheader88:                                     ; preds = %.preheader88.ph, %.preheader88
+  %store_forwarded142 = phi i16 [ %load_initial141, %.preheader88.ph ], [ %i.uh, %.preheader88 ]
+  %.pn = phi ptr [ %2, %.preheader88.ph ], [ %.196, %.preheader88 ] ; 10 uses
+  %.37195 = phi i32 [ 0, %.preheader88.ph ], [ %i.ui, %.preheader88 ]
+  %.37594 = phi ptr [ %0, %.preheader88.ph ], [ %i.uj, %.preheader88 ] ; 10 uses
   %.196 = getelementptr [2 x i8], ptr %.pn, i64 %3 ; 10 uses
   %i.ow = load i16, ptr %.pn, align 2, !tbaa !29
   %i.ox = sext i16 %i.ow to i32
@@ -850,10 +1261,9 @@ bb.a:
   %i.tk = sext i16 %i.tj to i32
   %i.tl = add nsw i32 %i.th, %i.tk
   %i.tm = lshr i32 %i.tl, 2
-  %i.tn = getelementptr inbounds nuw i8, ptr %.37594, i64 12 ; 2 uses
-  %8 = load i16, ptr %i.tn, align 2, !tbaa !29
+  %i.tn = getelementptr inbounds nuw i8, ptr %.37594, i64 12
   %i.to = trunc i32 %i.tm to i16
-  %i.tp = add i16 %8, %i.to
+  %i.tp = add i16 %store_forwarded142, %i.to
   store i16 %i.tp, ptr %i.tn, align 2, !tbaa !29
   %i.tq = load i16, ptr %i.tb, align 2, !tbaa !29
   %i.tr = sext i16 %i.tq to i32
@@ -872,122 +1282,122 @@ bb.a:
   %i.ue = getelementptr inbounds nuw i8, ptr %.37594, i64 14 ; 2 uses
   %i.uf = load i16, ptr %i.ue, align 2, !tbaa !29
   %i.ug = trunc i32 %i.ud to i16
-  %i.uh = add i16 %i.uf, %i.ug
+  %i.uh = add i16 %i.uf, %i.ug                    ; 2 uses
   store i16 %i.uh, ptr %i.ue, align 2, !tbaa !29
   %i.ui = add nuw nsw i32 %.37195, 1              ; 2 uses
-  %i.uj = getelementptr inbounds [2 x i8], ptr %.37594, i64 %1
+  %i.uj = getelementptr inbounds nuw [2 x i8], ptr %.37594, i64 %1
   %exitcond.not = icmp eq i32 %i.ui, 8
-  br i1 %exitcond.not, label %.loopexit, label %.preheader88, !llvm.loop !66
+  br i1 %exitcond.not, label %.loopexit, label %.preheader88, !llvm.loop !65
 
-.loopexit:                                        ; preds = %.preheader88, %.preheader85, %.preheader82.rtcont, %.preheader.preheader, %bb.a
+.loopexit:                                        ; preds = %.preheader88, %.preheader88.lver.orig, %.preheader85, %.preheader85.lver.orig, %.preheader82, %.preheader82.rtcont, %.preheader.preheader, %bb.a
   ret void
 
-.preheader82.rtvec:                               ; preds = %.preheader82
-  %i.uk = getelementptr inbounds nuw i8, ptr %.177104, i64 2
-  %i.ul = load <8 x i16>, ptr %.177104, align 2, !tbaa !29
+.preheader82.rtvec:                               ; preds = %.preheader82.lver.orig
+  %i.uk = getelementptr inbounds nuw i8, ptr %.177104.lver.orig, i64 2
+  %i.ul = load <8 x i16>, ptr %.177104.lver.orig, align 2, !tbaa !29
   %i.um = sext <8 x i16> %i.ul to <8 x i32>
   %i.un = load <8 x i16>, ptr %i.uk, align 2, !tbaa !29
   %i.uo = sext <8 x i16> %i.un to <8 x i32>
   %i.up = add nsw <8 x i32> %i.uo, %i.um
   %i.uq = lshr <8 x i32> %i.up, splat (i32 1)
-  %i.ur = load <8 x i16>, ptr %.173105, align 2, !tbaa !29
+  %i.ur = load <8 x i16>, ptr %.173105.lver.orig, align 2, !tbaa !29
   %i.us = trunc <8 x i32> %i.uq to <8 x i16>
   %i.ut = add <8 x i16> %i.ur, %i.us
-  store <8 x i16> %i.ut, ptr %.173105, align 2, !tbaa !29
+  store <8 x i16> %i.ut, ptr %.173105.lver.orig, align 2, !tbaa !29
   br label %.preheader82.rtcont
 
-.preheader82.rtscalar:                            ; preds = %.preheader82
-  %i.uu = load i16, ptr %.177104, align 2, !tbaa !29
+.preheader82.rtscalar:                            ; preds = %.preheader82.lver.orig
+  %i.uu = load i16, ptr %.177104.lver.orig, align 2, !tbaa !29
   %i.uv = sext i16 %i.uu to i32
-  %i.uw = getelementptr inbounds nuw i8, ptr %.177104, i64 2 ; 2 uses
+  %i.uw = getelementptr inbounds nuw i8, ptr %.177104.lver.orig, i64 2 ; 2 uses
   %i.ux = load i16, ptr %i.uw, align 2, !tbaa !29
   %i.uy = sext i16 %i.ux to i32
   %i.uz = add nsw i32 %i.uy, %i.uv
   %i.va = lshr i32 %i.uz, 1
-  %i.vb = load i16, ptr %.173105, align 2, !tbaa !29
+  %i.vb = load i16, ptr %.173105.lver.orig, align 2, !tbaa !29
   %i.vc = trunc i32 %i.va to i16
   %i.vd = add i16 %i.vb, %i.vc
-  store i16 %i.vd, ptr %.173105, align 2, !tbaa !29
+  store i16 %i.vd, ptr %.173105.lver.orig, align 2, !tbaa !29
   %i.ve = load i16, ptr %i.uw, align 2, !tbaa !29
   %i.vf = sext i16 %i.ve to i32
-  %i.vg = getelementptr inbounds nuw i8, ptr %.177104, i64 4 ; 2 uses
+  %i.vg = getelementptr inbounds nuw i8, ptr %.177104.lver.orig, i64 4 ; 2 uses
   %i.vh = load i16, ptr %i.vg, align 2, !tbaa !29
   %i.vi = sext i16 %i.vh to i32
   %i.vj = add nsw i32 %i.vi, %i.vf
   %i.vk = lshr i32 %i.vj, 1
-  %i.vl = getelementptr inbounds nuw i8, ptr %.173105, i64 2 ; 2 uses
+  %i.vl = getelementptr inbounds nuw i8, ptr %.173105.lver.orig, i64 2 ; 2 uses
   %i.vm = load i16, ptr %i.vl, align 2, !tbaa !29
   %i.vn = trunc i32 %i.vk to i16
   %i.vo = add i16 %i.vm, %i.vn
   store i16 %i.vo, ptr %i.vl, align 2, !tbaa !29
   %i.vp = load i16, ptr %i.vg, align 2, !tbaa !29
   %i.vq = sext i16 %i.vp to i32
-  %i.vr = getelementptr inbounds nuw i8, ptr %.177104, i64 6 ; 2 uses
+  %i.vr = getelementptr inbounds nuw i8, ptr %.177104.lver.orig, i64 6 ; 2 uses
   %i.vs = load i16, ptr %i.vr, align 2, !tbaa !29
   %i.vt = sext i16 %i.vs to i32
   %i.vu = add nsw i32 %i.vt, %i.vq
   %i.vv = lshr i32 %i.vu, 1
-  %i.vw = getelementptr inbounds nuw i8, ptr %.173105, i64 4 ; 2 uses
+  %i.vw = getelementptr inbounds nuw i8, ptr %.173105.lver.orig, i64 4 ; 2 uses
   %i.vx = load i16, ptr %i.vw, align 2, !tbaa !29
   %i.vy = trunc i32 %i.vv to i16
   %i.vz = add i16 %i.vx, %i.vy
   store i16 %i.vz, ptr %i.vw, align 2, !tbaa !29
   %i.wa = load i16, ptr %i.vr, align 2, !tbaa !29
   %i.wb = sext i16 %i.wa to i32
-  %i.wc = getelementptr inbounds nuw i8, ptr %.177104, i64 8 ; 2 uses
+  %i.wc = getelementptr inbounds nuw i8, ptr %.177104.lver.orig, i64 8 ; 2 uses
   %i.wd = load i16, ptr %i.wc, align 2, !tbaa !29
   %i.we = sext i16 %i.wd to i32
   %i.wf = add nsw i32 %i.we, %i.wb
   %i.wg = lshr i32 %i.wf, 1
-  %i.wh = getelementptr inbounds nuw i8, ptr %.173105, i64 6 ; 2 uses
+  %i.wh = getelementptr inbounds nuw i8, ptr %.173105.lver.orig, i64 6 ; 2 uses
   %i.wi = load i16, ptr %i.wh, align 2, !tbaa !29
   %i.wj = trunc i32 %i.wg to i16
   %i.wk = add i16 %i.wi, %i.wj
   store i16 %i.wk, ptr %i.wh, align 2, !tbaa !29
   %i.wl = load i16, ptr %i.wc, align 2, !tbaa !29
   %i.wm = sext i16 %i.wl to i32
-  %i.wn = getelementptr inbounds nuw i8, ptr %.177104, i64 10 ; 2 uses
+  %i.wn = getelementptr inbounds nuw i8, ptr %.177104.lver.orig, i64 10 ; 2 uses
   %i.wo = load i16, ptr %i.wn, align 2, !tbaa !29
   %i.wp = sext i16 %i.wo to i32
   %i.wq = add nsw i32 %i.wp, %i.wm
   %i.wr = lshr i32 %i.wq, 1
-  %i.ws = getelementptr inbounds nuw i8, ptr %.173105, i64 8 ; 2 uses
+  %i.ws = getelementptr inbounds nuw i8, ptr %.173105.lver.orig, i64 8 ; 2 uses
   %i.wt = load i16, ptr %i.ws, align 2, !tbaa !29
   %i.wu = trunc i32 %i.wr to i16
   %i.wv = add i16 %i.wt, %i.wu
   store i16 %i.wv, ptr %i.ws, align 2, !tbaa !29
   %i.ww = load i16, ptr %i.wn, align 2, !tbaa !29
   %i.wx = sext i16 %i.ww to i32
-  %i.wy = getelementptr inbounds nuw i8, ptr %.177104, i64 12 ; 2 uses
+  %i.wy = getelementptr inbounds nuw i8, ptr %.177104.lver.orig, i64 12 ; 2 uses
   %i.wz = load i16, ptr %i.wy, align 2, !tbaa !29
   %i.xa = sext i16 %i.wz to i32
   %i.xb = add nsw i32 %i.xa, %i.wx
   %i.xc = lshr i32 %i.xb, 1
-  %i.xd = getelementptr inbounds nuw i8, ptr %.173105, i64 10 ; 2 uses
+  %i.xd = getelementptr inbounds nuw i8, ptr %.173105.lver.orig, i64 10 ; 2 uses
   %i.xe = load i16, ptr %i.xd, align 2, !tbaa !29
   %i.xf = trunc i32 %i.xc to i16
   %i.xg = add i16 %i.xe, %i.xf
   store i16 %i.xg, ptr %i.xd, align 2, !tbaa !29
   %i.xh = load i16, ptr %i.wy, align 2, !tbaa !29
   %i.xi = sext i16 %i.xh to i32
-  %i.xj = getelementptr inbounds nuw i8, ptr %.177104, i64 14 ; 2 uses
+  %i.xj = getelementptr inbounds nuw i8, ptr %.177104.lver.orig, i64 14 ; 2 uses
   %i.xk = load i16, ptr %i.xj, align 2, !tbaa !29
   %i.xl = sext i16 %i.xk to i32
   %i.xm = add nsw i32 %i.xl, %i.xi
   %i.xn = lshr i32 %i.xm, 1
-  %i.xo = getelementptr inbounds nuw i8, ptr %.173105, i64 12 ; 2 uses
+  %i.xo = getelementptr inbounds nuw i8, ptr %.173105.lver.orig, i64 12 ; 2 uses
   %i.xp = load i16, ptr %i.xo, align 2, !tbaa !29
   %i.xq = trunc i32 %i.xn to i16
   %i.xr = add i16 %i.xp, %i.xq
   store i16 %i.xr, ptr %i.xo, align 2, !tbaa !29
   %i.xs = load i16, ptr %i.xj, align 2, !tbaa !29
   %i.xt = sext i16 %i.xs to i32
-  %i.xu = getelementptr inbounds nuw i8, ptr %.177104, i64 16
+  %i.xu = getelementptr inbounds nuw i8, ptr %.177104.lver.orig, i64 16
   %i.xv = load i16, ptr %i.xu, align 2, !tbaa !29
   %i.xw = sext i16 %i.xv to i32
   %i.xx = add nsw i32 %i.xw, %i.xt
   %i.xy = lshr i32 %i.xx, 1
-  %i.xz = getelementptr inbounds nuw i8, ptr %.173105, i64 14 ; 2 uses
+  %i.xz = getelementptr inbounds nuw i8, ptr %.173105.lver.orig, i64 14 ; 2 uses
   %i.ya = load i16, ptr %i.xz, align 2, !tbaa !29
   %i.yb = trunc i32 %i.xy to i16
   %i.yc = add i16 %i.ya, %i.yb
@@ -995,11 +1405,11 @@ bb.a:
   br label %.preheader82.rtcont
 
 .preheader82.rtcont:                              ; preds = %.preheader82.rtscalar, %.preheader82.rtvec
-  %.rtmerge = add nuw nsw i32 %.169106, 1         ; 2 uses
+  %.rtmerge = add nuw nsw i32 %.169106.lver.orig, 1 ; 2 uses
   %exitcond121.not.rtmerge = icmp eq i32 %.rtmerge, 8
-  %.rtmerge132 = getelementptr inbounds [2 x i8], ptr %.177104, i64 %3
-  %.rtmerge131 = getelementptr inbounds [2 x i8], ptr %.173105, i64 %1
-  br i1 %exitcond121.not.rtmerge, label %.loopexit, label %.preheader82, !llvm.loop !67
+  %.rtmerge132 = getelementptr inbounds [2 x i8], ptr %.177104.lver.orig, i64 %3
+  %.rtmerge131 = getelementptr inbounds [2 x i8], ptr %.173105.lver.orig, i64 %1
+  br i1 %exitcond121.not.rtmerge, label %.loopexit, label %.preheader82.lver.orig, !llvm.loop !67
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
