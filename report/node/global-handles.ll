@@ -204,9 +204,6 @@ declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly 
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZN2v88internal13GlobalHandles4Node26CollectPhantomCallbackDataEPSt6vectorISt4pairIPS2_NS1_22PendingPhantomCallbackEESaIS7_EE(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef %1) local_unnamed_addr #1 comdat align 2 !guid !114 {
 bb.a:
-  %2 = alloca [2 x ptr], align 16                 ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #21
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %2, i8 0, i64 16, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 11 ; 3 uses
   %i.b = load i8, ptr %i.a, align 1
   %i.c = and i8 %i.b, 24
@@ -273,8 +270,10 @@ _ZNK2v88internal8JSObject21GetEmbedderFieldCountEv.exit.i: ; preds = %bb.e, %bb.
   %wide.trip.count.i = select i1 %.not.i, i64 1, i64 2
   br label %bb.f
 
-bb.f:                                             ; preds = %6, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %6 ] ; 3 uses
+bb.f:                                             ; preds = %_ZN2v88internal8JSObject22GetEmbedderFieldOffsetEi.exit.i, %.lr.ph.i
+  %.sroa.520.1 = phi ptr [ null, %.lr.ph.i ], [ %.sroa.520.2, %_ZN2v88internal8JSObject22GetEmbedderFieldOffsetEi.exit.i ]
+  %.sroa.019.1 = phi ptr [ null, %.lr.ph.i ], [ %.sroa.019.2, %_ZN2v88internal8JSObject22GetEmbedderFieldOffsetEi.exit.i ]
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %_ZN2v88internal8JSObject22GetEmbedderFieldOffsetEi.exit.i ] ; 3 uses
   %i.ao = load atomic volatile i64, ptr %i.h monotonic, align 8 ; 2 uses
   %i.ap = add i64 %i.ao, 11
   %i.aq = inttoptr i64 %i.ap to ptr
@@ -300,29 +299,21 @@ _ZN2v88internal8JSObject22GetEmbedderFieldOffsetEi.exit.i: ; preds = %bb.g, %bb.
   %i.bd = inttoptr i64 %i.bc to ptr
   %i.be = load i64, ptr %i.bd, align 8            ; 2 uses
   %i.bf = and i64 %i.be, 1
-  %i.bg = icmp eq i64 %i.bf, 0
-  br i1 %i.bg, label %3, label %6
-
-3:                                                ; preds = %_ZN2v88internal8JSObject22GetEmbedderFieldOffsetEi.exit.i
-  %4 = inttoptr i64 %i.be to ptr
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv.i
-  store ptr %4, ptr %5, align 8
-  br label %6
-
-6:                                                ; preds = %3, %_ZN2v88internal8JSObject22GetEmbedderFieldOffsetEi.exit.i
+  %2 = icmp eq i64 %i.bf, 0                       ; 2 uses
+  %3 = inttoptr i64 %i.be to ptr                  ; 2 uses
+  %.sroa.idx.not = icmp ne i64 %indvars.iv.i, 0   ; 2 uses
+  %4 = and i1 %2, %.sroa.idx.not
+  %.sroa.520.2 = select i1 %4, ptr %3, ptr %.sroa.520.1 ; 2 uses
+  %5 = xor i1 %.sroa.idx.not, true
+  %6 = and i1 %2, %5
+  %.sroa.019.2 = select i1 %6, ptr %3, ptr %.sroa.019.1 ; 2 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %exitcond.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.i, label %_ZN2v88internal12_GLOBAL__N_121ExtractInternalFieldsENS0_6TaggedINS0_8JSObjectEEEPPvi.exit.loopexit, label %bb.f, !llvm.loop !109
+  %i.bg = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
+  br i1 %i.bg, label %_ZN2v88internal12_GLOBAL__N_121ExtractInternalFieldsENS0_6TaggedINS0_8JSObjectEEEPPvi.exit, label %bb.f, !llvm.loop !109
 
-_ZN2v88internal12_GLOBAL__N_121ExtractInternalFieldsENS0_6TaggedINS0_8JSObjectEEEPPvi.exit.loopexit: ; preds = %6
-  %.pre = load ptr, ptr %2, align 16
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %.pre28 = load ptr, ptr %.phi.trans.insert, align 8
-  br label %_ZN2v88internal12_GLOBAL__N_121ExtractInternalFieldsENS0_6TaggedINS0_8JSObjectEEEPPvi.exit
-
-_ZN2v88internal12_GLOBAL__N_121ExtractInternalFieldsENS0_6TaggedINS0_8JSObjectEEEPPvi.exit: ; preds = %_ZN2v88internal12_GLOBAL__N_121ExtractInternalFieldsENS0_6TaggedINS0_8JSObjectEEEPPvi.exit.loopexit, %bb.b, %_ZNK2v88internal8JSObject21GetEmbedderFieldCountEv.exit.i, %bb.c, %_ZN2v88internal10IsJSObjectENS0_6TaggedINS0_6ObjectEEE.exit, %bb.a
-  %i.bh = phi ptr [ %.pre28, %_ZN2v88internal12_GLOBAL__N_121ExtractInternalFieldsENS0_6TaggedINS0_8JSObjectEEEPPvi.exit.loopexit ], [ null, %bb.b ], [ null, %_ZNK2v88internal8JSObject21GetEmbedderFieldCountEv.exit.i ], [ null, %bb.c ], [ null, %_ZN2v88internal10IsJSObjectENS0_6TaggedINS0_6ObjectEEE.exit ], [ null, %bb.a ] ; 2 uses
-  %i.bi = phi ptr [ %.pre, %_ZN2v88internal12_GLOBAL__N_121ExtractInternalFieldsENS0_6TaggedINS0_8JSObjectEEEPPvi.exit.loopexit ], [ null, %bb.b ], [ null, %_ZNK2v88internal8JSObject21GetEmbedderFieldCountEv.exit.i ], [ null, %bb.c ], [ null, %_ZN2v88internal10IsJSObjectENS0_6TaggedINS0_6ObjectEEE.exit ], [ null, %bb.a ] ; 2 uses
+_ZN2v88internal12_GLOBAL__N_121ExtractInternalFieldsENS0_6TaggedINS0_8JSObjectEEEPPvi.exit: ; preds = %_ZN2v88internal8JSObject22GetEmbedderFieldOffsetEi.exit.i, %bb.b, %_ZNK2v88internal8JSObject21GetEmbedderFieldCountEv.exit.i, %bb.c, %_ZN2v88internal10IsJSObjectENS0_6TaggedINS0_6ObjectEEE.exit, %bb.a
+  %i.bh = phi ptr [ null, %bb.b ], [ null, %_ZN2v88internal10IsJSObjectENS0_6TaggedINS0_6ObjectEEE.exit ], [ null, %bb.a ], [ null, %bb.c ], [ null, %_ZNK2v88internal8JSObject21GetEmbedderFieldCountEv.exit.i ], [ %.sroa.520.2, %_ZN2v88internal8JSObject22GetEmbedderFieldOffsetEi.exit.i ] ; 2 uses
+  %i.bi = phi ptr [ null, %bb.b ], [ null, %_ZN2v88internal10IsJSObjectENS0_6TaggedINS0_6ObjectEEE.exit ], [ null, %bb.a ], [ null, %bb.c ], [ null, %_ZNK2v88internal8JSObject21GetEmbedderFieldCountEv.exit.i ], [ %.sroa.019.2, %_ZN2v88internal8JSObject22GetEmbedderFieldOffsetEi.exit.i ] ; 2 uses
   store i64 51729, ptr %0, align 8
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.bk = load ptr, ptr %i.bj, align 8            ; 2 uses
@@ -419,7 +410,6 @@ _ZNSt6vectorISt4pairIPN2v88internal13GlobalHandles4NodeENS3_22PendingPhantomCall
   %i.cn = load i8, ptr %i.a, align 1
   %i.co = or i8 %i.cn, 3
   store i8 %i.co, ptr %i.a, align 1
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #21
   ret void
 }
 

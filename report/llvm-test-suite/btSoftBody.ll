@@ -205,11 +205,10 @@ bb.a:
 ; Function Attrs: uwtable
 define dso_local noundef zeroext i1 @_ZN10btSoftBody7cutLinkEiif(ptr noundef nonnull align 8 dereferenceable(1496) %0, i32 noundef %1, i32 noundef %2, float noundef %3) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 !guid !671 {
 bb.a:
-  %.sroa.7.i96 = alloca <{ [2 x ptr], float, i8, [3 x i8], float, float, float, %class.btVector3, [4 x i8] }>, align 8 ; 4 uses
-  %.sroa.7.i82 = alloca <{ [2 x ptr], float, i8, [3 x i8], float, float, float, %class.btVector3, [4 x i8] }>, align 8 ; 4 uses
+  %.sroa.7.i122 = alloca <{ [2 x ptr], float, i8, [3 x i8], float, float, float, %class.btVector3, [4 x i8] }>, align 8 ; 4 uses
+  %.sroa.7.i108 = alloca <{ [2 x ptr], float, i8, [3 x i8], float, float, float, %class.btVector3, [4 x i8] }>, align 8 ; 4 uses
   %.sroa.7.i = alloca { [3 x ptr], %class.btVector3, float, ptr }, align 8 ; 4 uses
   %4 = alloca %class.btVector3, align 8           ; 6 uses
-  %5 = alloca [2 x ptr], align 16                 ; 8 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 832 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !179  ; 2 uses
   %i.c = sext i32 %1 to i64                       ; 2 uses
@@ -257,16 +256,12 @@ bb.a:
   %i.al = load ptr, ptr %i.a, align 8, !tbaa !179 ; 3 uses
   %i.am = getelementptr inbounds [120 x i8], ptr %i.al, i64 %i.c ; 4 uses
   %i.an = getelementptr inbounds [120 x i8], ptr %i.al, i64 %i.f ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #34
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 820 ; 3 uses
   %i.ap = load i32, ptr %i.ao, align 4, !tbaa !180
   %i.aq = sext i32 %i.ap to i64
   %i.ar = getelementptr [120 x i8], ptr %i.al, i64 %i.aq ; 14 uses
-  %6 = getelementptr i8, ptr %i.ar, i64 -240      ; 4 uses
-  store ptr %6, ptr %5, align 16, !tbaa !279
-  %i.as = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %i.at = getelementptr i8, ptr %i.ar, i64 -120   ; 4 uses
-  store ptr %i.at, ptr %i.as, align 8, !tbaa !279
+  %i.as = getelementptr i8, ptr %i.ar, i64 -240   ; 7 uses
+  %i.at = getelementptr i8, ptr %i.ar, i64 -120   ; 7 uses
   %i.au = getelementptr i8, ptr %i.ar, i64 -192
   store <2 x float> %i.aj, ptr %i.au, align 8, !tbaa !250
   %.sroa.5.0..sroa_idx = getelementptr i8, ptr %i.ar, i64 -184
@@ -295,16 +290,15 @@ bb.b:                                             ; preds = %.lr.ph, %bb.d
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !279 ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %i.bb, i64 24
   %i.bf = load ptr, ptr %i.be, align 8, !tbaa !279 ; 2 uses
-  %7 = icmp eq ptr %i.bd, %i.am
-  %8 = icmp eq ptr %i.bf, %i.an
-  %or.cond.i = and i1 %7, %8
+  %5 = icmp ne ptr %i.bd, %i.am
+  %6 = icmp ne ptr %i.bf, %i.an
+  %or.cond.i.not = or i1 %5, %6                   ; 2 uses
   %i.bg = icmp eq ptr %i.bd, %i.an
   %i.bh = icmp eq ptr %i.bf, %i.am
-  %or.cond8.i = and i1 %i.bg, %i.bh
-  %spec.select.i = select i1 %or.cond8.i, i32 1, i32 -1
-  %.0.i = select i1 %or.cond.i, i32 0, i32 %spec.select.i ; 3 uses
-  %.not60 = icmp eq i32 %.0.i, -1
-  br i1 %.not60, label %bb.d, label %bb.c
+  %or.cond8.i = and i1 %i.bg, %i.bh               ; 2 uses
+  %not.or.cond.i.not = xor i1 %or.cond.i.not, true
+  %7 = select i1 %not.or.cond.i.not, i1 true, i1 %or.cond8.i
+  br i1 %7, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   %i.bi = trunc nuw nsw i64 %indvars.iv to i32
@@ -314,17 +308,13 @@ bb.c:                                             ; preds = %bb.b
   %i.bl = load i32, ptr %i.aw, align 4, !tbaa !184
   %i.bm = sext i32 %i.bl to i64
   %i.bn = getelementptr [72 x i8], ptr %i.bj, i64 %i.bm
-  %9 = zext nneg i32 %.0.i to i64
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %9
-  %11 = load ptr, ptr %10, align 8, !tbaa !279
+  %.sroa.idx = and i1 %or.cond.i.not, %or.cond8.i ; 2 uses
+  %.sroa.speculated44 = select i1 %.sroa.idx, ptr %i.at, ptr %i.as
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bk, i64 24
-  store ptr %11, ptr %i.bo, align 8, !tbaa !279
-  %12 = sub nuw nsw i32 1, %.0.i
-  %13 = zext nneg i32 %12 to i64
-  %14 = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %13
-  %15 = load ptr, ptr %14, align 8, !tbaa !279
+  store ptr %.sroa.speculated44, ptr %i.bo, align 8, !tbaa !279
+  %.sroa.speculated41 = select i1 %.sroa.idx, ptr %i.as, ptr %i.at
   %i.bp = getelementptr i8, ptr %i.bn, i64 -56
-  store ptr %15, ptr %i.bp, align 8, !tbaa !279
+  store ptr %.sroa.speculated41, ptr %i.bp, align 8, !tbaa !279
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
@@ -380,14 +370,12 @@ bb.f:                                             ; preds = %.preheader, %_ZN10b
   %i.co = load ptr, ptr %i.cn, align 8, !tbaa !279 ; 2 uses
   %i.cp = icmp eq ptr %i.cm, %i.am
   %i.cq = icmp eq ptr %i.co, %i.an
-  %or.cond.i66 = and i1 %i.cp, %i.cq
+  %or.cond.i66 = and i1 %i.cp, %i.cq              ; 3 uses
   %i.cr = icmp eq ptr %i.cm, %i.an
   %i.cs = icmp eq ptr %i.co, %i.am
   %or.cond8.i67 = and i1 %i.cr, %i.cs
-  %spec.select.i68 = select i1 %or.cond8.i67, i32 1, i32 -1
-  %.0.i69 = select i1 %or.cond.i66, i32 0, i32 %spec.select.i68 ; 3 uses
-  %.not = icmp eq i32 %.0.i69, -1
-  br i1 %.not, label %._ZN10btSoftBody10appendLinkEPNS_4NodeES1_PNS_8MaterialEb.exit81_crit_edge, label %bb.g
+  %8 = or i1 %or.cond.i66, %or.cond8.i67
+  br i1 %8, label %bb.g, label %._ZN10btSoftBody10appendLinkEPNS_4NodeES1_PNS_8MaterialEb.exit81_crit_edge
 
 ._ZN10btSoftBody10appendLinkEPNS_4NodeES1_PNS_8MaterialEb.exit81_crit_edge: ; preds = %bb.f
   %.pre136 = add nuw nsw i64 %indvars.iv125, 1
@@ -504,19 +492,14 @@ _ZN10btSoftBody10appendFaceEiPNS_8MaterialE.exit: ; preds = %bb.g, %bb.h, %_ZN20
   %i.dz = getelementptr inbounds nuw [72 x i8], ptr %i.dy, i64 %indvars.iv129 ; 2 uses
   %i.ea = sext i32 %i.dw to i64
   %i.eb = getelementptr inbounds [72 x i8], ptr %i.dy, i64 %i.ea
-  %16 = zext nneg i32 %.0.i69 to i64
-  %17 = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %16
-  %18 = load ptr, ptr %17, align 8, !tbaa !279
+  %.sroa.speculated38 = select i1 %or.cond.i66, ptr %i.as, ptr %i.at
   %i.ec = getelementptr inbounds nuw i8, ptr %i.dz, i64 16 ; 2 uses
   %i.ed = getelementptr inbounds nuw [8 x i8], ptr %i.ec, i64 %indvars.iv125
-  store ptr %18, ptr %i.ed, align 8, !tbaa !279
-  %19 = sub nuw nsw i32 1, %.0.i69
-  %20 = zext nneg i32 %19 to i64
-  %21 = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %20
-  %22 = load ptr, ptr %21, align 8, !tbaa !279
+  store ptr %.sroa.speculated38, ptr %i.ed, align 8, !tbaa !279
+  %.sroa.speculated = select i1 %or.cond.i66, ptr %i.at, ptr %i.as
   %i.ee = getelementptr inbounds nuw i8, ptr %i.eb, i64 16
   %i.ef = getelementptr inbounds nuw [8 x i8], ptr %i.ee, i64 %.057121
-  store ptr %22, ptr %i.ef, align 8, !tbaa !279
+  store ptr %.sroa.speculated, ptr %i.ef, align 8, !tbaa !279
   %i.eg = add nuw nsw i64 %indvars.iv125, 1       ; 4 uses
   %.cmp.not = icmp eq i64 %indvars.iv125, 2
   %i.eh = select i1 %.cmp.not, i64 0, i64 %i.eg
@@ -543,7 +526,7 @@ bb.o:                                             ; preds = %bb.n, %.lr.ph.i.i
   %i.eo = getelementptr inbounds nuw [72 x i8], ptr %i.en, i64 %indvars.iv.i.i ; 2 uses
   %i.ep = getelementptr inbounds nuw i8, ptr %i.eo, i64 16
   %i.eq = load ptr, ptr %i.ep, align 8, !tbaa !279 ; 2 uses
-  %i.er = icmp eq ptr %i.eq, %6
+  %i.er = icmp eq ptr %i.eq, %i.as
   %i.es = getelementptr inbounds nuw i8, ptr %i.eo, i64 24
   %i.et = load ptr, ptr %i.es, align 8            ; 2 uses
   %i.eu = icmp eq ptr %i.et, %i.ej
@@ -552,12 +535,12 @@ bb.o:                                             ; preds = %bb.n, %.lr.ph.i.i
 
 .critedge.i.i:                                    ; preds = %bb.o
   %i.ev = icmp eq ptr %i.eq, %i.ej
-  %i.ew = icmp eq ptr %i.et, %6
+  %i.ew = icmp eq ptr %i.et, %i.as
   %or.cond23.i.i = select i1 %i.ev, i1 %i.ew, i1 false
   br i1 %or.cond23.i.i, label %_ZN10btSoftBody10appendLinkEPNS_4NodeES1_PNS_8MaterialEb.exit, label %bb.n
 
 _ZNK10btSoftBody9checkLinkEPKNS_4NodeES2_.exit.i: ; preds = %bb.n, %_ZN10btSoftBody10appendFaceEiPNS_8MaterialE.exit
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.7.i82)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.7.i108)
   %i.ex = load atomic i8, ptr @_ZGVZL14ZeroInitializeIN10btSoftBody4LinkEEvRT_E9zerodummy acquire, align 8
   %i.ey = icmp eq i8 %i.ex, 0
   br i1 %i.ey, label %bb.p, label %_ZL14ZeroInitializeIN10btSoftBody4LinkEEvRT_.exit.i, !prof !261
@@ -575,7 +558,7 @@ bb.q:                                             ; preds = %bb.p
 
 _ZL14ZeroInitializeIN10btSoftBody4LinkEEvRT_.exit.i: ; preds = %bb.q, %bb.p, %_ZNK10btSoftBody9checkLinkEPKNS_4NodeES2_.exit.i
   %.sroa.0.0.copyload6.i = load ptr, ptr @_ZZL14ZeroInitializeIN10btSoftBody4LinkEEvRT_E9zerodummy, align 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(52) %.sroa.7.i82, ptr noundef nonnull align 8 dereferenceable(52) getelementptr inbounds nuw (i8, ptr @_ZZL14ZeroInitializeIN10btSoftBody4LinkEEvRT_E9zerodummy, i64 16), i64 52, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(52) %.sroa.7.i108, ptr noundef nonnull align 8 dereferenceable(52) getelementptr inbounds nuw (i8, ptr @_ZZL14ZeroInitializeIN10btSoftBody4LinkEEvRT_E9zerodummy, i64 16), i64 52, i1 false)
   %.not.i = icmp eq ptr %i.el, null
   br i1 %.not.i, label %bb.r, label %bb.s
 
@@ -686,16 +669,16 @@ _ZN10btSoftBody10appendLinkEiPNS_8MaterialE.exit: ; preds = %bb.s, %bb.t, %_ZN20
   %.sroa.6.0..sroa_idx.i83 = getelementptr inbounds nuw i8, ptr %i.ge, i64 8
   store ptr %.sroa.6.0.i, ptr %.sroa.6.0..sroa_idx.i83, align 8
   %.sroa.7.0..sroa_idx.i84 = getelementptr inbounds nuw i8, ptr %i.ge, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %.sroa.7.0..sroa_idx.i84, ptr noundef nonnull align 8 dereferenceable(56) %.sroa.7.i82, i64 56, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %.sroa.7.0..sroa_idx.i84, ptr noundef nonnull align 8 dereferenceable(56) %.sroa.7.i108, i64 56, i1 false)
   %i.gf = load i32, ptr %i.aw, align 4, !tbaa !184
   %i.gg = add nsw i32 %i.gf, 1                    ; 3 uses
   store i32 %i.gg, ptr %i.aw, align 4, !tbaa !184
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.i82)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.i108)
   %i.gh = load ptr, ptr %i.bx, align 8, !tbaa !183 ; 2 uses
   %i.gi = sext i32 %i.gg to i64
   %i.gj = getelementptr [72 x i8], ptr %i.gh, i64 %i.gi ; 3 uses
   %i.gk = getelementptr i8, ptr %i.gj, i64 -56
-  store ptr %6, ptr %i.gk, align 8, !tbaa !279
+  store ptr %i.as, ptr %i.gk, align 8, !tbaa !279
   %i.gl = getelementptr i8, ptr %i.gj, i64 -48
   store ptr %i.ej, ptr %i.gl, align 8, !tbaa !279
   %i.gm = getelementptr inbounds nuw i8, ptr %i.ej, i64 16
@@ -757,7 +740,7 @@ bb.aa:                                            ; preds = %bb.z, %.lr.ph.i.i73
   br i1 %or.cond23.i.i78, label %_ZN10btSoftBody10appendLinkEPNS_4NodeES1_PNS_8MaterialEb.exit81, label %bb.z
 
 _ZNK10btSoftBody9checkLinkEPKNS_4NodeES2_.exit.i71: ; preds = %bb.z, %_ZN10btSoftBody10appendLinkEPNS_4NodeES1_PNS_8MaterialEb.exit
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.7.i96)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.7.i122)
   %i.hp = load atomic i8, ptr @_ZGVZL14ZeroInitializeIN10btSoftBody4LinkEEvRT_E9zerodummy acquire, align 8
   %i.hq = icmp eq i8 %i.hp, 0
   br i1 %i.hq, label %bb.ab, label %_ZL14ZeroInitializeIN10btSoftBody4LinkEEvRT_.exit.i97, !prof !261
@@ -775,7 +758,7 @@ bb.ac:                                            ; preds = %bb.ab
 
 _ZL14ZeroInitializeIN10btSoftBody4LinkEEvRT_.exit.i97: ; preds = %bb.ac, %bb.ab, %_ZNK10btSoftBody9checkLinkEPKNS_4NodeES2_.exit.i71
   %.sroa.0.0.copyload6.i98 = load ptr, ptr @_ZZL14ZeroInitializeIN10btSoftBody4LinkEEvRT_E9zerodummy, align 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(52) %.sroa.7.i96, ptr noundef nonnull align 8 dereferenceable(52) getelementptr inbounds nuw (i8, ptr @_ZZL14ZeroInitializeIN10btSoftBody4LinkEEvRT_E9zerodummy, i64 16), i64 52, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(52) %.sroa.7.i122, ptr noundef nonnull align 8 dereferenceable(52) getelementptr inbounds nuw (i8, ptr @_ZZL14ZeroInitializeIN10btSoftBody4LinkEEvRT_E9zerodummy, i64 16), i64 52, i1 false)
   %.not.i99 = icmp eq ptr %i.he, null
   br i1 %.not.i99, label %bb.ad, label %bb.ae
 
@@ -886,11 +869,11 @@ _ZN10btSoftBody10appendLinkEiPNS_8MaterialE.exit118: ; preds = %bb.ae, %bb.af, %
   %.sroa.6.0..sroa_idx.i101 = getelementptr inbounds nuw i8, ptr %i.iw, i64 8
   store ptr %.sroa.6.0.i100, ptr %.sroa.6.0..sroa_idx.i101, align 8
   %.sroa.7.0..sroa_idx.i102 = getelementptr inbounds nuw i8, ptr %i.iw, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %.sroa.7.0..sroa_idx.i102, ptr noundef nonnull align 8 dereferenceable(56) %.sroa.7.i96, i64 56, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %.sroa.7.0..sroa_idx.i102, ptr noundef nonnull align 8 dereferenceable(56) %.sroa.7.i122, i64 56, i1 false)
   %i.ix = load i32, ptr %i.aw, align 4, !tbaa !184
   %i.iy = add nsw i32 %i.ix, 1                    ; 2 uses
   store i32 %i.iy, ptr %i.aw, align 4, !tbaa !184
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.i96)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.i122)
   %i.iz = load ptr, ptr %i.bx, align 8, !tbaa !183
   %i.ja = sext i32 %i.iy to i64
   %i.jb = getelementptr [72 x i8], ptr %i.iz, i64 %i.ja ; 3 uses
@@ -941,7 +924,6 @@ bb.al:                                            ; preds = %._crit_edge124
   br label %bb.am
 
 bb.am:                                            ; preds = %bb.al, %._crit_edge124
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #34
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #34
   ret i1 %.0.lcssa
 }

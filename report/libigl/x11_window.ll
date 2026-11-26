@@ -205,8 +205,6 @@ define internal fastcc ptr @getSelectionString(i64 noundef %0) unnamed_addr #0 {
 bb.a:
   %1 = alloca %struct.fd_set, align 8             ; 6 uses
   %2 = alloca %struct.fd_set, align 8             ; 6 uses
-  %.sroa.0 = alloca i64, align 16                 ; 4 uses
-  %.sroa.4 = alloca i64, align 8                  ; 4 uses
   %i.a = alloca ptr, align 8                      ; 9 uses
   %i.b = alloca i64, align 8                      ; 6 uses
   %i.c = alloca i32, align 4                      ; 5 uses
@@ -214,11 +212,7 @@ bb.a:
   %i.e = alloca i64, align 8                      ; 5 uses
   %3 = alloca %union._XEvent, align 8             ; 10 uses
   %4 = alloca %union._XEvent, align 8             ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4)
   %i.f = load i64, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 134200), align 8, !tbaa !88
-  store i64 %i.f, ptr %.sroa.0, align 16, !tbaa !66
-  store i64 31, ptr %.sroa.4, align 8, !tbaa !66
   %i.g = load i64, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 134168), align 8, !tbaa !78
   %i.h = icmp eq i64 %0, %i.g
   %. = select i1 %i.h, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 130832), ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 130840) ; 9 uses
@@ -238,8 +232,8 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %select.unfold
+  %.sroa.idx = phi i64 [ %i.f, %bb.b ], [ 31, %select.unfold ] ; 4 uses
   %5 = phi i1 [ true, %bb.b ], [ false, %select.unfold ]
-  %.03178.sroa.phi = phi ptr [ %.sroa.0, %bb.b ], [ %.sroa.4, %select.unfold ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #21
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #21
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #21
@@ -249,10 +243,9 @@ bb.c:                                             ; preds = %bb.b, %select.unfol
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #21
   %i.p = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 134320), align 8, !tbaa !73
   %i.q = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 130760), align 8, !tbaa !65
-  %6 = load i64, ptr %.03178.sroa.phi, align 8, !tbaa !66 ; 4 uses
   %i.r = load i64, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 134224), align 8, !tbaa !389
   %i.s = load i64, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 130792), align 8, !tbaa !75
-  %i.t = call i32 %i.p(ptr noundef %i.q, i64 noundef %0, i64 noundef %6, i64 noundef %i.r, i64 noundef %i.s, i64 noundef 0) #21 ; 0 uses
+  %i.t = call i32 %i.p(ptr noundef %i.q, i64 noundef %0, i64 noundef %.sroa.idx, i64 noundef %i.r, i64 noundef %i.s, i64 noundef 0) #21 ; 0 uses
   %i.u = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 134296), align 8, !tbaa !159
   %i.v = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 130760), align 8, !tbaa !65
   %i.w = load i64, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 130792), align 8, !tbaa !75
@@ -426,7 +419,7 @@ bb.k:                                             ; preds = %._crit_edge77
   br label %.preheader
 
 .thread:                                          ; preds = %._crit_edge77
-  %i.dj = icmp eq i64 %6, 31
+  %i.dj = icmp eq i64 %.sroa.idx, 31
   br i1 %i.dj, label %bb.l, label %bb.n
 
 bb.l:                                             ; preds = %.thread
@@ -482,11 +475,11 @@ bb.n:                                             ; preds = %.thread
   br label %bb.t
 
 bb.o:                                             ; preds = %bb.g
-  %i.dx = icmp eq i64 %i.bl, %6
+  %i.dx = icmp eq i64 %i.bl, %.sroa.idx
   br i1 %i.dx, label %bb.p, label %bb.t
 
 bb.p:                                             ; preds = %bb.o
-  %i.dy = icmp eq i64 %6, 31
+  %i.dy = icmp eq i64 %.sroa.idx, 31
   %i.dz = load ptr, ptr %i.a, align 8, !tbaa !212 ; 5 uses
   br i1 %i.dy, label %bb.q, label %bb.s
 
@@ -582,8 +575,6 @@ bb.u:                                             ; preds = %.loopexit
 
 bb.v:                                             ; preds = %.loopexit.thread, %.loopexit, %bb.u, %bb.a
   %.034 = phi ptr [ %.pre, %.loopexit ], [ %.034.pre, %bb.u ], [ %.034.pre80, %bb.a ], [ %i.er, %.loopexit.thread ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4)
   ret ptr %.034
 }
 

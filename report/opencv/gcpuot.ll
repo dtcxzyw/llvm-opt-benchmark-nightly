@@ -204,8 +204,6 @@ bb.aa:                                            ; preds = %.invoke, %bb.n
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZN2cv4gapi2ot19GTrackFromFrameImpl5setupENS_10GFrameDescENS_10GArrayDescES4_fRSt10shared_ptrIN3vas2ot13ObjectTrackerEERKSt6vectorINS_11GCompileArgESaISC_EE(i64 %0, i32 %1, float noundef %2, ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(24) %4) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.0 = alloca ptr, align 8                  ; 4 uses
-  %.sroa.4 = alloca ptr, align 8                  ; 4 uses
   %5 = alloca %"class.cv::util::bad_any_cast", align 8 ; 5 uses
   %6 = alloca %"struct.cv::gapi::ot::ObjectTrackerParams", align 8 ; 6 uses
   %7 = alloca %"class.cv::util::optional", align 8 ; 8 uses
@@ -276,11 +274,6 @@ bb.d:                                             ; preds = %_ZN2cv4util8any_cas
   %.not.i = icmp eq ptr %i.v, %i.c
   br i1 %.not.i, label %.loopexit, label %.lr.ph.i
 
-.loopexit:                                        ; preds = %.critedge.i, %bb.a
-  store i64 0, ptr %7, align 8, !tbaa !129, !alias.scope !191
-  %10 = getelementptr inbounds nuw i8, ptr %7, i64 8
-  br label %bb.f
-
 bb.e:                                             ; preds = %_ZN2cv4util8any_castINS_4gapi2ot19ObjectTrackerParamsEEEPKT_PKNS0_3anyE.exit.i.i.i
   %i.w = getelementptr inbounds nuw i8, ptr %i.t, i64 8
   store i64 1, ptr %7, align 8, !tbaa !129, !alias.scope !191
@@ -292,20 +285,20 @@ bb.e:                                             ; preds = %_ZN2cv4util8any_cas
   %.val26 = load i64, ptr %i.y, align 8
   br label %bb.f
 
-bb.f:                                             ; preds = %.loopexit, %bb.e
+.loopexit:                                        ; preds = %.critedge.i, %bb.a
+  store i64 0, ptr %7, align 8, !tbaa !129, !alias.scope !191
+  %10 = getelementptr inbounds nuw i8, ptr %7, i64 8
+  br label %bb.f
+
+bb.f:                                             ; preds = %bb.e, %.loopexit
+  %.val.sink = phi i64 [ %.val26, %bb.e ], [ 4294967295, %.loopexit ] ; 2 uses
   %i.z = phi i8 [ %.sroa.34.0.i.sroa.speculate.load.true23, %bb.e ], [ 1, %.loopexit ]
-  %.sroa.phi = phi ptr [ %.sroa.4, %bb.e ], [ %.sroa.0, %.loopexit ]
-  %i.aa = phi ptr [ %i.y, %bb.e ], [ %10, %.loopexit ]
-  %11 = phi i64 [ %.val26, %bb.e ], [ 4294967295, %.loopexit ] ; 2 uses
-  store i64 %11, ptr %6, align 8
+  %.sroa.phi = phi ptr [ %i.y, %bb.e ], [ %10, %.loopexit ]
+  %i.aa = phi ptr [ @_ZN2cv4util7variantIJNS0_8optionalINS_4gapi2ot19ObjectTrackerParamsEE7nothingES5_EE6dtor_hIS5_E4helpEPNSt15aligned_storageILm12ELm4EE4typeE, %bb.e ], [ @_ZN2cv4util7variantIJNS0_8optionalINS_4gapi2ot19ObjectTrackerParamsEE7nothingES5_EE6dtor_hIS7_E4helpEPNSt15aligned_storageILm12ELm4EE4typeE, %.loopexit ]
+  store i64 %.val.sink, ptr %6, align 8
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 8
   store i8 %i.z, ptr %.sroa.2.0..sroa_idx, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4)
-  store ptr @_ZN2cv4util7variantIJNS0_8optionalINS_4gapi2ot19ObjectTrackerParamsEE7nothingES5_EE6dtor_hIS7_E4helpEPNSt15aligned_storageILm12ELm4EE4typeE, ptr %.sroa.0, align 8
-  store ptr @_ZN2cv4util7variantIJNS0_8optionalINS_4gapi2ot19ObjectTrackerParamsEE7nothingES5_EE6dtor_hIS5_E4helpEPNSt15aligned_storageILm12ELm4EE4typeE, ptr %.sroa.4, align 8
-  %12 = load ptr, ptr %.sroa.phi, align 8, !tbaa !49
-  invoke void %12(ptr noundef nonnull %i.aa)
+  invoke void %i.aa(ptr noundef nonnull %.sroa.phi)
           to label %_ZN2cv4util8optionalINS_4gapi2ot19ObjectTrackerParamsEED2Ev.exit unwind label %bb.g
 
 bb.g:                                             ; preds = %bb.f
@@ -316,10 +309,8 @@ bb.g:                                             ; preds = %bb.f
   unreachable
 
 _ZN2cv4util8optionalINS_4gapi2ot19ObjectTrackerParamsEED2Ev.exit: ; preds = %bb.f
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4)
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #22
-  %.mask = and i64 %11, -4294967296
+  %.mask = and i64 %.val.sink, -4294967296
   %i.ad = icmp eq i64 %.mask, 4294967296
   br i1 %i.ad, label %bb.m, label %bb.h
 
@@ -489,13 +480,13 @@ declare i64 @strlen(ptr noundef captures(none)) local_unnamed_addr #16
 declare void @_ZNSt9exceptionD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8)) unnamed_addr #10
 
 ; Function Attrs: mustprogress nounwind uwtable
-define linkonce_odr hidden void @_ZN2cv4util7variantIJNS0_8optionalINS_4gapi2ot19ObjectTrackerParamsEE7nothingES5_EE6dtor_hIS7_E4helpEPNSt15aligned_storageILm12ELm4EE4typeE(ptr noundef %0) #4 comdat align 2 {
+define linkonce_odr hidden void @_ZN2cv4util7variantIJNS0_8optionalINS_4gapi2ot19ObjectTrackerParamsEE7nothingES5_EE6dtor_hIS7_E4helpEPNSt15aligned_storageILm12ELm4EE4typeE(ptr noundef %0) local_unnamed_addr #4 comdat align 2 {
 bb.a:
   ret void
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define linkonce_odr hidden void @_ZN2cv4util7variantIJNS0_8optionalINS_4gapi2ot19ObjectTrackerParamsEE7nothingES5_EE6dtor_hIS5_E4helpEPNSt15aligned_storageILm12ELm4EE4typeE(ptr noundef %0) #4 comdat align 2 {
+define linkonce_odr hidden void @_ZN2cv4util7variantIJNS0_8optionalINS_4gapi2ot19ObjectTrackerParamsEE7nothingES5_EE6dtor_hIS5_E4helpEPNSt15aligned_storageILm12ELm4EE4typeE(ptr noundef %0) local_unnamed_addr #4 comdat align 2 {
 bb.a:
   ret void
 }
@@ -898,8 +889,6 @@ _ZN2cv8GMatDescD2Ev.exit31:                       ; preds = %bb.q, %bb.aa, %.bod
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZN2cv4gapi2ot17GTrackFromMatImpl5setupENS_8GMatDescENS_10GArrayDescES4_fRSt10shared_ptrIN3vas2ot13ObjectTrackerEERKSt6vectorINS_11GCompileArgESaISC_EE(ptr noundef align 8 %0, float noundef %1, ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(24) %3) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.0 = alloca ptr, align 8                  ; 4 uses
-  %.sroa.4 = alloca ptr, align 8                  ; 4 uses
   %4 = alloca %"class.cv::util::bad_any_cast", align 8 ; 5 uses
   %5 = alloca %"struct.cv::gapi::ot::ObjectTrackerParams", align 8 ; 6 uses
   %6 = alloca %"class.cv::util::optional", align 8 ; 8 uses
@@ -970,11 +959,6 @@ bb.d:                                             ; preds = %_ZN2cv4util8any_cas
   %.not.i = icmp eq ptr %i.v, %i.c
   br i1 %.not.i, label %.loopexit, label %.lr.ph.i
 
-.loopexit:                                        ; preds = %.critedge.i, %bb.a
-  store i64 0, ptr %6, align 8, !tbaa !129, !alias.scope !265
-  %9 = getelementptr inbounds nuw i8, ptr %6, i64 8
-  br label %bb.f
-
 bb.e:                                             ; preds = %_ZN2cv4util8any_castINS_4gapi2ot19ObjectTrackerParamsEEEPKT_PKNS0_3anyE.exit.i.i.i
   %i.w = getelementptr inbounds nuw i8, ptr %i.t, i64 8
   store i64 1, ptr %6, align 8, !tbaa !129, !alias.scope !265
@@ -986,20 +970,20 @@ bb.e:                                             ; preds = %_ZN2cv4util8any_cas
   %.val23 = load i64, ptr %i.y, align 8
   br label %bb.f
 
-bb.f:                                             ; preds = %.loopexit, %bb.e
+.loopexit:                                        ; preds = %.critedge.i, %bb.a
+  store i64 0, ptr %6, align 8, !tbaa !129, !alias.scope !265
+  %9 = getelementptr inbounds nuw i8, ptr %6, i64 8
+  br label %bb.f
+
+bb.f:                                             ; preds = %bb.e, %.loopexit
+  %.val.sink = phi i64 [ %.val23, %bb.e ], [ 4294967295, %.loopexit ] ; 2 uses
   %i.z = phi i8 [ %.sroa.34.0.i.sroa.speculate.load.true20, %bb.e ], [ 1, %.loopexit ]
-  %.sroa.phi = phi ptr [ %.sroa.4, %bb.e ], [ %.sroa.0, %.loopexit ]
-  %i.aa = phi ptr [ %i.y, %bb.e ], [ %9, %.loopexit ]
-  %10 = phi i64 [ %.val23, %bb.e ], [ 4294967295, %.loopexit ] ; 2 uses
-  store i64 %10, ptr %5, align 8
+  %.sroa.phi = phi ptr [ %i.y, %bb.e ], [ %9, %.loopexit ]
+  %i.aa = phi ptr [ @_ZN2cv4util7variantIJNS0_8optionalINS_4gapi2ot19ObjectTrackerParamsEE7nothingES5_EE6dtor_hIS5_E4helpEPNSt15aligned_storageILm12ELm4EE4typeE, %bb.e ], [ @_ZN2cv4util7variantIJNS0_8optionalINS_4gapi2ot19ObjectTrackerParamsEE7nothingES5_EE6dtor_hIS7_E4helpEPNSt15aligned_storageILm12ELm4EE4typeE, %.loopexit ]
+  store i64 %.val.sink, ptr %5, align 8
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 8
   store i8 %i.z, ptr %.sroa.2.0..sroa_idx, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4)
-  store ptr @_ZN2cv4util7variantIJNS0_8optionalINS_4gapi2ot19ObjectTrackerParamsEE7nothingES5_EE6dtor_hIS7_E4helpEPNSt15aligned_storageILm12ELm4EE4typeE, ptr %.sroa.0, align 8
-  store ptr @_ZN2cv4util7variantIJNS0_8optionalINS_4gapi2ot19ObjectTrackerParamsEE7nothingES5_EE6dtor_hIS5_E4helpEPNSt15aligned_storageILm12ELm4EE4typeE, ptr %.sroa.4, align 8
-  %11 = load ptr, ptr %.sroa.phi, align 8, !tbaa !49
-  invoke void %11(ptr noundef nonnull %i.aa)
+  invoke void %i.aa(ptr noundef nonnull %.sroa.phi)
           to label %_ZN2cv4util8optionalINS_4gapi2ot19ObjectTrackerParamsEED2Ev.exit unwind label %bb.g
 
 bb.g:                                             ; preds = %bb.f
@@ -1010,10 +994,8 @@ bb.g:                                             ; preds = %bb.f
   unreachable
 
 _ZN2cv4util8optionalINS_4gapi2ot19ObjectTrackerParamsEED2Ev.exit: ; preds = %bb.f
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4)
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #22
-  %i.ad = icmp ult i64 %10, 4294967296
+  %i.ad = icmp ult i64 %.val.sink, 4294967296
   br i1 %i.ad, label %bb.m, label %bb.h
 
 bb.h:                                             ; preds = %_ZN2cv4util8optionalINS_4gapi2ot19ObjectTrackerParamsEED2Ev.exit

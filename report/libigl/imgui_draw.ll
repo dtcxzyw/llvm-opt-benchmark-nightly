@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libigl/original/imgui_draw?download=true
 inline.NumInlined: 1179
 inline.NumDeleted: 280
-loop-unroll.NumCompletelyUnrolled: 238
+loop-unroll.NumCompletelyUnrolled: 236
 loop-unroll.NumRuntimeUnrolled: 43
-loop-unroll.NumUnrolled: 284
+loop-unroll.NumUnrolled: 282
 begin_hunk_0_@_ZN6ImFont16BuildLookupTableEv:bb.a
 
 bb.g:                                             ; preds = %_ZNK6ImFont9FindGlyphEt.exit
@@ -205,31 +205,29 @@ bb.x:                                             ; preds = %bb.w
   %i.fx = load ptr, ptr %i.av, align 8, !tbaa !115
   %i.fy = getelementptr inbounds nuw i8, ptr %i.fx, i64 16460
   %i.fz = load i16, ptr %i.fy, align 2, !tbaa !92
-  %1 = icmp eq i16 %i.fz, -1
+  %1 = icmp ne i16 %i.fz, -1
   %i.ga = load ptr, ptr %i.fw, align 8
-  %.not.i47 = icmp eq ptr %i.ga, null
-  %or.cond.i = select i1 %1, i1 true, i1 %.not.i47
-  br i1 %or.cond.i, label %_ZNK6ImFont19FindGlyphNoFallbackEt.exit.thread.i.thread, label %_ZL22FindFirstExistingGlyphP6ImFontPKti.exit
+  %.not.i47.peel = icmp ne ptr %i.ga, null
+  %or.cond.i = select i1 %1, i1 %.not.i47.peel, i1 false
+  br i1 %or.cond.i, label %_ZL22FindFirstExistingGlyphP6ImFontPKti.exit, label %_ZNK6ImFont19FindGlyphNoFallbackEt.exit.thread.i.thread
 
 _ZNK6ImFont19FindGlyphNoFallbackEt.exit.thread.i: ; preds = %bb.w
   %.not.i.i46.1 = icmp samesign ugt i32 %.pre97.pre, 133
-  br i1 %.not.i.i46.1, label %_ZNK6ImFont19FindGlyphNoFallbackEt.exit.thread.i.thread, label %_ZNK6ImFont19FindGlyphNoFallbackEt.exit.thread.i.1
+  br i1 %.not.i.i46.1, label %_ZNK6ImFont19FindGlyphNoFallbackEt.exit.thread.i.thread, label %_ZL22FindFirstExistingGlyphP6ImFontPKti.exit
 
 _ZNK6ImFont19FindGlyphNoFallbackEt.exit.thread.i.thread: ; preds = %bb.x, %_ZNK6ImFont19FindGlyphNoFallbackEt.exit.thread.i
   %i.gb = load ptr, ptr %i.av, align 8, !tbaa !115
   %i.gc = getelementptr inbounds nuw i8, ptr %i.gb, i64 266
   %i.gd = load i16, ptr %i.gc, align 2, !tbaa !92
-  %2 = icmp eq i16 %i.gd, -1
+  %2 = icmp ne i16 %i.gd, -1
   %i.ge = load ptr, ptr %i.fw, align 8
-  %.not.i47.1 = icmp eq ptr %i.ge, null
-  %or.cond.i.1 = select i1 %2, i1 true, i1 %.not.i47.1
-  br i1 %or.cond.i.1, label %_ZNK6ImFont19FindGlyphNoFallbackEt.exit.thread.i.1, label %_ZL22FindFirstExistingGlyphP6ImFontPKti.exit
-
-_ZNK6ImFont19FindGlyphNoFallbackEt.exit.thread.i.1: ; preds = %_ZNK6ImFont19FindGlyphNoFallbackEt.exit.thread.i.thread, %_ZNK6ImFont19FindGlyphNoFallbackEt.exit.thread.i
+  %.not.i47 = icmp ne ptr %i.ge, null
+  %or.cond.i.1 = select i1 %2, i1 %.not.i47, i1 false
+  %3 = select i1 %or.cond.i.1, i16 133, i16 -1
   br label %_ZL22FindFirstExistingGlyphP6ImFontPKti.exit
 
-_ZL22FindFirstExistingGlyphP6ImFontPKti.exit:     ; preds = %_ZNK6ImFont19FindGlyphNoFallbackEt.exit.thread.i.1, %_ZNK6ImFont19FindGlyphNoFallbackEt.exit.thread.i.thread, %bb.x
-  %i.gf = phi i16 [ 8230, %bb.x ], [ -1, %_ZNK6ImFont19FindGlyphNoFallbackEt.exit.thread.i.1 ], [ 133, %_ZNK6ImFont19FindGlyphNoFallbackEt.exit.thread.i.thread ]
+_ZL22FindFirstExistingGlyphP6ImFontPKti.exit:     ; preds = %_ZNK6ImFont19FindGlyphNoFallbackEt.exit.thread.i, %bb.x, %_ZNK6ImFont19FindGlyphNoFallbackEt.exit.thread.i.thread
+  %i.gf = phi i16 [ %3, %_ZNK6ImFont19FindGlyphNoFallbackEt.exit.thread.i.thread ], [ 8230, %bb.x ], [ -1, %_ZNK6ImFont19FindGlyphNoFallbackEt.exit.thread.i ]
   store i16 %i.gf, ptr %i.ft, align 4, !tbaa !182
   br label %bb.y
 
@@ -242,38 +240,36 @@ bb.y:                                             ; preds = %_ZL22FindFirstExist
 bb.z:                                             ; preds = %bb.y
   %i.gj = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %.not.i.i49.a = icmp ugt i32 %.pre97.pre, 46
-  br i1 %.not.i.i49.a, label %bb.aa, label %_ZNK6ImFont19FindGlyphNoFallbackEt.exit.thread.i50.1
+  br i1 %.not.i.i49.a, label %bb.aa, label %_ZL22FindFirstExistingGlyphP6ImFontPKti.exit55
 
 bb.aa:                                            ; preds = %bb.z
   %i.gk = load ptr, ptr %i.av, align 8, !tbaa !115
   %i.gl = getelementptr inbounds nuw i8, ptr %i.gk, i64 92
   %i.gm = load i16, ptr %i.gl, align 2, !tbaa !92
-  %3 = icmp eq i16 %i.gm, -1
+  %4 = icmp ne i16 %i.gm, -1
   %i.gn = load ptr, ptr %i.gj, align 8
-  %.not.i53 = icmp eq ptr %i.gn, null
-  %or.cond.i54 = select i1 %3, i1 true, i1 %.not.i53
-  br i1 %or.cond.i54, label %_ZNK6ImFont19FindGlyphNoFallbackEt.exit.thread.i50, label %_ZL22FindFirstExistingGlyphP6ImFontPKti.exit55
+  %.not.i53.peel = icmp ne ptr %i.gn, null
+  %or.cond.i54 = select i1 %4, i1 %.not.i53.peel, i1 false
+  br i1 %or.cond.i54, label %_ZL22FindFirstExistingGlyphP6ImFontPKti.exit55, label %_ZNK6ImFont19FindGlyphNoFallbackEt.exit.thread.i50
 
 _ZNK6ImFont19FindGlyphNoFallbackEt.exit.thread.i50: ; preds = %bb.aa
   %.not.i.i49.1 = icmp ugt i32 %.pre97.pre, 65294
-  br i1 %.not.i.i49.1, label %bb.ab, label %_ZNK6ImFont19FindGlyphNoFallbackEt.exit.thread.i50.1
+  br i1 %.not.i.i49.1, label %bb.ab, label %_ZL22FindFirstExistingGlyphP6ImFontPKti.exit55
 
 bb.ab:                                            ; preds = %_ZNK6ImFont19FindGlyphNoFallbackEt.exit.thread.i50
   %i.go = load ptr, ptr %i.av, align 8, !tbaa !115
   %i.gp = getelementptr inbounds nuw i8, ptr %i.go, i64 130588
   %i.gq = load i16, ptr %i.gp, align 2, !tbaa !92
-  %4 = icmp eq i16 %i.gq, -1
+  %5 = icmp ne i16 %i.gq, -1
   %i.gr = load ptr, ptr %i.gj, align 8
-  %.not.i53.1 = icmp eq ptr %i.gr, null
-  %or.cond.i54.1 = select i1 %4, i1 true, i1 %.not.i53.1
-  br i1 %or.cond.i54.1, label %_ZNK6ImFont19FindGlyphNoFallbackEt.exit.thread.i50.1, label %_ZL22FindFirstExistingGlyphP6ImFontPKti.exit55
-
-_ZNK6ImFont19FindGlyphNoFallbackEt.exit.thread.i50.1: ; preds = %bb.z, %bb.ab, %_ZNK6ImFont19FindGlyphNoFallbackEt.exit.thread.i50
+  %.not.i53 = icmp ne ptr %i.gr, null
+  %or.cond.i54.1 = select i1 %5, i1 %.not.i53, i1 false
+  %6 = select i1 %or.cond.i54.1, i16 -242, i16 -1
   br label %_ZL22FindFirstExistingGlyphP6ImFontPKti.exit55
 
-_ZL22FindFirstExistingGlyphP6ImFontPKti.exit55:   ; preds = %_ZNK6ImFont19FindGlyphNoFallbackEt.exit.thread.i50.1, %bb.ab, %bb.aa
-  %5 = phi i16 [ 46, %bb.aa ], [ -1, %_ZNK6ImFont19FindGlyphNoFallbackEt.exit.thread.i50.1 ], [ -242, %bb.ab ]
-  store i16 %5, ptr %i.gg, align 2, !tbaa !183
+_ZL22FindFirstExistingGlyphP6ImFontPKti.exit55:   ; preds = %bb.z, %_ZNK6ImFont19FindGlyphNoFallbackEt.exit.thread.i50, %bb.aa, %bb.ab
+  %7 = phi i16 [ %6, %bb.ab ], [ 46, %bb.aa ], [ -1, %_ZNK6ImFont19FindGlyphNoFallbackEt.exit.thread.i50 ], [ -1, %bb.z ]
+  store i16 %7, ptr %i.gg, align 2, !tbaa !183
   br label %._crit_edge104
 
 ._crit_edge104:                                   ; preds = %bb.y, %_ZL22FindFirstExistingGlyphP6ImFontPKti.exit55

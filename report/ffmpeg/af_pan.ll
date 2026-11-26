@@ -60,7 +60,6 @@ bb.a:
   %i.f = alloca i32, align 4                      ; 4 uses
   %i.g = alloca i32, align 4                      ; 5 uses
   %i.h = alloca i32, align 4                      ; 6 uses
-  %1 = alloca [2 x i32], align 8                  ; 7 uses
   %i.i = alloca [64 x i32], align 16              ; 4 uses
   %i.j = alloca double, align 8                   ; 5 uses
   %i.k = alloca [64 x i32], align 16              ; 5 uses
@@ -75,8 +74,6 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #8
-  call void @llvm.lifetime.start.p0(ptr nonnull %1) #8
-  store i64 0, ptr %1, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %i.i, i8 0, i64 256, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j) #8
@@ -122,7 +119,6 @@ bb.g:                                             ; preds = %bb.f
 .lr.ph:                                           ; preds = %.preheader
   %i.z = getelementptr inbounds nuw i8, ptr %i.m, i64 32808 ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.m, i64 40
-  %.sroa.gep = getelementptr inbounds nuw i8, ptr %1, i64 4
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.g
@@ -131,6 +127,8 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %.lr.ph, %bb.ag
   %i.ab = phi ptr [ %i.y, %.lr.ph ], [ %i.bt, %bb.ag ] ; 3 uses
+  %.sroa.5.0116 = phi i32 [ 0, %.lr.ph ], [ %.sroa.5.1., %bb.ag ]
+  %.sroa.0.0115 = phi i32 [ 0, %.lr.ph ], [ %..sroa.0.1, %bb.ag ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k) #8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %i.k, i8 0, i64 256, i1 false)
   %i.ac = call fastcc i32 @parse_channel_name(ptr noundef %i.c, ptr noundef %i.e, ptr noundef %i.h)
@@ -217,6 +215,8 @@ bb.u:                                             ; preds = %bb.r, %bb.s
 bb.v:                                             ; preds = %.backedge, %bb.u
   %.pn.pn = phi ptr [ %i.ar, %bb.u ], [ %i.br, %.backedge ]
   %.036 = phi double [ 1.000000e+00, %bb.u ], [ %.036.be, %.backedge ]
+  %.sroa.0.1 = phi i32 [ %.sroa.0.0115, %bb.u ], [ %..sroa.0.1, %.backedge ] ; 3 uses
+  %.sroa.5.1 = phi i32 [ %.sroa.5.0116, %bb.u ], [ %.sroa.5.1., %.backedge ] ; 3 uses
   %storemerge56 = getelementptr inbounds nuw i8, ptr %.pn.pn, i64 1 ; 3 uses
   store ptr %storemerge56, ptr %i.c, align 8, !tbaa !25
   store double 1.000000e+00, ptr %i.j, align 8, !tbaa !29
@@ -243,15 +243,14 @@ bb.y:                                             ; preds = %bb.x
 
 bb.z:                                             ; preds = %bb.x
   %i.be = load i32, ptr %i.h, align 4, !tbaa !26  ; 2 uses
-  %2 = sext i32 %i.be to i64
-  %3 = getelementptr inbounds [4 x i8], ptr %1, i64 %2 ; 2 uses
-  %4 = load i32, ptr %3, align 4, !tbaa !26
-  %5 = add nsw i32 %4, 1
-  store i32 %5, ptr %3, align 4, !tbaa !26
-  %.not58 = icmp eq i32 %i.be, 0
-  %.sroa.gep.val = load i32, ptr %.sroa.gep, align 4
-  %.val = load i32, ptr %1, align 8
-  %i.bf = select i1 %.not58, i32 %.sroa.gep.val, i32 %.val
+  %.sroa.idx.not = icmp eq i32 %i.be, 0           ; 4 uses
+  %1 = icmp ult i32 %i.be, 2
+  call void @llvm.assume(i1 %1)
+  %.sroa.speculated7 = select i1 %.sroa.idx.not, i32 %.sroa.0.1, i32 %.sroa.5.1
+  %2 = add nsw i32 %.sroa.speculated7, 1          ; 2 uses
+  %..sroa.0.1 = select i1 %.sroa.idx.not, i32 %2, i32 %.sroa.0.1 ; 2 uses
+  %.sroa.5.1. = select i1 %.sroa.idx.not, i32 %.sroa.5.1, i32 %2 ; 3 uses
+  %i.bf = select i1 %.sroa.idx.not, i32 %.sroa.5.1, i32 %.sroa.0.1
   %.not59 = icmp eq i32 %i.bf, 0
   br i1 %.not59, label %bb.ab, label %bb.aa
 
@@ -316,14 +315,12 @@ bb.ag:                                            ; preds = %bb.ad
   br i1 %.not51, label %._crit_edge.loopexit, label %bb.i
 
 ._crit_edge.loopexit:                             ; preds = %bb.ag
-  %.sroa.gep.le.le = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %.pre = load i32, ptr %.sroa.gep.le.le, align 4, !tbaa !26
-  %i.bu = icmp ne i32 %.pre, 0
+  %i.bu = icmp ne i32 %.sroa.5.1., 0
   %i.bv = zext i1 %i.bu to i32
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.preheader
-  %i.bw = phi i32 [ %i.bv, %._crit_edge.loopexit ], [ 0, %.preheader ]
+  %i.bw = phi i32 [ 0, %.preheader ], [ %i.bv, %._crit_edge.loopexit ]
   %i.bx = getelementptr inbounds nuw i8, ptr %i.m, i64 32816
   store i32 %i.bw, ptr %i.bx, align 8, !tbaa !30
   %i.by = getelementptr inbounds nuw i8, ptr %i.m, i64 40
@@ -377,7 +374,6 @@ bb.ak:                                            ; preds = %bb.c, %bb.aj, %bb.b
   %.039 = phi i32 [ %.2, %bb.aj ], [ -12, %bb.c ], [ -22, %bb.b ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j) #8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #8
-  call void @llvm.lifetime.end.p0(ptr nonnull %1) #8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #8
@@ -780,14 +776,14 @@ declare i32 @ff_channel_layouts_ref(ptr noundef, ptr noundef) local_unnamed_addr
 
 declare i32 @ff_add_channel_layout(ptr noundef, ptr noundef) local_unnamed_addr #3
 
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
+declare void @llvm.assume(i1 noundef) #7
+
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #4
-
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #7
 
 attributes #0 = { cold nounwind optsize uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

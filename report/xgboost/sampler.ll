@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/xgboost/original/sampler?download=true
 inline.NumInlined: 1085
 inline.NumDeleted: 511
-loop-unroll.NumCompletelyUnrolled: 6
+loop-unroll.NumCompletelyUnrolled: 4
 loop-unroll.NumRuntimeUnrolled: 12
-loop-unroll.NumUnrolled: 18
+loop-unroll.NumUnrolled: 16
 begin_hunk_0_@_ZN7xgboost4tree8cpu_impl18CalculateThresholdENS_6common4SpanIKfLm18446744073709551615EEES5_mm:bb.a
   br i1 %i.at, label %.thread64, label %bb.o
 
@@ -205,22 +205,19 @@ bb.a:
 _ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIKmLm2EEELb1EEdeEv.exit.i.i.i: ; preds = %bb.a
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.o = load i64, ptr %i.n, align 8, !tbaa !13
-  %i.p = load i64, ptr %2, align 8, !tbaa !13
+  %i.p = load i64, ptr %2, align 8, !tbaa !13     ; 2 uses
   %.not4.i.i.i.a = icmp eq i64 %i.p, %i.o
   %i.q = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.r = load i64, ptr %i.q, align 8
+  %i.r = load i64, ptr %i.q, align 8              ; 2 uses
   %.not4.i.i.i.1 = icmp eq i64 %i.r, 1
   %.not4.i.i.i.lcssa = select i1 %.not4.i.i.i.a, i1 %.not4.i.i.i.1, i1 false
   br i1 %.not4.i.i.i.lcssa, label %_ZNK7xgboost6linalg10TensorViewINS_6detail20GradientPairInternalIfEELi2EE10ContiguousEv.exit.thread, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIKmLm2EEELb1EEdeEv.exit.i.i1.i
 
 _ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIKmLm2EEELb1EEdeEv.exit.i.i1.i: ; preds = %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIKmLm2EEELb1EEdeEv.exit.i.i.i
   %i.s = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %20 = load i64, ptr %i.s, align 8, !tbaa !13
-  %i.t = load i64, ptr %2, align 8, !tbaa !13
-  %.not4.i.i3.i = icmp eq i64 %i.t, 1
-  %21 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %22 = load i64, ptr %21, align 8
-  %.not4.i.i3.i.1 = icmp eq i64 %22, %20
+  %i.t = load i64, ptr %i.s, align 8, !tbaa !13
+  %.not4.i.i3.i = icmp eq i64 %i.p, 1
+  %.not4.i.i3.i.1 = icmp eq i64 %i.r, %i.t
   %.not4.i.i3.i.lcssa = select i1 %.not4.i.i3.i, i1 %.not4.i.i3.i.1, i1 false
   br i1 %.not4.i.i3.i.lcssa, label %_ZNK7xgboost6linalg10TensorViewINS_6detail20GradientPairInternalIfEELi2EE10ContiguousEv.exit.thread, label %bb.b, !prof !91
 
@@ -623,7 +620,7 @@ attributes #30 = { noreturn nounwind }
 !88 = distinct !{!88, !87, !"_ZN4dmlc11LogCheck_GEB5cxx11Eii: argument 0"}
 !89 = distinct !{!89, !29}
 !90 = !{!42, !12, i64 0}
-!91 = !{!"branch_weights", !"expected", i32 2143190828, i32 4292820}
+!91 = !{!"branch_weights", !"expected", i32 2143190829, i32 4292819}
 !92 = !{!23, !12, i64 0}
 !93 = !{!42, !22, i64 8}
 !94 = !{!23, !22, i64 8}

@@ -204,8 +204,6 @@ bb.a:
   %51 = alloca %"class.testing::Message", align 8 ; 7 uses
   %52 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   %53 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
-  %.sroa.0 = alloca i8, align 1                   ; 6 uses
-  %.sroa.6 = alloca i8, align 1                   ; 6 uses
   %i.e = alloca i8, align 1                       ; 7 uses
   %54 = alloca %"class.testing::ScopedTrace", align 1 ; 8 uses
   %55 = alloca %"class.std::unique_ptr.22", align 8 ; 7 uses
@@ -608,10 +606,6 @@ _ZN7testing7MessageD2Ev.exit953:                  ; preds = %_ZNKSt14default_del
 
 bb.ft:                                            ; preds = %bb.ff
   call void @llvm.lifetime.end.p0(ptr nonnull %50) #18
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6)
-  store i8 0, ptr %.sroa.0, align 1, !tbaa !60
-  store i8 1, ptr %.sroa.6, align 1, !tbaa !60
   %i.qn = add i64 %i.dg, -1
   %i.qo = add i64 %i.dg, 1
   br label %bb.fv
@@ -622,11 +616,10 @@ bb.fu:                                            ; preds = %_ZN7testing7Message
   br label %bb.yv
 
 bb.fv:                                            ; preds = %bb.ft, %_ZNSt10unique_ptrI15evp_pkey_ctx_stN4bssl8internal7DeleterEED2Ev.exit
+  %.0180.ptr.sroa.idx = phi i8 [ 0, %bb.ft ], [ 1, %_ZNSt10unique_ptrI15evp_pkey_ctx_stN4bssl8internal7DeleterEED2Ev.exit ]
   %.not = phi i1 [ false, %bb.ft ], [ true, %_ZNSt10unique_ptrI15evp_pkey_ctx_stN4bssl8internal7DeleterEED2Ev.exit ]
-  %.0180.idx3061.sroa.phi = phi ptr [ %.sroa.0, %bb.ft ], [ %.sroa.6, %_ZNSt10unique_ptrI15evp_pkey_ctx_stN4bssl8internal7DeleterEED2Ev.exit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #18
-  %179 = load i8, ptr %.0180.idx3061.sroa.phi, align 1, !tbaa !60, !range !56, !noundef !57
-  store i8 %179, ptr %i.e, align 1, !tbaa !60
+  store i8 %.0180.ptr.sroa.idx, ptr %i.e, align 1, !tbaa !60
   call void @llvm.lifetime.start.p0(ptr nonnull %54) #18
   invoke void @_ZN7testing11ScopedTraceC2IbEEPKciRKT_(ptr noundef nonnull align 1 dereferenceable(1) %54, ptr noundef nonnull @.str.2, i32 noundef 289, ptr noundef nonnull align 1 dereferenceable(1) %i.e)
           to label %bb.fw unwind label %bb.fy
@@ -1029,8 +1022,6 @@ _ZNSt10unique_ptrI15evp_pkey_ctx_stN4bssl8internal7DeleterEED2Ev.exit1139: ; pre
   call void @_ZN7testing11ScopedTraceD1Ev(ptr noundef nonnull align 1 dereferenceable(1) %54) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %54) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #18
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6)
   br label %.critedge697
 
 bb.ko:                                            ; preds = %_ZN7testing7MessageD2Ev.exit1132, %bb.jy
@@ -1049,13 +1040,9 @@ bb.kq:                                            ; preds = %bb.kp, %bb.fy
   %.pn494.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn494.pn.pn.pn, %bb.kp ], [ %i.qu, %bb.fy ]
   call void @llvm.lifetime.end.p0(ptr nonnull %54) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #18
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6)
   br label %bb.yv
 
 bb.kr:                                            ; preds = %_ZNSt10unique_ptrI15evp_pkey_ctx_stN4bssl8internal7DeleterEED2Ev.exit
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6)
   %i.zx = invoke ptr @EVP_PKEY_CTX_new_id(i32 noundef 963, ptr noundef null)
           to label %bb.ks unwind label %bb.rl     ; 13 uses
 

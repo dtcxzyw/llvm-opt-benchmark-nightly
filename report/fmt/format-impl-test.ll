@@ -205,8 +205,6 @@ bb.a:
   %15 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
   %16 = alloca %"class.testing::Message", align 8 ; 7 uses
   %17 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
-  %.sroa.0 = alloca i32, align 8                  ; 5 uses
-  %.sroa.5 = alloca i32, align 4                  ; 5 uses
   %18 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %19 = alloca %"class.fmt::v12::basic_memory_buffer.24", align 8 ; 14 uses
   %20 = alloca %"class.std::__cxx11::basic_string", align 8 ; 16 uses
@@ -609,10 +607,6 @@ bb.au:                                            ; preds = %_ZNSt7__cxx1112basi
 
 _ZN3fmt3v1219basic_memory_bufferIcLm500ENS0_6detail9allocatorIcEEED2Ev.exit147: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit145, %bb.au
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #30
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5)
-  store i32 42, ptr %.sroa.0, align 8
-  store i32 -1, ptr %.sroa.5, align 4
   %i.fv = getelementptr inbounds nuw i8, ptr %18, i64 16 ; 6 uses
   %i.fw = getelementptr inbounds nuw i8, ptr %18, i64 8 ; 5 uses
   %i.fx = getelementptr inbounds nuw i8, ptr %19, i64 16
@@ -635,8 +629,6 @@ _ZN3fmt3v1219basic_memory_bufferIcLm500ENS0_6detail9allocatorIcEEED2Ev.exit147: 
   br label %bb.ay
 
 bb.av:                                            ; preds = %_ZN3fmt3v1219basic_memory_bufferIcLm500ENS0_6detail9allocatorIcEEED2Ev.exit276
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5)
   %i.go = load ptr, ptr %5, align 8, !tbaa !72    ; 2 uses
   %i.gp = icmp eq ptr %i.go, %i.j
   br i1 %i.gp, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit150, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i148
@@ -692,12 +684,11 @@ _ZN3fmt3v1219basic_memory_bufferIcLm500ENS0_6detail9allocatorIcEEED2Ev.exit158: 
   br label %bb.ds
 
 bb.ay:                                            ; preds = %_ZN3fmt3v1219basic_memory_bufferIcLm500ENS0_6detail9allocatorIcEEED2Ev.exit147, %_ZN3fmt3v1219basic_memory_bufferIcLm500ENS0_6detail9allocatorIcEEED2Ev.exit276
+  %.sroa.idx = phi i32 [ 42, %_ZN3fmt3v1219basic_memory_bufferIcLm500ENS0_6detail9allocatorIcEEED2Ev.exit147 ], [ -1, %_ZN3fmt3v1219basic_memory_bufferIcLm500ENS0_6detail9allocatorIcEEED2Ev.exit276 ] ; 3 uses
   %34 = phi i1 [ true, %_ZN3fmt3v1219basic_memory_bufferIcLm500ENS0_6detail9allocatorIcEEED2Ev.exit147 ], [ false, %_ZN3fmt3v1219basic_memory_bufferIcLm500ENS0_6detail9allocatorIcEEED2Ev.exit276 ]
-  %.0511.sroa.phi = phi ptr [ %.sroa.0, %_ZN3fmt3v1219basic_memory_bufferIcLm500ENS0_6detail9allocatorIcEEED2Ev.exit147 ], [ %.sroa.5, %_ZN3fmt3v1219basic_memory_bufferIcLm500ENS0_6detail9allocatorIcEEED2Ev.exit276 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #30, !noalias !461
-  %35 = load i32, ptr %.0511.sroa.phi, align 4, !tbaa !89, !noalias !461 ; 3 uses
-  store i32 %35, ptr %2, align 16, !tbaa !73, !noalias !461
+  store i32 %.sroa.idx, ptr %2, align 16, !tbaa !73, !noalias !461
   invoke void @_ZN3fmt3v127vformatB5cxx11ENS0_17basic_string_viewIcEENS0_17basic_format_argsINS0_7contextEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %18, ptr nonnull @.str.133, i64 8, i64 1, ptr nonnull %2)
           to label %bb.az unwind label %bb.bo
 
@@ -798,7 +789,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit161: ; preds = %_Z
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit163: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit161
   %i.hx = load ptr, ptr %20, align 8, !tbaa !72
   %i.hy = load i64, ptr %i.gc, align 8, !tbaa !71
-  call void @_ZN3fmt3v126detail17format_error_codeERNS1_6bufferIcEEiNS0_17basic_string_viewIcEE(ptr noundef nonnull align 8 dereferenceable(32) %19, i32 noundef %35, ptr %i.hx, i64 %i.hy) #30
+  call void @_ZN3fmt3v126detail17format_error_codeERNS1_6bufferIcEEiNS0_17basic_string_viewIcEE(ptr noundef nonnull align 8 dereferenceable(32) %19, i32 noundef %.sroa.idx, ptr %i.hx, i64 %i.hy) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %21) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %22) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %23) #30
@@ -1026,7 +1017,7 @@ bb.bo:                                            ; preds = %bb.ay
   %i.km = landingpad { ptr, i32 }
           cleanup
   call void @llvm.lifetime.end.p0(ptr nonnull %18) #30
-  br label %bb.dr
+  br label %bb.ds
 
 bb.bp:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit161
   %i.kn = landingpad { ptr, i32 }
@@ -1364,7 +1355,7 @@ bb.ct:                                            ; preds = %.noexc238, %_ZNKSt7
   store i8 0, ptr %i.nf, align 1, !tbaa !73
   %i.ng = load ptr, ptr %20, align 8, !tbaa !72
   %i.nh = load i64, ptr %i.gc, align 8, !tbaa !71
-  call void @_ZN3fmt3v126detail17format_error_codeERNS1_6bufferIcEEiNS0_17basic_string_viewIcEE(ptr noundef nonnull align 8 dereferenceable(32) %19, i32 noundef %35, ptr %i.ng, i64 %i.nh) #30
+  call void @_ZN3fmt3v126detail17format_error_codeERNS1_6bufferIcEEiNS0_17basic_string_viewIcEE(ptr noundef nonnull align 8 dereferenceable(32) %19, i32 noundef %.sroa.idx, ptr %i.ng, i64 %i.nh) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %30) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %31) #30
   call void @llvm.experimental.noalias.scope.decl(metadata !467)
@@ -1651,24 +1642,18 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit279: ; preds = %bb
   call void @llvm.lifetime.end.p0(ptr nonnull %20) #30
   %i.pr = load ptr, ptr %19, align 8, !tbaa !93   ; 2 uses
   %.not.i.i280 = icmp eq ptr %i.pr, %i.ga
-  br i1 %.not.i.i280, label %_ZN3fmt3v1219basic_memory_bufferIcLm500ENS0_6detail9allocatorIcEEED2Ev.exit281.a, label %36
+  br i1 %.not.i.i280, label %bb.dr, label %_ZN3fmt3v1219basic_memory_bufferIcLm500ENS0_6detail9allocatorIcEEED2Ev.exit281.a
 
-36:                                               ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit279
+_ZN3fmt3v1219basic_memory_bufferIcLm500ENS0_6detail9allocatorIcEEED2Ev.exit281.a: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit279
   call void @free(ptr noundef %i.pr) #30
-  br label %_ZN3fmt3v1219basic_memory_bufferIcLm500ENS0_6detail9allocatorIcEEED2Ev.exit281.a
-
-_ZN3fmt3v1219basic_memory_bufferIcLm500ENS0_6detail9allocatorIcEEED2Ev.exit281.a: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit279, %36
-  call void @llvm.lifetime.end.p0(ptr nonnull %19) #30
   br label %bb.dr
 
-bb.dr:                                            ; preds = %_ZN3fmt3v1219basic_memory_bufferIcLm500ENS0_6detail9allocatorIcEEED2Ev.exit281.a, %bb.bo
-  %.pn68.pn.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn68.pn.pn.pn.pn.pn, %_ZN3fmt3v1219basic_memory_bufferIcLm500ENS0_6detail9allocatorIcEEED2Ev.exit281.a ], [ %i.km, %bb.bo ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5)
+bb.dr:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit279, %_ZN3fmt3v1219basic_memory_bufferIcLm500ENS0_6detail9allocatorIcEEED2Ev.exit281.a
+  call void @llvm.lifetime.end.p0(ptr nonnull %19) #30
   br label %bb.ds
 
-bb.ds:                                            ; preds = %bb.dr, %_ZN3fmt3v1219basic_memory_bufferIcLm500ENS0_6detail9allocatorIcEEED2Ev.exit158, %_ZN3fmt3v1219basic_memory_bufferIcLm500ENS0_6detail9allocatorIcEEED2Ev.exit126
-  %.pn68.pn.pn.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn68.pn.pn.pn.pn.pn.pn, %bb.dr ], [ %.pn49.pn.pn.pn, %_ZN3fmt3v1219basic_memory_bufferIcLm500ENS0_6detail9allocatorIcEEED2Ev.exit158 ], [ %.pn42.pn.pn.pn, %_ZN3fmt3v1219basic_memory_bufferIcLm500ENS0_6detail9allocatorIcEEED2Ev.exit126 ]
+bb.ds:                                            ; preds = %bb.bo, %bb.dr, %_ZN3fmt3v1219basic_memory_bufferIcLm500ENS0_6detail9allocatorIcEEED2Ev.exit158, %_ZN3fmt3v1219basic_memory_bufferIcLm500ENS0_6detail9allocatorIcEEED2Ev.exit126
+  %.pn68.pn.pn.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn42.pn.pn.pn, %_ZN3fmt3v1219basic_memory_bufferIcLm500ENS0_6detail9allocatorIcEEED2Ev.exit126 ], [ %.pn49.pn.pn.pn, %_ZN3fmt3v1219basic_memory_bufferIcLm500ENS0_6detail9allocatorIcEEED2Ev.exit158 ], [ %.pn68.pn.pn.pn.pn.pn, %bb.dr ], [ %i.km, %bb.bo ]
   %i.ps = load ptr, ptr %5, align 8, !tbaa !72    ; 2 uses
   %i.pt = icmp eq ptr %i.ps, %i.j
   br i1 %i.pt, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit284, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i282

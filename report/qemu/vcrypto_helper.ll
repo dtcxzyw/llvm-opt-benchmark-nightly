@@ -205,7 +205,6 @@ bb.g:                                             ; preds = %bb.a, %._crit_edge
 ; Function Attrs: noinline nounwind sspstrong uwtable
 define dso_local void @helper_vghsh_vv(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef captures(none) %3, i32 noundef %4) local_unnamed_addr #0 {
 bb.a:
-  %5 = alloca [2 x i64], align 16                 ; 4 uses
   %i.a = lshr i32 %4, 14
   %i.b = and i32 %i.a, 1
   %i.c = getelementptr i8, ptr %3, i64 4608
@@ -287,7 +286,6 @@ bb.c:                                             ; preds = %.lr.ph.a, %bb.d
   %i.bi = and i64 %i.bh, 1085102592571150095
   %i.bj = or disjoint i64 %i.bg, %i.bi
   %i.bk = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.y
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #12
   %i.bl = load <2 x i64>, ptr %i.z, align 8
   %i.bm = load <2 x i64>, ptr %i.bk, align 8
   %i.bn = xor <2 x i64> %i.bm, %i.bl              ; 2 uses
@@ -305,8 +303,9 @@ bb.c:                                             ; preds = %.lr.ph.a, %bb.d
   %i.bz = and <2 x i64> %i.by, splat (i64 -1085102592571150096)
   %i.ca = lshr <2 x i64> %i.bx, splat (i64 4)
   %i.cb = and <2 x i64> %i.ca, splat (i64 1085102592571150095)
-  %i.cc = or disjoint <2 x i64> %i.bz, %i.cb
-  store <2 x i64> %i.cc, ptr %5, align 16
+  %i.cc = or disjoint <2 x i64> %i.bz, %i.cb      ; 2 uses
+  %5 = extractelement <2 x i64> %i.cc, i64 0
+  %6 = extractelement <2 x i64> %i.cc, i64 1
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.e
@@ -342,7 +341,6 @@ bb.d:                                             ; preds = %bb.e
   %i.df = and i64 %i.de, 1085102592571150095
   %i.dg = or disjoint i64 %i.dd, %i.df
   store i64 %i.dg, ptr %i.ab, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.dh = load i32, ptr %i.q, align 8             ; 2 uses
   %i.di = lshr i32 %i.dh, 2
@@ -356,14 +354,12 @@ bb.e:                                             ; preds = %bb.c, %bb.e
   %.sroa.0.060 = phi i64 [ 0, %bb.c ], [ %.sroa.0.1, %bb.e ]
   %.sroa.10.059 = phi i64 [ %i.bj, %bb.c ], [ %i.dr, %bb.e ] ; 3 uses
   %.sroa.09.058 = phi i64 [ %i.as, %bb.c ], [ %.sroa.09.1, %bb.e ] ; 3 uses
-  %6 = lshr i32 %.062, 6
-  %7 = zext nneg i32 %6 to i64
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %7
-  %9 = load i64, ptr %8, align 8
+  %.sroa.idx.not = icmp samesign ult i32 %.062, 64
+  %.sroa.speculated = select i1 %.sroa.idx.not, i64 %5, i64 %6
   %i.dl = and i32 %.062, 63
   %i.dm = zext nneg i32 %i.dl to i64
   %i.dn = shl nuw i64 1, %i.dm
-  %i.do = and i64 %9, %i.dn
+  %i.do = and i64 %i.dn, %.sroa.speculated
   %.not55 = icmp eq i64 %i.do, 0                  ; 2 uses
   %i.dp = select i1 %.not55, i64 0, i64 %.sroa.09.058
   %.sroa.0.1 = xor i64 %i.dp, %.sroa.0.060        ; 3 uses
@@ -386,7 +382,6 @@ bb.f:                                             ; preds = %bb.a, %._crit_edge
 ; Function Attrs: noinline nounwind sspstrong uwtable
 define dso_local void @helper_vgmul_vv(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef captures(none) %2, i32 noundef %3) local_unnamed_addr #0 {
 bb.a:
-  %4 = alloca [2 x i64], align 16                 ; 4 uses
   %i.a = lshr i32 %3, 14
   %i.b = and i32 %i.a, 1
   %i.c = getelementptr i8, ptr %2, i64 4608
@@ -429,7 +424,6 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %.lr.ph.a, %bb.d
   %indvars.iv = phi i64 [ %i.w, %.lr.ph.a ], [ %indvars.iv.next, %bb.d ] ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #12
   %i.y = shl nuw nsw i64 %indvars.iv, 1           ; 3 uses
   %i.z = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.y ; 2 uses
   %i.aa = or disjoint i64 %i.y, 1                 ; 2 uses
@@ -449,8 +443,7 @@ bb.c:                                             ; preds = %.lr.ph.a, %bb.d
   %i.ao = and <2 x i64> %i.an, splat (i64 -1085102592571150096)
   %i.ap = lshr <2 x i64> %i.am, splat (i64 4)
   %i.aq = and <2 x i64> %i.ap, splat (i64 1085102592571150095)
-  %i.ar = or disjoint <2 x i64> %i.ao, %i.aq
-  store <2 x i64> %i.ar, ptr %4, align 16
+  %i.ar = or disjoint <2 x i64> %i.ao, %i.aq      ; 2 uses
   %i.as = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.y
   %i.at = load i64, ptr %i.as, align 8            ; 2 uses
   %i.au = shl i64 %i.at, 1
@@ -485,6 +478,8 @@ bb.c:                                             ; preds = %.lr.ph.a, %bb.d
   %i.bx = lshr i64 %i.bu, 4
   %i.by = and i64 %i.bx, 1085102592571150095
   %i.bz = or disjoint i64 %i.bw, %i.by
+  %4 = extractelement <2 x i64> %i.ar, i64 0
+  %5 = extractelement <2 x i64> %i.ar, i64 1
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.e
@@ -520,7 +515,6 @@ bb.d:                                             ; preds = %bb.e
   %i.dc = and i64 %i.db, 1085102592571150095
   %i.dd = or disjoint i64 %i.da, %i.dc
   store i64 %i.dd, ptr %i.ab, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #12
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.de = load i32, ptr %i.q, align 8             ; 2 uses
   %i.df = lshr i32 %i.de, 2
@@ -534,14 +528,12 @@ bb.e:                                             ; preds = %bb.c, %bb.e
   %.sroa.0.052 = phi i64 [ 0, %bb.c ], [ %.sroa.0.1, %bb.e ]
   %.sroa.10.051 = phi i64 [ %i.bz, %bb.c ], [ %i.do, %bb.e ] ; 3 uses
   %.sroa.08.050 = phi i64 [ %i.bi, %bb.c ], [ %.sroa.08.1, %bb.e ] ; 3 uses
-  %5 = lshr i32 %.054, 6
-  %6 = zext nneg i32 %5 to i64
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %6
-  %8 = load i64, ptr %7, align 8
+  %.sroa.idx.not = icmp samesign ult i32 %.054, 64
+  %.sroa.speculated = select i1 %.sroa.idx.not, i64 %4, i64 %5
   %i.di = and i32 %.054, 63
   %i.dj = zext nneg i32 %i.di to i64
   %i.dk = shl nuw i64 1, %i.dj
-  %i.dl = and i64 %8, %i.dk
+  %i.dl = and i64 %i.dk, %.sroa.speculated
   %.not47 = icmp eq i64 %i.dl, 0                  ; 2 uses
   %i.dm = select i1 %.not47, i64 0, i64 %.sroa.08.050
   %.sroa.0.1 = xor i64 %i.dm, %.sroa.0.052        ; 3 uses

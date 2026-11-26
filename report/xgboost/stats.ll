@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/xgboost/original/stats?download=true
 inline.NumInlined: 1559
 inline.NumDeleted: 670
-loop-unroll.NumCompletelyUnrolled: 4
+loop-unroll.NumCompletelyUnrolled: 3
 loop-unroll.NumRuntimeUnrolled: 9
-loop-unroll.NumUnrolled: 13
+loop-unroll.NumUnrolled: 12
 begin_hunk_0_@_ZN7xgboost6common4MeanEPKNS_7ContextENS_6linalg10TensorViewIKfLi1EEEPNS4_6TensorIfLi1EEE:bb.a
 
 .loopexit.loopexit86.unr-lcssa:                   ; preds = %bb.y
@@ -205,7 +205,6 @@ bb.c:                                             ; preds = %bb.b
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !24, !noalias !186 ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.s = load i8, ptr %i.r, align 8, !tbaa !29, !noalias !186
-  %14 = load i64, ptr %i.f, align 8, !tbaa !31, !noalias !186 ; 2 uses
   %i.t = load i64, ptr %i.g, align 8, !tbaa !31, !noalias !186 ; 2 uses
   switch i8 %i.s, label %bb.e [
     i8 0, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIKmLm2EEELb1EEdeEv.exit.i.i
@@ -213,13 +212,14 @@ bb.c:                                             ; preds = %bb.b
   ]
 
 bb.d:                                             ; preds = %bb.c
+  %14 = load i64, ptr %i.f, align 8, !tbaa !31, !noalias !186
   br label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIKmLm2EEELb1EEdeEv.exit.i.i
 
 bb.e:                                             ; preds = %bb.c
   call void @_ZSt9terminatev() #29, !noalias !186
   unreachable
 
-_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIKmLm2EEELb1EEdeEv.exit.i.i: ; preds = %bb.d, %bb.c
+_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIKmLm2EEELb1EEdeEv.exit.i.i: ; preds = %bb.c, %bb.d
   %i.u = phi i64 [ %14, %bb.d ], [ 1, %bb.c ]     ; 3 uses
   %i.v = phi i64 [ 1, %bb.d ], [ %i.t, %bb.c ]    ; 11 uses
   %.not4.i.i.a = icmp eq i64 %i.v, %i.t
@@ -245,7 +245,6 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit: ; preds = %_ZN4dml
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit33: ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit
   call void @_ZN4dmlc15LogMessageFatalD2Ev(ptr noundef nonnull align 1 dereferenceable(1) %9)
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #8
-  %.pre = load i64, ptr %i.f, align 8, !tbaa !31
   br label %bb.j
 
 bb.g:                                             ; preds = %bb.a
@@ -268,8 +267,8 @@ bb.i:                                             ; preds = %bb.h
   br label %common.resume
 
 bb.j:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit33, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIKmLm2EEELb1EEdeEv.exit.i.i
-  %15 = phi i64 [ %.pre, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit33 ], [ %14, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIKmLm2EEELb1EEdeEv.exit.i.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #8
+  %15 = load i64, ptr %i.f, align 8, !tbaa !31
   store i64 %15, ptr %i.e, align 8, !tbaa !31
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #8
   call void @llvm.lifetime.start.p0(ptr nonnull %7)
@@ -672,7 +671,7 @@ bb.ap:                                            ; preds = %_ZN4dmlc15LogMessag
   invoke void @_ZN4dmlc15LogMessageFatalD2Ev(ptr noundef nonnull align 1 dereferenceable(1) %3)
           to label %bb.aq unwind label %bb.ar
 
-common.resume:                                    ; preds = %bb.i, %bb.aj, %bb.g, %bb.aq
+common.resume:                                    ; preds = %bb.g, %bb.aj, %bb.i, %bb.aq
   %common.resume.op = phi { ptr, i32 } [ %i.gx, %bb.aq ], [ %i.aa, %bb.g ], [ %.pn.pn.pn, %bb.aj ], [ %i.ab, %bb.i ]
   resume { ptr, i32 } %common.resume.op
 
