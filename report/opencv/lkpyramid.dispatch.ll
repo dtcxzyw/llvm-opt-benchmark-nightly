@@ -142,7 +142,7 @@ _ZN2cv10AutoBufferIsLm520EEC2Em.exit:             ; preds = %bb.a, %bb.b
   %i.cp = and i32 %i.f, 127
   %i.cq = zext nneg i32 %i.cp to i64              ; 3 uses
   %i.cr = add nuw nsw i64 %i.bf, %i.cq
-  %i.cs = shl nuw nsw i64 %i.cr, 1                ; 3 uses
+  %i.cs = shl nuw nsw i64 %i.cr, 1                ; 2 uses
   %i.ct = add nuw nsw i64 %i.be, %i.cq
   %i.cu = shl nuw nsw i64 %i.ct, 1                ; 2 uses
   %i.cv = add nsw i64 %i.cm, %i.ae
@@ -181,15 +181,12 @@ _ZN2cv10AutoBufferIsLm520EEC2Em.exit:             ; preds = %bb.a, %bb.b
   %xtraiter = and i64 %wide.trip.count, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %i.dq = add nsw i64 %wide.trip.count, -1
-  %min.iters.check222 = icmp samesign ult i32 %i.g, 23
-  %4 = or disjoint i64 %i.cy, 1
-  %diff.check.a = icmp ult i64 %4, 15
-  %i.dr = or disjoint i64 %i.db, 1
+  %diff.check.a = icmp samesign ult i32 %i.g, 15
+  %i.dr = or disjoint i64 %i.cy, 1
   %diff.check226.a = icmp ult i64 %i.dr, 15
-  %conflict.rdx227 = or i1 %diff.check.a, %diff.check226.a
-  %i.ds = or disjoint i64 %i.cs, 1
-  %diff.check230.a = icmp samesign ult i64 %i.ds, 15
-  %conflict.rdx231.a = or i1 %conflict.rdx227, %diff.check230.a
+  %i.ds = or disjoint i64 %i.db, 1
+  %diff.check230.a = icmp ult i64 %i.ds, 15
+  %conflict.rdx231.a = or i1 %diff.check226.a, %diff.check230.a
   %i.dt = or disjoint i64 %i.da, 1
   %diff.check232.a = icmp ult i64 %i.dt, 15
   %conflict.rdx233.a = or i1 %conflict.rdx231.a, %diff.check232.a
@@ -409,7 +406,7 @@ middle.block347:                                  ; preds = %vector.body341
   br i1 %exitcond.not.1, label %._crit_edge, label %.lr.ph, !llvm.loop !15
 
 ._crit_edge:                                      ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %middle.block347, %bb.c
-  %brmerge = select i1 %min.iters.check222, i1 true, i1 %conflict.rdx253
+  %brmerge = select i1 %diff.check.a, i1 true, i1 %conflict.rdx253
   br i1 %brmerge, label %scalar.ph221.preheader, label %vector.body256
 
 vector.body256:                                   ; preds = %._crit_edge, %vector.body256

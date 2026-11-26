@@ -203,14 +203,14 @@ bb.n:                                             ; preds = %bb.n, %.lr.ph267.ne
 
 .lr.ph271.preheader:                              ; preds = %._crit_edge268
   %i.nf = zext nneg i32 %.0225274 to i64          ; 8 uses
-  %invariant.gep306 = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.nf ; 6 uses
+  %invariant.gep306 = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.nf ; 5 uses
   %invariant.gep308 = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.nf ; 4 uses
   %min.iters.check460 = icmp samesign ult i64 %.pre-phi297302, 10
   br i1 %min.iters.check460, label %.lr.ph271.preheader495, label %vector.memcheck461
 
 vector.memcheck461:                               ; preds = %.lr.ph271.preheader
   %i.ng = shl nuw nsw i64 %.pre-phi297302, 3      ; 4 uses
-  %i.nh = getelementptr i8, ptr %2, i64 %i.ng     ; 3 uses
+  %i.nh = getelementptr i8, ptr %2, i64 %i.ng     ; 2 uses
   %i.ni = shl nuw nsw i64 %i.nf, 3                ; 3 uses
   %i.nj = sub nsw i64 %i.ni, %i.ng
   %i.nk = getelementptr i8, ptr %i.hw, i64 %i.nj  ; 3 uses
@@ -220,18 +220,14 @@ vector.memcheck461:                               ; preds = %.lr.ph271.preheader
   %i.no = getelementptr i8, ptr %i.hw, i64 %i.nn  ; 2 uses
   %i.np = getelementptr i8, ptr %i.hw, i64 %i.nm  ; 2 uses
   %i.nq = getelementptr i8, ptr %2, i64 %i.ng
-  %i.nr = getelementptr i8, ptr %i.nq, i64 %i.ni  ; 2 uses
-  %bound0462 = icmp ult ptr %2, %i.nl
-  %bound1463 = icmp ult ptr %i.nk, %i.nh
-  %found.conflict464 = and i1 %bound0462, %bound1463
-  %bound0465.a = icmp ult ptr %2, %i.np
-  %bound1466.a = icmp ult ptr %i.no, %i.nh
+  %i.nr = getelementptr i8, ptr %i.nq, i64 %i.ni
+  %bound0465.a = icmp ult ptr %2, %i.nl
+  %bound1466.a = icmp ult ptr %i.nk, %i.nh
   %found.conflict467.a = and i1 %bound0465.a, %bound1466.a
-  %conflict.rdx468 = or i1 %found.conflict464, %found.conflict467.a
-  %bound0469.a = icmp ult ptr %2, %i.nr
-  %bound1470.a = icmp ult ptr %invariant.gep306, %i.nh
+  %bound0469.a = icmp ult ptr %2, %i.np
+  %bound1470.a = icmp ult ptr %i.no, %i.nh
   %found.conflict471.a = and i1 %bound0469.a, %bound1470.a
-  %conflict.rdx472.a = or i1 %conflict.rdx468, %found.conflict471.a
+  %conflict.rdx472.a = or i1 %found.conflict467.a, %found.conflict471.a
   %bound0473 = icmp ult ptr %i.nk, %i.np
   %bound1474 = icmp ult ptr %i.no, %i.nl
   %found.conflict475 = and i1 %bound0473, %bound1474
@@ -634,7 +630,7 @@ rftfsub.exit:                                     ; preds = %.lr.ph.i216, %bb.f,
 .lr.ph251:                                        ; preds = %.lr.ph240
   %i.ho = sext i32 %.0236 to i64                  ; 2 uses
   %i.hp = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
-  %i.hq = getelementptr i8, ptr %2, i64 8         ; 8 uses
+  %i.hq = getelementptr i8, ptr %2, i64 8         ; 7 uses
   %i.hr = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.hs = shl nsw i32 %.0236, 1
   br label %bb.i
@@ -839,40 +835,32 @@ bb.m:                                             ; preds = %.lr.ph243, %bb.m
 
 .lr.ph247.preheader:                              ; preds = %._crit_edge244
   %i.mc = zext nneg i32 %.0199250 to i64          ; 6 uses
-  %invariant.gep284 = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.mc ; 7 uses
+  %invariant.gep284 = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.mc ; 6 uses
   %invariant.gep286 = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.mc ; 4 uses
   %i.md = add nsw i64 %.pre-phi270275, -1         ; 4 uses
-  %min.iters.check442 = icmp ult i64 %i.md, 10
+  %min.iters.check442 = icmp ult i64 %i.md, 8
   br i1 %min.iters.check442, label %.lr.ph247.preheader477, label %vector.memcheck443
 
 vector.memcheck443:                               ; preds = %.lr.ph247.preheader
   %i.me = shl nuw nsw i64 %.pre-phi270275, 3      ; 4 uses
-  %i.mf = getelementptr i8, ptr %2, i64 %i.me     ; 3 uses
+  %i.mf = getelementptr i8, ptr %2, i64 %i.me     ; 2 uses
   %i.mg = shl nuw nsw i64 %i.lo, 3                ; 3 uses
   %i.mh = sub nsw i64 %i.mg, %i.me
-  %i.mi = getelementptr i8, ptr %i.hq, i64 %i.mh  ; 3 uses
+  %i.mi = getelementptr i8, ptr %i.hq, i64 %i.mh  ; 2 uses
   %i.mj = shl nuw nsw i64 %i.lo, 4                ; 2 uses
   %i.mk = sub nsw i64 %i.mj, %i.me
-  %i.ml = getelementptr i8, ptr %i.hq, i64 %i.mk  ; 2 uses
-  %i.mm = getelementptr i8, ptr %2, i64 %i.mj     ; 2 uses
-  %i.mn = getelementptr i8, ptr %i.hq, i64 %i.mg  ; 2 uses
+  %i.ml = getelementptr i8, ptr %i.hq, i64 %i.mk
+  %i.mm = getelementptr i8, ptr %2, i64 %i.mj
+  %i.mn = getelementptr i8, ptr %i.hq, i64 %i.mg
   %i.mo = getelementptr i8, ptr %2, i64 %i.me
-  %i.mp = getelementptr i8, ptr %i.mo, i64 %i.mg  ; 2 uses
+  %i.mp = getelementptr i8, ptr %i.mo, i64 %i.mg
   %bound0444 = icmp ult ptr %i.hq, %invariant.gep284
-  %bound1445 = icmp ult ptr %i.mi, %i.mf
-  %found.conflict446 = and i1 %bound0444, %bound1445
-  %bound0447 = icmp ult ptr %i.hq, %i.mm
-  %bound1448 = icmp ult ptr %i.ml, %i.mf
-  %found.conflict449 = and i1 %bound0447, %bound1448
-  %conflict.rdx450 = or i1 %found.conflict446, %found.conflict449
-  %bound0451 = icmp ult ptr %i.hq, %i.mp
-  %bound1452 = icmp ult ptr %i.mn, %i.mf
-  %found.conflict453 = and i1 %bound0451, %bound1452
-  %conflict.rdx454 = or i1 %conflict.rdx450, %found.conflict453
-  %bound0455 = icmp ult ptr %i.mi, %i.mm
-  %bound1456 = icmp ult ptr %i.ml, %invariant.gep284
+  %bound1452 = icmp ult ptr %i.mi, %i.mf
+  %found.conflict453 = and i1 %bound0444, %bound1452
+  %bound0455 = icmp ult ptr %i.hq, %i.mm
+  %bound1456 = icmp ult ptr %i.ml, %i.mf
   %found.conflict457 = and i1 %bound0455, %bound1456
-  %conflict.rdx458 = or i1 %conflict.rdx454, %found.conflict457
+  %conflict.rdx458 = or i1 %found.conflict453, %found.conflict457
   %bound0459 = icmp ult ptr %i.mi, %i.mp
   %bound1460 = icmp ult ptr %i.mn, %invariant.gep284
   %found.conflict461 = and i1 %bound0459, %bound1460
@@ -902,7 +890,7 @@ vector.body465:                                   ; preds = %vector.body465, %ve
   %i.mz = getelementptr inbounds i8, ptr %i.my, i64 -8
   %i.na = shufflevector <2 x double> %wide.load469, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   %reverse472 = fsub <2 x double> %wide.load470, %i.na
-  store <2 x double> %reverse472, ptr %i.mz, align 8, !tbaa !14, !alias.scope !109, !noalias !110
+  store <2 x double> %reverse472, ptr %i.mz, align 8, !tbaa !14, !alias.scope !109, !noalias !106
   %index.next473 = add nuw i64 %index466, 2       ; 2 uses
   %i.nb = icmp eq i64 %index.next473, %n.vec464
   br i1 %i.nb, label %middle.block474, label %vector.body465, !llvm.loop !91
@@ -1007,7 +995,7 @@ declare double @cos(double noundef) local_unnamed_addr #5
 declare double @sin(double noundef) local_unnamed_addr #5
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define dso_local void @cftf1st(i32 noundef %0, ptr nofree noundef %1, ptr nofree noundef readonly captures(none) %2) local_unnamed_addr #4 !guid !112 {
+define dso_local void @cftf1st(i32 noundef %0, ptr nofree noundef %1, ptr nofree noundef readonly captures(none) %2) local_unnamed_addr #4 !guid !111 {
 bb.a:
   %i.a = ashr i32 %0, 3                           ; 9 uses
   %i.b = shl nsw i32 %i.a, 1
@@ -1242,7 +1230,7 @@ bb.a:
   store <2 x double> %i.gf, ptr %i.cl, align 8, !tbaa !14
   %indvars.iv.next704 = add nuw nsw i64 %indvars.iv703, 4 ; 2 uses
   %i.gg = icmp samesign ult i64 %indvars.iv.next704, %i.au
-  br i1 %i.gg, label %.lr.ph, label %._crit_edge, !llvm.loop !111
+  br i1 %i.gg, label %.lr.ph, label %._crit_edge, !llvm.loop !110
 
 ._crit_edge:                                      ; preds = %.lr.ph, %.._crit_edge_crit_edge
   %.pre-phi = phi i64 [ %.pre, %.._crit_edge_crit_edge ], [ %i.au, %.lr.ph ]
@@ -1414,7 +1402,7 @@ bb.a:
 }
 
 ; Function Attrs: nofree nosync nounwind memory(argmem: readwrite) uwtable
-define dso_local void @cftrec1(i32 noundef %0, ptr noundef %1, i32 noundef %2, ptr nofree noundef readonly captures(none) %3) local_unnamed_addr #2 !guid !113 {
+define dso_local void @cftrec1(i32 noundef %0, ptr noundef %1, i32 noundef %2, ptr nofree noundef readonly captures(none) %3) local_unnamed_addr #2 !guid !112 {
 bb.a:
   %i.a = ashr i32 %0, 2                           ; 2 uses
   %i.b = shl nsw i32 %i.a, 1                      ; 2 uses
@@ -1456,7 +1444,7 @@ tailrecurse._crit_edge:                           ; preds = %tailrecurse, %bb.a
 }
 
 ; Function Attrs: nofree nosync nounwind memory(argmem: readwrite) uwtable
-define dso_local void @cftrec2(i32 noundef %0, ptr noundef %1, i32 noundef %2, ptr nofree noundef readonly captures(none) %3) local_unnamed_addr #2 !guid !114 {
+define dso_local void @cftrec2(i32 noundef %0, ptr noundef %1, i32 noundef %2, ptr nofree noundef readonly captures(none) %3) local_unnamed_addr #2 !guid !113 {
 bb.a:
   %i.a = sub nsw i32 %2, %0
   %i.b = sext i32 %i.a to i64
@@ -1495,7 +1483,7 @@ tailrecurse._crit_edge:                           ; preds = %tailrecurse, %bb.a
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define dso_local void @cftexp1(i32 noundef %0, ptr nofree noundef %1, i32 noundef %2, ptr nofree noundef readonly captures(none) %3) local_unnamed_addr #4 !guid !120 {
+define dso_local void @cftexp1(i32 noundef %0, ptr nofree noundef %1, i32 noundef %2, ptr nofree noundef readonly captures(none) %3) local_unnamed_addr #4 !guid !119 {
 bb.a:
   %i.a = ashr i32 %0, 2                           ; 3 uses
   %i.b = icmp sgt i32 %i.a, 128
@@ -1578,12 +1566,12 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   tail call void @cftmdl1(i32 noundef %.0110, ptr noundef %gep139, ptr noundef %i.h)
   %indvars.iv.next = add nsw i64 %indvars.iv, %i.al ; 2 uses
   %i.ao = icmp slt i64 %indvars.iv.next, %i.c
-  br i1 %i.ao, label %bb.c, label %._crit_edge, !llvm.loop !115
+  br i1 %i.ao, label %bb.c, label %._crit_edge, !llvm.loop !114
 
 ._crit_edge:                                      ; preds = %bb.c, %.._crit_edge_crit_edge
   %.pre-phi = phi i32 [ %.pre, %.._crit_edge_crit_edge ], [ %i.ai, %bb.c ] ; 2 uses
   %i.ap = icmp slt i32 %.pre-phi, %0
-  br i1 %i.ap, label %bb.b, label %._crit_edge109, !llvm.loop !116
+  br i1 %i.ap, label %bb.b, label %._crit_edge109, !llvm.loop !115
 
 ._crit_edge109:                                   ; preds = %._crit_edge, %.preheader105
   %i.aq = sub nsw i32 %0, %.0110
@@ -1593,7 +1581,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   tail call void @cftmdl1(i32 noundef %.0110, ptr noundef %i.as, ptr noundef %i.at)
   %i.au = lshr i32 %.0110, 2                      ; 2 uses
   %i.av = icmp samesign ugt i32 %.0110, 515
-  br i1 %i.av, label %.preheader105, label %.preheader, !llvm.loop !117
+  br i1 %i.av, label %.preheader105, label %.preheader, !llvm.loop !116
 
 bb.d:                                             ; preds = %.lr.ph116, %._crit_edge114
   %.1115 = phi i32 [ %.0.lcssa, %.lr.ph116 ], [ %.pre-phi129, %._crit_edge114 ] ; 5 uses
@@ -1996,12 +1984,12 @@ begin_hunk_2_@cftexp1:bb.a
 cftfx41.exit104:                                  ; preds = %bb.f, %bb.g
   %indvars.iv.next120 = add nsw i64 %indvars.iv119, %i.bc ; 2 uses
   %i.anx = icmp slt i64 %indvars.iv.next120, %i.ae
-  br i1 %i.anx, label %bb.e, label %._crit_edge114, !llvm.loop !118
+  br i1 %i.anx, label %bb.e, label %._crit_edge114, !llvm.loop !117
 
 ._crit_edge114:                                   ; preds = %cftfx41.exit104, %.._crit_edge114_crit_edge
   %.pre-phi129 = phi i32 [ %.pre128, %.._crit_edge114_crit_edge ], [ %i.az, %cftfx41.exit104 ] ; 2 uses
   %i.any = icmp slt i32 %.pre-phi129, %0
-  br i1 %i.any, label %bb.d, label %._crit_edge117, !llvm.loop !119
+  br i1 %i.any, label %bb.d, label %._crit_edge117, !llvm.loop !118
 
 ._crit_edge117:                                   ; preds = %._crit_edge114, %.preheader
   %i.anz = sub nsw i32 %0, %.0.lcssa
@@ -2014,7 +2002,7 @@ cftfx41.exit104:                                  ; preds = %bb.f, %bb.g
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define dso_local void @cftfx41(i32 noundef %0, ptr nofree noundef captures(none) %1, i32 noundef %2, ptr nofree noundef readonly captures(none) %3) local_unnamed_addr #6 !guid !121 {
+define dso_local void @cftfx41(i32 noundef %0, ptr nofree noundef captures(none) %1, i32 noundef %2, ptr nofree noundef readonly captures(none) %3) local_unnamed_addr #6 !guid !120 {
 bb.a:
   %i.a = icmp eq i32 %0, 128
   %i.b = sext i32 %2 to i64
@@ -2049,7 +2037,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define dso_local void @bitrv2(i32 noundef %0, ptr nofree noundef captures(none) initializes((0, 4)) %1, ptr nofree noundef captures(none) %2) local_unnamed_addr #4 !guid !129 {
+define dso_local void @bitrv2(i32 noundef %0, ptr nofree noundef captures(none) initializes((0, 4)) %1, ptr nofree noundef captures(none) %2) local_unnamed_addr #4 !guid !128 {
 bb.a:
   store i32 0, ptr %1, align 4, !tbaa !12
   %i.a = icmp sgt i32 %0, 8
@@ -2088,7 +2076,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <4 x i32> %i.h, ptr %i.j, align 4, !tbaa !12
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.k = icmp eq i64 %index.next, %n.vec
-  br i1 %i.k, label %middle.block, label %vector.body, !llvm.loop !122
+  br i1 %i.k, label %middle.block, label %vector.body, !llvm.loop !121
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %n.vec, %i.d
@@ -2107,13 +2095,13 @@ middle.block:                                     ; preds = %vector.body
   store i32 %i.n, ptr %gep, align 4, !tbaa !12
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %i.d
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !123
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !122
 
 ._crit_edge:                                      ; preds = %.lr.ph, %middle.block, %.lr.ph216
   %i.o = shl i32 %.0214, 1                        ; 5 uses
   %i.p = shl i32 %.0214, 4                        ; 2 uses
   %i.q = icmp slt i32 %i.p, %i.b
-  br i1 %i.q, label %.lr.ph216, label %._crit_edge217, !llvm.loop !124
+  br i1 %i.q, label %.lr.ph216, label %._crit_edge217, !llvm.loop !123
 
 ._crit_edge217:                                   ; preds = %._crit_edge
   %i.r = shl i32 %.0214, 2                        ; 3 uses
@@ -2202,7 +2190,7 @@ bb.b:                                             ; preds = %.lr.ph223, %bb.b
   store <2 x double> %i.bg, ptr %i.bf, align 8, !tbaa !14
   %indvars.iv.next242 = add nuw nsw i64 %indvars.iv241, 1 ; 2 uses
   %exitcond245.not = icmp eq i64 %indvars.iv.next242, %indvars.iv246
-  br i1 %exitcond245.not, label %._crit_edge224, label %bb.b, !llvm.loop !125
+  br i1 %exitcond245.not, label %._crit_edge224, label %bb.b, !llvm.loop !124
 
 ._crit_edge224:                                   ; preds = %bb.b, %.preheader
   %i.bi = phi i32 [ 0, %.preheader ], [ %i.ac, %bb.b ]
@@ -2221,7 +2209,7 @@ bb.b:                                             ; preds = %.lr.ph223, %bb.b
   store <2 x double> %i.bs, ptr %i.br, align 8, !tbaa !14
   %indvars.iv.next247 = add nuw nsw i64 %indvars.iv246, 1 ; 2 uses
   %exitcond250.not = icmp eq i64 %indvars.iv.next247, %i.aa
-  br i1 %exitcond250.not, label %.loopexit, label %.preheader, !llvm.loop !126
+  br i1 %exitcond250.not, label %.loopexit, label %.preheader, !llvm.loop !125
 
 .preheader209:                                    ; preds = %.preheader209.preheader, %bb.d
   %indvars.iv236 = phi i64 [ 1, %.preheader209.preheader ], [ %indvars.iv.next237, %bb.d ] ; 4 uses
@@ -2256,19 +2244,19 @@ bb.c:                                             ; preds = %.preheader209, %bb.
   store <2 x double> %i.cl, ptr %i.ck, align 8, !tbaa !14
   %indvars.iv.next232 = add nuw nsw i64 %indvars.iv231, 1 ; 2 uses
   %exitcond235.not = icmp eq i64 %indvars.iv.next232, %indvars.iv236
-  br i1 %exitcond235.not, label %bb.d, label %bb.c, !llvm.loop !127
+  br i1 %exitcond235.not, label %bb.d, label %bb.c, !llvm.loop !126
 
 bb.d:                                             ; preds = %bb.c
   %indvars.iv.next237 = add nuw nsw i64 %indvars.iv236, 1 ; 2 uses
   %exitcond240.not = icmp eq i64 %indvars.iv.next237, %wide.trip.count239
-  br i1 %exitcond240.not, label %.loopexit, label %.preheader209, !llvm.loop !128
+  br i1 %exitcond240.not, label %.loopexit, label %.preheader209, !llvm.loop !127
 
 .loopexit:                                        ; preds = %bb.d, %._crit_edge224, %._crit_edge217.thread, %.preheader210, %.preheader208
   ret void
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define dso_local void @cftf161(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #6 !guid !130 {
+define dso_local void @cftf161(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #6 !guid !129 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16
@@ -2480,7 +2468,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define dso_local void @bitrv216(ptr nofree noundef captures(none) %0) local_unnamed_addr #6 !guid !131 {
+define dso_local void @bitrv216(ptr nofree noundef captures(none) %0) local_unnamed_addr #6 !guid !130 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
@@ -2522,7 +2510,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define dso_local void @cftf081(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #6 !guid !132 {
+define dso_local void @cftf081(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #6 !guid !131 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.b = load double, ptr %i.a, align 8, !tbaa !14 ; 3 uses
@@ -2615,7 +2603,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define dso_local void @bitrv208(ptr nofree noundef captures(none) %0) local_unnamed_addr #6 !guid !133 {
+define dso_local void @bitrv208(ptr nofree noundef captures(none) %0) local_unnamed_addr #6 !guid !132 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
@@ -2633,7 +2621,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define dso_local void @cftf040(ptr nofree noundef captures(none) %0) local_unnamed_addr #6 !guid !134 {
+define dso_local void @cftf040(ptr nofree noundef captures(none) %0) local_unnamed_addr #6 !guid !133 {
 bb.a:
   %i.a = load double, ptr %0, align 8, !tbaa !14  ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
@@ -2678,7 +2666,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define dso_local void @cftx020(ptr nofree noundef captures(none) %0) local_unnamed_addr #6 !guid !135 {
+define dso_local void @cftx020(ptr nofree noundef captures(none) %0) local_unnamed_addr #6 !guid !134 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.b = load <2 x double>, ptr %0, align 8, !tbaa !14 ; 2 uses
@@ -2691,7 +2679,7 @@ bb.a:
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define dso_local void @cftb1st(i32 noundef %0, ptr nofree noundef %1, ptr nofree noundef readonly captures(none) %2) local_unnamed_addr #4 !guid !137 {
+define dso_local void @cftb1st(i32 noundef %0, ptr nofree noundef %1, ptr nofree noundef readonly captures(none) %2) local_unnamed_addr #4 !guid !136 {
 bb.a:
   %i.a = ashr i32 %0, 3                           ; 9 uses
   %i.b = shl nsw i32 %i.a, 1
@@ -2990,7 +2978,7 @@ bb.a:
   store <2 x double> %i.hp, ptr %i.ch, align 8, !tbaa !14
   %indvars.iv.next704 = add nuw nsw i64 %indvars.iv703, 4 ; 2 uses
   %i.hq = icmp samesign ult i64 %indvars.iv.next704, %i.av
-  br i1 %i.hq, label %.lr.ph, label %._crit_edge, !llvm.loop !136
+  br i1 %i.hq, label %.lr.ph, label %._crit_edge, !llvm.loop !135
 
 ._crit_edge:                                      ; preds = %.lr.ph, %.._crit_edge_crit_edge
   %.pre-phi = phi i64 [ %.pre, %.._crit_edge_crit_edge ], [ %i.av, %.lr.ph ]
@@ -3169,7 +3157,7 @@ bb.a:
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define dso_local void @bitrv2conj(i32 noundef %0, ptr nofree noundef captures(none) initializes((0, 4)) %1, ptr nofree noundef captures(none) %2) local_unnamed_addr #4 !guid !145 {
+define dso_local void @bitrv2conj(i32 noundef %0, ptr nofree noundef captures(none) initializes((0, 4)) %1, ptr nofree noundef captures(none) %2) local_unnamed_addr #4 !guid !144 {
 bb.a:
   store i32 0, ptr %1, align 4, !tbaa !12
   %i.a = icmp sgt i32 %0, 8
@@ -3208,7 +3196,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <4 x i32> %i.h, ptr %i.j, align 4, !tbaa !12
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.k = icmp eq i64 %index.next, %n.vec
-  br i1 %i.k, label %middle.block, label %vector.body, !llvm.loop !138
+  br i1 %i.k, label %middle.block, label %vector.body, !llvm.loop !137
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %n.vec, %i.d
@@ -3227,13 +3215,13 @@ middle.block:                                     ; preds = %vector.body
   store i32 %i.n, ptr %gep, align 4, !tbaa !12
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %i.d
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !139
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !138
 
 ._crit_edge:                                      ; preds = %.lr.ph, %middle.block, %.lr.ph245
   %i.o = shl i32 %.0243, 1                        ; 4 uses
   %i.p = shl i32 %.0243, 4                        ; 2 uses
   %i.q = icmp slt i32 %i.p, %i.b
-  br i1 %i.q, label %.lr.ph245, label %._crit_edge246, !llvm.loop !140
+  br i1 %i.q, label %.lr.ph245, label %._crit_edge246, !llvm.loop !139
 
 ._crit_edge246:                                   ; preds = %._crit_edge
   %i.r = shl i32 %.0243, 2                        ; 2 uses
@@ -3344,7 +3332,7 @@ bb.b:                                             ; preds = %.lr.ph252, %bb.b
   store double %i.bw, ptr %i.ca, align 8, !tbaa !14
   %indvars.iv.next271 = add nuw nsw i64 %indvars.iv270, 1 ; 2 uses
   %exitcond274.not = icmp eq i64 %indvars.iv.next271, %indvars.iv275
-  br i1 %exitcond274.not, label %._crit_edge253.loopexit, label %bb.b, !llvm.loop !141
+  br i1 %exitcond274.not, label %._crit_edge253.loopexit, label %bb.b, !llvm.loop !140
 
 ._crit_edge253.loopexit:                          ; preds = %bb.b
   %i.cd = add nsw i32 %i.z, %i.ab
@@ -3385,7 +3373,7 @@ bb.b:                                             ; preds = %.lr.ph252, %bb.b
   store double %i.dd, ptr %i.db, align 8, !tbaa !14
   %indvars.iv.next276 = add nuw nsw i64 %indvars.iv275, 1 ; 2 uses
   %exitcond279.not = icmp eq i64 %indvars.iv.next276, %wide.trip.count278
-  br i1 %exitcond279.not, label %.loopexit, label %.preheader, !llvm.loop !142
+  br i1 %exitcond279.not, label %.loopexit, label %.preheader, !llvm.loop !141
 
 bb.c:                                             ; preds = %._crit_edge246.thread, %._crit_edge246
   %i.de = phi i32 [ 2, %._crit_edge246.thread ], [ %i.r, %._crit_edge246 ] ; 3 uses
@@ -3457,7 +3445,7 @@ bb.d:                                             ; preds = %.preheader239, %bb.
   store double %i.em, ptr %i.eq, align 8, !tbaa !14
   %indvars.iv.next261 = add nuw nsw i64 %indvars.iv260, 1 ; 2 uses
   %exitcond264.not = icmp eq i64 %indvars.iv.next261, %indvars.iv265
-  br i1 %exitcond264.not, label %bb.e, label %bb.d, !llvm.loop !143
+  br i1 %exitcond264.not, label %bb.e, label %bb.d, !llvm.loop !142
 
 bb.e:                                             ; preds = %bb.d
   %i.et = add nsw i32 %i.dp, %i.dr                ; 2 uses
@@ -3476,14 +3464,14 @@ bb.e:                                             ; preds = %bb.d
   store double %i.fe, ptr %i.fc, align 8, !tbaa !14
   %indvars.iv.next266 = add nuw nsw i64 %indvars.iv265, 1 ; 2 uses
   %exitcond269.not = icmp eq i64 %indvars.iv.next266, %wide.trip.count268
-  br i1 %exitcond269.not, label %.loopexit, label %.preheader239, !llvm.loop !144
+  br i1 %exitcond269.not, label %.loopexit, label %.preheader239, !llvm.loop !143
 
 .loopexit:                                        ; preds = %bb.e, %._crit_edge253, %bb.c, %.preheader238
   ret void
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define dso_local void @bitrv216neg(ptr nofree noundef captures(none) %0) local_unnamed_addr #6 !guid !146 {
+define dso_local void @bitrv216neg(ptr nofree noundef captures(none) %0) local_unnamed_addr #6 !guid !145 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
@@ -3534,7 +3522,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define dso_local void @bitrv208neg(ptr nofree noundef captures(none) %0) local_unnamed_addr #6 !guid !147 {
+define dso_local void @bitrv208neg(ptr nofree noundef captures(none) %0) local_unnamed_addr #6 !guid !146 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
@@ -3561,7 +3549,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define dso_local void @cftb040(ptr nofree noundef captures(none) %0) local_unnamed_addr #6 !guid !148 {
+define dso_local void @cftb040(ptr nofree noundef captures(none) %0) local_unnamed_addr #6 !guid !147 {
 bb.a:
   %i.a = load double, ptr %0, align 8, !tbaa !14  ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
@@ -3606,7 +3594,7 @@ bb.a:
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define dso_local void @cftmdl1(i32 noundef %0, ptr nofree noundef captures(none) %1, ptr nofree noundef readonly captures(none) %2) local_unnamed_addr #4 !guid !150 {
+define dso_local void @cftmdl1(i32 noundef %0, ptr nofree noundef captures(none) %1, ptr nofree noundef readonly captures(none) %2) local_unnamed_addr #4 !guid !149 {
 bb.a:
   %i.a = ashr i32 %0, 3                           ; 9 uses
   %i.b = shl nsw i32 %i.a, 1                      ; 2 uses
@@ -3761,7 +3749,7 @@ bb.a:
   store <2 x double> %i.dn, ptr %gep345, align 8, !tbaa !14
   %indvars.iv.next339 = add nuw nsw i64 %indvars.iv338, 2 ; 2 uses
   %i.do = icmp samesign ult i64 %indvars.iv.next339, %i.aq
-  br i1 %i.do, label %.lr.ph, label %._crit_edge, !llvm.loop !149
+  br i1 %i.do, label %.lr.ph, label %._crit_edge, !llvm.loop !148
 
 ._crit_edge:                                      ; preds = %.lr.ph, %.._crit_edge_crit_edge
   %.pre-phi = phi i64 [ %.pre, %.._crit_edge_crit_edge ], [ %i.aq, %.lr.ph ]
@@ -3824,7 +3812,7 @@ bb.a:
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define dso_local void @cftmdl2(i32 noundef %0, ptr nofree noundef captures(none) %1, ptr nofree noundef readonly captures(none) %2) local_unnamed_addr #4 !guid !152 {
+define dso_local void @cftmdl2(i32 noundef %0, ptr nofree noundef captures(none) %1, ptr nofree noundef readonly captures(none) %2) local_unnamed_addr #4 !guid !151 {
 bb.a:
   %i.a = ashr i32 %0, 3                           ; 9 uses
   %i.b = shl nsw i32 %i.a, 1                      ; 3 uses
@@ -4031,7 +4019,7 @@ bb.a:
   store <2 x double> %i.fl, ptr %gep429, align 8, !tbaa !14
   %indvars.iv.next421 = add nuw nsw i64 %indvars.iv420, 2 ; 2 uses
   %i.fm = icmp samesign ult i64 %indvars.iv.next421, %i.ba
-  br i1 %i.fm, label %.lr.ph, label %._crit_edge, !llvm.loop !151
+  br i1 %i.fm, label %.lr.ph, label %._crit_edge, !llvm.loop !150
 
 ._crit_edge:                                      ; preds = %.lr.ph, %.._crit_edge_crit_edge
   %.pre-phi = phi i64 [ %.pre, %.._crit_edge_crit_edge ], [ %i.ba, %.lr.ph ]
@@ -4095,7 +4083,7 @@ bb.a:
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define dso_local void @cftexp2(i32 noundef %0, ptr nofree noundef %1, i32 noundef %2, ptr nofree noundef readonly captures(none) %3) local_unnamed_addr #4 !guid !160 {
+define dso_local void @cftexp2(i32 noundef %0, ptr nofree noundef %1, i32 noundef %2, ptr nofree noundef readonly captures(none) %3) local_unnamed_addr #4 !guid !159 {
 bb.a:
   %i.a = ashr i32 %0, 1                           ; 12 uses
   %i.b = ashr i32 %0, 2                           ; 3 uses
@@ -4173,7 +4161,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   tail call void @cftmdl1(i32 noundef %.0124, ptr noundef %gep, ptr noundef %i.i)
   %indvars.iv.next = add nsw i64 %indvars.iv, %i.ai ; 2 uses
   %i.ak = icmp slt i64 %indvars.iv.next, %i.d
-  br i1 %i.ak, label %bb.c, label %._crit_edge, !llvm.loop !153
+  br i1 %i.ak, label %bb.c, label %._crit_edge, !llvm.loop !152
 
 ._crit_edge:                                      ; preds = %bb.c, %bb.b
   %i.al = sub nsw i32 %i.af, %.0124               ; 2 uses
@@ -4194,16 +4182,16 @@ bb.d:                                             ; preds = %.lr.ph119, %bb.d
   tail call void @cftmdl2(i32 noundef %.0124, ptr noundef %gep172, ptr noundef %i.l)
   %indvars.iv.next141 = add nsw i64 %indvars.iv140, %i.ap ; 2 uses
   %i.ar = icmp slt i64 %indvars.iv.next141, %i.d
-  br i1 %i.ar, label %bb.d, label %._crit_edge120, !llvm.loop !154
+  br i1 %i.ar, label %bb.d, label %._crit_edge120, !llvm.loop !153
 
 ._crit_edge120:                                   ; preds = %bb.d, %._crit_edge
   %i.as = icmp slt i32 %i.an, %i.a
-  br i1 %i.as, label %bb.b, label %._crit_edge123, !llvm.loop !155
+  br i1 %i.as, label %bb.b, label %._crit_edge123, !llvm.loop !154
 
 ._crit_edge123:                                   ; preds = %._crit_edge120, %.preheader115
   %i.at = lshr i32 %.0124, 2                      ; 2 uses
   %i.au = icmp samesign ugt i32 %.0124, 515
-  br i1 %i.au, label %.preheader115, label %.preheader, !llvm.loop !156
+  br i1 %i.au, label %.preheader115, label %.preheader, !llvm.loop !155
 
 bb.e:                                             ; preds = %.lr.ph135, %._crit_edge132
   %.1134 = phi i32 [ %.0.lcssa, %.lr.ph135 ], [ %.pre-phi160, %._crit_edge132 ] ; 6 uses
@@ -4239,7 +4227,7 @@ cftfx41.exit113.us:                               ; preds = %.lr.ph127, %cftfx41
   tail call void @cftf161(ptr noundef nonnull %i.bg, ptr noundef readonly %i.y)
   %indvars.iv.next147 = add nsw i64 %indvars.iv146, %i.az ; 2 uses
   %i.bh = icmp slt i64 %indvars.iv.next147, %i.ad
-  br i1 %i.bh, label %cftfx41.exit113.us, label %._crit_edge128.thread167, !llvm.loop !157
+  br i1 %i.bh, label %cftfx41.exit113.us, label %._crit_edge128.thread167, !llvm.loop !156
 
 cftfx41.exit113:                                  ; preds = %.lr.ph127, %cftfx41.exit113
   %indvars.iv143 = phi i64 [ %indvars.iv.next144, %cftfx41.exit113 ], [ %i.ay, %.lr.ph127 ] ; 3 uses
@@ -4642,7 +4630,7 @@ begin_hunk_3_@cftexp2:bb.a
   store <2 x double> %i.zo, ptr %i.xj, align 8, !tbaa !14
   %indvars.iv.next144 = add nsw i64 %indvars.iv143, %i.az ; 2 uses
   %i.zp = icmp slt i64 %indvars.iv.next144, %i.ad
-  br i1 %i.zp, label %cftfx41.exit113, label %._crit_edge128.thread, !llvm.loop !157
+  br i1 %i.zp, label %cftfx41.exit113, label %._crit_edge128.thread, !llvm.loop !156
 
 ._crit_edge128:                                   ; preds = %bb.e
   %i.zq = sub nsw i32 %i.ax, %.0.lcssa            ; 3 uses
@@ -4711,7 +4699,7 @@ cftfx42.exit114.us:                               ; preds = %cftfx42.exit114.us.
   tail call void @cftf162(ptr noundef nonnull %i.aan, ptr noundef readonly %i.z)
   %indvars.iv.next153 = add nsw i64 %indvars.iv152, %i.aag ; 2 uses
   %i.aao = icmp slt i64 %indvars.iv.next153, %i.ad
-  br i1 %i.aao, label %cftfx42.exit114.us, label %._crit_edge132, !llvm.loop !158
+  br i1 %i.aao, label %cftfx42.exit114.us, label %._crit_edge132, !llvm.loop !157
 
 cftfx42.exit114:                                  ; preds = %cftfx42.exit114.preheader, %cftfx42.exit114
   %indvars.iv149 = phi i64 [ %i.aab, %cftfx42.exit114.preheader ], [ %indvars.iv.next150, %cftfx42.exit114 ] ; 3 uses
@@ -5114,19 +5102,19 @@ begin_hunk_4_@cftexp2:bb.a
   store double %i.bcv, ptr %i.ayu, align 8, !tbaa !14
   %indvars.iv.next150 = add nsw i64 %indvars.iv149, %i.aac ; 2 uses
   %i.bcw = icmp slt i64 %indvars.iv.next150, %i.ad
-  br i1 %i.bcw, label %cftfx42.exit114, label %._crit_edge132, !llvm.loop !158
+  br i1 %i.bcw, label %cftfx42.exit114, label %._crit_edge132, !llvm.loop !157
 
 ._crit_edge132:                                   ; preds = %cftfx42.exit114, %cftfx42.exit114.us, %._crit_edge128.._crit_edge132_crit_edge
   %.pre-phi160 = phi i32 [ %.pre159, %._crit_edge128.._crit_edge132_crit_edge ], [ %i.aad, %cftfx42.exit114.us ], [ %i.zz, %cftfx42.exit114 ] ; 2 uses
   %i.bcx = icmp slt i32 %.pre-phi160, %i.a
-  br i1 %i.bcx, label %bb.e, label %._crit_edge136, !llvm.loop !159
+  br i1 %i.bcx, label %bb.e, label %._crit_edge136, !llvm.loop !158
 
 ._crit_edge136:                                   ; preds = %._crit_edge132, %.preheader
   ret void
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define dso_local void @cftfx42(i32 noundef %0, ptr nofree noundef captures(none) %1, i32 noundef %2, ptr nofree noundef readonly captures(none) %3) local_unnamed_addr #6 !guid !161 {
+define dso_local void @cftfx42(i32 noundef %0, ptr nofree noundef captures(none) %1, i32 noundef %2, ptr nofree noundef readonly captures(none) %3) local_unnamed_addr #6 !guid !160 {
 bb.a:
   %i.a = icmp eq i32 %0, 128
   %i.b = sext i32 %2 to i64
@@ -5161,7 +5149,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define dso_local void @cftf162(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #6 !guid !162 {
+define dso_local void @cftf162(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #6 !guid !161 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.b = load double, ptr %i.a, align 8, !tbaa !14 ; 5 uses
@@ -5455,7 +5443,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define dso_local void @cftf082(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #6 !guid !163 {
+define dso_local void @cftf082(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #6 !guid !162 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.b = load double, ptr %i.a, align 8, !tbaa !14 ; 3 uses
@@ -5694,7 +5682,7 @@ attributes #9 = { nounwind }
 !69 = !{!51}
 !70 = !{!52}
 !71 = !{!53}
-!72 = !{!54, !51, !52}
+!72 = !{!54, !51}
 !73 = !{!54}
 !74 = !{!51, !52}
 !75 = distinct !{!75, i1 false, !"LVerDomain"}
@@ -5730,60 +5718,59 @@ attributes #9 = { nounwind }
 !105 = !{!87}
 !106 = !{!88}
 !107 = !{!89}
-!108 = !{!90, !87, !88}
+!108 = !{!90, !87}
 !109 = !{!90}
-!110 = !{!87, !88}
-!111 = distinct !{!111, !15}
-!112 = !{i64 -222883952268193443}
-!113 = !{i64 -7291948556219423124}
-!114 = !{i64 -8849978327230544814}
+!110 = distinct !{!110, !15}
+!111 = !{i64 -222883952268193443}
+!112 = !{i64 -7291948556219423124}
+!113 = !{i64 -8849978327230544814}
+!114 = distinct !{!114, !15}
 !115 = distinct !{!115, !15}
 !116 = distinct !{!116, !15}
 !117 = distinct !{!117, !15}
 !118 = distinct !{!118, !15}
-!119 = distinct !{!119, !15}
-!120 = !{i64 -2552516468679356765}
-!121 = !{i64 4786290147676734024}
-!122 = distinct !{!122, !15, !16, !17}
-!123 = distinct !{!123, !15, !17, !16}
+!119 = !{i64 -2552516468679356765}
+!120 = !{i64 4786290147676734024}
+!121 = distinct !{!121, !15, !16, !17}
+!122 = distinct !{!122, !15, !17, !16}
+!123 = distinct !{!123, !15}
 !124 = distinct !{!124, !15}
 !125 = distinct !{!125, !15}
 !126 = distinct !{!126, !15}
 !127 = distinct !{!127, !15}
-!128 = distinct !{!128, !15}
-!129 = !{i64 -128065674960460604}
-!130 = !{i64 8269495930301071873}
-!131 = !{i64 -4249737902060508428}
-!132 = !{i64 236701111919197229}
-!133 = !{i64 -893462554659225106}
-!134 = !{i64 3649502912904951810}
-!135 = !{i64 -6334533556096705997}
-!136 = distinct !{!136, !15}
-!137 = !{i64 1370731979051644883}
-!138 = distinct !{!138, !15, !16, !17}
-!139 = distinct !{!139, !15, !17, !16}
+!128 = !{i64 -128065674960460604}
+!129 = !{i64 8269495930301071873}
+!130 = !{i64 -4249737902060508428}
+!131 = !{i64 236701111919197229}
+!132 = !{i64 -893462554659225106}
+!133 = !{i64 3649502912904951810}
+!134 = !{i64 -6334533556096705997}
+!135 = distinct !{!135, !15}
+!136 = !{i64 1370731979051644883}
+!137 = distinct !{!137, !15, !16, !17}
+!138 = distinct !{!138, !15, !17, !16}
+!139 = distinct !{!139, !15}
 !140 = distinct !{!140, !15}
 !141 = distinct !{!141, !15}
 !142 = distinct !{!142, !15}
 !143 = distinct !{!143, !15}
-!144 = distinct !{!144, !15}
-!145 = !{i64 -8604624135279729688}
-!146 = !{i64 6673207419828379747}
-!147 = !{i64 -4565538604905467127}
-!148 = !{i64 -3492118933922375023}
-!149 = distinct !{!149, !15}
-!150 = !{i64 2634283233805567999}
-!151 = distinct !{!151, !15}
-!152 = !{i64 -4641117561216527436}
+!144 = !{i64 -8604624135279729688}
+!145 = !{i64 6673207419828379747}
+!146 = !{i64 -4565538604905467127}
+!147 = !{i64 -3492118933922375023}
+!148 = distinct !{!148, !15}
+!149 = !{i64 2634283233805567999}
+!150 = distinct !{!150, !15}
+!151 = !{i64 -4641117561216527436}
+!152 = distinct !{!152, !15}
 !153 = distinct !{!153, !15}
 !154 = distinct !{!154, !15}
 !155 = distinct !{!155, !15}
 !156 = distinct !{!156, !15}
 !157 = distinct !{!157, !15}
 !158 = distinct !{!158, !15}
-!159 = distinct !{!159, !15}
-!160 = !{i64 6616402791472211693}
-!161 = !{i64 7582361286817776182}
-!162 = !{i64 -5853471080470027673}
-!163 = !{i64 -6095243400003050057}
+!159 = !{i64 6616402791472211693}
+!160 = !{i64 7582361286817776182}
+!161 = !{i64 -5853471080470027673}
+!162 = !{i64 -6095243400003050057}
 end_hunk_4

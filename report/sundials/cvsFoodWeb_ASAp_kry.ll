@@ -205,7 +205,7 @@ v_prod.exit.loopexit:                             ; preds = %.lr.ph.i.prol.loope
   br i1 %exitcond445.not, label %._crit_edge395.split, label %.lr.ph392
 
 ._crit_edge395.split:                             ; preds = %._crit_edge, %.preheader389.._crit_edge395.split_crit_edge, %.lr.ph394
-  %.pre-phi = phi i64 [ %.pre, %.preheader389.._crit_edge395.split_crit_edge ], [ %wide.trip.count.i, %.lr.ph394 ], [ %wide.trip.count.i, %._crit_edge ] ; 142 uses
+  %.pre-phi = phi i64 [ %.pre, %.preheader389.._crit_edge395.split_crit_edge ], [ %wide.trip.count.i, %.lr.ph394 ], [ %wide.trip.count.i, %._crit_edge ] ; 141 uses
   tail call void @N_VConst(double noundef 0.000000e+00, ptr noundef %1) #10
   %i.de = icmp slt i32 %i.o, 1                    ; 2 uses
   %i.df = icmp slt i32 %i.m, 1                    ; 2 uses
@@ -313,8 +313,7 @@ v_prod.exit.loopexit:                             ; preds = %.lr.ph.i.prol.loope
   %i.gy = mul i64 %i.gx, %i.dk
   %i.gz = add i64 %i.gy, %.pre-phi
   %i.ha = shl i64 %i.gz, 3
-  %4 = mul nsw i64 %i.dj, -8                      ; 6 uses
-  %i.hb = mul nsw i64 %.pre-phi, -8               ; 4 uses
+  %i.hb = mul nsw i64 %i.dj, -8                   ; 6 uses
   %min.iters.check1070 = icmp samesign ult i64 %.pre-phi, 4
   %n.vec1072 = and i64 %.pre-phi, 4294967292      ; 3 uses
   %cmp.n1081 = icmp eq i64 %.pre-phi, %n.vec1072
@@ -322,57 +321,49 @@ v_prod.exit.loopexit:                             ; preds = %.lr.ph.i.prol.loope
   %n.vec1058 = and i64 %.pre-phi, 4294967292      ; 3 uses
   %cmp.n1067 = icmp eq i64 %.pre-phi, %n.vec1058
   %min.iters.check1040 = icmp samesign ult i64 %.pre-phi, 4
-  %i.hc = add nsw i64 %4, -1
+  %i.hc = add nsw i64 %i.hb, -1
   %diff.check1042 = icmp ult i64 %i.hc, 31
   %or.cond1084 = select i1 %min.iters.check1040, i1 true, i1 %diff.check1042
   %n.vec1044 = and i64 %.pre-phi, 4294967292      ; 3 uses
   %cmp.n1053 = icmp eq i64 %.pre-phi, %n.vec1044
   %xtraiter1115 = and i64 %.pre-phi, 3            ; 2 uses
   %lcmp.mod1116.not = icmp eq i64 %xtraiter1115, 0
-  %min.iters.check1016 = icmp samesign ult i64 %.pre-phi, 4
-  %5 = add nsw i64 %i.hb, -1
-  %diff.check1018 = icmp ult i64 %5, 31
-  %i.hd = add nsw i64 %4, -1
+  %diff.check1018 = icmp samesign ult i64 %.pre-phi, 4
+  %i.hd = add nsw i64 %i.hb, -1
   %diff.check1019 = icmp ult i64 %i.hd, 31
-  %conflict.rdx1020 = or i1 %diff.check1018, %diff.check1019
+  %or.cond1073 = select i1 %diff.check1018, i1 true, i1 %diff.check1019
   %n.vec1022 = and i64 %.pre-phi, 4294967292      ; 3 uses
   %cmp.n1035 = icmp eq i64 %.pre-phi, %n.vec1022
   %xtraiter1118 = and i64 %.pre-phi, 1
   %lcmp.mod1119.not = icmp eq i64 %xtraiter1118, 0
-  %min.iters.check990 = icmp samesign ult i64 %.pre-phi, 4
-  %6 = add nsw i64 %i.hb, -1
-  %diff.check992 = icmp ult i64 %6, 31
-  %i.he = add nsw i64 %4, -1
+  %diff.check992 = icmp samesign ult i64 %.pre-phi, 4
+  %i.he = add nsw i64 %i.hb, -1
   %diff.check993 = icmp ult i64 %i.he, 31
-  %conflict.rdx994 = or i1 %diff.check992, %diff.check993
+  %or.cond1072 = select i1 %diff.check992, i1 true, i1 %diff.check993
   %n.vec996 = and i64 %.pre-phi, 4294967292       ; 3 uses
   %cmp.n1009 = icmp eq i64 %.pre-phi, %n.vec996
   %xtraiter1121 = and i64 %.pre-phi, 1
   %lcmp.mod1122.not = icmp eq i64 %xtraiter1121, 0
   %min.iters.check970 = icmp samesign ult i64 %.pre-phi, 4
-  %i.hf = add nsw i64 %4, -1
+  %i.hf = add nsw i64 %i.hb, -1
   %diff.check972 = icmp ult i64 %i.hf, 31
   %or.cond1083 = select i1 %min.iters.check970, i1 true, i1 %diff.check972
   %n.vec974 = and i64 %.pre-phi, 4294967292       ; 3 uses
   %cmp.n983 = icmp eq i64 %.pre-phi, %n.vec974
   %xtraiter1124 = and i64 %.pre-phi, 3            ; 2 uses
   %lcmp.mod1125.not = icmp eq i64 %xtraiter1124, 0
-  %min.iters.check946 = icmp samesign ult i64 %.pre-phi, 4
-  %7 = add nsw i64 %i.hb, -1
-  %diff.check948 = icmp ult i64 %7, 31
-  %i.hg = add nsw i64 %4, -1
+  %diff.check948 = icmp samesign ult i64 %.pre-phi, 4
+  %i.hg = add nsw i64 %i.hb, -1
   %diff.check949 = icmp ult i64 %i.hg, 31
-  %conflict.rdx950 = or i1 %diff.check948, %diff.check949
+  %or.cond1070 = select i1 %diff.check948, i1 true, i1 %diff.check949
   %n.vec952 = and i64 %.pre-phi, 4294967292       ; 3 uses
   %cmp.n965 = icmp eq i64 %.pre-phi, %n.vec952
   %xtraiter1127 = and i64 %.pre-phi, 1
   %lcmp.mod1128.not = icmp eq i64 %xtraiter1127, 0
-  %min.iters.check921 = icmp samesign ult i64 %.pre-phi, 4
-  %8 = add nsw i64 %i.hb, -1
-  %diff.check923 = icmp ult i64 %8, 31
-  %i.hh = add nsw i64 %4, -1
+  %diff.check923 = icmp samesign ult i64 %.pre-phi, 4
+  %i.hh = add nsw i64 %i.hb, -1
   %diff.check924 = icmp ult i64 %i.hh, 31
-  %conflict.rdx = or i1 %diff.check923, %diff.check924
+  %or.cond1069 = select i1 %diff.check923, i1 true, i1 %diff.check924
   %n.vec926 = and i64 %.pre-phi, 4294967292       ; 3 uses
   %cmp.n939 = icmp eq i64 %.pre-phi, %n.vec926
   %xtraiter1130 = and i64 %.pre-phi, 1
@@ -525,8 +516,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.t, label %.lr.ph.i238.preheader, label %v_sum_prods.exit
 
 .lr.ph.i238.preheader:                            ; preds = %bb.d
-  %brmerge1184 = select i1 %min.iters.check921, i1 true, i1 %conflict.rdx
-  br i1 %brmerge1184, label %.lr.ph.i238.preheader1100, label %vector.body927
+  br i1 %or.cond1069, label %.lr.ph.i238.preheader1100, label %vector.body927
 
 vector.body927:                                   ; preds = %.lr.ph.i238.preheader, %vector.body927
   %index928 = phi i64 [ %index.next937, %vector.body927 ], [ 0, %.lr.ph.i238.preheader ] ; 6 uses
@@ -562,7 +552,7 @@ middle.block938:                                  ; preds = %vector.body927
   br i1 %cmp.n939, label %v_sum_prods.exit, label %.lr.ph.i238.preheader1100
 
 .lr.ph.i238.preheader1100:                        ; preds = %.lr.ph.i238.preheader, %middle.block938
-  %indvars.iv.i239.ph = phi i64 [ %n.vec926, %middle.block938 ], [ 0, %.lr.ph.i238.preheader ] ; 8 uses
+  %indvars.iv.i239.ph = phi i64 [ 0, %.lr.ph.i238.preheader ], [ %n.vec926, %middle.block938 ] ; 8 uses
   %.neg1171.a = or disjoint i64 %indvars.iv.i239.ph, 1
   br i1 %lcmp.mod1131.not, label %.lr.ph.i238.prol.loopexit, label %.lr.ph.i238.prol
 
@@ -625,8 +615,7 @@ bb.e:                                             ; preds = %bb.c
   br i1 %i.t, label %.lr.ph.i244.preheader, label %v_sum_prods.exit
 
 .lr.ph.i244.preheader:                            ; preds = %bb.e
-  %brmerge1185 = select i1 %min.iters.check946, i1 true, i1 %conflict.rdx950
-  br i1 %brmerge1185, label %.lr.ph.i244.preheader1101, label %vector.body953
+  br i1 %or.cond1070, label %.lr.ph.i244.preheader1101, label %vector.body953
 
 vector.body953:                                   ; preds = %.lr.ph.i244.preheader, %vector.body953
   %index954 = phi i64 [ %index.next963, %vector.body953 ], [ 0, %.lr.ph.i244.preheader ] ; 6 uses
@@ -662,7 +651,7 @@ middle.block964:                                  ; preds = %vector.body953
   br i1 %cmp.n965, label %v_sum_prods.exit, label %.lr.ph.i244.preheader1101
 
 .lr.ph.i244.preheader1101:                        ; preds = %.lr.ph.i244.preheader, %middle.block964
-  %indvars.iv.i245.ph = phi i64 [ %n.vec952, %middle.block964 ], [ 0, %.lr.ph.i244.preheader ] ; 8 uses
+  %indvars.iv.i245.ph = phi i64 [ 0, %.lr.ph.i244.preheader ], [ %n.vec952, %middle.block964 ] ; 8 uses
   %.neg1170.a = or disjoint i64 %indvars.iv.i245.ph, 1
   br i1 %lcmp.mod1128.not, label %.lr.ph.i244.prol.loopexit, label %.lr.ph.i244.prol
 
@@ -818,8 +807,7 @@ bb.g:                                             ; preds = %bb.c
   br i1 %i.t, label %.lr.ph.i258.preheader, label %v_sum_prods.exit
 
 .lr.ph.i258.preheader:                            ; preds = %bb.g
-  %brmerge1186 = select i1 %min.iters.check990, i1 true, i1 %conflict.rdx994
-  br i1 %brmerge1186, label %.lr.ph.i258.preheader1105, label %vector.body997
+  br i1 %or.cond1072, label %.lr.ph.i258.preheader1105, label %vector.body997
 
 vector.body997:                                   ; preds = %.lr.ph.i258.preheader, %vector.body997
   %index998 = phi i64 [ %index.next1007, %vector.body997 ], [ 0, %.lr.ph.i258.preheader ] ; 6 uses
@@ -855,7 +843,7 @@ middle.block1008:                                 ; preds = %vector.body997
   br i1 %cmp.n1009, label %v_sum_prods.exit, label %.lr.ph.i258.preheader1105
 
 .lr.ph.i258.preheader1105:                        ; preds = %.lr.ph.i258.preheader, %middle.block1008
-  %indvars.iv.i259.ph = phi i64 [ %n.vec996, %middle.block1008 ], [ 0, %.lr.ph.i258.preheader ] ; 8 uses
+  %indvars.iv.i259.ph = phi i64 [ 0, %.lr.ph.i258.preheader ], [ %n.vec996, %middle.block1008 ] ; 8 uses
   %.neg1169.a = or disjoint i64 %indvars.iv.i259.ph, 1
   br i1 %lcmp.mod1122.not, label %.lr.ph.i258.prol.loopexit, label %.lr.ph.i258.prol
 
@@ -918,8 +906,7 @@ bb.h:                                             ; preds = %bb.c
   br i1 %i.t, label %.lr.ph.i265.preheader, label %v_sum_prods.exit
 
 .lr.ph.i265.preheader:                            ; preds = %bb.h
-  %brmerge1187 = select i1 %min.iters.check1016, i1 true, i1 %conflict.rdx1020
-  br i1 %brmerge1187, label %.lr.ph.i265.preheader1107, label %vector.body1023
+  br i1 %or.cond1073, label %.lr.ph.i265.preheader1107, label %vector.body1023
 
 vector.body1023:                                  ; preds = %.lr.ph.i265.preheader, %vector.body1023
   %index1024 = phi i64 [ %index.next1033, %vector.body1023 ], [ 0, %.lr.ph.i265.preheader ] ; 6 uses
@@ -955,7 +942,7 @@ middle.block1034:                                 ; preds = %vector.body1023
   br i1 %cmp.n1035, label %v_sum_prods.exit, label %.lr.ph.i265.preheader1107
 
 .lr.ph.i265.preheader1107:                        ; preds = %.lr.ph.i265.preheader, %middle.block1034
-  %indvars.iv.i266.ph = phi i64 [ %n.vec1022, %middle.block1034 ], [ 0, %.lr.ph.i265.preheader ] ; 8 uses
+  %indvars.iv.i266.ph = phi i64 [ 0, %.lr.ph.i265.preheader ], [ %n.vec1022, %middle.block1034 ] ; 8 uses
   %.neg = or disjoint i64 %indvars.iv.i266.ph, 1
   br i1 %lcmp.mod1119.not, label %.lr.ph.i265.prol.loopexit, label %.lr.ph.i265.prol
 

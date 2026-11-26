@@ -205,7 +205,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   br i1 %i.cg, label %.preheader267.i, label %.preheader274.i
 
 .lr.ph.i.i:                                       ; preds = %bb.u, %.lr.ph.i.i
-  %indvar = phi i64 [ %indvar.next, %.lr.ph.i.i ], [ 0, %bb.u ] ; 10 uses
+  %indvar = phi i64 [ %indvar.next, %.lr.ph.i.i ], [ 0, %bb.u ] ; 9 uses
   %.06.i.i = phi i32 [ %i.ck, %.lr.ph.i.i ], [ 0, %bb.u ] ; 8 uses
   %.035.i.i = phi ptr [ %i.cm, %.lr.ph.i.i ], [ %i.bu, %bb.u ]
   %i.ck = add nuw nsw i32 %.06.i.i, 1             ; 5 uses
@@ -424,17 +424,12 @@ bb.y:                                             ; preds = %bb.x
   br i1 %min.iters.check480, label %.lr.ph279.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph279.preheader.i
-  %2 = shl i64 %indvar, 3
-  %3 = add i64 %2, -1
-  %diff.check = icmp ult i64 %3, 15
-  %i.el = mul i64 %indvar, 24                     ; 2 uses
-  %diff.check481 = icmp ugt i64 %i.el, -16
-  %conflict.rdx = or i1 %diff.check, %diff.check481
+  %i.el = mul i64 %indvar, 24
   %i.em = shl i64 %indvar, 4
   %diff.check482 = icmp ugt i64 %i.em, -24
-  %conflict.rdx483 = or i1 %conflict.rdx, %diff.check482
-  %diff.check486 = icmp ult i64 %i.el, 8
-  %conflict.rdx487 = or i1 %conflict.rdx483, %diff.check486
+  %2 = add i64 %i.el, 15
+  %diff.check486 = icmp ult i64 %2, 23
+  %conflict.rdx487 = or i1 %diff.check486, %diff.check482
   br i1 %conflict.rdx487, label %.lr.ph279.i.preheader, label %vector.ph488
 
 vector.ph488:                                     ; preds = %vector.memcheck

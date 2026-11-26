@@ -204,7 +204,7 @@ _ZNKSt6vectorISt5tupleIJN4perf7MatTypeEN11opencv_test12_GLOBAL__N_120IntegralOut
   tail call void @llvm.assume(i1 %.not.i.i.i.i)
   %i.p = shl nuw nsw i64 %i.o, 3
   %i.q = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.p) #31
-          to label %.noexc12.i unwind label %.loopexit.i, !noalias !463 ; 16 uses
+          to label %.noexc12.i unwind label %.loopexit.i, !noalias !463 ; 15 uses
 
 .noexc12.i:                                       ; preds = %_ZNKSt6vectorISt5tupleIJN4perf7MatTypeEN11opencv_test12_GLOBAL__N_120IntegralOutputDepthsEEESaIS6_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 %i.h ; 2 uses
@@ -219,36 +219,32 @@ _ZNKSt6vectorISt5tupleIJN4perf7MatTypeEN11opencv_test12_GLOBAL__N_120IntegralOut
   %i.u = sub i64 %i.t, %i.g                       ; 3 uses
   %i.v = lshr i64 %i.u, 3
   %i.w = add nuw nsw i64 %i.v, 1                  ; 2 uses
-  %min.iters.check285 = icmp ult i64 %i.u, 168
+  %min.iters.check285 = icmp ult i64 %i.u, 136
   br i1 %min.iters.check285, label %.lr.ph.i.i.i.i.i.i.preheader330, label %vector.memcheck286
 
 vector.memcheck286:                               ; preds = %.lr.ph.i.i.i.i.i.i.preheader
   %i.x = and i64 %i.u, -8                         ; 2 uses
   %i.y = or disjoint i64 %i.x, 4                  ; 2 uses
-  %i.z = getelementptr i8, ptr %i.q, i64 %i.y     ; 3 uses
-  %i.aa = getelementptr i8, ptr %i.q, i64 4       ; 3 uses
+  %i.z = getelementptr i8, ptr %i.q, i64 %i.y     ; 2 uses
+  %i.aa = getelementptr i8, ptr %.val27.i.i.i, i64 %i.y ; 2 uses
+  %i.ab = getelementptr i8, ptr %.val27.i.i.i, i64 4 ; 2 uses
   %5 = add i64 %i.x, 8                            ; 2 uses
-  %i.ab = getelementptr i8, ptr %i.q, i64 %5      ; 3 uses
-  %6 = getelementptr i8, ptr %.val27.i.i.i, i64 %i.y ; 2 uses
-  %i.ac = getelementptr i8, ptr %.val27.i.i.i, i64 4 ; 2 uses
-  %i.ad = getelementptr i8, ptr %.val27.i.i.i, i64 %5 ; 2 uses
-  %bound0287 = icmp ult ptr %i.q, %i.ab
-  %bound1288 = icmp ult ptr %i.aa, %i.z
-  %found.conflict289 = and i1 %bound0287, %bound1288
-  %bound0290 = icmp ult ptr %i.q, %6
+  %i.ac = getelementptr i8, ptr %.val27.i.i.i, i64 %5 ; 2 uses
+  %i.ad = getelementptr i8, ptr %i.q, i64 4       ; 2 uses
+  %6 = getelementptr i8, ptr %i.q, i64 %5         ; 2 uses
+  %bound0290 = icmp ult ptr %i.q, %i.aa
   %bound1291 = icmp ult ptr %.val27.i.i.i, %i.z
   %found.conflict292 = and i1 %bound0290, %bound1291
-  %conflict.rdx293 = or i1 %found.conflict289, %found.conflict292
-  %bound0294 = icmp ult ptr %i.q, %i.ad
-  %bound1295 = icmp ult ptr %i.ac, %i.z
+  %bound0294 = icmp ult ptr %i.q, %i.ac
+  %bound1295 = icmp ult ptr %i.ab, %i.z
   %found.conflict296 = and i1 %bound0294, %bound1295
-  %conflict.rdx297 = or i1 %conflict.rdx293, %found.conflict296
-  %bound0298 = icmp ult ptr %i.aa, %6
-  %bound1299 = icmp ult ptr %.val27.i.i.i, %i.ab
+  %conflict.rdx297 = or i1 %found.conflict292, %found.conflict296
+  %bound0298 = icmp ult ptr %i.ad, %i.aa
+  %bound1299 = icmp ult ptr %.val27.i.i.i, %6
   %found.conflict300 = and i1 %bound0298, %bound1299
   %conflict.rdx301 = or i1 %conflict.rdx297, %found.conflict300
-  %bound0302 = icmp ult ptr %i.aa, %i.ad
-  %bound1303 = icmp ult ptr %i.ac, %i.ab
+  %bound0302 = icmp ult ptr %i.ad, %i.ac
+  %bound1303 = icmp ult ptr %i.ab, %6
   %found.conflict304 = and i1 %bound0302, %bound1303
   %conflict.rdx305 = or i1 %conflict.rdx301, %found.conflict304
   br i1 %conflict.rdx305, label %.lr.ph.i.i.i.i.i.i.preheader330, label %vector.ph306
@@ -348,7 +344,7 @@ _ZNKSt6vectorISt5tupleIJN4perf7MatTypeEN11opencv_test12_GLOBAL__N_120IntegralOut
   tail call void @llvm.assume(i1 %.not.i.i.i.1.i)
   %i.be = shl nuw nsw i64 %i.bd, 3
   %i.bf = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.be) #31
-          to label %.noexc12.1.i unwind label %.loopexit.i, !noalias !463 ; 16 uses
+          to label %.noexc12.1.i unwind label %.loopexit.i, !noalias !463 ; 15 uses
 
 .noexc12.1.i:                                     ; preds = %_ZNKSt6vectorISt5tupleIJN4perf7MatTypeEN11opencv_test12_GLOBAL__N_120IntegralOutputDepthsEEESaIS6_EE12_M_check_lenEmPKc.exit.i.i.1.i
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bf, i64 %i.aw ; 2 uses
@@ -363,36 +359,32 @@ _ZNKSt6vectorISt5tupleIJN4perf7MatTypeEN11opencv_test12_GLOBAL__N_120IntegralOut
   %i.bj = sub i64 %i.bi, %i.av                    ; 3 uses
   %i.bk = lshr i64 %i.bj, 3
   %i.bl = add nuw nsw i64 %i.bk, 1                ; 2 uses
-  %min.iters.check215 = icmp ult i64 %i.bj, 168
+  %min.iters.check215 = icmp ult i64 %i.bj, 136
   br i1 %min.iters.check215, label %.lr.ph.i.i.i.i.i.1.i.preheader329, label %vector.memcheck216
 
 vector.memcheck216:                               ; preds = %.lr.ph.i.i.i.i.i.1.i.preheader
   %i.bm = and i64 %i.bj, -8                       ; 2 uses
   %i.bn = or disjoint i64 %i.bm, 4                ; 2 uses
-  %i.bo = getelementptr i8, ptr %i.bf, i64 %i.bn  ; 3 uses
-  %i.bp = getelementptr i8, ptr %i.bf, i64 4      ; 3 uses
+  %i.bo = getelementptr i8, ptr %i.bf, i64 %i.bn  ; 2 uses
+  %i.bp = getelementptr i8, ptr %.val27.i.i.1.i, i64 %i.bn ; 2 uses
+  %i.bq = getelementptr i8, ptr %.val27.i.i.1.i, i64 4 ; 2 uses
   %7 = add i64 %i.bm, 8                           ; 2 uses
-  %i.bq = getelementptr i8, ptr %i.bf, i64 %7     ; 3 uses
-  %8 = getelementptr i8, ptr %.val27.i.i.1.i, i64 %i.bn ; 2 uses
-  %i.br = getelementptr i8, ptr %.val27.i.i.1.i, i64 4 ; 2 uses
-  %i.bs = getelementptr i8, ptr %.val27.i.i.1.i, i64 %7 ; 2 uses
-  %bound0217 = icmp ult ptr %i.bf, %i.bq
-  %bound1218 = icmp ult ptr %i.bp, %i.bo
-  %found.conflict219 = and i1 %bound0217, %bound1218
-  %bound0220 = icmp ult ptr %i.bf, %8
+  %i.br = getelementptr i8, ptr %.val27.i.i.1.i, i64 %7 ; 2 uses
+  %i.bs = getelementptr i8, ptr %i.bf, i64 4      ; 2 uses
+  %8 = getelementptr i8, ptr %i.bf, i64 %7        ; 2 uses
+  %bound0220 = icmp ult ptr %i.bf, %i.bp
   %bound1221 = icmp ult ptr %.val27.i.i.1.i, %i.bo
   %found.conflict222 = and i1 %bound0220, %bound1221
-  %conflict.rdx223 = or i1 %found.conflict219, %found.conflict222
-  %bound0224 = icmp ult ptr %i.bf, %i.bs
-  %bound1225 = icmp ult ptr %i.br, %i.bo
+  %bound0224 = icmp ult ptr %i.bf, %i.br
+  %bound1225 = icmp ult ptr %i.bq, %i.bo
   %found.conflict226 = and i1 %bound0224, %bound1225
-  %conflict.rdx227 = or i1 %conflict.rdx223, %found.conflict226
-  %bound0228 = icmp ult ptr %i.bp, %8
-  %bound1229 = icmp ult ptr %.val27.i.i.1.i, %i.bq
+  %conflict.rdx227 = or i1 %found.conflict222, %found.conflict226
+  %bound0228 = icmp ult ptr %i.bs, %i.bp
+  %bound1229 = icmp ult ptr %.val27.i.i.1.i, %8
   %found.conflict230 = and i1 %bound0228, %bound1229
   %conflict.rdx231 = or i1 %conflict.rdx227, %found.conflict230
-  %bound0232 = icmp ult ptr %i.bp, %i.bs
-  %bound1233 = icmp ult ptr %i.br, %i.bq
+  %bound0232 = icmp ult ptr %i.bs, %i.br
+  %bound1233 = icmp ult ptr %i.bq, %8
   %found.conflict234 = and i1 %bound0232, %bound1233
   %conflict.rdx235 = or i1 %conflict.rdx231, %found.conflict234
   br i1 %conflict.rdx235, label %.lr.ph.i.i.i.i.i.1.i.preheader329, label %vector.ph236
@@ -491,7 +483,7 @@ _ZNKSt6vectorISt5tupleIJN4perf7MatTypeEN11opencv_test12_GLOBAL__N_120IntegralOut
   tail call void @llvm.assume(i1 %.not.i.i.i.2.i)
   %i.ct = shl nuw nsw i64 %i.cs, 3
   %i.cu = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ct) #31
-          to label %.noexc12.2.i unwind label %.loopexit.i, !noalias !463 ; 16 uses
+          to label %.noexc12.2.i unwind label %.loopexit.i, !noalias !463 ; 15 uses
 
 .noexc12.2.i:                                     ; preds = %_ZNKSt6vectorISt5tupleIJN4perf7MatTypeEN11opencv_test12_GLOBAL__N_120IntegralOutputDepthsEEESaIS6_EE12_M_check_lenEmPKc.exit.i.i.2.i
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cu, i64 %i.cl ; 2 uses
@@ -506,36 +498,32 @@ _ZNKSt6vectorISt5tupleIJN4perf7MatTypeEN11opencv_test12_GLOBAL__N_120IntegralOut
   %i.cy = sub i64 %i.cx, %i.ck                    ; 3 uses
   %i.cz = lshr i64 %i.cy, 3
   %i.da = add nuw nsw i64 %i.cz, 1                ; 2 uses
-  %min.iters.check145 = icmp ult i64 %i.cy, 168
+  %min.iters.check145 = icmp ult i64 %i.cy, 136
   br i1 %min.iters.check145, label %.lr.ph.i.i.i.i.i.2.i.preheader328, label %vector.memcheck146
 
 vector.memcheck146:                               ; preds = %.lr.ph.i.i.i.i.i.2.i.preheader
   %i.db = and i64 %i.cy, -8                       ; 2 uses
   %i.dc = or disjoint i64 %i.db, 4                ; 2 uses
-  %i.dd = getelementptr i8, ptr %i.cu, i64 %i.dc  ; 3 uses
-  %i.de = getelementptr i8, ptr %i.cu, i64 4      ; 3 uses
+  %i.dd = getelementptr i8, ptr %i.cu, i64 %i.dc  ; 2 uses
+  %i.de = getelementptr i8, ptr %.val27.i.i.2.i, i64 %i.dc ; 2 uses
+  %i.df = getelementptr i8, ptr %.val27.i.i.2.i, i64 4 ; 2 uses
   %9 = add i64 %i.db, 8                           ; 2 uses
-  %i.df = getelementptr i8, ptr %i.cu, i64 %9     ; 3 uses
-  %10 = getelementptr i8, ptr %.val27.i.i.2.i, i64 %i.dc ; 2 uses
-  %i.dg = getelementptr i8, ptr %.val27.i.i.2.i, i64 4 ; 2 uses
-  %i.dh = getelementptr i8, ptr %.val27.i.i.2.i, i64 %9 ; 2 uses
-  %bound0147 = icmp ult ptr %i.cu, %i.df
-  %bound1148 = icmp ult ptr %i.de, %i.dd
-  %found.conflict149 = and i1 %bound0147, %bound1148
-  %bound0150 = icmp ult ptr %i.cu, %10
+  %i.dg = getelementptr i8, ptr %.val27.i.i.2.i, i64 %9 ; 2 uses
+  %i.dh = getelementptr i8, ptr %i.cu, i64 4      ; 2 uses
+  %10 = getelementptr i8, ptr %i.cu, i64 %9       ; 2 uses
+  %bound0150 = icmp ult ptr %i.cu, %i.de
   %bound1151 = icmp ult ptr %.val27.i.i.2.i, %i.dd
   %found.conflict152 = and i1 %bound0150, %bound1151
-  %conflict.rdx153 = or i1 %found.conflict149, %found.conflict152
-  %bound0154 = icmp ult ptr %i.cu, %i.dh
-  %bound1155 = icmp ult ptr %i.dg, %i.dd
+  %bound0154 = icmp ult ptr %i.cu, %i.dg
+  %bound1155 = icmp ult ptr %i.df, %i.dd
   %found.conflict156 = and i1 %bound0154, %bound1155
-  %conflict.rdx157 = or i1 %conflict.rdx153, %found.conflict156
-  %bound0158 = icmp ult ptr %i.de, %10
-  %bound1159 = icmp ult ptr %.val27.i.i.2.i, %i.df
+  %conflict.rdx157 = or i1 %found.conflict152, %found.conflict156
+  %bound0158 = icmp ult ptr %i.dh, %i.de
+  %bound1159 = icmp ult ptr %.val27.i.i.2.i, %10
   %found.conflict160 = and i1 %bound0158, %bound1159
   %conflict.rdx161 = or i1 %conflict.rdx157, %found.conflict160
-  %bound0162 = icmp ult ptr %i.de, %i.dh
-  %bound1163 = icmp ult ptr %i.dg, %i.df
+  %bound0162 = icmp ult ptr %i.dh, %i.dg
+  %bound1163 = icmp ult ptr %i.df, %10
   %found.conflict164 = and i1 %bound0162, %bound1163
   %conflict.rdx165 = or i1 %conflict.rdx161, %found.conflict164
   br i1 %conflict.rdx165, label %.lr.ph.i.i.i.i.i.2.i.preheader328, label %vector.ph166
@@ -635,7 +623,7 @@ _ZNKSt6vectorISt5tupleIJN4perf7MatTypeEN11opencv_test12_GLOBAL__N_120IntegralOut
   tail call void @llvm.assume(i1 %.not.i.i.i.3.i)
   %i.ei = shl nuw nsw i64 %i.eh, 3
   %i.ej = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ei) #31
-          to label %.noexc12.3.i unwind label %.loopexit.i, !noalias !463 ; 16 uses
+          to label %.noexc12.3.i unwind label %.loopexit.i, !noalias !463 ; 15 uses
 
 .noexc12.3.i:                                     ; preds = %_ZNKSt6vectorISt5tupleIJN4perf7MatTypeEN11opencv_test12_GLOBAL__N_120IntegralOutputDepthsEEESaIS6_EE12_M_check_lenEmPKc.exit.i.i.3.i
   %i.ek = getelementptr inbounds nuw i8, ptr %i.ej, i64 %i.ea ; 2 uses
@@ -650,36 +638,32 @@ _ZNKSt6vectorISt5tupleIJN4perf7MatTypeEN11opencv_test12_GLOBAL__N_120IntegralOut
   %i.en = sub i64 %i.em, %i.dz                    ; 3 uses
   %i.eo = lshr i64 %i.en, 3
   %i.ep = add nuw nsw i64 %i.eo, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.en, 168
+  %min.iters.check = icmp ult i64 %i.en, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.3.i.preheader327, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.3.i.preheader
   %i.eq = and i64 %i.en, -8                       ; 2 uses
   %i.er = or disjoint i64 %i.eq, 4                ; 2 uses
-  %i.es = getelementptr i8, ptr %i.ej, i64 %i.er  ; 3 uses
-  %i.et = getelementptr i8, ptr %i.ej, i64 4      ; 3 uses
+  %i.es = getelementptr i8, ptr %i.ej, i64 %i.er  ; 2 uses
+  %i.et = getelementptr i8, ptr %.val27.i.i.3.i, i64 %i.er ; 2 uses
+  %i.eu = getelementptr i8, ptr %.val27.i.i.3.i, i64 4 ; 2 uses
   %11 = add i64 %i.eq, 8                          ; 2 uses
-  %i.eu = getelementptr i8, ptr %i.ej, i64 %11    ; 3 uses
-  %12 = getelementptr i8, ptr %.val27.i.i.3.i, i64 %i.er ; 2 uses
-  %i.ev = getelementptr i8, ptr %.val27.i.i.3.i, i64 4 ; 2 uses
-  %i.ew = getelementptr i8, ptr %.val27.i.i.3.i, i64 %11 ; 2 uses
-  %bound0 = icmp ult ptr %i.ej, %i.eu
-  %bound1 = icmp ult ptr %i.et, %i.es
-  %found.conflict = and i1 %bound0, %bound1
-  %bound093.a = icmp ult ptr %i.ej, %12
+  %i.ev = getelementptr i8, ptr %.val27.i.i.3.i, i64 %11 ; 2 uses
+  %i.ew = getelementptr i8, ptr %i.ej, i64 4      ; 2 uses
+  %12 = getelementptr i8, ptr %i.ej, i64 %11      ; 2 uses
+  %bound093.a = icmp ult ptr %i.ej, %i.et
   %bound194.a = icmp ult ptr %.val27.i.i.3.i, %i.es
   %found.conflict95.a = and i1 %bound093.a, %bound194.a
-  %conflict.rdx = or i1 %found.conflict, %found.conflict95.a
-  %bound096 = icmp ult ptr %i.ej, %i.ew
-  %bound197 = icmp ult ptr %i.ev, %i.es
+  %bound096 = icmp ult ptr %i.ej, %i.ev
+  %bound197 = icmp ult ptr %i.eu, %i.es
   %found.conflict98 = and i1 %bound096, %bound197
-  %conflict.rdx99 = or i1 %conflict.rdx, %found.conflict98
-  %bound0100 = icmp ult ptr %i.et, %12
-  %bound1101 = icmp ult ptr %.val27.i.i.3.i, %i.eu
+  %conflict.rdx99 = or i1 %found.conflict95.a, %found.conflict98
+  %bound0100 = icmp ult ptr %i.ew, %i.et
+  %bound1101 = icmp ult ptr %.val27.i.i.3.i, %12
   %found.conflict102 = and i1 %bound0100, %bound1101
   %conflict.rdx103 = or i1 %conflict.rdx99, %found.conflict102
-  %bound0104 = icmp ult ptr %i.et, %i.ew
-  %bound1105 = icmp ult ptr %i.ev, %i.eu
+  %bound0104 = icmp ult ptr %i.ew, %i.ev
+  %bound1105 = icmp ult ptr %i.eu, %12
   %found.conflict106 = and i1 %bound0104, %bound1105
   %conflict.rdx107 = or i1 %conflict.rdx103, %found.conflict106
   br i1 %conflict.rdx107, label %.lr.ph.i.i.i.i.i.3.i.preheader327, label %vector.ph

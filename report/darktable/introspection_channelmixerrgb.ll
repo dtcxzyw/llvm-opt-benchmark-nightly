@@ -205,7 +205,7 @@ convert_any_LMS_to_XYZ.exit297.i:                 ; preds = %.thread.i, %.thread
   br label %pseudo_solve_gaussian.exit.i
 
 bb.s:                                             ; preds = %._crit_edge241.i
-  %i.pn = tail call ptr @dt_alloc_aligned(i64 noundef 648) #31, !noalias !343 ; 101 uses
+  %i.pn = tail call ptr @dt_alloc_aligned(i64 noundef 648) #31, !noalias !343 ; 99 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.pn, i64 64) ]
   %i.po = tail call ptr @dt_alloc_aligned(i64 noundef 72) #31, !noalias !343 ; 32 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.po, i64 64) ]
@@ -608,7 +608,7 @@ transpose_dot_vector.exit.i.i:                    ; preds = %vec.epilog.scalar.p
   %i.anl = tail call noalias dereferenceable_or_null(36) ptr @malloc(i64 noundef 36) #32, !noalias !343 ; 11 uses
   %i.anm = getelementptr inbounds nuw i8, ptr %i.anl, i64 32
   store i32 8, ptr %i.anm, align 4, !tbaa !15, !noalias !343
-  %scevgep1396 = getelementptr i8, ptr %i.pn, i64 648 ; 2 uses
+  %scevgep1396 = getelementptr i8, ptr %i.pn, i64 648
   %scevgep1424 = getelementptr i8, ptr %i.pn, i64 72
   br label %bb.t
 
@@ -618,21 +618,16 @@ transpose_dot_vector.exit.i.i:                    ; preds = %vec.epilog.scalar.p
   br i1 %exitcond146.not.i.i.i.i, label %gauss_make_triangular.exit.i.i.i, label %bb.t
 
 bb.t:                                             ; preds = %.loopexit.i.i.i.i, %transpose_dot_vector.exit.i.i
-  %indvars.iv143.i.i.i.i = phi i64 [ 0, %transpose_dot_vector.exit.i.i ], [ %indvars.iv.next144.i.i.i.i, %.loopexit.i.i.i.i ] ; 23 uses
+  %indvars.iv143.i.i.i.i = phi i64 [ 0, %transpose_dot_vector.exit.i.i ], [ %indvars.iv.next144.i.i.i.i, %.loopexit.i.i.i.i ] ; 22 uses
   %indvars.iv.i.i.i.i = phi i64 [ 1, %transpose_dot_vector.exit.i.i ], [ %indvars.iv.next.i.i.i.i, %.loopexit.i.i.i.i ] ; 14 uses
   %i.ann = mul nuw nsw i64 %indvars.iv143.i.i.i.i, 72
   %i.ano = getelementptr i8, ptr %i.pn, i64 %i.ann
   %scevgep = getelementptr i8, ptr %i.ano, i64 72
-  %i.anp = mul nuw nsw i64 %indvars.iv143.i.i.i.i, 80 ; 3 uses
-  %6 = getelementptr i8, ptr %i.pn, i64 %i.anp
-  %scevgep1393 = getelementptr i8, ptr %6, i64 8
-  %7 = shl nuw nsw i64 %indvars.iv143.i.i.i.i, 3
-  %8 = getelementptr i8, ptr %i.pn, i64 %7
-  %scevgep1394 = getelementptr i8, ptr %8, i64 584
+  %i.anp = mul nuw nsw i64 %indvars.iv143.i.i.i.i, 80 ; 2 uses
   %i.anq = getelementptr i8, ptr %i.pn, i64 %i.anp
-  %scevgep1395 = getelementptr i8, ptr %i.anq, i64 72
+  %scevgep1395 = getelementptr i8, ptr %i.anq, i64 8
   %i.anr = getelementptr i8, ptr %i.pn, i64 %i.anp
-  %scevgep1397 = getelementptr i8, ptr %i.anr, i64 80 ; 2 uses
+  %scevgep1397 = getelementptr i8, ptr %i.anr, i64 80
   %indvars.iv.next144.i.i.i.i = add nuw nsw i64 %indvars.iv143.i.i.i.i, 1 ; 2 uses
   %i.ans = icmp samesign ult i64 %indvars.iv143.i.i.i.i, 8 ; 2 uses
   %i.ant = trunc nuw nsw i64 %indvars.iv143.i.i.i.i to i32 ; 3 uses
@@ -919,13 +914,9 @@ middle.block1438:                                 ; preds = %vector.body1433
   %invariant.gep157.i.i.i.i = getelementptr inbounds nuw [8 x i8], ptr %i.pn, i64 %i.aol ; 6 uses
   %i.arq = sub nuw nsw i64 8, %indvars.iv143.i.i.i.i ; 2 uses
   %min.iters.check1398 = icmp samesign ugt i64 %indvars.iv143.i.i.i.i, 4
-  %bound0 = icmp ult ptr %scevgep1397, %scevgep1394
-  %bound1 = icmp ult ptr %scevgep1395, %scevgep1396
-  %found.conflict = and i1 %bound0, %bound1
   %bound01399 = icmp ult ptr %scevgep1397, %scevgep
-  %bound11400 = icmp ult ptr %scevgep1393, %scevgep1396
+  %bound11400 = icmp ult ptr %scevgep1395, %scevgep1396
   %found.conflict1401 = and i1 %bound01399, %bound11400
-  %conflict.rdx = or i1 %found.conflict, %found.conflict1401
   %n.vec1403 = and i64 %i.arq, 12                 ; 3 uses
   %i.arr = add nuw i64 %indvars.iv.i.i.i.i, %n.vec1403
   %cmp.n1412 = icmp eq i64 %i.arq, %n.vec1403
@@ -936,21 +927,18 @@ middle.block1438:                                 ; preds = %vector.body1433
   %i.ars = mul nuw nsw i64 %indvars.iv139.i.i.i.i, 9 ; 2 uses
   %gep162.i.i.i.i = getelementptr inbounds nuw [8 x i8], ptr %i.aoi, i64 %i.ars ; 6 uses
   %invariant.gep159.i.i.i.i = getelementptr inbounds nuw [8 x i8], ptr %i.pn, i64 %i.ars ; 6 uses
-  %brmerge = select i1 %min.iters.check1398, i1 true, i1 %conflict.rdx
-  br i1 %brmerge, label %scalar.ph.preheader, label %vector.ph1402
+  %brmerge = select i1 %min.iters.check1398, i1 true, i1 %found.conflict1401
+  br i1 %brmerge, label %scalar.ph.preheader, label %vector.body1404
 
-vector.ph1402:                                    ; preds = %.preheader.i.i.i.i
-  %9 = load double, ptr %gep162.i.i.i.i, align 8, !tbaa !105, !alias.scope !357, !noalias !343
-  %broadcast.splatinsert1407 = insertelement <4 x double> poison, double %9, i64 0
-  %broadcast.splat1408 = shufflevector <4 x double> %broadcast.splatinsert1407, <4 x double> poison, <4 x i32> zeroinitializer
-  br label %vector.body1404
-
-vector.body1404:                                  ; preds = %vector.body1404, %vector.ph1402
-  %index1405 = phi i64 [ 0, %vector.ph1402 ], [ %index.next1410, %vector.body1404 ] ; 2 uses
+vector.body1404:                                  ; preds = %.preheader.i.i.i.i, %vector.body1404
+  %index1405 = phi i64 [ %index.next1410, %vector.body1404 ], [ 0, %.preheader.i.i.i.i ] ; 2 uses
   %i.art = add nuw i64 %indvars.iv.i.i.i.i, %index1405 ; 2 uses
+  %6 = load double, ptr %gep162.i.i.i.i, align 8, !tbaa !105, !alias.scope !357, !noalias !343
+  %broadcast.splatinsert1397 = insertelement <4 x double> poison, double %6, i64 0
+  %broadcast.splat1398 = shufflevector <4 x double> %broadcast.splatinsert1397, <4 x double> poison, <4 x i32> zeroinitializer
   %i.aru = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep157.i.i.i.i, i64 %i.art
   %wide.load1406 = load <4 x double>, ptr %i.aru, align 8, !tbaa !105, !alias.scope !358, !noalias !343
-  %i.arv = fmul reassoc nsz arcp contract afn <4 x double> %wide.load1406, %broadcast.splat1408
+  %i.arv = fmul reassoc nsz arcp contract afn <4 x double> %wide.load1406, %broadcast.splat1398
   %i.arw = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep159.i.i.i.i, i64 %i.art ; 2 uses
   %wide.load1409 = load <4 x double>, ptr %i.arw, align 8, !tbaa !105, !alias.scope !359, !noalias !360
   %i.arx = fadd reassoc nsz arcp contract afn <4 x double> %wide.load1409, %i.arv
@@ -1353,7 +1341,7 @@ begin_hunk_2_@llvm.minnum.v2f32
 !357 = !{!326}
 !358 = !{!327}
 !359 = !{!328}
-!360 = !{!253, !254, !247, !248, !326, !327}
+!360 = !{!253, !254, !247, !248, !327}
 !361 = !{!253, !247, !248}
 !362 = !{!333}
 !363 = !{!89, !63, i64 2088}

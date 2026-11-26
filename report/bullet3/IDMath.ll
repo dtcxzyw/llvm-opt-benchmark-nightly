@@ -205,75 +205,71 @@ bb.a:
   %i.t = zext nneg i32 %i.j to i64                ; 3 uses
   %i.u = zext nneg i32 %i.b to i64                ; 2 uses
   %wide.trip.count = zext nneg i32 %i.b to i64    ; 5 uses
-  %min.iters.check = icmp ult i32 %i.b, 16
+  %min.iters.check = icmp ult i32 %i.b, 12
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph
   %i.v = shl nuw nsw i64 %wide.trip.count, 2      ; 4 uses
-  %3 = getelementptr nuw i8, ptr %i.s, i64 %i.v   ; 7 uses
-  %4 = shl nuw nsw i64 %wide.trip.count, 3        ; 2 uses
-  %i.w = getelementptr i8, ptr %i.s, i64 %4       ; 5 uses
+  %i.w = getelementptr nuw i8, ptr %i.s, i64 %i.v ; 6 uses
   %i.x = shl nuw nsw i64 %i.t, 2                  ; 4 uses
-  %i.y = getelementptr nuw i8, ptr %i.s, i64 %i.x ; 5 uses
+  %i.y = getelementptr nuw i8, ptr %i.s, i64 %i.x ; 4 uses
   %i.z = add nuw nsw i64 %i.v, %i.x               ; 2 uses
-  %i.aa = getelementptr i8, ptr %i.s, i64 %i.z    ; 6 uses
+  %i.aa = getelementptr i8, ptr %i.s, i64 %i.z    ; 5 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 3 uses
-  %5 = getelementptr nuw i8, ptr %i.g, i64 %i.x   ; 3 uses
-  %i.ac = getelementptr i8, ptr %i.g, i64 %i.z    ; 3 uses
-  %i.ad = getelementptr nuw i8, ptr %i.g, i64 %i.v ; 4 uses
-  %i.ae = getelementptr i8, ptr %i.g, i64 %4      ; 3 uses
-  %bound0 = icmp ult ptr %i.s, %i.aa
-  %bound1 = icmp samesign ult i64 %i.x, %i.v
-  %found.conflict = and i1 %bound0, %bound1
-  %bound0104 = icmp ult ptr %i.s, %i.ab
-  %bound1105 = icmp ult ptr %0, %3
+  %i.ac = getelementptr nuw i8, ptr %i.g, i64 %i.x ; 3 uses
+  %i.ad = getelementptr i8, ptr %i.g, i64 %i.z    ; 3 uses
+  %i.ae = getelementptr nuw i8, ptr %i.g, i64 %i.v ; 4 uses
+  %3 = shl nuw nsw i64 %wide.trip.count, 3        ; 2 uses
+  %4 = getelementptr i8, ptr %i.g, i64 %3         ; 3 uses
+  %5 = getelementptr i8, ptr %i.s, i64 %3         ; 4 uses
+  %bound0104 = icmp ult ptr %i.s, %i.aa
+  %bound1105 = icmp samesign ult i64 %i.x, %i.v
   %found.conflict106 = and i1 %bound0104, %bound1105
-  %conflict.rdx = or i1 %found.conflict, %found.conflict106
-  %bound0107 = icmp ult ptr %i.s, %i.ac
-  %bound1108 = icmp ult ptr %5, %3
+  %bound0107 = icmp ult ptr %i.s, %i.ab
+  %bound1108 = icmp ult ptr %0, %i.w
   %found.conflict109 = and i1 %bound0107, %bound1108
-  %conflict.rdx110 = or i1 %conflict.rdx, %found.conflict109
-  %bound0111 = icmp ult ptr %i.s, %i.ae
-  %bound1112 = icmp ult ptr %i.g, %i.s
+  %conflict.rdx110 = or i1 %found.conflict106, %found.conflict109
+  %bound0111 = icmp ult ptr %i.s, %i.ad
+  %bound1112 = icmp ult ptr %i.ac, %i.w
   %found.conflict113 = and i1 %bound0111, %bound1112
   %conflict.rdx114 = or i1 %conflict.rdx110, %found.conflict113
-  %bound0115 = icmp ult ptr %i.s, %i.ad
-  %bound1116 = icmp ult ptr %i.g, %3
+  %bound0115 = icmp ult ptr %i.s, %4
+  %bound1116 = icmp ult ptr %i.g, %i.s
   %found.conflict117 = and i1 %bound0115, %bound1116
   %conflict.rdx118 = or i1 %conflict.rdx114, %found.conflict117
-  %bound0119 = icmp ult ptr %3, %i.aa
-  %bound1120 = icmp ult ptr %i.y, %i.w
+  %bound0119 = icmp ult ptr %i.s, %i.ae
+  %bound1120 = icmp ult ptr %i.g, %i.w
   %found.conflict121 = and i1 %bound0119, %bound1120
   %conflict.rdx122 = or i1 %conflict.rdx118, %found.conflict121
-  %bound0123 = icmp ult ptr %3, %i.ab
-  %bound1124 = icmp ult ptr %0, %i.w
+  %bound0123 = icmp ult ptr %i.w, %i.ab
+  %bound1124 = icmp ult ptr %0, %5
   %found.conflict125 = and i1 %bound0123, %bound1124
   %conflict.rdx126 = or i1 %conflict.rdx122, %found.conflict125
-  %bound0127 = icmp ult ptr %3, %i.ac
-  %bound1128 = icmp ult ptr %5, %i.w
+  %bound0127 = icmp ult ptr %i.w, %i.ad
+  %bound1128 = icmp ult ptr %i.ac, %5
   %found.conflict129 = and i1 %bound0127, %bound1128
   %conflict.rdx130 = or i1 %conflict.rdx126, %found.conflict129
-  %bound0131 = icmp ult ptr %3, %i.ae
-  %bound1132 = icmp ult ptr %i.ad, %i.w
+  %bound0131 = icmp ult ptr %i.w, %4
+  %bound1132 = icmp ult ptr %i.ae, %5
   %found.conflict133 = and i1 %bound0131, %bound1132
   %conflict.rdx134 = or i1 %conflict.rdx130, %found.conflict133
   %bound0135 = icmp ult ptr %i.s, %i.g
-  %bound1136 = icmp ult ptr %i.g, %i.w
+  %bound1136 = icmp ult ptr %i.g, %5
   %found.conflict137 = and i1 %bound0135, %bound1136
   %conflict.rdx138 = or i1 %conflict.rdx134, %found.conflict137
   %bound0139 = icmp ult ptr %i.y, %i.ab
   %bound1140 = icmp ult ptr %0, %i.aa
   %found.conflict141 = and i1 %bound0139, %bound1140
   %conflict.rdx142 = or i1 %conflict.rdx138, %found.conflict141
-  %bound0143 = icmp ult ptr %i.y, %i.ac
-  %bound1144 = icmp ult ptr %5, %i.aa
+  %bound0143 = icmp ult ptr %i.y, %i.ad
+  %bound1144 = icmp ult ptr %i.ac, %i.aa
   %found.conflict145 = and i1 %bound0143, %bound1144
   %conflict.rdx146 = or i1 %conflict.rdx142, %found.conflict145
-  %bound0147 = icmp ult ptr %i.y, %i.ae
-  %bound1148 = icmp ult ptr %i.ad, %i.aa
+  %bound0147 = icmp ult ptr %i.y, %4
+  %bound1148 = icmp ult ptr %i.ae, %i.aa
   %found.conflict149 = and i1 %bound0147, %bound1148
   %conflict.rdx150 = or i1 %conflict.rdx146, %found.conflict149
-  %bound0151 = icmp ult ptr %i.y, %i.ad
+  %bound0151 = icmp ult ptr %i.y, %i.ae
   %bound1152 = icmp ult ptr %i.g, %i.aa
   %found.conflict153 = and i1 %bound0151, %bound1152
   %conflict.rdx154 = or i1 %conflict.rdx150, %found.conflict153
@@ -327,7 +323,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.bd = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %i.ap
   store <4 x float> %i.ay, ptr %i.bd, align 4, !tbaa !10, !alias.scope !45, !noalias !46
   %i.be = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %i.at
-  store <4 x float> %i.bb, ptr %i.be, align 4, !tbaa !10, !alias.scope !47, !noalias !48
+  store <4 x float> %i.bb, ptr %i.be, align 4, !tbaa !10, !alias.scope !47, !noalias !46
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.bf = icmp eq i64 %index.next, %n.vec
   br i1 %i.bf, label %middle.block, label %vector.body, !llvm.loop !37
@@ -550,7 +546,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <4 x float> %i.bq, ptr %i.br, align 4, !tbaa !10
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.bs = icmp eq i64 %index.next, %n.vec
-  br i1 %i.bs, label %middle.block, label %vector.body, !llvm.loop !49
+  br i1 %i.bs, label %middle.block, label %vector.body, !llvm.loop !48
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
@@ -595,7 +591,7 @@ bb.b:                                             ; preds = %bb.a
   store float %i.cm, ptr %i.cn, align 4, !tbaa !10
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %.preheader, !llvm.loop !50
+  br i1 %exitcond.not, label %._crit_edge, label %.preheader, !llvm.loop !49
 
 ._crit_edge:                                      ; preds = %.preheader, %middle.block
   %i.co = mul i32 %i.b, 3
@@ -753,7 +749,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <4 x float> %i.bq, ptr %i.br, align 4, !tbaa !10
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.bs = icmp eq i64 %index.next, %n.vec
-  br i1 %i.bs, label %middle.block, label %vector.body, !llvm.loop !51
+  br i1 %i.bs, label %middle.block, label %vector.body, !llvm.loop !50
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
@@ -798,7 +794,7 @@ bb.b:                                             ; preds = %bb.a
   store float %i.cm, ptr %i.cn, align 4, !tbaa !10
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %.preheader, !llvm.loop !52
+  br i1 %exitcond.not, label %._crit_edge, label %.preheader, !llvm.loop !51
 
 ._crit_edge:                                      ; preds = %.preheader, %middle.block
   %i.co = mul i32 %i.b, 3
@@ -1201,13 +1197,12 @@ attributes #16 = { nounwind }
 !41 = !{!32}
 !42 = !{!33}
 !43 = !{!34}
-!44 = !{!36, !35, !30, !33, !32, !31}
+!44 = !{!35, !30, !33, !32, !31}
 !45 = !{!36}
-!46 = !{!35, !30, !33, !32, !31}
+!46 = !{!30, !33, !32, !31}
 !47 = !{!35}
-!48 = !{!30, !33, !32, !31}
-!49 = distinct !{!49, !18, !25, !26}
-!50 = distinct !{!50, !18, !25}
-!51 = distinct !{!51, !18, !25, !26}
-!52 = distinct !{!52, !18, !25}
+!48 = distinct !{!48, !18, !25, !26}
+!49 = distinct !{!49, !18, !25}
+!50 = distinct !{!50, !18, !25, !26}
+!51 = distinct !{!51, !18, !25}
 end_hunk_1

@@ -205,7 +205,7 @@ bb.a:
   %i.h = zext nneg i32 %2 to i64                  ; 8 uses
   %i.i = zext nneg i32 %i.g to i64                ; 3 uses
   %wide.trip.count35 = zext nneg i32 %3 to i64
-  %wide.trip.count = zext nneg i32 %2 to i64      ; 8 uses
+  %wide.trip.count = zext nneg i32 %2 to i64      ; 7 uses
   %invariant.gep = getelementptr inbounds nuw i8, ptr %0, i64 %i.i ; 5 uses
   %i.j = sub nsw i64 %i.c, %i.i
   %min.iters.check = icmp ult i32 %2, 4
@@ -227,7 +227,7 @@ bb.a:
 
 iter.check:                                       ; preds = %.preheader.preheader, %._crit_edge
   %indvars.iv32 = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next33, %._crit_edge ] ; 3 uses
-  %i.n = mul nuw nsw i64 %indvars.iv32, %i.h      ; 8 uses
+  %i.n = mul nuw nsw i64 %indvars.iv32, %i.h      ; 7 uses
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
@@ -240,11 +240,8 @@ vector.memcheck:                                  ; preds = %iter.check
   %diff.check46.a = icmp ult i64 %.reass, 31
   %conflict.rdx47.a = or i1 %conflict.rdx, %diff.check46.a
   %.reass64 = add i64 %i.n, %invariant.op63
-  %diff.check48 = icmp ult i64 %.reass64, 31
-  %conflict.rdx49 = or i1 %conflict.rdx47.a, %diff.check48
-  %4 = add nuw i64 %i.n, %wide.trip.count
-  %diff.check50 = icmp ult i64 %4, 32
-  %conflict.rdx51 = or i1 %conflict.rdx49, %diff.check50
+  %diff.check50 = icmp ult i64 %.reass64, 31
+  %conflict.rdx51 = or i1 %conflict.rdx47.a, %diff.check50
   br i1 %conflict.rdx51, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck

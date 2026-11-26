@@ -205,17 +205,11 @@ _RNvXsg_NtCshByAT0BfsDP_7ndarray9iteratorsINtB5_7IterMutdINtNtNtB7_9dimension3di
   %i.gj = add i64 %i.r, -1
   %i.gk = tail call i64 @llvm.umin.i64(i64 %.val4.i200, i64 %i.gj)
   %i.gl = add i64 %i.gk, 1                        ; 3 uses
-  %min.iters.check58 = icmp ugt i64 %i.gl, 8
+  %min.iters.check58 = icmp ugt i64 %i.gl, 6
   %ident.check.not = icmp eq i64 %.val6.i202, 1
   %or.cond81 = select i1 %min.iters.check58, i1 %ident.check.not, i1 false
-  %6 = insertelement <2 x ptr> poison, ptr %i.cg, i64 0
-  %7 = shufflevector <2 x ptr> %6, <2 x ptr> poison, <2 x i32> zeroinitializer
-  %8 = insertelement <2 x ptr> poison, ptr %scevgep56, i64 0
-  %9 = shufflevector <2 x ptr> %8, <2 x ptr> poison, <2 x i32> zeroinitializer
   %.mask = and i64 %.val5.i203, 1152921504606846976
   %stride.check = icmp ne i64 %.mask, 0
-  %bound062 = icmp ult ptr %i.cg, %scevgep56
-  %invariant.op = or i1 %bound062, %stride.check
   %i.gm = and i64 %i.gl, 3                        ; 2 uses
   %i.gn = icmp eq i64 %i.gm, 0
   %i.go = select i1 %i.gn, i64 4, i64 %i.gm
@@ -515,16 +509,14 @@ bb.be:                                            ; preds = %.lr.ph605, %.loopex
   br i1 %.not67, label %.split557.split.us.split.us.preheader, label %.split557.split.us.split
 
 .split557.split.us.split.us.preheader:            ; preds = %.split557.split.us
-  %10 = insertelement <2 x ptr> poison, ptr %scevgep54, i64 0
-  %11 = insertelement <2 x ptr> %10, ptr %scevgep, i64 1
-  %12 = icmp ult <2 x ptr> %7, %11
-  %13 = insertelement <2 x ptr> poison, ptr %scevgep55, i64 0
-  %14 = insertelement <2 x ptr> %13, ptr %scevgep53, i64 1
-  %15 = icmp ult <2 x ptr> %14, %9
-  %16 = and <2 x i1> %12, %15
-  %17 = bitcast <2 x i1> %16 to i2
-  %18 = icmp ne i2 %17, 0
-  %op.rdx82.reass = or i1 %18, %invariant.op
+  %bound0 = icmp ult ptr %i.cg, %scevgep54
+  %bound1 = icmp ult ptr %scevgep55, %scevgep56
+  %found.conflict = and i1 %bound0, %bound1
+  %6 = or i1 %found.conflict, %stride.check
+  %bound056 = icmp ult ptr %i.cg, %scevgep
+  %bound157 = icmp ult ptr %scevgep53, %scevgep56
+  %found.conflict58 = and i1 %bound056, %bound157
+  %op.rdx82.reass = or i1 %6, %found.conflict58
   br label %.split557.split.us.split.us
 
 .split557.split.us.split.us:                      ; preds = %.split557.split.us.split.us.preheader, %.loopexit.us.us
@@ -927,17 +919,11 @@ _RNvXsg_NtCshByAT0BfsDP_7ndarray9iteratorsINtB5_7IterMutdINtNtNtB7_9dimension3di
   %i.gj = add i64 %i.r, -1
   %i.gk = tail call i64 @llvm.umin.i64(i64 %.val4.i198, i64 %i.gj)
   %i.gl = add i64 %i.gk, 1                        ; 3 uses
-  %min.iters.check803 = icmp ugt i64 %i.gl, 8
+  %min.iters.check803 = icmp ugt i64 %i.gl, 6
   %ident.check.not = icmp eq i64 %.val6.i200, 1
   %or.cond826 = select i1 %min.iters.check803, i1 %ident.check.not, i1 false
-  %7 = insertelement <2 x ptr> poison, ptr %i.cg, i64 0
-  %8 = shufflevector <2 x ptr> %7, <2 x ptr> poison, <2 x i32> zeroinitializer
-  %9 = insertelement <2 x ptr> poison, ptr %scevgep801, i64 0
-  %10 = shufflevector <2 x ptr> %9, <2 x ptr> poison, <2 x i32> zeroinitializer
   %.mask = and i64 %.val5.i201, 1152921504606846976
   %stride.check = icmp ne i64 %.mask, 0
-  %bound0807 = icmp ult ptr %i.cg, %scevgep801
-  %invariant.op = or i1 %bound0807, %stride.check
   %i.gm = and i64 %i.gl, 3                        ; 2 uses
   %i.gn = icmp eq i64 %i.gm, 0
   %i.go = select i1 %i.gn, i64 4, i64 %i.gm
@@ -1237,16 +1223,14 @@ bb.be:                                            ; preds = %.lr.ph603, %.loopex
   br i1 %.not67, label %.split555.split.us.split.us.preheader, label %.split555.split.us.split
 
 .split555.split.us.split.us.preheader:            ; preds = %.split555.split.us
-  %11 = insertelement <2 x ptr> poison, ptr %scevgep799, i64 0
-  %12 = insertelement <2 x ptr> %11, ptr %scevgep, i64 1
-  %13 = icmp ult <2 x ptr> %8, %12
-  %14 = insertelement <2 x ptr> poison, ptr %scevgep800, i64 0
-  %15 = insertelement <2 x ptr> %14, ptr %scevgep798, i64 1
-  %16 = icmp ult <2 x ptr> %15, %10
-  %17 = and <2 x i1> %13, %16
-  %18 = bitcast <2 x i1> %17 to i2
-  %19 = icmp ne i2 %18, 0
-  %op.rdx827.reass = or i1 %19, %invariant.op
+  %bound0 = icmp ult ptr %i.cg, %scevgep799
+  %bound1 = icmp ult ptr %scevgep800, %scevgep801
+  %found.conflict = and i1 %bound0, %bound1
+  %7 = or i1 %found.conflict, %stride.check
+  %bound0801 = icmp ult ptr %i.cg, %scevgep
+  %bound1802 = icmp ult ptr %scevgep798, %scevgep801
+  %found.conflict803 = and i1 %bound0801, %bound1802
+  %op.rdx827.reass = or i1 %7, %found.conflict803
   br label %.split555.split.us.split.us
 
 .split555.split.us.split.us:                      ; preds = %.split555.split.us.split.us.preheader, %.loopexit.us.us
@@ -1649,7 +1633,7 @@ begin_hunk_2_@llvm.fabs.v2f64
 !34175 = !{!34104}
 !34176 = !{!34105}
 !34177 = !{!34106}
-!34178 = !{!34103, !34104, !34105}
+!34178 = !{!34103, !34104}
 !34179 = !{!34110}
 !34180 = !{!34120, !34118, !34116, !34114, !34112}
 !34181 = !{!34122}
@@ -1863,7 +1847,7 @@ begin_hunk_2_@llvm.fabs.v2f64
 !34389 = !{!34318}
 !34390 = !{!34319}
 !34391 = !{!34320}
-!34392 = !{!34317, !34318, !34319}
+!34392 = !{!34317, !34318}
 !34393 = !{!34324}
 !34394 = !{!34334, !34332, !34330, !34328, !34326}
 !34395 = !{!34336}
