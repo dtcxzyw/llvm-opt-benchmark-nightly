@@ -205,7 +205,7 @@ _ZN4llvm15IntervalMapImpl8NodeBaseINS0_7NodeRefElLj12EE4copyILj12EEEvRKNS1_IS2_l
   %i.gu = tail call i32 @llvm.umin.i32(i32 %i.gt, i32 %i.en)
   %umin122 = zext i32 %i.gu to i64                ; 6 uses
   %i.gv = sub nsw i64 %i.gs, %umin122             ; 3 uses
-  %min.iters.check197 = icmp ult i64 %i.gv, 10
+  %min.iters.check197 = icmp ult i64 %i.gv, 4
   br i1 %min.iters.check197, label %scalar.ph196.preheader, label %vector.memcheck198
 
 vector.memcheck198:                               ; preds = %.lr.ph.i.i.i.i.i
@@ -608,7 +608,7 @@ _ZN4llvm15IntervalMapImpl8NodeBaseINS0_7NodeRefElLj12EE4copyILj12EEEvRKNS1_IS2_l
   %i.px = tail call i32 @llvm.umin.i32(i32 %i.pw, i32 %i.nq)
   %umin130 = zext i32 %i.px to i64                ; 6 uses
   %i.py = sub nsw i64 %i.pv, %umin130             ; 3 uses
-  %min.iters.check301 = icmp ult i64 %i.py, 10
+  %min.iters.check301 = icmp ult i64 %i.py, 4
   br i1 %min.iters.check301, label %scalar.ph300.preheader, label %vector.memcheck302
 
 vector.memcheck302:                               ; preds = %.lr.ph.i.i.i.i.i89

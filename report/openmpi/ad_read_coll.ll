@@ -204,18 +204,18 @@ bb.a:
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %wide.trip.count = zext nneg i32 %10 to i64     ; 5 uses
-  %min.iters.check = icmp ult i32 %10, 44
+  %min.iters.check = icmp ult i32 %10, 32
   br i1 %min.iters.check, label %.lr.ph.preheader569, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
   %i.l = shl nuw nsw i64 %i.h, 3
-  %17 = shl nuw nsw i64 %i.h, 2
   %i.m = sub i64 %i.a, %i.g                       ; 2 uses
   %i.n = add i64 %i.m, -1
   %diff.check556 = icmp ult i64 %i.n, 31
   %i.o = sub i64 %i.l, %i.m
   %diff.check560 = icmp ugt i64 %i.o, -32
   %conflict.rdx561 = or i1 %diff.check556, %diff.check560
+  %17 = shl nuw nsw i64 %i.h, 2
   %i.p = add i64 %17, %i.g
   %i.q = sub i64 %i.a, %i.p
   %diff.check562 = icmp ugt i64 %i.q, -32
