@@ -1,0 +1,84 @@
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index 988d5e6af5afa7..41afb36dd7e42e 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -7301,6 +7301,10 @@ bool ScalarEvolution::isGuaranteedToTransferExecutionTo(const Instruction *A,
+ }
+ 
+ bool ScalarEvolution::isGuaranteedNotToBePoison(const SCEV *Op) {
++  // Use flags only hold where the expression is used, so Op may be poison
++  // elsewhere if it or any of its operands carries them.
++  if (Op->getCanonical() != Op)
++    return false;
+   SCEVPoisonCollector PC(/* LookThroughMaybePoisonBlocking */ true);
+   visitAll(Op, PC);
+   return PC.MaybePoison.empty();
+diff --git a/llvm/test/Transforms/IndVarSimplify/exit-value-nowrap-flags-predicated-exits.ll b/llvm/test/Transforms/IndVarSimplify/exit-value-nowrap-flags-predicated-exits.ll
+index 37cacd3f122322..48260389ada0db 100644
+--- a/llvm/test/Transforms/IndVarSimplify/exit-value-nowrap-flags-predicated-exits.ll
++++ b/llvm/test/Transforms/IndVarSimplify/exit-value-nowrap-flags-predicated-exits.ll
+@@ -9,16 +9,11 @@ define void @exit_count_udiv_by_umax_of_exit_value_nuw(i8 noundef %start, i8 nou
+ ;
+ ; CHECK-LABEL: define void @exit_count_udiv_by_umax_of_exit_value_nuw(
+ ; CHECK-SAME: i8 noundef [[START:%.*]], i8 noundef [[N:%.*]], i8 noundef [[X:%.*]]) {
+-; CHECK-NEXT:  [[ENTRY:.*:]]
+-; CHECK-NEXT:    [[TMP0:%.*]] = add nuw i8 [[START]], 9
+-; CHECK-NEXT:    [[TMP1:%.*]] = udiv i8 [[X]], [[TMP0]]
+-; CHECK-NEXT:    [[TMP2:%.*]] = call i8 @llvm.usub.sat.i8(i8 [[TMP1]], i8 1)
+-; CHECK-NEXT:    [[TMP5:%.*]] = freeze i8 [[TMP2]]
+-; CHECK-NEXT:    [[UMIN:%.*]] = call i8 @llvm.umin.i8(i8 [[TMP5]], i8 [[N]])
+-; CHECK-NEXT:    [[TMP3:%.*]] = icmp eq i8 [[N]], [[UMIN]]
+-; CHECK-NEXT:    [[TMP4:%.*]] = icmp ne i8 [[TMP2]], [[UMIN]]
++; CHECK-NEXT:  [[ENTRY:.*]]:
+ ; CHECK-NEXT:    br label %[[OUTER_HEADER:.*]]
+ ; CHECK:       [[OUTER_HEADER]]:
++; CHECK-NEXT:    [[OUTER_IV:%.*]] = phi i8 [ 0, %[[ENTRY]] ], [ [[OUTER_IV_NEXT:%.*]], %[[OUTER_LATCH:.*]] ]
++; CHECK-NEXT:    [[TMP3:%.*]] = icmp eq i8 [[OUTER_IV]], [[N]]
+ ; CHECK-NEXT:    br i1 [[TMP3]], label %[[EXIT:.*]], label %[[INNER_PH:.*]]
+ ; CHECK:       [[INNER_PH]]:
+ ; CHECK-NEXT:    br label %[[INNER:.*]]
+@@ -28,8 +23,13 @@ define void @exit_count_udiv_by_umax_of_exit_value_nuw(i8 noundef %start, i8 nou
+ ; CHECK-NEXT:    [[INNER_IV_NEXT]] = add nuw i8 [[INNER_IV]], 1
+ ; CHECK-NEXT:    [[INNER_COUNT_NEXT]] = add nuw nsw i32 [[INNER_COUNT]], 1
+ ; CHECK-NEXT:    [[INNER_EC:%.*]] = icmp eq i32 [[INNER_COUNT_NEXT]], 10
+-; CHECK-NEXT:    br i1 [[INNER_EC]], label %[[OUTER_LATCH:.*]], label %[[INNER]]
++; CHECK-NEXT:    br i1 [[INNER_EC]], label %[[OUTER_LATCH]], label %[[INNER]]
+ ; CHECK:       [[OUTER_LATCH]]:
++; CHECK-NEXT:    [[INNER_IV_LCSSA:%.*]] = phi i8 [ [[INNER_IV]], %[[INNER]] ]
++; CHECK-NEXT:    [[DIVISOR:%.*]] = call i8 @llvm.umax.i8(i8 [[INNER_IV_LCSSA]], i8 1)
++; CHECK-NEXT:    [[OUTER_BOUND:%.*]] = udiv i8 [[X]], [[DIVISOR]]
++; CHECK-NEXT:    [[OUTER_IV_NEXT]] = add nuw i8 [[OUTER_IV]], 1
++; CHECK-NEXT:    [[TMP4:%.*]] = icmp ult i8 [[OUTER_IV_NEXT]], [[OUTER_BOUND]]
+ ; CHECK-NEXT:    br i1 [[TMP4]], label %[[OUTER_HEADER]], label %[[EXIT]]
+ ; CHECK:       [[EXIT]]:
+ ; CHECK-NEXT:    ret void
+diff --git a/llvm/unittests/Analysis/ScalarEvolutionTest.cpp b/llvm/unittests/Analysis/ScalarEvolutionTest.cpp
+index 0163119967cb3f..41b24db7d15cdd 100644
+--- a/llvm/unittests/Analysis/ScalarEvolutionTest.cpp
++++ b/llvm/unittests/Analysis/ScalarEvolutionTest.cpp
+@@ -2615,4 +2615,25 @@ TEST_F(ScalarEvolutionsTest, AddRecExprUseFlags) {
+ #endif
+   });
+ }
++
++TEST_F(ScalarEvolutionsTest, UseFlagsMayCauseUB) {
++  LLVMContext C;
++  SMDiagnostic Err;
++  std::unique_ptr<Module> M = parseAssemblyString(
++      "define void @foo(i32 noundef %a, i32 noundef %x) { ret void }", Err, C);
++  ASSERT_TRUE(M && "Could not parse module?");
++
++  runWithSE(*M, "foo", [](Function &F, LoopInfo &LI, ScalarEvolution &SE) {
++    const SCEV *A = SE.getSCEV(getArgByName(F, "a"));
++    const SCEV *X = SE.getSCEV(getArgByName(F, "x"));
++    Type *Ty = A->getType();
++    // The use flags on (9 + %a) may not hold where the udiv is evaluated.
++    SCEVUse Sum = SE.getAddExpr(SE.getConstant(Ty, 9), A,
++                                {SCEV::FlagNone, SCEV::FlagNUW});
++    const SCEV *Divisor = SE.getUMaxExpr(SE.getOne(Ty), Sum);
++    EXPECT_FALSE(SE.isGuaranteedNotToCauseUB(SE.getUDivExpr(X, Divisor)));
++    EXPECT_TRUE(SE.isGuaranteedNotToCauseUB(
++        SE.getUDivExpr(X, Divisor->getCanonical())));
++  });
++}
+ }  // end namespace llvm
