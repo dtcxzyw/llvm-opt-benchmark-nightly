@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.a, %_ZN5Eigen15P
 
 vector.memcheck:                                  ; preds = %.lr.ph.i
   %i.x = ptrtoaddr ptr %i.t to i64
-  %i.y = add i64 %i.s, %i.r
+  %i.y = add i64 %i.r, %i.s
   %i.z = shl i64 %i.y, 3
   %i.aa = add i64 %i.z, %i.x
   %i.ab = sub i64 %i.aa, %i.p
@@ -608,7 +608,7 @@ bb.d:                                             ; preds = %bb.a, %_ZN5Eigen15P
 
 vector.memcheck:                                  ; preds = %.lr.ph.i
   %i.x = ptrtoaddr ptr %i.t to i64
-  %i.y = add i64 %i.s, %i.r
+  %i.y = add i64 %i.r, %i.s
   %i.z = shl i64 %i.y, 3
   %i.aa = add i64 %i.z, %i.x
   %i.ab = sub i64 %i.aa, %i.p
@@ -1011,7 +1011,7 @@ bb.d:                                             ; preds = %bb.a, %_ZN5Eigen15P
 
 vector.memcheck:                                  ; preds = %.lr.ph.i
   %i.x = ptrtoaddr ptr %i.t to i64
-  %i.y = add i64 %i.s, %i.r
+  %i.y = add i64 %i.r, %i.s
   %i.z = shl i64 %i.y, 3
   %i.aa = add i64 %i.z, %i.x
   %i.ab = sub i64 %i.aa, %i.p
@@ -1414,7 +1414,7 @@ bb.d:                                             ; preds = %bb.a, %_ZN5Eigen15P
 
 vector.memcheck:                                  ; preds = %.lr.ph.i
   %i.x = ptrtoaddr ptr %i.t to i64
-  %i.y = add i64 %i.s, %i.r
+  %i.y = add i64 %i.r, %i.s
   %i.z = shl i64 %i.y, 3
   %i.aa = add i64 %i.z, %i.x
   %i.ab = sub i64 %i.aa, %i.p

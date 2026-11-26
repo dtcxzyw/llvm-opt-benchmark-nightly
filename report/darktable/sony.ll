@@ -85,7 +85,7 @@ bb.b:                                             ; preds = %bb.a
   store i32 %i.k, ptr %i.l, align 4, !tbaa !77
   %i.m = mul i32 %i.k, 48828125
   %i.n = add i32 %i.m, 1
-  %i.o = getelementptr nuw i8, ptr %i.b, i64 44
+  %i.o = getelementptr i8, ptr %i.b, i64 44
   %i.p = xor i32 %i.k, %i.f
   %i.q = tail call i32 @llvm.fshl.i32(i32 %i.n, i32 %i.p, i32 1) ; 2 uses
   store i32 %i.q, ptr %i.o, align 4, !tbaa !77
