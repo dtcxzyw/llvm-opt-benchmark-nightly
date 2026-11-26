@@ -53,7 +53,7 @@ bb.a:
   %narrow1424 = xor i32 %i.t, -1
   %i.u = sext i32 %narrow1424 to i64              ; 6 uses
   %i.v = getelementptr [8 x i8], ptr %17, i64 %i.u ; 13 uses
-  %i.w = load i32, ptr %6, align 4, !tbaa !70     ; 6 uses
+  %i.w = load i32, ptr %6, align 4, !tbaa !70     ; 7 uses
   %i.x = icmp slt i32 %i.w, 2
   br i1 %i.x, label %.loopexit1492, label %bb.b
 
@@ -120,7 +120,7 @@ bb.e:                                             ; preds = %.lr.ph._crit_edge, 
   %i.ax = fdiv double %i.aw, %i.at
   %i.ay = fmul double %i.au, %i.ax                ; 8 uses
   %i.az = load i32, ptr %2, align 4, !tbaa !70
-  %i.ba = load i32, ptr %4, align 4, !tbaa !70    ; 4 uses
+  %i.ba = load i32, ptr %4, align 4, !tbaa !70    ; 5 uses
   %i.bb = add i32 %i.ba, 2                        ; 3 uses
   %i.bc = load i32, ptr %5, align 4, !tbaa !70    ; 2 uses
   %.not1421 = icmp sgt i32 %i.bb, %i.bc
@@ -139,7 +139,7 @@ bb.g:                                             ; preds = %bb.f, %._crit_edge
   %i.bi = shl nuw i32 %i.bh, 2
   store i32 %i.bi, ptr %i.h, align 4, !tbaa !70
   %i.bj = add nsw i32 %i.bc, -2                   ; 2 uses
-  %i.bk = and i32 %i.w, 2147483646                ; 6 uses
+  %i.bk = and i32 %i.w, 2147483646                ; 7 uses
   %reass.sub = sub i32 %i.ba, %i.bk               ; 2 uses
   %i.bl = add i32 %reass.sub, 1                   ; 2 uses
   %.not14831571 = icmp sgt i32 %i.bl, %i.bj
@@ -177,15 +177,15 @@ bb.g:                                             ; preds = %bb.f, %._crit_edge
   %i.ci = getelementptr i8, ptr %13, i64 %i.ch
   %scevgep1874 = getelementptr i8, ptr %i.ci, i64 8
   %scevgep1876 = getelementptr i8, ptr %13, i64 %i.ch
-  %25 = shl nsw i64 %i.r, 3                       ; 2 uses
-  %i.cj = getelementptr i8, ptr %15, i64 %25
-  %scevgep1973 = getelementptr i8, ptr %i.cj, i64 32
-  %i.ck = shl nsw i64 %i.bw, 3
-  %i.cl = getelementptr i8, ptr %15, i64 %25
-  %scevgep1977.a = getelementptr i8, ptr %i.cl, i64 8
+  %i.cj = getelementptr i8, ptr %9, i64 16
+  %scevgep1973 = getelementptr i8, ptr %9, i64 8
+  %i.ck = shl nsw i64 %i.r, 3                     ; 2 uses
+  %i.cl = getelementptr i8, ptr %15, i64 %i.ck
+  %scevgep1977.a = getelementptr i8, ptr %i.cl, i64 32
   %i.cm = shl nsw i64 %i.bw, 3
-  %scevgep1979 = getelementptr i8, ptr %9, i64 16
-  %scevgep1980 = getelementptr i8, ptr %9, i64 8
+  %scevgep1979 = getelementptr i8, ptr %15, i64 %i.ck
+  %scevgep1980 = getelementptr i8, ptr %scevgep1979, i64 8
+  %25 = shl nsw i64 %i.bw, 3
   %scevgep1981 = getelementptr i8, ptr %9, i64 -16
   %scevgep1982 = getelementptr i8, ptr %9, i64 -8 ; 2 uses
   %i.cn = shl nsw i64 %i.r, 3                     ; 2 uses
@@ -211,8 +211,13 @@ bb.g:                                             ; preds = %bb.f, %._crit_edge
   %scevgep2267 = getelementptr i8, ptr %9, i64 8  ; 3 uses
   %scevgep2268 = getelementptr i8, ptr %9, i64 -8
   %scevgep2269 = getelementptr i8, ptr %9, i64 -16
-  %i.cz = shl nsw i64 %i.l, 3
-  %scevgep2325 = getelementptr i8, ptr %9, i64 %i.cz
+  %i.cz = shl nsw i64 %i.l, 3                     ; 2 uses
+  %scevgep2317 = getelementptr i8, ptr %9, i64 %i.cz
+  %26 = getelementptr i8, ptr %9, i64 %i.cz
+  %scevgep2325 = getelementptr i8, ptr %26, i64 8
+  %27 = xor i32 %i.bk, -1
+  %28 = add i32 %i.ba, %27
+  %29 = and i32 %i.w, 2147483646
   %ident.check2243.not = icmp eq i32 %i.k, 1
   %stride.check2098 = icmp sgt i32 %i.q, 0
   %ident.check.not = icmp eq i32 %i.k, 1
@@ -222,10 +227,13 @@ bb.g:                                             ; preds = %bb.f, %._crit_edge
   br label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph1575, %.loopexit1491
+  %indvar = phi i32 [ 0, %.lr.ph1575 ], [ %indvar.next, %.loopexit1491 ] ; 2 uses
   %indvars.iv1630 = phi i32 [ %i.ba, %.lr.ph1575 ], [ %indvars.iv.next1631, %.loopexit1491 ] ; 2 uses
   %indvars.iv1594 = phi i32 [ %.01369.neg1570, %.lr.ph1575 ], [ %indvars.iv.next1595, %.loopexit1491 ] ; 5 uses
   %indvars.iv1584 = phi i32 [ %i.bs, %.lr.ph1575 ], [ %indvars.iv.next1585, %.loopexit1491 ] ; 2 uses
   %.013691572 = phi i32 [ %i.bl, %.lr.ph1575 ], [ %i.dg, %.loopexit1491 ] ; 14 uses
+  %30 = mul i32 %29, %indvar
+  %31 = add i32 %28, %30
   br i1 %i.bn, label %bb.k, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
@@ -269,12 +277,13 @@ bb.l:                                             ; preds = %.thread, %bb.k
   %.pre = load i32, ptr %4, align 4, !tbaa !70    ; 3 uses
   %i.do = shl nsw i64 %i.dn, 3                    ; 2 uses
   %scevgep2084 = getelementptr i8, ptr %scevgep2083, i64 %i.do ; 3 uses
-  %scevgep2326 = getelementptr i8, ptr %scevgep2325, i64 %i.do ; 2 uses
+  %scevgep2326 = getelementptr i8, ptr %scevgep2317, i64 %i.do ; 2 uses
   %invariant.op2370 = sub i64 1, %i.dn
   %invariant.op = sub i64 1, %i.dn
   br label %bb.m
 
 bb.m:                                             ; preds = %.lr.ph1554, %.loopexit
+  %indvar2353 = phi i32 [ 0, %.lr.ph1554 ], [ %indvar.next2354, %.loopexit ] ; 2 uses
   %i.dp = phi i32 [ %.pre, %.lr.ph1554 ], [ %i.atm, %.loopexit ]
   %i.dq = phi i32 [ %.pre, %.lr.ph1554 ], [ %i.atp, %.loopexit ]
   %i.dr = phi i32 [ %i.di, %.lr.ph1554 ], [ %i.atl, %.loopexit ]
@@ -283,6 +292,7 @@ bb.m:                                             ; preds = %.lr.ph1554, %.loope
   %i.du = phi i32 [ %.pre, %.lr.ph1554 ], [ %i.atq, %.loopexit ] ; 3 uses
   %indvars.iv1586 = phi i32 [ %indvars.iv1584, %.lr.ph1554 ], [ %indvars.iv.next1587, %.loopexit ] ; 2 uses
   %.013681550 = phi i32 [ %.013691572, %.lr.ph1554 ], [ %i.atr, %.loopexit ] ; 14 uses
+  %32 = add i32 %31, %indvar2353
   %i.dv = sub nsw i32 %i.du, %.013681550          ; 2 uses
   %i.dw = sdiv i32 %i.dv, 2
   %i.dx = add nsw i32 %i.dw, 1
@@ -685,7 +695,7 @@ bb.bu:                                            ; preds = %bb.bs, %bb.bt
 
 .lr.ph1531:                                       ; preds = %.thread1693, %bb.bu
   %i.aig = phi i32 [ %i.zy, %.thread1693 ], [ %i.aia, %bb.bu ] ; 5 uses
-  %i.aih = phi i32 [ %i.adr, %.thread1693 ], [ %i.aib, %bb.bu ] ; 11 uses
+  %i.aih = phi i32 [ %i.adr, %.thread1693 ], [ %i.aib, %bb.bu ] ; 12 uses
   %i.aii = phi i32 [ %i.adr, %.thread1693 ], [ %i.aic, %bb.bu ] ; 9 uses
   %.113881695 = phi i32 [ %.1477, %.thread1693 ], [ %.11388, %bb.bu ] ; 4 uses
   %i.aij = phi i32 [ %i.zy, %.thread1693 ], [ %i.aif, %bb.bu ] ; 5 uses
@@ -693,20 +703,32 @@ bb.bu:                                            ; preds = %bb.bs, %bb.bt
   %i.ail = add i32 %.013681550, -2
   %i.aim = sext i32 %.113881695 to i64
   %i.ain = sext i32 %i.eb to i64                  ; 2 uses
-  %smin1609 = call i64 @llvm.smin.i64(i64 %i.bv, i64 %i.ain) ; 4 uses
+  %smin1609 = call i64 @llvm.smin.i64(i64 %i.bv, i64 %i.ain) ; 5 uses
   %i.aio = sext i32 %i.dy to i64                  ; 4 uses
   %smin1974 = call i64 @llvm.smin.i64(i64 %i.bv, i64 %i.aio)
   %smin1975 = call i64 @llvm.smin.i64(i64 %smin1974, i64 %i.ain)
-  %i.aip = mul i64 %i.ck, %smin1975
-  %scevgep1976.a = getelementptr i8, ptr %scevgep1973, i64 %i.aip ; 3 uses
-  %i.aiq = mul i64 %i.cm, %smin1609
-  %scevgep1978 = getelementptr i8, ptr %scevgep1977.a, i64 %i.aiq ; 3 uses
+  %i.aip = mul i64 %i.cm, %smin1975
+  %scevgep1976.a = getelementptr i8, ptr %scevgep1977.a, i64 %i.aip ; 3 uses
+  %i.aiq = mul i64 %25, %smin1609
+  %scevgep1978 = getelementptr i8, ptr %scevgep1980, i64 %i.aiq ; 3 uses
+  %33 = trunc i64 %smin1609 to i32
+  %34 = shl nsw i32 %33, 1
+  %35 = add i32 %32, %34
   %i.air = call i32 @llvm.smax.i32(i32 %.113881695, i32 %i.aih)
   br label %bb.bv
 
 bb.bv:                                            ; preds = %.lr.ph1531, %._crit_edge1527
+  %indvar2355 = phi i32 [ 0, %.lr.ph1531 ], [ %indvar.next2356, %._crit_edge1527 ] ; 2 uses
   %indvars.iv1610 = phi i64 [ %smin1609, %.lr.ph1531 ], [ %indvars.iv.next1611, %._crit_edge1527 ] ; 4 uses
-  %indvars.iv1604 = phi i32 [ %i.eg, %.lr.ph1531 ], [ %indvars.iv.next1605, %._crit_edge1527 ] ; 4 uses
+  %indvars.iv1604 = phi i32 [ %i.eg, %.lr.ph1531 ], [ %indvars.iv.next1605, %._crit_edge1527 ] ; 5 uses
+  %36 = call i32 @llvm.smax.i32(i32 %i.aih, i32 %indvars.iv1604)
+  %smax2352 = sext i32 %36 to i64
+  %37 = shl i32 %indvar2355, 1
+  %38 = sub i32 %35, %37
+  %39 = sext i32 %38 to i64
+  %40 = add nsw i64 %smax2352, %39
+  %41 = shl nsw i64 %40, 3
+  %scevgep2357 = getelementptr i8, ptr %scevgep2325, i64 %41
   %i.ais = trunc nsw i64 %indvars.iv1610 to i32
   %i.ait = shl i32 %i.ais, 1                      ; 2 uses
   %i.aiu = add i32 %i.ait, %.013681550            ; 2 uses
@@ -740,32 +762,28 @@ bb.bv:                                            ; preds = %.lr.ph1531, %._crit
 vector.memcheck1985:                              ; preds = %.lr.ph1526
   %i.ajk = add nsw i64 %smax1606, %i.aje
   %i.ajl = shl nsw i64 %i.ajk, 3                  ; 2 uses
-  %i.ajm = getelementptr i8, ptr %scevgep1982, i64 %i.ajl ; 3 uses
+  %i.ajm = getelementptr i8, ptr %scevgep1982, i64 %i.ajl ; 2 uses
   %i.ajn = call i32 @llvm.smax.i32(i32 %i.air, i32 %indvars.iv1604)
   %i.ajo = sext i32 %i.ajn to i64                 ; 2 uses
   %i.ajp = add nsw i64 %i.ajo, %i.aje
   %i.ajq = shl nsw i64 %i.ajp, 3                  ; 2 uses
-  %i.ajr = getelementptr i8, ptr %9, i64 %i.ajq   ; 3 uses
+  %i.ajr = getelementptr i8, ptr %9, i64 %i.ajq   ; 2 uses
   %i.ajs = add nsw i64 %smax1606, %i.ajd
   %i.ajt = shl nsw i64 %i.ajs, 3
   %i.aju = getelementptr i8, ptr %scevgep1981, i64 %i.ajt ; 3 uses
   %i.ajv = add nsw i64 %i.ajo, %i.ajd
   %i.ajw = shl nsw i64 %i.ajv, 3
   %i.ajx = getelementptr i8, ptr %scevgep1982, i64 %i.ajw ; 3 uses
-  %i.ajy = getelementptr i8, ptr %scevgep1980, i64 %i.ajl ; 3 uses
-  %i.ajz = getelementptr i8, ptr %scevgep1979, i64 %i.ajq ; 3 uses
-  %bound01986 = icmp ult ptr %i.ajm, %i.ajx
-  %bound11987 = icmp ult ptr %i.aju, %i.ajr
-  %found.conflict1988 = and i1 %bound01986, %bound11987
-  %bound01989 = icmp ult ptr %i.ajm, %i.ajz
-  %bound11990 = icmp ult ptr %i.ajy, %i.ajr
+  %i.ajy = getelementptr i8, ptr %scevgep1973, i64 %i.ajl ; 2 uses
+  %i.ajz = getelementptr i8, ptr %i.cj, i64 %i.ajq ; 2 uses
+  %bound01989 = icmp ult ptr %i.ajm, %i.ajx
+  %bound11990 = icmp ult ptr %i.aju, %i.ajr
   %found.conflict1991 = and i1 %bound01989, %bound11990
-  %conflict.rdx1992 = or i1 %found.conflict1988, %found.conflict1991
   %bound01993 = icmp ult ptr %i.ajm, %scevgep1976.a
   %bound11994 = icmp ult ptr %scevgep1978, %i.ajr
   %found.conflict1995 = and i1 %bound01993, %bound11994
   %i.aka = or i1 %found.conflict1995, %stride.check1996
-  %conflict.rdx1997.a = or i1 %conflict.rdx1992, %i.aka
+  %conflict.rdx1997.a = or i1 %found.conflict1991, %i.aka
   %bound01998.a = icmp ult ptr %i.aju, %i.ajz
   %bound11999.a = icmp ult ptr %i.ajy, %i.ajx
   %found.conflict2000.a = and i1 %bound01998.a, %bound11999.a
@@ -792,31 +810,32 @@ vector.ph2010:                                    ; preds = %vector.memcheck1985
   %i.ake = load double, ptr %i.ajc, align 8, !tbaa !72, !alias.scope !98
   %broadcast.splatinsert2019 = insertelement <2 x double> poison, double %i.ake, i64 0
   %broadcast.splat2020 = shufflevector <2 x double> %broadcast.splatinsert2019, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %load_initial = load <2 x double>, ptr %scevgep2357, align 8
   br label %vector.body2012
 
 vector.body2012:                                  ; preds = %vector.body2012, %vector.ph2010
+  %store_forwarded = phi <2 x double> [ %load_initial, %vector.ph2010 ], [ %i.akr, %vector.body2012 ] ; 2 uses
   %index2013 = phi i64 [ 0, %vector.ph2010 ], [ %index.next2025, %vector.body2012 ] ; 2 uses
   %i.akf = add i64 %index2013, %smax1606          ; 3 uses
   %i.akg = getelementptr [8 x i8], ptr %invariant.gep1721, i64 %i.akf
-  %i.akh = getelementptr i8, ptr %i.akg, i64 8    ; 2 uses
-  %wide.load2014 = load <2 x double>, ptr %i.akh, align 8, !tbaa !72, !alias.scope !99, !noalias !100 ; 2 uses
+  %i.akh = getelementptr i8, ptr %i.akg, i64 8
   %i.aki = getelementptr [8 x i8], ptr %invariant.gep1723, i64 %i.akf ; 3 uses
-  %wide.load2015.a = load <2 x double>, ptr %i.aki, align 8, !tbaa !72, !alias.scope !101, !noalias !102
-  %i.akj = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %broadcast.splat2017, <2 x double> %wide.load2015.a, <2 x double> %wide.load2014)
+  %wide.load2015.a = load <2 x double>, ptr %i.aki, align 8, !tbaa !72, !alias.scope !99, !noalias !100
+  %i.akj = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %broadcast.splat2017, <2 x double> %wide.load2015.a, <2 x double> %store_forwarded)
   %i.akk = getelementptr [8 x i8], ptr %invariant.gep1725, i64 %i.akf
   %i.akl = getelementptr i8, ptr %i.akk, i64 24   ; 3 uses
-  %wide.load2018 = load <2 x double>, ptr %i.akl, align 8, !tbaa !72, !alias.scope !103, !noalias !98
+  %wide.load2018 = load <2 x double>, ptr %i.akl, align 8, !tbaa !72, !alias.scope !101, !noalias !98
   %i.akm = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %broadcast.splat2020, <2 x double> %wide.load2018, <2 x double> %i.akj)
   %i.akn = fmul <2 x double> %broadcast.splat2022, %i.akm ; 2 uses
-  %i.ako = fsub <2 x double> %wide.load2014, %i.akn
-  store <2 x double> %i.ako, ptr %i.akh, align 8, !tbaa !72, !alias.scope !99, !noalias !100
-  %wide.load2023 = load <2 x double>, ptr %i.aki, align 8, !tbaa !72, !alias.scope !101, !noalias !102
+  %i.ako = fsub <2 x double> %store_forwarded, %i.akn
+  store <2 x double> %i.ako, ptr %i.akh, align 8, !tbaa !72, !alias.scope !102, !noalias !103
+  %wide.load2023 = load <2 x double>, ptr %i.aki, align 8, !tbaa !72, !alias.scope !99, !noalias !100
   %i.akp = fneg <2 x double> %i.akn               ; 2 uses
   %i.akq = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.akp, <2 x double> %broadcast.splat2017, <2 x double> %wide.load2023)
-  store <2 x double> %i.akq, ptr %i.aki, align 8, !tbaa !72, !alias.scope !101, !noalias !102
-  %wide.load2024 = load <2 x double>, ptr %i.akl, align 8, !tbaa !72, !alias.scope !103, !noalias !98
-  %i.akr = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.akp, <2 x double> %broadcast.splat2020, <2 x double> %wide.load2024)
-  store <2 x double> %i.akr, ptr %i.akl, align 8, !tbaa !72, !alias.scope !103, !noalias !98
+  store <2 x double> %i.akq, ptr %i.aki, align 8, !tbaa !72, !alias.scope !99, !noalias !100
+  %wide.load2024 = load <2 x double>, ptr %i.akl, align 8, !tbaa !72, !alias.scope !101, !noalias !98
+  %i.akr = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.akp, <2 x double> %broadcast.splat2020, <2 x double> %wide.load2024) ; 2 uses
+  store <2 x double> %i.akr, ptr %i.akl, align 8, !tbaa !72, !alias.scope !101, !noalias !98
   %index.next2025 = add nuw i64 %index2013, 2     ; 2 uses
   %i.aks = icmp eq i64 %index.next2025, %n.vec2011
   br i1 %i.aks, label %middle.block2026, label %vector.body2012, !llvm.loop !46
@@ -865,6 +884,7 @@ scalar.ph1983:                                    ; preds = %scalar.ph1983.prehe
   %indvars.iv.next1611 = add nsw i64 %indvars.iv1610, -1
   %.not1458.not = icmp sgt i64 %indvars.iv1610, %i.aio
   %indvars.iv.next1605 = add i32 %indvars.iv1604, -2
+  %indvar.next2356 = add i32 %indvar2355, 1
   br i1 %.not1458.not, label %bb.bv, label %._crit_edge1532, !llvm.loop !48
 
 ._crit_edge1532:                                  ; preds = %._crit_edge1527
@@ -1267,6 +1287,7 @@ scalar.ph1878:                                    ; preds = %scalar.ph1878.prol.
   %i.atr = add i32 %.013681550, 1
   %indvars.iv.next1587 = add i32 %indvars.iv1586, 1
   %exitcond1633.not = icmp eq i32 %.013681550, %smin1632
+  %indvar.next2354 = add i32 %indvar2353, 1
   br i1 %exitcond1633.not, label %._crit_edge1555, label %bb.m, !llvm.loop !65
 
 ._crit_edge1555:                                  ; preds = %.loopexit, %bb.l
@@ -1426,6 +1447,7 @@ bb.cc:                                            ; preds = %.lr.ph1569, %bb.cc
   %.not1483 = icmp sgt i32 %i.dg, %i.bj
   %indvars.iv.next1585 = add i32 %indvars.iv1584, %i.bk
   %indvars.iv.next1631 = add i32 %indvars.iv1630, %i.bk
+  %indvar.next = add i32 %indvar, 1
   br i1 %.not1483, label %.loopexit1492, label %bb.h, !llvm.loop !69
 
 .loopexit1492:                                    ; preds = %.loopexit1491, %bb.g, %bb.b, %bb.a
@@ -1594,10 +1616,10 @@ attributes #4 = { nounwind }
 !97 = !{!36}
 !98 = !{!42}
 !99 = !{!43}
-!100 = !{!45, !44, !42}
-!101 = !{!45}
-!102 = !{!44, !42}
-!103 = !{!44}
+!100 = !{!44, !42}
+!101 = !{!44}
+!102 = !{!45}
+!103 = !{!43, !42}
 !104 = !{!50}
 !105 = !{!51}
 !106 = !{!53, !52, !50}
