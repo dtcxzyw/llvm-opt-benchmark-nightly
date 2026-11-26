@@ -205,16 +205,16 @@ vector.ph:                                        ; preds = %bb.ak, %bb.aj, %bb.
   store <4 x float> %predphi.9, ptr %i.sr, align 16, !tbaa !66
   %i.wt = load float, ptr %i.oh, align 4, !tbaa !66
   %i.wu = call nsz float @llvm.fabs.f32(float %i.wt)
-  %i.wv = load float, ptr %i.e, align 4, !tbaa !66 ; 3 uses
-  %5 = fcmp nsz ogt float %i.wv, 0.000000e+00
-  %6 = fmul nsz float %i.wv, -5.000000e-01
-  %7 = select nsz i1 %5, float %i.wv, float %6
-  %8 = fadd nsz float %i.wu, %7
-  %9 = load float, ptr %i.oi, align 4, !tbaa !66  ; 3 uses
-  %10 = fcmp nsz ogt float %9, 0.000000e+00
-  %11 = fmul nsz float %9, -5.000000e-01
-  %12 = select nsz i1 %10, float %9, float %11
-  %i.ww = fadd nsz float %8, %12                  ; 6 uses
+  %i.wv = load float, ptr %i.e, align 4, !tbaa !66
+  %5 = load float, ptr %i.oi, align 4, !tbaa !66
+  %6 = insertelement <2 x float> poison, float %i.wv, i64 0
+  %7 = insertelement <2 x float> %6, float %5, i64 1 ; 2 uses
+  %8 = fmul nsz <2 x float> %7, splat (float -5.000000e-01)
+  %9 = call nsz <2 x float> @llvm.maxnum.v2f32(<2 x float> %7, <2 x float> %8) ; 2 uses
+  %10 = extractelement <2 x float> %9, i64 0
+  %11 = fadd nsz float %i.wu, %10
+  %12 = extractelement <2 x float> %9, i64 1
+  %i.ww = fadd nsz float %11, %12                 ; 6 uses
   %i.wx = fadd nsz float %.0352512, %i.ww         ; 2 uses
   %i.wy = fcmp nsz ogt float %i.ww, %.0353511     ; 2 uses
   br i1 %i.wy, label %bb.am, label %bb.ap
@@ -617,7 +617,7 @@ get_bitsz.exit:                                   ; preds = %get_bitsz.exit88, %
   %i.ay = getelementptr i8, ptr %i.au, i64 2
   %i.az = load i8, ptr %i.ay, align 1, !tbaa !36
   %i.ba = sitofp i8 %i.az to float
-  %i.bb = tail call nsz float @llvm.fmuladd.f32(float %i.ba, float 1.562500e-02, float 5.000000e-01) ; 6 uses
+  %i.bb = tail call nsz float @llvm.fmuladd.f32(float %i.ba, float 1.562500e-02, float 5.000000e-01) ; 4 uses
   %.not = icmp ne i32 %10, 0
   %i.bc = icmp sgt i32 %i.aa, %11
   %or.cond85 = select i1 %.not, i1 %i.bc, i1 false
@@ -630,15 +630,13 @@ bb.d:                                             ; preds = %get_bitsz.exit
   %i.bg = tail call nsz float @llvm.minnum.f32(float %i.bf, float f0x3F733333) ; 2 uses
   %i.bh = extractelement <2 x float> %i.ax, i64 1
   %i.bi = tail call nsz float @llvm.fabs.f32(float %i.bh)
-  %14 = extractelement <2 x float> %i.ax, i64 0   ; 3 uses
-  %15 = fcmp nsz ogt float %14, 0.000000e+00
-  %16 = fmul nnan nsz float %14, -5.000000e-01
-  %17 = select nsz i1 %15, float %14, float %16
+  %14 = insertelement <2 x float> %i.ax, float %i.bb, i64 1 ; 2 uses
+  %15 = fmul nnan nsz <2 x float> %14, splat (float -5.000000e-01)
+  %16 = tail call nsz <2 x float> @llvm.maxnum.v2f32(<2 x float> %14, <2 x float> %15) ; 2 uses
+  %17 = extractelement <2 x float> %16, i64 0
   %i.bj = fadd nsz float %17, %i.bi
-  %18 = fcmp nsz ogt float %i.bb, 0.000000e+00
-  %19 = fmul nnan nsz float %i.bb, -5.000000e-01
-  %20 = select nsz i1 %18, float %i.bb, float %19
-  %i.bk = fadd nsz float %i.bj, %20               ; 3 uses
+  %18 = extractelement <2 x float> %16, i64 1
+  %i.bk = fadd nsz float %i.bj, %18               ; 3 uses
   %i.bl = fcmp nsz ogt float %i.bk, %i.bg
   %i.bm = fcmp nsz ogt float %i.bk, 0.000000e+00
   %or.cond = and i1 %i.bl, %i.bm
@@ -1041,6 +1039,9 @@ declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #
 declare <8 x float> @llvm.fmuladd.v8f32(<8 x float>, <8 x float>, <8 x float>) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x float> @llvm.maxnum.v2f32(<2 x float>, <2 x float>) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x float> @llvm.fabs.v8f32(<8 x float>) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -1051,9 +1052,6 @@ declare <4 x float> @llvm.cos.v4f32(<4 x float>) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.sqrt.v2f32(<2 x float>) #5
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x float> @llvm.maxnum.v2f32(<2 x float>, <2 x float>) #5
 
 attributes #0 = { cold nounwind optsize uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
