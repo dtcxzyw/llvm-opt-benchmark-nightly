@@ -205,7 +205,7 @@ bb.ao:                                            ; preds = %bb.an, %bb.am, %.th
 }
 
 ; Function Attrs: uwtable
-define dso_local noundef zeroext i1 @_ZN11HullLibrary15CleanupVerticesEjPK9btVector3jRjPS0_fRS0_(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(64) %0, i32 noundef %1, ptr nofree noundef readonly captures(none) %2, i32 noundef %3, ptr nofree noundef nonnull align 4 captures(none) dereferenceable(4) %4, ptr nofree noundef captures(none) %5, float noundef %6, ptr nofree noundef nonnull writeonly align 4 captures(none) dereferenceable(16) %7) local_unnamed_addr #4 align 2 !guid !170 {
+define dso_local noundef zeroext i1 @_ZN11HullLibrary15CleanupVerticesEjPK9btVector3jRjPS0_fRS0_(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(64) %0, i32 noundef %1, ptr nofree noundef readonly captures(none) %2, i32 noundef %3, ptr nofree noundef nonnull align 4 captures(none) dereferenceable(4) %4, ptr nofree noundef captures(none) %5, float noundef %6, ptr nofree noundef nonnull writeonly align 4 captures(none) dereferenceable(16) %7) local_unnamed_addr #4 align 2 !guid !172 {
 bb.a:
   %i.a = icmp ne i32 %1, 0                        ; 2 uses
   br i1 %i.a, label %bb.b, label %bb.aa
@@ -386,12 +386,122 @@ bb.k:                                             ; preds = %bb.e
   br label %bb.m
 
 bb.l:                                             ; preds = %_ZN20btAlignedObjectArrayIiE9push_backERKi.exit
-  %i.cj = load i32, ptr %4, align 4, !tbaa !7     ; 3 uses
+  %i.cj = load i32, ptr %4, align 4, !tbaa !7     ; 4 uses
   %.not395 = icmp eq i32 %i.cj, 0
-  br i1 %.not395, label %._crit_edge, label %.lr.ph393.preheader.a
+  br i1 %.not395, label %._crit_edge, label %.lr.ph393.preheader
 
-.lr.ph393.preheader.a:                            ; preds = %bb.l
-  %wide.trip.count414 = zext i32 %i.cj to i64
+.lr.ph393.preheader:                              ; preds = %bb.l
+  %wide.trip.count414 = zext i32 %i.cj to i64     ; 3 uses
+  %min.iters.check520 = icmp ult i32 %i.cj, 5
+  br i1 %min.iters.check520, label %.lr.ph393.preheader.a, label %vector.ph521
+
+vector.ph521:                                     ; preds = %.lr.ph393.preheader
+  %8 = and i64 %wide.trip.count414, 3             ; 2 uses
+  %9 = icmp eq i64 %8, 0
+  %10 = select i1 %9, i64 4, i64 %8
+  %n.vec522 = sub nsw i64 %wide.trip.count414, %10 ; 2 uses
+  br label %vector.body523
+
+vector.body523:                                   ; preds = %vector.body523, %vector.ph521
+  %index524 = phi i64 [ 0, %vector.ph521 ], [ %index.next530, %vector.body523 ] ; 6 uses
+  %vec.phi = phi <4 x float> [ splat (float f0x7F7FFFFF), %vector.ph521 ], [ %62, %vector.body523 ] ; 3 uses
+  %vec.phi525 = phi <4 x float> [ splat (float f0x7F7FFFFF), %vector.ph521 ], [ %45, %vector.body523 ] ; 3 uses
+  %vec.phi526 = phi <4 x float> [ splat (float f0x7F7FFFFF), %vector.ph521 ], [ %28, %vector.body523 ] ; 3 uses
+  %vec.phi527 = phi <4 x float> [ splat (float f0xFF7FFFFF), %vector.ph521 ], [ %64, %vector.body523 ] ; 3 uses
+  %vec.phi528 = phi <4 x float> [ splat (float f0xFF7FFFFF), %vector.ph521 ], [ %47, %vector.body523 ] ; 3 uses
+  %vec.phi529 = phi <4 x float> [ splat (float f0xFF7FFFFF), %vector.ph521 ], [ %30, %vector.body523 ] ; 3 uses
+  %11 = getelementptr inbounds nuw [16 x i8], ptr %5, i64 %index524 ; 3 uses
+  %12 = getelementptr inbounds nuw [16 x i8], ptr %5, i64 %index524 ; 3 uses
+  %13 = getelementptr inbounds nuw i8, ptr %12, i64 16
+  %14 = getelementptr inbounds nuw [16 x i8], ptr %5, i64 %index524 ; 3 uses
+  %15 = getelementptr inbounds nuw i8, ptr %14, i64 32
+  %16 = getelementptr inbounds nuw [16 x i8], ptr %5, i64 %index524 ; 3 uses
+  %17 = getelementptr inbounds nuw i8, ptr %16, i64 48
+  %18 = load float, ptr %11, align 4, !tbaa !15
+  %19 = load float, ptr %13, align 4, !tbaa !15
+  %20 = load float, ptr %15, align 4, !tbaa !15
+  %21 = load float, ptr %17, align 4, !tbaa !15
+  %22 = insertelement <4 x float> poison, float %18, i64 0
+  %23 = insertelement <4 x float> %22, float %19, i64 1
+  %24 = insertelement <4 x float> %23, float %20, i64 2
+  %25 = insertelement <4 x float> %24, float %21, i64 3
+  %26 = freeze <4 x float> %25                    ; 5 uses
+  %27 = fcmp olt <4 x float> %26, %vec.phi526
+  %28 = select <4 x i1> %27, <4 x float> %26, <4 x float> %vec.phi526 ; 2 uses
+  %29 = fcmp ogt <4 x float> %26, %vec.phi529
+  %30 = select <4 x i1> %29, <4 x float> %26, <4 x float> %vec.phi529 ; 2 uses
+  %31 = getelementptr inbounds nuw i8, ptr %11, i64 4
+  %32 = getelementptr inbounds nuw i8, ptr %12, i64 20
+  %33 = getelementptr inbounds nuw i8, ptr %14, i64 36
+  %34 = getelementptr inbounds nuw i8, ptr %16, i64 52
+  %35 = load float, ptr %31, align 4, !tbaa !15
+  %36 = load float, ptr %32, align 4, !tbaa !15
+  %37 = load float, ptr %33, align 4, !tbaa !15
+  %38 = load float, ptr %34, align 4, !tbaa !15
+  %39 = insertelement <4 x float> poison, float %35, i64 0
+  %40 = insertelement <4 x float> %39, float %36, i64 1
+  %41 = insertelement <4 x float> %40, float %37, i64 2
+  %42 = insertelement <4 x float> %41, float %38, i64 3
+  %43 = freeze <4 x float> %42                    ; 5 uses
+  %44 = fcmp olt <4 x float> %43, %vec.phi525
+  %45 = select <4 x i1> %44, <4 x float> %43, <4 x float> %vec.phi525 ; 2 uses
+  %46 = fcmp ogt <4 x float> %43, %vec.phi528
+  %47 = select <4 x i1> %46, <4 x float> %43, <4 x float> %vec.phi528 ; 2 uses
+  %48 = getelementptr inbounds nuw i8, ptr %11, i64 8
+  %49 = getelementptr inbounds nuw i8, ptr %12, i64 24
+  %50 = getelementptr inbounds nuw i8, ptr %14, i64 40
+  %51 = getelementptr inbounds nuw i8, ptr %16, i64 56
+  %52 = load float, ptr %48, align 4, !tbaa !15
+  %53 = load float, ptr %49, align 4, !tbaa !15
+  %54 = load float, ptr %50, align 4, !tbaa !15
+  %55 = load float, ptr %51, align 4, !tbaa !15
+  %56 = insertelement <4 x float> poison, float %52, i64 0
+  %57 = insertelement <4 x float> %56, float %53, i64 1
+  %58 = insertelement <4 x float> %57, float %54, i64 2
+  %59 = insertelement <4 x float> %58, float %55, i64 3
+  %60 = freeze <4 x float> %59                    ; 5 uses
+  %61 = fcmp olt <4 x float> %60, %vec.phi
+  %62 = select <4 x i1> %61, <4 x float> %60, <4 x float> %vec.phi ; 2 uses
+  %63 = fcmp ogt <4 x float> %60, %vec.phi527
+  %64 = select <4 x i1> %63, <4 x float> %60, <4 x float> %vec.phi527 ; 2 uses
+  %index.next530 = add nuw i64 %index524, 4       ; 2 uses
+  %65 = tail call <4 x i1> @llvm.is.fpclass.v4f32(<4 x float> %60, /* (nan nzero) */ i32 35)
+  %66 = tail call <4 x i1> @llvm.is.fpclass.v4f32(<4 x float> %43, /* (nan nzero) */ i32 35)
+  %67 = or <4 x i1> %65, %66
+  %68 = tail call <4 x i1> @llvm.is.fpclass.v4f32(<4 x float> %26, /* (nan nzero) */ i32 35)
+  %69 = or <4 x i1> %67, %68
+  %70 = bitcast <4 x i1> %69 to i4
+  %71 = icmp ne i4 %70, 0                         ; 8 uses
+  %72 = icmp eq i64 %index.next530, %n.vec522
+  %73 = or i1 %71, %72
+  br i1 %73, label %middle.block531, label %vector.body523, !llvm.loop !167
+
+middle.block531:                                  ; preds = %vector.body523
+  %74 = select i1 %71, <4 x float> %vec.phi, <4 x float> %62
+  %75 = select i1 %71, <4 x float> %vec.phi525, <4 x float> %45
+  %76 = select i1 %71, <4 x float> %vec.phi526, <4 x float> %28
+  %77 = select i1 %71, <4 x float> %vec.phi527, <4 x float> %64
+  %78 = select i1 %71, <4 x float> %vec.phi528, <4 x float> %47
+  %79 = select i1 %71, <4 x float> %vec.phi529, <4 x float> %30
+  %80 = select i1 %71, i64 %index524, i64 %n.vec522
+  %81 = tail call nnan float @llvm.vector.reduce.fmin.v4f32(<4 x float> %74)
+  %82 = tail call nnan float @llvm.vector.reduce.fmin.v4f32(<4 x float> %75)
+  %83 = tail call nnan float @llvm.vector.reduce.fmin.v4f32(<4 x float> %76)
+  %84 = tail call nnan float @llvm.vector.reduce.fmax.v4f32(<4 x float> %77)
+  %85 = tail call nnan float @llvm.vector.reduce.fmax.v4f32(<4 x float> %78)
+  %86 = tail call nnan float @llvm.vector.reduce.fmax.v4f32(<4 x float> %79)
+  %87 = insertelement <2 x float> poison, float %86, i64 0
+  %88 = insertelement <2 x float> %87, float %85, i64 1
+  %89 = insertelement <2 x float> poison, float %83, i64 0
+  %90 = insertelement <2 x float> %89, float %82, i64 1
+  br label %.lr.ph393.preheader.a
+
+.lr.ph393.preheader.a:                            ; preds = %.lr.ph393.preheader, %middle.block531
+  %.sroa.10423.1.ph = phi float [ f0x7F7FFFFF, %.lr.ph393.preheader ], [ %81, %middle.block531 ]
+  %.sroa.10.1.ph = phi float [ f0xFF7FFFFF, %.lr.ph393.preheader ], [ %84, %middle.block531 ]
+  %indvars.iv411.ph = phi i64 [ 0, %.lr.ph393.preheader ], [ %80, %middle.block531 ]
+  %.ph = phi <2 x float> [ splat (float f0xFF7FFFFF), %.lr.ph393.preheader ], [ %88, %middle.block531 ]
+  %.ph541 = phi <2 x float> [ splat (float f0x7F7FFFFF), %.lr.ph393.preheader ], [ %90, %middle.block531 ]
   br label %.lr.ph393
 
 bb.m:                                             ; preds = %bb.k, %_ZN20btAlignedObjectArrayIiE9push_backERKi.exit
@@ -538,7 +648,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <4 x i32> %wide.load518, ptr %i.er, align 4, !tbaa !7
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.es = icmp eq i64 %index.next, %n.vec
-  br i1 %i.es, label %middle.block, label %vector.body, !llvm.loop !167
+  br i1 %i.es, label %middle.block, label %vector.body, !llvm.loop !168
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count.i.i.i346
@@ -560,7 +670,7 @@ scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
   %indvars.iv.next.i.i.i348.prol = add nuw nsw i64 %indvars.iv.i.i.i347.prol, 1 ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter535
-  br i1 %prol.iter.cmp.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol, !llvm.loop !168
+  br i1 %prol.iter.cmp.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol, !llvm.loop !169
 
 scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %scalar.ph.preheader
   %indvars.iv.i.i.i347.unr = phi i64 [ %indvars.iv.i.i.i347.ph, %scalar.ph.preheader ], [ %indvars.iv.next.i.i.i348.prol, %scalar.ph.prol ]
@@ -591,7 +701,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   store i32 %i.fj, ptr %i.fh, align 4, !tbaa !7
   %indvars.iv.next.i.i.i348.3 = add nuw nsw i64 %indvars.iv.i.i.i347, 4 ; 2 uses
   %exitcond.not.i.i.i349.3 = icmp eq i64 %indvars.iv.next.i.i.i348.3, %wide.trip.count.i.i.i346
-  br i1 %exitcond.not.i.i.i349.3, label %_ZNK20btAlignedObjectArrayIiE4copyEiiPi.exit.thread.i.i343, label %scalar.ph, !llvm.loop !169
+  br i1 %exitcond.not.i.i.i349.3, label %_ZNK20btAlignedObjectArrayIiE4copyEiiPi.exit.thread.i.i343, label %scalar.ph, !llvm.loop !170
 
 _ZNK20btAlignedObjectArrayIiE4copyEiiPi.exit.i.i341: ; preds = %_ZN20btAlignedObjectArrayIiE8allocateEi.exit.i.i
   %.not.i5.i.i342 = icmp eq ptr %i.el, null
@@ -648,11 +758,11 @@ _ZN20btAlignedObjectArrayIiE9push_backERKi.exit:  ; preds = %bb.r, %bb.s, %_ZN20
   br i1 %or.cond336, label %bb.x, label %bb.aa
 
 .lr.ph393:                                        ; preds = %.lr.ph393.preheader.a, %.lr.ph393
-  %.sroa.10423.1 = phi float [ f0x7F7FFFFF, %.lr.ph393.preheader.a ], [ %spec.store.select369.2, %.lr.ph393 ] ; 2 uses
-  %.sroa.10.1 = phi float [ f0xFF7FFFFF, %.lr.ph393.preheader.a ], [ %spec.store.select370.2, %.lr.ph393 ] ; 2 uses
-  %indvars.iv411 = phi i64 [ 0, %.lr.ph393.preheader.a ], [ %indvars.iv.next412, %.lr.ph393 ] ; 2 uses
-  %i.gc = phi <2 x float> [ splat (float f0xFF7FFFFF), %.lr.ph393.preheader.a ], [ %i.gj, %.lr.ph393 ] ; 2 uses
-  %i.gd = phi <2 x float> [ splat (float f0x7F7FFFFF), %.lr.ph393.preheader.a ], [ %i.gi, %.lr.ph393 ] ; 2 uses
+  %.sroa.10423.1 = phi float [ %spec.store.select369.2, %.lr.ph393 ], [ %.sroa.10423.1.ph, %.lr.ph393.preheader.a ] ; 2 uses
+  %.sroa.10.1 = phi float [ %spec.store.select370.2, %.lr.ph393 ], [ %.sroa.10.1.ph, %.lr.ph393.preheader.a ] ; 2 uses
+  %indvars.iv411 = phi i64 [ %indvars.iv.next412, %.lr.ph393 ], [ %indvars.iv411.ph, %.lr.ph393.preheader.a ] ; 2 uses
+  %i.gc = phi <2 x float> [ %i.gj, %.lr.ph393 ], [ %.ph, %.lr.ph393.preheader.a ] ; 2 uses
+  %i.gd = phi <2 x float> [ %i.gi, %.lr.ph393 ], [ %.ph541, %.lr.ph393.preheader.a ] ; 2 uses
   %i.ge = getelementptr inbounds nuw [16 x i8], ptr %5, i64 %indvars.iv411 ; 2 uses
   %i.gf = load <2 x float>, ptr %i.ge, align 4, !tbaa !15 ; 4 uses
   %i.gg = fcmp olt <2 x float> %i.gf, %i.gd
@@ -667,7 +777,7 @@ _ZN20btAlignedObjectArrayIiE9push_backERKi.exit:  ; preds = %bb.r, %bb.s, %_ZN20
   %spec.store.select370.2 = select i1 %i.gn, float %i.gl, float %.sroa.10.1 ; 2 uses
   %indvars.iv.next412 = add nuw nsw i64 %indvars.iv411, 1 ; 2 uses
   %exitcond415.not = icmp eq i64 %indvars.iv.next412, %wide.trip.count414
-  br i1 %exitcond415.not, label %._crit_edge, label %.lr.ph393
+  br i1 %exitcond415.not, label %._crit_edge, label %.lr.ph393, !llvm.loop !171
 
 bb.x:                                             ; preds = %._crit_edge
   %i.go = extractelement <2 x float> %i.fv, i64 0 ; 3 uses
@@ -780,7 +890,7 @@ bb.aa:                                            ; preds = %.sink.split, %._cri
 }
 
 ; Function Attrs: uwtable
-define dso_local void @_ZN11HullLibrary16BringOutYourDeadEPK9btVector3jPS0_RjPjj(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(64) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2, ptr nofree noundef writeonly captures(none) %3, ptr nofree noundef nonnull align 4 captures(none) dereferenceable(4) %4, ptr nofree noundef captures(none) %5, i32 noundef %6) local_unnamed_addr #4 align 2 personality ptr @__gxx_personality_v0 !guid !171 {
+define dso_local void @_ZN11HullLibrary16BringOutYourDeadEPK9btVector3jPS0_RjPjj(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(64) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2, ptr nofree noundef writeonly captures(none) %3, ptr nofree noundef nonnull align 4 captures(none) dereferenceable(4) %4, ptr nofree noundef captures(none) %5, i32 noundef %6) local_unnamed_addr #4 align 2 personality ptr @__gxx_personality_v0 !guid !173 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 5 uses
   %i.b = load i32, ptr %i.a, align 4, !tbaa !55   ; 2 uses
@@ -954,7 +1064,7 @@ bb.l:                                             ; preds = %bb.k
 }
 
 ; Function Attrs: uwtable
-define dso_local noundef i32 @_ZN11HullLibrary13ReleaseResultER10HullResult(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(64) %0, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(80) %1) local_unnamed_addr #4 align 2 !guid !172 {
+define dso_local noundef i32 @_ZN11HullLibrary13ReleaseResultER10HullResult(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(64) %0, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(80) %1) local_unnamed_addr #4 align 2 !guid !174 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
   %i.b = load i32, ptr %i.a, align 4, !tbaa !27
@@ -1020,7 +1130,7 @@ bb.g:                                             ; preds = %_ZN20btAlignedObjec
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define dso_local noundef float @_Z7GetDistfffPKf(float noundef %0, float noundef %1, float noundef %2, ptr nofree noundef readonly captures(none) %3) local_unnamed_addr #9 !guid !173 {
+define dso_local noundef float @_Z7GetDistfffPKf(float noundef %0, float noundef %1, float noundef %2, ptr nofree noundef readonly captures(none) %3) local_unnamed_addr #9 !guid !175 {
 bb.a:
   %i.a = load float, ptr %3, align 4, !tbaa !15
   %i.b = fsub float %0, %i.a                      ; 2 uses
@@ -1074,6 +1184,15 @@ declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.sqrt.v2f32(<2 x float>) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fmin.v4f32(<4 x float>) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fmax.v4f32(<4 x float>) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i1> @llvm.is.fpclass.v4f32(<4 x float>, i32 immarg) #15
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="64" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -1269,10 +1388,12 @@ attributes #20 = { noreturn nounwind }
 !165 = !{!68, !23, i64 0}
 !166 = !{!68, !6, i64 40}
 !167 = distinct !{!167, !33, !34}
-!168 = distinct !{!168, !32}
-!169 = distinct !{!169, !33}
-!170 = !{i64 -1612953614127440780}
-!171 = !{i64 -699150764083932220}
-!172 = !{i64 2404475434468888506}
-!173 = !{i64 3637275566337294840}
+!168 = distinct !{!168, !33, !34}
+!169 = distinct !{!169, !32}
+!170 = distinct !{!170, !33}
+!171 = distinct !{!171, !34, !33}
+!172 = !{i64 -1612953614127440780}
+!173 = !{i64 -699150764083932220}
+!174 = !{i64 2404475434468888506}
+!175 = !{i64 3637275566337294840}
 end_hunk_0

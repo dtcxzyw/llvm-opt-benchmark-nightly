@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openblas/original/dlaein?download=true
-loop-unroll.NumRuntimeUnrolled: 20
-loop-unroll.NumUnrolled: 20
+loop-unroll.NumRuntimeUnrolled: 19
+loop-unroll.NumUnrolled: 19
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -42,8 +42,8 @@ bb.a:
   %narrow = xor i32 %i.o, -1
   %i.p = sext i32 %narrow to i64                  ; 2 uses
   %i.q = getelementptr inbounds [8 x i8], ptr %3, i64 %i.p ; 6 uses
-  %i.r = getelementptr inbounds i8, ptr %7, i64 -8 ; 38 uses
-  %i.s = getelementptr inbounds i8, ptr %8, i64 -8 ; 31 uses
+  %i.r = getelementptr inbounds i8, ptr %7, i64 -8 ; 35 uses
+  %i.s = getelementptr inbounds i8, ptr %8, i64 -8 ; 28 uses
   %i.t = load i32, ptr %10, align 4, !tbaa !75    ; 30 uses
   %narrow885 = xor i32 %i.t, -1
   %i.u = sext i32 %narrow885 to i64               ; 9 uses
@@ -446,99 +446,122 @@ vec.epilog.middle.block1435:                      ; preds = %vec.epilog.vector.b
   br label %.loopexit897
 
 .loopexit897:                                     ; preds = %._crit_edge976, %._crit_edge988
-  %i.aue = load i32, ptr %2, align 4, !tbaa !75   ; 4 uses
+  %i.aue = load i32, ptr %2, align 4, !tbaa !75   ; 5 uses
   store i32 %i.aue, ptr %i.c, align 4, !tbaa !75
   %.not871990 = icmp slt i32 %i.aue, 1
   br i1 %.not871990, label %bb.bd, label %.lr.ph994.preheader
 
 .lr.ph994.preheader:                              ; preds = %.loopexit897
-  %i.auf = zext nneg i32 %i.aue to i64            ; 2 uses
-  %xtraiter1692 = and i64 %i.auf, 3               ; 3 uses
-  %i.aug = icmp ult i32 %i.aue, 4
+  %16 = add nuw i32 %i.aue, 1
+  %i.auf = zext i32 %16 to i64
+  %17 = zext nneg i32 %i.aue to i64               ; 2 uses
+  %i.aug = icmp ult i32 %i.aue, 16
   br i1 %i.aug, label %.lr.ph994.epil.preheader, label %.lr.ph994.preheader.new
 
 .lr.ph994.preheader.new:                          ; preds = %.lr.ph994.preheader
-  %unroll_iter1698 = and i64 %i.auf, 2147483644
+  %unroll_iter1698 = and i64 %17, 2147483632      ; 3 uses
   br label %.lr.ph994.a
 
 .lr.ph994.a:                                      ; preds = %.lr.ph994.a, %.lr.ph994.preheader.new
-  %indvars.iv1134.a = phi i64 [ 1, %.lr.ph994.preheader.new ], [ %indvars.iv.next1135.3, %.lr.ph994.a ] ; 7 uses
-  %.0832992 = phi double [ 0.000000e+00, %.lr.ph994.preheader.new ], [ %65, %.lr.ph994.a ] ; 2 uses
-  %niter1699 = phi i64 [ 0, %.lr.ph994.preheader.new ], [ %niter1699.next.3, %.lr.ph994.a ]
-  %i.auh = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %indvars.iv1134.a
-  %16 = load double, ptr %i.auh, align 8, !tbaa !77 ; 3 uses
-  %17 = fcmp oge double %16, 0.000000e+00
-  %18 = fneg double %16
-  %19 = select i1 %17, double %16, double %18
-  %20 = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %indvars.iv1134.a
-  %21 = load double, ptr %20, align 8, !tbaa !77  ; 3 uses
-  %22 = fcmp oge double %21, 0.000000e+00
-  %23 = fneg double %21
-  %24 = select i1 %22, double %21, double %23
-  %25 = fadd double %19, %24                      ; 2 uses
-  %26 = fcmp oge double %.0832992, %25
-  %27 = select i1 %26, double %.0832992, double %25 ; 2 uses
-  %28 = getelementptr [8 x i8], ptr %7, i64 %indvars.iv1134.a
-  %29 = load double, ptr %28, align 8, !tbaa !77  ; 3 uses
-  %30 = fcmp oge double %29, 0.000000e+00
-  %31 = fneg double %29
-  %32 = select i1 %30, double %29, double %31
-  %i.aui = getelementptr [8 x i8], ptr %8, i64 %indvars.iv1134.a
-  %33 = load double, ptr %i.aui, align 8, !tbaa !77 ; 3 uses
-  %34 = fcmp oge double %33, 0.000000e+00
-  %35 = fneg double %33
-  %36 = select i1 %34, double %33, double %35
-  %37 = fadd double %32, %36                      ; 2 uses
-  %38 = fcmp oge double %27, %37
-  %39 = select i1 %38, double %27, double %37     ; 2 uses
-  %indvars.iv.next1135.1 = add nuw nsw i64 %indvars.iv1134.a, 2 ; 2 uses
-  %40 = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %indvars.iv.next1135.1
-  %41 = load double, ptr %40, align 8, !tbaa !77  ; 3 uses
-  %42 = fcmp oge double %41, 0.000000e+00
-  %43 = fneg double %41
-  %44 = select i1 %42, double %41, double %43
-  %45 = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %indvars.iv.next1135.1
-  %46 = load double, ptr %45, align 8, !tbaa !77  ; 3 uses
-  %47 = fcmp oge double %46, 0.000000e+00
-  %48 = fneg double %46
-  %49 = select i1 %47, double %46, double %48
-  %50 = fadd double %44, %49                      ; 2 uses
-  %51 = fcmp oge double %39, %50
-  %52 = select i1 %51, double %39, double %50     ; 2 uses
-  %indvars.iv.next1135.2 = add nuw nsw i64 %indvars.iv1134.a, 3 ; 2 uses
-  %53 = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %indvars.iv.next1135.2
-  %54 = load double, ptr %53, align 8, !tbaa !77  ; 3 uses
-  %55 = fcmp oge double %54, 0.000000e+00
-  %56 = fneg double %54
-  %57 = select i1 %55, double %54, double %56
-  %58 = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %indvars.iv.next1135.2
-  %59 = load double, ptr %58, align 8, !tbaa !77  ; 4 uses
-  %60 = fcmp oge double %59, 0.000000e+00
-  %61 = fneg double %59
-  %62 = select i1 %60, double %59, double %61
-  %63 = fadd double %57, %62                      ; 2 uses
-  %64 = fcmp oge double %52, %63
-  %65 = select i1 %64, double %52, double %63     ; 3 uses
-  %indvars.iv.next1135.3 = add nuw nsw i64 %indvars.iv1134.a, 4 ; 2 uses
-  %niter1699.next.3 = add i64 %niter1699, 4       ; 2 uses
-  %niter1699.ncmp.3 = icmp eq i64 %niter1699.next.3, %unroll_iter1698
-  br i1 %niter1699.ncmp.3, label %._crit_edge995.unr-lcssa, label %.lr.ph994.a, !llvm.loop !73
+  %indvars.iv1134.a = phi i64 [ 0, %.lr.ph994.preheader.new ], [ %indvars.iv.next1135.3, %.lr.ph994.a ] ; 4 uses
+  %vec.phi = phi <4 x double> [ zeroinitializer, %.lr.ph994.preheader.new ], [ %60, %.lr.ph994.a ] ; 3 uses
+  %vec.phi1443 = phi <4 x double> [ zeroinitializer, %.lr.ph994.preheader.new ], [ %61, %.lr.ph994.a ] ; 3 uses
+  %vec.phi1444 = phi <4 x double> [ zeroinitializer, %.lr.ph994.preheader.new ], [ %62, %.lr.ph994.a ] ; 3 uses
+  %vec.phi1445 = phi <4 x double> [ zeroinitializer, %.lr.ph994.preheader.new ], [ %63, %.lr.ph994.a ] ; 3 uses
+  %i.auh = getelementptr [8 x i8], ptr %7, i64 %indvars.iv1134.a ; 4 uses
+  %18 = getelementptr inbounds nuw i8, ptr %i.auh, i64 32
+  %19 = getelementptr inbounds nuw i8, ptr %i.auh, i64 64
+  %20 = getelementptr inbounds nuw i8, ptr %i.auh, i64 96
+  %wide.load1446 = load <4 x double>, ptr %i.auh, align 8, !tbaa !77 ; 3 uses
+  %wide.load1447 = load <4 x double>, ptr %18, align 8, !tbaa !77 ; 3 uses
+  %wide.load1448 = load <4 x double>, ptr %19, align 8, !tbaa !77 ; 3 uses
+  %wide.load1449 = load <4 x double>, ptr %20, align 8, !tbaa !77 ; 3 uses
+  %21 = fcmp oge <4 x double> %wide.load1446, zeroinitializer
+  %22 = fcmp oge <4 x double> %wide.load1447, zeroinitializer
+  %23 = fcmp oge <4 x double> %wide.load1448, zeroinitializer
+  %24 = fcmp oge <4 x double> %wide.load1449, zeroinitializer
+  %25 = fneg <4 x double> %wide.load1446
+  %26 = fneg <4 x double> %wide.load1447
+  %27 = fneg <4 x double> %wide.load1448
+  %28 = fneg <4 x double> %wide.load1449
+  %29 = select <4 x i1> %21, <4 x double> %wide.load1446, <4 x double> %25
+  %30 = select <4 x i1> %22, <4 x double> %wide.load1447, <4 x double> %26
+  %31 = select <4 x i1> %23, <4 x double> %wide.load1448, <4 x double> %27
+  %32 = select <4 x i1> %24, <4 x double> %wide.load1449, <4 x double> %28
+  %i.aui = getelementptr [8 x i8], ptr %8, i64 %indvars.iv1134.a ; 4 uses
+  %33 = getelementptr inbounds nuw i8, ptr %i.aui, i64 32
+  %34 = getelementptr inbounds nuw i8, ptr %i.aui, i64 64
+  %35 = getelementptr inbounds nuw i8, ptr %i.aui, i64 96
+  %wide.load1450 = load <4 x double>, ptr %i.aui, align 8, !tbaa !77 ; 3 uses
+  %wide.load1451 = load <4 x double>, ptr %33, align 8, !tbaa !77 ; 3 uses
+  %wide.load1452 = load <4 x double>, ptr %34, align 8, !tbaa !77 ; 3 uses
+  %wide.load1453 = load <4 x double>, ptr %35, align 8, !tbaa !77 ; 4 uses
+  %36 = fcmp oge <4 x double> %wide.load1450, zeroinitializer
+  %37 = fcmp oge <4 x double> %wide.load1451, zeroinitializer
+  %38 = fcmp oge <4 x double> %wide.load1452, zeroinitializer
+  %39 = fcmp oge <4 x double> %wide.load1453, zeroinitializer
+  %40 = fneg <4 x double> %wide.load1450
+  %41 = fneg <4 x double> %wide.load1451
+  %42 = fneg <4 x double> %wide.load1452
+  %43 = fneg <4 x double> %wide.load1453
+  %44 = select <4 x i1> %36, <4 x double> %wide.load1450, <4 x double> %40
+  %45 = select <4 x i1> %37, <4 x double> %wide.load1451, <4 x double> %41
+  %46 = select <4 x i1> %38, <4 x double> %wide.load1452, <4 x double> %42
+  %47 = select <4 x i1> %39, <4 x double> %wide.load1453, <4 x double> %43
+  %48 = fadd <4 x double> %29, %44
+  %49 = fadd <4 x double> %30, %45
+  %50 = fadd <4 x double> %31, %46
+  %51 = fadd <4 x double> %32, %47
+  %52 = freeze <4 x double> %48                   ; 3 uses
+  %53 = freeze <4 x double> %49                   ; 3 uses
+  %54 = freeze <4 x double> %50                   ; 3 uses
+  %55 = freeze <4 x double> %51                   ; 3 uses
+  %56 = fcmp oge <4 x double> %vec.phi, %52
+  %57 = fcmp oge <4 x double> %vec.phi1443, %53
+  %58 = fcmp oge <4 x double> %vec.phi1444, %54
+  %59 = fcmp oge <4 x double> %vec.phi1445, %55
+  %60 = select <4 x i1> %56, <4 x double> %vec.phi, <4 x double> %52 ; 2 uses
+  %61 = select <4 x i1> %57, <4 x double> %vec.phi1443, <4 x double> %53 ; 2 uses
+  %62 = select <4 x i1> %58, <4 x double> %vec.phi1444, <4 x double> %54 ; 2 uses
+  %63 = select <4 x i1> %59, <4 x double> %vec.phi1445, <4 x double> %55 ; 2 uses
+  %indvars.iv.next1135.3 = add nuw i64 %indvars.iv1134.a, 16 ; 2 uses
+  %64 = call <4 x i1> @llvm.is.fpclass.v4f64(<4 x double> %52, /* (nan nzero) */ i32 35)
+  %65 = call <4 x i1> @llvm.is.fpclass.v4f64(<4 x double> %53, /* (nan nzero) */ i32 35)
+  %66 = call <4 x i1> @llvm.is.fpclass.v4f64(<4 x double> %54, /* (nan nzero) */ i32 35)
+  %67 = call <4 x i1> @llvm.is.fpclass.v4f64(<4 x double> %55, /* (nan nzero) */ i32 35)
+  %68 = or <4 x i1> %64, %65
+  %69 = or <4 x i1> %68, %66
+  %70 = or <4 x i1> %69, %67
+  %71 = bitcast <4 x i1> %70 to i4
+  %72 = icmp ne i4 %71, 0                         ; 7 uses
+  %niter1699.ncmp.3 = icmp eq i64 %indvars.iv.next1135.3, %unroll_iter1698
+  %73 = or i1 %72, %niter1699.ncmp.3
+  br i1 %73, label %._crit_edge995.unr-lcssa, label %.lr.ph994.a, !llvm.loop !73
 
 ._crit_edge995.unr-lcssa:                         ; preds = %.lr.ph994.a
-  %lcmp.mod1694.not = icmp eq i64 %xtraiter1692, 0
-  br i1 %lcmp.mod1694.not, label %._crit_edge995, label %.lr.ph994.epil.preheader
+  %74 = select i1 %72, <4 x double> %vec.phi, <4 x double> %60
+  %75 = select i1 %72, <4 x double> %vec.phi1443, <4 x double> %61
+  %76 = select i1 %72, <4 x double> %vec.phi1444, <4 x double> %62
+  %77 = select i1 %72, <4 x double> %vec.phi1445, <4 x double> %63
+  %78 = select i1 %72, i64 %indvars.iv1134.a, i64 %unroll_iter1698
+  %rdx.minmax = call nnan <4 x double> @llvm.maxnum.v4f64(<4 x double> %74, <4 x double> %75)
+  %rdx.minmax1456 = call nnan <4 x double> @llvm.maxnum.v4f64(<4 x double> %rdx.minmax, <4 x double> %76)
+  %rdx.minmax1457 = call nnan <4 x double> @llvm.maxnum.v4f64(<4 x double> %rdx.minmax1456, <4 x double> %77)
+  %79 = call nnan double @llvm.vector.reduce.fmax.v4f64(<4 x double> %rdx.minmax1457) ; 2 uses
+  %80 = or disjoint i64 %78, 1
+  %81 = extractelement <4 x double> %wide.load1453, i64 3
+  %cmp.n1458 = icmp ne i64 %unroll_iter1698, %17
+  %.not = or i1 %cmp.n1458, %72
+  br i1 %.not, label %.lr.ph994.epil.preheader, label %._crit_edge995
 
-.lr.ph994.epil.preheader:                         ; preds = %._crit_edge995.unr-lcssa, %.lr.ph994.preheader
-  %indvars.iv1134.epil.init = phi i64 [ 1, %.lr.ph994.preheader ], [ %indvars.iv.next1135.3, %._crit_edge995.unr-lcssa ]
-  %.0832992.epil.init = phi double [ 0.000000e+00, %.lr.ph994.preheader ], [ %65, %._crit_edge995.unr-lcssa ]
-  %lcmp.mod1697 = icmp ne i64 %xtraiter1692, 0
-  call void @llvm.assume(i1 %lcmp.mod1697)
+.lr.ph994.epil.preheader:                         ; preds = %.lr.ph994.preheader, %._crit_edge995.unr-lcssa
+  %indvars.iv1134.epil.init = phi i64 [ 1, %.lr.ph994.preheader ], [ %80, %._crit_edge995.unr-lcssa ]
+  %.0832992.epil.init = phi double [ 0.000000e+00, %.lr.ph994.preheader ], [ %79, %._crit_edge995.unr-lcssa ]
   br label %.lr.ph994.epil
 
-.lr.ph994.epil:                                   ; preds = %.lr.ph994.epil, %.lr.ph994.epil.preheader
-  %indvars.iv1134.epil = phi i64 [ %indvars.iv1134.epil.init, %.lr.ph994.epil.preheader ], [ %indvars.iv.next1135.epil, %.lr.ph994.epil ] ; 3 uses
-  %.0832992.epil = phi double [ %.0832992.epil.init, %.lr.ph994.epil.preheader ], [ %i.auv, %.lr.ph994.epil ] ; 2 uses
-  %epil.iter1693 = phi i64 [ 0, %.lr.ph994.epil.preheader ], [ %epil.iter1693.next, %.lr.ph994.epil ]
+.lr.ph994.epil:                                   ; preds = %.lr.ph994.epil.preheader, %.lr.ph994.epil
+  %indvars.iv1134.epil = phi i64 [ %epil.iter1693.next, %.lr.ph994.epil ], [ %indvars.iv1134.epil.init, %.lr.ph994.epil.preheader ] ; 3 uses
+  %.0832992.epil = phi double [ %i.auv, %.lr.ph994.epil ], [ %.0832992.epil.init, %.lr.ph994.epil.preheader ] ; 2 uses
   %i.auj = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %indvars.iv1134.epil
   %i.auk = load double, ptr %i.auj, align 8, !tbaa !77 ; 3 uses
   %i.aul = fcmp oge double %i.auk, 0.000000e+00
@@ -552,14 +575,13 @@ vec.epilog.middle.block1435:                      ; preds = %vec.epilog.vector.b
   %i.aut = fadd double %i.aun, %i.aus             ; 2 uses
   %i.auu = fcmp oge double %.0832992.epil, %i.aut
   %i.auv = select i1 %i.auu, double %.0832992.epil, double %i.aut ; 2 uses
-  %indvars.iv.next1135.epil = add nuw nsw i64 %indvars.iv1134.epil, 1
-  %epil.iter1693.next = add i64 %epil.iter1693, 1 ; 2 uses
-  %epil.iter1693.cmp.not = icmp eq i64 %epil.iter1693.next, %xtraiter1692
+  %epil.iter1693.next = add nuw nsw i64 %indvars.iv1134.epil, 1 ; 2 uses
+  %epil.iter1693.cmp.not = icmp eq i64 %epil.iter1693.next, %i.auf
   br i1 %epil.iter1693.cmp.not, label %._crit_edge995, label %.lr.ph994.epil, !llvm.loop !74
 
 ._crit_edge995:                                   ; preds = %.lr.ph994.epil, %._crit_edge995.unr-lcssa
-  %.lcssa1627 = phi double [ %59, %._crit_edge995.unr-lcssa ], [ %i.aup, %.lr.ph994.epil ]
-  %.lcssa1626 = phi double [ %65, %._crit_edge995.unr-lcssa ], [ %i.auv, %.lr.ph994.epil ]
+  %.lcssa1627 = phi double [ %81, %._crit_edge995.unr-lcssa ], [ %i.aup, %.lr.ph994.epil ]
+  %.lcssa1626 = phi double [ %79, %._crit_edge995.unr-lcssa ], [ %i.auv, %.lr.ph994.epil ]
   store double %.lcssa1627, ptr %i.g, align 8, !tbaa !77
   br label %bb.bd
 
@@ -621,7 +643,16 @@ declare double @llvm.fabs.f64(double) #4
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x double> @llvm.maxnum.v4f64(<4 x double>, <4 x double>) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fmax.v4f64(<4 x double>) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x double> @llvm.fmuladd.v4f64(<4 x double>, <4 x double>, <4 x double>) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i1> @llvm.is.fpclass.v4f64(<4 x double>, i32 immarg) #4
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #6
@@ -712,8 +743,8 @@ attributes #7 = { nounwind }
 !70 = distinct !{!70, !84}
 !71 = distinct !{!71, !80, !81}
 !72 = distinct !{!72, !80}
-!73 = distinct !{!73, !80}
-!74 = distinct !{!74, !84}
+!73 = distinct !{!73, !80, !81, !82}
+!74 = distinct !{!74, !80, !82, !81}
 !75 = !{!5, !5, i64 0}
 !76 = !{!"double", !4, i64 0}
 !77 = !{!76, !76, i64 0}

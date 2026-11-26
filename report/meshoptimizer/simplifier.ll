@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 193
 inline.NumDeleted: 81
 loop-unroll.NumCompletelyUnrolled: 5
-loop-unroll.NumRuntimeUnrolled: 29
-loop-unroll.NumUnrolled: 35
+loop-unroll.NumRuntimeUnrolled: 27
+loop-unroll.NumUnrolled: 33
 begin_hunk_0_@_Z20meshopt_simplifyEdgePjPKjmPKfmmS3_mS3_mPKhmfjPf:bb.a
   %i.axf = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.avw, <4 x float> %i.axe, <4 x float> %i.awa) ; 4 uses
   %i.axg = insertelement <2 x float> %i.awu, float %i.axb, i64 1
@@ -205,11 +205,11 @@ bb.cy:                                            ; preds = %bb.cx
   store i64 %i.bbg, ptr %i.ek, align 8, !tbaa !26
   %i.bbh = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %i.bbf
   store ptr %i.bbe, ptr %i.bbh, align 8, !tbaa !27
-  %i.bbi = call fastcc noundef i64 @_ZN7meshoptL15buildComponentsEPjmPKjmS2_(ptr noundef %i.bbe, i64 noundef %.0706, ptr noundef %0, i64 noundef %2, ptr noundef %i.iv) ; 8 uses
+  %i.bbi = call fastcc noundef i64 @_ZN7meshoptL15buildComponentsEPjmPKjmS2_(ptr noundef %i.bbe, i64 noundef %.0706, ptr noundef %0, i64 noundef %2, ptr noundef %i.iv) ; 9 uses
   %i.bbj = shl nuw nsw i64 %i.bbi, 4
   %i.bbk = load ptr, ptr @_ZZN17meshopt_Allocator7storageEvE1s, align 8, !tbaa !23
   %i.bbl = invoke noundef ptr %i.bbk(i64 noundef %i.bbj)
-          to label %bb.cz unwind label %bb.ec, !inline_history !6 ; 10 uses
+          to label %bb.cz unwind label %bb.ec, !inline_history !6 ; 7 uses
 
 bb.cz:                                            ; preds = %bb.cy
   %i.bbm = add nuw nsw i64 %i.bbf, 2
@@ -221,71 +221,68 @@ bb.cz:                                            ; preds = %bb.cy
   br i1 %.not834, label %.loopexit729, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.cz
-  %xtraiter1345 = and i64 %i.bbi, 3               ; 3 uses
-  %i.bbo = icmp samesign ult i64 %i.bbi, 4
+  %i.bbo = icmp samesign ult i64 %i.bbi, 8
   br i1 %i.bbo, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
-  %unroll_iter1350 = and i64 %i.bbi, 4294967292
+  %unroll_iter1350 = and i64 %i.bbi, 4294967288   ; 3 uses
   br label %.lr.ph.a
 
 .lr.ph.a:                                         ; preds = %.lr.ph.a, %.lr.ph.preheader.new
-  %.0342778 = phi i64 [ 0, %.lr.ph.preheader.new ], [ %31, %.lr.ph.a ] ; 5 uses
-  %.0700777 = phi float [ f0x7F7FFFFF, %.lr.ph.preheader.new ], [ %..3, %.lr.ph.a ] ; 2 uses
-  %niter1351 = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter1351.next.3, %.lr.ph.a ]
-  %18 = getelementptr inbounds nuw [4 x i8], ptr %i.bbl, i64 %.0342778
-  %19 = load float, ptr %18, align 4, !tbaa !44   ; 2 uses
-  %20 = fcmp ogt float %.0700777, %19
-  %. = select i1 %20, float %19, float %.0700777  ; 2 uses
-  %i.bbp = getelementptr inbounds nuw [4 x i8], ptr %i.bbl, i64 %.0342778
-  %i.bbq = getelementptr inbounds nuw i8, ptr %i.bbp, i64 4
-  %21 = load float, ptr %i.bbq, align 4, !tbaa !44 ; 2 uses
-  %22 = fcmp ogt float %., %21
-  %..1 = select i1 %22, float %21, float %.       ; 2 uses
-  %23 = getelementptr inbounds nuw [4 x i8], ptr %i.bbl, i64 %.0342778
-  %24 = getelementptr inbounds nuw i8, ptr %23, i64 8
-  %25 = load float, ptr %24, align 4, !tbaa !44   ; 2 uses
-  %26 = fcmp ogt float %..1, %25
-  %..2 = select i1 %26, float %25, float %..1     ; 2 uses
-  %27 = getelementptr inbounds nuw [4 x i8], ptr %i.bbl, i64 %.0342778
-  %28 = getelementptr inbounds nuw i8, ptr %27, i64 12
-  %29 = load float, ptr %28, align 4, !tbaa !44   ; 2 uses
-  %30 = fcmp ogt float %..2, %29
-  %..3 = select i1 %30, float %29, float %..2     ; 3 uses
-  %31 = add nuw nsw i64 %.0342778, 4              ; 2 uses
-  %niter1351.next.3 = add nuw nsw i64 %niter1351, 4 ; 2 uses
-  %niter1351.ncmp.3 = icmp eq i64 %niter1351.next.3, %unroll_iter1350
-  br i1 %niter1351.ncmp.3, label %.loopexit729.loopexit.unr-lcssa, label %.lr.ph.a, !llvm.loop !95
+  %niter1351 = phi i64 [ 0, %.lr.ph.preheader.new ], [ %index.next1195, %.lr.ph.a ] ; 3 uses
+  %vec.phi = phi <4 x float> [ splat (float f0x7F7FFFFF), %.lr.ph.preheader.new ], [ %22, %.lr.ph.a ] ; 3 uses
+  %vec.phi1192 = phi <4 x float> [ splat (float f0x7F7FFFFF), %.lr.ph.preheader.new ], [ %23, %.lr.ph.a ] ; 3 uses
+  %i.bbp = getelementptr inbounds nuw [4 x i8], ptr %i.bbl, i64 %niter1351 ; 2 uses
+  %i.bbq = getelementptr inbounds nuw i8, ptr %i.bbp, i64 16
+  %wide.load1193 = load <4 x float>, ptr %i.bbp, align 4, !tbaa !44
+  %wide.load1194 = load <4 x float>, ptr %i.bbq, align 4, !tbaa !44
+  %18 = freeze <4 x float> %wide.load1193         ; 3 uses
+  %19 = freeze <4 x float> %wide.load1194         ; 3 uses
+  %20 = fcmp ogt <4 x float> %vec.phi, %18
+  %21 = fcmp ogt <4 x float> %vec.phi1192, %19
+  %22 = select <4 x i1> %20, <4 x float> %18, <4 x float> %vec.phi ; 2 uses
+  %23 = select <4 x i1> %21, <4 x float> %19, <4 x float> %vec.phi1192 ; 2 uses
+  %index.next1195 = add nuw i64 %niter1351, 8     ; 2 uses
+  %24 = call <4 x i1> @llvm.is.fpclass.v4f32(<4 x float> %18, /* (nan nzero) */ i32 35)
+  %25 = call <4 x i1> @llvm.is.fpclass.v4f32(<4 x float> %19, /* (nan nzero) */ i32 35)
+  %26 = or <4 x i1> %24, %25
+  %27 = bitcast <4 x i1> %26 to i4
+  %28 = icmp ne i4 %27, 0                         ; 5 uses
+  %29 = icmp eq i64 %index.next1195, %unroll_iter1350
+  %30 = or i1 %28, %29
+  br i1 %30, label %.loopexit729.loopexit.unr-lcssa, label %.lr.ph.a, !llvm.loop !95
 
 .loopexit729.loopexit.unr-lcssa:                  ; preds = %.lr.ph.a
-  %lcmp.mod1347.not = icmp eq i64 %xtraiter1345, 0
-  br i1 %lcmp.mod1347.not, label %.loopexit729, label %.lr.ph.epil.preheader
+  %31 = select i1 %28, <4 x float> %vec.phi, <4 x float> %22
+  %32 = select i1 %28, <4 x float> %vec.phi1192, <4 x float> %23
+  %33 = select i1 %28, i64 %niter1351, i64 %unroll_iter1350
+  %rdx.minmax = call nnan <4 x float> @llvm.minnum.v4f32(<4 x float> %31, <4 x float> %32)
+  %34 = call nnan float @llvm.vector.reduce.fmin.v4f32(<4 x float> %rdx.minmax) ; 2 uses
+  %cmp.n1197 = icmp ne i64 %i.bbi, %unroll_iter1350
+  %.not1226 = or i1 %cmp.n1197, %28
+  br i1 %.not1226, label %.lr.ph.epil.preheader, label %.loopexit729
 
-.lr.ph.epil.preheader:                            ; preds = %.loopexit729.loopexit.unr-lcssa, %.lr.ph.preheader
-  %.0342778.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %31, %.loopexit729.loopexit.unr-lcssa ]
-  %.0700777.epil.init = phi float [ f0x7F7FFFFF, %.lr.ph.preheader ], [ %..3, %.loopexit729.loopexit.unr-lcssa ]
-  %lcmp.mod1349 = icmp ne i64 %xtraiter1345, 0
-  call void @llvm.assume(i1 %lcmp.mod1349)
+.lr.ph.epil.preheader:                            ; preds = %.lr.ph.preheader, %.loopexit729.loopexit.unr-lcssa
+  %.0342778.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %33, %.loopexit729.loopexit.unr-lcssa ]
+  %.0700777.epil.init = phi float [ f0x7F7FFFFF, %.lr.ph.preheader ], [ %34, %.loopexit729.loopexit.unr-lcssa ]
   br label %.lr.ph.epil
 
-.lr.ph.epil:                                      ; preds = %.lr.ph.epil, %.lr.ph.epil.preheader
-  %.0342778.epil = phi i64 [ %32, %.lr.ph.epil ], [ %.0342778.epil.init, %.lr.ph.epil.preheader ] ; 2 uses
+.lr.ph.epil:                                      ; preds = %.lr.ph.epil.preheader, %.lr.ph.epil
+  %.0342778.epil = phi i64 [ %epil.iter1346.next, %.lr.ph.epil ], [ %.0342778.epil.init, %.lr.ph.epil.preheader ] ; 2 uses
   %.0700777.epil = phi float [ %..epil, %.lr.ph.epil ], [ %.0700777.epil.init, %.lr.ph.epil.preheader ] ; 2 uses
-  %epil.iter1346 = phi i64 [ %epil.iter1346.next, %.lr.ph.epil ], [ 0, %.lr.ph.epil.preheader ]
   %i.bbr = getelementptr inbounds nuw [4 x i8], ptr %i.bbl, i64 %.0342778.epil
   %i.bbs = load float, ptr %i.bbr, align 4, !tbaa !44 ; 2 uses
   %i.bbt = fcmp ogt float %.0700777.epil, %i.bbs
   %..epil = select i1 %i.bbt, float %i.bbs, float %.0700777.epil ; 2 uses
-  %32 = add nuw nsw i64 %.0342778.epil, 1
-  %epil.iter1346.next = add i64 %epil.iter1346, 1 ; 2 uses
-  %epil.iter1346.cmp.not = icmp eq i64 %epil.iter1346.next, %xtraiter1345
+  %epil.iter1346.next = add nuw nsw i64 %.0342778.epil, 1 ; 2 uses
+  %epil.iter1346.cmp.not = icmp eq i64 %epil.iter1346.next, %i.bbi
   br i1 %epil.iter1346.cmp.not, label %.loopexit729, label %.lr.ph.epil, !llvm.loop !96
 
-.loopexit729:                                     ; preds = %.loopexit729.loopexit.unr-lcssa, %.lr.ph.epil, %bb.cz, %_ZN7meshoptL21fillAttributeQuadricsEPNS_7QuadricEPNS_11QuadricGradEPKjmPKNS_7Vector3EPKfm.exit
-  %.1701 = phi float [ 0.000000e+00, %_ZN7meshoptL21fillAttributeQuadricsEPNS_7QuadricEPNS_11QuadricGradEPKjmPKNS_7Vector3EPKfm.exit ], [ f0x7F7FFFFF, %bb.cz ], [ %..3, %.loopexit729.loopexit.unr-lcssa ], [ %..epil, %.lr.ph.epil ] ; 3 uses
-  %.0345 = phi ptr [ null, %_ZN7meshoptL21fillAttributeQuadricsEPNS_7QuadricEPNS_11QuadricGradEPKjmPKNS_7Vector3EPKfm.exit ], [ %i.bbe, %bb.cz ], [ %i.bbe, %.lr.ph.epil ], [ %i.bbe, %.loopexit729.loopexit.unr-lcssa ] ; 2 uses
-  %.0344 = phi ptr [ null, %_ZN7meshoptL21fillAttributeQuadricsEPNS_7QuadricEPNS_11QuadricGradEPKjmPKNS_7Vector3EPKfm.exit ], [ %i.bbl, %bb.cz ], [ %i.bbl, %.lr.ph.epil ], [ %i.bbl, %.loopexit729.loopexit.unr-lcssa ] ; 5 uses
-  %.0343 = phi i64 [ 0, %_ZN7meshoptL21fillAttributeQuadricsEPNS_7QuadricEPNS_11QuadricGradEPKjmPKNS_7Vector3EPKfm.exit ], [ 0, %bb.cz ], [ %i.bbi, %.lr.ph.epil ], [ %i.bbi, %.loopexit729.loopexit.unr-lcssa ] ; 5 uses
+.loopexit729:                                     ; preds = %.lr.ph.epil, %.loopexit729.loopexit.unr-lcssa, %bb.cz, %_ZN7meshoptL21fillAttributeQuadricsEPNS_7QuadricEPNS_11QuadricGradEPKjmPKNS_7Vector3EPKfm.exit
+  %.1701 = phi float [ 0.000000e+00, %_ZN7meshoptL21fillAttributeQuadricsEPNS_7QuadricEPNS_11QuadricGradEPKjmPKNS_7Vector3EPKfm.exit ], [ f0x7F7FFFFF, %bb.cz ], [ %34, %.loopexit729.loopexit.unr-lcssa ], [ %..epil, %.lr.ph.epil ] ; 3 uses
+  %.0345 = phi ptr [ null, %_ZN7meshoptL21fillAttributeQuadricsEPNS_7QuadricEPNS_11QuadricGradEPKjmPKNS_7Vector3EPKfm.exit ], [ %i.bbe, %bb.cz ], [ %i.bbe, %.loopexit729.loopexit.unr-lcssa ], [ %i.bbe, %.lr.ph.epil ] ; 2 uses
+  %.0344 = phi ptr [ null, %_ZN7meshoptL21fillAttributeQuadricsEPNS_7QuadricEPNS_11QuadricGradEPKjmPKNS_7Vector3EPKfm.exit ], [ %i.bbl, %bb.cz ], [ %i.bbl, %.loopexit729.loopexit.unr-lcssa ], [ %i.bbl, %.lr.ph.epil ] ; 5 uses
+  %.0343 = phi i64 [ 0, %_ZN7meshoptL21fillAttributeQuadricsEPNS_7QuadricEPNS_11QuadricGradEPKjmPKNS_7Vector3EPKfm.exit ], [ 0, %bb.cz ], [ %i.bbi, %.loopexit729.loopexit.unr-lcssa ], [ %i.bbi, %.lr.ph.epil ] ; 5 uses
   br i1 %.not88.i, label %_ZN7meshoptL18boundEdgeCollapsesERKNS_13EdgeAdjacencyEmmPh.exit, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %.loopexit729
@@ -688,7 +685,7 @@ _ZN7meshoptL15fillVertexCellsEPjmS0_PKjm.exit:    ; preds = %bb.ad
 
 bb.ae:                                            ; preds = %_ZN7meshoptL15fillVertexCellsEPjmS0_PKjm.exit, %_ZN7meshoptL15fillVertexCellsEPjmS0_PKjm.exit.thread
   %i.pq = phi i64 [ 0, %_ZN7meshoptL15fillVertexCellsEPjmS0_PKjm.exit.thread ], [ %i.pp, %_ZN7meshoptL15fillVertexCellsEPjmS0_PKjm.exit ]
-  %.019.lcssa.i222 = phi i64 [ 0, %_ZN7meshoptL15fillVertexCellsEPjmS0_PKjm.exit.thread ], [ %.1.i, %_ZN7meshoptL15fillVertexCellsEPjmS0_PKjm.exit ] ; 6 uses
+  %.019.lcssa.i222 = phi i64 [ 0, %_ZN7meshoptL15fillVertexCellsEPjmS0_PKjm.exit.thread ], [ %.1.i, %_ZN7meshoptL15fillVertexCellsEPjmS0_PKjm.exit ] ; 7 uses
   %i.pr = phi i64 [ 0, %_ZN7meshoptL15fillVertexCellsEPjmS0_PKjm.exit.thread ], [ %spec.select, %_ZN7meshoptL15fillVertexCellsEPjmS0_PKjm.exit ]
   %i.ps = load ptr, ptr @_ZZN17meshopt_Allocator7storageEvE1s, align 8, !tbaa !23
   %i.pt = invoke noundef ptr %i.ps(i64 noundef %i.pr)
@@ -858,7 +855,7 @@ bb.ai:                                            ; preds = %_ZN7meshoptL16fillC
   store ptr %i.uj, ptr %i.um, align 8, !tbaa !27
   %i.un = load ptr, ptr @_ZZN17meshopt_Allocator7storageEvE1s, align 8, !tbaa !23
   %i.uo = invoke noundef ptr %i.un(i64 noundef %i.ui)
-          to label %bb.aj unwind label %bb.aw, !inline_history !6 ; 8 uses
+          to label %bb.aj unwind label %bb.aw, !inline_history !6 ; 5 uses
 
 bb.aj:                                            ; preds = %bb.ai
   %i.up = add nuw nsw i64 %i.uk, 2                ; 2 uses
@@ -945,40 +942,54 @@ _ZN7meshoptL13fillCellRemapEPjPfmPKjPKNS_7QuadricEPKNS_7Vector3Em.exit: ; preds 
   br i1 %.not239, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %_ZN7meshoptL13fillCellRemapEPjPfmPKjPKNS_7QuadricEPKNS_7Vector3Em.exit
-  %xtraiter = and i64 %.019.lcssa.i222, 3         ; 3 uses
-  %i.wv = icmp ult i64 %.019.lcssa.i222, 4
-  br i1 %i.wv, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
+  %i.wv = icmp ult i64 %.019.lcssa.i222, 8
+  br i1 %i.wv, label %.lr.ph.preheader346, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
-  %unroll_iter = and i64 %.019.lcssa.i222, -4
+  %unroll_iter = and i64 %.019.lcssa.i222, -8     ; 3 uses
+  br label %.lr.ph.epil.preheader
+
+.lr.ph.epil.preheader:                            ; preds = %.lr.ph.epil.preheader, %.lr.ph.preheader.new
+  %.0238.epil.init = phi i64 [ 0, %.lr.ph.preheader.new ], [ %index.next329, %.lr.ph.epil.preheader ] ; 3 uses
+  %vec.phi = phi <4 x float> [ zeroinitializer, %.lr.ph.preheader.new ], [ %17, %.lr.ph.epil.preheader ] ; 3 uses
+  %vec.phi327 = phi <4 x float> [ zeroinitializer, %.lr.ph.preheader.new ], [ %18, %.lr.ph.epil.preheader ] ; 3 uses
+  %11 = getelementptr inbounds nuw [4 x i8], ptr %i.uo, i64 %.0238.epil.init ; 2 uses
+  %12 = getelementptr inbounds nuw i8, ptr %11, i64 16
+  %wide.load = load <4 x float>, ptr %11, align 4, !tbaa !44
+  %wide.load328 = load <4 x float>, ptr %12, align 4, !tbaa !44
+  %13 = freeze <4 x float> %wide.load             ; 3 uses
+  %14 = freeze <4 x float> %wide.load328          ; 3 uses
+  %15 = fcmp olt <4 x float> %vec.phi, %13
+  %16 = fcmp olt <4 x float> %vec.phi327, %14
+  %17 = select <4 x i1> %15, <4 x float> %13, <4 x float> %vec.phi ; 2 uses
+  %18 = select <4 x i1> %16, <4 x float> %14, <4 x float> %vec.phi327 ; 2 uses
+  %index.next329 = add nuw i64 %.0238.epil.init, 8 ; 2 uses
+  %19 = tail call <4 x i1> @llvm.is.fpclass.v4f32(<4 x float> %13, /* (nan nzero) */ i32 35)
+  %20 = tail call <4 x i1> @llvm.is.fpclass.v4f32(<4 x float> %14, /* (nan nzero) */ i32 35)
+  %21 = or <4 x i1> %19, %20
+  %22 = bitcast <4 x i1> %21 to i4
+  %lcmp.mod345 = icmp ne i4 %22, 0                ; 5 uses
+  %23 = icmp eq i64 %index.next329, %unroll_iter
+  %24 = or i1 %lcmp.mod345, %23
+  br i1 %24, label %.lr.ph.epil, label %.lr.ph.epil.preheader, !llvm.loop !178
+
+.lr.ph.epil:                                      ; preds = %.lr.ph.epil.preheader
+  %25 = select i1 %lcmp.mod345, <4 x float> %vec.phi, <4 x float> %17
+  %26 = select i1 %lcmp.mod345, <4 x float> %vec.phi327, <4 x float> %18
+  %27 = select i1 %lcmp.mod345, i64 %.0238.epil.init, i64 %unroll_iter
+  %rdx.minmax = tail call nnan <4 x float> @llvm.maxnum.v4f32(<4 x float> %25, <4 x float> %26)
+  %28 = tail call nnan float @llvm.vector.reduce.fmax.v4f32(<4 x float> %rdx.minmax) ; 2 uses
+  %cmp.n331 = icmp ne i64 %.019.lcssa.i222, %unroll_iter
+  %.not333 = or i1 %cmp.n331, %lcmp.mod345
+  br i1 %.not333, label %.lr.ph.preheader346, label %._crit_edge
+
+.lr.ph.preheader346:                              ; preds = %.lr.ph.preheader, %.lr.ph.epil
+  %.0238.ph = phi i64 [ 0, %.lr.ph.preheader ], [ %27, %.lr.ph.epil ]
+  %.0119237.ph = phi float [ 0.000000e+00, %.lr.ph.preheader ], [ %28, %.lr.ph.epil ]
   br label %.lr.ph
 
-._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.lr.ph.epil.preheader
-
-.lr.ph.epil.preheader:                            ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.preheader
-  %.0238.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %27, %._crit_edge.loopexit.unr-lcssa ]
-  %.0119237.epil.init = phi float [ 0.000000e+00, %.lr.ph.preheader ], [ %..0119.3, %._crit_edge.loopexit.unr-lcssa ]
-  %lcmp.mod345 = icmp ne i64 %xtraiter, 0
-  tail call void @llvm.assume(i1 %lcmp.mod345)
-  br label %.lr.ph.epil
-
-.lr.ph.epil:                                      ; preds = %.lr.ph.epil, %.lr.ph.epil.preheader
-  %.0238.epil = phi i64 [ %14, %.lr.ph.epil ], [ %.0238.epil.init, %.lr.ph.epil.preheader ] ; 2 uses
-  %.0119237.epil = phi float [ %..0119.epil, %.lr.ph.epil ], [ %.0119237.epil.init, %.lr.ph.epil.preheader ] ; 2 uses
-  %epil.iter = phi i64 [ %epil.iter.next, %.lr.ph.epil ], [ 0, %.lr.ph.epil.preheader ]
-  %11 = getelementptr inbounds nuw [4 x i8], ptr %i.uo, i64 %.0238.epil
-  %12 = load float, ptr %11, align 4, !tbaa !44   ; 2 uses
-  %13 = fcmp olt float %.0119237.epil, %12
-  %..0119.epil = select i1 %13, float %12, float %.0119237.epil ; 2 uses
-  %14 = add nuw i64 %.0238.epil, 1
-  %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
-  %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %._crit_edge, label %.lr.ph.epil, !llvm.loop !178
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.epil, %_ZN7meshoptL13fillCellRemapEPjPfmPKjPKNS_7QuadricEPKNS_7Vector3Em.exit
-  %.0119.lcssa = phi float [ 0.000000e+00, %_ZN7meshoptL13fillCellRemapEPjPfmPKjPKNS_7QuadricEPKNS_7Vector3Em.exit ], [ %..0119.3, %._crit_edge.loopexit.unr-lcssa ], [ %..0119.epil, %.lr.ph.epil ]
+._crit_edge:                                      ; preds = %.lr.ph, %.lr.ph.epil, %_ZN7meshoptL13fillCellRemapEPjPfmPKjPKNS_7QuadricEPKNS_7Vector3Em.exit
+  %.0119.lcssa = phi float [ 0.000000e+00, %_ZN7meshoptL13fillCellRemapEPjPfmPKjPKNS_7QuadricEPKNS_7Vector3Em.exit ], [ %28, %.lr.ph.epil ], [ %..0119.3, %.lr.ph ]
   %i.ww = lshr i64 %.1124.lcssa, 2
   %i.wx = add i64 %i.ww, %.1124.lcssa
   br label %bb.an
@@ -997,33 +1008,16 @@ _ZN7meshoptL12hashBuckets2Em.exit211:             ; preds = %bb.an
   %i.xe = invoke noundef ptr %i.xa(i64 noundef %i.xd)
           to label %bb.ao unwind label %bb.aw, !inline_history !4 ; 5 uses
 
-.lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
-  %.0238 = phi i64 [ 0, %.lr.ph.preheader.new ], [ %27, %.lr.ph ] ; 5 uses
-  %.0119237 = phi float [ 0.000000e+00, %.lr.ph.preheader.new ], [ %..0119.3, %.lr.ph ] ; 2 uses
-  %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.3, %.lr.ph ]
-  %15 = getelementptr inbounds nuw [4 x i8], ptr %i.uo, i64 %.0238
-  %16 = load float, ptr %15, align 4, !tbaa !44   ; 2 uses
-  %17 = fcmp olt float %.0119237, %16
-  %..0119 = select i1 %17, float %16, float %.0119237 ; 2 uses
-  %18 = getelementptr inbounds nuw [4 x i8], ptr %i.uo, i64 %.0238
-  %19 = getelementptr inbounds nuw i8, ptr %18, i64 4
-  %20 = load float, ptr %19, align 4, !tbaa !44   ; 2 uses
-  %21 = fcmp olt float %..0119, %20
-  %..0119.1 = select i1 %21, float %20, float %..0119 ; 2 uses
-  %22 = getelementptr inbounds nuw [4 x i8], ptr %i.uo, i64 %.0238
-  %23 = getelementptr inbounds nuw i8, ptr %22, i64 8
-  %24 = load float, ptr %23, align 4, !tbaa !44   ; 2 uses
-  %25 = fcmp olt float %..0119.1, %24
-  %..0119.2 = select i1 %25, float %24, float %..0119.1 ; 2 uses
+.lr.ph:                                           ; preds = %.lr.ph.preheader346, %.lr.ph
+  %.0238 = phi i64 [ %niter.next.3, %.lr.ph ], [ %.0238.ph, %.lr.ph.preheader346 ] ; 2 uses
+  %.0119237 = phi float [ %..0119.3, %.lr.ph ], [ %.0119237.ph, %.lr.ph.preheader346 ] ; 2 uses
   %i.xf = getelementptr inbounds nuw [4 x i8], ptr %i.uo, i64 %.0238
-  %26 = getelementptr inbounds nuw i8, ptr %i.xf, i64 12
-  %i.xg = load float, ptr %26, align 4, !tbaa !44 ; 2 uses
-  %i.xh = fcmp olt float %..0119.2, %i.xg
-  %..0119.3 = select i1 %i.xh, float %i.xg, float %..0119.2 ; 3 uses
-  %27 = add nuw i64 %.0238, 4                     ; 2 uses
-  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
-  %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
-  br i1 %niter.ncmp.3, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !179
+  %i.xg = load float, ptr %i.xf, align 4, !tbaa !44 ; 2 uses
+  %i.xh = fcmp olt float %.0119237, %i.xg
+  %..0119.3 = select i1 %i.xh, float %i.xg, float %.0119237 ; 2 uses
+  %niter.next.3 = add nuw i64 %.0238, 1           ; 2 uses
+  %niter.ncmp.3 = icmp eq i64 %niter.next.3, %.019.lcssa.i222
+  br i1 %niter.ncmp.3, label %._crit_edge, label %.lr.ph, !llvm.loop !179
 
 bb.ao:                                            ; preds = %_ZN7meshoptL12hashBuckets2Em.exit211
   %i.xi = add nuw nsw i64 %i.uk, 3                ; 2 uses
@@ -1426,7 +1420,16 @@ declare void @llvm.assume(i1 noundef) #13
 declare float @llvm.sqrt.f32(float) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x float> @llvm.minnum.v4f32(<4 x float>, <4 x float>) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fmin.v4f32(<4 x float>) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.add.v2i64(<2 x i64>) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i1> @llvm.is.fpclass.v4f32(<4 x float>, i32 immarg) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #10
@@ -1436,6 +1439,12 @@ declare <8 x float> @llvm.fmuladd.v8f32(<8 x float>, <8 x float>, <8 x float>) #
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x float> @llvm.maxnum.v4f32(<4 x float>, <4 x float>) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fmax.v4f32(<4 x float>) #10
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -1553,8 +1562,8 @@ attributes #15 = { noreturn nounwind }
 !92 = distinct !{!92, !30}
 !93 = distinct !{!93, !30}
 !94 = distinct !{!94, !30}
-!95 = distinct !{!95, !30}
-!96 = distinct !{!96, !31}
+!95 = distinct !{!95, !30, !41, !42}
+!96 = distinct !{!96, !30, !42, !41}
 !97 = distinct !{!97, !30, !41, !42}
 !98 = distinct !{!98, !30, !42, !41}
 !99 = distinct !{null}
@@ -1636,8 +1645,8 @@ attributes #15 = { noreturn nounwind }
 !175 = distinct !{!175, !30, !42, !41}
 !176 = distinct !{!176, !30}
 !177 = distinct !{!177, !30}
-!178 = distinct !{!178, !31}
-!179 = distinct !{!179, !30}
+!178 = distinct !{!178, !30, !41, !42}
+!179 = distinct !{!179, !30, !42, !41}
 !180 = distinct !{!180, !30}
 !181 = distinct !{!181, !30, !41, !42}
 !182 = distinct !{!182, !30, !42, !41}

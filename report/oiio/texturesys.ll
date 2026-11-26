@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 5128
 inline.NumDeleted: 1476
 loop-unroll.NumCompletelyUnrolled: 52
-loop-unroll.NumRuntimeUnrolled: 61
-loop-unroll.NumUnrolled: 118
+loop-unroll.NumRuntimeUnrolled: 60
+loop-unroll.NumUnrolled: 117
 begin_hunk_0_@_ZN11OpenImageIO4v3_117TextureSystemImpl17visualize_ellipseERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEffffff:bb.a
   %i.av = insertelement <2 x float> %i.au, float %2, i64 1 ; 2 uses
   %i.aw = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.av, <2 x float> %i.av, <2 x float> %i.at) ; 3 uses
@@ -205,7 +205,7 @@ bb.o:                                             ; preds = %_ZStlsISt11char_tra
   %i.fv = load i32, ptr %i.fu, align 8, !tbaa !328
   %i.fw = and i32 %i.fv, 2
   %i.fx = icmp ne i32 %i.fw, 0
-  %i.fy = alloca [1024 x i8], align 16            ; 8 uses
+  %i.fy = alloca [1024 x i8], align 16            ; 5 uses
   %i.fz = getelementptr inbounds nuw i8, ptr %i.fy, i64 256 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #3
@@ -372,41 +372,55 @@ bb.z:                                             ; preds = %bb.y
   br i1 %i.ix, label %.lr.ph.preheader, label %._crit_edge181
 
 .lr.ph.preheader:                                 ; preds = %bb.z
-  %wide.trip.count = zext nneg i32 %i.gb to i64   ; 2 uses
-  %xtraiter = and i64 %wide.trip.count, 3         ; 3 uses
-  %i.iy = icmp ult i32 %i.gb, 4
-  br i1 %i.iy, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
+  %wide.trip.count = zext nneg i32 %i.gb to i64   ; 3 uses
+  %i.iy = icmp ult i32 %i.gb, 8
+  br i1 %i.iy, label %.lr.ph.preheader218, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
-  %unroll_iter = and i64 %wide.trip.count, 2147483644
+  %unroll_iter = and i64 %wide.trip.count, 2147483640 ; 3 uses
+  br label %.lr.ph.epil.preheader
+
+.lr.ph.epil.preheader:                            ; preds = %.lr.ph.epil.preheader, %.lr.ph.preheader.new
+  %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph.preheader.new ], [ %index.next, %.lr.ph.epil.preheader ] ; 3 uses
+  %vec.phi = phi <4 x float> [ zeroinitializer, %.lr.ph.preheader.new ], [ %31, %.lr.ph.epil.preheader ] ; 3 uses
+  %vec.phi216 = phi <4 x float> [ zeroinitializer, %.lr.ph.preheader.new ], [ %32, %.lr.ph.epil.preheader ] ; 3 uses
+  %25 = getelementptr inbounds nuw [4 x i8], ptr %i.fy, i64 %indvars.iv.epil.init ; 2 uses
+  %26 = getelementptr inbounds nuw i8, ptr %25, i64 16
+  %wide.load = load <4 x float>, ptr %25, align 16, !tbaa !265
+  %wide.load217 = load <4 x float>, ptr %26, align 16, !tbaa !265
+  %27 = freeze <4 x float> %wide.load             ; 3 uses
+  %28 = freeze <4 x float> %wide.load217          ; 3 uses
+  %29 = fcmp olt <4 x float> %27, %vec.phi
+  %30 = fcmp olt <4 x float> %28, %vec.phi216
+  %31 = select <4 x i1> %29, <4 x float> %vec.phi, <4 x float> %27 ; 2 uses
+  %32 = select <4 x i1> %30, <4 x float> %vec.phi216, <4 x float> %28 ; 2 uses
+  %index.next = add nuw i64 %indvars.iv.epil.init, 8 ; 2 uses
+  %33 = call <4 x i1> @llvm.is.fpclass.v4f32(<4 x float> %27, /* (nan nzero) */ i32 35)
+  %34 = call <4 x i1> @llvm.is.fpclass.v4f32(<4 x float> %28, /* (nan nzero) */ i32 35)
+  %35 = or <4 x i1> %33, %34
+  %36 = bitcast <4 x i1> %35 to i4
+  %lcmp.mod220 = icmp ne i4 %36, 0                ; 5 uses
+  %37 = icmp eq i64 %index.next, %unroll_iter
+  %38 = or i1 %lcmp.mod220, %37
+  br i1 %38, label %.lr.ph.epil, label %.lr.ph.epil.preheader, !llvm.loop !1116
+
+.lr.ph.epil:                                      ; preds = %.lr.ph.epil.preheader
+  %39 = select i1 %lcmp.mod220, <4 x float> %vec.phi, <4 x float> %31
+  %40 = select i1 %lcmp.mod220, <4 x float> %vec.phi216, <4 x float> %32
+  %41 = select i1 %lcmp.mod220, i64 %indvars.iv.epil.init, i64 %unroll_iter
+  %rdx.minmax = call nnan <4 x float> @llvm.maxnum.v4f32(<4 x float> %39, <4 x float> %40)
+  %42 = call nnan float @llvm.vector.reduce.fmax.v4f32(<4 x float> %rdx.minmax) ; 2 uses
+  %cmp.n = icmp ne i64 %unroll_iter, %wide.trip.count
+  %.not = or i1 %cmp.n, %lcmp.mod220
+  br i1 %.not, label %.lr.ph.preheader218, label %.lr.ph180
+
+.lr.ph.preheader218:                              ; preds = %.lr.ph.preheader, %.lr.ph.epil
+  %indvars.iv.ph = phi i64 [ 0, %.lr.ph.preheader ], [ %41, %.lr.ph.epil ]
+  %.0166176.ph = phi float [ 0.000000e+00, %.lr.ph.preheader ], [ %42, %.lr.ph.epil ]
   br label %.lr.ph
 
-.lr.ph180.unr-lcssa:                              ; preds = %.lr.ph
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph180, label %.lr.ph.epil.preheader
-
-.lr.ph.epil.preheader:                            ; preds = %.lr.ph180.unr-lcssa, %.lr.ph.preheader
-  %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next.3, %.lr.ph180.unr-lcssa ]
-  %.0166176.epil.init = phi float [ 0.000000e+00, %.lr.ph.preheader ], [ %.sroa.speculated.3, %.lr.ph180.unr-lcssa ]
-  %lcmp.mod220 = icmp ne i64 %xtraiter, 0
-  call void @llvm.assume(i1 %lcmp.mod220)
-  br label %.lr.ph.epil
-
-.lr.ph.epil:                                      ; preds = %.lr.ph.epil, %.lr.ph.epil.preheader
-  %indvars.iv.epil = phi i64 [ %indvars.iv.epil.init, %.lr.ph.epil.preheader ], [ %indvars.iv.next.epil, %.lr.ph.epil ] ; 2 uses
-  %.0166176.epil = phi float [ %.0166176.epil.init, %.lr.ph.epil.preheader ], [ %.sroa.speculated.epil, %.lr.ph.epil ] ; 2 uses
-  %epil.iter = phi i64 [ 0, %.lr.ph.epil.preheader ], [ %epil.iter.next, %.lr.ph.epil ]
-  %25 = getelementptr inbounds nuw [4 x i8], ptr %i.fy, i64 %indvars.iv.epil
-  %26 = load float, ptr %25, align 4, !tbaa !265  ; 2 uses
-  %27 = fcmp olt float %26, %.0166176.epil
-  %.sroa.speculated.epil = select i1 %27, float %.0166176.epil, float %26 ; 2 uses
-  %indvars.iv.next.epil = add nuw nsw i64 %indvars.iv.epil, 1
-  %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
-  %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %.lr.ph180, label %.lr.ph.epil, !llvm.loop !1116
-
-.lr.ph180:                                        ; preds = %.lr.ph.epil, %.lr.ph180.unr-lcssa
-  %.sroa.speculated.lcssa = phi float [ %.sroa.speculated.3, %.lr.ph180.unr-lcssa ], [ %.sroa.speculated.epil, %.lr.ph.epil ]
+.lr.ph180:                                        ; preds = %.lr.ph, %.lr.ph.epil
+  %.sroa.speculated.lcssa = phi float [ %42, %.lr.ph.epil ], [ %.sroa.speculated.3, %.lr.ph ]
   %i.iz = load float, ptr %i.e, align 4, !tbaa !265
   %i.ja = fmul float %i.iz, 1.000000e+02
   %i.jb = fptosi float %i.ja to i32               ; 4 uses
@@ -434,33 +448,16 @@ bb.ab:                                            ; preds = %bb.y
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l) #3
   br label %.loopexit.split-lp.loopexit.split-lp
 
-.lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
-  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader.new ], [ %indvars.iv.next.3, %.lr.ph ] ; 5 uses
-  %.0166176 = phi float [ 0.000000e+00, %.lr.ph.preheader.new ], [ %.sroa.speculated.3, %.lr.ph ] ; 2 uses
-  %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.3, %.lr.ph ]
-  %28 = getelementptr inbounds nuw [4 x i8], ptr %i.fy, i64 %indvars.iv
-  %29 = load float, ptr %28, align 16, !tbaa !265 ; 2 uses
-  %30 = fcmp olt float %29, %.0166176
-  %.sroa.speculated = select i1 %30, float %.0166176, float %29 ; 2 uses
-  %31 = getelementptr inbounds nuw [4 x i8], ptr %i.fy, i64 %indvars.iv
-  %32 = getelementptr inbounds nuw i8, ptr %31, i64 4
-  %33 = load float, ptr %32, align 4, !tbaa !265  ; 2 uses
-  %34 = fcmp olt float %33, %.sroa.speculated
-  %.sroa.speculated.1 = select i1 %34, float %.sroa.speculated, float %33 ; 2 uses
-  %35 = getelementptr inbounds nuw [4 x i8], ptr %i.fy, i64 %indvars.iv
-  %36 = getelementptr inbounds nuw i8, ptr %35, i64 8
-  %37 = load float, ptr %36, align 8, !tbaa !265  ; 2 uses
-  %38 = fcmp olt float %37, %.sroa.speculated.1
-  %.sroa.speculated.2 = select i1 %38, float %.sroa.speculated.1, float %37 ; 2 uses
+.lr.ph:                                           ; preds = %.lr.ph.preheader218, %.lr.ph
+  %indvars.iv = phi i64 [ %niter.next.3, %.lr.ph ], [ %indvars.iv.ph, %.lr.ph.preheader218 ] ; 2 uses
+  %.0166176 = phi float [ %.sroa.speculated.3, %.lr.ph ], [ %.0166176.ph, %.lr.ph.preheader218 ] ; 2 uses
   %i.jj = getelementptr inbounds nuw [4 x i8], ptr %i.fy, i64 %indvars.iv
-  %39 = getelementptr inbounds nuw i8, ptr %i.jj, i64 12
-  %i.jk = load float, ptr %39, align 4, !tbaa !265 ; 2 uses
-  %i.jl = fcmp olt float %i.jk, %.sroa.speculated.2
-  %.sroa.speculated.3 = select i1 %i.jl, float %.sroa.speculated.2, float %i.jk ; 3 uses
-  %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
-  %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
-  br i1 %niter.ncmp.3, label %.lr.ph180.unr-lcssa, label %.lr.ph, !llvm.loop !1117
+  %i.jk = load float, ptr %i.jj, align 4, !tbaa !265 ; 2 uses
+  %i.jl = fcmp olt float %i.jk, %.0166176
+  %.sroa.speculated.3 = select i1 %i.jl, float %.0166176, float %i.jk ; 2 uses
+  %niter.next.3 = add nuw nsw i64 %indvars.iv, 1  ; 2 uses
+  %niter.ncmp.3 = icmp eq i64 %niter.next.3, %wide.trip.count
+  br i1 %niter.ncmp.3, label %.lr.ph180, label %.lr.ph, !llvm.loop !1117
 
 ._crit_edge181:                                   ; preds = %bb.ae, %bb.z
   %i.jm = load ptr, ptr %1, align 8, !tbaa !272
@@ -861,6 +858,15 @@ declare <2 x float> @llvm.fabs.v2f32(<2 x float>) #25
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #25
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x float> @llvm.maxnum.v4f32(<4 x float>, <4 x float>) #25
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fmax.v4f32(<4 x float>) #25
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i1> @llvm.is.fpclass.v4f32(<4 x float>, i32 immarg) #25
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.ceil.v2f32(<2 x float>) #25
@@ -1265,8 +1271,8 @@ begin_hunk_2_@llvm.ceil.v2f32
 !1113 = !{!1104, !1105}
 !1114 = distinct !{!1114, !274}
 !1115 = distinct !{!1115, !274}
-!1116 = distinct !{!1116, !452}
-!1117 = distinct !{!1117, !274}
+!1116 = distinct !{!1116, !274, !444, !445}
+!1117 = distinct !{!1117, !274, !445, !444}
 !1118 = distinct !{!1118, !274}
 !1119 = !{i64 -4527903148279325114}
 !1120 = !{!565, !252, i64 16}
