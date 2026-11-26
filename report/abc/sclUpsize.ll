@@ -204,11 +204,10 @@ bb.ci:                                            ; preds = %bb.ch
   %i.nw = load <2 x float>, ptr %i.nr, align 4, !tbaa !76
   %i.nx = load <2 x float>, ptr %i.nu, align 4, !tbaa !76
   %i.ny = fsub <2 x float> %i.nw, %i.nx
-  %i.nz = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %i.ny) ; 3 uses
-  %7 = fcmp ogt float %i.nz, 0.000000e+00
+  %i.nz = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %i.ny) ; 2 uses
   %i.oa = fmul float %i.nz, 1.500000e+00
-  %8 = select i1 %7, float %i.nz, float %i.oa
-  %i.ob = fpext float %8 to double
+  %7 = tail call float @llvm.minnum.f32(float %i.nz, float %i.oa)
+  %i.ob = fpext float %7 to double
   %i.oc = fpext float %.02335.i to double
   %i.od = tail call double @llvm.fmuladd.f64(double %i.ob, double 5.000000e-01, double %i.oc)
   %i.oe = fptrunc double %i.od to float
@@ -610,6 +609,9 @@ declare ptr @Extra_FileNameWithoutPath(ptr noundef) local_unnamed_addr #5
 
 ; Function Attrs: nofree nounwind
 declare noundef i32 @fclose(ptr noundef captures(none)) local_unnamed_addr #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.minnum.f32(float, float) #17
 
 ; Function Attrs: nofree nounwind
 declare noundef i32 @putchar(i32 noundef) local_unnamed_addr #22
