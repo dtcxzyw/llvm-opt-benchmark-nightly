@@ -205,7 +205,7 @@ _ZSt13move_backwardIPPN5clang9NamedDeclES3_ET0_T_S5_S4_.exit: ; preds = %"_ZN9__
 }
 
 ; Function Attrs: mustprogress nofree nounwind memory(read, argmem: readwrite) uwtable
-define internal fastcc void @"_ZSt12__move_mergeIPPN5clang9NamedDeclES3_N9__gnu_cxx5__ops15_Iter_comp_iterIZNS0_4Sema17getDestructorNameERKNS0_14IdentifierInfoENS0_14SourceLocationEPNS0_5ScopeERNS0_12CXXScopeSpecENS0_9OpaquePtrINS0_8QualTypeEEEbE3$_5EEET0_T_SM_SM_SM_SL_T1_"(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr nofree noundef writeonly captures(ret: address, provenance) %4) unnamed_addr #19 {
+define internal fastcc void @"_ZSt12__move_mergeIPPN5clang9NamedDeclES3_N9__gnu_cxx5__ops15_Iter_comp_iterIZNS0_4Sema17getDestructorNameERKNS0_14IdentifierInfoENS0_14SourceLocationEPNS0_5ScopeERNS0_12CXXScopeSpecENS0_9OpaquePtrINS0_8QualTypeEEEbE3$_5EEET0_T_SM_SM_SM_SL_T1_"(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr nofree noundef writeonly captures(none) %4) unnamed_addr #19 {
 bb.a:
   %i.a = icmp ne ptr %0, %1
   %i.b = icmp ne ptr %2, %3
