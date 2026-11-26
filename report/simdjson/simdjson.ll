@@ -204,7 +204,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not89108, label %.critedge4, label %.lr.ph109
 
 .lr.ph109:                                        ; preds = %.loopexit, %bb.n
-  %i.ai = phi ptr [ %i.ar, %bb.n ], [ %.promoted105, %.loopexit ] ; 4 uses
+  %i.ai = phi ptr [ %i.ar, %bb.n ], [ %.promoted105, %.loopexit ] ; 3 uses
   %i.aj = phi i32 [ %i.aq, %bb.n ], [ %.promoted106, %.loopexit ] ; 4 uses
   %i.ak = load i8, ptr %i.ai, align 1, !tbaa !36
   %i.al = add i8 %i.ak, -48                       ; 2 uses
@@ -229,9 +229,8 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   br i1 %.not89, label %.critedge4, label %.lr.ph109, !llvm.loop !185
 
 .critedge4:                                       ; preds = %.lr.ph109, %bb.n, %.loopexit
-  %3 = phi ptr [ %.promoted105, %.loopexit ], [ %i.ar, %bb.n ], [ %i.ai, %.lr.ph109 ]
   %.lcssa107 = phi i32 [ %.promoted106, %.loopexit ], [ %i.aq, %bb.n ], [ %i.aj, %.lr.ph109 ] ; 2 uses
-  %.lcssa = phi ptr [ %2, %.loopexit ], [ %2, %bb.n ], [ %i.ai, %.lr.ph109 ]
+  %.lcssa = phi ptr [ %.promoted105, %.loopexit ], [ %i.ar, %bb.n ], [ %i.ai, %.lr.ph109 ] ; 2 uses
   store i32 %.lcssa107, ptr %0, align 4
   %i.as = ptrtoint ptr %i.z to i64
   %i.at = ptrtoint ptr %.lcssa to i64
@@ -248,7 +247,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l
 
 .critedge2.thread:                                ; preds = %.critedge2.thread.loopexit, %.critedge4, %.critedge2
   %i.ax = phi i32 [ 0, %.critedge2.thread.loopexit ], [ %i.av, %.critedge4 ], [ 0, %.critedge2 ] ; 2 uses
-  %i.ay = phi ptr [ %i.aw, %.critedge2.thread.loopexit ], [ %3, %.critedge4 ], [ %i.o, %.critedge2 ] ; 5 uses
+  %i.ay = phi ptr [ %i.aw, %.critedge2.thread.loopexit ], [ %.lcssa, %.critedge4 ], [ %i.o, %.critedge2 ] ; 5 uses
   %i.az = phi i32 [ %.lcssa99, %.critedge2.thread.loopexit ], [ %.lcssa107, %.critedge4 ], [ %.promoted106, %.critedge2 ] ; 3 uses
   %.not90 = icmp eq i32 %i.az, 0
   br i1 %.not90, label %.thread, label %.preheader155

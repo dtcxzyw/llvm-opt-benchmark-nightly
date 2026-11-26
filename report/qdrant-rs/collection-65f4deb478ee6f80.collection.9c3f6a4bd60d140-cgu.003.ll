@@ -205,17 +205,15 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.b
   %i.r = getelementptr inbounds nuw i8, ptr %.val.i.i.i, i64 23
   %i.s = load i8, ptr %i.r, align 1, !alias.scope !3136, !noalias !3137, !noundef !11
-  %.not.i.i.i.i.i = icmp sgt i8 %i.s, -1
+  %.not.i.i.i.i.i = icmp slt i8 %i.s, 0
   %i.t = getelementptr inbounds nuw i8, ptr %.val.i.i.i, i64 16
-  %.val.i.i.i.i.i = load ptr, ptr %i.p, align 8, !alias.scope !3136, !noalias !3137 ; 5 uses
+  %.val.i.i.i.i.i = load ptr, ptr %i.p, align 8, !alias.scope !3136, !noalias !3137 ; 4 uses
   %.val21.i.i.i.i.i = load i64, ptr %i.t, align 8, !alias.scope !3136, !noalias !3137 ; 2 uses
-  br i1 %.not.i.i.i.i.i, label %3, label %_RNvXs6_NtCs9zPlAsQS9gd_4ecow3vecINtB5_6EcoVechENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsPYQCUnoTxQ_10collection.exit.i.i.i.i.i
-
-3:                                                ; preds = %bb.d
   %.not.i.i.i.i.i.i.i = icmp eq ptr %.val.i.i.i.i.i, inttoptr (i64 16 to ptr)
-  br i1 %.not.i.i.i.i.i.i.i, label %_RNvXs6_NtCs9zPlAsQS9gd_4ecow3vecINtB5_6EcoVechENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsPYQCUnoTxQ_10collection.exit.i.i.i.i.i, label %bb.e
+  %or.cond = select i1 %.not.i.i.i.i.i, i1 true, i1 %.not.i.i.i.i.i.i.i
+  br i1 %or.cond, label %_RNvXs6_NtCs9zPlAsQS9gd_4ecow3vecINtB5_6EcoVechENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsPYQCUnoTxQ_10collection.exit.i.i.i.i.i, label %bb.e
 
-bb.e:                                             ; preds = %3
+bb.e:                                             ; preds = %bb.d
   %i.u = getelementptr inbounds i8, ptr %.val.i.i.i.i.i, i64 -16
   %i.v = atomicrmw add ptr %i.u, i64 1 monotonic, align 8, !noalias !3138
   %i.w = icmp slt i64 %i.v, 0
@@ -225,9 +223,8 @@ bb.f:                                             ; preds = %bb.e
   call void @_RINvNtCs9zPlAsQS9gd_4ecow3vec18ref_count_overflowhECsPYQCUnoTxQ_10collection(ptr noundef nonnull %.val.i.i.i.i.i, i64 noundef %.val21.i.i.i.i.i) #37, !noalias !3138
   unreachable
 
-_RNvXs6_NtCs9zPlAsQS9gd_4ecow3vecINtB5_6EcoVechENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsPYQCUnoTxQ_10collection.exit.i.i.i.i.i: ; preds = %bb.d, %bb.e, %3
-  %.sroa.06.0.i.i.i.i.i = phi ptr [ %.val.i.i.i.i.i, %bb.e ], [ inttoptr (i64 16 to ptr), %3 ], [ %.val.i.i.i.i.i, %bb.d ]
-  %i.x = ptrtoint ptr %.sroa.06.0.i.i.i.i.i to i64
+_RNvXs6_NtCs9zPlAsQS9gd_4ecow3vecINtB5_6EcoVechENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsPYQCUnoTxQ_10collection.exit.i.i.i.i.i: ; preds = %bb.d, %bb.e
+  %i.x = ptrtoint ptr %.val.i.i.i.i.i to i64
   store i64 %i.x, ptr %.sroa.4.i.i.i.i, align 8, !alias.scope !3135, !noalias !3137
   br label %_RNCINvXsG_NtCsjqcU1oJFKXj_9hashbrown3mapINtB8_4ItermuENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4folduNCINvXsU_B8_INtB8_4KeysmuEBQ_4folduNCINvNtNtBW_8adapters3map8map_foldRmTmNtNtCs607s0NAIaWN_7segment5types8ShardKeyEuNCNCNvMs0_NtNtNtCsPYQCUnoTxQ_10collection6shards12shard_holder13shard_mappingNtB3T_15ShardKeyMapping21shard_id_to_shard_key00QNCINvNvBQ_8for_each4callB30_NCINvXs1i_B8_INtB8_7HashMapmB32_NtNtCsyIGusAaLFh_5ahash12random_state11RandomStateEINtNtBU_7collect6ExtendB30_E6extendINtNtB2x_7flatten7FlatMapINtNtNtNtCsG258MDvU3F_3std11collections4hash3map4IterB32_INtNtB8B_3set7HashSetmEEINtB2v_3MapINtB9u_4ItermEB3J_ENCB3N_0EE0E0E0E0E0B3Z_.exit
 

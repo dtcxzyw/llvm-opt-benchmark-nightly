@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 4 uses
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !400  ; 2 uses
   %i.i = sext i32 %1 to i64
-  %i.j = getelementptr inbounds i8, ptr %i.h, i64 %i.i ; 4 uses
+  %i.j = getelementptr inbounds i8, ptr %i.h, i64 %i.i ; 3 uses
   %i.k = tail call noundef ptr @_Z8ImStrbolPKcS0_(ptr noundef %i.j, ptr noundef %i.h) ; 2 uses
   %i.l = load ptr, ptr %i.g, align 8, !tbaa !400
   %i.m = load i32, ptr %i.b, align 8, !tbaa !377
@@ -247,9 +247,8 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.ad, label %bb.d, label %.thread9.sink.split
 
 .thread9.sink.split:                              ; preds = %bb.e, %bb.g
-  %.lcssa45.sink = phi ptr [ %i.w, %bb.g ], [ %i.j, %bb.e ]
   %i.ae = load ptr, ptr %i.g, align 8, !tbaa !400
-  %i.af = ptrtoint ptr %.lcssa45.sink to i64
+  %i.af = ptrtoint ptr %i.w to i64
   %i.ag = ptrtoint ptr %i.ae to i64
   %i.ah = sub i64 %i.af, %i.ag
   %i.ai = trunc i64 %i.ah to i32

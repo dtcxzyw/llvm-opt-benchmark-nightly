@@ -205,8 +205,8 @@ bb.aa:                                            ; preds = %.noexc203, %bb.y
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %.noexc204
   %i.hf = phi ptr [ %i.iq, %.noexc204 ], [ %.promoted1148, %.lr.ph.i.preheader ] ; 6 uses
-  %i.hg = phi ptr [ %i.ir, %.noexc204 ], [ %.promoted1147, %.lr.ph.i.preheader ] ; 5 uses
-  %i.hh = phi ptr [ %i.is, %.noexc204 ], [ %.promoted, %.lr.ph.i.preheader ] ; 6 uses
+  %i.hg = phi ptr [ %i.ir, %.noexc204 ], [ %.promoted1147, %.lr.ph.i.preheader ] ; 4 uses
+  %i.hh = phi ptr [ %i.is, %.noexc204 ], [ %.promoted, %.lr.ph.i.preheader ] ; 7 uses
   %i.hi = phi ptr [ %i.iw, %.noexc204 ], [ %i.gx, %.lr.ph.i.preheader ]
   %.144.i = phi float [ %i.it, %.noexc204 ], [ %.0.i, %.lr.ph.i.preheader ] ; 2 uses
   %.03743.i = phi i64 [ %i.iu, %.noexc204 ], [ 0, %.lr.ph.i.preheader ] ; 2 uses
@@ -230,7 +230,7 @@ bb.ab:                                            ; preds = %.lr.ph.i
   br label %.noexc204
 
 bb.ac:                                            ; preds = %.lr.ph.i
-  %i.hn = ptrtoint ptr %i.hg to i64
+  %i.hn = ptrtoint ptr %i.hh to i64
   %i.ho = ptrtoint ptr %i.hf to i64
   %i.hp = sub i64 %i.hn, %i.ho                    ; 3 uses
   %i.hq = icmp eq i64 %i.hp, 9223372036854775800
@@ -493,8 +493,8 @@ bb.as:                                            ; preds = %.noexc223, %bb.aq
 
 .lr.ph.i214:                                      ; preds = %.lr.ph.i214.preheader, %.noexc224
   %i.kp = phi ptr [ %i.ma, %.noexc224 ], [ %.promoted1151, %.lr.ph.i214.preheader ] ; 6 uses
-  %i.kq = phi ptr [ %i.mb, %.noexc224 ], [ %.promoted1150, %.lr.ph.i214.preheader ] ; 5 uses
-  %i.kr = phi ptr [ %i.mc, %.noexc224 ], [ %.promoted1149, %.lr.ph.i214.preheader ] ; 6 uses
+  %i.kq = phi ptr [ %i.mb, %.noexc224 ], [ %.promoted1150, %.lr.ph.i214.preheader ] ; 4 uses
+  %i.kr = phi ptr [ %i.mc, %.noexc224 ], [ %.promoted1149, %.lr.ph.i214.preheader ] ; 7 uses
   %i.ks = phi ptr [ %i.mg, %.noexc224 ], [ %i.kh, %.lr.ph.i214.preheader ]
   %.143.i = phi float [ %i.md, %.noexc224 ], [ %.0.i212, %.lr.ph.i214.preheader ] ; 2 uses
   %.03742.i = phi i64 [ %i.me, %.noexc224 ], [ 0, %.lr.ph.i214.preheader ] ; 2 uses
@@ -518,7 +518,7 @@ bb.at:                                            ; preds = %.lr.ph.i214
   br label %.noexc224
 
 bb.au:                                            ; preds = %.lr.ph.i214
-  %i.kx = ptrtoint ptr %i.kq to i64
+  %i.kx = ptrtoint ptr %i.kr to i64
   %i.ky = ptrtoint ptr %i.kp to i64
   %i.kz = sub i64 %i.kx, %i.ky                    ; 3 uses
   %i.la = icmp eq i64 %i.kz, 9223372036854775800
@@ -781,8 +781,8 @@ bb.bk:                                            ; preds = %.noexc247, %bb.bi
 
 .lr.ph.i235:                                      ; preds = %.lr.ph.i235.preheader, %.noexc248
   %i.nz = phi ptr [ %i.pl, %.noexc248 ], [ %.promoted1154, %.lr.ph.i235.preheader ] ; 6 uses
-  %i.oa = phi ptr [ %i.pm, %.noexc248 ], [ %.promoted1153, %.lr.ph.i235.preheader ] ; 5 uses
-  %i.ob = phi ptr [ %i.pn, %.noexc248 ], [ %.promoted1152, %.lr.ph.i235.preheader ] ; 6 uses
+  %i.oa = phi ptr [ %i.pm, %.noexc248 ], [ %.promoted1153, %.lr.ph.i235.preheader ] ; 4 uses
+  %i.ob = phi ptr [ %i.pn, %.noexc248 ], [ %.promoted1152, %.lr.ph.i235.preheader ] ; 7 uses
   %i.oc = phi ptr [ %i.pr, %.noexc248 ], [ %i.nr, %.lr.ph.i235.preheader ]
   %.144.i236 = phi float [ %i.po, %.noexc248 ], [ %.0.i233, %.lr.ph.i235.preheader ] ; 2 uses
   %.03743.i237 = phi i64 [ %i.pp, %.noexc248 ], [ 0, %.lr.ph.i235.preheader ] ; 2 uses
@@ -806,7 +806,7 @@ bb.bl:                                            ; preds = %.lr.ph.i235
   br label %.noexc248
 
 bb.bm:                                            ; preds = %.lr.ph.i235
-  %i.oh = ptrtoint ptr %i.oa to i64
+  %i.oh = ptrtoint ptr %i.ob to i64
   %i.oi = ptrtoint ptr %i.nz to i64
   %i.oj = sub i64 %i.oh, %i.oi                    ; 3 uses
   %i.ok = icmp eq i64 %i.oj, 9223372036854775800
@@ -1209,8 +1209,8 @@ _ZNSt6vectorIN3ozz9animation7offline12_GLOBAL__N_110SortingKeyINS2_12RawAnimatio
   br label %_ZNSt6vectorIN3ozz9animation7offline12_GLOBAL__N_110SortingKeyINS2_12RawAnimation14TranslationKeyEEENS0_12StdAllocatorIS7_EEE9push_backERKS7_.exit.i
 
 _ZNSt6vectorIN3ozz9animation7offline12_GLOBAL__N_110SortingKeyINS2_12RawAnimation14TranslationKeyEEENS0_12StdAllocatorIS7_EEE9push_backERKS7_.exit.i: ; preds = %_ZNSt6vectorIN3ozz9animation7offline12_GLOBAL__N_110SortingKeyINS2_12RawAnimation14TranslationKeyEEENS0_12StdAllocatorIS7_EEE17_M_realloc_insertIJRKS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_SA_EEDpOT_.exit.i.i, %bb.ei
-  %i.zv = phi ptr [ %i.zu, %_ZNSt6vectorIN3ozz9animation7offline12_GLOBAL__N_110SortingKeyINS2_12RawAnimation14TranslationKeyEEENS0_12StdAllocatorIS7_EEE17_M_realloc_insertIJRKS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_SA_EEDpOT_.exit.i.i ], [ %i.ys, %bb.ei ] ; 4 uses
-  %i.zw = phi ptr [ %i.zn, %_ZNSt6vectorIN3ozz9animation7offline12_GLOBAL__N_110SortingKeyINS2_12RawAnimation14TranslationKeyEEENS0_12StdAllocatorIS7_EEE17_M_realloc_insertIJRKS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_SA_EEDpOT_.exit.i.i ], [ %.val55.i, %bb.ei ] ; 3 uses
+  %i.zv = phi ptr [ %i.zu, %_ZNSt6vectorIN3ozz9animation7offline12_GLOBAL__N_110SortingKeyINS2_12RawAnimation14TranslationKeyEEENS0_12StdAllocatorIS7_EEE17_M_realloc_insertIJRKS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_SA_EEDpOT_.exit.i.i ], [ %i.ys, %bb.ei ] ; 3 uses
+  %i.zw = phi ptr [ %i.zn, %_ZNSt6vectorIN3ozz9animation7offline12_GLOBAL__N_110SortingKeyINS2_12RawAnimation14TranslationKeyEEENS0_12StdAllocatorIS7_EEE17_M_realloc_insertIJRKS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_SA_EEDpOT_.exit.i.i ], [ %.val55.i, %bb.ei ] ; 4 uses
   store float %i.yh, ptr %i.wz, align 4, !tbaa !75
   %.not.i77.i = icmp eq ptr %i.zw, %i.zv
   br i1 %.not.i77.i, label %bb.eq, label %bb.ep
@@ -1224,7 +1224,7 @@ bb.ep:                                            ; preds = %_ZNSt6vectorIN3ozz9
 
 bb.eq:                                            ; preds = %_ZNSt6vectorIN3ozz9animation7offline12_GLOBAL__N_110SortingKeyINS2_12RawAnimation14TranslationKeyEEENS0_12StdAllocatorIS7_EEE9push_backERKS7_.exit.i
   %.val.i.i78.i = load ptr, ptr %58, align 8, !tbaa !56 ; 5 uses
-  %i.zy = ptrtoint ptr %i.zv to i64
+  %i.zy = ptrtoint ptr %i.zw to i64
   %i.zz = ptrtoint ptr %.val.i.i78.i to i64
   %i.aaa = sub i64 %i.zy, %i.zz                   ; 3 uses
   %i.aab = icmp eq i64 %i.aaa, 9223372036854775800
@@ -1627,8 +1627,8 @@ _ZNSt6vectorIN3ozz9animation7offline12_GLOBAL__N_110SortingKeyINS2_12RawAnimatio
   br label %_ZNSt6vectorIN3ozz9animation7offline12_GLOBAL__N_110SortingKeyINS2_12RawAnimation11RotationKeyEEENS0_12StdAllocatorIS7_EEE9push_backERKS7_.exit.i
 
 _ZNSt6vectorIN3ozz9animation7offline12_GLOBAL__N_110SortingKeyINS2_12RawAnimation11RotationKeyEEENS0_12StdAllocatorIS7_EEE9push_backERKS7_.exit.i: ; preds = %_ZNSt6vectorIN3ozz9animation7offline12_GLOBAL__N_110SortingKeyINS2_12RawAnimation11RotationKeyEEENS0_12StdAllocatorIS7_EEE17_M_realloc_insertIJRKS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_SA_EEDpOT_.exit.i.i, %bb.hf
-  %i.ako = phi ptr [ %i.akn, %_ZNSt6vectorIN3ozz9animation7offline12_GLOBAL__N_110SortingKeyINS2_12RawAnimation11RotationKeyEEENS0_12StdAllocatorIS7_EEE17_M_realloc_insertIJRKS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_SA_EEDpOT_.exit.i.i ], [ %i.ajl, %bb.hf ] ; 4 uses
-  %i.akp = phi ptr [ %i.akg, %_ZNSt6vectorIN3ozz9animation7offline12_GLOBAL__N_110SortingKeyINS2_12RawAnimation11RotationKeyEEENS0_12StdAllocatorIS7_EEE17_M_realloc_insertIJRKS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_SA_EEDpOT_.exit.i.i ], [ %.val54.i, %bb.hf ] ; 3 uses
+  %i.ako = phi ptr [ %i.akn, %_ZNSt6vectorIN3ozz9animation7offline12_GLOBAL__N_110SortingKeyINS2_12RawAnimation11RotationKeyEEENS0_12StdAllocatorIS7_EEE17_M_realloc_insertIJRKS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_SA_EEDpOT_.exit.i.i ], [ %i.ajl, %bb.hf ] ; 3 uses
+  %i.akp = phi ptr [ %i.akg, %_ZNSt6vectorIN3ozz9animation7offline12_GLOBAL__N_110SortingKeyINS2_12RawAnimation11RotationKeyEEENS0_12StdAllocatorIS7_EEE17_M_realloc_insertIJRKS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_SA_EEDpOT_.exit.i.i ], [ %.val54.i, %bb.hf ] ; 4 uses
   store float %i.aiy, ptr %i.ahq, align 4, !tbaa !83
   %.not.i76.i = icmp eq ptr %i.akp, %i.ako
   br i1 %.not.i76.i, label %bb.hn, label %bb.hm
@@ -1642,7 +1642,7 @@ bb.hm:                                            ; preds = %_ZNSt6vectorIN3ozz9
 
 bb.hn:                                            ; preds = %_ZNSt6vectorIN3ozz9animation7offline12_GLOBAL__N_110SortingKeyINS2_12RawAnimation11RotationKeyEEENS0_12StdAllocatorIS7_EEE9push_backERKS7_.exit.i
   %.val.i.i77.i = load ptr, ptr %59, align 8, !tbaa !62 ; 5 uses
-  %i.akr = ptrtoint ptr %i.ako to i64
+  %i.akr = ptrtoint ptr %i.akp to i64
   %i.aks = ptrtoint ptr %.val.i.i77.i to i64
   %i.akt = sub i64 %i.akr, %i.aks                 ; 3 uses
   %i.aku = icmp eq i64 %i.akt, 9223372036854775800
@@ -2045,7 +2045,6 @@ _ZNSt6vectorISt4pairIiiEN3ozz12StdAllocatorIS1_EEEC2EmRKS4_.exit.i425: ; preds =
   br label %bb.jt
 
 .loopexit130.i439:                                ; preds = %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPSt4pairIiiESt6vectorIS3_N3ozz12StdAllocatorIS3_EEEEES3_EvT_SB_RKT0_.exit.i430, %bb.lr
-  %.val55.i4321230 = phi ptr [ %.val55.i432, %bb.lr ], [ %.val.i431, %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPSt4pairIiiESt6vectorIS3_N3ozz12StdAllocatorIS3_EEEEES3_EvT_SB_RKT0_.exit.i430 ] ; 2 uses
   %i.asl = load ptr, ptr %20, align 8, !tbaa !92  ; 2 uses
   %.not.i.i.i.i440 = icmp eq ptr %i.asl, null
   br i1 %.not.i.i.i.i440, label %bb.ls, label %bb.jq
@@ -2083,8 +2082,8 @@ bb.jt:                                            ; preds = %.loopexit30.i468, %
   br label %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPSt4pairIiiESt6vectorIS3_N3ozz12StdAllocatorIS3_EEEEES3_EvT_SB_RKT0_.exit.i430
 
 _ZSt4fillIN9__gnu_cxx17__normal_iteratorIPSt4pairIiiESt6vectorIS3_N3ozz12StdAllocatorIS3_EEEEES3_EvT_SB_RKT0_.exit.i430: ; preds = %.lr.ph.i.i.i.i71.preheader.i429, %bb.jt
-  %.val.i431 = load ptr, ptr %60, align 8, !tbaa !67 ; 12 uses
-  %.val55.i432 = load ptr, ptr %i.aos, align 8, !tbaa !68 ; 11 uses
+  %.val.i431 = load ptr, ptr %60, align 8, !tbaa !67 ; 11 uses
+  %.val55.i432 = load ptr, ptr %i.aos, align 8, !tbaa !68 ; 12 uses
   %.not67.i433 = icmp eq ptr %.val55.i432, %.val.i431 ; 2 uses
   br i1 %.not67.i433, label %.loopexit130.i439, label %.lr.ph.i434
 
@@ -2260,8 +2259,8 @@ _ZNSt6vectorIN3ozz9animation7offline12_GLOBAL__N_110SortingKeyINS2_12RawAnimatio
   br label %_ZNSt6vectorIN3ozz9animation7offline12_GLOBAL__N_110SortingKeyINS2_12RawAnimation8ScaleKeyEEENS0_12StdAllocatorIS7_EEE9push_backERKS7_.exit.i
 
 _ZNSt6vectorIN3ozz9animation7offline12_GLOBAL__N_110SortingKeyINS2_12RawAnimation8ScaleKeyEEENS0_12StdAllocatorIS7_EEE9push_backERKS7_.exit.i: ; preds = %_ZNSt6vectorIN3ozz9animation7offline12_GLOBAL__N_110SortingKeyINS2_12RawAnimation8ScaleKeyEEENS0_12StdAllocatorIS7_EEE17_M_realloc_insertIJRKS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_SA_EEDpOT_.exit.i.i, %bb.kc
-  %i.avg = phi ptr [ %i.avf, %_ZNSt6vectorIN3ozz9animation7offline12_GLOBAL__N_110SortingKeyINS2_12RawAnimation8ScaleKeyEEENS0_12StdAllocatorIS7_EEE17_M_realloc_insertIJRKS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_SA_EEDpOT_.exit.i.i ], [ %i.aud, %bb.kc ] ; 4 uses
-  %i.avh = phi ptr [ %i.auy, %_ZNSt6vectorIN3ozz9animation7offline12_GLOBAL__N_110SortingKeyINS2_12RawAnimation8ScaleKeyEEENS0_12StdAllocatorIS7_EEE17_M_realloc_insertIJRKS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_SA_EEDpOT_.exit.i.i ], [ %.val55.i432, %bb.kc ] ; 3 uses
+  %i.avg = phi ptr [ %i.avf, %_ZNSt6vectorIN3ozz9animation7offline12_GLOBAL__N_110SortingKeyINS2_12RawAnimation8ScaleKeyEEENS0_12StdAllocatorIS7_EEE17_M_realloc_insertIJRKS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_SA_EEDpOT_.exit.i.i ], [ %i.aud, %bb.kc ] ; 3 uses
+  %i.avh = phi ptr [ %i.auy, %_ZNSt6vectorIN3ozz9animation7offline12_GLOBAL__N_110SortingKeyINS2_12RawAnimation8ScaleKeyEEENS0_12StdAllocatorIS7_EEE17_M_realloc_insertIJRKS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_SA_EEDpOT_.exit.i.i ], [ %.val55.i432, %bb.kc ] ; 4 uses
   store float %i.ats, ptr %i.ask, align 4, !tbaa !88
   %.not.i77.i455 = icmp eq ptr %i.avh, %i.avg
   br i1 %.not.i77.i455, label %bb.kk, label %bb.kj
@@ -2275,7 +2274,7 @@ bb.kj:                                            ; preds = %_ZNSt6vectorIN3ozz9
 
 bb.kk:                                            ; preds = %_ZNSt6vectorIN3ozz9animation7offline12_GLOBAL__N_110SortingKeyINS2_12RawAnimation8ScaleKeyEEENS0_12StdAllocatorIS7_EEE9push_backERKS7_.exit.i
   %.val.i.i78.i505 = load ptr, ptr %60, align 8, !tbaa !67 ; 5 uses
-  %i.avj = ptrtoint ptr %i.avg to i64
+  %i.avj = ptrtoint ptr %i.avh to i64
   %i.avk = ptrtoint ptr %.val.i.i78.i505 to i64
   %i.avl = sub i64 %i.avj, %i.avk                 ; 3 uses
   %i.avm = icmp eq i64 %i.avl, 9223372036854775800
@@ -2678,9 +2677,9 @@ _ZNSt6vectorIfN3ozz12StdAllocatorIfEEE9push_backERKf.exit39.i: ; preds = %bb.ly,
   br i1 %.not12.i, label %._crit_edge26.i, label %bb.lw
 
 ._crit_edge31.i:                                  ; preds = %_ZNSt6vectorIfN3ozz12StdAllocatorIfEEE9push_backERKf.exit44.i, %._crit_edge26.i
-  %i.bac = load ptr, ptr %61, align 8, !tbaa !237, !alias.scope !236 ; 5 uses
+  %i.bac = load ptr, ptr %61, align 8, !tbaa !237, !alias.scope !236 ; 4 uses
   %i.bad = getelementptr inbounds nuw i8, ptr %61, i64 8 ; 11 uses
-  %i.bae = load ptr, ptr %i.bad, align 8, !tbaa !237, !alias.scope !236 ; 4 uses
+  %i.bae = load ptr, ptr %i.bad, align 8, !tbaa !237, !alias.scope !236 ; 5 uses
   %.not.i.i.i564 = icmp eq ptr %i.bac, %i.bae
   br i1 %.not.i.i.i564, label %_ZN3ozz9animation7offline12_GLOBAL__N_115BuildTimePointsERSt6vectorINS2_10SortingKeyINS1_12RawAnimation14TranslationKeyEEENS_12StdAllocatorIS7_EEERS3_INS4_INS5_11RotationKeyEEENS8_ISD_EEERS3_INS4_INS5_8ScaleKeyEEENS8_ISI_EEE.exit, label %bb.lz
 
@@ -2720,12 +2719,12 @@ bb.mc:                                            ; preds = %bb.ma
 
 _ZNSt6vectorIfN3ozz12StdAllocatorIfEEE9push_backERKf.exit44.i: ; preds = %bb.mc, %bb.mb
   %i.bar = getelementptr inbounds nuw i8, ptr %.sroa.05.028.i, i64 24 ; 2 uses
-  %.not13.i = icmp eq ptr %i.bar, %.val55.i4321230
+  %.not13.i = icmp eq ptr %i.bar, %.val55.i432
   br i1 %.not13.i, label %._crit_edge31.i, label %bb.ma
 
 _ZSt4sortIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEEEvT_S9_.exit.i: ; preds = %.noexc40.i
-  %.pre.i565 = load ptr, ptr %61, align 8, !tbaa !237, !alias.scope !236 ; 5 uses
-  %.pre39.i = load ptr, ptr %i.bad, align 8, !tbaa !237, !alias.scope !236 ; 6 uses
+  %.pre.i565 = load ptr, ptr %61, align 8, !tbaa !237, !alias.scope !236 ; 4 uses
+  %.pre39.i = load ptr, ptr %i.bad, align 8, !tbaa !237, !alias.scope !236 ; 7 uses
   %i.bas = icmp eq ptr %.pre.i565, %.pre39.i
   br i1 %i.bas, label %_ZN3ozz9animation7offline12_GLOBAL__N_115BuildTimePointsERSt6vectorINS2_10SortingKeyINS1_12RawAnimation14TranslationKeyEEENS_12StdAllocatorIS7_EEERS3_INS4_INS5_11RotationKeyEEENS8_ISD_EEERS3_INS4_INS5_8ScaleKeyEEENS8_ISI_EEE.exit, label %.preheader.i.i.i.i
 
@@ -2791,7 +2790,7 @@ _ZSt4moveIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEE
   br label %.body
 
 _ZN3ozz9animation7offline12_GLOBAL__N_115BuildTimePointsERSt6vectorINS2_10SortingKeyINS1_12RawAnimation14TranslationKeyEEENS_12StdAllocatorIS7_EEERS3_INS4_INS5_11RotationKeyEEENS8_ISD_EEERS3_INS4_INS5_8ScaleKeyEEENS8_ISI_EEE.exit: ; preds = %.preheader.i.i.i.i, %_ZSt6uniqueIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEEET_S9_S9_.exit.i._ZN3ozz9animation7offline12_GLOBAL__N_115BuildTimePointsERSt6vectorINS2_10SortingKeyINS1_12RawAnimation14TranslationKeyEEENS_12StdAllocatorIS7_EEERS3_INS4_INS5_11RotationKeyEEENS8_ISD_EEERS3_INS4_INS5_8ScaleKeyEEENS8_ISI_EEE.exit_crit_edge, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEES8_ET0_T_SA_S9_.exit.i.i.i, %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEEEvT_S9_.exit.i, %._crit_edge31.i
-  %i.bbk = phi ptr [ %.pre1310, %_ZSt6uniqueIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEEET_S9_S9_.exit.i._ZN3ozz9animation7offline12_GLOBAL__N_115BuildTimePointsERSt6vectorINS2_10SortingKeyINS1_12RawAnimation14TranslationKeyEEENS_12StdAllocatorIS7_EEERS3_INS4_INS5_11RotationKeyEEENS8_ISD_EEERS3_INS4_INS5_8ScaleKeyEEENS8_ISI_EEE.exit_crit_edge ], [ %i.bac, %._crit_edge31.i ], [ %i.bbj, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEES8_ET0_T_SA_S9_.exit.i.i.i ], [ %.pre.i565, %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEEEvT_S9_.exit.i ], [ %.pre39.i, %.preheader.i.i.i.i ]
+  %i.bbk = phi ptr [ %.pre1310, %_ZSt6uniqueIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEEET_S9_S9_.exit.i._ZN3ozz9animation7offline12_GLOBAL__N_115BuildTimePointsERSt6vectorINS2_10SortingKeyINS1_12RawAnimation14TranslationKeyEEENS_12StdAllocatorIS7_EEERS3_INS4_INS5_11RotationKeyEEENS8_ISD_EEERS3_INS4_INS5_8ScaleKeyEEENS8_ISI_EEE.exit_crit_edge ], [ %i.bae, %._crit_edge31.i ], [ %i.bbj, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEES8_ET0_T_SA_S9_.exit.i.i.i ], [ %.pre39.i, %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEEEvT_S9_.exit.i ], [ %.pre39.i, %.preheader.i.i.i.i ]
   %i.bbl = load ptr, ptr %61, align 8, !tbaa !97  ; 3 uses
   %i.bbm = ptrtoint ptr %i.bbk to i64
   %i.bbn = ptrtoint ptr %i.bbl to i64
@@ -2825,7 +2824,7 @@ bb.mi:                                            ; preds = %bb.mh
   br i1 %i.bbz, label %bb.mj, label %bb.ml
 
 bb.mj:                                            ; preds = %bb.mi
-  %i.bca = ptrtoint ptr %.val55.i4321230 to i64
+  %i.bca = ptrtoint ptr %.val55.i432 to i64
   %i.bcb = ptrtoint ptr %.val.i431 to i64
   %i.bcc = sub i64 %i.bca, %i.bcb
   %i.bcd = sdiv exact i64 %i.bcc, 24

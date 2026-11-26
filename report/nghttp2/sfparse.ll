@@ -94,7 +94,7 @@ bb.d:                                             ; preds = %bb.a, %parser_skip_
   %i.h = phi i32 [ %i.b, %bb.a ], [ %i.g, %parser_skip_inner_list.exit.thread ]
   %.val41 = load ptr, ptr %0, align 8, !tbaa !17  ; 3 uses
   %i.i = getelementptr i8, ptr %0, i64 8
-  %.val42 = load ptr, ptr %i.i, align 8, !tbaa !18 ; 9 uses
+  %.val42 = load ptr, ptr %i.i, align 8, !tbaa !18 ; 7 uses
   %.not = icmp eq ptr %.val41, %.val42
   br i1 %.not, label %bb.f, label %bb.e
 
@@ -152,7 +152,7 @@ bb.i:                                             ; preds = %parser_discard_sp.e
   br i1 %.not16.i, label %.critedge.i, label %.lr.ph, !llvm.loop !2
 
 .lr.ph:                                           ; preds = %.preheader.i.preheader, %.preheader.i
-  %storemerge.i63 = phi ptr [ %storemerge.i, %.preheader.i ], [ %storemerge.i60, %.preheader.i.preheader ] ; 6 uses
+  %storemerge.i63 = phi ptr [ %storemerge.i, %.preheader.i ], [ %storemerge.i60, %.preheader.i.preheader ] ; 5 uses
   %.pn.i62 = phi ptr [ %storemerge.i63, %.preheader.i ], [ %.val39, %.preheader.i.preheader ]
   %i.t = load i8, ptr %storemerge.i63, align 1, !tbaa !19
   %i.u = zext i8 %i.t to i64
@@ -166,15 +166,14 @@ bb.i:                                             ; preds = %parser_discard_sp.e
 
 .critedge.i:                                      ; preds = %.preheader.i, %..critedge.i_crit_edge, %.preheader.i.preheader
   %.pn.i.lcssa = phi ptr [ %.pn.i62, %..critedge.i_crit_edge ], [ %.val39, %.preheader.i.preheader ], [ %storemerge.i63, %.preheader.i ]
-  %storemerge.i.lcssa = phi ptr [ %storemerge.i63, %..critedge.i_crit_edge ], [ %storemerge.i60, %.preheader.i.preheader ], [ %storemerge.i, %.preheader.i ]
+  %storemerge.i.lcssa = phi ptr [ %storemerge.i63, %..critedge.i_crit_edge ], [ %storemerge.i60, %.preheader.i.preheader ], [ %storemerge.i, %.preheader.i ] ; 2 uses
   %.not16.i.lcssa = phi i1 [ false, %..critedge.i_crit_edge ], [ true, %.preheader.i.preheader ], [ true, %.preheader.i ]
-  %storemerge.lcssa.i = phi ptr [ %storemerge.i63, %..critedge.i_crit_edge ], [ %.val42, %.preheader.i.preheader ], [ %.val42, %.preheader.i ]
   %.not14.i = icmp eq ptr %1, null
   br i1 %.not14.i, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %.critedge.i
   store ptr %.val39, ptr %1, align 8, !tbaa !23
-  %i.x = ptrtoint ptr %storemerge.lcssa.i to i64
+  %i.x = ptrtoint ptr %storemerge.i.lcssa to i64
   %i.y = ptrtoint ptr %.val39 to i64
   %i.z = sub i64 %i.x, %i.y
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 8

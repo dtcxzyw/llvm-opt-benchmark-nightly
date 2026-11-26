@@ -205,17 +205,15 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c
   %i.aa = getelementptr inbounds nuw i8, ptr %.sroa.012.037.i, i64 23
   %i.ab = load i8, ptr %i.aa, align 1, !alias.scope !9939, !noundef !26
-  %.not.i.i = icmp sgt i8 %i.ab, -1
+  %.not.i.i = icmp slt i8 %i.ab, 0
   %i.ac = getelementptr inbounds nuw i8, ptr %.sroa.012.037.i, i64 16
-  %.val.i.i = load ptr, ptr %i.y, align 8, !alias.scope !9939 ; 5 uses
+  %.val.i.i = load ptr, ptr %i.y, align 8, !alias.scope !9939 ; 4 uses
   %.val21.i.i = load i64, ptr %i.ac, align 8, !alias.scope !9939 ; 2 uses
-  br i1 %.not.i.i, label %2, label %_RNvXs6_NtCs9zPlAsQS9gd_4ecow3vecINtB5_6EcoVechENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsgGgPqgSfnMH_7storage.exit.i.i
-
-2:                                                ; preds = %bb.e
   %.not.i.i.i.i = icmp eq ptr %.val.i.i, inttoptr (i64 16 to ptr)
-  br i1 %.not.i.i.i.i, label %_RNvXs6_NtCs9zPlAsQS9gd_4ecow3vecINtB5_6EcoVechENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsgGgPqgSfnMH_7storage.exit.i.i, label %bb.f
+  %or.cond = select i1 %.not.i.i, i1 true, i1 %.not.i.i.i.i
+  br i1 %or.cond, label %_RNvXs6_NtCs9zPlAsQS9gd_4ecow3vecINtB5_6EcoVechENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsgGgPqgSfnMH_7storage.exit.i.i, label %bb.f
 
-bb.f:                                             ; preds = %2
+bb.f:                                             ; preds = %bb.e
   %i.ad = getelementptr inbounds i8, ptr %.val.i.i, i64 -16
   %i.ae = atomicrmw add ptr %i.ad, i64 1 monotonic, align 8, !noalias !9940
   %i.af = icmp slt i64 %i.ae, 0
@@ -228,9 +226,8 @@ bb.g:                                             ; preds = %bb.f
 .noexc.i:                                         ; preds = %bb.g
   unreachable
 
-_RNvXs6_NtCs9zPlAsQS9gd_4ecow3vecINtB5_6EcoVechENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsgGgPqgSfnMH_7storage.exit.i.i: ; preds = %bb.e, %bb.f, %2
-  %.sroa.06.0.i.i = phi ptr [ %.val.i.i, %bb.f ], [ inttoptr (i64 16 to ptr), %2 ], [ %.val.i.i, %bb.e ]
-  %i.ag = ptrtoint ptr %.sroa.06.0.i.i to i64
+_RNvXs6_NtCs9zPlAsQS9gd_4ecow3vecINtB5_6EcoVechENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsgGgPqgSfnMH_7storage.exit.i.i: ; preds = %bb.e, %bb.f
+  %i.ag = ptrtoint ptr %.val.i.i to i64
   store i64 %i.ag, ptr %.sroa.415.i, align 8, !alias.scope !9937, !noalias !9936
   br label %bb.h
 

@@ -205,9 +205,9 @@ bb.a:
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
   %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8 ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !32988)
-  %i.b = load ptr, ptr %1, align 8, !alias.scope !32988, !nonnull !27, !noundef !27 ; 6 uses
+  %i.b = load ptr, ptr %1, align 8, !alias.scope !32988, !nonnull !27, !noundef !27 ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.d = load ptr, ptr %i.c, align 8, !alias.scope !32988, !nonnull !27, !noundef !27 ; 5 uses
+  %i.d = load ptr, ptr %i.c, align 8, !alias.scope !32988, !nonnull !27, !noundef !27 ; 6 uses
   %.not.i = icmp eq ptr %i.b, %i.d
   br i1 %.not.i, label %bb.b, label %bb.c
 
@@ -216,7 +216,7 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.7.0.copyload.i = load i64, ptr %.sroa.7.0..sroa_idx.i, align 8, !alias.scope !32988
   %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 24
   %.sroa.8.0.copyload.i = load i64, ptr %.sroa.8.0..sroa_idx.i, align 8, !alias.scope !32988
-  %.pre.i = ptrtoint ptr %i.b to i64
+  %.pre.i = ptrtoint ptr %i.d to i64
   %.pre67.i = sub nuw i64 %.sroa.8.0.copyload.i, %.pre.i
   %.pre69.i = udiv exact i64 %.pre67.i, 104
   br label %_RNvXs_NtNtCs4wP2HXfJTCR_5alloc3vec14spec_from_iterINtB6_3VecNtNtCskXtk6F4WjxZ_4just14string_literal13StringLiteralEINtB4_12SpecFromIterBW_INtNtB6_9into_iter8IntoIterBW_EE9from_iterB10_.exit
@@ -619,7 +619,7 @@ bb.gp:                                            ; preds = %bb.gm
   br label %_RINvNtNtCslDhCf6RbmI1_11shellexpand7strings5funcs16env_with_contextNtNtCs4wP2HXfJTCR_5alloc6string6StringB13_NCINvB2_4fullB13_E0NtNtCsaKJjC64KgbL_3std3env8VarErrorECskXtk6F4WjxZ_4just.exit.thread.i
 
 .split.i255.i.i:                                  ; preds = %bb.go, %bb.gn
-  %i.tr = getelementptr i8, ptr %.sroa.036.0.i.i, i64 %.sroa.53.0.i.i ; 10 uses
+  %i.tr = getelementptr i8, ptr %.sroa.036.0.i.i, i64 %.sroa.53.0.i.i ; 6 uses
   %i.ts = add nuw nsw i64 %.sroa.05.0.i.i, 1
   %i.tt = icmp eq i64 %i.ts, %.sroa.53.0.i.i
   br i1 %i.tt, label %.thread76.i.i, label %bb.gq
@@ -813,7 +813,7 @@ bb.hc:                                            ; preds = %bb.hb
 
 .preheader.i.i261:                                ; preds = %bb.gy, %bb.hk
   %.sroa.0.1.i.i = phi ptr [ %.sroa.0.2.ph.i.i, %bb.hk ], [ %.sroa.0.0.ph.i.i, %bb.gy ] ; 7 uses
-  %i.wu = icmp eq ptr %.sroa.0.1.i.i, %i.tr
+  %i.wu = icmp eq ptr %.sroa.0.1.i.i, %i.tr       ; 5 uses
   br i1 %i.wu, label %bb.hg, label %bb.hd
 
 bb.hd:                                            ; preds = %.preheader.i.i261
@@ -877,7 +877,7 @@ bb.hf:                                            ; preds = %_RNvXs2J_NtNtCsj6eK
           to label %bb.hk unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !47347
 
 bb.hg:                                            ; preds = %bb.hk, %.preheader.i.i261
-  %.sroa.0.1.lcssa.i.i = phi ptr [ %i.tr, %.preheader.i.i261 ], [ %.sroa.0.1.i.i, %bb.hk ] ; 5 uses
+  %.sroa.0.1.lcssa.i.i = phi ptr [ %.sroa.0.1.i.i, %bb.hk ], [ %i.tr, %.preheader.i.i261 ]
   %i.yf = ptrtoint ptr %i.tr to i64
   %i.yg = ptrtoint ptr %.sroa.0.1.lcssa.i.i to i64
   %.neg.le.i.i = sub i64 %i.yg, %i.yf             ; 2 uses
@@ -896,8 +896,7 @@ bb.hi:                                            ; preds = %bb.hh
   br i1 %i.yl, label %bb.hj, label %.thread180.invoke.i.i, !prof !31
 
 bb.hj:                                            ; preds = %bb.hi
-  %4 = icmp eq ptr %.sroa.0.1.lcssa.i.i, %i.tr
-  br i1 %4, label %_RNvNtNtCsj6eKBz9Db1c_4core3str6traits11check_range.exit232.thread.i.i, label %_RNvNtNtCsj6eKBz9Db1c_4core3str6traits11check_range.exit232.i.i
+  br i1 %i.wu, label %_RNvNtNtCsj6eKBz9Db1c_4core3str6traits11check_range.exit232.thread.i.i, label %_RNvNtNtCsj6eKBz9Db1c_4core3str6traits11check_range.exit232.i.i
 
 bb.hk:                                            ; preds = %bb.hf
   br i1 %i.ye, label %.preheader.i.i261, label %bb.hg
@@ -937,8 +936,7 @@ bb.hn:                                            ; preds = %bb.hm
   br i1 %.not.i298.i.i, label %bb.ho, label %.split.i299.i.i
 
 .split.i299.i.i:                                  ; preds = %bb.hn
-  %5 = icmp eq ptr %.sroa.0.1.lcssa.i.i, %i.tr
-  br i1 %5, label %bb.hp, label %.thread180.invoke.i.i
+  br i1 %i.wu, label %bb.hp, label %.thread180.invoke.i.i
 
 bb.ho:                                            ; preds = %bb.hn
   %i.ys = getelementptr inbounds nuw i8, ptr %i.tm, i64 %i.yh
@@ -954,8 +952,7 @@ bb.hq:                                            ; preds = %bb.hp
   br i1 %.not.i298.i.i, label %bb.hr, label %.split.i303.i.i
 
 .split.i303.i.i:                                  ; preds = %bb.hq
-  %6 = icmp eq ptr %.sroa.0.1.lcssa.i.i, %i.tr
-  br i1 %6, label %bb.hs, label %.thread180.invoke.i.i
+  br i1 %i.wu, label %bb.hs, label %.thread180.invoke.i.i
 
 bb.hr:                                            ; preds = %bb.hq
   %i.yv = getelementptr inbounds nuw i8, ptr %i.tm, i64 %i.yh
@@ -988,8 +985,7 @@ bb.hv:                                            ; preds = %bb.hu
   br i1 %.not.i310.i.i, label %bb.hw, label %.split.i311.i.i
 
 .split.i311.i.i:                                  ; preds = %bb.hv
-  %7 = icmp eq ptr %.sroa.0.1.lcssa.i.i, %i.tr
-  br i1 %7, label %bb.hx, label %.thread120.i.i
+  br i1 %i.wu, label %bb.hx, label %.thread120.i.i
 
 bb.hw:                                            ; preds = %bb.hv
   %i.zb = getelementptr inbounds nuw i8, ptr %i.tm, i64 %i.yh

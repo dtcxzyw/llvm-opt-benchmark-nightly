@@ -205,7 +205,7 @@ bb.w:                                             ; preds = %bb.v
   br i1 %i.cr, label %.split.i244.i, label %.thread524.invoke.i
 
 .split.i244.i:                                    ; preds = %bb.w, %bb.v
-  %i.cs = getelementptr i8, ptr %.sroa.033.0.i, i64 %.sroa.53.0.i ; 10 uses
+  %i.cs = getelementptr i8, ptr %.sroa.033.0.i, i64 %.sroa.53.0.i ; 6 uses
   %i.ct = add nuw nsw i64 %.sroa.05.0.i, 1
   %i.cu = icmp eq i64 %i.ct, %.sroa.53.0.i
   br i1 %i.cu, label %.thread414.i, label %bb.x
@@ -394,7 +394,7 @@ bb.al:                                            ; preds = %bb.ak
 
 .preheader540.i:                                  ; preds = %bb.ag, %bb.au
   %.sroa.0.0.i = phi ptr [ %.sroa.0.2.ph.i, %bb.au ], [ %.sroa.0.1.ph.i, %bb.ag ] ; 7 uses
-  %i.ft = icmp eq ptr %.sroa.0.0.i, %i.cs
+  %i.ft = icmp eq ptr %.sroa.0.0.i, %i.cs         ; 5 uses
   br i1 %i.ft, label %bb.ap, label %bb.am
 
 bb.am:                                            ; preds = %.preheader540.i
@@ -458,7 +458,7 @@ bb.ao:                                            ; preds = %_RNvXs2J_NtNtCs4NRV
           to label %bb.au unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !485
 
 bb.ap:                                            ; preds = %bb.au, %.preheader540.i
-  %.sroa.0.0.lcssa.i = phi ptr [ %i.cs, %.preheader540.i ], [ %.sroa.0.0.i, %bb.au ] ; 5 uses
+  %.sroa.0.0.lcssa.i = phi ptr [ %.sroa.0.0.i, %bb.au ], [ %i.cs, %.preheader540.i ]
   %i.he = ptrtoint ptr %i.cs to i64
   %i.hf = ptrtoint ptr %.sroa.0.0.lcssa.i to i64
   %.neg.le.i = sub i64 %i.hf, %i.he               ; 3 uses
@@ -483,8 +483,7 @@ bb.as:                                            ; preds = %bb.ar, %.split.i288
   br i1 %.not6.i.i, label %bb.at, label %.split7.i.i
 
 .split7.i.i:                                      ; preds = %bb.as
-  %3 = icmp eq ptr %.sroa.0.0.lcssa.i, %i.cs
-  br i1 %3, label %bb.av, label %.thread524.invoke.i
+  br i1 %i.ft, label %bb.av, label %.thread524.invoke.i
 
 bb.at:                                            ; preds = %bb.as
   %i.hk = getelementptr inbounds nuw i8, ptr %i.cm, i64 %i.hg
@@ -527,8 +526,7 @@ bb.ay:                                            ; preds = %bb.ax
   br i1 %.not6.i.i, label %bb.az, label %.split.i293.i
 
 .split.i293.i:                                    ; preds = %bb.ay
-  %4 = icmp eq ptr %.sroa.0.0.lcssa.i, %i.cs
-  br i1 %4, label %bb.ba, label %.thread524.invoke.i
+  br i1 %i.ft, label %bb.ba, label %.thread524.invoke.i
 
 bb.az:                                            ; preds = %bb.ay
   %i.hq = getelementptr inbounds nuw i8, ptr %i.cm, i64 %i.hg
@@ -544,8 +542,7 @@ bb.bb:                                            ; preds = %bb.ba
   br i1 %.not6.i.i, label %bb.bc, label %.split.i297.i
 
 .split.i297.i:                                    ; preds = %bb.bb
-  %5 = icmp eq ptr %.sroa.0.0.lcssa.i, %i.cs
-  br i1 %5, label %bb.bd, label %.thread524.invoke.i
+  br i1 %i.ft, label %bb.bd, label %.thread524.invoke.i
 
 bb.bc:                                            ; preds = %bb.bb
   %i.ht = getelementptr inbounds nuw i8, ptr %i.cm, i64 %i.hg
@@ -578,8 +575,7 @@ bb.bf:                                            ; preds = %bb.be
   br i1 %.not6.i.i, label %bb.bg, label %.split.i302.i
 
 .split.i302.i:                                    ; preds = %bb.bf
-  %6 = icmp eq ptr %.sroa.0.0.lcssa.i, %i.cs
-  br i1 %6, label %bb.bh, label %.thread455.i
+  br i1 %i.ft, label %bb.bh, label %.thread455.i
 
 bb.bg:                                            ; preds = %bb.bf
   %i.hz = getelementptr inbounds nuw i8, ptr %i.cm, i64 %i.hg
