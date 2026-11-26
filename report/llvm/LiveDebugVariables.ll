@@ -205,12 +205,12 @@ bb.s:                                             ; preds = %_ZN4llvm11SmallVect
   br i1 %.not48.us, label %.preheader, label %.lr.ph53.split.us, !llvm.loop !1126
 
 .preheader:                                       ; preds = %bb.u, %bb.s, %.loopexit
-  %.043.lcssa = phi i8 [ %.lobit, %.loopexit ], [ %.lobit, %bb.s ], [ %.144, %bb.u ]
-  %.042.lcssa = phi ptr [ %.val51, %.loopexit ], [ %.1.us, %bb.s ], [ %.1, %bb.u ]
+  %.0117.lcssa = phi ptr [ %.val51, %.loopexit ], [ %.1.us, %bb.s ], [ %.1118, %bb.u ]
+  %.0116.lcssa = phi i8 [ %.lobit, %.loopexit ], [ %.lobit, %bb.s ], [ %.1, %bb.u ]
   %i.dx = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.dy = getelementptr inbounds nuw i8, ptr %6, i64 8
   %.neg = select i1 %i.cx, i64 -15, i64 -14
-  %i.dz = trunc nuw i8 %.043.lcssa to i1
+  %i.dz = trunc nuw i8 %.0116.lcssa to i1
   %i.ea = getelementptr inbounds nuw i8, ptr %12, i64 8
   %i.eb = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 2 uses
   %i.ec = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 6 uses
@@ -223,24 +223,24 @@ bb.s:                                             ; preds = %_ZN4llvm11SmallVect
 
 .lr.ph53.split:                                   ; preds = %.lr.ph53, %bb.u
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.u ], [ 0, %.lr.ph53 ] ; 3 uses
-  %.04252 = phi ptr [ %.1, %bb.u ], [ %.val51, %.lr.ph53 ] ; 2 uses
-  %.04351 = phi i8 [ %.144, %bb.u ], [ %.lobit, %.lr.ph53 ] ; 2 uses
+  %.011653 = phi i8 [ %.1, %bb.u ], [ %.lobit, %.lr.ph53 ] ; 2 uses
+  %.011752 = phi ptr [ %.1118, %bb.u ], [ %.val51, %.lr.ph53 ] ; 2 uses
   %i.ei = getelementptr inbounds nuw i8, ptr %.0.val, i64 %indvars.iv
   %i.ej = load i8, ptr %i.ei, align 1, !tbaa !1138, !range !52, !noundef !53
   %i.ek = trunc nuw i8 %i.ej to i1
   br i1 %i.ek, label %bb.t, label %bb.u
 
 bb.t:                                             ; preds = %.lr.ph53.split
-  %spec.select = shl nuw nsw i8 %.04351, 1
+  %spec.select = shl nuw nsw i8 %.011653, 1
   %i.el = getelementptr inbounds nuw [4 x i8], ptr %.0.val1, i64 %indvars.iv
   %i.em = load i32, ptr %i.el, align 4, !tbaa !174
   %i.en = zext i32 %i.em to i64
-  %i.eo = call noundef ptr @_ZN4llvm12DIExpression7prependEPKS0_hl(ptr noundef %.04252, i8 noundef zeroext %spec.select, i64 noundef %i.en) #24
+  %i.eo = call noundef ptr @_ZN4llvm12DIExpression7prependEPKS0_hl(ptr noundef %.011752, i8 noundef zeroext %spec.select, i64 noundef %i.en) #24
   br label %bb.u
 
 bb.u:                                             ; preds = %.lr.ph53.split, %bb.t
-  %.144 = phi i8 [ %.04351, %.lr.ph53.split ], [ 1, %bb.t ] ; 2 uses
-  %.1 = phi ptr [ %.04252, %.lr.ph53.split ], [ %i.eo, %bb.t ] ; 2 uses
+  %.1118 = phi ptr [ %.011752, %.lr.ph53.split ], [ %i.eo, %bb.t ] ; 2 uses
+  %.1 = phi i8 [ %.011653, %.lr.ph53.split ], [ 1, %bb.t ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %.not48 = icmp eq i64 %indvars.iv.next, %i.dc
   br i1 %.not48, label %.preheader, label %.lr.ph53.split, !llvm.loop !1126
@@ -255,7 +255,7 @@ bb.v:                                             ; preds = %.preheader, %_ZL22f
   %i.et = zext i32 %i.es to i64
   store i64 %i.et, ptr %i.ea, align 8, !tbaa !1141
   %i.eu = load ptr, ptr %0, align 8, !tbaa !153
-  %i.ev = call { ptr, ptr } @_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_8DebugLocERKNS_11MCInstrDescEbNS_8ArrayRefINS_14MachineOperandEEEPKNS_6MDNodeESG_(ptr noundef nonnull align 8 dereferenceable(360) %1, ptr %.sroa.017.0, ptr noundef nonnull align 8 dereferenceable(8) %i.dx, ptr noundef nonnull align 8 dereferenceable(32) %i.eq, i1 noundef zeroext %i.dz, ptr noundef nonnull byval(%"class.llvm::ArrayRef.162") align 8 %12, ptr noundef %i.eu, ptr noundef %.042.lcssa) #24 ; 0 uses
+  %i.ev = call { ptr, ptr } @_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_8DebugLocERKNS_11MCInstrDescEbNS_8ArrayRefINS_14MachineOperandEEEPKNS_6MDNodeESG_(ptr noundef nonnull align 8 dereferenceable(360) %1, ptr %.sroa.017.0, ptr noundef nonnull align 8 dereferenceable(8) %i.dx, ptr noundef nonnull align 8 dereferenceable(32) %i.eq, i1 noundef zeroext %i.dz, ptr noundef nonnull byval(%"class.llvm::ArrayRef.162") align 8 %12, ptr noundef %i.eu, ptr noundef %.0117.lcssa) #24 ; 0 uses
   %i.ew = load ptr, ptr %10, align 8, !tbaa !56   ; 2 uses
   %i.ex = load i32, ptr %i.ad, align 8, !tbaa !75 ; 2 uses
   %i.ey = zext i32 %i.ex to i64

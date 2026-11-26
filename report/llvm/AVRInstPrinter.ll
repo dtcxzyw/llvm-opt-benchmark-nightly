@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.c
   br label %_ZN4llvm14AVRInstPrinter21getPrettyRegisterNameENS_10MCRegisterERKNS_14MCRegisterInfoE.exit
 
 _ZN4llvm14AVRInstPrinter21getPrettyRegisterNameENS_10MCRegisterERKNS_14MCRegisterInfoE.exit: ; preds = %bb.c, %bb.d
-  %.sroa.05.0.i = phi i32 [ %i.x, %bb.c ], [ %i.ad, %bb.d ]
+  %.sroa.05.0.i = phi i32 [ %i.ad, %bb.d ], [ %i.x, %bb.c ]
   %i.ae = add i32 %.sroa.05.0.i, -1
   %i.af = zext i32 %i.ae to i64
   %i.ag = getelementptr inbounds nuw i8, ptr @_ZZN4llvm14AVRInstPrinter15getRegisterNameENS_10MCRegisterEjE24RegAsmOffsetNoRegAltName, i64 %i.af
@@ -605,7 +605,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %.sroa.05.0 = phi i32 [ %0, %bb.a ], [ %i.d, %bb.b ]
+  %.sroa.05.0 = phi i32 [ %i.d, %bb.b ], [ %0, %bb.a ]
   %i.e = add i32 %.sroa.05.0, -1
   %i.f = zext i32 %i.e to i64
   %i.g = getelementptr inbounds nuw i8, ptr @_ZZN4llvm14AVRInstPrinter15getRegisterNameENS_10MCRegisterEjE24RegAsmOffsetNoRegAltName, i64 %i.f
