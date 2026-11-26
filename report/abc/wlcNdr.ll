@@ -204,9 +204,9 @@ bb.v:                                             ; preds = %.lr.ph620, %Ndr_Dat
   %.val269 = phi ptr [ %.val269.pre, %.lr.ph620 ], [ %.val.i422, %Ndr_DataSize.exit423 ] ; 6 uses
   %.val272619 = phi ptr [ %.val273832, %.lr.ph620 ], [ %.val272.pre.a, %Ndr_DataSize.exit423 ] ; 11 uses
   %.1227617 = phi i32 [ 3, %.lr.ph620 ], [ %i.st, %Ndr_DataSize.exit423 ] ; 7 uses
-  %.sroa.5519.0616 = phi i32 [ 0, %.lr.ph620 ], [ %.sroa.5519.6, %Ndr_DataSize.exit423 ] ; 15 uses
-  %.sroa.0518.0615 = phi i32 [ 0, %.lr.ph620 ], [ %.sroa.0518.6, %Ndr_DataSize.exit423 ] ; 15 uses
-  %.0537614 = phi ptr [ null, %.lr.ph620 ], [ %.7, %Ndr_DataSize.exit423 ] ; 16 uses
+  %.sroa.5519.0616 = phi i32 [ 0, %.lr.ph620 ], [ %.sroa.5519.6, %Ndr_DataSize.exit423 ] ; 11 uses
+  %.sroa.0518.0615 = phi i32 [ 0, %.lr.ph620 ], [ %.sroa.0518.6, %Ndr_DataSize.exit423 ] ; 11 uses
+  %.0537614 = phi ptr [ null, %.lr.ph620 ], [ %.7, %Ndr_DataSize.exit423 ] ; 12 uses
   %i.dx = sext i32 %.1227617 to i64               ; 7 uses
   %i.dy = getelementptr inbounds i8, ptr %.val269, i64 %i.dx
   %i.dz = load i8, ptr %i.dy, align 1, !tbaa !14
@@ -381,7 +381,7 @@ Ndr_DataSize.exit.i341:                           ; preds = %bb.aj, %bb.ai
   br i1 %i.gj, label %.lr.ph.i338, label %Ndr_ObjReadBody.exit342, !llvm.loop !2
 
 Ndr_ObjReadBody.exit342:                          ; preds = %Ndr_DataSize.exit.i341, %bb.ah
-  %.012.i337 = phi i32 [ %i.gd, %bb.ah ], [ -1, %Ndr_DataSize.exit.i341 ] ; 3 uses
+  %.012.i337 = phi i32 [ %i.gd, %bb.ah ], [ -1, %Ndr_DataSize.exit.i341 ] ; 4 uses
   br label %.lr.ph.i344
 
 .lr.ph.i344:                                      ; preds = %Ndr_ObjReadBody.exit342, %Ndr_DataSize.exit.i347
@@ -559,13 +559,10 @@ Vec_IntPush.exit.i:                               ; preds = %Vec_IntGrow.exit11.
   br i1 %exitcond.not.i, label %Vec_IntAppend.exit, label %thread-pre-split, !llvm.loop !72
 
 Vec_IntAppend.exit:                               ; preds = %Vec_IntPush.exit.i, %Ndr_ObjReadBody.exit354
-  switch i32 %.012.i337, label %.cont [
+  switch i32 %.012.i337, label %1 [
     i32 88, label %bb.bc
     i32 89, label %bb.cl
     i32 75, label %bb.cu
-    i32 91, label %bb.dn
-    i32 97, label %bb.dz
-    i32 21, label %bb.ee
   ]
 
 bb.bc:                                            ; preds = %Vec_IntAppend.exit
@@ -914,9 +911,9 @@ Vec_IntGrow.exit11.sink.split.i386:               ; preds = %bb.cs, %bb.ct, %bb.
   %.pre704 = load i32, ptr %i.az, align 4, !tbaa !25
   br label %Vec_IntPush.exit390
 
-Vec_IntPush.exit390:                              ; preds = %.Vec_IntPush.exit390_crit_edge, %bb.cq, %Vec_IntGrow.exit11.sink.split.i386
-  %i.mw = phi i32 [ %i.mi, %.Vec_IntPush.exit390_crit_edge ], [ %i.mi, %bb.cq ], [ %.pre704, %Vec_IntGrow.exit11.sink.split.i386 ] ; 2 uses
-  %i.mx = phi ptr [ %.pre702, %.Vec_IntPush.exit390_crit_edge ], [ %.pre703, %bb.cq ], [ %i.mv, %Vec_IntGrow.exit11.sink.split.i386 ]
+Vec_IntPush.exit390:                              ; preds = %.Vec_IntPush.exit390_crit_edge, %Vec_IntGrow.exit11.sink.split.i386, %bb.cq
+  %i.mw = phi i32 [ %i.mi, %.Vec_IntPush.exit390_crit_edge ], [ %.pre704, %Vec_IntGrow.exit11.sink.split.i386 ], [ %i.mi, %bb.cq ] ; 2 uses
+  %i.mx = phi ptr [ %.pre702, %.Vec_IntPush.exit390_crit_edge ], [ %i.mv, %Vec_IntGrow.exit11.sink.split.i386 ], [ %.pre703, %bb.cq ]
   %i.my = add nsw i32 %i.mw, 1
   store i32 %i.my, ptr %i.az, align 4, !tbaa !25
   %i.mz = sext i32 %i.mw to i64
@@ -1093,7 +1090,7 @@ Ndr_ObjReadBodyP.exit:                            ; preds = %bb.dk
   %i.pc = getelementptr inbounds [8 x i8], ptr %.val284, i64 %i.pb
   store i64 %i.oz, ptr %i.pc, align 8, !tbaa !97
   %i.pd = add nsw i32 %.sroa.5519.0616, 1
-  br label %.cont
+  br label %1
 
 .else:                                            ; preds = %Ndr_DataSize.exit.i402, %Vec_WrdFillExtra.exit, %Ndr_ObjReadBodyP.exit
   %i.pe = getelementptr i8, ptr %.1538, i64 8
@@ -1102,9 +1099,19 @@ Ndr_ObjReadBodyP.exit:                            ; preds = %bb.dk
   %i.pg = getelementptr inbounds [8 x i8], ptr %.val284570, i64 %i.pf
   store i64 0, ptr %i.pg, align 8, !tbaa !97
   %i.ph = add nsw i32 %.sroa.0518.0615, 1
-  br label %.cont
+  br label %1
 
-bb.dn:                                            ; preds = %Vec_IntAppend.exit
+1:                                                ; preds = %.else, %.then, %Vec_IntAppend.exit
+  %.2540 = phi ptr [ %.0537614, %Vec_IntAppend.exit ], [ %.1538, %.else ], [ %.1538, %.then ] ; 5 uses
+  %.sroa.0.1 = phi i32 [ %.sroa.0518.0615, %Vec_IntAppend.exit ], [ %i.ph, %.else ], [ %.sroa.0518.0615, %.then ] ; 5 uses
+  %.sroa.7.1 = phi i32 [ %.sroa.5519.0616, %Vec_IntAppend.exit ], [ %.sroa.5519.0616, %.else ], [ %i.pd, %.then ] ; 5 uses
+  switch i32 %.012.i337, label %.cont [
+    i32 91, label %bb.dn
+    i32 97, label %bb.dz
+    i32 21, label %bb.ee
+  ]
+
+bb.dn:                                            ; preds = %1
   %i.pi = load i32, ptr %i.d, align 4, !tbaa !25  ; 7 uses
   %i.pj = load i32, ptr %i.c, align 8, !tbaa !26
   %i.pk = icmp eq i32 %i.pi, %i.pj
@@ -1209,7 +1216,7 @@ Vec_IntPushTwo.exit:                              ; preds = %Vec_IntPush.exit.i4
   store i32 %.0533.a, ptr %i.qn, align 4, !tbaa !13
   br label %.cont
 
-bb.dz:                                            ; preds = %Vec_IntAppend.exit
+bb.dz:                                            ; preds = %1
   %.val13.i412.pre = load ptr, ptr %i.g, align 8, !tbaa !22 ; 3 uses
   %.phi.trans.insert698 = getelementptr inbounds [4 x i8], ptr %.val13.i412.pre, i64 %i.dx
   %.pre699 = load i32, ptr %.phi.trans.insert698, align 4, !tbaa !13
@@ -1253,7 +1260,7 @@ Ndr_ObjReadBodyP.exit418:                         ; preds = %Ndr_DataSize.exit.i
   tail call void @Ndr_ObjReadConstant(ptr noundef nonnull %i.c, ptr noundef %.012.i413)
   br label %.cont
 
-bb.ee:                                            ; preds = %Vec_IntAppend.exit
+bb.ee:                                            ; preds = %1
   %.val249 = load i32, ptr %i.d, align 4, !tbaa !25
   %i.ra = icmp eq i32 %.val249, 3
   br i1 %i.ra, label %bb.ef, label %.cont
@@ -1266,10 +1273,10 @@ bb.ef:                                            ; preds = %bb.ee
   store <2 x i32> %i.rd, ptr %i.rb, align 4, !tbaa !13
   br label %.cont
 
-.cont:                                            ; preds = %.then, %.else, %Vec_IntPush.exit390, %Vec_IntAppend.exit, %Ndr_ObjReadBodyP.exit418, %bb.ef, %bb.ee, %Vec_IntPushTwo.exit
-  %.5542 = phi ptr [ %.0537614, %Vec_IntAppend.exit ], [ %.0537614, %Vec_IntPush.exit390 ], [ %.0537614, %bb.ee ], [ %.0537614, %Vec_IntPushTwo.exit ], [ %.0537614, %Ndr_ObjReadBodyP.exit418 ], [ %.0537614, %bb.ef ], [ %.1538, %.else ], [ %.1538, %.then ] ; 2 uses
-  %.sroa.0518.4 = phi i32 [ %.sroa.0518.0615, %Vec_IntAppend.exit ], [ %.sroa.0518.0615, %Vec_IntPush.exit390 ], [ %.sroa.0518.0615, %bb.ee ], [ %.sroa.0518.0615, %Vec_IntPushTwo.exit ], [ %.sroa.0518.0615, %Ndr_ObjReadBodyP.exit418 ], [ %.sroa.0518.0615, %bb.ef ], [ %i.ph, %.else ], [ %.sroa.0518.0615, %.then ] ; 2 uses
-  %.sroa.5519.4 = phi i32 [ %.sroa.5519.0616, %Vec_IntAppend.exit ], [ %.sroa.5519.0616, %Vec_IntPush.exit390 ], [ %.sroa.5519.0616, %bb.ee ], [ %.sroa.5519.0616, %Vec_IntPushTwo.exit ], [ %.sroa.5519.0616, %Ndr_ObjReadBodyP.exit418 ], [ %.sroa.5519.0616, %bb.ef ], [ %.sroa.5519.0616, %.else ], [ %i.pd, %.then ] ; 2 uses
+.cont:                                            ; preds = %Vec_IntPush.exit390, %1, %Ndr_ObjReadBodyP.exit418, %bb.ef, %bb.ee, %Vec_IntPushTwo.exit
+  %.sroa.7.1584 = phi i32 [ %.sroa.5519.0616, %Vec_IntPush.exit390 ], [ %.sroa.7.1, %1 ], [ %.sroa.7.1, %Ndr_ObjReadBodyP.exit418 ], [ %.sroa.7.1, %bb.ef ], [ %.sroa.7.1, %bb.ee ], [ %.sroa.7.1, %Vec_IntPushTwo.exit ] ; 2 uses
+  %.sroa.0.1583 = phi i32 [ %.sroa.0518.0615, %Vec_IntPush.exit390 ], [ %.sroa.0.1, %1 ], [ %.sroa.0.1, %Ndr_ObjReadBodyP.exit418 ], [ %.sroa.0.1, %bb.ef ], [ %.sroa.0.1, %bb.ee ], [ %.sroa.0.1, %Vec_IntPushTwo.exit ] ; 2 uses
+  %.2540582 = phi ptr [ %.0537614, %Vec_IntPush.exit390 ], [ %.2540, %1 ], [ %.2540, %Ndr_ObjReadBodyP.exit418 ], [ %.2540, %bb.ef ], [ %.2540, %bb.ee ], [ %.2540, %Vec_IntPushTwo.exit ] ; 2 uses
   %.val261 = load ptr, ptr %i.be, align 8, !tbaa !36
   %i.re = sext i32 %i.hc to i64                   ; 3 uses
   %i.rf = getelementptr inbounds [24 x i8], ptr %.val261, i64 %i.re
@@ -1349,9 +1356,9 @@ Wlc_ObjFanin1.exit:                               ; preds = %Wlc_ObjHasArray.exi
   br label %Ndr_ObjIsType.exit309.thread
 
 Ndr_ObjIsType.exit309.thread:                     ; preds = %Ndr_DataSize.exit.i308, %Ndr_DataSize.exit.i315, %Ndr_ObjIsType.exit309, %bb.w, %Vec_IntPush.exit382, %Wlc_ObjFanin1.exit, %.cont, %bb.v, %Ndr_ObjIsType.exit316
-  %.7 = phi ptr [ %.0537614, %Ndr_DataSize.exit.i315 ], [ %.0537614, %Ndr_ObjIsType.exit316 ], [ %.0537614, %Ndr_ObjIsType.exit309 ], [ %.0537614, %bb.v ], [ %.0537614, %Vec_IntPush.exit382 ], [ %.5542, %Wlc_ObjFanin1.exit ], [ %.5542, %.cont ], [ %.0537614, %bb.w ], [ %.0537614, %Ndr_DataSize.exit.i308 ] ; 3 uses
-  %.sroa.0518.6 = phi i32 [ %.sroa.0518.0615, %Ndr_DataSize.exit.i315 ], [ %.sroa.0518.0615, %Ndr_ObjIsType.exit316 ], [ %.sroa.0518.0615, %Ndr_ObjIsType.exit309 ], [ %.sroa.0518.0615, %bb.v ], [ %.sroa.0518.0615, %Vec_IntPush.exit382 ], [ %.sroa.0518.4, %Wlc_ObjFanin1.exit ], [ %.sroa.0518.4, %.cont ], [ %.sroa.0518.0615, %bb.w ], [ %.sroa.0518.0615, %Ndr_DataSize.exit.i308 ] ; 4 uses
-  %.sroa.5519.6 = phi i32 [ %.sroa.5519.0616, %Ndr_DataSize.exit.i315 ], [ %.sroa.5519.0616, %Ndr_ObjIsType.exit316 ], [ %.sroa.5519.0616, %Ndr_ObjIsType.exit309 ], [ %.sroa.5519.0616, %bb.v ], [ %.sroa.5519.0616, %Vec_IntPush.exit382 ], [ %.sroa.5519.4, %Wlc_ObjFanin1.exit ], [ %.sroa.5519.4, %.cont ], [ %.sroa.5519.0616, %bb.w ], [ %.sroa.5519.0616, %Ndr_DataSize.exit.i308 ] ; 2 uses
+  %.7 = phi ptr [ %.0537614, %Ndr_DataSize.exit.i315 ], [ %.0537614, %Ndr_ObjIsType.exit316 ], [ %.0537614, %Ndr_ObjIsType.exit309 ], [ %.0537614, %bb.v ], [ %.0537614, %Vec_IntPush.exit382 ], [ %.2540582, %Wlc_ObjFanin1.exit ], [ %.2540582, %.cont ], [ %.0537614, %bb.w ], [ %.0537614, %Ndr_DataSize.exit.i308 ] ; 3 uses
+  %.sroa.0518.6 = phi i32 [ %.sroa.0518.0615, %Ndr_DataSize.exit.i315 ], [ %.sroa.0518.0615, %Ndr_ObjIsType.exit316 ], [ %.sroa.0518.0615, %Ndr_ObjIsType.exit309 ], [ %.sroa.0518.0615, %bb.v ], [ %.sroa.0518.0615, %Vec_IntPush.exit382 ], [ %.sroa.0.1583, %Wlc_ObjFanin1.exit ], [ %.sroa.0.1583, %.cont ], [ %.sroa.0518.0615, %bb.w ], [ %.sroa.0518.0615, %Ndr_DataSize.exit.i308 ] ; 4 uses
+  %.sroa.5519.6 = phi i32 [ %.sroa.5519.0616, %Ndr_DataSize.exit.i315 ], [ %.sroa.5519.0616, %Ndr_ObjIsType.exit316 ], [ %.sroa.5519.0616, %Ndr_ObjIsType.exit309 ], [ %.sroa.5519.0616, %bb.v ], [ %.sroa.5519.0616, %Vec_IntPush.exit382 ], [ %.sroa.7.1584, %Wlc_ObjFanin1.exit ], [ %.sroa.7.1584, %.cont ], [ %.sroa.5519.0616, %bb.w ], [ %.sroa.5519.0616, %Ndr_DataSize.exit.i308 ] ; 2 uses
   %.val.i422 = load ptr, ptr %i.ax, align 8, !tbaa !21 ; 2 uses
   %i.sn = getelementptr inbounds i8, ptr %.val.i422, i64 %i.dx
   %i.so = load i8, ptr %i.sn, align 1, !tbaa !14

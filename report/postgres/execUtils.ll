@@ -204,8 +204,8 @@ ExecGetResultSlotOps.exit26.i:                    ; preds = %bb.e, %.sink.split.
   %spec.select = select i1 %cond1.i, ptr %.0.i.i, ptr null
   br label %ExecGetCommonSlotOps.exit
 
-ExecGetCommonSlotOps.exit:                        ; preds = %ExecGetResultSlotOps.exit26.i, %.thread.i18.i, %.thread.i.i, %ExecGetResultSlotOps.exit.i
-  %.3.i = phi ptr [ null, %.thread.i.i ], [ null, %ExecGetResultSlotOps.exit.i ], [ null, %.thread.i18.i ], [ %spec.select, %ExecGetResultSlotOps.exit26.i ]
+ExecGetCommonSlotOps.exit:                        ; preds = %ExecGetResultSlotOps.exit26.i, %.thread.i.i, %ExecGetResultSlotOps.exit.i, %.thread.i18.i
+  %.3.i = phi ptr [ null, %.thread.i18.i ], [ null, %ExecGetResultSlotOps.exit.i ], [ %spec.select, %ExecGetResultSlotOps.exit26.i ], [ null, %.thread.i.i ]
   ret ptr %.3.i
 }
 

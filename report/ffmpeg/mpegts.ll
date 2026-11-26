@@ -205,7 +205,6 @@ bb.r:                                             ; preds = %bb.p
 ; Function Attrs: nounwind uwtable
 define internal range(i32 -2147483648, 1) i32 @mpegts_read_header(ptr noundef %0) #0 {
 bb.a:
-  %1 = alloca [2 x i64], align 16                 ; 7 uses
   %i.a = alloca [188 x i8], align 16              ; 5 uses
   %i.b = alloca ptr, align 8                      ; 6 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -420,7 +419,6 @@ mpegts_open_section_filter.exit98:                ; preds = %mpegts_open_section
   br label %bb.af
 
 bb.t:                                             ; preds = %bb.e
-  call void @llvm.lifetime.start.p0(ptr nonnull %1) #13
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #13
   %i.ch = tail call ptr @avformat_new_stream(ptr noundef nonnull %0, ptr noundef null) #13 ; 4 uses
@@ -437,16 +435,14 @@ bb.u:                                             ; preds = %bb.t
   %i.cl = load i32, ptr %i.q, align 8, !tbaa !108
   %i.cm = call fastcc i32 @read_packet(ptr noundef nonnull %0, ptr noundef nonnull %i.a, i32 noundef %i.cl, ptr noundef %i.b) ; 2 uses
   %i.cn = icmp slt i32 %i.cm, 0
-  br i1 %i.cn, label %.thread, label %.lr.ph
+  br i1 %i.cn, label %.thread, label %bb.v
 
-.lr.ph:                                           ; preds = %bb.u
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  br label %bb.v
-
-bb.v:                                             ; preds = %.lr.ph, %finished_reading_packet.exit103
-  %.075124 = phi i32 [ 0, %.lr.ph ], [ %.1, %finished_reading_packet.exit103 ] ; 4 uses
-  %.076122 = phi i32 [ 0, %.lr.ph ], [ %i.ep, %finished_reading_packet.exit103 ] ; 2 uses
-  %.077121 = phi i32 [ -1, %.lr.ph ], [ %.178, %finished_reading_packet.exit103 ] ; 4 uses
+bb.v:                                             ; preds = %bb.u, %finished_reading_packet.exit103
+  %.sroa.9.0139 = phi i64 [ %.sroa.9.1, %finished_reading_packet.exit103 ], [ undef, %bb.u ] ; 3 uses
+  %.sroa.0.0138 = phi i64 [ %.sroa.0.1, %finished_reading_packet.exit103 ], [ undef, %bb.u ] ; 3 uses
+  %.075124 = phi i32 [ %.1, %finished_reading_packet.exit103 ], [ 0, %bb.u ] ; 4 uses
+  %.076122 = phi i32 [ %i.ep, %finished_reading_packet.exit103 ], [ 0, %bb.u ] ; 2 uses
+  %.077121 = phi i32 [ %.178, %finished_reading_packet.exit103 ], [ -1, %bb.u ] ; 4 uses
   %i.co = load ptr, ptr %i.b, align 8, !tbaa !16  ; 7 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %i.co, i64 1
   %i.cq = load i16, ptr %i.cp, align 1, !tbaa !17
@@ -513,24 +509,21 @@ bb.aa:                                            ; preds = %bb.z
 
 finished_reading_packet.exit:                     ; preds = %bb.z, %bb.aa
   %i.ed = mul nuw nsw i64 %i.dp, 300
-  %i.ee = add nuw nsw i64 %i.dw, %i.ed
-  %3 = zext nneg i32 %.075124 to i64
-  %4 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %3
-  store i64 %i.ee, ptr %4, align 8, !tbaa !77
+  %i.ee = add nuw nsw i64 %i.dw, %i.ed            ; 2 uses
+  %.sroa.idx = icmp eq i32 %.075124, 1            ; 2 uses
+  %.sroa.0.0. = select i1 %.sroa.idx, i64 %.sroa.0.0138, i64 %i.ee ; 5 uses
+  %..sroa.9.0 = select i1 %.sroa.idx, i64 %i.ee, i64 %.sroa.9.0139 ; 5 uses
   %i.ef = icmp sgt i32 %.075124, 0
   br i1 %i.ef, label %bb.ab, label %finished_reading_packet.exit103
 
 bb.ab:                                            ; preds = %finished_reading_packet.exit
-  %5 = load i64, ptr %2, align 8, !tbaa !77       ; 3 uses
-  %6 = load i64, ptr %1, align 16, !tbaa !77      ; 4 uses
-  %i.eg = sub nsw i64 %5, %6                      ; 5 uses
+  %i.eg = sub nsw i64 %..sroa.9.0, %.sroa.0.0.    ; 5 uses
   %i.eh = icmp sgt i64 %i.eg, 0
   br i1 %i.eh, label %bb.ae, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
   %i.ei = load ptr, ptr %i.s, align 8, !tbaa !64
-  call void (ptr, i32, ptr, ...) @av_log(ptr noundef %i.ei, i32 noundef 24, ptr noundef nonnull @.str.98, i64 noundef %6, i64 noundef %5) #13
-  store i64 %5, ptr %1, align 16, !tbaa !77
+  call void (ptr, i32, ptr, ...) @av_log(ptr noundef %i.ei, i32 noundef 24, ptr noundef nonnull @.str.98, i64 noundef %.sroa.0.0., i64 noundef %..sroa.9.0) #13
   br label %finished_reading_packet.exit103
 
 parse_pcr.exit.thread:                            ; preds = %bb.y, %bb.w, %bb.x, %bb.v
@@ -550,6 +543,8 @@ bb.ad:                                            ; preds = %parse_pcr.exit.thre
 finished_reading_packet.exit103:                  ; preds = %bb.ad, %parse_pcr.exit.thread, %finished_reading_packet.exit, %bb.ac
   %.178 = phi i32 [ %i.ct, %bb.ac ], [ %i.ct, %finished_reading_packet.exit ], [ %.077121, %parse_pcr.exit.thread ], [ %.077121, %bb.ad ]
   %.1 = phi i32 [ 1, %bb.ac ], [ 1, %finished_reading_packet.exit ], [ %.075124, %parse_pcr.exit.thread ], [ %.075124, %bb.ad ]
+  %.sroa.0.1 = phi i64 [ %..sroa.9.0, %bb.ac ], [ %.sroa.0.0., %finished_reading_packet.exit ], [ %.sroa.0.0138, %parse_pcr.exit.thread ], [ %.sroa.0.0138, %bb.ad ]
+  %.sroa.9.1 = phi i64 [ %..sroa.9.0, %bb.ac ], [ %..sroa.9.0, %finished_reading_packet.exit ], [ %.sroa.9.0139, %parse_pcr.exit.thread ], [ %.sroa.9.0139, %bb.ad ]
   %i.ep = add nuw nsw i32 %.076122, 1
   %i.eq = load i32, ptr %i.q, align 8, !tbaa !108
   %i.er = call fastcc i32 @read_packet(ptr noundef nonnull %0, ptr noundef nonnull %i.a, i32 noundef %i.eq, ptr noundef %i.b) ; 2 uses
@@ -560,7 +555,6 @@ finished_reading_packet.exit103:                  ; preds = %bb.ad, %parse_pcr.e
   %.079.ph = phi i32 [ -12, %bb.t ], [ %i.cm, %bb.u ], [ %i.er, %finished_reading_packet.exit103 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
-  call void @llvm.lifetime.end.p0(ptr nonnull %1) #13
   br label %seek_back.exit105
 
 bb.ae:                                            ; preds = %bb.ab
@@ -569,7 +563,7 @@ bb.ae:                                            ; preds = %bb.ab
   %i.eu = add nsw i32 %.076122, -1
   %i.ev = sext i32 %i.eu to i64
   %i.ew = mul nsw i64 %i.eg, %i.ev
-  %i.ex = sub nsw i64 %6, %i.ew                   ; 3 uses
+  %i.ex = sub nsw i64 %.sroa.0.0., %i.ew          ; 3 uses
   %i.ey = getelementptr inbounds nuw i8, ptr %i.d, i64 48
   store i64 %i.ex, ptr %i.ey, align 8, !tbaa !166
   %i.ez = udiv i64 40608000000, %i.eg             ; 2 uses
@@ -582,7 +576,7 @@ bb.ae:                                            ; preds = %bb.ab
   store i64 %i.ex, ptr %i.fd, align 8, !tbaa !254
   %i.fe = load ptr, ptr %i.s, align 8, !tbaa !64
   %i.ff = sitofp nsz i64 %i.ex to double
-  %i.fg = sitofp nsz i64 %6 to double
+  %i.fg = sitofp nsz i64 %.sroa.0.0. to double
   %i.fh = insertelement <2 x double> poison, double %i.ff, i64 0
   %i.fi = insertelement <2 x double> %i.fh, double %i.fg, i64 1
   %i.fj = fdiv nsz <2 x double> %i.fi, <double 1.000000e+06, double 2.700000e+07> ; 2 uses
@@ -591,7 +585,6 @@ bb.ae:                                            ; preds = %bb.ab
   call void (ptr, i32, ptr, ...) @av_log(ptr noundef %i.fe, i32 noundef 56, ptr noundef nonnull @.str.99, double noundef %i.fk, double noundef %i.fl, i64 noundef %i.eg) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
-  call void @llvm.lifetime.end.p0(ptr nonnull %1) #13
   br label %bb.af
 
 bb.af:                                            ; preds = %bb.ae, %mpegts_open_section_filter.exit98

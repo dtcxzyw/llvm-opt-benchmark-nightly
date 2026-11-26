@@ -205,9 +205,9 @@ _ZN4llvm15SmallVectorImplIPKNS_16RegisterBankInfo12ValueMappingEE7reserveEm.exit
 
 _ZN4llvm11SmallVectorIPKNS_16RegisterBankInfo12ValueMappingELj10EEC2Em.exit: ; preds = %bb.a, %.sink.split.i.i.i
   %i.q = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 3 uses
+  %7 = and i64 %4, 4294967295
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 168 ; 3 uses
   %i.s = load ptr, ptr %i.q, align 8, !tbaa !82
-  %7 = and i64 %4, 4294967295
   %i.t = getelementptr inbounds nuw [32 x i8], ptr %i.s, i64 %7
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 4
   %i.v = load i32, ptr %i.u, align 4, !tbaa !83
@@ -261,7 +261,8 @@ _ZNK4llvm8TypeSizecvmEv.exit.1:                   ; preds = %_ZNK4llvm8TypeSizec
   %i.ar = ashr exact i64 %i.aq, 29
   %i.as = add i32 %i.ai, -1
   %i.at = call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.as, i1 false)
-  %i.au = ashr i64 %4, 32
+  %i.au = ashr i64 %4, 29
+  %8 = and i64 %i.au, -8
   %invariant.op = sub i32 32, %i.ap
   %invariant.op120 = sub i32 32, %i.at
   br label %.preheader
@@ -505,8 +506,8 @@ bb.t:                                             ; preds = %switch.lookup112, %
 
 _ZN4llvm6AMDGPU15getValueMappingEjj.exit47.1:     ; preds = %bb.t, %bb.r
   %.012.i.1 = phi ptr [ %i.cs, %bb.t ], [ @_ZN4llvm6AMDGPUL11ValMappingsE, %bb.r ]
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %i.bk, i64 %i.au
-  store ptr %.012.i.1, ptr %8, align 8, !tbaa !97
+  %9 = getelementptr inbounds nuw i8, ptr %i.bk, i64 %8
+  store ptr %.012.i.1, ptr %9, align 8, !tbaa !97
   %i.ct = add i32 %.04056, 1
   %i.cu = getelementptr inbounds nuw i8, ptr %.03957, i64 2
   %i.cv = load i16, ptr %i.cu, align 2, !tbaa !558

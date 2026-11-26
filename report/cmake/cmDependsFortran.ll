@@ -204,7 +204,6 @@ bb.a:
   %4 = alloca %"class.std::basic_ifstream", align 8 ; 16 uses
   %i.a = alloca [2 x i8], align 1                 ; 7 uses
   %i.b = alloca [1 x i8], align 1                 ; 6 uses
-  %5 = alloca [2 x i8], align 2                   ; 8 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 4 uses
   %i.d = load i64, ptr %i.c, align 8, !tbaa !24
   %i.e = icmp eq i64 %i.d, 6
@@ -235,7 +234,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #23
   %i.s = load ptr, ptr %1, align 8, !tbaa !26
   invoke void @_ZNSt14basic_ifstreamIcSt11char_traitsIcEEC1EPKcSt13_Ios_Openmode(ptr noundef nonnull align 8 dereferenceable(256) %4, ptr noundef %i.s, i32 noundef 8)
-          to label %bb.c unwind label %6
+          to label %bb.c unwind label %bb.e
 
 bb.c:                                             ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread
   %i.t = load ptr, ptr %3, align 8, !tbaa !28
@@ -259,19 +258,14 @@ bb.d:                                             ; preds = %bb.c
   %.not90 = icmp eq i32 %i.ag, 0
   br i1 %.not90, label %bb.f, label %_ZL22cmFortranStreamsDifferRSiS_.exit
 
-6:                                                ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread
-  %7 = landingpad { ptr, i32 }
+bb.e:                                             ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread
+  %i.ah = landingpad { ptr, i32 }
           cleanup
   br label %bb.aa
 
-bb.e:                                             ; preds = %.noexc81, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit57.thread
-  %i.ah = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.z
-
 bb.f:                                             ; preds = %bb.d
   %i.ai = load i64, ptr %i.c, align 8, !tbaa !24
-  switch i64 %i.ai, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit57.thread.preheader [
+  switch i64 %i.ai, label %_ZL31cmFortranStreamContainsSequenceRSiPKci.exit79.a [
     i64 3, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit46
     i64 5, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit55
     i64 9, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit57
@@ -289,7 +283,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   %i.ar = icmp ne i16 %i.aq, 0
   %i.as = zext i1 %i.ar to i32
   %i.at = icmp eq i32 %i.as, 0
-  br i1 %i.at, label %bb.g, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit57.thread.preheader
+  br i1 %i.at, label %bb.g, label %_ZL31cmFortranStreamContainsSequenceRSiPKci.exit79.a
 
 bb.g:                                             ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit46
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #23
@@ -388,7 +382,7 @@ bb.o:                                             ; preds = %bb.n
 
 .critedge41:                                      ; preds = %bb.o, %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #23
-  br label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit57.thread.preheader
+  br label %_ZL31cmFortranStreamContainsSequenceRSiPKci.exit79.a
 
 .critedge:                                        ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit52
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #23
@@ -415,7 +409,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   %i.cm = icmp ne i32 %i.cl, 0
   %i.cn = zext i1 %i.cm to i32
   %i.co = icmp eq i32 %i.cn, 0
-  br i1 %i.co, label %bb.r, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit57.thread.preheader
+  br i1 %i.co, label %bb.r, label %_ZL31cmFortranStreamContainsSequenceRSiPKci.exit79.a
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit57: ; preds = %bb.f
   %i.cp = load ptr, ptr %2, align 8, !tbaa !26    ; 2 uses
@@ -429,14 +423,9 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   %i.cx = icmp ne i64 %i.cw, 0
   %i.cy = zext i1 %i.cx to i32
   %i.cz = icmp eq i32 %i.cy, 0
-  br i1 %i.cz, label %bb.r, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit57.thread.preheader
-
-_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit57.thread.preheader: ; preds = %bb.f, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit55, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit46, %_ZL31cmFortranStreamContainsSequenceRSiPKci.exit79.thread, %.critedge41, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit57
-  br label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit57.thread
+  br i1 %i.cz, label %bb.r, label %_ZL31cmFortranStreamContainsSequenceRSiPKci.exit79.a
 
 bb.r:                                             ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit57, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit55
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #23
-  store i16 10, ptr %5, align 2
   %i.da = invoke noundef i32 @_ZNSi3getEv(ptr noundef nonnull align 8 dereferenceable(16) %3)
           to label %bb.s unwind label %.loopexit.split-lp92.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 
@@ -461,14 +450,12 @@ bb.s:                                             ; preds = %bb.r
   br i1 %.not.i59, label %bb.t, label %_ZL31cmFortranStreamContainsSequenceRSiPKci.exit63
 
 bb.t:                                             ; preds = %.noexc62
-  %8 = zext nneg i32 %.0913.i58 to i64
-  %9 = getelementptr inbounds nuw i8, ptr %5, i64 %8
-  %10 = load i8, ptr %9, align 1, !tbaa !25
-  %11 = sext i8 %10 to i32
-  %i.dk = icmp eq i32 %i.dc, %11
+  %.sroa.idx.not = icmp eq i32 %.0913.i58, 0
+  %5 = select i1 %.sroa.idx.not, i32 10, i32 0
+  %i.dk = icmp eq i32 %i.dc, %5
   %i.dl = add nuw nsw i32 %.0913.i58, 1
   %.1.i60 = select i1 %i.dk, i32 %i.dl, i32 0     ; 2 uses
-  %.not14.i61 = icmp slt i32 %.1.i60, 2
+  %.not14.i61 = icmp samesign ult i32 %.1.i60, 2
   br i1 %.not14.i61, label %.preheader96, label %.preheader, !llvm.loop !8
 
 _ZL31cmFortranStreamContainsSequenceRSiPKci.exit63: ; preds = %.noexc62
@@ -538,12 +525,11 @@ _ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i: ; preds = %.noexc84, %bb.v
 
 .noexc86:                                         ; preds = %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i
   %i.ek = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo5flushEv(ptr noundef nonnull align 8 dereferenceable(8) %i.ej)
-          to label %.critedge44 unwind label %.loopexit.split-lp92.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
+          to label %_ZL22cmFortranStreamsDifferRSiS_.exit unwind label %.loopexit.split-lp92.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 
-.loopexit.split-lp92.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %.preheader, %.preheader96, %.noexc86, %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i, %.noexc84, %bb.w, %bb.u, %_ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit69, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit67, %_ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit65, %_ZL31cmFortranStreamContainsSequenceRSiPKci.exit63, %bb.s, %bb.r
+.loopexit.split-lp92.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %.preheader, %.noexc81, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit57.thread, %.preheader96, %.noexc86, %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i, %.noexc84, %bb.w, %bb.u, %_ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit69, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit67, %_ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit65, %_ZL31cmFortranStreamContainsSequenceRSiPKci.exit63, %bb.s, %bb.r
   %lpad.loopexit.split-lp116 = landingpad { ptr, i32 }
           cleanup
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #23
   br label %bb.z
 
 .preheader:                                       ; preds = %bb.t, %bb.x
@@ -560,34 +546,27 @@ _ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i: ; preds = %.noexc84, %bb.v
   %i.er = load i32, ptr %i.eq, align 8, !tbaa !136
   %i.es = and i32 %i.er, 5
   %.not.i75 = icmp eq i32 %i.es, 0
-  br i1 %.not.i75, label %bb.x, label %_ZL31cmFortranStreamContainsSequenceRSiPKci.exit79.a
+  br i1 %.not.i75, label %bb.x, label %_ZL22cmFortranStreamsDifferRSiS_.exit
 
 bb.x:                                             ; preds = %.noexc78
-  %12 = zext nneg i32 %.0913.i74 to i64
-  %13 = getelementptr inbounds nuw i8, ptr %5, i64 %12
-  %14 = load i8, ptr %13, align 1, !tbaa !25
-  %15 = sext i8 %14 to i32
-  %i.et = icmp eq i32 %i.el, %15
+  %.sroa.idx88.not = icmp eq i32 %.0913.i74, 0
+  %6 = select i1 %.sroa.idx88.not, i32 10, i32 0
+  %i.et = icmp eq i32 %i.el, %6
   %i.eu = add nuw nsw i32 %.0913.i74, 1
   %.1.i76 = select i1 %i.et, i32 %i.eu, i32 0     ; 2 uses
-  %.not14.i77 = icmp slt i32 %.1.i76, 2
-  br i1 %.not14.i77, label %.preheader, label %_ZL31cmFortranStreamContainsSequenceRSiPKci.exit79.thread, !llvm.loop !8
+  %.not14.i77 = icmp samesign ult i32 %.1.i76, 2
+  br i1 %.not14.i77, label %.preheader, label %_ZL31cmFortranStreamContainsSequenceRSiPKci.exit79.a, !llvm.loop !8
 
-_ZL31cmFortranStreamContainsSequenceRSiPKci.exit79.thread: ; preds = %bb.x
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #23
-  br label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit57.thread.preheader
+_ZL31cmFortranStreamContainsSequenceRSiPKci.exit79.a: ; preds = %bb.x, %bb.f, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit55, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit46, %.critedge41, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit57
+  br label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit57.thread
 
-_ZL31cmFortranStreamContainsSequenceRSiPKci.exit79.a: ; preds = %.noexc78
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #23
-  br label %_ZL22cmFortranStreamsDifferRSiS_.exit
-
-_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit57.thread: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit57.thread.preheader, %bb.y
+_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit57.thread: ; preds = %_ZL31cmFortranStreamContainsSequenceRSiPKci.exit79.a, %bb.y
   %i.ev = invoke noundef i32 @_ZNSi3getEv(ptr noundef nonnull align 8 dereferenceable(16) %3)
-          to label %.noexc81 unwind label %bb.e
+          to label %.noexc81 unwind label %.loopexit.split-lp92.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc81:                                         ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit57.thread
   %i.ew = invoke noundef i32 @_ZNSi3getEv(ptr noundef nonnull align 8 dereferenceable(16) %4)
-          to label %.noexc82 unwind label %bb.e
+          to label %.noexc82 unwind label %.loopexit.split-lp92.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc82:                                         ; preds = %.noexc81
   %i.ex = load ptr, ptr %3, align 8, !tbaa !28
@@ -613,25 +592,21 @@ bb.y:                                             ; preds = %.noexc82
   %or.cond.i = and i1 %.not.i80, %.not16.i
   br i1 %or.cond.i, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit57.thread, label %_ZL22cmFortranStreamsDifferRSiS_.exit
 
-.critedge44:                                      ; preds = %.noexc86
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #23
-  br label %_ZL22cmFortranStreamsDifferRSiS_.exit
-
-_ZL22cmFortranStreamsDifferRSiS_.exit:            ; preds = %bb.y, %.noexc82, %_ZL31cmFortranStreamContainsSequenceRSiPKci.exit79.a, %.critedge44, %bb.p, %bb.c, %bb.d
-  %.4 = phi i1 [ true, %_ZL31cmFortranStreamContainsSequenceRSiPKci.exit79.a ], [ true, %.critedge44 ], [ true, %bb.p ], [ true, %bb.d ], [ true, %bb.c ], [ true, %bb.y ], [ %.not16.i, %.noexc82 ]
+_ZL22cmFortranStreamsDifferRSiS_.exit:            ; preds = %.noexc78, %bb.y, %.noexc82, %.noexc86, %bb.p, %bb.c, %bb.d
+  %.4 = phi i1 [ true, %bb.y ], [ true, %.noexc86 ], [ true, %bb.p ], [ true, %bb.d ], [ true, %bb.c ], [ %.not16.i, %.noexc82 ], [ true, %.noexc78 ]
   call void @_ZNSt14basic_ifstreamIcSt11char_traitsIcEED1Ev(ptr noundef nonnull align 8 dereferenceable(256) %4) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #23
   call void @_ZNSt14basic_ifstreamIcSt11char_traitsIcEED1Ev(ptr noundef nonnull align 8 dereferenceable(256) %3) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #23
   br label %bb.ab
 
-bb.z:                                             ; preds = %.loopexit.split-lp92.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.q, %bb.e
-  %.pn37 = phi { ptr, i32 } [ %i.ah, %bb.e ], [ %.pn, %bb.q ], [ %lpad.loopexit.split-lp116, %.loopexit.split-lp92.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+bb.z:                                             ; preds = %.loopexit.split-lp92.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.q
+  %.pn37 = phi { ptr, i32 } [ %.pn, %bb.q ], [ %lpad.loopexit.split-lp116, %.loopexit.split-lp92.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
   call void @_ZNSt14basic_ifstreamIcSt11char_traitsIcEED1Ev(ptr noundef nonnull align 8 dereferenceable(256) %4) #23
   br label %bb.aa
 
-bb.aa:                                            ; preds = %bb.z, %6
-  %.pn37.pn = phi { ptr, i32 } [ %.pn37, %bb.z ], [ %7, %6 ]
+bb.aa:                                            ; preds = %bb.z, %bb.e
+  %.pn37.pn = phi { ptr, i32 } [ %.pn37, %bb.z ], [ %i.ah, %bb.e ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #23
   call void @_ZNSt14basic_ifstreamIcSt11char_traitsIcEED1Ev(ptr noundef nonnull align 8 dereferenceable(256) %3) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #23

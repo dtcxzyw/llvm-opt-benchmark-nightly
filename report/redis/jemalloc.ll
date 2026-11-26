@@ -205,10 +205,10 @@ malloc_mutex_lock.exit:                           ; preds = %bb.g, %bb.h
   br i1 %or.cond.not.not161, label %bb.j, label %bb.m
 
 .lr.ph:                                           ; preds = %malloc_mutex_lock.exit, %.loopexit113
-  %.sroa.0132.1 = phi i32 [ %.sroa.0132.3, %.loopexit113 ], [ 0, %malloc_mutex_lock.exit ] ; 3 uses
-  %.sroa.10.1 = phi i32 [ %.sroa.10.2, %.loopexit113 ], [ 0, %malloc_mutex_lock.exit ] ; 3 uses
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.loopexit113 ], [ 1, %malloc_mutex_lock.exit ] ; 5 uses
-  %.0118 = phi i32 [ %.1, %.loopexit113 ], [ %i.t, %malloc_mutex_lock.exit ] ; 3 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.loopexit113 ], [ 1, %malloc_mutex_lock.exit ] ; 4 uses
+  %.sroa.10.1 = phi i32 [ %.1, %.loopexit113 ], [ %i.t, %malloc_mutex_lock.exit ] ; 3 uses
+  %.sroa.11.1206 = phi i32 [ %.sroa.10.2, %.loopexit113 ], [ 0, %malloc_mutex_lock.exit ] ; 3 uses
+  %.0118 = phi i32 [ %.sroa.0132.3, %.loopexit113 ], [ 0, %malloc_mutex_lock.exit ] ; 3 uses
   %i.an = getelementptr inbounds nuw [8 x i8], ptr @je_arenas, i64 %indvars.iv ; 3 uses
   %i.ao = load atomic ptr, ptr %i.an acquire, align 8
   %i.ap = icmp eq ptr %i.ao, null
@@ -217,37 +217,36 @@ malloc_mutex_lock.exit:                           ; preds = %bb.g, %bb.h
 arena_get.exit88.preheader:                       ; preds = %.lr.ph
   %i.aq = load atomic ptr, ptr %i.an acquire, align 8
   %i.ar = tail call i32 @je_arena_nthreads_get(ptr noundef %i.aq, i1 noundef zeroext false) #20
-  %i.as = zext i32 %.sroa.0132.1 to i64
+  %i.as = zext i32 %.0118 to i64
   %i.at = getelementptr inbounds nuw [8 x i8], ptr @je_arenas, i64 %i.as
   %i.au = load atomic ptr, ptr %i.at acquire, align 8
   %i.av = tail call i32 @je_arena_nthreads_get(ptr noundef %i.au, i1 noundef zeroext false) #20
   %i.aw = icmp ult i32 %i.ar, %i.av
-  %i.ax = trunc nuw i64 %indvars.iv to i32
-  %spec.select157 = select i1 %i.aw, i32 %i.ax, i32 %.sroa.0132.1
+  %i.ax = trunc nuw i64 %indvars.iv to i32        ; 2 uses
+  %spec.select157 = select i1 %i.aw, i32 %i.ax, i32 %.0118
   %i.ay = load atomic ptr, ptr %i.an acquire, align 8
   %i.az = tail call i32 @je_arena_nthreads_get(ptr noundef %i.ay, i1 noundef zeroext true) #20
-  %i.ba = zext i32 %.sroa.10.1 to i64
+  %i.ba = zext i32 %.sroa.11.1206 to i64
   %i.bb = getelementptr inbounds nuw [8 x i8], ptr @je_arenas, i64 %i.ba
   %i.bc = load atomic ptr, ptr %i.bb acquire, align 8
   %i.bd = tail call i32 @je_arena_nthreads_get(ptr noundef %i.bc, i1 noundef zeroext true) #20
   %i.be = icmp ult i32 %i.az, %i.bd
-  %2 = trunc nuw i64 %indvars.iv to i32
-  %.sroa.10.3 = select i1 %i.be, i32 %2, i32 %.sroa.10.1
+  %.sroa.10.3 = select i1 %i.be, i32 %i.ax, i32 %.sroa.11.1206
   %.pre = load i32, ptr @je_narenas_auto, align 4, !tbaa !14
   br label %.loopexit113
 
 bb.i:                                             ; preds = %.lr.ph
   %i.bf = load i32, ptr @je_narenas_auto, align 4, !tbaa !14 ; 2 uses
-  %i.bg = icmp eq i32 %.0118, %i.bf
+  %i.bg = icmp eq i32 %.sroa.10.1, %i.bf
   %i.bh = trunc nuw i64 %indvars.iv to i32
-  %spec.select = select i1 %i.bg, i32 %i.bh, i32 %.0118
+  %spec.select = select i1 %i.bg, i32 %i.bh, i32 %.sroa.10.1
   br label %.loopexit113
 
 .loopexit113:                                     ; preds = %arena_get.exit88.preheader, %bb.i
   %i.bi = phi i32 [ %i.bf, %bb.i ], [ %.pre, %arena_get.exit88.preheader ]
-  %.sroa.0132.3 = phi i32 [ %.sroa.0132.1, %bb.i ], [ %spec.select157, %arena_get.exit88.preheader ] ; 2 uses
-  %.sroa.10.2 = phi i32 [ %.sroa.10.1, %bb.i ], [ %.sroa.10.3, %arena_get.exit88.preheader ] ; 2 uses
-  %.1 = phi i32 [ %spec.select, %bb.i ], [ %.0118, %arena_get.exit88.preheader ] ; 2 uses
+  %.sroa.0132.3 = phi i32 [ %.0118, %bb.i ], [ %spec.select157, %arena_get.exit88.preheader ] ; 2 uses
+  %.sroa.10.2 = phi i32 [ %.sroa.11.1206, %bb.i ], [ %.sroa.10.3, %arena_get.exit88.preheader ] ; 2 uses
+  %.1 = phi i32 [ %spec.select, %bb.i ], [ %.sroa.10.1, %arena_get.exit88.preheader ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.bj = zext i32 %i.bi to i64
   %i.bk = icmp samesign ult i64 %indvars.iv.next, %i.bj
@@ -297,9 +296,9 @@ arena_init_locked.exit.thread106:                 ; preds = %bb.p, %arena_init_l
   br label %arena_get.exit94
 
 arena_get.exit94:                                 ; preds = %arena_init_locked.exit.thread106, %bb.l, %bb.k, %bb.j
-  %.sroa.0132.4 = phi i32 [ %.sroa.0132.0, %bb.l ], [ %.sroa.0132.0, %bb.k ], [ %.sroa.0132.0, %bb.j ], [ %.0.lcssa, %arena_init_locked.exit.thread106 ] ; 5 uses
-  %.376 = phi ptr [ null, %bb.l ], [ %i.bl, %bb.k ], [ null, %bb.j ], [ %spec.select81, %arena_init_locked.exit.thread106 ] ; 2 uses
-  tail call fastcc void @arena_bind(ptr noundef %0, i32 noundef %.sroa.0132.4, i1 noundef zeroext false)
+  %.3156 = phi ptr [ %spec.select81, %arena_init_locked.exit.thread106 ], [ null, %bb.j ], [ %i.bl, %bb.k ], [ null, %bb.l ] ; 2 uses
+  %.sroa.049.6 = phi i32 [ %.0.lcssa, %arena_init_locked.exit.thread106 ], [ %.sroa.0132.0, %bb.j ], [ %.sroa.0132.0, %bb.k ], [ %.sroa.0132.0, %bb.l ] ; 5 uses
+  tail call fastcc void @arena_bind(ptr noundef %0, i32 noundef %.sroa.049.6, i1 noundef zeroext false)
   %i.bu = zext i32 %.sroa.10.0 to i64
   %i.bv = getelementptr inbounds nuw [8 x i8], ptr @je_arenas, i64 %i.bu ; 2 uses
   %i.bw = load atomic ptr, ptr %i.bv acquire, align 8
@@ -334,7 +333,7 @@ arena_init_locked.exit.1:                         ; preds = %bb.t
 
 arena_init_locked.exit.thread106.1:               ; preds = %arena_init_locked.exit.1, %bb.t
   %.0.i95109.1 = phi ptr [ %i.cg, %arena_init_locked.exit.1 ], [ %i.ce, %bb.t ]
-  %spec.select81.1 = select i1 %1, ptr %.0.i95109.1, ptr %.376
+  %spec.select81.1 = select i1 %1, ptr %.0.i95109.1, ptr %.3156
   br label %arena_get.exit94.1
 
 bb.u:                                             ; preds = %arena_get.exit94
@@ -349,40 +348,40 @@ bb.w:                                             ; preds = %bb.v
   br label %arena_get.exit94.1
 
 arena_get.exit94.1:                               ; preds = %bb.w, %bb.v, %bb.u, %arena_init_locked.exit.thread106.1
-  %.sroa.10.4 = phi i32 [ %.sroa.10.0, %bb.w ], [ %.sroa.10.0, %bb.v ], [ %.sroa.10.0, %bb.u ], [ %.0.lcssa, %arena_init_locked.exit.thread106.1 ] ; 5 uses
-  %.376.1 = phi ptr [ null, %bb.w ], [ %i.ch, %bb.v ], [ %.376, %bb.u ], [ %spec.select81.1, %arena_init_locked.exit.thread106.1 ] ; 3 uses
-  tail call fastcc void @arena_bind(ptr noundef %0, i32 noundef %.sroa.10.4, i1 noundef zeroext true)
+  %.3156.1 = phi ptr [ %spec.select81.1, %arena_init_locked.exit.thread106.1 ], [ %.3156, %bb.u ], [ %i.ch, %bb.v ], [ null, %bb.w ] ; 3 uses
+  %.sroa.11.6.1 = phi i32 [ %.0.lcssa, %arena_init_locked.exit.thread106.1 ], [ %.sroa.10.0, %bb.u ], [ %.sroa.10.0, %bb.v ], [ %.sroa.10.0, %bb.w ] ; 5 uses
+  tail call fastcc void @arena_bind(ptr noundef %0, i32 noundef %.sroa.11.6.1, i1 noundef zeroext true)
   store atomic i8 0, ptr getelementptr inbounds nuw (i8, ptr @je_arenas_lock, i64 104) monotonic, align 8
   %i.cj = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @je_arenas_lock, i64 64)) #20 ; 0 uses
-  %i.ck = icmp eq i32 %.sroa.0132.4, 0
+  %i.ck = icmp eq i32 %.sroa.049.6, 0
   %or.cond = or i1 %or.cond.not.not161, %i.ck
   br i1 %or.cond, label %arena_new_create_background_thread.exit, label %bb.x
 
 bb.x:                                             ; preds = %arena_get.exit94.1
-  %i.cl = tail call zeroext i1 @je_arena_is_huge(i32 noundef %.sroa.0132.4) #20
+  %i.cl = tail call zeroext i1 @je_arena_is_huge(i32 noundef %.sroa.049.6) #20
   br i1 %i.cl, label %arena_new_create_background_thread.exit, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
-  %i.cm = tail call zeroext i1 @je_background_thread_create(ptr noundef %0, i32 noundef %.sroa.0132.4) #20
+  %i.cm = tail call zeroext i1 @je_background_thread_create(ptr noundef %0, i32 noundef %.sroa.049.6) #20
   br i1 %i.cm, label %bb.z, label %arena_new_create_background_thread.exit
 
 bb.z:                                             ; preds = %bb.ab, %bb.y
-  %.lcssa = phi i32 [ %.sroa.0132.4, %bb.y ], [ %.sroa.10.4, %bb.ab ]
+  %.lcssa = phi i32 [ %.sroa.049.6, %bb.y ], [ %.sroa.11.6.1, %bb.ab ]
   tail call void (ptr, ...) @je_malloc_printf(ptr noundef nonnull @.str.147, i32 noundef %.lcssa) #20
   tail call void @abort() #21
   unreachable
 
 arena_new_create_background_thread.exit:          ; preds = %bb.y, %bb.x, %arena_get.exit94.1
-  %i.cn = icmp eq i32 %.sroa.10.4, 0
+  %i.cn = icmp eq i32 %.sroa.11.6.1, 0
   %or.cond158 = or i1 %or.cond.1.not.not164, %i.cn
   br i1 %or.cond158, label %.loopexit, label %bb.aa
 
 bb.aa:                                            ; preds = %arena_new_create_background_thread.exit
-  %i.co = tail call zeroext i1 @je_arena_is_huge(i32 noundef %.sroa.10.4) #20
+  %i.co = tail call zeroext i1 @je_arena_is_huge(i32 noundef %.sroa.11.6.1) #20
   br i1 %i.co, label %.loopexit, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
-  %i.cp = tail call zeroext i1 @je_background_thread_create(ptr noundef %0, i32 noundef %.sroa.10.4) #20
+  %i.cp = tail call zeroext i1 @je_background_thread_create(ptr noundef %0, i32 noundef %.sroa.11.6.1) #20
   br i1 %i.cp, label %bb.z, label %.loopexit
 
 arena_get.exit99:                                 ; preds = %bb.e
@@ -394,8 +393,8 @@ arena_get.exit99:                                 ; preds = %bb.e
   store ptr %i.cr, ptr %i.cs, align 8, !tbaa !169
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.thread, %bb.ab, %bb.aa, %arena_new_create_background_thread.exit, %arena_get.exit99, %arena_get.exit
-  %.4 = phi ptr [ %.0.i84, %arena_get.exit ], [ %i.cq, %arena_get.exit99 ], [ null, %.thread ], [ %.376.1, %bb.ab ], [ %.376.1, %bb.aa ], [ %.376.1, %arena_new_create_background_thread.exit ]
+.loopexit:                                        ; preds = %arena_new_create_background_thread.exit, %bb.aa, %bb.ab, %.thread, %arena_get.exit99, %arena_get.exit
+  %.4 = phi ptr [ %.0.i84, %arena_get.exit ], [ %i.cq, %arena_get.exit99 ], [ null, %.thread ], [ %.3156.1, %bb.ab ], [ %.3156.1, %bb.aa ], [ %.3156.1, %arena_new_create_background_thread.exit ]
   ret ptr %.4
 }
 

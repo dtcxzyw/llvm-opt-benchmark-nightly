@@ -205,9 +205,6 @@ bb.a:
   %4 = alloca %struct.HuffmanTreeCode, align 8    ; 8 uses
   %i.c = alloca [19 x i32], align 16              ; 9 uses
   %i.d = alloca [19 x i8], align 16               ; 4 uses
-  %5 = alloca [2 x i32], align 8                  ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #7
-  store i64 0, ptr %5, align 8
   %i.e = load i32, ptr %3, align 8, !tbaa !79     ; 3 uses
   %i.f = icmp sgt i32 %i.e, 0
   br i1 %i.f, label %.lr.ph, label %._crit_edge.thread
@@ -220,7 +217,9 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %bb.f
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.f ] ; 3 uses
-  %.052 = phi i32 [ 0, %.lr.ph ], [ %.1, %bb.f ]  ; 4 uses
+  %.sroa.8.062 = phi i32 [ 0, %.lr.ph ], [ %.sroa.8.2, %bb.f ] ; 3 uses
+  %.sroa.0.061 = phi i32 [ 0, %.lr.ph ], [ %.sroa.0.2, %bb.f ] ; 3 uses
+  %.052 = phi i32 [ 0, %.lr.ph ], [ %.1, %bb.f ]  ; 5 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 %indvars.iv
   %i.k = load i8, ptr %i.j, align 1, !tbaa !42
   %.not = icmp eq i8 %i.k, 0
@@ -231,18 +230,24 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.l, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %6 = sext i32 %.052 to i64
-  %7 = getelementptr inbounds [4 x i8], ptr %5, i64 %6
-  %i.m = trunc nuw nsw i64 %indvars.iv to i32
-  store i32 %i.m, ptr %7, align 4, !tbaa !41
+  %.sroa.idx.not = icmp eq i32 %.052, 0           ; 2 uses
+  %5 = icmp ult i32 %.052, 2
+  tail call void @llvm.assume(i1 %5)
+  %i.m = trunc nuw nsw i64 %indvars.iv to i32     ; 2 uses
+  %.038..sroa.0.0 = select i1 %.sroa.idx.not, i32 %i.m, i32 %.sroa.0.061
+  %.sroa.8.0..038 = select i1 %.sroa.idx.not, i32 %.sroa.8.062, i32 %i.m
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %i.n = add nsw i32 %.052, 1
+  %.sroa.0.1 = phi i32 [ %.038..sroa.0.0, %bb.d ], [ %.sroa.0.061, %bb.c ]
+  %.sroa.8.1 = phi i32 [ %.sroa.8.0..038, %bb.d ], [ %.sroa.8.062, %bb.c ]
+  %i.n = add nuw nsw i32 %.052, 1
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.b, %bb.e
   %.1 = phi i32 [ %i.n, %bb.e ], [ %.052, %bb.b ] ; 5 uses
+  %.sroa.0.2 = phi i32 [ %.sroa.0.1, %bb.e ], [ %.sroa.0.061, %bb.b ] ; 5 uses
+  %.sroa.8.2 = phi i32 [ %.sroa.8.1, %bb.e ], [ %.sroa.8.062, %bb.b ] ; 3 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.o = icmp samesign ult i64 %indvars.iv.next, %i.i
   %i.p = icmp slt i32 %.1, 3                      ; 2 uses
@@ -276,12 +281,9 @@ VP8LPutBits.exit:                                 ; preds = %._crit_edge.thread,
   br label %bb.bn
 
 bb.h:                                             ; preds = %._crit_edge
-  %8 = load i32, ptr %5, align 8                  ; 4 uses
-  %i.ab = icmp slt i32 %8, 256
+  %i.ab = icmp slt i32 %.sroa.0.2, 256
   %or.cond = select i1 %i.p, i1 %i.ab, i1 false
-  %9 = getelementptr inbounds nuw i8, ptr %5, i64 4
-  %10 = load i32, ptr %9, align 4                 ; 2 uses
-  %i.ac = icmp slt i32 %10, 256
+  %i.ac = icmp slt i32 %.sroa.8.2, 256
   %or.cond5 = select i1 %or.cond, i1 %i.ac, i1 false
   br i1 %or.cond5, label %bb.i, label %bb.u
 
@@ -325,7 +327,7 @@ VP8LPutBits.exit34:                               ; preds = %VP8LPutBits.exit32,
   store i64 %i.at, ptr %0, align 8, !tbaa !67
   %i.au = add nsw i32 %i.ap, 1                    ; 3 uses
   store i32 %i.au, ptr %i.ad, align 8, !tbaa !62
-  %i.av = icmp slt i32 %8, 2
+  %i.av = icmp slt i32 %.sroa.0.2, 2
   %i.aw = icmp sgt i32 %i.ap, 30                  ; 2 uses
   br i1 %i.av, label %bb.l, label %bb.o
 
@@ -351,7 +353,7 @@ bb.n:                                             ; preds = %VP8LPutBits.exit36
 
 VP8LPutBits.exit38:                               ; preds = %VP8LPutBits.exit36, %bb.n
   %i.ba = phi i32 [ %.pre.i37, %bb.n ], [ %i.ay, %VP8LPutBits.exit36 ] ; 2 uses
-  %i.bb = zext i32 %8 to i64
+  %i.bb = zext i32 %.sroa.0.2 to i64
   %i.bc = zext nneg i32 %i.ba to i64
   %i.bd = shl i64 %i.bb, %i.bc
   %i.be = load i64, ptr %0, align 8, !tbaa !67
@@ -390,7 +392,7 @@ bb.q:                                             ; preds = %VP8LPutBits.exit40
 VP8LPutBits.exit42:                               ; preds = %VP8LPutBits.exit40, %bb.q
   %i.bo = phi i64 [ %.pre61, %bb.q ], [ %i.bl, %VP8LPutBits.exit40 ]
   %i.bp = phi i32 [ %.pre.i41, %bb.q ], [ %i.bm, %VP8LPutBits.exit40 ] ; 2 uses
-  %i.bq = zext nneg i32 %8 to i64
+  %i.bq = zext nneg i32 %.sroa.0.2 to i64
   %i.br = zext nneg i32 %i.bp to i64
   %i.bs = shl i64 %i.bq, %i.br
   %i.bt = or i64 %i.bs, %i.bo                     ; 2 uses
@@ -418,7 +420,7 @@ bb.t:                                             ; preds = %bb.s
 VP8LPutBits.exit44:                               ; preds = %bb.s, %bb.t
   %i.bz = phi i64 [ %.pre62, %bb.t ], [ %i.bv, %bb.s ]
   %i.ca = phi i32 [ %.pre.i43, %bb.t ], [ %i.bw, %bb.s ] ; 2 uses
-  %i.cb = zext i32 %10 to i64
+  %i.cb = zext i32 %.sroa.8.2 to i64
   %i.cc = zext nneg i32 %i.ca to i64
   %i.cd = shl i64 %i.cb, %i.cc
   %i.ce = or i64 %i.cd, %i.bz
@@ -821,7 +823,6 @@ StoreFullHuffmanCode.exit:                        ; preds = %bb.bm, %bb.bb
   br label %bb.bn
 
 bb.bn:                                            ; preds = %StoreFullHuffmanCode.exit, %VP8LPutBits.exit44, %bb.r, %VP8LPutBits.exit
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #7
   ret void
 }
 
@@ -1224,25 +1225,25 @@ declare void @VP8LOptimizeSampling(ptr noundef, i32 noundef, i32 noundef, i32 no
 
 declare ptr @VP8LBitWriterFinish(ptr noundef) local_unnamed_addr #2
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umin.i32(i32, i32) #5
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #5
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #5
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #6
+declare void @llvm.assume(i1 noundef) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umin.i32(i32, i32) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umin.i64(i64, i64) #6
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #4 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #5 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #6 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #5 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #6 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #7 = { nounwind }
 
 !llvm.module.flags = !{!3, !4}

@@ -21,7 +21,7 @@ define hidden range(i32 0, 5) i32 @FLAC__fixed_compute_best_predictor_limit_resi
   %spec.select432.1 = tail call i64 @llvm.abs.i64(i64 %i.j, i1 true) ; 2 uses
   %i.k = add nuw nsw i64 %i.i, %i.e
   %i.l = load i32, ptr %i.a, align 4, !tbaa !9
-  %i.m = sext i32 %i.l to i64                     ; 8 uses
+  %i.m = sext i32 %i.l to i64                     ; 9 uses
   %i.n = tail call i64 @llvm.abs.i64(i64 %i.m, i1 true) ; 2 uses
   %i.o = sub nsw i64 %i.m, %i.h
   %spec.select432.2 = tail call i64 @llvm.abs.i64(i64 %i.o, i1 true) ; 2 uses
@@ -33,9 +33,9 @@ define hidden range(i32 0, 5) i32 @FLAC__fixed_compute_best_predictor_limit_resi
   %i.t = add nuw nsw i64 %spec.select432.2, %spec.select432.1
   %i.u = getelementptr i8, ptr %0, i64 -4
   %i.v = load i32, ptr %i.u, align 4, !tbaa !9
-  %i.w = sext i32 %i.v to i64                     ; 5 uses
+  %i.w = sext i32 %i.v to i64                     ; 6 uses
   %i.x = tail call i64 @llvm.abs.i64(i64 %i.w, i1 true) ; 2 uses
-  %i.y = sub nsw i64 %i.w, %i.m                   ; 3 uses
+  %i.y = sub nsw i64 %i.w, %i.m
   %spec.select432.3 = tail call i64 @llvm.abs.i64(i64 %i.y, i1 true) ; 2 uses
   %i.z = shl nsw i64 %i.m, 1
   %i.aa = sub nsw i64 %i.w, %i.z
@@ -58,7 +58,8 @@ define hidden range(i32 0, 5) i32 @FLAC__fixed_compute_best_predictor_limit_resi
   %i.ak = add nsw i64 %i.m, %i.d
   %.neg482 = sub nsw i64 %i.aj, %i.ak
   %.neg422 = sub nsw i64 %i.h, %i.m
-  %i.al = add nsw i64 %.neg422, %i.y              ; 2 uses
+  %3 = sub nsw i64 %i.w, %i.m                     ; 2 uses
+  %i.al = add nsw i64 %.neg422, %3                ; 2 uses
   %i.am = add nsw i64 %.neg482, %i.al
   %.sroa.0.0.vec.insert545 = insertelement <2 x i64> poison, i64 %i.am, i64 0
   %i.an = zext nneg i32 %i.ae to i64
@@ -85,7 +86,7 @@ define hidden range(i32 0, 5) i32 @FLAC__fixed_compute_best_predictor_limit_resi
   %.sroa.0.8.vec.insert546 = insertelement <2 x i64> %.sroa.0.0.vec.insert545, i64 %i.bf, i64 1
   %.sroa.0547.0.vec.insert = insertelement <2 x i64> poison, i64 %i.al, i64 0
   %.sroa.0547.8.vec.insert = insertelement <2 x i64> %.sroa.0547.0.vec.insert, i64 %i.be, i64 1
-  %.sroa.0549.0.vec.insert = insertelement <2 x i64> poison, i64 %i.y, i64 0
+  %.sroa.0549.0.vec.insert = insertelement <2 x i64> poison, i64 %3, i64 0
   %.sroa.0549.8.vec.insert = insertelement <2 x i64> %.sroa.0549.0.vec.insert, i64 %i.bd, i64 1
   %.sroa.0551.0.vec.insert = insertelement <2 x i64> poison, i64 %i.w, i64 0
   %.sroa.0551.8.vec.insert = insertelement <2 x i64> %.sroa.0551.0.vec.insert, i64 %i.bc, i64 1

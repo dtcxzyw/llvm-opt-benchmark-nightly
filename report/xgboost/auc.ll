@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/xgboost/original/auc?download=true
 inline.NumInlined: 2442
 inline.NumDeleted: 966
-loop-unroll.NumCompletelyUnrolled: 5
+loop-unroll.NumCompletelyUnrolled: 3
 loop-unroll.NumRuntimeUnrolled: 6
-loop-unroll.NumUnrolled: 11
+loop-unroll.NumUnrolled: 9
 begin_hunk_0_@_ZZN7xgboost6metric8MultiAUCIRFSt5tupleIJdddEEPKNS_7ContextENS_6common4SpanIKfLm18446744073709551615EEENS_6linalg10TensorViewIS9_Li1EEENS7_15OptionalWeightsEEEEdS6_SA_RKNS_8MetaInfoEmiNS0_12MultiAUCTypeEOT_ENKUlSL_E_clImEEDaSL_:bb.a
 _ZNSt6vectorIfSaIfEED2Ev.exit21:                  ; preds = %bb.k, %bb.j, %bb.e
   %.pn.pn = phi { ptr, i32 } [ %i.dv, %bb.e ], [ %i.gm, %bb.j ], [ %i.gm, %bb.k ]
@@ -205,22 +205,19 @@ bb.c:                                             ; preds = %bb.a
 _ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIKmLm2EEELb1EEdeEv.exit.i.i.i: ; preds = %bb.c
   %i.i = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.j = load i64, ptr %i.i, align 8, !tbaa !25
-  %i.k = load i64, ptr %3, align 8, !tbaa !25
+  %i.k = load i64, ptr %3, align 8, !tbaa !25     ; 2 uses
   %.not4.i.i.i.a = icmp eq i64 %i.k, %i.j
   %i.l = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.m = load i64, ptr %i.l, align 8
+  %i.m = load i64, ptr %i.l, align 8              ; 2 uses
   %.not4.i.i.i.1 = icmp eq i64 %i.m, 1
   %.not4.i.i.i.lcssa = select i1 %.not4.i.i.i.a, i1 %.not4.i.i.i.1, i1 false
   br i1 %.not4.i.i.i.lcssa, label %_ZNK7xgboost6linalg10TensorViewIdLi2EE10ContiguousEv.exit.thread, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIKmLm2EEELb1EEdeEv.exit.i.i1.i
 
 _ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIKmLm2EEELb1EEdeEv.exit.i.i1.i: ; preds = %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIKmLm2EEELb1EEdeEv.exit.i.i.i
   %i.n = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %7 = load i64, ptr %i.n, align 8, !tbaa !25
-  %i.o = load i64, ptr %3, align 8, !tbaa !25
-  %.not4.i.i3.i = icmp eq i64 %i.o, 1
-  %8 = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %9 = load i64, ptr %8, align 8
-  %.not4.i.i3.i.1 = icmp eq i64 %9, %7
+  %i.o = load i64, ptr %i.n, align 8, !tbaa !25
+  %.not4.i.i3.i = icmp eq i64 %i.k, 1
+  %.not4.i.i3.i.1 = icmp eq i64 %i.m, %i.o
   %.not4.i.i3.i.lcssa = select i1 %.not4.i.i3.i, i1 %.not4.i.i3.i.1, i1 false
   br i1 %.not4.i.i3.i.lcssa, label %_ZNK7xgboost6linalg10TensorViewIdLi2EE10ContiguousEv.exit.thread, label %bb.d, !prof !513
 

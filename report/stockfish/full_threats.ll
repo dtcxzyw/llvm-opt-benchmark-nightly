@@ -58,13 +58,13 @@ bb.b:                                             ; preds = %bb.d
   ret void
 
 bb.c:                                             ; preds = %bb.a, %bb.d
+  %.0.ptr.sroa.idx = phi i8 [ 0, %bb.a ], [ 1, %bb.d ] ; 2 uses
   %.not = phi i1 [ false, %bb.a ], [ true, %bb.d ]
-  %.0.idx99.sroa.phi.sroa.speculated = phi i8 [ 0, %bb.a ], [ 1, %bb.d ] ; 2 uses
-  %i.s = xor i8 %.0.idx99.sroa.phi.sroa.speculated, %0 ; 2 uses
+  %i.s = xor i8 %.0.ptr.sroa.idx, %0              ; 2 uses
   %i.t = shl i8 %i.s, 3
   %i.u = zext i8 %i.s to i64
   %i.v = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.u
-  %i.w = icmp eq i8 %0, %.0.idx99.sroa.phi.sroa.speculated ; 3 uses
+  %i.w = icmp eq i8 %0, %.0.ptr.sroa.idx          ; 3 uses
   %.neg = select i1 %i.w, i32 247, i32 9
   %.neg82 = select i1 %i.w, i32 249, i32 7
   %i.x = zext i8 %i.t to i64
