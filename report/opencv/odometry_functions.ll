@@ -205,8 +205,8 @@ vector.memcheck:                                  ; preds = %bb.z
   %i.gi = getelementptr i8, ptr %i.bc, i64 %i.gh
   %i.gj = getelementptr i8, ptr %i.bi, i64 %i.gd  ; 2 uses
   %bound0 = icmp ult ptr %i.gi, %scevgep
-  %bound1 = icmp ult ptr %i.gf, %i.gj
-  %bound1189 = icmp ult ptr %i.ac, %i.gj
+  %bound1 = icmp ult ptr %i.ac, %i.gj
+  %bound1189 = icmp ult ptr %i.gf, %i.gj
   %found.conflict190206 = or i1 %bound1, %bound1189
   %conflict.rdx = and i1 %bound0, %found.conflict190206
   br i1 %conflict.rdx, label %scalar.ph.preheader, label %vector.ph
@@ -609,8 +609,8 @@ vector.memcheck:                                  ; preds = %bb.ac
   %i.is = getelementptr i8, ptr %i.fk, i64 %i.ir
   %i.it = getelementptr i8, ptr %i.fo, i64 %i.in  ; 2 uses
   %bound0 = icmp ult ptr %i.is, %scevgep
-  %bound1 = icmp ult ptr %i.ip, %i.it
-  %bound1311 = icmp ult ptr %i.ci, %i.it
+  %bound1 = icmp ult ptr %i.ci, %i.it
+  %bound1311 = icmp ult ptr %i.ip, %i.it
   %found.conflict312328 = or i1 %bound1, %bound1311
   %conflict.rdx = and i1 %bound0, %found.conflict312328
   br i1 %conflict.rdx, label %scalar.ph.preheader, label %vector.ph
@@ -1013,7 +1013,7 @@ begin_hunk_2_@llvm.fmuladd.v4f32
 !205 = !{!194}
 !206 = !{!195}
 !207 = !{!196}
-!208 = !{!195, !194}
+!208 = !{!194, !195}
 !209 = distinct !{!209, !38}
 !210 = distinct !{!210, i1 true, !"_ZNK2cv7Point3_IfEcvNS0_IT_EEIdEEv"}
 !211 = distinct !{!211, !210, !"_ZNK2cv7Point3_IfEcvNS0_IT_EEIdEEv: argument 0"}
@@ -1039,7 +1039,7 @@ begin_hunk_2_@llvm.fmuladd.v4f32
 !231 = !{!214}
 !232 = !{!215}
 !233 = !{!216}
-!234 = !{!215, !214}
+!234 = !{!214, !215}
 !235 = distinct !{!235, i1 true, !"_ZN2cv4MatxIfLi6ELi7EE5zerosEv"}
 !236 = distinct !{!236, !235, !"_ZN2cv4MatxIfLi6ELi7EE5zerosEv: argument 0"}
 !237 = !{!236}

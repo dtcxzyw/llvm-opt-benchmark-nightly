@@ -204,14 +204,14 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i499.preheader
   %i.asa = shl nuw nsw i64 %indvars.iv1712, 3
   %i.asb = add i64 %i.aqz, %i.asa                 ; 3 uses
-  %i.asc = shl nsw i64 %i.arx, 3
+  %i.asc = shl nsw i64 %i.arp, 3
   %i.asd = sub i64 %i.asc, %i.asb
   %diff.check = icmp ugt i64 %i.asd, -32
   %i.ase = shl nsw i64 %i.art, 3
   %i.asf = sub i64 %i.ase, %i.asb
   %diff.check1975 = icmp ugt i64 %i.asf, -32
   %conflict.rdx = or i1 %diff.check, %diff.check1975
-  %i.asg = shl nsw i64 %i.arp, 3
+  %i.asg = shl nsw i64 %i.arx, 3
   %i.ash = sub i64 %i.asg, %i.asb
   %diff.check1976 = icmp ugt i64 %i.ash, -32
   %conflict.rdx1977 = or i1 %conflict.rdx, %diff.check1976

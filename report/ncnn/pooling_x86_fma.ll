@@ -204,13 +204,13 @@ bb.b:                                             ; preds = %bb.a
 vector.memcheck:                                  ; preds = %.lr.ph
   %i.as = getelementptr i8, ptr %.04387, i64 %i.aj
   %i.at = getelementptr i8, ptr %i.as, i64 4      ; 2 uses
-  %i.au = getelementptr i8, ptr %.03890, i64 %i.ai
-  %i.av = getelementptr i8, ptr %.03989, i64 %i.ai
+  %i.au = getelementptr i8, ptr %.03989, i64 %i.ai
+  %i.av = getelementptr i8, ptr %.03890, i64 %i.ai
   %bound0 = icmp ult ptr %.04387, %i.au
-  %bound1 = icmp ult ptr %.03890, %i.at
+  %bound1 = icmp ult ptr %.03989, %i.at
   %found.conflict = and i1 %bound0, %bound1
   %bound0119 = icmp ult ptr %.04387, %i.av
-  %bound1120 = icmp ult ptr %.03989, %i.at
+  %bound1120 = icmp ult ptr %.03890, %i.at
   %found.conflict121 = and i1 %bound0119, %bound1120
   %conflict.rdx = or i1 %found.conflict, %found.conflict121
   br i1 %conflict.rdx, label %scalar.ph.preheader, label %vector.ph
@@ -613,7 +613,7 @@ begin_hunk_1_@llvm.vector.reduce.fadd.v4f32
 !223 = !{!213}
 !224 = !{!214}
 !225 = !{!215}
-!226 = !{!214, !213}
+!226 = !{!213, !214}
 !227 = distinct !{!227, !48, !67, !68}
 !228 = distinct !{!228, !48, !67, !68}
 !229 = distinct !{!229, !48}

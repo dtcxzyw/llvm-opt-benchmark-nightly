@@ -204,8 +204,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %.sroa.5.0 = phi i32 [ %3, %bb.b ], [ %5, %bb.a ] ; 5 uses
   %.sroa.024.0 = phi ptr [ %4, %bb.b ], [ %2, %bb.a ] ; 7 uses
   %.013 = phi i32 [ %5, %bb.b ], [ %3, %bb.a ]    ; 6 uses
-  %.sroa.018.057 = ptrtoaddr ptr %.sroa.018.0 to i64 ; 2 uses
-  %.sroa.024.058 = ptrtoaddr ptr %.sroa.024.0 to i64
+  %.sroa.018.057 = ptrtoaddr ptr %.sroa.024.0 to i64
+  %.sroa.024.058 = ptrtoaddr ptr %.sroa.018.0 to i64 ; 2 uses
   %.not = icmp eq i32 %.013, 0
   br i1 %.not, label %.preheader33, label %.lr.ph.preheader
 
@@ -286,7 +286,7 @@ middle.block:                                     ; preds = %vector.body
   %wide.trip.count46 = zext i32 %.sroa.5.0 to i64 ; 4 uses
   %i.v = sub nsw i64 %wide.trip.count46, %i.u     ; 3 uses
   %min.iters.check66 = icmp ult i64 %i.v, 8
-  %i.w = sub i64 %.sroa.018.057, %i.a
+  %i.w = sub i64 %.sroa.024.058, %i.a
   %diff.check68 = icmp ugt i64 %i.w, -32
   %or.cond = select i1 %min.iters.check66, i1 true, i1 %diff.check68
   br i1 %or.cond, label %.lr.ph36.preheader79, label %vector.ph69

@@ -205,9 +205,9 @@ bb.av:                                            ; preds = %bb.aq, %bb.ar, %bb.
 vector.memcheck375:                               ; preds = %.lr.ph277
   %spec.select75.i.sroa.sel200372 = ptrtoaddr ptr %spec.select75.i.sroa.sel200 to i64
   %i.dn = add i64 %i.cl, 4                        ; 2 uses
-  %i.do = sub i64 %spec.select.i.sroa.sel195371, %i.dn
+  %i.do = sub i64 %spec.select75.i.sroa.sel200372, %i.dn
   %diff.check376 = icmp ugt i64 %i.do, -32
-  %i.dp = sub i64 %spec.select75.i.sroa.sel200372, %i.dn
+  %i.dp = sub i64 %spec.select.i.sroa.sel195371, %i.dn
   %diff.check377 = icmp ugt i64 %i.dp, -32
   %conflict.rdx = or i1 %diff.check376, %diff.check377
   br i1 %conflict.rdx, label %scalar.ph373.preheader, label %vector.ph378
@@ -280,9 +280,9 @@ scalar.ph373.prol.loopexit:                       ; preds = %scalar.ph373.prol, 
 vector.memcheck416:                               ; preds = %.lr.ph281
   %spec.select75.i.sroa.sel206413 = ptrtoaddr ptr %spec.select75.i.sroa.sel206 to i64
   %i.ei = add i64 %i.cl, 4                        ; 2 uses
-  %i.ej = sub i64 %spec.select.i.sroa.sel195371, %i.ei
+  %i.ej = sub i64 %spec.select75.i.sroa.sel206413, %i.ei
   %diff.check417 = icmp ugt i64 %i.ej, -32
-  %i.ek = sub i64 %spec.select75.i.sroa.sel206413, %i.ei
+  %i.ek = sub i64 %spec.select.i.sroa.sel195371, %i.ei
   %diff.check418 = icmp ugt i64 %i.ek, -32
   %conflict.rdx419 = or i1 %diff.check417, %diff.check418
   br i1 %conflict.rdx419, label %scalar.ph414.preheader, label %vector.ph420
@@ -355,9 +355,9 @@ scalar.ph414.prol.loopexit:                       ; preds = %scalar.ph414.prol, 
 vector.memcheck460:                               ; preds = %.lr.ph285
   %spec.select75.i.sroa.sel212457 = ptrtoaddr ptr %spec.select75.i.sroa.sel212 to i64
   %i.fd = add i64 %i.cl, 4                        ; 2 uses
-  %i.fe = sub i64 %spec.select.i.sroa.sel195371, %i.fd
+  %i.fe = sub i64 %spec.select75.i.sroa.sel212457, %i.fd
   %diff.check461 = icmp ugt i64 %i.fe, -32
-  %i.ff = sub i64 %spec.select75.i.sroa.sel212457, %i.fd
+  %i.ff = sub i64 %spec.select.i.sroa.sel195371, %i.fd
   %diff.check462 = icmp ugt i64 %i.ff, -32
   %conflict.rdx463 = or i1 %diff.check461, %diff.check462
   br i1 %conflict.rdx463, label %scalar.ph458.preheader, label %vector.ph464

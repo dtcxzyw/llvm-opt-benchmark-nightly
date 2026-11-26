@@ -205,7 +205,7 @@ vector.memcheck143:                               ; preds = %.lr.ph.i100.i
   %i.lg = shl nsw i64 %i.lf, 2
   %i.lh = sub i64 %i.lg, %i.kn
   %diff.check = icmp ugt i64 %i.lh, -32
-  %conflict.rdx145 = or i1 %diff.check, %diff.check144.a
+  %conflict.rdx145 = or i1 %diff.check144.a, %diff.check
   br i1 %conflict.rdx145, label %scalar.ph141.preheader, label %vector.ph146
 
 vector.ph146:                                     ; preds = %vector.memcheck143

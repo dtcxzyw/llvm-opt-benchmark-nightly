@@ -205,8 +205,8 @@ bb.y:                                             ; preds = %bb.w
   br i1 %min.iters.check, label %.lr.ph124.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph124.preheader.i
-  %.1162.i83 = ptrtoaddr ptr %.1162.i to i64
-  %.190160.i82 = ptrtoaddr ptr %.190160.i to i64
+  %.1162.i83 = ptrtoaddr ptr %.190160.i to i64
+  %.190160.i82 = ptrtoaddr ptr %.1162.i to i64
   %i.ex = add i64 %i.ba, %.reass.i                ; 2 uses
   %i.ey = sub i64 %.190160.i82, %i.ex
   %diff.check = icmp ugt i64 %i.ey, -32
@@ -609,10 +609,10 @@ bb.aq:                                            ; preds = %bb.ao
   br i1 %min.iters.check, label %.lr.ph354.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph354.preheader.i
-  %.1266423.i151 = ptrtoaddr ptr %.1266423.i to i64
-  %.1268421.i150 = ptrtoaddr ptr %.1268421.i to i64
-  %.1270419.i149 = ptrtoaddr ptr %.1270419.i to i64
-  %.1272417.i148 = ptrtoaddr ptr %.1272417.i to i64
+  %.1266423.i151 = ptrtoaddr ptr %.1272417.i to i64
+  %.1268421.i150 = ptrtoaddr ptr %.1270419.i to i64
+  %.1270419.i149 = ptrtoaddr ptr %.1268421.i to i64
+  %.1272417.i148 = ptrtoaddr ptr %.1266423.i to i64
   %i.jk = add i64 %i.bi, %.reass.i                ; 4 uses
   %i.jl = sub i64 %.1272417.i148, %i.jk
   %diff.check = icmp ugt i64 %i.jl, -16

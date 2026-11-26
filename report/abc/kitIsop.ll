@@ -205,12 +205,12 @@ select.unfold.i214.preheader581:                  ; preds = %vector.memcheck433,
 
 vector.memcheck433:                               ; preds = %select.unfold.i214.preheader
   %i.im = sext i32 %i.h to i64                    ; 2 uses
-  %i.in = shl nsw i64 %i.im, 2
+  %8 = add nsw i64 %i.im, %i.bj
+  %i.in = shl nsw i64 %8, 2
   %i.io = sub i64 %i.a, %i.o                      ; 2 uses
   %i.ip = sub i64 %i.in, %i.io
   %diff.check434 = icmp ugt i64 %i.ip, -32
-  %8 = add nsw i64 %i.im, %i.bj
-  %i.iq = shl nsw i64 %8, 2
+  %i.iq = shl nsw i64 %i.im, 2
   %i.ir = sub i64 %i.iq, %i.io
   %diff.check435 = icmp ugt i64 %i.ir, -32
   %conflict.rdx436 = or i1 %diff.check434, %diff.check435

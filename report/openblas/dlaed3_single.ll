@@ -160,10 +160,10 @@ vector.memcheck297:                               ; preds = %iter.check331
   %bound0298 = icmp ult ptr %11, %i.bi
   %bound1299 = icmp ult ptr %invariant.gep, %i.bg
   %found.conflict300 = and i1 %bound0298, %bound1299
-  %bound1302.a = icmp ult ptr %7, %i.bg
-  %bound0305 = icmp ult ptr %11, %i.be
-  %found.conflict303410 = or i1 %bound0301.a, %bound0305
-  %i.bj = and i1 %found.conflict303410, %bound1302.a
+  %bound1302.a = icmp ult ptr %11, %i.be
+  %bound0305 = icmp ult ptr %7, %i.bg
+  %found.conflict303410 = or i1 %bound1302.a, %bound0301.a
+  %i.bj = and i1 %found.conflict303410, %bound0305
   %conflict.rdx307 = or i1 %found.conflict300, %i.bj
   br i1 %conflict.rdx307, label %vec.epilog.scalar.ph333.preheader, label %vector.main.loop.iter.check308
 
@@ -385,7 +385,7 @@ vector.memcheck:                                  ; preds = %iter.check
   %found.conflict = and i1 %bound0, %bound1
   %bound0255 = icmp ult ptr %i.ef, %scevgep
   %bound1258 = icmp ult ptr %i.el, %scevgep254
-  %i.em = or i1 %bound1256.a, %bound1258
+  %i.em = or i1 %bound1258, %bound1256.a
   %i.en = and i1 %bound0255, %i.em
   %conflict.rdx260 = or i1 %found.conflict, %i.en
   br i1 %conflict.rdx260, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -788,7 +788,7 @@ attributes #5 = { nounwind }
 !46 = !{!12}
 !47 = !{!13}
 !48 = !{!14}
-!49 = !{!12, !11, !13}
+!49 = !{!12, !13, !11}
 !50 = !{!"llvm.loop.isvectorized", i32 1}
 !51 = !{!"llvm.loop.unroll.runtime.disable"}
 !52 = !{!"branch_weights", i32 4, i32 12}
@@ -799,5 +799,5 @@ attributes #5 = { nounwind }
 !57 = !{!24}
 !58 = !{!25}
 !59 = !{!26}
-!60 = !{!24, !23, !25}
+!60 = !{!24, !25, !23}
 end_hunk_1

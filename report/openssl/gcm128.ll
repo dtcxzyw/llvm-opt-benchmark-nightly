@@ -205,19 +205,19 @@ vector.scevcheck:                                 ; preds = %iter.check
   br i1 %i.dd, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
-  %4 = sub i64 %.5145290, %i.a
-  %i.de = add i64 %4, -17
-  %diff.check = icmp ult i64 %i.de, 15
-  %5 = zext i32 %.3163 to i64
-  %6 = add i64 %i.a, %5
-  %7 = add i64 %6, 400                            ; 2 uses
-  %8 = sub i64 %.5145290, %7
-  %diff.check291 = icmp ugt i64 %8, -16
+  %4 = zext i32 %.3163 to i64
+  %i.de = add i64 %i.a, %4
+  %5 = add i64 %i.de, 400                         ; 2 uses
+  %6 = sub i64 %.5145290, %5
+  %diff.check = icmp ugt i64 %6, -16
+  %7 = sub i64 %.5145290, %i.a
+  %8 = add i64 %7, -17
+  %diff.check291 = icmp ult i64 %8, 15
   %conflict.rdx = or i1 %diff.check, %diff.check291
   %i.df = sub i64 %.5289, %.5145290
   %diff.check292 = icmp ugt i64 %i.df, -16
   %conflict.rdx293 = or i1 %conflict.rdx, %diff.check292
-  %i.dg = sub i64 %.5289, %7
+  %i.dg = sub i64 %.5289, %5
   %diff.check294 = icmp ugt i64 %i.dg, -16
   %conflict.rdx295 = or i1 %conflict.rdx293, %diff.check294
   br i1 %conflict.rdx295, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -620,22 +620,22 @@ vector.scevcheck:                                 ; preds = %iter.check
   br i1 %i.cg, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
-  %5 = add i64 %i.bj, %.2124.lcssa232
-  %6 = sub i64 %5, %i.a
-  %i.ch = add i64 %6, -17
-  %diff.check = icmp ult i64 %i.ch, 15
-  %7 = zext i32 %.3138 to i64
-  %8 = add i64 %i.a, %7
-  %i.ci = add i64 %8, 400                         ; 2 uses
-  %9 = add i64 %i.bj, %.2124.lcssa232
-  %10 = sub i64 %9, %i.ci
-  %diff.check233 = icmp ugt i64 %10, -16
+  %5 = zext i32 %.3138 to i64
+  %6 = add i64 %i.a, %5
+  %i.ch = add i64 %6, 400                         ; 2 uses
+  %7 = add i64 %i.bj, %.2124.lcssa232
+  %8 = sub i64 %7, %i.ch
+  %diff.check = icmp ugt i64 %8, -16
+  %i.ci = add i64 %i.bj, %.2124.lcssa232
+  %9 = sub i64 %i.ci, %i.a
+  %10 = add i64 %9, -17
+  %diff.check233 = icmp ult i64 %10, 15
   %conflict.rdx = or i1 %diff.check, %diff.check233
   %i.cj = sub i64 %.2.lcssa231, %.2124.lcssa232
   %diff.check234 = icmp ugt i64 %i.cj, -16
   %conflict.rdx235 = or i1 %conflict.rdx, %diff.check234
   %i.ck = add i64 %i.bj, %.2.lcssa231
-  %i.cl = sub i64 %i.ck, %i.ci
+  %i.cl = sub i64 %i.ck, %i.ch
   %diff.check236 = icmp ugt i64 %i.cl, -16
   %conflict.rdx237 = or i1 %conflict.rdx235, %diff.check236
   br i1 %conflict.rdx237, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check

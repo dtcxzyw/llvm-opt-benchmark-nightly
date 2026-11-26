@@ -205,10 +205,10 @@ iter.check:                                       ; preds = %bb.gu, %.lr.ph797.s
   br i1 %min.iters.check1096, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck1097
 
 vector.memcheck1097:                              ; preds = %iter.check
-  %i.akc = add i64 %i.ajl, %i.ajy
+  %i.akc = add i64 %i.ajl, %i.ajs
   %i.akd = sub i64 %i.akc, %.0593793.us1094
   %diff.check = icmp ugt i64 %i.akd, -32
-  %i.ake = add i64 %i.ajl, %i.ajs
+  %i.ake = add i64 %i.ajl, %i.ajy
   %i.akf = sub i64 %i.ake, %.0593793.us1094
   %diff.check1098 = icmp ugt i64 %i.akf, -32
   %conflict.rdx1099 = or i1 %diff.check, %diff.check1098

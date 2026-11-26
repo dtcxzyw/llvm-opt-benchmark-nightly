@@ -205,19 +205,19 @@ iter.check127:                                    ; preds = %._crit_edge
   br i1 %min.iters.check100, label %vec.epilog.scalar.ph129.preheader, label %vector.memcheck101
 
 vector.memcheck101:                               ; preds = %iter.check127
-  %3 = getelementptr i8, ptr %.048.lcssa, i64 %i.ao
   %i.ap = getelementptr i8, ptr %.048.lcssa, i64 %i.am
   %i.aq = add i64 %i.aj, %i.a
   %i.ar = add i64 %.046.lcssa64.pre-phi, %i.f
   %i.as = sub i64 %i.aq, %i.ar                    ; 2 uses
-  %i.at = getelementptr i8, ptr %.048.lcssa, i64 %i.as
+  %3 = getelementptr i8, ptr %.048.lcssa, i64 %i.as
+  %i.at = getelementptr i8, ptr %.048.lcssa, i64 %i.ao
   %i.au = getelementptr i8, ptr %.046.lcssa, i64 %i.am
   %i.av = getelementptr i8, ptr %.046.lcssa, i64 %i.as
   %bound0102 = icmp ult ptr %.046.lcssa, %3
-  %bound1103 = icmp ult ptr %.048.lcssa, %scevgep
+  %bound1103 = icmp ult ptr %i.ap, %scevgep
   %found.conflict104 = and i1 %bound0102, %bound1103
   %bound0105 = icmp ult ptr %.046.lcssa, %i.at
-  %bound1106 = icmp ult ptr %i.ap, %scevgep
+  %bound1106 = icmp ult ptr %.048.lcssa, %scevgep
   %found.conflict107 = and i1 %bound0105, %bound1106
   %conflict.rdx = or i1 %found.conflict104, %found.conflict107
   %bound0108 = icmp ult ptr %.046.lcssa, %i.av
@@ -620,5 +620,5 @@ begin_hunk_1_@llvm.umin.v4i32
 !358 = !{!349}
 !359 = !{!350}
 !360 = !{!351}
-!361 = !{!350, !348, !349}
+!361 = !{!348, !350, !349}
 end_hunk_1

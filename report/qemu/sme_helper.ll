@@ -205,15 +205,15 @@ bb.a:
 vector.memcheck:                                  ; preds = %bb.a
   %i.n = lshr exact i64 %i.g, 1
   %i.o = getelementptr nuw i8, ptr %spec.select, i64 %i.n ; 2 uses
-  %4 = getelementptr i8, ptr %spec.select, i64 %i.g
-  %5 = zext nneg i32 %.v.v.i to i64
-  %i.p = getelementptr i8, ptr %1, i64 %5
-  %i.q = getelementptr i8, ptr %i.p, i64 264      ; 2 uses
-  %bound0 = icmp ult ptr %i.o, %i.q
-  %bound1 = icmp ult ptr %1, %4
+  %4 = zext nneg i32 %.v.v.i to i64
+  %5 = getelementptr i8, ptr %1, i64 %4
+  %i.p = getelementptr i8, ptr %5, i64 264        ; 2 uses
+  %i.q = getelementptr i8, ptr %spec.select, i64 %i.g
+  %bound0 = icmp ult ptr %spec.select, %i.p
+  %bound1 = icmp ult ptr %1, %i.o
   %found.conflict = and i1 %bound0, %bound1
-  %bound052 = icmp ult ptr %spec.select, %i.q
-  %bound153 = icmp ult ptr %1, %i.o
+  %bound052 = icmp ult ptr %i.o, %i.p
+  %bound153 = icmp ult ptr %1, %i.q
   %found.conflict54 = and i1 %bound052, %bound153
   %conflict.rdx = or i1 %found.conflict, %found.conflict54
   br i1 %conflict.rdx, label %scalar.ph.preheader, label %vector.ph
@@ -312,15 +312,15 @@ bb.a:
 vector.memcheck:                                  ; preds = %bb.a
   %i.n = lshr exact i64 %i.g, 1
   %i.o = getelementptr nuw i8, ptr %spec.select, i64 %i.n ; 2 uses
-  %4 = getelementptr i8, ptr %spec.select, i64 %i.g
-  %5 = zext nneg i32 %.v.v.i to i64
-  %i.p = getelementptr i8, ptr %1, i64 %5
-  %i.q = getelementptr i8, ptr %i.p, i64 264      ; 2 uses
-  %bound0 = icmp ult ptr %i.o, %i.q
-  %bound1 = icmp ult ptr %1, %4
+  %4 = zext nneg i32 %.v.v.i to i64
+  %5 = getelementptr i8, ptr %1, i64 %4
+  %i.p = getelementptr i8, ptr %5, i64 264        ; 2 uses
+  %i.q = getelementptr i8, ptr %spec.select, i64 %i.g
+  %bound0 = icmp ult ptr %spec.select, %i.p
+  %bound1 = icmp ult ptr %1, %i.o
   %found.conflict = and i1 %bound0, %bound1
-  %bound052 = icmp ult ptr %spec.select, %i.q
-  %bound153 = icmp ult ptr %1, %i.o
+  %bound052 = icmp ult ptr %i.o, %i.p
+  %bound153 = icmp ult ptr %1, %i.q
   %found.conflict54 = and i1 %bound052, %bound153
   %conflict.rdx = or i1 %found.conflict, %found.conflict54
   br i1 %conflict.rdx, label %scalar.ph.preheader.new, label %vector.ph
@@ -428,15 +428,15 @@ bb.a:
 vector.memcheck:                                  ; preds = %bb.a
   %i.n = lshr exact i64 %i.g, 1
   %i.o = getelementptr nuw i8, ptr %spec.select, i64 %i.n ; 2 uses
-  %4 = getelementptr i8, ptr %spec.select, i64 %i.g
-  %5 = zext nneg i32 %.v.v.i to i64
-  %i.p = getelementptr i8, ptr %1, i64 %5
-  %i.q = getelementptr i8, ptr %i.p, i64 264      ; 2 uses
-  %bound0 = icmp ult ptr %i.o, %i.q
-  %bound1 = icmp ult ptr %1, %4
+  %4 = zext nneg i32 %.v.v.i to i64
+  %5 = getelementptr i8, ptr %1, i64 %4
+  %i.p = getelementptr i8, ptr %5, i64 264        ; 2 uses
+  %i.q = getelementptr i8, ptr %spec.select, i64 %i.g
+  %bound0 = icmp ult ptr %spec.select, %i.p
+  %bound1 = icmp ult ptr %1, %i.o
   %found.conflict = and i1 %bound0, %bound1
-  %bound052 = icmp ult ptr %spec.select, %i.q
-  %bound153 = icmp ult ptr %1, %i.o
+  %bound052 = icmp ult ptr %i.o, %i.p
+  %bound153 = icmp ult ptr %1, %i.q
   %found.conflict54 = and i1 %bound052, %bound153
   %conflict.rdx = or i1 %found.conflict, %found.conflict54
   br i1 %conflict.rdx, label %scalar.ph.preheader, label %vector.ph
@@ -839,15 +839,15 @@ do_urshr.exit51.us.preheader:                     ; preds = %bb.a
   br i1 %min.iters.check, label %do_urshr.exit51.us.preheader67, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %do_urshr.exit51.us.preheader
-  %4 = getelementptr i8, ptr %spec.select, i64 %i.g
-  %5 = zext nneg i32 %.v.v.i to i64
-  %i.s = getelementptr i8, ptr %1, i64 %5
-  %i.t = getelementptr i8, ptr %i.s, i64 264      ; 2 uses
-  %bound0 = icmp ult ptr %invariant.gep, %i.t
-  %bound1 = icmp ult ptr %1, %4
+  %4 = zext nneg i32 %.v.v.i to i64
+  %5 = getelementptr i8, ptr %1, i64 %4
+  %i.s = getelementptr i8, ptr %5, i64 264        ; 2 uses
+  %i.t = getelementptr i8, ptr %spec.select, i64 %i.g
+  %bound0 = icmp ult ptr %spec.select, %i.s
+  %bound1 = icmp ult ptr %1, %invariant.gep
   %found.conflict = and i1 %bound0, %bound1
-  %bound061 = icmp ult ptr %spec.select, %i.t
-  %bound162 = icmp ult ptr %1, %invariant.gep
+  %bound061 = icmp ult ptr %invariant.gep, %i.s
+  %bound162 = icmp ult ptr %1, %i.t
   %found.conflict63 = and i1 %bound061, %bound162
   %conflict.rdx = or i1 %found.conflict, %found.conflict63
   br i1 %conflict.rdx, label %do_urshr.exit51.us.preheader67, label %vector.ph

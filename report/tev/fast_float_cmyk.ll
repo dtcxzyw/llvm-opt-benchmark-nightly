@@ -204,22 +204,22 @@ vector.scevcheck:                                 ; preds = %.lr.ph562.split.us5
   br i1 %i.he, label %.lr.ph562.split.us587.preheader725, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
-  %i.hf = zext i32 %i.gf to i64
+  %i.hf = zext i32 %i.fv to i64
   %i.hg = shl nuw nsw i64 %i.hf, 2
   %i.hh = sub i64 %i.b, %.1508569.us669           ; 4 uses
   %i.hi = sub i64 %i.hg, %i.hh
   %diff.check = icmp ugt i64 %i.hi, -16
-  %i.hj = zext i32 %i.ge to i64
+  %i.hj = zext i32 %i.gc to i64
   %i.hk = shl nuw nsw i64 %i.hj, 2
   %i.hl = sub i64 %i.hk, %i.hh
   %diff.check670 = icmp ugt i64 %i.hl, -16
   %conflict.rdx = or i1 %diff.check, %diff.check670
-  %i.hm = zext i32 %i.gc to i64
+  %i.hm = zext i32 %i.ge to i64
   %i.hn = shl nuw nsw i64 %i.hm, 2
   %i.ho = sub i64 %i.hn, %i.hh
   %diff.check671 = icmp ugt i64 %i.ho, -16
   %conflict.rdx672 = or i1 %conflict.rdx, %diff.check671
-  %i.hp = zext i32 %i.fv to i64
+  %i.hp = zext i32 %i.gf to i64
   %i.hq = shl nuw nsw i64 %i.hp, 2
   %i.hr = sub i64 %i.hq, %i.hh
   %diff.check673 = icmp ugt i64 %i.hr, -16

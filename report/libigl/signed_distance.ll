@@ -205,12 +205,12 @@ bb.b:                                             ; preds = %thread-pre-split.i.
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i
   %i.t = ptrtoaddr ptr %i.q to i64
-  %4 = shl i64 %i.r, 3
-  %5 = sub i64 %.pre.i.i.i.i.i.i.i17, %i.t        ; 2 uses
-  %6 = sub i64 %4, %5
-  %diff.check = icmp ugt i64 %6, -16
-  %7 = add i64 %5, -1
-  %diff.check18 = icmp ult i64 %7, 15
+  %4 = sub i64 %.pre.i.i.i.i.i.i.i17, %i.t        ; 2 uses
+  %5 = add i64 %4, -1
+  %diff.check = icmp ult i64 %5, 15
+  %6 = shl i64 %i.r, 3
+  %7 = sub i64 %6, %4
+  %diff.check18 = icmp ugt i64 %7, -16
   %conflict.rdx = or i1 %diff.check, %diff.check18
   br i1 %conflict.rdx, label %scalar.ph.preheader, label %vector.ph
 

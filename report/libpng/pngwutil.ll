@@ -205,11 +205,11 @@ iter.check687:                                    ; preds = %.preheader.i
   br i1 %min.iters.check666, label %.lr.ph12.i.preheader, label %vector.memcheck667
 
 vector.memcheck667:                               ; preds = %iter.check687
-  %i.bh = sub i64 %.020.lcssa.i664, %i.m
-  %2 = add i64 %i.bh, -2
-  %diff.check668 = icmp ult i64 %2, 31
-  %3 = sub i64 %.022.lcssa.i663, %.020.lcssa.i664
-  %diff.check669 = icmp ugt i64 %3, -32
+  %i.bh = sub i64 %.022.lcssa.i663, %.020.lcssa.i664
+  %diff.check668 = icmp ugt i64 %i.bh, -32
+  %2 = sub i64 %.020.lcssa.i664, %i.m
+  %3 = add i64 %2, -2
+  %diff.check669 = icmp ult i64 %3, 31
   %conflict.rdx670 = or i1 %diff.check668, %diff.check669
   br i1 %conflict.rdx670, label %.lr.ph12.i.preheader, label %vector.main.loop.iter.check671
 
@@ -612,11 +612,11 @@ vector.scevcheck:                                 ; preds = %iter.check548
   br i1 %i.mz, label %.lr.ph44.i.preheader, label %vector.memcheck523
 
 vector.memcheck523:                               ; preds = %vector.scevcheck
-  %i.na = sub i64 %.020.lcssa.i155520, %i.m
-  %4 = add i64 %i.na, -2
-  %diff.check524 = icmp ult i64 %4, 31
-  %5 = sub i64 %.022.lcssa.i156519, %.020.lcssa.i155520
-  %diff.check525 = icmp ugt i64 %5, -32
+  %i.na = sub i64 %.022.lcssa.i156519, %.020.lcssa.i155520
+  %diff.check524 = icmp ugt i64 %i.na, -32
+  %4 = sub i64 %.020.lcssa.i155520, %i.m
+  %5 = add i64 %4, -2
+  %diff.check525 = icmp ult i64 %5, 31
   %conflict.rdx526 = or i1 %diff.check524, %diff.check525
   %i.nb = sub i64 %.018.lcssa.i518, %.020.lcssa.i155520
   %diff.check527 = icmp ugt i64 %i.nb, -32
@@ -1019,16 +1019,16 @@ iter.check437:                                    ; preds = %.preheader.i174
   br i1 %min.iters.check410, label %.lr.ph80.i.preheader, label %vector.memcheck411
 
 vector.memcheck411:                               ; preds = %iter.check437
-  %6 = add i64 %.049.lcssa.i408, -1               ; 2 uses
-  %7 = sub i64 %i.xv, %6
-  %diff.check412 = icmp ugt i64 %7, -16
-  %i.ys = sub i64 %.047.lcssa.i407, %.049.lcssa.i408
+  %6 = sub i64 %.047.lcssa.i407, %.049.lcssa.i408
+  %diff.check412 = icmp ugt i64 %6, -16
+  %7 = add i64 %.049.lcssa.i408, -1               ; 2 uses
+  %i.ys = sub i64 %i.xv, %7
   %diff.check413 = icmp ugt i64 %i.ys, -16
   %conflict.rdx414 = or i1 %diff.check412, %diff.check413
-  %i.yt = sub i64 %.051.lcssa.i406, %.049.lcssa.i408
+  %i.yt = sub i64 %i.m, %7
   %diff.check415 = icmp ugt i64 %i.yt, -16
   %conflict.rdx416 = or i1 %conflict.rdx414, %diff.check415
-  %i.yu = sub i64 %i.m, %6
+  %i.yu = sub i64 %.051.lcssa.i406, %.049.lcssa.i408
   %diff.check417 = icmp ugt i64 %i.yu, -16
   %conflict.rdx418 = or i1 %conflict.rdx416, %diff.check417
   br i1 %conflict.rdx418, label %.lr.ph80.i.preheader, label %vector.main.loop.iter.check419

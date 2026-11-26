@@ -205,13 +205,13 @@ bb.dc:                                            ; preds = %.body.i
   br i1 %min.iters.check595, label %scalar.ph594.preheader, label %vector.memcheck596
 
 vector.memcheck596:                               ; preds = %.lr.ph245.i
-  %i.vj = getelementptr i8, ptr %scevgep592, i64 %i.vh
-  %i.vk = getelementptr i8, ptr %scevgep592, i64 %i.vc
+  %i.vj = getelementptr i8, ptr %scevgep592, i64 %i.vc
+  %i.vk = getelementptr i8, ptr %scevgep592, i64 %i.vh
   %bound0597 = icmp ult ptr %i.ki, %i.vj
-  %bound1598 = icmp ult ptr %i.vi, %scevgep593
+  %bound1598 = icmp ult ptr %i.vd, %scevgep593
   %found.conflict599 = and i1 %bound0597, %bound1598
   %bound0600 = icmp ult ptr %i.ki, %i.vk
-  %bound1601 = icmp ult ptr %i.vd, %scevgep593
+  %bound1601 = icmp ult ptr %i.vi, %scevgep593
   %found.conflict602 = and i1 %bound0600, %bound1601
   %conflict.rdx603 = or i1 %found.conflict599, %found.conflict602
   br i1 %conflict.rdx603, label %scalar.ph594.preheader, label %vector.ph604
@@ -614,7 +614,7 @@ attributes #27 = { noreturn }
 !190 = !{!111}
 !191 = !{!112}
 !192 = !{!113}
-!193 = !{!112, !111}
+!193 = !{!111, !112}
 !194 = !{!"any p2 pointer", !27, i64 0}
 !195 = !{!"p2 float", !194, i64 0}
 !196 = !{!"_ZTSN2cv10AutoBufferIPKfLm136EEE", !195, i64 0, !43, i64 8, !4, i64 16}

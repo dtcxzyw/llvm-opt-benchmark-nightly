@@ -205,12 +205,12 @@ iter.check:                                       ; preds = %OPENSSL_memset.exit
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %3 = add i64 %i.u, %i.b
-  %4 = sub i64 %3, %i.a
-  %diff.check = icmp ugt i64 %4, -32
-  %5 = sub i64 %i.a, %i.b
-  %6 = add i64 %5, -185
-  %diff.check52 = icmp ult i64 %6, 31
+  %3 = sub i64 %i.a, %i.b
+  %4 = add i64 %3, -185
+  %diff.check = icmp ult i64 %4, 31
+  %5 = add i64 %i.u, %i.b
+  %6 = sub i64 %5, %i.a
+  %diff.check52 = icmp ugt i64 %6, -32
   %conflict.rdx = or i1 %diff.check, %diff.check52
   br i1 %conflict.rdx, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 

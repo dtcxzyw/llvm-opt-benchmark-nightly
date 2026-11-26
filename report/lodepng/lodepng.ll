@@ -205,10 +205,10 @@ iter.check624:                                    ; preds = %.preheader145
   br i1 %min.iters.check606, label %.lr.ph193.preheader, label %vector.memcheck607
 
 vector.memcheck607:                               ; preds = %iter.check624
-  %6 = add i64 %4, %i.a
-  %7 = sub i64 %i.b, %6
-  %diff.check608 = icmp ugt i64 %7, -32
-  %i.bb = sub i64 %i.b, %i.a
+  %6 = sub i64 %i.b, %i.a
+  %diff.check608 = icmp ugt i64 %6, -32
+  %7 = add i64 %4, %i.a
+  %i.bb = sub i64 %i.b, %7
   %diff.check609 = icmp ugt i64 %i.bb, -32
   %conflict.rdx610 = or i1 %diff.check608, %diff.check609
   br i1 %conflict.rdx610, label %.lr.ph193.preheader, label %vector.main.loop.iter.check611
@@ -611,10 +611,10 @@ iter.check422:                                    ; preds = %.preheader155
   br i1 %min.iters.check403, label %.lr.ph177.preheader, label %vector.memcheck404
 
 vector.memcheck404:                               ; preds = %iter.check422
-  %8 = add i64 %4, %i.a
-  %9 = sub i64 %i.b, %8
-  %diff.check405 = icmp ugt i64 %9, -16
-  %i.io = sub i64 %i.b, %i.a
+  %8 = sub i64 %i.b, %i.a
+  %diff.check405 = icmp ugt i64 %8, -16
+  %9 = add i64 %4, %i.a
+  %i.io = sub i64 %i.b, %9
   %diff.check406 = icmp ugt i64 %i.io, -16
   %conflict.rdx407 = or i1 %diff.check405, %diff.check406
   %i.ip = sub i64 %i.c, %i.a
@@ -794,10 +794,10 @@ iter.check490:                                    ; preds = %.preheader152
   br i1 %min.iters.check472, label %.lr.ph182.preheader, label %vector.memcheck473
 
 vector.memcheck473:                               ; preds = %iter.check490
-  %10 = add i64 %4, %i.a
-  %11 = sub i64 %i.b, %10
-  %diff.check474 = icmp ugt i64 %11, -32
-  %i.me = sub i64 %i.b, %i.a
+  %10 = sub i64 %i.b, %i.a
+  %diff.check474 = icmp ugt i64 %10, -32
+  %11 = add i64 %4, %i.a
+  %i.me = sub i64 %i.b, %11
   %diff.check475 = icmp ugt i64 %i.me, -32
   %conflict.rdx476 = or i1 %diff.check474, %diff.check475
   br i1 %conflict.rdx476, label %.lr.ph182.preheader, label %vector.main.loop.iter.check477
@@ -1144,16 +1144,16 @@ iter.check276:                                    ; preds = %.preheader161
   br i1 %min.iters.check254, label %.lr.ph167.preheader, label %vector.memcheck255
 
 vector.memcheck255:                               ; preds = %iter.check276
-  %12 = add i64 %4, %i.a                          ; 2 uses
-  %13 = sub i64 %i.b, %12
-  %diff.check256 = icmp ugt i64 %13, -16
-  %i.qm = sub i64 %i.b, %i.a
+  %12 = sub i64 %i.b, %i.a
+  %diff.check256 = icmp ugt i64 %12, -16
+  %13 = add i64 %4, %i.a                          ; 2 uses
+  %i.qm = sub i64 %i.b, %13
   %diff.check257 = icmp ugt i64 %i.qm, -16
   %conflict.rdx258 = or i1 %diff.check256, %diff.check257
-  %i.qn = sub i64 %i.c, %12
+  %i.qn = sub i64 %i.c, %i.a
   %diff.check259 = icmp ugt i64 %i.qn, -16
   %conflict.rdx260 = or i1 %conflict.rdx258, %diff.check259
-  %i.qo = sub i64 %i.c, %i.a
+  %i.qo = sub i64 %i.c, %13
   %diff.check261 = icmp ugt i64 %i.qo, -16
   %conflict.rdx262 = or i1 %conflict.rdx260, %diff.check261
   br i1 %conflict.rdx262, label %.lr.ph167.preheader, label %vector.main.loop.iter.check263
@@ -1339,10 +1339,10 @@ iter.check345:                                    ; preds = %.preheader158
   br i1 %min.iters.check327, label %.lr.ph172.preheader, label %vector.memcheck328
 
 vector.memcheck328:                               ; preds = %iter.check345
-  %14 = add i64 %4, %i.a
-  %15 = sub i64 %i.b, %14
-  %diff.check329 = icmp ugt i64 %15, -32
-  %i.us = sub i64 %i.b, %i.a
+  %14 = sub i64 %i.b, %i.a
+  %diff.check329 = icmp ugt i64 %14, -32
+  %15 = add i64 %4, %i.a
+  %i.us = sub i64 %i.b, %15
   %diff.check330 = icmp ugt i64 %i.us, -32
   %conflict.rdx331 = or i1 %diff.check329, %diff.check330
   br i1 %conflict.rdx331, label %.lr.ph172.preheader, label %vector.main.loop.iter.check332

@@ -202,8 +202,8 @@ vector.memcheck:                                  ; preds = %.preheader
   %i.l = mul nuw nsw i64 %indvars.iv, 288
   %i.m = getelementptr i8, ptr %i.f, i64 %i.l     ; 2 uses
   %bound0 = icmp ult ptr %i.k, %scevgep
-  %bound1 = icmp ult ptr %i.g, %i.m
-  %bound129 = icmp ult ptr %1, %i.m
+  %bound1 = icmp ult ptr %1, %i.m
+  %bound129 = icmp ult ptr %i.g, %i.m
   %found.conflict3034 = or i1 %bound1, %bound129
   %conflict.rdx = and i1 %bound0, %found.conflict3034
   br i1 %conflict.rdx, label %scalar.ph.preheader, label %vector.ph
@@ -367,7 +367,7 @@ attributes #7 = { nounwind }
 !39 = !{!33}
 !40 = !{!34}
 !41 = !{!35}
-!42 = !{!34, !33}
+!42 = !{!33, !34}
 !43 = !{!"llvm.loop.isvectorized", i32 1}
 !44 = !{!"llvm.loop.unroll.runtime.disable"}
 end_hunk_0

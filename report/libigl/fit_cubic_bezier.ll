@@ -205,11 +205,11 @@ bb.g:                                             ; preds = %.noexc, %bb.f
   br i1 %or.cond92, label %vector.memcheck, label %.lr.ph.i.i.i.i.i.i.i.i.preheader95
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.i.i.preheader
-  %i.ak = sub i64 %i.ai, %i.ab                    ; 2 uses
-  %i.al = sub i64 %i.i, %i.ak
-  %diff.check = icmp ugt i64 %i.al, -32
   %6 = shl nuw nsw i64 %i.z, 3
-  %i.am = sub i64 %6, %i.ak
+  %i.ak = sub i64 %i.ai, %i.ab                    ; 2 uses
+  %i.al = sub i64 %6, %i.ak
+  %diff.check = icmp ugt i64 %i.al, -32
+  %i.am = sub i64 %i.i, %i.ak
   %diff.check88 = icmp ugt i64 %i.am, -32
   %conflict.rdx = or i1 %diff.check, %diff.check88
   br i1 %conflict.rdx, label %.lr.ph.i.i.i.i.i.i.i.i.preheader95, label %vector.ph

@@ -205,10 +205,10 @@ iter.check1577:                                   ; preds = %bb.dl
   br i1 %min.iters.check1561, label %.lr.ph1059.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check1577
-  %5 = add i64 %i.aij, %i.aqi
-  %6 = sub i64 %5, %.10.lcssa1560
-  %diff.check = icmp ugt i64 %6, -32
-  %i.aqj = sub i64 %i.aij, %.10.lcssa1560
+  %5 = sub i64 %i.aij, %.10.lcssa1560
+  %diff.check = icmp ugt i64 %5, -32
+  %6 = add i64 %i.aij, %i.aqi
+  %i.aqj = sub i64 %6, %.10.lcssa1560
   %diff.check1562 = icmp ugt i64 %i.aqj, -32
   %conflict.rdx = or i1 %diff.check, %diff.check1562
   br i1 %conflict.rdx, label %.lr.ph1059.preheader, label %vector.main.loop.iter.check1563
