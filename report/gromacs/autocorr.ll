@@ -205,7 +205,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   %i.af = sext i32 %3 to i64                      ; 3 uses
   %i.ag = tail call noundef ptr @_Z11save_callocPKcS0_imm(ptr noundef nonnull @.str.8, ptr noundef nonnull @.str, i32 noundef 601, i64 noundef range(i64 -2147483648, 2147483648) %i.af, i64 noundef 4) ; 134 uses
   %i.ah = ptrtoaddr ptr %i.ag to i64
-  %i.ai = tail call noundef ptr @_Z11save_callocPKcS0_imm(ptr noundef nonnull @.str.9, ptr noundef nonnull @.str, i32 noundef 602, i64 noundef range(i64 -2147483648, 2147483648) %i.af, i64 noundef 4) ; 152 uses
+  %i.ai = tail call noundef ptr @_Z11save_callocPKcS0_imm(ptr noundef nonnull @.str.9, ptr noundef nonnull @.str, i32 noundef 602, i64 noundef range(i64 -2147483648, 2147483648) %i.af, i64 noundef 4) ; 153 uses
   %i.aj = ptrtoaddr ptr %i.ai to i64              ; 2 uses
   %i.ak = icmp sgt i32 %4, 0                      ; 2 uses
   br i1 %i.ak, label %.lr.ph, label %._crit_edge
@@ -230,7 +230,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   %i.ay = icmp eq i64 %i.ax, 12
   %spec.select.i = select i1 %i.o, i32 3, i32 1
   %.0110.i = select i1 %i.aw, i32 2, i32 %spec.select.i
-  %i.az = zext i32 %3 to i64                      ; 197 uses
+  %i.az = zext i32 %3 to i64                      ; 198 uses
   %or.cond170.i = and i1 %i.ar, %i.au
   %i.ba = shl nuw nsw i64 %i.az, 2                ; 6 uses
   %i.bb = zext nneg i32 %i.al to i64
@@ -246,14 +246,22 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   %i.bg = shl nuw nsw i64 %i.az, 2                ; 4 uses
   %scevgep1175 = getelementptr i8, ptr %i.ai, i64 %i.bg
   %scevgep1241 = getelementptr i8, ptr %i.ag, i64 %i.bg ; 2 uses
-  %i.bh = add nsw i64 %i.az, -1                   ; 4 uses
   %smax = tail call i32 @llvm.smax.i32(i32 %9, i32 1)
-  %27 = zext nneg i32 %smax to i64
-  %i.bi = shl nuw nsw i64 %27, 2
-  %scevgep1384 = getelementptr i8, ptr %i.ai, i64 4 ; 2 uses
+  %27 = zext nneg i32 %smax to i64                ; 2 uses
+  %28 = shl nuw nsw i64 %27, 2
+  %i.bh = add nsw i64 %i.az, -1                   ; 2 uses
+  %29 = urem i64 %i.bh, %27
+  %30 = sub nuw nsw i64 %i.bh, %29
+  %i.bi = shl nsw i64 %30, 2
+  %scevgep1384 = getelementptr i8, ptr %i.ai, i64 4
   %smax1430 = tail call i32 @llvm.smax.i32(i32 %9, i32 1)
-  %i.bj = zext nneg i32 %smax1430 to i64
-  %i.bk = shl nuw nsw i64 %i.bj, 2
+  %i.bj = zext nneg i32 %smax1430 to i64          ; 2 uses
+  %31 = shl nuw nsw i64 %i.bj, 2
+  %32 = add nsw i64 %i.az, -1                     ; 2 uses
+  %33 = urem i64 %32, %i.bj
+  %34 = sub nuw nsw i64 %32, %33
+  %i.bk = shl nsw i64 %34, 2
+  %scevgep1431 = getelementptr i8, ptr %i.ai, i64 4
   %i.bl = add nsw i64 %i.ap, -1
   %i.bm = add nsw i64 %i.ap, -1
   %min.iters.check1352 = icmp ult i32 %.0147.fr, 8
@@ -656,11 +664,8 @@ bb.bk:                                            ; preds = %bb.bj, %bb.bi
   br i1 %.not156, label %.lr.ph152.split.us.split.us.i, label %.lr.ph137.us.preheader.i
 
 .lr.ph137.us.preheader.i:                         ; preds = %.lr.ph152.split.us.i
-  %i.bjv = zext nneg i32 %.0.i to i64             ; 3 uses
-  %28 = urem i64 %i.bh, %i.bjv
-  %29 = sub nuw nsw i64 %i.bh, %28
-  %30 = shl nsw i64 %29, 2
-  %i.bjw = getelementptr i8, ptr %i.ej, i64 %30
+  %i.bjv = zext nneg i32 %.0.i to i64             ; 2 uses
+  %i.bjw = getelementptr i8, ptr %i.ej, i64 %i.bk
   %scevgep1429 = getelementptr i8, ptr %i.bjw, i64 4
   %bound01437 = icmp ult ptr %i.ai, %scevgep1429
   br label %.lr.ph137.us.i
@@ -676,11 +681,8 @@ bb.bk:                                            ; preds = %bb.bj, %bb.bi
   br i1 %.not123.i, label %.lr.ph152.split.us.split.us.split.us.split.us.i, label %.lr.ph137.us.us.us.preheader.i
 
 .lr.ph137.us.us.us.preheader.i:                   ; preds = %.lr.ph152.split.us.split.us.split.us.i
-  %i.bjy = zext nneg i32 %.0.i to i64             ; 3 uses
-  %31 = urem i64 %i.bh, %i.bjy
-  %32 = sub nuw nsw i64 %i.bh, %31
-  %33 = shl nsw i64 %32, 2
-  %i.bjz = getelementptr i8, ptr %i.ej, i64 %33
+  %i.bjy = zext nneg i32 %.0.i to i64             ; 2 uses
+  %i.bjz = getelementptr i8, ptr %i.ej, i64 %i.bi
   %scevgep1383 = getelementptr i8, ptr %i.bjz, i64 4
   %bound01391.a = icmp ult ptr %i.ai, %scevgep1383
   br label %.lr.ph137.us.us.us.i
@@ -927,15 +929,15 @@ bb.bt:                                            ; preds = %bb.bs
 vector.memcheck1387:                              ; preds = %.lr.ph137.us.us.us.i
   %i.bnv = shl i64 %i.bnt, 2                      ; 2 uses
   %i.bnw = getelementptr i8, ptr %scevgep1384, i64 %i.bnv ; 2 uses
-  %i.bnx = mul i64 %indvar, %i.bi
+  %i.bnx = mul i64 %indvar, %28
   %i.bny = getelementptr i8, ptr %i.ej, i64 %i.bnx
   %i.bnz = getelementptr i8, ptr %i.bny, i64 4
   %i.boa = getelementptr i8, ptr %i.bnz, i64 %i.bnv
-  %bound01388 = icmp ult ptr %i.ai, %i.boa
-  %bound11389 = icmp ult ptr %i.bns, %i.bnw
-  %found.conflict1390 = and i1 %bound01388, %bound11389
-  %bound11392 = icmp ult ptr %i.ej, %i.bnw
-  %found.conflict1393 = and i1 %bound01391.a, %bound11392
+  %bound01388 = icmp ult ptr %i.ej, %i.bnw
+  %found.conflict1390 = and i1 %bound01391.a, %bound01388
+  %bound01391 = icmp ult ptr %i.ai, %i.boa
+  %bound11392 = icmp ult ptr %i.bns, %i.bnw
+  %found.conflict1393 = and i1 %bound01391, %bound11392
   %conflict.rdx1394 = or i1 %found.conflict1390, %found.conflict1393
   br i1 %conflict.rdx1394, label %scalar.ph1385.preheader, label %vector.ph1395
 
@@ -1062,17 +1064,17 @@ bb.bw:                                            ; preds = %bb.bv
 
 vector.memcheck1433:                              ; preds = %.lr.ph137.us.i
   %i.bpu = shl i64 %i.bps, 2                      ; 2 uses
-  %i.bpv = getelementptr i8, ptr %scevgep1384, i64 %i.bpu ; 2 uses
-  %i.bpw = mul i64 %indvar1427, %i.bk
+  %i.bpv = getelementptr i8, ptr %scevgep1431, i64 %i.bpu ; 2 uses
+  %i.bpw = mul i64 %indvar1427, %31
   %i.bpx = getelementptr i8, ptr %i.ej, i64 %i.bpw
   %i.bpy = getelementptr i8, ptr %i.bpx, i64 4
   %i.bpz = getelementptr i8, ptr %i.bpy, i64 %i.bpu
-  %bound01434 = icmp ult ptr %i.ai, %i.bpz
-  %bound11435 = icmp ult ptr %i.bpr, %i.bpv
-  %found.conflict1436 = and i1 %bound01434, %bound11435
-  %bound11438 = icmp ult ptr %i.ej, %i.bpv
-  %found.conflict1439 = and i1 %bound01437, %bound11438
-  %conflict.rdx1440 = or i1 %found.conflict1436, %found.conflict1439
+  %bound01434 = icmp ult ptr %i.ej, %i.bpv
+  %found.conflict1437 = and i1 %bound01437, %bound01434
+  %bound01438 = icmp ult ptr %i.ai, %i.bpz
+  %bound11438 = icmp ult ptr %i.bpr, %i.bpv
+  %found.conflict1439 = and i1 %bound01438, %bound11438
+  %conflict.rdx1440 = or i1 %found.conflict1437, %found.conflict1439
   br i1 %conflict.rdx1440, label %scalar.ph1431.preheader, label %vector.ph1441
 
 vector.ph1441:                                    ; preds = %vector.memcheck1433
@@ -1475,11 +1477,11 @@ begin_hunk_2_@llvm.fmuladd.v2f64
 !266 = !{!205}
 !267 = !{!206}
 !268 = !{!207}
-!269 = !{!206, !205}
+!269 = !{!205, !206}
 !270 = !{!211}
 !271 = !{!212}
 !272 = !{!213}
-!273 = !{!212, !211}
+!273 = !{!211, !212}
 !274 = distinct !{!274, !25}
 !275 = distinct !{!275, !25, !26, !27}
 !276 = distinct !{!276, !25, !26, !27}

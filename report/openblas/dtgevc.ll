@@ -203,7 +203,7 @@ bb.cm:                                            ; preds = %.thread2403, %bb.av
   %i.arq = sext i32 %i.ah to i64                  ; 2 uses
   %i.arr = zext i32 %i.arp to i64
   %i.ars = zext i32 %i.aro to i64                 ; 3 uses
-  %i.art = zext nneg i32 %i.arg to i64            ; 6 uses
+  %i.art = zext nneg i32 %i.arg to i64            ; 7 uses
   %i.aru = sext i32 %i.ab to i64                  ; 9 uses
   %i.arv = sext i32 %i.y to i64                   ; 9 uses
   %invariant.gep2519 = getelementptr [8 x i8], ptr %i.aj, i64 %i.arq ; 9 uses
@@ -233,23 +233,23 @@ bb.cm:                                            ; preds = %.thread2403, %bb.av
   %i.asr = shl i64 %i.asq, 3
   %i.ass = add i64 %i.asr, %i.a
   %i.ast = sub i64 %i.aso, %i.ass
-  %16 = add nsw i64 %i.art, -1                    ; 3 uses
-  %i.asu = mul nsw i64 %16, %i.aru
+  %i.asu = mul nsw i64 %i.aru, %i.art
   %i.asv = add i64 %i.asu, %i.ac
   %i.asw = shl i64 %i.asv, 3                      ; 2 uses
   %i.asx = shl nuw nsw i64 %i.ars, 3              ; 5 uses
   %i.asy = shl nsw i64 %i.aru, 3
   %i.asz = sub nuw nsw i64 -8, %i.asy
-  %i.ata = mul nsw i64 %i.aru, %i.art
+  %16 = add nsw i64 %i.art, -1                    ; 2 uses
+  %i.ata = mul nsw i64 %16, %i.aru
   %i.atb = add i64 %i.ata, %i.ac
   %i.atc = shl i64 %i.atb, 3                      ; 2 uses
   %i.atd = mul nsw i64 %i.aru, -8
-  %i.ate = mul nsw i64 %16, %i.arv
+  %i.ate = mul nsw i64 %i.arv, %i.art
   %i.atf = add i64 %i.ate, %i.z
   %i.atg = shl i64 %i.atf, 3                      ; 2 uses
   %i.ath = shl nsw i64 %i.arv, 3
   %i.ati = sub nuw nsw i64 -8, %i.ath
-  %i.atj = mul nsw i64 %i.arv, %i.art
+  %i.atj = mul nsw i64 %16, %i.arv
   %i.atk = add i64 %i.atj, %i.z
   %i.atl = shl i64 %i.atk, 3                      ; 2 uses
   %i.atm = mul nsw i64 %i.arv, -8
@@ -289,7 +289,8 @@ bb.cn:                                            ; preds = %.lr.ph1963, %.loope
   %indvars.iv2288 = phi i64 [ %i.arr, %.lr.ph1963 ], [ %indvars.iv.next2289, %.loopexit1676 ] ; 5 uses
   %.61961 = phi i32 [ 0, %.lr.ph1963 ], [ %.8, %.loopexit1676 ]
   %.214551957 = phi i32 [ %i.ari, %.lr.ph1963 ], [ %.31456, %.loopexit1676 ] ; 5 uses
-  %17 = sub i64 %16, %indvar3060                  ; 8 uses
+  %17 = xor i64 %indvar3060, -1
+  %18 = add i64 %17, %i.art                       ; 8 uses
   %i.auo = trunc i64 %indvars.iv2288 to i32
   %i.aup = sub i64 %i.asf, %indvar3060            ; 14 uses
   %indvars2299 = trunc i64 %indvars.iv2292 to i32 ; 12 uses
@@ -537,7 +538,7 @@ iter.check3190:                                   ; preds = %.thread2428
   %invariant.gep2495 = getelementptr [8 x i8], ptr %i.ad, i64 %i.aws ; 7 uses
   %invariant.gep2497 = getelementptr [8 x i8], ptr %i.aa, i64 %i.awi ; 7 uses
   %invariant.gep2499 = getelementptr [8 x i8], ptr %i.ak, i64 %i.azx ; 7 uses
-  %min.iters.check3164 = icmp ult i64 %17, 4
+  %min.iters.check3164 = icmp ult i64 %18, 4
   br i1 %min.iters.check3164, label %.lr.ph1853.preheader, label %vector.memcheck3165
 
 vector.memcheck3165:                              ; preds = %iter.check3190
@@ -556,12 +557,12 @@ vector.memcheck3165:                              ; preds = %iter.check3190
   br i1 %conflict.rdx3168, label %.lr.ph1853.preheader, label %vector.main.loop.iter.check3169
 
 vector.main.loop.iter.check3169:                  ; preds = %vector.memcheck3165
-  %min.iters.check3170 = icmp ult i64 %17, 16
+  %min.iters.check3170 = icmp ult i64 %18, 16
   br i1 %min.iters.check3170, label %vec.epilog.ph3194, label %vector.ph3171
 
 vector.ph3171:                                    ; preds = %vector.main.loop.iter.check3169
-  %i.bal = and i64 %17, 12
-  %n.vec3172 = and i64 %17, -16                   ; 4 uses
+  %i.bal = and i64 %18, 12
+  %n.vec3172 = and i64 %18, -16                   ; 4 uses
   %i.bam = or disjoint i64 %n.vec3172, 1
   %broadcast.splat3174 = shufflevector <2 x double> %i.azr, <2 x double> poison, <4 x i32> zeroinitializer ; 4 uses
   %broadcast.splat3176 = shufflevector <2 x double> %i.azr, <2 x double> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1> ; 4 uses
@@ -611,7 +612,7 @@ vector.body3177:                                  ; preds = %vector.ph3171, %vec
   br i1 %i.bbm, label %middle.block3188, label %vector.body3177, !llvm.loop !38
 
 middle.block3188:                                 ; preds = %vector.body3177
-  %cmp.n3189 = icmp eq i64 %17, %n.vec3172
+  %cmp.n3189 = icmp eq i64 %18, %n.vec3172
   br i1 %cmp.n3189, label %.loopexit1680, label %vec.epilog.iter.check3191
 
 vec.epilog.iter.check3191:                        ; preds = %middle.block3188
@@ -620,7 +621,7 @@ vec.epilog.iter.check3191:                        ; preds = %middle.block3188
 
 vec.epilog.ph3194:                                ; preds = %vector.main.loop.iter.check3169, %vec.epilog.iter.check3191
   %vec.epilog.resume.val3195 = phi i64 [ %n.vec3172, %vec.epilog.iter.check3191 ], [ 0, %vector.main.loop.iter.check3169 ]
-  %n.vec3196 = and i64 %17, -4                    ; 3 uses
+  %n.vec3196 = and i64 %18, -4                    ; 3 uses
   %i.bbn = or disjoint i64 %n.vec3196, 1
   %broadcast.splat3198 = shufflevector <2 x double> %i.azr, <2 x double> poison, <4 x i32> zeroinitializer
   %broadcast.splat3200 = shufflevector <2 x double> %i.azr, <2 x double> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
@@ -643,13 +644,13 @@ vec.epilog.vector.body3201:                       ; preds = %vec.epilog.vector.b
   br i1 %i.bbv, label %vec.epilog.middle.block3206, label %vec.epilog.vector.body3201, !llvm.loop !39
 
 vec.epilog.middle.block3206:                      ; preds = %vec.epilog.vector.body3201
-  %cmp.n3207 = icmp eq i64 %17, %n.vec3196
+  %cmp.n3207 = icmp eq i64 %18, %n.vec3196
   br i1 %cmp.n3207, label %.loopexit1680, label %.lr.ph1853.preheader
 
 .lr.ph1853.preheader:                             ; preds = %iter.check3190, %vector.memcheck3165, %vec.epilog.iter.check3191, %vec.epilog.middle.block3206
   %indvars.iv2142.ph = phi i64 [ 1, %iter.check3190 ], [ 1, %vector.memcheck3165 ], [ %i.bam, %vec.epilog.iter.check3191 ], [ %i.bbn, %vec.epilog.middle.block3206 ] ; 4 uses
   %i.bbw = sub i64 %indvars.iv2292, %indvars.iv2142.ph
-  %i.bbx = sub i64 %17, %indvars.iv2142.ph
+  %i.bbx = sub i64 %18, %indvars.iv2142.ph
   %xtraiter3418 = and i64 %i.bbw, 3               ; 2 uses
   %lcmp.mod3419.not = icmp eq i64 %xtraiter3418, 0
   br i1 %lcmp.mod3419.not, label %.lr.ph1853.prol.loopexit, label %.lr.ph1853.prol.preheader
@@ -1052,9 +1053,9 @@ attributes #6 = { nounwind }
 !115 = !{!45}
 !116 = !{!46}
 !117 = !{!47}
-!118 = !{!48, !45, !43, !46, !44}
+!118 = !{!48, !43, !45, !44, !46}
 !119 = !{!48}
-!120 = !{!45, !43, !46, !44}
+!120 = !{!43, !45, !44, !46}
 !121 = !{!65}
 !122 = !{!67, !66}
 !123 = !{!67}
