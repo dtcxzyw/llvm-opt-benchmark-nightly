@@ -162,7 +162,7 @@ polybench_alloc_data.exit30:                      ; preds = %polybench_alloc_dat
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
   store ptr null, ptr %i.a, align 8, !tbaa !20
   %i.w = call i32 @posix_memalign(ptr noundef nonnull %i.a, i64 noundef 4096, i64 noundef 9600000) #13
-  %i.x = load ptr, ptr %i.a, align 8, !tbaa !20   ; 12 uses
+  %i.x = load ptr, ptr %i.a, align 8, !tbaa !20   ; 11 uses
   %i.y = icmp eq ptr %i.x, null
   %i.z = icmp ne i32 %i.w, 0
   %or.cond.i.i31 = or i1 %i.z, %i.y
@@ -298,8 +298,8 @@ middle.block111:                                  ; preds = %vector.body106, %sc
   br i1 %exitcond60.not.i, label %.preheader36.i.preheader, label %.preheader.i, !llvm.loop !35
 
 .preheader36.i.preheader:                         ; preds = %middle.block111
-  %i.cb = insertelement <2 x ptr> poison, ptr %i.x, i64 1
-  %i.cc = insertelement <2 x ptr> poison, ptr %i.r, i64 0 ; 2 uses
+  %i.cb = insertelement <2 x ptr> poison, ptr %i.r, i64 0
+  %i.cc = insertelement <2 x ptr> %i.cb, ptr %i.x, i64 1 ; 2 uses
   br label %.preheader36.i
 
 .preheader36.i:                                   ; preds = %.preheader36.i.preheader, %bb.f
@@ -349,15 +349,15 @@ scalar.ph148.preheader:                           ; preds = %.preheader36.i, %mi
   %i.cq = shufflevector <2 x ptr> %i.cp, <2 x ptr> poison, <2 x i32> zeroinitializer
   %i.cr = insertelement <2 x ptr> poison, ptr %scevgep126, i64 0
   %i.cs = insertelement <2 x ptr> %i.cr, ptr %scevgep, i64 1
-  %i.ct = insertelement <2 x ptr> %i.cb, ptr %i.co, i64 0
-  %i.cu = insertelement <2 x ptr> poison, ptr %scevgep127, i64 0
-  %2 = shufflevector <2 x ptr> %i.cu, <2 x ptr> poison, <2 x i32> zeroinitializer ; 2 uses
-  %3 = insertelement <2 x ptr> %i.cc, ptr %i.cn, i64 1
+  %i.ct = insertelement <2 x ptr> poison, ptr %i.co, i64 0
+  %i.cu = insertelement <2 x ptr> %i.ct, ptr %i.cn, i64 1
+  %2 = insertelement <2 x ptr> poison, ptr %scevgep127, i64 0
+  %3 = shufflevector <2 x ptr> %2, <2 x ptr> poison, <2 x i32> zeroinitializer ; 2 uses
   %min.iters.check = icmp samesign ult i64 %indvars.iv55.i, 2
   %i.cv = icmp ult <2 x ptr> %i.cq, %i.cs
-  %i.cw = icmp ult <2 x ptr> %i.ct, %2
-  %i.cx = icmp ult <2 x ptr> %3, %2
-  %i.cy = or <2 x i1> %i.cw, %i.cx
+  %i.cw = icmp ult <2 x ptr> %i.cc, %3
+  %i.cx = icmp ult <2 x ptr> %i.cu, %3
+  %i.cy = or <2 x i1> %i.cx, %i.cw
   %i.cz = and <2 x i1> %i.cv, %i.cy
   %i.da = bitcast <2 x i1> %i.cz to i2
   %.not = icmp eq i2 %i.da, 0
@@ -457,15 +457,11 @@ bb.f:                                             ; preds = %.loopexit223
   %indvars.iv.next58.i39 = add nuw nsw i64 %indvars.iv57.i34, 1 ; 2 uses
   %indvars.iv.next56.i = add nuw nsw i64 %indvars.iv55.i, 1
   %exitcond62.not.i = icmp eq i64 %indvars.iv.next58.i39, 1200
-  br i1 %exitcond62.not.i, label %.preheader36.i40.preheader, label %.preheader36.i, !llvm.loop !47
+  br i1 %exitcond62.not.i, label %.preheader36.i40, label %.preheader36.i, !llvm.loop !47
 
-.preheader36.i40.preheader:                       ; preds = %bb.f
-  %4 = insertelement <2 x ptr> poison, ptr %i.x, i64 1
-  br label %.preheader36.i40
-
-.preheader36.i40:                                 ; preds = %.preheader36.i40.preheader, %bb.g
-  %indvars.iv57.i41 = phi i64 [ %indvars.iv.next58.i58, %bb.g ], [ 0, %.preheader36.i40.preheader ] ; 6 uses
-  %indvars.iv55.i42 = phi i64 [ %indvars.iv.next56.i59, %bb.g ], [ 1, %.preheader36.i40.preheader ] ; 9 uses
+.preheader36.i40:                                 ; preds = %bb.f, %bb.g
+  %indvars.iv57.i41 = phi i64 [ %indvars.iv.next58.i58, %bb.g ], [ 0, %bb.f ] ; 6 uses
+  %indvars.iv55.i42 = phi i64 [ %indvars.iv.next56.i59, %bb.g ], [ 1, %bb.f ] ; 9 uses
   %i.en = mul nuw nsw i64 %indvars.iv57.i41, 8000
   %i.eo = add nuw i64 %i.en, 8000                 ; 2 uses
   %scevgep179 = getelementptr i8, ptr %i.x, i64 %i.eo
@@ -510,15 +506,15 @@ scalar.ph211.preheader:                           ; preds = %.preheader36.i40, %
   %i.fa = shufflevector <2 x ptr> %i.ez, <2 x ptr> poison, <2 x i32> zeroinitializer
   %i.fb = insertelement <2 x ptr> poison, ptr %scevgep180, i64 0
   %i.fc = insertelement <2 x ptr> %i.fb, ptr %scevgep179, i64 1
-  %i.fd = insertelement <2 x ptr> %4, ptr %i.ey, i64 0
-  %i.fe = insertelement <2 x ptr> poison, ptr %scevgep181, i64 0
-  %5 = shufflevector <2 x ptr> %i.fe, <2 x ptr> poison, <2 x i32> zeroinitializer ; 2 uses
-  %6 = insertelement <2 x ptr> %i.cc, ptr %i.ex, i64 1
+  %i.fd = insertelement <2 x ptr> poison, ptr %i.ey, i64 0
+  %i.fe = insertelement <2 x ptr> %i.fd, ptr %i.ex, i64 1
+  %4 = insertelement <2 x ptr> poison, ptr %scevgep181, i64 0
+  %5 = shufflevector <2 x ptr> %4, <2 x ptr> poison, <2 x i32> zeroinitializer ; 2 uses
   %min.iters.check183 = icmp samesign ult i64 %indvars.iv55.i42, 2
   %i.ff = icmp ult <2 x ptr> %i.fa, %i.fc
-  %i.fg = icmp ult <2 x ptr> %i.fd, %5
-  %i.fh = icmp ult <2 x ptr> %6, %5
-  %i.fi = or <2 x i1> %i.fg, %i.fh
+  %i.fg = icmp ult <2 x ptr> %i.cc, %5
+  %i.fh = icmp ult <2 x ptr> %i.fe, %5
+  %i.fi = or <2 x i1> %i.fh, %i.fg
   %i.fj = and <2 x i1> %i.ff, %i.fi
   %i.fk = bitcast <2 x i1> %i.fj to i2
   %.not229 = icmp eq i2 %i.fk, 0
@@ -850,12 +846,12 @@ attributes #17 = { nounwind allocsize(0) }
 !70 = !{!41}
 !71 = !{!42}
 !72 = !{!43}
-!73 = !{!40, !41, !42, !39}
+!73 = !{!41, !40, !39, !42}
 !74 = !{!51}
 !75 = !{!52}
 !76 = !{!53}
 !77 = !{!54}
 !78 = !{!55}
-!79 = !{!52, !53, !54, !51}
+!79 = !{!53, !52, !51, !54}
 !80 = !{!5, !5, i64 0}
 end_hunk_0
