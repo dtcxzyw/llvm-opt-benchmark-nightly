@@ -1,0 +1,460 @@
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ffmpeg/original/me_cmp?download=true
+inline.NumInlined: 20
+inline.NumDeleted: 2
+loop-unroll.NumCompletelyUnrolled: 28
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 30
+begin_hunk_0_@nsse8_c:bb.a
+  %i.dk = tail call i32 @llvm.abs.i32(i32 %i.dj, i1 true)
+  %i.dl = add i32 %i.cw, %i.dd
+  %i.dm = add nuw nsw i32 %i.cv, %i.dk
+  %i.dn = getelementptr inbounds i8, ptr %.099119, i64 %i.d
+  %i.do = load i8, ptr %i.dn, align 1, !tbaa !16
+  %i.dp = zext i8 %i.do to i32                    ; 2 uses
+  %i.dq = add nuw nsw i32 %i.cz, %i.aj
+  %i.dr = sub nsw i32 %i.aa, %i.dq
+  %i.ds = add nsw i32 %i.dr, %i.dp
+  %i.dt = tail call i32 @llvm.abs.i32(i32 %i.ds, i1 true)
+  %i.du = getelementptr inbounds i8, ptr %.0100118, i64 %i.d
+  %i.dv = load i8, ptr %i.du, align 1, !tbaa !16
+  %i.dw = zext i8 %i.dv to i32                    ; 2 uses
+  %i.dx = add nuw nsw i32 %i.dg, %i.am
+  %i.dy = sub nsw i32 %i.ad, %i.dx
+  %i.dz = add nsw i32 %i.dy, %i.dw
+  %i.ea = tail call i32 @llvm.abs.i32(i32 %i.dz, i1 true)
+  %i.eb = add i32 %i.dl, %i.dt
+  %i.ec = add nuw nsw i32 %i.dm, %i.ea
+  %i.ed = getelementptr inbounds i8, ptr %.099119, i64 %i.e
+  %i.ee = load i8, ptr %i.ed, align 1, !tbaa !16
+  %i.ef = zext i8 %i.ee to i32                    ; 2 uses
+  %i.eg = add nuw nsw i32 %i.dp, %i.as
+  %i.eh = sub nsw i32 %i.aj, %i.eg
+  %i.ei = add nsw i32 %i.eh, %i.ef
+  %i.ej = tail call i32 @llvm.abs.i32(i32 %i.ei, i1 true)
+  %i.ek = getelementptr inbounds i8, ptr %.0100118, i64 %i.e
+  %i.el = load i8, ptr %i.ek, align 1, !tbaa !16
+  %i.em = zext i8 %i.el to i32                    ; 2 uses
+  %i.en = add nuw nsw i32 %i.dw, %i.av
+  %i.eo = sub nsw i32 %i.am, %i.en
+  %i.ep = add nsw i32 %i.eo, %i.em
+  %i.eq = tail call i32 @llvm.abs.i32(i32 %i.ep, i1 true)
+  %i.er = add i32 %i.eb, %i.ej
+  %i.es = add nuw nsw i32 %i.ec, %i.eq
+  %i.et = getelementptr inbounds i8, ptr %.099119, i64 %i.f
+  %i.eu = load i8, ptr %i.et, align 1, !tbaa !16
+  %i.ev = zext i8 %i.eu to i32                    ; 2 uses
+  %i.ew = add nuw nsw i32 %i.ef, %i.bb
+  %i.ex = sub nsw i32 %i.as, %i.ew
+  %i.ey = add nsw i32 %i.ex, %i.ev
+  %i.ez = tail call i32 @llvm.abs.i32(i32 %i.ey, i1 true)
+  %i.fa = getelementptr inbounds i8, ptr %.0100118, i64 %i.f
+  %i.fb = load i8, ptr %i.fa, align 1, !tbaa !16
+  %i.fc = zext i8 %i.fb to i32                    ; 2 uses
+  %i.fd = add nuw nsw i32 %i.em, %i.be
+  %i.fe = sub nsw i32 %i.av, %i.fd
+  %i.ff = add nsw i32 %i.fe, %i.fc
+  %i.fg = tail call i32 @llvm.abs.i32(i32 %i.ff, i1 true)
+  %i.fh = add i32 %i.er, %i.ez
+  %i.fi = add nuw nsw i32 %i.es, %i.fg
+  %i.fj = getelementptr inbounds i8, ptr %.099119, i64 %i.g
+  %i.fk = load i8, ptr %i.fj, align 1, !tbaa !16
+  %i.fl = zext i8 %i.fk to i32                    ; 2 uses
+  %i.fm = add nuw nsw i32 %i.ev, %i.bk
+  %i.fn = sub nsw i32 %i.bb, %i.fm
+  %i.fo = add nsw i32 %i.fn, %i.fl
+  %i.fp = tail call i32 @llvm.abs.i32(i32 %i.fo, i1 true)
+  %i.fq = getelementptr inbounds i8, ptr %.0100118, i64 %i.g
+  %i.fr = load i8, ptr %i.fq, align 1, !tbaa !16
+  %i.fs = zext i8 %i.fr to i32                    ; 2 uses
+  %i.ft = add nuw nsw i32 %i.fc, %i.bn
+  %i.fu = sub nsw i32 %i.be, %i.ft
+  %i.fv = add nsw i32 %i.fu, %i.fs
+  %i.fw = tail call i32 @llvm.abs.i32(i32 %i.fv, i1 true)
+  %i.fx = add i32 %i.fh, %i.fp
+  %i.fy = add nuw nsw i32 %i.fi, %i.fw
+  %i.fz = load i8, ptr %i.bi, align 1, !tbaa !16
+  %i.ga = zext i8 %i.fz to i32
+  %i.gb = load i8, ptr %i.br, align 1, !tbaa !16
+  %i.gc = zext i8 %i.gb to i32
+  %i.gd = getelementptr inbounds i8, ptr %.099119, i64 %i.h
+  %i.ge = load i8, ptr %i.gd, align 1, !tbaa !16
+  %i.gf = zext i8 %i.ge to i32
+  %i.gg = add nuw nsw i32 %i.fl, %i.gc
+  %i.gh = sub nsw i32 %i.ga, %i.gg
+  %i.gi = add nsw i32 %i.gh, %i.gf
+  %i.gj = tail call i32 @llvm.abs.i32(i32 %i.gi, i1 true)
+  %i.gk = load i8, ptr %i.bl, align 1, !tbaa !16
+  %i.gl = zext i8 %i.gk to i32
+  %i.gm = load i8, ptr %i.bu, align 1, !tbaa !16
+  %i.gn = zext i8 %i.gm to i32
+  %i.go = getelementptr inbounds i8, ptr %.0100118, i64 %i.h
+  %i.gp = load i8, ptr %i.go, align 1, !tbaa !16
+  %i.gq = zext i8 %i.gp to i32
+  %i.gr = add nuw nsw i32 %i.fs, %i.gn
+  %i.gs = sub nsw i32 %i.gl, %i.gr
+  %i.gt = add nsw i32 %i.gs, %i.gq
+  %i.gu = tail call i32 @llvm.abs.i32(i32 %i.gt, i1 true)
+  %i.gv = add i32 %i.fx, %i.gj
+  %i.gw = add nuw nsw i32 %i.fy, %i.gu
+  %i.gx = sub i32 %i.gv, %i.gw
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %.preheader.preheader, %.preheader113
+  %.2 = phi i32 [ %.094121, %.preheader113 ], [ %i.gx, %.preheader.preheader ] ; 2 uses
+  %i.gy = getelementptr inbounds i8, ptr %.099119, i64 %3
+  %i.gz = getelementptr inbounds i8, ptr %.0100118, i64 %3
+  %exitcond.not = icmp eq i32 %i.ca, %4
+  br i1 %exitcond.not, label %._crit_edge.loopexit, label %.preheader113, !llvm.loop !113
+
+._crit_edge.loopexit:                             ; preds = %.loopexit
+  %i.ha = tail call i32 @llvm.abs.i32(i32 %.2, i1 true)
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
+  %.096.lcssa = phi i32 [ 0, %bb.a ], [ %i.bz, %._crit_edge.loopexit ]
+  %.094.lcssa = phi i32 [ 0, %bb.a ], [ %i.ha, %._crit_edge.loopexit ] ; 2 uses
+  %.not = icmp eq ptr %0, null
+  br i1 %.not, label %bb.c, label %bb.b
+
+bb.b:                                             ; preds = %._crit_edge
+  %i.hb = getelementptr inbounds nuw i8, ptr %0, i64 344
+  %i.hc = load ptr, ptr %i.hb, align 8, !tbaa !62
+  %i.hd = getelementptr inbounds nuw i8, ptr %i.hc, i64 240
+  %i.he = load i32, ptr %i.hd, align 8, !tbaa !75
+  %i.hf = mul nsw i32 %i.he, %.094.lcssa
+  br label %bb.d
+
+bb.c:                                             ; preds = %._crit_edge
+  %i.hg = shl nuw nsw i32 %.094.lcssa, 3
+  br label %bb.d
+
+bb.d:                                             ; preds = %bb.c, %bb.b
+  %.pn = phi i32 [ %i.hf, %bb.b ], [ %i.hg, %bb.c ]
+  %.098 = add nsw i32 %.pn, %.096.lcssa
+  ret i32 %.098
+}
+
+declare void @ff_dsputil_init_dwt(ptr noundef) local_unnamed_addr #3
+
+; Function Attrs: inlinehint nofree norecurse nosync nounwind memory(argmem: read) uwtable
+define internal i32 @pix_median_abs16_c(ptr nofree readnone captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, i64 noundef %3, i32 noundef %4) #6 {
+bb.a:
+  %i.a = load i8, ptr %1, align 1, !tbaa !16
+  %i.b = zext i8 %i.a to i32
+  %i.c = load i8, ptr %2, align 1, !tbaa !16
+  %i.d = zext i8 %i.c to i32
+  %i.e = sub nsw i32 %i.b, %i.d                   ; 2 uses
+  %i.f = tail call i32 @llvm.abs.i32(i32 %i.e, i1 true)
+  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 1
+  %i.h = getelementptr inbounds nuw i8, ptr %2, i64 1
+  %i.i = getelementptr inbounds nuw i8, ptr %1, i64 2
+  %i.j = getelementptr inbounds nuw i8, ptr %2, i64 2
+  %i.k = load i8, ptr %i.g, align 1, !tbaa !16
+  %i.l = zext i8 %i.k to i32
+  %i.m = load i8, ptr %i.h, align 1, !tbaa !16
+  %i.n = zext i8 %i.m to i32
+  %i.o = sub nsw i32 %i.l, %i.n                   ; 2 uses
+  %i.p = sub nsw i32 %i.o, %i.e
+  %i.q = tail call i32 @llvm.abs.i32(i32 %i.p, i1 true)
+  %i.r = load <12 x i8>, ptr %i.i, align 1, !tbaa !16
+  %i.s = zext <12 x i8> %i.r to <12 x i32>
+  %i.t = load <12 x i8>, ptr %i.j, align 1, !tbaa !16
+  %i.u = zext <12 x i8> %i.t to <12 x i32>
+  %i.v = sub nsw <12 x i32> %i.s, %i.u            ; 3 uses
+  %i.w = insertelement <12 x i32> poison, i32 %i.o, i64 0
+  %i.x = shufflevector <12 x i32> %i.w, <12 x i32> %i.v, <12 x i32> <i32 0, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22>
+  %i.y = sub nsw <12 x i32> %i.v, %i.x
+  %i.z = tail call <12 x i32> @llvm.abs.v12i32(<12 x i32> %i.y, i1 true)
+  %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 14
+  %i.ab = load i8, ptr %i.aa, align 1, !tbaa !16
+  %i.ac = zext i8 %i.ab to i32
+  %i.ad = getelementptr inbounds nuw i8, ptr %2, i64 14
+  %i.ae = load i8, ptr %i.ad, align 1, !tbaa !16
+  %i.af = zext i8 %i.ae to i32
+  %i.ag = sub nsw i32 %i.ac, %i.af                ; 2 uses
+  %i.ah = extractelement <12 x i32> %i.v, i64 11
+  %i.ai = sub nsw i32 %i.ag, %i.ah
+  %i.aj = tail call i32 @llvm.abs.i32(i32 %i.ai, i1 true)
+  %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 15
+  %i.al = load i8, ptr %i.ak, align 1, !tbaa !16
+  %i.am = zext i8 %i.al to i32
+  %i.an = getelementptr inbounds nuw i8, ptr %2, i64 15
+  %i.ao = load i8, ptr %i.an, align 1, !tbaa !16
+  %i.ap = zext i8 %i.ao to i32
+  %i.aq = add nsw i32 %i.ag, %i.ap
+  %i.ar = sub nsw i32 %i.am, %i.aq
+  %i.as = tail call i32 @llvm.abs.i32(i32 %i.ar, i1 true)
+  %i.at = tail call i32 @llvm.vector.reduce.add.v12i32(<12 x i32> %i.z)
+  %op.rdx = add i32 %i.at, %i.q
+  %op.rdx158 = add nuw nsw i32 %i.f, %i.aj
+  %op.rdx159 = add i32 %op.rdx, %op.rdx158
+  %op.rdx160 = add i32 %op.rdx159, %i.as          ; 2 uses
+  %i.au = icmp sgt i32 %4, 1
+  br i1 %i.au, label %.lr.ph, label %._crit_edge
+
+.lr.ph:                                           ; preds = %bb.a
+  %i.av = xor i64 %3, -1
+  %.pre = load i8, ptr %1, align 1, !tbaa !16
+  %.pre156 = load i8, ptr %2, align 1, !tbaa !16
+  br label %bb.b
+
+bb.b:                                             ; preds = %.lr.ph, %bb.d
+  %i.aw = phi i8 [ %.pre156, %.lr.ph ], [ %i.ba, %bb.d ]
+  %i.ax = phi i8 [ %.pre, %.lr.ph ], [ %i.ay, %bb.d ]
+  %.0129151 = phi i32 [ 1, %.lr.ph ], [ %i.cm, %bb.d ]
+  %.0130150 = phi i32 [ %op.rdx160, %.lr.ph ], [ %i.cl, %bb.d ]
+  %.pn133149 = phi ptr [ %1, %.lr.ph ], [ %.0131152, %bb.d ] ; 2 uses
+  %.pn148 = phi ptr [ %2, %.lr.ph ], [ %.0132153, %bb.d ] ; 2 uses
+  %.0131152 = getelementptr inbounds i8, ptr %.pn133149, i64 %3 ; 4 uses
+  %.0132153 = getelementptr inbounds i8, ptr %.pn148, i64 %3 ; 4 uses
+  %i.ay = load i8, ptr %.0131152, align 1, !tbaa !16 ; 3 uses
+  %i.az = zext i8 %i.ay to i32
+  %i.ba = load i8, ptr %.0132153, align 1, !tbaa !16 ; 3 uses
+  %i.bb = zext i8 %i.ba to i32
+  %i.bc = zext i8 %i.ax to i32
+  %i.bd = zext i8 %i.aw to i32
+  %i.be = add nuw nsw i32 %i.bb, %i.bc
+  %i.bf = sub nsw i32 %i.az, %i.be
+  %i.bg = add nsw i32 %i.bf, %i.bd
+  %i.bh = tail call i32 @llvm.abs.i32(i32 %i.bg, i1 true)
+  %i.bi = add nsw i32 %i.bh, %.0130150
+  br label %bb.c
+
+bb.c:                                             ; preds = %bb.b, %bb.c
+  %5 = phi i8 [ %i.ba, %bb.b ], [ %i.bn, %bb.c ]
+  %6 = phi i8 [ %i.ay, %bb.b ], [ %i.bk, %bb.c ]
+  %indvars.iv = phi i64 [ 1, %bb.b ], [ %indvars.iv.next, %bb.c ] ; 6 uses
+  %.1144 = phi i32 [ %i.bi, %bb.b ], [ %i.cl, %bb.c ]
+  %i.bj = getelementptr inbounds nuw i8, ptr %.0131152, i64 %indvars.iv
+  %i.bk = load i8, ptr %i.bj, align 1, !tbaa !16  ; 2 uses
+  %i.bl = zext i8 %i.bk to i32
+  %i.bm = getelementptr inbounds nuw i8, ptr %.0132153, i64 %indvars.iv
+  %i.bn = load i8, ptr %i.bm, align 1, !tbaa !16  ; 2 uses
+  %i.bo = zext i8 %i.bn to i32
+  %i.bp = getelementptr inbounds nuw i8, ptr %.pn133149, i64 %indvars.iv
+  %i.bq = load i8, ptr %i.bp, align 1, !tbaa !16
+  %i.br = zext i8 %i.bq to i32
+  %i.bs = getelementptr inbounds nuw i8, ptr %.pn148, i64 %indvars.iv
+  %i.bt = load i8, ptr %i.bs, align 1, !tbaa !16
+  %i.bu = zext i8 %i.bt to i32
+  %7 = sub nsw i32 %i.br, %i.bu                   ; 3 uses
+  %8 = zext i8 %6 to i32
+  %i.bv = zext i8 %5 to i32
+  %i.bw = sub nsw i32 %8, %i.bv                   ; 3 uses
+  %i.bx = add i64 %indvars.iv, %i.av              ; 2 uses
+  %i.by = getelementptr inbounds i8, ptr %.0131152, i64 %i.bx
+  %i.bz = load i8, ptr %i.by, align 1, !tbaa !16
+  %i.ca = zext i8 %i.bz to i32
+  %i.cb = getelementptr inbounds i8, ptr %.0132153, i64 %i.bx
+  %i.cc = load i8, ptr %i.cb, align 1, !tbaa !16
+  %i.cd = zext i8 %i.cc to i32
+  %.neg134 = add nsw i32 %i.bw, %7
+  %i.ce = sub nsw i32 %.neg134, %i.ca
+  %i.cf = add nsw i32 %i.ce, %i.cd
+  %..i = tail call i32 @llvm.smax.i32(i32 range(i32 -255, 256) %7, i32 range(i32 -255, 256) %i.bw)
+  %.20.i = tail call i32 @llvm.smin.i32(i32 range(i32 -255, 256) %7, i32 range(i32 -255, 256) %i.bw)
+  %i.cg = tail call i32 @llvm.smin.i32(i32 range(i32 -765, 766) %i.cf, i32 %..i)
+  %i.ch = tail call range(i32 -255, 256) i32 @llvm.smax.i32(i32 %i.cg, i32 %.20.i)
+  %i.ci = add nsw i32 %i.ch, %i.bo
+  %i.cj = sub nsw i32 %i.bl, %i.ci
+  %i.ck = tail call i32 @llvm.abs.i32(i32 %i.cj, i1 true)
+  %i.cl = add nsw i32 %i.ck, %.1144               ; 3 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, 16
+  br i1 %exitcond.not, label %bb.d, label %bb.c, !llvm.loop !114
+
+bb.d:                                             ; preds = %bb.c
+  %i.cm = add nuw nsw i32 %.0129151, 1            ; 2 uses
+  %exitcond155.not = icmp eq i32 %i.cm, %4
+  br i1 %exitcond155.not, label %._crit_edge, label %bb.b, !llvm.loop !115
+
+._crit_edge:                                      ; preds = %bb.d, %bb.a
+  %.0130.lcssa = phi i32 [ %op.rdx160, %bb.a ], [ %i.cl, %bb.d ]
+  ret i32 %.0130.lcssa
+}
+
+; Function Attrs: inlinehint nofree norecurse nosync nounwind memory(argmem: read) uwtable
+define internal i32 @pix_median_abs8_c(ptr nofree readnone captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, i64 noundef %3, i32 noundef %4) #6 {
+bb.a:
+  %i.a = load i8, ptr %1, align 1, !tbaa !16
+  %i.b = zext i8 %i.a to i32
+  %i.c = load i8, ptr %2, align 1, !tbaa !16
+  %i.d = zext i8 %i.c to i32
+  %i.e = sub nsw i32 %i.b, %i.d                   ; 2 uses
+  %i.f = tail call i32 @llvm.abs.i32(i32 %i.e, i1 true)
+  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 1
+  %i.h = getelementptr inbounds nuw i8, ptr %2, i64 1
+  %i.i = getelementptr inbounds nuw i8, ptr %1, i64 2
+  %i.j = getelementptr inbounds nuw i8, ptr %2, i64 2
+  %i.k = load <4 x i8>, ptr %i.g, align 1, !tbaa !16
+  %i.l = load <4 x i8>, ptr %i.i, align 1, !tbaa !16
+  %i.m = zext <4 x i8> %i.k to <4 x i32>
+  %i.n = load <4 x i8>, ptr %i.h, align 1, !tbaa !16
+  %i.o = load <4 x i8>, ptr %i.j, align 1, !tbaa !16
+  %i.p = zext <4 x i8> %i.n to <4 x i32>
+  %i.q = zext <4 x i8> %i.l to <4 x i32>
+  %i.r = zext <4 x i8> %i.o to <4 x i32>
+  %i.s = sub nsw <4 x i32> %i.m, %i.p             ; 2 uses
+  %i.t = extractelement <4 x i32> %i.s, i64 0
+  %i.u = sub nsw i32 %i.t, %i.e
+  %i.v = tail call i32 @llvm.abs.i32(i32 %i.u, i1 true)
+  %i.w = sub nsw <4 x i32> %i.q, %i.r             ; 2 uses
+  %i.x = sub nsw <4 x i32> %i.w, %i.s
+  %i.y = tail call <4 x i32> @llvm.abs.v4i32(<4 x i32> %i.x, i1 true)
+  %i.z = getelementptr inbounds nuw i8, ptr %1, i64 6
+  %i.aa = load i8, ptr %i.z, align 1, !tbaa !16
+  %i.ab = zext i8 %i.aa to i32
+  %i.ac = getelementptr inbounds nuw i8, ptr %2, i64 6
+  %i.ad = load i8, ptr %i.ac, align 1, !tbaa !16
+  %i.ae = zext i8 %i.ad to i32
+  %i.af = sub nsw i32 %i.ab, %i.ae                ; 2 uses
+  %i.ag = extractelement <4 x i32> %i.w, i64 3
+  %i.ah = sub nsw i32 %i.af, %i.ag
+  %i.ai = tail call i32 @llvm.abs.i32(i32 %i.ah, i1 true)
+  %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 7
+  %i.ak = load i8, ptr %i.aj, align 1, !tbaa !16
+  %i.al = zext i8 %i.ak to i32
+  %i.am = getelementptr inbounds nuw i8, ptr %2, i64 7
+  %i.an = load i8, ptr %i.am, align 1, !tbaa !16
+  %i.ao = zext i8 %i.an to i32
+  %i.ap = add nsw i32 %i.af, %i.ao
+  %i.aq = sub nsw i32 %i.al, %i.ap
+  %i.ar = tail call i32 @llvm.abs.i32(i32 %i.aq, i1 true)
+  %i.as = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.y)
+  %op.rdx = add i32 %i.as, %i.v
+  %op.rdx115 = add nuw nsw i32 %i.f, %i.ai
+  %op.rdx116 = add i32 %op.rdx, %op.rdx115
+  %op.rdx117 = add i32 %op.rdx116, %i.ar          ; 2 uses
+  %i.at = icmp sgt i32 %4, 1
+  br i1 %i.at, label %.lr.ph, label %._crit_edge
+
+.lr.ph:                                           ; preds = %bb.a, %.lr.ph
+  %.089111 = phi i32 [ %i.fw, %.lr.ph ], [ 1, %bb.a ]
+  %.090110 = phi i32 [ %op.rdx122, %.lr.ph ], [ %op.rdx117, %bb.a ]
+  %.pn93109 = phi ptr [ %.091112, %.lr.ph ], [ %1, %bb.a ] ; 10 uses
+  %.pn108 = phi ptr [ %.092113, %.lr.ph ], [ %2, %bb.a ] ; 10 uses
+  %.091112 = getelementptr inbounds i8, ptr %.pn93109, i64 %3 ; 8 uses
+  %.092113 = getelementptr inbounds i8, ptr %.pn108, i64 %3 ; 8 uses
+  %i.au = load i8, ptr %.pn93109, align 1, !tbaa !16
+  %i.av = zext i8 %i.au to i32
+  %i.aw = load i8, ptr %.pn108, align 1, !tbaa !16
+  %i.ax = zext i8 %i.aw to i32
+  %i.ay = getelementptr inbounds nuw i8, ptr %.091112, i64 1
+  %i.az = getelementptr inbounds nuw i8, ptr %.092113, i64 1
+  %i.ba = getelementptr inbounds nuw i8, ptr %.pn93109, i64 1
+  %i.bb = getelementptr inbounds nuw i8, ptr %.pn108, i64 1
+  %i.bc = getelementptr inbounds nuw i8, ptr %.091112, i64 4
+  %i.bd = getelementptr inbounds nuw i8, ptr %.092113, i64 4
+  %i.be = load i8, ptr %.092113, align 1, !tbaa !16
+  %i.bf = load <4 x i8>, ptr %.092113, align 1, !tbaa !16
+  %i.bg = load i8, ptr %i.bd, align 1, !tbaa !16
+  %i.bh = load <4 x i8>, ptr %i.az, align 1, !tbaa !16
+  %i.bi = zext i8 %i.be to i32
+  %i.bj = zext <4 x i8> %i.bf to <4 x i32>
+  %i.bk = add nuw nsw i32 %i.bi, %i.av
+  %i.bl = load i8, ptr %.091112, align 1, !tbaa !16
+  %i.bm = load <4 x i8>, ptr %.091112, align 1, !tbaa !16
+  %i.bn = load i8, ptr %i.bc, align 1, !tbaa !16
+  %i.bo = load <4 x i8>, ptr %i.ay, align 1, !tbaa !16
+  %i.bp = zext i8 %i.bl to i32
+  %i.bq = zext <4 x i8> %i.bm to <4 x i32>
+  %i.br = sub nsw i32 %i.bp, %i.bk
+  %i.bs = add nsw i32 %i.br, %i.ax
+  %i.bt = tail call i32 @llvm.abs.i32(i32 %i.bs, i1 true)
+  %i.bu = zext i8 %i.bn to i32
+  %i.bv = zext <4 x i8> %i.bo to <4 x i32>
+  %i.bw = zext i8 %i.bg to i32
+  %i.bx = zext <4 x i8> %i.bh to <4 x i32>
+  %i.by = load <4 x i8>, ptr %i.ba, align 1, !tbaa !16
+  %i.bz = zext <4 x i8> %i.by to <4 x i32>
+  %i.ca = load <4 x i8>, ptr %i.bb, align 1, !tbaa !16
+  %i.cb = zext <4 x i8> %i.ca to <4 x i32>
+  %i.cc = sub nsw <4 x i32> %i.bz, %i.cb          ; 3 uses
+  %i.cd = sub nsw <4 x i32> %i.bq, %i.bj          ; 3 uses
+  %i.ce = load <4 x i8>, ptr %.pn93109, align 1, !tbaa !16
+  %i.cf = zext <4 x i8> %i.ce to <4 x i32>
+  %i.cg = load <4 x i8>, ptr %.pn108, align 1, !tbaa !16
+  %i.ch = zext <4 x i8> %i.cg to <4 x i32>
+  %i.ci = add nsw <4 x i32> %i.cd, %i.cc
+  %i.cj = sub nsw <4 x i32> %i.ci, %i.cf
+  %i.ck = add nsw <4 x i32> %i.cj, %i.ch
+  %i.cl = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.cc, <4 x i32> %i.cd)
+  %i.cm = tail call <4 x i32> @llvm.smin.v4i32(<4 x i32> %i.cc, <4 x i32> %i.cd)
+  %i.cn = tail call <4 x i32> @llvm.smin.v4i32(<4 x i32> %i.ck, <4 x i32> %i.cl)
+  %i.co = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.cn, <4 x i32> %i.cm)
+  %i.cp = add nsw <4 x i32> %i.co, %i.bx
+  %i.cq = sub nsw <4 x i32> %i.bv, %i.cp
+  %i.cr = tail call <4 x i32> @llvm.abs.v4i32(<4 x i32> %i.cq, i1 true)
+  %i.cs = getelementptr inbounds nuw i8, ptr %.091112, i64 5
+  %i.ct = load i8, ptr %i.cs, align 1, !tbaa !16
+  %i.cu = zext i8 %i.ct to i32                    ; 2 uses
+  %i.cv = getelementptr inbounds nuw i8, ptr %.092113, i64 5
+  %i.cw = load i8, ptr %i.cv, align 1, !tbaa !16
+  %i.cx = zext i8 %i.cw to i32                    ; 2 uses
+  %i.cy = getelementptr inbounds nuw i8, ptr %.pn93109, i64 5
+  %i.cz = load i8, ptr %i.cy, align 1, !tbaa !16
+  %i.da = zext i8 %i.cz to i32
+  %i.db = getelementptr inbounds nuw i8, ptr %.pn108, i64 5
+  %i.dc = load i8, ptr %i.db, align 1, !tbaa !16
+  %i.dd = zext i8 %i.dc to i32
+  %i.de = sub nsw i32 %i.da, %i.dd                ; 3 uses
+  %i.df = sub nsw i32 %i.bu, %i.bw                ; 3 uses
+  %i.dg = getelementptr inbounds nuw i8, ptr %.pn93109, i64 4
+  %i.dh = load i8, ptr %i.dg, align 1, !tbaa !16
+  %i.di = zext i8 %i.dh to i32
+  %i.dj = getelementptr inbounds nuw i8, ptr %.pn108, i64 4
+  %i.dk = load i8, ptr %i.dj, align 1, !tbaa !16
+  %i.dl = zext i8 %i.dk to i32
+  %.neg94.4 = add nsw i32 %i.df, %i.de
+  %i.dm = sub nsw i32 %.neg94.4, %i.di
+  %i.dn = add nsw i32 %i.dm, %i.dl
+  %..i.4 = tail call i32 @llvm.smax.i32(i32 range(i32 -255, 256) %i.de, i32 range(i32 -255, 256) %i.df)
+  %.20.i.4 = tail call i32 @llvm.smin.i32(i32 range(i32 -255, 256) %i.de, i32 range(i32 -255, 256) %i.df)
+  %i.do = tail call i32 @llvm.smin.i32(i32 range(i32 -765, 766) %i.dn, i32 %..i.4)
+  %i.dp = tail call range(i32 -255, 256) i32 @llvm.smax.i32(i32 %i.do, i32 %.20.i.4)
+  %i.dq = add nsw i32 %i.dp, %i.cx
+  %i.dr = sub nsw i32 %i.cu, %i.dq
+  %i.ds = tail call i32 @llvm.abs.i32(i32 %i.dr, i1 true)
+  %i.dt = getelementptr inbounds nuw i8, ptr %.091112, i64 6
+  %i.du = load i8, ptr %i.dt, align 1, !tbaa !16
+  %i.dv = zext i8 %i.du to i32                    ; 2 uses
+  %i.dw = getelementptr inbounds nuw i8, ptr %.092113, i64 6
+  %i.dx = load i8, ptr %i.dw, align 1, !tbaa !16
+  %i.dy = zext i8 %i.dx to i32                    ; 2 uses
+  %i.dz = getelementptr inbounds nuw i8, ptr %.pn93109, i64 6
+  %i.ea = load i8, ptr %i.dz, align 1, !tbaa !16
+  %i.eb = zext i8 %i.ea to i32
+  %i.ec = getelementptr inbounds nuw i8, ptr %.pn108, i64 6
+  %i.ed = load i8, ptr %i.ec, align 1, !tbaa !16
+  %i.ee = zext i8 %i.ed to i32
+  %i.ef = sub nsw i32 %i.eb, %i.ee                ; 3 uses
+  %i.eg = sub nsw i32 %i.cu, %i.cx                ; 3 uses
+  %i.eh = getelementptr inbounds nuw i8, ptr %.pn93109, i64 5
+  %i.ei = load i8, ptr %i.eh, align 1, !tbaa !16
+  %i.ej = zext i8 %i.ei to i32
+  %i.ek = getelementptr inbounds nuw i8, ptr %.pn108, i64 5
+  %i.el = load i8, ptr %i.ek, align 1, !tbaa !16
+  %i.em = zext i8 %i.el to i32
+  %.neg94.5 = add nsw i32 %i.eg, %i.ef
+  %i.en = sub nsw i32 %.neg94.5, %i.ej
+  %i.eo = add nsw i32 %i.en, %i.em
+  %..i.5 = tail call i32 @llvm.smax.i32(i32 range(i32 -255, 256) %i.ef, i32 range(i32 -255, 256) %i.eg)
+  %.20.i.5 = tail call i32 @llvm.smin.i32(i32 range(i32 -255, 256) %i.ef, i32 range(i32 -255, 256) %i.eg)
+  %i.ep = tail call i32 @llvm.smin.i32(i32 range(i32 -765, 766) %i.eo, i32 %..i.5)
+  %i.eq = tail call range(i32 -255, 256) i32 @llvm.smax.i32(i32 %i.ep, i32 %.20.i.5)
+  %i.er = add nsw i32 %i.eq, %i.dy
+  %i.es = sub nsw i32 %i.dv, %i.er
+  %i.et = tail call i32 @llvm.abs.i32(i32 %i.es, i1 true)
+  %i.eu = getelementptr inbounds nuw i8, ptr %.091112, i64 7
+  %i.ev = load i8, ptr %i.eu, align 1, !tbaa !16
+  %i.ew = zext i8 %i.ev to i32
+  %i.ex = getelementptr inbounds nuw i8, ptr %.092113, i64 7
+  %i.ey = load i8, ptr %i.ex, align 1, !tbaa !16
+  %i.ez = zext i8 %i.ey to i32
+  %i.fa = getelementptr inbounds nuw i8, ptr %.pn93109, i64 7
+  %i.fb = load i8, ptr %i.fa, align 1, !tbaa !16
+  %i.fc = zext i8 %i.fb to i32
+  %i.fd = getelementptr inbounds nuw i8, ptr %.pn108, i64 7
+  %i.fe = load i8, ptr %i.fd, align 1, !tbaa !16
+  %i.ff = zext i8 %i.fe to i32
+end_hunk_0
