@@ -202,12 +202,12 @@ bb.a:
   %i.i = alloca [16 x i8], align 8                ; 2 uses
   %i.j = alloca [48 x i8], align 8                ; 4 uses
   %i.k = alloca [24 x i8], align 8                ; 2 uses
-  %i.l = alloca [8 x i8], align 8                 ; 2 uses
-  %i.m = alloca [8 x i8], align 8                 ; 2 uses
+  %i.l = alloca [8 x i8], align 8                 ; 3 uses
+  %i.m = alloca [8 x i8], align 8                 ; 3 uses
   %i.n = alloca [32 x i8], align 8                ; 4 uses
   %i.o = alloca [24 x i8], align 8                ; 2 uses
   %i.p = alloca [32 x i8], align 8                ; 2 uses
-  %i.q = alloca [8 x i8], align 8                 ; 3 uses
+  %i.q = alloca [8 x i8], align 8                 ; 4 uses
   %i.r = alloca [32 x i8], align 8                ; 8 uses
   %i.s = alloca [32 x i8], align 8                ; 5 uses
   %i.t = alloca [16 x i8], align 8                ; 6 uses
@@ -237,12 +237,20 @@ bb.e:                                             ; preds = %bb.b
   store i64 -1, ptr %0, align 8
   br label %bb.aq
 
-.loopexit.split-lp.a:                             ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %.loopexit.split-lp26.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
-  %.pn = phi { ptr, i32 } [ %lpad.loopexit.split-lp46, %.loopexit.split-lp26.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+.loopexit.split-lp.a:                             ; preds = %.loopexit, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %.loopexit.split-lp26.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+  %.pn = phi { ptr, i32 } [ %lpad.loopexit.split-lp46, %.loopexit.split-lp26.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecTdNtCse4VeaA6Ikg_11proc_macro24SpanEEECsaC8UfsfJL0H_18foundations_macros(ptr align 8 %i.u) #24
           to label %common.resume unwind label %bb.ay
 
-.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.af, %bb.ae, %bb.ax, %bb.al, %bb.ak, %bb.aj, %bb.ai, %bb.ah, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.v, %bb.t, %bb.s, %bb.d
+.loopexit:                                        ; preds = %bb.ae, %bb.af
+  %lpad.loopexit = landingpad { ptr, i32 }
+          cleanup
+  store i64 %3, ptr %i.m, align 8
+  store ptr %2, ptr %i.l, align 8
+  store double %i.bo, ptr %i.q, align 8
+  br label %.loopexit.split-lp.a
+
+.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.d, %bb.s, %bb.t, %bb.v, %bb.y, %bb.z, %bb.aa, %bb.ab, %bb.ah, %bb.ai, %bb.aj, %bb.ak, %bb.al, %bb.ax
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %.loopexit.split-lp.a
@@ -308,11 +316,11 @@ bb.m:                                             ; preds = %bb.o, %bb.k
   %.pn.i = phi ptr [ %i.aj, %bb.k ], [ %i.at, %bb.o ]
   %.sroa.0.0.i = getelementptr inbounds nuw i8, ptr %.pn.i, i64 40
   invoke void @_RINvMs6_NtCs6bAnw1I7Lci_3syn3litNtB6_8LitFloat12base10_parsedECsje5z0uo7eGy_12darling_core(ptr nonnull sret([24 x i8]) align 8 %i.b, ptr nonnull align 8 %.sroa.0.0.i)
-          to label %.noexc unwind label %.loopexit.split-lp26.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %.noexc unwind label %.loopexit.split-lp26.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !81
 
 .noexc:                                           ; preds = %bb.m
   invoke void @_RNvXsp_NtCs3oUPovFnLWP_4core6resultINtB5_6ResultdNtNtCs6bAnw1I7Lci_3syn5error5ErrorENtNtNtB7_3ops9try_trait3Try6branchCsaC8UfsfJL0H_18foundations_macros(ptr nonnull sret([24 x i8]) align 8 %i.c, ptr nonnull align 8 %i.b) #23
-          to label %.noexc15 unwind label %.loopexit.split-lp26.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %.noexc15 unwind label %.loopexit.split-lp26.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !81
 
 .noexc15:                                         ; preds = %.noexc
   %i.ar = load i64, ptr %i.c, align 8, !noalias !81
@@ -344,7 +352,7 @@ bb.q:                                             ; preds = %.noexc15
 bb.r:                                             ; preds = %.noexc15
   %i.az = load double, ptr %i.ag, align 8, !noalias !81
   %i.ba = invoke i32 @_RNvXNtCs6bAnw1I7Lci_3syn7spannedNtNtB4_4expr4ExprNtB2_7Spanned4spanCsje5z0uo7eGy_12darling_core(ptr nonnull align 8 %i.aj)
-          to label %.noexc17 unwind label %.loopexit.split-lp26.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %.noexc17 unwind label %.loopexit.split-lp26.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !81
 
 .noexc17:                                         ; preds = %bb.r
   %i.bb = fmul double %.sroa.3.0.i, %i.az
@@ -421,40 +429,39 @@ bb.ac:                                            ; preds = %bb.ab
   %i.bn = getelementptr inbounds nuw i8, ptr %i.n, i64 24 ; 2 uses
   br label %bb.ad
 
-bb.ad:                                            ; preds = %2, %bb.ac
-  %i.bo = phi double [ %i.bu, %2 ], [ %i.bg, %bb.ac ]
+bb.ad:                                            ; preds = %bb.ag, %bb.ac
+  %i.bo = phi double [ %i.bu, %bb.ag ], [ %i.bg, %bb.ac ] ; 3 uses
+  %2 = phi ptr [ %i.bs, %bb.ag ], [ undef, %bb.ac ]
+  %3 = phi i64 [ %i.bt, %bb.ag ], [ undef, %bb.ac ]
   %i.bp = load i64, ptr %i.bn, align 8            ; 2 uses
   %.not.i18 = icmp eq i64 %i.bp, 0
   br i1 %.not.i18, label %bb.ae, label %bb.af
 
 bb.ae:                                            ; preds = %bb.ad
   %i.bq = invoke { i64, ptr } @_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterTdNtCse4VeaA6Ikg_11proc_macro24SpanEEENtNtNtB8_6traits8iterator8Iterator4nextCsaC8UfsfJL0H_18foundations_macros(ptr nonnull align 8 %i.n) #23
-          to label %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters4skipINtB4_4SkipINtNtB6_9enumerate9EnumerateINtNtNtBa_5slice4iter4IterTdNtCse4VeaA6Ikg_11proc_macro24SpanEEEENtNtNtB8_6traits8iterator8Iterator4nextCsaC8UfsfJL0H_18foundations_macros.exit unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters4skipINtB4_4SkipINtNtB6_9enumerate9EnumerateINtNtNtBa_5slice4iter4IterTdNtCse4VeaA6Ikg_11proc_macro24SpanEEEENtNtNtB8_6traits8iterator8Iterator4nextCsaC8UfsfJL0H_18foundations_macros.exit unwind label %.loopexit
 
 bb.af:                                            ; preds = %bb.ad
   store i64 0, ptr %i.bn, align 8
   %i.br = invoke { i64, ptr } @_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterTdNtCse4VeaA6Ikg_11proc_macro24SpanEEENtNtNtB8_6traits8iterator8Iterator3nthCsaC8UfsfJL0H_18foundations_macros(ptr nonnull align 8 %i.n, i64 %i.bp) #23
-          to label %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters4skipINtB4_4SkipINtNtB6_9enumerate9EnumerateINtNtNtBa_5slice4iter4IterTdNtCse4VeaA6Ikg_11proc_macro24SpanEEEENtNtNtB8_6traits8iterator8Iterator4nextCsaC8UfsfJL0H_18foundations_macros.exit unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters4skipINtB4_4SkipINtNtB6_9enumerate9EnumerateINtNtNtBa_5slice4iter4IterTdNtCse4VeaA6Ikg_11proc_macro24SpanEEEENtNtNtB8_6traits8iterator8Iterator4nextCsaC8UfsfJL0H_18foundations_macros.exit unwind label %.loopexit
 
 _RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters4skipINtB4_4SkipINtNtB6_9enumerate9EnumerateINtNtNtBa_5slice4iter4IterTdNtCse4VeaA6Ikg_11proc_macro24SpanEEEENtNtNtB8_6traits8iterator8Iterator4nextCsaC8UfsfJL0H_18foundations_macros.exit: ; preds = %bb.ae, %bb.af
   %.pn.i19 = phi { i64, ptr } [ %i.bq, %bb.ae ], [ %i.br, %bb.af ] ; 2 uses
-  %i.bs = extractvalue { i64, ptr } %.pn.i19, 1   ; 4 uses
+  %i.bs = extractvalue { i64, ptr } %.pn.i19, 1   ; 5 uses
   %.not13 = icmp eq ptr %i.bs, null
   br i1 %.not13, label %.loopexit24, label %bb.ag
 
 bb.ag:                                            ; preds = %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters4skipINtB4_4SkipINtNtB6_9enumerate9EnumerateINtNtNtBa_5slice4iter4IterTdNtCse4VeaA6Ikg_11proc_macro24SpanEEEENtNtNtB8_6traits8iterator8Iterator4nextCsaC8UfsfJL0H_18foundations_macros.exit
-  %i.bt = extractvalue { i64, ptr } %.pn.i19, 0
-  store i64 %i.bt, ptr %i.m, align 8
-  store ptr %i.bs, ptr %i.l, align 8
-  %i.bu = load double, ptr %i.bs, align 8         ; 3 uses
+  %i.bt = extractvalue { i64, ptr } %.pn.i19, 0   ; 2 uses
+  %i.bu = load double, ptr %i.bs, align 8         ; 2 uses
   %i.bv = fcmp ugt double %i.bu, %i.bo
-  br i1 %i.bv, label %2, label %bb.ah
-
-2:                                                ; preds = %bb.ag
-  store double %i.bu, ptr %i.q, align 8
-  br label %bb.ad
+  br i1 %i.bv, label %bb.ad, label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag
+  store i64 %i.bt, ptr %i.m, align 8
+  store ptr %i.bs, ptr %i.l, align 8
+  store double %i.bo, ptr %i.q, align 8
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bs, i64 8
   invoke void @_RINvMNtNtCs3oUPovFnLWP_4core3fmt2rtNtB3_8Argument11new_displayjECse4VeaA6Ikg_11proc_macro2(ptr nonnull sret([16 x i8]) align 8 %i.i, ptr nonnull align 8 %i.m)
           to label %bb.ai unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp

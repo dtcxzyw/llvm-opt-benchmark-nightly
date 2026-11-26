@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/bitwuzla/original/bv_prop_solver?download=true
 inline.NumInlined: 1488
-inline.NumDeleted: 715
+inline.NumDeleted: 716
 loop-unroll.NumCompletelyUnrolled: 2
 loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_ZN4bzla2bv12BvPropSolver7mk_nodeERKNS_4NodeE:bb.a
@@ -204,8 +204,9 @@ bb.ak:                                            ; preds = %._crit_edge.i.i286
 bb.al:                                            ; preds = %bb.ak, %bb.aj
   %storemerge.i.i = phi i8 [ %i.dv, %bb.ak ], [ %i.dt, %bb.aj ]
   store i8 %storemerge.i.i, ptr %i.ct, align 1, !tbaa !53
+  call void @llvm.experimental.noalias.scope.decl(metadata !243)
   %i.dw = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %5, i64 noundef 0, i64 noundef 0, ptr noundef nonnull @.str.3, i64 noundef 2)
-          to label %.noexc288 unwind label %bb.ar ; 6 uses
+          to label %.noexc288 unwind label %bb.ar, !noalias !243 ; 6 uses
 
 .noexc288:                                        ; preds = %bb.al
   %i.dx = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 3 uses

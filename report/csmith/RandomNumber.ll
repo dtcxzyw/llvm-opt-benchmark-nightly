@@ -204,7 +204,7 @@ define dso_local void @_ZN12RandomNumberD0Ev(ptr noundef nonnull align 8 derefer
 bb.a:
   store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTV12RandomNumber, i64 16), ptr %0, align 8, !tbaa !10
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !18
   invoke void @_ZNSt8_Rb_treeI16RNDNUM_GENERATORSt4pairIKS0_P18AbsRndNumGeneratorESt10_Select1stIS5_ESt4lessIS0_ESaIS5_EE8_M_eraseEPSt13_Rb_tree_nodeIS5_E(ptr noundef nonnull align 8 dereferenceable(48) %i.a, ptr noundef %i.c)
           to label %_ZN12RandomNumberD2Ev.exit unwind label %bb.b, !inline_history !43
@@ -217,6 +217,10 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZN12RandomNumberD2Ev.exit:                       ; preds = %bb.a
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  store ptr null, ptr %i.b, align 8, !tbaa !18
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 40
+  store ptr %1, ptr %2, align 8, !tbaa !19
   tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 72) #14
   ret void
 }

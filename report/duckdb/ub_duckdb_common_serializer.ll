@@ -204,7 +204,8 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %1, ptr %i.b, align 8, !tbaa !179
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.d = tail call noalias noundef nonnull dereferenceable(4096) ptr @_Znam(i64 noundef 4096) #28
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !328)
+  %i.d = tail call noalias noundef nonnull dereferenceable(4096) ptr @_Znam(i64 noundef 4096) #28, !noalias !328
   store ptr %i.d, ptr %i.c, align 8, !tbaa !177, !alias.scope !328
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
@@ -459,7 +460,8 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %1, ptr %i.a, align 8, !tbaa !179
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.c = tail call noalias noundef nonnull dereferenceable(4096) ptr @_Znam(i64 noundef 4096) #28
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !333)
+  %i.c = tail call noalias noundef nonnull dereferenceable(4096) ptr @_Znam(i64 noundef 4096) #28, !noalias !333
   store ptr %i.c, ptr %i.b, align 8, !tbaa !177, !alias.scope !333
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
@@ -817,8 +819,9 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %._cri
   store i8 0, ptr %i.p, align 1, !tbaa !156
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #24
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
+  call void @llvm.experimental.noalias.scope.decl(metadata !347)
   %i.r = invoke noalias noundef nonnull dereferenceable(4096) ptr @_Znam(i64 noundef 4096) #28
-          to label %bb.e unwind label %bb.g
+          to label %bb.e unwind label %bb.g, !noalias !347
 
 bb.e:                                             ; preds = %bb.d
   store ptr %i.r, ptr %i.q, align 8, !tbaa !177, !alias.scope !347

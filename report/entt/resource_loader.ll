@@ -202,20 +202,27 @@ declare void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind writable sret(%
 
 ; Function Attrs: uwtable
 define internal void @_GLOBAL__sub_I_resource_loader.cpp() #10 section ".text.startup" personality ptr @__gxx_personality_v0 {
-.noexc11.i:
-  %0 = alloca %"struct.testing::internal::CodeLocation", align 8 ; 9 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %0)
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
-  %2 = tail call noalias noundef nonnull dereferenceable(65) ptr @_Znwm(i64 noundef 65) #13 ; 3 uses
-  store ptr %2, ptr %0, align 8, !tbaa !34
-  store i64 64, ptr %1, align 8, !tbaa !35
+  %1 = alloca %"struct.testing::internal::CodeLocation", align 8 ; 10 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %1)
+  %2 = tail call noalias noundef nonnull dereferenceable(65) ptr @_Znwm(i64 noundef 65) #13 ; 4 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %2, ptr noundef nonnull align 1 dereferenceable(64) @.str.2, i64 64, i1 false)
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 64, ptr %i.a, align 8, !tbaa !68
-  %i.b = getelementptr inbounds nuw i8, ptr %2, i64 64
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 64
+  store i8 0, ptr %3, align 1, !tbaa !35
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 6 uses
+  store ptr %4, ptr %1, align 8, !tbaa !68
+  %5 = invoke noalias noundef nonnull dereferenceable(65) ptr @_Znwm(i64 noundef 65) #13
+          to label %.noexc11.i unwind label %6    ; 3 uses
+
+.noexc11.i:                                       ; preds = %0
+  store ptr %5, ptr %1, align 8, !tbaa !34
+  store i64 64, ptr %4, align 8, !tbaa !35
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %5, ptr noundef nonnull align 1 dereferenceable(64) @.str.2, i64 64, i1 false)
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
+  store i64 64, ptr %i.a, align 8, !tbaa !69
+  %i.b = getelementptr inbounds nuw i8, ptr %5, i64 64
   store i8 0, ptr %i.b, align 1, !tbaa !35
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store i32 5, ptr %i.c, align 8, !tbaa !70
+  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 32
+  store i32 5, ptr %i.c, align 8, !tbaa !71
   %i.d = invoke noundef ptr @_ZN7testing8internal13GetTestTypeIdEv()
           to label %bb.a unwind label %bb.f
 
@@ -233,40 +240,48 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN7testing8internal15TestFactoryImplI35ResourceLoader_Functionalities_TestEE, i64 16), ptr %i.g, align 8, !tbaa !10
-  %i.h = invoke noundef ptr @_ZN7testing8internal23MakeAndRegisterTestInfoEPKcS2_S2_S2_NS0_12CodeLocationEPKvPFvvES7_PNS0_15TestFactoryBaseE(ptr noundef nonnull @.str, ptr noundef nonnull @.str.1, ptr noundef null, ptr noundef null, ptr nofreeobj noundef nonnull align 8 dereferenceable(40) %0, ptr noundef %i.d, ptr noundef %i.e, ptr noundef %i.f, ptr noundef nonnull %i.g)
+  %i.h = invoke noundef ptr @_ZN7testing8internal23MakeAndRegisterTestInfoEPKcS2_S2_S2_NS0_12CodeLocationEPKvPFvvES7_PNS0_15TestFactoryBaseE(ptr noundef nonnull @.str, ptr noundef nonnull @.str.1, ptr noundef null, ptr noundef null, ptr nofreeobj noundef nonnull align 8 dereferenceable(40) %1, ptr noundef %i.d, ptr noundef %i.e, ptr noundef %i.f, ptr noundef nonnull %i.g)
           to label %bb.e unwind label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %i.i = load ptr, ptr %0, align 8, !tbaa !34     ; 2 uses
-  %i.j = icmp eq ptr %i.i, %1
+  %i.i = load ptr, ptr %1, align 8, !tbaa !34     ; 2 uses
+  %i.j = icmp eq ptr %i.i, %4
   br i1 %i.j, label %__cxx_global_var_init.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i: ; preds = %bb.e
-  %i.k = load i64, ptr %1, align 8, !tbaa !35
+  %i.k = load i64, ptr %4, align 8, !tbaa !35
   %i.l = add i64 %i.k, 1
   call void @_ZdlPvm(ptr noundef %i.i, i64 noundef %i.l) #14
   br label %__cxx_global_var_init.exit
 
+6:                                                ; preds = %0
+  %7 = landingpad { ptr, i32 }
+          cleanup
+  br label %_ZN7testing8internal12CodeLocationD2Ev.exit14.i
+
 bb.f:                                             ; preds = %bb.d, %bb.c, %bb.b, %bb.a, %.noexc11.i
   %i.m = landingpad { ptr, i32 }
-          cleanup
-  %i.n = load ptr, ptr %0, align 8, !tbaa !34     ; 2 uses
-  %i.o = icmp eq ptr %i.n, %1
+          cleanup                                 ; 2 uses
+  %i.n = load ptr, ptr %1, align 8, !tbaa !34     ; 2 uses
+  %i.o = icmp eq ptr %i.n, %4
   br i1 %i.o, label %_ZN7testing8internal12CodeLocationD2Ev.exit14.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i12.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i12.i: ; preds = %bb.f
-  %i.p = load i64, ptr %1, align 8, !tbaa !35
+  %i.p = load i64, ptr %4, align 8, !tbaa !35
   %i.q = add i64 %i.p, 1
   call void @_ZdlPvm(ptr noundef %i.n, i64 noundef %i.q) #14
   br label %_ZN7testing8internal12CodeLocationD2Ev.exit14.i
 
-_ZN7testing8internal12CodeLocationD2Ev.exit14.i:  ; preds = %bb.f, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i12.i
-  resume { ptr, i32 } %i.m
+_ZN7testing8internal12CodeLocationD2Ev.exit14.i:  ; preds = %bb.f, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i12.i, %6
+  %.pn.pn.i = phi { ptr, i32 } [ %7, %6 ], [ %i.m, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i12.i ], [ %i.m, %bb.f ]
+  call void @_ZdlPvm(ptr noundef nonnull %2, i64 noundef 65) #14
+  resume { ptr, i32 } %.pn.pn.i
 
 __cxx_global_var_init.exit:                       ; preds = %bb.e, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
-  store ptr %i.h, ptr @_ZN35ResourceLoader_Functionalities_Test10test_info_E, align 8, !tbaa !72
+  call void @_ZdlPvm(ptr noundef nonnull %2, i64 noundef 65) #14
+  store ptr %i.h, ptr @_ZN35ResourceLoader_Functionalities_Test10test_info_E, align 8, !tbaa !73
   %i.r = call ptr @llvm.invariant.start.p0(i64 8, ptr nonnull @_ZN35ResourceLoader_Functionalities_Test10test_info_E) ; 0 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %0)
+  call void @llvm.lifetime.end.p0(ptr nonnull %1)
   ret void
 }
 
@@ -361,9 +376,10 @@ attributes #14 = { builtin nounwind }
 !65 = distinct !{null}
 !66 = !{!"_ZTSSt9type_info", !31, i64 8}
 !67 = !{!66, !31, i64 8}
-!68 = !{!33, !11, i64 8}
-!69 = !{!"_ZTSN7testing8internal12CodeLocationE", !33, i64 0, !6, i64 32}
-!70 = !{!69, !6, i64 32}
-!71 = !{!"p1 _ZTSN7testing8TestInfoE", !14, i64 0}
-!72 = !{!71, !71, i64 0}
+!68 = !{!32, !31, i64 0}
+!69 = !{!33, !11, i64 8}
+!70 = !{!"_ZTSN7testing8internal12CodeLocationE", !33, i64 0, !6, i64 32}
+!71 = !{!70, !6, i64 32}
+!72 = !{!"p1 _ZTSN7testing8TestInfoE", !14, i64 0}
+!73 = !{!72, !72, i64 0}
 end_hunk_0

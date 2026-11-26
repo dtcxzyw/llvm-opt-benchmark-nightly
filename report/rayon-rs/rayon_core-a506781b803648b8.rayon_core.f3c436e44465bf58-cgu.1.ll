@@ -202,7 +202,7 @@ bb.l:                                             ; preds = %bb.j
 
 bb.m:                                             ; preds = %bb.l
   invoke void @_RNvNtCs1xwejQucwHj_5alloc5alloc18handle_alloc_error(i64 noundef 128, i64 noundef 640) #23
-          to label %.noexc unwind label %bb.n
+          to label %.noexc unwind label %bb.n, !noalias !82
 
 .noexc:                                           ; preds = %bb.m
   unreachable
@@ -325,7 +325,7 @@ bb.s:                                             ; preds = %bb.r
 bb.t:                                             ; preds = %bb.s
   fence acquire
   invoke void @_RNvMsn_NtCs1xwejQucwHj_5alloc4syncINtB5_3ArcINtNtCsfI5zKgsrATz_15crossbeam_utils12cache_padded11CachePaddedINtNtCsjayvGk2fZH7_15crossbeam_deque5deque5InnerNtNtCskVyUMSjkkSy_10rayon_core3job6JobRefEEE9drop_slowB2x_(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.b) #25
-          to label %.loopexit unwind label %.body56.thread132.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %.loopexit unwind label %.body56.thread132.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !90
 
 .critedge:                                        ; preds = %.body56.thread132.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.ak, %bb.ba, %.noexc77, %bb.be
   %.pn48.pn = phi { ptr, i32 } [ %lpad.thr_comm.split-lp, %bb.ba ], [ %i.en, %.noexc77 ], [ %i.dc, %bb.ak ], [ %i.en, %bb.be ], [ %lpad.loopexit.split-lp171, %.body56.thread132.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
@@ -483,7 +483,7 @@ bb.ai:                                            ; preds = %bb.ae
 
 bb.aj:                                            ; preds = %bb.ai
   invoke void @_RNvNtCs1xwejQucwHj_5alloc5alloc18handle_alloc_error(i64 noundef 128, i64 noundef 384) #23
-          to label %.noexc70 unwind label %bb.ak
+          to label %.noexc70 unwind label %bb.ak, !noalias !99
 
 .noexc70:                                         ; preds = %bb.aj
   unreachable
@@ -592,7 +592,7 @@ bb.au:                                            ; preds = %.noexc73, %.lr.ph.i
 
 bb.av:                                            ; preds = %bb.au
   invoke void @_RNvMNtCskVyUMSjkkSy_10rayon_core5sleepNtB2_5Sleep26notify_worker_latch_is_set(ptr noundef nonnull align 8 %i.dy, i64 noundef %.sroa.7.09.i.i.i)
-          to label %.noexc73 unwind label %bb.ay
+          to label %.noexc73 unwind label %bb.ay, !noalias !105
 
 bb.aw:                                            ; preds = %.body61, %bb.ay
   %.pn48.pn.pn.pn = phi { ptr, i32 } [ %.pn48.pn.pn, %.body61 ], [ %i.ei, %bb.ay ] ; 2 uses
@@ -995,7 +995,7 @@ bb.f:                                             ; preds = %bb.b
 
 bb.g:                                             ; preds = %bb.f
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtCskVyUMSjkkSy_10rayon_core17ThreadPoolBuilderEBD_(ptr noalias nofree noundef nonnull readonly align 8 dereferenceable(104) %i.b)
-          to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNCINvNtCskVyUMSjkkSy_10rayon_core8registry19set_global_registryNCINvB12_20init_global_registryNtB12_12DefaultSpawnE0E0EEB14_.exit4.i unwind label %bb.i
+          to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNCINvNtCskVyUMSjkkSy_10rayon_core8registry19set_global_registryNCINvB12_20init_global_registryNtB12_12DefaultSpawnE0E0EEB14_.exit4.i unwind label %bb.i, !noalias !265
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNCINvNtCskVyUMSjkkSy_10rayon_core8registry19set_global_registryNCINvB12_20init_global_registryNtB12_12DefaultSpawnE0E0EEB14_.exit4.i: ; preds = %bb.g, %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !265
@@ -1109,7 +1109,7 @@ bb.g:                                             ; preds = %bb.e
   store ptr %i.o, ptr %i.p, align 8, !alias.scope !282, !noalias !281
   store i8 3, ptr %i.a, align 8, !alias.scope !282, !noalias !281
   invoke void @_RNvXsd_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_11CustomOwnerNtNtNtB9_3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.p)
-          to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECskVyUMSjkkSy_10rayon_core.exit.i.i.i.i unwind label %bb.h, !noalias !278
+          to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECskVyUMSjkkSy_10rayon_core.exit.i.i.i.i unwind label %bb.h, !noalias !281
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECskVyUMSjkkSy_10rayon_core.exit.i.i.i.i: ; preds = %bb.g, %bb.f, %bb.e, %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !281
@@ -1249,7 +1249,7 @@ bb.m:                                             ; preds = %bb.k
   store ptr %i.ac, ptr %i.ad, align 8, !alias.scope !316, !noalias !315
   store i8 3, ptr %i.c, align 8, !alias.scope !316, !noalias !315
   invoke void @_RNvXsd_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_11CustomOwnerNtNtNtB9_3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.ad)
-          to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECskVyUMSjkkSy_10rayon_core.exit.i.i.i.i.i.i unwind label %bb.d, !noalias !311
+          to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECskVyUMSjkkSy_10rayon_core.exit.i.i.i.i.i.i unwind label %bb.d, !noalias !315
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECskVyUMSjkkSy_10rayon_core.exit.i.i.i.i.i.i: ; preds = %bb.m, %bb.l, %bb.k, %bb.k
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !315
@@ -1389,7 +1389,7 @@ bb.z:                                             ; preds = %bb.x
   store ptr %i.ba, ptr %i.bb, align 8, !alias.scope !327, !noalias !326
   store i8 3, ptr %i.a, align 8, !alias.scope !327, !noalias !326
   invoke void @_RNvXsd_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_11CustomOwnerNtNtNtB9_3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.bb)
-          to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECskVyUMSjkkSy_10rayon_core.exit.i.i.i.i unwind label %bb.aa, !noalias !309
+          to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECskVyUMSjkkSy_10rayon_core.exit.i.i.i.i unwind label %bb.aa, !noalias !326
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECskVyUMSjkkSy_10rayon_core.exit.i.i.i.i: ; preds = %bb.z, %bb.y, %bb.x, %bb.x
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !326
@@ -1486,7 +1486,7 @@ bb.g:                                             ; preds = %bb.e
   store ptr %i.o, ptr %i.p, align 8, !alias.scope !348, !noalias !347
   store i8 3, ptr %i.a, align 8, !alias.scope !348, !noalias !347
   invoke void @_RNvXsd_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_11CustomOwnerNtNtNtB9_3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.p)
-          to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECskVyUMSjkkSy_10rayon_core.exit.i.i.i.i.i.i unwind label %bb.h, !noalias !344
+          to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECskVyUMSjkkSy_10rayon_core.exit.i.i.i.i.i.i unwind label %bb.h, !noalias !347
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECskVyUMSjkkSy_10rayon_core.exit.i.i.i.i.i.i: ; preds = %bb.g, %bb.f, %bb.e, %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !347
@@ -1889,6 +1889,7 @@ bb.h:                                             ; preds = %.lr.ph
 
 bb.i:                                             ; preds = %bb.h
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 472 ; 2 uses
+  call void @llvm.experimental.noalias.scope.decl(metadata !370)
   %i.ai = load i32, ptr %i.l, align 8, !alias.scope !370, !noundef !5 ; 3 uses
   %i.aj = icmp ult i32 %i.ai, 32
   br i1 %i.aj, label %bb.k, label %bb.j
@@ -1899,7 +1900,7 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.i
   invoke void @_RNvNtNtCsaL1QbXo9JQH_3std6thread9functions9yield_now()
-          to label %.noexc13 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %.noexc13 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !370
 
 .noexc13:                                         ; preds = %bb.k
   %i.al = add nuw nsw i32 %i.ai, 1
@@ -1908,13 +1909,13 @@ bb.k:                                             ; preds = %bb.i
 
 bb.l:                                             ; preds = %bb.j
   %i.am = invoke noundef i64 @_RNvMNtCskVyUMSjkkSy_10rayon_core5sleepNtB2_5Sleep15announce_sleepy(ptr noundef nonnull align 8 %i.ah)
-          to label %.noexc14 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %.noexc14 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !370
 
 .noexc14:                                         ; preds = %bb.l
   store i64 %i.am, ptr %i.m, align 8, !alias.scope !370
   store i32 33, ptr %i.l, align 8, !alias.scope !370
   invoke void @_RNvNtNtCsaL1QbXo9JQH_3std6thread9functions9yield_now()
-          to label %_RINvMNtCskVyUMSjkkSy_10rayon_core5sleepNtB3_5Sleep13no_work_foundNCNvMs8_NtB5_8registryNtB19_12WorkerThread15wait_until_cold0EB5_.exit unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %_RINvMNtCskVyUMSjkkSy_10rayon_core5sleepNtB3_5Sleep13no_work_foundNCNvMs8_NtB5_8registryNtB19_12WorkerThread15wait_until_cold0EB5_.exit unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !370
 
 bb.m:                                             ; preds = %bb.j
   invoke void @_RINvMNtCskVyUMSjkkSy_10rayon_core5sleepNtB3_5Sleep5sleepNCNvMs8_NtB5_8registryNtB10_12WorkerThread15wait_until_cold0EB5_(ptr noundef nonnull align 8 %i.ah, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.c, ptr noundef nonnull align 8 %1, ptr noundef nonnull align 128 %0)
@@ -2317,11 +2318,11 @@ begin_hunk_3_@llvm.memset.p0.i64
 !355 = distinct !{!355, i1 true, !"_RINvMs4_NtCskVyUMSjkkSy_10rayon_core8registryNtB6_8Registry12catch_unwindNCNvB6_9main_loop0EB8_"}
 !356 = distinct !{!356, !355, !"_RINvMs4_NtCskVyUMSjkkSy_10rayon_core8registryNtB6_8Registry12catch_unwindNCNvB6_9main_loop0EB8_: argument 0"}
 !357 = distinct !{!357, !355, !"_RINvMs4_NtCskVyUMSjkkSy_10rayon_core8registryNtB6_8Registry12catch_unwindNCNvB6_9main_loop0EB8_: argument 1"}
-!358 = distinct !{null}
+!358 = distinct !{null, null, null}
 !359 = distinct !{!359, i1 true, !"_RINvMs4_NtCskVyUMSjkkSy_10rayon_core8registryNtB6_8Registry12catch_unwindNCNvB6_9main_loops_0EB8_"}
 !360 = distinct !{!360, !359, !"_RINvMs4_NtCskVyUMSjkkSy_10rayon_core8registryNtB6_8Registry12catch_unwindNCNvB6_9main_loops_0EB8_: argument 0"}
 !361 = distinct !{!361, !359, !"_RINvMs4_NtCskVyUMSjkkSy_10rayon_core8registryNtB6_8Registry12catch_unwindNCNvB6_9main_loops_0EB8_: argument 1"}
-!362 = distinct !{null}
+!362 = distinct !{null, null, null}
 !363 = !{!354}
 !364 = !{!356}
 !365 = !{!356, !357, !354}

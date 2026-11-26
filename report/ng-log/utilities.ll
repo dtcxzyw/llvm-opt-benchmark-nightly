@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %.lr.ph.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #25
   %i.o = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.c, i64 noundef 1024, ptr noundef nonnull @.str.13, ptr noundef nonnull @.str.11, i32 noundef 18, ptr noundef nonnull %i.l, ptr noundef nonnull %spec.select.i.i) #25 ; 0 uses
   invoke fastcc void @_ZN5nglogL18DebugWriteToStringEPKcPv(ptr noundef nonnull %i.c, ptr noundef nonnull %0)
-          to label %.noexc3 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !inline_history !59
+          to label %.noexc3 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !callees !59, !inline_history !60
 
 .noexc3:                                          ; preds = %.noexc2
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #25
@@ -241,7 +241,7 @@ bb.e:                                             ; preds = %.noexc4, %.noexc3
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i, %.noexc2, %bb.b, %bb.d, %bb.a
   %lpad.loopexit.split-lp12 = landingpad { ptr, i32 }
           cleanup
-  %i.v = load ptr, ptr %0, align 8, !tbaa !60     ; 2 uses
+  %i.v = load ptr, ptr %0, align 8, !tbaa !61     ; 2 uses
   %i.w = icmp eq ptr %i.v, %i.e
   br i1 %i.w, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
 
@@ -350,9 +350,9 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVSt15basic_streambufIcSt11char_traitsIcEE, i64 16), ptr %i.f, align 8, !tbaa !10
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 64
-  tail call void @_ZNSt6localeD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.g) #25, !inline_history !61
-  tail call void @_ZNSt8ios_baseD2Ev(ptr noundef nonnull align 8 dead_on_return(264) dereferenceable(264) %i.e) #25, !inline_history !61
-  tail call void @_ZdlPvm(ptr noundef nonnull align 8 dereferenceable(88) %i.d, i64 noundef 352) #29, !inline_history !62
+  tail call void @_ZNSt6localeD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.g) #25, !inline_history !62
+  tail call void @_ZNSt8ios_baseD2Ev(ptr noundef nonnull align 8 dead_on_return(264) dereferenceable(264) %i.e) #25, !inline_history !62
+  tail call void @_ZdlPvm(ptr noundef nonnull align 8 dereferenceable(88) %i.d, i64 noundef 352) #29, !inline_history !63
   ret void
 }
 
@@ -489,7 +489,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %0) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #25
-  store ptr null, ptr %i.a, align 8, !tbaa !64
+  store ptr null, ptr %i.a, align 8, !tbaa !65
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #25
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1024) %i.b, i8 0, i64 1024, i1 false)
   %i.i = tail call i32 @geteuid() #25             ; 2 uses
@@ -501,7 +501,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %or.cond.i.i.i, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.n = load ptr, ptr %0, align 8, !tbaa !66
+  %i.n = load ptr, ptr %0, align 8, !tbaa !67
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.c
@@ -625,12 +625,13 @@ attributes #29 = { builtin nounwind }
 !56 = !{!"p1 _ZTS8_IO_FILE", !11, i64 0}
 !57 = !{!56, !56, i64 0}
 !58 = !{!"branch_weights", !"expected", i32 1, i32 2000}
-!59 = distinct !{null}
-!60 = !{!37, !12, i64 0}
-!61 = !{ptr @_ZN5nglog10LogMessage9LogStreamD0Ev, ptr @_ZN5nglog10LogMessage9LogStreamD1Ev}
-!62 = !{ptr @_ZN5nglog10LogMessage9LogStreamD0Ev}
-!63 = !{!"p1 _ZTS6passwd", !11, i64 0}
-!64 = !{!63, !63, i64 0}
-!65 = !{!"_ZTS6passwd", !12, i64 0, !12, i64 8, !6, i64 16, !6, i64 20, !12, i64 24, !12, i64 32, !12, i64 40}
-!66 = !{!65, !12, i64 0}
+!59 = distinct !{ptr @_ZN5nglogL18DebugWriteToStringEPKcPv, null}
+!60 = distinct !{null, null}
+!61 = !{!37, !12, i64 0}
+!62 = !{ptr @_ZN5nglog10LogMessage9LogStreamD0Ev, ptr @_ZN5nglog10LogMessage9LogStreamD1Ev}
+!63 = !{ptr @_ZN5nglog10LogMessage9LogStreamD0Ev}
+!64 = !{!"p1 _ZTS6passwd", !11, i64 0}
+!65 = !{!64, !64, i64 0}
+!66 = !{!"_ZTS6passwd", !12, i64 0, !12, i64 8, !6, i64 16, !6, i64 20, !12, i64 24, !12, i64 32, !12, i64 40}
+!67 = !{!66, !12, i64 0}
 end_hunk_0

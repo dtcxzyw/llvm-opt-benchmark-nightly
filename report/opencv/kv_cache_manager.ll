@@ -204,8 +204,9 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6substrEmm.exit: ; preds =
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 %i.az
   store i8 0, ptr %i.bb, align 1, !tbaa !26
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #23, !noalias !277
+  call void @llvm.experimental.noalias.scope.decl(metadata !278)
   %i.bc = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %2, i64 noundef 0, i64 noundef 0, ptr noundef nonnull @.str.6, i64 noundef 16)
-          to label %.noexc unwind label %bb.l     ; 6 uses
+          to label %.noexc unwind label %bb.l, !noalias !278 ; 6 uses
 
 .noexc:                                           ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6substrEmm.exit
   store ptr %i.s, ptr %1, align 8, !tbaa !163, !alias.scope !278
@@ -608,7 +609,7 @@ _ZNK2cv8MatShapeixEm.exit86:                      ; preds = %bb.x
   %i.bi = getelementptr inbounds nuw i8, ptr %1, i64 92
   %i.bj = load i32, ptr %i.bi, align 4, !tbaa !27 ; 2 uses
   %i.bk = srem i32 %i.bj, %i.l
-  %i.bl = sdiv i32 %i.bj, %i.l
+  %i.bl = sdiv exact i32 %i.bj, %i.l
   %i.bm = icmp eq i32 %i.bk, 0
   br i1 %i.bm, label %.sink.split, label %bb.ab
 

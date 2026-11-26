@@ -205,7 +205,7 @@ bb.cw:                                            ; preds = %.thread1555.thread
   br label %bb.cx
 
 bb.cx:                                            ; preds = %bb.cw, %.thread1555.thread
-  %.01255 = phi i8 [ %or.cond34.not, %bb.cw ], [ 0, %.thread1555.thread ] ; 26 uses
+  %.01255 = phi i8 [ %or.cond34.not, %bb.cw ], [ 0, %.thread1555.thread ] ; 3 uses
   %i.pr = and i1 %i.pm, %i.fl
   %i.ps = or i1 %i.po, %i.pr                      ; 6 uses
   br i1 %i.pm, label %bb.cy, label %bb.cz
@@ -608,7 +608,7 @@ bb.id:                                            ; preds = %bb.ic, %bb.ib
   br label %bb.ie
 
 bb.ie:                                            ; preds = %bb.ia, %bb.id, %bb.hy, %bb.hz
-  %.11256 = phi i8 [ %.01255, %bb.ia ], [ %.01255, %bb.id ], [ 1, %bb.hy ], [ 1, %bb.hz ]
+  %.11256 = phi i8 [ 0, %bb.ia ], [ 0, %bb.id ], [ 1, %bb.hy ], [ 1, %bb.hz ]
   %.01233 = xor i1 %i.aec, true
   br label %bb.jq
 
@@ -625,7 +625,8 @@ bb.ih:                                            ; preds = %bb.ig
   %i.aeq = load ptr, ptr %i.aep, align 8, !tbaa !376
   %i.aer = load i8, ptr %i.aeq, align 1, !tbaa !351
   %.not1320 = icmp ne i8 %i.aer, 0                ; 4 uses
-  %..01255 = select i1 %.not1320, i8 %.01255, i8 1
+  %not..not1320 = xor i1 %.not1320, true
+  %..01255 = zext i1 %not..not1320 to i8
   %..01242 = select i1 %.not1320, i8 %.01242, i8 0
   %. = select i1 %.not1320, i8 %i.qa, i8 0
   br label %bb.jq
@@ -892,7 +893,7 @@ bb.jp:                                            ; preds = %bb.jn, %bb.jj, %bb.
   resume { ptr, i32 } %.pn.pn.pn
 
 bb.jq:                                            ; preds = %bb.gr, %bb.gx, %bb.gw, %bb.hd, %bb.hh, %bb.hn, %bb.ie, %bb.ij, %bb.is, %bb.iw, %bb.il, %bb.hv, %bb.hj, %bb.hf, %bb.ha, %bb.hb, %bb.gt, %bb.ih, %bb.ig, %bb.jo, %bb.ix, %bb.iu, %bb.iv
-  %.21257 = phi i8 [ %.01255, %bb.gr ], [ %.01255, %bb.gt ], [ %.01255, %bb.gw ], [ %.01255, %bb.gx ], [ %.01255, %bb.ha ], [ %.01255, %bb.hb ], [ %.01255, %bb.hd ], [ %.01255, %bb.hf ], [ %.01255, %bb.hh ], [ %.01255, %bb.hj ], [ %.11256, %bb.ie ], [ %..01255, %bb.ih ], [ %.01255, %bb.hn ], [ %.01255, %bb.hv ], [ %.01255, %bb.ij ], [ %.01255, %bb.il ], [ %.01255, %bb.ix ], [ %.01255, %bb.is ], [ 1, %bb.ig ], [ %.01255, %bb.iw ], [ %.01255, %bb.jo ], [ %.01255, %bb.iu ], [ %.01255, %bb.iv ] ; 5 uses
+  %.21257 = phi i8 [ 0, %bb.gr ], [ 0, %bb.gt ], [ 0, %bb.gw ], [ 0, %bb.gx ], [ 0, %bb.ha ], [ 0, %bb.hb ], [ 0, %bb.hd ], [ 0, %bb.hf ], [ 0, %bb.hh ], [ 0, %bb.hj ], [ %.11256, %bb.ie ], [ %..01255, %bb.ih ], [ 0, %bb.hn ], [ 0, %bb.hv ], [ 0, %bb.ij ], [ 0, %bb.il ], [ 0, %bb.ix ], [ 0, %bb.is ], [ 1, %bb.ig ], [ 0, %bb.iw ], [ 0, %bb.jo ], [ 0, %bb.iu ], [ 0, %bb.iv ] ; 5 uses
   %.01249 = phi float [ %i.fn, %bb.gr ], [ %i.fn, %bb.gt ], [ %i.fn, %bb.gw ], [ %i.fn, %bb.gx ], [ %i.fn, %bb.ha ], [ %i.fn, %bb.hb ], [ %i.acs, %bb.hd ], [ %i.acx, %bb.hf ], [ %i.fn, %bb.hh ], [ %i.fn, %bb.hj ], [ %i.fn, %bb.ie ], [ %i.fn, %bb.ih ], [ %i.fn, %bb.hn ], [ %i.fn, %bb.hv ], [ %i.fn, %bb.ij ], [ %i.fn, %bb.il ], [ %i.fn, %bb.ix ], [ %i.fn, %bb.is ], [ %i.fn, %bb.ig ], [ %i.fn, %bb.iw ], [ %i.fn, %bb.jo ], [ %i.fn, %bb.iu ], [ %i.fn, %bb.iv ] ; 5 uses
   %.11243 = phi i8 [ %.01242, %bb.gr ], [ %.01242, %bb.gt ], [ %.01242, %bb.gw ], [ %.01242, %bb.gx ], [ %.01242, %bb.ha ], [ %.01242, %bb.hb ], [ %.01242, %bb.hd ], [ %.01242, %bb.hf ], [ %.01242, %bb.hh ], [ %.01242, %bb.hj ], [ %.01242, %bb.ie ], [ %..01242, %bb.ih ], [ %.01242, %bb.hn ], [ %.01242, %bb.hv ], [ %.01242, %bb.ij ], [ %.01242, %bb.il ], [ %.01242, %bb.ix ], [ %.01242, %bb.is ], [ 0, %bb.ig ], [ %.01242, %bb.iw ], [ %.01242, %bb.jo ], [ %.01242, %bb.iu ], [ %.01242, %bb.iv ] ; 6 uses
   %.01240 = phi i8 [ %i.qa, %bb.gr ], [ %i.qa, %bb.gt ], [ %i.qa, %bb.gw ], [ %i.qa, %bb.gx ], [ %i.qa, %bb.ha ], [ %i.qa, %bb.hb ], [ %i.qa, %bb.hd ], [ %i.qa, %bb.hf ], [ %i.qa, %bb.hh ], [ %i.qa, %bb.hj ], [ %i.qa, %bb.ie ], [ %., %bb.ih ], [ %i.qa, %bb.hn ], [ %i.qa, %bb.hv ], [ %i.qa, %bb.ij ], [ %i.qa, %bb.il ], [ %i.qa, %bb.ix ], [ %i.qa, %bb.is ], [ 0, %bb.ig ], [ %i.qa, %bb.iw ], [ %i.qa, %bb.jo ], [ %i.qa, %bb.iu ], [ %i.qa, %bb.iv ]

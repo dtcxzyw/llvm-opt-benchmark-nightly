@@ -204,16 +204,19 @@ bb.p:                                             ; preds = %.lr.ph57
 bb.q:                                             ; preds = %.lr.ph57
   %indvars.iv.next70 = add nuw nsw i64 %indvars.iv69, 1 ; 3 uses
   %i.be = icmp slt i64 %indvars.iv.next70, %i.p
-  br i1 %i.be, label %.lr.ph54, label %.loopexit
+  br i1 %i.be, label %.lr.ph54.preheader, label %.loopexit
+
+.lr.ph54.preheader:                               ; preds = %bb.q
+  %4 = load ptr, ptr %i.bb, align 8
+  br label %.lr.ph54
 
 bb.r:                                             ; preds = %.lr.ph54
   %indvars.iv.next64 = add nuw nsw i64 %indvars.iv63, 1 ; 2 uses
   %exitcond68.not = icmp eq i64 %indvars.iv.next64, %wide.trip.count73
   br i1 %exitcond68.not, label %.loopexit, label %.lr.ph54, !llvm.loop !11
 
-.lr.ph54:                                         ; preds = %bb.q, %bb.r
-  %indvars.iv63 = phi i64 [ %indvars.iv.next64, %bb.r ], [ %indvars.iv61, %bb.q ] ; 2 uses
-  %4 = load ptr, ptr %i.bb, align 8
+.lr.ph54:                                         ; preds = %.lr.ph54.preheader, %bb.r
+  %indvars.iv63 = phi i64 [ %indvars.iv.next64, %bb.r ], [ %indvars.iv61, %.lr.ph54.preheader ] ; 2 uses
   %i.bf = getelementptr inbounds nuw [8 x i8], ptr %i.q, i64 %indvars.iv63
   %i.bg = load ptr, ptr %i.bf, align 8
   %i.bh = call zeroext i1 @qobject_is_equal(ptr noundef %4, ptr noundef %i.bg) #9

@@ -206,9 +206,9 @@ bb.x:                                             ; preds = %_ZN5vcpkg7details19
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #22, !noalias !122
   store ptr %.0, ptr %9, align 16, !tbaa !22, !noalias !122
   %i.dm = getelementptr inbounds nuw i8, ptr %9, i64 16
-  store ptr %6, ptr %i.dm, align 16, !tbaa !22
+  store ptr %6, ptr %i.dm, align 16, !tbaa !22, !noalias !122
   %i.dn = getelementptr inbounds nuw i8, ptr %9, i64 24
-  store ptr @_ZN3fmt3v126detail5valueINS0_7contextEE13format_customIN5vcpkg13StringLiteralEEEvPvRNS0_13parse_contextIcEERS3_, ptr %i.dn, align 8, !tbaa !22
+  store ptr @_ZN3fmt3v126detail5valueINS0_7contextEE13format_customIN5vcpkg13StringLiteralEEEvPvRNS0_13parse_contextIcEERS3_, ptr %i.dn, align 8, !tbaa !22, !noalias !122
   invoke void @_ZN3fmt3v127vformatB5cxx11ENS0_17basic_string_viewIcEENS0_17basic_format_argsINS0_7contextEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %21, ptr nonnull @.str.6, i64 9, i64 252, ptr nonnull %9)
           to label %bb.y unwind label %bb.ac
 
@@ -611,14 +611,14 @@ bb.x:                                             ; preds = %bb.w
 
 bb.y:                                             ; preds = %bb.x
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.62) #24
-          to label %.noexc101 unwind label %bb.ag
+          to label %.noexc101 unwind label %bb.ag, !noalias !160
 
 .noexc101:                                        ; preds = %bb.y
   unreachable
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i: ; preds = %bb.x
   %i.bs = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm(ptr noundef nonnull align 8 dereferenceable(32) %25, ptr noundef nonnull @.str.9, i64 noundef 24)
-          to label %.noexc102 unwind label %bb.ag ; 6 uses
+          to label %.noexc102 unwind label %bb.ag, !noalias !160 ; 6 uses
 
 .noexc102:                                        ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i
   %i.bt = getelementptr inbounds nuw i8, ptr %24, i64 16 ; 7 uses
@@ -877,14 +877,14 @@ bb.aw:                                            ; preds = %bb.av
 
 bb.ax:                                            ; preds = %bb.aw
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.62) #24
-          to label %.noexc122 unwind label %bb.bm
+          to label %.noexc122 unwind label %bb.bm, !noalias !161
 
 .noexc122:                                        ; preds = %bb.ax
   unreachable
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i118: ; preds = %bb.aw
   %i.fj = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm(ptr noundef nonnull align 8 dereferenceable(32) %29, ptr noundef nonnull @.str.17, i64 noundef 25)
-          to label %.noexc123 unwind label %bb.bm ; 6 uses
+          to label %.noexc123 unwind label %bb.bm, !noalias !161 ; 6 uses
 
 .noexc123:                                        ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i118
   %i.fk = getelementptr inbounds nuw i8, ptr %28, i64 16 ; 7 uses
@@ -1272,8 +1272,9 @@ bb.cc:                                            ; preds = %.noexc161
           to label %_ZNKSt10error_code7messageB5cxx11Ev.exit.i unwind label %bb.cg, !inline_history !130
 
 _ZNKSt10error_code7messageB5cxx11Ev.exit.i:       ; preds = %bb.cc
+  call void @llvm.experimental.noalias.scope.decl(metadata !167)
   %i.kg = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %6, i64 noundef 0, i64 noundef 0, ptr noundef nonnull @.str.24, i64 noundef 33)
-          to label %.noexc.i unwind label %bb.ch  ; 6 uses
+          to label %.noexc.i unwind label %bb.ch, !noalias !167 ; 6 uses
 
 .noexc.i:                                         ; preds = %_ZNKSt10error_code7messageB5cxx11Ev.exit.i
   %i.kh = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 7 uses
@@ -1676,7 +1677,7 @@ bb.k:                                             ; preds = %bb.j
 _ZN3fmt3v1213parse_contextIcE11next_arg_idEv.exit: ; preds = %bb.j
   %i.ao = add nuw nsw i32 %i.am, 1
   store i32 %i.ao, ptr %i.al, align 8, !tbaa !87
-  store i32 %i.am, ptr %3, align 8
+  store i32 %i.am, ptr %3, align 8, !tbaa !22
   store i32 1, ptr %i.a, align 4, !tbaa !85
   br label %bb.m
 
@@ -1820,7 +1821,7 @@ bb.j:                                             ; preds = %bb.i, %_ZN3fmt3v126
 bb.k:                                             ; preds = %bb.i, %bb.i
   %i.aj = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !214, !nonnull !41, !align !49
-  store i32 %.021, ptr %i.ak, align 8
+  store i32 %.021, ptr %i.ak, align 8, !tbaa !22
   %i.al = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !215, !nonnull !41, !align !216
   store i32 1, ptr %i.am, align 4, !tbaa !85
@@ -1885,7 +1886,7 @@ bb.n:                                             ; preds = %bb.m
   %i.bh = sub i64 %i.bf, %i.bg
   %i.bi = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !214, !nonnull !41, !align !49 ; 2 uses
-  store ptr %0, ptr %i.bj, align 8
+  store ptr %0, ptr %i.bj, align 8, !tbaa !22
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bj, i64 8
   store i64 %i.bh, ptr %.sroa.4.0..sroa_idx.i, align 8, !tbaa !22
   %i.bk = getelementptr inbounds nuw i8, ptr %2, i64 16

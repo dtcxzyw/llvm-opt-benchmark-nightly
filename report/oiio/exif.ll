@@ -205,7 +205,7 @@ _ZN11OpenImageIO4v3_13pvt14gps_tagmap_refEv.exit: ; preds = %_ZN11OpenImageIO4v3
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
   br label %bb.o
 
-bb.j:                                             ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i, %bb.a, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i2
+bb.j:                                             ; preds = %bb.a, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i2
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
   %i.ab = load atomic i8, ptr @_ZGVZN11OpenImageIO4v3_13pvt15tiff_tagmap_refEvE1T acquire, align 8
   %i.ac = icmp eq i8 %i.ab, 0
@@ -506,7 +506,7 @@ _ZN11OpenImageIO4v3_13pvt14gps_tagmap_refEv.exit: ; preds = %_ZN11OpenImageIO4v3
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
   br label %bb.o
 
-bb.j:                                             ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i, %bb.a, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i2
+bb.j:                                             ; preds = %bb.a, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i2
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
   %i.ab = load atomic i8, ptr @_ZGVZN11OpenImageIO4v3_13pvt15tiff_tagmap_refEvE1T acquire, align 8
   %i.ac = icmp eq i8 %i.ab, 0
@@ -897,6 +897,8 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i:   ; preds = %bb.c
   br i1 %.not.i.i, label %_ZN11OpenImageIO4v3_1eqENS0_17basic_string_viewIcSt11char_traitsIcEEES4_.exit, label %bb.g
 
 _ZN11OpenImageIO4v3_1eqENS0_17basic_string_viewIcSt11char_traitsIcEEES4_.exit: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i
+  %12 = call noalias noundef nonnull dereferenceable(8) ptr @_Znwm(i64 noundef 8) #30 ; 3 uses
+  store i64 0, ptr %12, align 8, !tbaa !251
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #32
   %i.z = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 3 uses
   store i32 0, ptr %i.z, align 8, !tbaa !286
@@ -962,6 +964,7 @@ bb.f:                                             ; preds = %_ZN11OpenImageIO4v3
 
 _ZNSt6vectorImSaImEED2Ev.exit:                    ; preds = %_ZN11OpenImageIO4v3_13pvt10decode_ifdENS0_4spanIKhLm18446744073709551615EEEmRNS0_9ImageSpecERKNS1_6TagMapERSt3setImSt4lessImESaImEEbi.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #32
+  call void @_ZdlPvm(ptr noundef nonnull %12, i64 noundef 8) #31
   br label %bb.h
 
 _ZNSt6vectorImSaImEED2Ev.exit18.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.e, %_ZN11OpenImageIO4v3_1eqENS0_17basic_string_viewIcSt11char_traitsIcEEES4_.exit
@@ -969,6 +972,7 @@ _ZNSt6vectorImSaImEED2Ev.exit18.loopexit.split-lp.loopexit.split-lp.loopexit.spl
           cleanup
   call void @_ZNSt3setImSt4lessImESaImEED2Ev(ptr noundef nonnull align 8 dead_on_return(48) dereferenceable(48) %11) #32
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #32
+  call void @_ZdlPvm(ptr noundef nonnull %12, i64 noundef 8) #31
   resume { ptr, i32 } %lpad.loopexit.split-lp31
 
 bb.g:                                             ; preds = %bb.c, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i
@@ -1105,12 +1109,12 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i1:  ; preds = %bb.a
   %.not.i.i3 = icmp eq i32 %i.o, 0
   br i1 %.not.i.i3, label %_ZN11OpenImageIO4v3_1eqENS0_17basic_string_viewIcSt11char_traitsIcEEES4_.exit, label %bb.b
 
-bb.b:                                             ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i, %bb.a, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i1
+bb.b:                                             ; preds = %bb.a, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i1
   br label %_ZN11OpenImageIO4v3_1eqENS0_17basic_string_viewIcSt11char_traitsIcEEES4_.exit
 
 _ZN11OpenImageIO4v3_1eqENS0_17basic_string_viewIcSt11char_traitsIcEEES4_.exit: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i1, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i, %bb.b
-  %.sroa.012.0 = phi ptr [ @_ZN11OpenImageIO4v3_1L14tiff_tag_tableE, %bb.b ], [ @_ZN11OpenImageIO4v3_1L13gps_tag_tableE, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i1 ], [ @_ZN11OpenImageIO4v3_1L14exif_tag_tableE, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i ]
-  %.sroa.4.0 = phi i64 [ 21, %bb.b ], [ 32, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i1 ], [ 114, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i ]
+  %.sroa.012.0 = phi ptr [ @_ZN11OpenImageIO4v3_1L14tiff_tag_tableE, %bb.b ], [ @_ZN11OpenImageIO4v3_1L14exif_tag_tableE, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i ], [ @_ZN11OpenImageIO4v3_1L13gps_tag_tableE, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i1 ]
+  %.sroa.4.0 = phi i64 [ 21, %bb.b ], [ 114, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i ], [ 32, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i1 ]
   %.fca.0.insert = insertvalue { ptr, i64 } poison, ptr %.sroa.012.0, 0
   %.fca.1.insert = insertvalue { ptr, i64 } %.fca.0.insert, i64 %.sroa.4.0, 1
   ret { ptr, i64 } %.fca.1.insert
@@ -1396,9 +1400,9 @@ _ZNSt3setImSt4lessImESaImEE6insertEOm.exit:       ; preds = %bb.n, %_ZNSt8_Rb_tr
 
 .lr.ph173:                                        ; preds = %_ZNSt3setImSt4lessImESaImEE6insertEOm.exit
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bo, i64 2
-  %wide.trip.count183 = zext i16 %spec.select213 to i64
   %i.bv = icmp eq i16 %i.br, -30871
   %i.bw = select i1 %i.bv, ptr @_ZZN11OpenImageIO4v3_13pvt15exif_tagmap_refEvE1T, ptr @_ZZN11OpenImageIO4v3_13pvt14gps_tagmap_refEvE1T
+  %wide.trip.count183 = zext i16 %spec.select213 to i64
   br label %bb.p
 
 bb.p:                                             ; preds = %.lr.ph173, %bb.p
@@ -1801,7 +1805,7 @@ bb.f:                                             ; preds = %_ZSt8_DestroyIPN3ts
   br label %_ZN11OpenImageIO4v3_13pvt6TagMap4ImplD2Ev.exit
 
 _ZN11OpenImageIO4v3_13pvt6TagMap4ImplD2Ev.exit:   ; preds = %_ZSt8_DestroyIPN3tsl17detail_robin_hash12bucket_entryISt4pairIiPKN11OpenImageIO4v3_17TagInfoEELb0EEESA_EvT_SC_RSaIT0_E.exit.i.i.i.i, %bb.f
-  tail call void @_ZdlPvm(ptr noundef %1, i64 noundef 192) #31
+  tail call void @_ZdlPvm(ptr noundef nonnull %1, i64 noundef 192) #31
   br label %bb.g
 
 bb.g:                                             ; preds = %_ZN11OpenImageIO4v3_13pvt6TagMap4ImplD2Ev.exit, %bb.a

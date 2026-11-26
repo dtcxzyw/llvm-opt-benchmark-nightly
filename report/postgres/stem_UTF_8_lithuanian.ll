@@ -202,8 +202,9 @@ bb.x:                                             ; preds = %bb.v
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 20
   store i32 %i.bf, ptr %i.bg, align 4
   store i32 %.pre168, ptr %i.v, align 8
-  %i.bh = tail call i32 @slice_del(ptr noundef nonnull %0) #2 ; 2 uses
-  %i.bi = icmp sgt i32 %i.bh, -1
+  %i.bh = tail call i32 @slice_del(ptr noundef nonnull %0) #2
+  %.fr.i = freeze i32 %i.bh                       ; 2 uses
+  %i.bi = icmp sgt i32 %.fr.i, -1
   br i1 %i.bi, label %.r_step1.exit.thread_crit_edge, label %r_step1.exit
 
 .r_step1.exit.thread_crit_edge:                   ; preds = %bb.x
@@ -305,7 +306,7 @@ bb.aj:                                            ; preds = %bb.ai
   br label %r_step1.exit
 
 r_step1.exit:                                     ; preds = %bb.ah, %bb.ab, %bb.ac, %bb.x, %bb.ai, %.loopexit, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.aj
-  %.6105 = phi i32 [ 1, %bb.aj ], [ %i.ci, %.loopexit ], [ %i.bv, %bb.ac ], [ %i.cl, %bb.ai ], [ %i.bh, %bb.x ], [ %i.al, %bb.m ], [ %i.az, %bb.t ], [ %i.ax, %bb.s ], [ %i.av, %bb.r ], [ %i.at, %bb.q ], [ %i.ar, %bb.p ], [ %i.ap, %bb.o ], [ %i.an, %bb.n ], [ %i.bt, %bb.ab ], [ %i.cf, %bb.ah ]
+  %.6105 = phi i32 [ 1, %bb.aj ], [ %i.ci, %.loopexit ], [ %i.bv, %bb.ac ], [ %i.al, %bb.m ], [ %.fr.i, %bb.x ], [ %i.cl, %bb.ai ], [ %i.az, %bb.t ], [ %i.ax, %bb.s ], [ %i.av, %bb.r ], [ %i.at, %bb.q ], [ %i.ar, %bb.p ], [ %i.ap, %bb.o ], [ %i.an, %bb.n ], [ %i.bt, %bb.ab ], [ %i.cf, %bb.ah ]
   ret i32 %.6105
 }
 

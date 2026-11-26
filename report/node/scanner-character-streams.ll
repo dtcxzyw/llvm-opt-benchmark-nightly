@@ -205,6 +205,7 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZNK2v88internal25UnbufferedCharacterStreamINS0_12OnHeapStreamEE5CloneEv(ptr dead_on_unwind noalias writable sret(%"class.std::unique_ptr.16") align 8 %0, ptr noundef nonnull align 8 dereferenceable(80) %1) unnamed_addr #1 comdat align 2 !guid !218 {
 bb.a:
+  %2 = tail call noalias noundef nonnull dereferenceable(80) ptr @_Znwm(i64 noundef 80) #18 ; 0 uses
   tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.4) #17, !inline_history !217
   unreachable
 }

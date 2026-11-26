@@ -202,7 +202,7 @@ bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !501
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(96) %i.a, ptr noundef nonnull align 16 dereferenceable(96) %i.i, i64 96, i1 false), !noalias !500
   invoke void @_RNvNtCshE3sgg5Qsfb_6config6source9set_value(ptr noalias nofree noundef nonnull align 16 dereferenceable(96) %2, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.b, ptr noalias nofree noundef nonnull align 16 captures(address) dereferenceable(96) %i.a)
-          to label %bb.h unwind label %bb.e
+          to label %bb.h unwind label %bb.e, !noalias !502
 
 bb.h:                                             ; preds = %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !501
@@ -605,4 +605,5 @@ begin_hunk_1_@llvm.umin.i64
 !499 = !{i64 -1, i64 -9223372036854775808}
 !500 = !{!493, !492}
 !501 = !{!497, !495, !493, !492}
+!502 = !{!497, !495}
 end_hunk_1

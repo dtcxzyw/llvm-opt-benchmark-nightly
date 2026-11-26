@@ -202,11 +202,11 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.d = load ptr, ptr %i.c, align 8, !invariant.load !5, !noalias !47, !nonnull !5
   invoke void %i.d(ptr noundef nonnull %0, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %2) #17
-          to label %.noexc unwind label %bb.b, !inline_history !48
+          to label %.noexc unwind label %bb.b, !noalias !48, !inline_history !49
 
 .noexc:                                           ; preds = %bb.a
   invoke void @_RNvNtCsG258MDvU3F_3std7process5abort() #18
-          to label %.noexc2 unwind label %bb.b
+          to label %.noexc2 unwind label %bb.b, !noalias !48
 
 .noexc2:                                          ; preds = %.noexc
   unreachable
@@ -360,5 +360,6 @@ attributes #20 = { cold noreturn nounwind }
 !45 = distinct !{!45, !44, !"_RNCNvCsaaeZZ3CSYWN_13libfuzzer_sys10initialize0B3_: argument 1"}
 !46 = distinct !{!46, !44, !"_RNCNvCsaaeZZ3CSYWN_13libfuzzer_sys10initialize0B3_: argument 0"}
 !47 = !{!46, !45}
-!48 = !{ptr @_RNCNvCsaaeZZ3CSYWN_13libfuzzer_sys10initialize0B3_}
+!48 = !{!46}
+!49 = !{ptr @_RNCNvCsaaeZZ3CSYWN_13libfuzzer_sys10initialize0B3_}
 end_hunk_0

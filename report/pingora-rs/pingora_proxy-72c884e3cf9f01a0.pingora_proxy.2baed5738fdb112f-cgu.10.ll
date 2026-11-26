@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %_RINvNtCskKLDkoKarT
   %i.o = getelementptr inbounds nuw i8, ptr %.val2.i, i64 16
   %i.p = load i64, ptr %i.o, align 8, !alias.scope !258, !noalias !254, !noundef !4
   invoke void %i.l(ptr noundef %i.i, ptr noundef %i.n, i64 noundef %i.p)
-          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtCs84JG9zk80ZV_4http8byte_str7ByteStrEECs3Kwrwkha1e5_13pingora_proxy.exit.i.i.i unwind label %.body.i, !noalias !254, !inline_history !213
+          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtCs84JG9zk80ZV_4http8byte_str7ByteStrEECs3Kwrwkha1e5_13pingora_proxy.exit.i.i.i unwind label %.body.i, !noalias !259, !inline_history !213
 
 .body.i:                                          ; preds = %bb.d
   %i.q = landingpad { ptr, i32 }
@@ -223,7 +223,7 @@ bb.d:                                             ; preds = %_RINvNtCskKLDkoKarT
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 128
   %i.aa = load i64, ptr %i.z, align 8, !alias.scope !264, !noundef !4
   invoke void %i.w(ptr noundef %i.t, ptr noundef %i.y, i64 noundef %i.aa)
-          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs84JG9zk80ZV_4http3uri9authority9AuthorityECs3Kwrwkha1e5_13pingora_proxy.exit.i unwind label %bb.f, !noalias !254, !inline_history !222
+          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs84JG9zk80ZV_4http3uri9authority9AuthorityECs3Kwrwkha1e5_13pingora_proxy.exit.i unwind label %bb.f, !noalias !264, !inline_history !222
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtCs84JG9zk80ZV_4http8byte_str7ByteStrEECs3Kwrwkha1e5_13pingora_proxy.exit.i.i.i: ; preds = %bb.d
   tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %.val2.i, i64 noundef 32, i64 noundef 8) #12, !noalias !254
@@ -245,7 +245,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs84JG9zk80ZV_4http3uri6scheme6Sch
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 128
   %i.ak = load i64, ptr %i.aj, align 8, !alias.scope !269, !noundef !4
   invoke void %i.ag(ptr noundef %i.ad, ptr noundef %i.ai, i64 noundef %i.ak)
-          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs84JG9zk80ZV_4http3uri9authority9AuthorityECs3Kwrwkha1e5_13pingora_proxy.exit3.i unwind label %bb.e, !noalias !254, !inline_history !222
+          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs84JG9zk80ZV_4http3uri9authority9AuthorityECs3Kwrwkha1e5_13pingora_proxy.exit3.i unwind label %bb.e, !noalias !269, !inline_history !222
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs84JG9zk80ZV_4http3uri9authority9AuthorityECs3Kwrwkha1e5_13pingora_proxy.exit.i: ; preds = %bb.e, %.body.i
   %.pn.i = phi { ptr, i32 } [ %i.av, %bb.e ], [ %i.q, %.body.i ]
@@ -264,7 +264,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs84JG9zk80ZV_4http3uri9authority9
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.au = load i64, ptr %i.at, align 8, !alias.scope !274, !noundef !4
   invoke void %i.aq(ptr noundef %i.an, ptr noundef %i.as, i64 noundef %i.au)
-          to label %.body4 unwind label %bb.f, !noalias !254, !inline_history !239
+          to label %.body4 unwind label %bb.f, !noalias !274, !inline_history !239
 
 bb.e:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs84JG9zk80ZV_4http3uri6scheme6SchemeECs3Kwrwkha1e5_13pingora_proxy.exit.i
   %i.av = landingpad { ptr, i32 }
@@ -287,7 +287,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs84JG9zk80ZV_4http3uri9authority9
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.bf = load i64, ptr %i.be, align 8, !alias.scope !279, !noundef !4
   invoke void %i.bb(ptr noundef %i.ay, ptr noundef %i.bd, i64 noundef %i.bf)
-          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs84JG9zk80ZV_4http3uri3UriECs3Kwrwkha1e5_13pingora_proxy.exit unwind label %bb.g, !inline_history !248
+          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs84JG9zk80ZV_4http3uri3UriECs3Kwrwkha1e5_13pingora_proxy.exit unwind label %bb.g, !noalias !279, !inline_history !248
 
 bb.f:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs84JG9zk80ZV_4http3uri9authority9AuthorityECs3Kwrwkha1e5_13pingora_proxy.exit.i, %.body.i
   %i.bg = landingpad { ptr, i32 }
@@ -690,7 +690,7 @@ bb.f:                                             ; preds = %bb.e
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 368
   %i.x = load i64, ptr %i.w, align 8, !alias.scope !520, !noundef !4
   invoke void %i.t(ptr noundef %i.q, ptr noundef %i.v, i64 noundef %i.x)
-          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs1eA6bChxBZF_5bytes5bytes5BytesECs3Kwrwkha1e5_13pingora_proxy.exit unwind label %bb.v, !inline_history !501
+          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs1eA6bChxBZF_5bytes5bytes5BytesECs3Kwrwkha1e5_13pingora_proxy.exit unwind label %bb.v, !noalias !520, !inline_history !501
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtCskeugdADtBsi_12pingora_core9protocols2IOEL_EECs3Kwrwkha1e5_13pingora_proxy.exit: ; preds = %bb.d, %bb.c
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 352
@@ -706,7 +706,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNt
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 368
   %i.ah = load i64, ptr %i.ag, align 8, !alias.scope !523, !noundef !4
   invoke void %i.ad(ptr noundef %i.aa, ptr noundef %i.af, i64 noundef %i.ah)
-          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs1eA6bChxBZF_5bytes5bytes5BytesECs3Kwrwkha1e5_13pingora_proxy.exit19 unwind label %bb.g, !inline_history !501
+          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs1eA6bChxBZF_5bytes5bytes5BytesECs3Kwrwkha1e5_13pingora_proxy.exit19 unwind label %bb.g, !noalias !523, !inline_history !501
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs1eA6bChxBZF_5bytes5bytes5BytesECs3Kwrwkha1e5_13pingora_proxy.exit: ; preds = %.body, %bb.g
   %.pn = phi { ptr, i32 } [ %i.aj, %bb.g ], [ %i.i, %.body ]
@@ -964,7 +964,7 @@ bb.h:                                             ; preds = %bb.g
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(584) %i.b, ptr noundef nonnull align 8 dereferenceable(584) %i.x, i64 584, i1 false), !noalias !541
   %i.y = load i64, ptr %.sroa.07.0.copyload.i.i.i, align 8, !range !546, !noalias !545, !noundef !4
   %i.z = invoke noundef nonnull ptr @_RINvMs1_NtNtCs2awuzAz5vY4_5tokio7runtime9schedulerNtB6_6Handle5spawnNCNvMs7_Cs3Kwrwkha1e5_13pingora_proxyNtB1c_17SubrequestSpawner27spawn_background_subrequest0EB1c_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.v, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(584) %i.b, i64 noundef %i.y)
-          to label %_RINvNtNtCs2awuzAz5vY4_5tokio4task5spawn11spawn_innerNCNvMs7_Cs3Kwrwkha1e5_13pingora_proxyNtBW_17SubrequestSpawner27spawn_background_subrequest0EBW_.exit unwind label %bb.f, !noalias !543
+          to label %_RINvNtNtCs2awuzAz5vY4_5tokio4task5spawn11spawn_innerNCNvMs7_Cs3Kwrwkha1e5_13pingora_proxyNtBW_17SubrequestSpawner27spawn_background_subrequest0EBW_.exit unwind label %bb.f, !noalias !547
 
 bb.i:                                             ; preds = %bb.g
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCINvNtNtCs2awuzAz5vY4_5tokio4task5spawn11spawn_innerNCNvMs7_Cs3Kwrwkha1e5_13pingora_proxyNtB1A_17SubrequestSpawner27spawn_background_subrequest0E0EB1A_(ptr noundef nonnull align 8 %i.c)
@@ -1019,7 +1019,7 @@ bb.n:                                             ; preds = %_RINvMs2_NtNtCsG258
   store ptr %i.g, ptr %i.e, align 8, !noalias !539
   %.sroa.412.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   store ptr @_RNvXs3_NtNtCs2awuzAz5vY4_5tokio7runtime6handleNtB5_15TryCurrentErrorNtNtCskKLDkoKarTP_4core3fmt7Display3fmt, ptr %.sroa.412.0..sroa_idx.i, align 8, !noalias !539
-  call void @_RNvNtCskKLDkoKarTP_4core9panicking9panic_fmt(ptr noundef nonnull @0, ptr noundef nonnull %i.e, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %1) #16, !noalias !547
+  call void @_RNvNtCskKLDkoKarTP_4core9panicking9panic_fmt(ptr noundef nonnull @0, ptr noundef nonnull %i.e, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %1) #16, !noalias !548
   unreachable
 
 _RINvNtNtCs2awuzAz5vY4_5tokio4task5spawn11spawn_innerNCNvMs7_Cs3Kwrwkha1e5_13pingora_proxyNtBW_17SubrequestSpawner27spawn_background_subrequest0EBW_.exit: ; preds = %bb.h
@@ -1406,7 +1406,7 @@ attributes #16 = { noinline noreturn }
 !210 = distinct !{!210, !209, !"_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs1eA6bChxBZF_5bytes5bytes5BytesECs3Kwrwkha1e5_13pingora_proxy: argument 0"}
 !211 = distinct !{!211, i1 true, !"_RNvXs1_NtCs1eA6bChxBZF_5bytes5bytesNtB5_5BytesNtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4drop"}
 !212 = distinct !{!212, !211, !"_RNvXs1_NtCs1eA6bChxBZF_5bytes5bytesNtB5_5BytesNtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4drop: argument 0"}
-!213 = distinct !{null}
+!213 = distinct !{null, null, null}
 !214 = distinct !{!214, i1 true, !"_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs84JG9zk80ZV_4http3uri9authority9AuthorityECs3Kwrwkha1e5_13pingora_proxy"}
 !215 = distinct !{!215, !214, !"_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs84JG9zk80ZV_4http3uri9authority9AuthorityECs3Kwrwkha1e5_13pingora_proxy: argument 0"}
 !216 = distinct !{!216, i1 true, !"_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs84JG9zk80ZV_4http8byte_str7ByteStrECs3Kwrwkha1e5_13pingora_proxy"}
@@ -1415,7 +1415,7 @@ attributes #16 = { noinline noreturn }
 !219 = distinct !{!219, !218, !"_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs1eA6bChxBZF_5bytes5bytes5BytesECs3Kwrwkha1e5_13pingora_proxy: argument 0"}
 !220 = distinct !{!220, i1 true, !"_RNvXs1_NtCs1eA6bChxBZF_5bytes5bytesNtB5_5BytesNtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4drop"}
 !221 = distinct !{!221, !220, !"_RNvXs1_NtCs1eA6bChxBZF_5bytes5bytesNtB5_5BytesNtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4drop: argument 0"}
-!222 = distinct !{null}
+!222 = distinct !{null, null, null, null}
 !223 = distinct !{!223, i1 true, !"_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs84JG9zk80ZV_4http3uri9authority9AuthorityECs3Kwrwkha1e5_13pingora_proxy"}
 !224 = distinct !{!224, !223, !"_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs84JG9zk80ZV_4http3uri9authority9AuthorityECs3Kwrwkha1e5_13pingora_proxy: argument 0"}
 !225 = distinct !{!225, i1 true, !"_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs84JG9zk80ZV_4http8byte_str7ByteStrECs3Kwrwkha1e5_13pingora_proxy"}
@@ -1432,7 +1432,7 @@ attributes #16 = { noinline noreturn }
 !236 = distinct !{!236, !235, !"_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs1eA6bChxBZF_5bytes5bytes5BytesECs3Kwrwkha1e5_13pingora_proxy: argument 0"}
 !237 = distinct !{!237, i1 true, !"_RNvXs1_NtCs1eA6bChxBZF_5bytes5bytesNtB5_5BytesNtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4drop"}
 !238 = distinct !{!238, !237, !"_RNvXs1_NtCs1eA6bChxBZF_5bytes5bytesNtB5_5BytesNtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4drop: argument 0"}
-!239 = distinct !{null}
+!239 = distinct !{null, null, null, null}
 !240 = distinct !{!240, i1 true, !"_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs84JG9zk80ZV_4http3uri4path12PathAndQueryECs3Kwrwkha1e5_13pingora_proxy"}
 !241 = distinct !{!241, !240, !"_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs84JG9zk80ZV_4http3uri4path12PathAndQueryECs3Kwrwkha1e5_13pingora_proxy: argument 0"}
 !242 = distinct !{!242, i1 true, !"_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs84JG9zk80ZV_4http8byte_str7ByteStrECs3Kwrwkha1e5_13pingora_proxy"}
@@ -1441,7 +1441,7 @@ attributes #16 = { noinline noreturn }
 !245 = distinct !{!245, !244, !"_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs1eA6bChxBZF_5bytes5bytes5BytesECs3Kwrwkha1e5_13pingora_proxy: argument 0"}
 !246 = distinct !{!246, i1 true, !"_RNvXs1_NtCs1eA6bChxBZF_5bytes5bytesNtB5_5BytesNtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4drop"}
 !247 = distinct !{!247, !246, !"_RNvXs1_NtCs1eA6bChxBZF_5bytes5bytesNtB5_5BytesNtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4drop: argument 0"}
-!248 = distinct !{null}
+!248 = distinct !{null, null, null, null, null}
 !249 = !{!200}
 !250 = !{!202}
 !251 = !{!204}
@@ -1694,7 +1694,7 @@ attributes #16 = { noinline noreturn }
 !498 = distinct !{!498, !497, !"_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs1eA6bChxBZF_5bytes5bytes5BytesECs3Kwrwkha1e5_13pingora_proxy: argument 0"}
 !499 = distinct !{!499, i1 true, !"_RNvXs1_NtCs1eA6bChxBZF_5bytes5bytesNtB5_5BytesNtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4drop"}
 !500 = distinct !{!500, !499, !"_RNvXs1_NtCs1eA6bChxBZF_5bytes5bytesNtB5_5BytesNtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4drop: argument 0"}
-!501 = distinct !{null}
+!501 = distinct !{null, null}
 !502 = distinct !{!502, i1 true, !"_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs1eA6bChxBZF_5bytes5bytes5BytesECs3Kwrwkha1e5_13pingora_proxy"}
 !503 = distinct !{!503, !502, !"_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs1eA6bChxBZF_5bytes5bytes5BytesECs3Kwrwkha1e5_13pingora_proxy: argument 0"}
 !504 = distinct !{!504, i1 true, !"_RNvXs1_NtCs1eA6bChxBZF_5bytes5bytesNtB5_5BytesNtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4drop"}
@@ -1740,5 +1740,6 @@ attributes #16 = { noinline noreturn }
 !544 = !{i64 0, i64 3}
 !545 = !{!538, !537, !535, !533, !531, !530}
 !546 = !{i64 1, i64 0}
-!547 = !{!531}
+!547 = !{!538, !535, !533, !531, !530}
+!548 = !{!531}
 end_hunk_1

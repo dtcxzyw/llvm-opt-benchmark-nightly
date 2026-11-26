@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %bb.d
   store ptr %i.l, ptr %i.m, align 8, !alias.scope !93, !noalias !92
   store i8 3, ptr %i.a, align 8, !alias.scope !93, !noalias !92
   invoke void @_RNvXsd_NtNtCsf3Ta7LF998c_4core2io5errorNtB5_11CustomOwnerNtNtNtB9_3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.m)
-          to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECs8k3UfHgJ3Xe_15candle_datasets.exit.i.i.i unwind label %bb.g
+          to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECs8k3UfHgJ3Xe_15candle_datasets.exit.i.i.i unwind label %bb.g, !noalias !92
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECs8k3UfHgJ3Xe_15candle_datasets.exit.i.i.i: ; preds = %bb.f, %bb.e, %bb.d, %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !92
@@ -605,7 +605,7 @@ bb.al:                                            ; preds = %bb.aj
   store ptr %i.bj, ptr %i.bk, align 8, !alias.scope !197, !noalias !196
   store i8 3, ptr %i.c, align 8, !alias.scope !197, !noalias !196
   invoke void @_RNvXsd_NtNtCsf3Ta7LF998c_4core2io5errorNtB5_11CustomOwnerNtNtNtB9_3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.bk)
-          to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECs8k3UfHgJ3Xe_15candle_datasets.exit.i.i.i unwind label %bb.dp
+          to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECs8k3UfHgJ3Xe_15candle_datasets.exit.i.i.i unwind label %bb.dp, !noalias !194
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECs8k3UfHgJ3Xe_15candle_datasets.exit.i.i.i: ; preds = %bb.al, %bb.ak, %bb.aj, %bb.aj
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !196
@@ -1008,7 +1008,7 @@ bb.g:                                             ; preds = %bb.f
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsat2oUP5WrwS_6hf_hub3api8SiblingsECs8k3UfHgJ3Xe_15candle_datasets.exit.i.i.i: ; preds = %bb.e
   invoke void @_RNvXs1_NtCsgCecv3eZDcN_5alloc7raw_vecINtB5_6RawVechENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCs8k3UfHgJ3Xe_15candle_datasets(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.c)
-          to label %_RNCNvNtCs8k3UfHgJ3Xe_15candle_datasets3hub8from_hubs_0B5_.exit.i.i unwind label %bb.i, !noalias !259
+          to label %_RNCNvNtCs8k3UfHgJ3Xe_15candle_datasets3hub8from_hubs_0B5_.exit.i.i unwind label %bb.i, !noalias !263
 
 bb.h:                                             ; preds = %bb.d
   %i.af = landingpad { ptr, i32 }
@@ -1213,7 +1213,7 @@ bb.ah:                                            ; preds = %bb.af
   store ptr %i.bx, ptr %i.by, align 8, !alias.scope !275, !noalias !274
   store i8 3, ptr %i.a, align 8, !alias.scope !275, !noalias !274
   invoke void @_RNvXsd_NtNtCsf3Ta7LF998c_4core2io5errorNtB5_11CustomOwnerNtNtNtB9_3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.by)
-          to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECs8k3UfHgJ3Xe_15candle_datasets.exit.i.i.i.i.i.i unwind label %bb.ai, !noalias !264
+          to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECs8k3UfHgJ3Xe_15candle_datasets.exit.i.i.i.i.i.i unwind label %bb.ai, !noalias !274
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECs8k3UfHgJ3Xe_15candle_datasets.exit.i.i.i.i.i.i: ; preds = %bb.ah, %bb.ag, %bb.af, %bb.af
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !274
@@ -1616,12 +1616,15 @@ bb.l:                                             ; preds = %_RINvNtCsf3Ta7LF998
   %i.ak = shl i64 %3, 1                           ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
+  %5 = getelementptr inbounds nuw i8, ptr %i.aj, i64 8
+  %6 = load i64, ptr %5, align 8, !noundef !4
+  call void @llvm.experimental.noalias.scope.decl(metadata !333)
   %i.al = icmp eq i64 %i.ak, 0
   br i1 %i.al, label %bb.m, label %bb.o, !prof !10
 
 bb.m:                                             ; preds = %bb.l
   invoke void @_RNvNtCsf3Ta7LF998c_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @1, i64 noundef 27, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @3) #15
-          to label %.noexc12 unwind label %bb.b
+          to label %.noexc12 unwind label %bb.b, !noalias !333
 
 .noexc12:                                         ; preds = %bb.m
   unreachable
@@ -1630,8 +1633,6 @@ bb.n:                                             ; preds = %bb.k
   unreachable
 
 bb.o:                                             ; preds = %bb.l
-  %5 = getelementptr inbounds nuw i8, ptr %i.aj, i64 8
-  %6 = load i64, ptr %5, align 8, !noundef !4
   %i.am = sub i64 %6, %i.ak                       ; 2 uses
   %i.an = udiv i64 %i.am, %i.ak
   %i.ao = urem i64 %i.am, %i.ak

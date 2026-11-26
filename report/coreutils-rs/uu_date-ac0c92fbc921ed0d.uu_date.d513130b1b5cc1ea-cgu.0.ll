@@ -204,7 +204,7 @@ bb.a:
   %i.h = add i64 %2, -1
   %i.i = tail call i64 @llvm.umin.i64(i64 %2, i64 %i.h)
   %i.j = add i64 %i.i, 1                          ; 3 uses
-  %min.iters.check = icmp ult i64 %i.j, 17
+  %min.iters.check = icmp ult i64 %i.j, 33
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 scalar.ph.preheader:                              ; preds = %vector.body, %.lr.ph.i
@@ -212,9 +212,9 @@ scalar.ph.preheader:                              ; preds = %vector.body, %.lr.p
   br label %scalar.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i
-  %i.k = and i64 %i.j, 15                         ; 2 uses
+  %i.k = and i64 %i.j, 31                         ; 2 uses
   %i.l = icmp eq i64 %i.k, 0
-  %i.m = select i1 %i.l, i64 16, i64 %i.k
+  %i.m = select i1 %i.l, i64 32, i64 %i.k
   %n.vec = sub i64 %i.j, %i.m                     ; 2 uses
   %i.n = add i64 %n.vec, %i.b
   %invariant.gep = getelementptr i8, ptr %i.g, i64 %i.b
@@ -222,11 +222,15 @@ vector.ph:                                        ; preds = %.lr.ph.i
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.o = getelementptr inbounds nuw i8, ptr %1, i64 %index
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 %index ; 2 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %wide.load = load <16 x i8>, ptr %3, align 1, !alias.scope !4599
   %wide.load.a = load <16 x i8>, ptr %i.o, align 1, !alias.scope !4599
-  %gep.a = getelementptr i8, ptr %invariant.gep, i64 %index
+  %gep = getelementptr i8, ptr %invariant.gep, i64 %index ; 2 uses
+  %gep.a = getelementptr inbounds nuw i8, ptr %gep, i64 16
+  store <16 x i8> %wide.load, ptr %gep, align 1, !alias.scope !4598
   store <16 x i8> %wide.load.a, ptr %gep.a, align 1, !alias.scope !4598
-  %index.next = add nuw i64 %index, 16            ; 2 uses
+  %index.next = add nuw i64 %index, 32            ; 2 uses
   %i.p = icmp eq i64 %index.next, %n.vec
   br i1 %i.p, label %scalar.ph.preheader, label %vector.body, !llvm.loop !4596
 
@@ -339,7 +343,6 @@ bb.d:                                             ; preds = %bb.c
   %i.ag = icmp eq <16 x i8> %.sroa.0.0.copyload.i.i, %i.s
   %i.ah = icmp eq <16 x i8> %.sroa.01.0.copyload.i.i, %i.w
   %i.ai = and <16 x i1> %i.ag, %i.ah
-  %3 = bitcast <16 x i1> %i.ai to i16             ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ae, i64 16
   %.sroa.0.0.copyload.i.1.i = load <16 x i8>, ptr %i.aj, align 1, !alias.scope !4613, !noalias !4615
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ae, i64 17
@@ -347,7 +350,6 @@ bb.d:                                             ; preds = %bb.c
   %i.al = icmp eq <16 x i8> %.sroa.0.0.copyload.i.1.i, %i.s
   %i.am = icmp eq <16 x i8> %.sroa.01.0.copyload.i.1.i, %i.w
   %i.an = and <16 x i1> %i.al, %i.am
-  %4 = bitcast <16 x i1> %i.an to i16             ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.ae, i64 32
   %.sroa.0.0.copyload.i.2.i = load <16 x i8>, ptr %i.ao, align 1, !alias.scope !4613, !noalias !4615
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ae, i64 33
@@ -355,7 +357,6 @@ bb.d:                                             ; preds = %bb.c
   %i.aq = icmp eq <16 x i8> %.sroa.0.0.copyload.i.2.i, %i.s
   %i.ar = icmp eq <16 x i8> %.sroa.01.0.copyload.i.2.i, %i.w
   %i.as = and <16 x i1> %i.aq, %i.ar
-  %5 = bitcast <16 x i1> %i.as to i16             ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %i.ae, i64 48
   %.sroa.0.0.copyload.i.3.i = load <16 x i8>, ptr %i.at, align 1, !alias.scope !4613, !noalias !4615
   %i.au = getelementptr inbounds nuw i8, ptr %i.ae, i64 49
@@ -363,45 +364,48 @@ bb.d:                                             ; preds = %bb.c
   %i.av = icmp eq <16 x i8> %.sroa.0.0.copyload.i.3.i, %i.s
   %i.aw = icmp eq <16 x i8> %.sroa.01.0.copyload.i.3.i, %i.w
   %i.ax = and <16 x i1> %i.av, %i.aw
-  %i.ay = bitcast <16 x i1> %i.ax to i16          ; 2 uses
-  %i.az = icmp eq i16 %3, 0
+  %i.ay = bitcast <16 x i1> %i.ai to i16          ; 2 uses
+  %i.az = icmp eq i16 %i.ay, 0
   br i1 %i.az, label %.preheader80.1.i, label %bb.i
 
 .preheader80.1.i:                                 ; preds = %bb.i, %.lr.ph.i
   %.sroa.014.2.i = phi i8 [ 0, %.lr.ph.i ], [ %i.bx, %bb.i ] ; 3 uses
-  %i.ba = icmp eq i16 %4, 0
+  %3 = bitcast <16 x i1> %i.an to i16             ; 2 uses
+  %i.ba = icmp eq i16 %3, 0
   br i1 %i.ba, label %.preheader80.2.i, label %bb.e
 
 bb.e:                                             ; preds = %.preheader80.1.i
   %i.bb = or disjoint i64 %.sroa.06.084.i, 16
   %i.bc = trunc nuw i8 %.sroa.014.2.i to i1
-  %i.bd = call fastcc noundef zeroext i1 @_RNCNvNtNtCs6JMX4GRUq9U_4core3str7pattern13simd_containss0_0CsiibOIv6tv3q_7uu_date(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a, i64 noundef %i.bb, i16 noundef %4, i1 noundef zeroext %i.bc) #35
+  %i.bd = call fastcc noundef zeroext i1 @_RNCNvNtNtCs6JMX4GRUq9U_4core3str7pattern13simd_containss0_0CsiibOIv6tv3q_7uu_date(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a, i64 noundef %i.bb, i16 noundef %3, i1 noundef zeroext %i.bc) #35
   %i.be = zext i1 %i.bd to i8
   %i.bf = or i8 %.sroa.014.2.i, %i.be
   br label %.preheader80.2.i
 
 .preheader80.2.i:                                 ; preds = %bb.e, %.preheader80.1.i
   %.sroa.014.2.1.i = phi i8 [ %.sroa.014.2.i, %.preheader80.1.i ], [ %i.bf, %bb.e ] ; 3 uses
-  %i.bg = icmp eq i16 %5, 0
+  %4 = bitcast <16 x i1> %i.as to i16             ; 2 uses
+  %i.bg = icmp eq i16 %4, 0
   br i1 %i.bg, label %.preheader80.3.i, label %bb.f
 
 bb.f:                                             ; preds = %.preheader80.2.i
   %i.bh = or disjoint i64 %.sroa.06.084.i, 32
   %i.bi = trunc nuw i8 %.sroa.014.2.1.i to i1
-  %i.bj = call fastcc noundef zeroext i1 @_RNCNvNtNtCs6JMX4GRUq9U_4core3str7pattern13simd_containss0_0CsiibOIv6tv3q_7uu_date(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a, i64 noundef %i.bh, i16 noundef %5, i1 noundef zeroext %i.bi) #35
+  %i.bj = call fastcc noundef zeroext i1 @_RNCNvNtNtCs6JMX4GRUq9U_4core3str7pattern13simd_containss0_0CsiibOIv6tv3q_7uu_date(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a, i64 noundef %i.bh, i16 noundef %4, i1 noundef zeroext %i.bi) #35
   %i.bk = zext i1 %i.bj to i8
   %i.bl = or i8 %.sroa.014.2.1.i, %i.bk
   br label %.preheader80.3.i
 
 .preheader80.3.i:                                 ; preds = %bb.f, %.preheader80.2.i
   %.sroa.014.2.2.i = phi i8 [ %.sroa.014.2.1.i, %.preheader80.2.i ], [ %i.bl, %bb.f ] ; 3 uses
-  %i.bm = icmp eq i16 %i.ay, 0
+  %5 = bitcast <16 x i1> %i.ax to i16             ; 2 uses
+  %i.bm = icmp eq i16 %5, 0
   br i1 %i.bm, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %.preheader80.3.i
   %i.bn = or disjoint i64 %.sroa.06.084.i, 48
   %i.bo = trunc nuw i8 %.sroa.014.2.2.i to i1
-  %i.bp = call fastcc noundef zeroext i1 @_RNCNvNtNtCs6JMX4GRUq9U_4core3str7pattern13simd_containss0_0CsiibOIv6tv3q_7uu_date(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a, i64 noundef %i.bn, i16 noundef %i.ay, i1 noundef zeroext %i.bo) #35
+  %i.bp = call fastcc noundef zeroext i1 @_RNCNvNtNtCs6JMX4GRUq9U_4core3str7pattern13simd_containss0_0CsiibOIv6tv3q_7uu_date(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a, i64 noundef %i.bn, i16 noundef %5, i1 noundef zeroext %i.bo) #35
   %i.bq = zext i1 %i.bp to i8
   %i.br = or i8 %.sroa.014.2.2.i, %i.bq
   br label %bb.h
@@ -416,7 +420,7 @@ bb.h:                                             ; preds = %bb.g, %.preheader80
   br i1 %or.cond.i, label %.preheader.i, label %.lr.ph.i
 
 bb.i:                                             ; preds = %.lr.ph.i
-  %i.bw = call fastcc noundef zeroext i1 @_RNCNvNtNtCs6JMX4GRUq9U_4core3str7pattern13simd_containss0_0CsiibOIv6tv3q_7uu_date(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a, i64 noundef %.sroa.06.084.i, i16 noundef %3, i1 noundef zeroext false) #35
+  %i.bw = call fastcc noundef zeroext i1 @_RNCNvNtNtCs6JMX4GRUq9U_4core3str7pattern13simd_containss0_0CsiibOIv6tv3q_7uu_date(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a, i64 noundef %.sroa.06.084.i, i16 noundef %i.ay, i1 noundef zeroext false) #35
   %i.bx = zext i1 %i.bw to i8
   br label %.preheader80.1.i
 

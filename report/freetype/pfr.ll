@@ -205,7 +205,7 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define internal i32 @pfr_face_init(ptr noundef %0, ptr noundef %1, i32 noundef %2, i32 %3, ptr nofree readnone captures(none) %4) #3 {
 bb.a:
-  %i.a = alloca i32, align 4                      ; 13 uses
+  %i.a = alloca i32, align 4                      ; 12 uses
   %i.b = alloca ptr, align 8                      ; 15 uses
   %i.c = alloca i32, align 4                      ; 17 uses
   %i.d = alloca i32, align 4                      ; 6 uses
@@ -608,7 +608,7 @@ bb.bc:                                            ; preds = %bb.bb
   br i1 %.not164.i, label %.thread185.i, label %bb.bd
 
 bb.bd:                                            ; preds = %bb.bc
-  %i.mo = getelementptr inbounds nuw i8, ptr %i.ma, i64 %i.mn ; 7 uses
+  %i.mo = getelementptr inbounds nuw i8, ptr %i.ma, i64 %i.mn ; 4 uses
   %i.mp = icmp ugt ptr %i.mo, %i.iq
   br i1 %i.mp, label %.thread195.sink.split.i, label %bb.be
 
@@ -626,7 +626,7 @@ bb.bf:                                            ; preds = %bb.bn, %bb.be
   %.0147198.i = phi i64 [ %i.mn, %bb.be ], [ %i.ov, %bb.bn ] ; 2 uses
   %i.mv = getelementptr inbounds nuw i8, ptr %.0145199.i, i64 4 ; 3 uses
   %i.mw = icmp ugt ptr %i.mv, %i.mo
-  br i1 %i.mw, label %.thread185.i, label %bb.bg
+  br i1 %i.mw, label %.thread185.loopexit.i, label %bb.bg
 
 bb.bg:                                            ; preds = %bb.bf
   %i.mx = getelementptr inbounds nuw i8, ptr %.0145199.i, i64 2
@@ -638,12 +638,12 @@ bb.bg:                                            ; preds = %bb.bf
   %i.nd = zext i8 %i.nc to i32
   %i.ne = or disjoint i32 %i.na, %i.nd            ; 5 uses
   %i.nf = icmp samesign ult i32 %i.ne, 4
-  br i1 %i.nf, label %.thread185.i, label %bb.bh
+  br i1 %i.nf, label %.thread185.loopexit.i, label %bb.bh
 
 bb.bh:                                            ; preds = %bb.bg
   %i.ng = zext nneg i32 %i.ne to i64              ; 3 uses
   %i.nh = icmp ult i64 %.0147198.i, %i.ng
-  br i1 %i.nh, label %.thread185.i, label %bb.bi
+  br i1 %i.nh, label %.thread185.loopexit.i, label %bb.bi
 
 bb.bi:                                            ; preds = %bb.bh
   %i.ni = getelementptr i8, ptr %.0145199.i, i64 %i.ng
@@ -662,8 +662,7 @@ bb.bi:                                            ; preds = %bb.bh
 
 bb.bj:                                            ; preds = %bb.bi
   %i.np = add nsw i32 %i.ne, -4
-  %i.nq = call fastcc i32 @pfr_aux_name_load(ptr noundef nonnull %i.mv, i32 noundef %i.np, ptr noundef %i.ig, ptr noundef nonnull %i.mu) ; 3 uses
-  store i32 %i.nq, ptr %i.a, align 4, !tbaa !50
+  %i.nq = call fastcc i32 @pfr_aux_name_load(ptr noundef nonnull %i.mv, i32 noundef %i.np, ptr noundef %i.ig, ptr noundef nonnull %i.mu) ; 2 uses
   %.not167.i = icmp eq i32 %i.nq, 0
   br i1 %.not167.i, label %bb.bn, label %pfr_phy_font_load.exit.thread
 
@@ -706,18 +705,21 @@ bb.bl:                                            ; preds = %bb.bk
 
 bb.bm:                                            ; preds = %bb.bi
   %i.ot = add nsw i32 %i.ne, -4
-  %i.ou = call fastcc i32 @pfr_aux_name_load(ptr noundef nonnull %i.mv, i32 noundef %i.ot, ptr noundef %i.ig, ptr noundef nonnull %i.mq) ; 3 uses
-  store i32 %i.ou, ptr %i.a, align 4, !tbaa !50
+  %i.ou = call fastcc i32 @pfr_aux_name_load(ptr noundef nonnull %i.mv, i32 noundef %i.ot, ptr noundef %i.ig, ptr noundef nonnull %i.mq) ; 2 uses
   %.not166.i = icmp eq i32 %i.ou, 0
   br i1 %.not166.i, label %bb.bn, label %pfr_phy_font_load.exit.thread
 
 bb.bn:                                            ; preds = %bb.bm, %bb.bl, %bb.bk, %bb.bj, %bb.bi
   %i.ov = sub nuw nsw i64 %.0147198.i, %i.ng      ; 2 uses
   %.not165.i = icmp eq i64 %i.ov, 0
-  br i1 %.not165.i, label %.thread185.i, label %bb.bf
+  br i1 %.not165.i, label %.thread185.loopexit.i, label %bb.bf
 
-.thread185.i:                                     ; preds = %bb.bn, %bb.bh, %bb.bg, %bb.bf, %bb.bc
-  %6 = phi ptr [ %i.ma, %bb.bc ], [ %i.mo, %bb.bf ], [ %i.mo, %bb.bg ], [ %i.mo, %bb.bh ], [ %i.mo, %bb.bn ] ; 2 uses
+.thread185.loopexit.i:                            ; preds = %bb.bn, %bb.bh, %bb.bg, %bb.bf
+  store i32 0, ptr %i.a, align 4
+  br label %.thread185.i
+
+.thread185.i:                                     ; preds = %.thread185.loopexit.i, %bb.bc
+  %6 = phi ptr [ %i.mo, %.thread185.loopexit.i ], [ %i.ma, %bb.bc ] ; 2 uses
   %i.ow = getelementptr inbounds nuw i8, ptr %6, i64 1 ; 6 uses
   %i.ox = icmp ugt ptr %i.ow, %i.iq
   br i1 %i.ox, label %.thread195.sink.split.i, label %bb.bo
@@ -1087,8 +1089,8 @@ bb.ck:                                            ; preds = %bb.cj, %bb.ci
   store i32 8, ptr %i.a, align 4, !tbaa !50
   br label %pfr_phy_font_load.exit
 
-pfr_phy_font_load.exit.thread:                    ; preds = %bb.bj, %bb.bm, %bb.as, %bb.at
-  %.ph179 = phi i32 [ %i.in, %bb.at ], [ %i.il, %bb.as ], [ %i.nq, %bb.bj ], [ %i.ou, %bb.bm ]
+pfr_phy_font_load.exit.thread:                    ; preds = %bb.bm, %bb.bj, %bb.as, %bb.at
+  %.ph179 = phi i32 [ %i.in, %bb.at ], [ %i.il, %bb.as ], [ %i.ou, %bb.bm ], [ %i.nq, %bb.bj ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   br label %.critedge154

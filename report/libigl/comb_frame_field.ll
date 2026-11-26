@@ -205,13 +205,14 @@ bb.e:                                             ; preds = %.lr.ph, %.lr.ph.pre
   %i.fm = fsub double %i.fk, %i.fl
   %i.fn = call double @atan2(double noundef %i.fe, double noundef %i.fm) #14
   %i.fo = fsub double %i.fn, %i.ch                ; 3 uses
-  %i.fp = getelementptr inbounds nuw i8, ptr %i.ay, i64 24 ; 2 uses
+  %i.fp = getelementptr inbounds nuw i8, ptr %i.ay, i64 24 ; 3 uses
   %i.fq = fcmp olt double %i.fo, 0.000000e+00
   %i.fr = fdiv double %i.fo, f0xC01921FB54442D18
   %i.fs = call double @llvm.ceil.f64(double %i.fr)
   %i.ft = select i1 %i.fq, double %i.fs, double 0.000000e+00
   %i.fu = call double @llvm.fmuladd.f64(double %i.ft, double f0x401921FB54442D18, double %i.fo)
-  %i.fv = call double @fmod(double noundef %i.fu, double noundef f0x401921FB54442D18) #14 ; 2 uses
+  %i.fv = call double @fmod(double noundef %i.fu, double noundef f0x401921FB54442D18) #14 ; 3 uses
+  store double %i.fv, ptr %i.fp, align 8, !tbaa !16
   %i.fw = fcmp olt double %i.cz, %i.dx            ; 2 uses
   %spec.select.i.i125 = select i1 %i.fw, ptr %.ptr265.ptr, ptr %i.ay
   %i.fx = select i1 %i.fw, double %i.dx, double %i.cz ; 2 uses

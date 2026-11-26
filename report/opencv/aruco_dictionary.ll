@@ -204,8 +204,9 @@ bb.q:                                             ; preds = %bb.n
           to label %_ZNKSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEE3strEv.exit unwind label %bb.p
 
 _ZNKSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEE3strEv.exit: ; preds = %bb.q, %bb.o
+  call void @llvm.experimental.noalias.scope.decl(metadata !62)
   %i.bv = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %15, i64 noundef 0, i64 noundef 0, ptr noundef nonnull @.str.2, i64 noundef 7)
-          to label %.noexc121 unwind label %bb.v  ; 6 uses
+          to label %.noexc121 unwind label %bb.v, !noalias !62 ; 6 uses
 
 .noexc121:                                        ; preds = %_ZNKSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEE3strEv.exit
   store ptr %i.at, ptr %14, align 8, !tbaa !21, !alias.scope !62
@@ -608,8 +609,9 @@ bb.ah:                                            ; preds = %bb.ae
           to label %_ZNKSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEE3strEv.exit unwind label %bb.ag
 
 _ZNKSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEE3strEv.exit: ; preds = %bb.ah, %bb.af
+  call void @llvm.experimental.noalias.scope.decl(metadata !89)
   %i.dl = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %17, i64 noundef 0, i64 noundef 0, ptr noundef nonnull @.str.2, i64 noundef 7)
-          to label %.noexc unwind label %bb.an    ; 6 uses
+          to label %.noexc unwind label %bb.an, !noalias !89 ; 6 uses
 
 .noexc:                                           ; preds = %_ZNKSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEE3strEv.exit
   store ptr %i.ce, ptr %16, align 8, !tbaa !21, !alias.scope !89
@@ -1012,7 +1014,7 @@ bb.al:                                            ; preds = %bb.ak
   call void @llvm.lifetime.start.p0(ptr nonnull %27) #15
   call void @llvm.lifetime.start.p0(ptr nonnull %28) #15
   %i.bj = invoke noundef i32 @_ZNK2cv11_InputArray4kindEv(ptr noundef nonnull align 8 dereferenceable(24) %3)
-          to label %.noexc unwind label %bb.ba
+          to label %.noexc unwind label %bb.ba, !noalias !130
 
 .noexc:                                           ; preds = %bb.al
   %i.bk = icmp eq i32 %i.bj, 65536
@@ -1036,7 +1038,7 @@ bb.ao:                                            ; preds = %bb.an, %bb.am
   store ptr %28, ptr %i.bn, align 8, !tbaa !48
   call void @llvm.lifetime.start.p0(ptr nonnull %29) #15
   %i.bp = invoke noundef i32 @_ZNK2cv11_InputArray4kindEv(ptr noundef nonnull align 8 dereferenceable(24) %3)
-          to label %.noexc69 unwind label %bb.bb
+          to label %.noexc69 unwind label %bb.bb, !noalias !131
 
 .noexc69:                                         ; preds = %bb.ao
   %i.bq = icmp eq i32 %i.bp, 65536

@@ -202,6 +202,7 @@ define linkonce_odr hidden void @_ZN2v88internal8compiler21WasmGCOperatorReducer
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 112
   tail call void @_ZN2v88internal8compiler14GraphAssemblerD2Ev(ptr noundef nonnull align 8 dereferenceable(184) %i.a) #13
+  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN2v88internal8compiler35AdvancedReducerWithControlPathStateINS1_12NodeWithTypeELNS1_14NodeUniquenessE1EEE, i64 16), ptr %0, align 8
   tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 312) #15
   ret void
 }

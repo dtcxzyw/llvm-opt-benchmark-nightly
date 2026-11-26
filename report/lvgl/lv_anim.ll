@@ -202,25 +202,27 @@ bb.a:
   %i.a = icmp ugt i32 %0, 10000
   %i.b = icmp ugt i32 %1, 10000
   %i.c = icmp ugt i32 %2, 10000
-  %i.d = trunc i32 %0 to i16
-  %3 = insertelement <2 x i16> poison, i16 %i.d, i64 0
+  %i.d = trunc nuw nsw i32 %0 to i16
+  %.lhs.trunc = add i16 %i.d, 5
+  %3 = udiv i16 %.lhs.trunc, 10
+  %.zext = zext nneg i16 %3 to i32
+  %4 = select i1 %i.a, i32 1023, i32 %.zext
   %i.e = trunc i32 %1 to i16
-  %i.f = insertelement <2 x i16> %3, i16 %i.e, i64 1
-  %4 = add <2 x i16> %i.f, splat (i16 5)
-  %5 = udiv <2 x i16> %4, splat (i16 10)          ; 2 uses
-  %6 = extractelement <2 x i16> %5, i64 0
-  %.zext = zext nneg i16 %6 to i32
-  %7 = select i1 %i.a, i32 1023, i32 %.zext
-  %i.g = extractelement <2 x i16> %5, i64 1
+  %i.f = insertelement <2 x i16> poison, i16 %i.e, i64 0
+  %5 = trunc i32 %2 to i16
+  %6 = insertelement <2 x i16> %i.f, i16 %5, i64 1
+  %7 = add <2 x i16> %6, splat (i16 5)
+  %8 = udiv <2 x i16> %7, splat (i16 10)          ; 2 uses
+  %i.g = extractelement <2 x i16> %8, i64 0
   %.zext12 = zext nneg i16 %i.g to i32
-  %8 = add i32 %2, 5
-  %9 = udiv i32 %8, 10
-  %i.h = shl i32 %9, 20
+  %9 = extractelement <2 x i16> %8, i64 1
+  %.zext14 = zext nneg i16 %9 to i32
+  %i.h = shl i32 %.zext14, 20
   %i.i = xor i32 %i.h, -2147483648
   %i.j = select i1 %i.c, i32 -1074790400, i32 %i.i
   %i.k = shl nuw nsw i32 %.zext12, 10
   %i.l = select i1 %i.b, i32 1047552, i32 %i.k
-  %i.m = add nuw nsw i32 %i.l, %7
+  %i.m = add nuw nsw i32 %i.l, %4
   %i.n = add i32 %i.m, %i.j
   ret i32 %i.n
 }
@@ -229,7 +231,7 @@ bb.a:
 define range(i32 -1098907648, -1098901094) i32 @lv_anim_speed(i32 noundef %0) local_unnamed_addr #5 {
 bb.a:
   %i.a = icmp ugt i32 %0, 10000
-  %i.b = trunc i32 %0 to i16
+  %i.b = trunc nuw nsw i32 %0 to i16
   %.lhs.trunc.i = add i16 %i.b, 5
   %i.c = udiv i16 %.lhs.trunc.i, 10
   %.zext.i = zext nneg i16 %i.c to i32

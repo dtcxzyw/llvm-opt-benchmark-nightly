@@ -204,10 +204,10 @@ bb.af:                                            ; preds = %bb.ad
   %i.pt = fmul fast <4 x float> %i.po, %i.ps
   %i.pu = fadd fast <4 x float> %i.pt, splat (float 1.000000e+00) ; 2 uses
   %i.pv = fcmp fast ole <4 x float> %i.pu, zeroinitializer
-  %i.pw = call fast noundef nofpclass(nan inf) <4 x float> @llvm.x86.sse.max.ps(<4 x float> nofpclass(nan inf) %i.pu, <4 x float> splat (float f0x00800000))
+  %i.pw = call <4 x float> @llvm.maxnum.v4f32(<4 x float> %i.pu, <4 x float> splat (float f0x00800000))
   %i.px = bitcast <4 x float> %i.pw to <4 x i32>  ; 2 uses
   %i.py = lshr <4 x i32> %i.px, splat (i32 23)
-  %i.pz = and <4 x i32> %i.px, splat (i32 -2139095041)
+  %i.pz = and <4 x i32> %i.px, splat (i32 8388607)
   %i.qa = or disjoint <4 x i32> %i.pz, splat (i32 1056964608)
   %i.qb = bitcast <4 x i32> %i.qa to <4 x float>  ; 3 uses
   %i.qc = add nsw <4 x i32> %i.py, splat (i32 -127)
@@ -449,6 +449,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #15
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x float> @llvm.maxnum.v4f32(<4 x float>, <4 x float>) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.minnum.f32(float, float) #10
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
@@ -560,7 +563,7 @@ attributes #18 = { builtin nounwind }
 !76 = distinct !{!76, !53}
 !77 = distinct !{!77, !53}
 !78 = distinct !{!78, !53}
-!79 = distinct !{null}
+!79 = distinct !{null, null}
 !80 = distinct !{!80, !53}
 !81 = distinct !{!81, !53}
 !82 = distinct !{!82, !53}

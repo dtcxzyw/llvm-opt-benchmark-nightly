@@ -202,14 +202,14 @@ bb.d:                                             ; preds = %.noexc
 
 bb.e:                                             ; preds = %bb.d
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.134) #29
-          to label %.noexc37 unwind label %bb.o
+          to label %.noexc37 unwind label %bb.o, !noalias !141
 
 .noexc37:                                         ; preds = %bb.e
   unreachable
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i: ; preds = %bb.d
   %i.q = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm(ptr noundef nonnull align 8 dereferenceable(32) %11, ptr noundef nonnull @.str.12, i64 noundef 1)
-          to label %.noexc38 unwind label %bb.o   ; 6 uses
+          to label %.noexc38 unwind label %bb.o, !noalias !141 ; 6 uses
 
 .noexc38:                                         ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i
   %i.r = getelementptr inbounds nuw i8, ptr %10, i64 16 ; 7 uses
@@ -612,14 +612,14 @@ bb.e:                                             ; preds = %.noexc
 
 bb.f:                                             ; preds = %bb.e
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.134) #29
-          to label %.noexc37 unwind label %bb.r
+          to label %.noexc37 unwind label %bb.r, !noalias !208
 
 .noexc37:                                         ; preds = %bb.f
   unreachable
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i: ; preds = %bb.e
   %i.p = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm(ptr noundef nonnull align 8 dereferenceable(32) %11, ptr noundef nonnull @.str.12, i64 noundef 1)
-          to label %.noexc38 unwind label %bb.r   ; 6 uses
+          to label %.noexc38 unwind label %bb.r, !noalias !208 ; 6 uses
 
 .noexc38:                                         ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i
   %i.q = getelementptr inbounds nuw i8, ptr %10, i64 16 ; 7 uses
@@ -1022,8 +1022,9 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   %i.c = load ptr, ptr %i.b, align 8, !noalias !232
   call void %i.c(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %6, ptr noundef nonnull align 8 dereferenceable(8) %2, i32 noundef %1), !inline_history !227
+  call void @llvm.experimental.noalias.scope.decl(metadata !233)
   %i.d = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %6, i64 noundef 0, i64 noundef 0, ptr noundef nonnull @.str.113, i64 noundef 2)
-          to label %.noexc unwind label %bb.g     ; 6 uses
+          to label %.noexc unwind label %bb.g, !noalias !233 ; 6 uses
 
 .noexc:                                           ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 7 uses
@@ -1063,7 +1064,7 @@ bb.c:                                             ; preds = %_ZNKSt7__cxx1112bas
   %i.r = load i64, ptr %i.q, align 8, !tbaa !67, !noalias !234
   %i.s = load ptr, ptr %3, align 8, !tbaa !63, !noalias !234
   %i.t = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %5, i64 noundef 0, i64 noundef 0, ptr noundef %i.s, i64 noundef %i.r)
-          to label %.noexc10 unwind label %bb.h   ; 6 uses
+          to label %.noexc10 unwind label %bb.h, !noalias !234 ; 6 uses
 
 .noexc10:                                         ; preds = %bb.c
   %i.u = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 7 uses

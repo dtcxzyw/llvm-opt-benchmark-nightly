@@ -202,8 +202,8 @@ bb.by:                                            ; preds = %bb.bw
           to label %bb.bz unwind label %bb.ch     ; 2 uses
 
 bb.bz:                                            ; preds = %bb.by
-  %i.ft = extractvalue { i64, ptr } %i.fs, 0      ; 3 uses
-  %i.fu = extractvalue { i64, ptr } %i.fs, 1      ; 4 uses
+  %i.ft = extractvalue { i64, ptr } %i.fs, 0      ; 2 uses
+  %i.fu = extractvalue { i64, ptr } %i.fs, 1      ; 5 uses
   %i.fv = icmp eq i64 %i.ft, 0
   br i1 %i.fv, label %_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit, label %bb.ca
 
@@ -234,8 +234,16 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i22: ; preds = %_ZNSt11char_traitsI
   br i1 %i.gg, label %_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit, label %bb.ck
 
 _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i26: ; preds = %bb.cb
-  %bcmp.i27 = call i32 @bcmp(ptr nonnull %i.fu, ptr nonnull @.str.5, i64 %i.ft)
-  %i.gh = icmp eq i32 %bcmp.i27, 0
+  %13 = load i32, ptr %i.fu, align 1
+  %14 = xor i32 %13, 1936482662
+  %15 = getelementptr i8, ptr %i.fu, i64 4
+  %16 = load i8, ptr %15, align 1
+  %17 = zext i8 %16 to i32
+  %18 = xor i32 %17, 101
+  %19 = or i32 %14, %18
+  %20 = icmp ne i32 %19, 0
+  %21 = zext i1 %20 to i32
+  %i.gh = icmp eq i32 %21, 0
   br i1 %i.gh, label %_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit, label %bb.ck
 
 _ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i26, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i22, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i, %bb.ca, %bb.bz
@@ -310,7 +318,7 @@ bb.cj:                                            ; preds = %.body, %bb.ci
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #18
   br label %bb.cs
 
-bb.ck:                                            ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i22, %bb.cb, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i26
+bb.ck:                                            ; preds = %bb.cb, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i22, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i26
   call void @_ZN4absl12lts_202505128StatusOrIN6google8protobuf13json_internal12LocationWithINS4_16MaybeOwnedStringEEEEC2EOS8_(ptr noundef nonnull align 8 dereferenceable(88) %0, ptr noundef nonnull align 8 dereferenceable(88) %10) #18
   br label %bb.cl
 

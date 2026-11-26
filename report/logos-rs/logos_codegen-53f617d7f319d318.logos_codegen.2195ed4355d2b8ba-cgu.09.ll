@@ -202,7 +202,7 @@ bb.s:                                             ; preds = %bb.q
 bb.t:                                             ; preds = %bb.q
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   invoke void @_RNvXsq_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecTNtCsgSMwPvzVUxY_11proc_macro25IdentINtNtCskKLDkoKarTP_4core6option6OptionNtNtCshx33xqnyVJN_3syn2ty4TypeEEENtNtB1k_7default7Default7defaultCs2SM5xCHwwDm_13logos_codegen(ptr nonnull sret([24 x i8]) align 8 %i.a)
-          to label %bb.v unwind label %bb.u
+          to label %bb.v unwind label %bb.u, !noalias !19
 
 bb.u:                                             ; preds = %bb.t
   %i.p = landingpad { ptr, i32 }
@@ -605,4 +605,7 @@ attributes #19 = { noinline noreturn nounwind }
 !14 = distinct !{!14, i1 true, !"_RNvMNtNtCs2SM5xCHwwDm_13logos_codegen6parser11type_paramsNtB2_10TypeParams8generics"}
 !15 = distinct !{!15, !14, !"_RNvMNtNtCs2SM5xCHwwDm_13logos_codegen6parser11type_paramsNtB2_10TypeParams8generics: argument 0"}
 !16 = !{!15}
+!17 = distinct !{!17, i1 true, !"_RNvXs_NtNtCs2SM5xCHwwDm_13logos_codegen6parser11type_paramsNtB4_10TypeParamsNtNtCskKLDkoKarTP_4core7default7Default7defaultB8_"}
+!18 = distinct !{!18, !17, !"_RNvXs_NtNtCs2SM5xCHwwDm_13logos_codegen6parser11type_paramsNtB4_10TypeParamsNtNtCskKLDkoKarTP_4core7default7Default7defaultB8_: argument 0"}
+!19 = !{!18}
 end_hunk_1

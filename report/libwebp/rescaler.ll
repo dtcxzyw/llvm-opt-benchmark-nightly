@@ -23,10 +23,10 @@ target triple = "x86_64-pc-linux-gnu"
 define hidden void @WebPRescalerImportRowExpand_C(ptr noalias nofree noundef readonly captures(none) %0, ptr noalias nofree noundef readonly captures(none) %1) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !12   ; 6 uses
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !12   ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 52
   %i.d = load i32, ptr %i.c, align 4, !tbaa !13
-  %i.e = mul nsw i32 %i.d, %i.b                   ; 4 uses
+  %i.e = mul nsw i32 %i.d, %i.b                   ; 3 uses
   %i.f = icmp sgt i32 %i.b, 0
   br i1 %i.f, label %.lr.ph57, label %._crit_edge58
 
@@ -39,7 +39,8 @@ bb.a:
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !15   ; 4 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
-  %i.o = zext nneg i32 %i.b to i64                ; 7 uses
+  %i.o = zext nneg i32 %i.b to i64                ; 8 uses
+  %2 = sext i32 %i.e to i64                       ; 2 uses
   br i1 %i.k, label %.lr.ph57.split.us, label %.lr.ph57.split
 
 .lr.ph57.split.us:                                ; preds = %.lr.ph57, %._crit_edge.us
@@ -48,14 +49,13 @@ bb.a:
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv71
   %i.q = load i8, ptr %i.p, align 1, !tbaa !16
   %i.r = zext i8 %i.q to i32                      ; 2 uses
-  %i.s = add nuw nsw i64 %indvars.iv71, %i.o      ; 2 uses
+  %i.s = add nuw nsw i64 %indvars.iv71, %i.o      ; 3 uses
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 %i.s
   %i.u = load i8, ptr %i.t, align 1, !tbaa !16
   %i.v = mul i32 %i.h, %i.r
   %i.w = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %indvars.iv71
   store i32 %i.v, ptr %i.w, align 4, !tbaa !17
-  %2 = trunc nuw i64 %i.s to i32                  ; 2 uses
-  %.not50.us = icmp sgt i32 %i.e, %2
+  %.not50.us = icmp slt i64 %i.s, %2
   br i1 %.not50.us, label %.lr.ph.us, label %._crit_edge.us
 
 bb.b:                                             ; preds = %.lr.ph.us, %bb.d
@@ -63,7 +63,7 @@ bb.b:                                             ; preds = %.lr.ph.us, %bb.d
   %.054.us = phi i32 [ %i.al, %.lr.ph.us ], [ %.1.us, %bb.d ] ; 2 uses
   %.03853.us = phi i32 [ %i.r, %.lr.ph.us ], [ %.139.us, %bb.d ]
   %.04052.us = phi i32 [ %i.h, %.lr.ph.us ], [ %.141.us, %bb.d ]
-  %.04351.us = phi i32 [ %2, %.lr.ph.us ], [ %.144.us, %bb.d ] ; 2 uses
+  %.04351.us = phi i32 [ %3, %.lr.ph.us ], [ %.144.us, %bb.d ] ; 2 uses
   %i.x = sub nsw i32 %.04052.us, %i.am            ; 3 uses
   %i.y = icmp slt i32 %i.x, 0
   br i1 %i.y, label %bb.c, label %bb.d
@@ -102,6 +102,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 .lr.ph.us:                                        ; preds = %.lr.ph57.split.us
   %i.al = zext i8 %i.u to i32
   %i.am = load i32, ptr %i.n, align 8, !tbaa !19
+  %3 = trunc nuw nsw i64 %i.s to i32
   br label %bb.b
 
 .lr.ph57.split:                                   ; preds = %.lr.ph57, %._crit_edge
@@ -113,13 +114,13 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.aq = mul i32 %i.h, %i.ap
   %i.ar = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %indvars.iv63
   store i32 %i.aq, ptr %i.ar, align 4, !tbaa !17
-  %3 = trunc i64 %indvars.iv63 to i32
-  %4 = add i32 %i.b, %3                           ; 2 uses
-  %.not50 = icmp slt i32 %4, %i.e
+  %4 = add nuw nsw i64 %indvars.iv63, %i.o        ; 2 uses
+  %.not50 = icmp slt i64 %4, %2
   br i1 %.not50, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %.lr.ph57.split
   %i.as = load i32, ptr %i.n, align 8, !tbaa !19
+  %5 = trunc nuw nsw i64 %4 to i32
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph, %bb.g
@@ -127,7 +128,7 @@ bb.e:                                             ; preds = %.lr.ph, %bb.g
   %.054 = phi i32 [ %i.ap, %.lr.ph ], [ %.1, %bb.g ] ; 2 uses
   %.03853 = phi i32 [ %i.ap, %.lr.ph ], [ %.139, %bb.g ]
   %.04052 = phi i32 [ %i.h, %.lr.ph ], [ %.141, %bb.g ]
-  %.04351 = phi i32 [ %4, %.lr.ph ], [ %.144, %bb.g ] ; 2 uses
+  %.04351 = phi i32 [ %5, %.lr.ph ], [ %.144, %bb.g ] ; 2 uses
   %i.at = sub nsw i32 %.04052, %i.as              ; 3 uses
   %i.au = icmp slt i32 %i.at, 0
   br i1 %i.au, label %bb.f, label %bb.g

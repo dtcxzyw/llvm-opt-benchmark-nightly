@@ -205,7 +205,7 @@ _ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE23_M_add_ref_lock_nothrowE
   %i.x = tail call ptr @__cxa_allocate_exception(i64 8) #25, !noalias !170 ; 2 uses
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVSt12bad_weak_ptr, i64 16), ptr %i.x, align 8, !tbaa !34, !noalias !170
   invoke void @__cxa_throw(ptr nonnull %i.x, ptr nonnull @_ZTISt12bad_weak_ptr, ptr nonnull @_ZNSt12bad_weak_ptrD1Ev) #26
-          to label %.noexc42 unwind label %bb.w
+          to label %.noexc42 unwind label %bb.w, !noalias !170
 
 .noexc42:                                         ; preds = %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE23_M_add_ref_lock_nothrowEv.exit.i.i.i.i41
   unreachable
@@ -608,7 +608,7 @@ _ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE23_M_add_ref_lock_nothrowE
   %i.x = tail call ptr @__cxa_allocate_exception(i64 8) #25, !noalias !177 ; 2 uses
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVSt12bad_weak_ptr, i64 16), ptr %i.x, align 8, !tbaa !34, !noalias !177
   invoke void @__cxa_throw(ptr nonnull %i.x, ptr nonnull @_ZTISt12bad_weak_ptr, ptr nonnull @_ZNSt12bad_weak_ptrD1Ev) #26
-          to label %.noexc unwind label %bb.w
+          to label %.noexc unwind label %bb.w, !noalias !177
 
 .noexc:                                           ; preds = %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE23_M_add_ref_lock_nothrowEv.exit.i.i.i.i26
   unreachable
@@ -1011,7 +1011,7 @@ bb.k:                                             ; preds = %bb.j
 _ZN3fmt3v1213parse_contextIcE11next_arg_idEv.exit: ; preds = %bb.j
   %i.ao = add nuw nsw i32 %i.am, 1
   store i32 %i.ao, ptr %i.al, align 8, !tbaa !99
-  store i32 %i.am, ptr %3, align 8
+  store i32 %i.am, ptr %3, align 8, !tbaa !27
   store i32 1, ptr %i.a, align 4, !tbaa !159
   br label %bb.m
 
@@ -1155,7 +1155,7 @@ bb.j:                                             ; preds = %bb.i, %_ZN3fmt3v126
 bb.k:                                             ; preds = %bb.i, %bb.i
   %i.aj = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !245, !nonnull !145, !align !153
-  store i32 %.021, ptr %i.ak, align 8
+  store i32 %.021, ptr %i.ak, align 8, !tbaa !27
   %i.al = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !246, !nonnull !145, !align !247
   store i32 1, ptr %i.am, align 4, !tbaa !159
@@ -1220,7 +1220,7 @@ bb.n:                                             ; preds = %bb.m
   %i.bh = sub i64 %i.bf, %i.bg
   %i.bi = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !245, !nonnull !145, !align !153 ; 2 uses
-  store ptr %0, ptr %i.bj, align 8
+  store ptr %0, ptr %i.bj, align 8, !tbaa !27
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bj, i64 8
   store i64 %i.bh, ptr %.sroa.4.0..sroa_idx.i, align 8, !tbaa !27
   %i.bk = getelementptr inbounds nuw i8, ptr %2, i64 16
@@ -1241,7 +1241,7 @@ define linkonce_odr dso_local void @_ZNSt12__shared_ptrIN6spdlog12async_loggerEL
 bb.a:
   store ptr null, ptr %0, align 8, !tbaa !83
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = tail call noalias noundef nonnull dereferenceable(264) ptr @_Znwm(i64 noundef 264) #28, !inline_history !249 ; 11 uses
+  %i.b = tail call noalias noundef nonnull dereferenceable(264) ptr @_Znwm(i64 noundef 264) #28, !noalias !254, !inline_history !251 ; 11 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store i32 1, ptr %i.c, align 8, !tbaa !74
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 12 ; 4 uses
@@ -1251,7 +1251,7 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 224 ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.f, i8 0, i64 16, i1 false)
   invoke void @_ZN6spdlog6loggerC2ERKS0_(ptr noundef nonnull align 8 dereferenceable(248) %i.e, ptr noundef nonnull align 8 dereferenceable(248) %2)
-          to label %bb.b unwind label %.body.i.i, !inline_history !250
+          to label %bb.b unwind label %.body.i.i, !inline_history !252
 
 bb.b:                                             ; preds = %bb.a
   store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN6spdlog12async_loggerE, i64 16), ptr %i.e, align 8, !tbaa !34
@@ -1283,8 +1283,8 @@ bb.e:                                             ; preds = %bb.c
 .body.i.i:                                        ; preds = %bb.a
   %i.q = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZNSt23enable_shared_from_thisIN6spdlog12async_loggerEED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %i.f) #25, !inline_history !250
-  tail call void @_ZdlPv(ptr noundef nonnull %i.b) #24, !inline_history !249
+  tail call void @_ZNSt23enable_shared_from_thisIN6spdlog12async_loggerEED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %i.f) #25, !inline_history !252
+  tail call void @_ZdlPv(ptr noundef nonnull %i.b) #24, !inline_history !251
   resume { ptr, i32 } %i.q
 
 bb.f:                                             ; preds = %bb.e, %bb.d, %bb.b
@@ -1293,7 +1293,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %bb.b
   %i.t = load i32, ptr %i.s, align 8, !tbaa !66
   store i32 %i.t, ptr %i.r, align 8, !tbaa !66
   store ptr %i.b, ptr %i.a, align 8, !tbaa !69
-  store ptr %i.e, ptr %0, align 8, !tbaa !252
+  store ptr %i.e, ptr %0, align 8, !tbaa !255
   %i.u = getelementptr inbounds nuw i8, ptr %i.b, i64 232 ; 3 uses
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !30   ; 3 uses
   %.not.i.i.i.i.i = icmp eq ptr %i.v, null
@@ -1352,7 +1352,7 @@ bb.m:                                             ; preds = %_ZN9__gnu_cxx27__ex
   %i.ak = load ptr, ptr %i.ad, align 8, !tbaa !34
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 24
   %i.am = load ptr, ptr %i.al, align 8
-  tail call void %i.am(ptr noundef nonnull align 8 dereferenceable(16) %i.ad) #25, !inline_history !251
+  tail call void %i.am(ptr noundef nonnull align 8 dereferenceable(16) %i.ad) #25, !inline_history !253
   br label %_ZNSt12__weak_countILN9__gnu_cxx12_Lock_policyE2EEaSERKSt14__shared_countILS1_2EE.exit.i.i.i
 
 _ZNSt12__weak_countILN9__gnu_cxx12_Lock_policyE2EEaSERKSt14__shared_countILS1_2EE.exit.i.i.i: ; preds = %bb.m, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i, %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_weak_add_refEv.exit.i.i.i.i
@@ -1410,7 +1410,7 @@ bb.e:                                             ; preds = %_ZN9__gnu_cxx27__ex
   %i.j = load ptr, ptr %i.c, align 8, !tbaa !34
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 24
   %i.l = load ptr, ptr %i.k, align 8
-  tail call void %i.l(ptr noundef nonnull align 8 dereferenceable(16) %i.c) #25, !inline_history !253
+  tail call void %i.l(ptr noundef nonnull align 8 dereferenceable(16) %i.c) #25, !inline_history !256
   br label %_ZNSt10__weak_ptrIN6spdlog7details11thread_poolELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i.i
 
 _ZNSt10__weak_ptrIN6spdlog7details11thread_poolELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i.i: ; preds = %bb.e, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i, %bb.a
@@ -1445,7 +1445,7 @@ bb.i:                                             ; preds = %_ZN9__gnu_cxx27__ex
   %i.u = load ptr, ptr %i.n, align 8, !tbaa !34
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 24
   %i.w = load ptr, ptr %i.v, align 8
-  tail call void %i.w(ptr noundef nonnull align 8 dereferenceable(16) %i.n) #25, !inline_history !254
+  tail call void %i.w(ptr noundef nonnull align 8 dereferenceable(16) %i.n) #25, !inline_history !257
   br label %_ZSt8_DestroyIN6spdlog12async_loggerEEvPT_.exit
 
 _ZSt8_DestroyIN6spdlog12async_loggerEEvPT_.exit:  ; preds = %_ZNSt10__weak_ptrIN6spdlog7details11thread_poolELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i.i, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i, %bb.i
@@ -1468,7 +1468,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !256  ; 3 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !259  ; 3 uses
   %i.e = icmp eq ptr %i.d, @_ZTSSt19_Sp_make_shared_tag
   br i1 %i.e, label %_ZNKSt9type_infoeqERKS_.exit.thread, label %bb.c
 
@@ -1566,13 +1566,13 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.d = invoke noundef zeroext i1 %i.b(ptr noundef nonnull align 8 dereferenceable(32) %i.c, ptr noundef nonnull align 8 dereferenceable(32) %i.c, i32 noundef 3)
-          to label %_ZNSt14_Function_baseD2Ev.exit.i.i.i.i unwind label %bb.c, !inline_history !257 ; 0 uses
+          to label %_ZNSt14_Function_baseD2Ev.exit.i.i.i.i unwind label %bb.c, !inline_history !260 ; 0 uses
 
 bb.c:                                             ; preds = %bb.b
   %i.e = landingpad { ptr, i32 }
           catch ptr null
   %i.f = extractvalue { ptr, i32 } %i.e, 0
-  tail call void @__clang_call_terminate(ptr %i.f) #27, !inline_history !257
+  tail call void @__clang_call_terminate(ptr %i.f) #27, !inline_history !260
   unreachable
 
 _ZNSt14_Function_baseD2Ev.exit.i.i.i.i:           ; preds = %bb.b, %bb.a
@@ -1584,17 +1584,17 @@ _ZNSt14_Function_baseD2Ev.exit.i.i.i.i:           ; preds = %bb.b, %bb.a
 bb.d:                                             ; preds = %_ZNSt14_Function_baseD2Ev.exit.i.i.i.i
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.j = invoke noundef zeroext i1 %i.h(ptr noundef nonnull align 8 dereferenceable(32) %i.i, ptr noundef nonnull align 8 dereferenceable(32) %i.i, i32 noundef 3)
-          to label %"_ZNSt6thread11_State_implINS_8_InvokerISt5tupleIJZN6spdlog7details11thread_poolC1EmmSt8functionIFvvEES8_E3$_0EEEEED2Ev.exit" unwind label %bb.e, !inline_history !257 ; 0 uses
+          to label %"_ZNSt6thread11_State_implINS_8_InvokerISt5tupleIJZN6spdlog7details11thread_poolC1EmmSt8functionIFvvEES8_E3$_0EEEEED2Ev.exit" unwind label %bb.e, !inline_history !260 ; 0 uses
 
 bb.e:                                             ; preds = %bb.d
   %i.k = landingpad { ptr, i32 }
           catch ptr null
   %i.l = extractvalue { ptr, i32 } %i.k, 0
-  tail call void @__clang_call_terminate(ptr %i.l) #27, !inline_history !257
+  tail call void @__clang_call_terminate(ptr %i.l) #27, !inline_history !260
   unreachable
 
 "_ZNSt6thread11_State_implINS_8_InvokerISt5tupleIJZN6spdlog7details11thread_poolC1EmmSt8functionIFvvEES8_E3$_0EEEEED2Ev.exit": ; preds = %_ZNSt14_Function_baseD2Ev.exit.i.i.i.i, %bb.d
-  tail call void @_ZNSt6thread6_StateD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(80) %0) #25, !inline_history !257
+  tail call void @_ZNSt6thread6_StateD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(80) %0) #25, !inline_history !260
   tail call void @_ZdlPv(ptr noundef nonnull %0) #24
   ret void
 }
@@ -1617,7 +1617,7 @@ _ZNKSt8functionIFvvEEclEv.exit.i.i.i.i.i:         ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !125
-  tail call void %i.g(ptr noundef nonnull align 8 dereferenceable(32) %i.e), !inline_history !258
+  tail call void %i.g(ptr noundef nonnull align 8 dereferenceable(32) %i.e), !inline_history !261
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.c, %_ZNKSt8functionIFvvEEclEv.exit.i.i.i.i.i
@@ -1638,7 +1638,7 @@ bb.d:                                             ; preds = %_ZN6spdlog7details1
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !125
-  tail call void %i.m(ptr noundef nonnull align 8 dereferenceable(32) %i.k), !inline_history !258
+  tail call void %i.m(ptr noundef nonnull align 8 dereferenceable(32) %i.k), !inline_history !261
   ret void
 }
 
@@ -2041,14 +2041,17 @@ begin_hunk_3_@llvm.umin.i64
 !246 = !{!244, !20, i64 16}
 !247 = !{i64 4}
 !248 = !{!244, !160, i64 0}
-!249 = distinct !{null}
-!250 = distinct !{null, null, null, null}
-!251 = distinct !{null, null, null, null, null}
-!252 = !{!57, !57, i64 0}
-!253 = distinct !{null, ptr @_ZN6spdlog12async_loggerD2Ev, null, null, null}
-!254 = distinct !{null, ptr @_ZN6spdlog12async_loggerD2Ev, ptr @_ZNSt23enable_shared_from_thisIN6spdlog12async_loggerEED2Ev, null, null, null}
-!255 = !{!"_ZTSSt9type_info", !21, i64 8}
-!256 = !{!255, !21, i64 8}
-!257 = !{ptr @"_ZNSt6thread11_State_implINS_8_InvokerISt5tupleIJZN6spdlog7details11thread_poolC1EmmSt8functionIFvvEES8_E3$_0EEEEED2Ev"}
-!258 = distinct !{null, null, null, null, null, null}
+!249 = distinct !{!249, i1 true, !"_ZSt18__allocate_guardedISaISt23_Sp_counted_ptr_inplaceIN6spdlog12async_loggerESaIvELN9__gnu_cxx12_Lock_policyE2EEEESt15__allocated_ptrIT_ERS9_"}
+!250 = distinct !{!250, !249, !"_ZSt18__allocate_guardedISaISt23_Sp_counted_ptr_inplaceIN6spdlog12async_loggerESaIvELN9__gnu_cxx12_Lock_policyE2EEEESt15__allocated_ptrIT_ERS9_: argument 0"}
+!251 = distinct !{null}
+!252 = distinct !{null, null, null, null}
+!253 = distinct !{null, null, null, null, null}
+!254 = !{!250}
+!255 = !{!57, !57, i64 0}
+!256 = distinct !{null, ptr @_ZN6spdlog12async_loggerD2Ev, null, null, null}
+!257 = distinct !{null, ptr @_ZN6spdlog12async_loggerD2Ev, ptr @_ZNSt23enable_shared_from_thisIN6spdlog12async_loggerEED2Ev, null, null, null}
+!258 = !{!"_ZTSSt9type_info", !21, i64 8}
+!259 = !{!258, !21, i64 8}
+!260 = !{ptr @"_ZNSt6thread11_State_implINS_8_InvokerISt5tupleIJZN6spdlog7details11thread_poolC1EmmSt8functionIFvvEES8_E3$_0EEEEED2Ev"}
+!261 = distinct !{null, null, null, null, null, null}
 end_hunk_3

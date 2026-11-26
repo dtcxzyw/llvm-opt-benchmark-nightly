@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %bb.e
   %.sroa.69.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 64
   store ptr null, ptr %.sroa.69.0..sroa_idx.i, align 8, !noalias !87
   invoke void @_RNvXNtNtCsexYYUdYSQU6_5alloc3vec14spec_from_iterINtB4_3VecfEINtB2_12SpecFromIterfINtNtNtNtCskKLDkoKarTP_4core4iter8adapters7flatten7FlattenINtNtB4_9into_iter8IntoIterBK_EEE9from_iterCshMzyYDJGtjv_3api(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(32) %i.b, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(96) %i.a)
-          to label %bb.n unwind label %bb.m
+          to label %bb.n unwind label %bb.m, !noalias !86
 
 bb.g:                                             ; preds = %bb.e
   invoke void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef 0, i64 noundef 0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @6) #11
@@ -605,7 +605,7 @@ bb.h:                                             ; preds = %bb.g
   store ptr null, ptr %.sroa.411.0..sroa_idx.i, align 8, !noalias !103
   %.sroa.613.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 64
   store ptr null, ptr %.sroa.613.0..sroa_idx.i, align 8, !noalias !103
-  call void @_RNvXNtNtCsexYYUdYSQU6_5alloc3vec21spec_from_iter_nestedINtB4_3VecfEINtB2_18SpecFromIterNestedfINtNtNtNtCskKLDkoKarTP_4core4iter8adapters7flatten7FlatMapINtNtB4_9into_iter8IntoIterNtNtNtCshMzyYDJGtjv_3api4grpc6qdrant11DenseVectorEBR_NvYBR_INtNtB1D_7convert4FromB2R_E4fromEE9from_iterB2X_(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(32) %i.c, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(96) %i.a)
+  call void @_RNvXNtNtCsexYYUdYSQU6_5alloc3vec21spec_from_iter_nestedINtB4_3VecfEINtB2_18SpecFromIterNestedfINtNtNtNtCskKLDkoKarTP_4core4iter8adapters7flatten7FlatMapINtNtB4_9into_iter8IntoIterNtNtNtCshMzyYDJGtjv_3api4grpc6qdrant11DenseVectorEBR_NvYBR_INtNtB1D_7convert4FromB2R_E4fromEE9from_iterB2X_(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(32) %i.c, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(96) %i.a), !noalias !105
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !103
   %i.s = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   store i64 %i.n, ptr %i.s, align 8, !alias.scope !104
@@ -943,4 +943,5 @@ attributes #11 = { noreturn }
 !102 = distinct !{!102, !100, !"_RNvXsf_NtNtCshMzyYDJGtjv_3api11conversions7vectorsINtNtNtCs607s0NAIaWN_7segment10data_types7vectors21TypedMultiDenseVectorfEINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtB9_4grpc6qdrant16MultiDenseVectorE4from: argument 0"}
 !103 = !{!102, !101}
 !104 = !{!102}
+!105 = !{!101}
 end_hunk_1

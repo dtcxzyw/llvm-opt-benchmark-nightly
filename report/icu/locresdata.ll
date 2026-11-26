@@ -31,7 +31,7 @@ $__clang_call_terminate = comdat any
 define ptr @uloc_getTableStringWithFallback_78(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, ptr nofree noundef captures(none) %6) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 21 uses
-  %7 = alloca %"class.icu_78::internal::LocalOpenPointer", align 8 ; 6 uses
+  %7 = alloca %"class.icu_78::internal::LocalOpenPointer", align 8 ; 11 uses
   %8 = alloca %"class.icu_78::StackUResourceBundle", align 8 ; 12 uses
   %9 = alloca %"class.icu_78::StackUResourceBundle", align 8 ; 6 uses
   %i.b = alloca i32, align 4                      ; 6 uses
@@ -80,7 +80,7 @@ bb.g:                                             ; preds = %bb.d, %bb.e, %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %.thread76.thread96, %bb.g
-  %i.n = phi ptr [ %i.e, %bb.g ], [ %i.bj, %.thread76.thread96 ] ; 10 uses
+  %i.n = phi ptr [ %i.e, %bb.g ], [ %i.bj, %.thread76.thread96 ] ; 15 uses
   %.046 = phi ptr [ null, %bb.g ], [ %.450, %.thread76.thread96 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #9
   invoke void @_ZN6icu_7820StackUResourceBundleC1Ev(ptr noundef nonnull align 8 dereferenceable(136) %8)
@@ -105,11 +105,13 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %bb.h
   %i.q = landingpad { ptr, i32 }
           cleanup
+  store ptr %i.n, ptr %7, align 8
   br label %bb.as
 
 bb.n:                                             ; preds = %bb.i
   %i.r = landingpad { ptr, i32 }
           cleanup
+  store ptr %i.n, ptr %7, align 8
   br label %bb.ar
 
 bb.o:                                             ; preds = %bb.l, %bb.k
@@ -140,6 +142,7 @@ bb.s:                                             ; preds = %bb.r
 bb.t:                                             ; preds = %bb.j, %bb.l, %bb.p, %bb.x, %bb.v, %bb.s
   %i.aa = landingpad { ptr, i32 }
           cleanup
+  store ptr %i.n, ptr %7, align 8
   br label %bb.aq
 
 bb.u:                                             ; preds = %bb.r
@@ -198,6 +201,7 @@ bb.ab:                                            ; preds = %bb.aa
 bb.ac:                                            ; preds = %.thread76.thread
   %i.am = landingpad { ptr, i32 }
           cleanup
+  store ptr %i.n, ptr %7, align 8
   br label %bb.ap
 
 bb.ad:                                            ; preds = %bb.aa
@@ -240,6 +244,7 @@ _ZNK6icu_7810CharStringeqENS_11StringPieceE.exit: ; preds = %bb.ag
 bb.ah:                                            ; preds = %bb.aj, %_ZNK6icu_7810CharStringeqENS_11StringPieceE.exit.thread80, %bb.ae, %bb.ad
   %i.ax = landingpad { ptr, i32 }
           cleanup
+  store ptr %i.n, ptr %7, align 8
   call void @_ZN6icu_7810CharStringD2Ev(ptr noundef nonnull align 8 dead_on_return(60) dereferenceable(60) %10) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #9
   br label %bb.ap
@@ -247,7 +252,7 @@ bb.ah:                                            ; preds = %bb.aj, %_ZNK6icu_78
 _ZNK6icu_7810CharStringeqENS_11StringPieceE.exit.thread80: ; preds = %._ZNK6icu_7810CharStringeqENS_11StringPieceE.exit.thread80_crit_edge, %_ZNK6icu_7810CharStringeqENS_11StringPieceE.exit
   %i.ay = phi ptr [ %.pre81, %._ZNK6icu_7810CharStringeqENS_11StringPieceE.exit.thread80_crit_edge ], [ %i.au, %_ZNK6icu_7810CharStringeqENS_11StringPieceE.exit ]
   %i.az = invoke ptr @ures_open_78(ptr noundef %0, ptr noundef %i.ay, ptr noundef nonnull %i.a)
-          to label %bb.ai unwind label %bb.ah     ; 3 uses
+          to label %bb.ai unwind label %bb.ah     ; 2 uses
 
 bb.ai:                                            ; preds = %_ZNK6icu_7810CharStringeqENS_11StringPieceE.exit.thread80
   %.not.i = icmp eq ptr %i.n, null
@@ -258,7 +263,6 @@ bb.aj:                                            ; preds = %bb.ai
           to label %bb.ak unwind label %bb.ah
 
 bb.ak:                                            ; preds = %bb.ai, %bb.aj
-  store ptr %i.az, ptr %7, align 8, !tbaa !13
   %i.ba = load i32, ptr %i.a, align 4, !tbaa !9   ; 2 uses
   %i.bb = icmp slt i32 %i.ba, 1
   br i1 %i.bb, label %bb.al, label %.sink.split
@@ -304,14 +308,14 @@ bb.ap:                                            ; preds = %bb.ah, %bb.ac
   br label %bb.aq
 
 .thread76.thread96:                               ; preds = %bb.u, %bb.z, %.thread76, %bb.q, %bb.ao
-  %i.bj = phi ptr [ %i.bi, %bb.ao ], [ %i.n, %bb.q ], [ %i.n, %bb.z ], [ %i.n, %.thread76 ], [ %i.n, %bb.u ] ; 2 uses
+  %i.bj = phi ptr [ %i.bi, %bb.ao ], [ %i.n, %bb.q ], [ %i.n, %bb.z ], [ %i.n, %.thread76 ], [ %i.n, %bb.u ] ; 3 uses
   %.450 = phi ptr [ %.34995, %bb.ao ], [ %i.u, %bb.q ], [ %i.ae, %bb.z ], [ %i.u, %.thread76 ], [ %i.u, %bb.u ] ; 2 uses
   %.3 = phi i1 [ %.2, %bb.ao ], [ false, %bb.q ], [ false, %bb.z ], [ false, %.thread76 ], [ false, %bb.u ]
   call void @_ZN6icu_7820StackUResourceBundleD1Ev(ptr noundef nonnull align 8 dead_on_return(136) dereferenceable(136) %9) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #9
   call void @_ZN6icu_7820StackUResourceBundleD1Ev(ptr noundef nonnull align 8 dead_on_return(136) dereferenceable(136) %8) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #9
-  br i1 %.3, label %bb.h, label %.loopexit.a
+  br i1 %.3, label %bb.h, label %.loopexit
 
 bb.aq:                                            ; preds = %bb.ap, %bb.t
   %.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn, %bb.ap ], [ %i.aa, %bb.t ]
@@ -332,9 +336,13 @@ bb.as:                                            ; preds = %bb.ar, %bb.m
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   resume { ptr, i32 } %.pn.pn.pn.pn.pn
 
-.loopexit.a:                                      ; preds = %.thread76.thread96, %bb.c
-  %i.bk = phi ptr [ %i.e, %bb.c ], [ %i.bj, %.thread76.thread96 ] ; 2 uses
-  %.051 = phi ptr [ null, %bb.c ], [ %.450, %.thread76.thread96 ]
+.loopexit:                                        ; preds = %.thread76.thread96
+  store ptr %i.bj, ptr %7, align 8
+  br label %.loopexit.a
+
+.loopexit.a:                                      ; preds = %.loopexit, %bb.c
+  %i.bk = phi ptr [ %i.e, %bb.c ], [ %i.bj, %.loopexit ] ; 2 uses
+  %.051 = phi ptr [ null, %bb.c ], [ %.450, %.loopexit ]
   %.not.i71 = icmp eq ptr %i.bk, null
   br i1 %.not.i71, label %_ZN6icu_788internal16LocalOpenPointerI15UResourceBundleXadL_Z13ures_close_78EEED2Ev.exit, label %bb.at
 

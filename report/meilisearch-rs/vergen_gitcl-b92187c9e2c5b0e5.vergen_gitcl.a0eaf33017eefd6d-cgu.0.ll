@@ -202,24 +202,37 @@ bb.b:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define void @"_ZN99_$LT$alloc..collections..btree..map..IntoIter$LT$K$C$V$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17h10f907d1cd97e6c6E"(ptr align 8 %0) unnamed_addr #1 personality ptr @rust_eh_personality !guid !184 {
+define void @"_ZN99_$LT$alloc..collections..btree..map..IntoIter$LT$K$C$V$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17h10f907d1cd97e6c6E"(ptr align 8 %0) unnamed_addr #1 personality ptr @rust_eh_personality !guid !185 {
 bb.a:
-  %i.a = alloca [24 x i8], align 8                ; 6 uses
+  %i.a = alloca [24 x i8], align 8                ; 10 uses
   %i.b = alloca [8 x i8], align 8                 ; 2 uses
   %i.c = alloca [24 x i8], align 8                ; 3 uses
-  %.sroa.4 = alloca [16 x i8], align 8            ; 2 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
-  %.sroa.4.0..sroa_idx2 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %.sroa.4 = alloca [16 x i8], align 8            ; 3 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 4 uses
+  %.sroa.4.0..sroa_idx2 = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  br label %bb.b
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
+  %1 = load i64, ptr %i.d, align 8                ; 2 uses
+  %2 = icmp eq i64 %1, 0
+  br i1 %2, label %"_ZN5alloc11collections5btree3map25IntoIter$LT$K$C$V$C$A$GT$10dying_next17ha8558eb47daddaffE.exit.thread", label %"_ZN5alloc11collections5btree3map25IntoIter$LT$K$C$V$C$A$GT$10dying_next17ha8558eb47daddaffE.exit.peel"
 
-bb.b:                                             ; preds = %bb.c, %bb.a
+"_ZN5alloc11collections5btree3map25IntoIter$LT$K$C$V$C$A$GT$10dying_next17ha8558eb47daddaffE.exit.peel": ; preds = %bb.a
+  %3 = add i64 %1, -1
+  store i64 %3, ptr %i.d, align 8
+  call void @"_ZN5alloc11collections5btree8navigate75LazyLeafRange$LT$alloc..collections..btree..node..marker..Dying$C$K$C$V$GT$27deallocating_next_unchecked17h0a1aaac77d001f3eE"(ptr nonnull sret([24 x i8]) align 8 %i.a, ptr nonnull align 8 %0)
+  %.sroa.0.0.copyload1.peel = load ptr, ptr %i.a, align 8 ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4.0..sroa_idx2, i64 16, i1 false)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
+  %.not.peel = icmp eq ptr %.sroa.0.0.copyload1.peel, null
+  br i1 %.not.peel, label %.loopexit, label %bb.c
+
+bb.b:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.e = load i64, ptr %i.d, align 8              ; 2 uses
   %i.f = icmp eq i64 %i.e, 0
   br i1 %i.f, label %"_ZN5alloc11collections5btree3map25IntoIter$LT$K$C$V$C$A$GT$10dying_next17ha8558eb47daddaffE.exit.thread", label %"_ZN5alloc11collections5btree3map25IntoIter$LT$K$C$V$C$A$GT$10dying_next17ha8558eb47daddaffE.exit"
 
-"_ZN5alloc11collections5btree3map25IntoIter$LT$K$C$V$C$A$GT$10dying_next17ha8558eb47daddaffE.exit.thread": ; preds = %bb.b
+"_ZN5alloc11collections5btree3map25IntoIter$LT$K$C$V$C$A$GT$10dying_next17ha8558eb47daddaffE.exit.thread": ; preds = %bb.b, %bb.a
   call void @"_ZN5alloc11collections5btree8navigate75LazyLeafRange$LT$alloc..collections..btree..node..marker..Dying$C$K$C$V$GT$16deallocating_end17ha2195f23b815e2c5E"(ptr nonnull align 8 %0)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %.loopexit
@@ -234,19 +247,20 @@ bb.b:                                             ; preds = %bb.c, %bb.a
   %.not = icmp eq ptr %.sroa.0.0.copyload1, null
   br i1 %.not, label %.loopexit, label %bb.c
 
-bb.c:                                             ; preds = %"_ZN5alloc11collections5btree3map25IntoIter$LT$K$C$V$C$A$GT$10dying_next17ha8558eb47daddaffE.exit"
-  store ptr %.sroa.0.0.copyload1, ptr %i.c, align 8
+bb.c:                                             ; preds = %"_ZN5alloc11collections5btree3map25IntoIter$LT$K$C$V$C$A$GT$10dying_next17ha8558eb47daddaffE.exit.peel", %"_ZN5alloc11collections5btree3map25IntoIter$LT$K$C$V$C$A$GT$10dying_next17ha8558eb47daddaffE.exit"
+  %.sroa.0.0.copyload1.peel.sink = phi ptr [ %.sroa.0.0.copyload1, %"_ZN5alloc11collections5btree3map25IntoIter$LT$K$C$V$C$A$GT$10dying_next17ha8558eb47daddaffE.exit" ], [ %.sroa.0.0.copyload1.peel, %"_ZN5alloc11collections5btree3map25IntoIter$LT$K$C$V$C$A$GT$10dying_next17ha8558eb47daddaffE.exit.peel" ]
+  store ptr %.sroa.0.0.copyload1.peel.sink, ptr %i.c, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4, i64 16, i1 false)
-  store ptr %0, ptr %i.b, align 8
   invoke void @"_ZN5alloc11collections5btree4node173Handle$LT$alloc..collections..btree..node..NodeRef$LT$alloc..collections..btree..node..marker..Dying$C$K$C$V$C$NodeType$GT$$C$alloc..collections..btree..node..marker..KV$GT$12drop_key_val17h31e22435ffbf5aa2E"(ptr nonnull align 8 %i.c)
-          to label %bb.b unwind label %bb.d
+          to label %bb.b unwind label %bb.d, !llvm.loop !184
 
-.loopexit:                                        ; preds = %"_ZN5alloc11collections5btree3map25IntoIter$LT$K$C$V$C$A$GT$10dying_next17ha8558eb47daddaffE.exit", %"_ZN5alloc11collections5btree3map25IntoIter$LT$K$C$V$C$A$GT$10dying_next17ha8558eb47daddaffE.exit.thread"
+.loopexit:                                        ; preds = %"_ZN5alloc11collections5btree3map25IntoIter$LT$K$C$V$C$A$GT$10dying_next17ha8558eb47daddaffE.exit", %"_ZN5alloc11collections5btree3map25IntoIter$LT$K$C$V$C$A$GT$10dying_next17ha8558eb47daddaffE.exit.peel", %"_ZN5alloc11collections5btree3map25IntoIter$LT$K$C$V$C$A$GT$10dying_next17ha8558eb47daddaffE.exit.thread"
   ret void
 
 bb.d:                                             ; preds = %bb.c
   %i.h = landingpad { ptr, i32 }
           cleanup
+  store ptr %0, ptr %i.b, align 8
   invoke void @"_ZN4core3ptr250drop_in_place$LT$$LT$alloc..collections..btree..map..IntoIter$LT$K$C$V$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$..drop..DropGuard$LT$std..ffi..os_str..OsString$C$core..option..Option$LT$std..ffi..os_str..OsString$GT$$C$alloc..alloc..Global$GT$$GT$17h44f5fa1ef972a6e2E"(ptr nonnull align 8 %i.b) #25
           to label %bb.f unwind label %bb.e
 
@@ -649,5 +663,7 @@ attributes #26 = { cold noreturn nounwind }
 !181 = !{i64 2037136746814930660}
 !182 = !{i64 9191287270999120499}
 !183 = !{i64 -870590069265506882}
-!184 = !{i64 -8213806773658643385}
+!184 = distinct !{!184, !186}
+!185 = !{i64 -8213806773658643385}
+!186 = !{!"llvm.loop.peeled.count", i32 1}
 end_hunk_1

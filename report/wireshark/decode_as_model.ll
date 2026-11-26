@@ -202,10 +202,9 @@ bb.b:                                             ; preds = %bb.a
 
 _ZN9QtPrivate21qMakeForeachContainerIR5QListIN13DecodeAsModel9UIntEntryEEEENS_17QForeachContainerINSt5decayIT_E4typeEEEOS8_.exit: ; preds = %bb.a, %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
-  store ptr %i.f, ptr %i.k, align 8, !alias.scope !52
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 32
   %.idx = mul i64 %i.i, 56                        ; 2 uses
-  %i.m = getelementptr i8, ptr %i.f, i64 %.idx    ; 2 uses
+  %i.m = getelementptr i8, ptr %i.f, i64 %.idx    ; 3 uses
   store ptr %i.m, ptr %i.l, align 8, !alias.scope !52
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 40
   store i32 1, ptr %i.n, align 8, !alias.scope !52
@@ -213,6 +212,8 @@ _ZN9QtPrivate21qMakeForeachContainerIR5QListIN13DecodeAsModel9UIntEntryEEEENS_17
   br i1 %.not274302, label %._crit_edge, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %bb.r, %_ZN9QtPrivate21qMakeForeachContainerIR5QListIN13DecodeAsModel9UIntEntryEEEENS_17QForeachContainerINSt5decayIT_E4typeEEEOS8_.exit
+  %.lcssa = phi ptr [ %i.f, %_ZN9QtPrivate21qMakeForeachContainerIR5QListIN13DecodeAsModel9UIntEntryEEEENS_17QForeachContainerINSt5decayIT_E4typeEEEOS8_.exit ], [ %i.m, %bb.r ]
+  store ptr %.lcssa, ptr %i.k, align 8
   %i.o = load ptr, ptr %1, align 8                ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %i.o, null
   br i1 %.not.i.i.i.i, label %_ZN9QtPrivate17QForeachContainerI5QListIN13DecodeAsModel9UIntEntryEEED2Ev.exit, label %_ZN17QArrayDataPointerIN13DecodeAsModel9UIntEntryEE5derefEv.exit.i.i.i
@@ -295,7 +296,7 @@ _ZN9QtPrivate21qMakeForeachContainerIR5QListISt4pairIPKcS4_EEEENS_17QForeachCont
   br i1 %.not275303, label %._crit_edge306, label %.lr.ph305
 
 .lr.ph:                                           ; preds = %_ZN9QtPrivate21qMakeForeachContainerIR5QListIN13DecodeAsModel9UIntEntryEEEENS_17QForeachContainerINSt5decayIT_E4typeEEEOS8_.exit, %bb.r
-  %i.ak = phi ptr [ %i.be, %bb.r ], [ %i.f, %_ZN9QtPrivate21qMakeForeachContainerIR5QListIN13DecodeAsModel9UIntEntryEEEENS_17QForeachContainerINSt5decayIT_E4typeEEEOS8_.exit ] ; 4 uses
+  %i.ak = phi ptr [ %i.be, %bb.r ], [ %i.f, %_ZN9QtPrivate21qMakeForeachContainerIR5QListIN13DecodeAsModel9UIntEntryEEEENS_17QForeachContainerINSt5decayIT_E4typeEEEOS8_.exit ] ; 5 uses
   %i.al = getelementptr i8, ptr %i.ak, i64 8      ; 2 uses
   %i.am = load ptr, ptr %i.al, align 8            ; 2 uses
   %.not.i.i = icmp eq ptr %i.am, null
@@ -352,6 +353,7 @@ bb.o:                                             ; preds = %bb.n
 bb.p:                                             ; preds = %bb.q, %bb.o, %bb.n, %bb.l, %bb.k, %bb.j, %bb.i, %bb.g, %.lr.ph
   %i.bb = landingpad { ptr, i32 }
           cleanup
+  store ptr %i.ak, ptr %i.k, align 8
   call void @_ZN9QtPrivate17QForeachContainerI5QListIN13DecodeAsModel9UIntEntryEEED2Ev(ptr noundef nonnull align 8 dead_on_return(44) dereferenceable_or_null(44) %1) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #22
   br label %_ZN9QtPrivate17QForeachContainerI5QListISt4pairIPKcS4_EEED2Ev.exit137
@@ -365,8 +367,7 @@ bb.q:                                             ; preds = %bb.m, %bb.o, %bb.h
           to label %bb.r unwind label %bb.p
 
 bb.r:                                             ; preds = %bb.q
-  %i.be = getelementptr i8, ptr %i.ak, i64 56     ; 3 uses
-  store ptr %i.be, ptr %i.k, align 8
+  %i.be = getelementptr i8, ptr %i.ak, i64 56     ; 2 uses
   %.not274 = icmp eq ptr %i.be, %i.m
   br i1 %.not274, label %._crit_edge, label %.lr.ph, !llvm.loop !34
 

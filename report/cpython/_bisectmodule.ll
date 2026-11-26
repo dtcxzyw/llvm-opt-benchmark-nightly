@@ -202,14 +202,15 @@ bb.n:                                             ; preds = %bb.m
 .thread83:                                        ; preds = %bb.n, %bb.l
   %i.af = phi i64 [ -1, %bb.l ], [ %.pre93, %bb.n ] ; 2 uses
   %i.ag = getelementptr i8, ptr %i.l, i64 32
-  %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !45 ; 3 uses
+  %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !45 ; 4 uses
   %i.ai = icmp eq ptr %i.ah, @_Py_NoneStruct
   br i1 %i.ai, label %.thread88, label %bb.o
 
 .thread88:                                        ; preds = %.thread, %bb.k, %bb.n, %.thread83
   %i.aj = phi i64 [ %i.af, %.thread83 ], [ %.pre93, %bb.n ], [ -1, %.thread ], [ -1, %bb.k ]
+  %.04292 = phi ptr [ %i.ah, %.thread83 ], [ @_Py_NoneStruct, %bb.n ], [ @_Py_NoneStruct, %.thread ], [ @_Py_NoneStruct, %bb.k ]
   %.28291 = phi i64 [ %.1, %.thread83 ], [ %.1, %bb.n ], [ 0, %.thread ], [ %i.s, %bb.k ]
-  %i.ak = call fastcc i64 @internal_bisect_right(ptr noundef %i.m, ptr noundef %i.o, i64 noundef %.28291, i64 noundef %i.aj, ptr noundef nonnull @_Py_NoneStruct)
+  %i.ak = call fastcc i64 @internal_bisect_right(ptr noundef %i.m, ptr noundef %i.o, i64 noundef %.28291, i64 noundef %i.aj, ptr noundef nonnull %.04292)
   br label %Py_DECREF.exit36.i
 
 bb.o:                                             ; preds = %.thread83
@@ -528,14 +529,15 @@ bb.n:                                             ; preds = %bb.m
 .thread83:                                        ; preds = %bb.n, %bb.l
   %i.af = phi i64 [ -1, %bb.l ], [ %.pre93, %bb.n ] ; 2 uses
   %i.ag = getelementptr i8, ptr %i.l, i64 32
-  %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !45 ; 3 uses
+  %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !45 ; 4 uses
   %i.ai = icmp eq ptr %i.ah, @_Py_NoneStruct
   br i1 %i.ai, label %.thread88, label %bb.o
 
 .thread88:                                        ; preds = %.thread, %bb.k, %bb.n, %.thread83
   %i.aj = phi i64 [ %i.af, %.thread83 ], [ %.pre93, %bb.n ], [ -1, %.thread ], [ -1, %bb.k ]
+  %.04292 = phi ptr [ %i.ah, %.thread83 ], [ @_Py_NoneStruct, %bb.n ], [ @_Py_NoneStruct, %.thread ], [ @_Py_NoneStruct, %bb.k ]
   %.28291 = phi i64 [ %.1, %.thread83 ], [ %.1, %bb.n ], [ 0, %.thread ], [ %i.s, %bb.k ]
-  %i.ak = call fastcc i64 @internal_bisect_left(ptr noundef %i.m, ptr noundef %i.o, i64 noundef %.28291, i64 noundef %i.aj, ptr noundef nonnull @_Py_NoneStruct)
+  %i.ak = call fastcc i64 @internal_bisect_left(ptr noundef %i.m, ptr noundef %i.o, i64 noundef %.28291, i64 noundef %i.aj, ptr noundef nonnull %.04292)
   br label %Py_DECREF.exit36.i
 
 bb.o:                                             ; preds = %.thread83

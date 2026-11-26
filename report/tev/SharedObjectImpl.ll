@@ -171,6 +171,7 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local void @_ZN16AdobeXMPCore_Int16SharedObjectImplD0Ev(ptr noundef nonnull align 8 dereferenceable(24) initializes((0, 8)) %0) unnamed_addr #1 align 2 {
 bb.a:
+  store ptr getelementptr inbounds nuw inrange(-72, 48) (i8, ptr @_ZTVN16AdobeXMPCore_Int16SharedObjectImplE, i64 72), ptr %0, align 8, !tbaa !10
   tail call void @_ZdlPv(ptr noundef nonnull %0) #9
   ret void
 }
@@ -184,7 +185,8 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !10
   %i.b = getelementptr inbounds i8, ptr %i.a, i64 -48
   %i.c = load i64, ptr %i.b, align 8
-  %i.d = getelementptr inbounds i8, ptr %0, i64 %i.c
+  %i.d = getelementptr inbounds i8, ptr %0, i64 %i.c ; 2 uses
+  store ptr getelementptr inbounds nuw inrange(-72, 48) (i8, ptr @_ZTVN16AdobeXMPCore_Int16SharedObjectImplE, i64 72), ptr %i.d, align 8, !tbaa !10
   tail call void @_ZdlPv(ptr noundef nonnull align 8 dereferenceable(24) %i.d) #9, !inline_history !12
   ret void
 }

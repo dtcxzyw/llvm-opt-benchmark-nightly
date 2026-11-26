@@ -202,13 +202,16 @@ bb.i:                                             ; preds = %bb.f
   %i.s = phi ptr [ %i.t, %.preheader ], [ %i.q, %bb.i ] ; 2 uses
   store i8 0, ptr %i.s, align 1, !tbaa !31
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 1 ; 3 uses
-  store ptr %i.t, ptr %3, align 8, !tbaa !71
   %i.u = load i8, ptr %i.t, align 1, !tbaa !31
   %i.v = icmp eq i8 %i.u, 47
-  br i1 %i.v, label %.preheader, label %.loopexit.a, !llvm.loop !95
+  br i1 %i.v, label %.preheader, label %.loopexit, !llvm.loop !95
 
-.loopexit.a:                                      ; preds = %.preheader, %bb.i
-  %.015 = phi ptr [ @H5L__exists_final_cb, %bb.i ], [ @H5L__exists_inter_cb, %.preheader ]
+.loopexit:                                        ; preds = %.preheader
+  store ptr %i.t, ptr %3, align 8, !tbaa !71
+  br label %.loopexit.a
+
+.loopexit.a:                                      ; preds = %.loopexit, %bb.i
+  %.015 = phi ptr [ @H5L__exists_final_cb, %bb.i ], [ @H5L__exists_inter_cb, %.loopexit ]
   %i.w = call i32 @H5G_traverse(ptr noundef %0, ptr noundef nonnull %.013, i32 noundef 5, ptr noundef nonnull %.015, ptr noundef nonnull %3) #10
   %i.x = icmp slt i32 %i.w, 0
   br i1 %i.x, label %bb.j, label %bb.k

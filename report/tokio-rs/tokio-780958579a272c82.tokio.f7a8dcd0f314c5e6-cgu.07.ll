@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.e
   store ptr %i.q, ptr %i.c, align 8, !alias.scope !140, !noalias !135
   store i8 3, ptr %i.a, align 8, !alias.scope !140, !noalias !135
   invoke void @_RNvXsd_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_11CustomOwnerNtNtNtB9_3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.c)
-          to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECslghKHtsL3a4_5tokio.exit.i unwind label %bb.i
+          to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECslghKHtsL3a4_5tokio.exit.i unwind label %bb.i, !noalias !135
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECslghKHtsL3a4_5tokio.exit.i: ; preds = %bb.g, %bb.f, %bb.e, %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !135
@@ -607,14 +607,21 @@ bb.p:                                             ; preds = %bb.n
   %i.an = load ptr, ptr %i.am, align 8, !noalias !210, !noundef !4 ; 2 uses
   %.not.i11.i = icmp eq ptr %i.an, null
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.al, i8 0, i64 16, i1 false), !noalias !210
-  br i1 %.not.i11.i, label %_RNvMNtNtNtCslghKHtsL3a4_5tokio7runtime4time5wheelNtB2_5Wheel18process_expiration.exit, label %.lr.ph.i.a
+  br i1 %.not.i11.i, label %_RNvMNtNtNtCslghKHtsL3a4_5tokio7runtime4time5wheelNtB2_5Wheel18process_expiration.exit, label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %bb.p
+  %.promoted.i = load ptr, ptr %i.h, align 8, !alias.scope !208
+  %.promoted15.i = load ptr, ptr %i.i, align 8, !alias.scope !208
+  br label %.lr.ph.i.a
 
 bb.q:                                             ; preds = %bb.n
   call void @_RNvNtCs3oUPovFnLWP_4core9panicking18panic_bounds_check(i64 noundef %i.ad, i64 noundef 64, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @31) #23, !noalias !210
   unreachable
 
-.lr.ph.i.a:                                       ; preds = %bb.p, %bb.aa
-  %.sroa.4.012.i = phi ptr [ %i.ao, %bb.aa ], [ %i.an, %bb.p ] ; 11 uses
+.lr.ph.i.a:                                       ; preds = %bb.aa, %.lr.ph.i
+  %2 = phi ptr [ %.promoted15.i, %.lr.ph.i ], [ %4, %bb.aa ] ; 3 uses
+  %.sroa.4.01214.i = phi ptr [ %.promoted.i, %.lr.ph.i ], [ %.sroa.4.01213.i, %bb.aa ] ; 5 uses
+  %.sroa.4.012.i = phi ptr [ %i.an, %.lr.ph.i ], [ %i.ao, %bb.aa ] ; 13 uses
   %i.ao = load ptr, ptr %.sroa.4.012.i, align 8, !noalias !211, !noundef !4 ; 3 uses
   %.not6.i.i = icmp eq ptr %i.ao, null            ; 2 uses
   br i1 %.not6.i.i, label %bb.s, label %bb.r
@@ -650,15 +657,14 @@ bb.u:                                             ; preds = %bb.s
   call void @llvm.experimental.noalias.scope.decl(metadata !212)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !210
   store ptr %.sroa.4.012.i, ptr %i.c, align 8, !noalias !213
-  %2 = load ptr, ptr %i.h, align 8, !alias.scope !214, !noundef !4 ; 4 uses
-  %i.ba = icmp eq ptr %2, %.sroa.4.012.i
+  %i.ba = icmp eq ptr %.sroa.4.01214.i, %.sroa.4.012.i
   br i1 %i.ba, label %bb.w, label %bb.v, !prof !17
 
 bb.v:                                             ; preds = %bb.u
   %i.bb = getelementptr inbounds nuw i8, ptr %.sroa.4.012.i, i64 8
-  store ptr %2, ptr %i.bb, align 8, !noalias !213
+  store ptr %.sroa.4.01214.i, ptr %i.bb, align 8, !noalias !213
   store ptr null, ptr %.sroa.4.012.i, align 8, !noalias !213
-  %.not1.i.i = icmp eq ptr %2, null
+  %.not1.i.i = icmp eq ptr %.sroa.4.01214.i, null
   br i1 %.not1.i.i, label %bb.y, label %bb.x
 
 bb.w:                                             ; preds = %bb.u
@@ -666,13 +672,12 @@ bb.w:                                             ; preds = %bb.u
   unreachable
 
 bb.x:                                             ; preds = %bb.v
-  store ptr %.sroa.4.012.i, ptr %2, align 8, !noalias !213
+  store ptr %.sroa.4.012.i, ptr %.sroa.4.01214.i, align 8, !noalias !213
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.x, %bb.v
   store ptr %.sroa.4.012.i, ptr %i.h, align 8, !alias.scope !214
-  %3 = load ptr, ptr %i.i, align 8, !alias.scope !214, !noundef !4
-  %.not2.i.i = icmp eq ptr %3, null
+  %.not2.i.i = icmp eq ptr %2, null
   br i1 %.not2.i.i, label %bb.z, label %_RNvMs2_NtNtCslghKHtsL3a4_5tokio4util11linked_listINtB5_10LinkedListNtNtNtNtB9_7runtime4time5entry11TimerSharedE10push_frontB9_.exit.i
 
 bb.z:                                             ; preds = %bb.y
@@ -680,10 +685,13 @@ bb.z:                                             ; preds = %bb.y
   br label %_RNvMs2_NtNtCslghKHtsL3a4_5tokio4util11linked_listINtB5_10LinkedListNtNtNtNtB9_7runtime4time5entry11TimerSharedE10push_frontB9_.exit.i
 
 _RNvMs2_NtNtCslghKHtsL3a4_5tokio4util11linked_listINtB5_10LinkedListNtNtNtNtB9_7runtime4time5entry11TimerSharedE10push_frontB9_.exit.i: ; preds = %bb.z, %bb.y
+  %3 = phi ptr [ %2, %bb.y ], [ %.sroa.4.012.i, %bb.z ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !210
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.ab, %_RNvMs2_NtNtCslghKHtsL3a4_5tokio4util11linked_listINtB5_10LinkedListNtNtNtNtB9_7runtime4time5entry11TimerSharedE10push_frontB9_.exit.i
+  %4 = phi ptr [ %2, %bb.ab ], [ %3, %_RNvMs2_NtNtCslghKHtsL3a4_5tokio4util11linked_listINtB5_10LinkedListNtNtNtNtB9_7runtime4time5entry11TimerSharedE10push_frontB9_.exit.i ]
+  %.sroa.4.01213.i = phi ptr [ %.sroa.4.01214.i, %bb.ab ], [ %.sroa.4.012.i, %_RNvMs2_NtNtCslghKHtsL3a4_5tokio4util11linked_listINtB5_10LinkedListNtNtNtNtB9_7runtime4time5entry11TimerSharedE10push_frontB9_.exit.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !210
   br i1 %.not6.i.i, label %_RNvMNtNtNtCslghKHtsL3a4_5tokio7runtime4time5wheelNtB2_5Wheel18process_expiration.exit, label %.lr.ph.i.a
 
@@ -1086,7 +1094,7 @@ begin_hunk_2_@llvm.experimental.noalias.scope.decl
 !220 = distinct !{!220, i1 true, !"_RNvMsG_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecNtNtNtCs3oUPovFnLWP_4core4task4wake5WakerE8push_mutCslghKHtsL3a4_5tokio"}
 !221 = distinct !{!221, !220, !"_RNvMsG_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecNtNtNtCs3oUPovFnLWP_4core4task4wake5WakerE8push_mutCslghKHtsL3a4_5tokio: argument 0"}
 !222 = distinct !{!222, !220, !"_RNvMsG_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecNtNtNtCs3oUPovFnLWP_4core4task4wake5WakerE8push_mutCslghKHtsL3a4_5tokio: argument 1"}
-!223 = distinct !{null}
+!223 = distinct !{null, null}
 !224 = !{!221}
 !225 = !{!222}
 !226 = distinct !{!226, i1 true, !"_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsaL1QbXo9JQH_3std6thread6thread6ThreadECslghKHtsL3a4_5tokio"}

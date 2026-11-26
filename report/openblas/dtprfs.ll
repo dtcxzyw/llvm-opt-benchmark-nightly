@@ -149,8 +149,9 @@ bb.p:                                             ; preds = %bb.n
   %i.as = fmul double %i.am, %i.ao                ; 4 uses
   %i.at = sext i32 %i.k to i64
   %i.au = sext i32 %i.h to i64                    ; 3 uses
+  %15 = add nuw i32 %i.ar, 1
+  %i.av = zext i32 %15 to i64
   %.pre = load i32, ptr %3, align 4, !tbaa !69
-  %i.av = zext nneg i32 %i.ar to i64
   %scevgep = getelementptr i8, ptr %12, i64 -8
   %i.aw = mul nsw i64 %i.au, -8
   %i.ax = add i64 %i.b, -8
@@ -176,7 +177,7 @@ bb.p:                                             ; preds = %bb.n
 bb.q:                                             ; preds = %.lr.ph665, %._crit_edge660.thread
   %indvar1201 = phi i64 [ 0, %.lr.ph665 ], [ %indvar.next1202, %._crit_edge660.thread ] ; 2 uses
   %i.bc = phi i32 [ %.pre, %.lr.ph665 ], [ %i.amy, %._crit_edge660.thread ]
-  %indvars.iv807 = phi i64 [ 1, %.lr.ph665 ], [ %indvars.iv.next808, %._crit_edge660.thread ] ; 7 uses
+  %indvars.iv807 = phi i64 [ 1, %.lr.ph665 ], [ %indvars.iv.next808, %._crit_edge660.thread ] ; 6 uses
   %i.bd = mul nsw i64 %indvars.iv807, %i.at       ; 12 uses
   %i.be = getelementptr [8 x i8], ptr %i.m, i64 %i.bd
   %i.bf = getelementptr i8, ptr %i.be, i64 8
@@ -579,10 +580,10 @@ bb.ao:                                            ; preds = %._crit_edge660
   br label %._crit_edge660.thread
 
 ._crit_edge660.thread:                            ; preds = %bb.an, %._crit_edge660, %bb.ao
-  %indvars.iv.next808 = add nuw nsw i64 %indvars.iv807, 1
-  %.not518.not = icmp samesign ult i64 %indvars.iv807, %i.av
+  %indvars.iv.next808 = add nuw nsw i64 %indvars.iv807, 1 ; 2 uses
+  %exitcond811.not = icmp eq i64 %indvars.iv.next808, %i.av
   %indvar.next1202 = add i64 %indvar1201, 1
-  br i1 %.not518.not, label %bb.q, label %.loopexit, !llvm.loop !68
+  br i1 %exitcond811.not, label %.loopexit, label %bb.q, !llvm.loop !68
 
 .loopexit:                                        ; preds = %._crit_edge660.thread, %bb.n, %.lr.ph669.preheader, %bb.p, %bb.o, %.thread
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #7

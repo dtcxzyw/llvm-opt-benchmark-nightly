@@ -204,7 +204,7 @@ bb.a:
 
 .noexc1.i:                                        ; preds = %.noexc.i
   store ptr null, ptr %i.d, align 8, !tbaa !34
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 40
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !35
   invoke void @MyFree(ptr noundef %i.g)
           to label %_ZN9NCompress2NZ8CDecoderD2Ev.exit unwind label %bb.b, !inline_history !38
@@ -217,6 +217,7 @@ bb.b:                                             ; preds = %.noexc1.i, %.noexc.
   unreachable
 
 _ZN9NCompress2NZ8CDecoderD2Ev.exit:               ; preds = %.noexc1.i
+  store ptr null, ptr %i.f, align 8, !tbaa !35
   tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 56) #13
   ret void
 }
@@ -244,7 +245,7 @@ bb.a:
 
 .noexc1.i.i:                                      ; preds = %.noexc.i.i
   store ptr null, ptr %i.d, align 8, !tbaa !34
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !35
   invoke void @MyFree(ptr noundef %i.g)
           to label %_ZN9NCompress2NZ8CDecoderD0Ev.exit unwind label %bb.b, !inline_history !54
@@ -257,6 +258,7 @@ bb.b:                                             ; preds = %.noexc1.i.i, %.noex
   unreachable
 
 _ZN9NCompress2NZ8CDecoderD0Ev.exit:               ; preds = %.noexc1.i.i
+  store ptr null, ptr %i.f, align 8, !tbaa !35
   tail call void @_ZdlPvm(ptr noundef nonnull align 8 dereferenceable(56) %i.a, i64 noundef 56) #13, !inline_history !55
   ret void
 }

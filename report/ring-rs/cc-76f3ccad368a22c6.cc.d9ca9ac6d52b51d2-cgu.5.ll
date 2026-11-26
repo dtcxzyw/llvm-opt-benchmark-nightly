@@ -202,7 +202,6 @@ bb.a:
   store i64 0, ptr %i.j, align 8
   store ptr %i.e, ptr %i.d, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
-  store i64 0, ptr %i.k, align 8
   %i.l = getelementptr inbounds nuw [24 x i8], ptr %1, i64 %2
   store ptr %1, ptr %i.c, align 8
   %.sroa.0.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8
@@ -214,40 +213,52 @@ bb.a:
   br i1 %i.m, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %bb.g
-  %i.n = phi i64 [ %.pr, %bb.g ], [ %i.g, %bb.a ]
-  %i.o = add i64 %i.n, -1
+  %3 = phi i64 [ %.pr, %bb.g ], [ %i.g, %bb.a ]
+  %i.n = phi i64 [ %i.q, %bb.g ], [ 0, %bb.a ]
+  %i.o = add i64 %3, -1
   store i64 %i.o, ptr %.sroa.2.0..sroa_idx, align 8
   %i.p = invoke { i64, ptr } @_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterNtNtNtCsaL1QbXo9JQH_3std3ffi6os_str8OsStringEENtNtNtB8_6traits8iterator8Iterator4nextCsiHivYpkJ4Hu_2cc(ptr nonnull align 8 %i.c)
-          to label %bb.b unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
+          to label %bb.b unwind label %.loopexit  ; 2 uses
 
 ._crit_edge:                                      ; preds = %bb.b, %bb.g, %bb.a
   store i64 %2, ptr %i.j, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.e, i64 24, i1 false)
   ret void
 
-.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.d, %.lr.ph, %bb.e
+.loopexit:                                        ; preds = %.lr.ph, %bb.d
+  %4 = phi i64 [ %i.n, %.lr.ph ], [ %i.q, %bb.d ]
+  %lpad.loopexit = landingpad { ptr, i32 }
+          cleanup
+  store i64 %4, ptr %i.k, align 8
+  br label %5
+
+.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.e
   %lpad.loopexit.split-lp19 = landingpad { ptr, i32 }
           cleanup
+  br label %5
+
+5:                                                ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %.loopexit
+  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp19, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNvXNvMNtCs1xwejQucwHj_5alloc5sliceSp9to_vec_inpNtBH_10ConvertVec6to_vec9DropGuardNtNtNtCsaL1QbXo9JQH_3std3ffi6os_str8OsStringNtNtBM_5alloc6GlobalEECsiHivYpkJ4Hu_2cc(ptr nonnull align 8 %i.d) #23
           to label %bb.i unwind label %bb.h
 
 bb.b:                                             ; preds = %.lr.ph
-  %i.q = extractvalue { i64, ptr } %i.p, 0        ; 4 uses
+  %i.q = extractvalue { i64, ptr } %i.p, 0        ; 6 uses
   %i.r = extractvalue { i64, ptr } %i.p, 1        ; 2 uses
   %.not = icmp eq ptr %i.r, null
   br i1 %.not, label %._crit_edge, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  store i64 %i.q, ptr %i.k, align 8
   %i.s = icmp ult i64 %i.q, %i.g
   br i1 %i.s, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   invoke void @_RNvXsb_NtCs1xwejQucwHj_5alloc3vecINtB5_3VechENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCsiHivYpkJ4Hu_2cc(ptr nonnull sret([24 x i8]) align 8 %i.a, ptr nonnull align 8 %i.r)
-          to label %bb.g unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %bb.g unwind label %.loopexit
 
 bb.e:                                             ; preds = %bb.c
+  store i64 %i.q, ptr %i.k, align 8
   invoke void @_RNvNtCs3oUPovFnLWP_4core9panicking18panic_bounds_check(i64 %i.q, i64 %i.g, ptr nonnull align 8 @3) #26
           to label %bb.f unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -263,18 +274,18 @@ bb.g:                                             ; preds = %bb.d
   %i.u = icmp eq i64 %.pr, 0
   br i1 %i.u, label %._crit_edge, label %.lr.ph
 
-bb.h:                                             ; preds = %bb.i, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+bb.h:                                             ; preds = %bb.i, %5
   %i.v = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #24
   unreachable
 
-bb.i:                                             ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+bb.i:                                             ; preds = %5
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtNtCsaL1QbXo9JQH_3std3ffi6os_str8OsStringEECsiHivYpkJ4Hu_2cc(ptr nonnull align 8 %i.e) #23
           to label %bb.j unwind label %bb.h
 
 bb.j:                                             ; preds = %bb.i
-  resume { ptr, i32 } %lpad.loopexit.split-lp19
+  resume { ptr, i32 } %lpad.phi
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
@@ -294,7 +305,6 @@ bb.a:
   store i64 0, ptr %i.i, align 8
   store ptr %i.d, ptr %i.c, align 8
   %i.j = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
-  store i64 0, ptr %i.j, align 8
   %i.k = getelementptr inbounds nuw [48 x i8], ptr %1, i64 %2
   store ptr %1, ptr %i.b, align 8
   %.sroa.0.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -306,39 +316,51 @@ bb.a:
   br i1 %i.l, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %bb.g
-  %i.m = phi i64 [ %.pr, %bb.g ], [ %i.f, %bb.a ]
-  %i.n = add i64 %i.m, -1
+  %3 = phi i64 [ %.pr, %bb.g ], [ %i.f, %bb.a ]
+  %i.m = phi i64 [ %i.p, %bb.g ], [ 0, %bb.a ]
+  %i.n = add i64 %3, -1
   store i64 %i.n, ptr %.sroa.2.0..sroa_idx, align 8
   %i.o = invoke { i64, ptr } @_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterTNtNtNtCsaL1QbXo9JQH_3std3ffi6os_str8OsStringB1y_EEENtNtNtB8_6traits8iterator8Iterator4nextCsiHivYpkJ4Hu_2cc(ptr nonnull align 8 %i.b)
-          to label %bb.b unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
+          to label %bb.b unwind label %.loopexit  ; 2 uses
 
 ._crit_edge:                                      ; preds = %bb.b, %bb.g, %bb.a
   store i64 %2, ptr %i.i, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.d, i64 24, i1 false)
   ret void
 
-.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.d, %.lr.ph, %bb.e
+.loopexit:                                        ; preds = %.lr.ph, %bb.d
+  %4 = phi i64 [ %i.m, %.lr.ph ], [ %i.p, %bb.d ]
+  %lpad.loopexit = landingpad { ptr, i32 }
+          cleanup
+  store i64 %4, ptr %i.j, align 8
+  br label %5
+
+.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.e
   %lpad.loopexit.split-lp19 = landingpad { ptr, i32 }
           cleanup
+  br label %5
+
+5:                                                ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %.loopexit
+  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp19, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNvXNvMNtCs1xwejQucwHj_5alloc5sliceSp9to_vec_inpNtBH_10ConvertVec6to_vec9DropGuardTNtNtNtCsaL1QbXo9JQH_3std3ffi6os_str8OsStringB1Y_ENtNtBM_5alloc6GlobalEECsiHivYpkJ4Hu_2cc(ptr nonnull align 8 %i.c) #23
           to label %bb.i unwind label %bb.h
 
 bb.b:                                             ; preds = %.lr.ph
-  %i.p = extractvalue { i64, ptr } %i.o, 0        ; 4 uses
+  %i.p = extractvalue { i64, ptr } %i.o, 0        ; 6 uses
   %i.q = extractvalue { i64, ptr } %i.o, 1        ; 2 uses
   %.not = icmp eq ptr %i.q, null
   br i1 %.not, label %._crit_edge, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  store i64 %i.p, ptr %i.j, align 8
   %i.r = icmp ult i64 %i.p, %i.f
   br i1 %i.r, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
   invoke void @_RNvYTNtNtNtCsaL1QbXo9JQH_3std3ffi6os_str8OsStringB3_ENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCsiHivYpkJ4Hu_2cc(ptr nonnull sret([48 x i8]) align 8 %i.a, ptr nonnull align 8 %i.q)
-          to label %bb.g unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %bb.g unwind label %.loopexit
 
 bb.e:                                             ; preds = %bb.c
+  store i64 %i.p, ptr %i.j, align 8
   invoke void @_RNvNtCs3oUPovFnLWP_4core9panicking18panic_bounds_check(i64 %i.p, i64 %i.f, ptr nonnull align 8 @3) #26
           to label %bb.f unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -352,18 +374,18 @@ bb.g:                                             ; preds = %bb.d
   %i.t = icmp eq i64 %.pr, 0
   br i1 %i.t, label %._crit_edge, label %.lr.ph
 
-bb.h:                                             ; preds = %bb.i, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+bb.h:                                             ; preds = %bb.i, %5
   %i.u = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #24
   unreachable
 
-bb.i:                                             ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+bb.i:                                             ; preds = %5
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecTNtNtNtCsaL1QbXo9JQH_3std3ffi6os_str8OsStringB19_EEECs3U9i7nQCKwt_15find_msvc_tools(ptr nonnull align 8 %i.d) #23
           to label %bb.j unwind label %bb.h
 
 bb.j:                                             ; preds = %bb.i
-  resume { ptr, i32 } %lpad.loopexit.split-lp19
+  resume { ptr, i32 } %lpad.phi
 }
 
 ; Function Attrs: nonlazybind uwtable

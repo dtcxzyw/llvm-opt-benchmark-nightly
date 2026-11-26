@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/proj/original/oputils?download=true
 inline.NumInlined: 796
-inline.NumDeleted: 335
+inline.NumDeleted: 337
 begin_hunk_0_@_ZN5osgeo4proj9operation26createPropertiesForInverseEPKNS1_19CoordinateOperationEbb:bb.a
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i131: ; preds = %bb.ab
@@ -202,7 +202,7 @@ bb.al:                                            ; preds = %_ZN5osgeo4proj8inte
 
 bb.am:                                            ; preds = %bb.al
   invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.70, ptr noundef nonnull @.str.69, i64 noundef %i.gk, i64 noundef %i.gp) #27
-          to label %.noexc145 unwind label %.loopexit.split-lp285.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %.noexc145 unwind label %.loopexit.split-lp285.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !130
 
 .noexc145:                                        ; preds = %bb.am
   unreachable
@@ -603,7 +603,7 @@ bb.be:                                            ; preds = %_ZNKSt7__cxx1112bas
 
 bb.bf:                                            ; preds = %bb.be
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.68) #27
-          to label %.noexc190 unwind label %bb.bq
+          to label %.noexc190 unwind label %bb.bq, !noalias !135
 
 .noexc190:                                        ; preds = %bb.bf
   unreachable
@@ -611,7 +611,7 @@ bb.bf:                                            ; preds = %bb.be
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendERKS4_.exit.i188: ; preds = %bb.be
   %i.ky = load ptr, ptr %i.f, align 8, !tbaa !45, !noalias !135
   %i.kz = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm(ptr noundef nonnull align 8 dereferenceable(32) %14, ptr noundef %i.ky, i64 noundef %i.ku)
-          to label %.noexc191 unwind label %bb.bq ; 6 uses
+          to label %.noexc191 unwind label %bb.bq, !noalias !135 ; 6 uses
 
 .noexc191:                                        ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendERKS4_.exit.i188
   %i.la = getelementptr inbounds nuw i8, ptr %13, i64 16 ; 7 uses
@@ -649,7 +649,7 @@ bb.bh:                                            ; preds = %_ZNKSt7__cxx1112bas
   call void @llvm.experimental.noalias.scope.decl(metadata !136)
   %i.lm = load i64, ptr %i.ll, align 8, !tbaa !46, !noalias !136
   %i.ln = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc(ptr noundef nonnull align 8 dereferenceable(32) %13, i64 noundef %i.lm, i64 noundef 0, i64 noundef 1, i8 noundef signext 39)
-          to label %.noexc195 unwind label %bb.br ; 6 uses
+          to label %.noexc195 unwind label %bb.br, !noalias !136 ; 6 uses
 
 .noexc195:                                        ; preds = %bb.bh
   %i.lo = getelementptr inbounds nuw i8, ptr %12, i64 16 ; 9 uses
@@ -1052,7 +1052,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.aq, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread82
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit: ; preds = %bb.n
-  %i.ar = load ptr, ptr %i.an, align 8, !tbaa !45 ; 2 uses
+  %i.ar = load ptr, ptr %i.an, align 8, !tbaa !45 ; 3 uses
   %i.as = load i32, ptr %i.ar, align 1
   %i.at = xor i32 %i.as, 1397904453
   %i.au = getelementptr i8, ptr %i.ar, i64 4
@@ -1067,10 +1067,14 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread82: ; preds = %bb.n
   %i.bc = icmp ult i64 %i.ap, 4
-  br i1 %i.bc, label %_ZN5osgeo4proj8internal11starts_withERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKc.exit.thread, label %_ZN5osgeo4proj8internal11starts_withERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKc.exit
+  br i1 %i.bc, label %_ZN5osgeo4proj8internal11starts_withERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKc.exit.thread, label %._ZN5osgeo4proj8internal11starts_withERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKc.exit_crit_edge
 
-_ZN5osgeo4proj8internal11starts_withERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKc.exit: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread82
-  %4 = load ptr, ptr %i.an, align 8, !tbaa !45
+._ZN5osgeo4proj8internal11starts_withERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKc.exit_crit_edge: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread82
+  %.pre = load ptr, ptr %i.an, align 8, !tbaa !45
+  br label %_ZN5osgeo4proj8internal11starts_withERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKc.exit
+
+_ZN5osgeo4proj8internal11starts_withERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKc.exit: ; preds = %._ZN5osgeo4proj8internal11starts_withERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKc.exit_crit_edge, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
+  %4 = phi ptr [ %.pre, %._ZN5osgeo4proj8internal11starts_withERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKc.exit_crit_edge ], [ %i.ar, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit ]
   %i.bd = load i32, ptr %4, align 1
   %i.be = icmp ne i32 %i.bd, 1179800645
   %i.bf = zext i1 %i.be to i32

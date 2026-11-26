@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/luanti/original/keycode?download=true
 inline.NumInlined: 2173
-inline.NumDeleted: 527
+inline.NumDeleted: 528
 loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZN8KeyPressC2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE:.noexc.i
@@ -204,8 +204,9 @@ bb.j:                                             ; preds = %_ZNSt8__detail14__t
 _ZNSt7__cxx119to_stringEj.exit:                   ; preds = %bb.h, %bb.i
   %storemerge.i.i = phi i8 [ %i.at, %bb.i ], [ %i.ar, %bb.h ]
   store i8 %storemerge.i.i, ptr %i.p, align 1, !tbaa !21
+  call void @llvm.experimental.noalias.scope.decl(metadata !142)
   %i.aw = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %2, i64 noundef 0, i64 noundef 0, ptr noundef nonnull @.str.319, i64 noundef 16)
-          to label %.noexc unwind label %bb.m     ; 6 uses
+          to label %.noexc unwind label %bb.m, !noalias !142 ; 6 uses
 
 .noexc:                                           ; preds = %_ZNSt7__cxx119to_stringEj.exit
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
@@ -383,8 +384,9 @@ bb.v:                                             ; preds = %_ZNSt8__detail14__t
 _ZNSt7__cxx119to_stringEj.exit22:                 ; preds = %bb.t, %bb.u
   %storemerge.i.i17 = phi i8 [ %i.dj, %bb.u ], [ %i.dh, %bb.t ]
   store i8 %storemerge.i.i17, ptr %i.cf, align 1, !tbaa !21
+  call void @llvm.experimental.noalias.scope.decl(metadata !144)
   %i.dm = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %3, i64 noundef 0, i64 noundef 0, ptr noundef nonnull @.str.320, i64 noundef 13)
-          to label %.noexc26 unwind label %bb.y   ; 6 uses
+          to label %.noexc26 unwind label %bb.y, !noalias !144 ; 6 uses
 
 .noexc26:                                         ; preds = %_ZNSt7__cxx119to_stringEj.exit22
   %i.dn = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
@@ -787,7 +789,7 @@ attributes #30 = { builtin allocsize(0) }
 !172 = distinct !{!172, !27, !181, !182}
 !173 = distinct !{!173, !27, !181}
 !174 = distinct !{null}
-!175 = distinct !{null, null}
+!175 = distinct !{null, null, null, null, null}
 !176 = !{!"p1 _ZTS8Settings", !13, i64 0}
 !177 = !{!176, !176, i64 0}
 !178 = !{!86, !85, i64 8}

@@ -204,18 +204,19 @@ bb.an:                                            ; preds = %bb.al
   br label %.lr.ph330
 
 .lr.ph330:                                        ; preds = %.lr.ph330.preheader, %.lr.ph330
-  %indvars.iv = phi i64 [ %i.ix, %.lr.ph330.preheader ], [ %indvars.iv.next, %.lr.ph330 ] ; 3 uses
+  %indvars.iv = phi i64 [ %i.ix, %.lr.ph330.preheader ], [ %indvars.iv.next, %.lr.ph330 ] ; 4 uses
   %i.iy = getelementptr inbounds nuw [4 x i8], ptr %i.iq, i64 %indvars.iv
   %i.iz = load i32, ptr %i.iy, align 4, !tbaa !8
   %i.ja = load i32, ptr %i.it, align 8, !tbaa !8
-  %i.jb = trunc nuw i64 %indvars.iv to i32        ; 2 uses
+  %i.jb = trunc nuw nsw i64 %indvars.iv to i32
   %i.jc = sub nsw i32 %i.jb, %i.ja
   %i.jd = sext i32 %i.jc to i64
   %i.je = getelementptr inbounds [4 x i8], ptr %i.iq, i64 %i.jd
   store i32 %i.iz, ptr %i.je, align 4, !tbaa !8
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   %i.jf = load i32, ptr %i.ir, align 4, !tbaa !8
-  %.not224.not = icmp sgt i32 %i.jf, %i.jb
+  %2 = sext i32 %i.jf to i64
+  %.not224.not = icmp slt i64 %indvars.iv, %2
   br i1 %.not224.not, label %.lr.ph330, label %.loopexit322, !llvm.loop !14
 
 .loopexit322:                                     ; preds = %.lr.ph330, %bb.an

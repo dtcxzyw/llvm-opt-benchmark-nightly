@@ -202,7 +202,7 @@ _ZNK4llvm5Error3isAINS_9ErrorListEEEbv.exit17.thread: ; preds = %bb.n, %_ZNK4llv
   store ptr getelementptr inbounds nuw inrange(-16, 64) (i8, ptr @_ZTVN4llvm9ErrorListE, i64 16), ptr %i.eh, align 8, !tbaa !133
   %i.ek = getelementptr inbounds nuw i8, ptr %i.eh, i64 8
   %i.el = getelementptr inbounds nuw i8, ptr %i.eh, i64 16
-  %i.em = tail call noalias noundef nonnull dereferenceable(8) ptr @_Znwm(i64 noundef 8) #27 ; 3 uses
+  %i.em = tail call noalias noundef nonnull dereferenceable(8) ptr @_Znwm(i64 noundef 8) #27 ; 4 uses
   %i.en = ptrtoint ptr %i.ei to i64
   store i64 %i.en, ptr %i.em, align 8, !tbaa !258
   %i.eo = getelementptr inbounds nuw i8, ptr %i.eh, i64 24
@@ -214,6 +214,7 @@ _ZNK4llvm5Error3isAINS_9ErrorListEEEbv.exit17.thread: ; preds = %bb.n, %_ZNK4llv
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1037)
   %i.es = load i64, ptr %i.em, align 8, !tbaa !258, !alias.scope !1037
   store i64 %i.es, ptr %i.ep, align 8, !tbaa !258, !alias.scope !1036
+  store ptr null, ptr %i.em, align 8, !tbaa !258, !alias.scope !1037
   %i.et = getelementptr inbounds nuw i8, ptr %i.ep, i64 16 ; 2 uses
   tail call void @_ZdlPvm(ptr noundef nonnull %i.em, i64 noundef 8) #24
   store ptr %i.ep, ptr %i.ek, align 8, !tbaa !623

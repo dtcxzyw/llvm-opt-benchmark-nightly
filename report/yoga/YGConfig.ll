@@ -18,8 +18,10 @@ bb.b:                                             ; preds = %bb.a
   store ptr null, ptr %i.a, align 8, !tbaa !17
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %i.b, ptr %i.c, align 8, !tbaa !18
-  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  store i8 0, ptr %i.d, align 8
+  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
+  %0 = load i8, ptr %i.d, align 8
+  %1 = and i8 %0, -2
+  store i8 %1, ptr %i.d, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 20
   store i32 0, ptr %i.e, align 4, !tbaa !19
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 24

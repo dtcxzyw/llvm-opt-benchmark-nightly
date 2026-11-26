@@ -202,6 +202,8 @@ _ZN5boost6detail9test_implEPKcS2_iS2_b.exit52:    ; preds = %_ZN5boost6detail9te
   %i.ax = inttoptr i64 %i.aw to ptr
   store ptr %i.as, ptr %i.ax, align 8
   call void @_ZdlPvm(ptr noundef nonnull %i.as, i64 noundef 87) #17
+  %0 = call noalias noundef nonnull dereferenceable(16) ptr @_Znwm(i64 noundef 16) #20
+  call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 16) #21
   %i.ay = call noalias noundef nonnull dereferenceable(87) ptr @_Znwm(i64 noundef 87) #20 ; 3 uses
   %i.az = ptrtoint ptr %i.ay to i64
   %i.ba = add i64 %i.az, 71

@@ -149,14 +149,18 @@ bb.d:                                             ; preds = %bb.c
   %i.ao = load ptr, ptr %i.an, align 8
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 8
   %i.aq = load ptr, ptr %i.ap, align 8
-  %i.ar = tail call ptr @xstrdup(ptr noundef %i.aq) #11 ; 3 uses
+  %i.ar = tail call ptr @xstrdup(ptr noundef %i.aq) #11 ; 4 uses
   store ptr %i.ar, ptr %i.d, align 8
   %i.as = tail call ptr @xstrstr(ptr noundef %i.ar, ptr noundef nonnull @.str.11) #11 ; 2 uses
   %.not113.i = icmp eq ptr %i.as, null
   br i1 %.not113.i, label %.critedge4.preheader.i, label %.lr.ph115.i
 
-.critedge4.preheader.i:                           ; preds = %.lr.ph115.i, %._crit_edge.i
-  %i.at = phi ptr [ %i.ar, %._crit_edge.i ], [ %3, %.lr.ph115.i ]
+.critedge4.preheader.i.loopexit:                  ; preds = %.lr.ph115.i
+  %.pre = load ptr, ptr %i.d, align 8
+  br label %.critedge4.preheader.i
+
+.critedge4.preheader.i:                           ; preds = %.critedge4.preheader.i.loopexit, %._crit_edge.i
+  %i.at = phi ptr [ %.pre, %.critedge4.preheader.i.loopexit ], [ %i.ar, %._crit_edge.i ]
   %i.au = call ptr @strtok_r(ptr noundef %i.at, ptr noundef nonnull @.str.12, ptr noundef nonnull %i.f) #11 ; 2 uses
   %.not84.i445448 = icmp eq ptr %i.au, null
   br i1 %.not84.i445448, label %.preheader.i, label %.lr.ph
@@ -166,10 +170,9 @@ bb.d:                                             ; preds = %bb.c
   store i8 32, ptr %i.av, align 1
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 1
   store i8 32, ptr %i.aw, align 1
-  %3 = load ptr, ptr %i.d, align 8                ; 2 uses
-  %i.ax = tail call ptr @xstrstr(ptr noundef %3, ptr noundef nonnull @.str.11) #11 ; 2 uses
+  %i.ax = tail call ptr @xstrstr(ptr noundef %i.ar, ptr noundef nonnull @.str.11) #11 ; 2 uses
   %.not.i = icmp eq ptr %i.ax, null
-  br i1 %.not.i, label %.critedge4.preheader.i, label %.lr.ph115.i, !llvm.loop !11
+  br i1 %.not.i, label %.critedge4.preheader.i.loopexit, label %.lr.ph115.i, !llvm.loop !11
 
 .preheader.i:                                     ; preds = %.loopexit.i, %.critedge4.backedge.i, %.critedge4.preheader.i
   %.070.ph.i.lcssa = phi i32 [ %.070.ph.i450, %.critedge4.backedge.i ], [ 0, %.critedge4.preheader.i ], [ %spec.select.i, %.loopexit.i ] ; 2 uses

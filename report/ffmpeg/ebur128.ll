@@ -48,6 +48,7 @@ bb.d:                                             ; preds = %bb.c
   %i.j = getelementptr inbounds nuw i8, ptr %i.f, i64 12
   %i.k = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.l = getelementptr inbounds nuw i8, ptr %i.f, i64 4
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.e, i64 1)
   br label %.lr.ph.i
 
 bb.e:                                             ; preds = %bb.d
@@ -102,8 +103,8 @@ bb.m:                                             ; preds = %.lr.ph.i
 
 bb.n:                                             ; preds = %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g
   %i.o = add nuw nsw i64 %.035.i, 1               ; 2 uses
-  %4 = icmp samesign ult i64 %i.o, %i.e
-  br i1 %4, label %.lr.ph.i, label %.loopexit, !llvm.loop !49
+  %exitcond.not = icmp eq i64 %i.o, %umax
+  br i1 %exitcond.not, label %.loopexit, label %.lr.ph.i, !llvm.loop !49
 
 .loopexit.sink.split.i:                           ; preds = %bb.f, %bb.e
   %.sink41.i = phi i64 [ 4, %bb.e ], [ 8, %bb.f ]

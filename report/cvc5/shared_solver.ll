@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %4), !noalias !202
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #21, !noalias !203
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !122, !noalias !203
-  call void @_ZN4cvc58internal11NodeBuilderC1EPNS0_11NodeManagerENS0_4kind6Kind_tE(ptr noundef nonnull align 8 dereferenceable(124) %3, ptr noundef %i.j, i32 noundef 20), !noalias !202
+  call void @_ZN4cvc58internal11NodeBuilderC1EPNS0_11NodeManagerENS0_4kind6Kind_tE(ptr noundef nonnull align 8 dereferenceable(124) %3, ptr noundef %i.j, i32 noundef 20), !noalias !203
   store ptr %i.h, ptr %4, align 8, !tbaa !103, !noalias !203
   %i.k = invoke noundef nonnull align 8 dereferenceable(124) ptr @_ZN4cvc58internal11NodeBuilderlsENS0_12NodeTemplateILb0EEE(ptr noundef nonnull align 8 dereferenceable(124) %3, ptr noundef nonnull align 8 %4)
           to label %bb.d unwind label %.body.i, !noalias !203 ; 0 uses
@@ -343,7 +343,7 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %12), !noalias !216
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #21, !noalias !217
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !122, !noalias !217
-  call void @_ZN4cvc58internal11NodeBuilderC1EPNS0_11NodeManagerENS0_4kind6Kind_tE(ptr noundef nonnull align 8 dereferenceable(124) %10, ptr noundef %i.i, i32 noundef 5), !noalias !216
+  call void @_ZN4cvc58internal11NodeBuilderC1EPNS0_11NodeManagerENS0_4kind6Kind_tE(ptr noundef nonnull align 8 dereferenceable(124) %10, ptr noundef %i.i, i32 noundef 5), !noalias !217
   store ptr %i.d, ptr %11, align 8, !tbaa !103, !noalias !217
   %i.j = invoke noundef nonnull align 8 dereferenceable(124) ptr @_ZN4cvc58internal11NodeBuilderlsENS0_12NodeTemplateILb0EEE(ptr noundef nonnull align 8 dereferenceable(124) %10, ptr noundef nonnull align 8 %11)
           to label %bb.c unwind label %.body.i, !noalias !217
@@ -381,7 +381,7 @@ bb.e:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %9), !noalias !218
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #21, !noalias !219
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !122, !noalias !219
-  call void @_ZN4cvc58internal11NodeBuilderC1EPNS0_11NodeManagerENS0_4kind6Kind_tE(ptr noundef nonnull align 8 dereferenceable(124) %7, ptr noundef %i.n, i32 noundef 5), !noalias !218
+  call void @_ZN4cvc58internal11NodeBuilderC1EPNS0_11NodeManagerENS0_4kind6Kind_tE(ptr noundef nonnull align 8 dereferenceable(124) %7, ptr noundef %i.n, i32 noundef 5), !noalias !219
   store ptr %i.a, ptr %8, align 8, !tbaa !103, !noalias !219
   %i.o = invoke noundef nonnull align 8 dereferenceable(124) ptr @_ZN4cvc58internal11NodeBuilderlsENS0_12NodeTemplateILb0EEE(ptr noundef nonnull align 8 dereferenceable(124) %7, ptr noundef nonnull align 8 %8)
           to label %bb.f unwind label %.body.i10, !noalias !219
@@ -434,7 +434,7 @@ bb.k:                                             ; preds = %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #21, !noalias !221
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !122, !noalias !221
   invoke void @_ZN4cvc58internal11NodeBuilderC1EPNS0_11NodeManagerENS0_4kind6Kind_tE(ptr noundef nonnull align 8 dereferenceable(124) %5, ptr noundef %i.x, i32 noundef 20)
-          to label %.noexc unwind label %bb.r
+          to label %.noexc unwind label %bb.r, !noalias !221
 
 .noexc:                                           ; preds = %bb.k
   store ptr %i.v, ptr %6, align 8, !tbaa !103, !noalias !221
@@ -837,12 +837,15 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.f = invoke noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #24
-          to label %bb.e unwind label %bb.f       ; 3 uses
+          to label %bb.e unwind label %bb.f       ; 4 uses
 
 bb.e:                                             ; preds = %bb.d
-  store i64 1152920405095219200, ptr %i.f, align 8
-  %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 8
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.g, i8 0, i64 16, i1 false)
+  %0 = load <2 x i64>, ptr %i.f, align 8
+  %1 = and <2 x i64> %0, <i64 -1152921504606846976, i64 -288230371856745472>
+  %2 = or disjoint <2 x i64> %1, <i64 1152920405095219200, i64 0>
+  store <2 x i64> %2, ptr %i.f, align 8
+  %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 16
+  store ptr null, ptr %i.g, align 8, !tbaa !122
   store ptr %i.f, ptr @_ZZN4cvc58internal4expr9NodeValue4nullEvE6s_null, align 8, !tbaa !108
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN4cvc58internal4expr9NodeValue4nullEvE6s_null) #21
   br label %_ZN4cvc58internal4expr9NodeValue4nullEv.exit

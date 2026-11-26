@@ -199,21 +199,24 @@ bb.a:
   %i.a = alloca i32, align 4                      ; 5 uses
   %i.b = alloca i64, align 8                      ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !13   ; 3 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !13   ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #3
   store i64 0, ptr %4, align 8, !tbaa !22
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  br label %bb.b
+  %5 = tail call zeroext i1 @Curl_bufq_is_full(ptr noundef %i.d) #3
+  br i1 %5, label %bb.e, label %.lr.ph
 
-bb.b:                                             ; preds = %bb.d, %bb.a
+.lr.ph:                                           ; preds = %bb.a
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  br label %bb.c
+
+bb.b:                                             ; preds = %bb.d
   %i.e = call zeroext i1 @Curl_bufq_is_full(ptr noundef %i.d) #3
-  br i1 %i.e, label %bb.e, label %bb.c
+  br i1 %i.e, label %bb.e, label %bb.c, !llvm.loop !28
 
-bb.c:                                             ; preds = %bb.b
-  %i.f = load ptr, ptr %5, align 8, !tbaa !17
-  %i.g = call i32 @Curl_cf_recv_bufq(ptr noundef %i.f, ptr noundef %1, ptr noundef %i.d, i64 noundef 0, ptr noundef nonnull %i.b) #3 ; 3 uses
-  store i32 %i.g, ptr %i.a, align 4, !tbaa !23
+bb.c:                                             ; preds = %.lr.ph, %bb.b
+  %i.f = load ptr, ptr %6, align 8, !tbaa !17
+  %i.g = call i32 @Curl_cf_recv_bufq(ptr noundef %i.f, ptr noundef %1, ptr noundef %i.d, i64 noundef 0, ptr noundef nonnull %i.b) #3 ; 4 uses
   switch i32 %i.g, label %.loopexit [
     i32 81, label %bb.e
     i32 0, label %bb.d
@@ -222,10 +225,15 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.h = load i64, ptr %i.b, align 8, !tbaa !22
   %.not13 = icmp eq i64 %i.h, 0
-  br i1 %.not13, label %bb.e, label %bb.b, !llvm.loop !28
+  br i1 %.not13, label %._crit_edge15, label %bb.b, !llvm.loop !28
 
-bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b
-  %i.i = call i64 @Curl_capsule_process_udp_raw(ptr noundef %0, ptr noundef %1, ptr noundef %i.d, ptr noundef %2, i64 noundef %3, ptr noundef nonnull %i.a) #3
+._crit_edge15:                                    ; preds = %bb.d
+  br label %bb.e, !llvm.loop !28
+
+bb.e:                                             ; preds = %bb.b, %bb.c, %._crit_edge15, %bb.a
+  %7 = phi i32 [ undef, %bb.a ], [ 0, %._crit_edge15 ], [ %i.g, %bb.c ], [ %i.g, %bb.b ]
+  store i32 %7, ptr %i.a, align 4
+  %i.i = call i64 @Curl_capsule_process_udp_raw(ptr noundef nonnull %0, ptr noundef %1, ptr noundef %i.d, ptr noundef %2, i64 noundef %3, ptr noundef nonnull %i.a) #3
   store i64 %i.i, ptr %4, align 8, !tbaa !22
   %i.j = load i32, ptr %i.a, align 4, !tbaa !23
   br label %.loopexit

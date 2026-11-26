@@ -204,7 +204,7 @@ bb.a:
   %i.d = alloca i64, align 8                      ; 5 uses
   %i.e = alloca [13 x i32], align 16              ; 4 uses
   %i.f = alloca i32, align 4                      ; 5 uses
-  %i.g = alloca i32, align 4                      ; 8 uses
+  %i.g = alloca i32, align 4                      ; 11 uses
   %i.h = alloca i64, align 8                      ; 5 uses
   %i.i = alloca i64, align 8                      ; 6 uses
   %i.j = alloca i64, align 8                      ; 6 uses
@@ -337,34 +337,39 @@ bb.r:                                             ; preds = %bb.q
   %i.bf = call i32 (ptr, ptr, i32, i64, i64, ptr, ...) @H5E_printf_stack(ptr noundef nonnull @.str, ptr noundef nonnull @__func__.H5MF_get_freespace, i32 noundef 2212, i64 noundef %i.bd, i64 noundef %i.be, ptr noundef nonnull @.str.28) #5 ; 0 uses
   br label %bb.aq
 
+.preheader:                                       ; preds = %bb.af
+  store i32 %.107, ptr %i.g, align 4
+  br label %.preheader.a
+
 bb.s:                                             ; preds = %.preheader119, %bb.af
-  %3 = phi i32 [ %., %bb.af ], [ 2, %.preheader119 ]
-  %indvars.iv.a = phi i64 [ %indvars.iv.next, %bb.af ], [ 1, %.preheader119 ] ; 8 uses
-  %.073108 = phi i64 [ %.275, %bb.af ], [ 0, %.preheader119 ] ; 2 uses
-  %.076107 = phi i64 [ %.278, %bb.af ], [ 0, %.preheader119 ] ; 2 uses
-  %i.bg = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %indvars.iv.a ; 2 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.af ], [ 1, %.preheader119 ] ; 8 uses
+  %indvars.iv.a = phi i64 [ %.275, %bb.af ], [ 0, %.preheader119 ] ; 2 uses
+  %.073108 = phi i64 [ %.278, %bb.af ], [ 0, %.preheader119 ] ; 2 uses
+  %.108111 = phi i32 [ %.107, %bb.af ], [ 2, %.preheader119 ] ; 3 uses
+  %i.bg = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %indvars.iv ; 2 uses
   store i32 0, ptr %i.bg, align 4, !tbaa !14
   %i.bh = load ptr, ptr %i.r, align 8, !tbaa !46  ; 4 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bh, i64 1712
-  %i.bj = getelementptr inbounds nuw [8 x i8], ptr %i.bi, i64 %indvars.iv.a
+  %i.bj = getelementptr inbounds nuw [8 x i8], ptr %i.bi, i64 %indvars.iv
   %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !50
   %.not88 = icmp eq ptr %i.bk, null
   br i1 %.not88, label %bb.t, label %bb.x
 
 bb.t:                                             ; preds = %bb.s
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bh, i64 1608
-  %i.bm = getelementptr inbounds nuw [8 x i8], ptr %i.bl, i64 %indvars.iv.a
+  %i.bm = getelementptr inbounds nuw [8 x i8], ptr %i.bl, i64 %indvars.iv
   %i.bn = load i64, ptr %i.bm, align 8, !tbaa !41
   %.not89 = icmp eq i64 %i.bn, -1
   br i1 %.not89, label %bb.x, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %i.bo = trunc nuw nsw i64 %indvars.iv.a to i32
+  %i.bo = trunc nuw nsw i64 %indvars.iv to i32
   %i.bp = call i32 @H5MF__open_fstype(ptr noundef nonnull %0, i32 noundef %i.bo)
   %i.bq = icmp slt i32 %i.bp, 0
   br i1 %i.bq, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %bb.u
+  store i32 %.108111, ptr %i.g, align 4
   %i.br = load i64, ptr @H5E_RESOURCE_g, align 8, !tbaa !41
   %i.bs = load i64, ptr @H5E_CANTINIT_g, align 8, !tbaa !41
   %i.bt = call i32 (ptr, ptr, i32, i64, i64, ptr, ...) @H5E_printf_stack(ptr noundef nonnull @.str, ptr noundef nonnull @__func__.H5MF_get_freespace, i32 noundef 2222, i64 noundef %i.br, i64 noundef %i.bs, ptr noundef nonnull @.str.3) #5 ; 0 uses
@@ -377,21 +382,21 @@ bb.w:                                             ; preds = %bb.u
 
 bb.x:                                             ; preds = %bb.w, %bb.t, %bb.s
   %i.bu = phi ptr [ %.pre, %bb.w ], [ %i.bh, %bb.t ], [ %i.bh, %bb.s ]
-  %i.bv = trunc nuw nsw i64 %indvars.iv.a to i32
+  %i.bv = trunc nuw nsw i64 %indvars.iv to i32
   %i.bw = call fastcc zeroext i1 @H5MF__fsm_type_is_self_referential(ptr noundef %i.bu, i32 noundef %i.bv)
-  %. = select i1 %i.bw, i32 3, i32 2              ; 4 uses
-  %.not90 = icmp eq i32 %., %3
+  %. = select i1 %i.bw, i32 3, i32 2              ; 3 uses
+  %.not90 = icmp eq i32 %., %.108111
   br i1 %.not90, label %bb.z, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
   call void @H5AC_set_ring(i32 noundef %., ptr noundef null) #5
-  store i32 %., ptr %i.g, align 4, !tbaa !14
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.y, %bb.x
+  %.107 = phi i32 [ %., %bb.y ], [ %.108111, %bb.x ] ; 4 uses
   %i.bx = load ptr, ptr %i.r, align 8, !tbaa !46
   %i.by = getelementptr inbounds nuw i8, ptr %i.bx, i64 1712
-  %i.bz = getelementptr inbounds nuw [8 x i8], ptr %i.by, i64 %indvars.iv.a ; 2 uses
+  %i.bz = getelementptr inbounds nuw [8 x i8], ptr %i.by, i64 %indvars.iv ; 2 uses
   %i.ca = load ptr, ptr %i.bz, align 8, !tbaa !50
   %.not91 = icmp eq ptr %i.ca, null
   br i1 %.not91, label %bb.af, label %bb.aa
@@ -407,6 +412,7 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %i.cd, label %bb.ab, label %bb.ac
 
 bb.ab:                                            ; preds = %bb.aa
+  store i32 %.107, ptr %i.g, align 4
   %i.ce = load i64, ptr @H5E_RESOURCE_g, align 8, !tbaa !41
   %i.cf = load i64, ptr @H5E_CANTGET_g, align 8, !tbaa !41
   %i.cg = call i32 (ptr, ptr, i32, i64, i64, ptr, ...) @H5E_printf_stack(ptr noundef nonnull @.str, ptr noundef nonnull @__func__.H5MF_get_freespace, i32 noundef 2245, i64 noundef %i.ce, i64 noundef %i.cf, ptr noundef nonnull @.str.29) #5 ; 0 uses
@@ -415,13 +421,14 @@ bb.ab:                                            ; preds = %bb.aa
 bb.ac:                                            ; preds = %bb.aa
   %i.ch = load ptr, ptr %i.r, align 8, !tbaa !46
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 1712
-  %i.cj = getelementptr inbounds nuw [8 x i8], ptr %i.ci, i64 %indvars.iv.a
+  %i.cj = getelementptr inbounds nuw [8 x i8], ptr %i.ci, i64 %indvars.iv
   %i.ck = load ptr, ptr %i.cj, align 8, !tbaa !50
   %i.cl = call i32 @H5FS_size(ptr noundef %i.ck, ptr noundef nonnull %i.j) #5
   %i.cm = icmp slt i32 %i.cl, 0
   br i1 %i.cm, label %bb.ad, label %bb.ae
 
 bb.ad:                                            ; preds = %bb.ac
+  store i32 %.107, ptr %i.g, align 4
   %i.cn = load i64, ptr @H5E_RESOURCE_g, align 8, !tbaa !41
   %i.co = load i64, ptr @H5E_CANTGET_g, align 8, !tbaa !41
   %i.cp = call i32 (ptr, ptr, i32, i64, i64, ptr, ...) @H5E_printf_stack(ptr noundef nonnull @.str, ptr noundef nonnull @__func__.H5MF_get_freespace, i32 noundef 2247, i64 noundef %i.cn, i64 noundef %i.co, ptr noundef nonnull @.str.30) #5 ; 0 uses
@@ -434,22 +441,22 @@ bb.ad:                                            ; preds = %bb.ac
 
 bb.ae:                                            ; preds = %bb.ac
   %i.cq = load i64, ptr %i.i, align 8, !tbaa !41
-  %i.cr = add i64 %i.cq, %.076107
+  %i.cr = add i64 %i.cq, %.073108
   %i.cs = load i64, ptr %i.j, align 8, !tbaa !41
-  %i.ct = add i64 %i.cs, %.073108
+  %i.ct = add i64 %i.cs, %indvars.iv.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #5
   br label %bb.af
 
 bb.af:                                            ; preds = %bb.ae, %bb.z
-  %.278 = phi i64 [ %i.cr, %bb.ae ], [ %.076107, %bb.z ] ; 2 uses
-  %.275 = phi i64 [ %i.ct, %bb.ae ], [ %.073108, %bb.z ] ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv.a, 1 ; 2 uses
+  %.278 = phi i64 [ %i.cr, %bb.ae ], [ %.073108, %bb.z ] ; 2 uses
+  %.275 = phi i64 [ %i.ct, %bb.ae ], [ %indvars.iv.a, %bb.z ] ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %.068
-  br i1 %exitcond.not, label %.preheader.a, label %bb.s, !llvm.loop !107
+  br i1 %exitcond.not, label %.preheader, label %bb.s, !llvm.loop !107
 
-.preheader.a:                                     ; preds = %bb.af, %H5MF__close_fstype.exit.thread
-  %indvars.iv112 = phi i64 [ %indvars.iv.next113, %H5MF__close_fstype.exit.thread ], [ 1, %bb.af ] ; 6 uses
+.preheader.a:                                     ; preds = %.preheader, %H5MF__close_fstype.exit.thread
+  %indvars.iv112 = phi i64 [ 1, %.preheader ], [ %indvars.iv.next113, %H5MF__close_fstype.exit.thread ] ; 6 uses
   %i.cu = load ptr, ptr %i.r, align 8, !tbaa !46
   %i.cv = trunc nuw nsw i64 %indvars.iv112 to i32
   %i.cw = call fastcc zeroext i1 @H5MF__fsm_type_is_self_referential(ptr noundef %i.cu, i32 noundef %i.cv)

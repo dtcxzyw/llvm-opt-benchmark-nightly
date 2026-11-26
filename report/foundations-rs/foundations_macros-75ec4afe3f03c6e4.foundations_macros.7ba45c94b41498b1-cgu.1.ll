@@ -202,7 +202,7 @@ bb.a:
   %i.l = alloca [32 x i8], align 8                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)
   invoke void @_RNvMCse4VeaA6Ikg_11proc_macro2NtB2_11TokenStream3new(ptr nonnull sret([32 x i8]) align 8 %i.l)
-          to label %.noexc unwind label %bb.d
+          to label %.noexc unwind label %bb.d, !noalias !12
 
 .noexc:                                           ; preds = %bb.a
   invoke void @_RNvXs_NtNtCs6bAnw1I7Lci_3syn4attr8printingNtB6_4MetaNtNtCsk5uxfcyCLQt_5quote9to_tokens8ToTokens9to_tokens(ptr align 8 %1, ptr nonnull align 8 %i.l)
@@ -246,7 +246,7 @@ bb.e:                                             ; preds = %.noexc
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k)
   %i.p = invoke { ptr, i64 } @_RNvMNtCs6bAnw1I7Lci_3syn6bufferNtB2_11TokenBuffer4new2(ptr nonnull align 8 %i.c)
-          to label %.noexc1 unwind label %bb.d    ; 2 uses
+          to label %.noexc1 unwind label %bb.d, !noalias !13 ; 2 uses
 
 .noexc1:                                          ; preds = %bb.e
   %i.q = extractvalue { ptr, i64 } %i.p, 0
@@ -413,7 +413,7 @@ bb.a:
   %i.l = alloca [32 x i8], align 8                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)
   invoke void @_RNvMCse4VeaA6Ikg_11proc_macro2NtB2_11TokenStream3new(ptr nonnull sret([32 x i8]) align 8 %i.l)
-          to label %.noexc unwind label %bb.d
+          to label %.noexc unwind label %bb.d, !noalias !18
 
 .noexc:                                           ; preds = %bb.a
   invoke void @_RNvXs_NtNtCs6bAnw1I7Lci_3syn4attr8printingNtB6_4MetaNtNtCsk5uxfcyCLQt_5quote9to_tokens8ToTokens9to_tokens(ptr align 8 %1, ptr nonnull align 8 %i.l)
@@ -457,7 +457,7 @@ bb.e:                                             ; preds = %.noexc
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k)
   %i.p = invoke { ptr, i64 } @_RNvMNtCs6bAnw1I7Lci_3syn6bufferNtB2_11TokenBuffer4new2(ptr nonnull align 8 %i.c)
-          to label %.noexc1 unwind label %bb.d    ; 2 uses
+          to label %.noexc1 unwind label %bb.d, !noalias !19 ; 2 uses
 
 .noexc1:                                          ; preds = %bb.e
   %i.q = extractvalue { ptr, i64 } %i.p, 0
@@ -860,7 +860,7 @@ bb.fs:                                            ; preds = %bb.fq
   br label %bb.fr
 
 bb.ft:                                            ; preds = %bb.fq
-  call void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsaC8UfsfJL0H_18foundations_macros19with_test_telemetry4ArgsEBF_(ptr nonnull align 8 %i.av)
+  call void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsaC8UfsfJL0H_18foundations_macros19with_test_telemetry4ArgsEBF_(ptr nonnull align 8 %i.av), !noalias !34
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
@@ -1263,13 +1263,14 @@ bb.n:                                             ; preds = %.split, %bb.m
           to label %bb.q unwind label %.thread13
 
 bb.o:                                             ; preds = %.split, %bb.m
+  call void @llvm.experimental.noalias.scope.decl(metadata !62)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.v)
   %i.ax = invoke i32 @_RNvXNtCs6bAnw1I7Lci_3syn7spannedNtNtB4_4path4PathNtB2_7Spanned4spanCsje5z0uo7eGy_12darling_core(ptr nonnull align 8 %i.ai)
-          to label %.noexc unwind label %.thread13
+          to label %.noexc unwind label %.thread13, !noalias !62
 
 .noexc:                                           ; preds = %bb.o
   invoke void @_RINvMNtCs6bAnw1I7Lci_3syn5errorNtB3_5Error3newReEB5_(ptr nonnull sret([24 x i8]) align 8 %i.v, i32 %i.ax, ptr nonnull @38, i64 59)
-          to label %_RINvNtCsaC8UfsfJL0H_18foundations_macros6common5errorNtNtB4_19with_test_telemetry4ArgsNtNtCs6bAnw1I7Lci_3syn4path4PathEB4_.exit unwind label %.thread13
+          to label %_RINvNtCsaC8UfsfJL0H_18foundations_macros6common5errorNtNtB4_19with_test_telemetry4ArgsNtNtCs6bAnw1I7Lci_3syn4path4PathEB4_.exit unwind label %.thread13, !noalias !62
 
 _RINvNtCsaC8UfsfJL0H_18foundations_macros6common5errorNtNtB4_19with_test_telemetry4ArgsNtNtCs6bAnw1I7Lci_3syn4path4PathEB4_.exit: ; preds = %.noexc
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -1422,7 +1423,7 @@ bb.ai:                                            ; preds = %bb.af
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !63
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !63
   invoke void @_RNvMCse4VeaA6Ikg_11proc_macro2NtB2_11TokenStream3new(ptr nonnull sret([32 x i8]) align 8 %i.a)
-          to label %.noexc.i unwind label %bb.x, !noalias !63
+          to label %.noexc.i unwind label %bb.x, !noalias !64
 
 .noexc.i:                                         ; preds = %bb.ai
   invoke void @_RNvNtCsk5uxfcyCLQt_5quote9___private11push_colon2(ptr nonnull align 8 %i.a)

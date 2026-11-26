@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/xgboost/original/param_array?download=true
 inline.NumInlined: 634
-inline.NumDeleted: 312
+inline.NumDeleted: 313
 loop-unroll.NumRuntimeUnrolled: 1
 loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZN7xgboost4CastIKNS_9JsonArrayENS_5ValueEEEPT_PT0_:bb.a
@@ -204,8 +204,9 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %._cri
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 %i.p
   store i8 0, ptr %i.s, align 1, !tbaa !30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
+  call void @llvm.experimental.noalias.scope.decl(metadata !118)
   %i.t = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %3, i64 noundef 0, i64 noundef 0, ptr noundef nonnull @.str.29, i64 noundef 1)
-          to label %.noexc12 unwind label %bb.m   ; 6 uses
+          to label %.noexc12 unwind label %bb.m, !noalias !118 ; 6 uses
 
 .noexc12:                                         ; preds = %bb.e
   %i.u = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 7 uses
@@ -248,14 +249,14 @@ bb.g:                                             ; preds = %_ZNKSt7__cxx1112bas
 
 bb.h:                                             ; preds = %bb.g
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.1) #26
-          to label %.noexc16 unwind label %bb.n
+          to label %.noexc16 unwind label %bb.n, !noalias !119
 
 .noexc16:                                         ; preds = %bb.h
   unreachable
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i: ; preds = %bb.g
   %i.aj = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm(ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull @.str.30, i64 noundef 3)
-          to label %.noexc17 unwind label %bb.n   ; 6 uses
+          to label %.noexc17 unwind label %bb.n, !noalias !119 ; 6 uses
 
 .noexc17:                                         ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i
   %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 7 uses
@@ -622,8 +623,9 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %._cri
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 %i.p
   store i8 0, ptr %i.s, align 1, !tbaa !30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
+  call void @llvm.experimental.noalias.scope.decl(metadata !124)
   %i.t = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %2, i64 noundef 0, i64 noundef 0, ptr noundef nonnull @.str.29, i64 noundef 1)
-          to label %.noexc8 unwind label %bb.j    ; 8 uses
+          to label %.noexc8 unwind label %bb.j, !noalias !124 ; 8 uses
 
 .noexc8:                                          ; preds = %bb.e
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 7 uses
@@ -660,19 +662,20 @@ bb.f:                                             ; preds = %.noexc8
   store ptr %i.w, ptr %i.t, align 8, !tbaa !45
   store i64 0, ptr %i.af, align 8, !tbaa !43
   store i8 0, ptr %i.w, align 8, !tbaa !30
+  call void @llvm.experimental.noalias.scope.decl(metadata !125)
   %i.ah = icmp eq i64 %.pre.i, 4611686018427387903
   br i1 %i.ah, label %bb.g, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i
 
 bb.g:                                             ; preds = %bb.f
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.1) #26
-          to label %.noexc12 unwind label %bb.k
+          to label %.noexc12 unwind label %bb.k, !noalias !125
 
 .noexc12:                                         ; preds = %bb.g
   unreachable
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i: ; preds = %.thread, %bb.f
   %i.ai = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm(ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull @.str.29, i64 noundef 1)
-          to label %.noexc13 unwind label %bb.k   ; 6 uses
+          to label %.noexc13 unwind label %bb.k, !noalias !125 ; 6 uses
 
 .noexc13:                                         ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses

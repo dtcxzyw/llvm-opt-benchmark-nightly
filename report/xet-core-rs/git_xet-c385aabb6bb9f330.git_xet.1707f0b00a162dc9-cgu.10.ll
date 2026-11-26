@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %bb.d
   store ptr %i.l, ptr %i.m, align 8, !alias.scope !161, !noalias !160
   store i8 3, ptr %i.a, align 8, !alias.scope !161, !noalias !160
   invoke void @_RNvXsd_NtNtCskKLDkoKarTP_4core2io5errorNtB5_11CustomOwnerNtNtNtB9_3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.m)
-          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECs1YANDSn9Kib_7git_xet.exit.i.i.i unwind label %bb.g
+          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECs1YANDSn9Kib_7git_xet.exit.i.i.i unwind label %bb.g, !noalias !160
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECs1YANDSn9Kib_7git_xet.exit.i.i.i: ; preds = %bb.f, %bb.e, %bb.d, %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !160
@@ -605,6 +605,7 @@ bb.c:                                             ; preds = %bb.a
   store i64 %i.e, ptr %i.d, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
+  call void @llvm.experimental.noalias.scope.decl(metadata !271)
   switch i64 %i.e, label %default.unreachable [
     i64 0, label %bb.f
     i64 1, label %bb.d
@@ -683,13 +684,13 @@ bb.l:                                             ; preds = %bb.k
   %i.an = phi ptr [ @39, %bb.h ], [ @41, %bb.k ]
   %i.ao = phi i64 [ 41, %bb.h ], [ 39, %bb.k ]
   invoke void @_RINvMNtNtCs1YANDSn9Kib_7git_xet18lfs_agent_protocol6errorsNtB3_19GitLFSProtocolError10bad_syntaxReEB7_(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.an, i64 noundef %i.ao)
-          to label %_RNvMNtNtCs1YANDSn9Kib_7git_xet18lfs_agent_protocol13protocol_specNtB2_23LFSProtocolRequestEvent8validate.exit unwind label %bb.m
+          to label %_RNvMNtNtCs1YANDSn9Kib_7git_xet18lfs_agent_protocol13protocol_specNtB2_23LFSProtocolRequestEvent8validate.exit unwind label %bb.m, !noalias !271
 
 .invoke:                                          ; preds = %bb.l, %bb.j, %bb.e, %bb.i, %bb.g, %bb.d, %bb.f
   %i.ap = phi ptr [ @37, %bb.j ], [ @40, %bb.e ], [ @38, %bb.i ], [ @37, %bb.g ], [ @40, %bb.d ], [ @36, %bb.f ], [ @38, %bb.l ]
   %i.aq = phi i64 [ 12, %bb.j ], [ 11, %bb.e ], [ 36, %bb.i ], [ 12, %bb.g ], [ 11, %bb.d ], [ 14, %bb.f ], [ 36, %bb.l ]
   invoke void @_RINvMNtNtCs1YANDSn9Kib_7git_xet18lfs_agent_protocol6errorsNtB3_19GitLFSProtocolError12bad_argumentReEB7_(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.ap, i64 noundef %i.aq)
-          to label %_RNvMNtNtCs1YANDSn9Kib_7git_xet18lfs_agent_protocol13protocol_specNtB2_23LFSProtocolRequestEvent8validate.exit unwind label %bb.m
+          to label %_RNvMNtNtCs1YANDSn9Kib_7git_xet18lfs_agent_protocol13protocol_specNtB2_23LFSProtocolRequestEvent8validate.exit unwind label %bb.m, !noalias !271
 
 bb.m:                                             ; preds = %.invoke32, %.invoke
   %i.ar = landingpad { ptr, i32 }
@@ -1092,7 +1093,7 @@ attributes #22 = { noreturn }
 !124 = distinct !{!124, !123, !"_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCslc8SwK8fohf_5bytes5bytes5BytesECs1YANDSn9Kib_7git_xet: argument 0"}
 !125 = distinct !{!125, i1 true, !"_RNvXs1_NtCslc8SwK8fohf_5bytes5bytesNtB5_5BytesNtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4drop"}
 !126 = distinct !{!126, !125, !"_RNvXs1_NtCslc8SwK8fohf_5bytes5bytesNtB5_5BytesNtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4drop: argument 0"}
-!127 = distinct !{null}
+!127 = distinct !{null, null, null, null, null}
 !128 = distinct !{!128, i1 true, !"_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtCsbc8Eb5TzBdy_3url3UrlEECs1YANDSn9Kib_7git_xet"}
 !129 = distinct !{!129, !128, !"_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtCsbc8Eb5TzBdy_3url3UrlEECs1YANDSn9Kib_7git_xet: argument 0"}
 !130 = !{!116}

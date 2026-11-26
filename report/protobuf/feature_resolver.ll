@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/protobuf/original/feature_resolver?download=true
 inline.NumInlined: 1808
-inline.NumDeleted: 750
+inline.NumDeleted: 751
 loop-unroll.NumRuntimeUnrolled: 7
 loop-unroll.NumUnrolled: 7
 begin_hunk_0_@_ZN6google8protobuf12_GLOBAL__N_115CollectEditionsERKNS0_10DescriptorENS0_7EditionERN4absl12lts_202505129btree_setIS5_St4lessIS5_ESaIS5_EEE:bb.a
@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %_ZN4absl12lts_20250
   %i.cu = phi i8 [ %.pre.i, %_ZN4absl12lts_2025051218container_internal14btree_iteratorINS1_10btree_nodeINS1_10set_paramsIN6google8protobuf7EditionESt4lessIS7_ESaIS7_ELi256ELb0EEEEERKS7_PSD_EmmEv.exit.i ], [ %i.cd, %._crit_edge.i ]
   %i.cv = phi ptr [ %.117.lcssa.i.i.i.i, %_ZN4absl12lts_2025051218container_internal14btree_iteratorINS1_10btree_nodeINS1_10set_paramsIN6google8protobuf7EditionESt4lessIS7_ESaIS7_ELi256ELb0EEEEERKS7_PSD_EmmEv.exit.i ], [ %.sroa.0.0.i.i.i, %._crit_edge.i ] ; 6 uses
   %i.cw = ptrtoaddr ptr %i.cv to i64
-  %i.cx = getelementptr inbounds nuw i8, ptr %i.cv, i64 10
+  %i.cx = getelementptr inbounds nuw i8, ptr %i.cv, i64 10 ; 2 uses
   %i.cy = icmp eq i8 %i.ct, %i.cu
   br i1 %i.cy, label %bb.n, label %bb.q
 
@@ -292,6 +292,7 @@ middle.block:                                     ; preds = %vector.body
 _ZZN4absl12lts_2025051218container_internal5btreeINS1_10set_paramsIN6google8protobuf7EditionESt4lessIS6_ESaIS6_ELi256ELb0EEEE16internal_emplaceIJRKS6_EEENS1_14btree_iteratorINS1_10btree_nodeISA_EESE_PSD_EESJ_DpOT_ENKUlhE_clEh.exit.i: ; preds = %.lr.ph.i.i.i4.i, %middle.block, %bb.o
   %i.ee = getelementptr inbounds nuw i8, ptr %i.dg, i64 10
   store i8 %i.dk, ptr %i.ee, align 2, !tbaa !110, !noalias !228
+  store i8 0, ptr %i.cx, align 1, !tbaa !110, !noalias !228
   %i.ef = getelementptr inbounds nuw i8, ptr %i.cv, i64 11
   %i.eg = load i8, ptr %i.ef, align 1, !tbaa !110, !noalias !228 ; 2 uses
   %.not57.i = icmp eq i8 %i.eg, 0
@@ -694,7 +695,7 @@ bb.an:                                            ; preds = %bb.am, %bb.al, %._c
   %i.fk = getelementptr inbounds nuw i8, ptr %8, i64 8
   store ptr %.val101, ptr %i.fk, align 8, !noalias !243
   invoke void @_ZN4absl12lts_202505126StrCatB5cxx11ERKNS0_8AlphaNumES3_S3_S3_(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %4, ptr noundef nonnull align 8 dereferenceable(48) %5, ptr noundef nonnull align 8 dereferenceable(48) %6, ptr noundef nonnull align 8 dereferenceable(48) %7, ptr noundef nonnull align 8 dereferenceable(48) %8)
-          to label %.noexc120 unwind label %bb.ar
+          to label %.noexc120 unwind label %bb.ar, !noalias !243
 
 .noexc120:                                        ; preds = %bb.an
   %i.fl = load ptr, ptr %4, align 8, !tbaa !108, !noalias !243
@@ -1097,7 +1098,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i12
   br label %.critedge59
 
 .critedge59:                                      ; preds = %.body101, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i120, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit122.thread
-  %.pn50.pn = phi { ptr, i32 } [ %i.do, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i120 ], [ %i.ev, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit122.thread ], [ %i.do, %.body101 ]
+  %.pn50.pn = phi { ptr, i32 } [ %i.ev, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit122.thread ], [ %i.do, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i120 ], [ %i.do, %.body101 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %23) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %22) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %21) #22

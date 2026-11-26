@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/bitwuzla/original/rewrites_bool?download=true
 inline.NumInlined: 184
-inline.NumDeleted: 39
+inline.NumDeleted: 40
 loop-unroll.NumCompletelyUnrolled: 51
 loop-unroll.NumUnrolled: 51
 begin_hunk_0_@_ZN4bzla12_GLOBAL__N_113_rw_and_idem2ERNS_8RewriterERKNS_4NodeEm:bb.a
@@ -204,13 +204,13 @@ bb.e:                                             ; preds = %bb.a, %bb.c, %bb.d
 define void @_ZN4bzla11RewriteRuleILNS_15RewriteRuleKindE5EE6_applyERNS_8RewriterERKNS_4NodeE(ptr dead_on_unwind noalias writable sret(%"class.bzla::Node") align 8 %0, ptr noundef nonnull align 8 dereferenceable(208) %1, ptr noundef nonnull align 8 dereferenceable(8) %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %"class.bzla::Node", align 8        ; 8 uses
-  %i.a = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNK4bzla4NodeixEm(ptr noundef nonnull align 8 dereferenceable(8) %2, i64 noundef 0), !noalias !29
-  %i.b = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNK4bzla4NodeixEm(ptr noundef nonnull align 8 dereferenceable(8) %2, i64 noundef 1), !noalias !29
-  %i.c = tail call noundef zeroext i1 @_ZN4bzla7rewrite5utils14is_inverted_ofERKNS_4NodeES4_(ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull align 8 dereferenceable(8) %i.b), !noalias !29
+  %i.a = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNK4bzla4NodeixEm(ptr noundef nonnull align 8 dereferenceable(8) %2, i64 noundef 0), !noalias !31
+  %i.b = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNK4bzla4NodeixEm(ptr noundef nonnull align 8 dereferenceable(8) %2, i64 noundef 1), !noalias !31
+  %i.c = tail call noundef zeroext i1 @_ZN4bzla7rewrite5utils14is_inverted_ofERKNS_4NodeES4_(ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull align 8 dereferenceable(8) %i.b), !noalias !31
   br i1 %i.c, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = tail call noundef nonnull align 8 dereferenceable(216) ptr @_ZN4bzla8Rewriter2nmEv(ptr noundef nonnull align 8 dereferenceable(208) %1), !noalias !29
+  %i.d = tail call noundef nonnull align 8 dereferenceable(216) ptr @_ZN4bzla8Rewriter2nmEv(ptr noundef nonnull align 8 dereferenceable(208) %1), !noalias !31
   tail call void @_ZN4bzla11NodeManager8mk_valueEb(ptr dead_on_unwind writable sret(%"class.bzla::Node") align 8 %0, ptr noundef nonnull align 8 dereferenceable(216) %i.d, i1 noundef zeroext false)
   br label %_ZN4bzla12_GLOBAL__N_115_rw_and_contra1ERNS_8RewriterERKNS_4NodeEm.exit
 
@@ -228,22 +228,22 @@ bb.d:                                             ; preds = %_ZN4bzla12_GLOBAL__
 bb.e:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #10
   %i.f = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNK4bzla4NodeixEm(ptr noundef nonnull align 8 dereferenceable(8) %2, i64 noundef 1)
-          to label %.noexc unwind label %bb.j
+          to label %.noexc unwind label %bb.j, !noalias !32
 
 .noexc:                                           ; preds = %bb.e
   %i.g = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNK4bzla4NodeixEm(ptr noundef nonnull align 8 dereferenceable(8) %2, i64 noundef 0)
-          to label %.noexc11 unwind label %bb.j
+          to label %.noexc11 unwind label %bb.j, !noalias !32
 
 .noexc11:                                         ; preds = %.noexc
   %i.h = invoke noundef zeroext i1 @_ZN4bzla7rewrite5utils14is_inverted_ofERKNS_4NodeES4_(ptr noundef nonnull align 8 dereferenceable(8) %i.f, ptr noundef nonnull align 8 dereferenceable(8) %i.g)
-          to label %.noexc12 unwind label %bb.j
+          to label %.noexc12 unwind label %bb.j, !noalias !32
 
 .noexc12:                                         ; preds = %.noexc11
   br i1 %i.h, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %.noexc12
   %i.i = invoke noundef nonnull align 8 dereferenceable(216) ptr @_ZN4bzla8Rewriter2nmEv(ptr noundef nonnull align 8 dereferenceable(208) %1)
-          to label %.noexc13 unwind label %bb.j
+          to label %.noexc13 unwind label %bb.j, !noalias !32
 
 .noexc13:                                         ; preds = %bb.f
   invoke void @_ZN4bzla11NodeManager8mk_valueEb(ptr dead_on_unwind nonnull writable sret(%"class.bzla::Node") align 8 %3, ptr noundef nonnull align 8 dereferenceable(216) %i.i, i1 noundef zeroext false)
@@ -646,5 +646,8 @@ attributes #14 = { builtin nounwind }
 !26 = !{!25, !24, i64 0}
 !27 = distinct !{!27, i1 true, !"_ZN4bzla12_GLOBAL__N_115_rw_and_contra1ERNS_8RewriterERKNS_4NodeEm"}
 !28 = distinct !{!28, !27, !"_ZN4bzla12_GLOBAL__N_115_rw_and_contra1ERNS_8RewriterERKNS_4NodeEm: argument 0"}
-!29 = !{!28}
+!29 = distinct !{!29, i1 true, !"_ZN4bzla12_GLOBAL__N_115_rw_and_contra1ERNS_8RewriterERKNS_4NodeEm"}
+!30 = distinct !{!30, !29, !"_ZN4bzla12_GLOBAL__N_115_rw_and_contra1ERNS_8RewriterERKNS_4NodeEm: argument 0"}
+!31 = !{!28}
+!32 = !{!30}
 end_hunk_1

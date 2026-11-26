@@ -202,14 +202,14 @@ bb.g:                                             ; preds = %_ZNKSt7__cxx1112bas
 
 bb.h:                                             ; preds = %bb.g
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.39) #20
-          to label %.noexc18 unwind label %bb.q
+          to label %.noexc18 unwind label %bb.q, !noalias !100
 
 .noexc18:                                         ; preds = %bb.h
   unreachable
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i: ; preds = %bb.g
   %i.al = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm(ptr noundef nonnull align 8 dereferenceable(32) %15, ptr noundef nonnull @.str.33, i64 noundef 2)
-          to label %.noexc19 unwind label %bb.q   ; 6 uses
+          to label %.noexc19 unwind label %bb.q, !noalias !100 ; 6 uses
 
 .noexc19:                                         ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i
   %i.am = getelementptr inbounds nuw i8, ptr %14, i64 16 ; 7 uses
@@ -612,7 +612,7 @@ bb.ek:                                            ; preds = %bb.ej
   %i.mg = getelementptr inbounds nuw i8, ptr %i.mf, i64 24
   %i.mh = load ptr, ptr %i.mg, align 8, !noalias !333
   %i.mi = invoke noundef zeroext i1 %i.mh(ptr noundef nonnull align 8 dereferenceable(65) %72, ptr noundef nonnull align 8 dereferenceable(8) %i.g)
-          to label %.noexc unwind label %bb.ew, !inline_history !314
+          to label %.noexc unwind label %bb.ew, !noalias !333, !inline_history !314
 
 .noexc:                                           ; preds = %bb.ek
   %i.mj = zext i1 %i.mi to i8
@@ -1015,7 +1015,7 @@ bb.gh:                                            ; preds = %bb.gg
   %i.qs = getelementptr inbounds nuw i8, ptr %i.qr, i64 24
   %i.qt = load ptr, ptr %i.qs, align 8, !noalias !336
   %i.qu = invoke noundef zeroext i1 %i.qt(ptr noundef nonnull align 8 dereferenceable(65) %88, ptr noundef nonnull align 8 dereferenceable(8) %i.h)
-          to label %.noexc160 unwind label %bb.gt, !inline_history !314
+          to label %.noexc160 unwind label %bb.gt, !noalias !336, !inline_history !314
 
 .noexc160:                                        ; preds = %bb.gh
   %i.qv = zext i1 %i.qu to i8
@@ -1418,7 +1418,7 @@ bb.ah:                                            ; preds = %.noexc
   %i.de = getelementptr inbounds nuw i8, ptr %i.dd, i64 24
   %i.df = load ptr, ptr %i.de, align 8, !noalias !412
   %i.dg = invoke noundef zeroext i1 %i.df(ptr noundef nonnull align 8 dereferenceable(120) %22, ptr noundef nonnull align 8 dereferenceable(32) %i.cw)
-          to label %.noexc38 unwind label %bb.as, !inline_history !0
+          to label %.noexc38 unwind label %bb.as, !noalias !412, !inline_history !0
 
 .noexc38:                                         ; preds = %bb.ah
   %i.dh = zext i1 %i.dg to i8
@@ -1821,7 +1821,7 @@ bb.ah:                                            ; preds = %.noexc
   %i.de = getelementptr inbounds nuw i8, ptr %i.dd, i64 24
   %i.df = load ptr, ptr %i.de, align 8, !noalias !421
   %i.dg = invoke noundef zeroext i1 %i.df(ptr noundef nonnull align 8 dereferenceable(120) %22, ptr noundef nonnull align 8 dereferenceable(32) %i.cw)
-          to label %.noexc38 unwind label %bb.as, !inline_history !0
+          to label %.noexc38 unwind label %bb.as, !noalias !421, !inline_history !0
 
 .noexc38:                                         ; preds = %bb.ah
   %i.dh = zext i1 %i.dg to i8
@@ -2224,8 +2224,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #17
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #17
   call void @_ZNK5vcpkg10StringView9to_stringB5cxx11Ev(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %5, ptr noundef nonnull align 8 dereferenceable(16) %3)
+  call void @llvm.experimental.noalias.scope.decl(metadata !496)
   %i.b = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc(ptr noundef nonnull align 8 dereferenceable(32) %5, i64 noundef 0, i64 noundef 0, i64 noundef 1, i8 noundef signext 34)
-          to label %.noexc unwind label %bb.f     ; 6 uses
+          to label %.noexc unwind label %bb.f, !noalias !496 ; 6 uses
 
 .noexc:                                           ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 7 uses
@@ -2260,8 +2261,9 @@ bb.c:                                             ; preds = %_ZNKSt7__cxx1112bas
   store ptr %i.e, ptr %i.b, align 8, !tbaa !17
   store i64 0, ptr %i.m, align 8, !tbaa !19
   store i8 0, ptr %i.e, align 8, !tbaa !18
+  call void @llvm.experimental.noalias.scope.decl(metadata !497)
   %i.o = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc(ptr noundef nonnull align 8 dereferenceable(32) %4, i64 noundef %i.l, i64 noundef 0, i64 noundef 1, i8 noundef signext 34)
-          to label %.noexc6 unwind label %bb.g    ; 6 uses
+          to label %.noexc6 unwind label %bb.g, !noalias !497 ; 6 uses
 
 .noexc6:                                          ; preds = %bb.c
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
@@ -2664,7 +2666,7 @@ _ZN5Catch6Detail9stringifyIN5vcpkg10StringViewEEENSt7__cxx1112basic_stringIcSt11
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !538, !nonnull !40, !align !42
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #17, !noalias !539
   invoke void @_ZN5Catch20ReusableStringStreamC1Ev(ptr noundef nonnull align 8 dereferenceable(24) %2)
-          to label %.noexc unwind label %bb.h
+          to label %.noexc unwind label %bb.h, !noalias !539
 
 .noexc:                                           ; preds = %_ZN5Catch6Detail9stringifyIN5vcpkg10StringViewEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKT_.exit
   %i.h = invoke noundef nonnull align 8 dereferenceable(24) ptr @_ZN5Catch20ReusableStringStreamlsIN5vcpkg10StringViewEEERS0_RKT_(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(16) %i.g)
@@ -3067,14 +3069,14 @@ _ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_RKS8_.e
 
 bb.d:                                             ; preds = %_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_RKS8_.exit
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.39) #20
-          to label %.noexc unwind label %bb.g
+          to label %.noexc unwind label %bb.g, !noalias !626
 
 .noexc:                                           ; preds = %bb.d
   unreachable
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i: ; preds = %_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_RKS8_.exit
   %i.w = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm(ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull @.str.149, i64 noundef 1)
-          to label %.noexc2 unwind label %bb.g    ; 6 uses
+          to label %.noexc2 unwind label %bb.g, !noalias !626 ; 6 uses
 
 .noexc2:                                          ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
@@ -3477,7 +3479,7 @@ attributes #20 = { noreturn }
 !llvm.ident = !{!4}
 !llvm.errno.tbaa = !{!9}
 
-!0 = distinct !{null}
+!0 = distinct !{null, null}
 !1 = !{i32 8, !"PIC Level", i32 2}
 !2 = !{i32 7, !"PIE Level", i32 2}
 !3 = !{i32 7, !"uwtable", i32 2}
@@ -3791,7 +3793,7 @@ attributes #20 = { noreturn }
 !311 = distinct !{!311, !310, !"_ZNK5Catch7ExprLhsIbE13makeUnaryExprEv: argument 0"}
 !312 = distinct !{!312, i1 true, !"_ZN5Catch13makeMatchExprIdNS_8Matchers8Floating17WithinUlpsMatcherEEENS_9MatchExprIT_T0_EERKS5_RKS6_RKNS_9StringRefE"}
 !313 = distinct !{!313, !312, !"_ZN5Catch13makeMatchExprIdNS_8Matchers8Floating17WithinUlpsMatcherEEENS_9MatchExprIT_T0_EERKS5_RKS6_RKNS_9StringRefE: argument 0"}
-!314 = distinct !{null}
+!314 = distinct !{null, null}
 !315 = distinct !{!315, i1 true, !"_ZNK5Catch7ExprLhsIRKN5vcpkg9ExpectedTINS1_4Json10ParsedJsonENS1_15LocalizedStringEEEE13makeUnaryExprEv"}
 !316 = distinct !{!316, !315, !"_ZNK5Catch7ExprLhsIRKN5vcpkg9ExpectedTINS1_4Json10ParsedJsonENS1_15LocalizedStringEEEE13makeUnaryExprEv: argument 0"}
 !317 = distinct !{!317, i1 true, !"_ZNK5Catch7ExprLhsIbE13makeUnaryExprEv"}

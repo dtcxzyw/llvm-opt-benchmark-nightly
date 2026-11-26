@@ -204,8 +204,8 @@ bb.a:
   %i.a = alloca [32 x i8], align 8                ; 7 uses
   %i.b = alloca [16 x i8], align 8                ; 4 uses
   %i.c = alloca [16 x i8], align 8                ; 6 uses
-  %i.d = alloca [8 x i8], align 8                 ; 9 uses
-  %i.e = alloca [65536 x i8], align 1             ; 11 uses
+  %i.d = alloca [8 x i8], align 8                 ; 8 uses
+  %i.e = alloca [65536 x i8], align 1             ; 12 uses
   %i.f = alloca [176 x i8], align 8               ; 7 uses
   %.sroa.4.i.i2.i.i = alloca [24 x i8], align 8   ; 4 uses
   %i.g = alloca [32 x i8], align 8                ; 10 uses
@@ -608,7 +608,7 @@ bb.fz:                                            ; preds = %bb.fy
 bb.ga:                                            ; preds = %bb.fy
   %i.wj = load i64, ptr %i.ai, align 8, !alias.scope !1059, !noundef !8 ; 2 uses
   %i.wk = getelementptr inbounds nuw i8, ptr %1, i64 43
-  %i.wl = load i8, ptr %i.wk, align 1, !range !911, !alias.scope !1059, !noundef !8 ; 2 uses
+  %i.wl = load i8, ptr %i.wk, align 1, !range !911, !alias.scope !1059, !noundef !8 ; 3 uses
   %i.wm = call { i64, ptr } @_RNvXsc_NtCs2vKOLqTMYjT_3std2fsNtB5_4FileNtNtNtCs6JMX4GRUq9U_4core2io4seek4Seek4seek(ptr noalias nofree noundef nonnull align 4 dereferenceable(4) %0, i64 noundef 1, i64 noundef 0) #22, !noalias !1059 ; 2 uses
   %i.wn = extractvalue { i64, ptr } %i.wm, 0
   %i.wo = extractvalue { i64, ptr } %i.wm, 1      ; 3 uses
@@ -627,9 +627,10 @@ bb.gb:                                            ; preds = %bb.ga
   br label %bb.gc
 
 bb.gc:                                            ; preds = %bb.gt, %bb.gb
+  %2 = phi i64 [ 0, %bb.gb ], [ %.lcssa95.i.i.i, %bb.gt ] ; 3 uses
   %.sroa.06.0.i.i.i = phi i64 [ %i.wq, %bb.gb ], [ %i.wv, %bb.gt ] ; 3 uses
   %.sroa.05.0.not.i.i.i = phi i1 [ false, %bb.gb ], [ true, %bb.gt ]
-  %i.wu = phi i64 [ 0, %bb.gb ], [ %3, %bb.gt ]   ; 4 uses
+  %i.wu = phi i64 [ 0, %bb.gb ], [ %.lcssa.i.i.i, %bb.gt ] ; 4 uses
   %..i.i.i.i = call noundef i64 @llvm.umin.i64(i64 %.sroa.06.0.i.i.i, i64 65536) ; 4 uses
   %i.wv = sub nuw i64 %.sroa.06.0.i.i.i, %..i.i.i.i ; 4 uses
   %i.ww = call { i64, ptr } @_RNvXsc_NtCs2vKOLqTMYjT_3std2fsNtB5_4FileNtNtNtCs6JMX4GRUq9U_4core2io4seek4Seek4seek(ptr noalias nofree noundef nonnull align 4 dereferenceable(4) %0, i64 noundef 0, i64 noundef %i.wv) #22, !noalias !1059 ; 2 uses
@@ -747,10 +748,15 @@ bb.gm:                                            ; preds = %_RINvNtCs6JMX4GRUq9
 _RNvYNtNtCs2vKOLqTMYjT_3std2fs4FileNtNtNtCs7tKScEop1B6_5alloc2io4read4Read10read_exactCsgzkSwV7OBv7_7uu_head.exit.i.i.i: ; preds = %bb.gm
   br i1 %.sroa.05.0.not.i.i.i, label %_RNvYNtNtCs2vKOLqTMYjT_3std2fs4FileNtNtNtCs7tKScEop1B6_5alloc2io4read4Read10read_exactCsgzkSwV7OBv7_7uu_head.exit.thread61.i.i.i, label %bb.gn
 
-_RNvYNtNtCs2vKOLqTMYjT_3std2fs4FileNtNtNtCs7tKScEop1B6_5alloc2io4read4Read10read_exactCsgzkSwV7OBv7_7uu_head.exit.thread61.i.i.i: ; preds = %2, %bb.gn, %_RNvYNtNtCs2vKOLqTMYjT_3std2fs4FileNtNtNtCs7tKScEop1B6_5alloc2io4read4Read10read_exactCsgzkSwV7OBv7_7uu_head.exit.i.i.i, %bb.ge
-  %i.yf = phi i64 [ %i.wu, %_RNvYNtNtCs2vKOLqTMYjT_3std2fs4FileNtNtNtCs7tKScEop1B6_5alloc2io4read4Read10read_exactCsgzkSwV7OBv7_7uu_head.exit.i.i.i ], [ 1, %2 ], [ %i.wu, %bb.gn ], [ %i.wu, %bb.ge ]
+_RNvYNtNtCs2vKOLqTMYjT_3std2fs4FileNtNtNtCs7tKScEop1B6_5alloc2io4read4Read10read_exactCsgzkSwV7OBv7_7uu_head.exit.thread61.i.i.i: ; preds = %bb.gp, %bb.gn, %_RNvYNtNtCs2vKOLqTMYjT_3std2fs4FileNtNtNtCs7tKScEop1B6_5alloc2io4read4Read10read_exactCsgzkSwV7OBv7_7uu_head.exit.i.i.i, %bb.ge
+  %3 = phi i64 [ %2, %_RNvYNtNtCs2vKOLqTMYjT_3std2fs4FileNtNtNtCs7tKScEop1B6_5alloc2io4read4Read10read_exactCsgzkSwV7OBv7_7uu_head.exit.i.i.i ], [ %2, %bb.ge ], [ %2, %bb.gn ], [ 1, %bb.gp ]
+  %i.yf = phi i64 [ %i.wu, %_RNvYNtNtCs2vKOLqTMYjT_3std2fs4FileNtNtNtCs7tKScEop1B6_5alloc2io4read4Read10read_exactCsgzkSwV7OBv7_7uu_head.exit.i.i.i ], [ %i.wu, %bb.ge ], [ %i.wu, %bb.gn ], [ 1, %bb.gp ] ; 2 uses
   %i.yg = getelementptr i8, ptr %i.e, i64 %..i.i.i.i
-  br label %bb.gr
+  %4 = load atomic ptr, ptr @_RNvNvNtNtNtCs3RYoXg2VPb3_6memchr4arch6x86_646memchr11memrchr_raw2FN monotonic, align 8, !noalias !1064, !nonnull !8, !noundef !8
+  %5 = call { i64, ptr } %4(i8 noundef range(i8 0, 11) %i.wl, ptr noundef nonnull %i.e, ptr noundef %i.yg) #22, !noalias !1065, !inline_history !908 ; 2 uses
+  %6 = extractvalue { i64, ptr } %5, 0
+  %7 = trunc nuw i64 %6 to i1
+  br i1 %7, label %bb.gs, label %bb.gt
 
 bb.gn:                                            ; preds = %_RNvYNtNtCs2vKOLqTMYjT_3std2fs4FileNtNtNtCs7tKScEop1B6_5alloc2io4read4Read10read_exactCsgzkSwV7OBv7_7uu_head.exit.i.i.i
   %i.yh = getelementptr i8, ptr %i.e, i64 %..i.i.i.i
@@ -775,37 +781,35 @@ bb.go:                                            ; preds = %bb.gn
 
 bb.gp:                                            ; preds = %bb.go
   %i.yo = icmp eq i64 %i.wu, 0
-  br i1 %i.yo, label %2, label %bb.gq, !prof !7
-
-2:                                                ; preds = %bb.gp
-  store i64 1, ptr %i.d, align 8, !noalias !1060
-  br label %_RNvYNtNtCs2vKOLqTMYjT_3std2fs4FileNtNtNtCs7tKScEop1B6_5alloc2io4read4Read10read_exactCsgzkSwV7OBv7_7uu_head.exit.thread61.i.i.i
+  br i1 %i.yo, label %_RNvYNtNtCs2vKOLqTMYjT_3std2fs4FileNtNtNtCs7tKScEop1B6_5alloc2io4read4Read10read_exactCsgzkSwV7OBv7_7uu_head.exit.thread61.i.i.i, label %bb.gq, !prof !7
 
 bb.gq:                                            ; preds = %bb.gp
   call void @_RINvNtCs6JMX4GRUq9U_4core9panicking13assert_failedyyEB4_(i8 noundef 0, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.d, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(8) @1, ptr noundef null, ptr undef, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2) #25, !noalias !1059
   unreachable
 
-bb.gr:                                            ; preds = %bb.gs, %_RNvYNtNtCs2vKOLqTMYjT_3std2fs4FileNtNtNtCs7tKScEop1B6_5alloc2io4read4Read10read_exactCsgzkSwV7OBv7_7uu_head.exit.thread61.i.i.i
-  %.sroa.7.0.i.i.i = phi ptr [ %i.yg, %_RNvYNtNtCs2vKOLqTMYjT_3std2fs4FileNtNtNtCs7tKScEop1B6_5alloc2io4read4Read10read_exactCsgzkSwV7OBv7_7uu_head.exit.thread61.i.i.i ], [ %i.yt, %bb.gs ]
-  %3 = phi i64 [ %i.yf, %_RNvYNtNtCs2vKOLqTMYjT_3std2fs4FileNtNtNtCs7tKScEop1B6_5alloc2io4read4Read10read_exactCsgzkSwV7OBv7_7uu_head.exit.thread61.i.i.i ], [ %i.yx, %bb.gs ] ; 2 uses
+bb.gr:                                            ; preds = %bb.gs
   %i.yp = load atomic ptr, ptr @_RNvNvNtNtNtCs3RYoXg2VPb3_6memchr4arch6x86_646memchr11memrchr_raw2FN monotonic, align 8, !noalias !1064, !nonnull !8, !noundef !8
-  %i.yq = call { i64, ptr } %i.yp(i8 noundef range(i8 0, 11) %i.wl, ptr noundef nonnull %i.e, ptr noundef %.sroa.7.0.i.i.i) #22, !noalias !1065, !inline_history !908 ; 2 uses
+  %i.yq = call { i64, ptr } %i.yp(i8 noundef range(i8 0, 11) %i.wl, ptr noundef nonnull %i.e, ptr noundef %i.yt) #22, !noalias !1065, !inline_history !908 ; 2 uses
   %i.yr = extractvalue { i64, ptr } %i.yq, 0
   %i.ys = trunc nuw i64 %i.yr to i1
   br i1 %i.ys, label %bb.gs, label %bb.gt
 
-bb.gs:                                            ; preds = %bb.gr
-  %i.yt = extractvalue { i64, ptr } %i.yq, 1      ; 2 uses
+bb.gs:                                            ; preds = %_RNvYNtNtCs2vKOLqTMYjT_3std2fs4FileNtNtNtCs7tKScEop1B6_5alloc2io4read4Read10read_exactCsgzkSwV7OBv7_7uu_head.exit.thread61.i.i.i, %bb.gr
+  %8 = phi { i64, ptr } [ %i.yq, %bb.gr ], [ %5, %_RNvYNtNtCs2vKOLqTMYjT_3std2fs4FileNtNtNtCs7tKScEop1B6_5alloc2io4read4Read10read_exactCsgzkSwV7OBv7_7uu_head.exit.thread61.i.i.i ]
+  %9 = phi i64 [ %i.yx, %bb.gr ], [ %i.yf, %_RNvYNtNtCs2vKOLqTMYjT_3std2fs4FileNtNtNtCs7tKScEop1B6_5alloc2io4read4Read10read_exactCsgzkSwV7OBv7_7uu_head.exit.thread61.i.i.i ]
+  %i.yt = extractvalue { i64, ptr } %8, 1         ; 2 uses
   %i.yu = ptrtoint ptr %i.yt to i64
   %i.yv = sub i64 %i.yu, %i.wt                    ; 2 uses
   %i.yw = icmp sgt i64 %i.yv, -1
   call void @llvm.assume(i1 %i.yw), !noalias !1066
-  %i.yx = add i64 %3, 1                           ; 3 uses
-  store i64 %i.yx, ptr %i.d, align 8, !noalias !1060
+  %i.yx = add i64 %9, 1                           ; 4 uses
   %i.yy = icmp ugt i64 %i.yx, %i.wj
   br i1 %i.yy, label %bb.gu, label %bb.gr
 
-bb.gt:                                            ; preds = %bb.gr
+bb.gt:                                            ; preds = %bb.gr, %_RNvYNtNtCs2vKOLqTMYjT_3std2fs4FileNtNtNtCs7tKScEop1B6_5alloc2io4read4Read10read_exactCsgzkSwV7OBv7_7uu_head.exit.thread61.i.i.i
+  %.lcssa95.i.i.i = phi i64 [ %3, %_RNvYNtNtCs2vKOLqTMYjT_3std2fs4FileNtNtNtCs7tKScEop1B6_5alloc2io4read4Read10read_exactCsgzkSwV7OBv7_7uu_head.exit.thread61.i.i.i ], [ %i.yx, %bb.gr ] ; 2 uses
+  %.lcssa.i.i.i = phi i64 [ %i.yf, %_RNvYNtNtCs2vKOLqTMYjT_3std2fs4FileNtNtNtCs7tKScEop1B6_5alloc2io4read4Read10read_exactCsgzkSwV7OBv7_7uu_head.exit.thread61.i.i.i ], [ %i.yx, %bb.gr ]
+  store i64 %.lcssa95.i.i.i, ptr %i.d, align 8, !noalias !1060
   %i.yz = icmp eq i64 %i.wv, 0
   br i1 %i.yz, label %_RINvCsgzkSwV7OBv7_7uu_head22find_nth_line_from_endNtNtCs2vKOLqTMYjT_3std2fs4FileEB2_.exit.i.i, label %bb.gc
 

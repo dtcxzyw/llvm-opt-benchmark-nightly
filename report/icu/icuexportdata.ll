@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/icu/original/icuexportdata?download=true
 inline.NumInlined: 823
-inline.NumDeleted: 326
+inline.NumDeleted: 327
 loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_Z23dumpGeneralCategoryMaskP8_IO_FILE:bb.a
@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #25
   %i.m = invoke ptr @umutablecptrie_fromUCPMap_78(ptr noundef %i.l, ptr noundef nonnull %i.e)
-          to label %bb.i unwind label %bb.s       ; 3 uses
+          to label %bb.i unwind label %bb.s       ; 4 uses
 
 bb.i:                                             ; preds = %bb.h
   store ptr %i.m, ptr %3, align 8, !tbaa !32
@@ -304,8 +304,12 @@ _ZNK6icu_786header14USetCodePoints5beginEv.exit:  ; preds = %bb.q, %bb.m
   %i.ak = getelementptr inbounds nuw i8, ptr %4, i64 16
   br label %bb.w
 
-._crit_edge138:                                   ; preds = %_ZN6icu_786header21USetCodePointIteratorppEv.exit, %_ZNK6icu_786header14USetCodePoints5beginEv.exit
-  %i.al = phi ptr [ %i.m, %_ZNK6icu_786header14USetCodePoints5beginEv.exit ], [ %10, %_ZN6icu_786header21USetCodePointIteratorppEv.exit ] ; 3 uses
+._crit_edge138.loopexit:                          ; preds = %_ZN6icu_786header21USetCodePointIteratorppEv.exit
+  %.pre152 = load ptr, ptr %3, align 8, !tbaa !32
+  br label %._crit_edge138
+
+._crit_edge138:                                   ; preds = %._crit_edge138.loopexit, %_ZNK6icu_786header14USetCodePoints5beginEv.exit
+  %i.al = phi ptr [ %.pre152, %._crit_edge138.loopexit ], [ %i.m, %_ZNK6icu_786header14USetCodePoints5beginEv.exit ] ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #25
   %fwrite70 = call i64 @fwrite(ptr nonnull @.str.34, i64 3, i64 1, ptr %0) ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #25
@@ -339,9 +343,8 @@ bb.v:                                             ; preds = %bb.l
   br label %bb.bq
 
 bb.w:                                             ; preds = %.lr.ph137, %_ZN6icu_786header21USetCodePointIteratorppEv.exit
-  %9 = phi ptr [ %i.m, %.lr.ph137 ], [ %10, %_ZN6icu_786header21USetCodePointIteratorppEv.exit ]
   %i.at = phi i32 [ %i.ae, %.lr.ph137 ], [ %i.fe, %_ZN6icu_786header21USetCodePointIteratorppEv.exit ] ; 3 uses
-  %i.au = invoke i32 @umutablecptrie_get_78(ptr noundef %9, i32 noundef %i.at)
+  %i.au = invoke i32 @umutablecptrie_get_78(ptr noundef %i.m, i32 noundef %i.at)
           to label %bb.x unwind label %.loopexit.split-lp118.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 4 uses
 
 bb.x:                                             ; preds = %bb.w
@@ -640,8 +643,7 @@ _ZSteqItSaItEEbRKSt6vectorIT_T0_ES6_.exit.thread: ; preds = %bb.al, %_ZSteqItSaI
   %i.ei = zext i16 %.0 to i64
   %i.ej = or i64 %.047129, %i.ei
   %i.ek = trunc i64 %i.ej to i32
-  %10 = load ptr, ptr %3, align 8, !tbaa !32      ; 3 uses
-  invoke void @umutablecptrie_set_78(ptr noundef %10, i32 noundef %i.at, i32 noundef %i.ek, ptr noundef nonnull %i.e)
+  invoke void @umutablecptrie_set_78(ptr noundef %i.m, i32 noundef %i.at, i32 noundef %i.ek, ptr noundef nonnull %i.e)
           to label %bb.as unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.as:                                            ; preds = %_ZSteqItSaItEEbRKSt6vectorIT_T0_ES6_.exit.thread
@@ -722,7 +724,7 @@ _ZN6icu_786header21USetCodePointIteratorppEv.exit: ; preds = %bb.av, %bb.ba, %bb
   %i.fg = icmp ne ptr %i.ff, %5
   %i.fh = icmp ne i32 %i.fe, -1
   %.not3.i = select i1 %i.fg, i1 true, i1 %i.fh
-  br i1 %.not3.i, label %bb.w, label %._crit_edge138
+  br i1 %.not3.i, label %bb.w, label %._crit_edge138.loopexit
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %_ZNKSt6vectorItSaItEE12_M_check_lenEmPKc.exit.i.i.i, %bb.ar, %_ZNSt15__new_allocatorItE8allocateEmPKv.exit.i.i.i.i.i, %.noexc94, %bb.aa, %_ZNSt6vectorIS_ItSaItEESaIS1_EE9push_backERKS1_.exit, %bb.as, %_ZSteqItSaItEEbRKSt6vectorIT_T0_ES6_.exit.thread, %bb.ae, %.noexc.i.i.i
   %lpad.loopexit.split-lp200 = landingpad { ptr, i32 }
@@ -1125,7 +1127,7 @@ attributes #32 = { cold nounwind }
 
 !0 = distinct !{null}
 !1 = distinct !{!1, !29}
-!2 = distinct !{ptr @_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_, null}
+!2 = distinct !{ptr @_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_, null, null, null}
 !3 = distinct !{!3, !29}
 !4 = distinct !{!4, !29}
 !5 = distinct !{!5, !29}

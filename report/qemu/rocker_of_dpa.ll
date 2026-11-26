@@ -204,14 +204,12 @@ bb.k:                                             ; preds = %bb.c, %bb.c
   br i1 %.not94, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.k
-  %3 = getelementptr inbounds nuw i8, ptr %i.f, i64 46
   %i.bp = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.bq = getelementptr inbounds nuw i8, ptr %i.f, i64 48 ; 2 uses
   br label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph, %bb.l
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.l ] ; 2 uses
-  store i8 1, ptr %3, align 2
   %i.br = tail call noalias dereferenceable_or_null(16) ptr @g_malloc(i64 noundef 16) #18 ; 3 uses
   %i.bs = load ptr, ptr %i.bp, align 8
   %i.bt = getelementptr inbounds nuw [4 x i8], ptr %i.bs, i64 %indvars.iv
@@ -225,7 +223,7 @@ bb.l:                                             ; preds = %.lr.ph, %bb.l
   %i.bx = load i16, ptr %i.bn, align 8
   %i.by = zext i16 %i.bx to i64
   %i.bz = icmp samesign ult i64 %indvars.iv.next, %i.by
-  br i1 %i.bz, label %bb.l, label %.loopexit, !llvm.loop !11
+  br i1 %i.bz, label %bb.l, label %..loopexit_crit_edge, !llvm.loop !11
 
 bb.m:                                             ; preds = %bb.c
   %i.ca = getelementptr inbounds nuw i8, ptr %i.f, i64 16
@@ -301,7 +299,12 @@ bb.t:                                             ; preds = %bb.s
   store i8 %i.dg, ptr %i.di, align 1
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.l, %bb.k, %bb.c, %bb.d, %bb.j, %bb.i, %bb.t, %bb.s
+..loopexit_crit_edge:                             ; preds = %bb.l
+  %3 = getelementptr inbounds nuw i8, ptr %i.f, i64 46
+  store i8 1, ptr %3, align 2
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %bb.k, %..loopexit_crit_edge, %bb.c, %bb.d, %bb.j, %bb.i, %bb.t, %bb.s
   %i.dj = tail call noalias dereferenceable_or_null(16) ptr @g_malloc(i64 noundef 16) #18 ; 3 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %i.dj, i64 8
   store ptr %i.f, ptr %i.dk, align 8

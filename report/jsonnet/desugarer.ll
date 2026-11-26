@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/jsonnet/original/desugarer?download=true
 inline.NumInlined: 3682
-inline.NumDeleted: 1236
+inline.NumDeleted: 1237
 loop-unroll.NumCompletelyUnrolled: 56
 loop-unroll.NumUnrolled: 56
 begin_hunk_0_@_ZN7jsonnet8internal9Desugarer9stdlibASTENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE:._crit_edge.i.i
@@ -204,8 +204,9 @@ bb.z:                                             ; preds = %bb.y, %bb.x, %bb.w,
   br i1 %i.gq, label %.body, label %.body.sink.split
 
 _ZN7jsonnet8internalL11encode_utf8ERKNSt7__cxx1112basic_stringIDiSt11char_traitsIDiESaIDiEEE.exit: ; preds = %_ZN7jsonnet8internalL11encode_utf8EDiRNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.i.i, %bb.i
+  call void @llvm.experimental.noalias.scope.decl(metadata !293)
   %i.gr = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %6, i64 noundef 0, i64 noundef 0, ptr noundef nonnull @.str.92, i64 noundef 4)
-          to label %.noexc68 unwind label %bb.ak  ; 6 uses
+          to label %.noexc68 unwind label %bb.ak, !noalias !293 ; 6 uses
 
 .noexc68:                                         ; preds = %_ZN7jsonnet8internalL11encode_utf8ERKNSt7__cxx1112basic_stringIDiSt11char_traitsIDiESaIDiEEE.exit
   store ptr %i.ac, ptr %5, align 8, !tbaa !66, !alias.scope !293
@@ -608,7 +609,7 @@ begin_hunk_1_@llvm.umax.i64
 !372 = distinct !{!372, i1 true, !"_ZSt19__relocate_object_aIN7jsonnet8internal15DesugaredObject5FieldES3_SaIS3_EEvPT_PT0_RT1_"}
 !373 = distinct !{!373, !372, !"_ZSt19__relocate_object_aIN7jsonnet8internal15DesugaredObject5FieldES3_SaIS3_EEvPT_PT0_RT1_: argument 1"}
 !374 = distinct !{!374, !372, !"_ZSt19__relocate_object_aIN7jsonnet8internal15DesugaredObject5FieldES3_SaIS3_EEvPT_PT0_RT1_: argument 0"}
-!375 = distinct !{ptr @_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_, null}
+!375 = distinct !{ptr @_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_, null, null, null}
 !376 = distinct !{!376, i1 true, !"_ZN7jsonnet8internal9Desugarer4bindEPKNS0_10IdentifierEPNS0_3ASTE"}
 !377 = distinct !{!377, !376, !"_ZN7jsonnet8internal9Desugarer4bindEPKNS0_10IdentifierEPNS0_3ASTE: argument 0"}
 !378 = distinct !{!378, i1 true, !"_ZN7jsonnet8internal9Desugarer4bindEPKNS0_10IdentifierEPNS0_3ASTE"}

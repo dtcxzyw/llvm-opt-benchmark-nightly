@@ -202,8 +202,9 @@ bb.o:                                             ; preds = %bb.l
           to label %_ZNK7testing25StringMatchResultListener3strB5cxx11Ev.exit67 unwind label %bb.n
 
 _ZNK7testing25StringMatchResultListener3strB5cxx11Ev.exit67: ; preds = %bb.o, %bb.m
+  call void @llvm.experimental.noalias.scope.decl(metadata !93)
   %i.bq = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %10, i64 noundef 0, i64 noundef 0, ptr noundef nonnull @.str.6, i64 noundef 24)
-          to label %.noexc68 unwind label %.thread ; 6 uses
+          to label %.noexc68 unwind label %.thread, !noalias !93 ; 6 uses
 
 .noexc68:                                         ; preds = %_ZNK7testing25StringMatchResultListener3strB5cxx11Ev.exit67
   %i.br = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 3 uses
@@ -415,8 +416,8 @@ bb.x:                                             ; preds = %bb.v
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.x, %bb.w
-  %.sroa.0.0.i = phi i64 [ %spec.select.i, %bb.x ], [ %i.ea, %bb.w ] ; 5 uses
-  %.sroa.4.0.i = phi ptr [ %spec.select1.i, %bb.x ], [ %i.dy, %bb.w ] ; 3 uses
+  %.sroa.0.0.i = phi i64 [ %i.ea, %bb.w ], [ %spec.select.i, %bb.x ] ; 5 uses
+  %.sroa.4.0.i = phi ptr [ %i.dy, %bb.w ], [ %spec.select1.i, %bb.x ] ; 3 uses
   %i.ec = getelementptr inbounds nuw i8, ptr %12, i64 16 ; 7 uses
   store ptr %i.ec, ptr %12, align 8, !tbaa !80
   %i.ed = icmp eq ptr %.sroa.4.0.i, null
@@ -819,7 +820,7 @@ attributes #11 = { noreturn }
 !48 = distinct !{!48, !47, !"_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE3strEv: argument 0"}
 !49 = distinct !{!49, i1 true, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_OS8_"}
 !50 = distinct !{!50, !49, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_OS8_: argument 0"}
-!51 = distinct !{null}
+!51 = distinct !{null, null}
 !52 = !{!"p1 _ZTSSo", !10, i64 0}
 !53 = !{!"_ZTSN7testing19MatchResultListenerE", !52, i64 8}
 !54 = !{!53, !52, i64 8}

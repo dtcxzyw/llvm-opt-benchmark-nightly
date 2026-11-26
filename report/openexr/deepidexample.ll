@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openexr/original/deepidexample?download=true
 inline.NumInlined: 970
-inline.NumDeleted: 385
+inline.NumDeleted: 387
 loop-unroll.NumCompletelyUnrolled: 2
 loop-unroll.NumUnrolled: 2
 begin_hunk_0_@main:bb.a
@@ -204,14 +204,14 @@ bb.cn:                                            ; preds = %bb.cm, %bb.cl, %._c
 
 bb.co:                                            ; preds = %bb.cn
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.52) #25
-          to label %.noexc571 unwind label %.loopexit.split-lp2074.loopexit.split-lp.loopexit.split-lp
+          to label %.noexc571 unwind label %.loopexit.split-lp2074.loopexit.split-lp.loopexit.split-lp, !noalias !117
 
 .noexc571:                                        ; preds = %bb.co
   unreachable
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i: ; preds = %bb.cn
   %i.uz = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm(ptr noundef nonnull align 8 dereferenceable(32) %33, ptr noundef nonnull @.str.27, i64 noundef 1)
-          to label %.noexc572 unwind label %.loopexit.split-lp2074.loopexit.split-lp.loopexit.split-lp ; 6 uses
+          to label %.noexc572 unwind label %.loopexit.split-lp2074.loopexit.split-lp.loopexit.split-lp, !noalias !117 ; 6 uses
 
 .noexc572:                                        ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i
   store ptr %i.sq, ptr %32, align 8, !tbaa !25, !alias.scope !117
@@ -331,7 +331,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit14.i: ; pr
 
 .critedge.i:                                      ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit14.i
   %i.wk = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %34, i64 noundef 0, i64 noundef 0, ptr noundef %i.vz, i64 noundef %i.vw)
-          to label %.noexc580 unwind label %.loopexit.split-lp2079.loopexit.split-lp.loopexit.split-lp ; 5 uses
+          to label %.noexc580 unwind label %.loopexit.split-lp2079.loopexit.split-lp.loopexit.split-lp, !noalias !118 ; 5 uses
 
 .noexc580:                                        ; preds = %.critedge.i
   store ptr %i.su, ptr %31, align 8, !tbaa !25, !alias.scope !118
@@ -371,7 +371,7 @@ bb.cw:                                            ; preds = %_ZNKSt7__cxx1112bas
 
 bb.cx:                                            ; preds = %bb.cw
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.52) #25
-          to label %.noexc581 unwind label %.loopexit.split-lp2079.loopexit.split-lp.loopexit.split-lp
+          to label %.noexc581 unwind label %.loopexit.split-lp2079.loopexit.split-lp.loopexit.split-lp, !noalias !118
 
 .noexc581:                                        ; preds = %bb.cx
   unreachable
@@ -379,7 +379,7 @@ bb.cx:                                            ; preds = %bb.cw
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendERKS4_.exit.i: ; preds = %bb.cw
   %i.wx = load ptr, ptr %34, align 8, !tbaa !29, !noalias !118
   %i.wy = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm(ptr noundef nonnull align 8 dereferenceable(32) %32, ptr noundef %i.wx, i64 noundef %i.vx)
-          to label %.noexc582 unwind label %.loopexit.split-lp2079.loopexit.split-lp.loopexit.split-lp ; 5 uses
+          to label %.noexc582 unwind label %.loopexit.split-lp2079.loopexit.split-lp.loopexit.split-lp, !noalias !118 ; 5 uses
 
 .noexc582:                                        ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendERKS4_.exit.i
   store ptr %i.su, ptr %31, align 8, !tbaa !25, !alias.scope !118
@@ -622,7 +622,7 @@ _ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_PKS5_.e
 
 bb.di:                                            ; preds = %_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_PKS5_.exit
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.52) #25
-          to label %.noexc604 unwind label %.loopexit.split-lp2089.loopexit.split-lp.loopexit.split-lp
+          to label %.noexc604 unwind label %.loopexit.split-lp2089.loopexit.split-lp.loopexit.split-lp, !noalias !121
 
 .noexc604:                                        ; preds = %bb.di
   unreachable
@@ -631,7 +631,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendERKS4_.exit.i599: ; 
   %i.zz = getelementptr inbounds nuw i8, ptr %i.zt, i64 32
   %i.aaa = load ptr, ptr %i.zz, align 8, !tbaa !29, !noalias !121
   %i.aab = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm(ptr noundef nonnull align 8 dereferenceable(32) %38, ptr noundef %i.aaa, i64 noundef %i.zv)
-          to label %.noexc605 unwind label %.loopexit.split-lp2089.loopexit.split-lp.loopexit.split-lp ; 6 uses
+          to label %.noexc605 unwind label %.loopexit.split-lp2089.loopexit.split-lp.loopexit.split-lp, !noalias !121 ; 6 uses
 
 .noexc605:                                        ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendERKS4_.exit.i599
   store ptr %i.sy, ptr %37, align 8, !tbaa !25, !alias.scope !121
@@ -671,14 +671,14 @@ bb.dk:                                            ; preds = %_ZNKSt7__cxx1112bas
 
 bb.dl:                                            ; preds = %bb.dk
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.52) #25
-          to label %.noexc611 unwind label %.loopexit.split-lp2094.loopexit.split-lp.loopexit.split-lp
+          to label %.noexc611 unwind label %.loopexit.split-lp2094.loopexit.split-lp.loopexit.split-lp, !noalias !122
 
 .noexc611:                                        ; preds = %bb.dl
   unreachable
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i606: ; preds = %bb.dk
   %i.aao = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm(ptr noundef nonnull align 8 dereferenceable(32) %37, ptr noundef nonnull @.str.28, i64 noundef 1)
-          to label %.noexc612 unwind label %.loopexit.split-lp2094.loopexit.split-lp.loopexit.split-lp ; 6 uses
+          to label %.noexc612 unwind label %.loopexit.split-lp2094.loopexit.split-lp.loopexit.split-lp, !noalias !122 ; 6 uses
 
 .noexc612:                                        ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i606
   store ptr %i.ta, ptr %36, align 8, !tbaa !25, !alias.scope !122
@@ -862,7 +862,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit14.i621: ;
 
 .critedge.i623:                                   ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit14.i621
   %i.ade = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %39, i64 noundef 0, i64 noundef 0, ptr noundef %i.act, i64 noundef %i.acq)
-          to label %.noexc628 unwind label %.loopexit.split-lp2099.loopexit.split-lp.loopexit.split-lp ; 5 uses
+          to label %.noexc628 unwind label %.loopexit.split-lp2099.loopexit.split-lp.loopexit.split-lp, !noalias !124 ; 5 uses
 
 .noexc628:                                        ; preds = %.critedge.i623
   store ptr %i.te, ptr %35, align 8, !tbaa !25, !alias.scope !124
@@ -902,7 +902,7 @@ bb.ea:                                            ; preds = %_ZNKSt7__cxx1112bas
 
 bb.eb:                                            ; preds = %bb.ea
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.52) #25
-          to label %.noexc629 unwind label %.loopexit.split-lp2099.loopexit.split-lp.loopexit.split-lp
+          to label %.noexc629 unwind label %.loopexit.split-lp2099.loopexit.split-lp.loopexit.split-lp, !noalias !124
 
 .noexc629:                                        ; preds = %bb.eb
   unreachable
@@ -910,7 +910,7 @@ bb.eb:                                            ; preds = %bb.ea
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendERKS4_.exit.i617: ; preds = %bb.ea
   %i.adr = load ptr, ptr %39, align 8, !tbaa !29, !noalias !124
   %i.ads = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm(ptr noundef nonnull align 8 dereferenceable(32) %36, ptr noundef %i.adr, i64 noundef %i.acr)
-          to label %.noexc630 unwind label %.loopexit.split-lp2099.loopexit.split-lp.loopexit.split-lp ; 5 uses
+          to label %.noexc630 unwind label %.loopexit.split-lp2099.loopexit.split-lp.loopexit.split-lp, !noalias !124 ; 5 uses
 
 .noexc630:                                        ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendERKS4_.exit.i617
   store ptr %i.te, ptr %35, align 8, !tbaa !25, !alias.scope !124
@@ -1313,14 +1313,14 @@ bb.es:                                            ; preds = %bb.er, %bb.eq, %._c
 
 bb.et:                                            ; preds = %bb.es
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.52) #25
-          to label %.noexc695 unwind label %.loopexit.split-lp2064.loopexit.split-lp.loopexit.split-lp
+          to label %.noexc695 unwind label %.loopexit.split-lp2064.loopexit.split-lp.loopexit.split-lp, !noalias !125
 
 .noexc695:                                        ; preds = %bb.et
   unreachable
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i690: ; preds = %bb.es
   %i.ahu = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm(ptr noundef nonnull align 8 dereferenceable(32) %42, ptr noundef nonnull @.str.27, i64 noundef 1)
-          to label %.noexc696 unwind label %.loopexit.split-lp2064.loopexit.split-lp.loopexit.split-lp ; 6 uses
+          to label %.noexc696 unwind label %.loopexit.split-lp2064.loopexit.split-lp.loopexit.split-lp, !noalias !125 ; 6 uses
 
 .noexc696:                                        ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i690
   store ptr %i.sd, ptr %41, align 8, !tbaa !25, !alias.scope !125
@@ -1440,7 +1440,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit14.i709: ;
 
 .critedge.i711:                                   ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit14.i709
   %i.ajf = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %43, i64 noundef 0, i64 noundef 0, ptr noundef %i.aiu, i64 noundef %i.air)
-          to label %.noexc716 unwind label %.loopexit.split-lp2069.loopexit.split-lp.loopexit.split-lp ; 5 uses
+          to label %.noexc716 unwind label %.loopexit.split-lp2069.loopexit.split-lp.loopexit.split-lp, !noalias !126 ; 5 uses
 
 .noexc716:                                        ; preds = %.critedge.i711
   store ptr %i.sh, ptr %40, align 8, !tbaa !25, !alias.scope !126
@@ -1480,7 +1480,7 @@ bb.fb:                                            ; preds = %_ZNKSt7__cxx1112bas
 
 bb.fc:                                            ; preds = %bb.fb
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.52) #25
-          to label %.noexc717 unwind label %.loopexit.split-lp2069.loopexit.split-lp.loopexit.split-lp
+          to label %.noexc717 unwind label %.loopexit.split-lp2069.loopexit.split-lp.loopexit.split-lp, !noalias !126
 
 .noexc717:                                        ; preds = %bb.fc
   unreachable
@@ -1488,7 +1488,7 @@ bb.fc:                                            ; preds = %bb.fb
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendERKS4_.exit.i705: ; preds = %bb.fb
   %i.ajs = load ptr, ptr %43, align 8, !tbaa !29, !noalias !126
   %i.ajt = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm(ptr noundef nonnull align 8 dereferenceable(32) %41, ptr noundef %i.ajs, i64 noundef %i.ais)
-          to label %.noexc718 unwind label %.loopexit.split-lp2069.loopexit.split-lp.loopexit.split-lp ; 5 uses
+          to label %.noexc718 unwind label %.loopexit.split-lp2069.loopexit.split-lp.loopexit.split-lp, !noalias !126 ; 5 uses
 
 .noexc718:                                        ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendERKS4_.exit.i705
   store ptr %i.sh, ptr %40, align 8, !tbaa !25, !alias.scope !126
@@ -1891,8 +1891,8 @@ _ZSt6fill_nIPPcmS0_ET_S2_T0_RKT1_.exit.loopexit.i.i.i.i.i844: ; preds = %.noexc8
   br label %.lr.ph2331.preheader
 
 .lr.ph2331.preheader:                             ; preds = %_ZSt6fill_nIPPcmS0_ET_S2_T0_RKT1_.exit.loopexit.i.i.i.i.i844, %.noexc849
+  %85 = load ptr, ptr %28, align 8, !tbaa !37
   %wide.trip.count = zext nneg i32 %i.rk to i64
-  %.pre2358 = load ptr, ptr %28, align 8, !tbaa !37 ; 2 uses
   br label %.lr.ph2331
 
 ._crit_edge2332:                                  ; preds = %bb.gi, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i
@@ -1980,11 +1980,11 @@ _ZNSt6vectorIPcSaIS0_EED2Ev.exit910.thread:       ; preds = %bb.gf
   br label %bb.nf
 
 .lr.ph2331:                                       ; preds = %.lr.ph2331.preheader, %bb.gi
-  %indvars.iv = phi i64 [ 0, %.lr.ph2331.preheader ], [ %indvars.iv.next, %bb.gi ] ; 14 uses
-  %i.aox = getelementptr inbounds nuw [24 x i8], ptr %.pre2358, i64 %indvars.iv ; 2 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph2331.preheader ], [ %indvars.iv.next, %bb.gi ] ; 13 uses
+  %i.aox = getelementptr inbounds nuw [24 x i8], ptr %85, i64 %indvars.iv ; 3 uses
   %i.aoy = getelementptr inbounds nuw i8, ptr %i.aox, i64 8
   %i.aoz = load ptr, ptr %i.aoy, align 8, !tbaa !49 ; 4 uses
-  %i.apa = load ptr, ptr %i.aox, align 8, !tbaa !50 ; 4 uses
+  %i.apa = load ptr, ptr %i.aox, align 8, !tbaa !50 ; 5 uses
   %i.apb = ptrtoint ptr %i.aoz to i64
   %i.apc = ptrtoint ptr %i.apa to i64
   %i.apd = sub i64 %i.apb, %i.apc
@@ -2008,11 +2008,14 @@ bb.gh:                                            ; preds = %bb.gg
 
 .noexc852:                                        ; preds = %bb.gh
   invoke void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIP5RgbazSt6vectorIS2_SaIS2_EEEENS0_5__ops15_Iter_less_iterEEvT_SA_T0_(ptr %i.apa, ptr %i.aoz)
-          to label %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIP5RgbazSt6vectorIS2_SaIS2_EEEEEvT_S8_.exit unwind label %.thread2876
+          to label %.noexc852._ZSt4sortIN9__gnu_cxx17__normal_iteratorIP5RgbazSt6vectorIS2_SaIS2_EEEEEvT_S8_.exit_crit_edge unwind label %.thread2876
 
-_ZSt4sortIN9__gnu_cxx17__normal_iteratorIP5RgbazSt6vectorIS2_SaIS2_EEEEEvT_S8_.exit: ; preds = %bb.gg, %.noexc852
-  %85 = getelementptr inbounds nuw [24 x i8], ptr %.pre2358, i64 %indvars.iv
-  %86 = load ptr, ptr %85, align 8, !tbaa !50     ; 10 uses
+.noexc852._ZSt4sortIN9__gnu_cxx17__normal_iteratorIP5RgbazSt6vectorIS2_SaIS2_EEEEEvT_S8_.exit_crit_edge: ; preds = %.noexc852
+  %.pre2358 = load ptr, ptr %i.aox, align 8, !tbaa !50
+  br label %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIP5RgbazSt6vectorIS2_SaIS2_EEEEEvT_S8_.exit
+
+_ZSt4sortIN9__gnu_cxx17__normal_iteratorIP5RgbazSt6vectorIS2_SaIS2_EEEEEvT_S8_.exit: ; preds = %.noexc852._ZSt4sortIN9__gnu_cxx17__normal_iteratorIP5RgbazSt6vectorIS2_SaIS2_EEEEEvT_S8_.exit_crit_edge, %bb.gg
+  %86 = phi ptr [ %.pre2358, %.noexc852._ZSt4sortIN9__gnu_cxx17__normal_iteratorIP5RgbazSt6vectorIS2_SaIS2_EEEEEvT_S8_.exit_crit_edge ], [ %i.apa, %bb.gg ] ; 10 uses
   %i.apl = getelementptr inbounds nuw [8 x i8], ptr %i.anj, i64 %indvars.iv
   store ptr %86, ptr %i.apl, align 8, !tbaa !94
   %i.apm = getelementptr inbounds nuw i8, ptr %86, i64 2

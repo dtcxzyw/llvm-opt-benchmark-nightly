@@ -202,10 +202,10 @@ middle.block:                                     ; preds = %vector.body
   %i.bs = fmul fast <4 x float> %i.bn, %i.br
   %i.bt = fadd fast <4 x float> %i.bs, splat (float 1.000000e+00) ; 2 uses
   %i.bu = fcmp fast ole <4 x float> %i.bt, zeroinitializer
-  %i.bv = call fast noundef nofpclass(nan inf) <4 x float> @llvm.x86.sse.max.ps(<4 x float> nofpclass(nan inf) %i.bt, <4 x float> splat (float f0x00800000))
+  %i.bv = call <4 x float> @llvm.maxnum.v4f32(<4 x float> %i.bt, <4 x float> splat (float f0x00800000))
   %i.bw = bitcast <4 x float> %i.bv to <4 x i32>  ; 2 uses
   %i.bx = lshr <4 x i32> %i.bw, splat (i32 23)
-  %i.by = and <4 x i32> %i.bw, splat (i32 -2139095041)
+  %i.by = and <4 x i32> %i.bw, splat (i32 8388607)
   %i.bz = or disjoint <4 x i32> %i.by, splat (i32 1056964608)
   %i.ca = bitcast <4 x i32> %i.bz to <4 x float>  ; 3 uses
   %i.cb = add nsw <4 x i32> %i.bx, splat (i32 -127)
@@ -497,10 +497,10 @@ middle.block:                                     ; preds = %vector.body
   %i.cc = fmul fast <4 x float> %i.bx, %i.cb
   %i.cd = fadd fast <4 x float> %i.cc, splat (float 1.000000e+00) ; 2 uses
   %i.ce = fcmp fast ole <4 x float> %i.cd, zeroinitializer
-  %i.cf = call fast noundef nofpclass(nan inf) <4 x float> @llvm.x86.sse.max.ps(<4 x float> nofpclass(nan inf) %i.cd, <4 x float> splat (float f0x00800000))
+  %i.cf = call <4 x float> @llvm.maxnum.v4f32(<4 x float> %i.cd, <4 x float> splat (float f0x00800000))
   %i.cg = bitcast <4 x float> %i.cf to <4 x i32>  ; 2 uses
   %i.ch = lshr <4 x i32> %i.cg, splat (i32 23)
-  %i.ci = and <4 x i32> %i.cg, splat (i32 -2139095041)
+  %i.ci = and <4 x i32> %i.cg, splat (i32 8388607)
   %i.cj = or disjoint <4 x i32> %i.ci, splat (i32 1056964608)
   %i.ck = bitcast <4 x i32> %i.cj to <4 x float>  ; 3 uses
   %i.cl = add nsw <4 x i32> %i.ch, splat (i32 -127)
@@ -628,6 +628,9 @@ declare void @_ZdlPvm(ptr noundef, i64 noundef) local_unnamed_addr #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x float> @llvm.maxnum.v4f32(<4 x float>, <4 x float>) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.exp.v4f32(<4 x float>) #8

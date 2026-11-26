@@ -205,7 +205,7 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
   call void @_ZdlPvm(ptr noundef nonnull %i.fs, i64 noundef 32) #16
   br label %_ZN7testing15AssertionResultD2Ev.exit261
 
-_ZN7testing15AssertionResultD2Ev.exit261:         ; preds = %bb.bl, %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i259
+_ZN7testing15AssertionResultD2Ev.exit261:         ; preds = %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i259, %bb.bl
   call void @llvm.lifetime.end.p0(ptr nonnull %21) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %17) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #15
@@ -608,8 +608,9 @@ bb.y:                                             ; preds = %_ZN7testing15Assert
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit unwind label %bb.ac
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit: ; preds = %bb.y
+  call void @llvm.experimental.noalias.scope.decl(metadata !168)
   %i.ea = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %14, i64 noundef 0, i64 noundef 0, ptr noundef nonnull @.str.26, i64 noundef 1)
-          to label %.noexc unwind label %bb.ad    ; 6 uses
+          to label %.noexc unwind label %bb.ad, !noalias !168 ; 6 uses
 
 .noexc:                                           ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit
   store ptr %i.df, ptr %13, align 8, !tbaa !58, !alias.scope !168
@@ -819,8 +820,9 @@ bb.aj:                                            ; preds = %_ZNKSt14default_del
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit77 unwind label %bb.dm
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit77: ; preds = %bb.aj
+  call void @llvm.experimental.noalias.scope.decl(metadata !169)
   %i.gh = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %18, i64 noundef 0, i64 noundef 0, ptr noundef nonnull @.str.27, i64 noundef 1)
-          to label %.noexc81 unwind label %bb.dn  ; 6 uses
+          to label %.noexc81 unwind label %bb.dn, !noalias !169 ; 6 uses
 
 .noexc81:                                         ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit77
   store ptr %i.dj, ptr %17, align 8, !tbaa !58, !alias.scope !169
@@ -1223,8 +1225,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit94: ; preds = %_ZN
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit96 unwind label %bb.dp
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit96: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit94
+  call void @llvm.experimental.noalias.scope.decl(metadata !170)
   %i.pa = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %21, i64 noundef 0, i64 noundef 0, ptr noundef nonnull @.str.28, i64 noundef 1)
-          to label %.noexc100 unwind label %bb.dq ; 6 uses
+          to label %.noexc100 unwind label %bb.dq, !noalias !170 ; 6 uses
 
 .noexc100:                                        ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit96
   store ptr %i.dr, ptr %20, align 8, !tbaa !58, !alias.scope !170
@@ -1627,7 +1630,7 @@ _ZNK4absl12lts_2026052616strings_internal11BigUnsignedILi84EE7GetWordEi.exit15.i
 _ZN4absl12lts_2026052616strings_internaleqILi84ELi84EEEbRKNS1_11BigUnsignedIXT_EEERKNS3_IXT0_EEE.exit.i.i151: ; preds = %_ZNK4absl12lts_2026052616strings_internal11BigUnsignedILi84EE7GetWordEi.exit15.i.i.i148
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #15, !noalias !172
   invoke void @_ZN7testing13PrintToStringIN4absl12lts_2026052616strings_internal11BigUnsignedILi84EEEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKT_(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %1, ptr noundef nonnull align 4 dereferenceable(340) %16)
-          to label %.noexc222 unwind label %bb.dt
+          to label %.noexc222 unwind label %bb.dt, !noalias !172
 
 .noexc222:                                        ; preds = %_ZN4absl12lts_2026052616strings_internaleqILi84ELi84EEEbRKNS1_11BigUnsignedIXT_EEERKNS3_IXT0_EEE.exit.i.i151
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #15, !noalias !172
@@ -2030,8 +2033,9 @@ bb.aa:                                            ; preds = %bb.z
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit unwind label %bb.aj
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit: ; preds = %bb.aa
+  call void @llvm.experimental.noalias.scope.decl(metadata !212)
   %i.ci = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %11, i64 noundef 0, i64 noundef 0, ptr noundef nonnull @.str.43, i64 noundef 3)
-          to label %.noexc39 unwind label %bb.ak  ; 6 uses
+          to label %.noexc39 unwind label %bb.ak, !noalias !212 ; 6 uses
 
 .noexc39:                                         ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit
   store ptr %i.k, ptr %10, align 8, !tbaa !58, !alias.scope !212

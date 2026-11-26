@@ -204,12 +204,13 @@ bb.e:                                             ; preds = %"_ZN4core3str6trait
 define hidden void @_ZN7anki_io10write_file17hc41485b4c6d78aeaE(ptr dead_on_unwind noalias noundef writable sret([56 x i8]) align 8 captures(address) dereferenceable(56) %0, ptr noalias noundef align 8 captures(address) dead_on_return dereferenceable(24) %1, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %2) unnamed_addr #0 personality ptr @rust_eh_personality !guid !139 {
 bb.a:
   %i.a = alloca [40 x i8], align 8                ; 6 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !140)
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.val.i.i = load ptr, ptr %i.b, align 8, !alias.scope !140, !nonnull !5, !noundef !5 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 16
   %.val1.i.i = load i64, ptr %i.c, align 8, !alias.scope !140, !noundef !5 ; 2 uses
   %i.d = invoke noundef ptr @_ZN3std2fs5write5inner17hef6adfd32e013394E(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.val.i.i, i64 noundef %.val1.i.i, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %2, i64 noundef 0)
-          to label %bb.c unwind label %bb.b
+          to label %bb.c unwind label %bb.b, !noalias !140
 
 bb.b:                                             ; preds = %bb.a, %bb.c
   %i.e = landingpad { ptr, i32 }
@@ -263,12 +264,13 @@ bb.g:                                             ; preds = %bb.b
 define hidden void @_ZN7anki_io10write_file17hda7839c8dfefd618E(ptr dead_on_unwind noalias noundef writable sret([56 x i8]) align 8 captures(address) dereferenceable(56) %0, ptr noalias noundef align 8 captures(address) dead_on_return dereferenceable(24) %1, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %2, i64 noundef %3) unnamed_addr #0 personality ptr @rust_eh_personality !guid !143 {
 bb.a:
   %i.a = alloca [40 x i8], align 8                ; 6 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !144)
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.val.i.i = load ptr, ptr %i.b, align 8, !alias.scope !144, !nonnull !5, !noundef !5 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 16
   %.val1.i.i = load i64, ptr %i.c, align 8, !alias.scope !144, !noundef !5 ; 2 uses
   %i.d = invoke noundef ptr @_ZN3std2fs5write5inner17hef6adfd32e013394E(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.val.i.i, i64 noundef %.val1.i.i, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %2, i64 noundef %3)
-          to label %bb.c unwind label %bb.b
+          to label %bb.c unwind label %bb.b, !noalias !144
 
 bb.b:                                             ; preds = %bb.a, %bb.c
   %i.e = landingpad { ptr, i32 }

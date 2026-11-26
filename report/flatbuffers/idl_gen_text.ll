@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/flatbuffers/original/idl_gen_text?download=true
 inline.NumInlined: 1776
-inline.NumDeleted: 678
+inline.NumDeleted: 680
 loop-unroll.NumCompletelyUnrolled: 2
 loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_ZN11flatbuffers11GenTextFileERKNS_6ParserERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESA_:bb.a
@@ -204,14 +204,14 @@ _ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_SA_.exi
 
 bb.d:                                             ; preds = %_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_SA_.exit
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.2) #25
-          to label %.noexc unwind label %bb.g
+          to label %.noexc unwind label %bb.g, !noalias !269
 
 .noexc:                                           ; preds = %bb.d
   unreachable
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i: ; preds = %_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_SA_.exit
   %i.t = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm(ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull @.str.33, i64 noundef 5)
-          to label %.noexc3 unwind label %bb.g    ; 6 uses
+          to label %.noexc3 unwind label %bb.g, !noalias !269 ; 6 uses
 
 .noexc3:                                          ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
@@ -614,8 +614,9 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %._cri
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.j
   store i8 0, ptr %i.m, align 1, !tbaa !42
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #23
+  call void @llvm.experimental.noalias.scope.decl(metadata !490)
   %i.n = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %6, i64 noundef 0, i64 noundef 0, ptr noundef nonnull @.str.34, i64 noundef 2)
-          to label %.noexc15 unwind label %bb.p   ; 6 uses
+          to label %.noexc15 unwind label %bb.p, !noalias !490 ; 6 uses
 
 .noexc15:                                         ; preds = %bb.e
   %i.o = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 7 uses
@@ -657,14 +658,14 @@ bb.g:                                             ; preds = %_ZNKSt7__cxx1112bas
 
 bb.h:                                             ; preds = %bb.g
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.2) #25
-          to label %.noexc19 unwind label %bb.q
+          to label %.noexc19 unwind label %bb.q, !noalias !491
 
 .noexc19:                                         ; preds = %bb.h
   unreachable
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i: ; preds = %bb.g
   %i.ac = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm(ptr noundef nonnull align 8 dereferenceable(32) %5, ptr noundef nonnull @.str.35, i64 noundef 1)
-          to label %.noexc20 unwind label %bb.q   ; 6 uses
+          to label %.noexc20 unwind label %bb.q, !noalias !491 ; 6 uses
 
 .noexc20:                                         ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i
   %i.ad = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 12 uses
@@ -935,14 +936,14 @@ bb.e:                                             ; preds = %_ZNSt7__cxx1112basi
 
 bb.f:                                             ; preds = %bb.e
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.2) #25
-          to label %.noexc29.i unwind label %bb.p
+          to label %.noexc29.i unwind label %bb.p, !noalias !507
 
 .noexc29.i:                                       ; preds = %bb.f
   unreachable
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i.i: ; preds = %bb.e
   %i.r = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm(ptr noundef nonnull align 8 dereferenceable(32) %8, ptr noundef nonnull @.str.27, i64 noundef 2)
-          to label %.noexc30.i unwind label %bb.p ; 6 uses
+          to label %.noexc30.i unwind label %bb.p, !noalias !507 ; 6 uses
 
 .noexc30.i:                                       ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i.i
   %i.s = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 7 uses
@@ -987,7 +988,7 @@ bb.h:                                             ; preds = %_ZNKSt7__cxx1112bas
 
 bb.i:                                             ; preds = %bb.h
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.2) #25
-          to label %.noexc34.i unwind label %bb.q
+          to label %.noexc34.i unwind label %bb.q, !noalias !509
 
 .noexc34.i:                                       ; preds = %bb.i
   unreachable
@@ -995,7 +996,7 @@ bb.i:                                             ; preds = %bb.h
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendERKS4_.exit.i.i: ; preds = %bb.h
   %i.aj = load ptr, ptr %3, align 8, !tbaa !41, !noalias !510
   %i.ak = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm(ptr noundef nonnull align 8 dereferenceable(32) %7, ptr noundef %i.aj, i64 noundef %i.af)
-          to label %.noexc35.i unwind label %bb.q ; 6 uses
+          to label %.noexc35.i unwind label %bb.q, !noalias !509 ; 6 uses
 
 .noexc35.i:                                       ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendERKS4_.exit.i.i
   %i.al = getelementptr inbounds nuw i8, ptr %11, i64 16 ; 5 uses
@@ -1398,7 +1399,7 @@ begin_hunk_2_@llvm.umin.i64
 !390 = !{!389, !12, i64 0}
 !391 = !{!358}
 !392 = distinct !{!392, !194}
-!393 = distinct !{null}
+!393 = distinct !{null, null, null, null, null}
 !394 = distinct !{!394, i1 true, !"_ZNKSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEE3strEv"}
 !395 = distinct !{!395, !394, !"_ZNKSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEE3strEv: argument 0"}
 !396 = distinct !{!396, i1 true, !"_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE3strEv"}

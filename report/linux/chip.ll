@@ -202,6 +202,7 @@ bb.c:                                             ; preds = %.lr.ph.split
   br i1 %.not56, label %bb.n, label %bb.m
 
 .critedge59.thread75:                             ; preds = %.critedge59.thread, %bb.a, %.critedge59
+  %.078 = phi ptr [ %1, %.critedge59 ], [ @handle_bad_irq, %bb.a ], [ %1, %.critedge59.thread ]
   %i.n = getelementptr i8, ptr %0, i64 64         ; 2 uses
   %i.o = load ptr, ptr %i.n, align 8              ; 5 uses
   %.not54 = icmp eq ptr %i.o, @no_irq_chip
@@ -288,7 +289,7 @@ bb.k:                                             ; preds = %irq_get_pm_device.e
   %i.am = getelementptr i8, ptr %0, i64 128
   store i32 1, ptr %i.am, align 64
   %i.an = getelementptr i8, ptr %0, i64 104
-  store ptr @handle_bad_irq, ptr %i.an, align 8
+  store ptr %.078, ptr %i.an, align 8
   %i.ao = getelementptr i8, ptr %0, i64 440
   store ptr %3, ptr %i.ao, align 8
   br label %irq_activate_and_startup.exit

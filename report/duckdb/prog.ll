@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/duckdb/original/prog?download=true
 inline.NumInlined: 1409
-inline.NumDeleted: 635
+inline.NumDeleted: 639
 loop-unroll.NumCompletelyUnrolled: 3
 loop-unroll.NumRuntimeUnrolled: 6
 loop-unroll.NumUnrolled: 10
@@ -205,7 +205,7 @@ bb.v:                                             ; preds = %bb.u, %_ZN10duckdb_
   br label %.preheader
 
 .preheader:                                       ; preds = %bb.v, %_ZN10duckdb_re214ByteMapBuilder4MarkEii.exit147
-  %.0169 = phi i32 [ 0, %bb.v ], [ %.058.lcssa, %_ZN10duckdb_re214ByteMapBuilder4MarkEii.exit147 ] ; 11 uses
+  %.0169 = phi i32 [ 0, %bb.v ], [ %.058.lcssa, %_ZN10duckdb_re214ByteMapBuilder4MarkEii.exit147 ] ; 12 uses
   %i.fr = trunc i32 %.0169 to i8                  ; 3 uses
   %i.fs = and i8 %i.fr, -33
   %i.ft = add i8 %i.fs, -65
@@ -233,20 +233,24 @@ vector.ph290:                                     ; preds = %.lr.ph242
   %broadcast.splatinsert292 = insertelement <16 x i32> poison, i32 %.0169, i64 0
   %broadcast.splat293 = shufflevector <16 x i32> %broadcast.splatinsert292, <16 x i32> poison, <16 x i32> zeroinitializer
   %induction = add <16 x i32> %broadcast.splat293, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %2 = trunc i32 %.0169 to i8
+  %3 = add i8 %2, 1
+  %broadcast.splatinsert294 = insertelement <16 x i8> poison, i8 %3, i64 0
+  %broadcast.splat295 = shufflevector <16 x i8> %broadcast.splatinsert294, <16 x i8> poison, <16 x i32> zeroinitializer
+  %induction296 = add <16 x i8> %broadcast.splat295, <i8 0, i8 1, i8 2, i8 3, i8 4, i8 5, i8 6, i8 7, i8 8, i8 9, i8 10, i8 11, i8 12, i8 13, i8 14, i8 15>
   br label %vector.body294
 
 vector.body294:                                   ; preds = %vector.body.interim, %vector.ph290
   %index295 = phi i32 [ 0, %vector.ph290 ], [ %index.next296, %vector.body.interim ] ; 2 uses
   %vec.ind = phi <16 x i32> [ %induction, %vector.ph290 ], [ %vec.ind.next, %vector.body.interim ] ; 2 uses
-  %2 = add <16 x i32> %vec.ind, splat (i32 1)     ; 2 uses
-  %3 = trunc <16 x i32> %2 to <16 x i8>           ; 3 uses
-  %i.ga = and <16 x i8> %3, splat (i8 -33)
+  %vec.ind299 = phi <16 x i8> [ %induction296, %vector.ph290 ], [ %vec.ind.next301, %vector.body.interim ] ; 4 uses
+  %i.ga = and <16 x i8> %vec.ind299, splat (i8 -33)
   %i.gb = add <16 x i8> %i.ga, splat (i8 -65)
   %i.gc = icmp ult <16 x i8> %i.gb, splat (i8 26)
-  %i.gd = add <16 x i8> %3, splat (i8 -48)
+  %i.gd = add <16 x i8> %vec.ind299, splat (i8 -48)
   %i.ge = icmp ult <16 x i8> %i.gd, splat (i8 10)
   %i.gf = or <16 x i1> %i.ge, %i.gc
-  %i.gg = icmp eq <16 x i8> %3, splat (i8 95)
+  %i.gg = icmp eq <16 x i8> %vec.ind299, splat (i8 95)
   %i.gh = or <16 x i1> %i.gg, %i.gf
   %i.gi = xor <16 x i1> %broadcast.splat, %i.gh
   %i.gj = freeze <16 x i1> %i.gi                  ; 2 uses
@@ -255,6 +259,7 @@ vector.body294:                                   ; preds = %vector.body.interim
   br i1 %.not319, label %vector.body.interim, label %vector.early.exit
 
 vector.body.interim:                              ; preds = %vector.body294
+  %vec.ind.next301 = add <16 x i8> %vec.ind299, splat (i8 16)
   %vec.ind.next = add <16 x i32> %vec.ind, splat (i32 16)
   %index.next296 = add nuw i32 %index295, 16      ; 2 uses
   %i.gl = icmp eq i32 %index.next296, %n.vec291
@@ -273,7 +278,8 @@ vector.early.exit:                                ; preds = %vector.body294
   %i.gm = trunc i64 %first.active.lane to i32
   %i.gn = add i32 %index295, %i.gm
   %i.go = add i32 %.0169, %i.gn
-  %i.gp = extractelement <16 x i32> %2, i64 %first.active.lane
+  %i.gp = extractelement <16 x i32> %vec.ind, i64 %first.active.lane
+  %4 = add i32 %i.gp, 1
   br label %..critedge_crit_edge244
 
 _ZN10duckdb_re214ByteMapBuilder4MarkEii.exit147.thread: ; preds = %bb.ae, %_ZN10duckdb_re214ByteMapBuilder4MarkEii.exit147
@@ -418,7 +424,7 @@ scalar.ph288:                                     ; preds = %scalar.ph288.prehea
 
 ..critedge_crit_edge244:                          ; preds = %scalar.ph288, %vector.early.exit
   %split245 = phi i32 [ %i.go, %vector.early.exit ], [ %.058.in241, %scalar.ph288 ]
-  %split246 = phi i32 [ %i.gp, %vector.early.exit ], [ %.058, %scalar.ph288 ]
+  %split246 = phi i32 [ %4, %vector.early.exit ], [ %.058, %scalar.ph288 ]
   br label %.critedge, !llvm.loop !229
 
 .critedge:                                        ; preds = %bb.ad, %middle.block297, %..critedge_crit_edge244, %.preheader
