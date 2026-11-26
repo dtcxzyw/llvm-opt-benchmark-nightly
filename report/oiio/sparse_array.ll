@@ -204,9 +204,9 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.bc, label %bb.k, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.bd = getelementptr [4 x i8], ptr %i.bb, i64 %i.ab
+  %i.bd = getelementptr inbounds nuw [4 x i8], ptr %i.bb, i64 %i.ab
   %i.be = zext i32 %i.as to i64
-  %i.bf = getelementptr [4 x i8], ptr %i.bd, i64 %i.be ; 17 uses
+  %i.bf = getelementptr inbounds nuw [4 x i8], ptr %i.bd, i64 %i.be ; 17 uses
   %i.bg = sub i32 %.0381512.us, %1                ; 2 uses
   br i1 %i.m, label %bb.j, label %bb.g
 
@@ -572,9 +572,9 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.p, %bb.n
   %.0374.us = phi ptr [ %i.im, %bb.p ], [ %i.bb, %bb.n ]
-  %i.iu = getelementptr [4 x i8], ptr %.0374.us, i64 %i.ab
+  %i.iu = getelementptr inbounds nuw [4 x i8], ptr %.0374.us, i64 %i.ab
   %i.iv = zext i32 %i.as to i64
-  %i.iw = getelementptr [4 x i8], ptr %i.iu, i64 %i.iv ; 8 uses
+  %i.iw = getelementptr inbounds nuw [4 x i8], ptr %i.iu, i64 %i.iv ; 8 uses
   %i.ix = sub i32 %.0381512.us, %1                ; 2 uses
   br i1 %i.m, label %bb.t, label %bb.r
 
@@ -977,7 +977,7 @@ bb.z:                                             ; preds = %bb.z, %.epil.prehea
 }
 
 ; Function Attrs: nounwind uwtable
-define noundef i32 @opj_sparse_array_int32_write(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, ptr nofree noundef captures(none) %5, i32 noundef %6, i32 noundef %7, i32 noundef %8) local_unnamed_addr #0 !guid !63 {
+define noundef i32 @opj_sparse_array_int32_write(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, ptr nofree noundef captures(none) %5, i32 noundef %6, i32 noundef %7, i32 noundef %8) local_unnamed_addr #0 !guid !62 {
 bb.a:
   %i.a = tail call fastcc i32 @opj_sparse_array_int32_read_or_write(ptr noundef %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, ptr noundef %5, i32 noundef %6, i32 noundef %7, i32 noundef %8, i32 noundef 0)
   ret i32 %i.a
@@ -1037,7 +1037,7 @@ attributes #7 = { nounwind }
 !23 = !{i64 -2167386371439369003}
 !24 = !{i64 -7043143909876963824}
 !25 = !{i64 8235803135467633829}
-!26 = distinct !{!26, !20, !61}
+!26 = distinct !{!26, !20}
 !27 = distinct !{!27, !20}
 !28 = distinct !{!28, !20}
 !29 = distinct !{!29, !20}
@@ -1046,33 +1046,32 @@ attributes #7 = { nounwind }
 !32 = distinct !{!32, !20}
 !33 = distinct !{!33, !20}
 !34 = distinct !{!34, !20}
-!35 = distinct !{!35, !20, !61}
+!35 = distinct !{!35, !20}
 !36 = distinct !{!36, !20}
-!37 = distinct !{!37, !20, !61}
+!37 = distinct !{!37, !20}
 !38 = distinct !{!38, !20}
 !39 = distinct !{!39, !20}
 !40 = distinct !{!40, !20}
 !41 = distinct !{!41, !20}
 !42 = distinct !{!42, !20}
 !43 = distinct !{!43, !20}
-!44 = distinct !{!44, !62}
-!45 = distinct !{!45, !62}
-!46 = distinct !{!46, !62}
-!47 = distinct !{!47, !62}
-!48 = distinct !{!48, !62}
-!49 = distinct !{!49, !62}
-!50 = distinct !{!50, !62}
+!44 = distinct !{!44, !61}
+!45 = distinct !{!45, !61}
+!46 = distinct !{!46, !61}
+!47 = distinct !{!47, !61}
+!48 = distinct !{!48, !61}
+!49 = distinct !{!49, !61}
+!50 = distinct !{!50, !61}
 !51 = distinct !{!51, !20}
-!52 = distinct !{!52, !62}
-!53 = distinct !{!53, !62}
+!52 = distinct !{!52, !61}
+!53 = distinct !{!53, !61}
 !54 = distinct !{!54, !20}
-!55 = distinct !{!55, !62}
+!55 = distinct !{!55, !61}
 !56 = distinct !{!56, !20}
-!57 = distinct !{!57, !62}
+!57 = distinct !{!57, !61}
 !58 = distinct !{!58, !20}
 !59 = distinct !{!59, !20}
 !60 = !{i64 1159190088424462077}
-!61 = !{!"llvm.loop.isvectorized", i32 1}
-!62 = !{!"llvm.loop.unroll.disable"}
-!63 = !{i64 1508621826830541155}
+!61 = !{!"llvm.loop.unroll.disable"}
+!62 = !{i64 1508621826830541155}
 end_hunk_1
