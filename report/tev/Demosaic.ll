@@ -205,7 +205,7 @@ bb.a:
   %i.w = getelementptr inbounds nuw i8, ptr %i.k, i64 1076736 ; 4 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.k, i64 1179264 ; 14 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.k, i64 1230592 ; 14 uses
-  %i.z = getelementptr inbounds nuw i8, ptr %i.k, i64 1281920 ; 208 uses
+  %i.z = getelementptr inbounds nuw i8, ptr %i.k, i64 1281920 ; 207 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.k, i64 461440 ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.k, i64 1384448 ; 14 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.k, i64 1397376 ; 3 uses
@@ -608,10 +608,8 @@ begin_hunk_1_@"_ZZN3tevL13amazeDemosaicENS_11ChannelViewIKfEENS_16MultiChannelVi
   %indvars.iv2899 = phi i32 [ 320, %.lr.ph2636.preheader ], [ %indvars.iv.next2900, %._crit_edge2637 ] ; 3 uses
   %.023022638 = phi i32 [ 2, %.lr.ph2636.preheader ], [ %i.btx, %._crit_edge2637 ] ; 2 uses
   %i.bsg = or disjoint i32 %indvars.iv2899, 2
-  %i.bsh = zext i32 %i.bsg to i64                 ; 4 uses
+  %i.bsh = zext i32 %i.bsg to i64                 ; 3 uses
   %wide.trip.count2906 = zext i32 %indvars.iv2904 to i64 ; 2 uses
-  %.phi.trans.insert = getelementptr [4 x i8], ptr %i.z, i64 %i.bsh
-  %.pre = load float, ptr %.phi.trans.insert, align 8, !tbaa !111 ; 2 uses
   %i.bsi = zext i32 %indvars.iv2899 to i64
   %i.bsj = add nsw i64 %wide.trip.count2906, -2   ; 2 uses
   %i.bsk = sub nsw i64 %i.bsj, %i.bsi             ; 2 uses
@@ -622,18 +620,15 @@ vector.ph3687:                                    ; preds = %.lr.ph2636
   %i.bsl = and i64 %i.bsj, 3                      ; 2 uses
   %n.vec3688 = sub nuw nsw i64 %i.bsk, %i.bsl     ; 2 uses
   %i.bsm = add nsw i64 %n.vec3688, %i.bsh
-  %vector.recur.init = insertelement <4 x float> poison, float %.pre, i64 3
   br label %vector.body3689
 
 vector.body3689:                                  ; preds = %vector.body3689, %vector.ph3687
   %index3690 = phi i64 [ 0, %vector.ph3687 ], [ %index.next3699, %vector.body3689 ] ; 2 uses
-  %vector.recur = phi <4 x float> [ %vector.recur.init, %vector.ph3687 ], [ %wide.load3691.a, %vector.body3689 ]
   %i.bsn = add nuw i64 %index3690, %i.bsh         ; 5 uses
   %i.bso = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %i.bsn
   %i.bsp = getelementptr inbounds nuw i8, ptr %i.bso, i64 4
-  %wide.load3691.a = load <4 x float>, ptr %i.bsp, align 4, !tbaa !111 ; 4 uses
-  %2 = shufflevector <4 x float> %vector.recur, <4 x float> %wide.load3691.a, <4 x i32> <i32 3, i32 4, i32 5, i32 6> ; 4 uses
-  %i.bsq = getelementptr [4 x i8], ptr %i.z, i64 %i.bsn ; 7 uses
+  %wide.load3691.a = load <4 x float>, ptr %i.bsp, align 4, !tbaa !111
+  %i.bsq = getelementptr [4 x i8], ptr %i.z, i64 %i.bsn ; 8 uses
   %i.bsr = getelementptr i8, ptr %i.bsq, i64 -4
   %wide.load3692.a = load <4 x float>, ptr %i.bsr, align 4, !tbaa !111
   %i.bss = fsub <4 x float> %wide.load3691.a, %wide.load3692.a ; 3 uses
@@ -645,13 +640,14 @@ vector.body3689:                                  ; preds = %vector.body3689, %v
   %i.bsw = fsub <4 x float> %wide.load3693.a, %wide.load3694.a ; 3 uses
   %i.bsx = tail call <4 x float> @llvm.fabs.v4f32(<4 x float> %i.bsw)
   %i.bsy = getelementptr inbounds nuw i8, ptr %i.bsq, i64 1280
-  %wide.load3695.a = load <4 x float>, ptr %i.bsy, align 8, !tbaa !111
-  %i.bsz = fsub <4 x float> %wide.load3695.a, %2
+  %wide.load3693 = load <4 x float>, ptr %i.bsy, align 8, !tbaa !111
+  %wide.load3695.a = load <4 x float>, ptr %i.bsq, align 8, !tbaa !111 ; 4 uses
+  %i.bsz = fsub <4 x float> %wide.load3693, %wide.load3695.a
   %i.bta = tail call <4 x float> @llvm.fabs.v4f32(<4 x float> %i.bsz)
   %i.btb = fadd <4 x float> %i.bta, splat (float f0x3727C5AC)
   %i.btc = getelementptr i8, ptr %i.bsq, i64 -1280
   %wide.load3696.a = load <4 x float>, ptr %i.btc, align 8, !tbaa !111
-  %i.btd = fsub <4 x float> %2, %wide.load3696.a
+  %i.btd = fsub <4 x float> %wide.load3695.a, %wide.load3696.a
   %i.bte = tail call <4 x float> @llvm.fabs.v4f32(<4 x float> %i.btd)
   %i.btf = fadd <4 x float> %i.btb, %i.bte
   %i.btg = fadd <4 x float> %i.bsx, %i.btf
@@ -659,12 +655,12 @@ vector.body3689:                                  ; preds = %vector.body3689, %v
   store <4 x float> %i.btg, ptr %i.bth, align 8, !tbaa !111
   %i.bti = getelementptr inbounds nuw i8, ptr %i.bsq, i64 8
   %wide.load3697.a = load <4 x float>, ptr %i.bti, align 16, !tbaa !111
-  %i.btj = fsub <4 x float> %wide.load3697.a, %2
+  %i.btj = fsub <4 x float> %wide.load3697.a, %wide.load3695.a
   %i.btk = tail call <4 x float> @llvm.fabs.v4f32(<4 x float> %i.btj)
   %i.btl = fadd <4 x float> %i.btk, splat (float f0x3727C5AC)
   %i.btm = getelementptr i8, ptr %i.bsq, i64 -8
   %wide.load3698 = load <4 x float>, ptr %i.btm, align 16, !tbaa !111
-  %i.btn = fsub <4 x float> %2, %wide.load3698
+  %i.btn = fsub <4 x float> %wide.load3695.a, %wide.load3698
   %i.bto = tail call <4 x float> @llvm.fabs.v4f32(<4 x float> %i.btn)
   %i.btp = fadd <4 x float> %i.btl, %i.bto
   %i.btq = fadd <4 x float> %i.bst, %i.btp
@@ -680,12 +676,10 @@ vector.body3689:                                  ; preds = %vector.body3689, %v
   br i1 %i.btw, label %middle.block3700, label %vector.body3689, !llvm.loop !1546
 
 middle.block3700:                                 ; preds = %vector.body3689
-  %vector.recur.extract = extractelement <4 x float> %wide.load3691.a, i64 3
   %cmp.n3701 = icmp eq i64 %i.bsl, 0
   br i1 %cmp.n3701, label %._crit_edge2637, label %scalar.ph3685.preheader
 
 scalar.ph3685.preheader:                          ; preds = %.lr.ph2636, %middle.block3700
-  %.ph = phi float [ %.pre, %.lr.ph2636 ], [ %vector.recur.extract, %middle.block3700 ]
   %indvars.iv2901.ph = phi i64 [ %i.bsh, %.lr.ph2636 ], [ %i.bsm, %middle.block3700 ]
   br label %scalar.ph3685
 
@@ -697,61 +691,53 @@ scalar.ph3685.preheader:                          ; preds = %.lr.ph2636, %middle
   br i1 %exitcond2908.not, label %.preheader2577, label %.lr.ph2636, !llvm.loop !1547
 
 scalar.ph3685:                                    ; preds = %scalar.ph3685.preheader, %scalar.ph3685
-  %3 = phi float [ %i.btz, %scalar.ph3685 ], [ %.ph, %scalar.ph3685.preheader ] ; 4 uses
   %indvars.iv2901 = phi i64 [ %indvars.iv.next2902, %scalar.ph3685 ], [ %indvars.iv2901.ph, %scalar.ph3685.preheader ] ; 5 uses
   %indvars.iv.next2902 = add nuw nsw i64 %indvars.iv2901, 1 ; 3 uses
   %i.bty = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %indvars.iv.next2902
-  %i.btz = load float, ptr %i.bty, align 4, !tbaa !111 ; 2 uses
-  %i.bua = getelementptr [4 x i8], ptr %i.z, i64 %indvars.iv2901 ; 7 uses
-  %4 = getelementptr i8, ptr %i.bua, i64 -4
-  %5 = load float, ptr %4, align 4, !tbaa !111
-  %i.bub = getelementptr inbounds nuw i8, ptr %i.bua, i64 640
+  %i.btz = load float, ptr %i.bty, align 4, !tbaa !111
+  %i.bua = getelementptr [4 x i8], ptr %i.z, i64 %indvars.iv2901 ; 8 uses
+  %i.bub = getelementptr i8, ptr %i.bua, i64 -4
   %i.buc = load float, ptr %i.bub, align 4, !tbaa !111
-  %6 = getelementptr i8, ptr %i.bua, i64 -640
-  %7 = load float, ptr %6, align 4, !tbaa !111
-  %i.bud = getelementptr inbounds nuw i8, ptr %i.bua, i64 1280
+  %2 = fsub float %i.btz, %i.buc                  ; 3 uses
+  %3 = tail call float @llvm.fabs.f32(float %2)
+  %i.bud = getelementptr inbounds nuw i8, ptr %i.bua, i64 640
   %i.bue = load float, ptr %i.bud, align 4, !tbaa !111
-  %i.buf = getelementptr i8, ptr %i.bua, i64 -1280
+  %i.buf = getelementptr i8, ptr %i.bua, i64 -640
   %i.bug = load float, ptr %i.buf, align 4, !tbaa !111
-  %8 = insertelement <4 x float> poison, float %i.btz, i64 0
-  %9 = insertelement <4 x float> %8, float %i.buc, i64 1
-  %10 = insertelement <4 x float> %9, float %i.bue, i64 2
-  %11 = insertelement <4 x float> %10, float %3, i64 3
-  %12 = insertelement <4 x float> poison, float %5, i64 0
-  %13 = insertelement <4 x float> %12, float %7, i64 1
-  %14 = insertelement <4 x float> %13, float %3, i64 2
-  %15 = insertelement <4 x float> %14, float %i.bug, i64 3
-  %16 = fsub <4 x float> %11, %15                 ; 2 uses
-  %17 = tail call <4 x float> @llvm.fabs.v4f32(<4 x float> %16) ; 4 uses
-  %18 = extractelement <4 x float> %17, i64 2
-  %19 = fadd float %18, f0x3727C5AC
-  %20 = extractelement <4 x float> %17, i64 3
-  %i.buh = fadd float %19, %20
-  %21 = extractelement <4 x float> %17, i64 1
-  %i.bui = fadd float %21, %i.buh
+  %4 = fsub float %i.bue, %i.bug                  ; 3 uses
+  %5 = tail call float @llvm.fabs.f32(float %4)
+  %6 = getelementptr inbounds nuw i8, ptr %i.bua, i64 1280
+  %7 = load float, ptr %6, align 4, !tbaa !111
+  %8 = load float, ptr %i.bua, align 4, !tbaa !111 ; 4 uses
+  %9 = fsub float %7, %8
+  %10 = tail call float @llvm.fabs.f32(float %9)
+  %11 = fadd float %10, f0x3727C5AC
+  %12 = getelementptr i8, ptr %i.bua, i64 -1280
+  %13 = load float, ptr %12, align 4, !tbaa !111
+  %14 = fsub float %8, %13
+  %15 = tail call float @llvm.fabs.f32(float %14)
+  %i.buh = fadd float %11, %15
+  %i.bui = fadd float %5, %i.buh
   %i.buj = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %indvars.iv2901
   store float %i.bui, ptr %i.buj, align 4, !tbaa !111
   %i.buk = getelementptr inbounds nuw i8, ptr %i.bua, i64 8
   %i.bul = load float, ptr %i.buk, align 4, !tbaa !111
-  %i.bum = fsub float %i.bul, %3
+  %i.bum = fsub float %i.bul, %8
   %i.bun = tail call float @llvm.fabs.f32(float %i.bum)
   %i.buo = fadd float %i.bun, f0x3727C5AC
   %i.bup = getelementptr i8, ptr %i.bua, i64 -8
   %i.buq = load float, ptr %i.bup, align 4, !tbaa !111
-  %i.bur = fsub float %3, %i.buq
+  %i.bur = fsub float %8, %i.buq
   %i.bus = tail call float @llvm.fabs.f32(float %i.bur)
   %i.but = fadd float %i.buo, %i.bus
-  %22 = extractelement <4 x float> %17, i64 0
-  %i.buu = fadd float %22, %i.but
+  %i.buu = fadd float %3, %i.but
   %i.buv = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %indvars.iv2901
   store float %i.buu, ptr %i.buv, align 4, !tbaa !111
-  %23 = shufflevector <4 x float> %16, <4 x float> poison, <2 x i32> <i32 0, i32 1> ; 2 uses
-  %24 = fmul <2 x float> %23, %23                 ; 2 uses
-  %shift = shufflevector <2 x float> %24, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x float> %24, %shift
-  %25 = extractelement <2 x float> %foldExtExtBinop, i64 0
+  %16 = fmul float %2, %2
+  %17 = fmul float %4, %4
+  %18 = fadd float %16, %17
   %i.buw = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %indvars.iv2901
-  store float %25, ptr %i.buw, align 4, !tbaa !111
+  store float %18, ptr %i.buw, align 4, !tbaa !111
   %exitcond2907.not = icmp eq i64 %indvars.iv.next2902, %wide.trip.count2906
   br i1 %exitcond2907.not, label %._crit_edge2637, label %scalar.ph3685, !llvm.loop !1548
 

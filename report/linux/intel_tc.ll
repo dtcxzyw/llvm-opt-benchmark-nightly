@@ -202,11 +202,10 @@ get_lane_mask.exit.i.i:                           ; preds = %dev_name.exit40.i.i
   %i.ax = getelementptr i8, ptr %0, i64 256
   %i.ay = load i8, ptr %i.ax, align 8
   %i.az = zext i8 %i.ay to i32
-  %i.ba = shl nuw nsw i32 %i.az, 3                ; 2 uses
-  %1 = shl i32 15, %i.ba
-  %i.bb = and i32 %1, %.0.lcssa46.i.i.i
-  %2 = lshr i32 %i.bb, %i.ba                      ; 2 uses
-  switch i32 %2, label %bb.p [
+  %i.ba = shl nuw nsw i32 %i.az, 3
+  %1 = lshr i32 %.0.lcssa46.i.i.i, %i.ba
+  %i.bb = and i32 %1, 15                          ; 2 uses
+  switch i32 %i.bb, label %bb.p [
     i32 1, label %get_max_lane_count.exit
     i32 2, label %get_max_lane_count.exit
     i32 4, label %get_max_lane_count.exit
@@ -217,7 +216,7 @@ get_lane_mask.exit.i.i:                           ; preds = %dev_name.exit40.i.i
   ]
 
 bb.p:                                             ; preds = %get_lane_mask.exit.i.i
-  %i.bc = zext nneg i32 %2 to i64
+  %i.bc = zext nneg i32 %i.bb to i64
   %i.bd = tail call ptr asm sideeffect "lea (2f)(%rip), $0\0A1:\0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${1:c} - .\09# bug_entry::format\0A\09.long ${2:c} - .\09# bug_entry::file\0A\09.word ${3:c}\09# bug_entry::line\0A\09.word ${4:c}\09# bug_entry::flags\0A\09.org 2b + ${5:c}\0A.popsection\0A", "=r,i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr @.str.3, ptr @.str.2, i32 366, i32 2321, i64 16) #10, !srcloc !129
   tail call void (ptr, ...) @__SCT__WARN_trap(ptr noundef %i.bd, ptr noundef @.str.52, i64 noundef %i.bc) #9
   tail call void asm sideeffect "", "~{dirflag},~{fpsr},~{flags}"() #10, !srcloc !130

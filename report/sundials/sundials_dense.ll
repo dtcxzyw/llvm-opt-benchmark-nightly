@@ -37,14 +37,12 @@ bb.a:
   %i.k = shl i64 %.06689.i, 3
   %i.l = add i64 %i.k, 8                          ; 2 uses
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %.06689.i
-  %i.n = load ptr, ptr %i.m, align 8, !tbaa !17   ; 14 uses
+  %i.n = load ptr, ptr %i.m, align 8, !tbaa !17   ; 16 uses
   %i.o = add nuw nsw i64 %.06689.i, 1             ; 16 uses
   %i.p = icmp slt i64 %i.o, %i.d                  ; 2 uses
   br i1 %i.p, label %.lr.ph.preheader.i, label %._crit_edge.i
 
 .lr.ph.preheader.i:                               ; preds = %.lr.ph91.i
-  %.phi.trans.insert.i = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %.06689.i
-  %.pre.i = load double, ptr %.phi.trans.insert.i, align 8, !tbaa !19 ; 3 uses
   %i.q = sub i64 %.06689.i, %i.d
   %i.r = and i64 %i.q, 1
   %lcmp.mod.not.not = icmp eq i64 %i.r, 0
@@ -52,44 +50,45 @@ bb.a:
 
 .lr.ph.i.prol:                                    ; preds = %.lr.ph.preheader.i
   %i.s = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %i.o
-  %i.t = load double, ptr %i.s, align 8, !tbaa !19 ; 2 uses
+  %i.t = load double, ptr %i.s, align 8, !tbaa !19
   %i.u = tail call double @llvm.fabs.f64(double %i.t)
-  %i.v = tail call double @llvm.fabs.f64(double %.pre.i)
-  %i.w = fcmp ogt double %i.u, %i.v               ; 2 uses
+  %2 = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %.06689.i
+  %3 = load double, ptr %2, align 8, !tbaa !19
+  %i.v = tail call double @llvm.fabs.f64(double %3)
+  %i.w = fcmp ogt double %i.u, %i.v
   %spec.select.i.prol = select i1 %i.w, i64 %i.o, i64 %.06689.i ; 2 uses
   %i.x = add nuw nsw i64 %.06689.i, 2
-  %2 = select i1 %i.w, double %i.t, double %.pre.i
   br label %.lr.ph.i.prol.loopexit
 
 .lr.ph.i.prol.loopexit:                           ; preds = %.lr.ph.i.prol, %.lr.ph.preheader.i
   %spec.select.i.lcssa.unr = phi i64 [ poison, %.lr.ph.preheader.i ], [ %spec.select.i.prol, %.lr.ph.i.prol ]
-  %.unr = phi double [ %.pre.i, %.lr.ph.preheader.i ], [ %2, %.lr.ph.i.prol ]
   %.079.i.unr = phi i64 [ %.06689.i, %.lr.ph.preheader.i ], [ %spec.select.i.prol, %.lr.ph.i.prol ]
   %.06878.i.unr = phi i64 [ %i.o, %.lr.ph.preheader.i ], [ %i.x, %.lr.ph.i.prol ]
   %i.y = icmp eq i64 %i.i, %.06689.i
   br i1 %i.y, label %._crit_edge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i
-  %3 = phi double [ %5, %.lr.ph.i ], [ %.unr, %.lr.ph.i.prol.loopexit ] ; 2 uses
-  %.079.i = phi i64 [ %spec.select.i.1, %.lr.ph.i ], [ %.079.i.unr, %.lr.ph.i.prol.loopexit ]
+  %.079.i = phi i64 [ %spec.select.i.1, %.lr.ph.i ], [ %.079.i.unr, %.lr.ph.i.prol.loopexit ] ; 2 uses
   %.06878.i = phi i64 [ %i.ak, %.lr.ph.i ], [ %.06878.i.unr, %.lr.ph.i.prol.loopexit ] ; 4 uses
   %i.z = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %.06878.i
-  %i.aa = load double, ptr %i.z, align 8, !tbaa !19 ; 2 uses
+  %i.aa = load double, ptr %i.z, align 8, !tbaa !19
   %i.ab = tail call double @llvm.fabs.f64(double %i.aa)
-  %i.ac = tail call double @llvm.fabs.f64(double %3)
-  %i.ad = fcmp ogt double %i.ab, %i.ac            ; 2 uses
-  %spec.select.i = select i1 %i.ad, i64 %.06878.i, i64 %.079.i
+  %4 = getelementptr inbounds [8 x i8], ptr %i.n, i64 %.079.i
+  %5 = load double, ptr %4, align 8, !tbaa !19
+  %i.ac = tail call double @llvm.fabs.f64(double %5)
+  %i.ad = fcmp ogt double %i.ab, %i.ac
+  %spec.select.i = select i1 %i.ad, i64 %.06878.i, i64 %.079.i ; 2 uses
   %i.ae = add nuw nsw i64 %.06878.i, 1            ; 2 uses
-  %4 = select i1 %i.ad, double %i.aa, double %3   ; 2 uses
   %i.af = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %i.ae
-  %i.ag = load double, ptr %i.af, align 8, !tbaa !19 ; 2 uses
+  %i.ag = load double, ptr %i.af, align 8, !tbaa !19
   %i.ah = tail call double @llvm.fabs.f64(double %i.ag)
-  %i.ai = tail call double @llvm.fabs.f64(double %4)
-  %i.aj = fcmp ogt double %i.ah, %i.ai            ; 2 uses
+  %6 = getelementptr inbounds [8 x i8], ptr %i.n, i64 %spec.select.i
+  %7 = load double, ptr %6, align 8, !tbaa !19
+  %i.ai = tail call double @llvm.fabs.f64(double %7)
+  %i.aj = fcmp ogt double %i.ah, %i.ai
   %spec.select.i.1 = select i1 %i.aj, i64 %i.ae, i64 %spec.select.i ; 2 uses
   %i.ak = add nuw nsw i64 %.06878.i, 2            ; 2 uses
   %exitcond.not.i.1 = icmp eq i64 %i.ak, %i.d
-  %5 = select i1 %i.aj, double %i.ag, double %4
   br i1 %exitcond.not.i.1, label %._crit_edge.i, label %.lr.ph.i
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i, %.lr.ph91.i
@@ -341,14 +340,12 @@ bb.a:
   %i.e = shl i64 %.06689, 3
   %i.f = add i64 %i.e, 8                          ; 2 uses
   %i.g = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.06689
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !17   ; 14 uses
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !17   ; 16 uses
   %i.i = add nuw nsw i64 %.06689, 1               ; 16 uses
   %i.j = icmp slt i64 %i.i, %1                    ; 2 uses
   br i1 %i.j, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %.lr.ph91
-  %.phi.trans.insert = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %.06689
-  %.pre = load double, ptr %.phi.trans.insert, align 8, !tbaa !19 ; 3 uses
   %i.k = sub i64 %.06689, %1
   %i.l = and i64 %i.k, 1
   %lcmp.mod.not.not = icmp eq i64 %i.l, 0
@@ -356,44 +353,45 @@ bb.a:
 
 .lr.ph.prol:                                      ; preds = %.lr.ph.preheader
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %i.i
-  %i.n = load double, ptr %i.m, align 8, !tbaa !19 ; 2 uses
+  %i.n = load double, ptr %i.m, align 8, !tbaa !19
   %i.o = tail call double @llvm.fabs.f64(double %i.n)
-  %i.p = tail call double @llvm.fabs.f64(double %.pre)
-  %i.q = fcmp ogt double %i.o, %i.p               ; 2 uses
+  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %.06689
+  %5 = load double, ptr %4, align 8, !tbaa !19
+  %i.p = tail call double @llvm.fabs.f64(double %5)
+  %i.q = fcmp ogt double %i.o, %i.p
   %spec.select.prol = select i1 %i.q, i64 %i.i, i64 %.06689 ; 2 uses
   %i.r = add nuw nsw i64 %.06689, 2
-  %4 = select i1 %i.q, double %i.n, double %.pre
   br label %.lr.ph.prol.loopexit
 
 .lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol, %.lr.ph.preheader
   %spec.select.lcssa.unr = phi i64 [ poison, %.lr.ph.preheader ], [ %spec.select.prol, %.lr.ph.prol ]
-  %.unr = phi double [ %.pre, %.lr.ph.preheader ], [ %4, %.lr.ph.prol ]
   %.079.unr = phi i64 [ %.06689, %.lr.ph.preheader ], [ %spec.select.prol, %.lr.ph.prol ]
   %.06878.unr = phi i64 [ %i.i, %.lr.ph.preheader ], [ %i.r, %.lr.ph.prol ]
   %i.s = icmp eq i64 %i.c, %.06689
   br i1 %i.s, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
-  %5 = phi double [ %7, %.lr.ph ], [ %.unr, %.lr.ph.prol.loopexit ] ; 2 uses
-  %.079 = phi i64 [ %spec.select.1, %.lr.ph ], [ %.079.unr, %.lr.ph.prol.loopexit ]
+  %.079 = phi i64 [ %spec.select.1, %.lr.ph ], [ %.079.unr, %.lr.ph.prol.loopexit ] ; 2 uses
   %.06878 = phi i64 [ %i.ae, %.lr.ph ], [ %.06878.unr, %.lr.ph.prol.loopexit ] ; 4 uses
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %.06878
-  %i.u = load double, ptr %i.t, align 8, !tbaa !19 ; 2 uses
+  %i.u = load double, ptr %i.t, align 8, !tbaa !19
   %i.v = tail call double @llvm.fabs.f64(double %i.u)
-  %i.w = tail call double @llvm.fabs.f64(double %5)
-  %i.x = fcmp ogt double %i.v, %i.w               ; 2 uses
-  %spec.select = select i1 %i.x, i64 %.06878, i64 %.079
+  %6 = getelementptr inbounds [8 x i8], ptr %i.h, i64 %.079
+  %7 = load double, ptr %6, align 8, !tbaa !19
+  %i.w = tail call double @llvm.fabs.f64(double %7)
+  %i.x = fcmp ogt double %i.v, %i.w
+  %spec.select = select i1 %i.x, i64 %.06878, i64 %.079 ; 2 uses
   %i.y = add nuw nsw i64 %.06878, 1               ; 2 uses
-  %6 = select i1 %i.x, double %i.u, double %5     ; 2 uses
   %i.z = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %i.y
-  %i.aa = load double, ptr %i.z, align 8, !tbaa !19 ; 2 uses
+  %i.aa = load double, ptr %i.z, align 8, !tbaa !19
   %i.ab = tail call double @llvm.fabs.f64(double %i.aa)
-  %i.ac = tail call double @llvm.fabs.f64(double %6)
-  %i.ad = fcmp ogt double %i.ab, %i.ac            ; 2 uses
+  %8 = getelementptr inbounds [8 x i8], ptr %i.h, i64 %spec.select
+  %9 = load double, ptr %8, align 8, !tbaa !19
+  %i.ac = tail call double @llvm.fabs.f64(double %9)
+  %i.ad = fcmp ogt double %i.ab, %i.ac
   %spec.select.1 = select i1 %i.ad, i64 %i.y, i64 %spec.select ; 2 uses
   %i.ae = add nuw nsw i64 %.06878, 2              ; 2 uses
   %exitcond.not.1 = icmp eq i64 %i.ae, %1
-  %7 = select i1 %i.ad, double %i.aa, double %6
   br i1 %exitcond.not.1, label %._crit_edge, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %.lr.ph91

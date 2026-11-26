@@ -205,7 +205,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 2192
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !20   ; 18 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 96
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !29   ; 6 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !29   ; 7 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 164
   %i.f = load i32, ptr %i.e, align 4, !tbaa !39
   %.not = icmp eq i32 %i.f, 0                     ; 2 uses
@@ -257,8 +257,8 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.ac, label %._crit_edge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.g, %bb.h
-  %storemerge5360.i = phi i64 [ %i.al, %bb.h ], [ %.0.i, %bb.g ] ; 3 uses
-  %i.ad = getelementptr [8 x i8], ptr %i.d, i64 %storemerge5360.i ; 2 uses
+  %storemerge5360.i = phi i64 [ %i.al, %bb.h ], [ %.0.i, %bb.g ] ; 4 uses
+  %i.ad = getelementptr [8 x i8], ptr %i.d, i64 %storemerge5360.i
   %i.ae = getelementptr i8, ptr %i.ad, i64 -8
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !31 ; 2 uses
   %i.ag = load double, ptr %i.af, align 8, !tbaa !63 ; 2 uses
@@ -270,8 +270,6 @@ bb.g:                                             ; preds = %bb.f
 .thread146:                                       ; preds = %.lr.ph.i
   %i.ak = getelementptr inbounds nuw i8, ptr %i.b, i64 496
   store i64 %storemerge5360.i, ptr %i.ak, align 8, !tbaa !62
-  %.pre176 = load ptr, ptr %i.ad, align 8, !tbaa !31 ; 2 uses
-  %.pre177 = load double, ptr %.pre176, align 8, !tbaa !63
   br label %bb.k
 
 bb.h:                                             ; preds = %.lr.ph.i
@@ -292,8 +290,8 @@ bb.h:                                             ; preds = %.lr.ph.i
   br i1 %i.at, label %.loopexit, label %.thread
 
 bb.i:                                             ; preds = %bb.f
-  %i.av = load ptr, ptr %i.v, align 8, !tbaa !31  ; 2 uses
-  %i.aw = load double, ptr %i.av, align 8, !tbaa !63 ; 2 uses
+  %i.av = load ptr, ptr %i.v, align 8, !tbaa !31
+  %i.aw = load double, ptr %i.av, align 8, !tbaa !63
   %i.ax = fsub double %1, %i.aw
   %i.ay = fmul double %i.u, %i.ax
   %i.az = fcmp ogt double %i.ay, 0.000000e+00
@@ -302,8 +300,8 @@ bb.i:                                             ; preds = %bb.f
 .preheader:                                       ; preds = %bb.i, %.preheader
   %storemerge.i = phi i64 [ %i.bg, %.preheader ], [ %.0.i, %bb.i ] ; 3 uses
   %i.ba = getelementptr inbounds [8 x i8], ptr %i.d, i64 %storemerge.i
-  %i.bb = load ptr, ptr %i.ba, align 8, !tbaa !31 ; 2 uses
-  %i.bc = load double, ptr %i.bb, align 8, !tbaa !63 ; 2 uses
+  %i.bb = load ptr, ptr %i.ba, align 8, !tbaa !31
+  %i.bc = load double, ptr %i.bb, align 8, !tbaa !63
   %i.bd = fsub double %1, %i.bc
   %i.be = fmul double %i.u, %i.bd
   %i.bf = fcmp ogt double %i.be, 0.000000e+00
@@ -311,9 +309,7 @@ bb.i:                                             ; preds = %bb.f
   br i1 %i.bf, label %.preheader, label %.loopexit154
 
 .loopexit154:                                     ; preds = %.preheader, %bb.i
-  %4 = phi double [ %i.aw, %bb.i ], [ %i.bc, %.preheader ]
-  %5 = phi ptr [ %i.av, %bb.i ], [ %i.bb, %.preheader ]
-  %.0135.ph = phi i64 [ %.0.i, %bb.i ], [ %storemerge.i, %.preheader ] ; 3 uses
+  %.0135.ph = phi i64 [ %.0.i, %bb.i ], [ %storemerge.i, %.preheader ] ; 4 uses
   %.2134.ph = phi i32 [ %.0132, %bb.i ], [ 1, %.preheader ]
   %i.bh = getelementptr inbounds nuw i8, ptr %i.b, i64 496
   store i64 %.0135.ph, ptr %i.bh, align 8, !tbaa !62
@@ -355,13 +351,15 @@ bb.j:                                             ; preds = %.lr.ph160, %bb.j
   br i1 %exitcond173.not, label %.loopexit, label %bb.j, !llvm.loop !123
 
 bb.k:                                             ; preds = %.loopexit154._crit_edge, %.thread146
-  %i.bv = phi double [ %.pre177, %.thread146 ], [ %4, %.loopexit154._crit_edge ] ; 2 uses
-  %i.bw = phi ptr [ %.pre176, %.thread146 ], [ %5, %.loopexit154._crit_edge ]
-  %6 = phi double [ %i.ag, %.thread146 ], [ %.pre175, %.loopexit154._crit_edge ] ; 2 uses
-  %7 = phi ptr [ %i.af, %.thread146 ], [ %.pre, %.loopexit154._crit_edge ]
+  %i.bv = phi double [ %i.ag, %.thread146 ], [ %.pre175, %.loopexit154._crit_edge ] ; 2 uses
+  %i.bw = phi ptr [ %i.af, %.thread146 ], [ %.pre, %.loopexit154._crit_edge ]
   %.2134.ph151 = phi i1 [ false, %.thread146 ], [ %i.bj, %.loopexit154._crit_edge ]
-  %i.bx = fsub double %i.bv, %6                   ; 5 uses
-  %i.by = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %.0135.ph150 = phi i64 [ %storemerge5360.i, %.thread146 ], [ %.0135.ph, %.loopexit154._crit_edge ]
+  %4 = getelementptr [8 x i8], ptr %i.d, i64 %.0135.ph150
+  %5 = load ptr, ptr %4, align 8, !tbaa !31       ; 2 uses
+  %6 = load double, ptr %5, align 8, !tbaa !63    ; 2 uses
+  %i.bx = fsub double %6, %i.bv                   ; 5 uses
+  %i.by = getelementptr inbounds nuw i8, ptr %i.bw, i64 8
   %i.bz = load ptr, ptr %i.by, align 8, !tbaa !57 ; 4 uses
   %i.ca = load ptr, ptr %i.bz, align 8, !tbaa !52 ; 2 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %i.bz, i64 8
@@ -381,7 +379,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   br i1 %.2134.ph151, label %.loopexit153, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %i.ch = getelementptr inbounds nuw i8, ptr %i.bw, i64 8
+  %i.ch = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.ci = load ptr, ptr %i.ch, align 8, !tbaa !57 ; 4 uses
   %i.cj = load ptr, ptr %i.ci, align 8, !tbaa !52
   %i.ck = getelementptr inbounds nuw i8, ptr %i.ci, i64 8
@@ -446,10 +444,10 @@ bb.o:                                             ; preds = %.lr.ph, %bb.o
   br i1 %exitcond.not, label %.loopexit153, label %bb.o, !llvm.loop !124
 
 .loopexit153:                                     ; preds = %bb.o, %bb.n, %bb.m
-  %i.dz = fsub double %1, %6                      ; 3 uses
+  %i.dz = fsub double %1, %i.bv                   ; 3 uses
   %i.ea = fdiv double %i.dz, %i.bx                ; 2 uses
   %i.eb = fmul double %i.ea, %i.ea                ; 3 uses
-  %i.ec = fsub double %1, %i.bv
+  %i.ec = fsub double %1, %6
   %i.ed = fmul double %i.ec, %i.eb
   %i.ee = fdiv double %i.ed, %i.bx                ; 2 uses
   tail call void @N_VLinearSum(double noundef 1.000000e+00, ptr noundef %i.ca, double noundef %i.dz, ptr noundef %i.cc, ptr noundef %2) #7

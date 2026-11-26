@@ -204,18 +204,13 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
-  %i.d = load ptr, ptr @_ZN6google12_GLOBAL__N_112FlagRegistry16global_registry_E, align 8, !tbaa !143 ; 3 uses
+  %i.d = load ptr, ptr @_ZN6google12_GLOBAL__N_112FlagRegistry16global_registry_E, align 8, !tbaa !143 ; 2 uses
   %.not2.i = icmp eq ptr %i.d, null
-  br i1 %.not2.i, label %bb.e, label %._ZN6google12_GLOBAL__N_112FlagRegistry14GlobalRegistryEv.exit_crit_edge
-
-._ZN6google12_GLOBAL__N_112FlagRegistry14GlobalRegistryEv.exit_crit_edge: ; preds = %bb.d
-  %.phi.trans.insert = getelementptr i8, ptr %i.d, i64 24
-  %.val10.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !150
-  br label %_ZN6google12_GLOBAL__N_112FlagRegistry14GlobalRegistryEv.exit
+  br i1 %.not2.i, label %bb.e, label %_ZN6google12_GLOBAL__N_112FlagRegistry14GlobalRegistryEv.exit
 
 bb.e:                                             ; preds = %bb.d
   %i.e = tail call noalias noundef nonnull dereferenceable(104) ptr @_Znwm(i64 noundef 104) #41 ; 13 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 4 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 3 uses
   store i32 0, ptr %i.f, align 8, !tbaa !148
   %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   store ptr null, ptr %i.g, align 8, !tbaa !149
@@ -240,11 +235,12 @@ bb.e:                                             ; preds = %bb.d
   store ptr %i.e, ptr @_ZN6google12_GLOBAL__N_112FlagRegistry16global_registry_E, align 8, !tbaa !143
   br label %_ZN6google12_GLOBAL__N_112FlagRegistry14GlobalRegistryEv.exit
 
-_ZN6google12_GLOBAL__N_112FlagRegistry14GlobalRegistryEv.exit: ; preds = %._ZN6google12_GLOBAL__N_112FlagRegistry14GlobalRegistryEv.exit_crit_edge, %bb.e
-  %.val10.a = phi ptr [ %i.f, %bb.e ], [ %.val10.pre, %._ZN6google12_GLOBAL__N_112FlagRegistry14GlobalRegistryEv.exit_crit_edge ] ; 2 uses
-  %2 = phi ptr [ %i.e, %bb.e ], [ %i.d, %._ZN6google12_GLOBAL__N_112FlagRegistry14GlobalRegistryEv.exit_crit_edge ]
-  %i.q = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  %i.r = icmp eq ptr %.val10.a, %i.q
+_ZN6google12_GLOBAL__N_112FlagRegistry14GlobalRegistryEv.exit: ; preds = %bb.d, %bb.e
+  %.val10.a = phi ptr [ %i.e, %bb.e ], [ %i.d, %bb.d ] ; 2 uses
+  %2 = getelementptr i8, ptr %.val10.a, i64 24
+  %.val10 = load ptr, ptr %2, align 8, !tbaa !150 ; 2 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %.val10.a, i64 8 ; 2 uses
+  %i.r = icmp eq ptr %.val10, %i.q
   br i1 %i.r, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZN6google12_GLOBAL__N_112FlagRegistry14GlobalRegistryEv.exit
@@ -309,7 +305,7 @@ _ZSt4sortIN9__gnu_cxx17__normal_iteratorIPN6google19CommandLineFlagInfoESt6vecto
   ret void
 
 bb.i:                                             ; preds = %.lr.ph, %_ZN6google19CommandLineFlagInfoD2Ev.exit
-  %.sroa.018.019 = phi ptr [ %.val10.a, %.lr.ph ], [ %i.cf, %_ZN6google19CommandLineFlagInfoD2Ev.exit ] ; 2 uses
+  %.sroa.018.019 = phi ptr [ %.val10, %.lr.ph ], [ %i.cf, %_ZN6google19CommandLineFlagInfoD2Ev.exit ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #42
   store ptr %i.s, ptr %1, align 8, !tbaa !168
   store i64 0, ptr %i.t, align 8, !tbaa !169

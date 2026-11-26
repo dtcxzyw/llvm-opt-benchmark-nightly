@@ -205,49 +205,47 @@ middle.block172:                                  ; preds = %vector.body166
   br i1 %i.gq, label %.lr.ph111.us.preheader.i, label %._crit_edge112.split.us.us.i
 
 .lr.ph111.us.preheader.i:                         ; preds = %.lr.ph117.split.us.i
-  %i.gr = add nsw i32 %i.go, -1                   ; 2 uses
-  %.phi.trans.insert150.i = zext nneg i32 %i.gr to i64
-  %.phi.trans.insert151.i = getelementptr inbounds nuw [8 x i8], ptr %i.gm, i64 %.phi.trans.insert150.i
-  %.phi.trans.insert152.i = getelementptr inbounds nuw i8, ptr %.phi.trans.insert151.i, i64 4
-  %.pre153.i = load float, ptr %.phi.trans.insert152.i, align 4, !tbaa !292
+  %i.gr = add nsw i32 %i.go, -1
   br label %.lr.ph111.us.i
 
 .lr.ph111.us.i:                                   ; preds = %.lr.ph111.us._crit_edge.i, %.lr.ph111.us.preheader.i
   %i.gs = phi i32 [ %i.go, %.lr.ph111.us.preheader.i ], [ %i.hk, %.lr.ph111.us._crit_edge.i ]
-  %12 = phi float [ %.pre153.i, %.lr.ph111.us.preheader.i ], [ %i.gv, %.lr.ph111.us._crit_edge.i ] ; 2 uses
   %indvars.iv139.i = phi i64 [ 0, %.lr.ph111.us.preheader.i ], [ %indvars.iv.next140.i, %.lr.ph111.us._crit_edge.i ] ; 5 uses
-  %.087108.us.us.i.a = phi i32 [ %i.gr, %.lr.ph111.us.preheader.i ], [ %.pre-phi.i, %.lr.ph111.us._crit_edge.i ]
-  %.2107.us.us.i = phi i32 [ %.190114.us.i, %.lr.ph111.us.preheader.i ], [ %.3.us.us.i, %.lr.ph111.us._crit_edge.i ] ; 3 uses
+  %.087108.us.us.i = phi i32 [ %i.gr, %.lr.ph111.us.preheader.i ], [ %.pre-phi.i, %.lr.ph111.us._crit_edge.i ]
+  %.087108.us.us.i.a = phi i32 [ %.190114.us.i, %.lr.ph111.us.preheader.i ], [ %.3.us.us.i, %.lr.ph111.us._crit_edge.i ] ; 3 uses
+  %12 = sext i32 %.087108.us.us.i to i64          ; 3 uses
+  %13 = getelementptr inbounds [8 x i8], ptr %i.gm, i64 %12
+  %14 = getelementptr inbounds nuw i8, ptr %13, i64 4
+  %15 = load float, ptr %14, align 4, !tbaa !292  ; 2 uses
   %i.gt = getelementptr inbounds nuw [8 x i8], ptr %i.gm, i64 %indvars.iv139.i
   %i.gu = getelementptr inbounds nuw i8, ptr %i.gt, i64 4
-  %i.gv = load float, ptr %i.gu, align 4, !tbaa !292 ; 3 uses
-  %i.gw = fcmp oeq float %12, %i.gv
+  %i.gv = load float, ptr %i.gu, align 4, !tbaa !292 ; 2 uses
+  %i.gw = fcmp oeq float %15, %i.gv
   br i1 %i.gw, label %.lr.ph111.us._crit_edge.i, label %bb.r
 
 bb.r:                                             ; preds = %.lr.ph111.us.i
-  %i.gx = sext i32 %.2107.us.us.i to i64
+  %i.gx = sext i32 %.087108.us.us.i.a to i64
   %i.gy = getelementptr inbounds [20 x i8], ptr %i.fx, i64 %i.gx ; 2 uses
   %i.gz = getelementptr inbounds nuw i8, ptr %i.gy, i64 16
-  %i.ha = fcmp olt float %12, %i.gv               ; 3 uses
+  %i.ha = fcmp olt float %15, %i.gv               ; 3 uses
   %spec.store.select.i = zext i1 %i.ha to i32
   store i32 %spec.store.select.i, ptr %i.gz, align 4, !tbaa !850
-  %13 = sext i32 %.087108.us.us.i.a to i64        ; 2 uses
-  %i.hb = select i1 %i.ha, i64 %13, i64 %indvars.iv139.i
+  %i.hb = select i1 %i.ha, i64 %12, i64 %indvars.iv139.i
   %i.hc = getelementptr inbounds [8 x i8], ptr %i.gm, i64 %i.hb
-  %i.hd = select i1 %i.ha, i64 %indvars.iv139.i, i64 %13
+  %i.hd = select i1 %i.ha, i64 %indvars.iv139.i, i64 %12
   %i.he = getelementptr inbounds [8 x i8], ptr %i.gm, i64 %i.hd
   %i.hf = load <2 x float>, ptr %i.hc, align 4, !tbaa !54
   %i.hg = load <2 x float>, ptr %i.he, align 4, !tbaa !54
   %i.hh = shufflevector <2 x float> %i.hf, <2 x float> %i.hg, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.hi = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.hh, <4 x float> %i.gh, <4 x float> %i.gk)
   store <4 x float> %i.hi, ptr %i.gy, align 4, !tbaa !54
-  %i.hj = add nsw i32 %.2107.us.us.i, 1
+  %i.hj = add nsw i32 %.087108.us.us.i.a, 1
   %.pre154.i = load i32, ptr %i.gn, align 4, !tbaa !55
   br label %.lr.ph111.us._crit_edge.i
 
 .lr.ph111.us._crit_edge.i:                        ; preds = %bb.r, %.lr.ph111.us.i
   %i.hk = phi i32 [ %.pre154.i, %bb.r ], [ %i.gs, %.lr.ph111.us.i ] ; 2 uses
-  %.3.us.us.i = phi i32 [ %i.hj, %bb.r ], [ %.2107.us.us.i, %.lr.ph111.us.i ] ; 2 uses
+  %.3.us.us.i = phi i32 [ %i.hj, %bb.r ], [ %.087108.us.us.i.a, %.lr.ph111.us.i ] ; 2 uses
   %.pre-phi.i = trunc i64 %indvars.iv139.i to i32
   %indvars.iv.next140.i = add nuw nsw i64 %indvars.iv139.i, 1 ; 2 uses
   %i.hl = sext i32 %i.hk to i64
@@ -273,49 +271,47 @@ bb.r:                                             ; preds = %.lr.ph111.us.i
   br i1 %i.hs, label %.lr.ph111.preheader.i, label %._crit_edge112.split.i
 
 .lr.ph111.preheader.i:                            ; preds = %.lr.ph117.split.i
-  %i.ht = add nsw i32 %i.hq, -1                   ; 2 uses
-  %.phi.trans.insert.i = zext nneg i32 %i.ht to i64
-  %.phi.trans.insert147.i = getelementptr inbounds nuw [8 x i8], ptr %i.ho, i64 %.phi.trans.insert.i
-  %.phi.trans.insert148.i = getelementptr inbounds nuw i8, ptr %.phi.trans.insert147.i, i64 4
-  %.pre.i = load float, ptr %.phi.trans.insert148.i, align 4, !tbaa !292
+  %i.ht = add nsw i32 %i.hq, -1
   br label %.lr.ph111.i
 
 .lr.ph111.i:                                      ; preds = %.lr.ph111._crit_edge.i, %.lr.ph111.preheader.i
   %i.hu = phi i32 [ %i.hq, %.lr.ph111.preheader.i ], [ %i.im, %.lr.ph111._crit_edge.i ]
-  %14 = phi float [ %.pre.i, %.lr.ph111.preheader.i ], [ %i.hx, %.lr.ph111._crit_edge.i ] ; 2 uses
   %indvars.iv131.i = phi i64 [ 0, %.lr.ph111.preheader.i ], [ %indvars.iv.next132.i, %.lr.ph111._crit_edge.i ] ; 5 uses
-  %.087108.i.a = phi i32 [ %i.ht, %.lr.ph111.preheader.i ], [ %.pre-phi157.i, %.lr.ph111._crit_edge.i ]
-  %.2107.i = phi i32 [ %.190114.i, %.lr.ph111.preheader.i ], [ %.3.i, %.lr.ph111._crit_edge.i ] ; 3 uses
+  %.087108.i = phi i32 [ %i.ht, %.lr.ph111.preheader.i ], [ %.pre-phi157.i, %.lr.ph111._crit_edge.i ]
+  %.087108.i.a = phi i32 [ %.190114.i, %.lr.ph111.preheader.i ], [ %.3.i, %.lr.ph111._crit_edge.i ] ; 3 uses
+  %16 = sext i32 %.087108.i to i64                ; 3 uses
+  %17 = getelementptr inbounds [8 x i8], ptr %i.ho, i64 %16
+  %18 = getelementptr inbounds nuw i8, ptr %17, i64 4
+  %19 = load float, ptr %18, align 4, !tbaa !292  ; 2 uses
   %i.hv = getelementptr inbounds nuw [8 x i8], ptr %i.ho, i64 %indvars.iv131.i
   %i.hw = getelementptr inbounds nuw i8, ptr %i.hv, i64 4
-  %i.hx = load float, ptr %i.hw, align 4, !tbaa !292 ; 3 uses
-  %i.hy = fcmp oeq float %14, %i.hx
+  %i.hx = load float, ptr %i.hw, align 4, !tbaa !292 ; 2 uses
+  %i.hy = fcmp oeq float %19, %i.hx
   br i1 %i.hy, label %.lr.ph111._crit_edge.i, label %bb.s
 
 bb.s:                                             ; preds = %.lr.ph111.i
-  %i.hz = sext i32 %.2107.i to i64
+  %i.hz = sext i32 %.087108.i.a to i64
   %i.ia = getelementptr inbounds [20 x i8], ptr %i.fx, i64 %i.hz ; 2 uses
   %i.ib = getelementptr inbounds nuw i8, ptr %i.ia, i64 16
-  %i.ic = fcmp ogt float %14, %i.hx               ; 3 uses
+  %i.ic = fcmp ogt float %19, %i.hx               ; 3 uses
   %spec.store.select122.i = zext i1 %i.ic to i32
   store i32 %spec.store.select122.i, ptr %i.ib, align 4, !tbaa !850
-  %15 = sext i32 %.087108.i.a to i64              ; 2 uses
-  %i.id = select i1 %i.ic, i64 %15, i64 %indvars.iv131.i
+  %i.id = select i1 %i.ic, i64 %16, i64 %indvars.iv131.i
   %i.ie = getelementptr inbounds [8 x i8], ptr %i.ho, i64 %i.id
-  %i.if = select i1 %i.ic, i64 %indvars.iv131.i, i64 %15
+  %i.if = select i1 %i.ic, i64 %indvars.iv131.i, i64 %16
   %i.ig = getelementptr inbounds [8 x i8], ptr %i.ho, i64 %i.if
   %i.ih = load <2 x float>, ptr %i.ie, align 4, !tbaa !54
   %i.ii = load <2 x float>, ptr %i.ig, align 4, !tbaa !54
   %i.ij = shufflevector <2 x float> %i.ih, <2 x float> %i.ii, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.ik = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.ij, <4 x float> %i.gb, <4 x float> %i.ge)
   store <4 x float> %i.ik, ptr %i.ia, align 4, !tbaa !54
-  %i.il = add nsw i32 %.2107.i, 1
+  %i.il = add nsw i32 %.087108.i.a, 1
   %.pre149.i = load i32, ptr %i.hp, align 4, !tbaa !55
   br label %.lr.ph111._crit_edge.i
 
 .lr.ph111._crit_edge.i:                           ; preds = %bb.s, %.lr.ph111.i
   %i.im = phi i32 [ %.pre149.i, %bb.s ], [ %i.hu, %.lr.ph111.i ] ; 2 uses
-  %.3.i = phi i32 [ %i.il, %bb.s ], [ %.2107.i, %.lr.ph111.i ] ; 2 uses
+  %.3.i = phi i32 [ %i.il, %bb.s ], [ %.087108.i.a, %.lr.ph111.i ] ; 2 uses
   %.pre-phi157.i = trunc i64 %indvars.iv131.i to i32
   %indvars.iv.next132.i = add nuw nsw i64 %indvars.iv131.i, 1 ; 2 uses
   %i.in = sext i32 %i.im to i64

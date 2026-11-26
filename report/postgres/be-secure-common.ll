@@ -202,7 +202,7 @@ bb.g:                                             ; preds = %.lr.ph65
   store i8 0, ptr %i.ah, align 8
   %i.ai = load ptr, ptr %i.r, align 8, !nonnull !4, !noundef !4 ; 3 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 16
-  %i.ak = load ptr, ptr %i.aj, align 8            ; 9 uses
+  %i.ak = load ptr, ptr %i.aj, align 8            ; 7 uses
   %i.al = load ptr, ptr %i.ak, align 8            ; 3 uses
   %.not191.i = icmp eq ptr %i.al, null
   br i1 %.not191.i, label %.critedge199.i, label %.lr.ph.i
@@ -256,19 +256,18 @@ bb.h:                                             ; preds = %.tail.thread.i, %.l
   br i1 %i.bh, label %.lr.ph230.i, label %.critedge199.loopexit.i
 
 .critedge199.loopexit.i:                          ; preds = %bb.h
-  %.pre233.i = load ptr, ptr %i.r, align 8        ; 2 uses
-  %.phi.trans.insert.i = getelementptr i8, ptr %.pre233.i, i64 16
-  %.val211.pre.i = load ptr, ptr %.phi.trans.insert.i, align 8
+  %.pre233.i = load ptr, ptr %i.r, align 8
   br label %.critedge199.i
 
 .critedge199.i:                                   ; preds = %.critedge199.loopexit.i, %.lr.ph.i, %bb.g
-  %.val211.i.a = phi ptr [ %.val211.pre.i, %.critedge199.loopexit.i ], [ %i.ak, %.lr.ph.i ], [ %i.ak, %bb.g ]
-  %2 = phi ptr [ %.pre233.i, %.critedge199.loopexit.i ], [ %i.ai, %.lr.ph.i ], [ %i.ai, %bb.g ]
-  %i.bi = getelementptr i8, ptr %2, i64 4
-  %.val210.i = load i32, ptr %i.bi, align 4
+  %.val211.i.a = phi ptr [ %.pre233.i, %.critedge199.loopexit.i ], [ %i.ai, %.lr.ph.i ], [ %i.ai, %bb.g ] ; 2 uses
+  %2 = getelementptr i8, ptr %.val211.i.a, i64 4
+  %.val210.i = load i32, ptr %2, align 4
+  %i.bi = getelementptr i8, ptr %.val211.i.a, i64 16
+  %.val211.i = load ptr, ptr %i.bi, align 8
   %i.bj = getelementptr inbounds nuw i8, ptr %i.ak, i64 8 ; 2 uses
   %i.bk = sext i32 %.val210.i to i64
-  %i.bl = getelementptr inbounds [8 x i8], ptr %.val211.i.a, i64 %i.bk
+  %i.bl = getelementptr inbounds [8 x i8], ptr %.val211.i, i64 %i.bk
   %.not.i = icmp ult ptr %i.bj, %i.bl
   br i1 %.not.i, label %bb.j, label %bb.i
 

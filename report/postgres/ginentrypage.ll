@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %bb.b
   %i.ae = load i16, ptr %i.ad, align 2
   %i.af = and i16 %i.ae, -8192
   %i.ag = trunc i32 %i.aa to i16
-  %i.ah = or i16 %i.af, %i.ag                     ; 2 uses
+  %i.ah = or i16 %i.af, %i.ag
   store i16 %i.ah, ptr %i.ad, align 2
   br label %GinFormInteriorTuple.exit
 
@@ -211,18 +211,15 @@ bb.d:                                             ; preds = %bb.b, %bb.a
   %.val19.i = load i16, ptr %i.ai, align 2
   %i.aj = and i16 %.val19.i, 8191
   %i.ak = zext nneg i16 %i.aj to i64
-  %i.al = tail call ptr @palloc(i64 noundef %i.ak) #9 ; 3 uses
+  %i.al = tail call ptr @palloc(i64 noundef %i.ak) #9 ; 2 uses
   %.val.i14 = load i16, ptr %i.ai, align 2
   %i.am = and i16 %.val.i14, 8191
   %i.an = zext nneg i16 %i.am to i64
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 2 %i.al, ptr nonnull readonly align 2 %i.l, i64 %i.an, i1 false)
-  %.phi.trans.insert = getelementptr i8, ptr %i.al, i64 6
-  %.val13.pre = load i16, ptr %.phi.trans.insert, align 2
   br label %GinFormInteriorTuple.exit
 
 GinFormInteriorTuple.exit:                        ; preds = %bb.c, %bb.d
-  %.val13 = phi i16 [ %.val13.pre, %bb.d ], [ %i.ah, %bb.c ]
-  %.0.i = phi ptr [ %i.al, %bb.d ], [ %i.ac, %bb.c ] ; 5 uses
+  %.0.i = phi ptr [ %i.al, %bb.d ], [ %i.ac, %bb.c ] ; 6 uses
   %i.ao = lshr i32 %2, 16
   %i.ap = trunc nuw i32 %i.ao to i16
   store i16 %i.ap, ptr %.0.i, align 2
@@ -231,6 +228,8 @@ GinFormInteriorTuple.exit:                        ; preds = %bb.c, %bb.d
   store i16 %i.aq, ptr %i.ar, align 2
   %i.as = getelementptr inbounds nuw i8, ptr %.0.i, i64 4
   store i16 0, ptr %i.as, align 2
+  %6 = getelementptr i8, ptr %.0.i, i64 6
+  %.val13 = load i16, ptr %6, align 2
   %i.at = and i16 %.val13, 8191
   %i.au = zext nneg i16 %i.at to i64
   %i.av = tail call zeroext i16 @PageAddItemExtended(ptr noundef %1, ptr noundef nonnull %.0.i, i64 noundef %i.au, i16 noundef zeroext 0, i32 noundef 0) #9
@@ -293,7 +292,7 @@ bb.h:                                             ; preds = %bb.g
   %i.cd = load i16, ptr %i.cc, align 2
   %i.ce = and i16 %i.cd, -8192
   %i.cf = trunc i32 %i.bz to i16
-  %i.cg = or i16 %i.ce, %i.cf                     ; 2 uses
+  %i.cg = or i16 %i.ce, %i.cf
   store i16 %i.cg, ptr %i.cc, align 2
   br label %GinFormInteriorTuple.exit26
 
@@ -302,18 +301,15 @@ bb.i:                                             ; preds = %bb.g, %bb.f
   %.val19.i24 = load i16, ptr %i.ch, align 2
   %i.ci = and i16 %.val19.i24, 8191
   %i.cj = zext nneg i16 %i.ci to i64
-  %i.ck = tail call ptr @palloc(i64 noundef %i.cj) #9 ; 3 uses
+  %i.ck = tail call ptr @palloc(i64 noundef %i.cj) #9 ; 2 uses
   %.val.i25 = load i16, ptr %i.ch, align 2
   %i.cl = and i16 %.val.i25, 8191
   %i.cm = zext nneg i16 %i.cl to i64
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 2 %i.ck, ptr nonnull readonly align 2 %i.bk, i64 %i.cm, i1 false)
-  %.phi.trans.insert28 = getelementptr i8, ptr %i.ck, i64 6
-  %.val.pre = load i16, ptr %.phi.trans.insert28, align 2
   br label %GinFormInteriorTuple.exit26
 
 GinFormInteriorTuple.exit26:                      ; preds = %bb.h, %bb.i
-  %.val = phi i16 [ %.val.pre, %bb.i ], [ %i.cg, %bb.h ]
-  %.0.i23 = phi ptr [ %i.ck, %bb.i ], [ %i.cb, %bb.h ] ; 5 uses
+  %.0.i23 = phi ptr [ %i.ck, %bb.i ], [ %i.cb, %bb.h ] ; 6 uses
   %i.cn = lshr i32 %4, 16
   %i.co = trunc nuw i32 %i.cn to i16
   store i16 %i.co, ptr %.0.i23, align 2
@@ -322,6 +318,8 @@ GinFormInteriorTuple.exit26:                      ; preds = %bb.h, %bb.i
   store i16 %i.cp, ptr %i.cq, align 2
   %i.cr = getelementptr inbounds nuw i8, ptr %.0.i23, i64 4
   store i16 0, ptr %i.cr, align 2
+  %7 = getelementptr i8, ptr %.0.i23, i64 6
+  %.val = load i16, ptr %7, align 2
   %i.cs = and i16 %.val, 8191
   %i.ct = zext nneg i16 %i.cs to i64
   %i.cu = tail call zeroext i16 @PageAddItemExtended(ptr noundef %1, ptr noundef nonnull %.0.i23, i64 noundef %i.ct, i16 noundef zeroext 0, i32 noundef 0) #9

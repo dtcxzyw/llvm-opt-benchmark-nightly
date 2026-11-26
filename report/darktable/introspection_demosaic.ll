@@ -205,7 +205,7 @@ bb.nx:                                            ; preds = %bb.nw
   %i.ivf = tail call ptr @dt_alloc_aligned(i64 noundef 25088) #27, !noalias !494 ; 28 uses
   %i.ivg = ptrtoaddr ptr %i.ivf to i64
   call void @llvm.assume(i1 true) [ "align"(ptr %i.ivf, i64 64) ]
-  %i.ivh = tail call ptr @dt_alloc_aligned(i64 noundef 50176) #27, !noalias !494 ; 36 uses
+  %i.ivh = tail call ptr @dt_alloc_aligned(i64 noundef 50176) #27, !noalias !494 ; 35 uses
   %i.ivi = ptrtoaddr ptr %i.ivh to i64            ; 2 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.ivh, i64 64) ]
   %i.ivj = tail call ptr @dt_alloc_aligned(i64 noundef 25088) #27, !noalias !494 ; 13 uses
@@ -608,29 +608,24 @@ scalar.ph4110:                                    ; preds = %scalar.ph4110.prehe
   %i.jdz = zext i32 %indvars.iv981.i to i64       ; 2 uses
   %i.jea = add nsw i64 %i.iya, %i.jdz
   %i.jeb = add nsw i64 %i.iyc, %i.jdx
-  %i.jec = or disjoint i64 %i.jdx, 3              ; 4 uses
-  %.phi.trans.insert.i = getelementptr [4 x i8], ptr %i.ivh, i64 %i.jec
-  %.pre.i = load float, ptr %.phi.trans.insert.i, align 4, !tbaa !12, !noalias !494 ; 2 uses
+  %i.jec = or disjoint i64 %i.jdx, 3              ; 3 uses
   br i1 %min.iters.check4094, label %.lr.ph855.i.preheader, label %vector.ph4095
 
 vector.ph4095:                                    ; preds = %.lr.ph855.preheader.i
   %i.jed = add nsw i64 %i.jec, %n.vec4096
-  %vector.recur.init = insertelement <8 x float> poison, float %.pre.i, i64 7
   br label %vector.body4097
 
 vector.body4097:                                  ; preds = %vector.body4097, %vector.ph4095
   %index4098 = phi i64 [ 0, %vector.ph4095 ], [ %index.next4105, %vector.body4097 ] ; 3 uses
-  %vector.recur = phi <8 x float> [ %vector.recur.init, %vector.ph4095 ], [ %wide.load4101, %vector.body4097 ]
   %i.jee = add nuw i64 %i.jec, %index4098         ; 2 uses
-  %i.jef = getelementptr [4 x i8], ptr %i.ivh, i64 %i.jee ; 5 uses
+  %i.jef = getelementptr [4 x i8], ptr %i.ivh, i64 %i.jee ; 6 uses
   %i.jeg = getelementptr i8, ptr %i.jef, i64 -12
   %wide.load4099 = load <8 x float>, ptr %i.jeg, align 32, !tbaa !12, !noalias !494
   %i.jeh = getelementptr i8, ptr %i.jef, i64 -4
   %wide.load4100 = load <8 x float>, ptr %i.jeh, align 8, !tbaa !12, !noalias !494
   %i.jei = getelementptr inbounds nuw [4 x i8], ptr %i.ivh, i64 %i.jee
   %i.jej = getelementptr inbounds nuw i8, ptr %i.jei, i64 4
-  %wide.load4101 = load <8 x float>, ptr %i.jej, align 16, !tbaa !12, !noalias !494 ; 4 uses
-  %6 = shufflevector <8 x float> %vector.recur, <8 x float> %wide.load4101, <8 x i32> <i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14>
+  %wide.load4101 = load <8 x float>, ptr %i.jej, align 16, !tbaa !12, !noalias !494
   %i.jek = getelementptr inbounds nuw i8, ptr %i.jef, i64 12
   %wide.load4102 = load <8 x float>, ptr %i.jek, align 8, !tbaa !12, !noalias !494
   %i.jel = getelementptr i8, ptr %i.jef, i64 -8
@@ -639,12 +634,13 @@ vector.body4097:                                  ; preds = %vector.body4097, %v
   %wide.load4104 = load <8 x float>, ptr %i.jem, align 4, !tbaa !12, !noalias !494
   %i.jen = fadd reassoc nsz arcp contract afn <8 x float> %wide.load4104, %wide.load4103
   %i.jeo = fmul reassoc nsz arcp contract afn <8 x float> %i.jen, splat (float -3.000000e+00)
-  %i.jep = fmul reassoc nsz arcp contract afn <8 x float> %6, splat (float 6.000000e+00)
-  %i.jeq = fadd reassoc nsz arcp contract afn <8 x float> %i.jep, %wide.load4099
-  %7 = fadd reassoc nsz arcp contract afn <8 x float> %wide.load4100, %wide.load4101
-  %8 = fsub reassoc nsz arcp contract afn <8 x float> %i.jeq, %7
-  %i.jer = fadd reassoc nsz arcp contract afn <8 x float> %8, %wide.load4102
-  %i.jes = fadd reassoc nsz arcp contract afn <8 x float> %i.jer, %i.jeo ; 2 uses
+  %wide.load4105 = load <8 x float>, ptr %i.jef, align 4, !tbaa !12, !noalias !494
+  %i.jep = fmul reassoc nsz arcp contract afn <8 x float> %wide.load4105, splat (float 6.000000e+00)
+  %i.jeq = fadd reassoc nsz arcp contract afn <8 x float> %wide.load4100, %wide.load4101
+  %6 = fsub reassoc nsz arcp contract afn <8 x float> %wide.load4099, %i.jeq
+  %7 = fadd reassoc nsz arcp contract afn <8 x float> %6, %wide.load4102
+  %i.jer = fadd reassoc nsz arcp contract afn <8 x float> %7, %i.jeo
+  %i.jes = fadd reassoc nsz arcp contract afn <8 x float> %i.jer, %i.jep ; 2 uses
   %i.jet = fmul reassoc nsz arcp contract afn <8 x float> %i.jes, %i.jes
   %i.jeu = getelementptr [4 x i8], ptr %i.d, i64 %index4098
   store <8 x float> %i.jet, ptr %i.jeu, align 16, !tbaa !12, !noalias !496
@@ -653,11 +649,9 @@ vector.body4097:                                  ; preds = %vector.body4097, %v
   br i1 %i.jev, label %middle.block4106, label %vector.body4097, !llvm.loop !259
 
 middle.block4106:                                 ; preds = %vector.body4097
-  %vector.recur.extract = extractelement <8 x float> %wide.load4101, i64 7
   br i1 %cmp.n4107, label %._crit_edge856.i, label %.lr.ph855.i.preheader
 
 .lr.ph855.i.preheader:                            ; preds = %.lr.ph855.preheader.i, %middle.block4106
-  %.ph = phi float [ %.pre.i, %.lr.ph855.preheader.i ], [ %vector.recur.extract, %middle.block4106 ]
   %indvars.iv974.i.ph = phi i64 [ %i.jec, %.lr.ph855.preheader.i ], [ %i.jed, %middle.block4106 ]
   %indvars.iv970.i.ph = phi i64 [ 3, %.lr.ph855.preheader.i ], [ %i.jbv, %middle.block4106 ]
   br label %.lr.ph855.i
@@ -727,17 +721,16 @@ middle.block4089:                                 ; preds = %vector.body4079
   br label %.lr.ph860.i
 
 .lr.ph855.i:                                      ; preds = %.lr.ph855.i.preheader, %.lr.ph855.i
-  %9 = phi float [ %i.jgc, %.lr.ph855.i ], [ %.ph, %.lr.ph855.i.preheader ]
   %indvars.iv974.i = phi i64 [ %indvars.iv.next975.i, %.lr.ph855.i ], [ %indvars.iv974.i.ph, %.lr.ph855.i.preheader ] ; 2 uses
   %indvars.iv970.i = phi i64 [ %indvars.iv.next971.i, %.lr.ph855.i ], [ %indvars.iv970.i.ph, %.lr.ph855.i.preheader ] ; 2 uses
-  %i.jfw = getelementptr [4 x i8], ptr %i.ivh, i64 %indvars.iv974.i ; 5 uses
+  %i.jfw = getelementptr [4 x i8], ptr %i.ivh, i64 %indvars.iv974.i ; 6 uses
   %i.jfx = getelementptr i8, ptr %i.jfw, i64 -12
   %i.jfy = load float, ptr %i.jfx, align 4, !tbaa !12, !noalias !494
   %i.jfz = getelementptr i8, ptr %i.jfw, i64 -4
   %i.jga = load float, ptr %i.jfz, align 4, !tbaa !12, !noalias !494
   %indvars.iv.next975.i = add nuw nsw i64 %indvars.iv974.i, 1 ; 3 uses
   %i.jgb = getelementptr inbounds nuw [4 x i8], ptr %i.ivh, i64 %indvars.iv.next975.i
-  %i.jgc = load float, ptr %i.jgb, align 4, !tbaa !12, !noalias !494 ; 2 uses
+  %i.jgc = load float, ptr %i.jgb, align 4, !tbaa !12, !noalias !494
   %i.jgd = getelementptr inbounds nuw i8, ptr %i.jfw, i64 12
   %i.jge = load float, ptr %i.jgd, align 4, !tbaa !12, !noalias !494
   %i.jgf = getelementptr i8, ptr %i.jfw, i64 -8
@@ -746,12 +739,13 @@ middle.block4089:                                 ; preds = %vector.body4079
   %i.jgi = load float, ptr %i.jgh, align 4, !tbaa !12, !noalias !494
   %i.jgj = fadd reassoc nsz arcp contract afn float %i.jgi, %i.jgg
   %.neg821.i = fmul reassoc nsz arcp contract afn float %i.jgj, -3.000000e+00
-  %i.jgk = fmul reassoc nsz arcp contract afn float %9, 6.000000e+00
-  %.neg768 = fadd reassoc nsz arcp contract afn float %i.jgk, %i.jfy
-  %10 = fadd reassoc nsz arcp contract afn float %i.jga, %i.jgc
-  %11 = fsub reassoc nsz arcp contract afn float %.neg768, %10
-  %i.jgl = fadd reassoc nsz arcp contract afn float %11, %i.jge
-  %i.jgm = fadd reassoc nsz arcp contract afn float %i.jgl, %.neg821.i ; 2 uses
+  %8 = load float, ptr %i.jfw, align 4, !tbaa !12, !noalias !494
+  %i.jgk = fmul reassoc nsz arcp contract afn float %8, 6.000000e+00
+  %.neg768 = fadd reassoc nsz arcp contract afn float %i.jga, %i.jgc
+  %.neg822.i = fsub reassoc nsz arcp contract afn float %i.jfy, %.neg768
+  %9 = fadd reassoc nsz arcp contract afn float %.neg822.i, %i.jge
+  %i.jgl = fadd reassoc nsz arcp contract afn float %9, %.neg821.i
+  %i.jgm = fadd reassoc nsz arcp contract afn float %i.jgl, %i.jgk ; 2 uses
   %i.jgn = fmul reassoc nsz arcp contract afn float %i.jgm, %i.jgm
   %i.jgo = getelementptr [4 x i8], ptr %i.d, i64 %indvars.iv970.i
   %i.jgp = getelementptr i8, ptr %i.jgo, i64 -12

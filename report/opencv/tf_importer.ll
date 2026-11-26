@@ -205,23 +205,21 @@ bb.an:                                            ; preds = %.loopexit139
   %i.dx = getelementptr inbounds nuw i8, ptr %7, i64 12
   %i.dy = load i32, ptr %i.dx, align 4            ; 8 uses
   %i.dz = getelementptr inbounds nuw i8, ptr %7, i64 24
-  %i.ea = load ptr, ptr %i.dz, align 8            ; 15 uses
+  %i.ea = load ptr, ptr %i.dz, align 8            ; 14 uses
   %i.eb = getelementptr inbounds nuw i8, ptr %7, i64 128
   %i.ec = load i64, ptr %i.eb, align 8            ; 8 uses
   %wide.trip.count158 = and i64 %i.am, 2147483647 ; 2 uses
-  br i1 %i.dn, label %_ZN2cv3Mat2atIiEERT_i.exit76.thread.us.preheader, label %.lr.ph143.split
+  br i1 %i.dn, label %_ZN2cv3Mat2atIiEERT_i.exit76.thread.us, label %.lr.ph143.split
 
-_ZN2cv3Mat2atIiEERT_i.exit76.thread.us.preheader: ; preds = %.lr.ph143
-  %.pre = load i32, ptr %i.ea, align 4, !tbaa !40
-  br label %_ZN2cv3Mat2atIiEERT_i.exit76.thread.us
-
-_ZN2cv3Mat2atIiEERT_i.exit76.thread.us:           ; preds = %_ZN2cv3Mat2atIiEERT_i.exit76.thread.us.preheader, %bb.ao
-  %22 = phi i32 [ %.pre, %_ZN2cv3Mat2atIiEERT_i.exit76.thread.us.preheader ], [ %i.ee, %bb.ao ]
-  %indvars.iv155 = phi i64 [ 1, %_ZN2cv3Mat2atIiEERT_i.exit76.thread.us.preheader ], [ %indvars.iv.next156, %bb.ao ] ; 3 uses
-  %i.ed = getelementptr inbounds nuw [4 x i8], ptr %i.ea, i64 %indvars.iv155
-  %i.ee = load i32, ptr %i.ed, align 4, !tbaa !40 ; 3 uses
-  %i.ef = add nsw i32 %22, 1
-  %i.eg = icmp eq i32 %i.ee, %i.ef
+_ZN2cv3Mat2atIiEERT_i.exit76.thread.us:           ; preds = %.lr.ph143, %bb.ao
+  %indvars.iv155 = phi i64 [ %indvars.iv.next156, %bb.ao ], [ 1, %.lr.ph143 ] ; 3 uses
+  %22 = getelementptr inbounds nuw [4 x i8], ptr %i.ea, i64 %indvars.iv155
+  %23 = load i32, ptr %22, align 4, !tbaa !40     ; 2 uses
+  %i.ed = getelementptr [4 x i8], ptr %i.ea, i64 %indvars.iv155
+  %24 = getelementptr i8, ptr %i.ed, i64 -4
+  %i.ee = load i32, ptr %24, align 4, !tbaa !40   ; 2 uses
+  %i.ef = add nsw i32 %i.ee, 1
+  %i.eg = icmp eq i32 %23, %i.ef
   br i1 %i.eg, label %.thread.us, label %.split.us
 
 bb.ao:                                            ; preds = %.thread.us
@@ -230,10 +228,7 @@ bb.ao:                                            ; preds = %.thread.us
   br i1 %exitcond159.not, label %._crit_edge, label %_ZN2cv3Mat2atIiEERT_i.exit76.thread.us, !llvm.loop !795
 
 .thread.us:                                       ; preds = %_ZN2cv3Mat2atIiEERT_i.exit76.thread.us
-  %23 = getelementptr [4 x i8], ptr %i.ea, i64 %indvars.iv155
-  %24 = getelementptr i8, ptr %23, i64 -4
-  %25 = load i32, ptr %24, align 4, !tbaa !40
-  %i.eh = mul nsw i32 %25, %i.ee
+  %i.eh = mul nsw i32 %i.ee, %23
   %i.ei = icmp sgt i32 %i.eh, -1
   br i1 %i.ei, label %bb.ao, label %.split145.us
 

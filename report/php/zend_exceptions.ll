@@ -202,7 +202,7 @@ bb.e:                                             ; preds = %bb.ak, %.lr.ph
   %.082149 = phi ptr [ %i.d, %.lr.ph ], [ %.183, %bb.ak ] ; 8 uses
   %i.ab = load ptr, ptr %.0150, align 8, !tbaa !21 ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 16
-  %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !18 ; 3 uses
+  %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !18 ; 2 uses
   %i.ae = load ptr, ptr @zend_ce_throwable, align 8, !tbaa !19 ; 2 uses
   %i.af = icmp eq ptr %i.ad, %i.ae
   br i1 %i.af, label %instanceof_function.exit103.thread, label %instanceof_function.exit103
@@ -212,20 +212,19 @@ instanceof_function.exit103:                      ; preds = %bb.e
   br i1 %i.ag, label %instanceof_function.exit103.instanceof_function.exit103.thread_crit_edge, label %.critedge
 
 instanceof_function.exit103.instanceof_function.exit103.thread_crit_edge: ; preds = %instanceof_function.exit103
-  %.pre = load ptr, ptr %.0150, align 8, !tbaa !21 ; 2 uses
-  %.phi.trans.insert = getelementptr i8, ptr %.pre, i64 16
-  %.val122.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !18
+  %.pre = load ptr, ptr %.0150, align 8, !tbaa !21
   br label %instanceof_function.exit103.thread
 
 instanceof_function.exit103.thread:               ; preds = %instanceof_function.exit103.instanceof_function.exit103.thread_crit_edge, %bb.e
-  %.val122.a = phi ptr [ %.val122.pre, %instanceof_function.exit103.instanceof_function.exit103.thread_crit_edge ], [ %i.ad, %bb.e ] ; 2 uses
-  %7 = phi ptr [ %.pre, %instanceof_function.exit103.instanceof_function.exit103.thread_crit_edge ], [ %i.ab, %bb.e ]
+  %.val122.a = phi ptr [ %.pre, %instanceof_function.exit103.instanceof_function.exit103.thread_crit_edge ], [ %i.ab, %bb.e ] ; 2 uses
+  %7 = getelementptr i8, ptr %.val122.a, i64 16
+  %.val122 = load ptr, ptr %7, align 8, !tbaa !18 ; 2 uses
   %i.ah = load ptr, ptr @zend_ce_exception, align 8, !tbaa !19 ; 3 uses
-  %i.ai = icmp eq ptr %.val122.a, %i.ah
+  %i.ai = icmp eq ptr %.val122, %i.ah
   br i1 %i.ai, label %i_get_exception_base.exit127, label %instanceof_function.exit.i124
 
 instanceof_function.exit.i124:                    ; preds = %instanceof_function.exit103.thread
-  %i.aj = call zeroext i1 @instanceof_function_slow(ptr noundef %.val122.a, ptr noundef %i.ah) #12
+  %i.aj = call zeroext i1 @instanceof_function_slow(ptr noundef %.val122, ptr noundef %i.ah) #12
   %i.ak = load ptr, ptr @zend_ce_exception, align 8
   %i.al = load ptr, ptr @zend_ce_error, align 8
   %cond.fr.i125 = freeze i1 %i.aj
@@ -234,7 +233,7 @@ instanceof_function.exit.i124:                    ; preds = %instanceof_function
   br label %i_get_exception_base.exit127
 
 i_get_exception_base.exit127:                     ; preds = %instanceof_function.exit103.thread, %instanceof_function.exit.i124
-  %i.am = phi ptr [ %.pre157.a, %instanceof_function.exit.i124 ], [ %7, %instanceof_function.exit103.thread ]
+  %i.am = phi ptr [ %.pre157.a, %instanceof_function.exit.i124 ], [ %.val122.a, %instanceof_function.exit103.thread ]
   %i.an = phi ptr [ %spec.select.i126, %instanceof_function.exit.i124 ], [ %i.ah, %instanceof_function.exit103.thread ]
   %i.ao = load ptr, ptr @zend_known_strings, align 8, !tbaa !25
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 216

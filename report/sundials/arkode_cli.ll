@@ -202,7 +202,7 @@ bb.ac:                                            ; preds = %bb.ab
   store i32 %i.bg, ptr %i.a, align 4, !tbaa !9
   %i.bh = sext i32 %i.bg to i64                   ; 2 uses
   %i.bi = getelementptr inbounds [8 x i8], ptr %4, i64 %i.bh
-  %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !12 ; 4 uses
+  %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !12 ; 3 uses
   %i.bk = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.bj, ptr noundef nonnull dereferenceable(19) @.str.54) #9
   %i.bl = icmp eq i32 %i.bk, 0
   br i1 %i.bl, label %bb.af, label %bb.ad
@@ -225,19 +225,17 @@ bb.af:                                            ; preds = %bb.ae, %bb.ad, %bb.
 
 ..thread156_crit_edge.i:                          ; preds = %bb.af
   %.pre251.i = load i32, ptr %i.a, align 4, !tbaa !9
-  %.phi.trans.insert252.i = sext i32 %.pre251.i to i64 ; 2 uses
-  %.phi.trans.insert253.i = getelementptr [8 x i8], ptr %4, i64 %.phi.trans.insert252.i
-  %.pre254.i = load ptr, ptr %.phi.trans.insert253.i, align 8, !tbaa !12
+  %.phi.trans.insert252.i = sext i32 %.pre251.i to i64
   br label %.thread156.i
 
 .thread156.i:                                     ; preds = %bb.ae, %..thread156_crit_edge.i
   %.pre-phi.i.a = phi i64 [ %.phi.trans.insert252.i, %..thread156_crit_edge.i ], [ %i.bh, %bb.ae ]
-  %5 = phi ptr [ %.pre254.i, %..thread156_crit_edge.i ], [ %i.bj, %bb.ae ]
   %.0159.i = phi i32 [ %i.bq, %..thread156_crit_edge.i ], [ -22, %bb.ae ] ; 2 uses
-  %i.br = getelementptr [8 x i8], ptr %4, i64 %.pre-phi.i.a
+  %i.br = getelementptr [8 x i8], ptr %4, i64 %.pre-phi.i.a ; 2 uses
   %i.bs = getelementptr i8, ptr %i.br, i64 -8
-  %i.bt = load ptr, ptr %i.bs, align 8, !tbaa !12
-  call void (ptr, i32, i32, ptr, ptr, ptr, ...) @arkProcessError(ptr noundef nonnull %0, i32 noundef %.0159.i, i32 noundef 241, ptr noundef nonnull @__func__.arkSetFromCommandLine, ptr noundef nonnull @.str, ptr noundef nonnull @.str.57, ptr noundef %i.bt, ptr noundef %5) #7
+  %5 = load ptr, ptr %i.bs, align 8, !tbaa !12
+  %i.bt = load ptr, ptr %i.br, align 8, !tbaa !12
+  call void (ptr, i32, i32, ptr, ptr, ptr, ...) @arkProcessError(ptr noundef nonnull %0, i32 noundef %.0159.i, i32 noundef 241, ptr noundef nonnull @__func__.arkSetFromCommandLine, ptr noundef nonnull @.str, ptr noundef nonnull @.str.57, ptr noundef %5, ptr noundef %i.bt) #7
   br label %.thread170.i
 
 bb.ag:                                            ; preds = %bb.ab
@@ -250,7 +248,7 @@ bb.ah:                                            ; preds = %bb.ag
   store i32 %i.bw, ptr %i.a, align 4, !tbaa !9
   %i.bx = sext i32 %i.bw to i64                   ; 2 uses
   %i.by = getelementptr inbounds [8 x i8], ptr %4, i64 %i.bx
-  %i.bz = load ptr, ptr %i.by, align 8, !tbaa !12 ; 5 uses
+  %i.bz = load ptr, ptr %i.by, align 8, !tbaa !12 ; 4 uses
   %i.ca = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.bz, ptr noundef nonnull dereferenceable(20) @.str.59) #9
   %i.cb = icmp eq i32 %i.ca, 0
   br i1 %i.cb, label %bb.al, label %bb.ai
@@ -278,19 +276,17 @@ bb.al:                                            ; preds = %bb.ak, %bb.aj, %bb.
 
 ..thread160_crit_edge.i:                          ; preds = %bb.al
   %.pre247.i = load i32, ptr %i.a, align 4, !tbaa !9
-  %.phi.trans.insert248.i = sext i32 %.pre247.i to i64 ; 2 uses
-  %.phi.trans.insert249.i = getelementptr [8 x i8], ptr %4, i64 %.phi.trans.insert248.i
-  %.pre250.i = load ptr, ptr %.phi.trans.insert249.i, align 8, !tbaa !12
+  %.phi.trans.insert248.i = sext i32 %.pre247.i to i64
   br label %.thread160.i
 
 .thread160.i:                                     ; preds = %bb.ak, %..thread160_crit_edge.i
   %.pre-phi255.i = phi i64 [ %.phi.trans.insert248.i, %..thread160_crit_edge.i ], [ %i.bx, %bb.ak ]
-  %6 = phi ptr [ %.pre250.i, %..thread160_crit_edge.i ], [ %i.bz, %bb.ak ]
   %.1163.i = phi i32 [ %i.ci, %..thread160_crit_edge.i ], [ -22, %bb.ak ] ; 2 uses
-  %i.cj = getelementptr [8 x i8], ptr %4, i64 %.pre-phi255.i
+  %i.cj = getelementptr [8 x i8], ptr %4, i64 %.pre-phi255.i ; 2 uses
   %i.ck = getelementptr i8, ptr %i.cj, i64 -8
-  %i.cl = load ptr, ptr %i.ck, align 8, !tbaa !12
-  call void (ptr, i32, i32, ptr, ptr, ptr, ...) @arkProcessError(ptr noundef nonnull %0, i32 noundef %.1163.i, i32 noundef 272, ptr noundef nonnull @__func__.arkSetFromCommandLine, ptr noundef nonnull @.str, ptr noundef nonnull @.str.57, ptr noundef %i.cl, ptr noundef %6) #7
+  %6 = load ptr, ptr %i.ck, align 8, !tbaa !12
+  %i.cl = load ptr, ptr %i.cj, align 8, !tbaa !12
+  call void (ptr, i32, i32, ptr, ptr, ptr, ...) @arkProcessError(ptr noundef nonnull %0, i32 noundef %.1163.i, i32 noundef 272, ptr noundef nonnull @__func__.arkSetFromCommandLine, ptr noundef nonnull @.str, ptr noundef nonnull @.str.57, ptr noundef %6, ptr noundef %i.cl) #7
   br label %.thread170.i
 
 bb.am:                                            ; preds = %bb.ag

@@ -202,7 +202,7 @@ declare i32 @mbedtls_chachapoly_update(ptr noundef, i64 noundef, ptr noundef, pt
 ; Function Attrs: nounwind uwtable
 define hidden i32 @mbedtls_cipher_finish_padded(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #7 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !25     ; 2 uses
+  %i.a = load ptr, ptr %0, align 8, !tbaa !25     ; 3 uses
   %i.b = icmp eq ptr %i.a, null
   br i1 %i.b, label %switch.lookup, label %bb.b
 
@@ -216,7 +216,7 @@ bb.c:                                             ; preds = %bb.b
   store i64 0, ptr %2, align 8, !tbaa !30
   store i64 0, ptr %3, align 8, !tbaa !30
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %i.g = load i32, ptr %i.f, align 8              ; 6 uses
+  %i.g = load i32, ptr %i.f, align 8              ; 5 uses
   %i.h = and i32 %i.g, 61440
   %i.i = icmp eq i32 %i.h, 8192
   br i1 %i.i, label %bb.d, label %bb.e
@@ -287,16 +287,12 @@ mbedtls_cipher_get_iv_size.exit:                  ; preds = %bb.i
   %i.ai = load i64, ptr %i.ah, align 8, !tbaa !29
   tail call void %i.w(ptr noundef nonnull %i.aa, i64 noundef %i.ag, i64 noundef %i.ai) #15
   %.pre = load ptr, ptr %0, align 8, !tbaa !25
-  %.phi.trans.insert = getelementptr i8, ptr %.pre, i64 8
-  %.val.pre = load i32, ptr %.phi.trans.insert, align 8 ; 2 uses
   %.pre66 = load i32, ptr %i.s, align 4, !tbaa !27
-  %.pre67 = and i32 %.val.pre, 31
-  %.pre68 = zext nneg i32 %.pre67 to i64
   br label %mbedtls_cipher_get_block_size.exit60
 
 mbedtls_cipher_get_block_size.exit:               ; preds = %bb.h
   %i.aj = and i32 %i.g, 31
-  %i.ak = zext nneg i32 %i.aj to i64              ; 2 uses
+  %i.ak = zext nneg i32 %i.aj to i64
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.am = load i64, ptr %i.al, align 8, !tbaa !29 ; 2 uses
   %.not = icmp eq i64 %i.am, %i.ak
@@ -312,9 +308,10 @@ bb.k:                                             ; preds = %mbedtls_cipher_get_
   br label %switch.lookup
 
 mbedtls_cipher_get_block_size.exit60:             ; preds = %mbedtls_cipher_get_block_size.exit, %mbedtls_cipher_get_iv_size.exit
-  %.pre-phi69 = phi i64 [ %i.ak, %mbedtls_cipher_get_block_size.exit ], [ %.pre68, %mbedtls_cipher_get_iv_size.exit ]
   %4 = phi i32 [ %i.t, %mbedtls_cipher_get_block_size.exit ], [ %.pre66, %mbedtls_cipher_get_iv_size.exit ]
-  %.val = phi i32 [ %i.g, %mbedtls_cipher_get_block_size.exit ], [ %.val.pre, %mbedtls_cipher_get_iv_size.exit ]
+  %5 = phi ptr [ %i.a, %mbedtls_cipher_get_block_size.exit ], [ %.pre, %mbedtls_cipher_get_iv_size.exit ]
+  %6 = getelementptr i8, ptr %5, i64 8
+  %.val = load i32, ptr %6, align 8               ; 2 uses
   %i.ar = lshr i32 %.val, 26
   %i.as = and i32 %i.ar, 31
   %i.at = zext nneg i32 %i.as to i64
@@ -324,9 +321,11 @@ mbedtls_cipher_get_block_size.exit60:             ; preds = %mbedtls_cipher_get_
   %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !32
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.az = load ptr, ptr %i.ay, align 8, !tbaa !21
+  %7 = and i32 %.val, 31
+  %8 = zext nneg i32 %7 to i64
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.bc = tail call i32 %i.ax(ptr noundef %i.az, i32 noundef %4, i64 noundef %.pre-phi69, ptr noundef nonnull %i.ba, ptr noundef nonnull %i.bb, ptr noundef %1) #15 ; 2 uses
+  %i.bc = tail call i32 %i.ax(ptr noundef %i.az, i32 noundef %4, i64 noundef %8, ptr noundef nonnull %i.ba, ptr noundef nonnull %i.bb, ptr noundef %1) #15 ; 2 uses
   %.not50 = icmp eq i32 %i.bc, 0
   br i1 %.not50, label %bb.l, label %switch.lookup
 

@@ -205,23 +205,21 @@ bb.ad:                                            ; preds = %bb.ac, %bb.ab
 .lr.ph420.i.i:                                    ; preds = %.lr.ph423.i.i, %._crit_edge421.i.i
   %indvars.iv441.i.i = phi i32 [ %indvars.iv.next442.i.i, %._crit_edge421.i.i ], [ 2, %.lr.ph423.i.i ] ; 2 uses
   %.1352422.i.i = phi i32 [ %i.qn, %._crit_edge421.i.i ], [ 0, %.lr.ph423.i.i ]
-  %i.ph = sext i32 %indvars.iv441.i.i to i64      ; 2 uses
-  %.phi.trans.insert.i.i = getelementptr [4 x i8], ptr %2, i64 %i.ph
-  %.pre.i.i = load i32, ptr %.phi.trans.insert.i.i, align 4, !tbaa !9
+  %i.ph = sext i32 %indvars.iv441.i.i to i64
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ag, %.lr.ph420.i.i
-  %8 = phi i32 [ %.pre.i.i, %.lr.ph420.i.i ], [ %i.pm, %bb.ag ] ; 2 uses
   %indvars.iv443.i.i = phi i64 [ %i.ph, %.lr.ph420.i.i ], [ %indvars.iv.next444.i.i, %bb.ag ] ; 2 uses
   %.1349417.i.i = phi i32 [ 2, %.lr.ph420.i.i ], [ %i.ql, %bb.ag ]
-  %i.pi = getelementptr [4 x i8], ptr %2, i64 %indvars.iv443.i.i ; 2 uses
+  %i.pi = getelementptr [4 x i8], ptr %2, i64 %indvars.iv443.i.i ; 3 uses
   %i.pj = getelementptr i8, ptr %i.pi, i64 -8
-  %i.pk = load i32, ptr %i.pj, align 4, !tbaa !9  ; 2 uses
+  %8 = load i32, ptr %i.pj, align 4, !tbaa !9     ; 2 uses
+  %i.pk = load i32, ptr %i.pi, align 4, !tbaa !9  ; 2 uses
   %indvars.iv.next444.i.i = add nsw i64 %indvars.iv443.i.i, 2 ; 2 uses
   %i.pl = getelementptr inbounds [4 x i8], ptr %2, i64 %indvars.iv.next444.i.i
-  %i.pm = load i32, ptr %i.pl, align 4, !tbaa !9  ; 3 uses
-  %i.pn = sub nsw i32 %i.pm, %8                   ; 2 uses
-  %i.po = sub nsw i32 %8, %i.pk                   ; 2 uses
+  %i.pm = load i32, ptr %i.pl, align 4, !tbaa !9  ; 2 uses
+  %i.pn = sub nsw i32 %i.pm, %i.pk                ; 2 uses
+  %i.po = sub nsw i32 %i.pk, %8                   ; 2 uses
   %.403.i.i = tail call i32 @llvm.smin.i32(i32 %i.pn, i32 %i.po)
   %i.pp = tail call i32 @llvm.smax.i32(i32 %.403.i.i, i32 0)
   %i.pq = shl i32 %i.pp, 2                        ; 2 uses
@@ -232,7 +230,7 @@ bb.ae:                                            ; preds = %bb.ag, %.lr.ph420.i
   br i1 %i.pu, label %bb.af, label %bb.ag
 
 bb.af:                                            ; preds = %bb.ae
-  %i.pv = sub nsw i32 %i.pm, %i.pk                ; 2 uses
+  %i.pv = sub nsw i32 %i.pm, %8                   ; 2 uses
   %i.pw = icmp sgt i32 %i.pv, %i.pt
   %i.px = tail call i32 @llvm.smin.i32(i32 %i.pv, i32 %i.pq)
   %i.py = select i1 %i.pw, i32 %i.px, i32 %i.pt
@@ -635,23 +633,21 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac
 .lr.ph420.i.i:                                    ; preds = %.lr.ph423.i.i, %._crit_edge421.i.i
   %indvars.iv441.i.i = phi i32 [ %indvars.iv.next442.i.i, %._crit_edge421.i.i ], [ 2, %.lr.ph423.i.i ] ; 2 uses
   %.1352422.i.i = phi i32 [ %i.qk, %._crit_edge421.i.i ], [ 0, %.lr.ph423.i.i ]
-  %i.pe = sext i32 %indvars.iv441.i.i to i64      ; 2 uses
-  %.phi.trans.insert.i.i = getelementptr [8 x i8], ptr %2, i64 %i.pe
-  %.pre.i.i = load i64, ptr %.phi.trans.insert.i.i, align 8, !tbaa !18
+  %i.pe = sext i32 %indvars.iv441.i.i to i64
   br label %bb.af
 
 bb.af:                                            ; preds = %bb.ah, %.lr.ph420.i.i
-  %8 = phi i64 [ %.pre.i.i, %.lr.ph420.i.i ], [ %i.pj, %bb.ah ] ; 2 uses
   %indvars.iv443.i.i = phi i64 [ %i.pe, %.lr.ph420.i.i ], [ %indvars.iv.next444.i.i, %bb.ah ] ; 2 uses
   %.1349417.i.i = phi i32 [ 2, %.lr.ph420.i.i ], [ %i.qi, %bb.ah ]
-  %i.pf = getelementptr [8 x i8], ptr %2, i64 %indvars.iv443.i.i ; 2 uses
+  %i.pf = getelementptr [8 x i8], ptr %2, i64 %indvars.iv443.i.i ; 3 uses
   %i.pg = getelementptr i8, ptr %i.pf, i64 -16
-  %i.ph = load i64, ptr %i.pg, align 8, !tbaa !18 ; 2 uses
+  %8 = load i64, ptr %i.pg, align 8, !tbaa !18    ; 2 uses
+  %i.ph = load i64, ptr %i.pf, align 8, !tbaa !18 ; 2 uses
   %indvars.iv.next444.i.i = add nsw i64 %indvars.iv443.i.i, 2 ; 2 uses
   %i.pi = getelementptr inbounds [8 x i8], ptr %2, i64 %indvars.iv.next444.i.i
-  %i.pj = load i64, ptr %i.pi, align 8, !tbaa !18 ; 3 uses
-  %i.pk = sub nsw i64 %i.pj, %8                   ; 2 uses
-  %i.pl = sub nsw i64 %8, %i.ph                   ; 2 uses
+  %i.pj = load i64, ptr %i.pi, align 8, !tbaa !18 ; 2 uses
+  %i.pk = sub nsw i64 %i.pj, %i.ph                ; 2 uses
+  %i.pl = sub nsw i64 %i.ph, %8                   ; 2 uses
   %.403.i.i = tail call i64 @llvm.smin.i64(i64 %i.pk, i64 %i.pl)
   %i.pm = tail call i64 @llvm.smax.i64(i64 %.403.i.i, i64 0)
   %i.pn = shl i64 %i.pm, 2                        ; 2 uses
@@ -662,7 +658,7 @@ bb.af:                                            ; preds = %bb.ah, %.lr.ph420.i
   br i1 %i.pr, label %bb.ag, label %bb.ah
 
 bb.ag:                                            ; preds = %bb.af
-  %i.ps = sub nsw i64 %i.pj, %i.ph                ; 2 uses
+  %i.ps = sub nsw i64 %i.pj, %8                   ; 2 uses
   %i.pt = icmp sgt i64 %i.ps, %i.pq
   %i.pu = tail call i64 @llvm.smin.i64(i64 %i.ps, i64 %i.pn)
   %i.pv = select i1 %i.pt, i64 %i.pu, i64 %i.pq
