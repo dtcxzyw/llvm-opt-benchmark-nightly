@@ -204,11 +204,11 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.preheader
   %i.bp = sub i64 %i.bm, %i.aw                    ; 2 uses
-  %2 = sub i64 %i.r, %i.bp
-  %diff.check22 = icmp ugt i64 %2, -16
+  %2 = add i64 %i.bp, -1
+  %diff.check22 = icmp ult i64 %2, 15
   %conflict.rdx = or i1 %diff.check, %diff.check22
-  %3 = add i64 %i.bp, -1
-  %diff.check23 = icmp ult i64 %3, 15
+  %3 = sub i64 %i.r, %i.bp
+  %diff.check23 = icmp ugt i64 %3, -16
   %conflict.rdx24 = or i1 %conflict.rdx, %diff.check23
   %i.bq = shl nsw i64 %i.ax, 2                    ; 2 uses
   %i.br = shl nsw i64 %i.be, 2                    ; 4 uses

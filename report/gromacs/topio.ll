@@ -205,11 +205,11 @@ _ZNSt6vectorI17InteractionOfTypeSaIS0_EE5clearEv.exit.i: ; preds = %_ZSt8_Destro
   br i1 %or.cond.i553, label %.preheader.us.us.us.i.preheader, label %.preheader.us.us.i.preheader
 
 .preheader.us.us.i.preheader:                     ; preds = %.lr.ph60.split.us.split.us.i
-  %55 = sub i64 %i.iv, %i.xa
-  %56 = add i64 %i.iw, %i.xg
-  %i.xh = sub i64 %56, %i.xa
+  %55 = add i64 %i.iv, %i.xg
+  %56 = sub i64 %55, %i.xa
+  %i.xh = sub i64 %i.iw, %i.xa
   %invariant.op = add i64 %i.xh, -1
-  %invariant.op1759 = add i64 %55, -1
+  %invariant.op1759 = add i64 %56, -1
   %broadcast.splatinsert1538 = insertelement <8 x float> poison, float %.0357, i64 0
   %broadcast.splat1539 = shufflevector <8 x float> %broadcast.splatinsert1538, <8 x float> poison, <8 x i32> zeroinitializer
   %trip.count.minus.11535 = add nsw i64 %i.xf, -1
@@ -229,11 +229,11 @@ _ZNSt6vectorI17InteractionOfTypeSaIS0_EE5clearEv.exit.i: ; preds = %_ZSt8_Destro
   br label %.preheader.us.us.i
 
 .preheader.us.us.us.i.preheader:                  ; preds = %.lr.ph60.split.us.split.us.i
-  %57 = sub i64 %i.it, %i.xa
-  %58 = add i64 %i.iu, %i.xg
-  %i.xj = sub i64 %58, %i.xa
+  %57 = add i64 %i.it, %i.xg
+  %58 = sub i64 %57, %i.xa
+  %i.xj = sub i64 %i.iu, %i.xa
   %invariant.op1761 = add i64 %i.xj, -1
-  %invariant.op1763 = add i64 %57, -1
+  %invariant.op1763 = add i64 %58, -1
   %broadcast.splatinsert1517 = insertelement <8 x float> poison, float %.0357, i64 0
   %broadcast.splat1518 = shufflevector <8 x float> %broadcast.splatinsert1517, <8 x float> poison, <8 x i32> <i32 poison, i32 0, i32 poison, i32 0, i32 poison, i32 0, i32 poison, i32 0>
   %trip.count.minus.1 = add nsw i64 %i.xf, -1

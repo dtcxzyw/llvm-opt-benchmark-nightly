@@ -205,14 +205,14 @@ bb.b:                                             ; preds = %thread-pre-split.i.
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i
   %i.t = ptrtoaddr ptr %i.q to i64
   %i.u = sub i64 %.pre.i.i.i.i.i.i.i19, %i.t      ; 3 uses
-  %4 = sub i64 %.idx.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %i.u
-  %diff.check = icmp ugt i64 %4, -16
+  %4 = add i64 %i.u, -1
+  %diff.check = icmp ult i64 %4, 15
   %i.v = shl i64 %i.r, 3
   %i.w = sub i64 %i.v, %i.u
   %diff.check20 = icmp ugt i64 %i.w, -16
   %conflict.rdx = or i1 %diff.check, %diff.check20
-  %5 = add i64 %i.u, -1
-  %diff.check21 = icmp ult i64 %5, 15
+  %5 = sub i64 %.idx.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %i.u
+  %diff.check21 = icmp ugt i64 %5, -16
   %conflict.rdx22 = or i1 %conflict.rdx, %diff.check21
   br i1 %conflict.rdx22, label %scalar.ph.preheader, label %vector.ph
 
@@ -615,14 +615,14 @@ bb.b:                                             ; preds = %thread-pre-split.i.
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i
   %i.t = ptrtoaddr ptr %i.q to i64
   %i.u = sub i64 %.pre.i.i.i.i.i.i.i19, %i.t      ; 3 uses
-  %4 = sub i64 %.idx.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %i.u
-  %diff.check = icmp ugt i64 %4, -16
+  %4 = add i64 %i.u, -1
+  %diff.check = icmp ult i64 %4, 15
   %i.v = shl i64 %i.r, 2
   %i.w = sub i64 %i.v, %i.u
   %diff.check20 = icmp ugt i64 %i.w, -16
   %conflict.rdx = or i1 %diff.check, %diff.check20
-  %5 = add i64 %i.u, -1
-  %diff.check21 = icmp ult i64 %5, 15
+  %5 = sub i64 %.idx.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %i.u
+  %diff.check21 = icmp ugt i64 %5, -16
   %conflict.rdx22 = or i1 %conflict.rdx, %diff.check21
   br i1 %conflict.rdx22, label %scalar.ph.preheader, label %vector.ph
 

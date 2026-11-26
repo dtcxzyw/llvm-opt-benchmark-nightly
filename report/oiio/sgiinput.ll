@@ -205,8 +205,8 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.m, label %.lr.ph.preheader, label %.thread
 
 .lr.ph.preheader:                                 ; preds = %.preheader116
-  %scevgep = getelementptr i8, ptr %i.f, i64 1
-  %scevgep187 = getelementptr i8, ptr %i.f, i64 4
+  %scevgep = getelementptr i8, ptr %i.f, i64 4
+  %scevgep187 = getelementptr i8, ptr %i.f, i64 1
   %scevgep216 = getelementptr i8, ptr %i.f, i64 2
   br label %.lr.ph
 
@@ -609,13 +609,13 @@ vector.memcheck:                                  ; preds = %iter.check
   %i.gl = shl nuw nsw i64 %i.gk, 1
   %i.gm = getelementptr i8, ptr %.570126, i64 %i.gl
   %i.gn = getelementptr i8, ptr %i.gm, i64 2      ; 2 uses
-  %i.go = getelementptr i8, ptr %scevgep187, i64 %i.cu
-  %i.gp = getelementptr i8, ptr %scevgep, i64 %i.db
+  %i.go = getelementptr i8, ptr %scevgep187, i64 %i.db
+  %i.gp = getelementptr i8, ptr %scevgep, i64 %i.cu
   %bound0 = icmp ult ptr %.570126, %i.go
-  %bound1 = icmp ult ptr %i.gh, %i.gn
+  %bound1 = icmp ult ptr %i.gg, %i.gn
   %found.conflict = and i1 %bound0, %bound1
   %bound0188 = icmp ult ptr %.570126, %i.gp
-  %bound1189 = icmp ult ptr %i.gg, %i.gn
+  %bound1189 = icmp ult ptr %i.gh, %i.gn
   %found.conflict190 = and i1 %bound0188, %bound1189
   %conflict.rdx = or i1 %found.conflict, %found.conflict190
   br i1 %conflict.rdx, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -1018,7 +1018,7 @@ begin_hunk_2_@llvm.bswap.v8i16
 !435 = !{!425}
 !436 = !{!426}
 !437 = !{!427}
-!438 = !{!426, !425}
+!438 = !{!425, !426}
 !439 = !{i64 -3555127168131143096}
 !440 = distinct !{!440, i1 true, !"_ZN11OpenImageIO4v3_17Strutil3fmt6formatIPKcJRKiEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKT_DpOT0_"}
 !441 = distinct !{!441, !440, !"_ZN11OpenImageIO4v3_17Strutil3fmt6formatIPKcJRKiEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKT_DpOT0_: argument 0"}

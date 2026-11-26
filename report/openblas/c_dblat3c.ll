@@ -204,12 +204,8 @@ bb.a:
   br i1 %.not283, label %._crit_edge287, label %.lr.ph286.preheader
 
 .lr.ph286.preheader:                              ; preds = %bb.a
-  %28 = insertelement <2 x ptr> poison, ptr %15, i64 0
-  %29 = insertelement <2 x ptr> %28, ptr %25, i64 1 ; 2 uses
-  %30 = shufflevector <2 x ptr> %29, <2 x ptr> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 0>
-  %31 = ptrtoaddr <4 x ptr> %30 to <4 x i64>
-  %i.t = ptrtoaddr ptr %15 to i64
-  %i.u = ptrtoaddr ptr %25 to i64                 ; 2 uses
+  %i.t = ptrtoaddr ptr %15 to i64                 ; 3 uses
+  %i.u = ptrtoaddr ptr %25 to i64                 ; 3 uses
   %i.v = ptrtoaddr ptr %22 to i64
   %i.w = ptrtoaddr ptr %21 to i64
   %i.x = ptrtoaddr ptr %19 to i64
@@ -219,22 +215,23 @@ bb.a:
   %scevgep = getelementptr i8, ptr %11, i64 8
   %i.ab = add i64 %i.t, -8
   %i.ac = sub i64 %i.ab, %i.u
-  %i.ad = add i64 %i.u, 8
-  %32 = shufflevector <2 x ptr> %29, <2 x ptr> poison, <4 x i32> <i32 1, i32 poison, i32 0, i32 poison>
-  %33 = ptrtoaddr <4 x ptr> %32 to <4 x i64>
-  %i.ae = insertelement <4 x i64> %33, i64 %i.ad, i64 1
-  %34 = shufflevector <4 x i64> %i.ae, <4 x i64> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 1>
-  %i.af = sub <4 x i64> %34, %31                  ; 3 uses
+  %i.ad = add i64 %i.u, 8                         ; 2 uses
+  %28 = insertelement <4 x i64> <i64 poison, i64 poison, i64 poison, i64 0>, i64 %i.t, i64 0
+  %29 = insertelement <4 x i64> %28, i64 %i.u, i64 1 ; 2 uses
+  %i.ae = insertelement <4 x i64> %29, i64 %i.ad, i64 2
+  %30 = shufflevector <4 x i64> %29, <4 x i64> <i64 poison, i64 poison, i64 poison, i64 0>, <4 x i32> <i32 1, i32 0, i32 0, i32 7>
+  %i.af = sub <4 x i64> %i.ae, %30                ; 2 uses
+  %31 = sub i64 %i.ad, %i.t                       ; 3 uses
   %i.ag = sub i64 %i.aa, %i.z
   %diff.check517 = icmp ugt i64 %i.ag, -128
   %i.ah = sub i64 %i.y, %i.x
   %diff.check484 = icmp ugt i64 %i.ah, -128
   %i.ai = sub i64 %i.w, %i.v
   %diff.check451 = icmp ugt i64 %i.ai, -128
-  %35 = extractelement <4 x i64> %i.af, i64 1     ; 3 uses
-  %invariant.op575.a = add i64 %35, -1
+  %invariant.op575 = add <4 x i64> %i.af, <i64 -1, i64 -1, i64 -1, i64 0>
+  %invariant.op575.a = add i64 %31, -1
   %invariant.op577 = add i64 %i.ac, -1
-  %invariant.op579 = add i64 %35, -1
+  %invariant.op579 = add i64 %31, -1
   %bound1 = icmp ult ptr %11, getelementptr inbounds nuw (i8, ptr @dchk5_.alpha, i64 8)
   br label %.lr.ph286
 
@@ -637,21 +634,18 @@ vector.scevcheck415:                              ; preds = %.lr.ph242
   br i1 %i.pp, label %scalar.ph424.preheader, label %vector.memcheck426
 
 vector.memcheck426:                               ; preds = %vector.scevcheck415
-  %36 = shl nuw nsw i64 %i.pf, 3
   %i.pq = add i32 %i.pa, %i.pd
   %i.pr = add i32 %i.pq, 1
   %i.ps = sext i32 %i.pr to i64
-  %37 = insertelement <2 x i64> poison, i64 %i.pe, i64 0
-  %38 = insertelement <2 x i64> %37, i64 %i.ps, i64 1
-  %39 = shl nsw <2 x i64> %38, splat (i64 3)      ; 2 uses
-  %40 = insertelement <2 x i64> poison, i64 %36, i64 0
-  %41 = shufflevector <2 x i64> %40, <2 x i64> poison, <2 x i32> zeroinitializer
-  %42 = sub nsw <2 x i64> %41, %39
-  %43 = shufflevector <2 x i64> %39, <2 x i64> %42, <4 x i32> <i32 2, i32 3, i32 0, i32 1> ; 2 uses
-  %44 = add <4 x i64> %43, %i.af
-  %i.pt = sub <4 x i64> %43, %i.af
-  %45 = shufflevector <4 x i64> %44, <4 x i64> %i.pt, <4 x i32> <i32 0, i32 1, i32 2, i32 7>
-  %i.pu = add <4 x i64> %45, <i64 -1, i64 -1, i64 -1, i64 0> ; 2 uses
+  %32 = insertelement <4 x i64> poison, i64 %i.pe, i64 0
+  %33 = insertelement <4 x i64> %32, i64 %i.pf, i64 1
+  %34 = insertelement <4 x i64> %33, i64 %i.ps, i64 3
+  %35 = shl nsw <4 x i64> %34, <i64 3, i64 3, i64 poison, i64 3> ; 2 uses
+  %36 = shufflevector <4 x i64> %35, <4 x i64> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 3>
+  %37 = shufflevector <4 x i64> %35, <4 x i64> %i.af, <4 x i32> <i32 poison, i32 0, i32 3, i32 6>
+  %38 = insertelement <4 x i64> %37, i64 0, i64 0
+  %i.pt = sub <4 x i64> %36, %38
+  %i.pu = add <4 x i64> %i.pt, %invariant.op575   ; 2 uses
   %i.pv = icmp ult <4 x i64> %i.pu, <i64 63, i64 63, i64 63, i64 -64>
   %i.pw = icmp ugt <4 x i64> %i.pu, <i64 63, i64 63, i64 63, i64 -64>
   %i.px = shufflevector <4 x i1> %i.pv, <4 x i1> %i.pw, <4 x i32> <i32 0, i32 1, i32 2, i32 7>
@@ -818,19 +812,19 @@ bb.ad:                                            ; preds = %.lr.ph254
   br i1 %or.cond547, label %vector.memcheck397, label %scalar.ph.preheader
 
 vector.memcheck397:                               ; preds = %.lr.ph248
-  %46 = shl nuw nsw i64 %i.sj, 3                  ; 2 uses
-  %i.sm = shl nsw i64 %i.si, 3                    ; 3 uses
-  %i.sn = sub nsw i64 %46, %i.sm
+  %39 = mul nsw i64 %i.si, -8
+  %i.sm = shl nuw nsw i64 %i.sj, 3                ; 2 uses
+  %i.sn = sub nsw i64 %39, %i.sm
   %.reass576 = add i64 %i.sn, %invariant.op575.a
   %diff.check = icmp ult i64 %.reass576, 63
-  %47 = sub i64 %i.sm, %35
-  %diff.check398 = icmp ugt i64 %47, -64
+  %40 = shl nsw i64 %i.si, 3                      ; 3 uses
+  %.reass580 = add i64 %40, %invariant.op577
+  %diff.check398 = icmp ult i64 %.reass580, 63
   %conflict.rdx = or i1 %diff.check, %diff.check398
-  %.reass578 = add i64 %i.sm, %invariant.op577
-  %diff.check399 = icmp ult i64 %.reass578, 63
+  %41 = sub i64 %40, %31
+  %diff.check399 = icmp ugt i64 %41, -64
   %conflict.rdx400 = or i1 %conflict.rdx, %diff.check399
-  %48 = mul nsw i64 %i.si, -8
-  %i.so = sub nsw i64 %48, %46
+  %i.so = sub nsw i64 %i.sm, %40
   %.reass580.a = add i64 %i.so, %invariant.op579
   %diff.check401 = icmp ult i64 %.reass580.a, 63
   %conflict.rdx402 = or i1 %conflict.rdx400, %diff.check401

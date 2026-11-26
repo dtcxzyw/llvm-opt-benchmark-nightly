@@ -204,15 +204,15 @@ middle.block180:                                  ; preds = %vector.body173
   br i1 %min.iters.check189, label %scalar.ph188.preheader, label %vector.memcheck190
 
 vector.memcheck190:                               ; preds = %.lr.ph105
+  %7 = sub i64 %.pre187, %i.b
+  %diff.check191 = icmp ugt i64 %7, -32
   %i.gq = add i32 %4, -2
   %i.gr = zext i32 %i.gq to i64
   %i.gs = shl nuw nsw i64 %i.gr, 2
   %i.gt = shl nuw nsw i64 %i.gp, 2
   %i.gu = add i64 %i.gs, %i.b
   %i.gv = add i64 %i.gt, %.pre187
-  %7 = sub i64 %i.gv, %i.gu
-  %diff.check191 = icmp ugt i64 %7, -32
-  %i.gw = sub i64 %.pre187, %i.b
+  %i.gw = sub i64 %i.gv, %i.gu
   %diff.check192 = icmp ugt i64 %i.gw, -32
   %conflict.rdx = or i1 %diff.check191, %diff.check192
   br i1 %conflict.rdx, label %scalar.ph188.preheader, label %vector.ph193

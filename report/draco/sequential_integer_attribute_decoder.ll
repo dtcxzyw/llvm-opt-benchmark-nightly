@@ -205,7 +205,7 @@ bb.ai:                                            ; preds = %_ZN5draco23GetParal
   br i1 %min.iters.check396, label %.lr.ph.i138.preheader, label %vector.memcheck397
 
 vector.memcheck397:                               ; preds = %.lr.ph.preheader.i
-  %i.gi = shl nsw i64 %i.gh, 2
+  %i.gi = shl nsw i64 %i.gf, 2
   %i.gj = sub i64 %i.eg, %i.a                     ; 3 uses
   %i.gk = sub i64 %i.gi, %i.gj
   %diff.check = icmp ugt i64 %i.gk, -32
@@ -213,7 +213,7 @@ vector.memcheck397:                               ; preds = %.lr.ph.preheader.i
   %i.gm = sub i64 %i.gl, %i.gj
   %diff.check398 = icmp ugt i64 %i.gm, -32
   %conflict.rdx = or i1 %diff.check, %diff.check398
-  %i.gn = shl nsw i64 %i.gf, 2
+  %i.gn = shl nsw i64 %i.gh, 2
   %i.go = sub i64 %i.gn, %i.gj
   %diff.check399 = icmp ugt i64 %i.go, -32
   %conflict.rdx400 = or i1 %conflict.rdx, %diff.check399
@@ -616,7 +616,7 @@ bb.ak:                                            ; preds = %_ZN5draco23GetParal
   br i1 %min.iters.check390, label %.lr.ph.i137.preheader, label %vector.memcheck391
 
 vector.memcheck391:                               ; preds = %.lr.ph.preheader.i
-  %i.fu = shl nsw i64 %i.ft, 2
+  %i.fu = shl nsw i64 %i.fr, 2
   %i.fv = sub i64 %i.eb, %i.a                     ; 3 uses
   %i.fw = sub i64 %i.fu, %i.fv
   %diff.check = icmp ugt i64 %i.fw, -32
@@ -624,7 +624,7 @@ vector.memcheck391:                               ; preds = %.lr.ph.preheader.i
   %i.fy = sub i64 %i.fx, %i.fv
   %diff.check392 = icmp ugt i64 %i.fy, -32
   %conflict.rdx = or i1 %diff.check, %diff.check392
-  %i.fz = shl nsw i64 %i.fr, 2
+  %i.fz = shl nsw i64 %i.ft, 2
   %i.ga = sub i64 %i.fz, %i.fv
   %diff.check393 = icmp ugt i64 %i.ga, -32
   %conflict.rdx394 = or i1 %conflict.rdx, %diff.check393
