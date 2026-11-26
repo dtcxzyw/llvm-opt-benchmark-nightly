@@ -7,7 +7,6 @@ target triple = "x86_64-pc-linux-gnu"
 
 @.str = private unnamed_addr constant [8 x i8] c"DGEMMT \00", align 1
 @dgemmt_.gemv_thread = internal unnamed_addr constant [2 x ptr] [ptr @dgemv_thread_n, ptr @dgemv_thread_t], align 16
-@__const.dgemmt_.gemv = private unnamed_addr constant [2 x ptr] [ptr @dgemv_n, ptr @dgemv_t], align 16
 @blas_cpu_number = external local_unnamed_addr global i32, align 4
 
 ; Function Attrs: nounwind uwtable
@@ -18,7 +17,7 @@ bb.a:
   %i.c = alloca i32, align 4                      ; 3 uses
   %i.d = alloca i32, align 4                      ; 9 uses
   %i.e = alloca i32, align 4                      ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   %i.f = load i32, ptr %3, align 4, !tbaa !10     ; 12 uses
   %i.g = load i32, ptr %4, align 4, !tbaa !10     ; 7 uses
   %i.h = load double, ptr %5, align 8, !tbaa !12
@@ -46,7 +45,7 @@ bb.a:
   %i.x = icmp eq i8 %spec.select, 82
   %.2234 = select i1 %i.x, i32 0, i32 %.1233
   %i.y = icmp eq i8 %spec.select, 67
-  %.3235 = select i1 %i.y, i32 1, i32 %.2234      ; 4 uses
+  %.3235 = select i1 %i.y, i32 1, i32 %.2234      ; 6 uses
   %i.z = icmp ne i8 %.0226, 78
   %.0230 = sext i1 %i.z to i32
   %i.aa = icmp eq i8 %.0226, 84
@@ -87,7 +86,7 @@ bb.a:
   br i1 %.not245, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.ar = call i32 @xerbla_(ptr noundef nonnull @.str, ptr noundef nonnull %i.a, i32 noundef 8) #5 ; 0 uses
+  %i.ar = call i32 @xerbla_(ptr noundef nonnull @.str, ptr noundef nonnull %i.a, i32 noundef 8) #6 ; 0 uses
   br label %.loopexit
 
 bb.c:                                             ; preds = %bb.a
@@ -106,11 +105,11 @@ bb.d:                                             ; preds = %bb.c
   %i.av = fcmp une double %i.i, 1.000000e+00      ; 2 uses
   %i.aw = fcmp oeq double %.fr265, 0.000000e+00
   %i.ax = sext i32 %i.g to i64                    ; 5 uses
-  %i.ay = sext i32 %.3235 to i64                  ; 2 uses
+  %i.ay = sext i32 %.3235 to i64
   %i.az = getelementptr inbounds [8 x i8], ptr @dgemmt_.gemv_thread, i64 %i.ay
   %i.ba = sext i32 %i.j to i64                    ; 5 uses
   %i.bb = sext i32 %i.at to i64                   ; 4 uses
-  %13 = getelementptr inbounds [8 x i8], ptr @__const.dgemmt_.gemv, i64 %i.ay
+  %13 = icmp ult i32 %.3235, 2
   br i1 %i.aw, label %.lr.ph.split.us, label %.lr.ph.split.preheader
 
 .lr.ph.split.preheader:                           ; preds = %.lr.ph
@@ -137,7 +136,7 @@ bb.d:                                             ; preds = %bb.c
   %i.bj = mul nsw i64 %indvars.iv270, %i.bh
   %i.bk = getelementptr inbounds [8 x i8], ptr %11, i64 %i.bj
   %i.bl = getelementptr inbounds nuw [8 x i8], ptr %i.bk, i64 %indvars.iv270
-  %i.bm = tail call i32 @dscal_k(i64 noundef %i.bi, i64 noundef 0, i64 noundef 0, double noundef %i.i, ptr noundef %i.bl, i64 noundef 1, ptr noundef null, i64 noundef 0, ptr noundef null, i64 noundef 0) #5 ; 0 uses
+  %i.bm = tail call i32 @dscal_k(i64 noundef %i.bi, i64 noundef 0, i64 noundef 0, double noundef %i.i, ptr noundef %i.bl, i64 noundef 1, ptr noundef null, i64 noundef 0, ptr noundef null, i64 noundef 0) #6 ; 0 uses
   %indvars.iv.next271 = add nuw nsw i64 %indvars.iv270, 1 ; 2 uses
   %exitcond274.not = icmp eq i64 %indvars.iv.next271, %wide.trip.count273
   br i1 %exitcond274.not, label %.loopexit, label %.lr.ph.split.us.split, !llvm.loop !8
@@ -149,11 +148,11 @@ bb.d:                                             ; preds = %bb.c
   %i.bn = fcmp une double %i.i, 1.000000e+00      ; 2 uses
   %i.bo = fcmp oeq double %.fr265, 0.000000e+00
   %i.bp = sext i32 %i.g to i64                    ; 5 uses
-  %i.bq = sext i32 %.3235 to i64                  ; 2 uses
+  %i.bq = sext i32 %.3235 to i64
   %i.br = getelementptr inbounds [8 x i8], ptr @dgemmt_.gemv_thread, i64 %i.bq
   %i.bs = sext i32 %i.j to i64                    ; 4 uses
   %i.bt = sext i32 %i.at to i64                   ; 4 uses
-  %14 = getelementptr inbounds [8 x i8], ptr @__const.dgemmt_.gemv, i64 %i.bq
+  %14 = icmp ult i32 %.3235, 2
   br i1 %i.bo, label %.lr.ph263.split.us, label %.lr.ph263.split.preheader
 
 .lr.ph263.split.preheader:                        ; preds = %.lr.ph263
@@ -176,7 +175,7 @@ bb.d:                                             ; preds = %bb.c
   %indvars.iv.next281 = add nuw nsw i64 %indvars.iv280, 1 ; 3 uses
   %i.bx = mul nsw i64 %indvars.iv280, %i.bw
   %i.by = getelementptr inbounds [8 x i8], ptr %11, i64 %i.bx
-  %i.bz = tail call i32 @dscal_k(i64 noundef %indvars.iv.next281, i64 noundef 0, i64 noundef 0, double noundef %i.i, ptr noundef %i.by, i64 noundef 1, ptr noundef null, i64 noundef 0, ptr noundef null, i64 noundef 0) #5 ; 0 uses
+  %i.bz = tail call i32 @dscal_k(i64 noundef %indvars.iv.next281, i64 noundef 0, i64 noundef 0, double noundef %i.i, ptr noundef %i.by, i64 noundef 1, ptr noundef null, i64 noundef 0, ptr noundef null, i64 noundef 0) #6 ; 0 uses
   %exitcond284.not = icmp eq i64 %indvars.iv.next281, %wide.trip.count283
   br i1 %exitcond284.not, label %.loopexit, label %.lr.ph263.split.us.split, !llvm.loop !9
 
@@ -193,7 +192,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.av, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %.lr.ph.split
-  %i.ce = call i32 @dscal_k(i64 noundef %i.ca, i64 noundef 0, i64 noundef 0, double noundef %i.i, ptr noundef %i.cd, i64 noundef 1, ptr noundef null, i64 noundef 0, ptr noundef null, i64 noundef 0) #5 ; 0 uses
+  %i.ce = call i32 @dscal_k(i64 noundef %i.ca, i64 noundef 0, i64 noundef 0, double noundef %i.i, ptr noundef %i.cd, i64 noundef 1, ptr noundef null, i64 noundef 0, ptr noundef null, i64 noundef 0) #6 ; 0 uses
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %.lr.ph.split
@@ -233,7 +232,7 @@ bb.j:                                             ; preds = %bb.h, %bb.i
   br i1 %.not252, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
-  %i.co = call ptr @blas_memory_alloc(i32 noundef 1) #5
+  %i.co = call ptr @blas_memory_alloc(i32 noundef 1) #6
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.j, %bb.k
@@ -253,27 +252,27 @@ num_cpu_avail.exit:                               ; preds = %bb.m
   br i1 %i.cv, label %num_cpu_avail.exit.thread, label %bb.p
 
 num_cpu_avail.exit.thread:                        ; preds = %bb.m, %bb.l, %num_cpu_avail.exit
-  %15 = load ptr, ptr %13, align 8, !tbaa !16     ; 2 uses
+  call void @llvm.assume(i1 %13)
   br i1 %.not, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %num_cpu_avail.exit.thread
-  %i.cw = call i32 %15(i64 noundef %i.ca, i64 noundef %i.ax, i64 noundef 0, double noundef %.fr265, ptr noundef %.0222, i64 noundef %i.ba, ptr noundef %.0220, i64 noundef %i.bb, ptr noundef %i.cd, i64 noundef 1, ptr noundef %i.cp) #5 ; 0 uses
+  %i.cw = call i32 @dgemv_n(i64 noundef %i.ca, i64 noundef %i.ax, i64 noundef 0, double noundef %.fr265, ptr noundef %.0222, i64 noundef %i.ba, ptr noundef %.0220, i64 noundef %i.bb, ptr noundef %i.cd, i64 noundef 1, ptr noundef %i.cp) #6, !callees !15 ; 0 uses
   br label %bb.s
 
 bb.o:                                             ; preds = %num_cpu_avail.exit.thread
-  %i.cx = call i32 %15(i64 noundef %i.ax, i64 noundef %i.ca, i64 noundef 0, double noundef %.fr265, ptr noundef %.0222, i64 noundef %i.ba, ptr noundef %.0220, i64 noundef %i.bb, ptr noundef %i.cd, i64 noundef 1, ptr noundef %i.cp) #5 ; 0 uses
+  %i.cx = call i32 @dgemv_t(i64 noundef %i.ax, i64 noundef %i.ca, i64 noundef 0, double noundef %.fr265, ptr noundef %.0222, i64 noundef %i.ba, ptr noundef %.0220, i64 noundef %i.bb, ptr noundef %i.cd, i64 noundef 1, ptr noundef %i.cp) #6, !callees !15 ; 0 uses
   br label %bb.s
 
 bb.p:                                             ; preds = %num_cpu_avail.exit
-  %i.cy = load ptr, ptr %i.az, align 8, !tbaa !16 ; 2 uses
+  %i.cy = load ptr, ptr %i.az, align 8, !tbaa !17 ; 2 uses
   br i1 %.not, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %bb.p
-  %i.cz = call i32 %i.cy(i64 noundef %i.ca, i64 noundef %i.ax, double noundef %.fr265, ptr noundef %.0222, i64 noundef %i.ba, ptr noundef %.0220, i64 noundef %i.bb, ptr noundef %i.cd, i64 noundef 1, ptr noundef %i.cp, i32 noundef %i.cu) #5 ; 0 uses
+  %i.cz = call i32 %i.cy(i64 noundef %i.ca, i64 noundef %i.ax, double noundef %.fr265, ptr noundef %.0222, i64 noundef %i.ba, ptr noundef %.0220, i64 noundef %i.bb, ptr noundef %i.cd, i64 noundef 1, ptr noundef %i.cp, i32 noundef %i.cu) #6 ; 0 uses
   br label %bb.s
 
 bb.r:                                             ; preds = %bb.p
-  %i.da = call i32 %i.cy(i64 noundef %i.ax, i64 noundef %i.ca, double noundef %.fr265, ptr noundef %.0222, i64 noundef %i.ba, ptr noundef %.0220, i64 noundef %i.bb, ptr noundef %i.cd, i64 noundef 1, ptr noundef %i.cp, i32 noundef %i.cu) #5 ; 0 uses
+  %i.da = call i32 %i.cy(i64 noundef %i.ax, i64 noundef %i.ca, double noundef %.fr265, ptr noundef %.0222, i64 noundef %i.ba, ptr noundef %.0220, i64 noundef %i.bb, ptr noundef %i.cd, i64 noundef 1, ptr noundef %i.cp, i32 noundef %i.cu) #6 ; 0 uses
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.q, %bb.r, %bb.n, %bb.o
@@ -282,7 +281,7 @@ bb.s:                                             ; preds = %bb.q, %bb.r, %bb.n,
   br i1 %.not253, label %bb.t, label %bb.u
 
 bb.t:                                             ; preds = %bb.s
-  call void @blas_memory_free(ptr noundef %i.cp) #5
+  call void @blas_memory_free(ptr noundef %i.cp) #6
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %bb.s
@@ -303,7 +302,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   br i1 %i.bn, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %.lr.ph263.split
-  %i.dd = call i32 @dscal_k(i64 noundef %indvars.iv.next276, i64 noundef 0, i64 noundef 0, double noundef %i.i, ptr noundef %i.dc, i64 noundef 1, ptr noundef null, i64 noundef 0, ptr noundef null, i64 noundef 0) #5 ; 0 uses
+  %i.dd = call i32 @dscal_k(i64 noundef %indvars.iv.next276, i64 noundef 0, i64 noundef 0, double noundef %i.i, ptr noundef %i.dc, i64 noundef 1, ptr noundef null, i64 noundef 0, ptr noundef null, i64 noundef 0) #6 ; 0 uses
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.v, %.lr.ph263.split
@@ -343,7 +342,7 @@ bb.aa:                                            ; preds = %bb.y, %bb.z
   br i1 %.not247, label %bb.ab, label %bb.ac
 
 bb.ab:                                            ; preds = %bb.aa
-  %i.dn = call ptr @blas_memory_alloc(i32 noundef 1) #5
+  %i.dn = call ptr @blas_memory_alloc(i32 noundef 1) #6
   br label %bb.ac
 
 bb.ac:                                            ; preds = %bb.aa, %bb.ab
@@ -363,27 +362,27 @@ num_cpu_avail.exit256:                            ; preds = %bb.ad
   br i1 %i.du, label %num_cpu_avail.exit256.thread, label %bb.ag
 
 num_cpu_avail.exit256.thread:                     ; preds = %bb.ad, %bb.ac, %num_cpu_avail.exit256
-  %16 = load ptr, ptr %14, align 8, !tbaa !16     ; 2 uses
+  call void @llvm.assume(i1 %14)
   br i1 %.not, label %bb.ae, label %bb.af
 
 bb.ae:                                            ; preds = %num_cpu_avail.exit256.thread
-  %i.dv = call i32 %16(i64 noundef %indvars.iv.next276, i64 noundef %i.bp, i64 noundef 0, double noundef %.fr265, ptr noundef %6, i64 noundef %i.bs, ptr noundef %.1221, i64 noundef %i.bt, ptr noundef %i.dc, i64 noundef 1, ptr noundef %i.do) #5 ; 0 uses
+  %i.dv = call i32 @dgemv_n(i64 noundef %indvars.iv.next276, i64 noundef %i.bp, i64 noundef 0, double noundef %.fr265, ptr noundef %6, i64 noundef %i.bs, ptr noundef %.1221, i64 noundef %i.bt, ptr noundef %i.dc, i64 noundef 1, ptr noundef %i.do) #6, !callees !15 ; 0 uses
   br label %bb.aj
 
 bb.af:                                            ; preds = %num_cpu_avail.exit256.thread
-  %i.dw = call i32 %16(i64 noundef %i.bp, i64 noundef %indvars.iv.next276, i64 noundef 0, double noundef %.fr265, ptr noundef %6, i64 noundef %i.bs, ptr noundef %.1221, i64 noundef %i.bt, ptr noundef %i.dc, i64 noundef 1, ptr noundef %i.do) #5 ; 0 uses
+  %i.dw = call i32 @dgemv_t(i64 noundef %i.bp, i64 noundef %indvars.iv.next276, i64 noundef 0, double noundef %.fr265, ptr noundef %6, i64 noundef %i.bs, ptr noundef %.1221, i64 noundef %i.bt, ptr noundef %i.dc, i64 noundef 1, ptr noundef %i.do) #6, !callees !15 ; 0 uses
   br label %bb.aj
 
 bb.ag:                                            ; preds = %num_cpu_avail.exit256
-  %i.dx = load ptr, ptr %i.br, align 8, !tbaa !16 ; 2 uses
+  %i.dx = load ptr, ptr %i.br, align 8, !tbaa !17 ; 2 uses
   br i1 %.not, label %bb.ah, label %bb.ai
 
 bb.ah:                                            ; preds = %bb.ag
-  %i.dy = call i32 %i.dx(i64 noundef %indvars.iv.next276, i64 noundef %i.bp, double noundef %.fr265, ptr noundef %6, i64 noundef %i.bs, ptr noundef %.1221, i64 noundef %i.bt, ptr noundef %i.dc, i64 noundef 1, ptr noundef %i.do, i32 noundef %i.dt) #5 ; 0 uses
+  %i.dy = call i32 %i.dx(i64 noundef %indvars.iv.next276, i64 noundef %i.bp, double noundef %.fr265, ptr noundef %6, i64 noundef %i.bs, ptr noundef %.1221, i64 noundef %i.bt, ptr noundef %i.dc, i64 noundef 1, ptr noundef %i.do, i32 noundef %i.dt) #6 ; 0 uses
   br label %bb.aj
 
 bb.ai:                                            ; preds = %bb.ag
-  %i.dz = call i32 %i.dx(i64 noundef %i.bp, i64 noundef %indvars.iv.next276, double noundef %.fr265, ptr noundef %6, i64 noundef %i.bs, ptr noundef %.1221, i64 noundef %i.bt, ptr noundef %i.dc, i64 noundef 1, ptr noundef %i.do, i32 noundef %i.dt) #5 ; 0 uses
+  %i.dz = call i32 %i.dx(i64 noundef %i.bp, i64 noundef %indvars.iv.next276, double noundef %.fr265, ptr noundef %6, i64 noundef %i.bs, ptr noundef %.1221, i64 noundef %i.bt, ptr noundef %i.dc, i64 noundef 1, ptr noundef %i.do, i32 noundef %i.dt) #6 ; 0 uses
   br label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ah, %bb.ai, %bb.ae, %bb.af
@@ -392,7 +391,7 @@ bb.aj:                                            ; preds = %bb.ah, %bb.ai, %bb.
   br i1 %.not248, label %bb.ak, label %bb.al
 
 bb.ak:                                            ; preds = %bb.aj
-  call void @blas_memory_free(ptr noundef %i.do) #5
+  call void @blas_memory_free(ptr noundef %i.do) #6
   br label %bb.al
 
 bb.al:                                            ; preds = %bb.ak, %bb.aj
@@ -403,7 +402,7 @@ bb.al:                                            ; preds = %bb.ak, %bb.aj
   br i1 %exitcond279.not, label %.loopexit, label %.lr.ph263.split, !llvm.loop !9
 
 .loopexit:                                        ; preds = %bb.u, %.lr.ph.split.us.split, %bb.al, %.lr.ph263.split.us.split, %.preheader259, %.lr.ph.split.us, %.preheader, %.lr.ph263.split.us, %bb.c, %bb.b
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   ret void
 }
 
@@ -416,9 +415,9 @@ declare i32 @dgemv_thread_n(i64 noundef, i64 noundef, double noundef, ptr nounde
 
 declare i32 @dgemv_thread_t(i64 noundef, i64 noundef, double noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef, i32 noundef) #2
 
-declare i32 @dgemv_n(i64 noundef, i64 noundef, i64 noundef, double noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef) #2
+declare i32 @dgemv_n(i64 noundef, i64 noundef, i64 noundef, double noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef) local_unnamed_addr #2
 
-declare i32 @dgemv_t(i64 noundef, i64 noundef, i64 noundef, double noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef) #2
+declare i32 @dgemv_t(i64 noundef, i64 noundef, i64 noundef, double noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef) local_unnamed_addr #2
 
 declare i32 @dscal_k(i64 noundef, i64 noundef, i64 noundef, double noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef) local_unnamed_addr #2
 
@@ -435,15 +434,19 @@ declare void @llvm.stackrestore.p0(ptr) #3
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
+declare void @llvm.assume(i1 noundef) #4
+
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #4
+declare i32 @llvm.smax.i32(i32, i32) #5
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
 attributes #3 = { nocallback nofree nosync nounwind willreturn }
-attributes #4 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #5 = { nounwind }
+attributes #4 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #5 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #6 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}
@@ -464,6 +467,7 @@ attributes #5 = { nounwind }
 !12 = !{!11, !11, i64 0}
 !13 = !{!4, !4, i64 0}
 !14 = !{!"llvm.loop.mustprogress"}
-!15 = !{!"any pointer", !4, i64 0}
-!16 = !{!15, !15, i64 0}
+!15 = !{ptr @dgemv_n, ptr @dgemv_t}
+!16 = !{!"any pointer", !4, i64 0}
+!17 = !{!16, !16, i64 0}
 end_hunk_0

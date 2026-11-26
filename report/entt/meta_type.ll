@@ -33,7 +33,6 @@ module asm(target_features: "+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87", target_cpu:
 %"class.std::basic_string_view" = type { i64, ptr }
 %"struct.std::piecewise_construct_t" = type { i8 }
 %"struct.std::array.307" = type { [3 x ptr] }
-%"struct.std::array.310" = type { [2 x ptr] }
 %"struct.std::array.568" = type { [4 x ptr] }
 %"class.testing::internal::GTestLog" = type { i32 }
 %"class.testing::AssertionResult" = type { i8, %"class.std::unique_ptr" }
@@ -436,7 +435,6 @@ begin_hunk_1
 @_ZZN4entt10type_indexIfE5valueEvE5value = linkonce_odr hidden global i32 0, comdat, align 4
 @_ZGVZN4entt10type_indexIfE5valueEvE5value = linkonce_odr hidden global i64 0, comdat, align 8
 @.str.436 = private unnamed_addr constant [61 x i8] c"const char *entt::internal::pretty_function() [Type = float]\00", align 1
-@__const._ZN4entt8internal13meta_arg_nodeIJifEEERKNS0_14meta_type_nodeERKNS0_12meta_contextENS_9type_listIJDpT_EEEm.list = private unnamed_addr constant %"struct.std::array.310" { [2 x ptr] [ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedEiEERKNS0_14meta_type_nodeERKNS0_12meta_contextE, ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedEfEERKNS0_14meta_type_nodeERKNS0_12meta_contextE] }, align 8
 @_ZZN4entt7type_idIN8MetaType13property_typeEEERKNS_9type_infoEvE8instance = linkonce_odr hidden global %"struct.entt::type_info" zeroinitializer, comdat, align 8
 @_ZGVZN4entt7type_idIN8MetaType13property_typeEEERKNS_9type_infoEvE8instance = linkonce_odr hidden global i64 0, comdat, align 8
 @_ZZN4entt10type_indexIN8MetaType13property_typeEE5valueEvE5value = linkonce_odr hidden global i32 0, comdat, align 4
@@ -454,7 +452,6 @@ begin_hunk_1
 @_ZZN4entt10type_indexINS_9type_listIJRKN8MetaType4baseEiEEEE5valueEvE5value = linkonce_odr hidden global i32 0, comdat, align 4
 @_ZGVZN4entt10type_indexINS_9type_listIJRKN8MetaType4baseEiEEEE5valueEvE5value = linkonce_odr hidden global i64 0, comdat, align 8
 @.str.438 = private unnamed_addr constant [100 x i8] c"const char *entt::internal::pretty_function() [Type = entt::type_list<const MetaType::base &, int>]\00", align 1
-@__const._ZN4entt8internal13meta_arg_nodeIJRKN8MetaType4baseEiEEERKNS0_14meta_type_nodeERKNS0_12meta_contextENS_9type_listIJDpT_EEEm.list = private unnamed_addr constant %"struct.std::array.310" { [2 x ptr] [ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedEN8MetaType4baseEEERKNS0_14meta_type_nodeERKNS0_12meta_contextE, ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedEiEERKNS0_14meta_type_nodeERKNS0_12meta_contextE] }, align 8
 @_ZZN4entt8internal7resolveITkNS_17cvref_unqualifiedEN8MetaType5clazzEEERKNS0_14meta_type_nodeERKNS0_12meta_contextEE4node = linkonce_odr hidden global %"struct.entt::internal::meta_type_node" zeroinitializer, comdat, align 8
 @_ZGVZN4entt8internal7resolveITkNS_17cvref_unqualifiedEN8MetaType5clazzEEERKNS0_14meta_type_nodeERKNS0_12meta_contextEE4node = linkonce_odr hidden global i64 0, comdat, align 8
 @_ZTVSt23_Sp_counted_ptr_inplaceIN4entt8meta_ctxESaIvELN9__gnu_cxx12_Lock_policyE2EE = linkonce_odr hidden constant { [7 x ptr] } { [7 x ptr] [ptr null, ptr @_ZTISt23_Sp_counted_ptr_inplaceIN4entt8meta_ctxESaIvELN9__gnu_cxx12_Lock_policyE2EE, ptr @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EED2Ev, ptr @_ZNSt23_Sp_counted_ptr_inplaceIN4entt8meta_ctxESaIvELN9__gnu_cxx12_Lock_policyE2EED0Ev, ptr @_ZNSt23_Sp_counted_ptr_inplaceIN4entt8meta_ctxESaIvELN9__gnu_cxx12_Lock_policyE2EE10_M_disposeEv, ptr @_ZNSt23_Sp_counted_ptr_inplaceIN4entt8meta_ctxESaIvELN9__gnu_cxx12_Lock_policyE2EE10_M_destroyEv, ptr @_ZNSt23_Sp_counted_ptr_inplaceIN4entt8meta_ctxESaIvELN9__gnu_cxx12_Lock_policyE2EE14_M_get_deleterERKSt9type_info] }, comdat, align 8
@@ -602,7 +599,6 @@ begin_hunk_1
 @_ZZN4entt10type_indexINS_23meta_class_template_tagISt6vectorEEE5valueEvE5value = linkonce_odr hidden global i32 0, comdat, align 4
 @_ZGVZN4entt10type_indexINS_23meta_class_template_tagISt6vectorEEE5valueEvE5value = linkonce_odr hidden global i64 0, comdat, align 8
 @.str.472 = private unnamed_addr constant [98 x i8] c"const char *entt::internal::pretty_function() [Type = entt::meta_class_template_tag<std::vector>]\00", align 1
-@__const._ZN4entt8internal13meta_arg_nodeIJiSaIiEEEERKNS0_14meta_type_nodeERKNS0_12meta_contextENS_9type_listIJDpT_EEEm.list = private unnamed_addr constant %"struct.std::array.310" { [2 x ptr] [ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedEiEERKNS0_14meta_type_nodeERKNS0_12meta_contextE, ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedESaIiEEERKNS0_14meta_type_nodeERKNS0_12meta_contextE] }, align 8
 @_ZZN4entt8internal7resolveITkNS_17cvref_unqualifiedESaIiEEERKNS0_14meta_type_nodeERKNS0_12meta_contextEE4node = linkonce_odr hidden global %"struct.entt::internal::meta_type_node" zeroinitializer, comdat, align 8
 @_ZGVZN4entt8internal7resolveITkNS_17cvref_unqualifiedESaIiEEERKNS0_14meta_type_nodeERKNS0_12meta_contextEE4node = linkonce_odr hidden global i64 0, comdat, align 8
 @_ZZN4entt7type_idISaIiEEERKNS_9type_infoEvE8instance = linkonce_odr hidden global %"struct.entt::type_info" zeroinitializer, comdat, align 8
@@ -638,7 +634,6 @@ begin_hunk_1
 @_ZZN4entt10type_indexINS_23meta_class_template_tagISt4pairEEE5valueEvE5value = linkonce_odr hidden global i32 0, comdat, align 4
 @_ZGVZN4entt10type_indexINS_23meta_class_template_tagISt4pairEEE5valueEvE5value = linkonce_odr hidden global i64 0, comdat, align 8
 @.str.477 = private unnamed_addr constant [96 x i8] c"const char *entt::internal::pretty_function() [Type = entt::meta_class_template_tag<std::pair>]\00", align 1
-@__const._ZN4entt8internal13meta_arg_nodeIJKicEEERKNS0_14meta_type_nodeERKNS0_12meta_contextENS_9type_listIJDpT_EEEm.list = private unnamed_addr constant %"struct.std::array.310" { [2 x ptr] [ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedEiEERKNS0_14meta_type_nodeERKNS0_12meta_contextE, ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedEcEERKNS0_14meta_type_nodeERKNS0_12meta_contextE] }, align 8
 @_ZZN4entt7type_idISt23_Rb_tree_const_iteratorISt4pairIKicEEEERKNS_9type_infoEvE8instance = linkonce_odr hidden global %"struct.entt::type_info" zeroinitializer, comdat, align 8
 @_ZGVZN4entt7type_idISt23_Rb_tree_const_iteratorISt4pairIKicEEEERKNS_9type_infoEvE8instance = linkonce_odr hidden global i64 0, comdat, align 8
 @_ZZN4entt10type_indexISt23_Rb_tree_const_iteratorISt4pairIKicEEE5valueEvE5value = linkonce_odr hidden global i32 0, comdat, align 4
@@ -1041,9 +1036,11 @@ bb.i:                                             ; preds = %_ZNK4entt9dense_map
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden { ptr, ptr } @_ZN4entt8meta_argINS_9type_listIJifEEEEENS_9meta_typeERKNS_8meta_ctxEm(ptr noundef nonnull align 8 dereferenceable(56) %0, i64 noundef %1) #5 comdat {
 bb.a:
-  %2 = getelementptr inbounds nuw [8 x i8], ptr @__const._ZN4entt8internal13meta_arg_nodeIJifEEERKNS0_14meta_type_nodeERKNS0_12meta_contextENS_9type_listIJDpT_EEEm.list, i64 %1
-  %3 = load ptr, ptr %2, align 8, !tbaa !140
-  %i.a = tail call noundef nonnull align 8 dereferenceable(128) ptr %3(ptr noundef nonnull align 8 dereferenceable(56) %0) #29, !inline_history !1253
+  %.sroa.idx.not.i = icmp eq i64 %1, 0
+  %2 = icmp ult i64 %1, 2
+  tail call void @llvm.assume(i1 %2)
+  %.sroa.speculated.i = select i1 %.sroa.idx.not.i, ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedEiEERKNS0_14meta_type_nodeERKNS0_12meta_contextE, ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedEfEERKNS0_14meta_type_nodeERKNS0_12meta_contextE
+  %i.a = tail call noundef nonnull align 8 dereferenceable(128) ptr %.sroa.speculated.i(ptr noundef nonnull align 8 dereferenceable(56) %0) #29, !inline_history !1253
   %.fca.0.insert = insertvalue { ptr, ptr } poison, ptr %i.a, 0
   %.fca.1.insert = insertvalue { ptr, ptr } %.fca.0.insert, ptr %0, 1
   ret { ptr, ptr } %.fca.1.insert
@@ -1446,9 +1443,11 @@ declare i32 @strcmp(ptr noundef captures(none), ptr noundef captures(none)) loca
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden { ptr, ptr } @_ZN4entt8meta_argINS_9type_listIJRKN8MetaType4baseEiEEEEENS_9meta_typeERKNS_8meta_ctxEm(ptr noundef nonnull align 8 dereferenceable(56) %0, i64 noundef %1) #5 comdat {
 bb.a:
-  %2 = getelementptr inbounds nuw [8 x i8], ptr @__const._ZN4entt8internal13meta_arg_nodeIJRKN8MetaType4baseEiEEERKNS0_14meta_type_nodeERKNS0_12meta_contextENS_9type_listIJDpT_EEEm.list, i64 %1
-  %3 = load ptr, ptr %2, align 8, !tbaa !140
-  %i.a = tail call noundef nonnull align 8 dereferenceable(128) ptr %3(ptr noundef nonnull align 8 dereferenceable(56) %0) #29, !inline_history !1307
+  %.sroa.idx.not.i = icmp eq i64 %1, 0
+  %2 = icmp ult i64 %1, 2
+  tail call void @llvm.assume(i1 %2)
+  %.sroa.speculated.i = select i1 %.sroa.idx.not.i, ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedEN8MetaType4baseEEERKNS0_14meta_type_nodeERKNS0_12meta_contextE, ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedEiEERKNS0_14meta_type_nodeERKNS0_12meta_contextE
+  %i.a = tail call noundef nonnull align 8 dereferenceable(128) ptr %.sroa.speculated.i(ptr noundef nonnull align 8 dereferenceable(56) %0) #29, !inline_history !1307
   %.fca.0.insert = insertvalue { ptr, ptr } poison, ptr %i.a, 0
   %.fca.1.insert = insertvalue { ptr, ptr } %.fca.0.insert, ptr %0, 1
   ret { ptr, ptr } %.fca.1.insert
@@ -1851,9 +1850,11 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr hidden noundef nonnull align 8 dereferenceable(128) ptr @_ZZN4entt8internal14setup_node_forISt6vectorIiSaIiEEEEDavENUlRKNS0_12meta_contextEmE_8__invokeES7_m(ptr noundef nonnull align 8 dereferenceable(56) %0, i64 noundef %1) #6 comdat align 2 {
 bb.a:
-  %2 = getelementptr inbounds nuw [8 x i8], ptr @__const._ZN4entt8internal13meta_arg_nodeIJiSaIiEEEERKNS0_14meta_type_nodeERKNS0_12meta_contextENS_9type_listIJDpT_EEEm.list, i64 %1
-  %3 = load ptr, ptr %2, align 8, !tbaa !140
-  %i.a = tail call noundef nonnull align 8 dereferenceable(128) ptr %3(ptr noundef nonnull align 8 dereferenceable(56) %0) #29, !inline_history !1650
+  %.sroa.idx.not.i.i = icmp eq i64 %1, 0
+  %2 = icmp ult i64 %1, 2
+  tail call void @llvm.assume(i1 %2)
+  %.sroa.speculated.i.i = select i1 %.sroa.idx.not.i.i, ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedEiEERKNS0_14meta_type_nodeERKNS0_12meta_contextE, ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedESaIiEEERKNS0_14meta_type_nodeERKNS0_12meta_contextE
+  %i.a = tail call noundef nonnull align 8 dereferenceable(128) ptr %.sroa.speculated.i.i(ptr noundef nonnull align 8 dereferenceable(56) %0) #29, !inline_history !1650
   ret ptr %i.a
 }
 
@@ -2256,9 +2257,11 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr hidden noundef nonnull align 8 dereferenceable(128) ptr @_ZZN4entt8internal14setup_node_forISt4pairIKicEEEDavENUlRKNS0_12meta_contextEmE_8__invokeES7_m(ptr noundef nonnull align 8 dereferenceable(56) %0, i64 noundef %1) #6 comdat align 2 {
 bb.a:
-  %2 = getelementptr inbounds nuw [8 x i8], ptr @__const._ZN4entt8internal13meta_arg_nodeIJKicEEERKNS0_14meta_type_nodeERKNS0_12meta_contextENS_9type_listIJDpT_EEEm.list, i64 %1
-  %3 = load ptr, ptr %2, align 8, !tbaa !140
-  %i.a = tail call noundef nonnull align 8 dereferenceable(128) ptr %3(ptr noundef nonnull align 8 dereferenceable(56) %0) #29, !inline_history !1688
+  %.sroa.idx.not.i.i = icmp eq i64 %1, 0
+  %2 = icmp ult i64 %1, 2
+  tail call void @llvm.assume(i1 %2)
+  %.sroa.speculated.i.i = select i1 %.sroa.idx.not.i.i, ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedEiEERKNS0_14meta_type_nodeERKNS0_12meta_contextE, ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedEcEERKNS0_14meta_type_nodeERKNS0_12meta_contextE
+  %i.a = tail call noundef nonnull align 8 dereferenceable(128) ptr %.sroa.speculated.i.i(ptr noundef nonnull align 8 dereferenceable(56) %0) #29, !inline_history !1688
   ret ptr %i.a
 }
 

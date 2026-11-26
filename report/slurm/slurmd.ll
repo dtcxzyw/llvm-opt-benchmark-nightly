@@ -202,11 +202,11 @@ bb.f:                                             ; preds = %bb.d
 .preheader.preheader.i:                           ; preds = %bb.f
   %i.au = tail call ptr @xstrcasestr(ptr noundef nonnull %i.at, ptr noundef nonnull @.str.190) #16
   %.not6.i = icmp eq ptr %i.au, null
-  br i1 %.not6.i, label %.preheader.preheader.i._validate_dynamic_conf.exit_crit_edge, label %bb.g
+  br i1 %.not6.i, label %.preheader.preheader.i._validate_dynamic_conf.exit_crit_edge, label %bb.g, !llvm.loop !21
 
 .preheader.preheader.i._validate_dynamic_conf.exit_crit_edge: ; preds = %.preheader.preheader.i
   %.pre = load ptr, ptr @conf, align 8
-  br label %_validate_dynamic_conf.exit
+  br label %_validate_dynamic_conf.exit, !llvm.loop !21
 
 bb.g:                                             ; preds = %.preheader.preheader.i
   tail call void (ptr, ...) @fatal(ptr noundef nonnull @.str.191, ptr noundef nonnull @.str.190) #17
@@ -570,7 +570,7 @@ bb.d:                                             ; preds = %.lr.ph, %bb.d
   %i.w = load i32, ptr %i.k, align 8
   %i.x = zext i32 %i.w to i64
   %i.y = icmp samesign ult i64 %indvars.iv.next, %i.x
-  br i1 %i.y, label %bb.d, label %.preheader, !llvm.loop !21
+  br i1 %i.y, label %bb.d, label %.preheader, !llvm.loop !22
 
 ._crit_edge:                                      ; preds = %bb.e, %.preheader
   %i.z = getelementptr inbounds nuw i8, ptr %i.j, i64 1528 ; 2 uses
@@ -595,7 +595,7 @@ bb.e:                                             ; preds = %.lr.ph87, %bb.e
   %i.ah = load i32, ptr %i.n, align 8
   %i.ai = zext i32 %i.ah to i64
   %i.aj = icmp samesign ult i64 %indvars.iv.next92, %i.ai
-  br i1 %i.aj, label %bb.e, label %._crit_edge, !llvm.loop !22
+  br i1 %i.aj, label %bb.e, label %._crit_edge, !llvm.loop !23
 
 bb.f:                                             ; preds = %._crit_edge
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #16
@@ -998,7 +998,7 @@ bb.l:                                             ; preds = %bb.k, %.lr.ph.i.i
   %i.bm = load i32, ptr @ncpus, align 4
   %i.bn = sext i32 %i.bm to i64
   %i.bo = icmp slt i64 %indvars.iv.next.i.i, %i.bn
-  br i1 %i.bo, label %.lr.ph.i.i, label %.loopexit20.i.i, !llvm.loop !23
+  br i1 %i.bo, label %.lr.ph.i.i, label %.loopexit20.i.i, !llvm.loop !24
 
 .loopexit20.i.i:                                  ; preds = %bb.l, %.preheader19.i.i, %bb.i
   %i.bp = load ptr, ptr @res_abs_cores, align 8
@@ -1042,14 +1042,14 @@ bb.l:                                             ; preds = %bb.k, %.lr.ph.i.i
   %i.cl = load i16, ptr %i.ck, align 2
   %i.cm = zext i16 %i.cl to i32                   ; 2 uses
   %i.cn = icmp samesign ult i32 %i.ci, %i.cm
-  br i1 %i.cn, label %.lr.ph23.i.i, label %.loopexit.i.i, !llvm.loop !24
+  br i1 %i.cn, label %.lr.ph23.i.i, label %.loopexit.i.i, !llvm.loop !25
 
 .loopexit.i.i:                                    ; preds = %.lr.ph23.i.i, %.preheader.i.i, %.lr.ph26.i.i
   %indvars.iv.next30.i.i = add nuw nsw i64 %indvars.iv29.i.i, 1 ; 2 uses
   %i.co = load i32, ptr @ncores, align 4
   %i.cp = sext i32 %i.co to i64
   %i.cq = icmp slt i64 %indvars.iv.next30.i.i, %i.cp
-  br i1 %i.cq, label %.lr.ph26.i.i, label %_validate_and_convert_cpu_list.exit.i, !llvm.loop !25
+  br i1 %i.cq, label %.lr.ph26.i.i, label %_validate_and_convert_cpu_list.exit.i, !llvm.loop !26
 
 _validate_and_convert_cpu_list.exit.i:            ; preds = %.loopexit.i.i, %.loopexit20.i.i
   %i.cr = load ptr, ptr @res_cpu_bitmap, align 8
@@ -1210,7 +1210,7 @@ bb.aa:                                            ; preds = %._crit_edge.us.i.i,
   %i.es = load i16, ptr %i.er, align 2
   %i.et = zext i16 %i.es to i64
   %i.eu = icmp samesign ult i64 %indvars.iv.next.i35.i, %i.et
-  br i1 %i.eu, label %.lr.ph.us.i.i, label %._crit_edge.us.loopexit.i.i, !llvm.loop !26
+  br i1 %i.eu, label %.lr.ph.us.i.i, label %._crit_edge.us.loopexit.i.i, !llvm.loop !27
 
 ._crit_edge.us.loopexit.i.i:                      ; preds = %.lr.ph.us.i.i
   %.phi.trans.insert.i.i = getelementptr inbounds nuw i8, ptr %i.eq, i64 4184
@@ -1230,13 +1230,13 @@ bb.aa:                                            ; preds = %._crit_edge.us.i.i,
   %i.ez = icmp ne i32 %i.ex, 0                    ; 2 uses
   %i.fa = icmp ne i32 %i.ey, %.024.i.i
   %i.fb = select i1 %i.ez, i1 %i.fa, i1 false
-  br i1 %i.fb, label %bb.aa, label %._crit_edge37.us.i.i, !llvm.loop !27
+  br i1 %i.fb, label %bb.aa, label %._crit_edge37.us.i.i, !llvm.loop !28
 
 ._crit_edge37.us.i.i:                             ; preds = %._crit_edge.us.i.i
   %i.fc = add nsw i32 %.03140.us.i.i, %.023.i.i   ; 2 uses
   %i.fd = icmp ne i32 %i.fc, %.027.i.i
   %i.fe = select i1 %i.ez, i1 %i.fd, i1 false
-  br i1 %i.fe, label %.preheader.us.i.i, label %_select_spec_cores.exit.i, !llvm.loop !28
+  br i1 %i.fe, label %.preheader.us.i.i, label %_select_spec_cores.exit.i, !llvm.loop !29
 
 _select_spec_cores.exit.i:                        ; preds = %._crit_edge37.us.i.i, %bb.z
   %i.ff = load ptr, ptr @res_abs_cores, align 8
@@ -1440,7 +1440,7 @@ bb.bb:                                            ; preds = %bb.ba, %bb.az, %bb.
   %i.hl = load i32, ptr @ncpus, align 4
   %i.hm = sext i32 %i.hl to i64
   %i.hn = icmp slt i64 %indvars.iv.next.i, %i.hm
-  br i1 %i.hn, label %bb.ay, label %._crit_edge.i, !llvm.loop !29
+  br i1 %i.hn, label %bb.ay, label %._crit_edge.i, !llvm.loop !30
 
 ._crit_edge.i:                                    ; preds = %bb.bb, %bb.ax
   %i.ho = phi ptr [ %i.gq, %bb.ax ], [ %i.hk, %bb.bb ]
@@ -1838,7 +1838,7 @@ bb.z:                                             ; preds = %bb.y, %bb.x
   %i.dm = load i16, ptr %i.dl, align 8
   %i.dn = zext i16 %i.dm to i64
   %i.do = icmp samesign ult i64 %indvars.iv.next, %i.dn
-  br i1 %i.do, label %.lr.ph, label %._crit_edge, !llvm.loop !30
+  br i1 %i.do, label %.lr.ph, label %._crit_edge, !llvm.loop !31
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.z
   %i.dp = call i32 @get_log_level() #16
@@ -1876,7 +1876,7 @@ bb.ab:                                            ; preds = %bb.aa, %._crit_edge
   %i.ef = load i16, ptr %i.ee, align 8
   %i.eg = zext i16 %i.ef to i64
   %i.eh = icmp samesign ult i64 %indvars.iv.next49, %i.eg
-  br i1 %i.eh, label %.lr.ph33, label %._crit_edge34, !llvm.loop !31
+  br i1 %i.eh, label %.lr.ph33, label %._crit_edge34, !llvm.loop !32
 
 ._crit_edge34:                                    ; preds = %.lr.ph33, %bb.ab
   %i.ei = call i32 @get_log_level() #16
@@ -1959,7 +1959,7 @@ bb.am:                                            ; preds = %bb.ak, %bb.al
   %i.fl = load i32, ptr %i.fa, align 8
   %i.fm = zext i32 %i.fl to i64
   %i.fn = icmp samesign ult i64 %indvars.iv.next52, %i.fm
-  br i1 %i.fn, label %bb.ak, label %._crit_edge38, !llvm.loop !32
+  br i1 %i.fn, label %bb.ak, label %._crit_edge38, !llvm.loop !33
 
 bb.an:                                            ; preds = %._crit_edge38
   %i.fo = load ptr, ptr @conf, align 8
@@ -2050,7 +2050,7 @@ bb.az:                                            ; preds = %bb.ax, %bb.ay
   %i.gw = load i32, ptr %i.gl, align 8
   %i.gx = zext i32 %i.gw to i64
   %i.gy = icmp samesign ult i64 %indvars.iv.next55, %i.gx
-  br i1 %i.gy, label %bb.ax, label %._crit_edge42, !llvm.loop !33
+  br i1 %i.gy, label %bb.ax, label %._crit_edge42, !llvm.loop !34
 
 bb.ba:                                            ; preds = %._crit_edge42
   %i.gz = load ptr, ptr @conf, align 8
@@ -2276,7 +2276,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
 bb.k:                                             ; preds = %bb.j, %bb.g, %.lr.ph
   %i.ac = call ptr @readdir(ptr noundef nonnull %i.k) #16 ; 2 uses
   %.not = icmp eq ptr %i.ac, null
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !34
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !35
 
 ._crit_edge:                                      ; preds = %bb.k, %.preheader
   %i.ad = call i32 @closedir(ptr noundef nonnull %i.k) ; 0 uses
@@ -2679,4 +2679,5 @@ attributes #21 = { nounwind willreturn memory(read) }
 !32 = distinct !{!32, !8, !9}
 !33 = distinct !{!33, !8, !9}
 !34 = distinct !{!34, !8, !9}
+!35 = distinct !{!35, !8, !9}
 end_hunk_2

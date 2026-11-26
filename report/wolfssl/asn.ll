@@ -205,18 +205,15 @@ define range(i32 -192, 1) i32 @GetASN_Items(ptr nofree noundef readonly captures
 bb.a:
   %i.a = alloca i32, align 4                      ; 5 uses
   %i.b = alloca [8 x i32], align 16               ; 6 uses
-  %7 = alloca [2 x i8], align 2                   ; 7 uses
   %i.c = load i32, ptr %5, align 4, !tbaa !26     ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #24
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #24
-  store i16 -1, ptr %7, align 2
   %i.d = insertelement <4 x i32> poison, i32 %6, i64 0
   %i.e = shufflevector <4 x i32> %i.d, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   store <4 x i32> %i.e, ptr %i.b, align 16, !tbaa !26
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store <4 x i32> %i.e, ptr %i.f, align 16, !tbaa !26
   %i.g = icmp sgt i32 %2, 0
-  br i1 %i.g, label %.lr.ph325.preheader, label %.loopexit
+  br i1 %i.g, label %.lr.ph325.preheader, label %bb.ce
 
 .lr.ph325.preheader:                              ; preds = %bb.a
   %i.h = load i8, ptr %0, align 1, !tbaa !24
@@ -228,6 +225,8 @@ bb.a:
 .lr.ph325:                                        ; preds = %.lr.ph325.preheader, %.loopexit264
   %.0145324 = phi i32 [ %spec.select, %.loopexit264 ], [ %i.i, %.lr.ph325.preheader ] ; 2 uses
   %.0147323 = phi i32 [ %.2, %.loopexit264 ], [ 0, %.lr.ph325.preheader ] ; 3 uses
+  %.sroa.7.0358 = phi i8 [ %.sroa.7.3, %.loopexit264 ], [ -1, %.lr.ph325.preheader ] ; 5 uses
+  %.sroa.0.0357 = phi i8 [ %.sroa.0.3, %.loopexit264 ], [ -1, %.lr.ph325.preheader ] ; 5 uses
   %.1153322 = phi i32 [ %i.of, %.loopexit264 ], [ 0, %.lr.ph325.preheader ] ; 9 uses
   %.0321 = phi i32 [ %.2234, %.loopexit264 ], [ %i.c, %.lr.ph325.preheader ] ; 12 uses
   %i.l = sext i32 %.1153322 to i64                ; 2 uses
@@ -236,8 +235,8 @@ bb.a:
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 4 ; 2 uses
   store i32 0, ptr %i.n, align 4, !tbaa !30
   %i.o = getelementptr inbounds [4 x i8], ptr %0, i64 %i.l ; 11 uses
-  %i.p = load i8, ptr %i.o, align 1, !tbaa !24    ; 4 uses
-  %i.q = zext i8 %i.p to i32                      ; 3 uses
+  %i.p = load i8, ptr %i.o, align 1, !tbaa !24    ; 5 uses
+  %i.q = zext i8 %i.p to i32                      ; 2 uses
   %i.r = icmp ugt i8 %i.p, 7
   br i1 %i.r, label %GetLength_ex.exit.thread, label %bb.b
 
@@ -245,7 +244,7 @@ bb.b:                                             ; preds = %.lr.ph325
   %spec.select = call i32 @llvm.umin.i32(i32 %.0145324, i32 %i.q) ; 2 uses
   %i.s = icmp sgt i32 %.0147323, 0
   %i.t = getelementptr inbounds nuw i8, ptr %i.o, i64 3
-  %i.u = load i8, ptr %i.t, align 1, !tbaa !155   ; 3 uses
+  %i.u = load i8, ptr %i.t, align 1, !tbaa !155   ; 4 uses
   %i.v = zext i8 %i.u to i32                      ; 3 uses
   %.not173 = icmp eq i32 %.0147323, %i.v
   %or.cond475 = select i1 %i.s, i1 %.not173, i1 false
@@ -256,20 +255,23 @@ bb.b:                                             ; preds = %.lr.ph325
   br i1 %i.w, label %bb.c, label %bb.e
 
 bb.c:                                             ; preds = %._crit_edge394
-  %8 = zext i8 %i.u to i64
-  %9 = getelementptr i8, ptr %7, i64 %8
-  %10 = getelementptr i8, ptr %9, i64 -2          ; 2 uses
-  %11 = load i8, ptr %10, align 1, !tbaa !15
+  %.sroa.idx.not = icmp eq i8 %i.u, 2             ; 3 uses
+  %7 = icmp ult i8 %i.u, 4
+  call void @llvm.assume(i1 %7)
+  %.sroa.speculated40 = select i1 %.sroa.idx.not, i8 %.sroa.0.0357, i8 %.sroa.7.0358
   fence seq_cst
-  %i.x = icmp eq i8 %11, -1
+  %i.x = icmp eq i8 %.sroa.speculated40, -1
   br i1 %i.x, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  store i8 0, ptr %10, align 1, !tbaa !15
+  %..sroa.0.0 = select i1 %.sroa.idx.not, i8 0, i8 %.sroa.0.0357
+  %.sroa.7.0. = select i1 %.sroa.idx.not, i8 %.sroa.7.0358, i8 0
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.b, %bb.c, %bb.d, %._crit_edge394
-  %.2 = phi i32 [ %i.v, %bb.d ], [ %i.v, %bb.c ], [ 0, %._crit_edge394 ], [ %.0147323, %bb.b ] ; 3 uses
+  %.sroa.0.1 = phi i8 [ %..sroa.0.0, %bb.d ], [ %.sroa.0.0357, %bb.c ], [ %.sroa.0.0357, %._crit_edge394 ], [ %.sroa.0.0357, %bb.b ] ; 6 uses
+  %.sroa.7.1 = phi i8 [ %.sroa.7.0., %bb.d ], [ %.sroa.7.0358, %bb.c ], [ %.sroa.7.0358, %._crit_edge394 ], [ %.sroa.7.0358, %bb.b ] ; 6 uses
+  %.2 = phi i32 [ %i.v, %bb.d ], [ %i.v, %bb.c ], [ 0, %._crit_edge394 ], [ %.0147323, %bb.b ] ; 4 uses
   %i.y = zext nneg i8 %i.p to i64
   %i.z = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.y ; 2 uses
   %i.aa = load i32, ptr %i.z, align 4, !tbaa !26  ; 5 uses
@@ -509,13 +511,16 @@ bb.u:                                             ; preds = %GetLength_ex.exit
   br i1 %i.dm, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %bb.u
-  %12 = zext nneg i32 %.2 to i64
-  %13 = getelementptr i8, ptr %7, i64 %12
-  %14 = getelementptr i8, ptr %13, i64 -2
-  store i8 1, ptr %14, align 1, !tbaa !15
+  %.sroa.idx27.not = icmp eq i32 %.2, 2           ; 2 uses
+  %8 = icmp samesign ult i32 %.2, 4
+  call void @llvm.assume(i1 %8)
+  %..sroa.0.1 = select i1 %.sroa.idx27.not, i8 1, i8 %.sroa.0.1
+  %.sroa.7.1. = select i1 %.sroa.idx27.not, i8 %.sroa.7.1, i8 1
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.v, %bb.u
+  %.sroa.0.2 = phi i8 [ %..sroa.0.1, %bb.v ], [ %.sroa.0.1, %bb.u ] ; 5 uses
+  %.sroa.7.2 = phi i8 [ %.sroa.7.1., %bb.v ], [ %.sroa.7.1, %bb.u ] ; 5 uses
   %i.dn = getelementptr inbounds nuw i8, ptr %i.o, i64 1
   %i.do = load i8, ptr %i.dn, align 1, !tbaa !23  ; 4 uses
   switch i8 %i.do, label %bb.ah [
@@ -918,48 +923,50 @@ bb.cc:                                            ; preds = %bb.ca, %bb.cb
   br label %.loopexit264
 
 .loopexit264:                                     ; preds = %bb.cb, %bb.cc, %.lr.ph316, %..loopexit264.loopexit_crit_edge, %..loopexit264.loopexit_crit_edge541, %.preheader265, %.preheader263, %GetASN_StoreData.exit, %bb.av
-  %.2234 = phi i32 [ %i.ns, %GetASN_StoreData.exit ], [ %.1, %bb.av ], [ %.0321, %.preheader263 ], [ %.0321, %.lr.ph316 ], [ %i.ns, %.preheader265 ], [ %.0321, %..loopexit264.loopexit_crit_edge541 ], [ %.0321, %..loopexit264.loopexit_crit_edge ], [ %i.ns, %bb.cc ], [ %i.ns, %bb.cb ] ; 4 uses
+  %.2234 = phi i32 [ %i.ns, %GetASN_StoreData.exit ], [ %.1, %bb.av ], [ %.0321, %.preheader263 ], [ %.0321, %.lr.ph316 ], [ %i.ns, %.preheader265 ], [ %.0321, %..loopexit264.loopexit_crit_edge541 ], [ %.0321, %..loopexit264.loopexit_crit_edge ], [ %i.ns, %bb.cc ], [ %i.ns, %bb.cb ] ; 3 uses
   %.2154 = phi i32 [ %.1153322, %GetASN_StoreData.exit ], [ %.1153322, %bb.av ], [ %.1153322, %.preheader263 ], [ %.1153322, %.lr.ph316 ], [ %.1153322, %.preheader265 ], [ %i.oe, %..loopexit264.loopexit_crit_edge541 ], [ %i.k, %..loopexit264.loopexit_crit_edge ], [ %.1150.in309, %bb.cb ], [ %i.k, %bb.cc ]
+  %.sroa.0.3 = phi i8 [ %.sroa.0.2, %GetASN_StoreData.exit ], [ %.sroa.0.2, %bb.av ], [ %.sroa.0.1, %.preheader263 ], [ %.sroa.0.1, %.lr.ph316 ], [ %.sroa.0.2, %.preheader265 ], [ %.sroa.0.1, %..loopexit264.loopexit_crit_edge541 ], [ %.sroa.0.1, %..loopexit264.loopexit_crit_edge ], [ %.sroa.0.2, %bb.cc ], [ %.sroa.0.2, %bb.cb ] ; 2 uses
+  %.sroa.7.3 = phi i8 [ %.sroa.7.2, %GetASN_StoreData.exit ], [ %.sroa.7.2, %bb.av ], [ %.sroa.7.1, %.preheader263 ], [ %.sroa.7.1, %.lr.ph316 ], [ %.sroa.7.2, %.preheader265 ], [ %.sroa.7.1, %..loopexit264.loopexit_crit_edge541 ], [ %.sroa.7.1, %..loopexit264.loopexit_crit_edge ], [ %.sroa.7.2, %bb.cc ], [ %.sroa.7.2, %bb.cb ] ; 2 uses
   %i.of = add nsw i32 %.2154, 1                   ; 2 uses
   %i.og = icmp slt i32 %i.of, %2
   br i1 %i.og, label %.lr.ph325, label %._crit_edge, !llvm.loop !153
 
 ._crit_edge:                                      ; preds = %.loopexit264
+  %9 = icmp eq i8 %.sroa.0.3, 0
+  %10 = icmp eq i8 %.sroa.7.3, 0
   %.not = icmp ne i32 %3, 0
   %i.oh = icmp samesign ult i32 %.0145324, %i.q
   %or.cond = select i1 %.not, i1 %i.oh, i1 false
-  br i1 %or.cond, label %.lr.ph330, label %.loopexit
+  br i1 %or.cond, label %.lr.ph368.preheader, label %.loopexit
+
+.lr.ph368.preheader:                              ; preds = %._crit_edge
+  %11 = zext nneg i8 %i.p to i64
+  %12 = zext nneg i32 %spec.select to i64
+  br label %.lr.ph330
 
 bb.cd:                                            ; preds = %.lr.ph330
-  %15 = add nsw i32 %.2151329, -1                 ; 2 uses
-  %i.oi = icmp sgt i32 %15, %spec.select
+  %indvars.iv.next430 = add nsw i64 %indvars.iv429, -1 ; 2 uses
+  %i.oi = icmp sgt i64 %indvars.iv.next430, %12
   br i1 %i.oi, label %.lr.ph330, label %.loopexit, !llvm.loop !154
 
-.lr.ph330:                                        ; preds = %._crit_edge, %bb.cd
-  %.2151329 = phi i32 [ %15, %bb.cd ], [ %i.q, %._crit_edge ] ; 2 uses
-  %16 = zext nneg i32 %.2151329 to i64
-  %i.oj = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %16
+.lr.ph330:                                        ; preds = %.lr.ph368.preheader, %bb.cd
+  %indvars.iv429 = phi i64 [ %11, %.lr.ph368.preheader ], [ %indvars.iv.next430, %bb.cd ] ; 2 uses
+  %i.oj = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv429
   %i.ok = load i32, ptr %i.oj, align 4, !tbaa !26
   %i.ol = icmp ult i32 %.2234, %i.ok
   br i1 %i.ol, label %GetLength_ex.exit.thread, label %bb.cd
 
-.loopexit:                                        ; preds = %bb.cd, %bb.a, %._crit_edge
-  %.0.lcssa428 = phi i32 [ %i.c, %bb.a ], [ %.2234, %._crit_edge ], [ %.2234, %bb.cd ]
-  %17 = load i8, ptr %7, align 2, !tbaa !15
-  %18 = icmp eq i8 %17, 0
-  %19 = getelementptr inbounds nuw i8, ptr %7, i64 1
-  %20 = load i8, ptr %19, align 1
-  %21 = icmp eq i8 %20, 0
-  %or.cond478 = select i1 %18, i1 true, i1 %21
+.loopexit:                                        ; preds = %bb.cd, %._crit_edge
+  %or.cond478 = select i1 %9, i1 true, i1 %10
   br i1 %or.cond478, label %GetLength_ex.exit.thread, label %bb.ce
 
-bb.ce:                                            ; preds = %.loopexit
-  store i32 %.0.lcssa428, ptr %5, align 4, !tbaa !26
+bb.ce:                                            ; preds = %.loopexit, %bb.a
+  %.0.lcssa467474477 = phi i32 [ %.2234, %.loopexit ], [ %i.c, %bb.a ]
+  store i32 %.0.lcssa467474477, ptr %5, align 4, !tbaa !26
   br label %GetLength_ex.exit.thread
 
 GetLength_ex.exit.thread:                         ; preds = %.preheader.i200, %bb.br, %bb.bq, %bb.bt, %bb.bj, %bb.bi, %bb.bh, %bb.bf, %bb.be, %bb.bc, %bb.bb, %bb.az, %bb.ay, %bb.ax, %bb.at, %bb.au, %bb.ag, %bb.ae, %bb.af, %bb.ad, %bb.aa, %bb.x, %bb.ac, %.thread69.i, %bb.s, %._crit_edge.i, %bb.t, %bb.m, %bb.q, %GetLength_ex.exit, %.lr.ph325, %bb.l, %bb.al, %bb.bm, %bb.ar, %.lr.ph.preheader.i195, %.lr.ph.i196.1, %bb.ao, %.lr.ph.i196.2, %bb.aq, %.lr.ph330, %.loopexit, %bb.j, %bb.bl, %GetOID.exit.i, %bb.k, %bb.ce
   %.4 = phi i32 [ 0, %bb.ce ], [ -142, %bb.bl ], [ %.mux, %bb.j ], [ -148, %GetOID.exit.i ], [ %switch.select189, %bb.k ], [ -140, %bb.al ], [ -140, %bb.ar ], [ -140, %bb.bm ], [ -140, %.loopexit ], [ -140, %.lr.ph330 ], [ -140, %bb.aq ], [ -140, %.lr.ph.i196.2 ], [ -140, %bb.ao ], [ -140, %.lr.ph.i196.1 ], [ -140, %.lr.ph.preheader.i195 ], [ -140, %bb.az ], [ -146, %bb.bb ], [ -140, %bb.bc ], [ -146, %bb.be ], [ -132, %bb.bf ], [ -140, %bb.bh ], [ -140, %bb.bi ], [ -110, %bb.bj ], [ -146, %bb.bt ], [ -140, %bb.bq ], [ -192, %bb.br ], [ -140, %.preheader.i200 ], [ -140, %bb.au ], [ -146, %bb.ay ], [ -140, %bb.ae ], [ -140, %bb.af ], [ -140, %bb.x ], [ -140, %bb.aa ], [ -146, %bb.ad ], [ -140, %bb.s ], [ -140, %._crit_edge.i ], [ -140, %bb.t ], [ -140, %bb.m ], [ -140, %bb.q ], [ -140, %bb.l ], [ -140, %bb.ag ], [ -146, %bb.ac ], [ -140, %.thread69.i ], [ -140, %GetLength_ex.exit ], [ -140, %bb.at ], [ -140, %.lr.ph325 ], [ -140, %bb.ax ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #24
   ret i32 %.4
 }
@@ -1362,26 +1369,26 @@ wolfssl_local_MatchIpSubnet.exit.thread:          ; preds = %bb.f, %bb.d, %wolfs
   ret i32 %or.cond
 }
 
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
+declare void @llvm.assume(i1 noundef) #21
+
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.fshl.i32(i32, i32, i32) #21
+declare i32 @llvm.fshl.i32(i32, i32, i32) #22
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
-declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #22
+declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smin.i32(i32, i32) #21
+declare i32 @llvm.smin.i32(i32, i32) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #21
+declare i32 @llvm.umax.i32(i32, i32) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #21
+declare i32 @llvm.smax.i32(i32, i32) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umin.i32(i32, i32) #21
-
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #23
+declare i32 @llvm.umin.i32(i32, i32) #22
 
 attributes #0 = { nofree norecurse nosync nounwind memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -1404,9 +1411,9 @@ attributes #17 = { mustprogress nofree nosync nounwind willreturn memory(none) "
 attributes #18 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #19 = { nofree norecurse nosync nounwind memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #20 = { mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #21 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #22 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
-attributes #23 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #21 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #22 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #23 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
 attributes #24 = { nounwind }
 attributes #25 = { nounwind willreturn memory(read) }
 attributes #26 = { nounwind willreturn memory(none) }

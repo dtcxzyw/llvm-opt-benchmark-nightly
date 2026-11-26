@@ -204,8 +204,6 @@ bb.a:
   %60 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 4 uses
   %61 = alloca %"class.cvc5::internal::NodeTemplate.107", align 8 ; 2 uses
   %62 = alloca [2 x %"class.std::vector.97"], align 16 ; 29 uses
-  %.sroa.0 = alloca i64, align 16                 ; 6 uses
-  %.sroa.6 = alloca i64, align 8                  ; 6 uses
   %63 = alloca %"class.std::vector.97", align 8   ; 10 uses
   %64 = alloca %"class.cvc5::internal::NodeTemplate.107", align 8 ; 2 uses
   %65 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 2 uses
@@ -608,10 +606,6 @@ bb.ed:                                            ; preds = %bb.ec
 bb.ee:                                            ; preds = %bb.ed
   call void @llvm.lifetime.start.p0(ptr nonnull %62) #24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %62, i8 0, i64 48, i1 false)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6)
-  store i64 0, ptr %.sroa.0, align 16
-  store i64 0, ptr %.sroa.6, align 8
   br label %bb.ei
 
 bb.ef:                                            ; preds = %bb.ds, %bb.dp
@@ -631,8 +625,10 @@ bb.eh:                                            ; preds = %bb.ec
   br label %.body919
 
 bb.ei:                                            ; preds = %bb.ee, %._crit_edge2272
-  %i.qo = phi i1 [ true, %bb.ee ], [ false, %._crit_edge2272 ]
-  %.05382287.sroa.phi = phi ptr [ %.sroa.0, %bb.ee ], [ %.sroa.6, %._crit_edge2272 ] ; 2 uses
+  %.sroa.7.0 = phi i64 [ 0, %bb.ee ], [ %.sroa.7.5, %._crit_edge2272 ] ; 2 uses
+  %.sroa.02371.0 = phi i64 [ 0, %bb.ee ], [ %.sroa.02371.5, %._crit_edge2272 ] ; 2 uses
+  %i.qo = phi i1 [ false, %bb.ee ], [ true, %._crit_edge2272 ] ; 3 uses
+  %224 = phi i1 [ true, %bb.ee ], [ false, %._crit_edge2272 ]
   %.05382287.sroa.phi2878 = phi ptr [ %62, %bb.ee ], [ %.05382287.sroa.gep2879, %._crit_edge2272 ] ; 3 uses
   %.05382287.sroa.phi2881 = phi ptr [ %57, %bb.ee ], [ %.05382287.sroa.gep2883, %._crit_edge2272 ] ; 3 uses
   %i.qp = load ptr, ptr %.05382287.sroa.phi2881, align 8, !tbaa !135 ; 6 uses
@@ -691,6 +687,8 @@ _ZSt4sortIN9__gnu_cxx17__normal_iteratorIPN4cvc58internal12NodeTemplateILb1EEESt
   br label %bb.em
 
 bb.em:                                            ; preds = %.lr.ph2271, %.thread2055
+  %.sroa.7.1 = phi i64 [ %.sroa.7.0, %.lr.ph2271 ], [ %.sroa.7.4, %.thread2055 ] ; 4 uses
+  %.sroa.02371.1 = phi i64 [ %.sroa.02371.0, %.lr.ph2271 ], [ %.sroa.02371.4, %.thread2055 ] ; 4 uses
   %.sroa.02045.02270 = phi ptr [ %i.rc, %.lr.ph2271 ], [ %i.vf, %.thread2055 ] ; 5 uses
   %i.rg = invoke noundef zeroext i1 @_ZNK4cvc58internal12NodeTemplateILb1EE7isConstEv(ptr noundef nonnull align 8 dereferenceable(8) %.sroa.02045.02270)
           to label %bb.en unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
@@ -726,6 +724,8 @@ bb.eq:                                            ; preds = %bb.eo
   br label %bb.fq
 
 bb.er:                                            ; preds = %.lr.ph2257, %bb.fk
+  %.sroa.7.2 = phi i64 [ %.sroa.7.1, %.lr.ph2257 ], [ %spec.select, %bb.fk ] ; 5 uses
+  %.sroa.02371.2 = phi i64 [ %.sroa.02371.1, %.lr.ph2257 ], [ %spec.select2801, %bb.fk ] ; 5 uses
   %.sroa.02041.02254 = phi ptr [ %i.ri, %.lr.ph2257 ], [ %i.tv, %bb.fk ] ; 2 uses
   %i.rm = load ptr, ptr %.sroa.02041.02254, align 8, !tbaa !39
   %.not2116 = icmp eq ptr %i.rm, %i.rk
@@ -885,9 +885,10 @@ bb.fj:                                            ; preds = %bb.ey
   br label %bb.fl
 
 bb.fk:                                            ; preds = %bb.er
-  %224 = load i64, ptr %.05382287.sroa.phi, align 8, !tbaa !122
-  %i.tu = add i64 %224, 1
-  store i64 %i.tu, ptr %.05382287.sroa.phi, align 8, !tbaa !122
+  %.sroa.speculated = select i1 %i.qo, i64 %.sroa.7.2, i64 %.sroa.02371.2
+  %i.tu = add i64 %.sroa.speculated, 1            ; 2 uses
+  %spec.select = select i1 %i.qo, i64 %i.tu, i64 %.sroa.7.2 ; 2 uses
+  %spec.select2801 = select i1 %i.qo, i64 %.sroa.02371.2, i64 %i.tu ; 2 uses
   %i.tv = getelementptr inbounds nuw i8, ptr %.sroa.02041.02254, i64 8 ; 2 uses
   %.not2115 = icmp eq ptr %i.tv, %i.rj
   br i1 %.not2115, label %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit937.thread, label %bb.er
@@ -898,8 +899,10 @@ bb.fl:                                            ; preds = %bb.fj, %bb.fi
   br label %bb.fq
 
 _ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit937.thread: ; preds = %bb.fk, %bb.ep, %bb.fh, %bb.ff, %bb.fg
-  %.not21152138 = phi i1 [ false, %bb.fh ], [ false, %bb.fg ], [ false, %bb.ff ], [ true, %bb.ep ], [ true, %bb.fk ]
-  %spec.store.select = phi i32 [ 1, %bb.fh ], [ 1, %bb.fg ], [ 1, %bb.ff ], [ 0, %bb.ep ], [ 0, %bb.fk ]
+  %.sroa.7.3 = phi i64 [ %.sroa.7.1, %bb.ep ], [ %.sroa.7.2, %bb.fg ], [ %.sroa.7.2, %bb.ff ], [ %.sroa.7.2, %bb.fh ], [ %spec.select, %bb.fk ]
+  %.sroa.02371.3 = phi i64 [ %.sroa.02371.1, %bb.ep ], [ %.sroa.02371.2, %bb.fg ], [ %.sroa.02371.2, %bb.ff ], [ %.sroa.02371.2, %bb.fh ], [ %spec.select2801, %bb.fk ]
+  %.not21152138 = phi i1 [ true, %bb.ep ], [ false, %bb.fg ], [ false, %bb.ff ], [ false, %bb.fh ], [ true, %bb.fk ]
+  %spec.store.select = phi i32 [ 0, %bb.ep ], [ 1, %bb.fg ], [ 1, %bb.ff ], [ 1, %bb.fh ], [ 0, %bb.fk ]
   %i.tw = load ptr, ptr %63, align 8, !tbaa !141  ; 3 uses
   %i.tx = load ptr, ptr %i.nx, align 8, !tbaa !134 ; 2 uses
   %.not4.i.i.i = icmp eq ptr %i.tw, %i.tx
@@ -1010,18 +1013,20 @@ bb.fw:                                            ; preds = %bb.fr
           to label %.thread2055 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .thread2055:                                      ; preds = %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit.i, %bb.fw, %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EED2Ev.exit
+  %.sroa.7.4 = phi i64 [ %.sroa.7.3, %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EED2Ev.exit ], [ %.sroa.7.1, %bb.fw ], [ %.sroa.7.1, %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit.i ] ; 2 uses
+  %.sroa.02371.4 = phi i64 [ %.sroa.02371.3, %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EED2Ev.exit ], [ %.sroa.02371.1, %bb.fw ], [ %.sroa.02371.1, %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit.i ] ; 2 uses
   %i.vf = getelementptr inbounds nuw i8, ptr %.sroa.02045.02270, i64 8 ; 2 uses
   %.not2114 = icmp eq ptr %i.vf, %i.rd
   br i1 %.not2114, label %._crit_edge2272, label %bb.em
 
 ._crit_edge2272:                                  ; preds = %.thread2055, %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPN4cvc58internal12NodeTemplateILb1EEESt6vectorIS5_SaIS5_EEEEEvT_SB_.exit
-  br i1 %i.qo, label %bb.ei, label %bb.fx, !llvm.loop !589
+  %.sroa.7.5 = phi i64 [ %.sroa.7.0, %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPN4cvc58internal12NodeTemplateILb1EEESt6vectorIS5_SaIS5_EEEEEvT_SB_.exit ], [ %.sroa.7.4, %.thread2055 ] ; 5 uses
+  %.sroa.02371.5 = phi i64 [ %.sroa.02371.0, %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPN4cvc58internal12NodeTemplateILb1EEESt6vectorIS5_SaIS5_EEEEEvT_SB_.exit ], [ %.sroa.02371.4, %.thread2055 ] ; 5 uses
+  br i1 %224, label %bb.ei, label %bb.fx, !llvm.loop !589
 
 bb.fx:                                            ; preds = %._crit_edge2272
-  %.sroa.6.0..sroa.6.8. = load i64, ptr %.sroa.6, align 8, !tbaa !122 ; 4 uses
-  %.sroa.0.0..sroa.0.0. = load i64, ptr %.sroa.0, align 16, !tbaa !122 ; 4 uses
-  %i.vg = call i64 @llvm.umin.i64(i64 %.sroa.6.0..sroa.6.8., i64 %.sroa.0.0..sroa.0.0.) ; 2 uses
-  %.not744.not = icmp ugt i64 %.sroa.0.0..sroa.0.0., %.sroa.6.0..sroa.6.8.
+  %i.vg = call i64 @llvm.umin.i64(i64 %.sroa.7.5, i64 %.sroa.02371.5) ; 2 uses
+  %.not744.not = icmp ugt i64 %.sroa.02371.5, %.sroa.7.5
   br i1 %.not744.not, label %bb.gb, label %bb.gv
 
 bb.fy:                                            ; preds = %bb.hj
@@ -1044,7 +1049,7 @@ bb.ga:                                            ; preds = %bb.fz
           to label %_ZN4cvc58internal8TypeNodeC2ERKS1_.exit unwind label %bb.iz
 
 bb.gb:                                            ; preds = %bb.fx
-  %i.vo = sub i64 %.sroa.0.0..sroa.0.0., %i.vg    ; 4 uses
+  %i.vo = sub i64 %.sroa.02371.5, %i.vg           ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %66) #24
   %i.vp = icmp ugt i64 %i.vo, 1152921504606846975
   br i1 %i.vp, label %bb.gc, label %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i
@@ -1252,11 +1257,11 @@ bb.gu:                                            ; preds = %bb.gt, %bb.gs
   br label %.loopexit.split-lp
 
 bb.gv:                                            ; preds = %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EED2Ev.exit965, %bb.fx
-  %.not744.1.not = icmp ugt i64 %.sroa.6.0..sroa.6.8., %.sroa.0.0..sroa.0.0.
+  %.not744.1.not = icmp ugt i64 %.sroa.7.5, %.sroa.02371.5
   br i1 %.not744.1.not, label %bb.gw, label %bb.hj
 
 bb.gw:                                            ; preds = %bb.gv
-  %i.xu = sub i64 %.sroa.6.0..sroa.6.8., %i.vg    ; 4 uses
+  %i.xu = sub i64 %.sroa.7.5, %i.vg               ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %66) #24
   %i.xv = icmp ugt i64 %i.xu, 1152921504606846975
   br i1 %i.xv, label %bb.gc, label %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i.1
@@ -1659,8 +1664,6 @@ _ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit1007: ; preds = %_ZN4cvc58internal
 
 .loopexit2118:                                    ; preds = %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EED2Ev.exit, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit1007
   %.6513 = phi i32 [ %.5512, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit1007 ], [ %spec.store.select, %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EED2Ev.exit ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6)
   %i.ahh = load ptr, ptr %i.og, align 8, !tbaa !141 ; 3 uses
   %i.ahi = load ptr, ptr %i.oh, align 16, !tbaa !134 ; 2 uses
   %.not4.i.i.i1008 = icmp eq ptr %i.ahh, %i.ahi
@@ -1788,8 +1791,6 @@ bb.jx:                                            ; preds = %bb.jw, %bb.ja, %bb.
 
 .loopexit.split-lp:                               ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.fq, %.body946, %bb.jx
   %.pn745.pn.pn.pn = phi { ptr, i32 } [ %.pn731.pn, %bb.fq ], [ %.pn738.pn.pn.pn.pn, %bb.jx ], [ %.pn745.pn, %.body946 ], [ %lpad.loopexit.split-lp2850, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6)
   %i.aip = getelementptr inbounds nuw i8, ptr %62, i64 24 ; 2 uses
   %i.aiq = load ptr, ptr %i.aip, align 8, !tbaa !141 ; 3 uses
   %i.air = getelementptr inbounds nuw i8, ptr %62, i64 32

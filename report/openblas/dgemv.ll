@@ -5,7 +5,6 @@ begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
 
-@__const.dgemv_.gemv = private unnamed_addr constant [2 x ptr] [ptr @dgemv_n, ptr @dgemv_t], align 16
 @.str = private unnamed_addr constant [7 x i8] c"DGEMV \00", align 1
 @gemv_thread = internal unnamed_addr constant [2 x ptr] [ptr @dgemv_thread_n, ptr @dgemv_thread_t], align 16
 @blas_cpu_number = external local_unnamed_addr global i32, align 4
@@ -24,7 +23,7 @@ bb.a:
   %i.i = load i32, ptr %10, align 4, !tbaa !9     ; 6 uses
   %i.j = load double, ptr %3, align 8, !tbaa !11  ; 3 uses
   %i.k = load double, ptr %8, align 8, !tbaa !11  ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   %i.l = icmp sgt i8 %i.d, 96
   %i.m = add nsw i8 %i.d, -32
   %spec.select = select i1 %i.l, i8 %i.m, i8 %i.d ; 4 uses
@@ -54,7 +53,7 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.y = call i32 @xerbla_(ptr noundef nonnull @.str, ptr noundef nonnull %i.a, i32 noundef 7) #6 ; 0 uses
+  %i.y = call i32 @xerbla_(ptr noundef nonnull @.str, ptr noundef nonnull %i.a, i32 noundef 7) #7 ; 0 uses
   br label %bb.t
 
 bb.c:                                             ; preds = %bb.a
@@ -64,7 +63,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %or.cond, label %bb.t, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %.not102 = icmp eq i32 %spec.store.select4, 0   ; 2 uses
+  %.not102 = icmp eq i32 %spec.store.select4, 0   ; 3 uses
   %spec.select106 = select i1 %.not102, i32 %i.f, i32 %i.e
   %.086 = select i1 %.not102, i32 %i.e, i32 %i.f  ; 2 uses
   %i.ab = fcmp une double %i.k, 1.000000e+00
@@ -74,7 +73,7 @@ bb.e:                                             ; preds = %bb.d
   %i.ac = sext i32 %.086 to i64
   %i.ad = tail call i32 @llvm.abs.i32(i32 %i.i, i1 true)
   %i.ae = zext nneg i32 %i.ad to i64
-  %i.af = tail call i32 @dscal_k(i64 noundef %i.ac, i64 noundef 0, i64 noundef 0, double noundef %i.k, ptr noundef %9, i64 noundef %i.ae, ptr noundef null, i64 noundef 0, ptr noundef null, i64 noundef 0) #6 ; 0 uses
+  %i.af = tail call i32 @dscal_k(i64 noundef %i.ac, i64 noundef 0, i64 noundef 0, double noundef %i.k, ptr noundef %9, i64 noundef %i.ae, ptr noundef null, i64 noundef 0, ptr noundef null, i64 noundef 0) #7 ; 0 uses
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
@@ -130,7 +129,7 @@ bb.k:                                             ; preds = %bb.i, %bb.j
   br i1 %.not104, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
-  %i.az = tail call ptr @blas_memory_alloc(i32 noundef 1) #6
+  %i.az = tail call ptr @blas_memory_alloc(i32 noundef 1) #7
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.k, %bb.l
@@ -161,23 +160,23 @@ get_gemv_optimal_nthreads.exit:                   ; preds = %bb.o
   br i1 %i.bl, label %get_gemv_optimal_nthreads.exit.thread, label %bb.p
 
 get_gemv_optimal_nthreads.exit.thread:            ; preds = %bb.o, %num_cpu_avail.exit.i, %get_gemv_optimal_nthreads.exit
-  %11 = sext i32 %spec.store.select4 to i64
-  %12 = getelementptr inbounds [8 x i8], ptr @__const.dgemv_.gemv, i64 %11
-  %13 = load ptr, ptr %12, align 8, !tbaa !13
+  %11 = icmp ult i32 %spec.store.select4, 2
+  tail call void @llvm.assume(i1 %11)
+  %.sroa.speculated = select i1 %.not102, ptr @dgemv_n, ptr @dgemv_t
   %i.bm = sext i32 %i.g to i64
   %i.bn = sext i32 %i.h to i64
   %i.bo = sext i32 %i.i to i64
-  %i.bp = call i32 %13(i64 noundef %i.bb, i64 noundef %i.bc, i64 noundef 0, double noundef %i.j, ptr noundef %4, i64 noundef %i.bm, ptr noundef %.0, i64 noundef %i.bn, ptr noundef %.085, i64 noundef %i.bo, ptr noundef %i.ba) #6 ; 0 uses
+  %i.bp = call i32 %.sroa.speculated(i64 noundef %i.bb, i64 noundef %i.bc, i64 noundef 0, double noundef %i.j, ptr noundef %4, i64 noundef %i.bm, ptr noundef %.0, i64 noundef %i.bn, ptr noundef %.085, i64 noundef %i.bo, ptr noundef %i.ba) #7, !callees !12 ; 0 uses
   br label %bb.q
 
 bb.p:                                             ; preds = %get_gemv_optimal_nthreads.exit
   %i.bq = sext i32 %spec.store.select4 to i64
   %i.br = getelementptr inbounds [8 x i8], ptr @gemv_thread, i64 %i.bq
-  %i.bs = load ptr, ptr %i.br, align 8, !tbaa !13
+  %i.bs = load ptr, ptr %i.br, align 8, !tbaa !14
   %i.bt = sext i32 %i.g to i64
   %i.bu = sext i32 %i.h to i64
   %i.bv = sext i32 %i.i to i64
-  %i.bw = call i32 %i.bs(i64 noundef %i.bb, i64 noundef %i.bc, double noundef %i.j, ptr noundef %4, i64 noundef %i.bt, ptr noundef %.0, i64 noundef %i.bu, ptr noundef %.085, i64 noundef %i.bv, ptr noundef %i.ba, i32 noundef %i.bk) #6 ; 0 uses
+  %i.bw = call i32 %i.bs(i64 noundef %i.bb, i64 noundef %i.bc, double noundef %i.j, ptr noundef %4, i64 noundef %i.bt, ptr noundef %.0, i64 noundef %i.bu, ptr noundef %.085, i64 noundef %i.bv, ptr noundef %i.ba, i32 noundef %i.bk) #7 ; 0 uses
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %get_gemv_optimal_nthreads.exit.thread
@@ -186,7 +185,7 @@ bb.q:                                             ; preds = %bb.p, %get_gemv_opt
   br i1 %.not105, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %bb.q
-  call void @blas_memory_free(ptr noundef %i.ba) #6
+  call void @blas_memory_free(ptr noundef %i.ba) #7
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.r, %bb.q
@@ -196,16 +195,16 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.f, %bb.c, %bb.s, %bb.b
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   ret void
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.lifetime.start.p0(ptr captures(none)) #1
 
-declare i32 @dgemv_n(i64 noundef, i64 noundef, i64 noundef, double noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef) #2
+declare i32 @dgemv_n(i64 noundef, i64 noundef, i64 noundef, double noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef) local_unnamed_addr #2
 
-declare i32 @dgemv_t(i64 noundef, i64 noundef, i64 noundef, double noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef) #2
+declare i32 @dgemv_t(i64 noundef, i64 noundef, i64 noundef, double noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef) local_unnamed_addr #2
 
 declare i32 @xerbla_(ptr noundef, ptr noundef, i32 noundef) local_unnamed_addr #2
 
@@ -231,16 +230,20 @@ declare i32 @dgemv_thread_n(i64 noundef, i64 noundef, double noundef, ptr nounde
 
 declare i32 @dgemv_thread_t(i64 noundef, i64 noundef, double noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef, i32 noundef) #2
 
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
+declare void @llvm.assume(i1 noundef) #5
+
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #5
+declare i32 @llvm.smax.i32(i32, i32) #6
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
 attributes #3 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #4 = { nocallback nofree nosync nounwind willreturn }
-attributes #5 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #6 = { nounwind }
+attributes #5 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #6 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #7 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}
@@ -258,6 +261,7 @@ attributes #6 = { nounwind }
 !9 = !{!5, !5, i64 0}
 !10 = !{!"double", !4, i64 0}
 !11 = !{!10, !10, i64 0}
-!12 = !{!"any pointer", !4, i64 0}
-!13 = !{!12, !12, i64 0}
+!12 = !{ptr @dgemv_n, ptr @dgemv_t}
+!13 = !{!"any pointer", !4, i64 0}
+!14 = !{!13, !13, i64 0}
 end_hunk_0

@@ -204,14 +204,11 @@ declare void @trace_performance_fl(ptr noundef, i32 noundef, i64 noundef, ptr no
 ; Function Attrs: nounwind uwtable
 define dso_local void @diff_get_merge_base(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(none) %1) local_unnamed_addr #0 {
 bb.a:
-  %2 = alloca [2 x ptr], align 16                 ; 6 uses
   %i.a = alloca ptr, align 8                      ; 5 uses
-  %3 = alloca %struct.object_id, align 4          ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #15
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %2, i8 0, i64 16, i1 false)
+  %2 = alloca %struct.object_id, align 4          ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
   store ptr null, ptr %i.a, align 8, !tbaa !153
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 4 uses
   %i.c = load i32, ptr %i.b, align 8, !tbaa !125  ; 4 uses
   %.not31 = icmp eq i32 %i.c, 0
   br i1 %.not31, label %._crit_edge.thread, label %.lr.ph
@@ -247,42 +244,52 @@ bb.d:                                             ; preds = %bb.c
   br i1 %or.cond, label %._crit_edge.thread, label %.lr.ph28
 
 .lr.ph28:                                         ; preds = %._crit_edge
-  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 64
-  br label %bb.e
+  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 3 uses
+  %3 = load ptr, ptr @the_repository, align 8, !tbaa !103
+  %4 = load ptr, ptr %i.l, align 8, !tbaa !126
+  %5 = load ptr, ptr %4, align 8, !tbaa !129
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %7 = tail call ptr @lookup_commit_reference(ptr noundef %3, ptr noundef nonnull %6) #15
+  %8 = load i32, ptr %i.b, align 8, !tbaa !125    ; 2 uses
+  %9 = icmp ugt i32 %8, 1
+  br i1 %9, label %.cont.peel, label %._crit_edge29._crit_edge
+
+.cont.peel:                                       ; preds = %.lr.ph28
+  %10 = load ptr, ptr @the_repository, align 8, !tbaa !103
+  %11 = load ptr, ptr %i.l, align 8, !tbaa !126
+  %12 = getelementptr inbounds nuw i8, ptr %11, i64 32
+  %13 = load ptr, ptr %12, align 8, !tbaa !129
+  %14 = getelementptr inbounds nuw i8, ptr %13, i64 8
+  %15 = tail call ptr @lookup_commit_reference(ptr noundef %10, ptr noundef nonnull %14) #15
+  %16 = load i32, ptr %i.b, align 8, !tbaa !125   ; 2 uses
+  %17 = icmp ugt i32 %16, 2
+  br i1 %17, label %bb.e, label %._crit_edge29._crit_edge
 
 ._crit_edge.thread:                               ; preds = %bb.a, %._crit_edge
   tail call void (ptr, i32, ptr, ...) @BUG_fl(ptr noundef nonnull @.str.3, i32 noundef 596, ptr noundef nonnull @.str.6, i32 noundef %i.c) #16
   unreachable
 
-bb.e:                                             ; preds = %.lr.ph28, %bb.e
-  %indvars.iv35 = phi i64 [ 0, %.lr.ph28 ], [ %indvars.iv.next36, %bb.e ] ; 3 uses
+bb.e:                                             ; preds = %.cont.peel, %bb.e
   %i.m = load ptr, ptr @the_repository, align 8, !tbaa !103
   %i.n = load ptr, ptr %i.l, align 8, !tbaa !126
-  %4 = getelementptr inbounds nuw [32 x i8], ptr %i.n, i64 %indvars.iv35
-  %i.o = load ptr, ptr %4, align 8, !tbaa !129
+  %18 = getelementptr inbounds nuw i8, ptr %i.n, i64 64
+  %i.o = load ptr, ptr %18, align 8, !tbaa !129
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   %i.q = tail call ptr @lookup_commit_reference(ptr noundef %i.m, ptr noundef nonnull %i.p) #15
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv35
-  store ptr %i.q, ptr %5, align 8, !tbaa !155
-  %indvars.iv.next36 = add nuw nsw i64 %indvars.iv35, 1 ; 2 uses
   %i.r = load i32, ptr %i.b, align 8, !tbaa !125  ; 2 uses
-  %6 = zext i32 %i.r to i64
-  %7 = icmp samesign ult i64 %indvars.iv.next36, %6
-  br i1 %7, label %bb.e, label %._crit_edge29, !llvm.loop !152
+  %19 = icmp ugt i32 %i.r, 2
+  br i1 %19, label %bb.e, label %._crit_edge29._crit_edge, !llvm.loop !152
 
-._crit_edge29:                                    ; preds = %bb.e
-  %8 = icmp eq i32 %i.r, 1
-  br i1 %8, label %bb.f, label %._crit_edge29._crit_edge
+._crit_edge29._crit_edge:                         ; preds = %.cont.peel, %bb.e, %.lr.ph28
+  %.sroa.5.0..lcssa = phi ptr [ null, %.lr.ph28 ], [ %15, %.cont.peel ], [ %i.q, %bb.e ]
+  %.lcssa36 = phi i32 [ %8, %.lr.ph28 ], [ %16, %.cont.peel ], [ %i.r, %bb.e ]
+  %20 = icmp eq i32 %.lcssa36, 1
+  br i1 %20, label %bb.f, label %bb.i
 
-._crit_edge29._crit_edge:                         ; preds = %._crit_edge29
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !155
-  br label %bb.i
-
-bb.f:                                             ; preds = %._crit_edge29
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #15
+bb.f:                                             ; preds = %._crit_edge29._crit_edge
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #15
   %i.s = load ptr, ptr @the_repository, align 8, !tbaa !103
-  %i.t = call i32 @repo_get_oid(ptr noundef %i.s, ptr noundef nonnull @.str.7, ptr noundef nonnull %3) #15
+  %i.t = call i32 @repo_get_oid(ptr noundef %i.s, ptr noundef nonnull @.str.7, ptr noundef nonnull %2) #15
   %.not = icmp eq i32 %i.t, 0
   br i1 %.not, label %bb.h, label %bb.g
 
@@ -293,15 +300,14 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.f
   %i.v = load ptr, ptr @the_repository, align 8, !tbaa !103
-  %i.w = call ptr @lookup_commit_reference(ptr noundef %i.v, ptr noundef nonnull %3) #15
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #15
+  %i.w = call ptr @lookup_commit_reference(ptr noundef %i.v, ptr noundef nonnull %2) #15
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #15
   br label %bb.i
 
-bb.i:                                             ; preds = %._crit_edge29._crit_edge, %bb.h
-  %i.x = phi ptr [ %.pre, %._crit_edge29._crit_edge ], [ %i.w, %bb.h ]
+bb.i:                                             ; preds = %bb.h, %._crit_edge29._crit_edge
+  %i.x = phi ptr [ %i.w, %bb.h ], [ %.sroa.5.0..lcssa, %._crit_edge29._crit_edge ]
   %i.y = load ptr, ptr @the_repository, align 8, !tbaa !103
-  %9 = load ptr, ptr %2, align 16, !tbaa !155
-  %i.z = call i32 @repo_get_merge_bases(ptr noundef %i.y, ptr noundef %9, ptr noundef %i.x, ptr noundef nonnull %i.a) #15
+  %i.z = call i32 @repo_get_merge_bases(ptr noundef %i.y, ptr noundef %7, ptr noundef %i.x, ptr noundef nonnull %i.a) #15
   %i.aa = icmp slt i32 %i.z, 0
   br i1 %i.aa, label %bb.j, label %bb.k
 
@@ -341,7 +347,6 @@ bb.o:                                             ; preds = %bb.m
   store i32 %i.ak, ptr %i.al, align 4, !tbaa !105
   call void @commit_list_free(ptr noundef nonnull %i.ac) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #15
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #15
   ret void
 }
 
@@ -744,13 +749,13 @@ attributes #19 = { nounwind willreturn memory(none) }
 !149 = !{!96, !19, i64 240}
 !150 = !{!96, !9, i64 20}
 !151 = distinct !{!151, !123}
-!152 = distinct !{!152, !123}
+!152 = distinct !{!152, !123, !154}
 !153 = !{!13, !13, i64 0}
-!154 = !{!"p1 _ZTS6commit", !12, i64 0}
-!155 = !{!154, !154, i64 0}
-!156 = !{!"commit_list", !154, i64 0, !13, i64 8}
+!154 = !{!"llvm.loop.peeled.count", i32 2}
+!155 = !{!"p1 _ZTS6commit", !12, i64 0}
+!156 = !{!"commit_list", !155, i64 0, !13, i64 8}
 !157 = !{!156, !13, i64 8}
-!158 = !{!156, !154, i64 0}
+!158 = !{!156, !155, i64 0}
 !159 = !{!128, !22, i64 8}
 !160 = !{!134, !9, i64 104}
 !161 = !{!134, !9, i64 40}
