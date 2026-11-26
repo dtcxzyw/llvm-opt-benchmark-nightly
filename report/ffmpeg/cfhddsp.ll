@@ -200,9 +200,39 @@ bb.a:
 
 .lr.ph26:                                         ; preds = %bb.a
   %.idx.i = shl nsw i64 %3, 2
-  %i.b = add i32 %7, -1                           ; 2 uses
+  %i.b = add i32 %7, -1                           ; 3 uses
   %i.c = icmp sgt i32 %7, 2
-  %wide.trip.count.a = zext nneg i32 %i.b to i64
+  %wide.trip.count = zext i32 %i.b to i64         ; 4 uses
+  %8 = add nsw i32 %6, -1
+  %wide.trip.count.a = zext i32 %8 to i64         ; 2 uses
+  %9 = shl nuw nsw i64 %wide.trip.count.a, 1
+  %10 = add nuw nsw i64 %wide.trip.count, %wide.trip.count.a
+  %11 = shl nuw nsw i64 %10, 1                    ; 2 uses
+  %scevgep = getelementptr i8, ptr %4, i64 %11
+  %scevgep40 = getelementptr i8, ptr %4, i64 2
+  %12 = getelementptr i8, ptr %2, i64 %11
+  %scevgep41 = getelementptr i8, ptr %12, i64 2
+  %13 = shl nuw nsw i64 %wide.trip.count, 2
+  %14 = getelementptr i8, ptr %0, i64 %13
+  %scevgep42 = getelementptr i8, ptr %14, i64 %9  ; 2 uses
+  %scevgep43 = getelementptr i8, ptr %0, i64 4    ; 2 uses
+  %15 = add nsw i64 %wide.trip.count, -1          ; 3 uses
+  %min.iters.check = icmp ult i64 %15, 4
+  %ident.check = icmp ne i64 %3, 1
+  %ident.check31 = icmp ne i64 %5, 1
+  %ident.check32 = icmp ne i64 %1, 1
+  %16 = or i1 %ident.check, %ident.check31
+  %17 = or i1 %16, %ident.check32
+  %bound0 = icmp ult ptr %scevgep43, %scevgep41
+  %bound1 = icmp ult ptr %2, %scevgep42
+  %found.conflict = and i1 %bound0, %bound1
+  %bound044 = icmp ult ptr %scevgep43, %scevgep
+  %bound145 = icmp ult ptr %scevgep40, %scevgep42
+  %found.conflict46 = and i1 %bound044, %bound145
+  %conflict.rdx = or i1 %found.conflict, %found.conflict46
+  %n.vec = and i64 %15, -4                        ; 3 uses
+  %18 = or disjoint i64 %n.vec, 1
+  %cmp.n = icmp eq i64 %15, %n.vec
   br label %bb.b
 
 ._crit_edge:                                      ; preds = %filter.exit, %bb.a
@@ -210,9 +240,9 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph26, %filter.exit
   %.025 = phi i32 [ 0, %.lr.ph26 ], [ %i.el, %filter.exit ]
-  %.01224 = phi ptr [ %0, %.lr.ph26 ], [ %i.ek, %filter.exit ] ; 7 uses
-  %.01323 = phi ptr [ %2, %.lr.ph26 ], [ %i.ei, %filter.exit ] ; 11 uses
-  %.01422 = phi ptr [ %4, %.lr.ph26 ], [ %i.ej, %filter.exit ] ; 5 uses
+  %.01224 = phi ptr [ %0, %.lr.ph26 ], [ %i.ek, %filter.exit ] ; 8 uses
+  %.01323 = phi ptr [ %2, %.lr.ph26 ], [ %i.ei, %filter.exit ] ; 14 uses
+  %.01422 = phi ptr [ %4, %.lr.ph26 ], [ %i.ej, %filter.exit ] ; 6 uses
   %i.d = load i16, ptr %.01323, align 2, !tbaa !10
   %i.e = sext i16 %i.d to i32
   %i.f = mul nsw i32 %i.e, 11
@@ -254,10 +284,58 @@ bb.b:                                             ; preds = %.lr.ph26, %filter.e
   %i.an = getelementptr inbounds [2 x i8], ptr %.01224, i64 %1
   %storemerge134.i = trunc i32 %i.am to i16
   store i16 %storemerge134.i, ptr %i.an, align 2, !tbaa !10
-  br i1 %i.c, label %.lr.ph, label %filter.exit
+  br i1 %i.c, label %.lr.ph.preheader, label %filter.exit
 
-.lr.ph:                                           ; preds = %bb.b, %.lr.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ 1, %bb.b ] ; 5 uses
+.lr.ph.preheader:                                 ; preds = %bb.b
+  %brmerge = or i1 %min.iters.check, %17
+  %brmerge51 = select i1 %brmerge, i1 true, i1 %conflict.rdx
+  br i1 %brmerge51, label %.lr.ph.preheader50, label %vector.body
+
+vector.body:                                      ; preds = %.lr.ph.preheader, %vector.body
+  %index = phi i64 [ %index.next, %vector.body ], [ 0, %.lr.ph.preheader ] ; 4 uses
+  %19 = or disjoint i64 %index, 1                 ; 3 uses
+  %20 = getelementptr inbounds [2 x i8], ptr %.01323, i64 %index
+  %wide.load = load <4 x i16>, ptr %20, align 2, !tbaa !10, !alias.scope !37
+  %21 = sext <4 x i16> %wide.load to <4 x i32>    ; 2 uses
+  %22 = getelementptr [2 x i8], ptr %.01323, i64 %index
+  %23 = getelementptr i8, ptr %22, i64 4
+  %wide.load47 = load <4 x i16>, ptr %23, align 2, !tbaa !10, !alias.scope !37
+  %24 = sext <4 x i16> %wide.load47 to <4 x i32>  ; 2 uses
+  %25 = add nsw <4 x i32> %21, splat (i32 4)
+  %26 = sub nsw <4 x i32> %25, %24
+  %27 = lshr <4 x i32> %26, splat (i32 3)
+  %28 = getelementptr inbounds [2 x i8], ptr %.01323, i64 %19
+  %wide.load48 = load <4 x i16>, ptr %28, align 2, !tbaa !10, !alias.scope !37
+  %29 = sext <4 x i16> %wide.load48 to <4 x i32>  ; 2 uses
+  %30 = add nsw <4 x i32> %27, %29
+  %31 = getelementptr inbounds [2 x i8], ptr %.01422, i64 %19
+  %wide.load49 = load <4 x i16>, ptr %31, align 2, !tbaa !10, !alias.scope !38
+  %32 = sext <4 x i16> %wide.load49 to <4 x i32>  ; 2 uses
+  %33 = add nsw <4 x i32> %30, %32
+  %.idx = shl nsw i64 %19, 2
+  %34 = getelementptr inbounds i8, ptr %.01224, i64 %.idx
+  %35 = add nsw <4 x i32> %24, splat (i32 4)
+  %36 = sub nsw <4 x i32> %35, %21
+  %37 = lshr <4 x i32> %36, splat (i32 3)
+  %38 = add nsw <4 x i32> %37, %29
+  %39 = sub nsw <4 x i32> %38, %32
+  %40 = shufflevector <4 x i32> %33, <4 x i32> %39, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
+  %41 = lshr <8 x i32> %40, splat (i32 1)
+  %interleaved.vec = trunc <8 x i32> %41 to <8 x i16>
+  store <8 x i16> %interleaved.vec, ptr %34, align 2, !tbaa !10, !alias.scope !39, !noalias !40
+  %index.next = add nuw i64 %index, 4             ; 2 uses
+  %42 = icmp eq i64 %index.next, %n.vec
+  br i1 %42, label %middle.block, label %vector.body, !llvm.loop !34
+
+middle.block:                                     ; preds = %vector.body
+  br i1 %cmp.n, label %filter.exit, label %.lr.ph.preheader50
+
+.lr.ph.preheader50:                               ; preds = %.lr.ph.preheader, %middle.block
+  %indvars.iv.ph = phi i64 [ 1, %.lr.ph.preheader ], [ %18, %middle.block ]
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader50, %.lr.ph
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %indvars.iv.ph, %.lr.ph.preheader50 ] ; 5 uses
   %i.ao = add nsw i64 %indvars.iv, -1
   %i.ap = mul nsw i64 %3, %i.ao
   %i.aq = getelementptr inbounds [2 x i8], ptr %.01323, i64 %i.ap ; 2 uses
@@ -306,11 +384,11 @@ bb.b:                                             ; preds = %.lr.ph26, %filter.e
   %i.ce = getelementptr inbounds [2 x i8], ptr %.01224, i64 %i.cd
   %storemerge142.i = trunc i32 %i.cb to i16
   store i16 %storemerge142.i, ptr %i.ce, align 2, !tbaa !10
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count.a
-  br i1 %exitcond.not, label %filter.exit, label %.lr.ph, !llvm.loop !30
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond.not, label %filter.exit, label %.lr.ph, !llvm.loop !35
 
-filter.exit:                                      ; preds = %.lr.ph, %bb.b
-  %.0.i.lcssa = phi i32 [ 1, %bb.b ], [ %i.b, %.lr.ph ] ; 4 uses
+filter.exit:                                      ; preds = %.lr.ph, %middle.block, %bb.b
+  %.0.i.lcssa = phi i32 [ 1, %bb.b ], [ %i.b, %middle.block ], [ %i.b, %.lr.ph ] ; 4 uses
   %i.cf = zext nneg i32 %.0.i.lcssa to i64        ; 2 uses
   %i.cg = mul nsw i64 %3, %i.cf
   %i.ch = getelementptr inbounds [2 x i8], ptr %.01323, i64 %i.cg ; 2 uses
@@ -375,7 +453,7 @@ filter.exit:                                      ; preds = %.lr.ph, %bb.b
   %i.ek = getelementptr inbounds nuw i8, ptr %.01224, i64 2
   %i.el = add nuw nsw i32 %.025, 1                ; 2 uses
   %exitcond29.not = icmp eq i32 %i.el, %6
-  br i1 %exitcond29.not, label %._crit_edge, label %bb.b, !llvm.loop !31
+  br i1 %exitcond29.not, label %._crit_edge, label %bb.b, !llvm.loop !36
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
@@ -512,20 +590,20 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.bo = trunc i64 %i.bn to i32                  ; 8 uses
   %i.bp = getelementptr [2 x i8], ptr %1, i64 %i.bn ; 3 uses
   %i.bq = getelementptr i8, ptr %i.bp, i64 -2     ; 2 uses
-  %wide.load = load <8 x i16>, ptr %i.bq, align 2, !tbaa !10, !alias.scope !44, !noalias !45
+  %wide.load = load <8 x i16>, ptr %i.bq, align 2, !tbaa !10, !alias.scope !53, !noalias !54
   %i.br = sext <8 x i16> %wide.load to <8 x i32>
   %i.bs = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %index
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bs, i64 4 ; 2 uses
-  %wide.load60 = load <8 x i16>, ptr %i.bt, align 2, !tbaa !10, !alias.scope !44, !noalias !45
+  %wide.load60 = load <8 x i16>, ptr %i.bt, align 2, !tbaa !10, !alias.scope !53, !noalias !54
   %i.bu = sext <8 x i16> %wide.load60 to <8 x i32>
   %i.bv = add nsw <8 x i32> %i.br, splat (i32 4)
   %i.bw = sub nsw <8 x i32> %i.bv, %i.bu
   %i.bx = lshr <8 x i32> %i.bw, splat (i32 3)
-  %wide.load61 = load <8 x i16>, ptr %i.bp, align 2, !tbaa !10, !alias.scope !44, !noalias !45
+  %wide.load61 = load <8 x i16>, ptr %i.bp, align 2, !tbaa !10, !alias.scope !53, !noalias !54
   %i.by = sext <8 x i16> %wide.load61 to <8 x i32>
   %i.bz = add nsw <8 x i32> %i.bx, %i.by
   %i.ca = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %i.bn ; 2 uses
-  %wide.load62 = load <8 x i16>, ptr %i.ca, align 2, !tbaa !10, !alias.scope !46, !noalias !45
+  %wide.load62 = load <8 x i16>, ptr %i.ca, align 2, !tbaa !10, !alias.scope !55, !noalias !54
   %i.cb = sext <8 x i16> %wide.load62 to <8 x i32>
   %i.cc = add nsw <8 x i32> %i.bz, %i.cb
   %i.cd = shl i32 %i.bo, 2                        ; 2 uses
@@ -568,32 +646,32 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.do = select <8 x i1> %i.dl, <8 x i32> %i.dj, <8 x i32> %i.dn
   %i.dp = trunc <8 x i32> %i.do to <8 x i16>      ; 8 uses
   %i.dq = extractelement <8 x i16> %i.dp, i64 0
-  store i16 %i.dq, ptr %i.da, align 2, !tbaa !10, !alias.scope !45
+  store i16 %i.dq, ptr %i.da, align 2, !tbaa !10, !alias.scope !54
   %i.dr = extractelement <8 x i16> %i.dp, i64 1
-  store i16 %i.dr, ptr %i.db, align 2, !tbaa !10, !alias.scope !45
+  store i16 %i.dr, ptr %i.db, align 2, !tbaa !10, !alias.scope !54
   %i.ds = extractelement <8 x i16> %i.dp, i64 2
-  store i16 %i.ds, ptr %i.dc, align 2, !tbaa !10, !alias.scope !45
+  store i16 %i.ds, ptr %i.dc, align 2, !tbaa !10, !alias.scope !54
   %i.dt = extractelement <8 x i16> %i.dp, i64 3
-  store i16 %i.dt, ptr %i.dd, align 2, !tbaa !10, !alias.scope !45
+  store i16 %i.dt, ptr %i.dd, align 2, !tbaa !10, !alias.scope !54
   %i.du = extractelement <8 x i16> %i.dp, i64 4
-  store i16 %i.du, ptr %i.de, align 2, !tbaa !10, !alias.scope !45
+  store i16 %i.du, ptr %i.de, align 2, !tbaa !10, !alias.scope !54
   %i.dv = extractelement <8 x i16> %i.dp, i64 5
-  store i16 %i.dv, ptr %i.df, align 2, !tbaa !10, !alias.scope !45
+  store i16 %i.dv, ptr %i.df, align 2, !tbaa !10, !alias.scope !54
   %i.dw = extractelement <8 x i16> %i.dp, i64 6
-  store i16 %i.dw, ptr %i.dg, align 2, !tbaa !10, !alias.scope !45
+  store i16 %i.dw, ptr %i.dg, align 2, !tbaa !10, !alias.scope !54
   %i.dx = extractelement <8 x i16> %i.dp, i64 7
-  store i16 %i.dx, ptr %i.dh, align 2, !tbaa !10, !alias.scope !45
-  %wide.load63 = load <8 x i16>, ptr %i.bt, align 2, !tbaa !10, !alias.scope !44, !noalias !45
+  store i16 %i.dx, ptr %i.dh, align 2, !tbaa !10, !alias.scope !54
+  %wide.load63 = load <8 x i16>, ptr %i.bt, align 2, !tbaa !10, !alias.scope !53, !noalias !54
   %i.dy = sext <8 x i16> %wide.load63 to <8 x i32>
-  %wide.load64 = load <8 x i16>, ptr %i.bq, align 2, !tbaa !10, !alias.scope !44, !noalias !45
+  %wide.load64 = load <8 x i16>, ptr %i.bq, align 2, !tbaa !10, !alias.scope !53, !noalias !54
   %i.dz = sext <8 x i16> %wide.load64 to <8 x i32>
   %i.ea = add nsw <8 x i32> %i.dy, splat (i32 4)
   %i.eb = sub nsw <8 x i32> %i.ea, %i.dz
   %i.ec = lshr <8 x i32> %i.eb, splat (i32 3)
-  %wide.load65 = load <8 x i16>, ptr %i.bp, align 2, !tbaa !10, !alias.scope !44, !noalias !45
+  %wide.load65 = load <8 x i16>, ptr %i.bp, align 2, !tbaa !10, !alias.scope !53, !noalias !54
   %i.ed = sext <8 x i16> %wide.load65 to <8 x i32>
   %i.ee = add nsw <8 x i32> %i.ec, %i.ed
-  %wide.load66 = load <8 x i16>, ptr %i.ca, align 2, !tbaa !10, !alias.scope !46, !noalias !45
+  %wide.load66 = load <8 x i16>, ptr %i.ca, align 2, !tbaa !10, !alias.scope !55, !noalias !54
   %i.ef = sext <8 x i16> %wide.load66 to <8 x i32>
   %i.eg = sub nsw <8 x i32> %i.ee, %i.ef
   %i.eh = or disjoint i32 %i.cd, 2
@@ -629,24 +707,24 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.fl = select <8 x i1> %i.fi, <8 x i32> %i.fg, <8 x i32> %i.fk
   %i.fm = trunc <8 x i32> %i.fl to <8 x i16>      ; 8 uses
   %i.fn = extractelement <8 x i16> %i.fm, i64 0
-  store i16 %i.fn, ptr %i.ex, align 2, !tbaa !10, !alias.scope !45
+  store i16 %i.fn, ptr %i.ex, align 2, !tbaa !10, !alias.scope !54
   %i.fo = extractelement <8 x i16> %i.fm, i64 1
-  store i16 %i.fo, ptr %i.ey, align 2, !tbaa !10, !alias.scope !45
+  store i16 %i.fo, ptr %i.ey, align 2, !tbaa !10, !alias.scope !54
   %i.fp = extractelement <8 x i16> %i.fm, i64 2
-  store i16 %i.fp, ptr %i.ez, align 2, !tbaa !10, !alias.scope !45
+  store i16 %i.fp, ptr %i.ez, align 2, !tbaa !10, !alias.scope !54
   %i.fq = extractelement <8 x i16> %i.fm, i64 3
-  store i16 %i.fq, ptr %i.fa, align 2, !tbaa !10, !alias.scope !45
+  store i16 %i.fq, ptr %i.fa, align 2, !tbaa !10, !alias.scope !54
   %i.fr = extractelement <8 x i16> %i.fm, i64 4
-  store i16 %i.fr, ptr %i.fb, align 2, !tbaa !10, !alias.scope !45
+  store i16 %i.fr, ptr %i.fb, align 2, !tbaa !10, !alias.scope !54
   %i.fs = extractelement <8 x i16> %i.fm, i64 5
-  store i16 %i.fs, ptr %i.fc, align 2, !tbaa !10, !alias.scope !45
+  store i16 %i.fs, ptr %i.fc, align 2, !tbaa !10, !alias.scope !54
   %i.ft = extractelement <8 x i16> %i.fm, i64 6
-  store i16 %i.ft, ptr %i.fd, align 2, !tbaa !10, !alias.scope !45
+  store i16 %i.ft, ptr %i.fd, align 2, !tbaa !10, !alias.scope !54
   %i.fu = extractelement <8 x i16> %i.fm, i64 7
-  store i16 %i.fu, ptr %i.fe, align 2, !tbaa !10, !alias.scope !45
+  store i16 %i.fu, ptr %i.fe, align 2, !tbaa !10, !alias.scope !54
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.fv = icmp eq i64 %index.next, %n.vec
-  br i1 %i.fv, label %middle.block, label %vector.body, !llvm.loop !36
+  br i1 %i.fv, label %middle.block, label %vector.body, !llvm.loop !45
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.ay, %n.vec
@@ -700,20 +778,20 @@ vector.body95:                                    ; preds = %vector.body95, %vec
   %i.gm = trunc i64 %i.gl to i32                  ; 8 uses
   %i.gn = getelementptr [2 x i8], ptr %1, i64 %i.gl ; 3 uses
   %i.go = getelementptr i8, ptr %i.gn, i64 -2     ; 2 uses
-  %wide.load97 = load <8 x i16>, ptr %i.go, align 2, !tbaa !10, !alias.scope !47, !noalias !48
+  %wide.load97 = load <8 x i16>, ptr %i.go, align 2, !tbaa !10, !alias.scope !56, !noalias !57
   %i.gp = sext <8 x i16> %wide.load97 to <8 x i32>
   %i.gq = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %index96
   %i.gr = getelementptr inbounds nuw i8, ptr %i.gq, i64 4 ; 2 uses
-  %wide.load98 = load <8 x i16>, ptr %i.gr, align 2, !tbaa !10, !alias.scope !47, !noalias !48
+  %wide.load98 = load <8 x i16>, ptr %i.gr, align 2, !tbaa !10, !alias.scope !56, !noalias !57
   %i.gs = sext <8 x i16> %wide.load98 to <8 x i32>
   %i.gt = add nsw <8 x i32> %i.gp, splat (i32 4)
   %i.gu = sub nsw <8 x i32> %i.gt, %i.gs
   %i.gv = lshr <8 x i32> %i.gu, splat (i32 3)
-  %wide.load99 = load <8 x i16>, ptr %i.gn, align 2, !tbaa !10, !alias.scope !47, !noalias !48
+  %wide.load99 = load <8 x i16>, ptr %i.gn, align 2, !tbaa !10, !alias.scope !56, !noalias !57
   %i.gw = sext <8 x i16> %wide.load99 to <8 x i32>
   %i.gx = add nsw <8 x i32> %i.gv, %i.gw
   %i.gy = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %i.gl ; 2 uses
-  %wide.load100 = load <8 x i16>, ptr %i.gy, align 2, !tbaa !10, !alias.scope !49, !noalias !48
+  %wide.load100 = load <8 x i16>, ptr %i.gy, align 2, !tbaa !10, !alias.scope !58, !noalias !57
   %i.gz = sext <8 x i16> %wide.load100 to <8 x i32>
   %i.ha = add nsw <8 x i32> %i.gx, %i.gz
   %i.hb = lshr <8 x i32> %i.ha, splat (i32 1)
@@ -750,32 +828,32 @@ vector.body95:                                    ; preds = %vector.body95, %vec
   %i.ig = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %i.hy
   %i.ih = trunc <8 x i32> %i.hb to <8 x i16>      ; 8 uses
   %i.ii = extractelement <8 x i16> %i.ih, i64 0
-  store i16 %i.ii, ptr %i.hz, align 2, !tbaa !10, !alias.scope !48
+  store i16 %i.ii, ptr %i.hz, align 2, !tbaa !10, !alias.scope !57
   %i.ij = extractelement <8 x i16> %i.ih, i64 1
-  store i16 %i.ij, ptr %i.ia, align 2, !tbaa !10, !alias.scope !48
+  store i16 %i.ij, ptr %i.ia, align 2, !tbaa !10, !alias.scope !57
   %i.ik = extractelement <8 x i16> %i.ih, i64 2
-  store i16 %i.ik, ptr %i.ib, align 2, !tbaa !10, !alias.scope !48
+  store i16 %i.ik, ptr %i.ib, align 2, !tbaa !10, !alias.scope !57
   %i.il = extractelement <8 x i16> %i.ih, i64 3
-  store i16 %i.il, ptr %i.ic, align 2, !tbaa !10, !alias.scope !48
+  store i16 %i.il, ptr %i.ic, align 2, !tbaa !10, !alias.scope !57
   %i.im = extractelement <8 x i16> %i.ih, i64 4
-  store i16 %i.im, ptr %i.id, align 2, !tbaa !10, !alias.scope !48
+  store i16 %i.im, ptr %i.id, align 2, !tbaa !10, !alias.scope !57
   %i.in = extractelement <8 x i16> %i.ih, i64 5
-  store i16 %i.in, ptr %i.ie, align 2, !tbaa !10, !alias.scope !48
+  store i16 %i.in, ptr %i.ie, align 2, !tbaa !10, !alias.scope !57
   %i.io = extractelement <8 x i16> %i.ih, i64 6
-  store i16 %i.io, ptr %i.if, align 2, !tbaa !10, !alias.scope !48
+  store i16 %i.io, ptr %i.if, align 2, !tbaa !10, !alias.scope !57
   %i.ip = extractelement <8 x i16> %i.ih, i64 7
-  store i16 %i.ip, ptr %i.ig, align 2, !tbaa !10, !alias.scope !48
-  %wide.load101 = load <8 x i16>, ptr %i.gr, align 2, !tbaa !10, !alias.scope !47, !noalias !48
+  store i16 %i.ip, ptr %i.ig, align 2, !tbaa !10, !alias.scope !57
+  %wide.load101 = load <8 x i16>, ptr %i.gr, align 2, !tbaa !10, !alias.scope !56, !noalias !57
   %i.iq = sext <8 x i16> %wide.load101 to <8 x i32>
-  %wide.load102 = load <8 x i16>, ptr %i.go, align 2, !tbaa !10, !alias.scope !47, !noalias !48
+  %wide.load102 = load <8 x i16>, ptr %i.go, align 2, !tbaa !10, !alias.scope !56, !noalias !57
   %i.ir = sext <8 x i16> %wide.load102 to <8 x i32>
   %i.is = add nsw <8 x i32> %i.iq, splat (i32 4)
   %i.it = sub nsw <8 x i32> %i.is, %i.ir
   %i.iu = lshr <8 x i32> %i.it, splat (i32 3)
-  %wide.load103 = load <8 x i16>, ptr %i.gn, align 2, !tbaa !10, !alias.scope !47, !noalias !48
+  %wide.load103 = load <8 x i16>, ptr %i.gn, align 2, !tbaa !10, !alias.scope !56, !noalias !57
   %i.iv = sext <8 x i16> %wide.load103 to <8 x i32>
   %i.iw = add nsw <8 x i32> %i.iu, %i.iv
-  %wide.load104 = load <8 x i16>, ptr %i.gy, align 2, !tbaa !10, !alias.scope !49, !noalias !48
+  %wide.load104 = load <8 x i16>, ptr %i.gy, align 2, !tbaa !10, !alias.scope !58, !noalias !57
   %i.ix = sext <8 x i16> %wide.load104 to <8 x i32>
   %i.iy = sub nsw <8 x i32> %i.iw, %i.ix
   %i.iz = lshr <8 x i32> %i.iy, splat (i32 1)
@@ -805,24 +883,24 @@ vector.body95:                                    ; preds = %vector.body95, %vec
   %i.jx = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %i.jp
   %i.jy = trunc <8 x i32> %i.iz to <8 x i16>      ; 8 uses
   %i.jz = extractelement <8 x i16> %i.jy, i64 0
-  store i16 %i.jz, ptr %i.jq, align 2, !tbaa !10, !alias.scope !48
+  store i16 %i.jz, ptr %i.jq, align 2, !tbaa !10, !alias.scope !57
   %i.ka = extractelement <8 x i16> %i.jy, i64 1
-  store i16 %i.ka, ptr %i.jr, align 2, !tbaa !10, !alias.scope !48
+  store i16 %i.ka, ptr %i.jr, align 2, !tbaa !10, !alias.scope !57
   %i.kb = extractelement <8 x i16> %i.jy, i64 2
-  store i16 %i.kb, ptr %i.js, align 2, !tbaa !10, !alias.scope !48
+  store i16 %i.kb, ptr %i.js, align 2, !tbaa !10, !alias.scope !57
   %i.kc = extractelement <8 x i16> %i.jy, i64 3
-  store i16 %i.kc, ptr %i.jt, align 2, !tbaa !10, !alias.scope !48
+  store i16 %i.kc, ptr %i.jt, align 2, !tbaa !10, !alias.scope !57
   %i.kd = extractelement <8 x i16> %i.jy, i64 4
-  store i16 %i.kd, ptr %i.ju, align 2, !tbaa !10, !alias.scope !48
+  store i16 %i.kd, ptr %i.ju, align 2, !tbaa !10, !alias.scope !57
   %i.ke = extractelement <8 x i16> %i.jy, i64 5
-  store i16 %i.ke, ptr %i.jv, align 2, !tbaa !10, !alias.scope !48
+  store i16 %i.ke, ptr %i.jv, align 2, !tbaa !10, !alias.scope !57
   %i.kf = extractelement <8 x i16> %i.jy, i64 6
-  store i16 %i.kf, ptr %i.jw, align 2, !tbaa !10, !alias.scope !48
+  store i16 %i.kf, ptr %i.jw, align 2, !tbaa !10, !alias.scope !57
   %i.kg = extractelement <8 x i16> %i.jy, i64 7
-  store i16 %i.kg, ptr %i.jx, align 2, !tbaa !10, !alias.scope !48
+  store i16 %i.kg, ptr %i.jx, align 2, !tbaa !10, !alias.scope !57
   %index.next105 = add nuw i64 %index96, 8        ; 2 uses
   %i.kh = icmp eq i64 %index.next105, %n.vec94
-  br i1 %i.kh, label %middle.block106, label %vector.body95, !llvm.loop !41
+  br i1 %i.kh, label %middle.block106, label %vector.body95, !llvm.loop !50
 
 middle.block106:                                  ; preds = %vector.body95
   %cmp.n107 = icmp eq i64 %i.fw, %n.vec94
@@ -879,7 +957,7 @@ middle.block106:                                  ; preds = %vector.body95
   %storemerge142.i.us = trunc i32 %i.lr to i16
   store i16 %storemerge142.i.us, ptr %i.lu, align 2, !tbaa !10
   %exitcond41.not = icmp eq i64 %indvars.iv.next38, %wide.trip.count40
-  br i1 %exitcond41.not, label %._crit_edge, label %.lr.ph.split.us, !llvm.loop !42
+  br i1 %exitcond41.not, label %._crit_edge, label %.lr.ph.split.us, !llvm.loop !51
 
 .lr.ph.split:                                     ; preds = %.lr.ph.split.preheader112, %.lr.ph.split
   %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph.split ], [ %indvars.iv.ph, %.lr.ph.split.preheader112 ] ; 4 uses
@@ -940,7 +1018,7 @@ middle.block106:                                  ; preds = %vector.body95
   %storemerge142.i = trunc i32 %.0.i5 to i16
   store i16 %storemerge142.i, ptr %i.nj, align 2, !tbaa !10
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.split, !llvm.loop !43
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.split, !llvm.loop !52
 
 ._crit_edge:                                      ; preds = %.lr.ph.split, %.lr.ph.split.us, %middle.block, %middle.block106, %.thread, %bb.d
   %.0.i.lcssa = phi i32 [ %i.ap, %middle.block106 ], [ 1, %.thread ], [ 1, %bb.d ], [ %i.av, %middle.block ], [ %i.ap, %.lr.ph.split.us ], [ %i.av, %.lr.ph.split ] ; 2 uses
@@ -1152,20 +1230,20 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.bi = or disjoint i64 %index, 1               ; 3 uses
   %i.bj = getelementptr [2 x i8], ptr %1, i64 %i.bi ; 2 uses
   %i.bk = getelementptr i8, ptr %i.bj, i64 -2
-  %wide.load = load <4 x i16>, ptr %i.bk, align 2, !tbaa !10, !alias.scope !62
+  %wide.load = load <4 x i16>, ptr %i.bk, align 2, !tbaa !10, !alias.scope !71
   %i.bl = sext <4 x i16> %wide.load to <4 x i32>  ; 2 uses
   %i.bm = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %index
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 4
-  %wide.load61 = load <4 x i16>, ptr %i.bn, align 2, !tbaa !10, !alias.scope !62
+  %wide.load61 = load <4 x i16>, ptr %i.bn, align 2, !tbaa !10, !alias.scope !71
   %i.bo = sext <4 x i16> %wide.load61 to <4 x i32> ; 2 uses
   %i.bp = add nsw <4 x i32> %i.bl, splat (i32 4)
   %i.bq = sub nsw <4 x i32> %i.bp, %i.bo
   %i.br = lshr <4 x i32> %i.bq, splat (i32 3)
-  %wide.load62 = load <4 x i16>, ptr %i.bj, align 2, !tbaa !10, !alias.scope !62
+  %wide.load62 = load <4 x i16>, ptr %i.bj, align 2, !tbaa !10, !alias.scope !71
   %i.bs = sext <4 x i16> %wide.load62 to <4 x i32> ; 2 uses
   %i.bt = add nsw <4 x i32> %i.br, %i.bs
   %i.bu = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %i.bi
-  %wide.load63 = load <4 x i16>, ptr %i.bu, align 2, !tbaa !10, !alias.scope !63
+  %wide.load63 = load <4 x i16>, ptr %i.bu, align 2, !tbaa !10, !alias.scope !72
   %i.bv = sext <4 x i16> %wide.load63 to <4 x i32> ; 2 uses
   %i.bw = add nsw <4 x i32> %i.bt, %i.bv
   %i.bx = shl nuw nsw i64 %i.bi, 2
@@ -1191,10 +1269,10 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.cr = select <4 x i1> %i.co, <4 x i32> %i.cm, <4 x i32> %i.cq
   %i.cs = shufflevector <4 x i32> %i.cf, <4 x i32> %i.cr, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
   %interleaved.vec = trunc <8 x i32> %i.cs to <8 x i16>
-  store <8 x i16> %interleaved.vec, ptr %i.by, align 2, !tbaa !10, !alias.scope !64, !noalias !65
+  store <8 x i16> %interleaved.vec, ptr %i.by, align 2, !tbaa !10, !alias.scope !73, !noalias !74
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ct = icmp eq i64 %index.next, %n.vec
-  br i1 %i.ct, label %middle.block, label %vector.body, !llvm.loop !54
+  br i1 %i.ct, label %middle.block, label %vector.body, !llvm.loop !63
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.ay, %n.vec
@@ -1238,20 +1316,20 @@ vector.body88:                                    ; preds = %vector.body88, %vec
   %i.de = or disjoint i64 %index89, 1             ; 3 uses
   %i.df = getelementptr [2 x i8], ptr %1, i64 %i.de ; 2 uses
   %i.dg = getelementptr i8, ptr %i.df, i64 -2
-  %wide.load90 = load <4 x i16>, ptr %i.dg, align 2, !tbaa !10, !alias.scope !66
+  %wide.load90 = load <4 x i16>, ptr %i.dg, align 2, !tbaa !10, !alias.scope !75
   %i.dh = sext <4 x i16> %wide.load90 to <4 x i32> ; 2 uses
   %i.di = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %index89
   %i.dj = getelementptr inbounds nuw i8, ptr %i.di, i64 4
-  %wide.load91 = load <4 x i16>, ptr %i.dj, align 2, !tbaa !10, !alias.scope !66
+  %wide.load91 = load <4 x i16>, ptr %i.dj, align 2, !tbaa !10, !alias.scope !75
   %i.dk = sext <4 x i16> %wide.load91 to <4 x i32> ; 2 uses
   %i.dl = add nsw <4 x i32> %i.dh, splat (i32 4)
   %i.dm = sub nsw <4 x i32> %i.dl, %i.dk
   %i.dn = lshr <4 x i32> %i.dm, splat (i32 3)
-  %wide.load92 = load <4 x i16>, ptr %i.df, align 2, !tbaa !10, !alias.scope !66
+  %wide.load92 = load <4 x i16>, ptr %i.df, align 2, !tbaa !10, !alias.scope !75
   %i.do = sext <4 x i16> %wide.load92 to <4 x i32> ; 2 uses
   %i.dp = add nsw <4 x i32> %i.dn, %i.do
   %i.dq = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %i.de
-  %wide.load93 = load <4 x i16>, ptr %i.dq, align 2, !tbaa !10, !alias.scope !67
+  %wide.load93 = load <4 x i16>, ptr %i.dq, align 2, !tbaa !10, !alias.scope !76
   %i.dr = sext <4 x i16> %wide.load93 to <4 x i32> ; 2 uses
   %i.ds = add nsw <4 x i32> %i.dp, %i.dr
   %i.dt = shl nuw nsw i64 %i.de, 2
@@ -1264,10 +1342,10 @@ vector.body88:                                    ; preds = %vector.body88, %vec
   %i.ea = shufflevector <4 x i32> %i.ds, <4 x i32> %i.dz, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
   %i.eb = lshr <8 x i32> %i.ea, splat (i32 1)
   %interleaved.vec94 = trunc <8 x i32> %i.eb to <8 x i16>
-  store <8 x i16> %interleaved.vec94, ptr %i.du, align 2, !tbaa !10, !alias.scope !68, !noalias !69
+  store <8 x i16> %interleaved.vec94, ptr %i.du, align 2, !tbaa !10, !alias.scope !77, !noalias !78
   %index.next95 = add nuw i64 %index89, 4         ; 2 uses
   %i.ec = icmp eq i64 %index.next95, %n.vec87
-  br i1 %i.ec, label %middle.block96, label %vector.body88, !llvm.loop !59
+  br i1 %i.ec, label %middle.block96, label %vector.body88, !llvm.loop !68
 
 middle.block96:                                   ; preds = %vector.body88
   %cmp.n97 = icmp eq i64 %i.cu, %n.vec87
@@ -1320,7 +1398,7 @@ middle.block96:                                   ; preds = %vector.body88
   %storemerge142.i.us = trunc i32 %i.fj to i16
   store i16 %storemerge142.i.us, ptr %i.fk, align 2, !tbaa !10
   %exitcond41.not = icmp eq i64 %indvars.iv.next38, %wide.trip.count40
-  br i1 %exitcond41.not, label %._crit_edge, label %.lr.ph.split.us, !llvm.loop !60
+  br i1 %exitcond41.not, label %._crit_edge, label %.lr.ph.split.us, !llvm.loop !69
 
 .lr.ph.split:                                     ; preds = %.lr.ph.split.preheader100, %.lr.ph.split
   %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph.split ], [ %indvars.iv.ph, %.lr.ph.split.preheader100 ] ; 4 uses
@@ -1377,7 +1455,7 @@ middle.block96:                                   ; preds = %vector.body88
   %storemerge142.i = trunc i32 %.0.i5 to i16
   store i16 %storemerge142.i, ptr %i.gu, align 2, !tbaa !10
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.split, !llvm.loop !61
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.split, !llvm.loop !70
 
 ._crit_edge:                                      ; preds = %.lr.ph.split, %.lr.ph.split.us, %middle.block, %middle.block96, %.thread, %bb.d
   %.0.i.lcssa = phi i32 [ %i.ap, %middle.block96 ], [ 1, %.thread ], [ 1, %bb.d ], [ %i.av, %middle.block ], [ %i.ap, %.lr.ph.split.us ], [ %i.av, %.lr.ph.split ] ; 2 uses
@@ -1500,44 +1578,53 @@ attributes #1 = { nofree norecurse nosync nounwind memory(argmem: readwrite) uwt
 !27 = !{!21}
 !28 = !{!22}
 !29 = !{!20, !21}
-!30 = distinct !{!30, !11}
-!31 = distinct !{!31, !11}
-!32 = distinct !{!32, i1 false, !"LVerDomain"}
-!33 = distinct !{!33, !32}
-!34 = distinct !{!34, !32}
-!35 = distinct !{!35, !32}
-!36 = distinct !{!36, !11, !12, !13}
-!37 = distinct !{!37, i1 false, !"LVerDomain"}
-!38 = distinct !{!38, !37}
-!39 = distinct !{!39, !37}
-!40 = distinct !{!40, !37}
-!41 = distinct !{!41, !11, !12, !13}
-!42 = distinct !{!42, !11, !12}
-!43 = distinct !{!43, !11, !12}
-!44 = !{!33}
-!45 = !{!34}
-!46 = !{!35}
-!47 = !{!38}
-!48 = !{!39}
-!49 = !{!40}
-!50 = distinct !{!50, i1 false, !"LVerDomain"}
-!51 = distinct !{!51, !50}
-!52 = distinct !{!52, !50}
-!53 = distinct !{!53, !50}
-!54 = distinct !{!54, !11, !12, !13}
-!55 = distinct !{!55, i1 false, !"LVerDomain"}
-!56 = distinct !{!56, !55}
-!57 = distinct !{!57, !55}
-!58 = distinct !{!58, !55}
-!59 = distinct !{!59, !11, !12, !13}
-!60 = distinct !{!60, !11, !12}
-!61 = distinct !{!61, !11, !12}
-!62 = !{!51}
-!63 = !{!52}
-!64 = !{!53}
-!65 = !{!51, !52}
-!66 = !{!56}
-!67 = !{!57}
-!68 = !{!58}
-!69 = !{!56, !57}
+!30 = distinct !{!30, i1 false, !"LVerDomain"}
+!31 = distinct !{!31, !30}
+!32 = distinct !{!32, !30}
+!33 = distinct !{!33, !30}
+!34 = distinct !{!34, !11, !12, !13}
+!35 = distinct !{!35, !11, !12}
+!36 = distinct !{!36, !11}
+!37 = !{!31}
+!38 = !{!32}
+!39 = !{!33}
+!40 = !{!31, !32}
+!41 = distinct !{!41, i1 false, !"LVerDomain"}
+!42 = distinct !{!42, !41}
+!43 = distinct !{!43, !41}
+!44 = distinct !{!44, !41}
+!45 = distinct !{!45, !11, !12, !13}
+!46 = distinct !{!46, i1 false, !"LVerDomain"}
+!47 = distinct !{!47, !46}
+!48 = distinct !{!48, !46}
+!49 = distinct !{!49, !46}
+!50 = distinct !{!50, !11, !12, !13}
+!51 = distinct !{!51, !11, !12}
+!52 = distinct !{!52, !11, !12}
+!53 = !{!42}
+!54 = !{!43}
+!55 = !{!44}
+!56 = !{!47}
+!57 = !{!48}
+!58 = !{!49}
+!59 = distinct !{!59, i1 false, !"LVerDomain"}
+!60 = distinct !{!60, !59}
+!61 = distinct !{!61, !59}
+!62 = distinct !{!62, !59}
+!63 = distinct !{!63, !11, !12, !13}
+!64 = distinct !{!64, i1 false, !"LVerDomain"}
+!65 = distinct !{!65, !64}
+!66 = distinct !{!66, !64}
+!67 = distinct !{!67, !64}
+!68 = distinct !{!68, !11, !12, !13}
+!69 = distinct !{!69, !11, !12}
+!70 = distinct !{!70, !11, !12}
+!71 = !{!60}
+!72 = !{!61}
+!73 = !{!62}
+!74 = !{!60, !61}
+!75 = !{!65}
+!76 = !{!66}
+!77 = !{!67}
+!78 = !{!65, !66}
 end_hunk_0

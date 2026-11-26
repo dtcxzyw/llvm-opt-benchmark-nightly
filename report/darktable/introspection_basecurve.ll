@@ -205,7 +205,7 @@ define internal fastcc void @gauss_blur(ptr nofree noundef readonly captures(non
 bb.a:
   %i.a = shl nsw i64 %2, 4
   %i.b = mul i64 %i.a, %3
-  %i.c = tail call ptr @dt_alloc_aligned(i64 noundef %i.b) #26 ; 24 uses
+  %i.c = tail call ptr @dt_alloc_aligned(i64 noundef %i.b) #26 ; 31 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.c, i64 64) ]
   tail call void @dt_iop_image_fill(ptr noundef %i.c, float noundef 0.000000e+00, i64 noundef %2, i64 noundef %3, i64 noundef 4) #26
   %.not = icmp eq i64 %3, 0
@@ -537,13 +537,13 @@ vector.body:                                      ; preds = %vector.scevcheck, %
   %i.hp = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.ho ; 6 uses
   %i.hq = getelementptr i8, ptr %0, i64 %i.ho     ; 5 uses
   %i.hr = getelementptr i8, ptr %i.hq, i64 -32
-  %wide.vec = load <16 x float>, ptr %i.hr, align 4, !tbaa !13, !alias.scope !387 ; 4 uses
+  %wide.vec = load <16 x float>, ptr %i.hr, align 4, !tbaa !13, !alias.scope !392 ; 4 uses
   %strided.vec = shufflevector <16 x float> %wide.vec, <16 x float> poison, <4 x i32> <i32 0, i32 4, i32 8, i32 12>
   %strided.vec338 = shufflevector <16 x float> %wide.vec, <16 x float> poison, <4 x i32> <i32 1, i32 5, i32 9, i32 13>
   %strided.vec339 = shufflevector <16 x float> %wide.vec, <16 x float> poison, <4 x i32> <i32 2, i32 6, i32 10, i32 14>
   %strided.vec340 = shufflevector <16 x float> %wide.vec, <16 x float> poison, <4 x i32> <i32 3, i32 7, i32 11, i32 15>
   %i.hs = fmul reassoc nsz arcp contract afn <4 x float> %strided.vec, splat (float 6.250000e-02)
-  %wide.vec341 = load <16 x float>, ptr %i.hp, align 16, !tbaa !13, !alias.scope !388, !noalias !387 ; 4 uses
+  %wide.vec341 = load <16 x float>, ptr %i.hp, align 16, !tbaa !13, !alias.scope !393, !noalias !392 ; 4 uses
   %strided.vec342 = shufflevector <16 x float> %wide.vec341, <16 x float> poison, <4 x i32> <i32 0, i32 4, i32 8, i32 12>
   %strided.vec343 = shufflevector <16 x float> %wide.vec341, <16 x float> poison, <4 x i32> <i32 1, i32 5, i32 9, i32 13>
   %strided.vec344 = shufflevector <16 x float> %wide.vec341, <16 x float> poison, <4 x i32> <i32 2, i32 6, i32 10, i32 14>
@@ -558,9 +558,9 @@ vector.body:                                      ; preds = %vector.scevcheck, %
   %i.ia = shufflevector <4 x float> %i.ht, <4 x float> %i.hv, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.ib = shufflevector <4 x float> %i.hx, <4 x float> %i.hz, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %interleaved.vec = shufflevector <8 x float> %i.ia, <8 x float> %i.ib, <16 x i32> <i32 0, i32 4, i32 8, i32 12, i32 1, i32 5, i32 9, i32 13, i32 2, i32 6, i32 10, i32 14, i32 3, i32 7, i32 11, i32 15>
-  store <16 x float> %interleaved.vec, ptr %i.hp, align 16, !tbaa !13, !alias.scope !388, !noalias !387
+  store <16 x float> %interleaved.vec, ptr %i.hp, align 16, !tbaa !13, !alias.scope !393, !noalias !392
   %i.ic = getelementptr i8, ptr %i.hq, i64 -16
-  %wide.vec346 = load <16 x float>, ptr %i.ic, align 4, !tbaa !13, !alias.scope !387 ; 4 uses
+  %wide.vec346 = load <16 x float>, ptr %i.ic, align 4, !tbaa !13, !alias.scope !392 ; 4 uses
   %strided.vec347 = shufflevector <16 x float> %wide.vec346, <16 x float> poison, <4 x i32> <i32 0, i32 4, i32 8, i32 12>
   %strided.vec348 = shufflevector <16 x float> %wide.vec346, <16 x float> poison, <4 x i32> <i32 1, i32 5, i32 9, i32 13>
   %strided.vec349 = shufflevector <16 x float> %wide.vec346, <16 x float> poison, <4 x i32> <i32 2, i32 6, i32 10, i32 14>
@@ -576,8 +576,8 @@ vector.body:                                      ; preds = %vector.scevcheck, %
   %i.il = shufflevector <4 x float> %i.ie, <4 x float> %i.ig, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.im = shufflevector <4 x float> %i.ii, <4 x float> %i.ik, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %interleaved.vec351 = shufflevector <8 x float> %i.il, <8 x float> %i.im, <16 x i32> <i32 0, i32 4, i32 8, i32 12, i32 1, i32 5, i32 9, i32 13, i32 2, i32 6, i32 10, i32 14, i32 3, i32 7, i32 11, i32 15>
-  store <16 x float> %interleaved.vec351, ptr %i.hp, align 16, !tbaa !13, !alias.scope !388, !noalias !387
-  %wide.vec352 = load <16 x float>, ptr %i.hq, align 4, !tbaa !13, !alias.scope !387 ; 4 uses
+  store <16 x float> %interleaved.vec351, ptr %i.hp, align 16, !tbaa !13, !alias.scope !393, !noalias !392
+  %wide.vec352 = load <16 x float>, ptr %i.hq, align 4, !tbaa !13, !alias.scope !392 ; 4 uses
   %strided.vec353 = shufflevector <16 x float> %wide.vec352, <16 x float> poison, <4 x i32> <i32 0, i32 4, i32 8, i32 12>
   %strided.vec354 = shufflevector <16 x float> %wide.vec352, <16 x float> poison, <4 x i32> <i32 1, i32 5, i32 9, i32 13>
   %strided.vec355 = shufflevector <16 x float> %wide.vec352, <16 x float> poison, <4 x i32> <i32 2, i32 6, i32 10, i32 14>
@@ -593,9 +593,9 @@ vector.body:                                      ; preds = %vector.scevcheck, %
   %i.iv = shufflevector <4 x float> %i.io, <4 x float> %i.iq, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.iw = shufflevector <4 x float> %i.is, <4 x float> %i.iu, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %interleaved.vec357 = shufflevector <8 x float> %i.iv, <8 x float> %i.iw, <16 x i32> <i32 0, i32 4, i32 8, i32 12, i32 1, i32 5, i32 9, i32 13, i32 2, i32 6, i32 10, i32 14, i32 3, i32 7, i32 11, i32 15>
-  store <16 x float> %interleaved.vec357, ptr %i.hp, align 16, !tbaa !13, !alias.scope !388, !noalias !387
+  store <16 x float> %interleaved.vec357, ptr %i.hp, align 16, !tbaa !13, !alias.scope !393, !noalias !392
   %i.ix = getelementptr i8, ptr %i.hq, i64 16
-  %wide.vec358 = load <16 x float>, ptr %i.ix, align 4, !tbaa !13, !alias.scope !387 ; 4 uses
+  %wide.vec358 = load <16 x float>, ptr %i.ix, align 4, !tbaa !13, !alias.scope !392 ; 4 uses
   %strided.vec359 = shufflevector <16 x float> %wide.vec358, <16 x float> poison, <4 x i32> <i32 0, i32 4, i32 8, i32 12>
   %strided.vec360 = shufflevector <16 x float> %wide.vec358, <16 x float> poison, <4 x i32> <i32 1, i32 5, i32 9, i32 13>
   %strided.vec361 = shufflevector <16 x float> %wide.vec358, <16 x float> poison, <4 x i32> <i32 2, i32 6, i32 10, i32 14>
@@ -611,9 +611,9 @@ vector.body:                                      ; preds = %vector.scevcheck, %
   %i.jg = shufflevector <4 x float> %i.iz, <4 x float> %i.jb, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.jh = shufflevector <4 x float> %i.jd, <4 x float> %i.jf, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %interleaved.vec363 = shufflevector <8 x float> %i.jg, <8 x float> %i.jh, <16 x i32> <i32 0, i32 4, i32 8, i32 12, i32 1, i32 5, i32 9, i32 13, i32 2, i32 6, i32 10, i32 14, i32 3, i32 7, i32 11, i32 15>
-  store <16 x float> %interleaved.vec363, ptr %i.hp, align 16, !tbaa !13, !alias.scope !388, !noalias !387
+  store <16 x float> %interleaved.vec363, ptr %i.hp, align 16, !tbaa !13, !alias.scope !393, !noalias !392
   %i.ji = getelementptr i8, ptr %i.hq, i64 32
-  %wide.vec364 = load <16 x float>, ptr %i.ji, align 4, !tbaa !13, !alias.scope !387 ; 4 uses
+  %wide.vec364 = load <16 x float>, ptr %i.ji, align 4, !tbaa !13, !alias.scope !392 ; 4 uses
   %strided.vec365 = shufflevector <16 x float> %wide.vec364, <16 x float> poison, <4 x i32> <i32 0, i32 4, i32 8, i32 12>
   %strided.vec366 = shufflevector <16 x float> %wide.vec364, <16 x float> poison, <4 x i32> <i32 1, i32 5, i32 9, i32 13>
   %strided.vec367 = shufflevector <16 x float> %wide.vec364, <16 x float> poison, <4 x i32> <i32 2, i32 6, i32 10, i32 14>
@@ -629,7 +629,7 @@ vector.body:                                      ; preds = %vector.scevcheck, %
   %i.jr = shufflevector <4 x float> %i.jk, <4 x float> %i.jm, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.js = shufflevector <4 x float> %i.jo, <4 x float> %i.jq, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %interleaved.vec369 = shufflevector <8 x float> %i.jr, <8 x float> %i.js, <16 x i32> <i32 0, i32 4, i32 8, i32 12, i32 1, i32 5, i32 9, i32 13, i32 2, i32 6, i32 10, i32 14, i32 3, i32 7, i32 11, i32 15>
-  store <16 x float> %interleaved.vec369, ptr %i.hp, align 16, !tbaa !13, !alias.scope !388, !noalias !387
+  store <16 x float> %interleaved.vec369, ptr %i.hp, align 16, !tbaa !13, !alias.scope !393, !noalias !392
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.jt = icmp eq i64 %index.next, %n.vec
   br i1 %i.jt, label %middle.block, label %vector.body, !llvm.loop !385
@@ -656,6 +656,23 @@ middle.block:                                     ; preds = %vector.body
   %i.jy = shl i64 %2, 5
   %i.jz = getelementptr i8, ptr %i.c, i64 %i.jy
   %i.ka = mul nsw i64 %2, 3
+  %4 = add nsw i64 %3, %2
+  %5 = shl i64 %4, 4                              ; 2 uses
+  %6 = getelementptr i8, ptr %i.c, i64 %5
+  %scevgep378 = getelementptr i8, ptr %6, i64 -16
+  %7 = getelementptr i8, ptr %1, i64 %5
+  %scevgep379 = getelementptr i8, ptr %7, i64 -48
+  %scevgep380 = getelementptr i8, ptr %1, i64 32
+  %8 = add nsw i64 %3, -4                         ; 3 uses
+  %min.iters.check382 = icmp ugt i64 %8, 3
+  %ident.check.not = icmp eq i64 %2, 1
+  %or.cond = and i1 %min.iters.check382, %ident.check.not
+  %bound0384 = icmp ult ptr %scevgep380, %scevgep378
+  %bound1385 = icmp ult ptr %i.c, %scevgep379
+  %found.conflict386 = and i1 %bound0384, %bound1385
+  %n.vec388 = and i64 %8, -4                      ; 3 uses
+  %9 = or disjoint i64 %n.vec388, 2
+  %cmp.n428 = icmp eq i64 %8, %n.vec388
   br label %.preheader218
 
 .preheader223:                                    ; preds = %.preheader223.preheader385, %.preheader223
@@ -934,7 +951,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %exitcond273.not, label %._crit_edge239, label %.preheader226
 
 .preheader218:                                    ; preds = %.preheader218.lr.ph, %._crit_edge250
-  %indvars.iv302 = phi i64 [ 0, %.preheader218.lr.ph ], [ %indvars.iv.next303, %._crit_edge250 ] ; 16 uses
+  %indvars.iv302 = phi i64 [ 0, %.preheader218.lr.ph ], [ %indvars.iv.next303, %._crit_edge250 ] ; 21 uses
   %.idx201 = shl i64 %indvars.iv302, 4            ; 2 uses
   %i.rv = getelementptr inbounds nuw i8, ptr %1, i64 %.idx201 ; 9 uses
   %i.rw = shl i64 %indvars.iv302, 4
@@ -1133,14 +1150,145 @@ middle.block:                                     ; preds = %vector.body
   %i.xs = fmul reassoc nsz arcp contract afn float %i.xr, 6.250000e-02
   %i.xt = fadd reassoc nsz arcp contract afn float %i.xc, %i.xs
   store float %i.xt, ptr %i.vq, align 4, !tbaa !13
-  br i1 %i.jv, label %.preheader215, label %._crit_edge246
+  br i1 %i.jv, label %.preheader215.preheader, label %._crit_edge246
+
+.preheader215.preheader:                          ; preds = %.preheader218
+  %or.cond.not = xor i1 %or.cond, true
+  %brmerge447 = select i1 %or.cond.not, i1 true, i1 %found.conflict386
+  br i1 %brmerge447, label %.preheader215.preheader445, label %vector.ph387
+
+vector.ph387:                                     ; preds = %.preheader215.preheader
+  %invariant.op = add i64 4, %indvars.iv302
+  br label %vector.body389
+
+vector.body389:                                   ; preds = %vector.body389, %vector.ph387
+  %index390 = phi i64 [ 0, %vector.ph387 ], [ %index.next426, %vector.body389 ] ; 6 uses
+  %10 = or disjoint i64 %index390, 2
+  %11 = add nsw i64 %10, %indvars.iv302
+  %12 = shl i64 %11, 4                            ; 2 uses
+  %13 = getelementptr inbounds nuw i8, ptr %1, i64 %12 ; 6 uses
+  %14 = add i64 %index390, %indvars.iv302
+  %15 = shl i64 %14, 4
+  %16 = getelementptr inbounds nuw i8, ptr %i.c, i64 %15
+  %wide.vec391 = load <16 x float>, ptr %16, align 16, !tbaa !13, !alias.scope !394 ; 4 uses
+  %strided.vec392 = shufflevector <16 x float> %wide.vec391, <16 x float> poison, <4 x i32> <i32 0, i32 4, i32 8, i32 12>
+  %strided.vec393 = shufflevector <16 x float> %wide.vec391, <16 x float> poison, <4 x i32> <i32 1, i32 5, i32 9, i32 13>
+  %strided.vec394 = shufflevector <16 x float> %wide.vec391, <16 x float> poison, <4 x i32> <i32 2, i32 6, i32 10, i32 14>
+  %strided.vec395 = shufflevector <16 x float> %wide.vec391, <16 x float> poison, <4 x i32> <i32 3, i32 7, i32 11, i32 15>
+  %17 = fmul reassoc nsz arcp contract afn <4 x float> %strided.vec392, splat (float 6.250000e-02)
+  %wide.vec396 = load <16 x float>, ptr %13, align 4, !tbaa !13, !alias.scope !395, !noalias !394 ; 4 uses
+  %strided.vec397 = shufflevector <16 x float> %wide.vec396, <16 x float> poison, <4 x i32> <i32 0, i32 4, i32 8, i32 12>
+  %strided.vec398 = shufflevector <16 x float> %wide.vec396, <16 x float> poison, <4 x i32> <i32 1, i32 5, i32 9, i32 13>
+  %strided.vec399 = shufflevector <16 x float> %wide.vec396, <16 x float> poison, <4 x i32> <i32 2, i32 6, i32 10, i32 14>
+  %strided.vec400 = shufflevector <16 x float> %wide.vec396, <16 x float> poison, <4 x i32> <i32 3, i32 7, i32 11, i32 15>
+  %18 = fadd reassoc nsz arcp contract afn <4 x float> %strided.vec397, %17 ; 2 uses
+  %19 = fmul reassoc nsz arcp contract afn <4 x float> %strided.vec393, splat (float 6.250000e-02)
+  %20 = fadd reassoc nsz arcp contract afn <4 x float> %strided.vec398, %19 ; 2 uses
+  %21 = fmul reassoc nsz arcp contract afn <4 x float> %strided.vec394, splat (float 6.250000e-02)
+  %22 = fadd reassoc nsz arcp contract afn <4 x float> %strided.vec399, %21 ; 2 uses
+  %23 = fmul reassoc nsz arcp contract afn <4 x float> %strided.vec395, splat (float 6.250000e-02)
+  %24 = fadd reassoc nsz arcp contract afn <4 x float> %strided.vec400, %23 ; 2 uses
+  %25 = shufflevector <4 x float> %18, <4 x float> %20, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %26 = shufflevector <4 x float> %22, <4 x float> %24, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %interleaved.vec401 = shufflevector <8 x float> %25, <8 x float> %26, <16 x i32> <i32 0, i32 4, i32 8, i32 12, i32 1, i32 5, i32 9, i32 13, i32 2, i32 6, i32 10, i32 14, i32 3, i32 7, i32 11, i32 15>
+  store <16 x float> %interleaved.vec401, ptr %13, align 4, !tbaa !13, !alias.scope !395, !noalias !394
+  %27 = or disjoint i64 %index390, 1
+  %28 = add i64 %27, %indvars.iv302
+  %29 = shl i64 %28, 4
+  %30 = getelementptr inbounds nuw i8, ptr %i.c, i64 %29
+  %wide.vec402 = load <16 x float>, ptr %30, align 16, !tbaa !13, !alias.scope !394 ; 4 uses
+  %strided.vec403 = shufflevector <16 x float> %wide.vec402, <16 x float> poison, <4 x i32> <i32 0, i32 4, i32 8, i32 12>
+  %strided.vec404 = shufflevector <16 x float> %wide.vec402, <16 x float> poison, <4 x i32> <i32 1, i32 5, i32 9, i32 13>
+  %strided.vec405 = shufflevector <16 x float> %wide.vec402, <16 x float> poison, <4 x i32> <i32 2, i32 6, i32 10, i32 14>
+  %strided.vec406 = shufflevector <16 x float> %wide.vec402, <16 x float> poison, <4 x i32> <i32 3, i32 7, i32 11, i32 15>
+  %31 = fmul reassoc nsz arcp contract afn <4 x float> %strided.vec403, splat (float 2.500000e-01)
+  %32 = fadd reassoc nsz arcp contract afn <4 x float> %18, %31 ; 2 uses
+  %33 = fmul reassoc nsz arcp contract afn <4 x float> %strided.vec404, splat (float 2.500000e-01)
+  %34 = fadd reassoc nsz arcp contract afn <4 x float> %20, %33 ; 2 uses
+  %35 = fmul reassoc nsz arcp contract afn <4 x float> %strided.vec405, splat (float 2.500000e-01)
+  %36 = fadd reassoc nsz arcp contract afn <4 x float> %22, %35 ; 2 uses
+  %37 = fmul reassoc nsz arcp contract afn <4 x float> %strided.vec406, splat (float 2.500000e-01)
+  %38 = fadd reassoc nsz arcp contract afn <4 x float> %24, %37 ; 2 uses
+  %39 = shufflevector <4 x float> %32, <4 x float> %34, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %40 = shufflevector <4 x float> %36, <4 x float> %38, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %interleaved.vec407 = shufflevector <8 x float> %39, <8 x float> %40, <16 x i32> <i32 0, i32 4, i32 8, i32 12, i32 1, i32 5, i32 9, i32 13, i32 2, i32 6, i32 10, i32 14, i32 3, i32 7, i32 11, i32 15>
+  store <16 x float> %interleaved.vec407, ptr %13, align 4, !tbaa !13, !alias.scope !395, !noalias !394
+  %41 = getelementptr inbounds nuw i8, ptr %i.c, i64 %12
+  %wide.vec408 = load <16 x float>, ptr %41, align 16, !tbaa !13, !alias.scope !394 ; 4 uses
+  %strided.vec409 = shufflevector <16 x float> %wide.vec408, <16 x float> poison, <4 x i32> <i32 0, i32 4, i32 8, i32 12>
+  %strided.vec410 = shufflevector <16 x float> %wide.vec408, <16 x float> poison, <4 x i32> <i32 1, i32 5, i32 9, i32 13>
+  %strided.vec411 = shufflevector <16 x float> %wide.vec408, <16 x float> poison, <4 x i32> <i32 2, i32 6, i32 10, i32 14>
+  %strided.vec412 = shufflevector <16 x float> %wide.vec408, <16 x float> poison, <4 x i32> <i32 3, i32 7, i32 11, i32 15>
+  %42 = fmul reassoc nsz arcp contract afn <4 x float> %strided.vec409, splat (float 3.750000e-01)
+  %43 = fadd reassoc nsz arcp contract afn <4 x float> %32, %42 ; 2 uses
+  %44 = fmul reassoc nsz arcp contract afn <4 x float> %strided.vec410, splat (float 3.750000e-01)
+  %45 = fadd reassoc nsz arcp contract afn <4 x float> %34, %44 ; 2 uses
+  %46 = fmul reassoc nsz arcp contract afn <4 x float> %strided.vec411, splat (float 3.750000e-01)
+  %47 = fadd reassoc nsz arcp contract afn <4 x float> %36, %46 ; 2 uses
+  %48 = fmul reassoc nsz arcp contract afn <4 x float> %strided.vec412, splat (float 3.750000e-01)
+  %49 = fadd reassoc nsz arcp contract afn <4 x float> %38, %48 ; 2 uses
+  %50 = shufflevector <4 x float> %43, <4 x float> %45, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %51 = shufflevector <4 x float> %47, <4 x float> %49, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %interleaved.vec413 = shufflevector <8 x float> %50, <8 x float> %51, <16 x i32> <i32 0, i32 4, i32 8, i32 12, i32 1, i32 5, i32 9, i32 13, i32 2, i32 6, i32 10, i32 14, i32 3, i32 7, i32 11, i32 15>
+  store <16 x float> %interleaved.vec413, ptr %13, align 4, !tbaa !13, !alias.scope !395, !noalias !394
+  %52 = or disjoint i64 %index390, 3
+  %53 = add nsw i64 %52, %indvars.iv302
+  %54 = shl i64 %53, 4
+  %55 = getelementptr inbounds nuw i8, ptr %i.c, i64 %54
+  %wide.vec414 = load <16 x float>, ptr %55, align 16, !tbaa !13, !alias.scope !394 ; 4 uses
+  %strided.vec415 = shufflevector <16 x float> %wide.vec414, <16 x float> poison, <4 x i32> <i32 0, i32 4, i32 8, i32 12>
+  %strided.vec416 = shufflevector <16 x float> %wide.vec414, <16 x float> poison, <4 x i32> <i32 1, i32 5, i32 9, i32 13>
+  %strided.vec417 = shufflevector <16 x float> %wide.vec414, <16 x float> poison, <4 x i32> <i32 2, i32 6, i32 10, i32 14>
+  %strided.vec418 = shufflevector <16 x float> %wide.vec414, <16 x float> poison, <4 x i32> <i32 3, i32 7, i32 11, i32 15>
+  %56 = fmul reassoc nsz arcp contract afn <4 x float> %strided.vec415, splat (float 2.500000e-01)
+  %57 = fadd reassoc nsz arcp contract afn <4 x float> %43, %56 ; 2 uses
+  %58 = fmul reassoc nsz arcp contract afn <4 x float> %strided.vec416, splat (float 2.500000e-01)
+  %59 = fadd reassoc nsz arcp contract afn <4 x float> %45, %58 ; 2 uses
+  %60 = fmul reassoc nsz arcp contract afn <4 x float> %strided.vec417, splat (float 2.500000e-01)
+  %61 = fadd reassoc nsz arcp contract afn <4 x float> %47, %60 ; 2 uses
+  %62 = fmul reassoc nsz arcp contract afn <4 x float> %strided.vec418, splat (float 2.500000e-01)
+  %63 = fadd reassoc nsz arcp contract afn <4 x float> %49, %62 ; 2 uses
+  %64 = shufflevector <4 x float> %57, <4 x float> %59, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %65 = shufflevector <4 x float> %61, <4 x float> %63, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %interleaved.vec419 = shufflevector <8 x float> %64, <8 x float> %65, <16 x i32> <i32 0, i32 4, i32 8, i32 12, i32 1, i32 5, i32 9, i32 13, i32 2, i32 6, i32 10, i32 14, i32 3, i32 7, i32 11, i32 15>
+  store <16 x float> %interleaved.vec419, ptr %13, align 4, !tbaa !13, !alias.scope !395, !noalias !394
+  %.reass = add i64 %index390, %invariant.op
+  %66 = shl i64 %.reass, 4
+  %67 = getelementptr inbounds nuw i8, ptr %i.c, i64 %66
+  %wide.vec420 = load <16 x float>, ptr %67, align 16, !tbaa !13, !alias.scope !394 ; 4 uses
+  %strided.vec421 = shufflevector <16 x float> %wide.vec420, <16 x float> poison, <4 x i32> <i32 0, i32 4, i32 8, i32 12>
+  %strided.vec422 = shufflevector <16 x float> %wide.vec420, <16 x float> poison, <4 x i32> <i32 1, i32 5, i32 9, i32 13>
+  %strided.vec423 = shufflevector <16 x float> %wide.vec420, <16 x float> poison, <4 x i32> <i32 2, i32 6, i32 10, i32 14>
+  %strided.vec424 = shufflevector <16 x float> %wide.vec420, <16 x float> poison, <4 x i32> <i32 3, i32 7, i32 11, i32 15>
+  %68 = fmul reassoc nsz arcp contract afn <4 x float> %strided.vec421, splat (float 6.250000e-02)
+  %69 = fadd reassoc nsz arcp contract afn <4 x float> %57, %68
+  %70 = fmul reassoc nsz arcp contract afn <4 x float> %strided.vec422, splat (float 6.250000e-02)
+  %71 = fadd reassoc nsz arcp contract afn <4 x float> %59, %70
+  %72 = fmul reassoc nsz arcp contract afn <4 x float> %strided.vec423, splat (float 6.250000e-02)
+  %73 = fadd reassoc nsz arcp contract afn <4 x float> %61, %72
+  %74 = fmul reassoc nsz arcp contract afn <4 x float> %strided.vec424, splat (float 6.250000e-02)
+  %75 = fadd reassoc nsz arcp contract afn <4 x float> %63, %74
+  %76 = shufflevector <4 x float> %69, <4 x float> %71, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %77 = shufflevector <4 x float> %73, <4 x float> %75, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %interleaved.vec425 = shufflevector <8 x float> %76, <8 x float> %77, <16 x i32> <i32 0, i32 4, i32 8, i32 12, i32 1, i32 5, i32 9, i32 13, i32 2, i32 6, i32 10, i32 14, i32 3, i32 7, i32 11, i32 15>
+  store <16 x float> %interleaved.vec425, ptr %13, align 4, !tbaa !13, !alias.scope !395, !noalias !394
+  %index.next426 = add nuw i64 %index390, 4       ; 2 uses
+  %78 = icmp eq i64 %index.next426, %n.vec388
+  br i1 %78, label %middle.block427, label %vector.body389, !llvm.loop !390
+
+middle.block427:                                  ; preds = %vector.body389
+  br i1 %cmp.n428, label %._crit_edge246, label %.preheader215.preheader445
+
+.preheader215.preheader445:                       ; preds = %.preheader215.preheader, %middle.block427
+  %indvars.iv290.ph = phi i64 [ %9, %middle.block427 ], [ 2, %.preheader215.preheader ]
+  br label %.preheader215
 
 ._crit_edge252:                                   ; preds = %._crit_edge250, %._crit_edge239
   tail call void @free(ptr noundef %i.c) #26
   ret void
 
-.preheader215:                                    ; preds = %.preheader218, %.preheader215
-  %indvars.iv290 = phi i64 [ %i.aag, %.preheader215 ], [ 2, %.preheader218 ] ; 5 uses
+.preheader215:                                    ; preds = %.preheader215.preheader445, %.preheader215
+  %indvars.iv290 = phi i64 [ %i.aag, %.preheader215 ], [ %indvars.iv290.ph, %.preheader215.preheader445 ] ; 5 uses
   %i.xu = mul nsw i64 %indvars.iv290, %2
   %i.xv = add nsw i64 %i.xu, %indvars.iv302
   %.idx199 = shl i64 %i.xv, 4                     ; 2 uses
@@ -1269,9 +1417,9 @@ middle.block:                                     ; preds = %vector.body
   %i.abr = fadd reassoc nsz arcp contract afn float %i.aay, %i.abq
   store float %i.abr, ptr %i.yu, align 4, !tbaa !13
   %exitcond293.not = icmp eq i64 %i.aag, %i.ju
-  br i1 %exitcond293.not, label %._crit_edge246, label %.preheader215
+  br i1 %exitcond293.not, label %._crit_edge246, label %.preheader215, !llvm.loop !391
 
-._crit_edge246:                                   ; preds = %.preheader215, %.preheader218
+._crit_edge246:                                   ; preds = %.preheader215, %middle.block427, %.preheader218
   br i1 %i.jx, label %.preheader214, label %._crit_edge250
 
 .preheader214:                                    ; preds = %._crit_edge246, %.preheader214
@@ -1544,7 +1692,7 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   store <8 x float> %strided.vec41, ptr %i.n, align 16, !tbaa !13
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.o = icmp eq i64 %index.next, %n.vec
-  br i1 %i.o, label %middle.block, label %vector.body, !llvm.loop !389
+  br i1 %i.o, label %middle.block, label %vector.body, !llvm.loop !396
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
@@ -1571,7 +1719,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   store <4 x float> %strided.vec46, ptr %i.r, align 16, !tbaa !13
   %index.next47 = add nuw i64 %index43, 4         ; 2 uses
   %i.s = icmp eq i64 %index.next47, %n.vec42
-  br i1 %i.s, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !390
+  br i1 %i.s, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !397
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
   %cmp.n48 = icmp eq i64 %n.vec42, %wide.trip.count
@@ -1590,16 +1738,16 @@ vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.ep
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.preheader, %vec.epilog.scalar.ph
   %indvars.iv = phi i64 [ %indvars.iv.next, %vec.epilog.scalar.ph ], [ %indvars.iv.ph, %vec.epilog.scalar.ph.preheader ] ; 4 uses
   %i.v = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %indvars.iv ; 2 uses
-  %i.w = load float, ptr %i.v, align 8, !tbaa !393
+  %i.w = load float, ptr %i.v, align 8, !tbaa !400
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv
   store float %i.w, ptr %i.x, align 4, !tbaa !13
   %i.y = getelementptr inbounds nuw i8, ptr %i.v, i64 4
-  %i.z = load float, ptr %i.y, align 4, !tbaa !394
+  %i.z = load float, ptr %i.y, align 4, !tbaa !401
   %i.aa = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv
   store float %i.z, ptr %i.aa, align 4, !tbaa !13
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %vec.epilog.scalar.ph, !llvm.loop !391
+  br i1 %exitcond.not, label %._crit_edge, label %vec.epilog.scalar.ph, !llvm.loop !398
 
 bb.b:                                             ; preds = %._crit_edge
   %i.ab = load i8, ptr %i.c, align 4, !tbaa !140
@@ -1612,11 +1760,11 @@ bb.b:                                             ; preds = %._crit_edge
 bb.c:                                             ; preds = %bb.b, %._crit_edge
   %.026 = phi nsz float [ %i.ae, %bb.b ], [ 0.000000e+00, %._crit_edge ] ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %i.ag = load float, ptr %i.af, align 4, !tbaa !395 ; 2 uses
+  %i.ag = load float, ptr %i.af, align 4, !tbaa !402 ; 2 uses
   %i.ah = fcmp reassoc nsz arcp contract afn ogt float %.026, %i.ag
   %.026. = select reassoc nsz arcp contract afn i1 %i.ah, float %.026, float %i.ag ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.aj = load float, ptr %i.ai, align 8, !tbaa !396 ; 2 uses
+  %i.aj = load float, ptr %i.ai, align 8, !tbaa !403 ; 2 uses
   %i.ak = fcmp reassoc nsz arcp contract afn olt float %.026., %i.aj
   %spec.select = select reassoc nsz arcp contract afn i1 %i.ak, float %.026., float %i.aj
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #26
@@ -1688,7 +1836,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <16 x float> %interleaved.vec, ptr %i.p, align 4, !tbaa !13
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.q = icmp eq i64 %index.next, %n.vec
-  br i1 %i.q, label %middle.block, label %vector.body, !llvm.loop !397
+  br i1 %i.q, label %middle.block, label %vector.body, !llvm.loop !404
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.k, %n.vec
@@ -1717,7 +1865,7 @@ middle.block:                                     ; preds = %vector.body
   store <2 x float> %i.w, ptr %i.u, align 4, !tbaa !13
   %indvars.iv.next42 = add nsw i64 %indvars.iv41, -1 ; 2 uses
   %i.x = icmp sgt i64 %indvars.iv.next42, %i.j
-  br i1 %i.x, label %.lr.ph37, label %._crit_edge38, !llvm.loop !398
+  br i1 %i.x, label %.lr.ph37, label %._crit_edge38, !llvm.loop !405
 }
 
 declare void @dt_dev_add_history_item_target(ptr noundef, ptr noundef, i32 noundef, ptr noundef) local_unnamed_addr #7
@@ -1828,7 +1976,7 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   store <16 x float> %wide.vec3, ptr %i.ba, align 4, !tbaa !13
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.bb = icmp eq i64 %index.next, %n.vec
-  br i1 %i.bb, label %middle.block, label %vector.body, !llvm.loop !399
+  br i1 %i.bb, label %middle.block, label %vector.body, !llvm.loop !406
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.aq, %n.vec
@@ -1854,7 +2002,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   store <8 x float> %wide.vec9, ptr %i.bg, align 4, !tbaa !13
   %index.next13 = add nuw i64 %index8, 4          ; 2 uses
   %i.bh = icmp eq i64 %index.next13, %n.vec7
-  br i1 %i.bh, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !400
+  br i1 %i.bh, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !407
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
   %cmp.n14 = icmp eq i64 %i.aq, %n.vec7
@@ -1879,7 +2027,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.bm = load <2 x float>, ptr %i.bk, align 4, !tbaa !13
   store <2 x float> %i.bm, ptr %i.bl, align 4, !tbaa !13
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !401
+  br i1 %exitcond.not.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !408
 
 dt_iop_basecurve_sanity_check.exit:               ; preds = %bb.a, %bb.d, %bb.e, %._crit_edge.i
   tail call void @gtk_widget_queue_draw(ptr noundef %1) #26
@@ -2282,19 +2430,26 @@ begin_hunk_1_@llvm.log.v2f32
 !384 = distinct !{!384, !382}
 !385 = distinct !{!385, !128, !129}
 !386 = distinct !{!386, !128}
-!387 = !{!383}
-!388 = !{!384}
-!389 = distinct !{!389, !128, !129}
+!387 = distinct !{!387, i1 false, !"LVerDomain"}
+!388 = distinct !{!388, !387}
+!389 = distinct !{!389, !387}
 !390 = distinct !{!390, !128, !129}
-!391 = distinct !{!391, !129, !128}
-!392 = !{!"", !12, i64 0, !12, i64 4}
-!393 = !{!392, !12, i64 0}
-!394 = !{!392, !12, i64 4}
-!395 = !{!135, !12, i64 12}
-!396 = !{!135, !12, i64 16}
+!391 = distinct !{!391, !128}
+!392 = !{!383}
+!393 = !{!384}
+!394 = !{!388}
+!395 = !{!389}
+!396 = distinct !{!396, !128, !129}
 !397 = distinct !{!397, !128, !129}
 !398 = distinct !{!398, !129, !128}
-!399 = distinct !{!399, !128, !129}
-!400 = distinct !{!400, !128, !129}
-!401 = distinct !{!401, !129, !128}
+!399 = !{!"", !12, i64 0, !12, i64 4}
+!400 = !{!399, !12, i64 0}
+!401 = !{!399, !12, i64 4}
+!402 = !{!135, !12, i64 12}
+!403 = !{!135, !12, i64 16}
+!404 = distinct !{!404, !128, !129}
+!405 = distinct !{!405, !129, !128}
+!406 = distinct !{!406, !128, !129}
+!407 = distinct !{!407, !128, !129}
+!408 = distinct !{!408, !129, !128}
 end_hunk_1

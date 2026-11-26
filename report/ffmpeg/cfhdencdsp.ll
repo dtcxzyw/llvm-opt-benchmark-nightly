@@ -6,9 +6,9 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: cold mustprogress nofree norecurse nosync nounwind optsize willreturn memory(argmem: write) uwtable
 define void @ff_cfhdencdsp_init(ptr nofree noundef writeonly captures(none) initializes((0, 16)) %0) local_unnamed_addr #0 {
 bb.a:
-  store ptr @horiz_filter, ptr %0, align 8, !tbaa !14
+  store ptr @horiz_filter, ptr %0, align 8, !tbaa !16
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr @vert_filter, ptr %i.a, align 8, !tbaa !15
+  store ptr @vert_filter, ptr %i.a, align 8, !tbaa !17
   ret void
 }
 
@@ -131,21 +131,21 @@ vector.body:                                      ; preds = %.lr.ph.preheader, %
   %i.bn = shl nuw i64 %index, 1                   ; 2 uses
   %i.bo = or disjoint i64 %i.bn, 2                ; 3 uses
   %i.bp = getelementptr [2 x i8], ptr %.01231, i64 %i.bo ; 3 uses
-  %wide.vec = load <8 x i16>, ptr %i.bp, align 2, !tbaa !10, !alias.scope !23 ; 2 uses
+  %wide.vec = load <8 x i16>, ptr %i.bp, align 2, !tbaa !10, !alias.scope !25 ; 2 uses
   %strided.vec = shufflevector <8 x i16> %wide.vec, <8 x i16> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
   %strided.vec62 = shufflevector <8 x i16> %wide.vec, <8 x i16> poison, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
   %i.bq = tail call <4 x i16> @llvm.sadd.sat.v4i16(<4 x i16> %strided.vec, <4 x i16> %strided.vec62)
   %i.br = getelementptr inbounds nuw i8, ptr %.01330, i64 %i.bo
-  store <4 x i16> %i.bq, ptr %i.br, align 2, !tbaa !10, !alias.scope !24, !noalias !25
+  store <4 x i16> %i.bq, ptr %i.br, align 2, !tbaa !10, !alias.scope !26, !noalias !27
   %i.bs = getelementptr i8, ptr %i.bp, i64 -4
-  %wide.vec63 = load <8 x i16>, ptr %i.bs, align 2, !tbaa !10, !alias.scope !23 ; 2 uses
+  %wide.vec63 = load <8 x i16>, ptr %i.bs, align 2, !tbaa !10, !alias.scope !25 ; 2 uses
   %strided.vec64 = shufflevector <8 x i16> %wide.vec63, <8 x i16> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
   %strided.vec65 = shufflevector <8 x i16> %wide.vec63, <8 x i16> poison, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
   %i.bt = sext <4 x i16> %strided.vec64 to <4 x i32>
   %i.bu = sext <4 x i16> %strided.vec65 to <4 x i32>
   %i.bv = getelementptr inbounds nuw [2 x i8], ptr %.01231, i64 %i.bn
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bv, i64 8
-  %wide.vec66 = load <8 x i16>, ptr %i.bw, align 2, !tbaa !10, !alias.scope !23 ; 2 uses
+  %wide.vec66 = load <8 x i16>, ptr %i.bw, align 2, !tbaa !10, !alias.scope !25 ; 2 uses
   %strided.vec67 = shufflevector <8 x i16> %wide.vec66, <8 x i16> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
   %strided.vec68 = shufflevector <8 x i16> %wide.vec66, <8 x i16> poison, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
   %i.bx = sext <4 x i16> %strided.vec67 to <4 x i32>
@@ -155,7 +155,7 @@ vector.body:                                      ; preds = %.lr.ph.preheader, %
   %i.cb = add nsw <4 x i32> %i.ca, splat (i32 4)
   %i.cc = add nsw <4 x i32> %i.cb, %i.by
   %i.cd = ashr <4 x i32> %i.cc, splat (i32 3)
-  %wide.vec69 = load <8 x i16>, ptr %i.bp, align 2, !tbaa !10, !alias.scope !23 ; 2 uses
+  %wide.vec69 = load <8 x i16>, ptr %i.bp, align 2, !tbaa !10, !alias.scope !25 ; 2 uses
   %strided.vec70 = shufflevector <8 x i16> %wide.vec69, <8 x i16> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
   %strided.vec71 = shufflevector <8 x i16> %wide.vec69, <8 x i16> poison, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
   %i.ce = sext <4 x i16> %strided.vec70 to <4 x i32>
@@ -166,10 +166,10 @@ vector.body:                                      ; preds = %.lr.ph.preheader, %
   %i.cj = tail call <4 x i32> @llvm.smin.v4i32(<4 x i32> %i.ci, <4 x i32> splat (i32 32767))
   %i.ck = trunc nsw <4 x i32> %i.cj to <4 x i16>
   %i.cl = getelementptr inbounds nuw i8, ptr %.01429, i64 %i.bo
-  store <4 x i16> %i.ck, ptr %i.cl, align 2, !tbaa !10, !alias.scope !26, !noalias !23
+  store <4 x i16> %i.ck, ptr %i.cl, align 2, !tbaa !10, !alias.scope !28, !noalias !25
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.cm = icmp eq i64 %index.next, %n.vec
-  br i1 %i.cm, label %middle.block, label %vector.body, !llvm.loop !20
+  br i1 %i.cm, label %middle.block, label %vector.body, !llvm.loop !22
 
 middle.block:                                     ; preds = %vector.body
   br i1 %cmp.n, label %filter.exit, label %.lr.ph.preheader73
@@ -217,7 +217,7 @@ middle.block:                                     ; preds = %vector.body
   %i.dr = getelementptr inbounds nuw i8, ptr %.01429, i64 %indvars.iv
   store i16 %.0.i15, ptr %i.dr, align 2, !tbaa !10
   %i.ds = icmp slt i64 %indvars.iv.next, %i.d
-  br i1 %i.ds, label %.lr.ph, label %filter.exit, !llvm.loop !21
+  br i1 %i.ds, label %.lr.ph, label %filter.exit, !llvm.loop !23
 
 filter.exit:                                      ; preds = %.lr.ph, %middle.block, %bb.b
   %i.dt = getelementptr inbounds [2 x i8], ptr %.01231, i64 %i.d ; 2 uses
@@ -264,7 +264,7 @@ filter.exit:                                      ; preds = %.lr.ph, %middle.blo
   %i.fe = getelementptr inbounds [2 x i8], ptr %.01429, i64 %5
   %i.ff = add nuw nsw i32 %.032, 1                ; 2 uses
   %exitcond.not = icmp eq i32 %i.ff, %7
-  br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !22
+  br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !24
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
@@ -278,9 +278,9 @@ bb.a:
   %.idx83.i = mul nsw i64 %3, 6
   %.idx84.i = shl nsw i64 %3, 3
   %.idx85.i = mul nsw i64 %3, 10
-  %i.b = add nsw i32 %7, -2                       ; 2 uses
+  %i.b = add i32 %7, -2                           ; 3 uses
   %i.c = icmp sgt i32 %7, 4
-  %i.d = sext i32 %i.b to i64                     ; 2 uses
+  %i.d = sext i32 %i.b to i64                     ; 4 uses
   %i.e = mul nsw i64 %3, %i.d
   %i.f = add nsw i32 %7, -1
   %i.g = sext i32 %i.f to i64
@@ -301,7 +301,47 @@ bb.a:
   %i.v = sext i32 %i.u to i64
   %i.w = mul nsw i64 %3, %i.v
   %i.x = mul nsw i64 %5, %i.j
-  %wide.trip.count = zext nneg i32 %6 to i64
+  %wide.trip.count = zext nneg i32 %6 to i64      ; 2 uses
+  %smax = tail call i64 @llvm.smax.i64(i64 %i.d, i64 4)
+  %8 = add nsw i64 %smax, -3                      ; 2 uses
+  %9 = shl nuw nsw i64 %8, 1
+  %10 = and i64 %9, 9223372036854775804
+  %11 = shl nuw nsw i64 %wide.trip.count, 1       ; 2 uses
+  %12 = getelementptr i8, ptr %0, i64 %10
+  %13 = getelementptr i8, ptr %12, i64 %11
+  %scevgep = getelementptr i8, ptr %13, i64 10    ; 2 uses
+  %14 = and i64 %8, -2
+  %15 = add i64 %14, %11
+  %16 = add i64 %15, 2                            ; 2 uses
+  %scevgep45 = getelementptr i8, ptr %2, i64 %16  ; 2 uses
+  %scevgep46 = getelementptr i8, ptr %2, i64 2    ; 2 uses
+  %scevgep47 = getelementptr i8, ptr %1, i64 %16  ; 2 uses
+  %scevgep48 = getelementptr i8, ptr %1, i64 2    ; 2 uses
+  %17 = tail call i64 @llvm.smax.i64(i64 %i.d, i64 4)
+  %18 = add nsw i64 %17, -3
+  %19 = lshr i64 %18, 1
+  %20 = add nuw nsw i64 %19, 1                    ; 2 uses
+  %min.iters.check = icmp slt i32 %i.b, 9
+  %ident.check = icmp ne i64 %3, 1
+  %ident.check32 = icmp ne i64 %4, 1
+  %ident.check33 = icmp ne i64 %5, 1
+  %21 = or i1 %ident.check, %ident.check32
+  %22 = or i1 %21, %ident.check33
+  %bound0 = icmp ult ptr %scevgep48, %scevgep45
+  %bound1 = icmp ult ptr %scevgep46, %scevgep47
+  %found.conflict = and i1 %bound0, %bound1
+  %bound049 = icmp ult ptr %scevgep48, %scevgep
+  %bound150 = icmp ult ptr %0, %scevgep47
+  %found.conflict51 = and i1 %bound049, %bound150
+  %conflict.rdx = or i1 %found.conflict, %found.conflict51
+  %bound052 = icmp ult ptr %scevgep46, %scevgep
+  %bound153 = icmp ult ptr %0, %scevgep45
+  %found.conflict54 = and i1 %bound052, %bound153
+  %conflict.rdx55 = or i1 %conflict.rdx, %found.conflict54
+  %n.vec = and i64 %20, 9223372036854775804       ; 3 uses
+  %23 = shl nuw i64 %n.vec, 1
+  %24 = or disjoint i64 %23, 2
+  %cmp.n = icmp eq i64 %20, %n.vec
   br label %bb.b
 
 ._crit_edge:                                      ; preds = %filter.exit, %bb.a
@@ -309,9 +349,9 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph27, %filter.exit
   %indvars.iv29 = phi i64 [ 0, %.lr.ph27 ], [ %indvars.iv.next30, %filter.exit ] ; 4 uses
-  %i.y = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %indvars.iv29 ; 19 uses
-  %i.z = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %indvars.iv29 ; 3 uses
-  %i.aa = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %indvars.iv29 ; 3 uses
+  %i.y = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %indvars.iv29 ; 22 uses
+  %i.z = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %indvars.iv29 ; 4 uses
+  %i.aa = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %indvars.iv29 ; 4 uses
   %i.ab = load i16, ptr %i.y, align 2, !tbaa !10
   %i.ac = getelementptr inbounds [2 x i8], ptr %i.y, i64 %3 ; 2 uses
   %i.ad = load i16, ptr %i.ac, align 2, !tbaa !10
@@ -347,10 +387,67 @@ bb.b:                                             ; preds = %.lr.ph27, %filter.e
   %i.be = tail call i32 @llvm.smin.i32(i32 %i.bd, i32 32767)
   %.0.i16 = trunc nsw i32 %i.be to i16
   store i16 %.0.i16, ptr %i.aa, align 2, !tbaa !10
-  br i1 %i.c, label %.lr.ph, label %filter.exit
+  br i1 %i.c, label %.lr.ph.preheader, label %filter.exit
 
-.lr.ph:                                           ; preds = %bb.b, %.lr.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ 2, %bb.b ] ; 7 uses
+.lr.ph.preheader:                                 ; preds = %bb.b
+  %brmerge = or i1 %min.iters.check, %22
+  %brmerge67 = select i1 %brmerge, i1 true, i1 %conflict.rdx55
+  br i1 %brmerge67, label %.lr.ph.preheader66, label %vector.body
+
+vector.body:                                      ; preds = %.lr.ph.preheader, %vector.body
+  %index = phi i64 [ %index.next, %vector.body ], [ 0, %.lr.ph.preheader ] ; 2 uses
+  %25 = shl nuw i64 %index, 1                     ; 3 uses
+  %26 = or disjoint i64 %25, 2                    ; 3 uses
+  %27 = getelementptr inbounds [2 x i8], ptr %i.y, i64 %26 ; 2 uses
+  %wide.vec = load <8 x i16>, ptr %27, align 2, !tbaa !10, !alias.scope !36 ; 2 uses
+  %strided.vec = shufflevector <8 x i16> %wide.vec, <8 x i16> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
+  %strided.vec56 = shufflevector <8 x i16> %wide.vec, <8 x i16> poison, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
+  %28 = tail call <4 x i16> @llvm.sadd.sat.v4i16(<4 x i16> %strided.vec, <4 x i16> %strided.vec56)
+  %29 = getelementptr inbounds i8, ptr %i.z, i64 %26
+  store <4 x i16> %28, ptr %29, align 2, !tbaa !10, !alias.scope !37, !noalias !38
+  %30 = getelementptr inbounds [2 x i8], ptr %i.y, i64 %25
+  %wide.vec57 = load <8 x i16>, ptr %30, align 2, !tbaa !10, !alias.scope !36 ; 2 uses
+  %strided.vec58 = shufflevector <8 x i16> %wide.vec57, <8 x i16> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
+  %strided.vec59 = shufflevector <8 x i16> %wide.vec57, <8 x i16> poison, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
+  %31 = sext <4 x i16> %strided.vec58 to <4 x i32>
+  %32 = sext <4 x i16> %strided.vec59 to <4 x i32>
+  %33 = getelementptr [2 x i8], ptr %i.y, i64 %25
+  %34 = getelementptr i8, ptr %33, i64 8
+  %wide.vec60 = load <8 x i16>, ptr %34, align 2, !tbaa !10, !alias.scope !36 ; 2 uses
+  %strided.vec61 = shufflevector <8 x i16> %wide.vec60, <8 x i16> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
+  %strided.vec62 = shufflevector <8 x i16> %wide.vec60, <8 x i16> poison, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
+  %35 = sext <4 x i16> %strided.vec61 to <4 x i32>
+  %36 = sext <4 x i16> %strided.vec62 to <4 x i32>
+  %37 = add nsw <4 x i32> %31, %32
+  %38 = sub nsw <4 x i32> %35, %37
+  %39 = add nsw <4 x i32> %38, splat (i32 4)
+  %40 = add nsw <4 x i32> %39, %36
+  %41 = ashr <4 x i32> %40, splat (i32 3)
+  %wide.vec63 = load <8 x i16>, ptr %27, align 2, !tbaa !10, !alias.scope !36 ; 2 uses
+  %strided.vec64 = shufflevector <8 x i16> %wide.vec63, <8 x i16> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
+  %strided.vec65 = shufflevector <8 x i16> %wide.vec63, <8 x i16> poison, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
+  %42 = sext <4 x i16> %strided.vec64 to <4 x i32>
+  %43 = sext <4 x i16> %strided.vec65 to <4 x i32>
+  %44 = sub nsw <4 x i32> %42, %43
+  %45 = add nsw <4 x i32> %44, %41
+  %46 = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %45, <4 x i32> splat (i32 -32768))
+  %47 = tail call <4 x i32> @llvm.smin.v4i32(<4 x i32> %46, <4 x i32> splat (i32 32767))
+  %48 = trunc nsw <4 x i32> %47 to <4 x i16>
+  %49 = getelementptr inbounds i8, ptr %i.aa, i64 %26
+  store <4 x i16> %48, ptr %49, align 2, !tbaa !10, !alias.scope !39, !noalias !36
+  %index.next = add nuw i64 %index, 4             ; 2 uses
+  %50 = icmp eq i64 %index.next, %n.vec
+  br i1 %50, label %middle.block, label %vector.body, !llvm.loop !33
+
+middle.block:                                     ; preds = %vector.body
+  br i1 %cmp.n, label %filter.exit, label %.lr.ph.preheader66
+
+.lr.ph.preheader66:                               ; preds = %.lr.ph.preheader, %middle.block
+  %indvars.iv.ph = phi i64 [ 2, %.lr.ph.preheader ], [ %24, %middle.block ]
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader66, %.lr.ph
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %indvars.iv.ph, %.lr.ph.preheader66 ] ; 7 uses
   %i.bf = mul nsw i64 %3, %indvars.iv
   %i.bg = getelementptr inbounds [2 x i8], ptr %i.y, i64 %i.bf ; 2 uses
   %i.bh = load i16, ptr %i.bg, align 2, !tbaa !10
@@ -401,9 +498,9 @@ bb.b:                                             ; preds = %.lr.ph27, %filter.e
   %i.cw = getelementptr inbounds [2 x i8], ptr %i.aa, i64 %i.cv
   store i16 %.0.i12, ptr %i.cw, align 2, !tbaa !10
   %i.cx = icmp slt i64 %indvars.iv.next, %i.d
-  br i1 %i.cx, label %.lr.ph, label %filter.exit, !llvm.loop !29
+  br i1 %i.cx, label %.lr.ph, label %filter.exit, !llvm.loop !34
 
-filter.exit:                                      ; preds = %.lr.ph, %bb.b
+filter.exit:                                      ; preds = %.lr.ph, %middle.block, %bb.b
   %i.cy = getelementptr inbounds [2 x i8], ptr %i.y, i64 %i.e ; 2 uses
   %i.cz = load i16, ptr %i.cy, align 2, !tbaa !10
   %i.da = getelementptr inbounds [2 x i8], ptr %i.y, i64 %i.h ; 2 uses
@@ -444,7 +541,7 @@ filter.exit:                                      ; preds = %.lr.ph, %bb.b
   store i16 %.0.i14, ptr %i.ef, align 2, !tbaa !10
   %indvars.iv.next30 = add nuw nsw i64 %indvars.iv29, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next30, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !30
+  br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !35
 }
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -488,23 +585,32 @@ attributes #2 = { nocallback nocreateundeforpoison nofree nosync nounwind specul
 !9 = !{!"short", !5, i64 0}
 !10 = !{!9, !9, i64 0}
 !11 = !{!"llvm.loop.mustprogress"}
-!12 = !{!"any pointer", !5, i64 0}
-!13 = !{!"CFHDEncDSPContext", !12, i64 0, !12, i64 8}
-!14 = !{!13, !12, i64 0}
-!15 = !{!13, !12, i64 8}
-!16 = distinct !{!16, i1 false, !"LVerDomain"}
-!17 = distinct !{!17, !16}
-!18 = distinct !{!18, !16}
-!19 = distinct !{!19, !16}
-!20 = distinct !{!20, !11, !27, !28}
-!21 = distinct !{!21, !11, !27}
-!22 = distinct !{!22, !11}
-!23 = !{!17}
-!24 = !{!18}
-!25 = !{!19, !17}
-!26 = !{!19}
-!27 = !{!"llvm.loop.isvectorized", i32 1}
-!28 = !{!"llvm.loop.unroll.runtime.disable"}
-!29 = distinct !{!29, !11}
-!30 = distinct !{!30, !11}
+!12 = !{!"llvm.loop.isvectorized", i32 1}
+!13 = !{!"llvm.loop.unroll.runtime.disable"}
+!14 = !{!"any pointer", !5, i64 0}
+!15 = !{!"CFHDEncDSPContext", !14, i64 0, !14, i64 8}
+!16 = !{!15, !14, i64 0}
+!17 = !{!15, !14, i64 8}
+!18 = distinct !{!18, i1 false, !"LVerDomain"}
+!19 = distinct !{!19, !18}
+!20 = distinct !{!20, !18}
+!21 = distinct !{!21, !18}
+!22 = distinct !{!22, !11, !12, !13}
+!23 = distinct !{!23, !11, !12}
+!24 = distinct !{!24, !11}
+!25 = !{!19}
+!26 = !{!20}
+!27 = !{!21, !19}
+!28 = !{!21}
+!29 = distinct !{!29, i1 false, !"LVerDomain"}
+!30 = distinct !{!30, !29}
+!31 = distinct !{!31, !29}
+!32 = distinct !{!32, !29}
+!33 = distinct !{!33, !11, !12, !13}
+!34 = distinct !{!34, !11, !12}
+!35 = distinct !{!35, !11}
+!36 = !{!30}
+!37 = !{!31}
+!38 = !{!32, !30}
+!39 = !{!32}
 end_hunk_0
