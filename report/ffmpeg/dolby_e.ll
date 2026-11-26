@@ -205,9 +205,9 @@ bb.a:
   %i.c = alloca [50 x i32], align 16              ; 22 uses
   %i.d = alloca [50 x i32], align 16              ; 9 uses
   %i.e = alloca [8 x i32], align 16               ; 7 uses
-  %i.f = alloca [8 x i32], align 16               ; 7 uses
-  %i.g = alloca [8 x i32], align 16               ; 7 uses
-  %i.h = alloca [8 x i32], align 16               ; 7 uses
+  %i.f = alloca [8 x i32], align 16               ; 8 uses
+  %i.g = alloca [8 x i32], align 16               ; 8 uses
+  %i.h = alloca [8 x i32], align 16               ; 8 uses
   %i.i = alloca [2 x i32], align 4                ; 4 uses
   %i.j = alloca [50 x i32], align 16              ; 6 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 9 uses
@@ -610,7 +610,7 @@ bb.y:                                             ; preds = %parse_exponents.exi
   %i.ir = tail call i32 @llvm.bswap.i32(i32 %i.iq)
   %i.is = and i32 %.pre.i67.i, 7
   %i.it = shl i32 %i.ir, %i.is
-  %i.iu = lshr i32 %i.it, 30                      ; 2 uses
+  %i.iu = lshr i32 %i.it, 30
   %i.iv = add i32 %.pre.i67.i, 2
   %i.iw = tail call i32 @llvm.umin.i32(i32 %.pre76.i.i, i32 %i.iv) ; 4 uses
   store i32 %i.iw, ptr %i.aw, align 8, !tbaa !135
@@ -622,7 +622,7 @@ bb.y:                                             ; preds = %parse_exponents.exi
   %i.jb = tail call i32 @llvm.bswap.i32(i32 %i.ja)
   %i.jc = and i32 %i.iw, 7
   %i.jd = shl i32 %i.jb, %i.jc
-  %i.je = lshr i32 %i.jd, 29                      ; 2 uses
+  %i.je = lshr i32 %i.jd, 29
   %i.jf = add i32 %i.iw, 3
   %i.jg = tail call i32 @llvm.umin.i32(i32 %.pre76.i.i, i32 %i.jf) ; 5 uses
   store i32 %i.jg, ptr %i.aw, align 8, !tbaa !135
@@ -639,17 +639,14 @@ bb.y:                                             ; preds = %parse_exponents.exi
   %i.jp = shl nuw nsw i32 %i.jn, %i.jo
   %i.jq = lshr i32 %i.jp, 7
   store i32 %spec.select.i58.peel.i.i, ptr %i.aw, align 8, !tbaa !135
-  %i.jr = and i32 %i.jq, 1                        ; 2 uses
+  %i.jr = and i32 %i.jq, 1
   store i32 %i.jr, ptr %i.h, align 16, !tbaa !41
   %exitcond.peel.not.i.i = icmp eq i32 %.pr.i, 1
   br i1 %exitcond.peel.not.i.i, label %._crit_edge.i.i, label %.peel.next.i.i
 
 .peel.next.i.i:                                   ; preds = %bb.y, %bb.z
-  %4 = phi i32 [ %.sink.i.i, %bb.z ], [ %i.jr, %bb.y ]
-  %5 = phi i32 [ %.sink.i, %bb.z ], [ %i.je, %bb.y ]
-  %6 = phi i32 [ %.sink105.i, %bb.z ], [ %i.iu, %bb.y ]
   %i.js = phi i32 [ %i.ll, %bb.z ], [ %spec.select.i58.peel.i.i, %bb.y ] ; 4 uses
-  %indvars.iv.i68.i = phi i64 [ %indvars.iv.next.i70.i, %bb.z ], [ 1, %bb.y ] ; 5 uses
+  %indvars.iv.i68.i = phi i64 [ %indvars.iv.next.i70.i, %bb.z ], [ 1, %bb.y ] ; 6 uses
   %i.jt = lshr i32 %i.js, 3
   %i.ju = zext nneg i32 %i.jt to i64
   %i.jv = getelementptr inbounds nuw i8, ptr %.pre77.i.i, i64 %i.ju
@@ -666,7 +663,7 @@ bb.y:                                             ; preds = %parse_exponents.exi
   %i.ke = zext i1 %i.kd to i32
   %i.kf = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %indvars.iv.i68.i
   store i32 %i.ke, ptr %i.kf, align 4, !tbaa !41
-  br i1 %i.kd, label %._crit_edge78.i.i, label %bb.z
+  br i1 %i.kd, label %._crit_edge78.i.i, label %4
 
 ._crit_edge78.i.i:                                ; preds = %.peel.next.i.i
   %i.kg = lshr i32 %spec.select.i.i69.i, 3
@@ -706,11 +703,21 @@ bb.y:                                             ; preds = %parse_exponents.exi
   %i.lk = and i32 %i.lj, 1
   br label %bb.z
 
-bb.z:                                             ; preds = %._crit_edge78.i.i, %.peel.next.i.i
-  %.sink105.i = phi i32 [ %i.kn, %._crit_edge78.i.i ], [ %6, %.peel.next.i.i ] ; 2 uses
-  %.sink.i = phi i32 [ %i.kx, %._crit_edge78.i.i ], [ %5, %.peel.next.i.i ] ; 2 uses
-  %.sink.i.i = phi i32 [ %i.lk, %._crit_edge78.i.i ], [ %4, %.peel.next.i.i ] ; 2 uses
-  %i.ll = phi i32 [ %spec.select.i58.i.i, %._crit_edge78.i.i ], [ %spec.select.i.i69.i, %.peel.next.i.i ] ; 2 uses
+4:                                                ; preds = %.peel.next.i.i
+  %5 = add nsw i64 %indvars.iv.i68.i, -1          ; 3 uses
+  %6 = getelementptr inbounds [4 x i8], ptr %i.f, i64 %5
+  %7 = load i32, ptr %6, align 4, !tbaa !41
+  %8 = getelementptr inbounds [4 x i8], ptr %i.g, i64 %5
+  %9 = load i32, ptr %8, align 4, !tbaa !41
+  %10 = getelementptr inbounds [4 x i8], ptr %i.h, i64 %5
+  %11 = load i32, ptr %10, align 4, !tbaa !41
+  br label %bb.z
+
+bb.z:                                             ; preds = %4, %._crit_edge78.i.i
+  %.sink105.i = phi i32 [ %i.kn, %._crit_edge78.i.i ], [ %7, %4 ]
+  %.sink.i = phi i32 [ %i.kx, %._crit_edge78.i.i ], [ %9, %4 ]
+  %.sink.i.i = phi i32 [ %i.lk, %._crit_edge78.i.i ], [ %11, %4 ]
+  %i.ll = phi i32 [ %spec.select.i58.i.i, %._crit_edge78.i.i ], [ %spec.select.i.i69.i, %4 ] ; 2 uses
   %i.lm = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %indvars.iv.i68.i
   store i32 %.sink105.i, ptr %i.lm, align 4, !tbaa !41
   %i.ln = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %indvars.iv.i68.i

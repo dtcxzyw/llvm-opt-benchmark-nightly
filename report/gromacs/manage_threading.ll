@@ -205,8 +205,9 @@ vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.ep
   %.not130.i = icmp eq i32 %.2.i, 1
   %i.im = load ptr, ptr %i.m, align 8, !tbaa !44  ; 5 uses
   %i.in = getelementptr inbounds nuw i8, ptr %6, i64 12
-  %i.io = load i32, ptr %i.in, align 4            ; 5 uses
-  %i.ip = add i32 %i.io, 1
+  %i.io = load i32, ptr %i.in, align 4
+  %8 = freeze i32 %i.io                           ; 5 uses
+  %i.ip = add i32 %8, 1
   %i.iq = load ptr, ptr %6, align 8               ; 2 uses
   %i.ir = getelementptr inbounds nuw i8, ptr %i.iq, i64 8
   %i.is = sext i32 %i.ip to i64                   ; 4 uses
@@ -217,6 +218,7 @@ vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.ep
   %unroll_iter157 = and i64 %i.it, -8
   %lcmp.mod154.not = icmp eq i64 %xtraiter152, 0
   %lcmp.mod156 = icmp ne i64 %xtraiter152, 0
+  %9 = tail call i32 @llvm.umax.i32(i32 %8, i32 1)
   %broadcast.splatinsert117 = insertelement <8 x i64> poison, i64 %i.is, i64 0
   %broadcast.splat118 = shufflevector <8 x i64> %broadcast.splatinsert117, <8 x i64> poison, <8 x i32> zeroinitializer ; 2 uses
   %i.iw = mul nsw <8 x i64> %broadcast.splat118, <i64 0, i64 1, i64 2, i64 3, i64 4, i64 5, i64 6, i64 7>
@@ -279,13 +281,13 @@ bb.n:                                             ; preds = %.epilog-lcssa, %.lr
   %i.kb = sext i32 %.promoted.i to i64            ; 3 uses
   %i.kc = shl i64 %i.ka, 30
   %i.kd = ashr i64 %i.kc, 32                      ; 2 uses
-  %i.ke = add i32 %.04662.i.i, %i.io              ; 3 uses
+  %i.ke = add i32 %.04662.i.i, %8                 ; 3 uses
   %i.kf = tail call i32 @llvm.smax.i32(i32 %i.ju, i32 %i.ke)
   %i.kg = icmp slt i32 %i.ke, %i.ju
   %i.kh = zext i1 %i.kg to i32                    ; 2 uses
   %i.ki = add i32 %i.ke, %i.kh
   %i.kj = sub i32 %i.kf, %i.ki
-  %i.kk = udiv i32 %i.kj, %i.io
+  %i.kk = udiv i32 %i.kj, %9
   %i.kl = add i32 %i.kk, %i.kh                    ; 2 uses
   %i.km = zext i32 %i.kl to i64
   %i.kn = add nuw nsw i64 %i.km, 1                ; 2 uses
@@ -297,7 +299,7 @@ vector.ph115:                                     ; preds = %.preheader51.i.preh
   %i.ko = mul i64 %n.vec116, %i.is
   %i.kp = add i64 %i.ko, %i.kb                    ; 2 uses
   %i.kq = trunc i64 %n.vec116 to i32
-  %i.kr = mul i32 %i.io, %i.kq
+  %i.kr = mul i32 %8, %i.kq
   %i.ks = add i32 %.04662.i.i, %i.kr              ; 2 uses
   %broadcast.splatinsert = insertelement <8 x i64> poison, i64 %i.kd, i64 0
   %broadcast.splat = shufflevector <8 x i64> %broadcast.splatinsert, <8 x i64> poison, <8 x i32> zeroinitializer
@@ -334,7 +336,7 @@ middle.block129:                                  ; preds = %vector.body123
   %indvars.iv163.i = phi i64 [ %indvars.iv.next164.i, %bb.p ], [ %indvars.iv163.i.ph, %.preheader51.i.us.i.preheader ]
   %.14758.i.us.i = phi i32 [ %i.kx, %bb.p ], [ %.14758.i.us.i.ph, %.preheader51.i.us.i.preheader ]
   %indvars.iv.next164.i = add nsw i64 %indvars.iv163.i, %i.is ; 4 uses
-  %i.kx = add nsw i32 %.14758.i.us.i, %i.io       ; 3 uses
+  %i.kx = add nsw i32 %.14758.i.us.i, %8          ; 3 uses
   %i.ky = icmp slt i64 %indvars.iv.next164.i, %i.kd
   br i1 %i.ky, label %bb.o, label %bb.p
 
@@ -736,6 +738,9 @@ declare <4 x i32> @llvm.masked.gather.v4i32.v4p0(<4 x ptr>, <4 x i1>, <4 x i32>)
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #20
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umax.i32(i32, i32) #20
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(read)
 declare <8 x i32> @llvm.masked.gather.v8i32.v8p0(<8 x ptr>, <8 x i1>, <8 x i32>) #22

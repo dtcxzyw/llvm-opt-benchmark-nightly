@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %bb.j, %bb.b, %Gli_N
 define void @Gli_ManGlitching(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #13 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 6 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !23
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !23   ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 4
   store i32 0, ptr %i.c, align 4, !tbaa !17
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -213,11 +213,15 @@ bb.a:
   %i.f = getelementptr i8, ptr %i.e, i64 4
   %.val5678 = load i32, ptr %i.f, align 4, !tbaa !17
   %i.g = icmp sgt i32 %.val5678, 0
-  br i1 %i.g, label %.lr.ph, label %.critedge._crit_edge
+  br i1 %i.g, label %.lr.ph, label %.critedge.preheader
 
-.critedge.preheader:                              ; preds = %Vec_IntPush.exit
-  %.pre103 = load ptr, ptr %i.a, align 8, !tbaa !23 ; 2 uses
-  %.phi.trans.insert = getelementptr i8, ptr %.pre103, i64 4
+.critedge.preheader.loopexit:                     ; preds = %Vec_IntPush.exit
+  %.pre103 = load ptr, ptr %i.a, align 8, !tbaa !23
+  br label %.critedge.preheader
+
+.critedge.preheader:                              ; preds = %.critedge.preheader.loopexit, %bb.a
+  %1 = phi ptr [ %.pre103, %.critedge.preheader.loopexit ], [ %i.b, %bb.a ] ; 2 uses
+  %.phi.trans.insert = getelementptr i8, ptr %1, i64 4
   %.val5592.pre = load i32, ptr %.phi.trans.insert, align 4, !tbaa !17
   %i.h = icmp sgt i32 %.val5592.pre, 0
   br i1 %i.h, label %.lr.ph93, label %.critedge._crit_edge
@@ -315,10 +319,10 @@ Vec_IntPush.exit:                                 ; preds = %.lr.ph, %bb.f, %Vec
   %.val56 = load i32, ptr %i.ap, align 4, !tbaa !17
   %i.aq = sext i32 %.val56 to i64
   %i.ar = icmp slt i64 %indvars.iv.next, %i.aq
-  br i1 %i.ar, label %.lr.ph, label %.critedge.preheader, !llvm.loop !44
+  br i1 %i.ar, label %.lr.ph, label %.critedge.preheader.loopexit, !llvm.loop !44
 
 bb.k:                                             ; preds = %.lr.ph93, %.critedge6
-  %i.as = phi ptr [ %.pre103, %.lr.ph93 ], [ %i.hz, %.critedge6 ] ; 5 uses
+  %i.as = phi ptr [ %1, %.lr.ph93 ], [ %i.hz, %.critedge6 ] ; 5 uses
   %i.at = phi ptr [ %.pre105.a, %.lr.ph93 ], [ %i.ia, %.critedge6 ] ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 4
   store i32 0, ptr %i.au, align 4, !tbaa !17
@@ -721,7 +725,7 @@ bb.ao:                                            ; preds = %Gli_NodeComputeValu
   %i.ic = icmp sgt i32 %.val55, 0
   br i1 %i.ic, label %bb.k, label %.critedge._crit_edge, !llvm.loop !48
 
-.critedge._crit_edge:                             ; preds = %.critedge6, %bb.a, %.critedge.preheader
+.critedge._crit_edge:                             ; preds = %.critedge6, %.critedge.preheader
   ret void
 }
 

@@ -205,7 +205,7 @@ _ZL19computeAverageForceP16t_UmbrellaWindowiP15UmbrellaOptions.exit.i: ; preds =
 
 .noexc336:                                        ; preds = %_ZL19computeAverageForceP16t_UmbrellaWindowiP15UmbrellaOptions.exit.i
   %i.bjd = invoke noundef ptr @_Z11save_callocPKcS0_imm(ptr noundef nonnull @.str.375, ptr noundef nonnull @.str.219, i32 noundef 2674, i64 noundef range(i64 -2147483648, 2147483648) %i.bjb, i64 noundef 8)
-          to label %.noexc337 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.sp1281 ; 7 uses
+          to label %.noexc337 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.sp1281 ; 12 uses
 
 .noexc337:                                        ; preds = %.noexc336
   %i.bje = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZ8gmx_whamiPPcE3opt, i64 72), align 8, !tbaa !30 ; 6 uses
@@ -225,7 +225,7 @@ _ZL19computeAverageForceP16t_UmbrellaWindowiP15UmbrellaOptions.exit.i: ; preds =
 
 .lr.ph42.i:                                       ; preds = %.preheader.i318
   %i.bjj = fmul double %i.bjg, -5.000000e-01      ; 5 uses
-  %.pre.i320 = load double, ptr %i.bjc, align 8, !tbaa !90 ; 2 uses
+  %.pre.i320 = load double, ptr %i.bjc, align 8   ; 2 uses
   %i.bjk = add nsw i64 %wide.trip.count66.i, -1   ; 2 uses
   %xtraiter1340 = and i64 %i.bjk, 3               ; 3 uses
   %i.bjl = add nsw i32 %i.bje, -2
@@ -411,39 +411,43 @@ bb.ii:                                            ; preds = %._crit_edge33.threa
 
 bb.ij:                                            ; preds = %bb.ij, %.lr.ph42.i.new
   %i.blz = phi double [ %.pre.i320, %.lr.ph42.i.new ], [ %i.bna, %bb.ij ]
-  %indvars.iv68.i = phi i64 [ 1, %.lr.ph42.i.new ], [ %indvars.iv.next69.i.3, %bb.ij ] ; 6 uses
+  %indvars.iv68.i = phi i64 [ 1, %.lr.ph42.i.new ], [ %indvars.iv.next69.i.3, %bb.ij ] ; 7 uses
   %niter1345 = phi i64 [ 0, %.lr.ph42.i.new ], [ %niter1345.next.3, %bb.ij ]
-  %i.bma = getelementptr [8 x i8], ptr %i.bjd, i64 %indvars.iv68.i ; 2 uses
+  %i.bma = getelementptr [8 x i8], ptr %i.bjd, i64 %indvars.iv68.i
   %i.bmb = getelementptr i8, ptr %i.bma, i64 -8
   %i.bmc = load double, ptr %i.bmb, align 8, !tbaa !90
-  %i.bmd = load double, ptr %i.bma, align 8, !tbaa !90
+  %44 = getelementptr inbounds nuw [8 x i8], ptr %i.bjd, i64 %indvars.iv68.i
+  %i.bmd = load double, ptr %44, align 8, !tbaa !90
   %i.bme = fadd double %i.bmc, %i.bmd
   %i.bmf = call double @llvm.fmuladd.f64(double %i.bjj, double %i.bme, double %i.blz) ; 2 uses
   %i.bmg = getelementptr inbounds nuw [8 x i8], ptr %i.bjc, i64 %indvars.iv68.i
   store double %i.bmf, ptr %i.bmg, align 8, !tbaa !90
-  %indvars.iv.next69.i = add nuw nsw i64 %indvars.iv68.i, 1 ; 2 uses
-  %i.bmh = getelementptr [8 x i8], ptr %i.bjd, i64 %indvars.iv.next69.i ; 2 uses
+  %indvars.iv.next69.i = add nuw nsw i64 %indvars.iv68.i, 1 ; 3 uses
+  %i.bmh = getelementptr [8 x i8], ptr %i.bjd, i64 %indvars.iv.next69.i
   %i.bmi = getelementptr i8, ptr %i.bmh, i64 -8
   %i.bmj = load double, ptr %i.bmi, align 8, !tbaa !90
-  %i.bmk = load double, ptr %i.bmh, align 8, !tbaa !90
+  %45 = getelementptr inbounds nuw [8 x i8], ptr %i.bjd, i64 %indvars.iv.next69.i
+  %i.bmk = load double, ptr %45, align 8, !tbaa !90
   %i.bml = fadd double %i.bmj, %i.bmk
   %i.bmm = call double @llvm.fmuladd.f64(double %i.bjj, double %i.bml, double %i.bmf) ; 2 uses
   %i.bmn = getelementptr inbounds nuw [8 x i8], ptr %i.bjc, i64 %indvars.iv.next69.i
   store double %i.bmm, ptr %i.bmn, align 8, !tbaa !90
-  %indvars.iv.next69.i.1 = add nuw nsw i64 %indvars.iv68.i, 2 ; 2 uses
-  %i.bmo = getelementptr [8 x i8], ptr %i.bjd, i64 %indvars.iv.next69.i.1 ; 2 uses
+  %indvars.iv.next69.i.1 = add nuw nsw i64 %indvars.iv68.i, 2 ; 3 uses
+  %i.bmo = getelementptr [8 x i8], ptr %i.bjd, i64 %indvars.iv.next69.i.1
   %i.bmp = getelementptr i8, ptr %i.bmo, i64 -8
   %i.bmq = load double, ptr %i.bmp, align 8, !tbaa !90
-  %i.bmr = load double, ptr %i.bmo, align 8, !tbaa !90
+  %46 = getelementptr inbounds nuw [8 x i8], ptr %i.bjd, i64 %indvars.iv.next69.i.1
+  %i.bmr = load double, ptr %46, align 8, !tbaa !90
   %i.bms = fadd double %i.bmq, %i.bmr
   %i.bmt = call double @llvm.fmuladd.f64(double %i.bjj, double %i.bms, double %i.bmm) ; 2 uses
   %i.bmu = getelementptr inbounds nuw [8 x i8], ptr %i.bjc, i64 %indvars.iv.next69.i.1
   store double %i.bmt, ptr %i.bmu, align 8, !tbaa !90
-  %indvars.iv.next69.i.2 = add nuw nsw i64 %indvars.iv68.i, 3 ; 2 uses
-  %i.bmv = getelementptr [8 x i8], ptr %i.bjd, i64 %indvars.iv.next69.i.2 ; 2 uses
+  %indvars.iv.next69.i.2 = add nuw nsw i64 %indvars.iv68.i, 3 ; 3 uses
+  %i.bmv = getelementptr [8 x i8], ptr %i.bjd, i64 %indvars.iv.next69.i.2
   %i.bmw = getelementptr i8, ptr %i.bmv, i64 -8
   %i.bmx = load double, ptr %i.bmw, align 8, !tbaa !90
-  %i.bmy = load double, ptr %i.bmv, align 8, !tbaa !90
+  %47 = getelementptr inbounds nuw [8 x i8], ptr %i.bjd, i64 %indvars.iv.next69.i.2
+  %i.bmy = load double, ptr %47, align 8, !tbaa !90
   %i.bmz = fadd double %i.bmx, %i.bmy
   %i.bna = call double @llvm.fmuladd.f64(double %i.bjj, double %i.bmz, double %i.bmt) ; 3 uses
   %i.bnb = getelementptr inbounds nuw [8 x i8], ptr %i.bjc, i64 %indvars.iv.next69.i.2
@@ -466,12 +470,13 @@ bb.ij:                                            ; preds = %bb.ij, %.lr.ph42.i.
 
 bb.ik:                                            ; preds = %bb.ik, %.epil.preheader1339
   %i.bnc = phi double [ %.epil.init.a, %.epil.preheader1339 ], [ %i.bni, %bb.ik ]
-  %indvars.iv68.i.epil = phi i64 [ %indvars.iv68.i.epil.init, %.epil.preheader1339 ], [ %indvars.iv.next69.i.epil, %bb.ik ] ; 3 uses
+  %indvars.iv68.i.epil = phi i64 [ %indvars.iv68.i.epil.init, %.epil.preheader1339 ], [ %indvars.iv.next69.i.epil, %bb.ik ] ; 4 uses
   %epil.iter1341 = phi i64 [ 0, %.epil.preheader1339 ], [ %epil.iter1341.next, %bb.ik ]
-  %i.bnd = getelementptr [8 x i8], ptr %i.bjd, i64 %indvars.iv68.i.epil ; 2 uses
+  %i.bnd = getelementptr [8 x i8], ptr %i.bjd, i64 %indvars.iv68.i.epil
   %i.bne = getelementptr i8, ptr %i.bnd, i64 -8
   %i.bnf = load double, ptr %i.bne, align 8, !tbaa !90
-  %i.bng = load double, ptr %i.bnd, align 8, !tbaa !90
+  %48 = getelementptr inbounds nuw [8 x i8], ptr %i.bjd, i64 %indvars.iv68.i.epil
+  %i.bng = load double, ptr %48, align 8, !tbaa !90
   %i.bnh = fadd double %i.bnf, %i.bng
   %i.bni = call double @llvm.fmuladd.f64(double %i.bjj, double %i.bnh, double %i.bnc) ; 2 uses
   %i.bnj = getelementptr inbounds nuw [8 x i8], ptr %i.bjc, i64 %indvars.iv68.i.epil

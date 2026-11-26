@@ -204,9 +204,9 @@ _ZN5boost7movelib13op_merge_leftIPNS_9container4test24movable_and_copyable_intEN
 define linkonce_odr hidden void @_ZN5boost7movelib15detail_adaptive24op_merge_right_step_onceIPNS_9container4test24movable_and_copyable_intENS3_3dtl23flat_tree_value_compareISt4lessIS5_ES5_NS_11move_detail8identityIS5_EEEENS0_7move_opEEEvT_NS0_9iter_sizeISG_E4typeESJ_T0_T1_(ptr noundef %0, i64 noundef %1, i64 noundef %2) local_unnamed_addr #2 comdat {
 bb.a:
   %i.a = ptrtoaddr ptr %0 to i64                  ; 8 uses
-  %i.b = shl i64 %2, 1                            ; 9 uses
+  %i.b = shl i64 %2, 1                            ; 14 uses
   %i.c = urem i64 %1, %i.b                        ; 3 uses
-  %i.d = udiv i64 %1, %i.b                        ; 2 uses
+  %i.d = udiv i64 %1, %i.b
   %i.e = sub nuw i64 %1, %i.c                     ; 4 uses
   %.not = icmp ugt i64 %i.c, %2
   %i.f = getelementptr [4 x i8], ptr %0, i64 %i.e ; 5 uses
@@ -220,7 +220,7 @@ bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr [4 x i8], ptr %0, i64 %1   ; 6 uses
   %i.h = getelementptr [4 x i8], ptr %i.g, i64 %2 ; 5 uses
   %i.i = shl i64 %1, 2
-  %i.j = udiv i64 %1, %i.b                        ; 2 uses
+  %i.j = udiv i64 %1, %i.b
   %i.k = mul i64 %2, %i.j
   %i.l = shl i64 %i.k, 3
   %i.m = add i64 %i.i, -4
@@ -231,7 +231,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader315, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheader
-  %i.q = shl i64 %i.j, 3
+  %3 = udiv i64 %1, %i.b
+  %i.q = shl i64 %3, 3
   %i.r = or disjoint i64 %i.q, 4
   %i.s = mul i64 %2, %i.r
   %i.t = getelementptr i8, ptr %0, i64 %i.s
@@ -305,7 +306,7 @@ bb.c:                                             ; preds = %bb.a
 .lr.ph.i.i.i.preheader:                           ; preds = %.lr.ph.i
   %.02541.i149 = ptrtoaddr ptr %.02541.i to i64
   %i.ak = udiv i64 %1, %i.b
-  %i.al = mul i64 %2, %i.ak                       ; 2 uses
+  %i.al = mul i64 %2, %i.ak
   %i.am = shl i64 %i.al, 3
   %i.an = add i64 %.02541.i149, -4                ; 2 uses
   %i.ao = add i64 %i.am, %i.a
@@ -320,7 +321,9 @@ vector.memcheck152:                               ; preds = %.lr.ph.i.i.i.prehea
   %i.as = shl i64 %.idx67292, 2
   %i.at = add i64 %i.as, -4
   %i.au = shl i64 %indvar, 2
-  %i.av = shl i64 %i.al, 3
+  %4 = udiv i64 %1, %i.b
+  %5 = mul i64 %2, %4
+  %i.av = shl i64 %5, 3
   %i.aw = add i64 %i.av, %i.a
   %i.ax = sub i64 %i.an, %i.aw
   %i.ay = and i64 %i.ax, -4                       ; 2 uses
@@ -416,7 +419,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 
 .lr.ph.i.i30.i.preheader:                         ; preds = %._crit_edge.i
   %.024.lcssa.i175 = ptrtoaddr ptr %.024.lcssa.i to i64 ; 2 uses
-  %i.bw = udiv i64 %1, %i.b                       ; 2 uses
+  %i.bw = udiv i64 %1, %i.b
   %i.bx = shl i64 %i.bw, 3
   %i.by = or disjoint i64 %i.bx, 4
   %i.bz = mul i64 %2, %i.by
@@ -429,7 +432,8 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br i1 %min.iters.check177, label %.lr.ph.i.i30.i.preheader308, label %vector.memcheck178
 
 vector.memcheck178:                               ; preds = %.lr.ph.i.i30.i.preheader
-  %i.cf = shl i64 %i.bw, 3
+  %6 = udiv i64 %1, %i.b
+  %i.cf = shl i64 %6, 3
   %i.cg = or disjoint i64 %i.cf, 4
   %i.ch = mul i64 %2, %i.cg
   %i.ci = add i64 %i.ch, %i.a
@@ -620,7 +624,7 @@ _ZN5boost7movelib14op_merge_rightIPNS_9container4test24movable_and_copyable_intE
 
 .lr.ph.i.i.i62.preheader:                         ; preds = %.lr.ph.i45
   %.02541.i48211.le = ptrtoaddr ptr %.02541.i48 to i64 ; 2 uses
-  %i.ey = udiv i64 %1, %i.b                       ; 3 uses
+  %i.ey = udiv i64 %1, %i.b
   %i.ez = shl nuw i64 %i.ey, 1
   %i.fa = add i64 %i.ez, 4611686018427387902
   %i.fb = mul i64 %2, %i.fa
@@ -636,14 +640,15 @@ _ZN5boost7movelib14op_merge_rightIPNS_9container4test24movable_and_copyable_intE
   br i1 %min.iters.check213, label %.lr.ph.i.i.i62.preheader300, label %vector.memcheck214
 
 vector.memcheck214:                               ; preds = %.lr.ph.i.i.i62.preheader
-  %i.fj = shl i64 %i.ey, 3
+  %7 = udiv i64 %1, %i.b                          ; 2 uses
+  %i.fj = shl i64 %7, 3
   %i.fk = or disjoint i64 %i.fj, 4
   %i.fl = mul i64 %2, %i.fk
   %i.fm = add i64 %i.fl, -4
   %i.fn = mul i64 %indvar207, %i.cz
   %i.fo = add i64 %i.fm, %i.fn
   %i.fp = shl i64 %indvar209, 2
-  %i.fq = shl nuw i64 %i.ey, 1
+  %i.fq = shl nuw i64 %7, 1
   %i.fr = add i64 %i.fq, 4611686018427387902
   %i.fs = mul i64 %2, %i.fr
   %i.ft = shl i64 %i.fs, 2
@@ -743,7 +748,8 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   br i1 %or.cond.i57, label %_ZN5boost7movelib14op_merge_rightIPNS_9container4test24movable_and_copyable_intENS2_3dtl23flat_tree_value_compareISt4lessIS4_ES4_NS_11move_detail8identityIS4_EEEENS0_7move_opEEEvT_SF_SF_SF_T0_T1_.exit66, label %.lr.ph.i.i30.i58.preheader
 
 .lr.ph.i.i30.i58.preheader:                       ; preds = %._crit_edge.i52.loopexit
-  %i.gw = shl i64 %i.d, 3
+  %8 = udiv i64 %1, %i.b
+  %i.gw = shl i64 %8, 3
   %i.gx = add i64 %i.gw, -4
   %i.gy = mul i64 %2, %i.gx
   %i.gz = add i64 %i.gy, %i.a

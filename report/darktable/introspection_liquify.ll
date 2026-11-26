@@ -205,7 +205,7 @@ bb.ak:                                            ; preds = %bb.aj
   %i.bq = tail call noalias ptr @malloc(i64 noundef %i.bo) #32 ; 20 uses
   %i.br = tail call noalias ptr @malloc(i64 noundef %i.bo) #32 ; 18 uses
   %i.bs = shl nuw nsw i64 %i.bn, 3
-  %i.bt = tail call noalias ptr @malloc(i64 noundef %i.bs) #32 ; 12 uses
+  %i.bt = tail call noalias ptr @malloc(i64 noundef %i.bs) #32 ; 14 uses
   br label %.lr.ph.i182
 
 .preheader179.i:                                  ; preds = %bb.au
@@ -213,8 +213,7 @@ bb.ak:                                            ; preds = %bb.aj
   br i1 %.not215.i, label %._crit_edge.i, label %.lr.ph182.preheader.i
 
 .lr.ph182.preheader.i:                            ; preds = %.preheader179.i
-  %.pre.i = load float, ptr %i.bq, align 4, !tbaa !13 ; 2 uses
-  %1 = load <2 x float>, ptr %i.bt, align 4       ; 2 uses
+  %.pre.i = load float, ptr %i.bq, align 4        ; 2 uses
   %xtraiter = and i64 %indvar, 1
   %i.bu = icmp eq i64 %indvar, 1
   br i1 %i.bu, label %.lr.ph182.i.epil.preheader, label %.lr.ph182.preheader.i.new
@@ -380,27 +379,28 @@ bb.au:                                            ; preds = %.sink.split.i, %.lr
 .lr.ph182.i.epil.preheader:                       ; preds = %._crit_edge.i.loopexit.unr-lcssa, %.lr.ph182.preheader.i
   %.epil.init = phi float [ %.pre.i, %.lr.ph182.preheader.i ], [ %i.hh, %._crit_edge.i.loopexit.unr-lcssa ]
   %indvars.iv191.i.epil.init = phi i64 [ 1, %.lr.ph182.preheader.i ], [ %indvars.iv.next192.i.1, %._crit_edge.i.loopexit.unr-lcssa ] ; 4 uses
-  %.epil.init203 = phi <2 x float> [ %1, %.lr.ph182.preheader.i ], [ %i.hn, %._crit_edge.i.loopexit.unr-lcssa ]
   %lcmp.mod204 = trunc i64 %indvar to i1
   tail call void @llvm.assume(i1 %lcmp.mod204)
   %i.eq = getelementptr inbounds nuw [4 x i8], ptr %i.bp, i64 %indvars.iv191.i.epil.init
   %i.er = load float, ptr %i.eq, align 4, !tbaa !13
+  %1 = add nsw i64 %indvars.iv191.i.epil.init, -1 ; 2 uses
   %i.es = fdiv reassoc nsz arcp contract afn float %i.er, %.epil.init ; 2 uses
   %i.et = getelementptr inbounds nuw [4 x i8], ptr %i.bq, i64 %indvars.iv191.i.epil.init ; 2 uses
   %i.eu = load float, ptr %i.et, align 4, !tbaa !13
-  %i.ev = getelementptr [4 x i8], ptr %i.br, i64 %indvars.iv191.i.epil.init
-  %2 = getelementptr i8, ptr %i.ev, i64 -4
-  %i.ew = load float, ptr %2, align 4, !tbaa !13
+  %i.ev = getelementptr inbounds [4 x i8], ptr %i.br, i64 %1
+  %i.ew = load float, ptr %i.ev, align 4, !tbaa !13
   %i.ex = fmul reassoc nsz arcp contract afn float %i.ew, %i.es
   %i.ey = fsub reassoc nsz arcp contract afn float %i.eu, %i.ex
   store float %i.ey, ptr %i.et, align 4, !tbaa !13
-  %i.ez = getelementptr inbounds nuw [8 x i8], ptr %i.bt, i64 %indvars.iv191.i.epil.init ; 2 uses
+  %2 = getelementptr inbounds nuw [8 x i8], ptr %i.bt, i64 %indvars.iv191.i.epil.init ; 2 uses
+  %i.ez = getelementptr inbounds [8 x i8], ptr %i.bt, i64 %1
+  %3 = load <2 x float>, ptr %2, align 4
   %i.fa = load <2 x float>, ptr %i.ez, align 4
   %i.fb = insertelement <2 x float> poison, float %i.es, i64 0
   %i.fc = shufflevector <2 x float> %i.fb, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.fd = fmul reassoc nsz arcp contract afn <2 x float> %i.fc, %.epil.init203
-  %i.fe = fsub reassoc nsz arcp contract afn <2 x float> %i.fa, %i.fd
-  store <2 x float> %i.fe, ptr %i.ez, align 4
+  %i.fd = fmul reassoc nsz arcp contract afn <2 x float> %i.fa, %i.fc
+  %i.fe = fsub reassoc nsz arcp contract afn <2 x float> %3, %i.fd
+  store <2 x float> %i.fe, ptr %2, align 4
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %.lr.ph182.i.epil.preheader, %._crit_edge.i.loopexit.unr-lcssa, %.preheader179.i
@@ -457,46 +457,48 @@ bb.au:                                            ; preds = %.sink.split.i, %.lr
 
 .lr.ph182.i:                                      ; preds = %.lr.ph182.i, %.lr.ph182.preheader.i.new
   %i.gj = phi float [ %.pre.i, %.lr.ph182.preheader.i.new ], [ %i.hh, %.lr.ph182.i ]
-  %indvars.iv191.i = phi i64 [ 1, %.lr.ph182.preheader.i.new ], [ %indvars.iv.next192.i.1, %.lr.ph182.i ] ; 6 uses
-  %3 = phi <2 x float> [ %1, %.lr.ph182.preheader.i.new ], [ %i.hn, %.lr.ph182.i ]
+  %indvars.iv191.i = phi i64 [ 1, %.lr.ph182.preheader.i.new ], [ %indvars.iv.next192.i.1, %.lr.ph182.i ] ; 8 uses
   %niter = phi i64 [ 0, %.lr.ph182.preheader.i.new ], [ %niter.next.1, %.lr.ph182.i ]
   %i.gk = getelementptr inbounds nuw [4 x i8], ptr %i.bp, i64 %indvars.iv191.i
   %i.gl = load float, ptr %i.gk, align 4, !tbaa !13
+  %4 = add nsw i64 %indvars.iv191.i, -1           ; 2 uses
   %i.gm = fdiv reassoc nsz arcp contract afn float %i.gl, %i.gj ; 2 uses
   %i.gn = getelementptr inbounds nuw [4 x i8], ptr %i.bq, i64 %indvars.iv191.i ; 2 uses
   %i.go = load float, ptr %i.gn, align 4, !tbaa !13
-  %i.gp = getelementptr [4 x i8], ptr %i.br, i64 %indvars.iv191.i
-  %4 = getelementptr i8, ptr %i.gp, i64 -4
-  %i.gq = load float, ptr %4, align 4, !tbaa !13
+  %i.gp = getelementptr inbounds [4 x i8], ptr %i.br, i64 %4
+  %i.gq = load float, ptr %i.gp, align 4, !tbaa !13
   %i.gr = fmul reassoc nsz arcp contract afn float %i.gq, %i.gm
   %i.gs = fsub reassoc nsz arcp contract afn float %i.go, %i.gr ; 2 uses
   store float %i.gs, ptr %i.gn, align 4, !tbaa !13
-  %i.gt = getelementptr inbounds nuw [8 x i8], ptr %i.bt, i64 %indvars.iv191.i ; 2 uses
+  %5 = getelementptr inbounds nuw [8 x i8], ptr %i.bt, i64 %indvars.iv191.i ; 2 uses
+  %i.gt = getelementptr inbounds [8 x i8], ptr %i.bt, i64 %4
+  %6 = load <2 x float>, ptr %5, align 4
   %i.gu = load <2 x float>, ptr %i.gt, align 4
   %i.gv = insertelement <2 x float> poison, float %i.gm, i64 0
   %i.gw = shufflevector <2 x float> %i.gv, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.gx = fmul reassoc nsz arcp contract afn <2 x float> %i.gw, %3
-  %i.gy = fsub reassoc nsz arcp contract afn <2 x float> %i.gu, %i.gx ; 2 uses
-  store <2 x float> %i.gy, ptr %i.gt, align 4
-  %indvars.iv.next192.i = add nuw nsw i64 %indvars.iv191.i, 1 ; 4 uses
+  %i.gx = fmul reassoc nsz arcp contract afn <2 x float> %i.gu, %i.gw
+  %i.gy = fsub reassoc nsz arcp contract afn <2 x float> %6, %i.gx
+  store <2 x float> %i.gy, ptr %5, align 4
+  %indvars.iv.next192.i = add nuw nsw i64 %indvars.iv191.i, 1 ; 3 uses
   %i.gz = getelementptr inbounds nuw [4 x i8], ptr %i.bp, i64 %indvars.iv.next192.i
   %i.ha = load float, ptr %i.gz, align 4, !tbaa !13
   %i.hb = fdiv reassoc nsz arcp contract afn float %i.ha, %i.gs ; 2 uses
   %i.hc = getelementptr inbounds nuw [4 x i8], ptr %i.bq, i64 %indvars.iv.next192.i ; 2 uses
   %i.hd = load float, ptr %i.hc, align 4, !tbaa !13
-  %i.he = getelementptr [4 x i8], ptr %i.br, i64 %indvars.iv.next192.i
-  %5 = getelementptr i8, ptr %i.he, i64 -4
-  %i.hf = load float, ptr %5, align 4, !tbaa !13
+  %i.he = getelementptr inbounds nuw [4 x i8], ptr %i.br, i64 %indvars.iv191.i
+  %i.hf = load float, ptr %i.he, align 4, !tbaa !13
   %i.hg = fmul reassoc nsz arcp contract afn float %i.hf, %i.hb
   %i.hh = fsub reassoc nsz arcp contract afn float %i.hd, %i.hg ; 3 uses
   store float %i.hh, ptr %i.hc, align 4, !tbaa !13
-  %i.hi = getelementptr inbounds nuw [8 x i8], ptr %i.bt, i64 %indvars.iv.next192.i ; 2 uses
+  %7 = getelementptr inbounds nuw [8 x i8], ptr %i.bt, i64 %indvars.iv.next192.i ; 2 uses
+  %i.hi = getelementptr inbounds nuw [8 x i8], ptr %i.bt, i64 %indvars.iv191.i
+  %8 = load <2 x float>, ptr %7, align 4
   %i.hj = load <2 x float>, ptr %i.hi, align 4
   %i.hk = insertelement <2 x float> poison, float %i.hb, i64 0
   %i.hl = shufflevector <2 x float> %i.hk, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.hm = fmul reassoc nsz arcp contract afn <2 x float> %i.hl, %i.gy
-  %i.hn = fsub reassoc nsz arcp contract afn <2 x float> %i.hj, %i.hm ; 3 uses
-  store <2 x float> %i.hn, ptr %i.hi, align 4
+  %i.hm = fmul reassoc nsz arcp contract afn <2 x float> %i.hj, %i.hl
+  %i.hn = fsub reassoc nsz arcp contract afn <2 x float> %8, %i.hm
+  store <2 x float> %i.hn, ptr %7, align 4
   %indvars.iv.next192.i.1 = add nuw nsw i64 %indvars.iv191.i, 2 ; 2 uses
   %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter

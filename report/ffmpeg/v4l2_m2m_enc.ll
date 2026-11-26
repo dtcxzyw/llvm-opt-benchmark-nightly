@@ -204,9 +204,9 @@ bb.a:
   %2 = alloca %struct.v4l2_ext_controls, align 8  ; 7 uses
   %3 = alloca %struct.v4l2_ext_control, align 4   ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !28
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !28   ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !77   ; 7 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !77   ; 6 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 4104 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 4376
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 4808
@@ -227,16 +227,21 @@ bb.c:                                             ; preds = %bb.b
   %i.n = icmp slt i32 %i.m, 0
   %i.o = icmp ne i32 %i.m, -541478725             ; 2 uses
   %or.cond = and i1 %i.n, %i.o
-  br i1 %or.cond, label %bb.o, label %bb.d
+  br i1 %or.cond, label %bb.o, label %4
 
-bb.d:                                             ; preds = %bb.c
-  %.val45.pre = load ptr, ptr %i.a, align 8, !tbaa !28
+4:                                                ; preds = %bb.c
+  %.val45.pre = load ptr, ptr %i.a, align 8, !tbaa !28 ; 2 uses
+  br i1 %i.o, label %._crit_edge, label %bb.d
+
+bb.d:                                             ; preds = %4
   %.phi.trans.insert = getelementptr i8, ptr %.val45.pre, i64 8
-  %.val.val46.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !77 ; 2 uses
-  br i1 %i.o, label %._crit_edge, label %v4l2_send_frame.exit
+  %.val.val46.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !77
+  br label %v4l2_send_frame.exit
 
-._crit_edge:                                      ; preds = %bb.d, %bb.b
-  %.val.val46.a = phi ptr [ %i.d, %bb.b ], [ %.val.val46.pre, %bb.d ] ; 4 uses
+._crit_edge:                                      ; preds = %bb.b, %4
+  %.val.val46.a = phi ptr [ %i.b, %bb.b ], [ %.val45.pre, %4 ]
+  %5 = getelementptr i8, ptr %.val.val46.a, i64 8
+  %.val.val46 = load ptr, ptr %5, align 8, !tbaa !77 ; 4 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.h, i64 120
   %i.q = load i32, ptr %i.p, align 8, !tbaa !85
   %i.r = icmp eq i32 %i.q, 1
@@ -255,11 +260,11 @@ bb.e:                                             ; preds = %._crit_edge
   %i.v = getelementptr inbounds nuw i8, ptr %2, i64 4
   store i32 1, ptr %i.v, align 4, !tbaa !46
   store i32 10029541, ptr %3, align 4, !tbaa !44
-  %i.w = getelementptr inbounds nuw i8, ptr %.val.val46.a, i64 4096
+  %i.w = getelementptr inbounds nuw i8, ptr %.val.val46, i64 4096
   %i.x = load i32, ptr %i.w, align 8, !tbaa !39
   %i.y = call i32 (i32, i64, ...) @ioctl(i32 noundef %i.x, i64 noundef 3223344712, ptr noundef nonnull %2) #8
   %i.z = icmp slt i32 %i.y, 0
-  %i.aa = getelementptr inbounds nuw i8, ptr %.val.val46.a, i64 4648
+  %i.aa = getelementptr inbounds nuw i8, ptr %.val.val46, i64 4648
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !37 ; 2 uses
   br i1 %i.z, label %bb.f, label %bb.g
 
@@ -280,8 +285,8 @@ v4l2_set_ext_ctrl.exit.i:                         ; preds = %bb.g, %bb.f
   br label %v4l2_send_frame.exit
 
 v4l2_send_frame.exit:                             ; preds = %bb.d, %._crit_edge, %v4l2_set_ext_ctrl.exit.i
-  %.val.val51 = phi ptr [ %.val.val46.a, %v4l2_set_ext_ctrl.exit.i ], [ %.val.val46.a, %._crit_edge ], [ %.val.val46.pre, %bb.d ]
-  %.049 = phi ptr [ %i.h, %v4l2_set_ext_ctrl.exit.i ], [ %i.h, %._crit_edge ], [ null, %bb.d ] ; 2 uses
+  %.val.val51 = phi ptr [ %.val.val46.pre, %bb.d ], [ %.val.val46, %._crit_edge ], [ %.val.val46, %v4l2_set_ext_ctrl.exit.i ]
+  %.049 = phi ptr [ null, %bb.d ], [ %i.h, %._crit_edge ], [ %i.h, %v4l2_set_ext_ctrl.exit.i ] ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %.val.val51, i64 4376
   %i.ag = call i32 @ff_v4l2_context_enqueue_frame(ptr noundef nonnull %i.af, ptr noundef %.049) #8 ; 3 uses
   %.not54 = icmp eq i32 %i.ag, -11

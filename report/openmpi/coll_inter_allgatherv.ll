@@ -61,7 +61,7 @@ bb.c:                                             ; preds = %ompi_comm_remote_si
 
 bb.d:                                             ; preds = %bb.c, %ompi_comm_remote_size.exit
   %.075 = phi ptr [ %i.s, %bb.c ], [ null, %ompi_comm_remote_size.exit ] ; 14 uses
-  %.073 = phi ptr [ %i.t, %bb.c ], [ null, %ompi_comm_remote_size.exit ] ; 12 uses
+  %.073 = phi ptr [ %i.t, %bb.c ], [ null, %ompi_comm_remote_size.exit ] ; 13 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.e, i64 344
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !51   ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 144
@@ -82,6 +82,7 @@ bb.f:                                             ; preds = %bb.e
 
 .lr.ph.preheader:                                 ; preds = %bb.f
   %wide.trip.count = zext nneg i32 %.val99.val to i64
+  %load_initial = load i32, ptr %.073, align 4    ; 2 uses
   %i.ae = add nsw i64 %wide.trip.count, -1        ; 2 uses
   %xtraiter = and i64 %i.ae, 3                    ; 3 uses
   %i.af = add nsw i32 %.val99.val, -2
@@ -101,7 +102,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %lcmp.mod.not, label %.lr.ph104.preheader, label %.lr.ph.epil.preheader
 
 .lr.ph.epil.preheader:                            ; preds = %.lr.ph104.preheader.loopexit.unr-lcssa, %.lr.ph.preheader
-  %.epil.init = phi i32 [ 0, %.lr.ph.preheader ], [ %i.bp, %.lr.ph104.preheader.loopexit.unr-lcssa ]
+  %.epil.init = phi i32 [ %load_initial, %.lr.ph.preheader ], [ %i.bp, %.lr.ph104.preheader.loopexit.unr-lcssa ]
   %indvars.iv.epil.init = phi i64 [ 1, %.lr.ph.preheader ], [ %indvars.iv.next.3, %.lr.ph104.preheader.loopexit.unr-lcssa ]
   %lcmp.mod125 = icmp ne i64 %xtraiter, 0
   call void @llvm.assume(i1 %lcmp.mod125)
@@ -159,7 +160,7 @@ middle.block:                                     ; preds = %vector.body
   br label %.lr.ph104
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
-  %i.aw = phi i32 [ 0, %.lr.ph.preheader.new ], [ %i.bp, %.lr.ph ]
+  %i.aw = phi i32 [ %load_initial, %.lr.ph.preheader.new ], [ %i.bp, %.lr.ph ]
   %indvars.iv = phi i64 [ 1, %.lr.ph.preheader.new ], [ %indvars.iv.next.3, %.lr.ph ] ; 6 uses
   %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.3, %.lr.ph ]
   %i.ax = getelementptr [4 x i8], ptr %.075, i64 %indvars.iv

@@ -204,16 +204,15 @@ bb.by:                                            ; preds = %bb.bx, %bb.bl
   %i.ih = getelementptr inbounds nuw i8, ptr %0, i64 1204 ; 13 uses
   %i.ii = getelementptr i8, ptr %0, i64 1248      ; 3 uses
   %i.ij = getelementptr inbounds nuw i8, ptr %0, i64 1240 ; 19 uses
-  %i.ik = getelementptr inbounds nuw i8, ptr %0, i64 392 ; 2 uses
+  %i.ik = getelementptr inbounds nuw i8, ptr %0, i64 392 ; 3 uses
   %i.il = getelementptr inbounds nuw i8, ptr %0, i64 1280 ; 10 uses
   %i.im = getelementptr inbounds nuw i8, ptr %0, i64 1212 ; 5 uses
   %i.in = getelementptr inbounds nuw i8, ptr %0, i64 1216 ; 8 uses
   %i.io = getelementptr inbounds nuw i8, ptr %0, i64 1288 ; 2 uses
-  %i.ip = getelementptr inbounds nuw i8, ptr %0, i64 440 ; 8 uses
-  %i.iq = getelementptr inbounds nuw i8, ptr %0, i64 488 ; 5 uses
-  %i.ir = getelementptr inbounds nuw i8, ptr %0, i64 584 ; 2 uses
-  %i.is = getelementptr inbounds nuw i8, ptr %0, i64 536 ; 14 uses
-  %6 = getelementptr i8, ptr %0, i64 384
+  %i.ip = getelementptr inbounds nuw i8, ptr %0, i64 440 ; 9 uses
+  %i.iq = getelementptr inbounds nuw i8, ptr %0, i64 488 ; 6 uses
+  %i.ir = getelementptr i8, ptr %0, i64 584       ; 3 uses
+  %i.is = getelementptr inbounds nuw i8, ptr %0, i64 536 ; 15 uses
   %i.it = getelementptr inbounds nuw i8, ptr %0, i64 2112 ; 9 uses
   %i.iu = getelementptr inbounds nuw i8, ptr %0, i64 1184 ; 4 uses
   %i.iv = getelementptr inbounds nuw i8, ptr %0, i64 1192 ; 4 uses
@@ -616,36 +615,41 @@ bb.dm:                                            ; preds = %bb.dl
 
 .lr.ph.i.i446:                                    ; preds = %bb.dm
   %wide.trip.count.i.i447 = zext nneg i32 %i.sb to i64
+  %load_initial = load double, ptr %i.ir, align 8
   br label %bb.dn
 
 bb.dn:                                            ; preds = %bb.dn, %.lr.ph.i.i446
-  %i.sc = phi double [ 1.000000e+00, %.lr.ph.i.i446 ], [ %i.sj, %bb.dn ]
-  %7 = phi double [ 0.000000e+00, %.lr.ph.i.i446 ], [ %i.ss, %bb.dn ]
-  %i.sd = phi double [ 1.000000e+00, %.lr.ph.i.i446 ], [ %i.so, %bb.dn ]
-  %8 = phi double [ 1.000000e+00, %.lr.ph.i.i446 ], [ %i.sf, %bb.dn ]
+  %i.sc = phi double [ %load_initial, %.lr.ph.i.i446 ], [ %i.ss, %bb.dn ]
   %indvars.iv.i.i448 = phi i64 [ 1, %.lr.ph.i.i446 ], [ %indvars.iv.next.i.i449, %bb.dn ] ; 7 uses
-  %.0156192.i.i = phi double [ %i.rr, %.lr.ph.i.i446 ], [ %i.si, %bb.dn ] ; 2 uses
-  %9 = getelementptr [8 x i8], ptr %6, i64 %indvars.iv.i.i448 ; 2 uses
-  %10 = load double, ptr %9, align 8, !tbaa !24   ; 2 uses
-  store double %.0156192.i.i, ptr %9, align 8, !tbaa !24
-  %i.se = fmul double %8, %.0156192.i.i
-  %i.sf = fdiv double %i.se, %10                  ; 2 uses
+  %i.sd = phi double [ %i.rr, %.lr.ph.i.i446 ], [ %i.si, %bb.dn ] ; 2 uses
+  %6 = add nsw i64 %indvars.iv.i.i448, -1         ; 4 uses
+  %7 = getelementptr inbounds [8 x i8], ptr %i.ik, i64 %6 ; 2 uses
+  %8 = load double, ptr %7, align 8, !tbaa !24    ; 2 uses
+  store double %i.sd, ptr %7, align 8, !tbaa !24
+  %9 = getelementptr inbounds [8 x i8], ptr %i.iq, i64 %6
+  %10 = load double, ptr %9, align 8, !tbaa !24
+  %i.se = fmul double %i.sd, %10
+  %i.sf = fdiv double %i.se, %8
   %i.sg = getelementptr inbounds nuw [8 x i8], ptr %i.iq, i64 %indvars.iv.i.i448
   store double %i.sf, ptr %i.sg, align 8, !tbaa !24
   %i.sh = load double, ptr %i.ij, align 8, !tbaa !169 ; 2 uses
-  %i.si = fadd double %10, %i.sh                  ; 3 uses
-  %i.sj = fdiv double %i.sh, %i.si                ; 3 uses
+  %i.si = fadd double %8, %i.sh                   ; 3 uses
+  %i.sj = fdiv double %i.sh, %i.si                ; 2 uses
   %i.sk = getelementptr inbounds nuw [8 x i8], ptr %i.ip, i64 %indvars.iv.i.i448
   store double %i.sj, ptr %i.sk, align 8, !tbaa !24
   %i.sl = trunc nuw nsw i64 %indvars.iv.i.i448 to i32
   %i.sm = uitofp nneg i32 %i.sl to double
-  %i.sn = fmul double %i.sd, %i.sm
-  %i.so = fmul double %i.sn, %i.sj                ; 2 uses
+  %11 = getelementptr inbounds [8 x i8], ptr %i.is, i64 %6
+  %12 = load double, ptr %11, align 8, !tbaa !24
+  %i.sn = fmul double %12, %i.sm
+  %i.so = fmul double %i.sj, %i.sn
   %i.sp = getelementptr inbounds nuw [8 x i8], ptr %i.is, i64 %indvars.iv.i.i448
   store double %i.so, ptr %i.sp, align 8, !tbaa !24
+  %13 = getelementptr inbounds [8 x i8], ptr %i.ip, i64 %6
+  %14 = load double, ptr %13, align 8, !tbaa !24
   %i.sq = load double, ptr %i.ij, align 8, !tbaa !169
-  %i.sr = fdiv double %i.sc, %i.sq
-  %i.ss = fadd double %7, %i.sr                   ; 2 uses
+  %i.sr = fdiv double %14, %i.sq
+  %i.ss = fadd double %i.sc, %i.sr                ; 2 uses
   %i.st = getelementptr inbounds nuw [8 x i8], ptr %i.ir, i64 %indvars.iv.i.i448
   store double %i.ss, ptr %i.st, align 8, !tbaa !24
   %indvars.iv.next.i.i449 = add nuw nsw i64 %indvars.iv.i.i448, 1 ; 2 uses

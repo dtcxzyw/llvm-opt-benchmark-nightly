@@ -204,7 +204,7 @@ bb.p:                                             ; preds = %bb.o, %._crit_edge
   %i.as = getelementptr inbounds nuw i8, ptr %5, i64 24
   %i.at = load ptr, ptr %i.as, align 8, !tbaa !18 ; 8 uses
   %i.au = getelementptr inbounds nuw [4 x i8], ptr %i.at, i64 %i.k ; 8 uses
-  %i.av = getelementptr inbounds nuw [4 x i8], ptr %i.au, i64 %i.k ; 6 uses
+  %i.av = getelementptr inbounds nuw [4 x i8], ptr %i.au, i64 %i.k ; 7 uses
   %i.aw = getelementptr inbounds nuw [4 x i8], ptr %i.at, i64 %i.aq ; 2 uses
   %i.ax = load float, ptr %i.aw, align 4, !tbaa !20
   %i.ay = load float, ptr %i.at, align 4, !tbaa !20
@@ -216,7 +216,7 @@ bb.p:                                             ; preds = %bb.o, %._crit_edge
   store float %i.bb, ptr %i.az, align 4, !tbaa !20
   store float %i.ba, ptr %i.au, align 4, !tbaa !20
   %i.bc = getelementptr inbounds nuw [4 x i8], ptr %i.av, i64 %i.aq ; 2 uses
-  %i.bd = load float, ptr %i.bc, align 4, !tbaa !20 ; 2 uses
+  %i.bd = load float, ptr %i.bc, align 4, !tbaa !20
   %i.be = load float, ptr %i.av, align 4, !tbaa !20
   store float %i.be, ptr %i.bc, align 4, !tbaa !20
   store float %i.bd, ptr %i.av, align 4, !tbaa !20
@@ -230,12 +230,13 @@ bb.p:                                             ; preds = %bb.o, %._crit_edge
   br label %.lr.ph180
 
 .lr.ph180:                                        ; preds = %.lr.ph180.preheader, %bb.q
-  %9 = phi float [ %i.bd, %.lr.ph180.preheader ], [ %i.cy, %bb.q ]
   %indvars.iv187 = phi i64 [ 1, %.lr.ph180.preheader ], [ %indvars.iv.next188, %bb.q ] ; 11 uses
-  %10 = add nsw i64 %indvars.iv187, -1            ; 2 uses
-  %i.bh = getelementptr inbounds [4 x i8], ptr %i.at, i64 %10
+  %9 = add nsw i64 %indvars.iv187, -1             ; 3 uses
+  %10 = getelementptr inbounds [4 x i8], ptr %i.at, i64 %9
+  %11 = load float, ptr %10, align 4, !tbaa !20
+  %i.bh = getelementptr inbounds [4 x i8], ptr %i.au, i64 %9
   %i.bi = load float, ptr %i.bh, align 4, !tbaa !20
-  %i.bj = getelementptr inbounds [4 x i8], ptr %i.au, i64 %10
+  %i.bj = getelementptr inbounds [4 x i8], ptr %i.av, i64 %9
   %i.bk = load float, ptr %i.bj, align 4, !tbaa !20
   %i.bl = icmp samesign ult i64 %indvars.iv187, %i.bg
   %i.bm = trunc nuw nsw i64 %indvars.iv187 to i32 ; 2 uses
@@ -247,13 +248,13 @@ bb.p:                                             ; preds = %bb.o, %._crit_edge
   %.0116171 = phi float [ %.1117, %.lr.ph175 ], [ 0.000000e+00, %.lr.ph180 ] ; 2 uses
   %i.bn = getelementptr inbounds nuw [4 x i8], ptr %i.at, i64 %indvars.iv189
   %i.bo = load float, ptr %i.bn, align 4, !tbaa !20
-  %i.bp = fsub float %i.bi, %i.bo                 ; 2 uses
+  %i.bp = fsub float %11, %i.bo                   ; 2 uses
   %i.bq = getelementptr inbounds nuw [4 x i8], ptr %i.au, i64 %indvars.iv189
   %i.br = load float, ptr %i.bq, align 4, !tbaa !20
-  %i.bs = fsub float %i.bk, %i.br                 ; 2 uses
+  %i.bs = fsub float %i.bi, %i.br                 ; 2 uses
   %i.bt = getelementptr inbounds nuw [4 x i8], ptr %i.av, i64 %indvars.iv189
   %i.bu = load float, ptr %i.bt, align 4, !tbaa !20
-  %i.bv = fsub float %9, %i.bu                    ; 2 uses
+  %i.bv = fsub float %i.bk, %i.bu                 ; 2 uses
   %i.bw = fmul float %i.bs, %i.bs
   %i.bx = call float @llvm.fmuladd.f32(float %i.bp, float %i.bp, float %i.bw)
   %i.by = call float @llvm.fmuladd.f32(float %i.bv, float %i.bv, float %i.bx) ; 2 uses
@@ -307,7 +308,7 @@ bb.q:                                             ; preds = %._crit_edge176
   store float %i.cu, ptr %i.ct, align 4, !tbaa !20
   %i.cw = getelementptr inbounds [4 x i8], ptr %i.av, i64 %.0115.lcssa ; 2 uses
   %i.cx = getelementptr inbounds nuw [4 x i8], ptr %i.av, i64 %indvars.iv187 ; 2 uses
-  %i.cy = load float, ptr %i.cw, align 4, !tbaa !20 ; 2 uses
+  %i.cy = load float, ptr %i.cw, align 4, !tbaa !20
   %i.cz = load float, ptr %i.cx, align 4, !tbaa !20
   store float %i.cz, ptr %i.cw, align 4, !tbaa !20
   store float %i.cy, ptr %i.cx, align 4, !tbaa !20

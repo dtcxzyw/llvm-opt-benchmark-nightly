@@ -204,7 +204,7 @@ declare noalias noundef ptr @realloc(ptr allocptr noundef captures(none), i64 no
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal fastcc void @sha512_process_block(ptr nofree noundef readonly captures(none) %0, i64 noundef %1, ptr nofree noundef nonnull captures(none) %2) unnamed_addr #5 {
 bb.a:
-  %i.a = alloca [80 x i64], align 16              ; 23 uses
+  %i.a = alloca [80 x i64], align 16              ; 24 uses
   %i.b = lshr i64 %1, 3                           ; 2 uses
   %i.c = load i64, ptr %2, align 8, !tbaa !16     ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
@@ -270,7 +270,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %.0137153 = phi i64 [ %i.ej, %bb.e ], [ %i.c, %.lr.ph.preheader ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
   %i.an = load i64, ptr %.0162, align 8, !tbaa !16
-  %i.ao = tail call i64 @llvm.bswap.i64(i64 %i.an) ; 2 uses
+  %i.ao = tail call i64 @llvm.bswap.i64(i64 %i.an)
   store i64 %i.ao, ptr %i.a, align 16, !tbaa !16
   %i.ap = getelementptr inbounds nuw i8, ptr %.0162, i64 8
   %i.aq = load i64, ptr %i.ap, align 8, !tbaa !16
@@ -335,8 +335,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %bb.d
-  %3 = phi i64 [ %i.ao, %.lr.ph ], [ %i.cw, %bb.d ]
-  %indvars.iv = phi i64 [ 16, %.lr.ph ], [ %indvars.iv.next, %bb.d ] ; 5 uses
+  %indvars.iv = phi i64 [ 16, %.lr.ph ], [ %indvars.iv.next, %bb.d ] ; 6 uses
   %i.ci = getelementptr [8 x i8], ptr %i.a, i64 %indvars.iv
   %i.cj = getelementptr i8, ptr %i.ci, i64 -16
   %i.ck = load i64, ptr %i.cj, align 8, !tbaa !16 ; 5 uses
@@ -351,13 +350,16 @@ bb.d:                                             ; preds = %.lr.ph, %bb.d
   %i.ct = add i64 %i.cp, %i.cs
   %i.cu = getelementptr [8 x i8], ptr %i.a, i64 %indvars.iv
   %i.cv = getelementptr i8, ptr %i.cu, i64 -120
-  %i.cw = load i64, ptr %i.cv, align 8, !tbaa !16 ; 6 uses
+  %i.cw = load i64, ptr %i.cv, align 8, !tbaa !16 ; 5 uses
   %i.cx = tail call i64 @llvm.fshl.i64(i64 %i.cw, i64 %i.cw, i64 63)
   %i.cy = tail call i64 @llvm.fshl.i64(i64 %i.cw, i64 %i.cw, i64 56)
   %i.cz = xor i64 %i.cx, %i.cy
   %i.da = lshr i64 %i.cw, 7
   %i.db = xor i64 %i.cz, %i.da
-  %i.dc = add i64 %i.ct, %3
+  %3 = getelementptr [8 x i8], ptr %i.a, i64 %indvars.iv
+  %4 = getelementptr i8, ptr %3, i64 -128
+  %5 = load i64, ptr %4, align 8, !tbaa !16
+  %i.dc = add i64 %i.ct, %5
   %i.dd = add i64 %i.dc, %i.db
   %i.de = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv
   store i64 %i.dd, ptr %i.de, align 8, !tbaa !16

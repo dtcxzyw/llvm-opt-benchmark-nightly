@@ -205,7 +205,8 @@ bb.a:
   %i.i = zext i1 %i.h to i32                      ; 2 uses
   %i.j = add i32 %i.f, %i.i
   %i.k = sub i32 %i.g, %i.j
-  %i.l = udiv i32 %i.k, %3
+  %4 = tail call i32 @llvm.umax.i32(i32 %3, i32 1)
+  %i.l = udiv i32 %i.k, %4
   %i.m = add i32 %i.l, %i.i
   %i.n = add i32 %i.m, 1                          ; 3 uses
   %min.iters.check = icmp ult i32 %i.n, 8
@@ -606,6 +607,9 @@ declare i64 @llvm.umax.i64(i64, i64) #27
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #27
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umax.i32(i32, i32) #27
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #27

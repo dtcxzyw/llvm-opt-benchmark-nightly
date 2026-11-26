@@ -20,7 +20,7 @@ target triple = "x86_64-pc-linux-gnu"
 define dso_local void @rsdec_204(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #0 !guid !37 {
 bb.a:
   %i.a = alloca [18 x [16 x i32]], align 16       ; 15 uses
-  %i.b = alloca [18 x i32], align 16              ; 8 uses
+  %i.b = alloca [18 x i32], align 16              ; 9 uses
   %i.c = alloca [18 x i32], align 16              ; 9 uses
   %i.d = alloca [18 x i32], align 16              ; 7 uses
   %i.e = alloca [17 x i32], align 16              ; 14 uses
@@ -402,7 +402,7 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.m
   store i32 0, ptr %i.b, align 16, !tbaa !8
   %i.fv = getelementptr inbounds nuw i8, ptr %i.e, i64 4
-  %i.fw = load i32, ptr %i.fv, align 4, !tbaa !8  ; 2 uses
+  %i.fw = load i32, ptr %i.fv, align 4, !tbaa !8
   %i.fx = getelementptr inbounds nuw i8, ptr %i.b, i64 4
   store i32 %i.fw, ptr %i.fx, align 4, !tbaa !8
   store i32 0, ptr %i.a, align 16, !tbaa !8
@@ -421,10 +421,11 @@ bb.n:                                             ; preds = %bb.m
   br label %bb.o
 
 bb.o:                                             ; preds = %._crit_edge.i, %bb.n
-  %2 = phi i32 [ %i.ld, %._crit_edge.i ], [ %i.fw, %bb.n ] ; 2 uses
   %indvars.iv400.i = phi i64 [ %indvars.iv.next401.i, %._crit_edge.i ], [ 0, %bb.n ] ; 7 uses
-  %indvars.iv.next401.i = add nuw nsw i64 %indvars.iv400.i, 1 ; 7 uses
-  %i.gb = icmp eq i32 %2, -1
+  %indvars.iv.next401.i = add nuw nsw i64 %indvars.iv400.i, 1 ; 8 uses
+  %2 = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv.next401.i
+  %3 = load i32, ptr %2, align 4, !tbaa !8        ; 2 uses
+  %i.gb = icmp eq i32 %3, -1
   br i1 %i.gb, label %bb.p, label %.preheader328.i
 
 bb.p:                                             ; preds = %bb.o
@@ -541,7 +542,7 @@ bb.t:                                             ; preds = %bb.s, %.preheader32
 
 .lr.ph.i:                                         ; preds = %.loopexit327.i
   %i.hz = getelementptr inbounds [64 x i8], ptr %i.a, i64 %i.ho
-  %i.ia = add nsw i32 %2, 255
+  %i.ia = add nsw i32 %3, 255
   %i.ib = getelementptr inbounds [4 x i8], ptr %i.b, i64 %i.ho
   %i.ic = add nuw i32 %i.hy, 1
   %wide.trip.count.i = zext i32 %i.ic to i64
@@ -729,7 +730,7 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac, %bb.
   %i.la = phi i32 [ %.sink.i, %bb.aa ], [ %i.kz, %bb.ae ]
   %i.lb = sext i32 %i.la to i64
   %i.lc = getelementptr inbounds [4 x i8], ptr @index_of, i64 %i.lb
-  %i.ld = load i32, ptr %i.lc, align 4, !tbaa !8  ; 2 uses
+  %i.ld = load i32, ptr %i.lc, align 4, !tbaa !8
   store i32 %i.ld, ptr %i.kh, align 4, !tbaa !8
   %i.le = icmp slt i32 %i.jx, 9
   br i1 %i.le, label %bb.o, label %.preheader320.i.preheader, !llvm.loop !26

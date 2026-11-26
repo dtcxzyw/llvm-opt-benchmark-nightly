@@ -205,9 +205,9 @@ _ZN5boost7movelib13op_merge_leftIPiNS_9container3dtl23flat_tree_value_compareISt
 define linkonce_odr hidden void @_ZN5boost7movelib15detail_adaptive24op_merge_right_step_onceIPiNS_9container3dtl23flat_tree_value_compareISt4lessIiEiNS_11move_detail8identityIiEEEENS0_7move_opEEEvT_NS0_9iter_sizeISE_E4typeESH_T0_T1_(ptr noundef %0, i64 noundef %1, i64 noundef %2) local_unnamed_addr #1 comdat {
 bb.a:
   %i.a = ptrtoaddr ptr %0 to i64                  ; 7 uses
-  %i.b = shl i64 %2, 1                            ; 8 uses
+  %i.b = shl i64 %2, 1                            ; 10 uses
   %i.c = urem i64 %1, %i.b                        ; 3 uses
-  %i.d = udiv i64 %1, %i.b                        ; 2 uses
+  %i.d = udiv i64 %1, %i.b
   %i.e = sub nuw i64 %1, %i.c                     ; 4 uses
   %.not = icmp ugt i64 %i.c, %2
   %i.f = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.e ; 4 uses
@@ -518,7 +518,7 @@ _ZN5boost7movelib14op_merge_rightIPiNS_9container3dtl23flat_tree_value_compareIS
 
 .lr.ph.i.i.i63.preheader:                         ; preds = %.lr.ph.i45
   %.02541.i48196.le = ptrtoaddr ptr %.02541.i48 to i64 ; 2 uses
-  %i.cz = udiv i64 %1, %i.b                       ; 2 uses
+  %i.cz = udiv i64 %1, %i.b
   %i.da = shl nuw i64 %i.cz, 1
   %i.db = add i64 %i.da, 4611686018427387902
   %i.dc = mul i64 %2, %i.db
@@ -534,7 +534,8 @@ _ZN5boost7movelib14op_merge_rightIPiNS_9container3dtl23flat_tree_value_compareIS
   br i1 %min.iters.check202, label %.lr.ph.i.i.i63.preheader269, label %vector.memcheck203
 
 vector.memcheck203:                               ; preds = %.lr.ph.i.i.i63.preheader
-  %i.dk = shl i64 %i.cz, 3
+  %3 = udiv i64 %1, %i.b
+  %i.dk = shl i64 %3, 3
   %.neg264 = sub nuw nsw i64 -4, %i.dk
   %.neg265 = mul i64 %.neg264, %2
   %i.dl = sub i64 %.neg265, %i.a
@@ -613,7 +614,8 @@ bb.e:                                             ; preds = %.lr.ph.i45
   br i1 %or.cond.i58, label %_ZN5boost7movelib14op_merge_rightIPiNS_9container3dtl23flat_tree_value_compareISt4lessIiEiNS_11move_detail8identityIiEEEENS0_7move_opEEEvT_SD_SD_SD_T0_T1_.exit67, label %.lr.ph.i.i30.i59.preheader
 
 .lr.ph.i.i30.i59.preheader:                       ; preds = %._crit_edge.i53.loopexit
-  %i.ek = shl i64 %i.d, 3
+  %4 = udiv i64 %1, %i.b
+  %i.ek = shl i64 %4, 3
   %i.el = add i64 %i.ek, -4
   %i.em = mul i64 %2, %i.el
   %i.en = add i64 %i.em, %i.a
@@ -696,9 +698,9 @@ _ZN5boost7movelib14op_merge_rightIPiNS_9container3dtl23flat_tree_value_compareIS
 define linkonce_odr hidden void @_ZN5boost7movelib15detail_adaptive24op_merge_right_step_onceIPiNS_9container3dtl23flat_tree_value_compareISt4lessIiEiNS_11move_detail8identityIiEEEENS0_7swap_opEEEvT_NS0_9iter_sizeISE_E4typeESH_T0_T1_(ptr noundef %0, i64 noundef %1, i64 noundef %2) local_unnamed_addr #1 comdat {
 bb.a:
   %i.a = ptrtoaddr ptr %0 to i64                  ; 8 uses
-  %i.b = shl i64 %2, 1                            ; 9 uses
+  %i.b = shl i64 %2, 1                            ; 14 uses
   %i.c = urem i64 %1, %i.b                        ; 3 uses
-  %i.d = udiv i64 %1, %i.b                        ; 2 uses
+  %i.d = udiv i64 %1, %i.b
   %i.e = sub nuw i64 %1, %i.c                     ; 4 uses
   %.not = icmp ugt i64 %i.c, %2
   %i.f = getelementptr [4 x i8], ptr %0, i64 %i.e ; 5 uses
@@ -712,7 +714,7 @@ bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr [4 x i8], ptr %0, i64 %1   ; 6 uses
   %i.h = getelementptr [4 x i8], ptr %i.g, i64 %2 ; 5 uses
   %i.i = shl i64 %1, 2
-  %i.j = udiv i64 %1, %i.b                        ; 2 uses
+  %i.j = udiv i64 %1, %i.b
   %i.k = mul i64 %2, %i.j
   %i.l = shl i64 %i.k, 3
   %i.m = add i64 %i.i, -4
@@ -723,7 +725,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader339, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheader
-  %i.q = shl i64 %i.j, 3
+  %3 = udiv i64 %1, %i.b
+  %i.q = shl i64 %3, 3
   %i.r = or disjoint i64 %i.q, 4
   %i.s = mul i64 %2, %i.r
   %i.t = getelementptr i8, ptr %0, i64 %i.s
@@ -800,7 +803,7 @@ bb.c:                                             ; preds = %bb.a
 .lr.ph.i.i.i.preheader:                           ; preds = %.lr.ph.i
   %.02541.i163 = ptrtoaddr ptr %.02541.i to i64
   %i.al = udiv i64 %1, %i.b
-  %i.am = mul i64 %2, %i.al                       ; 2 uses
+  %i.am = mul i64 %2, %i.al
   %i.an = shl i64 %i.am, 3
   %i.ao = add i64 %.02541.i163, -4                ; 2 uses
   %i.ap = add i64 %i.an, %i.a
@@ -811,7 +814,9 @@ bb.c:                                             ; preds = %bb.a
   br i1 %min.iters.check165, label %.lr.ph.i.i.i.preheader333, label %vector.memcheck166
 
 vector.memcheck166:                               ; preds = %.lr.ph.i.i.i.preheader
-  %i.at = shl i64 %i.am, 3
+  %4 = udiv i64 %1, %i.b
+  %5 = mul i64 %2, %4
+  %i.at = shl i64 %5, 3
   %i.au = add i64 %i.at, %i.a
   %i.av = sub i64 %i.ao, %i.au
   %i.aw = and i64 %i.av, -4                       ; 2 uses
@@ -915,7 +920,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 
 .lr.ph.i.i30.i.preheader:                         ; preds = %._crit_edge.i
   %.024.lcssa.i191 = ptrtoaddr ptr %.024.lcssa.i to i64 ; 2 uses
-  %i.bz = udiv i64 %1, %i.b                       ; 2 uses
+  %i.bz = udiv i64 %1, %i.b
   %i.ca = shl i64 %i.bz, 3
   %i.cb = or disjoint i64 %i.ca, 4
   %i.cc = mul i64 %2, %i.cb
@@ -928,7 +933,8 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br i1 %min.iters.check193, label %.lr.ph.i.i30.i.preheader332, label %vector.memcheck194
 
 vector.memcheck194:                               ; preds = %.lr.ph.i.i30.i.preheader
-  %i.ci = shl i64 %i.bz, 3
+  %6 = udiv i64 %1, %i.b
+  %i.ci = shl i64 %6, 3
   %i.cj = or disjoint i64 %i.ci, 4
   %i.ck = mul i64 %2, %i.cj
   %i.cl = add i64 %i.ck, %i.a
@@ -1108,7 +1114,7 @@ _ZN5boost7movelib14op_merge_rightIPiNS_9container3dtl23flat_tree_value_compareIS
 
 .lr.ph.i.i.i62.preheader:                         ; preds = %.lr.ph.i45
   %.02541.i48225.le = ptrtoaddr ptr %.02541.i48 to i64 ; 2 uses
-  %i.eu = udiv i64 %1, %i.b                       ; 3 uses
+  %i.eu = udiv i64 %1, %i.b
   %i.ev = shl nuw i64 %i.eu, 1
   %i.ew = add i64 %i.ev, 4611686018427387902
   %i.ex = mul i64 %2, %i.ew
@@ -1124,7 +1130,8 @@ _ZN5boost7movelib14op_merge_rightIPiNS_9container3dtl23flat_tree_value_compareIS
   br i1 %min.iters.check231, label %.lr.ph.i.i.i62.preheader324, label %vector.memcheck232
 
 vector.memcheck232:                               ; preds = %.lr.ph.i.i.i62.preheader
-  %i.ff = shl nuw i64 %i.eu, 1
+  %7 = udiv i64 %1, %i.b                          ; 2 uses
+  %i.ff = shl nuw i64 %7, 1
   %i.fg = add i64 %i.ff, 4611686018427387902
   %i.fh = mul i64 %2, %i.fg
   %i.fi = shl i64 %i.fh, 2
@@ -1136,7 +1143,7 @@ vector.memcheck232:                               ; preds = %.lr.ph.i.i.i62.preh
   %i.fn = and i64 %i.fm, -4                       ; 2 uses
   %i.fo = sub nuw nsw i64 -4, %i.fn
   %i.fp = getelementptr i8, ptr %.02541.i48, i64 %i.fo
-  %i.fq = shl i64 %i.eu, 3
+  %i.fq = shl i64 %7, 3
   %i.fr = or disjoint i64 %i.fq, 4
   %i.fs = mul i64 %2, %i.fr
   %i.ft = add i64 %i.fs, -4
@@ -1235,7 +1242,8 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   br i1 %or.cond.i57, label %_ZN5boost7movelib14op_merge_rightIPiNS_9container3dtl23flat_tree_value_compareISt4lessIiEiNS_11move_detail8identityIiEEEENS0_7swap_opEEEvT_SD_SD_SD_T0_T1_.exit66, label %.lr.ph.i.i30.i58.preheader
 
 .lr.ph.i.i30.i58.preheader:                       ; preds = %._crit_edge.i52.loopexit
-  %i.gu = shl i64 %i.d, 3
+  %8 = udiv i64 %1, %i.b
+  %i.gu = shl i64 %8, 3
   %i.gv = add i64 %i.gu, -4
   %i.gw = mul i64 %2, %i.gv
   %i.gx = add i64 %i.gw, %i.a

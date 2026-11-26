@@ -205,7 +205,7 @@ bb.gw:                                            ; preds = %_ZN4llvm5ErrorD2Ev.
   br i1 %.not2.i.i10542449, label %.lr.ph2455, label %._crit_edge2456
 
 .lr.ph2455:                                       ; preds = %bb.gw
-  %i.bih = getelementptr inbounds nuw i8, ptr %241, i64 16 ; 2 uses
+  %i.bih = getelementptr inbounds nuw i8, ptr %241, i64 16 ; 3 uses
   %i.bii = getelementptr inbounds nuw i8, ptr %241, i64 8
   %i.bij = getelementptr inbounds nuw i8, ptr %241, i64 12
   %.not = icmp eq ptr %.sroa.02046.0, null
@@ -608,41 +608,46 @@ _ZN4llvm4sortIRNS_11SmallVectorISt4pairImcELj0EEEEEvOT_.exit: ; preds = %_ZNSt3m
   store ptr %i.bih, ptr %241, align 8, !tbaa !225
   store i32 0, ptr %i.bii, align 8, !tbaa !226
   store i32 0, ptr %i.bij, align 4, !tbaa !227
-  br i1 %.not, label %_ZN4llvm4sortIRNS_11SmallVectorISt4pairImPN12_GLOBAL__N_118DisassemblerTargetEELj0EEEEEvOT_.exit, label %bb.hm
+  br i1 %.not, label %bb.hm, label %273
 
-bb.hm:                                            ; preds = %_ZN4llvm4sortIRNS_11SmallVectorISt4pairImcELj0EEEEEvOT_.exit
-  %273 = call fastcc noundef nonnull align 8 dereferenceable(16) ptr @_ZNSt3mapIN4llvm6object10SectionRefENS0_11SmallVectorISt4pairImPN12_GLOBAL__N_118DisassemblerTargetEELj0EEESt4lessIS2_ESaIS4_IKS2_S9_EEEixERSC_(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.02046.0, ptr noundef nonnull align 8 dereferenceable(16) %i.bia) ; 6 uses
-  %.val724.pre = load ptr, ptr %273, align 8, !tbaa !225 ; 14 uses
-  %.phi.trans.insert.a = getelementptr inbounds nuw i8, ptr %273, i64 8
+273:                                              ; preds = %_ZN4llvm4sortIRNS_11SmallVectorISt4pairImcELj0EEEEEvOT_.exit
+  %274 = call fastcc noundef nonnull align 8 dereferenceable(16) ptr @_ZNSt3mapIN4llvm6object10SectionRefENS0_11SmallVectorISt4pairImPN12_GLOBAL__N_118DisassemblerTargetEELj0EEESt4lessIS2_ESaIS4_IKS2_S9_EEEixERSC_(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.02046.0, ptr noundef nonnull align 8 dereferenceable(16) %i.bia) ; 2 uses
+  %.val724.pre = load ptr, ptr %274, align 8, !tbaa !225
+  br label %bb.hm
+
+bb.hm:                                            ; preds = %_ZN4llvm4sortIRNS_11SmallVectorISt4pairImcELj0EEEEEvOT_.exit, %273
+  %.val724 = phi ptr [ %.val724.pre, %273 ], [ %i.bih, %_ZN4llvm4sortIRNS_11SmallVectorISt4pairImcELj0EEEEEvOT_.exit ] ; 14 uses
+  %275 = phi ptr [ %274, %273 ], [ %241, %_ZN4llvm4sortIRNS_11SmallVectorISt4pairImcELj0EEEEEvOT_.exit ] ; 2 uses
+  %.phi.trans.insert.a = getelementptr i8, ptr %275, i64 8 ; 2 uses
   %.val725.pre = load i32, ptr %.phi.trans.insert.a, align 8, !tbaa !226 ; 4 uses
   %i.btd = zext i32 %.val725.pre to i64           ; 2 uses
   %.idx.i1098 = shl nuw nsw i64 %i.btd, 4
-  %i.bte = getelementptr inbounds nuw i8, ptr %.val724.pre, i64 %.idx.i1098 ; 3 uses
+  %i.bte = getelementptr inbounds nuw i8, ptr %.val724, i64 %.idx.i1098 ; 3 uses
   %.not.i.i.i.i1099 = icmp eq i32 %.val725.pre, 0
   br i1 %.not.i.i.i.i1099, label %_ZN4llvm4sortIRNS_11SmallVectorISt4pairImPN12_GLOBAL__N_118DisassemblerTargetEELj0EEEEEvOT_.exit, label %bb.hn
 
 bb.hn:                                            ; preds = %bb.hm
-  %i.btf = ptrtoint ptr %.val724.pre to i64
+  %i.btf = ptrtoint ptr %.val724 to i64
   %i.btg = call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.btd, i1 true)
   %i.bth = shl nuw nsw i64 %i.btg, 1
   %i.bti = xor i64 %i.bth, 126
-  call fastcc void @_ZSt16__introsort_loopIPSt4pairImPN12_GLOBAL__N_118DisassemblerTargetEElN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr noundef %.val724.pre, ptr noundef nonnull %i.bte, i64 noundef %i.bti)
+  call fastcc void @_ZSt16__introsort_loopIPSt4pairImPN12_GLOBAL__N_118DisassemblerTargetEElN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr noundef %.val724, ptr noundef nonnull %i.bte, i64 noundef %i.bti)
   %i.btj = icmp ugt i32 %.val725.pre, 16
   br i1 %i.btj, label %bb.ho, label %.preheader.i.i.i.i.i.i
 
 bb.ho:                                            ; preds = %bb.hn
-  %i.btk = getelementptr i8, ptr %.val724.pre, i64 8 ; 2 uses
+  %i.btk = getelementptr i8, ptr %.val724, i64 8  ; 2 uses
   br label %bb.hp
 
 bb.hp:                                            ; preds = %bb.hr, %bb.ho
   %indvar = phi i64 [ %indvar.next, %bb.hr ], [ 0, %bb.ho ] ; 2 uses
   %.023.i.idx.i.i.i.i.i = phi i64 [ %.023.i.add.i.i.i.i.i, %bb.hr ], [ 16, %bb.ho ] ; 3 uses
-  %.pn22.i.i.i.i.i.i = phi ptr [ %.023.i.ptr.i.i.i.i.i, %bb.hr ], [ %.val724.pre, %bb.ho ] ; 5 uses
-  %.023.i.ptr.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.val724.pre, i64 %.023.i.idx.i.i.i.i.i ; 6 uses
+  %.pn22.i.i.i.i.i.i = phi ptr [ %.023.i.ptr.i.i.i.i.i, %bb.hr ], [ %.val724, %bb.ho ] ; 5 uses
+  %.023.i.ptr.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.val724, i64 %.023.i.idx.i.i.i.i.i ; 6 uses
   %.0.val.i.i.i.i.i.i = load i64, ptr %.023.i.ptr.i.i.i.i.i, align 8, !tbaa !725 ; 8 uses
   %i.btl = getelementptr i8, ptr %.pn22.i.i.i.i.i.i, i64 24
   %.0.val16.i.i.i.i.i.i = load ptr, ptr %i.btl, align 8 ; 5 uses
-  %.val.i.i.i.i.i.i = load i64, ptr %.val724.pre, align 8, !tbaa !725 ; 2 uses
+  %.val.i.i.i.i.i.i = load i64, ptr %.val724, align 8, !tbaa !725 ; 2 uses
   %.val17.i.i.i.i.i.i = load ptr, ptr %i.btk, align 8
   %i.btm = icmp ult i64 %.0.val.i.i.i.i.i.i, %.val.i.i.i.i.i.i
   %i.btn = icmp uge i64 %.val.i.i.i.i.i.i, %.0.val.i.i.i.i.i.i
@@ -724,7 +729,7 @@ bb.hp:                                            ; preds = %bb.hr, %bb.ho
   br i1 %i.bup, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i, label %_ZSt13move_backwardIPSt4pairImPN12_GLOBAL__N_118DisassemblerTargetEES5_ET0_T_S7_S6_.exit.i.i.i.i.i.i, !llvm.loop !3026
 
 _ZSt13move_backwardIPSt4pairImPN12_GLOBAL__N_118DisassemblerTargetEES5_ET0_T_S7_S6_.exit.i.i.i.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.prol.loopexit
-  store i64 %.0.val.i.i.i.i.i.i, ptr %.val724.pre, align 8, !tbaa !725
+  store i64 %.0.val.i.i.i.i.i.i, ptr %.val724, align 8, !tbaa !725
   store ptr %.0.val16.i.i.i.i.i.i, ptr %i.btk, align 8, !tbaa !727
   br label %bb.hr
 
@@ -772,7 +777,7 @@ bb.hr:                                            ; preds = %_ZSt25__unguarded_l
   br i1 %.not.i.i.i.i.i.i1100, label %_ZSt16__insertion_sortIPSt4pairImPN12_GLOBAL__N_118DisassemblerTargetEEN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S9_T0_.exit.i.i.i.i.i, label %bb.hp, !llvm.loop !3028
 
 _ZSt16__insertion_sortIPSt4pairImPN12_GLOBAL__N_118DisassemblerTargetEEN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S9_T0_.exit.i.i.i.i.i: ; preds = %bb.hr
-  %i.bvc = getelementptr inbounds nuw i8, ptr %.val724.pre, i64 256
+  %i.bvc = getelementptr inbounds nuw i8, ptr %.val724, i64 256
   br label %.lr.ph.i.i.i.i.i.i1101
 
 .lr.ph.i.i.i.i.i.i1101:                           ; preds = %_ZSt25__unguarded_linear_insertIPSt4pairImPN12_GLOBAL__N_118DisassemblerTargetEEN9__gnu_cxx5__ops14_Val_less_iterEEvT_T0_.exit.i11.i.i.i.i.i, %_ZSt16__insertion_sortIPSt4pairImPN12_GLOBAL__N_118DisassemblerTargetEEN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S9_T0_.exit.i.i.i.i.i
@@ -824,17 +829,17 @@ _ZSt25__unguarded_linear_insertIPSt4pairImPN12_GLOBAL__N_118DisassemblerTargetEE
   br i1 %.not21.i.i.i.i.i.i, label %_ZN4llvm4sortIRNS_11SmallVectorISt4pairImPN12_GLOBAL__N_118DisassemblerTargetEELj0EEEEEvOT_.exit, label %.lr.ph.i24.i.i.i.i.i
 
 .lr.ph.i24.i.i.i.i.i:                             ; preds = %.preheader.i.i.i.i.i.i
-  %.020.i23.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.val724.pre, i64 16
-  %i.bvq = getelementptr i8, ptr %.val724.pre, i64 8 ; 2 uses
+  %.020.i23.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.val724, i64 16
+  %i.bvq = getelementptr i8, ptr %.val724, i64 8  ; 2 uses
   br label %bb.hs
 
 bb.hs:                                            ; preds = %bb.hv, %.lr.ph.i24.i.i.i.i.i
   %.023.i25.i.i.i.i.i = phi ptr [ %.020.i23.i.i.i.i.i, %.lr.ph.i24.i.i.i.i.i ], [ %.0.i37.i.i.i.i.i, %bb.hv ] ; 8 uses
-  %.pn22.i26.i.i.i.i.i = phi ptr [ %.val724.pre, %.lr.ph.i24.i.i.i.i.i ], [ %.023.i25.i.i.i.i.i, %bb.hv ] ; 5 uses
+  %.pn22.i26.i.i.i.i.i = phi ptr [ %.val724, %.lr.ph.i24.i.i.i.i.i ], [ %.023.i25.i.i.i.i.i, %bb.hv ] ; 5 uses
   %.0.val.i27.i.i.i.i.i = load i64, ptr %.023.i25.i.i.i.i.i, align 8, !tbaa !725 ; 8 uses
   %i.bvr = getelementptr i8, ptr %.pn22.i26.i.i.i.i.i, i64 24
   %.0.val16.i28.i.i.i.i.i = load ptr, ptr %i.bvr, align 8 ; 5 uses
-  %.val.i29.i.i.i.i.i = load i64, ptr %.val724.pre, align 8, !tbaa !725 ; 2 uses
+  %.val.i29.i.i.i.i.i = load i64, ptr %.val724, align 8, !tbaa !725 ; 2 uses
   %.val17.i30.i.i.i.i.i = load ptr, ptr %i.bvq, align 8
   %i.bvs = icmp ult i64 %.0.val.i27.i.i.i.i.i, %.val.i29.i.i.i.i.i
   %i.bvt = icmp uge i64 %.val.i29.i.i.i.i.i, %.0.val.i27.i.i.i.i.i
@@ -922,7 +927,7 @@ bb.ht:                                            ; preds = %bb.hs
   br i1 %i.bwy, label %.lr.ph.i.i.i.i.i.i50.i.i.i.i.i, label %_ZSt13move_backwardIPSt4pairImPN12_GLOBAL__N_118DisassemblerTargetEES5_ET0_T_S7_S6_.exit.i48.i.i.i.i.i, !llvm.loop !3026
 
 _ZSt13move_backwardIPSt4pairImPN12_GLOBAL__N_118DisassemblerTargetEES5_ET0_T_S7_S6_.exit.i48.i.i.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i50.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i.i50.i.i.i.i.i, %bb.ht
-  store i64 %.0.val.i27.i.i.i.i.i, ptr %.val724.pre, align 8, !tbaa !725
+  store i64 %.0.val.i27.i.i.i.i.i, ptr %.val724, align 8, !tbaa !725
   store ptr %.0.val16.i28.i.i.i.i.i, ptr %i.bvq, align 8, !tbaa !727
   br label %bb.hv
 
@@ -968,9 +973,7 @@ bb.hv:                                            ; preds = %_ZSt25__unguarded_l
   %.not.i38.i.i.i.i.i = icmp eq ptr %.0.i37.i.i.i.i.i, %i.bte
   br i1 %.not.i38.i.i.i.i.i, label %_ZN4llvm4sortIRNS_11SmallVectorISt4pairImPN12_GLOBAL__N_118DisassemblerTargetEELj0EEEEEvOT_.exit, label %bb.hs, !llvm.loop !3028
 
-_ZN4llvm4sortIRNS_11SmallVectorISt4pairImPN12_GLOBAL__N_118DisassemblerTargetEELj0EEEEEvOT_.exit: ; preds = %bb.hv, %_ZSt25__unguarded_linear_insertIPSt4pairImPN12_GLOBAL__N_118DisassemblerTargetEEN9__gnu_cxx5__ops14_Val_less_iterEEvT_T0_.exit.i11.i.i.i.i.i, %_ZN4llvm4sortIRNS_11SmallVectorISt4pairImcELj0EEEEEvOT_.exit, %bb.hm, %.preheader.i.i.i.i.i.i
-  %274 = phi ptr [ %273, %_ZSt25__unguarded_linear_insertIPSt4pairImPN12_GLOBAL__N_118DisassemblerTargetEEN9__gnu_cxx5__ops14_Val_less_iterEEvT_T0_.exit.i11.i.i.i.i.i ], [ %241, %_ZN4llvm4sortIRNS_11SmallVectorISt4pairImcELj0EEEEEvOT_.exit ], [ %273, %.preheader.i.i.i.i.i.i ], [ %273, %bb.hm ], [ %273, %bb.hv ] ; 2 uses
-  %275 = getelementptr inbounds nuw i8, ptr %274, i64 8
+_ZN4llvm4sortIRNS_11SmallVectorISt4pairImPN12_GLOBAL__N_118DisassemblerTargetEELj0EEEEEvOT_.exit: ; preds = %bb.hv, %_ZSt25__unguarded_linear_insertIPSt4pairImPN12_GLOBAL__N_118DisassemblerTargetEEN9__gnu_cxx5__ops14_Val_less_iterEEvT_T0_.exit.i11.i.i.i.i.i, %bb.hm, %.preheader.i.i.i.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %56) #34, !noalias !3383
   %i.bxl = load ptr, ptr %i.bic, align 8, !tbaa !229, !noalias !3383 ; 2 uses
   %.sroa.0.0.copyload.i1103 = load i64, ptr %i.bia, align 8, !tbaa !107, !noalias !3383
@@ -1373,12 +1376,12 @@ bb.ru:                                            ; preds = %bb.rs
 
 bb.rv:                                            ; preds = %bb.ru, %bb.rt, %bb.rs, %_ZL20getMappingSymbolKindN4llvm8ArrayRefISt4pairImcEEEm.exit
   %.3 = phi ptr [ %.23666, %_ZL20getMappingSymbolKindN4llvm8ArrayRefISt4pairImcEEEm.exit ], [ %spec.select2112, %bb.rt ], [ %.23666, %bb.rs ], [ %spec.select2113, %bb.ru ]
-  %i.ehp = load i32, ptr %275, align 8, !tbaa !226 ; 2 uses
+  %i.ehp = load i32, ptr %.phi.trans.insert.a, align 8, !tbaa !226 ; 2 uses
   %.not.i1414 = icmp eq i32 %i.ehp, 0
   br i1 %.not.i1414, label %.thread2079, label %bb.rw
 
 bb.rw:                                            ; preds = %bb.rv
-  %.val734 = load ptr, ptr %274, align 8, !tbaa !225 ; 2 uses
+  %.val734 = load ptr, ptr %275, align 8, !tbaa !225 ; 2 uses
   %i.ehq = zext i32 %i.ehp to i64
   br label %.lr.ph.i.i.i1416
 

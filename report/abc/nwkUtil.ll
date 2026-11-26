@@ -204,7 +204,7 @@ Vec_IntAlloc.exit.i157:                           ; preds = %Vec_IntAlloc.exit.i
   %i.au = tail call noalias dereferenceable_or_null(16) ptr @malloc(i64 noundef 16) #19 ; 5 uses
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 4
   store i32 %spec.store.select.i.i, ptr %i.au, align 8, !tbaa !46
-  %i.aw = tail call noalias ptr @malloc(i64 noundef %i.an) #19 ; 4 uses
+  %i.aw = tail call noalias ptr @malloc(i64 noundef %i.an) #19 ; 3 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %i.au, i64 8
   store ptr %i.aw, ptr %i.ax, align 8, !tbaa !47
   store i32 %i.ak, ptr %i.av, align 4, !tbaa !45
@@ -218,16 +218,14 @@ bb.g:                                             ; preds = %Vec_IntAlloc.exit.i
   br label %Vec_IntStart.exit160
 
 Vec_IntStart.exit160:                             ; preds = %Vec_IntAlloc.exit.thread.i159, %Vec_IntAlloc.exit.i157, %bb.g
-  %.val136 = phi ptr [ null, %Vec_IntAlloc.exit.thread.i159 ], [ null, %Vec_IntAlloc.exit.i157 ], [ %i.aw, %bb.g ] ; 7 uses
   %i.ba = phi ptr [ null, %Vec_IntAlloc.exit.thread.i159 ], [ %i.ao, %Vec_IntAlloc.exit.i157 ], [ %i.ao, %bb.g ] ; 10 uses
-  %i.bb = phi ptr [ %i.ar, %Vec_IntAlloc.exit.thread.i159 ], [ %i.au, %Vec_IntAlloc.exit.i157 ], [ %i.au, %bb.g ] ; 3 uses
+  %i.bb = phi ptr [ %i.ar, %Vec_IntAlloc.exit.thread.i159 ], [ %i.au, %Vec_IntAlloc.exit.i157 ], [ %i.au, %bb.g ] ; 4 uses
   br i1 %i.e, label %.lr.ph191, label %.critedge2
 
 .lr.ph191:                                        ; preds = %Vec_IntStart.exit160
   %i.bc = getelementptr i8, ptr %i.c, i64 8
   %.val122 = load ptr, ptr %i.bc, align 8, !tbaa !23
-  %.val = load i32, ptr %i.d, align 4, !tbaa !22
-  %1 = sext i32 %.val to i64
+  %1 = getelementptr i8, ptr %i.bb, i64 8         ; 7 uses
   br label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph191, %bb.al
@@ -352,6 +350,7 @@ bb.x:                                             ; preds = %bb.m, %bb.q, %bb.u,
   br i1 %i.df, label %bb.y, label %bb.z
 
 bb.y:                                             ; preds = %bb.x
+  %.val136 = load ptr, ptr %1, align 8, !tbaa !47
   %i.dg = sext i32 %.val128 to i64
   %i.dh = getelementptr inbounds [4 x i8], ptr %.val136, i64 %i.dg ; 2 uses
   %i.di = load i32, ptr %i.dh, align 4, !tbaa !49
@@ -366,8 +365,9 @@ bb.z:                                             ; preds = %bb.x
 bb.aa:                                            ; preds = %bb.z
   %.lhs.trunc = trunc nuw nsw i32 %.val128 to i8
   %i.dl = udiv i8 %.lhs.trunc, 10
+  %.val135 = load ptr, ptr %1, align 8, !tbaa !47
   %i.dm = zext nneg i8 %i.dl to i64
-  %i.dn = getelementptr inbounds nuw [4 x i8], ptr %.val136, i64 %i.dm
+  %i.dn = getelementptr inbounds nuw [4 x i8], ptr %.val135, i64 %i.dm
   %i.do = getelementptr inbounds nuw i8, ptr %i.dn, i64 40 ; 2 uses
   %i.dp = load i32, ptr %i.do, align 4, !tbaa !49
   %i.dq = add nsw i32 %i.dp, 1
@@ -381,8 +381,9 @@ bb.ab:                                            ; preds = %bb.z
 bb.ac:                                            ; preds = %bb.ab
   %.lhs.trunc164 = trunc nuw nsw i32 %.val128 to i16
   %i.ds = udiv i16 %.lhs.trunc164, 100
+  %.val134 = load ptr, ptr %1, align 8, !tbaa !47
   %i.dt = zext nneg i16 %i.ds to i64
-  %i.du = getelementptr inbounds nuw [4 x i8], ptr %.val136, i64 %i.dt
+  %i.du = getelementptr inbounds nuw [4 x i8], ptr %.val134, i64 %i.dt
   %i.dv = getelementptr inbounds nuw i8, ptr %i.du, i64 80 ; 2 uses
   %i.dw = load i32, ptr %i.dv, align 4, !tbaa !49
   %i.dx = add nsw i32 %i.dw, 1
@@ -396,8 +397,9 @@ bb.ad:                                            ; preds = %bb.ab
 bb.ae:                                            ; preds = %bb.ad
   %.lhs.trunc166 = trunc nuw nsw i32 %.val128 to i16
   %i.dz = udiv i16 %.lhs.trunc166, 1000
+  %.val133 = load ptr, ptr %1, align 8, !tbaa !47
   %i.ea = zext nneg i16 %i.dz to i64
-  %i.eb = getelementptr inbounds nuw [4 x i8], ptr %.val136, i64 %i.ea
+  %i.eb = getelementptr inbounds nuw [4 x i8], ptr %.val133, i64 %i.ea
   %i.ec = getelementptr inbounds nuw i8, ptr %i.eb, i64 120 ; 2 uses
   %i.ed = load i32, ptr %i.ec, align 4, !tbaa !49
   %i.ee = add nsw i32 %i.ed, 1
@@ -410,8 +412,9 @@ bb.af:                                            ; preds = %bb.ad
 
 bb.ag:                                            ; preds = %bb.af
   %i.eg = udiv i32 %.val128, 10000
+  %.val132 = load ptr, ptr %1, align 8, !tbaa !47
   %i.eh = zext nneg i32 %i.eg to i64
-  %i.ei = getelementptr inbounds nuw [4 x i8], ptr %.val136, i64 %i.eh
+  %i.ei = getelementptr inbounds nuw [4 x i8], ptr %.val132, i64 %i.eh
   %i.ej = getelementptr inbounds nuw i8, ptr %i.ei, i64 160 ; 2 uses
   %i.ek = load i32, ptr %i.ej, align 4, !tbaa !49
   %i.el = add nsw i32 %i.ek, 1
@@ -424,8 +427,9 @@ bb.ah:                                            ; preds = %bb.af
 
 bb.ai:                                            ; preds = %bb.ah
   %i.en = udiv i32 %.val128, 100000
+  %.val131 = load ptr, ptr %1, align 8, !tbaa !47
   %i.eo = zext nneg i32 %i.en to i64
-  %i.ep = getelementptr inbounds nuw [4 x i8], ptr %.val136, i64 %i.eo
+  %i.ep = getelementptr inbounds nuw [4 x i8], ptr %.val131, i64 %i.eo
   %i.eq = getelementptr inbounds nuw i8, ptr %i.ep, i64 200 ; 2 uses
   %i.er = load i32, ptr %i.eq, align 4, !tbaa !49
   %i.es = add nsw i32 %i.er, 1
@@ -438,8 +442,9 @@ bb.aj:                                            ; preds = %bb.ah
 
 bb.ak:                                            ; preds = %bb.aj
   %i.eu = udiv i32 %.val128, 1000000
+  %.val130 = load ptr, ptr %1, align 8, !tbaa !47
   %i.ev = zext nneg i32 %i.eu to i64
-  %i.ew = getelementptr inbounds nuw [4 x i8], ptr %.val136, i64 %i.ev
+  %i.ew = getelementptr inbounds nuw [4 x i8], ptr %.val130, i64 %i.ev
   %i.ex = getelementptr inbounds nuw i8, ptr %i.ew, i64 240 ; 2 uses
   %i.ey = load i32, ptr %i.ex, align 4, !tbaa !49
   %i.ez = add nsw i32 %i.ey, 1
@@ -448,7 +453,9 @@ bb.ak:                                            ; preds = %bb.aj
 
 bb.al:                                            ; preds = %bb.i, %bb.h, %bb.aa, %bb.ae, %bb.ai, %bb.ak, %bb.aj, %bb.ag, %bb.ac, %bb.y
   %indvars.iv.next198 = add nuw nsw i64 %indvars.iv197, 1 ; 2 uses
-  %i.fa = icmp slt i64 %indvars.iv.next198, %1
+  %.val = load i32, ptr %i.d, align 4, !tbaa !22
+  %2 = sext i32 %.val to i64
+  %i.fa = icmp slt i64 %indvars.iv.next198, %2
   br i1 %i.fa, label %bb.h, label %.critedge2, !llvm.loop !74
 
 .critedge2:                                       ; preds = %bb.al, %Vec_IntStart.exit160

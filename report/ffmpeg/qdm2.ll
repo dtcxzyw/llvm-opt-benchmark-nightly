@@ -205,7 +205,8 @@ bb.a:
   %i.c = load i32, ptr %i.b, align 4, !tbaa !44
   %i.d = xor i32 %1, -1
   %i.e = add i32 %i.c, %i.d                       ; 2 uses
-  %i.f = shl nuw i32 1, %i.e                      ; 10 uses
+  %i.f = shl nuw i32 1, %i.e
+  %.fr12 = freeze i32 %i.f                        ; 10 uses
   %i.g = getelementptr i8, ptr %2, i64 8          ; 16 uses
   %i.h = getelementptr i8, ptr %2, i64 12         ; 3 uses
   %.val119155 = load i32, ptr %i.g, align 8, !tbaa !72
@@ -219,8 +220,8 @@ bb.a:
   %i.l = getelementptr inbounds nuw [24 x i8], ptr @vlc_tab_fft_tone_offset, i64 %i.k ; 4 uses
   %i.m = getelementptr i8, ptr %i.l, i64 8        ; 3 uses
   %i.n = shl i32 8, %i.e
-  %i.o = icmp slt i32 %i.f, 3
-  %i.p = add nsw i32 %i.f, -1                     ; 2 uses
+  %i.o = icmp slt i32 %.fr12, 3
+  %i.p = add nsw i32 %.fr12, -1                   ; 2 uses
   %i.q = shl nuw i32 1, %i.a                      ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %2, i64 16
@@ -234,16 +235,16 @@ bb.a:
   %i.z = sext i32 %1 to i64
   %i.aa = getelementptr inbounds [4 x i8], ptr %i.y, i64 %i.z ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 41344 ; 2 uses
-  %i.ac = add nsw i32 %i.f, -2                    ; 2 uses
+  %i.ac = add nsw i32 %.fr12, -2                  ; 2 uses
   %i.ad = tail call i32 @llvm.umax.i32(i32 %i.ac, i32 1) ; 2 uses
-  %invariant.op29 = sub i32 2, %i.f
+  %invariant.op29 = sub i32 2, %.fr12
   %invariant.op30 = add i32 %i.ad, 1
-  %i.ae = sub nsw i32 2, %i.f
-  %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.f, i64 0
+  %i.ae = sub nsw i32 2, %.fr12
+  %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %.fr12, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert5 = insertelement <4 x i32> poison, i32 %i.q, i64 0
   %broadcast.splat6 = shufflevector <4 x i32> %broadcast.splatinsert5, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
-  %invariant.op = sub i32 2, %i.f
+  %invariant.op = sub i32 2, %.fr12
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph161, %bb.v
@@ -277,7 +278,7 @@ bb.c:                                             ; preds = %.lr.ph
 
 bb.d:                                             ; preds = %.lr.ph
   %i.am = icmp eq i32 %i.ai, 0                    ; 2 uses
-  %.pn = select i1 %i.am, i32 %i.f, i32 %i.n
+  %.pn = select i1 %i.am, i32 %.fr12, i32 %i.n
   %.pn109 = select i1 %i.am, i32 1, i32 8
   %.pn108 = shl i32 %.pn109, %i.a
   %.282 = add nsw i32 %.pn108, %.181142           ; 2 uses
@@ -313,7 +314,7 @@ bb.f:                                             ; preds = %bb.e
   %.reass = add i32 %i.at, %invariant.op29
   %i.au = tail call i32 @llvm.smin.i32(i32 %.reass, i32 %i.ac)
   %.reass31 = add i32 %i.at, %invariant.op30
-  %i.av = add i32 %i.f, %i.au
+  %i.av = add i32 %.fr12, %i.au
   %i.aw = sub i32 %.reass31, %i.av
   %i.ax = udiv i32 %i.aw, %i.ad
   %i.ay = add i32 %i.ax, 1                        ; 3 uses
@@ -361,7 +362,7 @@ middle.block:                                     ; preds = %vector.body
   %.383148 = phi i32 [ %i.bl, %.lr.ph151 ], [ %.383148.ph, %.lr.ph151.preheader12 ]
   %.389147 = phi i32 [ %i.bk, %.lr.ph151 ], [ %.389147.ph, %.lr.ph151.preheader12 ]
   %.reass.reass = add i32 %.2149, %invariant.op   ; 3 uses
-  %i.bk = add nsw i32 %.389147, %i.f              ; 2 uses
+  %i.bk = add nsw i32 %.389147, %.fr12            ; 2 uses
   %i.bl = add nsw i32 %.383148, %i.q              ; 2 uses
   %.not104 = icmp slt i32 %.reass.reass, %i.p
   br i1 %.not104, label %.loopexit, label %.lr.ph151, !llvm.loop !208

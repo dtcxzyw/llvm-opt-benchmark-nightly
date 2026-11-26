@@ -205,20 +205,24 @@ bb.hk:                                            ; preds = %.lr.ph5.split.us.i
   %i.blu = phi ptr [ %i.blt, %bb.hk ], [ %i.bls, %.lr.ph5.split.us.i ]
   %i.blv = load i32, ptr %i.bgo, align 8, !tbaa !205
   %i.blw = sext i32 %i.blv to i64
-  %i.blx = getelementptr [2 x i8], ptr %i.blu, i64 %i.blw ; 10 uses
+  %i.blx = getelementptr [2 x i8], ptr %i.blu, i64 %i.blw ; 11 uses
   %.not85.us.i = icmp eq i32 %.0742.us.i, 0
   br i1 %.not85.us.i, label %bb.hm, label %bb.hl
 
 bb.hl:                                            ; preds = %.lr.ph.us.i528
   %i.bly = load i16, ptr %.13.us.i, align 2, !tbaa !55
   %i.blz = load i16, ptr %i.blx, align 2, !tbaa !55
-  %i.bma = add i16 %i.blz, %i.bly                 ; 2 uses
+  %i.bma = add i16 %i.blz, %i.bly
   store i16 %i.bma, ptr %i.blx, align 2, !tbaa !55
-  br i1 %exitcond20.peel.not.i, label %._crit_edge.us.i531, label %.lr.ph.split.us7.peel.next.i
+  br i1 %exitcond20.peel.not.i, label %._crit_edge.us.i531, label %.lr.ph.split.us7.peel.next.i.preheader
 
-.lr.ph.split.us7.peel.next.i:                     ; preds = %bb.hl, %.lr.ph.split.us7.peel.next.i
-  %i.bmb = phi i16 [ %i.bmr, %.lr.ph.split.us7.peel.next.i ], [ %i.bma, %bb.hl ]
-  %indvars.iv.i529 = phi i64 [ %indvars.iv.next.i530, %.lr.ph.split.us7.peel.next.i ], [ 1, %bb.hl ] ; 4 uses
+.lr.ph.split.us7.peel.next.i.preheader:           ; preds = %bb.hl
+  %load_initial = load i16, ptr %i.blx, align 2
+  br label %.lr.ph.split.us7.peel.next.i
+
+.lr.ph.split.us7.peel.next.i:                     ; preds = %.lr.ph.split.us7.peel.next.i.preheader, %.lr.ph.split.us7.peel.next.i
+  %i.bmb = phi i16 [ %load_initial, %.lr.ph.split.us7.peel.next.i.preheader ], [ %i.bmr, %.lr.ph.split.us7.peel.next.i ]
+  %indvars.iv.i529 = phi i64 [ 1, %.lr.ph.split.us7.peel.next.i.preheader ], [ %indvars.iv.next.i530, %.lr.ph.split.us7.peel.next.i ] ; 4 uses
   %i.bmc = sext i16 %i.bmb to i32                 ; 3 uses
   %i.bmd = getelementptr inbounds nuw [2 x i8], ptr %.13.us.i, i64 %indvars.iv.i529
   %i.bme = load i16, ptr %i.bmd, align 2, !tbaa !55

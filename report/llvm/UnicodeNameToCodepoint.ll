@@ -205,12 +205,12 @@ bb.e:                                             ; preds = %._crit_edge67
   %i.cd = load i64, ptr %i.cc, align 8, !tbaa !15
   %i.ce = icmp ult i64 %i.cd, %i.cb
   %i.cf = getelementptr inbounds nuw i8, ptr %i.ca, i64 8 ; 4 uses
-  %i.cg = load ptr, ptr %i.cf, align 8, !tbaa !110 ; 2 uses
-  %9 = getelementptr i8, ptr %i.cg, i64 8
-  %10 = load i32, ptr %9, align 8, !tbaa !33      ; 3 uses
+  %i.cg = load ptr, ptr %i.cf, align 8, !tbaa !110 ; 3 uses
   br i1 %i.ce, label %bb.f, label %._crit_edge.i
 
 bb.f:                                             ; preds = %bb.e
+  %9 = getelementptr inbounds nuw i8, ptr %i.cg, i64 8
+  %10 = load i32, ptr %9, align 8, !tbaa !33
   %i.ch = zext i32 %10 to i64
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ca, i64 16
   %i.cj = load ptr, ptr %i.ci, align 8, !tbaa !111, !nonnull !28, !align !53
@@ -234,11 +234,13 @@ bb.g:                                             ; preds = %bb.f
   %i.co = getelementptr inbounds nuw i8, ptr %6, i64 8
   store ptr %1, ptr %i.co, align 8, !tbaa !112
   %.val.i = load ptr, ptr %i.cg, align 8, !tbaa !32 ; 3 uses
-  %.not.i.i55 = icmp eq i32 %10, 0
+  %11 = getelementptr i8, ptr %i.cg, i64 8
+  %.val5.i = load i32, ptr %11, align 8, !tbaa !33 ; 2 uses
+  %.not.i.i55 = icmp eq i32 %.val5.i, 0
   br i1 %.not.i.i55, label %"_ZN4llvm11lower_boundIRNS_11SmallVectorINS_3sys7unicode21MatchForCodepointNameELj1EEERjZZNS3_30nearestMatchesForCodepointNameENS_9StringRefEmENK3$_0clERKNS3_4NodeEjDiEUlRKS4_mE_EEDaOT_OT0_T1_.exit.i", label %_ZSt9__advanceIPN4llvm3sys7unicode21MatchForCodepointNameElEvRT_T0_St26random_access_iterator_tag.exit.lr.ph.i.i.i.i
 
 _ZSt9__advanceIPN4llvm3sys7unicode21MatchForCodepointNameElEvRT_T0_St26random_access_iterator_tag.exit.lr.ph.i.i.i.i: ; preds = %._crit_edge.i
-  %i.cp = zext i32 %10 to i64
+  %i.cp = zext i32 %.val5.i to i64
   %i.cq = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.cr = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
   br label %_ZSt9__advanceIPN4llvm3sys7unicode21MatchForCodepointNameElEvRT_T0_St26random_access_iterator_tag.exit.i.i.i.i

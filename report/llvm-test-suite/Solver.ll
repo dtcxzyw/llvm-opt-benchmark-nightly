@@ -204,7 +204,7 @@ bb.a:
   br i1 %i.a, label %tailrecurse._crit_edge, label %.lr.ph
 
 tailrecurse._crit_edge:                           ; preds = %tailrecurse, %bb.a
-  %.tr.lcssa = phi ptr [ %0, %bb.a ], [ %i.ah, %tailrecurse ] ; 7 uses
+  %.tr.lcssa = phi ptr [ %0, %bb.a ], [ %i.ah, %tailrecurse ] ; 12 uses
   %.tr39.lcssa = phi i32 [ %1, %bb.a ], [ %i.am, %tailrecurse ] ; 3 uses
   %i.b = icmp sgt i32 %.tr39.lcssa, 1
   br i1 %i.b, label %.lr.ph27.preheader.i, label %_Z13selectionSortI3Lit16LessThan_defaultIS0_EEvPT_iT0_.exit
@@ -223,79 +223,86 @@ tailrecurse._crit_edge:                           ; preds = %tailrecurse, %bb.a
   %i.f = add nsw i64 %i.e, %wide.trip.count.i
   %i.g = sub i64 %i.d, %indvars.iv32.i
   %i.h = trunc nuw nsw i64 %indvars.iv32.i to i32 ; 2 uses
-  %.phi.trans.insert.i = getelementptr inbounds nuw [4 x i8], ptr %.tr.lcssa, i64 %indvars.iv32.i ; 2 uses
-  %.sroa.0.0.copyload.pre.i = load i32, ptr %.phi.trans.insert.i, align 4, !tbaa !15 ; 3 uses
   %xtraiter = and i64 %i.f, 3                     ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
 
 .lr.ph.i.prol:                                    ; preds = %.lr.ph.preheader.i, %.lr.ph.i.prol
-  %.sroa.0.0.copyload.i.prol.a = phi i32 [ %2, %.lr.ph.i.prol ], [ %.sroa.0.0.copyload.pre.i, %.lr.ph.preheader.i ] ; 2 uses
-  %indvars.iv29.i.prol.a = phi i64 [ %indvars.iv.next30.i.prol, %.lr.ph.i.prol ], [ %indvars.iv.i, %.lr.ph.preheader.i ] ; 3 uses
-  %.02223.i.prol = phi i32 [ %spec.select.i.prol, %.lr.ph.i.prol ], [ %i.h, %.lr.ph.preheader.i ]
-  %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.prol ], [ 0, %.lr.ph.preheader.i ]
-  %i.i = getelementptr inbounds nuw [4 x i8], ptr %.tr.lcssa, i64 %indvars.iv29.i.prol.a
-  %.sroa.01.0.copyload.i.prol.a = load i32, ptr %i.i, align 4, !tbaa !15 ; 2 uses
-  %i.j = icmp slt i32 %.sroa.01.0.copyload.i.prol.a, %.sroa.0.0.copyload.i.prol.a
-  %i.k = trunc nuw nsw i64 %indvars.iv29.i.prol.a to i32
-  %spec.select.i.prol = select i1 %i.j, i32 %i.k, i32 %.02223.i.prol ; 3 uses
-  %indvars.iv.next30.i.prol = add nuw nsw i64 %indvars.iv29.i.prol.a, 1 ; 2 uses
-  %2 = tail call i32 @llvm.smin.i32(i32 %.sroa.01.0.copyload.i.prol.a, i32 %.sroa.0.0.copyload.i.prol.a) ; 2 uses
-  %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
+  %indvars.iv29.i.prol = phi i64 [ %indvars.iv.next30.i.prol, %.lr.ph.i.prol ], [ %indvars.iv.i, %.lr.ph.preheader.i ] ; 3 uses
+  %.sroa.0.0.copyload.i.prol.a = phi i32 [ %spec.select.i.prol, %.lr.ph.i.prol ], [ %i.h, %.lr.ph.preheader.i ] ; 2 uses
+  %indvars.iv29.i.prol.a = phi i64 [ %prol.iter.next, %.lr.ph.i.prol ], [ 0, %.lr.ph.preheader.i ]
+  %2 = getelementptr inbounds nuw [4 x i8], ptr %.tr.lcssa, i64 %indvars.iv29.i.prol
+  %.sroa.01.0.copyload.i.prol = load i32, ptr %2, align 4, !tbaa !15
+  %3 = sext i32 %.sroa.0.0.copyload.i.prol.a to i64
+  %i.i = getelementptr inbounds [4 x i8], ptr %.tr.lcssa, i64 %3
+  %.sroa.01.0.copyload.i.prol.a = load i32, ptr %i.i, align 4, !tbaa !15
+  %i.j = icmp slt i32 %.sroa.01.0.copyload.i.prol, %.sroa.01.0.copyload.i.prol.a
+  %i.k = trunc nuw nsw i64 %indvars.iv29.i.prol to i32
+  %spec.select.i.prol = select i1 %i.j, i32 %i.k, i32 %.sroa.0.0.copyload.i.prol.a ; 3 uses
+  %indvars.iv.next30.i.prol = add nuw nsw i64 %indvars.iv29.i.prol, 1 ; 2 uses
+  %prol.iter.next = add i64 %indvars.iv29.i.prol.a, 1 ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
   br i1 %prol.iter.cmp.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol, !llvm.loop !194
 
 .lr.ph.i.prol.loopexit:                           ; preds = %.lr.ph.i.prol, %.lr.ph.preheader.i
   %spec.select.i.lcssa.unr = phi i32 [ poison, %.lr.ph.preheader.i ], [ %spec.select.i.prol, %.lr.ph.i.prol ]
-  %.sroa.0.0.copyload.i.unr = phi i32 [ %.sroa.0.0.copyload.pre.i, %.lr.ph.preheader.i ], [ %2, %.lr.ph.i.prol ]
   %indvars.iv29.i.unr = phi i64 [ %indvars.iv.i, %.lr.ph.preheader.i ], [ %indvars.iv.next30.i.prol, %.lr.ph.i.prol ]
   %.02223.i.unr = phi i32 [ %i.h, %.lr.ph.preheader.i ], [ %spec.select.i.prol, %.lr.ph.i.prol ]
   %i.l = icmp ult i64 %i.g, 3
   br i1 %i.l, label %._crit_edge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i
-  %.sroa.0.0.copyload.i.a = phi i32 [ %6, %.lr.ph.i ], [ %.sroa.0.0.copyload.i.unr, %.lr.ph.i.prol.loopexit ] ; 2 uses
   %indvars.iv29.i = phi i64 [ %indvars.iv.next30.i.3, %.lr.ph.i ], [ %indvars.iv29.i.unr, %.lr.ph.i.prol.loopexit ] ; 6 uses
-  %.02223.i = phi i32 [ %spec.select.i.3, %.lr.ph.i ], [ %.02223.i.unr, %.lr.ph.i.prol.loopexit ]
-  %i.m = getelementptr inbounds nuw [4 x i8], ptr %.tr.lcssa, i64 %indvars.iv29.i
-  %.sroa.01.0.copyload.i.a = load i32, ptr %i.m, align 4, !tbaa !15 ; 2 uses
-  %i.n = icmp slt i32 %.sroa.01.0.copyload.i.a, %.sroa.0.0.copyload.i.a
+  %.sroa.0.0.copyload.i.a = phi i32 [ %spec.select.i.3, %.lr.ph.i ], [ %.02223.i.unr, %.lr.ph.i.prol.loopexit ] ; 2 uses
+  %4 = getelementptr inbounds nuw [4 x i8], ptr %.tr.lcssa, i64 %indvars.iv29.i
+  %.sroa.01.0.copyload.i = load i32, ptr %4, align 4, !tbaa !15
+  %5 = sext i32 %.sroa.0.0.copyload.i.a to i64
+  %i.m = getelementptr inbounds [4 x i8], ptr %.tr.lcssa, i64 %5
+  %.sroa.01.0.copyload.i.a = load i32, ptr %i.m, align 4, !tbaa !15
+  %i.n = icmp slt i32 %.sroa.01.0.copyload.i, %.sroa.01.0.copyload.i.a
   %i.o = trunc nuw nsw i64 %indvars.iv29.i to i32
-  %spec.select.i = select i1 %i.n, i32 %i.o, i32 %.02223.i
+  %spec.select.i = select i1 %i.n, i32 %i.o, i32 %.sroa.0.0.copyload.i.a ; 2 uses
   %indvars.iv.next30.i = add nuw nsw i64 %indvars.iv29.i, 1 ; 2 uses
-  %3 = tail call i32 @llvm.smin.i32(i32 %.sroa.01.0.copyload.i.a, i32 %.sroa.0.0.copyload.i.a) ; 2 uses
-  %i.p = getelementptr inbounds nuw [4 x i8], ptr %.tr.lcssa, i64 %indvars.iv.next30.i
-  %.sroa.01.0.copyload.i.1.a = load i32, ptr %i.p, align 4, !tbaa !15 ; 2 uses
-  %i.q = icmp slt i32 %.sroa.01.0.copyload.i.1.a, %3
+  %6 = getelementptr inbounds nuw [4 x i8], ptr %.tr.lcssa, i64 %indvars.iv.next30.i
+  %.sroa.01.0.copyload.i.1 = load i32, ptr %6, align 4, !tbaa !15
+  %7 = sext i32 %spec.select.i to i64
+  %i.p = getelementptr inbounds [4 x i8], ptr %.tr.lcssa, i64 %7
+  %.sroa.01.0.copyload.i.1.a = load i32, ptr %i.p, align 4, !tbaa !15
+  %i.q = icmp slt i32 %.sroa.01.0.copyload.i.1, %.sroa.01.0.copyload.i.1.a
   %i.r = trunc nuw nsw i64 %indvars.iv.next30.i to i32
-  %spec.select.i.1 = select i1 %i.q, i32 %i.r, i32 %spec.select.i
+  %spec.select.i.1 = select i1 %i.q, i32 %i.r, i32 %spec.select.i ; 2 uses
   %indvars.iv.next30.i.1 = add nuw nsw i64 %indvars.iv29.i, 2 ; 2 uses
-  %4 = tail call i32 @llvm.smin.i32(i32 %.sroa.01.0.copyload.i.1.a, i32 %3) ; 2 uses
-  %i.s = getelementptr inbounds nuw [4 x i8], ptr %.tr.lcssa, i64 %indvars.iv.next30.i.1
-  %.sroa.01.0.copyload.i.2.a = load i32, ptr %i.s, align 4, !tbaa !15 ; 2 uses
-  %i.t = icmp slt i32 %.sroa.01.0.copyload.i.2.a, %4
+  %8 = getelementptr inbounds nuw [4 x i8], ptr %.tr.lcssa, i64 %indvars.iv.next30.i.1
+  %.sroa.01.0.copyload.i.2 = load i32, ptr %8, align 4, !tbaa !15
+  %9 = sext i32 %spec.select.i.1 to i64
+  %i.s = getelementptr inbounds [4 x i8], ptr %.tr.lcssa, i64 %9
+  %.sroa.01.0.copyload.i.2.a = load i32, ptr %i.s, align 4, !tbaa !15
+  %i.t = icmp slt i32 %.sroa.01.0.copyload.i.2, %.sroa.01.0.copyload.i.2.a
   %i.u = trunc nuw nsw i64 %indvars.iv.next30.i.1 to i32
-  %spec.select.i.2 = select i1 %i.t, i32 %i.u, i32 %spec.select.i.1
+  %spec.select.i.2 = select i1 %i.t, i32 %i.u, i32 %spec.select.i.1 ; 2 uses
   %indvars.iv.next30.i.2 = add nuw nsw i64 %indvars.iv29.i, 3 ; 2 uses
-  %5 = tail call i32 @llvm.smin.i32(i32 %.sroa.01.0.copyload.i.2.a, i32 %4) ; 2 uses
-  %i.v = getelementptr inbounds nuw [4 x i8], ptr %.tr.lcssa, i64 %indvars.iv.next30.i.2
-  %.sroa.01.0.copyload.i.3.a = load i32, ptr %i.v, align 4, !tbaa !15 ; 2 uses
-  %i.w = icmp slt i32 %.sroa.01.0.copyload.i.3.a, %5
+  %10 = getelementptr inbounds nuw [4 x i8], ptr %.tr.lcssa, i64 %indvars.iv.next30.i.2
+  %.sroa.01.0.copyload.i.3 = load i32, ptr %10, align 4, !tbaa !15
+  %11 = sext i32 %spec.select.i.2 to i64
+  %i.v = getelementptr inbounds [4 x i8], ptr %.tr.lcssa, i64 %11
+  %.sroa.01.0.copyload.i.3.a = load i32, ptr %i.v, align 4, !tbaa !15
+  %i.w = icmp slt i32 %.sroa.01.0.copyload.i.3, %.sroa.01.0.copyload.i.3.a
   %i.x = trunc nuw nsw i64 %indvars.iv.next30.i.2 to i32
   %spec.select.i.3 = select i1 %i.w, i32 %i.x, i32 %spec.select.i.2 ; 2 uses
   %indvars.iv.next30.i.3 = add nuw nsw i64 %indvars.iv29.i, 4 ; 2 uses
   %exitcond.not.i.3 = icmp eq i64 %indvars.iv.next30.i.3, %wide.trip.count.i
-  %6 = tail call i32 @llvm.smin.i32(i32 %.sroa.01.0.copyload.i.3.a, i32 %5)
   br i1 %exitcond.not.i.3, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !195
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i, %.lr.ph.i.prol.loopexit
   %spec.select.i.lcssa = phi i32 [ %spec.select.i.lcssa.unr, %.lr.ph.i.prol.loopexit ], [ %spec.select.i.3, %.lr.ph.i ]
   %indvars.iv.next33.i = add nuw nsw i64 %indvars.iv32.i, 1 ; 2 uses
+  %12 = getelementptr inbounds nuw [4 x i8], ptr %.tr.lcssa, i64 %indvars.iv32.i ; 2 uses
+  %13 = load i32, ptr %12, align 4, !tbaa !15
   %i.y = sext i32 %spec.select.i.lcssa to i64
   %i.z = getelementptr inbounds [4 x i8], ptr %.tr.lcssa, i64 %i.y ; 2 uses
   %i.aa = load i32, ptr %i.z, align 4, !tbaa !15
-  store i32 %i.aa, ptr %.phi.trans.insert.i, align 4, !tbaa !15
-  store i32 %.sroa.0.0.copyload.pre.i, ptr %i.z, align 4, !tbaa !15
+  store i32 %i.aa, ptr %12, align 4, !tbaa !15
+  store i32 %13, ptr %i.z, align 4, !tbaa !15
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1
   %exitcond36.not.i = icmp eq i64 %indvars.iv.next33.i, %wide.trip.count35.i
   br i1 %exitcond36.not.i, label %_Z13selectionSortI3Lit16LessThan_defaultIS0_EEvPT_iT0_.exit, label %.lr.ph.preheader.i, !llvm.loop !196
@@ -633,9 +640,6 @@ declare i32 @llvm.smax.i32(i32, i32) #10
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #16
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smin.i32(i32, i32) #10
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly captures(none), i64, i1 immarg) #1

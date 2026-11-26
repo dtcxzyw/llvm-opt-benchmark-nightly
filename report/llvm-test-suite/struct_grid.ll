@@ -204,28 +204,34 @@ bb.a:
   store i32 %i.j, ptr %i.e, align 4, !tbaa !7
   %i.k = load i32, ptr %i.c, align 4, !tbaa !7
   %i.l = shl i32 %i.k, 2
-  %i.m = call ptr @hypre_MAlloc(i32 noundef %i.l) #10 ; 5 uses
+  %i.m = call ptr @hypre_MAlloc(i32 noundef %i.l) #10 ; 6 uses
   %i.n = load i32, ptr %i.c, align 4, !tbaa !7
   %i.o = shl i32 %i.n, 2
-  %i.p = call ptr @hypre_MAlloc(i32 noundef %i.o) #10 ; 4 uses
+  %i.p = call ptr @hypre_MAlloc(i32 noundef %i.o) #10 ; 5 uses
   %i.q = call i32 @hypre_MPI_Allgather(ptr noundef nonnull %i.e, i32 noundef 1, i32 noundef 1, ptr noundef %i.m, i32 noundef 1, i32 noundef 1, i32 noundef %0) #10 ; 0 uses
   store i32 0, ptr %i.p, align 4, !tbaa !7
-  %i.r = load i32, ptr %i.m, align 4, !tbaa !7    ; 3 uses
+  %i.r = load i32, ptr %i.m, align 4, !tbaa !7    ; 2 uses
   %i.s = load i32, ptr %i.c, align 4, !tbaa !7
   %i.t = icmp sgt i32 %i.s, 1
-  br i1 %i.t, label %.lr.ph, label %._crit_edge
+  br i1 %i.t, label %.lr.ph.preheader, label %._crit_edge
 
-.lr.ph:                                           ; preds = %bb.a, %.lr.ph
-  %i.u = phi i32 [ %i.z, %.lr.ph ], [ %i.r, %bb.a ]
-  %i.v = phi i32 [ %i.w, %.lr.ph ], [ 0, %bb.a ]
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ 1, %bb.a ] ; 3 uses
-  %.0100103 = phi i32 [ %i.aa, %.lr.ph ], [ %i.r, %bb.a ]
-  %i.w = add nsw i32 %i.u, %i.v                   ; 2 uses
+.lr.ph.preheader:                                 ; preds = %bb.a
+  %load_initial = load i32, ptr %i.p, align 4
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
+  %i.u = phi i32 [ %load_initial, %.lr.ph.preheader ], [ %i.w, %.lr.ph ]
+  %indvars.iv = phi i64 [ 1, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 4 uses
+  %i.v = phi i32 [ %i.r, %.lr.ph.preheader ], [ %i.aa, %.lr.ph ]
+  %5 = getelementptr [4 x i8], ptr %i.m, i64 %indvars.iv
+  %6 = getelementptr i8, ptr %5, i64 -4
+  %7 = load i32, ptr %6, align 4, !tbaa !7
+  %i.w = add nsw i32 %7, %i.u                     ; 2 uses
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %i.p, i64 %indvars.iv
   store i32 %i.w, ptr %i.x, align 4, !tbaa !7
   %i.y = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %indvars.iv
-  %i.z = load i32, ptr %i.y, align 4, !tbaa !7    ; 2 uses
-  %i.aa = add nsw i32 %i.z, %.0100103             ; 2 uses
+  %i.z = load i32, ptr %i.y, align 4, !tbaa !7
+  %i.aa = add nsw i32 %i.z, %i.v                  ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.ab = load i32, ptr %i.c, align 4, !tbaa !7
   %i.ac = sext i32 %i.ab to i64

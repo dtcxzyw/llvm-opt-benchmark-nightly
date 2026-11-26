@@ -205,7 +205,7 @@ bb.ee:                                            ; preds = %_ZNK10glTFCommon3Re
 
 bb.ef:                                            ; preds = %bb.ee
   store i64 %i.aqk, ptr %i.aqn, align 16
-  %i.aqo = getelementptr inbounds nuw i8, ptr %i.aqn, i64 8 ; 9 uses
+  %i.aqo = getelementptr inbounds nuw i8, ptr %i.aqn, i64 8 ; 10 uses
   %i.aqp = icmp eq i32 %i.aqj, 0
   br i1 %i.aqp, label %.loopexit579, label %bb.eg
 
@@ -294,20 +294,24 @@ _ZN12_GLOBAL__N_17SetFaceER6aiFaceii.exit427:     ; preds = %.loopexit579
   br i1 %i.aru, label %bb.ei, label %.loopexit569
 
 .lr.ph903:                                        ; preds = %.lr.ph903.preheader, %bb.eh
-  %9 = phi i32 [ 1, %.lr.ph903.preheader ], [ %i.asa, %bb.eh ]
-  %indvars.iv1150 = phi i64 [ 2, %.lr.ph903.preheader ], [ %indvars.iv.next1151, %bb.eh ] ; 3 uses
-  %i.arv = getelementptr [16 x i8], ptr %i.aqo, i64 %indvars.iv1150 ; 2 uses
-  %i.arw = getelementptr i8, ptr %i.arv, i64 -16
-  store i32 2, ptr %i.arw, align 8
+  %indvars.iv1150 = phi i64 [ 2, %.lr.ph903.preheader ], [ %indvars.iv.next1151, %bb.eh ] ; 4 uses
+  %9 = getelementptr [16 x i8], ptr %i.aqo, i64 %indvars.iv1150 ; 2 uses
+  %10 = getelementptr i8, ptr %9, i64 -16
+  %i.arv = getelementptr [16 x i8], ptr %i.aqo, i64 %indvars.iv1150
+  %11 = getelementptr i8, ptr %i.arv, i64 -24
+  %12 = load ptr, ptr %11, align 8
+  %i.arw = getelementptr inbounds nuw i8, ptr %12, i64 4
+  %13 = load i32, ptr %i.arw, align 4
+  store i32 2, ptr %10, align 8
   %i.arx = invoke noalias noundef nonnull dereferenceable(8) ptr @_Znam(i64 noundef 8) #32
           to label %bb.eh unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 3 uses
 
 bb.eh:                                            ; preds = %.lr.ph903
-  %i.ary = getelementptr i8, ptr %i.arv, i64 -8
+  %i.ary = getelementptr i8, ptr %9, i64 -8
   store ptr %i.arx, ptr %i.ary, align 8
-  store i32 %9, ptr %i.arx, align 4
+  store i32 %13, ptr %i.arx, align 4
   %i.arz = getelementptr inbounds nuw i8, ptr %i.arx, i64 4
-  %i.asa = trunc nuw i64 %indvars.iv1150 to i32   ; 2 uses
+  %i.asa = trunc nuw i64 %indvars.iv1150 to i32
   store i32 %i.asa, ptr %i.arz, align 4
   %indvars.iv.next1151 = add nuw nsw i64 %indvars.iv1150, 1 ; 2 uses
   %exitcond1154.not = icmp eq i64 %indvars.iv.next1151, %wide.trip.count1153

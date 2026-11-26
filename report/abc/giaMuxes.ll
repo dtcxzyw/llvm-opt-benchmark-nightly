@@ -205,7 +205,7 @@ Vec_IntAlloc.exit.i576:                           ; preds = %Vec_IntAlloc.exit.i
   %i.we = tail call noalias dereferenceable_or_null(16) ptr @malloc(i64 noundef 16) #31 ; 5 uses
   %i.wf = getelementptr inbounds nuw i8, ptr %i.we, i64 4
   store i32 %i.vu, ptr %i.we, align 8, !tbaa !54
-  %i.wg = tail call noalias ptr @malloc(i64 noundef %i.vy) #31 ; 4 uses
+  %i.wg = tail call noalias ptr @malloc(i64 noundef %i.vy) #31 ; 3 uses
   %i.wh = getelementptr inbounds nuw i8, ptr %i.we, i64 8
   store ptr %i.wg, ptr %i.wh, align 8, !tbaa !55
   store i32 %i.vv, ptr %i.wf, align 4, !tbaa !39
@@ -220,8 +220,7 @@ bb.dh:                                            ; preds = %Vec_IntAlloc.exit.i
 
 Vec_IntStart.exit579:                             ; preds = %Vec_IntAlloc.exit.thread.i578, %Vec_IntAlloc.exit.i576, %bb.dh
   %.val185691 = phi i32 [ 0, %Vec_IntAlloc.exit.thread.i578 ], [ %i.vv, %Vec_IntAlloc.exit.i576 ], [ %i.vv, %bb.dh ] ; 2 uses
-  %.val220 = phi ptr [ null, %Vec_IntAlloc.exit.thread.i578 ], [ null, %Vec_IntAlloc.exit.i576 ], [ %i.wg, %bb.dh ]
-  %i.wk = phi ptr [ %calloc, %Vec_IntAlloc.exit.thread.i578 ], [ %i.we, %Vec_IntAlloc.exit.i576 ], [ %i.we, %bb.dh ] ; 3 uses
+  %i.wk = phi ptr [ %calloc, %Vec_IntAlloc.exit.thread.i578 ], [ %i.we, %Vec_IntAlloc.exit.i576 ], [ %i.we, %bb.dh ] ; 4 uses
   %i.wl = phi ptr [ %i.vq, %Vec_IntAlloc.exit.thread.i578 ], [ %i.vw, %Vec_IntAlloc.exit.i576 ], [ %i.vw, %bb.dh ] ; 3 uses
   %.012.i602607613 = phi i32 [ -1, %Vec_IntAlloc.exit.thread.i578 ], [ %.012.i602608, %Vec_IntAlloc.exit.i576 ], [ %.012.i602608, %bb.dh ] ; 2 uses
   %i.wm = phi ptr [ %i.vs, %Vec_IntAlloc.exit.thread.i578 ], [ %i.vt, %Vec_IntAlloc.exit.i576 ], [ %i.vt, %bb.dh ]
@@ -236,6 +235,7 @@ Vec_IntStart.exit579:                             ; preds = %Vec_IntAlloc.exit.t
   %i.wq = getelementptr i8, ptr %0, i64 16
   %i.wr = getelementptr i8, ptr %0, i64 72
   %i.ws = getelementptr i8, ptr %i.wl, i64 8
+  %3 = getelementptr i8, ptr %i.wk, i64 8
   br i1 %.not177, label %.critedge6, label %.lr.ph659.split
 
 .lr.ph659.split:                                  ; preds = %.lr.ph659
@@ -278,6 +278,7 @@ Gia_ObjIsRi.exit585.thread:                       ; preds = %bb.di, %Gia_ObjIsRi
   br i1 %i.xj, label %bb.dj, label %bb.dk
 
 bb.dj:                                            ; preds = %Gia_ObjIsRi.exit585.thread
+  %.val220 = load ptr, ptr %3, align 8, !tbaa !55
   %i.xk = getelementptr inbounds [4 x i8], ptr %.val220, i64 %i.xg
   %i.xl = trunc nuw nsw i64 %indvars.iv667 to i32
   store i32 %i.xl, ptr %i.xk, align 4, !tbaa !12

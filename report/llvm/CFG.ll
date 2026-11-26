@@ -205,7 +205,7 @@ bb.r:                                             ; preds = %bb.q
   %.sroa.28.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.7.0113, i64 24
   %.sroa.28.0.copyload = load i32, ptr %.sroa.28.0..sroa_idx, align 8, !tbaa !178 ; 2 uses
   %.sroa.25.0.copyload = load i32, ptr %.sroa.211.0..sroa_idx, align 8, !tbaa !178 ; 2 uses
-  %i.bf = load ptr, ptr %i.a, align 8, !tbaa !137 ; 3 uses
+  %i.bf = load ptr, ptr %i.a, align 8, !tbaa !137 ; 4 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bf, i64 60
   %i.bh = load i8, ptr %i.bg, align 4, !tbaa !145, !range !146, !noundef !138
   %i.bi = trunc nuw i8 %i.bh to i1
@@ -223,14 +223,14 @@ bb.t:                                             ; preds = %bb.r
 .thread.i:                                        ; preds = %bb.t, %bb.s
   %i.bk = load ptr, ptr %i.ae, align 8, !tbaa !136 ; 2 uses
   %.not.i.i = icmp eq ptr %i.bk, null
-  br i1 %.not.i.i, label %bb.u, label %_ZN12_GLOBAL__N_110CFGBuilder15autoCreateBlockEv.exit.thread.i
+  br i1 %.not.i.i, label %bb.u, label %_ZN12_GLOBAL__N_110CFGBuilder15autoCreateBlockEv.exit.i
 
 bb.u:                                             ; preds = %.thread.i
   %i.bl = load ptr, ptr %i.af, align 8, !tbaa !133
   %i.bm = call noundef ptr @_ZN5clang3CFG11createBlockEv(ptr noundef nonnull align 8 dereferenceable(112) %i.bl) ; 3 uses
   %i.bn = load ptr, ptr %i.ag, align 8, !tbaa !135 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.bn, null
-  br i1 %.not.i.i.i, label %_ZN12_GLOBAL__N_110CFGBuilder15autoCreateBlockEv.exit.i, label %bb.v
+  br i1 %.not.i.i.i, label %_ZN12_GLOBAL__N_110CFGBuilder11createBlockEb.exit.i.i, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
   call void @llvm.lifetime.start.p0(ptr nonnull %7)
@@ -241,21 +241,26 @@ bb.v:                                             ; preds = %bb.u
   %i.br = load i64, ptr %i.ah, align 8
   call void @_ZN5clang8CFGBlock12addSuccessorENS0_13AdjacentBlockERNS_17BumpVectorContextE(ptr noundef nonnull align 8 dereferenceable(120) %i.bm, ptr %i.bq, i64 %i.br, ptr noundef nonnull align 8 dereferenceable(8) %i.bp)
   call void @llvm.lifetime.end.p0(ptr nonnull %7)
+  br label %_ZN12_GLOBAL__N_110CFGBuilder11createBlockEb.exit.i.i
+
+_ZN12_GLOBAL__N_110CFGBuilder11createBlockEb.exit.i.i: ; preds = %bb.v, %bb.u
+  store ptr %i.bm, ptr %i.ae, align 8, !tbaa !136
+  %.val38.pre.i = load ptr, ptr %i.a, align 8, !tbaa !137
   br label %_ZN12_GLOBAL__N_110CFGBuilder15autoCreateBlockEv.exit.i
 
-_ZN12_GLOBAL__N_110CFGBuilder15autoCreateBlockEv.exit.i: ; preds = %bb.v, %bb.u
-  store ptr %i.bm, ptr %i.ae, align 8, !tbaa !136
-  %.val38.pre.i.a = load ptr, ptr %i.a, align 8, !tbaa !137 ; 2 uses
-  %.phi.trans.insert94.i = getelementptr i8, ptr %.val38.pre.i.a, i64 64
-  %.val38.val.pre.i = load i8, ptr %.phi.trans.insert94.i, align 8, !tbaa !238, !range !146
+_ZN12_GLOBAL__N_110CFGBuilder15autoCreateBlockEv.exit.i: ; preds = %_ZN12_GLOBAL__N_110CFGBuilder11createBlockEb.exit.i.i, %.thread.i
+  %.val38.i = phi ptr [ %i.bf, %.thread.i ], [ %.val38.pre.i, %_ZN12_GLOBAL__N_110CFGBuilder11createBlockEb.exit.i.i ] ; 2 uses
+  %11 = phi ptr [ %i.bk, %.thread.i ], [ %i.bm, %_ZN12_GLOBAL__N_110CFGBuilder11createBlockEb.exit.i.i ] ; 5 uses
+  %12 = getelementptr i8, ptr %.val48, i64 8
+  %.val36.val.i = load ptr, ptr %12, align 8, !tbaa !375
+  %.val36.val.val.i = load ptr, ptr %.val36.val.i, align 8, !tbaa !376
+  %.val38.pre.i.a = load ptr, ptr %i.af, align 8
+  %.phi.trans.insert94.i = getelementptr i8, ptr %.val38.i, i64 64
+  %.val38.val.pre.i = load i8, ptr %.phi.trans.insert94.i, align 8, !tbaa !238, !range !146, !noundef !138
   %i.bs = trunc nuw i8 %.val38.val.pre.i to i1
   br i1 %i.bs, label %_ZN12_GLOBAL__N_110CFGBuilder15autoCreateBlockEv.exit.thread.i, label %_ZN12_GLOBAL__N_110CFGBuilder14appendScopeEndEPN5clang8CFGBlockEPKNS1_7VarDeclEPKNS1_4StmtE.exit.i
 
-_ZN12_GLOBAL__N_110CFGBuilder15autoCreateBlockEv.exit.thread.i: ; preds = %.thread.i, %_ZN12_GLOBAL__N_110CFGBuilder15autoCreateBlockEv.exit.i
-  %11 = phi ptr [ %i.bm, %_ZN12_GLOBAL__N_110CFGBuilder15autoCreateBlockEv.exit.i ], [ %i.bk, %.thread.i ] ; 5 uses
-  %.val36.val.val126.in.in.i = getelementptr i8, ptr %.val48, i64 8
-  %.val36.val.val126.in.i = load ptr, ptr %.val36.val.val126.in.in.i, align 8, !tbaa !375
-  %.val36.val.val126.i = load ptr, ptr %.val36.val.val126.in.i, align 8, !tbaa !376
+_ZN12_GLOBAL__N_110CFGBuilder15autoCreateBlockEv.exit.thread.i: ; preds = %_ZN12_GLOBAL__N_110CFGBuilder15autoCreateBlockEv.exit.i
   %i.bt = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 5 uses
   %i.bu = load ptr, ptr %i.bt, align 8, !tbaa !73 ; 4 uses
   %i.bv = getelementptr inbounds nuw i8, ptr %11, i64 16 ; 2 uses
@@ -264,8 +269,7 @@ _ZN12_GLOBAL__N_110CFGBuilder15autoCreateBlockEv.exit.thread.i: ; preds = %.thre
   br i1 %i.bx, label %_ZN5clang8CFGBlock14appendScopeEndEPKNS_7VarDeclEPKNS_4StmtERNS_17BumpVectorContextE.exit.i.i, label %bb.w
 
 bb.w:                                             ; preds = %_ZN12_GLOBAL__N_110CFGBuilder15autoCreateBlockEv.exit.thread.i
-  %.val37127.i = load ptr, ptr %i.af, align 8
-  %i.by = getelementptr inbounds nuw i8, ptr %.val37127.i, i64 32
+  %i.by = getelementptr inbounds nuw i8, ptr %.val38.pre.i.a, i64 32
   %i.bz = load ptr, ptr %11, align 8, !tbaa !72   ; 2 uses
   %i.ca = ptrtoint ptr %i.bw to i64
   %i.cb = ptrtoint ptr %i.bz to i64               ; 2 uses
@@ -323,7 +327,7 @@ _ZN5clang10BumpVectorINS_10CFGElementEE4growERNS_17BumpVectorContextEm.exit.i.i.
 
 _ZN5clang8CFGBlock14appendScopeEndEPKNS_7VarDeclEPKNS_4StmtERNS_17BumpVectorContextE.exit.i.i: ; preds = %_ZN5clang10BumpVectorINS_10CFGElementEE4growERNS_17BumpVectorContextEm.exit.i.i.i.i.i, %_ZN12_GLOBAL__N_110CFGBuilder15autoCreateBlockEv.exit.thread.i
   %i.cx = phi ptr [ %i.bu, %_ZN12_GLOBAL__N_110CFGBuilder15autoCreateBlockEv.exit.thread.i ], [ %i.cv, %_ZN5clang10BumpVectorINS_10CFGElementEE4growERNS_17BumpVectorContextEm.exit.i.i.i.i.i ] ; 2 uses
-  %i.cy = ptrtoint ptr %.val36.val.val126.i to i64
+  %i.cy = ptrtoint ptr %.val36.val.val.i to i64
   %i.cz = and i64 %i.cy, -4
   %i.da = or disjoint i64 %i.cz, 1
   store i64 %i.ak, ptr %i.cx, align 8, !tbaa !74
@@ -336,7 +340,7 @@ _ZN5clang8CFGBlock14appendScopeEndEPKNS_7VarDeclEPKNS_4StmtERNS_17BumpVectorCont
   br label %_ZN12_GLOBAL__N_110CFGBuilder14appendScopeEndEPN5clang8CFGBlockEPKNS1_7VarDeclEPKNS1_4StmtE.exit.i
 
 _ZN12_GLOBAL__N_110CFGBuilder14appendScopeEndEPN5clang8CFGBlockEPKNS1_7VarDeclEPKNS1_4StmtE.exit.i: ; preds = %_ZN5clang8CFGBlock14appendScopeEndEPKNS_7VarDeclEPKNS_4StmtERNS_17BumpVectorContextE.exit.i.i, %_ZN12_GLOBAL__N_110CFGBuilder15autoCreateBlockEv.exit.i, %bb.t
-  %i.dd = phi ptr [ %.pre96.i, %_ZN5clang8CFGBlock14appendScopeEndEPKNS_7VarDeclEPKNS_4StmtERNS_17BumpVectorContextE.exit.i.i ], [ %.val38.pre.i.a, %_ZN12_GLOBAL__N_110CFGBuilder15autoCreateBlockEv.exit.i ], [ %i.bf, %bb.t ]
+  %i.dd = phi ptr [ %.pre96.i, %_ZN5clang8CFGBlock14appendScopeEndEPKNS_7VarDeclEPKNS_4StmtERNS_17BumpVectorContextE.exit.i.i ], [ %.val38.i, %_ZN12_GLOBAL__N_110CFGBuilder15autoCreateBlockEv.exit.i ], [ %i.bf, %bb.t ]
   %i.de = getelementptr inbounds nuw i8, ptr %i.dd, i64 60
   %i.df = load i8, ptr %i.de, align 4, !tbaa !145, !range !146, !noundef !138
   %i.dg = trunc nuw i8 %i.df to i1

@@ -204,13 +204,14 @@ _ZN3rle11rle_encoder25compute_compressed_lengthEPKci.exit.loopexit.us: ; preds =
   br i1 %exitcond63.not, label %._crit_edge48, label %.lr.ph.us, !llvm.loop !55
 
 ._crit_edge48:                                    ; preds = %._crit_edge.split.us51, %.lr.ph.us.us, %_ZNSt3__16vectorIcNS_9allocatorIcEEE6resizeEm.exit
-  %i.bz = getelementptr inbounds nuw i8, ptr %i.aa, i64 16 ; 4 uses
+  %i.bz = getelementptr inbounds nuw i8, ptr %i.aa, i64 16 ; 5 uses
   store i32 64, ptr %i.bz, align 4, !tbaa !20
   %i.ca = icmp sgt i32 %i.j, 1
   br i1 %i.ca, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %._crit_edge48
   %wide.trip.count68 = zext nneg i32 %i.j to i64
+  %load_initial = load i32, ptr %i.bz, align 4    ; 2 uses
   %i.cb = add nsw i64 %wide.trip.count68, -1      ; 3 uses
   %xtraiter = and i64 %i.cb, 1
   %i.cc = icmp eq i32 %i.j, 2
@@ -238,7 +239,7 @@ _ZN3rle11rle_encoder25compute_compressed_lengthEPKci.exit.loopexit.us: ; preds =
   br i1 %lcmp.mod.not, label %._crit_edge, label %.lr.ph.epil.preheader
 
 .lr.ph.epil.preheader:                            ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.preheader
-  %.epil.init = phi i32 [ 64, %.lr.ph.preheader ], [ %i.dk, %._crit_edge.loopexit.unr-lcssa ]
+  %.epil.init = phi i32 [ %load_initial, %.lr.ph.preheader ], [ %i.dk, %._crit_edge.loopexit.unr-lcssa ]
   %indvars.iv65.epil.init = phi i64 [ 1, %.lr.ph.preheader ], [ %indvars.iv.next66.1, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses
   %lcmp.mod95 = trunc i64 %i.cb to i1
   call void @llvm.assume(i1 %lcmp.mod95)
@@ -270,7 +271,7 @@ _ZN3rle11rle_encoder25compute_compressed_lengthEPKci.exit.loopexit.us: ; preds =
   br label %._crit_edge56
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
-  %i.cw = phi i32 [ 64, %.lr.ph.preheader.new ], [ %i.dk, %.lr.ph ]
+  %i.cw = phi i32 [ %load_initial, %.lr.ph.preheader.new ], [ %i.dk, %.lr.ph ]
   %indvars.iv65 = phi i64 [ 1, %.lr.ph.preheader.new ], [ %indvars.iv.next66.1, %.lr.ph ] ; 4 uses
   %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.1, %.lr.ph ]
   %i.cx = getelementptr [4 x i8], ptr %i.a, i64 %indvars.iv65

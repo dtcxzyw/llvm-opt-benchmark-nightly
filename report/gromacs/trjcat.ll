@@ -205,7 +205,7 @@ bb.fs:                                            ; preds = %bb.fl, %bb.fi, %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #19
   %i.tc = invoke noundef ptr @_Z11save_callocPKcS0_imm(ptr noundef nonnull @.str.64, ptr noundef nonnull @.str.53, i32 noundef 643, i64 noundef %i.ps, i64 noundef 4)
-          to label %_ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit379 unwind label %.loopexit.split-lp552.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 34 uses
+          to label %_ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit379 unwind label %.loopexit.split-lp552.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 43 uses
 
 _ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit379:       ; preds = %.loopexit559
   %i.td = ptrtoaddr ptr %i.tc to i64
@@ -579,30 +579,27 @@ _ZL10sort_filesN3gmx8ArrayRefINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcE
 .lr.ph.preheader.i.i:                             ; preds = %.lr.ph32.i.i
   %i.xz = xor i64 %.030.i.i, -1
   %i.ya = add nsw i64 %.pre-phi745, %i.xz
-  %.phi.trans.insert.i.i = getelementptr inbounds nuw [4 x i8], ptr %i.tc, i64 %.030.i.i ; 2 uses
-  %.pre.i.i = load float, ptr %.phi.trans.insert.i.i, align 4, !tbaa !86 ; 3 uses
   %xtraiter1162 = and i64 %i.ya, 7                ; 2 uses
   %lcmp.mod1163.not = icmp eq i64 %xtraiter1162, 0
   br i1 %lcmp.mod1163.not, label %.lr.ph.i.i.prol.loopexit, label %.lr.ph.i.i.prol
 
 .lr.ph.i.i.prol:                                  ; preds = %.lr.ph.preheader.i.i, %.lr.ph.i.i.prol
-  %51 = phi float [ %52, %.lr.ph.i.i.prol ], [ %.pre.i.i, %.lr.ph.preheader.i.i ] ; 2 uses
-  %.02329.i.i.prol.a = phi i64 [ %i.ye, %.lr.ph.i.i.prol ], [ %i.xx, %.lr.ph.preheader.i.i ] ; 3 uses
-  %.02428.i.i.prol = phi i64 [ %spec.select.i.i.prol, %.lr.ph.i.i.prol ], [ %.030.i.i, %.lr.ph.preheader.i.i ]
-  %prol.iter1164 = phi i64 [ %prol.iter1164.next, %.lr.ph.i.i.prol ], [ 0, %.lr.ph.preheader.i.i ]
-  %i.yb = getelementptr inbounds nuw [4 x i8], ptr %i.tc, i64 %.02329.i.i.prol.a
-  %i.yc = load float, ptr %i.yb, align 4, !tbaa !86 ; 2 uses
-  %i.yd = fcmp olt float %i.yc, %51               ; 2 uses
-  %spec.select.i.i.prol = select i1 %i.yd, i64 %.02329.i.i.prol.a, i64 %.02428.i.i.prol ; 3 uses
-  %i.ye = add nuw nsw i64 %.02329.i.i.prol.a, 1   ; 2 uses
-  %52 = select i1 %i.yd, float %i.yc, float %51   ; 2 uses
-  %prol.iter1164.next = add i64 %prol.iter1164, 1 ; 2 uses
+  %.02329.i.i.prol = phi i64 [ %i.ye, %.lr.ph.i.i.prol ], [ %i.xx, %.lr.ph.preheader.i.i ] ; 3 uses
+  %.02329.i.i.prol.a = phi i64 [ %spec.select.i.i.prol, %.lr.ph.i.i.prol ], [ %.030.i.i, %.lr.ph.preheader.i.i ] ; 2 uses
+  %.02428.i.i.prol = phi i64 [ %prol.iter1164.next, %.lr.ph.i.i.prol ], [ 0, %.lr.ph.preheader.i.i ]
+  %51 = getelementptr inbounds nuw [4 x i8], ptr %i.tc, i64 %.02329.i.i.prol
+  %52 = load float, ptr %51, align 4, !tbaa !86
+  %i.yb = getelementptr inbounds [4 x i8], ptr %i.tc, i64 %.02329.i.i.prol.a
+  %i.yc = load float, ptr %i.yb, align 4, !tbaa !86
+  %i.yd = fcmp olt float %52, %i.yc
+  %spec.select.i.i.prol = select i1 %i.yd, i64 %.02329.i.i.prol, i64 %.02329.i.i.prol.a ; 3 uses
+  %i.ye = add nuw nsw i64 %.02329.i.i.prol, 1     ; 2 uses
+  %prol.iter1164.next = add i64 %.02428.i.i.prol, 1 ; 2 uses
   %prol.iter1164.cmp.not = icmp eq i64 %prol.iter1164.next, %xtraiter1162
   br i1 %prol.iter1164.cmp.not, label %.lr.ph.i.i.prol.loopexit, label %.lr.ph.i.i.prol, !llvm.loop !53
 
 .lr.ph.i.i.prol.loopexit:                         ; preds = %.lr.ph.i.i.prol, %.lr.ph.preheader.i.i
   %spec.select.i.i.lcssa.unr = phi i64 [ poison, %.lr.ph.preheader.i.i ], [ %spec.select.i.i.prol, %.lr.ph.i.i.prol ]
-  %.unr = phi float [ %.pre.i.i, %.lr.ph.preheader.i.i ], [ %52, %.lr.ph.i.i.prol ]
   %.02329.i.i.unr = phi i64 [ %i.xx, %.lr.ph.preheader.i.i ], [ %i.ye, %.lr.ph.i.i.prol ]
   %.02428.i.i.unr = phi i64 [ %.030.i.i, %.lr.ph.preheader.i.i ], [ %spec.select.i.i.prol, %.lr.ph.i.i.prol ]
   %i.yf = icmp ult i64 %i.xw, 7
@@ -614,65 +611,74 @@ _ZL10sort_filesN3gmx8ArrayRefINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcE
   br i1 %.not.i.i404, label %._crit_edge.thread.i.i, label %bb.gj
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i.prol.loopexit, %.lr.ph.i.i
-  %53 = phi float [ %61, %.lr.ph.i.i ], [ %.unr, %.lr.ph.i.i.prol.loopexit ] ; 2 uses
-  %.02329.i.i.a = phi i64 [ %i.zl, %.lr.ph.i.i ], [ %.02329.i.i.unr, %.lr.ph.i.i.prol.loopexit ] ; 10 uses
-  %.02428.i.i = phi i64 [ %spec.select.i.i.7, %.lr.ph.i.i ], [ %.02428.i.i.unr, %.lr.ph.i.i.prol.loopexit ]
-  %i.yg = getelementptr inbounds nuw [4 x i8], ptr %i.tc, i64 %.02329.i.i.a
-  %i.yh = load float, ptr %i.yg, align 4, !tbaa !86 ; 2 uses
-  %i.yi = fcmp olt float %i.yh, %53               ; 2 uses
-  %spec.select.i.i = select i1 %i.yi, i64 %.02329.i.i.a, i64 %.02428.i.i
-  %i.yj = add nuw nsw i64 %.02329.i.i.a, 1        ; 2 uses
-  %54 = select i1 %i.yi, float %i.yh, float %53   ; 2 uses
-  %i.yk = getelementptr inbounds nuw [4 x i8], ptr %i.tc, i64 %i.yj
-  %i.yl = load float, ptr %i.yk, align 4, !tbaa !86 ; 2 uses
-  %i.ym = fcmp olt float %i.yl, %54               ; 2 uses
-  %spec.select.i.i.1 = select i1 %i.ym, i64 %i.yj, i64 %spec.select.i.i
-  %i.yn = add nuw nsw i64 %.02329.i.i.a, 2        ; 2 uses
-  %55 = select i1 %i.ym, float %i.yl, float %54   ; 2 uses
-  %i.yo = getelementptr inbounds nuw [4 x i8], ptr %i.tc, i64 %i.yn
-  %i.yp = load float, ptr %i.yo, align 4, !tbaa !86 ; 2 uses
-  %i.yq = fcmp olt float %i.yp, %55               ; 2 uses
-  %spec.select.i.i.2 = select i1 %i.yq, i64 %i.yn, i64 %spec.select.i.i.1
-  %i.yr = add nuw nsw i64 %.02329.i.i.a, 3        ; 2 uses
-  %56 = select i1 %i.yq, float %i.yp, float %55   ; 2 uses
-  %i.ys = getelementptr inbounds nuw [4 x i8], ptr %i.tc, i64 %i.yr
-  %i.yt = load float, ptr %i.ys, align 4, !tbaa !86 ; 2 uses
-  %i.yu = fcmp olt float %i.yt, %56               ; 2 uses
-  %spec.select.i.i.3 = select i1 %i.yu, i64 %i.yr, i64 %spec.select.i.i.2
-  %i.yv = add nuw nsw i64 %.02329.i.i.a, 4        ; 2 uses
-  %57 = select i1 %i.yu, float %i.yt, float %56   ; 2 uses
-  %i.yw = getelementptr inbounds nuw [4 x i8], ptr %i.tc, i64 %i.yv
-  %i.yx = load float, ptr %i.yw, align 4, !tbaa !86 ; 2 uses
-  %i.yy = fcmp olt float %i.yx, %57               ; 2 uses
-  %spec.select.i.i.4 = select i1 %i.yy, i64 %i.yv, i64 %spec.select.i.i.3
-  %i.yz = add nuw nsw i64 %.02329.i.i.a, 5        ; 2 uses
-  %58 = select i1 %i.yy, float %i.yx, float %57   ; 2 uses
-  %i.za = getelementptr inbounds nuw [4 x i8], ptr %i.tc, i64 %i.yz
-  %i.zb = load float, ptr %i.za, align 4, !tbaa !86 ; 2 uses
-  %i.zc = fcmp olt float %i.zb, %58               ; 2 uses
-  %spec.select.i.i.5 = select i1 %i.zc, i64 %i.yz, i64 %spec.select.i.i.4
-  %i.zd = add nuw nsw i64 %.02329.i.i.a, 6        ; 2 uses
-  %59 = select i1 %i.zc, float %i.zb, float %58   ; 2 uses
-  %i.ze = getelementptr inbounds nuw [4 x i8], ptr %i.tc, i64 %i.zd
-  %i.zf = load float, ptr %i.ze, align 4, !tbaa !86 ; 2 uses
-  %i.zg = fcmp olt float %i.zf, %59               ; 2 uses
-  %spec.select.i.i.6 = select i1 %i.zg, i64 %i.zd, i64 %spec.select.i.i.5
-  %i.zh = add nuw nsw i64 %.02329.i.i.a, 7        ; 2 uses
-  %60 = select i1 %i.zg, float %i.zf, float %59   ; 2 uses
-  %i.zi = getelementptr inbounds nuw [4 x i8], ptr %i.tc, i64 %i.zh
-  %i.zj = load float, ptr %i.zi, align 4, !tbaa !86 ; 2 uses
-  %i.zk = fcmp olt float %i.zj, %60               ; 2 uses
+  %.02329.i.i = phi i64 [ %i.zl, %.lr.ph.i.i ], [ %.02329.i.i.unr, %.lr.ph.i.i.prol.loopexit ] ; 10 uses
+  %.02329.i.i.a = phi i64 [ %spec.select.i.i.7, %.lr.ph.i.i ], [ %.02428.i.i.unr, %.lr.ph.i.i.prol.loopexit ] ; 2 uses
+  %53 = getelementptr inbounds nuw [4 x i8], ptr %i.tc, i64 %.02329.i.i
+  %54 = load float, ptr %53, align 4, !tbaa !86
+  %i.yg = getelementptr inbounds [4 x i8], ptr %i.tc, i64 %.02329.i.i.a
+  %i.yh = load float, ptr %i.yg, align 4, !tbaa !86
+  %i.yi = fcmp olt float %54, %i.yh
+  %spec.select.i.i = select i1 %i.yi, i64 %.02329.i.i, i64 %.02329.i.i.a ; 2 uses
+  %i.yj = add nuw nsw i64 %.02329.i.i, 1          ; 2 uses
+  %55 = getelementptr inbounds nuw [4 x i8], ptr %i.tc, i64 %i.yj
+  %56 = load float, ptr %55, align 4, !tbaa !86
+  %i.yk = getelementptr inbounds [4 x i8], ptr %i.tc, i64 %spec.select.i.i
+  %i.yl = load float, ptr %i.yk, align 4, !tbaa !86
+  %i.ym = fcmp olt float %56, %i.yl
+  %spec.select.i.i.1 = select i1 %i.ym, i64 %i.yj, i64 %spec.select.i.i ; 2 uses
+  %i.yn = add nuw nsw i64 %.02329.i.i, 2          ; 2 uses
+  %57 = getelementptr inbounds nuw [4 x i8], ptr %i.tc, i64 %i.yn
+  %58 = load float, ptr %57, align 4, !tbaa !86
+  %i.yo = getelementptr inbounds [4 x i8], ptr %i.tc, i64 %spec.select.i.i.1
+  %i.yp = load float, ptr %i.yo, align 4, !tbaa !86
+  %i.yq = fcmp olt float %58, %i.yp
+  %spec.select.i.i.2 = select i1 %i.yq, i64 %i.yn, i64 %spec.select.i.i.1 ; 2 uses
+  %i.yr = add nuw nsw i64 %.02329.i.i, 3          ; 2 uses
+  %59 = getelementptr inbounds nuw [4 x i8], ptr %i.tc, i64 %i.yr
+  %60 = load float, ptr %59, align 4, !tbaa !86
+  %i.ys = getelementptr inbounds [4 x i8], ptr %i.tc, i64 %spec.select.i.i.2
+  %i.yt = load float, ptr %i.ys, align 4, !tbaa !86
+  %i.yu = fcmp olt float %60, %i.yt
+  %spec.select.i.i.3 = select i1 %i.yu, i64 %i.yr, i64 %spec.select.i.i.2 ; 2 uses
+  %i.yv = add nuw nsw i64 %.02329.i.i, 4          ; 2 uses
+  %61 = getelementptr inbounds nuw [4 x i8], ptr %i.tc, i64 %i.yv
+  %62 = load float, ptr %61, align 4, !tbaa !86
+  %i.yw = getelementptr inbounds [4 x i8], ptr %i.tc, i64 %spec.select.i.i.3
+  %i.yx = load float, ptr %i.yw, align 4, !tbaa !86
+  %i.yy = fcmp olt float %62, %i.yx
+  %spec.select.i.i.4 = select i1 %i.yy, i64 %i.yv, i64 %spec.select.i.i.3 ; 2 uses
+  %i.yz = add nuw nsw i64 %.02329.i.i, 5          ; 2 uses
+  %63 = getelementptr inbounds nuw [4 x i8], ptr %i.tc, i64 %i.yz
+  %64 = load float, ptr %63, align 4, !tbaa !86
+  %i.za = getelementptr inbounds [4 x i8], ptr %i.tc, i64 %spec.select.i.i.4
+  %i.zb = load float, ptr %i.za, align 4, !tbaa !86
+  %i.zc = fcmp olt float %64, %i.zb
+  %spec.select.i.i.5 = select i1 %i.zc, i64 %i.yz, i64 %spec.select.i.i.4 ; 2 uses
+  %i.zd = add nuw nsw i64 %.02329.i.i, 6          ; 2 uses
+  %65 = getelementptr inbounds nuw [4 x i8], ptr %i.tc, i64 %i.zd
+  %66 = load float, ptr %65, align 4, !tbaa !86
+  %i.ze = getelementptr inbounds [4 x i8], ptr %i.tc, i64 %spec.select.i.i.5
+  %i.zf = load float, ptr %i.ze, align 4, !tbaa !86
+  %i.zg = fcmp olt float %66, %i.zf
+  %spec.select.i.i.6 = select i1 %i.zg, i64 %i.zd, i64 %spec.select.i.i.5 ; 2 uses
+  %i.zh = add nuw nsw i64 %.02329.i.i, 7          ; 2 uses
+  %67 = getelementptr inbounds nuw [4 x i8], ptr %i.tc, i64 %i.zh
+  %68 = load float, ptr %67, align 4, !tbaa !86
+  %i.zi = getelementptr inbounds [4 x i8], ptr %i.tc, i64 %spec.select.i.i.6
+  %i.zj = load float, ptr %i.zi, align 4, !tbaa !86
+  %i.zk = fcmp olt float %68, %i.zj
   %spec.select.i.i.7 = select i1 %i.zk, i64 %i.zh, i64 %spec.select.i.i.6 ; 2 uses
-  %i.zl = add nuw nsw i64 %.02329.i.i.a, 8        ; 2 uses
+  %i.zl = add nuw nsw i64 %.02329.i.i, 8          ; 2 uses
   %exitcond.not.i.i.7 = icmp eq i64 %i.zl, %.pre-phi745
-  %61 = select i1 %i.zk, float %i.zj, float %60
   br i1 %exitcond.not.i.i.7, label %._crit_edge.i.i403, label %.lr.ph.i.i, !llvm.loop !54
 
 bb.gj:                                            ; preds = %._crit_edge.i.i403
+  %69 = getelementptr inbounds nuw [4 x i8], ptr %i.tc, i64 %.030.i.i ; 2 uses
+  %70 = load float, ptr %69, align 4, !tbaa !86
   %i.zm = getelementptr inbounds [4 x i8], ptr %i.tc, i64 %spec.select.i.i.lcssa ; 2 uses
   %i.zn = load float, ptr %i.zm, align 4, !tbaa !86
-  store float %i.zn, ptr %.phi.trans.insert.i.i, align 4, !tbaa !86
-  store float %.pre.i.i, ptr %i.zm, align 4, !tbaa !86
+  store float %i.zn, ptr %69, align 4, !tbaa !86
+  store float %70, ptr %i.zm, align 4, !tbaa !86
   %i.zo = getelementptr inbounds nuw [32 x i8], ptr %i.tl, i64 %.030.i.i
   %i.zp = getelementptr inbounds [32 x i8], ptr %i.tl, i64 %spec.select.i.i.lcssa
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4swapERS4_(ptr noundef nonnull align 8 dereferenceable(32) %i.zo, ptr noundef nonnull align 8 dereferenceable(32) %i.zp) #19

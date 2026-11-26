@@ -205,33 +205,38 @@ _ZNSt6vectorIdSaIdEED2Ev.exit.i:                  ; preds = %.noexc166.i
   %i.chn = mul i64 %i.cge, %indvars.iv411.i
   %scevgep = getelementptr i8, ptr %i.cgf, i64 %i.chn
   %i.cho = mul nuw nsw i64 %indvars.iv411.i, %i.cfx ; 2 uses
-  %i.chp = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0226.0.i, i64 %i.cho ; 4 uses
-  %i.chq = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0232.0333.i, i64 %i.cho ; 13 uses
+  %i.chp = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0226.0.i, i64 %i.cho ; 6 uses
+  %i.chq = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0232.0333.i, i64 %i.cho ; 14 uses
   store double 0.000000e+00, ptr %i.chq, align 8, !tbaa !353
   store double 0.000000e+00, ptr %.sroa.0270.0289296323.i, align 8, !tbaa !353
-  br i1 %i.cfo, label %.lr.ph.i.i743, label %.lr.ph40.preheader.i.i
+  br i1 %i.cfo, label %.lr.ph.i.i743.preheader, label %.lr.ph40.preheader.i.i
 
-.lr.ph.i.i743:                                    ; preds = %.lr.ph385.i, %.lr.ph.i.i743
-  %i.chr = phi double [ %i.ciz, %.lr.ph.i.i743 ], [ 0.000000e+00, %.lr.ph385.i ]
-  %i.chs = phi double [ %i.cil, %.lr.ph.i.i743 ], [ 0.000000e+00, %.lr.ph385.i ]
-  %indvars.iv.i.i744 = phi i64 [ %indvars.iv.next.i.i745.1, %.lr.ph.i.i743 ], [ 1, %.lr.ph385.i ] ; 5 uses
-  %i.cht = call double @llvm.fmuladd.f64(double %i.chs, double 5.000000e-01, double 2.000000e+00) ; 2 uses
+.lr.ph.i.i743.preheader:                          ; preds = %.lr.ph385.i
+  %load_initial3258 = load double, ptr %i.chq, align 8
+  br label %.lr.ph.i.i743
+
+.lr.ph.i.i743:                                    ; preds = %.lr.ph.i.i743, %.lr.ph.i.i743.preheader
+  %i.chr = phi double [ %load_initial3258, %.lr.ph.i.i743.preheader ], [ %i.cil, %.lr.ph.i.i743 ]
+  %i.chs = phi double [ 0.000000e+00, %.lr.ph.i.i743.preheader ], [ %i.ciz, %.lr.ph.i.i743 ]
+  %indvars.iv.i.i744 = phi i64 [ 1, %.lr.ph.i.i743.preheader ], [ %indvars.iv.next.i.i745.1, %.lr.ph.i.i743 ] ; 6 uses
+  %i.cht = call double @llvm.fmuladd.f64(double %i.chr, double 5.000000e-01, double 2.000000e+00) ; 2 uses
   %i.chu = fdiv double -5.000000e-01, %i.cht      ; 2 uses
   %i.chv = getelementptr inbounds nuw [8 x i8], ptr %i.chq, i64 %indvars.iv.i.i744
   store double %i.chu, ptr %i.chv, align 8, !tbaa !353
-  %indvars.iv.next.i.i745 = add nuw nsw i64 %indvars.iv.i.i744, 1 ; 4 uses
+  %indvars.iv.next.i.i745 = add nuw nsw i64 %indvars.iv.i.i744, 1 ; 5 uses
   %i.chw = getelementptr inbounds nuw [8 x i8], ptr %i.chp, i64 %indvars.iv.next.i.i745
   %i.chx = load double, ptr %i.chw, align 8, !tbaa !353
-  %i.chy = getelementptr inbounds nuw [8 x i8], ptr %i.chp, i64 %indvars.iv.i.i744 ; 2 uses
+  %i.chy = getelementptr inbounds nuw [8 x i8], ptr %i.chp, i64 %indvars.iv.i.i744
   %i.chz = load double, ptr %i.chy, align 8, !tbaa !353
   %i.cia = call double @llvm.fmuladd.f64(double %i.chz, double -2.000000e+00, double %i.chx)
-  %i.cib = getelementptr i8, ptr %i.chy, i64 -8
+  %144 = getelementptr [8 x i8], ptr %i.chp, i64 %indvars.iv.i.i744
+  %i.cib = getelementptr i8, ptr %144, i64 -8
   %i.cic = load double, ptr %i.cib, align 8, !tbaa !353
   %i.cid = fadd double %i.cia, %i.cic
   %i.cie = fdiv double %i.cid, %i.cfg
   %i.cif = fmul double %i.cie, 3.000000e+00
   %i.cig = fdiv double %i.cif, %i.cfg
-  %i.cih = call double @llvm.fmuladd.f64(double %i.chr, double -5.000000e-01, double %i.cig)
+  %i.cih = call double @llvm.fmuladd.f64(double %i.chs, double -5.000000e-01, double %i.cig)
   %i.cii = fdiv double %i.cih, %i.cht             ; 2 uses
   %i.cij = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0270.0289296323.i, i64 %indvars.iv.i.i744
   store double %i.cii, ptr %i.cij, align 8, !tbaa !353
@@ -242,10 +247,11 @@ _ZNSt6vectorIdSaIdEED2Ev.exit.i:                  ; preds = %.noexc166.i
   %indvars.iv.next.i.i745.1 = add nuw nsw i64 %indvars.iv.i.i744, 2 ; 3 uses
   %i.cin = getelementptr inbounds nuw [8 x i8], ptr %i.chp, i64 %indvars.iv.next.i.i745.1
   %i.cio = load double, ptr %i.cin, align 8, !tbaa !353
-  %i.cip = getelementptr inbounds nuw [8 x i8], ptr %i.chp, i64 %indvars.iv.next.i.i745 ; 2 uses
+  %i.cip = getelementptr inbounds nuw [8 x i8], ptr %i.chp, i64 %indvars.iv.next.i.i745
   %i.ciq = load double, ptr %i.cip, align 8, !tbaa !353
   %i.cir = call double @llvm.fmuladd.f64(double %i.ciq, double -2.000000e+00, double %i.cio)
-  %i.cis = getelementptr i8, ptr %i.cip, i64 -8
+  %145 = getelementptr [8 x i8], ptr %i.chp, i64 %indvars.iv.next.i.i745
+  %i.cis = getelementptr i8, ptr %145, i64 -8
   %i.cit = load double, ptr %i.cis, align 8, !tbaa !353
   %i.ciu = fadd double %i.cir, %i.cit
   %i.civ = fdiv double %i.ciu, %i.cfg

@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %bb.k
 
 vector.ph:                                        ; preds = %bb.l
   %i.cw = getelementptr i8, ptr %i.f, i64 3664
-  %.val.i = load ptr, ptr %i.cw, align 16, !tbaa !41 ; 8 uses
+  %.val.i = load ptr, ptr %i.cw, align 16, !tbaa !41 ; 9 uses
   %i.cx = getelementptr i8, ptr %i.f, i64 3672
   %.val85.i = load ptr, ptr %i.cx, align 8, !tbaa !42 ; 26 uses
   br label %vector.body
@@ -239,7 +239,7 @@ vector.body.1:                                    ; preds = %vector.body
   br label %vector.body
 
 .preheader6.i.preheader.i:                        ; preds = %vector.body
-  %i.dk = load float, ptr %i.d, align 16, !tbaa !29 ; 3 uses
+  %i.dk = load float, ptr %i.d, align 16, !tbaa !29 ; 2 uses
   br label %.preheader6.i.i
 
 .preheader6.i.i:                                  ; preds = %.preheader6.i.i, %.preheader6.i.preheader.i
@@ -276,25 +276,24 @@ vector.body.1:                                    ; preds = %vector.body
   br label %bb.y
 
 .preheader5.i.i:                                  ; preds = %.preheader6.i.i, %._crit_edge.i.i.2
-  %.pre.i.i = phi float [ %5, %._crit_edge.i.i.2 ], [ %i.dk, %.preheader6.i.i ] ; 4 uses
   %indvars.iv33.i.i = phi i64 [ %indvars.iv.next34.i.i, %._crit_edge.i.i.2 ], [ 1, %.preheader6.i.i ] ; 4 uses
-  %4 = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %indvars.iv33.i.i
-  %5 = load float, ptr %4, align 4, !tbaa !29     ; 5 uses
-  %i.ee = getelementptr [143072 x i8], ptr %.val.i, i64 %indvars.iv33.i.i ; 4 uses
-  %6 = getelementptr i8, ptr %i.ee, i64 -143072   ; 3 uses
+  %4 = add nsw i64 %indvars.iv33.i.i, -1          ; 2 uses
+  %5 = getelementptr inbounds [4 x i8], ptr %i.d, i64 %4
+  %i.ee = getelementptr inbounds [143072 x i8], ptr %.val.i, i64 %4 ; 3 uses
+  %6 = getelementptr inbounds nuw [143072 x i8], ptr %.val.i, i64 %indvars.iv33.i.i ; 3 uses
   %i.ef = getelementptr inbounds nuw [35768 x i8], ptr %.val85.i, i64 %indvars.iv33.i.i ; 3 uses
-  %7 = insertelement <2 x float> poison, float %5, i64 0
-  %8 = insertelement <2 x float> %7, float %.pre.i.i, i64 1 ; 3 uses
-  %i.eg = fadd nsz float %.pre.i.i, 1.000000e+03  ; 2 uses
+  %7 = load <2 x float>, ptr %5, align 4, !tbaa !29 ; 7 uses
+  %8 = extractelement <2 x float> %7, i64 0       ; 3 uses
+  %i.eg = fadd nsz float %8, 1.000000e+03         ; 2 uses
   %i.eh = fcmp nsz olt float %i.eg, 3.576800e+04
   %i.ei = select i1 %i.eh, float %i.eg, float 3.576800e+04 ; 3 uses
   %i.ej = fptosi float %i.ei to i32
-  %i.ek = fadd nsz <2 x float> %8, splat (float -1.000000e+03) ; 2 uses
+  %i.ek = fadd nsz <2 x float> %7, splat (float -1.000000e+03) ; 2 uses
   %i.el = fcmp nsz ole <2 x float> %i.ek, zeroinitializer
   %i.em = select <2 x i1> %i.el, <2 x float> zeroinitializer, <2 x float> %i.ek ; 2 uses
-  %i.en = extractelement <2 x float> %i.em, i64 0
+  %i.en = extractelement <2 x float> %i.em, i64 1
   %spec.select.i88.i = fptosi float %i.en to i32
-  %i.eo = extractelement <2 x float> %i.em, i64 1
+  %i.eo = extractelement <2 x float> %i.em, i64 0
   %i.ep = fptosi float %i.eo to i32               ; 2 uses
   %i.eq = uitofp nsz nneg i32 %i.ep to float
   %i.er = fcmp nsz ogt float %i.ei, %i.eq
@@ -302,12 +301,13 @@ vector.body.1:                                    ; preds = %vector.body
 
 .lr.ph.preheader.i.i:                             ; preds = %.preheader5.i.i
   %i.es = zext i32 %i.ep to i64
+  %9 = extractelement <2 x float> %7, i64 1
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.loopexit.i.i, %.lr.ph.preheader.i.i
   %indvars.iv30.i.i = phi i64 [ %i.es, %.lr.ph.preheader.i.i ], [ %indvars.iv.next31.i.i, %.loopexit.i.i ] ; 3 uses
   %.113.i.i = phi i32 [ 0, %.lr.ph.preheader.i.i ], [ %.4.i.i, %.loopexit.i.i ] ; 2 uses
-  %i.et = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %indvars.iv30.i.i ; 2 uses
+  %i.et = getelementptr inbounds nuw [4 x i8], ptr %i.ee, i64 %indvars.iv30.i.i ; 2 uses
   %i.eu = load float, ptr %i.et, align 4, !tbaa !29
   %i.ev = tail call nsz float @llvm.fabs.f32(float %i.eu) #9
   %i.ew = fcmp nsz oeq float %i.ev, +inf
@@ -334,11 +334,11 @@ bb.m:                                             ; preds = %.preheader4.i.i
 bb.n:                                             ; preds = %bb.m
   %i.fd = load float, ptr %i.et, align 4, !tbaa !29
   %i.fe = sitofp nsz i32 %i.fb to float
-  %i.ff = fsub nsz float %i.fe, %5                ; 2 uses
+  %i.ff = fsub nsz float %i.fe, %9                ; 2 uses
   %i.fg = fmul nsz float %i.ff, %i.ff
   %i.fh = fadd nsz float %i.fg, %i.fd             ; 2 uses
   %i.fi = sext i32 %i.fb to i64                   ; 2 uses
-  %i.fj = getelementptr inbounds [4 x i8], ptr %i.ee, i64 %i.fi ; 2 uses
+  %i.fj = getelementptr inbounds [4 x i8], ptr %6, i64 %i.fi ; 2 uses
   %i.fk = load float, ptr %i.fj, align 4, !tbaa !29
   %i.fl = fcmp nsz ogt float %i.fk, %i.fh
   br i1 %i.fl, label %bb.o, label %bb.p
@@ -369,16 +369,16 @@ bb.p:                                             ; preds = %bb.o, %bb.n, %bb.m
   br i1 %i.fr, label %.critedge, label %._crit_edge.i.i.2
 
 .critedge:                                        ; preds = %.preheader5.i.i, %._crit_edge.loopexit.i.i
-  %i.fs = fadd nsz float %.pre.i.i, 4.000000e+03  ; 2 uses
+  %i.fs = fadd nsz float %8, 4.000000e+03         ; 2 uses
   %i.ft = fcmp nsz olt float %i.fs, 3.576800e+04
   %i.fu = select i1 %i.ft, float %i.fs, float 3.576800e+04 ; 3 uses
   %i.fv = fptosi float %i.fu to i32
-  %i.fw = fadd nsz <2 x float> %8, splat (float -4.000000e+03) ; 2 uses
+  %i.fw = fadd nsz <2 x float> %7, splat (float -4.000000e+03) ; 2 uses
   %i.fx = fcmp nsz ole <2 x float> %i.fw, zeroinitializer
   %i.fy = select <2 x i1> %i.fx, <2 x float> zeroinitializer, <2 x float> %i.fw ; 2 uses
-  %i.fz = extractelement <2 x float> %i.fy, i64 0
+  %i.fz = extractelement <2 x float> %i.fy, i64 1
   %spec.select.i88.i.1 = fptosi float %i.fz to i32
-  %i.ga = extractelement <2 x float> %i.fy, i64 1
+  %i.ga = extractelement <2 x float> %i.fy, i64 0
   %i.gb = fptosi float %i.ga to i32               ; 2 uses
   %i.gc = uitofp nsz nneg i32 %i.gb to float
   %i.gd = fcmp nsz ogt float %i.fu, %i.gc
@@ -386,12 +386,13 @@ bb.p:                                             ; preds = %bb.o, %bb.n, %bb.m
 
 .lr.ph.preheader.i.i.1:                           ; preds = %.critedge
   %i.ge = zext i32 %i.gb to i64
+  %10 = extractelement <2 x float> %7, i64 1
   br label %.lr.ph.i.i.1
 
 .lr.ph.i.i.1:                                     ; preds = %.loopexit.i.i.1, %.lr.ph.preheader.i.i.1
   %indvars.iv30.i.i.1 = phi i64 [ %i.ge, %.lr.ph.preheader.i.i.1 ], [ %indvars.iv.next31.i.i.1, %.loopexit.i.i.1 ] ; 3 uses
   %.113.i.i.1 = phi i32 [ 0, %.lr.ph.preheader.i.i.1 ], [ %.4.i.i.1, %.loopexit.i.i.1 ] ; 2 uses
-  %i.gf = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %indvars.iv30.i.i.1 ; 2 uses
+  %i.gf = getelementptr inbounds nuw [4 x i8], ptr %i.ee, i64 %indvars.iv30.i.i.1 ; 2 uses
   %i.gg = load float, ptr %i.gf, align 4, !tbaa !29
   %i.gh = tail call nsz float @llvm.fabs.f32(float %i.gg) #9
   %i.gi = fcmp nsz oeq float %i.gh, +inf
@@ -418,11 +419,11 @@ bb.q:                                             ; preds = %.preheader4.i.i.1
 bb.r:                                             ; preds = %bb.q
   %i.gp = load float, ptr %i.gf, align 4, !tbaa !29
   %i.gq = sitofp nsz i32 %i.gn to float
-  %i.gr = fsub nsz float %i.gq, %5                ; 2 uses
+  %i.gr = fsub nsz float %i.gq, %10               ; 2 uses
   %i.gs = fmul nsz float %i.gr, %i.gr
   %i.gt = fadd nsz float %i.gs, %i.gp             ; 2 uses
   %i.gu = sext i32 %i.gn to i64                   ; 2 uses
-  %i.gv = getelementptr inbounds [4 x i8], ptr %i.ee, i64 %i.gu ; 2 uses
+  %i.gv = getelementptr inbounds [4 x i8], ptr %6, i64 %i.gu ; 2 uses
   %i.gw = load float, ptr %i.gv, align 4, !tbaa !29
   %i.gx = fcmp nsz ogt float %i.gw, %i.gt
   br i1 %i.gx, label %bb.s, label %bb.t
@@ -453,16 +454,16 @@ bb.t:                                             ; preds = %bb.s, %bb.r, %bb.q
   br i1 %i.hd, label %.critedge66, label %._crit_edge.i.i.2
 
 .critedge66:                                      ; preds = %.critedge, %._crit_edge.loopexit.i.i.1
-  %i.he = fadd nsz float %.pre.i.i, 1.600000e+04  ; 2 uses
+  %i.he = fadd nsz float %8, 1.600000e+04         ; 2 uses
   %i.hf = fcmp nsz olt float %i.he, 3.576800e+04
   %i.hg = select i1 %i.hf, float %i.he, float 3.576800e+04 ; 3 uses
   %i.hh = fptosi float %i.hg to i32
-  %i.hi = fadd nsz <2 x float> %8, splat (float -1.600000e+04) ; 2 uses
+  %i.hi = fadd nsz <2 x float> %7, splat (float -1.600000e+04) ; 2 uses
   %i.hj = fcmp nsz ole <2 x float> %i.hi, zeroinitializer
   %i.hk = select <2 x i1> %i.hj, <2 x float> zeroinitializer, <2 x float> %i.hi ; 2 uses
-  %i.hl = extractelement <2 x float> %i.hk, i64 0
+  %i.hl = extractelement <2 x float> %i.hk, i64 1
   %spec.select.i88.i.2 = fptosi float %i.hl to i32
-  %i.hm = extractelement <2 x float> %i.hk, i64 1
+  %i.hm = extractelement <2 x float> %i.hk, i64 0
   %i.hn = fptosi float %i.hm to i32               ; 2 uses
   %i.ho = uitofp nsz nneg i32 %i.hn to float
   %i.hp = fcmp nsz ogt float %i.hg, %i.ho
@@ -470,11 +471,12 @@ bb.t:                                             ; preds = %bb.s, %bb.r, %bb.q
 
 .lr.ph.preheader.i.i.2:                           ; preds = %.critedge66
   %i.hq = zext i32 %i.hn to i64
+  %11 = extractelement <2 x float> %7, i64 1
   br label %.lr.ph.i.i.2
 
 .lr.ph.i.i.2:                                     ; preds = %.loopexit.i.i.2, %.lr.ph.preheader.i.i.2
   %indvars.iv30.i.i.2 = phi i64 [ %i.hq, %.lr.ph.preheader.i.i.2 ], [ %indvars.iv.next31.i.i.2, %.loopexit.i.i.2 ] ; 3 uses
-  %i.hr = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %indvars.iv30.i.i.2 ; 2 uses
+  %i.hr = getelementptr inbounds nuw [4 x i8], ptr %i.ee, i64 %indvars.iv30.i.i.2 ; 2 uses
   %i.hs = load float, ptr %i.hr, align 4, !tbaa !29
   %i.ht = tail call nsz float @llvm.fabs.f32(float %i.hs) #9
   %i.hu = fcmp nsz oeq float %i.ht, +inf
@@ -500,11 +502,11 @@ bb.u:                                             ; preds = %.preheader4.i.i.2
 bb.v:                                             ; preds = %bb.u
   %i.ib = load float, ptr %i.hr, align 4, !tbaa !29
   %i.ic = sitofp nsz i32 %i.hz to float
-  %i.id = fsub nsz float %i.ic, %5                ; 2 uses
+  %i.id = fsub nsz float %i.ic, %11               ; 2 uses
   %i.ie = fmul nsz float %i.id, %i.id
   %i.if = fadd nsz float %i.ie, %i.ib             ; 2 uses
   %i.ig = sext i32 %i.hz to i64                   ; 2 uses
-  %i.ih = getelementptr inbounds [4 x i8], ptr %i.ee, i64 %i.ig ; 2 uses
+  %i.ih = getelementptr inbounds [4 x i8], ptr %6, i64 %i.ig ; 2 uses
   %i.ii = load float, ptr %i.ih, align 4, !tbaa !29
   %i.ij = fcmp nsz ogt float %i.ii, %i.if
   br i1 %i.ij, label %bb.w, label %bb.x

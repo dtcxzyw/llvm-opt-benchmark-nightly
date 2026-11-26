@@ -204,7 +204,23 @@ bb.o:                                             ; preds = %bb.n
   %i.ac = atomicrmw add ptr %i.d, i32 -1 monotonic, align 4 ; 0 uses
   br label %lean_inc_ref.exit
 
-bb.p:                                             ; preds = %.thread
+3:                                                ; preds = %.thread
+  %4 = lshr i64 %i.hh, 1
+  %5 = trunc i64 %4 to i32
+  br label %lean_obj_tag.exit440
+
+6:                                                ; preds = %.thread
+  %7 = getelementptr i8, ptr %.2320, i64 4
+  %.val.i439 = load i32, ptr %7, align 4
+  %8 = lshr i32 %.val.i439, 24
+  br label %lean_obj_tag.exit440
+
+lean_obj_tag.exit440:                             ; preds = %3, %6
+  %.0.i438 = phi i32 [ %5, %3 ], [ %8, %6 ]
+  %9 = icmp eq i32 %.0.i438, 0
+  br i1 %9, label %bb.p, label %bb.bv
+
+bb.p:                                             ; preds = %lean_obj_tag.exit440
   %i.ad = ptrtoint ptr %i.f to i64
   %i.ae = and i64 %i.ad, 1
   %.not.i374 = icmp eq i64 %i.ae, 0
@@ -278,7 +294,7 @@ bb.ab:                                            ; preds = %bb.aa
   br label %lean_inc.exit373
 
 lean_inc.exit373:                                 ; preds = %bb.ab, %bb.aa, %bb.z, %bb.x
-  br i1 %.not.i437, label %bb.ac, label %lean_dec.exit410
+  br i1 %i.hj, label %bb.ac, label %lean_dec.exit410
 
 bb.ac:                                            ; preds = %lean_inc.exit373
   %i.ar = load i32, ptr %.2320, align 8, !tbaa !12 ; 3 uses
@@ -616,7 +632,7 @@ lean_alloc_ctor.exit465:                          ; preds = %bb.bt
   store ptr %i.di, ptr %i.dr, align 8, !tbaa !10
   br label %lean_dec_ref.exit346
 
-bb.bv:                                            ; preds = %.thread
+bb.bv:                                            ; preds = %lean_obj_tag.exit440
   %i.ds = load i32, ptr %i.fn, align 4, !tbaa !12 ; 3 uses
   %i.dt = icmp sgt i32 %i.ds, 1
   br i1 %i.dt, label %bb.bw, label %bb.bx, !prof !13
@@ -667,7 +683,7 @@ bb.cd:                                            ; preds = %bb.cc
   br label %lean_inc.exit371
 
 lean_inc.exit371:                                 ; preds = %bb.cd, %bb.cc, %bb.cb, %bb.bz
-  br i1 %.not.i437, label %bb.ce, label %lean_dec.exit406
+  br i1 %i.hj, label %bb.ce, label %lean_dec.exit406
 
 bb.ce:                                            ; preds = %lean_inc.exit371
   %i.ec = load i32, ptr %.2320, align 4, !tbaa !12 ; 3 uses
@@ -944,7 +960,7 @@ lean_dec.exit382:                                 ; preds = %bb.dj
   %i.gk = getelementptr inbounds nuw i8, ptr %i.fr, i64 4 ; 2 uses
   %i.gl = load i32, ptr %i.gk, align 4
   %i.gm = and i32 %i.gl, 16777215
-  %i.gn = or disjoint i32 %i.gm, 16777216         ; 2 uses
+  %i.gn = or disjoint i32 %i.gm, 16777216
   store i32 %i.gn, ptr %i.gk, align 4
   br label %.thread
 
@@ -1017,7 +1033,7 @@ bb.ee:                                            ; preds = %bb.ed
 lean_dec.exit:                                    ; preds = %bb.dv
   %i.ha = getelementptr inbounds nuw i8, ptr %i.fr, i64 4 ; 2 uses
   %i.hb = load i32, ptr %i.ha, align 4
-  %i.hc = and i32 %i.hb, 16777215                 ; 2 uses
+  %i.hc = and i32 %i.hb, 16777215
   store i32 %i.hc, ptr %i.ha, align 4
   br label %.thread
 
@@ -1040,17 +1056,11 @@ lean_alloc_ctor.exit550:                          ; preds = %bb.ef
   br label %.thread
 
 .thread:                                          ; preds = %lean_alloc_ctor.exit550, %lean_dec.exit, %lean_alloc_ctor.exit546, %lean_dec.exit382
-  %.val.i439 = phi i32 [ 16842768, %lean_alloc_ctor.exit546 ], [ %i.gn, %lean_dec.exit382 ], [ %i.hc, %lean_dec.exit ], [ 65552, %lean_alloc_ctor.exit550 ]
-  %.2320 = phi ptr [ %i.go, %lean_alloc_ctor.exit546 ], [ %i.fr, %lean_dec.exit382 ], [ %i.fr, %lean_dec.exit ], [ %i.hd, %lean_alloc_ctor.exit550 ] ; 13 uses
+  %.2320 = phi ptr [ %i.go, %lean_alloc_ctor.exit546 ], [ %i.fr, %lean_dec.exit382 ], [ %i.fr, %lean_dec.exit ], [ %i.hd, %lean_alloc_ctor.exit550 ] ; 14 uses
   %i.hh = ptrtoint ptr %.2320 to i64              ; 2 uses
   %i.hi = and i64 %i.hh, 1
-  %.not.i437 = icmp eq i64 %i.hi, 0               ; 3 uses
-  %3 = lshr i64 %i.hh, 1
-  %4 = trunc i64 %3 to i32
-  %5 = lshr i32 %.val.i439, 24
-  %.0.i438 = select i1 %.not.i437, i32 %5, i32 %4
-  %i.hj = icmp eq i32 %.0.i438, 0
-  br i1 %i.hj, label %bb.p, label %bb.bv
+  %i.hj = icmp eq i64 %i.hi, 0                    ; 3 uses
+  br i1 %i.hj, label %6, label %3
 
 lean_dec_ref.exit346:                             ; preds = %bb.dd, %bb.dc, %bb.db, %bb.cw, %lean_alloc_ctor.exit473, %bb.bd, %lean_alloc_ctor.exit458, %bb.bs, %lean_alloc_ctor.exit465
   %.13 = phi ptr [ %i.fj, %bb.dd ], [ %i.do, %lean_alloc_ctor.exit465 ], [ %i.cl, %lean_alloc_ctor.exit458 ], [ %.0334, %bb.bd ], [ %.0334, %bb.bs ], [ %i.fd, %lean_alloc_ctor.exit473 ], [ %.0323, %bb.cw ], [ %i.fj, %bb.db ], [ %i.fj, %bb.dc ]
@@ -1453,7 +1463,23 @@ bb.o:                                             ; preds = %bb.n
   %i.ac = atomicrmw add ptr %i.d, i32 -1 monotonic, align 4 ; 0 uses
   br label %lean_inc_ref.exit
 
-bb.p:                                             ; preds = %.thread
+3:                                                ; preds = %.thread
+  %4 = lshr i64 %i.hf, 1
+  %5 = trunc i64 %4 to i32
+  br label %lean_obj_tag.exit447
+
+6:                                                ; preds = %.thread
+  %7 = getelementptr i8, ptr %.2321, i64 4
+  %.val.i446 = load i32, ptr %7, align 4
+  %8 = lshr i32 %.val.i446, 24
+  br label %lean_obj_tag.exit447
+
+lean_obj_tag.exit447:                             ; preds = %3, %6
+  %.0.i445 = phi i32 [ %5, %3 ], [ %8, %6 ]
+  %9 = icmp eq i32 %.0.i445, 0
+  br i1 %9, label %bb.p, label %bb.bp
+
+bb.p:                                             ; preds = %lean_obj_tag.exit447
   %i.ad = ptrtoint ptr %i.f to i64
   %i.ae = and i64 %i.ad, 1
   %.not.i381 = icmp eq i64 %i.ae, 0
@@ -1527,7 +1553,7 @@ bb.ab:                                            ; preds = %bb.aa
   br label %lean_inc.exit380
 
 lean_inc.exit380:                                 ; preds = %bb.ab, %bb.aa, %bb.z, %bb.x
-  br i1 %.not.i444, label %bb.ac, label %lean_dec.exit417
+  br i1 %i.hh, label %bb.ac, label %lean_dec.exit417
 
 bb.ac:                                            ; preds = %lean_inc.exit380
   %i.ar = load i32, ptr %.2321, align 8, !tbaa !12 ; 3 uses
@@ -1829,7 +1855,7 @@ lean_alloc_ctor.exit466:                          ; preds = %bb.bn
   store ptr %i.dc, ptr %i.dl, align 8, !tbaa !10
   br label %lean_dec_ref.exit351
 
-bb.bp:                                            ; preds = %.thread
+bb.bp:                                            ; preds = %lean_obj_tag.exit447
   %i.dm = load i32, ptr %i.fl, align 4, !tbaa !12 ; 3 uses
   %i.dn = icmp sgt i32 %i.dm, 1
   br i1 %i.dn, label %bb.bq, label %bb.br, !prof !13
@@ -1897,7 +1923,7 @@ bb.ca:                                            ; preds = %bb.bz
   br label %lean_inc.exit378
 
 lean_inc.exit378:                                 ; preds = %bb.ca, %bb.bz, %bb.by, %bb.bw
-  br i1 %.not.i444, label %bb.cb, label %lean_dec.exit413
+  br i1 %i.hh, label %bb.cb, label %lean_dec.exit413
 
 bb.cb:                                            ; preds = %lean_inc.exit378
   %i.ea = load i32, ptr %.2321, align 8, !tbaa !12 ; 3 uses
@@ -2174,7 +2200,7 @@ lean_dec.exit389:                                 ; preds = %bb.dg
   %i.gi = getelementptr inbounds nuw i8, ptr %i.fp, i64 4 ; 2 uses
   %i.gj = load i32, ptr %i.gi, align 4
   %i.gk = and i32 %i.gj, 16777215
-  %i.gl = or disjoint i32 %i.gk, 16777216         ; 2 uses
+  %i.gl = or disjoint i32 %i.gk, 16777216
   store i32 %i.gl, ptr %i.gi, align 4
   br label %.thread
 
@@ -2247,7 +2273,7 @@ bb.eb:                                            ; preds = %bb.ea
 lean_dec.exit:                                    ; preds = %bb.ds
   %i.gy = getelementptr inbounds nuw i8, ptr %i.fp, i64 4 ; 2 uses
   %i.gz = load i32, ptr %i.gy, align 4
-  %i.ha = and i32 %i.gz, 16777215                 ; 2 uses
+  %i.ha = and i32 %i.gz, 16777215
   store i32 %i.ha, ptr %i.gy, align 4
   br label %.thread
 
@@ -2270,17 +2296,11 @@ lean_alloc_ctor.exit551:                          ; preds = %bb.ec
   br label %.thread
 
 .thread:                                          ; preds = %lean_alloc_ctor.exit551, %lean_dec.exit, %lean_alloc_ctor.exit547, %lean_dec.exit389
-  %.val.i446 = phi i32 [ 16842768, %lean_alloc_ctor.exit547 ], [ %i.gl, %lean_dec.exit389 ], [ %i.ha, %lean_dec.exit ], [ 65552, %lean_alloc_ctor.exit551 ]
-  %.2321 = phi ptr [ %i.gm, %lean_alloc_ctor.exit547 ], [ %i.fp, %lean_dec.exit389 ], [ %i.fp, %lean_dec.exit ], [ %i.hb, %lean_alloc_ctor.exit551 ] ; 13 uses
+  %.2321 = phi ptr [ %i.gm, %lean_alloc_ctor.exit547 ], [ %i.fp, %lean_dec.exit389 ], [ %i.fp, %lean_dec.exit ], [ %i.hb, %lean_alloc_ctor.exit551 ] ; 14 uses
   %i.hf = ptrtoint ptr %.2321 to i64              ; 2 uses
   %i.hg = and i64 %i.hf, 1
-  %.not.i444 = icmp eq i64 %i.hg, 0               ; 3 uses
-  %3 = lshr i64 %i.hf, 1
-  %4 = trunc i64 %3 to i32
-  %5 = lshr i32 %.val.i446, 24
-  %.0.i445 = select i1 %.not.i444, i32 %5, i32 %4
-  %i.hh = icmp eq i32 %.0.i445, 0
-  br i1 %i.hh, label %bb.p, label %bb.bp
+  %i.hh = icmp eq i64 %i.hg, 0                    ; 3 uses
+  br i1 %i.hh, label %6, label %3
 
 lean_dec_ref.exit351:                             ; preds = %bb.da, %bb.cz, %bb.cy, %bb.ct, %lean_alloc_ctor.exit474, %bb.ba, %lean_alloc_ctor.exit462, %bb.bm, %lean_alloc_ctor.exit466
   %.13 = phi ptr [ %i.fh, %bb.da ], [ %i.di, %lean_alloc_ctor.exit466 ], [ %i.ci, %lean_alloc_ctor.exit462 ], [ %.0335, %bb.ba ], [ %.0335, %bb.bm ], [ %i.fb, %lean_alloc_ctor.exit474 ], [ %.0324, %bb.ct ], [ %i.fh, %bb.cy ], [ %i.fh, %bb.cz ]

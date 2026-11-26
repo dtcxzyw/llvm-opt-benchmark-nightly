@@ -52,8 +52,8 @@ bb.c:                                             ; preds = %bb.a
   %i.t = call noalias noundef nonnull ptr @_Znam(i64 noundef %i.s) #9 ; 7 uses
   %i.u = shl nsw i64 %i.p, 3
   %i.v = select i1 %i.q, i64 -1, i64 %i.u         ; 6 uses
-  %i.w = call noalias noundef nonnull ptr @_Znam(i64 noundef %i.v) #9 ; 8 uses
-  %i.x = call noalias noundef nonnull ptr @_Znam(i64 noundef %i.v) #9 ; 8 uses
+  %i.w = call noalias noundef nonnull ptr @_Znam(i64 noundef %i.v) #9 ; 9 uses
+  %i.x = call noalias noundef nonnull ptr @_Znam(i64 noundef %i.v) #9 ; 9 uses
   %i.y = call noalias noundef nonnull ptr @_Znam(i64 noundef %i.v) #9
   %i.z = call noalias noundef nonnull ptr @_Znam(i64 noundef %i.v) #9
   store ptr %i.z, ptr %2, align 8, !tbaa !25
@@ -96,10 +96,10 @@ bb.e:                                             ; preds = %.lr.ph, %bb.d
   %i.ao = icmp slt i32 %.0151.lcssa, 0            ; 2 uses
   %i.ap = shl nsw i64 %i.an, 3
   %i.aq = select i1 %i.ao, i64 -1, i64 %i.ap
-  %i.ar = call noalias noundef nonnull ptr @_Znam(i64 noundef %i.aq) #9 ; 3 uses
+  %i.ar = call noalias noundef nonnull ptr @_Znam(i64 noundef %i.aq) #9
   %i.as = shl nsw i64 %i.an, 2
   %i.at = select i1 %i.ao, i64 -1, i64 %i.as
-  %i.au = call noalias noundef nonnull ptr @_Znam(i64 noundef %i.at) #9 ; 3 uses
+  %i.au = call noalias noundef nonnull ptr @_Znam(i64 noundef %i.at) #9
   store ptr %i.ar, ptr %i.w, align 8, !tbaa !25
   store ptr %i.au, ptr %i.x, align 8, !tbaa !28
   %i.av = icmp sgt i32 %i.o, 1
@@ -107,6 +107,8 @@ bb.e:                                             ; preds = %.lr.ph, %bb.d
 
 .lr.ph171.preheader:                              ; preds = %._crit_edge
   %wide.trip.count = zext nneg i32 %i.o to i64
+  %load_initial = load ptr, ptr %i.x, align 8     ; 2 uses
+  %load_initial196 = load ptr, ptr %i.w, align 8  ; 2 uses
   %i.aw = add nsw i64 %wide.trip.count, -1        ; 2 uses
   %xtraiter = and i64 %i.aw, 3                    ; 3 uses
   %i.ax = add nsw i32 %i.o, -2
@@ -122,26 +124,26 @@ bb.e:                                             ; preds = %.lr.ph, %bb.d
   br i1 %lcmp.mod.not, label %.preheader165, label %.lr.ph171.epil.preheader
 
 .lr.ph171.epil.preheader:                         ; preds = %.preheader165.loopexit.unr-lcssa, %.lr.ph171.preheader
-  %.epil.init = phi ptr [ %i.au, %.lr.ph171.preheader ], [ %i.cr, %.preheader165.loopexit.unr-lcssa ]
-  %.epil.init197 = phi ptr [ %i.ar, %.lr.ph171.preheader ], [ %i.cp, %.preheader165.loopexit.unr-lcssa ]
+  %.epil.init = phi ptr [ %load_initial196, %.lr.ph171.preheader ], [ %i.cp, %.preheader165.loopexit.unr-lcssa ]
+  %.epil.init197 = phi ptr [ %load_initial, %.lr.ph171.preheader ], [ %i.cr, %.preheader165.loopexit.unr-lcssa ]
   %indvars.iv.epil.init = phi i64 [ 1, %.lr.ph171.preheader ], [ %indvars.iv.next.3, %.preheader165.loopexit.unr-lcssa ]
   %lcmp.mod198 = icmp ne i64 %xtraiter, 0
   call void @llvm.assume(i1 %lcmp.mod198)
   br label %.lr.ph171.epil
 
 .lr.ph171.epil:                                   ; preds = %.lr.ph171.epil, %.lr.ph171.epil.preheader
-  %i.az = phi ptr [ %.epil.init, %.lr.ph171.epil.preheader ], [ %i.bh, %.lr.ph171.epil ]
-  %i.ba = phi ptr [ %.epil.init197, %.lr.ph171.epil.preheader ], [ %i.bf, %.lr.ph171.epil ]
+  %i.az = phi ptr [ %.epil.init, %.lr.ph171.epil.preheader ], [ %i.bf, %.lr.ph171.epil ]
+  %i.ba = phi ptr [ %.epil.init197, %.lr.ph171.epil.preheader ], [ %i.bh, %.lr.ph171.epil ]
   %indvars.iv.epil = phi i64 [ %indvars.iv.epil.init, %.lr.ph171.epil.preheader ], [ %indvars.iv.next.epil, %.lr.ph171.epil ] ; 4 uses
   %epil.iter = phi i64 [ 0, %.lr.ph171.epil.preheader ], [ %epil.iter.next, %.lr.ph171.epil ]
   %i.bb = getelementptr [4 x i8], ptr %i.t, i64 %indvars.iv.epil
   %i.bc = getelementptr i8, ptr %i.bb, i64 -4
   %i.bd = load i32, ptr %i.bc, align 4, !tbaa !7
   %i.be = sext i32 %i.bd to i64                   ; 2 uses
-  %i.bf = getelementptr inbounds [8 x i8], ptr %i.ba, i64 %i.be ; 2 uses
+  %i.bf = getelementptr inbounds [8 x i8], ptr %i.az, i64 %i.be ; 2 uses
   %i.bg = getelementptr inbounds nuw [8 x i8], ptr %i.w, i64 %indvars.iv.epil
   store ptr %i.bf, ptr %i.bg, align 8, !tbaa !25
-  %i.bh = getelementptr inbounds [4 x i8], ptr %i.az, i64 %i.be ; 2 uses
+  %i.bh = getelementptr inbounds [4 x i8], ptr %i.ba, i64 %i.be ; 2 uses
   %i.bi = getelementptr inbounds nuw [8 x i8], ptr %i.x, i64 %indvars.iv.epil
   store ptr %i.bh, ptr %i.bi, align 8, !tbaa !28
   %indvars.iv.next.epil = add nuw nsw i64 %indvars.iv.epil, 1
@@ -161,18 +163,18 @@ bb.e:                                             ; preds = %.lr.ph, %bb.d
   br label %._crit_edge185
 
 .lr.ph171:                                        ; preds = %.lr.ph171, %.lr.ph171.preheader.new
-  %i.bl = phi ptr [ %i.au, %.lr.ph171.preheader.new ], [ %i.cr, %.lr.ph171 ]
-  %i.bm = phi ptr [ %i.ar, %.lr.ph171.preheader.new ], [ %i.cp, %.lr.ph171 ]
+  %i.bl = phi ptr [ %load_initial196, %.lr.ph171.preheader.new ], [ %i.cp, %.lr.ph171 ]
+  %i.bm = phi ptr [ %load_initial, %.lr.ph171.preheader.new ], [ %i.cr, %.lr.ph171 ]
   %indvars.iv = phi i64 [ 1, %.lr.ph171.preheader.new ], [ %indvars.iv.next.3, %.lr.ph171 ] ; 7 uses
   %niter = phi i64 [ 0, %.lr.ph171.preheader.new ], [ %niter.next.3, %.lr.ph171 ]
   %i.bn = getelementptr [4 x i8], ptr %i.t, i64 %indvars.iv
   %i.bo = getelementptr i8, ptr %i.bn, i64 -4
   %i.bp = load i32, ptr %i.bo, align 4, !tbaa !7
   %i.bq = sext i32 %i.bp to i64                   ; 2 uses
-  %i.br = getelementptr inbounds [8 x i8], ptr %i.bm, i64 %i.bq ; 2 uses
+  %i.br = getelementptr inbounds [8 x i8], ptr %i.bl, i64 %i.bq ; 2 uses
   %i.bs = getelementptr inbounds nuw [8 x i8], ptr %i.w, i64 %indvars.iv
   store ptr %i.br, ptr %i.bs, align 8, !tbaa !25
-  %i.bt = getelementptr inbounds [4 x i8], ptr %i.bl, i64 %i.bq ; 2 uses
+  %i.bt = getelementptr inbounds [4 x i8], ptr %i.bm, i64 %i.bq ; 2 uses
   %i.bu = getelementptr inbounds nuw [8 x i8], ptr %i.x, i64 %indvars.iv
   store ptr %i.bt, ptr %i.bu, align 8, !tbaa !28
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses

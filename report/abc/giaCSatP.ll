@@ -202,19 +202,15 @@ define internal fastcc void @CbsP_ManDeriveReason(ptr nofree noundef captures(no
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 240 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 296 ; 4 uses
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !54
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !54   ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 4
   store i32 0, ptr %i.d, align 4, !tbaa !51
   %i.e = load i32, ptr %i.a, align 8, !tbaa !91   ; 2 uses
   %i.f = add nsw i32 %i.e, 1                      ; 3 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 244 ; 9 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 244 ; 8 uses
   %i.h = load i32, ptr %i.g, align 4, !tbaa !77
   %i.i = icmp slt i32 %i.f, %i.h
-  br i1 %i.i, label %.lr.ph, label %._crit_edge.thread
-
-._crit_edge.thread:                               ; preds = %bb.a
-  store i32 %i.f, ptr %i.g, align 4, !tbaa !77
-  br label %.critedge
+  br i1 %i.i, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 7 uses
@@ -471,19 +467,24 @@ bb.w:                                             ; preds = %.sink.split, %CbsP_
   %i.dr = load i32, ptr %i.g, align 4, !tbaa !77
   %i.ds = sext i32 %i.dr to i64
   %i.dt = icmp slt i64 %indvars.iv.next, %i.ds
-  br i1 %i.dt, label %bb.b, label %._crit_edge, !llvm.loop !156
+  br i1 %i.dt, label %bb.b, label %._crit_edge.loopexit, !llvm.loop !156
 
-._crit_edge:                                      ; preds = %bb.w
-  %.pre77 = load ptr, ptr %i.b, align 8, !tbaa !54 ; 2 uses
-  %.phi.trans.insert78 = getelementptr i8, ptr %.pre77, i64 4
+._crit_edge.loopexit:                             ; preds = %bb.w
+  %.pre77 = load ptr, ptr %i.b, align 8, !tbaa !54
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
+  %2 = phi ptr [ %i.c, %bb.a ], [ %.pre77, %._crit_edge.loopexit ] ; 2 uses
+  %.0.lcssa = phi i32 [ %i.f, %bb.a ], [ %.1, %._crit_edge.loopexit ]
+  store i32 %.0.lcssa, ptr %i.g, align 4, !tbaa !77
+  %.phi.trans.insert78 = getelementptr i8, ptr %2, i64 4
   %.val62.pre = load i32, ptr %.phi.trans.insert78, align 4, !tbaa !51
   %i.du = icmp sgt i32 %.val62.pre, 0
-  store i32 %.1, ptr %i.g, align 4, !tbaa !77
   br i1 %i.du, label %.lr.ph65, label %.critedge
 
 .lr.ph65:                                         ; preds = %._crit_edge, %.lr.ph65
   %indvars.iv67 = phi i64 [ %indvars.iv.next68, %.lr.ph65 ], [ 0, %._crit_edge ] ; 2 uses
-  %i.dv = phi ptr [ %i.eb, %.lr.ph65 ], [ %.pre77, %._crit_edge ]
+  %i.dv = phi ptr [ %i.eb, %.lr.ph65 ], [ %2, %._crit_edge ]
   %i.dw = getelementptr i8, ptr %i.dv, i64 8
   %.val48 = load ptr, ptr %i.dw, align 8, !tbaa !53
   %i.dx = getelementptr inbounds nuw [8 x i8], ptr %.val48, i64 %indvars.iv67
@@ -499,7 +500,7 @@ bb.w:                                             ; preds = %.sink.split, %CbsP_
   %i.ee = icmp slt i64 %indvars.iv.next68, %i.ed
   br i1 %i.ee, label %.lr.ph65, label %.critedge, !llvm.loop !157
 
-.critedge:                                        ; preds = %.lr.ph65, %._crit_edge.thread, %._crit_edge
+.critedge:                                        ; preds = %.lr.ph65, %._crit_edge
   ret void
 }
 

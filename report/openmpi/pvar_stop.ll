@@ -29,31 +29,37 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not1319, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.c, %bb.e
-  %.021 = phi i32 [ %.1, %bb.e ], [ 0, %bb.c ]    ; 2 uses
+  %.021 = phi i32 [ %.1, %bb.e ], [ 0, %bb.c ]    ; 3 uses
   %.01020 = phi ptr [ %i.k, %bb.e ], [ %i.e, %bb.c ] ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %.01020, i64 136
   %i.g = load i8, ptr %i.f, align 8, !tbaa !23, !range !24, !noundef !25
   %i.h = trunc nuw i8 %i.g to i1
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.01020, i64 88
-  %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !26
-  %.phi.trans.insert22 = getelementptr i8, ptr %.pre, i64 68
-  %.val.pre = load i32, ptr %.phi.trans.insert22, align 4, !tbaa !30 ; 2 uses
-  %2 = and i32 %.val.pre, 256
-  %.not = icmp ne i32 %2, 0
-  %or.cond.not29 = select i1 %i.h, i1 true, i1 %.not
-  %3 = and i32 %.val.pre, 256
-  %.not18 = icmp eq i32 %3, 0
-  %or.cond28 = select i1 %or.cond.not29, i1 %.not18, i1 false
-  br i1 %or.cond28, label %bb.d, label %bb.e
+  %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !26 ; 2 uses
+  br i1 %i.h, label %mca_base_pvar_handle_is_running.exit.thread, label %mca_base_pvar_handle_is_running.exit
 
-bb.d:                                             ; preds = %.lr.ph
+mca_base_pvar_handle_is_running.exit:             ; preds = %.lr.ph
+  %2 = getelementptr inbounds nuw i8, ptr %.pre, i64 68
+  %3 = load i32, ptr %2, align 4, !tbaa !30
+  %4 = and i32 %3, 256
+  %.not = icmp eq i32 %4, 0
+  br i1 %.not, label %bb.e, label %mca_base_pvar_handle_is_running.exit.thread
+
+mca_base_pvar_handle_is_running.exit.thread:      ; preds = %.lr.ph, %mca_base_pvar_handle_is_running.exit
+  %5 = getelementptr i8, ptr %.pre, i64 68
+  %.val = load i32, ptr %5, align 4, !tbaa !30
+  %6 = and i32 %.val, 256
+  %.not18 = icmp eq i32 %6, 0
+  br i1 %.not18, label %bb.d, label %bb.e
+
+bb.d:                                             ; preds = %mca_base_pvar_handle_is_running.exit.thread
   %i.i = tail call i32 @mca_base_pvar_handle_stop(ptr noundef nonnull %.01020) #2
   %.not.i = icmp eq i32 %i.i, 0
   %spec.select = select i1 %.not.i, i32 %.021, i32 65
   br label %bb.e
 
-bb.e:                                             ; preds = %.lr.ph, %bb.d
-  %.1 = phi i32 [ %spec.select, %bb.d ], [ %.021, %.lr.ph ] ; 2 uses
+bb.e:                                             ; preds = %bb.d, %mca_base_pvar_handle_is_running.exit, %mca_base_pvar_handle_is_running.exit.thread
+  %.1 = phi i32 [ %.021, %mca_base_pvar_handle_is_running.exit.thread ], [ %.021, %mca_base_pvar_handle_is_running.exit ], [ %spec.select, %bb.d ] ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %.01020, i64 16
   %i.k = load volatile ptr, ptr %i.j, align 8, !tbaa !31 ; 2 uses
   %.not13 = icmp eq ptr %i.k, %i.c

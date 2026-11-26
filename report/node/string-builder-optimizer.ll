@@ -204,9 +204,9 @@ _ZNK2v88internal8compiler4Node7InputAtEi.exit.i:  ; preds = %_ZNK2v88internal8co
   %i.fq = add i64 %i.fp, 32
   %i.fr = inttoptr i64 %i.fq to ptr               ; 3 uses
   %i.fs = load ptr, ptr %i.fr, align 8            ; 2 uses
-  %i.ft = load ptr, ptr %i.fs, align 8
+  %i.ft = load ptr, ptr %i.fs, align 8            ; 2 uses
   %i.fu = getelementptr inbounds nuw i8, ptr %i.ft, i64 16
-  %i.fv = load i16, ptr %i.fu, align 8            ; 2 uses
+  %i.fv = load i16, ptr %i.fu, align 8
   %i.fw = icmp eq i16 %i.fv, 36
   br i1 %i.fw, label %_ZNK2v88internal8compiler4Node7InputAtEi.exit11.thread.i, label %_ZNK2v88internal8compiler4Node7InputAtEi.exit8.i
 
@@ -215,16 +215,18 @@ _ZNK2v88internal8compiler4Node7InputAtEi.exit.thread.i: ; preds = %_ZNK2v88inter
   %i.fy = add i64 %i.fx, 16
   %i.fz = inttoptr i64 %i.fy to ptr               ; 2 uses
   %i.ga = load ptr, ptr %i.fz, align 8
-  %i.gb = load ptr, ptr %i.ga, align 8
+  %i.gb = load ptr, ptr %i.ga, align 8            ; 2 uses
   %i.gc = getelementptr inbounds nuw i8, ptr %i.gb, i64 16
-  %i.gd = load i16, ptr %i.gc, align 8            ; 2 uses
+  %i.gd = load i16, ptr %i.gc, align 8
   %i.ge = icmp eq i16 %i.gd, 36
   br i1 %i.ge, label %_ZNK2v88internal8compiler4Node7InputAtEi.exit11.i, label %_ZNK2v88internal8compiler4Node7InputAtEi.exit8.i
 
 _ZNK2v88internal8compiler4Node7InputAtEi.exit8.i: ; preds = %_ZNK2v88internal8compiler4Node7InputAtEi.exit.thread.i, %_ZNK2v88internal8compiler4Node7InputAtEi.exit.i
   %i.gf = phi ptr [ %i.fs, %_ZNK2v88internal8compiler4Node7InputAtEi.exit.i ], [ %i.fk, %_ZNK2v88internal8compiler4Node7InputAtEi.exit.thread.i ]
-  %.val5.val.i = phi i16 [ %i.fv, %_ZNK2v88internal8compiler4Node7InputAtEi.exit.i ], [ %i.gd, %_ZNK2v88internal8compiler4Node7InputAtEi.exit.thread.i ]
+  %.val5.i = phi ptr [ %i.ft, %_ZNK2v88internal8compiler4Node7InputAtEi.exit.i ], [ %i.gb, %_ZNK2v88internal8compiler4Node7InputAtEi.exit.thread.i ]
   %i.gg = phi ptr [ %i.fr, %_ZNK2v88internal8compiler4Node7InputAtEi.exit.i ], [ %i.fj, %_ZNK2v88internal8compiler4Node7InputAtEi.exit.thread.i ]
+  %3 = getelementptr i8, ptr %.val5.i, i64 16
+  %.val5.val.i = load i16, ptr %3, align 8
   switch i16 %.val5.val.i, label %_ZN2v88internal8compiler12_GLOBAL__N_124PhiInputsAreConcatsOrPhiEPNS1_4NodeE.exit.thread [
     i16 357, label %bb.z
     i16 317, label %bb.z
@@ -243,9 +245,9 @@ _ZNK2v88internal8compiler4Node7InputAtEi.exit11.i: ; preds = %._ZNK2v88internal8
   %.pre-phi26.i = phi ptr [ %.pre25.i, %._ZNK2v88internal8compiler4Node7InputAtEi.exit11_crit_edge.i ], [ %i.fz, %_ZNK2v88internal8compiler4Node7InputAtEi.exit.thread.i ]
   %i.gh = getelementptr inbounds nuw i8, ptr %.pre-phi26.i, i64 8
   %i.gi = load ptr, ptr %i.gh, align 8
-  %i.gj = load ptr, ptr %i.gi, align 8
+  %i.gj = load ptr, ptr %i.gi, align 8            ; 2 uses
   %i.gk = getelementptr inbounds nuw i8, ptr %i.gj, i64 16
-  %i.gl = load i16, ptr %i.gk, align 8            ; 2 uses
+  %i.gl = load i16, ptr %i.gk, align 8
   %i.gm = icmp eq i16 %i.gl, 36
   br i1 %i.gm, label %_ZN2v88internal8compiler12_GLOBAL__N_124PhiInputsAreConcatsOrPhiEPNS1_4NodeE.exit.thread313.thread324, label %_ZN2v88internal8compiler12_GLOBAL__N_124PhiInputsAreConcatsOrPhiEPNS1_4NodeE.exit
 
@@ -253,14 +255,16 @@ _ZNK2v88internal8compiler4Node7InputAtEi.exit11.thread.i: ; preds = %bb.z, %_ZNK
   %i.gn = phi ptr [ %i.gg, %bb.z ], [ %i.fr, %_ZNK2v88internal8compiler4Node7InputAtEi.exit.i ]
   %i.go = getelementptr inbounds nuw i8, ptr %i.gn, i64 8
   %i.gp = load ptr, ptr %i.go, align 8
-  %i.gq = load ptr, ptr %i.gp, align 8
+  %i.gq = load ptr, ptr %i.gp, align 8            ; 2 uses
   %i.gr = getelementptr inbounds nuw i8, ptr %i.gq, i64 16
-  %i.gs = load i16, ptr %i.gr, align 8            ; 2 uses
+  %i.gs = load i16, ptr %i.gr, align 8
   %i.gt = icmp eq i16 %i.gs, 36
   br i1 %i.gt, label %_ZN2v88internal8compiler12_GLOBAL__N_124PhiInputsAreConcatsOrPhiEPNS1_4NodeE.exit.thread313.thread, label %_ZN2v88internal8compiler12_GLOBAL__N_124PhiInputsAreConcatsOrPhiEPNS1_4NodeE.exit
 
 _ZN2v88internal8compiler12_GLOBAL__N_124PhiInputsAreConcatsOrPhiEPNS1_4NodeE.exit: ; preds = %_ZNK2v88internal8compiler4Node7InputAtEi.exit11.i, %_ZNK2v88internal8compiler4Node7InputAtEi.exit11.thread.i
-  %.val.val.i130 = phi i16 [ %i.gs, %_ZNK2v88internal8compiler4Node7InputAtEi.exit11.thread.i ], [ %i.gl, %_ZNK2v88internal8compiler4Node7InputAtEi.exit11.i ]
+  %.val.i129 = phi ptr [ %i.gq, %_ZNK2v88internal8compiler4Node7InputAtEi.exit11.thread.i ], [ %i.gj, %_ZNK2v88internal8compiler4Node7InputAtEi.exit11.i ]
+  %4 = getelementptr i8, ptr %.val.i129, i64 16
+  %.val.val.i130 = load i16, ptr %4, align 8
   switch i16 %.val.val.i130, label %_ZN2v88internal8compiler12_GLOBAL__N_124PhiInputsAreConcatsOrPhiEPNS1_4NodeE.exit.thread [
     i16 357, label %_ZN2v88internal8compiler12_GLOBAL__N_124PhiInputsAreConcatsOrPhiEPNS1_4NodeE.exit.thread313
     i16 317, label %_ZN2v88internal8compiler12_GLOBAL__N_124PhiInputsAreConcatsOrPhiEPNS1_4NodeE.exit.thread313

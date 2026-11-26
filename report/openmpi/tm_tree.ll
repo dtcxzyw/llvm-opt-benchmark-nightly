@@ -205,7 +205,7 @@ bb.dl:                                            ; preds = %bb.dp, %.lr.ph88.i.
 bb.dm:                                            ; preds = %bb.dl
   %i.amb = shl i64 %i.alz, 3
   %i.amc = add i64 %i.amb, 16
-  %i.amd = call noalias ptr @malloc(i64 noundef %i.amc) #27 ; 8 uses
+  %i.amd = call noalias ptr @malloc(i64 noundef %i.amc) #27 ; 9 uses
   call void @qsort(ptr noundef nonnull %i.alm, i64 noundef %i.alz, i64 noundef 8, ptr noundef nonnull @dbl_cmp_inc) #23
   %i.ame = load i32, ptr @verbose_level, align 4, !tbaa !15
   %i.amf = icmp sgt i32 %i.ame, 5
@@ -230,13 +230,15 @@ bb.dm:                                            ; preds = %bb.dl
   br label %bb.dn
 
 bb.dn:                                            ; preds = %._crit_edge.i69.i.loopexit.i, %bb.dm
-  %i.aml = load double, ptr %i.alm, align 8, !tbaa !39 ; 3 uses
+  %i.aml = load double, ptr %i.alm, align 8, !tbaa !39
   %i.amm = insertelement <2 x double> <double 0.000000e+00, double poison>, double %i.aml, i64 1
   store <2 x double> %i.amm, ptr %i.amd, align 8, !tbaa !39
   %.not29.i.i.i = icmp slt i64 %i.alz, 2
   br i1 %.not29.i.i.i, label %._crit_edge33.i.i.i, label %.lr.ph32.preheader.i.i.i
 
 .lr.ph32.preheader.i.i.i:                         ; preds = %bb.dn
+  %scevgep = getelementptr i8, ptr %i.amd, i64 8
+  %load_initial = load double, ptr %scevgep, align 8 ; 2 uses
   %xtraiter463 = and i64 %i.alq, 3                ; 3 uses
   %i.amn = add i32 %indvar, -1
   %i.amo = icmp ult i32 %i.amn, 3
@@ -247,7 +249,7 @@ bb.dn:                                            ; preds = %._crit_edge.i69.i.l
   br label %.lr.ph32.i.i.i
 
 .lr.ph32.i.i.i:                                   ; preds = %.lr.ph32.i.i.i, %.lr.ph32.preheader.i.i.i.new
-  %i.amp = phi double [ %i.aml, %.lr.ph32.preheader.i.i.i.new ], [ %i.ani, %.lr.ph32.i.i.i ]
+  %i.amp = phi double [ %load_initial, %.lr.ph32.preheader.i.i.i.new ], [ %i.ani, %.lr.ph32.i.i.i ]
   %indvars.iv35.i.i.i = phi i64 [ 2, %.lr.ph32.preheader.i.i.i.new ], [ %indvars.iv.next36.i.i.i.3, %.lr.ph32.i.i.i ] ; 6 uses
   %niter468 = phi i64 [ 0, %.lr.ph32.preheader.i.i.i.new ], [ %niter468.next.3, %.lr.ph32.i.i.i ]
   %i.amq = getelementptr [8 x i8], ptr %i.alm, i64 %indvars.iv35.i.i.i
@@ -287,7 +289,7 @@ bb.dn:                                            ; preds = %._crit_edge.i69.i.l
   br i1 %lcmp.mod465.not, label %._crit_edge33.i.i.i, label %.lr.ph32.i.i.i.epil.preheader
 
 .lr.ph32.i.i.i.epil.preheader:                    ; preds = %._crit_edge33.i.i.i.loopexit.unr-lcssa, %.lr.ph32.preheader.i.i.i
-  %.epil.init.a = phi double [ %i.aml, %.lr.ph32.preheader.i.i.i ], [ %i.ani, %._crit_edge33.i.i.i.loopexit.unr-lcssa ]
+  %.epil.init.a = phi double [ %load_initial, %.lr.ph32.preheader.i.i.i ], [ %i.ani, %._crit_edge33.i.i.i.loopexit.unr-lcssa ]
   %indvars.iv35.i.i.i.epil.init = phi i64 [ 2, %.lr.ph32.preheader.i.i.i ], [ %indvars.iv.next36.i.i.i.3, %._crit_edge33.i.i.i.loopexit.unr-lcssa ]
   %lcmp.mod466 = icmp ne i64 %xtraiter463, 0
   call void @llvm.assume(i1 %lcmp.mod466)

@@ -87,7 +87,7 @@ bb.a:
   %i.b = ptrtoaddr ptr %0 to i64                  ; 2 uses
   %i.c = alloca i32, align 4                      ; 6 uses
   %i.d = alloca i32, align 4                      ; 6 uses
-  %i.e = alloca [30 x ptr], align 16              ; 15 uses
+  %i.e = alloca [30 x ptr], align 16              ; 16 uses
   %i.f = alloca [30 x ptr], align 16              ; 13 uses
   %i.g = alloca [6 x float], align 16             ; 10 uses
   %i.h = alloca [6 x [30 x ptr]], align 16        ; 19 uses
@@ -490,7 +490,7 @@ ll_pad_input.exit:                                ; preds = %ll_pad_input.exit.l
   %.pre = phi i32 [ %.pre.pre, %bb.d ], [ %i.w, %bb.h ], [ %i.w, %ll_pad_input.exit.loopexit.unr-lcssa ] ; 17 uses
   %i.ls = phi i32 [ %i.s, %bb.d ], [ %i.u, %bb.h ], [ %i.u, %ll_pad_input.exit.loopexit.unr-lcssa ] ; 3 uses
   %.0528797 = phi i32 [ %i.r, %bb.d ], [ %i.n, %bb.h ], [ %i.n, %ll_pad_input.exit.loopexit.unr-lcssa ] ; 16 uses
-  %storemerge = phi ptr [ %i.t, %bb.d ], [ %i.ac, %bb.h ], [ %i.ac, %ll_pad_input.exit.loopexit.unr-lcssa ] ; 5 uses
+  %storemerge = phi ptr [ %i.t, %bb.d ], [ %i.ac, %bb.h ], [ %i.ac, %ll_pad_input.exit.loopexit.unr-lcssa ] ; 4 uses
   store ptr %storemerge, ptr %i.e, align 16, !tbaa !17
   %.not617 = icmp eq ptr %storemerge, null        ; 2 uses
   %.not612871 = icmp slt i32 %.0528797, 1         ; 2 uses
@@ -893,22 +893,23 @@ dl.exit678:                                       ; preds = %._crit_edge877.thre
 
 .lr.ph876:                                        ; preds = %.preheader851, %dl.exit694
   %indvar1489 = phi i64 [ %indvar.next1490, %dl.exit694 ], [ 0, %.preheader851 ] ; 4 uses
-  %9 = phi ptr [ %i.ql, %dl.exit694 ], [ %storemerge, %.preheader851 ]
   %indvars.iv949 = phi i64 [ %indvars.iv.next950, %dl.exit694 ], [ 1, %.preheader851 ] ; 4 uses
-  %i.qj = add i64 %indvar1489, -1                 ; 2 uses
-  %10 = add nsw i64 %indvars.iv949, -1            ; 2 uses
+  %9 = add i64 %indvar1489, -1                    ; 2 uses
+  %i.qj = add nsw i64 %indvars.iv949, -1          ; 3 uses
+  %10 = getelementptr inbounds [8 x i8], ptr %i.e, i64 %i.qj
+  %11 = load ptr, ptr %10, align 8, !tbaa !17
   %i.qk = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %indvars.iv949
-  %i.ql = load ptr, ptr %i.qk, align 8, !tbaa !17 ; 2 uses
+  %i.ql = load ptr, ptr %i.qk, align 8, !tbaa !17
   %i.qm = icmp samesign ugt i64 %indvars.iv949, 1
   br i1 %i.qm, label %.lr.ph.i681.preheader, label %dl.exit694
 
 .lr.ph.i681.preheader:                            ; preds = %.lr.ph876
-  %xtraiter1491 = and i64 %10, 7                  ; 3 uses
-  %i.qn = icmp ult i64 %i.qj, 7
+  %xtraiter1491 = and i64 %i.qj, 7                ; 3 uses
+  %i.qn = icmp ult i64 %9, 7
   br i1 %i.qn, label %.lr.ph.i681.epil.preheader, label %.lr.ph.i681.preheader.new
 
 .lr.ph.i681.preheader.new:                        ; preds = %.lr.ph.i681.preheader
-  %unroll_iter1496 = and i64 %10, -8
+  %unroll_iter1496 = and i64 %i.qj, -8
   br label %.lr.ph.i681
 
 .lr.ph.i681:                                      ; preds = %.lr.ph.i681, %.lr.ph.i681.preheader.new
@@ -940,7 +941,7 @@ dl.exit678:                                       ; preds = %._crit_edge877.thre
 .lr.ph.i689.preheader:                            ; preds = %.lr.ph.i681.epil, %.lr.ph.i689.preheader.unr-lcssa
   %.lcssa1440 = phi i32 [ %i.qo, %.lr.ph.i689.preheader.unr-lcssa ], [ %i.qp, %.lr.ph.i681.epil ]
   %xtraiter1498 = and i64 %indvar1489, 7          ; 3 uses
-  %i.qq = icmp ult i64 %i.qj, 7
+  %i.qq = icmp ult i64 %9, 7
   br i1 %i.qq, label %.lr.ph.i689.epil.preheader, label %.lr.ph.i689.preheader.new
 
 .lr.ph.i689.preheader.new:                        ; preds = %.lr.ph.i689.preheader
@@ -984,7 +985,7 @@ dl.exit694:                                       ; preds = %.lr.ph876, %._crit_
   %.05.lcssa.i687 = phi i32 [ %i.qt, %._crit_edge.loopexit.i693 ], [ %.pre1074, %.lr.ph876 ]
   %i.qv = sext i32 %.in834 to i64
   %i.qw = sext i32 %.05.lcssa.i687 to i64
-  tail call fastcc void @gauss_reduce(ptr noundef %9, ptr noundef %i.ql, i64 noundef %i.qv, i64 noundef %i.qw)
+  tail call fastcc void @gauss_reduce(ptr noundef %11, ptr noundef %i.ql, i64 noundef %i.qv, i64 noundef %i.qw)
   %indvars.iv.next950 = add nuw nsw i64 %indvars.iv949, 1 ; 2 uses
   %exitcond953.not = icmp eq i64 %indvars.iv.next950, %wide.trip.count952
   %indvar.next1490 = add i64 %indvar1489, 1
@@ -1387,8 +1388,8 @@ bb.z:                                             ; preds = %._crit_edge885
 
 .thread807.5:                                     ; preds = %bb.y, %._crit_edge885
   %indvars.iv1013 = phi i64 [ %indvars.iv.next1014, %._crit_edge885 ], [ 0, %bb.y ] ; 3 uses
-  %i.wm = getelementptr inbounds nuw [240 x i8], ptr %i.h, i64 %indvars.iv1013 ; 2 uses
-  %i.wn = load ptr, ptr %i.wm, align 16, !tbaa !17 ; 2 uses
+  %i.wm = getelementptr inbounds nuw [240 x i8], ptr %i.h, i64 %indvars.iv1013 ; 3 uses
+  %i.wn = load ptr, ptr %i.wm, align 16, !tbaa !17
   %i.wo = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %indvars.iv1013
   %i.wp = load float, ptr %i.wo, align 4, !tbaa !21
   tail call void @apply_curve(ptr noundef %i.wn, ptr noundef %storemerge, i32 noundef %.pre, i32 noundef %.pre1074, i32 noundef %i.ls, float noundef %i.wp, float noundef %4, float noundef %5, float noundef %6, float noundef %7)
@@ -1401,22 +1402,23 @@ bb.z:                                             ; preds = %._crit_edge885
 
 .lr.ph884:                                        ; preds = %.thread807.5, %dl.exit726
   %indvar1633 = phi i64 [ %indvar.next1634, %dl.exit726 ], [ 0, %.thread807.5 ] ; 4 uses
-  %11 = phi ptr [ %i.ws, %dl.exit726 ], [ %i.wn, %.thread807.5 ]
   %indvars.iv1008 = phi i64 [ %indvars.iv.next1009, %dl.exit726 ], [ 1, %.thread807.5 ] ; 4 uses
-  %i.wq = add i64 %indvar1633, -1                 ; 2 uses
-  %12 = add nsw i64 %indvars.iv1008, -1           ; 2 uses
+  %12 = add i64 %indvar1633, -1                   ; 2 uses
+  %i.wq = add nsw i64 %indvars.iv1008, -1         ; 3 uses
+  %13 = getelementptr inbounds [8 x i8], ptr %i.wm, i64 %i.wq
+  %14 = load ptr, ptr %13, align 8, !tbaa !17
   %i.wr = getelementptr inbounds nuw [8 x i8], ptr %i.wm, i64 %indvars.iv1008
-  %i.ws = load ptr, ptr %i.wr, align 8, !tbaa !17 ; 2 uses
+  %i.ws = load ptr, ptr %i.wr, align 8, !tbaa !17
   %i.wt = icmp samesign ugt i64 %indvars.iv1008, 1
   br i1 %i.wt, label %.lr.ph.i713.preheader, label %dl.exit726
 
 .lr.ph.i713.preheader:                            ; preds = %.lr.ph884
-  %xtraiter1635 = and i64 %12, 7                  ; 3 uses
-  %i.wu = icmp ult i64 %i.wq, 7
+  %xtraiter1635 = and i64 %i.wq, 7                ; 3 uses
+  %i.wu = icmp ult i64 %12, 7
   br i1 %i.wu, label %.lr.ph.i713.epil.preheader, label %.lr.ph.i713.preheader.new
 
 .lr.ph.i713.preheader.new:                        ; preds = %.lr.ph.i713.preheader
-  %unroll_iter1640 = and i64 %12, -8
+  %unroll_iter1640 = and i64 %i.wq, -8
   br label %.lr.ph.i713
 
 .lr.ph.i713:                                      ; preds = %.lr.ph.i713, %.lr.ph.i713.preheader.new
@@ -1448,7 +1450,7 @@ bb.z:                                             ; preds = %._crit_edge885
 .lr.ph.i721.preheader:                            ; preds = %.lr.ph.i713.epil, %.lr.ph.i721.preheader.unr-lcssa
   %.lcssa1419 = phi i32 [ %i.wv, %.lr.ph.i721.preheader.unr-lcssa ], [ %i.ww, %.lr.ph.i713.epil ]
   %xtraiter1642 = and i64 %indvar1633, 7          ; 3 uses
-  %i.wx = icmp ult i64 %i.wq, 7
+  %i.wx = icmp ult i64 %12, 7
   br i1 %i.wx, label %.lr.ph.i721.epil.preheader, label %.lr.ph.i721.preheader.new
 
 .lr.ph.i721.preheader.new:                        ; preds = %.lr.ph.i721.preheader
@@ -1492,7 +1494,7 @@ dl.exit726:                                       ; preds = %.lr.ph884, %._crit_
   %.05.lcssa.i719 = phi i32 [ %i.xa, %._crit_edge.loopexit.i725 ], [ %.pre1074, %.lr.ph884 ]
   %i.xc = sext i32 %.in831 to i64
   %i.xd = sext i32 %.05.lcssa.i719 to i64
-  tail call fastcc void @gauss_reduce(ptr noundef %11, ptr noundef %i.ws, i64 noundef %i.xc, i64 noundef %i.xd)
+  tail call fastcc void @gauss_reduce(ptr noundef %14, ptr noundef %i.ws, i64 noundef %i.xc, i64 noundef %i.xd)
   %indvars.iv.next1009 = add nuw nsw i64 %indvars.iv1008, 1 ; 2 uses
   %exitcond1012.not = icmp eq i64 %indvars.iv.next1009, %wide.trip.count947.pre-phi
   %indvar.next1634 = add i64 %indvar1633, 1

@@ -205,7 +205,8 @@ bb.h:                                             ; preds = %bb.f, %.loopexit
 bb.i:                                             ; preds = %bb.h
   %i.af = getelementptr inbounds nuw [24 x i8], ptr %i.u, i64 %indvars.iv53 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ab, i64 16
-  %i.ah = load i32, ptr %i.ag, align 8, !tbaa !33 ; 2 uses
+  %i.ah = load i32, ptr %i.ag, align 8, !tbaa !33
+  %.fr = freeze i32 %i.ah                         ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.af, i64 8
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !74
   %i.ak = load ptr, ptr %i.af, align 8, !tbaa !36 ; 3 uses
@@ -231,7 +232,7 @@ bb.k:                                             ; preds = %bb.j
   store ptr %i.w, ptr %4, align 8, !tbaa !59
   store i64 0, ptr %i.x, align 8, !tbaa !62
   store i8 1, ptr %i.y, align 8, !tbaa !65
-  %i.av = add nsw i32 %i.ah, 1
+  %i.av = add nsw i32 %.fr, 1
   %i.aw = sdiv i32 %i.ap, %i.av
   %i.ax = getelementptr inbounds nuw i8, ptr %i.ab, i64 8
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !75
@@ -283,7 +284,7 @@ bb.n:                                             ; preds = %_ZN3gmx14LogEntryWr
 
 .lr.ph:                                           ; preds = %bb.n
   %i.bn = load ptr, ptr %i.z, align 8, !tbaa !159 ; 2 uses
-  %i.bo = add nsw i32 %i.ah, 1
+  %i.bo = add i32 %.fr, 1
   %i.bp = sext i32 %i.bo to i64                   ; 8 uses
   %i.bq = and i64 %i.ao, 2147483647               ; 3 uses
   %i.br = call i64 @llvm.smax.i64(i64 %i.bp, i64 %i.bq)

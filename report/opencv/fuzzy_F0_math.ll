@@ -204,6 +204,7 @@ middle.block:                                     ; preds = %vector.body
   %i.br = zext i1 %i.bq to i32                    ; 2 uses
   %i.bs = or disjoint i32 %i.bo, %i.br
   %i.bt = sub i32 %i.bp, %i.bs
+  %14 = call i32 @llvm.umax.i32(i32 %1, i32 1)
   br label %.preheader.us
 
 .preheader.us:                                    ; preds = %.preheader.us.preheader, %._crit_edge415.us
@@ -308,7 +309,7 @@ bb.s:                                             ; preds = %bb.s, %.lr.ph391.us
 .lr.ph414.split.us.us:                            ; preds = %.preheader.us
   %i.dw = call noundef i32 @llvm.x86.sse.cvtss2si(<4 x float> <float +qnan, float poison, float poison, float poison>)
   %i.dx = trunc i32 %i.dw to i8                   ; 4 uses
-  %i.dy = udiv i32 %i.bt, %1
+  %i.dy = udiv i32 %i.bt, %14
   %i.dz = add i32 %i.dy, %i.br                    ; 2 uses
   %i.ea = zext i32 %i.dz to i64
   %i.eb = add nuw nsw i64 %i.ea, 1                ; 3 uses
@@ -711,6 +712,7 @@ middle.block:                                     ; preds = %vector.body
   %i.bs = zext i1 %i.br to i32                    ; 2 uses
   %i.bt = or disjoint i32 %i.bp, %i.bs
   %i.bu = sub i32 %i.bq, %i.bt
+  %14 = call i32 @llvm.umax.i32(i32 %1, i32 1)
   br label %.preheader.us
 
 .preheader.us:                                    ; preds = %.preheader.us.preheader, %._crit_edge417.us
@@ -722,7 +724,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %.not.i.i.i.i244, label %.lr.ph416.split.us.us.preheader, label %.lr.ph393.us.preheader
 
 .lr.ph416.split.us.us.preheader:                  ; preds = %.preheader.us
-  %i.bw = udiv i32 %i.bu, %1
+  %i.bw = udiv i32 %i.bu, %14
   %i.bx = add i32 %i.bw, %i.bs                    ; 2 uses
   %i.by = zext i32 %i.bx to i64
   %i.bz = add nuw nsw i64 %i.by, 1                ; 3 uses
@@ -1124,6 +1126,9 @@ declare i64 @llvm.umin.i64(i64, i64) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umax.i32(i32, i32) #8
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="128" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
