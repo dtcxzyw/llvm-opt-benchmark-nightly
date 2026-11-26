@@ -204,7 +204,7 @@ bb.a:
   br label %.lr.ph.us
 
 .lr.ph232.split.preheader:                        ; preds = %.lr.ph232
-  store <8 x i64> zeroinitializer, ptr %i.ae, align 64, !tbaa !23
+  store <16 x i32> zeroinitializer, ptr %i.ae, align 64, !tbaa !23
   br label %._crit_edge233.thread
 
 .lr.ph.us:                                        ; preds = %.lr.ph.us.preheader, %._crit_edge.us
@@ -222,9 +222,8 @@ bb.a:
   %.sroa.62.0221.us = phi i32 [ %.sroa.62.9.us, %._crit_edge.us ], [ 0, %.lr.ph.us.preheader ]
   store <8 x i64> %.0203225.us, ptr %i.ad, align 64, !tbaa !23
   %i.ak = lshr <16 x i32> %i.aj, splat (i32 3)
-  %11 = bitcast <16 x i32> %i.ak to <8 x i64>
-  %12 = and <8 x i64> %11, splat (i64 1)
-  store <8 x i64> %12, ptr %i.ae, align 64, !tbaa !23
+  %11 = and <16 x i32> %i.ak, splat (i32 1)
+  store <16 x i32> %11, ptr %i.ae, align 64, !tbaa !23
   %i.al = mul i32 %.098230.us, %5
   %i.am = zext i32 %i.al to i64
   %i.an = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.am
@@ -368,10 +367,9 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.ey = lshr <16 x i32> %i.ex, splat (i32 3)
   %i.ez = lshr <16 x i32> %i.ev, splat (i32 1)
   %i.fa = or <16 x i32> %i.ey, %i.ez
-  %13 = bitcast <16 x i32> %i.fa to <8 x i64>
-  %14 = and <8 x i64> %13, splat (i64 4294967297)
-  %15 = getelementptr inbounds nuw [64 x i8], ptr %i.f, i64 %indvars.iv
-  store <8 x i64> %14, ptr %15, align 64, !tbaa !23
+  %12 = getelementptr inbounds nuw [64 x i8], ptr %i.f, i64 %indvars.iv
+  %13 = and <16 x i32> %i.fa, splat (i32 1)
+  store <16 x i32> %13, ptr %12, align 64, !tbaa !23
   %i.fb = call <16 x i32> @llvm.smax.v16i32(<16 x i32> %i.em, <16 x i32> %i.dx) ; 5 uses
   %i.fc = sub nsw <16 x i32> %i.fb, %i.em         ; 3 uses
   %i.fd = bitcast <16 x i32> %i.fc to <8 x i64>
