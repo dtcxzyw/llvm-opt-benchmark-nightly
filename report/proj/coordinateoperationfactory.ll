@@ -204,8 +204,8 @@ bb.kb:                                            ; preds = %_ZNSt6vectorIN7drop
   br label %_ZNSt6vectorIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19CoordinateOperationEEEESaIS9_EE12emplace_backIJRKS9_EEERS9_DpOT_.exit
 
 _ZNSt6vectorIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19CoordinateOperationEEEESaIS9_EE12emplace_backIJRKS9_EEERS9_DpOT_.exit: ; preds = %.noexc393, %_ZN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19CoordinateOperationEEEC2ERKS8_.exit.i390, %bb.jr
-  %.pre904 = phi ptr [ %i.agz, %.noexc393 ], [ %.pre904.pre, %_ZN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19CoordinateOperationEEEC2ERKS8_.exit.i390 ], [ %.pre904.pre907, %bb.jr ] ; 7 uses
-  %.pre902 = phi ptr [ %i.agv, %.noexc393 ], [ %i.afw, %_ZN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19CoordinateOperationEEEC2ERKS8_.exit.i390 ], [ %.pre902.pre, %bb.jr ] ; 5 uses
+  %.pre904 = phi ptr [ %i.agz, %.noexc393 ], [ %.pre904.pre, %_ZN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19CoordinateOperationEEEC2ERKS8_.exit.i390 ], [ %.pre904.pre907, %bb.jr ] ; 6 uses
+  %.pre902 = phi ptr [ %i.agv, %.noexc393 ], [ %i.afw, %_ZN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19CoordinateOperationEEEC2ERKS8_.exit.i390 ], [ %.pre902.pre, %bb.jr ] ; 6 uses
   br i1 %i.ke, label %_ZNSt6vectorIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19CoordinateOperationEEEESaIS9_EE12emplace_backIJRS9_EEESD_DpOT_.exit401, label %bb.kc
 
 bb.kc:                                            ; preds = %_ZNSt6vectorIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19CoordinateOperationEEEESaIS9_EE12emplace_backIJRKS9_EEERS9_DpOT_.exit
@@ -246,7 +246,7 @@ _ZN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19CoordinateOperation
 
 bb.kh:                                            ; preds = %bb.kc
   %i.ahj = load ptr, ptr %18, align 8, !tbaa !157 ; 5 uses
-  %i.ahk = ptrtoint ptr %.pre904 to i64
+  %i.ahk = ptrtoint ptr %.pre902 to i64
   %i.ahl = ptrtoint ptr %i.ahj to i64             ; 2 uses
   %i.ahm = sub i64 %i.ahk, %i.ahl                 ; 3 uses
   %i.ahn = icmp eq i64 %i.ahm, 9223372036854775792
@@ -329,8 +329,8 @@ bb.kl:                                            ; preds = %_ZNSt6vectorIN7drop
   br label %_ZNSt6vectorIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19CoordinateOperationEEEESaIS9_EE12emplace_backIJRS9_EEESD_DpOT_.exit401
 
 _ZNSt6vectorIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19CoordinateOperationEEEESaIS9_EE12emplace_backIJRS9_EEESD_DpOT_.exit401: ; preds = %.noexc400, %_ZN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19CoordinateOperationEEEC2ERKS8_.exit.i397, %_ZNSt6vectorIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19CoordinateOperationEEEESaIS9_EE12emplace_backIJRKS9_EEERS9_DpOT_.exit
-  %i.aim = phi ptr [ %i.ail, %.noexc400 ], [ %.pre903, %_ZN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19CoordinateOperationEEEC2ERKS8_.exit.i397 ], [ %.pre904, %_ZNSt6vectorIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19CoordinateOperationEEEESaIS9_EE12emplace_backIJRKS9_EEERS9_DpOT_.exit ] ; 4 uses
-  %i.ain = phi ptr [ %i.aih, %.noexc400 ], [ %i.ahi, %_ZN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19CoordinateOperationEEEC2ERKS8_.exit.i397 ], [ %.pre902, %_ZNSt6vectorIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19CoordinateOperationEEEESaIS9_EE12emplace_backIJRKS9_EEERS9_DpOT_.exit ] ; 4 uses
+  %i.aim = phi ptr [ %i.ail, %.noexc400 ], [ %.pre903, %_ZN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19CoordinateOperationEEEC2ERKS8_.exit.i397 ], [ %.pre904, %_ZNSt6vectorIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19CoordinateOperationEEEESaIS9_EE12emplace_backIJRKS9_EEERS9_DpOT_.exit ] ; 3 uses
+  %i.ain = phi ptr [ %i.aih, %.noexc400 ], [ %i.ahi, %_ZN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19CoordinateOperationEEEC2ERKS8_.exit.i397 ], [ %.pre902, %_ZNSt6vectorIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19CoordinateOperationEEEESaIS9_EE12emplace_backIJRKS9_EEERS9_DpOT_.exit ] ; 5 uses
   %.not.i402 = icmp eq ptr %i.ain, %i.aim
   br i1 %.not.i402, label %bb.kq, label %bb.km
 
@@ -366,7 +366,7 @@ _ZN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19CoordinateOperation
 
 bb.kq:                                            ; preds = %_ZNSt6vectorIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19CoordinateOperationEEEESaIS9_EE12emplace_backIJRS9_EEESD_DpOT_.exit401
   %i.aix = load ptr, ptr %18, align 8, !tbaa !157 ; 5 uses
-  %i.aiy = ptrtoint ptr %i.aim to i64
+  %i.aiy = ptrtoint ptr %i.ain to i64
   %i.aiz = ptrtoint ptr %i.aix to i64             ; 2 uses
   %i.aja = sub i64 %i.aiy, %i.aiz                 ; 3 uses
   %i.ajb = icmp eq i64 %i.aja, 9223372036854775792
@@ -769,7 +769,7 @@ bb.z:                                             ; preds = %bb.y
 
 bb.aa:                                            ; preds = %_ZSt10_ConstructIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19CoordinateOperationEEEEJRKS9_EEvPT_DpOT0_.exit.i.i.i.i.i.i.1
   %i.by = load ptr, ptr %i.a, align 8, !tbaa !158 ; 7 uses
-  %i.bz = load ptr, ptr %i.g, align 16, !tbaa !159
+  %i.bz = load ptr, ptr %i.g, align 16, !tbaa !159 ; 2 uses
   %.not.i = icmp eq ptr %i.by, %i.bz
   br i1 %.not.i, label %bb.ac, label %bb.ab
 
@@ -787,8 +787,8 @@ bb.ab:                                            ; preds = %bb.aa
 bb.ac:                                            ; preds = %bb.aa
   %i.cd = load ptr, ptr %3, align 16, !tbaa !157  ; 5 uses
   %i.ce = ptrtoint ptr %i.by to i64
-  %i.cf = ptrtoint ptr %i.cd to i64
-  %i.cg = sub i64 %i.ce, %i.cf                    ; 4 uses
+  %i.cf = ptrtoint ptr %i.cd to i64               ; 2 uses
+  %i.cg = sub i64 %i.ce, %i.cf                    ; 3 uses
   %i.ch = icmp eq i64 %i.cg, 9223372036854775792
   br i1 %i.ch, label %bb.ad, label %_ZNKSt6vectorIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19CoordinateOperationEEEESaIS9_EE12_M_check_lenEmPKc.exit.i
 
@@ -843,7 +843,9 @@ _ZNSt6vectorIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19Coordina
   br i1 %.not.i23.i, label %.noexc, label %bb.ae
 
 bb.ae:                                            ; preds = %_ZNSt6vectorIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19CoordinateOperationEEEESaIS9_EE11_S_relocateEPS9_SC_SC_RSA_.exit22.i
-  call void @_ZdlPvm(ptr noundef nonnull %i.cd, i64 noundef %i.cg) #32
+  %6 = ptrtoint ptr %i.bz to i64
+  %7 = sub i64 %6, %i.cf
+  call void @_ZdlPvm(ptr noundef nonnull %i.cd, i64 noundef %7) #32
   br label %.noexc
 
 .noexc:                                           ; preds = %bb.ae, %_ZNSt6vectorIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19CoordinateOperationEEEESaIS9_EE11_S_relocateEPS9_SC_SC_RSA_.exit22.i

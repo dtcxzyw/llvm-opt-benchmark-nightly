@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %bb.i, %bb.j, %bb.f
   %i.ea = getelementptr inbounds nuw i8, ptr %5, i64 80 ; 2 uses
   %i.eb = getelementptr inbounds nuw i8, ptr %5, i64 88 ; 2 uses
   %i.ec = getelementptr inbounds nuw i8, ptr %5, i64 16
-  %i.ed = ptrtoint ptr %1 to i64                  ; 6 uses
+  %i.ed = ptrtoint ptr %1 to i64                  ; 5 uses
   %i.ee = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.ef = and i32 %i.bc, 33554432
   %i.eg = icmp ne i32 %i.ef, 0
@@ -608,13 +608,14 @@ bb.fr:                                            ; preds = %bb.fq
 bb.fs:                                            ; preds = %.backedge
   %i.afy = getelementptr inbounds nuw i8, ptr %.71534, i64 8
   %i.afz = load i32, ptr %i.afy, align 8, !tbaa !62 ; 2 uses
-  %i.aga = load ptr, ptr %i.i, align 8, !tbaa !103 ; 4 uses
+  %i.aga = load ptr, ptr %i.i, align 8, !tbaa !103 ; 5 uses
   %i.agb = icmp eq ptr %i.aga, %1
   br i1 %i.agb, label %bb.ft, label %bb.fx
 
 bb.ft:                                            ; preds = %bb.fs
-  %i.agc = ptrtoint ptr %.11457 to i64
-  %i.agd = sub i64 %i.agc, %i.ed
+  %8 = ptrtoint ptr %.11457 to i64
+  %i.agc = ptrtoint ptr %i.aga to i64
+  %i.agd = sub i64 %8, %i.agc
   %i.age = icmp slt i64 %i.agd, 1
   br i1 %i.age, label %backref_check_at_nested_level.exit.thread, label %bb.fu
 

@@ -202,9 +202,10 @@ bb.a:
 
 bb.b:                                             ; preds = %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit18, %bb.a
   %i.d = phi ptr [ null, %bb.a ], [ %i.cl, %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit18 ] ; 6 uses
-  %i.e = phi ptr [ null, %bb.a ], [ %i.cm, %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit18 ] ; 4 uses
+  %i.e = phi ptr [ null, %bb.a ], [ %i.cm, %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit18 ] ; 5 uses
   %i.f = phi ptr [ null, %bb.a ], [ %i.cn, %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit18 ] ; 21 uses
   %.010 = phi i64 [ 0, %bb.a ], [ %i.co, %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit18 ] ; 3 uses
+  %6 = ptrtoaddr ptr %i.d to i64                  ; 2 uses
   %i.g = invoke noundef i64 @_ZNK4geos4geom7Polygon18getNumInteriorRingEv(ptr noundef nonnull align 8 dereferenceable(72) %2)
           to label %bb.c unwind label %bb.d
 
@@ -324,7 +325,7 @@ bb.l:                                             ; preds = %bb.k
   br label %_ZNSt6vectorISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_EE12emplace_backIJPS3_EEEvDpOT_.exit
 
 bb.m:                                             ; preds = %bb.k
-  %i.ai = ptrtoint ptr %i.d to i64                ; 3 uses
+  %i.ai = ptrtoint ptr %i.e to i64
   %i.aj = ptrtoint ptr %i.f to i64                ; 3 uses
   %i.ak = sub i64 %i.ai, %i.aj                    ; 3 uses
   %i.al = icmp eq i64 %i.ak, 9223372036854775800
@@ -358,7 +359,7 @@ _ZNKSt6vectorISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_
   br i1 %.not10.i.i.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i.i, label %iter.check
 
 iter.check:                                       ; preds = %.noexc14
-  %i.au = add i64 %i.ai, -8
+  %i.au = add i64 %6, -8
   %i.av = sub i64 %i.au, %i.aj                    ; 3 uses
   %i.aw = lshr i64 %i.av, 3
   %i.ax = add nuw nsw i64 %i.aw, 1                ; 5 uses
@@ -366,7 +367,7 @@ iter.check:                                       ; preds = %.noexc14
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.ay = add i64 %i.ai, -8
+  %i.ay = add i64 %6, -8
   %i.az = sub i64 %i.ay, %i.aj
   %i.ba = and i64 %i.az, -8
   %i.bb = add i64 %i.ba, 8                        ; 2 uses

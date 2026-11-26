@@ -205,8 +205,8 @@ bb.j:                                             ; preds = %.lr.ph, %_ZNSt6vect
   %.0167 = phi i32 [ 0, %.lr.ph ], [ %i.bg, %_ZNSt6vectorIN8rawspeed10RawDecoder8RawSliceESaIS2_EE9push_backERKS2_.exit ] ; 4 uses
   %.071166 = phi i32 [ 0, %.lr.ph ], [ %i.aj, %_ZNSt6vectorIN8rawspeed10RawDecoder8RawSliceESaIS2_EE9push_backERKS2_.exit ] ; 2 uses
   %.sroa.0122.0165 = phi ptr [ %i.ab, %.lr.ph ], [ %.sroa.0122.4, %_ZNSt6vectorIN8rawspeed10RawDecoder8RawSliceESaIS2_EE9push_backERKS2_.exit ] ; 10 uses
-  %.sroa.13.0164 = phi ptr [ %i.ab, %.lr.ph ], [ %.sroa.13.2, %_ZNSt6vectorIN8rawspeed10RawDecoder8RawSliceESaIS2_EE9push_backERKS2_.exit ] ; 10 uses
-  %.sroa.22.0163 = phi ptr [ %i.ac, %.lr.ph ], [ %.sroa.22.4, %_ZNSt6vectorIN8rawspeed10RawDecoder8RawSliceESaIS2_EE9push_backERKS2_.exit ] ; 6 uses
+  %.sroa.13.0164 = phi ptr [ %i.ab, %.lr.ph ], [ %.sroa.13.2, %_ZNSt6vectorIN8rawspeed10RawDecoder8RawSliceESaIS2_EE9push_backERKS2_.exit ] ; 8 uses
+  %.sroa.22.0163 = phi ptr [ %i.ac, %.lr.ph ], [ %.sroa.22.4, %_ZNSt6vectorIN8rawspeed10RawDecoder8RawSliceESaIS2_EE9push_backERKS2_.exit ] ; 7 uses
   %i.ag = invoke noundef i32 @_ZNK8rawspeed9TiffEntry6getU32Ej(ptr noundef nonnull align 8 dereferenceable(48) %i.a, i32 noundef %.0167)
           to label %bb.k unwind label %.loopexit  ; 3 uses
 
@@ -259,8 +259,8 @@ bb.s:                                             ; preds = %bb.r
 
 bb.t:                                             ; preds = %bb.r
   %i.ar = ptrtoint ptr %.sroa.13.0164 to i64
-  %i.as = ptrtoint ptr %.sroa.0122.0165 to i64
-  %i.at = sub i64 %i.ar, %i.as                    ; 4 uses
+  %i.as = ptrtoint ptr %.sroa.0122.0165 to i64    ; 2 uses
+  %i.at = sub i64 %i.ar, %i.as                    ; 3 uses
   %i.au = icmp eq i64 %i.at, 9223372036854775800
   br i1 %i.au, label %bb.u, label %_ZNKSt6vectorIN8rawspeed10RawDecoder8RawSliceESaIS2_EE12_M_check_lenEmPKc.exit.i.i
 
@@ -309,7 +309,9 @@ _ZNSt6vectorIN8rawspeed10RawDecoder8RawSliceESaIS2_EE11_S_relocateEPS2_S5_S5_RS3
   br i1 %.not.i23.i.i, label %_ZNSt6vectorIN8rawspeed10RawDecoder8RawSliceESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i, label %bb.v
 
 bb.v:                                             ; preds = %_ZNSt6vectorIN8rawspeed10RawDecoder8RawSliceESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0122.0165, i64 noundef %i.at) #29
+  %7 = ptrtoint ptr %.sroa.22.0163 to i64
+  %8 = sub i64 %7, %i.as
+  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0122.0165, i64 noundef %8) #29
   br label %_ZNSt6vectorIN8rawspeed10RawDecoder8RawSliceESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i
 
 _ZNSt6vectorIN8rawspeed10RawDecoder8RawSliceESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i: ; preds = %bb.v, %_ZNSt6vectorIN8rawspeed10RawDecoder8RawSliceESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i
@@ -404,13 +406,12 @@ bb.ac:                                            ; preds = %bb.ab
   unreachable
 
 .loopexit:                                        ; preds = %_ZNKSt6vectorIN8rawspeed10RawDecoder8RawSliceESaIS2_EE12_M_check_lenEmPKc.exit.i.i, %bb.k, %bb.j
-  %.sroa.22.0163.lcssa = phi ptr [ %.sroa.13.0164, %_ZNKSt6vectorIN8rawspeed10RawDecoder8RawSliceESaIS2_EE12_M_check_lenEmPKc.exit.i.i ], [ %.sroa.22.0163, %bb.k ], [ %.sroa.22.0163, %bb.j ]
   %lpad.loopexit = landingpad { ptr, i32 }
           cleanup
   br label %bb.bb
 
 .loopexit.split-lp:                               ; preds = %bb.ab, %bb.u, %bb.p, %bb.m
-  %.sroa.22.0162 = phi ptr [ %.sroa.22.4, %bb.ab ], [ %.sroa.13.0164, %bb.u ], [ %.sroa.22.0163, %bb.p ], [ %.sroa.22.0163, %bb.m ]
+  %.sroa.22.0162 = phi ptr [ %.sroa.22.4, %bb.ab ], [ %.sroa.22.0163, %bb.u ], [ %.sroa.22.0163, %bb.p ], [ %.sroa.22.0163, %bb.m ]
   %.sroa.0122.0152 = phi ptr [ %.sroa.0122.4, %bb.ab ], [ %.sroa.0122.0165, %bb.u ], [ %.sroa.0122.0165, %bb.p ], [ %.sroa.0122.0165, %bb.m ]
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
@@ -619,7 +620,7 @@ bb.ba:                                            ; preds = %bb.az, %bb.ay, %bb.
   br label %bb.bb
 
 bb.bb:                                            ; preds = %.loopexit, %.loopexit.split-lp, %bb.ba, %bb.x
-  %.sroa.22.2 = phi ptr [ %.sroa.22.4, %bb.ba ], [ %.sroa.22.1, %bb.x ], [ %.sroa.22.0163.lcssa, %.loopexit ], [ %.sroa.22.0162, %.loopexit.split-lp ]
+  %.sroa.22.2 = phi ptr [ %.sroa.22.4, %bb.ba ], [ %.sroa.22.1, %bb.x ], [ %.sroa.22.0163, %.loopexit ], [ %.sroa.22.0162, %.loopexit.split-lp ]
   %.sroa.0122.2 = phi ptr [ %.sroa.0122.4, %bb.ba ], [ %.sroa.0122.1, %bb.x ], [ %.sroa.0122.0165, %.loopexit ], [ %.sroa.0122.0152, %.loopexit.split-lp ] ; 3 uses
   %.pn90.pn = phi { ptr, i32 } [ %.pn, %bb.ba ], [ %i.bj, %bb.x ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   %.not.i.i.i106 = icmp eq ptr %.sroa.0122.2, null

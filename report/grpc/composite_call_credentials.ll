@@ -202,6 +202,7 @@ _ZNSt12_Vector_baseIN9grpc_core13RefCountedPtrI21grpc_call_credentialsEESaIS3_EE
 _ZNSt6vectorIN9grpc_core13RefCountedPtrI21grpc_call_credentialsEESaIS3_EE7reserveEm.exit: ; preds = %_ZNSt12_Vector_baseIN9grpc_core13RefCountedPtrI21grpc_call_credentialsEESaIS3_EE13_M_deallocateEPS3_m.exit.i, %bb.q
   %i.cx = phi ptr [ %i.bu, %_ZNSt12_Vector_baseIN9grpc_core13RefCountedPtrI21grpc_call_credentialsEESaIS3_EE13_M_deallocateEPS3_m.exit.i ], [ %i.bj, %bb.q ] ; 10 uses
   %i.cy = phi ptr [ %i.cw, %_ZNSt12_Vector_baseIN9grpc_core13RefCountedPtrI21grpc_call_credentialsEESaIS3_EE13_M_deallocateEPS3_m.exit.i ], [ %i.bi, %bb.q ] ; 4 uses
+  %5 = ptrtoaddr ptr %i.cy to i64
   %i.cz = load ptr, ptr %1, align 8, !tbaa !17    ; 10 uses
   store ptr %i.cz, ptr %3, align 8, !tbaa !17
   store ptr null, ptr %1, align 8, !tbaa !17
@@ -209,7 +210,7 @@ _ZNSt6vectorIN9grpc_core13RefCountedPtrI21grpc_call_credentialsEESaIS3_EE7reserv
 
 bb.s:                                             ; preds = %_ZNSt6vectorIN9grpc_core13RefCountedPtrI21grpc_call_credentialsEESaIS3_EE7reserveEm.exit
   %i.da = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
-  %i.db = load ptr, ptr %i.da, align 8, !tbaa !63 ; 3 uses
+  %i.db = load ptr, ptr %i.da, align 8, !tbaa !63 ; 4 uses
   %.not.i.i.i = icmp eq ptr %i.db, %i.cy
   br i1 %.not.i.i.i, label %bb.t, label %_ZN31grpc_composite_call_credentials13push_to_innerEN9grpc_core13RefCountedPtrI21grpc_call_credentialsEEb.exit.thread
 
@@ -221,7 +222,7 @@ _ZN31grpc_composite_call_credentials13push_to_innerEN9grpc_core13RefCountedPtrI2
   br label %_ZN9grpc_core13RefCountedPtrI21grpc_call_credentialsED2Ev.exit
 
 bb.t:                                             ; preds = %bb.s
-  %i.dd = ptrtoint ptr %i.cy to i64               ; 2 uses
+  %i.dd = ptrtoint ptr %i.db to i64
   %i.de = ptrtoint ptr %i.cx to i64               ; 3 uses
   %i.df = sub i64 %i.dd, %i.de                    ; 3 uses
   %i.dg = icmp eq i64 %i.df, 9223372036854775800
@@ -255,7 +256,7 @@ _ZNKSt6vectorIN9grpc_core13RefCountedPtrI21grpc_call_credentialsEESaIS3_EE12_M_c
   br i1 %.not10.i.i.i.i57, label %_ZNSt6vectorIN9grpc_core13RefCountedPtrI21grpc_call_credentialsEESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit22.i, label %.lr.ph.i.i.i.i58.preheader
 
 .lr.ph.i.i.i.i58.preheader:                       ; preds = %.noexc65
-  %i.dp = add i64 %i.dd, -8
+  %i.dp = add i64 %5, -8
   %i.dq = sub i64 %i.dp, %i.de                    ; 3 uses
   %i.dr = lshr i64 %i.dq, 3
   %i.ds = add nuw nsw i64 %i.dr, 1                ; 2 uses

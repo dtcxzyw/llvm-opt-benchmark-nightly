@@ -204,9 +204,9 @@ bb.j:                                             ; preds = %bb.a
 
 .lr.ph:                                           ; preds = %bb.j, %_ZNSt6vectorISt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES3_EESaIS7_EE9push_backERKS7_.exit
   %.sroa.050.095 = phi ptr [ %.sroa.050.1, %_ZNSt6vectorISt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES3_EESaIS7_EE9push_backERKS7_.exit ], [ null, %bb.j ] ; 12 uses
-  %.sroa.10.094 = phi ptr [ %.sroa.10.1, %_ZNSt6vectorISt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES3_EESaIS7_EE9push_backERKS7_.exit ], [ null, %bb.j ] ; 8 uses
+  %.sroa.10.094 = phi ptr [ %.sroa.10.1, %_ZNSt6vectorISt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES3_EESaIS7_EE9push_backERKS7_.exit ], [ null, %bb.j ] ; 6 uses
   %.sroa.047.093 = phi ptr [ %i.bf, %_ZNSt6vectorISt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES3_EESaIS7_EE9push_backERKS7_.exit ], [ %i.o, %bb.j ] ; 3 uses
-  %.sroa.15.092 = phi ptr [ %.sroa.15.1, %_ZNSt6vectorISt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES3_EESaIS7_EE9push_backERKS7_.exit ], [ null, %bb.j ] ; 2 uses
+  %.sroa.15.092 = phi ptr [ %.sroa.15.1, %_ZNSt6vectorISt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES3_EESaIS7_EE9push_backERKS7_.exit ], [ null, %bb.j ] ; 5 uses
   %.not.i = icmp eq ptr %.sroa.10.094, %.sroa.15.092
   br i1 %.not.i, label %bb.l, label %bb.k
 
@@ -217,8 +217,8 @@ bb.k:                                             ; preds = %.lr.ph
 
 bb.l:                                             ; preds = %.lr.ph
   %i.r = ptrtoint ptr %.sroa.10.094 to i64        ; 2 uses
-  %i.s = ptrtoint ptr %.sroa.050.095 to i64       ; 3 uses
-  %i.t = sub i64 %i.r, %i.s                       ; 4 uses
+  %i.s = ptrtoint ptr %.sroa.050.095 to i64       ; 4 uses
+  %i.t = sub i64 %i.r, %i.s                       ; 3 uses
   %i.u = icmp eq i64 %i.t, 9223372036854775800
   br i1 %i.u, label %bb.m, label %_ZNKSt6vectorISt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES3_EESaIS7_EE12_M_check_lenEmPKc.exit.i.i
 
@@ -354,7 +354,9 @@ _ZNSt6vectorISt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES3_EESaI
   br i1 %.not.i23.i.i, label %_ZNSt6vectorISt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES3_EESaIS7_EE17_M_realloc_insertIJRKS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_S9_EEDpOT_.exit.i, label %bb.n
 
 bb.n:                                             ; preds = %_ZNSt6vectorISt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES3_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.050.095, i64 noundef %i.t) #41
+  %5 = ptrtoint ptr %.sroa.15.092 to i64
+  %6 = sub i64 %5, %i.s
+  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.050.095, i64 noundef %6) #41
   br label %_ZNSt6vectorISt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES3_EESaIS7_EE17_M_realloc_insertIJRKS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_S9_EEDpOT_.exit.i
 
 _ZNSt6vectorISt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES3_EESaIS7_EE17_M_realloc_insertIJRKS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_S9_EEDpOT_.exit.i: ; preds = %bb.n, %_ZNSt6vectorISt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES3_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i.i
@@ -376,7 +378,7 @@ _ZNSt6vectorISt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES3_EESaI
   br label %bb.ap
 
 .loopexit.split-lp68:                             ; preds = %bb.m, %bb.o
-  %.sroa.15.090 = phi ptr [ %.sroa.10.094, %bb.m ], [ %.sroa.15.1, %bb.o ]
+  %.sroa.15.090 = phi ptr [ %.sroa.15.092, %bb.m ], [ %.sroa.15.1, %bb.o ]
   %.sroa.050.081 = phi ptr [ %.sroa.050.095, %bb.m ], [ %.sroa.050.1, %bb.o ]
   %lpad.loopexit.split-lp70 = landingpad { ptr, i32 }
           cleanup
@@ -779,7 +781,7 @@ bb.ao:                                            ; preds = %_ZNSt7__cxx1112basi
   br label %bb.ap
 
 bb.ap:                                            ; preds = %.loopexit67, %.loopexit.split-lp68, %bb.ao
-  %.sroa.15.086 = phi ptr [ %.sroa.15.0.lcssa137, %bb.ao ], [ %.sroa.10.094, %.loopexit67 ], [ %.sroa.15.090, %.loopexit.split-lp68 ]
+  %.sroa.15.086 = phi ptr [ %.sroa.15.0.lcssa137, %bb.ao ], [ %.sroa.15.092, %.loopexit67 ], [ %.sroa.15.090, %.loopexit.split-lp68 ]
   %.sroa.050.077 = phi ptr [ %.sroa.050.0.lcssa141, %bb.ao ], [ %.sroa.050.095, %.loopexit67 ], [ %.sroa.050.081, %.loopexit.split-lp68 ] ; 3 uses
   %.pn16 = phi { ptr, i32 } [ %.pn13.pn, %bb.ao ], [ %lpad.loopexit69, %.loopexit67 ], [ %lpad.loopexit.split-lp70, %.loopexit.split-lp68 ] ; 2 uses
   %.not.i.i.i33 = icmp eq ptr %.sroa.050.077, null

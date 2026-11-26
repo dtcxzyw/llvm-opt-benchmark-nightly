@@ -204,7 +204,7 @@ bb.chb:                                           ; preds = %bb.cgx
 
 .lr.ph9239:                                       ; preds = %bb.chb
   %i.gpp = getelementptr inbounds nuw i8, ptr %i.goy, i64 8
-  %i.gpq = ptrtoint ptr %i.ac to i64              ; 4 uses
+  %i.gpq = ptrtoint ptr %i.ac to i64              ; 3 uses
   %i.gpr = trunc i64 %i.gpq to i32
   br label %bb.chc
 
@@ -266,14 +266,15 @@ bb.chf:                                           ; preds = %bb.chd, %bb.che, %b
   br i1 %exitcond12740.not, label %.critedge46, label %.lr.ph9228, !llvm.loop !187
 
 .critedge46:                                      ; preds = %.critedge48, %.lr.ph9228, %bb.chf
-  %.promoted92249244 = phi ptr [ %.promoted92249241, %bb.chf ], [ %i.gqc, %.lr.ph9228 ], [ %i.gqf, %.critedge48 ] ; 11 uses
+  %.promoted92249244 = phi ptr [ %.promoted92249241, %bb.chf ], [ %i.gqc, %.lr.ph9228 ], [ %i.gqf, %.critedge48 ] ; 12 uses
   %.04977.lcssa = phi i32 [ 0, %bb.chf ], [ %.049779225, %.lr.ph9228 ], [ %i.gqa, %.critedge48 ] ; 4 uses
   %.04975.lcssa = phi i32 [ 0, %bb.chf ], [ %.049759226, %.lr.ph9228 ], [ %.14976, %.critedge48 ] ; 2 uses
   %i.gqh = icmp eq ptr %.promoted92249244, %i.ac
   br i1 %i.gqh, label %bb.chg, label %bb.chk
 
 bb.chg:                                           ; preds = %.critedge46
-  %i.gqi = sub i64 %i.gpq, %i.gos                 ; 2 uses
+  %13 = ptrtoint ptr %.promoted92249244 to i64
+  %i.gqi = sub i64 %13, %i.gos                    ; 2 uses
   %i.gqj = trunc i64 %i.gqi to i32
   store i32 %i.gqj, ptr getelementptr inbounds nuw (i8, ptr @language_scanner_globals, i64 16), align 8, !tbaa !48
   %i.gqk = and i64 %i.gqi, 4294967295             ; 2 uses
@@ -676,7 +677,7 @@ bb.cpa:                                           ; preds = %bb.cow
 
 .lr.ph9209:                                       ; preds = %bb.cpa
   %i.how = getelementptr inbounds nuw i8, ptr %i.hof, i64 8
-  %i.hox = ptrtoint ptr %i.an to i64              ; 4 uses
+  %i.hox = ptrtoint ptr %i.an to i64              ; 3 uses
   %i.hoy = trunc i64 %i.hox to i32
   br label %bb.cpb
 
@@ -737,14 +738,15 @@ bb.cpe:                                           ; preds = %bb.cpc, %bb.cpd, %b
   br i1 %exitcond.not, label %.critedge52, label %.lr.ph, !llvm.loop !191
 
 .critedge52:                                      ; preds = %.critedge54, %.lr.ph, %bb.cpe
-  %i.hpo = phi ptr [ %.promoted9213, %bb.cpe ], [ %i.hpj, %.lr.ph ], [ %scevgep12736, %.critedge54 ] ; 11 uses
+  %i.hpo = phi ptr [ %.promoted9213, %bb.cpe ], [ %i.hpj, %.lr.ph ], [ %scevgep12736, %.critedge54 ] ; 12 uses
   %.14955.lcssa = phi i32 [ 0, %bb.cpe ], [ %.149559197, %.lr.ph ], [ %i.hph, %.critedge54 ] ; 10 uses
   %.14950.lcssa = phi i32 [ 0, %bb.cpe ], [ %.149509198, %.lr.ph ], [ %.24951, %.critedge54 ] ; 7 uses
   %i.hpp = icmp eq ptr %i.hpo, %i.an
   br i1 %i.hpp, label %bb.cpf, label %bb.cpj
 
 bb.cpf:                                           ; preds = %.critedge52
-  %i.hpq = sub i64 %i.hox, %i.hnz                 ; 2 uses
+  %14 = ptrtoint ptr %i.hpo to i64
+  %i.hpq = sub i64 %14, %i.hnz                    ; 2 uses
   %i.hpr = trunc i64 %i.hpq to i32
   store i32 %i.hpr, ptr getelementptr inbounds nuw (i8, ptr @language_scanner_globals, i64 16), align 8, !tbaa !48
   %i.hps = and i64 %i.hpq, 4294967295             ; 2 uses

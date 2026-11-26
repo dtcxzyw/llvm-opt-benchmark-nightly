@@ -204,7 +204,7 @@ bb.at:                                            ; preds = %.lr.ph193
   br i1 %exitcond.not, label %.critedge2, label %.lr.ph193, !llvm.loop !383
 
 .critedge2:                                       ; preds = %bb.at, %.lr.ph193, %bb.y, %.preheader, %bb.z, %bb.x, %bb.aa, %.critedge.thread254, %bb.aq, %bb.ap, %bb.t, %bb.u, %bb.p, %bb.q
-  %.promoted195 = phi ptr [ %i.aw, %bb.p ], [ %i.br, %bb.y ], [ %i.dt, %bb.ap ], [ %i.bh, %bb.u ], [ %i.bh, %bb.t ], [ %i.aw, %bb.q ], [ %i.br, %bb.aa ], [ %.promoted195.pre, %.critedge.thread254 ], [ %i.br, %bb.x ], [ %i.br, %bb.z ], [ %i.dt, %bb.aq ], [ %.promoted195.pre, %.preheader ], [ %scevgep, %bb.at ], [ %i.ez, %.lr.ph193 ] ; 6 uses
+  %.promoted195 = phi ptr [ %i.aw, %bb.p ], [ %i.br, %bb.y ], [ %i.dt, %bb.ap ], [ %i.bh, %bb.u ], [ %i.bh, %bb.t ], [ %i.aw, %bb.q ], [ %i.br, %bb.aa ], [ %.promoted195.pre, %.critedge.thread254 ], [ %i.br, %bb.x ], [ %i.br, %bb.z ], [ %i.dt, %bb.aq ], [ %.promoted195.pre, %.preheader ], [ %scevgep, %bb.at ], [ %i.ez, %.lr.ph193 ] ; 5 uses
   %.2105 = phi i64 [ 4, %bb.p ], [ 4, %bb.y ], [ 4, %bb.ap ], [ 4, %bb.u ], [ 4, %bb.t ], [ 4, %bb.q ], [ 4, %bb.aa ], [ 4, %.critedge.thread254 ], [ 4, %bb.x ], [ 4, %bb.z ], [ 4, %bb.aq ], [ %i.eu, %.preheader ], [ %i.eu, %.lr.ph193 ], [ %i.eu, %bb.at ] ; 4 uses
   %.0101 = phi i32 [ -1, %bb.p ], [ %i.be, %bb.y ], [ %i.be, %bb.ap ], [ %i.be, %bb.u ], [ %i.be, %bb.t ], [ -1, %bb.q ], [ %i.be, %bb.aa ], [ %i.be, %.critedge.thread254 ], [ %i.be, %bb.x ], [ %i.be, %bb.z ], [ %i.be, %bb.aq ], [ %i.be, %.preheader ], [ %i.be, %.lr.ph193 ], [ %i.be, %bb.at ] ; 3 uses
   %.099 = phi i32 [ -1, %bb.p ], [ %i.bo, %bb.y ], [ %i.bo, %bb.ap ], [ -1, %bb.u ], [ -1, %bb.t ], [ -1, %bb.q ], [ %i.bo, %bb.aa ], [ %i.bo, %.critedge.thread254 ], [ %i.bo, %bb.x ], [ %i.bo, %bb.z ], [ %i.bo, %bb.aq ], [ %i.bo, %.preheader ], [ %i.bo, %.lr.ph193 ], [ %i.bo, %bb.at ] ; 3 uses
@@ -218,11 +218,11 @@ bb.at:                                            ; preds = %.lr.ph193
 .lr.ph196.preheader:                              ; preds = %.critedge2
   %i.fg = add i64 %i.q, %i.o
   %i.fh = sub i64 %i.fg, %.promoted195208
-  %scevgep209 = getelementptr i8, ptr %.promoted195, i64 %i.fh ; 2 uses
+  %scevgep209 = getelementptr i8, ptr %.promoted195, i64 %i.fh
   br label %.lr.ph196
 
 .lr.ph196:                                        ; preds = %.lr.ph196.preheader, %bb.au
-  %i.fi = phi ptr [ %i.fo, %bb.au ], [ %.promoted195, %.lr.ph196.preheader ] ; 4 uses
+  %i.fi = phi ptr [ %i.fo, %bb.au ], [ %.promoted195, %.lr.ph196.preheader ] ; 3 uses
   %i.fj = load i8, ptr %i.fi, align 1, !tbaa !268 ; 2 uses
   %i.fk = sext i8 %i.fj to i32
   %i.fl = icmp ne i8 %i.fj, 32
@@ -239,25 +239,23 @@ bb.au:                                            ; preds = %.lr.ph196
 
 .critedge4.loopexit:                              ; preds = %bb.au, %.lr.ph196
   %.promoted200220 = phi ptr [ %i.fi, %.lr.ph196 ], [ %i.fo, %bb.au ] ; 2 uses
-  %.lcssa188.ph = phi ptr [ %i.fi, %.lr.ph196 ], [ %scevgep209, %bb.au ]
   %.pre = ptrtoaddr ptr %.promoted200220 to i64
   br label %.critedge4
 
 .critedge4:                                       ; preds = %.critedge4.loopexit, %.critedge2
   %.promoted200211.pre-phi = phi i64 [ %.pre, %.critedge4.loopexit ], [ %.promoted195208, %.critedge2 ] ; 2 uses
-  %.promoted200 = phi ptr [ %.promoted200220, %.critedge4.loopexit ], [ %.promoted195, %.critedge2 ] ; 5 uses
-  %.lcssa188 = phi ptr [ %.lcssa188.ph, %.critedge4.loopexit ], [ %.promoted195, %.critedge2 ] ; 2 uses
+  %.promoted200 = phi ptr [ %.promoted200220, %.critedge4.loopexit ], [ %.promoted195, %.critedge2 ] ; 6 uses
   %i.fp = icmp ult ptr %.promoted200, %i.r
   br i1 %i.fp, label %.lr.ph201.preheader, label %.critedge6
 
 .lr.ph201.preheader:                              ; preds = %.critedge4
   %i.fq = add i64 %i.q, %i.o
   %i.fr = sub i64 %i.fq, %.promoted200211.pre-phi
-  %scevgep212 = getelementptr i8, ptr %.promoted200, i64 %i.fr ; 2 uses
+  %scevgep212 = getelementptr i8, ptr %.promoted200, i64 %i.fr
   br label %.lr.ph201
 
 .lr.ph201:                                        ; preds = %.lr.ph201.preheader, %bb.av
-  %i.fs = phi ptr [ %i.fy, %bb.av ], [ %.promoted200, %.lr.ph201.preheader ] ; 4 uses
+  %i.fs = phi ptr [ %i.fy, %bb.av ], [ %.promoted200, %.lr.ph201.preheader ] ; 3 uses
   %i.ft = load i8, ptr %i.fs, align 1, !tbaa !268 ; 2 uses
   %i.fu = sext i8 %i.ft to i32
   %i.fv = icmp ne i8 %i.ft, 32
@@ -274,14 +272,12 @@ bb.av:                                            ; preds = %.lr.ph201
 
 .critedge6.loopexit:                              ; preds = %bb.av, %.lr.ph201
   %.promoted205222 = phi ptr [ %i.fs, %.lr.ph201 ], [ %i.fy, %bb.av ] ; 2 uses
-  %.lcssa.ph = phi ptr [ %i.fs, %.lr.ph201 ], [ %scevgep212, %bb.av ]
   %.pre223 = ptrtoaddr ptr %.promoted205222 to i64
   br label %.critedge6
 
 .critedge6:                                       ; preds = %.critedge6.loopexit, %.critedge4
   %.promoted205214.pre-phi = phi i64 [ %.pre223, %.critedge6.loopexit ], [ %.promoted200211.pre-phi, %.critedge4 ]
-  %.promoted205 = phi ptr [ %.promoted205222, %.critedge6.loopexit ], [ %.promoted200, %.critedge4 ] ; 3 uses
-  %.lcssa = phi ptr [ %.lcssa.ph, %.critedge6.loopexit ], [ %.promoted200, %.critedge4 ] ; 2 uses
+  %.promoted205 = phi ptr [ %.promoted205222, %.critedge6.loopexit ], [ %.promoted200, %.critedge4 ] ; 5 uses
   %i.fz = icmp ult ptr %.promoted205, %i.r
   br i1 %i.fz, label %.lr.ph206.preheader, label %.critedge8
 
@@ -319,13 +315,13 @@ bb.ax:                                            ; preds = %.lr.ph206
   unreachable
 
 .critedge8:                                       ; preds = %bb.aw, %.critedge6
-  %i.gq = icmp ugt ptr %.lcssa, %.lcssa188
+  %i.gq = icmp ugt ptr %.promoted205, %.promoted200
   br i1 %i.gq, label %bb.ay, label %bb.az
 
 bb.ay:                                            ; preds = %.critedge8
-  %i.gr = ptrtoint ptr %.lcssa188 to i64          ; 2 uses
+  %i.gr = ptrtoint ptr %.promoted200 to i64       ; 2 uses
   %i.gs = sub i64 %i.gr, %i.al
-  %i.gt = ptrtoint ptr %.lcssa to i64
+  %i.gt = ptrtoint ptr %.promoted205 to i64
   %i.gu = sub i64 %i.gt, %i.gr
   %i.gv = call i64 @rb_str_subseq(i64 noundef %i.c, i64 noundef %i.gs, i64 noundef %i.gu) #18
   br label %bb.bb

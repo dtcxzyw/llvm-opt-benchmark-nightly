@@ -204,7 +204,7 @@ bb.ev:                                            ; preds = %_ZN5arrow9ArraySpan
 bb.ew:                                            ; preds = %bb.ev, %.lr.ph.i58
   %i.pr = phi ptr [ %.promoted244.i, %.lr.ph.i58 ], [ %i.qr, %bb.ev ] ; 8 uses
   %.sroa.0224.0251.i = phi ptr [ %i.pg, %.lr.ph.i58 ], [ %i.pp, %bb.ev ] ; 2 uses
-  %i.ps = phi ptr [ %.promoted.i, %.lr.ph.i58 ], [ %i.qt, %bb.ev ] ; 7 uses
+  %i.ps = phi ptr [ %.promoted.i, %.lr.ph.i58 ], [ %i.qt, %bb.ev ] ; 8 uses
   %i.pt = phi ptr [ %.promoted244.i, %.lr.ph.i58 ], [ %i.qs, %bb.ev ] ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %89) #20, !noalias !656
   %i.pu = load ptr, ptr %.sroa.0224.0251.i, align 8, !tbaa !153
@@ -278,8 +278,8 @@ bb.fd:                                            ; preds = %bb.fc
 
 bb.fe:                                            ; preds = %bb.fc
   %i.qb = ptrtoint ptr %i.pr to i64
-  %i.qc = ptrtoint ptr %i.pt to i64
-  %i.qd = sub i64 %i.qb, %i.qc                    ; 4 uses
+  %i.qc = ptrtoint ptr %i.pt to i64               ; 2 uses
+  %i.qd = sub i64 %i.qb, %i.qc                    ; 3 uses
   %i.qe = icmp eq i64 %i.qd, 9223372036854775792
   br i1 %i.qe, label %bb.ff, label %_ZNKSt6vectorIN5arrow12_GLOBAL__N_15RangeESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i
 
@@ -329,7 +329,9 @@ _ZNSt6vectorIN5arrow12_GLOBAL__N_15RangeESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.ex
   br i1 %.not.i27.i.i.i, label %_ZNSt6vectorIN5arrow12_GLOBAL__N_15RangeESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i, label %bb.fg
 
 bb.fg:                                            ; preds = %_ZNSt6vectorIN5arrow12_GLOBAL__N_15RangeESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit26.i.i.i
-  call void @_ZdlPvm(ptr noundef nonnull %i.pt, i64 noundef %i.qd) #23, !inline_history !379
+  %118 = ptrtoint ptr %i.ps to i64
+  %119 = sub i64 %118, %i.qc
+  call void @_ZdlPvm(ptr noundef nonnull %i.pt, i64 noundef %119) #23, !inline_history !379
   br label %_ZNSt6vectorIN5arrow12_GLOBAL__N_15RangeESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIN5arrow12_GLOBAL__N_15RangeESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i: ; preds = %bb.fg, %_ZNSt6vectorIN5arrow12_GLOBAL__N_15RangeESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit26.i.i.i
@@ -732,7 +734,7 @@ bb.oi:                                            ; preds = %_ZN5arrow9ArraySpan
 bb.oj:                                            ; preds = %bb.oi, %.lr.ph.i121
   %i.avg = phi ptr [ %.promoted222.i, %.lr.ph.i121 ], [ %i.awg, %bb.oi ] ; 8 uses
   %.sroa.0202.0229.i = phi ptr [ %i.auv, %.lr.ph.i121 ], [ %i.ave, %bb.oi ] ; 2 uses
-  %i.avh = phi ptr [ %.promoted.i120, %.lr.ph.i121 ], [ %i.awi, %bb.oi ] ; 7 uses
+  %i.avh = phi ptr [ %.promoted.i120, %.lr.ph.i121 ], [ %i.awi, %bb.oi ] ; 8 uses
   %i.avi = phi ptr [ %.promoted222.i, %.lr.ph.i121 ], [ %i.awh, %bb.oi ] ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %65) #20, !noalias !696
   %i.avj = load ptr, ptr %.sroa.0202.0229.i, align 8, !tbaa !153
@@ -806,8 +808,8 @@ bb.oq:                                            ; preds = %bb.op
 
 bb.or:                                            ; preds = %bb.op
   %i.avq = ptrtoint ptr %i.avg to i64
-  %i.avr = ptrtoint ptr %i.avi to i64
-  %i.avs = sub i64 %i.avq, %i.avr                 ; 4 uses
+  %i.avr = ptrtoint ptr %i.avi to i64             ; 2 uses
+  %i.avs = sub i64 %i.avq, %i.avr                 ; 3 uses
   %i.avt = icmp eq i64 %i.avs, 9223372036854775792
   br i1 %i.avt, label %bb.os, label %_ZNKSt6vectorIN5arrow12_GLOBAL__N_15RangeESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i275
 
@@ -857,7 +859,9 @@ _ZNSt6vectorIN5arrow12_GLOBAL__N_15RangeESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.ex
   br i1 %.not.i27.i.i.i285, label %_ZNSt6vectorIN5arrow12_GLOBAL__N_15RangeESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i286, label %bb.ot
 
 bb.ot:                                            ; preds = %_ZNSt6vectorIN5arrow12_GLOBAL__N_15RangeESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit26.i.i.i283
-  call void @_ZdlPvm(ptr noundef nonnull %i.avi, i64 noundef %i.avs) #23, !inline_history !441
+  %120 = ptrtoint ptr %i.avh to i64
+  %121 = sub i64 %120, %i.avr
+  call void @_ZdlPvm(ptr noundef nonnull %i.avi, i64 noundef %121) #23, !inline_history !441
   br label %_ZNSt6vectorIN5arrow12_GLOBAL__N_15RangeESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i286
 
 _ZNSt6vectorIN5arrow12_GLOBAL__N_15RangeESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i286: ; preds = %bb.ot, %_ZNSt6vectorIN5arrow12_GLOBAL__N_15RangeESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit26.i.i.i283

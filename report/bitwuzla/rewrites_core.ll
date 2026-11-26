@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %7, i64 8
-  %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !45 ; 2 uses
+  %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !45 ; 3 uses
   %.phi.trans.insert213 = getelementptr inbounds nuw i8, ptr %7, i64 16
   %.pre214 = load ptr, ptr %.phi.trans.insert213, align 8, !tbaa !46 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 4 uses
@@ -224,9 +224,11 @@ bb.f:                                             ; preds = %.thread255, %bb.d
   %i.s = phi ptr [ %i.l, %.thread255 ], [ %i.o, %bb.d ] ; 3 uses
   %i.t = phi ptr [ %i.k, %.thread255 ], [ %i.n, %bb.d ] ; 2 uses
   %i.u = phi ptr [ %2, %.thread255 ], [ %i.m, %bb.d ]
+  %19 = phi ptr [ null, %.thread255 ], [ %.pre, %bb.d ]
   %i.v = phi ptr [ null, %.thread255 ], [ %.pre214, %bb.d ] ; 3 uses
+  %20 = ptrtoaddr ptr %i.v to i64
   %i.w = load ptr, ptr %7, align 8, !tbaa !47     ; 7 uses
-  %i.x = ptrtoint ptr %i.v to i64                 ; 2 uses
+  %i.x = ptrtoint ptr %19 to i64
   %i.y = ptrtoint ptr %i.w to i64                 ; 4 uses
   %i.z = sub i64 %i.x, %i.y                       ; 3 uses
   %i.aa = icmp eq i64 %i.z, 9223372036854775800
@@ -261,7 +263,7 @@ _ZNKSt6vectorISt17reference_wrapperIKN4bzla4NodeEESaIS4_EE12_M_check_lenEmPKc.ex
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %.noexc58
   %i.ak = ptrtoaddr ptr %i.ah to i64
-  %i.al = add i64 %i.x, -8
+  %i.al = add i64 %20, -8
   %i.am = sub i64 %i.al, %i.y                     ; 2 uses
   %i.an = lshr i64 %i.am, 3
   %i.ao = add nuw nsw i64 %i.an, 1                ; 2 uses

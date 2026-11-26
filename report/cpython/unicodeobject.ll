@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %bb.l
 
 _PyUnicode_DATA.exit.i:                           ; preds = %bb.n, %bb.m
   %.0.i.i69 = phi ptr [ %.0.i.i.i, %bb.m ], [ %.val4.i.i, %bb.n ] ; 4 uses
-  %i.ak = getelementptr i8, ptr %.0.i.i69, i64 %.val.i67 ; 3 uses
+  %i.ak = getelementptr i8, ptr %.0.i.i69, i64 %.val.i67 ; 2 uses
   %i.al = load ptr, ptr %3, align 8, !tbaa !678   ; 4 uses
   %i.am = getelementptr i8, ptr %i.al, i64 32
   %.val.i37.i = load i32, ptr %i.am, align 8      ; 3 uses
@@ -418,12 +418,12 @@ bb.ao:                                            ; preds = %.thread72.i
 
 bb.ap:                                            ; preds = %bb.ao, %bb.an
   %.1.i = phi ptr [ %.03078.i, %bb.an ], [ %i.ch, %bb.ao ] ; 2 uses
-  %i.ci = getelementptr i8, ptr %.03177.i, i64 1  ; 2 uses
+  %i.ci = getelementptr i8, ptr %.03177.i, i64 1  ; 3 uses
   %exitcond.not.i = icmp eq ptr %i.ci, %i.ak
   br i1 %exitcond.not.i, label %._crit_edge.loopexit.i, label %.lr.ph.i, !llvm.loop !1138
 
 ._crit_edge.loopexit.i:                           ; preds = %bb.ap, %bb.an, %bb.am
-  %.031.lcssa.ph.i = phi ptr [ %.03177.i, %bb.an ], [ %i.ak, %bb.ap ], [ %.03177.i, %bb.am ]
+  %.031.lcssa.ph.i = phi ptr [ %.03177.i, %bb.an ], [ %i.ci, %bb.ap ], [ %.03177.i, %bb.am ]
   %.030.lcssa.ph.i = phi ptr [ %.03078.i, %bb.an ], [ %.1.i, %bb.ap ], [ %.03078.i, %bb.am ]
   %i.cj = phi i1 [ false, %bb.an ], [ true, %bb.ap ], [ false, %bb.am ]
   %.pre.i = load ptr, ptr %3, align 8, !tbaa !678 ; 2 uses

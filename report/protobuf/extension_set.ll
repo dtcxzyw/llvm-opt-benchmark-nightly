@@ -205,7 +205,7 @@ declare noundef ptr @_ZN6google8protobuf8internal12ParseContext12ParseMessageEPN
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden noundef ptr @_ZN6google8protobuf8internal18EpsCopyInputStream16ReadPackedVarintIZNS1_19PackedEnumParserArgINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS1_13ExtensionInfo17EnumValidityCheckEEEPKcPvSE_PNS1_12ParseContextET0_PNS1_16InternalMetadataEiEUliE_ZNS2_16ReadPackedVarintISL_EESE_SE_T_EUliE_EESE_SE_SN_SI_(ptr noundef nonnull align 8 dereferenceable(88) %0, ptr noundef %1, ptr noundef byval(%class.anon.129) align 8 %2) local_unnamed_addr #3 comdat align 2 personality ptr @__gxx_personality_v0 !guid !666 {
 bb.a:
-  %i.a = alloca [26 x i8], align 16               ; 6 uses
+  %i.a = alloca [26 x i8], align 16               ; 7 uses
   %i.b = load i8, ptr %1, align 1, !tbaa !53      ; 2 uses
   %i.c = zext i8 %i.b to i32                      ; 2 uses
   %i.d = icmp sgt i8 %i.b, -1
@@ -410,7 +410,7 @@ bb.o:                                             ; preds = %_ZN6google8protobuf
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #35
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(26) %i.a, i8 0, i64 26, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.a, ptr noundef nonnull align 1 dereferenceable(16) %i.bm, i64 16, i1 false)
-  %i.bs = sext i32 %i.bq to i64                   ; 3 uses
+  %i.bs = sext i32 %i.bq to i64                   ; 2 uses
   %i.bt = getelementptr inbounds i8, ptr %i.a, i64 %i.bs ; 2 uses
   %sext39 = shl i64 %i.bp, 32
   %i.bu = ashr exact i64 %sext39, 32              ; 2 uses
@@ -561,13 +561,16 @@ _ZZN6google8protobuf8internal19PackedEnumParserArgINSt7__cxx1112basic_stringIcSt
   br i1 %i.dt, label %.lr.ph.i42, label %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_19PackedEnumParserArgINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS1_13ExtensionInfo17EnumValidityCheckEEEPKcPvSE_PNS1_12ParseContextET0_PNS1_16InternalMetadataEiEUliE_EESE_SE_SE_T_.exit48
 
 _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_19PackedEnumParserArgINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS1_13ExtensionInfo17EnumValidityCheckEEEPKcPvSE_PNS1_12ParseContextET0_PNS1_16InternalMetadataEiEUliE_EESE_SE_SE_T_.exit48: ; preds = %_ZZN6google8protobuf8internal19PackedEnumParserArgINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS1_13ExtensionInfo17EnumValidityCheckEEEPKcPvSC_PNS1_12ParseContextET0_PNS1_16InternalMetadataEiENKUliE_clEi.exit74, %bb.o
-  %.2.i41 = phi ptr [ %i.bv, %bb.o ], [ %.0.i11.i45, %_ZZN6google8protobuf8internal19PackedEnumParserArgINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS1_13ExtensionInfo17EnumValidityCheckEEEPKcPvSC_PNS1_12ParseContextET0_PNS1_16InternalMetadataEiENKUliE_clEi.exit74 ]
+  %.2.i41 = phi ptr [ %i.bv, %bb.o ], [ %.0.i11.i45, %_ZZN6google8protobuf8internal19PackedEnumParserArgINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS1_13ExtensionInfo17EnumValidityCheckEEEPKcPvSC_PNS1_12ParseContextET0_PNS1_16InternalMetadataEiENKUliE_clEi.exit74 ] ; 2 uses
   %.not40 = icmp eq ptr %.2.i41, %i.bt
   br i1 %.not40, label %bb.aa, label %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_19PackedEnumParserArgINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS1_13ExtensionInfo17EnumValidityCheckEEEPKcPvSE_PNS1_12ParseContextET0_PNS1_16InternalMetadataEiEUliE_EESE_SE_SE_T_.exit48.thread
 
 bb.aa:                                            ; preds = %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_19PackedEnumParserArgINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS1_13ExtensionInfo17EnumValidityCheckEEEPKcPvSE_PNS1_12ParseContextET0_PNS1_16InternalMetadataEiEUliE_EESE_SE_SE_T_.exit48
   %i.du = load ptr, ptr %i.g, align 8, !tbaa !202
-  %i.dv = getelementptr inbounds i8, ptr %i.du, i64 %i.bs
+  %3 = ptrtoint ptr %.2.i41 to i64
+  %4 = ptrtoint ptr %i.a to i64
+  %5 = sub i64 %3, %4
+  %i.dv = getelementptr inbounds i8, ptr %i.du, i64 %5
   br label %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_19PackedEnumParserArgINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS1_13ExtensionInfo17EnumValidityCheckEEEPKcPvSE_PNS1_12ParseContextET0_PNS1_16InternalMetadataEiEUliE_EESE_SE_SE_T_.exit48.thread
 
 _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_19PackedEnumParserArgINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS1_13ExtensionInfo17EnumValidityCheckEEEPKcPvSE_PNS1_12ParseContextET0_PNS1_16InternalMetadataEiEUliE_EESE_SE_SE_T_.exit48.thread: ; preds = %_ZN6google8protobuf8internal11VarintParseImEEPKcS4_PT_.exit.i44, %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_19PackedEnumParserArgINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS1_13ExtensionInfo17EnumValidityCheckEEEPKcPvSE_PNS1_12ParseContextET0_PNS1_16InternalMetadataEiEUliE_EESE_SE_SE_T_.exit48, %bb.aa

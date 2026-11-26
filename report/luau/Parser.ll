@@ -205,8 +205,9 @@ bb.b:                                             ; preds = %.lr.ph, %bb.g
   %i.ax = phi i64 [ %i.i, %.lr.ph ], [ %i.cr, %bb.g ]
   %i.ay = phi ptr [ %i.d, %.lr.ph ], [ %i.cs, %bb.g ] ; 8 uses
   %i.az = phi ptr [ %.pre, %.lr.ph ], [ %i.ct, %bb.g ] ; 5 uses
-  %i.ba = phi ptr [ %i.c, %.lr.ph ], [ %i.cu, %bb.g ] ; 3 uses
+  %i.ba = phi ptr [ %i.c, %.lr.ph ], [ %i.cu, %bb.g ] ; 4 uses
   %.0825 = phi i64 [ 0, %.lr.ph ], [ %i.cv, %bb.g ] ; 6 uses
+  %2 = ptrtoaddr ptr %i.az to i64
   %i.bb = load ptr, ptr %1, align 8, !tbaa !381, !nonnull !65, !align !338
   %i.bc = load i64, ptr %i.j, align 8, !tbaa !368
   %i.bd = load ptr, ptr %i.bb, align 8, !tbaa !182
@@ -224,7 +225,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.g
 
 bb.d:                                             ; preds = %bb.b
-  %i.bj = ptrtoint ptr %i.az to i64               ; 2 uses
+  %i.bj = ptrtoint ptr %i.ba to i64
   %i.bk = ptrtoint ptr %i.ay to i64               ; 4 uses
   %i.bl = sub i64 %i.bj, %i.bk                    ; 3 uses
   %i.bm = icmp eq i64 %i.bl, 9223372036854775800
@@ -259,7 +260,7 @@ _ZNKSt6vectorIN4Luau8PositionESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = 
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %.noexc11
   %i.bw = ptrtoaddr ptr %i.bt to i64
-  %i.bx = add i64 %i.bj, -8
+  %i.bx = add i64 %2, -8
   %i.by = sub i64 %i.bx, %i.bk                    ; 2 uses
   %i.bz = lshr i64 %i.by, 3
   %i.ca = add nuw nsw i64 %i.bz, 1                ; 2 uses

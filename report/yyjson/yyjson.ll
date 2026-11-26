@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %bb.l
 
 bb.o:                                             ; preds = %bb.n, %bb.i
   %i.u = phi ptr [ null, %bb.i ], [ %i.t, %bb.n ] ; 2 uses
-  %i.v = phi ptr [ %0, %bb.i ], [ %i.t, %bb.n ]   ; 72 uses
+  %i.v = phi ptr [ %0, %bb.i ], [ %i.t, %bb.n ]   ; 73 uses
   %.0 = getelementptr inbounds nuw i8, ptr %i.v, i64 %1 ; 79 uses
   store i32 0, ptr %.0, align 1
   %i.w = and i32 %2, 256
@@ -268,15 +268,18 @@ bb.v:                                             ; preds = %bb.u
 
 bb.w:                                             ; preds = %bb.v
   %i.aq = call fastcc zeroext i1 @skip_trivia(ptr noundef %i.m, ptr noundef nonnull %.0, i32 noundef %2)
-  %.pre = load ptr, ptr %i.m, align 8, !tbaa !107 ; 2 uses
+  %.pre = load ptr, ptr %i.m, align 8, !tbaa !107 ; 3 uses
   %i.ar = icmp ne ptr %.pre, %.0
   %or.cond8966.not = select i1 %i.aq, i1 true, i1 %i.ar
   br i1 %or.cond8966.not, label %bb.z, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
+  %15 = ptrtoint ptr %.pre to i64
+  %16 = ptrtoint ptr %i.v to i64
+  %17 = sub i64 %15, %16
   %spec.store.select.sroa.sel1749.v.sroa.sel.v.sroa.sel.v = select i1 %.not108, ptr %13, ptr %4
   %spec.store.select.sroa.sel1749.v.sroa.sel.v.sroa.sel = getelementptr inbounds nuw i8, ptr %spec.store.select.sroa.sel1749.v.sroa.sel.v.sroa.sel.v, i64 16
-  store i64 %1, ptr %spec.store.select.sroa.sel1749.v.sroa.sel.v.sroa.sel, align 8, !tbaa !113
+  store i64 %17, ptr %spec.store.select.sroa.sel1749.v.sroa.sel.v.sroa.sel, align 8, !tbaa !113
   %spec.store.select.sroa.sel1752.v.sroa.sel.v.sroa.sel.v = select i1 %.not108, ptr %13, ptr %4
   %spec.store.select.sroa.sel1752.v.sroa.sel.v.sroa.sel = getelementptr inbounds nuw i8, ptr %spec.store.select.sroa.sel1752.v.sroa.sel.v.sroa.sel.v, i64 8
   store ptr @.str.3, ptr %spec.store.select.sroa.sel1752.v.sroa.sel.v.sroa.sel, align 8, !tbaa !114
@@ -679,7 +682,7 @@ bb.ns:                                            ; preds = %bb.nr
 
 bb.nt:                                            ; preds = %bb.ns
   %i.byn = call fastcc zeroext i1 @skip_trivia(ptr noundef %i.b, ptr noundef nonnull %2, i32 noundef %4)
-  %.pre1136 = load ptr, ptr %i.b, align 8, !tbaa !107 ; 3 uses
+  %.pre1136 = load ptr, ptr %i.b, align 8, !tbaa !107 ; 4 uses
   %i.byo = icmp ne ptr %.pre1136, %2
   %or.cond1378.not = select i1 %i.byn, i1 true, i1 %i.byo
   br i1 %or.cond1378.not, label %bb.nu, label %bb.oa
@@ -855,12 +858,13 @@ read_nan.exit.thread:                             ; preds = %bb.mn, %bb.mo, %bb.
   br label %bb.oc
 
 bb.oa:                                            ; preds = %bb.nt
-  %i.cbn = call fastcc zeroext i1 @is_truncated_end(ptr noundef %0, ptr noundef %.pre1136, ptr noundef nonnull %2, i32 noundef 8, i32 noundef %4) ; 2 uses
-  %8 = ptrtoint ptr %2 to i64
+  %i.cbn = call fastcc zeroext i1 @is_truncated_end(ptr noundef %0, ptr noundef %.pre1136, ptr noundef nonnull %2, i32 noundef 8, i32 noundef %4) ; 3 uses
   %i.cbo = ptrtoint ptr %0 to i64
-  %9 = sub i64 %8, %i.cbo
+  %..pre1136 = select i1 %i.cbn, ptr %2, ptr %.pre1136
   %. = select i1 %i.cbn, i32 5, i32 8
   %.str.17..str.3 = select i1 %i.cbn, ptr @.str.17, ptr @.str.3
+  %8 = ptrtoint ptr %..pre1136 to i64
+  %9 = sub i64 %8, %i.cbo
   %i.cbp = getelementptr inbounds nuw i8, ptr %5, i64 16
   store i64 %9, ptr %i.cbp, align 8, !tbaa !113
   store i32 %., ptr %5, align 8, !tbaa !115

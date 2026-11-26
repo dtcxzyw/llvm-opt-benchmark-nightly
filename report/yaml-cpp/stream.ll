@@ -204,8 +204,8 @@ define noundef signext i8 @_ZN4YAML6Stream3getEv(ptr noundef nonnull align 8 der
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
-  %i.c = load ptr, ptr %i.a, align 8, !tbaa !46   ; 4 uses
-  %i.d = load ptr, ptr %i.b, align 8, !tbaa !46   ; 5 uses
+  %i.c = load ptr, ptr %i.a, align 8, !tbaa !46   ; 3 uses
+  %i.d = load ptr, ptr %i.b, align 8, !tbaa !46   ; 6 uses
   %i.e = icmp eq ptr %i.c, %i.d
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 3 uses
   %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !45 ; 3 uses
@@ -286,7 +286,7 @@ _ZNSt5dequeIcSaIcEE9pop_frontEv.exit.i:           ; preds = %bb.i, %bb.h
 ._crit_edge.i:                                    ; preds = %_ZNK4YAML6Stream4peekEv.exit.thread, %_ZNSt5dequeIcSaIcEE9pop_frontEv.exit.i
   %i.ag = phi ptr [ %i.ab, %_ZNSt5dequeIcSaIcEE9pop_frontEv.exit.i ], [ %.pre, %_ZNK4YAML6Stream4peekEv.exit.thread ]
   %.0.i12 = phi i8 [ %i.u, %_ZNSt5dequeIcSaIcEE9pop_frontEv.exit.i ], [ 4, %_ZNK4YAML6Stream4peekEv.exit.thread ] ; 4 uses
-  %i.ah = phi ptr [ %storemerge.i.i, %_ZNSt5dequeIcSaIcEE9pop_frontEv.exit.i ], [ %i.c, %_ZNK4YAML6Stream4peekEv.exit.thread ]
+  %i.ah = phi ptr [ %storemerge.i.i, %_ZNSt5dequeIcSaIcEE9pop_frontEv.exit.i ], [ %i.d, %_ZNK4YAML6Stream4peekEv.exit.thread ]
   %i.ai = phi ptr [ %i.ac, %_ZNSt5dequeIcSaIcEE9pop_frontEv.exit.i ], [ %.pre1.i11, %_ZNK4YAML6Stream4peekEv.exit.thread ]
   %i.aj = phi ptr [ %.pre.i, %_ZNSt5dequeIcSaIcEE9pop_frontEv.exit.i ], [ %i.c, %_ZNK4YAML6Stream4peekEv.exit.thread ]
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 104
@@ -404,8 +404,8 @@ define void @_ZN4YAML6Stream14AdvanceCurrentEv(ptr noundef nonnull align 8 deref
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
-  %i.c = load ptr, ptr %i.a, align 8, !tbaa !46   ; 4 uses
-  %i.d = load ptr, ptr %i.b, align 8, !tbaa !46   ; 3 uses
+  %i.c = load ptr, ptr %i.a, align 8, !tbaa !46   ; 3 uses
+  %i.d = load ptr, ptr %i.b, align 8, !tbaa !46   ; 4 uses
   %i.e = icmp eq ptr %i.c, %i.d
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %.pre1 = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !48 ; 3 uses
@@ -447,7 +447,7 @@ _ZNSt5dequeIcSaIcEE9pop_frontEv.exit:             ; preds = %bb.c, %bb.d
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.a, %_ZNSt5dequeIcSaIcEE9pop_frontEv.exit
-  %i.s = phi ptr [ %storemerge.i, %_ZNSt5dequeIcSaIcEE9pop_frontEv.exit ], [ %i.c, %bb.a ]
+  %i.s = phi ptr [ %storemerge.i, %_ZNSt5dequeIcSaIcEE9pop_frontEv.exit ], [ %i.d, %bb.a ]
   %i.t = phi ptr [ %i.o, %_ZNSt5dequeIcSaIcEE9pop_frontEv.exit ], [ %.pre1, %bb.a ]
   %i.u = phi ptr [ %.pre, %_ZNSt5dequeIcSaIcEE9pop_frontEv.exit ], [ %i.c, %bb.a ]
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 104

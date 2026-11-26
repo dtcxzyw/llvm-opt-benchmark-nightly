@@ -205,12 +205,15 @@ _ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_1
   br i1 %i.tu, label %.loopexit, label %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.thread.i.i.i.i
 
 _ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.thread.i.i.i.i: ; preds = %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.i.i.i.i, %.lr.ph.i.i.i.i362
-  %i.tv = getelementptr inbounds nuw i8, ptr %.011.i.i.i.i, i64 72 ; 2 uses
+  %i.tv = getelementptr inbounds nuw i8, ptr %.011.i.i.i.i, i64 72 ; 3 uses
   %.not.i.i.i.i364 = icmp eq ptr %i.tv, %i.ti
-  br i1 %.not.i.i.i.i364, label %.loopexit.thread, label %.lr.ph.i.i.i.i362, !llvm.loop !461
+  br i1 %.not.i.i.i.i364, label %.loopexit.from._ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.thread.i.i.i.i, label %.lr.ph.i.i.i.i362, !llvm.loop !461
 
-.loopexit:                                        ; preds = %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.i.i.i.i, %.lr.ph656
-  %.0.lcssa.i.i.i.i = phi ptr [ %i.tg, %.lr.ph656 ], [ %.011.i.i.i.i, %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.i.i.i.i ] ; 2 uses
+.loopexit.from._ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.thread.i.i.i.i: ; preds = %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.thread.i.i.i.i
+  br label %.loopexit, !llvm.loop !461
+
+.loopexit:                                        ; preds = %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.i.i.i.i, %.lr.ph656, %.loopexit.from._ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.thread.i.i.i.i
+  %.0.lcssa.i.i.i.i = phi ptr [ %i.tv, %.loopexit.from._ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.thread.i.i.i.i ], [ %i.tg, %.lr.ph656 ], [ %.011.i.i.i.i, %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.i.i.i.i ] ; 2 uses
   %i.tw = ptrtoint ptr %.0.lcssa.i.i.i.i to i64
   %i.tx = ptrtoint ptr %i.tg to i64
   %i.ty = sub i64 %i.tw, %i.tx
@@ -220,7 +223,7 @@ _ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_1
   %.not227 = or i1 %.not227586, %.not.i365
   br i1 %.not227, label %.loopexit.thread, label %.from..loopexit
 
-.loopexit.thread:                                 ; preds = %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.thread.i.i.i.i, %.loopexit
+.loopexit.thread:                                 ; preds = %.loopexit
   %i.ua = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZN4tlog6Logger6globalEv()
           to label %.noexc366 unwind label %.body411.from..loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -623,12 +626,15 @@ _ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_1
   br i1 %i.lm, label %.loopexit, label %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.thread.i.i.i.i
 
 _ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.thread.i.i.i.i: ; preds = %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.i.i.i.i, %.lr.ph.i.i.i.i362
-  %i.ln = getelementptr inbounds nuw i8, ptr %.011.i.i.i.i, i64 72 ; 2 uses
+  %i.ln = getelementptr inbounds nuw i8, ptr %.011.i.i.i.i, i64 72 ; 3 uses
   %.not.i.i.i.i364 = icmp eq ptr %i.ln, %i.la
-  br i1 %.not.i.i.i.i364, label %.loopexit.thread, label %.lr.ph.i.i.i.i362, !llvm.loop !1493
+  br i1 %.not.i.i.i.i364, label %.loopexit.from._ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.thread.i.i.i.i, label %.lr.ph.i.i.i.i362, !llvm.loop !1493
 
-.loopexit:                                        ; preds = %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.i.i.i.i, %.lr.ph656
-  %.0.lcssa.i.i.i.i = phi ptr [ %i.ky, %.lr.ph656 ], [ %.011.i.i.i.i, %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.i.i.i.i ] ; 2 uses
+.loopexit.from._ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.thread.i.i.i.i: ; preds = %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.thread.i.i.i.i
+  br label %.loopexit, !llvm.loop !1493
+
+.loopexit:                                        ; preds = %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.i.i.i.i, %.lr.ph656, %.loopexit.from._ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.thread.i.i.i.i
+  %.0.lcssa.i.i.i.i = phi ptr [ %i.ln, %.loopexit.from._ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.thread.i.i.i.i ], [ %i.ky, %.lr.ph656 ], [ %.011.i.i.i.i, %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.i.i.i.i ] ; 2 uses
   %i.lo = ptrtoint ptr %.0.lcssa.i.i.i.i to i64
   %i.lp = ptrtoint ptr %i.ky to i64
   %i.lq = sub i64 %i.lo, %i.lp
@@ -638,7 +644,7 @@ _ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_1
   %.not227 = or i1 %.not227586, %.not.i365
   br i1 %.not227, label %.loopexit.thread, label %.from..loopexit
 
-.loopexit.thread:                                 ; preds = %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.thread.i.i.i.i, %.loopexit
+.loopexit.thread:                                 ; preds = %.loopexit
   %i.ls = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZN4tlog6Logger6globalEv()
           to label %.noexc366 unwind label %.body411.from.
 
@@ -1041,7 +1047,7 @@ begin_hunk_2_@_ZNK3tev14IcoImageLoader4loadERNSt3__119basic_istringstreamIcNS1_1
 !1512 = distinct !{!1512, !1511, !"_ZN3fmt3v129to_stringILm500EEENSt3__112basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEERKNS0_19basic_memory_bufferIcXT_ENS0_6detail9allocatorIcEEEE: argument 0"}
 !1513 = distinct !{!1513, !101}
 !1514 = distinct !{!1514, !101}
-!1515 = !{!"branch_weights", i32 0, i32 -1870692793, i32 793657734, i32 -689682259, i32 287453131}
+!1515 = !{!"branch_weights", i32 0, i32 -2050028580, i32 734946877, i32 -1746114619, i32 278359503}
 !1516 = !{!1482}
 !1517 = !{!1484, !1482}
 !1518 = !{!1486}
@@ -1055,5 +1061,5 @@ begin_hunk_2_@_ZNK3tev14IcoImageLoader4loadERNSt3__119basic_istringstreamIcNS1_1
 !1526 = !{!1510}
 !1527 = !{!1512}
 !1528 = !{!1512, !1510}
-!1529 = !{!"branch_weights", i32 0, i32 -1870692793, i32 793657734, i32 -689682259, i32 287453131, i32 292584607}
+!1529 = !{!"branch_weights", i32 0, i32 -2050028580, i32 734946877, i32 -1746114619, i32 278359503, i32 263482486}
 end_hunk_2

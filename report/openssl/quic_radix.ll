@@ -205,8 +205,8 @@ bb.bo:                                            ; preds = %bb.bn
 TERP_execute.exit:                                ; preds = %bb.bn, %.sink.split.i
   %.082218219.i = phi i32 [ %.082.i, %bb.bn ], [ %.082218219.ph.i, %.sink.split.i ]
   %.not26 = icmp eq i32 %.082218219.i, 0
-  %.pre154 = load ptr, ptr %i.dq, align 8, !tbaa !56 ; 5 uses
-  %.pre156 = load ptr, ptr %i.dy, align 8, !tbaa !57 ; 3 uses
+  %.pre154 = load ptr, ptr %i.dq, align 8, !tbaa !56 ; 4 uses
+  %.pre156 = load ptr, ptr %i.dy, align 8, !tbaa !57 ; 4 uses
   br i1 %.not26, label %bb.br, label %bb.bp
 
 bb.bp:                                            ; preds = %TERP_execute.exit
@@ -223,7 +223,7 @@ bb.bq:                                            ; preds = %bb.bp
   br label %bb.br
 
 bb.br:                                            ; preds = %bb.bq, %TERP_execute.exit, %bb.bp
-  %i.kx = phi ptr [ %.pre155, %bb.bq ], [ %.pre154, %bb.bp ], [ %.pre156, %TERP_execute.exit ]
+  %i.kx = phi ptr [ %.pre155, %bb.bq ], [ %.pre156, %bb.bp ], [ %.pre156, %TERP_execute.exit ]
   %i.ky = phi ptr [ %.pre, %bb.bq ], [ %.pre154, %bb.bp ], [ %.pre154, %TERP_execute.exit ] ; 2 uses
   %.not29 = phi i1 [ true, %bb.bq ], [ false, %bb.bp ], [ true, %TERP_execute.exit ]
   %.022 = phi i32 [ 0, %bb.bq ], [ 1, %bb.bp ], [ 0, %TERP_execute.exit ] ; 2 uses

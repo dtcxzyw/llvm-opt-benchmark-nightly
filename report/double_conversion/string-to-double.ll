@@ -204,7 +204,7 @@ bb.ak:                                            ; preds = %bb.aj
   %i.ed = load i16, ptr %i.ec, align 8, !tbaa !35 ; 3 uses
   %i.ee = zext i16 %i.ed to i32                   ; 2 uses
   %i.ef = icmp eq i16 %i.ed, 0                    ; 2 uses
-  %i.eg = getelementptr inbounds nuw i8, ptr %i.dz, i64 1 ; 7 uses
+  %i.eg = getelementptr inbounds nuw i8, ptr %i.dz, i64 1 ; 8 uses
   store ptr %i.eg, ptr %i.b, align 8, !tbaa !16
   %i.eh = icmp eq ptr %i.eg, %i.h                 ; 2 uses
   br i1 %i.ef, label %.split, label %_ZN17double_conversionL7isDigitEii.exit.thread.i
@@ -240,7 +240,11 @@ _ZN17double_conversionL7isDigitEii.exit30.thread.i: ; preds = %bb.an
   br label %_ZN17double_conversionL7AdvanceIPKcEEbPT_tiRS3_.exit.threadthread-pre-split
 
 _ZN17double_conversionL7AdvanceIPKcEEbPT_tiRS3_.exit.thread356: ; preds = %_ZN17double_conversionL7isDigitEii.exit.thread.i, %.split
-  store i32 %2, ptr %4, align 4, !tbaa !17
+  %5 = ptrtoint ptr %i.eg to i64
+  %6 = ptrtoint ptr %1 to i64
+  %7 = sub i64 %5, %6
+  %8 = trunc i64 %7 to i32
+  store i32 %8, ptr %4, align 4, !tbaa !17
   %i.er = select i1 %.0180, double -0.000000e+00, double 0.000000e+00
   br label %.thread
 
@@ -643,7 +647,7 @@ bb.a:
   store ptr %1, ptr %i.a, align 8, !tbaa !40
   %i.f = sext i32 %2 to i64
   %.idx = shl nsw i64 %i.f, 1
-  %i.g = getelementptr i8, ptr %1, i64 %.idx      ; 37 uses
+  %i.g = getelementptr i8, ptr %1, i64 %.idx      ; 35 uses
   store i32 0, ptr %4, align 4, !tbaa !17
   %i.h = load i32, ptr %0, align 8, !tbaa !21     ; 9 uses
   %i.i = and i32 %i.h, 4
@@ -860,7 +864,7 @@ bb.u:                                             ; preds = %bb.s
 
 .lr.ph437:                                        ; preds = %.lr.ph.i247.preheader, %.lr.ph.i247
   %i.bu = phi ptr [ %i.bv, %.lr.ph.i247 ], [ %i.bl, %.lr.ph.i247.preheader ]
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 2 ; 3 uses
+  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 2 ; 4 uses
   %.not.not.i251 = icmp eq ptr %i.bv, %i.g
   br i1 %.not.not.i251, label %_ZN17double_conversionL17AdvanceToNonspaceIPKtEEbPT_S3_.exit252, label %.lr.ph.i247, !llvm.loop !3
 
@@ -870,7 +874,7 @@ bb.u:                                             ; preds = %bb.s
   br label %.thread
 
 _ZN17double_conversionL17AdvanceToNonspaceIPKtEEbPT_S3_.exit252: ; preds = %.lr.ph437, %bb.u
-  %i.by = phi ptr [ %i.bl, %bb.u ], [ %i.g, %.lr.ph437 ]
+  %i.by = phi ptr [ %i.bl, %bb.u ], [ %i.bv, %.lr.ph437 ]
   %i.bz = ptrtoint ptr %i.by to i64
   %i.ca = ptrtoint ptr %1 to i64
   %i.cb = sub i64 %i.bz, %i.ca
@@ -982,7 +986,7 @@ bb.ah:                                            ; preds = %bb.af
 
 .lr.ph442:                                        ; preds = %.lr.ph.i259.preheader, %.lr.ph.i259
   %i.dj = phi ptr [ %i.dk, %.lr.ph.i259 ], [ %i.da, %.lr.ph.i259.preheader ]
-  %i.dk = getelementptr inbounds nuw i8, ptr %i.dj, i64 2 ; 3 uses
+  %i.dk = getelementptr inbounds nuw i8, ptr %i.dj, i64 2 ; 4 uses
   %.not.not.i263 = icmp eq ptr %i.dk, %i.g
   br i1 %.not.not.i263, label %_ZN17double_conversionL17AdvanceToNonspaceIPKtEEbPT_S3_.exit264, label %.lr.ph.i259, !llvm.loop !3
 
@@ -992,7 +996,7 @@ bb.ah:                                            ; preds = %bb.af
   br label %.thread
 
 _ZN17double_conversionL17AdvanceToNonspaceIPKtEEbPT_S3_.exit264: ; preds = %.lr.ph442, %bb.ah
-  %i.dn = phi ptr [ %i.da, %bb.ah ], [ %i.g, %.lr.ph442 ]
+  %i.dn = phi ptr [ %i.da, %bb.ah ], [ %i.dk, %.lr.ph442 ]
   %i.do = ptrtoint ptr %i.dn to i64
   %i.dp = ptrtoint ptr %1 to i64
   %i.dq = sub i64 %i.do, %i.dp
@@ -1014,7 +1018,7 @@ bb.ak:                                            ; preds = %bb.aj
   %i.dw = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.dx = load i16, ptr %i.dw, align 8, !tbaa !35 ; 4 uses
   %i.dy = icmp eq i16 %i.dx, 0                    ; 2 uses
-  %i.dz = getelementptr inbounds nuw i8, ptr %i.dt, i64 2 ; 5 uses
+  %i.dz = getelementptr inbounds nuw i8, ptr %i.dt, i64 2 ; 6 uses
   %i.ea = icmp eq ptr %i.dz, %i.g                 ; 2 uses
   br i1 %i.dy, label %.split, label %_ZN17double_conversionL7isDigitEii.exit.thread.i
 
@@ -1041,7 +1045,12 @@ bb.an:                                            ; preds = %bb.am
   br i1 %or.cond19.i26.i, label %_ZN17double_conversionL7AdvanceIPKtEEbPT_tiRS3_.exit.thread, label %_ZN17double_conversionL7AdvanceIPKtEEbPT_tiRS3_.exit.threadthread-pre-split
 
 _ZN17double_conversionL7AdvanceIPKtEEbPT_tiRS3_.exit.thread356: ; preds = %_ZN17double_conversionL7isDigitEii.exit.thread.i, %.split
-  store i32 %2, ptr %4, align 4, !tbaa !17
+  %5 = ptrtoint ptr %i.dz to i64
+  %6 = ptrtoint ptr %1 to i64
+  %7 = sub i64 %5, %6
+  %8 = lshr exact i64 %7, 1
+  %9 = trunc i64 %8 to i32
+  store i32 %9, ptr %4, align 4, !tbaa !17
   %i.eh = select i1 %.0180, double -0.000000e+00, double 0.000000e+00
   br label %.thread
 

@@ -204,8 +204,8 @@ _ZNSt6vectorIhSaIhEE7reserveEm.exit:              ; preds = %_ZNK8rawspeed11Huff
   br label %bb.d
 
 bb.d:                                             ; preds = %_ZNSt20back_insert_iteratorISt6vectorIhSaIhEEEaSERKh.exit.i.i.i.i.i, %.lr.ph.i.i.i.i.i
-  %i.cq = phi ptr [ %.pre9.i.i.i.i.i, %.lr.ph.i.i.i.i.i ], [ %i.dn, %_ZNSt20back_insert_iteratorISt6vectorIhSaIhEEEaSERKh.exit.i.i.i.i.i ] ; 2 uses
-  %i.cr = phi ptr [ %.pre.i.i.i.i.i, %.lr.ph.i.i.i.i.i ], [ %i.do, %_ZNSt20back_insert_iteratorISt6vectorIhSaIhEEEaSERKh.exit.i.i.i.i.i ] ; 2 uses
+  %i.cq = phi ptr [ %.pre9.i.i.i.i.i, %.lr.ph.i.i.i.i.i ], [ %i.dn, %_ZNSt20back_insert_iteratorISt6vectorIhSaIhEEEaSERKh.exit.i.i.i.i.i ]
+  %i.cr = phi ptr [ %.pre.i.i.i.i.i, %.lr.ph.i.i.i.i.i ], [ %i.do, %_ZNSt20back_insert_iteratorISt6vectorIhSaIhEEEaSERKh.exit.i.i.i.i.i ] ; 3 uses
   %.07.i.i.i.i.i = phi i64 [ %i.cp, %.lr.ph.i.i.i.i.i ], [ %i.dq, %_ZNSt20back_insert_iteratorISt6vectorIhSaIhEEEaSERKh.exit.i.i.i.i.i ] ; 2 uses
   %.056.i.i.i.i.i = phi ptr [ %1, %.lr.ph.i.i.i.i.i ], [ %i.dp, %_ZNSt20back_insert_iteratorISt6vectorIhSaIhEEEaSERKh.exit.i.i.i.i.i ] ; 3 uses
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.cr, %i.cq
@@ -222,7 +222,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.d
   %i.cv = load ptr, ptr %0, align 8, !tbaa !288   ; 4 uses
-  %i.cw = ptrtoint ptr %i.cq to i64
+  %i.cw = ptrtoint ptr %i.cr to i64
   %i.cx = ptrtoint ptr %i.cv to i64               ; 2 uses
   %i.cy = sub i64 %i.cw, %i.cx                    ; 7 uses
   %i.cz = icmp eq i64 %i.cy, 9223372036854775807
@@ -625,10 +625,10 @@ _ZNSt6vectorIN8rawspeed18AbstractPrefixCodeINS0_15BaselineCodeTagEE10CodeSymbolE
 bb.b:                                             ; preds = %.lr.ph, %_ZNSt6vectorIN8rawspeed18AbstractPrefixCodeINS0_15BaselineCodeTagEE10CodeSymbolESaIS4_EE12emplace_backIJRjS8_EEERS4_DpOT_.exit
   %i.bp = phi ptr [ %i.ax, %.lr.ph ], [ %i.co, %_ZNSt6vectorIN8rawspeed18AbstractPrefixCodeINS0_15BaselineCodeTagEE10CodeSymbolESaIS4_EE12emplace_backIJRjS8_EEERS4_DpOT_.exit ]
   %i.bq = phi ptr [ %i.ax, %.lr.ph ], [ %i.cp, %_ZNSt6vectorIN8rawspeed18AbstractPrefixCodeINS0_15BaselineCodeTagEE10CodeSymbolESaIS4_EE12emplace_backIJRjS8_EEERS4_DpOT_.exit ]
-  %i.br = phi ptr [ %i.az, %.lr.ph ], [ %i.cq, %_ZNSt6vectorIN8rawspeed18AbstractPrefixCodeINS0_15BaselineCodeTagEE10CodeSymbolESaIS4_EE12emplace_backIJRjS8_EEERS4_DpOT_.exit ] ; 7 uses
+  %i.br = phi ptr [ %i.az, %.lr.ph ], [ %i.cq, %_ZNSt6vectorIN8rawspeed18AbstractPrefixCodeINS0_15BaselineCodeTagEE10CodeSymbolESaIS4_EE12emplace_backIJRjS8_EEERS4_DpOT_.exit ] ; 5 uses
   %.029 = phi i32 [ 0, %.lr.ph ], [ %i.cu, %_ZNSt6vectorIN8rawspeed18AbstractPrefixCodeINS0_15BaselineCodeTagEE10CodeSymbolESaIS4_EE12emplace_backIJRjS8_EEERS4_DpOT_.exit ]
   %.128 = phi i32 [ %.01833, %.lr.ph ], [ %i.ct, %_ZNSt6vectorIN8rawspeed18AbstractPrefixCodeINS0_15BaselineCodeTagEE10CodeSymbolESaIS4_EE12emplace_backIJRjS8_EEERS4_DpOT_.exit ] ; 3 uses
-  %i.bs = phi ptr [ %.promoted, %.lr.ph ], [ %i.cs, %_ZNSt6vectorIN8rawspeed18AbstractPrefixCodeINS0_15BaselineCodeTagEE10CodeSymbolESaIS4_EE12emplace_backIJRjS8_EEERS4_DpOT_.exit ] ; 4 uses
+  %i.bs = phi ptr [ %.promoted, %.lr.ph ], [ %i.cs, %_ZNSt6vectorIN8rawspeed18AbstractPrefixCodeINS0_15BaselineCodeTagEE10CodeSymbolESaIS4_EE12emplace_backIJRjS8_EEERS4_DpOT_.exit ] ; 7 uses
   %i.bt = phi ptr [ %.promoted24, %.lr.ph ], [ %i.cr, %_ZNSt6vectorIN8rawspeed18AbstractPrefixCodeINS0_15BaselineCodeTagEE10CodeSymbolESaIS4_EE12emplace_backIJRjS8_EEERS4_DpOT_.exit ] ; 9 uses
   %.not.i = icmp eq ptr %i.br, %i.bs
   br i1 %.not.i, label %bb.d, label %bb.c
@@ -644,8 +644,8 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   %i.bx = ptrtoint ptr %i.br to i64
-  %i.by = ptrtoint ptr %i.bt to i64
-  %i.bz = sub i64 %i.bx, %i.by                    ; 6 uses
+  %i.by = ptrtoint ptr %i.bt to i64               ; 2 uses
+  %i.bz = sub i64 %i.bx, %i.by                    ; 5 uses
   %i.ca = icmp eq i64 %i.bz, 9223372036854775804
   br i1 %i.ca, label %bb.e, label %_ZNKSt6vectorIN8rawspeed18AbstractPrefixCodeINS0_15BaselineCodeTagEE10CodeSymbolESaIS4_EE12_M_check_lenEmPKc.exit.i.i
 
@@ -690,7 +690,9 @@ _ZNSt6vectorIN8rawspeed18AbstractPrefixCodeINS0_15BaselineCodeTagEE10CodeSymbolE
   br i1 %.not.i28.i.i, label %_ZNSt6vectorIN8rawspeed18AbstractPrefixCodeINS0_15BaselineCodeTagEE10CodeSymbolESaIS4_EE17_M_realloc_insertIJRjS8_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i, label %bb.g
 
 bb.g:                                             ; preds = %_ZNSt6vectorIN8rawspeed18AbstractPrefixCodeINS0_15BaselineCodeTagEE10CodeSymbolESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit27.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.bt, i64 noundef %i.bz) #26
+  %2 = ptrtoint ptr %i.bs to i64
+  %3 = sub i64 %2, %i.by
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.bt, i64 noundef %3) #26
   br label %_ZNSt6vectorIN8rawspeed18AbstractPrefixCodeINS0_15BaselineCodeTagEE10CodeSymbolESaIS4_EE17_M_realloc_insertIJRjS8_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i
 
 _ZNSt6vectorIN8rawspeed18AbstractPrefixCodeINS0_15BaselineCodeTagEE10CodeSymbolESaIS4_EE17_M_realloc_insertIJRjS8_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i: ; preds = %bb.g, %_ZNSt6vectorIN8rawspeed18AbstractPrefixCodeINS0_15BaselineCodeTagEE10CodeSymbolESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit27.i.i
@@ -720,14 +722,14 @@ _ZNSt6vectorIN8rawspeed18AbstractPrefixCodeINS0_15BaselineCodeTagEE10CodeSymbolE
   br label %bb.h
 
 .loopexit.split-lp:                               ; preds = %bb.e, %_ZNSt12_Vector_baseIN8rawspeed18AbstractPrefixCodeINS0_15BaselineCodeTagEE10CodeSymbolESaIS4_EE11_M_allocateEm.exit.i
-  %i.cy = phi ptr [ %i.br, %bb.e ], [ null, %_ZNSt12_Vector_baseIN8rawspeed18AbstractPrefixCodeINS0_15BaselineCodeTagEE10CodeSymbolESaIS4_EE11_M_allocateEm.exit.i ]
+  %i.cy = phi ptr [ %i.bs, %bb.e ], [ null, %_ZNSt12_Vector_baseIN8rawspeed18AbstractPrefixCodeINS0_15BaselineCodeTagEE10CodeSymbolESaIS4_EE11_M_allocateEm.exit.i ]
   %i.cz = phi ptr [ %i.bt, %bb.e ], [ null, %_ZNSt12_Vector_baseIN8rawspeed18AbstractPrefixCodeINS0_15BaselineCodeTagEE10CodeSymbolESaIS4_EE11_M_allocateEm.exit.i ]
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %bb.h
 
 bb.h:                                             ; preds = %.loopexit.split-lp, %.loopexit
-  %i.da = phi ptr [ %i.br, %.loopexit ], [ %i.cy, %.loopexit.split-lp ]
+  %i.da = phi ptr [ %i.bs, %.loopexit ], [ %i.cy, %.loopexit.split-lp ]
   %i.db = phi ptr [ %i.bt, %.loopexit ], [ %i.cz, %.loopexit.split-lp ] ; 3 uses
   %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   %.not.i.i.i10 = icmp eq ptr %i.db, null

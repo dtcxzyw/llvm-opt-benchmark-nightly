@@ -204,7 +204,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 5 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !126  ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 7 uses
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !127  ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !127  ; 3 uses
   %.not.i.i = icmp eq ptr %i.d, %i.b
   br i1 %.not.i.i, label %_ZNSt6vectorI7obj_refIN10polynomial10polynomialENS1_7managerEE13std_allocatorIS4_EE5clearEv.exit, label %.lr.ph.i.i.i
 
@@ -237,6 +237,7 @@ _ZSt8_DestroyIP7obj_refIN10polynomial10polynomialENS1_7managerEE13std_allocatorI
   br label %_ZNSt6vectorI7obj_refIN10polynomial10polynomialENS1_7managerEE13std_allocatorIS4_EE5clearEv.exit
 
 _ZNSt6vectorI7obj_refIN10polynomial10polynomialENS1_7managerEE13std_allocatorIS4_EE5clearEv.exit: ; preds = %bb.a, %_ZSt8_DestroyIP7obj_refIN10polynomial10polynomialENS1_7managerEE13std_allocatorIS4_EEvT_S8_RT0_.exit.i.i
+  %3 = phi ptr [ %i.d, %bb.a ], [ %i.b, %_ZSt8_DestroyIP7obj_refIN10polynomial10polynomialENS1_7managerEE13std_allocatorIS4_EEvT_S8_RT0_.exit.i.i ]
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 136
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 144 ; 4 uses
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !122  ; 3 uses
@@ -258,7 +259,7 @@ _ZNK15ref_vector_coreIN10polynomial10polynomialE19ref_manager_wrapperIS1_NS0_7ma
   br i1 %i.y, label %_ZNSt12_Vector_baseI7obj_refIN10polynomial10polynomialENS1_7managerEE13std_allocatorIS4_EE11_M_allocateEm.exit.i, label %_ZNK15ref_vector_coreIN10polynomial10polynomialE19ref_manager_wrapperIS1_NS0_7managerEEE4sizeEv.exit10.lr.ph
 
 _ZNSt12_Vector_baseI7obj_refIN10polynomial10polynomialENS1_7managerEE13std_allocatorIS4_EE11_M_allocateEm.exit.i: ; preds = %_ZNK15ref_vector_coreIN10polynomial10polynomialE19ref_manager_wrapperIS1_NS0_7managerEEE4sizeEv.exit
-  %i.z = ptrtoint ptr %i.b to i64
+  %i.z = ptrtoint ptr %3 to i64
   %i.aa = sub i64 %i.z, %i.v
   %i.ab = shl nuw nsw i64 %i.q, 4
   %i.ac = tail call noalias noundef ptr @_ZN6memory8allocateEm(i64 noundef %i.ab) ; 4 uses
@@ -661,8 +662,8 @@ _ZNK15ref_vector_coreIN10polynomial10polynomialE19ref_manager_wrapperIS1_NS0_7ma
 
 _ZNK15ref_vector_coreIN10polynomial10polynomialE19ref_manager_wrapperIS1_NS0_7managerEEE4sizeEv.exit72: ; preds = %_ZNK15ref_vector_coreIN10polynomial10polynomialE19ref_manager_wrapperIS1_NS0_7managerEEE4sizeEv.exit72.lr.ph, %_ZNSt6vectorIZN5nlsat9levelwise4impl29build_both_side_spanning_treeEvE9both_info13std_allocatorIS3_EE9push_backEOS3_.exit
   %i.cm = phi ptr [ %i.by, %_ZNK15ref_vector_coreIN10polynomial10polynomialE19ref_manager_wrapperIS1_NS0_7managerEEE4sizeEv.exit72.lr.ph ], [ %i.em, %_ZNSt6vectorIZN5nlsat9levelwise4impl29build_both_side_spanning_treeEvE9both_info13std_allocatorIS3_EE9push_backEOS3_.exit ] ; 3 uses
-  %i.cn = phi ptr [ null, %_ZNK15ref_vector_coreIN10polynomial10polynomialE19ref_manager_wrapperIS1_NS0_7managerEEE4sizeEv.exit72.lr.ph ], [ %i.en, %_ZNSt6vectorIZN5nlsat9levelwise4impl29build_both_side_spanning_treeEvE9both_info13std_allocatorIS3_EE9push_backEOS3_.exit ] ; 6 uses
-  %i.co = phi ptr [ null, %_ZNK15ref_vector_coreIN10polynomial10polynomialE19ref_manager_wrapperIS1_NS0_7managerEEE4sizeEv.exit72.lr.ph ], [ %i.eo, %_ZNSt6vectorIZN5nlsat9levelwise4impl29build_both_side_spanning_treeEvE9both_info13std_allocatorIS3_EE9push_backEOS3_.exit ] ; 7 uses
+  %i.cn = phi ptr [ null, %_ZNK15ref_vector_coreIN10polynomial10polynomialE19ref_manager_wrapperIS1_NS0_7managerEEE4sizeEv.exit72.lr.ph ], [ %i.en, %_ZNSt6vectorIZN5nlsat9levelwise4impl29build_both_side_spanning_treeEvE9both_info13std_allocatorIS3_EE9push_backEOS3_.exit ] ; 5 uses
+  %i.co = phi ptr [ null, %_ZNK15ref_vector_coreIN10polynomial10polynomialE19ref_manager_wrapperIS1_NS0_7managerEEE4sizeEv.exit72.lr.ph ], [ %i.eo, %_ZNSt6vectorIZN5nlsat9levelwise4impl29build_both_side_spanning_treeEvE9both_info13std_allocatorIS3_EE9push_backEOS3_.exit ] ; 8 uses
   %indvars.iv = phi i64 [ 0, %_ZNK15ref_vector_coreIN10polynomial10polynomialE19ref_manager_wrapperIS1_NS0_7managerEEE4sizeEv.exit72.lr.ph ], [ %indvars.iv.next, %_ZNSt6vectorIZN5nlsat9levelwise4impl29build_both_side_spanning_treeEvE9both_info13std_allocatorIS3_EE9push_backEOS3_.exit ] ; 7 uses
   %i.cp = phi ptr [ null, %_ZNK15ref_vector_coreIN10polynomial10polynomialE19ref_manager_wrapperIS1_NS0_7managerEEE4sizeEv.exit72.lr.ph ], [ %i.ep, %_ZNSt6vectorIZN5nlsat9levelwise4impl29build_both_side_spanning_treeEvE9both_info13std_allocatorIS3_EE9push_backEOS3_.exit ] ; 10 uses
   %i.cq = getelementptr inbounds i8, ptr %i.cm, i64 -4
@@ -737,7 +738,7 @@ bb.i:                                             ; preds = %bb.h
   br label %_ZNSt6vectorIZN5nlsat9levelwise4impl29build_both_side_spanning_treeEvE9both_info13std_allocatorIS3_EE9push_backEOS3_.exit
 
 bb.j:                                             ; preds = %bb.h
-  %i.dv = ptrtoint ptr %i.cn to i64
+  %i.dv = ptrtoint ptr %i.co to i64
   %i.dw = ptrtoint ptr %i.cp to i64
   %i.dx = sub i64 %i.dv, %i.dw                    ; 3 uses
   %i.dy = icmp eq i64 %i.dx, 9223372036854775800

@@ -205,9 +205,9 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !73   ; 3 uses
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !73   ; 5 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
-  %i.i = load ptr, ptr %i.h, align 8, !tbaa !101
+  %i.i = load ptr, ptr %i.h, align 8, !tbaa !101  ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.i, %i.g
   br i1 %.not.i.i.i, label %_ZN5faiss16MaybeOwnedVectorIhE5clearEv.exit, label %_ZSt8_DestroyIPhhEvT_S1_RSaIT0_E.exit.i.i.i
 
@@ -216,10 +216,14 @@ _ZSt8_DestroyIPhhEvT_S1_RSaIT0_E.exit.i.i.i:      ; preds = %bb.c
   br label %_ZN5faiss16MaybeOwnedVectorIhE5clearEv.exit
 
 _ZN5faiss16MaybeOwnedVectorIhE5clearEv.exit:      ; preds = %bb.c, %_ZSt8_DestroyIPhhEvT_S1_RSaIT0_E.exit.i.i.i
+  %1 = phi ptr [ %i.i, %bb.c ], [ %i.g, %_ZSt8_DestroyIPhhEvT_S1_RSaIT0_E.exit.i.i.i ]
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 112
   store ptr %i.g, ptr %i.j, align 8, !tbaa !102
+  %2 = ptrtoint ptr %1 to i64
+  %3 = ptrtoint ptr %i.g to i64
+  %4 = sub i64 %2, %3
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 120
-  store i64 0, ptr %i.k, align 8, !tbaa !103
+  store i64 %4, ptr %i.k, align 8, !tbaa !103
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 0, ptr %i.l, align 8, !tbaa !88
   ret void

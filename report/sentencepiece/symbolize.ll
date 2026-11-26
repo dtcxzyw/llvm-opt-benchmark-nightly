@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr [336 x i8], ptr %.val51, i64 %.val ; 5 uses
   %i.c = getelementptr i8, ptr %i.b, i64 -336     ; 3 uses
   %i.d = getelementptr i8, ptr %i.b, i64 -320     ; 2 uses
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !63   ; 4 uses
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !63   ; 5 uses
   %i.f = icmp ugt ptr %i.e, %2
   br i1 %i.f, label %bb.c, label %bb.d
 
@@ -232,8 +232,9 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not50, label %.critedge, label %bb.g
 
 bb.g:                                             ; preds = %bb.e, %bb.f
-  %i.n = ptrtoint ptr %2 to i64                   ; 2 uses
-  tail call void (i32, ptr, i32, ptr, ...) @_ZN4absl12lts_2026052616raw_log_internal6RawLogENS0_11LogSeverityEPKciS4_z(i32 noundef 2, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str, i64 38), i32 noundef 1263, ptr noundef nonnull @.str.19, i64 noundef %i.n, ptr noundef %0, i64 noundef %i.n, ptr noundef %.pre)
+  %i.n = ptrtoint ptr %2 to i64
+  %5 = ptrtoint ptr %i.e to i64
+  tail call void (i32, ptr, i32, ptr, ...) @_ZN4absl12lts_2026052616raw_log_internal6RawLogENS0_11LogSeverityEPKciS4_z(i32 noundef 2, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str, i64 38), i32 noundef 1263, ptr noundef nonnull @.str.19, i64 noundef %i.n, ptr noundef %0, i64 noundef %5, ptr noundef %.pre)
   br label %.critedge
 
 bb.h:                                             ; preds = %bb.d

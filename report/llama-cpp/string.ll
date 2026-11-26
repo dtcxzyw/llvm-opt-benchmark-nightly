@@ -202,15 +202,21 @@ bb.a:
   %i.b = alloca i64, align 8                      ; 6 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 14 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 14 uses
-  %i.c = load ptr, ptr %1, align 8, !tbaa !19     ; 4 uses
+  %i.c = load ptr, ptr %1, align 8, !tbaa !19     ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !19   ; 3 uses
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !19   ; 4 uses
   %i.f = icmp eq ptr %i.c, %i.e
   br i1 %i.f, label %_ZN5jinja6stringC2ERKS0_.exit, label %bb.b
 
 _ZN5jinja6stringC2ERKS0_.exit:                    ; preds = %bb.a
+  %7 = ptrtoint ptr %i.e to i64
+  %8 = ptrtoint ptr %i.c to i64
+  %9 = sub i64 %7, %8
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
+  %10 = getelementptr inbounds nuw i8, ptr null, i64 %9
+  %11 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store i64 0, ptr %0, align 8
+  store ptr %10, ptr %11, align 8, !tbaa !31
   %i.h = tail call noundef ptr @_ZSt16__do_uninit_copyIN9__gnu_cxx17__normal_iteratorIPKN5jinja11string_partESt6vectorIS3_SaIS3_EEEEPS3_ET0_T_SC_SB_(ptr %i.c, ptr %i.e, ptr noundef null)
   store ptr %i.h, ptr %i.g, align 8, !tbaa !24
   br label %bb.af

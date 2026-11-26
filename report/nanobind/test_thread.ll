@@ -204,28 +204,27 @@ bb.a:
   %i.c = ptrtoint ptr %i.a to i64                 ; 2 uses
   %i.d = sub i64 %i.b, %i.c
   %i.e = getelementptr inbounds i8, ptr %i.a, i64 %i.d ; 4 uses
-  %i.f = ptrtoint ptr %2 to i64                   ; 4 uses
+  %i.f = ptrtoint ptr %2 to i64                   ; 3 uses
   %i.g = sub i64 %i.f, %i.c
-  %i.h = getelementptr inbounds i8, ptr %i.a, i64 %i.g ; 3 uses
+  %i.h = getelementptr inbounds i8, ptr %i.a, i64 %i.g ; 2 uses
   %.not.i = icmp eq ptr %1, %2
   br i1 %.not.i, label %_ZNSt6vectorIlSaIlEE8_M_eraseEN9__gnu_cxx17__normal_iteratorIPlS1_EES5_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  %i.j = load ptr, ptr %i.i, align 8, !tbaa !88   ; 4 uses
+  %i.j = load ptr, ptr %i.i, align 8, !tbaa !88   ; 5 uses
   %.not11.i = icmp eq ptr %2, %i.j
   br i1 %.not11.i, label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPlSt6vectorIlSaIlEEEES6_ET0_T_S8_S7_.exit.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.k = ptrtoint ptr %i.j to i64                 ; 3 uses
+  %i.k = ptrtoint ptr %i.j to i64
   %i.l = sub i64 %i.k, %i.f                       ; 3 uses
   %i.m = icmp sgt i64 %i.l, 8
   br i1 %i.m, label %bb.d, label %bb.e, !prof !93
 
 bb.d:                                             ; preds = %bb.c
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.e, ptr align 8 %i.h, i64 %i.l, i1 false)
-  %.pre.i = load ptr, ptr %i.i, align 8, !tbaa !88 ; 2 uses
-  %.pre13.i = ptrtoint ptr %.pre.i to i64
+  %.pre.i = load ptr, ptr %i.i, align 8, !tbaa !88
   br label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPlSt6vectorIlSaIlEEEES6_ET0_T_S8_S7_.exit.i
 
 bb.e:                                             ; preds = %bb.c
@@ -238,9 +237,9 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPlSt6vectorIlSaIlEEEES6_ET0_T_S8_S7_.exit.i
 
 _ZSt4moveIN9__gnu_cxx17__normal_iteratorIPlSt6vectorIlSaIlEEEES6_ET0_T_S8_S7_.exit.i: ; preds = %bb.b, %bb.f, %bb.e, %bb.d
-  %.pre-phi14.i = phi i64 [ %.pre13.i, %bb.d ], [ %i.k, %bb.f ], [ %i.k, %bb.e ], [ %i.f, %bb.b ]
-  %3 = phi ptr [ %.pre.i, %bb.d ], [ %i.j, %bb.f ], [ %i.j, %bb.e ], [ %i.h, %bb.b ]
-  %i.p = sub i64 %.pre-phi14.i, %i.f
+  %3 = phi ptr [ %.pre.i, %bb.d ], [ %i.j, %bb.f ], [ %i.j, %bb.e ], [ %i.j, %bb.b ] ; 2 uses
+  %4 = ptrtoint ptr %3 to i64
+  %i.p = sub i64 %4, %i.f
   %i.q = getelementptr inbounds i8, ptr %i.e, i64 %i.p ; 2 uses
   %.not.i.i = icmp eq ptr %3, %i.q
   br i1 %.not.i.i, label %_ZNSt6vectorIlSaIlEE8_M_eraseEN9__gnu_cxx17__normal_iteratorIPlS1_EES5_.exit, label %_ZSt8_DestroyIPllEvT_S1_RSaIT0_E.exit.i.i

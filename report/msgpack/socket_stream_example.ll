@@ -204,7 +204,7 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 20 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 10 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 27 uses
-  %i.j = ptrtoint ptr %i.d to i64                 ; 2 uses
+  %i.j = ptrtoint ptr %i.d to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %.preheader, %bb.cg
@@ -607,14 +607,15 @@ bb.cf:                                            ; preds = %bb.ab
 bb.cg:                                            ; preds = %.sink.split1354, %bb.x, %bb.ce, %bb.cd, %bb.cc, %bb.cb
   %.1364 = phi ptr [ %i.co, %bb.ce ], [ %.0363, %bb.x ], [ %i.co, %bb.cb ], [ %i.co, %bb.cc ], [ %i.co, %bb.cd ], [ %i.co, %.sink.split1354 ]
   %.23 = phi i1 [ false, %bb.ce ], [ false, %bb.x ], [ false, %bb.cb ], [ false, %bb.cc ], [ false, %bb.cd ], [ %.23.ph, %.sink.split1354 ]
-  %i.om = load ptr, ptr %i.c, align 8, !tbaa !91  ; 2 uses
+  %i.om = load ptr, ptr %i.c, align 8, !tbaa !91  ; 3 uses
   %.not493 = icmp eq ptr %i.om, %i.d
   br i1 %.not493, label %bb.ch, label %bb.b, !llvm.loop !118
 
 bb.ch:                                            ; preds = %bb.cg
   %i.on = load ptr, ptr %0, align 8, !tbaa !90
+  %16 = ptrtoint ptr %i.om to i64
   %i.oo = ptrtoint ptr %i.on to i64
-  %i.op = sub i64 %i.j, %i.oo
+  %i.op = sub i64 %16, %i.oo
   store i64 %i.op, ptr %3, align 8, !tbaa !13
   br label %.thread
 
@@ -1017,7 +1018,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
   %i.bm = load ptr, ptr %i.bl, align 8, !tbaa !76 ; 5 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
-  %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !77
+  %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !77 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.bm, %i.bo
   br i1 %.not.i.i.i, label %bb.s, label %bb.r
 
@@ -1033,8 +1034,8 @@ bb.r:                                             ; preds = %bb.q
 bb.s:                                             ; preds = %bb.q
   %i.br = load ptr, ptr %i.bk, align 8, !tbaa !75 ; 7 uses
   %i.bs = ptrtoint ptr %i.bm to i64               ; 2 uses
-  %i.bt = ptrtoint ptr %i.br to i64               ; 2 uses
-  %i.bu = sub i64 %i.bs, %i.bt                    ; 4 uses
+  %i.bt = ptrtoint ptr %i.br to i64               ; 3 uses
+  %i.bu = sub i64 %i.bs, %i.bt                    ; 3 uses
   %i.bv = icmp eq i64 %i.bu, 9223372036854775800
   br i1 %i.bv, label %bb.t, label %_ZNKSt6vectorIN7msgpack2v26detail7contextI17json_like_printerE12unpack_stack10stack_elemESaIS7_EE12_M_check_lenEmPKc.exit.i.i.i.i
 
@@ -1120,7 +1121,9 @@ _ZNSt6vectorIN7msgpack2v26detail7contextI17json_like_printerE12unpack_stack10sta
   br i1 %.not.i23.i.i.i.i, label %_ZNSt6vectorIN7msgpack2v26detail7contextI17json_like_printerE12unpack_stack10stack_elemESaIS7_EE17_M_realloc_insertIJS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_S9_EEDpOT_.exit.i.i.i, label %bb.u
 
 bb.u:                                             ; preds = %_ZNSt6vectorIN7msgpack2v26detail7contextI17json_like_printerE12unpack_stack10stack_elemESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i.i.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.br, i64 noundef %i.bu) #25
+  %5 = ptrtoint ptr %i.bo to i64
+  %6 = sub i64 %5, %i.bt
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.br, i64 noundef %6) #25
   br label %_ZNSt6vectorIN7msgpack2v26detail7contextI17json_like_printerE12unpack_stack10stack_elemESaIS7_EE17_M_realloc_insertIJS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_S9_EEDpOT_.exit.i.i.i
 
 _ZNSt6vectorIN7msgpack2v26detail7contextI17json_like_printerE12unpack_stack10stack_elemESaIS7_EE17_M_realloc_insertIJS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_S9_EEDpOT_.exit.i.i.i: ; preds = %bb.u, %_ZNSt6vectorIN7msgpack2v26detail7contextI17json_like_printerE12unpack_stack10stack_elemESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i.i.i.i
@@ -1323,7 +1326,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
   %i.bm = load ptr, ptr %i.bl, align 8, !tbaa !76 ; 5 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
-  %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !77
+  %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !77 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.bm, %i.bo
   br i1 %.not.i.i.i, label %bb.s, label %bb.r
 
@@ -1340,8 +1343,8 @@ bb.r:                                             ; preds = %bb.q
 bb.s:                                             ; preds = %bb.q
   %i.br = load ptr, ptr %i.bk, align 8, !tbaa !75 ; 7 uses
   %i.bs = ptrtoint ptr %i.bm to i64               ; 2 uses
-  %i.bt = ptrtoint ptr %i.br to i64               ; 2 uses
-  %i.bu = sub i64 %i.bs, %i.bt                    ; 4 uses
+  %i.bt = ptrtoint ptr %i.br to i64               ; 3 uses
+  %i.bu = sub i64 %i.bs, %i.bt                    ; 3 uses
   %i.bv = icmp eq i64 %i.bu, 9223372036854775800
   br i1 %i.bv, label %bb.t, label %_ZNKSt6vectorIN7msgpack2v26detail7contextI17json_like_printerE12unpack_stack10stack_elemESaIS7_EE12_M_check_lenEmPKc.exit.i.i.i.i
 
@@ -1428,7 +1431,9 @@ _ZNSt6vectorIN7msgpack2v26detail7contextI17json_like_printerE12unpack_stack10sta
   br i1 %.not.i23.i.i.i.i, label %_ZNSt6vectorIN7msgpack2v26detail7contextI17json_like_printerE12unpack_stack10stack_elemESaIS7_EE17_M_realloc_insertIJS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_S9_EEDpOT_.exit.i.i.i, label %bb.u
 
 bb.u:                                             ; preds = %_ZNSt6vectorIN7msgpack2v26detail7contextI17json_like_printerE12unpack_stack10stack_elemESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i.i.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.br, i64 noundef %i.bu) #25
+  %5 = ptrtoint ptr %i.bo to i64
+  %6 = sub i64 %5, %i.bt
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.br, i64 noundef %6) #25
   br label %_ZNSt6vectorIN7msgpack2v26detail7contextI17json_like_printerE12unpack_stack10stack_elemESaIS7_EE17_M_realloc_insertIJS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_S9_EEDpOT_.exit.i.i.i
 
 _ZNSt6vectorIN7msgpack2v26detail7contextI17json_like_printerE12unpack_stack10stack_elemESaIS7_EE17_M_realloc_insertIJS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_S9_EEDpOT_.exit.i.i.i: ; preds = %bb.u, %_ZNSt6vectorIN7msgpack2v26detail7contextI17json_like_printerE12unpack_stack10stack_elemESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i.i.i.i
@@ -1820,7 +1825,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
   %i.bl = load ptr, ptr %i.bk, align 8, !tbaa !76 ; 5 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
-  %i.bn = load ptr, ptr %i.bm, align 8, !tbaa !77
+  %i.bn = load ptr, ptr %i.bm, align 8, !tbaa !77 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.bl, %i.bn
   br i1 %.not.i.i.i, label %bb.s, label %bb.r
 
@@ -1836,8 +1841,8 @@ bb.r:                                             ; preds = %bb.q
 bb.s:                                             ; preds = %bb.q
   %i.bq = load ptr, ptr %i.bj, align 8, !tbaa !75 ; 7 uses
   %i.br = ptrtoint ptr %i.bl to i64               ; 2 uses
-  %i.bs = ptrtoint ptr %i.bq to i64               ; 2 uses
-  %i.bt = sub i64 %i.br, %i.bs                    ; 4 uses
+  %i.bs = ptrtoint ptr %i.bq to i64               ; 3 uses
+  %i.bt = sub i64 %i.br, %i.bs                    ; 3 uses
   %i.bu = icmp eq i64 %i.bt, 9223372036854775800
   br i1 %i.bu, label %bb.t, label %_ZNKSt6vectorIN7msgpack2v26detail7contextI17json_like_printerE12unpack_stack10stack_elemESaIS7_EE12_M_check_lenEmPKc.exit.i.i.i.i
 
@@ -1923,7 +1928,9 @@ _ZNSt6vectorIN7msgpack2v26detail7contextI17json_like_printerE12unpack_stack10sta
   br i1 %.not.i23.i.i.i.i, label %_ZNSt6vectorIN7msgpack2v26detail7contextI17json_like_printerE12unpack_stack10stack_elemESaIS7_EE17_M_realloc_insertIJS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_S9_EEDpOT_.exit.i.i.i, label %bb.u
 
 bb.u:                                             ; preds = %_ZNSt6vectorIN7msgpack2v26detail7contextI17json_like_printerE12unpack_stack10stack_elemESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i.i.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.bq, i64 noundef %i.bt) #25
+  %5 = ptrtoint ptr %i.bn to i64
+  %6 = sub i64 %5, %i.bs
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.bq, i64 noundef %6) #25
   br label %_ZNSt6vectorIN7msgpack2v26detail7contextI17json_like_printerE12unpack_stack10stack_elemESaIS7_EE17_M_realloc_insertIJS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_S9_EEDpOT_.exit.i.i.i
 
 _ZNSt6vectorIN7msgpack2v26detail7contextI17json_like_printerE12unpack_stack10stack_elemESaIS7_EE17_M_realloc_insertIJS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_S9_EEDpOT_.exit.i.i.i: ; preds = %bb.u, %_ZNSt6vectorIN7msgpack2v26detail7contextI17json_like_printerE12unpack_stack10stack_elemESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i.i.i.i
@@ -2126,7 +2133,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
   %i.bm = load ptr, ptr %i.bl, align 8, !tbaa !76 ; 5 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
-  %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !77
+  %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !77 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.bm, %i.bo
   br i1 %.not.i.i.i, label %bb.s, label %bb.r
 
@@ -2142,8 +2149,8 @@ bb.r:                                             ; preds = %bb.q
 bb.s:                                             ; preds = %bb.q
   %i.br = load ptr, ptr %i.bk, align 8, !tbaa !75 ; 7 uses
   %i.bs = ptrtoint ptr %i.bm to i64               ; 2 uses
-  %i.bt = ptrtoint ptr %i.br to i64               ; 2 uses
-  %i.bu = sub i64 %i.bs, %i.bt                    ; 4 uses
+  %i.bt = ptrtoint ptr %i.br to i64               ; 3 uses
+  %i.bu = sub i64 %i.bs, %i.bt                    ; 3 uses
   %i.bv = icmp eq i64 %i.bu, 9223372036854775800
   br i1 %i.bv, label %bb.t, label %_ZNKSt6vectorIN7msgpack2v26detail7contextI17json_like_printerE12unpack_stack10stack_elemESaIS7_EE12_M_check_lenEmPKc.exit.i.i.i.i
 
@@ -2229,7 +2236,9 @@ _ZNSt6vectorIN7msgpack2v26detail7contextI17json_like_printerE12unpack_stack10sta
   br i1 %.not.i23.i.i.i.i, label %_ZNSt6vectorIN7msgpack2v26detail7contextI17json_like_printerE12unpack_stack10stack_elemESaIS7_EE17_M_realloc_insertIJS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_S9_EEDpOT_.exit.i.i.i, label %bb.u
 
 bb.u:                                             ; preds = %_ZNSt6vectorIN7msgpack2v26detail7contextI17json_like_printerE12unpack_stack10stack_elemESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i.i.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.br, i64 noundef %i.bu) #25
+  %5 = ptrtoint ptr %i.bo to i64
+  %6 = sub i64 %5, %i.bt
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.br, i64 noundef %6) #25
   br label %_ZNSt6vectorIN7msgpack2v26detail7contextI17json_like_printerE12unpack_stack10stack_elemESaIS7_EE17_M_realloc_insertIJS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_S9_EEDpOT_.exit.i.i.i
 
 _ZNSt6vectorIN7msgpack2v26detail7contextI17json_like_printerE12unpack_stack10stack_elemESaIS7_EE17_M_realloc_insertIJS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_S9_EEDpOT_.exit.i.i.i: ; preds = %bb.u, %_ZNSt6vectorIN7msgpack2v26detail7contextI17json_like_printerE12unpack_stack10stack_elemESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i.i.i.i
@@ -2432,7 +2441,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
   %i.bl = load ptr, ptr %i.bk, align 8, !tbaa !76 ; 5 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
-  %i.bn = load ptr, ptr %i.bm, align 8, !tbaa !77
+  %i.bn = load ptr, ptr %i.bm, align 8, !tbaa !77 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.bl, %i.bn
   br i1 %.not.i.i.i, label %bb.s, label %bb.r
 
@@ -2449,8 +2458,8 @@ bb.r:                                             ; preds = %bb.q
 bb.s:                                             ; preds = %bb.q
   %i.bq = load ptr, ptr %i.bj, align 8, !tbaa !75 ; 7 uses
   %i.br = ptrtoint ptr %i.bl to i64               ; 2 uses
-  %i.bs = ptrtoint ptr %i.bq to i64               ; 2 uses
-  %i.bt = sub i64 %i.br, %i.bs                    ; 4 uses
+  %i.bs = ptrtoint ptr %i.bq to i64               ; 3 uses
+  %i.bt = sub i64 %i.br, %i.bs                    ; 3 uses
   %i.bu = icmp eq i64 %i.bt, 9223372036854775800
   br i1 %i.bu, label %bb.t, label %_ZNKSt6vectorIN7msgpack2v26detail7contextI17json_like_printerE12unpack_stack10stack_elemESaIS7_EE12_M_check_lenEmPKc.exit.i.i.i.i
 
@@ -2537,7 +2546,9 @@ _ZNSt6vectorIN7msgpack2v26detail7contextI17json_like_printerE12unpack_stack10sta
   br i1 %.not.i23.i.i.i.i, label %_ZNSt6vectorIN7msgpack2v26detail7contextI17json_like_printerE12unpack_stack10stack_elemESaIS7_EE17_M_realloc_insertIJS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_S9_EEDpOT_.exit.i.i.i, label %bb.u
 
 bb.u:                                             ; preds = %_ZNSt6vectorIN7msgpack2v26detail7contextI17json_like_printerE12unpack_stack10stack_elemESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i.i.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.bq, i64 noundef %i.bt) #25
+  %5 = ptrtoint ptr %i.bn to i64
+  %6 = sub i64 %5, %i.bs
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.bq, i64 noundef %6) #25
   br label %_ZNSt6vectorIN7msgpack2v26detail7contextI17json_like_printerE12unpack_stack10stack_elemESaIS7_EE17_M_realloc_insertIJS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_S9_EEDpOT_.exit.i.i.i
 
 _ZNSt6vectorIN7msgpack2v26detail7contextI17json_like_printerE12unpack_stack10stack_elemESaIS7_EE17_M_realloc_insertIJS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_S9_EEDpOT_.exit.i.i.i: ; preds = %bb.u, %_ZNSt6vectorIN7msgpack2v26detail7contextI17json_like_printerE12unpack_stack10stack_elemESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i.i.i.i
@@ -2740,7 +2751,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
   %i.bm = load ptr, ptr %i.bl, align 8, !tbaa !76 ; 5 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
-  %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !77
+  %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !77 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.bm, %i.bo
   br i1 %.not.i.i.i, label %bb.s, label %bb.r
 
@@ -2757,8 +2768,8 @@ bb.r:                                             ; preds = %bb.q
 bb.s:                                             ; preds = %bb.q
   %i.br = load ptr, ptr %i.bk, align 8, !tbaa !75 ; 7 uses
   %i.bs = ptrtoint ptr %i.bm to i64               ; 2 uses
-  %i.bt = ptrtoint ptr %i.br to i64               ; 2 uses
-  %i.bu = sub i64 %i.bs, %i.bt                    ; 4 uses
+  %i.bt = ptrtoint ptr %i.br to i64               ; 3 uses
+  %i.bu = sub i64 %i.bs, %i.bt                    ; 3 uses
   %i.bv = icmp eq i64 %i.bu, 9223372036854775800
   br i1 %i.bv, label %bb.t, label %_ZNKSt6vectorIN7msgpack2v26detail7contextI17json_like_printerE12unpack_stack10stack_elemESaIS7_EE12_M_check_lenEmPKc.exit.i.i.i.i
 
@@ -2845,7 +2856,9 @@ _ZNSt6vectorIN7msgpack2v26detail7contextI17json_like_printerE12unpack_stack10sta
   br i1 %.not.i23.i.i.i.i, label %_ZNSt6vectorIN7msgpack2v26detail7contextI17json_like_printerE12unpack_stack10stack_elemESaIS7_EE17_M_realloc_insertIJS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_S9_EEDpOT_.exit.i.i.i, label %bb.u
 
 bb.u:                                             ; preds = %_ZNSt6vectorIN7msgpack2v26detail7contextI17json_like_printerE12unpack_stack10stack_elemESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i.i.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.br, i64 noundef %i.bu) #25
+  %5 = ptrtoint ptr %i.bo to i64
+  %6 = sub i64 %5, %i.bt
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.br, i64 noundef %6) #25
   br label %_ZNSt6vectorIN7msgpack2v26detail7contextI17json_like_printerE12unpack_stack10stack_elemESaIS7_EE17_M_realloc_insertIJS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_S9_EEDpOT_.exit.i.i.i
 
 _ZNSt6vectorIN7msgpack2v26detail7contextI17json_like_printerE12unpack_stack10stack_elemESaIS7_EE17_M_realloc_insertIJS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_S9_EEDpOT_.exit.i.i.i: ; preds = %bb.u, %_ZNSt6vectorIN7msgpack2v26detail7contextI17json_like_printerE12unpack_stack10stack_elemESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i.i.i.i

@@ -205,7 +205,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !148  ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !152  ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !152  ; 3 uses
   %.not = icmp eq ptr %i.b, %i.d
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 5 uses
   %i.f = load i32, ptr %i.e, align 8              ; 5 uses
@@ -305,8 +305,8 @@ bb.g:                                             ; preds = %_ZNSt14_Bit_referen
 
 bb.h:                                             ; preds = %bb.a
   %i.au = load ptr, ptr %0, align 8, !tbaa !148   ; 4 uses
-  %i.av = ptrtoint ptr %i.au to i64               ; 2 uses
-  %i.aw = sub i64 %i.g, %i.av                     ; 2 uses
+  %i.av = ptrtoint ptr %i.au to i64               ; 3 uses
+  %i.aw = sub i64 %i.g, %i.av
   %i.ax = shl nsw i64 %i.aw, 3
   %i.ay = zext i32 %i.f to i64
   %i.az = add nsw i64 %i.ax, %i.ay                ; 4 uses
@@ -489,7 +489,9 @@ _ZSt4copyISt13_Bit_iteratorS0_ET0_T_S2_S1_.exit:  ; preds = %_ZNSt14_Bit_referen
   br i1 %.not.i73, label %_ZNSt13_Bvector_baseISaIbEE13_M_deallocateEv.exit, label %bb.t
 
 bb.t:                                             ; preds = %_ZSt4copyISt13_Bit_iteratorS0_ET0_T_S2_S1_.exit
-  %i.dp = ashr exact i64 %i.aw, 3
+  %4 = ptrtoint ptr %i.d to i64
+  %5 = sub i64 %4, %i.av
+  %i.dp = ashr exact i64 %5, 3
   %i.dq = sub nsw i64 0, %i.dp
   %i.dr = getelementptr inbounds [8 x i8], ptr %i.d, i64 %i.dq
   tail call void @_ZdlPv(ptr noundef %i.dr) #38
@@ -892,8 +894,8 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %_ZNSt6vectorIcSaIcEE9push_backEOc.exit
   %.026149 = phi i64 [ 0, %.lr.ph ], [ %i.aj, %_ZNSt6vectorIcSaIcEE9push_backEOc.exit ]
   %.sroa.0117.0148 = phi ptr [ null, %.lr.ph ], [ %.sroa.0117.1, %_ZNSt6vectorIcSaIcEE9push_backEOc.exit ] ; 7 uses
-  %.sroa.14.0147 = phi ptr [ null, %.lr.ph ], [ %.sroa.14.1, %_ZNSt6vectorIcSaIcEE9push_backEOc.exit ] ; 3 uses
-  %.sroa.9.0146 = phi ptr [ null, %.lr.ph ], [ %.sroa.9.1, %_ZNSt6vectorIcSaIcEE9push_backEOc.exit ] ; 3 uses
+  %.sroa.14.0147 = phi ptr [ null, %.lr.ph ], [ %.sroa.14.1, %_ZNSt6vectorIcSaIcEE9push_backEOc.exit ] ; 2 uses
+  %.sroa.9.0146 = phi ptr [ null, %.lr.ph ], [ %.sroa.9.1, %_ZNSt6vectorIcSaIcEE9push_backEOc.exit ] ; 4 uses
   %i.m = load i64, ptr %i.i, align 8, !tbaa !318
   %i.n = add i64 %i.m, 1
   store i64 %i.n, ptr %i.i, align 8, !tbaa !318
@@ -930,7 +932,7 @@ bb.g:                                             ; preds = %bb.f
   br label %_ZNSt6vectorIcSaIcEE9push_backEOc.exit
 
 bb.h:                                             ; preds = %bb.f
-  %i.x = ptrtoint ptr %.sroa.14.0147 to i64
+  %i.x = ptrtoint ptr %.sroa.9.0146 to i64
   %i.y = ptrtoint ptr %.sroa.0117.0148 to i64
   %i.z = sub i64 %i.x, %i.y                       ; 7 uses
   %i.aa = icmp eq i64 %i.z, 9223372036854775807

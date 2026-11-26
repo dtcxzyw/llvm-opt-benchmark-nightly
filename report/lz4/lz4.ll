@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.d = sext i32 %2 to i64
   %i.e = getelementptr inbounds i8, ptr %0, i64 %i.d ; 11 uses
   %i.f = zext nneg i32 %i.a to i64
-  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 %i.f ; 9 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 %i.f ; 8 uses
   %i.h = getelementptr inbounds i8, ptr %i.e, i64 -16
   %i.i = getelementptr inbounds i8, ptr %i.g, i64 -32 ; 2 uses
   %i.j = icmp eq i32 %i.a, 0
@@ -607,7 +607,7 @@ bb.an:                                            ; preds = %bb.am
   %i.jh = sub i64 %i.l, %i.jg
   %i.ji = tail call i64 @llvm.umin.i64(i64 %.13.i, i64 %i.jh) ; 5 uses
   %i.jj = getelementptr inbounds nuw i8, ptr %.1369.i, i64 %i.ji
-  %i.jk = getelementptr inbounds nuw i8, ptr %.11391.i, i64 %i.ji ; 3 uses
+  %i.jk = getelementptr inbounds nuw i8, ptr %.11391.i, i64 %i.ji ; 4 uses
   %i.jl = icmp ugt ptr %i.jj, %.11391.i
   br i1 %i.jl, label %.preheader, label %bb.ao
 
@@ -823,7 +823,7 @@ scalar.ph540:                                     ; preds = %scalar.ph540.prehea
   br i1 %.not439.i218, label %.thread100, label %.lr.ph220
 
 bb.au:                                            ; preds = %.thread124, %.loopexit, %bb.ah
-  %.18.i = phi ptr [ %i.g, %.loopexit ], [ %i.hz, %bb.ah ], [ %i.hx, %.thread124 ]
+  %.18.i = phi ptr [ %i.jk, %.loopexit ], [ %i.hz, %bb.ah ], [ %i.hx, %.thread124 ]
   %i.me = ptrtoint ptr %.18.i to i64
   %i.mf = sub i64 %i.me, %i.m
   %i.mg = trunc i64 %i.mf to i32
@@ -1226,7 +1226,7 @@ bb.b:                                             ; preds = %bb.a
   %i.d = sext i32 %2 to i64
   %i.e = getelementptr inbounds i8, ptr %0, i64 %i.d ; 11 uses
   %i.f = zext nneg i32 %i.a to i64
-  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 %i.f ; 11 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 %i.f ; 10 uses
   %i.h = icmp eq ptr %5, null
   %i.i = getelementptr inbounds nuw i8, ptr %5, i64 %6
   %i.j = select i1 %i.h, ptr null, ptr %i.i       ; 4 uses
@@ -1629,7 +1629,7 @@ bb.bb:                                            ; preds = %bb.ba
   %i.mp = sub i64 %i.p, %i.mo
   %i.mq = tail call i64 @llvm.umin.i64(i64 %.13.i, i64 %i.mp) ; 5 uses
   %i.mr = getelementptr inbounds nuw i8, ptr %.1369.i, i64 %i.mq
-  %i.ms = getelementptr inbounds nuw i8, ptr %.11391.i, i64 %i.mq ; 3 uses
+  %i.ms = getelementptr inbounds nuw i8, ptr %.11391.i, i64 %i.mq ; 4 uses
   %i.mt = icmp ugt ptr %i.mr, %.11391.i
   br i1 %i.mt, label %.preheader, label %bb.bc
 
@@ -1845,7 +1845,7 @@ scalar.ph598:                                     ; preds = %scalar.ph598.prehea
   br i1 %.not439.i227, label %.thread103, label %.lr.ph229
 
 bb.bi:                                            ; preds = %.thread127, %.loopexit140, %bb.ao
-  %.18.i = phi ptr [ %i.g, %.loopexit140 ], [ %i.jr, %bb.ao ], [ %i.jp, %.thread127 ]
+  %.18.i = phi ptr [ %i.ms, %.loopexit140 ], [ %i.jr, %bb.ao ], [ %i.jp, %.thread127 ]
   %i.pm = ptrtoint ptr %.18.i to i64
   %i.pn = sub i64 %i.pm, %i.q
   %i.po = trunc i64 %i.pn to i32
@@ -2248,7 +2248,7 @@ bb.bb:                                            ; preds = %bb.ba
   %i.mh = sext i32 %2 to i64
   %i.mi = getelementptr inbounds i8, ptr %0, i64 %i.mh ; 11 uses
   %i.mj = zext nneg i32 %i.g to i64
-  %i.mk = getelementptr inbounds nuw i8, ptr %1, i64 %i.mj ; 9 uses
+  %i.mk = getelementptr inbounds nuw i8, ptr %1, i64 %i.mj ; 8 uses
   %i.ml = getelementptr inbounds i8, ptr %i.mi, i64 -16
   %i.mm = getelementptr inbounds i8, ptr %i.mk, i64 -32 ; 2 uses
   %i.mn = icmp eq i32 %i.g, 0
@@ -2651,7 +2651,7 @@ bb.cn:                                            ; preds = %bb.cm
   %i.wl = sub i64 %i.mp, %i.wk
   %i.wm = tail call i64 @llvm.umin.i64(i64 %.13.i.i36, i64 %i.wl) ; 5 uses
   %i.wn = getelementptr inbounds nuw i8, ptr %.1369.i.i, i64 %i.wm
-  %i.wo = getelementptr inbounds nuw i8, ptr %.11391.i.i, i64 %i.wm ; 3 uses
+  %i.wo = getelementptr inbounds nuw i8, ptr %.11391.i.i, i64 %i.wm ; 4 uses
   %i.wp = icmp ugt ptr %i.wn, %.11391.i.i
   br i1 %i.wp, label %.preheader.i72, label %bb.co
 
@@ -2867,7 +2867,7 @@ scalar.ph775:                                     ; preds = %scalar.ph775.prehea
   br i1 %.not439.i219.i, label %.thread101.i, label %.lr.ph221.i
 
 bb.cu:                                            ; preds = %.loopexit.i71, %bb.ch, %.thread125.i
-  %.18.i.i65 = phi ptr [ %i.mk, %.loopexit.i71 ], [ %i.vd, %bb.ch ], [ %i.vb, %.thread125.i ]
+  %.18.i.i65 = phi ptr [ %i.wo, %.loopexit.i71 ], [ %i.vd, %bb.ch ], [ %i.vb, %.thread125.i ]
   %i.zi = ptrtoint ptr %.18.i.i65 to i64
   %i.zj = sub i64 %i.zi, %i.mq
   %i.zk = trunc i64 %i.zj to i32

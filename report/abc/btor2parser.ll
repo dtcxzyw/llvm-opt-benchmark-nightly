@@ -204,15 +204,15 @@ bb.n:                                             ; preds = %bb.q, %.lr.ph.i
   %i.aw = phi i32 [ %i.au, %.lr.ph.i ], [ %i.bi, %bb.q ]
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.q ] ; 2 uses
   %.sroa.33.282.i = phi ptr [ %.sroa.33.1.i, %.lr.ph.i ], [ %.sroa.33.3.i, %bb.q ] ; 4 uses
-  %.sroa.18.281.i = phi ptr [ %i.ai, %.lr.ph.i ], [ %i.bm, %bb.q ] ; 2 uses
+  %.sroa.18.281.i = phi ptr [ %i.ai, %.lr.ph.i ], [ %i.bm, %bb.q ] ; 3 uses
   %.sroa.0.280.i = phi ptr [ %.sroa.0.1.i, %.lr.ph.i ], [ %.sroa.0.3.i, %bb.q ] ; 4 uses
   %i.ax = icmp eq ptr %.sroa.18.281.i, %.sroa.33.282.i
   br i1 %i.ax, label %bb.o, label %bb.q
 
 bb.o:                                             ; preds = %bb.n
   %i.ay = ptrtoint ptr %.sroa.33.282.i to i64
-  %i.az = ptrtoint ptr %.sroa.0.280.i to i64
-  %i.ba = sub i64 %i.ay, %i.az                    ; 2 uses
+  %i.az = ptrtoint ptr %.sroa.0.280.i to i64      ; 2 uses
+  %i.ba = sub i64 %i.ay, %i.az
   %.not60.i = icmp eq ptr %.sroa.33.282.i, %.sroa.0.280.i
   %i.bb = ashr exact i64 %i.ba, 2
   %i.bc = select i1 %.not60.i, i64 1, i64 %i.bb   ; 2 uses
@@ -228,7 +228,9 @@ bb.p:                                             ; preds = %bb.o
   unreachable
 
 btorsim_realloc.exit71.i:                         ; preds = %bb.o
-  %i.bg = getelementptr inbounds nuw i8, ptr %i.be, i64 %i.ba
+  %2 = ptrtoint ptr %.sroa.18.281.i to i64
+  %3 = sub i64 %2, %i.az
+  %i.bg = getelementptr inbounds nuw i8, ptr %i.be, i64 %3
   %i.bh = getelementptr inbounds nuw [8 x i8], ptr %i.be, i64 %i.bc
   %.pre.i = load i32, ptr %i.at, align 8, !tbaa !50
   br label %bb.q

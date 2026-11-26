@@ -204,7 +204,7 @@ _ZNSt6vectorIiSaIiEE9push_backERKi.exit:          ; preds = %_ZNSt6vectorIiSaIiE
   %.sroa.36.8 = phi ptr [ %i.afu, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i ], [ %.sroa.36.0.ph, %bb.dw ] ; 5 uses
   %.pn = phi ptr [ %i.afp, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i ], [ %.sroa.20.0.ph, %bb.dw ] ; 2 uses
   %.sroa.0703.8 = phi ptr [ %i.afo, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i ], [ %.sroa.0703.0.ph, %bb.dw ] ; 7 uses
-  %.sroa.20.3 = getelementptr inbounds nuw i8, ptr %.pn, i64 4 ; 2 uses
+  %.sroa.20.3 = getelementptr inbounds nuw i8, ptr %.pn, i64 4 ; 3 uses
   %i.afw = getelementptr inbounds nuw i8, ptr %i.afv, i64 8 ; 2 uses
   %.not.i547 = icmp eq ptr %.sroa.20.3, %.sroa.36.8
   br i1 %.not.i547, label %bb.ec, label %bb.eb
@@ -216,9 +216,9 @@ bb.eb:                                            ; preds = %_ZNSt6vectorIiSaIiE
   br label %_ZNSt6vectorIiSaIiEE9push_backERKi.exit556
 
 bb.ec:                                            ; preds = %_ZNSt6vectorIiSaIiEE9push_backERKi.exit
-  %i.afz = ptrtoint ptr %.sroa.36.8 to i64
-  %i.aga = ptrtoint ptr %.sroa.0703.8 to i64
-  %i.agb = sub i64 %i.afz, %i.aga                 ; 6 uses
+  %i.afz = ptrtoint ptr %.sroa.20.3 to i64
+  %i.aga = ptrtoint ptr %.sroa.0703.8 to i64      ; 2 uses
+  %i.agb = sub i64 %i.afz, %i.aga                 ; 5 uses
   %i.agc = icmp eq i64 %i.agb, 9223372036854775804
   br i1 %i.agc, label %bb.ed, label %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i548
 
@@ -259,7 +259,9 @@ _ZNSt6vectorIiSaIiEE11_S_relocateEPiS2_S2_RS0_.exit16.i.i551: ; preds = %bb.ee, 
   br i1 %.not.i17.i.i552, label %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i553, label %bb.ef
 
 bb.ef:                                            ; preds = %_ZNSt6vectorIiSaIiEE11_S_relocateEPiS2_S2_RS0_.exit16.i.i551
-  call void @_ZdlPvm(ptr noundef nonnull %.sroa.0703.8, i64 noundef %i.agb) #24
+  %45 = ptrtoint ptr %.sroa.36.8 to i64
+  %46 = sub i64 %45, %i.aga
+  call void @_ZdlPvm(ptr noundef nonnull %.sroa.0703.8, i64 noundef %46) #24
   br label %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i553
 
 _ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i553: ; preds = %bb.ef, %_ZNSt6vectorIiSaIiEE11_S_relocateEPiS2_S2_RS0_.exit16.i.i551
@@ -270,7 +272,7 @@ _ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIP
 _ZNSt6vectorIiSaIiEE9push_backERKi.exit556:       ; preds = %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i553, %bb.eb
   %i.agp = phi ptr [ %.pre1092, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i553 ], [ %i.afv, %bb.eb ]
   %.sroa.36.9 = phi ptr [ %i.ago, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i553 ], [ %.sroa.36.8, %bb.eb ] ; 5 uses
-  %.sroa.20.4 = phi ptr [ %i.agn, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i553 ], [ %i.afy, %bb.eb ] ; 3 uses
+  %.sroa.20.4 = phi ptr [ %i.agn, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i553 ], [ %i.afy, %bb.eb ] ; 4 uses
   %.sroa.0703.9 = phi ptr [ %i.agj, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i553 ], [ %.sroa.0703.8, %bb.eb ] ; 7 uses
   %i.agq = getelementptr inbounds nuw i8, ptr %i.agp, i64 12 ; 2 uses
   %.not.i557 = icmp eq ptr %.sroa.20.4, %.sroa.36.9
@@ -283,9 +285,9 @@ bb.eg:                                            ; preds = %_ZNSt6vectorIiSaIiE
   br label %.outer.backedge
 
 bb.eh:                                            ; preds = %_ZNSt6vectorIiSaIiEE9push_backERKi.exit556
-  %i.agt = ptrtoint ptr %.sroa.36.9 to i64
-  %i.agu = ptrtoint ptr %.sroa.0703.9 to i64
-  %i.agv = sub i64 %i.agt, %i.agu                 ; 6 uses
+  %i.agt = ptrtoint ptr %.sroa.20.4 to i64
+  %i.agu = ptrtoint ptr %.sroa.0703.9 to i64      ; 2 uses
+  %i.agv = sub i64 %i.agt, %i.agu                 ; 5 uses
   %i.agw = icmp eq i64 %i.agv, 9223372036854775804
   br i1 %i.agw, label %bb.ei, label %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i558
 
@@ -326,7 +328,9 @@ _ZNSt6vectorIiSaIiEE11_S_relocateEPiS2_S2_RS0_.exit16.i.i561: ; preds = %bb.ej, 
   br i1 %.not.i17.i.i562, label %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i563, label %bb.ek
 
 bb.ek:                                            ; preds = %_ZNSt6vectorIiSaIiEE11_S_relocateEPiS2_S2_RS0_.exit16.i.i561
-  call void @_ZdlPvm(ptr noundef nonnull %.sroa.0703.9, i64 noundef %i.agv) #24
+  %47 = ptrtoint ptr %.sroa.36.9 to i64
+  %48 = sub i64 %47, %i.agu
+  call void @_ZdlPvm(ptr noundef nonnull %.sroa.0703.9, i64 noundef %48) #24
   br label %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i563
 
 _ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i563: ; preds = %bb.ek, %_ZNSt6vectorIiSaIiEE11_S_relocateEPiS2_S2_RS0_.exit16.i.i561

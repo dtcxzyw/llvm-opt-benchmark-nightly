@@ -1,0 +1,39 @@
+diff --git a/llvm/lib/Analysis/Loads.cpp b/llvm/lib/Analysis/Loads.cpp
+index 363b0f59e26064..662c2f614ec8d7 100644
+--- a/llvm/lib/Analysis/Loads.cpp
++++ b/llvm/lib/Analysis/Loads.cpp
+@@ -885,10 +885,6 @@ static bool isPointerUseReplaceable(const Use &U, bool HasNonAddressBits) {
+       continue;
+     if (isa<ICmpInst, PtrToAddrInst>(User))
+       continue;
+-    // FIXME: The PtrToIntInst case here is not strictly correct, as it
+-    // changes which provenance is exposed.
+-    if (!HasNonAddressBits && isa<PtrToIntInst>(User))
+-      continue;
+     if (isa<PHINode, SelectInst>(User))
+       Worklist.append(User->user_begin(), User->user_end());
+     else
+diff --git a/llvm/test/Transforms/GVN/assume-equal.ll b/llvm/test/Transforms/GVN/assume-equal.ll
+index 67b84510b9ca62..171cee47b9890c 100644
+--- a/llvm/test/Transforms/GVN/assume-equal.ll
++++ b/llvm/test/Transforms/GVN/assume-equal.ll
+@@ -388,14 +388,14 @@ define i1 @assume_ptr_eq_different_prov_does_not_matter_icmp_addrsize(ptr addrsp
+   ret i1 %c
+ }
+ 
+-; This is not correct, as it may change the provenance exposed by ptrtoint.
+-; We still allow it for now.
+-define i64 @assume_ptr_eq_different_prov_does_not_matter_ptrtoint(ptr %p, ptr %p2) {
+-; CHECK-LABEL: define i64 @assume_ptr_eq_different_prov_does_not_matter_ptrtoint(
++; Replacement would be incorrect, as it may change the provenance exposed by
++; ptrtoint.
++define i64 @assume_ptr_eq_different_prov_matters_ptrtoint(ptr %p, ptr %p2) {
++; CHECK-LABEL: define i64 @assume_ptr_eq_different_prov_matters_ptrtoint(
+ ; CHECK-SAME: ptr [[P:%.*]], ptr [[P2:%.*]]) {
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp eq ptr [[P]], [[P2]]
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[CMP]])
+-; CHECK-NEXT:    [[INT:%.*]] = ptrtoint ptr [[P]] to i64
++; CHECK-NEXT:    [[INT:%.*]] = ptrtoint ptr [[P2]] to i64
+ ; CHECK-NEXT:    ret i64 [[INT]]
+ ;
+   %cmp = icmp eq ptr %p, %p2

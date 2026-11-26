@@ -205,7 +205,7 @@ _ZSt4sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIjjESt6vectorIS3_SaIS3_EEEEPFbR
 _ZSt4sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIjjESt6vectorIS3_SaIS3_EEEEPFbRKS3_SA_EEvT_SD_T0_.exit: ; preds = %bb.ba, %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIjjESt6vectorIS3_SaIS3_EEEEPFbRKS3_SA_EEvT_SD_T0_.exitthread-pre-split
   %i.nt = phi i8 [ %.pr, %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIjjESt6vectorIS3_SaIS3_EEEEPFbRKS3_SA_EEvT_SD_T0_.exitthread-pre-split ], [ 0, %bb.ba ] ; 4 uses
   %i.nu = load ptr, ptr %16, align 8              ; 4 uses
-  %i.nv = load ptr, ptr %i.gl, align 8            ; 3 uses
+  %i.nv = load ptr, ptr %i.gl, align 8            ; 2 uses
   %.not143164.i = icmp eq ptr %i.nu, %i.nv
   br i1 %.not143164.i, label %_ZNSt6vectorISt4pairIjjESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EES8_.exit.i, label %.lr.ph.i
 
@@ -234,34 +234,34 @@ bb.bn:                                            ; preds = %bb.bm
 bb.bo:                                            ; preds = %.lr.ph.i
   %.neg.i = sub i32 %i.nz, %i.nx
   %i.od = add i32 %.neg.i, %.1                    ; 2 uses
-  %i.oe = getelementptr i8, ptr %.sroa.0133.0165.i, i64 8 ; 2 uses
+  %i.oe = getelementptr i8, ptr %.sroa.0133.0165.i, i64 8 ; 3 uses
   %.not143.i = icmp eq ptr %i.oe, %i.nv
   br i1 %.not143.i, label %.loopexit152.i, label %.lr.ph.i, !llvm.loop !128
 
 .loopexit152.i:                                   ; preds = %bb.bo, %bb.bn, %bb.bm
   %i.of = phi ptr [ %i.nu, %bb.bm ], [ %.pre741, %bb.bn ], [ %i.nu, %bb.bo ] ; 21 uses
   %.2 = phi i32 [ %.1, %bb.bm ], [ %i.oc, %bb.bn ], [ %i.od, %bb.bo ] ; 3 uses
-  %.sroa.0133.0163.i = phi ptr [ %.sroa.0133.0165.i, %bb.bm ], [ %.sroa.0133.0165.i, %bb.bn ], [ %i.nv, %bb.bo ] ; 6 uses
+  %.sroa.0133.0163.i = phi ptr [ %.sroa.0133.0165.i, %bb.bm ], [ %.sroa.0133.0165.i, %bb.bn ], [ %i.oe, %bb.bo ] ; 6 uses
   %.not144.i = icmp eq ptr %.sroa.0133.0163.i, %i.of
   br i1 %.not144.i, label %_ZNSt6vectorISt4pairIjjESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EES8_.exit.i, label %bb.bp
 
 bb.bp:                                            ; preds = %.loopexit152.i
-  %19 = ptrtoint ptr %i.of to i64                 ; 3 uses
-  %i.og = ptrtoint ptr %.sroa.0133.0163.i to i64  ; 5 uses
-  %20 = sub i64 %i.og, %19
-  %21 = getelementptr i8, ptr %i.of, i64 %20      ; 8 uses
-  %i.oh = load ptr, ptr %i.gl, align 8            ; 5 uses
+  %i.og = ptrtoint ptr %.sroa.0133.0163.i to i64  ; 4 uses
+  %i.oh = load ptr, ptr %i.gl, align 8            ; 6 uses
   %.not11.i.i.i = icmp eq ptr %.sroa.0133.0163.i, %i.oh
   br i1 %.not11.i.i.i, label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPSt4pairIjjESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i.i.i, label %bb.bq
 
 bb.bq:                                            ; preds = %bb.bp
-  %i.oi = ptrtoint ptr %i.oh to i64               ; 3 uses
+  %i.oi = ptrtoint ptr %i.oh to i64               ; 2 uses
   %i.oj = sub i64 %i.oi, %i.og                    ; 3 uses
   %i.ok = ashr exact i64 %i.oj, 3                 ; 9 uses
   %i.ol = icmp sgt i64 %i.ok, 0
   br i1 %i.ol, label %.lr.ph.i.i.i.i.i.i.i.i.preheader.a, label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPSt4pairIjjESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i.i.i
 
 .lr.ph.i.i.i.i.i.i.i.i.preheader.a:               ; preds = %bb.bq
+  %19 = ptrtoint ptr %i.of to i64                 ; 3 uses
+  %20 = sub i64 %i.og, %19
+  %21 = getelementptr i8, ptr %i.of, i64 %20      ; 7 uses
   %min.iters.check998 = icmp ult i64 %i.ok, 46
   br i1 %min.iters.check998, label %.lr.ph.i.i.i.i.i.i.i.i.preheader1049, label %vector.scevcheck969
 
@@ -364,14 +364,13 @@ middle.block1032:                                 ; preds = %vector.body1017
   br i1 %i.pu, label %.lr.ph.i.i.i.i.i.i.i.i, label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPSt4pairIjjESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.loopexit.i.i.i, !llvm.loop !130
 
 _ZSt4moveIN9__gnu_cxx17__normal_iteratorIPSt4pairIjjESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.loopexit.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i.i.i, %middle.block1032
-  %.pre.i.i.i = load ptr, ptr %i.gl, align 8      ; 2 uses
-  %.pre13.i.i.i = ptrtoint ptr %.pre.i.i.i to i64
+  %.pre.i.i.i = load ptr, ptr %i.gl, align 8
   br label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPSt4pairIjjESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i.i.i
 
 _ZSt4moveIN9__gnu_cxx17__normal_iteratorIPSt4pairIjjESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i.i.i: ; preds = %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPSt4pairIjjESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.loopexit.i.i.i, %bb.bq, %bb.bp
-  %.pre-phi14.i.i.i = phi i64 [ %i.oi, %bb.bq ], [ %.pre13.i.i.i, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPSt4pairIjjESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.loopexit.i.i.i ], [ %i.og, %bb.bp ]
-  %22 = phi ptr [ %i.oh, %bb.bq ], [ %.pre.i.i.i, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPSt4pairIjjESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.loopexit.i.i.i ], [ %21, %bb.bp ]
-  %i.pv = sub i64 %.pre-phi14.i.i.i, %i.og
+  %22 = phi ptr [ %i.oh, %bb.bq ], [ %.pre.i.i.i, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPSt4pairIjjESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.loopexit.i.i.i ], [ %i.oh, %bb.bp ] ; 2 uses
+  %23 = ptrtoint ptr %22 to i64
+  %i.pv = sub i64 %23, %i.og
   %i.pw = getelementptr i8, ptr %i.of, i64 %i.pv  ; 2 uses
   %.not.i.i.i.i163 = icmp eq ptr %22, %i.pw
   br i1 %.not.i.i.i.i163, label %_ZNSt6vectorISt4pairIjjESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EES8_.exit.i, label %_ZSt8_DestroyIPSt4pairIjjES1_EvT_S3_RSaIT0_E.exit.i.i.i.i

@@ -205,7 +205,7 @@ bb.cv:                                            ; preds = %_RNvXs1_NtCs87CvPiU
 
 _RNvXNtNtCs87CvPiUlf0m_5alloc3vec14spec_from_iterINtB4_3VecIBL_TNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexBZ_EEEINtB2_12SpecFromIterBU_INtNtNtNtCslwFuT2d6ECx_4core4iter8adapters7flatten7FlattenINtNtB2k_10filter_map9FilterMapINtNtB4_9into_iter8IntoIterBZ_ENCINvNtNtCsbNMRYq9Xj9a_14rustworkx_core12connectivity5chain19chain_decompositionRINtNtB11_12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB69_5types3any5PyAnyEB64_NtB13_10UndirectedEEs_0EEE9from_iterCskcxRuJ53GpR_9rustworkx.exit.i.i: ; preds = %bb.ct, %bb.cb
   %.sroa.7.0.i = phi i64 [ 0, %bb.cb ], [ %.sroa.7.0.copyload.i, %bb.ct ] ; 3 uses
-  %.sroa.5.027.i = phi ptr [ inttoptr (i64 8 to ptr), %bb.cb ], [ %.sroa.5.0.copyload.i, %bb.ct ] ; 10 uses
+  %.sroa.5.027.i = phi ptr [ inttoptr (i64 8 to ptr), %bb.cb ], [ %.sroa.5.0.copyload.i, %bb.ct ] ; 9 uses
   %.sroa.0.0.i = phi i64 [ 0, %bb.cb ], [ %.sroa.0.0.copyload.i, %bb.ct ] ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.v), !noalias !113507
   invoke void @_RNvXs6_CsiCakYNGl26C_11fixedbitsetNtB5_11FixedBitSetNtNtNtCslwFuT2d6ECx_4core3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.w)
@@ -368,7 +368,7 @@ bb.de:                                            ; preds = %_RNvXs1_NtCs87CvPiU
   %i.pc = icmp samesign ult i64 %.sroa.7.0.i, 384307168202282326
   call void @llvm.assume(i1 %i.pc)
   %.idx.i = mul nuw nsw i64 %.sroa.7.0.i, 24
-  %i.pd = getelementptr inbounds nuw i8, ptr %.sroa.5.027.i, i64 %.idx.i ; 6 uses
+  %i.pd = getelementptr inbounds nuw i8, ptr %.sroa.5.027.i, i64 %.idx.i ; 5 uses
   %.not15.i.i.i.i.i = icmp eq i64 %.sroa.7.0.i, 0
   br i1 %.not15.i.i.i.i.i, label %.loopexit.i.i, label %.lr.ph.i.i.i.i.i
 
@@ -569,9 +569,8 @@ _RNCINvNtNtNtCslwFuT2d6ECx_4core4iter8adapters3map12map_try_foldINtNtCs87CvPiUlf
 
 .loopexit.i.i:                                    ; preds = %_RNCINvNtNtNtCslwFuT2d6ECx_4core4iter8adapters3map12map_try_foldINtNtCs87CvPiUlf0m_5alloc3vec3VecTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexB1x_EENtNtCskcxRuJ53GpR_9rustworkx9iterators8EdgeListINtNtB12_13in_place_drop11InPlaceDropB2q_EINtNtBa_6result6ResultB3b_zENCNvNtB2u_12connectivity19chain_decomposition0NCINvNtB12_16in_place_collect24write_in_place_with_dropB2q_E0E0B2u_.exit.i.i.i.i.i, %bb.de
   %.val2.i.i.i = phi ptr [ %.sroa.5.027.i, %bb.de ], [ %i.pr, %_RNCINvNtNtNtCslwFuT2d6ECx_4core4iter8adapters3map12map_try_foldINtNtCs87CvPiUlf0m_5alloc3vec3VecTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexB1x_EENtNtCskcxRuJ53GpR_9rustworkx9iterators8EdgeListINtNtB12_13in_place_drop11InPlaceDropB2q_EINtNtBa_6result6ResultB3b_zENCNvNtB2u_12connectivity19chain_decomposition0NCINvNtB12_16in_place_collect24write_in_place_with_dropB2q_E0E0B2u_.exit.i.i.i.i.i ] ; 3 uses
-  %.sroa.4.0.lcssa.i.i.i.i.i = phi ptr [ %.sroa.5.027.i, %bb.de ], [ %i.pd, %_RNCINvNtNtNtCslwFuT2d6ECx_4core4iter8adapters3map12map_try_foldINtNtCs87CvPiUlf0m_5alloc3vec3VecTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexB1x_EENtNtCskcxRuJ53GpR_9rustworkx9iterators8EdgeListINtNtB12_13in_place_drop11InPlaceDropB2q_EINtNtBa_6result6ResultB3b_zENCNvNtB2u_12connectivity19chain_decomposition0NCINvNtB12_16in_place_collect24write_in_place_with_dropB2q_E0E0B2u_.exit.i.i.i.i.i ]
   %i.rv = ptrtoint ptr %i.pd to i64
-  %i.rw = ptrtoint ptr %.val2.i.i.i to i64
+  %i.rw = ptrtoint ptr %.val2.i.i.i to i64        ; 2 uses
   %i.rx = sub nuw i64 %i.rv, %i.rw
   %i.ry = udiv exact i64 %i.rx, 24
   call void @llvm.experimental.noalias.scope.decl(metadata !113640)
@@ -598,9 +597,8 @@ _RINvNtCslwFuT2d6ECx_4core3ptr9drop_glueINtNtCs87CvPiUlf0m_5alloc3vec3VecTNtNtCs
   br i1 %i.sf, label %.loopexit.i, label %.lr.ph.i.i.i.i
 
 .loopexit.i:                                      ; preds = %_RINvNtCslwFuT2d6ECx_4core3ptr9drop_glueINtNtCs87CvPiUlf0m_5alloc3vec3VecTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexB19_EEECskcxRuJ53GpR_9rustworkx.exit.i.i.i.i, %.loopexit.i.i
-  %5 = ptrtoint ptr %.sroa.4.0.lcssa.i.i.i.i.i to i64
   %i.sg = ptrtoint ptr %.sroa.5.027.i to i64
-  %i.sh = sub nuw i64 %5, %i.sg
+  %i.sh = sub nuw i64 %i.rw, %i.sg
   %i.si = udiv exact i64 %i.sh, 24
   call fastcc void @_RINvNtCslwFuT2d6ECx_4core3ptr9drop_glueNtNtCskcxRuJ53GpR_9rustworkx5graph7PyGraphEBF_(ptr noalias nofree noundef nonnull align 8 dereferenceable(88) %i.aj), !noalias !113624
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aj)

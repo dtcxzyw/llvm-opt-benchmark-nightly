@@ -205,9 +205,9 @@ _ZN7rocksdb6StatusD2Ev.exit133:                   ; preds = %bb.x, %_ZNKSt14defa
   br i1 %i.ba, label %.critedge112, label %bb.v
 
 .critedge112:                                     ; preds = %_ZN7rocksdb6StatusD2Ev.exit127, %_ZN7rocksdb6StatusD2Ev.exit133, %bb.q, %bb.u
-  %i.bb = load ptr, ptr %4, align 8, !tbaa !1462  ; 3 uses
+  %i.bb = load ptr, ptr %4, align 8, !tbaa !1462  ; 4 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 7 uses
-  %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !1463
+  %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !1463 ; 2 uses
   %.not.i.i134 = icmp eq ptr %i.bd, %i.bb
   br i1 %.not.i.i134, label %_ZNSt6vectorIPN7rocksdb8IteratorESaIS2_EE5clearEv.exit, label %_ZSt8_DestroyIPPN7rocksdb8IteratorES2_EvT_S4_RSaIT0_E.exit.i.i
 
@@ -216,6 +216,7 @@ _ZSt8_DestroyIPPN7rocksdb8IteratorES2_EvT_S4_RSaIT0_E.exit.i.i: ; preds = %.crit
   br label %_ZNSt6vectorIPN7rocksdb8IteratorESaIS2_EE5clearEv.exit
 
 _ZNSt6vectorIPN7rocksdb8IteratorESaIS2_EE5clearEv.exit: ; preds = %.critedge112, %_ZSt8_DestroyIPPN7rocksdb8IteratorES2_EvT_S4_RSaIT0_E.exit.i.i
+  %17 = phi ptr [ %i.bd, %.critedge112 ], [ %i.bb, %_ZSt8_DestroyIPPN7rocksdb8IteratorES2_EvT_S4_RSaIT0_E.exit.i.i ]
   %i.be = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.bf = load ptr, ptr %i.be, align 8, !tbaa !920
   %i.bg = load ptr, ptr %3, align 8, !tbaa !921
@@ -236,12 +237,14 @@ bb.z:                                             ; preds = %_ZNSt6vectorIPN7roc
   %i.bl = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 6 uses
   %i.bm = load ptr, ptr %i.bl, align 8, !tbaa !1464
   %i.bn = ptrtoint ptr %i.bm to i64
-  %i.bo = ptrtoint ptr %i.bb to i64
+  %i.bo = ptrtoint ptr %i.bb to i64               ; 2 uses
   %i.bp = sub i64 %i.bn, %i.bo
   %i.bq = icmp ult i64 %i.bp, %i.bj
   br i1 %i.bq, label %_ZNSt12_Vector_baseIPN7rocksdb8IteratorESaIS2_EE11_M_allocateEm.exit.i, label %_ZNSt6vectorIPN7rocksdb8IteratorESaIS2_EE7reserveEm.exit
 
 _ZNSt12_Vector_baseIPN7rocksdb8IteratorESaIS2_EE11_M_allocateEm.exit.i: ; preds = %bb.z
+  %18 = ptrtoint ptr %17 to i64
+  %19 = sub i64 %18, %i.bo
   %i.br = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bj) #34
           to label %.noexc135 unwind label %.loopexit.split-lp215.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 4 uses
 
@@ -271,7 +274,8 @@ bb.ab:                                            ; preds = %_ZNSt6vectorIPN7roc
 
 _ZNSt12_Vector_baseIPN7rocksdb8IteratorESaIS2_EE13_M_deallocateEPS2_m.exit.i: ; preds = %bb.ab, %_ZNSt6vectorIPN7rocksdb8IteratorESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit.i
   store ptr %i.br, ptr %4, align 8, !tbaa !1462
-  store ptr %i.br, ptr %i.bc, align 8, !tbaa !1463
+  %20 = getelementptr inbounds nuw i8, ptr %i.br, i64 %19
+  store ptr %20, ptr %i.bc, align 8, !tbaa !1463
   %i.cb = getelementptr inbounds nuw i8, ptr %i.br, i64 %i.bj
   store ptr %i.cb, ptr %i.bl, align 8, !tbaa !1464
   br label %_ZNSt6vectorIPN7rocksdb8IteratorESaIS2_EE7reserveEm.exit

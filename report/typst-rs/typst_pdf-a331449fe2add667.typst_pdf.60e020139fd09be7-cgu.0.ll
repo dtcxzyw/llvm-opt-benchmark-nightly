@@ -205,16 +205,14 @@ bb.hb:                                            ; preds = %bb.gx
 
 bb.hc:                                            ; preds = %bb.hb
   %i.yn = load i8, ptr %i.ve, align 1, !alias.scope !14512, !noalias !14280, !noundef !10
-  %.not.i.i.i = icmp sgt i8 %i.yn, -1
+  %.not.i.i.i = icmp slt i8 %i.yn, 0
   %.val.i254.i.i = load ptr, ptr %i.vc, align 8, !alias.scope !14512, !noalias !14280 ; 5 uses
-  %.val21.i.i.i = load i64, ptr %i.vf, align 8, !alias.scope !14512, !noalias !14280 ; 3 uses
-  br i1 %.not.i.i.i, label %8, label %_RNvXs10_NtNtCsdaEETE4DqmE_13typst_library9visualize5colorNtB6_16SpotColorantNameNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i.i
-
-8:                                                ; preds = %bb.hc
+  %.val21.i.i.i = load i64, ptr %i.vf, align 8, !alias.scope !14512, !noalias !14280 ; 2 uses
   %.not.i.i.i255.i.i = icmp eq ptr %.val.i254.i.i, inttoptr (i64 16 to ptr)
-  br i1 %.not.i.i.i255.i.i, label %_RNvXs10_NtNtCsdaEETE4DqmE_13typst_library9visualize5colorNtB6_16SpotColorantNameNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i.i, label %bb.hd
+  %or.cond = select i1 %.not.i.i.i, i1 true, i1 %.not.i.i.i255.i.i
+  br i1 %or.cond, label %_RNvXs10_NtNtCsdaEETE4DqmE_13typst_library9visualize5colorNtB6_16SpotColorantNameNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i.i, label %bb.hd
 
-bb.hd:                                            ; preds = %8
+bb.hd:                                            ; preds = %bb.hc
   %i.yo = getelementptr inbounds i8, ptr %.val.i254.i.i, i64 -16
   %i.yp = atomicrmw add ptr %i.yo, i64 1 monotonic, align 8, !noalias !14513
   %i.yq = icmp slt i64 %i.yp, 0
@@ -240,10 +238,10 @@ bb.hf:                                            ; preds = %_RNvXs10_NtNtCsdaEE
           cleanup
   br label %.body.i.i
 
-_RNvXs10_NtNtCsdaEETE4DqmE_13typst_library9visualize5colorNtB6_16SpotColorantNameNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i.i: ; preds = %bb.hc, %bb.hd, %8, %bb.hb
-  %.sroa.4.0.i.i = phi ptr [ undef, %bb.hb ], [ %.val.i254.i.i, %bb.hd ], [ inttoptr (i64 16 to ptr), %8 ], [ %.val.i254.i.i, %bb.hc ]
-  %.sroa.7.0.i.i = phi i64 [ undef, %bb.hb ], [ %.val21.i.i.i, %bb.hd ], [ %.val21.i.i.i, %8 ], [ %.val21.i.i.i, %bb.hc ]
-  %storemerge.i.i.i = phi i64 [ 0, %bb.hb ], [ 1, %bb.hd ], [ 1, %8 ], [ 1, %bb.hc ]
+_RNvXs10_NtNtCsdaEETE4DqmE_13typst_library9visualize5colorNtB6_16SpotColorantNameNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i.i: ; preds = %bb.hc, %bb.hd, %bb.hb
+  %.sroa.4.0.i.i = phi ptr [ undef, %bb.hb ], [ %.val.i254.i.i, %bb.hd ], [ %.val.i254.i.i, %bb.hc ]
+  %.sroa.7.0.i.i = phi i64 [ undef, %bb.hb ], [ %.val21.i.i.i, %bb.hd ], [ %.val21.i.i.i, %bb.hc ]
+  %storemerge.i.i.i = phi i64 [ 0, %bb.hb ], [ 1, %bb.hd ], [ 1, %bb.hc ]
   %i.yr = ptrtoint ptr %.sroa.4.0.i.i to i64      ; 2 uses
   %.sroa.4.0.extract.trunc.i.i = trunc i64 %i.yr to i8
   %.sroa.4.1.extract.shift.i.i = lshr i64 %i.yr, 8

@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %._crit_edge
 .lr.ph:                                           ; preds = %_ZNSt6vectorIP18InvocationTestBaseSaIS1_EE7reserveEm.exit, %_ZNSt6vectorIP18InvocationTestBaseSaIS1_EE9push_backEOS1_.exit
   %.sroa.037.079 = phi ptr [ %i.ah, %_ZNSt6vectorIP18InvocationTestBaseSaIS1_EE9push_backEOS1_.exit ], [ %i.l, %_ZNSt6vectorIP18InvocationTestBaseSaIS1_EE7reserveEm.exit ] ; 2 uses
   %.sroa.19.078 = phi ptr [ %.sroa.19.3, %_ZNSt6vectorIP18InvocationTestBaseSaIS1_EE9push_backEOS1_.exit ], [ %.sroa.19.2, %_ZNSt6vectorIP18InvocationTestBaseSaIS1_EE7reserveEm.exit ] ; 5 uses
-  %.sroa.12.077 = phi ptr [ %.sroa.12.2, %_ZNSt6vectorIP18InvocationTestBaseSaIS1_EE9push_backEOS1_.exit ], [ %.sroa.040.2, %_ZNSt6vectorIP18InvocationTestBaseSaIS1_EE7reserveEm.exit ] ; 3 uses
+  %.sroa.12.077 = phi ptr [ %.sroa.12.2, %_ZNSt6vectorIP18InvocationTestBaseSaIS1_EE9push_backEOS1_.exit ], [ %.sroa.040.2, %_ZNSt6vectorIP18InvocationTestBaseSaIS1_EE7reserveEm.exit ] ; 4 uses
   %.sroa.040.076 = phi ptr [ %.sroa.040.3, %_ZNSt6vectorIP18InvocationTestBaseSaIS1_EE9push_backEOS1_.exit ], [ %.sroa.040.2, %_ZNSt6vectorIP18InvocationTestBaseSaIS1_EE7reserveEm.exit ] ; 7 uses
   %i.s = load ptr, ptr %.sroa.037.079, align 8, !tbaa !126 ; 2 uses
   %.not.i.i = icmp eq ptr %.sroa.12.077, %.sroa.19.078
@@ -215,9 +215,9 @@ bb.e:                                             ; preds = %.lr.ph
   br label %_ZNSt6vectorIP18InvocationTestBaseSaIS1_EE9push_backEOS1_.exit
 
 bb.f:                                             ; preds = %.lr.ph
-  %i.t = ptrtoint ptr %.sroa.19.078 to i64
-  %i.u = ptrtoint ptr %.sroa.040.076 to i64
-  %i.v = sub i64 %i.t, %i.u                       ; 6 uses
+  %i.t = ptrtoint ptr %.sroa.12.077 to i64
+  %i.u = ptrtoint ptr %.sroa.040.076 to i64       ; 2 uses
+  %i.v = sub i64 %i.t, %i.u                       ; 5 uses
   %i.w = icmp eq i64 %i.v, 9223372036854775800
   br i1 %i.w, label %bb.g, label %_ZNKSt6vectorIP18InvocationTestBaseSaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
 
@@ -256,7 +256,9 @@ _ZNSt6vectorIP18InvocationTestBaseSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.
   br i1 %.not.i17.i.i.i, label %_ZNSt6vectorIP18InvocationTestBaseSaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt6vectorIP18InvocationTestBaseSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i.i
-  call void @_ZdlPvm(ptr noundef nonnull %.sroa.040.076, i64 noundef %i.v) #19
+  %2 = ptrtoint ptr %.sroa.19.078 to i64
+  %3 = sub i64 %2, %i.u
+  call void @_ZdlPvm(ptr noundef nonnull %.sroa.040.076, i64 noundef %3) #19
   br label %_ZNSt6vectorIP18InvocationTestBaseSaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIP18InvocationTestBaseSaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i: ; preds = %bb.i, %_ZNSt6vectorIP18InvocationTestBaseSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i.i
@@ -659,7 +661,7 @@ bb.d:                                             ; preds = %._crit_edge
 .lr.ph:                                           ; preds = %_ZNSt6vectorIP18InvocationTestBaseSaIS1_EE7reserveEm.exit, %_ZNSt6vectorIP18InvocationTestBaseSaIS1_EE9push_backEOS1_.exit
   %.sroa.037.079 = phi ptr [ %i.ah, %_ZNSt6vectorIP18InvocationTestBaseSaIS1_EE9push_backEOS1_.exit ], [ %i.l, %_ZNSt6vectorIP18InvocationTestBaseSaIS1_EE7reserveEm.exit ] ; 2 uses
   %.sroa.19.078 = phi ptr [ %.sroa.19.3, %_ZNSt6vectorIP18InvocationTestBaseSaIS1_EE9push_backEOS1_.exit ], [ %.sroa.19.2, %_ZNSt6vectorIP18InvocationTestBaseSaIS1_EE7reserveEm.exit ] ; 5 uses
-  %.sroa.12.077 = phi ptr [ %.sroa.12.2, %_ZNSt6vectorIP18InvocationTestBaseSaIS1_EE9push_backEOS1_.exit ], [ %.sroa.040.2, %_ZNSt6vectorIP18InvocationTestBaseSaIS1_EE7reserveEm.exit ] ; 3 uses
+  %.sroa.12.077 = phi ptr [ %.sroa.12.2, %_ZNSt6vectorIP18InvocationTestBaseSaIS1_EE9push_backEOS1_.exit ], [ %.sroa.040.2, %_ZNSt6vectorIP18InvocationTestBaseSaIS1_EE7reserveEm.exit ] ; 4 uses
   %.sroa.040.076 = phi ptr [ %.sroa.040.3, %_ZNSt6vectorIP18InvocationTestBaseSaIS1_EE9push_backEOS1_.exit ], [ %.sroa.040.2, %_ZNSt6vectorIP18InvocationTestBaseSaIS1_EE7reserveEm.exit ] ; 7 uses
   %i.s = load ptr, ptr %.sroa.037.079, align 8, !tbaa !126 ; 2 uses
   %.not.i.i = icmp eq ptr %.sroa.12.077, %.sroa.19.078
@@ -670,9 +672,9 @@ bb.e:                                             ; preds = %.lr.ph
   br label %_ZNSt6vectorIP18InvocationTestBaseSaIS1_EE9push_backEOS1_.exit
 
 bb.f:                                             ; preds = %.lr.ph
-  %i.t = ptrtoint ptr %.sroa.19.078 to i64
-  %i.u = ptrtoint ptr %.sroa.040.076 to i64
-  %i.v = sub i64 %i.t, %i.u                       ; 6 uses
+  %i.t = ptrtoint ptr %.sroa.12.077 to i64
+  %i.u = ptrtoint ptr %.sroa.040.076 to i64       ; 2 uses
+  %i.v = sub i64 %i.t, %i.u                       ; 5 uses
   %i.w = icmp eq i64 %i.v, 9223372036854775800
   br i1 %i.w, label %bb.g, label %_ZNKSt6vectorIP18InvocationTestBaseSaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
 
@@ -711,7 +713,9 @@ _ZNSt6vectorIP18InvocationTestBaseSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.
   br i1 %.not.i17.i.i.i, label %_ZNSt6vectorIP18InvocationTestBaseSaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt6vectorIP18InvocationTestBaseSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i.i
-  call void @_ZdlPvm(ptr noundef nonnull %.sroa.040.076, i64 noundef %i.v) #19
+  %2 = ptrtoint ptr %.sroa.19.078 to i64
+  %3 = sub i64 %2, %i.u
+  call void @_ZdlPvm(ptr noundef nonnull %.sroa.040.076, i64 noundef %3) #19
   br label %_ZNSt6vectorIP18InvocationTestBaseSaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIP18InvocationTestBaseSaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i: ; preds = %bb.i, %_ZNSt6vectorIP18InvocationTestBaseSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i.i

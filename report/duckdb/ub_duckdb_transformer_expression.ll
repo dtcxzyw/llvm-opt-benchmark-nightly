@@ -202,7 +202,7 @@ bb.s:                                             ; preds = %bb.r
   invoke void %i.bb(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::unique_ptr") align 8 %20, ptr noundef nonnull align 8 dereferenceable(120) %i.ay)
           to label %_ZNKSt6vectorIN6duckdb10unique_ptrINS0_16ParsedExpressionESt14default_deleteIS2_ELb1EEESaIS5_EE12_M_check_lenEmPKc.exit.i.i.i115 unwind label %bb.ae
 
-_ZNKSt6vectorIN6duckdb10unique_ptrINS0_16ParsedExpressionESt14default_deleteIS2_ELb1EEESaIS5_EE12_M_check_lenEmPKc.exit.i.i.i115: ; preds = %bb.s, %_ZN6duckdb11Transformer19TransformExpressionENS_12optional_ptrIN17duckdb_libpgquery6PGNodeELb1EEE.exit113
+_ZNKSt6vectorIN6duckdb10unique_ptrINS0_16ParsedExpressionESt14default_deleteIS2_ELb1EEESaIS5_EE12_M_check_lenEmPKc.exit.i.i.i115: ; preds = %_ZN6duckdb11Transformer19TransformExpressionENS_12optional_ptrIN17duckdb_libpgquery6PGNodeELb1EEE.exit113, %bb.s
   %i.bc = invoke noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #22
           to label %.lr.ph.i.i.i.i.i.i.i119.preheader unwind label %.loopexit.split-lp410 ; 6 uses
 
@@ -570,7 +570,7 @@ _ZNSt10unique_ptrIN6duckdb18ConstantExpressionESt14default_deleteIS1_EED2Ev.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #21
   br label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_16ParsedExpressionESt14default_deleteIS2_ELb1EEESaIS5_EED2Ev.exit
 
-.loopexit.split-lp410:                            ; preds = %_ZNKSt6vectorIN6duckdb10unique_ptrINS0_16ParsedExpressionESt14default_deleteIS2_ELb1EEESaIS5_EE12_M_check_lenEmPKc.exit.i.i.i115, %bb.ag
+.loopexit.split-lp410:                            ; preds = %bb.ag, %_ZNKSt6vectorIN6duckdb10unique_ptrINS0_16ParsedExpressionESt14default_deleteIS2_ELb1EEESaIS5_EE12_M_check_lenEmPKc.exit.i.i.i115
   %lpad.loopexit451 = landingpad { ptr, i32 }
           cleanup
   br label %.body157
@@ -973,7 +973,7 @@ bb.bh:                                            ; preds = %bb.bg
 
 bb.bi:                                            ; preds = %.noexc215
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %42, i64 8
-  %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !196 ; 3 uses
+  %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !196 ; 4 uses
   %.phi.trans.insert657 = getelementptr inbounds nuw i8, ptr %42, i64 16
   %.pre658 = load ptr, ptr %.phi.trans.insert657, align 8, !tbaa !197 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %26)
@@ -992,9 +992,11 @@ _ZNSt6vectorIN6duckdb10unique_ptrINS0_16ParsedExpressionESt14default_deleteIS2_E
 bb.bj:                                            ; preds = %.thread790, %bb.bi
   %i.ja = phi ptr [ %i.iu, %.thread790 ], [ %i.ix, %bb.bi ] ; 3 uses
   %i.jb = phi ptr [ %i.it, %.thread790 ], [ %i.iw, %bb.bi ] ; 3 uses
+  %72 = phi ptr [ null, %.thread790 ], [ %.pre, %bb.bi ]
   %i.jc = phi ptr [ null, %.thread790 ], [ %.pre658, %bb.bi ] ; 3 uses
+  %73 = ptrtoaddr ptr %i.jc to i64
   %i.jd = load ptr, ptr %42, align 8, !tbaa !195  ; 10 uses
-  %i.je = ptrtoint ptr %i.jc to i64               ; 2 uses
+  %i.je = ptrtoint ptr %72 to i64
   %i.jf = ptrtoint ptr %i.jd to i64               ; 2 uses
   %i.jg = sub i64 %i.je, %i.jf                    ; 3 uses
   %i.jh = icmp eq i64 %i.jg, 9223372036854775800
@@ -1029,7 +1031,7 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_16ParsedExpressionESt14default_deleteIS2_
   br i1 %.not10.i.i.i.i.i.i.i222, label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_16ParsedExpressionESt14default_deleteIS2_ELb1EEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i.i.i227, label %.lr.ph.i.i.i.i.i.i.i223.preheader
 
 .lr.ph.i.i.i.i.i.i.i223.preheader:                ; preds = %.noexc232
-  %i.jr = add i64 %i.je, -8
+  %i.jr = add i64 %73, -8
   %i.js = sub i64 %i.jr, %i.jf                    ; 3 uses
   %i.jt = lshr i64 %i.js, 3
   %i.ju = add nuw nsw i64 %i.jt, 1                ; 2 uses

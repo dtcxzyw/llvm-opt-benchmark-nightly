@@ -204,7 +204,7 @@ lean_obj_tag.exit1835:                            ; preds = %bb.aw, %bb.ax
 
 bb.ay:                                            ; preds = %lean_obj_tag.exit1835
   %i.cl = getelementptr inbounds nuw i8, ptr %i.cd, i64 8
-  %i.cm = load ptr, ptr %i.cl, align 8, !tbaa !10 ; 10 uses
+  %i.cm = load ptr, ptr %i.cl, align 8, !tbaa !10 ; 11 uses
   %.val1796 = load i32, ptr %i.cd, align 8, !tbaa !15
   %i.cn = icmp eq i32 %.val1796, 1                ; 3 uses
   br i1 %i.cn, label %lean_dec.exit1370, label %bb.az
@@ -259,7 +259,7 @@ lean_dec.exit1370:                                ; preds = %lean_inc.exit1768, 
   %.not2371 = icmp eq ptr %i.u, %i.cm
   %.not2372 = icmp eq ptr %i.s, %i.bu
   %or.cond = and i1 %.not2372, %.not2371
-  br i1 %or.cond, label %bb.ca, label %.critedge
+  br i1 %or.cond, label %7, label %.critedge
 
 .critedge:                                        ; preds = %lean_dec.exit1370
   %.val1795 = load i32, ptr %0, align 8, !tbaa !15 ; 4 uses
@@ -364,7 +364,13 @@ bb.bz:                                            ; preds = %bb.bx
   store ptr %.01136, ptr %i.dq, align 8, !tbaa !10
   br label %lean_dec.exit1356
 
-bb.ca:                                            ; preds = %lean_dec.exit1370
+7:                                                ; preds = %lean_dec.exit1370
+  %8 = ptrtoint ptr %i.cm to i64
+  %9 = and i64 %8, 1
+  %.not.i1361 = icmp eq i64 %9, 0
+  br i1 %.not.i1361, label %bb.ca, label %lean_dec.exit1362
+
+bb.ca:                                            ; preds = %7
   %i.dr = load i32, ptr %i.cm, align 4, !tbaa !15 ; 3 uses
   %i.ds = icmp sgt i32 %i.dr, 1
   br i1 %i.ds, label %bb.cb, label %bb.cc, !prof !16
@@ -382,7 +388,7 @@ bb.cd:                                            ; preds = %bb.cc
   tail call void @lean_dec_ref_cold(ptr noundef nonnull %i.cm) #5
   br label %lean_dec.exit1362
 
-lean_dec.exit1362:                                ; preds = %bb.cd, %bb.cc, %bb.cb
+lean_dec.exit1362:                                ; preds = %bb.cd, %bb.cc, %bb.cb, %7
   br i1 %.not.i1769, label %bb.ce, label %lean_dec.exit1360
 
 bb.ce:                                            ; preds = %lean_dec.exit1362

@@ -204,13 +204,17 @@ bb.au:                                            ; preds = %_ZN5Catch16Assertio
   call void @llvm.lifetime.end.p0(ptr nonnull %26) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %25) #22
   call void @llvm.lifetime.start.p0(ptr nonnull %28) #22
-  %i.ic = load ptr, ptr %spec.select.i.sroa.sel112, align 8, !tbaa !138
-  %i.id = load ptr, ptr %spec.select.i.sroa.sel110, align 8, !tbaa !139 ; 2 uses
+  %i.ic = load ptr, ptr %spec.select.i.sroa.sel112, align 8, !tbaa !138 ; 2 uses
+  %i.id = load ptr, ptr %spec.select.i.sroa.sel110, align 8, !tbaa !139 ; 3 uses
   %.not.i.i88.not = icmp eq ptr %i.ic, %i.id
   br i1 %.not.i.i88.not, label %bb.av, label %_ZNSt6vectorIN5vcpkg17InstallPlanActionESaIS1_EE2atEm.exit
 
 bb.av:                                            ; preds = %bb.au
-  invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.143, i64 noundef 0, i64 noundef 0) #25
+  %29 = ptrtoint ptr %i.ic to i64
+  %30 = ptrtoint ptr %i.id to i64
+  %31 = sub i64 %29, %30
+  %32 = sdiv exact i64 %31, 440
+  invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.143, i64 noundef 0, i64 noundef %32) #25
           to label %.noexc89 unwind label %bb.bf
 
 .noexc89:                                         ; preds = %bb.av
@@ -613,7 +617,8 @@ bb.aa:                                            ; preds = %_ZNSt6vectorISt10un
 
 _ZNSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EESaIS5_EE9push_backEOS5_.exit: ; preds = %.noexc367, %bb.y
   %i.lt = phi ptr [ %i.ls, %.noexc367 ], [ %i.kf, %bb.y ] ; 5 uses
-  %i.lu = phi ptr [ %i.lo, %.noexc367 ], [ %i.kh, %bb.y ] ; 3 uses
+  %i.lu = phi ptr [ %i.lo, %.noexc367 ], [ %i.kh, %bb.y ] ; 4 uses
+  %63 = ptrtoaddr ptr %i.lt to i64
   %.not.i.i368 = icmp eq ptr %i.lu, %i.lt
   br i1 %.not.i.i368, label %bb.ac, label %bb.ab
 
@@ -626,7 +631,7 @@ bb.ab:                                            ; preds = %_ZNSt6vectorISt10un
 
 bb.ac:                                            ; preds = %_ZNSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EESaIS5_EE9push_backEOS5_.exit
   %i.lw = load ptr, ptr %i.kb, align 8, !tbaa !215 ; 10 uses
-  %i.lx = ptrtoint ptr %i.lt to i64               ; 2 uses
+  %i.lx = ptrtoint ptr %i.lu to i64
   %i.ly = ptrtoint ptr %i.lw to i64               ; 3 uses
   %i.lz = sub i64 %i.lx, %i.ly                    ; 3 uses
   %i.ma = icmp eq i64 %i.lz, 9223372036854775800
@@ -653,7 +658,7 @@ _ZNKSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EES
   br i1 %.not10.i.i.i.i576, label %_ZNSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i588, label %.lr.ph.i.i.i.i577.preheader
 
 .lr.ph.i.i.i.i577.preheader:                      ; preds = %.noexc592
-  %i.mj = add i64 %i.lx, -8
+  %i.mj = add i64 %63, -8
   %i.mk = sub i64 %i.mj, %i.ly                    ; 3 uses
   %i.ml = lshr i64 %i.mk, 3
   %i.mm = add nuw nsw i64 %i.ml, 1                ; 2 uses
@@ -740,7 +745,8 @@ bb.ad:                                            ; preds = %_ZNSt6vectorISt10un
 
 _ZNSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EESaIS5_EE9push_backEOS5_.exit370: ; preds = %.noexc369, %bb.ab
   %i.ng = phi ptr [ %i.nf, %.noexc369 ], [ %i.lt, %bb.ab ] ; 4 uses
-  %i.nh = phi ptr [ %i.nb, %.noexc369 ], [ %i.lv, %bb.ab ] ; 3 uses
+  %i.nh = phi ptr [ %i.nb, %.noexc369 ], [ %i.lv, %bb.ab ] ; 4 uses
+  %64 = ptrtoaddr ptr %i.ng to i64
   %.not.i.i371 = icmp eq ptr %i.nh, %i.ng
   br i1 %.not.i.i371, label %bb.af, label %bb.ae
 
@@ -753,7 +759,7 @@ bb.ae:                                            ; preds = %_ZNSt6vectorISt10un
 
 bb.af:                                            ; preds = %_ZNSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EESaIS5_EE9push_backEOS5_.exit370
   %i.nj = load ptr, ptr %i.kb, align 8, !tbaa !215 ; 10 uses
-  %i.nk = ptrtoint ptr %i.ng to i64               ; 2 uses
+  %i.nk = ptrtoint ptr %i.nh to i64
   %i.nl = ptrtoint ptr %i.nj to i64               ; 3 uses
   %i.nm = sub i64 %i.nk, %i.nl                    ; 3 uses
   %i.nn = icmp eq i64 %i.nm, 9223372036854775800
@@ -787,7 +793,7 @@ _ZNKSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EES
   br i1 %.not10.i.i.i.i597, label %_ZNSt6vectorISt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i609, label %.lr.ph.i.i.i.i598.preheader
 
 .lr.ph.i.i.i.i598.preheader:                      ; preds = %.noexc613
-  %i.nw = add i64 %i.nk, -8
+  %i.nw = add i64 %64, -8
   %i.nx = sub i64 %i.nw, %i.nl                    ; 3 uses
   %i.ny = lshr i64 %i.nx, 3
   %i.nz = add nuw nsw i64 %i.ny, 1                ; 2 uses

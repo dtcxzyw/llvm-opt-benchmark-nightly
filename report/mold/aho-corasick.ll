@@ -202,7 +202,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 1024 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !23   ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 1032 ; 4 uses
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !23   ; 3 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !23   ; 4 uses
   %i.e = icmp eq ptr %i.b, %i.d
   br i1 %i.e, label %.lr.ph.i.i.i.i.i.preheader, label %_ZNSt6vectorIN4mold11AhoCorasick8TrieNodeESaIS2_EE12emplace_backIJEEERS2_DpOT_.exit
 
@@ -211,7 +211,7 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 1040 ; 3 uses
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !21
   %.not.i = icmp eq ptr %i.b, %i.g
-  br i1 %.not.i, label %_ZNSt6vectorIN4mold11AhoCorasick8TrieNodeESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit21.i.i, label %bb.b
+  br i1 %.not.i, label %4, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.i.i.i.i.i.preheader
   %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 16
@@ -222,27 +222,48 @@ bb.b:                                             ; preds = %.lr.ph.i.i.i.i.i.pr
   store ptr %i.j, ptr %i.c, align 8, !tbaa !20
   br label %_ZNSt6vectorIN4mold11AhoCorasick8TrieNodeESaIS2_EE12emplace_backIJEEERS2_DpOT_.exit
 
-_ZNSt6vectorIN4mold11AhoCorasick8TrieNodeESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit21.i.i: ; preds = %.lr.ph.i.i.i.i.i.preheader
-  %i.k = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #16 ; 4 uses
-  %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 16
+4:                                                ; preds = %.lr.ph.i.i.i.i.i.preheader
+  %5 = ptrtoint ptr %i.d to i64
+  %6 = ptrtoint ptr %i.b to i64                   ; 2 uses
+  %7 = sub i64 %5, %6                             ; 3 uses
+  %8 = icmp eq i64 %7, 9223372036854775800
+  br i1 %8, label %9, label %_ZNSt6vectorIN4mold11AhoCorasick8TrieNodeESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit21.i.i
+
+9:                                                ; preds = %4
+  tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.1) #15
+  unreachable
+
+_ZNSt6vectorIN4mold11AhoCorasick8TrieNodeESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit21.i.i: ; preds = %4
+  %10 = sdiv exact i64 %7, 24                     ; 3 uses
+  %.sroa.speculated.i.i.i = tail call i64 @llvm.umax.i64(i64 %10, i64 1)
+  %11 = add nsw i64 %.sroa.speculated.i.i.i, %10  ; 2 uses
+  %12 = icmp ult i64 %11, %10
+  %13 = tail call i64 @llvm.umin.i64(i64 %11, i64 384307168202282325)
+  %14 = select i1 %12, i64 384307168202282325, i64 %13 ; 3 uses
+  %.not.i.i.i = icmp ne i64 %14, 0
+  tail call void @llvm.assume(i1 %.not.i.i.i)
+  %15 = mul nuw nsw i64 %14, 24
+  %i.k = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %15) #16 ; 4 uses
+  %16 = getelementptr inbounds nuw i8, ptr %i.k, i64 %7 ; 2 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %16, i64 16
   store i64 0, ptr %i.l, align 8
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(21) %i.k, i8 -1, i64 20, i1 false)
-  %i.m = getelementptr inbounds nuw i8, ptr %i.k, i64 24 ; 2 uses
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(21) %16, i8 -1, i64 20, i1 false)
+  %i.m = getelementptr inbounds nuw i8, ptr %i.k, i64 24
   %.not.i22.i.i = icmp eq ptr %i.b, null
   br i1 %.not.i22.i.i, label %_ZNSt6vectorIN4mold11AhoCorasick8TrieNodeESaIS2_EE17_M_realloc_insertIJEEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i, label %bb.c
 
 bb.c:                                             ; preds = %_ZNSt6vectorIN4mold11AhoCorasick8TrieNodeESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit21.i.i
-  %4 = ptrtoint ptr %i.b to i64
   %i.n = load ptr, ptr %i.f, align 8, !tbaa !21
   %i.o = ptrtoint ptr %i.n to i64
-  %i.p = sub i64 %i.o, %4
+  %i.p = sub i64 %i.o, %6
   tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef %i.p) #14
   br label %_ZNSt6vectorIN4mold11AhoCorasick8TrieNodeESaIS2_EE17_M_realloc_insertIJEEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i
 
 _ZNSt6vectorIN4mold11AhoCorasick8TrieNodeESaIS2_EE17_M_realloc_insertIJEEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i: ; preds = %bb.c, %_ZNSt6vectorIN4mold11AhoCorasick8TrieNodeESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit21.i.i
   store ptr %i.k, ptr %i.a, align 8, !tbaa !16
   store ptr %i.m, ptr %i.c, align 8, !tbaa !20
-  store ptr %i.m, ptr %i.f, align 8, !tbaa !21
+  %17 = getelementptr inbounds nuw [24 x i8], ptr %i.k, i64 %14
+  store ptr %17, ptr %i.f, align 8, !tbaa !21
   br label %_ZNSt6vectorIN4mold11AhoCorasick8TrieNodeESaIS2_EE12emplace_backIJEEERS2_DpOT_.exit
 
 _ZNSt6vectorIN4mold11AhoCorasick8TrieNodeESaIS2_EE12emplace_backIJEEERS2_DpOT_.exit: ; preds = %_ZNSt6vectorIN4mold11AhoCorasick8TrieNodeESaIS2_EE17_M_realloc_insertIJEEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i, %bb.b, %bb.a

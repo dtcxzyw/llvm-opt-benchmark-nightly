@@ -205,20 +205,20 @@ _ZN6iguana12skip_commentIRN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_s
   br label %_ZN6iguana12skip_commentIRN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvOT_SE_.exit.i
 
 _ZN6iguana12skip_commentIRN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvOT_SE_.exit.i: ; preds = %bb.ay, %bb.bb, %.preheader25, %bb.ax, %_ZN6iguana12skip_commentIRN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvOT_SE_.exit.i.sink.split, %.preheader26
-  %i.el = phi ptr [ %.sink297, %_ZN6iguana12skip_commentIRN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvOT_SE_.exit.i.sink.split ], [ %i.dr, %.preheader25 ], [ %i.dn, %.preheader26 ], [ %i.dr, %bb.ax ], [ %i.dz, %bb.ay ], [ %i.eg, %bb.bb ] ; 2 uses
-  %i.em = load ptr, ptr %i.f, align 8, !tbaa !73  ; 2 uses
+  %i.el = phi ptr [ %.sink297, %_ZN6iguana12skip_commentIRN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvOT_SE_.exit.i.sink.split ], [ %i.dr, %.preheader25 ], [ %i.dn, %.preheader26 ], [ %i.dr, %bb.ax ], [ %i.dz, %bb.ay ], [ %i.eg, %bb.bb ] ; 3 uses
+  %i.em = load ptr, ptr %i.f, align 8, !tbaa !73  ; 3 uses
   %i.en = icmp eq ptr %i.el, %i.em
-  br i1 %i.en, label %_ZN6iguana7skip_wsIRN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvOT_SE_.exit.i.i.thread, label %.lr.ph88, !llvm.loop !3
+  br i1 %i.en, label %_ZN6iguana7skip_wsIRN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvOT_SE_.exit.i.i, label %.lr.ph88, !llvm.loop !3
 
-_ZN6iguana7skip_wsIRN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvOT_SE_.exit.i.i: ; preds = %bb.ar, %.preheader28
-  %.lcssa48 = phi ptr [ %i.cy, %.preheader28 ], [ %i.dc, %bb.ar ] ; 5 uses
-  %.lcssa = phi ptr [ %i.cx, %.preheader28 ], [ %i.db, %bb.ar ] ; 4 uses
+_ZN6iguana7skip_wsIRN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvOT_SE_.exit.i.i: ; preds = %_ZN6iguana12skip_commentIRN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvOT_SE_.exit.i, %bb.ar, %.preheader28
+  %.lcssa48 = phi ptr [ %i.cy, %.preheader28 ], [ %i.dc, %bb.ar ], [ %i.el, %_ZN6iguana12skip_commentIRN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvOT_SE_.exit.i ] ; 5 uses
+  %.lcssa = phi ptr [ %i.cx, %.preheader28 ], [ %i.db, %bb.ar ], [ %i.em, %_ZN6iguana12skip_commentIRN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvOT_SE_.exit.i ] ; 4 uses
   %i.eo = ptrtoint ptr %.lcssa to i64
   %i.ep = ptrtoint ptr %.lcssa48 to i64
   %i.eq = icmp eq ptr %.lcssa, %.lcssa48
-  br i1 %i.eq, label %_ZN6iguana7skip_wsIRN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvOT_SE_.exit.i.i.thread, label %bb.bh, !prof !160
+  br i1 %i.eq, label %_ZN6iguana7skip_wsIRN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvOT_SE_.exit.i.i.thread, label %bb.bh, !prof !60
 
-_ZN6iguana7skip_wsIRN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvOT_SE_.exit.i.i.thread: ; preds = %_ZN6iguana7skip_wsIRN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvOT_SE_.exit.i.i, %_ZN6iguana12skip_commentIRN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvOT_SE_.exit.i
+_ZN6iguana7skip_wsIRN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvOT_SE_.exit.i.i.thread: ; preds = %_ZN6iguana7skip_wsIRN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvOT_SE_.exit.i.i
   %i.er = tail call ptr @__cxa_allocate_exception(i64 16) #20 ; 3 uses
   invoke void @_ZNSt13runtime_errorC1EPKc(ptr noundef nonnull align 8 dereferenceable(16) %i.er, ptr noundef nonnull @.str.11)
           to label %bb.bf unwind label %bb.bg
@@ -469,9 +469,9 @@ bb.ce:                                            ; preds = %_ZN6iguana6detail14
   br label %common.resume
 
 bb.cf:                                            ; preds = %bb.bp
-  %i.hn = getelementptr inbounds nuw i8, ptr %i.ga, i64 1 ; 5 uses
+  %i.hn = getelementptr inbounds nuw i8, ptr %i.ga, i64 1 ; 4 uses
   store ptr %i.hn, ptr %i.d, align 8, !tbaa !72
-  %i.ho = load ptr, ptr %i.f, align 8, !tbaa !73  ; 2 uses
+  %i.ho = load ptr, ptr %i.f, align 8, !tbaa !73  ; 3 uses
   %i.hp = icmp eq ptr %i.hn, %i.ho
   br i1 %i.hp, label %_ZN6iguana7skip_wsIRN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvOT_SE_.exit.i, label %.lr.ph100
 
@@ -591,13 +591,13 @@ _ZN6iguana12skip_commentIRN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_s
   br label %_ZN6iguana12skip_commentIRN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvOT_SE_.exit21.i
 
 _ZN6iguana12skip_commentIRN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvOT_SE_.exit21.i: ; preds = %bb.co, %bb.cr, %.preheader, %bb.cn, %_ZN6iguana12skip_commentIRN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvOT_SE_.exit21.i.sink.split, %.preheader20
-  %i.ja = phi ptr [ %.sink301, %_ZN6iguana12skip_commentIRN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvOT_SE_.exit21.i.sink.split ], [ %i.ig, %.preheader ], [ %i.ic, %.preheader20 ], [ %i.ig, %bb.cn ], [ %i.io, %bb.co ], [ %i.iv, %bb.cr ] ; 4 uses
-  %i.jb = load ptr, ptr %i.f, align 8, !tbaa !73  ; 2 uses
+  %i.ja = phi ptr [ %.sink301, %_ZN6iguana12skip_commentIRN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvOT_SE_.exit21.i.sink.split ], [ %i.ig, %.preheader ], [ %i.ic, %.preheader20 ], [ %i.ig, %bb.cn ], [ %i.io, %bb.co ], [ %i.iv, %bb.cr ] ; 3 uses
+  %i.jb = load ptr, ptr %i.f, align 8, !tbaa !73  ; 3 uses
   %i.jc = icmp eq ptr %i.ja, %i.jb
   br i1 %i.jc, label %_ZN6iguana7skip_wsIRN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvOT_SE_.exit.i, label %.lr.ph100, !llvm.loop !3
 
 _ZN6iguana7skip_wsIRN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvOT_SE_.exit.i: ; preds = %_ZN6iguana12skip_commentIRN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvOT_SE_.exit21.i, %bb.ch, %bb.cf
-  %i.jd = phi ptr [ %i.hn, %bb.cf ], [ %i.ja, %_ZN6iguana12skip_commentIRN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvOT_SE_.exit21.i ], [ %i.hq, %bb.ch ]
+  %i.jd = phi ptr [ %i.ho, %bb.cf ], [ %i.jb, %_ZN6iguana12skip_commentIRN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvOT_SE_.exit21.i ], [ %i.hq, %bb.ch ]
   %i.je = phi ptr [ %i.hn, %bb.cf ], [ %i.ja, %_ZN6iguana12skip_commentIRN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvOT_SE_.exit21.i ], [ %i.hr, %bb.ch ]
   %i.jf = add nuw nsw i64 %.0.i.i103, 1           ; 2 uses
   %exitcond.not = icmp eq i64 %i.jf, 3
@@ -833,5 +833,4 @@ attributes #27 = { builtin allocsize(0) memory(inaccessiblemem: readwrite, errno
 !157 = distinct !{!157, !28}
 !158 = !{i64 0, i64 4, !66, i64 8, i64 8, !90}
 !159 = distinct !{!159, !28}
-!160 = !{!"branch_weights", !"expected", i32 0, i32 -2147483648}
 end_hunk_0

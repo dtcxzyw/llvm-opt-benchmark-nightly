@@ -205,7 +205,7 @@ _ZNSt6vectorISt10unique_ptrIN4LIEF5MachO18ChainedBindingInfoESt14default_deleteI
 bb.d:                                             ; preds = %.lr.ph, %bb.as
   %i.ao = phi ptr [ %.promoted114, %.lr.ph ], [ %i.lp, %bb.as ] ; 9 uses
   %.sroa.098.0122 = phi ptr [ %i.t, %.lr.ph ], [ %i.ls, %bb.as ] ; 9 uses
-  %i.ap = phi ptr [ %.promoted, %.lr.ph ], [ %i.lr, %bb.as ] ; 10 uses
+  %i.ap = phi ptr [ %.promoted, %.lr.ph ], [ %i.lr, %bb.as ] ; 11 uses
   %i.aq = phi ptr [ %.promoted114, %.lr.ph ], [ %i.lq, %bb.as ] ; 19 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %.sroa.098.0122, i64 40 ; 3 uses
   %i.as = load ptr, ptr %i.u, align 8, !tbaa !85, !noalias !427 ; 3 uses
@@ -608,8 +608,8 @@ bb.an:                                            ; preds = %_ZNSt6vectorIPN4LIE
 
 bb.ao:                                            ; preds = %_ZNSt6vectorIPN4LIEF5MachO18ChainedBindingInfoESaIS3_EE9push_backEOS3_.exit
   %i.jy = ptrtoint ptr %i.ao to i64               ; 2 uses
-  %i.jz = ptrtoint ptr %i.aq to i64               ; 2 uses
-  %i.ka = sub i64 %i.jy, %i.jz                    ; 4 uses
+  %i.jz = ptrtoint ptr %i.aq to i64               ; 3 uses
+  %i.ka = sub i64 %i.jy, %i.jz                    ; 3 uses
   %i.kb = icmp eq i64 %i.ka, 9223372036854775800
   br i1 %i.kb, label %bb.ap, label %_ZNKSt6vectorISt10unique_ptrIN4LIEF5MachO18ChainedBindingInfoESt14default_deleteIS3_EESaIS6_EE12_M_check_lenEmPKc.exit.i
 
@@ -709,7 +709,9 @@ _ZNSt6vectorISt10unique_ptrIN4LIEF5MachO18ChainedBindingInfoESt14default_deleteI
   br i1 %.not.i23.i74, label %_ZNSt6vectorISt10unique_ptrIN4LIEF5MachO18ChainedBindingInfoESt14default_deleteIS3_EESaIS6_EE17_M_realloc_insertIJS6_EEEvN9__gnu_cxx17__normal_iteratorIPS6_S8_EEDpOT_.exit, label %bb.aq
 
 bb.aq:                                            ; preds = %_ZNSt6vectorISt10unique_ptrIN4LIEF5MachO18ChainedBindingInfoESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i
-  call void @_ZdlPvm(ptr noundef nonnull %i.aq, i64 noundef %i.ka) #24
+  %12 = ptrtoint ptr %i.ap to i64
+  %13 = sub i64 %12, %i.jz
+  call void @_ZdlPvm(ptr noundef nonnull %i.aq, i64 noundef %13) #24
   br label %_ZNSt6vectorISt10unique_ptrIN4LIEF5MachO18ChainedBindingInfoESt14default_deleteIS3_EESaIS6_EE17_M_realloc_insertIJS6_EEEvN9__gnu_cxx17__normal_iteratorIPS6_S8_EEDpOT_.exit
 
 _ZNSt6vectorISt10unique_ptrIN4LIEF5MachO18ChainedBindingInfoESt14default_deleteIS3_EESaIS6_EE17_M_realloc_insertIJS6_EEEvN9__gnu_cxx17__normal_iteratorIPS6_S8_EEDpOT_.exit: ; preds = %_ZNSt6vectorISt10unique_ptrIN4LIEF5MachO18ChainedBindingInfoESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i, %bb.aq

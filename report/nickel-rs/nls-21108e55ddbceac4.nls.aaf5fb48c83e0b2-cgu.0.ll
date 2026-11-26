@@ -205,8 +205,8 @@ bb.p:                                             ; preds = %.noexc.i.i, %._ZN4c
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.n, ptr noundef nonnull readonly align 8 dereferenceable(40) %i.p, i64 40, i1 false), !noalias !65073
   %i.dx = getelementptr inbounds nuw i8, ptr %i.n, i64 24
   %i.dy = getelementptr inbounds nuw i8, ptr %i.n, i64 8 ; 3 uses
-  %.promoted.i.i = load ptr, ptr %i.dy, align 8, !alias.scope !65074, !noalias !65069 ; 4 uses
-  %i.dz = load ptr, ptr %i.dx, align 8, !alias.scope !65075, !noalias !65069, !nonnull !53, !noundef !53 ; 5 uses
+  %.promoted.i.i = load ptr, ptr %i.dy, align 8, !alias.scope !65074, !noalias !65069 ; 3 uses
+  %i.dz = load ptr, ptr %i.dx, align 8, !alias.scope !65075, !noalias !65069, !nonnull !53, !noundef !53 ; 4 uses
   %.not13.i.i.i245.i.i = icmp eq ptr %.promoted.i.i, %i.dz
   br i1 %.not13.i.i.i245.i.i, label %.loopexit212.i.i, label %.lr.ph.i.i.i.lr.ph.i.i
 
@@ -478,11 +478,10 @@ bb.af:                                            ; preds = %"_ZN4core4iter6trai
 
 .loopexit212.i.i:                                 ; preds = %"_ZN3std11collections4hash3map18Entry$LT$K$C$V$GT$9or_insert17h03ae1f11566ac4d2E.exit.i.i", %bb.ae, %bb.p
   %i.gs = phi ptr [ %i.eu, %bb.ae ], [ %.promoted.i.i, %bb.p ], [ %i.eu, %"_ZN3std11collections4hash3map18Entry$LT$K$C$V$GT$9or_insert17h03ae1f11566ac4d2E.exit.i.i" ] ; 2 uses
-  %4 = phi ptr [ %i.dz, %bb.ae ], [ %.promoted.i.i, %bb.p ], [ %i.dz, %"_ZN3std11collections4hash3map18Entry$LT$K$C$V$GT$9or_insert17h03ae1f11566ac4d2E.exit.i.i" ]
   call void @llvm.experimental.noalias.scope.decl(metadata !65111)
   call void @llvm.experimental.noalias.scope.decl(metadata !65112)
   call void @llvm.experimental.noalias.scope.decl(metadata !65113)
-  %i.gt = ptrtoint ptr %4 to i64
+  %i.gt = ptrtoint ptr %i.dz to i64
   %i.gu = ptrtoint ptr %i.gs to i64
   %i.gv = sub nuw i64 %i.gt, %i.gu
   %i.gw = lshr exact i64 %i.gv, 6

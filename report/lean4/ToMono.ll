@@ -204,7 +204,7 @@ lean_obj_tag.exit2073:                            ; preds = %bb.mf, %bb.mg
 
 bb.mh:                                            ; preds = %lean_obj_tag.exit2073
   %i.sh = getelementptr inbounds nuw i8, ptr %i.rz, i64 8
-  %i.si = load ptr, ptr %i.sh, align 8, !tbaa !12 ; 10 uses
+  %i.si = load ptr, ptr %i.sh, align 8, !tbaa !12 ; 11 uses
   %.val1891 = load i32, ptr %i.rz, align 8, !tbaa !14
   %i.sj = icmp eq i32 %.val1891, 1                ; 3 uses
   br i1 %i.sj, label %lean_dec.exit1613, label %bb.mi
@@ -260,7 +260,7 @@ lean_dec.exit1613:                                ; preds = %lean_inc.exit1488, 
   %i.st = icmp ne i8 %i.ss, 0
   %.not2402 = icmp eq ptr %i.ru, %i.si
   %or.cond = select i1 %i.st, i1 %.not2402, i1 false
-  br i1 %or.cond, label %bb.nn, label %.critedge
+  br i1 %or.cond, label %6, label %.critedge
 
 .critedge:                                        ; preds = %lean_dec.exit1613
   %i.su = ptrtoint ptr %i.rs to i64
@@ -388,7 +388,13 @@ bb.nm:                                            ; preds = %bb.nk
   store ptr %.01417, ptr %i.tt, align 8, !tbaa !12
   br label %lean_dec.exit1603
 
-bb.nn:                                            ; preds = %lean_dec.exit1613
+6:                                                ; preds = %lean_dec.exit1613
+  %7 = ptrtoint ptr %i.si to i64
+  %8 = and i64 %7, 1
+  %.not.i1604 = icmp eq i64 %8, 0
+  br i1 %.not.i1604, label %bb.nn, label %lean_dec.exit1605
+
+bb.nn:                                            ; preds = %6
   %i.tu = load i32, ptr %i.si, align 4, !tbaa !14 ; 3 uses
   %i.tv = icmp sgt i32 %i.tu, 1
   br i1 %i.tv, label %bb.no, label %bb.np, !prof !15
@@ -406,7 +412,7 @@ bb.nq:                                            ; preds = %bb.np
   tail call void @lean_dec_ref_cold(ptr noundef nonnull %i.si) #5
   br label %lean_dec.exit1605
 
-lean_dec.exit1605:                                ; preds = %bb.nq, %bb.np, %bb.no
+lean_dec.exit1605:                                ; preds = %bb.nq, %bb.np, %bb.no, %6
   br i1 %i.sj, label %bb.nr, label %bb.ns
 
 bb.nr:                                            ; preds = %lean_dec.exit1605

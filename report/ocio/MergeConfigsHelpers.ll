@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 5 uses
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !99   ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 6 uses
-  %i.j = load ptr, ptr %i.i, align 8, !tbaa !89   ; 2 uses
+  %i.j = load ptr, ptr %i.i, align 8, !tbaa !89   ; 3 uses
   %.not.i.i = icmp eq ptr %i.j, %i.h
   br i1 %.not.i.i, label %_ZNSt6vectorISt10shared_ptrIN16OpenColorIO_v2_523ConfigMergingParametersEESaIS3_EE5clearEv.exit, label %.lr.ph.i.i.i.i
 
@@ -267,6 +267,7 @@ _ZSt8_DestroyIPSt10shared_ptrIN16OpenColorIO_v2_523ConfigMergingParametersEES3_E
   br label %_ZNSt6vectorISt10shared_ptrIN16OpenColorIO_v2_523ConfigMergingParametersEESaIS3_EE5clearEv.exit
 
 _ZNSt6vectorISt10shared_ptrIN16OpenColorIO_v2_523ConfigMergingParametersEESaIS3_EE5clearEv.exit: ; preds = %bb.b, %_ZSt8_DestroyIPSt10shared_ptrIN16OpenColorIO_v2_523ConfigMergingParametersEES3_EvT_S5_RSaIT0_E.exit.i.i
+  %5 = phi ptr [ %i.j, %bb.b ], [ %i.h, %_ZSt8_DestroyIPSt10shared_ptrIN16OpenColorIO_v2_523ConfigMergingParametersEES3_EvT_S5_RSaIT0_E.exit.i.i ]
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 2 uses
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !89 ; 2 uses
@@ -292,7 +293,7 @@ bb.j:                                             ; preds = %_ZNSt6vectorISt10sh
   br i1 %i.aq, label %_ZNSt12_Vector_baseISt10shared_ptrIN16OpenColorIO_v2_523ConfigMergingParametersEESaIS3_EE11_M_allocateEm.exit.i, label %_ZNSt6vectorISt10shared_ptrIN16OpenColorIO_v2_523ConfigMergingParametersEESaIS3_EE7reserveEm.exit
 
 _ZNSt12_Vector_baseISt10shared_ptrIN16OpenColorIO_v2_523ConfigMergingParametersEESaIS3_EE11_M_allocateEm.exit.i: ; preds = %bb.j
-  %i.ar = ptrtoint ptr %i.h to i64
+  %i.ar = ptrtoint ptr %5 to i64
   %i.as = sub i64 %i.ar, %i.ao
   %i.at = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ai) #23 ; 4 uses
   %i.au = load ptr, ptr %i.g, align 8, !tbaa !99  ; 5 uses
@@ -351,7 +352,7 @@ _ZNSt6vectorISt10shared_ptrIN16OpenColorIO_v2_523ConfigMergingParametersEESaIS3_
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 5 uses
   %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !103 ; 4 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 6 uses
-  %i.bm = load ptr, ptr %i.bl, align 8, !tbaa !102 ; 2 uses
+  %i.bm = load ptr, ptr %i.bl, align 8, !tbaa !102 ; 3 uses
   %.not.i.i23 = icmp eq ptr %i.bm, %i.bk
   br i1 %.not.i.i23, label %_ZNSt6vectorISt10shared_ptrIKN16OpenColorIO_v2_56ConfigEESaIS4_EE5clearEv.exit, label %.lr.ph.i.i.i.i24
 
@@ -416,6 +417,7 @@ _ZSt8_DestroyIPSt10shared_ptrIKN16OpenColorIO_v2_56ConfigEES4_EvT_S6_RSaIT0_E.ex
   br label %_ZNSt6vectorISt10shared_ptrIKN16OpenColorIO_v2_56ConfigEESaIS4_EE5clearEv.exit
 
 _ZNSt6vectorISt10shared_ptrIKN16OpenColorIO_v2_56ConfigEESaIS4_EE5clearEv.exit: ; preds = %._crit_edge, %_ZSt8_DestroyIPSt10shared_ptrIKN16OpenColorIO_v2_56ConfigEES4_EvT_S6_RSaIT0_E.exit.i.i
+  %6 = phi ptr [ %i.bm, %._crit_edge ], [ %i.bk, %_ZSt8_DestroyIPSt10shared_ptrIKN16OpenColorIO_v2_56ConfigEES4_EvT_S6_RSaIT0_E.exit.i.i ]
   %i.cf = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 2 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %1, i64 96 ; 2 uses
   %i.ch = load ptr, ptr %i.cg, align 8, !tbaa !102 ; 2 uses
@@ -441,7 +443,7 @@ bb.s:                                             ; preds = %_ZNSt6vectorISt10sh
   br i1 %i.ct, label %_ZNSt12_Vector_baseISt10shared_ptrIKN16OpenColorIO_v2_56ConfigEESaIS4_EE11_M_allocateEm.exit.i, label %_ZNSt6vectorISt10shared_ptrIKN16OpenColorIO_v2_56ConfigEESaIS4_EE7reserveEm.exit
 
 _ZNSt12_Vector_baseISt10shared_ptrIKN16OpenColorIO_v2_56ConfigEESaIS4_EE11_M_allocateEm.exit.i: ; preds = %bb.s
-  %i.cu = ptrtoint ptr %i.bk to i64
+  %i.cu = ptrtoint ptr %6 to i64
   %i.cv = sub i64 %i.cu, %i.cr
   %i.cw = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.cl) #23 ; 4 uses
   %i.cx = load ptr, ptr %i.bj, align 8, !tbaa !103 ; 5 uses

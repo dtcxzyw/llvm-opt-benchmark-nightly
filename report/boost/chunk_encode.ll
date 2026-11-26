@@ -204,7 +204,7 @@ bb.a:
   %13 = alloca %"class.boost::system::error_code", align 8 ; 5 uses
   %14 = alloca %"class.boost::system::error_code", align 8 ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 8 uses
-  %i.b = ptrtoint ptr %2 to i64                   ; 6 uses
+  %i.b = ptrtoint ptr %2 to i64                   ; 5 uses
   %i.c = ptrtoint ptr %1 to i64
   %i.d = sub i64 %i.b, %i.c
   %i.e = sitofp i64 %i.d to double
@@ -398,9 +398,10 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not138, label %.preheader.preheader._crit_edge, label %.lr.ph683, !llvm.loop !749
 
 .preheader.preheader._crit_edge:                  ; preds = %.preheader.preheader, %.preheader
-  %.lcssa586 = phi ptr [ %i.ak, %.preheader ], [ %i.ah, %.preheader.preheader ]
+  %.lcssa586 = phi ptr [ %i.ak, %.preheader ], [ %i.ah, %.preheader.preheader ] ; 2 uses
+  %15 = ptrtoint ptr %.lcssa586 to i64
   %i.al = ptrtoint ptr %.4111290 to i64
-  %i.am = sub i64 %i.b, %i.al                     ; 7 uses
+  %i.am = sub i64 %15, %i.al                      ; 7 uses
   %i.an = load i64, ptr %i.i, align 8, !tbaa !47  ; 2 uses
   %i.ao = icmp ugt i64 %i.am, 127                 ; 2 uses
   br i1 %i.ao, label %.lr.ph.i.i, label %_ZN5boost5beast6detail11varint_sizeEm.exit.i

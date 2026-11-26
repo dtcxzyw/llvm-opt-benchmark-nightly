@@ -204,7 +204,8 @@ _ZNSt6vectorISt17reference_wrapperIKN4bzla8bitblast7AigNodeEESaIS5_EE17_M_reallo
 
 _ZNSt6vectorISt17reference_wrapperIKN4bzla8bitblast7AigNodeEESaIS5_EE9push_backEOS5_.exit: ; preds = %_ZNSt6vectorISt17reference_wrapperIKN4bzla8bitblast7AigNodeEESaIS5_EE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i.i, %bb.h
   %i.bm = phi ptr [ %i.bl, %_ZNSt6vectorISt17reference_wrapperIKN4bzla8bitblast7AigNodeEESaIS5_EE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i.i ], [ %.pre55, %bb.h ] ; 4 uses
-  %i.bn = phi ptr [ %i.bh, %_ZNSt6vectorISt17reference_wrapperIKN4bzla8bitblast7AigNodeEESaIS5_EE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i.i ], [ %i.ac, %bb.h ] ; 2 uses
+  %i.bn = phi ptr [ %i.bh, %_ZNSt6vectorISt17reference_wrapperIKN4bzla8bitblast7AigNodeEESaIS5_EE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i.i ], [ %i.ac, %bb.h ] ; 3 uses
+  %6 = ptrtoaddr ptr %i.bm to i64
   %i.bo = load i64, ptr %i.q, align 8
   %i.bp = and i64 %i.bo, -2
   %i.bq = inttoptr i64 %i.bp to ptr
@@ -222,7 +223,7 @@ bb.k:                                             ; preds = %_ZNSt6vectorISt17re
 
 bb.l:                                             ; preds = %_ZNSt6vectorISt17reference_wrapperIKN4bzla8bitblast7AigNodeEESaIS5_EE9push_backEOS5_.exit
   %i.bu = load ptr, ptr %4, align 8, !tbaa !73    ; 7 uses
-  %i.bv = ptrtoint ptr %i.bm to i64               ; 2 uses
+  %i.bv = ptrtoint ptr %i.bn to i64
   %i.bw = ptrtoint ptr %i.bu to i64               ; 4 uses
   %i.bx = sub i64 %i.bv, %i.bw                    ; 3 uses
   %i.by = icmp eq i64 %i.bx, 9223372036854775800
@@ -250,7 +251,7 @@ _ZNKSt6vectorISt17reference_wrapperIKN4bzla8bitblast7AigNodeEESaIS5_EE12_M_check
 
 .lr.ph.i.i.i.i.i.i32.preheader:                   ; preds = %.noexc41
   %i.ci = ptrtoaddr ptr %i.cf to i64
-  %i.cj = add i64 %i.bv, -8
+  %i.cj = add i64 %6, -8
   %i.ck = sub i64 %i.cj, %i.bw                    ; 2 uses
   %i.cl = lshr i64 %i.ck, 3
   %i.cm = add nuw nsw i64 %i.cl, 1                ; 2 uses
@@ -343,8 +344,8 @@ _ZNSt6vectorISt17reference_wrapperIKN4bzla8bitblast7AigNodeEESaIS5_EE9push_backE
   br label %_ZNSt6vectorISt17reference_wrapperIKN4bzla8bitblast7AigNodeEESaIS5_EE9push_backEOS5_.exit42
 
 _ZNSt6vectorISt17reference_wrapperIKN4bzla8bitblast7AigNodeEESaIS5_EE9push_backEOS5_.exit42: ; preds = %_ZNSt6vectorISt17reference_wrapperIKN4bzla8bitblast7AigNodeEESaIS5_EE9push_backEOS5_.exit42thread-pre-split, %_ZNSt6vectorISt17reference_wrapperIKN4bzla8bitblast7AigNodeEESaIS5_EE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i.i39
-  %i.de = phi ptr [ %.pre56, %_ZNSt6vectorISt17reference_wrapperIKN4bzla8bitblast7AigNodeEESaIS5_EE9push_backEOS5_.exit42thread-pre-split ], [ %i.cy, %_ZNSt6vectorISt17reference_wrapperIKN4bzla8bitblast7AigNodeEESaIS5_EE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i.i39 ] ; 4 uses
-  %i.df = phi ptr [ %.pr, %_ZNSt6vectorISt17reference_wrapperIKN4bzla8bitblast7AigNodeEESaIS5_EE9push_backEOS5_.exit42thread-pre-split ], [ %i.cf, %_ZNSt6vectorISt17reference_wrapperIKN4bzla8bitblast7AigNodeEESaIS5_EE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i.i39 ] ; 2 uses
+  %i.de = phi ptr [ %.pre56, %_ZNSt6vectorISt17reference_wrapperIKN4bzla8bitblast7AigNodeEESaIS5_EE9push_backEOS5_.exit42thread-pre-split ], [ %i.cy, %_ZNSt6vectorISt17reference_wrapperIKN4bzla8bitblast7AigNodeEESaIS5_EE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i.i39 ] ; 3 uses
+  %i.df = phi ptr [ %.pr, %_ZNSt6vectorISt17reference_wrapperIKN4bzla8bitblast7AigNodeEESaIS5_EE9push_backEOS5_.exit42thread-pre-split ], [ %i.cf, %_ZNSt6vectorISt17reference_wrapperIKN4bzla8bitblast7AigNodeEESaIS5_EE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i.i39 ] ; 3 uses
   %.121 = phi i64 [ %.121.ph, %_ZNSt6vectorISt17reference_wrapperIKN4bzla8bitblast7AigNodeEESaIS5_EE9push_backEOS5_.exit42thread-pre-split ], [ %i.y, %_ZNSt6vectorISt17reference_wrapperIKN4bzla8bitblast7AigNodeEESaIS5_EE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i.i39 ] ; 2 uses
   %i.dg = icmp eq ptr %i.df, %i.de
   br i1 %i.dg, label %bb.o, label %bb.d, !llvm.loop !296
@@ -356,7 +357,7 @@ bb.o:                                             ; preds = %_ZNSt6vectorISt17re
 bb.p:                                             ; preds = %bb.o
   %i.dh = load ptr, ptr %i.n, align 8, !tbaa !72
   %i.di = ptrtoint ptr %i.dh to i64
-  %i.dj = ptrtoint ptr %i.de to i64
+  %i.dj = ptrtoint ptr %i.df to i64
   %i.dk = sub i64 %i.di, %i.dj
   call void @_ZdlPvm(ptr noundef nonnull %i.df, i64 noundef %i.dk) #18
   br label %_ZNSt6vectorISt17reference_wrapperIKN4bzla8bitblast7AigNodeEESaIS5_EED2Ev.exit

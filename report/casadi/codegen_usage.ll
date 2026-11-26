@@ -204,10 +204,17 @@ bb.ae:                                            ; preds = %_ZN6casadi6MatrixId
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit: ; preds = %bb.ae
   %i.dt = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 3 uses
-  %i.du = load ptr, ptr %i.dt, align 8, !tbaa !51
-  %i.dv = load ptr, ptr %7, align 8, !tbaa !49    ; 2 uses
+  %i.du = load ptr, ptr %i.dt, align 8, !tbaa !51 ; 2 uses
+  %i.dv = load ptr, ptr %7, align 8, !tbaa !49    ; 3 uses
   %.not.i.i.not = icmp eq ptr %i.du, %i.dv
-  br i1 %.not.i.i.not, label %.invoke150, label %_ZNSt6vectorIN6casadi6MatrixIdEESaIS2_EE2atEm.exit
+  br i1 %.not.i.i.not, label %8, label %_ZNSt6vectorIN6casadi6MatrixIdEESaIS2_EE2atEm.exit
+
+8:                                                ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit
+  %9 = ptrtoint ptr %i.du to i64
+  %10 = ptrtoint ptr %i.dv to i64
+  %11 = sub i64 %9, %10
+  %12 = sdiv exact i64 %11, 40
+  br label %.invoke150
 
 _ZNSt6vectorIN6casadi6MatrixIdEESaIS2_EE2atEm.exit: ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit
   invoke void @_ZNK6casadi6MatrixIdE4dispERSob(ptr noundef nonnull align 8 dereferenceable(40) %i.dv, ptr noundef nonnull align 8 dereferenceable(8) @_ZSt4cout, i1 noundef zeroext false)
@@ -268,9 +275,9 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit38: ; preds = %_ZNSo
   %.not.i.i39 = icmp ugt i64 %i.es, 1
   br i1 %.not.i.i39, label %bb.ah, label %.invoke150
 
-.invoke150:                                       ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit38, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit
-  %i.et = phi i64 [ 0, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit ], [ 1, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit38 ]
-  %i.eu = phi i64 [ 0, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit ], [ %i.es, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit38 ]
+.invoke150:                                       ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit38, %8
+  %i.et = phi i64 [ 0, %8 ], [ 1, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit38 ]
+  %i.eu = phi i64 [ %12, %8 ], [ %i.es, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit38 ]
   invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.64, i64 noundef %i.et, i64 noundef %i.eu) #28
           to label %.cont151 unwind label %bb.at
 

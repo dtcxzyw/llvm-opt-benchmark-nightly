@@ -205,13 +205,17 @@ bb.bs:                                            ; preds = %_ZNK6casadi13Generi
           to label %bb.bt unwind label %bb.cd
 
 bb.bt:                                            ; preds = %.loopexit295
-  %i.iq = load ptr, ptr %i.gj, align 8, !tbaa !62
-  %i.ir = load ptr, ptr %43, align 8, !tbaa !60   ; 2 uses
+  %i.iq = load ptr, ptr %i.gj, align 8, !tbaa !62 ; 2 uses
+  %i.ir = load ptr, ptr %43, align 8, !tbaa !60   ; 3 uses
   %.not.i.i205.not = icmp eq ptr %i.iq, %i.ir
   br i1 %.not.i.i205.not, label %bb.bu, label %_ZNSt6vectorIN6casadi6MatrixINS0_6SXElemEEESaIS3_EE2atEm.exit
 
 bb.bu:                                            ; preds = %bb.bt
-  invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.41, i64 noundef 0, i64 noundef 0) #27
+  %44 = ptrtoint ptr %i.iq to i64
+  %45 = ptrtoint ptr %i.ir to i64
+  %46 = sub i64 %44, %45
+  %47 = sdiv exact i64 %46, 40
+  invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.41, i64 noundef 0, i64 noundef %47) #27
           to label %.noexc206 unwind label %.loopexit.split-lp297.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc206:                                        ; preds = %bb.bu

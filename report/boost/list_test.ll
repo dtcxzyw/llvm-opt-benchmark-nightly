@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.c, %.lr.ph.i.i.i.i.i.i
-  %storemerge19.i.i.i.i.i.i = phi ptr [ %i.n, %.lr.ph.i.i.i.i.i.i ], [ %i.v, %bb.c ] ; 12 uses
+  %storemerge19.i.i.i.i.i.i = phi ptr [ %i.n, %.lr.ph.i.i.i.i.i.i ], [ %i.v, %bb.c ] ; 13 uses
   %i.o = getelementptr inbounds nuw i8, ptr %storemerge19.i.i.i.i.i.i, i64 24
   %i.p = load i64, ptr %i.o, align 8, !tbaa !165, !noalias !2081 ; 2 uses
   %i.q = icmp ult i64 %i.b, %i.p
@@ -224,6 +224,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.i.i.i
   br i1 %i.w, label %._crit_edge.i.i.thread.i.i.i.i, label %bb.d
 
 ._crit_edge.i.i.thread.i.i.i.i:                   ; preds = %._crit_edge.i.i.i.i.i.i, %bb.b
+  %.017.lcssa.i.i7.i.i.i.i = phi ptr [ %storemerge19.i.i.i.i.i.i, %._crit_edge.i.i.i.i.i.i ], [ %i.i, %bb.b ]
   %i.x = ptrtoint ptr %i.j to i64
   %i.y = and i64 %i.l, 1
   %i.z = or disjoint i64 %i.y, %i.x
@@ -263,7 +264,7 @@ bb.h:                                             ; preds = %bb.g
   br label %_ZN5boost9container3dtl22block_container_traitsIPvmLj6EE16insert_was_emptyINS_9intrusive13multiset_implINS6_8bhtraitsINS1_19adaptive_pool_typesINS1_27basic_multiallocation_chainIS3_EES3_mLj6EE12block_info_tENS6_18rbtree_node_traitsIS3_Lb1EEELNS6_14link_mode_typeE0ENS6_7dft_tagELj3EEEvvmLb1EvEEEEvRT_RNSK_10value_typeEb.exit
 
 _ZN5boost9container3dtl22block_container_traitsIPvmLj6EE16insert_was_emptyINS_9intrusive13multiset_implINS6_8bhtraitsINS1_19adaptive_pool_typesINS1_27basic_multiallocation_chainIS3_EES3_mLj6EE12block_info_tENS6_18rbtree_node_traitsIS3_Lb1EEELNS6_14link_mode_typeE0ENS6_7dft_tagELj3EEEvvmLb1EvEEEEvRT_RNSK_10value_typeEb.exit: ; preds = %._crit_edge.i.i.thread.i.i.i.i, %bb.e, %bb.f, %bb.g, %bb.h
-  %.017.lcssa.i.i6.i.i.i.i = phi ptr [ %i.i, %._crit_edge.i.i.thread.i.i.i.i ], [ %storemerge19.i.i.i.i.i.i, %bb.e ], [ %storemerge19.i.i.i.i.i.i, %bb.f ], [ %storemerge19.i.i.i.i.i.i, %bb.g ], [ %storemerge19.i.i.i.i.i.i, %bb.h ]
+  %.017.lcssa.i.i6.i.i.i.i = phi ptr [ %.017.lcssa.i.i7.i.i.i.i, %._crit_edge.i.i.thread.i.i.i.i ], [ %storemerge19.i.i.i.i.i.i, %bb.e ], [ %storemerge19.i.i.i.i.i.i, %bb.f ], [ %storemerge19.i.i.i.i.i.i, %bb.g ], [ %storemerge19.i.i.i.i.i.i, %bb.h ]
   %i.al = ptrtoint ptr %.017.lcssa.i.i6.i.i.i.i to i64
   %i.am = load ptr, ptr %i.j, align 8, !tbaa !283, !noalias !2081
   %i.an = ptrtoint ptr %i.am to i64
@@ -410,7 +411,7 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.h, %.lr.ph.i.i.i.i.i
-  %storemerge19.i.i.i.i.i = phi ptr [ %i.ao, %.lr.ph.i.i.i.i.i ], [ %i.ax, %bb.h ] ; 12 uses
+  %storemerge19.i.i.i.i.i = phi ptr [ %i.ao, %.lr.ph.i.i.i.i.i ], [ %i.ax, %bb.h ] ; 13 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %storemerge19.i.i.i.i.i, i64 24
   %i.ar = load i64, ptr %i.aq, align 8, !tbaa !165, !noalias !2086 ; 2 uses
   %i.as = icmp ult i64 %i.ap, %i.ar
@@ -429,6 +430,7 @@ bb.h:                                             ; preds = %bb.h, %.lr.ph.i.i.i
   br i1 %i.ay, label %._crit_edge.i.i.thread.i.i.i, label %bb.i
 
 ._crit_edge.i.i.thread.i.i.i:                     ; preds = %._crit_edge.i.i.i.i.i, %bb.g
+  %.017.lcssa.i.i7.i.i.i = phi ptr [ %storemerge19.i.i.i.i.i, %._crit_edge.i.i.i.i.i ], [ %i.b, %bb.g ]
   %i.az = ptrtoint ptr %i.a to i64
   %i.ba = and i64 %i.am, 1
   %i.bb = or disjoint i64 %i.ba, %i.az
@@ -468,7 +470,7 @@ bb.m:                                             ; preds = %bb.l
   br label %_ZN5boost9intrusive13multiset_implINS0_8bhtraitsINS_9container3dtl19adaptive_pool_typesINS4_27basic_multiallocation_chainIPvEES7_mLj6EE12block_info_tENS0_18rbtree_node_traitsIS7_Lb1EEELNS0_14link_mode_typeE0ENS0_7dft_tagELj3EEEvvmLb1EvE6insertERSA_.exit
 
 _ZN5boost9intrusive13multiset_implINS0_8bhtraitsINS_9container3dtl19adaptive_pool_typesINS4_27basic_multiallocation_chainIPvEES7_mLj6EE12block_info_tENS0_18rbtree_node_traitsIS7_Lb1EEELNS0_14link_mode_typeE0ENS0_7dft_tagELj3EEEvvmLb1EvE6insertERSA_.exit: ; preds = %._crit_edge.i.i.thread.i.i.i, %bb.j, %bb.k, %bb.l, %bb.m
-  %.017.lcssa.i.i6.i.i.i = phi ptr [ %i.b, %._crit_edge.i.i.thread.i.i.i ], [ %storemerge19.i.i.i.i.i, %bb.j ], [ %storemerge19.i.i.i.i.i, %bb.k ], [ %storemerge19.i.i.i.i.i, %bb.l ], [ %storemerge19.i.i.i.i.i, %bb.m ]
+  %.017.lcssa.i.i6.i.i.i = phi ptr [ %.017.lcssa.i.i7.i.i.i, %._crit_edge.i.i.thread.i.i.i ], [ %storemerge19.i.i.i.i.i, %bb.j ], [ %storemerge19.i.i.i.i.i, %bb.k ], [ %storemerge19.i.i.i.i.i, %bb.l ], [ %storemerge19.i.i.i.i.i, %bb.m ]
   %i.bn = ptrtoint ptr %.017.lcssa.i.i6.i.i.i to i64
   %i.bo = load ptr, ptr %i.a, align 8, !tbaa !283, !noalias !2086
   %i.bp = ptrtoint ptr %i.bo to i64

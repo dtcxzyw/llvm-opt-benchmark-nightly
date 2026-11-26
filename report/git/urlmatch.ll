@@ -202,7 +202,7 @@ bb.bh:                                            ; preds = %bb.bg
   %i.fg = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 5 uses
   %i.fh = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %i.fi = load ptr, ptr %i.fh, align 8, !tbaa !21
-  %i.fj = getelementptr inbounds nuw i8, ptr %i.fi, i64 %.pre ; 4 uses
+  %i.fj = getelementptr inbounds nuw i8, ptr %i.fi, i64 %.pre ; 3 uses
   call fastcc void @strbuf_addch(ptr noundef %3, i32 noundef 47)
   %i.fk = load i8, ptr %.4238, align 1, !tbaa !12
   %i.fl = icmp eq i8 %i.fk, 47                    ; 2 uses
@@ -219,7 +219,6 @@ sub_0384.lr.ph:                                   ; preds = %._crit_edge435
   %i.fq = sext i1 %i.fl to i64
   %.3 = add i64 %.2227, %i.fq
   %i.fr = getelementptr inbounds nuw i8, ptr %i.fj, i64 1
-  %4 = ptrtoint ptr %i.fj to i64
   br label %sub_0384
 
 ._crit_edge416:                                   ; preds = %.thread360, %._crit_edge435
@@ -251,7 +250,7 @@ sub_0384:                                         ; preds = %sub_0384.lr.ph, %.t
   %i.fw = phi i64 [ %i.fn, %sub_0384.lr.ph ], [ %i.hg, %.thread360 ] ; 3 uses
   %i.fx = phi i64 [ %i.fm, %sub_0384.lr.ph ], [ %i.hf, %.thread360 ]
   %.4415 = phi i64 [ %.3, %sub_0384.lr.ph ], [ %.5, %.thread360 ] ; 3 uses
-  %i.fy = load ptr, ptr %i.fh, align 8, !tbaa !21 ; 4 uses
+  %i.fy = load ptr, ptr %i.fh, align 8, !tbaa !21 ; 3 uses
   %i.fz = getelementptr inbounds nuw i8, ptr %i.fy, i64 %i.fx ; 5 uses
   %i.ga = load i8, ptr %i.fz, align 1
   %.not421 = icmp eq i8 %i.ga, 46
@@ -316,24 +315,21 @@ _.exit346:                                        ; preds = %bb.bp, %bb.bq
   %i.gs = getelementptr inbounds i8, ptr %.0, i64 -1 ; 4 uses
   %i.gt = load i8, ptr %i.gs, align 1, !tbaa !12
   %.not297 = icmp eq i8 %i.gt, 47
-  br i1 %.not297, label %5, label %.preheader, !llvm.loop !40
+  br i1 %.not297, label %bb.br, label %.preheader, !llvm.loop !40
 
-5:                                                ; preds = %.preheader
-  %6 = icmp eq ptr %i.gs, %i.fj
-  br i1 %6, label %.thread354.thread, label %bb.br
-
-bb.br:                                            ; preds = %5
+bb.br:                                            ; preds = %.preheader
+  %4 = icmp eq ptr %i.gs, %i.fj
   %i.gu = ptrtoint ptr %i.gs to i64
   %i.gv = ptrtoint ptr %i.fy to i64
-  %i.gw = sub i64 %i.gu, %i.gv
-  br label %.thread354.sink.split
+  %i.gw = sub i64 %i.gu, %i.gv                    ; 2 uses
+  br i1 %4, label %.thread354.thread, label %.thread354.sink.split
 
 bb.bs:                                            ; preds = %bb.bo, %_.exit346
   call void @strbuf_release(ptr noundef nonnull %3) #14
   br label %.thread
 
-.thread354.sink.split:                            ; preds = %bb.bm, %bb.br
-  %.sink = phi i64 [ %i.gw, %bb.br ], [ %i.gg, %bb.bm ]
+.thread354.sink.split:                            ; preds = %bb.br, %bb.bm
+  %.sink = phi i64 [ %i.gg, %bb.bm ], [ %i.gw, %bb.br ]
   call fastcc void @strbuf_setlen(ptr noundef %3, i64 noundef %.sink)
   br label %.thread354
 
@@ -343,10 +339,8 @@ bb.bs:                                            ; preds = %bb.bo, %_.exit346
   %.not300 = icmp eq i8 %i.gy, 47
   br i1 %.not300, label %bb.bt, label %bb.bu
 
-.thread354.thread:                                ; preds = %5
-  %7 = ptrtoint ptr %i.fy to i64
-  %reass.sub = sub i64 %4, %7
-  %i.gz = add i64 %reass.sub, 1
+.thread354.thread:                                ; preds = %bb.br
+  %i.gz = add i64 %i.gw, 1
   call fastcc void @strbuf_setlen(ptr noundef %3, i64 noundef %i.gz)
   %i.ha = sub i64 %.4415, %i.fw                   ; 2 uses
   %i.hb = load i8, ptr %i.fv, align 1, !tbaa !12  ; 2 uses

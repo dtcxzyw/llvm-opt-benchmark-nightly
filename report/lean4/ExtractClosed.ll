@@ -204,7 +204,7 @@ lean_obj_tag.exit2866:                            ; preds = %bb.abt, %bb.abu
 
 bb.abv:                                           ; preds = %lean_obj_tag.exit2866
   %i.aqm = getelementptr inbounds nuw i8, ptr %i.aqe, i64 8
-  %i.aqn = load ptr, ptr %i.aqm, align 8, !tbaa !10 ; 9 uses
+  %i.aqn = load ptr, ptr %i.aqm, align 8, !tbaa !10 ; 10 uses
   %.val2433 = load i32, ptr %i.aqe, align 8, !tbaa !13
   %i.aqo = icmp eq i32 %.val2433, 1               ; 3 uses
   br i1 %i.aqo, label %lean_dec.exit2093, label %bb.abw
@@ -275,7 +275,7 @@ bb.ach:                                           ; preds = %bb.acg
 
 lean_dec_ref.exit2412:                            ; preds = %bb.acf, %bb.acg, %bb.ach
   %.not = icmp eq ptr %i.apx, %i.aqn
-  br i1 %.not, label %bb.acz, label %bb.aci
+  br i1 %.not, label %7, label %bb.aci
 
 bb.aci:                                           ; preds = %lean_dec_ref.exit2412
   %.val2432 = load i32, ptr %0, align 8, !tbaa !13 ; 4 uses
@@ -368,7 +368,13 @@ bb.acy:                                           ; preds = %bb.acw
   store ptr %.sink3627, ptr %i.ars, align 8, !tbaa !10
   br label %lean_dec.exit2077
 
-bb.acz:                                           ; preds = %lean_dec_ref.exit2412
+7:                                                ; preds = %lean_dec_ref.exit2412
+  %8 = ptrtoint ptr %i.aqn to i64
+  %9 = and i64 %8, 1
+  %.not.i2086 = icmp eq i64 %9, 0
+  br i1 %.not.i2086, label %bb.acz, label %lean_dec.exit2087
+
+bb.acz:                                           ; preds = %7
   %i.art = load i32, ptr %i.aqn, align 4, !tbaa !13 ; 3 uses
   %i.aru = icmp sgt i32 %i.art, 1
   br i1 %i.aru, label %bb.ada, label %bb.adb, !prof !14
@@ -386,7 +392,7 @@ bb.adc:                                           ; preds = %bb.adb
   tail call void @lean_dec_ref_cold(ptr noundef nonnull %i.aqn) #7
   br label %lean_dec.exit2087
 
-lean_dec.exit2087:                                ; preds = %bb.adc, %bb.adb, %bb.ada
+lean_dec.exit2087:                                ; preds = %bb.adc, %bb.adb, %bb.ada, %7
   %i.arw = ptrtoint ptr %.01673 to i64
   %i.arx = and i64 %i.arw, 1
   %.not.i2870 = icmp eq i64 %i.arx, 0

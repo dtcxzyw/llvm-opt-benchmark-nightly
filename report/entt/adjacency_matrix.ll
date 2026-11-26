@@ -205,7 +205,7 @@ _ZN4entt9dense_mapIjmSt4hashIjESt8equal_toIvESaISt4pairIKjmEEE16constrained_find
   br label %_ZN4entt9dense_mapIjmSt4hashIjESt8equal_toIvESaISt4pairIKjmEEE16constrained_findIjEEDaRKT_m.exit
 
 _ZN4entt9dense_mapIjmSt4hashIjESt8equal_toIvESaISt4pairIKjmEEE16constrained_findIjEEDaRKT_m.exit: ; preds = %_ZN4entt9dense_mapIjmSt4hashIjESt8equal_toIvESaISt4pairIKjmEEE16constrained_findIjEEDaRKT_m.exit.loopexit, %bb.d
-  %.pre-phi = phi i64 [ %.pre31, %_ZN4entt9dense_mapIjmSt4hashIjESt8equal_toIvESaISt4pairIKjmEEE16constrained_findIjEEDaRKT_m.exit.loopexit ], [ %i.v, %bb.d ] ; 2 uses
+  %.pre-phi = phi i64 [ %.pre31, %_ZN4entt9dense_mapIjmSt4hashIjESt8equal_toIvESaISt4pairIKjmEEE16constrained_findIjEEDaRKT_m.exit.loopexit ], [ %i.v, %bb.d ] ; 3 uses
   %i.y = phi ptr [ %.pre, %_ZN4entt9dense_mapIjmSt4hashIjESt8equal_toIvESaISt4pairIKjmEEE16constrained_findIjEEDaRKT_m.exit.loopexit ], [ %i.t, %bb.d ] ; 9 uses
   %.sroa.0.1.i = phi ptr [ %i.o, %_ZN4entt9dense_mapIjmSt4hashIjESt8equal_toIvESaISt4pairIKjmEEE16constrained_findIjEEDaRKT_m.exit.loopexit ], [ %i.x, %bb.d ] ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
@@ -214,7 +214,7 @@ _ZN4entt9dense_mapIjmSt4hashIjESt8equal_toIvESaISt4pairIKjmEEE16constrained_find
 
 bb.e:                                             ; preds = %_ZN4entt9dense_mapIjmSt4hashIjESt8equal_toIvESaISt4pairIKjmEEE16constrained_findIjEEDaRKT_m.exit
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
-  %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !92
+  %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !92 ; 2 uses
   %.not.i12 = icmp eq ptr %i.y, %i.ac
   br i1 %.not.i12, label %bb.g, label %bb.f
 
@@ -231,7 +231,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e
   %i.ah = ptrtoint ptr %i.y to i64
-  %i.ai = sub i64 %i.ah, %.pre-phi                ; 4 uses
+  %i.ai = sub i64 %i.ah, %.pre-phi                ; 3 uses
   %i.aj = icmp eq i64 %i.ai, 9223372036854775800
   br i1 %i.aj, label %bb.h, label %_ZNKSt6vectorIN4entt8internal14dense_map_nodeIjmEESaIS3_EE12_M_check_lenEmPKc.exit.i.i
 
@@ -277,7 +277,9 @@ _ZNSt6vectorIN4entt8internal14dense_map_nodeIjmEESaIS3_EE11_S_relocateEPS3_S6_S6
   br i1 %.not.i36.i.i, label %_ZNSt6vectorIN4entt8internal14dense_map_nodeIjmEESaIS3_EE17_M_realloc_insertIJRmRKSt21piecewise_construct_tSt5tupleIJRKjEESB_IJEEEEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt6vectorIN4entt8internal14dense_map_nodeIjmEESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit35.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.n, i64 noundef %i.ai) #28
+  %2 = ptrtoint ptr %i.ac to i64
+  %3 = sub i64 %2, %.pre-phi
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.n, i64 noundef %3) #28
   %.pre25.pre = load ptr, ptr %0, align 8, !tbaa !57 ; 2 uses
   %.pre26.pre = load ptr, ptr %i.c, align 8, !tbaa !59
   %.pre46 = ptrtoint ptr %.pre26.pre to i64
@@ -389,7 +391,7 @@ _ZN4entt9dense_mapIjmSt4hashIjESt8equal_toIvESaISt4pairIKjmEEE16constrained_find
   br label %_ZN4entt9dense_mapIjmSt4hashIjESt8equal_toIvESaISt4pairIKjmEEE16constrained_findIjEEDaRKT_m.exit
 
 _ZN4entt9dense_mapIjmSt4hashIjESt8equal_toIvESaISt4pairIKjmEEE16constrained_findIjEEDaRKT_m.exit: ; preds = %_ZN4entt9dense_mapIjmSt4hashIjESt8equal_toIvESaISt4pairIKjmEEE16constrained_findIjEEDaRKT_m.exit.loopexit, %bb.d
-  %.pre-phi = phi i64 [ %.pre31, %_ZN4entt9dense_mapIjmSt4hashIjESt8equal_toIvESaISt4pairIKjmEEE16constrained_findIjEEDaRKT_m.exit.loopexit ], [ %i.v, %bb.d ] ; 2 uses
+  %.pre-phi = phi i64 [ %.pre31, %_ZN4entt9dense_mapIjmSt4hashIjESt8equal_toIvESaISt4pairIKjmEEE16constrained_findIjEEDaRKT_m.exit.loopexit ], [ %i.v, %bb.d ] ; 3 uses
   %i.y = phi ptr [ %.pre, %_ZN4entt9dense_mapIjmSt4hashIjESt8equal_toIvESaISt4pairIKjmEEE16constrained_findIjEEDaRKT_m.exit.loopexit ], [ %i.t, %bb.d ] ; 9 uses
   %.sroa.0.1.i = phi ptr [ %i.o, %_ZN4entt9dense_mapIjmSt4hashIjESt8equal_toIvESaISt4pairIKjmEEE16constrained_findIjEEDaRKT_m.exit.loopexit ], [ %i.x, %bb.d ] ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
@@ -398,7 +400,7 @@ _ZN4entt9dense_mapIjmSt4hashIjESt8equal_toIvESaISt4pairIKjmEEE16constrained_find
 
 bb.e:                                             ; preds = %_ZN4entt9dense_mapIjmSt4hashIjESt8equal_toIvESaISt4pairIKjmEEE16constrained_findIjEEDaRKT_m.exit
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
-  %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !92
+  %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !92 ; 2 uses
   %.not.i12 = icmp eq ptr %i.y, %i.ac
   br i1 %.not.i12, label %bb.g, label %bb.f
 
@@ -415,7 +417,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e
   %i.ah = ptrtoint ptr %i.y to i64
-  %i.ai = sub i64 %i.ah, %.pre-phi                ; 4 uses
+  %i.ai = sub i64 %i.ah, %.pre-phi                ; 3 uses
   %i.aj = icmp eq i64 %i.ai, 9223372036854775800
   br i1 %i.aj, label %bb.h, label %_ZNKSt6vectorIN4entt8internal14dense_map_nodeIjmEESaIS3_EE12_M_check_lenEmPKc.exit.i.i
 
@@ -461,7 +463,9 @@ _ZNSt6vectorIN4entt8internal14dense_map_nodeIjmEESaIS3_EE11_S_relocateEPS3_S6_S6
   br i1 %.not.i36.i.i, label %_ZNSt6vectorIN4entt8internal14dense_map_nodeIjmEESaIS3_EE17_M_realloc_insertIJRmRKSt21piecewise_construct_tSt5tupleIJOjEESB_IJEEEEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt6vectorIN4entt8internal14dense_map_nodeIjmEESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit35.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.n, i64 noundef %i.ai) #28
+  %2 = ptrtoint ptr %i.ac to i64
+  %3 = sub i64 %2, %.pre-phi
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.n, i64 noundef %3) #28
   %.pre25.pre = load ptr, ptr %0, align 8, !tbaa !57 ; 2 uses
   %.pre26.pre = load ptr, ptr %i.c, align 8, !tbaa !59
   %.pre46 = ptrtoint ptr %.pre26.pre to i64

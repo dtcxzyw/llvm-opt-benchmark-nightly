@@ -205,8 +205,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit1107: ; preds 
           to label %_ZN5Ipopt16DenseVectorSpace17SetStringMetaDataERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorIS6_SaIS6_EE.exit unwind label %.loopexit.split-lp2067.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 
 _ZN5Ipopt16DenseVectorSpace17SetStringMetaDataERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorIS6_SaIS6_EE.exit: ; preds = %.noexc1108
-  %i.ail = load ptr, ptr %62, align 8, !tbaa !96  ; 7 uses
-  %i.aim = load ptr, ptr %i.agg, align 8, !tbaa !94 ; 2 uses
+  %i.ail = load ptr, ptr %62, align 8, !tbaa !96  ; 5 uses
+  %i.aim = load ptr, ptr %i.agg, align 8, !tbaa !94 ; 3 uses
   %.not.i.i1110 = icmp eq ptr %i.aim, %i.ail
   br i1 %.not.i.i1110, label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE5clearEv.exit, label %.lr.ph.i.i.i.i
 
@@ -235,7 +235,8 @@ _ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSa
 
 _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE5clearEv.exit: ; preds = %_ZN5Ipopt16DenseVectorSpace17SetStringMetaDataERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorIS6_SaIS6_EE.exit, %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i.i
   %i.ait = phi ptr [ %i.ail, %_ZN5Ipopt16DenseVectorSpace17SetStringMetaDataERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorIS6_SaIS6_EE.exit ], [ %.pre2682, %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i.i ] ; 2 uses
-  %i.aiu = ptrtoint ptr %i.ail to i64
+  %76 = phi ptr [ %i.aim, %_ZN5Ipopt16DenseVectorSpace17SetStringMetaDataERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorIS6_SaIS6_EE.exit ], [ %i.ail, %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i.i ] ; 3 uses
+  %i.aiu = ptrtoint ptr %76 to i64
   %i.aiv = ptrtoint ptr %i.ait to i64
   %i.aiw = sub i64 %i.aiu, %i.aiv
   %i.aix = ashr exact i64 %i.aiw, 5               ; 3 uses
@@ -253,7 +254,7 @@ bb.js:                                            ; preds = %_ZNSt6vectorINSt7__
 
 bb.jt:                                            ; preds = %bb.js
   %i.ajb = getelementptr inbounds nuw [32 x i8], ptr %i.ait, i64 %i.agl ; 3 uses
-  %.not.i.i1112 = icmp eq ptr %i.ail, %i.ajb
+  %.not.i.i1112 = icmp eq ptr %76, %i.ajb
   br i1 %.not.i.i1112, label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE6resizeEm.exit, label %.lr.ph.i.i.i.i1113
 
 .lr.ph.i.i.i.i1113:                               ; preds = %bb.jt, %_ZSt8_DestroyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i.i1116
@@ -271,7 +272,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 _ZSt8_DestroyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i.i1116: ; preds = %.lr.ph.i.i.i.i1113, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i1115
   %i.ajh = getelementptr inbounds nuw i8, ptr %.05.i.i.i.i1114, i64 32 ; 2 uses
-  %.not.i.i.i.i1117 = icmp eq ptr %i.ajh, %i.ail
+  %.not.i.i.i.i1117 = icmp eq ptr %i.ajh, %76
   br i1 %.not.i.i.i.i1117, label %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i.i1118, label %.lr.ph.i.i.i.i1113, !llvm.loop !8
 
 _ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i.i1118: ; preds = %_ZSt8_DestroyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i.i1116
@@ -335,8 +336,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit1125: ; preds 
   br i1 %exitcond2479.not, label %._crit_edge2197, label %.lr.ph2196.split, !llvm.loop !239
 
 _ZN5Ipopt16DenseVectorSpace17SetStringMetaDataERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorIS6_SaIS6_EE.exit1123: ; preds = %.noexc1121
-  %i.akf = load ptr, ptr %62, align 8, !tbaa !96  ; 7 uses
-  %i.akg = load ptr, ptr %i.agg, align 8, !tbaa !94 ; 2 uses
+  %i.akf = load ptr, ptr %62, align 8, !tbaa !96  ; 5 uses
+  %i.akg = load ptr, ptr %i.agg, align 8, !tbaa !94 ; 3 uses
   %.not.i.i1128 = icmp eq ptr %i.akg, %i.akf
   br i1 %.not.i.i1128, label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE5clearEv.exit1136, label %.lr.ph.i.i.i.i1129
 
@@ -365,7 +366,8 @@ _ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSa
 
 _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE5clearEv.exit1136: ; preds = %_ZN5Ipopt16DenseVectorSpace17SetStringMetaDataERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorIS6_SaIS6_EE.exit1123, %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i.i1134
   %i.akn = phi ptr [ %i.akf, %_ZN5Ipopt16DenseVectorSpace17SetStringMetaDataERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorIS6_SaIS6_EE.exit1123 ], [ %.pre2683, %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i.i1134 ] ; 2 uses
-  %i.ako = ptrtoint ptr %i.akf to i64
+  %77 = phi ptr [ %i.akg, %_ZN5Ipopt16DenseVectorSpace17SetStringMetaDataERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorIS6_SaIS6_EE.exit1123 ], [ %i.akf, %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i.i1134 ] ; 3 uses
+  %i.ako = ptrtoint ptr %77 to i64
   %i.akp = ptrtoint ptr %i.akn to i64
   %i.akq = sub i64 %i.ako, %i.akp
   %i.akr = ashr exact i64 %i.akq, 5               ; 3 uses
@@ -383,7 +385,7 @@ bb.jv:                                            ; preds = %_ZNSt6vectorINSt7__
 
 bb.jw:                                            ; preds = %bb.jv
   %i.akv = getelementptr inbounds nuw [32 x i8], ptr %i.akn, i64 %i.ago ; 3 uses
-  %.not.i.i1137 = icmp eq ptr %i.akf, %i.akv
+  %.not.i.i1137 = icmp eq ptr %77, %i.akv
   br i1 %.not.i.i1137, label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE6resizeEm.exit1146, label %.lr.ph.i.i.i.i1138
 
 .lr.ph.i.i.i.i1138:                               ; preds = %bb.jw, %_ZSt8_DestroyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i.i1141
@@ -401,7 +403,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 _ZSt8_DestroyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i.i1141: ; preds = %.lr.ph.i.i.i.i1138, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i1140
   %i.alb = getelementptr inbounds nuw i8, ptr %.05.i.i.i.i1139, i64 32 ; 2 uses
-  %.not.i.i.i.i1142 = icmp eq ptr %i.alb, %i.akf
+  %.not.i.i.i.i1142 = icmp eq ptr %i.alb, %77
   br i1 %.not.i.i.i.i1142, label %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i.i1143, label %.lr.ph.i.i.i.i1138, !llvm.loop !8
 
 _ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i.i1143: ; preds = %_ZSt8_DestroyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i.i1141
@@ -804,8 +806,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit1273: ; preds 
   br i1 %exitcond2574.not, label %._crit_edge2244, label %bb.nq, !llvm.loop !267
 
 _ZN5Ipopt16DenseVectorSpace17SetStringMetaDataERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorIS6_SaIS6_EE.exit1271: ; preds = %.noexc1269
-  %i.bxn = load ptr, ptr %65, align 8, !tbaa !96  ; 7 uses
-  %i.bxo = load ptr, ptr %i.bvi, align 8, !tbaa !94 ; 2 uses
+  %i.bxn = load ptr, ptr %65, align 8, !tbaa !96  ; 5 uses
+  %i.bxo = load ptr, ptr %i.bvi, align 8, !tbaa !94 ; 3 uses
   %.not.i.i1274 = icmp eq ptr %i.bxo, %i.bxn
   br i1 %.not.i.i1274, label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE5clearEv.exit1282, label %.lr.ph.i.i.i.i1275
 
@@ -834,7 +836,8 @@ _ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSa
 
 _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE5clearEv.exit1282: ; preds = %_ZN5Ipopt16DenseVectorSpace17SetStringMetaDataERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorIS6_SaIS6_EE.exit1271, %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i.i1280
   %i.bxv = phi ptr [ %i.bxn, %_ZN5Ipopt16DenseVectorSpace17SetStringMetaDataERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorIS6_SaIS6_EE.exit1271 ], [ %.pre2685, %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i.i1280 ] ; 2 uses
-  %i.bxw = ptrtoint ptr %i.bxn to i64
+  %78 = phi ptr [ %i.bxo, %_ZN5Ipopt16DenseVectorSpace17SetStringMetaDataERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorIS6_SaIS6_EE.exit1271 ], [ %i.bxn, %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i.i1280 ] ; 3 uses
+  %i.bxw = ptrtoint ptr %78 to i64
   %i.bxx = ptrtoint ptr %i.bxv to i64
   %i.bxy = sub i64 %i.bxw, %i.bxx
   %i.bxz = ashr exact i64 %i.bxy, 5               ; 3 uses
@@ -852,7 +855,7 @@ bb.ns:                                            ; preds = %_ZNSt6vectorINSt7__
 
 bb.nt:                                            ; preds = %bb.ns
   %i.byd = getelementptr inbounds nuw [32 x i8], ptr %i.bxv, i64 %i.bvl ; 3 uses
-  %.not.i.i1283 = icmp eq ptr %i.bxn, %i.byd
+  %.not.i.i1283 = icmp eq ptr %78, %i.byd
   br i1 %.not.i.i1283, label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE6resizeEm.exit1292, label %.lr.ph.i.i.i.i1284
 
 .lr.ph.i.i.i.i1284:                               ; preds = %bb.nt, %_ZSt8_DestroyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i.i1287
@@ -870,7 +873,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 _ZSt8_DestroyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i.i1287: ; preds = %.lr.ph.i.i.i.i1284, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i1286
   %i.byj = getelementptr inbounds nuw i8, ptr %.05.i.i.i.i1285, i64 32 ; 2 uses
-  %.not.i.i.i.i1288 = icmp eq ptr %i.byj, %i.bxn
+  %.not.i.i.i.i1288 = icmp eq ptr %i.byj, %78
   br i1 %.not.i.i.i.i1288, label %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i.i1289, label %.lr.ph.i.i.i.i1284, !llvm.loop !8
 
 _ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i.i1289: ; preds = %_ZSt8_DestroyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i.i1287
@@ -913,8 +916,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit1297: ; preds 
   br i1 %exitcond2580.not, label %._crit_edge2247, label %bb.nu, !llvm.loop !268
 
 _ZN5Ipopt16DenseVectorSpace17SetStringMetaDataERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorIS6_SaIS6_EE.exit1295: ; preds = %.noexc1293
-  %i.byx = load ptr, ptr %65, align 8, !tbaa !96  ; 7 uses
-  %i.byy = load ptr, ptr %i.bvi, align 8, !tbaa !94 ; 2 uses
+  %i.byx = load ptr, ptr %65, align 8, !tbaa !96  ; 5 uses
+  %i.byy = load ptr, ptr %i.bvi, align 8, !tbaa !94 ; 3 uses
   %.not.i.i1298 = icmp eq ptr %i.byy, %i.byx
   br i1 %.not.i.i1298, label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE5clearEv.exit1306, label %.lr.ph.i.i.i.i1299
 
@@ -943,7 +946,8 @@ _ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSa
 
 _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE5clearEv.exit1306: ; preds = %_ZN5Ipopt16DenseVectorSpace17SetStringMetaDataERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorIS6_SaIS6_EE.exit1295, %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i.i1304
   %i.bzf = phi ptr [ %i.byx, %_ZN5Ipopt16DenseVectorSpace17SetStringMetaDataERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorIS6_SaIS6_EE.exit1295 ], [ %.pre2686, %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i.i1304 ] ; 2 uses
-  %i.bzg = ptrtoint ptr %i.byx to i64
+  %79 = phi ptr [ %i.byy, %_ZN5Ipopt16DenseVectorSpace17SetStringMetaDataERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorIS6_SaIS6_EE.exit1295 ], [ %i.byx, %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i.i1304 ] ; 3 uses
+  %i.bzg = ptrtoint ptr %79 to i64
   %i.bzh = ptrtoint ptr %i.bzf to i64
   %i.bzi = sub i64 %i.bzg, %i.bzh
   %i.bzj = ashr exact i64 %i.bzi, 5               ; 3 uses
@@ -961,7 +965,7 @@ bb.nw:                                            ; preds = %_ZNSt6vectorINSt7__
 
 bb.nx:                                            ; preds = %bb.nw
   %i.bzn = getelementptr inbounds nuw [32 x i8], ptr %i.bzf, i64 %i.bvo ; 3 uses
-  %.not.i.i1307 = icmp eq ptr %i.byx, %i.bzn
+  %.not.i.i1307 = icmp eq ptr %79, %i.bzn
   br i1 %.not.i.i1307, label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE6resizeEm.exit1316, label %.lr.ph.i.i.i.i1308
 
 .lr.ph.i.i.i.i1308:                               ; preds = %bb.nx, %_ZSt8_DestroyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i.i1311
@@ -979,7 +983,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 _ZSt8_DestroyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i.i1311: ; preds = %.lr.ph.i.i.i.i1308, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i1310
   %i.bzt = getelementptr inbounds nuw i8, ptr %.05.i.i.i.i1309, i64 32 ; 2 uses
-  %.not.i.i.i.i1312 = icmp eq ptr %i.bzt, %i.byx
+  %.not.i.i.i.i1312 = icmp eq ptr %i.bzt, %79
   br i1 %.not.i.i.i.i1312, label %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i.i1313, label %.lr.ph.i.i.i.i1308, !llvm.loop !8
 
 _ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i.i1313: ; preds = %_ZSt8_DestroyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i.i1311
@@ -1023,8 +1027,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit1321: ; preds 
   br i1 %exitcond2586.not, label %._crit_edge2250, label %bb.ny, !llvm.loop !269
 
 _ZN5Ipopt16DenseVectorSpace17SetStringMetaDataERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorIS6_SaIS6_EE.exit1319: ; preds = %.noexc1317
-  %i.cai = load ptr, ptr %65, align 8, !tbaa !96  ; 7 uses
-  %i.caj = load ptr, ptr %i.bvi, align 8, !tbaa !94 ; 2 uses
+  %i.cai = load ptr, ptr %65, align 8, !tbaa !96  ; 5 uses
+  %i.caj = load ptr, ptr %i.bvi, align 8, !tbaa !94 ; 3 uses
   %.not.i.i1322 = icmp eq ptr %i.caj, %i.cai
   br i1 %.not.i.i1322, label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE5clearEv.exit1330, label %.lr.ph.i.i.i.i1323
 
@@ -1053,7 +1057,8 @@ _ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSa
 
 _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE5clearEv.exit1330: ; preds = %_ZN5Ipopt16DenseVectorSpace17SetStringMetaDataERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorIS6_SaIS6_EE.exit1319, %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i.i1328
   %i.caq = phi ptr [ %i.cai, %_ZN5Ipopt16DenseVectorSpace17SetStringMetaDataERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorIS6_SaIS6_EE.exit1319 ], [ %.pre2687, %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i.i1328 ] ; 2 uses
-  %i.car = ptrtoint ptr %i.cai to i64
+  %80 = phi ptr [ %i.caj, %_ZN5Ipopt16DenseVectorSpace17SetStringMetaDataERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorIS6_SaIS6_EE.exit1319 ], [ %i.cai, %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i.i1328 ] ; 3 uses
+  %i.car = ptrtoint ptr %80 to i64
   %i.cas = ptrtoint ptr %i.caq to i64
   %i.cat = sub i64 %i.car, %i.cas
   %i.cau = ashr exact i64 %i.cat, 5               ; 3 uses
@@ -1071,7 +1076,7 @@ bb.oa:                                            ; preds = %_ZNSt6vectorINSt7__
 
 bb.ob:                                            ; preds = %bb.oa
   %i.cay = getelementptr inbounds nuw [32 x i8], ptr %i.caq, i64 %i.bvs ; 3 uses
-  %.not.i.i1331 = icmp eq ptr %i.cai, %i.cay
+  %.not.i.i1331 = icmp eq ptr %80, %i.cay
   br i1 %.not.i.i1331, label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE6resizeEm.exit1340, label %.lr.ph.i.i.i.i1332
 
 .lr.ph.i.i.i.i1332:                               ; preds = %bb.ob, %_ZSt8_DestroyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i.i1335
@@ -1089,7 +1094,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 _ZSt8_DestroyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i.i1335: ; preds = %.lr.ph.i.i.i.i1332, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i1334
   %i.cbe = getelementptr inbounds nuw i8, ptr %.05.i.i.i.i1333, i64 32 ; 2 uses
-  %.not.i.i.i.i1336 = icmp eq ptr %i.cbe, %i.cai
+  %.not.i.i.i.i1336 = icmp eq ptr %i.cbe, %80
   br i1 %.not.i.i.i.i1336, label %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i.i1337, label %.lr.ph.i.i.i.i1332, !llvm.loop !8
 
 _ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i.i1337: ; preds = %_ZSt8_DestroyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i.i1335

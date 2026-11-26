@@ -204,7 +204,7 @@ lean_obj_tag.exit2096:                            ; preds = %bb.tc, %bb.td
 
 bb.te:                                            ; preds = %lean_obj_tag.exit2096
   %i.afn = getelementptr inbounds nuw i8, ptr %i.aff, i64 8
-  %i.afo = load ptr, ptr %i.afn, align 8, !tbaa !10 ; 9 uses
+  %i.afo = load ptr, ptr %i.afn, align 8, !tbaa !10 ; 10 uses
   %.val1714 = load i32, ptr %i.aff, align 8, !tbaa !12
   %i.afp = icmp eq i32 %.val1714, 1               ; 3 uses
   br i1 %i.afp, label %lean_dec.exit1471, label %bb.tf
@@ -257,7 +257,7 @@ bb.tn:                                            ; preds = %bb.tm
 lean_dec.exit1471:                                ; preds = %lean_inc.exit1342, %bb.tl, %bb.tm, %bb.tn, %bb.te
   %.01278 = phi ptr [ %i.aff, %bb.te ], [ inttoptr (i64 1 to ptr), %bb.tn ], [ inttoptr (i64 1 to ptr), %bb.tm ], [ inttoptr (i64 1 to ptr), %bb.tl ], [ inttoptr (i64 1 to ptr), %lean_inc.exit1342 ] ; 4 uses
   %.not2397 = icmp eq ptr %i.acw, %i.afo
-  br i1 %.not2397, label %bb.uo, label %bb.to
+  br i1 %.not2397, label %7, label %bb.to
 
 bb.to:                                            ; preds = %lean_dec.exit1471
   br i1 %.not.i1345, label %bb.tp, label %lean_inc.exit1340
@@ -406,7 +406,13 @@ bb.un:                                            ; preds = %bb.ul
   store ptr %.sink2667, ptr %i.ahb, align 8, !tbaa !10
   br label %lean_dec_ref_known.exit1778
 
-bb.uo:                                            ; preds = %lean_dec.exit1471
+7:                                                ; preds = %lean_dec.exit1471
+  %8 = ptrtoint ptr %i.afo to i64
+  %9 = and i64 %8, 1
+  %.not.i1464 = icmp eq i64 %9, 0
+  br i1 %.not.i1464, label %bb.uo, label %lean_dec.exit1465
+
+bb.uo:                                            ; preds = %7
   %i.ahc = load i32, ptr %i.afo, align 4, !tbaa !12 ; 3 uses
   %i.ahd = icmp sgt i32 %i.ahc, 1
   br i1 %i.ahd, label %bb.up, label %bb.uq, !prof !13
@@ -424,7 +430,7 @@ bb.ur:                                            ; preds = %bb.uq
   tail call void @lean_dec_ref_cold(ptr noundef nonnull %i.afo) #5
   br label %lean_dec.exit1465
 
-lean_dec.exit1465:                                ; preds = %bb.ur, %bb.uq, %bb.up
+lean_dec.exit1465:                                ; preds = %bb.ur, %bb.uq, %bb.up, %7
   br i1 %i.afp, label %bb.us, label %bb.ut
 
 bb.us:                                            ; preds = %lean_dec.exit1465

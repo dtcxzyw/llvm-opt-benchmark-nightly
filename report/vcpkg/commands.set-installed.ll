@@ -205,9 +205,9 @@ bb.ad:                                            ; preds = %bb.ac, %.noexc47
 
 _ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN5vcpkg17InstallPlanActionESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i.i.i: ; preds = %"_ZSt9remove_ifIN9__gnu_cxx17__normal_iteratorIPN5vcpkg17InstallPlanActionESt6vectorIS3_SaIS3_EEEEZNS2_31adjust_action_plan_to_status_dbERNS2_10ActionPlanERKNS2_16StatusParagraphsEE3$_0ET_SF_SF_T0_.exit.i"
   %i.ff = load ptr, ptr %i.g, align 8, !tbaa !63  ; 2 uses
-  %i.fg = ptrtoint ptr %i.ff to i64
-  %i.fh = ptrtoint ptr %.sroa.012.2.i.i.i to i64
-  %i.fi = sub i64 %i.fh, %i.fg
+  %i.fg = ptrtoint ptr %.sroa.012.2.i.i.i to i64
+  %i.fh = ptrtoint ptr %i.ff to i64
+  %i.fi = sub i64 %i.fg, %i.fh
   %i.fj = getelementptr inbounds i8, ptr %i.ff, i64 %i.fi ; 2 uses
   br label %.lr.ph.i.i.i.i.i.i
 
@@ -610,7 +610,7 @@ _ZNSt6vectorIPKN5vcpkg17InstallPlanActionESaIS3_EE7reserveEm.exit: ; preds = %.n
 bb.d:                                             ; preds = %.lr.ph, %_ZNSt6vectorIPKN5vcpkg17InstallPlanActionESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit
   %i.q = phi ptr [ %.promoted, %.lr.ph ], [ %i.aj, %_ZNSt6vectorIPKN5vcpkg17InstallPlanActionESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit ] ; 7 uses
   %i.r = phi ptr [ %.promoted7, %.lr.ph ], [ %i.ak, %_ZNSt6vectorIPKN5vcpkg17InstallPlanActionESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit ] ; 5 uses
-  %i.s = phi ptr [ %.promoted, %.lr.ph ], [ %i.al, %_ZNSt6vectorIPKN5vcpkg17InstallPlanActionESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit ] ; 3 uses
+  %i.s = phi ptr [ %.promoted, %.lr.ph ], [ %i.al, %_ZNSt6vectorIPKN5vcpkg17InstallPlanActionESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit ] ; 4 uses
   %.sroa.02.06 = phi ptr [ %i.o, %.lr.ph ], [ %i.am, %_ZNSt6vectorIPKN5vcpkg17InstallPlanActionESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit ] ; 3 uses
   %.not.i = icmp eq ptr %i.s, %i.r
   br i1 %.not.i, label %bb.f, label %bb.e
@@ -622,9 +622,9 @@ bb.e:                                             ; preds = %bb.d
   br label %_ZNSt6vectorIPKN5vcpkg17InstallPlanActionESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit
 
 bb.f:                                             ; preds = %bb.d
-  %i.u = ptrtoint ptr %i.r to i64
-  %i.v = ptrtoint ptr %i.q to i64
-  %i.w = sub i64 %i.u, %i.v                       ; 6 uses
+  %i.u = ptrtoint ptr %i.s to i64
+  %i.v = ptrtoint ptr %i.q to i64                 ; 2 uses
+  %i.w = sub i64 %i.u, %i.v                       ; 5 uses
   %i.x = icmp eq i64 %i.w, 9223372036854775800
   br i1 %i.x, label %bb.g, label %_ZNKSt6vectorIPKN5vcpkg17InstallPlanActionESaIS3_EE12_M_check_lenEmPKc.exit.i.i
 
@@ -664,7 +664,9 @@ _ZNSt6vectorIPKN5vcpkg17InstallPlanActionESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.e
   br i1 %.not.i17.i.i, label %_ZNSt6vectorIPKN5vcpkg17InstallPlanActionESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt6vectorIPKN5vcpkg17InstallPlanActionESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.q, i64 noundef %i.w) #23
+  %2 = ptrtoint ptr %i.r to i64
+  %3 = sub i64 %2, %i.v
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.q, i64 noundef %3) #23
   br label %_ZNSt6vectorIPKN5vcpkg17InstallPlanActionESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i
 
 _ZNSt6vectorIPKN5vcpkg17InstallPlanActionESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i: ; preds = %bb.i, %_ZNSt6vectorIPKN5vcpkg17InstallPlanActionESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i

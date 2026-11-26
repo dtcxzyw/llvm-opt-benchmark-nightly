@@ -205,13 +205,13 @@ _ZNSt6vectorIN5utils17LifetimeOperationESaIS1_EE12emplace_backIJiNS0_21LifetimeO
   store i32 3, ptr %.sroa.24.4, align 4, !tbaa !89
   %i.dw = getelementptr inbounds nuw i8, ptr %i.ds, i64 44
   store i32 5, ptr %i.dw, align 4, !tbaa !90
-  %i.dx = getelementptr inbounds nuw i8, ptr %i.ds, i64 48 ; 6 uses
-  %i.dy = getelementptr inbounds nuw i8, ptr %i.ds, i64 64 ; 7 uses
-  store i32 2, ptr %i.dx, align 4, !tbaa !89
+  %i.dx = getelementptr inbounds nuw i8, ptr %i.ds, i64 64 ; 7 uses
+  %i.dy = getelementptr inbounds nuw i8, ptr %i.ds, i64 48 ; 6 uses
+  store i32 2, ptr %i.dy, align 4, !tbaa !89
   %i.dz = getelementptr inbounds nuw i8, ptr %i.ds, i64 52
   store i32 5, ptr %i.dz, align 4, !tbaa !90
-  %.0.lcssa.i.i.i.i.i196.pn464 = ptrtoaddr ptr %i.dx to i64
-  %.sroa.24.6 = getelementptr inbounds nuw i8, ptr %i.dx, i64 8 ; 3 uses
+  %.0.lcssa.i.i.i.i.i196.pn464 = ptrtoaddr ptr %i.dy to i64
+  %.sroa.24.6 = getelementptr inbounds nuw i8, ptr %i.dy, i64 8 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #23
   %i.ea = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   %i.eb = load ptr, ptr %i.ea, align 8, !tbaa !91 ; 3 uses
@@ -426,14 +426,14 @@ bb.ay:                                            ; preds = %_ZN7testing15Assert
 
 bb.az:                                            ; preds = %bb.ay, %_ZN7testing15AssertionResultD2Ev.exit226
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #23
-  %.not.i229 = icmp eq ptr %.sroa.24.6, %i.dy
+  %.not.i229 = icmp eq ptr %.sroa.24.6, %i.dx
   br i1 %.not.i229, label %bb.bb, label %bb.ba
 
 bb.ba:                                            ; preds = %bb.az
   store i32 4, ptr %.sroa.24.6, align 4, !tbaa !89
-  %i.gh = getelementptr inbounds nuw i8, ptr %i.dx, i64 12
+  %i.gh = getelementptr inbounds nuw i8, ptr %i.dy, i64 12
   store i32 5, ptr %i.gh, align 4, !tbaa !90
-  %i.gi = getelementptr inbounds nuw i8, ptr %i.dx, i64 16
+  %i.gi = getelementptr inbounds nuw i8, ptr %i.dy, i64 16
   br label %_ZNSt6vectorIN5utils17LifetimeOperationESaIS1_EE12emplace_backIJiNS0_21LifetimeOperationTypeEEEERS1_DpOT_.exit244
 
 bb.bb:                                            ; preds = %bb.az
@@ -465,7 +465,7 @@ _ZNKSt6vectorIN5utils17LifetimeOperationESaIS1_EE12_M_check_lenEmPKc.exit.i.i230
   store i32 4, ptr %i.gr, align 4, !tbaa !89
   %i.gs = getelementptr inbounds nuw i8, ptr %i.gr, i64 4
   store i32 5, ptr %i.gs, align 4, !tbaa !90
-  %.not10.i.i.i.i.i233 = icmp eq ptr %i.ds, %i.dy
+  %.not10.i.i.i.i.i233 = icmp eq ptr %i.ds, %i.dx
   br i1 %.not10.i.i.i.i.i233, label %_ZNSt6vectorIN5utils17LifetimeOperationESaIS1_EE17_M_realloc_insertIJiNS0_21LifetimeOperationTypeEEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i241, label %.lr.ph.i.i.i.i.i234.preheader
 
 .lr.ph.i.i.i.i.i234.preheader:                    ; preds = %.noexc243
@@ -521,13 +521,13 @@ middle.block476:                                  ; preds = %vector.body469
   store i64 %i.hf, ptr %.012.i.i.i.i.i235, align 4, !alias.scope !301
   %i.hg = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i.i236, i64 8
   %i.hh = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i235, i64 8 ; 2 uses
-  %.not.i.i.i.i.i237 = icmp eq ptr %.0911.i.i.i.i.i236, %i.dx
+  %.not.i.i.i.i.i237 = icmp eq ptr %.0911.i.i.i.i.i236, %i.dy
   br i1 %.not.i.i.i.i.i237, label %_ZNSt6vectorIN5utils17LifetimeOperationESaIS1_EE17_M_realloc_insertIJiNS0_21LifetimeOperationTypeEEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i241, label %.lr.ph.i.i.i.i.i234, !llvm.loop !291
 
 _ZNSt6vectorIN5utils17LifetimeOperationESaIS1_EE17_M_realloc_insertIJiNS0_21LifetimeOperationTypeEEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i241: ; preds = %.lr.ph.i.i.i.i.i234, %middle.block476, %.noexc243
   %.0.lcssa.i.i.i.i.i239 = phi ptr [ %i.gq, %.noexc243 ], [ %i.gz, %middle.block476 ], [ %i.hh, %.lr.ph.i.i.i.i.i234 ]
   %i.hi = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i239, i64 8
-  %i.hj = ptrtoint ptr %i.dy to i64
+  %i.hj = ptrtoint ptr %i.dx to i64
   %i.hk = sub i64 %i.hj, %i.eh
   call void @_ZdlPvm(ptr noundef nonnull %i.ds, i64 noundef %i.hk) #24
   %i.hl = getelementptr inbounds nuw [8 x i8], ptr %i.gq, i64 %i.go
@@ -537,7 +537,7 @@ _ZNSt6vectorIN5utils17LifetimeOperationESaIS1_EE17_M_realloc_insertIJiNS0_21Life
 _ZNSt6vectorIN5utils17LifetimeOperationESaIS1_EE12emplace_backIJiNS0_21LifetimeOperationTypeEEEERS1_DpOT_.exit244: ; preds = %_ZNSt6vectorIN5utils17LifetimeOperationESaIS1_EE17_M_realloc_insertIJiNS0_21LifetimeOperationTypeEEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i241, %bb.ba
   %.pre-phi = phi i64 [ %.pre, %_ZNSt6vectorIN5utils17LifetimeOperationESaIS1_EE17_M_realloc_insertIJiNS0_21LifetimeOperationTypeEEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i241 ], [ %i.eh, %bb.ba ]
   %.sroa.24.7 = phi ptr [ %i.hi, %_ZNSt6vectorIN5utils17LifetimeOperationESaIS1_EE17_M_realloc_insertIJiNS0_21LifetimeOperationTypeEEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i241 ], [ %i.gi, %bb.ba ]
-  %.sroa.50.11 = phi ptr [ %i.hl, %_ZNSt6vectorIN5utils17LifetimeOperationESaIS1_EE17_M_realloc_insertIJiNS0_21LifetimeOperationTypeEEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i241 ], [ %i.dy, %bb.ba ] ; 2 uses
+  %.sroa.50.11 = phi ptr [ %i.hl, %_ZNSt6vectorIN5utils17LifetimeOperationESaIS1_EE17_M_realloc_insertIJiNS0_21LifetimeOperationTypeEEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i241 ], [ %i.dx, %bb.ba ] ; 2 uses
   %.sroa.0.11 = phi ptr [ %i.gq, %_ZNSt6vectorIN5utils17LifetimeOperationESaIS1_EE17_M_realloc_insertIJiNS0_21LifetimeOperationTypeEEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i241 ], [ %i.ds, %bb.ba ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #23
   %i.hm = load ptr, ptr %i.ea, align 8, !tbaa !91 ; 3 uses
@@ -572,7 +572,7 @@ bb.be:                                            ; preds = %.lr.ph.i.i.i.i.i246
   br i1 %.not.i.i.i.i.i249, label %_ZN7testing15AssertionResultD2Ev.exit269, label %.lr.ph.i.i.i.i.i246, !llvm.loop !3
 
 bb.bf:                                            ; preds = %_ZN7testing7MessageD2Ev.exit221, %bb.am, %bb.al, %bb.ak, %bb.aj, %_ZN7testing7MessageD2Ev.exit74, %bb.h, %bb.e
-  %.sroa.50.0 = phi ptr [ null, %bb.e ], [ %i.h, %bb.ak ], [ %i.eu, %bb.al ], [ %i.h, %bb.h ], [ %i.ew, %bb.am ], [ %i.h, %_ZN7testing7MessageD2Ev.exit74 ], [ %i.h, %bb.aj ], [ %i.dy, %_ZN7testing7MessageD2Ev.exit221 ]
+  %.sroa.50.0 = phi ptr [ null, %bb.e ], [ %i.h, %bb.ak ], [ %i.eu, %bb.al ], [ %i.h, %bb.h ], [ %i.ew, %bb.am ], [ %i.h, %_ZN7testing7MessageD2Ev.exit74 ], [ %i.h, %bb.aj ], [ %i.dx, %_ZN7testing7MessageD2Ev.exit221 ]
   %.sroa.0.0 = phi ptr [ null, %bb.e ], [ %i.f, %bb.ak ], [ %i.dk, %bb.al ], [ %i.f, %bb.h ], [ %i.do, %bb.am ], [ %i.f, %_ZN7testing7MessageD2Ev.exit74 ], [ %i.f, %bb.aj ], [ %i.ds, %_ZN7testing7MessageD2Ev.exit221 ] ; 2 uses
   %.pn46.pn.pn.pn.pn = phi { ptr, i32 } [ %i.y, %bb.e ], [ %i.es, %bb.ak ], [ %i.et, %bb.al ], [ %.pn, %bb.h ], [ %i.ev, %bb.am ], [ %.pn36.pn.pn, %_ZN7testing7MessageD2Ev.exit74 ], [ %.pn42.pn.pn, %bb.aj ], [ %.pn46.pn.pn, %_ZN7testing7MessageD2Ev.exit221 ] ; 2 uses
   %i.ic = load ptr, ptr %3, align 8, !tbaa !70    ; 2 uses
@@ -739,7 +739,7 @@ bb.bt:                                            ; preds = %.critedge62
 
 _ZNSt6vectorIN5utils17LifetimeOperationESaIS1_EED2Ev.exit: ; preds = %.thread357, %_ZN3pro2v45proxyIN27proxy_lifetime_tests_detail10TestFacadeEED2EvQooeqsrT_15destructibilityLNS0_16constraint_levelE1EeqsrS5_15destructibilityLS6_2E.exit, %_ZN7testing15AssertionResultD2Ev.exit269
   %.sroa.0.2362 = phi ptr [ %i.f, %.thread357 ], [ %.sroa.0.11, %_ZN7testing15AssertionResultD2Ev.exit269 ], [ %i.ds, %_ZN3pro2v45proxyIN27proxy_lifetime_tests_detail10TestFacadeEED2EvQooeqsrT_15destructibilityLNS0_16constraint_levelE1EeqsrS5_15destructibilityLS6_2E.exit ] ; 2 uses
-  %.sroa.50.2361 = phi ptr [ %i.h, %.thread357 ], [ %.sroa.50.11, %_ZN7testing15AssertionResultD2Ev.exit269 ], [ %i.dy, %_ZN3pro2v45proxyIN27proxy_lifetime_tests_detail10TestFacadeEED2EvQooeqsrT_15destructibilityLNS0_16constraint_levelE1EeqsrS5_15destructibilityLS6_2E.exit ]
+  %.sroa.50.2361 = phi ptr [ %i.h, %.thread357 ], [ %.sroa.50.11, %_ZN7testing15AssertionResultD2Ev.exit269 ], [ %i.dx, %_ZN3pro2v45proxyIN27proxy_lifetime_tests_detail10TestFacadeEED2EvQooeqsrT_15destructibilityLNS0_16constraint_levelE1EeqsrS5_15destructibilityLS6_2E.exit ]
   %i.jm = ptrtoint ptr %.sroa.50.2361 to i64
   %i.jn = ptrtoint ptr %.sroa.0.2362 to i64
   %i.jo = sub i64 %i.jm, %i.jn
@@ -769,7 +769,7 @@ bb.bv:                                            ; preds = %bb.bf, %bb.bg
 .thread434:                                       ; preds = %_ZN7testing7MessageD2Ev.exit264, %bb.bh, %bb.bv
   %.pn53.pn.pn.pn.pn441 = phi { ptr, i32 } [ %.pn46.pn.pn.pn.pn, %bb.bv ], [ %.pn53.pn.pn, %_ZN7testing7MessageD2Ev.exit264 ], [ %i.if, %bb.bh ]
   %.sroa.0.3440 = phi ptr [ %.sroa.0.0, %bb.bv ], [ %.sroa.0.11, %_ZN7testing7MessageD2Ev.exit264 ], [ %i.ds, %bb.bh ] ; 2 uses
-  %.sroa.50.3439 = phi ptr [ %.sroa.50.0, %bb.bv ], [ %.sroa.50.11, %_ZN7testing7MessageD2Ev.exit264 ], [ %i.dy, %bb.bh ]
+  %.sroa.50.3439 = phi ptr [ %.sroa.50.0, %bb.bv ], [ %.sroa.50.11, %_ZN7testing7MessageD2Ev.exit264 ], [ %i.dx, %bb.bh ]
   %i.jv = ptrtoint ptr %.sroa.50.3439 to i64
   %i.jw = ptrtoint ptr %.sroa.0.3440 to i64
   %i.jx = sub i64 %i.jv, %i.jw
@@ -1172,7 +1172,7 @@ _ZNSt6vectorIN5utils17LifetimeOperationESaIS1_EE12emplace_backIJiNS0_21LifetimeO
   %i.ia = getelementptr inbounds nuw i8, ptr %i.ht, i64 52
   store i32 4, ptr %i.ia, align 4, !tbaa !90
   %.0.lcssa.i.i.i.i.i284.pn638 = ptrtoaddr ptr %i.hz to i64
-  %.sroa.28.6 = getelementptr inbounds nuw i8, ptr %i.hz, i64 8 ; 2 uses
+  %.sroa.28.6 = getelementptr inbounds nuw i8, ptr %i.hz, i64 8 ; 3 uses
   %.not.i290 = icmp eq ptr %.sroa.28.6, %i.hy
   br i1 %.not.i290, label %bb.bp, label %bb.bo
 
@@ -1184,9 +1184,9 @@ bb.bo:                                            ; preds = %.lr.ph.i.i.i.i.i247
   br label %_ZNSt6vectorIN5utils17LifetimeOperationESaIS1_EE12emplace_backIJiNS0_21LifetimeOperationTypeEEEERS1_DpOT_.exit305
 
 bb.bp:                                            ; preds = %.lr.ph.i.i.i.i.i247.preheader
-  %i.id = ptrtoint ptr %i.hy to i64
-  %i.ie = ptrtoint ptr %i.ht to i64               ; 3 uses
-  %i.if = sub i64 %i.id, %i.ie                    ; 4 uses
+  %i.id = ptrtoint ptr %.sroa.28.6 to i64
+  %i.ie = ptrtoint ptr %i.ht to i64               ; 4 uses
+  %i.if = sub i64 %i.id, %i.ie                    ; 3 uses
   %i.ig = icmp eq i64 %i.if, 9223372036854775800
   br i1 %i.ig, label %bb.bq, label %_ZNKSt6vectorIN5utils17LifetimeOperationESaIS1_EE12_M_check_lenEmPKc.exit.i.i291
 
@@ -1277,7 +1277,9 @@ middle.block650:                                  ; preds = %vector.body643
 _ZNSt6vectorIN5utils17LifetimeOperationESaIS1_EE17_M_realloc_insertIJiNS0_21LifetimeOperationTypeEEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i302: ; preds = %.lr.ph.i.i.i.i.i295, %middle.block650, %.noexc304
   %.0.lcssa.i.i.i.i.i300 = phi ptr [ %i.in, %.noexc304 ], [ %i.iw, %middle.block650 ], [ %i.je, %.lr.ph.i.i.i.i.i295 ]
   %i.jf = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i300, i64 8
-  call void @_ZdlPvm(ptr noundef nonnull %i.ht, i64 noundef %i.if) #24
+  %29 = ptrtoint ptr %i.hy to i64
+  %30 = sub i64 %29, %i.ie
+  call void @_ZdlPvm(ptr noundef nonnull %i.ht, i64 noundef %30) #24
   %i.jg = getelementptr inbounds nuw [8 x i8], ptr %i.in, i64 %i.il
   br label %_ZNSt6vectorIN5utils17LifetimeOperationESaIS1_EE12emplace_backIJiNS0_21LifetimeOperationTypeEEEERS1_DpOT_.exit305
 
@@ -1634,7 +1636,7 @@ _ZNSt6vectorIN5utils17LifetimeOperationESaIS1_EE12emplace_backIJiNS0_21LifetimeO
   %.0.lcssa.i.i.i.i.i347.pn = phi ptr [ %.0.lcssa.i.i.i.i.i347, %_ZNSt6vectorIN5utils17LifetimeOperationESaIS1_EE17_M_realloc_insertIJiNS0_21LifetimeOperationTypeEEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i349 ], [ %.sroa.28.7, %bb.cm ] ; 5 uses
   %.sroa.0.14 = phi ptr [ %i.mb, %_ZNSt6vectorIN5utils17LifetimeOperationESaIS1_EE17_M_realloc_insertIJiNS0_21LifetimeOperationTypeEEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i349 ], [ %.sroa.0.13, %bb.cm ] ; 8 uses
   %.0.lcssa.i.i.i.i.i347.pn676 = ptrtoaddr ptr %.0.lcssa.i.i.i.i.i347.pn to i64 ; 2 uses
-  %.sroa.28.8 = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i347.pn, i64 8 ; 2 uses
+  %.sroa.28.8 = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i347.pn, i64 8 ; 3 uses
   %.not.i353 = icmp eq ptr %.sroa.28.8, %.sroa.60.14
   br i1 %.not.i353, label %bb.cq, label %bb.cp
 
@@ -1646,9 +1648,9 @@ bb.cp:                                            ; preds = %_ZNSt6vectorIN5util
   br label %_ZNSt6vectorIN5utils17LifetimeOperationESaIS1_EE12emplace_backIJiNS0_21LifetimeOperationTypeEEEERS1_DpOT_.exit368
 
 bb.cq:                                            ; preds = %_ZNSt6vectorIN5utils17LifetimeOperationESaIS1_EE12emplace_backIJiNS0_21LifetimeOperationTypeEEEERS1_DpOT_.exit352
-  %i.mz = ptrtoint ptr %.sroa.60.14 to i64
-  %i.na = ptrtoint ptr %.sroa.0.14 to i64         ; 3 uses
-  %i.nb = sub i64 %i.mz, %i.na                    ; 4 uses
+  %i.mz = ptrtoint ptr %.sroa.28.8 to i64
+  %i.na = ptrtoint ptr %.sroa.0.14 to i64         ; 4 uses
+  %i.nb = sub i64 %i.mz, %i.na                    ; 3 uses
   %i.nc = icmp eq i64 %i.nb, 9223372036854775800
   br i1 %i.nc, label %bb.cr, label %_ZNKSt6vectorIN5utils17LifetimeOperationESaIS1_EE12_M_check_lenEmPKc.exit.i.i354
 
@@ -1808,7 +1810,9 @@ middle.block690:                                  ; preds = %vector.body683
 _ZNSt6vectorIN5utils17LifetimeOperationESaIS1_EE17_M_realloc_insertIJiNS0_21LifetimeOperationTypeEEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i365: ; preds = %.lr.ph.i.i.i.i.i358.prol.loopexit, %.lr.ph.i.i.i.i.i358, %middle.block690, %.noexc367
   %.0.lcssa.i.i.i.i.i363 = phi ptr [ %i.nj, %.noexc367 ], [ %i.ns, %middle.block690 ], [ %.lcssa.unr, %.lr.ph.i.i.i.i.i358.prol.loopexit ], [ %i.pc, %.lr.ph.i.i.i.i.i358 ]
   %i.pd = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i363, i64 8
-  call void @_ZdlPvm(ptr noundef nonnull %.sroa.0.14, i64 noundef %i.nb) #24
+  %31 = ptrtoint ptr %.sroa.60.14 to i64
+  %32 = sub i64 %31, %i.na
+  call void @_ZdlPvm(ptr noundef nonnull %.sroa.0.14, i64 noundef %32) #24
   %i.pe = getelementptr inbounds nuw [8 x i8], ptr %i.nj, i64 %i.nh
   br label %_ZNSt6vectorIN5utils17LifetimeOperationESaIS1_EE12emplace_backIJiNS0_21LifetimeOperationTypeEEEERS1_DpOT_.exit368
 

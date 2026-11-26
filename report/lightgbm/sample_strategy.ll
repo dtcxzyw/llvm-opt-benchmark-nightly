@@ -204,8 +204,9 @@ bb.q:                                             ; preds = %.lr.ph, %_ZNSt6vect
   %i.bt = phi i32 [ %i.bf, %.lr.ph ], [ %i.dk, %_ZNSt6vectorIN8LightGBM6RandomESaIS1_EE12emplace_backIJiEEERS1_DpOT_.exit ]
   %i.bu = phi ptr [ %i.ba, %.lr.ph ], [ %i.dl, %_ZNSt6vectorIN8LightGBM6RandomESaIS1_EE12emplace_backIJiEEERS1_DpOT_.exit ] ; 8 uses
   %i.bv = phi ptr [ %.pre22, %.lr.ph ], [ %i.dm, %_ZNSt6vectorIN8LightGBM6RandomESaIS1_EE12emplace_backIJiEEERS1_DpOT_.exit ] ; 5 uses
-  %i.bw = phi ptr [ %i.bd, %.lr.ph ], [ %i.dn, %_ZNSt6vectorIN8LightGBM6RandomESaIS1_EE12emplace_backIJiEEERS1_DpOT_.exit ] ; 3 uses
+  %i.bw = phi ptr [ %i.bd, %.lr.ph ], [ %i.dn, %_ZNSt6vectorIN8LightGBM6RandomESaIS1_EE12emplace_backIJiEEERS1_DpOT_.exit ] ; 4 uses
   %.017 = phi i32 [ 0, %.lr.ph ], [ %i.do, %_ZNSt6vectorIN8LightGBM6RandomESaIS1_EE12emplace_backIJiEEERS1_DpOT_.exit ] ; 2 uses
+  %3 = ptrtoaddr ptr %i.bv to i64
   %i.bx = load ptr, ptr %i.a, align 8, !tbaa !54
   %i.by = getelementptr inbounds nuw i8, ptr %i.bx, i64 348
   %i.bz = load i32, ptr %i.by, align 4, !tbaa !140
@@ -220,7 +221,7 @@ bb.r:                                             ; preds = %bb.q
   br label %_ZNSt6vectorIN8LightGBM6RandomESaIS1_EE12emplace_backIJiEEERS1_DpOT_.exit
 
 bb.s:                                             ; preds = %bb.q
-  %i.cc = ptrtoint ptr %i.bv to i64               ; 2 uses
+  %i.cc = ptrtoint ptr %i.bw to i64
   %i.cd = ptrtoint ptr %i.bu to i64               ; 4 uses
   %i.ce = sub i64 %i.cc, %i.cd                    ; 3 uses
   %i.cf = icmp eq i64 %i.ce, 9223372036854775804
@@ -248,7 +249,7 @@ _ZNKSt6vectorIN8LightGBM6RandomESaIS1_EE12_M_check_lenEmPKc.exit.i.i: ; preds = 
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNKSt6vectorIN8LightGBM6RandomESaIS1_EE12_M_check_lenEmPKc.exit.i.i
   %i.co = ptrtoaddr ptr %i.cm to i64
-  %i.cp = add i64 %i.cc, -4
+  %i.cp = add i64 %3, -4
   %i.cq = sub i64 %i.cp, %i.cd                    ; 2 uses
   %i.cr = lshr i64 %i.cq, 2
   %i.cs = add nuw nsw i64 %i.cr, 1                ; 2 uses
@@ -651,8 +652,9 @@ bb.ao:                                            ; preds = %.lr.ph, %_ZNSt6vect
   %i.fk = phi i32 [ %i.fc, %.lr.ph ], [ %i.hb, %_ZNSt6vectorIN8LightGBM6RandomESaIS1_EE12emplace_backIJiEEERS1_DpOT_.exit ]
   %i.fl = phi ptr [ %i.ex, %.lr.ph ], [ %i.hc, %_ZNSt6vectorIN8LightGBM6RandomESaIS1_EE12emplace_backIJiEEERS1_DpOT_.exit ] ; 8 uses
   %i.fm = phi ptr [ %.pre59, %.lr.ph ], [ %i.hd, %_ZNSt6vectorIN8LightGBM6RandomESaIS1_EE12emplace_backIJiEEERS1_DpOT_.exit ] ; 5 uses
-  %i.fn = phi ptr [ %i.fa, %.lr.ph ], [ %i.he, %_ZNSt6vectorIN8LightGBM6RandomESaIS1_EE12emplace_backIJiEEERS1_DpOT_.exit ] ; 3 uses
+  %i.fn = phi ptr [ %i.fa, %.lr.ph ], [ %i.he, %_ZNSt6vectorIN8LightGBM6RandomESaIS1_EE12emplace_backIJiEEERS1_DpOT_.exit ] ; 4 uses
   %.02756 = phi i32 [ 0, %.lr.ph ], [ %i.hf, %_ZNSt6vectorIN8LightGBM6RandomESaIS1_EE12emplace_backIJiEEERS1_DpOT_.exit ] ; 2 uses
+  %4 = ptrtoaddr ptr %i.fm to i64
   %i.fo = load ptr, ptr %i.ao, align 8, !tbaa !54
   %i.fp = getelementptr inbounds nuw i8, ptr %i.fo, i64 348
   %i.fq = load i32, ptr %i.fp, align 4, !tbaa !140
@@ -667,7 +669,7 @@ bb.ap:                                            ; preds = %bb.ao
   br label %_ZNSt6vectorIN8LightGBM6RandomESaIS1_EE12emplace_backIJiEEERS1_DpOT_.exit
 
 bb.aq:                                            ; preds = %bb.ao
-  %i.ft = ptrtoint ptr %i.fm to i64               ; 2 uses
+  %i.ft = ptrtoint ptr %i.fn to i64
   %i.fu = ptrtoint ptr %i.fl to i64               ; 4 uses
   %i.fv = sub i64 %i.ft, %i.fu                    ; 3 uses
   %i.fw = icmp eq i64 %i.fv, 9223372036854775804
@@ -695,7 +697,7 @@ _ZNKSt6vectorIN8LightGBM6RandomESaIS1_EE12_M_check_lenEmPKc.exit.i.i: ; preds = 
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNKSt6vectorIN8LightGBM6RandomESaIS1_EE12_M_check_lenEmPKc.exit.i.i
   %i.gf = ptrtoaddr ptr %i.gd to i64
-  %i.gg = add i64 %i.ft, -4
+  %i.gg = add i64 %4, -4
   %i.gh = sub i64 %i.gg, %i.fu                    ; 2 uses
   %i.gi = lshr i64 %i.gh, 2
   %i.gj = add nuw nsw i64 %i.gi, 1                ; 2 uses

@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %bb.a, %bb.b, %bb.j
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define internal fastcc void @mt_destroy_walk(ptr noundef %0, i1 noundef zeroext %1) unnamed_addr #1 align 16 {
 bb.a:
-  %i.a = ptrtoint ptr %0 to i64                   ; 4 uses
+  %i.a = ptrtoint ptr %0 to i64                   ; 2 uses
   %i.b = trunc i64 %i.a to i32
   %i.c = lshr i32 %i.b, 3
   %i.d = and i32 %i.c, 15                         ; 2 uses
@@ -353,7 +353,7 @@ bb.k:                                             ; preds = %bb.j, %mte_dead_lea
   %i.bg = add i8 %i.bf, 1                         ; 3 uses
   %i.bh = getelementptr i8, ptr %.036, i64 24
   %i.bi = load ptr, ptr %i.bh, align 8            ; 4 uses
-  %i.bj = ptrtoint ptr %i.bi to i64               ; 2 uses
+  %i.bj = ptrtoint ptr %i.bi to i64               ; 4 uses
   %i.bk = and i64 %i.bj, -256
   %i.bl = inttoptr i64 %i.bk to ptr               ; 7 uses
   %i.bm = icmp eq ptr %.036, %i.bl
@@ -410,7 +410,7 @@ bb.q:                                             ; preds = %ma_slots.exit
   %.027.i44 = phi ptr [ %.024.i46, %bb.w ], [ %i.bi, %bb.q ]
   %.026.i45 = phi i8 [ %.1.i51, %bb.w ], [ %i.bg, %bb.q ]
   %.024.i46 = phi ptr [ %.125.i50, %bb.w ], [ %i.bz, %bb.q ] ; 3 uses
-  %i.cc = ptrtoint ptr %.024.i46 to i64           ; 2 uses
+  %i.cc = ptrtoint ptr %.024.i46 to i64           ; 3 uses
   %i.cd = and i64 %i.cc, -256
   %i.ce = inttoptr i64 %i.cd to ptr               ; 10 uses
   %i.cf = trunc i64 %i.cc to i32
@@ -476,16 +476,15 @@ bb.w:                                             ; preds = %bb.v, %ma_slots.exi
   br i1 %i.da, label %.loopexit, label %.preheader, !llvm.loop !289
 
 .loopexit:                                        ; preds = %bb.w, %ma_slots.exit, %bb.q
-  %.pre-phi44 = phi ptr [ %i.bl, %bb.q ], [ %i.bl, %ma_slots.exit ], [ %i.ce, %bb.w ]
+  %.pre-phi44 = phi ptr [ %i.bl, %bb.q ], [ %i.bl, %ma_slots.exit ], [ %i.ce, %bb.w ] ; 4 uses
+  %.pre-phi = phi i64 [ %i.bj, %bb.q ], [ %i.bj, %ma_slots.exit ], [ %i.cc, %bb.w ]
   %.119 = phi ptr [ %i.bi, %bb.q ], [ %i.bi, %ma_slots.exit ], [ %.024.i46, %bb.w ] ; 2 uses
   %.138 = phi ptr [ %.0.i, %bb.q ], [ %.0.i, %ma_slots.exit ], [ %.0.i.i48, %bb.w ] ; 4 uses
   %.not43 = icmp eq ptr %0, %.119
   br i1 %.not43, label %bb.x, label %mte_destroy_descend.exit, !llvm.loop !291
 
 bb.x:                                             ; preds = %.loopexit
-  %2 = and i64 %i.a, -256
-  %3 = inttoptr i64 %2 to ptr                     ; 3 uses
-  %i.db = lshr i64 %i.a, 3
+  %i.db = lshr i64 %.pre-phi, 3
   %i.dc = and i64 %i.db, 15
   %i.dd = getelementptr i8, ptr @mt_slots, i64 %i.dc
   %i.de = load i8, ptr %i.dd, align 1
@@ -527,7 +526,7 @@ bb.y:                                             ; preds = %.lr.ph.i55
 
 mte_dead_leaves.exit62:                           ; preds = %bb.y, %._crit_edge.split.loop.exit6.i58
   %.0.lcssa.ph.i59 = phi i8 [ %i.dt, %._crit_edge.split.loop.exit6.i58 ], [ %i.df, %bb.y ] ; 2 uses
-  %i.du = getelementptr i8, ptr %3, i64 40
+  %i.du = getelementptr i8, ptr %.pre-phi44, i64 40
   store i8 %.0.lcssa.ph.i59, ptr %i.du, align 8
   br i1 %1, label %.thread28, label %.thread31
 
@@ -542,12 +541,12 @@ mte_dead_leaves.exit62:                           ; preds = %bb.y, %._crit_edge.
   br i1 %1, label %bb.z, label %.thread31
 
 bb.z:                                             ; preds = %.thread28, %.loopexit35
-  %.230 = phi ptr [ %3, %.thread28 ], [ %.2, %.loopexit35 ]
+  %.230 = phi ptr [ %.pre-phi44, %.thread28 ], [ %.2, %.loopexit35 ]
   tail call void @kfree(ptr noundef %.230) #16
   br label %mt_clear_meta.exit
 
 .thread31:                                        ; preds = %mte_dead_leaves.exit62, %.loopexit35
-  %.233 = phi ptr [ %.2, %.loopexit35 ], [ %3, %mte_dead_leaves.exit62 ] ; 4 uses
+  %.233 = phi ptr [ %.2, %.loopexit35 ], [ %.pre-phi44, %mte_dead_leaves.exit62 ] ; 4 uses
   %i.dx = getelementptr i8, ptr %.233, i64 36
   %i.dy = load i32, ptr %i.dx, align 4            ; 2 uses
   switch i32 %i.dy, label %mt_clear_meta.exit [

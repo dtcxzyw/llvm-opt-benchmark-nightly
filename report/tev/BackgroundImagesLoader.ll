@@ -205,9 +205,9 @@ bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 8 ; 7 uses
   store ptr %i.j, ptr %i.f, align 8, !tbaa !195
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
-  %i.l = load ptr, ptr %i.k, align 8, !tbaa !449  ; 6 uses
+  %i.l = load ptr, ptr %i.k, align 8, !tbaa !449  ; 5 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
-  %i.n = load ptr, ptr %i.m, align 8, !tbaa !450
+  %i.n = load ptr, ptr %i.m, align 8, !tbaa !450  ; 2 uses
   %i.o = icmp eq ptr %i.l, %i.n
   br i1 %i.o, label %bb.c, label %_ZNSt3__114__split_bufferIPN3tev13ImageAdditionENS_9allocatorIS3_EEE9push_backB8ne180100ERKS3_.exit
 
@@ -242,7 +242,7 @@ _ZNSt3__14moveB8ne180100IPPN3tev13ImageAdditionES4_EET0_T_S6_S5_.exit.i: ; preds
   br label %_ZNSt3__114__split_bufferIPN3tev13ImageAdditionENS_9allocatorIS3_EEE9push_backB8ne180100ERKS3_.exit
 
 bb.f:                                             ; preds = %bb.c
-  %i.ac = ptrtoint ptr %i.l to i64
+  %i.ac = ptrtoint ptr %i.n to i64
   %i.ad = sub i64 %i.ac, %i.r
   %i.ae = ashr exact i64 %i.ad, 2
   %i.af = icmp eq ptr %i.l, %i.p
@@ -390,8 +390,8 @@ bb.l:                                             ; preds = %bb.j
   %i.ch = load ptr, ptr %i.cg, align 8, !tbaa !197
   %i.ci = getelementptr inbounds nuw i8, ptr %i.cg, i64 8 ; 7 uses
   store ptr %i.ci, ptr %i.f, align 8, !tbaa !195
-  %i.cj = load ptr, ptr %i.br, align 8, !tbaa !449 ; 6 uses
-  %i.ck = load ptr, ptr %i.bx, align 8, !tbaa !450
+  %i.cj = load ptr, ptr %i.br, align 8, !tbaa !449 ; 5 uses
+  %i.ck = load ptr, ptr %i.bx, align 8, !tbaa !450 ; 2 uses
   %i.cl = icmp eq ptr %i.cj, %i.ck
   br i1 %i.cl, label %bb.m, label %_ZNSt3__114__split_bufferIPN3tev13ImageAdditionENS_9allocatorIS3_EEE9push_backB8ne180100ERKS3_.exit29
 
@@ -426,7 +426,7 @@ _ZNSt3__14moveB8ne180100IPPN3tev13ImageAdditionES4_EET0_T_S6_S5_.exit.i28: ; pre
   br label %_ZNSt3__114__split_bufferIPN3tev13ImageAdditionENS_9allocatorIS3_EEE9push_backB8ne180100ERKS3_.exit29
 
 bb.p:                                             ; preds = %bb.m
-  %i.cz = ptrtoint ptr %i.cj to i64
+  %i.cz = ptrtoint ptr %i.ck to i64
   %i.da = sub i64 %i.cz, %i.co
   %i.db = ashr exact i64 %i.da, 2
   %i.dc = icmp eq ptr %i.cj, %i.cm
@@ -630,7 +630,7 @@ _ZNSt3__114__split_bufferIPN3tev13ImageAdditionERNS_9allocatorIS3_EEED2Ev.exit: 
 .lr.ph:                                           ; preds = %bb.w, %_ZNSt3__114__split_bufferIPN3tev13ImageAdditionERNS_9allocatorIS3_EEE10push_frontERKS3_.exit
   %.096 = phi ptr [ %i.ft, %_ZNSt3__114__split_bufferIPN3tev13ImageAdditionERNS_9allocatorIS3_EEE10push_frontERKS3_.exit ], [ %i.fi, %bb.w ]
   %i.fp = phi ptr [ %i.hs, %_ZNSt3__114__split_bufferIPN3tev13ImageAdditionERNS_9allocatorIS3_EEE10push_frontERKS3_.exit ], [ %i.fg, %bb.w ] ; 14 uses
-  %i.fq = phi ptr [ %i.hq, %_ZNSt3__114__split_bufferIPN3tev13ImageAdditionERNS_9allocatorIS3_EEE10push_frontERKS3_.exit ], [ %.promoted83, %bb.w ] ; 7 uses
+  %i.fq = phi ptr [ %i.hq, %_ZNSt3__114__split_bufferIPN3tev13ImageAdditionERNS_9allocatorIS3_EEE10push_frontERKS3_.exit ], [ %.promoted83, %bb.w ] ; 8 uses
   %i.fr = phi ptr [ %i.hp, %_ZNSt3__114__split_bufferIPN3tev13ImageAdditionERNS_9allocatorIS3_EEE10push_frontERKS3_.exit ], [ %i.fh, %bb.w ] ; 9 uses
   %i.fs = phi ptr [ %i.ho, %_ZNSt3__114__split_bufferIPN3tev13ImageAdditionERNS_9allocatorIS3_EEE10push_frontERKS3_.exit ], [ %.promoted91, %bb.w ] ; 8 uses
   %i.ft = getelementptr inbounds i8, ptr %.096, i64 -8 ; 3 uses
@@ -662,7 +662,7 @@ bb.aa:                                            ; preds = %bb.z
   br label %_ZNSt3__114__split_bufferIPN3tev13ImageAdditionERNS_9allocatorIS3_EEE10push_frontERKS3_.exit
 
 bb.ab:                                            ; preds = %bb.y
-  %i.gi = ptrtoint ptr %i.fp to i64               ; 4 uses
+  %i.gi = ptrtoint ptr %i.fq to i64
   %i.gj = sub i64 %i.fw, %i.gi                    ; 2 uses
   %i.gk = ashr exact i64 %i.gj, 2
   %i.gl = icmp eq ptr %i.fs, %i.fp
@@ -693,14 +693,15 @@ _ZNSt3__114__split_bufferIPN3tev13ImageAdditionERNS_9allocatorIS3_EEEC2EmmS6_.ex
   %i.gs = getelementptr inbounds nuw [8 x i8], ptr %i.go, i64 %i.gr ; 7 uses
   %i.gt = getelementptr inbounds nuw [8 x i8], ptr %i.go, i64 %.sroa.speculated.i47
   %i.gu = ptrtoint ptr %i.fr to i64               ; 2 uses
-  %i.gv = sub i64 %i.gu, %i.gi
+  %2 = ptrtoint ptr %i.fp to i64                  ; 3 uses
+  %i.gv = sub i64 %i.gu, %2
   %i.gw = getelementptr inbounds nuw i8, ptr %i.gs, i64 %i.gv ; 3 uses
   %.not10.i.i.i49 = icmp eq ptr %i.fr, %i.fp
   br i1 %.not10.i.i.i49, label %_ZNSt3__114__split_bufferIPN3tev13ImageAdditionERNS_9allocatorIS3_EEE5clearB8ne180100Ev.exit.i.i54, label %.lr.ph.i.i.i50.preheader
 
 .lr.ph.i.i.i50.preheader:                         ; preds = %.noexc60
   %i.gx = add i64 %i.gu, -8
-  %i.gy = sub i64 %i.gx, %i.gi                    ; 2 uses
+  %i.gy = sub i64 %i.gx, %2                       ; 2 uses
   %i.gz = lshr i64 %i.gy, 3
   %i.ha = add nuw nsw i64 %i.gz, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.gy, 56
@@ -709,7 +710,7 @@ _ZNSt3__114__split_bufferIPN3tev13ImageAdditionERNS_9allocatorIS3_EEEC2EmmS6_.ex
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i50.preheader
   %i.hb = shl nuw nsw i64 %i.gr, 3
   %i.hc = add i64 %i.hb, %i.gp
-  %i.hd = sub i64 %i.gi, %i.hc
+  %i.hd = sub i64 %2, %i.hc
   %diff.check = icmp ugt i64 %i.hd, -32
   br i1 %diff.check, label %.lr.ph.i.i.i50.preheader235, label %vector.ph
 
@@ -805,9 +806,9 @@ bb.ae:                                            ; preds = %bb.k, %_ZNSt3__114_
 define linkonce_odr hidden void @_ZNSt3__114__split_bufferIPN3tev13ImageAdditionENS_9allocatorIS3_EEE9push_backEOS3_(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(8) %1) local_unnamed_addr #3 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !449  ; 6 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !449  ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !450
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !450  ; 2 uses
   %i.e = icmp eq ptr %i.b, %i.d
   br i1 %i.e, label %bb.b, label %_ZNSt3__114__split_bufferIPN3tev13ImageAdditionERNS_9allocatorIS3_EEED2Ev.exit
 
@@ -844,7 +845,7 @@ _ZNSt3__14moveB8ne180100IPPN3tev13ImageAdditionES4_EET0_T_S6_S5_.exit: ; preds =
   br label %_ZNSt3__114__split_bufferIPN3tev13ImageAdditionERNS_9allocatorIS3_EEED2Ev.exit
 
 bb.e:                                             ; preds = %bb.b
-  %i.u = ptrtoint ptr %i.b to i64
+  %i.u = ptrtoint ptr %i.d to i64
   %i.v = sub i64 %i.u, %i.j
   %i.w = ashr exact i64 %i.v, 2
   %i.x = icmp eq ptr %i.b, %i.h
@@ -960,8 +961,8 @@ _ZNSt3__114__split_bufferIPN3tev13ImageAdditionERNS_9allocatorIS3_EEED2Ev.exit: 
 define linkonce_odr hidden void @_ZNSt3__114__split_bufferIPN3tev13ImageAdditionENS_9allocatorIS3_EEE10push_frontEOS3_(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(8) %1) local_unnamed_addr #3 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !195  ; 7 uses
-  %i.c = load ptr, ptr %0, align 8, !tbaa !451
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !195  ; 6 uses
+  %i.c = load ptr, ptr %0, align 8, !tbaa !451    ; 2 uses
   %i.d = icmp eq ptr %i.b, %i.c
   br i1 %i.d, label %bb.b, label %_ZNSt3__114__split_bufferIPN3tev13ImageAdditionERNS_9allocatorIS3_EEED2Ev.exit
 
@@ -1001,7 +1002,7 @@ _ZNSt3__113move_backwardB8ne180100IPPN3tev13ImageAdditionES4_EET0_T_S6_S5_.exit:
   br label %_ZNSt3__114__split_bufferIPN3tev13ImageAdditionERNS_9allocatorIS3_EEED2Ev.exit
 
 bb.e:                                             ; preds = %bb.b
-  %i.x = ptrtoint ptr %i.b to i64
+  %i.x = ptrtoint ptr %i.c to i64
   %i.y = sub i64 %i.j, %i.x
   %i.z = ashr exact i64 %i.y, 2
   %i.aa = icmp eq ptr %i.h, %i.b

@@ -202,7 +202,7 @@ bb.ar:                                            ; preds = %.noexc142, %bb.ap
   br label %bb.as
 
 bb.as:                                            ; preds = %.preheader, %bb.at
-  %.sroa.0156.0223 = phi ptr [ %i.hz, %.preheader ], [ %i.ie, %bb.at ] ; 4 uses
+  %.sroa.0156.0223 = phi ptr [ %i.hz, %.preheader ], [ %i.ie, %bb.at ] ; 3 uses
   %i.ia = load ptr, ptr %.sroa.0156.0223, align 8, !tbaa !83 ; 7 uses
   %i.ib = getelementptr inbounds nuw i8, ptr %i.ia, i64 40
   %i.ic = load i64, ptr %i.ib, align 8, !tbaa !73
@@ -210,16 +210,17 @@ bb.as:                                            ; preds = %.preheader, %bb.at
   br i1 %i.id, label %bb.au, label %bb.at
 
 bb.at:                                            ; preds = %bb.as
-  %i.ie = getelementptr inbounds nuw i8, ptr %.sroa.0156.0223, i64 8 ; 2 uses
+  %i.ie = getelementptr inbounds nuw i8, ptr %.sroa.0156.0223, i64 8 ; 3 uses
   %.not = icmp eq ptr %i.ie, %i.hy
-  br i1 %.not, label %.critedge, label %bb.as, !llvm.loop !127
+  br i1 %.not, label %bb.au, label %bb.as, !llvm.loop !127
 
-bb.au:                                            ; preds = %bb.as
-  %i.if = icmp eq ptr %.sroa.0156.0223, %i.hy     ; 3 uses
+bb.au:                                            ; preds = %bb.as, %bb.at
+  %.sroa.0156.0.lcssa = phi ptr [ %.sroa.0156.0223, %bb.as ], [ %i.ie, %bb.at ] ; 2 uses
+  %i.if = icmp eq ptr %.sroa.0156.0.lcssa, %i.hy  ; 3 uses
   br i1 %i.if, label %.critedge, label %bb.av
 
 bb.av:                                            ; preds = %bb.au
-  %i.ig = ptrtoint ptr %.sroa.0156.0223 to i64
+  %i.ig = ptrtoint ptr %.sroa.0156.0.lcssa to i64
   %i.ih = ptrtoint ptr %i.hz to i64
   %i.ii = sub i64 %i.ig, %i.ih
   %i.ij = getelementptr inbounds i8, ptr %i.hz, i64 %i.ii
@@ -357,8 +358,8 @@ _ZNSt3setIP4nodeSt4lessIS1_ESaIS1_EE5eraseERKS1_.exit: ; preds = %.lr.ph.i2.i, %
   %.not176 = icmp eq ptr %i.jt, %i.in
   br i1 %.not176, label %.loopexit, label %.lr.ph226
 
-.critedge:                                        ; preds = %.loopexit, %bb.au, %bb.at, %.preheader180
-  %.lcssa = phi i1 [ false, %.preheader180 ], [ true, %bb.at ], [ %i.if, %bb.au ], [ %i.if, %.loopexit ]
+.critedge:                                        ; preds = %.loopexit, %bb.au, %.preheader180
+  %.lcssa = phi i1 [ false, %.preheader180 ], [ %i.if, %bb.au ], [ %i.if, %.loopexit ]
   call void @_ZNSt6vectorISt10unique_ptrI4nodeSt14default_deleteIS1_EESaIS4_EED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %4) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #20
   %i.ju = load ptr, ptr %i.b, align 8, !tbaa !76
@@ -761,7 +762,7 @@ bb.at:                                            ; preds = %.preheader183
   br label %bb.au
 
 bb.au:                                            ; preds = %.preheader, %bb.av
-  %.sroa.0145.0222 = phi ptr [ %i.hw, %.preheader ], [ %i.ib, %bb.av ] ; 4 uses
+  %.sroa.0145.0222 = phi ptr [ %i.hw, %.preheader ], [ %i.ib, %bb.av ] ; 3 uses
   %i.hx = load ptr, ptr %.sroa.0145.0222, align 8, !tbaa !83 ; 7 uses
   %i.hy = getelementptr inbounds nuw i8, ptr %i.hx, i64 40
   %i.hz = load i64, ptr %i.hy, align 8, !tbaa !73
@@ -769,16 +770,17 @@ bb.au:                                            ; preds = %.preheader, %bb.av
   br i1 %i.ia, label %bb.aw, label %bb.av
 
 bb.av:                                            ; preds = %bb.au
-  %i.ib = getelementptr inbounds nuw i8, ptr %.sroa.0145.0222, i64 8 ; 2 uses
+  %i.ib = getelementptr inbounds nuw i8, ptr %.sroa.0145.0222, i64 8 ; 3 uses
   %.not178 = icmp eq ptr %i.ib, %i.hv
-  br i1 %.not178, label %.critedge, label %bb.au, !llvm.loop !145
+  br i1 %.not178, label %bb.aw, label %bb.au, !llvm.loop !145
 
-bb.aw:                                            ; preds = %bb.au
-  %i.ic = icmp eq ptr %.sroa.0145.0222, %i.hv     ; 3 uses
+bb.aw:                                            ; preds = %bb.au, %bb.av
+  %.sroa.0145.0.lcssa = phi ptr [ %.sroa.0145.0222, %bb.au ], [ %i.ib, %bb.av ] ; 2 uses
+  %i.ic = icmp eq ptr %.sroa.0145.0.lcssa, %i.hv  ; 3 uses
   br i1 %i.ic, label %.critedge, label %bb.ax
 
 bb.ax:                                            ; preds = %bb.aw
-  %i.id = ptrtoint ptr %.sroa.0145.0222 to i64
+  %i.id = ptrtoint ptr %.sroa.0145.0.lcssa to i64
   %i.ie = ptrtoint ptr %i.hw to i64
   %i.if = sub i64 %i.id, %i.ie
   %i.ig = getelementptr inbounds i8, ptr %i.hw, i64 %i.if
@@ -916,8 +918,8 @@ _ZNSt3setIP4nodeSt4lessIS1_ESaIS1_EE5eraseERKS1_.exit: ; preds = %.lr.ph.i2.i, %
   %.not179 = icmp eq ptr %i.jq, %i.ik
   br i1 %.not179, label %.loopexit, label %.lr.ph225
 
-.critedge:                                        ; preds = %.loopexit, %bb.aw, %bb.av, %.preheader181
-  %.lcssa = phi i1 [ false, %.preheader181 ], [ true, %bb.av ], [ %i.ic, %bb.aw ], [ %i.ic, %.loopexit ]
+.critedge:                                        ; preds = %.loopexit, %bb.aw, %.preheader181
+  %.lcssa = phi i1 [ false, %.preheader181 ], [ %i.ic, %bb.aw ], [ %i.ic, %.loopexit ]
   call void @_ZNSt6vectorISt10unique_ptrI4nodeSt14default_deleteIS1_EESaIS4_EED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %2) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #20
   %i.jr = load ptr, ptr %i.c, align 8, !tbaa !76

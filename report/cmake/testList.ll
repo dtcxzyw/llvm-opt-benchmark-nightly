@@ -204,9 +204,9 @@ bb.a:
   %i.a = load ptr, ptr %1, align 8, !tbaa !34     ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !34   ; 2 uses
-  %i.d = load ptr, ptr %0, align 8, !tbaa !29     ; 5 uses
+  %i.d = load ptr, ptr %0, align 8, !tbaa !29     ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  %i.f = load ptr, ptr %i.e, align 8, !tbaa !28   ; 2 uses
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !28   ; 3 uses
   %.not.i.i.i.i.i = icmp eq ptr %i.f, %i.d
   br i1 %.not.i.i.i.i.i, label %_ZN6cmList6assignISt13move_iteratorIN9__gnu_cxx17__normal_iteratorIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS9_SaIS9_EEEEEEEvT_SG_NS_14ExpandElementsENS_13EmptyElementsE.exit.i, label %.lr.ph.i.i.i.i.i.i.i
 
@@ -233,11 +233,12 @@ _ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSa
   br label %_ZN6cmList6assignISt13move_iteratorIN9__gnu_cxx17__normal_iteratorIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS9_SaIS9_EEEEEEEvT_SG_NS_14ExpandElementsENS_13EmptyElementsE.exit.i
 
 _ZN6cmList6assignISt13move_iteratorIN9__gnu_cxx17__normal_iteratorIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS9_SaIS9_EEEEEEEvT_SG_NS_14ExpandElementsENS_13EmptyElementsE.exit.i: ; preds = %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i.i.i.i.i, %bb.a
+  %.pre.i = phi ptr [ %i.f, %bb.a ], [ %i.d, %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i.i.i.i.i ] ; 2 uses
   %i.m = icmp eq ptr %i.a, %i.c
   br i1 %i.m, label %_ZN6cmList6InsertISt13move_iteratorIN9__gnu_cxx17__normal_iteratorIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS9_SaIS9_EEEEEEESE_RSD_NS3_IPKS9_SD_EET_SK_NS_14ExpandElementsENS_13EmptyElementsE.exit, label %bb.b
 
 bb.b:                                             ; preds = %_ZN6cmList6assignISt13move_iteratorIN9__gnu_cxx17__normal_iteratorIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS9_SaIS9_EEEEEEEvT_SG_NS_14ExpandElementsENS_13EmptyElementsE.exit.i
-  %i.n = ptrtoint ptr %i.d to i64
+  %i.n = ptrtoint ptr %.pre.i to i64
   %i.o = load ptr, ptr %0, align 8, !tbaa !34     ; 3 uses
   %i.p = ptrtoint ptr %i.o to i64
   %i.q = sub i64 %i.n, %i.p
@@ -246,7 +247,7 @@ bb.b:                                             ; preds = %_ZN6cmList6assignIS
 
 bb.c:                                             ; preds = %bb.c, %bb.b
   %i.s = phi ptr [ %i.o, %bb.b ], [ %i.aa, %bb.c ]
-  %i.t = phi ptr [ %i.d, %bb.b ], [ %i.z, %bb.c ]
+  %i.t = phi ptr [ %.pre.i, %bb.b ], [ %i.z, %bb.c ]
   %.sroa.033.050.i = phi ptr [ %i.a, %bb.b ], [ %i.ah, %bb.c ] ; 2 uses
   %.sroa.027.049.i = phi ptr [ %i.r, %bb.b ], [ %i.ag, %bb.c ]
   %i.u = ptrtoint ptr %i.t to i64

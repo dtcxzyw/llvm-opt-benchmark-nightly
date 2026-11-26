@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 160
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !147  ; 9 uses
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !147  ; 10 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 136 ; 2 uses
   %i.j = load i32, ptr %i.i, align 8, !tbaa !149
@@ -371,13 +371,14 @@ bb.m:                                             ; preds = %bb.n, %bb.l
 
 bb.n:                                             ; preds = %bb.m
   %i.cd = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i, i64 8
-  %i.ce = load ptr, ptr %i.cd, align 8, !tbaa !180
+  %i.ce = load ptr, ptr %i.cd, align 8, !tbaa !180 ; 2 uses
   %i.cf = icmp eq ptr %i.g, %i.ce
   br i1 %i.cf, label %.loopexit.i.i.i.i, label %bb.m, !llvm.loop !263
 
 .loopexit.i.i.i.i:                                ; preds = %bb.n, %bb.m, %_ZN20AstUserAllocatorBaseI8AstCFuncSt18unordered_multimapIPK11AstVarScopeP9AstVarRefSt4hashIS4_ESt8equal_toIS4_ESaISt4pairIKS4_S6_EEELi4EEclIJEEERSF_PS0_DpOT_.exit
   %.sroa.019.3.i.i.i.i.i = phi ptr [ null, %_ZN20AstUserAllocatorBaseI8AstCFuncSt18unordered_multimapIPK11AstVarScopeP9AstVarRefSt4hashIS4_ESt8equal_toIS4_ESaISt4pairIKS4_S6_EEELi4EEclIJEEERSF_PS0_DpOT_.exit ], [ %.sroa.0.0.i.i.i.i.i, %bb.n ], [ null, %bb.m ]
-  %.sroa.4.3.i.i.i.i.i = ptrtoint ptr %i.g to i64
+  %.sroa.4.3.in.i.i.i.i.i = phi ptr [ %i.g, %_ZN20AstUserAllocatorBaseI8AstCFuncSt18unordered_multimapIPK11AstVarScopeP9AstVarRefSt4hashIS4_ESt8equal_toIS4_ESaISt4pairIKS4_S6_EEELi4EEclIJEEERSF_PS0_DpOT_.exit ], [ %i.ce, %bb.n ], [ %i.g, %bb.m ]
+  %.sroa.4.3.i.i.i.i.i = ptrtoint ptr %.sroa.4.3.in.i.i.i.i.i to i64
   %i.cg = invoke ptr @_ZNSt10_HashtableIPK11AstVarScopeSt4pairIKS2_P9AstVarRefESaIS7_ENSt8__detail10_Select1stESt8equal_toIS2_ESt4hashIS2_ENS9_18_Mod_range_hashingENS9_20_Default_ranged_hashENS9_20_Prime_rehash_policyENS9_17_Hashtable_traitsILb0ELb0ELb0EEEE20_M_insert_multi_nodeEPNS9_10_Hash_nodeIS7_Lb0EEEmSN_(ptr noundef nonnull align 8 dereferenceable(56) %.0.i18, ptr noundef %.sroa.019.3.i.i.i.i.i, i64 noundef %.sroa.4.3.i.i.i.i.i, ptr noundef nonnull %i.bx)
           to label %_ZNSt18unordered_multimapIPK11AstVarScopeP9AstVarRefSt4hashIS2_ESt8equal_toIS2_ESaISt4pairIKS2_S4_EEE7emplaceIJRKPS0_RS4_EEENSt8__detail14_Node_iteratorISB_Lb0ELb0EEEDpOT_.exit unwind label %_ZNSt10_HashtableIPK11AstVarScopeSt4pairIKS2_P9AstVarRefESaIS7_ENSt8__detail10_Select1stESt8equal_toIS2_ESt4hashIS2_ENS9_18_Mod_range_hashingENS9_20_Default_ranged_hashENS9_20_Prime_rehash_policyENS9_17_Hashtable_traitsILb0ELb0ELb0EEEE12_Scoped_nodeD2Ev.exit10.i.i.i.i ; 0 uses
 

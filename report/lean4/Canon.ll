@@ -204,7 +204,7 @@ lean_obj_tag.exit3027:                            ; preds = %bb.bar, %bb.bas
 
 bb.bat:                                           ; preds = %lean_obj_tag.exit3027
   %i.cid = getelementptr inbounds nuw i8, ptr %i.chv, i64 8
-  %i.cie = load ptr, ptr %i.cid, align 8, !tbaa !12 ; 9 uses
+  %i.cie = load ptr, ptr %i.cid, align 8, !tbaa !12 ; 10 uses
   %.val = load i32, ptr %i.chv, align 8, !tbaa !10
   %i.cif = icmp eq i32 %.val, 1                   ; 3 uses
   br i1 %i.cif, label %lean_dec.exit1953, label %bb.bau
@@ -257,7 +257,7 @@ bb.bbc:                                           ; preds = %bb.bbb
 lean_dec.exit1953:                                ; preds = %lean_inc.exit1648, %bb.bbc, %bb.bbb, %bb.bba, %bb.bat
   %.01487 = phi ptr [ %i.chv, %bb.bat ], [ inttoptr (i64 1 to ptr), %bb.bba ], [ inttoptr (i64 1 to ptr), %bb.bbb ], [ inttoptr (i64 1 to ptr), %bb.bbc ], [ inttoptr (i64 1 to ptr), %lean_inc.exit1648 ] ; 4 uses
   %.not = icmp eq ptr %i.chr, %i.cie
-  br i1 %.not, label %bb.bbw, label %bb.bbd
+  br i1 %.not, label %8, label %bb.bbd
 
 bb.bbd:                                           ; preds = %lean_dec.exit1953
   %i.cio = ptrtoint ptr %i.chp to i64
@@ -375,7 +375,13 @@ bb.bbv:                                           ; preds = %lean_dec_ref_known.
   store ptr %i.cjj, ptr %i.cjm, align 8, !tbaa !12
   br label %lean_dec_ref_known.exit2381
 
-bb.bbw:                                           ; preds = %lean_dec.exit1953
+8:                                                ; preds = %lean_dec.exit1953
+  %9 = ptrtoint ptr %i.cie to i64
+  %10 = and i64 %9, 1
+  %.not.i1949 = icmp eq i64 %10, 0
+  br i1 %.not.i1949, label %bb.bbw, label %lean_dec.exit
+
+bb.bbw:                                           ; preds = %8
   %i.cjn = load i32, ptr %i.cie, align 4, !tbaa !10 ; 3 uses
   %i.cjo = icmp sgt i32 %i.cjn, 1
   br i1 %i.cjo, label %bb.bbx, label %bb.bby, !prof !13
@@ -393,7 +399,7 @@ bb.bbz:                                           ; preds = %bb.bby
   tail call void @lean_dec_ref_cold(ptr noundef nonnull %i.cie) #7
   br label %lean_dec.exit
 
-lean_dec.exit:                                    ; preds = %bb.bbx, %bb.bby, %bb.bbz
+lean_dec.exit:                                    ; preds = %bb.bbx, %bb.bby, %bb.bbz, %8
   br i1 %i.cif, label %bb.bca, label %bb.bcb
 
 bb.bca:                                           ; preds = %lean_dec.exit

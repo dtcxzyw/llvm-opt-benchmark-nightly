@@ -204,27 +204,29 @@ bb.b:                                             ; preds = %.lr.ph
 
 bb.c:                                             ; preds = %bb.b
   %i.r = getelementptr i8, ptr %i.h, i64 64
-  %.val40 = load ptr, ptr %i.r, align 8, !tbaa !32
+  %.val40 = load ptr, ptr %i.r, align 8, !tbaa !32 ; 2 uses
   %.not52 = icmp eq ptr %.val40, inttoptr (i64 1 to ptr)
   br i1 %.not52, label %bb.e, label %bb.h
 
 bb.d:                                             ; preds = %bb.b
   %i.s = getelementptr i8, ptr %i.h, i64 64
-  %.val41 = load ptr, ptr %i.s, align 8, !tbaa !32
+  %.val41 = load ptr, ptr %i.s, align 8, !tbaa !32 ; 2 uses
   %.not51 = icmp eq ptr %.val41, inttoptr (i64 2 to ptr)
   br i1 %.not51, label %bb.e, label %bb.h
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %.val42 = phi i32 [ 2, %bb.d ], [ 1, %bb.c ]
+  %.val42 = phi ptr [ %.val41, %bb.d ], [ %.val40, %bb.c ]
   %i.t = icmp eq ptr %.02555, null
   br i1 %i.t, label %bb.j, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
+  %1 = ptrtoint ptr %.val42 to i64
+  %2 = trunc nuw nsw i64 %1 to i32
   %i.u = getelementptr i8, ptr %.02555, i64 64
   %.025.val = load ptr, ptr %i.u, align 8, !tbaa !32
   %i.v = ptrtoint ptr %.025.val to i64
   %i.w = trunc i64 %i.v to i32
-  %.not31 = icmp eq i32 %.val42, %i.w
+  %.not31 = icmp eq i32 %2, %i.w
   %.025.val47 = load ptr, ptr %.02555, align 8, !tbaa !41
   %i.x = getelementptr i8, ptr %.02555, i64 48
   %.025.val48 = load ptr, ptr %i.x, align 8, !tbaa !93

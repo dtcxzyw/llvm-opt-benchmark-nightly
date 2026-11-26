@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %.lr.ph42
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE9push_backERKS2_.exit
   %i.ad = phi ptr [ %i.r, %.lr.ph.preheader ], [ %i.ba, %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE9push_backERKS2_.exit ] ; 3 uses
-  %i.ae = phi ptr [ %i.s, %.lr.ph.preheader ], [ %i.bb, %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE9push_backERKS2_.exit ] ; 4 uses
+  %i.ae = phi ptr [ %i.s, %.lr.ph.preheader ], [ %i.bb, %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE9push_backERKS2_.exit ] ; 5 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE9push_backERKS2_.exit ] ; 3 uses
   %i.af = phi ptr [ %.promoted, %.lr.ph.preheader ], [ %i.bc, %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE9push_backERKS2_.exit ] ; 8 uses
   %i.ag = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv
@@ -223,9 +223,9 @@ bb.d:                                             ; preds = %.lr.ph
   br label %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE9push_backERKS2_.exit
 
 bb.e:                                             ; preds = %.lr.ph
-  %i.al = ptrtoint ptr %i.ad to i64
-  %i.am = ptrtoint ptr %i.af to i64
-  %i.an = sub i64 %i.al, %i.am                    ; 6 uses
+  %i.al = ptrtoint ptr %i.ae to i64
+  %i.am = ptrtoint ptr %i.af to i64               ; 2 uses
+  %i.an = sub i64 %i.al, %i.am                    ; 5 uses
   %i.ao = icmp eq i64 %i.an, 9223372036854775792
   br i1 %i.ao, label %bb.f, label %_ZNKSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE12_M_check_lenEmPKc.exit.i.i
 
@@ -268,7 +268,9 @@ _ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE11_S_relocateEPS2_S5_S5_RS
   br i1 %.not.i17.i.i, label %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i, label %bb.h
 
 bb.h:                                             ; preds = %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i
-  call void @_ZdlPvm(ptr noundef nonnull %i.af, i64 noundef %i.an) #18
+  %4 = ptrtoint ptr %i.ad to i64
+  %5 = sub i64 %4, %i.am
+  call void @_ZdlPvm(ptr noundef nonnull %i.af, i64 noundef %5) #18
   br label %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i
 
 _ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i: ; preds = %bb.h, %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i
@@ -652,8 +654,8 @@ bb.k:                                             ; preds = %bb.j, %.lr.ph218
 .lr.ph207:                                        ; preds = %.lr.ph207.preheader, %_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EE9push_backERKS2_.exit
   %indvars.iv = phi i64 [ 0, %.lr.ph207.preheader ], [ %indvars.iv.next, %_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EE9push_backERKS2_.exit ] ; 3 uses
   %.sroa.0121.3205 = phi ptr [ %.sroa.0121.2215, %.lr.ph207.preheader ], [ %.sroa.0121.8, %_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EE9push_backERKS2_.exit ] ; 7 uses
-  %.sroa.21.3204 = phi ptr [ %.sroa.21.2214, %.lr.ph207.preheader ], [ %.sroa.21.6, %_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EE9push_backERKS2_.exit ] ; 8 uses
-  %.sroa.31.3203 = phi ptr [ %.sroa.31.2213, %.lr.ph207.preheader ], [ %.sroa.31.8, %_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EE9push_backERKS2_.exit ] ; 2 uses
+  %.sroa.21.3204 = phi ptr [ %.sroa.21.2214, %.lr.ph207.preheader ], [ %.sroa.21.6, %_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EE9push_backERKS2_.exit ] ; 7 uses
+  %.sroa.31.3203 = phi ptr [ %.sroa.31.2213, %.lr.ph207.preheader ], [ %.sroa.31.8, %_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EE9push_backERKS2_.exit ] ; 4 uses
   %i.dt = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv
   %i.du = load double, ptr %i.dt, align 8, !tbaa !29 ; 2 uses
   %i.dv = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv
@@ -671,8 +673,8 @@ bb.l:                                             ; preds = %.lr.ph207
 
 bb.m:                                             ; preds = %.lr.ph207
   %i.dx = ptrtoint ptr %.sroa.21.3204 to i64
-  %i.dy = ptrtoint ptr %.sroa.0121.3205 to i64
-  %i.dz = sub i64 %i.dx, %i.dy                    ; 6 uses
+  %i.dy = ptrtoint ptr %.sroa.0121.3205 to i64    ; 2 uses
+  %i.dz = sub i64 %i.dx, %i.dy                    ; 5 uses
   %i.ea = icmp eq i64 %i.dz, 9223372036854775792
   br i1 %i.ea, label %bb.n, label %_ZNKSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EE12_M_check_lenEmPKc.exit.i.i
 
@@ -716,7 +718,9 @@ _ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EE11_S_reloc
   br i1 %.not.i21.i.i, label %_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i, label %bb.p
 
 bb.p:                                             ; preds = %_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit20.i.i
-  call void @_ZdlPvm(ptr noundef nonnull %.sroa.0121.3205, i64 noundef %i.dz) #18
+  %1 = ptrtoint ptr %.sroa.31.3203 to i64
+  %2 = sub i64 %1, %i.dy
+  call void @_ZdlPvm(ptr noundef nonnull %.sroa.0121.3205, i64 noundef %2) #18
   br label %_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i
 
 _ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i: ; preds = %bb.p, %_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit20.i.i
@@ -872,7 +876,7 @@ _ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EE5clearEv.e
   br label %bb.z
 
 bb.y:                                             ; preds = %.loopexit.split-lp135.loopexit.split-lp, %bb.k, %bb.s
-  %.sroa.31.5 = phi ptr [ %.sroa.31.1.lcssa, %bb.s ], [ %.sroa.31.2213, %bb.k ], [ %.sroa.21.3204, %.loopexit.split-lp135.loopexit.split-lp ]
+  %.sroa.31.5 = phi ptr [ %.sroa.31.1.lcssa, %bb.s ], [ %.sroa.31.2213, %bb.k ], [ %.sroa.31.3203, %.loopexit.split-lp135.loopexit.split-lp ]
   %.sroa.0121.5 = phi ptr [ %.sroa.0121.1.lcssa, %bb.s ], [ %.sroa.0121.2215, %bb.k ], [ %.sroa.0121.3205, %.loopexit.split-lp135.loopexit.split-lp ]
   %.pn.pn = phi { ptr, i32 } [ %i.fc, %bb.s ], [ %i.ds, %bb.k ], [ %lpad.loopexit.split-lp395, %.loopexit.split-lp135.loopexit.split-lp ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #17

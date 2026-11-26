@@ -204,8 +204,8 @@ _ZNSt13unordered_mapIP11ggml_tensorSt6vectorIS1_SaIS1_EESt4hashIS1_ESt8equal_toI
   %i.y = getelementptr inbounds nuw i8, ptr %.pn.i.i.i, i64 24 ; 3 uses
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !148  ; 6 uses
   %i.aa = ptrtoint ptr %i.z to i64                ; 2 uses
-  %i.ab = ptrtoint ptr %i.x to i64
-  %i.ac = sub i64 %i.aa, %i.ab                    ; 9 uses
+  %i.ab = ptrtoint ptr %i.x to i64                ; 2 uses
+  %i.ac = sub i64 %i.aa, %i.ab                    ; 8 uses
   %i.ad = ashr i64 %i.ac, 5                       ; 2 uses
   %i.ae = icmp sgt i64 %i.ad, 0
   br i1 %i.ae, label %.lr.ph.i.i.i.i, label %._crit_edge.i.i.i.i
@@ -306,7 +306,7 @@ _ZSt4findIN9__gnu_cxx17__normal_iteratorIPP11ggml_tensorSt6vectorIS3_SaIS3_EEEES
 
 _ZSt4findIN9__gnu_cxx17__normal_iteratorIPP11ggml_tensorSt6vectorIS3_SaIS3_EEEES3_ET_S9_S9_RKT0_.exit.thread.i: ; preds = %_ZSt4findIN9__gnu_cxx17__normal_iteratorIPP11ggml_tensorSt6vectorIS3_SaIS3_EEEES3_ET_S9_S9_RKT0_.exit.i, %._crit_edge.i.i.i.i
   %i.bh = getelementptr inbounds nuw i8, ptr %.pn.i.i.i, i64 32 ; 2 uses
-  %i.bi = load ptr, ptr %i.bh, align 8, !tbaa !163
+  %i.bi = load ptr, ptr %i.bh, align 8, !tbaa !163 ; 2 uses
   %.not.i.i = icmp eq ptr %i.z, %i.bi
   br i1 %.not.i.i, label %bb.o, label %bb.n
 
@@ -350,7 +350,9 @@ _ZNSt6vectorIP11ggml_tensorSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i.i: ; 
   br i1 %.not.i17.i.i.i, label %_ZNSt6vectorIP11ggml_tensorSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i, label %bb.r
 
 bb.r:                                             ; preds = %_ZNSt6vectorIP11ggml_tensorSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.x, i64 noundef %i.ac) #26
+  %4 = ptrtoint ptr %i.bi to i64
+  %5 = sub i64 %4, %i.ab
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.x, i64 noundef %5) #26
   br label %_ZNSt6vectorIP11ggml_tensorSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIP11ggml_tensorSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i: ; preds = %bb.r, %_ZNSt6vectorIP11ggml_tensorSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i.i

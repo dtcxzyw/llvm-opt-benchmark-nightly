@@ -205,8 +205,8 @@ bb.a:
   %i.h = ashr exact i64 %i.g, 2
   %i.i = tail call noundef ptr @wmemchr(ptr noundef %i.b, i32 noundef signext %1, i64 noundef %i.h) #40 ; 2 uses
   %.not.not.i.i.i = icmp eq ptr %i.i, null
-  %spec.select.i.i.i = select i1 %.not.not.i.i.i, ptr %i.d, ptr %i.i ; 3 uses
-  %i.j = load ptr, ptr %i.c, align 8, !tbaa !477  ; 3 uses
+  %spec.select.i.i.i = select i1 %.not.not.i.i.i, ptr %i.d, ptr %i.i ; 2 uses
+  %i.j = load ptr, ptr %i.c, align 8, !tbaa !477  ; 4 uses
   %.not = icmp eq ptr %spec.select.i.i.i, %i.j
   br i1 %.not, label %bb.b, label %bb.h
 
@@ -223,7 +223,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   %i.o = load ptr, ptr %i.a, align 8, !tbaa !479
-  %i.p = ptrtoint ptr %spec.select.i.i.i to i64   ; 2 uses
+  %i.p = ptrtoint ptr %i.j to i64                 ; 2 uses
   %i.q = ptrtoint ptr %i.o to i64                 ; 3 uses
   %i.r = sub i64 %i.p, %i.q                       ; 2 uses
   %i.s = ashr exact i64 %i.r, 2
@@ -276,7 +276,7 @@ _ZNSt3__119__allocate_at_leastB8ne180100INS_9allocatorIjEEEENS_19__allocation_re
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.preheader
   %i.ao = add i64 %i.q, %i.ah
-  %i.ap = add i64 %i.p, %i.ac
+  %i.ap = add i64 %i.ac, %i.p
   %i.aq = sub i64 %i.ap, %i.ao
   %diff.check = icmp ugt i64 %i.aq, -32
   br i1 %diff.check, label %.lr.ph.i.i.i.i.i.i.i.i.i.preheader11, label %vector.ph
@@ -679,7 +679,7 @@ middle.block:                                     ; preds = %vector.body
 bb.k:                                             ; preds = %bb.f
   %i.ce = sdiv i64 %3, 2                          ; 6 uses
   %i.cf = getelementptr inbounds [4 x i8], ptr %0, i64 %i.ce ; 17 uses
-  %i.cg = ptrtoint ptr %i.cf to i64               ; 3 uses
+  %i.cg = ptrtoint ptr %i.cf to i64               ; 2 uses
   %i.ch = getelementptr inbounds i8, ptr %i.cf, i64 -4 ; 2 uses
   %i.ci = getelementptr i8, ptr %i.cf, i64 -2
   %.val58133 = load i16, ptr %i.ci, align 2, !tbaa !548 ; 2 uses
@@ -790,14 +790,15 @@ bb.r:                                             ; preds = %.loopexit
   br i1 %i.eg, label %_ZNSt3__18__rotateB8ne180100INS_17_ClassicAlgPolicyENS_11__wrap_iterIPN8Box_ipma19PropertyAssociationEEES6_EENS_4pairIT0_S8_EES8_S8_T1_.exit, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.eh = getelementptr inbounds nuw i8, ptr %.sroa.016.0, i64 4 ; 2 uses
+  %i.eh = getelementptr inbounds nuw i8, ptr %.sroa.016.0, i64 4 ; 3 uses
   %i.ei = icmp eq ptr %i.eh, %i.cf
   br i1 %i.ei, label %_ZNSt3__113__rotate_leftB8ne180100INS_17_ClassicAlgPolicyENS_11__wrap_iterIPN8Box_ipma19PropertyAssociationEEEEET0_S7_S7_.exit.i.i, label %bb.t
 
 _ZNSt3__113__rotate_leftB8ne180100INS_17_ClassicAlgPolicyENS_11__wrap_iterIPN8Box_ipma19PropertyAssociationEEEEET0_S7_S7_.exit.i.i: ; preds = %bb.s
   %i.ej = load i32, ptr %.sroa.016.0, align 2
   %i.ek = ptrtoint ptr %.sroa.0.0 to i64
-  %i.el = sub i64 %i.ek, %i.cg                    ; 2 uses
+  %6 = ptrtoint ptr %i.eh to i64
+  %i.el = sub i64 %i.ek, %6                       ; 2 uses
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 2 %.sroa.016.0, ptr nonnull align 2 %i.eh, i64 %i.el, i1 false)
   %i.em = getelementptr inbounds nuw i8, ptr %.sroa.016.0, i64 %i.el ; 2 uses
   store i32 %i.ej, ptr %i.em, align 2

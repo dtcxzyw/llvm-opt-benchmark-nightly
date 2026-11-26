@@ -204,7 +204,7 @@ bb.ak:                                            ; preds = %bb.ai, %bb.aj
   %i.jd = xor i64 %i.jc, 1
   %i.je = inttoptr i64 %i.jd to ptr
   %.1515 = select i1 %.not605, ptr %.0514, ptr %i.jb ; 4 uses
-  %.1512 = select i1 %.not605, ptr %.0511, ptr %i.je ; 4 uses
+  %.1512 = select i1 %.not605, ptr %.0511, ptr %i.je ; 5 uses
   %i.jf = getelementptr inbounds nuw i8, ptr %i.ig, i64 4 ; 2 uses
   %i.jg = load i32, ptr %i.jf, align 4, !tbaa !37
   %i.jh = add i32 %i.jg, -1
@@ -386,10 +386,10 @@ bb.bd:                                            ; preds = %bb.bb, %bb.ak, %bb.
   %i.mr = add i32 %i.mq, -1
   store i32 %i.mr, ptr %i.mp, align 4, !tbaa !37
   %i.ms = icmp eq ptr %.0508, %.1512
-  %3 = ptrtoint ptr %.0508 to i64                 ; 3 uses
   br i1 %i.ms, label %bb.be, label %bb.bf
 
 bb.be:                                            ; preds = %bb.bd
+  %3 = ptrtoint ptr %.1512 to i64
   %i.mt = and i64 %3, -2
   %i.mu = inttoptr i64 %i.mt to ptr
   %i.mv = getelementptr inbounds nuw i8, ptr %i.mu, i64 4 ; 2 uses
@@ -399,9 +399,10 @@ bb.be:                                            ; preds = %bb.bd
   br label %bb.bz
 
 bb.bf:                                            ; preds = %bb.bd
-  %i.my = and i64 %3, 1
+  %4 = ptrtoint ptr %.0508 to i64                 ; 2 uses
+  %i.my = and i64 %4, 1
   %.not610 = icmp eq i64 %i.my, 0                 ; 3 uses
-  %i.mz = and i64 %3, -2
+  %i.mz = and i64 %4, -2
   %i.na = inttoptr i64 %i.mz to ptr
   %i.nb = ptrtoint ptr %.1512 to i64
   %i.nc = xor i64 %i.nb, 1

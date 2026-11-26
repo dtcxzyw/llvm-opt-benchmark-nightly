@@ -204,21 +204,29 @@ bb.f:                                             ; preds = %bb.d
   br label %lv_obj_get_style_prop.exit77
 
 lv_obj_get_style_prop.exit77:                     ; preds = %bb.e, %bb.f
-  %.sroa.0.0.i75 = phi ptr [ %.sroa.0.0.copyload.i74, %bb.e ], [ %i.q, %bb.f ] ; 5 uses
+  %.sroa.0.0.i75 = phi ptr [ %.sroa.0.0.copyload.i74, %bb.e ], [ %i.q, %bb.f ] ; 6 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #10
   %i.r = load i32, ptr %i.a, align 2
   %i.s = and i32 %i.r, -9
   store i32 %i.s, ptr %i.a, align 2
   %i.t = icmp eq ptr %.sroa.0.0.i, %.sroa.0.0.i75
-  br i1 %i.t, label %bb.g, label %bb.h
+  br i1 %i.t, label %9, label %bb.h
 
-bb.g:                                             ; preds = %lv_obj_get_style_prop.exit77
-  %9 = ptrtoint ptr %.sroa.0.0.i to i64
-  %.sroa.019.0.extract.trunc26.a = trunc i64 %9 to i24 ; 2 uses
-  %i.u = tail call zeroext i1 @lv_color_eq(i24 %.sroa.019.0.extract.trunc26.a, i24 %.sroa.019.0.extract.trunc26.a) #10
+9:                                                ; preds = %lv_obj_get_style_prop.exit77
+  %10 = ptrtoint ptr %.sroa.0.0.i to i64          ; 2 uses
+  %.sroa.019.0.extract.trunc = trunc i64 %10 to i32
+  %11 = ptrtoint ptr %.sroa.0.0.i75 to i64        ; 2 uses
+  %.sroa.012.0.extract.trunc = trunc i64 %11 to i32
+  %12 = icmp eq i32 %.sroa.019.0.extract.trunc, %.sroa.012.0.extract.trunc
+  br i1 %12, label %bb.g, label %bb.h
+
+bb.g:                                             ; preds = %9
+  %.sroa.019.0.extract.trunc26 = trunc i64 %10 to i24
+  %.sroa.019.0.extract.trunc26.a = trunc i64 %11 to i24
+  %i.u = tail call zeroext i1 @lv_color_eq(i24 %.sroa.019.0.extract.trunc26, i24 %.sroa.019.0.extract.trunc26.a) #10
   br i1 %i.u, label %bb.r, label %bb.h
 
-bb.h:                                             ; preds = %lv_obj_get_style_prop.exit77, %bb.g
+bb.h:                                             ; preds = %lv_obj_get_style_prop.exit77, %9, %bb.g
   store i16 %i.d, ptr %i.e, align 4, !tbaa !61
   %i.v = load i8, ptr %i.f, align 8, !tbaa !115   ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #10

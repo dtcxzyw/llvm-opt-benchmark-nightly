@@ -203,7 +203,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 10 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 7 uses
   store ptr %i.a, ptr %i.b, align 8
-  %i.c = ptrtoint ptr %i.a to i64                 ; 2 uses
+  %i.c = ptrtoint ptr %i.a to i64                 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 144
   br label %bb.b
 
@@ -273,12 +273,15 @@ bb.j:                                             ; preds = %bb.i, %bb.b
   br i1 %i.z, label %bb.r, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.aa = load ptr, ptr %i.b, align 8             ; 2 uses
+  %i.aa = load ptr, ptr %i.b, align 8             ; 3 uses
   %i.ab = icmp eq ptr %i.aa, %i.d
   br i1 %i.ab, label %bb.l, label %bb.q
 
 bb.l:                                             ; preds = %bb.k
-  %i.ac = call noalias dereferenceable_or_null(129) ptr @GC_malloc_atomic(i64 noundef 129) #15 ; 4 uses
+  %2 = ptrtoint ptr %i.aa to i64
+  %3 = sub i64 %2, %i.c                           ; 4 uses
+  %4 = add i64 %3, 1
+  %i.ac = call noalias ptr @GC_malloc_atomic(i64 noundef %4) #15 ; 4 uses
   %i.ad = icmp eq ptr %i.ac, null
   br i1 %i.ad, label %bb.m, label %bb.p
 
@@ -298,11 +301,11 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   unreachable
 
 bb.p:                                             ; preds = %bb.l
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(128) %i.ac, ptr noundef nonnull align 16 dereferenceable(128) %i.a, i64 128, i1 false)
-  %i.ah = getelementptr inbounds nuw i8, ptr %i.ac, i64 128
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ac, ptr nonnull align 16 %i.a, i64 %3, i1 false)
+  %i.ah = getelementptr inbounds nuw i8, ptr %i.ac, i64 %3
   store i8 0, ptr %i.ah, align 1
   %i.ai = load ptr, ptr %1, align 16
-  %i.aj = call ptr @CORD_cat_char_star(ptr noundef %i.ai, ptr noundef nonnull %i.ac, i64 noundef 128) #14
+  %i.aj = call ptr @CORD_cat_char_star(ptr noundef %i.ai, ptr noundef nonnull %i.ac, i64 noundef %3) #14
   store ptr %i.aj, ptr %1, align 16
   br label %bb.q
 

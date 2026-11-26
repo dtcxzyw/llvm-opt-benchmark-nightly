@@ -204,7 +204,7 @@ _ZSt3getISt6vectorIN4bzla4TypeESaIS2_EEJmSt4pairImmES4_St8optionalINSt7__cxx1112
   %.077 = phi i64 [ %i.av, %_ZNSt6vectorIPN4bzla4type8TypeDataESaIS3_EE9push_backERKS3_.exit ], [ 0, %.lr.ph.preheader ] ; 2 uses
   %.sroa.034.176 = phi ptr [ %.sroa.034.2, %_ZNSt6vectorIPN4bzla4type8TypeDataESaIS3_EE9push_backERKS3_.exit ], [ %.sroa.034.0, %.lr.ph.preheader ] ; 6 uses
   %.sroa.19.175 = phi ptr [ %.sroa.19.2, %_ZNSt6vectorIPN4bzla4type8TypeDataESaIS3_EE9push_backERKS3_.exit ], [ %.sroa.19.0, %.lr.ph.preheader ] ; 5 uses
-  %.sroa.11.174 = phi ptr [ %.sroa.11.2, %_ZNSt6vectorIPN4bzla4type8TypeDataESaIS3_EE9push_backERKS3_.exit ], [ %i.g, %.lr.ph.preheader ] ; 4 uses
+  %.sroa.11.174 = phi ptr [ %.sroa.11.2, %_ZNSt6vectorIPN4bzla4type8TypeDataESaIS3_EE9push_backERKS3_.exit ], [ %i.g, %.lr.ph.preheader ] ; 5 uses
   %i.y = load ptr, ptr %i.m, align 8, !tbaa !52
   %i.z = getelementptr inbounds nuw [8 x i8], ptr %i.y, i64 %.077 ; 2 uses
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !50  ; 3 uses
@@ -226,9 +226,9 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZNSt6vectorIPN4bzla4type8TypeDataESaIS3_EE9push_backERKS3_.exit
 
 bb.g:                                             ; preds = %bb.e
-  %i.ag = ptrtoint ptr %.sroa.19.175 to i64
-  %i.ah = ptrtoint ptr %.sroa.034.176 to i64
-  %i.ai = sub i64 %i.ag, %i.ah                    ; 6 uses
+  %i.ag = ptrtoint ptr %.sroa.11.174 to i64
+  %i.ah = ptrtoint ptr %.sroa.034.176 to i64      ; 2 uses
+  %i.ai = sub i64 %i.ag, %i.ah                    ; 5 uses
   %i.aj = icmp eq i64 %i.ai, 9223372036854775800
   br i1 %i.aj, label %bb.h, label %_ZNKSt6vectorIPN4bzla4type8TypeDataESaIS3_EE12_M_check_lenEmPKc.exit.i.i
 
@@ -264,7 +264,9 @@ bb.i:                                             ; preds = %.noexc25
 
 _ZNSt6vectorIPN4bzla4type8TypeDataESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i: ; preds = %bb.i, %.noexc25
   %i.at = getelementptr inbounds nuw i8, ptr %i.ar, i64 8
-  call void @_ZdlPvm(ptr noundef nonnull %.sroa.034.176, i64 noundef %i.ai) #16
+  %2 = ptrtoint ptr %.sroa.19.175 to i64
+  %3 = sub i64 %2, %i.ah
+  call void @_ZdlPvm(ptr noundef nonnull %.sroa.034.176, i64 noundef %3) #16
   %i.au = getelementptr inbounds nuw [8 x i8], ptr %i.aq, i64 %i.ao
   br label %_ZNSt6vectorIPN4bzla4type8TypeDataESaIS3_EE9push_backERKS3_.exit
 
@@ -287,9 +289,9 @@ _ZNSt6vectorIPN4bzla4type8TypeDataESaIS3_EE9push_backERKS3_.exit: ; preds = %_ZN
 
 .loopexit:                                        ; preds = %.loopexit.loopexit, %_ZSt3getISt6vectorIN4bzla4TypeESaIS2_EEJmSt4pairImmES4_St8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEERT_RSt7variantIJDpT0_EE.exit, %bb.c
   %i.aw = phi ptr [ %.pre96, %bb.c ], [ %.pre96, %_ZSt3getISt6vectorIN4bzla4TypeESaIS2_EEJmSt4pairImmES4_St8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEERT_RSt7variantIJDpT0_EE.exit ], [ %.pre, %.loopexit.loopexit ]
-  %.sroa.11.3 = phi ptr [ %i.g, %bb.c ], [ %i.g, %_ZSt3getISt6vectorIN4bzla4TypeESaIS2_EEJmSt4pairImmES4_St8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEERT_RSt7variantIJDpT0_EE.exit ], [ %.sroa.11.2, %.loopexit.loopexit ] ; 3 uses
+  %.sroa.11.3 = phi ptr [ %i.g, %bb.c ], [ %i.g, %_ZSt3getISt6vectorIN4bzla4TypeESaIS2_EEJmSt4pairImmES4_St8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEERT_RSt7variantIJDpT0_EE.exit ], [ %.sroa.11.2, %.loopexit.loopexit ] ; 2 uses
   %.sroa.19.3 = phi ptr [ %.sroa.19.0, %bb.c ], [ %.sroa.19.0, %_ZSt3getISt6vectorIN4bzla4TypeESaIS2_EEJmSt4pairImmES4_St8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEERT_RSt7variantIJDpT0_EE.exit ], [ %.sroa.19.2, %.loopexit.loopexit ] ; 2 uses
-  %.sroa.034.3 = phi ptr [ %.sroa.034.0, %bb.c ], [ %.sroa.034.0, %_ZSt3getISt6vectorIN4bzla4TypeESaIS2_EEJmSt4pairImmES4_St8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEERT_RSt7variantIJDpT0_EE.exit ], [ %.sroa.034.2, %.loopexit.loopexit ] ; 3 uses
+  %.sroa.034.3 = phi ptr [ %.sroa.034.0, %bb.c ], [ %.sroa.034.0, %_ZSt3getISt6vectorIN4bzla4TypeESaIS2_EEJmSt4pairImmES4_St8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEERT_RSt7variantIJDpT0_EE.exit ], [ %.sroa.034.2, %.loopexit.loopexit ] ; 4 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 8
   %i.ay = load i64, ptr %i.ax, align 8, !tbaa !63
   %i.az = load ptr, ptr %i.f, align 8, !tbaa !25
@@ -313,7 +315,7 @@ _ZNSt6vectorIPN4bzla4type8TypeDataESaIS3_EED2Ev.exit: ; preds = %_ZNSt10unique_p
   store i8 0, ptr %i.b, align 8, !tbaa !85
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #17
   %i.be = ptrtoint ptr %.sroa.19.3 to i64
-  %i.bf = ptrtoint ptr %.sroa.11.3 to i64
+  %i.bf = ptrtoint ptr %.sroa.034.3 to i64
   %i.bg = sub i64 %i.be, %i.bf
   call void @_ZdlPvm(ptr noundef nonnull %.sroa.034.3, i64 noundef %i.bg) #16
   ret void

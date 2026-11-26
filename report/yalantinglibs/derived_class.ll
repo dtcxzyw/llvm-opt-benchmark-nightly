@@ -204,9 +204,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.h, label %_ZNSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE13shrink_to_fitEv.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.i = load ptr, ptr %1, align 8, !tbaa !32     ; 7 uses
+  %i.i = load ptr, ptr %1, align 8, !tbaa !32     ; 5 uses
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 7 uses
-  %i.k = load ptr, ptr %i.j, align 8, !tbaa !33   ; 2 uses
+  %i.k = load ptr, ptr %i.j, align 8, !tbaa !33   ; 3 uses
   %.not.i.i = icmp eq ptr %i.k, %i.i
   br i1 %.not.i.i, label %_ZNSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE5clearEv.exit, label %.lr.ph.i.i.i.i
 
@@ -234,6 +234,7 @@ _ZSt8_DestroyIPSt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_E
   br label %_ZNSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE5clearEv.exit
 
 _ZNSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE5clearEv.exit: ; preds = %_ZSt8_DestroyIPSt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EES5_EvT_S7_RSaIT0_E.exit.i.i, %bb.c
+  %2 = phi ptr [ %i.i, %_ZSt8_DestroyIPSt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EES5_EvT_S7_RSaIT0_E.exit.i.i ], [ %i.k, %bb.c ] ; 3 uses
   %i.q = phi ptr [ %.pr, %_ZSt8_DestroyIPSt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EES5_EvT_S7_RSaIT0_E.exit.i.i ], [ %i.i, %bb.c ] ; 7 uses
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 5 uses
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !34
@@ -245,11 +246,11 @@ _ZNSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EES
   br i1 %i.x, label %_ZNSt12_Vector_baseISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE11_M_allocateEm.exit.i, label %_ZNSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE7reserveEm.exit.preheader
 
 _ZNSt12_Vector_baseISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE11_M_allocateEm.exit.i: ; preds = %_ZNSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE5clearEv.exit
-  %i.y = ptrtoint ptr %i.i to i64                 ; 2 uses
+  %i.y = ptrtoint ptr %2 to i64                   ; 2 uses
   %i.z = sub i64 %i.y, %i.u
   %i.aa = shl nuw nsw i64 %.0.insert.ext, 3
   %i.ab = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.aa) #19 ; 6 uses
-  %.not10.i.i.i.i = icmp eq ptr %i.q, %i.i
+  %.not10.i.i.i.i = icmp eq ptr %i.q, %2
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit.i, label %.lr.ph.i.i.i.i16.preheader
 
 .lr.ph.i.i.i.i16.preheader:                       ; preds = %_ZNSt12_Vector_baseISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE11_M_allocateEm.exit.i
@@ -305,7 +306,7 @@ middle.block:                                     ; preds = %vector.body
   store ptr null, ptr %.0911.i.i.i.i, align 8, !tbaa !38, !alias.scope !210
   %i.ao = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i, i64 8 ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 8
-  %.not.i.i.i.i17 = icmp eq ptr %i.ao, %i.i
+  %.not.i.i.i.i17 = icmp eq ptr %i.ao, %2
   br i1 %.not.i.i.i.i17, label %_ZNSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit.i, label %.lr.ph.i.i.i.i16, !llvm.loop !199
 
 _ZNSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit.i: ; preds = %.lr.ph.i.i.i.i16, %middle.block, %_ZNSt12_Vector_baseISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE11_M_allocateEm.exit.i
@@ -330,7 +331,7 @@ _ZNSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EES
 _ZNSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE7reserveEm.exit: ; preds = %_ZNSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE7reserveEm.exit.preheader, %_ZN11struct_pack6detail8unpackerINS0_13memory_readerELm0ELb0EE15deserialize_oneILm1ELm18446744073709551615ELb1ELm0ESt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS7_EEEENS_8err_codeERT3_.exit.thread33
   %.037 = phi i64 [ %i.dh, %_ZN11struct_pack6detail8unpackerINS0_13memory_readerELm0ELb0EE15deserialize_oneILm1ELm18446744073709551615ELb1ELm0ESt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS7_EEEENS_8err_codeERT3_.exit.thread33 ], [ 0, %_ZNSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE7reserveEm.exit.preheader ]
   %i.as = load ptr, ptr %i.j, align 8, !tbaa !33  ; 7 uses
-  %i.at = load ptr, ptr %i.r, align 8, !tbaa !34  ; 2 uses
+  %i.at = load ptr, ptr %i.r, align 8, !tbaa !34  ; 3 uses
   %.not.i = icmp eq ptr %i.as, %i.at
   br i1 %.not.i, label %bb.f, label %bb.e
 
@@ -343,8 +344,8 @@ bb.e:                                             ; preds = %_ZNSt6vectorISt10un
 bb.f:                                             ; preds = %_ZNSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE7reserveEm.exit
   %i.av = load ptr, ptr %1, align 8, !tbaa !32    ; 10 uses
   %i.aw = ptrtoint ptr %i.as to i64               ; 2 uses
-  %i.ax = ptrtoint ptr %i.av to i64               ; 2 uses
-  %i.ay = sub i64 %i.aw, %i.ax                    ; 4 uses
+  %i.ax = ptrtoint ptr %i.av to i64               ; 3 uses
+  %i.ay = sub i64 %i.aw, %i.ax                    ; 3 uses
   %i.az = icmp eq i64 %i.ay, 9223372036854775800
   br i1 %i.az, label %bb.g, label %_ZNKSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i.i
 
@@ -441,7 +442,9 @@ _ZNSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EES
   br i1 %.not.i22.i.i, label %_ZNSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE17_M_realloc_insertIJEEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i, label %bb.h
 
 bb.h:                                             ; preds = %_ZNSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit21.i.i
-  call void @_ZdlPvm(ptr noundef nonnull %i.av, i64 noundef %i.ay) #20
+  %3 = ptrtoint ptr %i.at to i64
+  %4 = sub i64 %3, %i.ax
+  call void @_ZdlPvm(ptr noundef nonnull %i.av, i64 noundef %4) #20
   br label %_ZNSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE17_M_realloc_insertIJEEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i
 
 _ZNSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE17_M_realloc_insertIJEEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i: ; preds = %bb.h, %_ZNSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit21.i.i
@@ -844,9 +847,9 @@ bb.f:                                             ; preds = %_ZN11struct_pack6de
   br i1 %i.p, label %_ZNSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE13shrink_to_fitEv.exit, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.q = load ptr, ptr %1, align 8, !tbaa !32     ; 7 uses
+  %i.q = load ptr, ptr %1, align 8, !tbaa !32     ; 5 uses
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 7 uses
-  %i.s = load ptr, ptr %i.r, align 8, !tbaa !33   ; 2 uses
+  %i.s = load ptr, ptr %i.r, align 8, !tbaa !33   ; 3 uses
   %.not.i.i = icmp eq ptr %i.s, %i.q
   br i1 %.not.i.i, label %bb.h, label %.lr.ph.i.i.i.i
 
@@ -874,6 +877,7 @@ _ZSt8_DestroyIPSt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_E
   br label %bb.h
 
 bb.h:                                             ; preds = %_ZSt8_DestroyIPSt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EES5_EvT_S7_RSaIT0_E.exit.i.i, %bb.g
+  %2 = phi ptr [ %i.q, %_ZSt8_DestroyIPSt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EES5_EvT_S7_RSaIT0_E.exit.i.i ], [ %i.s, %bb.g ] ; 3 uses
   %i.y = phi ptr [ %.pr, %_ZSt8_DestroyIPSt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EES5_EvT_S7_RSaIT0_E.exit.i.i ], [ %i.q, %bb.g ] ; 7 uses
   %.sroa.speculated = tail call i64 @llvm.umin.i64(i64 %.038, i64 131072) ; 3 uses
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 5 uses
@@ -886,11 +890,11 @@ bb.h:                                             ; preds = %_ZSt8_DestroyIPSt10
   br i1 %i.af, label %_ZNSt12_Vector_baseISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE11_M_allocateEm.exit.i, label %_ZNSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE7reserveEm.exit
 
 _ZNSt12_Vector_baseISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE11_M_allocateEm.exit.i: ; preds = %bb.h
-  %i.ag = ptrtoint ptr %i.q to i64                ; 2 uses
+  %i.ag = ptrtoint ptr %2 to i64                  ; 2 uses
   %i.ah = sub i64 %i.ag, %i.ac
   %i.ai = shl nuw nsw i64 %.sroa.speculated, 3
   %i.aj = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ai) #19 ; 6 uses
-  %.not10.i.i.i.i = icmp eq ptr %i.y, %i.q
+  %.not10.i.i.i.i = icmp eq ptr %i.y, %2
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit.i, label %.lr.ph.i.i.i.i20.preheader
 
 .lr.ph.i.i.i.i20.preheader:                       ; preds = %_ZNSt12_Vector_baseISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE11_M_allocateEm.exit.i
@@ -946,7 +950,7 @@ middle.block:                                     ; preds = %vector.body
   store ptr null, ptr %.0911.i.i.i.i, align 8, !tbaa !38, !alias.scope !242
   %i.aw = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i, i64 8 ; 2 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 8
-  %.not.i.i.i.i21 = icmp eq ptr %i.aw, %i.q
+  %.not.i.i.i.i21 = icmp eq ptr %i.aw, %2
   br i1 %.not.i.i.i.i21, label %_ZNSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit.i, label %.lr.ph.i.i.i.i20, !llvm.loop !231
 
 _ZNSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit.i: ; preds = %.lr.ph.i.i.i.i20, %middle.block, %_ZNSt12_Vector_baseISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE11_M_allocateEm.exit.i
@@ -972,7 +976,7 @@ _ZNSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EES
 bb.j:                                             ; preds = %_ZNSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE7reserveEm.exit, %_ZN11struct_pack6detail8unpackerINS0_13memory_readerELm0ELb0EE15deserialize_oneILm2ELm18446744073709551615ELb1ELm0ESt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS7_EEEENS_8err_codeERT3_.exit.thread44
   %.047 = phi i64 [ 0, %_ZNSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE7reserveEm.exit ], [ %i.dq, %_ZN11struct_pack6detail8unpackerINS0_13memory_readerELm0ELb0EE15deserialize_oneILm2ELm18446744073709551615ELb1ELm0ESt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS7_EEEENS_8err_codeERT3_.exit.thread44 ]
   %i.bb = load ptr, ptr %i.r, align 8, !tbaa !33  ; 7 uses
-  %i.bc = load ptr, ptr %i.z, align 8, !tbaa !34  ; 2 uses
+  %i.bc = load ptr, ptr %i.z, align 8, !tbaa !34  ; 3 uses
   %.not.i = icmp eq ptr %i.bb, %i.bc
   br i1 %.not.i, label %bb.l, label %bb.k
 
@@ -985,8 +989,8 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.j
   %i.be = load ptr, ptr %1, align 8, !tbaa !32    ; 10 uses
   %i.bf = ptrtoint ptr %i.bb to i64               ; 2 uses
-  %i.bg = ptrtoint ptr %i.be to i64               ; 2 uses
-  %i.bh = sub i64 %i.bf, %i.bg                    ; 4 uses
+  %i.bg = ptrtoint ptr %i.be to i64               ; 3 uses
+  %i.bh = sub i64 %i.bf, %i.bg                    ; 3 uses
   %i.bi = icmp eq i64 %i.bh, 9223372036854775800
   br i1 %i.bi, label %bb.m, label %_ZNKSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i.i
 
@@ -1083,7 +1087,9 @@ _ZNSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EES
   br i1 %.not.i22.i.i, label %_ZNSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE17_M_realloc_insertIJEEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i, label %bb.n
 
 bb.n:                                             ; preds = %_ZNSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit21.i.i
-  call void @_ZdlPvm(ptr noundef nonnull %i.be, i64 noundef %i.bh) #20
+  %3 = ptrtoint ptr %i.bc to i64
+  %4 = sub i64 %3, %i.bg
+  call void @_ZdlPvm(ptr noundef nonnull %i.be, i64 noundef %4) #20
   br label %_ZNSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE17_M_realloc_insertIJEEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i
 
 _ZNSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE17_M_realloc_insertIJEEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i: ; preds = %bb.n, %_ZNSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit21.i.i
@@ -1486,9 +1492,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.h, label %_ZNSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE13shrink_to_fitEv.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.i = load ptr, ptr %1, align 8, !tbaa !62     ; 7 uses
+  %i.i = load ptr, ptr %1, align 8, !tbaa !62     ; 5 uses
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 7 uses
-  %i.k = load ptr, ptr %i.j, align 8, !tbaa !63   ; 2 uses
+  %i.k = load ptr, ptr %i.j, align 8, !tbaa !63   ; 3 uses
   %.not.i.i = icmp eq ptr %i.k, %i.i
   br i1 %.not.i.i, label %_ZNSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE5clearEv.exit, label %.lr.ph.i.i.i.i
 
@@ -1516,6 +1522,7 @@ _ZSt8_DestroyIPSt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EES5_EvT_
   br label %_ZNSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE5clearEv.exit
 
 _ZNSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE5clearEv.exit: ; preds = %_ZSt8_DestroyIPSt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EES5_EvT_S7_RSaIT0_E.exit.i.i, %bb.c
+  %2 = phi ptr [ %i.i, %_ZSt8_DestroyIPSt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EES5_EvT_S7_RSaIT0_E.exit.i.i ], [ %i.k, %bb.c ] ; 3 uses
   %i.q = phi ptr [ %.pr, %_ZSt8_DestroyIPSt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EES5_EvT_S7_RSaIT0_E.exit.i.i ], [ %i.i, %bb.c ] ; 7 uses
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 5 uses
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !64
@@ -1527,11 +1534,11 @@ _ZNSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE5
   br i1 %i.x, label %_ZNSt12_Vector_baseISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE11_M_allocateEm.exit.i, label %_ZNSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE7reserveEm.exit.preheader
 
 _ZNSt12_Vector_baseISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE11_M_allocateEm.exit.i: ; preds = %_ZNSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE5clearEv.exit
-  %i.y = ptrtoint ptr %i.i to i64                 ; 2 uses
+  %i.y = ptrtoint ptr %2 to i64                   ; 2 uses
   %i.z = sub i64 %i.y, %i.u
   %i.aa = shl nuw nsw i64 %.0.insert.ext, 3
   %i.ab = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.aa) #19 ; 6 uses
-  %.not10.i.i.i.i = icmp eq ptr %i.q, %i.i
+  %.not10.i.i.i.i = icmp eq ptr %i.q, %2
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit.i, label %.lr.ph.i.i.i.i16.preheader
 
 .lr.ph.i.i.i.i16.preheader:                       ; preds = %_ZNSt12_Vector_baseISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE11_M_allocateEm.exit.i
@@ -1587,7 +1594,7 @@ middle.block:                                     ; preds = %vector.body
   store ptr null, ptr %.0911.i.i.i.i, align 8, !tbaa !65, !alias.scope !273
   %i.ao = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i, i64 8 ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 8
-  %.not.i.i.i.i17 = icmp eq ptr %i.ao, %i.i
+  %.not.i.i.i.i17 = icmp eq ptr %i.ao, %2
   br i1 %.not.i.i.i.i17, label %_ZNSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit.i, label %.lr.ph.i.i.i.i16, !llvm.loop !262
 
 _ZNSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit.i: ; preds = %.lr.ph.i.i.i.i16, %middle.block, %_ZNSt12_Vector_baseISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE11_M_allocateEm.exit.i
@@ -1612,7 +1619,7 @@ _ZNSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE7
 _ZNSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE7reserveEm.exit: ; preds = %_ZNSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE7reserveEm.exit.preheader, %_ZN11struct_pack6detail8unpackerINS0_13memory_readerELm0ELb0EE15deserialize_oneILm1ELm18446744073709551615ELb1ELm0ESt10unique_ptrIN10base_class4baseESt14default_deleteIS7_EEEENS_8err_codeERT3_.exit.thread33
   %.037 = phi i64 [ %i.dh, %_ZN11struct_pack6detail8unpackerINS0_13memory_readerELm0ELb0EE15deserialize_oneILm1ELm18446744073709551615ELb1ELm0ESt10unique_ptrIN10base_class4baseESt14default_deleteIS7_EEEENS_8err_codeERT3_.exit.thread33 ], [ 0, %_ZNSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE7reserveEm.exit.preheader ]
   %i.as = load ptr, ptr %i.j, align 8, !tbaa !63  ; 7 uses
-  %i.at = load ptr, ptr %i.r, align 8, !tbaa !64  ; 2 uses
+  %i.at = load ptr, ptr %i.r, align 8, !tbaa !64  ; 3 uses
   %.not.i = icmp eq ptr %i.as, %i.at
   br i1 %.not.i, label %bb.f, label %bb.e
 
@@ -1625,8 +1632,8 @@ bb.e:                                             ; preds = %_ZNSt6vectorISt10un
 bb.f:                                             ; preds = %_ZNSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE7reserveEm.exit
   %i.av = load ptr, ptr %1, align 8, !tbaa !62    ; 10 uses
   %i.aw = ptrtoint ptr %i.as to i64               ; 2 uses
-  %i.ax = ptrtoint ptr %i.av to i64               ; 2 uses
-  %i.ay = sub i64 %i.aw, %i.ax                    ; 4 uses
+  %i.ax = ptrtoint ptr %i.av to i64               ; 3 uses
+  %i.ay = sub i64 %i.aw, %i.ax                    ; 3 uses
   %i.az = icmp eq i64 %i.ay, 9223372036854775800
   br i1 %i.az, label %bb.g, label %_ZNKSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i.i
 
@@ -1723,7 +1730,9 @@ _ZNSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE1
   br i1 %.not.i22.i.i, label %_ZNSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE17_M_realloc_insertIJEEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i, label %bb.h
 
 bb.h:                                             ; preds = %_ZNSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit21.i.i
-  call void @_ZdlPvm(ptr noundef nonnull %i.av, i64 noundef %i.ay) #20
+  %3 = ptrtoint ptr %i.at to i64
+  %4 = sub i64 %3, %i.ax
+  call void @_ZdlPvm(ptr noundef nonnull %i.av, i64 noundef %4) #20
   br label %_ZNSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE17_M_realloc_insertIJEEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i
 
 _ZNSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE17_M_realloc_insertIJEEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i: ; preds = %bb.h, %_ZNSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit21.i.i
@@ -2126,9 +2135,9 @@ bb.f:                                             ; preds = %_ZN11struct_pack6de
   br i1 %i.p, label %_ZNSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE13shrink_to_fitEv.exit, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.q = load ptr, ptr %1, align 8, !tbaa !62     ; 7 uses
+  %i.q = load ptr, ptr %1, align 8, !tbaa !62     ; 5 uses
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 7 uses
-  %i.s = load ptr, ptr %i.r, align 8, !tbaa !63   ; 2 uses
+  %i.s = load ptr, ptr %i.r, align 8, !tbaa !63   ; 3 uses
   %.not.i.i = icmp eq ptr %i.s, %i.q
   br i1 %.not.i.i, label %bb.h, label %.lr.ph.i.i.i.i
 
@@ -2156,6 +2165,7 @@ _ZSt8_DestroyIPSt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EES5_EvT_
   br label %bb.h
 
 bb.h:                                             ; preds = %_ZSt8_DestroyIPSt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EES5_EvT_S7_RSaIT0_E.exit.i.i, %bb.g
+  %2 = phi ptr [ %i.q, %_ZSt8_DestroyIPSt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EES5_EvT_S7_RSaIT0_E.exit.i.i ], [ %i.s, %bb.g ] ; 3 uses
   %i.y = phi ptr [ %.pr, %_ZSt8_DestroyIPSt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EES5_EvT_S7_RSaIT0_E.exit.i.i ], [ %i.q, %bb.g ] ; 7 uses
   %.sroa.speculated = tail call i64 @llvm.umin.i64(i64 %.038, i64 131072) ; 3 uses
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 5 uses
@@ -2168,11 +2178,11 @@ bb.h:                                             ; preds = %_ZSt8_DestroyIPSt10
   br i1 %i.af, label %_ZNSt12_Vector_baseISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE11_M_allocateEm.exit.i, label %_ZNSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE7reserveEm.exit
 
 _ZNSt12_Vector_baseISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE11_M_allocateEm.exit.i: ; preds = %bb.h
-  %i.ag = ptrtoint ptr %i.q to i64                ; 2 uses
+  %i.ag = ptrtoint ptr %2 to i64                  ; 2 uses
   %i.ah = sub i64 %i.ag, %i.ac
   %i.ai = shl nuw nsw i64 %.sroa.speculated, 3
   %i.aj = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ai) #19 ; 6 uses
-  %.not10.i.i.i.i = icmp eq ptr %i.y, %i.q
+  %.not10.i.i.i.i = icmp eq ptr %i.y, %2
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit.i, label %.lr.ph.i.i.i.i20.preheader
 
 .lr.ph.i.i.i.i20.preheader:                       ; preds = %_ZNSt12_Vector_baseISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE11_M_allocateEm.exit.i
@@ -2228,7 +2238,7 @@ middle.block:                                     ; preds = %vector.body
   store ptr null, ptr %.0911.i.i.i.i, align 8, !tbaa !65, !alias.scope !308
   %i.aw = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i, i64 8 ; 2 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 8
-  %.not.i.i.i.i21 = icmp eq ptr %i.aw, %i.q
+  %.not.i.i.i.i21 = icmp eq ptr %i.aw, %2
   br i1 %.not.i.i.i.i21, label %_ZNSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit.i, label %.lr.ph.i.i.i.i20, !llvm.loop !297
 
 _ZNSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit.i: ; preds = %.lr.ph.i.i.i.i20, %middle.block, %_ZNSt12_Vector_baseISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE11_M_allocateEm.exit.i
@@ -2254,7 +2264,7 @@ _ZNSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE7
 bb.j:                                             ; preds = %_ZNSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE7reserveEm.exit, %_ZN11struct_pack6detail8unpackerINS0_13memory_readerELm0ELb0EE15deserialize_oneILm2ELm18446744073709551615ELb1ELm0ESt10unique_ptrIN10base_class4baseESt14default_deleteIS7_EEEENS_8err_codeERT3_.exit.thread44
   %.047 = phi i64 [ 0, %_ZNSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE7reserveEm.exit ], [ %i.dq, %_ZN11struct_pack6detail8unpackerINS0_13memory_readerELm0ELb0EE15deserialize_oneILm2ELm18446744073709551615ELb1ELm0ESt10unique_ptrIN10base_class4baseESt14default_deleteIS7_EEEENS_8err_codeERT3_.exit.thread44 ]
   %i.bb = load ptr, ptr %i.r, align 8, !tbaa !63  ; 7 uses
-  %i.bc = load ptr, ptr %i.z, align 8, !tbaa !64  ; 2 uses
+  %i.bc = load ptr, ptr %i.z, align 8, !tbaa !64  ; 3 uses
   %.not.i = icmp eq ptr %i.bb, %i.bc
   br i1 %.not.i, label %bb.l, label %bb.k
 
@@ -2267,8 +2277,8 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.j
   %i.be = load ptr, ptr %1, align 8, !tbaa !62    ; 10 uses
   %i.bf = ptrtoint ptr %i.bb to i64               ; 2 uses
-  %i.bg = ptrtoint ptr %i.be to i64               ; 2 uses
-  %i.bh = sub i64 %i.bf, %i.bg                    ; 4 uses
+  %i.bg = ptrtoint ptr %i.be to i64               ; 3 uses
+  %i.bh = sub i64 %i.bf, %i.bg                    ; 3 uses
   %i.bi = icmp eq i64 %i.bh, 9223372036854775800
   br i1 %i.bi, label %bb.m, label %_ZNKSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i.i
 
@@ -2365,7 +2375,9 @@ _ZNSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE1
   br i1 %.not.i22.i.i, label %_ZNSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE17_M_realloc_insertIJEEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i, label %bb.n
 
 bb.n:                                             ; preds = %_ZNSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit21.i.i
-  call void @_ZdlPvm(ptr noundef nonnull %i.be, i64 noundef %i.bh) #20
+  %3 = ptrtoint ptr %i.bc to i64
+  %4 = sub i64 %3, %i.bg
+  call void @_ZdlPvm(ptr noundef nonnull %i.be, i64 noundef %4) #20
   br label %_ZNSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE17_M_realloc_insertIJEEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i
 
 _ZNSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE17_M_realloc_insertIJEEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i: ; preds = %bb.n, %_ZNSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit21.i.i

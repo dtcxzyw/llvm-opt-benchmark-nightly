@@ -204,7 +204,7 @@ _ZNSt6vectorIN6openzl10visualizer5CodecESaIS2_EE9push_backEOS2_.exit: ; preds = 
   %i.dn = getelementptr inbounds nuw i8, ptr %i.dl, i64 344 ; 3 uses
   %i.do = load ptr, ptr %i.dn, align 8, !tbaa !85 ; 4 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %i.dl, i64 352 ; 2 uses
-  %i.dq = load ptr, ptr %i.dp, align 8, !tbaa !83
+  %i.dq = load ptr, ptr %i.dp, align 8, !tbaa !83 ; 2 uses
   %.not.i = icmp eq ptr %i.do, %i.dq
   br i1 %.not.i, label %bb.n, label %bb.m
 
@@ -218,8 +218,8 @@ bb.m:                                             ; preds = %_ZNSt6vectorIN6open
 bb.n:                                             ; preds = %_ZNSt6vectorIN6openzl10visualizer5CodecESaIS2_EE9push_backEOS2_.exit
   %i.dt = load ptr, ptr %i.dm, align 8, !tbaa !86 ; 4 uses
   %i.du = ptrtoint ptr %i.do to i64
-  %i.dv = ptrtoint ptr %i.dt to i64
-  %i.dw = sub i64 %i.du, %i.dv                    ; 6 uses
+  %i.dv = ptrtoint ptr %i.dt to i64               ; 2 uses
+  %i.dw = sub i64 %i.du, %i.dv                    ; 5 uses
   %i.dx = icmp eq i64 %i.dw, 9223372036854775804
   br i1 %i.dx, label %bb.o, label %_ZNKSt6vectorI9ZL_DataIDSaIS0_EE12_M_check_lenEmPKc.exit.i.i
 
@@ -260,7 +260,9 @@ _ZNSt6vectorI9ZL_DataIDSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit16.i.i: ; preds 
   br i1 %.not.i17.i.i, label %_ZNSt6vectorI9ZL_DataIDSaIS0_EE17_M_realloc_insertIJRKS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i, label %bb.q
 
 bb.q:                                             ; preds = %_ZNSt6vectorI9ZL_DataIDSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit16.i.i
-  call void @_ZdlPvm(ptr noundef nonnull %i.dt, i64 noundef %i.dw) #22
+  %7 = ptrtoint ptr %i.dq to i64
+  %8 = sub i64 %7, %i.dv
+  call void @_ZdlPvm(ptr noundef nonnull %i.dt, i64 noundef %8) #22
   %.pre23.pre = load i64, ptr %4, align 8, !tbaa !16
   br label %_ZNSt6vectorI9ZL_DataIDSaIS0_EE17_M_realloc_insertIJRKS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i
 
@@ -663,7 +665,7 @@ _ZNSt6vectorIN6openzl10visualizer5CodecESaIS2_EE9push_backEOS2_.exit: ; preds = 
   %i.dn = getelementptr inbounds nuw i8, ptr %i.dl, i64 320 ; 3 uses
   %i.do = load ptr, ptr %i.dn, align 8, !tbaa !85 ; 4 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %i.dl, i64 328 ; 2 uses
-  %i.dq = load ptr, ptr %i.dp, align 8, !tbaa !83
+  %i.dq = load ptr, ptr %i.dp, align 8, !tbaa !83 ; 2 uses
   %.not.i = icmp eq ptr %i.do, %i.dq
   br i1 %.not.i, label %bb.n, label %bb.m
 
@@ -677,8 +679,8 @@ bb.m:                                             ; preds = %_ZNSt6vectorIN6open
 bb.n:                                             ; preds = %_ZNSt6vectorIN6openzl10visualizer5CodecESaIS2_EE9push_backEOS2_.exit
   %i.dt = load ptr, ptr %i.dm, align 8, !tbaa !86 ; 4 uses
   %i.du = ptrtoint ptr %i.do to i64
-  %i.dv = ptrtoint ptr %i.dt to i64
-  %i.dw = sub i64 %i.du, %i.dv                    ; 6 uses
+  %i.dv = ptrtoint ptr %i.dt to i64               ; 2 uses
+  %i.dw = sub i64 %i.du, %i.dv                    ; 5 uses
   %i.dx = icmp eq i64 %i.dw, 9223372036854775804
   br i1 %i.dx, label %bb.o, label %_ZNKSt6vectorI9ZL_DataIDSaIS0_EE12_M_check_lenEmPKc.exit.i.i
 
@@ -719,7 +721,9 @@ _ZNSt6vectorI9ZL_DataIDSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit16.i.i: ; preds 
   br i1 %.not.i17.i.i, label %_ZNSt6vectorI9ZL_DataIDSaIS0_EE17_M_realloc_insertIJRKS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i, label %bb.q
 
 bb.q:                                             ; preds = %_ZNSt6vectorI9ZL_DataIDSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit16.i.i
-  call void @_ZdlPvm(ptr noundef nonnull %i.dt, i64 noundef %i.dw) #22
+  %7 = ptrtoint ptr %i.dq to i64
+  %8 = sub i64 %7, %i.dv
+  call void @_ZdlPvm(ptr noundef nonnull %i.dt, i64 noundef %8) #22
   %.pre23.pre = load i64, ptr %4, align 8, !tbaa !16
   br label %_ZNSt6vectorI9ZL_DataIDSaIS0_EE17_M_realloc_insertIJRKS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i
 
@@ -994,7 +998,7 @@ _ZNSt12_Vector_baseIlSaIlEE11_M_allocateEm.exit.i.i: ; preds = %bb.b
   %.sroa.13.0 = phi ptr [ %.sroa.13.1, %_ZNSt6vectorIlSaIlEE9push_backEOl.exit.i ], [ %i.i, %.lr.ph.i ]
   %i.m = phi ptr [ %i.aq, %_ZNSt6vectorIlSaIlEE9push_backEOl.exit.i ], [ %i.h, %.lr.ph.i ] ; 6 uses
   %i.n = phi ptr [ %i.ar, %_ZNSt6vectorIlSaIlEE9push_backEOl.exit.i ], [ %i.i, %.lr.ph.i ] ; 5 uses
-  %i.o = phi ptr [ %.sroa.9.0, %_ZNSt6vectorIlSaIlEE9push_backEOl.exit.i ], [ %i.h, %.lr.ph.i ] ; 3 uses
+  %i.o = phi ptr [ %.sroa.9.0, %_ZNSt6vectorIlSaIlEE9push_backEOl.exit.i ], [ %i.h, %.lr.ph.i ] ; 4 uses
   %.024.i = phi i64 [ %i.as, %_ZNSt6vectorIlSaIlEE9push_backEOl.exit.i ], [ 0, %.lr.ph.i ] ; 5 uses
   switch i64 %i.l, label %bb.f [
     i64 0, label %bb.c
@@ -1053,9 +1057,9 @@ bb.h:                                             ; preds = %_ZN6openzl10visuali
   br label %_ZNSt6vectorIlSaIlEE9push_backEOl.exit.i
 
 bb.i:                                             ; preds = %_ZN6openzl10visualizer12_GLOBAL__N_115readNumericDataEmPKhm.exit.i
-  %i.ac = ptrtoint ptr %i.n to i64
-  %i.ad = ptrtoint ptr %i.m to i64
-  %i.ae = sub i64 %i.ac, %i.ad                    ; 6 uses
+  %i.ac = ptrtoint ptr %i.o to i64
+  %i.ad = ptrtoint ptr %i.m to i64                ; 2 uses
+  %i.ae = sub i64 %i.ac, %i.ad                    ; 5 uses
   %i.af = icmp eq i64 %i.ae, 9223372036854775800
   br i1 %i.af, label %bb.j, label %_ZNKSt6vectorIlSaIlEE12_M_check_lenEmPKc.exit.i.i.i.i
 
@@ -1090,7 +1094,9 @@ bb.k:                                             ; preds = %.noexc19.i
   br label %_ZNSt6vectorIlSaIlEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPlS1_EEDpOT_.exit.i.i.i
 
 _ZNSt6vectorIlSaIlEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPlS1_EEDpOT_.exit.i.i.i: ; preds = %bb.k, %.noexc19.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.m, i64 noundef %i.ae) #22, !noalias !124
+  %10 = ptrtoint ptr %i.n to i64
+  %11 = sub i64 %10, %i.ad
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.m, i64 noundef %11) #22, !noalias !124
   %i.ap = getelementptr inbounds nuw [8 x i8], ptr %i.am, i64 %i.ak ; 2 uses
   br label %_ZNSt6vectorIlSaIlEE9push_backEOl.exit.i
 

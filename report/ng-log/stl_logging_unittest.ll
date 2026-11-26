@@ -202,9 +202,9 @@ bb.ci:                                            ; preds = %.loopexit537
   br label %_ZNSt6vectorIiSaIiEE9push_backEOi.exit245
 
 bb.cj:                                            ; preds = %.loopexit537
-  %i.lk = ptrtoint ptr %.sroa.18.5 to i64
-  %i.ll = ptrtoint ptr %.sroa.0.5 to i64
-  %i.lm = sub i64 %i.lk, %i.ll                    ; 6 uses
+  %i.lk = ptrtoint ptr %.sroa.11.2 to i64
+  %i.ll = ptrtoint ptr %.sroa.0.5 to i64          ; 2 uses
+  %i.lm = sub i64 %i.lk, %i.ll                    ; 5 uses
   %i.ln = icmp eq i64 %i.lm, 9223372036854775804
   br i1 %i.ln, label %bb.ck, label %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i237
 
@@ -239,7 +239,9 @@ bb.cl:                                            ; preds = %.noexc244
   br label %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i242
 
 _ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i242: ; preds = %bb.cl, %.noexc244
-  call void @_ZdlPvm(ptr noundef nonnull %.sroa.0.5, i64 noundef %i.lm) #27
+  %51 = ptrtoint ptr %.sroa.18.5 to i64
+  %52 = sub i64 %51, %i.ll
+  call void @_ZdlPvm(ptr noundef nonnull %.sroa.0.5, i64 noundef %52) #27
   %i.lx = getelementptr inbounds nuw [4 x i8], ptr %i.lu, i64 %i.ls
   br label %_ZNSt6vectorIiSaIiEE9push_backEOi.exit245
 
@@ -267,7 +269,7 @@ bb.cp:                                            ; preds = %bb.co, %bb.bb, %bb.
 bb.cq:                                            ; preds = %.peel.next, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit
   %storemerge502 = phi i32 [ 1, %.peel.next ], [ %i.ne, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit ] ; 4 uses
   %.sroa.18.0501 = phi ptr [ %i.ky, %.peel.next ], [ %.sroa.18.5, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit ] ; 5 uses
-  %.sroa.11.0500 = phi ptr [ %.sroa.11.2.peel, %.peel.next ], [ %.sroa.11.2, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit ] ; 3 uses
+  %.sroa.11.0500 = phi ptr [ %.sroa.11.2.peel, %.peel.next ], [ %.sroa.11.2, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit ] ; 4 uses
   %.sroa.0.0499 = phi ptr [ %i.kx, %.peel.next ], [ %.sroa.0.5, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit ] ; 6 uses
   %.not.i246 = icmp eq ptr %.sroa.11.0500, %.sroa.18.0501
   br i1 %.not.i246, label %bb.cs, label %bb.cr
@@ -277,9 +279,9 @@ bb.cr:                                            ; preds = %bb.cq
   br label %bb.cu
 
 bb.cs:                                            ; preds = %bb.cq
-  %i.ly = ptrtoint ptr %.sroa.18.0501 to i64
-  %i.lz = ptrtoint ptr %.sroa.0.0499 to i64
-  %i.ma = sub i64 %i.ly, %i.lz                    ; 6 uses
+  %i.ly = ptrtoint ptr %.sroa.11.0500 to i64
+  %i.lz = ptrtoint ptr %.sroa.0.0499 to i64       ; 2 uses
+  %i.ma = sub i64 %i.ly, %i.lz                    ; 5 uses
   %i.mb = icmp eq i64 %i.ma, 9223372036854775804
   br i1 %i.mb, label %.loopexit, label %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i
 
@@ -314,7 +316,9 @@ bb.ct:                                            ; preds = %.noexc249
   br label %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i
 
 _ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i: ; preds = %bb.ct, %.noexc249
-  call void @_ZdlPvm(ptr noundef nonnull %.sroa.0.0499, i64 noundef %i.ma) #27
+  %53 = ptrtoint ptr %.sroa.18.0501 to i64
+  %54 = sub i64 %53, %i.lz
+  call void @_ZdlPvm(ptr noundef nonnull %.sroa.0.0499, i64 noundef %54) #27
   %i.ml = getelementptr inbounds nuw [4 x i8], ptr %i.mi, i64 %i.mg
   br label %bb.cu
 
@@ -322,7 +326,7 @@ bb.cu:                                            ; preds = %bb.cr, %_ZNSt6vecto
   %.sroa.0.5 = phi ptr [ %i.mi, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i ], [ %.sroa.0.0499, %bb.cr ] ; 9 uses
   %.pn457 = phi ptr [ %i.mj, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i ], [ %.sroa.11.0500, %bb.cr ]
   %.sroa.18.5 = phi ptr [ %i.ml, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i ], [ %.sroa.18.0501, %bb.cr ] ; 8 uses
-  %.sroa.11.2 = getelementptr inbounds nuw i8, ptr %.pn457, i64 4 ; 4 uses
+  %.sroa.11.2 = getelementptr inbounds nuw i8, ptr %.pn457, i64 4 ; 5 uses
   %i.mm = load i64, ptr %i.kw, align 8, !tbaa !46 ; 4 uses
   %i.mn = add i64 %i.mm, 1                        ; 3 uses
   %i.mo = load ptr, ptr %35, align 8, !tbaa !47   ; 2 uses

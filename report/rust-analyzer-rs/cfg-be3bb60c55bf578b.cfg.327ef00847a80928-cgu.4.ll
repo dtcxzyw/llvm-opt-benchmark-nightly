@@ -202,7 +202,7 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs39E2wp1vf7X_6intern6symbol6SymbolE
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q)
   br label %.thread252
 
-.thread234:                                       ; preds = %bb.al, %bb.aa, %bb.q
+.thread234:                                       ; preds = %bb.q, %bb.al, %bb.aa
   %.pn73239 = phi { ptr, i32 } [ %lpad.thr_comm.split-lp, %bb.q ], [ %i.cf, %bb.al ], [ %.pn66, %bb.aa ]
   %.sroa.048.1238 = phi i8 [ 1, %bb.q ], [ 0, %bb.al ], [ %.sroa.048.3, %bb.aa ]
   call void @llvm.experimental.noalias.scope.decl(metadata !136)

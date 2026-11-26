@@ -204,15 +204,15 @@ ph_remove_first.exit:                             ; preds = %bb.a, %ph_merge_chi
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define hidden void @je_hpdata_age_heap_remove(ptr nofree noundef captures(none) %0, ptr noundef %1) local_unnamed_addr #2 !guid !48 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !16     ; 6 uses
+  %i.a = load ptr, ptr %0, align 8, !tbaa !16     ; 8 uses
   %i.b = icmp eq ptr %i.a, %1
   %i.c = ptrtoint ptr %1 to i64
   %i.d = add i64 %i.c, 40
-  %i.e = inttoptr i64 %i.d to ptr                 ; 13 uses
+  %i.e = inttoptr i64 %i.d to ptr                 ; 10 uses
   br i1 %i.b, label %bb.b, label %._crit_edge102
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 16 ; 4 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !27
   %i.h = icmp eq ptr %i.g, null
   br i1 %i.h, label %bb.c, label %bb.e
@@ -234,16 +234,19 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.b
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 0, ptr %i.n, align 8, !tbaa !17
-  %i.o = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 2 uses
+  %2 = ptrtoint ptr %i.a to i64
+  %3 = add i64 %2, 40
+  %4 = inttoptr i64 %3 to ptr                     ; 4 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !19   ; 8 uses
   %.not.i2 = icmp eq ptr %i.p, null
-  br i1 %.not.i2, label %ph_merge_aux.exit.thread, label %bb.f
+  br i1 %.not.i2, label %ph_merge_aux.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.q = ptrtoint ptr %i.p to i64
   %i.r = add i64 %i.q, 40
   %i.s = inttoptr i64 %i.r to ptr                 ; 5 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.e, i8 0, i64 16, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   store ptr null, ptr %i.s, align 8, !tbaa !20
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 8 ; 2 uses
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !19   ; 7 uses
@@ -506,7 +509,7 @@ bb.aa:                                            ; preds = %phn_merge.exit
 phn_merge_siblings.exit:                          ; preds = %phn_merge.exit, %bb.f, %._crit_edge
   %.4.i = phi ptr [ %i.p, %bb.f ], [ %.0.i13, %._crit_edge ], [ %.0.i10, %phn_merge.exit ] ; 8 uses
   %i.dk = icmp eq ptr %1, null
-  br i1 %i.dk, label %ph_merge_aux.exit, label %bb.ab
+  br i1 %i.dk, label %phn_merge_ordered.exit19.a, label %bb.ab
 
 bb.ab:                                            ; preds = %phn_merge_siblings.exit
   %i.dl = getelementptr i8, ptr %i.a, i64 8
@@ -521,7 +524,8 @@ bb.ac:                                            ; preds = %bb.ab
   %i.dp = add i64 %i.do, 40
   %i.dq = inttoptr i64 %i.dp to ptr               ; 2 uses
   store ptr %i.a, ptr %i.dq, align 8, !tbaa !20
-  %i.dr = load ptr, ptr %i.f, align 8, !tbaa !27  ; 3 uses
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
+  %i.dr = load ptr, ptr %5, align 8, !tbaa !27    ; 3 uses
   %i.ds = getelementptr inbounds nuw i8, ptr %i.dq, i64 8
   store ptr %i.dr, ptr %i.ds, align 8, !tbaa !19
   %.not.i17 = icmp eq ptr %i.dr, null
@@ -535,11 +539,11 @@ bb.ad:                                            ; preds = %bb.ac
   br label %phn_merge_ordered.exit
 
 phn_merge_ordered.exit:                           ; preds = %bb.ac, %bb.ad
-  store ptr %.4.i, ptr %i.f, align 8, !tbaa !27
-  br label %ph_merge_aux.exit
+  store ptr %.4.i, ptr %5, align 8, !tbaa !27
+  br label %phn_merge_ordered.exit19.a
 
 bb.ae:                                            ; preds = %bb.ab
-  store ptr %.4.i, ptr %i.e, align 8, !tbaa !20
+  store ptr %.4.i, ptr %4, align 8, !tbaa !20
   %i.dw = ptrtoint ptr %.4.i to i64
   %i.dx = add i64 %i.dw, 40
   %i.dy = inttoptr i64 %i.dx to ptr
@@ -547,27 +551,35 @@ bb.ae:                                            ; preds = %bb.ab
   %i.ea = load ptr, ptr %i.dz, align 8, !tbaa !27 ; 3 uses
   store ptr %i.ea, ptr %i.o, align 8, !tbaa !19
   %.not.i18 = icmp eq ptr %i.ea, null
-  br i1 %.not.i18, label %phn_merge_ordered.exit19.a, label %bb.af
+  br i1 %.not.i18, label %phn_merge_ordered.exit19, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
   %i.eb = ptrtoint ptr %i.ea to i64
   %i.ec = add i64 %i.eb, 40
   %i.ed = inttoptr i64 %i.ec to ptr
   store ptr %i.a, ptr %i.ed, align 8, !tbaa !20
+  br label %phn_merge_ordered.exit19
+
+phn_merge_ordered.exit19:                         ; preds = %bb.ae, %bb.af
+  store ptr %i.a, ptr %i.dz, align 8, !tbaa !27
   br label %phn_merge_ordered.exit19.a
 
-phn_merge_ordered.exit19.a:                       ; preds = %bb.ae, %bb.af
-  store ptr %i.a, ptr %i.dz, align 8, !tbaa !27
+phn_merge_ordered.exit19.a:                       ; preds = %phn_merge_siblings.exit, %phn_merge_ordered.exit, %phn_merge_ordered.exit19
+  %.0.i15 = phi ptr [ %.4.i, %phn_merge_ordered.exit19 ], [ %.4.i, %phn_merge_siblings.exit ], [ %i.a, %phn_merge_ordered.exit ] ; 2 uses
+  store ptr %.0.i15, ptr %0, align 8, !tbaa !16
   br label %ph_merge_aux.exit
 
-ph_merge_aux.exit:                                ; preds = %phn_merge_ordered.exit19.a, %phn_merge_ordered.exit, %phn_merge_siblings.exit
-  %.0.i15 = phi ptr [ %.4.i, %phn_merge_ordered.exit19.a ], [ %.4.i, %phn_merge_siblings.exit ], [ %i.a, %phn_merge_ordered.exit ] ; 2 uses
-  store ptr %.0.i15, ptr %0, align 8, !tbaa !16
-  %i.ee = icmp eq ptr %.0.i15, %1
+ph_merge_aux.exit:                                ; preds = %bb.e, %phn_merge_ordered.exit19.a
+  %6 = phi ptr [ %i.a, %bb.e ], [ %.0.i15, %phn_merge_ordered.exit19.a ] ; 2 uses
+  %i.ee = icmp eq ptr %6, %1
   br i1 %i.ee, label %ph_merge_aux.exit.thread, label %._crit_edge102
 
-ph_merge_aux.exit.thread:                         ; preds = %bb.e, %ph_merge_aux.exit
-  %i.ef = load ptr, ptr %i.f, align 8, !tbaa !27  ; 8 uses
+ph_merge_aux.exit.thread:                         ; preds = %ph_merge_aux.exit
+  %7 = ptrtoint ptr %6 to i64
+  %8 = add i64 %7, 40
+  %9 = inttoptr i64 %8 to ptr
+  %10 = getelementptr inbounds nuw i8, ptr %9, i64 16
+  %i.ef = load ptr, ptr %10, align 8, !tbaa !27   ; 8 uses
   %i.eg = icmp eq ptr %i.ef, null
   br i1 %i.eg, label %ph_merge_children.exit, label %bb.ag
 

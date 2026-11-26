@@ -202,7 +202,7 @@ bb.a:
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 400 ; 6 uses
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !63 ; 4 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 408 ; 4 uses
-  %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !62 ; 2 uses
+  %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !62 ; 3 uses
   %.not.i.i = icmp eq ptr %i.ah, %i.af
   br i1 %.not.i.i, label %_ZNSt6vectorIN2cv4UMatESaIS1_EE5clearEv.exit, label %.lr.ph.i.i.i.i
 
@@ -218,6 +218,7 @@ _ZSt8_DestroyIPN2cv4UMatES1_EvT_S3_RSaIT0_E.exit.i.i: ; preds = %.lr.ph.i.i.i.i
   br label %_ZNSt6vectorIN2cv4UMatESaIS1_EE5clearEv.exit
 
 _ZNSt6vectorIN2cv4UMatESaIS1_EE5clearEv.exit:     ; preds = %bb.a, %_ZSt8_DestroyIPN2cv4UMatES1_EvT_S3_RSaIT0_E.exit.i.i
+  %11 = phi ptr [ %i.ah, %bb.a ], [ %i.af, %_ZSt8_DestroyIPN2cv4UMatES1_EvT_S3_RSaIT0_E.exit.i.i ]
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 424 ; 7 uses
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !63 ; 3 uses
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 432 ; 4 uses
@@ -238,7 +239,7 @@ _ZSt8_DestroyIPN2cv4UMatES1_EvT_S3_RSaIT0_E.exit.i.i24: ; preds = %.lr.ph.i.i.i.
   br label %_ZNSt6vectorIN2cv4UMatESaIS1_EE5clearEv.exit25
 
 _ZNSt6vectorIN2cv4UMatESaIS1_EE5clearEv.exit25:   ; preds = %_ZNSt6vectorIN2cv4UMatESaIS1_EE5clearEv.exit, %_ZSt8_DestroyIPN2cv4UMatES1_EvT_S3_RSaIT0_E.exit.i.i24
-  %i.ao = phi ptr [ %i.af, %_ZNSt6vectorIN2cv4UMatESaIS1_EE5clearEv.exit ], [ %.pre, %_ZSt8_DestroyIPN2cv4UMatES1_EvT_S3_RSaIT0_E.exit.i.i24 ] ; 3 uses
+  %i.ao = phi ptr [ %11, %_ZNSt6vectorIN2cv4UMatESaIS1_EE5clearEv.exit ], [ %.pre, %_ZSt8_DestroyIPN2cv4UMatES1_EvT_S3_RSaIT0_E.exit.i.i24 ] ; 3 uses
   %i.ap = load i32, ptr %i.e, align 4, !tbaa !72
   %i.aq = add nsw i32 %i.ap, 1
   %i.ar = sext i32 %i.aq to i64                   ; 4 uses
