@@ -204,7 +204,7 @@ doh_strerror.exit:                                ; preds = %bb.k, %bb.l
   br label %.split.1
 
 .split.1:                                         ; preds = %bb.h, %doh_strerror.exit, %bb.l, %bb.k, %bb.i, %.split.preheader
-  %i.az = phi i1 [ false, %.split.preheader ], [ false, %bb.h ], [ true, %bb.i ], [ true, %doh_strerror.exit ], [ true, %bb.l ], [ true, %bb.k ]
+  %i.az = phi i1 [ false, %.split.preheader ], [ true, %bb.i ], [ true, %bb.k ], [ true, %bb.l ], [ true, %doh_strerror.exit ], [ false, %bb.h ]
   %i.ba = getelementptr inbounds nuw i8, ptr %i.c, i64 88 ; 3 uses
   %i.bb = load i32, ptr %i.ba, align 8, !tbaa !101
   %.not93.1 = icmp eq i32 %i.bb, 0

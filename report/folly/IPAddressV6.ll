@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/folly/original/IPAddressV6?download=true
 inline.NumInlined: 1256
 inline.NumDeleted: 594
-loop-unroll.NumCompletelyUnrolled: 12
+loop-unroll.NumCompletelyUnrolled: 11
 loop-unroll.NumRuntimeUnrolled: 3
-loop-unroll.NumUnrolled: 15
+loop-unroll.NumUnrolled: 14
 begin_hunk_0_@_ZN3fmt2v96detail15write_codepointILm8EcNS0_8appenderEEET1_S4_cj:bb.a
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.j
   store i8 92, ptr %i.m, align 1, !tbaa !28
@@ -205,13 +205,13 @@ bb.a:
   %2 = alloca %"class.folly::IPAddressV4", align 4 ; 2 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %6 = load i8, ptr %5, align 1, !tbaa !28
-  %7 = load i8, ptr %0, align 4, !tbaa !28
-  %8 = zext i8 %7 to i16
-  %9 = shl nuw i16 %8, 8
-  %i.a = zext i8 %6 to i16
-  %i.b = or disjoint i16 %9, %i.a                 ; 2 uses
+  %5 = load i8, ptr %0, align 4, !tbaa !28
+  %6 = zext i8 %5 to i16
+  %7 = shl nuw i16 %6, 8
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 1
+  %9 = load i8, ptr %8, align 1, !tbaa !28
+  %i.a = zext i8 %9 to i16
+  %i.b = or disjoint i16 %7, %i.a                 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 3
   %i.d = load i8, ptr %i.c, align 1, !tbaa !28    ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 2
@@ -359,13 +359,13 @@ declare void @_ZNSt13runtime_errorD1Ev(ptr noundef nonnull align 8 dead_on_retur
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define noundef range(i32 0, 3) i32 @_ZNK5folly11IPAddressV64typeEv(ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(18) %0) local_unnamed_addr #27 align 2 {
 _ZN5follyL10unpackIntoEPKhPtm.exit:
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %2 = load i8, ptr %1, align 1, !tbaa !28
-  %3 = load i8, ptr %0, align 4, !tbaa !28
-  %4 = zext i8 %3 to i16
-  %5 = shl nuw i16 %4, 8
-  %i.a = zext i8 %2 to i16
-  %i.b = or disjoint i16 %5, %i.a                 ; 2 uses
+  %1 = load i8, ptr %0, align 4, !tbaa !28
+  %2 = zext i8 %1 to i16
+  %3 = shl nuw i16 %2, 8
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 1
+  %5 = load i8, ptr %4, align 1, !tbaa !28
+  %i.a = zext i8 %5 to i16
+  %i.b = or disjoint i16 %3, %i.a                 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 3
   %i.d = load i8, ptr %i.c, align 1, !tbaa !28
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 2
@@ -376,7 +376,7 @@ _ZN5follyL10unpackIntoEPKhPtm.exit:
   %i.j = or disjoint i32 %i.h, %i.i
   %i.k = zext i16 %i.b to i32
   %i.l = shl nuw i32 %i.k, 16
-  %i.m = or disjoint i32 %i.l, %i.j
+  %i.m = or disjoint i32 %i.j, %i.l
   %i.n = icmp eq i32 %i.m, 536936448
   %i.o = icmp eq i16 %i.b, 8194
   %. = select i1 %i.o, i32 1, i32 2

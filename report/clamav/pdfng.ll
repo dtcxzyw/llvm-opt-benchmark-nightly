@@ -47,6 +47,10 @@ bb.b:                                             ; preds = %bb.a
   %.not34 = icmp eq ptr %i.h, null
   br i1 %.not34, label %2, label %.preheader.preheader
 
+2:                                                ; preds = %bb.b
+  tail call void @free(ptr noundef nonnull %i.g) #13
+  br label %bb.g
+
 .preheader.preheader:                             ; preds = %bb.b
   store ptr %i.g, ptr %i.a, align 8, !tbaa !10
   store ptr %i.h, ptr %i.b, align 8, !tbaa !10
@@ -55,10 +59,6 @@ bb.b:                                             ; preds = %bb.a
   %i.i = tail call noalias ptr @iconv_open(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str) #13 ; 4 uses
   %i.j = icmp eq ptr %i.i, inttoptr (i64 -1 to ptr)
   br i1 %i.j, label %bb.c, label %bb.d
-
-2:                                                ; preds = %bb.b
-  tail call void @free(ptr noundef nonnull %i.g) #13
-  br label %bb.g
 
 bb.c:                                             ; preds = %.preheader.preheader
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #13

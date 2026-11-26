@@ -205,15 +205,15 @@ get_deltas_for_var_index_base.exit.loopexit:      ; preds = %bb.k, %bb.j
   %i.co = trunc i32 %i.cl to i16
   br label %get_deltas_for_var_index_base.exit
 
-get_deltas_for_var_index_base.exit:               ; preds = %bb.g, %get_deltas_for_var_index_base.exit.loopexit
-  %.pre57 = phi i32 [ %.pre57.pre, %get_deltas_for_var_index_base.exit.loopexit ], [ %i.h, %bb.g ]
-  %i.cp = phi i16 [ %.pre56, %get_deltas_for_var_index_base.exit.loopexit ], [ %i.bc, %bb.g ]
-  %i.cq = phi i64 [ %.pre, %get_deltas_for_var_index_base.exit.loopexit ], [ %i.ak, %bb.g ]
-  %.sroa.5.0 = phi i16 [ %i.co, %get_deltas_for_var_index_base.exit.loopexit ], [ 0, %bb.g ]
-  %.sroa.0.0 = phi i64 [ %i.cn, %get_deltas_for_var_index_base.exit.loopexit ], [ 0, %bb.g ]
-  %i.cr = add nsw i64 %.sroa.0.0, %i.cq
+get_deltas_for_var_index_base.exit:               ; preds = %get_deltas_for_var_index_base.exit.loopexit, %bb.g
+  %.pre57 = phi i32 [ %i.h, %bb.g ], [ %.pre57.pre, %get_deltas_for_var_index_base.exit.loopexit ]
+  %i.cp = phi i16 [ %i.bc, %bb.g ], [ %.pre56, %get_deltas_for_var_index_base.exit.loopexit ]
+  %i.cq = phi i64 [ %i.ak, %bb.g ], [ %.pre, %get_deltas_for_var_index_base.exit.loopexit ]
+  %.sroa.0.1 = phi i64 [ 0, %bb.g ], [ %i.cn, %get_deltas_for_var_index_base.exit.loopexit ]
+  %.sroa.5.1 = phi i16 [ 0, %bb.g ], [ %i.co, %get_deltas_for_var_index_base.exit.loopexit ]
+  %i.cr = add nsw i64 %i.cq, %.sroa.0.1
   store i64 %i.cr, ptr %1, align 8, !tbaa !612
-  %i.cs = add i16 %i.cp, %.sroa.5.0
+  %i.cs = add i16 %i.cp, %.sroa.5.1
   store i16 %i.cs, ptr %i.bd, align 2, !tbaa !614
   br label %bb.l
 
