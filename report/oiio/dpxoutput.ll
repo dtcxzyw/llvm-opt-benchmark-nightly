@@ -205,14 +205,19 @@ bb.q:                                             ; preds = %bb.p
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 2360 ; 3 uses
   store i32 0, ptr %i.au, align 8, !tbaa !284
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 2368 ; 5 uses
-  %i.aw = load ptr, ptr %i.av, align 8, !tbaa !299
+  %i.aw = load ptr, ptr %i.av, align 8, !tbaa !299 ; 2 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 2376
-  %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !299
+  %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !299 ; 2 uses
   %i.az = icmp eq ptr %i.aw, %i.ay
   br i1 %i.az, label %_ZNSt6vectorIN11OpenImageIO4v3_19ImageSpecESaIS2_EE6resizeEm.exit, label %bb.r
 
 _ZNSt6vectorIN11OpenImageIO4v3_19ImageSpecESaIS2_EE6resizeEm.exit: ; preds = %bb.q
-  call void @_ZNSt6vectorIN11OpenImageIO4v3_19ImageSpecESaIS2_EE17_M_default_appendEm(ptr noundef nonnull align 8 dereferenceable(24) %i.av, i64 noundef 1)
+  %101 = ptrtoint ptr %i.ay to i64
+  %102 = ptrtoint ptr %i.aw to i64
+  %103 = sub i64 %101, %102
+  %.neg = sdiv exact i64 %103, -160
+  %104 = add nsw i64 %.neg, 1
+  call void @_ZNSt6vectorIN11OpenImageIO4v3_19ImageSpecESaIS2_EE17_M_default_appendEm(ptr noundef nonnull align 8 dereferenceable(24) %i.av, i64 noundef %104)
   %i.ba = load ptr, ptr %i.av, align 8, !tbaa !286 ; 5 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(160) %i.ba, ptr noundef nonnull align 8 dereferenceable(160) %i.ao, i64 72, i1 false)
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 72

@@ -204,7 +204,7 @@ lean_obj_tag.exit2744:                            ; preds = %bb.aby, %bb.abz
 
 bb.aca:                                           ; preds = %lean_obj_tag.exit2744
   %i.alt = getelementptr inbounds nuw i8, ptr %i.all, i64 8
-  %i.alu = load ptr, ptr %i.alt, align 8, !tbaa !12 ; 10 uses
+  %i.alu = load ptr, ptr %i.alt, align 8, !tbaa !12 ; 11 uses
   %.val2365 = load i32, ptr %i.all, align 8, !tbaa !14
   %i.alv = icmp eq i32 %.val2365, 1               ; 3 uses
   br i1 %i.alv, label %lean_dec.exit1716, label %bb.acb
@@ -260,7 +260,7 @@ lean_dec.exit1716:                                ; preds = %lean_inc.exit2264, 
   %i.amf = icmp ne i8 %i.ame, 0
   %.not3235 = icmp eq ptr %i.akd, %i.alu
   %or.cond = select i1 %i.amf, i1 %.not3235, i1 false
-  br i1 %or.cond, label %bb.ade, label %.critedge1610
+  br i1 %or.cond, label %6, label %.critedge1610
 
 .critedge1610:                                    ; preds = %lean_dec.exit1716
   %.01367.val2364 = load i32, ptr %.01367, align 8, !tbaa !14 ; 4 uses
@@ -389,7 +389,13 @@ lean_alloc_ctor.exit2749:                         ; preds = %bb.adc
   store ptr %.01555, ptr %i.ane, align 8, !tbaa !12
   br label %lean_dec.exit1806.thread3211
 
-bb.ade:                                           ; preds = %lean_dec.exit1716
+6:                                                ; preds = %lean_dec.exit1716
+  %7 = ptrtoint ptr %i.alu to i64
+  %8 = and i64 %7, 1
+  %.not.i1707 = icmp eq i64 %8, 0
+  br i1 %.not.i1707, label %bb.ade, label %lean_dec.exit1708
+
+bb.ade:                                           ; preds = %6
   %i.anf = load i32, ptr %i.alu, align 4, !tbaa !14 ; 3 uses
   %i.ang = icmp sgt i32 %i.anf, 1
   br i1 %i.ang, label %bb.adf, label %bb.adg, !prof !15
@@ -407,7 +413,7 @@ bb.adh:                                           ; preds = %bb.adg
   tail call void @lean_dec_ref_cold(ptr noundef nonnull %i.alu) #5
   br label %lean_dec.exit1708
 
-lean_dec.exit1708:                                ; preds = %bb.adh, %bb.adg, %bb.adf
+lean_dec.exit1708:                                ; preds = %bb.adh, %bb.adg, %bb.adf, %6
   br i1 %.not.i2265, label %bb.adi, label %lean_dec.exit1706
 
 bb.adi:                                           ; preds = %lean_dec.exit1708

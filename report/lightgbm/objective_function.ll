@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %.lr.ph85, %bb.d
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZNSt6vectorIdSaIdEE9push_backEOd.exit
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %_ZNSt6vectorIdSaIdEE9push_backEOd.exit ] ; 2 uses
   %.sroa.10.077 = phi ptr [ null, %.lr.ph.preheader ], [ %.sroa.10.2, %_ZNSt6vectorIdSaIdEE9push_backEOd.exit ] ; 3 uses
-  %.sroa.7.076 = phi ptr [ null, %.lr.ph.preheader ], [ %.sroa.7.1, %_ZNSt6vectorIdSaIdEE9push_backEOd.exit ] ; 3 uses
+  %.sroa.7.076 = phi ptr [ null, %.lr.ph.preheader ], [ %.sroa.7.1, %_ZNSt6vectorIdSaIdEE9push_backEOd.exit ] ; 4 uses
   %.sroa.0.075 = phi ptr [ null, %.lr.ph.preheader ], [ %.sroa.0.2, %_ZNSt6vectorIdSaIdEE9push_backEOd.exit ] ; 5 uses
   %i.ao = load ptr, ptr %5, align 8, !tbaa !222, !llvm.access.group !619
   %i.ap = add nsw i64 %indvars.iv, %i.ai          ; 2 uses
@@ -227,9 +227,9 @@ bb.f:                                             ; preds = %.lr.ph
   br label %_ZNSt6vectorIdSaIdEE9push_backEOd.exit
 
 bb.g:                                             ; preds = %.lr.ph
-  %i.bb = ptrtoint ptr %.sroa.10.077 to i64
-  %i.bc = ptrtoint ptr %.sroa.0.075 to i64
-  %i.bd = sub i64 %i.bb, %i.bc                    ; 6 uses
+  %i.bb = ptrtoint ptr %.sroa.7.076 to i64
+  %i.bc = ptrtoint ptr %.sroa.0.075 to i64        ; 2 uses
+  %i.bd = sub i64 %i.bb, %i.bc                    ; 5 uses
   %i.be = icmp eq i64 %i.bd, 9223372036854775800
   br i1 %i.be, label %bb.h, label %_ZNKSt6vectorIdSaIdEE12_M_check_lenEmPKc.exit.i.i.i
 
@@ -268,7 +268,9 @@ _ZNSt6vectorIdSaIdEE11_S_relocateEPdS2_S2_RS0_.exit16.i.i.i: ; preds = %bb.i, %.
   br i1 %.not.i17.i.i.i, label %_ZNSt6vectorIdSaIdEE17_M_realloc_insertIJdEEEvN9__gnu_cxx17__normal_iteratorIPdS1_EEDpOT_.exit.i.i, label %bb.j
 
 bb.j:                                             ; preds = %_ZNSt6vectorIdSaIdEE11_S_relocateEPdS2_S2_RS0_.exit16.i.i.i
-  call void @_ZdlPvm(ptr noundef nonnull %.sroa.0.075, i64 noundef %i.bd) #35, !llvm.access.group !619
+  %8 = ptrtoint ptr %.sroa.10.077 to i64
+  %9 = sub i64 %8, %i.bc
+  call void @_ZdlPvm(ptr noundef nonnull %.sroa.0.075, i64 noundef %9) #35, !llvm.access.group !619
   br label %_ZNSt6vectorIdSaIdEE17_M_realloc_insertIJdEEEvN9__gnu_cxx17__normal_iteratorIPdS1_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIdSaIdEE17_M_realloc_insertIJdEEEvN9__gnu_cxx17__normal_iteratorIPdS1_EEDpOT_.exit.i.i: ; preds = %bb.j, %_ZNSt6vectorIdSaIdEE11_S_relocateEPdS2_S2_RS0_.exit16.i.i.i
@@ -671,8 +673,9 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %_ZNSt6vectorIN8LightGBM6RandomESaIS1_EE12emplace_backIJiEEERS1_DpOT_.exit
   %i.h = phi i32 [ %i.b, %.lr.ph ], [ %i.av, %_ZNSt6vectorIN8LightGBM6RandomESaIS1_EE12emplace_backIJiEEERS1_DpOT_.exit ]
   %i.i = phi ptr [ %.pre7, %.lr.ph ], [ %i.aw, %_ZNSt6vectorIN8LightGBM6RandomESaIS1_EE12emplace_backIJiEEERS1_DpOT_.exit ] ; 5 uses
-  %i.j = phi ptr [ %.pre, %.lr.ph ], [ %i.ax, %_ZNSt6vectorIN8LightGBM6RandomESaIS1_EE12emplace_backIJiEEERS1_DpOT_.exit ] ; 3 uses
+  %i.j = phi ptr [ %.pre, %.lr.ph ], [ %i.ax, %_ZNSt6vectorIN8LightGBM6RandomESaIS1_EE12emplace_backIJiEEERS1_DpOT_.exit ] ; 4 uses
   %.06 = phi i32 [ 0, %.lr.ph ], [ %i.ay, %_ZNSt6vectorIN8LightGBM6RandomESaIS1_EE12emplace_backIJiEEERS1_DpOT_.exit ] ; 2 uses
+  %3 = ptrtoaddr ptr %i.i to i64
   %i.k = load i32, ptr %i.e, align 8, !tbaa !156
   %i.l = add nsw i32 %i.k, %.06                   ; 2 uses
   %.not.i = icmp eq ptr %i.j, %i.i
@@ -686,7 +689,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   %i.n = load ptr, ptr %i.d, align 8, !tbaa !313  ; 7 uses
-  %i.o = ptrtoint ptr %i.i to i64                 ; 2 uses
+  %i.o = ptrtoint ptr %i.j to i64
   %i.p = ptrtoint ptr %i.n to i64                 ; 4 uses
   %i.q = sub i64 %i.o, %i.p                       ; 3 uses
   %i.r = icmp eq i64 %i.q, 9223372036854775804
@@ -714,7 +717,7 @@ _ZNKSt6vectorIN8LightGBM6RandomESaIS1_EE12_M_check_lenEmPKc.exit.i.i: ; preds = 
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNKSt6vectorIN8LightGBM6RandomESaIS1_EE12_M_check_lenEmPKc.exit.i.i
   %i.aa = ptrtoaddr ptr %i.y to i64
-  %i.ab = add i64 %i.o, -4
+  %i.ab = add i64 %3, -4
   %i.ac = sub i64 %i.ab, %i.p                     ; 2 uses
   %i.ad = lshr i64 %i.ac, 2
   %i.ae = add nuw nsw i64 %i.ad, 1                ; 2 uses

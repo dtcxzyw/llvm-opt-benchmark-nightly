@@ -202,7 +202,7 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 12 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 27 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 54 uses
-  %i.k = ptrtoint ptr %i.d to i64                 ; 2 uses
+  %i.k = ptrtoint ptr %i.d to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %.preheader, %bb.ig
@@ -605,14 +605,15 @@ bb.if:                                            ; preds = %bb.ar
 bb.ig:                                            ; preds = %.sink.split2324, %bb.an, %bb.ie, %bb.id, %bb.ic, %bb.ib
   %.1364 = phi ptr [ %i.go, %bb.ie ], [ %.0363, %bb.an ], [ %i.go, %bb.ib ], [ %i.go, %bb.ic ], [ %i.go, %bb.id ], [ %i.go, %.sink.split2324 ]
   %.23 = phi i1 [ false, %bb.ie ], [ false, %bb.an ], [ false, %bb.ib ], [ false, %bb.ic ], [ false, %bb.id ], [ %.23.ph, %.sink.split2324 ]
-  %i.ayb = load ptr, ptr %i.c, align 8, !tbaa !81 ; 2 uses
+  %i.ayb = load ptr, ptr %i.c, align 8, !tbaa !81 ; 3 uses
   %.not493 = icmp eq ptr %i.ayb, %i.d
   br i1 %.not493, label %bb.ih, label %bb.b, !llvm.loop !182
 
 bb.ih:                                            ; preds = %bb.ig
   %i.ayc = load ptr, ptr %0, align 8, !tbaa !80
+  %16 = ptrtoint ptr %i.ayb to i64
   %i.ayd = ptrtoint ptr %i.ayc to i64
-  %i.aye = sub i64 %i.k, %i.ayd
+  %i.aye = sub i64 %16, %i.ayd
   store i64 %i.aye, ptr %3, align 8, !tbaa !19
   br label %.thread
 
@@ -1004,7 +1005,7 @@ bb.m:                                             ; preds = %bb.k
   %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
   %i.bt = load ptr, ptr %i.bs, align 8, !tbaa !77 ; 5 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
-  %i.bv = load ptr, ptr %i.bu, align 8, !tbaa !78
+  %i.bv = load ptr, ptr %i.bu, align 8, !tbaa !78 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.bt, %i.bv
   br i1 %.not.i.i.i, label %bb.o, label %bb.n
 
@@ -1020,8 +1021,8 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %bb.m
   %i.by = load ptr, ptr %i.br, align 8, !tbaa !76 ; 7 uses
   %i.bz = ptrtoint ptr %i.bt to i64               ; 2 uses
-  %i.ca = ptrtoint ptr %i.by to i64               ; 2 uses
-  %i.cb = sub i64 %i.bz, %i.ca                    ; 4 uses
+  %i.ca = ptrtoint ptr %i.by to i64               ; 3 uses
+  %i.cb = sub i64 %i.bz, %i.ca                    ; 3 uses
   %i.cc = icmp eq i64 %i.cb, 9223372036854775800
   br i1 %i.cc, label %bb.p, label %_ZNKSt6vectorIN7msgpack2v26detail7contextINS2_12parse_helperINS2_21create_object_visitorEEEE12unpack_stack10stack_elemESaIS9_EE12_M_check_lenEmPKc.exit.i.i.i.i
 
@@ -1107,7 +1108,9 @@ _ZNSt6vectorIN7msgpack2v26detail7contextINS2_12parse_helperINS2_21create_object_
   br i1 %.not.i23.i.i.i.i, label %_ZNSt6vectorIN7msgpack2v26detail7contextINS2_12parse_helperINS2_21create_object_visitorEEEE12unpack_stack10stack_elemESaIS9_EE17_M_realloc_insertIJS9_EEEvN9__gnu_cxx17__normal_iteratorIPS9_SB_EEDpOT_.exit.i.i.i, label %bb.q
 
 bb.q:                                             ; preds = %_ZNSt6vectorIN7msgpack2v26detail7contextINS2_12parse_helperINS2_21create_object_visitorEEEE12unpack_stack10stack_elemESaIS9_EE11_S_relocateEPS9_SC_SC_RSA_.exit22.i.i.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.by, i64 noundef %i.cb) #22
+  %5 = ptrtoint ptr %i.bv to i64
+  %6 = sub i64 %5, %i.ca
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.by, i64 noundef %6) #22
   br label %_ZNSt6vectorIN7msgpack2v26detail7contextINS2_12parse_helperINS2_21create_object_visitorEEEE12unpack_stack10stack_elemESaIS9_EE17_M_realloc_insertIJS9_EEEvN9__gnu_cxx17__normal_iteratorIPS9_SB_EEDpOT_.exit.i.i.i
 
 _ZNSt6vectorIN7msgpack2v26detail7contextINS2_12parse_helperINS2_21create_object_visitorEEEE12unpack_stack10stack_elemESaIS9_EE17_M_realloc_insertIJS9_EEEvN9__gnu_cxx17__normal_iteratorIPS9_SB_EEDpOT_.exit.i.i.i: ; preds = %bb.q, %_ZNSt6vectorIN7msgpack2v26detail7contextINS2_12parse_helperINS2_21create_object_visitorEEEE12unpack_stack10stack_elemESaIS9_EE11_S_relocateEPS9_SC_SC_RSA_.exit22.i.i.i.i
@@ -1267,7 +1270,7 @@ bb.m:                                             ; preds = %bb.k
   %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
   %i.bt = load ptr, ptr %i.bs, align 8, !tbaa !77 ; 5 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
-  %i.bv = load ptr, ptr %i.bu, align 8, !tbaa !78
+  %i.bv = load ptr, ptr %i.bu, align 8, !tbaa !78 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.bt, %i.bv
   br i1 %.not.i.i.i, label %bb.o, label %bb.n
 
@@ -1284,8 +1287,8 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %bb.m
   %i.by = load ptr, ptr %i.br, align 8, !tbaa !76 ; 7 uses
   %i.bz = ptrtoint ptr %i.bt to i64               ; 2 uses
-  %i.ca = ptrtoint ptr %i.by to i64               ; 2 uses
-  %i.cb = sub i64 %i.bz, %i.ca                    ; 4 uses
+  %i.ca = ptrtoint ptr %i.by to i64               ; 3 uses
+  %i.cb = sub i64 %i.bz, %i.ca                    ; 3 uses
   %i.cc = icmp eq i64 %i.cb, 9223372036854775800
   br i1 %i.cc, label %bb.p, label %_ZNKSt6vectorIN7msgpack2v26detail7contextINS2_12parse_helperINS2_21create_object_visitorEEEE12unpack_stack10stack_elemESaIS9_EE12_M_check_lenEmPKc.exit.i.i.i.i
 
@@ -1372,7 +1375,9 @@ _ZNSt6vectorIN7msgpack2v26detail7contextINS2_12parse_helperINS2_21create_object_
   br i1 %.not.i23.i.i.i.i, label %_ZNSt6vectorIN7msgpack2v26detail7contextINS2_12parse_helperINS2_21create_object_visitorEEEE12unpack_stack10stack_elemESaIS9_EE17_M_realloc_insertIJS9_EEEvN9__gnu_cxx17__normal_iteratorIPS9_SB_EEDpOT_.exit.i.i.i, label %bb.q
 
 bb.q:                                             ; preds = %_ZNSt6vectorIN7msgpack2v26detail7contextINS2_12parse_helperINS2_21create_object_visitorEEEE12unpack_stack10stack_elemESaIS9_EE11_S_relocateEPS9_SC_SC_RSA_.exit22.i.i.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.by, i64 noundef %i.cb) #22
+  %5 = ptrtoint ptr %i.bv to i64
+  %6 = sub i64 %5, %i.ca
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.by, i64 noundef %6) #22
   br label %_ZNSt6vectorIN7msgpack2v26detail7contextINS2_12parse_helperINS2_21create_object_visitorEEEE12unpack_stack10stack_elemESaIS9_EE17_M_realloc_insertIJS9_EEEvN9__gnu_cxx17__normal_iteratorIPS9_SB_EEDpOT_.exit.i.i.i
 
 _ZNSt6vectorIN7msgpack2v26detail7contextINS2_12parse_helperINS2_21create_object_visitorEEEE12unpack_stack10stack_elemESaIS9_EE17_M_realloc_insertIJS9_EEEvN9__gnu_cxx17__normal_iteratorIPS9_SB_EEDpOT_.exit.i.i.i: ; preds = %bb.q, %_ZNSt6vectorIN7msgpack2v26detail7contextINS2_12parse_helperINS2_21create_object_visitorEEEE12unpack_stack10stack_elemESaIS9_EE11_S_relocateEPS9_SC_SC_RSA_.exit22.i.i.i.i
@@ -1775,7 +1780,7 @@ bb.m:                                             ; preds = %bb.k
   %i.br = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
   %i.bs = load ptr, ptr %i.br, align 8, !tbaa !77 ; 5 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
-  %i.bu = load ptr, ptr %i.bt, align 8, !tbaa !78
+  %i.bu = load ptr, ptr %i.bt, align 8, !tbaa !78 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.bs, %i.bu
   br i1 %.not.i.i.i, label %bb.o, label %bb.n
 
@@ -1791,8 +1796,8 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %bb.m
   %i.bx = load ptr, ptr %i.bq, align 8, !tbaa !76 ; 7 uses
   %i.by = ptrtoint ptr %i.bs to i64               ; 2 uses
-  %i.bz = ptrtoint ptr %i.bx to i64               ; 2 uses
-  %i.ca = sub i64 %i.by, %i.bz                    ; 4 uses
+  %i.bz = ptrtoint ptr %i.bx to i64               ; 3 uses
+  %i.ca = sub i64 %i.by, %i.bz                    ; 3 uses
   %i.cb = icmp eq i64 %i.ca, 9223372036854775800
   br i1 %i.cb, label %bb.p, label %_ZNKSt6vectorIN7msgpack2v26detail7contextINS2_12parse_helperINS2_21create_object_visitorEEEE12unpack_stack10stack_elemESaIS9_EE12_M_check_lenEmPKc.exit.i.i.i.i
 
@@ -1878,7 +1883,9 @@ _ZNSt6vectorIN7msgpack2v26detail7contextINS2_12parse_helperINS2_21create_object_
   br i1 %.not.i23.i.i.i.i, label %_ZNSt6vectorIN7msgpack2v26detail7contextINS2_12parse_helperINS2_21create_object_visitorEEEE12unpack_stack10stack_elemESaIS9_EE17_M_realloc_insertIJS9_EEEvN9__gnu_cxx17__normal_iteratorIPS9_SB_EEDpOT_.exit.i.i.i, label %bb.q
 
 bb.q:                                             ; preds = %_ZNSt6vectorIN7msgpack2v26detail7contextINS2_12parse_helperINS2_21create_object_visitorEEEE12unpack_stack10stack_elemESaIS9_EE11_S_relocateEPS9_SC_SC_RSA_.exit22.i.i.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.bx, i64 noundef %i.ca) #22
+  %5 = ptrtoint ptr %i.bu to i64
+  %6 = sub i64 %5, %i.bz
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.bx, i64 noundef %6) #22
   br label %_ZNSt6vectorIN7msgpack2v26detail7contextINS2_12parse_helperINS2_21create_object_visitorEEEE12unpack_stack10stack_elemESaIS9_EE17_M_realloc_insertIJS9_EEEvN9__gnu_cxx17__normal_iteratorIPS9_SB_EEDpOT_.exit.i.i.i
 
 _ZNSt6vectorIN7msgpack2v26detail7contextINS2_12parse_helperINS2_21create_object_visitorEEEE12unpack_stack10stack_elemESaIS9_EE17_M_realloc_insertIJS9_EEEvN9__gnu_cxx17__normal_iteratorIPS9_SB_EEDpOT_.exit.i.i.i: ; preds = %bb.q, %_ZNSt6vectorIN7msgpack2v26detail7contextINS2_12parse_helperINS2_21create_object_visitorEEEE12unpack_stack10stack_elemESaIS9_EE11_S_relocateEPS9_SC_SC_RSA_.exit22.i.i.i.i
@@ -2034,7 +2041,7 @@ bb.m:                                             ; preds = %bb.k
   %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
   %i.bp = load ptr, ptr %i.bo, align 8, !tbaa !77 ; 5 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
-  %i.br = load ptr, ptr %i.bq, align 8, !tbaa !78
+  %i.br = load ptr, ptr %i.bq, align 8, !tbaa !78 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.bp, %i.br
   br i1 %.not.i.i.i, label %bb.o, label %bb.n
 
@@ -2050,8 +2057,8 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %bb.m
   %i.bu = load ptr, ptr %i.bn, align 8, !tbaa !76 ; 7 uses
   %i.bv = ptrtoint ptr %i.bp to i64               ; 2 uses
-  %i.bw = ptrtoint ptr %i.bu to i64               ; 2 uses
-  %i.bx = sub i64 %i.bv, %i.bw                    ; 4 uses
+  %i.bw = ptrtoint ptr %i.bu to i64               ; 3 uses
+  %i.bx = sub i64 %i.bv, %i.bw                    ; 3 uses
   %i.by = icmp eq i64 %i.bx, 9223372036854775800
   br i1 %i.by, label %bb.p, label %_ZNKSt6vectorIN7msgpack2v26detail7contextINS2_12parse_helperINS2_21create_object_visitorEEEE12unpack_stack10stack_elemESaIS9_EE12_M_check_lenEmPKc.exit.i.i.i.i
 
@@ -2137,7 +2144,9 @@ _ZNSt6vectorIN7msgpack2v26detail7contextINS2_12parse_helperINS2_21create_object_
   br i1 %.not.i23.i.i.i.i, label %_ZNSt6vectorIN7msgpack2v26detail7contextINS2_12parse_helperINS2_21create_object_visitorEEEE12unpack_stack10stack_elemESaIS9_EE17_M_realloc_insertIJS9_EEEvN9__gnu_cxx17__normal_iteratorIPS9_SB_EEDpOT_.exit.i.i.i, label %bb.q
 
 bb.q:                                             ; preds = %_ZNSt6vectorIN7msgpack2v26detail7contextINS2_12parse_helperINS2_21create_object_visitorEEEE12unpack_stack10stack_elemESaIS9_EE11_S_relocateEPS9_SC_SC_RSA_.exit22.i.i.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.bu, i64 noundef %i.bx) #22
+  %5 = ptrtoint ptr %i.br to i64
+  %6 = sub i64 %5, %i.bw
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.bu, i64 noundef %6) #22
   br label %_ZNSt6vectorIN7msgpack2v26detail7contextINS2_12parse_helperINS2_21create_object_visitorEEEE12unpack_stack10stack_elemESaIS9_EE17_M_realloc_insertIJS9_EEEvN9__gnu_cxx17__normal_iteratorIPS9_SB_EEDpOT_.exit.i.i.i
 
 _ZNSt6vectorIN7msgpack2v26detail7contextINS2_12parse_helperINS2_21create_object_visitorEEEE12unpack_stack10stack_elemESaIS9_EE17_M_realloc_insertIJS9_EEEvN9__gnu_cxx17__normal_iteratorIPS9_SB_EEDpOT_.exit.i.i.i: ; preds = %bb.q, %_ZNSt6vectorIN7msgpack2v26detail7contextINS2_12parse_helperINS2_21create_object_visitorEEEE12unpack_stack10stack_elemESaIS9_EE11_S_relocateEPS9_SC_SC_RSA_.exit22.i.i.i.i
@@ -2297,7 +2306,7 @@ bb.m:                                             ; preds = %bb.k
   %i.br = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
   %i.bs = load ptr, ptr %i.br, align 8, !tbaa !77 ; 5 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
-  %i.bu = load ptr, ptr %i.bt, align 8, !tbaa !78
+  %i.bu = load ptr, ptr %i.bt, align 8, !tbaa !78 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.bs, %i.bu
   br i1 %.not.i.i.i, label %bb.o, label %bb.n
 
@@ -2314,8 +2323,8 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %bb.m
   %i.bx = load ptr, ptr %i.bq, align 8, !tbaa !76 ; 7 uses
   %i.by = ptrtoint ptr %i.bs to i64               ; 2 uses
-  %i.bz = ptrtoint ptr %i.bx to i64               ; 2 uses
-  %i.ca = sub i64 %i.by, %i.bz                    ; 4 uses
+  %i.bz = ptrtoint ptr %i.bx to i64               ; 3 uses
+  %i.ca = sub i64 %i.by, %i.bz                    ; 3 uses
   %i.cb = icmp eq i64 %i.ca, 9223372036854775800
   br i1 %i.cb, label %bb.p, label %_ZNKSt6vectorIN7msgpack2v26detail7contextINS2_12parse_helperINS2_21create_object_visitorEEEE12unpack_stack10stack_elemESaIS9_EE12_M_check_lenEmPKc.exit.i.i.i.i
 
@@ -2402,7 +2411,9 @@ _ZNSt6vectorIN7msgpack2v26detail7contextINS2_12parse_helperINS2_21create_object_
   br i1 %.not.i23.i.i.i.i, label %_ZNSt6vectorIN7msgpack2v26detail7contextINS2_12parse_helperINS2_21create_object_visitorEEEE12unpack_stack10stack_elemESaIS9_EE17_M_realloc_insertIJS9_EEEvN9__gnu_cxx17__normal_iteratorIPS9_SB_EEDpOT_.exit.i.i.i, label %bb.q
 
 bb.q:                                             ; preds = %_ZNSt6vectorIN7msgpack2v26detail7contextINS2_12parse_helperINS2_21create_object_visitorEEEE12unpack_stack10stack_elemESaIS9_EE11_S_relocateEPS9_SC_SC_RSA_.exit22.i.i.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.bx, i64 noundef %i.ca) #22
+  %5 = ptrtoint ptr %i.bu to i64
+  %6 = sub i64 %5, %i.bz
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.bx, i64 noundef %6) #22
   br label %_ZNSt6vectorIN7msgpack2v26detail7contextINS2_12parse_helperINS2_21create_object_visitorEEEE12unpack_stack10stack_elemESaIS9_EE17_M_realloc_insertIJS9_EEEvN9__gnu_cxx17__normal_iteratorIPS9_SB_EEDpOT_.exit.i.i.i
 
 _ZNSt6vectorIN7msgpack2v26detail7contextINS2_12parse_helperINS2_21create_object_visitorEEEE12unpack_stack10stack_elemESaIS9_EE17_M_realloc_insertIJS9_EEEvN9__gnu_cxx17__normal_iteratorIPS9_SB_EEDpOT_.exit.i.i.i: ; preds = %bb.q, %_ZNSt6vectorIN7msgpack2v26detail7contextINS2_12parse_helperINS2_21create_object_visitorEEEE12unpack_stack10stack_elemESaIS9_EE11_S_relocateEPS9_SC_SC_RSA_.exit22.i.i.i.i
@@ -2558,7 +2569,7 @@ bb.m:                                             ; preds = %bb.k
   %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
   %i.bp = load ptr, ptr %i.bo, align 8, !tbaa !77 ; 5 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
-  %i.br = load ptr, ptr %i.bq, align 8, !tbaa !78
+  %i.br = load ptr, ptr %i.bq, align 8, !tbaa !78 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.bp, %i.br
   br i1 %.not.i.i.i, label %bb.o, label %bb.n
 
@@ -2575,8 +2586,8 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %bb.m
   %i.bu = load ptr, ptr %i.bn, align 8, !tbaa !76 ; 7 uses
   %i.bv = ptrtoint ptr %i.bp to i64               ; 2 uses
-  %i.bw = ptrtoint ptr %i.bu to i64               ; 2 uses
-  %i.bx = sub i64 %i.bv, %i.bw                    ; 4 uses
+  %i.bw = ptrtoint ptr %i.bu to i64               ; 3 uses
+  %i.bx = sub i64 %i.bv, %i.bw                    ; 3 uses
   %i.by = icmp eq i64 %i.bx, 9223372036854775800
   br i1 %i.by, label %bb.p, label %_ZNKSt6vectorIN7msgpack2v26detail7contextINS2_12parse_helperINS2_21create_object_visitorEEEE12unpack_stack10stack_elemESaIS9_EE12_M_check_lenEmPKc.exit.i.i.i.i
 
@@ -2663,7 +2674,9 @@ _ZNSt6vectorIN7msgpack2v26detail7contextINS2_12parse_helperINS2_21create_object_
   br i1 %.not.i23.i.i.i.i, label %_ZNSt6vectorIN7msgpack2v26detail7contextINS2_12parse_helperINS2_21create_object_visitorEEEE12unpack_stack10stack_elemESaIS9_EE17_M_realloc_insertIJS9_EEEvN9__gnu_cxx17__normal_iteratorIPS9_SB_EEDpOT_.exit.i.i.i, label %bb.q
 
 bb.q:                                             ; preds = %_ZNSt6vectorIN7msgpack2v26detail7contextINS2_12parse_helperINS2_21create_object_visitorEEEE12unpack_stack10stack_elemESaIS9_EE11_S_relocateEPS9_SC_SC_RSA_.exit22.i.i.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.bu, i64 noundef %i.bx) #22
+  %5 = ptrtoint ptr %i.br to i64
+  %6 = sub i64 %5, %i.bw
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.bu, i64 noundef %6) #22
   br label %_ZNSt6vectorIN7msgpack2v26detail7contextINS2_12parse_helperINS2_21create_object_visitorEEEE12unpack_stack10stack_elemESaIS9_EE17_M_realloc_insertIJS9_EEEvN9__gnu_cxx17__normal_iteratorIPS9_SB_EEDpOT_.exit.i.i.i
 
 _ZNSt6vectorIN7msgpack2v26detail7contextINS2_12parse_helperINS2_21create_object_visitorEEEE12unpack_stack10stack_elemESaIS9_EE17_M_realloc_insertIJS9_EEEvN9__gnu_cxx17__normal_iteratorIPS9_SB_EEDpOT_.exit.i.i.i: ; preds = %bb.q, %_ZNSt6vectorIN7msgpack2v26detail7contextINS2_12parse_helperINS2_21create_object_visitorEEEE12unpack_stack10stack_elemESaIS9_EE11_S_relocateEPS9_SC_SC_RSA_.exit22.i.i.i.i
@@ -2846,7 +2859,7 @@ bb.r:                                             ; preds = %bb.i, %_ZN7msgpack2
   store ptr %.0.i.sink, ptr %i.bh, align 8, !tbaa !12
   %i.bi = load ptr, ptr %i.h, align 8, !tbaa !63  ; 4 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 2 uses
-  %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !60
+  %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !60 ; 2 uses
   %.not.i = icmp eq ptr %i.bi, %i.bk
   br i1 %.not.i, label %bb.t, label %bb.s
 
@@ -2859,8 +2872,8 @@ bb.s:                                             ; preds = %bb.r
 bb.t:                                             ; preds = %bb.r
   %i.bm = load ptr, ptr %i.g, align 8, !tbaa !59  ; 4 uses
   %i.bn = ptrtoint ptr %i.bi to i64
-  %i.bo = ptrtoint ptr %i.bm to i64
-  %i.bp = sub i64 %i.bn, %i.bo                    ; 6 uses
+  %i.bo = ptrtoint ptr %i.bm to i64               ; 2 uses
+  %i.bp = sub i64 %i.bn, %i.bo                    ; 5 uses
   %i.bq = icmp eq i64 %i.bp, 9223372036854775800
   br i1 %i.bq, label %bb.u, label %_ZNKSt6vectorIPN7msgpack2v26objectESaIS3_EE12_M_check_lenEmPKc.exit.i.i
 
@@ -2894,7 +2907,9 @@ _ZNSt6vectorIPN7msgpack2v26objectESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.
   br i1 %.not.i17.i.i, label %_ZNSt6vectorIPN7msgpack2v26objectESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i, label %bb.w
 
 bb.w:                                             ; preds = %_ZNSt6vectorIPN7msgpack2v26objectESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.bm, i64 noundef %i.bp) #22
+  %2 = ptrtoint ptr %i.bk to i64
+  %3 = sub i64 %2, %i.bo
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.bm, i64 noundef %3) #22
   br label %_ZNSt6vectorIPN7msgpack2v26objectESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i
 
 _ZNSt6vectorIPN7msgpack2v26objectESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i: ; preds = %bb.w, %_ZNSt6vectorIPN7msgpack2v26objectESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i
@@ -3093,7 +3108,7 @@ bb.r:                                             ; preds = %bb.i, %_ZN7msgpack2
   store ptr %.0.i.sink, ptr %i.bh, align 8, !tbaa !12
   %i.bi = load ptr, ptr %i.h, align 8, !tbaa !63  ; 4 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 2 uses
-  %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !60
+  %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !60 ; 2 uses
   %.not.i.i15 = icmp eq ptr %i.bi, %i.bk
   br i1 %.not.i.i15, label %bb.t, label %bb.s
 
@@ -3106,8 +3121,8 @@ bb.s:                                             ; preds = %bb.r
 bb.t:                                             ; preds = %bb.r
   %i.bm = load ptr, ptr %i.g, align 8, !tbaa !59  ; 4 uses
   %i.bn = ptrtoint ptr %i.bi to i64
-  %i.bo = ptrtoint ptr %i.bm to i64
-  %i.bp = sub i64 %i.bn, %i.bo                    ; 6 uses
+  %i.bo = ptrtoint ptr %i.bm to i64               ; 2 uses
+  %i.bp = sub i64 %i.bn, %i.bo                    ; 5 uses
   %i.bq = icmp eq i64 %i.bp, 9223372036854775800
   br i1 %i.bq, label %bb.u, label %_ZNKSt6vectorIPN7msgpack2v26objectESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
 
@@ -3141,7 +3156,9 @@ _ZNSt6vectorIPN7msgpack2v26objectESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.
   br i1 %.not.i17.i.i.i, label %_ZNSt6vectorIPN7msgpack2v26objectESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i, label %bb.w
 
 bb.w:                                             ; preds = %_ZNSt6vectorIPN7msgpack2v26objectESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.bm, i64 noundef %i.bp) #22
+  %2 = ptrtoint ptr %i.bk to i64
+  %3 = sub i64 %2, %i.bo
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.bm, i64 noundef %3) #22
   br label %_ZNSt6vectorIPN7msgpack2v26objectESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIPN7msgpack2v26objectESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i: ; preds = %bb.w, %_ZNSt6vectorIPN7msgpack2v26objectESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i

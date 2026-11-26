@@ -175,7 +175,7 @@ bb.i:                                             ; preds = %._crit_edge, %_ZNSt
 bb.j:                                             ; preds = %.lr.ph, %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE9push_backERKS2_.exit78
   %indvars.iv = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next, %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE9push_backERKS2_.exit78 ] ; 3 uses
   %i.bl = phi ptr [ %.promoted97, %.lr.ph ], [ %i.dm, %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE9push_backERKS2_.exit78 ] ; 7 uses
-  %i.bm = phi ptr [ %.promoted97, %.lr.ph ], [ %i.dn, %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE9push_backERKS2_.exit78 ] ; 8 uses
+  %i.bm = phi ptr [ %.promoted97, %.lr.ph ], [ %i.dn, %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE9push_backERKS2_.exit78 ] ; 9 uses
   %.05091 = phi i32 [ 0, %.lr.ph ], [ %i.dp, %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE9push_backERKS2_.exit78 ] ; 2 uses
   %.05190 = phi float [ %i.bb, %.lr.ph ], [ %i.ce, %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE9push_backERKS2_.exit78 ] ; 3 uses
   %i.bn = phi ptr [ %.promoted, %.lr.ph ], [ %i.do, %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE9push_backERKS2_.exit78 ] ; 10 uses
@@ -234,9 +234,9 @@ bb.n:                                             ; preds = %bb.m
   br label %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE9push_backERKS2_.exit78
 
 bb.o:                                             ; preds = %bb.m
-  %i.cw = ptrtoint ptr %i.bl to i64
-  %i.cx = ptrtoint ptr %i.bn to i64
-  %i.cy = sub i64 %i.cw, %i.cx                    ; 6 uses
+  %i.cw = ptrtoint ptr %i.bm to i64
+  %i.cx = ptrtoint ptr %i.bn to i64               ; 2 uses
+  %i.cy = sub i64 %i.cw, %i.cx                    ; 5 uses
   %i.cz = icmp eq i64 %i.cy, 9223372036854775792
   br i1 %i.cz, label %bb.p, label %_ZNKSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE12_M_check_lenEmPKc.exit.i.i70
 
@@ -281,7 +281,9 @@ _ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE11_S_relocateEPS2_S5_S5_RS
   br i1 %.not.i17.i.i74, label %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i75, label %bb.r
 
 bb.r:                                             ; preds = %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i73
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.bn, i64 noundef %i.cy) #10
+  %7 = ptrtoint ptr %i.bl to i64
+  %8 = sub i64 %7, %i.cx
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.bn, i64 noundef %8) #10
   br label %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i75
 
 _ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i75: ; preds = %bb.r, %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i73
@@ -684,7 +686,7 @@ bb.ag:                                            ; preds = %bb.z
 bb.ah:                                            ; preds = %.lr.ph, %bb.ao
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.ao ] ; 2 uses
   %i.jg = phi ptr [ %.promoted157, %.lr.ph ], [ %i.kh, %bb.ao ] ; 6 uses
-  %i.jh = phi ptr [ %.promoted151, %.lr.ph ], [ %i.ki, %bb.ao ] ; 6 uses
+  %i.jh = phi ptr [ %.promoted151, %.lr.ph ], [ %i.ki, %bb.ao ] ; 7 uses
   %.1101148 = phi i8 [ %.0100163, %.lr.ph ], [ %.2102, %bb.ao ] ; 3 uses
   %i.ji = phi ptr [ %.promoted, %.lr.ph ], [ %i.kj, %bb.ao ] ; 10 uses
   %i.jj = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %indvars.iv ; 3 uses
@@ -704,9 +706,9 @@ bb.aj:                                            ; preds = %bb.ai
   br label %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE9push_backERKS2_.exit136
 
 bb.ak:                                            ; preds = %bb.ai
-  %i.jp = ptrtoint ptr %i.jg to i64
-  %i.jq = ptrtoint ptr %i.ji to i64
-  %i.jr = sub i64 %i.jp, %i.jq                    ; 6 uses
+  %i.jp = ptrtoint ptr %i.jh to i64
+  %i.jq = ptrtoint ptr %i.ji to i64               ; 2 uses
+  %i.jr = sub i64 %i.jp, %i.jq                    ; 5 uses
   %i.js = icmp eq i64 %i.jr, 9223372036854775792
   br i1 %i.js, label %bb.al, label %_ZNKSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE12_M_check_lenEmPKc.exit.i.i128
 
@@ -748,7 +750,9 @@ _ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE11_S_relocateEPS2_S5_S5_RS
   br i1 %.not.i17.i.i132, label %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i133, label %bb.an
 
 bb.an:                                            ; preds = %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i131
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.ji, i64 noundef %i.jr) #10
+  %8 = ptrtoint ptr %i.jg to i64
+  %9 = sub i64 %8, %i.jq
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.ji, i64 noundef %9) #10
   br label %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i133
 
 _ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i133: ; preds = %bb.an, %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i131
@@ -1151,7 +1155,7 @@ bb.ag:                                            ; preds = %bb.z
 bb.ah:                                            ; preds = %.lr.ph, %bb.ao
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.ao ] ; 2 uses
   %i.jg = phi ptr [ %.promoted157, %.lr.ph ], [ %i.kh, %bb.ao ] ; 6 uses
-  %i.jh = phi ptr [ %.promoted151, %.lr.ph ], [ %i.ki, %bb.ao ] ; 6 uses
+  %i.jh = phi ptr [ %.promoted151, %.lr.ph ], [ %i.ki, %bb.ao ] ; 7 uses
   %.1101148 = phi i8 [ %.0100163, %.lr.ph ], [ %.2102, %bb.ao ] ; 3 uses
   %i.ji = phi ptr [ %.promoted, %.lr.ph ], [ %i.kj, %bb.ao ] ; 10 uses
   %i.jj = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %indvars.iv ; 3 uses
@@ -1171,9 +1175,9 @@ bb.aj:                                            ; preds = %bb.ai
   br label %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE9push_backERKS2_.exit136
 
 bb.ak:                                            ; preds = %bb.ai
-  %i.jp = ptrtoint ptr %i.jg to i64
-  %i.jq = ptrtoint ptr %i.ji to i64
-  %i.jr = sub i64 %i.jp, %i.jq                    ; 6 uses
+  %i.jp = ptrtoint ptr %i.jh to i64
+  %i.jq = ptrtoint ptr %i.ji to i64               ; 2 uses
+  %i.jr = sub i64 %i.jp, %i.jq                    ; 5 uses
   %i.js = icmp eq i64 %i.jr, 9223372036854775792
   br i1 %i.js, label %bb.al, label %_ZNKSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE12_M_check_lenEmPKc.exit.i.i128
 
@@ -1215,7 +1219,9 @@ _ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE11_S_relocateEPS2_S5_S5_RS
   br i1 %.not.i17.i.i132, label %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i133, label %bb.an
 
 bb.an:                                            ; preds = %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i131
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.ji, i64 noundef %i.jr) #10
+  %8 = ptrtoint ptr %i.jg to i64
+  %9 = sub i64 %8, %i.jq
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.ji, i64 noundef %9) #10
   br label %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i133
 
 _ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i133: ; preds = %bb.an, %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i131

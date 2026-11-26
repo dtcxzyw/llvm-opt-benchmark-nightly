@@ -205,7 +205,7 @@ _ZL9Py_DECREFP7_object.exit:                      ; preds = %bb.t, %bb.s, %bb.u
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 584 ; 4 uses
   %i.af = load ptr, ptr %i.ae, align 8            ; 3 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 592 ; 2 uses
-  %i.ah = load ptr, ptr %i.ag, align 8
+  %i.ah = load ptr, ptr %i.ag, align 8            ; 2 uses
   %.not.i38 = icmp eq ptr %i.af, %i.ah
   br i1 %.not.i38, label %bb.w, label %bb.v
 
@@ -219,8 +219,8 @@ bb.v:                                             ; preds = %_ZL9Py_DECREFP7_obj
 bb.w:                                             ; preds = %_ZL9Py_DECREFP7_object.exit
   %i.ak = load ptr, ptr %i.ad, align 8            ; 4 uses
   %i.al = ptrtoint ptr %i.af to i64
-  %i.am = ptrtoint ptr %i.ak to i64
-  %i.an = sub i64 %i.al, %i.am                    ; 6 uses
+  %i.am = ptrtoint ptr %i.ak to i64               ; 2 uses
+  %i.an = sub i64 %i.al, %i.am                    ; 5 uses
   %i.ao = icmp eq i64 %i.an, 9223372036854775800
   br i1 %i.ao, label %bb.x, label %_ZNKSt6vectorIPN8nanobind6detail12import_cacheESaIS3_EE12_M_check_lenEmPKc.exit.i.i
 
@@ -260,7 +260,9 @@ _ZNSt6vectorIPN8nanobind6detail12import_cacheESaIS3_EE11_S_relocateEPS3_S6_S6_RS
   br i1 %.not.i17.i.i, label %_ZNSt6vectorIPN8nanobind6detail12import_cacheESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i, label %bb.z
 
 bb.z:                                             ; preds = %_ZNSt6vectorIPN8nanobind6detail12import_cacheESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.ak, i64 noundef %i.an) #32
+  %2 = ptrtoint ptr %i.ah to i64
+  %3 = sub i64 %2, %i.am
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.ak, i64 noundef %3) #32
   br label %_ZNSt6vectorIPN8nanobind6detail12import_cacheESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i
 
 _ZNSt6vectorIPN8nanobind6detail12import_cacheESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i: ; preds = %bb.z, %_ZNSt6vectorIPN8nanobind6detail12import_cacheESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i
@@ -663,7 +665,7 @@ bb.bp:                                            ; preds = %_ZL9Py_DECREFP7_obj
   %i.dq = load ptr, ptr @_ZN8nanobind6detailL17internals_createdE, align 8 ; 5 uses
   %i.dr = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZN8nanobind6detailL17internals_createdE, i64 8), align 8 ; 4 uses
   %i.ds = icmp eq ptr %i.dq, %i.dr
-  %i.dt = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZN8nanobind6detailL17internals_createdE, i64 16), align 8
+  %i.dt = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZN8nanobind6detailL17internals_createdE, i64 16), align 8 ; 2 uses
   %.not.i99.i = icmp eq ptr %i.dr, %i.dt
   br i1 %.not.i99.i, label %bb.br, label %bb.bq
 
@@ -676,8 +678,8 @@ bb.bq:                                            ; preds = %bb.bp
 
 bb.br:                                            ; preds = %bb.bp
   %i.dw = ptrtoint ptr %i.dr to i64
-  %i.dx = ptrtoint ptr %i.dq to i64
-  %i.dy = sub i64 %i.dw, %i.dx                    ; 6 uses
+  %i.dx = ptrtoint ptr %i.dq to i64               ; 2 uses
+  %i.dy = sub i64 %i.dw, %i.dx                    ; 5 uses
   %i.dz = icmp eq i64 %i.dy, 9223372036854775800
   br i1 %i.dz, label %bb.bs, label %_ZNKSt6vectorIPN8nanobind6detail12nb_internalsESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
 
@@ -717,7 +719,9 @@ _ZNSt6vectorIPN8nanobind6detail12nb_internalsESaIS3_EE11_S_relocateEPS3_S6_S6_RS
   br i1 %.not.i17.i.i.i, label %_ZNSt6vectorIPN8nanobind6detail12nb_internalsESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i, label %bb.bu
 
 bb.bu:                                            ; preds = %_ZNSt6vectorIPN8nanobind6detail12nb_internalsESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.dq, i64 noundef %i.dy) #32
+  %2 = ptrtoint ptr %i.dt to i64
+  %3 = sub i64 %2, %i.dx
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.dq, i64 noundef %3) #32
   br label %_ZNSt6vectorIPN8nanobind6detail12nb_internalsESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIPN8nanobind6detail12nb_internalsESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i: ; preds = %bb.bu, %_ZNSt6vectorIPN8nanobind6detail12nb_internalsESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i

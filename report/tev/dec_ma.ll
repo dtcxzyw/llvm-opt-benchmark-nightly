@@ -202,7 +202,7 @@ bb.x:                                             ; preds = %_ZNSt3__16vectorIN3
 
 bb.y:                                             ; preds = %bb.x
   %i.gs = ptrtoaddr ptr %i.gr to i64
-  %i.gt = load ptr, ptr %2, align 8, !tbaa !93    ; 13 uses
+  %i.gt = load ptr, ptr %2, align 8, !tbaa !93    ; 14 uses
   %.not104106.i.i = icmp eq ptr %i.gt, %i.gr
   br i1 %.not104106.i.i, label %._crit_edge.thread.i.i, label %.lr.ph.i.i.preheader
 
@@ -283,7 +283,9 @@ middle.block:                                     ; preds = %vector.body
 
 ._crit_edge.thread.i.i:                           ; preds = %bb.y
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #13
-  %i.ir = ptrtoint ptr %i.gr to i64               ; 2 uses
+  %i.ir = ptrtoint ptr %i.gr to i64
+  %10 = ptrtoint ptr %i.gt to i64
+  %11 = sub i64 %i.ir, %10
   %i.is = getelementptr inbounds nuw i8, ptr %4, i64 8
   br label %_ZNSt3__16vectorIiNS_9allocatorIiEEEC2Em.exit.i.i
 
@@ -312,21 +314,20 @@ _ZNSt3__16vectorIiNS_9allocatorIiEEE18__construct_at_endEm.exit.i.i.i: ; preds =
   %.pre130.i.i = load ptr, ptr %2, align 8, !tbaa !93
   %.pre131.i.i = ptrtoint ptr %.pre.i.i to i64
   %.pre132.i.i = ptrtoint ptr %.pre130.i.i to i64
+  %.pre134.i.i = sub i64 %.pre131.i.i, %.pre132.i.i
   %i.jc = ptrtoint ptr %i.jb to i64
   br label %_ZNSt3__16vectorIiNS_9allocatorIiEEEC2Em.exit.i.i
 
 _ZNSt3__16vectorIiNS_9allocatorIiEEEC2Em.exit.i.i: ; preds = %_ZNSt3__16vectorIiNS_9allocatorIiEEE18__construct_at_endEm.exit.i.i.i, %._crit_edge.thread.i.i
   %i.jd = phi ptr [ %i.is, %._crit_edge.thread.i.i ], [ %i.iy, %_ZNSt3__16vectorIiNS_9allocatorIiEEE18__construct_at_endEm.exit.i.i.i ]
   %.0.lcssa152.i.i = phi i32 [ 0, %._crit_edge.thread.i.i ], [ %spec.select.i79.i.lcssa, %_ZNSt3__16vectorIiNS_9allocatorIiEEE18__construct_at_endEm.exit.i.i.i ] ; 7 uses
-  %.pre-phi133.i.i = phi i64 [ %i.ir, %._crit_edge.thread.i.i ], [ %.pre132.i.i, %_ZNSt3__16vectorIiNS_9allocatorIiEEE18__construct_at_endEm.exit.i.i.i ]
-  %.pre-phi.i.i = phi i64 [ %i.ir, %._crit_edge.thread.i.i ], [ %.pre131.i.i, %_ZNSt3__16vectorIiNS_9allocatorIiEEE18__construct_at_endEm.exit.i.i.i ]
+  %.pre-phi.i.i = phi i64 [ %11, %._crit_edge.thread.i.i ], [ %.pre134.i.i, %_ZNSt3__16vectorIiNS_9allocatorIiEEE18__construct_at_endEm.exit.i.i.i ]
   %i.je = phi i64 [ 0, %._crit_edge.thread.i.i ], [ %i.jc, %_ZNSt3__16vectorIiNS_9allocatorIiEEE18__construct_at_endEm.exit.i.i.i ]
   %i.jf = phi ptr [ null, %._crit_edge.thread.i.i ], [ %i.ja, %_ZNSt3__16vectorIiNS_9allocatorIiEEE18__construct_at_endEm.exit.i.i.i ] ; 10 uses
+  %.pre-phi137.i.i = sdiv exact i64 %.pre-phi.i.i, 40
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #13
-  %10 = zext nneg i32 %.0.lcssa152.i.i to i64     ; 6 uses
-  %11 = sub i64 %.pre-phi.i.i, %.pre-phi133.i.i
-  %12 = sdiv exact i64 %11, 40
-  %i.jg = mul i64 %12, %10                        ; 4 uses
+  %12 = zext nneg i32 %.0.lcssa152.i.i to i64     ; 6 uses
+  %i.jg = mul i64 %.pre-phi137.i.i, %12           ; 4 uses
   %.not.i83.i.i = icmp eq i64 %i.jg, 0
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   br i1 %.not.i83.i.i, label %_ZNSt3__16vectorINS_4pairIiiEENS_9allocatorIS2_EEEC2Em.exit.i.i, label %bb.aa
@@ -358,7 +359,7 @@ _ZNSt3__16vectorINS_4pairIiiEENS_9allocatorIS2_EEEC2Em.exit.i.i: ; preds = %_ZNS
   br i1 %min.iters.check97, label %.lr.ph110.i.i.preheader108, label %vector.ph98
 
 vector.ph98:                                      ; preds = %.lr.ph110.i.i.preheader
-  %n.vec99 = and i64 %10, 2147483644              ; 3 uses
+  %n.vec99 = and i64 %12, 2147483644              ; 3 uses
   br label %vector.body100
 
 vector.body100:                                   ; preds = %vector.body100, %vector.ph98
@@ -373,7 +374,7 @@ vector.body100:                                   ; preds = %vector.body100, %ve
   br i1 %i.js, label %middle.block103, label %vector.body100, !llvm.loop !61
 
 middle.block103:                                  ; preds = %vector.body100
-  %cmp.n104 = icmp eq i64 %n.vec99, %10
+  %cmp.n104 = icmp eq i64 %n.vec99, %12
   br i1 %cmp.n104, label %.preheader.i.i, label %.lr.ph110.i.i.preheader108
 
 .lr.ph110.i.i.preheader108:                       ; preds = %.lr.ph110.i.i.preheader, %middle.block103
@@ -436,7 +437,7 @@ bb.ac:                                            ; preds = %.lr.ph117.split.us.
   %i.kt = getelementptr inbounds nuw [4 x i8], ptr %i.jf, i64 %i.ks
   store i32 %i.kp, ptr %i.kt, align 4, !tbaa !19
   %i.ku = sext i16 %i.kh to i64                   ; 4 uses
-  %i.kv = mul i64 %.071116.us.i.i, %10
+  %i.kv = mul i64 %.071116.us.i.i, %12
   %i.kw = getelementptr [8 x i8], ptr %i.jn, i64 %i.kv ; 2 uses
   %i.kx = getelementptr [8 x i8], ptr %i.kw, i64 %i.ku ; 2 uses
   %i.ky = getelementptr inbounds nuw i8, ptr %i.kx, i64 4
@@ -496,7 +497,7 @@ bb.ah:                                            ; preds = %bb.ag, %bb.ae
   %i.ma = getelementptr inbounds nuw i8, ptr %i.lz, i64 4
   store i32 %.sink.i.i, ptr %i.ma, align 4, !tbaa !125
   %i.mb = add nuw nsw i64 %.068112.us.i.i, 1      ; 2 uses
-  %exitcond126.not.i.i = icmp eq i64 %i.mb, %10
+  %exitcond126.not.i.i = icmp eq i64 %i.mb, %12
   br i1 %exitcond126.not.i.i, label %.critedge80.us.i.i, label %bb.ad, !llvm.loop !63
 
 .critedge80.us.i.i:                               ; preds = %bb.ah, %bb.ac
@@ -511,7 +512,7 @@ bb.ah:                                            ; preds = %bb.ag, %bb.ae
   %i.me = getelementptr inbounds nuw i8, ptr %i.md, i64 4
   store i32 2147483647, ptr %i.me, align 4, !tbaa !125
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
-  %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %10
+  %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %12
   br i1 %exitcond.not.i.i, label %.preheader.i.i, label %.lr.ph110.i.i, !llvm.loop !65
 
 .lr.ph117.split.i.i:                              ; preds = %.lr.ph117.i.i, %.critedge80.i.i

@@ -205,7 +205,7 @@ _ZNSt6vectorIPKN5vcpkg17InstallPlanActionESaIS3_EE7reserveEm.exit: ; preds = %.n
 bb.d:                                             ; preds = %.lr.ph, %_ZNSt6vectorIPKN5vcpkg17InstallPlanActionESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit
   %i.q = phi ptr [ %.promoted, %.lr.ph ], [ %i.aj, %_ZNSt6vectorIPKN5vcpkg17InstallPlanActionESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit ] ; 7 uses
   %i.r = phi ptr [ %.promoted7, %.lr.ph ], [ %i.ak, %_ZNSt6vectorIPKN5vcpkg17InstallPlanActionESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit ] ; 5 uses
-  %i.s = phi ptr [ %.promoted, %.lr.ph ], [ %i.al, %_ZNSt6vectorIPKN5vcpkg17InstallPlanActionESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit ] ; 3 uses
+  %i.s = phi ptr [ %.promoted, %.lr.ph ], [ %i.al, %_ZNSt6vectorIPKN5vcpkg17InstallPlanActionESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit ] ; 4 uses
   %.sroa.02.06 = phi ptr [ %i.o, %.lr.ph ], [ %i.am, %_ZNSt6vectorIPKN5vcpkg17InstallPlanActionESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit ] ; 3 uses
   %.not.i = icmp eq ptr %i.s, %i.r
   br i1 %.not.i, label %bb.f, label %bb.e
@@ -217,9 +217,9 @@ bb.e:                                             ; preds = %bb.d
   br label %_ZNSt6vectorIPKN5vcpkg17InstallPlanActionESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit
 
 bb.f:                                             ; preds = %bb.d
-  %i.u = ptrtoint ptr %i.r to i64
-  %i.v = ptrtoint ptr %i.q to i64
-  %i.w = sub i64 %i.u, %i.v                       ; 6 uses
+  %i.u = ptrtoint ptr %i.s to i64
+  %i.v = ptrtoint ptr %i.q to i64                 ; 2 uses
+  %i.w = sub i64 %i.u, %i.v                       ; 5 uses
   %i.x = icmp eq i64 %i.w, 9223372036854775800
   br i1 %i.x, label %bb.g, label %_ZNKSt6vectorIPKN5vcpkg17InstallPlanActionESaIS3_EE12_M_check_lenEmPKc.exit.i.i
 
@@ -259,7 +259,9 @@ _ZNSt6vectorIPKN5vcpkg17InstallPlanActionESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.e
   br i1 %.not.i17.i.i, label %_ZNSt6vectorIPKN5vcpkg17InstallPlanActionESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt6vectorIPKN5vcpkg17InstallPlanActionESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.q, i64 noundef %i.w) #22
+  %2 = ptrtoint ptr %i.r to i64
+  %3 = sub i64 %2, %i.v
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.q, i64 noundef %3) #22
   br label %_ZNSt6vectorIPKN5vcpkg17InstallPlanActionESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i
 
 _ZNSt6vectorIPKN5vcpkg17InstallPlanActionESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i: ; preds = %bb.i, %_ZNSt6vectorIPKN5vcpkg17InstallPlanActionESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i
@@ -662,7 +664,7 @@ bb.a:
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
-  %i.l = phi ptr [ %i.h, %bb.a ], [ %.pre, %._crit_edge.loopexit ] ; 7 uses
+  %i.l = phi ptr [ %i.h, %bb.a ], [ %.pre, %._crit_edge.loopexit ] ; 6 uses
   %.lcssa243 = phi ptr [ %i.i, %bb.a ], [ %i.lz, %._crit_edge.loopexit ] ; 3 uses
   %i.m = ptrtoint ptr %i.l to i64                 ; 2 uses
   %i.n = ptrtoint ptr %.lcssa243 to i64
@@ -1065,7 +1067,7 @@ _ZNKSt8_Rb_treeIN5vcpkg11PackageSpecES1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE14_
   br label %"_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPN5vcpkg17InstallPlanActionESt6vectorIS3_SaIS3_EEEENS0_5__ops10_Iter_predIZN12_GLOBAL__N_136prune_entirely_known_action_branchesERNS2_10ActionPlanERKSt3mapINS2_11PackageSpecENS2_11BuildResultESt4lessISF_ESaISt4pairIKSF_SG_EEEE3$_0EEET_SS_SS_T0_.exit.i.i.i"
 
 "_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPN5vcpkg17InstallPlanActionESt6vectorIS3_SaIS3_EEEENS0_5__ops10_Iter_predIZN12_GLOBAL__N_136prune_entirely_known_action_branchesERNS2_10ActionPlanERKSt3mapINS2_11PackageSpecENS2_11BuildResultESt4lessISF_ESaISt4pairIKSF_SG_EEEE3$_0EEET_SS_SS_T0_.exit.i.i.i": ; preds = %.noexc27, %_ZNKSt8_Rb_treeIN5vcpkg11PackageSpecES1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS1_EPKSt18_Rb_tree_node_baseRKS1_.exit.i.i.i.i.i53.i.i.i.i.i, %bb.g, %.noexc24, %_ZNKSt8_Rb_treeIN5vcpkg11PackageSpecES1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS1_EPKSt18_Rb_tree_node_baseRKS1_.exit.i.i.i.i.i42.i.i.i.i.i, %bb.e, %.noexc21, %_ZNKSt8_Rb_treeIN5vcpkg11PackageSpecES1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS1_EPKSt18_Rb_tree_node_baseRKS1_.exit.i.i.i.i.i31.i.i.i.i.i, %bb.c, %.noexc18, %_ZNKSt8_Rb_treeIN5vcpkg11PackageSpecES1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS1_EPKSt18_Rb_tree_node_baseRKS1_.exit.i.i.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i, %.noexc33, %_ZNKSt8_Rb_treeIN5vcpkg11PackageSpecES1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS1_EPKSt18_Rb_tree_node_baseRKS1_.exit.i.i.i.i.i86.i.i.i.i.i, %bb.n, %.noexc31, %_ZNKSt8_Rb_treeIN5vcpkg11PackageSpecES1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS1_EPKSt18_Rb_tree_node_baseRKS1_.exit.i.i.i.i.i75.i.i.i.i.i, %bb.l, %.noexc29, %_ZNKSt8_Rb_treeIN5vcpkg11PackageSpecES1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS1_EPKSt18_Rb_tree_node_baseRKS1_.exit.i.i.i.i.i64.i.i.i.i.i, %bb.j
-  %.sroa.08.0.in.sroa.speculated.i.i.i.i.i = phi ptr [ %.sroa.0157.1.i.i.i.i.i, %.noexc31 ], [ %.sroa.0157.0.lcssa.i.i.i.i.i, %_ZNKSt8_Rb_treeIN5vcpkg11PackageSpecES1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS1_EPKSt18_Rb_tree_node_baseRKS1_.exit.i.i.i.i.i64.i.i.i.i.i ], [ %.sroa.0157.2.i.i.i.i.i, %bb.n ], [ %.sroa.0157.0.lcssa.i.i.i.i.i, %bb.j ], [ %spec.select.i.i.i.i.i, %.noexc33 ], [ %.sroa.0157.1.i.i.i.i.i, %bb.l ], [ %.sroa.0157.0.lcssa.i.i.i.i.i, %.noexc29 ], [ %.sroa.0157.2.i.i.i.i.i, %_ZNKSt8_Rb_treeIN5vcpkg11PackageSpecES1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS1_EPKSt18_Rb_tree_node_baseRKS1_.exit.i.i.i.i.i86.i.i.i.i.i ], [ %.sroa.0157.1.i.i.i.i.i, %_ZNKSt8_Rb_treeIN5vcpkg11PackageSpecES1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS1_EPKSt18_Rb_tree_node_baseRKS1_.exit.i.i.i.i.i75.i.i.i.i.i ], [ %i.ds, %bb.g ], [ %.sroa.0157.0241.i.i.i.i.i, %.noexc18 ], [ %i.ba, %.noexc21 ], [ %i.cj, %.noexc24 ], [ %i.ds, %.noexc27 ], [ %.sroa.0157.0241.i.i.i.i.i, %_ZNKSt8_Rb_treeIN5vcpkg11PackageSpecES1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS1_EPKSt18_Rb_tree_node_baseRKS1_.exit.i.i.i.i.i.i.i.i.i.i ], [ %i.ba, %_ZNKSt8_Rb_treeIN5vcpkg11PackageSpecES1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS1_EPKSt18_Rb_tree_node_baseRKS1_.exit.i.i.i.i.i31.i.i.i.i.i ], [ %i.cj, %_ZNKSt8_Rb_treeIN5vcpkg11PackageSpecES1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS1_EPKSt18_Rb_tree_node_baseRKS1_.exit.i.i.i.i.i42.i.i.i.i.i ], [ %i.ds, %_ZNKSt8_Rb_treeIN5vcpkg11PackageSpecES1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS1_EPKSt18_Rb_tree_node_baseRKS1_.exit.i.i.i.i.i53.i.i.i.i.i ], [ %.sroa.0157.0241.i.i.i.i.i, %.lr.ph.i.i.i.i.i ], [ %i.ba, %bb.c ], [ %i.cj, %bb.e ] ; 5 uses
+  %.sroa.08.0.in.sroa.speculated.i.i.i.i.i = phi ptr [ %.sroa.0157.1.i.i.i.i.i, %.noexc31 ], [ %.sroa.0157.0.lcssa.i.i.i.i.i, %_ZNKSt8_Rb_treeIN5vcpkg11PackageSpecES1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS1_EPKSt18_Rb_tree_node_baseRKS1_.exit.i.i.i.i.i64.i.i.i.i.i ], [ %.sroa.0157.2.i.i.i.i.i, %bb.n ], [ %.sroa.0157.0.lcssa.i.i.i.i.i, %bb.j ], [ %spec.select.i.i.i.i.i, %.noexc33 ], [ %.sroa.0157.1.i.i.i.i.i, %bb.l ], [ %.sroa.0157.0.lcssa.i.i.i.i.i, %.noexc29 ], [ %.sroa.0157.2.i.i.i.i.i, %_ZNKSt8_Rb_treeIN5vcpkg11PackageSpecES1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS1_EPKSt18_Rb_tree_node_baseRKS1_.exit.i.i.i.i.i86.i.i.i.i.i ], [ %.sroa.0157.1.i.i.i.i.i, %_ZNKSt8_Rb_treeIN5vcpkg11PackageSpecES1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS1_EPKSt18_Rb_tree_node_baseRKS1_.exit.i.i.i.i.i75.i.i.i.i.i ], [ %i.ds, %bb.g ], [ %.sroa.0157.0241.i.i.i.i.i, %.noexc18 ], [ %i.ba, %.noexc21 ], [ %i.cj, %.noexc24 ], [ %i.ds, %.noexc27 ], [ %.sroa.0157.0241.i.i.i.i.i, %_ZNKSt8_Rb_treeIN5vcpkg11PackageSpecES1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS1_EPKSt18_Rb_tree_node_baseRKS1_.exit.i.i.i.i.i.i.i.i.i.i ], [ %i.ba, %_ZNKSt8_Rb_treeIN5vcpkg11PackageSpecES1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS1_EPKSt18_Rb_tree_node_baseRKS1_.exit.i.i.i.i.i31.i.i.i.i.i ], [ %i.cj, %_ZNKSt8_Rb_treeIN5vcpkg11PackageSpecES1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS1_EPKSt18_Rb_tree_node_baseRKS1_.exit.i.i.i.i.i42.i.i.i.i.i ], [ %i.ds, %_ZNKSt8_Rb_treeIN5vcpkg11PackageSpecES1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS1_EPKSt18_Rb_tree_node_baseRKS1_.exit.i.i.i.i.i53.i.i.i.i.i ], [ %.sroa.0157.0241.i.i.i.i.i, %.lr.ph.i.i.i.i.i ], [ %i.ba, %bb.c ], [ %i.cj, %bb.e ] ; 6 uses
   %i.fw = icmp eq ptr %.sroa.08.0.in.sroa.speculated.i.i.i.i.i, %i.l
   br i1 %i.fw, label %"_ZSt9remove_ifIN9__gnu_cxx17__normal_iteratorIPN5vcpkg17InstallPlanActionESt6vectorIS3_SaIS3_EEEEZN12_GLOBAL__N_136prune_entirely_known_action_branchesERNS2_10ActionPlanERKSt3mapINS2_11PackageSpecENS2_11BuildResultESt4lessISD_ESaISt4pairIKSD_SE_EEEE3$_0ET_SP_SP_T0_.exit.i", label %.preheader.i.i.i
 
@@ -1209,16 +1211,16 @@ bb.p:                                             ; preds = %.noexc36
   br i1 %.not.i.i.i, label %"_ZSt9remove_ifIN9__gnu_cxx17__normal_iteratorIPN5vcpkg17InstallPlanActionESt6vectorIS3_SaIS3_EEEEZN12_GLOBAL__N_136prune_entirely_known_action_branchesERNS2_10ActionPlanERKSt3mapINS2_11PackageSpecENS2_11BuildResultESt4lessISD_ESaISt4pairIKSD_SE_EEEE3$_0ET_SP_SP_T0_.exit.i", label %.lr.ph.splitthread-pre-split.i.i.i, !llvm.loop !407
 
 "_ZSt9remove_ifIN9__gnu_cxx17__normal_iteratorIPN5vcpkg17InstallPlanActionESt6vectorIS3_SaIS3_EEEEZN12_GLOBAL__N_136prune_entirely_known_action_branchesERNS2_10ActionPlanERKSt3mapINS2_11PackageSpecENS2_11BuildResultESt4lessISD_ESaISt4pairIKSD_SE_EEEE3$_0ET_SP_SP_T0_.exit.i": ; preds = %"_ZN9__gnu_cxx5__ops10_Iter_predIZN12_GLOBAL__N_136prune_entirely_known_action_branchesERN5vcpkg10ActionPlanERKSt3mapINS3_11PackageSpecENS3_11BuildResultESt4lessIS7_ESaISt4pairIKS7_S8_EEEE3$_0EclINS_17__normal_iteratorIPNS3_17InstallPlanActionESt6vectorISM_SaISM_EEEEEEbT_.exit.thread.i.i.i", %.preheader.i.i.i, %"_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPN5vcpkg17InstallPlanActionESt6vectorIS3_SaIS3_EEEENS0_5__ops10_Iter_predIZN12_GLOBAL__N_136prune_entirely_known_action_branchesERNS2_10ActionPlanERKSt3mapINS2_11PackageSpecENS2_11BuildResultESt4lessISF_ESaISt4pairIKSF_SG_EEEE3$_0EEET_SS_SS_T0_.exit.i.i.i", %._crit_edge.i.i.i.i.i
-  %.sroa.014.2.i.i.i = phi ptr [ %i.l, %._crit_edge.i.i.i.i.i ], [ %i.l, %"_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPN5vcpkg17InstallPlanActionESt6vectorIS3_SaIS3_EEEENS0_5__ops10_Iter_predIZN12_GLOBAL__N_136prune_entirely_known_action_branchesERNS2_10ActionPlanERKSt3mapINS2_11PackageSpecENS2_11BuildResultESt4lessISF_ESaISt4pairIKSF_SG_EEEE3$_0EEET_SS_SS_T0_.exit.i.i.i" ], [ %.sroa.08.0.in.sroa.speculated.i.i.i.i.i, %.preheader.i.i.i ], [ %.sroa.014.1.i.i.i, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN12_GLOBAL__N_136prune_entirely_known_action_branchesERN5vcpkg10ActionPlanERKSt3mapINS3_11PackageSpecENS3_11BuildResultESt4lessIS7_ESaISt4pairIKS7_S8_EEEE3$_0EclINS_17__normal_iteratorIPNS3_17InstallPlanActionESt6vectorISM_SaISM_EEEEEEbT_.exit.thread.i.i.i" ] ; 2 uses
+  %.sroa.014.2.i.i.i = phi ptr [ %i.l, %._crit_edge.i.i.i.i.i ], [ %.sroa.08.0.in.sroa.speculated.i.i.i.i.i, %"_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPN5vcpkg17InstallPlanActionESt6vectorIS3_SaIS3_EEEENS0_5__ops10_Iter_predIZN12_GLOBAL__N_136prune_entirely_known_action_branchesERNS2_10ActionPlanERKSt3mapINS2_11PackageSpecENS2_11BuildResultESt4lessISF_ESaISt4pairIKSF_SG_EEEE3$_0EEET_SS_SS_T0_.exit.i.i.i" ], [ %.sroa.08.0.in.sroa.speculated.i.i.i.i.i, %.preheader.i.i.i ], [ %.sroa.014.1.i.i.i, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN12_GLOBAL__N_136prune_entirely_known_action_branchesERN5vcpkg10ActionPlanERKSt3mapINS3_11PackageSpecENS3_11BuildResultESt4lessIS7_ESaISt4pairIKS7_S8_EEEE3$_0EclINS_17__normal_iteratorIPNS3_17InstallPlanActionESt6vectorISM_SaISM_EEEEEEbT_.exit.thread.i.i.i" ] ; 2 uses
   %i.hj = load ptr, ptr %i.g, align 8, !tbaa !172 ; 2 uses
   %.not.i.i8.i = icmp eq ptr %.sroa.014.2.i.i.i, %i.hj
   br i1 %.not.i.i8.i, label %"_ZN5vcpkg4Util15erase_remove_ifISt6vectorINS_17InstallPlanActionESaIS3_EEZN12_GLOBAL__N_136prune_entirely_known_action_branchesERNS_10ActionPlanERKSt3mapINS_11PackageSpecENS_11BuildResultESt4lessISA_ESaISt4pairIKSA_SB_EEEE3$_0EEvRT_T0_.exit", label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN5vcpkg17InstallPlanActionESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i.i.i
 
 _ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN5vcpkg17InstallPlanActionESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i.i.i: ; preds = %"_ZSt9remove_ifIN9__gnu_cxx17__normal_iteratorIPN5vcpkg17InstallPlanActionESt6vectorIS3_SaIS3_EEEEZN12_GLOBAL__N_136prune_entirely_known_action_branchesERNS2_10ActionPlanERKSt3mapINS2_11PackageSpecENS2_11BuildResultESt4lessISD_ESaISt4pairIKSD_SE_EEEE3$_0ET_SP_SP_T0_.exit.i"
   %i.hk = load ptr, ptr %i.f, align 8, !tbaa !172 ; 2 uses
-  %i.hl = ptrtoint ptr %i.hk to i64
-  %i.hm = ptrtoint ptr %.sroa.014.2.i.i.i to i64
-  %i.hn = sub i64 %i.hm, %i.hl
+  %i.hl = ptrtoint ptr %.sroa.014.2.i.i.i to i64
+  %i.hm = ptrtoint ptr %i.hk to i64
+  %i.hn = sub i64 %i.hl, %i.hm
   %i.ho = getelementptr inbounds i8, ptr %i.hk, i64 %i.hn ; 2 uses
   br label %.lr.ph.i.i.i.i.i.i
 

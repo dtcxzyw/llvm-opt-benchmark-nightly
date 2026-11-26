@@ -204,15 +204,15 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i, label %.critedge, label %.preheader.i
 
 .preheader.i:                                     ; preds = %bb.b
-  %i.e = load ptr, ptr %1, align 8, !tbaa !36     ; 3 uses
+  %i.e = load ptr, ptr %1, align 8, !tbaa !36     ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !36
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !36   ; 2 uses
   %i.h = icmp eq ptr %i.e, %i.g
   br i1 %i.h, label %_ZNSt10_HashtableIPN6hermes2vm16SamplingProfilerES3_SaIS3_ENSt8__detail9_IdentityESt8equal_toIS3_ESt4hashIS3_ENS5_18_Mod_range_hashingENS5_20_Default_ranged_hashENS5_20_Prime_rehash_policyENS5_17_Hashtable_traitsILb0ELb1ELb1EEEE19_M_find_before_nodeERKS3_.exit, label %.lr.ph
 
 bb.c:                                             ; preds = %.lr.ph
   %i.i = getelementptr inbounds nuw i8, ptr %i.l, i64 8
-  %i.j = load ptr, ptr %i.i, align 8, !tbaa !36
+  %i.j = load ptr, ptr %i.i, align 8, !tbaa !36   ; 2 uses
   %i.k = icmp eq ptr %i.e, %i.j
   br i1 %i.k, label %_ZNSt10_HashtableIPN6hermes2vm16SamplingProfilerES3_SaIS3_ENSt8__detail9_IdentityESt8equal_toIS3_ESt4hashIS3_ENS5_18_Mod_range_hashingENS5_20_Default_ranged_hashENS5_20_Prime_rehash_policyENS5_17_Hashtable_traitsILb0ELb1ELb1EEEE19_M_find_before_nodeERKS3_.exit, label %.lr.ph, !llvm.loop !150
 
@@ -223,11 +223,12 @@ bb.c:                                             ; preds = %.lr.ph
   br i1 %.not14.i, label %.critedge, label %bb.c, !llvm.loop !150
 
 _ZNSt10_HashtableIPN6hermes2vm16SamplingProfilerES3_SaIS3_ENSt8__detail9_IdentityESt8equal_toIS3_ESt4hashIS3_ENS5_18_Mod_range_hashingENS5_20_Default_ranged_hashENS5_20_Prime_rehash_policyENS5_17_Hashtable_traitsILb0ELb1ELb1EEEE19_M_find_before_nodeERKS3_.exit: ; preds = %bb.c, %.preheader.i
+  %2 = phi ptr [ %i.g, %.preheader.i ], [ %i.j, %bb.c ]
   %i.m = phi ptr [ %i.d, %.preheader.i ], [ %i.l, %bb.c ]
   %.01115.i.lcssa = phi ptr [ %i.c, %.preheader.i ], [ %.016.i35, %bb.c ]
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.o = load i64, ptr %i.n, align 8, !tbaa !34   ; 2 uses
-  %i.p = ptrtoint ptr %i.e to i64
+  %i.p = ptrtoint ptr %2 to i64
   %i.q = urem i64 %i.p, %i.o                      ; 2 uses
   %.pre = load ptr, ptr %0, align 8, !tbaa !33    ; 2 uses
   %.phi.trans.insert = getelementptr inbounds nuw [8 x i8], ptr %.pre, i64 %i.q

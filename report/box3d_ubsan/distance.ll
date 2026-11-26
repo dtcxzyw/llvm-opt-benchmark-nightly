@@ -204,11 +204,11 @@ bb.a:
   %.sroa.093.i = alloca { %struct.b3Vec3, %struct.b3Vec3 }, align 8 ; 13 uses
   %.sroa.24.i = alloca { float, i32, i32 }, align 8 ; 13 uses
   %i.a = alloca [3 x float], align 8              ; 12 uses
-  %i.b = alloca [3 x float], align 4              ; 15 uses
-  %i.c = alloca [3 x float], align 4              ; 15 uses
-  %i.d = alloca [3 x float], align 4              ; 15 uses
-  %i.e = alloca [3 x float], align 4              ; 15 uses
-  %i.f = alloca [3 x float], align 4              ; 15 uses
+  %i.b = alloca [3 x float], align 4              ; 17 uses
+  %i.c = alloca [3 x float], align 4              ; 17 uses
+  %i.d = alloca [3 x float], align 4              ; 17 uses
+  %i.e = alloca [3 x float], align 4              ; 17 uses
+  %i.f = alloca [3 x float], align 4              ; 17 uses
   %i.g = alloca [4 x float], align 16             ; 10 uses
   %i.h = alloca [4 x float], align 16             ; 10 uses
   %i.i = alloca [4 x float], align 16             ; 10 uses
@@ -611,7 +611,9 @@ bb.ck:                                            ; preds = %b3BarycentricCoords
   br i1 %.not453.i, label %bb.cl, label %bb.cm, !prof !20, !nosanitize !11
 
 bb.cl:                                            ; preds = %bb.ck
-  call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @78, i64 -4, i64 0) #8, !nosanitize !11
+  %11 = ptrtoint ptr %i.b to i64, !nosanitize !11 ; 2 uses
+  %12 = add i64 %11, 4, !nosanitize !11
+  call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @78, i64 %11, i64 %12) #8, !nosanitize !11
   unreachable, !nosanitize !11
 
 bb.cm:                                            ; preds = %bb.ck
@@ -622,7 +624,9 @@ bb.cn:                                            ; preds = %bb.cm
   br i1 %.not454.i, label %bb.co, label %bb.cp, !prof !20, !nosanitize !11
 
 bb.co:                                            ; preds = %bb.cn
-  call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @79, i64 -4, i64 0) #8, !nosanitize !11
+  %13 = ptrtoint ptr %i.c to i64, !nosanitize !11 ; 2 uses
+  %14 = add i64 %13, 4, !nosanitize !11
+  call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @79, i64 %13, i64 %14) #8, !nosanitize !11
   unreachable, !nosanitize !11
 
 bb.cp:                                            ; preds = %bb.cn
@@ -643,7 +647,9 @@ bb.cs:                                            ; preds = %bb.cr
   br i1 %.not455.i, label %bb.ct, label %bb.cu, !prof !20, !nosanitize !11
 
 bb.ct:                                            ; preds = %bb.cs
-  call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @80, i64 -4, i64 0) #8, !nosanitize !11
+  %15 = ptrtoint ptr %i.d to i64, !nosanitize !11 ; 2 uses
+  %16 = add i64 %15, 4, !nosanitize !11
+  call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @80, i64 %15, i64 %16) #8, !nosanitize !11
   unreachable, !nosanitize !11
 
 bb.cu:                                            ; preds = %bb.cs
@@ -668,7 +674,9 @@ bb.cx:                                            ; preds = %bb.cw
   br i1 %.not456.i, label %bb.cy, label %bb.cz, !prof !20, !nosanitize !11
 
 bb.cy:                                            ; preds = %bb.cx
-  call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @81, i64 -4, i64 0) #8, !nosanitize !11
+  %17 = ptrtoint ptr %i.e to i64, !nosanitize !11 ; 2 uses
+  %18 = add i64 %17, 4, !nosanitize !11
+  call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @81, i64 %17, i64 %18) #8, !nosanitize !11
   unreachable, !nosanitize !11
 
 bb.cz:                                            ; preds = %bb.cx
@@ -693,7 +701,9 @@ bb.dc:                                            ; preds = %bb.db
   br i1 %.not457.i, label %bb.dd, label %bb.de, !prof !20, !nosanitize !11
 
 bb.dd:                                            ; preds = %bb.dc
-  call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @82, i64 -4, i64 0) #8, !nosanitize !11
+  %19 = ptrtoint ptr %i.f to i64, !nosanitize !11 ; 2 uses
+  %20 = add i64 %19, 4, !nosanitize !11
+  call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @82, i64 %19, i64 %20) #8, !nosanitize !11
   unreachable, !nosanitize !11
 
 bb.de:                                            ; preds = %bb.dc
@@ -772,7 +782,9 @@ bb.dm:                                            ; preds = %bb.dl
   br i1 %.not453.i, label %bb.dn, label %bb.do, !prof !20, !nosanitize !11
 
 bb.dn:                                            ; preds = %bb.dm
-  call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @83, i64 -4, i64 0) #8, !nosanitize !11
+  %21 = ptrtoint ptr %i.b to i64, !nosanitize !11 ; 2 uses
+  %22 = add i64 %21, 4, !nosanitize !11
+  call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @83, i64 %21, i64 %22) #8, !nosanitize !11
   unreachable, !nosanitize !11
 
 bb.do:                                            ; preds = %bb.dm
@@ -821,7 +833,9 @@ bb.dt:                                            ; preds = %bb.ds
   br i1 %.not454.i, label %bb.du, label %bb.dv, !prof !20, !nosanitize !11
 
 bb.du:                                            ; preds = %bb.dt
-  call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @84, i64 -4, i64 0) #8, !nosanitize !11
+  %23 = ptrtoint ptr %i.c to i64, !nosanitize !11 ; 2 uses
+  %24 = add i64 %23, 4, !nosanitize !11
+  call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @84, i64 %23, i64 %24) #8, !nosanitize !11
   unreachable, !nosanitize !11
 
 bb.dv:                                            ; preds = %bb.dt
@@ -870,7 +884,9 @@ bb.ea:                                            ; preds = %bb.dz
   br i1 %.not455.i, label %bb.eb, label %bb.ec, !prof !20, !nosanitize !11
 
 bb.eb:                                            ; preds = %bb.ea
-  call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @85, i64 -4, i64 0) #8, !nosanitize !11
+  %25 = ptrtoint ptr %i.d to i64, !nosanitize !11 ; 2 uses
+  %26 = add i64 %25, 4, !nosanitize !11
+  call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @85, i64 %25, i64 %26) #8, !nosanitize !11
   unreachable, !nosanitize !11
 
 bb.ec:                                            ; preds = %bb.ea
@@ -917,7 +933,9 @@ bb.eg:                                            ; preds = %bb.ef
   br i1 %.not456.i, label %bb.eh, label %bb.ei, !prof !20, !nosanitize !11
 
 bb.eh:                                            ; preds = %bb.eg
-  call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @86, i64 -4, i64 0) #8, !nosanitize !11
+  %27 = ptrtoint ptr %i.e to i64, !nosanitize !11 ; 2 uses
+  %28 = add i64 %27, 4, !nosanitize !11
+  call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @86, i64 %27, i64 %28) #8, !nosanitize !11
   unreachable, !nosanitize !11
 
 bb.ei:                                            ; preds = %bb.eg
@@ -966,7 +984,9 @@ bb.en:                                            ; preds = %bb.em
   br i1 %.not457.i, label %bb.eo, label %bb.ep, !prof !20, !nosanitize !11
 
 bb.eo:                                            ; preds = %bb.en
-  call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @87, i64 -4, i64 0) #8, !nosanitize !11
+  %29 = ptrtoint ptr %i.f to i64, !nosanitize !11 ; 2 uses
+  %30 = add i64 %29, 4, !nosanitize !11
+  call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @87, i64 %29, i64 %30) #8, !nosanitize !11
   unreachable, !nosanitize !11
 
 bb.ep:                                            ; preds = %bb.en
@@ -1369,7 +1389,7 @@ bb.n:                                             ; preds = %bb.l
   %i.pp = lshr i64 %i.ph, 32
   %i.pq = trunc nuw i64 %i.pp to i32
   %i.pr = lshr i64 %i.pg, 32                      ; 2 uses
-  %16 = trunc i64 %i.pr to i16
+  %16 = trunc nuw i64 %i.pr to i32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(68) %i.bb, ptr noundef nonnull align 4 dereferenceable(68) %6, i64 68, i1 false), !tbaa.struct !92
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.ci, i8 0, i64 32, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(68) %i.bd, ptr noundef nonnull align 4 dereferenceable(68) %7, i64 68, i1 false), !tbaa.struct !92
@@ -1385,10 +1405,10 @@ bb.n:                                             ; preds = %bb.l
   store i32 %i.po, ptr %i.bh, align 4, !tbaa !27, !noalias !101
   %i.pv = and i32 %i.pq, 255
   store i32 %i.pv, ptr %i.bi, align 4, !tbaa !27, !noalias !101
-  %17 = trunc nuw i64 %i.pr to i32
-  %18 = and i32 %17, 65535                        ; 2 uses
-  %19 = call fastcc i32 @b3UniqueCount(i32 noundef %18, ptr noundef %i.a), !noalias !101 ; 2 uses
-  %i.pw = call fastcc i32 @b3UniqueCount(i32 noundef %18, ptr noundef %i.b), !noalias !101 ; 2 uses
+  %17 = and i32 %16, 65535                        ; 2 uses
+  %18 = call fastcc i32 @b3UniqueCount(i32 noundef %17, ptr noundef %i.a), !noalias !101 ; 2 uses
+  %.sroa.0664.4.extract.trunc = trunc i64 %i.pr to i16
+  %i.pw = call fastcc i32 @b3UniqueCount(i32 noundef %17, ptr noundef %i.b), !noalias !101 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #9, !noalias !101
   call void @b3GetSweepTransform(ptr dead_on_unwind nonnull writable sret(%struct.b3Transform) align 4 %4, ptr noundef nonnull %6, float noundef %.0), !noalias !101
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #9, !noalias !101
@@ -1408,7 +1428,7 @@ bb.n:                                             ; preds = %bb.l
   %i.qa = shufflevector <2 x float> %.sroa.0570.0.copyload.i, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
   %i.qb = insertelement <2 x float> %i.qa, float %.sroa.2571.0.copyload.i, i64 0
   %i.qc = fsub <2 x float> %i.pz, %i.qb           ; 4 uses
-  switch i16 %16, label %b3MakeSeparationFunction.exit [
+  switch i16 %.sroa.0664.4.extract.trunc, label %b3MakeSeparationFunction.exit [
     i16 1, label %bb.o
     i16 2, label %bb.p
     i16 3, label %bb.aq
@@ -1421,7 +1441,7 @@ bb.o:                                             ; preds = %bb.n
   br label %b3MakeSeparationFunction.exit
 
 bb.p:                                             ; preds = %bb.n
-  %i.qd = icmp eq i32 %19, 2
+  %i.qd = icmp eq i32 %18, 2
   %i.qe = icmp eq i32 %i.pw, 2
   %or.cond.i = select i1 %i.qd, i1 %i.qe, i1 false
   br i1 %or.cond.i, label %bb.q, label %bb.ap
@@ -1824,7 +1844,7 @@ bb.ap:                                            ; preds = %bb.p
   br label %b3MakeSeparationFunction.exit
 
 bb.aq:                                            ; preds = %bb.n
-  %i.abp = icmp eq i32 %19, 3
+  %i.abp = icmp eq i32 %18, 3
   br i1 %i.abp, label %bb.ar, label %bb.bn
 
 bb.ar:                                            ; preds = %bb.aq

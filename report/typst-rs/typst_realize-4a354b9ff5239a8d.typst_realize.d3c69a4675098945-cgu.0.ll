@@ -205,7 +205,7 @@ _RNvMs7_CsaPYV88GQHqL_7bumpaloNtB5_4Bump21try_alloc_layout_fastCsibhcYuwTAtB_13t
 bb.h:                                             ; preds = %bb.f
   %i.ab = shl i64 %i.h, 4                         ; 7 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.ad = load ptr, ptr %0, align 8, !alias.scope !3479, !nonnull !10, !noundef !10 ; 7 uses
+  %i.ad = load ptr, ptr %0, align 8, !alias.scope !3479, !nonnull !10, !noundef !10 ; 6 uses
   %.val35.i = load ptr, ptr %i.ac, align 8, !alias.scope !3479 ; 7 uses
   %i.ae = icmp eq i64 %i.ab, 0
   br i1 %i.ae, label %bb.i, label %bb.j
@@ -242,22 +242,23 @@ bb.l:                                             ; preds = %bb.j
   %.phi.trans.insert.i.i.i = getelementptr inbounds nuw i8, ptr %.val35.i, i64 16
   %.pre.i.i.i = load ptr, ptr %.phi.trans.insert.i.i.i, align 8, !noalias !3479 ; 3 uses
   %.phi.trans.insert30.i.i.i = getelementptr inbounds nuw i8, ptr %.pre.i.i.i, i64 32 ; 3 uses
-  %.pre31.i.i.i = load ptr, ptr %.phi.trans.insert30.i.i.i, align 8, !noalias !3479 ; 4 uses
+  %.pre31.i.i.i = load ptr, ptr %.phi.trans.insert30.i.i.i, align 8, !noalias !3479 ; 5 uses
   %i.aq = icmp eq ptr %.pre31.i.i.i, %i.ad
   br i1 %i.aq, label %bb.m, label %._RNvMs7_CsaPYV88GQHqL_7bumpaloNtB5_4Bump21try_alloc_layout_fastCsibhcYuwTAtB_13typst_realize.exit.thread.i_crit_edge.i.i
 
 ._RNvMs7_CsaPYV88GQHqL_7bumpaloNtB5_4Bump21try_alloc_layout_fastCsibhcYuwTAtB_13typst_realize.exit.thread.i_crit_edge.i.i: ; preds = %bb.l
   %.pre.i.i = load ptr, ptr %.pre.i.i.i, align 8, !noalias !3479 ; 2 uses
+  %.pre7.i.i = ptrtoint ptr %.pre31.i.i.i to i64
+  %.pre9.i.i = and i64 %.pre7.i.i, 15
+  %.pre11.i.i = sub nsw i64 0, %.pre9.i.i
   %.pre7.i.i.a = ptrtoint ptr %.pre.i.i to i64
   br label %_RNvMs7_CsaPYV88GQHqL_7bumpaloNtB5_4Bump21try_alloc_layout_fastCsibhcYuwTAtB_13typst_realize.exit.thread.i.i.i
 
 _RNvMs7_CsaPYV88GQHqL_7bumpaloNtB5_4Bump21try_alloc_layout_fastCsibhcYuwTAtB_13typst_realize.exit.thread.i.i.i: ; preds = %bb.m, %._RNvMs7_CsaPYV88GQHqL_7bumpaloNtB5_4Bump21try_alloc_layout_fastCsibhcYuwTAtB_13typst_realize.exit.thread.i_crit_edge.i.i
   %.pre-phi8.i.i = phi i64 [ %.pre7.i.i.a, %._RNvMs7_CsaPYV88GQHqL_7bumpaloNtB5_4Bump21try_alloc_layout_fastCsibhcYuwTAtB_13typst_realize.exit.thread.i_crit_edge.i.i ], [ %i.bf, %bb.m ]
+  %.pre-phi12.i.i = phi i64 [ %.pre11.i.i, %._RNvMs7_CsaPYV88GQHqL_7bumpaloNtB5_4Bump21try_alloc_layout_fastCsibhcYuwTAtB_13typst_realize.exit.thread.i_crit_edge.i.i ], [ %i.bc, %bb.m ]
   %4 = phi ptr [ %.pre.i.i, %._RNvMs7_CsaPYV88GQHqL_7bumpaloNtB5_4Bump21try_alloc_layout_fastCsibhcYuwTAtB_13typst_realize.exit.thread.i_crit_edge.i.i ], [ %i.az, %bb.m ]
-  %5 = ptrtoint ptr %.pre31.i.i.i to i64
-  %6 = and i64 %5, 15
-  %7 = sub nsw i64 0, %6
-  %i.ar = getelementptr i8, ptr %.pre31.i.i.i, i64 %7 ; 3 uses
+  %i.ar = getelementptr i8, ptr %.pre31.i.i.i, i64 %.pre-phi12.i.i ; 3 uses
   %i.as = ptrtoint ptr %i.ar to i64
   %i.at = sub i64 %i.as, %.pre-phi8.i.i
   %i.au = icmp ult ptr %i.ar, %4
@@ -275,9 +276,9 @@ _RNvMs7_CsaPYV88GQHqL_7bumpaloNtB5_4Bump21try_alloc_layout_fastCsibhcYuwTAtB_13t
 bb.m:                                             ; preds = %bb.l
   %i.ay = sub nuw nsw i64 %i.f, %i.ab             ; 2 uses
   %i.az = load ptr, ptr %.pre.i.i.i, align 8, !noalias !3479, !nonnull !10, !noundef !10 ; 3 uses
-  %i.ba = ptrtoint ptr %i.ad to i64
+  %i.ba = ptrtoint ptr %.pre31.i.i.i to i64
   %i.bb = and i64 %i.ba, 15
-  %i.bc = sub nsw i64 0, %i.bb
+  %i.bc = sub nsw i64 0, %i.bb                    ; 2 uses
   %i.bd = getelementptr i8, ptr %.pre31.i.i.i, i64 %i.bc ; 3 uses
   %i.be = ptrtoint ptr %i.bd to i64
   %i.bf = ptrtoint ptr %i.az to i64               ; 2 uses
@@ -320,7 +321,7 @@ bb.q:                                             ; preds = %bb.j
 bb.r:                                             ; preds = %bb.q
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bq, i64 %i.bm ; 3 uses
   store ptr %i.bt, ptr %i.bp, align 8, !noalias !3479
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bt, ptr nonnull align 1 %i.ad, i64 range(i64 0, 9223372036854775793) %i.f, i1 false), !noalias !3479
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bt, ptr nonnull readonly align 1 %i.ad, i64 range(i64 0, 9223372036854775793) %i.f, i1 false), !noalias !3479
   br label %bb.t
 
 bb.s:                                             ; preds = %bb.g
@@ -410,7 +411,7 @@ _RNvMs7_CsaPYV88GQHqL_7bumpaloNtB5_4Bump21try_alloc_layout_fastCsibhcYuwTAtB_13t
 bb.h:                                             ; preds = %bb.f
   %i.ab = shl i64 %i.h, 5                         ; 7 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.ad = load ptr, ptr %0, align 8, !alias.scope !3482, !nonnull !10, !noundef !10 ; 7 uses
+  %i.ad = load ptr, ptr %0, align 8, !alias.scope !3482, !nonnull !10, !noundef !10 ; 6 uses
   %.val.i = load ptr, ptr %i.ac, align 8, !alias.scope !3482 ; 7 uses
   %i.ae = icmp eq i64 %i.ab, 0
   br i1 %i.ae, label %bb.i, label %bb.j
@@ -447,22 +448,23 @@ bb.l:                                             ; preds = %bb.j
   %.phi.trans.insert.i.i.i = getelementptr inbounds nuw i8, ptr %.val.i, i64 16
   %.pre.i.i.i = load ptr, ptr %.phi.trans.insert.i.i.i, align 8, !noalias !3482 ; 3 uses
   %.phi.trans.insert30.i.i.i = getelementptr inbounds nuw i8, ptr %.pre.i.i.i, i64 32 ; 3 uses
-  %.pre31.i.i.i = load ptr, ptr %.phi.trans.insert30.i.i.i, align 8, !noalias !3482 ; 4 uses
+  %.pre31.i.i.i = load ptr, ptr %.phi.trans.insert30.i.i.i, align 8, !noalias !3482 ; 5 uses
   %i.aq = icmp eq ptr %.pre31.i.i.i, %i.ad
   br i1 %i.aq, label %bb.m, label %._RNvMs7_CsaPYV88GQHqL_7bumpaloNtB5_4Bump21try_alloc_layout_fastCsibhcYuwTAtB_13typst_realize.exit.thread.i_crit_edge.i.i
 
 ._RNvMs7_CsaPYV88GQHqL_7bumpaloNtB5_4Bump21try_alloc_layout_fastCsibhcYuwTAtB_13typst_realize.exit.thread.i_crit_edge.i.i: ; preds = %bb.l
   %.pre.i.i = load ptr, ptr %.pre.i.i.i, align 8, !noalias !3482 ; 2 uses
+  %.pre7.i.i = ptrtoint ptr %.pre31.i.i.i to i64
+  %.pre9.i.i = and i64 %.pre7.i.i, 7
+  %.pre11.i.i = sub nsw i64 0, %.pre9.i.i
   %.pre7.i.i.a = ptrtoint ptr %.pre.i.i to i64
   br label %_RNvMs7_CsaPYV88GQHqL_7bumpaloNtB5_4Bump21try_alloc_layout_fastCsibhcYuwTAtB_13typst_realize.exit.thread.i.i.i
 
 _RNvMs7_CsaPYV88GQHqL_7bumpaloNtB5_4Bump21try_alloc_layout_fastCsibhcYuwTAtB_13typst_realize.exit.thread.i.i.i: ; preds = %bb.m, %._RNvMs7_CsaPYV88GQHqL_7bumpaloNtB5_4Bump21try_alloc_layout_fastCsibhcYuwTAtB_13typst_realize.exit.thread.i_crit_edge.i.i
   %.pre-phi8.i.i = phi i64 [ %.pre7.i.i.a, %._RNvMs7_CsaPYV88GQHqL_7bumpaloNtB5_4Bump21try_alloc_layout_fastCsibhcYuwTAtB_13typst_realize.exit.thread.i_crit_edge.i.i ], [ %i.bf, %bb.m ]
+  %.pre-phi12.i.i = phi i64 [ %.pre11.i.i, %._RNvMs7_CsaPYV88GQHqL_7bumpaloNtB5_4Bump21try_alloc_layout_fastCsibhcYuwTAtB_13typst_realize.exit.thread.i_crit_edge.i.i ], [ %i.bc, %bb.m ]
   %4 = phi ptr [ %.pre.i.i, %._RNvMs7_CsaPYV88GQHqL_7bumpaloNtB5_4Bump21try_alloc_layout_fastCsibhcYuwTAtB_13typst_realize.exit.thread.i_crit_edge.i.i ], [ %i.az, %bb.m ]
-  %5 = ptrtoint ptr %.pre31.i.i.i to i64
-  %6 = and i64 %5, 7
-  %7 = sub nsw i64 0, %6
-  %i.ar = getelementptr i8, ptr %.pre31.i.i.i, i64 %7 ; 3 uses
+  %i.ar = getelementptr i8, ptr %.pre31.i.i.i, i64 %.pre-phi12.i.i ; 3 uses
   %i.as = ptrtoint ptr %i.ar to i64
   %i.at = sub i64 %i.as, %.pre-phi8.i.i
   %i.au = icmp ult ptr %i.ar, %4
@@ -480,9 +482,9 @@ _RNvMs7_CsaPYV88GQHqL_7bumpaloNtB5_4Bump21try_alloc_layout_fastCsibhcYuwTAtB_13t
 bb.m:                                             ; preds = %bb.l
   %i.ay = sub nuw nsw i64 %i.f, %i.ab             ; 2 uses
   %i.az = load ptr, ptr %.pre.i.i.i, align 8, !noalias !3482, !nonnull !10, !noundef !10 ; 3 uses
-  %i.ba = ptrtoint ptr %i.ad to i64
+  %i.ba = ptrtoint ptr %.pre31.i.i.i to i64
   %i.bb = and i64 %i.ba, 7
-  %i.bc = sub nsw i64 0, %i.bb
+  %i.bc = sub nsw i64 0, %i.bb                    ; 2 uses
   %i.bd = getelementptr i8, ptr %.pre31.i.i.i, i64 %i.bc ; 3 uses
   %i.be = ptrtoint ptr %i.bd to i64
   %i.bf = ptrtoint ptr %i.az to i64               ; 2 uses
@@ -525,7 +527,7 @@ bb.q:                                             ; preds = %bb.j
 bb.r:                                             ; preds = %bb.q
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bq, i64 %i.bm ; 3 uses
   store ptr %i.bt, ptr %i.bp, align 8, !noalias !3482
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bt, ptr nonnull align 1 %i.ad, i64 range(i64 0, 9223372036854775793) %i.f, i1 false), !noalias !3482
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bt, ptr nonnull readonly align 1 %i.ad, i64 range(i64 0, 9223372036854775793) %i.f, i1 false), !noalias !3482
   br label %bb.t
 
 bb.s:                                             ; preds = %bb.g

@@ -205,8 +205,8 @@ bb.sd:                                            ; preds = %.noexc2501
   %i.byh = getelementptr inbounds nuw i8, ptr %.pn.i, i64 24 ; 6 uses
   %i.byi = load ptr, ptr %i.byh, align 8, !tbaa !755 ; 9 uses
   %i.byj = ptrtoint ptr %i.byi to i64
-  %i.byk = ptrtoint ptr %i.byg to i64             ; 3 uses
-  %i.byl = sub i64 %i.byj, %i.byk                 ; 4 uses
+  %i.byk = ptrtoint ptr %i.byg to i64             ; 4 uses
+  %i.byl = sub i64 %i.byj, %i.byk                 ; 2 uses
   %i.bym = ashr exact i64 %i.byl, 4               ; 5 uses
   %i.byn = icmp sgt i64 %i.bym, 0
   br i1 %i.byn, label %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPSt4pairImmESt6vectorIS3_SaIS3_EEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i.i.i.i.i.i, label %_ZSt11lower_boundIN9__gnu_cxx17__normal_iteratorIPSt4pairImmESt6vectorIS3_SaIS3_EEEES3_ZN4cvc58internal4expr4attr8AttrHashImE5IdMapixEmEUlRKS3_SH_E_ET_SJ_SJ_RKT0_T1_.exit.i.i.i.i.i
@@ -227,7 +227,7 @@ _ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPSt4pairImmESt6vectorIS3_SaIS3_EEE
   br i1 %i.byv, label %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPSt4pairImmESt6vectorIS3_SaIS3_EEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i.i.i.i.i.i, label %_ZSt11lower_boundIN9__gnu_cxx17__normal_iteratorIPSt4pairImmESt6vectorIS3_SaIS3_EEEES3_ZN4cvc58internal4expr4attr8AttrHashImE5IdMapixEmEUlRKS3_SH_E_ET_SJ_SJ_RKT0_T1_.exit.i.i.i.i.i, !llvm.loop !705
 
 _ZSt11lower_boundIN9__gnu_cxx17__normal_iteratorIPSt4pairImmESt6vectorIS3_SaIS3_EEEES3_ZN4cvc58internal4expr4attr8AttrHashImE5IdMapixEmEUlRKS3_SH_E_ET_SJ_SJ_RKT0_T1_.exit.i.i.i.i.i: ; preds = %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPSt4pairImmESt6vectorIS3_SaIS3_EEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i.i.i.i.i.i, %.noexc1133
-  %.sroa.011.0.lcssa.i.i.i.i.i.i.i = phi ptr [ %i.byg, %.noexc1133 ], [ %.sroa.011.1.i.i.i.i.i.i.i, %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPSt4pairImmESt6vectorIS3_SaIS3_EEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i.i.i.i.i.i ] ; 6 uses
+  %.sroa.011.0.lcssa.i.i.i.i.i.i.i = phi ptr [ %i.byg, %.noexc1133 ], [ %.sroa.011.1.i.i.i.i.i.i.i, %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPSt4pairImmESt6vectorIS3_SaIS3_EEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i.i.i.i.i.i ] ; 7 uses
   %i.byw = icmp eq ptr %.sroa.011.0.lcssa.i.i.i.i.i.i.i, %i.byi ; 2 uses
   br i1 %i.byw, label %.critedge.i.i.i.i.i, label %bb.se
 
@@ -237,6 +237,8 @@ bb.se:                                            ; preds = %_ZSt11lower_boundIN
   br i1 %.not.i.i.i.i.i, label %bb.sk, label %.critedge.i.i.i.i.i.thread
 
 .critedge.i.i.i.i.i:                              ; preds = %_ZSt11lower_boundIN9__gnu_cxx17__normal_iteratorIPSt4pairImmESt6vectorIS3_SaIS3_EEEES3_ZN4cvc58internal4expr4attr8AttrHashImE5IdMapixEmEUlRKS3_SH_E_ET_SJ_SJ_RKT0_T1_.exit.i.i.i.i.i
+  %147 = ptrtoint ptr %.sroa.011.0.lcssa.i.i.i.i.i.i.i to i64
+  %148 = sub i64 %147, %i.byk                     ; 2 uses
   %i.byy = getelementptr inbounds nuw i8, ptr %.pn.i, i64 32 ; 2 uses
   %i.byz = load ptr, ptr %i.byy, align 8, !tbaa !480
   %.not.i2493 = icmp eq ptr %i.byi, %i.byz
@@ -351,7 +353,7 @@ _ZNSt6vectorISt4pairImmESaIS1_EE13_M_insert_auxIS1_EEvN9__gnu_cxx17__normal_iter
 
 bb.sh:                                            ; preds = %.critedge.i.i.i.i.i.thread, %.critedge.i.i.i.i.i
   %i.cay = phi ptr [ %i.bzc, %.critedge.i.i.i.i.i.thread ], [ %i.byy, %.critedge.i.i.i.i.i ] ; 2 uses
-  %i.caz = phi i64 [ %i.bzb, %.critedge.i.i.i.i.i.thread ], [ %i.byl, %.critedge.i.i.i.i.i ] ; 3 uses
+  %i.caz = phi i64 [ %i.bzb, %.critedge.i.i.i.i.i.thread ], [ %148, %.critedge.i.i.i.i.i ] ; 3 uses
   %i.cba = getelementptr inbounds i8, ptr %i.byg, i64 %i.caz
   %i.cbb = icmp eq i64 %i.byl, 9223372036854775792
   br i1 %i.cbb, label %bb.si, label %_ZNKSt6vectorISt4pairImmESaIS1_EE12_M_check_lenEmPKc.exit.i.i
@@ -426,7 +428,7 @@ _ZNSt6vectorISt4pairImmESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__norma
   br label %.noexc1134
 
 .noexc1134:                                       ; preds = %_ZNSt6vectorISt4pairImmESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i, %_ZNSt6vectorISt4pairImmESaIS1_EE13_M_insert_auxIS1_EEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEOT_.exit.i, %bb.sf
-  %i.cbs = phi i64 [ %i.byl, %bb.sf ], [ %i.bzb, %_ZNSt6vectorISt4pairImmESaIS1_EE13_M_insert_auxIS1_EEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEOT_.exit.i ], [ %i.caz, %_ZNSt6vectorISt4pairImmESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ]
+  %i.cbs = phi i64 [ %148, %bb.sf ], [ %i.bzb, %_ZNSt6vectorISt4pairImmESaIS1_EE13_M_insert_auxIS1_EEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEOT_.exit.i ], [ %i.caz, %_ZNSt6vectorISt4pairImmESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ]
   %i.cbt = load ptr, ptr %.1.i, align 8, !tbaa !481
   %i.cbu = getelementptr inbounds i8, ptr %i.cbt, i64 %i.cbs
   br label %bb.sk

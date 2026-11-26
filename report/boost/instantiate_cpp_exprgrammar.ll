@@ -203,7 +203,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !294  ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 4 uses
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !294  ; 2 uses
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !294  ; 3 uses
   %i.f = icmp eq ptr %i.c, %i.e
   br i1 %i.f, label %bb.c, label %bb.b
 
@@ -217,7 +217,7 @@ bb.c:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 3 uses
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !121
   %i.k = ptrtoint ptr %i.j to i64
-  %i.l = ptrtoint ptr %i.c to i64
+  %i.l = ptrtoint ptr %i.c to i64                 ; 2 uses
   %i.m = sub i64 %i.k, %i.l
   %i.n = ashr exact i64 %i.m, 3                   ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
@@ -244,6 +244,8 @@ bb.f:                                             ; preds = %bb.d
   br i1 %.not7, label %_ZNSt6vectorImSaImEE7reserveEm.exit, label %_ZNSt12_Vector_baseImSaImEE11_M_allocateEm.exit.i
 
 _ZNSt12_Vector_baseImSaImEE11_M_allocateEm.exit.i: ; preds = %bb.f
+  %2 = ptrtoint ptr %i.e to i64
+  %3 = sub i64 %2, %i.l
   %i.u = shl nuw nsw i64 %i.s, 3
   %i.v = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.u) #28
           to label %.noexc5 unwind label %bb.i    ; 4 uses
@@ -274,7 +276,8 @@ bb.h:                                             ; preds = %_ZNSt6vectorImSaImE
 
 _ZNSt12_Vector_baseImSaImEE13_M_deallocateEPmm.exit.i: ; preds = %bb.h, %_ZNSt6vectorImSaImEE11_S_relocateEPmS2_S2_RS0_.exit.i
   store ptr %i.v, ptr %i.b, align 8, !tbaa !128
-  store ptr %i.v, ptr %i.d, align 8, !tbaa !120
+  %4 = getelementptr inbounds nuw i8, ptr %i.v, i64 %3
+  store ptr %4, ptr %i.d, align 8, !tbaa !120
   %i.af = getelementptr inbounds nuw [8 x i8], ptr %i.v, i64 %i.s
   store ptr %i.af, ptr %i.i, align 8, !tbaa !121
   %.pre = load i64, ptr %i.o, align 8, !tbaa !127

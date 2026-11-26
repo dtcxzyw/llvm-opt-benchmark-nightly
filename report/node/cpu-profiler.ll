@@ -205,13 +205,14 @@ _ZN2v88internal12_GLOBAL__N_119GetProfilersManagerEv.exit: ; preds = %bb.a, %bb.
 
 bb.d:                                             ; preds = %.preheader.i
   %i.v = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i.i, i64 8
-  %i.w = load ptr, ptr %i.v, align 8
+  %i.w = load ptr, ptr %i.v, align 8              ; 2 uses
   %i.x = icmp eq ptr %1, %i.w
   br i1 %i.x, label %_ZN2v88internal12_GLOBAL__N_119CpuProfilersManager11AddProfilerEPNS0_7IsolateEPNS0_11CpuProfilerE.exit, label %.preheader.i, !llvm.loop !105
 
 _ZN2v88internal12_GLOBAL__N_119CpuProfilersManager11AddProfilerEPNS0_7IsolateEPNS0_11CpuProfilerE.exit: ; preds = %.preheader.i, %bb.d, %_ZN2v88internal12_GLOBAL__N_119GetProfilersManagerEv.exit
   %.sroa.019.3.i.i.i.i.i.i = phi ptr [ null, %_ZN2v88internal12_GLOBAL__N_119GetProfilersManagerEv.exit ], [ null, %.preheader.i ], [ %.sroa.0.0.i.i.i.i.i.i, %bb.d ]
-  %.sroa.4.3.i.i.i.i.i.i = ptrtoint ptr %1 to i64
+  %.sroa.4.3.in.i.i.i.i.i.i = phi ptr [ %1, %_ZN2v88internal12_GLOBAL__N_119GetProfilersManagerEv.exit ], [ %1, %.preheader.i ], [ %i.w, %bb.d ]
+  %.sroa.4.3.i.i.i.i.i.i = ptrtoint ptr %.sroa.4.3.in.i.i.i.i.i.i to i64
   %i.y = tail call ptr @_ZNSt10_HashtableIPN2v88internal7IsolateESt4pairIKS3_PNS1_11CpuProfilerEESaIS8_ENSt8__detail10_Select1stESt8equal_toIS3_ESt4hashIS3_ENSA_18_Mod_range_hashingENSA_20_Default_ranged_hashENSA_20_Prime_rehash_policyENSA_17_Hashtable_traitsILb0ELb0ELb0EEEE20_M_insert_multi_nodeEPNSA_10_Hash_nodeIS8_Lb0EEEmSO_(ptr noundef nonnull align 8 dereferenceable(56) @_ZZN2v88internal12_GLOBAL__N_119GetProfilersManagerEvE6object, ptr noundef %.sroa.019.3.i.i.i.i.i.i, i64 noundef %.sroa.4.3.i.i.i.i.i.i, ptr noundef nonnull %i.q) ; 0 uses
   tail call void @_ZN2v84base5Mutex6UnlockEv(ptr noundef nonnull align 8 dereferenceable(8) getelementptr inbounds nuw (i8, ptr @_ZZN2v88internal12_GLOBAL__N_119GetProfilersManagerEvE6object, i64 56)) #20
   %i.z = icmp eq i32 %3, 1

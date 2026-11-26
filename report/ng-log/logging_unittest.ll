@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %bb.h
 bb.n:                                             ; preds = %_ZNSt12_Vector_baseISt6threadSaIS0_EE13_M_deallocateEPS0_m.exit.i, %"_ZNSt6vectorISt6threadSaIS0_EE12emplace_backIJZN43Logging_DropLogMemoryConcurrentWriters_Test8TestBodyEvE3$_0EEERS0_DpOT_.exit"
   %.017204 = phi i32 [ 0, %_ZNSt12_Vector_baseISt6threadSaIS0_EE13_M_deallocateEPS0_m.exit.i ], [ %i.dw, %"_ZNSt6vectorISt6threadSaIS0_EE12emplace_backIJZN43Logging_DropLogMemoryConcurrentWriters_Test8TestBodyEvE3$_0EEERS0_DpOT_.exit" ]
   %i.bj = phi ptr [ %i.ay, %_ZNSt12_Vector_baseISt6threadSaIS0_EE13_M_deallocateEPS0_m.exit.i ], [ %i.dv, %"_ZNSt6vectorISt6threadSaIS0_EE12emplace_backIJZN43Logging_DropLogMemoryConcurrentWriters_Test8TestBodyEvE3$_0EEERS0_DpOT_.exit" ] ; 12 uses
-  %i.bk = phi ptr [ %i.az, %_ZNSt12_Vector_baseISt6threadSaIS0_EE13_M_deallocateEPS0_m.exit.i ], [ %i.du, %"_ZNSt6vectorISt6threadSaIS0_EE12emplace_backIJZN43Logging_DropLogMemoryConcurrentWriters_Test8TestBodyEvE3$_0EEERS0_DpOT_.exit" ] ; 7 uses
+  %i.bk = phi ptr [ %i.az, %_ZNSt12_Vector_baseISt6threadSaIS0_EE13_M_deallocateEPS0_m.exit.i ], [ %i.du, %"_ZNSt6vectorISt6threadSaIS0_EE12emplace_backIJZN43Logging_DropLogMemoryConcurrentWriters_Test8TestBodyEvE3$_0EEERS0_DpOT_.exit" ] ; 8 uses
   %i.bl = phi ptr [ %i.ay, %_ZNSt12_Vector_baseISt6threadSaIS0_EE13_M_deallocateEPS0_m.exit.i ], [ %i.dt, %"_ZNSt6vectorISt6threadSaIS0_EE12emplace_backIJZN43Logging_DropLogMemoryConcurrentWriters_Test8TestBodyEvE3$_0EEERS0_DpOT_.exit" ] ; 15 uses
   %.not.i = icmp eq ptr %i.bj, %i.bk
   br i1 %.not.i, label %bb.r, label %bb.o
@@ -258,8 +258,8 @@ _ZNKSt14default_deleteINSt6thread6_StateEEclEPS1_.exit.i6.i.i: ; preds = %bb.q
 
 bb.r:                                             ; preds = %bb.n
   %i.bx = ptrtoint ptr %i.bj to i64               ; 2 uses
-  %i.by = ptrtoint ptr %i.bl to i64               ; 2 uses
-  %i.bz = sub i64 %i.bx, %i.by                    ; 4 uses
+  %i.by = ptrtoint ptr %i.bl to i64               ; 3 uses
+  %i.bz = sub i64 %i.bx, %i.by                    ; 3 uses
   %i.ca = icmp eq i64 %i.bz, 9223372036854775800
   br i1 %i.ca, label %bb.s, label %_ZNKSt6vectorISt6threadSaIS0_EE12_M_check_lenEmPKc.exit.i.i
 
@@ -435,7 +435,9 @@ bb.aa:                                            ; preds = %bb.y
 
 "_ZNSt6vectorISt6threadSaIS0_EE17_M_realloc_insertIJZN43Logging_DropLogMemoryConcurrentWriters_Test8TestBodyEvE3$_0EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i": ; preds = %.lr.ph.i.i.i.i.i, %middle.block, %bb.v
   %.0.lcssa.i.i.i.i.i = phi ptr [ %i.ch, %bb.v ], [ %i.dd, %middle.block ], [ %i.dl, %.lr.ph.i.i.i.i.i ]
-  call void @_ZdlPvm(ptr noundef nonnull %i.bl, i64 noundef %i.bz) #41
+  %20 = ptrtoint ptr %i.bk to i64
+  %21 = sub i64 %20, %i.by
+  call void @_ZdlPvm(ptr noundef nonnull %i.bl, i64 noundef %21) #41
   %i.ds = getelementptr inbounds nuw [8 x i8], ptr %i.ch, i64 %i.cf
   br label %"_ZNSt6vectorISt6threadSaIS0_EE12emplace_backIJZN43Logging_DropLogMemoryConcurrentWriters_Test8TestBodyEvE3$_0EEERS0_DpOT_.exit"
 
@@ -838,8 +840,8 @@ bb.n:                                             ; preds = %_ZStlsISt11char_tra
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #40
   call void @_ZN18TestWaitingLogSinkD2Ev(ptr noundef nonnull align 8 dead_on_return(152) dereferenceable(152) %0) #40
   call void @llvm.lifetime.end.p0(ptr nonnull %0) #40
-  %i.v = load ptr, ptr @_ZL15global_messagesB5cxx11, align 8, !tbaa !90 ; 4 uses
-  %i.w = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZL15global_messagesB5cxx11, i64 8), align 8, !tbaa !90 ; 2 uses
+  %i.v = load ptr, ptr @_ZL15global_messagesB5cxx11, align 8, !tbaa !90 ; 3 uses
+  %i.w = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZL15global_messagesB5cxx11, i64 8), align 8, !tbaa !90 ; 3 uses
   %.not23 = icmp eq ptr %i.v, %i.w
   br i1 %.not23, label %._crit_edge, label %.lr.ph
 
@@ -850,7 +852,7 @@ bb.n:                                             ; preds = %_ZStlsISt11char_tra
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.n
   %i.x = phi ptr [ %.pre25, %._crit_edge.loopexit ], [ %i.v, %bb.n ]
-  %i.y = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %i.v, %bb.n ]
+  %i.y = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %i.w, %bb.n ]
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #40
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #40
   %i.z = ptrtoint ptr %i.y to i64

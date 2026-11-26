@@ -205,7 +205,7 @@ _ZN6opencc16DictEntryFactory3NewERKNSt7__cxx1112basic_stringIcSt11char_traitsIcE
   %i.fe = getelementptr inbounds nuw i8, ptr %i.dr, i64 8 ; 3 uses
   %i.ff = load ptr, ptr %i.fe, align 8, !tbaa !230, !noalias !673 ; 6 uses
   %i.fg = getelementptr inbounds nuw i8, ptr %i.dr, i64 16 ; 2 uses
-  %i.fh = load ptr, ptr %i.fg, align 8, !tbaa !231, !noalias !673
+  %i.fh = load ptr, ptr %i.fg, align 8, !tbaa !231, !noalias !673 ; 2 uses
   %.not.i.i73.i = icmp eq ptr %i.ff, %i.fh
   br i1 %.not.i.i73.i, label %bb.at, label %bb.as
 
@@ -218,8 +218,8 @@ bb.as:                                            ; preds = %_ZN6opencc16DictEnt
 bb.at:                                            ; preds = %_ZN6opencc16DictEntryFactory3NewERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_.exit.i
   %i.fj = load ptr, ptr %i.dr, align 8, !tbaa !234, !noalias !673 ; 10 uses
   %i.fk = ptrtoint ptr %i.ff to i64               ; 2 uses
-  %i.fl = ptrtoint ptr %i.fj to i64               ; 2 uses
-  %i.fm = sub i64 %i.fk, %i.fl                    ; 4 uses
+  %i.fl = ptrtoint ptr %i.fj to i64               ; 3 uses
+  %i.fm = sub i64 %i.fk, %i.fl                    ; 3 uses
   %i.fn = icmp eq i64 %i.fm, 9223372036854775800
   br i1 %i.fn, label %bb.au, label %_ZNKSt6vectorISt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i.i.i.i
 
@@ -322,7 +322,9 @@ _ZNSt6vectorISt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS2_EESaIS5_EE1
   br i1 %.not.i23.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS2_EESaIS5_EE17_M_realloc_insertIJRPS2_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i.i.i, label %bb.av
 
 bb.av:                                            ; preds = %_ZNSt6vectorISt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i.i.i.i
-  call void @_ZdlPvm(ptr noundef nonnull %i.fj, i64 noundef %i.fm) #35, !noalias !673
+  %29 = ptrtoint ptr %i.fh to i64
+  %30 = sub i64 %29, %i.fl
+  call void @_ZdlPvm(ptr noundef nonnull %i.fj, i64 noundef %30) #35, !noalias !673
   br label %_ZNSt6vectorISt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS2_EESaIS5_EE17_M_realloc_insertIJRPS2_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i.i.i
 
 _ZNSt6vectorISt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS2_EESaIS5_EE17_M_realloc_insertIJRPS2_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i.i.i: ; preds = %bb.av, %_ZNSt6vectorISt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i.i.i.i

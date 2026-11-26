@@ -205,15 +205,15 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i, label %.critedge, label %.preheader.i
 
 .preheader.i:                                     ; preds = %bb.b
-  %i.e = load ptr, ptr %1, align 8, !tbaa !237    ; 3 uses
+  %i.e = load ptr, ptr %1, align 8, !tbaa !237    ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !237
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !237  ; 2 uses
   %i.h = icmp eq ptr %i.e, %i.g
   br i1 %i.h, label %_ZNSt10_HashtableIPKN2lp8lar_termES3_SaIS3_ENSt8__detail9_IdentityESt8equal_toIS3_ESt4hashIS3_ENS5_18_Mod_range_hashingENS5_20_Default_ranged_hashENS5_20_Prime_rehash_policyENS5_17_Hashtable_traitsILb0ELb1ELb1EEEE19_M_find_before_nodeERKS3_.exit, label %.lr.ph
 
 bb.c:                                             ; preds = %.lr.ph
   %i.i = getelementptr inbounds nuw i8, ptr %i.l, i64 8
-  %i.j = load ptr, ptr %i.i, align 8, !tbaa !237
+  %i.j = load ptr, ptr %i.i, align 8, !tbaa !237  ; 2 uses
   %i.k = icmp eq ptr %i.e, %i.j
   br i1 %i.k, label %_ZNSt10_HashtableIPKN2lp8lar_termES3_SaIS3_ENSt8__detail9_IdentityESt8equal_toIS3_ESt4hashIS3_ENS5_18_Mod_range_hashingENS5_20_Default_ranged_hashENS5_20_Prime_rehash_policyENS5_17_Hashtable_traitsILb0ELb1ELb1EEEE19_M_find_before_nodeERKS3_.exit, label %.lr.ph, !llvm.loop !414
 
@@ -224,11 +224,12 @@ bb.c:                                             ; preds = %.lr.ph
   br i1 %.not14.i, label %.critedge, label %bb.c, !llvm.loop !414
 
 _ZNSt10_HashtableIPKN2lp8lar_termES3_SaIS3_ENSt8__detail9_IdentityESt8equal_toIS3_ESt4hashIS3_ENS5_18_Mod_range_hashingENS5_20_Default_ranged_hashENS5_20_Prime_rehash_policyENS5_17_Hashtable_traitsILb0ELb1ELb1EEEE19_M_find_before_nodeERKS3_.exit: ; preds = %bb.c, %.preheader.i
+  %2 = phi ptr [ %i.g, %.preheader.i ], [ %i.j, %bb.c ]
   %i.m = phi ptr [ %i.d, %.preheader.i ], [ %i.l, %bb.c ]
   %.01115.i.lcssa = phi ptr [ %i.c, %.preheader.i ], [ %.016.i35, %bb.c ]
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.o = load i64, ptr %i.n, align 8, !tbaa !172  ; 2 uses
-  %i.p = ptrtoint ptr %i.e to i64
+  %i.p = ptrtoint ptr %2 to i64
   %i.q = urem i64 %i.p, %i.o                      ; 2 uses
   %.pre = load ptr, ptr %0, align 8, !tbaa !171   ; 2 uses
   %.phi.trans.insert = getelementptr inbounds nuw [8 x i8], ptr %.pre, i64 %i.q
@@ -631,8 +632,10 @@ bb.b:                                             ; preds = %.lr.ph143, %_ZNSt6v
   %i.q = phi ptr [ null, %.lr.ph143 ], [ %i.fv, %_ZNSt6vectorIj13std_allocatorIjEE9push_backERKj.exit ] ; 11 uses
   %i.r = phi ptr [ null, %.lr.ph143 ], [ %i.fw, %_ZNSt6vectorIj13std_allocatorIjEE9push_backERKj.exit ] ; 20 uses
   %i.s = phi ptr [ null, %.lr.ph143 ], [ %i.fx, %_ZNSt6vectorIj13std_allocatorIjEE9push_backERKj.exit ] ; 9 uses
-  %i.t = phi ptr [ null, %.lr.ph143 ], [ %i.fy, %_ZNSt6vectorIj13std_allocatorIjEE9push_backERKj.exit ] ; 10 uses
+  %i.t = phi ptr [ null, %.lr.ph143 ], [ %i.fy, %_ZNSt6vectorIj13std_allocatorIjEE9push_backERKj.exit ] ; 12 uses
   %.sroa.0108.0142 = phi ptr [ %.sroa.0108.0141, %.lr.ph143 ], [ %.sroa.0108.0, %_ZNSt6vectorIj13std_allocatorIjEE9push_backERKj.exit ] ; 2 uses
+  %5 = ptrtoaddr ptr %i.s to i64
+  %6 = ptrtoaddr ptr %i.q to i64
   %i.u = getelementptr inbounds nuw i8, ptr %.sroa.0108.0142, i64 12
   %i.v = load i32, ptr %i.u, align 4, !tbaa !297  ; 16 uses
   %i.w = icmp eq i32 %i.v, %1
@@ -832,7 +835,7 @@ bb.s:                                             ; preds = %bb.r
   br label %_ZNSt6vectorIj13std_allocatorIjEE9push_backERKj.exit
 
 bb.t:                                             ; preds = %bb.r
-  %i.ce = ptrtoint ptr %i.s to i64                ; 2 uses
+  %i.ce = ptrtoint ptr %i.t to i64
   %i.cf = ptrtoint ptr %i.r to i64                ; 3 uses
   %i.cg = sub i64 %i.ce, %i.cf                    ; 3 uses
   %i.ch = icmp eq i64 %i.cg, 9223372036854775804
@@ -859,7 +862,7 @@ _ZNKSt6vectorIj13std_allocatorIjEE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.t
 
 .lr.ph.i.i.i.i.i42.preheader:                     ; preds = %.noexc45
   %i.cq = ptrtoaddr ptr %i.co to i64
-  %i.cr = add i64 %i.ce, -4
+  %i.cr = add i64 %5, -4
   %i.cs = sub i64 %i.cr, %i.cf                    ; 2 uses
   %i.ct = lshr i64 %i.cs, 2
   %i.cu = add nuw nsw i64 %i.ct, 1                ; 2 uses
@@ -1052,7 +1055,7 @@ bb.ag:                                            ; preds = %bb.af
   br label %_ZNSt6vectorIj13std_allocatorIjEE9push_backERKj.exit
 
 bb.ah:                                            ; preds = %bb.af
-  %i.er = ptrtoint ptr %i.q to i64                ; 2 uses
+  %i.er = ptrtoint ptr %i.t to i64
   %i.es = ptrtoint ptr %i.r to i64                ; 3 uses
   %i.et = sub i64 %i.er, %i.es                    ; 3 uses
   %i.eu = icmp eq i64 %i.et, 9223372036854775804
@@ -1079,7 +1082,7 @@ _ZNKSt6vectorIj13std_allocatorIjEE12_M_check_lenEmPKc.exit.i.i50: ; preds = %bb.
 
 .lr.ph.i.i.i.i.i54.preheader:                     ; preds = %.noexc63
   %i.fd = ptrtoaddr ptr %i.fb to i64
-  %i.fe = add i64 %i.er, -4
+  %i.fe = add i64 %6, -4
   %i.ff = sub i64 %i.fe, %i.es                    ; 2 uses
   %i.fg = lshr i64 %i.ff, 2
   %i.fh = add nuw nsw i64 %i.fg, 1                ; 2 uses
@@ -1162,8 +1165,9 @@ _ZNSt6vectorIj13std_allocatorIjEE9push_backERKj.exit: ; preds = %bb.w, %bb.v, %_
 
 bb.aj:                                            ; preds = %.lr.ph146, %_ZNSt6vectorIj13std_allocatorIjEE9push_backERKj.exit82
   %i.ga = phi ptr [ %.pre172, %.lr.ph146 ], [ %i.hj, %_ZNSt6vectorIj13std_allocatorIjEE9push_backERKj.exit82 ] ; 5 uses
-  %i.gb = phi ptr [ %.pre171, %.lr.ph146 ], [ %i.hk, %_ZNSt6vectorIj13std_allocatorIjEE9push_backERKj.exit82 ] ; 3 uses
+  %i.gb = phi ptr [ %.pre171, %.lr.ph146 ], [ %i.hk, %_ZNSt6vectorIj13std_allocatorIjEE9push_backERKj.exit82 ] ; 4 uses
   %.sroa.089.0144 = phi ptr [ %.pre, %.lr.ph146 ], [ %i.hl, %_ZNSt6vectorIj13std_allocatorIjEE9push_backERKj.exit82 ] ; 2 uses
+  %7 = ptrtoaddr ptr %i.ga to i64
   %i.gc = load i32, ptr %.sroa.089.0144, align 4, !tbaa !205 ; 2 uses
   %.not.i66 = icmp eq ptr %i.gb, %i.ga
   br i1 %.not.i66, label %bb.al, label %bb.ak
@@ -1176,7 +1180,7 @@ bb.ak:                                            ; preds = %bb.aj
 
 bb.al:                                            ; preds = %bb.aj
   %i.ge = load ptr, ptr %2, align 8, !tbaa !201   ; 7 uses
-  %i.gf = ptrtoint ptr %i.ga to i64               ; 2 uses
+  %i.gf = ptrtoint ptr %i.gb to i64
   %i.gg = ptrtoint ptr %i.ge to i64               ; 3 uses
   %i.gh = sub i64 %i.gf, %i.gg                    ; 3 uses
   %i.gi = icmp eq i64 %i.gh, 9223372036854775804
@@ -1210,7 +1214,7 @@ _ZNKSt6vectorIj13std_allocatorIjEE12_M_check_lenEmPKc.exit.i.i67: ; preds = %bb.
 
 .lr.ph.i.i.i.i.i71.preheader:                     ; preds = %.noexc80
   %i.gr = ptrtoaddr ptr %i.gp to i64
-  %i.gs = add i64 %i.gf, -4
+  %i.gs = add i64 %7, -4
   %i.gt = sub i64 %i.gs, %i.gg                    ; 2 uses
   %i.gu = lshr i64 %i.gt, 2
   %i.gv = add nuw nsw i64 %i.gu, 1                ; 2 uses
@@ -1613,9 +1617,10 @@ _ZNSt13unordered_mapIjSt6vectorIj13std_allocatorIjEESt4hashIjESt8equal_toIjESaIS
 
 .lr.ph172:                                        ; preds = %.lr.ph175, %_ZNSt6vectorIj13std_allocatorIjEE9push_backEOj.exit
   %i.hy = phi ptr [ %i.jh, %_ZNSt6vectorIj13std_allocatorIjEE9push_backEOj.exit ], [ %i.hk, %.lr.ph175 ] ; 5 uses
-  %i.hz = phi ptr [ %i.ji, %_ZNSt6vectorIj13std_allocatorIjEE9push_backEOj.exit ], [ %i.hl, %.lr.ph175 ] ; 3 uses
+  %i.hz = phi ptr [ %i.ji, %_ZNSt6vectorIj13std_allocatorIjEE9push_backEOj.exit ], [ %i.hl, %.lr.ph175 ] ; 4 uses
   %.sroa.0115.0170 = phi ptr [ %i.jk, %_ZNSt6vectorIj13std_allocatorIjEE9push_backEOj.exit ], [ %i.hq, %.lr.ph175 ] ; 2 uses
   %i.ia = phi ptr [ %i.jj, %_ZNSt6vectorIj13std_allocatorIjEE9push_backEOj.exit ], [ %.promoted, %.lr.ph175 ] ; 10 uses
+  %7 = ptrtoaddr ptr %i.hy to i64
   %i.ib = load i32, ptr %.sroa.0115.0170, align 4, !tbaa !277 ; 2 uses
   %.not.i.i = icmp eq ptr %i.hz, %i.hy
   br i1 %.not.i.i, label %bb.ah, label %bb.ag
@@ -1627,7 +1632,7 @@ bb.ag:                                            ; preds = %.lr.ph172
   br label %_ZNSt6vectorIj13std_allocatorIjEE9push_backEOj.exit
 
 bb.ah:                                            ; preds = %.lr.ph172
-  %i.id = ptrtoint ptr %i.hy to i64               ; 2 uses
+  %i.id = ptrtoint ptr %i.hz to i64
   %i.ie = ptrtoint ptr %i.ia to i64               ; 3 uses
   %i.if = sub i64 %i.id, %i.ie                    ; 3 uses
   %i.ig = icmp eq i64 %i.if, 9223372036854775804
@@ -1658,7 +1663,7 @@ _ZNKSt6vectorIj13std_allocatorIjEE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %.noexc68
   %i.ip = ptrtoaddr ptr %i.in to i64
-  %i.iq = add i64 %i.id, -4
+  %i.iq = add i64 %7, -4
   %i.ir = sub i64 %i.iq, %i.ie                    ; 2 uses
   %i.is = lshr i64 %i.ir, 2
   %i.it = add nuw nsw i64 %i.is, 1                ; 2 uses
@@ -2061,9 +2066,9 @@ bb.a:
   %i.t = zext i32 %2 to i64                       ; 2 uses
   %i.u = load ptr, ptr %i.s, align 8, !tbaa !203
   %i.v = getelementptr inbounds nuw [24 x i8], ptr %i.u, i64 %i.t ; 2 uses
-  %i.w = load ptr, ptr %i.v, align 8, !tbaa !287  ; 4 uses
+  %i.w = load ptr, ptr %i.v, align 8, !tbaa !287  ; 3 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.v, i64 8
-  %i.y = load ptr, ptr %i.x, align 8, !tbaa !287  ; 2 uses
+  %i.y = load ptr, ptr %i.x, align 8, !tbaa !287  ; 3 uses
   %i.z = icmp eq ptr %i.w, %i.y
   br i1 %i.z, label %.critedge, label %.lr.ph
 
@@ -2345,7 +2350,7 @@ _ZNK8rational6is_oneEv.exit.thread..critedge.loopexit_crit_edge: ; preds = %_ZNK
 .critedge:                                        ; preds = %.critedge.loopexit, %bb.a
   %i.eh = phi i1 [ true, %bb.a ], [ %i.eg, %.critedge.loopexit ]
   %i.ei = phi ptr [ %i.w, %bb.a ], [ %.pre50, %.critedge.loopexit ]
-  %i.ej = phi ptr [ %i.w, %bb.a ], [ %.pre49, %.critedge.loopexit ]
+  %i.ej = phi ptr [ %i.y, %bb.a ], [ %.pre49, %.critedge.loopexit ]
   %.239 = phi i32 [ -1, %bb.a ], [ %.239.ph, %.critedge.loopexit ] ; 2 uses
   %.236 = phi i32 [ 0, %bb.a ], [ %.236.ph, %.critedge.loopexit ]
   %i.ek = getelementptr inbounds nuw i8, ptr %1, i64 256
@@ -2748,9 +2753,10 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %_ZNSt6vectorIj13std_allocatorIjEE9push_backEOj.exit
   %i.t = phi ptr [ null, %.lr.ph ], [ %i.ci, %_ZNSt6vectorIj13std_allocatorIjEE9push_backEOj.exit ] ; 9 uses
-  %i.u = phi ptr [ null, %.lr.ph ], [ %i.cj, %_ZNSt6vectorIj13std_allocatorIjEE9push_backEOj.exit ] ; 7 uses
+  %i.u = phi ptr [ null, %.lr.ph ], [ %i.cj, %_ZNSt6vectorIj13std_allocatorIjEE9push_backEOj.exit ] ; 8 uses
   %.sroa.035.048 = phi ptr [ %i.b, %.lr.ph ], [ %i.cl, %_ZNSt6vectorIj13std_allocatorIjEE9push_backEOj.exit ] ; 2 uses
   %i.v = phi ptr [ null, %.lr.ph ], [ %i.ck, %_ZNSt6vectorIj13std_allocatorIjEE9push_backEOj.exit ] ; 14 uses
+  %3 = ptrtoaddr ptr %i.t to i64
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.035.048, i64 32 ; 2 uses
   %i.x = load i32, ptr %i.w, align 8, !tbaa !333  ; 6 uses
   %i.y = load i64, ptr %i.f, align 8, !tbaa !279
@@ -2845,7 +2851,7 @@ bb.j:                                             ; preds = %bb.i
   br label %_ZNSt6vectorIj13std_allocatorIjEE9push_backEOj.exit
 
 bb.k:                                             ; preds = %bb.i
-  %i.be = ptrtoint ptr %i.t to i64                ; 2 uses
+  %i.be = ptrtoint ptr %i.u to i64
   %i.bf = ptrtoint ptr %i.v to i64                ; 3 uses
   %i.bg = sub i64 %i.be, %i.bf                    ; 3 uses
   %i.bh = icmp eq i64 %i.bg, 9223372036854775804
@@ -2880,7 +2886,7 @@ _ZNKSt6vectorIj13std_allocatorIjEE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %.noexc23
   %i.bq = ptrtoaddr ptr %i.bo to i64
-  %i.br = add i64 %i.be, -4
+  %i.br = add i64 %3, -4
   %i.bs = sub i64 %i.br, %i.bf                    ; 2 uses
   %i.bt = lshr i64 %i.bs, 2
   %i.bu = add nuw nsw i64 %i.bt, 1                ; 2 uses
@@ -3283,7 +3289,7 @@ bb.b:                                             ; preds = %.lr.ph202, %_ZNSt6v
   %.050198 = phi i32 [ 0, %.lr.ph202 ], [ %.252, %_ZNSt6vectorIjSaIjEE9push_backERKj.exit ] ; 4 uses
   %.sroa.0112.0196 = phi ptr [ null, %.lr.ph202 ], [ %.sroa.0112.1, %_ZNSt6vectorIjSaIjEE9push_backERKj.exit ] ; 12 uses
   %.sroa.13.0194 = phi ptr [ null, %.lr.ph202 ], [ %.sroa.13.1, %_ZNSt6vectorIjSaIjEE9push_backERKj.exit ] ; 10 uses
-  %.sroa.9116.0193 = phi ptr [ null, %.lr.ph202 ], [ %.sroa.9116.1, %_ZNSt6vectorIjSaIjEE9push_backERKj.exit ] ; 6 uses
+  %.sroa.9116.0193 = phi ptr [ null, %.lr.ph202 ], [ %.sroa.9116.1, %_ZNSt6vectorIjSaIjEE9push_backERKj.exit ] ; 7 uses
   %i.n = getelementptr inbounds nuw i8, ptr %.sroa.0109.0201, i64 16
   %i.o = load i32, ptr %i.n, align 4, !tbaa !205  ; 17 uses
   %i.p = zext i32 %i.o to i64                     ; 5 uses
@@ -3312,9 +3318,9 @@ bb.c:                                             ; preds = %_ZNK2lp8dioph_eq3im
   br label %_ZNSt6vectorIjSaIjEE9push_backERKj.exit
 
 bb.d:                                             ; preds = %_ZNK2lp8dioph_eq3imp15term_with_index3hasEj.exit.thread
-  %i.ab = ptrtoint ptr %.sroa.13.0194 to i64
-  %i.ac = ptrtoint ptr %.sroa.0112.0196 to i64
-  %i.ad = sub i64 %i.ab, %i.ac                    ; 6 uses
+  %i.ab = ptrtoint ptr %.sroa.9116.0193 to i64
+  %i.ac = ptrtoint ptr %.sroa.0112.0196 to i64    ; 2 uses
+  %i.ad = sub i64 %i.ab, %i.ac                    ; 5 uses
   %i.ae = icmp eq i64 %i.ad, 9223372036854775804
   br i1 %i.ae, label %bb.e, label %_ZNKSt6vectorIjSaIjEE12_M_check_lenEmPKc.exit.i.i
 
@@ -3354,7 +3360,9 @@ _ZNSt6vectorIjSaIjEE11_S_relocateEPjS2_S2_RS0_.exit16.i.i: ; preds = %bb.f, %.no
   br i1 %.not.i17.i.i, label %_ZNSt6vectorIjSaIjEE17_M_realloc_insertIJRKjEEEvN9__gnu_cxx17__normal_iteratorIPjS1_EEDpOT_.exit.i, label %bb.g
 
 bb.g:                                             ; preds = %_ZNSt6vectorIjSaIjEE11_S_relocateEPjS2_S2_RS0_.exit16.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0112.0196, i64 noundef %i.ad) #22
+  %2 = ptrtoint ptr %.sroa.13.0194 to i64
+  %3 = sub i64 %2, %i.ac
+  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0112.0196, i64 noundef %3) #22
   br label %_ZNSt6vectorIjSaIjEE17_M_realloc_insertIJRKjEEEvN9__gnu_cxx17__normal_iteratorIPjS1_EEDpOT_.exit.i
 
 _ZNSt6vectorIjSaIjEE17_M_realloc_insertIJRKjEEEvN9__gnu_cxx17__normal_iteratorIPjS1_EEDpOT_.exit.i: ; preds = %bb.g, %_ZNSt6vectorIjSaIjEE11_S_relocateEPjS2_S2_RS0_.exit16.i.i

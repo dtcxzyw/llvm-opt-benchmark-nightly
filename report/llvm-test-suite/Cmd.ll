@@ -204,7 +204,7 @@ _ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN2PP8VariableESt4l
 
 bb.bc:                                            ; preds = %_ZNSt6vectorIiSaIiEE9push_backEOi.exit, %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN2PP8VariableESt4lessIS5_ESaISt4pairIKS5_S7_EEE4findERSB_.exit134
   %i.lk = phi ptr [ %i.st, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit ], [ null, %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN2PP8VariableESt4lessIS5_ESaISt4pairIKS5_S7_EEE4findERSB_.exit134 ] ; 8 uses
-  %i.ll = phi ptr [ %i.su, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit ], [ null, %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN2PP8VariableESt4lessIS5_ESaISt4pairIKS5_S7_EEE4findERSB_.exit134 ] ; 8 uses
+  %i.ll = phi ptr [ %i.su, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit ], [ null, %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN2PP8VariableESt4lessIS5_ESaISt4pairIKS5_S7_EEE4findERSB_.exit134 ] ; 9 uses
   %indvars.iv256 = phi i64 [ %indvars.iv.next257, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit ], [ 2, %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN2PP8VariableESt4lessIS5_ESaISt4pairIKS5_S7_EEE4findERSB_.exit134 ] ; 10 uses
   %i.lm = phi ptr [ %i.sv, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit ], [ null, %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN2PP8VariableESt4lessIS5_ESaISt4pairIKS5_S7_EEE4findERSB_.exit134 ] ; 21 uses
   %i.ln = load ptr, ptr %i.bm, align 8, !tbaa !255 ; 2 uses
@@ -607,9 +607,9 @@ bb.cp:                                            ; preds = %bb.co
   br label %_ZNSt6vectorIiSaIiEE9push_backEOi.exit
 
 bb.cq:                                            ; preds = %bb.co
-  %i.se = ptrtoint ptr %i.lk to i64
-  %i.sf = ptrtoint ptr %i.lm to i64
-  %i.sg = sub i64 %i.se, %i.sf                    ; 6 uses
+  %i.se = ptrtoint ptr %i.ll to i64
+  %i.sf = ptrtoint ptr %i.lm to i64               ; 2 uses
+  %i.sg = sub i64 %i.se, %i.sf                    ; 5 uses
   %i.sh = icmp eq i64 %i.sg, 9223372036854775804
   br i1 %i.sh, label %bb.cr, label %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i
 
@@ -650,7 +650,9 @@ _ZNSt6vectorIiSaIiEE11_S_relocateEPiS2_S2_RS0_.exit16.i.i.i: ; preds = %bb.cs, %
   br i1 %.not.i17.i.i.i, label %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i, label %bb.ct
 
 bb.ct:                                            ; preds = %_ZNSt6vectorIiSaIiEE11_S_relocateEPiS2_S2_RS0_.exit16.i.i.i
-  call void @_ZdlPvm(ptr noundef nonnull %i.lm, i64 noundef %i.sg) #21
+  %16 = ptrtoint ptr %i.lk to i64
+  %17 = sub i64 %16, %i.sf
+  call void @_ZdlPvm(ptr noundef nonnull %i.lm, i64 noundef %17) #21
   br label %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i: ; preds = %bb.ct, %_ZNSt6vectorIiSaIiEE11_S_relocateEPiS2_S2_RS0_.exit16.i.i.i
@@ -1053,7 +1055,7 @@ bb.ck:                                            ; preds = %bb.cj, %bb.ci
 
 _ZStplRKSt15_Deque_iteratorIN2PP4WordERS1_PS1_El.exit.i: ; preds = %bb.ck, %bb.ch
   %.sroa.10.0.i = phi ptr [ %i.qw, %bb.ch ], [ %i.ri, %bb.ck ] ; 2 uses
-  %storemerge.i.i.i = phi ptr [ %i.re, %bb.ch ], [ %i.rm, %bb.ck ] ; 5 uses
+  %storemerge.i.i.i = phi ptr [ %i.re, %bb.ch ], [ %i.rm, %bb.ck ] ; 4 uses
   %i.rn = load ptr, ptr %24, align 8, !tbaa !320
   %i.ro = getelementptr inbounds nuw [128 x i8], ptr %i.rn, i64 %indvars.iv.next.i ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #22
@@ -1298,7 +1300,7 @@ bb.dd:                                            ; preds = %_ZNSt15_Deque_itera
   unreachable
 
 bb.de:                                            ; preds = %_ZStplRKSt15_Deque_iteratorIN2PP4WordERS1_PS1_El.exit.i
-  %i.vh = load ptr, ptr %i.hb, align 8, !tbaa !251, !noalias !1218 ; 2 uses
+  %i.vh = load ptr, ptr %i.hb, align 8, !tbaa !251, !noalias !1218 ; 3 uses
   %i.vi = icmp eq ptr %storemerge.i.i.i, %i.vh
   br i1 %i.vi, label %bb.df, label %bb.ec
 
@@ -1323,7 +1325,7 @@ bb.dh:                                            ; preds = %bb.df
   %i.vr = add nsw i64 %i.vp, %.neg.i.i.i
   %i.vs = shl nsw i64 %i.vr, 2
   %i.vt = load ptr, ptr %i.hf, align 8, !tbaa !254, !noalias !1218
-  %i.vu = ptrtoint ptr %storemerge.i.i.i to i64
+  %i.vu = ptrtoint ptr %i.vh to i64
   %i.vv = ptrtoint ptr %i.vt to i64
   %i.vw = sub i64 %i.vu, %i.vv
   %i.vx = ashr exact i64 %i.vw, 7

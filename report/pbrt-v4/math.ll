@@ -204,13 +204,15 @@ bb.b:                                             ; preds = %bb.a
 .loopexit.split-lp.loopexit.split-lp:             ; preds = %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i, %bb.f
   %lpad.loopexit.split-lp100 = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0.061, i64 noundef %i.o) #25
+  %1 = ptrtoint ptr %.sroa.18.063 to i64
+  %2 = sub i64 %1, %i.n
+  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0.061, i64 noundef %2) #25
   resume { ptr, i32 } %lpad.loopexit.split-lp100
 
 .lr.ph:                                           ; preds = %bb.b, %"_ZZN4pbrt9NextPrimeEiENK3$_0clEi.exit"
   %storemerge64 = phi i32 [ %i.ab, %"_ZZN4pbrt9NextPrimeEiENK3$_0clEi.exit" ], [ 3, %bb.b ] ; 5 uses
-  %.sroa.18.063 = phi ptr [ %.sroa.18.1, %"_ZZN4pbrt9NextPrimeEiENK3$_0clEi.exit" ], [ %i.c, %bb.b ] ; 4 uses
-  %.sroa.12.062 = phi ptr [ %.sroa.12.1, %"_ZZN4pbrt9NextPrimeEiENK3$_0clEi.exit" ], [ %i.c, %bb.b ] ; 6 uses
+  %.sroa.18.063 = phi ptr [ %.sroa.18.1, %"_ZZN4pbrt9NextPrimeEiENK3$_0clEi.exit" ], [ %i.c, %bb.b ] ; 5 uses
+  %.sroa.12.062 = phi ptr [ %.sroa.12.1, %"_ZZN4pbrt9NextPrimeEiENK3$_0clEi.exit" ], [ %i.c, %bb.b ] ; 7 uses
   %.sroa.0.061 = phi ptr [ %.sroa.0.1, %"_ZZN4pbrt9NextPrimeEiENK3$_0clEi.exit" ], [ %i.b, %bb.b ] ; 8 uses
   %.not45.i = icmp eq ptr %.sroa.0.061, %.sroa.12.062
   br i1 %.not45.i, label %.loopexit47, label %.lr.ph.i
@@ -241,9 +243,9 @@ bb.d:                                             ; preds = %.loopexit47
   br label %"_ZZN4pbrt9NextPrimeEiENK3$_0clEi.exit"
 
 bb.e:                                             ; preds = %.loopexit47
-  %i.m = ptrtoint ptr %.sroa.18.063 to i64
-  %i.n = ptrtoint ptr %.sroa.0.061 to i64
-  %i.o = sub i64 %i.m, %i.n                       ; 7 uses
+  %i.m = ptrtoint ptr %.sroa.12.062 to i64
+  %i.n = ptrtoint ptr %.sroa.0.061 to i64         ; 3 uses
+  %i.o = sub i64 %i.m, %i.n                       ; 5 uses
   %i.p = icmp eq i64 %i.o, 9223372036854775804
   br i1 %i.p, label %bb.f, label %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i
 
@@ -279,7 +281,9 @@ bb.g:                                             ; preds = %.noexc20
 
 _ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i: ; preds = %bb.g, %.noexc20
   %i.z = getelementptr inbounds nuw i8, ptr %i.x, i64 4
-  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0.061, i64 noundef %i.o) #25
+  %3 = ptrtoint ptr %.sroa.18.063 to i64
+  %4 = sub i64 %3, %i.n
+  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0.061, i64 noundef %4) #25
   %i.aa = getelementptr inbounds nuw [4 x i8], ptr %i.w, i64 %i.u
   br label %"_ZZN4pbrt9NextPrimeEiENK3$_0clEi.exit"
 

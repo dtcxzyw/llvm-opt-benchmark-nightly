@@ -204,8 +204,8 @@ bb.x:                                             ; preds = %._crit_edge
 
 .lr.ph259:                                        ; preds = %.lr.ph259.preheader, %_ZNSt6vectorIxSaIxEE9push_backEOx.exit
   %i.bu = phi ptr [ %i.dh, %_ZNSt6vectorIxSaIxEE9push_backEOx.exit ], [ %i.v, %.lr.ph259.preheader ] ; 4 uses
-  %i.bv = phi ptr [ %i.di, %_ZNSt6vectorIxSaIxEE9push_backEOx.exit ], [ %i.bo, %.lr.ph259.preheader ] ; 3 uses
-  %i.bw = phi ptr [ %i.dj, %_ZNSt6vectorIxSaIxEE9push_backEOx.exit ], [ %i.bo, %.lr.ph259.preheader ] ; 4 uses
+  %i.bv = phi ptr [ %i.di, %_ZNSt6vectorIxSaIxEE9push_backEOx.exit ], [ %i.bo, %.lr.ph259.preheader ] ; 2 uses
+  %i.bw = phi ptr [ %i.dj, %_ZNSt6vectorIxSaIxEE9push_backEOx.exit ], [ %i.bo, %.lr.ph259.preheader ] ; 5 uses
   %.043257 = phi i64 [ %i.dk, %_ZNSt6vectorIxSaIxEE9push_backEOx.exit ], [ 0, %.lr.ph259.preheader ] ; 4 uses
   %i.bx = getelementptr inbounds i8, ptr %i.bw, i64 -8
   %i.by = load i64, ptr %i.bx, align 8, !tbaa !67
@@ -234,7 +234,7 @@ bb.y:                                             ; preds = %.lr.ph259
   br label %_ZNSt6vectorIxSaIxEE9push_backEOx.exit
 
 bb.z:                                             ; preds = %.lr.ph259
-  %i.cp = ptrtoint ptr %i.bv to i64
+  %i.cp = ptrtoint ptr %i.bw to i64
   %i.cq = ptrtoint ptr %i.bu to i64               ; 2 uses
   %i.cr = sub i64 %i.cp, %i.cq                    ; 5 uses
   %i.cs = icmp eq i64 %i.cr, 9223372036854775800
@@ -637,7 +637,7 @@ bb.c:                                             ; preds = %.lr.ph, %_ZNSt6vect
   %i.s = phi ptr [ %i.o, %.lr.ph ], [ %i.hc, %_ZNSt6vectorIxSaIxEE9push_backERKx.exit ]
   %i.t = phi ptr [ %.promoted195, %.lr.ph ], [ %i.hd, %_ZNSt6vectorIxSaIxEE9push_backERKx.exit ] ; 4 uses
   %storemerge201 = phi i64 [ 0, %.lr.ph ], [ %i.hh, %_ZNSt6vectorIxSaIxEE9push_backERKx.exit ]
-  %i.u = phi ptr [ %.promoted, %.lr.ph ], [ %i.hf, %_ZNSt6vectorIxSaIxEE9push_backERKx.exit ] ; 7 uses
+  %i.u = phi ptr [ %.promoted, %.lr.ph ], [ %i.hf, %_ZNSt6vectorIxSaIxEE9push_backERKx.exit ] ; 8 uses
   %i.v = phi ptr [ %.promoted195, %.lr.ph ], [ %i.he, %_ZNSt6vectorIxSaIxEE9push_backERKx.exit ] ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #23
   %i.w = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %storemerge201
@@ -1040,8 +1040,8 @@ bb.bf:                                            ; preds = %bb.be
 
 bb.bg:                                            ; preds = %bb.be
   %i.gl = ptrtoint ptr %i.t to i64
-  %i.gm = ptrtoint ptr %i.v to i64
-  %i.gn = sub i64 %i.gl, %i.gm                    ; 6 uses
+  %i.gm = ptrtoint ptr %i.v to i64                ; 2 uses
+  %i.gn = sub i64 %i.gl, %i.gm                    ; 5 uses
   %i.go = icmp eq i64 %i.gn, 9223372036854775800
   br i1 %i.go, label %bb.bh, label %_ZNKSt6vectorIxSaIxEE12_M_check_lenEmPKc.exit.i.i
 
@@ -1084,7 +1084,9 @@ _ZNSt6vectorIxSaIxEE11_S_relocateEPxS2_S2_RS0_.exit16.i.i: ; preds = %bb.bi, %.n
   br i1 %.not.i17.i.i, label %_ZNSt6vectorIxSaIxEE17_M_realloc_insertIJRKxEEEvN9__gnu_cxx17__normal_iteratorIPxS1_EEDpOT_.exit.i, label %bb.bj
 
 bb.bj:                                            ; preds = %_ZNSt6vectorIxSaIxEE11_S_relocateEPxS2_S2_RS0_.exit16.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.v, i64 noundef %i.gn) #24
+  %31 = ptrtoint ptr %i.u to i64
+  %32 = sub i64 %31, %i.gm
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.v, i64 noundef %32) #24
   br label %_ZNSt6vectorIxSaIxEE17_M_realloc_insertIJRKxEEEvN9__gnu_cxx17__normal_iteratorIPxS1_EEDpOT_.exit.i
 
 _ZNSt6vectorIxSaIxEE17_M_realloc_insertIJRKxEEEvN9__gnu_cxx17__normal_iteratorIPxS1_EEDpOT_.exit.i: ; preds = %bb.bj, %_ZNSt6vectorIxSaIxEE11_S_relocateEPxS2_S2_RS0_.exit16.i.i

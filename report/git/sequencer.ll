@@ -204,7 +204,6 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %appen
   store i64 %i.bd, ptr %i.be, align 8, !tbaa !136
   %i.bf = ptrtoint ptr %.0 to i64
   %i.bg = sub i64 %i.bf, %i.bc
-  %5 = trunc i64 %i.bg to i32
   br label %parse_insn_line.exit.thread82.sink.split
 
 bb.k:                                             ; preds = %.preheader147.i
@@ -607,7 +606,7 @@ bb.bq:                                            ; preds = %skip_prefix_impl.ex
   %i.hn = call i64 @strspn(ptr noundef nonnull %.011.i.lcssa.ph299.i, ptr noundef nonnull @.str.148) #22
   %sext303.i = shl i64 %i.hn, 32
   %i.ho = ashr exact i64 %sext303.i, 32
-  %i.hp = getelementptr inbounds i8, ptr %.011.i.lcssa.ph299.i, i64 %i.ho ; 2 uses
+  %i.hp = getelementptr inbounds i8, ptr %.011.i.lcssa.ph299.i, i64 %i.ho ; 3 uses
   %.not89.i = icmp eq ptr %i.hp, %.0
   br i1 %.not89.i, label %bb.bu, label %bb.br
 
@@ -649,9 +648,11 @@ command_to_string.exit.i:                         ; preds = %bb.bs, %_.exit93.th
 bb.bu:                                            ; preds = %bb.bq
   %i.ia = getelementptr inbounds nuw i8, ptr %i.ah, i64 8
   store ptr null, ptr %i.ia, align 8, !tbaa !144
-  %i.ib = sub i64 %i.at, %i.m
+  %5 = ptrtoint ptr %i.hp to i64                  ; 2 uses
+  %i.ib = sub i64 %5, %i.m
   %i.ic = getelementptr inbounds nuw i8, ptr %i.ah, i64 32
   store i64 %i.ib, ptr %i.ic, align 8, !tbaa !136
+  %6 = sub i64 %i.at, %5
   br label %parse_insn_line.exit.thread82.sink.split
 
 bb.bv:                                            ; preds = %skip_prefix_impl.exit.thread.i.4.i, %skip_prefix_impl.exit.thread.i.4.i, %skip_prefix_impl.exit.thread.i.4.i, %skip_prefix_impl.exit.thread.i.4.i, %skip_prefix_impl.exit.thread.i.4.i
@@ -867,7 +868,6 @@ skip_prefix_impl.exit109.i:                       ; preds = %.preheader.1.i, %.p
   %i.kq = getelementptr inbounds nuw i8, ptr %i.ah, i64 32
   store i64 %i.kp, ptr %i.kq, align 8, !tbaa !136
   %i.kr = sub i64 %i.at, %i.ko
-  %6 = trunc i64 %i.kr to i32
   br label %parse_insn_line.exit.thread82.sink.split
 
 skip_prefix_impl.exit101.i.thread:                ; preds = %.preheader146.preheader.i, %skip_prefix_impl.exit101.sink.split.i, %.preheader146.1.i, %skip_prefix_impl.exit105.2.i, %.preheader.2.i, %skip_prefix_impl.exit101.i
@@ -1038,9 +1038,10 @@ bb.dc:                                            ; preds = %bb.cq
   unreachable
 
 parse_insn_line.exit.thread82.sink.split:         ; preds = %skip_prefix_impl.exit109.i, %bb.bu, %bb.j
-  %.sink = phi i32 [ %5, %bb.j ], [ 0, %bb.bu ], [ %6, %skip_prefix_impl.exit109.i ]
+  %.sink131 = phi i64 [ %i.bg, %bb.j ], [ %6, %bb.bu ], [ %i.kr, %skip_prefix_impl.exit109.i ]
+  %7 = trunc i64 %.sink131 to i32
   %i.mh = getelementptr inbounds nuw i8, ptr %i.ah, i64 20
-  store i32 %.sink, ptr %i.mh, align 4, !tbaa !145
+  store i32 %7, ptr %i.mh, align 4, !tbaa !145
   br label %parse_insn_line.exit.thread82
 
 parse_insn_line.exit.thread82:                    ; preds = %parse_insn_line.exit.thread82.sink.split, %bb.cp, %bb.co, %bb.cb, %bb.cn, %bb.cq, %bb.cq

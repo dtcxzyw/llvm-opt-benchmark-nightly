@@ -205,7 +205,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !206  ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !207  ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !207  ; 3 uses
   %.not = icmp eq ptr %i.b, %i.d
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 5 uses
   %i.f = load i32, ptr %i.e, align 8              ; 5 uses
@@ -305,8 +305,8 @@ bb.g:                                             ; preds = %_ZNSt14_Bit_referen
 
 bb.h:                                             ; preds = %bb.a
   %i.au = load ptr, ptr %0, align 8, !tbaa !206   ; 4 uses
-  %i.av = ptrtoint ptr %i.au to i64               ; 2 uses
-  %i.aw = sub i64 %i.g, %i.av                     ; 2 uses
+  %i.av = ptrtoint ptr %i.au to i64               ; 3 uses
+  %i.aw = sub i64 %i.g, %i.av
   %i.ax = shl nsw i64 %i.aw, 3
   %i.ay = zext i32 %i.f to i64
   %i.az = add nsw i64 %i.ax, %i.ay                ; 4 uses
@@ -489,7 +489,9 @@ _ZSt4copyISt13_Bit_iteratorS0_ET0_T_S2_S1_.exit:  ; preds = %_ZNSt14_Bit_referen
   br i1 %.not.i73, label %_ZNSt13_Bvector_baseISaIbEE13_M_deallocateEv.exit, label %bb.t
 
 bb.t:                                             ; preds = %_ZSt4copyISt13_Bit_iteratorS0_ET0_T_S2_S1_.exit
-  %i.dp = ashr exact i64 %i.aw, 3
+  %4 = ptrtoint ptr %i.d to i64
+  %5 = sub i64 %4, %i.av
+  %i.dp = ashr exact i64 %5, 3
   %i.dq = sub nsw i64 0, %i.dp
   %i.dr = getelementptr inbounds [8 x i8], ptr %i.d, i64 %i.dq
   tail call void @_ZdlPv(ptr noundef %i.dr) #29

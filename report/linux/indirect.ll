@@ -204,7 +204,7 @@ bb.a:
 define dso_local void @ext4_ind_truncate(ptr noundef %0, ptr noundef %1) local_unnamed_addr #0 align 16 prefalign(16) {
 bb.a:
   %i.a = alloca [4 x i32], align 16               ; 15 uses
-  %2 = alloca [4 x %struct.Indirect], align 16    ; 9 uses
+  %2 = alloca [4 x %struct.Indirect], align 16    ; 10 uses
   %i.b = alloca i32, align 4                      ; 15 uses
   %i.c = getelementptr i8, ptr %1, i64 -232
   %i.d = getelementptr i8, ptr %1, i64 40
@@ -373,7 +373,7 @@ bb.p:                                             ; preds = %._crit_edge.i
   br label %ext4_free_data.exitthread-pre-split
 
 bb.q:                                             ; preds = %ext4_block_to_path.exit.thread
-  %i.by = call fastcc ptr @ext4_find_shared(ptr noundef %1, i32 noundef %.0, ptr noundef nonnull %i.a, ptr noundef nonnull %2, ptr noundef nonnull %i.b) #12, !srcloc !48 ; 7 uses
+  %i.by = call fastcc ptr @ext4_find_shared(ptr noundef %1, i32 noundef %.0, ptr noundef nonnull %i.a, ptr noundef nonnull %2, ptr noundef nonnull %i.b) #12, !srcloc !48 ; 8 uses
   %i.bz = load i32, ptr %i.b, align 4
   %.not72 = icmp eq i32 %i.bz, 0
   br i1 %.not72, label %bb.u, label %bb.r
@@ -384,12 +384,15 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.r
   %i.cb = getelementptr inbounds nuw i8, ptr %i.b, i64 4
-  %3 = trunc nuw nsw i32 %.0 to i8
-  %.idx = mul nuw i8 %3, 24
-  %.lhs.trunc = add i8 %.idx, -24
-  %4 = udiv exact i8 %.lhs.trunc, 24
-  %5 = zext nneg i8 %4 to i32
-  call fastcc void @ext4_free_branches(ptr noundef %0, ptr noundef %1, ptr noundef null, ptr noundef nonnull %i.b, ptr noundef nonnull %i.cb, i32 noundef %5) #12, !srcloc !49
+  %3 = zext nneg i32 %.0 to i64
+  %4 = getelementptr [24 x i8], ptr %2, i64 %3
+  %5 = getelementptr i8, ptr %4, i64 -24
+  %6 = ptrtoint ptr %5 to i64
+  %7 = ptrtoint ptr %i.by to i64
+  %8 = sub i64 %6, %7
+  %9 = sdiv exact i64 %8, 24
+  %10 = trunc i64 %9 to i32
+  call fastcc void @ext4_free_branches(ptr noundef %0, ptr noundef %1, ptr noundef null, ptr noundef nonnull %i.b, ptr noundef nonnull %i.cb, i32 noundef %10) #12, !srcloc !49
   %i.cc = load ptr, ptr %i.by, align 8
   store i32 0, ptr %i.cc, align 4
   br label %bb.u
@@ -792,7 +795,7 @@ define dso_local noundef i32 @ext4_ind_remove_space(ptr noundef %0, ptr noundef 
 bb.a:
   %i.a = alloca [4 x i32], align 16               ; 17 uses
   %i.b = alloca [4 x i32], align 16               ; 15 uses
-  %4 = alloca [4 x %struct.Indirect], align 16    ; 19 uses
+  %4 = alloca [4 x %struct.Indirect], align 16    ; 20 uses
   %5 = alloca [4 x %struct.Indirect], align 16    ; 15 uses
   %i.c = alloca i32, align 4                      ; 20 uses
   %i.d = alloca i32, align 4                      ; 7 uses
@@ -1113,7 +1116,7 @@ bb.ag:                                            ; preds = %._crit_edge.i251
   br label %ext4_free_data.exit261
 
 bb.ah:                                            ; preds = %bb.z
-  %i.dm = call fastcc ptr @ext4_find_shared(ptr noundef %1, i32 noundef %.060.i, ptr noundef nonnull %i.a, ptr noundef nonnull %4, ptr noundef nonnull %i.c) #12, !srcloc !71 ; 9 uses
+  %i.dm = call fastcc ptr @ext4_find_shared(ptr noundef %1, i32 noundef %.060.i, ptr noundef nonnull %i.a, ptr noundef nonnull %4, ptr noundef nonnull %i.c) #12, !srcloc !71 ; 10 uses
   %i.dn = load i32, ptr %i.c, align 4
   %.not220 = icmp eq i32 %i.dn, 0
   br i1 %.not220, label %bb.al, label %bb.ai
@@ -1124,12 +1127,15 @@ bb.ai:                                            ; preds = %bb.ah
 
 bb.aj:                                            ; preds = %bb.ai
   %i.dp = getelementptr inbounds nuw i8, ptr %i.c, i64 4
-  %6 = trunc nuw nsw i32 %.060.i to i8
-  %.idx = mul nuw i8 %6, 24
-  %.lhs.trunc = add i8 %.idx, -24
-  %7 = sdiv exact i8 %.lhs.trunc, 24
-  %8 = sext i8 %7 to i32
-  call fastcc void @ext4_free_branches(ptr noundef %0, ptr noundef %1, ptr noundef null, ptr noundef nonnull %i.c, ptr noundef nonnull %i.dp, i32 noundef %8) #12, !srcloc !72
+  %6 = zext nneg i32 %.060.i to i64
+  %7 = getelementptr [24 x i8], ptr %4, i64 %6
+  %8 = getelementptr i8, ptr %7, i64 -24
+  %9 = ptrtoint ptr %8 to i64
+  %10 = ptrtoint ptr %i.dm to i64
+  %11 = sub i64 %9, %10
+  %12 = sdiv exact i64 %11, 24
+  %13 = trunc i64 %12 to i32
+  call fastcc void @ext4_free_branches(ptr noundef %0, ptr noundef %1, ptr noundef null, ptr noundef nonnull %i.c, ptr noundef nonnull %i.dp, i32 noundef %13) #12, !srcloc !72
   %i.dq = load ptr, ptr %i.dm, align 8
   store i32 0, ptr %i.dq, align 4
   br label %bb.al

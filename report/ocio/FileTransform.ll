@@ -202,7 +202,7 @@ bb.i:                                             ; preds = %bb.h
 _ZNSt6vectorIhSaIhEEaSEOS1_.exit:                 ; preds = %bb.i
   %i.x = load ptr, ptr %5, align 8, !tbaa !140    ; 3 uses
   %i.y = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %i.z = load ptr, ptr %i.y, align 8, !tbaa !141  ; 2 uses
+  %i.z = load ptr, ptr %i.y, align 8, !tbaa !141  ; 3 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !142 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
@@ -308,7 +308,8 @@ bb.x:                                             ; preds = %bb.o, %_ZN9__gnu_cx
 
 .thread:                                          ; preds = %bb.w, %bb.x
   %.sroa.14.065 = phi ptr [ %i.ab, %bb.x ], [ null, %bb.w ] ; 3 uses
-  %.sroa.11.062.a = phi ptr [ %i.x, %bb.x ], [ null, %bb.w ] ; 4 uses
+  %.sroa.11.062 = phi ptr [ %i.z, %bb.x ], [ null, %bb.w ]
+  %.sroa.11.062.a = phi ptr [ %i.x, %bb.x ], [ null, %bb.w ] ; 3 uses
   %i.bb = invoke noundef zeroext i1 @_ZN8pystring2os4path5isabsERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(32) %2)
           to label %bb.y unwind label %bb.ac
 
@@ -317,7 +318,7 @@ bb.y:                                             ; preds = %.thread
 
 bb.z:                                             ; preds = %bb.y, %bb.x
   %.sroa.14.063 = phi ptr [ %.sroa.14.065, %bb.y ], [ %i.ab, %bb.x ] ; 4 uses
-  %.sroa.11.061 = phi ptr [ %.sroa.11.062.a, %bb.y ], [ %i.z, %bb.x ]
+  %.sroa.11.061 = phi ptr [ %.sroa.11.062, %bb.y ], [ %i.z, %bb.x ]
   %.sroa.046.058 = phi ptr [ %.sroa.11.062.a, %bb.y ], [ %i.x, %bb.x ] ; 6 uses
   %i.bc = invoke noalias noundef nonnull dereferenceable(392) ptr @_Znwm(i64 noundef 392) #30
           to label %bb.aa unwind label %bb.ad     ; 6 uses

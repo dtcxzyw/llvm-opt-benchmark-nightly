@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %.lr.ph37, %._crit_e
 
 .lr.ph:                                           ; preds = %bb.b, %_ZNSt6vectorIP10ConstraintSaIS1_EE9push_backERKS1_.exit
   %i.p = phi ptr [ %i.au, %_ZNSt6vectorIP10ConstraintSaIS1_EE9push_backERKS1_.exit ], [ %i.f, %bb.b ] ; 4 uses
-  %i.q = phi ptr [ %i.av, %_ZNSt6vectorIP10ConstraintSaIS1_EE9push_backERKS1_.exit ], [ %i.g, %bb.b ] ; 4 uses
+  %i.q = phi ptr [ %i.av, %_ZNSt6vectorIP10ConstraintSaIS1_EE9push_backERKS1_.exit ], [ %i.g, %bb.b ] ; 5 uses
   %.sroa.022.033 = phi ptr [ %i.ax, %_ZNSt6vectorIP10ConstraintSaIS1_EE9push_backERKS1_.exit ], [ %i.j, %bb.b ] ; 2 uses
   %i.r = phi ptr [ %i.aw, %_ZNSt6vectorIP10ConstraintSaIS1_EE9push_backERKS1_.exit ], [ %.promoted, %bb.b ] ; 9 uses
   %i.s = load ptr, ptr %.sroa.022.033, align 8, !tbaa !48 ; 5 uses
@@ -236,9 +236,9 @@ bb.e:                                             ; preds = %bb.d
   br label %_ZNSt6vectorIP10ConstraintSaIS1_EE9push_backERKS1_.exit
 
 bb.f:                                             ; preds = %bb.d
-  %i.af = ptrtoint ptr %i.p to i64
-  %i.ag = ptrtoint ptr %i.r to i64
-  %i.ah = sub i64 %i.af, %i.ag                    ; 6 uses
+  %i.af = ptrtoint ptr %i.q to i64
+  %i.ag = ptrtoint ptr %i.r to i64                ; 2 uses
+  %i.ah = sub i64 %i.af, %i.ag                    ; 5 uses
   %i.ai = icmp eq i64 %i.ah, 9223372036854775800
   br i1 %i.ai, label %bb.g, label %_ZNKSt6vectorIP10ConstraintSaIS1_EE12_M_check_lenEmPKc.exit.i.i
 
@@ -279,7 +279,9 @@ _ZNSt6vectorIP10ConstraintSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i: ; pre
   br i1 %.not.i17.i.i, label %_ZNSt6vectorIP10ConstraintSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt6vectorIP10ConstraintSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.r, i64 noundef %i.ah) #14
+  %4 = ptrtoint ptr %i.p to i64
+  %5 = sub i64 %4, %i.ag
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.r, i64 noundef %5) #14
   br label %_ZNSt6vectorIP10ConstraintSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i
 
 _ZNSt6vectorIP10ConstraintSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i: ; preds = %bb.i, %_ZNSt6vectorIP10ConstraintSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i
@@ -448,8 +450,8 @@ bb.a:
   ret void
 
 bb.b:                                             ; preds = %.lr.ph, %_ZNSt6vectorIP8VariableSaIS1_EE9push_backERKS1_.exit
-  %i.v = phi ptr [ %.pre17, %.lr.ph ], [ %i.aw, %_ZNSt6vectorIP8VariableSaIS1_EE9push_backERKS1_.exit ] ; 3 uses
-  %i.w = phi ptr [ %.pre, %.lr.ph ], [ %i.ax, %_ZNSt6vectorIP8VariableSaIS1_EE9push_backERKS1_.exit ] ; 3 uses
+  %i.v = phi ptr [ %.pre17, %.lr.ph ], [ %i.aw, %_ZNSt6vectorIP8VariableSaIS1_EE9push_backERKS1_.exit ] ; 2 uses
+  %i.w = phi ptr [ %.pre, %.lr.ph ], [ %i.ax, %_ZNSt6vectorIP8VariableSaIS1_EE9push_backERKS1_.exit ] ; 4 uses
   %.sroa.012.016 = phi ptr [ %i.p, %.lr.ph ], [ %i.ay, %_ZNSt6vectorIP8VariableSaIS1_EE9push_backERKS1_.exit ] ; 2 uses
   %i.x = load ptr, ptr %.sroa.012.016, align 8, !tbaa !28 ; 4 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 32
@@ -469,7 +471,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   %i.ad = load ptr, ptr %0, align 8, !tbaa !29    ; 4 uses
-  %i.ae = ptrtoint ptr %i.v to i64
+  %i.ae = ptrtoint ptr %i.w to i64
   %i.af = ptrtoint ptr %i.ad to i64               ; 2 uses
   %i.ag = sub i64 %i.ae, %i.af                    ; 5 uses
   %i.ah = icmp eq i64 %i.ag, 9223372036854775800
@@ -568,7 +570,7 @@ bb.a:
   %i.f = phi ptr [ %i.al, %_ZNSt6vectorIP10ConstraintSaIS1_EE9push_backERKS1_.exit ], [ %i.d, %bb.a ]
   %i.g = phi ptr [ %i.ak, %_ZNSt6vectorIP10ConstraintSaIS1_EE9push_backERKS1_.exit ], [ %i.c, %bb.a ] ; 2 uses
   %.sroa.13.064 = phi ptr [ %.sroa.13.1, %_ZNSt6vectorIP10ConstraintSaIS1_EE9push_backERKS1_.exit ], [ null, %bb.a ] ; 7 uses
-  %.sroa.9.063 = phi ptr [ %.sroa.9.1, %_ZNSt6vectorIP10ConstraintSaIS1_EE9push_backERKS1_.exit ], [ null, %bb.a ] ; 5 uses
+  %.sroa.9.063 = phi ptr [ %.sroa.9.1, %_ZNSt6vectorIP10ConstraintSaIS1_EE9push_backERKS1_.exit ], [ null, %bb.a ] ; 6 uses
   %.sroa.024.062 = phi ptr [ %.sroa.024.1, %_ZNSt6vectorIP10ConstraintSaIS1_EE9push_backERKS1_.exit ], [ null, %bb.a ] ; 9 uses
   %.val.val = load ptr, ptr %i.g, align 8, !tbaa !48 ; 5 uses
   %i.h = load ptr, ptr %.val.val, align 8, !tbaa !52
@@ -604,9 +606,9 @@ bb.e:                                             ; preds = %bb.d
   br label %_ZNSt6vectorIP10ConstraintSaIS1_EE9push_backERKS1_.exit
 
 bb.f:                                             ; preds = %bb.d
-  %i.v = ptrtoint ptr %.sroa.13.064 to i64
-  %i.w = ptrtoint ptr %.sroa.024.062 to i64
-  %i.x = sub i64 %i.v, %i.w                       ; 6 uses
+  %i.v = ptrtoint ptr %.sroa.9.063 to i64
+  %i.w = ptrtoint ptr %.sroa.024.062 to i64       ; 2 uses
+  %i.x = sub i64 %i.v, %i.w                       ; 5 uses
   %i.y = icmp eq i64 %i.x, 9223372036854775800
   br i1 %i.y, label %bb.g, label %_ZNKSt6vectorIP10ConstraintSaIS1_EE12_M_check_lenEmPKc.exit.i.i
 
@@ -646,7 +648,9 @@ _ZNSt6vectorIP10ConstraintSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i: ; pre
   br i1 %.not.i17.i.i, label %_ZNSt6vectorIP10ConstraintSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt6vectorIP10ConstraintSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.024.062, i64 noundef %i.x) #14
+  %1 = ptrtoint ptr %.sroa.13.064 to i64
+  %2 = sub i64 %1, %i.w
+  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.024.062, i64 noundef %2) #14
   br label %_ZNSt6vectorIP10ConstraintSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i
 
 _ZNSt6vectorIP10ConstraintSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i: ; preds = %bb.i, %_ZNSt6vectorIP10ConstraintSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i
@@ -690,8 +694,8 @@ _ZNSt6vectorIP10ConstraintSaIS1_EE9push_backERKS1_.exit.thread: ; preds = %_ZNSt
 
 bb.j:                                             ; preds = %.lr.ph75, %.loopexit
   %.pre.i = phi ptr [ %.pre.i87, %.lr.ph75 ], [ %.pre.i85, %.loopexit ]
-  %i.as = phi ptr [ %.pre, %.lr.ph75 ], [ %i.br, %.loopexit ] ; 3 uses
-  %i.at = phi ptr [ %i.an, %.lr.ph75 ], [ %.pre89, %.loopexit ] ; 3 uses
+  %i.as = phi ptr [ %.pre, %.lr.ph75 ], [ %i.br, %.loopexit ] ; 2 uses
+  %i.at = phi ptr [ %i.an, %.lr.ph75 ], [ %.pre89, %.loopexit ] ; 4 uses
   %.sroa.021.074 = phi ptr [ %.sroa.024.0.lcssa, %.lr.ph75 ], [ %i.hx, %.loopexit ] ; 2 uses
   %i.au = load ptr, ptr %.sroa.021.074, align 8, !tbaa !48 ; 3 uses
   %i.av = load i64, ptr @blockTimeCtr, align 8, !tbaa !49
@@ -708,7 +712,7 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.j
   %i.ay = load ptr, ptr %i.a, align 8, !tbaa !41  ; 4 uses
-  %i.az = ptrtoint ptr %i.as to i64
+  %i.az = ptrtoint ptr %i.at to i64
   %i.ba = ptrtoint ptr %i.ay to i64               ; 2 uses
   %i.bb = sub i64 %i.az, %i.ba                    ; 5 uses
   %i.bc = icmp eq i64 %i.bb, 9223372036854775800
@@ -1095,9 +1099,9 @@ define void @_ZN5Block8mergeOutEPS_(ptr noundef nonnull align 8 dereferenceable(
 bb.a:
   %2 = alloca %"struct.__gnu_cxx::__ops::_Iter_comp_iter", align 8 ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 6 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !44   ; 5 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !44   ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 4 uses
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !44   ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !44   ; 3 uses
   %i.e = icmp eq ptr %i.b, %i.d
   br i1 %i.e, label %_ZN5Block20findMinOutConstraintEv.exit, label %.preheader.i.preheader
 
@@ -1127,8 +1131,8 @@ bb.a:
 
 .lr.ph:                                           ; preds = %.preheader.i.preheader, %.preheader.i
   tail call fastcc void @_ZL9deleteMinRSt6vectorIP10ConstraintSaIS1_EE(ptr noundef nonnull align 8 dereferenceable(24) %i.a)
-  %i.v = load ptr, ptr %i.a, align 8, !tbaa !44   ; 5 uses
-  %i.w = load ptr, ptr %i.c, align 8, !tbaa !44   ; 2 uses
+  %i.v = load ptr, ptr %i.a, align 8, !tbaa !44   ; 4 uses
+  %i.w = load ptr, ptr %i.c, align 8, !tbaa !44   ; 3 uses
   %i.x = icmp eq ptr %i.v, %i.w
   br i1 %i.x, label %._ZN5Block20findMinOutConstraintEv.exit.loopexit_crit_edge, label %.preheader.i, !llvm.loop !1
 
@@ -1137,7 +1141,7 @@ bb.a:
 
 _ZN5Block20findMinOutConstraintEv.exit:           ; preds = %.preheader.i, %.preheader.i.preheader, %._ZN5Block20findMinOutConstraintEv.exit.loopexit_crit_edge, %bb.a
   %i.y = phi ptr [ %i.b, %bb.a ], [ %i.v, %._ZN5Block20findMinOutConstraintEv.exit.loopexit_crit_edge ], [ %i.b, %.preheader.i.preheader ], [ %i.v, %.preheader.i ]
-  %i.z = phi ptr [ %i.b, %bb.a ], [ %i.v, %._ZN5Block20findMinOutConstraintEv.exit.loopexit_crit_edge ], [ %i.d, %.preheader.i.preheader ], [ %i.w, %.preheader.i ]
+  %i.z = phi ptr [ %i.d, %bb.a ], [ %i.w, %._ZN5Block20findMinOutConstraintEv.exit.loopexit_crit_edge ], [ %i.d, %.preheader.i.preheader ], [ %i.w, %.preheader.i ]
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 3 uses
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !44 ; 4 uses
   %i.ac = getelementptr i8, ptr %1, i64 96        ; 2 uses

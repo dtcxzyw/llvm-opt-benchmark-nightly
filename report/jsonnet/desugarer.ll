@@ -204,7 +204,7 @@ bb.ad:                                            ; preds = %_ZNSt7__cxx1112basi
 
 bb.ae:                                            ; preds = %bb.ad
   %i.hk = invoke ptr @_ZSt7find_ifIN9__gnu_cxx17__normal_iteratorIPN7jsonnet8internal15DesugaredObject5FieldESt6vectorIS5_SaIS5_EEEEZNS3_9Desugarer9stdlibASTENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEUlRKS5_E_ET_SL_SL_T0_(ptr %i.hi, ptr %i.hj, ptr nofreeobj noundef nonnull align 8 dereferenceable(56) %8)
-          to label %bb.af unwind label %bb.an     ; 6 uses
+          to label %bb.af unwind label %bb.an     ; 5 uses
 
 bb.af:                                            ; preds = %bb.ae
   %i.hl = load ptr, ptr %i.ag, align 8, !tbaa !58 ; 3 uses
@@ -288,7 +288,7 @@ bb.ai:                                            ; preds = %_ZN7jsonnet8interna
   %i.il = load i64, ptr %i.ik, align 8, !tbaa !84
   %i.im = add i64 %i.il, 1
   store i64 %i.im, ptr %i.ik, align 8, !tbaa !84
-  %i.in = load ptr, ptr %i.af, align 8, !tbaa !78 ; 5 uses
+  %i.in = load ptr, ptr %i.af, align 8, !tbaa !78 ; 6 uses
   %.not = icmp eq ptr %i.hk, %i.in
   br i1 %.not, label %bb.ao, label %bb.aj
 
@@ -340,7 +340,7 @@ bb.an:                                            ; preds = %bb.ae
   br label %.body73
 
 bb.ao:                                            ; preds = %bb.ai
-  %i.ix = load ptr, ptr %i.ak, align 8, !tbaa !89
+  %i.ix = load ptr, ptr %i.ak, align 8, !tbaa !89 ; 2 uses
   %.not.i = icmp eq ptr %i.hk, %i.ix
   br i1 %.not.i, label %bb.aq, label %bb.ap
 
@@ -356,9 +356,9 @@ bb.ap:                                            ; preds = %bb.ao
 
 bb.aq:                                            ; preds = %bb.ao
   %i.jb = load ptr, ptr %i.y, align 8, !tbaa !93  ; 5 uses
-  %i.jc = ptrtoint ptr %i.hk to i64
-  %i.jd = ptrtoint ptr %i.jb to i64
-  %i.je = sub i64 %i.jc, %i.jd                    ; 4 uses
+  %i.jc = ptrtoint ptr %i.in to i64
+  %i.jd = ptrtoint ptr %i.jb to i64               ; 2 uses
+  %i.je = sub i64 %i.jc, %i.jd                    ; 3 uses
   %i.jf = icmp eq i64 %i.je, 9223372036854775800
   br i1 %i.jf, label %bb.ar, label %_ZNKSt6vectorIN7jsonnet8internal15DesugaredObject5FieldESaIS3_EE12_M_check_lenEmPKc.exit.i.i
 
@@ -408,7 +408,9 @@ _ZNSt6vectorIN7jsonnet8internal15DesugaredObject5FieldESaIS3_EE11_S_relocateEPS3
   br i1 %.not.i35.i.i, label %_ZNSt6vectorIN7jsonnet8internal15DesugaredObject5FieldESaIS3_EE17_M_realloc_insertIJNS1_11ObjectField4HideERPNS1_13LiteralStringERPNS1_15BuiltinFunctionEEEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i, label %bb.as
 
 bb.as:                                            ; preds = %_ZNSt6vectorIN7jsonnet8internal15DesugaredObject5FieldESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit34.i.i
-  call void @_ZdlPvm(ptr noundef nonnull %i.jb, i64 noundef %i.je) #26
+  %11 = ptrtoint ptr %i.ix to i64
+  %12 = sub i64 %11, %i.jd
+  call void @_ZdlPvm(ptr noundef nonnull %i.jb, i64 noundef %12) #26
   br label %_ZNSt6vectorIN7jsonnet8internal15DesugaredObject5FieldESaIS3_EE17_M_realloc_insertIJNS1_11ObjectField4HideERPNS1_13LiteralStringERPNS1_15BuiltinFunctionEEEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i
 
 _ZNSt6vectorIN7jsonnet8internal15DesugaredObject5FieldESaIS3_EE17_M_realloc_insertIJNS1_11ObjectField4HideERPNS1_13LiteralStringERPNS1_15BuiltinFunctionEEEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i: ; preds = %bb.as, %_ZNSt6vectorIN7jsonnet8internal15DesugaredObject5FieldESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit34.i.i
@@ -534,7 +536,7 @@ bb.aw:                                            ; preds = %bb.av
 bb.ax:                                            ; preds = %bb.aw
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #28
   %i.ky = load ptr, ptr %i.af, align 8, !tbaa !92 ; 8 uses
-  %i.kz = load ptr, ptr %i.ak, align 8, !tbaa !89
+  %i.kz = load ptr, ptr %i.ak, align 8, !tbaa !89 ; 2 uses
   %.not.i93 = icmp eq ptr %i.ky, %i.kz
   br i1 %.not.i93, label %bb.az, label %bb.ay
 
@@ -551,8 +553,8 @@ bb.ay:                                            ; preds = %bb.ax
 bb.az:                                            ; preds = %bb.ax
   %i.ld = load ptr, ptr %i.y, align 8, !tbaa !93  ; 5 uses
   %i.le = ptrtoint ptr %i.ky to i64
-  %i.lf = ptrtoint ptr %i.ld to i64
-  %i.lg = sub i64 %i.le, %i.lf                    ; 4 uses
+  %i.lf = ptrtoint ptr %i.ld to i64               ; 2 uses
+  %i.lg = sub i64 %i.le, %i.lf                    ; 3 uses
   %i.lh = icmp eq i64 %i.lg, 9223372036854775800
   br i1 %i.lh, label %bb.ba, label %_ZNKSt6vectorIN7jsonnet8internal15DesugaredObject5FieldESaIS3_EE12_M_check_lenEmPKc.exit.i.i94
 
@@ -602,7 +604,9 @@ _ZNSt6vectorIN7jsonnet8internal15DesugaredObject5FieldESaIS3_EE11_S_relocateEPS3
   br i1 %.not.i35.i.i104, label %_ZNSt6vectorIN7jsonnet8internal15DesugaredObject5FieldESaIS3_EE17_M_realloc_insertIJNS1_11ObjectField4HideEPNS1_13LiteralStringESA_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i, label %bb.bb
 
 bb.bb:                                            ; preds = %_ZNSt6vectorIN7jsonnet8internal15DesugaredObject5FieldESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit34.i.i102
-  call void @_ZdlPvm(ptr noundef nonnull %i.ld, i64 noundef %i.lg) #26
+  %13 = ptrtoint ptr %i.kz to i64
+  %14 = sub i64 %13, %i.lf
+  call void @_ZdlPvm(ptr noundef nonnull %i.ld, i64 noundef %14) #26
   br label %_ZNSt6vectorIN7jsonnet8internal15DesugaredObject5FieldESaIS3_EE17_M_realloc_insertIJNS1_11ObjectField4HideEPNS1_13LiteralStringESA_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i
 
 _ZNSt6vectorIN7jsonnet8internal15DesugaredObject5FieldESaIS3_EE17_M_realloc_insertIJNS1_11ObjectField4HideEPNS1_13LiteralStringESA_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i: ; preds = %bb.bb, %_ZNSt6vectorIN7jsonnet8internal15DesugaredObject5FieldESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit34.i.i102
@@ -1005,7 +1009,7 @@ bb.i:                                             ; preds = %bb.g
   %i.ba = getelementptr inbounds nuw i8, ptr %.sroa.0110.0120, i64 112 ; 2 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %.sroa.0110.0120, i64 248 ; 2 uses
   %i.bc = load ptr, ptr %i.al, align 8, !tbaa !92 ; 8 uses
-  %i.bd = load ptr, ptr %i.am, align 8, !tbaa !89
+  %i.bd = load ptr, ptr %i.am, align 8, !tbaa !89 ; 2 uses
   %.not.i = icmp eq ptr %i.bc, %i.bd
   br i1 %.not.i, label %bb.k, label %bb.j
 
@@ -1025,8 +1029,8 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.i
   %i.bk = load ptr, ptr %8, align 8, !tbaa !93    ; 5 uses
   %i.bl = ptrtoint ptr %i.bc to i64
-  %i.bm = ptrtoint ptr %i.bk to i64
-  %i.bn = sub i64 %i.bl, %i.bm                    ; 4 uses
+  %i.bm = ptrtoint ptr %i.bk to i64               ; 2 uses
+  %i.bn = sub i64 %i.bl, %i.bm                    ; 3 uses
   %i.bo = icmp eq i64 %i.bn, 9223372036854775800
   br i1 %i.bo, label %bb.l, label %_ZNKSt6vectorIN7jsonnet8internal15DesugaredObject5FieldESaIS3_EE12_M_check_lenEmPKc.exit.i.i
 
@@ -1079,7 +1083,9 @@ _ZNSt6vectorIN7jsonnet8internal15DesugaredObject5FieldESaIS3_EE11_S_relocateEPS3
   br i1 %.not.i35.i.i, label %_ZNSt6vectorIN7jsonnet8internal15DesugaredObject5FieldESaIS3_EE17_M_realloc_insertIJRKNS1_11ObjectField4HideERKPNS1_3ASTESE_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i, label %bb.m
 
 bb.m:                                             ; preds = %_ZNSt6vectorIN7jsonnet8internal15DesugaredObject5FieldESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit34.i.i
-  call void @_ZdlPvm(ptr noundef nonnull %i.bk, i64 noundef %i.bn) #26
+  %13 = ptrtoint ptr %i.bd to i64
+  %14 = sub i64 %13, %i.bm
+  call void @_ZdlPvm(ptr noundef nonnull %i.bk, i64 noundef %14) #26
   br label %_ZNSt6vectorIN7jsonnet8internal15DesugaredObject5FieldESaIS3_EE17_M_realloc_insertIJRKNS1_11ObjectField4HideERKPNS1_3ASTESE_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i
 
 _ZNSt6vectorIN7jsonnet8internal15DesugaredObject5FieldESaIS3_EE17_M_realloc_insertIJRKNS1_11ObjectField4HideERKPNS1_3ASTESE_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i: ; preds = %bb.m, %_ZNSt6vectorIN7jsonnet8internal15DesugaredObject5FieldESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit34.i.i
@@ -1482,7 +1488,7 @@ _ZNSt7__cxx1112basic_stringIDiSt11char_traitsIDiESaIDiEED2Ev.exit: ; preds = %_Z
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 8 ; 3 uses
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !222  ; 7 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.v, i64 16 ; 2 uses
-  %i.z = load ptr, ptr %i.y, align 8, !tbaa !227
+  %i.z = load ptr, ptr %i.y, align 8, !tbaa !227  ; 2 uses
   %.not.i = icmp eq ptr %i.x, %i.z
   br i1 %.not.i, label %bb.e, label %bb.d
 
@@ -1498,8 +1504,8 @@ bb.d:                                             ; preds = %_ZNSt7__cxx1112basi
 bb.e:                                             ; preds = %_ZNSt7__cxx1112basic_stringIDiSt11char_traitsIDiESaIDiEED2Ev.exit
   %i.ad = load ptr, ptr %i.v, align 8, !tbaa !223 ; 5 uses
   %i.ae = ptrtoint ptr %i.x to i64
-  %i.af = ptrtoint ptr %i.ad to i64
-  %i.ag = sub i64 %i.ae, %i.af                    ; 4 uses
+  %i.af = ptrtoint ptr %i.ad to i64               ; 2 uses
+  %i.ag = sub i64 %i.ae, %i.af                    ; 3 uses
   %i.ah = icmp eq i64 %i.ag, 9223372036854775792
   br i1 %i.ah, label %bb.f, label %_ZNKSt6vectorISt4pairIPKN7jsonnet8internal10IdentifierEPNS2_3ASTEESaIS8_EE12_M_check_lenEmPKc.exit.i.i
 
@@ -1542,7 +1548,9 @@ _ZNSt6vectorISt4pairIPKN7jsonnet8internal10IdentifierEPNS2_3ASTEESaIS8_EE11_S_re
   br i1 %.not.i34.i.i, label %_ZNSt6vectorISt4pairIPKN7jsonnet8internal10IdentifierEPNS2_3ASTEESaIS8_EE17_M_realloc_insertIJRS5_DnEEEvN9__gnu_cxx17__normal_iteratorIPS8_SA_EEDpOT_.exit.i, label %bb.g
 
 bb.g:                                             ; preds = %_ZNSt6vectorISt4pairIPKN7jsonnet8internal10IdentifierEPNS2_3ASTEESaIS8_EE11_S_relocateEPS8_SB_SB_RS9_.exit33.i.i
-  call void @_ZdlPvm(ptr noundef nonnull %i.ad, i64 noundef %i.ag) #26
+  %7 = ptrtoint ptr %i.z to i64
+  %8 = sub i64 %7, %i.af
+  call void @_ZdlPvm(ptr noundef nonnull %i.ad, i64 noundef %8) #26
   br label %_ZNSt6vectorISt4pairIPKN7jsonnet8internal10IdentifierEPNS2_3ASTEESaIS8_EE17_M_realloc_insertIJRS5_DnEEEvN9__gnu_cxx17__normal_iteratorIPS8_SA_EEDpOT_.exit.i
 
 _ZNSt6vectorISt4pairIPKN7jsonnet8internal10IdentifierEPNS2_3ASTEESaIS8_EE17_M_realloc_insertIJRS5_DnEEEvN9__gnu_cxx17__normal_iteratorIPS8_SA_EEDpOT_.exit.i: ; preds = %bb.g, %_ZNSt6vectorISt4pairIPKN7jsonnet8internal10IdentifierEPNS2_3ASTEESaIS8_EE11_S_relocateEPS8_SB_SB_RS9_.exit33.i.i
@@ -1721,7 +1729,7 @@ _ZNSt7__cxx1112basic_stringIDiSt11char_traitsIDiESaIDiEED2Ev.exit56: ; preds = %
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cw, i64 8 ; 3 uses
   %i.cy = load ptr, ptr %i.cx, align 8, !tbaa !222 ; 7 uses
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cw, i64 16 ; 2 uses
-  %i.da = load ptr, ptr %i.cz, align 8, !tbaa !227
+  %i.da = load ptr, ptr %i.cz, align 8, !tbaa !227 ; 2 uses
   %.not.i57 = icmp eq ptr %i.cy, %i.da
   br i1 %.not.i57, label %bb.r, label %bb.q
 
@@ -1736,8 +1744,8 @@ bb.q:                                             ; preds = %_ZNSt7__cxx1112basi
 bb.r:                                             ; preds = %_ZNSt7__cxx1112basic_stringIDiSt11char_traitsIDiESaIDiEED2Ev.exit56
   %i.dd = load ptr, ptr %i.cw, align 8, !tbaa !223 ; 5 uses
   %i.de = ptrtoint ptr %i.cy to i64
-  %i.df = ptrtoint ptr %i.dd to i64
-  %i.dg = sub i64 %i.de, %i.df                    ; 4 uses
+  %i.df = ptrtoint ptr %i.dd to i64               ; 2 uses
+  %i.dg = sub i64 %i.de, %i.df                    ; 3 uses
   %i.dh = icmp eq i64 %i.dg, 9223372036854775792
   br i1 %i.dh, label %bb.s, label %_ZNKSt6vectorISt4pairIPKN7jsonnet8internal10IdentifierEPNS2_3ASTEESaIS8_EE12_M_check_lenEmPKc.exit.i.i58
 
@@ -1785,7 +1793,9 @@ _ZNSt6vectorISt4pairIPKN7jsonnet8internal10IdentifierEPNS2_3ASTEESaIS8_EE11_S_re
   br i1 %.not.i34.i.i68, label %_ZNSt6vectorISt4pairIPKN7jsonnet8internal10IdentifierEPNS2_3ASTEESaIS8_EE17_M_realloc_insertIJRS5_RPNS2_10SuperIndexEEEEvN9__gnu_cxx17__normal_iteratorIPS8_SA_EEDpOT_.exit.i, label %bb.t
 
 bb.t:                                             ; preds = %_ZNSt6vectorISt4pairIPKN7jsonnet8internal10IdentifierEPNS2_3ASTEESaIS8_EE11_S_relocateEPS8_SB_SB_RS9_.exit33.i.i66
-  call void @_ZdlPvm(ptr noundef nonnull %i.dd, i64 noundef %i.dg) #26
+  %9 = ptrtoint ptr %i.da to i64
+  %10 = sub i64 %9, %i.df
+  call void @_ZdlPvm(ptr noundef nonnull %i.dd, i64 noundef %10) #26
   br label %_ZNSt6vectorISt4pairIPKN7jsonnet8internal10IdentifierEPNS2_3ASTEESaIS8_EE17_M_realloc_insertIJRS5_RPNS2_10SuperIndexEEEEvN9__gnu_cxx17__normal_iteratorIPS8_SA_EEDpOT_.exit.i
 
 _ZNSt6vectorISt4pairIPKN7jsonnet8internal10IdentifierEPNS2_3ASTEESaIS8_EE17_M_realloc_insertIJRS5_RPNS2_10SuperIndexEEEEvN9__gnu_cxx17__normal_iteratorIPS8_SA_EEDpOT_.exit.i: ; preds = %bb.t, %_ZNSt6vectorISt4pairIPKN7jsonnet8internal10IdentifierEPNS2_3ASTEESaIS8_EE11_S_relocateEPS8_SB_SB_RS9_.exit33.i.i66
@@ -2000,7 +2010,7 @@ _ZNSt7__cxx1112basic_stringIDiSt11char_traitsIDiESaIDiEED2Ev.exit103: ; preds = 
   %i.gg = getelementptr inbounds nuw i8, ptr %i.gf, i64 8 ; 3 uses
   %i.gh = load ptr, ptr %i.gg, align 8, !tbaa !222 ; 7 uses
   %i.gi = getelementptr inbounds nuw i8, ptr %i.gf, i64 16 ; 2 uses
-  %i.gj = load ptr, ptr %i.gi, align 8, !tbaa !227
+  %i.gj = load ptr, ptr %i.gi, align 8, !tbaa !227 ; 2 uses
   %.not.i104 = icmp eq ptr %i.gh, %i.gj
   br i1 %.not.i104, label %bb.ah, label %bb.ag
 
@@ -2015,8 +2025,8 @@ bb.ag:                                            ; preds = %_ZNSt7__cxx1112basi
 bb.ah:                                            ; preds = %_ZNSt7__cxx1112basic_stringIDiSt11char_traitsIDiESaIDiEED2Ev.exit103
   %i.gm = load ptr, ptr %i.gf, align 8, !tbaa !223 ; 5 uses
   %i.gn = ptrtoint ptr %i.gh to i64
-  %i.go = ptrtoint ptr %i.gm to i64
-  %i.gp = sub i64 %i.gn, %i.go                    ; 4 uses
+  %i.go = ptrtoint ptr %i.gm to i64               ; 2 uses
+  %i.gp = sub i64 %i.gn, %i.go                    ; 3 uses
   %i.gq = icmp eq i64 %i.gp, 9223372036854775792
   br i1 %i.gq, label %bb.ai, label %_ZNKSt6vectorISt4pairIPKN7jsonnet8internal10IdentifierEPNS2_3ASTEESaIS8_EE12_M_check_lenEmPKc.exit.i.i105
 
@@ -2064,7 +2074,9 @@ _ZNSt6vectorISt4pairIPKN7jsonnet8internal10IdentifierEPNS2_3ASTEESaIS8_EE11_S_re
   br i1 %.not.i34.i.i115, label %_ZNSt6vectorISt4pairIPKN7jsonnet8internal10IdentifierEPNS2_3ASTEESaIS8_EE17_M_realloc_insertIJRS5_RPNS2_7InSuperEEEEvN9__gnu_cxx17__normal_iteratorIPS8_SA_EEDpOT_.exit.i, label %bb.aj
 
 bb.aj:                                            ; preds = %_ZNSt6vectorISt4pairIPKN7jsonnet8internal10IdentifierEPNS2_3ASTEESaIS8_EE11_S_relocateEPS8_SB_SB_RS9_.exit33.i.i113
-  call void @_ZdlPvm(ptr noundef nonnull %i.gm, i64 noundef %i.gp) #26
+  %11 = ptrtoint ptr %i.gj to i64
+  %12 = sub i64 %11, %i.go
+  call void @_ZdlPvm(ptr noundef nonnull %i.gm, i64 noundef %12) #26
   br label %_ZNSt6vectorISt4pairIPKN7jsonnet8internal10IdentifierEPNS2_3ASTEESaIS8_EE17_M_realloc_insertIJRS5_RPNS2_7InSuperEEEEvN9__gnu_cxx17__normal_iteratorIPS8_SA_EEDpOT_.exit.i
 
 _ZNSt6vectorISt4pairIPKN7jsonnet8internal10IdentifierEPNS2_3ASTEESaIS8_EE17_M_realloc_insertIJRS5_RPNS2_7InSuperEEEEvN9__gnu_cxx17__normal_iteratorIPS8_SA_EEDpOT_.exit.i: ; preds = %bb.aj, %_ZNSt6vectorISt4pairIPKN7jsonnet8internal10IdentifierEPNS2_3ASTEESaIS8_EE11_S_relocateEPS8_SB_SB_RS9_.exit33.i.i113
@@ -2467,7 +2479,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %_ZNSt6vectorIPKN7jsonnet8internal10IdentifierESaIS4_EE9push_backEOS4_.exit
   %i.j = phi ptr [ null, %.lr.ph ], [ %i.ae, %_ZNSt6vectorIPKN7jsonnet8internal10IdentifierESaIS4_EE9push_backEOS4_.exit ] ; 4 uses
-  %i.k = phi ptr [ null, %.lr.ph ], [ %i.af, %_ZNSt6vectorIPKN7jsonnet8internal10IdentifierESaIS4_EE9push_backEOS4_.exit ] ; 3 uses
+  %i.k = phi ptr [ null, %.lr.ph ], [ %i.af, %_ZNSt6vectorIPKN7jsonnet8internal10IdentifierESaIS4_EE9push_backEOS4_.exit ] ; 4 uses
   %.sroa.08.014 = phi ptr [ %i.e, %.lr.ph ], [ %i.ah, %_ZNSt6vectorIPKN7jsonnet8internal10IdentifierESaIS4_EE9push_backEOS4_.exit ] ; 2 uses
   %i.l = phi ptr [ null, %.lr.ph ], [ %i.ag, %_ZNSt6vectorIPKN7jsonnet8internal10IdentifierESaIS4_EE9push_backEOS4_.exit ] ; 10 uses
   %i.m = load ptr, ptr %i.a, align 8, !tbaa !64
@@ -2485,9 +2497,9 @@ bb.c:                                             ; preds = %_ZN7jsonnet8interna
   br label %_ZNSt6vectorIPKN7jsonnet8internal10IdentifierESaIS4_EE9push_backEOS4_.exit
 
 bb.d:                                             ; preds = %_ZN7jsonnet8internal9Desugarer2idERKNSt7__cxx1112basic_stringIDiSt11char_traitsIDiESaIDiEEE.exit
-  %i.p = ptrtoint ptr %i.j to i64
-  %i.q = ptrtoint ptr %i.l to i64
-  %i.r = sub i64 %i.p, %i.q                       ; 6 uses
+  %i.p = ptrtoint ptr %i.k to i64
+  %i.q = ptrtoint ptr %i.l to i64                 ; 2 uses
+  %i.r = sub i64 %i.p, %i.q                       ; 5 uses
   %i.s = icmp eq i64 %i.r, 9223372036854775800
   br i1 %i.s, label %bb.e, label %_ZNKSt6vectorIPKN7jsonnet8internal10IdentifierESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i
 
@@ -2528,7 +2540,9 @@ _ZNSt6vectorIPKN7jsonnet8internal10IdentifierESaIS4_EE11_S_relocateEPS4_S7_S7_RS
   br i1 %.not.i17.i.i.i, label %_ZNSt6vectorIPKN7jsonnet8internal10IdentifierESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i, label %bb.g
 
 bb.g:                                             ; preds = %_ZNSt6vectorIPKN7jsonnet8internal10IdentifierESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit16.i.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.l, i64 noundef %i.r) #26
+  %2 = ptrtoint ptr %i.j to i64
+  %3 = sub i64 %2, %i.q
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.l, i64 noundef %3) #26
   br label %_ZNSt6vectorIPKN7jsonnet8internal10IdentifierESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIPKN7jsonnet8internal10IdentifierESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i: ; preds = %bb.g, %_ZNSt6vectorIPKN7jsonnet8internal10IdentifierESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit16.i.i.i

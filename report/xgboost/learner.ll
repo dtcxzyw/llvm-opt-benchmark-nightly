@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZNSt5queu
   %i.n = phi ptr [ %i.f, %.lr.ph ], [ %storemerge.i.i, %_ZNSt5queueIN7xgboost12DMatrixCacheINS0_20PredictionCacheEntryEE3KeyESt5dequeIS4_SaIS4_EEE3popEv.exit ]
   %.sroa.076.0134 = phi ptr [ null, %.lr.ph ], [ %.sroa.076.1, %_ZNSt5queueIN7xgboost12DMatrixCacheINS0_20PredictionCacheEntryEE3KeyESt5dequeIS4_SaIS4_EEE3popEv.exit ] ; 9 uses
   %.sroa.16.0133 = phi ptr [ null, %.lr.ph ], [ %.sroa.16.1, %_ZNSt5queueIN7xgboost12DMatrixCacheINS0_20PredictionCacheEntryEE3KeyESt5dequeIS4_SaIS4_EEE3popEv.exit ] ; 8 uses
-  %.sroa.10.0132 = phi ptr [ null, %.lr.ph ], [ %.sroa.10.1, %_ZNSt5queueIN7xgboost12DMatrixCacheINS0_20PredictionCacheEntryEE3KeyESt5dequeIS4_SaIS4_EEE3popEv.exit ] ; 5 uses
+  %.sroa.10.0132 = phi ptr [ null, %.lr.ph ], [ %.sroa.10.1, %_ZNSt5queueIN7xgboost12DMatrixCacheINS0_20PredictionCacheEntryEE3KeyESt5dequeIS4_SaIS4_EEE3popEv.exit ] ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #17
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(16) %i.n, i64 16, i1 false), !tbaa.struct !340
   %i.o = invoke ptr @_ZNSt10_HashtableIN7xgboost12DMatrixCacheINS0_20PredictionCacheEntryEE3KeyESt4pairIKS4_NS3_4ItemEESaIS8_ENSt8__detail10_Select1stESt8equal_toIS4_ENS3_4HashENSA_18_Mod_range_hashingENSA_20_Default_ranged_hashENSA_20_Prime_rehash_policyENSA_17_Hashtable_traitsILb0ELb0ELb1EEEE4findERS6_(ptr noundef nonnull align 8 dereferenceable(56) %i.h, ptr noundef nonnull align 8 dereferenceable(16) %2)
@@ -288,9 +288,9 @@ bb.i:                                             ; preds = %_ZNKSt10__weak_ptrI
   br label %_ZNSt6vectorIN7xgboost12DMatrixCacheINS0_20PredictionCacheEntryEE3KeyESaIS4_EE9push_backERKS4_.exit
 
 bb.j:                                             ; preds = %_ZNKSt10__weak_ptrIN7xgboost7DMatrixELN9__gnu_cxx12_Lock_policyE2EE7expiredEv.exit.thread
-  %i.ac = ptrtoint ptr %.sroa.16.0133 to i64
-  %i.ad = ptrtoint ptr %.sroa.076.0134 to i64
-  %i.ae = sub i64 %i.ac, %i.ad                    ; 4 uses
+  %i.ac = ptrtoint ptr %.sroa.10.0132 to i64
+  %i.ad = ptrtoint ptr %.sroa.076.0134 to i64     ; 2 uses
+  %i.ae = sub i64 %i.ac, %i.ad                    ; 3 uses
   %i.af = icmp eq i64 %i.ae, 9223372036854775792
   br i1 %i.af, label %bb.k, label %_ZNKSt6vectorIN7xgboost12DMatrixCacheINS0_20PredictionCacheEntryEE3KeyESaIS4_EE12_M_check_lenEmPKc.exit.i.i
 
@@ -336,7 +336,9 @@ _ZNSt6vectorIN7xgboost12DMatrixCacheINS0_20PredictionCacheEntryEE3KeyESaIS4_EE11
   br i1 %.not.i23.i.i, label %_ZNSt6vectorIN7xgboost12DMatrixCacheINS0_20PredictionCacheEntryEE3KeyESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %_ZNSt6vectorIN7xgboost12DMatrixCacheINS0_20PredictionCacheEntryEE3KeyESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit22.i.i
-  call void @_ZdlPvm(ptr noundef nonnull %.sroa.076.0134, i64 noundef %i.ae) #39
+  %7 = ptrtoint ptr %.sroa.16.0133 to i64
+  %8 = sub i64 %7, %i.ad
+  call void @_ZdlPvm(ptr noundef nonnull %.sroa.076.0134, i64 noundef %8) #39
   br label %_ZNSt6vectorIN7xgboost12DMatrixCacheINS0_20PredictionCacheEntryEE3KeyESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i
 
 _ZNSt6vectorIN7xgboost12DMatrixCacheINS0_20PredictionCacheEntryEE3KeyESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i: ; preds = %bb.l, %_ZNSt6vectorIN7xgboost12DMatrixCacheINS0_20PredictionCacheEntryEE3KeyESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit22.i.i
@@ -739,11 +741,11 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i, label %.critedge, label %.preheader.i
 
 .preheader.i:                                     ; preds = %bb.b
-  %i.e = load ptr, ptr %1, align 8, !tbaa !335    ; 3 uses
+  %i.e = load ptr, ptr %1, align 8, !tbaa !335    ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.01.0.copyload.i.i.i.i = load i64, ptr %i.f, align 8 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !335
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !335  ; 2 uses
   %i.i = icmp eq ptr %i.e, %i.h
   %i.j = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %.sroa.0.0.copyload.i.i.i.i35 = load i64, ptr %i.j, align 8
@@ -753,7 +755,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %.lr.ph
   %i.m = getelementptr inbounds nuw i8, ptr %i.s, i64 8
-  %i.n = load ptr, ptr %i.m, align 8, !tbaa !335
+  %i.n = load ptr, ptr %i.m, align 8, !tbaa !335  ; 2 uses
   %i.o = icmp eq ptr %i.e, %i.n
   %i.p = getelementptr inbounds nuw i8, ptr %i.s, i64 16
   %.sroa.0.0.copyload.i.i.i.i = load i64, ptr %i.p, align 8
@@ -768,6 +770,7 @@ bb.c:                                             ; preds = %.lr.ph
   br i1 %.not14.i, label %.critedge, label %bb.c, !llvm.loop !725
 
 _ZNSt10_HashtableIN7xgboost12DMatrixCacheINS0_20PredictionCacheEntryEE3KeyESt4pairIKS4_NS3_4ItemEESaIS8_ENSt8__detail10_Select1stESt8equal_toIS4_ENS3_4HashENSA_18_Mod_range_hashingENSA_20_Default_ranged_hashENSA_20_Prime_rehash_policyENSA_17_Hashtable_traitsILb0ELb0ELb1EEEE19_M_find_before_nodeERS6_.exit: ; preds = %bb.c, %.preheader.i
+  %2 = phi ptr [ %i.h, %.preheader.i ], [ %i.n, %bb.c ]
   %i.t = phi ptr [ %i.d, %.preheader.i ], [ %i.s, %bb.c ] ; 2 uses
   %.01115.i.lcssa = phi ptr [ %i.c, %.preheader.i ], [ %.016.i36, %bb.c ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -784,7 +787,7 @@ bb.d:                                             ; preds = %_ZNSt10_HashtableIN
   unreachable
 
 _ZNKSt10_HashtableIN7xgboost12DMatrixCacheINS0_20PredictionCacheEntryEE3KeyESt4pairIKS4_NS3_4ItemEESaIS8_ENSt8__detail10_Select1stESt8equal_toIS4_ENS3_4HashENSA_18_Mod_range_hashingENSA_20_Default_ranged_hashENSA_20_Prime_rehash_policyENSA_17_Hashtable_traitsILb0ELb0ELb1EEEE15_M_bucket_indexERKNSA_16_Hash_node_valueIS8_Lb0EEE.exit: ; preds = %_ZNSt10_HashtableIN7xgboost12DMatrixCacheINS0_20PredictionCacheEntryEE3KeyESt4pairIKS4_NS3_4ItemEESaIS8_ENSt8__detail10_Select1stESt8equal_toIS4_ENS3_4HashENSA_18_Mod_range_hashingENSA_20_Default_ranged_hashENSA_20_Prime_rehash_policyENSA_17_Hashtable_traitsILb0ELb0ELb1EEEE19_M_find_before_nodeERS6_.exit
-  %i.aa = ptrtoint ptr %i.e to i64                ; 2 uses
+  %i.aa = ptrtoint ptr %2 to i64                  ; 2 uses
   %i.ab = icmp eq i64 %i.x, %i.aa
   %i.ac = select i1 %i.ab, i64 0, i64 %i.x
   %.0.i.i.i.i = xor i64 %i.ac, %i.aa

@@ -204,9 +204,11 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %bb.ai
   %i.c = phi ptr [ null, %.lr.ph ], [ %i.eb, %bb.ai ] ; 6 uses
   %i.d = phi ptr [ null, %.lr.ph ], [ %i.ec, %bb.ai ] ; 5 uses
-  %i.e = phi ptr [ null, %.lr.ph ], [ %i.ed, %bb.ai ] ; 6 uses
+  %i.e = phi ptr [ null, %.lr.ph ], [ %i.ed, %bb.ai ] ; 8 uses
   %.019101 = phi ptr [ %.01999, %.lr.ph ], [ %.019, %bb.ai ] ; 2 uses
   %i.f = phi ptr [ null, %.lr.ph ], [ %i.ee, %bb.ai ] ; 31 uses
+  %11 = ptrtoaddr ptr %i.d to i64
+  %12 = ptrtoaddr ptr %i.c to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #23
   %i.g = load ptr, ptr %.019101, align 8, !tbaa !255
   store ptr %i.g, ptr %4, align 8
@@ -369,7 +371,7 @@ _ZNSt10unique_ptrIN6duckdb16ParsedExpressionESt14default_deleteIS1_EED2Ev.exit.t
   br label %_ZNSt10unique_ptrIN6duckdb19ColumnRefExpressionESt14default_deleteIS1_EED2Ev.exit
 
 bb.v:                                             ; preds = %bb.u
-  %i.ai = ptrtoint ptr %i.d to i64                ; 2 uses
+  %i.ai = ptrtoint ptr %i.e to i64
   %i.aj = ptrtoint ptr %i.f to i64                ; 2 uses
   %i.ak = sub i64 %i.ai, %i.aj                    ; 3 uses
   %i.al = icmp eq i64 %i.ak, 9223372036854775800
@@ -404,7 +406,7 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_16ParsedExpressionESt14default_deleteIS2_
   br i1 %.not10.i.i.i.i.i.i.i, label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_16ParsedExpressionESt14default_deleteIS2_ELb1EEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %.noexc38
-  %i.av = add i64 %i.ai, -8
+  %i.av = add i64 %11, -8
   %i.aw = sub i64 %i.av, %i.aj                    ; 3 uses
   %i.ax = lshr i64 %i.aw, 3
   %i.ay = add nuw nsw i64 %i.ax, 1                ; 2 uses
@@ -572,7 +574,7 @@ _ZNSt6vectorIN6duckdb10unique_ptrINS0_16ParsedExpressionESt14default_deleteIS2_E
   br label %_ZNSt10unique_ptrIN6duckdb16ParsedExpressionESt14default_deleteIS1_EED2Ev.exit66
 
 bb.ad:                                            ; preds = %bb.ac
-  %i.cj = ptrtoint ptr %i.c to i64                ; 2 uses
+  %i.cj = ptrtoint ptr %i.e to i64
   %i.ck = ptrtoint ptr %i.f to i64                ; 2 uses
   %i.cl = sub i64 %i.cj, %i.ck                    ; 3 uses
   %i.cm = icmp eq i64 %i.cl, 9223372036854775800
@@ -608,7 +610,7 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_16ParsedExpressionESt14default_deleteIS2_
   br i1 %.not10.i.i.i.i.i.i.i52, label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_16ParsedExpressionESt14default_deleteIS2_ELb1EEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i.i.i57, label %.lr.ph.i.i.i.i.i.i.i53.preheader
 
 .lr.ph.i.i.i.i.i.i.i53.preheader:                 ; preds = %.noexc62
-  %i.cw = add i64 %i.cj, -8
+  %i.cw = add i64 %12, -8
   %i.cx = sub i64 %i.cw, %i.ck                    ; 3 uses
   %i.cy = lshr i64 %i.cx, 3
   %i.cz = add nuw nsw i64 %i.cy, 1                ; 2 uses

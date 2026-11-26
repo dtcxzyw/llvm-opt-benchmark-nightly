@@ -202,7 +202,7 @@ bb.cj:                                            ; preds = %_ZNKSt7__cxx1112bas
   %i.fq = getelementptr inbounds nuw i8, ptr %i.fh, i64 8 ; 3 uses
   %i.fr = load ptr, ptr %i.fq, align 8, !tbaa !176 ; 4 uses
   %i.fs = getelementptr inbounds nuw i8, ptr %i.fh, i64 16 ; 2 uses
-  %i.ft = load ptr, ptr %i.fs, align 8, !tbaa !108
+  %i.ft = load ptr, ptr %i.fs, align 8, !tbaa !108 ; 2 uses
   %.not.i.i = icmp eq ptr %i.fr, %i.ft
   br i1 %.not.i.i, label %bb.cl, label %bb.ck
 
@@ -215,8 +215,8 @@ bb.ck:                                            ; preds = %bb.cj
 bb.cl:                                            ; preds = %bb.cj
   %i.fv = load ptr, ptr %i.fh, align 8, !tbaa !109 ; 4 uses
   %i.fw = ptrtoint ptr %i.fr to i64
-  %i.fx = ptrtoint ptr %i.fv to i64
-  %i.fy = sub i64 %i.fw, %i.fx                    ; 6 uses
+  %i.fx = ptrtoint ptr %i.fv to i64               ; 2 uses
+  %i.fy = sub i64 %i.fw, %i.fx                    ; 5 uses
   %i.fz = icmp eq i64 %i.fy, 9223372036854775800
   br i1 %i.fz, label %bb.cm, label %_ZNKSt6vectorIPKN4i18n12phonenumbers6RegExpESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i
 
@@ -256,7 +256,9 @@ _ZNSt6vectorIPKN4i18n12phonenumbers6RegExpESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.
   br i1 %.not.i17.i.i.i, label %_ZNSt6vectorIPKN4i18n12phonenumbers6RegExpESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i, label %bb.co
 
 bb.co:                                            ; preds = %_ZNSt6vectorIPKN4i18n12phonenumbers6RegExpESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit16.i.i.i
-  call void @_ZdlPvm(ptr noundef nonnull %i.fv, i64 noundef %i.fy) #23
+  %68 = ptrtoint ptr %i.ft to i64
+  %69 = sub i64 %68, %i.fx
+  call void @_ZdlPvm(ptr noundef nonnull %i.fv, i64 noundef %69) #23
   br label %_ZNSt6vectorIPKN4i18n12phonenumbers6RegExpESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIPKN4i18n12phonenumbers6RegExpESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i: ; preds = %bb.co, %_ZNSt6vectorIPKN4i18n12phonenumbers6RegExpESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit16.i.i.i
@@ -299,7 +301,7 @@ bb.cp:                                            ; preds = %_ZNKSt7__cxx1112bas
   %i.gy = getelementptr inbounds nuw i8, ptr %i.gp, i64 8 ; 3 uses
   %i.gz = load ptr, ptr %i.gy, align 8, !tbaa !176 ; 4 uses
   %i.ha = getelementptr inbounds nuw i8, ptr %i.gp, i64 16 ; 2 uses
-  %i.hb = load ptr, ptr %i.ha, align 8, !tbaa !108
+  %i.hb = load ptr, ptr %i.ha, align 8, !tbaa !108 ; 2 uses
   %.not.i.i282 = icmp eq ptr %i.gz, %i.hb
   br i1 %.not.i.i282, label %bb.cr, label %bb.cq
 
@@ -312,8 +314,8 @@ bb.cq:                                            ; preds = %bb.cp
 bb.cr:                                            ; preds = %bb.cp
   %i.hd = load ptr, ptr %i.gp, align 8, !tbaa !109 ; 4 uses
   %i.he = ptrtoint ptr %i.gz to i64
-  %i.hf = ptrtoint ptr %i.hd to i64
-  %i.hg = sub i64 %i.he, %i.hf                    ; 6 uses
+  %i.hf = ptrtoint ptr %i.hd to i64               ; 2 uses
+  %i.hg = sub i64 %i.he, %i.hf                    ; 5 uses
   %i.hh = icmp eq i64 %i.hg, 9223372036854775800
   br i1 %i.hh, label %bb.cs, label %_ZNKSt6vectorIPKN4i18n12phonenumbers6RegExpESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i283
 
@@ -353,7 +355,9 @@ _ZNSt6vectorIPKN4i18n12phonenumbers6RegExpESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.
   br i1 %.not.i17.i.i.i287, label %_ZNSt6vectorIPKN4i18n12phonenumbers6RegExpESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i288, label %bb.cu
 
 bb.cu:                                            ; preds = %_ZNSt6vectorIPKN4i18n12phonenumbers6RegExpESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit16.i.i.i286
-  call void @_ZdlPvm(ptr noundef nonnull %i.hd, i64 noundef %i.hg) #23
+  %70 = ptrtoint ptr %i.hb to i64
+  %71 = sub i64 %70, %i.hf
+  call void @_ZdlPvm(ptr noundef nonnull %i.hd, i64 noundef %71) #23
   br label %_ZNSt6vectorIPKN4i18n12phonenumbers6RegExpESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i288
 
 _ZNSt6vectorIPKN4i18n12phonenumbers6RegExpESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i288: ; preds = %bb.cu, %_ZNSt6vectorIPKN4i18n12phonenumbers6RegExpESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit16.i.i.i286
@@ -407,7 +411,7 @@ bb.cw:                                            ; preds = %bb.cv
   %i.ij = getelementptr inbounds nuw i8, ptr %i.hx, i64 8 ; 3 uses
   %i.ik = load ptr, ptr %i.ij, align 8, !tbaa !176 ; 4 uses
   %i.il = getelementptr inbounds nuw i8, ptr %i.hx, i64 16 ; 2 uses
-  %i.im = load ptr, ptr %i.il, align 8, !tbaa !108
+  %i.im = load ptr, ptr %i.il, align 8, !tbaa !108 ; 2 uses
   %.not.i.i299 = icmp eq ptr %i.ik, %i.im
   br i1 %.not.i.i299, label %bb.cy, label %bb.cx
 
@@ -420,8 +424,8 @@ bb.cx:                                            ; preds = %bb.cw
 bb.cy:                                            ; preds = %bb.cw
   %i.io = load ptr, ptr %i.hx, align 8, !tbaa !109 ; 4 uses
   %i.ip = ptrtoint ptr %i.ik to i64
-  %i.iq = ptrtoint ptr %i.io to i64
-  %i.ir = sub i64 %i.ip, %i.iq                    ; 6 uses
+  %i.iq = ptrtoint ptr %i.io to i64               ; 2 uses
+  %i.ir = sub i64 %i.ip, %i.iq                    ; 5 uses
   %i.is = icmp eq i64 %i.ir, 9223372036854775800
   br i1 %i.is, label %bb.cz, label %_ZNKSt6vectorIPKN4i18n12phonenumbers6RegExpESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i300
 
@@ -461,7 +465,9 @@ _ZNSt6vectorIPKN4i18n12phonenumbers6RegExpESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.
   br i1 %.not.i17.i.i.i304, label %_ZNSt6vectorIPKN4i18n12phonenumbers6RegExpESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i305, label %bb.db
 
 bb.db:                                            ; preds = %_ZNSt6vectorIPKN4i18n12phonenumbers6RegExpESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit16.i.i.i303
-  call void @_ZdlPvm(ptr noundef nonnull %i.io, i64 noundef %i.ir) #23
+  %72 = ptrtoint ptr %i.im to i64
+  %73 = sub i64 %72, %i.iq
+  call void @_ZdlPvm(ptr noundef nonnull %i.io, i64 noundef %73) #23
   br label %_ZNSt6vectorIPKN4i18n12phonenumbers6RegExpESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i305
 
 _ZNSt6vectorIPKN4i18n12phonenumbers6RegExpESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i305: ; preds = %bb.db, %_ZNSt6vectorIPKN4i18n12phonenumbers6RegExpESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit16.i.i.i303
@@ -515,7 +521,7 @@ bb.dd:                                            ; preds = %bb.dc
   %i.ju = getelementptr inbounds nuw i8, ptr %i.ji, i64 8 ; 3 uses
   %i.jv = load ptr, ptr %i.ju, align 8, !tbaa !176 ; 4 uses
   %i.jw = getelementptr inbounds nuw i8, ptr %i.ji, i64 16 ; 2 uses
-  %i.jx = load ptr, ptr %i.jw, align 8, !tbaa !108
+  %i.jx = load ptr, ptr %i.jw, align 8, !tbaa !108 ; 2 uses
   %.not.i.i316 = icmp eq ptr %i.jv, %i.jx
   br i1 %.not.i.i316, label %bb.df, label %bb.de
 
@@ -528,8 +534,8 @@ bb.de:                                            ; preds = %bb.dd
 bb.df:                                            ; preds = %bb.dd
   %i.jz = load ptr, ptr %i.ji, align 8, !tbaa !109 ; 4 uses
   %i.ka = ptrtoint ptr %i.jv to i64
-  %i.kb = ptrtoint ptr %i.jz to i64
-  %i.kc = sub i64 %i.ka, %i.kb                    ; 6 uses
+  %i.kb = ptrtoint ptr %i.jz to i64               ; 2 uses
+  %i.kc = sub i64 %i.ka, %i.kb                    ; 5 uses
   %i.kd = icmp eq i64 %i.kc, 9223372036854775800
   br i1 %i.kd, label %bb.dg, label %_ZNKSt6vectorIPKN4i18n12phonenumbers6RegExpESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i317
 
@@ -569,7 +575,9 @@ _ZNSt6vectorIPKN4i18n12phonenumbers6RegExpESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.
   br i1 %.not.i17.i.i.i321, label %_ZNSt6vectorIPKN4i18n12phonenumbers6RegExpESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i322, label %bb.di
 
 bb.di:                                            ; preds = %_ZNSt6vectorIPKN4i18n12phonenumbers6RegExpESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit16.i.i.i320
-  call void @_ZdlPvm(ptr noundef nonnull %i.jz, i64 noundef %i.kc) #23
+  %74 = ptrtoint ptr %i.jx to i64
+  %75 = sub i64 %74, %i.kb
+  call void @_ZdlPvm(ptr noundef nonnull %i.jz, i64 noundef %75) #23
   br label %_ZNSt6vectorIPKN4i18n12phonenumbers6RegExpESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i322
 
 _ZNSt6vectorIPKN4i18n12phonenumbers6RegExpESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i322: ; preds = %bb.di, %_ZNSt6vectorIPKN4i18n12phonenumbers6RegExpESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit16.i.i.i320
@@ -623,7 +631,7 @@ bb.dk:                                            ; preds = %bb.dj
   %i.lf = getelementptr inbounds nuw i8, ptr %i.kt, i64 8 ; 3 uses
   %i.lg = load ptr, ptr %i.lf, align 8, !tbaa !176 ; 4 uses
   %i.lh = getelementptr inbounds nuw i8, ptr %i.kt, i64 16 ; 2 uses
-  %i.li = load ptr, ptr %i.lh, align 8, !tbaa !108
+  %i.li = load ptr, ptr %i.lh, align 8, !tbaa !108 ; 2 uses
   %.not.i.i333 = icmp eq ptr %i.lg, %i.li
   br i1 %.not.i.i333, label %bb.dm, label %bb.dl
 
@@ -636,8 +644,8 @@ bb.dl:                                            ; preds = %bb.dk
 bb.dm:                                            ; preds = %bb.dk
   %i.lk = load ptr, ptr %i.kt, align 8, !tbaa !109 ; 4 uses
   %i.ll = ptrtoint ptr %i.lg to i64
-  %i.lm = ptrtoint ptr %i.lk to i64
-  %i.ln = sub i64 %i.ll, %i.lm                    ; 6 uses
+  %i.lm = ptrtoint ptr %i.lk to i64               ; 2 uses
+  %i.ln = sub i64 %i.ll, %i.lm                    ; 5 uses
   %i.lo = icmp eq i64 %i.ln, 9223372036854775800
   br i1 %i.lo, label %bb.dn, label %_ZNKSt6vectorIPKN4i18n12phonenumbers6RegExpESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i334
 
@@ -677,7 +685,9 @@ _ZNSt6vectorIPKN4i18n12phonenumbers6RegExpESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.
   br i1 %.not.i17.i.i.i338, label %_ZNSt6vectorIPKN4i18n12phonenumbers6RegExpESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i339, label %bb.dp
 
 bb.dp:                                            ; preds = %_ZNSt6vectorIPKN4i18n12phonenumbers6RegExpESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit16.i.i.i337
-  call void @_ZdlPvm(ptr noundef nonnull %i.lk, i64 noundef %i.ln) #23
+  %76 = ptrtoint ptr %i.li to i64
+  %77 = sub i64 %76, %i.lm
+  call void @_ZdlPvm(ptr noundef nonnull %i.lk, i64 noundef %77) #23
   br label %_ZNSt6vectorIPKN4i18n12phonenumbers6RegExpESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i339
 
 _ZNSt6vectorIPKN4i18n12phonenumbers6RegExpESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i339: ; preds = %bb.dp, %_ZNSt6vectorIPKN4i18n12phonenumbers6RegExpESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit16.i.i.i337
@@ -720,7 +730,7 @@ bb.dq:                                            ; preds = %_ZNKSt7__cxx1112bas
   %i.mn = getelementptr inbounds nuw i8, ptr %i.me, i64 8 ; 3 uses
   %i.mo = load ptr, ptr %i.mn, align 8, !tbaa !176 ; 4 uses
   %i.mp = getelementptr inbounds nuw i8, ptr %i.me, i64 16 ; 2 uses
-  %i.mq = load ptr, ptr %i.mp, align 8, !tbaa !108
+  %i.mq = load ptr, ptr %i.mp, align 8, !tbaa !108 ; 2 uses
   %.not.i.i350 = icmp eq ptr %i.mo, %i.mq
   br i1 %.not.i.i350, label %bb.ds, label %bb.dr
 
@@ -733,8 +743,8 @@ bb.dr:                                            ; preds = %bb.dq
 bb.ds:                                            ; preds = %bb.dq
   %i.ms = load ptr, ptr %i.me, align 8, !tbaa !109 ; 4 uses
   %i.mt = ptrtoint ptr %i.mo to i64
-  %i.mu = ptrtoint ptr %i.ms to i64
-  %i.mv = sub i64 %i.mt, %i.mu                    ; 6 uses
+  %i.mu = ptrtoint ptr %i.ms to i64               ; 2 uses
+  %i.mv = sub i64 %i.mt, %i.mu                    ; 5 uses
   %i.mw = icmp eq i64 %i.mv, 9223372036854775800
   br i1 %i.mw, label %bb.dt, label %_ZNKSt6vectorIPKN4i18n12phonenumbers6RegExpESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i351
 
@@ -774,7 +784,9 @@ _ZNSt6vectorIPKN4i18n12phonenumbers6RegExpESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.
   br i1 %.not.i17.i.i.i355, label %_ZNSt6vectorIPKN4i18n12phonenumbers6RegExpESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i356, label %bb.dv
 
 bb.dv:                                            ; preds = %_ZNSt6vectorIPKN4i18n12phonenumbers6RegExpESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit16.i.i.i354
-  call void @_ZdlPvm(ptr noundef nonnull %i.ms, i64 noundef %i.mv) #23
+  %78 = ptrtoint ptr %i.mq to i64
+  %79 = sub i64 %78, %i.mu
+  call void @_ZdlPvm(ptr noundef nonnull %i.ms, i64 noundef %79) #23
   br label %_ZNSt6vectorIPKN4i18n12phonenumbers6RegExpESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i356
 
 _ZNSt6vectorIPKN4i18n12phonenumbers6RegExpESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i356: ; preds = %bb.dv, %_ZNSt6vectorIPKN4i18n12phonenumbers6RegExpESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit16.i.i.i354

@@ -202,7 +202,7 @@ bb.a:
   %89 = alloca %"class.dropbox::oxygen::nn.55", align 8 ; 7 uses
   %90 = alloca %"class.dropbox::oxygen::nn", align 16 ; 9 uses
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 17 uses
-  %i.f = load ptr, ptr %i.e, align 8, !tbaa !29   ; 3 uses
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !29   ; 2 uses
   %i.g = load ptr, ptr %2, align 8, !tbaa !30     ; 6 uses
   %.not = icmp eq ptr %i.f, %i.g
   br i1 %.not, label %bb.ah, label %bb.b
@@ -441,7 +441,7 @@ bb.ae:                                            ; preds = %_ZN9__gnu_cxx27__ex
 _ZNSt12__shared_ptrIN5osgeo4proj3crs3CRSELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit473: ; preds = %_ZNSt12__shared_ptrIN5osgeo4proj3crs3CRSELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, %bb.aa, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i471, %bb.ae
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #25
   %.pre = load ptr, ptr %i.e, align 8, !tbaa !29
-  %.pre1741 = load ptr, ptr %2, align 8, !tbaa !30 ; 2 uses
+  %.pre1741 = load ptr, ptr %2, align 8, !tbaa !30
   br label %bb.ah
 
 bb.af:                                            ; preds = %bb.s, %bb.e
@@ -457,11 +457,10 @@ bb.ag:                                            ; preds = %bb.af, %bb.d
   br label %bb.ajo
 
 bb.ah:                                            ; preds = %_ZNSt12__shared_ptrIN5osgeo4proj3crs3CRSELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit473, %bb.a
-  %.pre17471759 = phi ptr [ %.pre1741, %_ZNSt12__shared_ptrIN5osgeo4proj3crs3CRSELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit473 ], [ %i.g, %bb.a ]
-  %91 = phi ptr [ %.pre1741, %_ZNSt12__shared_ptrIN5osgeo4proj3crs3CRSELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit473 ], [ %i.f, %bb.a ]
+  %.pre17471759 = phi ptr [ %.pre1741, %_ZNSt12__shared_ptrIN5osgeo4proj3crs3CRSELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit473 ], [ %i.g, %bb.a ] ; 2 uses
   %i.ca = phi ptr [ %.pre, %_ZNSt12__shared_ptrIN5osgeo4proj3crs3CRSELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit473 ], [ %i.f, %bb.a ] ; 3 uses
   %i.cb = ptrtoint ptr %i.ca to i64
-  %i.cc = ptrtoint ptr %91 to i64
+  %i.cc = ptrtoint ptr %.pre17471759 to i64
   %i.cd = sub i64 %i.cb, %i.cc
   %i.ce = icmp ugt i64 %i.cd, 16
   br i1 %i.ce, label %bb.ai, label %bb.bo
@@ -864,7 +863,7 @@ _ZNSt6vectorIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19Coordina
   %i.eq = phi ptr [ %i.fg, %_ZNSt6vectorImSaImEE9push_backERKm.exit ], [ %i.v, %._crit_edge366 ]
   %storemerge370 = phi i64 [ %i.fh, %_ZNSt6vectorImSaImEE9push_backERKm.exit ], [ 0, %._crit_edge366 ] ; 3 uses
   %.sroa.30.0369 = phi ptr [ %.sroa.30.1, %_ZNSt6vectorImSaImEE9push_backERKm.exit ], [ null, %._crit_edge366 ] ; 4 uses
-  %.sroa.20.0368 = phi ptr [ %.sroa.20.3, %_ZNSt6vectorImSaImEE9push_backERKm.exit ], [ null, %._crit_edge366 ] ; 3 uses
+  %.sroa.20.0368 = phi ptr [ %.sroa.20.3, %_ZNSt6vectorImSaImEE9push_backERKm.exit ], [ null, %._crit_edge366 ] ; 4 uses
   %.sroa.0253.0367 = phi ptr [ %.sroa.0253.1, %_ZNSt6vectorImSaImEE9push_backERKm.exit ], [ null, %._crit_edge366 ] ; 7 uses
   %.not.i125 = icmp eq ptr %.sroa.20.0368, %.sroa.30.0369
   br i1 %.not.i125, label %bb.an, label %bb.am
@@ -874,9 +873,9 @@ bb.am:                                            ; preds = %.lr.ph371
   br label %_ZNSt6vectorImSaImEE9push_backERKm.exit
 
 bb.an:                                            ; preds = %.lr.ph371
-  %i.er = ptrtoint ptr %.sroa.30.0369 to i64
-  %i.es = ptrtoint ptr %.sroa.0253.0367 to i64    ; 2 uses
-  %i.et = sub i64 %i.er, %i.es                    ; 6 uses
+  %i.er = ptrtoint ptr %.sroa.20.0368 to i64
+  %i.es = ptrtoint ptr %.sroa.0253.0367 to i64    ; 3 uses
+  %i.et = sub i64 %i.er, %i.es                    ; 5 uses
   %i.eu = icmp eq i64 %i.et, 9223372036854775800
   br i1 %i.eu, label %bb.ao, label %_ZNKSt6vectorImSaImEE12_M_check_lenEmPKc.exit.i.i
 
@@ -915,7 +914,9 @@ _ZNSt6vectorImSaImEE11_S_relocateEPmS2_S2_RS0_.exit16.i.i: ; preds = %bb.ap, %.n
   br i1 %.not.i17.i.i, label %_ZNSt6vectorImSaImEE17_M_realloc_insertIJRKmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i, label %bb.aq
 
 bb.aq:                                            ; preds = %_ZNSt6vectorImSaImEE11_S_relocateEPmS2_S2_RS0_.exit16.i.i
-  call void @_ZdlPvm(ptr noundef nonnull %.sroa.0253.0367, i64 noundef %i.et) #26
+  %23 = ptrtoint ptr %.sroa.30.0369 to i64
+  %24 = sub i64 %23, %i.es
+  call void @_ZdlPvm(ptr noundef nonnull %.sroa.0253.0367, i64 noundef %24) #26
   br label %_ZNSt6vectorImSaImEE17_M_realloc_insertIJRKmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i
 
 _ZNSt6vectorImSaImEE17_M_realloc_insertIJRKmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i: ; preds = %bb.aq, %_ZNSt6vectorImSaImEE11_S_relocateEPmS2_S2_RS0_.exit16.i.i
@@ -1285,21 +1286,21 @@ _ZN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19CoordinateOperation
 
 bb.cb:                                            ; preds = %_ZN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19CoordinateOperationEEED2Ev.exit
   %i.kg = getelementptr inbounds nuw i8, ptr %i.ft, i64 16 ; 4 uses
+  %25 = ptrtoint ptr %i.kg to i64
   %.not11.i.i = icmp eq ptr %i.kg, %.sroa.20.1
+  %.pre434 = sub i64 %i.fn, %25                   ; 6 uses
   br i1 %.not11.i.i, label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES6_ET0_T_S8_S7_.exit.i.i, label %bb.cc
 
 bb.cc:                                            ; preds = %bb.cb
-  %23 = ptrtoint ptr %i.kg to i64
-  %24 = sub i64 %i.fn, %23                        ; 5 uses
-  %i.kh = icmp sgt i64 %24, 8
+  %i.kh = icmp sgt i64 %.pre434, 8
   br i1 %i.kh, label %bb.cd, label %bb.ce, !prof !198
 
 bb.cd:                                            ; preds = %bb.cc
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.ft, ptr nonnull align 8 %i.kg, i64 %24, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.ft, ptr nonnull align 8 %i.kg, i64 %.pre434, i1 false)
   br label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES6_ET0_T_S8_S7_.exit.i.i
 
 bb.ce:                                            ; preds = %bb.cc
-  %i.ki = icmp eq i64 %24, 8
+  %i.ki = icmp eq i64 %.pre434, 8
   br i1 %i.ki, label %bb.cf, label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES6_ET0_T_S8_S7_.exit.i.i
 
 bb.cf:                                            ; preds = %bb.ce
@@ -1308,7 +1309,7 @@ bb.cf:                                            ; preds = %bb.ce
   br label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES6_ET0_T_S8_S7_.exit.i.i
 
 _ZSt4moveIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES6_ET0_T_S8_S7_.exit.i.i: ; preds = %bb.cb, %bb.cf, %bb.ce, %bb.cd
-  %.pre-phi435 = phi i64 [ %24, %bb.cd ], [ 8, %bb.cf ], [ %24, %bb.ce ], [ 0, %bb.cb ]
+  %.pre-phi435 = phi i64 [ %.pre434, %bb.cd ], [ 8, %bb.cf ], [ %.pre434, %bb.ce ], [ %.pre434, %bb.cb ]
   %i.kk = getelementptr inbounds i8, ptr %i.ft, i64 %.pre-phi435 ; 2 uses
   %.not.i.i.i147 = icmp eq ptr %.sroa.20.1, %i.kk
   %spec.select295 = select i1 %.not.i.i.i147, ptr %.sroa.20.1, ptr %i.kk ; 3 uses

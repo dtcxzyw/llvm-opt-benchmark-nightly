@@ -12,7 +12,7 @@ declare dso_local ptr @memcpy(ptr noundef, ptr noundef, i64 noundef) #0
 declare dso_local ptr @memset(ptr noundef, i32 noundef, i64 noundef) #1
 
 ; Function Attrs: noredzone nounwind optsize uwtable
-define dso_local range(i64 -2147483647, 2147483648) i64 @lib_fflush_unlocked(ptr nofree noundef captures(none) %0) local_unnamed_addr #2 {
+define dso_local i64 @lib_fflush_unlocked(ptr nofree noundef captures(none) %0) local_unnamed_addr #2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 184
   %i.b = load i16, ptr %i.a, align 8
@@ -22,15 +22,15 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
-  %i.f = load ptr, ptr %i.e, align 8              ; 5 uses
+  %i.f = load ptr, ptr %i.e, align 8              ; 6 uses
   %i.g = icmp eq ptr %i.f, null
   br i1 %i.g, label %.loopexit.a, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 4 uses
-  %i.i = load ptr, ptr %i.h, align 8              ; 2 uses
+  %i.i = load ptr, ptr %i.h, align 8              ; 3 uses
   %.not = icmp eq ptr %i.i, %i.f
-  br i1 %.not, label %.loopexit.a, label %bb.d
+  br i1 %.not, label %.loopexit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 112
@@ -87,10 +87,10 @@ bb.k:                                             ; preds = %bb.i
   br i1 %i.ag, label %bb.f, label %bb.l, !llvm.loop !7
 
 bb.l:                                             ; preds = %bb.k
-  %i.ah = load ptr, ptr %i.e, align 8
+  %i.ah = load ptr, ptr %i.e, align 8             ; 3 uses
   store ptr %i.ah, ptr %i.h, align 8
   %.not4345 = icmp eq i64 %i.af, 0
-  br i1 %.not4345, label %.loopexit.a, label %.lr.ph
+  br i1 %.not4345, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.l, %.lr.ph
   %.13446 = phi ptr [ %i.ai, %.lr.ph ], [ %i.ae, %bb.l ] ; 2 uses
@@ -102,8 +102,16 @@ bb.l:                                             ; preds = %bb.k
   store i8 %i.aj, ptr %i.ak, align 1
   br label %.lr.ph
 
-.loopexit.a:                                      ; preds = %bb.c, %bb.l, %bb.d, %bb.b, %bb.a, %bb.j
-  %.035 = phi i64 [ 0, %bb.d ], [ -9, %bb.a ], [ 0, %bb.b ], [ %i.ad, %bb.j ], [ 0, %bb.l ], [ 0, %bb.c ]
+.loopexit:                                        ; preds = %bb.l, %bb.c
+  %1 = phi ptr [ %i.f, %bb.c ], [ %i.ah, %bb.l ]
+  %2 = phi ptr [ %i.i, %bb.c ], [ %i.ah, %bb.l ]
+  %3 = ptrtoint ptr %2 to i64
+  %4 = ptrtoint ptr %1 to i64
+  %5 = sub i64 %3, %4
+  br label %.loopexit.a
+
+.loopexit.a:                                      ; preds = %bb.d, %bb.b, %bb.a, %.loopexit, %bb.j
+  %.035 = phi i64 [ %5, %.loopexit ], [ -9, %bb.a ], [ 0, %bb.b ], [ %i.ad, %bb.j ], [ 0, %bb.d ]
   ret i64 %.035
 }
 
@@ -114,7 +122,7 @@ declare dso_local noundef i64 @write(i32 noundef, ptr noundef readonly captures(
 declare dso_local ptr @__errno() local_unnamed_addr #4
 
 ; Function Attrs: noredzone nounwind optsize uwtable
-define dso_local range(i64 -2147483647, 2147483648) i64 @lib_fflush(ptr nofree noundef captures(none) %0) local_unnamed_addr #2 {
+define dso_local i64 @lib_fflush(ptr nofree noundef captures(none) %0) local_unnamed_addr #2 {
 bb.a:
   tail call void @flockfile(ptr noundef %0) #7
   %i.a = tail call i64 @lib_fflush_unlocked(ptr noundef %0) #7

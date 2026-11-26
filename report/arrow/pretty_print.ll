@@ -204,7 +204,7 @@ bb.ap:                                            ; preds = %.lr.ph, %_ZNSt12__s
 
 bb.aq:                                            ; preds = %bb.ap
   %i.fs = load ptr, ptr %15, align 8, !tbaa !132  ; 2 uses
-  %i.ft = load ptr, ptr %i.fj, align 8, !tbaa !228 ; 3 uses
+  %i.ft = load ptr, ptr %i.fj, align 8, !tbaa !228 ; 4 uses
   %.not.i100 = icmp eq ptr %i.ft, %i.fq
   br i1 %.not.i100, label %bb.as, label %bb.ar
 
@@ -215,9 +215,9 @@ bb.ar:                                            ; preds = %bb.aq
   br label %_ZNSt6vectorIPKN5arrow5ArrayESaIS3_EE12emplace_backIJPS1_EEERS3_DpOT_.exit
 
 bb.as:                                            ; preds = %bb.aq
-  %i.fv = ptrtoint ptr %i.fq to i64
-  %i.fw = ptrtoint ptr %i.fr to i64
-  %i.fx = sub i64 %i.fv, %i.fw                    ; 6 uses
+  %i.fv = ptrtoint ptr %i.ft to i64
+  %i.fw = ptrtoint ptr %i.fr to i64               ; 2 uses
+  %i.fx = sub i64 %i.fv, %i.fw                    ; 5 uses
   %i.fy = icmp eq i64 %i.fx, 9223372036854775800
   br i1 %i.fy, label %bb.at, label %_ZNKSt6vectorIPKN5arrow5ArrayESaIS3_EE12_M_check_lenEmPKc.exit.i.i
 
@@ -259,7 +259,9 @@ _ZNSt6vectorIPKN5arrow5ArrayESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i: ; 
   br i1 %.not.i17.i.i, label %_ZNSt6vectorIPKN5arrow5ArrayESaIS3_EE17_M_realloc_insertIJPS1_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i, label %bb.av
 
 bb.av:                                            ; preds = %_ZNSt6vectorIPKN5arrow5ArrayESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i
-  call void @_ZdlPvm(ptr noundef nonnull %i.fr, i64 noundef %i.fx) #19
+  %16 = ptrtoint ptr %i.fq to i64
+  %17 = sub i64 %16, %i.fw
+  call void @_ZdlPvm(ptr noundef nonnull %i.fr, i64 noundef %17) #19
   br label %_ZNSt6vectorIPKN5arrow5ArrayESaIS3_EE17_M_realloc_insertIJPS1_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i
 
 _ZNSt6vectorIPKN5arrow5ArrayESaIS3_EE17_M_realloc_insertIJPS1_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i: ; preds = %bb.av, %_ZNSt6vectorIPKN5arrow5ArrayESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i

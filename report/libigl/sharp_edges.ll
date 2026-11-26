@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
   %i.c = trunc i64 %i.b to i32                    ; 2 uses
   %i.d = load ptr, ptr %8, align 8, !tbaa !13     ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 6 uses
-  %i.f = load ptr, ptr %i.e, align 8, !tbaa !26
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !26   ; 2 uses
   %.not.i.i = icmp eq ptr %i.f, %i.d
   br i1 %.not.i.i, label %_ZNSt6vectorIiSaIiEE5clearEv.exit, label %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i
 
@@ -211,6 +211,7 @@ _ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i:        ; preds = %bb.b
   br label %_ZNSt6vectorIiSaIiEE5clearEv.exit
 
 _ZNSt6vectorIiSaIiEE5clearEv.exit:                ; preds = %bb.b, %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i
+  %12 = phi ptr [ %i.f, %bb.b ], [ %i.d, %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i ]
   %i.g = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 2 uses
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !18
   %i.i = load ptr, ptr %7, align 8, !tbaa !17     ; 2 uses
@@ -259,7 +260,7 @@ _ZN5Eigen8internal28check_rows_cols_for_overflowILin1EE3runIlEEvT_S4_.exit.i.loo
 
 _ZN5Eigen8internal28check_rows_cols_for_overflowILin1EE3runIlEEvT_S4_.exit.i: ; preds = %_ZN5Eigen8internal28check_rows_cols_for_overflowILin1EE3runIlEEvT_S4_.exit.i.loopexit, %_ZNSt6vectorIiSaIiEE5clearEv.exit
   %i.x = phi ptr [ %.pre151, %_ZN5Eigen8internal28check_rows_cols_for_overflowILin1EE3runIlEEvT_S4_.exit.i.loopexit ], [ %i.d, %_ZNSt6vectorIiSaIiEE5clearEv.exit ]
-  %i.y = phi ptr [ %.pre150, %_ZN5Eigen8internal28check_rows_cols_for_overflowILin1EE3runIlEEvT_S4_.exit.i.loopexit ], [ %i.d, %_ZNSt6vectorIiSaIiEE5clearEv.exit ]
+  %i.y = phi ptr [ %.pre150, %_ZN5Eigen8internal28check_rows_cols_for_overflowILin1EE3runIlEEvT_S4_.exit.i.loopexit ], [ %12, %_ZNSt6vectorIiSaIiEE5clearEv.exit ]
   %i.z = ptrtoint ptr %i.y to i64
   %i.aa = ptrtoint ptr %i.x to i64
   %i.ab = sub i64 %i.z, %i.aa                     ; 2 uses
@@ -662,7 +663,7 @@ bb.b:                                             ; preds = %bb.a
   %i.c = trunc i64 %i.b to i32                    ; 2 uses
   %i.d = load ptr, ptr %8, align 8, !tbaa !13     ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 6 uses
-  %i.f = load ptr, ptr %i.e, align 8, !tbaa !26
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !26   ; 2 uses
   %.not.i.i = icmp eq ptr %i.f, %i.d
   br i1 %.not.i.i, label %_ZNSt6vectorIiSaIiEE5clearEv.exit, label %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i
 
@@ -671,6 +672,7 @@ _ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i:        ; preds = %bb.b
   br label %_ZNSt6vectorIiSaIiEE5clearEv.exit
 
 _ZNSt6vectorIiSaIiEE5clearEv.exit:                ; preds = %bb.b, %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i
+  %12 = phi ptr [ %i.f, %bb.b ], [ %i.d, %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i ]
   %i.g = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 2 uses
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !18
   %i.i = load ptr, ptr %7, align 8, !tbaa !17     ; 2 uses
@@ -719,7 +721,7 @@ _ZN5Eigen8internal28check_rows_cols_for_overflowILin1EE3runIlEEvT_S4_.exit.i.loo
 
 _ZN5Eigen8internal28check_rows_cols_for_overflowILin1EE3runIlEEvT_S4_.exit.i: ; preds = %_ZN5Eigen8internal28check_rows_cols_for_overflowILin1EE3runIlEEvT_S4_.exit.i.loopexit, %_ZNSt6vectorIiSaIiEE5clearEv.exit
   %i.x = phi ptr [ %.pre151, %_ZN5Eigen8internal28check_rows_cols_for_overflowILin1EE3runIlEEvT_S4_.exit.i.loopexit ], [ %i.d, %_ZNSt6vectorIiSaIiEE5clearEv.exit ]
-  %i.y = phi ptr [ %.pre150, %_ZN5Eigen8internal28check_rows_cols_for_overflowILin1EE3runIlEEvT_S4_.exit.i.loopexit ], [ %i.d, %_ZNSt6vectorIiSaIiEE5clearEv.exit ]
+  %i.y = phi ptr [ %.pre150, %_ZN5Eigen8internal28check_rows_cols_for_overflowILin1EE3runIlEEvT_S4_.exit.i.loopexit ], [ %12, %_ZNSt6vectorIiSaIiEE5clearEv.exit ]
   %i.z = ptrtoint ptr %i.y to i64
   %i.aa = ptrtoint ptr %i.x to i64
   %i.ab = sub i64 %i.z, %i.aa                     ; 2 uses

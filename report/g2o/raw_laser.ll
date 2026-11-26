@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.c
   %i.y = fmul double %i.o, %i.x                   ; 2 uses
   %i.z = tail call double @sin(double noundef %i.w) #15
   %i.aa = fmul double %i.o, %i.z                  ; 2 uses
-  %i.ab = load ptr, ptr %i.j, align 8, !tbaa !57
+  %i.ab = load ptr, ptr %i.j, align 8, !tbaa !57  ; 3 uses
   %.not.i.i = icmp eq ptr %i.k, %i.ab
   br i1 %.not.i.i, label %bb.f, label %bb.e
 
@@ -216,8 +216,8 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.d
   %i.ad = ptrtoint ptr %i.k to i64
-  %i.ae = ptrtoint ptr %i.m to i64
-  %i.af = sub i64 %i.ad, %i.ae                    ; 5 uses
+  %i.ae = ptrtoint ptr %i.m to i64                ; 3 uses
+  %i.af = sub i64 %i.ad, %i.ae                    ; 3 uses
   %i.ag = icmp eq i64 %i.af, 9223372036854775792
   br i1 %i.ag, label %bb.g, label %_ZNKSt6vectorIN5Eigen6MatrixIdLi2ELi1ELi0ELi2ELi1EEESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i
 
@@ -266,7 +266,9 @@ _ZNSt6vectorIN5Eigen6MatrixIdLi2ELi1ELi0ELi2ELi1EEESaIS2_EE11_S_relocateEPS2_S5_
   br i1 %.not.i23.i.i.i, label %_ZNSt6vectorIN5Eigen6MatrixIdLi2ELi1ELi0ELi2ELi1EEESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i, label %bb.h
 
 bb.h:                                             ; preds = %_ZNSt6vectorIN5Eigen6MatrixIdLi2ELi1ELi0ELi2ELi1EEESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.m, i64 noundef %i.af) #14
+  %2 = ptrtoint ptr %i.ab to i64
+  %3 = sub i64 %2, %i.ae
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.m, i64 noundef %3) #14
   br label %_ZNSt6vectorIN5Eigen6MatrixIdLi2ELi1ELi0ELi2ELi1EEESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIN5Eigen6MatrixIdLi2ELi1ELi0ELi2ELi1EEESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i: ; preds = %bb.h, %_ZNSt6vectorIN5Eigen6MatrixIdLi2ELi1ELi0ELi2ELi1EEESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i.i
@@ -292,7 +294,9 @@ bb.i:                                             ; preds = %.loopexit.split-lp,
   br i1 %.not.i.i.i, label %_ZNSt6vectorIN5Eigen6MatrixIdLi2ELi1ELi0ELi2ELi1EEESaIS2_EED2Ev.exit, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.m, i64 noundef %i.af) #14
+  %4 = ptrtoint ptr %i.ab to i64
+  %5 = sub i64 %4, %i.ae
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.m, i64 noundef %5) #14
   br label %_ZNSt6vectorIN5Eigen6MatrixIdLi2ELi1ELi0ELi2ELi1EEESaIS2_EED2Ev.exit
 
 _ZNSt6vectorIN5Eigen6MatrixIdLi2ELi1ELi0ELi2ELi1EEESaIS2_EED2Ev.exit: ; preds = %bb.i, %bb.j

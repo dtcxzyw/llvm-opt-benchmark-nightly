@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
 _ZNSt8functionIFvRiEEC2EOS2_.exit.i:              ; preds = %_ZNSt8functionIFvRiEEC2EOS2_.exit.thread, %bb.b
   %i.m = phi ptr [ %i.h, %_ZNSt8functionIFvRiEEC2EOS2_.exit.thread ], [ %i.k, %bb.b ] ; 2 uses
   %i.n = phi ptr [ %i.g, %_ZNSt8functionIFvRiEEC2EOS2_.exit.thread ], [ %i.j, %bb.b ] ; 2 uses
-  %i.o = phi ptr [ %i.f, %_ZNSt8functionIFvRiEEC2EOS2_.exit.thread ], [ %i.i, %bb.b ] ; 2 uses
+  %i.o = phi ptr [ %i.f, %_ZNSt8functionIFvRiEEC2EOS2_.exit.thread ], [ %i.i, %bb.b ] ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !765)
   %i.p = icmp eq ptr %i.o, %1
   br i1 %i.p, label %._crit_edge.i.i, label %.lr.ph.i.i
@@ -233,7 +233,7 @@ _ZSt8__invokeIRSt8functionIFvRiEEJS1_EENSt15__invoke_resultIT_JDpT0_EE4typeEOS6_
           to label %.noexc5.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !766, !inline_history !761
 
 .noexc5.i:                                        ; preds = %_ZSt8__invokeIRSt8functionIFvRiEEJS1_EENSt15__invoke_resultIT_JDpT0_EE4typeEOS6_DpOS7_.exit.i.i
-  %i.u = load ptr, ptr %.sroa.01.05.i.i, align 8, !tbaa !72, !noalias !766 ; 2 uses
+  %i.u = load ptr, ptr %.sroa.01.05.i.i, align 8, !tbaa !72, !noalias !766 ; 3 uses
   %i.v = icmp eq ptr %i.u, %1
   br i1 %i.v, label %._crit_edge.i.loopexit.i, label %bb.c, !llvm.loop !762
 
@@ -243,21 +243,22 @@ _ZSt8__invokeIRSt8functionIFvRiEEJS1_EENSt15__invoke_resultIT_JDpT0_EE4typeEOS6_
   br label %._crit_edge.i.i
 
 ._crit_edge.i.i:                                  ; preds = %._crit_edge.i.loopexit.i, %_ZNSt8functionIFvRiEEC2EOS2_.exit.i
-  %i.w = phi ptr [ %.pre10.i, %._crit_edge.i.loopexit.i ], [ %i.e, %_ZNSt8functionIFvRiEEC2EOS2_.exit.i ] ; 2 uses
-  %i.x = phi ptr [ %.pre.i, %._crit_edge.i.loopexit.i ], [ %i.c, %_ZNSt8functionIFvRiEEC2EOS2_.exit.i ]
-  %i.y = ptrtoint ptr %1 to i64
+  %5 = phi ptr [ %i.e, %_ZNSt8functionIFvRiEEC2EOS2_.exit.i ], [ %.pre10.i, %._crit_edge.i.loopexit.i ] ; 2 uses
+  %i.w = phi ptr [ %i.c, %_ZNSt8functionIFvRiEEC2EOS2_.exit.i ], [ %.pre.i, %._crit_edge.i.loopexit.i ]
+  %i.x = phi ptr [ %i.o, %_ZNSt8functionIFvRiEEC2EOS2_.exit.i ], [ %i.u, %._crit_edge.i.loopexit.i ]
+  %i.y = ptrtoint ptr %i.x to i64
   store i64 %i.y, ptr %0, align 8, !tbaa !767, !alias.scope !766
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 32
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.z, i8 0, i64 24, i1 false), !alias.scope !766
-  store ptr %i.x, ptr %i.aa, align 8, !tbaa !84, !alias.scope !766
-  %.not.i.i.not.i.i.i = icmp eq ptr %i.w, null
+  store ptr %i.w, ptr %i.aa, align 8, !tbaa !84, !alias.scope !766
+  %.not.i.i.not.i.i.i = icmp eq ptr %5, null
   br i1 %.not.i.i.not.i.i.i, label %bb.g, label %_ZNKSt6ranges13__for_each_fnclITkSt14input_iteratorSt14_List_iteratorIiETkSt12sentinel_forIT_ES3_St8identityTkSt26indirectly_unary_invocableINSt8__detail11__projectedIS5_T1_E6__typeEESt8functionIFvRiEEEENS_13in_fun_resultIS5_T2_EES5_T0_SI_SA_.exit.i
 
 _ZNKSt6ranges13__for_each_fnclITkSt14input_iteratorSt14_List_iteratorIiETkSt12sentinel_forIT_ES3_St8identityTkSt26indirectly_unary_invocableINSt8__detail11__projectedIS5_T1_E6__typeEESt8functionIFvRiEEEENS_13in_fun_resultIS5_T2_EES5_T0_SI_SA_.exit.i: ; preds = %._crit_edge.i.i
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.z, ptr noundef nonnull align 8 dereferenceable(32) %3, i64 16, i1 false), !tbaa.struct !85
-  store ptr %i.w, ptr %i.ab, align 8, !tbaa !86, !alias.scope !766
+  store ptr %5, ptr %i.ab, align 8, !tbaa !86, !alias.scope !766
   br label %bb.g
 
 .loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %_ZSt8__invokeIRSt8functionIFvRiEEJS1_EENSt15__invoke_resultIT_JDpT0_EE4typeEOS6_DpOS7_.exit.i.i, %bb.d

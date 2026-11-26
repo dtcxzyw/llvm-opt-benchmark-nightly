@@ -205,7 +205,7 @@ _ZN4toml2v34nodeaSERKS1_.exit:                    ; preds = %bb.b, %bb.d, %_ZN9_
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 6 uses
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !175  ; 4 uses
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 7 uses
-  %i.v = load ptr, ptr %i.u, align 8, !tbaa !174  ; 2 uses
+  %i.v = load ptr, ptr %i.u, align 8, !tbaa !174  ; 3 uses
   %.not.i.i = icmp eq ptr %i.v, %i.t
   br i1 %.not.i.i, label %_ZNSt6vectorISt10unique_ptrIN4toml2v34nodeESt14default_deleteIS3_EESaIS6_EE5clearEv.exit, label %.lr.ph.i.i.i.i
 
@@ -232,6 +232,7 @@ _ZSt8_DestroyIPSt10unique_ptrIN4toml2v34nodeESt14default_deleteIS3_EES6_EvT_S8_R
   br label %_ZNSt6vectorISt10unique_ptrIN4toml2v34nodeESt14default_deleteIS3_EESaIS6_EE5clearEv.exit
 
 _ZNSt6vectorISt10unique_ptrIN4toml2v34nodeESt14default_deleteIS3_EESaIS6_EE5clearEv.exit: ; preds = %_ZN4toml2v34nodeaSERKS1_.exit, %_ZSt8_DestroyIPSt10unique_ptrIN4toml2v34nodeESt14default_deleteIS3_EES6_EvT_S8_RSaIT0_E.exit.i.i
+  %3 = phi ptr [ %i.v, %_ZN4toml2v34nodeaSERKS1_.exit ], [ %i.t, %_ZSt8_DestroyIPSt10unique_ptrIN4toml2v34nodeESt14default_deleteIS3_EES6_EvT_S8_RSaIT0_E.exit.i.i ]
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 2 uses
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !174 ; 2 uses
@@ -257,7 +258,7 @@ bb.j:                                             ; preds = %_ZNSt6vectorISt10un
   br i1 %i.ap, label %_ZNSt12_Vector_baseISt10unique_ptrIN4toml2v34nodeESt14default_deleteIS3_EESaIS6_EE11_M_allocateEm.exit.i, label %_ZNSt6vectorISt10unique_ptrIN4toml2v34nodeESt14default_deleteIS3_EESaIS6_EE7reserveEm.exit
 
 _ZNSt12_Vector_baseISt10unique_ptrIN4toml2v34nodeESt14default_deleteIS3_EESaIS6_EE11_M_allocateEm.exit.i: ; preds = %bb.j
-  %i.aq = ptrtoint ptr %i.t to i64
+  %i.aq = ptrtoint ptr %3 to i64
   %i.ar = sub i64 %i.aq, %i.an
   %i.as = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ah) #55 ; 6 uses
   %i.at = load ptr, ptr %i.s, align 8, !tbaa !175 ; 8 uses
@@ -660,20 +661,20 @@ bb.a:
   %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
   %i.e = sub i64 %i.c, %i.d
   %i.f = getelementptr inbounds i8, ptr %i.b, i64 %i.e ; 3 uses
-  %i.g = ptrtoint ptr %2 to i64                   ; 4 uses
+  %i.g = ptrtoint ptr %2 to i64                   ; 3 uses
   %i.h = sub i64 %i.g, %i.d
-  %i.i = getelementptr inbounds i8, ptr %i.b, i64 %i.h ; 2 uses
+  %i.i = getelementptr inbounds i8, ptr %i.b, i64 %i.h
   %.not.i.i = icmp eq ptr %1, %2
   br i1 %.not.i.i, label %_ZNSt6vectorISt10unique_ptrIN4toml2v34nodeESt14default_deleteIS3_EESaIS6_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS6_S8_EESD_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
-  %i.k = load ptr, ptr %i.j, align 8, !tbaa !161  ; 3 uses
+  %i.k = load ptr, ptr %i.j, align 8, !tbaa !161  ; 4 uses
   %.not11.i.i = icmp eq ptr %2, %i.k
   br i1 %.not11.i.i, label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN4toml2v34nodeESt14default_deleteIS5_EESt6vectorIS8_SaIS8_EEEESD_ET0_T_SF_SE_.exit.i.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.l = ptrtoint ptr %i.k to i64                 ; 2 uses
+  %i.l = ptrtoint ptr %i.k to i64
   %i.m = sub i64 %i.l, %i.g
   %i.n = ashr exact i64 %i.m, 3                   ; 2 uses
   %i.o = icmp sgt i64 %i.n, 0
@@ -705,14 +706,13 @@ _ZNSt10unique_ptrIN4toml2v34nodeESt14default_deleteIS2_EEaSEOS5_.exit.i.i.i.i.i.
   br i1 %i.x, label %.lr.ph.i.i.i.i.i.i.i, label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN4toml2v34nodeESt14default_deleteIS5_EESt6vectorIS8_SaIS8_EEEESD_ET0_T_SF_SE_.exit.loopexit.i.i, !llvm.loop !27
 
 _ZSt4moveIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN4toml2v34nodeESt14default_deleteIS5_EESt6vectorIS8_SaIS8_EEEESD_ET0_T_SF_SE_.exit.loopexit.i.i: ; preds = %_ZNSt10unique_ptrIN4toml2v34nodeESt14default_deleteIS2_EEaSEOS5_.exit.i.i.i.i.i.i.i
-  %.pre.i.i = load ptr, ptr %i.j, align 8, !tbaa !161 ; 2 uses
-  %.pre13.i.i = ptrtoint ptr %.pre.i.i to i64
+  %.pre.i.i = load ptr, ptr %i.j, align 8, !tbaa !161
   br label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN4toml2v34nodeESt14default_deleteIS5_EESt6vectorIS8_SaIS8_EEEESD_ET0_T_SF_SE_.exit.i.i
 
 _ZSt4moveIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN4toml2v34nodeESt14default_deleteIS5_EESt6vectorIS8_SaIS8_EEEESD_ET0_T_SF_SE_.exit.i.i: ; preds = %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN4toml2v34nodeESt14default_deleteIS5_EESt6vectorIS8_SaIS8_EEEESD_ET0_T_SF_SE_.exit.loopexit.i.i, %bb.c, %bb.b
-  %.pre-phi14.i.i = phi i64 [ %i.l, %bb.c ], [ %.pre13.i.i, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN4toml2v34nodeESt14default_deleteIS5_EESt6vectorIS8_SaIS8_EEEESD_ET0_T_SF_SE_.exit.loopexit.i.i ], [ %i.g, %bb.b ]
-  %3 = phi ptr [ %i.k, %bb.c ], [ %.pre.i.i, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN4toml2v34nodeESt14default_deleteIS5_EESt6vectorIS8_SaIS8_EEEESD_ET0_T_SF_SE_.exit.loopexit.i.i ], [ %i.i, %bb.b ] ; 2 uses
-  %i.y = sub i64 %.pre-phi14.i.i, %i.g
+  %3 = phi ptr [ %i.k, %bb.c ], [ %.pre.i.i, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN4toml2v34nodeESt14default_deleteIS5_EESt6vectorIS8_SaIS8_EEEESD_ET0_T_SF_SE_.exit.loopexit.i.i ], [ %i.k, %bb.b ] ; 3 uses
+  %4 = ptrtoint ptr %3 to i64
+  %i.y = sub i64 %4, %i.g
   %i.z = getelementptr inbounds i8, ptr %i.f, i64 %i.y ; 3 uses
   %.not.i.i.i = icmp eq ptr %3, %i.z
   br i1 %.not.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN4toml2v34nodeESt14default_deleteIS3_EESaIS6_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS6_S8_EESD_.exit, label %.lr.ph.i.i.i.i.i
@@ -1115,14 +1115,14 @@ bb.az:                                            ; preds = %bb.as
           to label %bb.ba unwind label %bb.bc
 
 bb.ba:                                            ; preds = %bb.az
-  %i.be = load ptr, ptr %i.i, align 8, !tbaa !195 ; 3 uses
-  %i.bf = load ptr, ptr %i.h, align 8, !tbaa !175 ; 2 uses
+  %i.be = load ptr, ptr %i.i, align 8, !tbaa !195 ; 2 uses
+  %i.bf = load ptr, ptr %i.h, align 8, !tbaa !175 ; 3 uses
   %.not14 = icmp eq ptr %i.be, %i.bf
   %.pre = load ptr, ptr %i.j, align 8, !tbaa !174 ; 2 uses
   br i1 %.not14, label %_ZNSt12_Vector_baseISt10unique_ptrIN4toml2v34nodeESt14default_deleteIS3_EESaIS6_EE11_M_allocateEm.exit.i.i, label %bb.bd
 
 _ZNSt12_Vector_baseISt10unique_ptrIN4toml2v34nodeESt14default_deleteIS3_EESaIS6_EE11_M_allocateEm.exit.i.i: ; preds = %bb.ba
-  %i.bg = ptrtoint ptr %i.be to i64
+  %i.bg = ptrtoint ptr %i.bf to i64
   %i.bh = ptrtoint ptr %.pre to i64
   %i.bi = sub i64 %i.bh, %i.bg
   %i.bj = invoke noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #55
@@ -1244,7 +1244,8 @@ _ZNKSt14default_deleteIN4toml2v34nodeEEclEPS2_.exit.i: ; preds = %.loopexit.spli
 bb.bd:                                            ; preds = %_ZN4toml2v35array7reserveEm.exit, %bb.ba
   %i.cr = phi ptr [ %i.bj, %_ZN4toml2v35array7reserveEm.exit ], [ %i.bf, %bb.ba ] ; 10 uses
   %i.cs = phi ptr [ %i.cl, %_ZN4toml2v35array7reserveEm.exit ], [ %i.be, %bb.ba ] ; 4 uses
-  %i.ct = phi ptr [ %i.ck, %_ZN4toml2v35array7reserveEm.exit ], [ %.pre, %bb.ba ] ; 3 uses
+  %i.ct = phi ptr [ %i.ck, %_ZN4toml2v35array7reserveEm.exit ], [ %.pre, %bb.ba ] ; 4 uses
+  %22 = ptrtoaddr ptr %i.cs to i64
   %.not.i.i.i.i = icmp eq ptr %i.ct, %i.cs
   br i1 %.not.i.i.i.i, label %bb.be, label %.thread57
 
@@ -1256,7 +1257,7 @@ bb.bd:                                            ; preds = %_ZN4toml2v35array7r
   br label %_ZNSt10unique_ptrIN4toml2v34nodeESt14default_deleteIS2_EED2Ev.exit32
 
 bb.be:                                            ; preds = %bb.bd
-  %i.cw = ptrtoint ptr %i.cs to i64               ; 2 uses
+  %i.cw = ptrtoint ptr %i.ct to i64
   %i.cx = ptrtoint ptr %i.cr to i64               ; 3 uses
   %i.cy = sub i64 %i.cw, %i.cx                    ; 3 uses
   %i.cz = icmp eq i64 %i.cy, 9223372036854775800
@@ -1291,7 +1292,7 @@ _ZNKSt6vectorISt10unique_ptrIN4toml2v34nodeESt14default_deleteIS3_EESaIS6_EE12_M
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN4toml2v34nodeESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc48
-  %i.dj = add i64 %i.cw, -8
+  %i.dj = add i64 %22, -8
   %i.dk = sub i64 %i.dj, %i.cx                    ; 3 uses
   %i.dl = lshr i64 %i.dk, 3
   %i.dm = add nuw nsw i64 %i.dl, 1                ; 2 uses

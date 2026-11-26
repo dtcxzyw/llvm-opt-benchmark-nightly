@@ -204,7 +204,7 @@ bb.ed:                                            ; preds = %bb.e
   %i.acd = load ptr, ptr %i.fa, align 8, !tbaa !185 ; 6 uses
   %i.ace = getelementptr inbounds nuw i8, ptr %i.fa, i64 8 ; 3 uses
   %i.acf = load ptr, ptr %i.ace, align 8, !tbaa !185 ; 5 uses
-  %i.acg = ptrtoint ptr %i.acf to i64             ; 2 uses
+  %i.acg = ptrtoint ptr %i.acf to i64             ; 4 uses
   %i.ach = ptrtoint ptr %i.acd to i64             ; 3 uses
   %i.aci = sub i64 %i.acg, %i.ach                 ; 5 uses
   %i.acj = ashr i64 %i.aci, 5                     ; 2 uses
@@ -338,7 +338,7 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit27.i.i.i.i.i.i: ; pr
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #15
   %.pre.i.i.i.i225.i.i = load ptr, ptr %i.ace, align 8, !tbaa !121 ; 2 uses
   %.pre86.i.i.i.i.i.i = load ptr, ptr %i.fa, align 8, !tbaa !122 ; 2 uses
-  %.pre89.i.i.i.i.i.i = ptrtoint ptr %.pre.i.i.i.i225.i.i to i64
+  %.pre89.i.i.i.i.i.i = ptrtoint ptr %.pre.i.i.i.i225.i.i to i64 ; 2 uses
   %.pre90.i.i.i.i.i.i = ptrtoint ptr %.pre86.i.i.i.i.i.i to i64 ; 2 uses
   %.pre92.i.i.i.i.i.i = sub i64 %.pre89.i.i.i.i.i.i, %.pre90.i.i.i.i.i.i
   br label %"_ZSt6all_ofIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEZZNK7xgboost12CatContainer4SaveEPNS8_4JsonEENK3$_1clIRKS6_EEDaOT_EUlmE_EbSG_SG_T0_.exit.thread.i.i.i.i.i.i"
@@ -355,7 +355,8 @@ bb.ep:                                            ; preds = %bb.eo
 
 "_ZSt6all_ofIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEZZNK7xgboost12CatContainer4SaveEPNS8_4JsonEENK3$_1clIRKS6_EEDaOT_EUlmE_EbSG_SG_T0_.exit.thread.i.i.i.i.i.i": ; preds = %.noexc76, %"_ZSt6all_ofIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEZZNK7xgboost12CatContainer4SaveEPNS8_4JsonEENK3$_1clIRKS6_EEDaOT_EUlmE_EbSG_SG_T0_.exit.i.i.i.i.i.i", %._crit_edge.i.i.i.i.i.i.i.i.i.i
   %.pre-phi93.i.i.i.i.i.i = phi i64 [ %i.aci, %._crit_edge.i.i.i.i.i.i.i.i.i.i ], [ %.pre92.i.i.i.i.i.i, %.noexc76 ], [ %i.aci, %"_ZSt6all_ofIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEZZNK7xgboost12CatContainer4SaveEPNS8_4JsonEENK3$_1clIRKS6_EEDaOT_EUlmE_EbSG_SG_T0_.exit.i.i.i.i.i.i" ] ; 3 uses
-  %.pre-phi91.i.i.i.i.i.i = phi i64 [ %i.ach, %._crit_edge.i.i.i.i.i.i.i.i.i.i ], [ %.pre90.i.i.i.i.i.i, %.noexc76 ], [ %i.ach, %"_ZSt6all_ofIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEZZNK7xgboost12CatContainer4SaveEPNS8_4JsonEENK3$_1clIRKS6_EEDaOT_EUlmE_EbSG_SG_T0_.exit.i.i.i.i.i.i" ] ; 2 uses
+  %.pre-phi91.i.i.i.i.i.i = phi i64 [ %i.ach, %._crit_edge.i.i.i.i.i.i.i.i.i.i ], [ %.pre90.i.i.i.i.i.i, %.noexc76 ], [ %i.ach, %"_ZSt6all_ofIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEZZNK7xgboost12CatContainer4SaveEPNS8_4JsonEENK3$_1clIRKS6_EEDaOT_EUlmE_EbSG_SG_T0_.exit.i.i.i.i.i.i" ]
+  %.pre-phi.i.i.i.i226.i.i = phi i64 [ %i.acg, %._crit_edge.i.i.i.i.i.i.i.i.i.i ], [ %.pre89.i.i.i.i.i.i, %.noexc76 ], [ %i.acg, %"_ZSt6all_ofIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEZZNK7xgboost12CatContainer4SaveEPNS8_4JsonEENK3$_1clIRKS6_EEDaOT_EUlmE_EbSG_SG_T0_.exit.i.i.i.i.i.i" ]
   %i.adt = phi ptr [ %i.acd, %._crit_edge.i.i.i.i.i.i.i.i.i.i ], [ %.pre86.i.i.i.i.i.i, %.noexc76 ], [ %i.acd, %"_ZSt6all_ofIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEZZNK7xgboost12CatContainer4SaveEPNS8_4JsonEENK3$_1clIRKS6_EEDaOT_EUlmE_EbSG_SG_T0_.exit.i.i.i.i.i.i" ] ; 2 uses
   %i.adu = phi ptr [ %i.acf, %._crit_edge.i.i.i.i.i.i.i.i.i.i ], [ %.pre.i.i.i.i225.i.i, %.noexc76 ], [ %i.acf, %"_ZSt6all_ofIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEZZNK7xgboost12CatContainer4SaveEPNS8_4JsonEENK3$_1clIRKS6_EEDaOT_EUlmE_EbSG_SG_T0_.exit.i.i.i.i.i.i" ]
   %i.adv = ashr exact i64 %.pre-phi93.i.i.i.i.i.i, 3 ; 2 uses
@@ -392,7 +393,7 @@ _ZNSt6vectorImSaImEE17_M_default_appendEm.exit.i.i.i.i.i.i: ; preds = %_ZSt6fill
 
 _ZN7xgboost14JsonTypedArrayImLNS_5Value9ValueKindE16EEC2Em.exit.i.i.i.i.i.i: ; preds = %_ZNSt6vectorImSaImEE17_M_default_appendEm.exit.i.i.i.i.i.i, %"_ZSt6all_ofIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEZZNK7xgboost12CatContainer4SaveEPNS8_4JsonEENK3$_1clIRKS6_EEDaOT_EUlmE_EbSG_SG_T0_.exit.thread.i.i.i.i.i.i"
   %.pre-phi97.i.i.i.i.i.i = phi i64 [ %.pre96.i.i.i.i.i.i, %_ZNSt6vectorImSaImEE17_M_default_appendEm.exit.i.i.i.i.i.i ], [ %.pre-phi91.i.i.i.i.i.i, %"_ZSt6all_ofIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEZZNK7xgboost12CatContainer4SaveEPNS8_4JsonEENK3$_1clIRKS6_EEDaOT_EUlmE_EbSG_SG_T0_.exit.thread.i.i.i.i.i.i" ]
-  %.pre-phi95.i.i.i.i.i.i = phi i64 [ %.pre94.i.i.i.i.i.i, %_ZNSt6vectorImSaImEE17_M_default_appendEm.exit.i.i.i.i.i.i ], [ %.pre-phi91.i.i.i.i.i.i, %"_ZSt6all_ofIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEZZNK7xgboost12CatContainer4SaveEPNS8_4JsonEENK3$_1clIRKS6_EEDaOT_EUlmE_EbSG_SG_T0_.exit.thread.i.i.i.i.i.i" ]
+  %.pre-phi95.i.i.i.i.i.i = phi i64 [ %.pre94.i.i.i.i.i.i, %_ZNSt6vectorImSaImEE17_M_default_appendEm.exit.i.i.i.i.i.i ], [ %.pre-phi.i.i.i.i226.i.i, %"_ZSt6all_ofIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEZZNK7xgboost12CatContainer4SaveEPNS8_4JsonEENK3$_1clIRKS6_EEDaOT_EUlmE_EbSG_SG_T0_.exit.thread.i.i.i.i.i.i" ]
   %i.aec = phi ptr [ %.pre87.i.i.i.i.i.i, %_ZNSt6vectorImSaImEE17_M_default_appendEm.exit.i.i.i.i.i.i ], [ %i.adt, %"_ZSt6all_ofIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEZZNK7xgboost12CatContainer4SaveEPNS8_4JsonEENK3$_1clIRKS6_EEDaOT_EUlmE_EbSG_SG_T0_.exit.thread.i.i.i.i.i.i" ] ; 2 uses
   %.sroa.21.1.i.i.i.i228.i.i = phi ptr [ %i.aeb, %_ZNSt6vectorImSaImEE17_M_default_appendEm.exit.i.i.i.i.i.i ], [ null, %"_ZSt6all_ofIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEZZNK7xgboost12CatContainer4SaveEPNS8_4JsonEENK3$_1clIRKS6_EEDaOT_EUlmE_EbSG_SG_T0_.exit.thread.i.i.i.i.i.i" ] ; 3 uses
   %.sroa.8.1.i.i.i.i229.i.i = phi ptr [ %i.adx, %_ZNSt6vectorImSaImEE17_M_default_appendEm.exit.i.i.i.i.i.i ], [ null, %"_ZSt6all_ofIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEZZNK7xgboost12CatContainer4SaveEPNS8_4JsonEENK3$_1clIRKS6_EEDaOT_EUlmE_EbSG_SG_T0_.exit.thread.i.i.i.i.i.i" ] ; 6 uses

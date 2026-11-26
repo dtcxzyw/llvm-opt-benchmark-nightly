@@ -205,12 +205,12 @@ bb.c:                                             ; preds = %_ZNSt12_Vector_base
 
 _ZNK4llvm8ArrayRefIPKNS_6RecordEEcvSt6vectorIS3_SaIS3_EEEv.exit.i: ; preds = %bb.c, %bb.b, %.thread.i.i.i.i
   %.sroa.12.0.i = phi ptr [ %i.i, %.thread.i.i.i.i ], [ %i.k, %bb.c ], [ %i.k, %bb.b ] ; 10 uses
-  %.sroa.013.0.i = phi ptr [ null, %.thread.i.i.i.i ], [ %i.j, %bb.c ], [ %i.j, %bb.b ] ; 78 uses
+  %.sroa.013.0.i = phi ptr [ null, %.thread.i.i.i.i ], [ %i.j, %bb.c ], [ %i.j, %bb.b ] ; 79 uses
   %.not.i.i.i.i4.i = icmp eq ptr %.sroa.013.0.i, %.sroa.12.0.i
-  %.pre.i = ptrtoint ptr %.sroa.12.0.i to i64     ; 2 uses
   br i1 %.not.i.i.i.i4.i, label %"_ZN4llvm4sortIRSt6vectorIPKNS_6RecordESaIS4_EEZL19emitRISCVExtensionsRKNS_12RecordKeeperERNS_11raw_ostreamEE3$_0EEvOT_T0_.exit.thread34.i", label %bb.d
 
 "_ZN4llvm4sortIRSt6vectorIPKNS_6RecordESaIS4_EEZL19emitRISCVExtensionsRKNS_12RecordKeeperERNS_11raw_ostreamEE3$_0EEvOT_T0_.exit.thread34.i": ; preds = %_ZNK4llvm8ArrayRefIPKNS_6RecordEEcvSt6vectorIS3_SaIS3_EEEv.exit.i
+  %.pre.i = ptrtoint ptr %.sroa.013.0.i to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %38) #19
   call void @_ZN4llvm12IfDefEmitterC2ERNS_11raw_ostreamENS_9StringRefEb(ptr noundef nonnull align 8 dereferenceable(41) %38, ptr noundef nonnull align 8 dereferenceable(48) %1, ptr nonnull @.str.7, i64 24, i1 noundef zeroext false)
   call void @_ZN4llvm12IfDefEmitterD2Ev(ptr noundef nonnull align 8 dead_on_return(41) dereferenceable(41) %38) #19
@@ -220,8 +220,9 @@ _ZNK4llvm8ArrayRefIPKNS_6RecordEEcvSt6vectorIS3_SaIS3_EEEv.exit.i: ; preds = %bb
   br label %_ZL25emitImpliedExtensionTableN4llvm8ArrayRefIPKNS_6RecordEEERNS_11raw_ostreamE.exit.i
 
 bb.d:                                             ; preds = %_ZNK4llvm8ArrayRefIPKNS_6RecordEEcvSt6vectorIS3_SaIS3_EEEv.exit.i
+  %40 = ptrtoint ptr %.sroa.12.0.i to i64
   %i.m = ptrtoint ptr %.sroa.013.0.i to i64       ; 4 uses
-  %i.n = sub i64 %.pre.i, %i.m                    ; 2 uses
+  %i.n = sub i64 %40, %i.m                        ; 2 uses
   %i.o = ashr exact i64 %i.n, 3                   ; 3 uses
   %i.p = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.o, i1 true)
   %i.q = shl nuw nsw i64 %i.p, 1

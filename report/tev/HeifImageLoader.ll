@@ -205,12 +205,15 @@ _ZN4tlog5debugIJRKjEEEvN3fmt3v127fstringIJDpT_EE1tEDpOS6_.exit: ; preds = %.noex
 
 .lr.ph.i.i.i.from.:                               ; preds = %.lr.ph.i.i.i.preheader, %.lr.ph.i.i.i
   %.03.i.i.i1624 = phi ptr [ %i.eb, %.lr.ph.i.i.i ], [ %.val204, %.lr.ph.i.i.i.preheader ]
-  %i.eb = getelementptr inbounds nuw i8, ptr %.03.i.i.i1624, i64 24 ; 4 uses
+  %i.eb = getelementptr inbounds nuw i8, ptr %.03.i.i.i1624, i64 24 ; 5 uses
   %.not.i.i.i247 = icmp eq ptr %i.eb, %.val205
-  br i1 %.not.i.i.i247, label %.loopexit750.thread, label %.lr.ph.i.i.i, !llvm.loop !11649
+  br i1 %.not.i.i.i247, label %.loopexit750.from., label %.lr.ph.i.i.i, !llvm.loop !11649
 
-.loopexit750:                                     ; preds = %.lr.ph.i.i.i, %.lr.ph.i.i.i.preheader, %_ZN4tlog5debugIJRKjEEEvN3fmt3v127fstringIJDpT_EE1tEDpOS6_.exit
-  %.0.lcssa.i.i.i = phi ptr [ %.val204, %_ZN4tlog5debugIJRKjEEEvN3fmt3v127fstringIJDpT_EE1tEDpOS6_.exit ], [ %.val204, %.lr.ph.i.i.i.preheader ], [ %i.eb, %.lr.ph.i.i.i ] ; 2 uses
+.loopexit750.from.:                               ; preds = %.lr.ph.i.i.i.from.
+  br label %.loopexit750, !llvm.loop !11649
+
+.loopexit750:                                     ; preds = %.lr.ph.i.i.i, %.lr.ph.i.i.i.preheader, %_ZN4tlog5debugIJRKjEEEvN3fmt3v127fstringIJDpT_EE1tEDpOS6_.exit, %.loopexit750.from.
+  %.0.lcssa.i.i.i = phi ptr [ %.val204, %_ZN4tlog5debugIJRKjEEEvN3fmt3v127fstringIJDpT_EE1tEDpOS6_.exit ], [ %i.eb, %.loopexit750.from. ], [ %.val204, %.lr.ph.i.i.i.preheader ], [ %i.eb, %.lr.ph.i.i.i ] ; 2 uses
   %i.ec = ptrtoint ptr %.0.lcssa.i.i.i to i64
   %i.ed = ptrtoint ptr %.val204 to i64
   %i.ee = sub i64 %i.ec, %i.ed
@@ -218,7 +221,7 @@ _ZN4tlog5debugIJRKjEEEvN3fmt3v127fstringIJDpT_EE1tEDpOS6_.exit: ; preds = %.noex
   %i.eg = icmp eq ptr %.0.lcssa.i.i.i, %.val205
   br i1 %i.eg, label %.loopexit750.thread, label %bb.am
 
-.loopexit750.thread:                              ; preds = %.lr.ph.i.i.i.from., %.loopexit750
+.loopexit750.thread:                              ; preds = %.loopexit750
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #37
   %i.eh = load ptr, ptr %.reload.addr1516.a, align 8, !tbaa !1606
   store ptr %i.eh, ptr %8, align 8, !tbaa !1609

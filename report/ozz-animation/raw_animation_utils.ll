@@ -204,10 +204,10 @@ bb.k:                                             ; preds = %.lr.ph.i79
   br i1 %.not.i82, label %"_ZSt8for_eachIN9__gnu_cxx17__normal_iteratorIPKN3ozz9animation7offline12RawAnimation8ScaleKeyESt6vectorIS6_NS2_12StdAllocatorIS6_EEEEEZNS4_17ExtractTimePointsERKS5_RKNS2_4spanIKsEEE3$_0ET0_T_SN_SM_.exit", label %.lr.ph.i79, !llvm.loop !110
 
 "_ZSt8for_eachIN9__gnu_cxx17__normal_iteratorIPKN3ozz9animation7offline12RawAnimation8ScaleKeyESt6vectorIS6_NS2_12StdAllocatorIS6_EEEEEZNS4_17ExtractTimePointsERKS5_RKNS2_4spanIKsEEE3$_0ET0_T_SN_SM_.exit": ; preds = %"_ZZN3ozz9animation7offline17ExtractTimePointsERKNS1_12RawAnimationERKNS_4spanIKsEEENK3$_0clINS2_8ScaleKeyEEEDaRKT_.exit.i", %"_ZSt8for_eachIN9__gnu_cxx17__normal_iteratorIPKN3ozz9animation7offline12RawAnimation11RotationKeyESt6vectorIS6_NS2_12StdAllocatorIS6_EEEEEZNS4_17ExtractTimePointsERKS5_RKNS2_4spanIKsEEE3$_0ET0_T_SN_SM_.exit"
-  %i.ay = load ptr, ptr %3, align 8, !tbaa !38    ; 6 uses
-  %i.az = load ptr, ptr %i.j, align 8, !tbaa !38  ; 4 uses
+  %i.ay = load ptr, ptr %3, align 8, !tbaa !38    ; 5 uses
+  %i.az = load ptr, ptr %i.j, align 8, !tbaa !38  ; 5 uses
   %.not.i.i = icmp eq ptr %i.ay, %i.az
-  br i1 %.not.i.i, label %_ZNSt6vectorIfN3ozz12StdAllocatorIfEEE5eraseEN9__gnu_cxx17__normal_iteratorIPKfS3_EES8_.exit, label %bb.l
+  br i1 %.not.i.i, label %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEEEvT_S9_.exit, label %bb.l
 
 bb.l:                                             ; preds = %"_ZSt8for_eachIN9__gnu_cxx17__normal_iteratorIPKN3ozz9animation7offline12RawAnimation8ScaleKeyESt6vectorIS6_NS2_12StdAllocatorIS6_EEEEEZNS4_17ExtractTimePointsERKS5_RKNS2_4spanIKsEEE3$_0ET0_T_SN_SM_.exit"
   %i.ba = ptrtoint ptr %i.az to i64
@@ -222,18 +222,23 @@ bb.l:                                             ; preds = %"_ZSt8for_eachIN9__
 
 .noexc84:                                         ; preds = %bb.l
   invoke void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEENS0_5__ops15_Iter_less_iterEEvT_SB_T0_(ptr %i.ay, ptr %i.az)
-          to label %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEEEvT_S9_.exit unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %.noexc84._ZSt4sortIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEEEvT_S9_.exit_crit_edge unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
-_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEEEvT_S9_.exit: ; preds = %.noexc84
-  %.pre = load ptr, ptr %3, align 8, !tbaa !38    ; 8 uses
-  %.pre134 = load ptr, ptr %i.j, align 8, !tbaa !38 ; 8 uses
-  %i.bh = icmp eq ptr %.pre, %.pre134
+.noexc84._ZSt4sortIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEEEvT_S9_.exit_crit_edge: ; preds = %.noexc84
+  %.pre = load ptr, ptr %3, align 8, !tbaa !38
+  %.pre134 = load ptr, ptr %i.j, align 8, !tbaa !38
+  br label %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEEEvT_S9_.exit
+
+_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEEEvT_S9_.exit: ; preds = %.noexc84._ZSt4sortIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEEEvT_S9_.exit_crit_edge, %"_ZSt8for_eachIN9__gnu_cxx17__normal_iteratorIPKN3ozz9animation7offline12RawAnimation8ScaleKeyESt6vectorIS6_NS2_12StdAllocatorIS6_EEEEEZNS4_17ExtractTimePointsERKS5_RKNS2_4spanIKsEEE3$_0ET0_T_SN_SM_.exit"
+  %4 = phi ptr [ %.pre134, %.noexc84._ZSt4sortIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEEEvT_S9_.exit_crit_edge ], [ %i.az, %"_ZSt8for_eachIN9__gnu_cxx17__normal_iteratorIPKN3ozz9animation7offline12RawAnimation8ScaleKeyESt6vectorIS6_NS2_12StdAllocatorIS6_EEEEEZNS4_17ExtractTimePointsERKS5_RKNS2_4spanIKsEEE3$_0ET0_T_SN_SM_.exit" ] ; 8 uses
+  %5 = phi ptr [ %.pre, %.noexc84._ZSt4sortIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEEEvT_S9_.exit_crit_edge ], [ %i.ay, %"_ZSt8for_eachIN9__gnu_cxx17__normal_iteratorIPKN3ozz9animation7offline12RawAnimation8ScaleKeyESt6vectorIS6_NS2_12StdAllocatorIS6_EEEEEZNS4_17ExtractTimePointsERKS5_RKNS2_4spanIKsEEE3$_0ET0_T_SN_SM_.exit" ] ; 6 uses
+  %i.bh = icmp eq ptr %5, %4
   br i1 %i.bh, label %_ZNSt6vectorIfN3ozz12StdAllocatorIfEEE5eraseEN9__gnu_cxx17__normal_iteratorIPKfS3_EES8_.exit, label %.preheader.i.i.i
 
 .preheader.i.i.i:                                 ; preds = %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEEEvT_S9_.exit, %bb.m
-  %.sroa.09.0.i.i.i = phi ptr [ %i.bi, %bb.m ], [ %.pre, %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEEEvT_S9_.exit ] ; 5 uses
+  %.sroa.09.0.i.i.i = phi ptr [ %i.bi, %bb.m ], [ %5, %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEEEvT_S9_.exit ] ; 5 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %.sroa.09.0.i.i.i, i64 4 ; 3 uses
-  %.not.i.i.i86 = icmp eq ptr %i.bi, %.pre134
+  %.not.i.i.i86 = icmp eq ptr %i.bi, %4
   br i1 %.not.i.i.i86, label %_ZNSt6vectorIfN3ozz12StdAllocatorIfEEE5eraseEN9__gnu_cxx17__normal_iteratorIPKfS3_EES8_.exit, label %bb.m
 
 bb.m:                                             ; preds = %.preheader.i.i.i
@@ -244,7 +249,7 @@ bb.m:                                             ; preds = %.preheader.i.i.i
 
 _ZSt15__adjacent_findIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEENS0_5__ops19_Iter_equal_to_iterEET_SB_SB_T0_.exit.i.i: ; preds = %bb.m
   %i.bm = getelementptr inbounds nuw i8, ptr %.sroa.09.0.i.i.i, i64 8 ; 2 uses
-  %.not18.i.i = icmp eq ptr %i.bm, %.pre134
+  %.not18.i.i = icmp eq ptr %i.bm, %4
   br i1 %.not18.i.i, label %_ZSt6uniqueIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEEET_S9_S9_.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %_ZSt15__adjacent_findIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEENS0_5__ops19_Iter_equal_to_iterEET_SB_SB_T0_.exit.i.i, %bb.o
@@ -264,26 +269,25 @@ bb.o:                                             ; preds = %bb.n, %.lr.ph.i.i
   %i.bs = phi float [ %i.bn, %.lr.ph.i.i ], [ %i.bp, %bb.n ]
   %.sroa.0.1.i.i = phi ptr [ %.sroa.0.019.i.i, %.lr.ph.i.i ], [ %i.br, %bb.n ] ; 2 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bo, i64 4 ; 2 uses
-  %.not.i.i87 = icmp eq ptr %i.bt, %.pre134
+  %.not.i.i87 = icmp eq ptr %i.bt, %4
   br i1 %.not.i.i87, label %_ZSt6uniqueIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEEET_S9_S9_.exit, label %.lr.ph.i.i, !llvm.loop !112
 
 _ZSt6uniqueIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEEET_S9_S9_.exit: ; preds = %bb.o, %_ZSt15__adjacent_findIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEENS0_5__ops19_Iter_equal_to_iterEET_SB_SB_T0_.exit.i.i
   %.sroa.0.0.lcssa.i.i = phi ptr [ %.sroa.09.0.i.i.i, %_ZSt15__adjacent_findIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEENS0_5__ops19_Iter_equal_to_iterEET_SB_SB_T0_.exit.i.i ], [ %.sroa.0.1.i.i, %bb.o ]
   %i.bu = getelementptr inbounds nuw i8, ptr %.sroa.0.0.lcssa.i.i, i64 4 ; 2 uses
-  %.not.i.i88 = icmp eq ptr %i.bu, %.pre134
+  %.not.i.i88 = icmp eq ptr %i.bu, %4
   br i1 %.not.i.i88, label %_ZNSt6vectorIfN3ozz12StdAllocatorIfEEE5eraseEN9__gnu_cxx17__normal_iteratorIPKfS3_EES8_.exit, label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEES8_ET0_T_SA_S9_.exit.i.i
 
 _ZSt4moveIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEES8_ET0_T_SA_S9_.exit.i.i: ; preds = %_ZSt6uniqueIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEEET_S9_S9_.exit
   %i.bv = ptrtoint ptr %i.bu to i64
-  %i.bw = ptrtoint ptr %.pre to i64
+  %i.bw = ptrtoint ptr %5 to i64
   %i.bx = sub i64 %i.bv, %i.bw
-  %i.by = getelementptr inbounds i8, ptr %.pre, i64 %i.bx ; 2 uses
+  %i.by = getelementptr inbounds i8, ptr %5, i64 %i.bx ; 2 uses
   store ptr %i.by, ptr %i.j, align 8, !tbaa !47
   br label %_ZNSt6vectorIfN3ozz12StdAllocatorIfEEE5eraseEN9__gnu_cxx17__normal_iteratorIPKfS3_EES8_.exit
 
-_ZNSt6vectorIfN3ozz12StdAllocatorIfEEE5eraseEN9__gnu_cxx17__normal_iteratorIPKfS3_EES8_.exit: ; preds = %.preheader.i.i.i, %"_ZSt8for_eachIN9__gnu_cxx17__normal_iteratorIPKN3ozz9animation7offline12RawAnimation8ScaleKeyESt6vectorIS6_NS2_12StdAllocatorIS6_EEEEEZNS4_17ExtractTimePointsERKS5_RKNS2_4spanIKsEEE3$_0ET0_T_SN_SM_.exit", %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEEEvT_S9_.exit, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEES8_ET0_T_SA_S9_.exit.i.i, %_ZSt6uniqueIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEEET_S9_S9_.exit
-  %4 = phi ptr [ %i.ay, %"_ZSt8for_eachIN9__gnu_cxx17__normal_iteratorIPKN3ozz9animation7offline12RawAnimation8ScaleKeyESt6vectorIS6_NS2_12StdAllocatorIS6_EEEEEZNS4_17ExtractTimePointsERKS5_RKNS2_4spanIKsEEE3$_0ET0_T_SN_SM_.exit" ], [ %.pre, %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEEEvT_S9_.exit ], [ %.pre, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEES8_ET0_T_SA_S9_.exit.i.i ], [ %.pre, %_ZSt6uniqueIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEEET_S9_S9_.exit ], [ %.pre, %.preheader.i.i.i ] ; 2 uses
-  %5 = phi ptr [ %i.ay, %"_ZSt8for_eachIN9__gnu_cxx17__normal_iteratorIPKN3ozz9animation7offline12RawAnimation8ScaleKeyESt6vectorIS6_NS2_12StdAllocatorIS6_EEEEEZNS4_17ExtractTimePointsERKS5_RKNS2_4spanIKsEEE3$_0ET0_T_SN_SM_.exit" ], [ %.pre134, %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEEEvT_S9_.exit ], [ %i.by, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEES8_ET0_T_SA_S9_.exit.i.i ], [ %.pre134, %_ZSt6uniqueIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEEET_S9_S9_.exit ], [ %.pre134, %.preheader.i.i.i ] ; 2 uses
+_ZNSt6vectorIfN3ozz12StdAllocatorIfEEE5eraseEN9__gnu_cxx17__normal_iteratorIPKfS3_EES8_.exit: ; preds = %.preheader.i.i.i, %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEEEvT_S9_.exit, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEES8_ET0_T_SA_S9_.exit.i.i, %_ZSt6uniqueIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEEET_S9_S9_.exit
+  %6 = phi ptr [ %4, %_ZSt6uniqueIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEEET_S9_S9_.exit ], [ %4, %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEEEvT_S9_.exit ], [ %i.by, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfN3ozz12StdAllocatorIfEEEEES8_ET0_T_SA_S9_.exit.i.i ], [ %4, %.preheader.i.i.i ] ; 2 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %.045119, i64 2 ; 2 uses
   %.not = icmp eq ptr %i.bz, %i.f
   br i1 %.not, label %.critedge58, label %bb.c
@@ -299,11 +303,11 @@ _ZNSt6vectorIfN3ozz12StdAllocatorIfEEE5eraseEN9__gnu_cxx17__normal_iteratorIPKfS
   store i8 1, ptr %0, align 8, !tbaa !120
   %i.ca = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
-  %i.cc = ptrtoint ptr %5 to i64
-  %i.cd = ptrtoint ptr %4 to i64
+  %i.cc = ptrtoint ptr %6 to i64
+  %i.cd = ptrtoint ptr %5 to i64
   %i.ce = sub i64 %i.cc, %i.cd                    ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ca, i8 0, i64 24, i1 false)
-  %.not.i.i.i.i.i90 = icmp eq ptr %5, %4
+  %.not.i.i.i.i.i90 = icmp eq ptr %6, %5
   br i1 %.not.i.i.i.i.i90, label %_ZNSt12_Vector_baseIfN3ozz12StdAllocatorIfEEEC2EmRKS2_.exit.i.i91, label %bb.p
 
 bb.p:                                             ; preds = %.critedge58

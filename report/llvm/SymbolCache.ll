@@ -205,9 +205,10 @@ _ZNSt10unique_ptrIN4llvm3pdb15NativeRawSymbolESt14default_deleteIS2_EED2Ev.exit:
   store ptr %i.u, ptr %i.r, align 8, !tbaa !104
   store ptr %i.u, ptr %i.s, align 8, !tbaa !105
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 120
-  %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !106 ; 3 uses
+  %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !106 ; 4 uses
   %.phi.trans.insert29 = getelementptr inbounds nuw i8, ptr %0, i64 128
   %.pre30 = load ptr, ptr %.phi.trans.insert29, align 8, !tbaa !107 ; 4 uses
+  %.pre3041 = ptrtoaddr ptr %.pre30 to i64
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 2 uses
   %.not.i.i5 = icmp eq ptr %.pre, %.pre30
@@ -221,7 +222,7 @@ bb.a:                                             ; preds = %_ZNSt10unique_ptrIN
 
 bb.b:                                             ; preds = %_ZNSt10unique_ptrIN4llvm3pdb15NativeRawSymbolESt14default_deleteIS2_EED2Ev.exit
   %i.y = load ptr, ptr %i.d, align 8, !tbaa !110  ; 7 uses
-  %i.z = ptrtoint ptr %.pre30 to i64              ; 2 uses
+  %i.z = ptrtoint ptr %.pre to i64
   %i.aa = ptrtoint ptr %i.y to i64                ; 3 uses
   %i.ab = sub i64 %i.z, %i.aa                     ; 3 uses
   %i.ac = icmp eq i64 %i.ab, 9223372036854775800
@@ -248,7 +249,7 @@ _ZNKSt6vectorISt10unique_ptrIN4llvm3pdb16NativeSourceFileESt14default_deleteIS3_
   br i1 %.not10.i.i.i.i11, label %_ZNSt6vectorISt10unique_ptrIN4llvm3pdb16NativeSourceFileESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i, label %.lr.ph.i.i.i.i12.preheader
 
 .lr.ph.i.i.i.i12.preheader:                       ; preds = %_ZNKSt6vectorISt10unique_ptrIN4llvm3pdb16NativeSourceFileESt14default_deleteIS3_EESaIS6_EE12_M_check_lenEmPKc.exit.i
-  %i.al = add i64 %i.z, -8
+  %i.al = add i64 %.pre3041, -8
   %i.am = sub i64 %i.al, %i.aa                    ; 2 uses
   %i.an = lshr i64 %i.am, 3
   %i.ao = add nuw nsw i64 %i.an, 1                ; 2 uses

@@ -205,7 +205,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit175: ; preds = %_Z
   br i1 %.not588822, label %._crit_edge, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE9push_backERKS5_.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit175
-  %i.fk = load ptr, ptr %i.bx, align 8, !tbaa !371
+  %i.fk = load ptr, ptr %i.bx, align 8, !tbaa !371 ; 2 uses
   %.not.i.i176 = icmp eq ptr %i.cn, %i.fk
   br i1 %.not.i.i176, label %bb.y, label %bb.v
 
@@ -283,8 +283,8 @@ _ZZN5osgeo4proj2io15DatabaseContext7Private20attachExtraDatabasesERKSt6vectorINS
 
 bb.y:                                             ; preds = %._crit_edge
   %i.gl = ptrtoint ptr %i.cn to i64
-  %i.gm = ptrtoint ptr %.val.i.i.i to i64
-  %i.gn = sub i64 %i.gl, %i.gm                    ; 4 uses
+  %i.gm = ptrtoint ptr %.val.i.i.i to i64         ; 2 uses
+  %i.gn = sub i64 %i.gl, %i.gm                    ; 3 uses
   %i.go = icmp eq i64 %i.gn, 9223372036854775776
   br i1 %i.go, label %bb.z, label %_ZNKSt6vectorIZN5osgeo4proj2io15DatabaseContext7Private20attachExtraDatabasesERKS_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISA_EEE14TableStructureSaISF_EE12_M_check_lenEmPKc.exit.i.i.i
 
@@ -476,7 +476,9 @@ _ZNSt6vectorIZN5osgeo4proj2io15DatabaseContext7Private20attachExtraDatabasesERKS
   br i1 %.not.i35.i.i.i, label %_ZNSt6vectorIZN5osgeo4proj2io15DatabaseContext7Private20attachExtraDatabasesERKS_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISA_EEE14TableStructureSaISF_EE17_M_realloc_insertIJSF_EEEvN9__gnu_cxx17__normal_iteratorIPSF_SH_EEDpOT_.exit.i.i, label %bb.ae
 
 bb.ae:                                            ; preds = %_ZNSt6vectorIZN5osgeo4proj2io15DatabaseContext7Private20attachExtraDatabasesERKS_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISA_EEE14TableStructureSaISF_EE11_S_relocateEPSF_SI_SI_RSG_.exit34.i.i.i
-  call void @_ZdlPvm(ptr noundef nonnull %.val.i.i.i, i64 noundef %i.gn) #34
+  %40 = ptrtoint ptr %i.fk to i64
+  %41 = sub i64 %40, %i.gm
+  call void @_ZdlPvm(ptr noundef nonnull %.val.i.i.i, i64 noundef %41) #34
   br label %_ZNSt6vectorIZN5osgeo4proj2io15DatabaseContext7Private20attachExtraDatabasesERKS_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISA_EEE14TableStructureSaISF_EE17_M_realloc_insertIJSF_EEEvN9__gnu_cxx17__normal_iteratorIPSF_SH_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIZN5osgeo4proj2io15DatabaseContext7Private20attachExtraDatabasesERKS_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISA_EEE14TableStructureSaISF_EE17_M_realloc_insertIJSF_EEEvN9__gnu_cxx17__normal_iteratorIPSF_SH_EEDpOT_.exit.i.i: ; preds = %bb.ae, %_ZNSt6vectorIZN5osgeo4proj2io15DatabaseContext7Private20attachExtraDatabasesERKS_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISA_EEE14TableStructureSaISF_EE11_S_relocateEPSF_SI_SI_RSG_.exit34.i.i.i
@@ -879,8 +881,8 @@ bb.ds:                                            ; preds = %_ZSteqIcSt11char_tr
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %._crit_edge624
   %i.rw = phi ptr [ %i.rs, %.preheader.lr.ph ], [ %i.rz, %._crit_edge624 ]
-  %i.rx = phi ptr [ %.pre652, %.preheader.lr.ph ], [ %i.sa, %._crit_edge624 ] ; 4 uses
-  %i.ry = phi ptr [ %.pre650, %.preheader.lr.ph ], [ %i.sb, %._crit_edge624 ]
+  %i.rx = phi ptr [ %.pre652, %.preheader.lr.ph ], [ %i.sa, %._crit_edge624 ] ; 3 uses
+  %i.ry = phi ptr [ %.pre650, %.preheader.lr.ph ], [ %i.sb, %._crit_edge624 ] ; 2 uses
   %.0114626 = phi i64 [ 0, %.preheader.lr.ph ], [ %i.sc, %._crit_edge624 ] ; 2 uses
   %.not638 = icmp eq ptr %i.ry, %i.rx
   br i1 %.not638, label %._crit_edge624, label %.lr.ph623
@@ -892,7 +894,7 @@ bb.ds:                                            ; preds = %_ZSteqIcSt11char_tr
 ._crit_edge624:                                   ; preds = %._crit_edge624.loopexit, %.preheader
   %i.rz = phi ptr [ %.pre648, %._crit_edge624.loopexit ], [ %i.rw, %.preheader ] ; 2 uses
   %i.sa = phi ptr [ %i.uu, %._crit_edge624.loopexit ], [ %i.rx, %.preheader ] ; 2 uses
-  %i.sb = phi ptr [ %i.ut, %._crit_edge624.loopexit ], [ %i.rx, %.preheader ] ; 2 uses
+  %i.sb = phi ptr [ %i.ut, %._crit_edge624.loopexit ], [ %i.ry, %.preheader ] ; 2 uses
   %i.sc = add i64 %.0114626, 1                    ; 2 uses
   %i.sd = getelementptr inbounds nuw [8 x i8], ptr %i.rz, i64 %i.sc
   %i.se = load ptr, ptr %i.sd, align 8, !tbaa !1193
@@ -1118,8 +1120,8 @@ bb.ei:                                            ; preds = %.loopexit563
   br label %bb.ej
 
 bb.ej:                                            ; preds = %._crit_edge653, %.loopexit563
-  %i.vm = phi ptr [ %.pre655, %._crit_edge653 ], [ %i.vd, %.loopexit563 ] ; 4 uses
-  %i.vn = phi ptr [ %.pre654, %._crit_edge653 ], [ %i.ve, %.loopexit563 ] ; 2 uses
+  %i.vm = phi ptr [ %.pre655, %._crit_edge653 ], [ %i.vd, %.loopexit563 ] ; 3 uses
+  %i.vn = phi ptr [ %.pre654, %._crit_edge653 ], [ %i.ve, %.loopexit563 ] ; 3 uses
   %.not547627 = icmp eq ptr %i.vn, %i.vm
   br i1 %.not547627, label %._crit_edge631, label %.lr.ph630
 
@@ -1145,7 +1147,7 @@ bb.ej:                                            ; preds = %._crit_edge653, %.l
   br label %._crit_edge631
 
 ._crit_edge631:                                   ; preds = %._crit_edge631.loopexit, %bb.ej
-  %i.wb = phi ptr [ %.pre657, %._crit_edge631.loopexit ], [ %i.vm, %bb.ej ]
+  %i.wb = phi ptr [ %.pre657, %._crit_edge631.loopexit ], [ %i.vn, %bb.ej ]
   %i.wc = phi ptr [ %.pre656, %._crit_edge631.loopexit ], [ %i.vm, %bb.ej ]
   %i.wd = ptrtoint ptr %i.wc to i64
   %i.we = ptrtoint ptr %i.wb to i64

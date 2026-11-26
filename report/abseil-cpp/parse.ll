@@ -202,7 +202,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
 
 bb.cj:                                            ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i63.i.i.i
   %i.oh = load ptr, ptr %i.aj, align 8, !tbaa !74 ; 12 uses
-  %i.oi = load ptr, ptr %i.ak, align 8, !tbaa !75
+  %i.oi = load ptr, ptr %i.ak, align 8, !tbaa !75 ; 2 uses
   %.not.i5.i.i = icmp eq ptr %i.oh, %i.oi
   br i1 %.not.i5.i.i, label %bb.co, label %bb.ck
 
@@ -271,8 +271,8 @@ _ZN4absl12lts_2026052614flags_internal12_GLOBAL__N_18ArgsListC2ERKS3_.exit.i.i.i
 
 bb.co:                                            ; preds = %bb.cj
   %i.ph = ptrtoint ptr %i.oh to i64
-  %i.pi = ptrtoint ptr %.val.i.i.i.i to i64
-  %i.pj = sub i64 %i.ph, %i.pi                    ; 4 uses
+  %i.pi = ptrtoint ptr %.val.i.i.i.i to i64       ; 2 uses
+  %i.pj = sub i64 %i.ph, %i.pi                    ; 3 uses
   %i.pk = icmp eq i64 %i.pj, 9223372036854775776
   br i1 %i.pk, label %bb.cp, label %_ZNKSt6vectorIN4absl12lts_2026052614flags_internal12_GLOBAL__N_18ArgsListESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i
 
@@ -392,7 +392,9 @@ _ZNSt6vectorIN4absl12lts_2026052614flags_internal12_GLOBAL__N_18ArgsListESaIS4_E
   br i1 %.not.i38.i.i.i.i, label %_ZNSt6vectorIN4absl12lts_2026052614flags_internal12_GLOBAL__N_18ArgsListESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i.i, label %bb.cu
 
 bb.cu:                                            ; preds = %_ZNSt6vectorIN4absl12lts_2026052614flags_internal12_GLOBAL__N_18ArgsListESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit37.i.i.i.i
-  call void @_ZdlPvm(ptr noundef nonnull %.val.i.i.i.i, i64 noundef %i.pj) #25
+  %65 = ptrtoint ptr %i.oi to i64
+  %66 = sub i64 %65, %i.pi
+  call void @_ZdlPvm(ptr noundef nonnull %.val.i.i.i.i, i64 noundef %66) #25
   br label %_ZNSt6vectorIN4absl12lts_2026052614flags_internal12_GLOBAL__N_18ArgsListESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i.i
 
 .loopexit.split-lp38.i.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp: ; preds = %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i.i.i.i.i.i, %.noexc.i.i.i.i.i.i.i
@@ -795,8 +797,8 @@ bb.hc:                                            ; preds = %_ZN4absl12lts_20260
   br label %.body169
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZNSt6vectorIPcSaIS0_EE9push_backERKS0_.exit275
-  %i.aif = phi ptr [ %i.aje, %_ZNSt6vectorIPcSaIS0_EE9push_backERKS0_.exit275 ], [ %.pre874, %.lr.ph.preheader ] ; 3 uses
-  %i.aig = phi ptr [ %i.ajf, %_ZNSt6vectorIPcSaIS0_EE9push_backERKS0_.exit275 ], [ %.pre873, %.lr.ph.preheader ] ; 3 uses
+  %i.aif = phi ptr [ %i.aje, %_ZNSt6vectorIPcSaIS0_EE9push_backERKS0_.exit275 ], [ %.pre874, %.lr.ph.preheader ] ; 2 uses
+  %i.aig = phi ptr [ %i.ajf, %_ZNSt6vectorIPcSaIS0_EE9push_backERKS0_.exit275 ], [ %.pre873, %.lr.ph.preheader ] ; 4 uses
   %.092797 = phi i64 [ %i.ajg, %_ZNSt6vectorIPcSaIS0_EE9push_backERKS0_.exit275 ], [ %.val133, %.lr.ph.preheader ] ; 2 uses
   %i.aih = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %.092797 ; 2 uses
   %.not.i266 = icmp eq ptr %i.aig, %i.aif
@@ -811,7 +813,7 @@ bb.hd:                                            ; preds = %.lr.ph
 
 bb.he:                                            ; preds = %.lr.ph
   %i.aik = load ptr, ptr %2, align 8, !tbaa !63   ; 4 uses
-  %i.ail = ptrtoint ptr %i.aif to i64
+  %i.ail = ptrtoint ptr %i.aig to i64
   %i.aim = ptrtoint ptr %i.aik to i64             ; 2 uses
   %i.ain = sub i64 %i.ail, %i.aim                 ; 5 uses
   %i.aio = icmp eq i64 %i.ain, 9223372036854775800

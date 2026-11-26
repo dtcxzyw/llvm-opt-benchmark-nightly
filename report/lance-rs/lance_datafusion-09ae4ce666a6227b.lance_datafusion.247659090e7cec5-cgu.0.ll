@@ -205,7 +205,7 @@ bb.aj:                                            ; preds = %_RNvNtCs40k4W9msRzi
   %i.ce = icmp ult i64 %i.cd, 230584300921369396
   call void @llvm.assume(i1 %i.ce)
   store i64 0, ptr %i.af, align 8, !alias.scope !96202
-  %i.cf = load ptr, ptr %i.ag, align 16, !alias.scope !96202, !nonnull !326, !noundef !326 ; 3 uses
+  %i.cf = load ptr, ptr %i.ag, align 16, !alias.scope !96202, !nonnull !326, !noundef !326 ; 4 uses
   %.idx54.i = mul nuw nsw i64 %i.cd, 40           ; 3 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %i.cf, i64 %.idx54.i ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l), !noalias !96203
@@ -219,7 +219,7 @@ _RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtCs4ytUTZt2Gw9_11arrow_array12reco
   %i.ck = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   store ptr inttoptr (i64 8 to ptr), ptr %i.ck, align 8, !noalias !96203
   %i.cl = getelementptr inbounds nuw i8, ptr %i.l, i64 16
-  br label %_RNvXs3_NtNtCs40k4W9msRzi_5alloc3vec5drainINtB5_5DrainNtNtCs4ytUTZt2Gw9_11arrow_array12record_batch11RecordBatchENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsc85D0lJ81Z_16lance_datafusion.exit.thread.thread.i.i.i.i.i.i
+  br label %_RNvXs3_NtNtCs40k4W9msRzi_5alloc3vec5drainINtB5_5DrainNtNtCs4ytUTZt2Gw9_11arrow_array12record_batch11RecordBatchENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsc85D0lJ81Z_16lance_datafusion.exit.thread.i.i.i.i.i.i
 
 bb.ak:                                            ; preds = %bb.aj
   call void @_RNvCs9hJ03s5DiqP_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #71, !noalias !96204
@@ -246,7 +246,7 @@ _RNvXs3_NtNtCs40k4W9msRzi_5alloc3vec5drainINtB5_5DrainNtNtCs4ytUTZt2Gw9_11arrow_
 _RNvXs3_NtNtCs40k4W9msRzi_5alloc3vec5drainINtB5_5DrainNtNtCs4ytUTZt2Gw9_11arrow_array12record_batch11RecordBatchENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i.i.i.i: ; preds = %bb.am, %_RNvXs3_NtNtCs40k4W9msRzi_5alloc3vec5drainINtB5_5DrainNtNtCs4ytUTZt2Gw9_11arrow_array12record_batch11RecordBatchENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i.i.i.preheader.i
   %i.cq = phi i64 [ %i.cu, %bb.am ], [ 0, %_RNvXs3_NtNtCs40k4W9msRzi_5alloc3vec5drainINtB5_5DrainNtNtCs4ytUTZt2Gw9_11arrow_array12record_batch11RecordBatchENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i.i.i.preheader.i ] ; 3 uses
   %i.cr = phi ptr [ %i.cs, %bb.am ], [ %i.cf, %_RNvXs3_NtNtCs40k4W9msRzi_5alloc3vec5drainINtB5_5DrainNtNtCs4ytUTZt2Gw9_11arrow_array12record_batch11RecordBatchENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i.i.i.preheader.i ] ; 3 uses
-  %i.cs = getelementptr inbounds nuw i8, ptr %i.cr, i64 40 ; 4 uses
+  %i.cs = getelementptr inbounds nuw i8, ptr %i.cr, i64 40 ; 3 uses
   %.sroa.0.0.copyload6.i.i.i.i.i.i = load i64, ptr %i.cr, align 8, !noalias !96208 ; 2 uses
   %.not.i.i.i.i.i.i = icmp eq i64 %.sroa.0.0.copyload6.i.i.i.i.i.i, -1
   br i1 %.not.i.i.i.i.i.i, label %_RNvXs3_NtNtCs40k4W9msRzi_5alloc3vec5drainINtB5_5DrainNtNtCs4ytUTZt2Gw9_11arrow_array12record_batch11RecordBatchENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsc85D0lJ81Z_16lance_datafusion.exit.thread.i.i.i.i.i.i, label %bb.am
@@ -261,19 +261,20 @@ bb.am:                                            ; preds = %_RNvXs3_NtNtCs40k4W
   %i.cv = icmp eq ptr %i.cs, %i.cg
   br i1 %i.cv, label %_RNvXs3_NtNtCs40k4W9msRzi_5alloc3vec5drainINtB5_5DrainNtNtCs4ytUTZt2Gw9_11arrow_array12record_batch11RecordBatchENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsc85D0lJ81Z_16lance_datafusion.exit.thread.thread.i.i.i.i.i.i, label %_RNvXs3_NtNtCs40k4W9msRzi_5alloc3vec5drainINtB5_5DrainNtNtCs4ytUTZt2Gw9_11arrow_array12record_batch11RecordBatchENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i.i.i.i
 
-_RNvXs3_NtNtCs40k4W9msRzi_5alloc3vec5drainINtB5_5DrainNtNtCs4ytUTZt2Gw9_11arrow_array12record_batch11RecordBatchENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsc85D0lJ81Z_16lance_datafusion.exit.thread.thread.i.i.i.i.i.i: ; preds = %bb.am, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtCs4ytUTZt2Gw9_11arrow_array12record_batch11RecordBatchE7reserveCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i.thread.i
-  %3 = phi ptr [ %i.cl, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtCs4ytUTZt2Gw9_11arrow_array12record_batch11RecordBatchE7reserveCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i.thread.i ], [ %i.cp, %bb.am ]
-  %.val5.ph.i.i.i.i.i.i = phi i64 [ 0, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtCs4ytUTZt2Gw9_11arrow_array12record_batch11RecordBatchE7reserveCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i.thread.i ], [ %i.cu, %bb.am ]
-  store i64 %.val5.ph.i.i.i.i.i.i, ptr %3, align 8, !alias.scope !96210, !noalias !96211
+_RNvXs3_NtNtCs40k4W9msRzi_5alloc3vec5drainINtB5_5DrainNtNtCs4ytUTZt2Gw9_11arrow_array12record_batch11RecordBatchENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsc85D0lJ81Z_16lance_datafusion.exit.thread.thread.i.i.i.i.i.i: ; preds = %bb.am
+  store i64 %i.cu, ptr %i.cp, align 8, !alias.scope !96210, !noalias !96211
   br label %bb.ap
 
-_RNvXs3_NtNtCs40k4W9msRzi_5alloc3vec5drainINtB5_5DrainNtNtCs4ytUTZt2Gw9_11arrow_array12record_batch11RecordBatchENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsc85D0lJ81Z_16lance_datafusion.exit.thread.i.i.i.i.i.i: ; preds = %_RNvXs3_NtNtCs40k4W9msRzi_5alloc3vec5drainINtB5_5DrainNtNtCs4ytUTZt2Gw9_11arrow_array12record_batch11RecordBatchENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i.i.i.i
-  store i64 %i.cq, ptr %i.cp, align 8, !alias.scope !96210, !noalias !96211
-  %i.cw = icmp eq ptr %i.cg, %i.cs
+_RNvXs3_NtNtCs40k4W9msRzi_5alloc3vec5drainINtB5_5DrainNtNtCs4ytUTZt2Gw9_11arrow_array12record_batch11RecordBatchENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsc85D0lJ81Z_16lance_datafusion.exit.thread.i.i.i.i.i.i: ; preds = %_RNvXs3_NtNtCs40k4W9msRzi_5alloc3vec5drainINtB5_5DrainNtNtCs4ytUTZt2Gw9_11arrow_array12record_batch11RecordBatchENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i.i.i.i, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtCs4ytUTZt2Gw9_11arrow_array12record_batch11RecordBatchE7reserveCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i.thread.i
+  %3 = phi ptr [ %i.cl, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtCs4ytUTZt2Gw9_11arrow_array12record_batch11RecordBatchE7reserveCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i.thread.i ], [ %i.cp, %_RNvXs3_NtNtCs40k4W9msRzi_5alloc3vec5drainINtB5_5DrainNtNtCs4ytUTZt2Gw9_11arrow_array12record_batch11RecordBatchENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i.i.i.i ]
+  %4 = phi ptr [ %i.cf, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtCs4ytUTZt2Gw9_11arrow_array12record_batch11RecordBatchE7reserveCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i.thread.i ], [ %i.cs, %_RNvXs3_NtNtCs40k4W9msRzi_5alloc3vec5drainINtB5_5DrainNtNtCs4ytUTZt2Gw9_11arrow_array12record_batch11RecordBatchENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i.i.i.i ] ; 2 uses
+  %.val5.i.i.i.i.i.i = phi i64 [ 0, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtCs4ytUTZt2Gw9_11arrow_array12record_batch11RecordBatchE7reserveCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i.thread.i ], [ %i.cq, %_RNvXs3_NtNtCs40k4W9msRzi_5alloc3vec5drainINtB5_5DrainNtNtCs4ytUTZt2Gw9_11arrow_array12record_batch11RecordBatchENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i.i.i.i ]
+  store i64 %.val5.i.i.i.i.i.i, ptr %3, align 8, !alias.scope !96210, !noalias !96211
+  %i.cw = icmp eq ptr %i.cg, %4
   br i1 %i.cw, label %bb.ap, label %bb.an
 
 bb.an:                                            ; preds = %_RNvXs3_NtNtCs40k4W9msRzi_5alloc3vec5drainINtB5_5DrainNtNtCs4ytUTZt2Gw9_11arrow_array12record_batch11RecordBatchENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsc85D0lJ81Z_16lance_datafusion.exit.thread.i.i.i.i.i.i
-  %i.cx = ptrtoint ptr %i.cs to i64               ; 2 uses
+  %i.cx = ptrtoint ptr %4 to i64                  ; 2 uses
   %i.cy = sub nuw i64 %i.ch, %i.cx
   %i.cz = udiv exact i64 %i.cy, 40
   %i.da = load ptr, ptr %i.ag, align 16, !alias.scope !96191, !noalias !96212, !nonnull !326, !noundef !326 ; 2 uses

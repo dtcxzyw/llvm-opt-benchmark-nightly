@@ -204,8 +204,8 @@ _ZNSt6vectorIN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapS_NSt7__cxx1112basic
 
 bb.g:                                             ; preds = %_ZNSt6vectorIN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapS_NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS1_14adl_serializerES_IhSaIhEEvEESaISD_EE9push_backEOSD_.exit.i.i, %.lr.ph.i136
   %i.w = phi ptr [ %.promoted271, %.lr.ph.i136 ], [ %i.aq, %_ZNSt6vectorIN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapS_NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS1_14adl_serializerES_IhSaIhEEvEESaISD_EE9push_backEOSD_.exit.i.i ] ; 8 uses
-  %i.x = phi ptr [ %.promoted267, %.lr.ph.i136 ], [ %i.ar, %_ZNSt6vectorIN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapS_NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS1_14adl_serializerES_IhSaIhEEvEESaISD_EE9push_backEOSD_.exit.i.i ] ; 7 uses
-  %.0.i1931.i264 = phi ptr [ %.promoted271, %.lr.ph.i136 ], [ %.0.i1931.i265, %_ZNSt6vectorIN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapS_NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS1_14adl_serializerES_IhSaIhEEvEESaISD_EE9push_backEOSD_.exit.i.i ] ; 5 uses
+  %i.x = phi ptr [ %.promoted267, %.lr.ph.i136 ], [ %i.ar, %_ZNSt6vectorIN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapS_NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS1_14adl_serializerES_IhSaIhEEvEESaISD_EE9push_backEOSD_.exit.i.i ] ; 6 uses
+  %.0.i1931.i264 = phi ptr [ %.promoted271, %.lr.ph.i136 ], [ %.0.i1931.i265, %_ZNSt6vectorIN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapS_NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS1_14adl_serializerES_IhSaIhEEvEESaISD_EE9push_backEOSD_.exit.i.i ] ; 6 uses
   %.0.i12.i137 = phi i64 [ %i.u, %.lr.ph.i136 ], [ %i.at, %_ZNSt6vectorIN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapS_NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS1_14adl_serializerES_IhSaIhEEvEESaISD_EE9push_backEOSD_.exit.i.i ] ; 2 uses
   %.05.i11.i = phi ptr [ %i.l, %.lr.ph.i136 ], [ %i.as, %_ZNSt6vectorIN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapS_NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS1_14adl_serializerES_IhSaIhEEvEESaISD_EE9push_backEOSD_.exit.i.i ] ; 7 uses
   %.not.i.i.i.i = icmp eq ptr %.0.i1931.i264, %i.x
@@ -219,7 +219,7 @@ bb.h:                                             ; preds = %bb.g
   br label %_ZNSt6vectorIN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapS_NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS1_14adl_serializerES_IhSaIhEEvEESaISD_EE9push_backEOSD_.exit.i.i
 
 bb.i:                                             ; preds = %bb.g
-  %i.z = ptrtoint ptr %i.x to i64
+  %i.z = ptrtoint ptr %.0.i1931.i264 to i64
   %i.aa = ptrtoint ptr %i.w to i64
   %i.ab = sub i64 %i.z, %i.aa                     ; 3 uses
   %i.ac = icmp eq i64 %i.ab, 9223372036854775792
@@ -326,8 +326,8 @@ _ZNSt6vectorIN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapS_NSt7__cxx1112basic
 
 bb.n:                                             ; preds = %.lr.ph, %_ZNSt6vectorIN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapS_NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS1_14adl_serializerES_IhSaIhEEvEESaISD_EE9push_backEOSD_.exit
   %i.bh = phi ptr [ %.promoted259, %.lr.ph ], [ %i.cd, %_ZNSt6vectorIN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapS_NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS1_14adl_serializerES_IhSaIhEEvEESaISD_EE9push_backEOSD_.exit ] ; 8 uses
-  %i.bi = phi ptr [ %.promoted255, %.lr.ph ], [ %i.ce, %_ZNSt6vectorIN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapS_NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS1_14adl_serializerES_IhSaIhEEvEESaISD_EE9push_backEOSD_.exit ] ; 7 uses
-  %.0.i1931.i176252 = phi ptr [ %.promoted259, %.lr.ph ], [ %.0.i1931.i176253, %_ZNSt6vectorIN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapS_NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS1_14adl_serializerES_IhSaIhEEvEESaISD_EE9push_backEOSD_.exit ] ; 5 uses
+  %i.bi = phi ptr [ %.promoted255, %.lr.ph ], [ %i.ce, %_ZNSt6vectorIN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapS_NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS1_14adl_serializerES_IhSaIhEEvEESaISD_EE9push_backEOSD_.exit ] ; 6 uses
+  %.0.i1931.i176252 = phi ptr [ %.promoted259, %.lr.ph ], [ %.0.i1931.i176253, %_ZNSt6vectorIN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapS_NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS1_14adl_serializerES_IhSaIhEEvEESaISD_EE9push_backEOSD_.exit ] ; 6 uses
   %.sroa.059.088 = phi ptr [ %i.be, %.lr.ph ], [ %i.cf, %_ZNSt6vectorIN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapS_NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS1_14adl_serializerES_IhSaIhEEvEESaISD_EE9push_backEOSD_.exit ] ; 4 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %.sroa.059.088, i64 64 ; 4 uses
   %.not.i = icmp eq ptr %.0.i1931.i176252, %i.bi
@@ -341,7 +341,7 @@ bb.o:                                             ; preds = %bb.n
   br label %_ZNSt6vectorIN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapS_NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS1_14adl_serializerES_IhSaIhEEvEESaISD_EE9push_backEOSD_.exit
 
 bb.p:                                             ; preds = %bb.n
-  %i.bl = ptrtoint ptr %i.bi to i64
+  %i.bl = ptrtoint ptr %.0.i1931.i176252 to i64
   %i.bm = ptrtoint ptr %i.bh to i64
   %i.bn = sub i64 %i.bl, %i.bm                    ; 3 uses
   %i.bo = icmp eq i64 %i.bn, 9223372036854775792
@@ -514,8 +514,8 @@ bb.u:                                             ; preds = %_ZN8nlohmann16json_
 
 .lr.ph95:                                         ; preds = %.lr.ph95.preheader, %.noexc46
   %i.de = phi ptr [ %i.dy, %.noexc46 ], [ %.promoted295, %.lr.ph95.preheader ] ; 8 uses
-  %i.df = phi ptr [ %i.dz, %.noexc46 ], [ %.promoted291, %.lr.ph95.preheader ] ; 7 uses
-  %.0.i1931.i200288 = phi ptr [ %.0.i1931.i200289, %.noexc46 ], [ %i.cp, %.lr.ph95.preheader ] ; 5 uses
+  %i.df = phi ptr [ %i.dz, %.noexc46 ], [ %.promoted291, %.lr.ph95.preheader ] ; 6 uses
+  %.0.i1931.i200288 = phi ptr [ %.0.i1931.i200289, %.noexc46 ], [ %i.cp, %.lr.ph95.preheader ] ; 6 uses
   %.0.i.i4593 = phi i64 [ %i.eb, %.noexc46 ], [ %i.dc, %.lr.ph95.preheader ] ; 2 uses
   %.05.i.i92 = phi ptr [ %i.ea, %.noexc46 ], [ %i.cw, %.lr.ph95.preheader ] ; 7 uses
   %.not.i48 = icmp eq ptr %.0.i1931.i200288, %i.df
@@ -529,7 +529,7 @@ bb.v:                                             ; preds = %.lr.ph95
   br label %.noexc46
 
 bb.w:                                             ; preds = %.lr.ph95
-  %i.dh = ptrtoint ptr %i.df to i64
+  %i.dh = ptrtoint ptr %.0.i1931.i200288 to i64
   %i.di = ptrtoint ptr %i.de to i64
   %i.dj = sub i64 %i.dh, %i.di                    ; 3 uses
   %i.dk = icmp eq i64 %i.dj, 9223372036854775792
@@ -682,8 +682,8 @@ _ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N
 
 .lr.ph91:                                         ; preds = %.lr.ph91.preheader, %_ZNSt6vectorIN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapS_NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS1_14adl_serializerES_IhSaIhEEvEESaISD_EE9push_backEOSD_.exit38
   %i.fb = phi ptr [ %i.fw, %_ZNSt6vectorIN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapS_NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS1_14adl_serializerES_IhSaIhEEvEESaISD_EE9push_backEOSD_.exit38 ], [ %.promoted283, %.lr.ph91.preheader ] ; 8 uses
-  %i.fc = phi ptr [ %i.fx, %_ZNSt6vectorIN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapS_NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS1_14adl_serializerES_IhSaIhEEvEESaISD_EE9push_backEOSD_.exit38 ], [ %.promoted279, %.lr.ph91.preheader ] ; 7 uses
-  %.0.i1931.i224276 = phi ptr [ %.0.i1931.i224277, %_ZNSt6vectorIN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapS_NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS1_14adl_serializerES_IhSaIhEEvEESaISD_EE9push_backEOSD_.exit38 ], [ %i.cp, %.lr.ph91.preheader ] ; 5 uses
+  %i.fc = phi ptr [ %i.fx, %_ZNSt6vectorIN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapS_NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS1_14adl_serializerES_IhSaIhEEvEESaISD_EE9push_backEOSD_.exit38 ], [ %.promoted279, %.lr.ph91.preheader ] ; 6 uses
+  %.0.i1931.i224276 = phi ptr [ %.0.i1931.i224277, %_ZNSt6vectorIN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapS_NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS1_14adl_serializerES_IhSaIhEEvEESaISD_EE9push_backEOSD_.exit38 ], [ %i.cp, %.lr.ph91.preheader ] ; 6 uses
   %.sroa.055.090 = phi ptr [ %i.fy, %_ZNSt6vectorIN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapS_NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS1_14adl_serializerES_IhSaIhEEvEESaISD_EE9push_backEOSD_.exit38 ], [ %i.ep, %.lr.ph91.preheader ] ; 4 uses
   %i.fd = getelementptr inbounds nuw i8, ptr %.sroa.055.090, i64 64 ; 4 uses
   %.not.i41 = icmp eq ptr %.0.i1931.i224276, %i.fc
@@ -697,7 +697,7 @@ bb.ab:                                            ; preds = %.lr.ph91
   br label %_ZNSt6vectorIN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapS_NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS1_14adl_serializerES_IhSaIhEEvEESaISD_EE9push_backEOSD_.exit38
 
 bb.ac:                                            ; preds = %.lr.ph91
-  %i.ff = ptrtoint ptr %i.fc to i64
+  %i.ff = ptrtoint ptr %.0.i1931.i224276 to i64
   %i.fg = ptrtoint ptr %i.fb to i64
   %i.fh = sub i64 %i.ff, %i.fg                    ; 3 uses
   %i.fi = icmp eq i64 %i.fh, 9223372036854775792
@@ -1100,7 +1100,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !218  ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !219  ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !219  ; 3 uses
   %.not = icmp eq ptr %i.b, %i.d
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 5 uses
   %i.f = load i32, ptr %i.e, align 8              ; 5 uses
@@ -1200,8 +1200,8 @@ bb.g:                                             ; preds = %_ZNSt14_Bit_referen
 
 bb.h:                                             ; preds = %bb.a
   %i.au = load ptr, ptr %0, align 8, !tbaa !218   ; 4 uses
-  %i.av = ptrtoint ptr %i.au to i64               ; 2 uses
-  %i.aw = sub i64 %i.g, %i.av                     ; 2 uses
+  %i.av = ptrtoint ptr %i.au to i64               ; 3 uses
+  %i.aw = sub i64 %i.g, %i.av
   %i.ax = shl nsw i64 %i.aw, 3
   %i.ay = zext i32 %i.f to i64
   %i.az = add nsw i64 %i.ax, %i.ay                ; 4 uses
@@ -1384,7 +1384,9 @@ _ZSt4copyISt13_Bit_iteratorS0_ET0_T_S2_S1_.exit:  ; preds = %_ZNSt14_Bit_referen
   br i1 %.not.i73, label %_ZNSt13_Bvector_baseISaIbEE13_M_deallocateEv.exit, label %bb.t
 
 bb.t:                                             ; preds = %_ZSt4copyISt13_Bit_iteratorS0_ET0_T_S2_S1_.exit
-  %i.dp = ashr exact i64 %i.aw, 3
+  %4 = ptrtoint ptr %i.d to i64
+  %5 = sub i64 %4, %i.av
+  %i.dp = ashr exact i64 %5, 3
   %i.dq = sub nsw i64 0, %i.dp
   %i.dr = getelementptr inbounds [8 x i8], ptr %i.d, i64 %i.dq
   tail call void @_ZdlPv(ptr noundef %i.dr) #30

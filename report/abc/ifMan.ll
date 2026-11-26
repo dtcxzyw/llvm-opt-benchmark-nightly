@@ -205,11 +205,11 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.m
 
 bb.d:                                             ; preds = %bb.b
-  %i.k = ptrtoint ptr %1 to i64                   ; 3 uses
+  %i.k = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.l = and i64 %i.k, -2
   %i.m = inttoptr i64 %i.l to ptr                 ; 7 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.o = load ptr, ptr %i.n, align 8, !tbaa !89   ; 4 uses
+  %i.o = load ptr, ptr %i.n, align 8, !tbaa !89   ; 5 uses
   %i.p = icmp eq ptr %i.o, %i.m
   br i1 %i.p, label %bb.e, label %bb.g
 
@@ -218,8 +218,9 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.q, label %bb.m, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %3 = or i64 %i.k, 1
-  %i.r = inttoptr i64 %3 to ptr
+  %3 = ptrtoint ptr %i.o to i64
+  %4 = xor i64 %3, 1
+  %i.r = inttoptr i64 %4 to ptr
   br label %bb.m
 
 bb.g:                                             ; preds = %bb.d

@@ -205,7 +205,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 6 uses
   %.val9 = load ptr, ptr %i.a, align 8, !tbaa !48 ; 14 uses
   %i.b = ptrtoint ptr %.val9 to i64
-  %i.c = ptrtoint ptr %.val to i64
+  %i.c = ptrtoint ptr %.val to i64                ; 2 uses
   %i.d = sub i64 %i.b, %i.c                       ; 2 uses
   %i.e = sdiv exact i64 %i.d, 160
   switch i64 %i.e, label %bb.h [
@@ -215,9 +215,9 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !89
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !89   ; 2 uses
   %.not.i = icmp eq ptr %i.g, %.val9
-  br i1 %.not.i, label %_ZNSt3__119__allocate_at_leastB8nn180100INS_9allocatorINS_5arrayIN12_GLOBAL__N_19BitWriterELm4EEEEEEENS_19__allocation_resultINS_16allocator_traitsIT_E7pointerEEERS9_m.exit.i.i, label %.lr.ph.i.i
+  br i1 %.not.i, label %_ZNKSt3__16vectorINS_5arrayIN12_GLOBAL__N_19BitWriterELm4EEENS_9allocatorIS4_EEE11__recommendB8nn180100Em.exit.i, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.b
   %i.h = getelementptr inbounds nuw i8, ptr %.val9, i64 8
@@ -241,10 +241,26 @@ bb.b:                                             ; preds = %bb.a
   store ptr %i.p, ptr %i.a, align 8, !tbaa !48
   br label %_ZNSt3__16vectorINS_5arrayIN12_GLOBAL__N_19BitWriterELm4EEENS_9allocatorIS4_EEE8__appendEm.exit
 
-_ZNSt3__119__allocate_at_leastB8nn180100INS_9allocatorINS_5arrayIN12_GLOBAL__N_19BitWriterELm4EEEEEEENS_19__allocation_resultINS_16allocator_traitsIT_E7pointerEEERS9_m.exit.i.i: ; preds = %bb.b
-  %i.q = tail call noalias noundef nonnull dereferenceable(160) ptr @_Znwm(i64 noundef 160) #40 ; 2 uses
+_ZNKSt3__16vectorINS_5arrayIN12_GLOBAL__N_19BitWriterELm4EEENS_9allocatorIS4_EEE11__recommendB8nn180100Em.exit.i: ; preds = %bb.b
+  %1 = ptrtoint ptr %i.g to i64
+  %2 = sub i64 %1, %i.c
+  %3 = sdiv exact i64 %2, 160                     ; 2 uses
+  %.not.i10.i = icmp ult i64 %3, 57646075230342348
+  %4 = shl nuw nsw i64 %3, 1
+  %.sroa.speculated.i.i = tail call i64 @llvm.umax.i64(i64 %4, i64 range(i64 -57646075230342347, 57646075230342350) 1)
+  %.0.i.i = select i1 %.not.i10.i, i64 %.sroa.speculated.i.i, i64 115292150460684697 ; 3 uses
+  %5 = icmp samesign ugt i64 %.0.i.i, 115292150460684697
+  br i1 %5, label %6, label %_ZNSt3__119__allocate_at_leastB8nn180100INS_9allocatorINS_5arrayIN12_GLOBAL__N_19BitWriterELm4EEEEEEENS_19__allocation_resultINS_16allocator_traitsIT_E7pointerEEERS9_m.exit.i.i
+
+6:                                                ; preds = %_ZNKSt3__16vectorINS_5arrayIN12_GLOBAL__N_19BitWriterELm4EEENS_9allocatorIS4_EEE11__recommendB8nn180100Em.exit.i
+  tail call void @_ZSt28__throw_bad_array_new_lengthB8nn180100v() #41
+  unreachable
+
+_ZNSt3__119__allocate_at_leastB8nn180100INS_9allocatorINS_5arrayIN12_GLOBAL__N_19BitWriterELm4EEEEEEENS_19__allocation_resultINS_16allocator_traitsIT_E7pointerEEERS9_m.exit.i.i: ; preds = %_ZNKSt3__16vectorINS_5arrayIN12_GLOBAL__N_19BitWriterELm4EEENS_9allocatorIS4_EEE11__recommendB8nn180100Em.exit.i
+  %7 = mul nuw i64 %.0.i.i, 160
+  %i.q = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %7) #40 ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 %i.d ; 12 uses
-  %1 = getelementptr inbounds nuw i8, ptr %i.q, i64 160 ; 2 uses
+  %8 = getelementptr inbounds nuw [160 x i8], ptr %i.q, i64 %.0.i.i ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 8
   store i64 0, ptr %i.r, align 8
   store ptr @free, ptr %i.s, align 8, !tbaa !120
@@ -272,7 +288,7 @@ _ZNSt3__16vectorINS_5arrayIN12_GLOBAL__N_19BitWriterELm4EEENS_9allocatorIS4_EEE2
   store ptr %i.r, ptr %0, align 8, !tbaa !89
   store ptr %.sroa.0.0.ptr.i.i, ptr %i.a, align 8, !tbaa !89
   %i.ac = load ptr, ptr %i.f, align 8, !tbaa !89
-  store ptr %1, ptr %i.f, align 8, !tbaa !89
+  store ptr %8, ptr %i.f, align 8, !tbaa !89
   br label %_ZNSt3__114__split_bufferINS_5arrayIN12_GLOBAL__N_19BitWriterELm4EEERNS_9allocatorIS4_EEE5clearB8nn180100Ev.exit.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_ZNSt3__119__allocate_at_leastB8nn180100INS_9allocatorINS_5arrayIN12_GLOBAL__N_19BitWriterELm4EEEEEEENS_19__allocation_resultINS_16allocator_traitsIT_E7pointerEEERS9_m.exit.i.i, %.lr.ph.i.i.i
@@ -333,7 +349,7 @@ _ZNSt3__16vectorINS_5arrayIN12_GLOBAL__N_19BitWriterELm4EEENS_9allocatorIS4_EEE2
   store ptr %i.ad, ptr %0, align 8, !tbaa !89
   store ptr %.sroa.0.0.ptr.i.i, ptr %i.a, align 8, !tbaa !89
   %i.bj = load ptr, ptr %i.f, align 8, !tbaa !89
-  store ptr %1, ptr %i.f, align 8, !tbaa !89
+  store ptr %8, ptr %i.f, align 8, !tbaa !89
   br label %.lr.ph.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %_ZNSt3__116allocator_traitsINS_9allocatorINS_5arrayIN12_GLOBAL__N_19BitWriterELm4EEEEEE7destroyB8nn180100IS5_vEEvRS6_PT_.exit.i.i.i.i.i, %_ZNSt3__16vectorINS_5arrayIN12_GLOBAL__N_19BitWriterELm4EEENS_9allocatorIS4_EEE26__swap_out_circular_bufferERNS_14__split_bufferIS4_RS6_EE.exit.i
