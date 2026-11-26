@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %.preheader, %.loopexit
-  %.promoted = phi i32 [ -1, %.preheader ], [ %.promoted43, %.loopexit ] ; 4 uses
+  %.promoted = phi i32 [ -1, %.preheader ], [ %.promoted43, %.loopexit ] ; 3 uses
   %i.n = load i32, ptr %i.b, align 4, !tbaa !41   ; 3 uses
   %i.o = call ptr @Curl_uint32_tbl_get(ptr noundef nonnull %i.j, i32 noundef %i.n) #13 ; 3 uses
   %.not.i = icmp eq ptr %i.o, null
@@ -269,11 +269,10 @@ Curl_multi_get_easy.exit:                         ; preds = %bb.f
   br label %bb.m
 
 bb.m:                                             ; preds = %.lr.ph, %bb.s
-  %.promoted44 = phi i32 [ %.promoted, %.lr.ph ], [ %.promoted45, %bb.s ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.s ] ; 3 uses
-  %i.ag = phi i32 [ %.promoted, %.lr.ph ], [ %8, %bb.s ] ; 3 uses
+  %i.ag = phi i32 [ %.promoted, %.lr.ph ], [ %6, %bb.s ] ; 2 uses
   %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %indvars.iv
-  %i.ai = load i32, ptr %i.ah, align 4, !tbaa !41 ; 9 uses
+  %i.ai = load i32, ptr %i.ah, align 4, !tbaa !41 ; 6 uses
   %i.aj = icmp slt i32 %i.ai, 1024
   br i1 %i.aj, label %bb.n, label %bb.s
 
@@ -301,7 +300,7 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   %i.av = phi i8 [ %.pre, %bb.o ], [ %i.al, %bb.n ]
   %i.aw = and i8 %i.av, 2
   %.not35 = icmp eq i8 %i.aw, 0
-  br i1 %.not35, label %6, label %bb.q
+  br i1 %.not35, label %bb.r, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
   %i.ax = srem i32 %i.ai, 64
@@ -313,30 +312,29 @@ bb.q:                                             ; preds = %bb.p
   %i.bd = load i64, ptr %i.bc, align 8, !tbaa !114
   %i.be = or i64 %i.bd, %i.az
   store i64 %i.be, ptr %i.bc, align 8, !tbaa !114
-  br label %6
+  br label %bb.r
 
-6:                                                ; preds = %bb.q, %bb.p
-  %7 = icmp sgt i32 %i.ai, %i.ag
-  br i1 %7, label %bb.r, label %bb.s
-
-bb.r:                                             ; preds = %6
-  store i32 %i.ai, ptr %i.a, align 4, !tbaa !41
+bb.r:                                             ; preds = %bb.q, %bb.p
+  %spec.select = call i32 @llvm.smax.i32(i32 %i.ai, i32 %i.ag)
   br label %bb.s
 
-bb.s:                                             ; preds = %6, %bb.r, %bb.m
-  %.promoted45 = phi i32 [ %.promoted44, %6 ], [ %i.ai, %bb.r ], [ %.promoted44, %bb.m ] ; 2 uses
-  %8 = phi i32 [ %i.ag, %6 ], [ %i.ai, %bb.r ], [ %i.ag, %bb.m ]
+bb.s:                                             ; preds = %bb.r, %bb.m
+  %6 = phi i32 [ %spec.select, %bb.r ], [ %i.ag, %bb.m ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.loopexit, label %bb.m, !llvm.loop !185
 
 .loopexit:                                        ; preds = %bb.s, %Curl_multi_get_easy.exit, %Curl_multi_get_easy.exit.thread
-  %.promoted43 = phi i32 [ %.promoted, %Curl_multi_get_easy.exit.thread ], [ %.promoted, %Curl_multi_get_easy.exit ], [ %.promoted45, %bb.s ]
+  %.promoted43 = phi i32 [ %.promoted, %Curl_multi_get_easy.exit.thread ], [ %.promoted, %Curl_multi_get_easy.exit ], [ %6, %bb.s ] ; 2 uses
   %i.bf = load i32, ptr %i.b, align 4, !tbaa !41
   %i.bg = call zeroext i1 @Curl_uint32_bset_next(ptr noundef nonnull %i.h, i32 noundef %i.bf, ptr noundef nonnull %i.b) #13
-  br i1 %i.bg, label %bb.e, label %.loopexit38.a, !llvm.loop !186
+  br i1 %i.bg, label %bb.e, label %.loopexit38, !llvm.loop !186
 
-.loopexit38.a:                                    ; preds = %.loopexit, %bb.d
+.loopexit38:                                      ; preds = %.loopexit
+  store i32 %.promoted43, ptr %i.a, align 4
+  br label %.loopexit38.a
+
+.loopexit38.a:                                    ; preds = %.loopexit38, %bb.d
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 504
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 152
   %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !42
@@ -710,7 +708,7 @@ bb.o:                                             ; preds = %Curl_multi_get_easy
 
 bb.p:                                             ; preds = %.loopexit101
   %i.an = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 3 uses
-  %i.ao = load i32, ptr %i.an, align 8            ; 3 uses
+  %i.ao = load i32, ptr %i.an, align 8            ; 2 uses
   %i.ap = or i32 %i.ao, %2
   %i.aq = icmp ne i32 %i.ap, 0
   %or.cond4 = select i1 %5, i1 true, i1 %i.aq
@@ -728,7 +726,7 @@ bb.q:                                             ; preds = %bb.p
   br label %bb.r
 
 bb.r:                                             ; preds = %._crit_edge105, %bb.p
-  %i.au = phi i32 [ %.pre, %._crit_edge105 ], [ %i.ao, %bb.p ]
+  %i.au = phi i32 [ %.pre, %._crit_edge105 ], [ 0, %bb.p ]
   %.066 = phi i32 [ %i.ao, %._crit_edge105 ], [ -1, %bb.p ] ; 2 uses
   %i.av = zext i32 %2 to i64
   %.not103 = icmp eq i32 %2, 0
@@ -1130,6 +1128,9 @@ declare i64 @llvm.smin.i64(i64, i64) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #11
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #11
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #12

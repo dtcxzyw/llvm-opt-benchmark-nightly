@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.c
   store ptr %i.k, ptr %i.l, align 8, !alias.scope !218, !noalias !217
   store i8 3, ptr %i.a, align 8, !alias.scope !218, !noalias !217
   invoke void @_RNvXsd_NtNtCskKLDkoKarTP_4core2io5errorNtB5_11CustomOwnerNtNtNtB9_3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.l)
-          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsg9QLscIEtAL_17libp2p_rendezvous.exit.i unwind label %bb.g
+          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsg9QLscIEtAL_17libp2p_rendezvous.exit.i unwind label %bb.g, !noalias !217
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsg9QLscIEtAL_17libp2p_rendezvous.exit.i: ; preds = %bb.e, %bb.d, %bb.c, %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !217
@@ -607,7 +607,7 @@ bb.k:                                             ; preds = %bb.i
   store ptr %i.al, ptr %i.am, align 8, !alias.scope !310, !noalias !309
   store i8 3, ptr %i.a, align 8, !alias.scope !310, !noalias !309
   invoke void @_RNvXsd_NtNtCskKLDkoKarTP_4core2io5errorNtB5_11CustomOwnerNtNtNtB9_3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.am)
-          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsg9QLscIEtAL_17libp2p_rendezvous.exit.i.i unwind label %bb.l, !noalias !308
+          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsg9QLscIEtAL_17libp2p_rendezvous.exit.i.i unwind label %bb.l, !noalias !311
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsg9QLscIEtAL_17libp2p_rendezvous.exit.i.i: ; preds = %bb.k, %bb.j, %bb.i, %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !309
@@ -631,7 +631,7 @@ _RNvXNvNtNtCskKLDkoKarTP_4core2io5write17default_write_fmtINtB2_7AdapterNtNtNtNt
 ; Function Attrs: nonlazybind uwtable
 define internal noundef zeroext i1 @_RNvYINtNvNtNtCskKLDkoKarTP_4core2io5write17default_write_fmt7AdapterNtNtNtNtCsG258MDvU3F_3std3sys5stdio4unix6StderrENtNtBb_3fmt5Write9write_fmtCsg9QLscIEtAL_17libp2p_rendezvous(ptr noalias nofree noundef align 8 dereferenceable(16) %0, ptr noundef nonnull %1, ptr noundef nonnull %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 _RNvXs_NvNtNtCskKLDkoKarTP_4core3fmt5Write9write_fmtQINtNvNtNtBa_2io5write17default_write_fmt7AdapterNtNtNtNtCsG258MDvU3F_3std3sys5stdio4unix6StderrENtB4_12SpecWriteFmt14spec_write_fmtCsg9QLscIEtAL_17libp2p_rendezvous.exit:
-  %i.a = tail call noundef zeroext i1 @_RNvNtCskKLDkoKarTP_4core3fmt5write(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) @0, ptr noundef nonnull %1, ptr noundef nonnull %2), !inline_history !311
+  %i.a = tail call noundef zeroext i1 @_RNvNtCskKLDkoKarTP_4core3fmt5write(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) @0, ptr noundef nonnull %1, ptr noundef nonnull %2), !inline_history !312
   ret i1 %i.a
 }
 
@@ -663,7 +663,7 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: read) uwtable
 define hidden { ptr, ptr } @_RNvYNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id10ParseErrorNtNtCskKLDkoKarTP_4core5error5Error5causeCsg9QLscIEtAL_17libp2p_rendezvous(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %0) unnamed_addr #2 {
 bb.a:
-  %i.a = load i64, ptr %0, align 8, !range !7, !alias.scope !314, !noundef !5
+  %i.a = load i64, ptr %0, align 8, !range !7, !alias.scope !315, !noundef !5
   switch i64 %i.a, label %default.unreachable [
     i64 0, label %bb.b
     i64 1, label %_RNvXsj_NtCs2iisHxfqoT7_15libp2p_identity7peer_idNtB5_10ParseErrorNtNtCskKLDkoKarTP_4core5error5Error6source.exit
@@ -724,7 +724,7 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: read) uwtable
 define hidden { ptr, ptr } @_RNvYNtNtCsdTHTBGblh3Z_11libp2p_core11peer_record17FromEnvelopeErrorNtNtCskKLDkoKarTP_4core5error5Error5causeCsg9QLscIEtAL_17libp2p_rendezvous(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %0) unnamed_addr #2 {
 bb.a:
-  %i.a = load i64, ptr %0, align 8, !range !14, !alias.scope !317, !noundef !5 ; 2 uses
+  %i.a = load i64, ptr %0, align 8, !range !14, !alias.scope !318, !noundef !5 ; 2 uses
   %i.b = icmp slt i64 %i.a, -9223372036854775804
   %i.c = add i64 %i.a, -9223372036854775807
   %i.d = select i1 %i.b, i64 %i.c, i64 0
@@ -796,7 +796,7 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: read) uwtable
 define hidden { ptr, ptr } @_RNvYNtNtCsgW4lhAJgVdS_9multihash5error5ErrorNtNtCskKLDkoKarTP_4core5error5Error5causeCsg9QLscIEtAL_17libp2p_rendezvous(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(16) %0) unnamed_addr #2 {
 bb.a:
-  %i.a = load i8, ptr %0, align 8, !range !8, !alias.scope !320, !noundef !5
+  %i.a = load i8, ptr %0, align 8, !range !8, !alias.scope !321, !noundef !5
   %i.b = icmp eq i8 %i.a, 0
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.sroa.0.0.i = select i1 %i.b, ptr %i.c, ptr null
@@ -1199,14 +1199,15 @@ begin_hunk_2_@llvm.experimental.noalias.scope.decl
 !308 = !{!301}
 !309 = !{!304, !301, !302}
 !310 = !{!306}
-!311 = distinct !{null}
-!312 = distinct !{!312, i1 true, !"_RNvXsj_NtCs2iisHxfqoT7_15libp2p_identity7peer_idNtB5_10ParseErrorNtNtCskKLDkoKarTP_4core5error5Error6source"}
-!313 = distinct !{!313, !312, !"_RNvXsj_NtCs2iisHxfqoT7_15libp2p_identity7peer_idNtB5_10ParseErrorNtNtCskKLDkoKarTP_4core5error5Error6source: argument 0"}
-!314 = !{!313}
-!315 = distinct !{!315, i1 true, !"_RNvXs4_NtCsdTHTBGblh3Z_11libp2p_core11peer_recordNtB5_17FromEnvelopeErrorNtNtCskKLDkoKarTP_4core5error5Error6source"}
-!316 = distinct !{!316, !315, !"_RNvXs4_NtCsdTHTBGblh3Z_11libp2p_core11peer_recordNtB5_17FromEnvelopeErrorNtNtCskKLDkoKarTP_4core5error5Error6source: argument 0"}
-!317 = !{!316}
-!318 = distinct !{!318, i1 true, !"_RNvXs1_NtCsgW4lhAJgVdS_9multihash5errorNtB5_5ErrorNtNtCskKLDkoKarTP_4core5error5Error6source"}
-!319 = distinct !{!319, !318, !"_RNvXs1_NtCsgW4lhAJgVdS_9multihash5errorNtB5_5ErrorNtNtCskKLDkoKarTP_4core5error5Error6source: argument 0"}
-!320 = !{!319}
+!311 = !{!304, !301}
+!312 = distinct !{null}
+!313 = distinct !{!313, i1 true, !"_RNvXsj_NtCs2iisHxfqoT7_15libp2p_identity7peer_idNtB5_10ParseErrorNtNtCskKLDkoKarTP_4core5error5Error6source"}
+!314 = distinct !{!314, !313, !"_RNvXsj_NtCs2iisHxfqoT7_15libp2p_identity7peer_idNtB5_10ParseErrorNtNtCskKLDkoKarTP_4core5error5Error6source: argument 0"}
+!315 = !{!314}
+!316 = distinct !{!316, i1 true, !"_RNvXs4_NtCsdTHTBGblh3Z_11libp2p_core11peer_recordNtB5_17FromEnvelopeErrorNtNtCskKLDkoKarTP_4core5error5Error6source"}
+!317 = distinct !{!317, !316, !"_RNvXs4_NtCsdTHTBGblh3Z_11libp2p_core11peer_recordNtB5_17FromEnvelopeErrorNtNtCskKLDkoKarTP_4core5error5Error6source: argument 0"}
+!318 = !{!317}
+!319 = distinct !{!319, i1 true, !"_RNvXs1_NtCsgW4lhAJgVdS_9multihash5errorNtB5_5ErrorNtNtCskKLDkoKarTP_4core5error5Error6source"}
+!320 = distinct !{!320, !319, !"_RNvXs1_NtCsgW4lhAJgVdS_9multihash5errorNtB5_5ErrorNtNtCskKLDkoKarTP_4core5error5Error6source: argument 0"}
+!321 = !{!320}
 end_hunk_2

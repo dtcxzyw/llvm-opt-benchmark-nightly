@@ -66,7 +66,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   invoke void @_RNvNtCsgZ49sUHp3tW_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef 24) #19
-          to label %.noexc unwind label %bb.c, !dbg !244
+          to label %.noexc unwind label %bb.c, !dbg !244, !noalias !238
 
 .noexc:                                           ; preds = %bb.b
   unreachable, !dbg !244
@@ -469,32 +469,33 @@ bb.a:
 bb.b:                                             ; preds = %bb.h, %bb.a
   %i.d = landingpad { ptr, i32 }
           cleanup
-  %.val.i = load ptr, ptr %i.b, align 8, !dbg !690, !alias.scope !686, !noundef !65 ; 2 uses
-  %i.e = icmp eq ptr %.val.i, null, !dbg !691
-  br i1 %i.e, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNvNtCsh8eZTKRCwoO_3std2io17default_write_fmt7AdapterNtNtNtNtBN_3sys5stdio4unix6StderrEECs2mZqlW55729_12polars_utils.exit, label %bb.c, !dbg !691
+  call void @llvm.experimental.noalias.scope.decl(metadata !686), !dbg !690
+  %.val.i = load ptr, ptr %i.b, align 8, !dbg !691, !alias.scope !686, !noundef !65 ; 2 uses
+  %i.e = icmp eq ptr %.val.i, null, !dbg !692
+  br i1 %i.e, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNvNtCsh8eZTKRCwoO_3std2io17default_write_fmt7AdapterNtNtNtNtBN_3sys5stdio4unix6StderrEECs2mZqlW55729_12polars_utils.exit, label %bb.c, !dbg !692
 
 bb.c:                                             ; preds = %bb.b
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorECs2mZqlW55729_12polars_utils(ptr nonnull %.val.i)
-          to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNvNtCsh8eZTKRCwoO_3std2io17default_write_fmt7AdapterNtNtNtNtBN_3sys5stdio4unix6StderrEECs2mZqlW55729_12polars_utils.exit unwind label %bb.j, !dbg !691
+          to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNvNtCsh8eZTKRCwoO_3std2io17default_write_fmt7AdapterNtNtNtNtBN_3sys5stdio4unix6StderrEECs2mZqlW55729_12polars_utils.exit unwind label %bb.j, !dbg !692, !noalias !686
 
 bb.d:                                             ; preds = %bb.a
-  %i.f = load ptr, ptr %i.b, align 8, !dbg !692, !noundef !65 ; 3 uses
-  %.not = icmp eq ptr %i.f, null, !dbg !692       ; 2 uses
-  br i1 %i.c, label %bb.e, label %bb.f, !dbg !693
+  %i.f = load ptr, ptr %i.b, align 8, !dbg !693, !noundef !65 ; 3 uses
+  %.not = icmp eq ptr %i.f, null, !dbg !693       ; 2 uses
+  br i1 %i.c, label %bb.e, label %bb.f, !dbg !694
 
 bb.e:                                             ; preds = %bb.d
-  br i1 %.not, label %bb.h, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultuNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECs2mZqlW55729_12polars_utils.exit, !dbg !694, !prof !80
+  br i1 %.not, label %bb.h, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultuNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECs2mZqlW55729_12polars_utils.exit, !dbg !695, !prof !80
 
 bb.f:                                             ; preds = %bb.d
-  br i1 %.not, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultuNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECs2mZqlW55729_12polars_utils.exit, label %bb.g, !dbg !695
+  br i1 %.not, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultuNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECs2mZqlW55729_12polars_utils.exit, label %bb.g, !dbg !696
 
 bb.g:                                             ; preds = %bb.f
-  call fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorECs2mZqlW55729_12polars_utils(ptr nonnull %i.f), !dbg !695
-  br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultuNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECs2mZqlW55729_12polars_utils.exit, !dbg !695
+  call fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorECs2mZqlW55729_12polars_utils(ptr nonnull %i.f), !dbg !696
+  br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultuNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECs2mZqlW55729_12polars_utils.exit, !dbg !696
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultuNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECs2mZqlW55729_12polars_utils.exit: ; preds = %bb.g, %bb.f, %bb.e
-  %.sroa.0.0 = phi ptr [ %i.f, %bb.e ], [ null, %bb.f ], [ null, %bb.g ], !dbg !696
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !697
+  %.sroa.0.0 = phi ptr [ %i.f, %bb.e ], [ null, %bb.f ], [ null, %bb.g ], !dbg !697
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !690
   ret ptr %.sroa.0.0, !dbg !698
 
 bb.h:                                             ; preds = %bb.e
@@ -897,7 +898,7 @@ bb.p:                                             ; preds = %.loopexit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !1330, !noalias !1277
   store i8 %.sroa.5.0.ph, ptr %i.a, align 1, !dbg !1330, !noalias !1277
   invoke void @_RNvNtCscgRAwXFJnXP_4core6result13unwrap_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @15, i64 noundef 31, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @10, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @17) #19
-          to label %.noexc unwind label %bb.p, !dbg !1331
+          to label %.noexc unwind label %bb.p, !dbg !1331, !noalias !1277
 
 .noexc:                                           ; preds = %.loopexit
   unreachable
@@ -1300,14 +1301,14 @@ begin_hunk_3_@llvm.umax.i8
 !687 = !DILocation(line: 638, column: 9, scope: !678)
 !688 = !DILocation(line: 638, column: 22, scope: !678)
 !689 = !DILocation(line: 639, column: 11, scope: !679)
-!690 = !DILocation(line: 810, column: 1, scope: !30, inlinedAt: !682)
-!691 = !DILocation(line: 810, column: 1, scope: !31, inlinedAt: !683)
-!692 = !DILocation(line: 0, scope: !678)
-!693 = !DILocation(line: 639, column: 5, scope: !679)
-!694 = !DILocation(line: 643, column: 16, scope: !679)
-!695 = !DILocation(line: 810, column: 1, scope: !31, inlinedAt: !684)
-!696 = !DILocation(line: 0, scope: !679)
-!697 = !DILocation(line: 654, column: 1, scope: !678)
+!690 = !DILocation(line: 654, column: 1, scope: !678)
+!691 = !DILocation(line: 810, column: 1, scope: !30, inlinedAt: !682)
+!692 = !DILocation(line: 810, column: 1, scope: !31, inlinedAt: !683)
+!693 = !DILocation(line: 0, scope: !678)
+!694 = !DILocation(line: 639, column: 5, scope: !679)
+!695 = !DILocation(line: 643, column: 16, scope: !679)
+!696 = !DILocation(line: 810, column: 1, scope: !31, inlinedAt: !684)
+!697 = !DILocation(line: 0, scope: !679)
 !698 = !DILocation(line: 654, column: 2, scope: !678)
 !699 = !DILocation(line: 648, column: 17, scope: !679)
 !700 = !DILocation(line: 615, column: 1, scope: !678)

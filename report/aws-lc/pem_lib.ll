@@ -204,7 +204,7 @@ define range(i32 0, 2) i32 @PEM_read_bio(ptr noundef %0, ptr nofree noundef writ
 bb.a:
   %5 = alloca %struct.evp_encode_ctx_st, align 4  ; 5 uses
   %i.a = alloca i32, align 4                      ; 4 uses
-  %i.b = alloca i32, align 4                      ; 10 uses
+  %i.b = alloca i32, align 4                      ; 12 uses
   %i.c = alloca [256 x i8], align 16              ; 34 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
@@ -212,8 +212,8 @@ bb.a:
   store i32 0, ptr %i.b, align 4, !tbaa !16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #8
   %i.d = tail call ptr @BUF_MEM_new() #8          ; 6 uses
-  %i.e = tail call ptr @BUF_MEM_new() #8          ; 16 uses
-  %i.f = tail call ptr @BUF_MEM_new() #8          ; 16 uses
+  %i.e = tail call ptr @BUF_MEM_new() #8          ; 15 uses
+  %i.f = tail call ptr @BUF_MEM_new() #8          ; 15 uses
   %i.g = icmp eq ptr %i.d, null
   %i.h = icmp eq ptr %i.e, null
   %or.cond = select i1 %i.g, i1 true, i1 %i.h
@@ -398,13 +398,13 @@ bb.n:                                             ; preds = %._crit_edge149
   %i.ce = getelementptr inbounds nuw i8, ptr %i.f, i64 8 ; 3 uses
   %i.cf = load ptr, ptr %i.ce, align 8, !tbaa !24
   store i8 0, ptr %i.cf, align 1, !tbaa !9
-  br i1 %.not127, label %.preheader139, label %bb.s
+  br i1 %.not127, label %.preheader139, label %6
 
 .preheader139:                                    ; preds = %bb.n, %OPENSSL_memcpy.exit137
-  %i.cg = phi i32 [ %i.dg, %OPENSSL_memcpy.exit137 ], [ 0, %bb.n ] ; 5 uses
+  %i.cg = phi i32 [ %i.dg, %OPENSSL_memcpy.exit137 ], [ 0, %bb.n ] ; 6 uses
   %i.ch = call i32 @BIO_gets(ptr noundef %0, ptr noundef nonnull %i.c, i32 noundef 254) #8 ; 2 uses
   %i.ci = icmp slt i32 %i.ch, 1
-  br i1 %i.ci, label %.loopexit, label %.preheader138
+  br i1 %i.ci, label %bb.s, label %.preheader138
 
 .preheader138:                                    ; preds = %.preheader139, %bb.o
   %.2156 = phi i32 [ %i.cn, %bb.o ], [ %i.ch, %.preheader139 ] ; 4 uses
@@ -434,7 +434,7 @@ bb.o:                                             ; preds = %.preheader138
   %i.cw = icmp eq i32 %i.cv, 0
   %i.cx = icmp sgt i32 %.2.lcssa, 63
   %or.cond11 = or i1 %i.cx, %i.cw
-  br i1 %or.cond11, label %.loopexit, label %bb.p
+  br i1 %or.cond11, label %bb.s, label %bb.p
 
 bb.p:                                             ; preds = %.critedge7
   %i.cy = add nsw i32 %.2.lcssa, 11
@@ -442,7 +442,7 @@ bb.p:                                             ; preds = %.critedge7
   %i.da = sext i32 %i.cz to i64
   %i.db = call i64 @BUF_MEM_grow_clean(ptr noundef %i.f, i64 noundef %i.da) #8
   %.not129 = icmp eq i64 %i.db, 0
-  br i1 %.not129, label %.loopexit140.a, label %OPENSSL_memcpy.exit137
+  br i1 %.not129, label %.loopexit140, label %OPENSSL_memcpy.exit137
 
 OPENSSL_memcpy.exit137:                           ; preds = %bb.p
   %i.dc = load ptr, ptr %i.ce, align 8, !tbaa !24
@@ -454,10 +454,10 @@ OPENSSL_memcpy.exit137:                           ; preds = %bb.p
   %i.dh = sext i32 %i.dg to i64
   %i.di = getelementptr inbounds i8, ptr %i.df, i64 %i.dh
   store i8 0, ptr %i.di, align 1, !tbaa !9
-  store i32 %i.dg, ptr %i.b, align 4, !tbaa !16
   br i1 %.not128, label %.preheader139, label %bb.q
 
 bb.q:                                             ; preds = %OPENSSL_memcpy.exit137
+  store i32 %i.dg, ptr %i.b, align 4
   store i8 0, ptr %i.c, align 16, !tbaa !9
   %i.dj = call i32 @BIO_gets(ptr noundef %0, ptr noundef nonnull %i.c, i32 noundef 254) #8 ; 2 uses
   %i.dk = icmp slt i32 %i.dj, 1
@@ -486,14 +486,18 @@ bb.r:                                             ; preds = %.preheader
   store i8 0, ptr %i.du, align 1, !tbaa !9
   br label %.loopexit
 
-bb.s:                                             ; preds = %bb.n
+6:                                                ; preds = %bb.n
   store i32 %.0107.lcssa, ptr %i.b, align 4, !tbaa !16
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.preheader139, %.critedge7, %.critedge9, %bb.q, %bb.s
-  %6 = phi i32 [ %.0107.lcssa, %bb.s ], [ %i.dg, %bb.q ], [ %i.dg, %.critedge9 ], [ %i.cg, %.critedge7 ], [ %i.cg, %.preheader139 ]
-  %.0104 = phi ptr [ %i.f, %bb.s ], [ %i.e, %bb.q ], [ %i.e, %.critedge9 ], [ %i.e, %.critedge7 ], [ %i.e, %.preheader139 ] ; 6 uses
-  %.0 = phi ptr [ %i.e, %bb.s ], [ %i.f, %bb.q ], [ %i.f, %.critedge9 ], [ %i.f, %.critedge7 ], [ %i.f, %.preheader139 ] ; 6 uses
+bb.s:                                             ; preds = %.critedge7, %.preheader139
+  store i32 %i.cg, ptr %i.b, align 4
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %bb.s, %.critedge9, %bb.q, %6
+  %7 = phi i32 [ %.0107.lcssa, %6 ], [ %i.dg, %bb.q ], [ %i.dg, %.critedge9 ], [ %i.cg, %bb.s ]
+  %.0104 = phi ptr [ %i.f, %6 ], [ %i.e, %bb.q ], [ %i.e, %.critedge9 ], [ %i.e, %bb.s ] ; 6 uses
+  %.0 = phi ptr [ %i.e, %6 ], [ %i.f, %bb.q ], [ %i.f, %.critedge9 ], [ %i.f, %bb.s ] ; 6 uses
   %i.dv = load ptr, ptr %i.ap, align 8, !tbaa !24
   %i.dw = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.dv) #9
   %i.dx = call i32 @CRYPTO_memcmp(ptr noundef nonnull %i.c, ptr noundef nonnull @.str.13, i64 noundef 9) #8
@@ -525,7 +529,7 @@ bb.w:                                             ; preds = %bb.u
   call void @EVP_DecodeInit(ptr noundef nonnull %5) #8
   %i.ef = getelementptr inbounds nuw i8, ptr %.0, i64 8 ; 3 uses
   %i.eg = load ptr, ptr %i.ef, align 8, !tbaa !24 ; 2 uses
-  %i.eh = sext i32 %6 to i64
+  %i.eh = sext i32 %7 to i64
   %i.ei = call i32 @EVP_DecodeUpdate(ptr noundef nonnull %5, ptr noundef %i.eg, ptr noundef nonnull %i.b, ptr noundef %i.eg, i64 noundef %i.eh) #8
   %i.ej = icmp slt i32 %i.ei, 0
   br i1 %i.ej, label %bb.x, label %bb.y
@@ -571,9 +575,13 @@ bb.ab:                                            ; preds = %bb.aa
   call void @OPENSSL_free(ptr noundef nonnull %.0) #8
   br label %bb.ac
 
-.loopexit140.a:                                   ; preds = %bb.l, %bb.p, %bb.aa, %._crit_edge149, %OPENSSL_memcpy.exit, %bb.f, %bb.z, %bb.x, %bb.v, %._crit_edge
-  %.1105 = phi ptr [ %i.e, %._crit_edge ], [ %.0104, %bb.v ], [ %.0104, %bb.x ], [ %.0104, %bb.z ], [ %.0104, %bb.aa ], [ %i.e, %bb.f ], [ %i.e, %._crit_edge149 ], [ %i.e, %bb.p ], [ %i.e, %OPENSSL_memcpy.exit ], [ %i.e, %bb.l ]
-  %.1 = phi ptr [ %i.f, %._crit_edge ], [ %.0, %bb.v ], [ %.0, %bb.x ], [ %.0, %bb.z ], [ %.0, %bb.aa ], [ %i.f, %bb.f ], [ %i.f, %._crit_edge149 ], [ %i.f, %bb.p ], [ %i.f, %OPENSSL_memcpy.exit ], [ %i.f, %bb.l ]
+.loopexit140:                                     ; preds = %bb.p
+  store i32 %i.cg, ptr %i.b, align 4
+  br label %.loopexit140.a
+
+.loopexit140.a:                                   ; preds = %bb.l, %.loopexit140, %bb.aa, %._crit_edge149, %OPENSSL_memcpy.exit, %bb.f, %bb.z, %bb.x, %bb.v, %._crit_edge
+  %.1105 = phi ptr [ %i.e, %._crit_edge ], [ %.0104, %bb.v ], [ %.0104, %bb.x ], [ %.0104, %bb.z ], [ %.0104, %bb.aa ], [ %i.e, %bb.f ], [ %i.e, %._crit_edge149 ], [ %i.e, %.loopexit140 ], [ %i.e, %OPENSSL_memcpy.exit ], [ %i.e, %bb.l ]
+  %.1 = phi ptr [ %i.f, %._crit_edge ], [ %.0, %bb.v ], [ %.0, %bb.x ], [ %.0, %bb.z ], [ %.0, %bb.aa ], [ %i.f, %bb.f ], [ %i.f, %._crit_edge149 ], [ %i.f, %.loopexit140 ], [ %i.f, %OPENSSL_memcpy.exit ], [ %i.f, %bb.l ]
   call void @OPENSSL_cleanse(ptr noundef nonnull %i.c, i64 noundef 256) #8
   call void @BUF_MEM_free(ptr noundef %i.d) #8
   call void @BUF_MEM_free(ptr noundef %.1105) #8

@@ -204,7 +204,7 @@ _ZNK7msdfgen5Shape11boundMitersERdS1_S1_S1_ddi.exit: ; preds = %.lr.ph.i10, %bb.
 ; Function Attrs: mustprogress uwtable
 define void @_ZNK7msdfgen5Shape8scanlineERNS_8ScanlineEd(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(25) %0, ptr noundef nonnull align 8 dereferenceable(28) %1, double noundef %2) local_unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = alloca %"class.std::vector.8", align 8     ; 12 uses
+  %3 = alloca %"class.std::vector.8", align 8     ; 14 uses
   %i.a = alloca [3 x double], align 16            ; 5 uses
   %i.b = alloca [3 x i32], align 4                ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #17
@@ -252,9 +252,9 @@ bb.b:                                             ; preds = %.lr.ph45, %._crit_e
   br i1 %.not, label %._crit_edge46, label %bb.b, !llvm.loop !49
 
 .lr.ph40:                                         ; preds = %bb.b, %._crit_edge
-  %i.t = phi ptr [ %i.ac, %._crit_edge ], [ %i.i, %bb.b ] ; 3 uses
+  %i.t = phi ptr [ %i.ac, %._crit_edge ], [ %i.i, %bb.b ] ; 2 uses
   %i.u = phi ptr [ %i.ad, %._crit_edge ], [ %i.j, %bb.b ] ; 2 uses
-  %i.v = phi ptr [ %i.ae, %._crit_edge ], [ %i.k, %bb.b ] ; 2 uses
+  %i.v = phi ptr [ %i.ae, %._crit_edge ], [ %i.k, %bb.b ] ; 3 uses
   %.sroa.024.038 = phi ptr [ %i.af, %._crit_edge ], [ %i.l, %bb.b ] ; 2 uses
   %i.w = invoke noundef ptr @_ZNK7msdfgen10EdgeHolderptEv(ptr noundef nonnull align 8 dereferenceable(8) %.sroa.024.038)
           to label %bb.c unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit ; 2 uses
@@ -277,40 +277,42 @@ bb.c:                                             ; preds = %.lr.ph40
 ._crit_edge:                                      ; preds = %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE9push_backERKS2_.exit, %.preheader
   %i.ac = phi ptr [ %i.t, %.preheader ], [ %i.bd, %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE9push_backERKS2_.exit ] ; 2 uses
   %i.ad = phi ptr [ %i.u, %.preheader ], [ %i.be, %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE9push_backERKS2_.exit ] ; 2 uses
-  %i.ae = phi ptr [ %i.v, %.preheader ], [ %i.bf, %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE9push_backERKS2_.exit ] ; 2 uses
+  %i.ae = phi ptr [ %i.v, %.preheader ], [ %i.bf, %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE9push_backERKS2_.exit ] ; 3 uses
+  store ptr %i.ae, ptr %3, align 8
   %i.af = getelementptr inbounds nuw i8, ptr %.sroa.024.038, i64 8 ; 2 uses
   %i.ag = load ptr, ptr %i.m, align 8, !tbaa !18
   %.not32 = icmp eq ptr %i.af, %i.ag
   br i1 %.not32, label %._crit_edge41.loopexit, label %.lr.ph40, !llvm.loop !50
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE9push_backERKS2_.exit
-  %i.ah = phi ptr [ %i.t, %.lr.ph.preheader ], [ %i.bd, %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE9push_backERKS2_.exit ] ; 6 uses
-  %i.ai = phi ptr [ %i.u, %.lr.ph.preheader ], [ %i.be, %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE9push_backERKS2_.exit ] ; 3 uses
-  %4 = phi ptr [ %i.v, %.lr.ph.preheader ], [ %i.bf, %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE9push_backERKS2_.exit ] ; 4 uses
+  %i.ah = phi ptr [ %i.t, %.lr.ph.preheader ], [ %i.bd, %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE9push_backERKS2_.exit ] ; 3 uses
+  %i.ai = phi ptr [ %i.u, %.lr.ph.preheader ], [ %i.be, %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE9push_backERKS2_.exit ] ; 4 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE9push_backERKS2_.exit ] ; 3 uses
+  %4 = phi ptr [ %i.v, %.lr.ph.preheader ], [ %i.bf, %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE9push_backERKS2_.exit ] ; 8 uses
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv
   %i.ak = load double, ptr %i.aj, align 8, !tbaa !29 ; 2 uses
   %i.al = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv
   %i.am = load i32, ptr %i.al, align 4, !tbaa !30 ; 2 uses
-  %.not.i = icmp eq ptr %4, %i.ai
+  %.not.i = icmp eq ptr %i.ai, %i.ah
   br i1 %.not.i, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph
-  store double %i.ak, ptr %4, align 8, !tbaa !29
-  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 8
+  store double %i.ak, ptr %i.ai, align 8, !tbaa !29
+  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ai, i64 8
   store i32 %i.am, ptr %.sroa.6.0..sroa_idx, align 8, !tbaa !30
-  %i.an = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %i.ai, i64 16 ; 2 uses
   store ptr %i.an, ptr %i.f, align 8, !tbaa !54
   br label %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE9push_backERKS2_.exit
 
 bb.e:                                             ; preds = %.lr.ph
-  %i.ao = ptrtoint ptr %i.ai to i64
-  %i.ap = ptrtoint ptr %i.ah to i64
+  %i.ao = ptrtoint ptr %i.ah to i64
+  %i.ap = ptrtoint ptr %4 to i64
   %i.aq = sub i64 %i.ao, %i.ap                    ; 6 uses
   %i.ar = icmp eq i64 %i.aq, 9223372036854775792
   br i1 %i.ar, label %bb.f, label %_ZNKSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE12_M_check_lenEmPKc.exit.i.i
 
 bb.f:                                             ; preds = %bb.e
+  store ptr %4, ptr %3, align 8
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str) #19
           to label %.noexc unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -328,7 +330,7 @@ _ZNKSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE12_M_check_lenEmPKc.exit.
   call void @llvm.assume(i1 %.not.i.i.i)
   %i.ax = shl nuw nsw i64 %i.aw, 4
   %i.ay = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ax) #20
-          to label %.noexc14 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.a ; 5 uses
+          to label %.noexc14 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.a ; 4 uses
 
 .noexc14:                                         ; preds = %_ZNKSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE12_M_check_lenEmPKc.exit.i.i
   %i.az = getelementptr inbounds i8, ptr %i.ay, i64 %i.aq ; 3 uses
@@ -339,29 +341,28 @@ _ZNKSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE12_M_check_lenEmPKc.exit.
   br i1 %i.ba, label %bb.g, label %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i
 
 bb.g:                                             ; preds = %.noexc14
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.ay, ptr align 8 %i.ah, i64 %i.aq, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.ay, ptr align 8 %4, i64 %i.aq, i1 false)
   br label %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i
 
 _ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i: ; preds = %bb.g, %.noexc14
   %i.bb = getelementptr inbounds nuw i8, ptr %i.az, i64 16 ; 2 uses
-  %.not.i17.i.i = icmp eq ptr %i.ah, null
+  %.not.i17.i.i = icmp eq ptr %4, null
   br i1 %.not.i17.i.i, label %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i, label %bb.h
 
 bb.h:                                             ; preds = %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i
-  call void @_ZdlPvm(ptr noundef nonnull %i.ah, i64 noundef %i.aq) #18
+  call void @_ZdlPvm(ptr noundef nonnull %4, i64 noundef %i.aq) #18
   br label %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i
 
 _ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i: ; preds = %bb.h, %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i
-  store ptr %i.ay, ptr %3, align 8, !tbaa !55
   store ptr %i.bb, ptr %i.f, align 8, !tbaa !54
   %i.bc = getelementptr inbounds nuw [16 x i8], ptr %i.ay, i64 %i.aw ; 2 uses
-  store ptr %i.bc, ptr %i.g, align 8, !tbaa !56
+  store ptr %i.bc, ptr %i.g, align 8, !tbaa !55
   br label %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE9push_backERKS2_.exit
 
 _ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE9push_backERKS2_.exit: ; preds = %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i, %bb.d
-  %i.bd = phi ptr [ %i.ay, %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i ], [ %i.ah, %bb.d ] ; 2 uses
-  %i.be = phi ptr [ %i.bc, %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i ], [ %i.ai, %bb.d ] ; 2 uses
-  %i.bf = phi ptr [ %i.bb, %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i ], [ %i.an, %bb.d ] ; 2 uses
+  %i.bd = phi ptr [ %i.bc, %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i ], [ %i.ah, %bb.d ] ; 2 uses
+  %i.be = phi ptr [ %i.bb, %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i ], [ %i.an, %bb.d ] ; 2 uses
+  %i.bf = phi ptr [ %i.ay, %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i ], [ %4, %bb.d ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !51
@@ -369,13 +370,13 @@ _ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE9push_backERKS2_.exit: ; p
 bb.i:                                             ; preds = %._crit_edge46
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #17
-  %i.bg = load ptr, ptr %3, align 8, !tbaa !55    ; 3 uses
+  %i.bg = load ptr, ptr %3, align 8, !tbaa !56    ; 3 uses
   %.not.i.i.i15 = icmp eq ptr %i.bg, null
   br i1 %.not.i.i.i15, label %_ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EED2Ev.exit, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   %i.bh = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %i.bi = load ptr, ptr %i.bh, align 8, !tbaa !56
+  %i.bi = load ptr, ptr %i.bh, align 8, !tbaa !55
   %i.bj = ptrtoint ptr %i.bi to i64
   %i.bk = ptrtoint ptr %i.bg to i64
   %i.bl = sub i64 %i.bj, %i.bk
@@ -389,21 +390,22 @@ _ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EED2Ev.exit: ; preds = %bb.i
 .loopexit.split-lp.loopexit.split-lp.loopexit.a:  ; preds = %_ZNKSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EE12_M_check_lenEmPKc.exit.i.i
   %lpad.loopexit = landingpad { ptr, i32 }
           cleanup
+  store ptr %4, ptr %3, align 8
   br label %.loopexit.split-lp.loopexit.split-lp
 
-.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit: ; preds = %.lr.ph40, %bb.c
+.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit: ; preds = %bb.c, %.lr.ph40
   %lpad.loopexit47 = landingpad { ptr, i32 }
           cleanup
   br label %.loopexit.split-lp.loopexit.split-lp
 
-.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.f, %._crit_edge46
+.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %._crit_edge46, %bb.f
   %lpad.loopexit.split-lp48 = landingpad { ptr, i32 }
           cleanup
-  %.pre51.pre = load ptr, ptr %3, align 8, !tbaa !55
+  %.pre51.pre = load ptr, ptr %3, align 8, !tbaa !56
   br label %.loopexit.split-lp.loopexit.split-lp
 
 .loopexit.split-lp.loopexit.split-lp:             ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %.loopexit.split-lp.loopexit.split-lp.loopexit.a
-  %i.bm = phi ptr [ %i.ah, %.loopexit.split-lp.loopexit.split-lp.loopexit.a ], [ %i.t, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit ], [ %.pre51.pre, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ] ; 3 uses
+  %i.bm = phi ptr [ %4, %.loopexit.split-lp.loopexit.split-lp.loopexit.a ], [ %i.v, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit ], [ %.pre51.pre, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ] ; 3 uses
   %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit.split-lp.loopexit.split-lp.loopexit.a ], [ %lpad.loopexit47, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit ], [ %lpad.loopexit.split-lp48, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #17
@@ -412,7 +414,7 @@ _ZNSt6vectorIN7msdfgen8Scanline12IntersectionESaIS2_EED2Ev.exit: ; preds = %bb.i
 
 bb.k:                                             ; preds = %.loopexit.split-lp.loopexit.split-lp
   %i.bn = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !56
+  %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !55
   %i.bp = ptrtoint ptr %i.bo to i64
   %i.bq = ptrtoint ptr %i.bm to i64
   %i.br = sub i64 %i.bp, %i.bq
@@ -815,8 +817,8 @@ attributes #21 = { noreturn nounwind }
 !52 = !{!"p1 _ZTSN7msdfgen8Scanline12IntersectionE", !12, i64 0}
 !53 = !{!"_ZTSNSt12_Vector_baseIN7msdfgen8Scanline12IntersectionESaIS2_EE17_Vector_impl_dataE", !52, i64 0, !52, i64 8, !52, i64 16}
 !54 = !{!53, !52, i64 8}
-!55 = !{!53, !52, i64 0}
-!56 = !{!53, !52, i64 16}
+!55 = !{!53, !52, i64 16}
+!56 = !{!53, !52, i64 0}
 !57 = distinct !{!57, !25}
 !58 = distinct !{!58, !25}
 !59 = distinct !{!59, !25}

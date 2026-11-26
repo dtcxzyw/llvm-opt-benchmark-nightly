@@ -202,7 +202,7 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i14.i: ; preds = %_ZNSt11cha
 .noexc17:                                         ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i14.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i11.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i, %bb.h, %bb.i
   %.0.in.i = phi i32 [ %.0.i6.i.i.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i ], [ %i.ab, %bb.h ], [ %.0.i6.i.i17.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i14.i ], [ %i.x, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i ], [ %i.al, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i11.i ], [ %i.ae, %bb.i ]
   %.0.i = icmp slt i32 %.0.in.i, 0                ; 2 uses
-  %.19.i.i.i.i = select i1 %.0.i, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 5 uses
+  %.19.i.i.i.i = select i1 %.0.i, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 6 uses
   %.1.in.v.i.i.i.i = select i1 %.0.i, i64 24, i64 16
   %.1.in.i.i.i.i = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 %.1.in.v.i.i.i.i
   %.1.i.i.i.i = load ptr, ptr %.1.in.i.i.i.i, align 8, !tbaa !28 ; 2 uses
@@ -226,11 +226,12 @@ bb.k:                                             ; preds = %_ZNSt3mapINSt7__cxx
   br i1 %i.ap, label %bb.l, label %bb.m
 
 .critedge.i:                                      ; preds = %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE20DeprecatedDirectivesN3gmx13StringCompareESaISt4pairIKS5_S6_EEE11lower_boundERSA_.exit.i, %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE20DeprecatedDirectivesN3gmx13StringCompareESaISt4pairIKS5_S6_EEE11lower_boundERSA_.exit.thread.i
+  %.08.lcssa.i.i.i11.i = phi ptr [ getelementptr inbounds nuw (i8, ptr @_ZZ7str2dirPKcE24s_converterForDeprecated, i64 8), %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE20DeprecatedDirectivesN3gmx13StringCompareESaISt4pairIKS5_S6_EEE11lower_boundERSA_.exit.thread.i ], [ %.19.i.i.i.i, %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE20DeprecatedDirectivesN3gmx13StringCompareESaISt4pairIKS5_S6_EEE11lower_boundERSA_.exit.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %0) #18
   br label %bb.l
 
 bb.l:                                             ; preds = %.critedge.i, %.noexc18
-  %.08.lcssa.i.i.i10.i = phi ptr [ getelementptr inbounds nuw (i8, ptr @_ZZ7str2dirPKcE24s_converterForDeprecated, i64 8), %.critedge.i ], [ %.19.i.i.i.i, %.noexc18 ]
+  %.08.lcssa.i.i.i10.i = phi ptr [ %.08.lcssa.i.i.i11.i, %.critedge.i ], [ %.19.i.i.i.i, %.noexc18 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #18
   store ptr %3, ptr %1, align 8, !tbaa !43
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #18

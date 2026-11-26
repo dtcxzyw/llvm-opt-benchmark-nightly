@@ -203,7 +203,7 @@ _RNvNtCsexYYUdYSQU6_5alloc5boxed14box_new_uninit.exit: ; preds = %_RNvXs13_NtNtC
 
 bb.h:                                             ; preds = %_RNvNtCsexYYUdYSQU6_5alloc5boxed14box_new_uninit.exit
   invoke void @_RNvNtCsexYYUdYSQU6_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef 72) #32
-          to label %.noexc unwind label %bb.i
+          to label %.noexc unwind label %bb.i, !noalias !254
 
 .noexc:                                           ; preds = %bb.h
   unreachable
@@ -606,7 +606,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   invoke void @_RNvNtCsexYYUdYSQU6_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef 2384) #32
-          to label %.noexc.i.i.i unwind label %bb.c, !noalias !467
+          to label %.noexc.i.i.i unwind label %bb.c, !noalias !469
 
 .noexc.i.i.i:                                     ; preds = %bb.b
   unreachable
@@ -713,7 +713,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   invoke void @_RNvNtCsexYYUdYSQU6_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef 2408) #32
-          to label %.noexc.i.i.i unwind label %bb.c, !noalias !491
+          to label %.noexc.i.i.i unwind label %bb.c, !noalias !493
 
 .noexc.i.i.i:                                     ; preds = %bb.b
   unreachable
@@ -820,7 +820,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   invoke void @_RNvNtCsexYYUdYSQU6_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef 2384) #32
-          to label %.noexc.i.i.i unwind label %bb.c, !noalias !515
+          to label %.noexc.i.i.i unwind label %bb.c, !noalias !517
 
 .noexc.i.i.i:                                     ; preds = %bb.b
   unreachable
@@ -927,7 +927,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   invoke void @_RNvNtCsexYYUdYSQU6_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef 2408) #32
-          to label %.noexc.i.i.i unwind label %bb.c, !noalias !539
+          to label %.noexc.i.i.i unwind label %bb.c, !noalias !541
 
 .noexc.i.i.i:                                     ; preds = %bb.b
   unreachable
@@ -1018,8 +1018,9 @@ bb.a:
           to label %bb.b unwind label %bb.d       ; 0 uses
 
 bb.b:                                             ; preds = %bb.a
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !548)
   %i.b = invoke noundef i64 @_RNvXs1_NtNtCs8C3ZpOVqhBL_18tracing_subscriber8registry7shardedNtB5_8RegistryNtB7_10LookupSpan15register_filter(ptr noalias nofree noundef nonnull align 8 dereferenceable(544) %2)
-          to label %bb.c unwind label %bb.d
+          to label %bb.c unwind label %bb.d, !noalias !548
 
 bb.c:                                             ; preds = %bb.b
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 1808
@@ -1062,8 +1063,9 @@ bb.a:
           to label %bb.b unwind label %bb.d       ; 0 uses
 
 bb.b:                                             ; preds = %bb.a
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !554)
   %i.b = invoke noundef i64 @_RNvXs1_NtNtCs8C3ZpOVqhBL_18tracing_subscriber8registry7shardedNtB5_8RegistryNtB7_10LookupSpan15register_filter(ptr noalias nofree noundef nonnull align 8 dereferenceable(544) %2)
-          to label %bb.c unwind label %bb.d
+          to label %bb.c unwind label %bb.d, !noalias !554
 
 bb.c:                                             ; preds = %bb.b
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 1832
@@ -1106,8 +1108,9 @@ bb.a:
           to label %bb.b unwind label %bb.d       ; 0 uses
 
 bb.b:                                             ; preds = %bb.a
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !560)
   %i.b = invoke noundef i64 @_RNvXs1_NtNtCs8C3ZpOVqhBL_18tracing_subscriber8registry7shardedNtB5_8RegistryNtB7_10LookupSpan15register_filter(ptr noalias nofree noundef nonnull align 8 dereferenceable(544) %2)
-          to label %bb.c unwind label %bb.d
+          to label %bb.c unwind label %bb.d, !noalias !560
 
 bb.c:                                             ; preds = %bb.b
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 1808
@@ -1150,8 +1153,9 @@ bb.a:
           to label %bb.b unwind label %bb.d       ; 0 uses
 
 bb.b:                                             ; preds = %bb.a
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !566)
   %i.b = invoke noundef i64 @_RNvXs1_NtNtCs8C3ZpOVqhBL_18tracing_subscriber8registry7shardedNtB5_8RegistryNtB7_10LookupSpan15register_filter(ptr noalias nofree noundef nonnull align 8 dereferenceable(544) %2)
-          to label %bb.c unwind label %bb.d
+          to label %bb.c unwind label %bb.d, !noalias !566
 
 bb.c:                                             ; preds = %bb.b
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 1832

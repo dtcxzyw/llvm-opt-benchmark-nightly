@@ -202,23 +202,37 @@ bb.a:
 ; Function Attrs: nonlazybind uwtable
 define void @_RNvXsy_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mapINtB5_8IntoIterNtNtNtCsG258MDvU3F_3std3ffi6os_str8OsStringINtNtCskKLDkoKarTP_4core6option6OptionB17_EENtNtNtB1T_3ops4drop4Drop4dropCsiOEEQt9hBE2_17pyo3_build_config(ptr align 8 %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [24 x i8], align 8                ; 6 uses
+  %i.a = alloca [24 x i8], align 8                ; 10 uses
   %i.b = alloca [8 x i8], align 8                 ; 2 uses
   %i.c = alloca [24 x i8], align 8                ; 3 uses
-  %.sroa.4 = alloca [16 x i8], align 8            ; 2 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
-  %.sroa.4.0..sroa_idx2 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %.sroa.4 = alloca [16 x i8], align 8            ; 3 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 4 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 3 uses
+  %.sroa.4.0..sroa_idx2 = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  br label %bb.b
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
+  %1 = load i64, ptr %i.d, align 8                ; 2 uses
+  %2 = icmp eq i64 %1, 0
+  br i1 %2, label %_RNvMsz_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mapINtB5_8IntoIterNtNtNtCsG258MDvU3F_3std3ffi6os_str8OsStringINtNtCskKLDkoKarTP_4core6option6OptionB17_EE10dying_nextCsiOEEQt9hBE2_17pyo3_build_config.exit.thread, label %_RNvMsz_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mapINtB5_8IntoIterNtNtNtCsG258MDvU3F_3std3ffi6os_str8OsStringINtNtCskKLDkoKarTP_4core6option6OptionB17_EE10dying_nextCsiOEEQt9hBE2_17pyo3_build_config.exit.peel
 
-bb.b:                                             ; preds = %bb.c, %bb.a
+_RNvMsz_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mapINtB5_8IntoIterNtNtNtCsG258MDvU3F_3std3ffi6os_str8OsStringINtNtCskKLDkoKarTP_4core6option6OptionB17_EE10dying_nextCsiOEEQt9hBE2_17pyo3_build_config.exit.peel: ; preds = %bb.a
+  %3 = add i64 %1, -1
+  store i64 %3, ptr %i.d, align 8
+  tail call void @_RNvXs5_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsiOEEQt9hBE2_17pyo3_build_config(ptr nonnull %i.e) #23
+  call void @_RINvMsb_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree8navigateINtB6_13LazyLeafRangeNtNtNtB8_4node6marker5DyingNtNtNtCsG258MDvU3F_3std3ffi6os_str8OsStringINtNtCskKLDkoKarTP_4core6option6OptionB1K_EE27deallocating_next_uncheckedNtNtBc_5alloc6GlobalECsiOEEQt9hBE2_17pyo3_build_config(ptr nonnull sret([24 x i8]) align 8 %i.a, ptr nonnull align 8 %0) #23
+  %.sroa.0.0.copyload1.peel = load ptr, ptr %i.a, align 8 ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4.0..sroa_idx2, i64 16, i1 false)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
+  %.not.peel = icmp eq ptr %.sroa.0.0.copyload1.peel, null
+  br i1 %.not.peel, label %.loopexit, label %bb.c
+
+bb.b:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.f = load i64, ptr %i.d, align 8              ; 2 uses
   %i.g = icmp eq i64 %i.f, 0
   br i1 %i.g, label %_RNvMsz_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mapINtB5_8IntoIterNtNtNtCsG258MDvU3F_3std3ffi6os_str8OsStringINtNtCskKLDkoKarTP_4core6option6OptionB17_EE10dying_nextCsiOEEQt9hBE2_17pyo3_build_config.exit.thread, label %_RNvMsz_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mapINtB5_8IntoIterNtNtNtCsG258MDvU3F_3std3ffi6os_str8OsStringINtNtCskKLDkoKarTP_4core6option6OptionB17_EE10dying_nextCsiOEEQt9hBE2_17pyo3_build_config.exit
 
-_RNvMsz_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mapINtB5_8IntoIterNtNtNtCsG258MDvU3F_3std3ffi6os_str8OsStringINtNtCskKLDkoKarTP_4core6option6OptionB17_EE10dying_nextCsiOEEQt9hBE2_17pyo3_build_config.exit.thread: ; preds = %bb.b
+_RNvMsz_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mapINtB5_8IntoIterNtNtNtCsG258MDvU3F_3std3ffi6os_str8OsStringINtNtCskKLDkoKarTP_4core6option6OptionB17_EE10dying_nextCsiOEEQt9hBE2_17pyo3_build_config.exit.thread: ; preds = %bb.b, %bb.a
   call void @_RNvXs5_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsiOEEQt9hBE2_17pyo3_build_config(ptr nonnull %i.e) #23
   call void @_RINvMsb_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree8navigateINtB6_13LazyLeafRangeNtNtNtB8_4node6marker5DyingNtNtNtCsG258MDvU3F_3std3ffi6os_str8OsStringINtNtCskKLDkoKarTP_4core6option6OptionB1K_EE16deallocating_endNtNtBc_5alloc6GlobalECsiOEEQt9hBE2_17pyo3_build_config(ptr nonnull align 8 %0) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
@@ -235,19 +249,20 @@ _RNvMsz_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mapINtB5_8IntoIterNtNtNtCs
   %.not = icmp eq ptr %.sroa.0.0.copyload1, null
   br i1 %.not, label %.loopexit, label %bb.c
 
-bb.c:                                             ; preds = %_RNvMsz_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mapINtB5_8IntoIterNtNtNtCsG258MDvU3F_3std3ffi6os_str8OsStringINtNtCskKLDkoKarTP_4core6option6OptionB17_EE10dying_nextCsiOEEQt9hBE2_17pyo3_build_config.exit
-  store ptr %.sroa.0.0.copyload1, ptr %i.c, align 8
+bb.c:                                             ; preds = %_RNvMsz_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mapINtB5_8IntoIterNtNtNtCsG258MDvU3F_3std3ffi6os_str8OsStringINtNtCskKLDkoKarTP_4core6option6OptionB17_EE10dying_nextCsiOEEQt9hBE2_17pyo3_build_config.exit.peel, %_RNvMsz_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mapINtB5_8IntoIterNtNtNtCsG258MDvU3F_3std3ffi6os_str8OsStringINtNtCskKLDkoKarTP_4core6option6OptionB17_EE10dying_nextCsiOEEQt9hBE2_17pyo3_build_config.exit
+  %.sroa.0.0.copyload1.peel.sink = phi ptr [ %.sroa.0.0.copyload1, %_RNvMsz_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mapINtB5_8IntoIterNtNtNtCsG258MDvU3F_3std3ffi6os_str8OsStringINtNtCskKLDkoKarTP_4core6option6OptionB17_EE10dying_nextCsiOEEQt9hBE2_17pyo3_build_config.exit ], [ %.sroa.0.0.copyload1.peel, %_RNvMsz_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mapINtB5_8IntoIterNtNtNtCsG258MDvU3F_3std3ffi6os_str8OsStringINtNtCskKLDkoKarTP_4core6option6OptionB17_EE10dying_nextCsiOEEQt9hBE2_17pyo3_build_config.exit.peel ]
+  store ptr %.sroa.0.0.copyload1.peel.sink, ptr %i.c, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4, i64 16, i1 false)
-  store ptr %0, ptr %i.b, align 8
   invoke void @_RNvMsT_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree4nodeINtB5_6HandleINtB5_7NodeRefNtNtB5_6marker5DyingNtNtNtCsG258MDvU3F_3std3ffi6os_str8OsStringINtNtCskKLDkoKarTP_4core6option6OptionB1E_ENtB1m_14LeafOrInternalENtB1m_2KVE12drop_key_valCsiOEEQt9hBE2_17pyo3_build_config(ptr nonnull align 8 %i.c)
-          to label %bb.b unwind label %bb.d
+          to label %bb.b unwind label %bb.d, !llvm.loop !7
 
-.loopexit:                                        ; preds = %_RNvMsz_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mapINtB5_8IntoIterNtNtNtCsG258MDvU3F_3std3ffi6os_str8OsStringINtNtCskKLDkoKarTP_4core6option6OptionB17_EE10dying_nextCsiOEEQt9hBE2_17pyo3_build_config.exit, %_RNvMsz_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mapINtB5_8IntoIterNtNtNtCsG258MDvU3F_3std3ffi6os_str8OsStringINtNtCskKLDkoKarTP_4core6option6OptionB17_EE10dying_nextCsiOEEQt9hBE2_17pyo3_build_config.exit.thread
+.loopexit:                                        ; preds = %_RNvMsz_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mapINtB5_8IntoIterNtNtNtCsG258MDvU3F_3std3ffi6os_str8OsStringINtNtCskKLDkoKarTP_4core6option6OptionB17_EE10dying_nextCsiOEEQt9hBE2_17pyo3_build_config.exit, %_RNvMsz_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mapINtB5_8IntoIterNtNtNtCsG258MDvU3F_3std3ffi6os_str8OsStringINtNtCskKLDkoKarTP_4core6option6OptionB17_EE10dying_nextCsiOEEQt9hBE2_17pyo3_build_config.exit.peel, %_RNvMsz_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mapINtB5_8IntoIterNtNtNtCsG258MDvU3F_3std3ffi6os_str8OsStringINtNtCskKLDkoKarTP_4core6option6OptionB17_EE10dying_nextCsiOEEQt9hBE2_17pyo3_build_config.exit.thread
   ret void
 
 bb.d:                                             ; preds = %bb.c
   %i.i = landingpad { ptr, i32 }
           cleanup
+  store ptr %0, ptr %i.b, align 8
   invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNvXsy_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mapINtBK_8IntoIterpppENtNtNtB4_3ops4drop4Drop4drop9DropGuardNtNtNtCsG258MDvU3F_3std3ffi6os_str8OsStringINtNtB4_6option6OptionB2s_ENtNtBQ_5alloc6GlobalEECsiOEEQt9hBE2_17pyo3_build_config(ptr nonnull align 8 %i.b) #26
           to label %bb.f unwind label %bb.e
 
@@ -650,4 +665,6 @@ attributes #29 = { nounwind }
 !4 = !{!"address", !"read_provenance"}
 !5 = !{}
 !6 = !{ptr @_RNvXsn_NtCsexYYUdYSQU6_5alloc5boxedINtB5_3BoxDNtNtCskKLDkoKarTP_4core5error5ErrorEL_ENtNtBM_3fmt5Debug3fmtCsiOEEQt9hBE2_17pyo3_build_config}
+!7 = distinct !{!7, !8}
+!8 = !{!"llvm.loop.peeled.count", i32 1}
 end_hunk_1

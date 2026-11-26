@@ -205,8 +205,9 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.ex
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 
 _ZN5vcpkg7Strings4joinISt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS8_EEEES8_NS_13StringLiteralERKT_.exit: ; preds = %_ZN5vcpkg7Strings6appendIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEERS7_S8_DpRKT_.exit.i.i, %bb.e
+  call void @llvm.experimental.noalias.scope.decl(metadata !221)
   %i.w = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %6, i64 noundef 0, i64 noundef 0, ptr noundef nonnull @.str.14, i64 noundef 1)
-          to label %.noexc unwind label %bb.p     ; 6 uses
+          to label %.noexc unwind label %bb.p, !noalias !221 ; 6 uses
 
 .noexc:                                           ; preds = %_ZN5vcpkg7Strings4joinISt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS8_EEEES8_NS_13StringLiteralERKT_.exit
   %i.x = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 7 uses
@@ -248,14 +249,14 @@ bb.i:                                             ; preds = %_ZNKSt7__cxx1112bas
 
 bb.j:                                             ; preds = %bb.i
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.81) #25
-          to label %.noexc14 unwind label %bb.q
+          to label %.noexc14 unwind label %bb.q, !noalias !222
 
 .noexc14:                                         ; preds = %bb.j
   unreachable
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i: ; preds = %bb.i
   %i.al = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm(ptr noundef nonnull align 8 dereferenceable(32) %5, ptr noundef nonnull @.str.14, i64 noundef 1)
-          to label %.noexc15 unwind label %bb.q   ; 6 uses
+          to label %.noexc15 unwind label %bb.q, !noalias !222 ; 6 uses
 
 .noexc15:                                         ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i
   %i.am = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 7 uses
@@ -658,7 +659,7 @@ bb.a:
   %i.e = load ptr, ptr @_ZN12_GLOBAL__N_125ConfigurationDeserializer8instanceE, align 8, !tbaa !83, !noalias !237
   %i.f = load ptr, ptr %i.e, align 8, !noalias !237
   invoke void %i.f(ptr dead_on_unwind nonnull writable sret(%"struct.vcpkg::LocalizedString") align 8 %7, ptr noundef nonnull align 8 dereferenceable(8) @_ZN12_GLOBAL__N_125ConfigurationDeserializer8instanceE)
-          to label %.noexc unwind label %bb.j, !inline_history !232
+          to label %.noexc unwind label %bb.j, !noalias !237, !inline_history !232
 
 .noexc:                                           ; preds = %bb.a
   %i.g = extractvalue { ptr, i64 } %i.d, 1
@@ -1061,7 +1062,7 @@ bb.p:                                             ; preds = %._crit_edge
 bb.q:                                             ; preds = %bb.p, %bb.o
   call void @llvm.experimental.noalias.scope.decl(metadata !256)
   %i.bk = invoke noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #26
-          to label %_ZNSt10unique_ptrIN5vcpkg22RegistryImplementationESt14default_deleteIS1_EED2Ev.exit35 unwind label %bb.s ; 4 uses
+          to label %_ZNSt10unique_ptrIN5vcpkg22RegistryImplementationESt14default_deleteIS1_EED2Ev.exit35 unwind label %bb.s, !noalias !256 ; 4 uses
 
 _ZNSt10unique_ptrIN5vcpkg22RegistryImplementationESt14default_deleteIS1_EED2Ev.exit35: ; preds = %bb.q
   %i.bl = load i64, ptr %7, align 8, !tbaa !115, !noalias !256
@@ -1464,7 +1465,7 @@ _ZNSt6vectorIN5vcpkg15LocalizedStringESaIS1_EED2Ev.exit: ; preds = %_ZSt8_Destro
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22, !noalias !355
   %.sroa.0.0.copyload.i138 = load i64, ptr @_ZN5vcpkg43msgAnObjectContainingVcpkgArtifactsMetadataE, align 8, !tbaa !51, !noalias !356
   invoke void @_ZN5vcpkg3msg6formatIJEJEEENS_15LocalizedStringENS0_8MessageTIJDpT_EEEDpNS0_6TagArgINS_8identityIS4_E4typeET0_EE(ptr dead_on_unwind nonnull writable sret(%"struct.vcpkg::LocalizedString") align 8 %4, i64 %.sroa.0.0.copyload.i138)
-          to label %.noexc111 unwind label %bb.ca
+          to label %.noexc111 unwind label %bb.ca, !noalias !355
 
 .noexc111:                                        ; preds = %_ZNSt6vectorIN5vcpkg15LocalizedStringESaIS1_EED2Ev.exit
   invoke void @_ZN5vcpkg4Json6Reader27check_for_unexpected_fieldsERKNS0_6ObjectENS_4SpanIKNS_13StringLiteralEEERKNS_15LocalizedStringE(ptr noundef nonnull align 8 dereferenceable(112) %2, ptr noundef nonnull align 8 dereferenceable(24) %3, ptr null, i64 0, ptr noundef nonnull align 8 dereferenceable(32) %4)
@@ -1867,7 +1868,7 @@ bb.k:                                             ; preds = %bb.j
 _ZN3fmt3v1213parse_contextIcE11next_arg_idEv.exit: ; preds = %bb.j
   %i.ao = add nuw nsw i32 %i.am, 1
   store i32 %i.ao, ptr %i.al, align 8, !tbaa !162
-  store i32 %i.am, ptr %3, align 8
+  store i32 %i.am, ptr %3, align 8, !tbaa !44
   store i32 1, ptr %i.a, align 4, !tbaa !160
   br label %bb.m
 
@@ -2011,7 +2012,7 @@ bb.j:                                             ; preds = %bb.i, %_ZN3fmt3v126
 bb.k:                                             ; preds = %bb.i, %bb.i
   %i.aj = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !441, !nonnull !33, !align !125
-  store i32 %.021, ptr %i.ak, align 8
+  store i32 %.021, ptr %i.ak, align 8, !tbaa !44
   %i.al = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !442, !nonnull !33, !align !443
   store i32 1, ptr %i.am, align 4, !tbaa !160
@@ -2076,7 +2077,7 @@ bb.n:                                             ; preds = %bb.m
   %i.bh = sub i64 %i.bf, %i.bg
   %i.bi = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !441, !nonnull !33, !align !125 ; 2 uses
-  store ptr %0, ptr %i.bj, align 8
+  store ptr %0, ptr %i.bj, align 8, !tbaa !44
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bj, i64 8
   store i64 %i.bh, ptr %.sroa.4.0..sroa_idx.i, align 8, !tbaa !44
   %i.bk = getelementptr inbounds nuw i8, ptr %2, i64 16
@@ -2479,7 +2480,7 @@ bb.s:                                             ; preds = %_ZN5vcpkg15Localize
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22, !noalias !648
   %.sroa.0.0.copyload.i88 = load i64, ptr @_ZN5vcpkg43msgAnObjectContainingVcpkgArtifactsMetadataE, align 8, !tbaa !51, !noalias !649
   invoke void @_ZN5vcpkg3msg6formatIJEJEEENS_15LocalizedStringENS0_8MessageTIJDpT_EEEDpNS0_6TagArgINS_8identityIS4_E4typeET0_EE(ptr dead_on_unwind nonnull writable sret(%"struct.vcpkg::LocalizedString") align 8 %4, i64 %.sroa.0.0.copyload.i88)
-          to label %.noexc unwind label %bb.w
+          to label %.noexc unwind label %bb.w, !noalias !648
 
 .noexc:                                           ; preds = %bb.s
   invoke void @_ZN5vcpkg4Json6Reader27check_for_unexpected_fieldsERKNS0_6ObjectENS_4SpanIKNS_13StringLiteralEEERKNS_15LocalizedStringE(ptr noundef nonnull align 8 dereferenceable(112) %2, ptr noundef nonnull align 8 dereferenceable(24) %i.ah, ptr null, i64 0, ptr noundef nonnull align 8 dereferenceable(32) %4)
@@ -2882,7 +2883,7 @@ begin_hunk_6_@llvm.smin.i64
 !353 = !{!328, !326, !318}
 !354 = !{!134, !134, i64 0}
 !355 = !{!330}
-!356 = !{!332}
+!356 = !{!332, !330}
 !357 = !{!334}
 !358 = distinct !{!358, i1 true, !"_ZSt19__relocate_object_aINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_SaIS5_EEvPT_PT0_RT1_"}
 !359 = distinct !{!359, !358, !"_ZSt19__relocate_object_aINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_SaIS5_EEvPT_PT0_RT1_: argument 0"}
@@ -3175,7 +3176,7 @@ begin_hunk_6_@llvm.smin.i64
 !646 = !{!634}
 !647 = !{!636, !634}
 !648 = !{!638}
-!649 = !{!640}
+!649 = !{!640, !638}
 !650 = distinct !{!650, !72}
 !651 = distinct !{!651, i1 true, !"_ZSt19__relocate_object_aIN5vcpkg8RegistryES1_SaIS1_EEvPT_PT0_RT1_"}
 !652 = distinct !{!652, !651, !"_ZSt19__relocate_object_aIN5vcpkg8RegistryES1_SaIS1_EEvPT_PT0_RT1_: argument 0"}

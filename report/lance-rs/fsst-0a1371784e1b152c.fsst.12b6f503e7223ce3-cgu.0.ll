@@ -204,7 +204,7 @@ _RINvXs_NtNtCs40k4W9msRzi_5alloc3vec14spec_from_elemtNtB5_12SpecFromElem9from_el
 
 bb.c:                                             ; preds = %_RINvXs_NtNtCs40k4W9msRzi_5alloc3vec14spec_from_elemtNtB5_12SpecFromElem9from_elemNtNtB9_5alloc6GlobalECs1BCiKJoB9mN_4fsst.exit
   invoke void @_RNvNtCs40k4W9msRzi_5alloc7raw_vec12handle_error(i64 noundef 2, i64 1024) #16
-          to label %.noexc unwind label %bb.d
+          to label %.noexc unwind label %bb.d, !noalias !57
 
 .noexc:                                           ; preds = %bb.c
   unreachable
@@ -215,51 +215,51 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.i
 
 _RINvXs_NtNtCs40k4W9msRzi_5alloc3vec14spec_from_elemtNtB5_12SpecFromElem9from_elemNtNtB9_5alloc6GlobalECs1BCiKJoB9mN_4fsst.exit2: ; preds = %_RINvXs_NtNtCs40k4W9msRzi_5alloc3vec14spec_from_elemtNtB5_12SpecFromElem9from_elemNtNtB9_5alloc6GlobalECs1BCiKJoB9mN_4fsst.exit
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !57
-  tail call void @_RNvCs9hJ03s5DiqP_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #15, !noalias !58
-  %i.g = tail call noundef align 8 dereferenceable_or_null(12288) ptr @_RNvCs9hJ03s5DiqP_7___rustc12___rust_alloc(i64 noundef range(i64 0, 9223372036854775807) 12288, i64 noundef range(i64 2, 9) 8) #15, !noalias !58 ; 3 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !58
+  tail call void @_RNvCs9hJ03s5DiqP_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #15, !noalias !59
+  %i.g = tail call noundef align 8 dereferenceable_or_null(12288) ptr @_RNvCs9hJ03s5DiqP_7___rustc12___rust_alloc(i64 noundef range(i64 0, 9223372036854775807) 12288, i64 noundef range(i64 2, 9) 8) #15, !noalias !59 ; 3 uses
   %i.h = icmp eq ptr %i.g, null
   br i1 %i.h, label %bb.e, label %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecIBv_tEE7reserveCs1BCiKJoB9mN_4fsst.exit.i.i
 
 bb.e:                                             ; preds = %_RINvXs_NtNtCs40k4W9msRzi_5alloc3vec14spec_from_elemtNtB5_12SpecFromElem9from_elemNtNtB9_5alloc6GlobalECs1BCiKJoB9mN_4fsst.exit2
   invoke void @_RNvNtCs40k4W9msRzi_5alloc7raw_vec12handle_error(i64 noundef 8, i64 12288) #16
-          to label %.noexc.i unwind label %bb.g, !noalias !57
+          to label %.noexc.i unwind label %bb.g, !noalias !58
 
 .noexc.i:                                         ; preds = %bb.e
   unreachable
 
 _RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecIBv_tEE7reserveCs1BCiKJoB9mN_4fsst.exit.i.i: ; preds = %_RINvXs_NtNtCs40k4W9msRzi_5alloc3vec14spec_from_elemtNtB5_12SpecFromElem9from_elemNtNtB9_5alloc6GlobalECs1BCiKJoB9mN_4fsst.exit2
-  store i64 512, ptr %i.a, align 8, !noalias !57
+  store i64 512, ptr %i.a, align 8, !noalias !58
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store ptr %i.g, ptr %i.i, align 8, !noalias !57
+  store ptr %i.g, ptr %i.i, align 8, !noalias !58
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !59)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !60)
   br label %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecIBv_tEE7reserveCs1BCiKJoB9mN_4fsst.exit.split.i.i
 
 _RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecIBv_tEE7reserveCs1BCiKJoB9mN_4fsst.exit.split.i.i: ; preds = %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecIBv_tEE7reserveCs1BCiKJoB9mN_4fsst.exit.i.i, %_RNvXsa_NtCs40k4W9msRzi_5alloc3vecINtB5_3VectENtNtCscI6d9CVNmLh_4core5clone5Clone5cloneCs1BCiKJoB9mN_4fsst.exit.i.i
   %.sroa.0.026.i.i = phi ptr [ %i.n, %_RNvXsa_NtCs40k4W9msRzi_5alloc3vecINtB5_3VectENtNtCscI6d9CVNmLh_4core5clone5Clone5cloneCs1BCiKJoB9mN_4fsst.exit.i.i ], [ %i.g, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecIBv_tEE7reserveCs1BCiKJoB9mN_4fsst.exit.i.i ] ; 6 uses
   %.sroa.03.025.i.i = phi i64 [ %i.m, %_RNvXsa_NtCs40k4W9msRzi_5alloc3vecINtB5_3VectENtNtCscI6d9CVNmLh_4core5clone5Clone5cloneCs1BCiKJoB9mN_4fsst.exit.i.i ], [ 1, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecIBv_tEE7reserveCs1BCiKJoB9mN_4fsst.exit.i.i ]
   %storemerge24.i.i = phi i64 [ %i.o, %_RNvXsa_NtCs40k4W9msRzi_5alloc3vecINtB5_3VectENtNtCscI6d9CVNmLh_4core5clone5Clone5cloneCs1BCiKJoB9mN_4fsst.exit.i.i ], [ 0, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecIBv_tEE7reserveCs1BCiKJoB9mN_4fsst.exit.i.i ] ; 2 uses
-  tail call void @_RNvCs9hJ03s5DiqP_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #15, !noalias !60
-  %i.k = tail call noundef align 2 dereferenceable_or_null(1024) ptr @_RNvCs9hJ03s5DiqP_7___rustc12___rust_alloc(i64 noundef range(i64 0, 9223372036854775807) 1024, i64 noundef range(i64 2, 9) 2) #15, !noalias !60 ; 3 uses
+  tail call void @_RNvCs9hJ03s5DiqP_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #15, !noalias !61
+  %i.k = tail call noundef align 2 dereferenceable_or_null(1024) ptr @_RNvCs9hJ03s5DiqP_7___rustc12___rust_alloc(i64 noundef range(i64 0, 9223372036854775807) 1024, i64 noundef range(i64 2, 9) 2) #15, !noalias !61 ; 3 uses
   %i.l = icmp eq ptr %i.k, null
   br i1 %i.l, label %bb.f, label %_RNvXsa_NtCs40k4W9msRzi_5alloc3vecINtB5_3VectENtNtCscI6d9CVNmLh_4core5clone5Clone5cloneCs1BCiKJoB9mN_4fsst.exit.i.i
 
 bb.f:                                             ; preds = %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecIBv_tEE7reserveCs1BCiKJoB9mN_4fsst.exit.split.i.i
   invoke void @_RNvNtCs40k4W9msRzi_5alloc7raw_vec12handle_error(i64 noundef 2, i64 1024) #16
-          to label %.noexc16.i.i unwind label %.body.i, !noalias !61
+          to label %.noexc16.i.i unwind label %.body.i, !noalias !62
 
 .noexc16.i.i:                                     ; preds = %bb.f
   unreachable
 
 _RNvXsa_NtCs40k4W9msRzi_5alloc3vecINtB5_3VectENtNtCscI6d9CVNmLh_4core5clone5Clone5cloneCs1BCiKJoB9mN_4fsst.exit.i.i: ; preds = %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecIBv_tEE7reserveCs1BCiKJoB9mN_4fsst.exit.split.i.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1024) %i.k, ptr noundef nonnull readonly align 2 dereferenceable(1024) %i.d, i64 1024, i1 false), !noalias !62
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1024) %i.k, ptr noundef nonnull readonly align 2 dereferenceable(1024) %i.d, i64 1024, i1 false), !noalias !63
   %i.m = add nuw nsw i64 %.sroa.03.025.i.i, 1     ; 2 uses
-  store i64 512, ptr %.sroa.0.026.i.i, align 8, !noalias !61
+  store i64 512, ptr %.sroa.0.026.i.i, align 8, !noalias !64
   %.sroa.521.0..sroa.0.0.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.026.i.i, i64 8
-  store ptr %i.k, ptr %.sroa.521.0..sroa.0.0.sroa_idx.i.i, align 8, !noalias !61
+  store ptr %i.k, ptr %.sroa.521.0..sroa.0.0.sroa_idx.i.i, align 8, !noalias !64
   %.sroa.7.0..sroa.0.0.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.026.i.i, i64 16
-  store i64 512, ptr %.sroa.7.0..sroa.0.0.sroa_idx.i.i, align 8, !noalias !61
+  store i64 512, ptr %.sroa.7.0..sroa.0.0.sroa_idx.i.i, align 8, !noalias !64
   %i.n = getelementptr inbounds nuw i8, ptr %.sroa.0.026.i.i, i64 24 ; 2 uses
   %i.o = add nuw nsw i64 %storemerge24.i.i, 1
   %exitcond.not.i.i = icmp eq i64 %i.m, 512
@@ -268,27 +268,27 @@ _RNvXsa_NtCs40k4W9msRzi_5alloc3vecINtB5_3VectENtNtCscI6d9CVNmLh_4core5clone5Clon
 .body.i:                                          ; preds = %bb.f
   %i.p = landingpad { ptr, i32 }
           cleanup
-  store i64 %storemerge24.i.i, ptr %i.j, align 8, !alias.scope !59, !noalias !57
-  tail call void @_RNvCs9hJ03s5DiqP_7___rustc14___rust_dealloc(ptr noundef nonnull %i.d, i64 noundef 1024, i64 noundef range(i64 1, -9223372036854775807) 2) #15, !noalias !61
-  call fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VecIBC_tEEECs1BCiKJoB9mN_4fsst(ptr noalias noundef align 8 dereferenceable(24) %i.a) #17, !noalias !57
+  store i64 %storemerge24.i.i, ptr %i.j, align 8, !alias.scope !60, !noalias !58
+  tail call void @_RNvCs9hJ03s5DiqP_7___rustc14___rust_dealloc(ptr noundef nonnull %i.d, i64 noundef 1024, i64 noundef range(i64 1, -9223372036854775807) 2) #15, !noalias !64
+  call fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VecIBC_tEEECs1BCiKJoB9mN_4fsst(ptr noalias noundef align 8 dereferenceable(24) %i.a) #17, !noalias !58
   br label %bb.i
 
 bb.g:                                             ; preds = %bb.e
   %i.q = landingpad { ptr, i32 }
           cleanup
-  tail call void @_RNvCs9hJ03s5DiqP_7___rustc14___rust_dealloc(ptr noundef nonnull %i.d, i64 noundef 1024, i64 noundef range(i64 1, -9223372036854775807) 2) #15, !noalias !57
+  tail call void @_RNvCs9hJ03s5DiqP_7___rustc14___rust_dealloc(ptr noundef nonnull %i.d, i64 noundef 1024, i64 noundef range(i64 1, -9223372036854775807) 2) #15, !noalias !58
   br label %bb.i
 
 bb.h:                                             ; preds = %_RNvXsa_NtCs40k4W9msRzi_5alloc3vecINtB5_3VectENtNtCscI6d9CVNmLh_4core5clone5Clone5cloneCs1BCiKJoB9mN_4fsst.exit.i.i
-  store i64 512, ptr %i.n, align 8, !noalias !63
+  store i64 512, ptr %i.n, align 8, !noalias !65
   %.sroa.5.0..us-phi27.i.sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.0.026.i.i, i64 32
-  store ptr %i.d, ptr %.sroa.5.0..us-phi27.i.sroa_idx.i, align 8, !noalias !63
+  store ptr %i.d, ptr %.sroa.5.0..us-phi27.i.sroa_idx.i, align 8, !noalias !65
   %.sroa.7.0..us-phi27.i.sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.0.026.i.i, i64 40
-  store i64 512, ptr %.sroa.7.0..us-phi27.i.sroa_idx.i, align 8, !noalias !63
-  store i64 512, ptr %i.j, align 8, !alias.scope !59, !noalias !57
+  store i64 512, ptr %.sroa.7.0..us-phi27.i.sroa_idx.i, align 8, !noalias !65
+  store i64 512, ptr %i.j, align 8, !alias.scope !60, !noalias !58
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.r, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !57
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !58
   store i64 512, ptr %0, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.b, ptr %.sroa.5.0..sroa_idx, align 8
@@ -303,14 +303,14 @@ bb.i:                                             ; preds = %bb.d, %bb.g, %.body
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef nonnull ptr @_RNvNtCs1BCiKJoB9mN_4fsst4fsst28missing_escape_payload_error() unnamed_addr #1 !guid !64 {
+define noundef nonnull ptr @_RNvNtCs1BCiKJoB9mN_4fsst4fsst28missing_escape_payload_error() unnamed_addr #1 !guid !66 {
 bb.a:
   %i.a = tail call noundef nonnull ptr @_RINvMs3_NtNtCsgczF5crJ4sT_3std2io5errorNtB6_5Error3newReEBa_(i8 noundef 21, ptr noalias noundef nonnull readonly captures(address, read_provenance) @15, i64 noundef 62)
   ret ptr %i.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef zeroext i1 @_RNvXNtCs1BCiKJoB9mN_4fsst4fsstNtB2_6SymbolNtNtCscI6d9CVNmLh_4core3fmt7Display3fmt(ptr noalias noundef readonly align 8 captures(none) dereferenceable(16) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %1) unnamed_addr #1 !guid !65 {
+define noundef zeroext i1 @_RNvXNtCs1BCiKJoB9mN_4fsst4fsstNtB2_6SymbolNtNtCscI6d9CVNmLh_4core3fmt7Display3fmt(ptr noalias noundef readonly align 8 captures(none) dereferenceable(16) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %1) unnamed_addr #1 !guid !67 {
 bb.a:
   %i.a = alloca [48 x i8], align 8                ; 9 uses
   %i.b = alloca [4 x i8], align 4                 ; 4 uses
@@ -531,7 +531,7 @@ bb.t:                                             ; preds = %bb.s
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef zeroext i1 @_RNvXs6_NtCs1BCiKJoB9mN_4fsst4fsstNtB5_11SymbolTableNtNtCscI6d9CVNmLh_4core3fmt7Display3fmt(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(156176) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %1) unnamed_addr #1 !guid !66 {
+define noundef zeroext i1 @_RNvXs6_NtCs1BCiKJoB9mN_4fsst4fsstNtB5_11SymbolTableNtNtCscI6d9CVNmLh_4core3fmt7Display3fmt(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(156176) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %1) unnamed_addr #1 !guid !68 {
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 39 uses
   %i.b = alloca [2 x i8], align 2                 ; 36 uses
@@ -747,7 +747,7 @@ bb.p:                                             ; preds = %bb.n
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef zeroext i1 @_RNvXs7_NtCs1BCiKJoB9mN_4fsst4fsstNtB5_11SymbolTableNtNtCscI6d9CVNmLh_4core3fmt5Debug3fmt(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(156176) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %1) unnamed_addr #1 !guid !67 {
+define noundef zeroext i1 @_RNvXs7_NtCs1BCiKJoB9mN_4fsst4fsstNtB5_11SymbolTableNtNtCscI6d9CVNmLh_4core3fmt5Debug3fmt(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(156176) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %1) unnamed_addr #1 !guid !69 {
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 39 uses
   %i.b = alloca [2 x i8], align 2                 ; 36 uses
@@ -964,7 +964,7 @@ bb.p:                                             ; preds = %bb.n
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef zeroext i1 @_RNvXs_NtCs1BCiKJoB9mN_4fsst4fsstNtB4_6SymbolNtNtCscI6d9CVNmLh_4core3fmt5Debug3fmt(ptr noalias noundef readonly align 8 captures(none) dereferenceable(16) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %1) unnamed_addr #1 !guid !68 {
+define noundef zeroext i1 @_RNvXs_NtCs1BCiKJoB9mN_4fsst4fsstNtB4_6SymbolNtNtCscI6d9CVNmLh_4core3fmt5Debug3fmt(ptr noalias noundef readonly align 8 captures(none) dereferenceable(16) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %1) unnamed_addr #1 !guid !70 {
 bb.a:
   %i.a = alloca [48 x i8], align 8                ; 9 uses
   %i.b = alloca [4 x i8], align 4                 ; 4 uses
@@ -1326,16 +1326,18 @@ attributes #17 = { cold }
 !54 = !{!33, !31}
 !55 = !{!31}
 !56 = !{!37, !35}
-!57 = !{!40, !39}
-!58 = !{!42, !40, !39}
-!59 = !{!44}
-!60 = !{!52, !50, !49, !47, !44, !45, !40, !39}
-!61 = !{!44, !45, !40, !39}
-!62 = !{!50, !47, !44, !45, !40, !39}
-!63 = !{!44, !40, !39}
-!64 = !{i64 -5389841347276881315}
-!65 = !{i64 8785960860359433409}
-!66 = !{i64 1339286145353300594}
-!67 = !{i64 5259740240000970845}
-!68 = !{i64 8717846504239000886}
+!57 = !{!35}
+!58 = !{!40, !39}
+!59 = !{!42, !40, !39}
+!60 = !{!44}
+!61 = !{!52, !50, !49, !47, !44, !45, !40, !39}
+!62 = !{!50, !49, !47, !44, !45, !40, !39}
+!63 = !{!50, !47, !44, !45, !40, !39}
+!64 = !{!44, !45, !40, !39}
+!65 = !{!44, !40, !39}
+!66 = !{i64 -5389841347276881315}
+!67 = !{i64 8785960860359433409}
+!68 = !{i64 1339286145353300594}
+!69 = !{i64 5259740240000970845}
+!70 = !{i64 8717846504239000886}
 end_hunk_0

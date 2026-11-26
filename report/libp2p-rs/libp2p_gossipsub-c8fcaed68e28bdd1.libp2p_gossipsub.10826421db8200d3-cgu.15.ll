@@ -202,7 +202,7 @@ bb.fi:                                            ; preds = %bb.fh
 
 bb.fj:                                            ; preds = %bb.fi
   invoke void @_RNvNtCsexYYUdYSQU6_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef 24) #23
-          to label %.noexc117 unwind label %bb.fl
+          to label %.noexc117 unwind label %bb.fl, !noalias !602
 
 .noexc117:                                        ; preds = %bb.fj
   unreachable
@@ -278,7 +278,7 @@ bb.fr:                                            ; preds = %bb.fn
 
 bb.fs:                                            ; preds = %bb.fr
   invoke void @_RNvNtCsexYYUdYSQU6_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef 24) #23
-          to label %.noexc123 unwind label %bb.fu
+          to label %.noexc123 unwind label %bb.fu, !noalias !611
 
 .noexc123:                                        ; preds = %bb.fs
   unreachable
@@ -354,7 +354,7 @@ bb.ga:                                            ; preds = %bb.fw
 
 bb.gb:                                            ; preds = %bb.ga
   invoke void @_RNvNtCsexYYUdYSQU6_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef 24) #23
-          to label %.noexc131 unwind label %bb.gd
+          to label %.noexc131 unwind label %bb.gd, !noalias !620
 
 .noexc131:                                        ; preds = %bb.gb
   unreachable
@@ -536,7 +536,7 @@ bb.gv:                                            ; preds = %bb.gu
 
 bb.gw:                                            ; preds = %bb.gv
   invoke void @_RNvNtCsexYYUdYSQU6_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef 24) #23
-          to label %.noexc144 unwind label %bb.gt
+          to label %.noexc144 unwind label %bb.gt, !noalias !641
 
 .noexc144:                                        ; preds = %bb.gw
   unreachable
@@ -939,7 +939,7 @@ bb.d:                                             ; preds = %bb.b
 bb.e:                                             ; preds = %.noexc.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !798
   invoke void @_RNvNtCskKLDkoKarTP_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #24
-          to label %.noexc1.i unwind label %bb.g, !noalias !797
+          to label %.noexc1.i unwind label %bb.g, !noalias !798
 
 .noexc1.i:                                        ; preds = %bb.e
   unreachable
@@ -951,11 +951,11 @@ bb.f:                                             ; preds = %.noexc.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !798
   store ptr %i.k, ptr %i.a, align 8, !noalias !798
   invoke void @_RNvMsp_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree8navigateINtNtB7_4node6HandleINtB10_7NodeRefNtNtB10_6marker5ImmutNtNtCs1pSuea8KFR7_16libp2p_gossipsub5topic9TopicHashNtNtB7_7set_val9SetValZSTNtB1y_14LeafOrInternalENtB1y_2KVE14next_leaf_edgeB1V_(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(40) %i.c, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.a)
-          to label %.noexc2.i unwind label %bb.g, !noalias !797
+          to label %.noexc2.i unwind label %bb.g, !noalias !799
 
 .noexc2.i:                                        ; preds = %bb.f
   %i.m = invoke { ptr, ptr } @_RNvMsP_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree4nodeINtB5_6HandleINtB5_7NodeRefNtNtB5_6marker5ImmutNtNtCs1pSuea8KFR7_16libp2p_gossipsub5topic9TopicHashNtNtB7_7set_val9SetValZSTNtB1m_14LeafOrInternalENtB1m_2KVE7into_kvB1I_(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.a)
-          to label %_RINvNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mem7replaceINtNtB4_4node6HandleINtB10_7NodeRefNtNtB10_6marker5ImmutNtNtCs1pSuea8KFR7_16libp2p_gossipsub5topic9TopicHashNtNtB4_7set_val9SetValZSTNtB1y_4LeafENtB1y_4EdgeETRB1R_RB2H_ENCNvMsk_NtB4_8navigateBX_14next_unchecked0EB1V_.exit unwind label %bb.g, !noalias !797 ; 2 uses
+          to label %_RINvNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mem7replaceINtNtB4_4node6HandleINtB10_7NodeRefNtNtB10_6marker5ImmutNtNtCs1pSuea8KFR7_16libp2p_gossipsub5topic9TopicHashNtNtB4_7set_val9SetValZSTNtB1y_4LeafENtB1y_4EdgeETRB1R_RB2H_ENCNvMsk_NtB4_8navigateBX_14next_unchecked0EB1V_.exit unwind label %bb.g, !noalias !798 ; 2 uses
 
 bb.g:                                             ; preds = %.noexc2.i, %bb.f, %bb.e, %bb.d
   %i.n = landingpad { ptr, i32 }
@@ -1053,9 +1053,9 @@ define internal noundef ptr @_RNvYNCNKNvNvMNtNtCsG258MDvU3F_3std4hash6randomNtBb
 bb.a:
   %i.a = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr @_RNvNCNKNvNvMNtNtCsG258MDvU3F_3std4hash6randomNtBa_11RandomState3new4KEYS0s_023___RUST_STD_INTERNAL_VAL) ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %i.c = load i8, ptr %i.b, align 8, !range !9, !noalias !803, !noundef !4
+  %i.c = load i8, ptr %i.b, align 8, !range !9, !noalias !804, !noundef !4
   %i.d = trunc nuw i8 %i.c to i1
-  br i1 %i.d, label %_RNCNKNvNvMNtNtCsG258MDvU3F_3std4hash6randomNtB8_11RandomState3new4KEYS0s_0Cs1pSuea8KFR7_16libp2p_gossipsub.exit, label %bb.b, !prof !804
+  br i1 %i.d, label %_RNCNKNvNvMNtNtCsG258MDvU3F_3std4hash6randomNtB8_11RandomState3new4KEYS0s_0Cs1pSuea8KFR7_16libp2p_gossipsub.exit, label %bb.b, !prof !805
 
 bb.b:                                             ; preds = %bb.a
   %i.e = tail call noundef ptr @_RINvMs0_NtNtNtNtCsG258MDvU3F_3std3sys12thread_local6native4lazyINtB6_7StorageINtNtCskKLDkoKarTP_4core4cell4CellTyyEEzE16get_or_init_slowNvNvNvMNtNtBe_4hash6randomNtB2h_11RandomState3new4KEYS27___rust_std_internal_init_fnECs1pSuea8KFR7_16libp2p_gossipsub(ptr noundef nonnull align 8 %i.a, ptr noalias nofree noundef align 8 dereferenceable_or_null(24) %0)
@@ -1105,7 +1105,7 @@ bb.a:
 ; Function Attrs: nonlazybind uwtable
 define internal noundef zeroext i1 @_RNvYNtNtCsexYYUdYSQU6_5alloc6string6StringNtNtCskKLDkoKarTP_4core3fmt5Write9write_fmtCs1pSuea8KFR7_16libp2p_gossipsub(ptr noalias nofree noundef align 8 dereferenceable(24) %0, ptr noundef nonnull %1, ptr noundef nonnull %2) unnamed_addr #0 {
 _RNvXs_NvNtNtCskKLDkoKarTP_4core3fmt5Write9write_fmtQNtNtCsexYYUdYSQU6_5alloc6string6StringNtB4_12SpecWriteFmt14spec_write_fmtCs1pSuea8KFR7_16libp2p_gossipsub.exit:
-  %i.a = tail call noundef zeroext i1 @_RNvNtCskKLDkoKarTP_4core3fmt5write(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) @112, ptr noundef nonnull %1, ptr noundef nonnull %2), !inline_history !805
+  %i.a = tail call noundef zeroext i1 @_RNvNtCskKLDkoKarTP_4core3fmt5write(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) @112, ptr noundef nonnull %1, ptr noundef nonnull %2), !inline_history !806
   ret i1 %i.a
 }
 
@@ -1508,11 +1508,12 @@ begin_hunk_2_@llvm.experimental.noalias.scope.decl
 !796 = distinct !{!796, !794, !"_RNCNvMsk_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree8navigateINtNtB9_4node6HandleINtB12_7NodeRefNtNtB12_6marker5ImmutNtNtCs1pSuea8KFR7_16libp2p_gossipsub5topic9TopicHashNtNtB9_7set_val9SetValZSTNtB1A_4LeafENtB1A_4EdgeE14next_unchecked0B1X_: argument 0"}
 !797 = !{!793}
 !798 = !{!796, !795, !793}
-!799 = distinct !{!799, i1 true, !"_RNCNKNvNvMNtNtCsG258MDvU3F_3std4hash6randomNtB8_11RandomState3new4KEYS0s_0Cs1pSuea8KFR7_16libp2p_gossipsub"}
-!800 = distinct !{!800, !799, !"_RNCNKNvNvMNtNtCsG258MDvU3F_3std4hash6randomNtB8_11RandomState3new4KEYS0s_0Cs1pSuea8KFR7_16libp2p_gossipsub: argument 0"}
-!801 = distinct !{!801, i1 true, !"_RINvMs0_NtNtNtNtCsG258MDvU3F_3std3sys12thread_local6native4lazyINtB6_7StorageINtNtCskKLDkoKarTP_4core4cell4CellTyyEEzE11get_or_initNvNvNvMNtNtBe_4hash6randomNtB2c_11RandomState3new4KEYS27___rust_std_internal_init_fnECs1pSuea8KFR7_16libp2p_gossipsub"}
-!802 = distinct !{!802, !801, !"_RINvMs0_NtNtNtNtCsG258MDvU3F_3std3sys12thread_local6native4lazyINtB6_7StorageINtNtCskKLDkoKarTP_4core4cell4CellTyyEEzE11get_or_initNvNvNvMNtNtBe_4hash6randomNtB2c_11RandomState3new4KEYS27___rust_std_internal_init_fnECs1pSuea8KFR7_16libp2p_gossipsub: argument 0"}
-!803 = !{!802, !800}
-!804 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!805 = distinct !{null}
+!799 = !{!795, !793}
+!800 = distinct !{!800, i1 true, !"_RNCNKNvNvMNtNtCsG258MDvU3F_3std4hash6randomNtB8_11RandomState3new4KEYS0s_0Cs1pSuea8KFR7_16libp2p_gossipsub"}
+!801 = distinct !{!801, !800, !"_RNCNKNvNvMNtNtCsG258MDvU3F_3std4hash6randomNtB8_11RandomState3new4KEYS0s_0Cs1pSuea8KFR7_16libp2p_gossipsub: argument 0"}
+!802 = distinct !{!802, i1 true, !"_RINvMs0_NtNtNtNtCsG258MDvU3F_3std3sys12thread_local6native4lazyINtB6_7StorageINtNtCskKLDkoKarTP_4core4cell4CellTyyEEzE11get_or_initNvNvNvMNtNtBe_4hash6randomNtB2c_11RandomState3new4KEYS27___rust_std_internal_init_fnECs1pSuea8KFR7_16libp2p_gossipsub"}
+!803 = distinct !{!803, !802, !"_RINvMs0_NtNtNtNtCsG258MDvU3F_3std3sys12thread_local6native4lazyINtB6_7StorageINtNtCskKLDkoKarTP_4core4cell4CellTyyEEzE11get_or_initNvNvNvMNtNtBe_4hash6randomNtB2c_11RandomState3new4KEYS27___rust_std_internal_init_fnECs1pSuea8KFR7_16libp2p_gossipsub: argument 0"}
+!804 = !{!803, !801}
+!805 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!806 = distinct !{null}
 end_hunk_2

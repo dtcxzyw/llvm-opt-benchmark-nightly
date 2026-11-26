@@ -114,6 +114,7 @@ $_ZTSN7testing8internal15TestFactoryBaseE = comdat any
 @_ZTSN12_GLOBAL__N_118DerivedForDownCastE = internal constant [37 x i8] c"N12_GLOBAL__N_118DerivedForDownCastE\00", align 1
 @_ZTIN12_GLOBAL__N_115BaseForDownCastE = internal constant { ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv117__class_type_infoE, i64 2), ptr @_ZTSN12_GLOBAL__N_115BaseForDownCastE }, align 8
 @_ZTSN12_GLOBAL__N_115BaseForDownCastE = internal constant [34 x i8] c"N12_GLOBAL__N_115BaseForDownCastE\00", align 1
+@_ZTVN12_GLOBAL__N_115BaseForDownCastE = internal constant { [4 x ptr] } { [4 x ptr] [ptr null, ptr @_ZTIN12_GLOBAL__N_115BaseForDownCastE, ptr @_ZN12_GLOBAL__N_115BaseForDownCastD2Ev, ptr @_ZN12_GLOBAL__N_115BaseForDownCastD0Ev] }, align 8
 @_ZTVN7testing8internal15TestFactoryImplIN12_GLOBAL__N_127DownCastTest_Reference_TestEEE = internal constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr @_ZTIN7testing8internal15TestFactoryImplIN12_GLOBAL__N_127DownCastTest_Reference_TestEEE, ptr @_ZN7testing8internal15TestFactoryBaseD2Ev, ptr @_ZN7testing8internal15TestFactoryImplIN12_GLOBAL__N_127DownCastTest_Reference_TestEED0Ev, ptr @_ZN7testing8internal15TestFactoryImplIN12_GLOBAL__N_127DownCastTest_Reference_TestEE10CreateTestEv] }, align 8
 @_ZTIN7testing8internal15TestFactoryImplIN12_GLOBAL__N_127DownCastTest_Reference_TestEEE = internal constant { ptr, ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv120__si_class_type_infoE, i64 2), ptr @_ZTSN7testing8internal15TestFactoryImplIN12_GLOBAL__N_127DownCastTest_Reference_TestEEE, ptr @_ZTIN7testing8internal15TestFactoryBaseE }, align 8
 @_ZTSN7testing8internal15TestFactoryImplIN12_GLOBAL__N_127DownCastTest_Reference_TestEEE = internal constant [84 x i8] c"N7testing8internal15TestFactoryImplIN12_GLOBAL__N_127DownCastTest_Reference_TestEEE\00", align 1
@@ -516,6 +517,9 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
 
 _ZN7testing15AssertionResultD2Ev.exit102:         ; preds = %bb.bt, %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i100
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #13
+  %17 = call noalias noundef nonnull dereferenceable(8) ptr @_Znwm(i64 noundef 8) #15 ; 2 uses
+  store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN12_GLOBAL__N_115BaseForDownCastE, i64 16), ptr %17, align 8, !tbaa !11
+  call void @_ZdlPvm(ptr noundef nonnull align 8 dereferenceable(8) %17, i64 noundef 8) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #13
   ret void
@@ -555,7 +559,7 @@ bb.c:                                             ; preds = %bb.a
   call void @llvm.experimental.noalias.scope.decl(metadata !110)
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #13, !noalias !111
   invoke void @_ZNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEC1Ev(ptr noundef nonnull align 8 dereferenceable(128) %3)
-          to label %.noexc.i.i unwind label %bb.k, !noalias !107
+          to label %.noexc.i.i unwind label %bb.k, !noalias !111
 
 .noexc.i.i:                                       ; preds = %bb.c
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
@@ -842,6 +846,12 @@ bb.a:
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define internal void @_ZN12_GLOBAL__N_118DerivedForDownCastD0Ev(ptr noundef nonnull align 8 dereferenceable(8) %0) unnamed_addr #5 align 2 {
 bb.a:
+  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 8) #14
+  ret void
+}
+
+; Function Attrs: mustprogress nounwind uwtable
+define internal void @_ZN12_GLOBAL__N_115BaseForDownCastD0Ev(ptr noundef nonnull align 8 dereferenceable(8) %0) unnamed_addr #6 align 2 {
   tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 8) #14
   ret void
 }
@@ -1248,6 +1258,9 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
 
 _ZN7testing15AssertionResultD2Ev.exit84:          ; preds = %bb.bb, %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i82
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #13
+  %14 = call noalias noundef nonnull dereferenceable(8) ptr @_Znwm(i64 noundef 8) #15 ; 2 uses
+  store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN12_GLOBAL__N_115BaseForDownCastE, i64 16), ptr %14, align 8, !tbaa !11
+  call void @_ZdlPvm(ptr noundef nonnull align 8 dereferenceable(8) %14, i64 noundef 8) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #13
   ret void
 

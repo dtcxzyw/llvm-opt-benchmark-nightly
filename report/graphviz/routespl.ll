@@ -205,10 +205,14 @@ bb.z:                                             ; preds = %bb.y, %bb.x
   %i.hf = getelementptr inbounds nuw i8, ptr %9, i64 48
   %i.hg = getelementptr inbounds nuw i8, ptr %8, i64 48 ; 2 uses
   %i.hh = getelementptr inbounds nuw i8, ptr %10, i64 8
+  %11 = load <2 x double>, ptr %i.m, align 16
+  %12 = load <2 x double>, ptr %i.t, align 16
   br label %bb.aa
 
 bb.aa:                                            ; preds = %.lr.ph, %bb.ad
   %.086101 = phi i64 [ 0, %.lr.ph ], [ %i.ii, %bb.ad ] ; 2 uses
+  %13 = phi <2 x double> [ %11, %.lr.ph ], [ %i.ig, %bb.ad ]
+  %14 = phi <2 x double> [ %12, %.lr.ph ], [ %i.ih, %bb.ad ]
   %i.hi = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %.086101
   %i.hj = load ptr, ptr %i.hi, align 8, !tbaa !70 ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #17
@@ -269,11 +273,9 @@ bb.ac:                                            ; preds = %.loopexit
 
 bb.ad:                                            ; preds = %bb.ac, %bb.ab
   call void @addEdgeLabels(ptr noundef nonnull %i.hj) #17
-  %11 = load <2 x double>, ptr %i.m, align 16
-  %i.ig = fadd <2 x double> %i.gz, %11
+  %i.ig = fadd <2 x double> %i.gz, %13            ; 2 uses
   store <2 x double> %i.ig, ptr %i.m, align 16, !tbaa !20
-  %12 = load <2 x double>, ptr %i.t, align 16
-  %i.ih = fadd <2 x double> %i.gz, %12
+  %i.ih = fadd <2 x double> %i.gz, %14            ; 2 uses
   store <2 x double> %i.ih, ptr %i.t, align 16, !tbaa !20
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #17
   %i.ii = add nuw i64 %.086101, 1                 ; 2 uses

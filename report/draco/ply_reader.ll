@@ -176,7 +176,6 @@ $_ZTSZN5draco17PlyPropertyWriterIdEC1EPNS_11PlyPropertyEEUldE6_ = comdat any
 @.str.15 = private unnamed_addr constant [25 x i8] c"Wrong property data type\00", align 1
 @.str.16 = private unnamed_addr constant [25 x i8] c"Wrong property list type\00", align 1
 @.str.17 = private unnamed_addr constant [7 x i8] c" \09\0A\0B\0C\0D\00", align 1
-@.str.20 = private unnamed_addr constant [6 x i8] c"uchar\00", align 1
 @.str.24 = private unnamed_addr constant [7 x i8] c"ushort\00", align 1
 @.str.25 = private unnamed_addr constant [7 x i8] c"uint16\00", align 1
 @.str.26 = private unnamed_addr constant [4 x i8] c"int\00", align 1
@@ -463,7 +462,7 @@ _ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   %.not = icmp eq i32 %i.u, 0
   br i1 %.not, label %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread102, label %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread
 
-_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread: ; preds = %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit, %bb.b
+_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread: ; preds = %bb.b, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #20
   %i.v = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 6 uses
   store ptr %i.v, ptr %4, align 8, !tbaa !14
@@ -646,7 +645,7 @@ bb.n:                                             ; preds = %_ZNSt7__cxx1112basi
           cleanup
   br label %bb.am
 
-_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread103: ; preds = %bb.l, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit, %bb.k
+_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread103: ; preds = %bb.l, %bb.k, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #20
   %i.cd = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 6 uses
   store ptr %i.cd, ptr %8, align 8, !tbaa !14
@@ -1049,7 +1048,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZNSt7__cx
 
 bb.c:                                             ; preds = %bb.b
   invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.39, ptr noundef nonnull @.str.38, i64 noundef %.097, i64 noundef %i.n) #22
-          to label %.noexc unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %.noexc unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !138
 
 .noexc:                                           ; preds = %bb.c
   unreachable
@@ -1319,7 +1318,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.u,
 
 bb.v:                                             ; preds = %._crit_edge
   invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.39, ptr noundef nonnull @.str.38, i64 noundef %i.ck, i64 noundef %i.cr) #22
-          to label %.noexc34 unwind label %bb.an
+          to label %.noexc34 unwind label %bb.an, !noalias !139
 
 .noexc34:                                         ; preds = %bb.v
   unreachable
@@ -1722,7 +1721,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt
 define dso_local noundef range(i32 0, 11) i32 @_ZNK5draco9PlyReader21GetDataTypeFromStringERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr nofree nonnull readnone align 8 captures(none) %0, ptr noundef nonnull align 8 dereferenceable(32) %1) local_unnamed_addr #5 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !18   ; 2 uses
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !18
   switch i64 %i.b, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit25.thread31 [
     i64 4, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
     i64 5, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit19
@@ -1744,9 +1743,17 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   br i1 %i.k, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit25.thread31
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit19: ; preds = %bb.a
-  %.pre = load ptr, ptr %1, align 8, !tbaa !17    ; 7 uses
-  %bcmp.i18 = tail call i32 @bcmp(ptr %.pre, ptr nonnull @.str.20, i64 %i.b)
-  %i.l = icmp eq i32 %bcmp.i18, 0
+  %.pre = load ptr, ptr %1, align 8, !tbaa !17    ; 8 uses
+  %2 = load i32, ptr %.pre, align 1
+  %3 = xor i32 %2, 1634231157
+  %4 = getelementptr i8, ptr %.pre, i64 4
+  %5 = load i8, ptr %4, align 1
+  %6 = zext i8 %5 to i32
+  %7 = xor i32 %6, 114
+  %8 = or i32 %3, %7
+  %9 = icmp ne i32 %8, 0
+  %10 = zext i1 %9 to i32
+  %i.l = icmp eq i32 %10, 0
   br i1 %i.l, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit21
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit21: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit19
@@ -1788,7 +1795,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   %i.ap = icmp eq i32 %i.ao, 0
   br i1 %i.ap, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit25.thread31
 
-_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit25.thread31: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit17, %bb.a, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit25
+_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit25.thread31: ; preds = %bb.a, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit17, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit25
   %i.aq = tail call noundef zeroext i1 @_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_(ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull @.str.24)
   br i1 %i.aq, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread, label %bb.b
 
@@ -2191,7 +2198,7 @@ attributes #25 = { nounwind willreturn memory(read) }
 !162 = distinct !{!162, !76}
 !163 = distinct !{!163, !76}
 !164 = distinct !{!164, !76}
-!165 = distinct !{null}
+!165 = distinct !{null, null}
 !166 = distinct !{!166, !76}
 !167 = distinct !{!167, !76}
 !168 = distinct !{!168, !76}

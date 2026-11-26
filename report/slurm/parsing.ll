@@ -202,7 +202,7 @@ bb.a:
   %i.l = tail call i32 @openapi_append_rel_path(ptr noundef %i.j, ptr noundef %0) #7 ; 0 uses
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.n = load ptr, ptr %i.m, align 8
-  %i.o = tail call ptr @data_copy(ptr noundef null, ptr noundef %i.n) #7 ; 5 uses
+  %i.o = tail call ptr @data_copy(ptr noundef null, ptr noundef %i.n) #7 ; 10 uses
   %i.p = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 3 uses
   store ptr %i.o, ptr %i.p, align 8
   %i.q = tail call ptr @data_list_append(ptr noundef %i.o) #7
@@ -351,7 +351,7 @@ bb.p:                                             ; preds = %bb.n, %bb.o, %bb.m
   br label %bb.v
 
 bb.q:                                             ; preds = %_match_array_path.exit._crit_edge, %bb.b
-  %i.bq = phi i64 [ %i.x, %bb.b ], [ %.pre, %_match_array_path.exit._crit_edge ] ; 2 uses
+  %i.bq = phi i64 [ %.pre, %_match_array_path.exit._crit_edge ], [ %i.x, %bb.b ] ; 2 uses
   %indvars.iv.next76 = add nuw nsw i64 %indvars.iv75, 1 ; 2 uses
   %i.br = icmp ugt i64 %i.bq, %indvars.iv.next76
   br i1 %i.br, label %bb.b, label %._crit_edge, !llvm.loop !20
@@ -363,6 +363,7 @@ bb.q:                                             ; preds = %_match_array_path.e
 
 bb.r:                                             ; preds = %._crit_edge
   %i.bu = call i32 @data_dict_for_each(ptr noundef %1, ptr noundef nonnull @_foreach_parse_marray, ptr noundef nonnull %4) #7 ; 0 uses
+  %.pre78 = load ptr, ptr %i.p, align 8
   br label %bb.v
 
 bb.s:                                             ; preds = %._crit_edge
@@ -387,7 +388,7 @@ bb.u:                                             ; preds = %bb.s, %bb.t
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.j, %bb.f, %bb.p, %bb.l, %bb.r, %bb.u
-  %5 = load ptr, ptr %i.p, align 8                ; 2 uses
+  %5 = phi ptr [ %i.o, %bb.j ], [ %i.o, %bb.f ], [ %i.o, %bb.p ], [ %i.o, %bb.l ], [ %.pre78, %bb.r ], [ %i.o, %bb.u ] ; 2 uses
   %.not51 = icmp eq ptr %5, null
   br i1 %.not51, label %bb.x, label %bb.w
 

@@ -202,13 +202,13 @@ bb.a:
   %i.k = alloca i32, align 4                      ; 4 uses
   %i.l = alloca i32, align 4                      ; 4 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.n = load i64, ptr %i.m, align 8, !tbaa !35   ; 11 uses
+  %i.n = load i64, ptr %i.m, align 8, !tbaa !35   ; 12 uses
   %cond = icmp eq i64 %i.n, 0
   br i1 %cond, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareEPKc.exit67.thread, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i
 
 _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i:     ; preds = %bb.a
   %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %i.n, i64 10)
-  %i.o = load ptr, ptr %0, align 8, !tbaa !36     ; 7 uses
+  %i.o = load ptr, ptr %0, align 8, !tbaa !36     ; 2 uses
   %bcmp = tail call i32 @bcmp(ptr %i.o, ptr nonnull @.str.3, i64 %.sroa.speculated.i)
   %.not.i = icmp eq i32 %bcmp, 0
   %.not = icmp eq i64 %i.n, 10
@@ -241,9 +241,10 @@ bb.c:                                             ; preds = %_ZNSt11char_traitsI
 
 _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i24:   ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i15
   %.sroa.speculated.i23 = tail call i64 @llvm.umin.i64(i64 %i.n, i64 3) ; 2 uses
-  %bcmp83 = tail call i32 @bcmp(ptr %i.o, ptr nonnull @.str.5, i64 %.sroa.speculated.i23)
+  %1 = load ptr, ptr %0, align 8, !tbaa !36
+  %bcmp83 = tail call i32 @bcmp(ptr %1, ptr nonnull @.str.5, i64 %.sroa.speculated.i23)
   %.not.i25 = icmp eq i32 %bcmp83, 0
-  %.not9 = icmp eq i64 %i.n, 3                    ; 2 uses
+  %.not9 = icmp eq i64 %i.n, 3
   %or.cond89 = and i1 %.not9, %.not.i25
   br i1 %or.cond89, label %bb.d, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i33
 
@@ -257,7 +258,8 @@ bb.d:                                             ; preds = %_ZNSt11char_traitsI
 
 _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i33:   ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i24
   %.sroa.speculated.i32 = tail call i64 @llvm.umin.i64(i64 %i.n, i64 7)
-  %bcmp84 = tail call i32 @bcmp(ptr %i.o, ptr nonnull @.str.6, i64 %.sroa.speculated.i32)
+  %2 = load ptr, ptr %0, align 8, !tbaa !36
+  %bcmp84 = tail call i32 @bcmp(ptr %2, ptr nonnull @.str.6, i64 %.sroa.speculated.i32)
   %.not.i34 = icmp eq i32 %bcmp84, 0
   %.not10 = icmp eq i64 %i.n, 7
   %or.cond90 = and i1 %.not10, %.not.i34
@@ -273,7 +275,8 @@ bb.e:                                             ; preds = %_ZNSt11char_traitsI
 
 _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i42:   ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i33
   %.sroa.speculated.i41 = tail call i64 @llvm.umin.i64(i64 %i.n, i64 6) ; 2 uses
-  %bcmp85 = tail call i32 @bcmp(ptr %i.o, ptr nonnull @.str.7, i64 %.sroa.speculated.i41)
+  %3 = load ptr, ptr %0, align 8, !tbaa !36       ; 2 uses
+  %bcmp85 = tail call i32 @bcmp(ptr %3, ptr nonnull @.str.7, i64 %.sroa.speculated.i41)
   %.not.i43 = icmp eq i32 %bcmp85, 0
   %.not11 = icmp eq i64 %i.n, 6                   ; 2 uses
   %or.cond91 = and i1 %.not11, %.not.i43
@@ -288,7 +291,7 @@ bb.f:                                             ; preds = %_ZNSt11char_traitsI
   br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareEPKc.exit67.thread
 
 _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i51:   ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i42
-  %bcmp86 = tail call i32 @bcmp(ptr %i.o, ptr nonnull @.str.8, i64 %.sroa.speculated.i41)
+  %bcmp86 = tail call i32 @bcmp(ptr %3, ptr nonnull @.str.8, i64 %.sroa.speculated.i41)
   %.not.i52 = icmp eq i32 %bcmp86, 0
   %or.cond92 = and i1 %.not11, %.not.i52
   br i1 %or.cond92, label %bb.g, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i60
@@ -302,9 +305,11 @@ bb.g:                                             ; preds = %_ZNSt11char_traitsI
   br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareEPKc.exit67.thread
 
 _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i60:   ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i51
-  %bcmp87 = tail call i32 @bcmp(ptr %i.o, ptr nonnull @.str.9, i64 %.sroa.speculated.i23)
-  %.not.i61.a = icmp eq i32 %bcmp87, 0
-  %or.cond93 = and i1 %.not9, %.not.i61.a
+  %4 = load ptr, ptr %0, align 8, !tbaa !36
+  %bcmp87 = tail call i32 @bcmp(ptr %4, ptr nonnull @.str.9, i64 %.sroa.speculated.i23)
+  %.not.i61 = icmp eq i32 %bcmp87, 0
+  %.not.i61.a = icmp eq i64 %i.n, 3
+  %or.cond93 = and i1 %.not.i61.a, %.not.i61
   br i1 %or.cond93, label %bb.h, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareEPKc.exit67.thread
 
 bb.h:                                             ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i60
@@ -343,7 +348,7 @@ bb.h:                                             ; preds = %_ZNSt11char_traitsI
   br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareEPKc.exit67.thread
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareEPKc.exit67.thread: ; preds = %bb.a, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i60, %bb.b, %bb.d, %bb.f, %bb.h, %bb.g, %bb.e, %bb.c
-  %.0 = phi i1 [ false, %bb.a ], [ true, %bb.c ], [ true, %bb.e ], [ true, %bb.g ], [ true, %bb.h ], [ true, %bb.f ], [ true, %bb.d ], [ true, %bb.b ], [ false, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i60 ]
+  %.0 = phi i1 [ false, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i60 ], [ true, %bb.c ], [ true, %bb.e ], [ true, %bb.g ], [ true, %bb.h ], [ true, %bb.f ], [ true, %bb.d ], [ true, %bb.b ], [ false, %bb.a ]
   ret i1 %.0
 }
 

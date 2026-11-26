@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/abc/original/areaEngine?download=true
 inline.NumInlined: 1126
-inline.NumDeleted: 588
+inline.NumDeleted: 596
 loop-unroll.NumCompletelyUnrolled: 6
 loop-unroll.NumUnrolled: 6
 begin_hunk_0_@_ZN5eSLIM10AreaEngine24setupConnectionVariablesEv:bb.a
@@ -204,9 +204,12 @@ bb.al:                                            ; preds = %.lr.ph.i.i.i.i.i
   %i.fv = sext i32 %i.fu to i64
   %i.fw = load ptr, ptr %i.ex, align 8, !tbaa !25
   %i.fx = getelementptr inbounds nuw [4 x i8], ptr %i.fw, i64 %i.fv
-  %i.fy = load i32, ptr %i.fx, align 4, !tbaa !39
+  %i.fy = load i32, ptr %i.fx, align 4, !tbaa !39 ; 2 uses
+  %1 = tail call noalias noundef nonnull dereferenceable(4) ptr @_Znwm(i64 noundef 4) #16 ; 2 uses
+  store i32 %i.fy, ptr %1, align 4, !tbaa !39
   tail call void @_ZN7CaDiCaL6Solver3addEi(ptr noundef nonnull align 8 dereferenceable(24) %i.q, i32 noundef %i.fy) #13
   tail call void @_ZN7CaDiCaL6Solver3addEi(ptr noundef nonnull align 8 dereferenceable(24) %i.q, i32 noundef 0) #13
+  tail call void @_ZdlPvm(ptr noundef nonnull %1, i64 noundef 4) #14
   %i.fz = load i32, ptr %i.r, align 8, !tbaa !77
   %.not143 = icmp eq i32 %i.fz, 0
   br i1 %.not143, label %.loopexit, label %.lr.ph136

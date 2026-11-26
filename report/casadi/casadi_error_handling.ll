@@ -204,14 +204,14 @@ bb.a:                                             ; preds = %.noexc
 
 bb.b:                                             ; preds = %bb.a
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.27) #22
-          to label %.noexc52 unwind label %bb.i
+          to label %.noexc52 unwind label %bb.i, !noalias !35
 
 .noexc52:                                         ; preds = %bb.b
   unreachable
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i: ; preds = %bb.a
   %i.l = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm(ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull @.str.8, i64 noundef 2)
-          to label %.noexc53 unwind label %bb.i   ; 6 uses
+          to label %.noexc53 unwind label %bb.i, !noalias !35 ; 6 uses
 
 .noexc53:                                         ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 5 uses
@@ -256,8 +256,9 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
   store i64 14, ptr %i.z, align 8, !tbaa !18
   %i.aa = getelementptr inbounds nuw i8, ptr %6, i64 30
   store i8 0, ptr %i.aa, align 2, !tbaa !17
+  call void @llvm.experimental.noalias.scope.decl(metadata !36)
   %i.ab = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %6, i64 noundef 0, i64 noundef 0, ptr noundef nonnull @.str.9, i64 noundef 26)
-          to label %.noexc61 unwind label %bb.j   ; 6 uses
+          to label %.noexc61 unwind label %bb.j, !noalias !36 ; 6 uses
 
 .noexc61:                                         ; preds = %._crit_edge.i.i54
   %i.ac = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 5 uses

@@ -128,25 +128,26 @@ bb.a:
 bb.b:                                             ; preds = %bb.g, %bb.a
   %i.d = landingpad { ptr, i32 }
           cleanup
-  %.val.i = load ptr, ptr %i.b, align 8, !dbg !195, !alias.scope !188, !noundef !14
+  call void @llvm.experimental.noalias.scope.decl(metadata !188), !dbg !195
+  %.val.i = load ptr, ptr %i.b, align 8, !dbg !196, !alias.scope !188, !noundef !14
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultuNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsidoPH4Qgqxm_12polars_async(ptr %.val.i)
-          to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNvNtCsh8eZTKRCwoO_3std2io17default_write_fmt7AdapterNtNtNtNtBN_3sys5stdio4unix6StderrEECsidoPH4Qgqxm_12polars_async.exit unwind label %bb.i, !dbg !195
+          to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNvNtCsh8eZTKRCwoO_3std2io17default_write_fmt7AdapterNtNtNtNtBN_3sys5stdio4unix6StderrEECsidoPH4Qgqxm_12polars_async.exit unwind label %bb.i, !dbg !196, !noalias !188
 
 bb.c:                                             ; preds = %bb.a
-  %i.e = load ptr, ptr %i.b, align 8, !dbg !196, !noundef !14 ; 3 uses
-  br i1 %i.c, label %bb.d, label %bb.e, !dbg !197
+  %i.e = load ptr, ptr %i.b, align 8, !dbg !197, !noundef !14 ; 3 uses
+  br i1 %i.c, label %bb.d, label %bb.e, !dbg !198
 
 bb.d:                                             ; preds = %bb.c
-  %.not = icmp eq ptr %i.e, null, !dbg !198
-  br i1 %.not, label %bb.g, label %bb.f, !dbg !199, !prof !31
+  %.not = icmp eq ptr %i.e, null, !dbg !199
+  br i1 %.not, label %bb.g, label %bb.f, !dbg !200, !prof !31
 
 bb.e:                                             ; preds = %bb.c
-  call fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultuNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsidoPH4Qgqxm_12polars_async(ptr %i.e), !dbg !200
-  br label %bb.f, !dbg !200
+  call fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultuNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECsidoPH4Qgqxm_12polars_async(ptr %i.e), !dbg !195
+  br label %bb.f, !dbg !195
 
 bb.f:                                             ; preds = %bb.d, %bb.e
   %.sroa.0.0 = phi ptr [ null, %bb.e ], [ %i.e, %bb.d ], !dbg !201
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !200
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !195
   ret ptr %.sroa.0.0, !dbg !202
 
 bb.g:                                             ; preds = %bb.d
@@ -549,12 +550,12 @@ begin_hunk_1_@llvm.umin.i64
 !192 = !DILocation(line: 638, column: 9, scope: !179)
 !193 = !DILocation(line: 638, column: 22, scope: !179)
 !194 = !DILocation(line: 639, column: 11, scope: !180)
-!195 = !DILocation(line: 810, column: 1, scope: !1, inlinedAt: !183)
-!196 = !DILocation(line: 0, scope: !179)
-!197 = !DILocation(line: 639, column: 5, scope: !180)
-!198 = !DILocation(line: 594, column: 18, scope: !189, inlinedAt: !191)
-!199 = !DILocation(line: 643, column: 16, scope: !180)
-!200 = !DILocation(line: 654, column: 1, scope: !179)
+!195 = !DILocation(line: 654, column: 1, scope: !179)
+!196 = !DILocation(line: 810, column: 1, scope: !1, inlinedAt: !183)
+!197 = !DILocation(line: 0, scope: !179)
+!198 = !DILocation(line: 639, column: 5, scope: !180)
+!199 = !DILocation(line: 594, column: 18, scope: !189, inlinedAt: !191)
+!200 = !DILocation(line: 643, column: 16, scope: !180)
 !201 = !DILocation(line: 0, scope: !180)
 !202 = !DILocation(line: 654, column: 2, scope: !179)
 !203 = !DILocation(line: 648, column: 17, scope: !180)

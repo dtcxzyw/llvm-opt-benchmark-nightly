@@ -202,11 +202,12 @@ bb.cc:                                            ; preds = %bb.cb
   br i1 %i.iq, label %bb.cd, label %r_Step_1c.exit.thread
 
 bb.cd:                                            ; preds = %bb.cc
-  %i.ir = tail call i32 @slice_from_s(ptr noundef nonnull %0, i32 noundef 1, ptr noundef nonnull @s_10) #3 ; 2 uses
-  %i.is = icmp sgt i32 %i.ir, -1
+  %i.ir = tail call i32 @slice_from_s(ptr noundef nonnull %0, i32 noundef 1, ptr noundef nonnull @s_10) #3
+  %.fr.i = freeze i32 %i.ir                       ; 2 uses
+  %i.is = icmp sgt i32 %.fr.i, -1
   br i1 %i.is, label %r_Step_1c.exit.thread, label %.critedge
 
-r_Step_1c.exit.thread:                            ; preds = %bb.cd, %r_Step_1b.exit.thread, %bb.ca, %bb.cc, %bb.cb
+r_Step_1c.exit.thread:                            ; preds = %bb.cd, %bb.cb, %bb.cc, %bb.ca, %r_Step_1b.exit.thread
   %i.it = load i32, ptr %i.e, align 4
   store i32 %i.it, ptr %i.a, align 8
   %i.iu = tail call fastcc i32 @r_Step_2(ptr noundef nonnull %0) ; 2 uses
@@ -246,7 +247,7 @@ bb.ci:                                            ; preds = %bb.ch
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.aa, %bb.cd, %bb.az, %bb.aw, %bb.av, %bb.at, %bb.ap, %bb.bi, %.critedge.i, %bb.bz, %bb.bp, %bb.t, %bb.r, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.ce, %r_Step_1c.exit.thread, %r_Step_1b.exit, %bb.cf, %bb.cg, %bb.ch, %bb.o, %bb.p, %bb.ci
-  %i.ji = phi i32 [ 1, %bb.o ], [ 1, %bb.ci ], [ 1, %bb.p ], [ %i.av, %bb.r ], [ %i.ag, %bb.n ], [ %i.ae, %bb.m ], [ %i.ac, %bb.l ], [ %i.aa, %bb.k ], [ %i.y, %bb.j ], [ %i.w, %bb.i ], [ %i.u, %bb.h ], [ %i.s, %bb.g ], [ %i.jg, %bb.ch ], [ %i.ix, %bb.ce ], [ %i.iu, %r_Step_1c.exit.thread ], [ %i.ep, %bb.az ], [ %i.ie, %r_Step_1b.exit ], [ %i.go, %bb.bp ], [ %i.ja, %bb.cf ], [ %i.jd, %bb.cg ], [ %i.ir, %bb.cd ], [ %i.bd, %bb.t ], [ %i.ft, %bb.bi ], [ %i.gz, %.critedge.i ], [ %i.ic, %bb.bz ], [ %i.dj, %bb.ap ], [ %i.eb, %bb.av ], [ %i.du, %bb.at ], [ %i.ef, %bb.aw ], [ %i.bt, %bb.aa ]
+  %i.ji = phi i32 [ 1, %bb.o ], [ 1, %bb.ci ], [ 1, %bb.p ], [ %i.av, %bb.r ], [ %i.ag, %bb.n ], [ %i.ae, %bb.m ], [ %i.ac, %bb.l ], [ %i.aa, %bb.k ], [ %i.y, %bb.j ], [ %i.w, %bb.i ], [ %i.u, %bb.h ], [ %i.s, %bb.g ], [ %i.jg, %bb.ch ], [ %i.ix, %bb.ce ], [ %i.iu, %r_Step_1c.exit.thread ], [ %i.ep, %bb.az ], [ %i.ie, %r_Step_1b.exit ], [ %i.go, %bb.bp ], [ %i.ja, %bb.cf ], [ %i.jd, %bb.cg ], [ %.fr.i, %bb.cd ], [ %i.bd, %bb.t ], [ %i.ft, %bb.bi ], [ %i.gz, %.critedge.i ], [ %i.ic, %bb.bz ], [ %i.dj, %bb.ap ], [ %i.eb, %bb.av ], [ %i.du, %bb.at ], [ %i.ef, %bb.aw ], [ %i.bt, %bb.aa ]
   ret i32 %i.ji
 }
 

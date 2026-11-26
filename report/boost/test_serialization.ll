@@ -202,6 +202,7 @@ _ZNSt6vectorISt5tupleIJSt17basic_string_viewIcSt11char_traitsIcEEN5other9my_stru
 _ZN12_GLOBAL__N_117test_tuple_customEv.exit:      ; preds = %_ZNSt6vectorIN5boost5redis6detail13pubsub_changeESaIS3_EED2Ev.exit.i.i80, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i81
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #20
   call void @_ZdlPvm(ptr noundef nonnull %i.mp, i64 noundef 24) #22
+  %31 = call noalias noundef nonnull dereferenceable(1) ptr @_Znwm(i64 noundef 1) #23 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %0) #20
   store i32 16842752, ptr %0, align 8, !tbaa !80
   %i.nq = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
@@ -289,10 +290,12 @@ _ZNSt6vectorISt5tupleIJEESaIS1_EED2Ev.exit12.i:   ; preds = %bb.bx, %bb.bw
   %.pn.i83 = phi { ptr, i32 } [ %i.oq, %bb.bx ], [ %i.op, %bb.bw ]
   call void @_ZN5boost5redis7requestD2Ev(ptr noundef nonnull align 8 dead_on_return(88) dereferenceable(88) %0) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %0) #20
+  call void @_ZdlPvm(ptr noundef nonnull %31, i64 noundef 1) #22
   br label %common.resume
 
 _ZN12_GLOBAL__N_116test_tuple_emptyEv.exit:       ; preds = %_ZNSt6vectorIN5boost5redis6detail13pubsub_changeESaIS3_EED2Ev.exit.i.i86, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i87
   call void @llvm.lifetime.end.p0(ptr nonnull %0) #20
+  call void @_ZdlPvm(ptr noundef nonnull %31, i64 noundef 1) #22
   %i.or = call noundef i32 @_ZN5boost13report_errorsEv()
   ret i32 %i.or
 }

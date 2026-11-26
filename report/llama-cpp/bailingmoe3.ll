@@ -202,8 +202,9 @@ bb.o:                                             ; preds = %_ZNSt8__detail14__t
 _ZNSt7__cxx119to_stringEi.exit:                   ; preds = %bb.m, %bb.n
   %storemerge.i.i = phi i8 [ %i.fv, %bb.n ], [ %i.ft, %bb.m ]
   store i8 %storemerge.i.i, ptr %i.eu, align 1, !tbaa !413
+  call void @llvm.experimental.noalias.scope.decl(metadata !414)
   %i.fy = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %12, i64 noundef 0, i64 noundef 0, ptr noundef nonnull @.str.6, i64 noundef 4)
-          to label %.noexc unwind label %bb.ac    ; 6 uses
+          to label %.noexc unwind label %bb.ac, !noalias !414 ; 6 uses
 
 .noexc:                                           ; preds = %_ZNSt7__cxx119to_stringEi.exit
   %i.fz = getelementptr inbounds nuw i8, ptr %11, i64 16 ; 7 uses
@@ -246,14 +247,14 @@ bb.q:                                             ; preds = %_ZNKSt7__cxx1112bas
 
 bb.r:                                             ; preds = %bb.q
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.34) #17
-          to label %.noexc512 unwind label %bb.ad
+          to label %.noexc512 unwind label %bb.ad, !noalias !416
 
 .noexc512:                                        ; preds = %bb.r
   unreachable
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i: ; preds = %bb.q
   %i.go = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm(ptr noundef nonnull align 8 dereferenceable(32) %11, ptr noundef nonnull @.str.7, i64 noundef 21)
-          to label %.noexc513 unwind label %bb.ad ; 6 uses
+          to label %.noexc513 unwind label %bb.ad, !noalias !416 ; 6 uses
 
 .noexc513:                                        ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i
   %i.gp = getelementptr inbounds nuw i8, ptr %10, i64 16 ; 7 uses
@@ -656,7 +657,7 @@ bb.m:                                             ; preds = %bb.l
   %sqrt = tail call float @llvm.sqrt.f32(float %i.au)
   %i.av = fdiv float 1.000000e+00, %sqrt
   %i.aw = invoke noalias noundef nonnull dereferenceable(40) ptr @_Znwm(i64 noundef 40) #21
-          to label %.noexc unwind label %_ZNSt10unique_ptrI17llm_graph_input_iSt14default_deleteIS0_EED2Ev.exit213.thread232 ; 8 uses
+          to label %.noexc unwind label %_ZNSt10unique_ptrI17llm_graph_input_iSt14default_deleteIS0_EED2Ev.exit213.thread232, !noalias !577 ; 8 uses
 
 .noexc:                                           ; preds = %bb.m
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aq, i64 12

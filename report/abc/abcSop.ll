@@ -4,6 +4,7 @@ inline.NumDeleted: 24
 loop-unroll.NumCompletelyUnrolled: 7
 loop-unroll.NumRuntimeUnrolled: 14
 loop-unroll.NumUnrolled: 21
+loop-unroll.NumUnrolledNotLatch: 1
 begin_hunk_0_@Abc_SopGenerateCounters:bb.a
 ._crit_edge79:                                    ; preds = %bb.ac
   %i.ci = icmp eq i32 %.promoted89, %i.cg
@@ -205,7 +206,7 @@ middle.block:                                     ; preds = %vector.body
   %i.n = icmp samesign ugt i32 %.lcssa, 1
   br label %Vec_StrPush.exit.i.2
 
-Vec_StrPush.exit.i.2:                             ; preds = %.lr.ph.i.loopexit, %bb.a
+Vec_StrPush.exit.i.2:                             ; preds = %bb.a, %.lr.ph.i.loopexit
   %.026.lcssa = phi i1 [ false, %bb.a ], [ %i.n, %.lr.ph.i.loopexit ] ; 2 uses
   %i.o = tail call noalias dereferenceable_or_null(16) ptr @malloc(i64 noundef 16) #25 ; 17 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 4 ; 14 uses

@@ -202,12 +202,13 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   %i.c = load ptr, ptr %i.b, align 8, !noalias !31
   call void %i.c(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %6, ptr noundef nonnull align 8 dereferenceable(8) %2, i32 noundef %1), !inline_history !24
+  call void @llvm.experimental.noalias.scope.decl(metadata !32)
   %i.d = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %6, i64 noundef 0, i64 noundef 0, ptr noundef nonnull @.str.10, i64 noundef 2)
-          to label %.noexc unwind label %bb.g     ; 6 uses
+          to label %.noexc unwind label %bb.g, !noalias !32 ; 6 uses
 
 .noexc:                                           ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 7 uses
-  store ptr %i.e, ptr %5, align 8, !tbaa !34, !alias.scope !35
+  store ptr %i.e, ptr %5, align 8, !tbaa !35, !alias.scope !32
   %i.f = load ptr, ptr %i.d, align 8, !tbaa !37   ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 5 uses
   %i.h = icmp eq ptr %i.f, %i.g
@@ -223,9 +224,9 @@ bb.b:                                             ; preds = %.noexc
   br label %bb.c
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: ; preds = %.noexc
-  store ptr %i.f, ptr %5, align 8, !tbaa !37, !alias.scope !35
+  store ptr %i.f, ptr %5, align 8, !tbaa !37, !alias.scope !32
   %i.m = load i64, ptr %i.g, align 8, !tbaa !39
-  store i64 %i.m, ptr %i.e, align 8, !tbaa !39, !alias.scope !35
+  store i64 %i.m, ptr %i.e, align 8, !tbaa !39, !alias.scope !32
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %.pre.i = load i64, ptr %.phi.trans.insert.i, align 8, !tbaa !38
   br label %bb.c
@@ -234,18 +235,18 @@ bb.c:                                             ; preds = %_ZNKSt7__cxx1112bas
   %i.n = phi i64 [ %i.j, %bb.b ], [ %.pre.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i ]
   %i.o = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.p = getelementptr inbounds nuw i8, ptr %5, i64 8
-  store i64 %i.n, ptr %i.p, align 8, !tbaa !38, !alias.scope !35
+  store i64 %i.n, ptr %i.p, align 8, !tbaa !38, !alias.scope !32
   store ptr %i.g, ptr %i.d, align 8, !tbaa !37
   store i64 0, ptr %i.o, align 8, !tbaa !38
   store i8 0, ptr %i.g, align 8, !tbaa !39
   call void @llvm.experimental.noalias.scope.decl(metadata !40)
   %i.q = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %3) #19, !noalias !40
   %i.r = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %5, i64 noundef 0, i64 noundef 0, ptr noundef nonnull %3, i64 noundef %i.q)
-          to label %.noexc10 unwind label %bb.h   ; 6 uses
+          to label %.noexc10 unwind label %bb.h, !noalias !40 ; 6 uses
 
 .noexc10:                                         ; preds = %bb.c
   %i.s = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 7 uses
-  store ptr %i.s, ptr %4, align 8, !tbaa !34, !alias.scope !40
+  store ptr %i.s, ptr %4, align 8, !tbaa !35, !alias.scope !40
   %i.t = load ptr, ptr %i.r, align 8, !tbaa !37   ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.r, i64 16 ; 5 uses
   %i.v = icmp eq ptr %i.t, %i.u
@@ -471,12 +472,12 @@ attributes #23 = { builtin nounwind }
 !29 = !{!"vtable pointer", !3, i64 0}
 !30 = !{!29, !29, i64 0}
 !31 = !{!23}
-!32 = !{!"p1 omnipotent char", !8, i64 0}
-!33 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_Alloc_hiderE", !32, i64 0}
-!34 = !{!33, !32, i64 0}
-!35 = !{!26}
-!36 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE", !33, i64 0, !9, i64 8, !4, i64 16}
-!37 = !{!36, !32, i64 0}
+!32 = !{!26}
+!33 = !{!"p1 omnipotent char", !8, i64 0}
+!34 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_Alloc_hiderE", !33, i64 0}
+!35 = !{!34, !33, i64 0}
+!36 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE", !34, i64 0, !9, i64 8, !4, i64 16}
+!37 = !{!36, !33, i64 0}
 !38 = !{!36, !9, i64 8}
 !39 = !{!4, !4, i64 0}
 !40 = !{!28}

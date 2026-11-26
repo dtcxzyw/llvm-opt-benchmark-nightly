@@ -205,17 +205,17 @@ bb.a:
   %3 = alloca %"class.tbb::detail::r1::pipeline", align 8 ; 13 uses
   %4 = alloca %"class.tbb::detail::d1::small_object_allocator", align 8 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #9
-  store ptr %0, ptr %3, align 8, !tbaa !89
+  store ptr %0, ptr %3, align 8, !tbaa !90
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
-  store i64 %1, ptr %i.b, align 8, !tbaa !90
+  store i64 %1, ptr %i.b, align 8, !tbaa !91
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 32
-  store i8 0, ptr %i.c, align 8, !tbaa !91
+  store i8 0, ptr %i.c, align 8, !tbaa !92
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 40 ; 3 uses
-  store i64 1, ptr %i.d, align 8, !tbaa !92
+  store i64 1, ptr %i.d, align 8, !tbaa !93
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 48 ; 2 uses
-  store i64 0, ptr %i.e, align 8, !tbaa !90
+  store i64 0, ptr %i.e, align 8, !tbaa !91
   invoke void @_ZN3tbb6detail2r18pipeline13fill_pipelineERKNS0_2d111filter_nodeE(ptr noundef nonnull align 8 dereferenceable(56) %3, ptr noundef nonnull align 8 dereferenceable(32) %2)
           to label %bb.b unwind label %bb.e
 
@@ -248,7 +248,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %.noexc
   %i.p = ptrtoint ptr %i.d to i64
   invoke void @_ZN3tbb6detail2r114notify_waitersEm(i64 noundef %i.p)
-          to label %_ZN3tbb6detail2d122small_object_allocator10new_objectINS0_2r110stage_taskEJRNS4_8pipelineERS2_EEEPT_DpOT0_.exit unwind label %bb.f
+          to label %_ZN3tbb6detail2d122small_object_allocator10new_objectINS0_2r110stage_taskEJRNS4_8pipelineERS2_EEEPT_DpOT0_.exit unwind label %bb.f, !inline_history !89
 
 _ZN3tbb6detail2d122small_object_allocator10new_objectINS0_2r110stage_taskEJRNS4_8pipelineERS2_EEEPT_DpOT0_.exit: ; preds = %.noexc, %bb.c
   invoke void @_ZN3tbb6detail2r116execute_and_waitERNS0_2d14taskERNS2_18task_group_contextERNS2_12wait_contextES6_(ptr noundef nonnull align 64 dereferenceable(64) %i.f, ptr noundef nonnull align 8 dereferenceable(128) %0, ptr noundef nonnull align 8 dereferenceable(16) %i.d, ptr noundef nonnull align 8 dereferenceable(128) %0)
@@ -282,7 +282,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 define linkonce_odr hidden void @_ZN3tbb6detail2r18pipeline13fill_pipelineERKNS0_2d111filter_nodeE(ptr noundef nonnull align 8 dereferenceable(56) %0, ptr noundef nonnull align 8 dereferenceable(32) %1) local_unnamed_addr #0 comdat align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !95   ; 2 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !96   ; 2 uses
   %.not8 = icmp eq ptr %i.b, null
   br i1 %.not8, label %._crit_edge, label %.lr.ph
 
@@ -290,15 +290,15 @@ bb.a:
   %i.c = phi ptr [ %i.h, %tailrecurse ], [ %i.b, %bb.a ]
   %.tr79 = phi ptr [ %i.f, %tailrecurse ], [ %1, %bb.a ] ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %.tr79, i64 24 ; 2 uses
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !95
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !96
   %.not6 = icmp eq ptr %i.e, null
   br i1 %.not6, label %._crit_edge, label %tailrecurse
 
 tailrecurse:                                      ; preds = %.lr.ph
   tail call void @_ZN3tbb6detail2r18pipeline13fill_pipelineERKNS0_2d111filter_nodeE(ptr noundef nonnull align 8 dereferenceable(56) %0, ptr noundef nonnull align 8 dereferenceable(32) %i.c)
-  %i.f = load ptr, ptr %i.d, align 8, !tbaa !95   ; 3 uses
+  %i.f = load ptr, ptr %i.d, align 8, !tbaa !96   ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 16
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !95   ; 2 uses
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !96   ; 2 uses
   %.not = icmp eq ptr %i.h, null
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
@@ -418,7 +418,7 @@ bb.c:                                             ; preds = %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 24
   %i.g = load ptr, ptr %i.f, align 8
   invoke void %i.g(ptr noundef nonnull align 8 dereferenceable(40) %i.b, ptr noundef nonnull %i.d)
-          to label %bb.d unwind label %bb.g, !inline_history !96
+          to label %bb.d unwind label %bb.g, !inline_history !97
 
 bb.d:                                             ; preds = %bb.c
   store ptr null, ptr %i.c, align 64, !tbaa !51
@@ -436,13 +436,13 @@ bb.f:                                             ; preds = %bb.e
   %i.l = getelementptr inbounds nuw i8, ptr %i.i, i64 40
   %i.m = ptrtoint ptr %i.l to i64
   invoke void @_ZN3tbb6detail2r114notify_waitersEm(i64 noundef %i.m)
-          to label %_ZN3tbb6detail2r110stage_taskD2Ev.exit unwind label %bb.g, !inline_history !96
+          to label %_ZN3tbb6detail2r110stage_taskD2Ev.exit unwind label %bb.g, !inline_history !97
 
 bb.g:                                             ; preds = %bb.f, %bb.c
   %i.n = landingpad { ptr, i32 }
           catch ptr null
   %i.o = extractvalue { ptr, i32 } %i.n, 0
-  tail call void @__clang_call_terminate(ptr %i.o) #11, !inline_history !96
+  tail call void @__clang_call_terminate(ptr %i.o) #11, !inline_history !97
   unreachable
 
 _ZN3tbb6detail2r110stage_taskD2Ev.exit:           ; preds = %bb.e, %bb.f
@@ -627,12 +627,13 @@ attributes #12 = { builtin nounwind }
 !86 = distinct !{!86, !31}
 !87 = distinct !{!87, !27}
 !88 = !{!65, !40, i64 16}
-!89 = !{!61, !61, i64 0}
-!90 = !{!62, !19, i64 0}
-!91 = !{!21, !20, i64 0}
-!92 = !{!64, !19, i64 0}
-!93 = !{!"p1 _ZTSN3tbb6detail2d111filter_nodeE", !17, i64 0}
-!94 = !{!"_ZTSN3tbb6detail2d115filter_node_ptrE", !93, i64 0}
-!95 = !{!94, !93, i64 0}
-!96 = !{ptr @_ZN3tbb6detail2r110stage_taskD2Ev}
+!89 = distinct !{null}
+!90 = !{!61, !61, i64 0}
+!91 = !{!62, !19, i64 0}
+!92 = !{!21, !20, i64 0}
+!93 = !{!64, !19, i64 0}
+!94 = !{!"p1 _ZTSN3tbb6detail2d111filter_nodeE", !17, i64 0}
+!95 = !{!"_ZTSN3tbb6detail2d115filter_node_ptrE", !94, i64 0}
+!96 = !{!95, !94, i64 0}
+!97 = !{ptr @_ZN3tbb6detail2r110stage_taskD2Ev}
 end_hunk_0

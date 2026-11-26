@@ -206,7 +206,7 @@ bb.c:                                             ; preds = %bb.b
   %.03847.i = phi i32 [ %.1.i, %bb.f ], [ %i.v, %bb.c ] ; 2 uses
   %i.w = trunc nuw nsw i64 %indvars.iv.i to i32   ; 2 uses
   %i.x = srem i32 %i.w, %i.s
-  %i.y = sdiv i32 %i.w, %i.s
+  %i.y = sdiv exact i32 %i.w, %i.s
   %i.z = icmp eq i32 %i.x, 0
   br i1 %i.z, label %bb.d, label %bb.e
 
@@ -609,7 +609,7 @@ bb.a:
   %i.o = alloca [80 x i8], align 16               ; 5 uses
   %i.p = alloca i32, align 4                      ; 4 uses
   %i.q = alloca i32, align 4                      ; 6 uses
-  %i.r = alloca i64, align 8                      ; 6 uses
+  %i.r = alloca i64, align 8                      ; 5 uses
   %i.s = alloca i32, align 4                      ; 5 uses
   %i.t = alloca i64, align 8                      ; 5 uses
   %i.u = alloca i32, align 4                      ; 5 uses
@@ -1012,7 +1012,6 @@ bb.fg:                                            ; preds = %bb.fe, %bb.ff
 bb.fh:                                            ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q) #20
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r) #20
-  store i64 0, ptr %i.r, align 8, !tbaa !154
   call void @llvm.lifetime.start.p0(ptr nonnull %i.s) #20
   store i32 0, ptr %i.s, align 4, !tbaa !30
   %i.aak = icmp eq i32 %2, 2
@@ -1037,6 +1036,7 @@ bb.fi:                                            ; preds = %bb.fh
 bb.fj:                                            ; preds = %.lr.ph1420, %.thread1258
   %.09391419 = phi i32 [ 2, %.lr.ph1420 ], [ %i.aca, %.thread1258 ] ; 5 uses
   %.09411418 = phi ptr [ null, %.lr.ph1420 ], [ %.19421264, %.thread1258 ] ; 3 uses
+  %6 = phi i64 [ 0, %.lr.ph1420 ], [ %7, %.thread1258 ] ; 2 uses
   %i.aar = load ptr, ptr @tclStubsPtr, align 8, !tbaa !98
   %i.aas = getelementptr inbounds nuw i8, ptr %i.aar, i64 2736
   %i.aat = load ptr, ptr %i.aas, align 8, !tbaa !107
@@ -1054,7 +1054,7 @@ bb.fk:                                            ; preds = %bb.fj
   call void @llvm.lifetime.start.p0(ptr nonnull %i.t) #20
   %i.abb = load ptr, ptr @tclStubsPtr, align 8, !tbaa !98
   %i.abc = getelementptr inbounds nuw i8, ptr %i.abb, i64 3912
-  %i.abd = load ptr, ptr %i.abc, align 8, !tbaa !155
+  %i.abd = load ptr, ptr %i.abc, align 8, !tbaa !154
   %i.abe = add nsw i32 %.09391419, 1              ; 2 uses
   %i.abf = sext i32 %i.abe to i64
   %i.abg = getelementptr inbounds [8 x i8], ptr %3, i64 %i.abf
@@ -1064,8 +1064,7 @@ bb.fk:                                            ; preds = %bb.fj
   br i1 %.not1144, label %.thread1274, label %bb.fq
 
 .thread1274:                                      ; preds = %bb.fk
-  %i.abj = load i64, ptr %i.t, align 8, !tbaa !154
-  store i64 %i.abj, ptr %i.r, align 8, !tbaa !154
+  %i.abj = load i64, ptr %i.t, align 8, !tbaa !155
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t) #20
   br label %.thread1258
 
@@ -1110,6 +1109,7 @@ bb.fq:                                            ; preds = %bb.fk
   br label %.thread1269
 
 .thread1258:                                      ; preds = %bb.fm, %bb.fo, %.thread1274
+  %7 = phi i64 [ %i.abj, %.thread1274 ], [ %6, %bb.fo ], [ %6, %bb.fm ] ; 2 uses
   %.19401265 = phi i32 [ %i.abe, %.thread1274 ], [ %i.aan, %bb.fo ], [ %i.abp, %bb.fm ]
   %.19421264 = phi ptr [ %.09411418, %.thread1274 ], [ %i.aax, %bb.fo ], [ %.09411418, %bb.fm ] ; 2 uses
   %i.aca = add nsw i32 %.19401265, 1              ; 2 uses
@@ -1117,7 +1117,9 @@ bb.fq:                                            ; preds = %bb.fk
   br i1 %i.acb, label %bb.fj, label %._crit_edge1421, !llvm.loop !347
 
 ._crit_edge1421:                                  ; preds = %.thread1258, %.preheader1333
+  %.lcssa1418 = phi i64 [ 0, %.preheader1333 ], [ %7, %.thread1258 ]
   %.0941.lcssa = phi ptr [ null, %.preheader1333 ], [ %.19421264, %.thread1258 ] ; 2 uses
+  store i64 %.lcssa1418, ptr %i.r, align 8
   %i.acc = zext nneg i32 %i.aal to i64
   %i.acd = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.acc
   %i.ace = load ptr, ptr %i.acd, align 8, !tbaa !105
@@ -1170,7 +1172,7 @@ bb.fv:                                            ; preds = %bb.fu
 
 bb.fw:                                            ; preds = %bb.fv, %bb.fu
   %.61003 = phi i32 [ 1, %bb.fv ], [ 0, %bb.fu ]  ; 2 uses
-  %i.adb = load i64, ptr %i.r, align 8, !tbaa !154
+  %i.adb = load i64, ptr %i.r, align 8, !tbaa !155
   %i.adc = icmp sgt i64 %i.adb, 0
   br i1 %i.adc, label %bb.fx, label %.thread1269
 
@@ -1573,7 +1575,7 @@ bb.ih:                                            ; preds = %bb.ig, %bb.if
   %i.aok = call ptr %i.aoh(ptr noundef %i.aoj) #20
   %i.aol = load ptr, ptr @tclStubsPtr, align 8, !tbaa !98
   %i.aom = getelementptr inbounds nuw i8, ptr %i.aol, i64 3912
-  %i.aon = load ptr, ptr %i.aom, align 8, !tbaa !155
+  %i.aon = load ptr, ptr %i.aom, align 8, !tbaa !154
   %i.aoo = getelementptr i8, ptr %i.aob, i64 -8
   %i.aop = load ptr, ptr %i.aoo, align 8, !tbaa !105
   %i.aoq = call i32 %i.aon(ptr noundef %1, ptr noundef %i.aop, ptr noundef nonnull %i.aa) #20 ; 2 uses
@@ -1581,7 +1583,7 @@ bb.ih:                                            ; preds = %bb.ig, %bb.if
   br i1 %i.aor, label %bb.ii, label %.thread1289
 
 bb.ii:                                            ; preds = %bb.ih
-  %i.aos = load i64, ptr %i.aa, align 8, !tbaa !154
+  %i.aos = load i64, ptr %i.aa, align 8, !tbaa !155
   %i.aot = call fastcc i32 @createIncrblobChannel(ptr noundef %1, ptr noundef %0, ptr noundef %.0924, ptr noundef %i.aoe, ptr noundef %i.aok, i64 noundef %i.aos, i32 noundef %.0925)
   br label %.thread1289
 
@@ -1984,7 +1986,7 @@ bb.kj:                                            ; preds = %bb.d
 
 .thread1306:                                      ; preds = %bb.kj
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ag) #20
-  store i64 0, ptr %i.ag, align 8, !tbaa !154
+  store i64 0, ptr %i.ag, align 8, !tbaa !155
   br label %bb.km
 
 bb.kk:                                            ; preds = %bb.kj
@@ -1995,7 +1997,7 @@ bb.kk:                                            ; preds = %bb.kj
   %i.awi = load ptr, ptr %i.awh, align 8, !tbaa !105
   %i.awj = call ptr %i.awg(ptr noundef %i.awi) #20
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ag) #20
-  store i64 0, ptr %i.ag, align 8, !tbaa !154
+  store i64 0, ptr %i.ag, align 8, !tbaa !155
   %i.awk = icmp samesign ugt i32 %2, 3
   br i1 %i.awk, label %bb.kl, label %bb.km
 
@@ -2021,7 +2023,7 @@ bb.kn:                                            ; preds = %bb.km
   %i.awv = load ptr, ptr %i.awu, align 8, !tbaa !151
   %i.aww = getelementptr inbounds nuw i8, ptr %i.awt, i64 416
   %i.awx = load ptr, ptr %i.aww, align 8, !tbaa !171
-  %i.awy = load i64, ptr %i.ag, align 8, !tbaa !154
+  %i.awy = load i64, ptr %i.ag, align 8, !tbaa !155
   %i.awz = trunc i64 %i.awy to i32
   %i.axa = call ptr %i.awx(ptr noundef %i.aws, i32 noundef %i.awz) #20
   call void %i.awv(ptr noundef %1, ptr noundef %i.axa) #20
@@ -2034,7 +2036,7 @@ bb.kn:                                            ; preds = %bb.km
   %i.axd = load ptr, ptr %i.axc, align 8, !tbaa !151
   %i.axe = getelementptr inbounds nuw i8, ptr %i.axb, i64 416
   %i.axf = load ptr, ptr %i.axe, align 8, !tbaa !171
-  %i.axg = load i64, ptr %i.ag, align 8, !tbaa !154
+  %i.axg = load i64, ptr %i.ag, align 8, !tbaa !155
   %i.axh = trunc i64 %i.axg to i32
   %i.axi = call ptr %i.axf(ptr noundef nonnull %i.awq, i32 noundef %i.axh) #20
   call void %i.axd(ptr noundef %1, ptr noundef %i.axi) #20
@@ -2326,7 +2328,7 @@ bb.lx:                                            ; preds = %bb.lw
   store i32 %i.bcb, ptr %i.bbz, align 8, !tbaa !143
   %i.bcc = load ptr, ptr @tclStubsPtr, align 8, !tbaa !98
   %i.bcd = getelementptr inbounds nuw i8, ptr %i.bcc, i64 3912
-  %i.bce = load ptr, ptr %i.bcd, align 8, !tbaa !155
+  %i.bce = load ptr, ptr %i.bcd, align 8, !tbaa !154
   %i.bcf = load ptr, ptr %i.ak, align 8, !tbaa !105
   %i.bcg = call i32 %i.bce(ptr noundef %1, ptr noundef %i.bcf, ptr noundef nonnull %i.am) #20
   %i.bch = icmp eq i32 %i.bcg, 0
@@ -2394,7 +2396,7 @@ bb.mg:                                            ; preds = %bb.mc
   br label %.critedge1214.sink.split
 
 bb.mh:                                            ; preds = %bb.ly, %bb.lz
-  %i.bdc = load i64, ptr %i.am, align 8, !tbaa !154
+  %i.bdc = load i64, ptr %i.am, align 8, !tbaa !155
   %i.bdd = or i64 %i.bdc, %.09111388
   call void @llvm.lifetime.end.p0(ptr nonnull %i.am) #20
   br label %.thread1313
@@ -2797,7 +2799,7 @@ bb.ak:                                            ; preds = %bb.ac
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #20
   %i.em = load ptr, ptr @tclStubsPtr, align 8, !tbaa !98
   %i.en = getelementptr inbounds nuw i8, ptr %i.em, i64 3912
-  %i.eo = load ptr, ptr %i.en, align 8, !tbaa !155
+  %i.eo = load ptr, ptr %i.en, align 8, !tbaa !154
   %i.ep = call i32 %i.eo(ptr noundef null, ptr noundef nonnull %i.dk, ptr noundef nonnull %i.d) #20
   %i.eq = icmp eq i32 %i.ep, 0
   br i1 %i.eq, label %bb.al, label %.thread120
@@ -2807,7 +2809,7 @@ bb.ak:                                            ; preds = %bb.ac
   br label %.thread118
 
 bb.al:                                            ; preds = %.thread
-  %i.er = load i64, ptr %i.d, align 8, !tbaa !154
+  %i.er = load i64, ptr %i.d, align 8, !tbaa !155
   call void @sqlite3_result_int64(ptr noundef %0, i64 noundef %i.er) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #20
   br label %bb.an
@@ -3157,7 +3159,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br label %bb.n
 
 bb.e:                                             ; preds = %.split
-  %i.as = load i64, ptr %3, align 8, !tbaa !154
+  %i.as = load i64, ptr %3, align 8, !tbaa !155
   %i.at = load ptr, ptr @tclStubsPtr, align 8, !tbaa !98
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 464
   %i.av = load ptr, ptr %i.au, align 8, !tbaa !149
@@ -3560,10 +3562,10 @@ bb.as:                                            ; preds = %bb.ar, %bb.aq
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #20
   %i.fo = load ptr, ptr @tclStubsPtr, align 8, !tbaa !98
   %i.fp = getelementptr inbounds nuw i8, ptr %i.fo, i64 3912
-  %i.fq = load ptr, ptr %i.fp, align 8, !tbaa !155
+  %i.fq = load ptr, ptr %i.fp, align 8, !tbaa !154
   %i.fr = call i32 %i.fq(ptr noundef %i.g, ptr noundef nonnull %.2239, ptr noundef nonnull %i.e) #20 ; 0 uses
   %i.fs = load ptr, ptr %i.a, align 8, !tbaa !87
-  %i.ft = load i64, ptr %i.e, align 8, !tbaa !154
+  %i.ft = load i64, ptr %i.e, align 8, !tbaa !155
   %i.fu = call i32 @sqlite3_bind_int64(ptr noundef %i.fs, i32 noundef %.0167273, i64 noundef %i.ft) #20 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #20
   br label %bb.at
@@ -3966,8 +3968,8 @@ attributes #22 = { nounwind allocsize(0) }
 !151 = !{!99, !31, i64 1896}
 !152 = !{!99, !31, i64 456}
 !153 = !{!99, !31, i64 280}
-!154 = !{!37, !37, i64 0}
-!155 = !{!99, !31, i64 3912}
+!154 = !{!99, !31, i64 3912}
+!155 = !{!37, !37, i64 0}
 !156 = !{!"p1 _ZTS8SqliteDb", !31, i64 0}
 !157 = !{!"p2 _ZTS7Tcl_Obj", !34, i64 0}
 !158 = !{!"DbEvalContext", !156, i64 0, !104, i64 8, !41, i64 16, !114, i64 24, !22, i64 32, !22, i64 36, !104, i64 40, !157, i64 48}

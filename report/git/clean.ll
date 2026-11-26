@@ -204,6 +204,7 @@ bb.bf:                                            ; preds = %find_unique.exit.i
 
 .lr.ph.preheader.i:                               ; preds = %.preheader.i
   %i.hd = zext nneg i32 %.057.i to i64            ; 3 uses
+  %7 = add nuw i32 %.056.i, 1
   %i.he = sub nuw nsw i32 %.056.i, %.057.i        ; 2 uses
   %narrow = add nuw i32 %i.he, 1
   %i.hf = zext i32 %narrow to i64                 ; 2 uses
@@ -260,14 +261,14 @@ _.exit.i:                                         ; preds = %bb.bg, %find_unique
   br label %.loopexit.i
 
 .lr.ph.i74:                                       ; preds = %.lr.ph.i74.preheader, %.lr.ph.i74
-  %indvars.iv.i75 = phi i64 [ %indvars.iv.next.i76, %.lr.ph.i74 ], [ %indvars.iv.i75.ph, %.lr.ph.i74.preheader ] ; 3 uses
+  %indvars.iv.i75 = phi i64 [ %indvars.iv.next.i76, %.lr.ph.i74 ], [ %indvars.iv.i75.ph, %.lr.ph.i74.preheader ] ; 2 uses
   %i.ht = getelementptr [4 x i8], ptr %i.f, i64 %indvars.iv.i75
   %i.hu = getelementptr i8, ptr %i.ht, i64 -4
   store i32 %.058.i, ptr %i.hu, align 4, !tbaa !16
-  %indvars.iv.next.i76 = add nuw nsw i64 %indvars.iv.i75, 1
-  %i.hv = trunc nuw i64 %indvars.iv.i75 to i32
-  %.not76.not.i = icmp sgt i32 %.056.i, %i.hv
-  br i1 %.not76.not.i, label %.lr.ph.i74, label %.loopexit.i, !llvm.loop !125
+  %indvars.iv.next.i76 = add nuw nsw i64 %indvars.iv.i75, 1 ; 2 uses
+  %i.hv = trunc i64 %indvars.iv.next.i76 to i32
+  %exitcond.not.i = icmp eq i32 %7, %i.hv
+  br i1 %exitcond.not.i, label %.loopexit.i, label %.lr.ph.i74, !llvm.loop !125
 
 .loopexit.i:                                      ; preds = %.lr.ph.i74, %middle.block221, %_.exit.i, %.preheader.i, %.lr.ph120
   %i.hw = getelementptr inbounds nuw i8, ptr %.06321.i119, i64 16 ; 2 uses

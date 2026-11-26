@@ -205,6 +205,7 @@ bb.hu:                                            ; preds = %bb.hs, %bb.ht
 
 .lr.ph550.preheader:                              ; preds = %.preheader
   %i.yx = zext nneg i32 %.0253 to i64
+  %4 = add nuw nsw i32 %.0252, 1
   %.pre653 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @server, i64 8224), align 8, !tbaa !414
   br label %.lr.ph550
 
@@ -216,16 +217,16 @@ bb.hv:                                            ; preds = %bb.hu
 .lr.ph550:                                        ; preds = %.lr.ph550.preheader, %clusterAddSlot.exit
   %i.yz = phi ptr [ %.pre653, %.lr.ph550.preheader ], [ %i.zr, %clusterAddSlot.exit ] ; 2 uses
   %indvars.iv636 = phi i64 [ %i.yx, %.lr.ph550.preheader ], [ %indvars.iv.next637, %clusterAddSlot.exit ] ; 5 uses
-  %indvars.iv.next637 = add nuw nsw i64 %indvars.iv636, 1
+  %indvars.iv.next637 = add nuw nsw i64 %indvars.iv636, 1 ; 2 uses
   %i.za = getelementptr inbounds nuw i8, ptr %i.yz, i64 262192
   %i.zb = getelementptr inbounds nuw [8 x i8], ptr %i.za, i64 %indvars.iv636
   %i.zc = load ptr, ptr %i.zb, align 8, !tbaa !404
   %.not.i388 = icmp eq ptr %i.zc, null
-  %4 = trunc nuw i64 %indvars.iv636 to i32        ; 4 uses
   br i1 %.not.i388, label %bb.hw, label %clusterAddSlot.exit
 
 bb.hw:                                            ; preds = %.lr.ph550
-  %i.zd = call i32 @clusterNodeSetSlotBit(ptr noundef %.0279, i32 noundef %4) ; 0 uses
+  %5 = trunc nuw nsw i64 %indvars.iv636 to i32    ; 3 uses
+  %i.zd = call i32 @clusterNodeSetSlotBit(ptr noundef %.0279, i32 noundef %5) ; 0 uses
   %i.ze = load ptr, ptr getelementptr inbounds nuw (i8, ptr @server, i64 8224), align 8, !tbaa !414 ; 2 uses
   %i.zf = getelementptr inbounds nuw i8, ptr %i.ze, i64 262192
   %i.zg = getelementptr inbounds nuw [8 x i8], ptr %i.zf, i64 %indvars.iv636
@@ -233,7 +234,7 @@ bb.hw:                                            ; preds = %.lr.ph550
   %i.zh = getelementptr inbounds nuw i8, ptr %i.ze, i64 393584
   %i.zi = lshr i64 %indvars.iv636, 3
   %i.zj = and i64 %i.zi, 536870911
-  %i.zk = and i32 %4, 7
+  %i.zk = and i32 %5, 7
   %i.zl = shl nuw nsw i32 1, %i.zk
   %i.zm = getelementptr inbounds nuw i8, ptr %i.zh, i64 %i.zj ; 2 uses
   %i.zn = load i8, ptr %i.zm, align 1, !tbaa !407
@@ -241,14 +242,15 @@ bb.hw:                                            ; preds = %.lr.ph550
   %i.zp = xor i8 %i.zo, -1
   %i.zq = and i8 %i.zn, %i.zp
   store i8 %i.zq, ptr %i.zm, align 1, !tbaa !407
-  call void @clusterSlotStatReset(i32 noundef %4) #30
+  call void @clusterSlotStatReset(i32 noundef %5) #30
   %.pre652 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @server, i64 8224), align 8, !tbaa !414
   br label %clusterAddSlot.exit
 
 clusterAddSlot.exit:                              ; preds = %.lr.ph550, %bb.hw
-  %i.zr = phi ptr [ %.pre652, %bb.hw ], [ %i.yz, %.lr.ph550 ]
-  %.not332.not = icmp sgt i32 %.0252, %4
-  br i1 %.not332.not, label %.lr.ph550, label %.loopexit, !llvm.loop !572
+  %i.zr = phi ptr [ %i.yz, %.lr.ph550 ], [ %.pre652, %bb.hw ]
+  %lftr.wideiv = trunc i64 %indvars.iv.next637 to i32
+  %exitcond.not = icmp eq i32 %4, %lftr.wideiv
+  br i1 %exitcond.not, label %.loopexit, label %.lr.ph550, !llvm.loop !572
 
 .loopexit:                                        ; preds = %clusterAddSlot.exit, %clusterAddNode.exit387, %.preheader
   %indvars.iv.next640 = add nuw nsw i64 %indvars.iv639, 1 ; 2 uses

@@ -202,7 +202,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   invoke void @_RNvNtCsexYYUdYSQU6_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef 56) #26
-          to label %.noexc unwind label %bb.c
+          to label %.noexc unwind label %bb.c, !noalias !71
 
 .noexc:                                           ; preds = %bb.b
   unreachable
@@ -251,7 +251,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   invoke void @_RNvNtCsexYYUdYSQU6_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef 64) #26
-          to label %.noexc unwind label %bb.c
+          to label %.noexc unwind label %bb.c, !noalias !75
 
 .noexc:                                           ; preds = %bb.b
   unreachable
@@ -654,7 +654,7 @@ bb.e:                                             ; preds = %bb.c
   store ptr %i.l, ptr %i.m, align 8, !alias.scope !251, !noalias !250
   store i8 3, ptr %i.a, align 8, !alias.scope !251, !noalias !250
   invoke void @_RNvXsd_NtNtCskKLDkoKarTP_4core2io5errorNtB5_11CustomOwnerNtNtNtB9_3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.m)
-          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECscoiT177WhKJ_10wasmi_fuzz.exit.i unwind label %bb.f
+          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECscoiT177WhKJ_10wasmi_fuzz.exit.i unwind label %bb.f, !noalias !250
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECscoiT177WhKJ_10wasmi_fuzz.exit.i: ; preds = %bb.e, %bb.d, %bb.c, %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !250
@@ -1057,7 +1057,7 @@ bb.a:
   %i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   %i.j = load i64, ptr %i.i, align 8, !alias.scope !308, !noundef !4
   invoke void @_RINvCsaoJQ0BThbft_11wasmprinter11print_bytesRShECscoiT177WhKJ_10wasmi_fuzz(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.h, i64 noundef %i.j)
-          to label %.noexc unwind label %bb.f
+          to label %.noexc unwind label %bb.f, !noalias !309
 
 .noexc:                                           ; preds = %bb.a
   %i.k = load i64, ptr %i.c, align 8, !range !7, !noalias !309, !noundef !4
@@ -1460,7 +1460,7 @@ bb.k:                                             ; preds = %bb.i
   store ptr %i.am, ptr %i.an, align 8, !alias.scope !346, !noalias !345
   store i8 3, ptr %i.a, align 8, !alias.scope !346, !noalias !345
   invoke void @_RNvXsd_NtNtCskKLDkoKarTP_4core2io5errorNtB5_11CustomOwnerNtNtNtB9_3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.an)
-          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECscoiT177WhKJ_10wasmi_fuzz.exit.i.i unwind label %bb.l, !noalias !344
+          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECscoiT177WhKJ_10wasmi_fuzz.exit.i.i unwind label %bb.l, !noalias !347
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECscoiT177WhKJ_10wasmi_fuzz.exit.i.i: ; preds = %bb.k, %bb.j, %bb.i, %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !345
@@ -1484,7 +1484,7 @@ _RNvXNvNtNtCsaoJQ0BThbft_11wasmprinter5print5Print9write_fmtINtB2_7AdapterINtB6_
 ; Function Attrs: nonlazybind uwtable
 define internal noundef zeroext i1 @_RNvYINtNvNtNtCsaoJQ0BThbft_11wasmprinter5print5Print9write_fmt7AdapterINtB9_13PrintFmtWriteQNtNtCsexYYUdYSQU6_5alloc6string6StringEENtNtCskKLDkoKarTP_4core3fmt5Write9write_fmtCscoiT177WhKJ_10wasmi_fuzz(ptr noalias nofree noundef align 8 dereferenceable(16) %0, ptr noundef nonnull %1, ptr noundef nonnull %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 _RNvXs_NvNtNtCskKLDkoKarTP_4core3fmt5Write9write_fmtQINtNvNtNtCsaoJQ0BThbft_11wasmprinter5print5Print9write_fmt7AdapterINtBV_13PrintFmtWriteQNtNtCsexYYUdYSQU6_5alloc6string6StringEENtB4_12SpecWriteFmt14spec_write_fmtCscoiT177WhKJ_10wasmi_fuzz.exit:
-  %i.a = tail call noundef zeroext i1 @_RNvNtCskKLDkoKarTP_4core3fmt5write(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) @123, ptr noundef nonnull %1, ptr noundef nonnull %2), !inline_history !347
+  %i.a = tail call noundef zeroext i1 @_RNvNtCskKLDkoKarTP_4core3fmt5write(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) @123, ptr noundef nonnull %1, ptr noundef nonnull %2), !inline_history !348
   ret i1 %i.a
 }
 
@@ -1887,5 +1887,6 @@ begin_hunk_4_@llvm.umin.i64
 !344 = !{!337}
 !345 = !{!340, !337, !338}
 !346 = !{!342}
-!347 = distinct !{null}
+!347 = !{!340, !337}
+!348 = distinct !{null}
 end_hunk_4

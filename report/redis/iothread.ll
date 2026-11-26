@@ -205,6 +205,7 @@ bb.d:                                             ; preds = %bb.b
 
 .lr.ph.preheader:                                 ; preds = %bb.d
   %i.i = zext nneg i32 %0 to i64
+  %2 = add nsw i32 %1, 1
   br label %.lr.ph
 
 bb.e:                                             ; preds = %bb.d
@@ -245,7 +246,7 @@ bb.f:                                             ; preds = %bb.f, %.preheader.p
   br i1 %i.s, label %.loopexit35, label %.lr.ph41
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.j
-  %indvars.iv = phi i64 [ %i.i, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.j ] ; 4 uses
+  %indvars.iv = phi i64 [ %i.i, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.j ] ; 3 uses
   %i.t = getelementptr inbounds nuw [4 x i8], ptr @PausedIOThreads, i64 %indvars.iv ; 2 uses
   %i.u = load i32, ptr %i.t, align 4, !tbaa !19   ; 2 uses
   %i.v = add nsw i32 %i.u, 1
@@ -273,10 +274,10 @@ bb.i:                                             ; preds = %bb.g
   br label %bb.j
 
 bb.j:                                             ; preds = %.lr.ph, %bb.i
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
-  %i.ae = trunc nuw i64 %indvars.iv to i32
-  %.not29.not = icmp sgt i32 %1, %i.ae
-  br i1 %.not29.not, label %.lr.ph, label %.lr.ph41.preheader, !llvm.loop !185
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %i.ae = trunc i64 %indvars.iv.next to i32
+  %exitcond.not = icmp eq i32 %2, %i.ae
+  br i1 %exitcond.not, label %.lr.ph41.preheader, label %.lr.ph, !llvm.loop !185
 
 .lr.ph41:                                         ; preds = %.lr.ph41.prol.loopexit, %.loopexit.1
   %indvars.iv43 = phi i64 [ %indvars.iv.next44.1, %.loopexit.1 ], [ %indvars.iv43.unr, %.lr.ph41.prol.loopexit ] ; 4 uses
@@ -356,6 +357,7 @@ bb.d:                                             ; preds = %bb.b
 
 .lr.ph.preheader:                                 ; preds = %bb.d
   %i.i = zext nneg i32 %0 to i64
+  %2 = add nsw i32 %1, 1
   br label %.lr.ph
 
 bb.e:                                             ; preds = %bb.d
@@ -364,7 +366,7 @@ bb.e:                                             ; preds = %bb.d
   unreachable
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.loopexit
-  %indvars.iv = phi i64 [ %i.i, %.lr.ph.preheader ], [ %indvars.iv.next, %.loopexit ] ; 4 uses
+  %indvars.iv = phi i64 [ %i.i, %.lr.ph.preheader ], [ %indvars.iv.next, %.loopexit ] ; 3 uses
   %i.j = getelementptr inbounds nuw [4 x i8], ptr @PausedIOThreads, i64 %indvars.iv ; 2 uses
   %i.k = load i32, ptr %i.j, align 4, !tbaa !19   ; 3 uses
   %i.l = icmp sgt i32 %i.k, 0
@@ -403,10 +405,10 @@ bb.k:                                             ; preds = %bb.j, %bb.k
   br i1 %.not27, label %.loopexit, label %bb.k, !llvm.loop !188
 
 .loopexit:                                        ; preds = %bb.k, %bb.g
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
-  %i.s = trunc nuw i64 %indvars.iv to i32
-  %.not25.not = icmp sgt i32 %1, %i.s
-  br i1 %.not25.not, label %.lr.ph, label %.loopexit30, !llvm.loop !189
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %i.s = trunc i64 %indvars.iv.next to i32
+  %exitcond.not = icmp eq i32 %2, %i.s
+  br i1 %exitcond.not, label %.loopexit30, label %.lr.ph, !llvm.loop !189
 
 .loopexit30:                                      ; preds = %.loopexit, %bb.a
   ret void

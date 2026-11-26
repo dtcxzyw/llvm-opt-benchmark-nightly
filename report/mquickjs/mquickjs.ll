@@ -204,7 +204,7 @@ bb.a:
   %1 = alloca %struct.JSGCRef, align 8            ; 6 uses
   %2 = alloca %struct.StringBuffer, align 8       ; 9 uses
   %i.a = alloca i32, align 4                      ; 9 uses
-  %i.b = alloca ptr, align 8                      ; 9 uses
+  %i.b = alloca ptr, align 8                      ; 19 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #29
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #29
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
@@ -224,18 +224,15 @@ bb.a:
   store ptr %i.m, ptr %i.b, align 8, !tbaa !44
   %i.n = ptrtoaddr ptr %i.k to i64                ; 4 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 12
+  %3 = or disjoint i64 %i.g, 1
   br label %.backedge.outer
 
-.backedge.outer:                                  ; preds = %.backedge.sink.split, %bb.a
-  %.ph451 = phi i64 [ %.ph, %.backedge.sink.split ], [ %i.g, %bb.a ] ; 3 uses
-  %storemerge86233.ph = phi ptr [ %.sink, %.backedge.sink.split ], [ %i.m, %bb.a ]
+.backedge.outer:                                  ; preds = %bb.d, %bb.a
+  %storemerge86233.ph = phi ptr [ %i.ad, %bb.d ], [ %i.m, %bb.a ]
   br label %.backedge
 
-.backedge.loopexit:                               ; preds = %bb.n, %bb.n
-  br label %.backedge
-
-.backedge:                                        ; preds = %.backedge.outer, %.backedge.loopexit
-  %storemerge86233 = phi ptr [ %storemerge, %.backedge.loopexit ], [ %storemerge86233.ph, %.backedge.outer ] ; 51 uses
+.backedge:                                        ; preds = %bb.e, %.backedge.outer
+  %storemerge86233 = phi ptr [ %storemerge86233.ph, %.backedge.outer ], [ %storemerge86.lcssa217234.be, %bb.e ] ; 64 uses
   %i.p = ptrtoaddr ptr %storemerge86233 to i64
   %i.q = sub i64 %i.p, %i.n                       ; 2 uses
   %i.r = trunc i64 %i.q to i32
@@ -246,11 +243,11 @@ bb.a:
     i8 34, label %bb.c
     i8 39, label %bb.c
     i8 10, label %bb.d
-    i8 32, label %bb.e
-    i8 9, label %bb.e
-    i8 12, label %bb.e
-    i8 11, label %bb.e
-    i8 13, label %bb.e
+    i8 32, label %.backedge.sink.split
+    i8 9, label %.backedge.sink.split
+    i8 12, label %.backedge.sink.split
+    i8 11, label %.backedge.sink.split
+    i8 13, label %.backedge.sink.split
     i8 47, label %bb.f
     i8 95, label %bb.u
     i8 36, label %bb.u
@@ -351,21 +348,17 @@ bb.c:                                             ; preds = %.backedge, %.backed
   br label %bb.ce
 
 bb.d:                                             ; preds = %.backedge
-  %3 = and i64 %.ph451, -256
-  %4 = or disjoint i64 %3, 1                      ; 2 uses
-  store i64 %4, ptr %i.e, align 8
+  store i64 %3, ptr %i.e, align 8
   %i.ad = getelementptr inbounds nuw i8, ptr %storemerge86233, i64 1
-  br label %.backedge.sink.split
-
-.backedge.sink.split:                             ; preds = %bb.k, %bb.e, %bb.d
-  %.sink = phi ptr [ %i.ad, %bb.d ], [ %5, %bb.e ], [ %i.al, %bb.k ] ; 2 uses
-  %.ph = phi i64 [ %4, %bb.d ], [ %.ph451, %bb.e ], [ %.ph451, %bb.k ]
-  store ptr %.sink, ptr %i.b, align 8, !tbaa !44
   br label %.backedge.outer
 
-bb.e:                                             ; preds = %.backedge, %.backedge, %.backedge, %.backedge, %.backedge
-  %5 = getelementptr inbounds nuw i8, ptr %storemerge86233, i64 1
-  br label %.backedge.sink.split
+.backedge.sink.split:                             ; preds = %.backedge, %.backedge, %.backedge, %.backedge, %.backedge
+  %4 = getelementptr inbounds nuw i8, ptr %storemerge86233, i64 1
+  br label %bb.e
+
+bb.e:                                             ; preds = %bb.n, %bb.n, %.backedge.sink.split, %bb.k
+  %storemerge86.lcssa217234.be = phi ptr [ %i.al, %bb.k ], [ %4, %.backedge.sink.split ], [ %storemerge, %bb.n ], [ %storemerge, %bb.n ]
+  br label %.backedge
 
 bb.f:                                             ; preds = %.backedge
   %i.ae = getelementptr inbounds nuw i8, ptr %storemerge86233, i64 1
@@ -380,8 +373,7 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.l, %bb.g
-  %storemerge86 = phi ptr [ %i.ag, %bb.g ], [ %i.am, %bb.l ] ; 5 uses
-  store ptr %storemerge86, ptr %i.b, align 8, !tbaa !44
+  %storemerge86 = phi ptr [ %i.ag, %bb.g ], [ %i.am, %bb.l ] ; 4 uses
   %i.ah = load i8, ptr %storemerge86, align 1, !tbaa !51
   switch i8 %i.ah, label %bb.l [
     i8 0, label %bb.i
@@ -400,7 +392,7 @@ bb.j:                                             ; preds = %bb.h
 
 bb.k:                                             ; preds = %bb.j
   %i.al = getelementptr inbounds nuw i8, ptr %storemerge86, i64 2
-  br label %.backedge.sink.split
+  br label %bb.e
 
 bb.l:                                             ; preds = %bb.h, %bb.j
   %i.am = getelementptr inbounds nuw i8, ptr %storemerge86, i64 1
@@ -412,11 +404,10 @@ bb.m:                                             ; preds = %bb.f
 
 bb.n:                                             ; preds = %bb.o, %bb.m
   %storemerge = phi ptr [ %i.an, %bb.m ], [ %i.ap, %bb.o ] ; 4 uses
-  store ptr %storemerge, ptr %i.b, align 8, !tbaa !44
   %i.ao = load i8, ptr %storemerge, align 1, !tbaa !51
   switch i8 %i.ao, label %bb.o [
-    i8 0, label %.backedge.loopexit
-    i8 10, label %.backedge.loopexit
+    i8 0, label %bb.e
+    i8 10, label %bb.e
   ]
 
 bb.o:                                             ; preds = %bb.n
@@ -608,6 +599,7 @@ js_parse_ident.exit:                              ; preds = %js_free.exit.i, %bb
   br label %bb.ce
 
 bb.af:                                            ; preds = %.backedge
+  store ptr %storemerge86233, ptr %i.b, align 8
   %i.dj = getelementptr inbounds nuw i8, ptr %storemerge86233, i64 1
   %i.dk = load i8, ptr %i.dj, align 1, !tbaa !51
   %i.dl = add i8 %i.dk, -58
@@ -615,6 +607,7 @@ bb.af:                                            ; preds = %.backedge
   br i1 %i.dm, label %bb.cd, label %.loopexit
 
 bb.ag:                                            ; preds = %.backedge
+  store ptr %storemerge86233, ptr %i.b, align 8
   %i.dn = getelementptr inbounds nuw i8, ptr %storemerge86233, i64 1
   %i.do = load i8, ptr %i.dn, align 1, !tbaa !51
   %i.dp = add i8 %i.do, -58
@@ -673,6 +666,7 @@ bb.ak:                                            ; preds = %js_free.exit
   br label %bb.ce
 
 bb.al:                                            ; preds = %.backedge
+  store ptr %storemerge86233, ptr %i.b, align 8
   %i.ek = getelementptr inbounds nuw i8, ptr %storemerge86233, i64 1
   %i.el = load i8, ptr %i.ek, align 1, !tbaa !51
   switch i8 %i.el, label %bb.cd [
@@ -701,6 +695,7 @@ bb.ap:                                            ; preds = %bb.an
   br label %bb.ce
 
 bb.aq:                                            ; preds = %.backedge
+  store ptr %storemerge86233, ptr %i.b, align 8
   %i.er = getelementptr inbounds nuw i8, ptr %storemerge86233, i64 1
   %i.es = load i8, ptr %i.er, align 1, !tbaa !51
   %i.et = icmp eq i8 %i.es, 61
@@ -712,6 +707,7 @@ bb.ar:                                            ; preds = %bb.aq
   br label %bb.ce
 
 bb.as:                                            ; preds = %.backedge
+  store ptr %storemerge86233, ptr %i.b, align 8
   %i.ev = getelementptr inbounds nuw i8, ptr %storemerge86233, i64 1
   %i.ew = load i8, ptr %i.ev, align 1, !tbaa !51
   switch i8 %i.ew, label %bb.cd [
@@ -730,6 +726,7 @@ bb.au:                                            ; preds = %bb.as
   br label %bb.ce
 
 bb.av:                                            ; preds = %.backedge
+  store ptr %storemerge86233, ptr %i.b, align 8
   %i.ez = getelementptr inbounds nuw i8, ptr %storemerge86233, i64 1
   %i.fa = load i8, ptr %i.ez, align 1, !tbaa !51
   switch i8 %i.fa, label %bb.cd [
@@ -748,6 +745,7 @@ bb.ax:                                            ; preds = %bb.av
   br label %bb.ce
 
 bb.ay:                                            ; preds = %.backedge
+  store ptr %storemerge86233, ptr %i.b, align 8
   %i.fd = getelementptr inbounds nuw i8, ptr %storemerge86233, i64 1
   %i.fe = load i8, ptr %i.fd, align 1, !tbaa !51
   switch i8 %i.fe, label %bb.cd [
@@ -776,6 +774,7 @@ bb.bc:                                            ; preds = %bb.ba
   br label %bb.ce
 
 bb.bd:                                            ; preds = %.backedge
+  store ptr %storemerge86233, ptr %i.b, align 8
   %i.fk = getelementptr inbounds nuw i8, ptr %storemerge86233, i64 1
   %i.fl = load i8, ptr %i.fk, align 1, !tbaa !51
   switch i8 %i.fl, label %bb.cd [
@@ -821,6 +820,7 @@ bb.bk:                                            ; preds = %bb.bf
   br label %bb.ce
 
 bb.bl:                                            ; preds = %.backedge
+  store ptr %storemerge86233, ptr %i.b, align 8
   %i.fu = getelementptr inbounds nuw i8, ptr %storemerge86233, i64 1
   %i.fv = load i8, ptr %i.fu, align 1, !tbaa !51
   %i.fw = icmp eq i8 %i.fv, 61
@@ -842,6 +842,7 @@ bb.bo:                                            ; preds = %bb.bm
   br label %bb.ce
 
 bb.bp:                                            ; preds = %.backedge
+  store ptr %storemerge86233, ptr %i.b, align 8
   %i.gb = getelementptr inbounds nuw i8, ptr %storemerge86233, i64 1
   %i.gc = load i8, ptr %i.gb, align 1, !tbaa !51
   %i.gd = icmp eq i8 %i.gc, 61
@@ -863,6 +864,7 @@ bb.bs:                                            ; preds = %bb.bq
   br label %bb.ce
 
 bb.bt:                                            ; preds = %.backedge
+  store ptr %storemerge86233, ptr %i.b, align 8
   %i.gi = getelementptr inbounds nuw i8, ptr %storemerge86233, i64 1
   %i.gj = load i8, ptr %i.gi, align 1, !tbaa !51
   switch i8 %i.gj, label %bb.cd [
@@ -881,6 +883,7 @@ bb.bv:                                            ; preds = %bb.bt
   br label %bb.ce
 
 bb.bw:                                            ; preds = %.backedge
+  store ptr %storemerge86233, ptr %i.b, align 8
   %i.gm = getelementptr inbounds nuw i8, ptr %storemerge86233, i64 1
   %i.gn = load i8, ptr %i.gm, align 1, !tbaa !51
   %i.go = icmp eq i8 %i.gn, 61
@@ -892,6 +895,7 @@ bb.bx:                                            ; preds = %bb.bw
   br label %bb.ce
 
 bb.by:                                            ; preds = %.backedge
+  store ptr %storemerge86233, ptr %i.b, align 8
   %i.gq = getelementptr inbounds nuw i8, ptr %storemerge86233, i64 1
   %i.gr = load i8, ptr %i.gq, align 1, !tbaa !51
   switch i8 %i.gr, label %bb.cd [

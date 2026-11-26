@@ -150,7 +150,7 @@ ZL_hashPtr.exit:                                  ; preds = %bb.b, %bb.c, %bb.d,
   %.0.i = phi i64 [ %i.ay, %bb.l ], [ %i.e, %bb.b ], [ %i.j, %bb.c ], [ %i.n, %bb.d ], [ %i.r, %bb.e ], [ %i.v, %bb.f ], [ %i.z, %bb.g ], [ %i.ad, %bb.h ], [ %i.ah, %bb.i ], [ %i.ao, %bb.j ], [ %i.au, %bb.k ]
   %i.az = load ptr, ptr %0, align 8, !tbaa !13
   %i.ba = getelementptr inbounds nuw [16 x i8], ptr %i.az, i64 %.0.i ; 3 uses
-  %.sroa.08.0.copyload.i = load i64, ptr %i.ba, align 4
+  %.sroa.08.0.copyload.i = load i64, ptr %i.ba, align 4, !tbaa !16
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ba, i64 8 ; 2 uses
   %.sroa.2.0.copyload.i = load i64, ptr %.sroa.2.0..sroa_idx.i, align 4
   %.sroa.0.0.copyload.i = load i64, ptr %1, align 1
@@ -160,7 +160,7 @@ ZL_hashPtr.exit:                                  ; preds = %bb.b, %bb.c, %bb.d,
   %.sroa.2.12.insert.ext.i = zext i32 %2 to i64
   %.sroa.2.12.insert.shift.i = shl nuw i64 %.sroa.2.12.insert.ext.i, 32
   %.sroa.2.12.insert.insert.i = or disjoint i64 %.sroa.2.12.insert.shift.i, %.sroa.2.0.insert.ext.i
-  store i64 %.sroa.0.0.copyload.i, ptr %i.ba, align 4
+  store i64 %.sroa.0.0.copyload.i, ptr %i.ba, align 4, !tbaa !16
   store i64 %.sroa.2.12.insert.insert.i, ptr %.sroa.2.0..sroa_idx.i, align 4
   %.fca.0.insert.i = insertvalue { i64, i64 } poison, i64 %.sroa.08.0.copyload.i, 0
   %.fca.1.insert.i = insertvalue { i64, i64 } %.fca.0.insert.i, i64 %.sroa.2.0.copyload.i, 1
@@ -290,7 +290,7 @@ ZL_hashPtr.exit:                                  ; preds = %bb.b, %bb.c, %bb.d,
   %.sroa.2.12.insert.ext.i = zext i32 %2 to i64
   %.sroa.2.12.insert.shift.i = shl nuw i64 %.sroa.2.12.insert.ext.i, 32
   %.sroa.2.12.insert.insert.i = or disjoint i64 %.sroa.2.12.insert.shift.i, %.sroa.2.0.insert.ext.i
-  store i64 %.sroa.0.0.copyload.i, ptr %i.ba, align 4
+  store i64 %.sroa.0.0.copyload.i, ptr %i.ba, align 4, !tbaa !16
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ba, i64 8
   store i64 %.sroa.2.12.insert.insert.i, ptr %.sroa.4.0..sroa_idx.i, align 4
   ret void
@@ -412,7 +412,7 @@ ZL_hashPtr.exit:                                  ; preds = %bb.b, %bb.c, %bb.d,
   %.0.i = phi i64 [ %i.ay, %bb.l ], [ %i.e, %bb.b ], [ %i.j, %bb.c ], [ %i.n, %bb.d ], [ %i.r, %bb.e ], [ %i.v, %bb.f ], [ %i.z, %bb.g ], [ %i.ad, %bb.h ], [ %i.ah, %bb.i ], [ %i.ao, %bb.j ], [ %i.au, %bb.k ]
   %i.az = load ptr, ptr %0, align 8, !tbaa !13
   %i.ba = getelementptr inbounds nuw [16 x i8], ptr %i.az, i64 %.0.i ; 2 uses
-  %.sroa.0.0.copyload.i = load i64, ptr %i.ba, align 4
+  %.sroa.0.0.copyload.i = load i64, ptr %i.ba, align 4, !tbaa !16
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ba, i64 8
   %.sroa.2.0.copyload.i = load i64, ptr %.sroa.2.0..sroa_idx.i, align 4
   %.fca.0.insert.i = insertvalue { i64, i64 } poison, i64 %.sroa.0.0.copyload.i, 0
@@ -450,4 +450,5 @@ attributes #5 = { nocallback nofree nosync nounwind willreturn memory(argmem: wr
 !13 = !{!12, !11, i64 0}
 !14 = !{!12, !8, i64 8}
 !15 = !{!12, !8, i64 12}
+!16 = !{!7, !7, i64 0}
 end_hunk_0

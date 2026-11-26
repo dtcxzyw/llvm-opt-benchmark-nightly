@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 88
+  %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 88 ; 2 uses
   %i.r = load i8, ptr %i.q, align 8, !tbaa !207, !range !83, !noundef !84
   %i.s = trunc nuw i8 %i.r to i1
   br i1 %i.s, label %bb.d, label %_ZN8NWindows16NSynchronization8CSynchroD2Ev.exit.i
@@ -214,6 +214,7 @@ bb.d:                                             ; preds = %bb.c
   br label %_ZN8NWindows16NSynchronization8CSynchroD2Ev.exit.i
 
 _ZN8NWindows16NSynchronization8CSynchroD2Ev.exit.i: ; preds = %bb.d, %bb.c
+  store i8 0, ptr %i.q, align 8, !tbaa !207
   tail call void @_ZdlPvm(ptr noundef nonnull %i.p, i64 noundef 96) #18
   br label %bb.e
 
@@ -616,9 +617,9 @@ attributes #19 = { noreturn }
 !96 = !{ptr @_ZN13CObjectVectorI9CMyComPtrI20ISequentialOutStreamEED2Ev}
 !97 = !{i64 -8540958033177551450}
 !98 = !{i64 4726953570768109800}
-!99 = distinct !{null}
+!99 = distinct !{null, null}
 !100 = distinct !{null}
-!101 = distinct !{null}
+!101 = distinct !{null, null}
 !102 = distinct !{null}
 !103 = distinct !{!103, !82}
 !104 = distinct !{!104, !82}

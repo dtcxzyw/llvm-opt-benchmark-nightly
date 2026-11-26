@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %_RINvNtCs5Xr050g3D4
   %spec.select.i = select i1 %.not.i47, i64 0, i64 89
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !30
   invoke void @_RNvMs5_NtCsgCecv3eZDcN_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsgkdYJAOlkeX_5gimli(ptr nonnull sret([24 x i8]) align 8 %i.j, i64 %spec.select.i, i1 zeroext false, i64 1, i64 1)
-          to label %.noexc unwind label %.thread125
+          to label %.noexc unwind label %.thread125, !noalias !30
 
 .noexc:                                           ; preds = %bb.h
   %i.ah = load i64, ptr %i.j, align 8, !noalias !30
@@ -218,7 +218,7 @@ bb.h:                                             ; preds = %_RINvNtCs5Xr050g3D4
 bb.i:                                             ; preds = %.noexc
   %i.am = load i64, ptr %i.al, align 8, !noalias !30
   invoke void @_RNvNtCsgCecv3eZDcN_5alloc7raw_vec12handle_error(i64 %i.ak, i64 %i.am) #25
-          to label %.noexc48 unwind label %.thread125
+          to label %.noexc48 unwind label %.thread125, !noalias !30
 
 .noexc48:                                         ; preds = %bb.i
   unreachable
@@ -392,7 +392,7 @@ _RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
 
 _RNvXs9_NtNtCsf3Ta7LF998c_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3getCsfrMbUeuvm3s_18build_script_build.exit.thread.i.i.i: ; preds = %_RNvXs9_NtNtCsf3Ta7LF998c_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3getCsfrMbUeuvm3s_18build_script_build.exit.i.i.i, %bb.m, %.split.i.i.i.i
   invoke void @_RNvNtCsf3Ta7LF998c_4core3str16slice_error_fail(ptr %.sroa.1064.0.copyload.i, i64 %.sroa.1165.0.copyload.i, i64 %.sroa.212.1.i, i64 %.sroa.1165.0.copyload.i, ptr nonnull align 8 @61) #24
-          to label %.noexc.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !30
+          to label %.noexc.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !31
 
 .noexc.i:                                         ; preds = %_RNvXs9_NtNtCsf3Ta7LF998c_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3getCsfrMbUeuvm3s_18build_script_build.exit.thread.i.i.i
   unreachable
@@ -447,7 +447,7 @@ bb.ad:                                            ; preds = %.lr.ph.i.i.i
 
 _RNvNtNtCsf3Ta7LF998c_4core5slice6memchr6memchrCsfrMbUeuvm3s_18build_script_build.exit.i.i: ; preds = %bb.ac
   %i.cz = invoke { i64, i64 } @_RNvNtNtCsf3Ta7LF998c_4core5slice6memchr14memchr_aligned(i8 %.sroa.1016.sroa.0.0.i, ptr %i.ct, i64 %i.cs)
-          to label %.noexc27.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !30 ; 2 uses
+          to label %.noexc27.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !32 ; 2 uses
 
 .noexc27.i:                                       ; preds = %_RNvNtNtCsf3Ta7LF998c_4core5slice6memchr6memchrCsfrMbUeuvm3s_18build_script_build.exit.i.i
   %i.da = extractvalue { i64, i64 } %i.cz, 0
@@ -634,7 +634,7 @@ bb.ap:                                            ; preds = %.lr.ph379
 .invoke.i:                                        ; preds = %.preheader.preheader.i.split.i, %.lr.ph375
   %i.ff = phi i64 [ %i.dy, %.lr.ph375 ], [ %i.ek, %.preheader.preheader.i.split.i ]
   invoke void @_RNvNtCsf3Ta7LF998c_4core9panicking18panic_bounds_check(i64 %i.ff, i64 %.sroa.1367.0.copyload.i, ptr nonnull align 8 @3) #24
-          to label %.cont.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !30
+          to label %.cont.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !34
 
 .cont.i:                                          ; preds = %.invoke.i
   unreachable
@@ -907,7 +907,7 @@ bb.bq:                                            ; preds = %bb.bm
 
 _RINvMsi_NtCs5Xr050g3D4S_3std7processNtB6_7Command3newNtNtNtB8_3ffi6os_str8OsStringECsfrMbUeuvm3s_18build_script_build.exit.i: ; preds = %bb.bn
   invoke void @_RNvXs1_NtCsgCecv3eZDcN_5alloc7raw_vecINtB5_6RawVechENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCsgkdYJAOlkeX_5gimli(ptr nonnull align 8 %i.e)
-          to label %.noexc66 unwind label %.thread125
+          to label %.noexc66 unwind label %.thread125, !noalias !36
 
 .noexc66:                                         ; preds = %_RINvMsi_NtCs5Xr050g3D4S_3std7processNtB6_7Command3newNtNtNtB8_3ffi6os_str8OsStringECsfrMbUeuvm3s_18build_script_build.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
@@ -963,7 +963,7 @@ bb.bw:                                            ; preds = %bb.bt
   store ptr %i.hh, ptr %i.hi, align 8, !alias.scope !38, !noalias !37
   store i8 3, ptr %i.a, align 8, !alias.scope !38, !noalias !37
   invoke void @_RNvXsd_NtNtCsf3Ta7LF998c_4core2io5errorNtB5_11CustomOwnerNtNtNtB9_3ops4drop4Drop4drop(ptr nonnull align 8 %i.hi)
-          to label %bb.cv unwind label %bb.br
+          to label %bb.cv unwind label %bb.br, !noalias !37
 
 bb.bx:                                            ; preds = %bb.bs
   %.sroa.234.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.h, i64 8 ; 2 uses
@@ -1366,7 +1366,7 @@ _RINvMsj_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree8navigateINtNtB8_4node6Han
 
 bb.j:                                             ; preds = %_RINvMsj_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree8navigateINtNtB8_4node6HandleINtB11_7NodeRefNtNtB11_6marker5DyingNtNtNtCs5Xr050g3D4S_3std3ffi6os_str8OsStringINtNtCsf3Ta7LF998c_4core6option6OptionB1S_ENtB1z_4LeafENtB1z_4EdgeE17deallocating_nextNtNtBc_5alloc6GlobalECsfrMbUeuvm3s_18build_script_build.exit.i.i.i, %_RINvMsj_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree8navigateINtNtB8_4node6HandleINtB11_7NodeRefNtNtB11_6marker5DyingNtNtNtCs5Xr050g3D4S_3std3ffi6os_str8OsStringINtNtCsf3Ta7LF998c_4core6option6OptionB1S_ENtB1z_4LeafENtB1z_4EdgeE17deallocating_nextNtNtBc_5alloc6GlobalECsfrMbUeuvm3s_18build_script_build.exit.thread.i.i.i
   invoke void @_RNvNtCsf3Ta7LF998c_4core6option13unwrap_failed(ptr nonnull align 8 @11) #24
-          to label %.noexc.i.i unwind label %bb.k, !noalias !69
+          to label %.noexc.i.i unwind label %bb.k, !noalias !74
 
 .noexc.i.i:                                       ; preds = %bb.j
   unreachable
@@ -1428,8 +1428,8 @@ bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr i8, ptr %0, i64 24         ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 4 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
-  %i.h = load i64, ptr %i.f, align 8, !noalias !76 ; 2 uses
-  %i.i = load i64, ptr %i.g, align 8, !noalias !76 ; 2 uses
+  %i.h = load i64, ptr %i.f, align 8, !noalias !77 ; 2 uses
+  %i.i = load i64, ptr %i.g, align 8, !noalias !77 ; 2 uses
   %i.j = icmp ult i64 %i.i, %i.h
   br i1 %i.j, label %.loopexit.i, label %.lr.ph.i.i
 
@@ -1441,19 +1441,19 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.g, %.lr.ph.i.i
   %i.m = phi i64 [ %i.i, %.lr.ph.i.i ], [ %i.an, %bb.g ] ; 5 uses
   %i.n = phi i64 [ %i.h, %.lr.ph.i.i ], [ %i.aj, %bb.g ] ; 4 uses
-  %i.o = load i64, ptr %i.e, align 8, !noalias !76
+  %i.o = load i64, ptr %i.e, align 8, !noalias !77
   %.not.i.i = icmp ugt i64 %i.m, %i.o
   br i1 %.not.i.i, label %.loopexit.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.p = load ptr, ptr %i.d, align 8, !noalias !76
+  %i.p = load ptr, ptr %i.d, align 8, !noalias !77
   %i.q = sub nuw i64 %i.m, %i.n                   ; 3 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.n ; 2 uses
-  %i.s = load i8, ptr %i.l, align 8, !noalias !76 ; 2 uses
+  %i.s = load i8, ptr %i.l, align 8, !noalias !77 ; 2 uses
   %i.t = zext i8 %i.s to i64                      ; 2 uses
   %i.u = getelementptr i8, ptr %i.k, i64 %i.t
   %i.v = getelementptr i8, ptr %i.u, i64 -1
-  %i.w = load i8, ptr %i.v, align 1, !noalias !76 ; 2 uses
+  %i.w = load i8, ptr %i.v, align 1, !noalias !77 ; 2 uses
   %i.x = icmp ult i64 %i.q, 16
   br i1 %i.x, label %.preheader.i.i.i, label %_RNvNtNtCsf3Ta7LF998c_4core5slice6memchr6memchrCsfrMbUeuvm3s_18build_script_build.exit.i.i
 
@@ -1464,7 +1464,7 @@ bb.d:                                             ; preds = %bb.c
 .lr.ph.i.i.i:                                     ; preds = %.preheader.i.i.i, %bb.e
   %.sroa.04.09.i.i.i = phi i64 [ %i.ab, %bb.e ], [ 0, %.preheader.i.i.i ] ; 3 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.r, i64 %.sroa.04.09.i.i.i
-  %i.z = load i8, ptr %i.y, align 1, !noalias !76
+  %i.z = load i8, ptr %i.y, align 1, !noalias !77
   %i.aa = icmp eq i8 %i.z, %i.w
   br i1 %i.aa, label %_RNvNtNtCsf3Ta7LF998c_4core5slice6memchr6memchrCsfrMbUeuvm3s_18build_script_build.exit.thread15.i.i, label %bb.e
 
@@ -1474,19 +1474,19 @@ bb.e:                                             ; preds = %.lr.ph.i.i.i
   br i1 %exitcond.not.i.i.i, label %_RNvNtNtCsf3Ta7LF998c_4core5slice6memchr6memchrCsfrMbUeuvm3s_18build_script_build.exit.thread.i.i, label %.lr.ph.i.i.i
 
 _RNvNtNtCsf3Ta7LF998c_4core5slice6memchr6memchrCsfrMbUeuvm3s_18build_script_build.exit.i.i: ; preds = %bb.d
-  %i.ac = tail call { i64, i64 } @_RNvNtNtCsf3Ta7LF998c_4core5slice6memchr14memchr_aligned(i8 %i.w, ptr %i.r, i64 %i.q), !noalias !76 ; 2 uses
+  %i.ac = tail call { i64, i64 } @_RNvNtNtCsf3Ta7LF998c_4core5slice6memchr14memchr_aligned(i8 %i.w, ptr %i.r, i64 %i.q), !noalias !77 ; 2 uses
   %i.ad = extractvalue { i64, i64 } %i.ac, 0
   %i.ae = trunc nuw i64 %i.ad to i1
   br i1 %i.ae, label %_RNvNtNtCsf3Ta7LF998c_4core5slice6memchr6memchrCsfrMbUeuvm3s_18build_script_build.exit._RNvNtNtCsf3Ta7LF998c_4core5slice6memchr6memchrCsfrMbUeuvm3s_18build_script_build.exit.thread15_crit_edge.i.i, label %_RNvNtNtCsf3Ta7LF998c_4core5slice6memchr6memchrCsfrMbUeuvm3s_18build_script_build.exit._RNvNtNtCsf3Ta7LF998c_4core5slice6memchr6memchrCsfrMbUeuvm3s_18build_script_build.exit.thread.loopexit19_crit_edge.i.i
 
 _RNvNtNtCsf3Ta7LF998c_4core5slice6memchr6memchrCsfrMbUeuvm3s_18build_script_build.exit._RNvNtNtCsf3Ta7LF998c_4core5slice6memchr6memchrCsfrMbUeuvm3s_18build_script_build.exit.thread.loopexit19_crit_edge.i.i: ; preds = %_RNvNtNtCsf3Ta7LF998c_4core5slice6memchr6memchrCsfrMbUeuvm3s_18build_script_build.exit.i.i
-  %.pre44.pre.i.i = load i64, ptr %i.g, align 8, !noalias !76
+  %.pre44.pre.i.i = load i64, ptr %i.g, align 8, !noalias !77
   br label %_RNvNtNtCsf3Ta7LF998c_4core5slice6memchr6memchrCsfrMbUeuvm3s_18build_script_build.exit.thread.i.i
 
 _RNvNtNtCsf3Ta7LF998c_4core5slice6memchr6memchrCsfrMbUeuvm3s_18build_script_build.exit._RNvNtNtCsf3Ta7LF998c_4core5slice6memchr6memchrCsfrMbUeuvm3s_18build_script_build.exit.thread15_crit_edge.i.i: ; preds = %_RNvNtNtCsf3Ta7LF998c_4core5slice6memchr6memchrCsfrMbUeuvm3s_18build_script_build.exit.i.i
   %i.af = extractvalue { i64, i64 } %i.ac, 1
-  %.pre.i.i = load i64, ptr %i.f, align 8, !noalias !76
-  %.pre43.i.i = load i8, ptr %i.l, align 8, !noalias !76 ; 2 uses
+  %.pre.i.i = load i64, ptr %i.f, align 8, !noalias !77
+  %.pre43.i.i = load i8, ptr %i.l, align 8, !noalias !77 ; 2 uses
   %.pre46.i.i = zext i8 %.pre43.i.i to i64
   br label %_RNvNtNtCsf3Ta7LF998c_4core5slice6memchr6memchrCsfrMbUeuvm3s_18build_script_build.exit.thread15.i.i
 
@@ -1497,23 +1497,23 @@ _RNvNtNtCsf3Ta7LF998c_4core5slice6memchr6memchrCsfrMbUeuvm3s_18build_script_buil
   %.sroa.5.1.i18.i.i = phi i64 [ %i.af, %_RNvNtNtCsf3Ta7LF998c_4core5slice6memchr6memchrCsfrMbUeuvm3s_18build_script_build.exit._RNvNtNtCsf3Ta7LF998c_4core5slice6memchr6memchrCsfrMbUeuvm3s_18build_script_build.exit.thread15_crit_edge.i.i ], [ %.sroa.04.09.i.i.i, %.lr.ph.i.i.i ]
   %i.ai = add i64 %i.ah, 1
   %i.aj = add i64 %i.ai, %.sroa.5.1.i18.i.i       ; 7 uses
-  store i64 %i.aj, ptr %i.f, align 8, !noalias !76
+  store i64 %i.aj, ptr %i.f, align 8, !noalias !77
   %.not11.i.i = icmp ult i64 %i.aj, %.pre-phi.i.i
   br i1 %.not11.i.i, label %bb.g, label %bb.f
 
 _RNvNtNtCsf3Ta7LF998c_4core5slice6memchr6memchrCsfrMbUeuvm3s_18build_script_build.exit.thread.i.i: ; preds = %.preheader.i.i.i, %bb.e, %_RNvNtNtCsf3Ta7LF998c_4core5slice6memchr6memchrCsfrMbUeuvm3s_18build_script_build.exit._RNvNtNtCsf3Ta7LF998c_4core5slice6memchr6memchrCsfrMbUeuvm3s_18build_script_build.exit.thread.loopexit19_crit_edge.i.i
   %i.ak = phi i64 [ %i.m, %bb.e ], [ %.pre44.pre.i.i, %_RNvNtNtCsf3Ta7LF998c_4core5slice6memchr6memchrCsfrMbUeuvm3s_18build_script_build.exit._RNvNtNtCsf3Ta7LF998c_4core5slice6memchr6memchrCsfrMbUeuvm3s_18build_script_build.exit.thread.loopexit19_crit_edge.i.i ], [ %i.m, %.preheader.i.i.i ]
-  store i64 %i.ak, ptr %i.f, align 8, !noalias !76
+  store i64 %i.ak, ptr %i.f, align 8, !noalias !77
   br label %.loopexit.i
 
 bb.f:                                             ; preds = %_RNvNtNtCsf3Ta7LF998c_4core5slice6memchr6memchrCsfrMbUeuvm3s_18build_script_build.exit.thread15.i.i
   %i.al = sub nuw i64 %i.aj, %.pre-phi.i.i        ; 2 uses
-  %i.am = load i64, ptr %i.e, align 8, !noalias !76
+  %i.am = load i64, ptr %i.e, align 8, !noalias !77
   %.not12.i.i = icmp ugt i64 %i.aj, %i.am
   br i1 %.not12.i.i, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.j, %bb.f, %_RNvNtNtCsf3Ta7LF998c_4core5slice6memchr6memchrCsfrMbUeuvm3s_18build_script_build.exit.thread15.i.i
-  %i.an = load i64, ptr %i.g, align 8, !noalias !76 ; 2 uses
+  %i.an = load i64, ptr %i.g, align 8, !noalias !77 ; 2 uses
   %i.ao = icmp ult i64 %i.an, %i.aj
   br i1 %i.ao, label %.loopexit.i, label %bb.c
 
@@ -1522,13 +1522,13 @@ bb.h:                                             ; preds = %bb.f
   br i1 %i.ap, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  tail call void @_RNvNtNtCsf3Ta7LF998c_4core5slice5index16slice_index_fail(i64 0, i64 %.pre-phi.i.i, i64 4, ptr nonnull align 8 @57) #24, !noalias !76
+  tail call void @_RNvNtNtCsf3Ta7LF998c_4core5slice5index16slice_index_fail(i64 0, i64 %.pre-phi.i.i, i64 4, ptr nonnull align 8 @57) #24, !noalias !77
   unreachable
 
 bb.j:                                             ; preds = %bb.h
-  %i.aq = load ptr, ptr %i.d, align 8, !noalias !76
+  %i.aq = load ptr, ptr %i.d, align 8, !noalias !77
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 %i.al
-  %bcmp.i.i = tail call i32 @bcmp(ptr %i.ar, ptr nonnull %i.k, i64 %.pre-phi.i.i), !noalias !76
+  %bcmp.i.i = tail call i32 @bcmp(ptr %i.ar, ptr nonnull %i.k, i64 %.pre-phi.i.i), !noalias !77
   %i.as = icmp eq i32 %bcmp.i.i, 0
   br i1 %i.as, label %_RNvXs_NtNtCsf3Ta7LF998c_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_matchCsfrMbUeuvm3s_18build_script_build.exit.i, label %bb.g
 
@@ -1842,7 +1842,8 @@ attributes #26 = { noinline noreturn nounwind }
 !71 = !{!60, !58, !56, !54, !51, !49}
 !72 = !{!62, !56, !54, !51, !49}
 !73 = !{!58, !56, !54, !51, !49}
-!74 = distinct !{!74, i1 true, !"_RNvXs_NtNtCsf3Ta7LF998c_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_matchCsfrMbUeuvm3s_18build_script_build"}
-!75 = distinct !{!75, !74, !"_RNvXs_NtNtCsf3Ta7LF998c_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_matchCsfrMbUeuvm3s_18build_script_build: argument 0"}
-!76 = !{!75}
+!74 = !{!54, !51, !49}
+!75 = distinct !{!75, i1 true, !"_RNvXs_NtNtCsf3Ta7LF998c_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_matchCsfrMbUeuvm3s_18build_script_build"}
+!76 = distinct !{!76, !75, !"_RNvXs_NtNtCsf3Ta7LF998c_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_matchCsfrMbUeuvm3s_18build_script_build: argument 0"}
+!77 = !{!76}
 end_hunk_1

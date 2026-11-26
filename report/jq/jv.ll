@@ -205,9 +205,9 @@ bb.b:                                             ; preds = %bb.a
 
 jvp_array_length.exit.i:                          ; preds = %bb.a
   %i.c = trunc i64 %0 to i32
-  %i.d = lshr i32 %i.c, 16                        ; 2 uses
+  %i.d = lshr i32 %i.c, 16                        ; 3 uses
   %.sroa.21.0.extract.shift.i.i = lshr i64 %0, 32
-  %.sroa.21.0.extract.trunc.i.i = trunc nuw i64 %.sroa.21.0.extract.shift.i.i to i32 ; 9 uses
+  %.sroa.21.0.extract.trunc.i.i = trunc nuw i64 %.sroa.21.0.extract.shift.i.i to i32 ; 7 uses
   %i.e = icmp slt i32 %2, 0
   %i.f = select i1 %i.e, i32 %.sroa.21.0.extract.trunc.i.i, i32 0
   %spec.select.i = add nsw i32 %i.f, %2           ; 3 uses
@@ -272,19 +272,27 @@ bb.g:                                             ; preds = %bb.e
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.ag = zext nneg i32 %.1101.i to i64           ; 2 uses
-  %4 = zext nneg i32 %i.d to i64                  ; 2 uses
-  br i1 %.not.i.i, label %.lr.ph.split.us.i, label %.lr.ph.split.i
+  br i1 %.not.i.i, label %.lr.ph.split.us.preheader.i, label %.lr.ph.split.preheader.i
 
-.lr.ph.split.us.i:                                ; preds = %.lr.ph.i, %jv_array_append.exit.us.i
-  %indvars.iv120.i = phi i64 [ %indvars.iv.next121.i, %jv_array_append.exit.us.i ], [ %i.ag, %.lr.ph.i ] ; 3 uses
-  %.sroa.6.0109.us.i = phi ptr [ %.sroa.6.0.us.i, %jv_array_append.exit.us.i ], [ %i.aa, %.lr.ph.i ] ; 4 uses
-  %.sroa.080.0108.us.i = phi i64 [ %i.az, %jv_array_append.exit.us.i ], [ 134, %.lr.ph.i ] ; 5 uses
-  %5 = trunc nuw i64 %indvars.iv120.i to i32
-  %i.ah = icmp slt i32 %5, %.sroa.21.0.extract.trunc.i.i
+.lr.ph.split.preheader.i:                         ; preds = %.lr.ph.i
+  %4 = zext nneg i32 %i.d to i64
+  %5 = ashr i64 %0, 32
+  br label %.lr.ph.split.i
+
+.lr.ph.split.us.preheader.i:                      ; preds = %.lr.ph.i
+  %6 = ashr i64 %0, 32
+  %7 = zext nneg i32 %i.d to i64
+  br label %.lr.ph.split.us.i
+
+.lr.ph.split.us.i:                                ; preds = %jv_array_append.exit.us.i, %.lr.ph.split.us.preheader.i
+  %indvars.iv120.i = phi i64 [ %i.ag, %.lr.ph.split.us.preheader.i ], [ %indvars.iv.next121.i, %jv_array_append.exit.us.i ] ; 3 uses
+  %.sroa.6.0109.us.i = phi ptr [ %i.aa, %.lr.ph.split.us.preheader.i ], [ %.sroa.6.0.us.i, %jv_array_append.exit.us.i ] ; 4 uses
+  %.sroa.080.0108.us.i = phi i64 [ 134, %.lr.ph.split.us.preheader.i ], [ %i.az, %jv_array_append.exit.us.i ] ; 5 uses
+  %i.ah = icmp slt i64 %indvars.iv120.i, %6
   br i1 %i.ah, label %jvp_array_offset.exit.i.i.us.i, label %jv_array_get.exit.us.i
 
 jvp_array_offset.exit.i.i.us.i:                   ; preds = %.lr.ph.split.us.i
-  %i.ai = add nuw nsw i64 %indvars.iv120.i, %4    ; 2 uses
+  %i.ai = add nuw nsw i64 %indvars.iv120.i, %7    ; 2 uses
   %i.aj = load i32, ptr %i.ae, align 4, !tbaa !14
   %i.ak = trunc nuw i64 %i.ai to i32
   %i.al = icmp sgt i32 %i.aj, %i.ak
@@ -342,15 +350,14 @@ jv_array_append.exit.us.i:                        ; preds = %jv_copy.exit.i.us.i
   tail call void @jv_free(i64 %0, ptr %1)
   br label %jvp_array_slice.exit
 
-.lr.ph.split.i:                                   ; preds = %.lr.ph.i, %jv_array_append.exit.i
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %jv_array_append.exit.i ], [ %i.ag, %.lr.ph.i ] ; 3 uses
-  %.sroa.6.0109.i = phi ptr [ %.sroa.6.0.i, %jv_array_append.exit.i ], [ %i.aa, %.lr.ph.i ] ; 4 uses
-  %.sroa.080.0108.i = phi i64 [ %i.bw, %jv_array_append.exit.i ], [ 134, %.lr.ph.i ] ; 5 uses
+.lr.ph.split.i:                                   ; preds = %jv_array_append.exit.i, %.lr.ph.split.preheader.i
+  %indvars.iv.i = phi i64 [ %i.ag, %.lr.ph.split.preheader.i ], [ %indvars.iv.next.i, %jv_array_append.exit.i ] ; 3 uses
+  %.sroa.6.0109.i = phi ptr [ %i.aa, %.lr.ph.split.preheader.i ], [ %.sroa.6.0.i, %jv_array_append.exit.i ] ; 4 uses
+  %.sroa.080.0108.i = phi i64 [ 134, %.lr.ph.split.preheader.i ], [ %i.bw, %jv_array_append.exit.i ] ; 5 uses
   %i.bc = load i32, ptr %1, align 4, !tbaa !17
   %i.bd = add nsw i32 %i.bc, 1
   store i32 %i.bd, ptr %1, align 4, !tbaa !17
-  %6 = trunc nuw i64 %indvars.iv.i to i32
-  %i.be = icmp slt i32 %6, %.sroa.21.0.extract.trunc.i.i
+  %i.be = icmp slt i64 %indvars.iv.i, %5
   br i1 %i.be, label %jvp_array_offset.exit.i.i.i, label %jv_array_get.exit.i
 
 jvp_array_offset.exit.i.i.i:                      ; preds = %.lr.ph.split.i

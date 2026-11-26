@@ -204,7 +204,7 @@ define dso_local void @lua_call(ptr noundef %0, i32 noundef %1, i32 noundef %2) 
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !17   ; 4 uses
-  %3 = sext i32 %1 to i64
+  %3 = zext nneg i32 %1 to i64
   %.neg.i = mul nsw i64 %3, -8
   %i.c = getelementptr inbounds i8, ptr %i.b, i64 %.neg.i
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -283,7 +283,7 @@ bb.e:                                             ; preds = %._crit_edge, %index
   %i.aa = phi ptr [ %i.v, %index2adr_stack.exit ], [ %.pre, %._crit_edge ] ; 4 uses
   %.0 = phi i64 [ %i.z, %index2adr_stack.exit ], [ 0, %._crit_edge ]
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %4 = sext i32 %1 to i64
+  %4 = zext nneg i32 %1 to i64
   %.neg.i = mul nsw i64 %4, -8
   %i.ac = getelementptr inbounds i8, ptr %i.aa, i64 %.neg.i
   %i.ad = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
@@ -686,10 +686,10 @@ bb.c:                                             ; preds = %bb.b
   %i.g = icmp eq i8 %i.e, 0
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !17   ; 5 uses
-  %2 = sext i32 %1 to i64                         ; 2 uses
   br i1 %i.g, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
+  %2 = zext nneg i32 %1 to i64
   %.neg.i = mul nsw i64 %2, -8
   %i.j = getelementptr inbounds i8, ptr %i.i, i64 %.neg.i
   %i.k = getelementptr inbounds nuw i8, ptr %i.i, i64 8
@@ -712,7 +712,8 @@ api_call_base.exit:                               ; preds = %.lr.ph.i, %bb.d
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.c
-  %i.q = sub nsw i64 0, %2
+  %3 = sext i32 %1 to i64
+  %i.q = sub nsw i64 0, %3
   %i.r = getelementptr inbounds [8 x i8], ptr %i.i, i64 %i.q
   br label %bb.f
 

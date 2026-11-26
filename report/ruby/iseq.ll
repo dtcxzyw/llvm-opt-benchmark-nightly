@@ -205,6 +205,7 @@ RSTRING_PTR.exit215:                              ; preds = %bb.t, %bb.u
   %i.cg = phi ptr [ %i.dn, %RSTRING_PTR.exit218 ], [ %i.ce, %RSTRING_PTR.exit215 ]
   %.0241 = phi ptr [ %.1, %RSTRING_PTR.exit218 ], [ %i.cd, %RSTRING_PTR.exit215 ] ; 3 uses
   %.0167240 = phi ptr [ %.2169, %RSTRING_PTR.exit218 ], [ null, %RSTRING_PTR.exit215 ] ; 5 uses
+  %2 = phi i64 [ %4, %RSTRING_PTR.exit218 ], [ 4, %RSTRING_PTR.exit215 ] ; 3 uses
   %i.ch = getelementptr i8, ptr %i.cg, i64 4
   %i.ci = getelementptr [32 x i8], ptr %i.ch, i64 %indvars.iv ; 6 uses
   %i.cj = tail call i64 @rb_str_cat(i64 noundef %i.g, ptr noundef %.0241, i64 noundef %i.m) #20 ; 0 uses
@@ -260,10 +261,10 @@ bb.z:                                             ; preds = %bb.w
   %i.de = tail call i64 @rb_str_concat(i64 noundef %i.g, i64 noundef %i.dd) #20 ; 0 uses
   %i.df = tail call ptr @rb_st_init_numtable() #20 ; 2 uses
   %i.dg = tail call i64 @rb_data_typed_object_wrap(i64 noundef 0, ptr noundef %i.df, ptr noundef nonnull @tmp_set) #20
-  store i64 %i.dg, ptr %i.a, align 8, !tbaa !364
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.y, %bb.z
+  %3 = phi i64 [ %2, %bb.y ], [ %i.dg, %bb.z ]    ; 2 uses
   %.1168 = phi ptr [ %.0167240, %bb.y ], [ %i.df, %bb.z ] ; 3 uses
   %i.dh = load ptr, ptr %i.cw, align 8, !tbaa !465
   %i.di = ptrtoint ptr %i.dh to i64
@@ -278,6 +279,7 @@ bb.ab:                                            ; preds = %bb.aa
   br label %RSTRING_PTR.exit218
 
 RSTRING_PTR.exit218:                              ; preds = %bb.ab, %bb.aa, %bb.x, %switch.lookup
+  %4 = phi i64 [ %2, %bb.x ], [ %2, %switch.lookup ], [ %3, %bb.aa ], [ %3, %bb.ab ] ; 2 uses
   %.2169 = phi ptr [ %.0167240, %bb.x ], [ %.0167240, %switch.lookup ], [ %.1168, %bb.aa ], [ %.1168, %bb.ab ] ; 2 uses
   %.1 = phi ptr [ %.0241, %bb.x ], [ %.0241, %switch.lookup ], [ %i.p, %bb.aa ], [ %i.dm, %bb.ab ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
@@ -288,7 +290,9 @@ RSTRING_PTR.exit218:                              ; preds = %bb.ab, %bb.aa, %bb.
   br i1 %i.dq, label %.lr.ph, label %._crit_edge, !llvm.loop !753
 
 ._crit_edge:                                      ; preds = %RSTRING_PTR.exit218, %RSTRING_PTR.exit215
+  %.lcssa239 = phi i64 [ 4, %RSTRING_PTR.exit215 ], [ %4, %RSTRING_PTR.exit218 ]
   %.0167.lcssa = phi ptr [ null, %RSTRING_PTR.exit215 ], [ %.2169, %RSTRING_PTR.exit218 ] ; 2 uses
+  store i64 %.lcssa239, ptr %i.a, align 8
   %i.dr = tail call i64 @rb_str_resize(i64 noundef %1, i64 noundef %i.m) #20 ; 0 uses
   %i.ds = load i64, ptr %i.k, align 8, !tbaa !425
   %i.dt = and i64 %i.ds, 8192

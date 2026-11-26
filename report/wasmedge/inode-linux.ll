@@ -204,7 +204,7 @@ _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i:   ; preds = %bb.a
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEcm.exit.thread.i: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i
   %i.g = add i64 %0, 1                            ; 2 uses
   %i.h = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.g) #27
-          to label %_ZNSt10unique_ptrIA_cSt14default_deleteIS0_EED2Ev.exit.i unwind label %bb.e, !noalias !228 ; 9 uses
+          to label %_ZNSt10unique_ptrIA_cSt14default_deleteIS0_EED2Ev.exit.i unwind label %bb.e, !noalias !229 ; 9 uses
 
 _ZNSt10unique_ptrIA_cSt14default_deleteIS0_EED2Ev.exit.i: ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEcm.exit.thread.i
   tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.h, i8 0, i64 %i.g, i1 false), !noalias !229
@@ -250,7 +250,7 @@ _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i59: ; preds = %_ZN8WasmEdge4Host4W
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEcm.exit.thread.i65: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i59
   %i.s = add i64 %2, 1                            ; 2 uses
   %i.t = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.s) #27
-          to label %_ZNSt10unique_ptrIA_cSt14default_deleteIS0_EED2Ev.exit.i66 unwind label %bb.i, !noalias !230 ; 9 uses
+          to label %_ZNSt10unique_ptrIA_cSt14default_deleteIS0_EED2Ev.exit.i66 unwind label %bb.i, !noalias !231 ; 9 uses
 
 _ZNSt10unique_ptrIA_cSt14default_deleteIS0_EED2Ev.exit.i66: ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEcm.exit.thread.i65
   tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.t, i8 0, i64 %i.s, i1 false), !noalias !231
@@ -653,12 +653,15 @@ _ZNKSt6vectorIN8WasmEdge4Host4WASI6Poller5TimerESaIS4_EE12_M_check_lenEmPKc.exit
   %i.r = load i32, ptr %2, align 4, !tbaa !32
   store i32 -1, ptr %2, align 4, !tbaa !32
   store i32 %i.r, ptr %i.q, align 4, !tbaa !17
-  %i.s = getelementptr inbounds nuw i8, ptr %i.q, i64 4
+  %i.s = getelementptr inbounds nuw i8, ptr %i.q, i64 4 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 2 uses
-  %i.u = load i8, ptr %i.t, align 4               ; 2 uses
-  %i.v = and i8 %i.u, 1
-  store i8 %i.v, ptr %i.s, align 4
-  %i.w = or i8 %i.u, 1
+  %3 = load i8, ptr %i.t, align 4                 ; 2 uses
+  %4 = and i8 %3, 1
+  %i.u = load i8, ptr %i.s, align 4
+  %i.v = and i8 %i.u, -2
+  %5 = or disjoint i8 %i.v, %4
+  store i8 %5, ptr %i.s, align 4
+  %i.w = or i8 %3, 1
   store i8 %i.w, ptr %i.t, align 4
   %i.x = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   %i.y = getelementptr inbounds nuw i8, ptr %2, i64 8

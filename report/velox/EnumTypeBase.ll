@@ -205,8 +205,9 @@ bb.a:
           to label %bb.b unwind label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit12.thread
 
 bb.b:                                             ; preds = %bb.a
+  call void @llvm.experimental.noalias.scope.decl(metadata !522)
   %i.e = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %2, i64 noundef 0, i64 noundef 0, ptr noundef nonnull @.str.5, i64 noundef 24)
-          to label %.noexc unwind label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread ; 6 uses
+          to label %.noexc unwind label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread, !noalias !522 ; 6 uses
 
 .noexc:                                           ; preds = %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 5 uses

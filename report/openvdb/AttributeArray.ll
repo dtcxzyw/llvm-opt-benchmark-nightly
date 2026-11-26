@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.t = invoke noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #22
-          to label %.noexc unwind label %bb.m     ; 3 uses
+          to label %.noexc unwind label %bb.m, !noalias !87 ; 3 uses
 
 .noexc:                                           ; preds = %bb.d
   %i.u = getelementptr inbounds nuw i8, ptr %i.s, i64 16
@@ -607,7 +607,7 @@ _ZNSt3mapISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_EPFSt10
           to label %.noexc unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
 .noexc:                                           ; preds = %.lr.ph.i.i.i.i30
-  %.19.i.i.i.i = select i1 %i.cv, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 5 uses
+  %.19.i.i.i.i = select i1 %i.cv, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 6 uses
   %.1.in.v.i.i.i.i = select i1 %i.cv, i64 24, i64 16
   %.1.in.i.i.i.i = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 %.1.in.v.i.i.i.i
   %.1.i.i.i.i = load ptr, ptr %.1.in.i.i.i.i, align 8, !tbaa !58 ; 2 uses
@@ -629,11 +629,12 @@ bb.ab:                                            ; preds = %_ZNSt3mapISt4pairIN
   br i1 %i.cy, label %bb.ac, label %bb.ad
 
 .critedge.i:                                      ; preds = %_ZNSt3mapISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_EPFSt10shared_ptrIN7openvdb5v13_06points14AttributeArrayEEjjbPKNSA_8MetadataEESt4lessIS7_ESaIS0_IKS7_SI_EEE11lower_boundERSL_.exit.i, %_ZNSt3mapISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_EPFSt10shared_ptrIN7openvdb5v13_06points14AttributeArrayEEjjbPKNSA_8MetadataEESt4lessIS7_ESaIS0_IKS7_SI_EEE11lower_boundERSL_.exit.thread.i
+  %.08.lcssa.i.i.i11.i = phi ptr [ getelementptr inbounds nuw (i8, ptr @_ZZN7openvdb5v13_06points12_GLOBAL__N_120getAttributeRegistryEvE8registry, i64 16), %_ZNSt3mapISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_EPFSt10shared_ptrIN7openvdb5v13_06points14AttributeArrayEEjjbPKNSA_8MetadataEESt4lessIS7_ESaIS0_IKS7_SI_EEE11lower_boundERSL_.exit.thread.i ], [ %.19.i.i.i.i, %_ZNSt3mapISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_EPFSt10shared_ptrIN7openvdb5v13_06points14AttributeArrayEEjjbPKNSA_8MetadataEESt4lessIS7_ESaIS0_IKS7_SI_EEE11lower_boundERSL_.exit.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #16
   br label %bb.ac
 
 bb.ac:                                            ; preds = %.critedge.i, %.noexc31
-  %.08.lcssa.i.i.i10.i = phi ptr [ getelementptr inbounds nuw (i8, ptr @_ZZN7openvdb5v13_06points12_GLOBAL__N_120getAttributeRegistryEvE8registry, i64 16), %.critedge.i ], [ %.19.i.i.i.i, %.noexc31 ]
+  %.08.lcssa.i.i.i10.i = phi ptr [ %.08.lcssa.i.i.i11.i, %.critedge.i ], [ %.19.i.i.i.i, %.noexc31 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #16
   store ptr %0, ptr %4, align 8, !tbaa !69
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #16

@@ -202,6 +202,8 @@ _ZN4Luau12DenseHashSetIPKvNS_16DenseHashPointerESt8equal_toIS2_EED2Ev.exit:
   store i8 %i.al, ptr %i.am, align 8, !tbaa !153
   %i.an = getelementptr inbounds nuw i8, ptr %8, i64 428
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.an, ptr noundef nonnull align 8 dereferenceable(16) %5, i64 16, i1 false)
+  tail call void @_ZdlPvm(ptr noundef null, i64 noundef 0) #28
+  tail call void @_ZdlPvm(ptr noundef null, i64 noundef 0) #28
   %i.ao = getelementptr inbounds nuw i8, ptr %6, i64 24
   %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !333
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 336

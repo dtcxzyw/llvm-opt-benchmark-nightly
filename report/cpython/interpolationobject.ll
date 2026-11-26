@@ -202,7 +202,7 @@ bb.i:                                             ; preds = %bb.h, %bb.e
   %.038 = phi i64 [ %i.t, %bb.h ], [ %i.g, %bb.e ]
   %.037 = phi ptr [ %i.p, %bb.h ], [ getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 60176), %bb.e ] ; 2 uses
   %i.u = getelementptr i8, ptr %i.m, i64 16
-  %i.v = load ptr, ptr %i.u, align 8, !tbaa !61   ; 7 uses
+  %i.v = load ptr, ptr %i.u, align 8, !tbaa !61   ; 6 uses
   %.not52 = icmp eq ptr %i.v, null
   br i1 %.not52, label %bb.n, label %bb.j
 
@@ -250,11 +250,12 @@ _conversion_converter.exit:                       ; preds = %bb.m, %bb.m, %bb.m
   br label %_conversion_converter.exit.thread67
 
 _conversion_converter.exit.thread67:              ; preds = %bb.j, %_conversion_converter.exit
+  %.371 = phi ptr [ %i.v, %_conversion_converter.exit ], [ @_Py_NoneStruct, %bb.j ] ; 2 uses
   %i.ag = icmp ugt i64 %.038, 1
   br i1 %i.ag, label %bb.n, label %bb.p
 
 bb.n:                                             ; preds = %_conversion_converter.exit.thread67, %bb.i
-  %.061 = phi ptr [ @_Py_NoneStruct, %bb.i ], [ %i.v, %_conversion_converter.exit.thread67 ]
+  %.061 = phi ptr [ @_Py_NoneStruct, %bb.i ], [ %.371, %_conversion_converter.exit.thread67 ]
   %i.ah = getelementptr i8, ptr %i.m, i64 24
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !61 ; 3 uses
   %i.aj = getelementptr i8, ptr %i.ai, i64 8
@@ -270,7 +271,7 @@ bb.o:                                             ; preds = %bb.n
   br label %interpolation_new_impl.exit
 
 bb.p:                                             ; preds = %bb.n, %_conversion_converter.exit.thread67, %bb.h, %.thread
-  %.162 = phi ptr [ @_Py_NoneStruct, %.thread ], [ @_Py_NoneStruct, %bb.h ], [ %i.v, %_conversion_converter.exit.thread67 ], [ %.061, %bb.n ] ; 3 uses
+  %.162 = phi ptr [ @_Py_NoneStruct, %.thread ], [ @_Py_NoneStruct, %bb.h ], [ %.371, %_conversion_converter.exit.thread67 ], [ %.061, %bb.n ] ; 3 uses
   %.1 = phi ptr [ getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 60176), %.thread ], [ %i.p, %bb.h ], [ %.037, %_conversion_converter.exit.thread67 ], [ %.037, %bb.n ] ; 3 uses
   %.0 = phi ptr [ getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 60176), %.thread ], [ getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 60176), %bb.h ], [ getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 60176), %_conversion_converter.exit.thread67 ], [ %i.ai, %bb.n ] ; 3 uses
   %i.am = call ptr @_PyObject_GC_New(ptr noundef %0) #5 ; 7 uses

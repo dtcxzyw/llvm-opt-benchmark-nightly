@@ -202,16 +202,18 @@ submodule_gitfile_path.exit:                      ; preds = %bb.bh
   %i.ic = load ptr, ptr %i.du, align 8, !tbaa !88
   %i.id = call ptr @read_gitfile_gently(ptr noundef %i.ic, ptr noundef null) #13 ; 2 uses
   call void @strbuf_release(ptr noundef nonnull %5) #13
+  %.not6.i = icmp eq ptr %i.id, null
+  %..i = select i1 %.not6.i, ptr inttoptr (i64 1 to ptr), ptr %i.id ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #13
-  %22 = icmp ult ptr %i.id, inttoptr (i64 2 to ptr)
-  br i1 %22, label %bb.bk, label %bb.bj
+  %.not330 = icmp eq ptr %..i, inttoptr (i64 1 to ptr)
+  br i1 %.not330, label %bb.bk, label %bb.bj
 
 bb.bj:                                            ; preds = %submodule_gitfile_path.exit
-  %i.ie = call ptr @strvec_push(ptr noundef nonnull %10, ptr noundef nonnull %i.id) #13
+  %i.ie = call ptr @strvec_push(ptr noundef nonnull %10, ptr noundef nonnull %..i) #13
   br label %bb.bk
 
-bb.bk:                                            ; preds = %submodule_gitfile_path.exit, %bb.bj
-  %.0241 = phi ptr [ %i.ie, %bb.bj ], [ inttoptr (i64 1 to ptr), %submodule_gitfile_path.exit ]
+bb.bk:                                            ; preds = %bb.bj, %submodule_gitfile_path.exit
+  %.0241 = phi ptr [ %i.ie, %bb.bj ], [ %..i, %submodule_gitfile_path.exit ]
   %i.if = getelementptr inbounds [8 x i8], ptr %.0236511, i64 %i.eb
   store ptr %.0241, ptr %i.if, align 8, !tbaa !18
   br label %_.exit361
@@ -614,7 +616,7 @@ strbuf_setlen.exit:                               ; preds = %bb.dn, %bb.do
 
 .lr.ph519:                                        ; preds = %strbuf_setlen.exit, %bb.dw
   %.0225518 = phi ptr [ %i.op, %bb.dw ], [ %i.nw, %strbuf_setlen.exit ]
-  %i.ny = phi ptr [ %i.oo, %bb.dw ], [ %i.nv, %strbuf_setlen.exit ] ; 3 uses
+  %i.ny = phi ptr [ %i.oo, %bb.dw ], [ %i.nv, %strbuf_setlen.exit ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %20) #13
   %i.nz = ptrtoint ptr %.0225518 to i64
   %i.oa = ptrtoint ptr %i.ny to i64
@@ -649,7 +651,7 @@ bb.du:                                            ; preds = %bb.dt
   unreachable
 
 strbuf_setlen.exit406:                            ; preds = %bb.ds, %bb.dt
-  %i.og = phi ptr [ %.pre, %bb.ds ], [ @strbuf_slopbuf, %bb.dt ] ; 2 uses
+  %i.og = phi ptr [ %.pre, %bb.ds ], [ %i.ny, %bb.dt ] ; 2 uses
   store ptr %i.og, ptr %i.dy, align 8, !tbaa !61
   %i.oh = call i32 @fspathhash(ptr noundef %i.og) #13
   store i32 %i.oh, ptr %i.dz, align 8, !tbaa !89

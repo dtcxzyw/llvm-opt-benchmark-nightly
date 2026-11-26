@@ -202,12 +202,13 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   %i.c = load ptr, ptr %i.b, align 8, !noalias !45
   call void %i.c(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %6, ptr noundef nonnull align 8 dereferenceable(8) %2, i32 noundef %1), !inline_history !40
+  call void @llvm.experimental.noalias.scope.decl(metadata !46)
   %i.d = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %6, i64 noundef 0, i64 noundef 0, ptr noundef nonnull @.str.12, i64 noundef 2)
-          to label %.noexc unwind label %bb.g     ; 6 uses
+          to label %.noexc unwind label %bb.g, !noalias !46 ; 6 uses
 
 .noexc:                                           ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 7 uses
-  store ptr %i.e, ptr %5, align 8, !tbaa !48, !alias.scope !49
+  store ptr %i.e, ptr %5, align 8, !tbaa !49, !alias.scope !46
   %i.f = load ptr, ptr %i.d, align 8, !tbaa !51   ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 5 uses
   %i.h = icmp eq ptr %i.f, %i.g
@@ -223,9 +224,9 @@ bb.b:                                             ; preds = %.noexc
   br label %bb.c
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: ; preds = %.noexc
-  store ptr %i.f, ptr %5, align 8, !tbaa !51, !alias.scope !49
+  store ptr %i.f, ptr %5, align 8, !tbaa !51, !alias.scope !46
   %i.m = load i64, ptr %i.g, align 8, !tbaa !53
-  store i64 %i.m, ptr %i.e, align 8, !tbaa !53, !alias.scope !49
+  store i64 %i.m, ptr %i.e, align 8, !tbaa !53, !alias.scope !46
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %.pre.i = load i64, ptr %.phi.trans.insert.i, align 8, !tbaa !52
   br label %bb.c
@@ -234,18 +235,18 @@ bb.c:                                             ; preds = %_ZNKSt7__cxx1112bas
   %i.n = phi i64 [ %i.j, %bb.b ], [ %.pre.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i ]
   %i.o = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.p = getelementptr inbounds nuw i8, ptr %5, i64 8
-  store i64 %i.n, ptr %i.p, align 8, !tbaa !52, !alias.scope !49
+  store i64 %i.n, ptr %i.p, align 8, !tbaa !52, !alias.scope !46
   store ptr %i.g, ptr %i.d, align 8, !tbaa !51
   store i64 0, ptr %i.o, align 8, !tbaa !52
   store i8 0, ptr %i.g, align 8, !tbaa !53
   call void @llvm.experimental.noalias.scope.decl(metadata !54)
   %i.q = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %3) #21, !noalias !54
   %i.r = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %5, i64 noundef 0, i64 noundef 0, ptr noundef nonnull %3, i64 noundef %i.q)
-          to label %.noexc10 unwind label %bb.h   ; 6 uses
+          to label %.noexc10 unwind label %bb.h, !noalias !54 ; 6 uses
 
 .noexc10:                                         ; preds = %bb.c
   %i.s = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 7 uses
-  store ptr %i.s, ptr %4, align 8, !tbaa !48, !alias.scope !54
+  store ptr %i.s, ptr %4, align 8, !tbaa !49, !alias.scope !54
   %i.t = load ptr, ptr %i.r, align 8, !tbaa !51   ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.r, i64 16 ; 5 uses
   %i.v = icmp eq ptr %i.t, %i.u
@@ -499,12 +500,12 @@ attributes #25 = { builtin nounwind }
 !43 = distinct !{!43, i1 true, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_OS8_"}
 !44 = distinct !{!44, !43, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_OS8_: argument 0"}
 !45 = !{!39}
-!46 = !{!"p1 omnipotent char", !8, i64 0}
-!47 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_Alloc_hiderE", !46, i64 0}
-!48 = !{!47, !46, i64 0}
-!49 = !{!42}
-!50 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE", !47, i64 0, !26, i64 8, !4, i64 16}
-!51 = !{!50, !46, i64 0}
+!46 = !{!42}
+!47 = !{!"p1 omnipotent char", !8, i64 0}
+!48 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_Alloc_hiderE", !47, i64 0}
+!49 = !{!48, !47, i64 0}
+!50 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE", !48, i64 0, !26, i64 8, !4, i64 16}
+!51 = !{!50, !47, i64 0}
 !52 = !{!50, !26, i64 8}
 !53 = !{!4, !4, i64 0}
 !54 = !{!44}

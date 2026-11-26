@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/wasmedge/original/memory?download=true
 inline.NumInlined: 397
-inline.NumDeleted: 275
+inline.NumDeleted: 276
 begin_hunk_0_@_ZN8WasmEdge7Runtime8Instance14ModuleInstance17unsafeAddInstanceINS1_14MemoryInstanceEJRKNS_3AST10MemoryTypeEmEEENSt9enable_ifIX11IsInstanceVIT_EEvE4typeERSt6vectorISt10unique_ptrISA_St14default_deleteISA_EESaISH_EERSD_IPSA_SaISL_EEDpOT0_:bb.a
   br i1 %i.bf, label %bb.h, label %_ZNSt6vectorIPN8WasmEdge7Runtime8Instance14MemoryInstanceESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit16.i.i.i
 
@@ -202,11 +202,12 @@ bb.b:                                             ; preds = %bb.a
   store ptr %i.i, ptr %7, align 8, !tbaa !51
   store i64 250, ptr %i.f, align 8, !tbaa !52
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #14
-  %i.j = load i64, ptr %5, align 8, !tbaa !26
+  call void @llvm.experimental.noalias.scope.decl(metadata !91)
+  %i.j = load i64, ptr %5, align 8, !tbaa !26, !noalias !91
   %.sroa.01.0.insert.ext.i = zext i64 %i.j to i128
   store i128 %.sroa.01.0.insert.ext.i, ptr %8, align 16, !alias.scope !91
   %i.k = getelementptr inbounds nuw i8, ptr %8, i64 16
-  %i.l = load i64, ptr %6, align 8, !tbaa !26
+  %i.l = load i64, ptr %6, align 8, !tbaa !26, !noalias !91
   %.sroa.01.0.insert.ext.i17 = zext i64 %i.l to i128
   store i128 %.sroa.01.0.insert.ext.i17, ptr %i.k, align 16, !alias.scope !91
   invoke void @_ZN3fmt3v116detail10vformat_toIcEEvRNS1_6bufferIT_EENS0_17basic_string_viewIS4_EENS1_12vformat_argsIS4_E4typeENS1_10locale_refE(ptr noundef nonnull align 8 dereferenceable(32) %7, ptr %3, i64 %4, i64 68, ptr nonnull %8, ptr null)

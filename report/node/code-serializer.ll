@@ -205,12 +205,13 @@ _ZNK2v88internal6Script10is_wrappedEv.exit.thread: ; preds = %_ZN2v88internal6Ha
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #18
   %i.em = getelementptr inbounds nuw i8, ptr %7, i64 8
   call void @_ZN2v88internal18SerializedCodeDataC2EPKSt6vectorIhSaIhEEPKNS0_14CodeSerializerE(ptr noundef nonnull align 8 dereferenceable(21) %2, ptr noundef nonnull %i.em, ptr noundef nonnull align 8 dereferenceable(604) %7)
-  %i.en = call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #17 ; 5 uses
+  %i.en = call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #17 ; 7 uses
   %i.eo = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.ep = load ptr, ptr %i.eo, align 8
   %i.eq = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.er = load i32, ptr %i.eq, align 8
   call void @_ZN2v88internal17AlignedCachedDataC2EPKhi(ptr noundef nonnull align 8 dereferenceable(20) %i.en, ptr noundef %i.ep, i32 noundef %i.er)
+  %9 = load i8, ptr %i.en, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #18
   %i.es = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1590), align 2, !range !55, !noundef !56
   %i.et = trunc nuw i8 %i.es to i1
@@ -235,6 +236,8 @@ bb.u:                                             ; preds = %bb.t, %_ZNK2v88inte
   %i.fc = getelementptr inbounds nuw i8, ptr %i.en, i64 16
   %i.fd = load i32, ptr %i.fc, align 8
   call void @_ZN2v814ScriptCompiler10CachedDataC1EPKhiNS1_12BufferPolicyE(ptr noundef nonnull align 8 dereferenceable(20) %i.ez, ptr noundef %i.fb, i32 noundef %i.fd, i32 noundef 1) #18
+  %10 = and i8 %9, -2
+  store i8 %10, ptr %i.en, align 8
   call void @_ZdlPvm(ptr noundef nonnull %i.en, i64 noundef 24) #20
   store ptr getelementptr inbounds nuw inrange(-16, 80) (i8, ptr @_ZTVN2v88internal14CodeSerializerE, i64 16), ptr %7, align 8
   call void @_ZN2v88internal10Serializer16OutputStatisticsEPKc(ptr noundef nonnull align 8 dereferenceable(604) %7, ptr noundef nonnull @.str.20) #18, !inline_history !57

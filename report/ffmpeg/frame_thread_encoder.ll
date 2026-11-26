@@ -18,7 +18,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: cold nounwind optsize uwtable
 define i32 @ff_frame_thread_encoder_init(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca ptr, align 8                      ; 5 uses
+  %i.a = alloca ptr, align 8                      ; 6 uses
   %i.b = alloca ptr, align 8                      ; 7 uses
   %i.c = alloca i64, align 8                      ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
@@ -243,8 +243,7 @@ bb.x:                                             ; preds = %._crit_edge
 bb.y:                                             ; preds = %.lr.ph136, %bb.ao
   %indvars.iv145 = phi i64 [ 0, %.lr.ph136 ], [ %indvars.iv.next146, %bb.ao ] ; 4 uses
   %i.ce = load ptr, ptr %i.g, align 8, !tbaa !53
-  %i.cf = call ptr @avcodec_alloc_context3(ptr noundef %i.ce) #7 ; 17 uses
-  store ptr %i.cf, ptr %i.a, align 8, !tbaa !11
+  %i.cf = call ptr @avcodec_alloc_context3(ptr noundef %i.ce) #7 ; 18 uses
   %.not115 = icmp eq ptr %i.cf, null
   br i1 %.not115, label %.thread127.loopexit, label %bb.z
 
@@ -356,6 +355,7 @@ bb.am:                                            ; preds = %bb.ak
 
 bb.an:                                            ; preds = %bb.am
   %i.dx = trunc nuw nsw i64 %indvars.iv145 to i32
+  store ptr %i.cf, ptr %i.a, align 8
   %i.dy = sub nsw i32 0, %i.dw
   br label %.thread127
 
@@ -375,6 +375,7 @@ bb.ao:                                            ; preds = %bb.am
 .thread127.loopexit:                              ; preds = %bb.z, %bb.aa, %bb.ac, %bb.aj, %bb.y, %bb.ae, %bb.ag, %bb.ai
   %.1.ph = phi i32 [ %i.ch, %bb.z ], [ %i.cj, %bb.aa ], [ %i.cr, %bb.ac ], [ %i.dp, %bb.aj ], [ -12, %bb.y ], [ -12, %bb.ae ], [ -12, %bb.ag ], [ -12, %bb.ai ]
   %i.ed = trunc nuw nsw i64 %indvars.iv145 to i32
+  store ptr %i.cf, ptr %i.a, align 8
   br label %.thread127
 
 .thread127:                                       ; preds = %bb.v, %bb.w, %.thread127.loopexit, %._crit_edge, %bb.x, %bb.s, %bb.an

@@ -202,11 +202,12 @@ bb.aq:                                            ; preds = %bb.ap
   %i.ds = load i32, ptr %i.a, align 8
   %i.dt = sub i32 %i.ds, %i.dq
   store i32 %i.dt, ptr %i.a, align 8
-  %i.du = tail call i32 @slice_from_s(ptr noundef nonnull %0, i32 noundef 1, ptr noundef nonnull @s_5) #2 ; 2 uses
-  %i.dv = icmp sgt i32 %i.du, -1
+  %i.du = tail call i32 @slice_from_s(ptr noundef nonnull %0, i32 noundef 1, ptr noundef nonnull @s_5) #2
+  %.fr.i = freeze i32 %i.du                       ; 2 uses
+  %i.dv = icmp sgt i32 %.fr.i, -1
   br i1 %i.dv, label %r_Step_1c.exit.thread, label %.critedge
 
-r_Step_1c.exit.thread:                            ; preds = %bb.aq, %bb.an, %bb.ao, %bb.ap
+r_Step_1c.exit.thread:                            ; preds = %bb.aq, %bb.ap, %bb.ao, %bb.an
   %i.dw = load i32, ptr %i.d, align 4             ; 4 uses
   store i32 %i.dw, ptr %i.a, align 8
   store i32 %i.dw, ptr %i.p, align 8
@@ -455,7 +456,7 @@ bb.ca:                                            ; preds = %bb.bx
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.k, %bb.ca, %bb.br, %bb.bq, %bb.bp, %bb.aq, %bb.am, %bb.ak, %bb.ai, %.critedge.i, %bb.ac, %bb.w, %bb.v, %bb.u, %bb.bi, %bb.bh, %bb.bg, %bb.bf, %bb.be, %bb.bd, %bb.bc, %bb.bb, %bb.ba, %bb.az, %bb.ay, %bb.ax, %bb.aw, %.thread365, %bb.c, %bb.bu, %bb.bt, %bb.bs
-  %.19252 = phi i32 [ %i.gi, %bb.bt ], [ %i.m, %bb.c ], [ %i.gy, %bb.ca ], [ %i.ek, %bb.aw ], [ %i.bh, %bb.u ], [ %i.cu, %bb.ai ], [ %i.fy, %bb.bp ], [ %i.du, %bb.aq ], [ %i.gf, %bb.bs ], [ %i.gl, %bb.bu ], [ 1, %.thread365 ], [ %i.fi, %bb.bi ], [ %i.fg, %bb.bh ], [ %i.fe, %bb.bg ], [ %i.fc, %bb.bf ], [ %i.fa, %bb.be ], [ %i.ey, %bb.bd ], [ %i.ew, %bb.bc ], [ %i.eu, %bb.bb ], [ %i.es, %bb.ba ], [ %i.eq, %bb.az ], [ %i.eo, %bb.ay ], [ %i.em, %bb.ax ], [ %i.bj, %bb.v ], [ %i.bl, %bb.w ], [ %i.da, %bb.ak ], [ %i.dh, %bb.am ], [ %i.bw, %bb.ac ], [ %i.cd, %.critedge.i ], [ %i.ga, %bb.bq ], [ %i.gc, %bb.br ], [ %i.ad, %bb.k ]
+  %.19252 = phi i32 [ %i.gi, %bb.bt ], [ %i.m, %bb.c ], [ %i.gy, %bb.ca ], [ %i.ek, %bb.aw ], [ %i.bh, %bb.u ], [ %i.cu, %bb.ai ], [ %i.fy, %bb.bp ], [ %.fr.i, %bb.aq ], [ %i.gf, %bb.bs ], [ %i.gl, %bb.bu ], [ 1, %.thread365 ], [ %i.fi, %bb.bi ], [ %i.fg, %bb.bh ], [ %i.fe, %bb.bg ], [ %i.fc, %bb.bf ], [ %i.fa, %bb.be ], [ %i.ey, %bb.bd ], [ %i.ew, %bb.bc ], [ %i.eu, %bb.bb ], [ %i.es, %bb.ba ], [ %i.eq, %bb.az ], [ %i.eo, %bb.ay ], [ %i.em, %bb.ax ], [ %i.bj, %bb.v ], [ %i.bl, %bb.w ], [ %i.da, %bb.ak ], [ %i.dh, %bb.am ], [ %i.bw, %bb.ac ], [ %i.cd, %.critedge.i ], [ %i.ga, %bb.bq ], [ %i.gc, %bb.br ], [ %i.ad, %bb.k ]
   ret i32 %.19252
 }
 

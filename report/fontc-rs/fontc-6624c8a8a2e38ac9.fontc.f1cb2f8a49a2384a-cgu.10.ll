@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %.lr.ph.i.i
 
 bb.d:                                             ; preds = %bb.c
   %i.ac = invoke noundef zeroext i1 @_RNvNtNtNtNtCs5Xr050g3D4S_3std3sys4sync5futex4unix10futex_wake(ptr noundef nonnull align 4 %i.y)
-          to label %.noexc5.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
+          to label %.noexc5.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !879 ; 0 uses
 
 .loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.d, %._crit_edge.i.i
   %lpad.loopexit.split-lp2 = landingpad { ptr, i32 }
@@ -607,7 +607,7 @@ bb.g:                                             ; preds = %bb.e
 
 .noexc22.i:                                       ; preds = %bb.g
   invoke void @_RNvNtCsgCecv3eZDcN_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef 4472) #27
-          to label %.noexc unwind label %.body
+          to label %.noexc unwind label %.body, !noalias !965
 
 .noexc:                                           ; preds = %.noexc22.i
   unreachable
@@ -664,7 +664,7 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.q
   invoke void @_RNvNtCsf3Ta7LF998c_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @13) #27
-          to label %.noexc5 unwind label %.body
+          to label %.noexc5 unwind label %.body, !noalias !965
 
 .noexc5:                                          ; preds = %bb.r
   unreachable
@@ -765,7 +765,7 @@ bb.w:                                             ; preds = %_RNvMs1_NtNtCsghax4
 .noexc6:                                          ; preds = %bb.w
   %i.bb = getelementptr inbounds nuw i8, ptr %1, i64 256
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !968
-  call void @_RNvMs5_NtNtNtCs5Xr050g3D4S_3std4sync6poison5mutexINtB5_5MutexNtNtCsghax4HXTRKW_17crossbeam_channel5waker5WakerE4lockCskL3QWxtyvYA_5fontc(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.b, ptr noundef nonnull align 8 %i.bb)
+  call void @_RNvMs5_NtNtNtCs5Xr050g3D4S_3std4sync6poison5mutexINtB5_5MutexNtNtCsghax4HXTRKW_17crossbeam_channel5waker5WakerE4lockCskL3QWxtyvYA_5fontc(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.b, ptr noundef nonnull align 8 %i.bb), !noalias !968
   %i.bc = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.bd = load ptr, ptr %i.bc, align 8, !noalias !968, !nonnull !4, !align !13 ; 9 uses
   %i.be = getelementptr inbounds nuw i8, ptr %i.b, i64 16
@@ -801,7 +801,7 @@ bb.z:                                             ; preds = %bb.y
 
 _RNvYNCNKNvNvNtCsghax4HXTRKW_17crossbeam_channel5waker17current_thread_id9THREAD_ID0s_0INtNtNtCsf3Ta7LF998c_4core3ops8function6FnOnceTINtNtB1t_6option6OptionQIB28_NtNtNtCs5Xr050g3D4S_3std6thread2id8ThreadIdEEEE9call_onceCskL3QWxtyvYA_5fontc.exit.i.i.i.i: ; preds = %bb.z
   %i.br = invoke noundef ptr @_RINvMs0_NtNtNtNtCs5Xr050g3D4S_3std3sys12thread_local6native4lazyINtB6_7StorageNtNtNtBe_6thread2id8ThreadIdzE16get_or_init_slowNvNvNvNtCsghax4HXTRKW_17crossbeam_channel5waker17current_thread_id9THREAD_ID27___rust_std_internal_init_fnECskL3QWxtyvYA_5fontc(ptr noundef nonnull align 8 %i.bn, ptr noalias nofree noundef align 8 dereferenceable_or_null(8) null)
-          to label %.noexc.i.i unwind label %bb.x, !noalias !968 ; 2 uses
+          to label %.noexc.i.i unwind label %bb.x, !noalias !971 ; 2 uses
 
 .noexc.i.i:                                       ; preds = %_RNvYNCNKNvNvNtCsghax4HXTRKW_17crossbeam_channel5waker17current_thread_id9THREAD_ID0s_0INtNtNtCsf3Ta7LF998c_4core3ops8function6FnOnceTINtNtB1t_6option6OptionQIB28_NtNtNtCs5Xr050g3D4S_3std6thread2id8ThreadIdEEEE9call_onceCskL3QWxtyvYA_5fontc.exit.i.i.i.i
   %i.bs = icmp eq ptr %i.br, null
@@ -810,7 +810,7 @@ _RNvYNCNKNvNvNtCsghax4HXTRKW_17crossbeam_channel5waker17current_thread_id9THREAD
 bb.aa:                                            ; preds = %.noexc.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !971
   %i.bt = invoke noundef nonnull ptr @_RNvNtNtCs5Xr050g3D4S_3std6thread7current7current()
-          to label %.noexc6.i.i unwind label %bb.x, !noalias !968 ; 3 uses
+          to label %.noexc6.i.i unwind label %bb.x, !noalias !971 ; 3 uses
 
 .noexc6.i.i:                                      ; preds = %bb.aa
   store ptr %i.bt, ptr %i.a, align 8, !noalias !971
@@ -823,7 +823,7 @@ bb.aa:                                            ; preds = %.noexc.i.i
 bb.ab:                                            ; preds = %.noexc6.i.i
   fence acquire
   invoke void @_RNvMsn_NtCsgCecv3eZDcN_5alloc4syncINtB5_3ArcNtNtNtCs5Xr050g3D4S_3std6thread6thread5InnerNtNtBM_5alloc6SystemE9drop_slowBM_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.a) #25
-          to label %.noexc7.i.i unwind label %bb.x, !noalias !968
+          to label %.noexc7.i.i unwind label %bb.x, !noalias !971
 
 .thread.i.i.i:                                    ; preds = %.noexc.i.i, %bb.z
   %.sroa.0.0.i.i.i2.i.i.i.i = phi ptr [ %i.br, %.noexc.i.i ], [ %i.bn, %bb.z ]
@@ -891,7 +891,7 @@ bb.af:                                            ; preds = %bb.ae, %bb.ad
 
 bb.ag:                                            ; preds = %bb.af
   %i.db = invoke noundef zeroext i1 @_RNvNtNtNtNtCs5Xr050g3D4S_3std3sys4sync5futex4unix10futex_wake(ptr noundef nonnull align 4 %i.cy)
-          to label %.noexc8.i.i unwind label %bb.x, !noalias !968 ; 0 uses
+          to label %.noexc8.i.i unwind label %bb.x, !noalias !976 ; 0 uses
 
 _RNCNvMNtCsghax4HXTRKW_17crossbeam_channel5wakerNtB4_5Waker10try_select0CskL3QWxtyvYA_5fontc.exit.i.i.i.i: ; preds = %bb.ac, %.lr.ph.i.i.i.i
   %i.dc = add nuw nsw i64 %.sroa.02.010.i.i.i.i, 1
@@ -916,7 +916,7 @@ bb.ai:                                            ; preds = %bb.ah
   br i1 %i.dj, label %_RNvMNtNtCs5Xr050g3D4S_3std4sync6poisonNtB2_4Flag4done.exit.i.i.i.i, label %.noexc7, !prof !11
 
 .noexc7:                                          ; preds = %bb.ai
-  %i.dk = call noundef zeroext i1 @_RNvNtNtCs5Xr050g3D4S_3std9panicking11panic_count17is_zero_slow_path() #25
+  %i.dk = call noundef zeroext i1 @_RNvNtNtCs5Xr050g3D4S_3std9panicking11panic_count17is_zero_slow_path() #25, !noalias !968
   br i1 %i.dk, label %_RNvMNtNtCs5Xr050g3D4S_3std4sync6poisonNtB2_4Flag4done.exit.i.i.i.i, label %bb.aj
 
 bb.aj:                                            ; preds = %.noexc7
@@ -929,7 +929,7 @@ _RNvMNtNtCs5Xr050g3D4S_3std4sync6poisonNtB2_4Flag4done.exit.i.i.i.i: ; preds = %
   br i1 %i.dm, label %bb.ak, label %_RNvMs1_NtNtCsghax4HXTRKW_17crossbeam_channel7flavors4listINtB5_7ChannelTNtNtCshxhuDJfZv4T_6fontbe13orchestration9AnyWorkIdINtNtCsf3Ta7LF998c_4core6result6ResultuNtNtCskL3QWxtyvYA_5fontc5error5ErrorEEE5writeB2D_.exit.thread, !prof !12
 
 bb.ak:                                            ; preds = %_RNvMNtNtCs5Xr050g3D4S_3std4sync6poisonNtB2_4Flag4done.exit.i.i.i.i
-  call void @_RNvMNtNtNtNtCs5Xr050g3D4S_3std3sys4sync5mutex5futexNtB2_5Mutex4wake(ptr noundef nonnull align 4 %i.bd)
+  call void @_RNvMNtNtNtNtCs5Xr050g3D4S_3std3sys4sync5mutex5futexNtB2_5Mutex4wake(ptr noundef nonnull align 4 %i.bd), !noalias !968
   br label %_RNvMs1_NtNtCsghax4HXTRKW_17crossbeam_channel7flavors4listINtB5_7ChannelTNtNtCshxhuDJfZv4T_6fontbe13orchestration9AnyWorkIdINtNtCsf3Ta7LF998c_4core6result6ResultuNtNtCskL3QWxtyvYA_5fontc5error5ErrorEEE5writeB2D_.exit.thread
 
 _RNvMNtCsghax4HXTRKW_17crossbeam_channel5wakerNtB2_5Waker10try_select.exit.i.i: ; preds = %.noexc8.i.i
@@ -1332,7 +1332,7 @@ bb.d:                                             ; preds = %bb.b
 bb.e:                                             ; preds = %.noexc.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !997
   invoke void @_RNvNtCsf3Ta7LF998c_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @9) #22
-          to label %.noexc1.i unwind label %bb.g, !noalias !996
+          to label %.noexc1.i unwind label %bb.g, !noalias !997
 
 .noexc1.i:                                        ; preds = %bb.e
   unreachable
@@ -1344,11 +1344,11 @@ bb.f:                                             ; preds = %.noexc.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !997
   store ptr %i.k, ptr %i.a, align 8, !noalias !997
   invoke void @_RNvMsp_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree8navigateINtNtB7_4node6HandleINtB10_7NodeRefNtNtB10_6marker5ImmutINtNtCsgdm2QMcbaeA_10fontdrasil6coords8LocationNtB1U_15NormalizedSpaceENtNtB7_7set_val9SetValZSTNtB1y_14LeafOrInternalENtB1y_2KVE14next_leaf_edgeCskL3QWxtyvYA_5fontc(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(40) %i.c, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.a)
-          to label %.noexc2.i unwind label %bb.g, !noalias !996
+          to label %.noexc2.i unwind label %bb.g, !noalias !998
 
 .noexc2.i:                                        ; preds = %bb.f
   %i.m = invoke { ptr, ptr } @_RNvMsP_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree4nodeINtB5_6HandleINtB5_7NodeRefNtNtB5_6marker5ImmutINtNtCsgdm2QMcbaeA_10fontdrasil6coords8LocationNtB1H_15NormalizedSpaceENtNtB7_7set_val9SetValZSTNtB1m_14LeafOrInternalENtB1m_2KVE7into_kvCskL3QWxtyvYA_5fontc(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.a)
-          to label %_RINvNtNtNtCsgCecv3eZDcN_5alloc11collections5btree3mem7replaceINtNtB4_4node6HandleINtB10_7NodeRefNtNtB10_6marker5ImmutINtNtCsgdm2QMcbaeA_10fontdrasil6coords8LocationNtB1U_15NormalizedSpaceENtNtB4_7set_val9SetValZSTNtB1y_4LeafENtB1y_4EdgeETRB1R_RB30_ENCNvMsk_NtB4_8navigateBX_14next_unchecked0ECskL3QWxtyvYA_5fontc.exit unwind label %bb.g, !noalias !996 ; 2 uses
+          to label %_RINvNtNtNtCsgCecv3eZDcN_5alloc11collections5btree3mem7replaceINtNtB4_4node6HandleINtB10_7NodeRefNtNtB10_6marker5ImmutINtNtCsgdm2QMcbaeA_10fontdrasil6coords8LocationNtB1U_15NormalizedSpaceENtNtB4_7set_val9SetValZSTNtB1y_4LeafENtB1y_4EdgeETRB1R_RB30_ENCNvMsk_NtB4_8navigateBX_14next_unchecked0ECskL3QWxtyvYA_5fontc.exit unwind label %bb.g, !noalias !997 ; 2 uses
 
 bb.g:                                             ; preds = %.noexc2.i, %bb.f, %bb.e, %bb.d
   %i.n = landingpad { ptr, i32 }
@@ -1751,4 +1751,5 @@ begin_hunk_3_@llvm.memset.p0.i64
 !995 = distinct !{!995, !993, !"_RNCNvMsk_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree8navigateINtNtB9_4node6HandleINtB12_7NodeRefNtNtB12_6marker5ImmutINtNtCsgdm2QMcbaeA_10fontdrasil6coords8LocationNtB1W_15NormalizedSpaceENtNtB9_7set_val9SetValZSTNtB1A_4LeafENtB1A_4EdgeE14next_unchecked0CskL3QWxtyvYA_5fontc: argument 0"}
 !996 = !{!992}
 !997 = !{!995, !994, !992}
+!998 = !{!994, !992}
 end_hunk_3

@@ -205,7 +205,7 @@ bb.a:
   %.sroa.14107.0.copyload = load i64, ptr %.sroa.14107.0..sroa_idx, align 8, !tbaa !99
   %i.b = tail call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh4errsEv() #24 ; 47 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !102  ; 3 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !102  ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.f = load i64, ptr %i.e, align 8, !tbaa !103  ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 48
@@ -223,21 +223,22 @@ bb.b:                                             ; preds = %bb.a
   br label %"_ZZN6hermes18SourceErrorManager15printDiagnosticERKN4llvh12SMDiagnosticEPvENK3$_0clENS1_11raw_ostream6ColorsE.exit"
 
 "_ZZN6hermes18SourceErrorManager15printDiagnosticERKN4llvh12SMDiagnosticEPvENK3$_0clENS1_11raw_ostream6ColorsE.exit": ; preds = %bb.a, %bb.b
-  switch i64 %i.f, label %_ZNK4llvh9StringRef6equalsES0_.exit.thread.a [
+  switch i64 %i.f, label %_ZNK4llvh9StringRef6equalsES0_.exit.thread [
     i64 0, label %_ZN4llvh11raw_ostreamlsEPKc.exit
     i64 1, label %_ZNK4llvh9StringRef6equalsES0_.exit
   ]
 
 _ZNK4llvh9StringRef6equalsES0_.exit:              ; preds = %"_ZZN6hermes18SourceErrorManager15printDiagnosticERKN4llvh12SMDiagnosticEPvENK3$_0clENS1_11raw_ostream6ColorsE.exit"
   %lhsc = load i8, ptr %i.d, align 1
-  %i.p = icmp eq i8 %lhsc, 45                     ; 2 uses
-  %spec.select = select i1 %i.p, i64 7, i64 1
-  %spec.select108 = select i1 %i.p, ptr @.str.4, ptr %i.d
+  %i.p = icmp eq i8 %lhsc, 45
+  br i1 %i.p, label %_ZNK4llvh9StringRef6equalsES0_.exit.thread.a, label %_ZNK4llvh9StringRef6equalsES0_.exit.thread
+
+_ZNK4llvh9StringRef6equalsES0_.exit.thread:       ; preds = %"_ZZN6hermes18SourceErrorManager15printDiagnosticERKN4llvh12SMDiagnosticEPvENK3$_0clENS1_11raw_ostream6ColorsE.exit", %_ZNK4llvh9StringRef6equalsES0_.exit
   br label %_ZNK4llvh9StringRef6equalsES0_.exit.thread.a
 
-_ZNK4llvh9StringRef6equalsES0_.exit.thread.a:     ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit, %"_ZZN6hermes18SourceErrorManager15printDiagnosticERKN4llvh12SMDiagnosticEPvENK3$_0clENS1_11raw_ostream6ColorsE.exit"
-  %.sroa.3.0 = phi i64 [ %i.f, %"_ZZN6hermes18SourceErrorManager15printDiagnosticERKN4llvh12SMDiagnosticEPvENK3$_0clENS1_11raw_ostream6ColorsE.exit" ], [ %spec.select, %_ZNK4llvh9StringRef6equalsES0_.exit ] ; 4 uses
-  %.sroa.0100.0 = phi ptr [ %i.d, %"_ZZN6hermes18SourceErrorManager15printDiagnosticERKN4llvh12SMDiagnosticEPvENK3$_0clENS1_11raw_ostream6ColorsE.exit" ], [ %spec.select108, %_ZNK4llvh9StringRef6equalsES0_.exit ] ; 2 uses
+_ZNK4llvh9StringRef6equalsES0_.exit.thread.a:     ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit, %_ZNK4llvh9StringRef6equalsES0_.exit.thread
+  %.sroa.3.0 = phi i64 [ %i.f, %_ZNK4llvh9StringRef6equalsES0_.exit.thread ], [ 7, %_ZNK4llvh9StringRef6equalsES0_.exit ] ; 4 uses
+  %.sroa.0100.0 = phi ptr [ %i.d, %_ZNK4llvh9StringRef6equalsES0_.exit.thread ], [ @.str.4, %_ZNK4llvh9StringRef6equalsES0_.exit ] ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 4 uses
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !124
   %i.s = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 10 uses

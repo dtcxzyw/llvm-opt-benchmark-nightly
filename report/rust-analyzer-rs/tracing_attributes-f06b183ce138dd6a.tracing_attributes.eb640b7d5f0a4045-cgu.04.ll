@@ -155,24 +155,24 @@ bb.e:                                             ; preds = %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store ptr %i.e, ptr %i.i, align 8
   %i.j = getelementptr inbounds nuw i8, ptr %i.d, i64 24
-  %i.k = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 3 uses
   %.pre = load ptr, ptr %i.j, align 8
   %.pre9 = load ptr, ptr %i.k, align 8
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.g, %bb.e
-  %i.l = phi ptr [ %i.m, %bb.g ], [ %.pre9, %bb.e ] ; 3 uses
+  %i.l = phi ptr [ %i.m, %bb.g ], [ %.pre9, %bb.e ] ; 4 uses
   %.not.not.i = icmp eq ptr %i.l, %.pre
   br i1 %.not.not.i, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(256) %i.b, ptr noundef nonnull align 8 dereferenceable(256) %i.l, i64 256, i1 false)
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 256 ; 2 uses
-  store ptr %i.m, ptr %i.k, align 8
   invoke void @_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator9partition6extendNtNtCsgFSQ9XOTBNe_3syn4attr9AttributeINtNtCsbSS6DM8SDEO_5alloc3vec3VecB1i_ENCNvXs0_CskcYJZwGNSzp_18tracing_attributesNtB2D_11MaybeItemFnINtNtBe_7convert4FromNtNtB1m_4item6ItemFnE4from0E0B2D_(ptr nonnull align 8 %i.c, ptr nonnull align 8 %i.b)
           to label %bb.f unwind label %bb.i
 
 bb.h:                                             ; preds = %bb.f
+  store ptr %i.l, ptr %i.k, align 8
   %i.n = load ptr, ptr %i.d, align 8
   %i.o = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %i.p = load i64, ptr %i.o, align 8
@@ -185,6 +185,7 @@ bb.h:                                             ; preds = %bb.f
 bb.i:                                             ; preds = %bb.g
   %i.r = landingpad { ptr, i32 }
           cleanup
+  store ptr %i.m, ptr %i.k, align 8
   invoke void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtNtCsgFSQ9XOTBNe_3syn4attr9AttributeEEB1t_(ptr nonnull align 8 %i.d) #13
           to label %.body unwind label %bb.j
 

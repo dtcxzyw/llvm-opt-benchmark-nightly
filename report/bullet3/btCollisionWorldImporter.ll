@@ -205,7 +205,7 @@ bb.aq:                                            ; preds = %bb.ap
   %i.ie = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.if = getelementptr inbounds nuw i8, ptr %i.hz, i64 8
   %i.ig = load <4 x float>, ptr %i.ie, align 8, !tbaa !169
-  store <4 x float> %i.ig, ptr %i.if, align 8
+  store <4 x float> %i.ig, ptr %i.if, align 8, !tbaa !148
   %i.ih = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 2 uses
   %i.ii = load ptr, ptr %i.ih, align 8, !tbaa !362 ; 3 uses
   %.not153 = icmp eq ptr %i.ii, null
@@ -608,10 +608,10 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.c, ptr noundef nonnull align 8 dereferenceable(16) %i.b, i64 16, i1 false), !tbaa.struct !271
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.e = load i32, ptr %i.d, align 8, !tbaa !208  ; 3 uses
+  %i.e = load i32, ptr %i.d, align 8, !tbaa !208  ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   store i32 %i.e, ptr %i.f, align 8, !tbaa !208
-  %i.g = sext i32 %i.e to i64                     ; 2 uses
+  %i.g = sext i32 %i.e to i64
   %i.h = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.g, i64 56) ; 2 uses
   %i.i = extractvalue { i64, i1 } %i.h, 1
   %i.j = extractvalue { i64, i1 } %i.h, 0
@@ -619,7 +619,11 @@ bb.a:
   %i.l = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.k) #28 ; 2 uses
   store ptr %i.l, ptr %i.a, align 8, !tbaa !209
   %i.m = icmp sgt i32 %i.e, 0
-  br i1 %i.m, label %.lr.ph.a, label %._crit_edge
+  br i1 %i.m, label %.lr.ph, label %._crit_edge
+
+.lr.ph:                                           ; preds = %bb.a
+  %wide.trip.count = zext nneg i32 %i.e to i64
+  br label %.lr.ph.a
 
 ._crit_edge:                                      ; preds = %bb.t, %bb.a
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 188 ; 4 uses
@@ -770,8 +774,8 @@ _ZN20btAlignedObjectArrayIP27btStridingMeshInterfaceDataE9push_backERKS1_.exit: 
   store i32 %i.bj, ptr %i.n, align 4, !tbaa !100
   ret ptr %i.a
 
-.lr.ph.a:                                         ; preds = %bb.a, %bb.t
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.t ], [ 0, %bb.a ] ; 3 uses
+.lr.ph.a:                                         ; preds = %.lr.ph, %bb.t
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.t ] ; 3 uses
   %i.bk = load ptr, ptr %1, align 8, !tbaa !209
   %i.bl = getelementptr inbounds nuw [56 x i8], ptr %i.bk, i64 %indvars.iv ; 10 uses
   %i.bm = getelementptr inbounds nuw [56 x i8], ptr %i.l, i64 %indvars.iv ; 15 uses
@@ -941,8 +945,8 @@ bb.s:                                             ; preds = %.thread68, %.crited
 
 bb.t:                                             ; preds = %bb.s, %bb.r
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %2 = icmp slt i64 %indvars.iv.next, %i.g
-  br i1 %2, label %.lr.ph.a, label %._crit_edge, !llvm.loop !477
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.a, !llvm.loop !477
 }
 
 ; Function Attrs: nobuiltin allocsize(0)
@@ -1105,7 +1109,7 @@ _ZN9btHashMapI12btHashStringP17btCollisionObjectE4findERKS0_.exit: ; preds = %_Z
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i: ; preds = %_ZN9btHashMapI12btHashStringP17btCollisionObjectE4findERKS0_.exit
   %i.be = load i64, ptr %i.b, align 8, !tbaa !148
   %i.bf = add i64 %i.be, 1
-  call void @_ZdlPvm(ptr noundef %i.n, i64 noundef %i.bf) #24
+  call void @_ZdlPvm(ptr noundef nonnull %i.n, i64 noundef %i.bf) #24
   br label %_ZN12btHashStringD2Ev.exit
 
 _ZN12btHashStringD2Ev.exit:                       ; preds = %_ZN9btHashMapI12btHashStringP17btCollisionObjectE4findERKS0_.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
@@ -1508,7 +1512,7 @@ _ZN9btHashMapI12btHashStringP16btCollisionShapeE4findERKS0_.exit: ; preds = %_ZN
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i: ; preds = %_ZN9btHashMapI12btHashStringP16btCollisionShapeE4findERKS0_.exit
   %i.be = load i64, ptr %i.b, align 8, !tbaa !148
   %i.bf = add i64 %i.be, 1
-  call void @_ZdlPvm(ptr noundef %i.n, i64 noundef %i.bf) #24
+  call void @_ZdlPvm(ptr noundef nonnull %i.n, i64 noundef %i.bf) #24
   br label %_ZN12btHashStringD2Ev.exit
 
 _ZN12btHashStringD2Ev.exit:                       ; preds = %_ZN9btHashMapI12btHashStringP16btCollisionShapeE4findERKS0_.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i

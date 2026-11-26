@@ -202,8 +202,8 @@ bb.ge:                                            ; preds = %bb.gd
 bb.gf:                                            ; preds = %bb.ge, %bb.gd
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #19
   %i.oc = load ptr, ptr @_ZL14ProjForFactors, align 8, !tbaa !93
-  store double %.sroa.029.1.i, ptr %6, align 8
-  store double %.sroa.11.1.i, ptr %.sroa.020.sroa.4.0..sroa_idx.i, align 8
+  store double %.sroa.029.1.i, ptr %6, align 8, !tbaa !12
+  store double %.sroa.11.1.i, ptr %.sroa.020.sroa.4.0..sroa_idx.i, align 8, !tbaa !12
   invoke void @proj_factors(ptr dead_on_unwind nonnull writable sret(%struct.P5_FACTORS) align 8 %5, ptr noundef %i.oc, ptr noundef nonnull byval(%union.PJ_COORD) align 8 %6)
           to label %.noexc323 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -393,7 +393,7 @@ bb.gs:                                            ; preds = %.loopexit.i332
   %.b35.i = load i1, ptr @_ZL9reversein, align 4
   %i.rc = load ptr, ptr @_ZL8informat, align 8, !tbaa !49
   %i.rd = invoke noundef double %i.rc(ptr noundef nonnull %i.qv, ptr noundef nonnull %i.b)
-          to label %.noexc341 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !inline_history !33 ; 4 uses
+          to label %.noexc341 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !callees !112, !inline_history !33 ; 4 uses
 
 .noexc341:                                        ; preds = %bb.gs
   br i1 %.b35.i, label %bb.gt, label %bb.gu
@@ -403,7 +403,7 @@ bb.gt:                                            ; preds = %.noexc341
   %i.re = load ptr, ptr @_ZL8informat, align 8, !tbaa !49
   %i.rf = load ptr, ptr %i.b, align 8, !tbaa !11
   %i.rg = invoke noundef double %i.re(ptr noundef %i.rf, ptr noundef nonnull %i.b)
-          to label %.noexc342 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !inline_history !33 ; 2 uses
+          to label %.noexc342 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !callees !112, !inline_history !33 ; 2 uses
 
 .noexc342:                                        ; preds = %bb.gt
   store double %i.rg, ptr %2, align 8, !tbaa !12
@@ -414,7 +414,7 @@ bb.gu:                                            ; preds = %.noexc341
   %i.rh = load ptr, ptr @_ZL8informat, align 8, !tbaa !49
   %i.ri = load ptr, ptr %i.b, align 8, !tbaa !11
   %i.rj = invoke noundef double %i.rh(ptr noundef %i.ri, ptr noundef nonnull %i.b)
-          to label %.noexc343 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !inline_history !33 ; 2 uses
+          to label %.noexc343 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !callees !112, !inline_history !33 ; 2 uses
 
 .noexc343:                                        ; preds = %bb.gu
   store double %i.rj, ptr %i.li, align 8, !tbaa !12
@@ -817,7 +817,7 @@ define linkonce_odr dso_local void @_ZNSt7__cxx1112basic_stringIcSt11char_traits
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
-  store ptr %i.b, ptr %0, align 8, !tbaa !112
+  store ptr %i.b, ptr %0, align 8, !tbaa !113
   %i.c = icmp eq ptr %1, null
   br i1 %i.c, label %bb.b, label %bb.c
 
@@ -828,14 +828,14 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.d = tail call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #19 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19
-  store i64 %i.d, ptr %i.a, align 8, !tbaa !113
+  store i64 %i.d, ptr %i.a, align 8, !tbaa !114
   %i.e = icmp ugt i64 %i.d, 15
   br i1 %i.e, label %.noexc, label %._crit_edge.i
 
 .noexc:                                           ; preds = %bb.c
   %i.f = call noundef ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(8) %i.a, i64 noundef 0) ; 2 uses
   store ptr %i.f, ptr %0, align 8, !tbaa !22
-  %i.g = load i64, ptr %i.a, align 8, !tbaa !113
+  %i.g = load i64, ptr %i.a, align 8, !tbaa !114
   store i64 %i.g, ptr %i.b, align 8, !tbaa !12
   br label %._crit_edge.i
 
@@ -856,7 +856,7 @@ bb.e:                                             ; preds = %._crit_edge.i
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d, %._crit_edge.i
-  %i.j = load i64, ptr %i.a, align 8, !tbaa !113  ; 2 uses
+  %i.j = load i64, ptr %i.a, align 8, !tbaa !114  ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %i.j, ptr %i.k, align 8, !tbaa !23
   %i.l = load ptr, ptr %0, align 8, !tbaa !22
@@ -1190,6 +1190,7 @@ attributes #26 = { builtin nounwind }
 !109 = !{!103, !50, i64 40}
 !110 = !{!103, !50, i64 48}
 !111 = !{!103, !50, i64 56}
-!112 = !{!19, !10, i64 0}
-!113 = !{!20, !20, i64 0}
+!112 = !{ptr @strtod, ptr @proj_dmstor}
+!113 = !{!19, !10, i64 0}
+!114 = !{!20, !20, i64 0}
 end_hunk_1

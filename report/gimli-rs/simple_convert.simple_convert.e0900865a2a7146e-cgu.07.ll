@@ -205,13 +205,18 @@ _RINvMsa_NtCsiHO4aZxHxup_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capac
   store i64 %.sroa.09.0.i.i, ptr %.sroa.619.sroa.5.0..sroa.619.0..sroa_idx.sroa_idx.i.i, align 8, !noalias !100
   %.sroa.619.sroa.6.0..sroa.619.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 48
   store i64 0, ptr %.sroa.619.sroa.6.0..sroa.619.0..sroa_idx.sroa_idx.i.i, align 8, !noalias !100
-  %2 = load ptr, ptr %0, align 8, !alias.scope !103, !nonnull !5, !noundef !5 ; 4 uses
   %i.au = load i64, ptr %i.e, align 8, !alias.scope !103, !noundef !5 ; 2 uses
   %i.av = icmp eq i64 %i.au, 0
   %i.aw = ptrtoint ptr %i.at to i64
-  br i1 %i.av, label %._crit_edge37, label %.preheader.preheader
+  br i1 %i.av, label %_RINvMsa_NtCsiHO4aZxHxup_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capacityNtNtNtB8_5alloc5inner6GlobalECsjhlb6SMKfKY_14simple_convert.exit.._crit_edge37_crit_edge, label %.preheader.preheader
+
+_RINvMsa_NtCsiHO4aZxHxup_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capacityNtNtNtB8_5alloc5inner6GlobalECsjhlb6SMKfKY_14simple_convert.exit.._crit_edge37_crit_edge: ; preds = %_RINvMsa_NtCsiHO4aZxHxup_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capacityNtNtNtB8_5alloc5inner6GlobalECsjhlb6SMKfKY_14simple_convert.exit
+  %.sroa.0.0.copyload.i.i.i.i.i.pre = load i64, ptr %0, align 8, !alias.scope !104, !noalias !105
+  %.sroa.0.0.copyload.i.i.i.i.i.pre.ptr = inttoptr i64 %.sroa.0.0.copyload.i.i.i.i.i.pre to ptr
+  br label %._crit_edge37
 
 .preheader.preheader:                             ; preds = %_RINvMsa_NtCsiHO4aZxHxup_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capacityNtNtNtB8_5alloc5inner6GlobalECsjhlb6SMKfKY_14simple_convert.exit
+  %2 = load ptr, ptr %0, align 8, !alias.scope !103, !nonnull !5, !noundef !5 ; 3 uses
   %.val326 = load <16 x i8>, ptr %2, align 16
   %i.ax = icmp sgt <16 x i8> %.val326, splat (i8 -1)
   %i.ay = bitcast <16 x i1> %i.ax to i16
@@ -226,15 +231,14 @@ _RINvMsa_NtCsiHO4aZxHxup_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capac
 bb.m:                                             ; preds = %._crit_edge
   %i.az = landingpad { ptr, i32 }
           cleanup
-  call fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsiHO4aZxHxup_9hashbrown10scopeguard10ScopeGuardNtNtBG_3raw13RawTableInnerNCINvMsa_B1u_B1s_14prepare_resizeNtNtNtBG_5alloc5inner6GlobalE0EECsjhlb6SMKfKY_14simple_convert(ptr noalias nofree noundef align 8 dereferenceable(56) %i.a) #19, !noalias !104
+  call fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsiHO4aZxHxup_9hashbrown10scopeguard10ScopeGuardNtNtBG_3raw13RawTableInnerNCINvMsa_B1u_B1s_14prepare_resizeNtNtNtBG_5alloc5inner6GlobalE0EECsjhlb6SMKfKY_14simple_convert(ptr noalias nofree noundef align 8 dereferenceable(56) %i.a) #19, !noalias !105
   resume { ptr, i32 } %i.az
 
 .preheader:                                       ; preds = %.preheader.preheader, %_RNvMsa_NtCsiHO4aZxHxup_9hashbrown3rawNtB5_13RawTableInner17find_insert_index.exit
-  %3 = phi ptr [ %i.de, %_RNvMsa_NtCsiHO4aZxHxup_9hashbrown3rawNtB5_13RawTableInner17find_insert_index.exit ], [ %2, %.preheader.preheader ]
-  %.sroa.0.036 = phi ptr [ %.sroa.0.1.lcssa, %_RNvMsa_NtCsiHO4aZxHxup_9hashbrown3rawNtB5_13RawTableInner17find_insert_index.exit ], [ %2, %.preheader.preheader ] ; 2 uses
-  %.sroa.5.035 = phi i64 [ %.sroa.5.1.lcssa, %_RNvMsa_NtCsiHO4aZxHxup_9hashbrown3rawNtB5_13RawTableInner17find_insert_index.exit ], [ 0, %.preheader.preheader ] ; 2 uses
-  %.sroa.9.034 = phi i64 [ %i.by, %_RNvMsa_NtCsiHO4aZxHxup_9hashbrown3rawNtB5_13RawTableInner17find_insert_index.exit ], [ %i.au, %.preheader.preheader ]
-  %.sroa.13.033 = phi i16 [ %i.bw, %_RNvMsa_NtCsiHO4aZxHxup_9hashbrown3rawNtB5_13RawTableInner17find_insert_index.exit ], [ %i.ay, %.preheader.preheader ] ; 2 uses
+  %.sroa.0.036 = phi ptr [ %2, %.preheader.preheader ], [ %.sroa.0.1.lcssa, %_RNvMsa_NtCsiHO4aZxHxup_9hashbrown3rawNtB5_13RawTableInner17find_insert_index.exit ] ; 2 uses
+  %.sroa.5.035 = phi i64 [ 0, %.preheader.preheader ], [ %.sroa.5.1.lcssa, %_RNvMsa_NtCsiHO4aZxHxup_9hashbrown3rawNtB5_13RawTableInner17find_insert_index.exit ] ; 2 uses
+  %.sroa.9.034 = phi i64 [ %i.au, %.preheader.preheader ], [ %i.by, %_RNvMsa_NtCsiHO4aZxHxup_9hashbrown3rawNtB5_13RawTableInner17find_insert_index.exit ]
+  %.sroa.13.033 = phi i16 [ %i.ay, %.preheader.preheader ], [ %i.bw, %_RNvMsa_NtCsiHO4aZxHxup_9hashbrown3rawNtB5_13RawTableInner17find_insert_index.exit ] ; 2 uses
   %.not.i128 = icmp eq i16 %.sroa.13.033, 0
   br i1 %.not.i128, label %.noexc2, label %._crit_edge
 
@@ -254,15 +258,15 @@ bb.m:                                             ; preds = %._crit_edge
   %.pre = load i64, ptr %i.e, align 8, !alias.scope !103
   br label %._crit_edge37
 
-._crit_edge37:                                    ; preds = %._crit_edge37.loopexit, %_RINvMsa_NtCsiHO4aZxHxup_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capacityNtNtNtB8_5alloc5inner6GlobalECsjhlb6SMKfKY_14simple_convert.exit
-  %.sroa.0.0.copyload.i.i.i.i.i.in = phi ptr [ %i.de, %._crit_edge37.loopexit ], [ %2, %_RINvMsa_NtCsiHO4aZxHxup_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capacityNtNtNtB8_5alloc5inner6GlobalECsjhlb6SMKfKY_14simple_convert.exit ]
-  %i.be = phi i64 [ %.pre, %._crit_edge37.loopexit ], [ 0, %_RINvMsa_NtCsiHO4aZxHxup_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capacityNtNtNtB8_5alloc5inner6GlobalECsjhlb6SMKfKY_14simple_convert.exit ]
+._crit_edge37:                                    ; preds = %_RINvMsa_NtCsiHO4aZxHxup_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capacityNtNtNtB8_5alloc5inner6GlobalECsjhlb6SMKfKY_14simple_convert.exit.._crit_edge37_crit_edge, %._crit_edge37.loopexit
+  %.sroa.0.0.copyload.i.i.i.i.i.in = phi ptr [ %i.de, %._crit_edge37.loopexit ], [ %.sroa.0.0.copyload.i.i.i.i.i.pre.ptr, %_RINvMsa_NtCsiHO4aZxHxup_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capacityNtNtNtB8_5alloc5inner6GlobalECsjhlb6SMKfKY_14simple_convert.exit.._crit_edge37_crit_edge ]
+  %i.be = phi i64 [ %.pre, %._crit_edge37.loopexit ], [ 0, %_RINvMsa_NtCsiHO4aZxHxup_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capacityNtNtNtB8_5alloc5inner6GlobalECsjhlb6SMKfKY_14simple_convert.exit.._crit_edge37_crit_edge ]
   %i.bf = sub i64 %.sroa.09.0.i.i, %i.be
-  store i64 %i.aw, ptr %0, align 8, !alias.scope !105, !noalias !104
-  %.sroa.0.0.copyload.i.i.i.1.i.i = load i64, ptr %i.h, align 8, !alias.scope !106, !noalias !104 ; 3 uses
-  store i64 %i.aq, ptr %i.h, align 8, !alias.scope !106, !noalias !104
+  store i64 %i.aw, ptr %0, align 8, !alias.scope !104, !noalias !105
+  %.sroa.0.0.copyload.i.i.i.1.i.i = load i64, ptr %i.h, align 8, !alias.scope !106, !noalias !105 ; 3 uses
+  store i64 %i.aq, ptr %i.h, align 8, !alias.scope !106, !noalias !105
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %i.bf, ptr %i.bg, align 8, !alias.scope !107, !noalias !104
+  store i64 %i.bf, ptr %i.bg, align 8, !alias.scope !107, !noalias !105
   %i.bh = icmp eq i64 %.sroa.0.0.copyload.i.i.i.1.i.i, 0
   br i1 %i.bh, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsiHO4aZxHxup_9hashbrown10scopeguard10ScopeGuardNtNtBG_3raw13RawTableInnerNCINvMsa_B1u_B1s_14prepare_resizeNtNtNtBG_5alloc5inner6GlobalE0EECsjhlb6SMKfKY_14simple_convert.exit, label %_RNvMs1_NtCsiHO4aZxHxup_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i
 
@@ -271,14 +275,14 @@ _RNvMs1_NtCsiHO4aZxHxup_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.e
   %i.bj = add i64 %i.bi, 24
   %i.bk = add i64 %i.bi, 39                       ; 2 uses
   %i.bl = icmp uge i64 %i.bk, %i.bj
-  call void @llvm.assume(i1 %i.bl), !noalias !104
+  call void @llvm.assume(i1 %i.bl), !noalias !105
   %i.bm = and i64 %i.bk, -16                      ; 3 uses
   %i.bn = add i64 %.sroa.0.0.copyload.i.i.i.1.i.i, 17
   %i.bo = add i64 %i.bn, %i.bm                    ; 3 uses
   %i.bp = icmp uge i64 %i.bo, %i.bm
   %i.bq = icmp ult i64 %i.bo, 9223372036854775793
-  call void @llvm.assume(i1 %i.bp), !noalias !104
-  call void @llvm.assume(i1 %i.bq), !noalias !104
+  call void @llvm.assume(i1 %i.bp), !noalias !105
+  call void @llvm.assume(i1 %i.bq), !noalias !105
   %i.br = sub nsw i64 0, %i.bm
   %i.bs = getelementptr inbounds i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.in, i64 %i.br
   call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %i.bs, i64 noundef %i.bo, i64 noundef range(i64 1, -9223372036854775807) 16) #21, !noalias !108
@@ -299,11 +303,11 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsiHO4aZxHxup_9hashbrown10scopeguar
   %i.bx = add i64 %.sroa.5.1.lcssa, %i.bv         ; 2 uses
   %i.by = add i64 %.sroa.9.034, -1                ; 2 uses
   %i.bz = sub nsw i64 0, %i.bx
-  %i.ca = getelementptr inbounds [24 x i8], ptr %3, i64 %i.bz
+  %i.ca = getelementptr inbounds [24 x i8], ptr %2, i64 %i.bz
   %i.cb = getelementptr inbounds i8, ptr %i.ca, i64 -24
   %.val.i = load ptr, ptr %i.c, align 8, !noalias !109, !nonnull !5, !noundef !5
   %i.cc = invoke noundef i64 @_RINvYINtNtCskKLDkoKarTP_4core4hash18BuildHasherDefaultNtCs4ix5f8b49eS_3fnv9FnvHasherENtB6_11BuildHasher8hash_oneRNtNtCsi68uqYEhoRA_5gimli6common17UnitSectionOffsetECsjhlb6SMKfKY_14simple_convert(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.val.i, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.cb)
-          to label %_RNCINvMs6_NtCsiHO4aZxHxup_9hashbrown3rawINtB8_8RawTableTNtNtCsi68uqYEhoRA_5gimli6common17UnitSectionOffsetTNtNtNtBW_5write4unit6UnitIdNtB1J_11UnitEntryIdEEE14reserve_rehashNCINvNtBa_3map11make_hasherBS_B1G_INtNtCskKLDkoKarTP_4core4hash18BuildHasherDefaultNtCs4ix5f8b49eS_3fnv9FnvHasherEE0E0Csjhlb6SMKfKY_14simple_convert.exit unwind label %bb.m ; 2 uses
+          to label %_RNCINvMs6_NtCsiHO4aZxHxup_9hashbrown3rawINtB8_8RawTableTNtNtCsi68uqYEhoRA_5gimli6common17UnitSectionOffsetTNtNtNtBW_5write4unit6UnitIdNtB1J_11UnitEntryIdEEE14reserve_rehashNCINvNtBa_3map11make_hasherBS_B1G_INtNtCskKLDkoKarTP_4core4hash18BuildHasherDefaultNtCs4ix5f8b49eS_3fnv9FnvHasherEE0E0Csjhlb6SMKfKY_14simple_convert.exit unwind label %bb.m, !noalias !109 ; 2 uses
 
 _RNCINvMs6_NtCsiHO4aZxHxup_9hashbrown3rawINtB8_8RawTableTNtNtCsi68uqYEhoRA_5gimli6common17UnitSectionOffsetTNtNtNtBW_5write4unit6UnitIdNtB1J_11UnitEntryIdEEE14reserve_rehashNCINvNtBa_3map11make_hasherBS_B1G_INtNtCskKLDkoKarTP_4core4hash18BuildHasherDefaultNtCs4ix5f8b49eS_3fnv9FnvHasherEE0E0Csjhlb6SMKfKY_14simple_convert.exit: ; preds = %._crit_edge
   %.sroa.0.07.i = and i64 %i.cc, %i.aq            ; 3 uses
@@ -356,18 +360,18 @@ _RNvMsa_NtCsiHO4aZxHxup_9hashbrown3rawNtB5_13RawTableInner17find_insert_index.ex
   %i.cz = add nsw i64 %.sroa.0.0.i5.i, -16
   %i.da = and i64 %i.cz, %i.aq
   %i.db = getelementptr inbounds nuw i8, ptr %i.at, i64 %.sroa.0.0.i5.i
-  store i8 %i.cy, ptr %i.db, align 1, !noalias !104
+  store i8 %i.cy, ptr %i.db, align 1, !noalias !105
   %i.dc = getelementptr i8, ptr %i.at, i64 %i.da
   %i.dd = getelementptr i8, ptr %i.dc, i64 16
-  store i8 %i.cy, ptr %i.dd, align 1, !noalias !104
-  %i.de = load ptr, ptr %0, align 8, !alias.scope !103, !nonnull !5, !noundef !5 ; 3 uses
+  store i8 %i.cy, ptr %i.dd, align 1, !noalias !105
+  %i.de = load ptr, ptr %0, align 8, !alias.scope !103, !nonnull !5, !noundef !5 ; 2 uses
   %.neg.i.i = xor i64 %i.bx, -1
   %.neg62.i.i = mul i64 %.neg.i.i, 24
   %i.df = getelementptr inbounds i8, ptr %i.de, i64 %.neg62.i.i
   %.neg63.i.i = xor i64 %.sroa.0.0.i5.i, -1
   %.neg64.i.i = mul i64 %.neg63.i.i, 24
   %i.dg = getelementptr inbounds i8, ptr %i.at, i64 %.neg64.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.dg, ptr noundef nonnull align 1 dereferenceable(24) %i.df, i64 range(i64 8, 25) 24, i1 false), !noalias !104
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.dg, ptr noundef nonnull align 1 dereferenceable(24) %i.df, i64 range(i64 8, 25) 24, i1 false), !noalias !105
   %i.dh = icmp eq i64 %i.by, 0
   br i1 %i.dh, label %._crit_edge37.loopexit, label %.preheader
 
@@ -599,7 +603,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsiHO4aZxHxup_9hashbrown10scopeguar
 
 bb.l:                                             ; preds = %._crit_edge
   invoke void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %.val3.i, i64 noundef %.val2.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @4) #23
-          to label %.noexc8 unwind label %bb.k
+          to label %.noexc8 unwind label %bb.k, !noalias !147
 
 .noexc8:                                          ; preds = %bb.l
   unreachable
@@ -1002,8 +1006,8 @@ attributes #24 = { noinline }
 !101 = !{!81, !79}
 !102 = !{!79}
 !103 = !{!75, !71}
-!104 = !{!76, !72}
-!105 = !{!83}
+!104 = !{!83}
+!105 = !{!76, !72}
 !106 = !{!85}
 !107 = !{!87}
 !108 = !{!91, !89, !76, !72}

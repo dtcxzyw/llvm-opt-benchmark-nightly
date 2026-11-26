@@ -105,14 +105,15 @@ vector.ph:                                        ; preds = %vector.memcheck
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %5 = trunc i64 %index to i32                    ; 2 uses
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 4 uses
   %i.am = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %index ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 16
   %wide.load = load <4 x i32>, ptr %i.am, align 4, !alias.scope !12, !noalias !13 ; 2 uses
   %wide.load23 = load <4 x i32>, ptr %i.an, align 4, !alias.scope !12, !noalias !13 ; 2 uses
+  %5 = trunc nuw i64 %index to i32
+  %6 = trunc i64 %index to i32
   %i.ao = shl nuw i32 %5, 1
-  %i.ap = shl i32 %5, 1
+  %i.ap = shl i32 %6, 1
   %i.aq = sext i32 %i.ao to i64
   %i.ar = getelementptr inbounds i8, ptr %i.aa, i64 %i.aq
   %i.as = sext i32 %i.ap to i64

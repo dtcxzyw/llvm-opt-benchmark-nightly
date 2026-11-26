@@ -205,6 +205,11 @@ fcol.exit.preheader.new:                          ; preds = %fcol.exit.prol.loop
   %i.jj = and i32 %i.ji, 3
   %i.jk = zext nneg i32 %i.jj to i64
   %i.jl = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.jk
+  %5 = load float, ptr %i.jl, align 4, !tbaa !12
+  %6 = fmul reassoc nsz arcp contract afn float %5, f0x3F733333 ; 2 uses
+  %7 = fcmp reassoc nsz arcp contract afn olt float %6, 5.000000e-01
+  %spec.select101 = select i1 %7, float 5.000000e-01, float %6 ; 2 uses
+  %8 = fdiv reassoc nsz arcp contract afn float 1.000000e+00, %spec.select101
   br label %fcol.exit
 
 ._crit_edge.split:                                ; preds = %fcol.exit.prol.loopexit, %fcol.exit, %middle.block
@@ -215,16 +220,12 @@ fcol.exit.preheader.new:                          ; preds = %fcol.exit.prol.loop
 fcol.exit:                                        ; preds = %fcol.exit, %fcol.exit.preheader.new
   %indvars.iv = phi i64 [ %indvars.iv.unr, %fcol.exit.preheader.new ], [ %indvars.iv.next.1, %fcol.exit ] ; 3 uses
   %i.jm = add nuw nsw i64 %i.hr, %indvars.iv      ; 2 uses
-  %5 = load float, ptr %i.jl, align 4, !tbaa !12
-  %6 = fmul reassoc nsz arcp contract afn float %5, f0x3F733333 ; 2 uses
-  %7 = fcmp reassoc nsz arcp contract afn olt float %6, 5.000000e-01
-  %spec.select101 = select i1 %7, float 5.000000e-01, float %6 ; 2 uses
   %i.jn = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.jm
   %i.jo = load float, ptr %i.jn, align 4, !tbaa !12
   %i.jp = fsub reassoc nsz arcp contract afn float %i.jo, %spec.select101
-  %8 = fdiv reassoc nsz arcp contract afn float %i.jp, %spec.select101 ; 2 uses
-  %i.jq = fcmp reassoc nsz arcp contract afn olt float %8, 0.000000e+00
-  %i.jr = select reassoc nsz arcp contract afn i1 %i.jq, float 0.000000e+00, float %8
+  %9 = fmul reassoc nsz arcp contract afn float %i.jp, %8 ; 2 uses
+  %i.jq = fcmp reassoc nsz arcp contract afn olt float %9, 0.000000e+00
+  %i.jr = select reassoc nsz arcp contract afn i1 %i.jq, float 0.000000e+00, float %9
   %i.js = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %i.jm
   store float %i.jr, ptr %i.js, align 4, !tbaa !12
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses

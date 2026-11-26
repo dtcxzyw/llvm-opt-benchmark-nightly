@@ -204,7 +204,7 @@ bb.x:                                             ; preds = %bb.u
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   %i.bh = getelementptr inbounds nuw i8, ptr %i.f, i64 8 ; 3 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %i.f, i64 16 ; 3 uses
-  store ptr %i.ac, ptr %i.g, align 8, !captures !8
+  store ptr %i.ac, ptr %i.g, align 8, !captures !12
   %i.bj = invoke { ptr, i64 } @_RNvXNtCs3oUPovFnLWP_4core7convertRNtNtCsaL1QbXo9JQH_3std4path7PathBufINtB2_5AsRefNtBy_4PathE6as_refCskfouyF4kJzn_2cc(ptr nonnull align 8 %i.g)
           to label %.noexc.i unwind label %bb.y   ; 2 uses
 
@@ -237,7 +237,7 @@ _RNvMNtCs3oUPovFnLWP_4core6optionINtB2_6OptionReE6unwrapCshrhKyGBusiH_18build_sc
           to label %.noexc33.i unwind label %bb.y
 
 .noexc33.i:                                       ; preds = %_RNvMNtCs3oUPovFnLWP_4core6optionINtB2_6OptionReE6unwrapCshrhKyGBusiH_18build_script_build.exit.i.i
-  store ptr %i.ab, ptr %i.g, align 8, !captures !8
+  store ptr %i.ab, ptr %i.g, align 8, !captures !12
   %i.bq = invoke { ptr, i64 } @_RNvXNtCs3oUPovFnLWP_4core7convertRNtNtCsaL1QbXo9JQH_3std4path7PathBufINtB2_5AsRefNtBy_4PathE6as_refCskfouyF4kJzn_2cc(ptr nonnull align 8 %i.g)
           to label %.noexc34.i unwind label %bb.y ; 2 uses
 
@@ -263,7 +263,7 @@ _RNvMNtCs3oUPovFnLWP_4core6optionINtB2_6OptionReE6unwrapCshrhKyGBusiH_18build_sc
           to label %.noexc36.i unwind label %bb.y
 
 .noexc36.i:                                       ; preds = %_RNvMNtCs3oUPovFnLWP_4core6optionINtB2_6OptionReE6unwrapCshrhKyGBusiH_18build_script_build.exit.1.i.i
-  store ptr %i.af, ptr %i.g, align 8, !captures !8
+  store ptr %i.af, ptr %i.g, align 8, !captures !12
   %i.bx = invoke { ptr, i64 } @_RNvXNtCs3oUPovFnLWP_4core7convertRNtNtCsaL1QbXo9JQH_3std4path7PathBufINtB2_5AsRefNtBy_4PathE6as_refCskfouyF4kJzn_2cc(ptr nonnull align 8 %i.g)
           to label %.noexc37.i unwind label %bb.y ; 2 uses
 
@@ -328,7 +328,7 @@ bb.ac:                                            ; preds = %_RINvNvCshrhKyGBusi
 bb.ad:                                            ; preds = %bb.ac
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   invoke void @_RINvXs_NvMNtCs1xwejQucwHj_5alloc5sliceSp9to_vec_inhNtB5_10ConvertVec6to_vecNtNtBa_5alloc6GlobalECs5ILFtGS3mP9_15find_msvc_tools(ptr nonnull sret([24 x i8]) align 8 %i.e, ptr nonnull @19, i64 1) #13
-          to label %bb.ag unwind label %bb.af
+          to label %bb.ag unwind label %bb.af, !noalias !13
 
 bb.ae:                                            ; preds = %bb.aj, %bb.af
   %.pn16.i = phi { ptr, i32 } [ %i.cm, %bb.af ], [ %i.da, %bb.aj ]
@@ -465,7 +465,7 @@ _RNvXs3_NtNtCs3oUPovFnLWP_4core5array4iterINtB5_8IntoIterRNtNtNtCsaL1QbXo9JQH_3s
   %i.dh = phi ptr [ %i.df, %.lr.ph.i.i ], [ %i.dp, %.noexc50.i ]
   %i.di = phi { ptr, i64 } [ %i.de, %.lr.ph.i.i ], [ %i.do, %.noexc50.i ]
   %i.dj = extractvalue { ptr, i64 } %i.di, 1
-  store ptr %i.dh, ptr %i.c, align 8, !captures !8
+  store ptr %i.dh, ptr %i.c, align 8, !captures !12
   store i64 %i.dj, ptr %i.dg, align 8
   %i.dk = invoke { ptr, i64 } @_RNvXNtCs3oUPovFnLWP_4core7convertRNtNtNtCsaL1QbXo9JQH_3std3ffi6os_str5OsStrINtB2_5AsRefBw_E6as_refCskfouyF4kJzn_2cc(ptr nonnull align 8 %i.c)
           to label %.noexc48.i unwind label %.thread85.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
@@ -538,7 +538,7 @@ bb.au:                                            ; preds = %.noexc51.i
   %i.dz = getelementptr inbounds nuw i8, ptr %i.dy, i64 8
   %i.ea = load ptr, ptr %i.dz, align 8
   %i.eb = invoke i8 %i.ea(i32 %i.dx)
-          to label %bb.cd unwind label %bb.cc, !inline_history !7
+          to label %bb.cd unwind label %bb.cc, !inline_history !9
 
 bb.av:                                            ; preds = %.noexc51.i
   %i.ec = getelementptr inbounds nuw i8, ptr %i.b, i64 1
@@ -766,7 +766,7 @@ bb.ci:                                            ; preds = %bb.cr, %bb.cq, %bb.
 bb.cj:                                            ; preds = %bb.ce
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   invoke void @_RINvXs_NvMNtCs1xwejQucwHj_5alloc5sliceSp9to_vec_inhNtB5_10ConvertVec6to_vecNtNtBa_5alloc6GlobalECs5ILFtGS3mP9_15find_msvc_tools(ptr nonnull sret([24 x i8]) align 8 %i.a, ptr nonnull @31, i64 1) #13
-          to label %bb.cm unwind label %bb.cl
+          to label %bb.cm unwind label %bb.cl, !noalias !14
 
 bb.ck:                                            ; preds = %bb.cp, %bb.cl
   %.pn11.i = phi { ptr, i32 } [ %i.gh, %bb.cp ], [ %i.ft, %bb.cl ]
@@ -1159,6 +1159,12 @@ attributes #15 = { noreturn }
 !4 = !{!"rustc version 1.100.0-nightly (787af2b8c 2026-08-25)"}
 !5 = distinct !{null}
 !6 = !{i64 21277267989337965}
-!7 = distinct !{null}
-!8 = !{!"address", !"read_provenance"}
+!7 = distinct !{!7, i1 true, !"_RNvXs2_NtCs1xwejQucwHj_5alloc3streNtNtB7_6borrow7ToOwned8to_ownedCshrhKyGBusiH_18build_script_build"}
+!8 = distinct !{!8, !7, !"_RNvXs2_NtCs1xwejQucwHj_5alloc3streNtNtB7_6borrow7ToOwned8to_ownedCshrhKyGBusiH_18build_script_build: argument 0"}
+!9 = distinct !{null}
+!10 = distinct !{!10, i1 true, !"_RNvXs2_NtCs1xwejQucwHj_5alloc3streNtNtB7_6borrow7ToOwned8to_ownedCshrhKyGBusiH_18build_script_build"}
+!11 = distinct !{!11, !10, !"_RNvXs2_NtCs1xwejQucwHj_5alloc3streNtNtB7_6borrow7ToOwned8to_ownedCshrhKyGBusiH_18build_script_build: argument 0"}
+!12 = !{!"address", !"read_provenance"}
+!13 = !{!8}
+!14 = !{!11}
 end_hunk_0

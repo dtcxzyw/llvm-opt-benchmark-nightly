@@ -202,7 +202,7 @@ bb.h:                                             ; preds = %bb.g
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECshhfsHpF03Qr_6netlog.exit.i: ; preds = %bb.f
     #dbg_value(ptr %2, !1281, !DIExpression(), !9258)
   invoke void @_RNvXs1_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVechENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCshhfsHpF03Qr_6netlog(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %2)
-          to label %_RNvMsi_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mapINtB5_8BTreeMapNtNtBb_6string6StringB17_E5entryCshhfsHpF03Qr_6netlog.exit.thread unwind label %bb.k, !dbg !9516
+          to label %_RNvMsi_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mapINtB5_8BTreeMapNtNtBb_6string6StringB17_E5entryCshhfsHpF03Qr_6netlog.exit.thread unwind label %bb.k, !dbg !9516, !noalias !9401
 
 bb.i:                                             ; preds = %bb.e
   %.sroa.11.32.copyload = load ptr, ptr %i.s, align 8, !dbg !9517, !noalias !9434
@@ -313,7 +313,7 @@ bb.o:                                             ; preds = %bb.n
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.d, ptr noundef nonnull align 8 dereferenceable(56) %i.j, i64 24, i1 false), !dbg !9540, !noalias !9493
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !9541, !noalias !9473
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.c, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 24, i1 false), !dbg !9541
-  call void @_RNvMsu_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree4nodeINtB5_7NodeRefNtNtB5_6marker3MutNtNtBb_6string6StringB1p_NtB19_4LeafE16push_with_handleCshhfsHpF03Qr_6netlog(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.f, ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.e, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.d, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.c), !dbg !9542
+  call void @_RNvMsu_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree4nodeINtB5_7NodeRefNtNtB5_6marker3MutNtNtBb_6string6StringB1p_NtB19_4LeafE16push_with_handleCshhfsHpF03Qr_6netlog(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.f, ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.e, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.d, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.c), !dbg !9542, !noalias !9473
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !dbg !9543, !noalias !9473
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !dbg !9543, !noalias !9473
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !dbg !9544, !noalias !9473
@@ -328,27 +328,28 @@ bb.o:                                             ; preds = %bb.n
   call void @_RINvMsN_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree4nodeINtB6_6HandleINtB6_7NodeRefNtNtB6_6marker3MutNtNtBc_6string6StringB1D_NtB1n_4LeafENtB1n_4EdgeE16insert_recursingNtNtBc_5alloc6GlobalNCNvMs4_NtNtB8_3map5entryINtB3a_11VacantEntryB1D_B1D_E12insert_entry0ECshhfsHpF03Qr_6netlog(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.f, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.b, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %3, ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %.sroa.9.0..sroa_idx, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.af), !dbg !9549
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !9550, !noalias !9473
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !9551, !noalias !9473
+  %.pre = load ptr, ptr %.sroa.9.0..sroa_idx, align 8, !dbg !9552, !alias.scope !9455
   br label %_RNvMs5_NtNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3map5entryINtB5_13OccupiedEntryNtNtBd_6string6StringB1l_E8into_mutCshhfsHpF03Qr_6netlog.exit, !dbg !9551
 
 bb.p:                                             ; preds = %bb.r, %bb.q
   %i.ag = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #18, !dbg !9552, !noalias !9454
-  unreachable, !dbg !9552
+  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #18, !dbg !9553, !noalias !9454
+  unreachable, !dbg !9553
 
 bb.q:                                             ; preds = %bb.o
   %i.ah = landingpad { ptr, i32 }
           cleanup
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECshhfsHpF03Qr_6netlog(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.i) #21
-          to label %bb.r unwind label %bb.p, !dbg !9553, !noalias !9494
+          to label %bb.r unwind label %bb.p, !dbg !9554, !noalias !9494
 
 bb.r:                                             ; preds = %bb.q
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECshhfsHpF03Qr_6netlog(ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %i.j) #21
-          to label %.thread29 unwind label %bb.p, !dbg !9553, !noalias !9454
+          to label %.thread29 unwind label %bb.p, !dbg !9554, !noalias !9454
 
 _RNvMs5_NtNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3map5entryINtB5_13OccupiedEntryNtNtBd_6string6StringB1l_E8into_mutCshhfsHpF03Qr_6netlog.exit: ; preds = %.noexc10, %.noexc9
+  %4 = phi ptr [ %.pre, %.noexc10 ], [ %1, %.noexc9 ], !dbg !9552
     #dbg_value(ptr %i.j, !9476, !DIExpression(DW_OP_plus_uconst, 24, DW_OP_stack_value), !9302)
-  %4 = load ptr, ptr %.sroa.9.0..sroa_idx, align 8, !dbg !9554, !alias.scope !9455, !nonnull !640, !noundef !640
   %i.ai = getelementptr inbounds nuw i8, ptr %4, i64 16, !dbg !9555 ; 2 uses
   %i.aj = load i64, ptr %i.ai, align 8, !dbg !9555, !noalias !9493, !noundef !640
   %i.ak = add i64 %i.aj, 1, !dbg !9555
@@ -362,7 +363,7 @@ _RNvMs5_NtNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3map5entryINtB5_13Occupie
   store <2 x i64> %i.ao, ptr %.sroa.4.0..sroa_idx.i7, align 8, !dbg !9558, !alias.scope !9454
   %i.ap = getelementptr inbounds nuw i8, ptr %i.h, i64 24, !dbg !9558
   store ptr %i.an, ptr %i.ap, align 8, !dbg !9558, !alias.scope !9454
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !dbg !9553, !noalias !9473
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !dbg !9554, !noalias !9473
     #dbg_declare(ptr %i.h, !9495, !DIExpression(), !9305)
   %i.aq = call noundef nonnull align 8 ptr @_RNvMsQ_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree4nodeINtB5_6HandleINtB5_7NodeRefNtNtB5_6marker3MutNtNtBb_6string6StringB1C_NtB1m_14LeafOrInternalENtB1m_2KVE12into_val_mutCshhfsHpF03Qr_6netlog(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %i.h), !dbg !9559 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !dbg !9560
@@ -765,9 +766,9 @@ begin_hunk_1_@llvm.experimental.noalias.scope.decl
 !9549 = !DILocation(line: 460, column: 36, scope: !9275, inlinedAt: !9282)
 !9550 = !DILocation(line: 467, column: 14, scope: !9275, inlinedAt: !9282)
 !9551 = !DILocation(line: 467, column: 14, scope: !9281, inlinedAt: !9282)
-!9552 = !DILocation(line: 447, column: 5, scope: !9281, inlinedAt: !9282)
-!9553 = !DILocation(line: 479, column: 5, scope: !9281, inlinedAt: !9282)
-!9554 = !DILocation(line: 53, column: 24, scope: !9289, inlinedAt: !9301)
+!9552 = !DILocation(line: 53, column: 24, scope: !9289, inlinedAt: !9301)
+!9553 = !DILocation(line: 447, column: 5, scope: !9281, inlinedAt: !9282)
+!9554 = !DILocation(line: 479, column: 5, scope: !9281, inlinedAt: !9282)
 !9555 = !DILocation(line: 471, column: 18, scope: !9280, inlinedAt: !9282)
 !9556 = !DILocation(line: 474, column: 21, scope: !9280, inlinedAt: !9282)
 !9557 = !DILocation(line: 475, column: 26, scope: !9280, inlinedAt: !9282)
@@ -962,7 +963,7 @@ begin_hunk_1_@llvm.experimental.noalias.scope.decl
 !9746 = !{!9732, !9745}
 !9747 = !{!9635, !9634, !9632, !9631, !9589, !9629}
 !9748 = !{!9632, !9589}
-!9749 = !{!9632, !9631, !9589}
+!9749 = !{!9635, !9634, !9632, !9631, !9589}
 !9750 = !DIDerivedType(tag: DW_TAG_pointer_type, name: "&mut alloc::collections::btree::mem::replace::PanicGuard", baseType: !9603, size: 64, align: 64, dwarfAddressSpace: 0)
 !9751 = !DILocalVariable(arg: 1, scope: !9636, file: !1174, line: 848, type: !9750)
 !9752 = !{null, !9750}

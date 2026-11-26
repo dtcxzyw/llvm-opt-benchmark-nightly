@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %.noexc
   br i1 %.not.i, label %bb.g, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 88
+  %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 88 ; 2 uses
   %i.al = load i8, ptr %i.ak, align 8, !tbaa !120, !range !121, !noundef !122
   %i.am = trunc nuw i8 %i.al to i1
   br i1 %i.am, label %bb.f, label %_ZN8NWindows16NSynchronization8CSynchroD2Ev.exit.i
@@ -216,6 +216,7 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZN8NWindows16NSynchronization8CSynchroD2Ev.exit.i
 
 _ZN8NWindows16NSynchronization8CSynchroD2Ev.exit.i: ; preds = %bb.f, %bb.e
+  store i8 0, ptr %i.ak, align 8, !tbaa !120
   call void @_ZdlPvm(ptr noundef nonnull %i.aj, i64 noundef 96) #18
   br label %bb.g
 
@@ -415,7 +416,7 @@ bb.a:
   br i1 %.not, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 88
+  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 88 ; 2 uses
   %i.d = load i8, ptr %i.c, align 8, !tbaa !120, !range !121, !noundef !122
   %i.e = trunc nuw i8 %i.d to i1
   br i1 %i.e, label %bb.c, label %_ZN8NWindows16NSynchronization8CSynchroD2Ev.exit
@@ -427,6 +428,7 @@ bb.c:                                             ; preds = %bb.b
   br label %_ZN8NWindows16NSynchronization8CSynchroD2Ev.exit
 
 _ZN8NWindows16NSynchronization8CSynchroD2Ev.exit: ; preds = %bb.b, %bb.c
+  store i8 0, ptr %i.c, align 8, !tbaa !120
   tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 96) #18
   br label %bb.d
 
@@ -829,7 +831,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 88
+  %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 88 ; 2 uses
   %i.r = load i8, ptr %i.q, align 8, !tbaa !120, !range !121, !noundef !122
   %i.s = trunc nuw i8 %i.r to i1
   br i1 %i.s, label %bb.d, label %_ZN8NWindows16NSynchronization8CSynchroD2Ev.exit.i
@@ -841,6 +843,7 @@ bb.d:                                             ; preds = %bb.c
   br label %_ZN8NWindows16NSynchronization8CSynchroD2Ev.exit.i
 
 _ZN8NWindows16NSynchronization8CSynchroD2Ev.exit.i: ; preds = %bb.d, %bb.c
+  store i8 0, ptr %i.q, align 8, !tbaa !120
   tail call void @_ZdlPvm(ptr noundef nonnull %i.p, i64 noundef 96) #18
   br label %bb.e
 

@@ -205,12 +205,13 @@ vector.ph:                                        ; preds = %vector.scevcheck
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %vec.phi = phi <4 x i32> [ %i.lz, %vector.ph ], [ %i.mk, %vector.body ]
   %vec.phi249 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.ml, %vector.body ]
-  %i.ma = trunc i64 %index to i32                 ; 2 uses
+  %4 = trunc nuw nsw i64 %index to i32
+  %i.ma = trunc i64 %index to i32
   %i.mb = or disjoint i32 %i.ma, 4
-  %i.mc = add i32 %invariant.op.us.i.i, %i.ma
+  %i.mc = add i32 %invariant.op.us.i.i, %4
   %i.md = add i32 %invariant.op.us.i.i, %i.mb
   %i.me = sext i32 %i.mc to i64
   %i.mf = sext i32 %i.md to i64
