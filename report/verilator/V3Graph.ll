@@ -202,8 +202,16 @@ bb.a:
   store double %i.e, ptr %i.c, align 8, !tbaa !21
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 64
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %2 = load <2 x i32>, ptr %i.g, align 8, !tbaa !22
-  store <2 x i32> %2, ptr %i.f, align 8, !tbaa !22
+  %2 = load i32, ptr %i.g, align 8, !tbaa !112
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 68
+  %4 = load i32, ptr %3, align 4, !tbaa !111
+  %5 = freeze i32 %2
+  %6 = zext i32 %5 to i64
+  %7 = freeze i32 %4
+  %8 = zext i32 %7 to i64
+  %9 = shl nuw i64 %8, 32
+  %10 = or disjoint i64 %9, %6
+  store i64 %10, ptr %i.f, align 8
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 72
   store ptr null, ptr %i.h, align 8, !tbaa !23
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses

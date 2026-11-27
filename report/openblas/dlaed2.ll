@@ -20,7 +20,7 @@ bb.a:
   %i.d = alloca double, align 8                   ; 8 uses
   %i.e = alloca double, align 8                   ; 6 uses
   %i.f = alloca i32, align 4                      ; 9 uses
-  %i.g = alloca [4 x i32], align 16               ; 11 uses
+  %i.g = alloca [4 x i32], align 16               ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #6
@@ -423,25 +423,31 @@ bb.t:                                             ; preds = %bb.r, %._crit_edge5
   %.pre639 = load i32, ptr %.phi.trans.insert638, align 8, !tbaa !35
   %.phi.trans.insert640 = getelementptr inbounds nuw i8, ptr %i.b, i64 12
   %.pre641 = load i32, ptr %.phi.trans.insert640, align 4, !tbaa !35
+  %17 = freeze i32 %.pre636
+  %18 = freeze i32 %.pre637
+  %19 = freeze i32 %.pre639
   br label %._crit_edge515
 
 ._crit_edge515:                                   ; preds = %._crit_edge515.loopexit, %.loopexit454
   %i.st = phi i32 [ %.pre641, %._crit_edge515.loopexit ], [ 0, %.loopexit454 ]
-  %i.su = phi i32 [ %.pre639, %._crit_edge515.loopexit ], [ 0, %.loopexit454 ]
-  %i.sv = phi i32 [ %.pre637, %._crit_edge515.loopexit ], [ 0, %.loopexit454 ] ; 2 uses
-  %i.sw = phi i32 [ %.pre636, %._crit_edge515.loopexit ], [ 0, %.loopexit454 ] ; 4 uses
-  store i32 1, ptr %i.g, align 16, !tbaa !35
-  %17 = add nsw i32 %i.sw, 1                      ; 2 uses
-  %18 = getelementptr inbounds nuw i8, ptr %i.g, i64 4
-  store i32 %17, ptr %18, align 4, !tbaa !35
+  %i.su = phi i32 [ %19, %._crit_edge515.loopexit ], [ 0, %.loopexit454 ]
+  %i.sv = phi i32 [ %18, %._crit_edge515.loopexit ], [ 0, %.loopexit454 ] ; 2 uses
+  %i.sw = phi i32 [ %17, %._crit_edge515.loopexit ], [ 0, %.loopexit454 ] ; 4 uses
+  %20 = add i32 %i.sw, 1                          ; 2 uses
+  %21 = zext i32 %20 to i64
+  %22 = shl nuw i64 %21, 32
+  %23 = or disjoint i64 %22, 1
+  store i64 %23, ptr %i.g, align 16
   %i.sx = getelementptr inbounds nuw i8, ptr %i.b, i64 4
-  %i.sy = add nsw i32 %i.sv, %17                  ; 2 uses
+  %i.sy = add i32 %i.sv, %20                      ; 2 uses
   %i.sz = getelementptr inbounds nuw i8, ptr %i.g, i64 8
-  store i32 %i.sy, ptr %i.sz, align 8, !tbaa !35
   %i.ta = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %i.tb = add nsw i32 %i.su, %i.sy
-  %19 = getelementptr inbounds nuw i8, ptr %i.g, i64 12
-  store i32 %i.tb, ptr %19, align 4, !tbaa !35
+  %i.tb = add i32 %i.sy, %i.su
+  %24 = zext i32 %i.sy to i64
+  %25 = zext i32 %i.tb to i64
+  %26 = shl nuw i64 %25, 32
+  %27 = or disjoint i64 %26, %24
+  store i64 %27, ptr %i.sz, align 8
   %i.tc = getelementptr inbounds nuw i8, ptr %i.b, i64 12 ; 2 uses
   %i.td = sub nsw i32 %i.pz, %i.st
   store i32 %i.td, ptr %0, align 4, !tbaa !35

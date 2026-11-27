@@ -204,7 +204,7 @@ define linkonce_odr hidden void @_ZN6google8protobuf2io7Printer5PrintIN4absl12lt
 bb.a:
   %4 = alloca %class.anon.201, align 8            ; 4 uses
   %5 = alloca %"class.absl::lts_20250512::Cleanup", align 8 ; 6 uses
-  %6 = alloca %"struct.google::protobuf::io::Printer::PrintOptions", align 8 ; 3 uses
+  %6 = alloca %"struct.google::protobuf::io::Printer::PrintOptions", align 8 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #25
   tail call void @llvm.experimental.noalias.scope.decl(metadata !627)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #25, !noalias !627
@@ -237,13 +237,17 @@ bb.c:                                             ; preds = %bb.a
 
 _ZN6google8protobuf2io7Printer8WithVarsIN4absl12lts_2025051213flat_hash_mapISt17basic_string_viewIcSt11char_traitsIcEESA_NS5_18container_internal10StringHashENSB_8StringEqESaISt4pairIKSA_SA_EEEEEEDaPKT_.exit: ; preds = %bb.b, %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #25, !noalias !627
-  %i.l = getelementptr inbounds nuw i8, ptr %5, i64 8
-  store ptr %0, ptr %i.l, align 8, !tbaa !155, !alias.scope !628
+  %7 = getelementptr inbounds nuw i8, ptr %5, i64 8
+  store ptr %0, ptr %7, align 8, !tbaa !155, !alias.scope !628
   store i8 1, ptr %5, align 8, !tbaa !278, !alias.scope !628
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 1
-  store i32 65792, ptr %.sroa.4.0..sroa_idx, align 1
-  %.sroa.7.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %6, i64 5
-  store <4 x i8> <i8 0, i8 1, i8 0, i8 1>, ptr %.sroa.7.0..sroa_idx.a, align 1
+  %i.l = getelementptr inbounds nuw i8, ptr %6, i64 1
+  store i32 65792, ptr %i.l, align 1
+  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 5
+  store i8 0, ptr %.sroa.7.0..sroa_idx, align 1
+  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 6
+  store i16 1, ptr %.sroa.4.0..sroa_idx, align 2
+  %.sroa.7.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %6, i64 8
+  store i8 1, ptr %.sroa.7.0..sroa_idx.a, align 8
   invoke void @_ZN6google8protobuf2io7Printer9PrintImplESt17basic_string_viewIcSt11char_traitsIcEEN4absl12lts_202505124SpanIKNSt7__cxx1112basic_stringIcS5_SaIcEEEEENS2_12PrintOptionsE(ptr noundef nonnull align 16 dereferenceable(296) %0, i64 %2, ptr %3, ptr null, i64 0, ptr noundef nonnull byval(%"struct.google::protobuf::io::Printer::PrintOptions") align 8 %6)
           to label %bb.d unwind label %bb.g
 

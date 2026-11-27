@@ -205,8 +205,8 @@ bb.c:                                             ; preds = %bb.a
   %i.g = load i64, ptr %i.a, align 8, !range !16, !alias.scope !1426, !noundef !11 ; 2 uses
   %.not.i = icmp eq i64 %i.g, -1
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %.sroa.0.0.copyload.i = load i32, ptr %i.h, align 8, !alias.scope !1427 ; 2 uses
-  %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
+  %.sroa.0.0.copyload.i = load i32, ptr %i.h, align 8, !alias.scope !1427
+  %2 = freeze i32 %.sroa.0.0.copyload.i           ; 2 uses
   br i1 %.not.i, label %bb.f, label %bb.e
 
 bb.d:                                             ; preds = %bb.f, %bb.e, %bb.b
@@ -214,16 +214,19 @@ bb.d:                                             ; preds = %bb.f, %bb.e, %bb.b
 
 bb.e:                                             ; preds = %bb.c
   %.sroa.6.0..sroa_idx7 = getelementptr inbounds nuw i8, ptr %i.a, i64 12
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.2.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.6.0..sroa_idx7, i64 12, i1 false)
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 12
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.6.0..sroa_idx7, i64 12, i1 false)
   store i64 %i.g, ptr %0, align 8, !alias.scope !1428
   %.sroa.411.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 %.sroa.0.0.copyload.i, ptr %.sroa.411.0..sroa_idx, align 8, !alias.scope !1428
+  store i32 %2, ptr %.sroa.411.0..sroa_idx, align 8, !alias.scope !1428
   br label %bb.d
 
 bb.f:                                             ; preds = %bb.c
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 1, ptr %i.i, align 8
-  store i32 %.sroa.0.0.copyload.i, ptr %.sroa.2.0..sroa_idx, align 4
+  %3 = zext i32 %2 to i64
+  %4 = shl nuw i64 %3, 32
+  %5 = or disjoint i64 %4, 1
+  store i64 %5, ptr %i.i, align 8
   store i64 -1, ptr %0, align 8
   br label %bb.d
 }

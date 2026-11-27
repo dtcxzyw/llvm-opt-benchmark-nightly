@@ -204,11 +204,12 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %.sink = phi i16 [ 2, %bb.b ], [ 10, %bb.c ]
+  %.sink = phi i32 [ 10, %bb.c ], [ 2, %bb.b ]
   %rev.i = tail call noundef i16 @llvm.bswap.i16(i16 %.val18)
-  store i16 %.sink, ptr %1, align 8, !tbaa !26
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 2
-  store i16 %rev.i, ptr %2, align 2, !tbaa !26
+  %2 = zext i16 %rev.i to i32
+  %3 = shl nuw i32 %2, 16
+  %4 = or disjoint i32 %3, %.sink
+  store i32 %4, ptr %1, align 8
   ret void
 }
 

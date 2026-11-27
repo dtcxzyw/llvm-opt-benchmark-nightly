@@ -202,6 +202,8 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtCs6et67aoV1xO_11proc_macro25IdentECsgb
 define void @_RNvXsX_NtNtCsgbWeKYPjk8w_3syn3gen5cloneNtNtB9_4path5QSelfNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([32 x i8]) align 8 captures(none) dereferenceable(32) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [248 x i8], align 8               ; 4 uses
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %.val = load i32, ptr %2, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.val9 = load ptr, ptr %i.b, align 8            ; 2 uses
   %i.c = tail call noundef nonnull align 8 ptr @_RNvMs_NtCs4wP2HXfJTCR_5alloc5boxedINtB4_3BoxNtNtCsgbWeKYPjk8w_3syn2ty4TypeE13new_uninit_inBK_() ; 3 uses
@@ -217,7 +219,6 @@ bb.b:                                             ; preds = %bb.a
   resume { ptr, i32 } %i.d
 
 _RNvXsd_NtCs4wP2HXfJTCR_5alloc5boxedINtB5_3BoxNtNtCsgbWeKYPjk8w_3syn2ty4TypeENtNtCsj6eKBz9Db1c_4core5clone5Clone5cloneBL_.exit: ; preds = %bb.a
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(248) %i.c, ptr noundef nonnull align 8 dereferenceable(248) %i.a, i64 248, i1 false), !noalias !1216
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !1216
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 16
@@ -227,16 +228,26 @@ _RNvXsd_NtCs4wP2HXfJTCR_5alloc5boxedINtB5_3BoxNtNtCsgbWeKYPjk8w_3syn2ty4TypeENtN
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 4
   %.val10 = load i32, ptr %i.i, align 4
   %.sroa.5.0 = select i1 %i.h, i32 %.val10, i32 undef
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 28
+  %.val8 = load i32, ptr %3, align 4
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.c, ptr %i.k, align 8
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %i.f, ptr %i.l, align 8
-  store i32 %i.g, ptr %0, align 8
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i32 %.sroa.5.0, ptr %3, align 4
-  %4 = load <2 x i32>, ptr %2, align 8
-  store <2 x i32> %4, ptr %i.j, align 8
+  %4 = zext nneg i32 %i.g to i64
+  %5 = freeze i32 %.sroa.5.0
+  %6 = zext i32 %5 to i64
+  %7 = shl nuw i64 %6, 32
+  %8 = or disjoint i64 %7, %4
+  store i64 %8, ptr %0, align 8
+  %9 = freeze i32 %.val
+  %10 = zext i32 %9 to i64
+  %11 = freeze i32 %.val8
+  %12 = zext i32 %11 to i64
+  %13 = shl nuw i64 %12, 32
+  %14 = or disjoint i64 %13, %10
+  store i64 %14, ptr %i.j, align 8
   ret void
 }
 

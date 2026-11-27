@@ -202,7 +202,8 @@ bb.a:
   %i.l = and i64 %i.k, 262143
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.l
   %i.n = load atomic ptr, ptr %i.m monotonic, align 8, !noalias !39
-  %i.o = ptrtoint ptr %i.n to i64                 ; 2 uses
+  %.fr3.i = freeze ptr %i.n
+  %i.o = ptrtoint ptr %.fr3.i to i64              ; 2 uses
   %i.p = trunc i64 %i.o to i1
   br i1 %i.p, label %.noexc2, label %.noexc.thread, !prof !34
 
@@ -272,7 +273,8 @@ bb.a:
   %i.l = and i64 %i.k, 262143
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.l
   %i.n = load atomic ptr, ptr %i.m monotonic, align 8, !noalias !42
-  %i.o = ptrtoint ptr %i.n to i64                 ; 2 uses
+  %.fr3.i = freeze ptr %i.n
+  %i.o = ptrtoint ptr %.fr3.i to i64              ; 2 uses
   %i.p = trunc i64 %i.o to i1
   br i1 %i.p, label %.noexc2, label %.noexc.thread, !prof !34
 
@@ -342,7 +344,8 @@ bb.a:
   %i.l = and i64 %i.k, 262143
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.l
   %i.n = load atomic ptr, ptr %i.m monotonic, align 8, !noalias !45
-  %i.o = ptrtoint ptr %i.n to i64                 ; 2 uses
+  %.fr3.i = freeze ptr %i.n
+  %i.o = ptrtoint ptr %.fr3.i to i64              ; 2 uses
   %i.p = trunc i64 %i.o to i1
   br i1 %i.p, label %.noexc2, label %.noexc.thread, !prof !34
 
@@ -412,7 +415,8 @@ bb.a:
   %i.l = and i64 %i.k, 262143
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.l
   %i.n = load atomic ptr, ptr %i.m monotonic, align 8, !noalias !48
-  %i.o = ptrtoint ptr %i.n to i64                 ; 2 uses
+  %.fr3.i = freeze ptr %i.n
+  %i.o = ptrtoint ptr %.fr3.i to i64              ; 2 uses
   %i.p = trunc i64 %i.o to i1
   br i1 %i.p, label %.noexc2, label %.noexc.thread, !prof !34
 
@@ -604,7 +608,8 @@ bb.a:
   %i.l = and i64 %i.k, 262143
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.l
   %i.n = load atomic ptr, ptr %i.m monotonic, align 8, !noalias !51
-  %i.o = ptrtoint ptr %i.n to i64                 ; 2 uses
+  %.fr3.i = freeze ptr %i.n
+  %i.o = ptrtoint ptr %.fr3.i to i64              ; 2 uses
   %i.p = trunc i64 %i.o to i1
   br i1 %i.p, label %.noexc2, label %.noexc.thread, !prof !34
 
@@ -674,7 +679,8 @@ bb.a:
   %i.l = and i64 %i.k, 262143
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.l
   %i.n = load atomic ptr, ptr %i.m monotonic, align 8, !noalias !54
-  %i.o = ptrtoint ptr %i.n to i64                 ; 2 uses
+  %.fr3.i = freeze ptr %i.n
+  %i.o = ptrtoint ptr %.fr3.i to i64              ; 2 uses
   %i.p = trunc i64 %i.o to i1
   br i1 %i.p, label %.noexc2, label %.noexc.thread, !prof !34
 
@@ -744,7 +750,8 @@ bb.a:
   %i.l = and i64 %i.k, 262143
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.l
   %i.n = load atomic ptr, ptr %i.m monotonic, align 8, !noalias !57
-  %i.o = ptrtoint ptr %i.n to i64                 ; 2 uses
+  %.fr3.i = freeze ptr %i.n
+  %i.o = ptrtoint ptr %.fr3.i to i64              ; 2 uses
   %i.p = trunc i64 %i.o to i1
   br i1 %i.p, label %.noexc2, label %.noexc.thread, !prof !34
 
@@ -814,7 +821,8 @@ bb.a:
   %i.l = and i64 %i.k, 262143
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.l
   %i.n = load atomic ptr, ptr %i.m monotonic, align 8, !noalias !60
-  %i.o = ptrtoint ptr %i.n to i64                 ; 2 uses
+  %.fr3.i = freeze ptr %i.n
+  %i.o = ptrtoint ptr %.fr3.i to i64              ; 2 uses
   %i.p = trunc i64 %i.o to i1
   br i1 %i.p, label %.noexc2, label %.noexc.thread, !prof !34
 

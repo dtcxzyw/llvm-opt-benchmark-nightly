@@ -204,14 +204,16 @@ bb.bn:                                            ; preds = %._crit_edge
   %i.sn = load i16, ptr %i.sm, align 4, !tbaa !186
   %i.so = zext i16 %i.sn to i32
   %i.sp = shl i32 %i.so, %i.sl
-  %2 = trunc i32 %i.sp to i16
-  store i16 %2, ptr %i.sm, align 4, !tbaa !186
-  %i.sq = getelementptr inbounds nuw i8, ptr %0, i64 22 ; 2 uses
+  %.fr276 = freeze i32 %i.sp
+  %i.sq = getelementptr inbounds nuw i8, ptr %0, i64 22
   %i.sr = load i16, ptr %i.sq, align 2, !tbaa !187
   %i.ss = zext i16 %i.sr to i32
   %i.st = lshr i32 %i.ss, %i.sl
-  %3 = trunc nuw i32 %i.st to i16
-  store i16 %3, ptr %i.sq, align 2, !tbaa !187
+  %.fr277 = freeze i32 %i.st
+  %2 = and i32 %.fr276, 65535
+  %3 = shl i32 %.fr277, 16
+  %4 = or disjoint i32 %3, %2
+  store i32 %4, ptr %i.sm, align 4
   br label %bb.bo
 
 bb.bo:                                            ; preds = %._crit_edge, %bb.bn, %bb.a

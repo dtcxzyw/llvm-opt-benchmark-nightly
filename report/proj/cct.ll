@@ -205,7 +205,7 @@ bb.a:
   br i1 %i.b, label %bb.az, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = tail call noalias dereferenceable_or_null(2176) ptr @calloc(i64 noundef 1, i64 noundef 2176) #29 ; 44 uses
+  %i.c = tail call noalias dereferenceable_or_null(2176) ptr @calloc(i64 noundef 1, i64 noundef 2176) #29 ; 43 uses
   %i.d = icmp eq ptr %i.c, null
   br i1 %i.d, label %bb.az, label %bb.c
 
@@ -608,11 +608,14 @@ bb.at:                                            ; preds = %.tail
   %.neg = xor i32 %i.il, -1
   %i.im = add i32 %i.ij, %.neg
   %i.in = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  store i32 %i.im, ptr %i.in, align 8, !tbaa !33
   %.neg262 = xor i32 %i.ij, -1
-  %6 = add nsw i32 %0, %.neg262                   ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %i.c, i64 12
-  store i32 %6, ptr %7, align 4, !tbaa !17
+  %6 = add i32 %0, %.neg262                       ; 2 uses
+  %7 = freeze i32 %i.im
+  %8 = zext i32 %7 to i64
+  %9 = zext i32 %6 to i64
+  %10 = shl nuw i64 %9, 32
+  %11 = or disjoint i64 %10, %8
+  store i64 %11, ptr %i.in, align 8
   %.not263 = icmp eq i32 %6, 0
   br i1 %.not263, label %bb.az, label %bb.au
 

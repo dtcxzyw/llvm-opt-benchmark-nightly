@@ -202,7 +202,7 @@ bb.a:
   %i.d = alloca [24 x i8], align 8                ; 5 uses
   %.sroa.4.i.i.i = alloca [28 x i8], align 4      ; 4 uses
   %.sroa.22.i.i = alloca [6 x i8], align 2        ; 6 uses
-  %i.e = alloca [24 x i8], align 8                ; 10 uses
+  %i.e = alloca [24 x i8], align 8                ; 9 uses
   %.val = load ptr, ptr %0, align 8, !nonnull !4, !noundef !4
   %i.f = tail call noundef ptr %.val(ptr noalias nofree noundef align 8 dereferenceable_or_null(72) null), !inline_history !119 ; 13 uses
   %i.g = icmp eq ptr %i.f, null
@@ -368,12 +368,14 @@ bb.v:                                             ; preds = %bb.b
   unreachable
 
 _RNvXsB_NtCs1fJj97VvEPD_9minijinja5valueNtB5_9ValueReprNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit.i.i: ; preds = %bb.t, %bb.r, %bb.p, %.noexc.i.i, %bb.m, %bb.k, %bb.j, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c
+  %.sroa.06.sroa.16.0.i.i = phi i8 [ undef, %.noexc.i.i ], [ %i.n, %bb.d ], [ %i.p, %bb.e ], [ undef, %bb.f ], [ undef, %bb.g ], [ undef, %bb.h ], [ undef, %bb.p ], [ %.sroa.16.1.copyload8.i.i, %bb.j ], [ %.sroa.16.1.copyload7.i.i, %bb.k ], [ %i.av, %bb.r ], [ %.sroa.16.1.copyload.i.i, %bb.m ], [ undef, %bb.t ], [ undef, %bb.c ]
   %.sroa.29.0.i.i = phi i64 [ %i.aq, %.noexc.i.i ], [ undef, %bb.d ], [ undef, %bb.e ], [ undef, %bb.f ], [ undef, %bb.g ], [ undef, %bb.h ], [ undef, %bb.p ], [ %.sroa.29.1.insert.ext21.i.i, %bb.j ], [ %.sroa.29.1.insert.ext.i.i, %bb.k ], [ %i.at, %bb.r ], [ %.sroa.29.1.copyload.i.i, %bb.m ], [ undef, %bb.t ], [ undef, %bb.c ]
   %.sroa.2211.0.i.i = phi i64 [ %i.ap, %.noexc.i.i ], [ undef, %bb.d ], [ undef, %bb.e ], [ %i.r, %bb.f ], [ %i.t, %bb.g ], [ %i.v, %bb.h ], [ %i.ar, %bb.p ], [ %.sroa.2211.1.copyload15.i.i, %bb.j ], [ %.sroa.2211.1.copyload13.i.i, %bb.k ], [ %i.aw, %bb.r ], [ %.sroa.2211.1.copyload.i.i, %bb.m ], [ %i.ax, %bb.t ], [ undef, %bb.c ]
-  %.sroa.16.0.i.i = phi i8 [ undef, %.noexc.i.i ], [ %i.n, %bb.d ], [ %i.p, %bb.e ], [ undef, %bb.f ], [ undef, %bb.g ], [ undef, %bb.h ], [ undef, %bb.p ], [ %.sroa.16.1.copyload8.i.i, %bb.j ], [ %.sroa.16.1.copyload7.i.i, %bb.k ], [ %i.av, %bb.r ], [ %.sroa.16.1.copyload.i.i, %bb.m ], [ undef, %bb.t ], [ undef, %bb.c ]
-  store i8 %i.l, ptr %i.e, align 8
-  %.sroa.16.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 1
-  store i8 %.sroa.16.0.i.i, ptr %.sroa.16.0..sroa_idx.i.i, align 1
+  %.sroa.06.sroa.16.0.insert.ext.i.i = zext i8 %.sroa.06.sroa.16.0.i.i to i16
+  %.sroa.06.sroa.16.0.insert.shift.i.i = shl nuw i16 %.sroa.06.sroa.16.0.insert.ext.i.i, 8
+  %.sroa.06.sroa.0.0.insert.ext.i.i = zext nneg i8 %i.l to i16
+  %.sroa.06.sroa.0.0.insert.insert.i.i = or disjoint i16 %.sroa.06.sroa.16.0.insert.shift.i.i, %.sroa.06.sroa.0.0.insert.ext.i.i
+  store i16 %.sroa.06.sroa.0.0.insert.insert.i.i, ptr %i.e, align 8
   %.sroa.22.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 2
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(6) %.sroa.22.0..sroa_idx.i.i, ptr noundef nonnull align 2 dereferenceable(6) %.sroa.22.i.i, i64 6, i1 false)
   %.sroa.2211.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 8

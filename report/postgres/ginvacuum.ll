@@ -202,7 +202,8 @@ ginVacuumPostingTreeLeaves.exit.thread.i:         ; preds = %.thread.i, %ginVacu
   %i.kb = call i32 @ReadBufferExtended(ptr noundef %i.jz, i32 noundef 0, i32 noundef %i.hn, i32 noundef 0, ptr noundef %i.ka) #6 ; 3 uses
   call void @LockBufferForCleanup(i32 noundef %i.kb) #6
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %4, i8 0, i64 32, i1 false)
-  store i32 %i.kb, ptr %i.cd, align 8
+  %6 = zext i32 %i.kb to i64
+  store i64 %6, ptr %i.cd, align 8
   store i8 1, ptr %i.ce, align 2
   %i.kc = call fastcc zeroext i1 @ginScanPostingTreeToDelete(ptr noundef nonnull %5, ptr noundef nonnull %4) ; 0 uses
   %i.kd = load ptr, ptr %4, align 8               ; 2 uses

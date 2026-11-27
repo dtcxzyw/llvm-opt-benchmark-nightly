@@ -202,7 +202,7 @@ bb.a:
   %i.g = alloca [32 x i8], align 8                ; 10 uses
   %i.h = alloca [32 x i8], align 4                ; 6 uses
   %i.i = alloca [32 x i8], align 4                ; 8 uses
-  %i.j = alloca [40 x i8], align 8                ; 15 uses
+  %i.j = alloca [40 x i8], align 8                ; 14 uses
   %.sroa.6.i.i.i.i.i = alloca [24 x i8], align 8  ; 5 uses
   %i.k = alloca [40 x i8], align 8                ; 9 uses
   %i.l = alloca [32 x i8], align 8                ; 12 uses
@@ -397,9 +397,12 @@ bb.t:                                             ; preds = %_RINvNtCskKLDkoKarT
   %.sroa.8.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !1219
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.8.0..sroa_idx.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.6.i.i.i.i.i, i64 24, i1 false), !noalias !1219
-  store i32 %i.av, ptr %i.j, align 8, !noalias !1219
-  %.sroa.646.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.j, i64 4
-  store i32 %.sroa.3.0.copyload.i.i.i.i.i, ptr %.sroa.646.0..sroa_idx.i.i.i.i.i, align 4, !noalias !1219
+  %1 = zext nneg i32 %i.av to i64
+  %2 = freeze i32 %.sroa.3.0.copyload.i.i.i.i.i
+  %3 = zext i32 %2 to i64
+  %4 = shl nuw i64 %3, 32
+  %5 = or disjoint i64 %4, %1
+  store i64 %5, ptr %i.j, align 8, !noalias !1219
   %.sroa.7.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 4 uses
   store ptr %.sroa.4.0.copyload.i.i.i.i.i, ptr %.sroa.7.0..sroa_idx.i.i.i.i.i, align 8, !noalias !1219
   %i.ba = getelementptr inbounds nuw i8, ptr %i.g, i64 8 ; 2 uses

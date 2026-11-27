@@ -202,10 +202,11 @@ bb.a:
 ; Function Attrs: inlinehint nonlazybind uwtable
 define hidden void @"_ZN78_$LT$std..io..error..repr_bitpacked..Repr$u20$as$u20$core..ops..drop..Drop$GT$4drop17h1ea54191dcfcccf4E"(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #0 personality ptr @rust_eh_personality !guid !87 {
 bb.a:
-  %i.a = alloca [16 x i8], align 8                ; 6 uses
-  %i.b = load ptr, ptr %0, align 8                ; 4 uses
+  %i.a = alloca [16 x i8], align 8                ; 8 uses
+  %i.b = load ptr, ptr %0, align 8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !88)
-  %i.c = ptrtoint ptr %i.b to i64                 ; 3 uses
+  %.fr.i = freeze ptr %i.b                        ; 4 uses
+  %i.c = ptrtoint ptr %.fr.i to i64               ; 3 uses
   %i.d = and i64 %i.c, 3
   switch i64 %i.d, label %default.unreachable [
     i64 2, label %bb.b
@@ -222,28 +223,32 @@ bb.b:                                             ; preds = %bb.a
   %i.f = trunc nuw i64 %i.e to i32
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   store i32 %i.f, ptr %i.g, align 4, !alias.scope !88
+  store i8 0, ptr %i.a, align 8, !alias.scope !88
   br label %_ZN3std2io5error14repr_bitpacked11decode_repr17h8602e8aa3813c72eE.exit
 
 bb.c:                                             ; preds = %bb.a
-  %.not.i = icmp ugt ptr %i.b, inttoptr (i64 180388626431 to ptr)
+  %.not.i = icmp ugt ptr %.fr.i, inttoptr (i64 180388626431 to ptr)
   br i1 %.not.i, label %bb.g, label %bb.f
 
 bb.d:                                             ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store ptr %i.b, ptr %i.h, align 8, !alias.scope !88
+  store ptr %.fr.i, ptr %i.h, align 8, !alias.scope !88
+  store i8 2, ptr %i.a, align 8, !alias.scope !88
   br label %_ZN3std2io5error14repr_bitpacked11decode_repr17h8602e8aa3813c72eE.exit
 
 bb.e:                                             ; preds = %bb.a
-  %i.i = getelementptr i8, ptr %i.b, i64 -1
+  %i.i = getelementptr i8, ptr %.fr.i, i64 -1
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %i.i, ptr %i.j, align 8, !alias.scope !88
+  store i8 3, ptr %i.a, align 8, !alias.scope !88
   br label %_ZN3std2io5error14repr_bitpacked11decode_repr17h8602e8aa3813c72eE.exit
 
 bb.f:                                             ; preds = %bb.c
-  %i.k = lshr i64 %i.c, 32
-  %spec.select.i.i = trunc i64 %i.k to i8
-  %1 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  store i8 %spec.select.i.i, ptr %1, align 1, !alias.scope !88
+  %i.k = lshr i64 %i.c, 24
+  %tr.sh.diff.i = trunc i64 %i.k to i16
+  %1 = and i16 %tr.sh.diff.i, -256
+  %2 = or disjoint i16 %1, 1
+  store i16 %2, ptr %i.a, align 8, !alias.scope !88
   br label %_ZN3std2io5error14repr_bitpacked11decode_repr17h8602e8aa3813c72eE.exit
 
 bb.g:                                             ; preds = %bb.c
@@ -251,8 +256,6 @@ bb.g:                                             ; preds = %bb.c
   unreachable
 
 _ZN3std2io5error14repr_bitpacked11decode_repr17h8602e8aa3813c72eE.exit: ; preds = %bb.b, %bb.d, %bb.e, %bb.f
-  %.sink.i = phi i8 [ 0, %bb.b ], [ 2, %bb.d ], [ 1, %bb.f ], [ 3, %bb.e ]
-  store i8 %.sink.i, ptr %i.a, align 8, !alias.scope !88
   call void @"_ZN4core3ptr101drop_in_place$LT$std..io..error..ErrorData$LT$alloc..boxed..Box$LT$std..io..error..Custom$GT$$GT$$GT$17hce952bf0403f1bdbE"(ptr nonnull align 8 %i.a)
   ret void
 }

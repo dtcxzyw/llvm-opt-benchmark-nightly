@@ -204,6 +204,7 @@ bb.e:                                             ; preds = %bb.c
   store i64 1350, ptr %i.aa, align 8, !dbg !9808
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 272, !dbg !9808
   store i64 1350, ptr %i.ab, align 16, !dbg !9808
+  store i32 65537, ptr %i.o, align 16, !dbg !9808
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 144, !dbg !9808
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.ac, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false), !dbg !9808
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 168, !dbg !9808
@@ -216,10 +217,13 @@ bb.e:                                             ; preds = %bb.c
   store i64 5, ptr %.sroa.5.0..sroa_idx, align 8, !dbg !9808
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 280, !dbg !9808
   store i64 10, ptr %i.af, align 8, !dbg !9808
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 356, !dbg !9808
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 368, !dbg !9808
   store i8 3, ptr %i.ag, align 16, !dbg !9808
+  store i32 65536, ptr %1, align 4, !dbg !9808
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 32, !dbg !9808
   store i64 0, ptr %i.ah, align 16, !dbg !9808
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 360, !dbg !9808
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 88, !dbg !9808
   store i32 -1, ptr %i.ai, align 8, !dbg !9808
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 288, !dbg !9808
@@ -228,6 +232,9 @@ bb.e:                                             ; preds = %bb.c
   store i64 25165824, ptr %i.ak, align 8, !dbg !9808
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 304, !dbg !9808
   store i64 16777216, ptr %i.al, align 16, !dbg !9808
+  store i32 0, ptr %2, align 8, !dbg !9808
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 364, !dbg !9808
+  store i16 256, ptr %3, align 4, !dbg !9808
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 312, !dbg !9808
   store i64 3, ptr %i.am, align 8, !dbg !9808
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 320, !dbg !9808
@@ -239,7 +246,8 @@ bb.e:                                             ; preds = %bb.c
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 344, !dbg !9808
   store i64 3, ptr %i.aq, align 8, !dbg !9808
   store i128 0, ptr %0, align 16, !dbg !9808
-  store <16 x i8> <i8 1, i8 0, i8 1, i8 0, i8 0, i8 0, i8 1, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 1, i8 0, i8 0>, ptr %i.o, align 16, !dbg !9808
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 366, !dbg !9808
+  store i16 0, ptr %4, align 2, !dbg !9808
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 48, !dbg !9808
   store i64 0, ptr %i.ar, align 16, !dbg !9808
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !9799

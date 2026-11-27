@@ -42,14 +42,15 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.d = load i32, ptr %i.c, align 8, !tbaa !22   ; 2 uses
+  %i.d = load i32, ptr %i.c, align 8, !tbaa !22
+  %.fr.i = freeze i32 %i.d                        ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.f = load i32, ptr %i.e, align 4, !tbaa !21   ; 2 uses
   %i.g = add nsw i32 %i.f, -1
-  %i.h = mul nsw i32 %i.g, %i.d
+  %i.h = mul nsw i32 %i.g, %.fr.i
   %i.i = sext i32 %i.h to i64
   %i.j = getelementptr inbounds i8, ptr %.pre, i64 %i.i
-  %i.k = sub nsw i32 0, %i.d
+  %i.k = sub i32 0, %.fr.i
   br label %_ZN7msdfgen18BitmapConstSectionIhLi1EE8reorientENS_16YAxisOrientationE.exit
 
 _ZN7msdfgen18BitmapConstSectionIhLi1EE8reorientENS_16YAxisOrientationE.exit: ; preds = %._ZN7msdfgen18BitmapConstSectionIhLi1EE8reorientENS_16YAxisOrientationE.exit_crit_edge, %bb.b
@@ -282,14 +283,15 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.d = load i32, ptr %i.c, align 8, !tbaa !34   ; 2 uses
+  %i.d = load i32, ptr %i.c, align 8, !tbaa !34
+  %.fr.i = freeze i32 %i.d                        ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.f = load i32, ptr %i.e, align 4, !tbaa !33   ; 2 uses
   %i.g = add nsw i32 %i.f, -1
-  %i.h = mul nsw i32 %i.g, %i.d
+  %i.h = mul nsw i32 %i.g, %.fr.i
   %i.i = sext i32 %i.h to i64
   %i.j = getelementptr inbounds i8, ptr %.pre, i64 %i.i
-  %i.k = sub nsw i32 0, %i.d
+  %i.k = sub i32 0, %.fr.i
   br label %_ZN7msdfgen18BitmapConstSectionIhLi3EE8reorientENS_16YAxisOrientationE.exit
 
 _ZN7msdfgen18BitmapConstSectionIhLi3EE8reorientENS_16YAxisOrientationE.exit: ; preds = %._ZN7msdfgen18BitmapConstSectionIhLi3EE8reorientENS_16YAxisOrientationE.exit_crit_edge, %bb.b
@@ -320,14 +322,15 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.d = load i32, ptr %i.c, align 8, !tbaa !40   ; 2 uses
+  %i.d = load i32, ptr %i.c, align 8, !tbaa !40
+  %.fr.i = freeze i32 %i.d                        ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.f = load i32, ptr %i.e, align 4, !tbaa !39   ; 2 uses
   %i.g = add nsw i32 %i.f, -1
-  %i.h = mul nsw i32 %i.g, %i.d
+  %i.h = mul nsw i32 %i.g, %.fr.i
   %i.i = sext i32 %i.h to i64
   %i.j = getelementptr inbounds i8, ptr %.pre, i64 %i.i
-  %i.k = sub nsw i32 0, %i.d
+  %i.k = sub i32 0, %.fr.i
   br label %_ZN7msdfgen18BitmapConstSectionIhLi4EE8reorientENS_16YAxisOrientationE.exit
 
 _ZN7msdfgen18BitmapConstSectionIhLi4EE8reorientENS_16YAxisOrientationE.exit: ; preds = %._ZN7msdfgen18BitmapConstSectionIhLi4EE8reorientENS_16YAxisOrientationE.exit_crit_edge, %bb.b
@@ -358,14 +361,15 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.d = load i32, ptr %i.c, align 8, !tbaa !46   ; 2 uses
+  %i.d = load i32, ptr %i.c, align 8, !tbaa !46
+  %.fr.i = freeze i32 %i.d                        ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.f = load i32, ptr %i.e, align 4, !tbaa !45   ; 2 uses
   %i.g = add nsw i32 %i.f, -1
-  %i.h = mul nsw i32 %i.g, %i.d
+  %i.h = mul nsw i32 %i.g, %.fr.i
   %i.i = sext i32 %i.h to i64
   %i.j = getelementptr inbounds [4 x i8], ptr %.pre, i64 %i.i
-  %i.k = sub nsw i32 0, %i.d
+  %i.k = sub i32 0, %.fr.i
   br label %_ZN7msdfgen18BitmapConstSectionIfLi1EE8reorientENS_16YAxisOrientationE.exit
 
 _ZN7msdfgen18BitmapConstSectionIfLi1EE8reorientENS_16YAxisOrientationE.exit: ; preds = %._ZN7msdfgen18BitmapConstSectionIfLi1EE8reorientENS_16YAxisOrientationE.exit_crit_edge, %bb.b
@@ -576,14 +580,15 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.d = load i32, ptr %i.c, align 8, !tbaa !65   ; 2 uses
+  %i.d = load i32, ptr %i.c, align 8, !tbaa !65
+  %.fr.i = freeze i32 %i.d                        ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.f = load i32, ptr %i.e, align 4, !tbaa !64   ; 2 uses
   %i.g = add nsw i32 %i.f, -1
-  %i.h = mul nsw i32 %i.g, %i.d
+  %i.h = mul nsw i32 %i.g, %.fr.i
   %i.i = sext i32 %i.h to i64
   %i.j = getelementptr inbounds [4 x i8], ptr %.pre, i64 %i.i
-  %i.k = sub nsw i32 0, %i.d
+  %i.k = sub i32 0, %.fr.i
   br label %_ZN7msdfgen18BitmapConstSectionIfLi3EE8reorientENS_16YAxisOrientationE.exit
 
 _ZN7msdfgen18BitmapConstSectionIfLi3EE8reorientENS_16YAxisOrientationE.exit: ; preds = %._ZN7msdfgen18BitmapConstSectionIfLi3EE8reorientENS_16YAxisOrientationE.exit_crit_edge, %bb.b
@@ -614,14 +619,15 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.d = load i32, ptr %i.c, align 8, !tbaa !71   ; 2 uses
+  %i.d = load i32, ptr %i.c, align 8, !tbaa !71
+  %.fr.i = freeze i32 %i.d                        ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.f = load i32, ptr %i.e, align 4, !tbaa !70   ; 2 uses
   %i.g = add nsw i32 %i.f, -1
-  %i.h = mul nsw i32 %i.g, %i.d
+  %i.h = mul nsw i32 %i.g, %.fr.i
   %i.i = sext i32 %i.h to i64
   %i.j = getelementptr inbounds [4 x i8], ptr %.pre, i64 %i.i
-  %i.k = sub nsw i32 0, %i.d
+  %i.k = sub i32 0, %.fr.i
   br label %_ZN7msdfgen18BitmapConstSectionIfLi4EE8reorientENS_16YAxisOrientationE.exit
 
 _ZN7msdfgen18BitmapConstSectionIfLi4EE8reorientENS_16YAxisOrientationE.exit: ; preds = %._ZN7msdfgen18BitmapConstSectionIfLi4EE8reorientENS_16YAxisOrientationE.exit_crit_edge, %bb.b

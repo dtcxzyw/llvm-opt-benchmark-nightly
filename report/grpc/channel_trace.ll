@@ -204,11 +204,12 @@ _ZN9grpc_core9Timestamp3NowEv.exit:               ; preds = %bb.j, %bb.k
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bd, i64 10
   store i16 %.sroa.028.0.extract.trunc, ptr %i.bj, align 2, !tbaa !43
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bd, i64 12
-  %i.bl = getelementptr inbounds nuw i8, ptr %i.bd, i64 16
+  store i32 -1, ptr %i.bk, align 4
+  %i.bl = getelementptr inbounds nuw i8, ptr %i.bd, i64 16 ; 2 uses
+  store i32 -1, ptr %i.bl, align 8
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bd, i64 22
   store i16 -1, ptr %i.bm, align 2, !tbaa !91
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bd, i64 24 ; 3 uses
-  store i64 -1, ptr %i.bk, align 4
   %i.bo = load ptr, ptr %2, align 8, !tbaa !82
   store ptr null, ptr %2, align 8, !tbaa !82
   %i.bp = load ptr, ptr %i.bn, align 8, !tbaa !82 ; 3 uses

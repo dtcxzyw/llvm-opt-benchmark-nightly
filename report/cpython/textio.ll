@@ -204,7 +204,7 @@ bb.bb:                                            ; preds = %bb.ba
   %.val244.i = load i64, ptr %i.ej, align 8, !tbaa !217
   %i.ek = getelementptr i8, ptr %i.ei, i64 %.val244.i ; 3 uses
   %i.el = getelementptr i8, ptr %i.ei, i64 %.2140.i ; 3 uses
-  %i.em = getelementptr inbounds nuw i8, ptr %2, i64 12 ; 4 uses
+  %i.em = getelementptr inbounds nuw i8, ptr %2, i64 12 ; 3 uses
   %i.en = icmp ult ptr %i.el, %i.ek
   br i1 %i.en, label %.lr.ph, label %Py_DECREF.exit199.thread277.i
 
@@ -357,8 +357,9 @@ bb.bt:                                            ; preds = %bb.bs
   store i64 %i.gi, ptr %2, align 8, !tbaa !287
   %i.gj = sub i64 %.1148.i130, %i.ey
   %i.gk = load i32, ptr %i.h, align 4, !tbaa !10
-  store i32 %i.gk, ptr %i.bn, align 8, !tbaa !290
-  store i32 0, ptr %i.em, align 4, !tbaa !289
+  %3 = freeze i32 %i.gk
+  %4 = zext i32 %3 to i64
+  store i64 %4, ptr %i.bn, align 8
   br label %bb.bu
 
 bb.bu:                                            ; preds = %bb.bt, %bb.bs
@@ -761,8 +762,16 @@ bb.a:
   store i64 %i.b, ptr %i.a, align 16
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.d = getelementptr i8, ptr %0, i64 8
-  %1 = load <2 x i32>, ptr %i.d, align 8
-  store <2 x i32> %1, ptr %i.c, align 8
+  %1 = load i32, ptr %i.d, align 8
+  %2 = getelementptr i8, ptr %0, i64 12
+  %3 = load i32, ptr %2, align 4
+  %4 = freeze i32 %1
+  %5 = zext i32 %4 to i64
+  %6 = freeze i32 %3
+  %7 = zext i32 %6 to i64
+  %8 = shl nuw i64 %7, 32
+  %9 = or disjoint i64 %8, %5
+  store i64 %9, ptr %i.c, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.f = getelementptr i8, ptr %0, i64 16
   %i.g = load i32, ptr %i.f, align 8

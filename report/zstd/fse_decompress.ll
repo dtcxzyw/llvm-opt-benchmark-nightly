@@ -46,7 +46,6 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.p, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.b
-  %6 = trunc nuw nsw i32 %3 to i16
   %i.q = shl nuw nsw i32 32768, %3
   %i.r = lshr exact i32 %i.q, 16                  ; 3 uses
   %xtraiter = and i64 %i.h, 1
@@ -80,12 +79,13 @@ bb.e:                                             ; preds = %bb.c
   %i.ab = sext i16 %i.u to i32
   %.not135 = icmp sgt i32 %i.r, %i.ab
   %spec.select = select i1 %.not135, i16 %.sroa.4.0140, i16 0
+  %6 = freeze i16 %spec.select
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.d, %bb.e
   %.sink = phi i16 [ 1, %bb.d ], [ %i.u, %bb.e ]
   %.1128 = phi i32 [ %i.x, %bb.d ], [ %.0127139, %bb.e ] ; 3 uses
-  %.sroa.4.2 = phi i16 [ %.sroa.4.0140, %bb.d ], [ %spec.select, %bb.e ] ; 2 uses
+  %.sroa.4.2 = phi i16 [ %.sroa.4.0140, %bb.d ], [ %6, %bb.e ] ; 2 uses
   %i.ac = getelementptr inbounds nuw [2 x i8], ptr %4, i64 %indvars.iv
   store i16 %.sink, ptr %i.ac, align 2, !tbaa !10
   %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 3 uses
@@ -98,6 +98,7 @@ bb.g:                                             ; preds = %bb.f
   %i.ag = sext i16 %i.ae to i32
   %.not135.1 = icmp sgt i32 %i.r, %i.ag
   %spec.select.1 = select i1 %.not135.1, i16 %.sroa.4.2, i16 0
+  %7 = freeze i16 %spec.select.1
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.f
@@ -112,7 +113,7 @@ bb.h:                                             ; preds = %bb.f
 bb.i:                                             ; preds = %bb.h, %bb.g
   %.sink.1 = phi i16 [ 1, %bb.h ], [ %i.ae, %bb.g ]
   %.1128.1 = phi i32 [ %i.ai, %bb.h ], [ %.1128, %bb.g ] ; 3 uses
-  %.sroa.4.2.1 = phi i16 [ %.sroa.4.2, %bb.h ], [ %spec.select.1, %bb.g ] ; 3 uses
+  %.sroa.4.2.1 = phi i16 [ %.sroa.4.2, %bb.h ], [ %7, %bb.g ] ; 3 uses
   %i.am = getelementptr inbounds nuw [2 x i8], ptr %4, i64 %indvars.iv.next
   store i16 %.sink.1, ptr %i.am, align 2, !tbaa !10
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
@@ -139,6 +140,7 @@ bb.j:                                             ; preds = %.epil.preheader
   %i.aq = sext i16 %i.ao to i32
   %.not135.epil = icmp sgt i32 %i.r, %i.aq
   %spec.select.epil = select i1 %.not135.epil, i16 %.sroa.4.0140.epil.init, i16 0
+  %8 = freeze i16 %spec.select.epil
   br label %._crit_edge.epilog-lcssa
 
 bb.k:                                             ; preds = %.epil.preheader
@@ -153,7 +155,7 @@ bb.k:                                             ; preds = %.epil.preheader
 ._crit_edge.epilog-lcssa:                         ; preds = %bb.k, %bb.j
   %.sink.epil = phi i16 [ 1, %bb.k ], [ %i.ao, %bb.j ]
   %.1128.epil = phi i32 [ %i.as, %bb.k ], [ %.0127139.epil.init, %bb.j ]
-  %.sroa.4.2.epil = phi i16 [ %.sroa.4.0140.epil.init, %bb.k ], [ %spec.select.epil, %bb.j ]
+  %.sroa.4.2.epil = phi i16 [ %.sroa.4.0140.epil.init, %bb.k ], [ %8, %bb.j ]
   %i.aw = getelementptr inbounds nuw [2 x i8], ptr %4, i64 %indvars.iv.epil.init
   store i16 %.sink.epil, ptr %i.aw, align 2, !tbaa !10
   br label %._crit_edge
@@ -161,9 +163,10 @@ bb.k:                                             ; preds = %.epil.preheader
 ._crit_edge:                                      ; preds = %._crit_edge.unr-lcssa, %._crit_edge.epilog-lcssa
   %.1128.lcssa = phi i32 [ %.1128.1, %._crit_edge.unr-lcssa ], [ %.1128.epil, %._crit_edge.epilog-lcssa ] ; 4 uses
   %.sroa.4.2.lcssa = phi i16 [ %.sroa.4.2.1, %._crit_edge.unr-lcssa ], [ %.sroa.4.2.epil, %._crit_edge.epilog-lcssa ]
-  store i16 %6, ptr %0, align 4
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 2
-  store i16 %.sroa.4.2.lcssa, ptr %.sroa.4.0..sroa_idx, align 2
+  %9 = zext i16 %.sroa.4.2.lcssa to i32
+  %10 = shl nuw i32 %9, 16
+  %11 = or disjoint i32 %10, %3
+  store i32 %11, ptr %0, align 4
   %i.ax = icmp eq i32 %.1128.lcssa, %i.g
   %i.ay = lshr i32 %i.f, 1                        ; 2 uses
   br i1 %i.ax, label %.lr.ph160.preheader, label %.preheader138.lr.ph

@@ -202,9 +202,12 @@ bb.e:                                             ; preds = %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !11879
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(320) %0, ptr noundef nonnull align 8 dereferenceable(320) %.sroa.07, i64 320, i1 false), !dbg !11880
   %.sroa.14.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 320, !dbg !11880
-  store i8 %i.q, ptr %.sroa.14.0..sroa_idx, align 8, !dbg !11880
-  %.sroa.15.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 321, !dbg !11880
-  store i8 %i.s, ptr %.sroa.15.0..sroa_idx, align 1, !dbg !11880
+  %2 = zext nneg i8 %i.q to i16, !dbg !11880
+  %3 = freeze i8 %i.s, !dbg !11880
+  %4 = zext i8 %3 to i16, !dbg !11880
+  %5 = shl nuw i16 %4, 8, !dbg !11880
+  %6 = or disjoint i16 %5, %2, !dbg !11880
+  store i16 %6, ptr %.sroa.14.0..sroa_idx, align 8, !dbg !11880
   %.sroa.16.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 322, !dbg !11880
   store i8 %i.z, ptr %.sroa.16.0..sroa_idx, align 2, !dbg !11880
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.07), !dbg !11881

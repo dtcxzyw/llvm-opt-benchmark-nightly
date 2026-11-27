@@ -205,8 +205,8 @@ bb.a:
   %i.aw = tail call i32 @llvm.vector.reduce.add.v8i32(<8 x i32> %i.av)
   %i.ax = sitofp i32 %i.aw to float
   %i.ay = fmul float %i.aa, %i.ax
-  %i.az = insertelement <2 x float> poison, float %i.aa, i64 0
-  %i.ba = insertelement <2 x float> %i.az, float %i.ay, i64 1 ; 2 uses
+  %i.az = insertelement <2 x float> poison, float %i.ay, i64 0
+  %i.ba = insertelement <2 x float> %i.az, float %i.aa, i64 1 ; 2 uses
   %i.bb = tail call <2 x float> @llvm.fabs.v2f32(<2 x float> %i.ba)
   %i.bc = fmul <2 x float> %i.bb, splat (float f0x77800000)
   %i.bd = fmul <2 x float> %i.bc, splat (float f0x08800000)
@@ -228,8 +228,13 @@ bb.a:
   %i.bt = icmp ugt <2 x i32> %i.bf, splat (i32 -16777216)
   %i.bu = select <2 x i1> %i.bt, <2 x i32> splat (i32 32256), <2 x i32> %i.bq
   %i.bv = or <2 x i32> %i.bu, %i.bs
-  %3 = trunc nuw <2 x i32> %i.bv to <2 x i16>
-  store <2 x i16> %3, ptr %i.ab, align 4, !tbaa !9
+  %3 = freeze <2 x i32> %i.bv                     ; 2 uses
+  %4 = extractelement <2 x i32> %3, i64 0
+  %5 = shl i32 %4, 16
+  %6 = extractelement <2 x i32> %3, i64 1
+  %7 = and i32 %6, 65535
+  %8 = or disjoint i32 %5, %7
+  store i32 %8, ptr %i.ab, align 4
   %i.bw = tail call <16 x i16> @llvm.x86.avx2.packssdw(<8 x i32> %i.ap, <8 x i32> %i.aq)
   %i.bx = tail call <16 x i16> @llvm.x86.avx2.packssdw(<8 x i32> %i.ar, <8 x i32> %i.as)
   %i.by = tail call <32 x i8> @llvm.x86.avx2.packsswb(<16 x i16> %i.bw, <16 x i16> %i.bx)

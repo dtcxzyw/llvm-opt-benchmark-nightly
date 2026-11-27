@@ -205,8 +205,9 @@ bb.a:
 define hidden void @_RNvXs2_NtNtCs3oUPovFnLWP_4core3str7patterncNtB5_7Pattern13into_searcherCsiHivYpkJ4Hu_2cc(ptr nofree writeonly sret([48 x i8]) align 8 captures(none) initializes((0, 41)) %0, i32 %1, ptr %2, i64 %3) unnamed_addr #3 {
 bb.a:
   %i.a = alloca [4 x i8], align 4                 ; 3 uses
+  %4 = freeze i32 %1                              ; 2 uses
   store i32 0, ptr %i.a, align 4
-  %i.b = call { ptr, i64 } @_RNvNtNtCs3oUPovFnLWP_4core4char7methods15encode_utf8_rawCsiHivYpkJ4Hu_2cc(i32 %1, ptr nonnull %i.a, i64 4) #23
+  %i.b = call { ptr, i64 } @_RNvNtNtCs3oUPovFnLWP_4core4char7methods15encode_utf8_rawCsiHivYpkJ4Hu_2cc(i32 %4, ptr nonnull %i.a, i64 4) #23
   %i.c = extractvalue { ptr, i64 } %i.b, 1        ; 2 uses
   %i.d = icmp ugt i64 %i.c, 255                   ; 2 uses
   %i.e = trunc nuw i64 %i.c to i8
@@ -220,12 +221,15 @@ bb.a:
   store i64 0, ptr %i.h, align 8
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 %3, ptr %i.i, align 8
-  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 36
-  store i32 %1, ptr %i.j, align 4
-  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store i8 %i.f, ptr %i.k, align 8
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store i32 %.sroa.01.0.copyload, ptr %4, align 8
+  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 40
+  store i8 %i.f, ptr %i.j, align 8
+  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %5 = freeze i32 %.sroa.01.0.copyload
+  %6 = zext i32 %5 to i64
+  %7 = zext i32 %4 to i64
+  %8 = shl nuw i64 %7, 32
+  %9 = or disjoint i64 %8, %6
+  store i64 %9, ptr %i.k, align 8
   ret void
 }
 

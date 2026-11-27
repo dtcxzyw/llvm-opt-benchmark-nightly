@@ -205,6 +205,8 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 bb.f:                                             ; preds = %bb.e
   %i.mn = getelementptr inbounds nuw i8, ptr %0, i64 40
   store float 1.000000e+00, ptr %i.mn, align 4, !tbaa !26
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 47
+  store i8 127, ptr %7, align 1, !tbaa !27
   br label %bb.g
 
 .loopexit:                                        ; preds = %.preheader, %middle.block188
@@ -239,7 +241,6 @@ bb.f:                                             ; preds = %bb.e
   %i.nj = fcmp oge float %i.gl, 0.000000e+00
   %i.nk = fcmp oge <4 x float> %i.ci, <float 0.000000e+00, float -1.000000e+00, float 0.000000e+00, float -1.000000e+00> ; 3 uses
   %i.nl = getelementptr inbounds nuw i8, ptr %0, i64 44
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 45
   %i.nm = extractelement <4 x i1> %i.nk, i64 0
   %i.nn = select i1 %i.nm, float 5.000000e-01, float -5.000000e-01
   %i.no = fcmp oge float %i.gm, -1.000000e+00
@@ -247,10 +248,10 @@ bb.f:                                             ; preds = %bb.e
   %i.nq = fcmp ole float %i.np, 1.000000e+00
   %i.nr = select i1 %i.nq, float %i.np, float 1.000000e+00
   %i.ns = tail call float @llvm.fmuladd.f32(float %i.nr, float 1.270000e+02, float %i.nn)
-  %i.nt = fptosi float %i.ns to i32               ; 2 uses
-  %8 = trunc i32 %i.nt to i8
+  %i.nt = fptosi float %i.ns to i32
+  %.fr154 = freeze i32 %i.nt                      ; 2 uses
+  %8 = trunc i32 %.fr154 to i16
   %9 = getelementptr inbounds nuw i8, ptr %0, i64 46
-  store i8 %8, ptr %9, align 2, !tbaa !13
   %i.nu = shufflevector <4 x i1> %i.nk, <4 x i1> poison, <2 x i32> <i32 poison, i32 2>
   %i.nv = insertelement <2 x i1> %i.nu, i1 %i.nj, i64 0
   %i.nw = select <2 x i1> %i.nv, <2 x float> splat (float 5.000000e-01), <2 x float> splat (float -5.000000e-01)
@@ -261,17 +262,22 @@ bb.f:                                             ; preds = %bb.e
   %i.ob = select <2 x i1> %i.oa, <2 x float> %i.nz, <2 x float> splat (float 1.000000e+00)
   %i.oc = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ob, <2 x float> splat (float 1.270000e+02), <2 x float> %i.nw)
   %i.od = fptosi <2 x float> %i.oc to <2 x i32>
-  %i.oe = trunc <2 x i32> %i.od to <2 x i8>       ; 3 uses
-  %10 = extractelement <2 x i8> %i.oe, i64 0
-  store i8 %10, ptr %i.nl, align 4, !tbaa !13
-  %11 = extractelement <2 x i8> %i.oe, i64 1
-  store i8 %11, ptr %7, align 1, !tbaa !13
+  %10 = freeze <2 x i32> %i.od                    ; 3 uses
+  %i.oe = trunc <2 x i32> %10 to <2 x i8>
+  %11 = bitcast <2 x i32> %10 to <4 x i16>
+  %12 = extractelement <4 x i16> %11, i64 0
+  %13 = and i16 %12, 255
+  %14 = bitcast <2 x i32> %10 to <4 x i16>
+  %15 = extractelement <4 x i16> %14, i64 2
+  %16 = shl i16 %15, 8
+  %17 = or disjoint i16 %16, %13
+  store i16 %17, ptr %i.nl, align 4
   %i.of = sitofp <2 x i8> %i.oe to <2 x float>    ; 2 uses
   %i.og = extractelement <2 x float> %i.of, i64 0
   %i.oh = fdiv float %i.og, 1.270000e+02
   %i.oi = fsub float %i.oh, %i.gl
   %i.oj = tail call float @llvm.fabs.f32(float %i.oi)
-  %sext = shl i32 %i.nt, 24
+  %sext = shl i32 %.fr154, 24
   %i.ok = ashr exact i32 %sext, 24
   %i.ol = sitofp i32 %i.ok to float
   %i.om = shufflevector <2 x float> %i.of, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
@@ -287,8 +293,13 @@ bb.f:                                             ; preds = %bb.e
   %i.ow = fadd float %i.ov, %i.ou
   %i.ox = tail call float @llvm.fmuladd.f32(float %i.ow, float 1.270000e+02, float 1.000000e+00)
   %i.oy = fptosi float %i.ox to i32
-  %i.oz = tail call i32 @llvm.smin.i32(i32 %i.oy, i32 127)
-  %12 = trunc i32 %i.oz to i8
+  %.fr156 = freeze i32 %i.oy
+  %i.oz = tail call i32 @llvm.smin.i32(i32 %.fr156, i32 127)
+  %18 = trunc i32 %i.oz to i16
+  %19 = and i16 %8, 255
+  %20 = shl i16 %18, 8
+  %21 = or disjoint i16 %20, %19
+  store i16 %21, ptr %9, align 2
   br label %bb.g
 
 .preheader:                                       ; preds = %.preheader.preheader198, %.preheader
@@ -317,9 +328,6 @@ bb.f:                                             ; preds = %bb.e
   br i1 %exitcond154.not, label %.loopexit, label %.preheader, !llvm.loop !21
 
 bb.g:                                             ; preds = %.loopexit, %bb.f
-  %.sink = phi i8 [ %12, %.loopexit ], [ 127, %bb.f ]
-  %13 = getelementptr inbounds nuw i8, ptr %0, i64 47
-  store i8 %.sink, ptr %13, align 1, !tbaa !27
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #7

@@ -204,6 +204,8 @@ bb.d:                                             ; preds = %bb.c
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.f, i8 0, i64 24, i1 false)
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 1032
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 1040
+  store i16 0, ptr %i.h, align 8
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 1042
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 1044
   store i32 0, ptr %i.i, align 4, !tbaa !126
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 1048
@@ -218,7 +220,7 @@ bb.d:                                             ; preds = %bb.c
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 88
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(73) %i.o, i8 0, i64 73, i1 false)
-  store <4 x i8> zeroinitializer, ptr %i.h, align 8, !tbaa !192
+  store i16 0, ptr %2, align 2
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 96
   store <2 x double> splat (double -1.000000e+00), ptr %i.q, align 8, !tbaa !66
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 112
@@ -621,13 +623,15 @@ bb.d:                                             ; preds = %bb.c
   store i8 1, ptr %i.g, align 8, !tbaa !196
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 1144 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 1152
+  store i16 0, ptr %i.i, align 8
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 1154
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 1156
   store i32 0, ptr %i.j, align 4, !tbaa !126
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 1160
   store i32 0, ptr %i.k, align 8, !tbaa !130
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 1168
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.l, i8 0, i64 64, i1 false)
-  store <4 x i8> zeroinitializer, ptr %i.i, align 8, !tbaa !192
+  store i16 0, ptr %2, align 2
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8
   store <2 x double> splat (double -1.000000e+00), ptr %i.m, align 8, !tbaa !66
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -1030,6 +1034,8 @@ bb.d:                                             ; preds = %bb.c
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.f, i8 0, i64 24, i1 false)
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 1032
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 1040
+  store i16 0, ptr %i.h, align 8
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 1042
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 1044
   store i32 0, ptr %i.i, align 4, !tbaa !126
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 1048
@@ -1043,7 +1049,7 @@ bb.d:                                             ; preds = %bb.c
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 88
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(73) %i.o, i8 0, i64 73, i1 false)
-  store <4 x i8> zeroinitializer, ptr %i.h, align 8, !tbaa !192
+  store i16 0, ptr %2, align 2
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 96
   store <2 x double> splat (double -1.000000e+00), ptr %i.q, align 8, !tbaa !66
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 112

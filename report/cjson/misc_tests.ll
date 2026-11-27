@@ -204,7 +204,7 @@ bb.a:
 ; Function Attrs: nounwind sspstrong uwtable
 define dso_local ptr @cJSON_PrintBuffered(ptr nofree noundef readonly captures(address_is_null) %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #8 {
 bb.a:
-  %3 = alloca %struct.printbuffer, align 8        ; 12 uses
+  %3 = alloca %struct.printbuffer, align 8        ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #29
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 24
   store i64 0, ptr %i.a, align 8
@@ -225,9 +225,9 @@ bb.c:                                             ; preds = %bb.b
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 16
   store i64 0, ptr %i.g, align 8, !tbaa !69
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 32
-  store i32 0, ptr %i.h, align 8, !tbaa !70
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 36
-  store i32 %2, ptr %4, align 4, !tbaa !68
+  %4 = zext i32 %2 to i64
+  %5 = shl nuw i64 %4, 32
+  store i64 %5, ptr %i.h, align 8
   %i.i = getelementptr inbounds nuw i8, ptr %3, i64 40
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.i, ptr noundef nonnull align 8 dereferenceable(24) @global_hooks, i64 24, i1 false), !tbaa.struct !52
   %i.j = call fastcc i32 @print_value(ptr noundef %0, ptr noundef %3)
@@ -630,7 +630,7 @@ print_array.exit:                                 ; preds = %update_offset.exit6
 ; Function Attrs: nounwind sspstrong uwtable
 define dso_local range(i32 0, 2) i32 @cJSON_PrintPreallocated(ptr nofree noundef readonly captures(address_is_null) %0, ptr noundef %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #8 {
 bb.a:
-  %4 = alloca %struct.printbuffer, align 8        ; 10 uses
+  %4 = alloca %struct.printbuffer, align 8        ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #29
   %i.a = getelementptr inbounds nuw i8, ptr %4, i64 24
   store i64 0, ptr %i.a, align 8
@@ -647,9 +647,10 @@ bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 16
   store i64 0, ptr %i.f, align 8, !tbaa !69
   %i.g = getelementptr inbounds nuw i8, ptr %4, i64 32
-  store i32 1, ptr %i.g, align 8, !tbaa !70
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 36
-  store i32 %3, ptr %5, align 4, !tbaa !68
+  %5 = zext i32 %3 to i64
+  %6 = shl nuw i64 %5, 32
+  %7 = or disjoint i64 %6, 1
+  store i64 %7, ptr %i.g, align 8
   %i.h = getelementptr inbounds nuw i8, ptr %4, i64 40
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.h, ptr noundef nonnull align 8 dereferenceable(24) @global_hooks, i64 24, i1 false), !tbaa.struct !52
   %i.i = call fastcc i32 @print_value(ptr noundef %0, ptr noundef %4)

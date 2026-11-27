@@ -204,7 +204,7 @@ define dso_local void @_ZN26Bounds2_IteratorBasic_Test8TestBodyEv(ptr nofree non
   %7 = alloca %"class.testing::Message", align 8  ; 10 uses
   %8 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #25
-  store <8 x i32> <i32 0, i32 1, i32 1, i32 1, i32 0, i32 2, i32 1, i32 2>, ptr %1, align 16, !tbaa !36
+  store <4 x i64> <i64 4294967296, i64 4294967297, i64 8589934592, i64 8589934593>, ptr %1, align 16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #25
   store i32 0, ptr %i.a, align 4, !tbaa !36
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
@@ -529,7 +529,7 @@ _ZN7testing15AssertionResultD2Ev.exit33:          ; preds = %bb.ak, %.noexc.i.i2
   %i.bu = add nsw i32 %i.bt, 1
   store i32 %i.bu, ptr %i.a, align 4, !tbaa !36
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #25
-  %i.bv = add nsw i32 %.sroa.037.0.extract.trunc55, 1 ; 2 uses
+  %i.bv = add i32 %.sroa.037.0.extract.trunc55, 1 ; 2 uses
   %.sroa.037.0.insert.ext = zext i32 %i.bv to i64
   %.sroa.037.0.insert.mask = and i64 %.sroa.037.054, -4294967296 ; 2 uses
   %.sroa.037.0.insert.insert = or disjoint i64 %.sroa.037.0.insert.mask, %.sroa.037.0.insert.ext
@@ -932,7 +932,7 @@ bb.b:                                             ; preds = %_ZN7testing15Assert
   ret void
 
 bb.c:                                             ; preds = %bb.a, %_ZN7testing15AssertionResultD2Ev.exit76
-  %.sroa.080.094 = phi i32 [ 0, %bb.a ], [ %9, %_ZN7testing15AssertionResultD2Ev.exit76 ]
+  %.sroa.079.094 = phi i64 [ 429496729600, %bb.a ], [ %.sroa.079.0.insert.ext, %_ZN7testing15AssertionResultD2Ev.exit76 ]
   %.sroa.8.093 = phi i64 [ 6364136223846793006, %bb.a ], [ %i.k, %_ZN7testing15AssertionResultD2Ev.exit76 ] ; 2 uses
   %i.h = mul i64 %.sroa.8.093, 6364136223846793005
   %i.i = add i64 %i.h, 1                          ; 2 uses
@@ -1335,8 +1335,9 @@ bb.au:                                            ; preds = %bb.ar
 
 _ZN7testing15AssertionResultD2Ev.exit76:          ; preds = %bb.aq, %.noexc.i.i72, %bb.as, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i74
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #25
-  %9 = add nuw nsw i32 %.sroa.080.094, 1          ; 2 uses
-  %.not = icmp eq i32 %9, 100
+  %9 = add nuw nsw i64 %.sroa.079.094, 1
+  %.sroa.079.0.insert.ext = and i64 %9, 4294967295 ; 2 uses
+  %.not = icmp eq i64 %.sroa.079.0.insert.ext, 100
   br i1 %.not, label %bb.b, label %bb.c
 
 bb.av:                                            ; preds = %bb.ap, %bb.u

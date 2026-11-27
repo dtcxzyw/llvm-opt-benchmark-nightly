@@ -202,16 +202,21 @@ _ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPKN6hermes9SourceMap7SegmentESt6ve
 
 bb.e:                                             ; preds = %"_ZSt11upper_boundIN9__gnu_cxx17__normal_iteratorIPKN6hermes9SourceMap7SegmentESt6vectorIS4_SaIS4_EEEEjZNKS3_20getSegmentForAddressEjjE3$_0ET_SC_SC_RKT0_T1_.exit.i.i"
   %i.ag = icmp eq ptr %.sroa.02.1.i.i.i.i, %i.q
-  %.v.i.i = select i1 %i.ag, ptr %i.q, ptr %.sroa.02.1.i.i.i.i ; 3 uses
+  %.v.i.i = select i1 %i.ag, ptr %i.q, ptr %.sroa.02.1.i.i.i.i ; 4 uses
   %.sroa.65.0..sroa_idx.i = getelementptr inbounds i8, ptr %.v.i.i, i64 -4
   %.sroa.65.0.copyload.i = load i8, ptr %.sroa.65.0..sroa_idx.i, align 4
   %i.ah = trunc nuw i8 %.sroa.65.0.copyload.i to i1
   br i1 %i.ah, label %_ZNK6hermes9SourceMap27getLocationForAddressFIndexEjj.exit, label %_ZNK6hermes9SourceMap27getLocationForAddressFIndexEjj.exit.thread
 
 _ZNK6hermes9SourceMap27getLocationForAddressFIndexEjj.exit: ; preds = %bb.e
+  %.sroa.54.0..sroa_idx.i = getelementptr inbounds i8, ptr %.v.i.i, i64 -16
+  %.sroa.54.0.copyload.i = load i32, ptr %.sroa.54.0..sroa_idx.i, align 4
   %.sroa.43.0..sroa_idx.i = getelementptr inbounds i8, ptr %.v.i.i, i64 -20
-  %5 = load <2 x i32>, ptr %.sroa.43.0..sroa_idx.i, align 4
-  %6 = add <2 x i32> %5, splat (i32 1)
+  %.sroa.43.0.copyload.i = load i32, ptr %.sroa.43.0..sroa_idx.i, align 4
+  %.sroa.43.0.copyload.i.fr = freeze i32 %.sroa.43.0.copyload.i
+  %5 = add i32 %.sroa.43.0.copyload.i.fr, 1
+  %.sroa.54.0.copyload.i.fr = freeze i32 %.sroa.54.0.copyload.i
+  %6 = add i32 %.sroa.54.0.copyload.i.fr, 1
   %.sroa.3.0..sroa_idx.i = getelementptr inbounds i8, ptr %.v.i.i, i64 -24
   %.sroa.3.0.copyload.i = load i32, ptr %.sroa.3.0..sroa_idx.i, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #8
@@ -261,8 +266,12 @@ bb.g:                                             ; preds = %_ZNSt7__cxx1112basi
 
 _ZNK6hermes9SourceMap17getSourceFullPathB5cxx11Ej.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit.i.i.i
   %i.bd = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm(ptr noundef nonnull align 8 dereferenceable(32) %4, ptr noundef %i.ap, i64 noundef %i.ar) #8 ; 0 uses
-  %i.be = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
-  store <2 x i32> %6, ptr %i.be, align 8, !tbaa !7
+  %i.be = getelementptr inbounds nuw i8, ptr %4, i64 32
+  %7 = zext i32 %5 to i64
+  %8 = zext i32 %6 to i64
+  %9 = shl nuw i64 %8, 32
+  %10 = or disjoint i64 %9, %7                    ; 2 uses
+  store i64 %10, ptr %i.be, align 8
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 40
   store i8 1, ptr %i.bf, align 8, !tbaa !61
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
@@ -291,8 +300,7 @@ _ZN6hermes21SourceMapTextLocationD2Ev.exit:       ; preds = %bb.h, %_ZNKSt7__cxx
   %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %i.bn, ptr %i.bo, align 8, !tbaa !54
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %7 = load i64, ptr %i.be, align 8
-  store i64 %7, ptr %i.bp, align 8
+  store i64 %10, ptr %i.bp, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #8
   br label %bb.i
 

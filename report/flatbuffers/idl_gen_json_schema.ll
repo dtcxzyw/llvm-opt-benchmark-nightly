@@ -204,7 +204,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #21
   call void @_ZNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEC1Ev(ptr noundef nonnull align 8 dereferenceable(128) %3)
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 8 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !15   ; 3 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !15   ; 2 uses
   %i.c = getelementptr i8, ptr %i.b, i64 -24      ; 2 uses
   %i.d = load i64, ptr %i.c, align 8
   %i.e = getelementptr inbounds i8, ptr %i.a, i64 %i.d
@@ -212,15 +212,15 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   store i64 %i.f, ptr %i.g, align 8, !tbaa !663
   %i.h = load i64, ptr %i.c, align 8
-  %i.i = getelementptr inbounds i8, ptr %i.a, i64 %i.h ; 3 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 225 ; 2 uses
+  %i.i = getelementptr inbounds i8, ptr %i.a, i64 %i.h ; 4 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 225
   %i.k = load i8, ptr %i.j, align 1, !tbaa !670, !range !150, !noundef !22
   %i.l = trunc nuw i8 %i.k to i1
   br i1 %i.l, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.m = getelementptr inbounds nuw i8, ptr %i.i, i64 240
-  %i.n = load ptr, ptr %i.m, align 8, !tbaa !671  ; 5 uses
+  %i.n = load ptr, ptr %i.m, align 8, !tbaa !671  ; 6 uses
   %.not.i.i.i.i.i = icmp eq ptr %i.n, null
   br i1 %.not.i.i.i.i.i, label %bb.c, label %_ZSt13__check_facetISt5ctypeIcEERKT_PS3_.exit.i.i.i.i
 
@@ -235,7 +235,13 @@ _ZSt13__check_facetISt5ctypeIcEERKT_PS3_.exit.i.i.i.i: ; preds = %bb.b
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 56
   %i.p = load i8, ptr %i.o, align 8, !tbaa !677
   %.not.i1.i.i.i.i = icmp eq i8 %i.p, 0
-  br i1 %.not.i1.i.i.i.i, label %bb.d, label %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i.i.i
+  br i1 %.not.i1.i.i.i.i, label %bb.d, label %4
+
+4:                                                ; preds = %_ZSt13__check_facetISt5ctypeIcEERKT_PS3_.exit.i.i.i.i
+  %5 = getelementptr inbounds nuw i8, ptr %i.n, i64 89
+  %6 = load i8, ptr %5, align 1, !tbaa !13
+  %7 = freeze i8 %6
+  br label %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i.i.i
 
 bb.d:                                             ; preds = %_ZSt13__check_facetISt5ctypeIcEERKT_PS3_.exit.i.i.i.i
   invoke void @_ZNKSt5ctypeIcE13_M_widen_initEv(ptr noundef nonnull align 8 dereferenceable(570) %i.n)
@@ -246,15 +252,15 @@ bb.d:                                             ; preds = %_ZSt13__check_facet
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 48
   %i.s = load ptr, ptr %i.r, align 8
   %i.t = invoke noundef signext i8 %i.s(ptr noundef nonnull align 8 dereferenceable(570) %i.n, i8 noundef signext 32)
-          to label %.noexc4._ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i.i.i_crit_edge unwind label %bb.j, !inline_history !652 ; 0 uses
+          to label %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i.i.i unwind label %bb.j, !inline_history !652
 
-.noexc4._ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i.i.i_crit_edge: ; preds = %.noexc4
-  %.pre.pre = load ptr, ptr %i.a, align 8, !tbaa !15
-  br label %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i.i.i
-
-_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i.i.i: ; preds = %.noexc4._ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i.i.i_crit_edge, %_ZSt13__check_facetISt5ctypeIcEERKT_PS3_.exit.i.i.i.i
-  %.pre = phi ptr [ %.pre.pre, %.noexc4._ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i.i.i_crit_edge ], [ %i.b, %_ZSt13__check_facetISt5ctypeIcEERKT_PS3_.exit.i.i.i.i ]
-  store i8 1, ptr %i.j, align 1, !tbaa !670
+_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i.i.i: ; preds = %.noexc4, %4
+  %.0.i.i.i.i.i = phi i8 [ %7, %4 ], [ %i.t, %.noexc4 ]
+  %8 = getelementptr inbounds nuw i8, ptr %i.i, i64 224
+  %9 = zext i8 %.0.i.i.i.i.i to i16
+  %10 = or disjoint i16 %9, 256
+  store i16 %10, ptr %8, align 8
+  %.pre = load ptr, ptr %i.a, align 8, !tbaa !15
   br label %bb.e
 
 bb.e:                                             ; preds = %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i.i.i, %bb.a

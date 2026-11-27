@@ -95,7 +95,7 @@ bb.a:
   %i.g = trunc i64 %i.f to i32
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 3 uses
   %i.i = load i32, ptr %i.h, align 4, !tbaa !31
-  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 2 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 28
   %i.k = load i32, ptr %i.j, align 4, !tbaa !32
   %i.l = add i32 %i.k, %i.i
   %i.m = add i32 %i.l, %i.g                       ; 2 uses
@@ -120,10 +120,11 @@ bb.b:                                             ; preds = %bb.a
   %i.z = load i32, ptr %i.y, align 8, !tbaa !36
   %.neg3 = sub i32 %i.z, %i.x
   %i.aa = add i32 %.neg3, %.neg5
-  store i32 %i.aa, ptr %i.y, align 8, !tbaa !36
   store ptr %i.u, ptr %i.a, align 8, !tbaa !29
   store i32 0, ptr %i.h, align 4, !tbaa !31
-  store i32 0, ptr %i.j, align 4, !tbaa !32
+  %1 = freeze i32 %i.aa
+  %2 = zext i32 %1 to i64
+  store i64 %2, ptr %i.y, align 8
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
@@ -526,7 +527,7 @@ bb.g:                                             ; preds = %bb.c
   %i.ae = trunc i64 %i.ad to i32
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 3 uses
   %i.ag = load i32, ptr %i.af, align 4, !tbaa !31
-  %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 2 uses
+  %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 28
   %i.ai = load i32, ptr %i.ah, align 4, !tbaa !32
   %i.aj = add i32 %i.ai, %i.ag
   %i.ak = add i32 %i.aj, %i.ae                    ; 2 uses
@@ -550,10 +551,11 @@ bb.h:                                             ; preds = %bb.g
   %i.aw = load i32, ptr %i.av, align 8, !tbaa !36
   %.neg3.i = sub i32 %i.aw, %i.au
   %i.ax = add i32 %.neg3.i, %.neg5.i
-  store i32 %i.ax, ptr %i.av, align 8, !tbaa !36
   store ptr %i.ar, ptr %i.f, align 8, !tbaa !29
   store i32 0, ptr %i.af, align 4, !tbaa !31
-  store i32 0, ptr %i.ah, align 4, !tbaa !32
+  %3 = freeze i32 %i.ax
+  %4 = zext i32 %3 to i64
+  store i64 %4, ptr %i.av, align 8
   br label %_ZN6google8protobuf2io16CodedInputStream28BackUpInputToCurrentPositionEv.exit
 
 _ZN6google8protobuf2io16CodedInputStream28BackUpInputToCurrentPositionEv.exit: ; preds = %bb.h, %bb.g, %bb.f

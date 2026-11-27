@@ -205,7 +205,7 @@ bb.p:                                             ; preds = %bb.o, %bb.n, %bb.m,
   %i.bm = phi ptr [ %i.aq, %bb.l ], [ %i.am, %bb.m ], [ %i.am, %bb.n ], [ %i.bf, %bb.o ] ; 6 uses
   %i.bn = phi i32 [ %i.ar, %bb.l ], [ %i.al, %bb.m ], [ %i.al, %bb.n ], [ %i.bg, %bb.o ] ; 10 uses
   %i.bo = phi i32 [ %i.as, %bb.l ], [ %i.ak, %bb.m ], [ %i.ak, %bb.n ], [ %i.bh, %bb.o ] ; 3 uses
-  %i.bp = phi ptr [ %i.at, %bb.l ], [ %i.aj, %bb.m ], [ %i.aj, %bb.n ], [ %i.bi, %bb.o ] ; 2 uses
+  %i.bp = phi ptr [ %i.at, %bb.l ], [ %i.aj, %bb.m ], [ %i.aj, %bb.n ], [ %i.bi, %bb.o ]
   %i.bq = phi ptr [ %i.au, %bb.l ], [ %i.ai, %bb.m ], [ %i.ai, %bb.n ], [ %i.bj, %bb.o ] ; 2 uses
   %.0103203 = phi i32 [ %i.k, %bb.l ], [ %i.k, %bb.m ], [ %i.k, %bb.n ], [ %.0103204, %bb.o ] ; 8 uses
   %.0104200 = phi i32 [ %.0104208, %bb.l ], [ %i.h, %bb.m ], [ %i.h, %bb.n ], [ %.0104202, %bb.o ] ; 7 uses
@@ -608,10 +608,15 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
 ._crit_edge159:                                   ; preds = %._crit_edge155.split, %bb.am
   %.lcssa138 = phi i32 [ 0, %bb.am ], [ %i.ke, %._crit_edge155.split ]
   %i.kg = load i32, ptr %i.bp, align 4, !tbaa !31
-  %i.kh = add i32 %i.kg, %.0104200
-  store i32 %i.kh, ptr %i.bp, align 4, !tbaa !31
-  %5 = add i32 %.lcssa138, %.0103203
-  store i32 %5, ptr %1, align 8, !tbaa !27
+  %5 = add i32 %i.kg, %.0104200
+  %i.kh = add i32 %.lcssa138, %.0103203
+  %6 = freeze i32 %i.kh
+  %7 = zext i32 %6 to i64
+  %8 = freeze i32 %5
+  %9 = zext i32 %8 to i64
+  %10 = shl nuw i64 %9, 32
+  %11 = or disjoint i64 %10, %7
+  store i64 %11, ptr %1, align 8
   br label %bb.av
 
 .critedge:                                        ; preds = %bb.h
@@ -1014,7 +1019,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.au = add nsw i64 %i.ae, %i.ar                ; 3 uses
-  %i.av = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 3 uses
+  %i.av = getelementptr inbounds nuw i8, ptr %4, i64 4
   %i.aw = load i32, ptr %i.av, align 4, !tbaa !31 ; 3 uses
   %.not263 = icmp eq i32 %i.aw, 0                 ; 2 uses
   br i1 %.not263, label %bb.n, label %bb.j
@@ -1053,14 +1058,16 @@ bb.n:                                             ; preds = %bb.i, %bb.j, %bb.m
   %i.bk = tail call i64 @llvm.smin.i64(i64 %i.ae, i64 %.0224) ; 4 uses
   %i.bl = tail call i64 @llvm.smin.i64(i64 %i.ap, i64 %.0222) ; 4 uses
   %i.bm = sub nsw i64 %.0221, %i.bk
-  %i.bn = lshr i64 %i.bm, 6
-  %i.bo = trunc i64 %i.bn to i32                  ; 6 uses
-  %i.bp = sub nsw i64 %.0220, %i.bl               ; 2 uses
-  %i.bq = lshr i64 %i.bp, 6                       ; 3 uses
-  %i.br = trunc i64 %i.bq to i32                  ; 4 uses
+  %.fr304 = freeze i64 %i.bm
+  %i.bn = lshr i64 %.fr304, 6                     ; 3 uses
+  %i.bo = trunc i64 %i.bn to i32                  ; 4 uses
+  %i.bp = sub nsw i64 %.0220, %i.bl
+  %.fr303 = freeze i64 %i.bp                      ; 2 uses
+  %i.bq = lshr i64 %.fr303, 6                     ; 3 uses
+  %i.br = trunc i64 %i.bq to i32                  ; 2 uses
   %i.bs = icmp ne i32 %i.bo, 0
   %i.bt = icmp ne i32 %i.br, 0
-  %or.cond7 = select i1 %i.bs, i1 %i.bt, i1 false
+  %or.cond7 = and i1 %i.bs, %i.bt
   br i1 %or.cond7, label %bb.o, label %bb.ag
 
 bb.o:                                             ; preds = %bb.n
@@ -1085,8 +1092,10 @@ bb.r:                                             ; preds = %bb.q, %bb.p, %bb.o
   br i1 %i.bz, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %bb.r
-  store i32 %i.bo, ptr %i.av, align 4, !tbaa !31
-  store i32 %i.br, ptr %4, align 8, !tbaa !27
+  %8 = and i64 %i.bq, 4294967295                  ; 2 uses
+  %9 = shl i64 %i.bn, 32
+  %10 = or disjoint i64 %8, %9
+  store i64 %10, ptr %4, align 8
   store i8 7, ptr %i.m, align 2, !tbaa !30
   %i.ca = shl nsw i32 %i.bo, 2                    ; 2 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %4, i64 8
@@ -1094,7 +1103,6 @@ bb.s:                                             ; preds = %bb.r
   %i.cc = getelementptr inbounds nuw i8, ptr %4, i64 24
   store i16 256, ptr %i.cc, align 8, !tbaa !32
   %i.cd = sext i32 %i.ca to i64
-  %8 = and i64 %i.bq, 4294967295
   %i.ce = call ptr @ft_mem_realloc(ptr noundef %i.l, i64 noundef %i.cd, i64 noundef 0, i64 noundef %8, ptr noundef null, ptr noundef nonnull %i.a) #7
   %i.cf = getelementptr inbounds nuw i8, ptr %4, i64 16
   store ptr %i.ce, ptr %i.cf, align 8, !tbaa !21
@@ -1117,7 +1125,7 @@ bb.v:                                             ; preds = %bb.u, %bb.t
   %spec.select = tail call i32 @llvm.abs.i32(i32 %i.cj, i1 true) ; 2 uses
   %i.ck = shl nsw i32 %i.bo, 2                    ; 3 uses
   %i.cl = sext i32 %i.ck to i64                   ; 3 uses
-  %i.cm = and i64 %i.bq, 4294967295               ; 2 uses
+  %i.cm = and i64 %i.bq, 4294967295               ; 3 uses
   %i.cn = call ptr @ft_mem_realloc(ptr noundef %i.l, i64 noundef %i.cl, i64 noundef 0, i64 noundef %i.cm, ptr noundef null, ptr noundef nonnull %i.a) #7 ; 2 uses
   %i.co = load i32, ptr %i.a, align 4, !tbaa !8
   %.not269 = icmp eq i32 %i.co, 0
@@ -1164,8 +1172,9 @@ bb.y:                                             ; preds = %.lr.ph, %bb.y
   %i.dl = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
   %i.dm = load ptr, ptr %i.dl, align 8, !tbaa !21
   call void @ft_mem_free(ptr noundef %i.l, ptr noundef %i.dm) #7
-  store i32 %i.bo, ptr %i.av, align 4, !tbaa !31
-  store i32 %i.br, ptr %4, align 8, !tbaa !27
+  %11 = shl i64 %i.bn, 32
+  %12 = or disjoint i64 %i.cm, %11
+  store i64 %12, ptr %4, align 8
   %i.dn = load i32, ptr %i.ci, align 8, !tbaa !13
   %i.do = icmp slt i32 %i.dn, 0
   %i.dp = sub nsw i32 0, %i.ck
@@ -1568,7 +1577,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 .loopexit:                                        ; preds = %._crit_edge, %bb.ac, %bb.ab
   store i64 %i.bk, ptr %5, align 8, !tbaa !84
-  %i.vp = and i64 %i.bp, 4294967232
+  %i.vp = and i64 %.fr303, 4294967232
   %i.vq = add nsw i64 %i.vp, %i.bl
   store i64 %i.vq, ptr %i.ai, align 8, !tbaa !85
   %.pre305 = load i32, ptr %i.a, align 4, !tbaa !8

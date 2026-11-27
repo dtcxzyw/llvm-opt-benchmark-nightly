@@ -204,7 +204,7 @@ bb.a:
   %i.b = ptrtoaddr ptr %i.a to i64                ; 2 uses
   %2 = alloca %struct.crypto_generichash_blake2b_state, align 64 ; 18 uses
   %i.c = alloca [4 x i8], align 4                 ; 22 uses
-  %i.d = alloca [72 x i8], align 16               ; 8 uses
+  %i.d = alloca [72 x i8], align 16               ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #9
   %i.e = icmp eq ptr %0, null
   %i.f = icmp eq ptr %1, null
@@ -389,7 +389,6 @@ argon2_initial_hash.exit:                         ; preds = %bb.p, %bb.q
   br i1 %.not.i17, label %argon2_fill_first_blocks.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %argon2_initial_hash.exit
-  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 68
   %i.cp = getelementptr i8, ptr %0, i64 32        ; 2 uses
   %i.cq = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.cr = getelementptr inbounds nuw i8, ptr %i.a, i64 32
@@ -520,15 +519,16 @@ argon2_initial_hash.exit:                         ; preds = %bb.p, %bb.q
   br label %vector.memcheck33
 
 vector.memcheck33:                                ; preds = %load_block.exit17.i, %.lr.ph.i
-  %.018.i = phi i32 [ 0, %.lr.ph.i ], [ %4, %load_block.exit17.i ] ; 4 uses
-  store i32 0, ptr %i.cm, align 16
-  store i32 %.018.i, ptr %3, align 4
+  %indvars.iv = phi i64 [ %indvars.iv.next, %load_block.exit17.i ], [ 0, %.lr.ph.i ] ; 3 uses
+  %3 = shl nuw i64 %indvars.iv, 32
+  store i64 %3, ptr %i.cm, align 16
   %i.hm = call i32 @blake2b_long(ptr noundef nonnull %i.a, i64 noundef 1024, ptr noundef nonnull %i.d, i64 noundef 72) #9 ; 0 uses
   %i.hn = load ptr, ptr %0, align 8
   %i.ho = getelementptr i8, ptr %i.hn, i64 8
   %i.hp = load ptr, ptr %i.ho, align 8            ; 2 uses
   %i.hq = load i32, ptr %i.cp, align 8
-  %i.hr = mul i32 %i.hq, %.018.i
+  %4 = trunc nuw i64 %indvars.iv to i32           ; 2 uses
+  %i.hr = mul i32 %i.hq, %4
   %i.hs = zext i32 %i.hr to i64                   ; 2 uses
   %i.ht = getelementptr [1024 x i8], ptr %i.hp, i64 %i.hs ; 68 uses
   %i.hu = ptrtoaddr ptr %i.hp to i64
@@ -768,7 +768,7 @@ load_block.exit.i:                                ; preds = %scalar.ph32, %vecto
   %i.lb = getelementptr i8, ptr %i.la, i64 8
   %i.lc = load ptr, ptr %i.lb, align 8            ; 2 uses
   %i.ld = load i32, ptr %i.cp, align 8
-  %i.le = mul i32 %i.ld, %.018.i
+  %i.le = mul i32 %i.ld, %4
   %i.lf = add i32 %i.le, 1
   %i.lg = zext i32 %i.lf to i64                   ; 2 uses
   %i.lh = getelementptr [1024 x i8], ptr %i.lc, i64 %i.lg ; 68 uses
@@ -1003,9 +1003,10 @@ scalar.ph:                                        ; preds = %load_block.exit.i, 
   br i1 %exitcond.not.i16.i.3, label %load_block.exit17.i, label %scalar.ph, !llvm.loop !17
 
 load_block.exit17.i:                              ; preds = %scalar.ph, %vector.body
-  %4 = add nuw i32 %.018.i, 1                     ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.on = load i32, ptr %i.cn, align 4
-  %i.oo = icmp ult i32 %4, %i.on
+  %5 = zext i32 %i.on to i64
+  %i.oo = icmp samesign ult i64 %indvars.iv.next, %5
   br i1 %i.oo, label %vector.memcheck33, label %argon2_fill_first_blocks.exit, !llvm.loop !18
 
 argon2_fill_first_blocks.exit:                    ; preds = %load_block.exit17.i, %argon2_initial_hash.exit

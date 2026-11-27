@@ -202,7 +202,9 @@ bb.w:                                             ; preds = %"_ZN4core3ptr56drop
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 40
   store i64 0, ptr %i.as, align 8
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 536
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(10) %i.at, i8 0, i64 10, i1 false)
+  store i64 0, ptr %i.at, align 8
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 544
+  store i16 0, ptr %1, align 8
   ret void
 }
 
@@ -454,7 +456,9 @@ bb.h:                                             ; preds = %.lr.ph23
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 80
   store i32 2, ptr %i.y, align 8
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 128
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(5) %i.z, i8 0, i64 5, i1 false)
+  store i32 0, ptr %i.z, align 8
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 132
+  store i8 0, ptr %1, align 4
   ret void
 }
 

@@ -12,40 +12,50 @@ target triple = "x86_64-pc-linux-gnu"
 define hidden void @BrotliBuildCodeLengthsHuffmanTable(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca [18 x i32], align 16              ; 32 uses
-  %i.b = alloca [6 x i32], align 16               ; 27 uses
+  %i.b = alloca [6 x i32], align 16               ; 24 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #3
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 2 ; 2 uses
   %i.d = load i16, ptr %i.c, align 2, !tbaa !9
-  %3 = zext i16 %i.d to i32
+  %.fr98 = freeze i16 %i.d
+  %3 = zext i16 %.fr98 to i32
   %4 = add nsw i32 %3, -1                         ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 4
-  store i32 %4, ptr %5, align 4, !tbaa !13
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 2 uses
   %i.f = load i16, ptr %i.e, align 2, !tbaa !9
   %i.g = zext i16 %i.f to i32
-  %i.h = add nsw i32 %4, %i.g                     ; 2 uses
+  %i.h = add nsw i32 %4, %i.g
+  %5 = freeze i32 %i.h                            ; 2 uses
   %6 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  store i32 %i.h, ptr %6, align 8, !tbaa !13
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 6 ; 2 uses
   %i.j = load i16, ptr %i.i, align 2, !tbaa !9
-  %i.k = zext i16 %i.j to i32
-  %i.l = add nsw i32 %i.h, %i.k                   ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %i.b, i64 12
-  store i32 %i.l, ptr %7, align 4, !tbaa !13
+  %.fr95 = freeze i16 %i.j
+  %i.k = zext i16 %.fr95 to i32
+  %i.l = add i32 %5, %i.k                         ; 2 uses
+  %7 = zext i32 %5 to i64
+  %8 = zext i32 %i.l to i64
+  %9 = shl nuw i64 %8, 32
+  %10 = or disjoint i64 %9, %7
+  store i64 %10, ptr %6, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.n = load i16, ptr %i.m, align 2, !tbaa !9
-  %i.o = zext i16 %i.n to i32
-  %i.p = add nsw i32 %i.l, %i.o                   ; 2 uses
+  %.fr96 = freeze i16 %i.n
+  %i.o = zext i16 %.fr96 to i32
+  %i.p = add i32 %i.l, %i.o                       ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  store i32 %i.p, ptr %i.q, align 16, !tbaa !13
   %i.r = getelementptr inbounds nuw i8, ptr %2, i64 10 ; 2 uses
   %i.s = load i16, ptr %i.r, align 2, !tbaa !9
-  %i.t = zext i16 %i.s to i32
-  %i.u = add nsw i32 %i.p, %i.t
-  %8 = getelementptr inbounds nuw i8, ptr %i.b, i64 20
-  store i32 %i.u, ptr %8, align 4, !tbaa !13
-  store i32 17, ptr %i.b, align 16, !tbaa !13
+  %.fr97 = freeze i16 %i.s
+  %i.t = zext i16 %.fr97 to i32
+  %i.u = add i32 %i.p, %i.t
+  %11 = zext i32 %i.p to i64
+  %12 = zext i32 %i.u to i64
+  %13 = shl nuw i64 %12, 32
+  %14 = or disjoint i64 %13, %11
+  store i64 %14, ptr %i.q, align 16
+  %15 = zext i32 %4 to i64
+  %16 = shl nuw i64 %15, 32
+  %17 = or disjoint i64 %16, 17
+  store i64 %17, ptr %i.b, align 16
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 17
   %i.w = load i8, ptr %i.v, align 1, !tbaa !10
   %i.x = zext i8 %i.w to i64

@@ -86,7 +86,7 @@ bb.a:
   %18 = alloca %"class.core::CMatrix4", align 4   ; 10 uses
   %19 = alloca %"class.core::CMatrix4", align 4   ; 13 uses
   %20 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
-  %21 = alloca [4 x %"class.video::SColor"], align 16 ; 4 uses
+  %21 = alloca [4 x %"class.video::SColor"], align 16 ; 5 uses
   %22 = alloca %"class.core::rect", align 8       ; 5 uses
   %23 = alloca %"class.core::rect", align 4       ; 6 uses
   %24 = alloca %"class.std::optional.15", align 8 ; 16 uses
@@ -489,6 +489,9 @@ bb.an:                                            ; preds = %bb.am, %_ZN18ItemMe
 
 .critedge.thread:                                 ; preds = %_ZN4core4rectIiE11clipAgainstERKS1_.exit, %.critedge
   %i.jp = call i32 @_ZNK18ItemVisualsManager17getItemstackColorERK9ItemStackP6Client(ptr noundef nonnull align 8 dereferenceable(64) %i.ad, ptr noundef nonnull align 8 dereferenceable(296) %2, ptr noundef nonnull %5)
+  %34 = freeze i32 %i.jp
+  %35 = zext i32 %34 to i64
+  %36 = mul nuw i64 %35, 4294967297
   br label %.thread
 
 bb.ao:                                            ; preds = %.critedge
@@ -541,12 +544,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit294: ; preds = %bb
   br label %bb.da
 
 .thread:                                          ; preds = %.critedge.thread, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit291
-  %.sroa.0387.0 = phi i32 [ -1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit291 ], [ %i.jp, %.critedge.thread ]
+  %.sroa.0387.0 = phi i64 [ -1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit291 ], [ %36, %.critedge.thread ] ; 2 uses
   %.0232 = phi ptr [ %i.jx, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit291 ], [ %i.ae, %.critedge.thread ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %21) #19
-  %34 = insertelement <4 x i32> poison, i32 %.sroa.0387.0, i64 0
-  %35 = shufflevector <4 x i32> %34, <4 x i32> poison, <4 x i32> zeroinitializer
-  store <4 x i32> %35, ptr %21, align 16, !tbaa !264
+  store i64 %.sroa.0387.0, ptr %21, align 16
+  %37 = getelementptr inbounds nuw i8, ptr %21, i64 8
+  store i64 %.sroa.0387.0, ptr %37, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %22) #19
   %i.kh = getelementptr inbounds nuw i8, ptr %.0232, i64 72
   store i64 0, ptr %22, align 8, !tbaa !264

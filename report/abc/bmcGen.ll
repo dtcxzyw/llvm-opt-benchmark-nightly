@@ -82,7 +82,8 @@ bb.g:                                             ; preds = %bb.a
   %i.v = add i32 %i.f, -1
   %or.cond.i.i = icmp ult i32 %i.v, 15
   %spec.store.select.i.i = select i1 %or.cond.i.i, i32 16, i32 %i.f ; 3 uses
-  store i32 %spec.store.select.i.i, ptr %i.u, align 8, !tbaa !58
+  %2 = zext i32 %spec.store.select.i.i to i64
+  store i64 %2, ptr %i.u, align 8
   %.not.i.i51 = icmp eq i32 %spec.store.select.i.i, 0
   br i1 %.not.i.i51, label %Vec_WrdStart.exit, label %bb.h
 
@@ -94,10 +95,10 @@ bb.h:                                             ; preds = %bb.g
 
 Vec_WrdStart.exit:                                ; preds = %bb.g, %bb.h
   %i.z = phi ptr [ %i.y, %bb.h ], [ null, %bb.g ] ; 2 uses
-  %i.aa = getelementptr inbounds nuw i8, ptr %i.u, i64 4
-  %2 = getelementptr inbounds nuw i8, ptr %i.u, i64 8
-  store ptr %i.z, ptr %2, align 8, !tbaa !34
-  store i32 %i.f, ptr %i.aa, align 4, !tbaa !60
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.u, i64 8
+  store ptr %i.z, ptr %i.aa, align 8, !tbaa !34
+  %3 = getelementptr inbounds nuw i8, ptr %i.u, i64 4
+  store i32 %i.f, ptr %3, align 4, !tbaa !60
   %i.ab = sext i32 %i.f to i64
   %i.ac = shl nsw i64 %i.ab, 3
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.z, i8 0, i64 %i.ac, i1 false)

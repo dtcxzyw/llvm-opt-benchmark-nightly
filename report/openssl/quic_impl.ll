@@ -202,13 +202,15 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 44
-  %i.k = getelementptr inbounds nuw i8, ptr %1, i64 48
+  %i.k = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 2 uses
   %i.l = and i32 %2, 64                           ; 2 uses
   %.not94 = icmp eq i32 %i.l, 0                   ; 2 uses
   %.lobit93 = lshr exact i32 %i.l, 6
-  %i.m = getelementptr inbounds nuw i8, ptr %1, i64 52 ; 3 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(52) %1, i8 0, i64 52, i1 false)
-  store i32 %.lobit93, ptr %i.m, align 4, !tbaa !134
+  %i.m = getelementptr inbounds nuw i8, ptr %1, i64 52 ; 2 uses
+  %3 = zext nneg i32 %.lobit93 to i64
+  %4 = shl nuw nsw i64 %3, 32
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %1, i8 0, i64 48, i1 false)
+  store i64 %4, ptr %i.k, align 8
   %i.n = icmp eq ptr %0, null
   br i1 %i.n, label %bb.b, label %bb.c
 

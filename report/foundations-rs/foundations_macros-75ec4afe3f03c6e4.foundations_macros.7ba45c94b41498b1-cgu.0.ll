@@ -202,7 +202,7 @@ bb.a:
   %i.ai = alloca [24 x i8], align 8               ; 2 uses
   %i.aj = alloca [80 x i8], align 8               ; 2 uses
   %i.ak = alloca [104 x i8], align 8              ; 3 uses
-  %i.al = alloca [80 x i8], align 8               ; 7 uses
+  %i.al = alloca [80 x i8], align 8               ; 6 uses
   %i.am = alloca [80 x i8], align 8               ; 4 uses
   %i.an = alloca [32 x i8], align 8               ; 2 uses
   %i.ao = alloca [32 x i8], align 8               ; 3 uses
@@ -391,9 +391,13 @@ bb.u:                                             ; preds = %_RNvMs0_NtCsaC8Ufsf
   %i.bq = getelementptr inbounds nuw i8, ptr %i.al, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.bq, ptr noundef nonnull align 8 dereferenceable(48) %i.d, i64 48, i1 false)
   %.sroa.213.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.al, i64 56
-  store i8 %spec.select.i, ptr %.sroa.213.0..sroa_idx.i, align 8, !alias.scope !73
-  %.sroa.314.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.al, i64 57
-  store i8 %.sroa.016.0.i, ptr %.sroa.314.0..sroa_idx.i, align 1, !alias.scope !73
+  %2 = freeze i8 %spec.select.i
+  %3 = zext i8 %2 to i16
+  %4 = freeze i8 %.sroa.016.0.i
+  %5 = zext i8 %4 to i16
+  %6 = shl nuw i16 %5, 8
+  %7 = or disjoint i16 %6, %3
+  store i16 %7, ptr %.sroa.213.0..sroa_idx.i, align 8, !alias.scope !73
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.al, i64 58
   store i8 %.sroa.017.0.i, ptr %.sroa.4.0..sroa_idx.i, align 2, !alias.scope !73
   store i64 -1, ptr %i.al, align 8, !alias.scope !73

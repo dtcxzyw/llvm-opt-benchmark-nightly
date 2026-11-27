@@ -202,9 +202,10 @@ bb.c:                                             ; preds = %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 96
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.f, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 24, i1 false)
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 120
-  store i8 %i.a, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !11
-  %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 121
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.3.0..sroa_idx, i8 0, i64 7, i1 false)
+  %4 = zext nneg i8 %i.a to i16
+  store i16 %4, ptr %.sroa.2.0..sroa_idx, align 8
+  %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 122
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(6) %.sroa.3.0..sroa_idx, i8 0, i64 6, i1 false)
   tail call void @nghttp2_frame_data_init(ptr noundef nonnull %i.d, i8 noundef zeroext 0, i32 noundef %2) #7
   %i.g = tail call i32 @nghttp2_session_add_item(ptr noundef nonnull %0, ptr noundef nonnull %i.d) #7 ; 2 uses
   %.not = icmp eq i32 %i.g, 0
@@ -259,9 +260,10 @@ bb.e:                                             ; preds = %bb.d
   %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 96
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.g, ptr noundef nonnull readonly align 8 dereferenceable(24) %i.a, i64 24, i1 false)
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.e, i64 120
-  store i8 %i.b, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !11
-  %.sroa.3.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.e, i64 121
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.3.0..sroa_idx.i, i8 0, i64 7, i1 false)
+  %5 = zext nneg i8 %i.b to i16
+  store i16 %5, ptr %.sroa.2.0..sroa_idx.i, align 8
+  %.sroa.3.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.e, i64 122
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(6) %.sroa.3.0..sroa_idx.i, i8 0, i64 6, i1 false)
   call void @nghttp2_frame_data_init(ptr noundef nonnull %i.e, i8 noundef zeroext 0, i32 noundef %2) #7
   %i.h = call i32 @nghttp2_session_add_item(ptr noundef nonnull %0, ptr noundef nonnull %i.e) #7 ; 2 uses
   %.not.i = icmp eq i32 %i.h, 0
@@ -307,9 +309,10 @@ bb.e:                                             ; preds = %bb.d
   %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 96
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.g, ptr noundef nonnull readonly align 8 dereferenceable(24) %i.a, i64 24, i1 false)
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.e, i64 120
-  store i8 %i.b, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !11
-  %.sroa.3.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.e, i64 121
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.3.0..sroa_idx.i, i8 0, i64 7, i1 false)
+  %5 = zext nneg i8 %i.b to i16
+  store i16 %5, ptr %.sroa.2.0..sroa_idx.i, align 8
+  %.sroa.3.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.e, i64 122
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(6) %.sroa.3.0..sroa_idx.i, i8 0, i64 6, i1 false)
   call void @nghttp2_frame_data_init(ptr noundef nonnull %i.e, i8 noundef zeroext 0, i32 noundef %2) #7
   %i.h = call i32 @nghttp2_session_add_item(ptr noundef nonnull %0, ptr noundef nonnull %i.e) #7 ; 2 uses
   %.not.i = icmp eq i32 %i.h, 0

@@ -202,14 +202,16 @@ bb.w:                                             ; preds = %bb.u
   br label %.loopexit.split-lp.loopexit.split-lp.i
 
 bb.x:                                             ; preds = %bb.v, %_ZNSt6vectorIN4Luau7CodeGen3X6411RegisterX64ESaIS3_EED2Ev.exit.i, %bb.o
-  %.sroa.3363.0.insert.ext.i = zext i8 %i.j to i64
+  %7 = freeze i8 %i.j
+  %.sroa.3363.0.insert.ext.i = zext i8 %7 to i64
   %.sroa.3363.0.insert.shift.i = shl nuw nsw i64 %.sroa.3363.0.insert.ext.i, 16
   %.sroa.2362.0.insert.insert.i = or disjoint i64 %.sroa.3363.0.insert.shift.i, 268468224
   invoke void @_ZN4Luau7CodeGen3X6418AssemblyBuilderX643movENS1_10OperandX64ES3_(ptr noundef nonnull align 8 dereferenceable(268) %5, i64 276594688, i64 %.sroa.2362.0.insert.insert.i)
           to label %bb.y unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !56
 
 bb.y:                                             ; preds = %bb.x
-  %.sroa.3353.0.insert.ext.i = zext i8 %i.m to i64
+  %8 = freeze i8 %i.m
+  %.sroa.3353.0.insert.ext.i = zext i8 %8 to i64
   %.sroa.3353.0.insert.shift.i = shl nuw nsw i64 %.sroa.3353.0.insert.ext.i, 16
   %.sroa.2352.0.insert.insert.i = or disjoint i64 %.sroa.3353.0.insert.shift.i, 268468224
   invoke void @_ZN4Luau7CodeGen3X6418AssemblyBuilderX643movENS1_10OperandX64ES3_(ptr noundef nonnull align 8 dereferenceable(268) %5, i64 275546112, i64 %.sroa.2352.0.insert.insert.i)
@@ -236,7 +238,8 @@ bb.ad:                                            ; preds = %bb.ac
           to label %bb.ae unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !56
 
 bb.ae:                                            ; preds = %bb.ad
-  %.sroa.3.0.insert.ext.i.tr.i = zext i8 %i.k to i64
+  %9 = freeze i8 %i.k
+  %.sroa.3.0.insert.ext.i.tr.i = zext i8 %9 to i64
   %i.cy = shl nuw nsw i64 %.sroa.3.0.insert.ext.i.tr.i, 16 ; 2 uses
   %.sroa.0279.0.insert.insert.i = or disjoint i64 %i.cy, 34695315457
   invoke void @_ZN4Luau7CodeGen3X6418AssemblyBuilderX643movENS1_10OperandX64ES3_(ptr noundef nonnull align 8 dereferenceable(268) %5, i64 275021824, i64 %.sroa.0279.0.insert.insert.i)
@@ -252,7 +255,8 @@ bb.ag:                                            ; preds = %bb.af
           to label %bb.ah unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !56
 
 bb.ah:                                            ; preds = %bb.ag
-  %.sroa.3256.0.insert.ext.i = zext i8 %i.l to i64
+  %10 = freeze i8 %i.l
+  %.sroa.3256.0.insert.ext.i = zext i8 %10 to i64
   %.sroa.3256.0.insert.shift.i = shl nuw nsw i64 %.sroa.3256.0.insert.ext.i, 16
   %.sroa.2255.0.insert.insert.i = or disjoint i64 %.sroa.3256.0.insert.shift.i, 268468224
   invoke void @_ZN4Luau7CodeGen3X6418AssemblyBuilderX643jmpENS1_10OperandX64E(ptr noundef nonnull align 8 dereferenceable(268) %5, i64 %.sroa.2255.0.insert.insert.i)
@@ -275,13 +279,13 @@ bb.aj:                                            ; preds = %bb.ai
   %indvars.iv467.i = phi i64 [ 6, %.preheader.preheader.i ], [ %indvars.iv.next468.i, %bb.ak ] ; 2 uses
   %.0161462.i = phi i32 [ 0, %.preheader.preheader.i ], [ %i.df, %bb.ak ]
   %i.dc = shl nuw nsw i64 %indvars.iv467.i, 19
+  %.sroa.0219.0.insert.ext.i = or i64 %i.dc, 268795904
   %i.dd = and i32 %.0161462.i, 255                ; 2 uses
   %i.de = add nuw nsw i32 %i.dd, %i.ac
   %.sroa.21.0.insert.ext.i189.i = zext nneg i32 %i.de to i64
   %.sroa.21.0.insert.shift.i190.i = shl nuw nsw i64 %.sroa.21.0.insert.ext.i189.i, 32
-  %.sroa.0247.0.insert.insert.i = or disjoint i64 %.sroa.21.0.insert.shift.i190.i, 354713601
-  %.sroa.2250.0.insert.insert.i = or i64 %i.dc, 268795904
-  invoke void @_ZN4Luau7CodeGen3X6418AssemblyBuilderX647vmovapsENS1_10OperandX64ES3_(ptr noundef nonnull align 8 dereferenceable(268) %5, i64 %.sroa.2250.0.insert.insert.i, i64 %.sroa.0247.0.insert.insert.i)
+  %.sroa.2250.0.insert.insert.i = or disjoint i64 %.sroa.21.0.insert.shift.i190.i, 354713601
+  invoke void @_ZN4Luau7CodeGen3X6418AssemblyBuilderX647vmovapsENS1_10OperandX64ES3_(ptr noundef nonnull align 8 dereferenceable(268) %5, i64 %.sroa.0219.0.insert.ext.i, i64 %.sroa.2250.0.insert.insert.i)
           to label %bb.ak unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !56
 
 bb.ak:                                            ; preds = %.preheader.i

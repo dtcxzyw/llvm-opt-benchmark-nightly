@@ -8,13 +8,14 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZN6hermes12CompactArray7scaleUpEv(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(16) %0) local_unnamed_addr #0 align 2 !guid !29 {
 bb.a:
-  %i.a = load i32, ptr %0, align 8, !tbaa !34     ; 2 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 3 uses
+  %i.a = load i32, ptr %0, align 8, !tbaa !34
+  %1 = freeze i32 %i.a
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
   %i.c = load i32, ptr %i.b, align 4, !tbaa !35
   %.fr37 = freeze i32 %i.c
-  %i.d = add i32 %.fr37, 1                        ; 3 uses
-  %i.e = zext i32 %i.a to i64
-  %i.f = zext nneg i32 %i.d to i64
+  %i.d = add i32 %.fr37, 1                        ; 2 uses
+  %i.e = zext i32 %1 to i64                       ; 2 uses
+  %i.f = zext i32 %i.d to i64                     ; 2 uses
   %i.g = shl nuw i64 1, %i.f
   %i.h = tail call noalias noundef nonnull ptr @_ZN6hermes13checkedCallocEmm(i64 noundef %i.e, i64 noundef %i.g) #4 ; 55 uses
   %i.i = load i32, ptr %0, align 8, !tbaa !34     ; 13 uses
@@ -417,8 +418,9 @@ _ZNK6hermes12CompactArray3getEj.exit.us18:        ; preds = %_ZNK6hermes12Compac
 
 ._crit_edge:                                      ; preds = %_ZNK6hermes12CompactArray3getEj.exit.us18.us33, %_ZNK6hermes12CompactArray3getEj.exit.us18.us, %_ZNK6hermes12CompactArray3getEj.exit.us18, %_ZNK6hermes12CompactArray3getEj.exit.us13.us28, %_ZNK6hermes12CompactArray3getEj.exit.us13.us, %_ZN6hermes12CompactArray6trySetEjj.exit.us15, %_ZN6hermes12CompactArray6trySetEjj.exit.us.us25, %_ZNK6hermes12CompactArray3getEj.exit.us.us, %_ZN6hermes12CompactArray6trySetEjj.exit.us, %middle.block, %middle.block116, %middle.block128, %middle.block141, %vec.epilog.middle.block, %middle.block160, %vec.epilog.middle.block173, %middle.block199, %middle.block245, %vec.epilog.middle.block266, %middle.block280, %vec.epilog.middle.block293, %middle.block321, %.._crit_edge_crit_edge
   %i.kg = phi ptr [ %.pre, %.._crit_edge_crit_edge ], [ %i.l, %middle.block199 ], [ %i.l, %middle.block245 ], [ %i.l, %middle.block280 ], [ %i.l, %middle.block321 ], [ %i.l, %middle.block116 ], [ %i.l, %middle.block128 ], [ %i.l, %middle.block141 ], [ %i.l, %middle.block160 ], [ %i.l, %middle.block ], [ %i.l, %_ZNK6hermes12CompactArray3getEj.exit.us18.us ], [ %i.l, %vec.epilog.middle.block293 ], [ %i.l, %_ZN6hermes12CompactArray6trySetEjj.exit.us ], [ %i.l, %vec.epilog.middle.block266 ], [ %i.l, %_ZNK6hermes12CompactArray3getEj.exit.us.us ], [ %i.l, %_ZN6hermes12CompactArray6trySetEjj.exit.us.us25 ], [ %i.l, %vec.epilog.middle.block173 ], [ %i.l, %_ZN6hermes12CompactArray6trySetEjj.exit.us15 ], [ %i.l, %vec.epilog.middle.block ], [ %i.l, %_ZNK6hermes12CompactArray3getEj.exit.us13.us ], [ %i.l, %_ZNK6hermes12CompactArray3getEj.exit.us13.us28 ], [ %i.l, %_ZNK6hermes12CompactArray3getEj.exit.us18 ], [ %i.l, %_ZNK6hermes12CompactArray3getEj.exit.us18.us33 ]
-  store i32 %i.a, ptr %0, align 8, !tbaa !6
-  store i32 %i.d, ptr %i.b, align 4, !tbaa !46
+  %2 = shl nuw i64 %i.f, 32
+  %3 = or disjoint i64 %2, %i.e
+  store i64 %3, ptr %0, align 8
   %i.kh = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.h, ptr %i.kh, align 8, !tbaa !36
   tail call void @free(ptr noundef %i.kg) #4
@@ -492,5 +494,4 @@ attributes #4 = { nounwind }
 !43 = !{!"llvm.loop.unroll.runtime.disable"}
 !44 = !{!"branch_weights", i32 4, i32 12}
 !45 = !{!"branch_weights", i32 4, i32 28}
-!46 = !{!30, !30, i64 0}
 end_hunk_1

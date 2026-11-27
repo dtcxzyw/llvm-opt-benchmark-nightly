@@ -202,7 +202,7 @@ bb.j:                                             ; preds = %bb.b
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RNvMs0_NtNtCs3roNzt6HBWW_12regex_syntax3hir8intervalINtB5_11IntervalSetNtB7_17ClassUnicodeRangeE4pushB9_(ptr noalias nofree noundef align 8 dereferenceable(32) %0, i32 noundef range(i32 0, 1114112) %1, i32 noundef range(i32 0, 1114112) %2) unnamed_addr #0 personality ptr @rust_eh_personality !dbg !6877 {
 bb.a:
-  %i.a = alloca [48 x i8], align 8                ; 6 uses
+  %i.a = alloca [48 x i8], align 8                ; 5 uses
     #dbg_value(ptr poison, !7001, !DIExpression(), !7008)
     #dbg_value(ptr poison, !7011, !DIExpression(), !7014)
     #dbg_value(ptr poison, !7009, !DIExpression(), !7015)
@@ -404,26 +404,29 @@ bb.d:                                             ; preds = %bb.c
   br i1 %exitcond.not, label %bb.h, label %bb.g, !dbg !7235
 
 ._crit_edge:                                      ; preds = %bb.i, %bb.g, %.thread
-  %.lcssa51.a = phi i32 [ %i.aj, %.thread ], [ %i.ao, %bb.g ], [ %i.az, %bb.i ] ; 2 uses
+  %.lcssa51.a = phi i32 [ %i.aj, %.thread ], [ %i.ao, %bb.g ], [ %i.az, %bb.i ]
   %.lcssa49 = phi i32 [ %i.ak, %.thread ], [ %i.an, %bb.g ], [ %i.ay, %bb.i ] ; 2 uses
   %.sroa.08.0.lcssa = phi i64 [ %.sroa.4.0.i.ph47, %.thread ], [ %.sroa.08.054, %bb.g ], [ %i.g, %bb.i ], !dbg !7099
+  %3 = freeze i32 %.lcssa51.a                     ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !7236
     #dbg_value(i32 %.lcssa49, !7154, !DIExpression(DW_OP_LLVM_fragment, 0, 32), !7174)
-    #dbg_value(i32 %.lcssa51.a, !7154, !DIExpression(DW_OP_LLVM_fragment, 32, 32), !7174)
+    #dbg_value(i32 poison, !7154, !DIExpression(DW_OP_LLVM_fragment, 32, 32), !7174)
   %i.aq = icmp ult i32 %.lcssa49, 1114112, !dbg !7237
   call void @llvm.assume(i1 %i.aq), !dbg !7237
-  %i.ar = icmp ult i32 %.lcssa51.a, 1114112, !dbg !7237
+  %i.ar = icmp ult i32 %3, 1114112, !dbg !7237
   call void @llvm.assume(i1 %i.ar), !dbg !7237
     #dbg_value(ptr %0, !7175, !DIExpression(), !6975)
     #dbg_value(i64 %.sroa.02.1, !7185, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !6975)
     #dbg_value(i64 %.sroa.08.0.lcssa, !7185, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !6975)
     #dbg_value(i32 %.lcssa49, !7186, !DIExpression(DW_OP_LLVM_fragment, 0, 32), !6975)
-    #dbg_value(i32 %.lcssa51.a, !7186, !DIExpression(DW_OP_LLVM_fragment, 32, 32), !6975)
+    #dbg_value(i32 poison, !7186, !DIExpression(DW_OP_LLVM_fragment, 32, 32), !6975)
   %i.as = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !7238 ; 3 uses
   call void @_RINvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtCs3roNzt6HBWW_12regex_syntax3hir17ClassUnicodeRangeE5drainINtNtNtCsj6eKBz9Db1c_4core3ops5range5RangejEEBJ_(ptr noalias nofree noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.as, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %0, i64 noundef range(i64 0, 1152921504606846976) %.sroa.02.1, i64 noundef range(i64 0, 1152921504606846976) %.sroa.08.0.lcssa), !dbg !7239
-  store i32 %.lcssa49, ptr %i.a, align 8, !dbg !7238, !alias.scope !7188
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 4, !dbg !7238
-  store i32 %.lcssa51.a, ptr %3, align 4, !dbg !7238, !alias.scope !7188
+  %4 = zext nneg i32 %.lcssa49 to i64, !dbg !7238
+  %5 = zext nneg i32 %3 to i64, !dbg !7238
+  %6 = shl nuw nsw i64 %5, 32, !dbg !7238
+  %7 = or disjoint i64 %6, %4, !dbg !7238
+  store i64 %7, ptr %i.a, align 8, !dbg !7238, !alias.scope !7188
     #dbg_value(ptr %i.a, !7190, !DIExpression(), !6980)
   invoke void @_RNvXs1_NtNtCs4wP2HXfJTCR_5alloc3vec6spliceINtB5_6SpliceINtNtNtNtCsj6eKBz9Db1c_4core4iter7sources4once4OnceNtNtCs3roNzt6HBWW_12regex_syntax3hir17ClassUnicodeRangeEENtNtNtB10_3ops4drop4Drop4dropB1K_(ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %i.a)
           to label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCs4wP2HXfJTCR_5alloc3vec6splice6SpliceINtNtNtNtB4_4iter7sources4once4OnceNtNtCs3roNzt6HBWW_12regex_syntax3hir17ClassUnicodeRangeEEEB1X_.exit unwind label %bb.e, !dbg !7240

@@ -202,7 +202,7 @@ bb.a:
   %i.b = load i64, ptr %i.a, align 8, !tbaa !36
   %i.c = inttoptr i64 %i.b to ptr                 ; 63 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 7 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 33 ; 8 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 33 ; 7 uses
   %i.f = load i8, ptr %i.e, align 1, !tbaa !66
   switch i8 %i.f, label %bb.cc [
     i8 0, label %bb.b
@@ -605,8 +605,8 @@ atomic.exit:                                      ; preds = %.loopexit.i.i, %gc_
   tail call void @lj_buf_shrink(ptr noundef %0, ptr noundef nonnull %i.hg) #8
   %i.hh = getelementptr inbounds nuw i8, ptr %i.c, i64 32 ; 2 uses
   %i.hi = load i8, ptr %i.hh, align 8, !tbaa !38
-  %1 = xor i8 %i.hi, 3                            ; 2 uses
-  store i8 %1, ptr %i.hh, align 8, !tbaa !38
+  %.fr = freeze i8 %i.hi
+  %1 = xor i8 %.fr, 3                             ; 2 uses
   %i.hj = getelementptr inbounds nuw i8, ptr %i.c, i64 128
   store i8 %1, ptr %i.hj, align 8, !tbaa !114
   %i.hk = getelementptr inbounds nuw i8, ptr %i.c, i64 40
@@ -618,7 +618,9 @@ atomic.exit:                                      ; preds = %.loopexit.i.i, %gc_
   %i.hp = sub i64 %i.hn, %i.ho
   %i.hq = getelementptr inbounds nuw i8, ptr %i.c, i64 96
   store i64 %i.hp, ptr %i.hq, align 8, !tbaa !67
-  store i8 3, ptr %i.e, align 1, !tbaa !66
+  %2 = zext i8 %1 to i16
+  %3 = or disjoint i16 %2, 768
+  store i16 %3, ptr %i.hh, align 8
   %i.hr = getelementptr inbounds nuw i8, ptr %i.c, i64 36
   store i32 0, ptr %i.hr, align 4, !tbaa !79
   br label %bb.cc

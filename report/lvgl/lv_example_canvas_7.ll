@@ -20,7 +20,7 @@ target triple = "x86_64-pc-linux-gnu"
 define void @lv_example_canvas_7() local_unnamed_addr #0 {
 bb.a:
   %0 = alloca %struct._lv_layer_t, align 8        ; 5 uses
-  %1 = alloca %struct.lv_draw_line_dsc_t, align 8 ; 8 uses
+  %1 = alloca %struct.lv_draw_line_dsc_t, align 8 ; 9 uses
   %i.a = load i64, ptr @lv_example_canvas_7.draw_buf, align 8 ; 3 uses
   %i.b = lshr i64 %i.a, 32
   %i.c = trunc nuw i64 %i.b to i32
@@ -55,8 +55,10 @@ bb.a:
   %i.v = load i8, ptr %i.u, align 1
   %i.w = or i8 %i.v, 3
   store i8 %i.w, ptr %i.u, align 1
-  %i.x = getelementptr inbounds nuw i8, ptr %1, i64 64
-  store <4 x i32> <i32 15, i32 15, i32 35, i32 10>, ptr %i.x, align 8, !tbaa !19
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 64
+  store i64 64424509455, ptr %2, align 8
+  %i.x = getelementptr inbounds nuw i8, ptr %1, i64 72
+  store i64 42949672995, ptr %i.x, align 8
   call void @lv_draw_line(ptr noundef nonnull %0, ptr noundef nonnull %1) #3
   call void @lv_canvas_finish_layer(ptr noundef %i.p, ptr noundef nonnull %0) #3
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #3
@@ -122,5 +124,4 @@ attributes #3 = { nounwind }
 !16 = !{!"", !5, i64 0, !5, i64 4}
 !17 = !{!"", !15, i64 0, !16, i64 64, !16, i64 72, !9, i64 80, !5, i64 88, !13, i64 92, !5, i64 96, !5, i64 100, !5, i64 104, !4, i64 108, !4, i64 109, !4, i64 109, !4, i64 109}
 !18 = !{!17, !5, i64 96}
-!19 = !{!5, !5, i64 0}
 end_hunk_0

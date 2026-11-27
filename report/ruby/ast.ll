@@ -202,7 +202,7 @@ declare i64 @rb_parser_compile_array(i64 noundef, i64 noundef, i64 noundef, i32 
 ; Function Attrs: nounwind sspstrong uwtable
 define internal fastcc i64 @node_children(i64 noundef %0, ptr noundef %1) unnamed_addr #0 !guid !212 {
 bb.a:
-  %i.a = alloca [22 x i8], align 16               ; 8 uses
+  %i.a = alloca [22 x i8], align 16               ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   %i.b = load i64, ptr %1, align 8, !tbaa !97
   %i.c = trunc i64 %i.b to i32
@@ -605,12 +605,13 @@ bb.dr:                                            ; preds = %bb.a
   br label %bb.ic
 
 bb.ds:                                            ; preds = %bb.a
-  store i8 36, ptr %i.a, align 16, !tbaa !73
   %i.np = getelementptr i8, ptr %1, i64 32
   %i.nq = load i64, ptr %i.np, align 8, !tbaa !352
-  %2 = trunc i64 %i.nq to i8
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  store i8 %2, ptr %3, align 1, !tbaa !73
+  %.fr = freeze i64 %i.nq
+  %2 = trunc i64 %.fr to i16
+  %3 = shl i16 %2, 8
+  %4 = or disjoint i16 %3, 36
+  store i16 %4, ptr %i.a, align 16
   %i.nr = getelementptr inbounds nuw i8, ptr %i.a, i64 2
   store i8 0, ptr %i.nr, align 2, !tbaa !73
   %i.ns = call i64 @rb_intern(ptr noundef nonnull %i.a) #10

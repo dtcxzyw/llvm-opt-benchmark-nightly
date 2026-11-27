@@ -205,9 +205,11 @@ bb.eg:                                            ; preds = %bb.ef
 bb.eh:                                            ; preds = %bb.eg, %bb.ef
   %i.zt = phi i64 [ %i.zs, %bb.eg ], [ 0, %bb.ef ] ; 3 uses
   %.sroa.0105.0.copyload.i = load ptr, ptr %2, align 8, !tbaa !343 ; 11 uses
-  %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 4 uses
-  %3 = load <2 x i32>, ptr %.sroa.6.0..sroa_idx.i, align 8
-  %.sroa.6.0.copyload.i.a = load i32, ptr %.sroa.6.0..sroa_idx.i, align 8, !tbaa !22
+  %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
+  %.sroa.6.0.copyload.i = load i32, ptr %.sroa.6.0..sroa_idx.i, align 8, !tbaa !22
+  %3 = freeze i32 %.sroa.6.0.copyload.i           ; 2 uses
+  %.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %2, i64 12
+  %.sroa.6.0.copyload.i.a = load i32, ptr %.sroa.7.0..sroa_idx.i, align 4
   %.sroa.7112.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 3 uses
   %.sroa.7112.0.copyload.i = load ptr, ptr %.sroa.7112.0..sroa_idx.i, align 8, !tbaa !400 ; 12 uses
   %.sroa.9.0..sroa_idx.i = getelementptr i8, ptr %2, i64 24 ; 2 uses
@@ -227,7 +229,7 @@ Py_INCREF.exit239.i:                              ; preds = %bb.ei, %bb.eh
 
 .lr.ph:                                           ; preds = %Py_INCREF.exit239.i
   %i.zy = add nsw i64 %i.zt, -1
-  %i.zz = icmp ne i32 %.sroa.6.0.copyload.i.a, 0
+  %i.zz = icmp ne i32 %3, 0
   br label %bb.ek
 
 bb.ej:                                            ; preds = %bb.fh
@@ -265,7 +267,7 @@ bb.en:                                            ; preds = %bb.em
 
 Py_DECREF.exit233.i:                              ; preds = %bb.en, %bb.em, %bb.el
   %i.aal = icmp eq i64 %.0200.i412, %i.zy
-  %4 = select i1 %i.aal, i1 %i.zz, i1 false
+  %4 = and i1 %i.aal, %i.zz
   %i.aam = zext i1 %4 to i32
   store i32 %i.aam, ptr %.sroa.6.0..sroa_idx.i, align 8, !tbaa !390
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.7112.0..sroa_idx.i, i8 0, i64 24, i1 false)
@@ -492,7 +494,12 @@ bb.fj:                                            ; preds = %bb.fi
 
 Py_DECREF.exit229.i:                              ; preds = %bb.fj, %bb.fi, %._crit_edge
   store ptr %.sroa.0105.0.copyload.i, ptr %2, align 8, !tbaa !343
-  store <2 x i32> %3, ptr %.sroa.6.0..sroa_idx.i, align 8
+  %5 = zext i32 %3 to i64
+  %6 = freeze i32 %.sroa.6.0.copyload.i.a
+  %7 = zext i32 %6 to i64
+  %8 = shl nuw i64 %7, 32
+  %9 = or disjoint i64 %8, %5
+  store i64 %9, ptr %.sroa.6.0..sroa_idx.i, align 8
   store ptr %.sroa.7112.0.copyload.i, ptr %.sroa.7112.0..sroa_idx.i, align 8, !tbaa !400
   store <2 x i64> %.sroa.9.i.sroa.0.0.copyload, ptr %.sroa.9.0..sroa_idx.i, align 8, !tbaa !372
   %i.adg = load i32, ptr %.sroa.0105.0.copyload.i, align 8, !tbaa !341 ; 2 uses

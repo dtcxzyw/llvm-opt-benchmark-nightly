@@ -202,7 +202,7 @@ bb.a:
   %i.bu = alloca [240 x i8], align 8              ; 15 uses
   %i.bv = alloca [8 x i8], align 8                ; 5 uses
   %i.bw = alloca [40 x i8], align 8               ; 4 uses
-  %i.bx = alloca [80 x i8], align 8               ; 10 uses
+  %i.bx = alloca [80 x i8], align 8               ; 9 uses
   %i.by = alloca [40 x i8], align 8               ; 4 uses
   %i.bz = alloca [40 x i8], align 8               ; 5 uses
   %i.ca = alloca [40 x i8], align 8               ; 4 uses
@@ -241,9 +241,10 @@ bb.a:
 
 _RNvXsk_NtNtCs50gxqRnCXtk_10proc_macro6bridge3rpcmINtB5_6DecodeuE6decodeCscQ9YKgepC2A_12lance_derive.exit.i.i.i.i.i.i.i: ; preds = %.noexc44
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cr) ]
-  %.val.i.i.i.i.i.i.i.i = load i32, ptr %i.cr, align 1, !noalias !3786 ; 2 uses
+  %.val.i.i.i.i.i.i.i.i = load i32, ptr %i.cr, align 1, !noalias !3786
+  %2 = freeze i32 %.val.i.i.i.i.i.i.i.i           ; 2 uses
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cr, i64 4
-  %.not.i.i.i.i.i.i.i = icmp eq i32 %.val.i.i.i.i.i.i.i.i, 0
+  %.not.i.i.i.i.i.i.i = icmp eq i32 %2, 0
   br i1 %.not.i.i.i.i.i.i.i, label %.invoke, label %_RNvXs7_NtNtCs50gxqRnCXtk_10proc_macro6bridge6clientNtB5_4SpanINtNtB7_3rpc6DecodeuE6decodeCscQ9YKgepC2A_12lance_derive.exit.i.i.i.i.i, !prof !83
 
 _RNvXs7_NtNtCs50gxqRnCXtk_10proc_macro6bridge6clientNtB5_4SpanINtNtB7_3rpc6DecodeuE6decodeCscQ9YKgepC2A_12lance_derive.exit.i.i.i.i.i: ; preds = %_RNvXsk_NtNtCs50gxqRnCXtk_10proc_macro6bridge3rpcmINtB5_6DecodeuE6decodeCscQ9YKgepC2A_12lance_derive.exit.i.i.i.i.i.i.i
@@ -252,9 +253,10 @@ _RNvXs7_NtNtCs50gxqRnCXtk_10proc_macro6bridge6clientNtB5_4SpanINtNtB7_3rpc6Decod
   br i1 %i.cx, label %_RNvXsk_NtNtCs50gxqRnCXtk_10proc_macro6bridge3rpcmINtB5_6DecodeuE6decodeCscQ9YKgepC2A_12lance_derive.exit.i.i2.i.i.i.i.i, label %.invoke280, !prof !3785
 
 _RNvXsk_NtNtCs50gxqRnCXtk_10proc_macro6bridge3rpcmINtB5_6DecodeuE6decodeCscQ9YKgepC2A_12lance_derive.exit.i.i2.i.i.i.i.i: ; preds = %_RNvXs7_NtNtCs50gxqRnCXtk_10proc_macro6bridge6clientNtB5_4SpanINtNtB7_3rpc6DecodeuE6decodeCscQ9YKgepC2A_12lance_derive.exit.i.i.i.i.i
-  %.val.i.i.i3.i.i.i.i.i = load i32, ptr %i.cv, align 1, !noalias !3787 ; 2 uses
+  %.val.i.i.i3.i.i.i.i.i = load i32, ptr %i.cv, align 1, !noalias !3787
+  %3 = freeze i32 %.val.i.i.i3.i.i.i.i.i          ; 2 uses
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cr, i64 8
-  %.not.i.i4.i.i.i.i.i = icmp eq i32 %.val.i.i.i3.i.i.i.i.i, 0
+  %.not.i.i4.i.i.i.i.i = icmp eq i32 %3, 0
   br i1 %.not.i.i4.i.i.i.i.i, label %.invoke, label %_RNvXs7_NtNtCs50gxqRnCXtk_10proc_macro6bridge6clientNtB5_4SpanINtNtB7_3rpc6DecodeuE6decodeCscQ9YKgepC2A_12lance_derive.exit5.i.i.i.i.i, !prof !83
 
 _RNvXs7_NtNtCs50gxqRnCXtk_10proc_macro6bridge6clientNtB5_4SpanINtNtB7_3rpc6DecodeuE6decodeCscQ9YKgepC2A_12lance_derive.exit5.i.i.i.i.i: ; preds = %_RNvXsk_NtNtCs50gxqRnCXtk_10proc_macro6bridge3rpcmINtB5_6DecodeuE6decodeCscQ9YKgepC2A_12lance_derive.exit.i.i2.i.i.i.i.i
@@ -308,9 +310,11 @@ _RNvXs7_NtNtCs50gxqRnCXtk_10proc_macro6bridge3rpcTINtB7_11ExpnGlobalsNtNtB7_6cli
   %i.df = getelementptr inbounds nuw i8, ptr %i.bx, i64 8
   store <2 x ptr> %i.cn, ptr %i.df, align 8, !noalias !3784
   %.sroa.612.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.bx, i64 64
-  store i32 %.val.i.i.i.i.i.i.i.i, ptr %.sroa.612.0..sroa_idx.i.i.i, align 8, !noalias !3784
-  %.sroa.612.sroa.4.0..sroa.612.0..sroa_idx.sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.bx, i64 68
-  store i32 %.val.i.i.i3.i.i.i.i.i, ptr %.sroa.612.sroa.4.0..sroa.612.0..sroa_idx.sroa_idx.i.i.i, align 4, !noalias !3784
+  %4 = zext i32 %2 to i64
+  %5 = zext i32 %3 to i64
+  %6 = shl nuw i64 %5, 32
+  %7 = or disjoint i64 %6, %4
+  store i64 %7, ptr %.sroa.612.0..sroa_idx.i.i.i, align 8, !noalias !3784
   %.sroa.612.sroa.5.0..sroa.612.0..sroa_idx.sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.bx, i64 72
   store i32 %.val.i.i.i7.i.i.i.i.i, ptr %.sroa.612.sroa.5.0..sroa.612.0..sroa_idx.sroa_idx.i.i.i, align 8, !noalias !3784
   %i.dg = tail call noundef nonnull align 8 ptr @llvm.threadlocal.address.p0(ptr @_RNvNCNKNvNtNtNtCs50gxqRnCXtk_10proc_macro6bridge6client5state12BRIDGE_STATE0s_023___RUST_STD_INTERNAL_VAL) ; 2 uses

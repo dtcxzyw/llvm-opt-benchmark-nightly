@@ -202,7 +202,9 @@ bb.b:                                             ; preds = %bb.a
 
 .noexc:                                           ; preds = %bb.b
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 152 ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(10) %i.h, i8 0, i64 10, i1 false)
+  store i64 0, ptr %i.h, align 8
+  %2 = getelementptr inbounds nuw i8, ptr %i.g, i64 160 ; 2 uses
+  store i16 0, ptr %2, align 8
   %i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 168 ; 2 uses
   store ptr null, ptr %i.i, align 8, !tbaa !260
   store ptr getelementptr inbounds nuw inrange(-16, 456) (i8, ptr @_ZTV19AstUnpackArrayDType, i64 16), ptr %i.g, align 8, !tbaa !104
@@ -230,7 +232,6 @@ bb.d:                                             ; preds = %bb.c, %.noexc12
   %i.p = load <2 x i32>, ptr %i.o, align 8, !tbaa !198
   store <2 x i32> %i.p, ptr %i.h, align 8, !tbaa !198
   %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 160
-  %2 = getelementptr inbounds nuw i8, ptr %i.g, i64 160
   %i.r = load i8, ptr %i.q, align 8, !tbaa !469
   store i8 %i.r, ptr %2, align 8, !tbaa !469
   %i.s = load ptr, ptr @v3Global, align 8, !tbaa !293
@@ -380,11 +381,13 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   store i32 0, ptr %i.a, align 8, !tbaa !313
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 3 uses
-  store i8 0, ptr %i.b, align 4, !tbaa !314
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 37 ; 2 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 37
   %i.d = load i8, ptr %i.c, align 1
-  %i.e = and i8 %i.d, -128
-  store i8 %i.e, ptr %i.c, align 1
+  %.fr.i = freeze i8 %i.d
+  %i.e = and i8 %.fr.i, -128
+  %5 = zext i8 %i.e to i16
+  %6 = shl nuw i16 %5, 8
+  store i16 %6, ptr %i.b, align 4
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 40
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.f, i8 0, i64 16, i1 false)
   invoke void @_ZN8V3Number4initEP7AstNodeib(ptr noundef nonnull align 8 dereferenceable(56) %0, ptr noundef %1, i32 noundef %2, i1 noundef zeroext %4)

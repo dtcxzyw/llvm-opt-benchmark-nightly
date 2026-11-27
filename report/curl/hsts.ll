@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
 .preheader.i:                                     ; preds = %bb.b
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 3 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %2, i64 17 ; 3 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %2, i64 17 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 34 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 2048
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 648
@@ -215,9 +215,10 @@ bb.c:                                             ; preds = %bb.g, %.preheader.i
   store ptr %i.a, ptr %2, align 8, !tbaa !81
   store i64 2048, ptr %i.d, align 8, !tbaa !82
   %i.k = load i8, ptr %i.e, align 8
-  %i.l = and i8 %i.k, -2
-  store i8 %i.l, ptr %i.e, align 8
-  store i8 0, ptr %i.f, align 1, !tbaa !24
+  %.fr.i = freeze i8 %i.k
+  %i.l = and i8 %.fr.i, -2
+  %3 = zext i8 %i.l to i16
+  store i16 %3, ptr %i.e, align 8
   store i8 0, ptr %i.g, align 2, !tbaa !24
   store i8 0, ptr %i.a, align 16, !tbaa !24
   store i8 0, ptr %i.h, align 16, !tbaa !24

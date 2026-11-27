@@ -205,7 +205,7 @@ bb.ab:                                            ; preds = %_RINvMs0_NtNtCsa9sS
 ; Function Attrs: nonlazybind uwtable
 define { i64, ptr } @_RNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal7printerNtB2_15DateTimePrinter15print_time_zone(ptr noalias nofree noundef readonly captures(none) dereferenceable(4) %0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(8) %1, ptr noundef nonnull %2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %3) unnamed_addr #0 personality ptr @rust_eh_personality {
 _RNvMs4_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB5_14BorrowedWriter3new.exit:
-  %i.a = alloca [16 x i8], align 8                ; 11 uses
+  %i.a = alloca [16 x i8], align 8                ; 10 uses
   %i.b = alloca [24 x i8], align 8                ; 11 uses
   %i.c = alloca [24 x i8], align 8                ; 7 uses
   %i.d = alloca [32 x i8], align 1                ; 14 uses
@@ -214,7 +214,7 @@ _RNvMs4_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB5_14BorrowedWriter3new.exit:
   store ptr %i.d, ptr %i.c, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store i64 32, ptr %i.e, align 8
-  %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 6 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 7 uses
   store i16 0, ptr %i.f, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store ptr %i.c, ptr %i.b, align 8, !alias.scope !537
@@ -464,17 +464,18 @@ bb.z:                                             ; preds = %_RINvNtCs3oUPovFnLW
 
 _RINvMs4_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB6_14BorrowedWriter23if_will_fill_then_flushjEBa_.exit54.thread.i.i: ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !547
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  store i32 %i.l, ptr %4, align 4, !alias.scope !549, !noalias !547
-  store i32 0, ptr %i.a, align 8, !alias.scope !549, !noalias !547
+  %4 = zext i32 %i.l to i64
+  %5 = shl nuw i64 %4, 32
+  store i64 %5, ptr %i.a, align 8, !alias.scope !549, !noalias !547
   %i.cu = icmp slt i32 %i.l, 0
   %. = select i1 %i.cu, i8 45, i8 43
   store i8 %., ptr %i.d, align 1, !noalias !540
+  store i16 1, ptr %i.f, align 8, !noalias !540
   %i.cv = sdiv i32 %i.l, 3600
   %i.cw = trunc nsw i32 %i.cv to i8
   %.sroa.030.0.i.i = call i8 @llvm.abs.i8(i8 %i.cw, i1 true)
   %i.cx = sdiv i32 %i.l, 60
-  %.lhs.trunc.i = trunc nsw i32 %i.cx to i16
+  %.lhs.trunc.i = trunc i32 %i.cx to i16
   %i.cy = srem i16 %.lhs.trunc.i, 60              ; 2 uses
   %i.cz = trunc nsw i16 %i.cy to i8               ; 2 uses
   %i.da = icmp slt i16 %i.cy, 0

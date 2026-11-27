@@ -202,15 +202,15 @@ bb.b:                                             ; preds = %.lr.ph, %_ZNSolsEPF
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 16
   store i64 %i.k, ptr %i.t, align 8, !tbaa !79
   %i.u = load i64, ptr %i.q, align 8
-  %i.v = getelementptr inbounds i8, ptr %i.o, i64 %i.u ; 3 uses
-  %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 225 ; 2 uses
+  %i.v = getelementptr inbounds i8, ptr %i.o, i64 %i.u ; 4 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 225
   %i.x = load i8, ptr %i.w, align 1, !tbaa !80, !range !52, !noundef !16
   %i.y = trunc nuw i8 %i.x to i1
   br i1 %i.y, label %bb.f, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.z = getelementptr inbounds nuw i8, ptr %i.v, i64 240
-  %i.aa = load ptr, ptr %i.z, align 8, !tbaa !34  ; 5 uses
+  %i.aa = load ptr, ptr %i.z, align 8, !tbaa !34  ; 6 uses
   %.not.i.i.i.i.i = icmp eq ptr %i.aa, null
   br i1 %.not.i.i.i.i.i, label %bb.d, label %_ZSt13__check_facetISt5ctypeIcEERKT_PS3_.exit.i.i.i.i
 
@@ -225,7 +225,13 @@ _ZSt13__check_facetISt5ctypeIcEERKT_PS3_.exit.i.i.i.i: ; preds = %bb.c
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 56
   %i.ac = load i8, ptr %i.ab, align 8, !tbaa !40
   %.not.i1.i.i.i.i = icmp eq i8 %i.ac, 0
-  br i1 %.not.i1.i.i.i.i, label %bb.e, label %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i.i.i
+  br i1 %.not.i1.i.i.i.i, label %bb.e, label %6
+
+6:                                                ; preds = %_ZSt13__check_facetISt5ctypeIcEERKT_PS3_.exit.i.i.i.i
+  %7 = getelementptr inbounds nuw i8, ptr %i.aa, i64 89
+  %8 = load i8, ptr %7, align 1, !tbaa !41
+  %9 = freeze i8 %8
+  br label %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i.i.i
 
 bb.e:                                             ; preds = %_ZSt13__check_facetISt5ctypeIcEERKT_PS3_.exit.i.i.i.i
   invoke void @_ZNKSt5ctypeIcE13_M_widen_initEv(ptr noundef nonnull align 8 dereferenceable(570) %i.aa)
@@ -236,10 +242,14 @@ bb.e:                                             ; preds = %_ZSt13__check_facet
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 48
   %i.af = load ptr, ptr %i.ae, align 8
   %i.ag = invoke noundef signext i8 %i.af(ptr noundef nonnull align 8 dereferenceable(570) %i.aa, i8 noundef signext 32)
-          to label %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !inline_history !76 ; 0 uses
+          to label %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !inline_history !76
 
-_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i.i.i: ; preds = %.noexc28, %_ZSt13__check_facetISt5ctypeIcEERKT_PS3_.exit.i.i.i.i
-  store i8 1, ptr %i.w, align 1, !tbaa !80
+_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i.i.i: ; preds = %.noexc28, %6
+  %.0.i.i.i.i.i = phi i8 [ %9, %6 ], [ %i.ag, %.noexc28 ]
+  %10 = getelementptr inbounds nuw i8, ptr %i.v, i64 224
+  %11 = zext i8 %.0.i.i.i.i.i to i16
+  %12 = or disjoint i16 %11, 256
+  store i16 %12, ptr %10, align 8
   br label %bb.f
 
 bb.f:                                             ; preds = %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i.i.i, %bb.b

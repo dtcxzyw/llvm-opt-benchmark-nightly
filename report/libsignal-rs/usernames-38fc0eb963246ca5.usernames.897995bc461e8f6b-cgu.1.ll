@@ -80,7 +80,7 @@ bb.a:
 define hidden void @_RINvNtCsdbmLU2M1sR8_3log13___private_api3loguNtB2_12GlobalLoggerECsbNM6vbj4kjf_9usernames(ptr noundef nonnull %0, ptr noundef nonnull %1, i64 noundef range(i64 1, 6) %2, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(40) %3) unnamed_addr #2 personality ptr @rust_eh_personality !guid !26 {
 bb.a:
   %i.a = alloca [0 x i8], align 1
-  %i.b = alloca [96 x i8], align 8                ; 16 uses
+  %i.b = alloca [96 x i8], align 8                ; 15 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !27)
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.d = load ptr, ptr %i.c, align 8, !alias.scope !27, !nonnull !6, !align !7, !noundef !6 ; 3 uses
@@ -119,9 +119,10 @@ bb.a:
   %.sroa.535.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 40
   store i64 %i.n, ptr %.sroa.535.0..sroa_idx.i, align 8, !noalias !27
   %i.u = getelementptr inbounds nuw i8, ptr %i.b, i64 72
-  store i32 1, ptr %i.u, align 8, !noalias !27
-  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 76
-  store i32 %i.p, ptr %4, align 4, !noalias !27
+  %4 = zext i32 %i.p to i64
+  %5 = shl nuw i64 %4, 32
+  %6 = or disjoint i64 %5, 1
+  store i64 %6, ptr %i.u, align 8, !noalias !27
   call void @_RNvXs0_NtCsdbmLU2M1sR8_3log13___private_apiNtB5_12GlobalLoggerNtB7_3Log3log(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.a, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(96) %i.b), !noalias !27
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !27
   ret void
@@ -463,7 +464,7 @@ bb.c:                                             ; preds = %bb.a
 ; Function Attrs: nonlazybind uwtable
 define hidden noundef align 8 ptr @_RINvNtNtCs43OB2dM8s8d_5prost8encoding5bytes5mergeINtNtCs6i54tJFfzR_5alloc3vec3VechEQRShECsbNM6vbj4kjf_9usernames(i8 noundef range(i8 0, 6) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1, ptr noalias nofree noundef align 8 dereferenceable(8) %2, i32 noundef %3) unnamed_addr #2 !guid !178 {
 bb.a:
-  %i.a = alloca [48 x i8], align 8                ; 6 uses
+  %i.a = alloca [48 x i8], align 8                ; 5 uses
   %i.b = alloca [32 x i8], align 8                ; 4 uses
   %i.c = alloca [48 x i8], align 8                ; 4 uses
   %.not = icmp eq i8 %0, 2
@@ -480,9 +481,9 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store i8 %0, ptr %i.i, align 8
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 9
-  store i8 2, ptr %4, align 1
+  %4 = zext nneg i8 %0 to i16
+  %5 = or disjoint i16 %4, 512
+  store i16 %5, ptr %i.i, align 8
   store i64 -9223372036854775802, ptr %i.a, align 8
   %i.j = call noundef nonnull align 8 ptr @_RNvXs1_NtCs43OB2dM8s8d_5prost5errorNtB5_11DecodeErrorINtNtCsgxBkk5gSRhY_4core7convert4FromNtB5_15DecodeErrorKindE4from(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
@@ -517,7 +518,7 @@ bb.g:                                             ; preds = %bb.b, %bb.f, %bb.e,
 ; Function Attrs: nonlazybind uwtable
 define hidden noundef align 8 ptr @_RINvNtNtCs43OB2dM8s8d_5prost8encoding6string5mergeQRShECsbNM6vbj4kjf_9usernames(i8 noundef range(i8 0, 6) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1, ptr noalias nofree noundef align 8 dereferenceable(8) %2, i32 noundef %3) unnamed_addr #2 personality ptr @rust_eh_personality !guid !182 {
 bb.a:
-  %i.a = alloca [48 x i8], align 8                ; 6 uses
+  %i.a = alloca [48 x i8], align 8                ; 5 uses
   %i.b = alloca [48 x i8], align 8                ; 4 uses
   %i.c = alloca [48 x i8], align 8                ; 4 uses
   %i.d = alloca [24 x i8], align 8                ; 4 uses
@@ -539,9 +540,9 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !185
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store i8 %0, ptr %i.j, align 8, !noalias !185
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 9
-  store i8 2, ptr %4, align 1, !noalias !185
+  %4 = zext nneg i8 %0 to i16
+  %5 = or disjoint i16 %4, 512
+  store i16 %5, ptr %i.j, align 8, !noalias !185
   store i64 -9223372036854775802, ptr %i.a, align 8, !noalias !185
   %i.k = invoke noundef nonnull align 8 ptr @_RNvXs1_NtCs43OB2dM8s8d_5prost5errorNtB5_11DecodeErrorINtNtCsgxBkk5gSRhY_4core7convert4FromNtB5_15DecodeErrorKindE4from(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.a)
           to label %.noexc7 unwind label %bb.l, !noalias !185

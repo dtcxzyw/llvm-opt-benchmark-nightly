@@ -204,9 +204,10 @@ bb.l:                                             ; preds = %bb.j
   %i.aj = add nsw i64 %3, -1
   %i.ak = add i64 %i.aj, %.sroa.04.0.ph.lcssa147327
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i8 2, ptr %i.al, align 8
-  %.sroa.469.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 9
-  store i8 %.sroa.019.0.ph.lcssa151326, ptr %.sroa.469.0..sroa_idx, align 1
+  %11 = zext i8 %.sroa.019.0.ph.lcssa151326 to i16
+  %12 = shl nuw i16 %11, 8
+  %13 = or disjoint i16 %12, 2
+  store i16 %13, ptr %i.al, align 8
   %.sroa.570.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 10
   store i8 %.sroa.020.0.ph.lcssa155325, ptr %.sroa.570.0..sroa_idx, align 2
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -260,9 +261,9 @@ bb.q:                                             ; preds = %bb.af, %bb.aa, %bb.
   %.sroa.017.0158.lcssa.lcssa = phi i64 [ %.sroa.017.0158.4, %bb.af ], [ %.sroa.017.0158.3, %bb.aa ], [ %.sroa.017.0158.2, %bb.v ]
   %i.au = add i64 %.sroa.017.0158.lcssa.lcssa, %3
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i8 0, ptr %i.av, align 8
-  %.sroa.435.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 9
-  store i8 %9, ptr %.sroa.435.0..sroa_idx, align 1
+  %14 = zext i8 %9 to i16
+  %15 = shl nuw i16 %14, 8
+  store i16 %15, ptr %i.av, align 8
   %.sroa.637.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %i.au, ptr %.sroa.637.0..sroa_idx, align 8
   store i64 2, ptr %0, align 8
@@ -280,9 +281,9 @@ bb.s:                                             ; preds = %.thread353, %.threa
   %.lcssa185.lcssa188 = phi i8 [ %i.h, %bb.r ], [ %i.bf, %bb.t ], [ %.lcssa185.2340, %.thread ], [ %.lcssa185.3352, %.thread341 ], [ %.lcssa185.4359, %.thread353 ]
   %i.ba = add i64 %.sroa.8.0156.lcssa.lcssa199, %3
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i8 0, ptr %i.bb, align 8
-  %.sroa.443.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 9
-  store i8 %.lcssa185.lcssa188, ptr %.sroa.443.0..sroa_idx, align 1
+  %16 = zext i8 %.lcssa185.lcssa188 to i16
+  %17 = shl nuw i16 %16, 8
+  store i16 %17, ptr %i.bb, align 8
   %.sroa.645.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %i.ba, ptr %.sroa.645.0..sroa_idx, align 8
   store i64 2, ptr %0, align 8
@@ -484,9 +485,9 @@ bb.ai:                                            ; preds = %.thread353
   %.sroa.8.0156.lcssa197 = phi i64 [ 1, %_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCsgkxsgNF9KUO_6base64.exit.lr.ph.1 ], [ %.sroa.8.0156.4, %bb.ag ], [ 0, %bb.ab ], [ %.lcssa191.2339, %bb.y ], [ 0, %_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCsgkxsgNF9KUO_6base64.exit.lr.ph.preheader ], [ %.lcssa191.3351, %bb.ad ], [ 0, %bb.w ]
   %i.du = add nuw i64 %.sroa.8.0156.lcssa197, %3
   %i.dv = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i8 0, ptr %i.dv, align 8
-  %.sroa.428.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 9
-  store i8 %9, ptr %.sroa.428.0..sroa_idx, align 1
+  %18 = zext i8 %9 to i16
+  %19 = shl nuw i16 %18, 8
+  store i16 %19, ptr %i.dv, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %i.du, ptr %.sroa.6.0..sroa_idx, align 8
   store i64 2, ptr %0, align 8
@@ -809,15 +810,17 @@ bb.f:                                             ; preds = %bb.d
   br i1 %i.w, label %bb.g, label %bb.c
 
 bb.g:                                             ; preds = %bb.f, %bb.c
-  %.sroa.102.0.ph.i = phi i64 [ %i.j, %bb.f ], [ undef, %bb.c ]
-  %.sroa.8.0.ph.i = phi i8 [ %i.s, %bb.f ], [ undef, %bb.c ]
-  %.sroa.0.0.ph.i = phi i8 [ 0, %bb.f ], [ -1, %bb.c ]
+  %.sroa.0.sroa.8.0.ph.i = phi i8 [ undef, %bb.c ], [ %i.s, %bb.f ]
+  %.sroa.0.sroa.0.0.ph.i = phi i16 [ 255, %bb.c ], [ 0, %bb.f ]
+  %.sroa.91.0.ph.i = phi i64 [ undef, %bb.c ], [ %i.j, %bb.f ]
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i8 %.sroa.0.0.ph.i, ptr %i.x, align 8, !alias.scope !155
-  %.sroa.418.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 9
-  store i8 %.sroa.8.0.ph.i, ptr %.sroa.418.0..sroa_idx.i, align 1, !alias.scope !155
+  %8 = freeze i8 %.sroa.0.sroa.8.0.ph.i
+  %9 = zext i8 %8 to i16
+  %10 = shl nuw i16 %9, 8
+  %11 = or disjoint i16 %10, %.sroa.0.sroa.0.0.ph.i
+  store i16 %11, ptr %i.x, align 8, !alias.scope !155
   %.sroa.519.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %.sroa.102.0.ph.i, ptr %.sroa.519.0..sroa_idx.i, align 8, !alias.scope !155
+  store i64 %.sroa.91.0.ph.i, ptr %.sroa.519.0..sroa_idx.i, align 8, !alias.scope !155
   store i64 2, ptr %0, align 8, !alias.scope !155
   br label %_RINvNtNtNtCsgkxsgNF9KUO_6base646engine15general_purpose6decode13decode_helperNCNvXs_B4_NtB4_14GeneralPurposeNtB6_6Engine15internal_decode0EB8_.exit
 
@@ -1220,14 +1223,14 @@ bb.cl:                                            ; preds = %bb.ck
   br i1 %.not.i.i.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i
 
 bb.cm:                                            ; preds = %.loopexit295.i.i, %.loopexit294.i.i, %.loopexit293.i.i, %.loopexit292.i.i, %bb.bm, %bb.bl, %bb.bj, %bb.bh, %bb.bf, %bb.bd, %bb.bb, %.loopexit.i.i, %bb.q, %bb.o, %bb.m
-  %.sroa.165.0.ph.i = phi i64 [ %i.nq, %.loopexit292.i.i ], [ %i.mh, %bb.bd ], [ %i.mp, %bb.bf ], [ %i.mx, %bb.bh ], [ %i.nf, %bb.bj ], [ %i.nn, %bb.bl ], [ %i.np, %bb.bm ], [ %i.lz, %bb.bb ], [ %i.bf, %bb.o ], [ %i.bn, %bb.q ], [ %i.ax, %bb.m ], [ %i.tk, %.loopexit294.i.i ], [ %i.qn, %.loopexit293.i.i ], [ %i.bo, %.loopexit.i.i ], [ %i.wh, %.loopexit295.i.i ]
-  %.sroa.11.0.ph.i = phi i8 [ %i.lh, %.loopexit292.i.i ], [ %i.lt, %bb.bd ], [ %i.mb, %bb.bf ], [ %i.mj, %bb.bh ], [ %i.mr, %bb.bj ], [ %i.mz, %bb.bl ], [ %i.nh, %bb.bm ], [ %i.ln, %bb.bb ], [ %.lcssa618, %bb.o ], [ %.lcssa621, %bb.q ], [ %.lcssa614, %bb.m ], [ %.sroa.1495.0.ph.i.i, %.loopexit294.i.i ], [ %.sroa.1491.0.ph.i.i, %.loopexit293.i.i ], [ %.lcssa609, %.loopexit.i.i ], [ %.sroa.1499.0.ph.i.i, %.loopexit295.i.i ]
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i8 0, ptr %8, align 8, !alias.scope !155
-  %.sroa.419.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 9
-  store i8 %.sroa.11.0.ph.i, ptr %.sroa.419.0..sroa_idx.i, align 1, !alias.scope !155
+  %.sroa.0.sroa.11.0.ph.i = phi i8 [ %.sroa.1495.0.ph.i.i, %.loopexit294.i.i ], [ %.sroa.1491.0.ph.i.i, %.loopexit293.i.i ], [ %.lcssa609, %.loopexit.i.i ], [ %.sroa.1499.0.ph.i.i, %.loopexit295.i.i ], [ %.lcssa614, %bb.m ], [ %.lcssa621, %bb.q ], [ %.lcssa618, %bb.o ], [ %i.ln, %bb.bb ], [ %i.nh, %bb.bm ], [ %i.mz, %bb.bl ], [ %i.mr, %bb.bj ], [ %i.mj, %bb.bh ], [ %i.mb, %bb.bf ], [ %i.lt, %bb.bd ], [ %i.lh, %.loopexit292.i.i ]
+  %.sroa.113.0.ph.i = phi i64 [ %i.tk, %.loopexit294.i.i ], [ %i.qn, %.loopexit293.i.i ], [ %i.bo, %.loopexit.i.i ], [ %i.wh, %.loopexit295.i.i ], [ %i.ax, %bb.m ], [ %i.bn, %bb.q ], [ %i.bf, %bb.o ], [ %i.lz, %bb.bb ], [ %i.np, %bb.bm ], [ %i.nn, %bb.bl ], [ %i.nf, %bb.bj ], [ %i.mx, %bb.bh ], [ %i.mp, %bb.bf ], [ %i.mh, %bb.bd ], [ %i.nq, %.loopexit292.i.i ]
+  %.sroa.0.sroa.11.0.insert.ext.i = zext i8 %.sroa.0.sroa.11.0.ph.i to i16
+  %.sroa.0.sroa.11.0.insert.shift.i = shl nuw i16 %.sroa.0.sroa.11.0.insert.ext.i, 8
+  %.sroa.419.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i16 %.sroa.0.sroa.11.0.insert.shift.i, ptr %.sroa.419.0..sroa_idx.i, align 8, !alias.scope !155
   %.sroa.621.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %.sroa.165.0.ph.i, ptr %.sroa.621.0..sroa_idx.i, align 8, !alias.scope !155
+  store i64 %.sroa.113.0.ph.i, ptr %.sroa.621.0..sroa_idx.i, align 8, !alias.scope !155
   store i64 2, ptr %0, align 8, !alias.scope !155
   br label %_RINvNtNtNtCsgkxsgNF9KUO_6base646engine15general_purpose6decode13decode_helperNCNvXs_B4_NtB4_14GeneralPurposeNtB6_6Engine15internal_decode0EB8_.exit
 

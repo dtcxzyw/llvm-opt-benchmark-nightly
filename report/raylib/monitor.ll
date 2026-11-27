@@ -202,11 +202,13 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define hidden noundef ptr @_glfwAllocMonitor(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call ptr @_glfw_calloc(i64 noundef 1, i64 noundef 320) #12 ; 4 uses
+  %i.a = tail call ptr @_glfw_calloc(i64 noundef 1, i64 noundef 320) #12 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 136
-  store i32 %1, ptr %i.b, align 8
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 140
-  store i32 %2, ptr %3, align 4
+  %3 = zext i32 %1 to i64
+  %4 = zext i32 %2 to i64
+  %5 = shl nuw i64 %4, 32
+  %6 = or disjoint i64 %5, %3
+  store i64 %6, ptr %i.b, align 8
   %i.c = tail call ptr @strncpy(ptr noundef nonnull dereferenceable(1) %i.a, ptr noundef nonnull dereferenceable(1) %0, i64 noundef 127) #12 ; 0 uses
   ret ptr %i.a
 }

@@ -202,9 +202,13 @@ bb.r:                                             ; preds = %bb.p
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.24..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %i.i, i64 24, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.0, i64 48, i1 false)
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 48
-  store i32 %i.u, ptr %.sroa.3.0..sroa_idx, align 8
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 52
-  store i32 %.sroa.01.0.copyload, ptr %.sroa.4.0..sroa_idx, align 4
+  %2 = freeze i32 %i.u
+  %3 = zext i32 %2 to i64
+  %4 = freeze i32 %.sroa.01.0.copyload
+  %5 = zext i32 %4 to i64
+  %6 = shl nuw i64 %5, 32
+  %7 = or disjoint i64 %6, %3
+  store i64 %7, ptr %.sroa.3.0..sroa_idx, align 8
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.ad, %bb.ac, %bb.x, %bb.r, %bb.b

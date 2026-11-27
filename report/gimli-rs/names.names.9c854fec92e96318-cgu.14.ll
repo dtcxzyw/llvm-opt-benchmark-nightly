@@ -202,7 +202,7 @@ bb.a:
   %.sroa.733 = alloca [16 x i8], align 8          ; 3 uses
   %.sroa.0229 = alloca [120 x i8], align 8        ; 4 uses
   %i.f = alloca [160 x i8], align 8               ; 9 uses
-  %i.g = alloca [32 x i8], align 8                ; 9 uses
+  %i.g = alloca [32 x i8], align 8                ; 8 uses
   %i.h = alloca [16 x i8], align 8                ; 5 uses
   %i.i = alloca [16 x i8], align 8                ; 5 uses
   %i.j = alloca [8 x i8], align 8                 ; 4 uses
@@ -431,9 +431,7 @@ bb.u:                                             ; preds = %bb.p
   %i.cf = getelementptr inbounds nuw i8, ptr %i.g, i64 24
   store i8 0, ptr %i.cf, align 8
   %i.cg = getelementptr inbounds nuw i8, ptr %i.g, i64 26
-  store i8 0, ptr %i.cg, align 2
-  %0 = getelementptr inbounds nuw i8, ptr %i.g, i64 27
-  store i8 0, ptr %0, align 1
+  store i16 0, ptr %i.cg, align 2
   %i.ch = getelementptr inbounds nuw i8, ptr %i.g, i64 28
   store i8 0, ptr %i.ch, align 4
   invoke void @_RINvMs0_CsgQ7e0lqRvgo_7memmap2NtB6_11MmapOptions3mapRNtNtCsG258MDvU3F_3std2fs4FileECsdr9GKMNitvw_5names(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.as, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.g, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(4) %i.aw)
@@ -706,7 +704,7 @@ bb.aq:                                            ; preds = %bb.ap
   %.sroa.5259.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ae, i64 49
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ad, i64 48
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ad, i64 49
-  %i.en = getelementptr inbounds nuw i8, ptr %i.e, i64 4
+  %i.en = getelementptr inbounds nuw i8, ptr %i.e, i64 4 ; 2 uses
   %i.eo = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 2 uses
   %i.ep = getelementptr inbounds nuw i8, ptr %i.am, i64 536
   %i.eq = getelementptr inbounds nuw i8, ptr %i.ac, i64 48
@@ -891,7 +889,8 @@ bb.bl:                                            ; preds = %.backedge
   br i1 %.not409, label %bb.bn, label %bb.bm
 
 bb.bm:                                            ; preds = %bb.bl
-  %1 = load <2 x i32>, ptr %i.e, align 8
+  %.sroa.0266.0.copyload = load i32, ptr %i.e, align 8
+  %.sroa.4267.0.copyload = load i32, ptr %i.en, align 4
   %.sroa.5268.0.copyload = load i64, ptr %i.eo, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   %i.fp = invoke fastcc noundef nonnull align 8 ptr @_RNvNtCsexYYUdYSQU6_5alloc5boxed14box_new_uninit(i64 noundef 16) #24
@@ -1294,7 +1293,13 @@ bb.eb:                                            ; preds = %bb.bs
   br label %bb.dz
 
 bb.ec:                                            ; preds = %bb.bm
-  store <2 x i32> %1, ptr %i.fp, align 8
+  %0 = freeze i32 %.sroa.0266.0.copyload
+  %1 = zext i32 %0 to i64
+  %2 = freeze i32 %.sroa.4267.0.copyload
+  %3 = zext i32 %2 to i64
+  %4 = shl nuw i64 %3, 32
+  %5 = or disjoint i64 %4, %1
+  store i64 %5, ptr %i.fp, align 8
   %.sroa.6485.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fp, i64 8
   store i64 %.sroa.5268.0.copyload, ptr %.sroa.6485.0..sroa_idx, align 8
   br label %bb.dz

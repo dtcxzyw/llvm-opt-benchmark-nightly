@@ -205,11 +205,15 @@ bb.f:                                             ; preds = %_ZN9Stockfish4Eval4
 define dso_local void @_ZN9Stockfish4Eval4NNUE16AccumulatorStack5resetEv(ptr nofree noundef nonnull writeonly align 64 captures(none) dereferenceable(2529288) initializes((4160, 4162), (4800, 4802), (4864, 4871), (1221376, 1221378), (1222016, 1222018), (1222080, 1222475), (1222480, 1222496), (2529280, 2529288)) %0) local_unnamed_addr #3 align 2 !guid !94 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4864
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 4160
-  store i16 0, ptr %i.b, align 64
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 4800
+  store i32 0, ptr %i.a, align 64
+  %.sroa.76.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4868
+  store i16 0, ptr %.sroa.76.0..sroa_idx, align 4
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 4870
+  store i8 0, ptr %i.b, align 2, !tbaa !30
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 4160
   store i16 0, ptr %i.c, align 64
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 64 dereferenceable(7) %i.a, i8 0, i64 7, i1 false)
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 4800
+  store i16 0, ptr %1, align 64
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 1222080
   %.sroa.81.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 1222480
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 1221376

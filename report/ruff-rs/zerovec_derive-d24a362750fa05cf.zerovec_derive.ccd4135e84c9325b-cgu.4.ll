@@ -204,7 +204,8 @@ bb.b:                                             ; preds = %bb.a
   %i.d = lshr i64 %i.b, 32
   %i.e = trunc nuw i64 %i.d to i32
   %i.f = tail call i8 @_RNvMNtNtCs4NRVxsYgnAr_4core2io5errorNtB2_9ErrorKind9from_primCshAipbVPsRtf_14zerovec_derive(i32 %i.e), !noalias !79
-  %.not.i.i.i = icmp eq i8 %i.f, -1
+  %1 = freeze i8 %i.f
+  %.not.i.i.i = icmp eq i8 %1, -1
   br i1 %.not.i.i.i, label %bb.c, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtNtCs2AWtUsOyxgP_3std2io5error14repr_bitpacked4ReprECshAipbVPsRtf_14zerovec_derive.exit
 
 bb.c:                                             ; preds = %bb.b

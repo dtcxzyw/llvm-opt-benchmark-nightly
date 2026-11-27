@@ -205,9 +205,11 @@ bb.ar:                                            ; preds = %bb.ap, %bb.as
   %i.bw = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 -9223372036854775785, ptr %i.bw, align 8
   %.sroa.414.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i32 %i.u, ptr %.sroa.414.0..sroa_idx, align 8
-  %.sroa.515.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 20
-  store i32 %i.bv, ptr %.sroa.515.0..sroa_idx, align 4
+  %4 = zext i32 %i.u to i64
+  %5 = zext i32 %i.bv to i64
+  %6 = shl nuw i64 %5, 32
+  %7 = or disjoint i64 %6, %4
+  store i64 %7, ptr %.sroa.414.0..sroa_idx, align 8
   store i64 -1, ptr %0, align 8
   br label %bb.ak
 
@@ -610,7 +612,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !527)
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 104
-  %2 = load <2 x i32>, ptr %i.g, align 8, !alias.scope !527
+  %2 = load i64, ptr %i.g, align 8, !alias.scope !527
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !528
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.i = load i64, ptr %i.h, align 8, !range !6, !alias.scope !527, !noundef !5
@@ -715,7 +717,7 @@ _RNvXsy_NtNtCs4tP8yUXWbFU_18libsignal_protocol5proto7storageNtB5_23SenderKeyStat
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !528
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %0, ptr noundef nonnull align 8 dereferenceable(104) %.sroa.0, i64 104, i1 false)
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 104
-  store <2 x i32> %2, ptr %.sroa.6.0..sroa_idx, align 8
+  store i64 %2, ptr %.sroa.6.0..sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   ret void
 }

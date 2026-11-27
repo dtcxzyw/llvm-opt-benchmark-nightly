@@ -202,14 +202,16 @@ bb.al:                                            ; preds = %_RNvXso_NtCscdodAO9
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.027.24..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(24) %i.l, i64 24, i1 false), !noalias !1995
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.027.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.026.0208.i, i64 24, i1 false), !alias.scope !1992, !noalias !1996
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.027.48..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(24) %i.k, i64 24, i1 false), !noalias !1995
+  %2 = zext nneg i8 %i.ge to i16
+  %3 = zext i8 %i.bd to i16
+  %4 = shl nuw i16 %3, 8
+  %5 = or disjoint i16 %4, %2
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k), !noalias !1962
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l), !noalias !1962
-  %i.gf = getelementptr inbounds nuw [104 x i8], ptr %i.y, i64 %.sroa.7.0206.i ; 3 uses
+  %i.gf = getelementptr inbounds nuw [104 x i8], ptr %i.y, i64 %.sroa.7.0206.i ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %i.gf, ptr noundef nonnull align 8 dereferenceable(96) %.sroa.027.i, i64 96, i1 false), !noalias !1957
-  %.sroa.437.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.gf, i64 96
-  store i8 %i.ge, ptr %.sroa.437.0..sroa_idx.i, align 8, !noalias !1957
-  %.sroa.538.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.gf, i64 97
-  store i8 %i.bd, ptr %.sroa.538.0..sroa_idx.i, align 1, !noalias !1957
+  %.sroa.538.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.gf, i64 96
+  store i16 %5, ptr %.sroa.538.0..sroa_idx.i, align 8, !noalias !1957
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.027.i)
   %i.gg = icmp eq i64 %i.ay, 0
   br i1 %i.gg, label %_RINvXNvMNtCscdodAO9FK5_5alloc5sliceSp9to_vec_inNtNtNtNtCsbyItyepKEh3_12clap_builder6parser7matches11matched_arg10MatchedArgNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsjWl3uGiVprL_18influxdb3_commands.exit, label %bb.c

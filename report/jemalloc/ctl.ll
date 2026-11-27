@@ -205,7 +205,8 @@ emap_full_alloc_ctx_try_lookup.exit.thread:       ; preds = %rtree_leaf_elm_look
 
 emap_full_alloc_ctx_try_lookup.exit:              ; preds = %rtree_leaf_elm_lookup.exit.i
   %i.bo = load atomic ptr, ptr %.1.i.i acquire, align 8, !noalias !222
-  %i.bp = ptrtoint ptr %i.bo to i64
+  %.fr.i = freeze ptr %i.bo
+  %i.bp = ptrtoint ptr %.fr.i to i64
   %i.bq = shl i64 %i.bp, 16
   %i.br = ashr exact i64 %i.bq, 16
   %i.bs = and i64 %i.br, -128                     ; 2 uses

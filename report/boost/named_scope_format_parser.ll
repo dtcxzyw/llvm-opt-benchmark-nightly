@@ -202,7 +202,7 @@ _ZN5boost3log11v2_mt_posix3aux22basic_ostringstreambufIcSt11char_traitsIcESaIcEE
   %i.ac = getelementptr i8, ptr %i.ab, i64 -24
   %i.ad = load i64, ptr %i.ac, align 8
   %i.ae = getelementptr inbounds i8, ptr %i.a, i64 %i.ad ; 4 uses
-  %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 225 ; 2 uses
+  %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 225
   %i.ag = load i8, ptr %i.af, align 1, !tbaa !176, !range !70, !noundef !71
   %i.ah = trunc nuw i8 %i.ag to i1
   br i1 %i.ah, label %._crit_edge.i, label %bb.g
@@ -231,6 +231,7 @@ _ZSt13__check_facetISt5ctypeIcEERKT_PS3_.exit.i.i: ; preds = %bb.g
 bb.i:                                             ; preds = %_ZSt13__check_facetISt5ctypeIcEERKT_PS3_.exit.i.i
   %i.am = getelementptr inbounds nuw i8, ptr %i.aj, i64 89
   %i.an = load i8, ptr %i.am, align 1, !tbaa !14
+  %3 = freeze i8 %i.an
   br label %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i
 
 bb.j:                                             ; preds = %_ZSt13__check_facetISt5ctypeIcEERKT_PS3_.exit.i.i
@@ -242,10 +243,11 @@ bb.j:                                             ; preds = %_ZSt13__check_facet
   br label %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i
 
 _ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i: ; preds = %bb.j, %bb.i
-  %.0.i.i.i = phi i8 [ %i.an, %bb.i ], [ %i.ar, %bb.j ] ; 2 uses
+  %.0.i.i.i = phi i8 [ %3, %bb.i ], [ %i.ar, %bb.j ] ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.ae, i64 224
-  store i8 %.0.i.i.i, ptr %i.as, align 8, !tbaa !177
-  store i8 1, ptr %i.af, align 1, !tbaa !176
+  %4 = zext i8 %.0.i.i.i to i16
+  %5 = or disjoint i16 %4, 256
+  store i16 %5, ptr %i.as, align 8
   br label %_ZNKSt9basic_iosIcSt11char_traitsIcEE4fillEv.exit
 
 _ZNKSt9basic_iosIcSt11char_traitsIcEE4fillEv.exit: ; preds = %._crit_edge.i, %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i
@@ -274,7 +276,7 @@ bb.m:                                             ; preds = %bb.k
   br label %_ZN5boost3log11v2_mt_posix3aux22basic_ostringstreambufIcSt11char_traitsIcESaIcEE6appendEmc.exit
 
 bb.n:                                             ; preds = %bb.a
-  %i.bd = getelementptr inbounds nuw i8, ptr %i.e, i64 225 ; 2 uses
+  %i.bd = getelementptr inbounds nuw i8, ptr %i.e, i64 225
   %i.be = load i8, ptr %i.bd, align 1, !tbaa !176, !range !70, !noundef !71
   %i.bf = trunc nuw i8 %i.be to i1
   br i1 %i.bf, label %._crit_edge.i16, label %bb.o
@@ -303,6 +305,7 @@ _ZSt13__check_facetISt5ctypeIcEERKT_PS3_.exit.i.i12: ; preds = %bb.o
 bb.q:                                             ; preds = %_ZSt13__check_facetISt5ctypeIcEERKT_PS3_.exit.i.i12
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bh, i64 89
   %i.bl = load i8, ptr %i.bk, align 1, !tbaa !14
+  %6 = freeze i8 %i.bl
   br label %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i14
 
 bb.r:                                             ; preds = %_ZSt13__check_facetISt5ctypeIcEERKT_PS3_.exit.i.i12
@@ -314,10 +317,11 @@ bb.r:                                             ; preds = %_ZSt13__check_facet
   br label %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i14
 
 _ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i14: ; preds = %bb.r, %bb.q
-  %.0.i.i.i15 = phi i8 [ %i.bl, %bb.q ], [ %i.bp, %bb.r ] ; 2 uses
+  %.0.i.i.i15 = phi i8 [ %6, %bb.q ], [ %i.bp, %bb.r ] ; 2 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %i.e, i64 224
-  store i8 %.0.i.i.i15, ptr %i.bq, align 8, !tbaa !177
-  store i8 1, ptr %i.bd, align 1, !tbaa !176
+  %7 = zext i8 %.0.i.i.i15 to i16
+  %8 = or disjoint i16 %7, 256
+  store i16 %8, ptr %i.bq, align 8
   br label %_ZNKSt9basic_iosIcSt11char_traitsIcEE4fillEv.exit19
 
 _ZNKSt9basic_iosIcSt11char_traitsIcEE4fillEv.exit19: ; preds = %._crit_edge.i16, %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i14

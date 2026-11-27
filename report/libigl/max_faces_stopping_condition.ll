@@ -24,9 +24,11 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #7
   %i.a = getelementptr inbounds nuw i8, ptr %4, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %4, ptr noundef nonnull align 8 dereferenceable(32) %3, i64 16, i1 false), !tbaa.struct !14
-  store i32 %1, ptr %3, align 8
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 4
-  store i32 %2, ptr %.sroa.4.0..sroa_idx, align 4
+  %5 = zext i32 %1 to i64
+  %6 = zext i32 %2 to i64
+  %7 = shl nuw i64 %6, 32
+  %8 = or disjoint i64 %7, %5
+  store i64 %8, ptr %3, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 8
   store ptr %0, ptr %.sroa.5.0..sroa_idx, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
@@ -64,9 +66,11 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define dso_local void @_ZN3igl28max_faces_stopping_conditionERiii(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.std::function") align 8 captures(none) initializes((0, 32)) %0, ptr noundef nonnull align 4 dereferenceable(4) %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #2 personality ptr @__gxx_personality_v0 {
 _ZN3igl28max_faces_stopping_conditionERiiiRSt8functionIFbRKN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEERKNS3_IiLin1ELin1ELi0ELin1ELin1EEES9_RKNS3_IiLin1ELi1ELi0ELin1ELi1EEES9_S9_RKSt14priority_queueISt5tupleIJdiiEESt6vectorISF_SaISF_EESt7greaterISF_EESC_S6_iiiiiEE.exit:
-  store i32 %2, ptr %0, align 8
-  %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i32 %3, ptr %.sroa.4.0..sroa_idx.i, align 4
+  %4 = zext i32 %2 to i64
+  %5 = zext i32 %3 to i64
+  %6 = shl nuw i64 %5, 32
+  %7 = or disjoint i64 %6, %4
+  store i64 %7, ptr %0, align 8
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %1, ptr %.sroa.5.0..sroa_idx.i, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16

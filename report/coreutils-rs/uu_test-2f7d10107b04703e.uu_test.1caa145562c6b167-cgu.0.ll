@@ -204,7 +204,7 @@ _RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VecTINtNtB6_6borrow3CoweENtNtCsiMbvvWBbX
   %.sroa.14.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ac, i64 104
   store i64 -1, ptr %.sroa.14.0..sroa_idx, align 8
   %.sroa.16.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ac, i64 128
-  store <4 x i8> <i8 0, i8 1, i8 0, i8 0>, ptr %.sroa.16.0..sroa_idx, align 8
+  store i32 256, ptr %.sroa.16.0..sroa_idx, align 8
   %.sroa.21.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ac, i64 136
   store double %3, ptr %.sroa.21.0..sroa_idx, align 8
   %i.ah = add nuw nsw i64 %i.d, 1
@@ -233,7 +233,7 @@ bb.g:                                             ; preds = %bb.f
   %.sroa.819.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 104
   store i64 -1, ptr %.sroa.819.0..sroa_idx, align 8
   %.sroa.920.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 128
-  store <4 x i8> <i8 0, i8 1, i8 0, i8 0>, ptr %.sroa.920.0..sroa_idx, align 8
+  store i32 256, ptr %.sroa.920.0..sroa_idx, align 8
   %.sroa.1321.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 136
   store double %3, ptr %.sroa.1321.0..sroa_idx, align 8
   br label %bb.i
@@ -357,7 +357,7 @@ _RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VecTINtNtB6_6borrow3CoweENtNtCsiMbvvWBbX
   %.sroa.14.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ad, i64 104
   store i64 -1, ptr %.sroa.14.0..sroa_idx, align 8
   %.sroa.16.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ad, i64 128
-  store <4 x i8> <i8 0, i8 1, i8 0, i8 0>, ptr %.sroa.16.0..sroa_idx, align 8
+  store i32 256, ptr %.sroa.16.0..sroa_idx, align 8
   %.sroa.21.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ad, i64 136
   store double %i.z, ptr %.sroa.21.0..sroa_idx, align 8
   %i.ai = add nuw nsw i64 %i.d, 1
@@ -387,7 +387,7 @@ bb.g:                                             ; preds = %bb.f
   %.sroa.819.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 104
   store i64 -1, ptr %.sroa.819.0..sroa_idx, align 8
   %.sroa.920.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 128
-  store <4 x i8> <i8 0, i8 1, i8 0, i8 0>, ptr %.sroa.920.0..sroa_idx, align 8
+  store i32 256, ptr %.sroa.920.0..sroa_idx, align 8
   %.sroa.1321.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 136
   store double %i.ak, ptr %.sroa.1321.0..sroa_idx, align 8
   br label %bb.i
@@ -790,9 +790,11 @@ _RINvMs0_NtNtCsgNwXemyrBWj_12clap_builder7builder7commandNtB6_7Command13help_tem
   %.sroa.8.sroa.7.sroa.27.0..sroa.8.sroa.7.0..sroa.8.0..sroa_idx24.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 688
   store ptr null, ptr %.sroa.8.sroa.7.sroa.27.0..sroa.8.sroa.7.0..sroa.8.0..sroa_idx24.sroa_idx.sroa_idx, align 8, !alias.scope !388
   %.sroa.8.sroa.7.sroa.28.0..sroa.8.sroa.7.0..sroa.8.0..sroa_idx24.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 696
-  store i32 -1, ptr %.sroa.8.sroa.7.sroa.28.0..sroa.8.sroa.7.0..sroa.8.0..sroa_idx24.sroa_idx.sroa_idx, align 8, !alias.scope !388
-  %.sroa.8.sroa.7.sroa.29.0..sroa.8.sroa.7.0..sroa.8.0..sroa_idx24.sroa_idx.sroa_idx.a = getelementptr inbounds nuw i8, ptr %0, i64 700
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(9) %.sroa.8.sroa.7.sroa.29.0..sroa.8.sroa.7.0..sroa.8.0..sroa_idx24.sroa_idx.sroa_idx.a, i8 0, i64 9, i1 false)
+  store i64 4294967295, ptr %.sroa.8.sroa.7.sroa.28.0..sroa.8.sroa.7.0..sroa.8.0..sroa_idx24.sroa_idx.sroa_idx, align 8, !alias.scope !388
+  %.sroa.8.sroa.7.sroa.29.0..sroa.8.sroa.7.0..sroa.8.0..sroa_idx24.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 704
+  store i32 0, ptr %.sroa.8.sroa.7.sroa.29.0..sroa.8.sroa.7.0..sroa.8.0..sroa_idx24.sroa_idx.sroa_idx, align 8, !alias.scope !388
+  %.sroa.8.sroa.7.sroa.29.0..sroa.8.sroa.7.0..sroa.8.0..sroa_idx24.sroa_idx.sroa_idx.a = getelementptr inbounds nuw i8, ptr %0, i64 708
+  store i8 0, ptr %.sroa.8.sroa.7.sroa.29.0..sroa.8.sroa.7.0..sroa.8.0..sroa_idx24.sroa_idx.sroa_idx.a, align 4, !alias.scope !388
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.experimental.noalias.scope.decl(metadata !389)
   %.val.i19 = load i64, ptr %i.b, align 8, !range !5, !alias.scope !389, !noundef !4 ; 2 uses
@@ -1195,8 +1197,8 @@ bb.ad:                                            ; preds = %.lr.ph150.i
   %.not105.i = icmp eq i64 %i.ee, 0
   br i1 %.not105.i, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit, label %.lr.ph150.i
 
-.thread:                                          ; preds = %.lr.ph.i, %bb.w, %bb.v, %.lr.ph141.i, %.preheader111.i, %bb.aa, %bb.ab, %.lr.ph150.i, %bb.s, %bb.s, %bb.e
-  %.ph = phi ptr [ inttoptr (i64 1 to ptr), %bb.e ], [ %i.ay, %.preheader111.i ], [ %i.ay, %.lr.ph150.i ], [ %i.ay, %bb.s ], [ %i.ay, %.lr.ph141.i ], [ %i.ay, %bb.s ], [ %i.ay, %bb.ab ], [ %i.ay, %bb.aa ], [ %i.ay, %bb.v ], [ %i.ay, %bb.w ], [ %i.ay, %.lr.ph.i ] ; 3 uses
+.thread:                                          ; preds = %.lr.ph.i, %bb.w, %bb.v, %.lr.ph141.i, %.preheader111.i, %bb.ab, %bb.aa, %.lr.ph150.i, %bb.s, %bb.s, %bb.e
+  %.ph = phi ptr [ inttoptr (i64 1 to ptr), %bb.e ], [ %i.ay, %.preheader111.i ], [ %i.ay, %.lr.ph150.i ], [ %i.ay, %bb.s ], [ %i.ay, %.lr.ph141.i ], [ %i.ay, %bb.s ], [ %i.ay, %bb.aa ], [ %i.ay, %bb.ab ], [ %i.ay, %bb.v ], [ %i.ay, %bb.w ], [ %i.ay, %.lr.ph.i ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ah)
   call void @_RNvXs2_NtNtCs6JMX4GRUq9U_4core3num11float_parsedNtNtNtB9_3str6traits7FromStr8from_str(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.ah, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.ph, i64 noundef %i.aw) #20
   %i.ei = load i8, ptr %i.ah, align 8, !range !18, !noundef !4
@@ -1414,8 +1416,8 @@ bb.aw:                                            ; preds = %.lr.ph150.i208
   %.not105.i212 = icmp eq i64 %i.gp, 0
   br i1 %.not105.i212, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit215, label %.lr.ph150.i208
 
-.thread499:                                       ; preds = %.lr.ph.i183, %bb.ap, %bb.ao, %.lr.ph141.i193, %.preheader111.i200, %bb.at, %bb.au, %.lr.ph150.i208, %bb.al, %bb.al, %bb.g
-  %.ph507 = phi ptr [ inttoptr (i64 1 to ptr), %bb.g ], [ %i.bf, %.preheader111.i200 ], [ %i.bf, %.lr.ph150.i208 ], [ %i.bf, %bb.al ], [ %i.bf, %.lr.ph141.i193 ], [ %i.bf, %bb.al ], [ %i.bf, %bb.au ], [ %i.bf, %bb.at ], [ %i.bf, %bb.ao ], [ %i.bf, %bb.ap ], [ %i.bf, %.lr.ph.i183 ] ; 3 uses
+.thread499:                                       ; preds = %.lr.ph.i183, %bb.ap, %bb.ao, %.lr.ph141.i193, %.preheader111.i200, %bb.au, %bb.at, %.lr.ph150.i208, %bb.al, %bb.al, %bb.g
+  %.ph507 = phi ptr [ inttoptr (i64 1 to ptr), %bb.g ], [ %i.bf, %.preheader111.i200 ], [ %i.bf, %.lr.ph150.i208 ], [ %i.bf, %bb.al ], [ %i.bf, %.lr.ph141.i193 ], [ %i.bf, %bb.al ], [ %i.bf, %bb.at ], [ %i.bf, %bb.au ], [ %i.bf, %bb.ao ], [ %i.bf, %bb.ap ], [ %i.bf, %.lr.ph.i183 ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ab)
   call void @_RNvXs2_NtNtCs6JMX4GRUq9U_4core3num11float_parsedNtNtNtB9_3str6traits7FromStr8from_str(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.ab, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.ph507, i64 noundef %i.bd) #20
   %i.gt = load i8, ptr %i.ab, align 8, !range !18, !noundef !4
@@ -1633,8 +1635,8 @@ bb.bp:                                            ; preds = %.lr.ph150.i248
   %.not105.i252 = icmp eq i64 %i.ja, 0
   br i1 %.not105.i252, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit255, label %.lr.ph150.i248
 
-.thread521:                                       ; preds = %.lr.ph.i223, %bb.bi, %bb.bh, %.lr.ph141.i233, %.preheader111.i240, %bb.bm, %bb.bn, %.lr.ph150.i248, %bb.be, %bb.be, %bb.i
-  %.ph529 = phi ptr [ inttoptr (i64 1 to ptr), %bb.i ], [ %i.bm, %.preheader111.i240 ], [ %i.bm, %.lr.ph150.i248 ], [ %i.bm, %bb.be ], [ %i.bm, %.lr.ph141.i233 ], [ %i.bm, %bb.be ], [ %i.bm, %bb.bn ], [ %i.bm, %bb.bm ], [ %i.bm, %bb.bh ], [ %i.bm, %bb.bi ], [ %i.bm, %.lr.ph.i223 ] ; 3 uses
+.thread521:                                       ; preds = %.lr.ph.i223, %bb.bi, %bb.bh, %.lr.ph141.i233, %.preheader111.i240, %bb.bn, %bb.bm, %.lr.ph150.i248, %bb.be, %bb.be, %bb.i
+  %.ph529 = phi ptr [ inttoptr (i64 1 to ptr), %bb.i ], [ %i.bm, %.preheader111.i240 ], [ %i.bm, %.lr.ph150.i248 ], [ %i.bm, %bb.be ], [ %i.bm, %.lr.ph141.i233 ], [ %i.bm, %bb.be ], [ %i.bm, %bb.bm ], [ %i.bm, %bb.bn ], [ %i.bm, %bb.bh ], [ %i.bm, %bb.bi ], [ %i.bm, %.lr.ph.i223 ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.v)
   call void @_RNvXs2_NtNtCs6JMX4GRUq9U_4core3num11float_parsedNtNtNtB9_3str6traits7FromStr8from_str(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.v, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.ph529, i64 noundef %i.bk) #20
   %i.je = load i8, ptr %i.v, align 8, !range !18, !noundef !4
@@ -1852,8 +1854,8 @@ bb.ci:                                            ; preds = %.lr.ph150.i288
   %.not105.i292 = icmp eq i64 %i.ll, 0
   br i1 %.not105.i292, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit295, label %.lr.ph150.i288
 
-.thread543:                                       ; preds = %.lr.ph.i263, %bb.cb, %bb.ca, %.lr.ph141.i273, %.preheader111.i280, %bb.cf, %bb.cg, %.lr.ph150.i288, %bb.bx, %bb.bx, %bb.k
-  %.ph551 = phi ptr [ inttoptr (i64 1 to ptr), %bb.k ], [ %i.bt, %.preheader111.i280 ], [ %i.bt, %.lr.ph150.i288 ], [ %i.bt, %bb.bx ], [ %i.bt, %.lr.ph141.i273 ], [ %i.bt, %bb.bx ], [ %i.bt, %bb.cg ], [ %i.bt, %bb.cf ], [ %i.bt, %bb.ca ], [ %i.bt, %bb.cb ], [ %i.bt, %.lr.ph.i263 ] ; 3 uses
+.thread543:                                       ; preds = %.lr.ph.i263, %bb.cb, %bb.ca, %.lr.ph141.i273, %.preheader111.i280, %bb.cg, %bb.cf, %.lr.ph150.i288, %bb.bx, %bb.bx, %bb.k
+  %.ph551 = phi ptr [ inttoptr (i64 1 to ptr), %bb.k ], [ %i.bt, %.preheader111.i280 ], [ %i.bt, %.lr.ph150.i288 ], [ %i.bt, %bb.bx ], [ %i.bt, %.lr.ph141.i273 ], [ %i.bt, %bb.bx ], [ %i.bt, %bb.cf ], [ %i.bt, %bb.cg ], [ %i.bt, %bb.ca ], [ %i.bt, %bb.cb ], [ %i.bt, %.lr.ph.i263 ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p)
   call void @_RNvXs2_NtNtCs6JMX4GRUq9U_4core3num11float_parsedNtNtNtB9_3str6traits7FromStr8from_str(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.p, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.ph551, i64 noundef %i.br) #20
   %i.lp = load i8, ptr %i.p, align 8, !range !18, !noundef !4
@@ -2071,8 +2073,8 @@ bb.db:                                            ; preds = %.lr.ph150.i328
   %.not105.i332 = icmp eq i64 %i.nw, 0
   br i1 %.not105.i332, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit335, label %.lr.ph150.i328
 
-.thread565:                                       ; preds = %.lr.ph.i303, %bb.cu, %bb.ct, %.lr.ph141.i313, %.preheader111.i320, %bb.cy, %bb.cz, %.lr.ph150.i328, %bb.cq, %bb.cq, %bb.m
-  %.ph573 = phi ptr [ inttoptr (i64 1 to ptr), %bb.m ], [ %i.ca, %.preheader111.i320 ], [ %i.ca, %.lr.ph150.i328 ], [ %i.ca, %bb.cq ], [ %i.ca, %.lr.ph141.i313 ], [ %i.ca, %bb.cq ], [ %i.ca, %bb.cz ], [ %i.ca, %bb.cy ], [ %i.ca, %bb.ct ], [ %i.ca, %bb.cu ], [ %i.ca, %.lr.ph.i303 ] ; 3 uses
+.thread565:                                       ; preds = %.lr.ph.i303, %bb.cu, %bb.ct, %.lr.ph141.i313, %.preheader111.i320, %bb.cz, %bb.cy, %.lr.ph150.i328, %bb.cq, %bb.cq, %bb.m
+  %.ph573 = phi ptr [ inttoptr (i64 1 to ptr), %bb.m ], [ %i.ca, %.preheader111.i320 ], [ %i.ca, %.lr.ph150.i328 ], [ %i.ca, %bb.cq ], [ %i.ca, %.lr.ph141.i313 ], [ %i.ca, %bb.cq ], [ %i.ca, %bb.cy ], [ %i.ca, %bb.cz ], [ %i.ca, %bb.ct ], [ %i.ca, %bb.cu ], [ %i.ca, %.lr.ph.i303 ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j)
   call void @_RNvXs2_NtNtCs6JMX4GRUq9U_4core3num11float_parsedNtNtNtB9_3str6traits7FromStr8from_str(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.j, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.ph573, i64 noundef %i.by) #20
   %i.oa = load i8, ptr %i.j, align 8, !range !18, !noundef !4
@@ -2290,8 +2292,8 @@ bb.du:                                            ; preds = %.lr.ph150.i368
   %.not105.i372 = icmp eq i64 %i.qh, 0
   br i1 %.not105.i372, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit375, label %.lr.ph150.i368
 
-.thread587:                                       ; preds = %.lr.ph.i343, %bb.dn, %bb.dm, %.lr.ph141.i353, %.preheader111.i360, %bb.dr, %bb.ds, %.lr.ph150.i368, %bb.dj, %bb.dj, %bb.o
-  %.ph595 = phi ptr [ inttoptr (i64 1 to ptr), %bb.o ], [ %i.ch, %.preheader111.i360 ], [ %i.ch, %.lr.ph150.i368 ], [ %i.ch, %bb.dj ], [ %i.ch, %.lr.ph141.i353 ], [ %i.ch, %bb.dj ], [ %i.ch, %bb.ds ], [ %i.ch, %bb.dr ], [ %i.ch, %bb.dm ], [ %i.ch, %bb.dn ], [ %i.ch, %.lr.ph.i343 ] ; 3 uses
+.thread587:                                       ; preds = %.lr.ph.i343, %bb.dn, %bb.dm, %.lr.ph141.i353, %.preheader111.i360, %bb.ds, %bb.dr, %.lr.ph150.i368, %bb.dj, %bb.dj, %bb.o
+  %.ph595 = phi ptr [ inttoptr (i64 1 to ptr), %bb.o ], [ %i.ch, %.preheader111.i360 ], [ %i.ch, %.lr.ph150.i368 ], [ %i.ch, %bb.dj ], [ %i.ch, %.lr.ph141.i353 ], [ %i.ch, %bb.dj ], [ %i.ch, %bb.dr ], [ %i.ch, %bb.ds ], [ %i.ch, %bb.dm ], [ %i.ch, %bb.dn ], [ %i.ch, %.lr.ph.i343 ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   call void @_RNvXs2_NtNtCs6JMX4GRUq9U_4core3num11float_parsedNtNtNtB9_3str6traits7FromStr8from_str(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.d, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.ph595, i64 noundef %i.cf) #20
   %i.ql = load i8, ptr %i.d, align 8, !range !18, !noundef !4

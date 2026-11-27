@@ -204,12 +204,16 @@ bb.h:                                             ; preds = %bb.f
   %.sroa.5.i.sroa.3.6.copyload.i.i = load i64, ptr %i.c, align 8, !noalias !114
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.8.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5.i.sroa.5.6..sroa_idx.i.i, i64 16, i1 false), !noalias !117
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !114
+  %3 = zext nneg i8 %i.ab to i16
+  %4 = freeze i8 %i.ac
+  %5 = zext i8 %4 to i16
+  %6 = shl nuw i16 %5, 8
+  %7 = or disjoint i16 %6, %3
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.e
   %.sroa.6.0.i.i = phi i64 [ %.sroa.5.i.sroa.3.6.copyload.i.i, %bb.h ], [ -9223372036854775808, %bb.e ] ; 2 uses
-  %.sroa.4.0.i.i = phi i8 [ %i.ac, %bb.h ], [ undef, %bb.e ]
-  %.sroa.0.0.i.i = phi i8 [ %i.ab, %bb.h ], [ undef, %bb.e ]
+  %.sroa.0.0.i.i = phi i16 [ %7, %bb.h ], [ undef, %bb.e ] ; 2 uses
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6result6ResultNtNtNtCsjyY8HP3IvQ6_12object_store3aws7builder17AmazonS3ConfigKeyNtB18_5ErrorEECs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef align 8 dereferenceable(72) %i.e)
           to label %bb.k unwind label %bb.d, !noalias !115
 
@@ -258,10 +262,13 @@ _RNCNvMs_NtCs9rVkZwOUgsI_13deltalake_aws11credentialsNtB6_26OptionsCredentialsPr
 bb.p:                                             ; preds = %_RNCNvMs_NtCs9rVkZwOUgsI_13deltalake_aws11credentialsNtB6_26OptionsCredentialsProvider11credentials0B8_.exit.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !122
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.9.8..sroa_idx.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.8.i.i, i64 16, i1 false), !noalias !123
+  %.sroa.03.0.extract.trunc.i.i = trunc i16 %.sroa.0.0.i.i to i8
+  %.sroa.03.1.extract.shift.i.i = lshr i16 %.sroa.0.0.i.i, 8
+  %.sroa.03.1.extract.trunc.i.i = trunc nuw i16 %.sroa.03.1.extract.shift.i.i to i8
   store i64 %.sroa.6.0.i.i, ptr %i.b, align 8, !noalias !123
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !124
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i) ]
-  call void @_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3mapINtB5_7HashMapNtNtNtCsjyY8HP3IvQ6_12object_store3aws7builder17AmazonS3ConfigKeyNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtNtCs2pqxYH9ZEk8_3std4hash6random11RandomStateE6insertCs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, ptr noalias noundef nonnull align 8 dereferenceable(48) %.val.i, i8 noundef %.sroa.0.0.i.i, i8 %.sroa.4.0.i.i, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.b), !noalias !125
+  call void @_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3mapINtB5_7HashMapNtNtNtCsjyY8HP3IvQ6_12object_store3aws7builder17AmazonS3ConfigKeyNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtNtCs2pqxYH9ZEk8_3std4hash6random11RandomStateE6insertCs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, ptr noalias noundef nonnull align 8 dereferenceable(48) %.val.i, i8 noundef %.sroa.03.0.extract.trunc.i.i, i8 %.sroa.03.1.extract.trunc.i.i, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.b), !noalias !125
   %i.ai = load i64, ptr %i.a, align 8, !range !13, !alias.scope !126, !noalias !124, !noundef !6
   %i.aj = icmp eq i64 %i.ai, -9223372036854775808
   br i1 %i.aj, label %_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits8iterator8Iterator8for_each4callTNtNtNtCsjyY8HP3IvQ6_12object_store3aws7builder17AmazonS3ConfigKeyNtNtCs6Po7BT7Nknu_5alloc6string6StringENCINvXs1i_NtCs3gpiEk3WpjL_9hashbrown3mapINtB36_7HashMapB1g_B2j_NtNtNtCs2pqxYH9ZEk8_3std4hash6random11RandomStateEINtNtBa_7collect6ExtendB1f_E6extendINtNtNtBc_8adapters10filter_map9FilterMapINtNtNtNtB43_11collections4hash3map4IterB2j_B2j_ENCNvMs_NtCs9rVkZwOUgsI_13deltalake_aws11credentialsNtB6T_26OptionsCredentialsProvider11credentials0EE0E0B6V_.exit.i.i, label %bb.q
@@ -664,18 +671,13 @@ bb.a:
   %i.b = and i64 %i.a, 3
   switch i64 %i.b, label %default.unreachable [
     i64 2, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtNtCs2pqxYH9ZEk8_3std2io5error14repr_bitpacked4ReprECs9rVkZwOUgsI_13deltalake_aws.exit
-    i64 3, label %0
+    i64 3, label %_RINvNtNtNtCs2pqxYH9ZEk8_3std2io5error14repr_bitpacked11decode_reprINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxNtB4_6CustomENCNvXs1_B2_NtB2_4ReprNtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4drop0ECs9rVkZwOUgsI_13deltalake_aws.exit.i.i
     i64 0, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtNtCs2pqxYH9ZEk8_3std2io5error14repr_bitpacked4ReprECs9rVkZwOUgsI_13deltalake_aws.exit
     i64 1, label %bb.b
   ], !prof !745
 
 default.unreachable:                              ; preds = %bb.a
   unreachable
-
-0:                                                ; preds = %bb.a
-  %1 = icmp ult ptr %.0.val, inttoptr (i64 180388626432 to ptr)
-  tail call void @llvm.assume(i1 %1)
-  br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtNtCs2pqxYH9ZEk8_3std2io5error14repr_bitpacked4ReprECs9rVkZwOUgsI_13deltalake_aws.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr i8, ptr %.0.val, i64 -1    ; 4 uses
@@ -686,6 +688,11 @@ bb.b:                                             ; preds = %bb.a
   %i.e = load ptr, ptr %.val1.i.i.i.i, align 8, !invariant.load !6 ; 2 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.e, null
   br i1 %.not.i.i.i.i.i.i, label %bb.d, label %bb.c
+
+_RINvNtNtNtCs2pqxYH9ZEk8_3std2io5error14repr_bitpacked11decode_reprINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxNtB4_6CustomENCNvXs1_B2_NtB2_4ReprNtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4drop0ECs9rVkZwOUgsI_13deltalake_aws.exit.i.i: ; preds = %bb.a
+  %0 = icmp ult ptr %.0.val, inttoptr (i64 180388626432 to ptr)
+  tail call void @llvm.assume(i1 %0)
+  br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtNtCs2pqxYH9ZEk8_3std2io5error14repr_bitpacked4ReprECs9rVkZwOUgsI_13deltalake_aws.exit
 
 bb.c:                                             ; preds = %bb.b
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i) ]
@@ -727,7 +734,7 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3Box
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %i.c, i64 noundef 24, i64 noundef 8) #29
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtNtCs2pqxYH9ZEk8_3std2io5error14repr_bitpacked4ReprECs9rVkZwOUgsI_13deltalake_aws.exit
 
-_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtNtCs2pqxYH9ZEk8_3std2io5error14repr_bitpacked4ReprECs9rVkZwOUgsI_13deltalake_aws.exit: ; preds = %bb.a, %bb.a, %0, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxNtNtNtCs2pqxYH9ZEk8_3std2io5error6CustomEECs9rVkZwOUgsI_13deltalake_aws.exit.i.i.i
+_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtNtCs2pqxYH9ZEk8_3std2io5error14repr_bitpacked4ReprECs9rVkZwOUgsI_13deltalake_aws.exit: ; preds = %bb.a, %bb.a, %_RINvNtNtNtCs2pqxYH9ZEk8_3std2io5error14repr_bitpacked11decode_reprINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxNtB4_6CustomENCNvXs1_B2_NtB2_4ReprNtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4drop0ECs9rVkZwOUgsI_13deltalake_aws.exit.i.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxNtNtNtCs2pqxYH9ZEk8_3std2io5error6CustomEECs9rVkZwOUgsI_13deltalake_aws.exit.i.i.i
   ret void
 }
 

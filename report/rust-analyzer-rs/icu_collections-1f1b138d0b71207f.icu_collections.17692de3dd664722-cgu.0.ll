@@ -204,9 +204,10 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %.sroa.661.sroa.4.0..sroa.661.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i8 %.sroa.2.068, ptr %.sroa.661.sroa.4.0..sroa.661.0..sroa_idx.sroa_idx, align 8, !alias.scope !150
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store i32 %.sroa.0.0, ptr %i.n, align 8, !alias.scope !151
-  %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 44
-  store i32 1114111, ptr %.sroa.2.0..sroa_idx, align 4, !alias.scope !151
+  %2 = freeze i32 %.sroa.0.0
+  %3 = zext i32 %2 to i64
+  %4 = or disjoint i64 %3, 4785070309113856
+  store i64 %4, ptr %i.n, align 8, !alias.scope !151
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 48
   store i8 %.sroa.3.065, ptr %.sroa.3.0..sroa_idx, align 8, !alias.scope !151
   ret void

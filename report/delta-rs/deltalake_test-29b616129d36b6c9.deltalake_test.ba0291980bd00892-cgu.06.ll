@@ -202,18 +202,13 @@ bb.a:
   %i.b = and i64 %i.a, 3
   switch i64 %i.b, label %default.unreachable [
     i64 2, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtNtCs2pqxYH9ZEk8_3std2io5error14repr_bitpacked4ReprECsfY7SmN0bPrO_14deltalake_test.exit
-    i64 3, label %1
+    i64 3, label %_RINvNtNtNtCs2pqxYH9ZEk8_3std2io5error14repr_bitpacked11decode_reprINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxNtB4_6CustomENCNvXs1_B2_NtB2_4ReprNtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4drop0ECsfY7SmN0bPrO_14deltalake_test.exit.i.i
     i64 0, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtNtCs2pqxYH9ZEk8_3std2io5error14repr_bitpacked4ReprECsfY7SmN0bPrO_14deltalake_test.exit
     i64 1, label %bb.b
   ], !prof !338
 
 default.unreachable:                              ; preds = %bb.a
   unreachable
-
-1:                                                ; preds = %bb.a
-  %2 = icmp ult ptr %.val, inttoptr (i64 180388626432 to ptr)
-  tail call void @llvm.assume(i1 %2)
-  br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtNtCs2pqxYH9ZEk8_3std2io5error14repr_bitpacked4ReprECsfY7SmN0bPrO_14deltalake_test.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr i8, ptr %.val, i64 -1      ; 4 uses
@@ -224,6 +219,11 @@ bb.b:                                             ; preds = %bb.a
   %i.e = load ptr, ptr %.val1.i.i.i.i, align 8, !invariant.load !4 ; 2 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.e, null
   br i1 %.not.i.i.i.i.i.i, label %bb.d, label %bb.c
+
+_RINvNtNtNtCs2pqxYH9ZEk8_3std2io5error14repr_bitpacked11decode_reprINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxNtB4_6CustomENCNvXs1_B2_NtB2_4ReprNtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4drop0ECsfY7SmN0bPrO_14deltalake_test.exit.i.i: ; preds = %bb.a
+  %1 = icmp ult ptr %.val, inttoptr (i64 180388626432 to ptr)
+  tail call void @llvm.assume(i1 %1)
+  br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtNtCs2pqxYH9ZEk8_3std2io5error14repr_bitpacked4ReprECsfY7SmN0bPrO_14deltalake_test.exit
 
 bb.c:                                             ; preds = %bb.b
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i) ]
@@ -265,7 +265,7 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3Box
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %i.c, i64 noundef 24, i64 noundef 8) #20
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtNtCs2pqxYH9ZEk8_3std2io5error14repr_bitpacked4ReprECsfY7SmN0bPrO_14deltalake_test.exit
 
-_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtNtCs2pqxYH9ZEk8_3std2io5error14repr_bitpacked4ReprECsfY7SmN0bPrO_14deltalake_test.exit: ; preds = %bb.a, %bb.a, %1, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxNtNtNtCs2pqxYH9ZEk8_3std2io5error6CustomEECsfY7SmN0bPrO_14deltalake_test.exit.i.i.i
+_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtNtCs2pqxYH9ZEk8_3std2io5error14repr_bitpacked4ReprECsfY7SmN0bPrO_14deltalake_test.exit: ; preds = %bb.a, %bb.a, %_RINvNtNtNtCs2pqxYH9ZEk8_3std2io5error14repr_bitpacked11decode_reprINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxNtB4_6CustomENCNvXs1_B2_NtB2_4ReprNtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4drop0ECsfY7SmN0bPrO_14deltalake_test.exit.i.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxNtNtNtCs2pqxYH9ZEk8_3std2io5error6CustomEECsfY7SmN0bPrO_14deltalake_test.exit.i.i.i
   ret void
 }
 
@@ -668,13 +668,17 @@ bb.a:
   %i.b = alloca [8 x i8], align 4                 ; 5 uses
   %i.c = alloca [48 x i8], align 8                ; 5 uses
   %i.d = alloca [24 x i8], align 8                ; 12 uses
-  %i.e = alloca [24 x i8], align 8                ; 6 uses
+  %i.e = alloca [24 x i8], align 8                ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
-  %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 16
+  %6 = getelementptr inbounds nuw i8, ptr %i.e, i64 16
+  store i16 0, ptr %6, align 8
   store i64 64000, ptr %i.e, align 8
+  %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 18
+  store i8 0, ptr %i.f, align 2
+  %7 = getelementptr inbounds nuw i8, ptr %i.e, i64 19
   %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   store i64 0, ptr %i.g, align 8
-  store <4 x i8> <i8 0, i8 0, i8 0, i8 1>, ptr %i.f, align 8
+  store i8 1, ptr %7, align 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   %i.h = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -764,9 +768,7 @@ bb.l:                                             ; preds = %bb.j
 
 bb.m:                                             ; preds = %bb.h
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i32 0, ptr %6, align 4
-  store i32 0, ptr %0, align 8
+  store i64 0, ptr %0, align 8
   invoke void @_RNvXso_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VechENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCsfY7SmN0bPrO_14deltalake_test(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.d)
           to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs2pqxYH9ZEk8_3std4path7PathBufECsfY7SmN0bPrO_14deltalake_test.exit unwind label %bb.n
 

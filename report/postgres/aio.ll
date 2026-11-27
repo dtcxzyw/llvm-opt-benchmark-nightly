@@ -202,7 +202,12 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   store i64 %i.bb, ptr %i.az, align 8
   tail call fastcc void @pgaio_io_update_state(ptr noundef nonnull %0, i32 noundef 0)
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #13, !srcloc !12
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 2
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 1
+  store i8 0, ptr %i.bc, align 1
+  store i16 0, ptr %1, align 2
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 4
+  store i8 0, ptr %2, align 4
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 13
   store i8 0, ptr %i.bd, align 1
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 96
@@ -210,7 +215,6 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 20
   store i32 0, ptr %i.bf, align 4
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 84 ; 2 uses
-  store i32 0, ptr %i.bc, align 1
   %i.bh = load i32, ptr %i.bg, align 4
   %i.bi = and i32 %i.bh, -449
   store i32 %i.bi, ptr %i.bg, align 4

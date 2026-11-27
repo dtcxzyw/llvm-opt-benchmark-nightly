@@ -204,7 +204,7 @@ bb.o:                                             ; preds = %bb.n
   %i.bl = load ptr, ptr %i.bk, align 8, !tbaa !19 ; 2 uses
   %i.bm = load i32, ptr %i.bj, align 8, !tbaa !19
   %i.bn = zext i32 %i.bm to i64                   ; 2 uses
-  %i.bo = load ptr, ptr %i.b, align 8, !tbaa !361 ; 8 uses
+  %i.bo = load ptr, ptr %i.b, align 8, !tbaa !361 ; 7 uses
   %i.bp = load ptr, ptr %i.c, align 8, !tbaa !47
   %.not.i.i = icmp eq ptr %i.bo, %i.bp
   br i1 %.not.i.i, label %bb.q, label %bb.p
@@ -214,9 +214,7 @@ bb.p:                                             ; preds = %bb.o
   %.sroa.549.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bo, i64 8
   store i64 %i.bn, ptr %.sroa.549.0..sroa_idx, align 8, !tbaa !32
   %.sroa.652.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bo, i64 16
-  store i8 0, ptr %.sroa.652.0..sroa_idx, align 8, !tbaa !93
-  %.sroa.755.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bo, i64 17
-  store i8 0, ptr %.sroa.755.0..sroa_idx, align 1, !tbaa !93
+  store i16 0, ptr %.sroa.652.0..sroa_idx, align 8, !tbaa !93
   %i.bq = load ptr, ptr %i.b, align 8, !tbaa !361
   %i.br = getelementptr inbounds nuw i8, ptr %i.bq, i64 24
   store ptr %i.br, ptr %i.b, align 8, !tbaa !361
@@ -245,14 +243,12 @@ _ZNKSt6vectorIN7msgpack2v113object_parser4elemESaIS3_EE12_M_check_lenEmPKc.exit.
   tail call void @llvm.assume(i1 %.not.i.i.i.i)
   %i.cc = mul nuw nsw i64 %i.cb, 24
   %i.cd = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.cc) #27 ; 5 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.cd, i64 %i.bv ; 4 uses
-  store ptr %i.bl, ptr %2, align 8, !tbaa !19
-  %.sroa.549.0..sroa_idx50 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store i64 %i.bn, ptr %.sroa.549.0..sroa_idx50, align 8, !tbaa !32
-  %.sroa.652.0..sroa_idx53 = getelementptr inbounds nuw i8, ptr %2, i64 16
-  store i8 0, ptr %.sroa.652.0..sroa_idx53, align 8, !tbaa !93
-  %.sroa.755.0..sroa_idx56 = getelementptr inbounds nuw i8, ptr %2, i64 17
-  store i8 0, ptr %.sroa.755.0..sroa_idx56, align 1, !tbaa !93
+  %.sroa.549.0..sroa_idx50 = getelementptr inbounds nuw i8, ptr %i.cd, i64 %i.bv ; 3 uses
+  store ptr %i.bl, ptr %.sroa.549.0..sroa_idx50, align 8, !tbaa !19
+  %.sroa.652.0..sroa_idx53 = getelementptr inbounds nuw i8, ptr %.sroa.549.0..sroa_idx50, i64 8
+  store i64 %i.bn, ptr %.sroa.652.0..sroa_idx53, align 8, !tbaa !32
+  %.sroa.755.0..sroa_idx56 = getelementptr inbounds nuw i8, ptr %.sroa.549.0..sroa_idx50, i64 16
+  store i16 0, ptr %.sroa.755.0..sroa_idx56, align 8, !tbaa !93
   %.not10.i.i.i.i.i.i = icmp eq ptr %i.bs, %i.bo
   br i1 %.not10.i.i.i.i.i.i, label %_ZNSt6vectorIN7msgpack2v113object_parser4elemESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i
 
@@ -302,7 +298,7 @@ bb.u:                                             ; preds = %bb.t
   %i.cs = load ptr, ptr %i.cr, align 8, !tbaa !19 ; 2 uses
   %i.ct = load i32, ptr %i.cq, align 8, !tbaa !19
   %i.cu = zext i32 %i.ct to i64                   ; 2 uses
-  %i.cv = load ptr, ptr %i.b, align 8, !tbaa !361 ; 8 uses
+  %i.cv = load ptr, ptr %i.b, align 8, !tbaa !361 ; 7 uses
   %i.cw = load ptr, ptr %i.c, align 8, !tbaa !47
   %.not.i.i23 = icmp eq ptr %i.cv, %i.cw
   br i1 %.not.i.i23, label %bb.w, label %bb.v
@@ -312,9 +308,7 @@ bb.v:                                             ; preds = %bb.u
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cv, i64 8
   store i64 %i.cu, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !32
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cv, i64 16
-  store i8 1, ptr %.sroa.6.0..sroa_idx, align 8, !tbaa !93
-  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cv, i64 17
-  store i8 1, ptr %.sroa.7.0..sroa_idx, align 1, !tbaa !93
+  store i16 257, ptr %.sroa.6.0..sroa_idx, align 8, !tbaa !93
   %i.cx = load ptr, ptr %i.b, align 8, !tbaa !361
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cx, i64 24
   store ptr %i.cy, ptr %i.b, align 8, !tbaa !361
@@ -343,14 +337,12 @@ _ZNKSt6vectorIN7msgpack2v113object_parser4elemESaIS3_EE12_M_check_lenEmPKc.exit.
   tail call void @llvm.assume(i1 %.not.i.i.i.i26)
   %i.dj = mul nuw nsw i64 %i.di, 24
   %i.dk = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.dj) #27 ; 5 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.dk, i64 %i.dc ; 4 uses
-  store ptr %i.cs, ptr %3, align 8, !tbaa !19
-  %.sroa.5.0..sroa_idx40.a = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store i64 %i.cu, ptr %.sroa.5.0..sroa_idx40.a, align 8, !tbaa !32
-  %.sroa.6.0..sroa_idx42.a = getelementptr inbounds nuw i8, ptr %3, i64 16
-  store i8 1, ptr %.sroa.6.0..sroa_idx42.a, align 8, !tbaa !93
-  %.sroa.7.0..sroa_idx44 = getelementptr inbounds nuw i8, ptr %3, i64 17
-  store i8 1, ptr %.sroa.7.0..sroa_idx44, align 1, !tbaa !93
+  %.sroa.5.0..sroa_idx40.a = getelementptr inbounds nuw i8, ptr %i.dk, i64 %i.dc ; 3 uses
+  store ptr %i.cs, ptr %.sroa.5.0..sroa_idx40.a, align 8, !tbaa !19
+  %.sroa.6.0..sroa_idx42.a = getelementptr inbounds nuw i8, ptr %.sroa.5.0..sroa_idx40.a, i64 8
+  store i64 %i.cu, ptr %.sroa.6.0..sroa_idx42.a, align 8, !tbaa !32
+  %.sroa.7.0..sroa_idx44 = getelementptr inbounds nuw i8, ptr %.sroa.5.0..sroa_idx40.a, i64 16
+  store i16 257, ptr %.sroa.7.0..sroa_idx44, align 8, !tbaa !93
   %.not10.i.i.i.i.i.i27 = icmp eq ptr %i.cz, %i.cv
   br i1 %.not10.i.i.i.i.i.i27, label %_ZNSt6vectorIN7msgpack2v113object_parser4elemESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit22.i.i.i32, label %.lr.ph.i.i.i.i.i.i28
 
@@ -693,15 +685,15 @@ bb.o:                                             ; preds = %bb.n
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bg, i64 16
   store i64 4, ptr %i.bh, align 8, !tbaa !373
   %i.bi = load i64, ptr %i.ay, align 8
-  %i.bj = getelementptr inbounds i8, ptr %i.ap, i64 %i.bi ; 3 uses
-  %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 225 ; 2 uses
+  %i.bj = getelementptr inbounds i8, ptr %i.ap, i64 %i.bi ; 4 uses
+  %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 225
   %i.bl = load i8, ptr %i.bk, align 1, !tbaa !376, !range !94, !noundef !95
   %i.bm = trunc nuw i8 %i.bl to i1
   br i1 %i.bm, label %_ZStlsIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_St8_SetfillIS3_E.exit, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bj, i64 240
-  %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !66 ; 5 uses
+  %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !66 ; 6 uses
   %.not.i.i.i.i.i = icmp eq ptr %i.bo, null
   br i1 %.not.i.i.i.i.i, label %bb.q, label %_ZSt13__check_facetISt5ctypeIcEERKT_PS3_.exit.i.i.i.i
 
@@ -713,18 +705,28 @@ _ZSt13__check_facetISt5ctypeIcEERKT_PS3_.exit.i.i.i.i: ; preds = %bb.p
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 56
   %i.bq = load i8, ptr %i.bp, align 8, !tbaa !71
   %.not.i1.i.i.i.i = icmp eq i8 %i.bq, 0
-  br i1 %.not.i1.i.i.i.i, label %bb.r, label %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i.i.i
+  br i1 %.not.i1.i.i.i.i, label %bb.r, label %3
+
+3:                                                ; preds = %_ZSt13__check_facetISt5ctypeIcEERKT_PS3_.exit.i.i.i.i
+  %4 = getelementptr inbounds nuw i8, ptr %i.bo, i64 89
+  %5 = load i8, ptr %4, align 1, !tbaa !19
+  %6 = freeze i8 %5
+  br label %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i.i.i
 
 bb.r:                                             ; preds = %_ZSt13__check_facetISt5ctypeIcEERKT_PS3_.exit.i.i.i.i
   call void @_ZNKSt5ctypeIcE13_M_widen_initEv(ptr noundef nonnull align 8 dereferenceable(570) %i.bo)
   %i.br = load ptr, ptr %i.bo, align 8, !tbaa !53
   %i.bs = getelementptr inbounds nuw i8, ptr %i.br, i64 48
   %i.bt = load ptr, ptr %i.bs, align 8
-  %i.bu = call noundef signext i8 %i.bt(ptr noundef nonnull align 8 dereferenceable(570) %i.bo, i8 noundef signext 32), !inline_history !371 ; 0 uses
+  %i.bu = call noundef signext i8 %i.bt(ptr noundef nonnull align 8 dereferenceable(570) %i.bo, i8 noundef signext 32), !inline_history !371
   br label %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i.i.i
 
-_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i.i.i: ; preds = %bb.r, %_ZSt13__check_facetISt5ctypeIcEERKT_PS3_.exit.i.i.i.i
-  store i8 1, ptr %i.bk, align 1, !tbaa !376
+_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i.i.i: ; preds = %bb.r, %3
+  %.0.i.i.i.i.i = phi i8 [ %6, %3 ], [ %i.bu, %bb.r ]
+  %7 = getelementptr inbounds nuw i8, ptr %i.bj, i64 224
+  %8 = zext i8 %.0.i.i.i.i.i to i16
+  %9 = or disjoint i16 %8, 256
+  store i16 %9, ptr %7, align 8
   br label %_ZStlsIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_St8_SetfillIS3_E.exit
 
 _ZStlsIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_St8_SetfillIS3_E.exit: ; preds = %bb.o, %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i.i.i

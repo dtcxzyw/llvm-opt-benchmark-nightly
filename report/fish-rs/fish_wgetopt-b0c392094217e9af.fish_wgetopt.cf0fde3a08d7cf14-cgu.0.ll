@@ -204,10 +204,11 @@ _RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   %.us-phi133.i.i = phi i64 [ %.sroa.7.0.us114137.us.i.i258, %_RINvYNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtCskr4qsHYS30i_15fish_widestring4WExt11starts_withRB3_ECshMbxjpSxucW_12fish_wgetopt.exit.us.us.i.i ], [ %.sroa.7.0.ph157229.i.i, %_RINvYNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtCskr4qsHYS30i_15fish_widestring4WExt11starts_withRB3_ECshMbxjpSxucW_12fish_wgetopt.exit.i.i ]
   %.us-phi134.i.i = phi ptr [ %.sroa.0.0.us115138.us.i.i257, %_RINvYNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtCskr4qsHYS30i_15fish_widestring4WExt11starts_withRB3_ECshMbxjpSxucW_12fish_wgetopt.exit.us.us.i.i ], [ %.sroa.0.0.ph158228.i.i, %_RINvYNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtCskr4qsHYS30i_15fish_widestring4WExt11starts_withRB3_ECshMbxjpSxucW_12fish_wgetopt.exit.i.i ] ; 2 uses
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.us-phi134.i.i, i64 16
-  %.sroa.4.0.copyload.i.i = load i32, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !noalias !143 ; 2 uses
+  %.sroa.4.0.copyload.i.i = load i32, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !noalias !143
   %.sroa.518.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.us-phi134.i.i, i64 20
   %.sroa.518.0.copyload.i.i = load i32, ptr %.sroa.518.0..sroa_idx.i.i, align 4, !noalias !143
-  %.not.i.i16120.i = icmp eq i32 %.sroa.4.0.copyload.i.i, -1
+  %2 = freeze i32 %.sroa.4.0.copyload.i.i         ; 2 uses
+  %.not.i.i16120.i = icmp eq i32 %2, -1
   br i1 %.not.i.i16120.i, label %_RNvMCshMbxjpSxucW_12fish_wgetoptNtB2_9WGetopter22find_matching_long_opt.exit.thread.i, label %_RNvMCshMbxjpSxucW_12fish_wgetoptNtB2_9WGetopter22find_matching_long_opt.exit.i
 
 bb.bu:                                            ; preds = %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterNtCshMbxjpSxucW_12fish_wgetopt7WOptionEENtNtNtB8_6traits8iterator8Iterator4nextB1z_.exit.thread.i.i
@@ -256,7 +257,7 @@ _RINvYNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtCskr4qsHYS30i_15fish_wides
   %.sroa.027.2.i.i = phi i64 [ %.sroa.7.0.ph157229.i.i, %bb.bz ], [ %.sroa.027.0.ph149233.i.i, %bb.by ], [ %.sroa.027.0.ph149233.i.i, %bb.bw ], [ %.sroa.027.0.ph149233.i.i, %bb.bx ] ; 2 uses
   %.sroa.0.130.i.i = phi i1 [ %.sroa.0.029.ph151232.i.i, %bb.bz ], [ true, %bb.by ], [ %.sroa.0.029.ph151232.i.i, %bb.bw ], [ %.sroa.0.029.ph151232.i.i, %bb.bx ] ; 2 uses
   %.sroa.6.2.i.i = phi i32 [ %.sroa.521.0.copyload.i.i, %bb.bz ], [ %.sroa.6.0.ph153231.i.i, %bb.by ], [ %.sroa.6.0.ph153231.i.i, %bb.bw ], [ %.sroa.6.0.ph153231.i.i, %bb.bx ] ; 2 uses
-  %.sroa.3.2.i.i = phi i32 [ %.sroa.420.0.copyload.i.i, %bb.bz ], [ %.sroa.3.0.ph155230.i.i, %bb.by ], [ %.sroa.3.0.ph155230.i.i, %bb.bw ], [ %.sroa.3.0.ph155230.i.i, %bb.bx ] ; 3 uses
+  %.sroa.3.2.i.i = phi i32 [ %3, %bb.bz ], [ %.sroa.3.0.ph155230.i.i, %bb.by ], [ %.sroa.3.0.ph155230.i.i, %bb.bw ], [ %.sroa.3.0.ph155230.i.i, %bb.bx ] ; 3 uses
   %.not.i.i = icmp eq ptr %i.jo, %i.im
   br i1 %.not.i.i, label %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterNtCshMbxjpSxucW_12fish_wgetopt7WOptionEENtNtNtB8_6traits8iterator8Iterator4nextB1z_.exit.thread.i.i, label %.lr.ph.preheader.i.i
 
@@ -273,13 +274,15 @@ bb.bz:                                            ; preds = %bb.by
   %.sroa.420.0.copyload.i.i = load i32, ptr %.sroa.420.0..sroa_idx.i.i, align 8, !noalias !143
   %.sroa.521.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.ph158228.i.i, i64 20
   %.sroa.521.0.copyload.i.i = load i32, ptr %.sroa.521.0..sroa_idx.i.i, align 4, !noalias !143
+  %3 = freeze i32 %.sroa.420.0.copyload.i.i
   br label %_RINvYNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtCskr4qsHYS30i_15fish_widestring4WExt11starts_withRB3_ECshMbxjpSxucW_12fish_wgetopt.exit.thread.i.i
 
 _RNvMCshMbxjpSxucW_12fish_wgetoptNtB2_9WGetopter22find_matching_long_opt.exit.i: ; preds = %bb.bu, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterNtCshMbxjpSxucW_12fish_wgetopt7WOptionEENtNtNtB8_6traits8iterator8Iterator4nextB1z_.exit.thread.i.thread.i
   %.sroa.027.1.i123132.i = phi i64 [ %.sroa.027.2.i.i, %bb.bu ], [ %.us-phi133.i.i, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterNtCshMbxjpSxucW_12fish_wgetopt7WOptionEENtNtNtB8_6traits8iterator8Iterator4nextB1z_.exit.thread.i.thread.i ]
   %.sroa.6.1.i124131.i = phi i32 [ %.sroa.6.2.i.i, %bb.bu ], [ %.sroa.518.0.copyload.i.i, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterNtCshMbxjpSxucW_12fish_wgetopt7WOptionEENtNtNtB8_6traits8iterator8Iterator4nextB1z_.exit.thread.i.thread.i ]
-  %.sroa.3.1.i125130.i = phi i32 [ %.sroa.3.2.i.i, %bb.bu ], [ %.sroa.4.0.copyload.i.i, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterNtCshMbxjpSxucW_12fish_wgetopt7WOptionEENtNtNtB8_6traits8iterator8Iterator4nextB1z_.exit.thread.i.thread.i ]
-  %.sroa.829.20.extract.trunc.i = trunc i32 %.sroa.6.1.i124131.i to i8 ; 2 uses
+  %.sroa.3.1.i125130.i = phi i32 [ %.sroa.3.2.i.i, %bb.bu ], [ %2, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterNtCshMbxjpSxucW_12fish_wgetopt7WOptionEENtNtNtB8_6traits8iterator8Iterator4nextB1z_.exit.thread.i.thread.i ]
+  %4 = freeze i32 %.sroa.6.1.i124131.i
+  %.sroa.829.20.extract.trunc.i = trunc i32 %4 to i8 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !150)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !151)
   %i.kh = icmp eq i64 %i.dy, -1

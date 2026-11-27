@@ -205,7 +205,7 @@ bb.kn:                                            ; preds = %bb.km
 .lr.ph21.i.i:                                     ; preds = %.preheader.i.i422, %swap_bezier.exit.i.i
   %.020.i.i = phi i64 [ %i.dad, %swap_bezier.exit.i.i ], [ 0, %.preheader.i.i422 ] ; 2 uses
   %i.czn = load ptr, ptr %i.czb, align 8, !tbaa !286
-  %i.czo = getelementptr inbounds nuw [56 x i8], ptr %i.czn, i64 %.020.i.i ; 6 uses
+  %i.czo = getelementptr inbounds nuw [56 x i8], ptr %i.czn, i64 %.020.i.i ; 7 uses
   %i.czp = getelementptr inbounds nuw i8, ptr %i.czo, i64 8
   %i.czq = load i64, ptr %i.czp, align 8, !tbaa !288 ; 2 uses
   %i.czr = lshr i64 %i.czq, 1                     ; 2 uses
@@ -232,9 +232,16 @@ bb.kn:                                            ; preds = %bb.km
 
 swap_bezier.exit.i.i:                             ; preds = %.lr.ph.i.i.i, %.lr.ph21.i.i
   %i.daa = getelementptr inbounds nuw i8, ptr %i.czo, i64 16 ; 2 uses
-  %36 = load <2 x i32>, ptr %i.daa, align 8
-  %37 = shufflevector <2 x i32> %36, <2 x i32> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x i32> %37, ptr %i.daa, align 8
+  %.sroa.0.0.copyload.i.i.i = load i32, ptr %i.daa, align 8
+  %36 = getelementptr inbounds nuw i8, ptr %i.czo, i64 20
+  %37 = load i32, ptr %36, align 4, !tbaa !290
+  %38 = freeze i32 %37
+  %39 = zext i32 %38 to i64
+  %40 = freeze i32 %.sroa.0.0.copyload.i.i.i
+  %41 = zext i32 %40 to i64
+  %42 = shl nuw i64 %41, 32
+  %43 = or disjoint i64 %42, %39
+  store i64 %43, ptr %i.daa, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   %i.dab = getelementptr inbounds nuw i8, ptr %i.czo, i64 24 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.e, ptr noundef nonnull align 8 dereferenceable(16) %i.dab, i64 16, i1 false)

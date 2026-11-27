@@ -202,12 +202,15 @@ define dso_local void @_ZN10ExpressionC2E9eTermType(ptr nofree noundef nonnull w
 bb.a:
   store ptr getelementptr inbounds nuw inrange(-16, 176) (i8, ptr @_ZTV10Expression, i64 16), ptr %0, align 8, !tbaa !13
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 %1, ptr %i.a, align 8, !tbaa !75
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %3 = load i32, ptr @eid, align 4, !tbaa !72     ; 2 uses
+  %2 = load i32, ptr @eid, align 4, !tbaa !72
+  %3 = freeze i32 %2                              ; 2 uses
   %4 = add nsw i32 %3, 1
   store i32 %4, ptr @eid, align 4, !tbaa !72
-  store i32 %3, ptr %2, align 4, !tbaa !114
+  %5 = zext i32 %1 to i64
+  %6 = zext i32 %3 to i64
+  %7 = shl nuw i64 %6, 32
+  %8 = or disjoint i64 %7, %5
+  store i64 %8, ptr %i.a, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr null, ptr %i.b, align 8, !tbaa !85
   ret void
@@ -371,7 +374,7 @@ bb.c:                                             ; preds = %_ZNKSt7__cxx1112bas
   %i.q = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.b
   %i.r = icmp ult ptr %i.q, %3
   %i.s = select i1 %i.p, i1 true, i1 %i.r
-  br i1 %i.s, label %bb.d, label %bb.j, !prof !115
+  br i1 %i.s, label %bb.d, label %bb.j, !prof !114
 
 bb.d:                                             ; preds = %bb.c
   %.not35 = icmp eq i64 %i.b, %i.n
@@ -670,10 +673,10 @@ declare noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIc
 ; Function Attrs: nofree nounwind uwtable
 define internal void @_GLOBAL__sub_I_Expression.cpp() #16 section ".text.startup" {
 bb.a:
-  store i32 0, ptr @_ZN10Expression10exprTable_E, align 8, !tbaa !117
+  store i32 0, ptr @_ZN10Expression10exprTable_E, align 8, !tbaa !116
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) getelementptr inbounds nuw (i8, ptr @_ZN10Expression10exprTable_E, i64 8), i8 0, i64 48, i1 false)
   %i.a = tail call i32 @__cxa_atexit(ptr nonnull @_ZN17DistributionTableD2Ev, ptr nonnull @_ZN10Expression10exprTable_E, ptr nonnull @__dso_handle) #22 ; 0 uses
-  store i32 0, ptr @_ZN10Expression11paramTable_E, align 8, !tbaa !117
+  store i32 0, ptr @_ZN10Expression11paramTable_E, align 8, !tbaa !116
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) getelementptr inbounds nuw (i8, ptr @_ZN10Expression11paramTable_E, i64 8), i8 0, i64 48, i1 false)
   %i.b = tail call i32 @__cxa_atexit(ptr nonnull @_ZN17DistributionTableD2Ev, ptr nonnull @_ZN10Expression11paramTable_E, ptr nonnull @__dso_handle) #22 ; 0 uses
   ret void
@@ -837,8 +840,7 @@ attributes #26 = { builtin allocsize(0) memory(inaccessiblemem: readwrite, errno
 !111 = !{!47, !46, i64 73}
 !112 = !{i8 0, i8 2}
 !113 = !{!"llvm.loop.mustprogress"}
-!114 = !{!74, !6, i64 12}
-!115 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!116 = !{!"_ZTS17DistributionTable", !6, i64 0, !68, i64 8, !68, i64 32}
-!117 = !{!116, !6, i64 0}
+!114 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!115 = !{!"_ZTS17DistributionTable", !6, i64 0, !68, i64 8, !68, i64 32}
+!116 = !{!115, !6, i64 0}
 end_hunk_0

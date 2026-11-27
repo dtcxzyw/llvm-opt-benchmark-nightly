@@ -189,7 +189,9 @@ bb.o:                                             ; preds = %.preheader.i
 bb.p:                                             ; preds = %bb.o
   %i.az = call i32 @Extra_ReadBinary(ptr noundef %i.aw) #11
   %i.ba = getelementptr inbounds nuw i8, ptr %i.as, i64 72
-  store i32 %i.az, ptr %i.ba, align 8, !tbaa !15
+  %2 = freeze i32 %i.az
+  %3 = zext i32 %2 to i64
+  store i64 %3, ptr %i.ba, align 8
   br label %bb.r
 
 bb.q:                                             ; preds = %bb.o
@@ -199,12 +201,11 @@ bb.q:                                             ; preds = %bb.o
   store i32 %i.bc, ptr %i.bd, align 8, !tbaa !15
   store i8 0, ptr %i.bb, align 1, !tbaa !8
   %i.be = call i32 @Extra_ReadBinary(ptr noundef %i.aw) #11
+  %4 = getelementptr inbounds nuw i8, ptr %i.as, i64 76
+  store i32 %i.be, ptr %4, align 4, !tbaa !15
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %bb.p
-  %.sink.i.i = phi i32 [ 0, %bb.p ], [ %i.be, %bb.q ]
-  %2 = getelementptr inbounds nuw i8, ptr %i.as, i64 76
-  store i32 %.sink.i.i, ptr %2, align 4, !tbaa !15
   %i.bf = call ptr @strtok(ptr noundef null, ptr noundef nonnull @.str.17) #11
   %i.bg = call double @strtod(ptr noundef nonnull captures(none) %i.bf, ptr noundef null) #11, !inline_history !24
   %i.bh = fptrunc double %i.bg to float           ; 2 uses

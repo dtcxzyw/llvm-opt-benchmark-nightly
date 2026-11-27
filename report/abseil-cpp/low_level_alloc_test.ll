@@ -106,7 +106,8 @@ bb.g:                                             ; preds = %bb.d, %bb.f, %bb.e
 
 bb.h:                                             ; preds = %bb.g
   %i.n = call i32 @rand() #21
-  %i.o = and i32 %i.n, 16383                      ; 6 uses
+  %.fr = freeze i32 %i.n
+  %i.o = and i32 %.fr, 16383                      ; 6 uses
   %i.p = zext nneg i32 %i.o to i64                ; 2 uses
   br i1 %i.d, label %bb.i, label %bb.j
 
@@ -120,8 +121,9 @@ bb.j:                                             ; preds = %bb.h
 
 bb.k:                                             ; preds = %bb.j, %bb.i
   %i.s = phi ptr [ %i.q, %bb.i ], [ %i.r, %bb.j ] ; 4 uses
-  %i.t = call i32 @rand() #21                     ; 4 uses
-  %i.u = and i32 %i.t, 255
+  %i.t = call i32 @rand() #21
+  %.fr136 = freeze i32 %i.t                       ; 4 uses
+  %i.u = and i32 %.fr136, 255
   %.not7.i = icmp eq i32 %i.o, 0
   br i1 %.not7.i, label %_ZN4absl12lts_2026052613base_internal12_GLOBAL__N_118RandomizeBlockDescEPNS2_9BlockDescE.exit, label %iter.check
 
@@ -137,7 +139,7 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
   %i.w = and i64 %i.v, 12
   %n.vec = and i64 %i.v, 16368                    ; 4 uses
-  %broadcast.splatinsert = insertelement <16 x i32> poison, i32 %i.t, i64 0
+  %broadcast.splatinsert = insertelement <16 x i32> poison, i32 %.fr136, i64 0
   %broadcast.splat = shufflevector <16 x i32> %broadcast.splatinsert, <16 x i32> poison, <16 x i32> zeroinitializer
   br label %vector.body
 
@@ -164,7 +166,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ] ; 2 uses
   %n.vec14 = and i64 %i.v, 16380                  ; 3 uses
-  %broadcast.splatinsert15 = insertelement <4 x i32> poison, i32 %i.t, i64 0
+  %broadcast.splatinsert15 = insertelement <4 x i32> poison, i32 %.fr136, i64 0
   %broadcast.splat16 = shufflevector <4 x i32> %broadcast.splatinsert15, <4 x i32> poison, <4 x i32> zeroinitializer
   %i.ab = trunc nuw nsw i64 %vec.epilog.resume.val to i32
   %broadcast.splatinsert17 = insertelement <4 x i32> poison, i32 %i.ab, i64 0
@@ -195,7 +197,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %.lr.ph.i
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.lr.ph.i ], [ %indvars.iv.i.ph, %.lr.ph.i.preheader ] ; 3 uses
   %i.ag = trunc nuw nsw i64 %indvars.iv.i to i32
-  %i.ah = add i32 %i.t, %i.ag
+  %i.ah = add i32 %.fr136, %i.ag
   %i.ai = trunc i32 %i.ah to i8
   %i.aj = getelementptr inbounds nuw i8, ptr %i.s, i64 %indvars.iv.i
   store i8 %i.ai, ptr %i.aj, align 1, !tbaa !10
@@ -568,13 +570,15 @@ bb.am:                                            ; preds = %bb.ak
           to label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17NodeHashMapPolicyIiNS0_13base_internal12_GLOBAL__N_19BlockDescEEEJEE5eraseENS8_8iteratorE.exit unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 _ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17NodeHashMapPolicyIiNS0_13base_internal12_GLOBAL__N_19BlockDescEEEJEE5eraseENS8_8iteratorE.exit.sink.split: ; preds = %bb.z, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17NodeHashMapPolicyIiNS0_13base_internal12_GLOBAL__N_19BlockDescEEEJEE22find_or_prepare_insertIiEESt4pairINS8_8iteratorEbERKT_.exit.i.i.i, %.noexc56, %bb.w
-  %.val.val.i.i.sink175 = phi ptr [ %.val48.val, %bb.w ], [ %i.eh, %.noexc56 ], [ %.val.i.i.i.i.i, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17NodeHashMapPolicyIiNS0_13base_internal12_GLOBAL__N_19BlockDescEEEJEE22find_or_prepare_insertIiEESt4pairINS8_8iteratorEbERKT_.exit.i.i.i ], [ %.val4.i.i.i.i.i.i, %bb.z ] ; 3 uses
+  %.val.val.i.i.sink175 = phi ptr [ %.val48.val, %bb.w ], [ %i.eh, %.noexc56 ], [ %.val.i.i.i.i.i, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17NodeHashMapPolicyIiNS0_13base_internal12_GLOBAL__N_19BlockDescEEEJEE22find_or_prepare_insertIiEESt4pairINS8_8iteratorEbERKT_.exit.i.i.i ], [ %.val4.i.i.i.i.i.i, %bb.z ] ; 2 uses
   %i.fj = getelementptr inbounds nuw i8, ptr %.val.val.i.i.sink175, i64 8
   store ptr %i.s, ptr %i.fj, align 8, !tbaa !60
   %.sroa.7.0..sroa_idx96 = getelementptr inbounds nuw i8, ptr %.val.val.i.i.sink175, i64 16
-  store i32 %i.o, ptr %.sroa.7.0..sroa_idx96, align 8, !tbaa !12
-  %.sroa.10.0..sroa_idx99 = getelementptr inbounds nuw i8, ptr %.val.val.i.i.sink175, i64 20
-  store i32 %i.u, ptr %.sroa.10.0..sroa_idx99, align 4, !tbaa !12
+  %4 = zext nneg i32 %i.o to i64
+  %5 = zext nneg i32 %i.u to i64
+  %6 = shl nuw nsw i64 %5, 32
+  %7 = or disjoint i64 %6, %4
+  store i64 %7, ptr %.sroa.7.0..sroa_idx96, align 8
   br label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17NodeHashMapPolicyIiNS0_13base_internal12_GLOBAL__N_19BlockDescEEEJEE5eraseENS8_8iteratorE.exit
 
 _ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17NodeHashMapPolicyIiNS0_13base_internal12_GLOBAL__N_19BlockDescEEEJEE5eraseENS8_8iteratorE.exit: ; preds = %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17NodeHashMapPolicyIiNS0_13base_internal12_GLOBAL__N_19BlockDescEEEJEE5eraseENS8_8iteratorE.exit.sink.split, %bb.ae, %bb.al, %bb.am

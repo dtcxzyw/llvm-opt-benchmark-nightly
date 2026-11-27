@@ -202,7 +202,8 @@ _ZN8nanobind6detailL16trampoline_probeEPNS0_9type_dataEPKcm.exit.thread.i: ; pre
 bb.an:                                            ; preds = %_ZN8nanobind6detailL16trampoline_probeEPNS0_9type_dataEPKcm.exit.thread.i
   %i.ey = getelementptr inbounds nuw i8, ptr %i.ex, i64 12
   %i.ez = load i32, ptr %i.ey, align 4
-  %i.fa = add i32 %i.ez, 1
+  %.fr.i = freeze i32 %i.ez
+  %i.fa = add i32 %.fr.i, 1
   br label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an, %_ZN8nanobind6detailL16trampoline_probeEPNS0_9type_dataEPKcm.exit.thread.i
@@ -220,7 +221,7 @@ bb.aq:                                            ; preds = %bb.ap
   %i.ff = zext i32 %.037.i to i64
   %i.fg = shl nuw nsw i64 %i.ff, 4                ; 2 uses
   %i.fh = or disjoint i64 %i.fg, 16
-  %i.fi = tail call noundef ptr @_ZN8nanobind6detail12malloc_checkEm(i64 noundef %i.fh) ; 6 uses
+  %i.fi = tail call noundef ptr @_ZN8nanobind6detail12malloc_checkEm(i64 noundef %i.fh) ; 5 uses
   %i.fj = load atomic i64, ptr %i.ao monotonic, align 8
   %i.fk = and i64 %i.fj, -2
   %i.fl = inttoptr i64 %i.fk to ptr
@@ -230,9 +231,11 @@ bb.aq:                                            ; preds = %bb.ap
   store atomic i64 %i.fn, ptr %i.ao monotonic, align 8
   %i.fo = add i32 %.037.i, -1                     ; 3 uses
   %i.fp = getelementptr inbounds nuw i8, ptr %i.fi, i64 8 ; 2 uses
-  store i32 %i.fo, ptr %i.fp, align 8
-  %5 = getelementptr inbounds nuw i8, ptr %i.fi, i64 12
-  store i32 %i.fb, ptr %5, align 4
+  %5 = zext i32 %i.fo to i64
+  %6 = zext i32 %i.fb to i64
+  %7 = shl nuw i64 %6, 32
+  %8 = or disjoint i64 %7, %5
+  store i64 %8, ptr %i.fp, align 8
   %i.fq = getelementptr inbounds nuw i8, ptr %i.fi, i64 16 ; 5 uses
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.fq, i8 0, i64 %i.fg, i1 false)
   %i.fr = load i8, ptr %1, align 1                ; 2 uses
