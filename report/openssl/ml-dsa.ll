@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openssl/original/ml-dsa?download=true
-inline.NumInlined: 9
+inline.NumInlined: 8
 inline.NumDeleted: 5
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
@@ -103,14 +103,11 @@ bb.d:                                             ; preds = %bb.b, %bb.c
   %i.u = phi ptr [ null, %bb.b ], [ %.pre, %bb.c ]
   %i.v = load ptr, ptr %i.c, align 8, !tbaa !10
   %i.w = load ptr, ptr %i.d, align 8, !tbaa !10
-  call void @EVP_PKEY_free(ptr noundef %i.v) #5
-  call void @EVP_PKEY_free(ptr noundef %i.w) #5
-  call void @EVP_PKEY_free(ptr noundef %i.u) #5
-  call void @EVP_PKEY_free(ptr noundef %i.t) #5
+  call void @cleanup_ml_dsa_keys(ptr noundef %i.v, ptr noundef %i.w, ptr noundef %i.u, ptr noundef %i.t) #5
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.a, %bb.d
-  %.0 = phi i32 [ 0, %bb.d ], [ -1, %bb.a ]
+bb.e:                                             ; preds = %bb.d, %bb.a
+  %.0 = phi i32 [ -1, %bb.a ], [ 0, %bb.d ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #5

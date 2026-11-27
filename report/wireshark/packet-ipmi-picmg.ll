@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/wireshark/original/packet-ipmi-picmg?download=true
-inline.NumInlined: 15
+inline.NumInlined: 20
 inline.NumDeleted: 4
 begin_hunk_0_@rq2b:bb.a
 ; Function Attrs: null_pointer_is_valid sspstrong uwtable
@@ -202,13 +202,57 @@ bb.h:                                             ; preds = %bb.g
 proto_item_set_generated.exit:                    ; preds = %bb.f, %bb.g, %bb.h
   %i.s = load i32, ptr %i.a, align 4              ; 2 uses
   %i.t = icmp ult i32 %i.s, 5
-  br i1 %i.t, label %bb.i, label %bb.j
+  br i1 %i.t, label %3, label %bb.j
 
-bb.i:                                             ; preds = %proto_item_set_generated.exit
-  %3 = zext nneg i32 %i.s to i64
-  %4 = getelementptr [16 x i8], ptr @compprops, i64 %3
-  %5 = load ptr, ptr %4, align 16
-  call void %5(ptr noundef %0, ptr noundef %2)
+3:                                                ; preds = %proto_item_set_generated.exit
+  switch i32 %i.s, label %default.unreachable21 [
+    i32 0, label %call.0
+    i32 1, label %call.1
+    i32 2, label %call.2
+    i32 3, label %call.3
+    i32 4, label %bb.i
+  ], !prof !10
+
+default.unreachable21:                            ; preds = %3
+  unreachable
+
+call.0:                                           ; preds = %3
+  %4 = load i32, ptr @ett_ipmi_picmg_prop00_byte1, align 4
+  %5 = call ptr @proto_tree_add_bitmask_text(ptr noundef %2, ptr noundef %0, i32 noundef 0, i32 noundef 1, ptr noundef @.str.950, ptr noundef @.str.593, i32 noundef %4, ptr noundef @prop_00.byte1, i32 noundef -2147483648, i32 noundef 0) ; 0 uses
+  br label %bb.k
+
+call.1:                                           ; preds = %3
+  %6 = load i32, ptr @ett_ipmi_picmg_prop01_byte1, align 4
+  %7 = call ptr @proto_tree_add_bitmask_text(ptr noundef %2, ptr noundef %0, i32 noundef 0, i32 noundef 1, ptr noundef null, ptr noundef null, i32 noundef %6, ptr noundef @parse_version.byte1, i32 noundef -2147483648, i32 noundef 0) ; 0 uses
+  %8 = load i32, ptr @hf_ipmi_picmg_prop01_fw_minor, align 4
+  %9 = call ptr @proto_tree_add_item(ptr noundef %2, i32 noundef %8, ptr noundef %0, i32 noundef 1, i32 noundef 1, i32 noundef -2147483648) ; 0 uses
+  %10 = load i32, ptr @hf_ipmi_picmg_prop01_fw_aux, align 4
+  %11 = call ptr @proto_tree_add_item(ptr noundef %2, i32 noundef %10, ptr noundef %0, i32 noundef 2, i32 noundef 4, i32 noundef 0) ; 0 uses
+  br label %bb.k
+
+call.2:                                           ; preds = %3
+  %12 = call i32 @tvb_captured_length(ptr noundef %0)
+  %spec.store.select.i = call i32 @llvm.umin.i32(i32 %12, i32 12)
+  %13 = load i32, ptr @hf_ipmi_picmg_prop02_desc, align 4
+  %14 = call ptr @proto_tree_add_item(ptr noundef %2, i32 noundef %13, ptr noundef %0, i32 noundef 0, i32 noundef %spec.store.select.i, i32 noundef 0) ; 0 uses
+  br label %bb.k
+
+call.3:                                           ; preds = %3
+  %15 = load i32, ptr @ett_ipmi_picmg_prop01_byte1, align 4
+  %16 = call ptr @proto_tree_add_bitmask_text(ptr noundef %2, ptr noundef %0, i32 noundef 0, i32 noundef 1, ptr noundef null, ptr noundef null, i32 noundef %15, ptr noundef @parse_version.byte1, i32 noundef -2147483648, i32 noundef 0) ; 0 uses
+  %17 = load i32, ptr @hf_ipmi_picmg_prop01_fw_minor, align 4
+  %18 = call ptr @proto_tree_add_item(ptr noundef %2, i32 noundef %17, ptr noundef %0, i32 noundef 1, i32 noundef 1, i32 noundef -2147483648) ; 0 uses
+  %19 = load i32, ptr @hf_ipmi_picmg_prop01_fw_aux, align 4
+  %20 = call ptr @proto_tree_add_item(ptr noundef %2, i32 noundef %19, ptr noundef %0, i32 noundef 2, i32 noundef 4, i32 noundef 0) ; 0 uses
+  br label %bb.k
+
+bb.i:                                             ; preds = %3
+  %21 = load i32, ptr @ett_ipmi_picmg_prop01_byte1, align 4
+  %22 = call ptr @proto_tree_add_bitmask_text(ptr noundef %2, ptr noundef %0, i32 noundef 0, i32 noundef 1, ptr noundef null, ptr noundef null, i32 noundef %21, ptr noundef @parse_version.byte1, i32 noundef -2147483648, i32 noundef 0) ; 0 uses
+  %23 = load i32, ptr @hf_ipmi_picmg_prop01_fw_minor, align 4
+  %24 = call ptr @proto_tree_add_item(ptr noundef %2, i32 noundef %23, ptr noundef %0, i32 noundef 1, i32 noundef 1, i32 noundef -2147483648) ; 0 uses
+  %25 = load i32, ptr @hf_ipmi_picmg_prop01_fw_aux, align 4
+  %26 = call ptr @proto_tree_add_item(ptr noundef %2, i32 noundef %25, ptr noundef %0, i32 noundef 2, i32 noundef 4, i32 noundef 0) ; 0 uses
   br label %bb.k
 
 bb.j:                                             ; preds = %proto_item_set_generated.exit
@@ -216,7 +260,7 @@ bb.j:                                             ; preds = %proto_item_set_gene
   %i.v = call ptr @proto_tree_add_item(ptr noundef %2, i32 noundef %i.u, ptr noundef %0, i32 noundef 0, i32 noundef -1, i32 noundef 0) ; 0 uses
   br label %bb.k
 
-bb.k:                                             ; preds = %bb.i, %bb.j, %bb.b
+bb.k:                                             ; preds = %call.0, %call.1, %call.2, %call.3, %bb.i, %bb.j, %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   ret void
 }
@@ -619,7 +663,7 @@ bb.a:
   %i.m = tail call ptr @proto_tree_add_item(ptr noundef %2, i32 noundef %i.k, ptr noundef %0, i32 noundef %i.l, i32 noundef 4, i32 noundef -2147483648) ; 0 uses
   %indvars.iv.next = add nuw nsw i32 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i32 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !10
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !11
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
   ret void
@@ -913,5 +957,6 @@ attributes #6 = { nounwind }
 !7 = distinct !{!7, !6}
 !8 = distinct !{!8, !6}
 !9 = distinct !{!9, !6}
-!10 = distinct !{!10, !6}
+!10 = !{!"unknown", !"jump-table-to-switch"}
+!11 = distinct !{!11, !6}
 end_hunk_1

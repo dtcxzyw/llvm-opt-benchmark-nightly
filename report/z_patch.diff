@@ -1,0 +1,1107 @@
+diff --git a/llvm/include/llvm/Analysis/Loads.h b/llvm/include/llvm/Analysis/Loads.h
+index 09fc8278606597..71027f6cb26403 100644
+--- a/llvm/include/llvm/Analysis/Loads.h
++++ b/llvm/include/llvm/Analysis/Loads.h
+@@ -19,6 +19,7 @@
+ #include "llvm/IR/GEPNoWrapFlags.h"
+ #include "llvm/Support/CommandLine.h"
+ #include "llvm/Support/Compiler.h"
++#include <optional>
+ 
+ namespace llvm {
+ 
+@@ -26,6 +27,7 @@ class BatchAAResults;
+ class AssumptionCache;
+ class DataLayout;
+ class DominatorTree;
++class IRBuilderBase;
+ class Instruction;
+ class LoadInst;
+ struct LoadStoreInstProperties;
+@@ -238,6 +240,58 @@ struct LinearExpression {
+ /// multiple GEPs.
+ LLVM_ABI LinearExpression decomposeLinearExpression(const DataLayout &DL,
+                                                     Value *Ptr);
++
++/// A helper to analyze a load instruction that loads from a constant global.
++/// Provides an API to access the elements of the global.
++///
++/// Currently the analysis requires constant offset to the global to be less
++/// than the stride, so the global is always accessed with 0 as the first valid
++/// index.
++class ConstGlobalLoad {
++  const DataLayout &DL;
++  LinearExpression Expr;
++  uint64_t ElementCount;
++  GlobalVariable *GV;
++  Type *EltTy;
++
++  ConstGlobalLoad(const DataLayout &DL, LinearExpression Expr,
++                  uint64_t ArrayElementCount, GlobalVariable *GV, Type *EltTy)
++      : DL(DL), Expr(Expr), ElementCount(ArrayElementCount), GV(GV),
++        EltTy(EltTy) {}
++
++public:
++  /// Analyze a load instruction to a linear expression that loads from a
++  /// constant global.
++  LLVM_ABI static std::optional<ConstGlobalLoad> fromLoadInst(LoadInst *LI);
++
++  /// Get the element of the global that the load instruction reads when its
++  /// linear expression's index value is the given value.
++  ///
++  /// Currently the first index value is always 0, so the global can be iterated
++  /// with indices from 0 to `elementCount`.
++  ///
++  /// This uses `ConstantFoldLoadFromConst` and returns null under the same
++  /// circumstances that `ConstantLoadFromConst` returns null. (e.g. when the
++  /// value being loaded cannot be reinterpreted as the load type)
++  LLVM_ABI Constant *elementAt(uint64_t Idx) const;
++
++  /// Number of elements that can be read from the global.
++  ///
++  /// Currently the first element always has index 0, so the valid index range
++  /// is `[0, elementCount())`.
++  uint64_t elementCount() const { return ElementCount; }
++
++  /// Get the index value of the linear expression that can be compared against
++  /// known index values. E.g. if `elementAt(5)` returns a constant, then the
++  /// load instruction, when the returned value here is '5' reads the same
++  /// constant.
++  LLVM_ABI Value *buildIndex(IRBuilderBase &Builder) const;
++
++  /// Returns the type of the index returned by `buildIndex`.
++  /// This does not build the index, so it can be used to check the type without
++  /// generating the masking instructions for the index.
++  Type *getIndexType() const { return Expr.Index->getType(); }
++};
+ }
+ 
+ #endif
+diff --git a/llvm/lib/Analysis/Loads.cpp b/llvm/lib/Analysis/Loads.cpp
+index 363b0f59e26064..9fd9aa951e5f15 100644
+--- a/llvm/lib/Analysis/Loads.cpp
++++ b/llvm/lib/Analysis/Loads.cpp
+@@ -22,6 +22,7 @@
+ #include "llvm/Analysis/ValueTracking.h"
+ #include "llvm/IR/DataLayout.h"
+ #include "llvm/IR/GetElementPtrTypeIterator.h"
++#include "llvm/IR/IRBuilder.h"
+ #include "llvm/IR/IntrinsicInst.h"
+ #include "llvm/IR/Operator.h"
+ #include "llvm/IR/PatternMatch.h"
+@@ -1068,3 +1069,80 @@ LinearExpression llvm::decomposeLinearExpression(const DataLayout &DL,
+ 
+   return Expr;
+ }
++
++std::optional<ConstGlobalLoad> ConstGlobalLoad::fromLoadInst(LoadInst *LI) {
++  const DataLayout &DL = LI->getDataLayout();
++  Value *Ptr = LI->getPointerOperand();
++  auto *GV = dyn_cast<GlobalVariable>(getUnderlyingObject(Ptr));
++  if (LI->isVolatile() || !GV || !GV->isConstant() ||
++      !GV->hasDefinitiveInitializer())
++    return std::nullopt;
++
++  Type *EltTy = LI->getType();
++  TypeSize EltSize = DL.getTypeStoreSize(EltTy);
++  if (EltSize.isScalable())
++    return std::nullopt;
++
++  LinearExpression Expr = decomposeLinearExpression(DL, Ptr);
++  if (!Expr.Index || Expr.BasePtr != GV || Expr.Offset.getBitWidth() > 64)
++    return std::nullopt;
++
++  Constant *Init = GV->getInitializer();
++  TypeSize GlobalSize = DL.getTypeAllocSize(Init->getType());
++
++  const APInt &Stride = Expr.Scale;
++  const APInt &ConstOffset = Expr.Offset;
++
++  // Allow an additional context offset, but only within the stride.
++  if (!ConstOffset.ult(Stride))
++    return std::nullopt;
++
++  // Don't handle overlapping loads for now.
++  if (!Stride.uge(EltSize.getFixedValue()))
++    return std::nullopt;
++
++  // - With nuw: `Idx * Stride` does not wrap and all strides are valid.
++  // - With nusw: `Idx * Stride` does not wrap as signed, and the following
++  //   enumeration over ArrayElementCount is valid so long as the stride is
++  //   positive.
++  // - Without nusw or nuw: `Idx * Stride` is computed modulo 2^N (see
++  //   getIndex), and the masking in getIndex is only exact when the stride is
++  //   a power of two.
++  bool StrideIsValid =
++      Expr.Flags.hasNoUnsignedWrap() ||
++      (Expr.Flags.hasNoUnsignedSignedWrap() ? !Stride.isNegative()
++                                            : Stride.isPowerOf2());
++  if (!StrideIsValid)
++    return std::nullopt;
++
++  uint64_t ArrayElementCount =
++      divideCeil((GlobalSize.getFixedValue() - ConstOffset.getZExtValue()),
++                 Stride.getZExtValue());
++
++  return ConstGlobalLoad(DL, Expr, ArrayElementCount, GV, EltTy);
++}
++
++Constant *ConstGlobalLoad::elementAt(uint64_t Idx) const {
++  assert(Idx < ElementCount);
++  APInt Offset = Expr.Offset + (Expr.Scale * Idx);
++  return ConstantFoldLoadFromConst(GV->getInitializer(), EltTy, Offset, DL);
++}
++
++Value *ConstGlobalLoad::buildIndex(IRBuilderBase &Builder) const {
++  // If none of nusw (implied by inbounds) or nuw is present, Idx * Stride can
++  // overflow.
++  // Let's assume that Stride is 2 and the wanted value is at offset 0.
++  // Then, there are two possible values for Idx to match offset 0:
++  // 0x00..00, 0x80..00.
++  // Emitting 'icmp eq Idx, 0' isn't correct in this case because the
++  // comparison is false if Idx was 0x80..00.
++  // We need to erase the highest countr_zero(Stride) bits of Idx.
++  Value *Idx = Expr.Index;
++  unsigned Shift = Expr.Scale.countr_zero();
++  if (Expr.Flags.hasNoUnsignedWrap() || Expr.Flags.hasNoUnsignedSignedWrap() ||
++      Shift == 0)
++    return Idx;
++  Value *Mask = Constant::getAllOnesValue(Idx->getType());
++  Mask = Builder.CreateLShr(Mask, Shift);
++  return Builder.CreateAnd(Idx, Mask);
++}
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
+index 9fa4ad42609e10..85e389f64783a4 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
+@@ -121,54 +121,12 @@ static bool isSignTest(ICmpInst::Predicate &Pred, const APInt &C) {
+ Instruction *InstCombinerImpl::foldCmpLoadFromIndexedGlobal(
+     LoadInst *LI, CmpPredicate Pred, Constant *RHSC, Instruction &CtxI,
+     ConstantInt *AndCst) {
+-  Value *Ptr = LI->getPointerOperand();
+-  auto *GV = dyn_cast<GlobalVariable>(getUnderlyingObject(Ptr));
+-  if (LI->isVolatile() || !GV || !GV->isConstant() ||
+-      !GV->hasDefinitiveInitializer())
+-    return nullptr;
+-
+-  Type *EltTy = LI->getType();
+-  TypeSize EltSize = DL.getTypeStoreSize(EltTy);
+-  if (EltSize.isScalable())
+-    return nullptr;
+-
+-  LinearExpression Expr = decomposeLinearExpression(DL, Ptr);
+-  if (!Expr.Index || Expr.BasePtr != GV || Expr.Offset.getBitWidth() > 64)
+-    return nullptr;
+-
+-  Constant *Init = GV->getInitializer();
+-  TypeSize GlobalSize = DL.getTypeAllocSize(Init->getType());
+-
+-  Value *Idx = Expr.Index;
+-  const APInt &Stride = Expr.Scale;
+-  const APInt &ConstOffset = Expr.Offset;
+-
+-  // Allow an additional context offset, but only within the stride.
+-  if (!ConstOffset.ult(Stride))
+-    return nullptr;
+-
+-  // Don't handle overlapping loads for now.
+-  if (!Stride.uge(EltSize.getFixedValue()))
+-    return nullptr;
+-
+-  // - With nuw: `Idx * Stride` does not wrap and all strides are valid.
+-  // - With nusw: `Idx * Stride` does not wrap as signed, and the following
+-  //   enumeration over ArrayElementCount is valid so long as the stride is
+-  //   positive.
+-  // - Without nusw or nuw: `Idx * Stride` is computed modulo 2^N (see MaskIdx
+-  //   below), and the masking in MaskIdx below is only exact when the stride
+-  //   is a power of two.
+-  bool StrideIsValid =
+-      Expr.Flags.hasNoUnsignedWrap() ||
+-      (Expr.Flags.hasNoUnsignedSignedWrap() ? !Stride.isNegative()
+-                                            : Stride.isPowerOf2());
+-  if (!StrideIsValid)
++  std::optional<ConstGlobalLoad> GlobalIter = ConstGlobalLoad::fromLoadInst(LI);
++  if (!GlobalIter)
+     return nullptr;
+ 
+   // Don't blow up on huge arrays.
+-  uint64_t ArrayElementCount =
+-      divideCeil((GlobalSize.getFixedValue() - ConstOffset.getZExtValue()),
+-                 Stride.getZExtValue());
++  const uint64_t ArrayElementCount = GlobalIter->elementCount();
+   if (ArrayElementCount > CLOpts.maxarray_size)
+     return nullptr;
+ 
+@@ -201,9 +159,8 @@ Instruction *InstCombinerImpl::foldCmpLoadFromIndexedGlobal(
+   uint64_t MagicBitvector = 0;
+ 
+   // Scan the array and see if one of our patterns matches.
+-  APInt Offset = ConstOffset;
+-  for (unsigned i = 0, e = ArrayElementCount; i != e; ++i, Offset += Stride) {
+-    Constant *Elt = ConstantFoldLoadFromConst(Init, EltTy, Offset, DL);
++  for (uint64_t i = 0; i < ArrayElementCount; i += 1) {
++    Constant *Elt = GlobalIter->elementAt(i);
+     if (!Elt)
+       return nullptr;
+ 
+@@ -291,28 +248,10 @@ Instruction *InstCombinerImpl::foldCmpLoadFromIndexedGlobal(
+   // Now that we've scanned the entire array, emit our new comparison(s).  We
+   // order the state machines in complexity of the generated code.
+ 
+-  // If none of nusw (implied by inbounds) or nuw is present, Idx * Stride can
+-  // overflow.
+-  // Let's assume that Stride is 2 and the wanted value is at offset 0.
+-  // Then, there are two possible values for Idx to match offset 0:
+-  // 0x00..00, 0x80..00.
+-  // Emitting 'icmp eq Idx, 0' isn't correct in this case because the
+-  // comparison is false if Idx was 0x80..00.
+-  // We need to erase the highest countTrailingZeros(Stride) bits of Idx.
+-  auto MaskIdx = [&](Value *Idx) {
+-    if (!Expr.Flags.hasNoUnsignedWrap() &&
+-        !Expr.Flags.hasNoUnsignedSignedWrap() && Stride.countr_zero() != 0) {
+-      Value *Mask = Constant::getAllOnesValue(Idx->getType());
+-      Mask = Builder.CreateLShr(Mask, Stride.countr_zero());
+-      Idx = Builder.CreateAnd(Idx, Mask);
+-    }
+-    return Idx;
+-  };
+-
+   // If the comparison is only true for one or two elements, emit direct
+   // comparisons.
+   if (SecondTrueElement != Overdefined) {
+-    Idx = MaskIdx(Idx);
++    Value *Idx = GlobalIter->buildIndex(Builder);
+     // None true -> false.
+     if (FirstTrueElement == Undefined)
+       return replaceInstUsesWith(CtxI, Builder.getFalse());
+@@ -333,7 +272,7 @@ Instruction *InstCombinerImpl::foldCmpLoadFromIndexedGlobal(
+   // If the comparison is only false for one or two elements, emit direct
+   // comparisons.
+   if (SecondFalseElement != Overdefined) {
+-    Idx = MaskIdx(Idx);
++    Value *Idx = GlobalIter->buildIndex(Builder);
+     // None false -> true.
+     if (FirstFalseElement == Undefined)
+       return replaceInstUsesWith(CtxI, Builder.getTrue());
+@@ -356,7 +295,7 @@ Instruction *InstCombinerImpl::foldCmpLoadFromIndexedGlobal(
+   // where it is true, emit the range check.
+   if (TrueRangeEnd != Overdefined) {
+     assert(TrueRangeEnd != FirstTrueElement && "Should emit single compare");
+-    Idx = MaskIdx(Idx);
++    Value *Idx = GlobalIter->buildIndex(Builder);
+ 
+     // Generate (i-FirstTrue) <u (TrueRangeEnd-FirstTrue+1).
+     if (FirstTrueElement) {
+@@ -372,7 +311,7 @@ Instruction *InstCombinerImpl::foldCmpLoadFromIndexedGlobal(
+   // False range check.
+   if (FalseRangeEnd != Overdefined) {
+     assert(FalseRangeEnd != FirstFalseElement && "Should emit single compare");
+-    Idx = MaskIdx(Idx);
++    Value *Idx = GlobalIter->buildIndex(Builder);
+     // Generate (i-FirstFalse) >u (FalseRangeEnd-FirstFalse).
+     if (FirstFalseElement) {
+       Value *Offs = ConstantInt::getSigned(Idx->getType(), -FirstFalseElement);
+@@ -388,18 +327,15 @@ Instruction *InstCombinerImpl::foldCmpLoadFromIndexedGlobal(
+   // of this load, replace it with computation that does:
+   //   ((magic_cst >> i) & 1) != 0
+   {
+-    Type *Ty = nullptr;
+-
+     // Look for an appropriate type:
+     // - The type of Idx if the magic fits
+     // - The smallest fitting legal type
+-    if (ArrayElementCount <= Idx->getType()->getIntegerBitWidth())
+-      Ty = Idx->getType();
+-    else
+-      Ty = DL.getSmallestLegalIntType(Init->getContext(), ArrayElementCount);
++    Type *Ty = GlobalIter->getIndexType();
++    if (ArrayElementCount > Ty->getIntegerBitWidth())
++      Ty = DL.getSmallestLegalIntType(RHSC->getContext(), ArrayElementCount);
+ 
+     if (Ty) {
+-      Idx = MaskIdx(Idx);
++      Value *Idx = GlobalIter->buildIndex(Builder);
+       Value *V = Builder.CreateIntCast(Idx, Ty, false);
+       V = Builder.CreateLShr(ConstantInt::get(Ty, MagicBitvector), V);
+       V = Builder.CreateAnd(ConstantInt::get(Ty, 1), V);
+diff --git a/llvm/lib/Transforms/Scalar/JumpTableToSwitch.cpp b/llvm/lib/Transforms/Scalar/JumpTableToSwitch.cpp
+index bcc9a696b9d114..c76d2d405fdc2f 100644
+--- a/llvm/lib/Transforms/Scalar/JumpTableToSwitch.cpp
++++ b/llvm/lib/Transforms/Scalar/JumpTableToSwitch.cpp
+@@ -13,6 +13,7 @@
+ #include "llvm/ADT/Statistic.h"
+ #include "llvm/Analysis/ConstantFolding.h"
+ #include "llvm/Analysis/DomTreeUpdater.h"
++#include "llvm/Analysis/Loads.h"
+ #include "llvm/Analysis/OptimizationRemarkEmitter.h"
+ #include "llvm/Analysis/PostDominators.h"
+ #include "llvm/IR/IRBuilder.h"
+@@ -49,47 +50,26 @@ static Function *getExpandableCallee(const ScalarOptions &Opts, Value *V,
+ }
+ 
+ static std::optional<JumpTable> parseJumpTable(const ScalarOptions &Opts,
+-                                               GetElementPtrInst *GEP,
+-                                               PointerType *PtrTy,
+-                                               FunctionType *CallFTy) {
+-  Constant *Ptr = dyn_cast<Constant>(GEP->getPointerOperand());
+-  if (!Ptr)
++                                               LoadInst *LI, PointerType *PtrTy,
++                                               FunctionType *CallFTy,
++                                               IRBuilderBase &Builder) {
++  std::optional<ConstGlobalLoad> GlobalLoad = ConstGlobalLoad::fromLoadInst(LI);
++  if (!GlobalLoad)
+     return std::nullopt;
+ 
+-  GlobalVariable *GV = dyn_cast<GlobalVariable>(Ptr);
+-  if (!GV || !GV->isConstant() || !GV->hasDefinitiveInitializer())
+-    return std::nullopt;
+-
+-  Function &F = *GEP->getParent()->getParent();
+-  const DataLayout &DL = F.getDataLayout();
+-  const unsigned BitWidth =
+-      DL.getIndexSizeInBits(GEP->getPointerAddressSpace());
+-  SmallMapVector<Value *, APInt, 4> VariableOffsets;
+-  APInt ConstantOffset(BitWidth, 0);
+-  if (!GEP->collectOffset(DL, BitWidth, VariableOffsets, ConstantOffset))
+-    return std::nullopt;
+-  if (VariableOffsets.size() != 1)
+-    return std::nullopt;
+-  // TODO: consider supporting more general patterns
+-  if (!ConstantOffset.isZero())
+-    return std::nullopt;
+-  APInt StrideBytes = VariableOffsets.front().second;
+-  const uint64_t JumpTableSizeBytes = GV->getGlobalSize(DL);
+-  if (JumpTableSizeBytes % StrideBytes.getZExtValue() != 0)
+-    return std::nullopt;
+   ++NumEligibleJumpTables;
+-  const uint64_t N = JumpTableSizeBytes / StrideBytes.getZExtValue();
++
++  uint64_t N = GlobalLoad->elementCount();
+   if (N > Opts.jump_table_to_switch_size_threshold)
+     return std::nullopt;
+ 
+-  JumpTable JT;
+-  JT.Index = VariableOffsets.front().first;
+-  JT.Funcs.reserve(N);
++  Function &F = *LI->getParent()->getParent();
++
++  SmallVector<std::pair<uint64_t, Function *>, 10> Funcs;
++  Funcs.reserve(N);
++
+   for (uint64_t Index = 0; Index < N; ++Index) {
+-    // ConstantOffset is zero.
+-    APInt Offset = Index * StrideBytes;
+-    Constant *C =
+-        ConstantFoldLoadFromConst(GV->getInitializer(), PtrTy, Offset, DL);
++    Constant *C = GlobalLoad->elementAt(Index);
+     if (!C)
+       return std::nullopt;
+     if ((isa<ConstantPointerNull>(C) &&
+@@ -99,12 +79,13 @@ static std::optional<JumpTable> parseJumpTable(const ScalarOptions &Opts,
+     Function *Func = getExpandableCallee(Opts, C, CallFTy);
+     if (!Func)
+       return std::nullopt;
+-    JT.Funcs.push_back({Index, Func});
++    Funcs.push_back({Index, Func});
+   }
+   // Empty table, or only values that are UB when called
+-  if (JT.Funcs.empty())
++  if (Funcs.empty())
+     return std::nullopt;
+-  return JT;
++
++  return JumpTable{GlobalLoad->buildIndex(Builder), std::move(Funcs)};
+ }
+ 
+ static BasicBlock *
+@@ -255,16 +236,12 @@ PreservedAnalyses JumpTableToSwitchPass::run(Function &F,
+           JT->Funcs.push_back({0, F0});
+           JT->Funcs.push_back({1, F1});
+         } else if (auto *L = dyn_cast<LoadInst>(Call->getCalledOperand())) {
+-          // Skip atomic or volatile loads.
+-          if (!L || !L->isSimple())
+-            continue;
+-          auto *GEP = dyn_cast<GetElementPtrInst>(L->getPointerOperand());
+-          if (!GEP ||
+-              (!GEP->hasNoUnsignedWrap() && !GEP->hasNoUnsignedSignedWrap()))
++          if (!L)
+             continue;
+           auto *PtrTy = dyn_cast<PointerType>(L->getType());
+           assert(PtrTy && "call operand must be a pointer");
+-          JT = parseJumpTable(Opts, GEP, PtrTy, Call->getFunctionType());
++          IRBuilder<> Builder(Call);
++          JT = parseJumpTable(Opts, L, PtrTy, Call->getFunctionType(), Builder);
+         }
+         if (!JT)
+           continue;
+diff --git a/llvm/test/Transforms/InstCombine/load-cmp-verify-fixpoint.ll b/llvm/test/Transforms/InstCombine/load-cmp-verify-fixpoint.ll
+new file mode 100644
+index 00000000000000..eb85c50ad63ca1
+--- /dev/null
++++ b/llvm/test/Transforms/InstCombine/load-cmp-verify-fixpoint.ll
+@@ -0,0 +1,26 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -passes='instcombine<verify-fixpoint>' -S %s | FileCheck %s
++
++; Tests a tricky case in foldCmpLoadFromIndexedGlobal: when the comparison
++; result cannot be encoded in a machine integer, if we still generate the
++; masking instructions for the index, the output gets simplified by other
++; instcombines, and then we add the masking again in the next iteration,
++; causing a verify-fixpoint failure.
++
++target datalayout = "p:32:32"
++
++@g = constant [40 x i16] [i16 1, i16 0, i16 1, i16 0, i16 1, i16 0, i16 1, i16 0, i16 1, i16 0, i16 1, i16 0, i16 1, i16 0, i16 1, i16 0, i16 1, i16 0, i16 1, i16 0, i16 1, i16 0, i16 1, i16 0, i16 1, i16 0, i16 1, i16 0, i16 1, i16 0, i16 1, i16 0, i16 1, i16 0, i16 1, i16 0, i16 1, i16 0, i16 1, i16 0]
++
++define i1 @test(i32 %x) {
++; CHECK-LABEL: define i1 @test(
++; CHECK-SAME: i32 [[X:%.*]]) {
++; CHECK-NEXT:    [[P:%.*]] = getelementptr [2 x i8], ptr @g, i32 [[X]]
++; CHECK-NEXT:    [[V:%.*]] = load i16, ptr [[P]], align 2
++; CHECK-NEXT:    [[C:%.*]] = icmp eq i16 [[V]], 1
++; CHECK-NEXT:    ret i1 [[C]]
++;
++  %p = getelementptr [40 x i16], ptr @g, i32 0, i32 %x
++  %v = load i16, ptr %p
++  %c = icmp eq i16 %v, 1
++  ret i1 %c
++}
+diff --git a/llvm/test/Transforms/JumpTableToSwitch/basic.ll b/llvm/test/Transforms/JumpTableToSwitch/basic.ll
+index c6f59406f73378..9895ed2e1ace3d 100644
+--- a/llvm/test/Transforms/JumpTableToSwitch/basic.ll
++++ b/llvm/test/Transforms/JumpTableToSwitch/basic.ll
+@@ -37,14 +37,14 @@ define i32 @func1() !guid !1 {
+   ret i32 2
+ }
+ 
+-define i32 @function_with_jump_table(i32 %index) {
++define i32 @function_with_jump_table(i64 %index) {
+ ; CHECK-LABEL: define i32 @function_with_jump_table(
+-; CHECK-SAME: i32 [[INDEX:%.*]]) {
+-; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds [2 x ptr], ptr @func_array, i32 0, i32 [[INDEX]]
++; CHECK-SAME: i64 [[INDEX:%.*]]) {
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds [2 x ptr], ptr @func_array, i64 0, i64 [[INDEX]]
+ ; CHECK-NEXT:    [[FUNC_PTR:%.*]] = load ptr, ptr [[GEP]], align 8
+-; CHECK-NEXT:    switch i32 [[INDEX]], label [[DEFAULT_SWITCH_CASE_UNREACHABLE:%.*]] [
+-; CHECK-NEXT:      i32 0, label [[CALL_0:%.*]]
+-; CHECK-NEXT:      i32 1, label [[CALL_1:%.*]]
++; CHECK-NEXT:    switch i64 [[INDEX]], label [[DEFAULT_SWITCH_CASE_UNREACHABLE:%.*]] [
++; CHECK-NEXT:      i64 0, label [[CALL_0:%.*]]
++; CHECK-NEXT:      i64 1, label [[CALL_1:%.*]]
+ ; CHECK-NEXT:    ], !prof [[PROF2:![0-9]+]]
+ ; CHECK:       default.switch.case.unreachable:
+ ; CHECK-NEXT:    unreachable
+@@ -59,26 +59,26 @@ define i32 @function_with_jump_table(i32 %index) {
+ ; CHECK-NEXT:    ret i32 [[TMP3]]
+ ;
+ ; THRESHOLD-0-LABEL: define i32 @function_with_jump_table(
+-; THRESHOLD-0-SAME: i32 [[INDEX:%.*]]) {
+-; THRESHOLD-0-NEXT:    [[GEP:%.*]] = getelementptr inbounds [2 x ptr], ptr @func_array, i32 0, i32 [[INDEX]]
++; THRESHOLD-0-SAME: i64 [[INDEX:%.*]]) {
++; THRESHOLD-0-NEXT:    [[GEP:%.*]] = getelementptr inbounds [2 x ptr], ptr @func_array, i64 0, i64 [[INDEX]]
+ ; THRESHOLD-0-NEXT:    [[FUNC_PTR:%.*]] = load ptr, ptr [[GEP]], align 8
+ ; THRESHOLD-0-NEXT:    [[RESULT:%.*]] = call i32 [[FUNC_PTR]](), !prof [[PROF2:![0-9]+]]
+ ; THRESHOLD-0-NEXT:    ret i32 [[RESULT]]
+ ;
+-  %gep = getelementptr inbounds [2 x ptr], ptr @func_array, i32 0, i32 %index
++  %gep = getelementptr inbounds [2 x ptr], ptr @func_array, i64 0, i64 %index
+   %func_ptr = load ptr, ptr %gep
+   %result = call i32 %func_ptr(), !prof !2
+   ret i32 %result
+ }
+ 
+-define i32 @basic_block_splitted_twice(i32 %index) {
++define i32 @basic_block_splitted_twice(i64 %index) {
+ ; CHECK-LABEL: define i32 @basic_block_splitted_twice(
+-; CHECK-SAME: i32 [[INDEX:%.*]]) {
+-; CHECK-NEXT:    [[GEP1:%.*]] = getelementptr inbounds [2 x ptr], ptr @func_array, i32 0, i32 [[INDEX]]
++; CHECK-SAME: i64 [[INDEX:%.*]]) {
++; CHECK-NEXT:    [[GEP1:%.*]] = getelementptr inbounds [2 x ptr], ptr @func_array, i64 0, i64 [[INDEX]]
+ ; CHECK-NEXT:    [[FUNC_PTR1:%.*]] = load ptr, ptr [[GEP1]], align 8
+-; CHECK-NEXT:    switch i32 [[INDEX]], label [[DEFAULT_SWITCH_CASE_UNREACHABLE:%.*]] [
+-; CHECK-NEXT:      i32 0, label [[CALL_0:%.*]]
+-; CHECK-NEXT:      i32 1, label [[CALL_1:%.*]]
++; CHECK-NEXT:    switch i64 [[INDEX]], label [[DEFAULT_SWITCH_CASE_UNREACHABLE:%.*]] [
++; CHECK-NEXT:      i64 0, label [[CALL_0:%.*]]
++; CHECK-NEXT:      i64 1, label [[CALL_1:%.*]]
+ ; CHECK-NEXT:    ], !prof [[PROF3:![0-9]+]]
+ ; CHECK:       default.switch.case.unreachable:
+ ; CHECK-NEXT:    unreachable
+@@ -90,11 +90,11 @@ define i32 @basic_block_splitted_twice(i32 %index) {
+ ; CHECK-NEXT:    br label [[DOTTAIL]]
+ ; CHECK:       .tail:
+ ; CHECK-NEXT:    [[TMP3:%.*]] = phi i32 [ [[TMP1]], [[CALL_0]] ], [ [[TMP2]], [[CALL_1]] ]
+-; CHECK-NEXT:    [[GEP2:%.*]] = getelementptr inbounds [2 x ptr], ptr @func_array, i32 0, i32 [[INDEX]]
++; CHECK-NEXT:    [[GEP2:%.*]] = getelementptr inbounds [2 x ptr], ptr @func_array, i64 0, i64 [[INDEX]]
+ ; CHECK-NEXT:    [[FUNC_PTR2:%.*]] = load ptr, ptr [[GEP2]], align 8
+-; CHECK-NEXT:    switch i32 [[INDEX]], label [[DEFAULT_SWITCH_CASE_UNREACHABLE1:%.*]] [
+-; CHECK-NEXT:      i32 0, label [[CALL_02:%.*]]
+-; CHECK-NEXT:      i32 1, label [[CALL_13:%.*]]
++; CHECK-NEXT:    switch i64 [[INDEX]], label [[DEFAULT_SWITCH_CASE_UNREACHABLE1:%.*]] [
++; CHECK-NEXT:      i64 0, label [[CALL_02:%.*]]
++; CHECK-NEXT:      i64 1, label [[CALL_13:%.*]]
+ ; CHECK-NEXT:    ], !prof [[PROF3]]
+ ; CHECK:       default.switch.case.unreachable1:
+ ; CHECK-NEXT:    unreachable
+@@ -110,20 +110,20 @@ define i32 @basic_block_splitted_twice(i32 %index) {
+ ; CHECK-NEXT:    ret i32 [[RESULT]]
+ ;
+ ; THRESHOLD-0-LABEL: define i32 @basic_block_splitted_twice(
+-; THRESHOLD-0-SAME: i32 [[INDEX:%.*]]) {
+-; THRESHOLD-0-NEXT:    [[GEP1:%.*]] = getelementptr inbounds [2 x ptr], ptr @func_array, i32 0, i32 [[INDEX]]
++; THRESHOLD-0-SAME: i64 [[INDEX:%.*]]) {
++; THRESHOLD-0-NEXT:    [[GEP1:%.*]] = getelementptr inbounds [2 x ptr], ptr @func_array, i64 0, i64 [[INDEX]]
+ ; THRESHOLD-0-NEXT:    [[FUNC_PTR1:%.*]] = load ptr, ptr [[GEP1]], align 8
+ ; THRESHOLD-0-NEXT:    [[RESULT1:%.*]] = call i32 [[FUNC_PTR1]]()
+-; THRESHOLD-0-NEXT:    [[GEP2:%.*]] = getelementptr inbounds [2 x ptr], ptr @func_array, i32 0, i32 [[INDEX]]
++; THRESHOLD-0-NEXT:    [[GEP2:%.*]] = getelementptr inbounds [2 x ptr], ptr @func_array, i64 0, i64 [[INDEX]]
+ ; THRESHOLD-0-NEXT:    [[FUNC_PTR2:%.*]] = load ptr, ptr [[GEP2]], align 8
+ ; THRESHOLD-0-NEXT:    [[RESULT2:%.*]] = call i32 [[FUNC_PTR2]]()
+ ; THRESHOLD-0-NEXT:    [[RESULT:%.*]] = add i32 [[RESULT1]], [[RESULT2]]
+ ; THRESHOLD-0-NEXT:    ret i32 [[RESULT]]
+ ;
+-  %gep1 = getelementptr inbounds [2 x ptr], ptr @func_array, i32 0, i32 %index
++  %gep1 = getelementptr inbounds [2 x ptr], ptr @func_array, i64 0, i64 %index
+   %func_ptr1 = load ptr, ptr %gep1
+   %result1 = call i32 %func_ptr1()
+-  %gep2 = getelementptr inbounds [2 x ptr], ptr @func_array, i32 0, i32 %index
++  %gep2 = getelementptr inbounds [2 x ptr], ptr @func_array, i64 0, i64 %index
+   %func_ptr2 = load ptr, ptr %gep2
+   %result2 = call i32 %func_ptr2()
+   %result = add i32 %result1, %result2
+@@ -152,14 +152,14 @@ define void @void_func1() {
+ 
+ @void_func_array = constant [2 x ptr] [ptr @void_func0, ptr @void_func1]
+ 
+-define void @void_function_with_jump_table(i32 %index) {
++define void @void_function_with_jump_table(i64 %index) {
+ ; CHECK-LABEL: define void @void_function_with_jump_table(
+-; CHECK-SAME: i32 [[INDEX:%.*]]) {
+-; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds [2 x ptr], ptr @void_func_array, i32 0, i32 [[INDEX]]
++; CHECK-SAME: i64 [[INDEX:%.*]]) {
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds [2 x ptr], ptr @void_func_array, i64 0, i64 [[INDEX]]
+ ; CHECK-NEXT:    [[FUNC_PTR:%.*]] = load ptr, ptr [[GEP]], align 8
+-; CHECK-NEXT:    switch i32 [[INDEX]], label [[DEFAULT_SWITCH_CASE_UNREACHABLE:%.*]] [
+-; CHECK-NEXT:      i32 0, label [[CALL_0:%.*]]
+-; CHECK-NEXT:      i32 1, label [[CALL_1:%.*]]
++; CHECK-NEXT:    switch i64 [[INDEX]], label [[DEFAULT_SWITCH_CASE_UNREACHABLE:%.*]] [
++; CHECK-NEXT:      i64 0, label [[CALL_0:%.*]]
++; CHECK-NEXT:      i64 1, label [[CALL_1:%.*]]
+ ; CHECK-NEXT:    ], !prof [[PROF3]]
+ ; CHECK:       default.switch.case.unreachable:
+ ; CHECK-NEXT:    unreachable
+@@ -173,26 +173,26 @@ define void @void_function_with_jump_table(i32 %index) {
+ ; CHECK-NEXT:    ret void
+ ;
+ ; THRESHOLD-0-LABEL: define void @void_function_with_jump_table(
+-; THRESHOLD-0-SAME: i32 [[INDEX:%.*]]) {
+-; THRESHOLD-0-NEXT:    [[GEP:%.*]] = getelementptr inbounds [2 x ptr], ptr @void_func_array, i32 0, i32 [[INDEX]]
++; THRESHOLD-0-SAME: i64 [[INDEX:%.*]]) {
++; THRESHOLD-0-NEXT:    [[GEP:%.*]] = getelementptr inbounds [2 x ptr], ptr @void_func_array, i64 0, i64 [[INDEX]]
+ ; THRESHOLD-0-NEXT:    [[FUNC_PTR:%.*]] = load ptr, ptr [[GEP]], align 8
+ ; THRESHOLD-0-NEXT:    call void [[FUNC_PTR]]()
+ ; THRESHOLD-0-NEXT:    ret void
+ ;
+-  %gep = getelementptr inbounds [2 x ptr], ptr @void_func_array, i32 0, i32 %index
++  %gep = getelementptr inbounds [2 x ptr], ptr @void_func_array, i64 0, i64 %index
+   %func_ptr = load ptr, ptr %gep
+   call void %func_ptr()
+   ret void
+ }
+ 
+-define void @void_function_with_jump_table_and_call_site_attr(i32 %index) {
++define void @void_function_with_jump_table_and_call_site_attr(i64 %index) {
+ ; CHECK-LABEL: define void @void_function_with_jump_table_and_call_site_attr(
+-; CHECK-SAME: i32 [[INDEX:%.*]]) {
+-; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds [2 x ptr], ptr @void_func_array, i32 0, i32 [[INDEX]]
++; CHECK-SAME: i64 [[INDEX:%.*]]) {
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds [2 x ptr], ptr @void_func_array, i64 0, i64 [[INDEX]]
+ ; CHECK-NEXT:    [[FUNC_PTR:%.*]] = load ptr, ptr [[GEP]], align 8
+-; CHECK-NEXT:    switch i32 [[INDEX]], label [[DEFAULT_SWITCH_CASE_UNREACHABLE:%.*]] [
+-; CHECK-NEXT:      i32 0, label [[CALL_0:%.*]]
+-; CHECK-NEXT:      i32 1, label [[CALL_1:%.*]]
++; CHECK-NEXT:    switch i64 [[INDEX]], label [[DEFAULT_SWITCH_CASE_UNREACHABLE:%.*]] [
++; CHECK-NEXT:      i64 0, label [[CALL_0:%.*]]
++; CHECK-NEXT:      i64 1, label [[CALL_1:%.*]]
+ ; CHECK-NEXT:    ], !prof [[PROF3]]
+ ; CHECK:       default.switch.case.unreachable:
+ ; CHECK-NEXT:    unreachable
+@@ -206,13 +206,13 @@ define void @void_function_with_jump_table_and_call_site_attr(i32 %index) {
+ ; CHECK-NEXT:    ret void
+ ;
+ ; THRESHOLD-0-LABEL: define void @void_function_with_jump_table_and_call_site_attr(
+-; THRESHOLD-0-SAME: i32 [[INDEX:%.*]]) {
+-; THRESHOLD-0-NEXT:    [[GEP:%.*]] = getelementptr inbounds [2 x ptr], ptr @void_func_array, i32 0, i32 [[INDEX]]
++; THRESHOLD-0-SAME: i64 [[INDEX:%.*]]) {
++; THRESHOLD-0-NEXT:    [[GEP:%.*]] = getelementptr inbounds [2 x ptr], ptr @void_func_array, i64 0, i64 [[INDEX]]
+ ; THRESHOLD-0-NEXT:    [[FUNC_PTR:%.*]] = load ptr, ptr [[GEP]], align 8
+ ; THRESHOLD-0-NEXT:    call void [[FUNC_PTR]]() #[[ATTR0:[0-9]+]]
+ ; THRESHOLD-0-NEXT:    ret void
+ ;
+-  %gep = getelementptr inbounds [2 x ptr], ptr @void_func_array, i32 0, i32 %index
++  %gep = getelementptr inbounds [2 x ptr], ptr @void_func_array, i64 0, i64 %index
+   %func_ptr = load ptr, ptr %gep
+   call void %func_ptr() nounwind
+   ret void
+@@ -241,14 +241,14 @@ define i32 @func1_addrspace_42() addrspace(42) {
+ 
+ @func_array_addrspace_42 = addrspace(42) constant [2 x ptr addrspace(42)] [ptr addrspace(42) @func0_addrspace_42, ptr addrspace(42) @func1_addrspace_42]
+ 
+-define i32 @function_with_jump_table_addrspace_42(i32 %index) addrspace(42) {
++define i32 @function_with_jump_table_addrspace_42(i64 %index) addrspace(42) {
+ ; CHECK-LABEL: define i32 @function_with_jump_table_addrspace_42(
+-; CHECK-SAME: i32 [[INDEX:%.*]]) addrspace(42) {
+-; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds [2 x ptr addrspace(42)], ptr addrspace(42) @func_array_addrspace_42, i32 0, i32 [[INDEX]]
++; CHECK-SAME: i64 [[INDEX:%.*]]) addrspace(42) {
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds [2 x ptr addrspace(42)], ptr addrspace(42) @func_array_addrspace_42, i64 0, i64 [[INDEX]]
+ ; CHECK-NEXT:    [[FUNC_PTR:%.*]] = load ptr addrspace(42), ptr addrspace(42) [[GEP]], align 8
+-; CHECK-NEXT:    switch i32 [[INDEX]], label [[DEFAULT_SWITCH_CASE_UNREACHABLE:%.*]] [
+-; CHECK-NEXT:      i32 0, label [[CALL_0:%.*]]
+-; CHECK-NEXT:      i32 1, label [[CALL_1:%.*]]
++; CHECK-NEXT:    switch i64 [[INDEX]], label [[DEFAULT_SWITCH_CASE_UNREACHABLE:%.*]] [
++; CHECK-NEXT:      i64 0, label [[CALL_0:%.*]]
++; CHECK-NEXT:      i64 1, label [[CALL_1:%.*]]
+ ; CHECK-NEXT:    ], !prof [[PROF3]]
+ ; CHECK:       default.switch.case.unreachable:
+ ; CHECK-NEXT:    unreachable
+@@ -263,13 +263,13 @@ define i32 @function_with_jump_table_addrspace_42(i32 %index) addrspace(42) {
+ ; CHECK-NEXT:    ret i32 [[TMP3]]
+ ;
+ ; THRESHOLD-0-LABEL: define i32 @function_with_jump_table_addrspace_42(
+-; THRESHOLD-0-SAME: i32 [[INDEX:%.*]]) addrspace(42) {
+-; THRESHOLD-0-NEXT:    [[GEP:%.*]] = getelementptr inbounds [2 x ptr addrspace(42)], ptr addrspace(42) @func_array_addrspace_42, i32 0, i32 [[INDEX]]
++; THRESHOLD-0-SAME: i64 [[INDEX:%.*]]) addrspace(42) {
++; THRESHOLD-0-NEXT:    [[GEP:%.*]] = getelementptr inbounds [2 x ptr addrspace(42)], ptr addrspace(42) @func_array_addrspace_42, i64 0, i64 [[INDEX]]
+ ; THRESHOLD-0-NEXT:    [[FUNC_PTR:%.*]] = load ptr addrspace(42), ptr addrspace(42) [[GEP]], align 8
+ ; THRESHOLD-0-NEXT:    [[RESULT:%.*]] = call addrspace(42) i32 [[FUNC_PTR]]()
+ ; THRESHOLD-0-NEXT:    ret i32 [[RESULT]]
+ ;
+-  %gep = getelementptr inbounds [2 x ptr addrspace(42)], ptr addrspace(42) @func_array_addrspace_42, i32 0, i32 %index
++  %gep = getelementptr inbounds [2 x ptr addrspace(42)], ptr addrspace(42) @func_array_addrspace_42, i64 0, i64 %index
+   %func_ptr = load ptr addrspace(42), ptr addrspace(42) %gep, align 8
+   %result = call addrspace(42) i32 %func_ptr()
+   ret i32 %result
+diff --git a/llvm/test/Transforms/JumpTableToSwitch/callee-type-mismatch.ll b/llvm/test/Transforms/JumpTableToSwitch/callee-type-mismatch.ll
+index 66014b9ca97699..ab566c43ecc27e 100644
+--- a/llvm/test/Transforms/JumpTableToSwitch/callee-type-mismatch.ll
++++ b/llvm/test/Transforms/JumpTableToSwitch/callee-type-mismatch.ll
+@@ -19,29 +19,29 @@ define i64 @f_rettype() {
+   ret i64 123
+ }
+ 
+-define i32 @argcount(i32 %idx) {
++define i32 @argcount(i64 %idx) {
+ ; CHECK-LABEL: define i32 @argcount(
+-; CHECK-SAME: i32 [[IDX:%.*]]) {
+-; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds [1 x ptr], ptr @arr_argcount, i32 0, i32 [[IDX]]
++; CHECK-SAME: i64 [[IDX:%.*]]) {
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds [1 x ptr], ptr @arr_argcount, i64 0, i64 [[IDX]]
+ ; CHECK-NEXT:    [[FP:%.*]] = load ptr, ptr [[GEP]], align 8
+ ; CHECK-NEXT:    [[R:%.*]] = call i32 [[FP]]()
+ ; CHECK-NEXT:    ret i32 [[R]]
+ ;
+-  %gep = getelementptr inbounds [1 x ptr], ptr @arr_argcount, i32 0, i32 %idx
++  %gep = getelementptr inbounds [1 x ptr], ptr @arr_argcount, i64 0, i64 %idx
+   %fp = load ptr, ptr %gep
+   %r = call i32 %fp()
+   ret i32 %r
+ }
+ 
+-define i32 @rettype(i32 %idx) {
++define i32 @rettype(i64 %idx) {
+ ; CHECK-LABEL: define i32 @rettype(
+-; CHECK-SAME: i32 [[IDX:%.*]]) {
+-; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds [1 x ptr], ptr @arr_rettype, i32 0, i32 [[IDX]]
++; CHECK-SAME: i64 [[IDX:%.*]]) {
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds [1 x ptr], ptr @arr_rettype, i64 0, i64 [[IDX]]
+ ; CHECK-NEXT:    [[FP:%.*]] = load ptr, ptr [[GEP]], align 8
+ ; CHECK-NEXT:    [[R:%.*]] = call i32 [[FP]]()
+ ; CHECK-NEXT:    ret i32 [[R]]
+ ;
+-  %gep = getelementptr inbounds [1 x ptr], ptr @arr_rettype, i32 0, i32 %idx
++  %gep = getelementptr inbounds [1 x ptr], ptr @arr_rettype, i64 0, i64 %idx
+   %fp = load ptr, ptr %gep
+   %r = call i32 %fp()
+   ret i32 %r
+diff --git a/llvm/test/Transforms/JumpTableToSwitch/gep-flags.ll b/llvm/test/Transforms/JumpTableToSwitch/gep-flags.ll
+index cbb8869114c14c..45501b2eb0bee3 100644
+--- a/llvm/test/Transforms/JumpTableToSwitch/gep-flags.ll
++++ b/llvm/test/Transforms/JumpTableToSwitch/gep-flags.ll
+@@ -22,7 +22,21 @@ define i32 @test_no_flags(i64 %i) {
+ ; CHECK-SAME: i64 [[I:%.*]]) {
+ ; CHECK-NEXT:    [[P:%.*]] = getelementptr [2 x ptr], ptr @table, i64 0, i64 [[I]]
+ ; CHECK-NEXT:    [[F:%.*]] = load ptr, ptr [[P]], align 8
+-; CHECK-NEXT:    [[R:%.*]] = call i32 [[F]]()
++; CHECK-NEXT:    [[TMP1:%.*]] = and i64 [[I]], 2305843009213693951
++; CHECK-NEXT:    switch i64 [[TMP1]], label %[[DEFAULT_SWITCH_CASE_UNREACHABLE:.*]] [
++; CHECK-NEXT:      i64 0, label %[[CALL_0:.*]]
++; CHECK-NEXT:      i64 1, label %[[CALL_1:.*]]
++; CHECK-NEXT:    ], !prof [[PROF0:![0-9]+]]
++; CHECK:       [[DEFAULT_SWITCH_CASE_UNREACHABLE]]:
++; CHECK-NEXT:    unreachable
++; CHECK:       [[CALL_0]]:
++; CHECK-NEXT:    [[TMP2:%.*]] = call i32 @f0()
++; CHECK-NEXT:    br label %[[DOTTAIL:.*]]
++; CHECK:       [[CALL_1]]:
++; CHECK-NEXT:    [[TMP3:%.*]] = call i32 @f1()
++; CHECK-NEXT:    br label %[[DOTTAIL]]
++; CHECK:       [[DOTTAIL]]:
++; CHECK-NEXT:    [[R:%.*]] = phi i32 [ [[TMP2]], %[[CALL_0]] ], [ [[TMP3]], %[[CALL_1]] ]
+ ; CHECK-NEXT:    ret i32 [[R]]
+ ;
+   %p = getelementptr [2 x ptr], ptr @table, i64 0, i64 %i
+@@ -39,7 +53,7 @@ define i32 @test_nusw(i64 %i) {
+ ; CHECK-NEXT:    switch i64 [[I]], label %[[DEFAULT_SWITCH_CASE_UNREACHABLE:.*]] [
+ ; CHECK-NEXT:      i64 0, label %[[CALL_0:.*]]
+ ; CHECK-NEXT:      i64 1, label %[[CALL_1:.*]]
+-; CHECK-NEXT:    ], !prof [[PROF0:![0-9]+]]
++; CHECK-NEXT:    ], !prof [[PROF0]]
+ ; CHECK:       [[DEFAULT_SWITCH_CASE_UNREACHABLE]]:
+ ; CHECK-NEXT:    unreachable
+ ; CHECK:       [[CALL_0]]:
+diff --git a/llvm/test/Transforms/JumpTableToSwitch/max_function_size.ll b/llvm/test/Transforms/JumpTableToSwitch/max_function_size.ll
+index 565916f47911bc..381ae69113871c 100644
+--- a/llvm/test/Transforms/JumpTableToSwitch/max_function_size.ll
++++ b/llvm/test/Transforms/JumpTableToSwitch/max_function_size.ll
+@@ -19,15 +19,15 @@ define i32 @large_func() {
+   ret i32 %x
+ }
+ 
+-define i32 @function_with_jump_table_with_large_func(i32 %index) {
++define i32 @function_with_jump_table_with_large_func(i64 %index) {
+ ; CHECK-LABEL: define i32 @function_with_jump_table_with_large_func(
+-; CHECK-SAME: i32 [[INDEX:%.*]]) {
+-; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds [2 x ptr], ptr @func_array0, i32 0, i32 [[INDEX]]
++; CHECK-SAME: i64 [[INDEX:%.*]]) {
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds [2 x ptr], ptr @func_array0, i64 0, i64 [[INDEX]]
+ ; CHECK-NEXT:    [[FUNC_PTR:%.*]] = load ptr, ptr [[GEP]], align 8
+ ; CHECK-NEXT:    [[RESULT:%.*]] = call i32 [[FUNC_PTR]]()
+ ; CHECK-NEXT:    ret i32 [[RESULT]]
+ ;
+-  %gep = getelementptr inbounds [2 x ptr], ptr @func_array0, i32 0, i32 %index
++  %gep = getelementptr inbounds [2 x ptr], ptr @func_array0, i64 0, i64 %index
+   %func_ptr = load ptr, ptr %gep, align 8
+   %result = call i32 %func_ptr()
+   ret i32 %result
+diff --git a/llvm/test/Transforms/JumpTableToSwitch/profile-no-guid-metadata.ll b/llvm/test/Transforms/JumpTableToSwitch/profile-no-guid-metadata.ll
+index e10e7fd15080e1..86fd3711d3fb3f 100644
+--- a/llvm/test/Transforms/JumpTableToSwitch/profile-no-guid-metadata.ll
++++ b/llvm/test/Transforms/JumpTableToSwitch/profile-no-guid-metadata.ll
+@@ -25,14 +25,14 @@ define i32 @jt_target_1() {
+   ret i32 20
+ }
+ 
+-define i32 @caller(i32 %idx) {
++define i32 @caller(i64 %idx) {
+ ; CHECK-LABEL: define i32 @caller(
+-; CHECK-SAME: i32 [[IDX:%.*]]) {
+-; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds [2 x ptr], ptr @jt, i32 0, i32 [[IDX]]
++; CHECK-SAME: i64 [[IDX:%.*]]) {
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds [2 x ptr], ptr @jt, i64 0, i64 [[IDX]]
+ ; CHECK-NEXT:    [[FPTR:%.*]] = load ptr, ptr [[GEP]], align 8
+-; CHECK-NEXT:    switch i32 [[IDX]], label %[[DEFAULT_SWITCH_CASE_UNREACHABLE:.*]] [
+-; CHECK-NEXT:      i32 0, label %[[CALL0:.*]]
+-; CHECK-NEXT:      i32 1, label %[[CALL1:.*]]
++; CHECK-NEXT:    switch i64 [[IDX]], label %[[DEFAULT_SWITCH_CASE_UNREACHABLE:.*]] [
++; CHECK-NEXT:      i64 0, label %[[CALL0:.*]]
++; CHECK-NEXT:      i64 1, label %[[CALL1:.*]]
+ ; CHECK-NEXT:    ], !prof [[PROF0:![0-9]+]]
+ ; CHECK:       [[DEFAULT_SWITCH_CASE_UNREACHABLE]]:
+ ; CHECK-NEXT:    unreachable
+@@ -46,20 +46,20 @@ define i32 @caller(i32 %idx) {
+ ; CHECK-NEXT:    [[TMP3:%.*]] = phi i32 [ [[TMP1]], %[[CALL0]] ], [ [[TMP2]], %[[CALL1]] ]
+ ; CHECK-NEXT:    ret i32 [[TMP3]]
+ ;
+-  %gep = getelementptr inbounds [2 x ptr], ptr @jt, i32 0, i32 %idx
++  %gep = getelementptr inbounds [2 x ptr], ptr @jt, i64 0, i64 %idx
+   %fptr = load ptr, ptr %gep
+   %r = call i32 %fptr(), !prof !0
+   ret i32 %r
+ }
+ 
+-define i32 @caller_only_zero_guids(i32 %idx) {
++define i32 @caller_only_zero_guids(i64 %idx) {
+ ; CHECK-LABEL: define i32 @caller_only_zero_guids(
+-; CHECK-SAME: i32 [[IDX:%.*]]) {
+-; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds [2 x ptr], ptr @jt, i32 0, i32 [[IDX]]
++; CHECK-SAME: i64 [[IDX:%.*]]) {
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds [2 x ptr], ptr @jt, i64 0, i64 [[IDX]]
+ ; CHECK-NEXT:    [[FPTR:%.*]] = load ptr, ptr [[GEP]], align 8
+-; CHECK-NEXT:    switch i32 [[IDX]], label %[[DEFAULT_SWITCH_CASE_UNREACHABLE:.*]] [
+-; CHECK-NEXT:      i32 0, label %[[CALL_0:.*]]
+-; CHECK-NEXT:      i32 1, label %[[CALL_1:.*]]
++; CHECK-NEXT:    switch i64 [[IDX]], label %[[DEFAULT_SWITCH_CASE_UNREACHABLE:.*]] [
++; CHECK-NEXT:      i64 0, label %[[CALL_0:.*]]
++; CHECK-NEXT:      i64 1, label %[[CALL_1:.*]]
+ ; CHECK-NEXT:    ], !prof [[PROF1:![0-9]+]]
+ ; CHECK:       [[DEFAULT_SWITCH_CASE_UNREACHABLE]]:
+ ; CHECK-NEXT:    unreachable
+@@ -73,7 +73,7 @@ define i32 @caller_only_zero_guids(i32 %idx) {
+ ; CHECK-NEXT:    [[TMP3:%.*]] = phi i32 [ [[TMP1]], %[[CALL_0]] ], [ [[TMP2]], %[[CALL_1]] ]
+ ; CHECK-NEXT:    ret i32 [[TMP3]]
+ ;
+-  %gep = getelementptr inbounds [2 x ptr], ptr @jt, i32 0, i32 %idx
++  %gep = getelementptr inbounds [2 x ptr], ptr @jt, i64 0, i64 %idx
+   %fptr = load ptr, ptr %gep
+   %r = call i32 %fptr(), !prof !1
+   ret i32 %r
+diff --git a/llvm/test/Transforms/JumpTableToSwitch/remarks.ll b/llvm/test/Transforms/JumpTableToSwitch/remarks.ll
+index 0bce2267af0d0d..8afe185e8f8fa9 100644
+--- a/llvm/test/Transforms/JumpTableToSwitch/remarks.ll
++++ b/llvm/test/Transforms/JumpTableToSwitch/remarks.ll
+@@ -12,8 +12,8 @@ define i32 @func1() {
+   ret i32 2
+ }
+ 
+-define i32 @function_with_jump_table(i32 %index) {
+-  %gep = getelementptr inbounds [2 x ptr], ptr @func_array, i32 0, i32 %index
++define i32 @function_with_jump_table(i64 %index) {
++  %gep = getelementptr inbounds [2 x ptr], ptr @func_array, i64 0, i64 %index
+   %func_ptr = load ptr, ptr %gep
+   %result = call i32 %func_ptr(), !dbg !8
+   ret i32 %result
+diff --git a/llvm/test/Transforms/JumpTableToSwitch/skip.ll b/llvm/test/Transforms/JumpTableToSwitch/skip.ll
+index aa788fa8ddec53..47b383d6f63dc7 100644
+--- a/llvm/test/Transforms/JumpTableToSwitch/skip.ll
++++ b/llvm/test/Transforms/JumpTableToSwitch/skip.ll
+@@ -12,15 +12,15 @@ define i32 @func0() {
+ 
+ declare i32 @declared_only_func1()
+ 
+-define i32 @function_with_jump_table_with_a_declared_only_func(i32 %index) {
++define i32 @function_with_jump_table_with_a_declared_only_func(i64 %index) {
+ ; CHECK-LABEL: define i32 @function_with_jump_table_with_a_declared_only_func(
+-; CHECK-SAME: i32 [[INDEX:%.*]]) {
+-; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds [2 x ptr], ptr @func_array0, i32 0, i32 [[INDEX]]
++; CHECK-SAME: i64 [[INDEX:%.*]]) {
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds [2 x ptr], ptr @func_array0, i64 0, i64 [[INDEX]]
+ ; CHECK-NEXT:    [[FUNC_PTR:%.*]] = load ptr, ptr [[GEP]], align 8
+ ; CHECK-NEXT:    [[RESULT:%.*]] = call i32 [[FUNC_PTR]]()
+ ; CHECK-NEXT:    ret i32 [[RESULT]]
+ ;
+-  %gep = getelementptr inbounds [2 x ptr], ptr @func_array0, i32 0, i32 %index
++  %gep = getelementptr inbounds [2 x ptr], ptr @func_array0, i64 0, i64 %index
+   %func_ptr = load ptr, ptr %gep, align 8
+   %result = call i32 %func_ptr()
+   ret i32 %result
+@@ -28,10 +28,10 @@ define i32 @function_with_jump_table_with_a_declared_only_func(i32 %index) {
+ 
+ declare i32 @__gxx_personality_v0(...)
+ 
+-define i32 @function_with_jump_table_invoke(i32 %index) personality ptr @__gxx_personality_v0 {
++define i32 @function_with_jump_table_invoke(i64 %index) personality ptr @__gxx_personality_v0 {
+ ; CHECK-LABEL: define i32 @function_with_jump_table_invoke(
+-; CHECK-SAME: i32 [[INDEX:%.*]]) personality ptr @__gxx_personality_v0 {
+-; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds [2 x ptr], ptr @func_array0, i32 0, i32 [[INDEX]]
++; CHECK-SAME: i64 [[INDEX:%.*]]) personality ptr @__gxx_personality_v0 {
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds [2 x ptr], ptr @func_array0, i64 0, i64 [[INDEX]]
+ ; CHECK-NEXT:    [[FUNC_PTR:%.*]] = load ptr, ptr [[GEP]], align 8
+ ; CHECK-NEXT:    [[RESULT:%.*]] = invoke i32 [[FUNC_PTR]]()
+ ; CHECK-NEXT:            to label [[NORMAL:%.*]] unwind label [[EXCEPTIONAL:%.*]]
+@@ -42,7 +42,7 @@ define i32 @function_with_jump_table_invoke(i32 %index) personality ptr @__gxx_p
+ ; CHECK-NEXT:            catch ptr null
+ ; CHECK-NEXT:    resume { ptr, i32 } [[LANDING_PAD]]
+ ;
+-  %gep = getelementptr inbounds [2 x ptr], ptr @func_array0, i32 0, i32 %index
++  %gep = getelementptr inbounds [2 x ptr], ptr @func_array0, i64 0, i64 %index
+   %func_ptr = load ptr, ptr %gep, align 8
+   %result = invoke i32 %func_ptr() to label %normal unwind label %exceptional
+ normal:
+@@ -62,77 +62,76 @@ define i32 @func2(i32 %arg) {
+   ret i32 %arg
+ }
+ 
+-define i32 @function_with_jump_table_musttail_call(i32 %index) {
++define i32 @function_with_jump_table_musttail_call(i64 %index) {
+ ; CHECK-LABEL: define i32 @function_with_jump_table_musttail_call(
+-; CHECK-SAME: i32 [[INDEX:%.*]]) {
+-; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds [1 x ptr], ptr @func_array1, i32 0, i32 [[INDEX]]
++; CHECK-SAME: i64 [[INDEX:%.*]]) {
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds [1 x ptr], ptr @func_array1, i64 0, i64 [[INDEX]]
+ ; CHECK-NEXT:    [[FUNC_PTR:%.*]] = load ptr, ptr [[GEP]], align 8
+-; CHECK-NEXT:    [[RESULT:%.*]] = musttail call i32 [[FUNC_PTR]](i32 [[INDEX]])
++; CHECK-NEXT:    [[RESULT:%.*]] = musttail call i32 [[FUNC_PTR]](i64 [[INDEX]])
+ ; CHECK-NEXT:    ret i32 [[RESULT]]
+ ;
+-  %gep = getelementptr inbounds [1 x ptr], ptr @func_array1, i32 0, i32 %index
++  %gep = getelementptr inbounds [1 x ptr], ptr @func_array1, i64 0, i64 %index
+   %func_ptr = load ptr, ptr %gep, align 8
+-  %result = musttail call i32 %func_ptr(i32 %index)
++  %result = musttail call i32 %func_ptr(i64 %index)
+   ret i32 %result
+ }
+ 
+-define i32 @function_with_jump_table_and_volatile_load(i32 %index) {
++define i32 @function_with_jump_table_and_volatile_load(i64 %index) {
+ ; CHECK-LABEL: define i32 @function_with_jump_table_and_volatile_load(
+-; CHECK-SAME: i32 [[INDEX:%.*]]) {
+-; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds [1 x ptr], ptr @func_array1, i32 0, i32 [[INDEX]]
++; CHECK-SAME: i64 [[INDEX:%.*]]) {
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds [1 x ptr], ptr @func_array1, i64 0, i64 [[INDEX]]
+ ; CHECK-NEXT:    [[FUNC_PTR:%.*]] = load volatile ptr, ptr [[GEP]], align 8
+-; CHECK-NEXT:    [[RESULT:%.*]] = call i32 [[FUNC_PTR]](i32 [[INDEX]])
++; CHECK-NEXT:    [[RESULT:%.*]] = call i32 [[FUNC_PTR]](i64 [[INDEX]])
+ ; CHECK-NEXT:    ret i32 [[RESULT]]
+ ;
+-  %gep = getelementptr inbounds [1 x ptr], ptr @func_array1, i32 0, i32 %index
++  %gep = getelementptr inbounds [1 x ptr], ptr @func_array1, i64 0, i64 %index
+   %func_ptr = load volatile ptr, ptr %gep, align 8
+-  %result = call i32 %func_ptr(i32 %index)
++  %result = call i32 %func_ptr(i64 %index)
+   ret i32 %result
+ }
+ 
+-define i32 @function_with_jump_table_and_atomic_load(i32 %index) {
++define i32 @function_with_jump_table_and_atomic_load(i64 %index) {
+ ; CHECK-LABEL: define i32 @function_with_jump_table_and_atomic_load(
+-; CHECK-SAME: i32 [[INDEX:%.*]]) {
+-; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds [1 x ptr], ptr @func_array1, i32 0, i32 [[INDEX]]
++; CHECK-SAME: i64 [[INDEX:%.*]]) {
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds [1 x ptr], ptr @func_array1, i64 0, i64 [[INDEX]]
+ ; CHECK-NEXT:    [[FUNC_PTR:%.*]] = load atomic ptr, ptr [[GEP]] monotonic, align 8
+-; CHECK-NEXT:    [[RESULT:%.*]] = call i32 [[FUNC_PTR]](i32 [[INDEX]])
++; CHECK-NEXT:    [[RESULT:%.*]] = call i32 [[FUNC_PTR]](i64 [[INDEX]])
+ ; CHECK-NEXT:    ret i32 [[RESULT]]
+ ;
+-  %gep = getelementptr inbounds [1 x ptr], ptr @func_array1, i32 0, i32 %index
++  %gep = getelementptr inbounds [1 x ptr], ptr @func_array1, i64 0, i64 %index
+   %func_ptr = load atomic ptr, ptr %gep monotonic, align 8
+-  %result = call i32 %func_ptr(i32 %index)
++  %result = call i32 %func_ptr(i64 %index)
+   ret i32 %result
+ }
+ 
+ @func_array2 = global [1 x ptr] [ptr @func2]
+ 
+-define i32 @function_with_nonconstant_jump_table(i32 %index) {
++define i32 @function_with_nonconstant_jump_table(i64 %index) {
+ ; CHECK-LABEL: define i32 @function_with_nonconstant_jump_table(
+-; CHECK-SAME: i32 [[INDEX:%.*]]) {
+-; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds [1 x ptr], ptr @func_array2, i32 0, i32 [[INDEX]]
++; CHECK-SAME: i64 [[INDEX:%.*]]) {
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds [1 x ptr], ptr @func_array2, i64 0, i64 [[INDEX]]
+ ; CHECK-NEXT:    [[FUNC_PTR:%.*]] = load ptr, ptr [[GEP]], align 8
+-; CHECK-NEXT:    [[RESULT:%.*]] = call i32 [[FUNC_PTR]](i32 [[INDEX]])
++; CHECK-NEXT:    [[RESULT:%.*]] = call i32 [[FUNC_PTR]](i64 [[INDEX]])
+ ; CHECK-NEXT:    ret i32 [[RESULT]]
+ ;
+-  %gep = getelementptr inbounds [1 x ptr], ptr @func_array2, i32 0, i32 %index
++  %gep = getelementptr inbounds [1 x ptr], ptr @func_array2, i64 0, i64 %index
+   %func_ptr = load ptr, ptr %gep, align 8
+-  %result = call i32 %func_ptr(i32 %index)
++  %result = call i32 %func_ptr(i64 %index)
+   ret i32 %result
+ }
+ 
+ @func_array3 = weak constant [1 x ptr] [ptr @func2]
+ 
+-define i32 @function_with_constant_weak_jump_table(i32 %index) {
++define i32 @function_with_constant_weak_jump_table(i64 %index) {
+ ; CHECK-LABEL: define i32 @function_with_constant_weak_jump_table(
+-; CHECK-SAME: i32 [[INDEX:%.*]]) {
+-; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds [1 x ptr], ptr @func_array3, i32 0, i32 [[INDEX]]
++; CHECK-SAME: i64 [[INDEX:%.*]]) {
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds [1 x ptr], ptr @func_array3, i64 0, i64 [[INDEX]]
+ ; CHECK-NEXT:    [[FUNC_PTR:%.*]] = load ptr, ptr [[GEP]], align 8
+-; CHECK-NEXT:    [[RESULT:%.*]] = call i32 [[FUNC_PTR]](i32 [[INDEX]])
++; CHECK-NEXT:    [[RESULT:%.*]] = call i32 [[FUNC_PTR]](i64 [[INDEX]])
+ ; CHECK-NEXT:    ret i32 [[RESULT]]
+ ;
+-  %gep = getelementptr inbounds [1 x ptr], ptr @func_array3, i32 0, i32 %index
++  %gep = getelementptr inbounds [1 x ptr], ptr @func_array3, i64 0, i64 %index
+   %func_ptr = load ptr, ptr %gep, align 8
+-  %result = call i32 %func_ptr(i32 %index)
++  %result = call i32 %func_ptr(i64 %index)
+   ret i32 %result
+ }
+-
+diff --git a/llvm/test/Transforms/JumpTableToSwitch/stats.ll b/llvm/test/Transforms/JumpTableToSwitch/stats.ll
+index 1533d7072bcc0d..1f4878d6dd60a6 100644
+--- a/llvm/test/Transforms/JumpTableToSwitch/stats.ll
++++ b/llvm/test/Transforms/JumpTableToSwitch/stats.ll
+@@ -24,15 +24,15 @@ define i32 @func2() {
+   ret i32 %d
+ }
+ 
+-define i32 @function_gets_converted(i32 %index) {
+-  %gep = getelementptr inbounds [2 x ptr], ptr @func_array1, i32 0, i32 %index
++define i32 @function_gets_converted(i64 %index) {
++  %gep = getelementptr inbounds [2 x ptr], ptr @func_array1, i64 0, i64 %index
+   %func_ptr = load ptr, ptr %gep
+   %result = call i32 %func_ptr()
+   ret i32 %result
+ }
+ 
+-define i32 @function_not_converted(i32 %index) {
+-  %gep = getelementptr inbounds [2 x ptr], ptr @func_array2, i32 0, i32 %index
++define i32 @function_not_converted(i64 %index) {
++  %gep = getelementptr inbounds [2 x ptr], ptr @func_array2, i64 0, i64 %index
+   %func_ptr = load ptr, ptr %gep
+   %result = call i32 %func_ptr()
+   ret i32 %result
+diff --git a/llvm/test/Transforms/JumpTableToSwitch/stride.ll b/llvm/test/Transforms/JumpTableToSwitch/stride.ll
+index 1a04cff50c3c2d..16ef6eec5d044a 100644
+--- a/llvm/test/Transforms/JumpTableToSwitch/stride.ll
++++ b/llvm/test/Transforms/JumpTableToSwitch/stride.ll
+@@ -17,13 +17,13 @@ define i32 @func1() {
+   ret i32 2
+ }
+ 
+-define i32 @check_stride(i32 %index) {
++define i32 @check_stride(i64 %index) {
+ ; CHECK-LABEL: define i32 @check_stride(
+-; CHECK-SAME: i32 [[INDEX:%.*]]) {
+-; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds [2 x { ptr, ptr }], ptr @func_array, i32 0, i32 [[INDEX]]
++; CHECK-SAME: i64 [[INDEX:%.*]]) {
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds [2 x { ptr, ptr }], ptr @func_array, i64 0, i64 [[INDEX]]
+ ; CHECK-NEXT:    [[FUNC_PTR:%.*]] = load ptr, ptr [[GEP]], align 8
+-; CHECK-NEXT:    switch i32 [[INDEX]], label [[DEFAULT_SWITCH_CASE_UNREACHABLE:%.*]] [
+-; CHECK-NEXT:      i32 0, label [[CALL_0:%.*]]
++; CHECK-NEXT:    switch i64 [[INDEX]], label [[DEFAULT_SWITCH_CASE_UNREACHABLE:%.*]] [
++; CHECK-NEXT:      i64 0, label [[CALL_0:%.*]]
+ ; CHECK-NEXT:    ], !prof [[PROF0:![0-9]+]]
+ ; CHECK:       default.switch.case.unreachable:
+ ; CHECK-NEXT:    unreachable
+@@ -34,7 +34,7 @@ define i32 @check_stride(i32 %index) {
+ ; CHECK-NEXT:    [[TMP2:%.*]] = phi i32 [ [[TMP1]], [[CALL_0]] ]
+ ; CHECK-NEXT:    ret i32 [[TMP2]]
+ ;
+-  %gep = getelementptr inbounds [2 x { ptr, ptr }], ptr @func_array, i32 0, i32 %index
++  %gep = getelementptr inbounds [2 x { ptr, ptr }], ptr @func_array, i64 0, i64 %index
+   %func_ptr = load ptr, ptr %gep
+   %result = call i32 %func_ptr()
+   ret i32 %result
+diff --git a/llvm/test/Transforms/JumpTableToSwitch/struct.ll b/llvm/test/Transforms/JumpTableToSwitch/struct.ll
+index 37856ce0244c60..eb6861a15a546a 100644
+--- a/llvm/test/Transforms/JumpTableToSwitch/struct.ll
++++ b/llvm/test/Transforms/JumpTableToSwitch/struct.ll
+@@ -19,14 +19,14 @@ define i32 @func1() {
+   ret i32 2
+ }
+ 
+-define i32 @function_with_jump_table(i32 %index) {
++define i32 @function_with_jump_table(i64 %index) {
+ ; CHECK-LABEL: define i32 @function_with_jump_table(
+-; CHECK-SAME: i32 [[INDEX:%.*]]) {
+-; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds [2 x ptr], ptr @func_array, i32 0, i32 [[INDEX]]
++; CHECK-SAME: i64 [[INDEX:%.*]]) {
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds [2 x ptr], ptr @func_array, i64 0, i64 [[INDEX]]
+ ; CHECK-NEXT:    [[FUNC_PTR:%.*]] = load ptr, ptr [[GEP]], align 8
+-; CHECK-NEXT:    switch i32 [[INDEX]], label [[DEFAULT_SWITCH_CASE_UNREACHABLE:%.*]] [
+-; CHECK-NEXT:      i32 0, label [[CALL_0:%.*]]
+-; CHECK-NEXT:      i32 1, label [[CALL_1:%.*]]
++; CHECK-NEXT:    switch i64 [[INDEX]], label [[DEFAULT_SWITCH_CASE_UNREACHABLE:%.*]] [
++; CHECK-NEXT:      i64 0, label [[CALL_0:%.*]]
++; CHECK-NEXT:      i64 1, label [[CALL_1:%.*]]
+ ; CHECK-NEXT:    ], !prof [[PROF0:![0-9]+]]
+ ; CHECK:       default.switch.case.unreachable:
+ ; CHECK-NEXT:    unreachable
+@@ -40,7 +40,7 @@ define i32 @function_with_jump_table(i32 %index) {
+ ; CHECK-NEXT:    [[TMP3:%.*]] = phi i32 [ [[TMP1]], [[CALL_0]] ], [ [[TMP2]], [[CALL_1]] ]
+ ; CHECK-NEXT:    ret i32 [[TMP3]]
+ ;
+-  %gep = getelementptr inbounds [2 x ptr], ptr @func_array, i32 0, i32 %index
++  %gep = getelementptr inbounds [2 x ptr], ptr @func_array, i64 0, i64 %index
+   %func_ptr = load ptr, ptr %gep
+   %result = call i32 %func_ptr()
+   ret i32 %result
