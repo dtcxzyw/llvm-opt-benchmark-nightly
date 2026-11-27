@@ -205,38 +205,30 @@ aes_nohw_expand_round_keys.exit:                  ; preds = %.preheader.i
   %.inner14 = xor <4 x i32> %.inner, %i.cq        ; 2 uses
   %i.cr = bitcast <2 x i64> %i.co to <4 x i32>
   %i.cs = lshr <4 x i32> %i.cr, splat (i32 4)
-  %5 = bitcast <4 x i32> %i.cs to <2 x i64>
-  %6 = and <2 x i64> %5, splat (i64 1085102592571150095) ; 2 uses
-  %7 = bitcast <2 x i64> %6 to <4 x i32>
-  %i.ct = shl nuw <4 x i32> %7, splat (i32 4)
+  %5 = and <4 x i32> %i.cs, splat (i32 252645135) ; 2 uses
+  %i.ct = shl nuw <4 x i32> %5, splat (i32 4)
   %i.cu = bitcast <4 x i32> %i.ct to <2 x i64>
   %i.cv = xor <2 x i64> %i.co, %i.cu
   store <2 x i64> %i.cv, ptr %4, align 16, !tbaa !78
-  store <2 x i64> %6, ptr %.phi.trans.insert14.i, align 16, !tbaa !78
+  store <4 x i32> %5, ptr %.phi.trans.insert14.i, align 16, !tbaa !78
   %i.cw = lshr <4 x i32> %.inner14, splat (i32 4)
-  %8 = bitcast <4 x i32> %i.cw to <2 x i64>
-  %9 = and <2 x i64> %8, splat (i64 361700864190383365) ; 2 uses
-  %10 = bitcast <2 x i64> %9 to <4 x i32>
-  %i.cx = shl nuw nsw <4 x i32> %10, splat (i32 4)
+  %6 = and <4 x i32> %i.cw, splat (i32 84215045)  ; 2 uses
+  %i.cx = shl nuw nsw <4 x i32> %6, splat (i32 4)
   %.inner17.a = xor <4 x i32> %.inner14, %i.cx
   store <4 x i32> %.inner17.a, ptr %.phi.trans.insert.i, align 16, !tbaa !78
-  store <2 x i64> %9, ptr %.phi.trans.insert16.i, align 16, !tbaa !78
+  store <4 x i32> %6, ptr %.phi.trans.insert16.i, align 16, !tbaa !78
   %i.cy = lshr <4 x i32> %i.ck, splat (i32 6)
-  %11 = bitcast <4 x i32> %i.cy to <2 x i64>
-  %12 = and <2 x i64> %11, splat (i64 217020518514230019) ; 2 uses
-  %13 = bitcast <2 x i64> %12 to <4 x i32>
-  %i.cz = shl nuw nsw <4 x i32> %13, splat (i32 4)
+  %7 = and <4 x i32> %i.cy, splat (i32 50529027)  ; 2 uses
+  %i.cz = shl nuw nsw <4 x i32> %7, splat (i32 4)
   %.inner19 = xor <4 x i32> %.inner12, %i.cz
   store <4 x i32> %.inner19, ptr %.phi.trans.insert10.i, align 16, !tbaa !78
-  store <2 x i64> %12, ptr %.phi.trans.insert18.i, align 16, !tbaa !78
+  store <4 x i32> %7, ptr %.phi.trans.insert18.i, align 16, !tbaa !78
   %i.da = lshr <4 x i32> %i.cf, splat (i32 7)
-  %14 = bitcast <4 x i32> %i.da to <2 x i64>
-  %15 = and <2 x i64> %14, splat (i64 72340172838076673) ; 2 uses
-  %16 = bitcast <2 x i64> %15 to <4 x i32>
-  %i.db = shl nuw nsw <4 x i32> %16, splat (i32 4)
+  %8 = and <4 x i32> %i.da, splat (i32 16843009)  ; 2 uses
+  %i.db = shl nuw nsw <4 x i32> %8, splat (i32 4)
   %.inner21 = xor <4 x i32> %.inner13, %i.db
   store <4 x i32> %.inner21, ptr %.phi.trans.insert12.i, align 16, !tbaa !78
-  store <2 x i64> %15, ptr %.phi.trans.insert20.i, align 16, !tbaa !78
+  store <4 x i32> %8, ptr %.phi.trans.insert20.i, align 16, !tbaa !78
   call fastcc void @aes_nohw_encrypt_batch(ptr noundef %3, i64 noundef %i.c, ptr noundef %4)
   %.sroa.0.i.sroa.0.0.copyload = load <2 x i64>, ptr %4, align 16, !tbaa !78
   %.sroa.0.i.sroa.6.0.copyload6 = load <4 x i32>, ptr %.phi.trans.insert.i, align 16, !tbaa !78
@@ -462,38 +454,30 @@ aes_nohw_expand_round_keys.exit:                  ; preds = %.preheader.i
   %.inner14 = xor <4 x i32> %.inner, %i.cq        ; 2 uses
   %i.cr = bitcast <2 x i64> %i.co to <4 x i32>
   %i.cs = lshr <4 x i32> %i.cr, splat (i32 4)
-  %5 = bitcast <4 x i32> %i.cs to <2 x i64>
-  %6 = and <2 x i64> %5, splat (i64 1085102592571150095) ; 2 uses
-  %7 = bitcast <2 x i64> %6 to <4 x i32>
-  %i.ct = shl nuw <4 x i32> %7, splat (i32 4)
+  %5 = and <4 x i32> %i.cs, splat (i32 252645135) ; 2 uses
+  %i.ct = shl nuw <4 x i32> %5, splat (i32 4)
   %i.cu = bitcast <4 x i32> %i.ct to <2 x i64>
   %i.cv = xor <2 x i64> %i.co, %i.cu
   store <2 x i64> %i.cv, ptr %4, align 16, !tbaa !78
-  store <2 x i64> %6, ptr %.phi.trans.insert14.i, align 16, !tbaa !78
+  store <4 x i32> %5, ptr %.phi.trans.insert14.i, align 16, !tbaa !78
   %i.cw = lshr <4 x i32> %.inner14, splat (i32 4)
-  %8 = bitcast <4 x i32> %i.cw to <2 x i64>
-  %9 = and <2 x i64> %8, splat (i64 361700864190383365) ; 2 uses
-  %10 = bitcast <2 x i64> %9 to <4 x i32>
-  %i.cx = shl nuw nsw <4 x i32> %10, splat (i32 4)
+  %6 = and <4 x i32> %i.cw, splat (i32 84215045)  ; 2 uses
+  %i.cx = shl nuw nsw <4 x i32> %6, splat (i32 4)
   %.inner17.a = xor <4 x i32> %.inner14, %i.cx
   store <4 x i32> %.inner17.a, ptr %.phi.trans.insert.i, align 16, !tbaa !78
-  store <2 x i64> %9, ptr %.phi.trans.insert16.i, align 16, !tbaa !78
+  store <4 x i32> %6, ptr %.phi.trans.insert16.i, align 16, !tbaa !78
   %i.cy = lshr <4 x i32> %i.ck, splat (i32 6)
-  %11 = bitcast <4 x i32> %i.cy to <2 x i64>
-  %12 = and <2 x i64> %11, splat (i64 217020518514230019) ; 2 uses
-  %13 = bitcast <2 x i64> %12 to <4 x i32>
-  %i.cz = shl nuw nsw <4 x i32> %13, splat (i32 4)
+  %7 = and <4 x i32> %i.cy, splat (i32 50529027)  ; 2 uses
+  %i.cz = shl nuw nsw <4 x i32> %7, splat (i32 4)
   %.inner19 = xor <4 x i32> %.inner12, %i.cz
   store <4 x i32> %.inner19, ptr %.phi.trans.insert10.i, align 16, !tbaa !78
-  store <2 x i64> %12, ptr %.phi.trans.insert18.i, align 16, !tbaa !78
+  store <4 x i32> %7, ptr %.phi.trans.insert18.i, align 16, !tbaa !78
   %i.da = lshr <4 x i32> %i.cf, splat (i32 7)
-  %14 = bitcast <4 x i32> %i.da to <2 x i64>
-  %15 = and <2 x i64> %14, splat (i64 72340172838076673) ; 2 uses
-  %16 = bitcast <2 x i64> %15 to <4 x i32>
-  %i.db = shl nuw nsw <4 x i32> %16, splat (i32 4)
+  %8 = and <4 x i32> %i.da, splat (i32 16843009)  ; 2 uses
+  %i.db = shl nuw nsw <4 x i32> %8, splat (i32 4)
   %.inner21 = xor <4 x i32> %.inner13, %i.db
   store <4 x i32> %.inner21, ptr %.phi.trans.insert12.i, align 16, !tbaa !78
-  store <2 x i64> %15, ptr %.phi.trans.insert20.i, align 16, !tbaa !78
+  store <4 x i32> %8, ptr %.phi.trans.insert20.i, align 16, !tbaa !78
   call fastcc void @aes_nohw_decrypt_batch(ptr noundef %3, i64 noundef %i.c, ptr noundef %4)
   %.sroa.0.i.sroa.0.0.copyload = load <2 x i64>, ptr %4, align 16, !tbaa !78
   %.sroa.0.i.sroa.6.0.copyload6 = load <4 x i32>, ptr %.phi.trans.insert.i, align 16, !tbaa !78
@@ -750,9 +734,8 @@ bb.c:                                             ; preds = %bb.a
   %i.cu = xor <16 x i8> %i.ct, %i.cs              ; 2 uses
   %i.cv = shufflevector <16 x i8> %i.cu, <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0>, <16 x i32> <i32 28, i32 29, i32 30, i32 31, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11>
   %i.cw = xor <16 x i8> %i.cv, %i.cu
-  %3 = bitcast <16 x i8> %i.cw to <2 x i64>
-  %4 = and <2 x i64> %3, <i64 -1, i64 0>
-  store <2 x i64> %4, ptr %.0149.i, align 16, !tbaa !78
+  %3 = and <16 x i8> %i.cw, <i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0>
+  store <16 x i8> %3, ptr %.0149.i, align 16, !tbaa !78
   %i.cx = getelementptr inbounds nuw i8, ptr %i.bp, i64 48
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.cx, ptr noundef nonnull align 16 dereferenceable(16) %.0138148.i, i64 16, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #46
@@ -1155,38 +1138,30 @@ aes_nohw_expand_round_keys.exit:                  ; preds = %.preheader.i
   %.inner129 = xor <4 x i32> %.inner, %i.da       ; 2 uses
   %i.db = bitcast <2 x i64> %i.cy to <4 x i32>
   %i.dc = lshr <4 x i32> %i.db, splat (i32 4)
-  %9 = bitcast <4 x i32> %i.dc to <2 x i64>
-  %10 = and <2 x i64> %9, splat (i64 1085102592571150095) ; 2 uses
-  %11 = bitcast <2 x i64> %10 to <4 x i32>
-  %i.dd = shl nuw <4 x i32> %11, splat (i32 4)
+  %9 = and <4 x i32> %i.dc, splat (i32 252645135) ; 2 uses
+  %i.dd = shl nuw <4 x i32> %9, splat (i32 4)
   %i.de = bitcast <4 x i32> %i.dd to <2 x i64>
   %i.df = xor <2 x i64> %i.cy, %i.de
   store <2 x i64> %i.df, ptr %7, align 16, !tbaa !78
-  store <2 x i64> %10, ptr %.phi.trans.insert14.i, align 16, !tbaa !78
+  store <4 x i32> %9, ptr %.phi.trans.insert14.i, align 16, !tbaa !78
   %i.dg = lshr <4 x i32> %.inner129, splat (i32 4)
-  %12 = bitcast <4 x i32> %i.dg to <2 x i64>
-  %13 = and <2 x i64> %12, splat (i64 361700864190383365) ; 2 uses
-  %14 = bitcast <2 x i64> %13 to <4 x i32>
-  %i.dh = shl nuw nsw <4 x i32> %14, splat (i32 4)
+  %10 = and <4 x i32> %i.dg, splat (i32 84215045) ; 2 uses
+  %i.dh = shl nuw nsw <4 x i32> %10, splat (i32 4)
   %.inner132.a = xor <4 x i32> %.inner129, %i.dh
   store <4 x i32> %.inner132.a, ptr %.phi.trans.insert.i, align 16, !tbaa !78
-  store <2 x i64> %13, ptr %.phi.trans.insert16.i, align 16, !tbaa !78
+  store <4 x i32> %10, ptr %.phi.trans.insert16.i, align 16, !tbaa !78
   %i.di = lshr <4 x i32> %i.cu, splat (i32 6)
-  %15 = bitcast <4 x i32> %i.di to <2 x i64>
-  %16 = and <2 x i64> %15, splat (i64 217020518514230019) ; 2 uses
-  %17 = bitcast <2 x i64> %16 to <4 x i32>
-  %i.dj = shl nuw nsw <4 x i32> %17, splat (i32 4)
+  %11 = and <4 x i32> %i.di, splat (i32 50529027) ; 2 uses
+  %i.dj = shl nuw nsw <4 x i32> %11, splat (i32 4)
   %.inner134 = xor <4 x i32> %.inner127, %i.dj
   store <4 x i32> %.inner134, ptr %.phi.trans.insert10.i, align 16, !tbaa !78
-  store <2 x i64> %16, ptr %.phi.trans.insert18.i, align 16, !tbaa !78
+  store <4 x i32> %11, ptr %.phi.trans.insert18.i, align 16, !tbaa !78
   %i.dk = lshr <4 x i32> %i.cp, splat (i32 7)
-  %18 = bitcast <4 x i32> %i.dk to <2 x i64>
-  %19 = and <2 x i64> %18, splat (i64 72340172838076673) ; 2 uses
-  %20 = bitcast <2 x i64> %19 to <4 x i32>
-  %i.dl = shl nuw nsw <4 x i32> %20, splat (i32 4)
+  %12 = and <4 x i32> %i.dk, splat (i32 16843009) ; 2 uses
+  %i.dl = shl nuw nsw <4 x i32> %12, splat (i32 4)
   %.inner136 = xor <4 x i32> %.inner128, %i.dl
   store <4 x i32> %.inner136, ptr %.phi.trans.insert12.i, align 16, !tbaa !78
-  store <2 x i64> %19, ptr %.phi.trans.insert20.i, align 16, !tbaa !78
+  store <4 x i32> %12, ptr %.phi.trans.insert20.i, align 16, !tbaa !78
   %i.dm = load i32, ptr %i.d, align 4, !tbaa !77
   %i.dn = zext i32 %i.dm to i64
   call fastcc void @aes_nohw_encrypt_batch(ptr noundef %6, i64 noundef %i.dn, ptr noundef %7)
@@ -1589,38 +1564,30 @@ aes_nohw_encrypt.exit:                            ; preds = %.preheader.i.i
   %.inner44 = xor <4 x i32> %.inner, %i.di        ; 2 uses
   %i.dj = bitcast <2 x i64> %i.dg to <4 x i32>
   %i.dk = lshr <4 x i32> %i.dj, splat (i32 4)
-  %7 = bitcast <4 x i32> %i.dk to <2 x i64>
-  %8 = and <2 x i64> %7, splat (i64 1085102592571150095) ; 2 uses
-  %9 = bitcast <2 x i64> %8 to <4 x i32>
-  %i.dl = shl nuw <4 x i32> %9, splat (i32 4)
+  %7 = and <4 x i32> %i.dk, splat (i32 252645135) ; 2 uses
+  %i.dl = shl nuw <4 x i32> %7, splat (i32 4)
   %i.dm = bitcast <4 x i32> %i.dl to <2 x i64>
   %i.dn = xor <2 x i64> %i.dg, %i.dm
   store <2 x i64> %i.dn, ptr %6, align 16, !tbaa !78
-  store <2 x i64> %8, ptr %.phi.trans.insert14.i.i, align 16, !tbaa !78
+  store <4 x i32> %7, ptr %.phi.trans.insert14.i.i, align 16, !tbaa !78
   %i.do = lshr <4 x i32> %.inner44, splat (i32 4)
-  %10 = bitcast <4 x i32> %i.do to <2 x i64>
-  %11 = and <2 x i64> %10, splat (i64 361700864190383365) ; 2 uses
-  %12 = bitcast <2 x i64> %11 to <4 x i32>
-  %i.dp = shl nuw nsw <4 x i32> %12, splat (i32 4)
+  %8 = and <4 x i32> %i.do, splat (i32 84215045)  ; 2 uses
+  %i.dp = shl nuw nsw <4 x i32> %8, splat (i32 4)
   %.inner47.a = xor <4 x i32> %.inner44, %i.dp
   store <4 x i32> %.inner47.a, ptr %.phi.trans.insert.i.i, align 16, !tbaa !78
-  store <2 x i64> %11, ptr %.phi.trans.insert16.i.i, align 16, !tbaa !78
+  store <4 x i32> %8, ptr %.phi.trans.insert16.i.i, align 16, !tbaa !78
   %i.dq = lshr <4 x i32> %i.dc, splat (i32 6)
-  %13 = bitcast <4 x i32> %i.dq to <2 x i64>
-  %14 = and <2 x i64> %13, splat (i64 217020518514230019) ; 2 uses
-  %15 = bitcast <2 x i64> %14 to <4 x i32>
-  %i.dr = shl nuw nsw <4 x i32> %15, splat (i32 4)
+  %9 = and <4 x i32> %i.dq, splat (i32 50529027)  ; 2 uses
+  %i.dr = shl nuw nsw <4 x i32> %9, splat (i32 4)
   %.inner49 = xor <4 x i32> %.inner42, %i.dr
   store <4 x i32> %.inner49, ptr %.phi.trans.insert10.i.i, align 16, !tbaa !78
-  store <2 x i64> %14, ptr %.phi.trans.insert18.i.i, align 16, !tbaa !78
+  store <4 x i32> %9, ptr %.phi.trans.insert18.i.i, align 16, !tbaa !78
   %i.ds = lshr <4 x i32> %i.cx, splat (i32 7)
-  %16 = bitcast <4 x i32> %i.ds to <2 x i64>
-  %17 = and <2 x i64> %16, splat (i64 72340172838076673) ; 2 uses
-  %18 = bitcast <2 x i64> %17 to <4 x i32>
-  %i.dt = shl nuw nsw <4 x i32> %18, splat (i32 4)
+  %10 = and <4 x i32> %i.ds, splat (i32 16843009) ; 2 uses
+  %i.dt = shl nuw nsw <4 x i32> %10, splat (i32 4)
   %.inner51 = xor <4 x i32> %.inner43, %i.dt
   store <4 x i32> %.inner51, ptr %.phi.trans.insert12.i.i, align 16, !tbaa !78
-  store <2 x i64> %17, ptr %.phi.trans.insert20.i.i, align 16, !tbaa !78
+  store <4 x i32> %10, ptr %.phi.trans.insert20.i.i, align 16, !tbaa !78
   call fastcc void @aes_nohw_encrypt_batch(ptr noundef %5, i64 noundef %i.u, ptr noundef %6)
   %.sroa.0.i.sroa.0.0.copyload.i = load <2 x i64>, ptr %6, align 16, !tbaa !78
   %.sroa.0.i.sroa.6.0.copyload6.i = load <4 x i32>, ptr %.phi.trans.insert.i.i, align 16, !tbaa !78
@@ -1938,28 +1905,20 @@ aes_nohw_decrypt.exit:                            ; preds = %.preheader.i.i
   %i.ec = bitcast <4 x i32> %.inner56 to <2 x i64>
   %i.ed = bitcast <2 x i64> %i.dw to <4 x i32>
   %i.ee = lshr <4 x i32> %i.ed, splat (i32 4)
-  %7 = bitcast <4 x i32> %i.ee to <2 x i64>
-  %8 = and <2 x i64> %7, splat (i64 1085102592571150095) ; 2 uses
-  %9 = bitcast <2 x i64> %8 to <4 x i32>
-  %i.ef = shl nuw <4 x i32> %9, splat (i32 4)
+  %7 = and <4 x i32> %i.ee, splat (i32 252645135) ; 2 uses
+  %i.ef = shl nuw <4 x i32> %7, splat (i32 4)
   %i.eg = bitcast <4 x i32> %i.ef to <2 x i64>
   %i.eh = lshr <4 x i32> %.inner56, splat (i32 4)
-  %10 = bitcast <4 x i32> %i.eh to <2 x i64>
-  %11 = and <2 x i64> %10, splat (i64 361700864190383365) ; 2 uses
-  %12 = bitcast <2 x i64> %11 to <4 x i32>
-  %i.ei = shl nuw nsw <4 x i32> %12, splat (i32 4)
+  %8 = and <4 x i32> %i.eh, splat (i32 84215045)  ; 2 uses
+  %i.ei = shl nuw nsw <4 x i32> %8, splat (i32 4)
   %i.ej = bitcast <4 x i32> %i.ei to <2 x i64>
   %i.ek = lshr <4 x i32> %i.dt, splat (i32 4)
-  %13 = bitcast <4 x i32> %i.ek to <2 x i64>
-  %14 = and <2 x i64> %13, splat (i64 217020518514230019) ; 2 uses
-  %15 = bitcast <2 x i64> %14 to <4 x i32>
-  %i.el = shl nuw nsw <4 x i32> %15, splat (i32 4)
+  %9 = and <4 x i32> %i.ek, splat (i32 50529027)  ; 2 uses
+  %i.el = shl nuw nsw <4 x i32> %9, splat (i32 4)
   %i.em = bitcast <4 x i32> %i.el to <2 x i64>
   %i.en = lshr <4 x i32> %i.ea, splat (i32 4)
-  %16 = bitcast <4 x i32> %i.en to <2 x i64>
-  %17 = and <2 x i64> %16, splat (i64 72340172838076673) ; 2 uses
-  %18 = bitcast <2 x i64> %17 to <4 x i32>
-  %i.eo = shl nuw nsw <4 x i32> %18, splat (i32 4)
+  %10 = and <4 x i32> %i.en, splat (i32 16843009) ; 2 uses
+  %i.eo = shl nuw nsw <4 x i32> %10, splat (i32 4)
   %i.ep = bitcast <4 x i32> %i.eo to <2 x i64>
   %i.eq = getelementptr inbounds nuw [128 x i8], ptr %5, i64 %i.ah ; 8 uses
   %i.er = load <2 x i64>, ptr %i.eq, align 16, !tbaa !78
@@ -1981,21 +1940,25 @@ aes_nohw_decrypt.exit:                            ; preds = %.preheader.i.i
   %i.fe = xor <2 x i64> %i.fd, %i.ep
   %i.ff = xor <2 x i64> %i.fe, %i.dz
   store <2 x i64> %i.ff, ptr %.phi.trans.insert12.i.i, align 16, !tbaa !78
+  %11 = bitcast <4 x i32> %7 to <2 x i64>
   %i.fg = getelementptr inbounds nuw i8, ptr %i.eq, i64 64
   %i.fh = load <2 x i64>, ptr %i.fg, align 16, !tbaa !78
-  %i.fi = xor <2 x i64> %8, %i.fh
+  %i.fi = xor <2 x i64> %i.fh, %11
   store <2 x i64> %i.fi, ptr %.phi.trans.insert14.i.i, align 16, !tbaa !78
+  %12 = bitcast <4 x i32> %8 to <2 x i64>
   %i.fj = getelementptr inbounds nuw i8, ptr %i.eq, i64 80
   %i.fk = load <2 x i64>, ptr %i.fj, align 16, !tbaa !78
-  %i.fl = xor <2 x i64> %i.fk, %11
+  %i.fl = xor <2 x i64> %i.fk, %12
   store <2 x i64> %i.fl, ptr %.phi.trans.insert16.i.i, align 16, !tbaa !78
+  %13 = bitcast <4 x i32> %9 to <2 x i64>
   %i.fm = getelementptr inbounds nuw i8, ptr %i.eq, i64 96
   %i.fn = load <2 x i64>, ptr %i.fm, align 16, !tbaa !78
-  %i.fo = xor <2 x i64> %i.fn, %14
+  %i.fo = xor <2 x i64> %i.fn, %13
   store <2 x i64> %i.fo, ptr %.phi.trans.insert18.i.i, align 16, !tbaa !78
+  %14 = bitcast <4 x i32> %10 to <2 x i64>
   %i.fp = getelementptr inbounds nuw i8, ptr %i.eq, i64 112
   %i.fq = load <2 x i64>, ptr %i.fp, align 16, !tbaa !78
-  %i.fr = xor <2 x i64> %i.fq, %17
+  %i.fr = xor <2 x i64> %i.fq, %14
   store <2 x i64> %i.fr, ptr %.phi.trans.insert20.i.i, align 16, !tbaa !78
   br label %bb.g
 

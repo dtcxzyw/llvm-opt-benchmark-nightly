@@ -204,7 +204,7 @@ bb.a:
   br label %.lr.ph.us
 
 .lr.ph232.split.preheader:                        ; preds = %.lr.ph232
-  store <8 x i64> zeroinitializer, ptr %i.ae, align 64, !tbaa !23
+  store <16 x i32> zeroinitializer, ptr %i.ae, align 64, !tbaa !23
   br label %._crit_edge233.thread
 
 .lr.ph.us:                                        ; preds = %.lr.ph.us.preheader, %._crit_edge.us
@@ -222,9 +222,8 @@ bb.a:
   %.sroa.62.0221.us = phi i32 [ %.sroa.62.9.us, %._crit_edge.us ], [ 0, %.lr.ph.us.preheader ]
   store <8 x i64> %.0203225.us, ptr %i.ad, align 64, !tbaa !23
   %i.ak = lshr <16 x i32> %i.aj, splat (i32 3)
-  %11 = bitcast <16 x i32> %i.ak to <8 x i64>
-  %12 = and <8 x i64> %11, splat (i64 1)
-  store <8 x i64> %12, ptr %i.ae, align 64, !tbaa !23
+  %11 = and <16 x i32> %i.ak, splat (i32 1)
+  store <16 x i32> %11, ptr %i.ae, align 64, !tbaa !23
   %i.al = mul i32 %.098230.us, %5
   %i.am = zext i32 %i.al to i64
   %i.an = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.am
@@ -268,45 +267,53 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.bi = phi <16 x i32> [ %i.bh, %bb.c ], [ zeroinitializer, %bb.b ] ; 2 uses
   %i.bj = phi <16 x i32> [ %i.bf, %bb.c ], [ zeroinitializer, %bb.b ] ; 2 uses
   %i.bk = shl <16 x i32> %i.ba, splat (i32 1)
-  %i.bl = call <16 x i32> @llvm.x86.avx512.psrli.d.512(<16 x i32> %i.bk, i32 %i.aa)
+  %i.bl = call <16 x i32> @llvm.x86.avx512.psrli.d.512(<16 x i32> %i.bk, i32 %i.aa) ; 2 uses
   %i.bm = and <16 x i32> %i.bl, splat (i32 -2)    ; 2 uses
   %i.bn = icmp ne <16 x i32> %i.bm, zeroinitializer ; 2 uses
   %i.bo = call <16 x i32> @llvm.usub.sat.v16i32(<16 x i32> %i.bm, <16 x i32> splat (i32 1)) ; 2 uses
-  %i.bp = call range(i32 0, 33) <16 x i32> @llvm.ctlz.v16i32(<16 x i32> %i.bo, i1 false)
-  %i.bq = sub nuw nsw <16 x i32> splat (i32 32), %i.bp ; 2 uses
+  %i.bp = call range(i32 0, 33) <16 x i32> @llvm.ctlz.v16i32(<16 x i32> %i.bo, i1 true)
+  %12 = icmp ugt <16 x i32> %i.bl, splat (i32 1)
+  %i.bq = sub nuw nsw <16 x i32> splat (i32 32), %i.bp
+  %13 = select <16 x i1> %12, <16 x i32> %i.bq, <16 x i32> zeroinitializer ; 2 uses
   %i.br = lshr <16 x i32> %i.ba, splat (i32 31)
   %i.bs = add nsw <16 x i32> %i.br, splat (i32 -1)
   %i.bt = add <16 x i32> %i.bs, %i.bo
   %i.bu = select <16 x i1> %i.bn, <16 x i32> %i.bt, <16 x i32> zeroinitializer ; 2 uses
   %i.bv = shl <16 x i32> %i.bj, splat (i32 1)
-  %i.bw = call <16 x i32> @llvm.x86.avx512.psrli.d.512(<16 x i32> %i.bv, i32 %i.aa)
+  %i.bw = call <16 x i32> @llvm.x86.avx512.psrli.d.512(<16 x i32> %i.bv, i32 %i.aa) ; 2 uses
   %i.bx = and <16 x i32> %i.bw, splat (i32 -2)    ; 2 uses
   %i.by = icmp ne <16 x i32> %i.bx, zeroinitializer ; 2 uses
   %i.bz = call <16 x i32> @llvm.usub.sat.v16i32(<16 x i32> %i.bx, <16 x i32> splat (i32 1)) ; 2 uses
-  %i.ca = call range(i32 0, 33) <16 x i32> @llvm.ctlz.v16i32(<16 x i32> %i.bz, i1 false)
-  %i.cb = sub nuw nsw <16 x i32> splat (i32 32), %i.ca ; 2 uses
+  %i.ca = call range(i32 0, 33) <16 x i32> @llvm.ctlz.v16i32(<16 x i32> %i.bz, i1 true)
+  %14 = icmp ugt <16 x i32> %i.bw, splat (i32 1)
+  %i.cb = sub nuw nsw <16 x i32> splat (i32 32), %i.ca
+  %15 = select <16 x i1> %14, <16 x i32> %i.cb, <16 x i32> zeroinitializer ; 2 uses
   %i.cc = lshr <16 x i32> %i.bj, splat (i32 31)
   %i.cd = add nsw <16 x i32> %i.cc, splat (i32 -1)
   %i.ce = add <16 x i32> %i.cd, %i.bz
   %i.cf = select <16 x i1> %i.by, <16 x i32> %i.ce, <16 x i32> zeroinitializer ; 2 uses
   %i.cg = shl <16 x i32> %i.bd, splat (i32 1)
-  %i.ch = call <16 x i32> @llvm.x86.avx512.psrli.d.512(<16 x i32> %i.cg, i32 %i.aa)
+  %i.ch = call <16 x i32> @llvm.x86.avx512.psrli.d.512(<16 x i32> %i.cg, i32 %i.aa) ; 2 uses
   %i.ci = and <16 x i32> %i.ch, splat (i32 -2)    ; 2 uses
   %i.cj = icmp ne <16 x i32> %i.ci, zeroinitializer ; 2 uses
   %i.ck = call <16 x i32> @llvm.usub.sat.v16i32(<16 x i32> %i.ci, <16 x i32> splat (i32 1)) ; 2 uses
-  %i.cl = call range(i32 0, 33) <16 x i32> @llvm.ctlz.v16i32(<16 x i32> %i.ck, i1 false)
-  %i.cm = sub nuw nsw <16 x i32> splat (i32 32), %i.cl ; 2 uses
+  %i.cl = call range(i32 0, 33) <16 x i32> @llvm.ctlz.v16i32(<16 x i32> %i.ck, i1 true)
+  %16 = icmp ugt <16 x i32> %i.ch, splat (i32 1)
+  %i.cm = sub nuw nsw <16 x i32> splat (i32 32), %i.cl
+  %17 = select <16 x i1> %16, <16 x i32> %i.cm, <16 x i32> zeroinitializer ; 2 uses
   %i.cn = lshr <16 x i32> %i.bd, splat (i32 31)
   %i.co = add nsw <16 x i32> %i.cn, splat (i32 -1)
   %i.cp = add <16 x i32> %i.co, %i.ck
   %i.cq = select <16 x i1> %i.cj, <16 x i32> %i.cp, <16 x i32> zeroinitializer ; 2 uses
   %i.cr = shl <16 x i32> %i.bi, splat (i32 1)
-  %i.cs = call <16 x i32> @llvm.x86.avx512.psrli.d.512(<16 x i32> %i.cr, i32 %i.aa)
+  %i.cs = call <16 x i32> @llvm.x86.avx512.psrli.d.512(<16 x i32> %i.cr, i32 %i.aa) ; 2 uses
   %i.ct = and <16 x i32> %i.cs, splat (i32 -2)    ; 2 uses
   %i.cu = icmp ne <16 x i32> %i.ct, zeroinitializer ; 2 uses
   %i.cv = call <16 x i32> @llvm.usub.sat.v16i32(<16 x i32> %i.ct, <16 x i32> splat (i32 1)) ; 2 uses
-  %i.cw = call range(i32 0, 33) <16 x i32> @llvm.ctlz.v16i32(<16 x i32> %i.cv, i1 false)
-  %i.cx = sub nuw nsw <16 x i32> splat (i32 32), %i.cw ; 2 uses
+  %i.cw = call range(i32 0, 33) <16 x i32> @llvm.ctlz.v16i32(<16 x i32> %i.cv, i1 true)
+  %18 = icmp ugt <16 x i32> %i.cs, splat (i32 1)
+  %i.cx = sub nuw nsw <16 x i32> splat (i32 32), %i.cw
+  %19 = select <16 x i1> %18, <16 x i32> %i.cx, <16 x i32> zeroinitializer ; 2 uses
   %i.cy = lshr <16 x i32> %i.bi, splat (i32 31)
   %i.cz = add nsw <16 x i32> %i.cy, splat (i32 -1)
   %i.da = add <16 x i32> %i.cz, %i.cv
@@ -315,20 +322,20 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.dd = zext <16 x i1> %i.by to <16 x i32>      ; 2 uses
   %i.de = zext <16 x i1> %i.cj to <16 x i32>      ; 2 uses
   %i.df = zext <16 x i1> %i.cu to <16 x i32>      ; 2 uses
-  %i.dg = shufflevector <16 x i32> %i.bq, <16 x i32> %i.cm, <16 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14, i32 16, i32 18, i32 20, i32 22, i32 24, i32 26, i32 28, i32 30> ; 2 uses
+  %i.dg = shufflevector <16 x i32> %13, <16 x i32> %17, <16 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14, i32 16, i32 18, i32 20, i32 22, i32 24, i32 26, i32 28, i32 30> ; 2 uses
   %i.dh = shufflevector <16 x i32> %i.bu, <16 x i32> %i.cq, <16 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14, i32 16, i32 18, i32 20, i32 22, i32 24, i32 26, i32 28, i32 30> ; 2 uses
   %i.di = shufflevector <16 x i32> %i.dc, <16 x i32> %i.de, <16 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14, i32 16, i32 18, i32 20, i32 22, i32 24, i32 26, i32 28, i32 30>
-  %i.dj = shufflevector <16 x i32> %i.cb, <16 x i32> %i.cx, <16 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14, i32 16, i32 18, i32 20, i32 22, i32 24, i32 26, i32 28, i32 30> ; 3 uses
+  %i.dj = shufflevector <16 x i32> %15, <16 x i32> %19, <16 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14, i32 16, i32 18, i32 20, i32 22, i32 24, i32 26, i32 28, i32 30> ; 3 uses
   %i.dk = shufflevector <16 x i32> %i.cf, <16 x i32> %i.db, <16 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14, i32 16, i32 18, i32 20, i32 22, i32 24, i32 26, i32 28, i32 30> ; 2 uses
   %i.dl = shufflevector <16 x i32> %i.dd, <16 x i32> %i.df, <16 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14, i32 16, i32 18, i32 20, i32 22, i32 24, i32 26, i32 28, i32 30>
   %i.dm = shl nuw nsw <16 x i32> %i.dl, splat (i32 1)
   %i.dn = call <16 x i32> @llvm.smax.v16i32(<16 x i32> %i.dg, <16 x i32> %i.dj)
-  %i.do = shufflevector <16 x i32> %i.bq, <16 x i32> %i.cm, <16 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15, i32 17, i32 19, i32 21, i32 23, i32 25, i32 27, i32 29, i32 31> ; 2 uses
+  %i.do = shufflevector <16 x i32> %13, <16 x i32> %17, <16 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15, i32 17, i32 19, i32 21, i32 23, i32 25, i32 27, i32 29, i32 31> ; 2 uses
   %i.dp = shufflevector <16 x i32> %i.bu, <16 x i32> %i.cq, <16 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15, i32 17, i32 19, i32 21, i32 23, i32 25, i32 27, i32 29, i32 31> ; 2 uses
   %i.dq = shufflevector <16 x i32> %i.dc, <16 x i32> %i.de, <16 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15, i32 17, i32 19, i32 21, i32 23, i32 25, i32 27, i32 29, i32 31>
   %i.dr = shl nuw nsw <16 x i32> %i.dq, splat (i32 2)
   %i.ds = call <16 x i32> @llvm.smax.v16i32(<16 x i32> %i.dn, <16 x i32> %i.do) ; 2 uses
-  %i.dt = shufflevector <16 x i32> %i.cb, <16 x i32> %i.cx, <16 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15, i32 17, i32 19, i32 21, i32 23, i32 25, i32 27, i32 29, i32 31> ; 3 uses
+  %i.dt = shufflevector <16 x i32> %15, <16 x i32> %19, <16 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15, i32 17, i32 19, i32 21, i32 23, i32 25, i32 27, i32 29, i32 31> ; 3 uses
   %i.du = shufflevector <16 x i32> %i.cf, <16 x i32> %i.db, <16 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15, i32 17, i32 19, i32 21, i32 23, i32 25, i32 27, i32 29, i32 31> ; 2 uses
   %i.dv = shufflevector <16 x i32> %i.dd, <16 x i32> %i.df, <16 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15, i32 17, i32 19, i32 21, i32 23, i32 25, i32 27, i32 29, i32 31>
   %i.dw = shl nuw nsw <16 x i32> %i.dv, splat (i32 3)
@@ -368,10 +375,9 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.ey = lshr <16 x i32> %i.ex, splat (i32 3)
   %i.ez = lshr <16 x i32> %i.ev, splat (i32 1)
   %i.fa = or <16 x i32> %i.ey, %i.ez
-  %13 = bitcast <16 x i32> %i.fa to <8 x i64>
-  %14 = and <8 x i64> %13, splat (i64 4294967297)
-  %15 = getelementptr inbounds nuw [64 x i8], ptr %i.f, i64 %indvars.iv
-  store <8 x i64> %14, ptr %15, align 64, !tbaa !23
+  %20 = getelementptr inbounds nuw [64 x i8], ptr %i.f, i64 %indvars.iv
+  %21 = and <16 x i32> %i.fa, splat (i32 1)
+  store <16 x i32> %21, ptr %20, align 64, !tbaa !23
   %i.fb = call <16 x i32> @llvm.smax.v16i32(<16 x i32> %i.em, <16 x i32> %i.dx) ; 5 uses
   %i.fc = sub nsw <16 x i32> %i.fb, %i.em         ; 3 uses
   %i.fd = bitcast <16 x i32> %i.fc to <8 x i64>
