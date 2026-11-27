@@ -205,9 +205,7 @@ declare i32 @vpaes_set_encrypt_key(ptr noundef, i32 noundef, ptr noundef) local_
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define hidden range(i32 0, 2) i32 @aes_nohw_set_encrypt_key(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, ptr nofree noundef writeonly captures(none) %2) local_unnamed_addr #2 {
 bb.a:
-  %3 = alloca [1 x <2 x i64>], align 16           ; 7 uses
-  %4 = alloca [1 x <2 x i64>], align 16           ; 4 uses
-  %i.a = alloca [1 x <2 x i64>], align 16         ; 5 uses
+  %i.a = alloca [1 x <2 x i64>], align 16         ; 7 uses
   %i.b = alloca [1 x <2 x i64>], align 16         ; 6 uses
   %i.c = alloca [1 x <2 x i64>], align 16         ; 4 uses
   switch i32 %1, label %aes_nohw_setup_key_128.exit [
@@ -260,119 +258,94 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 240
   store i32 12, ptr %i.ab, align 4, !tbaa !77
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #46
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #46
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, ptr noundef nonnull readonly align 1 dereferenceable(16) %0, i64 16, i1 false)
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %2, ptr noundef nonnull readonly align 1 dereferenceable(16) %0, i64 16, i1 false)
+  %.sroa.0152.0.copyload153.i = load <16 x i8>, ptr %0, align 1 ; 2 uses
+  store <16 x i8> %.sroa.0152.0.copyload153.i, ptr %2, align 4
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.ad = load i64, ptr %i.ac, align 1
-  store i64 %i.ad, ptr %i.a, align 16
-  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store i64 0, ptr %.sroa.5.0..sroa_idx.i, align 8
+  %.sroa.0.8.vec.insert.i = insertelement <2 x i64> <i64 poison, i64 0>, i64 %i.ad, i64 0
   br label %.critedge.i7
 
 .critedge.i7:                                     ; preds = %.critedge.i7, %bb.c
-  %.0149.i = phi ptr [ %4, %bb.c ], [ %.0138148.i, %.critedge.i7 ] ; 7 uses
-  %.0138148.i = phi ptr [ %i.a, %bb.c ], [ %.0149.i, %.critedge.i7 ] ; 10 uses
+  %.0149.sroa.i = phi <16 x i8> [ %.sroa.0152.0.copyload153.i, %bb.c ], [ %12, %.critedge.i7 ] ; 2 uses
+  %.0138148.sroa.in.i = phi <2 x i64> [ %.sroa.0.8.vec.insert.i, %bb.c ], [ %i.cf, %.critedge.i7 ] ; 2 uses
   %.0140147.i = phi i64 [ 0, %bb.c ], [ %i.ch, %.critedge.i7 ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #46
-  %.0138.val.i = load <2 x i64>, ptr %.0138148.i, align 16, !tbaa !78
-  call fastcc void @aes_nohw_sub_block(ptr noundef %i.b, <2 x i64> %.0138.val.i)
+  call fastcc void @aes_nohw_sub_block(ptr noundef %i.b, <2 x i64> %.0138148.sroa.in.i)
   %i.ae = shl nuw nsw i64 %.0140147.i, 1
   %i.af = getelementptr inbounds nuw i8, ptr @aes_nohw_rcon, i64 %i.ae ; 2 uses
   %i.ag = load i8, ptr %i.af, align 1, !tbaa !78
-  %5 = load <2 x i64>, ptr %.0138148.i, align 16, !tbaa !78
-  %6 = load <2 x i64>, ptr %.0149.i, align 16     ; 2 uses
   %i.ah = zext i8 %i.ag to i32
   %i.ai = insertelement <4 x i32> <i32 poison, i32 0, i32 poison, i32 poison>, i32 %i.ah, i64 0
-  %7 = bitcast <4 x i32> %i.ai to <2 x i64>
-  %8 = xor <2 x i64> %6, %7
-  %9 = shufflevector <2 x i64> %8, <2 x i64> <i64 poison, i64 0>, <2 x i32> <i32 3, i32 0>
-  %10 = or <2 x i64> %5, %9                       ; 2 uses
-  store <2 x i64> %10, ptr %.0138148.i, align 16, !tbaa !78
+  %3 = bitcast <4 x i32> %i.ai to <16 x i8>
+  %4 = xor <16 x i8> %.0149.sroa.i, %3
+  %5 = shufflevector <16 x i8> %4, <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0>, <16 x i32> <i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %6 = bitcast <16 x i8> %5 to <2 x i64>
+  %7 = or <2 x i64> %.0138148.sroa.in.i, %6
   %i.aj = load <4 x i32>, ptr %i.b, align 16, !tbaa !78 ; 2 uses
   %i.ak = tail call <4 x i32> @llvm.fshl.v4i32(<4 x i32> %i.aj, <4 x i32> %i.aj, <4 x i32> <i32 24, i32 24, i32 24, i32 poison>)
   %i.al = bitcast <4 x i32> %i.ak to <16 x i8>
   %i.am = shufflevector <16 x i8> %i.al, <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0>, <16 x i32> <i32 28, i32 29, i32 30, i32 31, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11>
   %i.an = bitcast <16 x i8> %i.am to <2 x i64>
   %i.ao = and <2 x i64> %i.an, <i64 0, i64 4294967295>
-  %i.ap = xor <2 x i64> %i.ao, %10                ; 2 uses
+  %i.ap = xor <2 x i64> %7, %i.ao                 ; 2 uses
   %i.aq = bitcast <2 x i64> %i.ap to <16 x i8>
   %i.ar = shufflevector <16 x i8> %i.aq, <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0>, <16 x i32> <i32 28, i32 29, i32 30, i32 31, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11>
   %i.as = bitcast <16 x i8> %i.ar to <2 x i64>
   %i.at = and <2 x i64> %i.as, <i64 0, i64 -4294967296>
   %i.au = xor <2 x i64> %i.at, %i.ap              ; 2 uses
-  store <2 x i64> %i.au, ptr %.0138148.i, align 16, !tbaa !78
-  %i.av = bitcast <2 x i64> %6 to <16 x i8>
-  %i.aw = shufflevector <16 x i8> %i.av, <16 x i8> <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison>, <16 x i32> <i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23>
-  %.cast144.i = bitcast <2 x i64> %i.au to <16 x i8> ; 2 uses
-  %i.ax = shufflevector <16 x i8> %.cast144.i, <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0>, <16 x i32> <i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %i.av = bitcast <2 x i64> %i.au to <16 x i8>    ; 3 uses
+  %i.aw = shufflevector <16 x i8> %.0149.sroa.i, <16 x i8> <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison>, <16 x i32> <i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23>
+  %i.ax = shufflevector <16 x i8> %i.av, <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0>, <16 x i32> <i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.ay = or <16 x i8> %i.ax, %i.aw
-  %i.az = shufflevector <16 x i8> %.cast144.i, <16 x i8> <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison>, <16 x i32> <i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27>
+  %i.az = shufflevector <16 x i8> %i.av, <16 x i8> <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison>, <16 x i32> <i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27>
   %i.ba = xor <16 x i8> %i.ay, %i.az              ; 4 uses
   %i.bb = shufflevector <16 x i8> %i.ba, <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0>, <16 x i32> <i32 28, i32 29, i32 30, i32 31, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11>
   %i.bc = shufflevector <16 x i8> %i.ba, <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0>, <16 x i32> <i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.bd = shufflevector <16 x i8> %i.ba, <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0>, <16 x i32> <i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 0, i32 1, i32 2, i32 3>
   %i.be = xor <16 x i8> %i.bb, %i.bc
   %i.bf = xor <16 x i8> %i.be, %i.bd
-  %i.bg = xor <16 x i8> %i.bf, %i.ba
-  store <16 x i8> %i.bg, ptr %.0149.i, align 16, !tbaa !78
+  %i.bg = xor <16 x i8> %i.bf, %i.ba              ; 4 uses
   %.idx.i8 = mul nuw nsw i64 %.0140147.i, 48
   %i.bh = getelementptr inbounds nuw i8, ptr %2, i64 %.idx.i8 ; 3 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bh, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.bi, ptr noundef nonnull align 16 dereferenceable(16) %.0138148.i, i64 16, i1 false)
+  store <2 x i64> %i.au, ptr %i.bi, align 4
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bh, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.bj, ptr noundef nonnull align 16 dereferenceable(16) %.0149.i, i64 16, i1 false)
-  %.0.val.i = load <2 x i64>, ptr %.0149.i, align 16, !tbaa !78
-  call fastcc void @aes_nohw_sub_block(ptr noundef %i.b, <2 x i64> %.0.val.i)
+  store <16 x i8> %i.bg, ptr %i.bj, align 4
+  %.0.val.value.i = bitcast <16 x i8> %i.bg to <2 x i64>
+  call fastcc void @aes_nohw_sub_block(ptr noundef %i.b, <2 x i64> %.0.val.value.i)
   %i.bk = getelementptr inbounds nuw i8, ptr %i.af, i64 1
   %i.bl = load i8, ptr %i.bk, align 1, !tbaa !78
-  %11 = load <16 x i8>, ptr %.0138148.i, align 16, !tbaa !78
-  %i.bm = shufflevector <16 x i8> %11, <16 x i8> <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison>, <16 x i32> <i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23>
-  %12 = load <16 x i8>, ptr %.0149.i, align 16, !tbaa !78 ; 2 uses
-  %i.bn = shufflevector <16 x i8> %12, <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0>, <16 x i32> <i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %i.bm = shufflevector <16 x i8> %i.av, <16 x i8> <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison>, <16 x i32> <i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23>
+  %i.bn = shufflevector <16 x i8> %i.bg, <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0>, <16 x i32> <i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.bo = or <16 x i8> %i.bn, %i.bm
-  %13 = bitcast <16 x i8> %i.bo to <2 x i64>
   %i.bp = zext i8 %i.bl to i32
   %i.bq = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %i.bp, i64 0
-  %14 = bitcast <4 x i32> %i.bq to <2 x i64>
-  %15 = xor <2 x i64> %13, %14                    ; 2 uses
-  store <2 x i64> %15, ptr %.0138148.i, align 16, !tbaa !78
   %i.br = load <4 x i32>, ptr %i.b, align 16, !tbaa !78 ; 2 uses
   %i.bs = tail call <4 x i32> @llvm.fshl.v4i32(<4 x i32> %i.br, <4 x i32> %i.br, <4 x i32> <i32 poison, i32 poison, i32 poison, i32 24>)
   %i.bt = bitcast <4 x i32> %i.bs to <16 x i8>
   %i.bu = shufflevector <16 x i8> %i.bt, <16 x i8> <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison>, <16 x i32> <i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27>
-  %16 = bitcast <16 x i8> %i.bu to <2 x i64>
-  %17 = xor <2 x i64> %15, %16                    ; 2 uses
-  %18 = bitcast <2 x i64> %17 to <16 x i8>        ; 3 uses
-  %i.bv = shufflevector <16 x i8> %18, <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0>, <16 x i32> <i32 28, i32 29, i32 30, i32 31, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11>
-  %i.bw = shufflevector <16 x i8> %18, <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0>, <16 x i32> <i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %19 = xor <16 x i8> %i.bv, %i.bw
-  %i.bx = shufflevector <16 x i8> %18, <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0>, <16 x i32> <i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 0, i32 1, i32 2, i32 3>
-  %i.by = xor <16 x i8> %19, %i.bx
-  %20 = bitcast <16 x i8> %i.by to <2 x i64>
-  %21 = xor <2 x i64> %17, %20                    ; 2 uses
-  store <2 x i64> %21, ptr %.0138148.i, align 16, !tbaa !78
-  %i.bz = shufflevector <16 x i8> %12, <16 x i8> <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison>, <16 x i32> <i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23>
-  %.cast.i = bitcast <2 x i64> %21 to <16 x i8>
-  %i.ca = shufflevector <16 x i8> %.cast.i, <16 x i8> <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison>, <16 x i32> <i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27>
+  %8 = bitcast <4 x i32> %i.bq to <16 x i8>
+  %9 = xor <16 x i8> %i.bu, %8
+  %10 = xor <16 x i8> %9, %i.bo                   ; 4 uses
+  %i.bv = shufflevector <16 x i8> %10, <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0>, <16 x i32> <i32 28, i32 29, i32 30, i32 31, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11>
+  %i.bw = shufflevector <16 x i8> %10, <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0>, <16 x i32> <i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %i.bx = shufflevector <16 x i8> %10, <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0>, <16 x i32> <i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 0, i32 1, i32 2, i32 3>
+  %i.by = xor <16 x i8> %i.bw, %i.bv
+  %11 = xor <16 x i8> %i.by, %i.bx
+  %12 = xor <16 x i8> %11, %10                    ; 3 uses
+  %i.bz = shufflevector <16 x i8> %i.bg, <16 x i8> <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison>, <16 x i32> <i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23>
+  %i.ca = shufflevector <16 x i8> %12, <16 x i8> <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison>, <16 x i32> <i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27>
   %i.cb = xor <16 x i8> %i.ca, %i.bz              ; 2 uses
   %i.cc = shufflevector <16 x i8> %i.cb, <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0>, <16 x i32> <i32 28, i32 29, i32 30, i32 31, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11>
   %i.cd = xor <16 x i8> %i.cc, %i.cb
   %i.ce = bitcast <16 x i8> %i.cd to <2 x i64>
   %i.cf = and <2 x i64> %i.ce, <i64 -1, i64 0>
-  store <2 x i64> %i.cf, ptr %.0149.i, align 16, !tbaa !78
   %i.cg = getelementptr inbounds nuw i8, ptr %i.bh, i64 48
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.cg, ptr noundef nonnull align 16 dereferenceable(16) %.0138148.i, i64 16, i1 false)
+  store <16 x i8> %12, ptr %i.cg, align 4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #46
   %i.ch = add nuw nsw i64 %.0140147.i, 1          ; 2 uses
   %exitcond.not.i9 = icmp eq i64 %i.ch, 4
-  br i1 %exitcond.not.i9, label %aes_nohw_setup_key_192.exit, label %.critedge.i7, !llvm.loop !649
-
-aes_nohw_setup_key_192.exit:                      ; preds = %.critedge.i7
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #46
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #46
-  br label %aes_nohw_setup_key_128.exit
+  br i1 %exitcond.not.i9, label %aes_nohw_setup_key_128.exit, label %.critedge.i7, !llvm.loop !649
 
 bb.d:                                             ; preds = %bb.a
   %i.ci = getelementptr inbounds nuw i8, ptr %2, i64 240
@@ -389,8 +362,8 @@ bb.d:                                             ; preds = %bb.a
   %.065.i = phi i64 [ 2, %bb.d ], [ %i.dv, %.critedge52.i ] ; 4 uses
   %.sroa.0.064.i = phi <2 x i64> [ %.sroa.0.0.copyload58.i, %bb.d ], [ %i.dt, %.critedge52.i ] ; 2 uses
   %.sroa.059.063.i = phi <2 x i64> [ %.sroa.059.0.copyload62.i, %bb.d ], [ %i.dg, %.critedge52.i ]
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #46
-  call fastcc void @aes_nohw_sub_block(ptr noundef %3, <2 x i64> %.sroa.0.064.i)
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #46
+  call fastcc void @aes_nohw_sub_block(ptr noundef %i.a, <2 x i64> %.sroa.0.064.i)
   %i.cl = lshr exact i64 %.065.i, 1
   %i.cm = getelementptr i8, ptr @aes_nohw_rcon, i64 %i.cl
   %i.cn = getelementptr i8, ptr %i.cm, i64 -1
@@ -399,7 +372,7 @@ bb.d:                                             ; preds = %bb.a
   %i.cq = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %i.cp, i64 0
   %i.cr = bitcast <4 x i32> %i.cq to <2 x i64>
   %i.cs = xor <2 x i64> %.sroa.059.063.i, %i.cr
-  %i.ct = load <4 x i32>, ptr %3, align 16, !tbaa !78 ; 2 uses
+  %i.ct = load <4 x i32>, ptr %i.a, align 16, !tbaa !78 ; 2 uses
   %i.cu = tail call <4 x i32> @llvm.fshl.v4i32(<4 x i32> %i.ct, <4 x i32> %i.ct, <4 x i32> <i32 poison, i32 poison, i32 poison, i32 24>)
   %i.cv = bitcast <4 x i32> %i.cu to <16 x i8>
   %i.cw = shufflevector <16 x i8> %i.cv, <16 x i8> <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison>, <16 x i32> <i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27>
@@ -420,8 +393,8 @@ bb.d:                                             ; preds = %bb.a
   br i1 %.not.i, label %aes_nohw_setup_key_256.exit, label %.critedge52.i
 
 .critedge52.i:                                    ; preds = %.critedge.i10
-  call fastcc void @aes_nohw_sub_block(ptr noundef %3, <2 x i64> %i.dg)
-  %i.di = load <16 x i8>, ptr %3, align 16, !tbaa !78
+  call fastcc void @aes_nohw_sub_block(ptr noundef %i.a, <2 x i64> %i.dg)
+  %i.di = load <16 x i8>, ptr %i.a, align 16, !tbaa !78
   %i.dj = shufflevector <16 x i8> %i.di, <16 x i8> <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison>, <16 x i32> <i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27>
   %i.dk = bitcast <16 x i8> %i.dj to <2 x i64>
   %i.dl = xor <2 x i64> %.sroa.0.064.i, %i.dk     ; 2 uses
@@ -435,16 +408,16 @@ bb.d:                                             ; preds = %bb.a
   %i.dt = xor <2 x i64> %i.dl, %i.ds              ; 2 uses
   %i.du = getelementptr inbounds nuw i8, ptr %i.dh, i64 16
   store <2 x i64> %i.dt, ptr %i.du, align 4
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #46
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #46
   %i.dv = add nuw nsw i64 %.065.i, 2
   br label %.critedge.i10
 
 aes_nohw_setup_key_256.exit:                      ; preds = %.critedge.i10
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #46
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #46
   br label %aes_nohw_setup_key_128.exit
 
-aes_nohw_setup_key_128.exit:                      ; preds = %.critedge.i, %bb.a, %aes_nohw_setup_key_256.exit, %aes_nohw_setup_key_192.exit
-  %.0 = phi i32 [ 0, %aes_nohw_setup_key_256.exit ], [ 1, %bb.a ], [ 0, %aes_nohw_setup_key_192.exit ], [ 0, %.critedge.i ]
+aes_nohw_setup_key_128.exit:                      ; preds = %.critedge.i7, %.critedge.i, %bb.a, %aes_nohw_setup_key_256.exit
+  %.0 = phi i32 [ 0, %aes_nohw_setup_key_256.exit ], [ 1, %bb.a ], [ 0, %.critedge.i ], [ 0, %.critedge.i7 ]
   ret i32 %.0
 }
 
