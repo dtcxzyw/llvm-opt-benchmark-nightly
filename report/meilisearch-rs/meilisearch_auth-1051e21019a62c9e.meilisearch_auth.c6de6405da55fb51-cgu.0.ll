@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1245)
   %i.i = load ptr, ptr %i.g, align 8, !alias.scope !1245, !nonnull !11, !noundef !11 ; 4 uses
   %.val13.i.i = load <16 x i8>, ptr %i.i, align 16, !noalias !1246
-  %i.j = load i64, ptr %i.h, align 8, !alias.scope !1245, !noundef !11 ; 4 uses
+  %i.j = load i64, ptr %i.h, align 8, !alias.scope !1245, !noundef !11 ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1247)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1248)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1249)
@@ -242,7 +242,7 @@ bb.c:                                             ; preds = %bb.b
   %i.w = and i16 %i.t, %.lcssa.i.i.i.i.i.i.i.i
   %i.x = sub nsw i64 0, %i.v
   %i.y = getelementptr inbounds [96 x i8], ptr %.sroa.08.0.copyload.i.i.i.i, i64 %i.x ; 2 uses
-  %i.z = add nsw i64 %i.j, -1                     ; 2 uses
+  %i.z = add i64 %i.j, -1                         ; 3 uses
   %i.aa = getelementptr i8, ptr %i.y, i64 -88
   %.val.i.i.i.i.i = load ptr, ptr %i.aa, align 8, !noalias !1253, !nonnull !11, !noundef !11
   %i.ab = getelementptr i8, ptr %i.y, i64 -80
@@ -287,7 +287,7 @@ bb.i:                                             ; preds = %bb.d, %_ZN4core5all
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.sroa.10.0.i.i.i.i.i.i.i.i, ptr nonnull readonly align 1 %.val.i.i.i.i.i, i64 %.val2.i.i.i.i.i, i1 false), !noalias !1258
   %.sroa.0.0.i.i.i.i.i = tail call noundef i64 @llvm.umax.i64(i64 %i.j, i64 4) ; 3 uses
   %i.aj = mul i64 %.sroa.0.0.i.i.i.i.i, 24        ; 3 uses
-  %or.cond.i.i.i.i.i.i.i = icmp ugt i64 %i.j, 384307168202282325
+  %or.cond.i.i.i.i.i.i.i = icmp ugt i64 %i.z, 384307168202282324
   br i1 %or.cond.i.i.i.i.i.i.i, label %bb.k, label %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i, !prof !31
 
 _ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i: ; preds = %bb.i
@@ -359,7 +359,7 @@ bb.l:                                             ; preds = %bb.j, %_ZN4core5all
   %i.ba = and i16 %i.ax, %.lcssa.i.i.i.i.i.i.i.i.i.i
   %i.bb = sub nsw i64 0, %i.az
   %i.bc = getelementptr inbounds [96 x i8], ptr %.pre.i.i.i.i16.i.i.i.i.i.i, i64 %i.bb ; 2 uses
-  %i.bd = add i64 %.val1419.i.i.i.i.i.i, -1       ; 2 uses
+  %i.bd = add nsw i64 %.val1419.i.i.i.i.i.i, -1   ; 2 uses
   %i.be = getelementptr i8, ptr %i.bc, i64 -88
   %.val.i.i.i.i.i.i.i = load ptr, ptr %i.be, align 8, !noalias !1263, !nonnull !11, !noundef !11
   %i.bf = getelementptr i8, ptr %i.bc, i64 -80
@@ -482,7 +482,7 @@ bb.v:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1280)
   %i.ca = load ptr, ptr %i.g, align 8, !alias.scope !1280, !nonnull !11, !noundef !11 ; 4 uses
   %.val13.i.i2 = load <16 x i8>, ptr %i.ca, align 16, !noalias !1281
-  %i.cb = load i64, ptr %i.h, align 8, !alias.scope !1280, !noundef !11 ; 4 uses
+  %i.cb = load i64, ptr %i.h, align 8, !alias.scope !1280, !noundef !11 ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1282)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1283)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1284)
@@ -519,7 +519,7 @@ bb.w:                                             ; preds = %bb.v
   %i.co = and i16 %i.cl, %.lcssa.i.i.i.i.i.i.i.i18
   %i.cp = sub nsw i64 0, %i.cn
   %i.cq = getelementptr inbounds [24 x i8], ptr %.sroa.08.0.copyload.i.i.i.i17, i64 %i.cp ; 2 uses
-  %i.cr = add nsw i64 %i.cb, -1                   ; 2 uses
+  %i.cr = add i64 %i.cb, -1                       ; 3 uses
   %i.cs = getelementptr i8, ptr %i.cq, i64 -16
   %.val.i.i.i.i.i19 = load ptr, ptr %i.cs, align 8, !noalias !1288, !nonnull !11, !noundef !11
   %i.ct = getelementptr i8, ptr %i.cq, i64 -8
@@ -564,7 +564,7 @@ bb.ac:                                            ; preds = %bb.x, %_ZN4core5all
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.sroa.10.0.i.i.i.i.i.i.i.i22, ptr nonnull readonly align 1 %.val.i.i.i.i.i19, i64 %.val2.i.i.i.i.i20, i1 false), !noalias !1293
   %.sroa.0.0.i.i.i.i.i23 = tail call noundef i64 @llvm.umax.i64(i64 %i.cb, i64 4) ; 3 uses
   %i.db = mul i64 %.sroa.0.0.i.i.i.i.i23, 24      ; 3 uses
-  %or.cond.i.i.i.i.i.i.i24 = icmp ugt i64 %i.cb, 384307168202282325
+  %or.cond.i.i.i.i.i.i.i24 = icmp ugt i64 %i.cr, 384307168202282324
   br i1 %or.cond.i.i.i.i.i.i.i24, label %bb.ae, label %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i25, !prof !31
 
 _ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i25: ; preds = %bb.ac
@@ -636,7 +636,7 @@ bb.af:                                            ; preds = %bb.ad, %_ZN4core5al
   %i.ds = and i16 %i.dp, %.lcssa.i.i.i.i.i.i.i.i.i.i40
   %i.dt = sub nsw i64 0, %i.dr
   %i.du = getelementptr inbounds [24 x i8], ptr %.pre.i.i.i.i16.i.i.i.i.i.i39, i64 %i.dt ; 2 uses
-  %i.dv = add i64 %.val1419.i.i.i.i.i.i34, -1     ; 2 uses
+  %i.dv = add nsw i64 %.val1419.i.i.i.i.i.i34, -1 ; 2 uses
   %i.dw = getelementptr i8, ptr %i.du, i64 -16
   %.val.i.i.i.i.i.i.i41 = load ptr, ptr %i.dw, align 8, !noalias !1298, !nonnull !11, !noundef !11
   %i.dx = getelementptr i8, ptr %i.du, i64 -8
@@ -834,7 +834,7 @@ bb.e:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1475)
   %i.l = load ptr, ptr %i.h, align 8, !alias.scope !1475, !nonnull !11, !noundef !11 ; 4 uses
   %.val13.i.i = load <16 x i8>, ptr %i.l, align 16, !noalias !1476
-  %i.m = load i64, ptr %i.i, align 8, !alias.scope !1475, !noundef !11 ; 4 uses
+  %i.m = load i64, ptr %i.i, align 8, !alias.scope !1475, !noundef !11 ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1477)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1478)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1479)
@@ -871,7 +871,7 @@ bb.f:                                             ; preds = %bb.e
   %i.z = and i16 %i.w, %.lcssa.i.i.i.i.i.i.i.i
   %i.aa = sub nsw i64 0, %i.y
   %i.ab = getelementptr inbounds [96 x i8], ptr %.sroa.08.0.copyload.i.i.i.i, i64 %i.aa ; 2 uses
-  %i.ac = add nsw i64 %i.m, -1                    ; 2 uses
+  %i.ac = add i64 %i.m, -1                        ; 3 uses
   %i.ad = getelementptr i8, ptr %i.ab, i64 -88
   %.val.i.i.i.i.i = load ptr, ptr %i.ad, align 8, !noalias !1483, !nonnull !11, !noundef !11
   %i.ae = getelementptr i8, ptr %i.ab, i64 -80
@@ -916,7 +916,7 @@ bb.l:                                             ; preds = %bb.g, %_ZN4core5all
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.sroa.10.0.i.i.i.i.i.i.i.i, ptr nonnull readonly align 1 %.val.i.i.i.i.i, i64 %.val2.i.i.i.i.i, i1 false), !noalias !1488
   %.sroa.0.0.i.i.i.i.i = tail call noundef i64 @llvm.umax.i64(i64 %i.m, i64 4) ; 3 uses
   %i.am = mul i64 %.sroa.0.0.i.i.i.i.i, 24        ; 3 uses
-  %or.cond.i.i.i.i.i.i.i = icmp ugt i64 %i.m, 384307168202282325
+  %or.cond.i.i.i.i.i.i.i = icmp ugt i64 %i.ac, 384307168202282324
   br i1 %or.cond.i.i.i.i.i.i.i, label %bb.n, label %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i, !prof !31
 
 _ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i: ; preds = %bb.l
@@ -988,7 +988,7 @@ bb.o:                                             ; preds = %bb.m, %_ZN4core5all
   %i.bd = and i16 %i.ba, %.lcssa.i.i.i.i.i.i.i.i.i.i
   %i.be = sub nsw i64 0, %i.bc
   %i.bf = getelementptr inbounds [96 x i8], ptr %.pre.i.i.i.i16.i.i.i.i.i.i, i64 %i.be ; 2 uses
-  %i.bg = add i64 %.val1419.i.i.i.i.i.i, -1       ; 2 uses
+  %i.bg = add nsw i64 %.val1419.i.i.i.i.i.i, -1   ; 2 uses
   %i.bh = getelementptr i8, ptr %i.bf, i64 -88
   %.val.i.i.i.i.i.i.i = load ptr, ptr %i.bh, align 8, !noalias !1493, !nonnull !11, !noundef !11
   %i.bi = getelementptr i8, ptr %i.bf, i64 -80
@@ -1111,7 +1111,7 @@ bb.y:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1510)
   %i.cd = load ptr, ptr %i.h, align 8, !alias.scope !1510, !nonnull !11, !noundef !11 ; 4 uses
   %.val13.i.i2 = load <16 x i8>, ptr %i.cd, align 16, !noalias !1511
-  %i.ce = load i64, ptr %i.i, align 8, !alias.scope !1510, !noundef !11 ; 4 uses
+  %i.ce = load i64, ptr %i.i, align 8, !alias.scope !1510, !noundef !11 ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1512)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1513)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1514)
@@ -1148,7 +1148,7 @@ bb.z:                                             ; preds = %bb.y
   %i.cr = and i16 %i.co, %.lcssa.i.i.i.i.i.i.i.i18
   %i.cs = sub nsw i64 0, %i.cq
   %i.ct = getelementptr inbounds [24 x i8], ptr %.sroa.08.0.copyload.i.i.i.i17, i64 %i.cs ; 2 uses
-  %i.cu = add nsw i64 %i.ce, -1                   ; 2 uses
+  %i.cu = add i64 %i.ce, -1                       ; 3 uses
   %i.cv = getelementptr i8, ptr %i.ct, i64 -16
   %.val.i.i.i.i.i19 = load ptr, ptr %i.cv, align 8, !noalias !1518, !nonnull !11, !noundef !11
   %i.cw = getelementptr i8, ptr %i.ct, i64 -8
@@ -1193,7 +1193,7 @@ bb.af:                                            ; preds = %bb.aa, %_ZN4core5al
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.sroa.10.0.i.i.i.i.i.i.i.i22, ptr nonnull readonly align 1 %.val.i.i.i.i.i19, i64 %.val2.i.i.i.i.i20, i1 false), !noalias !1523
   %.sroa.0.0.i.i.i.i.i23 = tail call noundef i64 @llvm.umax.i64(i64 %i.ce, i64 4) ; 3 uses
   %i.de = mul i64 %.sroa.0.0.i.i.i.i.i23, 24      ; 3 uses
-  %or.cond.i.i.i.i.i.i.i24 = icmp ugt i64 %i.ce, 384307168202282325
+  %or.cond.i.i.i.i.i.i.i24 = icmp ugt i64 %i.cu, 384307168202282324
   br i1 %or.cond.i.i.i.i.i.i.i24, label %bb.ah, label %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i25, !prof !31
 
 _ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i25: ; preds = %bb.af
@@ -1265,7 +1265,7 @@ bb.ai:                                            ; preds = %bb.ag, %_ZN4core5al
   %i.dv = and i16 %i.ds, %.lcssa.i.i.i.i.i.i.i.i.i.i40
   %i.dw = sub nsw i64 0, %i.du
   %i.dx = getelementptr inbounds [24 x i8], ptr %.pre.i.i.i.i16.i.i.i.i.i.i39, i64 %i.dw ; 2 uses
-  %i.dy = add i64 %.val1419.i.i.i.i.i.i34, -1     ; 2 uses
+  %i.dy = add nsw i64 %.val1419.i.i.i.i.i.i34, -1 ; 2 uses
   %i.dz = getelementptr i8, ptr %i.dx, i64 -16
   %.val.i.i.i.i.i.i.i41 = load ptr, ptr %i.dz, align 8, !noalias !1528, !nonnull !11, !noundef !11
   %i.ea = getelementptr i8, ptr %i.dx, i64 -8

@@ -205,7 +205,7 @@ bb.lk:                                            ; preds = %_RINvNtCs6JMX4GRUq9
   call void @llvm.experimental.noalias.scope.decl(metadata !3300)
   %i.als = load ptr, ptr %i.uw, align 8, !alias.scope !3301, !nonnull !9, !noundef !9 ; 4 uses
   %.val3.i.i.i228.i = load <16 x i8>, ptr %i.als, align 16, !noalias !3302
-  %i.alt = load i64, ptr %i.ux, align 8, !alias.scope !3301, !noundef !9 ; 5 uses
+  %i.alt = load i64, ptr %i.ux, align 8, !alias.scope !3301, !noundef !9 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !3303
   %i.alu = icmp eq i64 %i.alt, 0
   br i1 %i.alu, label %_RNvXNtNtCs7tKScEop1B6_5alloc3vec21spec_from_iter_nestedINtB4_3VecNtNtCs2vKOLqTMYjT_3std4path7PathBufEINtB2_18SpecFromIterNestedB11_INtNtNtNtCs6JMX4GRUq9U_4core4iter8adapters6cloned6ClonedINtNtNtNtB15_11collections4hash3map4KeysB11_NtNtNtCsgZlHlzpN0xi_7uu_tail6follow5files8PathDataEEE9from_iterB3N_.exit.i, label %bb.ll
@@ -238,7 +238,7 @@ bb.ll:                                            ; preds = %bb.lk
   %i.amg = and i16 %i.amd, %.lcssa.i.i.i.i.i.i
   %i.amh = sub nsw i64 0, %i.amf
   %i.ami = getelementptr inbounds [240 x i8], ptr %.sroa.011.0.copyload.i.i, i64 %i.amh ; 2 uses
-  %i.amj = add nsw i64 %i.alt, -1                 ; 2 uses
+  %i.amj = add i64 %i.alt, -1                     ; 3 uses
   %i.amk = getelementptr i8, ptr %i.ami, i64 -232
   %.val.i.i229.i = load ptr, ptr %i.amk, align 8, !noalias !3305, !nonnull !9, !noundef !9
   %i.aml = getelementptr i8, ptr %i.ami, i64 -224
@@ -265,7 +265,7 @@ _RNvXs_NtNtNtCs6JMX4GRUq9U_4core4iter8adapters6clonedINtB4_6ClonedINtNtNtNtCs2vK
   %.sroa.7.027.i.i = phi ptr [ %i.amn, %_RNvXs_NtNtNtCs6JMX4GRUq9U_4core4iter8adapters6clonedINtB4_6ClonedINtNtNtNtCs2vKOLqTMYjT_3std11collections4hash3map4KeysNtNtB1a_4path7PathBufNtNtNtCsgZlHlzpN0xi_7uu_tail6follow5files8PathDataEENtNtNtB8_6traits8iterator8Iterator4nextB2k_.exit.i.i ], [ inttoptr (i64 1 to ptr), %._crit_edge18.i.i.i.i.i.i ]
   %..i.i.i = call noundef i64 @llvm.umax.i64(i64 %i.alt, i64 4) ; 3 uses
   %i.amp = mul i64 %..i.i.i, 24                   ; 3 uses
-  %or.cond.i.i.i.i = icmp ugt i64 %i.alt, 384307168202282325
+  %or.cond.i.i.i.i = icmp ugt i64 %i.amj, 384307168202282324
   br i1 %or.cond.i.i.i.i, label %bb.lq, label %bb.lo, !prof !20
 
 bb.lo:                                            ; preds = %_RNvXs_NtNtNtCs6JMX4GRUq9U_4core4iter8adapters6clonedINtB4_6ClonedINtNtNtNtCs2vKOLqTMYjT_3std11collections4hash3map4KeysNtNtB1a_4path7PathBufNtNtNtCsgZlHlzpN0xi_7uu_tail6follow5files8PathDataEENtNtNtB8_6traits8iterator8Iterator4nextB2k_.exit.thread21.i.i
@@ -332,7 +332,7 @@ _RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsgZlH
   %i.ang = and i16 %i.and, %.lcssa.i.i.i.i.i.i.i.i
   %i.anh = sub nsw i64 0, %i.anf
   %i.ani = getelementptr inbounds [240 x i8], ptr %.lcssa2023.i.i.i.i, i64 %i.anh ; 2 uses
-  %i.anj = add i64 %.val2126.i.i.i.i, -1          ; 2 uses
+  %i.anj = add nsw i64 %.val2126.i.i.i.i, -1      ; 2 uses
   %i.ank = getelementptr i8, ptr %i.ani, i64 -232
   %.val.i.i.i.i.i175 = load ptr, ptr %i.ank, align 8, !noalias !3314, !nonnull !9, !noundef !9
   %i.anl = getelementptr i8, ptr %i.ani, i64 -224
@@ -735,17 +735,17 @@ _RNvXs0_NtNtNtCs6JMX4GRUq9U_4core4iter8adapters3mapINtB5_3MapINtNtNtNtCsgNwXemyr
   %.idx.i.le.i = shl nuw nsw i64 %.val4.i.i.i.i.i.i, 5
   %i.adq = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i.i.le.i, i64 %.idx.i.le.i
   %i.adr = call fastcc noundef nonnull align 8 ptr @_RNSINvNtNtNtCsgNwXemyrBWj_12clap_builder6parser7matches11arg_matches19unwrap_downcast_refNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str8OsStringE5reifyCsgZlHlzpN0xi_7uu_tail(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %.val.i.i.i.i.i.le.i) #33, !noalias !4923, !inline_history !4807
-  %i.ads = add i64 %i.ade, -1                     ; 2 uses
+  %i.ads = add i64 %i.ade, -1                     ; 3 uses
   call fastcc void @_RINvMs_NtCsgZlHlzpN0xi_7uu_tail5pathsNtB5_5Input4fromRNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str8OsStringEB7_(ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(48) %i.f, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.adr) #33, !noalias !4921
   %.pr.i.i.i = load i64, ptr %i.f, align 8, !noalias !4921
   %.not.i.i.i = icmp eq i64 %.pr.i.i.i, -1
   br i1 %.not.i.i.i, label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtCs7tKScEop1B6_5alloc3vec3VecNtNtCsgZlHlzpN0xi_7uu_tail5paths5InputEEB1c_.exit, label %bb.gp
 
 bb.gp:                                            ; preds = %_RNvXs0_NtNtNtCs6JMX4GRUq9U_4core4iter8adapters3mapINtB5_3MapINtNtNtNtCsgNwXemyrBWj_12clap_builder6parser7matches11arg_matches9ValuesRefNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str8OsStringEINvMs_NtCsgZlHlzpN0xi_7uu_tail5pathsNtB2Y_5Input4fromRB29_EENtNtNtB9_6traits8iterator8Iterator4nextB30_.exit.i.i.i
-  %i.adt = call i64 @llvm.uadd.sat.i64(i64 %i.ads, i64 1) ; 2 uses
+  %i.adt = call i64 @llvm.uadd.sat.i64(i64 %i.ads, i64 1)
   %..i.i.i.i = call noundef i64 @llvm.umax.i64(i64 %i.adt, i64 4) ; 3 uses
   %i.adu = mul i64 %..i.i.i.i, 48                 ; 3 uses
-  %or.cond.i.i.i.i.i = icmp ugt i64 %i.adt, 192153584101141162
+  %or.cond.i.i.i.i.i = icmp ugt i64 %i.ads, 192153584101141161
   br i1 %or.cond.i.i.i.i.i, label %bb.gs, label %bb.gq, !prof !20
 
 bb.gq:                                            ; preds = %bb.gp

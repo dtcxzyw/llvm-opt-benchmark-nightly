@@ -205,11 +205,11 @@ bb.c:                                             ; preds = %_RINvMNtNtCsgNwXemy
 
 bb.d:                                             ; preds = %bb.c
   %i.ax = getelementptr inbounds nuw i8, ptr %i.an, i64 56
-  %.val.i.i = load i64, ptr %i.ax, align 8, !alias.scope !2746, !noalias !2738, !noundef !6
-  %i.ay = tail call i64 @llvm.uadd.sat.i64(i64 %.val.i.i, i64 1) ; 2 uses
+  %.val.i.i = load i64, ptr %i.ax, align 8, !alias.scope !2746, !noalias !2738, !noundef !6 ; 2 uses
+  %i.ay = tail call i64 @llvm.uadd.sat.i64(i64 %.val.i.i, i64 1)
   %..i.i.i = tail call noundef i64 @llvm.umax.i64(i64 %i.ay, i64 4) ; 3 uses
   %i.az = mul i64 %..i.i.i, 24                    ; 3 uses
-  %or.cond.i.i.i.i = icmp ugt i64 %i.ay, 384307168202282325
+  %or.cond.i.i.i.i = icmp ugt i64 %.val.i.i, 384307168202282324
   br i1 %or.cond.i.i.i.i, label %bb.f, label %bb.e, !prof !12
 
 bb.e:                                             ; preds = %bb.d
@@ -368,11 +368,11 @@ bb.k:                                             ; preds = %_RINvMNtNtCsgNwXemy
 
 bb.l:                                             ; preds = %bb.k
   %i.bx = getelementptr inbounds nuw i8, ptr %i.al, i64 56
-  %.val.i59.i = load i64, ptr %i.bx, align 8, !alias.scope !2770, !noalias !2738, !noundef !6
-  %i.by = tail call i64 @llvm.uadd.sat.i64(i64 %.val.i59.i, i64 1) ; 2 uses
+  %.val.i59.i = load i64, ptr %i.bx, align 8, !alias.scope !2770, !noalias !2738, !noundef !6 ; 2 uses
+  %i.by = tail call i64 @llvm.uadd.sat.i64(i64 %.val.i59.i, i64 1)
   %..i.i60.i = tail call noundef i64 @llvm.umax.i64(i64 %i.by, i64 4) ; 3 uses
   %i.bz = mul i64 %..i.i60.i, 24                  ; 3 uses
-  %or.cond.i.i.i61.i = icmp ugt i64 %i.by, 384307168202282325
+  %or.cond.i.i.i61.i = icmp ugt i64 %.val.i59.i, 384307168202282324
   br i1 %or.cond.i.i.i61.i, label %bb.n, label %bb.m, !prof !12
 
 bb.m:                                             ; preds = %bb.l

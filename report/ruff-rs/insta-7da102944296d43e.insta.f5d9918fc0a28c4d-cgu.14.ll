@@ -204,7 +204,7 @@ _RNvNtCsl6EuCK7xub1_5insta6output10print_line.exit.i.i: ; preds = %bb.c
   store i16 %i.dw, ptr %.sroa.46.0..sroa_idx.i.i.i, align 8, !noalias !248
   call void @_RNvNtNtCs2AWtUsOyxgP_3std2io5stdio6__print(ptr noundef nonnull @50, ptr noundef nonnull %i.ch), !noalias !247
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ch), !noalias !248
-  %i.dy = call noundef i64 @_RNvNtCsl6EuCK7xub1_5insta5utils10term_width(), !noalias !247
+  %i.dy = call noundef i64 @_RNvNtCsl6EuCK7xub1_5insta5utils10term_width(), !noalias !247 ; 2 uses
   %i.dz = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.ea = load i8, ptr %i.dz, align 8, !range !15, !alias.scope !248, !noundef !4
   %i.eb = trunc nuw i8 %i.ea to i1
@@ -280,12 +280,12 @@ _RNvXsC_NtCscdodAO9FK5_5alloc6stringNtNtCsl6EuCK7xub1_5insta8snapshot20TextSnaps
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.cs, ptr noundef nonnull align 8 dereferenceable(24) %i.cg, i64 24, i1 false), !noalias !251
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cf), !noalias !249
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cg), !noalias !249
-  %1 = call i64 @llvm.usub.sat.i64(i64 %i.dy, i64 7) ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cr), !noalias !248
-  %i.ek = icmp ugt i64 %1, 65535
+  %i.ek = icmp ugt i64 %i.dy, 65542
   br i1 %i.ek, label %bb.m, label %bb.l, !prof !7
 
 bb.l:                                             ; preds = %_RNvXsC_NtCscdodAO9FK5_5alloc6stringNtNtCsl6EuCK7xub1_5insta8snapshot20TextSnapshotContentsNtB5_12SpecToString14spec_to_stringBB_.exit.i.i
+  %1 = call i64 @llvm.usub.sat.i64(i64 %i.dy, i64 7)
   %i.el = trunc nuw i64 %1 to i16                 ; 2 uses
   store ptr @9, ptr %i.cr, align 8, !noalias !248
   %.sroa.48.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.cr, i64 8
@@ -688,8 +688,8 @@ bb.fa:                                            ; preds = %bb.ez
   br label %bb.fb
 
 bb.fb:                                            ; preds = %bb.fa, %bb.ey
-  %2 = call i64 @llvm.usub.sat.i64(i64 %i.gu, i64 13)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ay), !noalias !259
+  %2 = call i64 @llvm.usub.sat.i64(i64 %i.gu, i64 13)
   %i.pt = trunc nuw i64 %2 to i16                 ; 3 uses
   store ptr @9, ptr %i.ay, align 8, !noalias !259
   %.sroa.4353.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.ay, i64 8

@@ -205,7 +205,7 @@ bb.ds:                                            ; preds = %bb.e
   br i1 %i.awa, label %bb.dt, label %bb.dx
 
 bb.dt:                                            ; preds = %bb.ds
-  %i.awb = shl nsw i32 %i.avx, 1                  ; 7 uses
+  %i.awb = shl nsw i32 %i.avx, 1                  ; 9 uses
   %i.awc = shl nsw i32 %i.avx, 2
   %i.awd = sext i32 %i.awc to i64
   %i.awe = tail call noalias ptr @av_malloc(i64 noundef %i.awd) #11 ; 34 uses
@@ -224,14 +224,14 @@ bb.dv:                                            ; preds = %bb.du
 
 iter.check1543:                                   ; preds = %bb.dv
   %i.awi = zext nneg i32 %i.awb to i64            ; 2 uses
-  %i.awj = tail call i64 @llvm.usub.sat.i64(i64 %i.awi, i64 2) ; 3 uses
+  %i.awj = tail call i64 @llvm.usub.sat.i64(i64 %i.awi, i64 2)
   %i.awk = lshr exact i64 %i.awj, 1
   %i.awl = add nuw nsw i64 %i.awk, 1              ; 5 uses
-  %min.iters.check1532 = icmp samesign ult i64 %i.awj, 14
+  %min.iters.check1532 = icmp ult i32 %i.awb, 16
   br i1 %min.iters.check1532, label %.lr.ph1027.preheader, label %vector.main.loop.iter.check1533
 
 vector.main.loop.iter.check1533:                  ; preds = %iter.check1543
-  %min.iters.check1534 = icmp samesign ult i64 %i.awj, 30
+  %min.iters.check1534 = icmp ult i32 %i.awb, 32
   br i1 %min.iters.check1534, label %vec.epilog.ph1547, label %vector.ph1535
 
 vector.ph1535:                                    ; preds = %vector.main.loop.iter.check1533

@@ -202,15 +202,15 @@ bb.a:
   %i.g = sub i64 %i.e, %i.f
   %i.h = sdiv exact i64 %i.g, 24
   %i.i = shl nsw i64 %i.h, 1
-  %.sroa.speculated = tail call i64 @llvm.umax.i64(i64 %1, i64 %i.i)
-  %spec.select.i.i = tail call i64 @llvm.usub.sat.i64(i64 %.sroa.speculated, i64 1) ; 3 uses
+  %.sroa.speculated = tail call i64 @llvm.umax.i64(i64 %1, i64 %i.i) ; 3 uses
+  %spec.select.i.i = tail call i64 @llvm.usub.sat.i64(i64 %.sroa.speculated, i64 1)
   %i.j = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %spec.select.i.i, i1 false)
   %i.k = sub nuw nsw i64 64, %i.j                 ; 2 uses
-  %i.l = icmp ugt i64 %spec.select.i.i, 288230376151711743
+  %i.l = icmp ugt i64 %.sroa.speculated, 288230376151711744
   br i1 %i.l, label %bb.b, label %bb.e, !prof !41
 
 bb.b:                                             ; preds = %bb.a
-  %i.m = icmp ugt i64 %spec.select.i.i, 576460752303423487
+  %i.m = icmp ugt i64 %.sroa.speculated, 576460752303423488
   br i1 %i.m, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
@@ -613,15 +613,15 @@ bb.a:
   %i.f = ptrtoint ptr %i.b to i64                 ; 2 uses
   %i.g = sub i64 %i.e, %i.f
   %i.h = ashr exact i64 %i.g, 2
-  %.sroa.speculated = tail call i64 @llvm.umax.i64(i64 %1, i64 %i.h)
-  %spec.select.i.i = tail call i64 @llvm.usub.sat.i64(i64 %.sroa.speculated, i64 1) ; 3 uses
+  %.sroa.speculated = tail call i64 @llvm.umax.i64(i64 %1, i64 %i.h) ; 3 uses
+  %spec.select.i.i = tail call i64 @llvm.usub.sat.i64(i64 %.sroa.speculated, i64 1)
   %i.i = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %spec.select.i.i, i1 false)
   %i.j = sub nuw nsw i64 64, %i.i                 ; 2 uses
-  %i.k = icmp ugt i64 %spec.select.i.i, 576460752303423487
+  %i.k = icmp ugt i64 %.sroa.speculated, 576460752303423488
   br i1 %i.k, label %bb.b, label %bb.e, !prof !41
 
 bb.b:                                             ; preds = %bb.a
-  %i.l = icmp ugt i64 %spec.select.i.i, 1152921504606846975
+  %i.l = icmp ugt i64 %.sroa.speculated, 1152921504606846976
   br i1 %i.l, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b

@@ -202,15 +202,15 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %.val.i = load i64, ptr %i.d, align 8, !alias.scope !5130, !noundef !6
-  %i.e = call i64 @llvm.uadd.sat.i64(i64 %.val.i, i64 1) ; 4 uses
+  %.val.i = load i64, ptr %i.d, align 8, !alias.scope !5130, !noundef !6 ; 3 uses
+  %i.e = call i64 @llvm.uadd.sat.i64(i64 %.val.i, i64 1) ; 2 uses
   %i.f = shl nuw i64 %i.e, 2                      ; 2 uses
-  %i.g = icmp ugt i64 %i.e, 4611686018427387903
+  %i.g = icmp ugt i64 %.val.i, 4611686018427387902
   br i1 %i.g, label %bb.e, label %bb.c, !prof !9
 
 bb.c:                                             ; preds = %bb.b
   %i.h = shl nuw i64 %i.e, 3
-  %i.i = icmp samesign ugt i64 %i.e, 2305843009213693951
+  %i.i = icmp samesign ugt i64 %.val.i, 2305843009213693950
   br i1 %i.i, label %bb.d, label %bb.e, !prof !31
 
 bb.d:                                             ; preds = %bb.c

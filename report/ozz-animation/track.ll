@@ -202,7 +202,7 @@ _ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit19.i: ; preds = %bb.g
   br label %_ZN3ozz9animation8internal5TrackIfE8AllocateEmm.exit
 
 _ZN3ozz9animation8internal5TrackIfE8AllocateEmm.exit: ; preds = %bb.g, %_ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit19.i
-  %.pre-phi = phi i64 [ %.idx.i.i, %_ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit19.i ], [ 0, %bb.g ] ; 3 uses
+  %.pre-phi = phi i64 [ %.idx.i.i, %_ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit19.i ], [ 0, %bb.g ] ; 5 uses
   %.sink56.i = phi ptr [ %i.bk, %_ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit19.i ], [ null, %bb.g ]
   %.sink.i = phi ptr [ %i.bl, %_ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit19.i ], [ null, %bb.g ] ; 5 uses
   %.sroa.036.2.i = phi ptr [ %i.bn, %_ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit19.i ], [ %i.bk, %bb.g ]
@@ -234,14 +234,14 @@ _ZN3ozz9animation8internal5TrackIfE8AllocateEmm.exit: ; preds = %bb.g, %_ZN3ozz9
   br i1 %or.cond.not, label %iter.check, label %_ZN3ozz2io8IArchiversIKNS0_8internal5ArrayIfEEEEvRT_.exit
 
 iter.check:                                       ; preds = %_ZN3ozz9animation8internal5TrackIfE8AllocateEmm.exit
-  %i.ce = call i64 @llvm.usub.sat.i64(i64 %.pre-phi, i64 4) ; 3 uses
+  %i.ce = call i64 @llvm.usub.sat.i64(i64 %.pre-phi, i64 4)
   %i.cf = lshr exact i64 %i.ce, 2
   %i.cg = add nuw nsw i64 %i.cf, 1                ; 5 uses
-  %min.iters.check = icmp samesign ult i64 %i.ce, 12
+  %min.iters.check = icmp samesign ult i64 %.pre-phi, 16
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check54 = icmp samesign ult i64 %i.ce, 60
+  %min.iters.check54 = icmp samesign ult i64 %.pre-phi, 64
   br i1 %min.iters.check54, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
@@ -644,7 +644,7 @@ _ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit.i: ; preds = %bb.g
   br label %_ZN3ozz9animation8internal5TrackINS_4math6Float2EE8AllocateEmm.exit
 
 _ZN3ozz9animation8internal5TrackINS_4math6Float2EE8AllocateEmm.exit: ; preds = %bb.g, %_ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit.i
-  %.pre-phi = phi i64 [ %.idx.i14.i, %_ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit.i ], [ 0, %bb.g ] ; 3 uses
+  %.pre-phi = phi i64 [ %.idx.i14.i, %_ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit.i ], [ 0, %bb.g ] ; 5 uses
   %.sink55.i = phi ptr [ %i.bk, %_ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit.i ], [ null, %bb.g ]
   %.sink.i = phi ptr [ %i.bl, %_ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit.i ], [ null, %bb.g ] ; 5 uses
   %.sroa.035.2.i = phi ptr [ %i.bn, %_ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit.i ], [ %i.bk, %bb.g ]
@@ -676,14 +676,14 @@ _ZN3ozz9animation8internal5TrackINS_4math6Float2EE8AllocateEmm.exit: ; preds = %
   br i1 %or.cond.not, label %iter.check, label %_ZN3ozz2io8IArchiversIKNS0_8internal5ArrayIfEEEEvRT_.exit
 
 iter.check:                                       ; preds = %_ZN3ozz9animation8internal5TrackINS_4math6Float2EE8AllocateEmm.exit
-  %i.ce = call i64 @llvm.usub.sat.i64(i64 %.pre-phi, i64 4) ; 3 uses
+  %i.ce = call i64 @llvm.usub.sat.i64(i64 %.pre-phi, i64 4)
   %i.cf = lshr exact i64 %i.ce, 2
   %i.cg = add nuw nsw i64 %i.cf, 1                ; 5 uses
-  %min.iters.check = icmp samesign ult i64 %i.ce, 12
+  %min.iters.check = icmp samesign ult i64 %.pre-phi, 16
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check45 = icmp samesign ult i64 %i.ce, 60
+  %min.iters.check45 = icmp samesign ult i64 %.pre-phi, 64
   br i1 %min.iters.check45, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
@@ -1086,7 +1086,7 @@ _ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit.i: ; preds = %bb.g
   br label %_ZN3ozz9animation8internal5TrackINS_4math6Float3EE8AllocateEmm.exit
 
 _ZN3ozz9animation8internal5TrackINS_4math6Float3EE8AllocateEmm.exit: ; preds = %bb.g, %_ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit.i
-  %.pre-phi = phi i64 [ %.idx.i14.i, %_ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit.i ], [ 0, %bb.g ] ; 3 uses
+  %.pre-phi = phi i64 [ %.idx.i14.i, %_ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit.i ], [ 0, %bb.g ] ; 5 uses
   %.sink55.i = phi ptr [ %i.bk, %_ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit.i ], [ null, %bb.g ]
   %.sink.i = phi ptr [ %i.bl, %_ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit.i ], [ null, %bb.g ] ; 5 uses
   %.sroa.035.2.i = phi ptr [ %i.bn, %_ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit.i ], [ %i.bk, %bb.g ]
@@ -1118,14 +1118,14 @@ _ZN3ozz9animation8internal5TrackINS_4math6Float3EE8AllocateEmm.exit: ; preds = %
   br i1 %or.cond.not, label %iter.check, label %_ZN3ozz2io8IArchiversIKNS0_8internal5ArrayIfEEEEvRT_.exit
 
 iter.check:                                       ; preds = %_ZN3ozz9animation8internal5TrackINS_4math6Float3EE8AllocateEmm.exit
-  %i.ce = call i64 @llvm.usub.sat.i64(i64 %.pre-phi, i64 4) ; 3 uses
+  %i.ce = call i64 @llvm.usub.sat.i64(i64 %.pre-phi, i64 4)
   %i.cf = lshr exact i64 %i.ce, 2
   %i.cg = add nuw nsw i64 %i.cf, 1                ; 5 uses
-  %min.iters.check = icmp samesign ult i64 %i.ce, 12
+  %min.iters.check = icmp samesign ult i64 %.pre-phi, 16
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check45 = icmp samesign ult i64 %i.ce, 60
+  %min.iters.check45 = icmp samesign ult i64 %.pre-phi, 64
   br i1 %min.iters.check45, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
@@ -1528,7 +1528,7 @@ _ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit.i: ; preds = %bb.g
   br label %_ZN3ozz9animation8internal5TrackINS_4math6Float4EE8AllocateEmm.exit
 
 _ZN3ozz9animation8internal5TrackINS_4math6Float4EE8AllocateEmm.exit: ; preds = %bb.g, %_ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit.i
-  %.pre-phi = phi i64 [ %.idx.i14.i, %_ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit.i ], [ 0, %bb.g ] ; 3 uses
+  %.pre-phi = phi i64 [ %.idx.i14.i, %_ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit.i ], [ 0, %bb.g ] ; 5 uses
   %.sink55.i = phi ptr [ %i.bk, %_ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit.i ], [ null, %bb.g ]
   %.sink.i = phi ptr [ %i.bl, %_ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit.i ], [ null, %bb.g ] ; 5 uses
   %.sroa.035.2.i = phi ptr [ %i.bn, %_ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit.i ], [ %i.bk, %bb.g ]
@@ -1560,14 +1560,14 @@ _ZN3ozz9animation8internal5TrackINS_4math6Float4EE8AllocateEmm.exit: ; preds = %
   br i1 %or.cond.not, label %iter.check, label %_ZN3ozz2io8IArchiversIKNS0_8internal5ArrayIfEEEEvRT_.exit
 
 iter.check:                                       ; preds = %_ZN3ozz9animation8internal5TrackINS_4math6Float4EE8AllocateEmm.exit
-  %i.ce = call i64 @llvm.usub.sat.i64(i64 %.pre-phi, i64 4) ; 3 uses
+  %i.ce = call i64 @llvm.usub.sat.i64(i64 %.pre-phi, i64 4)
   %i.cf = lshr exact i64 %i.ce, 2
   %i.cg = add nuw nsw i64 %i.cf, 1                ; 5 uses
-  %min.iters.check = icmp samesign ult i64 %i.ce, 12
+  %min.iters.check = icmp samesign ult i64 %.pre-phi, 16
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check45 = icmp samesign ult i64 %i.ce, 60
+  %min.iters.check45 = icmp samesign ult i64 %.pre-phi, 64
   br i1 %min.iters.check45, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
@@ -1970,7 +1970,7 @@ _ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit.i: ; preds = %bb.g
   br label %_ZN3ozz9animation8internal5TrackINS_4math10QuaternionEE8AllocateEmm.exit
 
 _ZN3ozz9animation8internal5TrackINS_4math10QuaternionEE8AllocateEmm.exit: ; preds = %bb.g, %_ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit.i
-  %.pre-phi = phi i64 [ %.idx.i14.i, %_ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit.i ], [ 0, %bb.g ] ; 3 uses
+  %.pre-phi = phi i64 [ %.idx.i14.i, %_ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit.i ], [ 0, %bb.g ] ; 5 uses
   %.sink55.i = phi ptr [ %i.bk, %_ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit.i ], [ null, %bb.g ]
   %.sink.i = phi ptr [ %i.bl, %_ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit.i ], [ null, %bb.g ] ; 5 uses
   %.sroa.035.2.i = phi ptr [ %i.bn, %_ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit.i ], [ %i.bk, %bb.g ]
@@ -2002,14 +2002,14 @@ _ZN3ozz9animation8internal5TrackINS_4math10QuaternionEE8AllocateEmm.exit: ; pred
   br i1 %or.cond.not, label %iter.check, label %_ZN3ozz2io8IArchiversIKNS0_8internal5ArrayIfEEEEvRT_.exit
 
 iter.check:                                       ; preds = %_ZN3ozz9animation8internal5TrackINS_4math10QuaternionEE8AllocateEmm.exit
-  %i.ce = call i64 @llvm.usub.sat.i64(i64 %.pre-phi, i64 4) ; 3 uses
+  %i.ce = call i64 @llvm.usub.sat.i64(i64 %.pre-phi, i64 4)
   %i.cf = lshr exact i64 %i.ce, 2
   %i.cg = add nuw nsw i64 %i.cf, 1                ; 5 uses
-  %min.iters.check = icmp samesign ult i64 %i.ce, 12
+  %min.iters.check = icmp samesign ult i64 %.pre-phi, 16
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check45 = icmp samesign ult i64 %i.ce, 60
+  %min.iters.check45 = icmp samesign ult i64 %.pre-phi, 64
   br i1 %min.iters.check45, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check

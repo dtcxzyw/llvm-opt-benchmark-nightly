@@ -205,8 +205,8 @@ bb.d:                                             ; preds = %.loopexit.split-lp.
 .lr.ph148:                                        ; preds = %bb.c
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 5556
   %i.ab = load i32, ptr %i.aa, align 4, !tbaa !106
-  %. = call i32 @llvm.umin.i32(i32 %i.ab, i32 %i.p) ; 2 uses
-  %i.ac = call i32 @llvm.usub.sat.i32(i32 %., i32 1) ; 4 uses
+  %. = call i32 @llvm.umin.i32(i32 %i.ab, i32 %i.p) ; 5 uses
+  %i.ac = call i32 @llvm.usub.sat.i32(i32 %., i32 1)
   %i.ad = zext i16 %i.n to i64                    ; 2 uses
   %.idx = shl nuw nsw i64 %i.ad, 3
   %i.ae = getelementptr inbounds nuw i8, ptr %i.m, i64 %.idx
@@ -221,9 +221,9 @@ bb.d:                                             ; preds = %.loopexit.split-lp.
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 5 uses
   %i.ao = zext i32 %i.ac to i64                   ; 4 uses
   %i.ap = icmp ult i32 %., 2
-  %i.aq = icmp eq i32 %i.ac, 1
-  %i.ar = icmp eq i32 %i.ac, 2
-  %i.as = icmp eq i32 %i.ac, 3
+  %i.aq = icmp eq i32 %., 2
+  %i.ar = icmp eq i32 %., 3
+  %i.as = icmp eq i32 %., 4
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph148, %._crit_edge145

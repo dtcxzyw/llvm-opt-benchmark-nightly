@@ -204,9 +204,9 @@ bb.am:                                            ; preds = %bb.as, %bb.ap, %bb.
   %i.fg = getelementptr inbounds nuw i8, ptr %9, i64 3128, !dbg !13991
   store i64 %i.dx, ptr %i.fg, align 8, !dbg !13991, !alias.scope !13486
   %i.fh = getelementptr inbounds nuw i8, ptr %9, i64 3144, !dbg !13992 ; 2 uses
-  %i.fi = load i32, ptr %i.fh, align 8, !dbg !13992, !alias.scope !13486, !noundef !1498 ; 3 uses
+  %i.fi = load i32, ptr %i.fh, align 8, !dbg !13992, !alias.scope !13486, !noundef !1498 ; 4 uses
     #dbg_value(i32 %i.fi, !13524, !DIExpression(), !12561)
-  %i.fj = call i32 @llvm.uadd.sat.i32(i32 %i.fi, i32 1), !dbg !13993 ; 3 uses
+  %i.fj = call i32 @llvm.uadd.sat.i32(i32 %i.fi, i32 1), !dbg !13993 ; 2 uses
     #dbg_value(i32 %i.fj, !13017, !DIExpression(), !12668)
     #dbg_value(i32 %i.fj, !13529, !DIExpression(), !12568)
     #dbg_value(i32 %i.fi, !13529, !DIExpression(), !12566)
@@ -230,7 +230,7 @@ bb.am:                                            ; preds = %bb.as, %bb.ap, %bb.
     #dbg_value(i32 1, !13614, !DIExpression(), !12694)
     #dbg_value(i32 %i.fj, !13615, !DIExpression(), !12695)
     #dbg_value(i32 %i.fj, !13624, !DIExpression(), !12692)
-  %i.fn = icmp ult i32 %i.fj, 64, !dbg !13996
+  %i.fn = icmp ult i32 %i.fi, 63, !dbg !13996
   %i.fo = zext nneg i32 %i.fj to i64, !dbg !13996
   %i.fp = shl nuw i64 1, %i.fo, !dbg !13996
   %.sroa.08.0.i = select i1 %i.fn, i64 %i.fp, i64 -1, !dbg !13997
@@ -633,11 +633,11 @@ bb.g:                                             ; preds = %bb.f
     #dbg_value(i64 %i.ad, !24784, !DIExpression(), !24660)
   %i.ae = add i64 %.val20, -1, !dbg !24875        ; 2 uses
     #dbg_value(i64 %i.ae, !24798, !DIExpression(), !24659)
-  %i.af = sub i64 %i.ae, %i.ad, !dbg !24876
-  %i.ag = tail call i64 @llvm.usub.sat.i64(i64 %i.af, i64 1), !dbg !24876 ; 3 uses
+  %i.af = sub i64 %i.ae, %i.ad, !dbg !24876       ; 2 uses
+  %i.ag = tail call i64 @llvm.usub.sat.i64(i64 %i.af, i64 1), !dbg !24876 ; 2 uses
     #dbg_value(i64 %i.ag, !24785, !DIExpression(), !24661)
     #dbg_value(i64 %i.ag, !24800, !DIExpression(), !24663)
-  %i.ah = icmp ugt i64 %i.ag, 127, !dbg !24877
+  %i.ah = icmp ugt i64 %i.af, 128, !dbg !24877
   br i1 %i.ah, label %_RNvMs8_NtNtCshovLROGBtMy_11quinn_proto10connection6spacesNtB5_11PendingAcks15is_out_of_order.exit, label %bb.h, !dbg !24877
 
 bb.h:                                             ; preds = %bb.g
@@ -714,11 +714,11 @@ bb.m:                                             ; preds = %bb.k
     #dbg_value(i64 %i.az, !24784, !DIExpression(), !24691)
   %i.ba = add i64 %.val20, -1, !dbg !24899        ; 2 uses
     #dbg_value(i64 %i.ba, !24798, !DIExpression(), !24690)
-  %i.bb = sub i64 %i.ba, %i.az, !dbg !24900
-  %i.bc = tail call i64 @llvm.usub.sat.i64(i64 %i.bb, i64 1), !dbg !24900 ; 3 uses
+  %i.bb = sub i64 %i.ba, %i.az, !dbg !24900       ; 2 uses
+  %i.bc = tail call i64 @llvm.usub.sat.i64(i64 %i.bb, i64 1), !dbg !24900 ; 2 uses
     #dbg_value(i64 %i.bc, !24785, !DIExpression(), !24692)
     #dbg_value(i64 %i.bc, !24800, !DIExpression(), !24694)
-  %i.bd = icmp ugt i64 %i.bc, 127, !dbg !24901
+  %i.bd = icmp ugt i64 %i.bb, 128, !dbg !24901
   br i1 %i.bd, label %_RNvMs8_NtNtCshovLROGBtMy_11quinn_proto10connection6spacesNtB5_11PendingAcks15is_out_of_order.exit, label %bb.n, !dbg !24901
 
 bb.n:                                             ; preds = %bb.m

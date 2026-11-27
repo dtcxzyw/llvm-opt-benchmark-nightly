@@ -205,9 +205,9 @@ bb.v:                                             ; preds = %.split
   %i.fh = phi i32 [ %i.fg, %bb.v ], [ 1, %.split ], [ 1, %.thread ], [ 1, %._crit_edge ]
   %i.fi = phi ptr [ %i.ex, %bb.v ], [ %i.ex, %.split ], [ %i.de, %.thread ], [ %i.ex, %._crit_edge ] ; 4 uses
   %.158.lcssa138141150 = phi i64 [ %indvars.iv.next, %bb.v ], [ %indvars.iv.next, %.split ], [ %i.df, %.thread ], [ %indvars.iv.next, %._crit_edge ]
-  %i.fj = phi i32 [ %i.fd, %bb.v ], [ %i.fd, %.split ], [ 1, %.thread ], [ 1, %._crit_edge ] ; 6 uses
+  %i.fj = phi i32 [ %i.fd, %bb.v ], [ %i.fd, %.split ], [ 1, %.thread ], [ 1, %._crit_edge ] ; 7 uses
   %wide.trip.count = zext nneg i32 %i.fh to i64   ; 2 uses
-  %i.fk = call i32 @llvm.usub.sat.i32(i32 %i.fj, i32 1) ; 2 uses
+  %i.fk = call i32 @llvm.usub.sat.i32(i32 %i.fj, i32 1)
   %i.fl = call i32 @llvm.usub.sat.i32(i32 %i.fj, i32 1)
   %i.fm = zext nneg i32 %i.fl to i64
   %scevgep181 = getelementptr i8, ptr %scevgep, i64 %i.fm
@@ -216,9 +216,9 @@ bb.v:                                             ; preds = %.split
   %min.iters.check184 = icmp samesign ult i32 %i.fj, 6
   %i.fo = and i32 %i.fk, 255
   %i.fp = icmp eq i32 %i.fo, 255
-  %i.fq = icmp samesign ugt i32 %i.fk, 255
+  %i.fq = icmp samesign ugt i32 %i.fj, 256
   %i.fr = or i1 %i.fp, %i.fq
-  %i.fs = and i32 %i.fj, 2147483644
+  %i.fs = and i32 %i.fj, 508
   %n.vec187 = zext nneg i32 %i.fs to i64          ; 2 uses
   br label %.lr.ph84
 

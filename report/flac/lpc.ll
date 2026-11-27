@@ -204,12 +204,12 @@ scalar.ph490:                                     ; preds = %scalar.ph490.prol.l
 vector.scevcheck504:                              ; preds = %.lr.ph188.preheader
   %i.bk = trunc i64 %indvars.iv280 to i32
   %i.bl = add i64 %indvar, %i.be
-  %i.bm = sub i64 %i.bf, %i.bl
-  %i.bn = tail call i64 @llvm.usub.sat.i64(i64 %i.bm, i64 1) ; 2 uses
+  %i.bm = sub i64 %i.bf, %i.bl                    ; 2 uses
+  %i.bn = tail call i64 @llvm.usub.sat.i64(i64 %i.bm, i64 1)
   %i.bo = trunc i64 %i.bn to i32
   %i.bp = xor i32 %i.bk, -1
   %i.bq = icmp ult i32 %i.bp, %i.bo
-  %i.br = icmp ugt i64 %i.bn, 4294967295
+  %i.br = icmp ugt i64 %i.bm, 4294967296
   %i.bs = or i1 %i.bq, %i.br
   br i1 %i.bs, label %.lr.ph188.preheader522, label %vector.ph507
 

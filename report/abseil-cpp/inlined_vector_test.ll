@@ -205,7 +205,7 @@ _ZN4absl12lts_2026052613InlinedVectorIN12_GLOBAL__N_18MoveOnlyELm2ESaIS3_EE9push
   %.pre.i.i = load i64, ptr %1, align 8, !tbaa !199
   %.val1.i.i51.pre.pre = load ptr, ptr %i.b, align 8 ; 2 uses
   %.val4.i.i.i54.pre.pre = load i64, ptr %i.a, align 8, !noalias !1503
-  %i.h = add i64 %.pre.i.i, 2                     ; 4 uses
+  %i.h = add i64 %.pre.i.i, 2                     ; 5 uses
   store i64 %i.h, ptr %1, align 8, !tbaa !199
   %i.i = trunc i64 %i.h to i1                     ; 3 uses
   %i.j = select i1 %i.i, ptr %.val1.i.i51.pre.pre, ptr %i.b
@@ -251,12 +251,12 @@ _ZN4absl12lts_2026052623inlined_vector_internal21AllocationTransactionISaIN12_GL
   br label %bb.d
 
 _ZN4absl12lts_2026052623inlined_vector_internal23ConstructionTransactionISaIN12_GLOBAL__N_18MoveOnlyEEE9ConstructINS1_20IteratorValueAdapterIS5_St13move_iteratorIPS4_EEEEEvSA_RT_m.exit84.i.i68: ; preds = %_ZN4absl12lts_2026052613InlinedVectorIN12_GLOBAL__N_18MoveOnlyELm2ESaIS3_EE9push_backEOS3_.exit23
-  %2 = tail call i64 @llvm.usub.sat.i64(i64 %.sink5.i.i.i57, i64 1) ; 2 uses
-  %i.r = icmp samesign ugt i64 %2, 1
+  %i.r = icmp ugt i64 %i.h, 5
   br i1 %i.r, label %bb.c, label %_ZSt13move_backwardIPN12_GLOBAL__N_18MoveOnlyES2_ET0_T_S4_S3_.exit.i.i69, !prof !226
 
 bb.c:                                             ; preds = %_ZN4absl12lts_2026052623inlined_vector_internal23ConstructionTransactionISaIN12_GLOBAL__N_18MoveOnlyEEE9ConstructINS1_20IteratorValueAdapterIS5_St13move_iteratorIPS4_EEEEEvSA_RT_m.exit84.i.i68
-  %.val1.i.i51.sroa.gep = getelementptr inbounds nuw i8, ptr %.val1.i.i51.pre.pre, i64 1
+  %2 = add nsw i64 %.sink5.i.i.i57, -1
+  %.val1.i.i51.sroa.gep = getelementptr i8, ptr %.val1.i.i51.pre.pre, i64 1
   %.sroa.sel90 = select i1 %i.i, ptr %.val1.i.i51.sroa.gep, ptr %i.c
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %.sroa.sel90, ptr align 1 %i.j, i64 %2, i1 false)
   %.pre.i.i70 = load i64, ptr %1, align 8, !tbaa !199

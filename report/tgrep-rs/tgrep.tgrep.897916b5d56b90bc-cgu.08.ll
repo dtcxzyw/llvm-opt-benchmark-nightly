@@ -204,13 +204,13 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %2 = add i64 %1, 1
-  %3 = tail call i64 @llvm.usub.sat.i64(i64 %2, i64 1) ; 2 uses
-  %i.a = icmp sgt i64 %3, -1
+  %i.a = icmp sgt i64 %1, -2
   br i1 %i.a, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.b = tail call range(i64 1, 65) i64 @llvm.ctlz.i64(i64 %3, i1 false)
+  %2 = add i64 %1, 1
+  %3 = tail call i64 @llvm.usub.sat.i64(i64 %2, i64 1)
+  %i.b = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %3, i1 false)
   %i.c = sub nuw nsw i64 64, %i.b
   %i.d = shl nuw i64 1, %i.c
   br label %bb.e

@@ -204,12 +204,12 @@ bb.a:
   %i.h = ptrtoint ptr %i.d to i64                 ; 2 uses
   %i.i = sub i64 %i.g, %i.h
   %i.j = ashr exact i64 %i.i, 2
-  %.sroa.speculated = tail call i64 @llvm.umax.i64(i64 %1, i64 %i.j)
-  %spec.select.i.i = tail call i64 @llvm.usub.sat.i64(i64 %.sroa.speculated, i64 1) ; 2 uses
+  %.sroa.speculated = tail call i64 @llvm.umax.i64(i64 %1, i64 %i.j) ; 2 uses
+  %spec.select.i.i = tail call i64 @llvm.usub.sat.i64(i64 %.sroa.speculated, i64 1)
   %i.k = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %spec.select.i.i, i1 false)
   %i.l = sub nuw nsw i64 64, %i.k                 ; 2 uses
   %i.m = load ptr, ptr %0, align 8                ; 3 uses
-  %i.n = icmp ult i64 %spec.select.i.i, 1152921504606846976
+  %i.n = icmp ult i64 %.sroa.speculated, 1152921504606846977
   br i1 %i.n, label %bb.c, label %bb.b, !prof !40
 
 bb.b:                                             ; preds = %bb.a

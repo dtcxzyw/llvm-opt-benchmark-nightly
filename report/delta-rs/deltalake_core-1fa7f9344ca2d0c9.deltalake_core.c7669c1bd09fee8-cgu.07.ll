@@ -205,8 +205,8 @@ bb.g:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !22998)
   %i.x = load i64, ptr %i.v, align 8, !range !94, !alias.scope !22997, !noundef !37
   %i.y = tail call i64 @llvm.usub.sat.i64(i64 %i.x, i64 68) ; 2 uses
-  %i.z = load i64, ptr %i.w, align 8, !range !94, !alias.scope !22998, !noundef !37 ; 2 uses
-  %i.aa = tail call i64 @llvm.usub.sat.i64(i64 %i.z, i64 68) ; 2 uses
+  %i.z = load i64, ptr %i.w, align 8, !range !94, !alias.scope !22998, !noundef !37 ; 3 uses
+  %i.aa = tail call i64 @llvm.usub.sat.i64(i64 %i.z, i64 68)
   switch i64 %i.y, label %default.unreachable [
     i64 0, label %bb.h
     i64 1, label %bb.i
@@ -221,7 +221,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.ab, label %bb.k, label %bb.j
 
 bb.i:                                             ; preds = %bb.g
-  %i.ac = icmp eq i64 %i.aa, 1
+  %i.ac = icmp eq i64 %i.z, 69
   br i1 %i.ac, label %bb.l, label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g
@@ -251,8 +251,8 @@ bb.m:                                             ; preds = %bb.e
   tail call void @llvm.experimental.noalias.scope.decl(metadata !23001)
   %i.am = load i64, ptr %i.al, align 8, !range !94, !alias.scope !23000, !noundef !37
   %i.an = tail call i64 @llvm.usub.sat.i64(i64 %i.am, i64 68) ; 2 uses
-  %i.ao = load i64, ptr %i.ak, align 8, !range !94, !alias.scope !23001, !noundef !37 ; 2 uses
-  %i.ap = tail call i64 @llvm.usub.sat.i64(i64 %i.ao, i64 68) ; 2 uses
+  %i.ao = load i64, ptr %i.ak, align 8, !range !94, !alias.scope !23001, !noundef !37 ; 3 uses
+  %i.ap = tail call i64 @llvm.usub.sat.i64(i64 %i.ao, i64 68)
   switch i64 %i.an, label %default.unreachable [
     i64 0, label %bb.n
     i64 1, label %bb.o
@@ -264,7 +264,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.aq, label %bb.q, label %bb.p
 
 bb.o:                                             ; preds = %bb.m
-  %i.ar = icmp eq i64 %i.ap, 1
+  %i.ar = icmp eq i64 %i.ao, 69
   br i1 %i.ar, label %bb.r, label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %bb.n, %bb.m
@@ -309,8 +309,8 @@ bb.t:                                             ; preds = %bb.f
   tail call void @llvm.experimental.noalias.scope.decl(metadata !23004)
   %i.bd = load i64, ptr %i.bc, align 8, !range !94, !alias.scope !23003, !noundef !37
   %i.be = tail call i64 @llvm.usub.sat.i64(i64 %i.bd, i64 68) ; 2 uses
-  %i.bf = load i64, ptr %i.bb, align 8, !range !94, !alias.scope !23004, !noundef !37 ; 2 uses
-  %i.bg = tail call i64 @llvm.usub.sat.i64(i64 %i.bf, i64 68) ; 2 uses
+  %i.bf = load i64, ptr %i.bb, align 8, !range !94, !alias.scope !23004, !noundef !37 ; 3 uses
+  %i.bg = tail call i64 @llvm.usub.sat.i64(i64 %i.bf, i64 68)
   switch i64 %i.be, label %default.unreachable [
     i64 0, label %bb.u
     i64 1, label %bb.v
@@ -322,7 +322,7 @@ bb.u:                                             ; preds = %bb.t
   br i1 %i.bh, label %bb.x, label %bb.w
 
 bb.v:                                             ; preds = %bb.t
-  %i.bi = icmp eq i64 %i.bg, 1
+  %i.bi = icmp eq i64 %i.bf, 69
   br i1 %i.bi, label %bb.y, label %bb.w
 
 bb.w:                                             ; preds = %bb.v, %bb.u, %bb.t

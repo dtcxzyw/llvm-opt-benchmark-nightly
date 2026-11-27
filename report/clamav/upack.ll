@@ -203,11 +203,11 @@ bb.ag:                                            ; preds = %bb.af
 
 .preheader369:                                    ; preds = %bb.a, %.preheader369
   %i.gz = phi i32 [ %i.hc, %.preheader369 ], [ %.promoted389, %bb.a ] ; 2 uses
-  %i.ha = and i32 %i.gz, 255
-  %.0259 = call i32 @llvm.usub.sat.i32(i32 %i.ha, i32 3) ; 2 uses
+  %i.ha = and i32 %i.gz, 255                      ; 2 uses
+  %.0259 = call i32 @llvm.usub.sat.i32(i32 %i.ha, i32 3)
   %i.hb = and i32 %i.gz, -256                     ; 2 uses
   %i.hc = or disjoint i32 %.0259, %i.hb           ; 5 uses
-  %i.hd = icmp samesign ugt i32 %.0259, 6
+  %i.hd = icmp samesign ugt i32 %i.ha, 9
   br i1 %i.hd, label %.preheader369, label %bb.ah
 
 bb.ah:                                            ; preds = %.preheader369

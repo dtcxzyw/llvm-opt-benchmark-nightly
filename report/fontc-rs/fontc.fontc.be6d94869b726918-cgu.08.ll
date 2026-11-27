@@ -202,7 +202,7 @@ _RNvMsd_CsgkGe90ZnUBq_8smallvecINtB5_8SmallVecAINtNtCsgCLBQfCopcP_18tracing_subs
 
 .thread:                                          ; preds = %bb.a, %_RNvMsd_CsgkGe90ZnUBq_8smallvecINtB5_8SmallVecAINtNtCsgCLBQfCopcP_18tracing_subscriber8registry7SpanRefINtNtNtBN_5layer7layered7LayeredINtNtNtBN_6filter13layer_filters8FilteredINtNtNtBN_3fmt9fmt_layer5LayerNtNtBL_7sharded8RegistryNtNtB2S_6format13DefaultFieldsNtCsglDVE6xSTcO_5fontc12LogFormatterENtNtB2d_3env9EnvFilterB3h_EB3h_EEj10_E6tripleB4b_.exit
   %.sink12.i47 = phi i64 [ %i.e, %_RNvMsd_CsgkGe90ZnUBq_8smallvecINtB5_8SmallVecAINtNtCsgCLBQfCopcP_18tracing_subscriber8registry7SpanRefINtNtNtBN_5layer7layered7LayeredINtNtNtBN_6filter13layer_filters8FilteredINtNtNtBN_3fmt9fmt_layer5LayerNtNtBL_7sharded8RegistryNtNtB2S_6format13DefaultFieldsNtCsglDVE6xSTcO_5fontc12LogFormatterENtNtB2d_3env9EnvFilterB3h_EB3h_EEj10_E6tripleB4b_.exit ], [ %i.b, %bb.a ]
-  %i.g = tail call range(i64 1, 65) i64 @llvm.ctlz.i64(i64 %.sink12.i47, i1 false)
+  %i.g = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %.sink12.i47, i1 false)
   %i.h = sub nuw nsw i64 64, %i.g
   %i.i = shl nuw i64 1, %i.h
   %i.j = tail call fastcc { i64, i64 } @_RNvMsd_CsgkGe90ZnUBq_8smallvecINtB5_8SmallVecAINtNtCsgCLBQfCopcP_18tracing_subscriber8registry7SpanRefINtNtNtBN_5layer7layered7LayeredINtNtNtBN_6filter13layer_filters8FilteredINtNtNtBN_3fmt9fmt_layer5LayerNtNtBL_7sharded8RegistryNtNtB2S_6format13DefaultFieldsNtCsglDVE6xSTcO_5fontc12LogFormatterENtNtB2d_3env9EnvFilterB3h_EB3h_EEj10_E8try_growB4b_(ptr noalias nofree noundef align 8 dereferenceable(656) %0, i64 noundef %i.i) ; 2 uses
@@ -346,7 +346,7 @@ _RNvMsd_CsgkGe90ZnUBq_8smallvecINtB5_8SmallVecANtNtNtCsgCLBQfCopcP_18tracing_sub
   br i1 %i.g, label %bb.b, label %bb.q, !prof !10
 
 bb.b:                                             ; preds = %_RNvMsd_CsgkGe90ZnUBq_8smallvecINtB5_8SmallVecANtNtNtCsgCLBQfCopcP_18tracing_subscriber6filter9directive15StaticDirectivej8_E6tripleCsglDVE6xSTcO_5fontc.exit
-  %i.h = tail call range(i64 1, 65) i64 @llvm.ctlz.i64(i64 %i.f, i1 false)
+  %i.h = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.f, i1 false)
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.k = load ptr, ptr %i.j, align 8, !alias.scope !125, !nonnull !5, !noundef !5
@@ -354,7 +354,7 @@ bb.b:                                             ; preds = %_RNvMsd_CsgkGe90ZnU
   br label %_RNvMsd_CsgkGe90ZnUBq_8smallvecINtB5_8SmallVecANtNtNtCsgCLBQfCopcP_18tracing_subscriber6filter9directive15StaticDirectivej8_E10triple_mutCsglDVE6xSTcO_5fontc.exit.i
 
 bb.c:                                             ; preds = %bb.a
-  %i.l = tail call range(i64 1, 65) i64 @llvm.ctlz.i64(i64 %i.c, i1 false)
+  %i.l = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.c, i1 false)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !126)
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   br label %_RNvMsd_CsgkGe90ZnUBq_8smallvecINtB5_8SmallVecANtNtNtCsgCLBQfCopcP_18tracing_subscriber6filter9directive15StaticDirectivej8_E10triple_mutCsglDVE6xSTcO_5fontc.exit.i
@@ -558,7 +558,7 @@ _RNvMsd_CsgkGe90ZnUBq_8smallvecINtB5_8SmallVecANtNtNtNtCsgCLBQfCopcP_18tracing_s
   br i1 %i.g, label %bb.b, label %bb.q, !prof !10
 
 bb.b:                                             ; preds = %_RNvMsd_CsgkGe90ZnUBq_8smallvecINtB5_8SmallVecANtNtNtNtCsgCLBQfCopcP_18tracing_subscriber6filter3env9directive9Directivej8_E6tripleCsglDVE6xSTcO_5fontc.exit
-  %i.h = tail call range(i64 1, 65) i64 @llvm.ctlz.i64(i64 %i.f, i1 false)
+  %i.h = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.f, i1 false)
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.k = load ptr, ptr %i.j, align 8, !alias.scope !140, !nonnull !5, !noundef !5
@@ -566,7 +566,7 @@ bb.b:                                             ; preds = %_RNvMsd_CsgkGe90ZnU
   br label %_RNvMsd_CsgkGe90ZnUBq_8smallvecINtB5_8SmallVecANtNtNtNtCsgCLBQfCopcP_18tracing_subscriber6filter3env9directive9Directivej8_E10triple_mutCsglDVE6xSTcO_5fontc.exit.i
 
 bb.c:                                             ; preds = %bb.a
-  %i.l = tail call range(i64 1, 65) i64 @llvm.ctlz.i64(i64 %i.c, i1 false)
+  %i.l = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.c, i1 false)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !141)
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   br label %_RNvMsd_CsgkGe90ZnUBq_8smallvecINtB5_8SmallVecANtNtNtNtCsgCLBQfCopcP_18tracing_subscriber6filter3env9directive9Directivej8_E10triple_mutCsglDVE6xSTcO_5fontc.exit.i
@@ -969,7 +969,7 @@ attributes #27 = { noinline }
 !7 = !{i64 -1, i64 -9223372036854775808}
 !8 = !{!"branch_weights", !"expected", i32 1, i32 2000}
 !9 = !{i64 0, i64 -9223372036854775808}
-!10 = !{!"branch_weights", i32 -8583494, i32 8583493}
+!10 = !{!"branch_weights", i32 2143191900, i32 4291748}
 !11 = !{!"branch_weights", i32 2002, i32 2000}
 !12 = distinct !{!12, i1 true, !"_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCs5Xr050g3D4S_3std3ffi6os_str8OsStringENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsglDVE6xSTcO_5fontc"}
 !13 = distinct !{!13, !12, !"_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCs5Xr050g3D4S_3std3ffi6os_str8OsStringENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsglDVE6xSTcO_5fontc: argument 1"}

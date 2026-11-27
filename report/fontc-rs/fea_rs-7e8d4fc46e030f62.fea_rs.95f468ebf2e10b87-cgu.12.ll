@@ -204,9 +204,9 @@ bb.a:
   %i.b = alloca [24 x i8], align 8                ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %i.d = load i16, ptr %i.c, align 8, !noundef !4 ; 2 uses
-  %3 = tail call i16 @llvm.uadd.sat.i16(i16 %i.d, i16 1) ; 2 uses
-  %4 = icmp slt i16 %3, 0
-  %spec.select = select i1 %4, i16 %i.d, i16 %3   ; 3 uses
+  %3 = icmp ult i16 %i.d, 32767
+  %4 = zext i1 %3 to i16
+  %spec.select = add nuw nsw i16 %i.d, %4         ; 3 uses
   %.idx = shl nuw nsw i64 %2, 5
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 %.idx ; 2 uses
   %i.f = icmp eq i64 %2, 0

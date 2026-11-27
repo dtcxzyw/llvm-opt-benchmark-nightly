@@ -205,7 +205,7 @@ _ZNK8facebook5velox17SelectivityVector15applyToSelectedIZNKS0_9functions12_GLOBA
   br i1 %.not.i.i.i10.i.i, label %bb.cj, label %_ZN8facebook5velox4bits12findFirstBitEPKmii.exit.thread.i.i.i
 
 bb.cj:                                            ; preds = %_ZNK8facebook5velox17SelectivityVector15applyToSelectedIZNKS0_9functions12_GLOBAL__N_117MapFilterFunction27buildInMapSelectivityVectorERS1_N5boost13intrusive_ptrINS0_6BufferEEESA_iRKS1_PKiEUliE_EEvT_.exit.i.i
-  %i.tm = and i32 %i.tl, 2147483584               ; 6 uses
+  %i.tm = and i32 %i.tl, 2147483584               ; 8 uses
   %.not3347.i.i.i.i.i = icmp eq i32 %i.tm, 0      ; 2 uses
   br i1 %.not3347.i.i.i.i.i, label %._crit_edge.i.i.i.i.i, label %.lr.ph.i.i.preheader.i.i.i
 
@@ -241,14 +241,14 @@ bb.ck:                                            ; preds = %._crit_edge.i.i.i.i
 
 iter.check:                                       ; preds = %bb.ck, %.thread.i.i
   %i.ty = zext nneg i32 %i.tm to i64              ; 5 uses
-  %i.tz = call i64 @llvm.usub.sat.i64(i64 %i.ty, i64 64) ; 3 uses
+  %i.tz = call i64 @llvm.usub.sat.i64(i64 %i.ty, i64 64)
   %i.ua = lshr exact i64 %i.tz, 6
   %i.ub = add nuw nsw i64 %i.ua, 1                ; 5 uses
-  %min.iters.check = icmp samesign ult i64 %i.tz, 192
+  %min.iters.check = icmp samesign ult i32 %i.tm, 256
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %66 = call i64 @llvm.usub.sat.i64(i64 %i.ty, i64 64)
+  %66 = add nsw i64 %i.ty, -64
   %i.uc = lshr exact i64 %66, 3
   %i.ud = add nuw nsw i64 %i.uc, 8                ; 2 uses
   %i.ue = getelementptr i8, ptr %i.tk, i64 %i.ud
@@ -259,7 +259,7 @@ vector.memcheck:                                  ; preds = %iter.check
   br i1 %found.conflict, label %.lr.ph.i.i.i.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
-  %min.iters.check403 = icmp samesign ult i64 %i.tz, 960
+  %min.iters.check403 = icmp samesign ult i32 %i.tm, 1024
   br i1 %min.iters.check403, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check

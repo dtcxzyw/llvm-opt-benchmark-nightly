@@ -202,7 +202,7 @@ proc_get_long.exit:                               ; preds = %.lr.ph438, %bb.l, %
 proc_get_long.exit.thread:                        ; preds = %bb.m, %bb.n
   %.3200 = phi i8 [ %.0197302436, %bb.m ], [ %i.bw, %bb.n ] ; 2 uses
   %i.bz = getelementptr i8, ptr %.0192303435, i64 %i.bt
-  %i.ca = sub i64 %.1205301437, %i.bt             ; 2 uses
+  %i.ca = sub i64 %.1205301437, %i.bt             ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #14
   %i.cb = icmp ult i64 %i.ca, 2
   %or.cond7342 = select i1 %i.cb, i1 %i.az, i1 false
@@ -215,7 +215,7 @@ bb.o:                                             ; preds = %proc_get_long.exit.
 
 bb.p:                                             ; preds = %bb.o
   %.not91 = icmp ne i64 %.1205301437, %i.bt
-  %.2206 = call i64 @llvm.usub.sat.i64(i64 %i.ca, i64 1) ; 7 uses
+  %.2206 = call i64 @llvm.usub.sat.i64(i64 %i.ca, i64 1) ; 6 uses
   %.1193.idx = zext i1 %.not91 to i64
   %.1193 = getelementptr i8, ptr %i.bz, i64 %.1193.idx ; 3 uses
   %i.cd = icmp eq i8 %.3200, 45
@@ -234,7 +234,7 @@ bb.r:                                             ; preds = %bb.q
   store i8 0, ptr %i.cg, align 1
   %i.ch = load i8, ptr %i.e, align 16             ; 2 uses
   %i.ci = icmp eq i8 %i.ch, 45
-  %i.cj = icmp ne i64 %.2206, 1
+  %i.cj = icmp ne i64 %i.ca, 2
   %or.cond.i107 = and i1 %i.cj, %i.ci             ; 3 uses
   %.pre.i108 = load i8, ptr %i.ba, align 1
   %i.ck = select i1 %or.cond.i107, i8 %.pre.i108, i8 %i.ch

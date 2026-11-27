@@ -205,7 +205,7 @@ _RNvXs5_NtNtNtCs2FJGJNE9lTN_12clap_builder6parser7matches11arg_matchesINtB5_6Val
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !79547
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 104 ; 2 uses
   %i.n = load i64, ptr %i.m, align 8, !alias.scope !79546, !noundef !27
-  %i.o = add i64 %i.n, -1                         ; 2 uses
+  %i.o = add i64 %i.n, -1                         ; 3 uses
   store i64 %i.o, ptr %i.m, align 8, !alias.scope !79546
   %.pr = load i64, ptr %i.g, align 8              ; 4 uses
   %.not = icmp eq i64 %.pr, -1
@@ -241,10 +241,10 @@ bb.h:                                             ; preds = %_RNvXs5_NtNtNtCs2FJ
   %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8 ; 3 uses
   %.sroa.6.0..sroa_idx12 = getelementptr inbounds nuw i8, ptr %i.g, i64 16
   %.sroa.6.0.copyload = load i64, ptr %.sroa.6.0..sroa_idx12, align 8
-  %i.t = call i64 @llvm.uadd.sat.i64(i64 %i.o, i64 1) ; 2 uses
+  %i.t = call i64 @llvm.uadd.sat.i64(i64 %i.o, i64 1)
   %..i = call noundef i64 @llvm.umax.i64(i64 %i.t, i64 4) ; 3 uses
   %i.u = mul i64 %..i, 24                         ; 3 uses
-  %or.cond.i.i = icmp ugt i64 %i.t, 384307168202282325
+  %or.cond.i.i = icmp ugt i64 %i.o, 384307168202282324
   br i1 %or.cond.i.i, label %bb.k, label %bb.i, !prof !41
 
 bb.i:                                             ; preds = %bb.h
@@ -647,7 +647,7 @@ _RNvXs5_NtNtNtCs2FJGJNE9lTN_12clap_builder6parser7matches11arg_matchesINtB5_6Val
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !79694
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 104 ; 2 uses
   %i.n = load i64, ptr %i.m, align 8, !alias.scope !79693, !noundef !27
-  %i.o = add i64 %i.n, -1                         ; 2 uses
+  %i.o = add i64 %i.n, -1                         ; 3 uses
   store i64 %i.o, ptr %i.m, align 8, !alias.scope !79693
   %.pr = load i64, ptr %i.g, align 8              ; 4 uses
   %.not = icmp eq i64 %.pr, -1
@@ -683,10 +683,10 @@ bb.h:                                             ; preds = %_RNvXs5_NtNtNtCs2FJ
   %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8 ; 3 uses
   %.sroa.6.0..sroa_idx12 = getelementptr inbounds nuw i8, ptr %i.g, i64 16
   %.sroa.6.0.copyload = load i64, ptr %.sroa.6.0..sroa_idx12, align 8
-  %i.t = call i64 @llvm.uadd.sat.i64(i64 %i.o, i64 1) ; 2 uses
+  %i.t = call i64 @llvm.uadd.sat.i64(i64 %i.o, i64 1)
   %..i = call noundef i64 @llvm.umax.i64(i64 %i.t, i64 4) ; 3 uses
   %i.u = mul i64 %..i, 24                         ; 3 uses
-  %or.cond.i.i = icmp ugt i64 %i.t, 384307168202282325
+  %or.cond.i.i = icmp ugt i64 %i.o, 384307168202282324
   br i1 %or.cond.i.i, label %bb.k, label %bb.i, !prof !41
 
 bb.i:                                             ; preds = %bb.h

@@ -205,13 +205,13 @@ bb.am:                                            ; preds = %bb.q
   tail call void @llvm.experimental.noalias.scope.decl(metadata !763)
   %i.ef = icmp ult i64 %.val6.i, 2305843009213693952
   tail call void @llvm.assume(i1 %i.ef)
-  %i.eg = mul i64 %.val6.i, %i.x
-  %2 = tail call i64 @llvm.usub.sat.i64(i64 %i.eg, i64 1) ; 2 uses
-  %3 = icmp sgt i64 %2, -1
-  br i1 %3, label %bb.an, label %bb.ao
+  %i.eg = mul i64 %.val6.i, %i.x                  ; 2 uses
+  %2 = icmp ult i64 %i.eg, -9223372036854775807
+  br i1 %2, label %bb.an, label %bb.ao
 
 bb.an:                                            ; preds = %bb.am
-  %i.eh = tail call range(i64 1, 65) i64 @llvm.ctlz.i64(i64 %2, i1 false)
+  %3 = tail call i64 @llvm.usub.sat.i64(i64 %i.eg, i64 1)
+  %i.eh = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %3, i1 false)
   %i.ei = sub nuw nsw i64 64, %i.eh
   %i.ej = shl nuw i64 1, %i.ei
   br label %bb.ao
@@ -614,13 +614,13 @@ bb.dv:                                            ; preds = %bb.dt
 
 bb.dw:                                            ; preds = %bb.dt
   %i.oh = getelementptr inbounds nuw i8, ptr %i.l, i64 120 ; 3 uses
-  %i.oi = load i64, ptr %i.oh, align 8, !noundef !5 ; 3 uses
-  %4 = tail call i64 @llvm.usub.sat.i64(i64 %i.oi, i64 1) ; 2 uses
-  %5 = icmp sgt i64 %4, -1
-  br i1 %5, label %bb.dx, label %bb.dy
+  %i.oi = load i64, ptr %i.oh, align 8, !noundef !5 ; 4 uses
+  %4 = icmp ult i64 %i.oi, -9223372036854775807
+  br i1 %4, label %bb.dx, label %bb.dy
 
 bb.dx:                                            ; preds = %bb.dw
-  %i.oj = tail call range(i64 1, 65) i64 @llvm.ctlz.i64(i64 %4, i1 false)
+  %5 = tail call i64 @llvm.usub.sat.i64(i64 %i.oi, i64 1)
+  %i.oj = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %5, i1 false)
   %i.ok = sub nuw nsw i64 64, %i.oj
   %i.ol = shl nuw i64 1, %i.ok
   br label %bb.dy

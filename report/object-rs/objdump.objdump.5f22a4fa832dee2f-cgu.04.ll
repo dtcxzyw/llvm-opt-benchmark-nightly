@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %bb.j
   br label %bb.d
 
 bb.l:                                             ; preds = %bb.j
-  %i.aj = extractvalue { ptr, i64 } %i.ae, 1      ; 3 uses
+  %i.aj = extractvalue { ptr, i64 } %i.ae, 1      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %.not.i99 = icmp ult i64 %i.aj, 4
   br i1 %.not.i99, label %bb.m, label %bb.n
@@ -227,7 +227,7 @@ bb.o:                                             ; preds = %bb.n
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %.not.i101 = icmp ult i64 %i.aj, 20
   %i.an = getelementptr inbounds nuw i8, ptr %i.af, i64 20
-  %storemerge.i103 = tail call i64 @llvm.usub.sat.i64(i64 %i.aj, i64 20) ; 2 uses
+  %storemerge.i103 = tail call i64 @llvm.usub.sat.i64(i64 %i.aj, i64 20)
   br i1 %.not.i101, label %bb.q, label %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultAhj10_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8aoZCP6pRcV_7objdump.exit
 
 bb.p:                                             ; preds = %bb.n
@@ -244,7 +244,7 @@ bb.q:                                             ; preds = %bb.o
 _RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultAhj10_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8aoZCP6pRcV_7objdump.exit: ; preds = %bb.o
   %i.aq = getelementptr inbounds nuw i8, ptr %i.af, i64 4
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.a, ptr noundef nonnull align 1 dereferenceable(16) %i.aq, i64 16, i1 false)
-  %i.ar = icmp samesign ult i64 %storemerge.i103, 4
+  %i.ar = icmp ult i64 %i.aj, 24
   br i1 %i.ar, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultAhj10_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8aoZCP6pRcV_7objdump.exit
@@ -481,7 +481,7 @@ bb.k:                                             ; preds = %bb.j
   br label %bb.d
 
 bb.l:                                             ; preds = %bb.j
-  %i.aj = extractvalue { ptr, i64 } %i.ae, 1      ; 3 uses
+  %i.aj = extractvalue { ptr, i64 } %i.ae, 1      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %.not.i99 = icmp ult i64 %i.aj, 4
   br i1 %.not.i99, label %bb.m, label %bb.n
@@ -503,7 +503,7 @@ bb.o:                                             ; preds = %bb.n
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %.not.i101 = icmp ult i64 %i.aj, 20
   %i.an = getelementptr inbounds nuw i8, ptr %i.af, i64 20
-  %storemerge.i103 = tail call i64 @llvm.usub.sat.i64(i64 %i.aj, i64 20) ; 2 uses
+  %storemerge.i103 = tail call i64 @llvm.usub.sat.i64(i64 %i.aj, i64 20)
   br i1 %.not.i101, label %bb.q, label %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultAhj10_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8aoZCP6pRcV_7objdump.exit
 
 bb.p:                                             ; preds = %bb.n
@@ -520,7 +520,7 @@ bb.q:                                             ; preds = %bb.o
 _RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultAhj10_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8aoZCP6pRcV_7objdump.exit: ; preds = %bb.o
   %i.aq = getelementptr inbounds nuw i8, ptr %i.af, i64 4
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.a, ptr noundef nonnull align 1 dereferenceable(16) %i.aq, i64 16, i1 false)
-  %i.ar = icmp samesign ult i64 %storemerge.i103, 4
+  %i.ar = icmp ult i64 %i.aj, 24
   br i1 %i.ar, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultAhj10_NtNtB4_5array17TryFromSliceErrorE6unwrapCs8aoZCP6pRcV_7objdump.exit

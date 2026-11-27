@@ -204,12 +204,12 @@ _ZN2v88internal7Isolate22MemorySaverModeEnabledEv.exit: ; preds = %bb.c
   br i1 %i.t, label %.critedge, label %bb.d
 
 bb.d:                                             ; preds = %.split, %_ZN2v88internal7Isolate22MemorySaverModeEnabledEv.exit
-  %i.u = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 184), align 8
-  %spec.select.i = tail call i32 @llvm.usub.sat.i32(i32 %i.u, i32 1) ; 3 uses
+  %i.u = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 184), align 8 ; 3 uses
+  %spec.select.i = tail call i32 @llvm.usub.sat.i32(i32 %i.u, i32 1)
   %i.v = tail call noundef range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %spec.select.i, i1 false)
   %i.w = sub nuw nsw i32 32, %i.v                 ; 2 uses
   %i.x = shl nuw i32 1, %i.w                      ; 2 uses
-  %i.y = icmp ugt i32 %spec.select.i, 127
+  %i.y = icmp ugt i32 %i.u, 128
   br i1 %i.y, label %bb.f, label %bb.e, !prof !34
 
 bb.e:                                             ; preds = %bb.d
@@ -217,7 +217,7 @@ bb.e:                                             ; preds = %bb.d
   unreachable
 
 bb.f:                                             ; preds = %bb.d
-  %i.z = icmp ult i32 %spec.select.i, 4096
+  %i.z = icmp ult i32 %i.u, 4097
   br i1 %i.z, label %_ZN2v88internal11FactoryBaseINS0_7FactoryEE16AllocateRawArrayEiNS0_14AllocationTypeENS0_14AllocationHintENS0_19AllocationAlignmentE.exit.i, label %bb.g, !prof !34
 
 bb.g:                                             ; preds = %bb.f
@@ -376,11 +376,11 @@ _ZN2v88internal7Isolate22MemorySaverModeEnabledEv.exit: ; preds = %bb.c
   br i1 %i.v, label %.critedge, label %bb.d
 
 bb.d:                                             ; preds = %.split, %_ZN2v88internal7Isolate22MemorySaverModeEnabledEv.exit
-  %i.w = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 180), align 4
-  %spec.select.i = tail call i32 @llvm.usub.sat.i32(i32 %i.w, i32 1) ; 4 uses
+  %i.w = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 180), align 4 ; 4 uses
+  %spec.select.i = tail call i32 @llvm.usub.sat.i32(i32 %i.w, i32 1)
   %i.x = tail call noundef range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %spec.select.i, i1 false)
   %i.y = sub nuw nsw i32 32, %i.x                 ; 2 uses
-  %i.z = icmp ugt i32 %spec.select.i, 127
+  %i.z = icmp ugt i32 %i.w, 128
   br i1 %i.z, label %bb.f, label %bb.e, !prof !34
 
 bb.e:                                             ; preds = %bb.d
@@ -388,7 +388,7 @@ bb.e:                                             ; preds = %bb.d
   unreachable
 
 bb.f:                                             ; preds = %bb.d
-  %i.aa = icmp ult i32 %spec.select.i, 67108864
+  %i.aa = icmp ult i32 %i.w, 67108865
   br i1 %i.aa, label %bb.h, label %bb.g, !prof !34
 
 bb.g:                                             ; preds = %bb.f
@@ -400,7 +400,7 @@ bb.h:                                             ; preds = %bb.f
   %i.ac = shl nuw i32 16, %i.y                    ; 2 uses
   %i.ad = add nuw nsw i32 %i.ac, 16
   %i.ae = tail call i64 @_ZN2v88internal7Factory11AllocateRawEiNS0_14AllocationTypeENS0_19AllocationAlignmentENS0_14AllocationHintE(ptr noundef nonnull align 1 dereferenceable(1) %0, i32 noundef %i.ad, i8 noundef zeroext 1, i8 noundef zeroext 0, i8 0) #15 ; 3 uses
-  %i.af = icmp samesign ugt i32 %spec.select.i, 4095
+  %i.af = icmp samesign ugt i32 %i.w, 4096
   %i.ag = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1222), align 2, !range !31
   %i.ah = trunc nuw i8 %i.ag to i1
   %or.cond.i.i.i = select i1 %i.af, i1 %i.ah, i1 false

@@ -205,14 +205,14 @@ define noundef align 8 ptr @_RNvMNtNtNtCsbaWXNhtWAp9_11foundations9telemetry3log
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40, !dbg !5473 ; 2 uses
-  %i.c = load i32, ptr %i.b, align 8, !dbg !5473, !noundef !494
-  %i.d = tail call i32 @llvm.uadd.sat.i32(i32 %i.c, i32 1), !dbg !5474 ; 3 uses
+  %i.c = load i32, ptr %i.b, align 8, !dbg !5473, !noundef !494 ; 3 uses
+  %i.d = tail call i32 @llvm.uadd.sat.i32(i32 %i.c, i32 1), !dbg !5474
   store i32 %i.d, ptr %i.b, align 8, !dbg !5475
-  %i.e = icmp ult i32 %i.d, 1000, !dbg !5476
+  %i.e = icmp ult i32 %i.c, 999, !dbg !5476
   br i1 %i.e, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs7hp7eIiX3bT_8lock_api6rwlock16RwLockWriteGuardNtNtCsix9GtmFTcQ_11parking_lot10raw_rwlock9RawRwLockNtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry3log8internal27LoggerWithKvNestingTrackingEEB2q_.exit, label %bb.b, !dbg !5476
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = icmp eq i32 %i.d, 1000, !dbg !5477
+  %i.f = icmp eq i32 %i.c, 999, !dbg !5477
   br i1 %i.f, label %bb.c, label %bb.d, !dbg !5477
 
 bb.c:                                             ; preds = %bb.b

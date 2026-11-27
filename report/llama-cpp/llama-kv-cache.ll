@@ -205,18 +205,18 @@ bb.h:                                             ; preds = %bb.f
   %i.br = ptrtoint ptr %i.bp to i64
   %i.bs = ptrtoint ptr %i.bq to i64
   %i.bt = sub i64 %i.br, %i.bs
-  %i.bu = ashr exact i64 %i.bt, 2                 ; 6 uses
+  %i.bu = ashr exact i64 %i.bt, 2                 ; 7 uses
   %.not40 = icmp eq ptr %i.bp, %i.bq
   br i1 %.not40, label %._crit_edge39, label %.lr.ph.us.preheader
 
 .lr.ph.us.preheader:                              ; preds = %.lr.ph38.split.split.split
-  %i.bv = tail call i64 @llvm.usub.sat.i64(i64 %i.bu, i64 1) ; 2 uses
+  %i.bv = tail call i64 @llvm.usub.sat.i64(i64 %i.bu, i64 1)
   %min.iters.check = icmp ult i64 %i.bu, 8
   %i.bw = and i64 %i.bv, 4294967295
   %i.bx = icmp eq i64 %i.bw, 4294967295
-  %i.by = icmp ugt i64 %i.bv, 4294967295
+  %i.by = icmp ugt i64 %i.bu, 4294967296
   %i.bz = or i1 %i.bx, %i.by
-  %n.vec = and i64 %i.bu, -4                      ; 3 uses
+  %n.vec = and i64 %i.bu, 8589934588              ; 3 uses
   %cmp.n = icmp eq i64 %i.bu, %n.vec
   br label %.lr.ph.us
 
@@ -415,18 +415,18 @@ bb.h:                                             ; preds = %bb.f
   %i.bu = ptrtoint ptr %i.bs to i64
   %i.bv = ptrtoint ptr %i.bt to i64
   %i.bw = sub i64 %i.bu, %i.bv
-  %i.bx = ashr exact i64 %i.bw, 2                 ; 6 uses
+  %i.bx = ashr exact i64 %i.bw, 2                 ; 7 uses
   %.not98 = icmp eq ptr %i.bs, %i.bt
   br i1 %.not98, label %.loopexit, label %.lr.ph.us.preheader
 
 .lr.ph.us.preheader:                              ; preds = %.lr.ph74.split.split.split
-  %i.by = tail call i64 @llvm.usub.sat.i64(i64 %i.bx, i64 1) ; 2 uses
+  %i.by = tail call i64 @llvm.usub.sat.i64(i64 %i.bx, i64 1)
   %min.iters.check = icmp ult i64 %i.bx, 8
   %i.bz = and i64 %i.by, 4294967295
   %i.ca = icmp eq i64 %i.bz, 4294967295
-  %i.cb = icmp ugt i64 %i.by, 4294967295
+  %i.cb = icmp ugt i64 %i.bx, 4294967296
   %i.cc = or i1 %i.ca, %i.cb
-  %n.vec = and i64 %i.bx, -4                      ; 3 uses
+  %n.vec = and i64 %i.bx, 8589934588              ; 3 uses
   %cmp.n = icmp eq i64 %i.bx, %n.vec
   br label %.lr.ph.us
 

@@ -205,11 +205,11 @@ bb.hb:                                            ; preds = %bb.ha
   %.val.i57.i.i.i.i.i.i.i.i = load i64, ptr %i.ux, align 8, !alias.scope !17915, !noalias !17903
   %.sroa.8.0.i.i.i.i.i.i.i.i = select i1 %.not51.i.i.i.i.i.i.i.i, i64 0, i64 %.val.i57.i.i.i.i.i.i.i.i ; 2 uses
   %i.uy = call i64 @llvm.uadd.sat.i64(i64 %.val.i.i.i.i.i.i.i.i.i, i64 %.sroa.8.0.i.i.i.i.i.i.i.i)
-  %i.uz = select i1 %.not.i.i.i.i.i.i.i.i, i64 %.sroa.8.0.i.i.i.i.i.i.i.i, i64 %i.uy
-  %i.va = call i64 @llvm.uadd.sat.i64(i64 %i.uz, i64 1) ; 2 uses
+  %i.uz = select i1 %.not.i.i.i.i.i.i.i.i, i64 %.sroa.8.0.i.i.i.i.i.i.i.i, i64 %i.uy ; 2 uses
+  %i.va = call i64 @llvm.uadd.sat.i64(i64 %i.uz, i64 1)
   %.sroa.0.0.i.i.i.i.i.i.i = call noundef i64 @llvm.umax.i64(i64 %i.va, i64 4) ; 3 uses
   %i.vb = mul i64 %.sroa.0.0.i.i.i.i.i.i.i, 112   ; 3 uses
-  %or.cond.i.i.i.i.i.i.i.i.i = icmp ugt i64 %i.va, 82351536043346212
+  %or.cond.i.i.i.i.i.i.i.i.i = icmp ugt i64 %i.uz, 82351536043346211
   br i1 %or.cond.i.i.i.i.i.i.i.i.i, label %bb.hk, label %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i.i.i, !prof !51
 
 bb.hc:                                            ; preds = %bb.ha

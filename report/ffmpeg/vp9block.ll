@@ -204,7 +204,7 @@ bb.od:                                            ; preds = %bb.oc
   %i.dwq = load i32, ptr %i.dwp, align 4, !tbaa !194
   %i.dwr = sub i32 %i.dwq, %i.dvo
   %i.dws = shl i32 %i.dwr, 1                      ; 17 uses
-  %..i.i = tail call i32 @llvm.umin.i32(i32 %i.dws, i32 %i.dwk) ; 32 uses
+  %..i.i = tail call i32 @llvm.umin.i32(i32 %i.dws, i32 %i.dwk) ; 34 uses
   %i.dwt = getelementptr inbounds nuw i8, ptr %i.dvl, i64 3960
   %i.dwu = load i32, ptr %i.dwt, align 8, !tbaa !196
   %i.dwv = sub i32 %i.dwu, %i.dvn
@@ -442,10 +442,10 @@ bb.of:                                            ; preds = %bb.of, %.preheader4
 
 .lr.ph126.preheader.i:                            ; preds = %.preheader51.thread.i, %.preheader51.i
   %i.ebj = zext nneg i32 %..i.i to i64            ; 4 uses
-  %i.ebk = tail call i64 @llvm.usub.sat.i64(i64 %i.ebj, i64 2) ; 2 uses
+  %i.ebk = tail call i64 @llvm.usub.sat.i64(i64 %i.ebj, i64 2)
   %i.ebl = lshr exact i64 %i.ebk, 1
   %i.ebm = add nuw nsw i64 %i.ebl, 1              ; 2 uses
-  %min.iters.check1382 = icmp samesign ult i64 %i.ebk, 14
+  %min.iters.check1382 = icmp samesign ult i32 %..i.i, 16
   br i1 %min.iters.check1382, label %.lr.ph126.i.preheader, label %vector.ph1383
 
 vector.ph1383:                                    ; preds = %.lr.ph126.preheader.i
@@ -848,10 +848,10 @@ bb.op:                                            ; preds = %bb.op, %.preheader5
 
 .lr.ph134.preheader.i:                            ; preds = %.preheader59.thread.i, %.preheader59.i617
   %i.fnv = zext nneg i32 %..i.i to i64            ; 4 uses
-  %i.fnw = tail call i64 @llvm.usub.sat.i64(i64 %i.fnv, i64 2) ; 2 uses
+  %i.fnw = tail call i64 @llvm.usub.sat.i64(i64 %i.fnv, i64 2)
   %i.fnx = lshr exact i64 %i.fnw, 1
   %i.fny = add nuw nsw i64 %i.fnx, 1              ; 2 uses
-  %min.iters.check1338 = icmp samesign ult i64 %i.fnw, 14
+  %min.iters.check1338 = icmp samesign ult i32 %..i.i, 16
   br i1 %min.iters.check1338, label %.lr.ph134.i.preheader, label %vector.ph1339
 
 vector.ph1339:                                    ; preds = %.lr.ph134.preheader.i

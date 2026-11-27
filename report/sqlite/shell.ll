@@ -206,7 +206,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ab = load i32, ptr %i.aa, align 8, !tbaa !143
   %i.ac = sub i32 %.057.lcssa, %i.h
   %i.ad = add nsw i32 %i.ac, %i.ab
-  %i.ae = sub nuw nsw i32 %.057.lcssa, %.058.lcssa ; 4 uses
+  %i.ae = sub nuw nsw i32 %.057.lcssa, %.058.lcssa ; 6 uses
   %i.af = sext i32 %i.ae to i64
   %i.ag = add nsw i64 %i.af, 20
   %i.ah = tail call ptr @sqlite3_malloc64(i64 noundef %i.ag) #45 ; 15 uses
@@ -261,8 +261,8 @@ bb.o:                                             ; preds = %bb.n, %bb.m
 iter.check:                                       ; preds = %.preheader
   %wide.trip.count82 = zext nneg i32 %.1 to i64   ; 3 uses
   %i.az = zext i32 %i.ae to i64
-  %i.ba = call i64 @llvm.usub.sat.i64(i64 %i.az, i64 1) ; 7 uses
-  %min.iters.check = icmp samesign ult i64 %i.ba, 8
+  %i.ba = call i64 @llvm.usub.sat.i64(i64 %i.az, i64 1) ; 5 uses
+  %min.iters.check = icmp ult i32 %i.ae, 9
   br i1 %min.iters.check, label %.lr.ph74.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
@@ -272,7 +272,7 @@ vector.memcheck:                                  ; preds = %iter.check
   br i1 %diff.check, label %.lr.ph74.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
-  %min.iters.check97 = icmp samesign ult i64 %i.ba, 32
+  %min.iters.check97 = icmp ult i32 %i.ae, 33
   br i1 %min.iters.check97, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check

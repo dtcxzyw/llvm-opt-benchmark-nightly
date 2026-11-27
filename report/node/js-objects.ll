@@ -205,11 +205,11 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   store i64 %.sroa.0.0.copyload.i.i.i.i.i, ptr %2, align 8
   %i.ae = call noundef i32 @_ZN2v88internal8JSObject20GetFastElementsUsageEv(ptr noundef nonnull align 8 dereferenceable(8) %2) ; 2 uses
   %i.af = lshr i32 %i.ae, 1
-  %i.ag = add i32 %i.af, %i.ae
-  %spec.select.i.i.i.i = tail call i32 @llvm.usub.sat.i32(i32 %i.ag, i32 1) ; 2 uses
+  %i.ag = add i32 %i.af, %i.ae                    ; 2 uses
+  %spec.select.i.i.i.i = tail call i32 @llvm.usub.sat.i32(i32 %i.ag, i32 1)
   %i.ah = tail call noundef range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %spec.select.i.i.i.i, i1 false)
   %i.ai = sub nuw nsw i32 32, %i.ah
-  %i.aj = icmp ult i32 %spec.select.i.i.i.i, 2
+  %i.aj = icmp ult i32 %i.ag, 3
   %i.ak = shl i32 9, %i.ai
   %i.al = select i1 %i.aj, i32 36, i32 %i.ak
   %i.am = icmp ule i32 %i.al, %.0.i.i
@@ -583,11 +583,11 @@ _ZN2v88internalL27ShouldConvertToSlowElementsENS0_6TaggedINS0_8JSObjectEEEjjPj.e
   store i64 %i.a, ptr %5, align 8
   %i.gh = call noundef i32 @_ZN2v88internal8JSObject20GetFastElementsUsageEv(ptr noundef nonnull align 8 dereferenceable(8) %5) ; 2 uses
   %i.gi = lshr i32 %i.gh, 1
-  %i.gj = add i32 %i.gi, %i.gh
-  %spec.select.i.i.i.i = tail call i32 @llvm.usub.sat.i32(i32 %i.gj, i32 1) ; 2 uses
+  %i.gj = add i32 %i.gi, %i.gh                    ; 2 uses
+  %spec.select.i.i.i.i = tail call i32 @llvm.usub.sat.i32(i32 %i.gj, i32 1)
   %i.gk = tail call noundef range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %spec.select.i.i.i.i, i1 false)
   %i.gl = sub nuw nsw i32 32, %i.gk
-  %i.gm = icmp ult i32 %spec.select.i.i.i.i, 2
+  %i.gm = icmp ult i32 %i.gj, 3
   %i.gn = shl i32 9, %i.gl
   %.fr186 = freeze i32 %i.gn
   %i.go = select i1 %i.gm, i32 36, i32 %.fr186

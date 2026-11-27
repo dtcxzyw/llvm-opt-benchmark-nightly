@@ -205,11 +205,11 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !100
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 24
-  %i.e = load i32, ptr %i.d, align 8, !tbaa !101
-  %storemerge.i = tail call i32 @llvm.usub.sat.i32(i32 %i.e, i32 4) ; 2 uses
+  %i.e = load i32, ptr %i.d, align 8, !tbaa !101  ; 2 uses
+  %storemerge.i = tail call i32 @llvm.usub.sat.i32(i32 %i.e, i32 4)
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 4 ; 4 uses
   %.sroa.3.8.insert.ext.i = zext i32 %storemerge.i to i64 ; 4 uses
-  %i.g = icmp ult i32 %storemerge.i, 4
+  %i.g = icmp ult i32 %i.e, 8
   %spec.select.i.i.i = select i1 %i.g, ptr @_hb_NullPool, ptr %i.f ; 6 uses
   %i.h = load i16, ptr %spec.select.i.i.i, align 1, !tbaa !239 ; 2 uses
   %i.i = and i16 %i.h, -241                       ; 2 uses

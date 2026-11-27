@@ -202,7 +202,7 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.h = load atomic i64, ptr %i.g monotonic, align 8
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.j = load i32, ptr %i.i, align 8, !noundef !4 ; 5 uses
+  %i.j = load i32, ptr %i.i, align 8, !noundef !4 ; 6 uses
   %i.k = zext i32 %i.j to i64
   %i.l = icmp eq i64 %i.h, %i.k
   br i1 %i.l, label %bb.b, label %bb.c
@@ -229,13 +229,13 @@ bb.d:                                             ; preds = %bb.b
   br label %bb.c
 
 bb.e:                                             ; preds = %bb.b
-  %5 = add i32 %i.j, 1
-  %6 = tail call i32 @llvm.usub.sat.i32(i32 %5, i32 1) ; 2 uses
-  %i.p = icmp sgt i32 %6, -1
+  %i.p = icmp sgt i32 %i.j, -2
   br i1 %i.p, label %bb.f, label %bb.c
 
 bb.f:                                             ; preds = %bb.e
-  %i.q = tail call range(i32 1, 33) i32 @llvm.ctlz.i32(i32 %6, i1 false)
+  %5 = add i32 %i.j, 1
+  %6 = tail call i32 @llvm.usub.sat.i32(i32 %5, i32 1)
+  %i.q = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %6, i1 false)
   %i.r = sub nuw nsw i32 32, %i.q
   %i.s = shl nuw i32 1, %i.r
   br label %bb.c
@@ -272,16 +272,16 @@ bb.i:                                             ; preds = %bb.g
 bb.j:                                             ; preds = %bb.g
   %i.ad = tail call i64 @llvm.umax.i64(i64 %2, i64 %i.d)
   %i.ae = add i64 %i.ad, -1
-  %i.af = tail call range(i64 1, 65) i64 @llvm.ctlz.i64(i64 %i.ae, i1 false)
+  %i.af = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.ae, i1 false)
   %i.ag = sub nuw nsw i64 64, %i.af
   %i.ah = shl nuw i64 1, %i.ag                    ; 3 uses
-  %i.ai = tail call i64 @llvm.umax.i64(i64 %3, i64 %i.b)
-  %7 = tail call i64 @llvm.usub.sat.i64(i64 %i.ai, i64 1) ; 2 uses
-  %8 = icmp sgt i64 %7, -1
-  br i1 %8, label %bb.k, label %bb.l
+  %i.ai = tail call i64 @llvm.umax.i64(i64 %3, i64 %i.b) ; 2 uses
+  %7 = icmp ult i64 %i.ai, -9223372036854775807
+  br i1 %7, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
-  %i.aj = tail call range(i64 1, 65) i64 @llvm.ctlz.i64(i64 %7, i1 false)
+  %8 = tail call i64 @llvm.usub.sat.i64(i64 %i.ai, i64 1)
+  %i.aj = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %8, i1 false)
   %i.ak = sub nuw nsw i64 64, %i.aj
   %i.al = shl nuw i64 1, %i.ak
   br label %bb.l
