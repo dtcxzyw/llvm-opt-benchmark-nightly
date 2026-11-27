@@ -205,11 +205,11 @@ bb.ag:                                            ; preds = %bb.ad
   %.val16.i.i.i = load i64, ptr %.sroa.5343.0..sroa_idx, align 8, !alias.scope !16493, !noalias !16470, !noundef !17
   %i.fy = load i64, ptr %.val15.i.i.i, align 8, !noalias !16495, !noundef !17
   %i.fz = sub i64 %i.fy, %.val16.i.i.i
-  %.sroa.0.0.i.i.i.i = tail call noundef i64 @llvm.umin.i64(i64 %i.fz, i64 %i.fx)
-  %i.ga = tail call i64 @llvm.uadd.sat.i64(i64 %.sroa.0.0.i.i.i.i, i64 1) ; 2 uses
+  %.sroa.0.0.i.i.i.i = tail call noundef i64 @llvm.umin.i64(i64 %i.fz, i64 %i.fx) ; 2 uses
+  %i.ga = tail call i64 @llvm.uadd.sat.i64(i64 %.sroa.0.0.i.i.i.i, i64 1)
   %.sroa.0.0.i = tail call noundef i64 @llvm.umax.i64(i64 %i.ga, i64 4) ; 3 uses
   %i.gb = mul i64 %.sroa.0.0.i, 144               ; 3 uses
-  %or.cond.i.i = icmp ugt i64 %i.ga, 64051194700380387
+  %or.cond.i.i = icmp ugt i64 %.sroa.0.0.i.i.i.i, 64051194700380386
   br i1 %or.cond.i.i, label %bb.ai, label %bb.ah, !prof !38
 
 bb.ah:                                            ; preds = %bb.ag
@@ -612,11 +612,11 @@ bb.by:                                            ; preds = %_RNvXs0_NtNtNtCs4NR
   %.sroa.7426.0..sroa_idx427 = getelementptr inbounds nuw i8, ptr %i.g, i64 4
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(68) %.sroa.7426.0..sroa_idx427, ptr noundef nonnull align 4 dereferenceable(68) %.sroa.7426, i64 68, i1 false), !noalias !16567
   %i.jx = load i64, ptr %i.js, align 8, !noalias !16578, !noundef !17
-  %i.jy = add i64 %i.jx, -1
-  %i.jz = call i64 @llvm.uadd.sat.i64(i64 %i.jy, i64 1) ; 2 uses
+  %i.jy = add i64 %i.jx, -1                       ; 2 uses
+  %i.jz = call i64 @llvm.uadd.sat.i64(i64 %i.jy, i64 1)
   %.sroa.0.0.i.i324 = call noundef i64 @llvm.umax.i64(i64 %i.jz, i64 4) ; 3 uses
   %i.ka = mul i64 %.sroa.0.0.i.i324, 72           ; 3 uses
-  %or.cond.i.i.i = icmp ugt i64 %i.jz, 128102389400760775
+  %or.cond.i.i.i = icmp ugt i64 %i.jy, 128102389400760774
   br i1 %or.cond.i.i.i, label %bb.ce, label %bb.cd, !prof !38
 
 _RNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3mapINtB5_3MapINtCsaSrGj5dYoxL_8thin_vec8IntoIterNtNtCskLngH8kgpZI_15ruff_python_ast9generated7PatternENvNtNtCsb6FLkjZuKG_18ruff_python_parser6parser8recovery15pattern_to_exprENtNtNtB9_6traits8iterator8Iterator4nextB2t_.exit.i.thread: ; preds = %bb.bv, %_RNvXsE_CsaSrGj5dYoxL_8thin_vecINtB5_8IntoIterNtNtCskLngH8kgpZI_15ruff_python_ast9generated7PatternENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCsb6FLkjZuKG_18ruff_python_parser.exit.i.i, %_RNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3mapINtB5_3MapINtCsaSrGj5dYoxL_8thin_vec8IntoIterNtNtCskLngH8kgpZI_15ruff_python_ast9generated7PatternENvNtNtCsb6FLkjZuKG_18ruff_python_parser6parser8recovery15pattern_to_exprENtNtNtB9_6traits8iterator8Iterator4nextB2t_.exit.i

@@ -205,8 +205,8 @@ bb.ar:                                            ; preds = %bb.aq
 bb.as:                                            ; preds = %bb.ar
   %i.kw = extractvalue { i32, i64 } %i.kt, 1
   %i.kx = bitcast i64 %i.kw to double
-  %i.ky = fptoui double %i.kx to i64              ; 2 uses
-  %i.kz = call i64 @llvm.usub.sat.i64(i64 %i.ky, i64 1) ; 4 uses
+  %i.ky = fptoui double %i.kx to i64              ; 3 uses
+  %i.kz = call i64 @llvm.usub.sat.i64(i64 %i.ky, i64 1) ; 3 uses
   %i.la = call { i32, i64 } @_ZN6hermes2vm8JSObject27getComputedWithReceiver_RJSENS0_6HandleIS1_EERNS0_7RuntimeENS2_INS0_11HermesValueEEES7_(ptr nonnull %.0.i.i.i.i.i.i258, ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr nonnull @_ZN6hermes2vm15HandleRootOwner10zeroValue_E, ptr nonnull %.0.i.i.i.i.i.i258) #12 ; 2 uses
   %i.lb = extractvalue { i32, i64 } %i.la, 0
   %i.lc = extractvalue { i32, i64 } %i.la, 1      ; 2 uses
@@ -307,7 +307,7 @@ bb.bc:                                            ; preds = %_ZN6hermes2vm15Hand
   %i.mu = call nsz double @llvm.maxnum.f64(double %i.mt, double 0.000000e+00)
   %i.mv = fptosi double %i.mu to i64
   %i.mw = trunc i64 %i.mv to i32                  ; 5 uses
-  %i.mx = icmp ugt i64 %i.kz, 1027070
+  %i.mx = icmp ugt i64 %i.ky, 1027071
   br i1 %i.mx, label %_ZN6hermes2vm11TwineChar16C2EPKc.exit285, label %bb.bd, !prof !31
 
 _ZN6hermes2vm11TwineChar16C2EPKc.exit285:         ; preds = %bb.bc
@@ -398,7 +398,7 @@ bb.bj:                                            ; preds = %_ZN6hermes2vm13Muta
 
 _ZN6hermes2vm13MutableHandleINS0_11HermesValueEEC2ERNS0_15HandleRootOwnerES2_.exit293: ; preds = %bb.bi, %bb.bj
   %.0.i.i.i.i.i.i292 = phi ptr [ %i.nz, %bb.bi ], [ %i.oe, %bb.bj ] ; 4 uses
-  %.not673 = icmp ult i64 %i.ky, 2
+  %.not673 = icmp samesign ult i64 %i.ky, 2
   br i1 %.not673, label %._crit_edge, label %.lr.ph675
 
 .lr.ph675:                                        ; preds = %_ZN6hermes2vm13MutableHandleINS0_11HermesValueEEC2ERNS0_15HandleRootOwnerES2_.exit293, %bb.cb
@@ -657,12 +657,20 @@ _ZN6hermes2vm13MutableHandleINS0_15StringPrimitiveEEC2ERNS0_15HandleRootOwnerEPS
   %i.sh = and i64 %i.sf, 281474976710655
   %i.si = icmp ne i64 %i.sh, 0
   %i.sj = and i1 %i.sg, %i.si
-  br i1 %i.sj, label %bb.cj, label %bb.cz
+  br i1 %i.sj, label %12, label %bb.cz
 
-bb.cj:                                            ; preds = %_ZN6hermes2vm13MutableHandleINS0_15StringPrimitiveEEC2ERNS0_15HandleRootOwnerEPS2_.exit305
-  %12 = add nuw nsw i64 %i.kz, 3
-  %13 = zext i1 %i.rw to i64
-  %14 = add nuw nsw i64 %12, %13                  ; 3 uses
+12:                                               ; preds = %_ZN6hermes2vm13MutableHandleINS0_15StringPrimitiveEEC2ERNS0_15HandleRootOwnerEPS2_.exit305
+  %13 = add nuw nsw i64 %i.kz, 3
+  %14 = zext i1 %i.rw to i64
+  %15 = add nuw nsw i64 %13, %14                  ; 4 uses
+  %16 = icmp ugt i64 %15, 4294967294
+  br i1 %16, label %.critedge244, label %bb.cj, !prof !31
+
+.critedge244:                                     ; preds = %12
+  %17 = call noundef i32 @_ZN6hermes2vm7Runtime18raiseStackOverflowENS1_17StackOverflowKindE(ptr noundef nonnull align 8 dereferenceable(9816) %1, i32 noundef 0) #12
+  br label %.thread490
+
+bb.cj:                                            ; preds = %12
   %i.sk = load ptr, ptr %i.jt, align 8, !tbaa !400 ; 4 uses
   %i.sl = load i64, ptr %i.ju, align 8, !tbaa !401
   %i.sm = add i64 %i.sl, 1                        ; 2 uses
@@ -673,7 +681,7 @@ bb.cj:                                            ; preds = %_ZN6hermes2vm13Muta
   %i.sq = sub i64 %i.so, %i.sp
   %i.sr = lshr exact i64 %i.sq, 3
   %i.ss = and i64 %i.sr, 4294967295
-  %i.st = add nuw nsw i64 %14, 39
+  %i.st = add nuw nsw i64 %15, 39
   %i.su = icmp samesign ugt i64 %i.st, %i.ss
   %i.sv = load i64, ptr %i.jw, align 8
   %i.sw = icmp ugt i64 %i.sm, %i.sv
@@ -690,7 +698,7 @@ bb.cj:                                            ; preds = %_ZN6hermes2vm13Muta
 
 bb.ck:                                            ; preds = %bb.cj
   %i.ta = or i64 %i.sf, -281474976710656
-  %i.tb = getelementptr inbounds nuw [8 x i8], ptr %i.sk, i64 %14 ; 8 uses
+  %i.tb = getelementptr inbounds nuw [8 x i8], ptr %i.sk, i64 %15 ; 8 uses
   %i.tc = getelementptr inbounds nuw i8, ptr %i.tb, i64 56 ; 5 uses
   store ptr %i.tc, ptr %i.jt, align 8, !tbaa !400
   %.sroa.02.0.copyload.i.i = load ptr, ptr %i.jx, align 8, !tbaa !92
@@ -698,7 +706,7 @@ bb.ck:                                            ; preds = %bb.cj
   %i.te = getelementptr inbounds nuw i8, ptr %i.tb, i64 48
   store i64 %i.td, ptr %i.te, align 8, !tbaa !30
   %i.tf = getelementptr inbounds nuw i8, ptr %i.tb, i64 32
-  %i.tg = or disjoint i64 %14, -1125899906842624
+  %i.tg = or disjoint i64 %15, -1125899906842624
   %i.th = getelementptr inbounds nuw i8, ptr %i.tb, i64 24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.tf, i8 0, i64 16, i1 false)
   store i64 %i.tg, ptr %i.th, align 8, !tbaa !30
@@ -988,8 +996,8 @@ bb.dg:                                            ; preds = %bb.de, %bb.df
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.thread513, label %bb.aq, !llvm.loop !172
 
-.thread490:                                       ; preds = %bb.dc, %bb.da, %_ZN6hermes2vm13MutableHandleINS0_11HermesValueEEC2ERNS0_15HandleRootOwnerES2_.exit301, %_ZN6hermes2vm15HandleRootOwner10makeHandleINS0_11HermesValueEEENS0_6HandleIT_EEONS0_12PseudoHandleIS5_EE.exit327, %bb.cv, %.thread480, %.critedge246.critedge
-  %.sroa.0464.20.ph = phi i32 [ 0, %.thread480 ], [ %i.sx, %.critedge246.critedge ], [ 0, %bb.cv ], [ 0, %_ZN6hermes2vm15HandleRootOwner10makeHandleINS0_11HermesValueEEENS0_6HandleIT_EEONS0_12PseudoHandleIS5_EE.exit327 ], [ 0, %_ZN6hermes2vm13MutableHandleINS0_11HermesValueEEC2ERNS0_15HandleRootOwnerES2_.exit301 ], [ 0, %bb.da ], [ 0, %bb.dc ]
+.thread490:                                       ; preds = %bb.dc, %bb.da, %_ZN6hermes2vm13MutableHandleINS0_11HermesValueEEC2ERNS0_15HandleRootOwnerES2_.exit301, %_ZN6hermes2vm15HandleRootOwner10makeHandleINS0_11HermesValueEEENS0_6HandleIT_EEONS0_12PseudoHandleIS5_EE.exit327, %bb.cv, %.thread480, %.critedge246.critedge, %.critedge244
+  %.sroa.0464.20.ph = phi i32 [ 0, %.thread480 ], [ %i.sx, %.critedge246.critedge ], [ %17, %.critedge244 ], [ 0, %bb.cv ], [ 0, %_ZN6hermes2vm15HandleRootOwner10makeHandleINS0_11HermesValueEEENS0_6HandleIT_EEONS0_12PseudoHandleIS5_EE.exit327 ], [ 0, %_ZN6hermes2vm13MutableHandleINS0_11HermesValueEEC2ERNS0_15HandleRootOwnerES2_.exit301 ], [ 0, %bb.da ], [ 0, %bb.dc ]
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #12
   %i.yc = getelementptr inbounds nuw i8, ptr %i.kb, i64 144
   %i.yd = zext i32 %i.kf to i64

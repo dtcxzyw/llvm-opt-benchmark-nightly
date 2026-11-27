@@ -205,7 +205,7 @@ bb.p:                                             ; preds = %bb.o
 
 _RNvXs3_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter14ChunksExactMutfEINtBZ_11ChunksExacthEEINtB5_7ZipImplBW_B1z_E4nextCsltEA4u8Pgfu_11candle_core.exit: ; preds = %.noexc36
   %i.ee = extractvalue { ptr, i64 } %i.ed, 0      ; 21 uses
-  %i.ef = extractvalue { ptr, i64 } %i.ed, 1      ; 34 uses
+  %i.ef = extractvalue { ptr, i64 } %i.ed, 1      ; 35 uses
   %.not25 = icmp eq ptr %i.eb, null
   br i1 %.not25, label %_RNvXs3_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter14ChunksExactMutfEINtBZ_11ChunksExacthEEINtB5_7ZipImplBW_B1z_E4nextCsltEA4u8Pgfu_11candle_core.exit.thread, label %bb.q
 
@@ -224,7 +224,7 @@ bb.q:                                             ; preds = %_RNvXs3_NtNtNtCsf3T
   br i1 %.not26122, label %.loopexit, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.q
-  %i.ek = call i64 @llvm.usub.sat.i64(i64 %i.ef, i64 16) ; 4 uses
+  %i.ek = call i64 @llvm.usub.sat.i64(i64 %i.ef, i64 16) ; 3 uses
   %exitcond158.not = icmp eq i64 %i.ef, 0
   %exitcond158.1.not = icmp eq i64 %i.ef, 1
   %i.el = getelementptr inbounds nuw i8, ptr %i.ee, i64 1
@@ -270,7 +270,7 @@ bb.q:                                             ; preds = %_RNvXs3_NtNtNtCsf3T
   %scevgep218 = getelementptr i8, ptr %i.eb, i64 64 ; 2 uses
   %i.ff = call i64 @llvm.umin.i64(i64 %i.ek, i64 15)
   %i.fg = add nuw nsw i64 %i.ff, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.ek, 4
+  %min.iters.check = icmp ult i64 %i.ef, 20
   %bound0 = icmp ult ptr %scevgep218, %scevgep214
   %bound1 = icmp ult ptr %scevgep215, %scevgep217
   %found.conflict = and i1 %bound0, %bound1

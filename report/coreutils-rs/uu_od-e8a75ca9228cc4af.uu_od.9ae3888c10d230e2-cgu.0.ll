@@ -205,22 +205,26 @@ bb.g:                                             ; preds = %.loopexit.i1
   unreachable
 
 _RNSINvNtNtNtCsgNwXemyrBWj_12clap_builder6parser7matches11arg_matches19unwrap_downcast_refNtNtCs7tKScEop1B6_5alloc6string6StringE5reifyCsdit6BuOJVAc_5uu_od.exit: ; preds = %.loopexit.i1
-  %i.bh = add i64 %i.ak, -1                       ; 2 uses
+  %i.bh = add i64 %i.ak, -1                       ; 3 uses
   %i.bi = getelementptr i8, ptr %i.bc, i64 24
   %.val.i.i = load ptr, ptr %i.bi, align 8, !noalias !2322, !nonnull !5, !noundef !5
   %i.bj = getelementptr i8, ptr %i.bc, i64 32
   %.val3.i.i = load i64, ptr %i.bj, align 8, !noalias !2322, !noundef !5
-  %i.bk = call i64 @llvm.uadd.sat.i64(i64 %i.bh, i64 1) ; 2 uses
-  %..i.i = call noundef i64 @llvm.umax.i64(i64 %i.bk, i64 4) ; 2 uses
-  %i.bl = shl i64 %..i.i, 4                       ; 3 uses
-  %i.bm = icmp ugt i64 %i.bk, 1152921504606846975
+  %i.bk = call i64 @llvm.uadd.sat.i64(i64 %i.bh, i64 1)
+  %..i.i = call noundef i64 @llvm.umax.i64(i64 %i.bk, i64 4) ; 3 uses
+  %i.bl = shl i64 %..i.i, 4                       ; 4 uses
+  %i.bm = icmp ugt i64 %i.bh, 1152921504606846974
   %.not.i.i.i = icmp ugt i64 %i.bl, 9223372036854775800
   %or.cond.i.i.i = or i1 %i.bm, %.not.i.i.i
-  br i1 %or.cond.i.i.i, label %bb.h, label %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i, !prof !11
+  br i1 %or.cond.i.i.i, label %bb.h, label %2, !prof !11
 
-_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i: ; preds = %_RNSINvNtNtNtCsgNwXemyrBWj_12clap_builder6parser7matches11arg_matches19unwrap_downcast_refNtNtCs7tKScEop1B6_5alloc6string6StringE5reifyCsdit6BuOJVAc_5uu_od.exit
+2:                                                ; preds = %_RNSINvNtNtNtCsgNwXemyrBWj_12clap_builder6parser7matches11arg_matches19unwrap_downcast_refNtNtCs7tKScEop1B6_5alloc6string6StringE5reifyCsdit6BuOJVAc_5uu_od.exit
+  %3 = icmp eq i64 %i.bl, 0
+  br i1 %3, label %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsdit6BuOJVAc_5uu_od.exit.i, label %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i
+
+_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i: ; preds = %2
   call void @_RNvCsjSVV5GABoor_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #29, !noalias !2323
-  %i.bn = call noundef align 8 ptr @_RNvCsjSVV5GABoor_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.bl, i64 noundef range(i64 1, 9) 8) #29, !noalias !2323 ; 5 uses
+  %i.bn = call noundef align 8 ptr @_RNvCsjSVV5GABoor_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.bl, i64 noundef range(i64 1, 9) 8) #29, !noalias !2323 ; 2 uses
   %i.bo = icmp eq ptr %i.bn, null
   br i1 %i.bo, label %bb.h, label %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsdit6BuOJVAc_5uu_od.exit.i
 
@@ -229,13 +233,17 @@ bb.h:                                             ; preds = %_RNvXs_NtCs7tKScEop
   call void @_RNvNtCs7tKScEop1B6_5alloc7raw_vec12handle_error(i64 noundef %.sroa.4.0.ph.i.i, i64 %i.bl) #32, !noalias !2317
   unreachable
 
-_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsdit6BuOJVAc_5uu_od.exit.i: ; preds = %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i
-  store ptr %.val.i.i, ptr %i.bn, align 8, !noalias !2317, !captures !26
-  %i.bp = getelementptr inbounds nuw i8, ptr %i.bn, i64 8
+_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsdit6BuOJVAc_5uu_od.exit.i: ; preds = %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i, %2
+  %.sroa.10.0.i.i = phi ptr [ inttoptr (i64 8 to ptr), %2 ], [ %i.bn, %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i ] ; 4 uses
+  %.sroa.4.0.i.i = phi i64 [ 0, %2 ], [ %..i.i, %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i ] ; 2 uses
+  %4 = icmp ule i64 %..i.i, %.sroa.4.0.i.i
+  call void @llvm.assume(i1 %4)
+  store ptr %.val.i.i, ptr %.sroa.10.0.i.i, align 8, !noalias !2317, !captures !26
+  %i.bp = getelementptr inbounds nuw i8, ptr %.sroa.10.0.i.i, i64 8
   store i64 %.val3.i.i, ptr %i.bp, align 8, !noalias !2317
-  store i64 %..i.i, ptr %i.c, align 8, !noalias !2317
+  store i64 %.sroa.4.0.i.i, ptr %i.c, align 8, !noalias !2317
   %.sroa.4.0..sroa_idx.i2 = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 3 uses
-  store ptr %i.bn, ptr %.sroa.4.0..sroa_idx.i2, align 8, !noalias !2317
+  store ptr %.sroa.10.0.i.i, ptr %.sroa.4.0..sroa_idx.i2, align 8, !noalias !2317
   %.sroa.64.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 2 uses
   store i64 1, ptr %.sroa.64.0..sroa_idx.i, align 8, !noalias !2317
   call void @llvm.experimental.noalias.scope.decl(metadata !2324)
@@ -243,7 +251,7 @@ _RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsdit6
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.k, %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsdit6BuOJVAc_5uu_od.exit.i
-  %i.bq = phi ptr [ %i.cu, %bb.k ], [ %i.bn, %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsdit6BuOJVAc_5uu_od.exit.i ]
+  %i.bq = phi ptr [ %i.cu, %bb.k ], [ %.sroa.10.0.i.i, %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsdit6BuOJVAc_5uu_od.exit.i ]
   %.sroa.622.0.copyload24 = phi i64 [ %i.cx, %bb.k ], [ 1, %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsdit6BuOJVAc_5uu_od.exit.i ] ; 6 uses
   %i.br = phi i64 [ %i.cn, %bb.k ], [ %i.bh, %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsdit6BuOJVAc_5uu_od.exit.i ]
   %i.bs = phi ptr [ %.lcssa3.i.i, %bb.k ], [ %i.aw, %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsdit6BuOJVAc_5uu_od.exit.i ] ; 2 uses

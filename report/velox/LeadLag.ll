@@ -205,15 +205,15 @@ bb.b:                                             ; preds = %_ZN8facebook5velox1
   br i1 %.not3342.i.i, label %._crit_edge.i.i, label %iter.check
 
 iter.check:                                       ; preds = %bb.b
-  %i.ab = and i64 %i.n, 2147483584                ; 2 uses
-  %i.ac = call i64 @llvm.usub.sat.i64(i64 %i.ab, i64 64) ; 3 uses
+  %i.ab = and i64 %i.n, 2147483584                ; 4 uses
+  %i.ac = call i64 @llvm.usub.sat.i64(i64 %i.ab, i64 64)
   %i.ad = lshr exact i64 %i.ac, 6
   %i.ae = add nuw nsw i64 %i.ad, 1                ; 5 uses
-  %min.iters.check = icmp samesign ult i64 %i.ac, 192
+  %min.iters.check = icmp samesign ult i64 %i.ab, 256
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check10 = icmp samesign ult i64 %i.ac, 960
+  %min.iters.check10 = icmp samesign ult i64 %i.ab, 1024
   br i1 %min.iters.check10, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
@@ -616,15 +616,15 @@ bb.b:                                             ; preds = %_ZN8facebook5velox1
   br i1 %.not3342.i.i, label %._crit_edge.i.i, label %iter.check
 
 iter.check:                                       ; preds = %bb.b
-  %i.ab = and i64 %i.n, 2147483584                ; 2 uses
-  %i.ac = call i64 @llvm.usub.sat.i64(i64 %i.ab, i64 64) ; 3 uses
+  %i.ab = and i64 %i.n, 2147483584                ; 4 uses
+  %i.ac = call i64 @llvm.usub.sat.i64(i64 %i.ab, i64 64)
   %i.ad = lshr exact i64 %i.ac, 6
   %i.ae = add nuw nsw i64 %i.ad, 1                ; 5 uses
-  %min.iters.check = icmp samesign ult i64 %i.ac, 192
+  %min.iters.check = icmp samesign ult i64 %i.ab, 256
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check10 = icmp samesign ult i64 %i.ac, 960
+  %min.iters.check10 = icmp samesign ult i64 %i.ab, 1024
   br i1 %min.iters.check10, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check

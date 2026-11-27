@@ -205,15 +205,15 @@ bb.a:
   %i.f = ptrtoint ptr %i.b to i64                 ; 2 uses
   %i.g = sub i64 %i.e, %i.f
   %i.h = ashr exact i64 %i.g, 1
-  %.sroa.speculated = tail call i64 @llvm.umax.i64(i64 %1, i64 %i.h)
-  %spec.select.i.i = tail call i64 @llvm.usub.sat.i64(i64 %.sroa.speculated, i64 1) ; 3 uses
+  %.sroa.speculated = tail call i64 @llvm.umax.i64(i64 %1, i64 %i.h) ; 3 uses
+  %spec.select.i.i = tail call i64 @llvm.usub.sat.i64(i64 %.sroa.speculated, i64 1)
   %i.i = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %spec.select.i.i, i1 false)
   %i.j = sub nuw nsw i64 64, %i.i                 ; 2 uses
-  %i.k = icmp ugt i64 %spec.select.i.i, 1152921504606846975
+  %i.k = icmp ugt i64 %.sroa.speculated, 1152921504606846976
   br i1 %i.k, label %bb.b, label %bb.e, !prof !36
 
 bb.b:                                             ; preds = %bb.a
-  %i.l = icmp ugt i64 %spec.select.i.i, 2305843009213693951
+  %i.l = icmp ugt i64 %.sroa.speculated, 2305843009213693952
   br i1 %i.l, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
@@ -616,12 +616,12 @@ bb.a:
   %i.h = ptrtoint ptr %i.d to i64                 ; 2 uses
   %i.i = sub i64 %i.g, %i.h
   %i.j = ashr exact i64 %i.i, 2
-  %.sroa.speculated = tail call i64 @llvm.umax.i64(i64 %1, i64 %i.j)
-  %spec.select.i.i = tail call i64 @llvm.usub.sat.i64(i64 %.sroa.speculated, i64 1) ; 2 uses
+  %.sroa.speculated = tail call i64 @llvm.umax.i64(i64 %1, i64 %i.j) ; 2 uses
+  %spec.select.i.i = tail call i64 @llvm.usub.sat.i64(i64 %.sroa.speculated, i64 1)
   %i.k = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %spec.select.i.i, i1 false)
   %i.l = sub nuw nsw i64 64, %i.k                 ; 2 uses
   %i.m = load ptr, ptr %0, align 8                ; 3 uses
-  %i.n = icmp ult i64 %spec.select.i.i, 1152921504606846976
+  %i.n = icmp ult i64 %.sroa.speculated, 1152921504606846977
   br i1 %i.n, label %bb.c, label %bb.b, !prof !38
 
 bb.b:                                             ; preds = %bb.a

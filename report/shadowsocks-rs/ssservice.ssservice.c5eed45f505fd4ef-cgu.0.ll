@@ -205,7 +205,7 @@ _RNvXsg_CsjcToxTEWQ5H_8smallvecINtB5_8SmallVecAINtNtCsgCecv3eZDcN_5alloc4sync3Ar
 
 _RNvMsd_CsjcToxTEWQ5H_8smallvecINtB5_8SmallVecAINtNtCsgCecv3eZDcN_5alloc4sync3ArcINtNtCs8AjStw0eGtC_16hickory_resolver11name_server10NameServerNtNtNtCslxdWNweD0x2_11shadowsocks12dns_resolver20hickory_dns_resolver24ShadowDnsRuntimeProviderEEj2_E11try_reserveCsgZAIVb0XKpv_9ssservice.exit.i.i.i: ; preds = %_RNvXsg_CsjcToxTEWQ5H_8smallvecINtB5_8SmallVecAINtNtCsgCecv3eZDcN_5alloc4sync3ArcINtNtCs8AjStw0eGtC_16hickory_resolver11name_server10NameServerNtNtNtCslxdWNweD0x2_11shadowsocks12dns_resolver20hickory_dns_resolver24ShadowDnsRuntimeProviderEEj2_ENtNtNtCsf3Ta7LF998c_4core3ops5deref5Deref5derefCsgZAIVb0XKpv_9ssservice.exit
   %i.bbj = add nsw i64 %i.azw, -1
-  %i.bbk = call range(i64 1, 65) i64 @llvm.ctlz.i64(i64 %i.bbj, i1 false)
+  %i.bbk = call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.bbj, i1 false)
   %i.bbl = sub nuw nsw i64 64, %i.bbk
   %i.bbm = shl nuw nsw i64 1, %i.bbl
   %i.bbn = call fastcc { i64, i64 } @_RNvMsd_CsjcToxTEWQ5H_8smallvecINtB5_8SmallVecAINtNtCsgCecv3eZDcN_5alloc4sync3ArcINtNtCs8AjStw0eGtC_16hickory_resolver11name_server10NameServerNtNtNtCslxdWNweD0x2_11shadowsocks12dns_resolver20hickory_dns_resolver24ShadowDnsRuntimeProviderEEj2_E8try_growCsgZAIVb0XKpv_9ssservice(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.p, i64 noundef %i.bbm) #52, !noalias !58161 ; 2 uses
@@ -608,7 +608,7 @@ _RNvMsd_CsjcToxTEWQ5H_8smallvecINtB5_8SmallVecAINtNtCsgCecv3eZDcN_5alloc4sync3Ar
 
 .thread:                                          ; preds = %bb.a, %_RNvMsd_CsjcToxTEWQ5H_8smallvecINtB5_8SmallVecAINtNtCsgCecv3eZDcN_5alloc4sync3ArcINtNtCs8AjStw0eGtC_16hickory_resolver11name_server10NameServerNtNtNtCslxdWNweD0x2_11shadowsocks12dns_resolver20hickory_dns_resolver24ShadowDnsRuntimeProviderEEj2_E6tripleCsgZAIVb0XKpv_9ssservice.exit
   %.sink12.i47 = phi i64 [ %i.e, %_RNvMsd_CsjcToxTEWQ5H_8smallvecINtB5_8SmallVecAINtNtCsgCecv3eZDcN_5alloc4sync3ArcINtNtCs8AjStw0eGtC_16hickory_resolver11name_server10NameServerNtNtNtCslxdWNweD0x2_11shadowsocks12dns_resolver20hickory_dns_resolver24ShadowDnsRuntimeProviderEEj2_E6tripleCsgZAIVb0XKpv_9ssservice.exit ], [ %i.b, %bb.a ]
-  %i.g = tail call range(i64 1, 65) i64 @llvm.ctlz.i64(i64 %.sink12.i47, i1 false)
+  %i.g = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %.sink12.i47, i1 false)
   %i.h = sub nuw nsw i64 64, %i.g
   %i.i = shl nuw i64 1, %i.h
   %i.j = tail call fastcc { i64, i64 } @_RNvMsd_CsjcToxTEWQ5H_8smallvecINtB5_8SmallVecAINtNtCsgCecv3eZDcN_5alloc4sync3ArcINtNtCs8AjStw0eGtC_16hickory_resolver11name_server10NameServerNtNtNtCslxdWNweD0x2_11shadowsocks12dns_resolver20hickory_dns_resolver24ShadowDnsRuntimeProviderEEj2_E8try_growCsgZAIVb0XKpv_9ssservice(ptr noalias nofree noundef align 8 dereferenceable(32) %0, i64 noundef %i.i) #52 ; 2 uses
@@ -750,7 +750,7 @@ _RNvMsd_CsjcToxTEWQ5H_8smallvecINtB5_8SmallVecANtNtNtCsf3Ta7LF998c_4core3net7ip_
   br i1 %i.g, label %bb.b, label %bb.q, !prof !349
 
 bb.b:                                             ; preds = %_RNvMsd_CsjcToxTEWQ5H_8smallvecINtB5_8SmallVecANtNtNtCsf3Ta7LF998c_4core3net7ip_addr6IpAddrj2_E6tripleCsgZAIVb0XKpv_9ssservice.exit
-  %i.h = tail call range(i64 1, 65) i64 @llvm.ctlz.i64(i64 %i.f, i1 false)
+  %i.h = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.f, i1 false)
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.k = load ptr, ptr %i.j, align 8, !alias.scope !93659, !nonnull !177, !noundef !177
@@ -758,7 +758,7 @@ bb.b:                                             ; preds = %_RNvMsd_CsjcToxTEWQ
   br label %_RNvMsd_CsjcToxTEWQ5H_8smallvecINtB5_8SmallVecANtNtNtCsf3Ta7LF998c_4core3net7ip_addr6IpAddrj2_E10triple_mutCsgZAIVb0XKpv_9ssservice.exit.i
 
 bb.c:                                             ; preds = %bb.a
-  %i.l = tail call range(i64 1, 65) i64 @llvm.ctlz.i64(i64 %i.c, i1 false)
+  %i.l = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.c, i1 false)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !93660)
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 1
   br label %_RNvMsd_CsjcToxTEWQ5H_8smallvecINtB5_8SmallVecANtNtNtCsf3Ta7LF998c_4core3net7ip_addr6IpAddrj2_E10triple_mutCsgZAIVb0XKpv_9ssservice.exit.i
@@ -1161,7 +1161,7 @@ begin_hunk_2_@llvm.ucmp.i32.i32
 !346 = !{!"branch_weights", i32 1, i32 2000, i32 2000, i32 1, i32 2000, i32 2000, i32 2000, i32 2000, i32 2000, i32 2000}
 !347 = !{i8 -2, i8 9}
 !348 = !{!"branch_weights", !"expected", i32 1274872, i32 2146208776}
-!349 = !{!"branch_weights", i32 -8583494, i32 8583493}
+!349 = !{!"branch_weights", i32 2143191900, i32 4291748}
 !350 = !{!"branch_weights", !"expected", i32 1431058, i32 2146052590}
 !351 = !{!"branch_weights", !"expected", i32 8424812, i32 2139058836}
 !352 = !{i8 -3, i8 5}
@@ -1564,7 +1564,7 @@ begin_hunk_3_@llvm.ucmp.i32.i32
 !58161 = !{!57618, !57616}
 !58162 = !{!57622, !57620}
 !58163 = !{!57624}
-!58164 = !{!"branch_weights", i32 1395946, i32 2146087702, i32 0}
+!58164 = !{!"branch_weights", i32 1073742, i32 2146409906, i32 0}
 !58165 = !{!57626, !57624}
 !58166 = !{!57628, !57624, !57618, !57616}
 !58167 = !{!57628, !57618, !57616}

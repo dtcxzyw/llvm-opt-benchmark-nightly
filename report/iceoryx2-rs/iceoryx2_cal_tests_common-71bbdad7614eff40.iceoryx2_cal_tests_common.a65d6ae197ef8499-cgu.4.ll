@@ -202,14 +202,14 @@ bb.h:                                             ; preds = %bb.f
   store ptr %i.bk, ptr %i.f, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
-  %i.bl = load i32, ptr %i.ag, align 8, !noundef !6
-  %0 = add i32 %i.bl, 1
-  %1 = call i32 @llvm.usub.sat.i32(i32 %0, i32 1) ; 2 uses
-  %i.bm = icmp sgt i32 %1, -1
+  %i.bl = load i32, ptr %i.ag, align 8, !noundef !6 ; 2 uses
+  %i.bm = icmp sgt i32 %i.bl, -2
   br i1 %i.bm, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
-  %i.bn = call range(i32 1, 33) i32 @llvm.ctlz.i32(i32 %1, i1 false)
+  %0 = add i32 %i.bl, 1
+  %1 = call i32 @llvm.usub.sat.i32(i32 %0, i32 1)
+  %i.bn = call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %1, i1 false)
   %i.bo = sub nuw nsw i32 32, %i.bn
   %i.bp = zext nneg i32 %i.bo to i64
   %i.bq = shl nuw nsw i64 16, %i.bp

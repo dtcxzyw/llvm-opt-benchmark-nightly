@@ -47,10 +47,10 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not23.i, label %putv.exit, label %.lr.ph18.i.preheader
 
 .lr.ph18.i.preheader:                             ; preds = %.preheader.i
-  %i.q = tail call i32 @llvm.usub.sat.i32(i32 %i.ac, i32 2) ; 2 uses
+  %i.q = tail call i32 @llvm.usub.sat.i32(i32 %i.ac, i32 2)
   %narrow = add nuw i32 %i.q, 1
   %i.r = zext i32 %narrow to i64                  ; 2 uses
-  %min.iters.check = icmp ult i32 %i.q, 15
+  %min.iters.check = icmp ult i32 %.016.i, 16
   br i1 %min.iters.check, label %.lr.ph18.i.preheader98, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph18.i.preheader
@@ -90,7 +90,7 @@ middle.block:                                     ; preds = %vector.body
   br label %.lr.ph18.i
 
 .lr.ph.i:                                         ; preds = %bb.b, %.lr.ph.i
-  %.016.i = phi i32 [ %i.ac, %.lr.ph.i ], [ 0, %bb.b ] ; 3 uses
+  %.016.i = phi i32 [ %i.ac, %.lr.ph.i ], [ 0, %bb.b ] ; 4 uses
   %.01115.i = phi i32 [ %i.ag, %.lr.ph.i ], [ 0, %bb.b ]
   %i.ac = add nuw i32 %.016.i, 1                  ; 5 uses
   %i.ad = mul nuw nsw i32 %.016.i, 7
@@ -128,10 +128,10 @@ putv.exit:                                        ; preds = %.lr.ph18.i, %middle
   br i1 %.not23.i31, label %putv.exit37, label %.lr.ph18.i33.preheader
 
 .lr.ph18.i33.preheader:                           ; preds = %.preheader.i30
-  %i.as = tail call i32 @llvm.usub.sat.i32(i32 %i.be, i32 2) ; 2 uses
+  %i.as = tail call i32 @llvm.usub.sat.i32(i32 %i.be, i32 2)
   %narrow94 = add nuw i32 %i.as, 1
   %i.at = zext i32 %narrow94 to i64               ; 2 uses
-  %min.iters.check77 = icmp ult i32 %i.as, 15
+  %min.iters.check77 = icmp ult i32 %.016.i27, 16
   br i1 %min.iters.check77, label %.lr.ph18.i33.preheader95, label %vector.ph78
 
 vector.ph78:                                      ; preds = %.lr.ph18.i33.preheader
@@ -171,7 +171,7 @@ middle.block90:                                   ; preds = %vector.body84
   br label %.lr.ph18.i33
 
 .lr.ph.i26:                                       ; preds = %putv.exit, %.lr.ph.i26
-  %.016.i27 = phi i32 [ %i.be, %.lr.ph.i26 ], [ 0, %putv.exit ] ; 3 uses
+  %.016.i27 = phi i32 [ %i.be, %.lr.ph.i26 ], [ 0, %putv.exit ] ; 4 uses
   %.01115.i28 = phi i32 [ %i.bi, %.lr.ph.i26 ], [ 0, %putv.exit ]
   %i.be = add nuw i32 %.016.i27, 1                ; 5 uses
   %i.bf = mul nuw nsw i32 %.016.i27, 7

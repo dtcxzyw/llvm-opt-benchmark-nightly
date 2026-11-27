@@ -206,7 +206,7 @@ bb.f:                                             ; preds = %bb.d
 _RINvMNtNtCsgNwXemyrBWj_12clap_builder6parser5errorNtB3_12MatchesError6unwrapINtNtCs6JMX4GRUq9U_4core6option6OptionINtNtNtB5_7matches11arg_matches9ValuesRefNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str8OsStringEEECsfPYenFzdTHO_5uu_wc.exit: ; preds = %_RNvXs_NtNtCs6JMX4GRUq9U_4core3str6traitseNtNtB8_3cmp9PartialEq2eq.exit.backedge.i.i.i, %bb.e, %bb.a
   %.sroa.1388.0.ph = phi ptr [ undef, %bb.a ], [ %i.bi, %bb.e ], [ undef, %_RNvXs_NtNtCs6JMX4GRUq9U_4core3str6traitseNtNtB8_3cmp9PartialEq2eq.exit.backedge.i.i.i ] ; 4 uses
   %.sroa.10.0.ph = phi ptr [ undef, %bb.a ], [ %i.bf, %bb.e ], [ undef, %_RNvXs_NtNtCs6JMX4GRUq9U_4core3str6traitseNtNtB8_3cmp9PartialEq2eq.exit.backedge.i.i.i ] ; 2 uses
-  %.sroa.23.0.ph = phi i64 [ undef, %bb.a ], [ %i.bj, %bb.e ], [ undef, %_RNvXs_NtNtCs6JMX4GRUq9U_4core3str6traitseNtNtB8_3cmp9PartialEq2eq.exit.backedge.i.i.i ] ; 2 uses
+  %.sroa.23.0.ph = phi i64 [ undef, %bb.a ], [ %i.bj, %bb.e ], [ undef, %_RNvXs_NtNtCs6JMX4GRUq9U_4core3str6traitseNtNtB8_3cmp9PartialEq2eq.exit.backedge.i.i.i ] ; 3 uses
   %.not = phi i1 [ true, %bb.a ], [ false, %bb.e ], [ true, %_RNvXs_NtNtCs6JMX4GRUq9U_4core3str6traitseNtNtB8_3cmp9PartialEq2eq.exit.backedge.i.i.i ]
   %.sroa.687.0.ph = phi ptr [ null, %bb.a ], [ @_RNSINvNtNtNtCsgNwXemyrBWj_12clap_builder6parser7matches11arg_matches19unwrap_downcast_refNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str8OsStringE5reifyCsfPYenFzdTHO_5uu_wc, %bb.e ], [ null, %_RNvXs_NtNtCs6JMX4GRUq9U_4core3str6traitseNtNtB8_3cmp9PartialEq2eq.exit.backedge.i.i.i ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aa)
@@ -609,10 +609,10 @@ bb.bk:                                            ; preds = %.loopexit.i.i
 _RNvXs0_NtNtNtCs6JMX4GRUq9U_4core4iter8adapters3mapINtB5_3MapINtNtNtNtCsgNwXemyrBWj_12clap_builder6parser7matches11arg_matches9ValuesRefNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str8OsStringENvYRB29_INtNtBb_7convert4IntoNtCsfPYenFzdTHO_5uu_wc5InputE4intoENtNtNtB9_6traits8iterator8Iterator4nextB3n_.exit.i: ; preds = %bb.bk, %.loopexit.i.i
   %.sroa.7.0.i = phi ptr [ %.val.i.i47, %.loopexit.i.i ], [ %spec.select.i.i, %bb.bk ]
   %.sroa.0.0.i48 = phi i64 [ -1, %.loopexit.i.i ], [ %spec.select5.i.i, %bb.bk ]
-  %i.in = call i64 @llvm.uadd.sat.i64(i64 %.sroa.23.0.ph, i64 1) ; 2 uses
+  %i.in = call i64 @llvm.uadd.sat.i64(i64 %.sroa.23.0.ph, i64 1)
   %..i.i = call noundef i64 @llvm.umax.i64(i64 %i.in, i64 4) ; 3 uses
   %i.io = mul i64 %..i.i, 24                      ; 3 uses
-  %or.cond.i.i.i49 = icmp ugt i64 %i.in, 384307168202282325
+  %or.cond.i.i.i49 = icmp ugt i64 %.sroa.23.0.ph, 384307168202282324
   br i1 %or.cond.i.i.i49, label %bb.bm, label %bb.bl, !prof !16
 
 bb.bl:                                            ; preds = %_RNvXs0_NtNtNtCs6JMX4GRUq9U_4core4iter8adapters3mapINtB5_3MapINtNtNtNtCsgNwXemyrBWj_12clap_builder6parser7matches11arg_matches9ValuesRefNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str8OsStringENvYRB29_INtNtBb_7convert4IntoNtCsfPYenFzdTHO_5uu_wc5InputE4intoENtNtNtB9_6traits8iterator8Iterator4nextB3n_.exit.i

@@ -204,7 +204,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !9359)
   %i.a = load i64, ptr %0, align 8, !range !9360, !alias.scope !9361, !noundef !31 ; 3 uses
   %i.b = tail call i64 @llvm.usub.sat.i64(i64 %i.a, i64 8) ; 2 uses
-  %i.c = load i64, ptr %1, align 8, !range !9360, !alias.scope !9362, !noundef !31 ; 3 uses
+  %i.c = load i64, ptr %1, align 8, !range !9360, !alias.scope !9362, !noundef !31 ; 9 uses
   %i.d = tail call i64 @llvm.usub.sat.i64(i64 %i.c, i64 8)
   %i.e = icmp eq i64 %i.b, %i.d
   br i1 %i.e, label %bb.b, label %_RNvXsK_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir6binderINtB5_6BinderNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerINtNtB7_14predicate_kind13PredicateKindB10_EENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB16_.exit
@@ -212,12 +212,12 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   switch i64 %i.b, label %default.unreachable [
     i64 0, label %bb.c
-    i64 1, label %.split17.i
-    i64 2, label %bb.o
-    i64 3, label %bb.q
-    i64 4, label %bb.r
-    i64 6, label %bb.s
-    i64 7, label %bb.u
+    i64 1, label %2
+    i64 2, label %4
+    i64 3, label %6
+    i64 4, label %8
+    i64 6, label %10
+    i64 7, label %12
     i64 5, label %_RNvXsa_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir14predicate_kindINtB5_13PredicateKindNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB1n_.exit.thread4.i
   ]
 
@@ -227,6 +227,30 @@ default.unreachable:                              ; preds = %bb.e, %bb.b
 bb.c:                                             ; preds = %bb.b
   %i.f = icmp samesign ult i64 %i.c, 9
   br i1 %i.f, label %bb.d, label %_RNvXsa_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir14predicate_kindINtB5_13PredicateKindNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB1n_.exit.thread4.i
+
+2:                                                ; preds = %bb.b
+  %3 = icmp eq i64 %i.c, 9
+  br i1 %3, label %.split17.i, label %_RNvXsa_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir14predicate_kindINtB5_13PredicateKindNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB1n_.exit.thread4.i
+
+4:                                                ; preds = %bb.b
+  %5 = icmp eq i64 %i.c, 10
+  br i1 %5, label %bb.o, label %_RNvXsa_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir14predicate_kindINtB5_13PredicateKindNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB1n_.exit.thread4.i
+
+6:                                                ; preds = %bb.b
+  %7 = icmp eq i64 %i.c, 11
+  br i1 %7, label %bb.q, label %_RNvXsa_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir14predicate_kindINtB5_13PredicateKindNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB1n_.exit.thread4.i
+
+8:                                                ; preds = %bb.b
+  %9 = icmp eq i64 %i.c, 12
+  br i1 %9, label %bb.r, label %_RNvXsa_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir14predicate_kindINtB5_13PredicateKindNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB1n_.exit.thread4.i
+
+10:                                               ; preds = %bb.b
+  %11 = icmp eq i64 %i.c, 14
+  br i1 %11, label %bb.s, label %_RNvXsa_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir14predicate_kindINtB5_13PredicateKindNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB1n_.exit.thread4.i
+
+12:                                               ; preds = %bb.b
+  %13 = icmp eq i64 %i.c, 15
+  br i1 %13, label %bb.u, label %_RNvXsa_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir14predicate_kindINtB5_13PredicateKindNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB1n_.exit.thread4.i
 
 bb.d:                                             ; preds = %bb.c
   tail call void @llvm.experimental.noalias.scope.decl(metadata !9363)
@@ -282,7 +306,7 @@ bb.h:                                             ; preds = %bb.e
   %.val11.i.i.i = load ptr, ptr %i.w, align 8, !alias.scope !9369, !nonnull !31, !noundef !31
   %.val12.i.i.i = load ptr, ptr %i.x, align 8, !alias.scope !9370, !nonnull !31, !noundef !31
   %i.y = icmp eq ptr %.val11.i.i.i, %.val12.i.i.i
-  br i1 %i.y, label %.split7.i, label %_RNvXsK_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir6binderINtB5_6BinderNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerINtNtB7_14predicate_kind13PredicateKindB10_EENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB16_.exit
+  br i1 %i.y, label %.split15.i, label %_RNvXsK_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir6binderINtB5_6BinderNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerINtNtB7_14predicate_kind13PredicateKindB10_EENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB16_.exit
 
 bb.i:                                             ; preds = %bb.e
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -290,7 +314,7 @@ bb.i:                                             ; preds = %bb.e
   %.val5.i.i.i = load ptr, ptr %i.z, align 8, !alias.scope !9369, !nonnull !31, !noundef !31
   %.val6.i.i.i = load ptr, ptr %i.aa, align 8, !alias.scope !9370, !nonnull !31, !noundef !31
   %i.ab = icmp eq ptr %.val5.i.i.i, %.val6.i.i.i
-  br i1 %i.ab, label %.split15.i, label %_RNvXsK_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir6binderINtB5_6BinderNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerINtNtB7_14predicate_kind13PredicateKindB10_EENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB16_.exit
+  br i1 %i.ab, label %_RNvXsa_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir14predicate_kindINtB5_13PredicateKindNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB1n_.exit.i, label %_RNvXsK_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir6binderINtB5_6BinderNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerINtNtB7_14predicate_kind13PredicateKindB10_EENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB16_.exit
 
 bb.j:                                             ; preds = %bb.e
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -369,15 +393,7 @@ bb.n:                                             ; preds = %bb.m
   %i.bi = icmp eq i8 %i.bf, %i.bh
   br i1 %i.bi, label %_RNvXsa_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir14predicate_kindINtB5_13PredicateKindNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB1n_.exit.thread4.i, label %_RNvXsK_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir6binderINtB5_6BinderNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerINtNtB7_14predicate_kind13PredicateKindB10_EENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB16_.exit
 
-.split7.i:                                        ; preds = %bb.h
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %.val9.i.i.i = load ptr, ptr %3, align 8, !alias.scope !9369, !nonnull !31, !noundef !31
-  %.val10.i.i.i = load ptr, ptr %2, align 8, !alias.scope !9370, !nonnull !31, !noundef !31
-  %4 = icmp eq ptr %.val9.i.i.i, %.val10.i.i.i
-  br i1 %4, label %_RNvXsa_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir14predicate_kindINtB5_13PredicateKindNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB1n_.exit.thread4.i, label %_RNvXsK_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir6binderINtB5_6BinderNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerINtNtB7_14predicate_kind13PredicateKindB10_EENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB16_.exit
-
-.split15.i:                                       ; preds = %bb.i
+.split15.i:                                       ; preds = %bb.h
   %i.bj = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.val7.i.i.i.a = load ptr, ptr %i.bk, align 8, !alias.scope !9369, !nonnull !31, !noundef !31
@@ -393,7 +409,7 @@ bb.n:                                             ; preds = %bb.m
   %i.bo = icmp eq ptr %.val3.i.i.i, %.val4.i.i.i
   br i1 %i.bo, label %_RNvXsa_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir14predicate_kindINtB5_13PredicateKindNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB1n_.exit.thread4.i, label %_RNvXsK_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir6binderINtB5_6BinderNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerINtNtB7_14predicate_kind13PredicateKindB10_EENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB16_.exit
 
-.split17.i:                                       ; preds = %bb.b
+.split17.i:                                       ; preds = %2
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.bq = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.br = load <2 x i32>, ptr %i.bp, align 8, !alias.scope !9361
@@ -404,7 +420,7 @@ bb.n:                                             ; preds = %bb.m
   %.sroa.0.0.i.i.i.i = select i1 %i.bv, i1 %i.bu, i1 false
   br i1 %.sroa.0.0.i.i.i.i, label %_RNvXsa_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir14predicate_kindINtB5_13PredicateKindNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB1n_.exit.thread4.i, label %_RNvXsK_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir6binderINtB5_6BinderNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerINtNtB7_14predicate_kind13PredicateKindB10_EENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB16_.exit
 
-bb.o:                                             ; preds = %bb.b
+bb.o:                                             ; preds = %4
   %i.bw = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.bx = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.by = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -428,7 +444,7 @@ bb.p:                                             ; preds = %bb.o
   %i.cg = icmp eq ptr %.val13.i.i, %.val14.i.i
   br i1 %i.cg, label %_RNvXsa_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir14predicate_kindINtB5_13PredicateKindNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB1n_.exit.thread4.i, label %_RNvXsK_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir6binderINtB5_6BinderNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerINtNtB7_14predicate_kind13PredicateKindB10_EENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB16_.exit
 
-bb.q:                                             ; preds = %bb.b
+bb.q:                                             ; preds = %6
   %i.ch = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ci = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.val11.i.i = load ptr, ptr %i.ch, align 8, !alias.scope !9361, !nonnull !31, !noundef !31
@@ -444,7 +460,7 @@ bb.q:                                             ; preds = %bb.b
   %i.cm = icmp eq ptr %.val9.i.i, %.val10.i.i
   br i1 %i.cm, label %_RNvXsa_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir14predicate_kindINtB5_13PredicateKindNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB1n_.exit.thread4.i, label %_RNvXsK_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir6binderINtB5_6BinderNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerINtNtB7_14predicate_kind13PredicateKindB10_EENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB16_.exit
 
-bb.r:                                             ; preds = %bb.b
+bb.r:                                             ; preds = %8
   %i.cn = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.co = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.val19.i.i = load ptr, ptr %i.cn, align 8, !alias.scope !9361, !nonnull !31, !noundef !31
@@ -460,7 +476,7 @@ bb.r:                                             ; preds = %bb.b
   %i.cs = icmp eq ptr %.val17.i.i, %.val18.i.i
   br i1 %i.cs, label %_RNvXsa_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir14predicate_kindINtB5_13PredicateKindNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB1n_.exit.thread4.i, label %_RNvXsK_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir6binderINtB5_6BinderNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerINtNtB7_14predicate_kind13PredicateKindB10_EENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB16_.exit
 
-bb.s:                                             ; preds = %bb.b
+bb.s:                                             ; preds = %10
   %i.ct = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.cu = getelementptr inbounds nuw i8, ptr %1, i64 8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !9379)
@@ -476,9 +492,15 @@ bb.t:                                             ; preds = %bb.s
   %i.cy = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.cz = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.da = tail call fastcc noundef zeroext i1 @_RNvXs1J_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir9predicateINtB6_13AliasTermKindNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB1i_(ptr noalias nofree noundef readonly align 4 captures(address, read_provenance) dereferenceable(12) %i.cz, ptr noalias nofree noundef readonly align 4 captures(address, read_provenance) dereferenceable(12) %i.cy) #40
-  br i1 %i.da, label %_RNvXsa_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir14predicate_kindINtB5_13PredicateKindNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB1n_.exit.i, label %_RNvXsK_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir6binderINtB5_6BinderNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerINtNtB7_14predicate_kind13PredicateKindB10_EENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB16_.exit
+  br i1 %i.da, label %.split13.i, label %_RNvXsK_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir6binderINtB5_6BinderNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerINtNtB7_14predicate_kind13PredicateKindB10_EENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB16_.exit
 
-bb.u:                                             ; preds = %bb.b
+.split13.i:                                       ; preds = %bb.t
+  %.val2.i22.i.i = load ptr, ptr %i.cv, align 8, !alias.scope !9381, !nonnull !31, !noundef !31
+  %.val3.i23.i.i = load ptr, ptr %i.cw, align 8, !alias.scope !9382, !nonnull !31, !noundef !31
+  %14 = icmp eq ptr %.val2.i22.i.i, %.val3.i23.i.i
+  br i1 %14, label %_RNvXsa_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir14predicate_kindINtB5_13PredicateKindNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB1n_.exit.thread4.i, label %_RNvXsK_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir6binderINtB5_6BinderNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerINtNtB7_14predicate_kind13PredicateKindB10_EENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB16_.exit
+
+bb.u:                                             ; preds = %12
   %i.db = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.dc = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.val7.i.i = load ptr, ptr %i.db, align 8, !alias.scope !9361, !nonnull !31, !noundef !31
@@ -502,13 +524,15 @@ bb.v:                                             ; preds = %bb.u
   %i.dl = icmp eq i8 %i.di, %i.dk
   br i1 %i.dl, label %_RNvXsa_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir14predicate_kindINtB5_13PredicateKindNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB1n_.exit.thread4.i, label %_RNvXsK_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir6binderINtB5_6BinderNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerINtNtB7_14predicate_kind13PredicateKindB10_EENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB16_.exit
 
-_RNvXsa_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir14predicate_kindINtB5_13PredicateKindNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB1n_.exit.i: ; preds = %bb.t
-  %.val2.i22.i.i.a = load ptr, ptr %i.cv, align 8, !alias.scope !9381, !nonnull !31, !noundef !31
-  %.val3.i23.i.i.a = load ptr, ptr %i.cw, align 8, !alias.scope !9382, !nonnull !31, !noundef !31
+_RNvXsa_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir14predicate_kindINtB5_13PredicateKindNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB1n_.exit.i: ; preds = %bb.i
+  %15 = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %16 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %.val2.i22.i.i.a = load ptr, ptr %16, align 8, !alias.scope !9369, !nonnull !31, !noundef !31
+  %.val3.i23.i.i.a = load ptr, ptr %15, align 8, !alias.scope !9370, !nonnull !31, !noundef !31
   %i.dm = icmp eq ptr %.val2.i22.i.i.a, %.val3.i23.i.i.a
   br i1 %i.dm, label %_RNvXsa_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir14predicate_kindINtB5_13PredicateKindNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB1n_.exit.thread4.i, label %_RNvXsK_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir6binderINtB5_6BinderNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerINtNtB7_14predicate_kind13PredicateKindB10_EENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB16_.exit
 
-_RNvXsa_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir14predicate_kindINtB5_13PredicateKindNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB1n_.exit.thread4.i: ; preds = %_RNvXsa_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir14predicate_kindINtB5_13PredicateKindNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB1n_.exit.i, %.split9.i, %.split12.i, %.split14.i, %.split16.i, %.split17.i, %.split11.i, %.split15.i, %.split7.i, %.split10.i, %.split.i, %.split6.i.a, %.split8.i.a, %.split13.i.a, %bb.e, %bb.c, %bb.b
+_RNvXsa_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir14predicate_kindINtB5_13PredicateKindNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB1n_.exit.thread4.i: ; preds = %_RNvXsa_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir14predicate_kindINtB5_13PredicateKindNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB1n_.exit.i, %.split9.i, %.split13.i, %.split12.i, %.split14.i, %.split16.i, %.split17.i, %.split11.i, %.split15.i, %.split10.i, %.split.i, %.split6.i.a, %.split8.i.a, %.split13.i.a, %bb.e, %12, %10, %8, %6, %4, %2, %bb.c, %bb.b
   %i.dn = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.do = getelementptr inbounds nuw i8, ptr %0, i64 40
   %.val.i = load ptr, ptr %i.do, align 8, !alias.scope !9356, !nonnull !31, !noundef !31
@@ -516,8 +540,8 @@ _RNvXsa_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir14predicate_kindINtB5_13PredicateKi
   %i.dp = icmp eq ptr %.val.i, %.val1.i
   br label %_RNvXsK_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir6binderINtB5_6BinderNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerINtNtB7_14predicate_kind13PredicateKindB10_EENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB16_.exit
 
-_RNvXsK_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir6binderINtB5_6BinderNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerINtNtB7_14predicate_kind13PredicateKindB10_EENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB16_.exit: ; preds = %bb.a, %bb.d, %bb.f, %bb.g, %.split13.i.a, %bb.h, %bb.i, %bb.j, %bb.k, %.split8.i.a, %bb.l, %.split6.i.a, %.split.i, %bb.m, %bb.n, %.split10.i, %.split7.i, %.split15.i, %.split11.i, %.split17.i, %bb.o, %bb.p, %.split16.i, %bb.q, %.split14.i, %bb.r, %.split12.i, %bb.s, %bb.t, %bb.u, %bb.v, %.split9.i, %_RNvXsa_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir14predicate_kindINtB5_13PredicateKindNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB1n_.exit.i, %_RNvXsa_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir14predicate_kindINtB5_13PredicateKindNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB1n_.exit.thread4.i
-  %.sroa.0.0.i = phi i1 [ %i.dp, %_RNvXsa_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir14predicate_kindINtB5_13PredicateKindNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB1n_.exit.thread4.i ], [ false, %_RNvXsa_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir14predicate_kindINtB5_13PredicateKindNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB1n_.exit.i ], [ false, %.split17.i ], [ false, %.split.i ], [ false, %.split6.i.a ], [ false, %.split7.i ], [ false, %.split8.i.a ], [ false, %.split9.i ], [ false, %.split10.i ], [ false, %.split11.i ], [ false, %.split12.i ], [ false, %.split13.i.a ], [ false, %.split14.i ], [ false, %.split15.i ], [ false, %.split16.i ], [ false, %bb.u ], [ false, %bb.a ], [ false, %bb.o ], [ false, %bb.q ], [ false, %bb.r ], [ false, %bb.t ], [ false, %bb.s ], [ false, %bb.m ], [ false, %bb.j ], [ false, %bb.p ], [ false, %bb.v ], [ false, %bb.l ], [ false, %bb.d ], [ false, %bb.h ], [ false, %bb.g ], [ false, %bb.i ], [ false, %bb.k ], [ false, %bb.n ], [ false, %bb.f ]
+_RNvXsK_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir6binderINtB5_6BinderNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerINtNtB7_14predicate_kind13PredicateKindB10_EENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB16_.exit: ; preds = %bb.a, %bb.d, %bb.f, %bb.g, %.split13.i.a, %bb.h, %bb.i, %bb.j, %bb.k, %.split8.i.a, %bb.l, %.split6.i.a, %.split.i, %bb.m, %bb.n, %.split10.i, %.split15.i, %.split11.i, %.split17.i, %bb.o, %bb.p, %.split16.i, %bb.q, %.split14.i, %bb.r, %.split12.i, %bb.s, %bb.t, %.split13.i, %bb.u, %bb.v, %.split9.i, %_RNvXsa_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir14predicate_kindINtB5_13PredicateKindNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB1n_.exit.i, %_RNvXsa_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir14predicate_kindINtB5_13PredicateKindNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB1n_.exit.thread4.i
+  %.sroa.0.0.i = phi i1 [ %i.dp, %_RNvXsa_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir14predicate_kindINtB5_13PredicateKindNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB1n_.exit.thread4.i ], [ false, %_RNvXsa_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir14predicate_kindINtB5_13PredicateKindNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB1n_.exit.i ], [ false, %.split17.i ], [ false, %.split8.i.a ], [ false, %.split.i ], [ false, %.split6.i.a ], [ false, %.split11.i ], [ false, %.split9.i ], [ false, %.split10.i ], [ false, %.split13.i.a ], [ false, %.split12.i ], [ false, %.split13.i ], [ false, %.split14.i ], [ false, %.split15.i ], [ false, %.split16.i ], [ false, %bb.u ], [ false, %bb.a ], [ false, %bb.o ], [ false, %bb.q ], [ false, %bb.r ], [ false, %bb.p ], [ false, %bb.v ], [ false, %bb.l ], [ false, %bb.d ], [ false, %bb.h ], [ false, %bb.g ], [ false, %bb.i ], [ false, %bb.k ], [ false, %bb.n ], [ false, %bb.f ], [ false, %bb.j ], [ false, %bb.m ], [ false, %bb.s ], [ false, %bb.t ]
   ret i1 %.sroa.0.0.i
 }
 

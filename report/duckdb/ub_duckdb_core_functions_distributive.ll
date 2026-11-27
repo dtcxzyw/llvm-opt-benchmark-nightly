@@ -205,12 +205,12 @@ bb.s:                                             ; preds = %bb.p
 
 _ZN6duckdb12_GLOBAL__N_121BitStringAggOperation8GetRangeIaEEmT_S3_.exit: ; preds = %bb.r
   %i.ay = load i8, ptr %i.c, align 1, !tbaa !393
-  %i.az = call noundef i64 @_ZN6duckdb15NumericCastImplImaLb0EE7ConvertEa(i8 noundef signext %i.ay)
-  %.08.i = call i64 @llvm.uadd.sat.i64(i64 %i.az, i64 1) ; 3 uses
+  %i.az = call noundef i64 @_ZN6duckdb15NumericCastImplImaLb0EE7ConvertEa(i8 noundef signext %i.ay) ; 2 uses
+  %.08.i = call i64 @llvm.uadd.sat.i64(i64 %i.az, i64 1) ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #27
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
-  %i.ba = icmp ugt i64 %.08.i, 1000000000
+  %i.ba = icmp ugt i64 %i.az, 999999999
   br i1 %i.ba, label %bb.t, label %bb.x
 
 bb.t:                                             ; preds = %_ZN6duckdb12_GLOBAL__N_121BitStringAggOperation8GetRangeIaEEmT_S3_.exit.thread, %_ZN6duckdb12_GLOBAL__N_121BitStringAggOperation8GetRangeIaEEmT_S3_.exit
@@ -613,12 +613,12 @@ bb.s:                                             ; preds = %bb.p
 
 _ZN6duckdb12_GLOBAL__N_121BitStringAggOperation8GetRangeIsEEmT_S3_.exit: ; preds = %bb.r
   %i.ay = load i16, ptr %i.c, align 2, !tbaa !565
-  %i.az = call noundef i64 @_ZN6duckdb15NumericCastImplImsLb0EE7ConvertEs(i16 noundef signext %i.ay)
-  %.08.i = call i64 @llvm.uadd.sat.i64(i64 %i.az, i64 1) ; 3 uses
+  %i.az = call noundef i64 @_ZN6duckdb15NumericCastImplImsLb0EE7ConvertEs(i16 noundef signext %i.ay) ; 2 uses
+  %.08.i = call i64 @llvm.uadd.sat.i64(i64 %i.az, i64 1) ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #27
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
-  %i.ba = icmp ugt i64 %.08.i, 1000000000
+  %i.ba = icmp ugt i64 %i.az, 999999999
   br i1 %i.ba, label %bb.t, label %bb.x
 
 bb.t:                                             ; preds = %_ZN6duckdb12_GLOBAL__N_121BitStringAggOperation8GetRangeIsEEmT_S3_.exit.thread, %_ZN6duckdb12_GLOBAL__N_121BitStringAggOperation8GetRangeIsEEmT_S3_.exit
@@ -1021,12 +1021,12 @@ bb.s:                                             ; preds = %bb.p
 
 _ZN6duckdb12_GLOBAL__N_121BitStringAggOperation8GetRangeIiEEmT_S3_.exit: ; preds = %bb.r
   %i.ay = load i32, ptr %i.c, align 4, !tbaa !178
-  %i.az = call noundef i64 @_ZN6duckdb15NumericCastImplImiLb0EE7ConvertEi(i32 noundef %i.ay)
-  %.08.i = call i64 @llvm.uadd.sat.i64(i64 %i.az, i64 1) ; 3 uses
+  %i.az = call noundef i64 @_ZN6duckdb15NumericCastImplImiLb0EE7ConvertEi(i32 noundef %i.ay) ; 2 uses
+  %.08.i = call i64 @llvm.uadd.sat.i64(i64 %i.az, i64 1) ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #27
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
-  %i.ba = icmp ugt i64 %.08.i, 1000000000
+  %i.ba = icmp ugt i64 %i.az, 999999999
   br i1 %i.ba, label %bb.t, label %bb.x
 
 bb.t:                                             ; preds = %_ZN6duckdb12_GLOBAL__N_121BitStringAggOperation8GetRangeIiEEmT_S3_.exit.thread, %_ZN6duckdb12_GLOBAL__N_121BitStringAggOperation8GetRangeIiEEmT_S3_.exit
@@ -1429,12 +1429,12 @@ bb.v:                                             ; preds = %bb.s
 
 _ZN6duckdb12_GLOBAL__N_121BitStringAggOperation8GetRangeIlEEmT_S3_.exit: ; preds = %bb.u
   %i.bd = load i64, ptr %i.c, align 8, !tbaa !455
-  %i.be = call noundef i64 @_ZN6duckdb15NumericCastImplImlLb0EE7ConvertEl(i64 noundef %i.bd)
-  %.08.i = call i64 @llvm.uadd.sat.i64(i64 %i.be, i64 1) ; 3 uses
+  %i.be = call noundef i64 @_ZN6duckdb15NumericCastImplImlLb0EE7ConvertEl(i64 noundef %i.bd) ; 2 uses
+  %.08.i = call i64 @llvm.uadd.sat.i64(i64 %i.be, i64 1) ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #27
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
-  %i.bf = icmp ugt i64 %.08.i, 1000000000
+  %i.bf = icmp ugt i64 %i.be, 999999999
   br i1 %i.bf, label %bb.w, label %bb.ad
 
 bb.w:                                             ; preds = %_ZN6duckdb12_GLOBAL__N_121BitStringAggOperation8GetRangeIlEEmT_S3_.exit.thread, %_ZN6duckdb12_GLOBAL__N_121BitStringAggOperation8GetRangeIlEEmT_S3_.exit

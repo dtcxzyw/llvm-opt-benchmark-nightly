@@ -205,7 +205,7 @@ bb.q:                                             ; preds = %dwt_get_image_layer
   %i.cg = trunc i64 %..i.i.i to i32               ; 6 uses
   %.not.i.i.i.i = icmp sgt i32 %.val82.i, %i.cg
   %i.ch = shl nsw i64 %i.cf, 1                    ; 2 uses
-  %i.ci = shl nsw i64 %i.cc, 2                    ; 20 uses
+  %i.ci = shl nsw i64 %i.cc, 2                    ; 22 uses
   %.not69.i.i.i = icmp eq i32 %.val.i, 0          ; 2 uses
   br i1 %.not.i.i.i.i, label %.lr.ph.split.us.i.i.i, label %.lr.ph.split.i.i.i
 
@@ -221,10 +221,10 @@ bb.q:                                             ; preds = %dwt_get_image_layer
 .lr.ph.split.us.split.us.preheader.i.i.i:         ; preds = %.lr.ph.split.us.i.i.i
   %i.cp = mul nsw i32 %i.cm, %i.cl                ; 2 uses
   %i.cq = sext i32 %i.cp to i64
-  %i.cr = call i64 @llvm.usub.sat.i64(i64 %i.ci, i64 4) ; 2 uses
+  %i.cr = call i64 @llvm.usub.sat.i64(i64 %i.ci, i64 4)
   %i.cs = lshr exact i64 %i.cr, 2
   %i.ct = add nuw nsw i64 %i.cs, 1                ; 2 uses
-  %min.iters.check257 = icmp ult i64 %i.cr, 12
+  %min.iters.check257 = icmp ult i64 %i.ci, 16
   %n.vec259 = and i64 %i.ct, 9223372036854775804  ; 3 uses
   %i.cu = shl i64 %n.vec259, 2
   %cmp.n280 = icmp eq i64 %i.ct, %n.vec259
@@ -325,10 +325,10 @@ middle.block279:                                  ; preds = %vector.body260
   br i1 %.not69.i.i.i, label %.lr.ph96.i.i.i, label %dwt_interleave_rows.exit.i.i.i.preheader
 
 dwt_interleave_rows.exit.i.i.i.preheader:         ; preds = %.lr.ph.split.i.i.i
-  %i.es = call i64 @llvm.usub.sat.i64(i64 %i.ci, i64 4) ; 2 uses
+  %i.es = call i64 @llvm.usub.sat.i64(i64 %i.ci, i64 4)
   %i.et = lshr exact i64 %i.es, 2
   %i.eu = add nuw nsw i64 %i.et, 1                ; 2 uses
-  %min.iters.check283 = icmp ult i64 %i.es, 12
+  %min.iters.check283 = icmp ult i64 %i.ci, 16
   %n.vec285 = and i64 %i.eu, 9223372036854775804  ; 3 uses
   %i.ev = shl i64 %n.vec285, 2
   %cmp.n306 = icmp eq i64 %i.eu, %n.vec285

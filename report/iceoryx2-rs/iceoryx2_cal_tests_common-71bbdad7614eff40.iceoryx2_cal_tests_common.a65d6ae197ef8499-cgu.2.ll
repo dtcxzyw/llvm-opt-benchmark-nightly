@@ -204,13 +204,13 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   %i.q = load i64, ptr %i.l, align 8, !noundef !4
-  %i.r = add i64 %i.q, %i.n
-  %0 = call i64 @llvm.usub.sat.i64(i64 %i.r, i64 1) ; 2 uses
-  %1 = icmp sgt i64 %0, -1
-  br i1 %1, label %bb.b, label %bb.c
+  %i.r = add i64 %i.q, %i.n                       ; 2 uses
+  %0 = icmp ult i64 %i.r, -9223372036854775807
+  br i1 %0, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %.split.i
-  %i.s = call range(i64 1, 65) i64 @llvm.ctlz.i64(i64 %0, i1 false)
+  %1 = call i64 @llvm.usub.sat.i64(i64 %i.r, i64 1)
+  %i.s = call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %1, i1 false)
   %i.t = sub nuw nsw i64 64, %i.s
   %i.u = shl nuw i64 1, %i.t
   br label %bb.c

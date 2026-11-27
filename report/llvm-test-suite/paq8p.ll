@@ -205,12 +205,12 @@ bb.a:
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.b = add nuw nsw i32 %2, 7
-  %i.c = and i32 %i.b, 2147483640
+  %i.c = and i32 %i.b, 2147483640                 ; 2 uses
   %i.d = zext nneg i32 %i.c to i64                ; 2 uses
-  %i.e = tail call i64 @llvm.usub.sat.i64(i64 %i.d, i64 2) ; 2 uses
+  %i.e = tail call i64 @llvm.usub.sat.i64(i64 %i.d, i64 2)
   %i.f = lshr exact i64 %i.e, 1
   %i.g = add nuw nsw i64 %i.f, 1                  ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %i.e, 14
+  %min.iters.check = icmp samesign ult i32 %i.c, 16
   br i1 %min.iters.check, label %.lr.ph.preheader28, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
@@ -613,12 +613,12 @@ bb.j:                                             ; preds = %.lr.ph31, %_Z6squas
 
 .lr.ph.preheader.i:                               ; preds = %bb.j
   %i.de = add nuw nsw i32 %i.dc, 7
-  %i.df = and i32 %i.de, 2147483640
+  %i.df = and i32 %i.de, 2147483640               ; 2 uses
   %i.dg = zext nneg i32 %i.df to i64              ; 2 uses
-  %i.dh = tail call i64 @llvm.usub.sat.i64(i64 %i.dg, i64 2) ; 2 uses
+  %i.dh = tail call i64 @llvm.usub.sat.i64(i64 %i.dg, i64 2)
   %i.di = lshr exact i64 %i.dh, 1
   %i.dj = add nuw nsw i64 %i.di, 1                ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %i.dh, 14
+  %min.iters.check = icmp samesign ult i32 %i.df, 16
   br i1 %min.iters.check, label %.lr.ph.i9.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader.i

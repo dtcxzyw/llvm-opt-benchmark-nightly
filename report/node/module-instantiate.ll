@@ -205,14 +205,14 @@ bb.a:
   %i.f = sub i64 %i.d, %i.e
   %i.g = sdiv exact i64 %i.f, 48
   %i.h = trunc i64 %i.g to i32
-  %i.i = add i32 %1, %i.h
+  %i.i = add i32 %1, %i.h                         ; 2 uses
   %i.j = zext i32 %i.i to i64
-  %spec.select.i.i = tail call i64 @llvm.usub.sat.i64(i64 %i.j, i64 1) ; 2 uses
+  %spec.select.i.i = tail call i64 @llvm.usub.sat.i64(i64 %i.j, i64 1)
   %i.k = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %spec.select.i.i, i1 false)
   %i.l = sub nuw nsw i64 64, %i.k
   %i.m = shl nuw nsw i64 1, %i.l
   %.sroa.speculated = tail call i64 @llvm.umax.i64(i64 %i.m, i64 8) ; 2 uses
-  %i.n = icmp samesign ult i64 %spec.select.i.i, 2147483648
+  %i.n = icmp ult i32 %i.i, -2147483647
   br i1 %i.n, label %bb.c, label %bb.b, !prof !980
 
 bb.b:                                             ; preds = %bb.a
@@ -291,14 +291,14 @@ bb.a:
   %i.f = sub i64 %i.d, %i.e
   %i.g = sdiv exact i64 %i.f, 184
   %i.h = trunc i64 %i.g to i32
-  %i.i = add i32 %1, %i.h
+  %i.i = add i32 %1, %i.h                         ; 2 uses
   %i.j = zext i32 %i.i to i64
-  %spec.select.i.i = tail call i64 @llvm.usub.sat.i64(i64 %i.j, i64 1) ; 2 uses
+  %spec.select.i.i = tail call i64 @llvm.usub.sat.i64(i64 %i.j, i64 1)
   %i.k = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %spec.select.i.i, i1 false)
   %i.l = sub nuw nsw i64 64, %i.k
   %i.m = shl nuw nsw i64 1, %i.l
   %.sroa.speculated = tail call i64 @llvm.umax.i64(i64 %i.m, i64 8) ; 2 uses
-  %i.n = icmp samesign ult i64 %spec.select.i.i, 2147483648
+  %i.n = icmp ult i32 %i.i, -2147483647
   br i1 %i.n, label %bb.c, label %bb.b, !prof !980
 
 bb.b:                                             ; preds = %bb.a
@@ -701,15 +701,15 @@ bb.a:
   %i.g = sub i64 %i.e, %i.f
   %i.h = sdiv exact i64 %i.g, 48
   %i.i = shl nsw i64 %i.h, 1
-  %.sroa.speculated = tail call i64 @llvm.umax.i64(i64 %1, i64 %i.i)
-  %spec.select.i.i = tail call i64 @llvm.usub.sat.i64(i64 %.sroa.speculated, i64 1) ; 3 uses
+  %.sroa.speculated = tail call i64 @llvm.umax.i64(i64 %1, i64 %i.i) ; 3 uses
+  %spec.select.i.i = tail call i64 @llvm.usub.sat.i64(i64 %.sroa.speculated, i64 1)
   %i.j = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %spec.select.i.i, i1 false)
   %i.k = sub nuw nsw i64 64, %i.j                 ; 2 uses
-  %i.l = icmp ugt i64 %spec.select.i.i, 144115188075855871
+  %i.l = icmp ugt i64 %.sroa.speculated, 144115188075855872
   br i1 %i.l, label %bb.b, label %bb.e, !prof !979
 
 bb.b:                                             ; preds = %bb.a
-  %i.m = icmp ugt i64 %spec.select.i.i, 288230376151711743
+  %i.m = icmp ugt i64 %.sroa.speculated, 288230376151711744
   br i1 %i.m, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b

@@ -205,14 +205,14 @@ _ZNK22hb_serialize_context_t6lengthEv.exit:       ; preds = %_ZNK22hb_serialize_
   %i.ads = ptrtoint ptr %i.adq to i64
   %i.adt = ptrtoint ptr %i.adr to i64
   %i.adu = sub i64 %i.ads, %i.adt
-  %i.adv = trunc i64 %i.adu to i32
-  %i.adw = call i32 @llvm.usub.sat.i32(i32 %i.adv, i32 4) ; 2 uses
+  %i.adv = trunc i64 %i.adu to i32                ; 2 uses
+  %i.adw = call i32 @llvm.usub.sat.i32(i32 %i.adv, i32 4)
   %i.adx = lshr i32 %i.adw, 3
   %i.ady = getelementptr inbounds nuw i8, ptr %0, i64 2
   %i.adz = trunc i32 %i.adx to i16
   %i.aea = call i16 @llvm.bswap.i16(i16 %i.adz)
   store i16 %i.aea, ptr %i.ady, align 1, !tbaa !236
-  %.not.i.i120 = icmp ult i32 %i.adw, 524288
+  %.not.i.i120 = icmp ult i32 %i.adv, 524292
   br i1 %.not.i.i120, label %_ZN22hb_serialize_context_t12check_assignIN2OT7NumTypeILb1EtLj2EEEjEEbRT_OT0_20hb_serialize_error_t.exit, label %bb.ed
 
 bb.ed:                                            ; preds = %_ZNK22hb_serialize_context_t6lengthEv.exit

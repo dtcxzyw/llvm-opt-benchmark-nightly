@@ -204,7 +204,7 @@ define internal fastcc noundef zeroext i1 @_RNvXs73_NtNtCs4lawaffTVVK_9sqlparser
 bb.a:
   %i.a = load i64, ptr %0, align 8, !range !103, !noundef !32 ; 3 uses
   %i.b = tail call i64 @llvm.usub.sat.i64(i64 %i.a, i64 2) ; 2 uses
-  %i.c = load i64, ptr %1, align 8, !range !103, !noundef !32 ; 4 uses
+  %i.c = load i64, ptr %1, align 8, !range !103, !noundef !32 ; 16 uses
   %i.d = tail call i64 @llvm.usub.sat.i64(i64 %i.c, i64 2)
   %i.e = icmp eq i64 %i.b, %i.d
   br i1 %i.e, label %bb.b, label %_RNvXs5r_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_14TableWithJoinsNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.thread
@@ -244,6 +244,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.k, label %bb.q, label %_RNvXs5r_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_14TableWithJoinsNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.thread
 
 bb.d:                                             ; preds = %bb.b
+  %2 = icmp eq i64 %i.c, 3
+  tail call void @llvm.assume(i1 %2)
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.m = load i8, ptr %i.l, align 8, !range !41, !noundef !32
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 104
@@ -252,12 +254,16 @@ bb.d:                                             ; preds = %bb.b
   br i1 %i.p, label %bb.an, label %_RNvXs5r_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_14TableWithJoinsNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.thread
 
 bb.e:                                             ; preds = %bb.b
+  %3 = icmp eq i64 %i.c, 4
+  tail call void @llvm.assume(i1 %3)
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.s = tail call fastcc noundef zeroext i1 @_RNvXs6J_NtCs4lawaffTVVK_9sqlparser3astNtB6_4ExprNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(328) %i.q, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(328) %i.r) #57
   br i1 %i.s, label %bb.aq, label %_RNvXs5r_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_14TableWithJoinsNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.thread
 
 bb.f:                                             ; preds = %bb.b
+  %4 = icmp eq i64 %i.c, 5
+  tail call void @llvm.assume(i1 %4)
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 144
   %i.u = load i8, ptr %i.t, align 8, !range !41, !noundef !32
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 144
@@ -266,6 +272,8 @@ bb.f:                                             ; preds = %bb.b
   br i1 %i.x, label %bb.as, label %_RNvXs5r_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_14TableWithJoinsNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.thread
 
 bb.g:                                             ; preds = %bb.b
+  %5 = icmp eq i64 %i.c, 6
+  tail call void @llvm.assume(i1 %5)
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 184
   %i.z = load i8, ptr %i.y, align 8, !range !41, !noundef !32
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 184
@@ -274,18 +282,24 @@ bb.g:                                             ; preds = %bb.b
   br i1 %i.ac, label %bb.ax, label %_RNvXs5r_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_14TableWithJoinsNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.thread
 
 bb.h:                                             ; preds = %bb.b
+  %6 = icmp eq i64 %i.c, 7
+  tail call void @llvm.assume(i1 %6)
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.af = tail call fastcc noundef zeroext i1 @_RNvXs6J_NtCs4lawaffTVVK_9sqlparser3astNtB6_4ExprNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(328) %i.ad, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(328) %i.ae) #57
   br i1 %i.af, label %bb.bf, label %_RNvXs5r_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_14TableWithJoinsNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.thread
 
 bb.i:                                             ; preds = %bb.b
+  %7 = icmp eq i64 %i.c, 8
+  tail call void @llvm.assume(i1 %7)
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.ai = tail call fastcc noundef zeroext i1 @_RNvXs6J_NtCs4lawaffTVVK_9sqlparser3astNtB6_4ExprNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(328) %i.ag, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(328) %i.ah) #57
   br i1 %i.ai, label %bb.bk, label %_RNvXs5r_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_14TableWithJoinsNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.thread
 
 bb.j:                                             ; preds = %bb.b
+  %8 = icmp eq i64 %i.c, 9
+  tail call void @llvm.assume(i1 %8)
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.ak = load ptr, ptr %i.aj, align 8, !nonnull !32, !noundef !32 ; 3 uses
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 96
@@ -312,6 +326,8 @@ _RNvXs5r_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_14TableWithJoinsNtNtCsbvkFyI
   br i1 %i.ax, label %bb.br, label %_RNvXs5r_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_14TableWithJoinsNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.thread
 
 bb.l:                                             ; preds = %bb.b
+  %9 = icmp eq i64 %i.c, 10
+  tail call void @llvm.assume(i1 %9)
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.az = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 504
@@ -322,6 +338,8 @@ bb.l:                                             ; preds = %bb.b
   br i1 %i.be, label %bb.bt, label %_RNvXs5r_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_14TableWithJoinsNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.thread
 
 bb.m:                                             ; preds = %bb.b
+  %10 = icmp eq i64 %i.c, 11
+  tail call void @llvm.assume(i1 %10)
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 336
   %i.bg = getelementptr inbounds nuw i8, ptr %1, i64 336
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 512
@@ -332,6 +350,8 @@ bb.m:                                             ; preds = %bb.b
   br i1 %i.bl, label %bb.cd, label %_RNvXs5r_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_14TableWithJoinsNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.thread
 
 bb.n:                                             ; preds = %bb.b
+  %11 = icmp eq i64 %i.c, 12
+  tail call void @llvm.assume(i1 %11)
   %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 264
   %i.bn = getelementptr inbounds nuw i8, ptr %1, i64 264
   %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 336
@@ -342,6 +362,8 @@ bb.n:                                             ; preds = %bb.b
   br i1 %i.bs, label %bb.cm, label %_RNvXs5r_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_14TableWithJoinsNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.thread
 
 bb.o:                                             ; preds = %bb.b
+  %12 = icmp eq i64 %i.c, 13
+  tail call void @llvm.assume(i1 %12)
   %i.bt = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.bu = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.bv = getelementptr inbounds nuw i8, ptr %0, i64 352
@@ -352,6 +374,8 @@ bb.o:                                             ; preds = %bb.b
   br i1 %i.bz, label %bb.df, label %_RNvXs5r_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_14TableWithJoinsNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.thread
 
 bb.p:                                             ; preds = %bb.b
+  %13 = icmp eq i64 %i.c, 14
+  tail call void @llvm.assume(i1 %13)
   %i.ca = getelementptr inbounds nuw i8, ptr %0, i64 352
   %.val88 = load i64, ptr %i.ca, align 8, !noundef !32 ; 2 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %1, i64 352
@@ -754,8 +778,8 @@ bb.g:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !33428)
   %i.x = load i64, ptr %i.v, align 8, !range !56, !alias.scope !33427, !noundef !32
   %i.y = tail call i64 @llvm.usub.sat.i64(i64 %i.x, i64 68) ; 2 uses
-  %i.z = load i64, ptr %i.w, align 8, !range !56, !alias.scope !33428, !noundef !32 ; 2 uses
-  %i.aa = tail call i64 @llvm.usub.sat.i64(i64 %i.z, i64 68) ; 2 uses
+  %i.z = load i64, ptr %i.w, align 8, !range !56, !alias.scope !33428, !noundef !32 ; 3 uses
+  %i.aa = tail call i64 @llvm.usub.sat.i64(i64 %i.z, i64 68)
   switch i64 %i.y, label %default.unreachable [
     i64 0, label %bb.h
     i64 1, label %bb.i
@@ -770,7 +794,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.ab, label %bb.k, label %bb.j
 
 bb.i:                                             ; preds = %bb.g
-  %i.ac = icmp eq i64 %i.aa, 1
+  %i.ac = icmp eq i64 %i.z, 69
   br i1 %i.ac, label %bb.l, label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g
@@ -800,8 +824,8 @@ bb.m:                                             ; preds = %bb.e
   tail call void @llvm.experimental.noalias.scope.decl(metadata !33431)
   %i.am = load i64, ptr %i.al, align 8, !range !56, !alias.scope !33430, !noundef !32
   %i.an = tail call i64 @llvm.usub.sat.i64(i64 %i.am, i64 68) ; 2 uses
-  %i.ao = load i64, ptr %i.ak, align 8, !range !56, !alias.scope !33431, !noundef !32 ; 2 uses
-  %i.ap = tail call i64 @llvm.usub.sat.i64(i64 %i.ao, i64 68) ; 2 uses
+  %i.ao = load i64, ptr %i.ak, align 8, !range !56, !alias.scope !33431, !noundef !32 ; 3 uses
+  %i.ap = tail call i64 @llvm.usub.sat.i64(i64 %i.ao, i64 68)
   switch i64 %i.an, label %default.unreachable [
     i64 0, label %bb.n
     i64 1, label %bb.o
@@ -813,7 +837,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.aq, label %bb.q, label %bb.p
 
 bb.o:                                             ; preds = %bb.m
-  %i.ar = icmp eq i64 %i.ap, 1
+  %i.ar = icmp eq i64 %i.ao, 69
   br i1 %i.ar, label %bb.r, label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %bb.n, %bb.m
@@ -858,8 +882,8 @@ bb.t:                                             ; preds = %bb.f
   tail call void @llvm.experimental.noalias.scope.decl(metadata !33434)
   %i.bd = load i64, ptr %i.bc, align 8, !range !56, !alias.scope !33433, !noundef !32
   %i.be = tail call i64 @llvm.usub.sat.i64(i64 %i.bd, i64 68) ; 2 uses
-  %i.bf = load i64, ptr %i.bb, align 8, !range !56, !alias.scope !33434, !noundef !32 ; 2 uses
-  %i.bg = tail call i64 @llvm.usub.sat.i64(i64 %i.bf, i64 68) ; 2 uses
+  %i.bf = load i64, ptr %i.bb, align 8, !range !56, !alias.scope !33434, !noundef !32 ; 3 uses
+  %i.bg = tail call i64 @llvm.usub.sat.i64(i64 %i.bf, i64 68)
   switch i64 %i.be, label %default.unreachable [
     i64 0, label %bb.u
     i64 1, label %bb.v
@@ -871,7 +895,7 @@ bb.u:                                             ; preds = %bb.t
   br i1 %i.bh, label %bb.x, label %bb.w
 
 bb.v:                                             ; preds = %bb.t
-  %i.bi = icmp eq i64 %i.bg, 1
+  %i.bi = icmp eq i64 %i.bf, 69
   br i1 %i.bi, label %bb.y, label %bb.w
 
 bb.w:                                             ; preds = %bb.v, %bb.u, %bb.t

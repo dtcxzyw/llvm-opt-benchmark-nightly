@@ -204,21 +204,21 @@ bb.a:
   br i1 %i.o, label %mi_arenas_page_try_find_abandoned.exit.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.p = load atomic i64, ptr %i.f monotonic, align 8 ; 3 uses
-  %i.q = tail call i64 @llvm.usub.sat.i64(i64 %i.p, i64 1) ; 5 uses
-  %i.r = icmp ult i64 %i.q, 2
+  %i.p = load atomic i64, ptr %i.f monotonic, align 8 ; 4 uses
+  %i.q = tail call i64 @llvm.usub.sat.i64(i64 %i.p, i64 1) ; 4 uses
+  %i.r = icmp ult i64 %i.p, 3
   br i1 %i.r, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.s = urem i64 %i.j, %i.q
-  br label %bb.d
+  br label %.lr.ph.i
 
-bb.d:                                             ; preds = %bb.c, %bb.b
-  %3 = phi i64 [ %i.s, %bb.c ], [ 0, %bb.b ]
+bb.d:                                             ; preds = %bb.b
   %.not97.i = icmp eq i64 %i.p, 0
   br i1 %.not97.i, label %mi_arenas_page_try_find_abandoned.exit.thread, label %.lr.ph.i
 
-.lr.ph.i:                                         ; preds = %bb.d
+.lr.ph.i:                                         ; preds = %bb.d, %bb.c
+  %3 = phi i64 [ %i.s, %bb.c ], [ 0, %bb.d ]
   %.not.i = icmp eq ptr %i.c, null
   %i.t = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   br i1 %.not.i, label %.lr.ph.split.us.i, label %.lr.ph.split.i
@@ -621,21 +621,21 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: noinline nounwind uwtable
 define internal fastcc ptr @mi_arenas_try_find_free(ptr nofree noundef captures(none) %0, i64 noundef range(i64 0, 18014398509481984) %1, i1 noundef zeroext %2, i1 noundef zeroext %3, ptr noundef %4, i64 noundef %5, i32 noundef %6, ptr nofree noundef writeonly captures(none) %7) unnamed_addr #6 !guid !195 {
 bb.a:
-  %i.a = load atomic i64, ptr %0 monotonic, align 8 ; 3 uses
-  %i.b = tail call i64 @llvm.usub.sat.i64(i64 %i.a, i64 1) ; 5 uses
-  %i.c = icmp ult i64 %i.b, 2
+  %i.a = load atomic i64, ptr %0 monotonic, align 8 ; 4 uses
+  %i.b = tail call i64 @llvm.usub.sat.i64(i64 %i.a, i64 1) ; 4 uses
+  %i.c = icmp ult i64 %i.a, 3
   br i1 %i.c, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.d = urem i64 %5, %i.b
-  br label %bb.c
+  br label %.lr.ph
 
-bb.c:                                             ; preds = %bb.a, %bb.b
-  %8 = phi i64 [ %i.d, %bb.b ], [ 0, %bb.a ]
+bb.c:                                             ; preds = %bb.a
   %.not185 = icmp eq i64 %i.a, 0
   br i1 %.not185, label %.thread147, label %.lr.ph
 
-.lr.ph:                                           ; preds = %bb.c
+.lr.ph:                                           ; preds = %bb.b, %bb.c
+  %8 = phi i64 [ %i.d, %bb.b ], [ 0, %bb.c ]
   %.not = icmp eq ptr %4, null
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.f = icmp slt i32 %6, 0
@@ -714,21 +714,21 @@ bb.g:                                             ; preds = %.lr.ph.split.split.
   br i1 %i.ac, label %.thread167, label %bb.h
 
 bb.h:                                             ; preds = %.thread147
-  %i.ad = load atomic i64, ptr %0 monotonic, align 8 ; 5 uses
-  %i.ae = tail call i64 @llvm.usub.sat.i64(i64 %i.ad, i64 1) ; 7 uses
-  %i.af = icmp ult i64 %i.ae, 2
+  %i.ad = load atomic i64, ptr %0 monotonic, align 8 ; 6 uses
+  %i.ae = tail call i64 @llvm.usub.sat.i64(i64 %i.ad, i64 1) ; 6 uses
+  %i.af = icmp ult i64 %i.ad, 3
   br i1 %i.af, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.ag = urem i64 %5, %i.ae
-  br label %bb.j
+  br label %.lr.ph180
 
-bb.j:                                             ; preds = %bb.h, %bb.i
-  %9 = phi i64 [ %i.ag, %bb.i ], [ 0, %bb.h ]     ; 3 uses
+bb.j:                                             ; preds = %bb.h
   %.not188 = icmp eq i64 %i.ad, 0
   br i1 %.not188, label %.thread167, label %.lr.ph180
 
-.lr.ph180:                                        ; preds = %bb.j
+.lr.ph180:                                        ; preds = %bb.i, %bb.j
+  %9 = phi i64 [ %i.ag, %bb.i ], [ 0, %bb.j ]     ; 3 uses
   %.not115 = icmp eq ptr %4, null                 ; 3 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   br i1 %.not115, label %bb.k, label %.thread151.peel

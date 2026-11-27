@@ -204,16 +204,16 @@ bb.ai:                                            ; preds = %bb.ah
   %i.be = load i32, ptr %i.am, align 4, !tbaa !95
   %i.bf = load i32, ptr %i.an, align 8, !tbaa !96
   %i.bg = shl i32 %i.be, 2
-  %i.bh = mul i32 %i.bg, %i.bf                    ; 2 uses
+  %i.bh = mul i32 %i.bg, %i.bf                    ; 3 uses
   %i.bi = sext i32 %i.bh to i64                   ; 2 uses
   %.not = icmp eq i32 %i.bh, 0
   br i1 %.not, label %.loopexit, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %.preheader
-  %i.bj = call i64 @llvm.usub.sat.i64(i64 %i.bi, i64 4) ; 2 uses
+  %i.bj = call i64 @llvm.usub.sat.i64(i64 %i.bi, i64 4)
   %i.bk = lshr exact i64 %i.bj, 2
   %i.bl = add nuw nsw i64 %i.bk, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.bj, 12
+  %min.iters.check = icmp ult i32 %i.bh, 16
   br i1 %min.iters.check, label %.lr.ph.preheader114, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader

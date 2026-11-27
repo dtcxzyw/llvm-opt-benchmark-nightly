@@ -205,9 +205,9 @@ bb.d:                                             ; preds = %bb.c
   br label %.lr.ph.us
 
 .lr.ph.us:                                        ; preds = %.lr.ph.us.peel.next, %bb.g
-  %.sroa.04.1282.us.us = phi i32 [ %i.ah, %bb.g ], [ 1, %.lr.ph.us.peel.next ] ; 6 uses
+  %.sroa.04.1282.us.us = phi i32 [ %i.ah, %bb.g ], [ 1, %.lr.ph.us.peel.next ] ; 7 uses
   %.sroa.09.1281.us.us = phi i1 [ %spec.select.us.us, %bb.g ], [ %or.cond.us.us.not.peel, %.lr.ph.us.peel.next ]
-  %.sroa.011.1280.us.us = phi double [ %i.af, %bb.g ], [ %i.aa, %.lr.ph.us.peel.next ] ; 2 uses
+  %.sroa.011.1280.us.us = phi double [ %i.af, %bb.g ], [ %i.aa, %.lr.ph.us.peel.next ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store double 0.000000e+00, ptr %i.b, align 8
   store i32 %.sroa.04.1282.us.us, ptr %i.l, align 4, !alias.scope !51
@@ -218,17 +218,17 @@ bb.d:                                             ; preds = %bb.c
   store i64 %.sroa.0.1.i.us.us, ptr %i.p, align 8, !alias.scope !51
   %i.ad = icmp ne i32 %.sroa.04.1282.us.us, %i.v
   %or.cond.us.us.not = select i1 %i.x, i1 true, i1 %i.ad
-  %spec.select.us.us = select i1 %or.cond.us.us.not, i1 %.sroa.09.1281.us.us, i1 false ; 3 uses
+  %spec.select.us.us = select i1 %or.cond.us.us.not, i1 %.sroa.09.1281.us.us, i1 false ; 4 uses
   %i.ae = invoke noundef zeroext i1 @_RNvNtNtCs4GWW6M5ZWyU_6brotli3enc9metablock19ComputeDistanceCost(ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) %8, i64 noundef %9, i64 noundef %10, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.r, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.p, ptr noalias nofree noundef nonnull %14, ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.b)
           to label %bb.e unwind label %.loopexit265.split.us.split.us.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.e:                                             ; preds = %.lr.ph.us
-  br i1 %i.ae, label %bb.f, label %.loopexit264.us.loopexit
+  br i1 %i.ae, label %bb.f, label %.loopexit264.us
 
 bb.f:                                             ; preds = %bb.e
   %i.af = load double, ptr %i.b, align 8, !noundef !5 ; 3 uses
   %i.ag = fcmp ogt double %i.af, %.sroa.011.1280.us.us
-  br i1 %i.ag, label %.loopexit264.us.loopexit, label %bb.g
+  br i1 %i.ag, label %.loopexit264.us, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.w, ptr noundef nonnull align 8 dereferenceable(24) %i.p, i64 24, i1 false)
@@ -237,23 +237,20 @@ bb.g:                                             ; preds = %bb.f
   %exitcond359.not = icmp eq i32 %i.ah, 16
   br i1 %exitcond359.not, label %.lr.ph.us.1, label %.lr.ph.us, !llvm.loop !37
 
-.loopexit264.us.loopexit:                         ; preds = %bb.f, %bb.e
-  %16 = call i32 @llvm.usub.sat.i32(i32 %.sroa.04.1282.us.us, i32 1)
-  br label %.loopexit264.us
-
-.loopexit264.us:                                  ; preds = %.loopexit264.us.loopexit, %bb.d, %bb.c
-  %.sroa.04.1282.us.us.lcssa609 = phi i32 [ 0, %bb.c ], [ 0, %bb.d ], [ %16, %.loopexit264.us.loopexit ] ; 2 uses
-  %.sroa.011.1280.us.us.lcssa607 = phi double [ f0x547D42AEA2879F2E, %bb.c ], [ f0x547D42AEA2879F2E, %bb.d ], [ %.sroa.011.1280.us.us, %.loopexit264.us.loopexit ] ; 2 uses
-  %spec.select.us.us.lcssa604 = phi i1 [ %or.cond.us.us.not.peel, %bb.c ], [ %or.cond.us.us.not.peel, %bb.d ], [ %spec.select.us.us, %.loopexit264.us.loopexit ] ; 2 uses
+.loopexit264.us:                                  ; preds = %bb.e, %bb.f, %bb.d, %bb.c
+  %.sroa.04.1282.us.us.lcssa633 = phi i32 [ 0, %bb.c ], [ 0, %bb.d ], [ %.sroa.04.1282.us.us, %bb.f ], [ %.sroa.04.1282.us.us, %bb.e ] ; 2 uses
+  %.sroa.011.1280.us.us.lcssa631 = phi double [ f0x547D42AEA2879F2E, %bb.c ], [ f0x547D42AEA2879F2E, %bb.d ], [ %.sroa.011.1280.us.us, %bb.f ], [ %.sroa.011.1280.us.us, %bb.e ] ; 2 uses
+  %spec.select.us.us.lcssa628 = phi i1 [ %or.cond.us.us.not.peel, %bb.c ], [ %or.cond.us.us.not.peel, %bb.d ], [ %spec.select.us.us, %bb.f ], [ %spec.select.us.us, %bb.e ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
-  %i.ai = lshr i32 %.sroa.04.1282.us.us.lcssa609, 1 ; 2 uses
-  %i.aj = icmp samesign ult i32 %.sroa.04.1282.us.us.lcssa609, 32
+  %16 = call i32 @llvm.usub.sat.i32(i32 %.sroa.04.1282.us.us.lcssa633, i32 1)
+  %i.ai = lshr i32 %16, 1                         ; 2 uses
+  %i.aj = icmp samesign ult i32 %.sroa.04.1282.us.us.lcssa633, 33
   br i1 %i.aj, label %.lr.ph.us.1, label %.loopexit264.us.1
 
 .lr.ph.us.1:                                      ; preds = %bb.g, %.loopexit264.us
-  %spec.select.us.us606 = phi i1 [ %spec.select.us.us.lcssa604, %.loopexit264.us ], [ %spec.select.us.us, %bb.g ]
+  %spec.select.us.us606 = phi i1 [ %spec.select.us.us.lcssa628, %.loopexit264.us ], [ %spec.select.us.us, %bb.g ]
   %.sroa.04.1271.us403 = phi i32 [ %i.ai, %.loopexit264.us ], [ 7, %bb.g ]
-  %.sroa.011.1276.us402 = phi double [ %.sroa.011.1280.us.us.lcssa607, %.loopexit264.us ], [ %i.af, %bb.g ]
+  %.sroa.011.1276.us402 = phi double [ %.sroa.011.1280.us.us.lcssa631, %.loopexit264.us ], [ %i.af, %bb.g ]
   store i32 1, ptr %i.k, align 8, !alias.scope !53
   %i.ak = icmp ne i32 %i.t, 1
   br label %bb.h
@@ -295,30 +292,33 @@ bb.k:                                             ; preds = %bb.j
   %i.au = add nuw nsw i32 %.sroa.04.1282.us.us.1, 1 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %exitcond359.1.not = icmp eq i32 %i.au, 16
-  br i1 %exitcond359.1.not, label %.loopexit264.us.1, label %bb.h
+  br i1 %exitcond359.1.not, label %.lr.ph.us.2, label %bb.h
 
 .split286.us.us.1:                                ; preds = %bb.j, %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br label %.loopexit264.us.1
 
-.loopexit264.us.1:                                ; preds = %bb.k, %.split286.us.us.1, %.loopexit264.us
-  %.sroa.011.1276.us.1 = phi double [ %.sroa.011.1280.us.us.1, %.split286.us.us.1 ], [ %.sroa.011.1280.us.us.lcssa607, %.loopexit264.us ], [ %i.as, %bb.k ] ; 2 uses
-  %.sroa.04.1271.us.1 = phi i32 [ %.sroa.04.1282.us.us.1, %.split286.us.us.1 ], [ %i.ai, %.loopexit264.us ], [ 16, %bb.k ]
-  %.sroa.09.2.us.1 = phi i1 [ %spec.select.us.us.1, %.split286.us.us.1 ], [ %spec.select.us.us.lcssa604, %.loopexit264.us ], [ %spec.select.us.us.1, %bb.k ] ; 2 uses
-  %i.av = call i32 @llvm.usub.sat.i32(i32 %.sroa.04.1271.us.1, i32 1) ; 2 uses
+.loopexit264.us.1:                                ; preds = %.split286.us.us.1, %.loopexit264.us
+  %.sroa.011.1276.us.1 = phi double [ %.sroa.011.1280.us.us.1, %.split286.us.us.1 ], [ %.sroa.011.1280.us.us.lcssa631, %.loopexit264.us ] ; 2 uses
+  %.sroa.04.1271.us.1 = phi i32 [ %.sroa.04.1282.us.us.1, %.split286.us.us.1 ], [ %i.ai, %.loopexit264.us ] ; 2 uses
+  %.sroa.09.2.us.1 = phi i1 [ %spec.select.us.us.1, %.split286.us.us.1 ], [ %spec.select.us.us.lcssa628, %.loopexit264.us ] ; 2 uses
+  %i.av = call i32 @llvm.usub.sat.i32(i32 %.sroa.04.1271.us.1, i32 1)
   %i.aw = lshr i32 %i.av, 1                       ; 2 uses
-  %i.ax = icmp ult i32 %i.av, 32
+  %i.ax = icmp ult i32 %.sroa.04.1271.us.1, 33
   br i1 %i.ax, label %.lr.ph.us.2, label %.loopexit264.us.2
 
-.lr.ph.us.2:                                      ; preds = %.loopexit264.us.1
+.lr.ph.us.2:                                      ; preds = %bb.k, %.loopexit264.us.1
+  %17 = phi i32 [ %i.aw, %.loopexit264.us.1 ], [ 7, %bb.k ]
+  %.sroa.09.2.us.1408 = phi i1 [ %.sroa.09.2.us.1, %.loopexit264.us.1 ], [ %spec.select.us.us.1, %bb.k ]
+  %.sroa.011.1276.us.1407 = phi double [ %.sroa.011.1276.us.1, %.loopexit264.us.1 ], [ %i.as, %bb.k ]
   store i32 2, ptr %i.k, align 8, !alias.scope !54
   %i.ay = icmp ne i32 %i.t, 2
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.o, %.lr.ph.us.2
-  %.sroa.04.1282.us.us.2 = phi i32 [ %i.aw, %.lr.ph.us.2 ], [ %i.bi, %bb.o ] ; 5 uses
-  %.sroa.09.1281.us.us.2 = phi i1 [ %.sroa.09.2.us.1, %.lr.ph.us.2 ], [ %spec.select.us.us.2, %bb.o ]
-  %.sroa.011.1280.us.us.2 = phi double [ %.sroa.011.1276.us.1, %.lr.ph.us.2 ], [ %i.bg, %bb.o ] ; 2 uses
+  %.sroa.04.1282.us.us.2 = phi i32 [ %17, %.lr.ph.us.2 ], [ %i.bi, %bb.o ] ; 5 uses
+  %.sroa.09.1281.us.us.2 = phi i1 [ %.sroa.09.2.us.1408, %.lr.ph.us.2 ], [ %spec.select.us.us.2, %bb.o ]
+  %.sroa.011.1280.us.us.2 = phi double [ %.sroa.011.1276.us.1407, %.lr.ph.us.2 ], [ %i.bg, %bb.o ] ; 2 uses
   %i.az = shl nuw nsw i32 %.sroa.04.1282.us.us.2, 2 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store double 0.000000e+00, ptr %i.b, align 8
@@ -352,30 +352,33 @@ bb.o:                                             ; preds = %bb.n
   %i.bi = add nuw nsw i32 %.sroa.04.1282.us.us.2, 1 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %exitcond359.2.not = icmp eq i32 %i.bi, 16
-  br i1 %exitcond359.2.not, label %.loopexit264.us.2, label %bb.l
+  br i1 %exitcond359.2.not, label %.lr.ph.us.3, label %bb.l
 
 .split286.us.us.2:                                ; preds = %bb.n, %bb.m
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br label %.loopexit264.us.2
 
-.loopexit264.us.2:                                ; preds = %bb.o, %.split286.us.us.2, %.loopexit264.us.1
-  %.sroa.011.1276.us.2 = phi double [ %.sroa.011.1280.us.us.2, %.split286.us.us.2 ], [ %.sroa.011.1276.us.1, %.loopexit264.us.1 ], [ %i.bg, %bb.o ] ; 2 uses
-  %.sroa.04.1271.us.2 = phi i32 [ %.sroa.04.1282.us.us.2, %.split286.us.us.2 ], [ %i.aw, %.loopexit264.us.1 ], [ 16, %bb.o ]
-  %.sroa.09.2.us.2 = phi i1 [ %spec.select.us.us.2, %.split286.us.us.2 ], [ %.sroa.09.2.us.1, %.loopexit264.us.1 ], [ %spec.select.us.us.2, %bb.o ] ; 2 uses
-  %17 = call i32 @llvm.usub.sat.i32(i32 %.sroa.04.1271.us.2, i32 1) ; 2 uses
-  %i.bj = icmp ult i32 %17, 32
+.loopexit264.us.2:                                ; preds = %.split286.us.us.2, %.loopexit264.us.1
+  %.sroa.011.1276.us.2 = phi double [ %.sroa.011.1280.us.us.2, %.split286.us.us.2 ], [ %.sroa.011.1276.us.1, %.loopexit264.us.1 ] ; 2 uses
+  %.sroa.04.1271.us.2 = phi i32 [ %.sroa.04.1282.us.us.2, %.split286.us.us.2 ], [ %i.aw, %.loopexit264.us.1 ] ; 2 uses
+  %.sroa.09.2.us.2 = phi i1 [ %spec.select.us.us.2, %.split286.us.us.2 ], [ %.sroa.09.2.us.1, %.loopexit264.us.1 ] ; 2 uses
+  %i.bj = icmp ult i32 %.sroa.04.1271.us.2, 33
   br i1 %i.bj, label %.lr.ph.us.3, label %.split301.us
 
-.lr.ph.us.3:                                      ; preds = %.loopexit264.us.2
-  %i.bk = lshr i32 %17, 1
+.lr.ph.us.3:                                      ; preds = %bb.o, %.loopexit264.us.2
+  %.sroa.09.2.us.2414 = phi i1 [ %.sroa.09.2.us.2, %.loopexit264.us.2 ], [ %spec.select.us.us.2, %bb.o ]
+  %.sroa.04.1271.us.2413 = phi i32 [ %.sroa.04.1271.us.2, %.loopexit264.us.2 ], [ 16, %bb.o ]
+  %.sroa.011.1276.us.2412 = phi double [ %.sroa.011.1276.us.2, %.loopexit264.us.2 ], [ %i.bg, %bb.o ]
+  %18 = call i32 @llvm.usub.sat.i32(i32 %.sroa.04.1271.us.2413, i32 1)
+  %i.bk = lshr i32 %18, 1
   store i32 3, ptr %i.k, align 8, !alias.scope !55
   %i.bl = icmp ne i32 %i.t, 3
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.s, %.lr.ph.us.3
   %.sroa.04.1282.us.us.3 = phi i32 [ %i.bk, %.lr.ph.us.3 ], [ %i.bv, %bb.s ] ; 4 uses
-  %.sroa.09.1281.us.us.3 = phi i1 [ %.sroa.09.2.us.2, %.lr.ph.us.3 ], [ %spec.select.us.us.3, %bb.s ]
-  %.sroa.011.1280.us.us.3 = phi double [ %.sroa.011.1276.us.2, %.lr.ph.us.3 ], [ %i.bt, %bb.s ] ; 2 uses
+  %.sroa.09.1281.us.us.3 = phi i1 [ %.sroa.09.2.us.2414, %.lr.ph.us.3 ], [ %spec.select.us.us.3, %bb.s ]
+  %.sroa.011.1280.us.us.3 = phi double [ %.sroa.011.1276.us.2412, %.lr.ph.us.3 ], [ %i.bt, %bb.s ] ; 2 uses
   %i.bm = shl nuw nsw i32 %.sroa.04.1282.us.us.3, 3 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store double 0.000000e+00, ptr %i.b, align 8
@@ -470,7 +473,7 @@ bb.z:                                             ; preds = %bb.u
   br label %bb.t
 
 bb.aa:                                            ; preds = %.lr.ph, %bb.ap
-  %indvars.iv356 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next357, %bb.ap ] ; 5 uses
+  %indvars.iv356 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next357, %bb.ap ] ; 6 uses
   %.sroa.09.1281 = phi i1 [ true, %.lr.ph ], [ %spec.select, %bb.ap ]
   %.sroa.011.1280 = phi double [ f0x547D42AEA2879F2E, %.lr.ph ], [ %i.eh, %bb.ap ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
@@ -490,9 +493,9 @@ bb.aa:                                            ; preds = %.lr.ph, %bb.ap
 
 .loopexit264:                                     ; preds = %bb.an, %bb.ao
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
-  %i.ci = call i32 @llvm.usub.sat.i32(i32 %i.cc, i32 1) ; 3 uses
+  %i.ci = call i32 @llvm.usub.sat.i32(i32 %i.cc, i32 1) ; 2 uses
   %i.cj = lshr i32 %i.ci, 1
-  %i.ck = icmp ult i32 %i.ci, 32
+  %i.ck = icmp samesign ult i64 %indvars.iv356, 33
   br i1 %i.ck, label %.lr.ph.1, label %.loopexit264.1
 
 .lr.ph.1:                                         ; preds = %bb.ap, %.loopexit264
@@ -539,34 +542,37 @@ bb.ae:                                            ; preds = %bb.ad
   %indvars.iv.next354 = add nuw nsw i64 %indvars.iv353, 1 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %exitcond.1.not = icmp eq i64 %indvars.iv.next354, 16
-  br i1 %exitcond.1.not, label %.loopexit264.1, label %bb.ab
+  br i1 %exitcond.1.not, label %.lr.ph.2, label %bb.ab
 
 .split286.1:                                      ; preds = %bb.ad, %bb.ac
   %i.cz = trunc nuw i64 %indvars.iv353 to i32
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br label %.loopexit264.1
 
-.loopexit264.1:                                   ; preds = %bb.ae, %.split286.1, %.loopexit264
-  %.sroa.011.1276.1 = phi double [ %.sroa.011.1280.1, %.split286.1 ], [ %.sroa.011.1280, %.loopexit264 ], [ %i.cx, %bb.ae ] ; 2 uses
-  %.sroa.04.1271.1 = phi i32 [ %i.cz, %.split286.1 ], [ %i.cj, %.loopexit264 ], [ 16, %bb.ae ]
-  %.sroa.09.2.1 = phi i1 [ %spec.select.1, %.split286.1 ], [ %spec.select, %.loopexit264 ], [ %spec.select.1, %bb.ae ] ; 2 uses
-  %i.da = call i32 @llvm.usub.sat.i32(i32 %.sroa.04.1271.1, i32 1) ; 3 uses
+.loopexit264.1:                                   ; preds = %.split286.1, %.loopexit264
+  %.sroa.011.1276.1 = phi double [ %.sroa.011.1280.1, %.split286.1 ], [ %.sroa.011.1280, %.loopexit264 ] ; 2 uses
+  %.sroa.04.1271.1 = phi i32 [ %i.cz, %.split286.1 ], [ %i.cj, %.loopexit264 ] ; 2 uses
+  %.sroa.09.2.1 = phi i1 [ %spec.select.1, %.split286.1 ], [ %spec.select, %.loopexit264 ] ; 2 uses
+  %i.da = call i32 @llvm.usub.sat.i32(i32 %.sroa.04.1271.1, i32 1) ; 2 uses
   %i.db = lshr i32 %i.da, 1
-  %i.dc = icmp ult i32 %i.da, 32
+  %i.dc = icmp ult i32 %.sroa.04.1271.1, 33
   br i1 %i.dc, label %.lr.ph.2, label %.loopexit264.2
 
-.lr.ph.2:                                         ; preds = %.loopexit264.1
+.lr.ph.2:                                         ; preds = %bb.ae, %.loopexit264.1
+  %19 = phi i32 [ %i.da, %.loopexit264.1 ], [ 15, %bb.ae ]
+  %.sroa.09.2.1424 = phi i1 [ %.sroa.09.2.1, %.loopexit264.1 ], [ %spec.select.1, %bb.ae ]
+  %.sroa.011.1276.1423 = phi double [ %.sroa.011.1276.1, %.loopexit264.1 ], [ %i.cx, %bb.ae ]
   store i32 2, ptr %i.k, align 8, !alias.scope !57
   %i.dd = icmp ne i32 %i.t, 2
-  %i.de = lshr i32 %i.da, 1
+  %i.de = lshr i32 %19, 1
   %i.df = zext nneg i32 %i.de to i64
   %i.dg = zext i32 %i.v to i64
   br label %bb.af
 
 bb.af:                                            ; preds = %bb.ai, %.lr.ph.2
   %indvars.iv350 = phi i64 [ %indvars.iv.next351, %bb.ai ], [ %i.df, %.lr.ph.2 ] ; 4 uses
-  %.sroa.09.1281.2 = phi i1 [ %spec.select.2, %bb.ai ], [ %.sroa.09.2.1, %.lr.ph.2 ]
-  %.sroa.011.1280.2 = phi double [ %i.dp, %bb.ai ], [ %.sroa.011.1276.1, %.lr.ph.2 ] ; 2 uses
+  %.sroa.09.1281.2 = phi i1 [ %spec.select.2, %bb.ai ], [ %.sroa.09.2.1424, %.lr.ph.2 ]
+  %.sroa.011.1280.2 = phi double [ %i.dp, %bb.ai ], [ %.sroa.011.1276.1423, %.lr.ph.2 ] ; 2 uses
   %i.dh = shl nuw nsw i64 %indvars.iv350, 2       ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store double 0.000000e+00, ptr %i.b, align 8
@@ -597,33 +603,36 @@ bb.ai:                                            ; preds = %bb.ah
   %indvars.iv.next351 = add nuw nsw i64 %indvars.iv350, 1 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %exitcond.2.not = icmp eq i64 %indvars.iv.next351, 16
-  br i1 %exitcond.2.not, label %.loopexit264.2, label %bb.af
+  br i1 %exitcond.2.not, label %.lr.ph.3, label %bb.af
 
 .split286.2:                                      ; preds = %bb.ah, %bb.ag
   %i.dr = trunc nuw i64 %indvars.iv350 to i32
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br label %.loopexit264.2
 
-.loopexit264.2:                                   ; preds = %bb.ai, %.split286.2, %.loopexit264.1
-  %.sroa.011.1276.2 = phi double [ %.sroa.011.1280.2, %.split286.2 ], [ %.sroa.011.1276.1, %.loopexit264.1 ], [ %i.dp, %bb.ai ] ; 2 uses
-  %.sroa.04.1271.2 = phi i32 [ %i.dr, %.split286.2 ], [ %i.db, %.loopexit264.1 ], [ 16, %bb.ai ]
-  %.sroa.09.2.2 = phi i1 [ %spec.select.2, %.split286.2 ], [ %.sroa.09.2.1, %.loopexit264.1 ], [ %spec.select.2, %bb.ai ] ; 2 uses
-  %18 = call i32 @llvm.usub.sat.i32(i32 %.sroa.04.1271.2, i32 1) ; 2 uses
-  %i.ds = icmp ult i32 %18, 32
+.loopexit264.2:                                   ; preds = %.split286.2, %.loopexit264.1
+  %.sroa.011.1276.2 = phi double [ %.sroa.011.1280.2, %.split286.2 ], [ %.sroa.011.1276.1, %.loopexit264.1 ] ; 2 uses
+  %.sroa.04.1271.2 = phi i32 [ %i.dr, %.split286.2 ], [ %i.db, %.loopexit264.1 ] ; 2 uses
+  %.sroa.09.2.2 = phi i1 [ %spec.select.2, %.split286.2 ], [ %.sroa.09.2.1, %.loopexit264.1 ] ; 2 uses
+  %i.ds = icmp ult i32 %.sroa.04.1271.2, 33
   br i1 %i.ds, label %.lr.ph.3, label %.loopexit264.3
 
-.lr.ph.3:                                         ; preds = %.loopexit264.2
+.lr.ph.3:                                         ; preds = %bb.ai, %.loopexit264.2
+  %.sroa.09.2.2430 = phi i1 [ %.sroa.09.2.2, %.loopexit264.2 ], [ %spec.select.2, %bb.ai ]
+  %.sroa.04.1271.2429 = phi i32 [ %.sroa.04.1271.2, %.loopexit264.2 ], [ 16, %bb.ai ]
+  %.sroa.011.1276.2428 = phi double [ %.sroa.011.1276.2, %.loopexit264.2 ], [ %i.dp, %bb.ai ]
+  %20 = call i32 @llvm.usub.sat.i32(i32 %.sroa.04.1271.2429, i32 1)
   store i32 3, ptr %i.k, align 8, !alias.scope !58
   %i.dt = icmp ne i32 %i.t, 3
-  %i.du = lshr i32 %18, 1
+  %i.du = lshr i32 %20, 1
   %i.dv = zext nneg i32 %i.du to i64
   %i.dw = zext i32 %i.v to i64
   br label %bb.aj
 
 bb.aj:                                            ; preds = %bb.am, %.lr.ph.3
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.am ], [ %i.dv, %.lr.ph.3 ] ; 3 uses
-  %.sroa.09.1281.3 = phi i1 [ %spec.select.3, %bb.am ], [ %.sroa.09.2.2, %.lr.ph.3 ]
-  %.sroa.011.1280.3 = phi double [ %i.ef, %bb.am ], [ %.sroa.011.1276.2, %.lr.ph.3 ] ; 2 uses
+  %.sroa.09.1281.3 = phi i1 [ %spec.select.3, %bb.am ], [ %.sroa.09.2.2430, %.lr.ph.3 ]
+  %.sroa.011.1280.3 = phi double [ %i.ef, %bb.am ], [ %.sroa.011.1276.2428, %.lr.ph.3 ] ; 2 uses
   %i.dx = shl nuw nsw i64 %indvars.iv, 3          ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store double 0.000000e+00, ptr %i.b, align 8

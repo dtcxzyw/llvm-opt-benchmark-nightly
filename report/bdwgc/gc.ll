@@ -205,10 +205,10 @@ bb.w:                                             ; preds = %bb.u, %bb.v, %bb.o,
 ; Function Attrs: nounwind uwtable
 define internal fastcc ptr @GC_alloc_large(i64 noundef %0, i32 noundef %1, i32 noundef range(i32 0, 2) %2) unnamed_addr #2 {
 bb.a:
-  %i.a = tail call i64 @llvm.uadd.sat.i64(i64 %0, i64 15) ; 3 uses
+  %i.a = tail call i64 @llvm.uadd.sat.i64(i64 %0, i64 15) ; 2 uses
   %i.b = and i64 %i.a, -16                        ; 4 uses
-  %i.c = icmp ult i64 %i.a, -4096
-  %i.d = add nuw i64 %i.a, 4080
+  %i.c = icmp ult i64 %0, -4111
+  %i.d = add i64 %i.a, 4080
   %i.e = lshr i64 %i.d, 12
   %i.f = select i1 %i.c, i64 %i.e, i64 4503599627370495, !prof !47 ; 5 uses
   %.b32 = load i1, ptr @GC_is_initialized, align 4
@@ -611,13 +611,13 @@ bb.c:                                             ; preds = %bb.a
 ; Function Attrs: nounwind uwtable
 define internal fastcc ptr @GC_allochblk(i64 noundef %0, i32 noundef %1, i32 noundef range(i32 0, 2) %2) unnamed_addr #2 {
 bb.a:
-  %3 = tail call i64 @llvm.uadd.sat.i64(i64 %0, i64 4095) ; 4 uses
-  %4 = icmp slt i64 %3, 0
-  br i1 %4, label %.loopexit, label %bb.b
+  %3 = icmp ugt i64 %0, 9223372036854771712
+  br i1 %3, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.a = lshr i64 %3, 12                          ; 2 uses
-  %i.b = icmp samesign ult i64 %3, 135168
+  %4 = add nuw nsw i64 %0, 4095
+  %i.a = lshr i64 %4, 12                          ; 2 uses
+  %i.b = icmp samesign ult i64 %0, 131073
   br i1 %i.b, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
@@ -625,7 +625,7 @@ bb.c:                                             ; preds = %bb.b
   br label %GC_hblk_fl_from_blocks.exit
 
 bb.d:                                             ; preds = %bb.b
-  %i.d = icmp samesign ugt i64 %3, 1048575
+  %i.d = icmp samesign ugt i64 %0, 1044480
   br i1 %i.d, label %GC_hblk_fl_from_blocks.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -1028,9 +1028,9 @@ GC_scratch_recycle_inner.exit.i:                  ; preds = %bb.i, %bb.h, %bb.e
   br label %bb.j
 
 bb.j:                                             ; preds = %._crit_edge.i, %GC_scratch_recycle_inner.exit.i
-  %.lcssa.i = phi i64 [ %i.ae, %._crit_edge.i ], [ %GC_get_maps.maps_buf_sz.promoted.i, %GC_scratch_recycle_inner.exit.i ] ; 2 uses
+  %.lcssa.i = phi i64 [ %i.ae, %._crit_edge.i ], [ %GC_get_maps.maps_buf_sz.promoted.i, %GC_scratch_recycle_inner.exit.i ] ; 3 uses
   %i.af = load ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 120), align 8 ; 4 uses
-  %i.ag = tail call i64 @llvm.uadd.sat.i64(i64 %.lcssa.i, i64 15) ; 2 uses
+  %i.ag = tail call i64 @llvm.uadd.sat.i64(i64 %.lcssa.i, i64 15)
   %i.ah = and i64 %i.ag, -16                      ; 9 uses
   %i.ai = load ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 136), align 8
   %i.aj = ptrtoint ptr %i.ai to i64
@@ -1040,7 +1040,7 @@ bb.j:                                             ; preds = %._crit_edge.i, %GC_
   br i1 %.not33.i.i, label %.lr.ph.i.i, label %GC_scratch_alloc.exit.i
 
 .lr.ph.i.i:                                       ; preds = %bb.j
-  %i.am = icmp ugt i64 %i.ag, 65535
+  %i.am = icmp ugt i64 %.lcssa.i, 65520
   %i.an = load i64, ptr @GC_page_size, align 8    ; 3 uses
   br i1 %i.am, label %bb.p, label %.preheader.preheader.i
 
@@ -1443,7 +1443,7 @@ declare i32 @pthread_cond_wait(ptr noundef, ptr noundef) local_unnamed_addr #30
 define internal fastcc ptr @GC_scratch_alloc(i64 noundef %0) unnamed_addr #2 {
 bb.a:
   %i.a = load ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 120), align 8 ; 2 uses
-  %i.b = tail call i64 @llvm.uadd.sat.i64(i64 %0, i64 15) ; 2 uses
+  %i.b = tail call i64 @llvm.uadd.sat.i64(i64 %0, i64 15)
   %i.c = and i64 %i.b, -16                        ; 8 uses
   %i.d = load ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 136), align 8
   %i.e = ptrtoint ptr %i.d to i64
@@ -1453,7 +1453,7 @@ bb.a:
   br i1 %.not33, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.h = icmp ugt i64 %i.b, 65535
+  %i.h = icmp ugt i64 %0, 65520
   br i1 %i.h, label %bb.b, label %.lr.ph.split
 
 ._crit_edge:                                      ; preds = %bb.f, %bb.a

@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2095)
   %i.w = load i64, ptr %i.t, align 8, !range !32, !alias.scope !2094, !noalias !2096, !noundef !11 ; 2 uses
   %i.x = tail call i64 @llvm.usub.sat.i64(i64 %i.w, i64 1) ; 2 uses
-  %i.y = load i64, ptr %i.v, align 8, !range !32, !alias.scope !2095, !noalias !2096, !noundef !11 ; 3 uses
+  %i.y = load i64, ptr %i.v, align 8, !range !32, !alias.scope !2095, !noalias !2096, !noundef !11 ; 16 uses
   %i.z = tail call i64 @llvm.usub.sat.i64(i64 %i.y, i64 1)
   %i.aa = icmp eq i64 %i.x, %i.z
   br i1 %i.aa, label %bb.e, label %_RNCNvMNtCsjqcU1oJFKXj_9hashbrown11rustc_entryINtNtB6_3map7HashMapNtNtNtCsgGgPqgSfnMH_7storage15content_manager13consensus_ops19ConsensusOperationsINtNtNtCsjZG7hsAZr3B_5tokio4sync9broadcast6SenderINtNtCskKLDkoKarTP_4core6result6ResultbNtNtB15_6errors12StorageErrorEENtNtNtCsG258MDvU3F_3std4hash6random11RandomStateE11rustc_entry0Csl8OoimOLbh_6qdrant.exit
@@ -607,6 +607,8 @@ bb.cm:                                            ; preds = %bb.cl
   br label %_RNCNvMNtCsjqcU1oJFKXj_9hashbrown11rustc_entryINtNtB6_3map7HashMapNtNtNtCsgGgPqgSfnMH_7storage15content_manager13consensus_ops19ConsensusOperationsINtNtNtCsjZG7hsAZr3B_5tokio4sync9broadcast6SenderINtNtCskKLDkoKarTP_4core6result6ResultbNtNtB15_6errors12StorageErrorEENtNtNtCsG258MDvU3F_3std4hash6random11RandomStateE11rustc_entry0Csl8OoimOLbh_6qdrant.exit
 
 bb.cn:                                            ; preds = %bb.e
+  %2 = icmp eq i64 %i.y, 2
+  tail call void @llvm.assume(i1 %2)
   %i.jp = getelementptr inbounds nuw i8, ptr %i.t, i64 8
   %i.jq = getelementptr inbounds nuw i8, ptr %i.v, i64 8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2121)
@@ -916,6 +918,8 @@ bb.ed:                                            ; preds = %bb.ec
   br label %_RNCNvMNtCsjqcU1oJFKXj_9hashbrown11rustc_entryINtNtB6_3map7HashMapNtNtNtCsgGgPqgSfnMH_7storage15content_manager13consensus_ops19ConsensusOperationsINtNtNtCsjZG7hsAZr3B_5tokio4sync9broadcast6SenderINtNtCskKLDkoKarTP_4core6result6ResultbNtNtB15_6errors12StorageErrorEENtNtNtCsG258MDvU3F_3std4hash6random11RandomStateE11rustc_entry0Csl8OoimOLbh_6qdrant.exit
 
 bb.ee:                                            ; preds = %bb.e
+  %3 = icmp eq i64 %i.y, 3
+  tail call void @llvm.assume(i1 %3)
   %i.og = getelementptr inbounds nuw i8, ptr %i.t, i64 24
   %.val5.i.i.i = load i64, ptr %i.og, align 8, !alias.scope !2094, !noalias !2096, !noundef !11 ; 2 uses
   %i.oh = getelementptr inbounds nuw i8, ptr %i.v, i64 24
@@ -933,6 +937,8 @@ bb.ef:                                            ; preds = %bb.ee
   br label %_RNCNvMNtCsjqcU1oJFKXj_9hashbrown11rustc_entryINtNtB6_3map7HashMapNtNtNtCsgGgPqgSfnMH_7storage15content_manager13consensus_ops19ConsensusOperationsINtNtNtCsjZG7hsAZr3B_5tokio4sync9broadcast6SenderINtNtCskKLDkoKarTP_4core6result6ResultbNtNtB15_6errors12StorageErrorEENtNtNtCsG258MDvU3F_3std4hash6random11RandomStateE11rustc_entry0Csl8OoimOLbh_6qdrant.exit
 
 bb.eg:                                            ; preds = %bb.e
+  %4 = icmp eq i64 %i.y, 4
+  tail call void @llvm.assume(i1 %4)
   %i.om = getelementptr inbounds nuw i8, ptr %i.t, i64 24
   %.val9.i.i.i = load i64, ptr %i.om, align 8, !alias.scope !2094, !noalias !2096, !noundef !11 ; 2 uses
   %i.on = getelementptr inbounds nuw i8, ptr %i.v, i64 24
@@ -949,6 +955,8 @@ bb.eh:                                            ; preds = %bb.eg
   br label %_RNCNvMNtCsjqcU1oJFKXj_9hashbrown11rustc_entryINtNtB6_3map7HashMapNtNtNtCsgGgPqgSfnMH_7storage15content_manager13consensus_ops19ConsensusOperationsINtNtNtCsjZG7hsAZr3B_5tokio4sync9broadcast6SenderINtNtCskKLDkoKarTP_4core6result6ResultbNtNtB15_6errors12StorageErrorEENtNtNtCsG258MDvU3F_3std4hash6random11RandomStateE11rustc_entry0Csl8OoimOLbh_6qdrant.exit
 
 bb.ei:                                            ; preds = %bb.e
+  %5 = icmp eq i64 %i.y, 5
+  tail call void @llvm.assume(i1 %5)
   %i.os = getelementptr inbounds nuw i8, ptr %i.t, i64 8
   %i.ot = getelementptr inbounds nuw i8, ptr %i.v, i64 8
   %i.ou = getelementptr inbounds nuw i8, ptr %i.t, i64 88
@@ -959,6 +967,8 @@ bb.ei:                                            ; preds = %bb.e
   br i1 %i.oy, label %bb.gr, label %_RNCNvMNtCsjqcU1oJFKXj_9hashbrown11rustc_entryINtNtB6_3map7HashMapNtNtNtCsgGgPqgSfnMH_7storage15content_manager13consensus_ops19ConsensusOperationsINtNtNtCsjZG7hsAZr3B_5tokio4sync9broadcast6SenderINtNtCskKLDkoKarTP_4core6result6ResultbNtNtB15_6errors12StorageErrorEENtNtNtCsG258MDvU3F_3std4hash6random11RandomStateE11rustc_entry0Csl8OoimOLbh_6qdrant.exit
 
 bb.ej:                                            ; preds = %bb.e
+  %6 = icmp eq i64 %i.y, 6
+  tail call void @llvm.assume(i1 %6)
   %i.oz = getelementptr inbounds nuw i8, ptr %i.t, i64 8
   %i.pa = getelementptr inbounds nuw i8, ptr %i.v, i64 8
   %i.pb = getelementptr inbounds nuw i8, ptr %i.t, i64 168
@@ -969,6 +979,8 @@ bb.ej:                                            ; preds = %bb.e
   br i1 %i.pf, label %bb.gt, label %_RNCNvMNtCsjqcU1oJFKXj_9hashbrown11rustc_entryINtNtB6_3map7HashMapNtNtNtCsgGgPqgSfnMH_7storage15content_manager13consensus_ops19ConsensusOperationsINtNtNtCsjZG7hsAZr3B_5tokio4sync9broadcast6SenderINtNtCskKLDkoKarTP_4core6result6ResultbNtNtB15_6errors12StorageErrorEENtNtNtCsG258MDvU3F_3std4hash6random11RandomStateE11rustc_entry0Csl8OoimOLbh_6qdrant.exit
 
 bb.ek:                                            ; preds = %bb.e
+  %7 = icmp eq i64 %i.y, 7
+  tail call void @llvm.assume(i1 %7)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2135)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2136)
   %i.pg = getelementptr inbounds nuw i8, ptr %i.t, i64 24
@@ -1028,6 +1040,8 @@ bb.er:                                            ; preds = %bb.ep
   br label %_RNCNvMNtCsjqcU1oJFKXj_9hashbrown11rustc_entryINtNtB6_3map7HashMapNtNtNtCsgGgPqgSfnMH_7storage15content_manager13consensus_ops19ConsensusOperationsINtNtNtCsjZG7hsAZr3B_5tokio4sync9broadcast6SenderINtNtCskKLDkoKarTP_4core6result6ResultbNtNtB15_6errors12StorageErrorEENtNtNtCsG258MDvU3F_3std4hash6random11RandomStateE11rustc_entry0Csl8OoimOLbh_6qdrant.exit
 
 bb.es:                                            ; preds = %bb.e
+  %8 = icmp eq i64 %i.y, 8
+  tail call void @llvm.assume(i1 %8)
   %i.ql = getelementptr inbounds nuw i8, ptr %i.t, i64 8
   %i.qm = getelementptr inbounds nuw i8, ptr %i.v, i64 8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2141)
@@ -1132,6 +1146,8 @@ bb.fb:                                            ; preds = %bb.ez
   br label %_RNCNvMNtCsjqcU1oJFKXj_9hashbrown11rustc_entryINtNtB6_3map7HashMapNtNtNtCsgGgPqgSfnMH_7storage15content_manager13consensus_ops19ConsensusOperationsINtNtNtCsjZG7hsAZr3B_5tokio4sync9broadcast6SenderINtNtCskKLDkoKarTP_4core6result6ResultbNtNtB15_6errors12StorageErrorEENtNtNtCsG258MDvU3F_3std4hash6random11RandomStateE11rustc_entry0Csl8OoimOLbh_6qdrant.exit
 
 bb.fc:                                            ; preds = %bb.e
+  %9 = icmp eq i64 %i.y, 9
+  tail call void @llvm.assume(i1 %9)
   %i.so = getelementptr inbounds nuw i8, ptr %i.t, i64 8
   %i.sp = getelementptr inbounds nuw i8, ptr %i.v, i64 8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2150)
@@ -1204,6 +1220,8 @@ bb.fi:                                            ; preds = %bb.fh
   br label %_RNCNvMNtCsjqcU1oJFKXj_9hashbrown11rustc_entryINtNtB6_3map7HashMapNtNtNtCsgGgPqgSfnMH_7storage15content_manager13consensus_ops19ConsensusOperationsINtNtNtCsjZG7hsAZr3B_5tokio4sync9broadcast6SenderINtNtCskKLDkoKarTP_4core6result6ResultbNtNtB15_6errors12StorageErrorEENtNtNtCsG258MDvU3F_3std4hash6random11RandomStateE11rustc_entry0Csl8OoimOLbh_6qdrant.exit
 
 bb.fj:                                            ; preds = %bb.e
+  %10 = icmp eq i64 %i.y, 10
+  tail call void @llvm.assume(i1 %10)
   %i.ub = getelementptr inbounds nuw i8, ptr %i.t, i64 8
   %i.uc = getelementptr inbounds nuw i8, ptr %i.v, i64 8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2159)
@@ -1264,6 +1282,8 @@ bb.fo:                                            ; preds = %_RNvXs7_NtCs607s0NA
   br label %_RNCNvMNtCsjqcU1oJFKXj_9hashbrown11rustc_entryINtNtB6_3map7HashMapNtNtNtCsgGgPqgSfnMH_7storage15content_manager13consensus_ops19ConsensusOperationsINtNtNtCsjZG7hsAZr3B_5tokio4sync9broadcast6SenderINtNtCskKLDkoKarTP_4core6result6ResultbNtNtB15_6errors12StorageErrorEENtNtNtCsG258MDvU3F_3std4hash6random11RandomStateE11rustc_entry0Csl8OoimOLbh_6qdrant.exit
 
 bb.fp:                                            ; preds = %bb.e
+  %11 = icmp eq i64 %i.y, 11
+  tail call void @llvm.assume(i1 %11)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2169)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2170)
   %i.vi = getelementptr inbounds nuw i8, ptr %i.t, i64 24
@@ -1318,6 +1338,8 @@ bb.fu:                                            ; preds = %bb.ft
   br label %_RNCNvMNtCsjqcU1oJFKXj_9hashbrown11rustc_entryINtNtB6_3map7HashMapNtNtNtCsgGgPqgSfnMH_7storage15content_manager13consensus_ops19ConsensusOperationsINtNtNtCsjZG7hsAZr3B_5tokio4sync9broadcast6SenderINtNtCskKLDkoKarTP_4core6result6ResultbNtNtB15_6errors12StorageErrorEENtNtNtCsG258MDvU3F_3std4hash6random11RandomStateE11rustc_entry0Csl8OoimOLbh_6qdrant.exit
 
 bb.fv:                                            ; preds = %bb.e
+  %12 = icmp eq i64 %i.y, 12
+  tail call void @llvm.assume(i1 %12)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2179)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2180)
   %i.wm = getelementptr inbounds nuw i8, ptr %i.t, i64 24
@@ -1438,6 +1460,8 @@ bb.gl:                                            ; preds = %bb.gj
   br label %_RNCNvMNtCsjqcU1oJFKXj_9hashbrown11rustc_entryINtNtB6_3map7HashMapNtNtNtCsgGgPqgSfnMH_7storage15content_manager13consensus_ops19ConsensusOperationsINtNtNtCsjZG7hsAZr3B_5tokio4sync9broadcast6SenderINtNtCskKLDkoKarTP_4core6result6ResultbNtNtB15_6errors12StorageErrorEENtNtNtCsG258MDvU3F_3std4hash6random11RandomStateE11rustc_entry0Csl8OoimOLbh_6qdrant.exit
 
 bb.gm:                                            ; preds = %bb.e
+  %13 = icmp eq i64 %i.y, 13
+  tail call void @llvm.assume(i1 %13)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2192)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2193)
   %i.yn = getelementptr inbounds nuw i8, ptr %i.t, i64 24
@@ -1474,6 +1498,8 @@ bb.gp:                                            ; preds = %bb.go
   br label %_RNCNvMNtCsjqcU1oJFKXj_9hashbrown11rustc_entryINtNtB6_3map7HashMapNtNtNtCsgGgPqgSfnMH_7storage15content_manager13consensus_ops19ConsensusOperationsINtNtNtCsjZG7hsAZr3B_5tokio4sync9broadcast6SenderINtNtCskKLDkoKarTP_4core6result6ResultbNtNtB15_6errors12StorageErrorEENtNtNtCsG258MDvU3F_3std4hash6random11RandomStateE11rustc_entry0Csl8OoimOLbh_6qdrant.exit
 
 bb.gq:                                            ; preds = %bb.e
+  %14 = icmp eq i64 %i.y, 14
+  tail call void @llvm.assume(i1 %14)
   %i.zh = getelementptr inbounds nuw i8, ptr %i.t, i64 8
   %i.zi = load i64, ptr %i.zh, align 8, !alias.scope !2094, !noalias !2096, !noundef !11
   %i.zj = getelementptr inbounds nuw i8, ptr %i.v, i64 8

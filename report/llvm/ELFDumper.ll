@@ -205,17 +205,17 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !998, !nonnull !248 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %.sroa.0.0.copyload.i = load i32, ptr %i.b, align 1, !tbaa !270 ; 14 uses
-  %.0.copyload.i.i.i.i = load i32, ptr %i.a, align 1 ; 2 uses
+  %.0.copyload.i.i.i.i = load i32, ptr %i.a, align 1 ; 8 uses
   %.not.i = icmp eq i32 %.0.copyload.i.i.i.i, 0
-  %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 12 ; 5 uses
-  %.sroa.0.0.i = select i1 %.not.i, ptr null, ptr %i.c ; 7 uses
-  %narrow.i = tail call i32 @llvm.usub.sat.i32(i32 %.0.copyload.i.i.i.i, i32 1) ; 7 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 12 ; 11 uses
+  %.sroa.0.0.i = select i1 %.not.i, ptr null, ptr %i.c
+  %narrow.i = tail call i32 @llvm.usub.sat.i32(i32 %.0.copyload.i.i.i.i, i32 1)
   %.sroa.4.0.i = zext i32 %narrow.i to i64        ; 7 uses
-  %.not.i38 = icmp eq i32 %narrow.i, 3
+  %.not.i38 = icmp eq i32 %.0.copyload.i.i.i.i, 4
   br i1 %.not.i38, label %_ZN4llvmeqENS_9StringRefES0_.exit, label %bb.b
 
 _ZN4llvmeqENS_9StringRefES0_.exit:                ; preds = %bb.a
-  %bcmp.i = tail call i32 @bcmp(ptr %.sroa.0.0.i, ptr nonnull @.str.473, i64 %.sroa.4.0.i)
+  %bcmp.i = tail call i32 @bcmp(ptr nonnull %i.c, ptr nonnull @.str.473, i64 %.sroa.4.0.i)
   %i.d = icmp eq i32 %bcmp.i, 0
   br i1 %i.d, label %.preheader.preheader, label %_ZN4llvmeqENS_9StringRefES0_.exit46.thread.thread
 
@@ -235,11 +235,11 @@ switch.lookup:                                    ; preds = %.preheader.preheade
   br label %_ZZ15getNoteTypeNameIN4llvm6object7ELFTypeILNS0_10endiannessE1ELb0EEEENS0_9StringRefERKNT_4NoteEjENKUlNS0_8ArrayRefIN12_GLOBAL__N_112_GLOBAL__N_18NoteTypeEEEE_clESE_.exit
 
 bb.b:                                             ; preds = %bb.a
-  %.not.i43 = icmp eq i32 %narrow.i, 7            ; 3 uses
+  %.not.i43 = icmp eq i32 %.0.copyload.i.i.i.i, 8 ; 3 uses
   br i1 %.not.i43, label %_ZN4llvmeqENS_9StringRefES0_.exit46, label %_ZN4llvmeqENS_9StringRefES0_.exit46.thread
 
 _ZN4llvmeqENS_9StringRefES0_.exit46:              ; preds = %bb.b
-  %bcmp.i45 = tail call i32 @bcmp(ptr %.sroa.0.0.i, ptr nonnull @.str.474, i64 %.sroa.4.0.i)
+  %bcmp.i45 = tail call i32 @bcmp(ptr nonnull %i.c, ptr nonnull @.str.474, i64 %.sroa.4.0.i)
   %i.g = icmp eq i32 %bcmp.i45, 0
   %i.h = icmp eq i32 %1, 4                        ; 2 uses
   br i1 %i.g, label %bb.c, label %.thread313
@@ -554,7 +554,7 @@ _ZN4llvmeqENS_9StringRefES0_.exit46.thread:       ; preds = %bb.b
 
 _ZN4llvmeqENS_9StringRefES0_.exit46.thread.thread: ; preds = %_ZN4llvmeqENS_9StringRefES0_.exit
   %i.q = icmp eq i32 %1, 4
-  %bcmp.i141 = tail call i32 @bcmp(ptr %.sroa.0.0.i, ptr nonnull @.str.476, i64 %.sroa.4.0.i)
+  %bcmp.i141 = tail call i32 @bcmp(ptr nonnull %i.c, ptr nonnull @.str.476, i64 %.sroa.4.0.i)
   %i.r = icmp eq i32 %bcmp.i141, 0
   br i1 %i.r, label %.preheader393.preheader, label %_ZN4llvmeqENS_9StringRefES0_.exit176.thread.thread
 
@@ -571,7 +571,7 @@ _ZN4llvmeqENS_9StringRefES0_.exit46.thread.thread: ; preds = %_ZN4llvmeqENS_9Str
   br i1 %i.h, label %_ZNK4llvm9StringRef11starts_withES0_.exit113, label %_ZN4llvmeqENS_9StringRefES0_.exit193.thread537
 
 bb.e:                                             ; preds = %_ZN4llvmeqENS_9StringRefES0_.exit46.thread
-  %.not.i84 = icmp ult i32 %narrow.i, 11
+  %.not.i84 = icmp ult i32 %.0.copyload.i.i.i.i, 12
   br i1 %.not.i84, label %bb.g, label %_ZNK4llvm9StringRef11starts_withES0_.exit
 
 _ZNK4llvm9StringRef11starts_withES0_.exit:        ; preds = %bb.e
@@ -901,7 +901,7 @@ bb.f:                                             ; preds = %.critedge.i100, %.f
   br label %_ZZ15getNoteTypeNameIN4llvm6object7ELFTypeILNS0_10endiannessE1ELb0EEEENS0_9StringRefERKNT_4NoteEjENKUlNS0_8ArrayRefIN12_GLOBAL__N_112_GLOBAL__N_18NoteTypeEEEE_clESE_.exit
 
 bb.g:                                             ; preds = %bb.e
-  %.not.i111 = icmp samesign ult i32 %narrow.i, 7
+  %.not.i111 = icmp samesign ult i32 %.0.copyload.i.i.i.i, 8
   br i1 %.not.i111, label %.critedge, label %_ZNK4llvm9StringRef11starts_withES0_.exit113
 
 _ZNK4llvm9StringRef11starts_withES0_.exit113:     ; preds = %_ZNK4llvm9StringRef11starts_withES0_.exit, %.thread313, %bb.g
@@ -1247,11 +1247,11 @@ switch.lookup807:                                 ; preds = %.preheader393.prehe
   br label %_ZZ15getNoteTypeNameIN4llvm6object7ELFTypeILNS0_10endiannessE1ELb0EEEENS0_9StringRefERKNT_4NoteEjENKUlNS0_8ArrayRefIN12_GLOBAL__N_112_GLOBAL__N_18NoteTypeEEEE_clESE_.exit
 
 .critedge:                                        ; preds = %_ZN4llvmeqENS_9StringRefES0_.exit46.thread, %bb.g
-  %.not.i156 = icmp eq i32 %narrow.i, 6
+  %.not.i156 = icmp eq i32 %.0.copyload.i.i.i.i, 7
   br i1 %.not.i156, label %_ZN4llvmeqENS_9StringRefES0_.exit159, label %.thread352
 
 _ZN4llvmeqENS_9StringRefES0_.exit159:             ; preds = %.critedge
-  %bcmp.i158 = tail call i32 @bcmp(ptr %.sroa.0.0.i, ptr nonnull @.str.478, i64 %.sroa.4.0.i)
+  %bcmp.i158 = tail call i32 @bcmp(ptr nonnull %i.c, ptr nonnull @.str.478, i64 %.sroa.4.0.i)
   %i.at = icmp eq i32 %bcmp.i158, 0
   br i1 %i.at, label %.preheader407.preheader, label %_ZN4llvmeqENS_9StringRefES0_.exit176.thread.thread
 
@@ -1263,7 +1263,7 @@ _ZN4llvmeqENS_9StringRefES0_.exit159:             ; preds = %.critedge
 
 .thread352:                                       ; preds = %_ZNK4llvm9StringRef11starts_withES0_.exit113, %.critedge
   %.ph356 = phi i1 [ %i.p, %.critedge ], [ true, %_ZNK4llvm9StringRef11starts_withES0_.exit113 ] ; 2 uses
-  %.not.i173 = icmp eq i32 %narrow.i, 14
+  %.not.i173 = icmp eq i32 %.0.copyload.i.i.i.i, 15
   br i1 %.not.i173, label %_ZN4llvmeqENS_9StringRefES0_.exit176, label %_ZN4llvmeqENS_9StringRefES0_.exit176.thread
 
 _ZN4llvmeqENS_9StringRefES0_.exit176.thread.thread: ; preds = %_ZN4llvmeqENS_9StringRefES0_.exit46.thread.thread, %_ZN4llvmeqENS_9StringRefES0_.exit159
@@ -1274,7 +1274,7 @@ _ZN4llvmeqENS_9StringRefES0_.exit176.thread:      ; preds = %.thread352
   br i1 %.not.i43, label %_ZN4llvmeqENS_9StringRefES0_.exit193, label %_ZN4llvmeqENS_9StringRefES0_.exit193.thread
 
 _ZN4llvmeqENS_9StringRefES0_.exit176:             ; preds = %.thread352
-  %bcmp.i175 = tail call i32 @bcmp(ptr %.sroa.0.0.i, ptr nonnull @.str.479, i64 %.sroa.4.0.i)
+  %bcmp.i175 = tail call i32 @bcmp(ptr nonnull %i.c, ptr nonnull @.str.479, i64 %.sroa.4.0.i)
   %i.au = icmp eq i32 %bcmp.i175, 0
   br i1 %i.au, label %.preheader405.preheader, label %bb.i
 
@@ -1305,7 +1305,7 @@ _ZN4llvmeqENS_9StringRefES0_.exit193:             ; preds = %_ZN4llvmeqENS_9Stri
   br i1 %i.ax, label %.preheader395.preheader, label %bb.k
 
 _ZN4llvmeqENS_9StringRefES0_.exit193.thread537:   ; preds = %.thread313
-  %bcmp.i192538 = tail call i32 @bcmp(ptr %.sroa.0.0.i, ptr nonnull @.str.481, i64 %.sroa.4.0.i)
+  %bcmp.i192538 = tail call i32 @bcmp(ptr nonnull %i.c, ptr nonnull @.str.481, i64 %.sroa.4.0.i)
   %i.ay = icmp eq i32 %bcmp.i192538, 0
   br i1 %i.ay, label %.preheader395.preheader, label %.thread
 
@@ -1708,17 +1708,17 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !1573, !nonnull !248 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %.sroa.0.0.copyload.i = load i32, ptr %i.b, align 1, !tbaa !270 ; 14 uses
-  %.0.copyload.i.i.i.i = load i32, ptr %i.a, align 1 ; 2 uses
+  %.0.copyload.i.i.i.i = load i32, ptr %i.a, align 1 ; 8 uses
   %.not.i = icmp eq i32 %.0.copyload.i.i.i.i, 0
-  %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 12 ; 5 uses
-  %.sroa.0.0.i = select i1 %.not.i, ptr null, ptr %i.c ; 7 uses
-  %narrow.i = tail call i32 @llvm.usub.sat.i32(i32 %.0.copyload.i.i.i.i, i32 1) ; 7 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 12 ; 11 uses
+  %.sroa.0.0.i = select i1 %.not.i, ptr null, ptr %i.c
+  %narrow.i = tail call i32 @llvm.usub.sat.i32(i32 %.0.copyload.i.i.i.i, i32 1)
   %.sroa.4.0.i = zext i32 %narrow.i to i64        ; 7 uses
-  %.not.i38 = icmp eq i32 %narrow.i, 3
+  %.not.i38 = icmp eq i32 %.0.copyload.i.i.i.i, 4
   br i1 %.not.i38, label %_ZN4llvmeqENS_9StringRefES0_.exit, label %bb.b
 
 _ZN4llvmeqENS_9StringRefES0_.exit:                ; preds = %bb.a
-  %bcmp.i = tail call i32 @bcmp(ptr %.sroa.0.0.i, ptr nonnull @.str.473, i64 %.sroa.4.0.i)
+  %bcmp.i = tail call i32 @bcmp(ptr nonnull %i.c, ptr nonnull @.str.473, i64 %.sroa.4.0.i)
   %i.d = icmp eq i32 %bcmp.i, 0
   br i1 %i.d, label %.preheader.preheader, label %_ZN4llvmeqENS_9StringRefES0_.exit46.thread.thread
 
@@ -1738,11 +1738,11 @@ switch.lookup:                                    ; preds = %.preheader.preheade
   br label %_ZZ15getNoteTypeNameIN4llvm6object7ELFTypeILNS0_10endiannessE1ELb1EEEENS0_9StringRefERKNT_4NoteEjENKUlNS0_8ArrayRefIN12_GLOBAL__N_112_GLOBAL__N_18NoteTypeEEEE_clESE_.exit
 
 bb.b:                                             ; preds = %bb.a
-  %.not.i43 = icmp eq i32 %narrow.i, 7            ; 3 uses
+  %.not.i43 = icmp eq i32 %.0.copyload.i.i.i.i, 8 ; 3 uses
   br i1 %.not.i43, label %_ZN4llvmeqENS_9StringRefES0_.exit46, label %_ZN4llvmeqENS_9StringRefES0_.exit46.thread
 
 _ZN4llvmeqENS_9StringRefES0_.exit46:              ; preds = %bb.b
-  %bcmp.i45 = tail call i32 @bcmp(ptr %.sroa.0.0.i, ptr nonnull @.str.474, i64 %.sroa.4.0.i)
+  %bcmp.i45 = tail call i32 @bcmp(ptr nonnull %i.c, ptr nonnull @.str.474, i64 %.sroa.4.0.i)
   %i.g = icmp eq i32 %bcmp.i45, 0
   %i.h = icmp eq i32 %1, 4                        ; 2 uses
   br i1 %i.g, label %bb.c, label %.thread313
@@ -2057,7 +2057,7 @@ _ZN4llvmeqENS_9StringRefES0_.exit46.thread:       ; preds = %bb.b
 
 _ZN4llvmeqENS_9StringRefES0_.exit46.thread.thread: ; preds = %_ZN4llvmeqENS_9StringRefES0_.exit
   %i.q = icmp eq i32 %1, 4
-  %bcmp.i141 = tail call i32 @bcmp(ptr %.sroa.0.0.i, ptr nonnull @.str.476, i64 %.sroa.4.0.i)
+  %bcmp.i141 = tail call i32 @bcmp(ptr nonnull %i.c, ptr nonnull @.str.476, i64 %.sroa.4.0.i)
   %i.r = icmp eq i32 %bcmp.i141, 0
   br i1 %i.r, label %.preheader393.preheader, label %_ZN4llvmeqENS_9StringRefES0_.exit176.thread.thread
 
@@ -2074,7 +2074,7 @@ _ZN4llvmeqENS_9StringRefES0_.exit46.thread.thread: ; preds = %_ZN4llvmeqENS_9Str
   br i1 %i.h, label %_ZNK4llvm9StringRef11starts_withES0_.exit113, label %_ZN4llvmeqENS_9StringRefES0_.exit193.thread537
 
 bb.e:                                             ; preds = %_ZN4llvmeqENS_9StringRefES0_.exit46.thread
-  %.not.i84 = icmp ult i32 %narrow.i, 11
+  %.not.i84 = icmp ult i32 %.0.copyload.i.i.i.i, 12
   br i1 %.not.i84, label %bb.g, label %_ZNK4llvm9StringRef11starts_withES0_.exit
 
 _ZNK4llvm9StringRef11starts_withES0_.exit:        ; preds = %bb.e
@@ -2404,7 +2404,7 @@ bb.f:                                             ; preds = %.critedge.i100, %.f
   br label %_ZZ15getNoteTypeNameIN4llvm6object7ELFTypeILNS0_10endiannessE1ELb1EEEENS0_9StringRefERKNT_4NoteEjENKUlNS0_8ArrayRefIN12_GLOBAL__N_112_GLOBAL__N_18NoteTypeEEEE_clESE_.exit
 
 bb.g:                                             ; preds = %bb.e
-  %.not.i111 = icmp samesign ult i32 %narrow.i, 7
+  %.not.i111 = icmp samesign ult i32 %.0.copyload.i.i.i.i, 8
   br i1 %.not.i111, label %.critedge, label %_ZNK4llvm9StringRef11starts_withES0_.exit113
 
 _ZNK4llvm9StringRef11starts_withES0_.exit113:     ; preds = %_ZNK4llvm9StringRef11starts_withES0_.exit, %.thread313, %bb.g
@@ -2750,11 +2750,11 @@ switch.lookup807:                                 ; preds = %.preheader393.prehe
   br label %_ZZ15getNoteTypeNameIN4llvm6object7ELFTypeILNS0_10endiannessE1ELb1EEEENS0_9StringRefERKNT_4NoteEjENKUlNS0_8ArrayRefIN12_GLOBAL__N_112_GLOBAL__N_18NoteTypeEEEE_clESE_.exit
 
 .critedge:                                        ; preds = %_ZN4llvmeqENS_9StringRefES0_.exit46.thread, %bb.g
-  %.not.i156 = icmp eq i32 %narrow.i, 6
+  %.not.i156 = icmp eq i32 %.0.copyload.i.i.i.i, 7
   br i1 %.not.i156, label %_ZN4llvmeqENS_9StringRefES0_.exit159, label %.thread352
 
 _ZN4llvmeqENS_9StringRefES0_.exit159:             ; preds = %.critedge
-  %bcmp.i158 = tail call i32 @bcmp(ptr %.sroa.0.0.i, ptr nonnull @.str.478, i64 %.sroa.4.0.i)
+  %bcmp.i158 = tail call i32 @bcmp(ptr nonnull %i.c, ptr nonnull @.str.478, i64 %.sroa.4.0.i)
   %i.at = icmp eq i32 %bcmp.i158, 0
   br i1 %i.at, label %.preheader407.preheader, label %_ZN4llvmeqENS_9StringRefES0_.exit176.thread.thread
 
@@ -2766,7 +2766,7 @@ _ZN4llvmeqENS_9StringRefES0_.exit159:             ; preds = %.critedge
 
 .thread352:                                       ; preds = %_ZNK4llvm9StringRef11starts_withES0_.exit113, %.critedge
   %.ph356 = phi i1 [ %i.p, %.critedge ], [ true, %_ZNK4llvm9StringRef11starts_withES0_.exit113 ] ; 2 uses
-  %.not.i173 = icmp eq i32 %narrow.i, 14
+  %.not.i173 = icmp eq i32 %.0.copyload.i.i.i.i, 15
   br i1 %.not.i173, label %_ZN4llvmeqENS_9StringRefES0_.exit176, label %_ZN4llvmeqENS_9StringRefES0_.exit176.thread
 
 _ZN4llvmeqENS_9StringRefES0_.exit176.thread.thread: ; preds = %_ZN4llvmeqENS_9StringRefES0_.exit46.thread.thread, %_ZN4llvmeqENS_9StringRefES0_.exit159
@@ -2777,7 +2777,7 @@ _ZN4llvmeqENS_9StringRefES0_.exit176.thread:      ; preds = %.thread352
   br i1 %.not.i43, label %_ZN4llvmeqENS_9StringRefES0_.exit193, label %_ZN4llvmeqENS_9StringRefES0_.exit193.thread
 
 _ZN4llvmeqENS_9StringRefES0_.exit176:             ; preds = %.thread352
-  %bcmp.i175 = tail call i32 @bcmp(ptr %.sroa.0.0.i, ptr nonnull @.str.479, i64 %.sroa.4.0.i)
+  %bcmp.i175 = tail call i32 @bcmp(ptr nonnull %i.c, ptr nonnull @.str.479, i64 %.sroa.4.0.i)
   %i.au = icmp eq i32 %bcmp.i175, 0
   br i1 %i.au, label %.preheader405.preheader, label %bb.i
 
@@ -2808,7 +2808,7 @@ _ZN4llvmeqENS_9StringRefES0_.exit193:             ; preds = %_ZN4llvmeqENS_9Stri
   br i1 %i.ax, label %.preheader395.preheader, label %bb.k
 
 _ZN4llvmeqENS_9StringRefES0_.exit193.thread537:   ; preds = %.thread313
-  %bcmp.i192538 = tail call i32 @bcmp(ptr %.sroa.0.0.i, ptr nonnull @.str.481, i64 %.sroa.4.0.i)
+  %bcmp.i192538 = tail call i32 @bcmp(ptr nonnull %i.c, ptr nonnull @.str.481, i64 %.sroa.4.0.i)
   %i.ay = icmp eq i32 %bcmp.i192538, 0
   br i1 %i.ay, label %.preheader395.preheader, label %.thread
 

@@ -205,7 +205,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5570)
   %i.d = load i64, ptr %i.b, align 8, !range !51, !alias.scope !5571, !noundef !23 ; 3 uses
   %i.e = tail call i64 @llvm.usub.sat.i64(i64 %i.d, i64 4) ; 2 uses
-  %i.f = load i64, ptr %i.c, align 8, !range !51, !alias.scope !5572, !noundef !23 ; 3 uses
+  %i.f = load i64, ptr %i.c, align 8, !range !51, !alias.scope !5572, !noundef !23 ; 6 uses
   %i.g = tail call i64 @llvm.usub.sat.i64(i64 %i.f, i64 4)
   %i.h = icmp eq i64 %i.e, %i.g
   br i1 %i.h, label %bb.b, label %_RNvYNtNtCslLuZgPVt6hg_3ide5hover11HoverActionNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB6_.exit.thread
@@ -426,6 +426,8 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.db, label %_RNvYNtNtCslLuZgPVt6hg_3ide5hover11HoverActionNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB6_.exit.thread7, label %_RNvYNtNtCslLuZgPVt6hg_3ide5hover11HoverActionNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB6_.exit.thread
 
 bb.u:                                             ; preds = %bb.b
+  %3 = icmp eq i64 %i.f, 5
+  tail call void @llvm.assume(i1 %3)
   %i.dc = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.dd = load i32, ptr %i.dc, align 8, !alias.scope !5571, !noundef !23
   %i.de = getelementptr inbounds nuw i8, ptr %i.c, i64 8
@@ -434,6 +436,8 @@ bb.u:                                             ; preds = %bb.b
   br i1 %i.dg, label %_RNvYNtNtCslLuZgPVt6hg_3ide5hover11HoverActionNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB6_.exit, label %_RNvYNtNtCslLuZgPVt6hg_3ide5hover11HoverActionNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB6_.exit.thread
 
 bb.v:                                             ; preds = %bb.b
+  %4 = icmp eq i64 %i.f, 6
+  tail call void @llvm.assume(i1 %4)
   %i.dh = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.di = load i32, ptr %i.dh, align 8, !alias.scope !5571, !noundef !23
   %i.dj = getelementptr inbounds nuw i8, ptr %i.c, i64 8
@@ -442,6 +446,8 @@ bb.v:                                             ; preds = %bb.b
   br i1 %i.dl, label %.split, label %_RNvYNtNtCslLuZgPVt6hg_3ide5hover11HoverActionNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB6_.exit.thread
 
 bb.w:                                             ; preds = %bb.b
+  %5 = icmp eq i64 %i.f, 7
+  tail call void @llvm.assume(i1 %5)
   %i.dm = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %i.dn = load i64, ptr %i.dm, align 8, !alias.scope !5571, !noundef !23 ; 3 uses
   %i.do = getelementptr inbounds nuw i8, ptr %i.c, i64 24

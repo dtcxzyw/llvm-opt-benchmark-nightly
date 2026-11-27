@@ -202,7 +202,7 @@ bb.a:
   %i.o = alloca [56 x i8], align 8                ; 5 uses
   %i.p = alloca [32 x i8], align 8                ; 7 uses
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 176 ; 10 uses
-  %i.r = getelementptr inbounds nuw i8, ptr %1, i64 200 ; 12 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %1, i64 200 ; 11 uses
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 7 uses
   %i.t = load i64, ptr %i.q, align 8, !range !24, !noundef !6 ; 2 uses
   %i.u = tail call i64 @llvm.usub.sat.i64(i64 %i.t, i64 1)
@@ -405,7 +405,7 @@ bb.w:                                             ; preds = %bb.u
   unreachable
 
 bb.x:                                             ; preds = %bb.v
-  %i.ak = getelementptr inbounds nuw i8, ptr %i.n, i64 8 ; 4 uses
+  %i.ak = getelementptr inbounds nuw i8, ptr %i.n, i64 8 ; 3 uses
   %i.al = load ptr, ptr %i.ak, align 8, !noundef !6
   %i.am = icmp eq ptr %i.al, null
   br i1 %i.am, label %bb.y, label %bb.z
@@ -423,11 +423,11 @@ bb.z:                                             ; preds = %bb.x
   call void @llvm.experimental.noalias.scope.decl(metadata !3068)
   call void @llvm.experimental.noalias.scope.decl(metadata !3069)
   call void @llvm.experimental.noalias.scope.decl(metadata !3070)
-  %i.ap = load i64, ptr %i.r, align 8, !range !20, !alias.scope !3069, !noundef !6
-  %i.aq = call i64 @llvm.usub.sat.i64(i64 %i.ap, i64 2)
+  %i.ap = load i64, ptr %i.r, align 8, !range !20, !alias.scope !3069, !noundef !6 ; 2 uses
+  %i.aq = call i64 @llvm.usub.sat.i64(i64 %i.ap, i64 2) ; 2 uses
   switch i64 %i.aq, label %default.unreachable165 [
     i64 0, label %bb.aa
-    i64 1, label %bb.ac
+    i64 1, label %3
     i64 2, label %_RNvMNvNtNtCsgoPClq0H8JF_9actix_web7extract14tuple_from_req1__INtB4_13ExtractFutureINtNtNtB8_5types4json14JsonExtractFutNtNtNtCs5QaNqjAn6vc_5shard9snapshots17snapshot_manifest16SnapshotManifestEINtB1l_4JsonB1T_EE15project_replaceCsl8OoimOLbh_6qdrant.exit.thread
   ]
 
@@ -437,6 +437,12 @@ bb.aa:                                            ; preds = %bb.z
   invoke void @_RNvXs1_NtCskn68Yowd57P_16pin_project_lite9___privateINtB5_22UnsafeDropInPlaceGuardINtNtNtCsgoPClq0H8JF_9actix_web5types4json14JsonExtractFutNtNtNtCs5QaNqjAn6vc_5shard9snapshots17snapshot_manifest16SnapshotManifestEENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.g)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTINtNtCskn68Yowd57P_16pin_project_lite9___private22UnsafeDropInPlaceGuardINtNtNtCsgoPClq0H8JF_9actix_web5types4json14JsonExtractFutNtNtNtCs5QaNqjAn6vc_5shard9snapshots17snapshot_manifest16SnapshotManifestEEEECsl8OoimOLbh_6qdrant.exit.i unwind label %bb.ab, !noalias !3072
 
+3:                                                ; preds = %bb.z
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 208
+  %5 = getelementptr inbounds nuw i8, ptr %i.o, i64 8
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %5, ptr noundef nonnull align 8 dereferenceable(48) %4, i64 48, i1 false), !alias.scope !3073
+  br label %_RNvMNvNtNtCsgoPClq0H8JF_9actix_web7extract14tuple_from_req1__INtB4_13ExtractFutureINtNtNtB8_5types4json14JsonExtractFutNtNtNtCs5QaNqjAn6vc_5shard9snapshots17snapshot_manifest16SnapshotManifestEINtB1l_4JsonB1T_EE15project_replaceCsl8OoimOLbh_6qdrant.exit.thread
+
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTINtNtCskn68Yowd57P_16pin_project_lite9___private22UnsafeDropInPlaceGuardINtNtNtCsgoPClq0H8JF_9actix_web5types4json14JsonExtractFutNtNtNtCs5QaNqjAn6vc_5shard9snapshots17snapshot_manifest16SnapshotManifestEEEECsl8OoimOLbh_6qdrant.exit.i: ; preds = %bb.aa
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !3071
   br label %_RNvMNvNtNtCsgoPClq0H8JF_9actix_web7extract14tuple_from_req1__INtB4_13ExtractFutureINtNtNtB8_5types4json14JsonExtractFutNtNtNtCs5QaNqjAn6vc_5shard9snapshots17snapshot_manifest16SnapshotManifestEINtB1l_4JsonB1T_EE15project_replaceCsl8OoimOLbh_6qdrant.exit.thread
@@ -444,25 +450,20 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTINtNtCskn68Yowd57P_16pin_project_lite9_
 bb.ab:                                            ; preds = %bb.aa
   %i.ar = landingpad { ptr, i32 }
           cleanup
-  store i64 3, ptr %i.r, align 8, !alias.scope !3073
+  store i64 3, ptr %i.r, align 8, !alias.scope !3074
   %.sroa.597.0..sroa_idx98 = getelementptr inbounds nuw i8, ptr %1, i64 208
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.597.0..sroa_idx98, ptr noundef nonnull align 8 dereferenceable(48) %i.ak, i64 48, i1 false)
   br label %common.resume
 
-_RNvMNvNtNtCsgoPClq0H8JF_9actix_web7extract14tuple_from_req1__INtB4_13ExtractFutureINtNtNtB8_5types4json14JsonExtractFutNtNtNtCs5QaNqjAn6vc_5shard9snapshots17snapshot_manifest16SnapshotManifestEINtB1l_4JsonB1T_EE15project_replaceCsl8OoimOLbh_6qdrant.exit.thread: ; preds = %bb.z, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTINtNtCskn68Yowd57P_16pin_project_lite9___private22UnsafeDropInPlaceGuardINtNtNtCsgoPClq0H8JF_9actix_web5types4json14JsonExtractFutNtNtNtCs5QaNqjAn6vc_5shard9snapshots17snapshot_manifest16SnapshotManifestEEEECsl8OoimOLbh_6qdrant.exit.i
-  store i64 3, ptr %i.r, align 8, !alias.scope !3073
+_RNvMNvNtNtCsgoPClq0H8JF_9actix_web7extract14tuple_from_req1__INtB4_13ExtractFutureINtNtNtB8_5types4json14JsonExtractFutNtNtNtCs5QaNqjAn6vc_5shard9snapshots17snapshot_manifest16SnapshotManifestEINtB1l_4JsonB1T_EE15project_replaceCsl8OoimOLbh_6qdrant.exit.thread: ; preds = %bb.z, %3, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTINtNtCskn68Yowd57P_16pin_project_lite9___private22UnsafeDropInPlaceGuardINtNtNtCsgoPClq0H8JF_9actix_web5types4json14JsonExtractFutNtNtNtCs5QaNqjAn6vc_5shard9snapshots17snapshot_manifest16SnapshotManifestEEEECsl8OoimOLbh_6qdrant.exit.i
+  store i64 %i.aq, ptr %i.o, align 8
+  store i64 3, ptr %i.r, align 8, !alias.scope !3074
   %.sroa.597.0..sroa_idx166 = getelementptr inbounds nuw i8, ptr %1, i64 208
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.597.0..sroa_idx166, ptr noundef nonnull align 8 dereferenceable(48) %i.ak, i64 48, i1 false)
-  br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsgoPClq0H8JF_9actix_web7extract14tuple_from_req18ExtractReplaceProjINtNtNtBI_5types4json14JsonExtractFutNtNtNtCs5QaNqjAn6vc_5shard9snapshots17snapshot_manifest16SnapshotManifestEINtB1R_4JsonB2p_EEECsl8OoimOLbh_6qdrant.exit
+  %6 = icmp eq i64 %i.ap, 3
+  br i1 %6, label %bb.ac, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsgoPClq0H8JF_9actix_web7extract14tuple_from_req18ExtractReplaceProjINtNtNtBI_5types4json14JsonExtractFutNtNtNtCs5QaNqjAn6vc_5shard9snapshots17snapshot_manifest16SnapshotManifestEINtB1R_4JsonB2p_EEECsl8OoimOLbh_6qdrant.exit
 
-bb.ac:                                            ; preds = %bb.z
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 208
-  %4 = getelementptr inbounds nuw i8, ptr %i.o, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %4, ptr noundef nonnull align 8 dereferenceable(48) %3, i64 48, i1 false), !alias.scope !3074
-  store i64 1, ptr %i.o, align 8, !alias.scope !3068
-  store i64 3, ptr %i.r, align 8, !alias.scope !3073
-  %.sroa.597.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 208
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.597.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(48) %i.ak, i64 48, i1 false)
+bb.ac:                                            ; preds = %_RNvMNvNtNtCsgoPClq0H8JF_9actix_web7extract14tuple_from_req1__INtB4_13ExtractFutureINtNtNtB8_5types4json14JsonExtractFutNtNtNtCs5QaNqjAn6vc_5shard9snapshots17snapshot_manifest16SnapshotManifestEINtB1l_4JsonB1T_EE15project_replaceCsl8OoimOLbh_6qdrant.exit.thread
   %i.as = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   call void @_RNvXsg_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTNtNtCsexYYUdYSQU6_5alloc6string6StringNtNtNtCs607s0NAIaWN_7segment10data_types8manifest15SegmentManifestEENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %i.as)
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsgoPClq0H8JF_9actix_web7extract14tuple_from_req18ExtractReplaceProjINtNtNtBI_5types4json14JsonExtractFutNtNtNtCs5QaNqjAn6vc_5shard9snapshots17snapshot_manifest16SnapshotManifestEINtB1R_4JsonB2p_EEECsl8OoimOLbh_6qdrant.exit
@@ -865,8 +866,8 @@ begin_hunk_1_@llvm.experimental.noalias.scope.decl
 !3070 = !{!3006}
 !3071 = !{!3004, !3005, !3006}
 !3072 = !{!3004, !3006}
-!3073 = !{!3005, !3006}
-!3074 = !{!3004, !3005}
+!3073 = !{!3004, !3005}
+!3074 = !{!3005, !3006}
 !3075 = !{!3008}
 !3076 = !{!3009, !3008}
 !3077 = !{!3011}

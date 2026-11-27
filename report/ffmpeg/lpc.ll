@@ -204,9 +204,9 @@ scalar.ph434.preheader:                           ; preds = %.lr.ph245, %middle.
 
 .lr.ph249.preheader:                              ; preds = %.preheader
   %i.hx = zext nneg i32 %4 to i64                 ; 3 uses
-  %i.hy = call i64 @llvm.usub.sat.i64(i64 %wide.trip.count302, i64 2) ; 2 uses
+  %i.hy = call i64 @llvm.usub.sat.i64(i64 %wide.trip.count302, i64 2)
   %i.hz = add nuw nsw i64 %i.hy, 1                ; 2 uses
-  %min.iters.check447 = icmp samesign ult i64 %i.hy, 3
+  %min.iters.check447 = icmp ult i32 %4, 5
   br i1 %min.iters.check447, label %.lr.ph249.preheader491, label %vector.ph448
 
 vector.ph448:                                     ; preds = %.lr.ph249.preheader

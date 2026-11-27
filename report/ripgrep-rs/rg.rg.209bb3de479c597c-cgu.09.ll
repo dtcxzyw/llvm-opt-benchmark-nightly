@@ -202,17 +202,17 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 544, !dbg !6707 ; 2 uses
-  %i.f = load i64, ptr %i.e, align 8, !dbg !6707, !noundef !294
-  %i.g = tail call i64 @llvm.uadd.sat.i64(i64 %i.f, i64 1), !dbg !6708 ; 3 uses
+  %i.f = load i64, ptr %i.e, align 8, !dbg !6707, !noundef !294 ; 3 uses
+  %i.g = tail call i64 @llvm.uadd.sat.i64(i64 %i.f, i64 1), !dbg !6708
   store i64 %i.g, ptr %i.e, align 8, !dbg !6709
-  %i.h = icmp ugt i64 %i.g, 3, !dbg !6710
+  %i.h = icmp ugt i64 %i.f, 2, !dbg !6710
   br i1 %i.h, label %bb.e, label %bb.d, !dbg !6711, !prof !375
 
 bb.d:                                             ; preds = %bb.c
-  switch i64 %i.g, label %default.unreachable10 [
-    i64 1, label %bb.f
-    i64 2, label %bb.g
-    i64 3, label %bb.h
+  switch i64 %i.f, label %default.unreachable10 [
+    i64 0, label %bb.f
+    i64 1, label %bb.g
+    i64 2, label %bb.h
   ], !dbg !6712, !prof !626
 
 bb.e:                                             ; preds = %bb.c

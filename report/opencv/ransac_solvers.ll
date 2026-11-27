@@ -205,12 +205,12 @@ _ZNSt6vectorIN2cv3PtrINS0_4usac17NeighborhoodGraphEEESaIS4_EE7reserveEm.exit: ; 
   br i1 %i.sq, label %.lr.ph.preheader, label %.preheader
 
 .lr.ph.preheader:                                 ; preds = %_ZNSt6vectorIN2cv3PtrINS0_4usac17NeighborhoodGraphEEESaIS4_EE7reserveEm.exit
-  %i.sr = shl nsw i32 %i.sp, 2
+  %i.sr = shl nsw i32 %i.sp, 2                    ; 2 uses
   %i.ss = zext nneg i32 %i.sr to i64              ; 2 uses
-  %i.st = call i64 @llvm.usub.sat.i64(i64 %i.ss, i64 4) ; 2 uses
+  %i.st = call i64 @llvm.usub.sat.i64(i64 %i.ss, i64 4)
   %i.su = lshr exact i64 %i.st, 2
   %i.sv = add nuw nsw i64 %i.su, 1                ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %i.st, 28
+  %min.iters.check = icmp ult i32 %i.sr, 32
   br i1 %min.iters.check, label %.lr.ph.preheader570, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader

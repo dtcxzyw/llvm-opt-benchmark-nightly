@@ -187,7 +187,7 @@ bb.b:                                             ; preds = %._crit_edge
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(128) %i.a, i8 0, i64 128, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
-  %i.dh = shl nsw i32 %i.j, 2                     ; 3 uses
+  %i.dh = shl nsw i32 %i.j, 2                     ; 5 uses
   %i.di = icmp sgt i32 %i.j, 0                    ; 2 uses
   br i1 %i.di, label %.lr.ph97.preheader, label %._crit_edge98
 
@@ -340,24 +340,23 @@ middle.block:                                     ; preds = %vector.body
   br i1 %i.di, label %iter.check, label %._crit_edge104
 
 iter.check:                                       ; preds = %._crit_edge98
-  %i.hr = zext nneg i32 %i.dh to i64              ; 3 uses
-  %i.hs = call i64 @llvm.usub.sat.i64(i64 %i.hr, i64 4) ; 3 uses
+  %i.hr = zext nneg i32 %i.dh to i64              ; 4 uses
+  %i.hs = call i64 @llvm.usub.sat.i64(i64 %i.hr, i64 4)
   %i.ht = lshr exact i64 %i.hs, 2
   %i.hu = add nuw nsw i64 %i.ht, 1                ; 5 uses
-  %min.iters.check123 = icmp samesign ult i64 %i.hs, 12
+  %min.iters.check123 = icmp ult i32 %i.dh, 16
   br i1 %min.iters.check123, label %.lr.ph103.preheader, label %vector.memcheck124
 
 vector.memcheck124:                               ; preds = %iter.check
-  %7 = call i64 @llvm.umax.i64(i64 %i.hr, i64 4)  ; 2 uses
-  %i.hv = getelementptr i8, ptr %.049.lcssa, i64 %7
-  %i.hw = getelementptr i8, ptr %i.b, i64 %7
+  %i.hv = getelementptr i8, ptr %.049.lcssa, i64 %i.hr
+  %i.hw = getelementptr i8, ptr %i.b, i64 %i.hr
   %bound0125 = icmp ult ptr %.049.lcssa, %i.hw
   %bound1126 = icmp ult ptr %i.b, %i.hv
   %found.conflict127 = and i1 %bound0125, %bound1126
   br i1 %found.conflict127, label %.lr.ph103.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck124
-  %min.iters.check128 = icmp samesign ult i64 %i.hs, 60
+  %min.iters.check128 = icmp ult i32 %i.dh, 64
   br i1 %min.iters.check128, label %vec.epilog.ph, label %vector.ph129
 
 vector.ph129:                                     ; preds = %vector.main.loop.iter.check

@@ -205,7 +205,7 @@ _ZN5arrow6StatusD2Ev.exit:                        ; preds = %bb.b, %bb.c, %bb.d
 
 bb.e:                                             ; preds = %bb.a
   %i.j = load i8, ptr %1, align 1, !tbaa !107     ; 2 uses
-  %.sroa.speculated27 = tail call i32 @llvm.usub.sat.i32(i32 %2, i32 8) ; 4 uses
+  %.sroa.speculated27 = tail call i32 @llvm.usub.sat.i32(i32 %2, i32 8) ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #26
   store i64 0, ptr %i.b, align 8, !tbaa !114
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -216,7 +216,7 @@ bb.e:                                             ; preds = %bb.a
   %i.o = load i64, ptr %i.b, align 8, !tbaa !114
   %i.p = tail call noundef i64 @llvm.bswap.i64(i64 %i.o) ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #26
-  %i.q = icmp eq i32 %.sroa.speculated27, 8
+  %i.q = icmp eq i32 %2, 16
   br i1 %i.q, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e

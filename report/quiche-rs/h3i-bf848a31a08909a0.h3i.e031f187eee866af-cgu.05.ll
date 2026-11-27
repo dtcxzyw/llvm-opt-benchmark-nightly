@@ -204,7 +204,7 @@ bb.a:
     #dbg_value(ptr %1, !18311, !DIExpression(), !18315)
   %i.a = load i64, ptr %0, align 8, !dbg !18341, !range !4745, !noundef !1246 ; 2 uses
   %i.b = icmp eq i64 %i.a, -1, !dbg !18341
-  %i.c = load i64, ptr %1, align 8, !range !4745  ; 3 uses
+  %i.c = load i64, ptr %1, align 8, !range !4745  ; 5 uses
   %i.d = icmp eq i64 %i.c, -1
   %or.cond = select i1 %i.b, i1 true, i1 %i.d, !dbg !18342
   br i1 %or.cond, label %_RNvXsg_NtCsjfnSKV9Rz3v_3h3i5frameNtB5_8H3iFrameNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit, label %bb.b, !dbg !18342
@@ -254,6 +254,8 @@ bb.e:                                             ; preds = %bb.d
   br label %_RNvXsg_NtCsjfnSKV9Rz3v_3h3i5frameNtB5_8H3iFrameNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit, !dbg !18350
 
 bb.f:                                             ; preds = %bb.d
+  %2 = icmp eq i64 %i.c, 12, !dbg !18348
+  tail call void @llvm.assume(i1 %2), !dbg !18348
     #dbg_value(ptr %0, !4859, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !18233)
     #dbg_value(ptr %1, !4860, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !18233)
     #dbg_value(ptr poison, !4867, !DIExpression(), !18235)
@@ -341,6 +343,8 @@ bb.j:                                             ; preds = %bb.i
   br label %_RNvXsg_NtCsjfnSKV9Rz3v_3h3i5frameNtB5_8H3iFrameNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit, !dbg !18366
 
 bb.k:                                             ; preds = %bb.d
+  %3 = icmp eq i64 %i.c, 13, !dbg !18348
+  tail call void @llvm.assume(i1 %3), !dbg !18348
     #dbg_value(ptr %0, !4861, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !18301)
     #dbg_value(ptr %0, !4941, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !18304)
     #dbg_value(ptr %1, !4862, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !18301)
@@ -398,12 +402,14 @@ bb.a:
   br i1 %.not.i, label %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterNtNtCsjfnSKV9Rz3v_3h3i5frame8H3iFrameENtNtNtNtBb_4iter6traits8iterator8Iterator3anyNCNvXsf_NtB9_3cmpBQ_NtB2j_13SliceContains14slice_contains0EBU_.exit, label %.lr.ph.i, !dbg !18592
 
 .lr.ph.i:                                         ; preds = %bb.a
-  %i.b = load i64, ptr %0, align 8, !range !3445, !alias.scope !18574, !noalias !18575, !noundef !1246 ; 2 uses
+  %i.b = load i64, ptr %0, align 8, !range !3445, !alias.scope !18574, !noalias !18575, !noundef !1246 ; 4 uses
   %i.c = tail call i64 @llvm.usub.sat.i64(i64 %i.b, i64 11)
+  %3 = icmp eq i64 %i.b, 13
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.e = load i64, ptr %i.d, align 8, !alias.scope !18576
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.g = load i64, ptr %i.f, align 8, !alias.scope !18576 ; 2 uses
+  %4 = icmp eq i64 %i.b, 12
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.i = load i64, ptr %i.h, align 8, !alias.scope !18576 ; 2 uses
   %.cast.i = inttoptr i64 %i.g to ptr
@@ -477,6 +483,7 @@ default.unreachable:                              ; preds = %.lr.ph.i
   br i1 %i.x, label %bb.b, label %.backedge.i.us9, !dbg !18597
 
 bb.b:                                             ; preds = %.lr.ph.i.split.us8
+  tail call void @llvm.assume(i1 %4), !dbg !18597
     #dbg_value(ptr %i.u, !4859, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !18424)
     #dbg_value(ptr %0, !4860, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !18424)
     #dbg_value(ptr poison, !4867, !DIExpression(), !18426)
@@ -581,6 +588,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.ap, label %bb.f, label %.backedge.i.us14, !dbg !18597
 
 bb.f:                                             ; preds = %.lr.ph.i.split.us13
+  tail call void @llvm.assume(i1 %3), !dbg !18597
     #dbg_value(ptr %i.am, !4861, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !18486)
     #dbg_value(ptr %i.am, !4941, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !18489)
     #dbg_value(ptr %0, !4862, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !18486)

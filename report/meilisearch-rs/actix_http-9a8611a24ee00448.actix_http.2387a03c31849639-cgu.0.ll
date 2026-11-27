@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.d, %bb.e
   br label %bb.c
 
 bb.g:                                             ; preds = %.lr.ph, %bb.t
-  %.sroa.08.1484 = phi i32 [ 0, %.lr.ph ], [ %i.bl, %bb.t ] ; 4 uses
+  %.sroa.08.1484 = phi i32 [ 0, %.lr.ph ], [ %i.bl, %bb.t ] ; 5 uses
   %.sroa.013.1483 = phi i1 [ true, %.lr.ph ], [ %spec.select, %bb.t ]
   %.sroa.014.1482 = phi double [ f0x547D42AEA2879F2E, %.lr.ph ], [ %i.bj, %bb.t ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
@@ -219,9 +219,9 @@ bb.g:                                             ; preds = %.lr.ph, %bb.t
 
 .loopexit334:                                     ; preds = %bb.g, %bb.s
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
-  %i.ag = call i32 @llvm.usub.sat.i32(i32 %.sroa.08.1484, i32 1) ; 2 uses
+  %i.ag = call i32 @llvm.usub.sat.i32(i32 %.sroa.08.1484, i32 1)
   %i.ah = lshr i32 %i.ag, 1                       ; 2 uses
-  %i.ai = icmp samesign ult i32 %i.ag, 32
+  %i.ai = icmp samesign ult i32 %.sroa.08.1484, 33
   br i1 %i.ai, label %.lr.ph.1, label %.loopexit334.1
 
 .lr.ph.1:                                         ; preds = %bb.t, %.loopexit334
@@ -254,29 +254,32 @@ bb.j:                                             ; preds = %bb.i
   %i.ap = add nuw nsw i32 %.sroa.08.1484.1, 1     ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   %exitcond.1.not = icmp eq i32 %i.ap, 16
-  br i1 %exitcond.1.not, label %.loopexit334.1, label %bb.h
+  br i1 %exitcond.1.not, label %.lr.ph.2, label %bb.h
 
 bb.k:                                             ; preds = %bb.i, %bb.h
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   br label %.loopexit334.1
 
-.loopexit334.1:                                   ; preds = %bb.j, %bb.k, %.loopexit334
-  %.sroa.014.1481.1 = phi double [ %.sroa.014.1482.1, %bb.k ], [ %.sroa.014.1482, %.loopexit334 ], [ %i.an, %bb.j ] ; 2 uses
-  %.sroa.08.1478.1 = phi i32 [ %.sroa.08.1484.1, %bb.k ], [ %i.ah, %.loopexit334 ], [ 16, %bb.j ]
-  %.sroa.013.2.1 = phi i1 [ %spec.select.1, %bb.k ], [ %spec.select, %.loopexit334 ], [ %spec.select.1, %bb.j ] ; 2 uses
-  %i.aq = call i32 @llvm.usub.sat.i32(i32 %.sroa.08.1478.1, i32 1) ; 2 uses
+.loopexit334.1:                                   ; preds = %bb.k, %.loopexit334
+  %.sroa.014.1481.1 = phi double [ %.sroa.014.1482.1, %bb.k ], [ %.sroa.014.1482, %.loopexit334 ] ; 2 uses
+  %.sroa.08.1478.1 = phi i32 [ %.sroa.08.1484.1, %bb.k ], [ %i.ah, %.loopexit334 ] ; 2 uses
+  %.sroa.013.2.1 = phi i1 [ %spec.select.1, %bb.k ], [ %spec.select, %.loopexit334 ] ; 2 uses
+  %i.aq = call i32 @llvm.usub.sat.i32(i32 %.sroa.08.1478.1, i32 1)
   %i.ar = lshr i32 %i.aq, 1                       ; 2 uses
-  %i.as = icmp ult i32 %i.aq, 32
+  %i.as = icmp ult i32 %.sroa.08.1478.1, 33
   br i1 %i.as, label %.lr.ph.2, label %.loopexit334.2
 
-.lr.ph.2:                                         ; preds = %.loopexit334.1
+.lr.ph.2:                                         ; preds = %bb.j, %.loopexit334.1
+  %13 = phi i32 [ %i.ar, %.loopexit334.1 ], [ 7, %bb.j ]
+  %.sroa.013.2.1937 = phi i1 [ %.sroa.013.2.1, %.loopexit334.1 ], [ %spec.select.1, %bb.j ]
+  %.sroa.014.1481.1936 = phi double [ %.sroa.014.1481.1, %.loopexit334.1 ], [ %i.an, %bb.j ]
   %i.at = icmp ne i32 %i.v, 2
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.n, %.lr.ph.2
-  %.sroa.08.1484.2 = phi i32 [ %i.ar, %.lr.ph.2 ], [ %i.az, %bb.n ] ; 3 uses
-  %.sroa.013.1483.2 = phi i1 [ %.sroa.013.2.1, %.lr.ph.2 ], [ %spec.select.2, %bb.n ]
-  %.sroa.014.1482.2 = phi double [ %.sroa.014.1481.1, %.lr.ph.2 ], [ %i.ax, %bb.n ] ; 2 uses
+  %.sroa.08.1484.2 = phi i32 [ %13, %.lr.ph.2 ], [ %i.az, %bb.n ] ; 3 uses
+  %.sroa.013.1483.2 = phi i1 [ %.sroa.013.2.1937, %.lr.ph.2 ], [ %spec.select.2, %bb.n ]
+  %.sroa.014.1482.2 = phi double [ %.sroa.014.1481.1936, %.lr.ph.2 ], [ %i.ax, %bb.n ] ; 2 uses
   %i.au = shl nuw nsw i32 %.sroa.08.1484.2, 2     ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   store double 0.000000e+00, ptr %i.f, align 8
@@ -297,29 +300,32 @@ bb.n:                                             ; preds = %bb.m
   %i.az = add nuw nsw i32 %.sroa.08.1484.2, 1     ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   %exitcond.2.not = icmp eq i32 %i.az, 16
-  br i1 %exitcond.2.not, label %.loopexit334.2, label %bb.l
+  br i1 %exitcond.2.not, label %.lr.ph.3, label %bb.l
 
 bb.o:                                             ; preds = %bb.m, %bb.l
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   br label %.loopexit334.2
 
-.loopexit334.2:                                   ; preds = %bb.n, %bb.o, %.loopexit334.1
-  %.sroa.014.1481.2 = phi double [ %.sroa.014.1482.2, %bb.o ], [ %.sroa.014.1481.1, %.loopexit334.1 ], [ %i.ax, %bb.n ] ; 2 uses
-  %.sroa.08.1478.2 = phi i32 [ %.sroa.08.1484.2, %bb.o ], [ %i.ar, %.loopexit334.1 ], [ 16, %bb.n ]
-  %.sroa.013.2.2 = phi i1 [ %spec.select.2, %bb.o ], [ %.sroa.013.2.1, %.loopexit334.1 ], [ %spec.select.2, %bb.n ] ; 2 uses
-  %13 = call i32 @llvm.usub.sat.i32(i32 %.sroa.08.1478.2, i32 1) ; 2 uses
-  %i.ba = icmp ult i32 %13, 32
+.loopexit334.2:                                   ; preds = %bb.o, %.loopexit334.1
+  %.sroa.014.1481.2 = phi double [ %.sroa.014.1482.2, %bb.o ], [ %.sroa.014.1481.1, %.loopexit334.1 ] ; 2 uses
+  %.sroa.08.1478.2 = phi i32 [ %.sroa.08.1484.2, %bb.o ], [ %i.ar, %.loopexit334.1 ] ; 2 uses
+  %.sroa.013.2.2 = phi i1 [ %spec.select.2, %bb.o ], [ %.sroa.013.2.1, %.loopexit334.1 ] ; 2 uses
+  %i.ba = icmp ult i32 %.sroa.08.1478.2, 33
   br i1 %i.ba, label %.lr.ph.3, label %.loopexit334.3
 
-.lr.ph.3:                                         ; preds = %.loopexit334.2
-  %i.bb = lshr i32 %13, 1
+.lr.ph.3:                                         ; preds = %bb.n, %.loopexit334.2
+  %.sroa.013.2.2943 = phi i1 [ %.sroa.013.2.2, %.loopexit334.2 ], [ %spec.select.2, %bb.n ]
+  %.sroa.08.1478.2942 = phi i32 [ %.sroa.08.1478.2, %.loopexit334.2 ], [ 16, %bb.n ]
+  %.sroa.014.1481.2941 = phi double [ %.sroa.014.1481.2, %.loopexit334.2 ], [ %i.ax, %bb.n ]
+  %14 = call i32 @llvm.usub.sat.i32(i32 %.sroa.08.1478.2942, i32 1)
+  %i.bb = lshr i32 %14, 1
   %i.bc = icmp ne i32 %i.v, 3
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.r, %.lr.ph.3
   %.sroa.08.1484.3 = phi i32 [ %i.bb, %.lr.ph.3 ], [ %i.bi, %bb.r ] ; 2 uses
-  %.sroa.013.1483.3 = phi i1 [ %.sroa.013.2.2, %.lr.ph.3 ], [ %spec.select.3, %bb.r ]
-  %.sroa.014.1482.3 = phi double [ %.sroa.014.1481.2, %.lr.ph.3 ], [ %i.bg, %bb.r ] ; 2 uses
+  %.sroa.013.1483.3 = phi i1 [ %.sroa.013.2.2943, %.lr.ph.3 ], [ %spec.select.3, %bb.r ]
+  %.sroa.014.1482.3 = phi double [ %.sroa.014.1481.2941, %.lr.ph.3 ], [ %i.bg, %bb.r ] ; 2 uses
   %i.bd = shl nuw nsw i32 %.sroa.08.1484.3, 3     ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   store double 0.000000e+00, ptr %i.f, align 8

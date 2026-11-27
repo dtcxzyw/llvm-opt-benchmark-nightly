@@ -206,7 +206,7 @@ bb.cf:                                            ; preds = %bb.ce
   call void @llvm.lifetime.end.p0(ptr nonnull %i.be), !noalias !39511
   %i.if = getelementptr inbounds nuw i8, ptr %i.dk, i64 104 ; 2 uses
   %i.ig = load i64, ptr %i.if, align 8, !alias.scope !39513, !noundef !28
-  %i.ih = add i64 %i.ig, -1                       ; 2 uses
+  %i.ih = add i64 %i.ig, -1                       ; 3 uses
   store i64 %i.ih, ptr %i.if, align 8, !alias.scope !39513
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i, ptr noundef nonnull align 8 dereferenceable(16) %i.bf, i64 16, i1 false), !noalias !39509
   %.sroa.5.0..sroa_idx11.i = getelementptr inbounds nuw i8, ptr %i.bf, i64 16
@@ -223,10 +223,10 @@ bb.cg:                                            ; preds = %bb.cf, %.thread27.i
           to label %bb.cy unwind label %bb.bb, !noalias !39515
 
 bb.ch:                                            ; preds = %bb.cf
-  %i.ii = call i64 @llvm.uadd.sat.i64(i64 %i.ih, i64 1) ; 2 uses
+  %i.ii = call i64 @llvm.uadd.sat.i64(i64 %i.ih, i64 1)
   %..i.i = call noundef i64 @llvm.umax.i64(i64 %i.ii, i64 4) ; 3 uses
   %i.ij = mul i64 %..i.i, 24                      ; 3 uses
-  %or.cond.i.i.i = icmp ugt i64 %i.ii, 384307168202282325
+  %or.cond.i.i.i = icmp ugt i64 %i.ih, 384307168202282324
   br i1 %or.cond.i.i.i, label %bb.cj, label %bb.ci, !prof !61
 
 bb.ci:                                            ; preds = %bb.ch
@@ -629,7 +629,7 @@ bb.t:                                             ; preds = %bb.r
   call void @llvm.lifetime.end.p0(ptr nonnull %i.w), !noalias !41565
   %i.bx = getelementptr inbounds nuw i8, ptr %i.ap, i64 104 ; 2 uses
   %i.by = load i64, ptr %i.bx, align 8, !alias.scope !41567, !noundef !28
-  %i.bz = add i64 %i.by, -1                       ; 2 uses
+  %i.bz = add i64 %i.by, -1                       ; 3 uses
   store i64 %i.bz, ptr %i.bx, align 8, !alias.scope !41567
   %.sroa.0.0.copyload9.i = load i64, ptr %i.x, align 8, !noalias !41568 ; 4 uses
   %.sroa.7.0..sroa_idx10.i = getelementptr inbounds nuw i8, ptr %i.x, i64 8
@@ -672,10 +672,10 @@ bb.x:                                             ; preds = %_RINvNtCs3oUPovFnLW
   br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueTNtNtCs1xwejQucwHj_5alloc6string6StringBC_EECs9fPPV5zPXBl_5typst.exit
 
 bb.y:                                             ; preds = %bb.t
-  %i.ce = call i64 @llvm.uadd.sat.i64(i64 %i.bz, i64 1) ; 2 uses
+  %i.ce = call i64 @llvm.uadd.sat.i64(i64 %i.bz, i64 1)
   %..i.i = call noundef i64 @llvm.umax.i64(i64 %i.ce, i64 4) ; 3 uses
   %i.cf = mul i64 %..i.i, 48                      ; 3 uses
-  %or.cond.i.i.i = icmp ugt i64 %i.ce, 192153584101141162
+  %or.cond.i.i.i = icmp ugt i64 %i.bz, 192153584101141161
   br i1 %or.cond.i.i.i, label %bb.aa, label %bb.z, !prof !61
 
 bb.z:                                             ; preds = %bb.y
@@ -1078,7 +1078,7 @@ bb.k:                                             ; preds = %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k), !noalias !42990
   %i.an = getelementptr inbounds nuw i8, ptr %i.w, i64 104 ; 2 uses
   %i.ao = load i64, ptr %i.an, align 8, !alias.scope !42992, !noundef !28
-  %i.ap = add i64 %i.ao, -1                       ; 2 uses
+  %i.ap = add i64 %i.ao, -1                       ; 3 uses
   store i64 %i.ap, ptr %i.an, align 8, !alias.scope !42992
   %.sroa.0.0.copyload11.i = load i64, ptr %i.l, align 8, !noalias !42993 ; 4 uses
   %.sroa.7.0..sroa_idx12.i = getelementptr inbounds nuw i8, ptr %i.l, i64 8
@@ -1106,10 +1106,10 @@ bb.n:                                             ; preds = %bb.m
   br label %bb.ad
 
 bb.o:                                             ; preds = %bb.k
-  %i.as = call i64 @llvm.uadd.sat.i64(i64 %i.ap, i64 1) ; 2 uses
+  %i.as = call i64 @llvm.uadd.sat.i64(i64 %i.ap, i64 1)
   %..i.i = call noundef i64 @llvm.umax.i64(i64 %i.as, i64 4) ; 3 uses
   %i.at = mul i64 %..i.i, 24                      ; 3 uses
-  %or.cond.i.i.i = icmp ugt i64 %i.as, 384307168202282325
+  %or.cond.i.i.i = icmp ugt i64 %i.ap, 384307168202282324
   br i1 %or.cond.i.i.i, label %bb.q, label %bb.p, !prof !61
 
 bb.p:                                             ; preds = %bb.o

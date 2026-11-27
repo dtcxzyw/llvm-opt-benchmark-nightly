@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.c
   tail call void @llvm.experimental.noalias.scope.decl(metadata !58987), !dbg !59001
   %i.r = load i64, ptr %i.p, align 8, !dbg !59002, !range !1592, !alias.scope !58988, !noundef !1417 ; 3 uses
   %i.s = tail call i64 @llvm.usub.sat.i64(i64 %i.r, i64 -9223372036854775806), !dbg !59002 ; 2 uses
-  %i.t = load i64, ptr %i.q, align 8, !dbg !59003, !range !1592, !alias.scope !58990, !noundef !1417 ; 4 uses
+  %i.t = load i64, ptr %i.q, align 8, !dbg !59003, !range !1592, !alias.scope !58990, !noundef !1417 ; 6 uses
   %i.u = tail call i64 @llvm.usub.sat.i64(i64 %i.t, i64 -9223372036854775806), !dbg !59003
   %i.v = icmp eq i64 %i.s, %i.u, !dbg !59004
   br i1 %i.v, label %bb.e, label %_RNvXs4o_NtNtCsaRr8xKSRVhT_9sqlparser3ast3ddlNtB6_13AlterOperatorNtNtCscgRAwXFJnXP_4core3cmp9PartialEq2eq.exit, !dbg !59004
@@ -238,6 +238,8 @@ bb.h:                                             ; preds = %bb.g
   br label %_RNvXs4o_NtNtCsaRr8xKSRVhT_9sqlparser3ast3ddlNtB6_13AlterOperatorNtNtCscgRAwXFJnXP_4core3cmp9PartialEq2eq.exit, !dbg !59009
 
 bb.i:                                             ; preds = %bb.e
+  %0 = icmp eq i64 %i.t, -9223372036854775805, !dbg !59004
+  tail call void @llvm.assume(i1 %0), !dbg !59004
   %i.ag = getelementptr inbounds nuw i8, ptr %.0.val, i64 48, !dbg !59010
   %.val1.i.i.i = load i64, ptr %i.ag, align 8, !dbg !59010, !alias.scope !58988, !noundef !1417 ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %.0.val1, i64 48, !dbg !59010
@@ -254,6 +256,8 @@ bb.j:                                             ; preds = %bb.i
   br label %_RNvXs4o_NtNtCsaRr8xKSRVhT_9sqlparser3ast3ddlNtB6_13AlterOperatorNtNtCscgRAwXFJnXP_4core3cmp9PartialEq2eq.exit, !dbg !59013
 
 bb.k:                                             ; preds = %bb.e
+  %1 = icmp eq i64 %i.t, -9223372036854775804, !dbg !59004
+  tail call void @llvm.assume(i1 %1), !dbg !59004
   %i.am = getelementptr inbounds nuw i8, ptr %.0.val, i64 48, !dbg !59014
   %.val1.i7.i.i = load i64, ptr %i.am, align 8, !dbg !59014, !alias.scope !58988, !noundef !1417 ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %.0.val1, i64 48, !dbg !59014
@@ -656,7 +660,7 @@ define internal fastcc noundef zeroext i1 @_RNvXs7r_NtNtCsaRr8xKSRVhT_9sqlparser
 bb.a:
   %i.a = load i64, ptr %0, align 8, !dbg !62551, !range !1721, !noundef !1417
   %i.b = tail call i64 @llvm.usub.sat.i64(i64 %i.a, i64 2), !dbg !62551 ; 2 uses
-  %i.c = load i64, ptr %1, align 8, !dbg !62552, !range !1721, !noundef !1417 ; 2 uses
+  %i.c = load i64, ptr %1, align 8, !dbg !62552, !range !1721, !noundef !1417 ; 14 uses
   %i.d = tail call i64 @llvm.usub.sat.i64(i64 %i.c, i64 2), !dbg !62552
   %i.e = icmp eq i64 %i.b, %i.d, !dbg !62553
   br i1 %i.e, label %bb.b, label %_RNvXs7_NtNtCscgRAwXFJnXP_4core3cmp5implsRINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtNtCsaRr8xKSRVhT_9sqlparser3ast5query15TableIndexHintsENtB7_9PartialEq2eqCshquuC4dCYVj_10polars_sql.exit, !dbg !62553
@@ -704,6 +708,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.q, label %bb.q, label %_RNvXs7_NtNtCscgRAwXFJnXP_4core3cmp5implsRINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtNtCsaRr8xKSRVhT_9sqlparser3ast5query15TableIndexHintsENtB7_9PartialEq2eqCshquuC4dCYVj_10polars_sql.exit, !dbg !62563
 
 bb.d:                                             ; preds = %bb.b
+  %2 = icmp eq i64 %i.c, 3, !dbg !62553
+  tail call void @llvm.assume(i1 %2), !dbg !62553
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 192, !dbg !62564
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 24, !dbg !62565
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !62566
@@ -716,12 +722,16 @@ bb.d:                                             ; preds = %bb.b
   br i1 %i.x, label %bb.ab, label %_RNvXs7_NtNtCscgRAwXFJnXP_4core3cmp5implsRINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtNtCsaRr8xKSRVhT_9sqlparser3ast5query15TableIndexHintsENtB7_9PartialEq2eqCshquuC4dCYVj_10polars_sql.exit, !dbg !62569
 
 bb.e:                                             ; preds = %bb.b
+  %3 = icmp eq i64 %i.c, 4, !dbg !62553
+  tail call void @llvm.assume(i1 %3), !dbg !62553
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !62570
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 8, !dbg !62570
   %i.aa = tail call fastcc noundef zeroext i1 @_RNvXs7N_NtCsaRr8xKSRVhT_9sqlparser3astNtB6_4ExprNtNtCscgRAwXFJnXP_4core3cmp9PartialEq2eq(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(328) %i.y, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(328) %i.z) #46, !dbg !62571, !noalias !62506, !inline_history !1271
   br i1 %i.aa, label %bb.ae, label %_RNvXs7_NtNtCscgRAwXFJnXP_4core3cmp5implsRINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtNtCsaRr8xKSRVhT_9sqlparser3ast5query15TableIndexHintsENtB7_9PartialEq2eqCshquuC4dCYVj_10polars_sql.exit, !dbg !62572
 
 bb.f:                                             ; preds = %bb.b
+  %4 = icmp eq i64 %i.c, 5, !dbg !62553
+  tail call void @llvm.assume(i1 %4), !dbg !62553
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 216, !dbg !62573
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 56, !dbg !62574
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 216, !dbg !62573
@@ -732,6 +742,8 @@ bb.f:                                             ; preds = %bb.b
   br i1 %i.af, label %bb.af, label %_RNvXs7_NtNtCscgRAwXFJnXP_4core3cmp5implsRINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtNtCsaRr8xKSRVhT_9sqlparser3ast5query15TableIndexHintsENtB7_9PartialEq2eqCshquuC4dCYVj_10polars_sql.exit, !dbg !62577
 
 bb.g:                                             ; preds = %bb.b
+  %5 = icmp eq i64 %i.c, 6, !dbg !62553
+  tail call void @llvm.assume(i1 %5), !dbg !62553
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 32, !dbg !62578
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 256, !dbg !62579
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 192, !dbg !62580 ; 2 uses
@@ -744,6 +756,8 @@ bb.g:                                             ; preds = %bb.b
   br i1 %i.am, label %bb.aj, label %_RNvXs7_NtNtCscgRAwXFJnXP_4core3cmp5implsRINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtNtCsaRr8xKSRVhT_9sqlparser3ast5query15TableIndexHintsENtB7_9PartialEq2eqCshquuC4dCYVj_10polars_sql.exit, !dbg !62583
 
 bb.h:                                             ; preds = %bb.b
+  %6 = icmp eq i64 %i.c, 7, !dbg !62553
+  tail call void @llvm.assume(i1 %6), !dbg !62553
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !62584
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 360, !dbg !62585
   %i.ap = getelementptr inbounds nuw i8, ptr %1, i64 8, !dbg !62584
@@ -752,6 +766,8 @@ bb.h:                                             ; preds = %bb.b
   br i1 %i.ar, label %bb.ao, label %_RNvXs7_NtNtCscgRAwXFJnXP_4core3cmp5implsRINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtNtCsaRr8xKSRVhT_9sqlparser3ast5query15TableIndexHintsENtB7_9PartialEq2eqCshquuC4dCYVj_10polars_sql.exit, !dbg !62587
 
 bb.i:                                             ; preds = %bb.b
+  %7 = icmp eq i64 %i.c, 8, !dbg !62553
+  tail call void @llvm.assume(i1 %7), !dbg !62553
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !62588
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 520, !dbg !62589 ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 360, !dbg !62590
@@ -762,6 +778,8 @@ bb.i:                                             ; preds = %bb.b
   br i1 %i.ay, label %bb.ar, label %_RNvXs7_NtNtCscgRAwXFJnXP_4core3cmp5implsRINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtNtCsaRr8xKSRVhT_9sqlparser3ast5query15TableIndexHintsENtB7_9PartialEq2eqCshquuC4dCYVj_10polars_sql.exit, !dbg !62592
 
 bb.j:                                             ; preds = %bb.b
+  %8 = icmp eq i64 %i.c, 9, !dbg !62553
+  tail call void @llvm.assume(i1 %8), !dbg !62553
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 168, !dbg !62593
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !62594
   %i.bb = getelementptr inbounds nuw i8, ptr %1, i64 168, !dbg !62593
@@ -792,6 +810,8 @@ _RNvXsg_NtCsgZ49sUHp3tW_5alloc5boxedINtB5_3BoxNtNtNtCsaRr8xKSRVhT_9sqlparser3ast
   br i1 %i.bl, label %bb.au, label %_RNvXs7_NtNtCscgRAwXFJnXP_4core3cmp5implsRINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtNtCsaRr8xKSRVhT_9sqlparser3ast5query15TableIndexHintsENtB7_9PartialEq2eqCshquuC4dCYVj_10polars_sql.exit, !dbg !62603
 
 bb.l:                                             ; preds = %bb.b
+  %9 = icmp eq i64 %i.c, 10, !dbg !62553
+  tail call void @llvm.assume(i1 %9), !dbg !62553
   %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 576, !dbg !62604
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !62605
   %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 40, !dbg !62606 ; 2 uses
@@ -808,6 +828,8 @@ bb.l:                                             ; preds = %bb.b
   br i1 %i.bw, label %bb.av, label %_RNvXs7_NtNtCscgRAwXFJnXP_4core3cmp5implsRINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtNtCsaRr8xKSRVhT_9sqlparser3ast5query15TableIndexHintsENtB7_9PartialEq2eqCshquuC4dCYVj_10polars_sql.exit, !dbg !62612
 
 bb.m:                                             ; preds = %bb.b
+  %10 = icmp eq i64 %i.c, 11, !dbg !62553
+  tail call void @llvm.assume(i1 %10), !dbg !62553
   %i.bx = getelementptr inbounds nuw i8, ptr %0, i64 584, !dbg !62613
   %i.by = getelementptr inbounds nuw i8, ptr %0, i64 336, !dbg !62614
   %i.bz = getelementptr inbounds nuw i8, ptr %0, i64 592, !dbg !62615
@@ -824,6 +846,8 @@ bb.m:                                             ; preds = %bb.b
   br i1 %i.ch, label %bb.bb, label %_RNvXs7_NtNtCscgRAwXFJnXP_4core3cmp5implsRINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtNtCsaRr8xKSRVhT_9sqlparser3ast5query15TableIndexHintsENtB7_9PartialEq2eqCshquuC4dCYVj_10polars_sql.exit, !dbg !62621
 
 bb.n:                                             ; preds = %bb.b
+  %11 = icmp eq i64 %i.c, 12, !dbg !62553
+  tail call void @llvm.assume(i1 %11), !dbg !62553
   %i.ci = getelementptr inbounds nuw i8, ptr %0, i64 408, !dbg !62622
   %i.cj = getelementptr inbounds nuw i8, ptr %0, i64 416, !dbg !62623
   %i.ck = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !62624
@@ -842,6 +866,8 @@ bb.n:                                             ; preds = %bb.b
   br i1 %i.cu, label %bb.bg, label %_RNvXs7_NtNtCscgRAwXFJnXP_4core3cmp5implsRINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtNtCsaRr8xKSRVhT_9sqlparser3ast5query15TableIndexHintsENtB7_9PartialEq2eqCshquuC4dCYVj_10polars_sql.exit, !dbg !62631
 
 bb.o:                                             ; preds = %bb.b
+  %12 = icmp eq i64 %i.c, 13, !dbg !62553
+  tail call void @llvm.assume(i1 %12), !dbg !62553
   %i.cv = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !62632
   %i.cw = getelementptr inbounds nuw i8, ptr %0, i64 408, !dbg !62633
   %i.cx = getelementptr inbounds nuw i8, ptr %1, i64 8, !dbg !62632
@@ -862,6 +888,8 @@ _RNvXs7_NtNtCscgRAwXFJnXP_4core3cmp5implsRINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtN
   br i1 %i.de, label %bb.bp, label %_RNvXs7_NtNtCscgRAwXFJnXP_4core3cmp5implsRINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtNtCsaRr8xKSRVhT_9sqlparser3ast5query15TableIndexHintsENtB7_9PartialEq2eqCshquuC4dCYVj_10polars_sql.exit, !dbg !62637
 
 bb.p:                                             ; preds = %bb.b
+  %13 = icmp eq i64 %i.c, 14, !dbg !62553
+  tail call void @llvm.assume(i1 %13), !dbg !62553
   %i.df = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !62638 ; 2 uses
   %i.dg = getelementptr inbounds nuw i8, ptr %0, i64 432, !dbg !62639
   %i.dh = getelementptr inbounds nuw i8, ptr %1, i64 8, !dbg !62638 ; 2 uses
@@ -1264,7 +1292,7 @@ bb.h:                                             ; preds = %.split29, %_RNvXsf_
   tail call void @llvm.experimental.noalias.scope.decl(metadata !86185), !dbg !86211
   %i.ab = load i64, ptr %i.z, align 8, !dbg !86212, !range !1593, !alias.scope !86184, !noundef !1417 ; 2 uses
   %.not.i5 = icmp eq i64 %i.ab, 71, !dbg !86212
-  %i.ac = load i64, ptr %i.aa, align 8, !dbg !86212, !range !1593, !alias.scope !86185, !noundef !1417 ; 3 uses
+  %i.ac = load i64, ptr %i.aa, align 8, !dbg !86212, !range !1593, !alias.scope !86185, !noundef !1417 ; 5 uses
   %i.ad = icmp eq i64 %i.ac, 71, !dbg !86212      ; 2 uses
   br i1 %.not.i5, label %_RNvXsf_NtCscgRAwXFJnXP_4core6optionINtB5_6OptionNtNtCsaRr8xKSRVhT_9sqlparser3ast12HiveIOFormatENtNtB7_3cmp9PartialEq2eqCshquuC4dCYVj_10polars_sql.exit, label %bb.i, !dbg !86213
 
@@ -1294,6 +1322,8 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.ai, label %.split33, label %_RNvXsf_NtCscgRAwXFJnXP_4core6optionINtB5_6OptionNtNtCsgZ49sUHp3tW_5alloc6string6StringENtNtB7_3cmp9PartialEq2eqCshquuC4dCYVj_10polars_sql.exit, !dbg !86218
 
 .split32:                                         ; preds = %bb.k
+  %2 = icmp eq i64 %i.ac, 69, !dbg !86216
+  tail call void @llvm.assume(i1 %2), !dbg !86216
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 40, !dbg !86219
   %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 40, !dbg !86219
   %.val.i.i = load i8, ptr %i.aj, align 8, !dbg !86220, !range !2193, !noundef !1417
@@ -1302,6 +1332,8 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.al, label %bb.m, label %_RNvXsf_NtCscgRAwXFJnXP_4core6optionINtB5_6OptionNtNtCsgZ49sUHp3tW_5alloc6string6StringENtNtB7_3cmp9PartialEq2eqCshquuC4dCYVj_10polars_sql.exit, !dbg !86211
 
 .split31:                                         ; preds = %bb.k
+  %3 = icmp eq i64 %i.ac, 70, !dbg !86216
+  tail call void @llvm.assume(i1 %3), !dbg !86216
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 40, !dbg !86222
   %i.an = getelementptr inbounds nuw i8, ptr %1, i64 40, !dbg !86222
   %i.ao = tail call noundef zeroext i1 @_RNvXs2_NtCsaRr8xKSRVhT_9sqlparser3astNtB5_5IdentNtNtCscgRAwXFJnXP_4core3cmp9PartialEq2eq(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(64) %i.am, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(64) %i.an), !dbg !86223, !inline_history !86156

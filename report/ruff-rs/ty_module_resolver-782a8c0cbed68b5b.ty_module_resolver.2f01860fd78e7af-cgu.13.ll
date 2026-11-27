@@ -202,7 +202,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsfDzkztWVnn_18ty_module_resolver11m
 bb.a:                                             ; preds = %.lr.ph, %.backedge
   %.lcssa436501 = phi i64 [ 0, %.lr.ph ], [ %.lcssa436499, %.backedge ] ; 3 uses
   %.pre.i2.i.i.i.i.i461492 = phi i64 [ 0, %.lr.ph ], [ %.pre.i2.i.i.i.i.i460, %.backedge ] ; 4 uses
-  %i.i = phi i64 [ 0, %.lr.ph ], [ %i.aq, %.backedge ] ; 2 uses
+  %i.i = phi i64 [ 0, %.lr.ph ], [ %i.aq, %.backedge ] ; 4 uses
   %i.j = icmp ult i64 %2, %.lcssa436501
   br i1 %i.j, label %_RNvMsf_NtNtCs4NRVxsYgnAr_4core3str4iterINtB5_13SplitInternalcE7get_endCsfDzkztWVnn_18ty_module_resolver.exit.i.i.i.i.i, label %.lr.ph.split.i.i.i.i.i.i
 
@@ -314,9 +314,8 @@ _RNvXss_NtNtCs4NRVxsYgnAr_4core3str4iterNtB5_5LinesNtNtNtNtB9_4iter6traits8itera
 bb.h:                                             ; preds = %_RNvXss_NtNtCs4NRVxsYgnAr_4core3str4iterNtB5_5LinesNtNtNtNtB9_4iter6traits8iterator8Iterator4next.exit.i
   %i.ap = extractvalue { ptr, i64 } %.merged.i.i.i.i.i, 1 ; 6 uses
   %i.aq = add i64 %i.i, 1
-  %3 = call i64 @llvm.uadd.sat.i64(i64 %i.i, i64 1) ; 4 uses
-  %4 = icmp ugt i64 %3, 65535
-  br i1 %4, label %bb.k, label %.lr.ph.split.i.i
+  %exitcond = icmp eq i64 %i.i, 65535
+  br i1 %exitcond, label %bb.k, label %.lr.ph.split.i.i
 
 _RNvXss_NtNtCs4NRVxsYgnAr_4core3str4iterNtB5_5LinesNtNtNtNtB9_4iter6traits8iterator8Iterator4next.exit.i._crit_edge: ; preds = %.backedge, %_RNvMsf_NtNtCs4NRVxsYgnAr_4core3str4iterINtB5_13SplitInternalcE7get_endCsfDzkztWVnn_18ty_module_resolver.exit.i.i.i.i.i, %_RNvXss_NtNtCs4NRVxsYgnAr_4core3str4iterNtB5_5LinesNtNtNtNtB9_4iter6traits8iterator8Iterator4next.exit.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %0, ptr noundef nonnull align 8 dereferenceable(56) %i.g, i64 56, i1 false)
@@ -333,7 +332,7 @@ bb.k:                                             ; preds = %bb.h
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 0, ptr %i.ar, align 8
   %.sroa.03.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %3, ptr %.sroa.03.sroa.4.0..sroa_idx, align 8
+  store i64 65536, ptr %.sroa.03.sroa.4.0..sroa_idx, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40
   store i16 0, ptr %.sroa.4.0..sroa_idx, align 8
   store i64 -1, ptr %0, align 8
@@ -736,11 +735,12 @@ bb.bl:                                            ; preds = %_RINvMCsg7m2K3K1Fzf
   br i1 %.not130, label %bb.bo, label %bb.bm
 
 bb.bm:                                            ; preds = %bb.bl
-  %i.hj = trunc nuw i64 %3 to i16
+  %i.hj = trunc nuw i64 %i.i to i16
+  %3 = add nuw i16 %i.hj, 1
   %i.hk = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.hk, ptr noundef nonnull align 8 dereferenceable(32) %i.f, i64 32, i1 false)
   %.sroa.438.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store i16 %i.hj, ptr %.sroa.438.0..sroa_idx, align 8
+  store i16 %3, ptr %.sroa.438.0..sroa_idx, align 8
   store i64 -1, ptr %0, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   %.sroa.7255.23.extract.shift.mask = and i64 %.sroa.4.0.i, -72057594037927936
@@ -774,11 +774,12 @@ bb.bp:                                            ; preds = %bb.bo
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsfDzkztWVnn_18ty_module_resolver11module_name10ModuleNameEBF_.exit.sink.split: ; preds = %bb.ad, %.thread303, %_RNvXs_NtNtCs4NRVxsYgnAr_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i227, %bb.bj
   %.sink904 = phi i64 [ 32, %bb.bj ], [ 8, %_RNvXs_NtNtCs4NRVxsYgnAr_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i227 ], [ 8, %.thread303 ], [ 8, %bb.ad ]
   %.sink903 = phi i64 [ %i.di, %bb.bj ], [ 1, %_RNvXs_NtNtCs4NRVxsYgnAr_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i227 ], [ 1, %.thread303 ], [ 1, %bb.ad ]
-  %.sink.a = trunc nuw i64 %3 to i16
+  %.sink.a = trunc i64 %i.i to i16
+  %.sink = add nuw i16 %.sink.a, 1
   %.sroa.032.sroa.4.sroa.5.0..sroa.032.sroa.4.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 %.sink904
   store i64 %.sink903, ptr %.sroa.032.sroa.4.sroa.5.0..sroa.032.sroa.4.0..sroa_idx.sroa_idx, align 8
   %.sroa.433.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store i16 %.sink.a, ptr %.sroa.433.0..sroa_idx, align 8
+  store i16 %.sink, ptr %.sroa.433.0..sroa_idx, align 8
   store i64 -1, ptr %0, align 8
   br label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsfDzkztWVnn_18ty_module_resolver11module_name10ModuleNameEBF_.exit
 

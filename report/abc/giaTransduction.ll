@@ -205,17 +205,17 @@ _ZNK12Transduction7ManUtilIN6NewBdd3ManEjLj4294967295EE6UpdateERjj.exit.thread: 
 
 .lr.ph.split.us.preheader:                        ; preds = %_ZNK12Transduction7ManUtilIN6NewBdd3ManEjLj4294967295EE6UpdateERjj.exit.thread, %.lr.ph
   %i.bp = phi ptr [ %i.bb, %.lr.ph ], [ %i.bi, %_ZNK12Transduction7ManUtilIN6NewBdd3ManEjLj4294967295EE6UpdateERjj.exit.thread ] ; 2 uses
-  %i.bq = phi i64 [ %i.bh, %.lr.ph ], [ %i.bo, %_ZNK12Transduction7ManUtilIN6NewBdd3ManEjLj4294967295EE6UpdateERjj.exit.thread ] ; 3 uses
+  %i.bq = phi i64 [ %i.bh, %.lr.ph ], [ %i.bo, %_ZNK12Transduction7ManUtilIN6NewBdd3ManEjLj4294967295EE6UpdateERjj.exit.thread ] ; 4 uses
   %i.br = call i64 @llvm.umax.i64(i64 %i.bq, i64 1)
   %i.bs = trunc i64 %i.br to i32                  ; 3 uses
   %min.iters.check = icmp ult i32 %i.bs, 12
   br i1 %min.iters.check, label %.lr.ph.split.us.preheader146, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph.split.us.preheader
-  %i.bt = call i64 @llvm.usub.sat.i64(i64 %i.bq, i64 1) ; 2 uses
+  %i.bt = call i64 @llvm.usub.sat.i64(i64 %i.bq, i64 1)
   %i.bu = and i64 %i.bt, 4294967295
   %i.bv = icmp eq i64 %i.bu, 4294967295
-  %i.bw = icmp ugt i64 %i.bt, 4294967295
+  %i.bw = icmp ugt i64 %i.bq, 4294967296
   %i.bx = or i1 %i.bv, %i.bw
   br i1 %i.bx, label %.lr.ph.split.us.preheader146, label %vector.ph
 
@@ -618,17 +618,17 @@ _ZNK12Transduction7ManUtilIN5NewTt3ManEjLj4294967295EE6UpdateERjj.exit.thread: ;
 
 .lr.ph.split.us.preheader:                        ; preds = %_ZNK12Transduction7ManUtilIN5NewTt3ManEjLj4294967295EE6UpdateERjj.exit.thread, %.lr.ph
   %i.bp = phi ptr [ %i.bb, %.lr.ph ], [ %i.bi, %_ZNK12Transduction7ManUtilIN5NewTt3ManEjLj4294967295EE6UpdateERjj.exit.thread ] ; 2 uses
-  %i.bq = phi i64 [ %i.bh, %.lr.ph ], [ %i.bo, %_ZNK12Transduction7ManUtilIN5NewTt3ManEjLj4294967295EE6UpdateERjj.exit.thread ] ; 3 uses
+  %i.bq = phi i64 [ %i.bh, %.lr.ph ], [ %i.bo, %_ZNK12Transduction7ManUtilIN5NewTt3ManEjLj4294967295EE6UpdateERjj.exit.thread ] ; 4 uses
   %i.br = call i64 @llvm.umax.i64(i64 %i.bq, i64 1)
   %i.bs = trunc i64 %i.br to i32                  ; 3 uses
   %min.iters.check = icmp ult i32 %i.bs, 12
   br i1 %min.iters.check, label %.lr.ph.split.us.preheader146, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph.split.us.preheader
-  %i.bt = call i64 @llvm.usub.sat.i64(i64 %i.bq, i64 1) ; 2 uses
+  %i.bt = call i64 @llvm.usub.sat.i64(i64 %i.bq, i64 1)
   %i.bu = and i64 %i.bt, 4294967295
   %i.bv = icmp eq i64 %i.bu, 4294967295
-  %i.bw = icmp ugt i64 %i.bt, 4294967295
+  %i.bw = icmp ugt i64 %i.bq, 4294967296
   %i.bx = or i1 %i.bv, %i.bw
   br i1 %i.bx, label %.lr.ph.split.us.preheader146, label %vector.ph
 

@@ -205,11 +205,11 @@ bb.r:                                             ; preds = %"_ZN4core3ptr42drop
   br label %.body.i
 
 bb.s:                                             ; preds = %.noexc.i
-  %.val.i.i.i.i.i = load i64, ptr %.sroa.819.0..sroa_idx.i, align 8, !alias.scope !182, !noalias !163, !noundef !14
-  %i.be = call i64 @llvm.uadd.sat.i64(i64 %.val.i.i.i.i.i, i64 1) ; 2 uses
+  %.val.i.i.i.i.i = load i64, ptr %.sroa.819.0..sroa_idx.i, align 8, !alias.scope !182, !noalias !163, !noundef !14 ; 2 uses
+  %i.be = call i64 @llvm.uadd.sat.i64(i64 %.val.i.i.i.i.i, i64 1)
   %.sroa.0.0.i.i.i.i.i.i = call noundef i64 @llvm.umax.i64(i64 %i.be, i64 4) ; 3 uses
   %i.bf = mul i64 %.sroa.0.0.i.i.i.i.i.i, 48      ; 3 uses
-  %or.cond.i.i.i.i.i.i.i.i = icmp ugt i64 %i.be, 192153584101141162
+  %or.cond.i.i.i.i.i.i.i.i = icmp ugt i64 %.val.i.i.i.i.i, 192153584101141161
   br i1 %or.cond.i.i.i.i.i.i.i.i, label %bb.u, label %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i.i, !prof !17
 
 _ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i.i: ; preds = %bb.s
@@ -612,11 +612,11 @@ bb.s:                                             ; preds = %"_ZN70_$LT$alloc..v
   br label %"_ZN4core3ptr52drop_in_place$LT$prometheus..proto..MetricFamily$GT$17h59a553868dd65940E.exit.i.i.i.i"
 
 bb.t:                                             ; preds = %bb.n
-  %.val.i.i.i.i.i = load i64, ptr %.sroa.0269.sroa.11.0..sroa_idx.i, align 8, !alias.scope !2048, !noalias !2026, !noundef !14
-  %i.et = call i64 @llvm.uadd.sat.i64(i64 %.val.i.i.i.i.i, i64 1) ; 2 uses
+  %.val.i.i.i.i.i = load i64, ptr %.sroa.0269.sroa.11.0..sroa_idx.i, align 8, !alias.scope !2048, !noalias !2026, !noundef !14 ; 2 uses
+  %i.et = call i64 @llvm.uadd.sat.i64(i64 %.val.i.i.i.i.i, i64 1)
   %.sroa.0.0.i.i.i.i.i.i = call noundef i64 @llvm.umax.i64(i64 %i.et, i64 4) ; 3 uses
   %i.eu = mul i64 %.sroa.0.0.i.i.i.i.i.i, 80      ; 3 uses
-  %or.cond.i.i.i.i.i.i.i.i = icmp ugt i64 %i.et, 115292150460684697
+  %or.cond.i.i.i.i.i.i.i.i = icmp ugt i64 %.val.i.i.i.i.i, 115292150460684696
   br i1 %or.cond.i.i.i.i.i.i.i.i, label %bb.v, label %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i.i, !prof !17
 
 _ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i.i: ; preds = %bb.t

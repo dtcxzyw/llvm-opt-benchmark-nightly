@@ -205,7 +205,7 @@ _RNvMsd_CsjcToxTEWQ5H_8smallvecINtB5_8SmallVecAINtNtCslHe4oyxs8Ro_18tracing_subs
 
 .thread:                                          ; preds = %bb.a, %_RNvMsd_CsjcToxTEWQ5H_8smallvecINtB5_8SmallVecAINtNtCslHe4oyxs8Ro_18tracing_subscriber8registry7SpanRefNtNtBL_7sharded8RegistryEj10_E6tripleCsat9HgdBb3qc_16shadowsocks_rust.exit
   %.sink12.i47 = phi i64 [ %i.e, %_RNvMsd_CsjcToxTEWQ5H_8smallvecINtB5_8SmallVecAINtNtCslHe4oyxs8Ro_18tracing_subscriber8registry7SpanRefNtNtBL_7sharded8RegistryEj10_E6tripleCsat9HgdBb3qc_16shadowsocks_rust.exit ], [ %i.b, %bb.a ]
-  %i.g = tail call range(i64 1, 65) i64 @llvm.ctlz.i64(i64 %.sink12.i47, i1 false)
+  %i.g = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %.sink12.i47, i1 false)
   %i.h = sub nuw nsw i64 64, %i.g
   %i.i = shl nuw i64 1, %i.h
   %i.j = tail call fastcc { i64, i64 } @_RNvMsd_CsjcToxTEWQ5H_8smallvecINtB5_8SmallVecAINtNtCslHe4oyxs8Ro_18tracing_subscriber8registry7SpanRefNtNtBL_7sharded8RegistryEj10_E8try_growCsat9HgdBb3qc_16shadowsocks_rust(ptr noalias nofree noundef align 8 dereferenceable(656) %0, i64 noundef %i.i) #30 ; 2 uses
@@ -349,7 +349,7 @@ _RNvMsd_CsjcToxTEWQ5H_8smallvecINtB5_8SmallVecANtNtNtCslHe4oyxs8Ro_18tracing_sub
   br i1 %i.g, label %bb.b, label %bb.q, !prof !58
 
 bb.b:                                             ; preds = %_RNvMsd_CsjcToxTEWQ5H_8smallvecINtB5_8SmallVecANtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter9directive15StaticDirectivej8_E6tripleCsat9HgdBb3qc_16shadowsocks_rust.exit
-  %i.h = tail call range(i64 1, 65) i64 @llvm.ctlz.i64(i64 %i.f, i1 false)
+  %i.h = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.f, i1 false)
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.k = load ptr, ptr %i.j, align 8, !alias.scope !5727, !nonnull !14, !noundef !14
@@ -357,7 +357,7 @@ bb.b:                                             ; preds = %_RNvMsd_CsjcToxTEWQ
   br label %_RNvMsd_CsjcToxTEWQ5H_8smallvecINtB5_8SmallVecANtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter9directive15StaticDirectivej8_E10triple_mutCsat9HgdBb3qc_16shadowsocks_rust.exit.i
 
 bb.c:                                             ; preds = %bb.a
-  %i.l = tail call range(i64 1, 65) i64 @llvm.ctlz.i64(i64 %i.c, i1 false)
+  %i.l = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.c, i1 false)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5728)
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   br label %_RNvMsd_CsjcToxTEWQ5H_8smallvecINtB5_8SmallVecANtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter9directive15StaticDirectivej8_E10triple_mutCsat9HgdBb3qc_16shadowsocks_rust.exit.i
@@ -480,7 +480,7 @@ _RNvMsd_CsjcToxTEWQ5H_8smallvecINtB5_8SmallVecANtNtNtNtCslHe4oyxs8Ro_18tracing_s
   br i1 %i.g, label %bb.b, label %bb.q, !prof !58
 
 bb.b:                                             ; preds = %_RNvMsd_CsjcToxTEWQ5H_8smallvecINtB5_8SmallVecANtNtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env9directive9Directivej8_E6tripleCsat9HgdBb3qc_16shadowsocks_rust.exit
-  %i.h = tail call range(i64 1, 65) i64 @llvm.ctlz.i64(i64 %i.f, i1 false)
+  %i.h = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.f, i1 false)
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.k = load ptr, ptr %i.j, align 8, !alias.scope !5739, !nonnull !14, !noundef !14
@@ -488,7 +488,7 @@ bb.b:                                             ; preds = %_RNvMsd_CsjcToxTEWQ
   br label %_RNvMsd_CsjcToxTEWQ5H_8smallvecINtB5_8SmallVecANtNtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env9directive9Directivej8_E10triple_mutCsat9HgdBb3qc_16shadowsocks_rust.exit.i
 
 bb.c:                                             ; preds = %bb.a
-  %i.l = tail call range(i64 1, 65) i64 @llvm.ctlz.i64(i64 %i.c, i1 false)
+  %i.l = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.c, i1 false)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5740)
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   br label %_RNvMsd_CsjcToxTEWQ5H_8smallvecINtB5_8SmallVecANtNtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env9directive9Directivej8_E10triple_mutCsat9HgdBb3qc_16shadowsocks_rust.exit.i
@@ -891,17 +891,17 @@ _RNvXs_NtNtNtCsf3Ta7LF998c_4core4iter8adapters6clonedINtB4_6ClonedINtNtNtNtCslDQ
   %.sroa.6.0.copyload.i = phi ptr [ null, %.sink.split.i8.i.i.i.i ], [ %i.aos, %_RNvXs_NtNtNtCsf3Ta7LF998c_4core4iter8adapters6clonedINtB4_6ClonedINtNtNtNtCslDQ48jUgq5Q_12clap_builder6parser7matches11arg_matches9ValuesRefNtNtCsgCecv3eZDcN_5alloc6string6StringEENtNtNtB8_6traits8iterator8Iterator4nextCsat9HgdBb3qc_16shadowsocks_rust.exit.i.loopexit ]
   %.sroa.0.0.i.i.i.i = phi ptr [ %.sroa.6782.sroa.8.0.copyload, %.sink.split.i8.i.i.i.i ], [ %spec.select.i18.i.i.i.i.lcssa982, %_RNvXs_NtNtNtCsf3Ta7LF998c_4core4iter8adapters6clonedINtB4_6ClonedINtNtNtNtCslDQ48jUgq5Q_12clap_builder6parser7matches11arg_matches9ValuesRefNtNtCsgCecv3eZDcN_5alloc6string6StringEENtNtNtB8_6traits8iterator8Iterator4nextCsat9HgdBb3qc_16shadowsocks_rust.exit.i.loopexit ]
   %i.aot = call noundef nonnull align 8 ptr %.sroa.0780.0.copyload781(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %.sroa.0.0.i.i.i.i) #30, !noalias !7942, !inline_history !7627
-  %i.aou = add i64 %.sroa.6782.sroa.10.0.copyload, -1 ; 2 uses
+  %i.aou = add i64 %.sroa.6782.sroa.10.0.copyload, -1 ; 3 uses
   call void @_RNvXs4_NtCsgCecv3eZDcN_5alloc6stringNtB5_6StringNtNtCsf3Ta7LF998c_4core5clone5Clone5clone(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.o, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.aot) #30, !noalias !7940
   %.pr.i = load i64, ptr %i.o, align 8, !noalias !7940
   %.not.i703 = icmp eq i64 %.pr.i, -1
   br i1 %.not.i703, label %_RNvXNtNtCsgCecv3eZDcN_5alloc3vec21spec_from_iter_nestedINtB4_3VecNtNtB6_6string6StringEINtB2_18SpecFromIterNestedB11_INtNtNtNtCsf3Ta7LF998c_4core4iter8adapters6cloned6ClonedINtNtNtNtCslDQ48jUgq5Q_12clap_builder6parser7matches11arg_matches9ValuesRefB11_EEE9from_iterCsat9HgdBb3qc_16shadowsocks_rust.exit, label %bb.js
 
 bb.js:                                            ; preds = %_RNvXs_NtNtNtCsf3Ta7LF998c_4core4iter8adapters6clonedINtB4_6ClonedINtNtNtNtCslDQ48jUgq5Q_12clap_builder6parser7matches11arg_matches9ValuesRefNtNtCsgCecv3eZDcN_5alloc6string6StringEENtNtNtB8_6traits8iterator8Iterator4nextCsat9HgdBb3qc_16shadowsocks_rust.exit.i
-  %i.aov = call i64 @llvm.uadd.sat.i64(i64 %i.aou, i64 1) ; 2 uses
+  %i.aov = call i64 @llvm.uadd.sat.i64(i64 %i.aou, i64 1)
   %i.aow = call i64 @llvm.umax.i64(i64 %i.aov, i64 4) ; 3 uses
   %i.aox = mul i64 %i.aow, 24                     ; 3 uses
-  %or.cond.i.i.i = icmp ugt i64 %i.aov, 384307168202282325
+  %or.cond.i.i.i = icmp ugt i64 %i.aou, 384307168202282324
   br i1 %or.cond.i.i.i, label %bb.jv, label %bb.jt, !prof !39
 
 bb.jt:                                            ; preds = %bb.js
@@ -1304,7 +1304,7 @@ attributes #37 = { noinline noreturn nounwind }
 !55 = !{i64 1, i64 0}
 !56 = !{i32 0, i32 1000000000}
 !57 = !{!"branch_weights", !"expected", i32 -2147483648, i32 0}
-!58 = !{!"branch_weights", i32 -8583494, i32 8583493}
+!58 = !{!"branch_weights", i32 2143191900, i32 4291748}
 !59 = !{i64 0, i64 -9223372036854775806}
 !60 = !{i8 0, i8 6}
 !61 = !{i32 0, i32 23}

@@ -204,19 +204,22 @@ bb.a:
   %.val = load i64, ptr %i.i, align 8, !dbg !71550, !noundef !1852
     #dbg_value(ptr poison, !7870, !DIExpression(), !71421)
     #dbg_value(i64 1, !7876, !DIExpression(), !71425)
-  %i.j = shl i64 %.val, 1, !dbg !71551
+  %i.j = shl i64 %.val, 1, !dbg !71551            ; 2 uses
     #dbg_value(i64 %i.j, !7887, !DIExpression(), !71426)
     #dbg_value(i64 %i.j, !7881, !DIExpression(), !71427)
     #dbg_value(i64 %i.j, !7877, !DIExpression(), !71425)
-  %6 = tail call i64 @llvm.usub.sat.i64(i64 %i.j, i64 1), !dbg !71552 ; 2 uses
-    #dbg_value(i64 %6, !7882, !DIExpression(), !71428)
-    #dbg_value(i64 %6, !7890, !DIExpression(), !71430)
-    #dbg_value(i64 %6, !7894, !DIExpression(), !71432)
-  %7 = icmp sgt i64 %6, -1, !dbg !71553
-  br i1 %7, label %bb.b, label %_RNvMNtCs5yXxDE1DkoT_4tera8templateNtB2_8Template9size_hint.exit, !dbg !71553
+    #dbg_value(i64 poison, !7882, !DIExpression(), !71428)
+    #dbg_value(i64 poison, !7890, !DIExpression(), !71430)
+    #dbg_value(i64 poison, !7894, !DIExpression(), !71432)
+  %6 = icmp ult i64 %i.j, -9223372036854775807, !dbg !71552
+  br i1 %6, label %bb.b, label %_RNvMNtCs5yXxDE1DkoT_4tera8templateNtB2_8Template9size_hint.exit, !dbg !71552
 
 bb.b:                                             ; preds = %bb.a
-  %i.k = tail call range(i64 1, 65) i64 @llvm.ctlz.i64(i64 %6, i1 false), !dbg !71554
+  %7 = tail call i64 @llvm.usub.sat.i64(i64 %i.j, i64 1), !dbg !71553
+    #dbg_value(i64 %7, !7882, !DIExpression(), !71428)
+    #dbg_value(i64 %7, !7890, !DIExpression(), !71430)
+    #dbg_value(i64 %7, !7894, !DIExpression(), !71432)
+  %i.k = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %7, i1 false), !dbg !71554
   %i.l = sub nuw nsw i64 64, %i.k, !dbg !71555
     #dbg_value(i64 %i.l, !7883, !DIExpression(), !71433)
   %i.m = shl nuw i64 1, %i.l, !dbg !71556
@@ -619,19 +622,22 @@ bb.a:
   %.val = load i64, ptr %i.i, align 8, !dbg !73019, !noundef !1852
     #dbg_value(ptr poison, !7870, !DIExpression(), !72891)
     #dbg_value(i64 1, !7876, !DIExpression(), !72895)
-  %i.j = shl i64 %.val, 1, !dbg !73020
+  %i.j = shl i64 %.val, 1, !dbg !73020            ; 2 uses
     #dbg_value(i64 %i.j, !7887, !DIExpression(), !72896)
     #dbg_value(i64 %i.j, !7881, !DIExpression(), !72897)
     #dbg_value(i64 %i.j, !7877, !DIExpression(), !72895)
-  %4 = tail call i64 @llvm.usub.sat.i64(i64 %i.j, i64 1), !dbg !73021 ; 2 uses
-    #dbg_value(i64 %4, !7882, !DIExpression(), !72898)
-    #dbg_value(i64 %4, !7890, !DIExpression(), !72900)
-    #dbg_value(i64 %4, !7894, !DIExpression(), !72902)
-  %5 = icmp sgt i64 %4, -1, !dbg !73022
-  br i1 %5, label %bb.b, label %_RNvMNtCs5yXxDE1DkoT_4tera8templateNtB2_8Template9size_hint.exit, !dbg !73022
+    #dbg_value(i64 poison, !7882, !DIExpression(), !72898)
+    #dbg_value(i64 poison, !7890, !DIExpression(), !72900)
+    #dbg_value(i64 poison, !7894, !DIExpression(), !72902)
+  %4 = icmp ult i64 %i.j, -9223372036854775807, !dbg !73021
+  br i1 %4, label %bb.b, label %_RNvMNtCs5yXxDE1DkoT_4tera8templateNtB2_8Template9size_hint.exit, !dbg !73021
 
 bb.b:                                             ; preds = %bb.a
-  %i.k = tail call range(i64 1, 65) i64 @llvm.ctlz.i64(i64 %4, i1 false), !dbg !73023
+  %5 = tail call i64 @llvm.usub.sat.i64(i64 %i.j, i64 1), !dbg !73022
+    #dbg_value(i64 %5, !7882, !DIExpression(), !72898)
+    #dbg_value(i64 %5, !7890, !DIExpression(), !72900)
+    #dbg_value(i64 %5, !7894, !DIExpression(), !72902)
+  %i.k = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %5, i1 false), !dbg !73023
   %i.l = sub nuw nsw i64 64, %i.k, !dbg !73024
     #dbg_value(i64 %i.l, !7883, !DIExpression(), !72903)
   %i.m = shl nuw i64 1, %i.l, !dbg !73025
@@ -1034,8 +1040,8 @@ begin_hunk_2_@llvm.vector.reduce.add.v2i64
 !71549 = !DILocation(line: 1047, column: 45, scope: !71402)
 !71550 = !DILocation(line: 1047, column: 59, scope: !71402)
 !71551 = !DILocation(line: 144, column: 9, scope: !1507, inlinedAt: !71420)
-!71552 = !DILocation(line: 2570, column: 13, scope: !1508, inlinedAt: !71424)
-!71553 = !DILocation(line: 3974, column: 16, scope: !1510, inlinedAt: !71423)
+!71552 = !DILocation(line: 3974, column: 16, scope: !1510, inlinedAt: !71423)
+!71553 = !DILocation(line: 2570, column: 13, scope: !1508, inlinedAt: !71424)
 !71554 = !DILocation(line: 154, column: 20, scope: !1515, inlinedAt: !71431)
 !71555 = !DILocation(line: 246, column: 13, scope: !1514, inlinedAt: !71429)
 !71556 = !DILocation(line: 3976, column: 22, scope: !1509, inlinedAt: !71423)
@@ -1438,8 +1444,8 @@ begin_hunk_3_@llvm.vector.reduce.add.v2i64
 !73018 = !DILocation(line: 1036, column: 45, scope: !72872)
 !73019 = !DILocation(line: 1036, column: 59, scope: !72872)
 !73020 = !DILocation(line: 144, column: 9, scope: !1507, inlinedAt: !72890)
-!73021 = !DILocation(line: 2570, column: 13, scope: !1508, inlinedAt: !72894)
-!73022 = !DILocation(line: 3974, column: 16, scope: !1510, inlinedAt: !72893)
+!73021 = !DILocation(line: 3974, column: 16, scope: !1510, inlinedAt: !72893)
+!73022 = !DILocation(line: 2570, column: 13, scope: !1508, inlinedAt: !72894)
 !73023 = !DILocation(line: 154, column: 20, scope: !1515, inlinedAt: !72901)
 !73024 = !DILocation(line: 246, column: 13, scope: !1514, inlinedAt: !72899)
 !73025 = !DILocation(line: 3976, column: 22, scope: !1509, inlinedAt: !72893)

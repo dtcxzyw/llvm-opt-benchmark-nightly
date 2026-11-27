@@ -205,14 +205,14 @@ bb.bc:                                            ; preds = %.noexc44.i.i
   store i8 %i.jh, ptr %i.ao, align 1, !tbaa !82
   %i.ji = load ptr, ptr %192, align 8, !tbaa !286, !nonnull !141, !align !245
   %i.jj = getelementptr inbounds nuw i8, ptr %i.ji, i64 8
-  %i.jk = load i64, ptr %i.jj, align 8, !tbaa !287
-  %spec.select.i.i.i.i.i.i = call noundef i64 @llvm.usub.sat.i64(i64 %i.jk, i64 1) ; 4 uses
+  %i.jk = load i64, ptr %i.jj, align 8, !tbaa !287 ; 2 uses
+  %spec.select.i.i.i.i.i.i = call noundef i64 @llvm.usub.sat.i64(i64 %i.jk, i64 1) ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ap) #18
   %i.jl = load i32, ptr %i.gu, align 4, !tbaa !288
   store i32 %i.jl, ptr %i.ap, align 4, !tbaa !83
   call void @llvm.lifetime.start.p0(ptr nonnull %178) #18
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %178, i8 0, i64 24, i1 false)
-  %i.jm = icmp ugt i64 %spec.select.i.i.i.i.i.i, 1
+  %i.jm = icmp ugt i64 %i.jk, 2
   br i1 %i.jm, label %bb.bd, label %_ZN7xgboost6common11ParallelForIiZNS_9predictor12_GLOBAL__N_125PredictBatchByBlockKernelILm64ENS2_20GHistIndexMatrixViewINS_11CatAccessorEEEEEvRKT0_RKNS2_15GBTreeModelViewINS3_3VecESt7variantIJNS_4tree14ScalarTreeViewENSE_19MultiTargetTreeViewEEENS3_9CopyViewsEEEPNS3_9ThreadTmpIXT_EEEibNS_6linalg10TensorViewIfLi2EEENS0_15OptionalWeightsEEUlT_E_EEvST_iOS8_.exit.i.i.i.i
 
 bb.bd:                                            ; preds = %bb.bc
@@ -615,7 +615,7 @@ bb.fk:                                            ; preds = %.noexc71.i.i
   %i.ty = ptrtoint ptr %i.tu to i64
   %i.tz = ptrtoint ptr %i.tv to i64
   %i.ua = sub i64 %i.ty, %i.tz
-  %i.ub = ashr exact i64 %i.ua, 3                 ; 2 uses
+  %i.ub = ashr exact i64 %i.ua, 3                 ; 3 uses
   %i.uc = getelementptr inbounds nuw i8, ptr %i.tx, i64 8
   %i.ud = load ptr, ptr %i.uc, align 8, !tbaa !299, !noalias !804
   %i.ue = load ptr, ptr %i.tx, align 8, !tbaa !300, !noalias !804 ; 2 uses
@@ -637,11 +637,11 @@ bb.fk:                                            ; preds = %.noexc71.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %161, ptr noundef nonnull align 8 dereferenceable(72) %i.do, i64 72, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %160)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %160, ptr noundef nonnull align 8 dereferenceable(24) %i.dq, i64 24, i1 false)
-  %spec.select.i.i.i.i73.i.i = call noundef i64 @llvm.usub.sat.i64(i64 %i.ub, i64 1) ; 5 uses
+  %spec.select.i.i.i.i73.i.i = call noundef i64 @llvm.usub.sat.i64(i64 %i.ub, i64 1) ; 4 uses
   %i.un = load i32, ptr %i.rm, align 4, !tbaa !288 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %157) #18
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %157, i8 0, i64 24, i1 false)
-  %i.uo = icmp ugt i64 %spec.select.i.i.i.i73.i.i, 1
+  %i.uo = icmp ugt i64 %i.ub, 2
   br i1 %i.uo, label %bb.fl, label %_ZN7xgboost6common11ParallelForIiZNS_9predictor12_GLOBAL__N_125PredictBatchByBlockKernelILm64ENS2_14SparsePageViewINS_11CatAccessorEEEEEvRKT0_RKNS2_15GBTreeModelViewINS3_3VecESt7variantIJNS_4tree14ScalarTreeViewENSE_19MultiTargetTreeViewEEENS3_9CopyViewsEEEPNS3_9ThreadTmpIXT_EEEibNS_6linalg10TensorViewIfLi2EEENS0_15OptionalWeightsEEUlT_E_EEvST_iOS8_.exit.i.i.i.i
 
 bb.fl:                                            ; preds = %bb.fk
@@ -1044,14 +1044,14 @@ bb.kv:                                            ; preds = %.noexc43.i.i
   store i8 %i.amn, ptr %i.aa, align 1, !tbaa !82
   %i.amo = load ptr, ptr %132, align 8, !tbaa !323, !nonnull !141, !align !245
   %i.amp = getelementptr inbounds nuw i8, ptr %i.amo, i64 8
-  %i.amq = load i64, ptr %i.amp, align 8, !tbaa !287
-  %spec.select.i.i.i.i.i.i84 = call noundef i64 @llvm.usub.sat.i64(i64 %i.amq, i64 1) ; 4 uses
+  %i.amq = load i64, ptr %i.amp, align 8, !tbaa !287 ; 2 uses
+  %spec.select.i.i.i.i.i.i84 = call noundef i64 @llvm.usub.sat.i64(i64 %i.amq, i64 1) ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ab) #18
   %i.amr = load i32, ptr %i.aka, align 4, !tbaa !288
   store i32 %i.amr, ptr %i.ab, align 4, !tbaa !83
   call void @llvm.lifetime.start.p0(ptr nonnull %120) #18
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %120, i8 0, i64 24, i1 false)
-  %i.ams = icmp ugt i64 %spec.select.i.i.i.i.i.i84, 1
+  %i.ams = icmp ugt i64 %i.amq, 2
   br i1 %i.ams, label %bb.kw, label %_ZN7xgboost6common11ParallelForIiZNS_9predictor12_GLOBAL__N_125PredictBatchByBlockKernelILm64ENS2_20GHistIndexMatrixViewINS_12NoOpAccessorEEEEEvRKT0_RKNS2_15GBTreeModelViewINS3_3VecESt7variantIJNS_4tree14ScalarTreeViewENSE_19MultiTargetTreeViewEEENS3_9CopyViewsEEEPNS3_9ThreadTmpIXT_EEEibNS_6linalg10TensorViewIfLi2EEENS0_15OptionalWeightsEEUlT_E_EEvST_iOS8_.exit.i.i.i.i
 
 bb.kw:                                            ; preds = %bb.kv
@@ -1454,7 +1454,7 @@ bb.pd:                                            ; preds = %.noexc70.i.i
   %i.axi = ptrtoint ptr %i.axe to i64
   %i.axj = ptrtoint ptr %i.axf to i64
   %i.axk = sub i64 %i.axi, %i.axj
-  %i.axl = ashr exact i64 %i.axk, 3               ; 2 uses
+  %i.axl = ashr exact i64 %i.axk, 3               ; 3 uses
   %i.axm = getelementptr inbounds nuw i8, ptr %i.axh, i64 8
   %i.axn = load ptr, ptr %i.axm, align 8, !tbaa !299, !noalias !816
   %i.axo = load ptr, ptr %i.axh, align 8, !tbaa !300, !noalias !816 ; 2 uses
@@ -1477,13 +1477,13 @@ bb.pd:                                            ; preds = %.noexc70.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %102, ptr noundef nonnull align 8 dereferenceable(24) %i.ahb, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.s)
   store i8 %i.axw, ptr %i.s, align 1, !tbaa !82
-  %spec.select.i.i.i.i72.i.i = call noundef i64 @llvm.usub.sat.i64(i64 %i.axl, i64 1) ; 4 uses
+  %spec.select.i.i.i.i72.i.i = call noundef i64 @llvm.usub.sat.i64(i64 %i.axl, i64 1) ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.t) #18
   %i.axx = load i32, ptr %i.aux, align 4, !tbaa !288
   store i32 %i.axx, ptr %i.t, align 4, !tbaa !83
   call void @llvm.lifetime.start.p0(ptr nonnull %98) #18
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %98, i8 0, i64 24, i1 false)
-  %i.axy = icmp ugt i64 %spec.select.i.i.i.i72.i.i, 1
+  %i.axy = icmp ugt i64 %i.axl, 2
   br i1 %i.axy, label %bb.pe, label %_ZN7xgboost6common11ParallelForIiZNS_9predictor12_GLOBAL__N_125PredictBatchByBlockKernelILm64ENS2_14SparsePageViewINS_12NoOpAccessorEEEEEvRKT0_RKNS2_15GBTreeModelViewINS3_3VecESt7variantIJNS_4tree14ScalarTreeViewENSE_19MultiTargetTreeViewEEENS3_9CopyViewsEEEPNS3_9ThreadTmpIXT_EEEibNS_6linalg10TensorViewIfLi2EEENS0_15OptionalWeightsEEUlT_E_EEvST_iOS8_.exit.i.i.i.i
 
 bb.pe:                                            ; preds = %bb.pd
@@ -1886,8 +1886,8 @@ bb.a:
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !487, !nonnull !141, !align !245 ; 2 uses
   %i.n = load ptr, ptr %1, align 8, !tbaa !474
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 216
-  %i.p = load i64, ptr %i.o, align 8, !tbaa !59
-  %i.q = tail call noundef i64 @llvm.usub.sat.i64(i64 %i.p, i64 1) ; 6 uses
+  %i.p = load i64, ptr %i.o, align 8, !tbaa !59   ; 2 uses
+  %i.q = tail call noundef i64 @llvm.usub.sat.i64(i64 %i.p, i64 1) ; 5 uses
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !488, !nonnull !141, !align !245
   %i.t = load i64, ptr %i.s, align 8, !tbaa !59, !noalias !1509 ; 3 uses
@@ -1943,7 +1943,7 @@ bb.a:
   store i32 %i.ar, ptr %i.f, align 4, !tbaa !83
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #18
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %18, i8 0, i64 24, i1 false)
-  %i.as = icmp ugt i64 %i.q, 1
+  %i.as = icmp ugt i64 %i.p, 2
   br i1 %i.as, label %bb.b, label %_ZN7xgboost6common11ParallelForIiZNS_9predictor12_GLOBAL__N_125PredictBatchByBlockKernelILm64ENS2_11AdapterViewINS_4data15CSRArrayAdapterENS_12NoOpAccessorEEEEEvRKT0_RKNS2_15GBTreeModelViewINS3_3VecESt7variantIJNS_4tree14ScalarTreeViewENSG_19MultiTargetTreeViewEEENS3_9CopyViewsEEEPNS3_9ThreadTmpIXT_EEEibNS_6linalg10TensorViewIfLi2EEENS0_15OptionalWeightsEEUlT_E_EEvSV_iOSA_.exit.i
 
 bb.b:                                             ; preds = %bb.a

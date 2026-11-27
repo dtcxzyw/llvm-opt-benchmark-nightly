@@ -203,10 +203,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.r = getelementptr inbounds nuw i8, ptr %i.k, i64 80
-  %.sroa.4.0..sroa_idx.val = load i64, ptr %i.r, align 8, !noundef !4
-  %0 = add i64 %.sroa.4.0..sroa_idx.val, 1
-  %1 = call i64 @llvm.usub.sat.i64(i64 %0, i64 1) ; 2 uses
-  %i.s = icmp sgt i64 %1, -1
+  %.sroa.4.0..sroa_idx.val = load i64, ptr %i.r, align 8, !noundef !4 ; 2 uses
+  %i.s = icmp sgt i64 %.sroa.4.0..sroa_idx.val, -2
   br i1 %i.s, label %bb.d, label %bb.e
 
 bb.c:                                             ; preds = %bb.a
@@ -214,7 +212,9 @@ bb.c:                                             ; preds = %bb.a
   unreachable
 
 bb.d:                                             ; preds = %bb.b
-  %i.t = call range(i64 1, 65) i64 @llvm.ctlz.i64(i64 %1, i1 false)
+  %0 = add i64 %.sroa.4.0..sroa_idx.val, 1
+  %1 = call i64 @llvm.usub.sat.i64(i64 %0, i64 1)
+  %i.t = call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %1, i1 false)
   %i.u = sub nuw nsw i64 64, %i.t
   %i.v = shl nuw i64 1, %i.u
   br label %bb.e

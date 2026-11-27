@@ -204,11 +204,11 @@ bb.g:                                             ; preds = %_RNvXs0_NtNtNtCskKL
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.g, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.8.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.8, i64 40, i1 false)
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %.val = load i64, ptr %i.u, align 8, !noundef !7
-  %i.v = call i64 @llvm.uadd.sat.i64(i64 %.val, i64 1) ; 2 uses
+  %.val = load i64, ptr %i.u, align 8, !noundef !7 ; 2 uses
+  %i.v = call i64 @llvm.uadd.sat.i64(i64 %.val, i64 1)
   %..i = call noundef i64 @llvm.umax.i64(i64 %i.v, i64 4) ; 3 uses
   %i.w = mul i64 %..i, 72                         ; 3 uses
-  %or.cond.i.i = icmp ugt i64 %i.v, 128102389400760775
+  %or.cond.i.i = icmp ugt i64 %.val, 128102389400760774
   br i1 %or.cond.i.i, label %bb.j, label %bb.h, !prof !10
 
 bb.h:                                             ; preds = %bb.g

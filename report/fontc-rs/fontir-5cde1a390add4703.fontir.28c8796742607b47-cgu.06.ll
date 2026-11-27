@@ -202,12 +202,12 @@ bb.a:
   %i.b = alloca [24 x i8], align 8                ; 6 uses
   %i.c = alloca [24 x i8], align 8                ; 7 uses
   %i.d = alloca [24 x i8], align 8                ; 7 uses
-  %2 = tail call i64 @llvm.usub.sat.i64(i64 %1, i64 1) ; 2 uses
-  %3 = icmp sgt i64 %2, -1
-  br i1 %3, label %bb.b, label %bb.c
+  %2 = icmp ult i64 %1, -9223372036854775807
+  br i1 %2, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = tail call range(i64 1, 65) i64 @llvm.ctlz.i64(i64 %2, i1 false)
+  %3 = tail call i64 @llvm.usub.sat.i64(i64 %1, i64 1)
+  %i.e = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %3, i1 false)
   %i.f = sub nuw nsw i64 64, %i.e
   %i.g = shl nuw i64 1, %i.f
   br label %bb.c

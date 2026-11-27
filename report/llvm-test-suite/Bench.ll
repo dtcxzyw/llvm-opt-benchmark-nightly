@@ -205,9 +205,8 @@ _ZL13NormalizeValsRyS_.exit5:                     ; preds = %.lr.ph.i4, %_ZL13No
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define dso_local noundef i64 @_Z17GetCompressRatingjyyy(i32 noundef %0, i64 noundef %1, i64 noundef %2, i64 noundef %3) local_unnamed_addr #7 !guid !173 {
 bb.a:
-  %4 = tail call i32 @llvm.usub.sat.i32(i32 %0, i32 256) ; 2 uses
-  %i.a = icmp ult i32 %4, 256
-  br i1 %i.a, label %.loopexit30.i, label %vector.ph
+  %i.a = icmp ult i32 %0, 512
+  br i1 %i.a, label %.loopexit30.i.loopexit77, label %vector.ph
 
 vector.ph:                                        ; preds = %bb.a
   %broadcast.splatinsert = insertelement <16 x i32> poison, i32 %0, i64 0
@@ -610,6 +609,10 @@ vector.body.interim458:                           ; preds = %vector.body453
   %i.dl = icmp eq i32 %index.next456, 256
   br i1 %i.dl, label %_ZL10GetLogSizej.exit, label %vector.body453, !llvm.loop !172
 
+.loopexit30.i.loopexit77:                         ; preds = %bb.a
+  %4 = tail call i32 @llvm.usub.sat.i32(i32 %0, i32 256)
+  br label %.loopexit30.i
+
 .loopexit30.i.loopexit:                           ; preds = %vector.body453
   %i.dm = tail call i64 @llvm.experimental.cttz.elts.i64.v16i1(<16 x i1> %i.dj, i1 false)
   %i.dn = trunc i64 %i.dm to i32
@@ -748,9 +751,9 @@ vector.body.interim458:                           ; preds = %vector.body453
   %i.gc = add i32 %index, %i.gb
   br label %.loopexit30.i
 
-.loopexit30.i:                                    ; preds = %.loopexit30.i.loopexit194, %.loopexit30.i.loopexit193, %.loopexit30.i.loopexit192, %.loopexit30.i.loopexit191, %.loopexit30.i.loopexit190, %.loopexit30.i.loopexit189, %.loopexit30.i.loopexit188, %.loopexit30.i.loopexit187, %.loopexit30.i.loopexit186, %.loopexit30.i.loopexit185, %.loopexit30.i.loopexit184, %.loopexit30.i.loopexit183, %.loopexit30.i.loopexit182, %.loopexit30.i.loopexit181, %.loopexit30.i.loopexit180, %.loopexit30.i.loopexit179, %.loopexit30.i.loopexit178, %.loopexit30.i.loopexit177, %.loopexit30.i.loopexit176, %.loopexit30.i.loopexit175, %.loopexit30.i.loopexit174, %.loopexit30.i.loopexit173, %.loopexit30.i.loopexit, %bb.a
-  %.01426.lcssa.i = phi i32 [ -768, %.loopexit30.i.loopexit188 ], [ -512, %.loopexit30.i.loopexit187 ], [ -256, %.loopexit30.i.loopexit186 ], [ 0, %.loopexit30.i.loopexit185 ], [ 256, %.loopexit30.i.loopexit184 ], [ 512, %.loopexit30.i.loopexit183 ], [ 768, %.loopexit30.i.loopexit182 ], [ 1024, %.loopexit30.i.loopexit181 ], [ 1280, %.loopexit30.i.loopexit180 ], [ 1536, %.loopexit30.i.loopexit179 ], [ 1792, %.loopexit30.i.loopexit178 ], [ 2048, %.loopexit30.i.loopexit177 ], [ 2304, %.loopexit30.i.loopexit176 ], [ 2560, %.loopexit30.i.loopexit175 ], [ 2816, %.loopexit30.i.loopexit174 ], [ 3072, %.loopexit30.i.loopexit173 ], [ 3328, %.loopexit30.i.loopexit ], [ -2048, %.loopexit30.i.loopexit193 ], [ -1792, %.loopexit30.i.loopexit192 ], [ -2560, %bb.a ], [ -1536, %.loopexit30.i.loopexit191 ], [ -1280, %.loopexit30.i.loopexit190 ], [ -1024, %.loopexit30.i.loopexit189 ], [ -2304, %.loopexit30.i.loopexit194 ]
-  %.025.lcssa.i = phi i32 [ %i.fk, %.loopexit30.i.loopexit188 ], [ %i.fh, %.loopexit30.i.loopexit187 ], [ %i.fe, %.loopexit30.i.loopexit186 ], [ %i.fb, %.loopexit30.i.loopexit185 ], [ %i.ey, %.loopexit30.i.loopexit184 ], [ %i.ev, %.loopexit30.i.loopexit183 ], [ %i.es, %.loopexit30.i.loopexit182 ], [ %i.ep, %.loopexit30.i.loopexit181 ], [ %i.em, %.loopexit30.i.loopexit180 ], [ %i.ej, %.loopexit30.i.loopexit179 ], [ %i.eg, %.loopexit30.i.loopexit178 ], [ %i.ed, %.loopexit30.i.loopexit177 ], [ %i.ea, %.loopexit30.i.loopexit176 ], [ %i.dx, %.loopexit30.i.loopexit175 ], [ %i.du, %.loopexit30.i.loopexit174 ], [ %i.dr, %.loopexit30.i.loopexit173 ], [ %i.do, %.loopexit30.i.loopexit ], [ %i.fz, %.loopexit30.i.loopexit193 ], [ %i.fw, %.loopexit30.i.loopexit192 ], [ %4, %bb.a ], [ %i.ft, %.loopexit30.i.loopexit191 ], [ %i.fq, %.loopexit30.i.loopexit190 ], [ %i.fn, %.loopexit30.i.loopexit189 ], [ %i.gc, %.loopexit30.i.loopexit194 ]
+.loopexit30.i:                                    ; preds = %.loopexit30.i.loopexit194, %.loopexit30.i.loopexit193, %.loopexit30.i.loopexit192, %.loopexit30.i.loopexit191, %.loopexit30.i.loopexit190, %.loopexit30.i.loopexit189, %.loopexit30.i.loopexit188, %.loopexit30.i.loopexit187, %.loopexit30.i.loopexit186, %.loopexit30.i.loopexit185, %.loopexit30.i.loopexit184, %.loopexit30.i.loopexit183, %.loopexit30.i.loopexit182, %.loopexit30.i.loopexit181, %.loopexit30.i.loopexit180, %.loopexit30.i.loopexit179, %.loopexit30.i.loopexit178, %.loopexit30.i.loopexit177, %.loopexit30.i.loopexit176, %.loopexit30.i.loopexit175, %.loopexit30.i.loopexit174, %.loopexit30.i.loopexit173, %.loopexit30.i.loopexit, %.loopexit30.i.loopexit77
+  %.01426.lcssa.i = phi i32 [ -768, %.loopexit30.i.loopexit188 ], [ -512, %.loopexit30.i.loopexit187 ], [ -256, %.loopexit30.i.loopexit186 ], [ 0, %.loopexit30.i.loopexit185 ], [ 256, %.loopexit30.i.loopexit184 ], [ 512, %.loopexit30.i.loopexit183 ], [ 768, %.loopexit30.i.loopexit182 ], [ 1024, %.loopexit30.i.loopexit181 ], [ 1280, %.loopexit30.i.loopexit180 ], [ 1536, %.loopexit30.i.loopexit179 ], [ 1792, %.loopexit30.i.loopexit178 ], [ 2048, %.loopexit30.i.loopexit177 ], [ 2304, %.loopexit30.i.loopexit176 ], [ 2560, %.loopexit30.i.loopexit175 ], [ 2816, %.loopexit30.i.loopexit174 ], [ 3072, %.loopexit30.i.loopexit173 ], [ 3328, %.loopexit30.i.loopexit ], [ -2048, %.loopexit30.i.loopexit193 ], [ -1792, %.loopexit30.i.loopexit192 ], [ -1536, %.loopexit30.i.loopexit191 ], [ -2560, %.loopexit30.i.loopexit77 ], [ -1280, %.loopexit30.i.loopexit190 ], [ -1024, %.loopexit30.i.loopexit189 ], [ -2304, %.loopexit30.i.loopexit194 ]
+  %.025.lcssa.i = phi i32 [ %i.fk, %.loopexit30.i.loopexit188 ], [ %i.fh, %.loopexit30.i.loopexit187 ], [ %i.fe, %.loopexit30.i.loopexit186 ], [ %i.fb, %.loopexit30.i.loopexit185 ], [ %i.ey, %.loopexit30.i.loopexit184 ], [ %i.ev, %.loopexit30.i.loopexit183 ], [ %i.es, %.loopexit30.i.loopexit182 ], [ %i.ep, %.loopexit30.i.loopexit181 ], [ %i.em, %.loopexit30.i.loopexit180 ], [ %i.ej, %.loopexit30.i.loopexit179 ], [ %i.eg, %.loopexit30.i.loopexit178 ], [ %i.ed, %.loopexit30.i.loopexit177 ], [ %i.ea, %.loopexit30.i.loopexit176 ], [ %i.dx, %.loopexit30.i.loopexit175 ], [ %i.du, %.loopexit30.i.loopexit174 ], [ %i.dr, %.loopexit30.i.loopexit173 ], [ %i.do, %.loopexit30.i.loopexit ], [ %i.fz, %.loopexit30.i.loopexit193 ], [ %i.fw, %.loopexit30.i.loopexit192 ], [ %i.ft, %.loopexit30.i.loopexit191 ], [ %4, %.loopexit30.i.loopexit77 ], [ %i.fq, %.loopexit30.i.loopexit190 ], [ %i.fn, %.loopexit30.i.loopexit189 ], [ %i.gc, %.loopexit30.i.loopexit194 ]
   %i.gd = add i32 %.01426.lcssa.i, %.025.lcssa.i
   %i.ge = zext i32 %i.gd to i64                   ; 2 uses
   %i.gf = mul nuw nsw i64 %i.ge, 5

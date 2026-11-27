@@ -205,7 +205,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !39570)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !39571)
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
-  %i.d = load i64, ptr %i.c, align 8, !alias.scope !39572, !noundef !113 ; 4 uses
+  %i.d = load i64, ptr %i.c, align 8, !alias.scope !39572, !noundef !113 ; 3 uses
   %i.e = icmp eq i64 %i.d, 0
   br i1 %i.e, label %.thread, label %bb.b
 
@@ -258,7 +258,7 @@ _RNvXsE_NtCsfKiFC1ztrmh_9hashbrown3rawINtB5_11RawIntoIterTNtNtCs40k4W9msRzi_5all
   store i16 %i.u, ptr %i.i, align 8, !alias.scope !39574
   %i.v = sub nsw i64 0, %i.t
   %i.w = getelementptr inbounds [24 x i8], ptr %i.q, i64 %i.v ; 3 uses
-  %i.x = add i64 %i.d, -1                         ; 3 uses
+  %i.x = add i64 %i.d, -1                         ; 4 uses
   store i64 %i.x, ptr %i.c, align 8, !alias.scope !39572
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -24
   %.sroa.0.0.copyload1.i = load i64, ptr %i.y, align 8, !noalias !39576 ; 4 uses
@@ -374,7 +374,7 @@ bb.k:                                             ; preds = %_RNvXsE_NtCsfKiFC1z
   %.sroa.6.sroa.5.0.copyload = load i64, ptr %.sroa.6.sroa.5.0..sroa.6.0..sroa_idx2.i.sroa_idx, align 8, !noalias !39570
   %.sroa.0.0.i = tail call noundef i64 @llvm.umax.i64(i64 %i.d, i64 4) ; 3 uses
   %i.be = mul i64 %.sroa.0.0.i, 24                ; 3 uses
-  %or.cond.i.i = icmp ugt i64 %i.d, 384307168202282325
+  %or.cond.i.i = icmp ugt i64 %i.x, 384307168202282324
   br i1 %or.cond.i.i, label %bb.m, label %bb.l, !prof !114
 
 bb.l:                                             ; preds = %bb.k

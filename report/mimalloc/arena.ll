@@ -205,26 +205,26 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.p = load ptr, ptr %i.c, align 8, !tbaa !40   ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 32
-  %i.r = load atomic i64, ptr %i.q monotonic, align 8 ; 3 uses
-  %i.s = tail call i64 @llvm.usub.sat.i64(i64 %i.r, i64 1) ; 8 uses
+  %i.r = load atomic i64, ptr %i.q monotonic, align 8 ; 5 uses
+  %i.s = tail call i64 @llvm.usub.sat.i64(i64 %i.r, i64 1) ; 6 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.u = load i64, ptr %i.t, align 8, !tbaa !50   ; 3 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.p, i64 1488
   %i.w = load atomic i64, ptr %i.v monotonic, align 8 ; 4 uses
-  %i.x = icmp ult i64 %i.s, 2
+  %i.x = icmp ult i64 %i.r, 3
   br i1 %i.x, label %mi_arena_start_idx.exit.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.y = icmp eq i64 %i.u, 0
   %i.z = icmp ult i64 %i.w, 2
   %or.cond.i.i = select i1 %i.y, i1 true, i1 %i.z
-  %i.aa = icmp ugt i64 %i.s, 2303
+  %i.aa = icmp ugt i64 %i.r, 2304
   %or.cond3.i.i = or i1 %i.aa, %or.cond.i.i
   br i1 %or.cond3.i.i, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
   %i.ab = urem i64 %i.g, %i.s
-  br label %mi_arena_start_idx.exit.i
+  br label %.lr.ph.i
 
 bb.f:                                             ; preds = %bb.d
   %i.ac = shl nuw nsw i64 %i.s, 8                 ; 2 uses
@@ -234,27 +234,27 @@ bb.f:                                             ; preds = %bb.d
 
 bb.g:                                             ; preds = %bb.f
   %i.af = urem i64 %i.u, %i.s
-  br label %mi_arena_start_idx.exit.i
+  br label %.lr.ph.i
 
 bb.h:                                             ; preds = %bb.f
   %i.ag = urem i64 %i.u, %i.w
   %i.ah = mul nuw nsw i64 %i.ag, %i.ad
   %i.ai = lshr i64 %i.ah, 8                       ; 2 uses
   %i.aj = icmp samesign ugt i64 %i.ad, 511
-  br i1 %i.aj, label %bb.i, label %mi_arena_start_idx.exit.i
+  br i1 %i.aj, label %bb.i, label %.lr.ph.i
 
 bb.i:                                             ; preds = %bb.h
   %i.ak = lshr i64 %i.ad, 8
   %i.al = urem i64 %i.g, %i.ak
   %i.am = add nuw nsw i64 %i.al, %i.ai
-  br label %mi_arena_start_idx.exit.i
+  br label %.lr.ph.i
 
-mi_arena_start_idx.exit.i:                        ; preds = %bb.i, %bb.h, %bb.g, %bb.e, %bb.c
-  %.026.i.i = phi i64 [ 0, %bb.c ], [ %i.ab, %bb.e ], [ %i.af, %bb.g ], [ %i.am, %bb.i ], [ %i.ai, %bb.h ]
+mi_arena_start_idx.exit.i:                        ; preds = %bb.c
   %.not115.i = icmp eq i64 %i.r, 0
   br i1 %.not115.i, label %mi_arenas_page_try_find_abandoned.exit.thread, label %.lr.ph.i
 
-.lr.ph.i:                                         ; preds = %mi_arena_start_idx.exit.i
+.lr.ph.i:                                         ; preds = %mi_arena_start_idx.exit.i, %bb.i, %bb.h, %bb.g, %bb.e
+  %.026.i133.i = phi i64 [ 0, %mi_arena_start_idx.exit.i ], [ %i.ai, %bb.h ], [ %i.am, %bb.i ], [ %i.af, %bb.g ], [ %i.ab, %bb.e ]
   %.not.i = icmp eq ptr %i.i, null
   %i.an = getelementptr inbounds nuw i8, ptr %i.c, i64 752 ; 2 uses
   br i1 %.not.i, label %.lr.ph.split.us.i, label %.lr.ph.split.i
@@ -262,7 +262,7 @@ mi_arena_start_idx.exit.i:                        ; preds = %bb.i, %bb.h, %bb.g,
 .lr.ph.split.us.i:                                ; preds = %.lr.ph.i, %.thread92.us.i
   %.061113.us.i = phi i64 [ %i.bg, %.thread92.us.i ], [ 0, %.lr.ph.i ] ; 4 uses
   %i.ao = icmp ult i64 %.061113.us.i, %i.s
-  %i.ap = add i64 %.061113.us.i, %.026.i.i        ; 2 uses
+  %i.ap = add i64 %.061113.us.i, %.026.i133.i     ; 2 uses
   %.not72.us.i = icmp ult i64 %i.ap, %i.s
   %i.aq = select i1 %.not72.us.i, i64 0, i64 %i.s
   %spec.select.us.i = sub nuw i64 %i.ap, %i.aq
@@ -665,22 +665,22 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %i.h, i8 0, i64 7, i1 false)
   %i.i = load ptr, ptr %.057, align 8, !tbaa !40  ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 32
-  %i.k = load atomic i64, ptr %i.j monotonic, align 8 ; 4 uses
-  %i.l = tail call i64 @llvm.usub.sat.i64(i64 %i.k, i64 1) ; 10 uses
+  %i.k = load atomic i64, ptr %i.j monotonic, align 8 ; 6 uses
+  %i.l = tail call i64 @llvm.usub.sat.i64(i64 %i.k, i64 1) ; 8 uses
   %i.m = getelementptr inbounds nuw i8, ptr %.057, i64 8
   %i.n = load i64, ptr %i.m, align 8, !tbaa !50   ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.i, i64 1488
   %i.p = load atomic i64, ptr %i.o monotonic, align 8 ; 4 uses
-  %i.q = icmp ult i64 %i.l, 2
+  %i.q = icmp ult i64 %i.k, 3
   br i1 %i.q, label %mi_arena_start_idx.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.r = icmp eq i64 %i.n, 0
   %i.s = icmp ult i64 %i.p, 2
   %or.cond.i = select i1 %i.r, i1 true, i1 %i.s
-  %i.t = icmp ugt i64 %i.l, 2303
+  %i.t = icmp ugt i64 %i.k, 2304
   %or.cond3.i = or i1 %i.t, %or.cond.i
-  br i1 %or.cond3.i, label %mi_arena_start_idx.exit, label %bb.f
+  br i1 %or.cond3.i, label %.lr.ph, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.u = shl nuw nsw i64 %i.l, 8                  ; 2 uses
@@ -689,24 +689,21 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f
   %i.w = urem i64 %i.n, %i.l
-  br label %mi_arena_start_idx.exit
+  br label %.lr.ph
 
 bb.h:                                             ; preds = %bb.f
-  %.lhs.trunc = trunc nuw i64 %i.u to i32
-  %.rhs.trunc = trunc i64 %i.p to i32
-  %7 = udiv i32 %.lhs.trunc, %.rhs.trunc
-  %.zext = zext nneg i32 %7 to i64
+  %7 = udiv i64 %i.u, %i.p
   %i.x = urem i64 %i.n, %i.p
-  %i.y = mul nuw nsw i64 %i.x, %.zext
+  %i.y = mul nuw nsw i64 %i.x, %7
   %i.z = lshr i64 %i.y, 8
-  br label %mi_arena_start_idx.exit
+  br label %.lr.ph
 
-mi_arena_start_idx.exit:                          ; preds = %bb.h, %bb.e, %bb.d, %bb.g
-  %.026.i = phi i64 [ 0, %bb.d ], [ %i.z, %bb.h ], [ %i.w, %bb.g ], [ 0, %bb.e ] ; 2 uses
+mi_arena_start_idx.exit:                          ; preds = %bb.d
   %.not80 = icmp eq i64 %i.k, 0
   br i1 %.not80, label %._crit_edge.thread, label %.lr.ph
 
-.lr.ph:                                           ; preds = %mi_arena_start_idx.exit
+.lr.ph:                                           ; preds = %bb.g, %bb.e, %bb.h, %mi_arena_start_idx.exit
+  %.026.i102 = phi i64 [ 0, %mi_arena_start_idx.exit ], [ 0, %bb.e ], [ %i.w, %bb.g ], [ %i.z, %bb.h ] ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %.057, i64 752 ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %.057, i64 104
   br i1 %1, label %.lr.ph.split.us, label %.lr.ph.split
@@ -715,7 +712,7 @@ mi_arena_start_idx.exit:                          ; preds = %bb.h, %bb.e, %bb.d,
   %.06076.us = phi i64 [ %i.ba, %.loopexit73.us ], [ 0, %.lr.ph ] ; 4 uses
   %.06175.us = phi i8 [ %.4.us, %.loopexit73.us ], [ 1, %.lr.ph ] ; 3 uses
   %i.ac = icmp ult i64 %.06076.us, %i.l
-  %i.ad = add i64 %.06076.us, %.026.i             ; 2 uses
+  %i.ad = add i64 %.06076.us, %.026.i102          ; 2 uses
   %.not.us = icmp ult i64 %i.ad, %i.l
   %i.ae = select i1 %.not.us, i64 0, i64 %i.l
   %spec.select.us = sub nuw i64 %i.ad, %i.ae
@@ -778,7 +775,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   %.06076 = phi i64 [ %i.bs, %bb.o ], [ 0, %.lr.ph ] ; 4 uses
   %.06175 = phi i8 [ %.4, %bb.o ], [ 1, %.lr.ph ] ; 3 uses
   %i.bc = icmp ult i64 %.06076, %i.l
-  %i.bd = add i64 %.06076, %.026.i                ; 2 uses
+  %i.bd = add i64 %.06076, %.026.i102             ; 2 uses
   %.not = icmp ult i64 %i.bd, %i.l
   %i.be = select i1 %.not, i64 0, i64 %i.l
   %spec.select = sub nuw i64 %i.bd, %i.be
@@ -1025,26 +1022,26 @@ define internal fastcc ptr @mi_arenas_try_find_free(ptr nofree noundef readonly 
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !40     ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  %i.c = load atomic i64, ptr %i.b monotonic, align 8 ; 4 uses
-  %i.d = tail call i64 @llvm.usub.sat.i64(i64 %i.c, i64 1) ; 11 uses
+  %i.c = load atomic i64, ptr %i.b monotonic, align 8 ; 6 uses
+  %i.d = tail call i64 @llvm.usub.sat.i64(i64 %i.c, i64 1) ; 9 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.f = load i64, ptr %i.e, align 8, !tbaa !50   ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 1488
   %i.h = load atomic i64, ptr %i.g monotonic, align 8 ; 4 uses
-  %i.i = icmp ult i64 %i.d, 2
+  %i.i = icmp ult i64 %i.c, 3
   br i1 %i.i, label %mi_arena_start_idx.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.j = icmp eq i64 %i.f, 0
   %i.k = icmp ult i64 %i.h, 2
   %or.cond.i = select i1 %i.j, i1 true, i1 %i.k
-  %i.l = icmp ugt i64 %i.d, 2303
+  %i.l = icmp ugt i64 %i.c, 2304
   %or.cond3.i = or i1 %i.l, %or.cond.i
   br i1 %or.cond3.i, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   %i.m = urem i64 %5, %i.d
-  br label %mi_arena_start_idx.exit
+  br label %.lr.ph
 
 bb.d:                                             ; preds = %bb.b
   %i.n = shl nuw nsw i64 %i.d, 8                  ; 2 uses
@@ -1054,27 +1051,27 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %i.q = urem i64 %i.f, %i.d
-  br label %mi_arena_start_idx.exit
+  br label %.lr.ph
 
 bb.f:                                             ; preds = %bb.d
   %i.r = urem i64 %i.f, %i.h
   %i.s = mul nuw nsw i64 %i.r, %i.o
   %i.t = lshr i64 %i.s, 8                         ; 2 uses
   %i.u = icmp samesign ugt i64 %i.o, 511
-  br i1 %i.u, label %bb.g, label %mi_arena_start_idx.exit
+  br i1 %i.u, label %bb.g, label %.lr.ph
 
 bb.g:                                             ; preds = %bb.f
   %i.v = lshr i64 %i.o, 8
   %i.w = urem i64 %5, %i.v
   %i.x = add nuw nsw i64 %i.w, %i.t
-  br label %mi_arena_start_idx.exit
+  br label %.lr.ph
 
-mi_arena_start_idx.exit:                          ; preds = %bb.a, %bb.c, %bb.e, %bb.f, %bb.g
-  %.026.i = phi i64 [ 0, %bb.a ], [ %i.m, %bb.c ], [ %i.q, %bb.e ], [ %i.x, %bb.g ], [ %i.t, %bb.f ] ; 2 uses
+mi_arena_start_idx.exit:                          ; preds = %bb.a
   %.not210 = icmp eq i64 %i.c, 0
   br i1 %.not210, label %.thread152, label %.lr.ph
 
-.lr.ph:                                           ; preds = %mi_arena_start_idx.exit
+.lr.ph:                                           ; preds = %bb.g, %bb.f, %bb.e, %bb.c, %mi_arena_start_idx.exit
+  %.026.i253 = phi i64 [ 0, %mi_arena_start_idx.exit ], [ %i.t, %bb.f ], [ %i.x, %bb.g ], [ %i.q, %bb.e ], [ %i.m, %bb.c ] ; 2 uses
   %.not.not = icmp eq ptr %4, null
   %.old = icmp slt i32 %6, 0                      ; 2 uses
   br i1 %.not.not, label %.lr.ph.split, label %.lr.ph.split.us
@@ -1104,7 +1101,7 @@ mi_arena_is_suitable.exit.thread.i.us.us:         ; preds = %.lr.ph.split.us.spl
 .lr.ph.split.split.us:                            ; preds = %.lr.ph.split, %mi_arena_is_suitable_ex.exit.thread143.us188
   %.091176.us178 = phi i64 [ %i.as, %mi_arena_is_suitable_ex.exit.thread143.us188 ], [ 0, %.lr.ph.split ] ; 4 uses
   %i.ad = icmp ult i64 %.091176.us178, %i.d
-  %i.ae = add i64 %.091176.us178, %.026.i         ; 2 uses
+  %i.ae = add i64 %.091176.us178, %.026.i253      ; 2 uses
   %.not109.us = icmp ult i64 %i.ae, %i.d
   %i.af = select i1 %.not109.us, i64 0, i64 %i.d
   %spec.select.us = sub nuw i64 %i.ae, %i.af
@@ -1146,7 +1143,7 @@ mi_arena_is_suitable_ex.exit.thread143.us188:     ; preds = %.thread.us179, %mi_
 .lr.ph.split.split:                               ; preds = %.lr.ph.split, %mi_arena_is_suitable_ex.exit.thread143
   %.091176 = phi i64 [ %i.bl, %mi_arena_is_suitable_ex.exit.thread143 ], [ 0, %.lr.ph.split ] ; 4 uses
   %i.at = icmp ult i64 %.091176, %i.d
-  %i.au = add i64 %.091176, %.026.i               ; 2 uses
+  %i.au = add i64 %.091176, %.026.i253            ; 2 uses
   %.not109 = icmp ult i64 %i.au, %i.d
   %i.av = select i1 %.not109, i64 0, i64 %i.d
   %spec.select = sub nuw i64 %i.au, %i.av
@@ -1198,25 +1195,25 @@ mi_arena_is_suitable_ex.exit.thread143:           ; preds = %bb.i, %bb.j, %.thre
 bb.k:                                             ; preds = %.thread152
   %i.bn = load ptr, ptr %0, align 8, !tbaa !40    ; 3 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bn, i64 32
-  %i.bp = load atomic i64, ptr %i.bo monotonic, align 8 ; 5 uses
-  %i.bq = tail call i64 @llvm.usub.sat.i64(i64 %i.bp, i64 1) ; 10 uses
+  %i.bp = load atomic i64, ptr %i.bo monotonic, align 8 ; 7 uses
+  %i.bq = tail call i64 @llvm.usub.sat.i64(i64 %i.bp, i64 1) ; 8 uses
   %i.br = load i64, ptr %i.e, align 8, !tbaa !50  ; 3 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %i.bn, i64 1488
   %i.bt = load atomic i64, ptr %i.bs monotonic, align 8 ; 4 uses
-  %i.bu = icmp ult i64 %i.bq, 2
+  %i.bu = icmp ult i64 %i.bp, 3
   br i1 %i.bu, label %mi_arena_start_idx.exit127, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   %i.bv = icmp eq i64 %i.br, 0
   %i.bw = icmp ult i64 %i.bt, 2
   %or.cond.i124 = select i1 %i.bv, i1 true, i1 %i.bw
-  %i.bx = icmp ugt i64 %i.bq, 2303
+  %i.bx = icmp ugt i64 %i.bp, 2304
   %or.cond3.i125 = or i1 %i.bx, %or.cond.i124
   br i1 %or.cond3.i125, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
   %i.by = urem i64 %5, %i.bq
-  br label %mi_arena_start_idx.exit127
+  br label %.lr.ph203
 
 bb.n:                                             ; preds = %bb.l
   %i.bz = shl nuw nsw i64 %i.bq, 8                ; 2 uses
@@ -1226,35 +1223,35 @@ bb.n:                                             ; preds = %bb.l
 
 bb.o:                                             ; preds = %bb.n
   %i.cc = urem i64 %i.br, %i.bq
-  br label %mi_arena_start_idx.exit127
+  br label %.lr.ph203
 
 bb.p:                                             ; preds = %bb.n
   %i.cd = urem i64 %i.br, %i.bt
   %i.ce = mul nuw nsw i64 %i.cd, %i.ca
   %i.cf = lshr i64 %i.ce, 8                       ; 2 uses
   %i.cg = icmp samesign ugt i64 %i.ca, 511
-  br i1 %i.cg, label %bb.q, label %mi_arena_start_idx.exit127
+  br i1 %i.cg, label %bb.q, label %.lr.ph203
 
 bb.q:                                             ; preds = %bb.p
   %i.ch = lshr i64 %i.ca, 8
   %i.ci = urem i64 %5, %i.ch
   %i.cj = add nuw nsw i64 %i.ci, %i.cf
-  br label %mi_arena_start_idx.exit127
+  br label %.lr.ph203
 
-mi_arena_start_idx.exit127:                       ; preds = %bb.k, %bb.m, %bb.o, %bb.p, %bb.q
-  %.026.i126 = phi i64 [ 0, %bb.k ], [ %i.by, %bb.m ], [ %i.cc, %bb.o ], [ %i.cj, %bb.q ], [ %i.cf, %bb.p ] ; 3 uses
+mi_arena_start_idx.exit127:                       ; preds = %bb.k
   %.not213 = icmp eq i64 %i.bp, 0
   br i1 %.not213, label %.thread172, label %.lr.ph203
 
-.lr.ph203:                                        ; preds = %mi_arena_start_idx.exit127
+.lr.ph203:                                        ; preds = %bb.q, %bb.p, %bb.o, %bb.m, %mi_arena_start_idx.exit127
+  %.026.i126256 = phi i64 [ 0, %mi_arena_start_idx.exit127 ], [ %i.cf, %bb.p ], [ %i.cj, %bb.q ], [ %i.cc, %bb.o ], [ %i.by, %bb.m ] ; 3 uses
   %.not113 = icmp eq ptr %4, null                 ; 4 uses
   br i1 %.not113, label %bb.r, label %.thread156.peel
 
 bb.r:                                             ; preds = %.lr.ph203
   %.not = icmp eq i64 %i.bp, 1
-  %.not114.peel = icmp ult i64 %.026.i126, %i.bq
+  %.not114.peel = icmp ult i64 %.026.i126256, %i.bq
   %i.ck = select i1 %.not114.peel, i64 0, i64 %i.bq
-  %spec.select118.peel = sub nuw i64 %.026.i126, %i.ck
+  %spec.select118.peel = sub nuw i64 %.026.i126256, %i.ck
   %.0.peel = select i1 %.not, i64 0, i64 %spec.select118.peel
   %i.cl = getelementptr inbounds nuw i8, ptr %i.bn, i64 40
   %i.cm = getelementptr inbounds nuw [8 x i8], ptr %i.cl, i64 %.0.peel
@@ -1319,7 +1316,7 @@ bb.w:                                             ; preds = %mi_arena_is_suitabl
 
 bb.x:                                             ; preds = %.peel.next
   %i.dd = icmp ult i64 %.087202, %i.bq
-  %i.de = add i64 %.087202, %.026.i126            ; 2 uses
+  %i.de = add i64 %.087202, %.026.i126256         ; 2 uses
   %.not114 = icmp ult i64 %i.de, %i.bq
   %i.df = select i1 %.not114, i64 0, i64 %i.bq
   %spec.select118 = sub nuw i64 %i.de, %i.df

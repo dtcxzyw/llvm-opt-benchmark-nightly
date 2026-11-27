@@ -1,0 +1,117 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
+index 9fa4ad42609e10..1650d065573c9c 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
+@@ -4222,11 +4222,6 @@ static Instruction *
+ foldICmpUSubSatOrUAddSatWithConstant(CmpPredicate Pred, SaturatingInst *II,
+                                      const APInt &C,
+                                      InstCombiner::BuilderTy &Builder) {
+-  // This transform may end up producing more than one instruction for the
+-  // intrinsic, so limit it to one user of the intrinsic.
+-  if (!II->hasOneUse())
+-    return nullptr;
+-
+   // Let Y        = [add/sub]_sat(X, C) pred C2
+   //     SatVal   = The saturating value for the operation
+   //     WillWrap = Whether or not the operation will underflow / overflow
+@@ -4297,6 +4292,12 @@ foldICmpUSubSatOrUAddSatWithConstant(CmpPredicate Pred, SaturatingInst *II,
+ 
+   Combination->getEquivalentICmp(EquivPred, EquivInt, EquivOffset);
+ 
++  // Ensure this fold never increases the number of instructions: Only fold when
++  // we replace the only use of the saturating operation, or when the offset is
++  // zero (so no add instruction is needed).
++  if (!II->hasOneUse() && !EquivOffset.isZero())
++    return nullptr;
++
+   return new ICmpInst(
+       EquivPred,
+       Builder.CreateAdd(Op0, ConstantInt::get(Op1->getType(), EquivOffset)),
+diff --git a/llvm/test/Transforms/InstCombine/icmp-uadd-sat.ll b/llvm/test/Transforms/InstCombine/icmp-uadd-sat.ll
+index fc582708e0b750..95a6de2d266920 100644
+--- a/llvm/test/Transforms/InstCombine/icmp-uadd-sat.ll
++++ b/llvm/test/Transforms/InstCombine/icmp-uadd-sat.ll
+@@ -126,7 +126,7 @@ define i1 @icmp_eq_multiuse(i8 %arg) {
+ ; CHECK-LABEL: define i1 @icmp_eq_multiuse(
+ ; CHECK-SAME: i8 [[ARG:%.*]]) {
+ ; CHECK-NEXT:    [[ADD:%.*]] = call i8 @llvm.uadd.sat.i8(i8 [[ARG]], i8 2)
+-; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i8 [[ADD]], 5
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i8 [[ARG]], 3
+ ; CHECK-NEXT:    call void @use.i8(i8 [[ADD]])
+ ; CHECK-NEXT:    ret i1 [[CMP]]
+ ;
+@@ -238,7 +238,7 @@ define <2 x i1> @icmp_eq_vector_multiuse_equal(<2 x i8> %arg) {
+ ; CHECK-LABEL: define <2 x i1> @icmp_eq_vector_multiuse_equal(
+ ; CHECK-SAME: <2 x i8> [[ARG:%.*]]) {
+ ; CHECK-NEXT:    [[ADD:%.*]] = call <2 x i8> @llvm.uadd.sat.v2i8(<2 x i8> [[ARG]], <2 x i8> splat (i8 2))
+-; CHECK-NEXT:    [[CMP:%.*]] = icmp eq <2 x i8> [[ADD]], splat (i8 5)
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq <2 x i8> [[ARG]], splat (i8 3)
+ ; CHECK-NEXT:    call void @use.v2i8(<2 x i8> [[ADD]])
+ ; CHECK-NEXT:    ret <2 x i1> [[CMP]]
+ ;
+diff --git a/llvm/test/Transforms/InstCombine/icmp-usub-sat.ll b/llvm/test/Transforms/InstCombine/icmp-usub-sat.ll
+index 3a62fe60f2713f..97f93110d6e157 100644
+--- a/llvm/test/Transforms/InstCombine/icmp-usub-sat.ll
++++ b/llvm/test/Transforms/InstCombine/icmp-usub-sat.ll
+@@ -242,7 +242,7 @@ define i1 @icmp_eq_multiuse_positive(i8 %arg) {
+ ; CHECK-LABEL: define i1 @icmp_eq_multiuse_positive
+ ; CHECK-SAME: (i8 [[ARG:%.*]]) {
+ ; CHECK-NEXT:    [[SUB:%.*]] = call i8 @llvm.usub.sat.i8(i8 [[ARG]], i8 2)
+-; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i8 [[SUB]], 5
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i8 [[ARG]], 7
+ ; CHECK-NEXT:    call void @use.i8(i8 [[SUB]])
+ ; CHECK-NEXT:    ret i1 [[CMP]]
+ ;
+@@ -252,6 +252,34 @@ define i1 @icmp_eq_multiuse_positive(i8 %arg) {
+   ret i1 %cmp
+ }
+ 
++define i1 @icmp_ult_multiuse_positive(i64 %arg) {
++; CHECK-LABEL: define i1 @icmp_ult_multiuse_positive
++; CHECK-SAME: (i64 [[ARG:%.*]]) {
++; CHECK-NEXT:    [[SUB:%.*]] = call i64 @llvm.usub.sat.i64(i64 [[ARG]], i64 4)
++; CHECK-NEXT:    [[CMP:%.*]] = icmp ult i64 [[ARG]], 6
++; CHECK-NEXT:    call void @use.i64(i64 [[SUB]])
++; CHECK-NEXT:    ret i1 [[CMP]]
++;
++  %sub = call i64 @llvm.usub.sat.i64(i64 %arg, i64 4)
++  %cmp = icmp ult i64 %sub, 2
++  call void @use.i64(i64 %sub)
++  ret i1 %cmp
++}
++
++define i1 @icmp_slt_multiuse_positive(i8 %arg) {
++; CHECK-LABEL: define i1 @icmp_slt_multiuse_positive
++; CHECK-SAME: (i8 [[ARG:%.*]]) {
++; CHECK-NEXT:    [[SUB:%.*]] = call i8 @llvm.usub.sat.i8(i8 [[ARG]], i8 2)
++; CHECK-NEXT:    [[CMP:%.*]] = icmp slt i8 [[SUB]], 5
++; CHECK-NEXT:    call void @use.i8(i8 [[SUB]])
++; CHECK-NEXT:    ret i1 [[CMP]]
++;
++  %sub = call i8 @llvm.usub.sat.i8(i8 %arg, i8 2)
++  %cmp = icmp slt i8 %sub, 5
++  call void @use.i8(i8 %sub)
++  ret i1 %cmp
++}
++
+ ; ==============================================================================
+ ; Tests with more than one user and negative arguments
+ ; ==============================================================================
+@@ -398,7 +426,7 @@ define <2 x i1> @icmp_eq_vector_multiuse_positive_equal(<2 x i8> %arg) {
+ ; CHECK-LABEL: define <2 x i1> @icmp_eq_vector_multiuse_positive_equal
+ ; CHECK-SAME: (<2 x i8> [[ARG:%.*]]) {
+ ; CHECK-NEXT:    [[SUB:%.*]] = call <2 x i8> @llvm.usub.sat.v2i8(<2 x i8> [[ARG]], <2 x i8> splat (i8 2))
+-; CHECK-NEXT:    [[CMP:%.*]] = icmp eq <2 x i8> [[SUB]], splat (i8 5)
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq <2 x i8> [[ARG]], splat (i8 7)
+ ; CHECK-NEXT:    call void @use.v2i8(<2 x i8> [[SUB]])
+ ; CHECK-NEXT:    ret <2 x i1> [[CMP]]
+ ;
+@@ -415,7 +443,7 @@ define <2 x i1> @icmp_eq_vector_multiuse_negative_equal(<2 x i8> %arg) {
+ ; CHECK-LABEL: define <2 x i1> @icmp_eq_vector_multiuse_negative_equal
+ ; CHECK-SAME: (<2 x i8> [[ARG:%.*]]) {
+ ; CHECK-NEXT:    [[SUB:%.*]] = call <2 x i8> @llvm.usub.sat.v2i8(<2 x i8> [[ARG]], <2 x i8> splat (i8 -20))
+-; CHECK-NEXT:    [[CMP:%.*]] = icmp eq <2 x i8> [[SUB]], splat (i8 5)
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq <2 x i8> [[ARG]], splat (i8 -15)
+ ; CHECK-NEXT:    call void @use.v2i8(<2 x i8> [[SUB]])
+ ; CHECK-NEXT:    ret <2 x i1> [[CMP]]
+ ;

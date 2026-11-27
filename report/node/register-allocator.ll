@@ -206,15 +206,15 @@ _ZSt11lower_boundIPN2v88internal8compiler11UseIntervalES3_ET_S5_S5_RKT0_.exit: ;
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #36
   %i.ca = call noundef ptr @_ZN2v88internal10ZoneVectorINS0_8compiler11UseIntervalEE19PrepareForInsertionEPKS3_mPm(ptr noundef nonnull align 8 dereferenceable(32) %i.k, ptr noundef %.011.lcssa.i.i, i64 noundef 1, ptr noundef nonnull %i.b) ; 3 uses
   %i.cb = load i64, ptr %i.b, align 8             ; 2 uses
-  %.idx.i = shl i64 %i.cb, 3                      ; 2 uses
+  %.idx.i = shl i64 %i.cb, 3                      ; 3 uses
   %.not.i = icmp eq i64 %i.cb, 0
   br i1 %.not.i, label %.lr.ph18.i, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %_ZSt11lower_boundIPN2v88internal8compiler11UseIntervalES3_ET_S5_S5_RKT0_.exit
-  %i.cc = call i64 @llvm.usub.sat.i64(i64 %.idx.i, i64 8) ; 2 uses
+  %i.cc = call i64 @llvm.usub.sat.i64(i64 %.idx.i, i64 8)
   %i.cd = lshr exact i64 %i.cc, 3
   %i.ce = add nuw nsw i64 %i.cd, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.cc, 24
+  %min.iters.check = icmp ult i64 %.idx.i, 32
   br i1 %min.iters.check, label %.lr.ph.i.preheader75, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.preheader
@@ -617,15 +617,15 @@ _ZSt11lower_boundIPN2v88internal8compiler11UseIntervalES3_ET_S5_S5_RKT0_.exit: ;
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #36
   %i.ay = call noundef ptr @_ZN2v88internal10ZoneVectorINS0_8compiler11UseIntervalEE19PrepareForInsertionEPKS3_mPm(ptr noundef nonnull align 8 dereferenceable(32) %i.af, ptr noundef %.011.lcssa.i.i9, i64 noundef 1, ptr noundef nonnull %i.a) ; 3 uses
   %i.az = load i64, ptr %i.a, align 8             ; 2 uses
-  %.idx.i16 = shl i64 %i.az, 3                    ; 2 uses
+  %.idx.i16 = shl i64 %i.az, 3                    ; 3 uses
   %.not.i17 = icmp eq i64 %i.az, 0
   br i1 %.not.i17, label %.lr.ph18.i22, label %.lr.ph.i18.preheader
 
 .lr.ph.i18.preheader:                             ; preds = %_ZSt11lower_boundIPN2v88internal8compiler11UseIntervalES3_ET_S5_S5_RKT0_.exit
-  %i.ba = call i64 @llvm.usub.sat.i64(i64 %.idx.i16, i64 8) ; 2 uses
+  %i.ba = call i64 @llvm.usub.sat.i64(i64 %.idx.i16, i64 8)
   %i.bb = lshr exact i64 %i.ba, 3
   %i.bc = add nuw nsw i64 %i.bb, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.ba, 24
+  %min.iters.check = icmp ult i64 %.idx.i16, 32
   br i1 %min.iters.check, label %.lr.ph.i18.preheader47, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i18.preheader
