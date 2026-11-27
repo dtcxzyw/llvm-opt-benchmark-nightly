@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/qemu/original/cpregs-pmu?download=true
-inline.NumInlined: 166
+inline.NumInlined: 174
 inline.NumDeleted: 39
 loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumUnrolled: 1
@@ -28,7 +28,6 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.15 = private unnamed_addr constant [8 x i8] c"PMCEID3\00", align 1
 @define_pm_cpregs.v84_pmmir = internal constant { ptr, i8, i8, i8, i8, i8, i8, [2 x i8], i32, i32, i32, i32, i32, i32, i32, i32, i64, i64, [2 x i64], ptr, ptr, ptr, ptr, ptr, ptr } { ptr @.str.16, i8 0, i8 9, i8 14, i8 3, i8 0, i8 6, [2 x i8] zeroinitializer, i32 2, i32 16, i32 168, i32 0, i32 3158, i32 0, i32 0, i32 0, i64 0, i64 0, [2 x i64] zeroinitializer, ptr @pmreg_access, ptr null, ptr null, ptr null, ptr null, ptr null }, align 8
 @.str.16 = private unnamed_addr constant [10 x i8] c"PMMIR_EL1\00", align 1
-@pm_events = internal unnamed_addr constant [4 x { i16, [6 x i8], ptr, ptr, ptr }] [{ i16, [6 x i8], ptr, ptr, ptr } { i16 0, [6 x i8] zeroinitializer, ptr @event_always_supported, ptr @swinc_get_count, ptr @swinc_ns_per }, { i16, [6 x i8], ptr, ptr, ptr } { i16 35, [6 x i8] zeroinitializer, ptr @pmuv3p1_events_supported, ptr @zero_event_get_count, ptr @zero_event_ns_per }, { i16, [6 x i8], ptr, ptr, ptr } { i16 36, [6 x i8] zeroinitializer, ptr @pmuv3p1_events_supported, ptr @zero_event_get_count, ptr @zero_event_ns_per }, { i16, [6 x i8], ptr, ptr, ptr } { i16 60, [6 x i8] zeroinitializer, ptr @pmuv3p4_events_supported, ptr @zero_event_get_count, ptr @zero_event_ns_per }], align 16
 @.str.22 = private unnamed_addr constant [13 x i8] c"counter < 31\00", align 1
 @__PRETTY_FUNCTION__.pmevcntr_is_64_bit = private unnamed_addr constant [45 x i8] c"_Bool pmevcntr_is_64_bit(CPUARMState *, int)\00", align 1
 @.str.23 = private unnamed_addr constant [11 x i8] c"PMCNTENSET\00", align 1
@@ -154,9 +153,9 @@ declare void @__assert_fail(ptr noundef, ptr noundef, i32 noundef, ptr noundef) 
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 
 ; Function Attrs: nounwind sspstrong uwtable
-define dso_local void @pmu_op_start(ptr noundef %0) local_unnamed_addr #3 {
+define dso_local void @pmu_op_start(ptr nofree noundef captures(none) %0) local_unnamed_addr #3 {
 bb.a:
-  %i.a = tail call { i32, i32 } asm sideeffect "rdtsc", "={ax},={dx},~{dirflag},~{fpsr},~{flags}"() #12, !srcloc !9 ; 2 uses
+  %i.a = tail call { i32, i32 } asm sideeffect "rdtsc", "={ax},={dx},~{dirflag},~{fpsr},~{flags}"() #13, !srcloc !9 ; 2 uses
   %i.b = extractvalue { i32, i32 } %i.a, 0
   %i.c = extractvalue { i32, i32 } %i.a, 1
   %i.d = zext i32 %i.c to i64
@@ -224,46 +223,23 @@ pmccntr_op_start.exit:                            ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc void @pmevcntr_op_start(ptr noundef %0, i8 noundef zeroext range(i8 0, 32) %1) unnamed_addr #3 {
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 2768
-  %4 = zext nneg i8 %1 to i64                     ; 4 uses
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %4
-  %6 = load i64, ptr %5, align 8                  ; 2 uses
-  %7 = trunc i64 %6 to i16
-  %8 = icmp ugt i16 %7, 60
-  br i1 %8, label %event_supported.exit.thread, label %event_supported.exit
-
-event_supported.exit:                             ; preds = %2
-  %9 = and i64 %6, 63
-  %10 = getelementptr inbounds nuw [2 x i8], ptr @supported_event_map, i64 %9
-  %11 = load i16, ptr %10, align 2                ; 2 uses
-  %.not29 = icmp eq i16 %11, -1
-  br i1 %.not29, label %event_supported.exit.thread, label %12
-
-12:                                               ; preds = %event_supported.exit
-  %13 = zext i16 %11 to i64
-  %14 = getelementptr inbounds nuw [32 x i8], ptr @pm_events, i64 %13
-  %15 = getelementptr inbounds nuw i8, ptr %14, i64 16
-  %16 = load ptr, ptr %15, align 16
-  %17 = tail call i64 %16(ptr noundef nonnull %0) #12
-  br label %event_supported.exit.thread
-
-event_supported.exit.thread:                      ; preds = %2, %12, %event_supported.exit
-  %.0 = phi i64 [ %17, %12 ], [ 0, %event_supported.exit ], [ 0, %2 ] ; 2 uses
+define internal fastcc void @pmevcntr_op_start(ptr nofree noundef captures(none) %0, i8 noundef zeroext range(i8 0, 32) %1) unnamed_addr #3 {
+event_supported.exit.thread:
+  %2 = zext nneg i8 %1 to i64                     ; 3 uses
   %i.a = tail call fastcc zeroext i1 @pmu_counter_enabled(ptr noundef nonnull %0, i8 noundef zeroext %1)
   br i1 %i.a, label %bb.a, label %bb.h
 
 bb.a:                                             ; preds = %event_supported.exit.thread
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 2520
-  %i.c = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %4
-  %i.d = load i64, ptr %i.c, align 8
-  %i.e = sub i64 %.0, %i.d                        ; 2 uses
+  %i.c = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %2
+  %i.d = load i64, ptr %i.c, align 8              ; 2 uses
+  %i.e = sub i64 0, %i.d
   %i.f = zext nneg i8 %1 to i32                   ; 2 uses
   %.not.i = icmp eq i8 %1, 31
   br i1 %.not.i, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @__assert_fail(ptr noundef nonnull @.str.22, ptr noundef nonnull @.str.1, i32 noundef 457, ptr noundef nonnull @__PRETTY_FUNCTION__.pmevcntr_is_64_bit) #13
+  tail call void @__assert_fail(ptr noundef nonnull @.str.22, ptr noundef nonnull @.str.1, i32 noundef 457, ptr noundef nonnull @__PRETTY_FUNCTION__.pmevcntr_is_64_bit) #14
   unreachable
 
 bb.c:                                             ; preds = %bb.a
@@ -320,10 +296,10 @@ bb.e:                                             ; preds = %.split, %pmevcntr_i
 pmevcntr_is_64_bit.exit.thread:                   ; preds = %isar_feature_any_pmuv3p5.exit.i, %.split, %pmevcntr_is_64_bit.exit, %bb.e
   %i.x = phi i64 [ -9223372036854775808, %bb.e ], [ 2147483648, %pmevcntr_is_64_bit.exit ], [ 2147483648, %.split ], [ 2147483648, %isar_feature_any_pmuv3p5.exit.i ]
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 2272
-  %i.z = getelementptr inbounds nuw [8 x i8], ptr %i.y, i64 %4 ; 2 uses
+  %i.z = getelementptr inbounds nuw [8 x i8], ptr %i.y, i64 %2 ; 2 uses
   %i.aa = load i64, ptr %i.z, align 8
-  %18 = xor i64 %i.e, -1
-  %i.ab = and i64 %i.x, %18
+  %3 = add i64 %i.d, -1
+  %i.ab = and i64 %i.x, %3
   %i.ac = and i64 %i.ab, %i.aa
   %.not = icmp eq i64 %i.ac, 0
   br i1 %.not, label %bb.g, label %bb.f
@@ -343,8 +319,8 @@ bb.g:                                             ; preds = %bb.f, %pmevcntr_is_
 
 bb.h:                                             ; preds = %bb.g, %event_supported.exit.thread
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 2520
-  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %4
-  store i64 %.0, ptr %i.aj, align 8
+  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %2
+  store i64 0, ptr %i.aj, align 8
   ret void
 }
 
@@ -409,10 +385,10 @@ pmevcntr_op_finish.exit:                          ; preds = %bb.c, %bb.d
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define dso_local void @pmu_pre_el_change(ptr noundef %0, ptr nofree noundef readnone captures(none) %1) local_unnamed_addr #3 {
+define dso_local void @pmu_pre_el_change(ptr nofree noundef captures(none) %0, ptr nofree noundef readnone captures(none) %1) local_unnamed_addr #3 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16496 ; 2 uses
-  %i.b = tail call { i32, i32 } asm sideeffect "rdtsc", "={ax},={dx},~{dirflag},~{fpsr},~{flags}"() #12, !srcloc !9 ; 2 uses
+  %i.b = tail call { i32, i32 } asm sideeffect "rdtsc", "={ax},={dx},~{dirflag},~{fpsr},~{flags}"() #13, !srcloc !9 ; 2 uses
   %i.c = extractvalue { i32, i32 } %i.b, 0
   %i.d = extractvalue { i32, i32 } %i.b, 1
   %i.e = zext i32 %i.d to i64
@@ -541,10 +517,10 @@ pmu_op_finish.exit:                               ; preds = %pmevcntr_op_finish.
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define dso_local void @arm_pmu_timer_cb(ptr noundef %0) local_unnamed_addr #3 {
+define dso_local void @arm_pmu_timer_cb(ptr nofree noundef captures(none) %0) local_unnamed_addr #3 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16496 ; 4 uses
-  %i.b = tail call { i32, i32 } asm sideeffect "rdtsc", "={ax},={dx},~{dirflag},~{fpsr},~{flags}"() #12, !srcloc !9 ; 2 uses
+  %i.b = tail call { i32, i32 } asm sideeffect "rdtsc", "={ax},={dx},~{dirflag},~{fpsr},~{flags}"() #13, !srcloc !9 ; 2 uses
   %i.c = extractvalue { i32, i32 } %i.b, 0
   %i.d = extractvalue { i32, i32 } %i.b, 1
   %i.e = zext i32 %i.d to i64
@@ -678,7 +654,7 @@ bb.a:
   br i1 %.not, label %bb.f, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %1) #12
+  call void @llvm.lifetime.start.p0(ptr nonnull %1) #13
   store ptr @.str.4, ptr %1, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
   store <4 x i8> <i8 0, i8 9, i8 12, i8 3>, ptr %i.c, align 8
@@ -712,10 +688,10 @@ bb.b:                                             ; preds = %bb.a
   store ptr @raw_write, ptr %i.r, align 8
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 120
   store ptr null, ptr %i.s, align 8
-  tail call void @define_one_arm_cp_reg(ptr noundef nonnull %0, ptr noundef nonnull @define_pm_cpregs.pmcr) #12
-  call void @define_one_arm_cp_reg(ptr noundef nonnull %0, ptr noundef nonnull %1) #12
-  call void @define_arm_cp_regs_len(ptr noundef nonnull %0, ptr noundef nonnull @v7_pm_reginfo, i64 noundef 23) #12
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #12
+  tail call void @define_one_arm_cp_reg(ptr noundef nonnull %0, ptr noundef nonnull @define_pm_cpregs.pmcr) #13
+  call void @define_one_arm_cp_reg(ptr noundef nonnull %0, ptr noundef nonnull %1) #13
+  call void @define_arm_cp_regs_len(ptr noundef nonnull %0, ptr noundef nonnull @v7_pm_reginfo, i64 noundef 23) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #13
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(128) %2, ptr noundef nonnull align 8 dereferenceable(128) @__const.define_pm_cpregs.pmccntr, i64 128, i1 false)
   %.val47 = load i64, ptr %i.a, align 16
   %i.t = and i64 %.val47, 16777216
@@ -728,7 +704,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  call void @define_one_arm_cp_reg(ptr noundef nonnull %0, ptr noundef nonnull %2) #12
+  call void @define_one_arm_cp_reg(ptr noundef nonnull %0, ptr noundef nonnull %2) #13
   %.val49 = load i64, ptr %i.j, align 16
   %i.v = trunc i64 %.val49 to i32
   %i.w = lshr i32 %i.v, 11
@@ -798,18 +774,18 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br label %bb.e
 
 ._crit_edge:                                      ; preds = %bb.e, %bb.d
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #12
-  call void @llvm.lifetime.end.p0(ptr nonnull %1) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %1) #13
   %.val46.pre = load i64, ptr %i.a, align 16
   br label %bb.f
 
 bb.e:                                             ; preds = %.lr.ph, %bb.e
   %.059 = phi i32 [ 0, %.lr.ph ], [ %i.co, %bb.e ] ; 6 uses
-  %i.ce = call noalias ptr (ptr, ...) @g_strdup_printf(ptr noundef nonnull @.str.6, i32 noundef %.059) #12 ; 2 uses
-  %i.cf = call noalias ptr (ptr, ...) @g_strdup_printf(ptr noundef nonnull @.str.7, i32 noundef %.059) #12 ; 2 uses
-  %i.cg = call noalias ptr (ptr, ...) @g_strdup_printf(ptr noundef nonnull @.str.8, i32 noundef %.059) #12 ; 2 uses
-  %i.ch = call noalias ptr (ptr, ...) @g_strdup_printf(ptr noundef nonnull @.str.9, i32 noundef %.059) #12 ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #12
+  %i.ce = call noalias ptr (ptr, ...) @g_strdup_printf(ptr noundef nonnull @.str.6, i32 noundef %.059) #13 ; 2 uses
+  %i.cf = call noalias ptr (ptr, ...) @g_strdup_printf(ptr noundef nonnull @.str.7, i32 noundef %.059) #13 ; 2 uses
+  %i.cg = call noalias ptr (ptr, ...) @g_strdup_printf(ptr noundef nonnull @.str.8, i32 noundef %.059) #13 ; 2 uses
+  %i.ch = call noalias ptr (ptr, ...) @g_strdup_printf(ptr noundef nonnull @.str.9, i32 noundef %.059) #13 ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #13
   store ptr %i.ce, ptr %3, align 16
   store i8 15, ptr %i.y, align 8
   store i8 14, ptr %i.z, align 1
@@ -875,12 +851,12 @@ bb.e:                                             ; preds = %.lr.ph, %bb.e
   store ptr null, ptr %i.cb, align 8
   store ptr @pmevtyper_rawwrite, ptr %i.cc, align 16
   store ptr null, ptr %i.cd, align 8
-  call void @define_arm_cp_regs_len(ptr noundef nonnull %0, ptr noundef nonnull %3, i64 noundef 4) #12
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #12
-  call void @g_free(ptr noundef %i.ch) #12
-  call void @g_free(ptr noundef %i.cg) #12
-  call void @g_free(ptr noundef %i.cf) #12
-  call void @g_free(ptr noundef %i.ce) #12
+  call void @define_arm_cp_regs_len(ptr noundef nonnull %0, ptr noundef nonnull %3, i64 noundef 4) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #13
+  call void @g_free(ptr noundef %i.ch) #13
+  call void @g_free(ptr noundef %i.cg) #13
+  call void @g_free(ptr noundef %i.cf) #13
+  call void @g_free(ptr noundef %i.ce) #13
   %i.co = add nuw nsw i32 %.059, 1                ; 2 uses
   %exitcond.not = icmp eq i32 %i.co, %i.x
   br i1 %exitcond.not, label %._crit_edge, label %bb.e, !llvm.loop !13
@@ -892,7 +868,7 @@ bb.f:                                             ; preds = %._crit_edge, %bb.a
   br i1 %.not43, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  call void @define_arm_cp_regs_len(ptr noundef nonnull %0, ptr noundef nonnull @pmovsset_cp_reginfo, i64 noundef 2) #12
+  call void @define_arm_cp_regs_len(ptr noundef nonnull %0, ptr noundef nonnull @pmovsset_cp_reginfo, i64 noundef 2) #13
   %.val45.pre = load i64, ptr %i.a, align 16
   br label %bb.h
 
@@ -903,7 +879,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   br i1 %.not44, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #12
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #13
   %i.cr = getelementptr inbounds nuw i8, ptr %4, i64 544
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(96) %i.cr, i8 0, i64 96, i1 false), !annotation !14
   store ptr @.str.10, ptr %4, align 16
@@ -1021,8 +997,8 @@ bb.i:                                             ; preds = %bb.h
   store ptr @pmccntr_write, ptr %i.ey, align 16
   %i.ez = getelementptr inbounds nuw i8, ptr %4, i64 616
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ez, i8 0, i64 24, i1 false)
-  call void @define_arm_cp_regs_len(ptr noundef nonnull %0, ptr noundef nonnull %4, i64 noundef 5) #12
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #12
+  call void @define_arm_cp_regs_len(ptr noundef nonnull %0, ptr noundef nonnull %4, i64 noundef 5) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #13
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
@@ -1036,7 +1012,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   br i1 %switch, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #12
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #13
   store ptr @.str.14, ptr %5, align 16
   %i.fe = getelementptr inbounds nuw i8, ptr %5, i64 8
   store <4 x i8> <i8 15, i8 9, i8 14, i8 0>, ptr %i.fe, align 8
@@ -1086,8 +1062,8 @@ bb.k:                                             ; preds = %bb.j
   store ptr @pmreg_access, ptr %i.gd, align 16
   %i.ge = getelementptr inbounds nuw i8, ptr %5, i64 216
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.ge, i8 0, i64 40, i1 false)
-  call void @define_arm_cp_regs_len(ptr noundef nonnull %0, ptr noundef nonnull %5, i64 noundef 2) #12
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
+  call void @define_arm_cp_regs_len(ptr noundef nonnull %0, ptr noundef nonnull %5, i64 noundef 2) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #13
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.j, %bb.k
@@ -1109,7 +1085,7 @@ isar_feature_any_pmuv3p4.exit:                    ; preds = %bb.l
   br i1 %switch58, label %isar_feature_any_pmuv3p4.exit.thread, label %bb.m
 
 isar_feature_any_pmuv3p4.exit.thread:             ; preds = %isar_feature_any_pmuv3p4.exit, %bb.l
-  call void @define_one_arm_cp_reg(ptr noundef nonnull %0, ptr noundef nonnull @define_pm_cpregs.v84_pmmir) #12
+  call void @define_one_arm_cp_reg(ptr noundef nonnull %0, ptr noundef nonnull @define_pm_cpregs.v84_pmmir) #13
   br label %bb.m
 
 bb.m:                                             ; preds = %isar_feature_any_pmuv3p4.exit, %isar_feature_any_pmuv3p4.exit.thread
@@ -1205,9 +1181,9 @@ arm_current_el.exit.thread:
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal void @pmcr_write(ptr noundef %0, ptr nofree readnone captures(none) %1, i64 noundef %2) #3 {
+define internal void @pmcr_write(ptr nofree noundef captures(none) %0, ptr nofree readnone captures(none) %1, i64 noundef %2) #3 {
 bb.a:
-  %i.a = tail call { i32, i32 } asm sideeffect "rdtsc", "={ax},={dx},~{dirflag},~{fpsr},~{flags}"() #12, !srcloc !9 ; 2 uses
+  %i.a = tail call { i32, i32 } asm sideeffect "rdtsc", "={ax},={dx},~{dirflag},~{fpsr},~{flags}"() #13, !srcloc !9 ; 2 uses
   %i.b = extractvalue { i32, i32 } %i.a, 0
   %i.c = extractvalue { i32, i32 } %i.a, 1
   %i.d = zext i32 %i.c to i64
@@ -1518,7 +1494,7 @@ pmreg_access.exit:                                ; preds = %arm_current_el.exit
 ; Function Attrs: nounwind sspstrong uwtable
 define internal i64 @pmccntr_read(ptr nofree noundef captures(none) %0, ptr nofree readnone captures(none) %1) #3 {
 bb.a:
-  %i.a = tail call { i32, i32 } asm sideeffect "rdtsc", "={ax},={dx},~{dirflag},~{fpsr},~{flags}"() #12, !srcloc !9 ; 2 uses
+  %i.a = tail call { i32, i32 } asm sideeffect "rdtsc", "={ax},={dx},~{dirflag},~{fpsr},~{flags}"() #13, !srcloc !9 ; 2 uses
   %i.b = extractvalue { i32, i32 } %i.a, 0
   %i.c = extractvalue { i32, i32 } %i.a, 1
   %i.d = zext i32 %i.c to i64
@@ -1590,7 +1566,7 @@ pmccntr_op_finish.exit:                           ; preds = %pmccntr_op_start.ex
 ; Function Attrs: nounwind sspstrong uwtable
 define internal void @pmccntr_write32(ptr nofree noundef captures(none) %0, ptr nofree readnone captures(none) %1, i64 noundef %2) #3 {
 bb.a:
-  %i.a = tail call { i32, i32 } asm sideeffect "rdtsc", "={ax},={dx},~{dirflag},~{fpsr},~{flags}"() #12, !srcloc !9 ; 2 uses
+  %i.a = tail call { i32, i32 } asm sideeffect "rdtsc", "={ax},={dx},~{dirflag},~{fpsr},~{flags}"() #13, !srcloc !9 ; 2 uses
   %i.b = extractvalue { i32, i32 } %i.a, 0
   %i.c = extractvalue { i32, i32 } %i.a, 1
   %i.d = zext i32 %i.c to i64
@@ -1659,7 +1635,7 @@ pmccntr_read.exit:                                ; preds = %pmccntr_op_start.ex
   %i.ah = and i64 %i.z, -4294967296
   %i.ai = and i64 %2, 4294967295
   %i.aj = or disjoint i64 %i.ah, %i.ai            ; 2 uses
-  %i.ak = tail call { i32, i32 } asm sideeffect "rdtsc", "={ax},={dx},~{dirflag},~{fpsr},~{flags}"() #12, !srcloc !9 ; 2 uses
+  %i.ak = tail call { i32, i32 } asm sideeffect "rdtsc", "={ax},={dx},~{dirflag},~{fpsr},~{flags}"() #13, !srcloc !9 ; 2 uses
   %i.al = extractvalue { i32, i32 } %i.ak, 0
   %i.am = extractvalue { i32, i32 } %i.ak, 1
   %i.an = zext i32 %i.am to i64
@@ -1864,7 +1840,7 @@ pmreg_access.exit:                                ; preds = %arm_current_el.exit
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal i64 @pmevcntr_readfn(ptr noundef %0, ptr nofree noundef readonly captures(none) %1) #3 {
+define internal i64 @pmevcntr_readfn(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1) #3 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 10
   %i.b = load i8, ptr %i.a, align 2
@@ -1931,7 +1907,7 @@ pmevcntr_read.exit:                               ; preds = %bb.a, %isar_feature
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal void @pmevcntr_writefn(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2) #3 {
+define internal void @pmevcntr_writefn(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2) #3 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 10
   %i.b = load i8, ptr %i.a, align 2
@@ -2018,7 +1994,7 @@ bb.a:
   br i1 %i.n, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @__assert_fail(ptr noundef nonnull @.str.48, ptr noundef nonnull @.str.1, i32 noundef 973, ptr noundef nonnull @__PRETTY_FUNCTION__.pmevcntr_rawread) #13
+  tail call void @__assert_fail(ptr noundef nonnull @.str.48, ptr noundef nonnull @.str.1, i32 noundef 973, ptr noundef nonnull @__PRETTY_FUNCTION__.pmevcntr_rawread) #14
   unreachable
 
 bb.c:                                             ; preds = %bb.a
@@ -2030,7 +2006,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal void @pmevcntr_rawwrite(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2) #3 {
+define internal void @pmevcntr_rawwrite(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2) #3 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 10
   %i.b = load i8, ptr %i.a, align 2
@@ -2050,7 +2026,7 @@ bb.a:
   br i1 %i.n, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @__assert_fail(ptr noundef nonnull @.str.48, ptr noundef nonnull @.str.1, i32 noundef 965, ptr noundef nonnull @__PRETTY_FUNCTION__.pmevcntr_rawwrite) #13
+  tail call void @__assert_fail(ptr noundef nonnull @.str.48, ptr noundef nonnull @.str.1, i32 noundef 965, ptr noundef nonnull @__PRETTY_FUNCTION__.pmevcntr_rawwrite) #14
   unreachable
 
 bb.c:                                             ; preds = %bb.a
@@ -2223,7 +2199,7 @@ pmevtyper_read.exit:                              ; preds = %bb.b, %bb.c, %bb.d
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal void @pmevtyper_writefn(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2) #3 {
+define internal void @pmevtyper_writefn(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2) #3 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 10
   %i.b = load i8, ptr %i.a, align 2
@@ -2237,8 +2213,8 @@ bb.a:
   ret void
 }
 
-; Function Attrs: nounwind sspstrong uwtable
-define internal void @pmevtyper_rawwrite(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2) #3 {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
+define internal void @pmevtyper_rawwrite(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2) #8 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 10
   %i.b = load i8, ptr %i.a, align 2
@@ -2259,29 +2235,24 @@ bb.a:
 event_supported.exit:                             ; preds = %bb.a
   %i.n = and i64 %2, 63
   %i.o = getelementptr inbounds nuw [2 x i8], ptr @supported_event_map, i64 %i.n
-  %i.p = load i16, ptr %i.o, align 2              ; 2 uses
+  %i.p = load i16, ptr %i.o, align 2
   %.not = icmp eq i16 %i.p, -1
   br i1 %.not, label %event_supported.exit.thread, label %bb.b
 
 bb.b:                                             ; preds = %event_supported.exit
-  %3 = zext i16 %i.p to i64
-  %4 = getelementptr inbounds nuw [32 x i8], ptr @pm_events, i64 %3
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 16
-  %6 = load ptr, ptr %5, align 16
-  %7 = tail call i64 %6(ptr noundef nonnull %0) #12
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 2520
   %i.r = getelementptr inbounds nuw [8 x i8], ptr %i.q, i64 %i.j
-  store i64 %7, ptr %i.r, align 8
+  store i64 0, ptr %i.r, align 8
   br label %event_supported.exit.thread
 
-event_supported.exit.thread:                      ; preds = %bb.a, %bb.b, %event_supported.exit
+event_supported.exit.thread:                      ; preds = %event_supported.exit, %bb.a, %bb.b
   ret void
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
 define internal void @pmccntr_write(ptr nofree noundef captures(none) %0, ptr nofree readnone captures(none) %1, i64 noundef %2) #3 {
 bb.a:
-  %i.a = tail call { i32, i32 } asm sideeffect "rdtsc", "={ax},={dx},~{dirflag},~{fpsr},~{flags}"() #12, !srcloc !9 ; 2 uses
+  %i.a = tail call { i32, i32 } asm sideeffect "rdtsc", "={ax},={dx},~{dirflag},~{fpsr},~{flags}"() #13, !srcloc !9 ; 2 uses
   %i.b = extractvalue { i32, i32 } %i.a, 0
   %i.c = extractvalue { i32, i32 } %i.a, 1
   %i.d = zext i32 %i.c to i64
@@ -2343,86 +2314,19 @@ pmccntr_op_finish.exit:                           ; preds = %pmccntr_op_start.ex
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(none) uwtable
-define internal noundef zeroext i1 @event_always_supported(ptr nofree readnone captures(none) %0) #8 {
-  ret i1 true
-}
-
-; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(none) uwtable
-define internal noundef i64 @swinc_get_count(ptr nofree readnone captures(none) %0) #8 {
+define internal fastcc noundef i64 @swinc_get_count(ptr nofree readnone captures(none) %0) unnamed_addr #9 {
 bb.a:
   ret i64 0
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(none) uwtable
-define internal noundef i64 @swinc_ns_per(i64 %0) #8 {
-  ret i64 -1
-}
-
-; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(argmem: read) uwtable
-define internal zeroext i1 @pmuv3p1_events_supported(ptr nofree noundef readonly captures(none) %0) #5 {
-  %2 = getelementptr i8, ptr %0, i64 79776
-  %.val.i = load i64, ptr %2, align 8
-  %3 = lshr i64 %.val.i, 8
-  %4 = and i64 %3, 15
-  %.off.i = add nsw i64 %4, -4
-  %switch.i = icmp ult i64 %.off.i, 11
-  br i1 %switch.i, label %isar_feature_any_pmuv3p1.exit, label %5
-
-5:                                                ; preds = %1
-  %6 = getelementptr i8, ptr %0, i64 79896
-  %.val2.i = load i64, ptr %6, align 8
-  %7 = trunc i64 %.val2.i to i32
-  %8 = lshr i32 %7, 24
-  %9 = and i32 %8, 15                             ; 2 uses
-  %10 = icmp samesign ugt i32 %9, 3
-  %11 = icmp ne i32 %9, 15
-  %spec.select.i3.i = and i1 %10, %11
-  br label %isar_feature_any_pmuv3p1.exit
-
-isar_feature_any_pmuv3p1.exit:                    ; preds = %1, %5
-  %12 = phi i1 [ true, %1 ], [ %spec.select.i3.i, %5 ]
-  ret i1 %12
-}
-
-; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(none) uwtable
-define internal noundef i64 @zero_event_get_count(ptr nofree readnone captures(none) %0) #8 {
+define internal fastcc noundef i64 @zero_event_get_count(ptr nofree readnone captures(none) %0) unnamed_addr #9 {
 bb.a:
   ret i64 0
-}
-
-; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(none) uwtable
-define internal noundef i64 @zero_event_ns_per(i64 %0) #8 {
-  ret i64 -1
-}
-
-; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(argmem: read) uwtable
-define internal zeroext i1 @pmuv3p4_events_supported(ptr nofree noundef readonly captures(none) %0) #5 {
-  %2 = getelementptr i8, ptr %0, i64 79776
-  %.val.i = load i64, ptr %2, align 8
-  %3 = lshr i64 %.val.i, 8
-  %4 = and i64 %3, 15
-  %.off.i = add nsw i64 %4, -5
-  %switch.i = icmp ult i64 %.off.i, 10
-  br i1 %switch.i, label %isar_feature_any_pmuv3p4.exit, label %5
-
-5:                                                ; preds = %1
-  %6 = getelementptr i8, ptr %0, i64 79896
-  %.val2.i = load i64, ptr %6, align 8
-  %7 = trunc i64 %.val2.i to i32
-  %8 = lshr i32 %7, 24
-  %9 = and i32 %8, 15                             ; 2 uses
-  %10 = icmp samesign ugt i32 %9, 4
-  %11 = icmp ne i32 %9, 15
-  %spec.select.i3.i = and i1 %10, %11
-  br label %isar_feature_any_pmuv3p4.exit
-
-isar_feature_any_pmuv3p4.exit:                    ; preds = %1, %5
-  %12 = phi i1 [ true, %1 ], [ %spec.select.i3.i, %5 ]
-  ret i1 %12
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define internal fastcc zeroext i1 @pmu_counter_enabled(ptr nofree noundef readonly captures(none) %0, i8 noundef zeroext range(i8 0, 32) %1) unnamed_addr #9 {
+define internal fastcc zeroext i1 @pmu_counter_enabled(ptr nofree noundef readonly captures(none) %0, i8 noundef zeroext range(i8 0, 32) %1) unnamed_addr #10 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 78928
   %.val.i = load i64, ptr %i.a, align 16          ; 5 uses
@@ -2645,9 +2549,9 @@ event_supported.exit.thread:                      ; preds = %bb.t, %arm_current_
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal void @pmcntenset_write(ptr noundef %0, ptr nofree readnone captures(none) %1, i64 noundef %2) #3 {
+define internal void @pmcntenset_write(ptr nofree noundef captures(none) %0, ptr nofree readnone captures(none) %1, i64 noundef %2) #3 {
 bb.a:
-  %i.a = tail call { i32, i32 } asm sideeffect "rdtsc", "={ax},={dx},~{dirflag},~{fpsr},~{flags}"() #12, !srcloc !9 ; 2 uses
+  %i.a = tail call { i32, i32 } asm sideeffect "rdtsc", "={ax},={dx},~{dirflag},~{fpsr},~{flags}"() #13, !srcloc !9 ; 2 uses
   %i.b = extractvalue { i32, i32 } %i.a, 0
   %i.c = extractvalue { i32, i32 } %i.a, 1
   %i.d = zext i32 %i.c to i64
@@ -2777,9 +2681,9 @@ pmu_op_finish.exit:                               ; preds = %pmevcntr_op_finish.
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal void @pmcntenclr_write(ptr noundef %0, ptr nofree readnone captures(none) %1, i64 noundef %2) #3 {
+define internal void @pmcntenclr_write(ptr nofree noundef captures(none) %0, ptr nofree readnone captures(none) %1, i64 noundef %2) #3 {
 bb.a:
-  %i.a = tail call { i32, i32 } asm sideeffect "rdtsc", "={ax},={dx},~{dirflag},~{fpsr},~{flags}"() #12, !srcloc !9 ; 2 uses
+  %i.a = tail call { i32, i32 } asm sideeffect "rdtsc", "={ax},={dx},~{dirflag},~{fpsr},~{flags}"() #13, !srcloc !9 ; 2 uses
   %i.b = extractvalue { i32, i32 } %i.a, 0
   %i.c = extractvalue { i32, i32 } %i.a, 1
   %i.d = zext i32 %i.c to i64
@@ -2910,7 +2814,7 @@ pmu_op_finish.exit:                               ; preds = %pmevcntr_op_finish.
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(argmem: readwrite) uwtable
-define internal void @pmovsr_write(ptr nofree noundef captures(none) %0, ptr nofree readnone captures(none) %1, i64 noundef %2) #10 {
+define internal void @pmovsr_write(ptr nofree noundef captures(none) %0, ptr nofree readnone captures(none) %1, i64 noundef %2) #11 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 79728
   %.val = load i64, ptr %i.a, align 8
@@ -3069,7 +2973,7 @@ pmreg_access.exit:                                ; preds = %arm_current_el.exit
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal void @pmswinc_write(ptr noundef %0, ptr nofree readnone captures(none) %1, i64 noundef %2) #3 {
+define internal void @pmswinc_write(ptr nofree noundef captures(none) %0, ptr nofree readnone captures(none) %1, i64 noundef %2) #3 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 79728      ; 2 uses
   %.val34 = load i64, ptr %i.a, align 8
@@ -3337,7 +3241,7 @@ pmreg_access.exit:                                ; preds = %arm_current_el.exit
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(argmem: write) uwtable
-define internal void @pmselr_write(ptr nofree noundef writeonly captures(none) initializes((1272, 1280)) %0, ptr nofree readnone captures(none) %1, i64 noundef %2) #11 {
+define internal void @pmselr_write(ptr nofree noundef writeonly captures(none) initializes((1272, 1280)) %0, ptr nofree readnone captures(none) %1, i64 noundef %2) #12 {
 bb.a:
   %i.a = and i64 %2, 31
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 1272
@@ -3357,7 +3261,7 @@ bb.a:
 ; Function Attrs: nounwind sspstrong uwtable
 define internal void @pmccfiltr_write_a32(ptr nofree noundef captures(none) %0, ptr nofree readnone captures(none) %1, i64 noundef %2) #3 {
 bb.a:
-  %i.a = tail call { i32, i32 } asm sideeffect "rdtsc", "={ax},={dx},~{dirflag},~{fpsr},~{flags}"() #12, !srcloc !9 ; 2 uses
+  %i.a = tail call { i32, i32 } asm sideeffect "rdtsc", "={ax},={dx},~{dirflag},~{fpsr},~{flags}"() #13, !srcloc !9 ; 2 uses
   %i.b = extractvalue { i32, i32 } %i.a, 0
   %i.c = extractvalue { i32, i32 } %i.a, 1
   %i.d = zext i32 %i.c to i64
@@ -3431,7 +3335,7 @@ pmccntr_op_finish.exit:                           ; preds = %pmccntr_op_start.ex
 ; Function Attrs: nounwind sspstrong uwtable
 define internal void @pmccfiltr_write(ptr nofree noundef captures(none) %0, ptr nofree readnone captures(none) %1, i64 noundef %2) #3 {
 bb.a:
-  %i.a = tail call { i32, i32 } asm sideeffect "rdtsc", "={ax},={dx},~{dirflag},~{fpsr},~{flags}"() #12, !srcloc !9 ; 2 uses
+  %i.a = tail call { i32, i32 } asm sideeffect "rdtsc", "={ax},={dx},~{dirflag},~{fpsr},~{flags}"() #13, !srcloc !9 ; 2 uses
   %i.b = extractvalue { i32, i32 } %i.a, 0
   %i.c = extractvalue { i32, i32 } %i.a, 1
   %i.d = zext i32 %i.c to i64
@@ -3537,7 +3441,7 @@ pmevtyper_read.exit:                              ; preds = %bb.b, %bb.c, %bb.d
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal void @pmxevtyper_write(ptr noundef %0, ptr nofree readnone captures(none) %1, i64 noundef %2) #3 {
+define internal void @pmxevtyper_write(ptr nofree noundef captures(none) %0, ptr nofree readnone captures(none) %1, i64 noundef %2) #3 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 1272
   %i.b = load i64, ptr %i.a, align 8
@@ -3548,7 +3452,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal i64 @pmxevcntr_read(ptr noundef %0, ptr nofree readnone captures(none) %1) #3 {
+define internal i64 @pmxevcntr_read(ptr nofree noundef captures(none) %0, ptr nofree readnone captures(none) %1) #3 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 1272
   %i.b = load i64, ptr %i.a, align 8              ; 2 uses
@@ -3611,7 +3515,7 @@ pmevcntr_read.exit:                               ; preds = %bb.a, %isar_feature
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal void @pmxevcntr_write(ptr noundef %0, ptr nofree readnone captures(none) %1, i64 noundef %2) #3 {
+define internal void @pmxevcntr_write(ptr nofree noundef captures(none) %0, ptr nofree readnone captures(none) %1, i64 noundef %2) #3 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 1272
   %i.b = load i64, ptr %i.a, align 8              ; 2 uses
@@ -3718,7 +3622,7 @@ bb.d:                                             ; preds = %arm_current_el.exit
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(argmem: readwrite) uwtable
-define internal void @pmuserenr_write(ptr nofree noundef captures(none) initializes((1264, 1272)) %0, ptr nofree readnone captures(none) %1, i64 noundef %2) #10 {
+define internal void @pmuserenr_write(ptr nofree noundef captures(none) initializes((1264, 1272)) %0, ptr nofree readnone captures(none) %1, i64 noundef %2) #11 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 78928
   %.val = load i64, ptr %i.a, align 16
@@ -3732,7 +3636,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(argmem: readwrite) uwtable
-define internal void @pmintenset_write(ptr nofree noundef captures(none) %0, ptr nofree readnone captures(none) %1, i64 noundef %2) #10 {
+define internal void @pmintenset_write(ptr nofree noundef captures(none) %0, ptr nofree readnone captures(none) %1, i64 noundef %2) #11 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 79728
   %.val = load i64, ptr %i.a, align 8
@@ -3750,7 +3654,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(argmem: readwrite) uwtable
-define internal void @pmintenclr_write(ptr nofree noundef captures(none) %0, ptr nofree readnone captures(none) %1, i64 noundef %2) #10 {
+define internal void @pmintenclr_write(ptr nofree noundef captures(none) %0, ptr nofree readnone captures(none) %1, i64 noundef %2) #11 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 79728
   %.val = load i64, ptr %i.a, align 8
@@ -3769,13 +3673,13 @@ bb.a:
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc void @pmevtyper_write(ptr noundef %0, i64 noundef %1, i8 noundef zeroext range(i8 0, 32) %2) unnamed_addr #3 {
+define internal fastcc void @pmevtyper_write(ptr nofree noundef captures(none) %0, i64 noundef %1, i8 noundef zeroext range(i8 0, 32) %2) unnamed_addr #3 {
 bb.a:
   %i.a = icmp eq i8 %2, 31
   br i1 %i.a, label %bb.b, label %bb.g
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = tail call { i32, i32 } asm sideeffect "rdtsc", "={ax},={dx},~{dirflag},~{fpsr},~{flags}"() #12, !srcloc !9 ; 2 uses
+  %i.b = tail call { i32, i32 } asm sideeffect "rdtsc", "={ax},={dx},~{dirflag},~{fpsr},~{flags}"() #13, !srcloc !9 ; 2 uses
   %i.c = extractvalue { i32, i32 } %i.b, 0
   %i.d = extractvalue { i32, i32 } %i.b, 1
   %i.e = zext i32 %i.d to i64
@@ -3868,20 +3772,36 @@ bb.i:                                             ; preds = %bb.h
 event_supported.exit:                             ; preds = %bb.i
   %i.az = and i64 %1, 63
   %i.ba = getelementptr inbounds nuw [2 x i8], ptr @supported_event_map, i64 %i.az
-  %i.bb = load i16, ptr %i.ba, align 2            ; 2 uses
-  %.not2 = icmp eq i16 %i.bb, -1
-  br i1 %.not2, label %event_supported.exit.thread, label %bb.j
+  %i.bb = load i16, ptr %i.ba, align 2
+  switch i16 %i.bb, label %default.switch.case.unreachable [
+    i16 -1, label %event_supported.exit.thread
+    i16 0, label %call.0
+    i16 1, label %call.1
+    i16 2, label %call.2
+    i16 3, label %bb.j
+  ]
 
-bb.j:                                             ; preds = %event_supported.exit
-  %3 = zext i16 %i.bb to i64
-  %4 = getelementptr inbounds nuw [32 x i8], ptr @pm_events, i64 %3
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 16
-  %6 = load ptr, ptr %5, align 16
-  %7 = tail call i64 %6(ptr noundef nonnull %0) #12
+default.switch.case.unreachable:                  ; preds = %event_supported.exit
+  unreachable
+
+call.0:                                           ; preds = %event_supported.exit
+  %3 = tail call fastcc i64 @swinc_get_count(ptr nonnull poison) #13
   br label %event_supported.exit.thread
 
-event_supported.exit.thread:                      ; preds = %bb.i, %bb.j, %event_supported.exit
-  %.0 = phi i64 [ %7, %bb.j ], [ 0, %event_supported.exit ], [ 0, %bb.i ]
+call.1:                                           ; preds = %event_supported.exit
+  %4 = tail call fastcc i64 @zero_event_get_count(ptr nonnull poison) #13
+  br label %event_supported.exit.thread
+
+call.2:                                           ; preds = %event_supported.exit
+  %5 = tail call fastcc i64 @zero_event_get_count(ptr nonnull poison) #13
+  br label %event_supported.exit.thread
+
+bb.j:                                             ; preds = %event_supported.exit
+  %6 = tail call fastcc i64 @zero_event_get_count(ptr nonnull poison) #13
+  br label %event_supported.exit.thread
+
+event_supported.exit.thread:                      ; preds = %event_supported.exit, %call.0, %call.1, %call.2, %bb.j, %bb.i
+  %.0 = phi i64 [ 0, %bb.i ], [ 0, %event_supported.exit ], [ %3, %call.0 ], [ %4, %call.1 ], [ %5, %call.2 ], [ %6, %bb.j ]
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 2520
   %i.bd = getelementptr inbounds nuw [8 x i8], ptr %i.bc, i64 %i.as
   store i64 %.0, ptr %i.bd, align 8
@@ -3911,7 +3831,7 @@ pmccfiltr_write.exit:                             ; preds = %bb.l, %bb.k, %bb.f,
 declare void @g_free(ptr noundef) local_unnamed_addr #6
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(argmem: readwrite) uwtable
-define internal void @pmovsset_write(ptr nofree noundef captures(none) %0, ptr nofree readnone captures(none) %1, i64 noundef %2) #10 {
+define internal void @pmovsset_write(ptr nofree noundef captures(none) %0, ptr nofree readnone captures(none) %1, i64 noundef %2) #11 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 79728
   %.val = load i64, ptr %i.a, align 8
@@ -3936,12 +3856,13 @@ attributes #4 = { nofree norecurse nosync nounwind sspstrong memory(read, argmem
 attributes #5 = { mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
 attributes #6 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
 attributes #7 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #8 = { mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
-attributes #9 = { mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
-attributes #10 = { mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
-attributes #11 = { mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
-attributes #12 = { nounwind }
-attributes #13 = { noreturn nounwind }
+attributes #8 = { mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
+attributes #9 = { mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
+attributes #10 = { mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
+attributes #11 = { mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
+attributes #12 = { mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
+attributes #13 = { nounwind }
+attributes #14 = { noreturn nounwind }
 
 !llvm.module.flags = !{!2, !3, !4, !5, !6, !7}
 !llvm.ident = !{!8}
