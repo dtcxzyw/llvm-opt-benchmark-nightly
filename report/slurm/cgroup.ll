@@ -194,11 +194,12 @@ bb.d:                                             ; preds = %bb.c
   store ptr %i.f, ptr getelementptr inbounds nuw (i8, ptr @slurm_cgroup_conf, i64 16), align 8
   %i.g = tail call ptr @xstrdup(ptr noundef nonnull @.str.61) #11
   store ptr %i.g, ptr getelementptr inbounds nuw (i8, ptr @slurm_cgroup_conf, i64 24), align 8
+  store ptr null, ptr getelementptr inbounds nuw (i8, ptr @slurm_cgroup_conf, i64 40), align 8
+  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @slurm_cgroup_conf, i64 48), align 8
   store i8 0, ptr getelementptr inbounds nuw (i8, ptr @slurm_cgroup_conf, i64 32), align 8
+  store i8 0, ptr getelementptr inbounds nuw (i8, ptr @slurm_cgroup_conf, i64 52), align 4
   store ptr null, ptr getelementptr inbounds nuw (i8, ptr @slurm_cgroup_conf, i64 56), align 8
-  store i8 0, ptr getelementptr inbounds nuw (i8, ptr @slurm_cgroup_conf, i64 64), align 8
-  store i8 0, ptr getelementptr inbounds nuw (i8, ptr @slurm_cgroup_conf, i64 65), align 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(13) getelementptr inbounds nuw (i8, ptr @slurm_cgroup_conf, i64 40), i8 0, i64 13, i1 false)
+  store i16 0, ptr getelementptr inbounds nuw (i8, ptr @slurm_cgroup_conf, i64 64), align 8
   store <2 x float> splat (float 1.000000e+02), ptr getelementptr inbounds nuw (i8, ptr @slurm_cgroup_conf, i64 68), align 4
   store i64 -2, ptr getelementptr inbounds nuw (i8, ptr @slurm_cgroup_conf, i64 80), align 8
   store i64 30, ptr getelementptr inbounds nuw (i8, ptr @slurm_cgroup_conf, i64 88), align 8

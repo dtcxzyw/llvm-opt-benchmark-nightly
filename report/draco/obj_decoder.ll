@@ -101,10 +101,12 @@ define dso_local void @_ZN5draco10ObjDecoderC2Ev(ptr noundef nonnull align 8 der
 bb.a:
   store i8 1, ptr %0, align 8, !tbaa !34
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 28
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %i.a, i8 0, i64 24, i1 false)
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %i.a, i8 0, i64 20, i1 false)
+  store i64 -4294967296, ptr %i.b, align 8
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 52
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %i.b, i8 -1, i64 24, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %1, i8 -1, i64 20, i1 false)
   store i8 1, ptr %i.c, align 4, !tbaa !35
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 56
   store i32 0, ptr %i.d, align 8, !tbaa !36

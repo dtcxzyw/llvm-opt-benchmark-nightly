@@ -204,7 +204,7 @@ bb.a:
   %i.x = alloca [8 x i8], align 8                 ; 4 uses
   %i.y = alloca [8 x i8], align 8                 ; 4 uses
   %i.z = alloca [8 x i8], align 8                 ; 5 uses
-  %i.aa = alloca [120 x i8], align 8              ; 15 uses
+  %i.aa = alloca [120 x i8], align 8              ; 13 uses
   %i.ab = alloca [72 x i8], align 8               ; 5 uses
   %i.ac = alloca [128 x i8], align 128            ; 5 uses
   %i.ad = alloca [8 x i8], align 8                ; 5 uses
@@ -347,11 +347,9 @@ bb.l:                                             ; preds = %bb.j
   %i.bx = getelementptr inbounds nuw i8, ptr %i.aa, i64 104
   %i.by = getelementptr inbounds nuw i8, ptr %i.aa, i64 112
   %i.bz = getelementptr inbounds nuw i8, ptr %i.aa, i64 24
-  %8 = getelementptr inbounds nuw i8, ptr %i.aa, i64 113
-  %i.ca = getelementptr inbounds nuw i8, ptr %i.aa, i64 117
+  %i.ca = getelementptr inbounds nuw i8, ptr %i.aa, i64 116
   %i.cb = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
   %i.cc = getelementptr inbounds nuw i8, ptr %i.aa, i64 32
-  %9 = getelementptr inbounds nuw i8, ptr %i.aa, i64 108
   %i.cd = getelementptr inbounds nuw i8, ptr %i.aa, i64 16
   %i.ce = getelementptr inbounds nuw i8, ptr %i.aa, i64 20
   %i.cf = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -754,15 +752,19 @@ bb.bs:                                            ; preds = %bb.bp
 bb.bt:                                            ; preds = %bb.bs
   %i.ga = extractvalue { i32, i32 } %i.fz, 0
   %i.gb = extractvalue { i32, i32 } %i.fz, 1
-  store i32 0, ptr %i.bx, align 8
   store ptr null, ptr %i.aa, align 8
-  store i8 %i.ft, ptr %i.by, align 8
   store ptr %i.fm, ptr %i.bz, align 8
-  store <4 x i8> <i8 0, i8 0, i8 0, i8 1>, ptr %8, align 1
-  store i8 %i.fu, ptr %i.ca, align 1
+  %8 = zext nneg i8 %i.ft to i32
+  store i32 %8, ptr %i.by, align 8
+  %9 = zext nneg i8 %i.fu to i16
+  %10 = shl nuw nsw i16 %9, 8
+  %11 = or disjoint i16 %10, 1
+  store i16 %11, ptr %i.ca, align 4
   store ptr %i.fn, ptr %i.cb, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.cc, ptr noundef nonnull align 8 dereferenceable(72) %i.ab, i64 72, i1 false)
-  store i32 %i.fv, ptr %9, align 4
+  %12 = zext i32 %i.fv to i64
+  %13 = shl nuw i64 %12, 32
+  store i64 %13, ptr %i.bx, align 8
   store i32 %i.ga, ptr %i.cd, align 8
   store i32 %i.gb, ptr %i.ce, align 4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.x)

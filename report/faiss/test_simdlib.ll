@@ -204,10 +204,10 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZN37TestSIMDLib_TestCmpltMinMaxInt16_Test8TestBodyEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #4 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %1 = alloca %"struct.faiss::simd16uint16_tpl", align 16 ; 6 uses
-  %2 = alloca %"struct.faiss::simd16uint16_tpl", align 16 ; 5 uses
-  %3 = alloca %"struct.faiss::simd16uint16_tpl", align 16 ; 6 uses
-  %4 = alloca %"struct.faiss::simd16uint16_tpl", align 16 ; 5 uses
+  %1 = alloca %"struct.faiss::simd16uint16_tpl", align 8 ; 8 uses
+  %2 = alloca %"struct.faiss::simd16uint16_tpl", align 8 ; 7 uses
+  %3 = alloca %"struct.faiss::simd16uint16_tpl", align 8 ; 8 uses
+  %4 = alloca %"struct.faiss::simd16uint16_tpl", align 8 ; 7 uses
   %5 = alloca %"struct.faiss::simd16uint16_tpl", align 16 ; 10 uses
   %6 = alloca %"struct.faiss::simd16uint16_tpl", align 16 ; 10 uses
   %7 = alloca %"struct.faiss::simd16uint16_tpl", align 16 ; 10 uses
@@ -256,18 +256,34 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
   call void @llvm.lifetime.start.p0(ptr nonnull %1)
-  store <8 x i16> <i16 0, i16 1, i16 2, i16 3, i16 4, i16 5, i16 6, i16 7>, ptr %1, align 16
-  %.sroa.0204.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 16
-  store <8 x i16> <i16 1000, i16 1001, i16 1002, i16 1003, i16 1004, i16 1005, i16 1006, i16 1007>, ptr %.sroa.0204.sroa.9.0..sroa_idx, align 16
-  store <8 x i16> <i16 0, i16 1, i16 2, i16 3, i16 4, i16 5, i16 6, i16 7>, ptr %2, align 16
-  %.sroa.0205.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 16
-  store <8 x i16> <i16 1000, i16 1001, i16 1002, i16 1003, i16 1004, i16 1005, i16 1006, i16 1007>, ptr %.sroa.0205.sroa.9.0..sroa_idx, align 16
-  store <8 x i16> <i16 10, i16 11, i16 12, i16 13, i16 14, i16 15, i16 16, i16 17>, ptr %3, align 16
-  %.sroa.0206.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 16
-  store <8 x i16> <i16 1010, i16 1011, i16 1012, i16 1013, i16 1014, i16 1015, i16 1016, i16 1017>, ptr %.sroa.0206.sroa.9.0..sroa_idx, align 16
-  store <8 x i16> splat (i16 5), ptr %4, align 16
-  %.sroa.0207.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 16
-  store <8 x i16> splat (i16 1005), ptr %.sroa.0207.sroa.9.0..sroa_idx, align 16
+  store i64 844433520132096, ptr %1, align 8
+  %.sroa.0180.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
+  store i64 1970350607106052, ptr %.sroa.0180.sroa.3.0..sroa_idx, align 8
+  %.sroa.0180.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 16
+  store i64 282323705263621096, ptr %.sroa.0180.sroa.5.0..sroa_idx, align 8
+  %.sroa.0180.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 24
+  store i64 283449622350595052, ptr %.sroa.0180.sroa.7.0..sroa_idx, align 8
+  store i64 844433520132096, ptr %2, align 8
+  %.sroa.0181.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
+  store i64 1970350607106052, ptr %.sroa.0181.sroa.3.0..sroa_idx, align 8
+  %.sroa.0181.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 16
+  store i64 282323705263621096, ptr %.sroa.0181.sroa.5.0..sroa_idx, align 8
+  %.sroa.0181.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 24
+  store i64 283449622350595052, ptr %.sroa.0181.sroa.7.0..sroa_idx, align 8
+  store i64 3659226237566986, ptr %3, align 8
+  %.sroa.0204.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 8
+  store i64 4785143324540942, ptr %.sroa.0204.sroa.9.0..sroa_idx, align 8
+  %.sroa.0182.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 16
+  store i64 285138497981055986, ptr %.sroa.0182.sroa.5.0..sroa_idx, align 8
+  %.sroa.0205.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 24
+  store i64 286264415068029942, ptr %.sroa.0205.sroa.9.0..sroa_idx, align 8
+  store i64 1407396358717445, ptr %4, align 8
+  %.sroa.0206.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 8
+  store i64 1407396358717445, ptr %.sroa.0206.sroa.9.0..sroa_idx, align 8
+  %.sroa.0183.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 16
+  store i64 282886668102206445, ptr %.sroa.0183.sroa.5.0..sroa_idx, align 8
+  %.sroa.0207.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 24
+  store i64 282886668102206445, ptr %.sroa.0207.sroa.9.0..sroa_idx, align 8
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %bb.a

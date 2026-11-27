@@ -202,8 +202,8 @@ declare noundef zeroext i1 @_ZN4llvm14RISCVInstrInfo19isVectorConfigInstrERKNS_1
 define dso_local void @_ZNK4llvm5RISCV24RISCVVSETVLIInfoAnalysis17getInfoForVSETVLIERKNS_12MachineInstrE(ptr dead_on_unwind noalias nofree writable sret(%"class.llvm::RISCV::VSETVLIInfo") align 8 captures(none) initializes((0, 4), (16, 19)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %1, ptr noundef nonnull align 8 dereferenceable(80) %2) local_unnamed_addr #0 align 2 {
 bb.a:
   store i32 0, ptr %0, align 8, !tbaa !35
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 17
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  store i16 0, ptr %i.a, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 18
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 19 ; 2 uses
   %i.d = load i8, ptr %i.c, align 1
@@ -281,6 +281,7 @@ bb.j:                                             ; preds = %bb.f, %bb.d, %bb.e,
   %i.an = trunc i64 %i.am to i32                  ; 3 uses
   %i.ao = trunc i64 %i.am to i8                   ; 2 uses
   %i.ap = and i8 %i.ao, 7
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 17
   store i8 %i.ap, ptr %3, align 1, !tbaa !185
   %i.aq = lshr i32 %i.an, 3
   %i.ar = and i32 %i.aq, 7
@@ -577,8 +578,8 @@ _ZNK4llvm9LiveRange15getVNInfoBeforeENS_9SlotIndexE.exit: ; preds = %bb.j, %bb.i
 define dso_local void @_ZNK4llvm5RISCV24RISCVVSETVLIInfoAnalysis19computeInfoForInstrERKNS_12MachineInstrE(ptr dead_on_unwind noalias nofree writable sret(%"class.llvm::RISCV::VSETVLIInfo") align 8 captures(none) initializes((0, 4), (16, 19)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %1, ptr noundef nonnull align 8 dereferenceable(80) %2) local_unnamed_addr #0 align 2 {
 bb.a:
   store i32 0, ptr %0, align 8, !tbaa !35
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 17 ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
+  store i16 0, ptr %i.a, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 18 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 19 ; 3 uses
   %i.d = load i8, ptr %i.c, align 1
@@ -711,6 +712,7 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.g, %bb.h, %bb.f
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 17
   store i8 %i.ap, ptr %3, align 1, !tbaa !185
   %i.bz = trunc i32 %i.bf to i8
   store i8 %i.bz, ptr %i.b, align 2, !tbaa !184
@@ -842,7 +844,8 @@ bb.x:                                             ; preds = %bb.j
 bb.y:                                             ; preds = %_ZNK4llvm14RISCVSubtarget14getRealMinVLenEv.exit, %bb.w, %bb.v, %bb.s, %bb.t, %bb.x
   %.sink = phi i8 [ 1, %bb.w ], [ 2, %bb.v ], [ 2, %bb.s ], [ 2, %bb.x ], [ 2, %bb.t ], [ 3, %_ZNK4llvm14RISCVSubtarget14getRealMinVLenEv.exit ]
   store i8 %.sink, ptr %i.a, align 8, !tbaa !186
-  store i8 %i.ap, ptr %3, align 1, !tbaa !185
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 17
+  store i8 %i.ap, ptr %4, align 1, !tbaa !185
   %i.dy = trunc i32 %i.bf to i8
   store i8 %i.dy, ptr %i.b, align 2, !tbaa !184
   %i.dz = or disjoint i8 %i.at, %.155

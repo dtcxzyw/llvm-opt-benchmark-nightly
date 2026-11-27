@@ -204,7 +204,9 @@ define void @_Z9sha1_initP12sha1_context(ptr nofree noundef writeonly captures(n
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 0, ptr %i.a, align 8, !tbaa !12
-  store <4 x i32> <i32 1732584193, i32 -271733879, i32 -1732584194, i32 271733878>, ptr %0, align 8, !tbaa !8
+  store i64 -1167088121787636991, ptr %0, align 8
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i64 1167088121787636990, ptr %1, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i32 -1009589776, ptr %i.b, align 8, !tbaa !8
   ret void
@@ -388,7 +390,7 @@ bb.d:                                             ; preds = %bb.c, %bb.a
   %i.ab = load i32, ptr %i.aa, align 4, !tbaa !8
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 4
   store i32 %i.ab, ptr %i.ac, align 4, !tbaa !8
-  %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.ae = load i32, ptr %i.ad, align 8, !tbaa !8
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 8
   store i32 %i.ae, ptr %i.af, align 4, !tbaa !8
@@ -401,7 +403,8 @@ bb.d:                                             ; preds = %bb.c, %bb.a
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 16
   store i32 %i.ak, ptr %i.al, align 4, !tbaa !8
   store i64 0, ptr %i.b, align 8, !tbaa !12
-  store <4 x i32> <i32 1732584193, i32 -271733879, i32 -1732584194, i32 271733878>, ptr %0, align 8, !tbaa !8
+  store i64 -1167088121787636991, ptr %0, align 8
+  store i64 1167088121787636990, ptr %i.ad, align 8
   store i32 -1009589776, ptr %i.aj, align 8, !tbaa !8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   ret void

@@ -201,13 +201,16 @@ bb.m:                                             ; preds = %.lr.ph309, %bb.h, %
 define hidden void @PMurHash128x86(ptr nofree noundef readonly captures(address) %0, i32 noundef %1, i32 noundef %2, ptr nofree noundef writeonly captures(none) %3) local_unnamed_addr #2 {
 bb.a:
   %i.a = alloca [4 x i32], align 16               ; 5 uses
-  %i.b = alloca [4 x i32], align 16               ; 5 uses
+  %i.b = alloca [4 x i32], align 16               ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #5
-  %4 = insertelement <4 x i32> poison, i32 %2, i64 0
-  %5 = shufflevector <4 x i32> %4, <4 x i32> poison, <4 x i32> zeroinitializer
-  store <4 x i32> %5, ptr %i.b, align 16, !tbaa !12
+  %4 = zext i32 %2 to i64                         ; 2 uses
+  %5 = shl nuw i64 %4, 32
+  %6 = or disjoint i64 %5, %4                     ; 2 uses
+  store i64 %6, ptr %i.b, align 16
+  %7 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  store i64 %6, ptr %7, align 8
   call void @PMurHash128x86_Process(ptr noundef nonnull %i.b, ptr noundef nonnull %i.a, ptr noundef %0, i32 noundef %1)
   call void @PMurHash128x86_Result(ptr noundef nonnull %i.b, ptr noundef nonnull %i.a, i32 noundef %1, ptr noundef %3)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #5

@@ -23,14 +23,15 @@ bb.a:
 ; Function Attrs: mustprogress nofree noinline norecurse nosync nounwind willreturn memory(write, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc void @ZS_FastTagTable_clear(ptr nofree noundef captures(none) initializes((8, 16)) %0, i32 noundef %1, i32 noundef %2) unnamed_addr #2 {
 bb.a:
-  %i.a = zext nneg i32 %1 to i64
+  %i.a = zext i32 %1 to i64                       ; 2 uses
   %i.b = shl i64 16, %i.a
   %i.c = load ptr, ptr %0, align 8, !tbaa !13
   tail call void @llvm.memset.p0.i64(ptr align 4 %i.c, i8 0, i64 %i.b, i1 false)
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 %1, ptr %i.d, align 8, !tbaa !14
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store i32 %2, ptr %3, align 4, !tbaa !15
+  %3 = zext i32 %2 to i64
+  %4 = shl nuw i64 %3, 32
+  %5 = or disjoint i64 %4, %i.a
+  store i64 %5, ptr %i.d, align 8
   ret void
 }
 
@@ -38,9 +39,9 @@ bb.a:
 define { i64, i64 } @ZS_FastTagTable_getAndUpdate(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2) local_unnamed_addr #3 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !15
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !14
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.d = load i32, ptr %i.c, align 8, !tbaa !14   ; 11 uses
+  %i.d = load i32, ptr %i.c, align 8, !tbaa !15   ; 11 uses
   switch i32 %i.b, label %bb.l [
     i32 1, label %bb.b
     i32 2, label %bb.c
@@ -171,9 +172,9 @@ ZL_hashPtr.exit:                                  ; preds = %bb.b, %bb.c, %bb.d,
 define void @ZS_FastTagTable_put(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2) local_unnamed_addr #1 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !15
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !14
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.d = load i32, ptr %i.c, align 8, !tbaa !14   ; 11 uses
+  %i.d = load i32, ptr %i.c, align 8, !tbaa !15   ; 11 uses
   switch i32 %i.b, label %bb.l [
     i32 1, label %bb.b
     i32 2, label %bb.c
@@ -300,9 +301,9 @@ ZL_hashPtr.exit:                                  ; preds = %bb.b, %bb.c, %bb.d,
 define { i64, i64 } @ZS_FastTagTable_get(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #4 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !15
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !14
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.d = load i32, ptr %i.c, align 8, !tbaa !14   ; 11 uses
+  %i.d = load i32, ptr %i.c, align 8, !tbaa !15   ; 11 uses
   switch i32 %i.b, label %bb.l [
     i32 1, label %bb.b
     i32 2, label %bb.c
@@ -448,7 +449,7 @@ attributes #5 = { nocallback nofree nosync nounwind willreturn memory(argmem: wr
 !11 = !{!"any pointer", !7, i64 0}
 !12 = !{!"", !11, i64 0, !8, i64 8, !8, i64 12}
 !13 = !{!12, !11, i64 0}
-!14 = !{!12, !8, i64 8}
-!15 = !{!12, !8, i64 12}
+!14 = !{!12, !8, i64 12}
+!15 = !{!12, !8, i64 8}
 !16 = !{!7, !7, i64 0}
 end_hunk_0

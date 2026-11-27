@@ -200,12 +200,16 @@ bb.g:                                             ; preds = %evmap_make_space.ex
   store ptr %i.ab, ptr %i.ad, align 8
   %i.ae = load ptr, ptr %i.b, align 8
   %i.af = getelementptr inbounds nuw [8 x i8], ptr %i.ae, i64 %i.u
-  %i.ag = load ptr, ptr %i.af, align 8            ; 2 uses
+  %i.ag = load ptr, ptr %i.af, align 8            ; 4 uses
   %i.ah = icmp eq ptr %i.ag, null
   br i1 %i.ah, label %evmap_make_space.exit.thread, label %bb.h, !prof !8
 
 bb.h:                                             ; preds = %bb.g
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(14) %i.ag, i8 0, i64 14, i1 false)
+  store ptr null, ptr %i.ag, align 8
+  %3 = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
+  store i32 0, ptr %3, align 8
+  %4 = getelementptr inbounds nuw i8, ptr %i.ag, i64 12
+  store i16 0, ptr %4, align 4
   %.pre = load ptr, ptr %i.b, align 8
   %.phi.trans.insert = getelementptr inbounds nuw [8 x i8], ptr %.pre, i64 %i.u
   %.pre115 = load ptr, ptr %.phi.trans.insert, align 8

@@ -202,9 +202,11 @@ bb.a:
   %2 = alloca %"class.boost::filesystem::file_status", align 4 ; 5 uses
   %3 = alloca %"class.boost::filesystem::file_status", align 4 ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 44
-  store <4 x i32> <i32 0, i32 65535, i32 0, i32 65535>, ptr %i.a, align 8, !tbaa !23
+  store i64 281470681743360, ptr %i.a, align 8
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
+  store i32 0, ptr %i.b, align 8, !tbaa !28
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 2 uses
+  store i32 65535, ptr %i.c, align 4, !tbaa !29
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #29
   call void @_ZN5boost10filesystem6detail14symlink_statusERKNS0_4pathEPNS_6system10error_codeE(ptr dead_on_unwind nonnull writable sret(%"class.boost::filesystem::file_status") align 4 %2, ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef %1)
   %i.d = load i32, ptr %2, align 4, !tbaa !28     ; 3 uses
@@ -607,10 +609,10 @@ bb.g:                                             ; preds = %bb.e
   %i.s = getelementptr inbounds nuw i8, ptr %calloc.i.i, i64 8
   %i.t = getelementptr inbounds nuw i8, ptr %calloc.i.i, i64 24
   store ptr %i.t, ptr %i.s, align 8, !tbaa !18, !noalias !109
-  %i.u = getelementptr inbounds nuw i8, ptr %calloc.i.i, i64 44
-  store i32 65535, ptr %i.u, align 4, !tbaa !29, !noalias !109
-  %i.v = getelementptr inbounds nuw i8, ptr %calloc.i.i, i64 52
-  store i32 65535, ptr %i.v, align 4, !tbaa !29, !noalias !109
+  %i.u = getelementptr inbounds nuw i8, ptr %calloc.i.i, i64 40
+  store i64 281470681743360, ptr %i.u, align 8, !noalias !109
+  %i.v = getelementptr inbounds nuw i8, ptr %calloc.i.i, i64 48
+  store i64 281470681743360, ptr %i.v, align 8, !noalias !109
   %i.w = getelementptr inbounds nuw i8, ptr %calloc.i.i, i64 56
   %i.x = atomicrmw add ptr %calloc.i.i, i32 1 acq_rel, align 4, !noalias !109 ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #29, !noalias !109

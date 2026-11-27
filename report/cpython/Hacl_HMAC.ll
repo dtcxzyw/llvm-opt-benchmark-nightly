@@ -204,7 +204,7 @@ bb.a:
   %i.a = alloca [64 x i8], align 16               ; 13 uses
   %i.b = alloca [64 x i8], align 16               ; 13 uses
   %i.c = alloca [64 x i8], align 16               ; 9 uses
-  %i.d = alloca [8 x i32], align 16               ; 14 uses
+  %i.d = alloca [8 x i32], align 16               ; 16 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.a, i8 0, i64 64, i1 false)
   %i.e = icmp ult i32 %2, 65
@@ -269,9 +269,13 @@ vector.ph:                                        ; preds = %bb.c, %bb.b
   store <16 x i8> %i.y, ptr %i.u, align 16, !tbaa !12
   store <16 x i8> %i.z, ptr %i.v, align 16, !tbaa !12
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #4
-  store <4 x i32> <i32 -1056596264, i32 914150663, i32 812702999, i32 -150054599>, ptr %i.d, align 16, !tbaa !9
+  store i64 3926247204440088280, ptr %i.d, align 16
+  %5 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
+  store i64 -644479594506691305, ptr %5, align 8
   %i.aa = getelementptr inbounds nuw i8, ptr %i.d, i64 16
-  store <4 x i32> <i32 -4191439, i32 1750603025, i32 1694076839, i32 -1090891868>, ptr %i.aa, align 16, !tbaa !9
+  store i64 7518782744944446257, ptr %i.aa, align 16
+  %6 = getelementptr inbounds nuw i8, ptr %i.d, i64 24
+  store i64 -4685344894838272089, ptr %6, align 8
   %i.ab = icmp eq i32 %4, 0
   br i1 %i.ab, label %bb.d, label %bb.e
 
@@ -331,7 +335,7 @@ bb.a:
   %i.a = alloca [64 x i8], align 16               ; 13 uses
   %i.b = alloca [64 x i8], align 16               ; 13 uses
   %i.c = alloca [64 x i8], align 16               ; 9 uses
-  %i.d = alloca [8 x i32], align 16               ; 14 uses
+  %i.d = alloca [8 x i32], align 16               ; 16 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.a, i8 0, i64 64, i1 false)
   %i.e = icmp ult i32 %2, 65
@@ -396,9 +400,13 @@ vector.ph:                                        ; preds = %bb.c, %bb.b
   store <16 x i8> %i.y, ptr %i.u, align 16, !tbaa !12
   store <16 x i8> %i.z, ptr %i.v, align 16, !tbaa !12
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #4
-  store <4 x i32> <i32 1779033703, i32 -1150833019, i32 1013904242, i32 -1521486534>, ptr %i.d, align 16, !tbaa !9
+  store i64 -4942790177982912921, ptr %i.d, align 16
+  %5 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
+  store i64 -6534734903820487822, ptr %5, align 8
   %i.aa = getelementptr inbounds nuw i8, ptr %i.d, i64 16
-  store <4 x i32> <i32 1359893119, i32 -1694144372, i32 528734635, i32 1541459225>, ptr %i.aa, align 16, !tbaa !9
+  store i64 -7276294671082564993, ptr %i.aa, align 16
+  %6 = getelementptr inbounds nuw i8, ptr %i.d, i64 24
+  store i64 6620516960021240235, ptr %6, align 8
   %i.ab = icmp eq i32 %4, 0
   br i1 %i.ab, label %bb.d, label %bb.e
 

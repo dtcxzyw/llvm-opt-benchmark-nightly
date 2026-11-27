@@ -69,21 +69,39 @@ bb.a:
 define hidden noundef i32 @_glfwInitNull() #1 {
 bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(591) getelementptr inbounds nuw (i8, ptr @_glfw, i64 138816), i8 -1, i64 591, i1 false)
-  store <8 x i16> <i16 32, i16 39, i16 44, i16 45, i16 46, i16 47, i16 48, i16 49>, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 138818), align 2
-  store <8 x i16> <i16 50, i16 51, i16 52, i16 53, i16 54, i16 55, i16 56, i16 57>, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 138834), align 2
-  store <8 x i16> <i16 70, i16 71, i16 72, i16 73, i16 74, i16 75, i16 76, i16 77>, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 138914), align 2
-  store <8 x i16> <i16 78, i16 79, i16 80, i16 81, i16 82, i16 83, i16 84, i16 85>, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 138930), align 2
-  store <8 x i16> <i16 59, i16 61, i16 91, i16 92, i16 93, i16 96, i16 161, i16 162>, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 138850), align 2
-  store <8 x i16> <i16 256, i16 257, i16 258, i16 259, i16 260, i16 261, i16 262, i16 263>, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 138866), align 2
-  store <8 x i16> <i16 264, i16 265, i16 266, i16 267, i16 268, i16 269, i16 280, i16 281>, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 138882), align 2
-  store <8 x i16> <i16 282, i16 283, i16 284, i16 65, i16 66, i16 67, i16 68, i16 69>, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 138898), align 2
-  store <8 x i16> <i16 86, i16 87, i16 88, i16 89, i16 90, i16 290, i16 291, i16 292>, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 138946), align 2
-  store <8 x i16> <i16 293, i16 294, i16 295, i16 296, i16 297, i16 298, i16 299, i16 300>, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 138962), align 2
-  store <8 x i16> <i16 301, i16 302, i16 303, i16 304, i16 305, i16 306, i16 307, i16 308>, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 138978), align 2
-  store <8 x i16> <i16 309, i16 310, i16 311, i16 312, i16 313, i16 314, i16 320, i16 321>, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 138994), align 2
-  store <8 x i16> <i16 322, i16 323, i16 324, i16 325, i16 326, i16 327, i16 328, i16 329>, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 139010), align 2
-  store <8 x i16> <i16 330, i16 331, i16 332, i16 333, i16 334, i16 335, i16 336, i16 340>, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 139026), align 2
-  store <8 x i16> <i16 341, i16 342, i16 343, i16 344, i16 345, i16 346, i16 347, i16 348>, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 139042), align 2
+  store i16 32, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 138818), align 2
+  store i32 2883623, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 138820), align 4
+  store i64 13511000748589101, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 138824), align 8
+  store i64 14636917835563057, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 138832), align 8
+  store i64 15762834922537013, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 138840), align 8
+  store i32 3866681, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 138848), align 8
+  store i64 19140586183458881, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 138904), align 8
+  store i64 20266503270432837, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 138912), align 8
+  store i64 21392420357406793, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 138920), align 8
+  store i64 22518337444380749, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 138928), align 8
+  store i64 23644254531354705, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 138936), align 8
+  store i64 24770171618328661, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 138944), align 8
+  store i32 5963837, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 138852), align 4
+  store i64 45317883573370972, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 138856), align 8
+  store i64 72621647814721698, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 138864), align 8
+  store i64 73747564901695747, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 138872), align 8
+  store i64 74873481988669703, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 138880), align 8
+  store i64 78814148842750219, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 138888), align 8
+  store i64 79940108880052505, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 138896), align 8
+  store i64 81910463769215065, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 138952), align 8
+  store i64 83036380869230884, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 138960), align 8
+  store i64 84162297956204840, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 138968), align 8
+  store i64 85288215043178796, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 138976), align 8
+  store i64 86414132130152752, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 138984), align 8
+  store i64 87540049217126708, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 138992), align 8
+  store i64 90073341187653944, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 139000), align 8
+  store i64 91199279749792065, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 139008), align 8
+  store i64 92325196836766021, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 139016), align 8
+  store i64 93451113923739977, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 139024), align 8
+  store i64 94577031010713933, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 139032), align 8
+  store i64 96547385912918356, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 139040), align 8
+  store i64 97673302999892312, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 139048), align 8
+  store i16 348, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 139056), align 8
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.g, %bb.a

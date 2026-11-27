@@ -204,11 +204,13 @@ make_vn_slot.exit:                                ; preds = %.lr.ph.i.prol.loope
   %i.ey = getelementptr inbounds [8 x i8], ptr %.0.i.i.i, i64 %.pre-phi.i ; 2 uses
   store ptr %i.ex, ptr %i.ey, align 8, !tbaa !15
   %i.ez = getelementptr inbounds nuw i8, ptr %i.ex, i64 16
-  %i.fa = load ptr, ptr %i.ez, align 8, !tbaa !13 ; 2 uses
-  %i.fb = getelementptr inbounds nuw i8, ptr %i.fa, i64 364
-  store i32 %.0.i, ptr %i.fb, align 4, !tbaa !36
-  %1 = getelementptr inbounds nuw i8, ptr %i.fa, i64 360
-  store i32 %i.bp, ptr %1, align 8, !tbaa !49
+  %i.fa = load ptr, ptr %i.ez, align 8, !tbaa !13
+  %i.fb = getelementptr inbounds nuw i8, ptr %i.fa, i64 360
+  %1 = zext i32 %i.bp to i64
+  %2 = zext i32 %.0.i to i64
+  %3 = shl nuw i64 %2, 32
+  %4 = or disjoint i64 %3, %1
+  store i64 %4, ptr %i.fb, align 8
   %i.fc = load ptr, ptr %i.y, align 8, !tbaa !13  ; 2 uses
   %i.fd = getelementptr inbounds nuw i8, ptr %i.fc, i64 264
   %i.fe = load ptr, ptr %i.fd, align 8, !tbaa !48

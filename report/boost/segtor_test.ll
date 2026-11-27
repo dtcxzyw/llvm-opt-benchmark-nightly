@@ -205,14 +205,18 @@ _ZNK5boost9container10deque_baseINS0_13new_allocatorINS0_4test10EmplaceIntEEENS0
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(20) @_ZZN5boost9container4test17test_emplace_backINS0_6segtorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i8 0, i64 20, i1 false)
   store i32 1, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test17test_emplace_backINS0_6segtorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 44), align 4, !tbaa !649
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test17test_emplace_backINS0_6segtorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 48), i8 0, i64 16, i1 false)
-  store <4 x i32> <i32 1, i32 2, i32 0, i32 0>, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test17test_emplace_backINS0_6segtorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 88), align 8, !tbaa !363
+  store i64 8589934593, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test17test_emplace_backINS0_6segtorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 88), align 8
+  store i64 0, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test17test_emplace_backINS0_6segtorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 96), align 16
   store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test17test_emplace_backINS0_6segtorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 104), align 8, !tbaa !650
-  store <4 x i32> <i32 1, i32 2, i32 3, i32 0>, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test17test_emplace_backINS0_6segtorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 132), align 4, !tbaa !363
-  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test17test_emplace_backINS0_6segtorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 148), align 4, !tbaa !650
-  store <4 x i32> <i32 1, i32 2, i32 3, i32 4>, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test17test_emplace_backINS0_6segtorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 176), align 16, !tbaa !363
+  store i32 1, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test17test_emplace_backINS0_6segtorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 132), align 4, !tbaa !649
+  store i64 12884901890, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test17test_emplace_backINS0_6segtorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 136), align 8
+  store i64 0, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test17test_emplace_backINS0_6segtorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 144), align 16
+  store i64 8589934593, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test17test_emplace_backINS0_6segtorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 176), align 16
+  store i64 17179869187, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test17test_emplace_backINS0_6segtorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 184), align 8
   store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test17test_emplace_backINS0_6segtorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 192), align 16, !tbaa !650
-  store <4 x i32> <i32 1, i32 2, i32 3, i32 4>, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test17test_emplace_backINS0_6segtorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 220), align 4, !tbaa !363
-  store i32 5, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test17test_emplace_backINS0_6segtorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 236), align 4, !tbaa !650
+  store i32 1, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test17test_emplace_backINS0_6segtorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 220), align 4, !tbaa !649
+  store i64 12884901890, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test17test_emplace_backINS0_6segtorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 224), align 16
+  store i64 21474836484, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test17test_emplace_backINS0_6segtorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 232), align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #22
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %9, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #22
@@ -615,14 +619,18 @@ _ZNK5boost9container10deque_implINS0_4test10EmplaceIntEvLb1EvE6cbeginEv.exit58: 
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(20) @_ZZN5boost9container4test19test_emplace_beforeINS0_6segtorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i8 0, i64 20, i1 false)
   store i32 1, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test19test_emplace_beforeINS0_6segtorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 44), align 4, !tbaa !649
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test19test_emplace_beforeINS0_6segtorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 48), i8 0, i64 16, i1 false)
-  store <4 x i32> <i32 1, i32 2, i32 0, i32 0>, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test19test_emplace_beforeINS0_6segtorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 88), align 8, !tbaa !363
+  store i64 8589934593, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test19test_emplace_beforeINS0_6segtorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 88), align 8
+  store i64 0, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test19test_emplace_beforeINS0_6segtorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 96), align 16
   store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test19test_emplace_beforeINS0_6segtorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 104), align 8, !tbaa !650
-  store <4 x i32> <i32 1, i32 2, i32 3, i32 0>, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test19test_emplace_beforeINS0_6segtorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 132), align 4, !tbaa !363
-  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test19test_emplace_beforeINS0_6segtorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 148), align 4, !tbaa !650
-  store <4 x i32> <i32 1, i32 2, i32 3, i32 4>, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test19test_emplace_beforeINS0_6segtorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 176), align 16, !tbaa !363
+  store i32 1, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test19test_emplace_beforeINS0_6segtorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 132), align 4, !tbaa !649
+  store i64 12884901890, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test19test_emplace_beforeINS0_6segtorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 136), align 8
+  store i64 0, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test19test_emplace_beforeINS0_6segtorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 144), align 16
+  store i64 8589934593, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test19test_emplace_beforeINS0_6segtorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 176), align 16
+  store i64 17179869187, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test19test_emplace_beforeINS0_6segtorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 184), align 8
   store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test19test_emplace_beforeINS0_6segtorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 192), align 16, !tbaa !650
-  store <4 x i32> <i32 1, i32 2, i32 3, i32 4>, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test19test_emplace_beforeINS0_6segtorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 220), align 4, !tbaa !363
-  store i32 5, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test19test_emplace_beforeINS0_6segtorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 236), align 4, !tbaa !650
+  store i32 1, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test19test_emplace_beforeINS0_6segtorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 220), align 4, !tbaa !649
+  store i64 12884901890, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test19test_emplace_beforeINS0_6segtorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 224), align 16
+  store i64 21474836484, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test19test_emplace_beforeINS0_6segtorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 232), align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #22
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %7, i8 0, i64 24, i1 false)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %8, i8 0, i64 16, i1 false)
@@ -1025,7 +1033,7 @@ _ZN5boost9container10deque_baseINS0_4test26propagation_test_allocatorIcLb1ELb1EL
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZN5boost9container4test38test_propagate_allocator_allocator_argINS1_23alloc_propagate_wrapperIcNS1_26propagation_test_allocatorIcLb1ELb1ELb1ELb1ELb1EEE22boost_container_segtorEEEEvv() local_unnamed_addr #2 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %0 = alloca %"class.boost::container::test::alloc_propagate_wrapper", align 8 ; 7 uses
+  %0 = alloca %"class.boost::container::test::alloc_propagate_wrapper", align 8 ; 6 uses
   %1 = alloca %"class.boost::container::test::alloc_propagate_wrapper", align 8 ; 10 uses
   %2 = alloca %"class.boost::container::test::alloc_propagate_wrapper", align 8 ; 14 uses
   %3 = alloca %"class.boost::container::test::propagation_test_allocator", align 4 ; 6 uses
@@ -1034,9 +1042,7 @@ bb.a:
   %6 = alloca %"class.boost::container::test::propagation_test_allocator", align 4 ; 6 uses
   store i32 112, ptr @_ZN5boost9container4test26propagation_test_allocatorIcLb1ELb1ELb1ELb1ELb1EE10unique_id_E, align 4, !tbaa !363
   call void @llvm.lifetime.start.p0(ptr nonnull %0) #22
-  store i32 112, ptr %0, align 8, !tbaa !482
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i32 1, ptr %7, align 4, !tbaa !483
+  store i64 4294967408, ptr %0, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.a, i8 0, i64 40, i1 false)
   %i.b = invoke noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.58, ptr noundef nonnull @.str.59, i32 noundef 325, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN5boost9container4test38test_propagate_allocator_allocator_argINS1_23alloc_propagate_wrapperIcNS1_26propagation_test_allocatorIcLb1ELb1ELb1ELb1ELb1EEE22boost_container_segtorEEEEvv, i1 noundef zeroext true)
@@ -1391,7 +1397,7 @@ _ZN5boost9container10deque_baseINS0_4test26propagation_test_allocatorIcLb0ELb0EL
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZN5boost9container4test38test_propagate_allocator_allocator_argINS1_23alloc_propagate_wrapperIcNS1_26propagation_test_allocatorIcLb0ELb0ELb0ELb0ELb1EEE22boost_container_segtorEEEEvv() local_unnamed_addr #2 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %0 = alloca %"class.boost::container::test::alloc_propagate_wrapper.410", align 8 ; 7 uses
+  %0 = alloca %"class.boost::container::test::alloc_propagate_wrapper.410", align 8 ; 6 uses
   %1 = alloca %"class.boost::container::test::alloc_propagate_wrapper.410", align 8 ; 10 uses
   %2 = alloca %"class.boost::container::test::alloc_propagate_wrapper.410", align 8 ; 14 uses
   %3 = alloca %"class.boost::container::test::propagation_test_allocator.415", align 4 ; 6 uses
@@ -1400,9 +1406,7 @@ bb.a:
   %6 = alloca %"class.boost::container::test::propagation_test_allocator.415", align 4 ; 6 uses
   store i32 112, ptr @_ZN5boost9container4test26propagation_test_allocatorIcLb0ELb0ELb0ELb0ELb1EE10unique_id_E, align 4, !tbaa !363
   call void @llvm.lifetime.start.p0(ptr nonnull %0) #22
-  store i32 112, ptr %0, align 8, !tbaa !498
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i32 1, ptr %7, align 4, !tbaa !507
+  store i64 4294967408, ptr %0, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.a, i8 0, i64 40, i1 false)
   %i.b = invoke noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.58, ptr noundef nonnull @.str.59, i32 noundef 325, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN5boost9container4test38test_propagate_allocator_allocator_argINS1_23alloc_propagate_wrapperIcNS1_26propagation_test_allocatorIcLb0ELb0ELb0ELb0ELb1EEE22boost_container_segtorEEEEvv, i1 noundef zeroext true)

@@ -204,7 +204,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 ; Function Attrs: nounwind uwtable
 define internal void @prepare_secondary(ptr noundef %0, ptr noundef %1, i32 noundef %2) #0 {
 bb.a:
-  %3 = alloca %struct.ThreadData, align 8         ; 10 uses
+  %3 = alloca %struct.ThreadData, align 8         ; 9 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !19   ; 10 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 1192
@@ -224,10 +224,12 @@ bb.a:
   %i.p = getelementptr inbounds [4 x i8], ptr %i.o, i64 %i.d
   %i.q = load i32, ptr %i.p, align 4, !tbaa !37
   tail call void %i.h(ptr noundef %i.b, ptr noundef %i.k, ptr noundef %1, i32 noundef %i.n, i32 noundef %i.q, i32 noundef %i.f, i32 noundef %2, float noundef 1.000000e+00) #14
-  %i.r = getelementptr inbounds nuw i8, ptr %3, i64 36
-  store i32 %i.f, ptr %i.r, align 4, !tbaa !54
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 32
-  store i32 %2, ptr %4, align 8, !tbaa !53
+  %i.r = getelementptr inbounds nuw i8, ptr %3, i64 32
+  %4 = zext i32 %2 to i64
+  %5 = zext i32 %i.f to i64
+  %6 = shl nuw i64 %5, 32
+  %7 = or disjoint i64 %6, %4
+  store i64 %7, ptr %i.r, align 8
   %i.s = load ptr, ptr %i.j, align 8, !tbaa !47
   store ptr %i.s, ptr %3, align 8, !tbaa !56
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 1464

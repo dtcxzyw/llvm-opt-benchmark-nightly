@@ -202,14 +202,16 @@ bb.l:                                             ; preds = %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #20, !noalias !170
   call void @llvm.experimental.noalias.scope.decl(metadata !171)
   %i.bc = invoke noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #21
-          to label %bb.m unwind label %bb.q, !noalias !172 ; 7 uses
+          to label %bb.m unwind label %bb.q, !noalias !172 ; 8 uses
 
 bb.m:                                             ; preds = %bb.l
   store ptr %.0.i55.i.i, ptr %i.bc, align 8, !noalias !172
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bc, i64 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bd, i8 0, i64 24, i1 false), !noalias !172
   %i.be = getelementptr inbounds nuw i8, ptr %i.bc, i64 32
-  store <4 x i32> <i32 2147483647, i32 -2147483648, i32 -1, i32 0>, ptr %i.be, align 8, !noalias !172
+  store i64 -9223372034707292161, ptr %i.be, align 8, !noalias !172
+  %49 = getelementptr inbounds nuw i8, ptr %i.bc, i64 40
+  store i64 4294967295, ptr %49, align 8, !noalias !172
   %i.bf = getelementptr inbounds nuw i8, ptr %i.bc, i64 48
   store i32 0, ptr %i.bf, align 8, !noalias !172
   store ptr %i.bc, ptr %8, align 8, !alias.scope !171, !noalias !170

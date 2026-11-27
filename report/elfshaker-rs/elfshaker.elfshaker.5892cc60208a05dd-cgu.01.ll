@@ -202,7 +202,7 @@ bb.a:
   %i.i = alloca [16 x i8], align 8                ; 4 uses
   %i.j = alloca [104 x i8], align 8               ; 5 uses
   %i.k = alloca [20 x i8], align 1                ; 6 uses
-  %i.l = alloca [104 x i8], align 8               ; 13 uses
+  %i.l = alloca [104 x i8], align 8               ; 14 uses
   %i.m = alloca [176 x i8], align 8               ; 7 uses
   %i.n = alloca [24 x i8], align 8                ; 12 uses
   %i.o = alloca [24 x i8], align 8                ; 13 uses
@@ -228,6 +228,7 @@ bb.a:
   %.sroa.980.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.m, i64 56
   %i.ab = getelementptr inbounds nuw i8, ptr %i.l, i64 32 ; 5 uses
   %.sroa.4.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.l, i64 8 ; 3 uses
+  %.sroa.5.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.l, i64 16
   %.sroa.8.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.l, i64 24
   %i.ac = getelementptr inbounds nuw i8, ptr %i.o, i64 8 ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.o, i64 16 ; 3 uses
@@ -302,8 +303,8 @@ bb.f:                                             ; preds = %bb.e
   switch i64 %i.bf, label %default.unreachable [
     i64 2, label %bb.g
     i64 3, label %bb.h
-    i64 0, label %2
-    i64 1, label %bb.i
+    i64 0, label %bb.i
+    i64 1, label %_RINvNtNtNtCs3oUPovFnLWP_4core2io5error4repr11decode_reprRNtB4_6CustomNCNvMs0_B2_NtB2_4Repr4data0ECs7BtpbLEd5q3_9elfshaker.exit.thread21.i.i.i
   ], !prof !9
 
 default.unreachable:                              ; preds = %bb.p, %bb.f
@@ -321,6 +322,11 @@ bb.g:                                             ; preds = %bb.f
   %i.bl = invoke noundef i8 %i.bk(i32 noundef %i.bi)
           to label %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error4kind.exit.i.i unwind label %bb.v, !noalias !456, !inline_history !406
 
+_RINvNtNtNtCs3oUPovFnLWP_4core2io5error4repr11decode_reprRNtB4_6CustomNCNvMs0_B2_NtB2_4Repr4data0ECs7BtpbLEd5q3_9elfshaker.exit.thread21.i.i.i: ; preds = %bb.f
+  %2 = getelementptr i8, ptr %.val112.i.i, i64 31
+  %3 = load i8, ptr %2, align 8, !range !458, !noalias !456, !noundef !6
+  br label %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error4kind.exit.i.i
+
 bb.h:                                             ; preds = %bb.f
   %i.bm = lshr i64 %i.be, 32
   %i.bn = icmp ult ptr %.val112.i.i, inttoptr (i64 188978561024 to ptr)
@@ -330,18 +336,13 @@ bb.h:                                             ; preds = %bb.f
   call void @llvm.assume(i1 %i.bo)
   br label %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error4kind.exit.i.i
 
-2:                                                ; preds = %bb.f
-  %3 = getelementptr inbounds nuw i8, ptr %.val112.i.i, i64 16
-  %4 = load i8, ptr %3, align 8, !range !458, !noalias !456, !noundef !6
-  br label %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error4kind.exit.i.i
-
 bb.i:                                             ; preds = %bb.f
-  %i.bp = getelementptr i8, ptr %.val112.i.i, i64 31
+  %i.bp = getelementptr inbounds nuw i8, ptr %.val112.i.i, i64 16
   %i.bq = load i8, ptr %i.bp, align 8, !range !458, !noalias !456, !noundef !6
   br label %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error4kind.exit.i.i
 
-_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error4kind.exit.i.i: ; preds = %bb.i, %2, %bb.h, %.noexc.i.i
-  %.sroa.0.0.i.i.i = phi i8 [ %i.bq, %bb.i ], [ %switch.idx.cast.i.i.i.i.i, %bb.h ], [ %4, %2 ], [ %i.bl, %.noexc.i.i ]
+_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error4kind.exit.i.i: ; preds = %bb.i, %bb.h, %_RINvNtNtNtCs3oUPovFnLWP_4core2io5error4repr11decode_reprRNtB4_6CustomNCNvMs0_B2_NtB2_4Repr4data0ECs7BtpbLEd5q3_9elfshaker.exit.thread21.i.i.i, %.noexc.i.i
+  %.sroa.0.0.i.i.i = phi i8 [ %3, %_RINvNtNtNtCs3oUPovFnLWP_4core2io5error4repr11decode_reprRNtB4_6CustomNCNvMs0_B2_NtB2_4Repr4data0ECs7BtpbLEd5q3_9elfshaker.exit.thread21.i.i.i ], [ %switch.idx.cast.i.i.i.i.i, %bb.h ], [ %i.bq, %bb.i ], [ %i.bl, %.noexc.i.i ]
   %i.br = icmp eq i8 %.sroa.0.0.i.i.i, 1
   br i1 %i.br, label %bb.j, label %.thread1.i.i
 
@@ -501,7 +502,8 @@ bb.ad:                                            ; preds = %bb.ab
 
 bb.ae:                                            ; preds = %bb.ad
   store i64 0, ptr %i.l, align 8, !alias.scope !461, !noalias !455
-  store <4 x i32> <i32 1732584193, i32 -271733879, i32 -1732584194, i32 271733878>, ptr %.sroa.4.0..sroa_idx.i.i.i, align 8, !alias.scope !461, !noalias !455
+  store i64 -1167088121787636991, ptr %.sroa.4.0..sroa_idx.i.i.i, align 8, !alias.scope !461, !noalias !455
+  store i64 1167088121787636990, ptr %.sroa.5.0..sroa_idx.i.i.i, align 8, !alias.scope !461, !noalias !455
   store i32 -1009589776, ptr %.sroa.8.0..sroa_idx.i.i.i, align 8, !alias.scope !461, !noalias !455
   call void @llvm.experimental.noalias.scope.decl(metadata !462)
   call void @llvm.experimental.noalias.scope.decl(metadata !463)

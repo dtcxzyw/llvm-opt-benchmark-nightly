@@ -204,7 +204,7 @@ bb.a:
   %i.d = alloca [512 x i8], align 16              ; 5 uses
   %17 = alloca %struct.ImVec2, align 8            ; 4 uses
   %18 = alloca %struct.ImVec2, align 8            ; 4 uses
-  %i.e = alloca [7 x i32], align 16               ; 20 uses
+  %i.e = alloca [7 x i32], align 16               ; 21 uses
   %i.f = alloca i8, align 1                       ; 4 uses
   %i.g = alloca i8, align 1                       ; 4 uses
   %19 = alloca %"struct.ImGuizmo::vec_t", align 16 ; 5 uses
@@ -607,9 +607,11 @@ bb.ek:                                            ; preds = %bb.ej
 
 .loopexit.loopexit.i.i:                           ; preds = %bb.ek
   %i.dbp = getelementptr inbounds nuw i8, ptr %i.e, i64 4
-  %i.dbq = getelementptr inbounds nuw i8, ptr %i.e, i64 20
-  store i32 -1978629889, ptr %i.dbq, align 4, !tbaa !52
-  store <4 x i32> <i32 -16777046, i32 -16733696, i32 -5636096, i32 -1978629889>, ptr %i.dbp, align 4, !tbaa !52
+  store i32 -16777046, ptr %i.dbp, align 4, !tbaa !52
+  %65 = getelementptr inbounds nuw i8, ptr %i.e, i64 16
+  %i.dbq = getelementptr inbounds nuw i8, ptr %i.e, i64 8
+  store i64 -8498150661826772737, ptr %65, align 16
+  store i64 -24206843718882816, ptr %i.dbq, align 8
   %i.dbr = getelementptr inbounds nuw i8, ptr %i.e, i64 24
   store i32 -1978629889, ptr %i.dbr, align 8, !tbaa !52
   br label %_ZN8ImGuizmoL13ComputeColorsEPjiNS_9OPERATIONE.exit.i133
@@ -1012,9 +1014,8 @@ bb.c:                                             ; preds = %bb.a, %bb.c
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
 define internal void @_GLOBAL__sub_I_ImGuizmo.cpp() #18 section ".text.startup" {
 bb.a:
-  store i8 0, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 684), align 4, !tbaa !32
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 640), i8 0, i64 24, i1 false)
-  store i8 1, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 685), align 1, !tbaa !50
+  store i16 256, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 684), align 4
   store i8 0, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 892), align 4, !tbaa !51
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 964), i8 0, i64 24, i1 false)
   store float 1.000000e+00, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 988), align 4, !tbaa !29

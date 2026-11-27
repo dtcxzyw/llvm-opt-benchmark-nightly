@@ -202,11 +202,12 @@ define dso_local i32 @uv_ip4_addr(ptr noundef %0, i32 noundef %1, ptr noundef in
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 4
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.a, i8 0, i64 12, i1 false)
-  store i16 2, ptr %2, align 4
   %i.b = trunc i32 %1 to i16
   %rev.i = tail call noundef i16 @llvm.bswap.i16(i16 %i.b)
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 2
-  store i16 %rev.i, ptr %3, align 2
+  %3 = zext i16 %rev.i to i32
+  %4 = shl nuw i32 %3, 16
+  %5 = or disjoint i32 %4, 2
+  store i32 %5, ptr %2, align 4
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.d = tail call i32 @uv_inet_pton(i32 noundef 2, ptr noundef %0, ptr noundef nonnull %i.c) #25
   ret i32 %i.d
@@ -224,11 +225,12 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #25
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 4
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %i.b, i8 0, i64 24, i1 false)
-  store i16 10, ptr %2, align 4
   %i.c = trunc i32 %1 to i16
   %rev.i = tail call noundef i16 @llvm.bswap.i16(i16 %i.c)
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 2
-  store i16 %rev.i, ptr %3, align 2
+  %3 = zext i16 %rev.i to i32
+  %4 = shl nuw i32 %3, 16
+  %5 = or disjoint i32 %4, 10
+  store i32 %5, ptr %2, align 4
   %i.d = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %0, i32 noundef 37) #24 ; 3 uses
   %.not = icmp eq ptr %i.d, null
   br i1 %.not, label %bb.c, label %bb.b

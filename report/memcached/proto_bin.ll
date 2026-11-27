@@ -202,7 +202,7 @@ declare i64 @strlen(ptr noundef captures(none)) local_unnamed_addr #5
 define internal fastcc void @add_bin_header(ptr nofree noundef readonly captures(none) %0, i16 noundef zeroext %1, i8 noundef zeroext range(i8 0, 5) %2, i16 noundef zeroext %3, i32 noundef %4) unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 208
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !59   ; 12 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !59   ; 10 uses
   tail call void @resp_reset(ptr noundef %i.b) #11
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 164 ; 3 uses
   store i8 -127, ptr %i.c, align 8, !tbaa !35
@@ -214,12 +214,12 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 166
   store i16 %rev.i, ptr %i.g, align 2, !tbaa !35
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 168
-  store i8 %2, ptr %i.h, align 4, !tbaa !35
-  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 169
-  store i8 0, ptr %5, align 1, !tbaa !35
   %rev.i32 = tail call noundef i16 @llvm.bswap.i16(i16 %1)
-  %6 = getelementptr inbounds nuw i8, ptr %i.b, i64 170
-  store i16 %rev.i32, ptr %6, align 2, !tbaa !35
+  %5 = zext nneg i8 %2 to i32
+  %6 = zext i16 %rev.i32 to i32
+  %7 = shl nuw i32 %6, 16
+  %8 = or disjoint i32 %7, %5
+  store i32 %8, ptr %i.h, align 4
   %i.i = tail call noundef i32 @llvm.bswap.i32(i32 %4)
   %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 172
   store i32 %i.i, ptr %i.j, align 8, !tbaa !35
@@ -482,13 +482,15 @@ bb.c:                                             ; preds = %bb.a
   %i.d = sub nsw i64 0, %i.c
   %i.e = getelementptr inbounds i8, ptr %.val, i64 %i.d ; 5 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 4 uses
-  %i.g = load i32, ptr %i.f, align 8, !tbaa !35
-  %2 = tail call noundef i32 @llvm.bswap.i32(i32 %i.g)
-  store i32 %2, ptr %i.f, align 8, !tbaa !35
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 28 ; 4 uses
-  %4 = load i32, ptr %3, align 4, !tbaa !35
-  %5 = tail call noundef i32 @llvm.bswap.i32(i32 %4)
-  store i32 %5, ptr %3, align 4, !tbaa !35
+  %2 = load i32, ptr %i.f, align 8, !tbaa !35
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 28 ; 3 uses
+  %i.g = load i32, ptr %3, align 4, !tbaa !35
+  %4 = zext i32 %i.g to i64
+  %5 = zext i32 %2 to i64
+  %6 = shl nuw i64 %5, 32
+  %7 = or disjoint i64 %6, %4
+  %8 = tail call i64 @llvm.bswap.i64(i64 %7)
+  store i64 %8, ptr %i.f, align 8
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 344
   %i.i = load i32, ptr %i.h, align 8, !tbaa !35
   %i.j = zext i16 %.val93 to i32                  ; 2 uses
@@ -890,6 +892,9 @@ declare i16 @llvm.bswap.i16(i16) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.bswap.i32(i32) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.bswap.i64(i64) #9
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { noreturn nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

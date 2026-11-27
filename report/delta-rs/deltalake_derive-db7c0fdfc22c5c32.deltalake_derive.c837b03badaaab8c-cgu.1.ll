@@ -204,7 +204,7 @@ _RNvXs2_NtNtNtCsbvkFyIu7lgC_4core4iter6traits7collectTINtNtCs6Po7BT7Nknu_5alloc3
   %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 77 ; 4 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 78 ; 12 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 80 ; 5 uses
-  %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 79 ; 6 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 79 ; 5 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 4 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 4 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 3 uses
@@ -346,10 +346,11 @@ _RNvMNtNtCsbvkFyIu7lgC_4core4char7methodsc8len_utf8.exit.i.i.i.i.i: ; preds = %b
   %.sroa.0.0.i.i.i.i.i.i.i = phi i64 [ 2, %bb.k ], [ %..i.i.i.i.i.i.i, %bb.l ], [ 1, %bb.j ]
   %i.cc = call noundef i64 @llvm.uadd.sat.i64(i64 %i.by, i64 %.sroa.0.0.i.i.i.i.i.i.i)
   store i64 %i.cc, ptr %i.f, align 8, !alias.scope !4307
-  store i8 0, ptr %i.m, align 2, !alias.scope !4307
   %i.cd = load i8, ptr %i.n, align 8, !range !4312, !alias.scope !4313, !noundef !75 ; 2 uses
   store i8 16, ptr %i.n, align 8, !alias.scope !4313
-  store i8 %i.cd, ptr %i.o, align 1, !alias.scope !4307
+  %2 = zext nneg i8 %i.cd to i16
+  %3 = shl nuw nsw i16 %2, 8
+  store i16 %3, ptr %i.m, align 2, !alias.scope !4307
   %.not.i16.i.i.i.i.i = icmp eq i8 %i.cd, 16
   br i1 %.not.i16.i.i.i.i.i, label %bb.o, label %bb.n
 

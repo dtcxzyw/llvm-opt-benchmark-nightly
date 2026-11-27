@@ -204,12 +204,13 @@ bb.a:
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64                 ; 2 uses
   %i.f = sub i64 %i.d, %i.e                       ; 4 uses
-  %i.g = sdiv exact i64 %i.f, 104                 ; 4 uses
+  %i.g = sdiv exact i64 %i.f, 104                 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6)
-  %4 = trunc i64 %i.g to i32                      ; 3 uses
+  %4 = or i64 %i.g, -4294967296                   ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.6, ptr noundef nonnull align 8 dereferenceable(80) %1, i64 80, i1 false), !tbaa.struct !122
-  %5 = icmp sgt i32 %4, -1
-  br i1 %5, label %_ZN2cv8TreeNodeINS_7ContourEEC2EiOS1_.exit, label %bb.b
+  %5 = and i64 %i.g, 2147483648
+  %6 = icmp eq i64 %5, 0
+  br i1 %6, label %_ZN2cv8TreeNodeINS_7ContourEEC2EiOS1_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #16
@@ -247,9 +248,9 @@ _ZN2cv8TreeNodeINS_7ContourEEC2EiOS1_.exit:       ; preds = %bb.a
   br i1 %.not.i, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %_ZN2cv8TreeNodeINS_7ContourEEC2EiOS1_.exit
-  store i32 %4, ptr %i.b, align 8, !tbaa !24
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.5.0..sroa_idx, i8 -1, i64 20, i1 false)
+  store i64 %4, ptr %i.b, align 8, !tbaa !24
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5.0..sroa_idx, i8 -1, i64 16, i1 false)
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.6.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(80) %.sroa.6, i64 80, i1 false), !tbaa.struct !122
   %i.p = load ptr, ptr %i.a, align 8, !tbaa !118
@@ -277,9 +278,9 @@ _ZNKSt6vectorIN2cv8TreeNodeINS0_7ContourEEESaIS3_EE12_M_check_lenEmPKc.exit.i.i:
   %i.w = mul nuw nsw i64 %i.v, 104
   %i.x = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.w) #19 ; 6 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 %i.f ; 3 uses
-  store i32 %4, ptr %i.y, align 8, !tbaa !24
-  %.sroa.5.0..sroa_idx4 = getelementptr inbounds nuw i8, ptr %i.y, i64 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.5.0..sroa_idx4, i8 -1, i64 20, i1 false)
+  store i64 %4, ptr %i.y, align 8, !tbaa !24
+  %.sroa.5.0..sroa_idx4 = getelementptr inbounds nuw i8, ptr %i.y, i64 8
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5.0..sroa_idx4, i8 -1, i64 16, i1 false)
   %.sroa.6.0..sroa_idx5 = getelementptr inbounds nuw i8, ptr %i.y, i64 24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.6.0..sroa_idx5, ptr noundef nonnull align 8 dereferenceable(80) %.sroa.6, i64 80, i1 false), !tbaa.struct !122
   %.not10.i.i.i.i.i = icmp eq ptr %i.c, %i.b

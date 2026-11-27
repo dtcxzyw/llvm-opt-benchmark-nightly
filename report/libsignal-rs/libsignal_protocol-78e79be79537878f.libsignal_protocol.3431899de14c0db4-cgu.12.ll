@@ -84,7 +84,7 @@ bb.c:                                             ; preds = %bb.a
 define hidden void @_RINvNtCsdbmLU2M1sR8_3log13___private_api3loguNtB2_12GlobalLoggerECs4tP8yUXWbFU_18libsignal_protocol(ptr noundef nonnull %0, ptr noundef nonnull %1, i64 noundef range(i64 1, 6) %2, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(40) %3) unnamed_addr #0 personality ptr @rust_eh_personality !guid !24 {
 bb.a:
   %i.a = alloca [0 x i8], align 1
-  %i.b = alloca [96 x i8], align 8                ; 16 uses
+  %i.b = alloca [96 x i8], align 8                ; 15 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !25)
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.d = load ptr, ptr %i.c, align 8, !alias.scope !25, !nonnull !5, !align !6, !noundef !5 ; 3 uses
@@ -123,9 +123,10 @@ bb.a:
   %.sroa.535.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 40
   store i64 %i.n, ptr %.sroa.535.0..sroa_idx.i, align 8, !noalias !25
   %i.u = getelementptr inbounds nuw i8, ptr %i.b, i64 72
-  store i32 1, ptr %i.u, align 8, !noalias !25
-  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 76
-  store i32 %i.p, ptr %4, align 4, !noalias !25
+  %4 = zext i32 %i.p to i64
+  %5 = shl nuw i64 %4, 32
+  %6 = or disjoint i64 %5, 1
+  store i64 %6, ptr %i.u, align 8, !noalias !25
   call void @_RNvXs0_NtCsdbmLU2M1sR8_3log13___private_apiNtB5_12GlobalLoggerNtB7_3Log3log(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.a, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(96) %i.b), !noalias !25
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !25
   ret void
@@ -528,13 +529,12 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.g = load i32, ptr %i.f, align 8, !range !8, !alias.scope !102, !noundef !5
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 2 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 28
   %i.i = trunc nuw i32 %i.g to i1
   br i1 %i.i, label %_RINvMNtCsgxBkk5gSRhY_4core6optionINtB3_6OptionmE18get_or_insert_withNvYmNtNtB5_7default7Default7defaultECs4tP8yUXWbFU_18libsignal_protocol.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  store i32 1, ptr %i.f, align 8, !alias.scope !102
-  store i32 0, ptr %i.h, align 4, !alias.scope !102
+  store i64 1, ptr %i.f, align 8, !alias.scope !102
   br label %_RINvMNtCsgxBkk5gSRhY_4core6optionINtB3_6OptionmE18get_or_insert_withNvYmNtNtB5_7default7Default7defaultECs4tP8yUXWbFU_18libsignal_protocol.exit
 
 _RINvMNtCsgxBkk5gSRhY_4core6optionINtB3_6OptionmE18get_or_insert_withNvYmNtNtB5_7default7Default7defaultECs4tP8yUXWbFU_18libsignal_protocol.exit: ; preds = %bb.c, %bb.d
@@ -937,7 +937,7 @@ bb.a:
   %i.c = alloca [24 x i8], align 8                ; 4 uses
   %i.d = alloca [344 x i8], align 8               ; 4 uses
   %i.e = alloca [24 x i8], align 8                ; 4 uses
-  %i.f = alloca [40 x i8], align 8                ; 7 uses
+  %i.f = alloca [40 x i8], align 8                ; 9 uses
   %i.g = alloca [32 x i8], align 8                ; 6 uses
   %i.h = alloca [32 x i8], align 1                ; 2 uses
   %i.i = alloca [36 x i8], align 4                ; 2 uses
@@ -973,13 +973,17 @@ bb.c:                                             ; preds = %bb.a
   %i.u = load i8, ptr %i.t, align 1, !range !13, !alias.scope !188, !noundef !5
   %i.v = trunc nuw i8 %i.u to i1
   %spec.select.i.i = select i1 %i.v, i32 -1, i32 25000
+  %3 = getelementptr inbounds nuw i8, ptr %i.f, i64 24
+  store i64 4294967297, ptr %3, align 8, !noalias !189
+  %4 = getelementptr inbounds nuw i8, ptr %i.f, i64 32
+  store i32 1, ptr %4, align 8, !noalias !189
   store ptr %i.h, ptr %i.f, align 8, !noalias !189
   %i.w = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   store i64 32, ptr %i.w, align 8, !noalias !189
   %i.x = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   store i32 %spec.select.i.i, ptr %i.x, align 8, !noalias !189
   %i.y = getelementptr inbounds nuw i8, ptr %i.f, i64 20
-  store <4 x i32> <i32 2000, i32 1, i32 1, i32 1>, ptr %i.y, align 4, !noalias !189
+  store i32 2000, ptr %i.y, align 4, !noalias !189
   call void @_RNvCs1YsMTEqGlh_4spqr13initial_state(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.g, ptr noalias nofree noundef nonnull readonly align 8 captures(address) dereferenceable(40) %i.f), !noalias !190
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !189
   %i.z = load i64, ptr %i.g, align 8, !range !10, !noalias !189, !noundef !5

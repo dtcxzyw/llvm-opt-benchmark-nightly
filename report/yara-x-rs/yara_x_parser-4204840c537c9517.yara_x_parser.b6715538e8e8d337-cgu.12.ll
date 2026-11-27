@@ -202,14 +202,15 @@ bb.j:                                             ; preds = %bb.b
 define hidden void @_RINvXsw_NtCsjqcU1oJFKXj_9hashbrown3setINtB6_5DrainNtCsfF8zpZz1lvn_13yara_x_parser4SpanENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4foldINtNtB1v_3cmp11KeyAndValuejBM_ENCINvNtNtB1t_8adapters3map8map_foldBM_B2n_B2n_NCINvNvB1n_10max_by_key3keyBM_jNCNvMs2_NtBO_6parserNtB4f_10ParserImpl13handle_errorss_0E0NvYB2n_NtB2q_3Ord3maxE0EBO_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([16 x i8]) align 8 captures(none) dereferenceable(16) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(80) %1, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(16) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 7 uses
-  %i.b = alloca [12 x i8], align 4                ; 6 uses
+  %i.b = alloca [12 x i8], align 4                ; 7 uses
   %i.c = alloca [16 x i8], align 8                ; 6 uses
   %i.d = alloca [80 x i8], align 8                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.d, ptr noundef nonnull align 8 dereferenceable(80) %1, i64 80, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.c, ptr noundef nonnull readonly align 8 dereferenceable(16) %2, i64 16, i1 false), !noalias !222
-  %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 4 ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 4
+  %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
   %.sroa.6.16..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   br label %bb.b
@@ -231,15 +232,18 @@ bb.d:                                             ; preds = %bb.b
   br i1 %i.i, label %bb.e, label %_RINvYINtNtCsjqcU1oJFKXj_9hashbrown3raw8RawDrainTNtCsfF8zpZz1lvn_13yara_x_parser4SpanuEENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4foldINtNtB1v_3cmp11KeyAndValuejBK_ENCINvXsw_NtB8_3setINtB31_5DrainBK_EB1n_4foldB2n_NCINvNtNtB1t_8adapters3map8map_foldBK_B2n_B2n_NCINvNvB1n_10max_by_key3keyBK_jNCNvMs2_NtBM_6parserNtB51_10ParserImpl13handle_errorss_0E0NvYB2n_NtB2q_3Ord3maxE0E0EBM_.exit
 
 bb.e:                                             ; preds = %bb.d
+  %4 = load i32, ptr %3, align 4, !noalias !223, !noundef !4
+  %5 = load i32, ptr %i.e, align 4, !noalias !223, !noundef !4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !226
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.a, ptr noundef nonnull align 8 dereferenceable(16) %i.c, i64 16, i1 false), !noalias !223
-  %3 = load <2 x i32>, ptr %i.e, align 4, !noalias !223
-  %4 = load i32, ptr %i.e, align 4, !noalias !223, !noundef !4
-  %5 = zext i32 %4 to i64                         ; 2 uses
-  store i64 %5, ptr %i.f, align 8, !noalias !227
-  store <2 x i32> %3, ptr %.sroa.6.16..sroa_idx.i.i.i, align 8, !noalias !227
+  %6 = zext i32 %4 to i64                         ; 3 uses
+  %7 = zext i32 %5 to i64
+  %8 = shl nuw i64 %7, 32
+  %9 = or disjoint i64 %8, %6
+  store i64 %6, ptr %i.f, align 8, !noalias !227
+  store i64 %9, ptr %.sroa.6.16..sroa_idx.i.i.i, align 8, !noalias !227
   %.val1.i.i.i.i.i = load i64, ptr %i.a, align 8, !alias.scope !228, !noalias !229, !noundef !4
-  %i.j = icmp ugt i64 %.val1.i.i.i.i.i, %5
+  %i.j = icmp ugt i64 %.val1.i.i.i.i.i, %6
   %..i.i.i.i.i = select i1 %i.j, ptr %i.a, ptr %i.f
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.c, ptr noundef nonnull align 8 dereferenceable(16) %..i.i.i.i.i, i64 16, i1 false), !noalias !223
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !226

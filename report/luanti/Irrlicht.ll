@@ -204,22 +204,26 @@ bb.a:
   %i.b = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZN5video16IdentityMaterialE, i64 8), align 8
   %i.c = and i16 %i.b, -4096
   store i16 %i.c, ptr getelementptr inbounds nuw (i8, ptr @_ZN5video16IdentityMaterialE, i64 8), align 8
-  store <4 x i8> <i8 1, i8 1, i8 0, i8 0>, ptr getelementptr inbounds nuw (i8, ptr @_ZN5video16IdentityMaterialE, i64 10), align 2, !tbaa !68
+  store i16 257, ptr getelementptr inbounds nuw (i8, ptr @_ZN5video16IdentityMaterialE, i64 10), align 2
+  store i16 0, ptr getelementptr inbounds nuw (i8, ptr @_ZN5video16IdentityMaterialE, i64 12), align 4
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @_ZN5video16IdentityMaterialE, i64 16), i8 0, i64 16, i1 false)
   %i.d = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZN5video16IdentityMaterialE, i64 32), align 8
   %i.e = and i16 %i.d, -4096
   store i16 %i.e, ptr getelementptr inbounds nuw (i8, ptr @_ZN5video16IdentityMaterialE, i64 32), align 8
-  store <4 x i8> <i8 1, i8 1, i8 0, i8 0>, ptr getelementptr inbounds nuw (i8, ptr @_ZN5video16IdentityMaterialE, i64 34), align 2, !tbaa !68
+  store i16 257, ptr getelementptr inbounds nuw (i8, ptr @_ZN5video16IdentityMaterialE, i64 34), align 2
+  store i16 0, ptr getelementptr inbounds nuw (i8, ptr @_ZN5video16IdentityMaterialE, i64 36), align 4
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @_ZN5video16IdentityMaterialE, i64 40), i8 0, i64 16, i1 false)
   %i.f = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZN5video16IdentityMaterialE, i64 56), align 8
   %i.g = and i16 %i.f, -4096
   store i16 %i.g, ptr getelementptr inbounds nuw (i8, ptr @_ZN5video16IdentityMaterialE, i64 56), align 8
-  store <4 x i8> <i8 1, i8 1, i8 0, i8 0>, ptr getelementptr inbounds nuw (i8, ptr @_ZN5video16IdentityMaterialE, i64 58), align 2, !tbaa !68
+  store i16 257, ptr getelementptr inbounds nuw (i8, ptr @_ZN5video16IdentityMaterialE, i64 58), align 2
+  store i16 0, ptr getelementptr inbounds nuw (i8, ptr @_ZN5video16IdentityMaterialE, i64 60), align 4
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @_ZN5video16IdentityMaterialE, i64 64), i8 0, i64 16, i1 false)
   %i.h = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZN5video16IdentityMaterialE, i64 80), align 8
   %i.i = and i16 %i.h, -4096
   store i16 %i.i, ptr getelementptr inbounds nuw (i8, ptr @_ZN5video16IdentityMaterialE, i64 80), align 8
-  store <4 x i8> <i8 1, i8 1, i8 0, i8 0>, ptr getelementptr inbounds nuw (i8, ptr @_ZN5video16IdentityMaterialE, i64 82), align 2, !tbaa !68
+  store i16 257, ptr getelementptr inbounds nuw (i8, ptr @_ZN5video16IdentityMaterialE, i64 82), align 2
+  store i16 0, ptr getelementptr inbounds nuw (i8, ptr @_ZN5video16IdentityMaterialE, i64 84), align 4
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) getelementptr inbounds nuw (i8, ptr @_ZN5video16IdentityMaterialE, i64 88), i8 0, i64 20, i1 false)
   store <4 x float> <float 1.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, ptr getelementptr inbounds nuw (i8, ptr @_ZN5video16IdentityMaterialE, i64 108), align 4, !tbaa !66
   store i16 3857, ptr getelementptr inbounds nuw (i8, ptr @_ZN5video16IdentityMaterialE, i64 124), align 4
@@ -316,5 +320,4 @@ attributes #14 = { nounwind }
 !65 = !{!29, !28, i64 16}
 !66 = !{!24, !24, i64 0}
 !67 = !{!29, !25, i64 0}
-!68 = !{!4, !4, i64 0}
 end_hunk_0

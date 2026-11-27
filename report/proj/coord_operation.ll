@@ -202,19 +202,20 @@ bb.j:                                             ; preds = %_ZL34isSpecialCaseF
 bb.k:                                             ; preds = %bb.j
   %i.bm = call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEPKcmm(ptr noundef nonnull align 8 dereferenceable(32) %i.l, ptr noundef nonnull @.str.8, i64 noundef 0, i64 noundef 21) #13
   %i.bn = icmp ne i64 %i.bm, -1
-  %17 = zext i1 %i.bn to i8
+  %17 = zext i1 %i.bn to i16
   br label %_ZL34isSpecialCaseForNAD83_to_NAD83HARNRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread
 
 _ZL34isSpecialCaseForNAD83_to_NAD83HARNRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit, %bb.h, %bb.i, %bb.k, %bb.j, %_ZL34isSpecialCaseForNAD83_to_NAD83HARNRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit
-  %18 = phi i8 [ 1, %bb.j ], [ 1, %_ZL34isSpecialCaseForNAD83_to_NAD83HARNRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit ], [ %17, %bb.k ], [ 1, %bb.i ], [ 1, %bb.h ], [ 1, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit ]
-  store i8 %18, ptr %i.bg, align 2, !tbaa !61
-  %19 = getelementptr inbounds nuw i8, ptr %0, i64 163 ; 2 uses
-  %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 164
+  %18 = phi i16 [ 1, %bb.j ], [ 1, %_ZL34isSpecialCaseForNAD83_to_NAD83HARNRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit ], [ %17, %bb.k ], [ 1, %bb.i ], [ 1, %bb.h ], [ 1, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit ]
+  %19 = getelementptr inbounds nuw i8, ptr %0, i64 163
+  store i16 %18, ptr %i.bg, align 2
+  %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 164 ; 2 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 165
-  %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 166
+  store i16 0, ptr %i.bo, align 4
+  %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 166 ; 2 uses
+  store i8 0, ptr %i.bq, align 2, !tbaa !61
   %i.br = getelementptr inbounds nuw i8, ptr %0, i64 168
   %.not36 = icmp eq ptr %15, null
-  store i32 0, ptr %19, align 1
   br i1 %.not36, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %_ZL34isSpecialCaseForNAD83_to_NAD83HARNRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread
@@ -487,7 +488,7 @@ attributes #13 = { nounwind }
 !58 = !{!16, !8, i64 120}
 !59 = !{!16, !15, i64 160}
 !60 = !{!16, !15, i64 161}
-!61 = !{!16, !15, i64 162}
+!61 = !{!16, !15, i64 166}
 !62 = !{!11, !11, i64 0}
 !63 = !{!8, !8, i64 0}
 !64 = !{!15, !15, i64 0}

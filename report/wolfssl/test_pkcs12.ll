@@ -202,7 +202,7 @@ bb.a:
   %i.b = alloca [32 x i8], align 16               ; 4 uses
   %i.c = alloca [32 x i8], align 16               ; 5 uses
   %0 = alloca %struct.Hmac, align 16              ; 7 uses
-  %i.d = alloca [64 x i8], align 16               ; 13 uses
+  %i.d = alloca [64 x i8], align 16               ; 16 uses
   %i.e = alloca ptr, align 8                      ; 5 uses
   %i.f = alloca i32, align 4                      ; 4 uses
   %i.g = alloca ptr, align 8                      ; 5 uses
@@ -298,21 +298,27 @@ bb.e:                                             ; preds = %.sink.split, %.crit
 .critedge384:                                     ; preds = %bb.c, %bb.b, %bb.e
   %i.at = phi i8 [ %.pre, %bb.e ], [ 0, %bb.b ], [ 0, %bb.c ]
   %.9344390 = phi i1 [ %.9344.ph, %bb.e ], [ false, %bb.b ], [ false, %bb.c ]
-  store <16 x i8> <i8 48, i8 57, i8 2, i8 1, i8 3, i8 48, i8 17, i8 6, i8 9, i8 42, i8 -122, i8 72, i8 -122, i8 -9, i8 13, i8 1>, ptr %i.d, align 16, !tbaa !20
+  store i64 437183428291606832, ptr %i.d, align 16
+  %1 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
+  store i64 75988924849596937, ptr %1, align 8
   %i.au = getelementptr inbounds nuw i8, ptr %i.d, i64 16
-  store <16 x i8> <i8 7, i8 1, i8 -96, i8 4, i8 4, i8 2, i8 48, i8 0, i8 48, i8 33, i8 48, i8 18, i8 48, i8 13, i8 6, i8 9>, ptr %i.au, align 16, !tbaa !20
+  store i64 13513015162831111, ptr %i.au, align 16
+  %2 = getelementptr inbounds nuw i8, ptr %i.d, i64 24
+  store i64 650221696316350768, ptr %2, align 8
   %i.av = getelementptr inbounds nuw i8, ptr %i.d, i64 32
-  store <8 x i8> <i8 96, i8 -122, i8 72, i8 1, i8 101, i8 3, i8 4, i8 2>, ptr %i.av, align 16, !tbaa !20
+  store i64 145244820330808928, ptr %i.av, align 16
   %i.aw = getelementptr inbounds nuw i8, ptr %i.d, i64 40
-  store <4 x i8> <i8 1, i8 5, i8 0, i8 4>, ptr %i.aw, align 8, !tbaa !20
+  store i32 67110145, ptr %i.aw, align 8
   %i.ax = getelementptr inbounds nuw i8, ptr %i.d, i64 44
   store i8 1, ptr %i.ax, align 4, !tbaa !20
   %i.ay = getelementptr inbounds nuw i8, ptr %i.d, i64 45
   store i8 %i.at, ptr %i.ay, align 1, !tbaa !20
   %i.az = getelementptr inbounds nuw i8, ptr %i.d, i64 46
-  store <8 x i8> <i8 4, i8 8, i8 1, i8 2, i8 3, i8 4, i8 5, i8 6>, ptr %i.az, align 2, !tbaa !20
-  %i.ba = getelementptr inbounds nuw i8, ptr %i.d, i64 54
-  store <4 x i8> <i8 7, i8 8, i8 2, i8 1>, ptr %i.ba, align 2, !tbaa !20
+  store i16 2052, ptr %i.az, align 2
+  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 48
+  store i64 578437695752307201, ptr %3, align 16
+  %i.ba = getelementptr inbounds nuw i8, ptr %i.d, i64 56
+  store i16 258, ptr %i.ba, align 8
   %i.bb = getelementptr inbounds nuw i8, ptr %i.d, i64 58
   store i8 1, ptr %i.bb, align 2, !tbaa !20
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #8

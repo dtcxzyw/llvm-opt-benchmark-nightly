@@ -202,11 +202,10 @@ _ZNSt6vectorIhSaIhEE9push_backEOh.exit:           ; preds = %_ZNSt6vectorIhSaIhE
 .lr.ph155:                                        ; preds = %._crit_edge, %_ZNSt16reverse_iteratorISt13_Bit_iteratorEppEv.exit
   %.sroa.050.0153 = phi ptr [ %i.bj, %_ZNSt16reverse_iteratorISt13_Bit_iteratorEppEv.exit ], [ %.sroa.10.0.lcssa, %._crit_edge ]
   %.sroa.051.0152 = phi ptr [ %spec.select3.i, %_ZNSt16reverse_iteratorISt13_Bit_iteratorEppEv.exit ], [ %.sroa.0.0.copyload.i.i, %._crit_edge ]
-  %.sroa.8.0151 = phi i32 [ %spec.select.i, %_ZNSt16reverse_iteratorISt13_Bit_iteratorEppEv.exit ], [ %.sroa.2.0.copyload.i.i, %._crit_edge ] ; 2 uses
-  %.sroa.19.0150 = phi i32 [ %i.cf, %_ZNSt16reverse_iteratorISt13_Bit_iteratorEppEv.exit ], [ 4096, %._crit_edge ] ; 4 uses
-  %.sroa.9.0149 = phi i32 [ %.sroa.9.1, %_ZNSt16reverse_iteratorISt13_Bit_iteratorEppEv.exit ], [ 0, %._crit_edge ] ; 3 uses
-  %i.bf = add i32 %.sroa.8.0151, -1
-  %i.bg = icmp eq i32 %.sroa.8.0151, 0            ; 2 uses
+  %.sroa.19.0150 = phi i32 [ %spec.select.i, %_ZNSt16reverse_iteratorISt13_Bit_iteratorEppEv.exit ], [ %.sroa.2.0.copyload.i.i, %._crit_edge ] ; 2 uses
+  %.sroa.9.0155 = phi i64 [ %.sroa.9.12.insert.insert, %_ZNSt16reverse_iteratorISt13_Bit_iteratorEppEv.exit ], [ 17592186044416, %._crit_edge ] ; 5 uses
+  %i.bf = add i32 %.sroa.19.0150, -1
+  %i.bg = icmp eq i32 %.sroa.19.0150, 0           ; 2 uses
   %spec.select.i = select i1 %i.bg, i32 63, i32 %i.bf ; 3 uses
   %spec.select3.idx.i = select i1 %i.bg, i64 -8, i64 0
   %spec.select3.i = getelementptr inbounds i8, ptr %.sroa.051.0152, i64 %spec.select3.idx.i ; 3 uses
@@ -220,22 +219,26 @@ _ZNSt6vectorIhSaIhEE9push_backEOh.exit:           ; preds = %_ZNSt6vectorIhSaIhE
   %.not.i = icmp eq i64 %i.bn, 0                  ; 2 uses
   %i.bo = select i1 %.not.i, i8 %i.bk, i8 %i.bl   ; 2 uses
   %i.bp = zext i8 %i.bo to i32                    ; 2 uses
+  %.sroa.9.12.extract.shift = lshr i64 %.sroa.9.0155, 32 ; 2 uses
+  %.sroa.9.12.extract.trunc = trunc nuw i64 %.sroa.9.12.extract.shift to i32 ; 2 uses
   %i.bq = shl nuw nsw i32 %i.bp, 12
-  %.not19.i = icmp ult i32 %.sroa.19.0150, %i.bq
+  %.not19.i = icmp ugt i32 %i.bq, %.sroa.9.12.extract.trunc
   br i1 %.not19.i, label %_ZNSt16reverse_iteratorISt13_Bit_iteratorEppEv.exit, label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph155
-  %i.br = trunc i32 %.sroa.19.0150 to i8
-  %2 = add nsw i32 %.sroa.9.0149, 1
-  %3 = sext i32 %.sroa.9.0149 to i64
-  %i.bs = getelementptr inbounds i8, ptr %i.o, i64 %3
+  %i.br = trunc i64 %.sroa.9.12.extract.shift to i8
+  %2 = add i64 %.sroa.9.0155, 1
+  %3 = shl i64 %.sroa.9.0155, 32
+  %4 = ashr exact i64 %3, 32
+  %i.bs = getelementptr inbounds i8, ptr %i.o, i64 %4
   store i8 %i.br, ptr %i.bs, align 1, !tbaa !16
-  %4 = lshr i32 %.sroa.19.0150, 8
+  %sum.shift = lshr i64 %.sroa.9.0155, 40
+  %5 = trunc nuw nsw i64 %sum.shift to i32
   br label %_ZNSt16reverse_iteratorISt13_Bit_iteratorEppEv.exit
 
 _ZNSt16reverse_iteratorISt13_Bit_iteratorEppEv.exit: ; preds = %bb.h, %.lr.ph155
-  %.sroa.9.1 = phi i32 [ %.sroa.9.0149, %.lr.ph155 ], [ %2, %bb.h ] ; 7 uses
-  %i.bt = phi i32 [ %.sroa.19.0150, %.lr.ph155 ], [ %4, %bb.h ] ; 3 uses
+  %.sroa.9.1 = phi i64 [ %.sroa.9.0155, %.lr.ph155 ], [ %2, %bb.h ] ; 5 uses
+  %i.bt = phi i32 [ %.sroa.9.12.extract.trunc, %.lr.ph155 ], [ %5, %bb.h ] ; 3 uses
   %i.bu = zext i8 %i.bo to i64
   %i.bv = getelementptr inbounds nuw [8 x i8], ptr @_ZN5draco16vp10_fastdiv_tabE, i64 %i.bu ; 2 uses
   %i.bw = load i32, ptr %i.bv, align 8, !tbaa !30
@@ -249,7 +252,11 @@ _ZNSt16reverse_iteratorISt13_Bit_iteratorEppEv.exit: ; preds = %bb.h, %.lr.ph155
   %reass.add.i = sub nuw nsw i32 256, %i.bp
   %reass.mul.i = mul i32 %i.cb, %reass.add.i
   %i.ce = add nuw nsw i32 %i.bt, %i.cd
-  %i.cf = add i32 %i.ce, %reass.mul.i             ; 6 uses
+  %i.cf = add i32 %i.ce, %reass.mul.i             ; 5 uses
+  %.sroa.9.12.insert.ext = zext i32 %i.cf to i64  ; 2 uses
+  %.sroa.9.12.insert.shift = shl nuw i64 %.sroa.9.12.insert.ext, 32
+  %.sroa.9.12.insert.mask = and i64 %.sroa.9.1, 4294967295
+  %.sroa.9.12.insert.insert = or disjoint i64 %.sroa.9.12.insert.shift, %.sroa.9.12.insert.mask ; 2 uses
   %i.cg = icmp ne ptr %spec.select3.i, %i.z
   %i.ch = icmp ne i32 %spec.select.i, 0
   %.not3.i37 = or i1 %i.cg, %i.ch
@@ -262,13 +269,15 @@ _ZNSt16reverse_iteratorISt13_Bit_iteratorEppEv.exit: ; preds = %bb.h, %.lr.ph155
   br i1 %i.cj, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %._crit_edge156.thread, %._crit_edge156
-  %.sroa.19.0.lcssa174 = phi i32 [ 4096, %._crit_edge156.thread ], [ %i.cf, %._crit_edge156 ]
-  %.sroa.9.0.lcssa173 = phi i32 [ 0, %._crit_edge156.thread ], [ %.sroa.9.1, %._crit_edge156 ] ; 2 uses
-  %i.ck = trunc i32 %.sroa.19.0.lcssa174 to i8
-  %5 = sext i32 %.sroa.9.0.lcssa173 to i64
-  %i.cl = getelementptr inbounds i8, ptr %i.o, i64 %5
+  %.sroa.9.12.extract.shift99179 = phi i64 [ 4096, %._crit_edge156.thread ], [ %.sroa.9.12.insert.ext, %._crit_edge156 ]
+  %.sroa.9.0.lcssa178 = phi i64 [ 17592186044416, %._crit_edge156.thread ], [ %.sroa.9.12.insert.insert, %._crit_edge156 ] ; 2 uses
+  %i.ck = trunc i64 %.sroa.9.12.extract.shift99179 to i8
+  %.sroa.9.8.extract.trunc92 = trunc i64 %.sroa.9.0.lcssa178 to i32
+  %sext133 = shl i64 %.sroa.9.0.lcssa178, 32
+  %6 = ashr exact i64 %sext133, 32
+  %i.cl = getelementptr inbounds i8, ptr %i.o, i64 %6
   store i8 %i.ck, ptr %i.cl, align 1, !tbaa !16
-  %i.cm = add nsw i32 %.sroa.9.0.lcssa173, 1
+  %i.cm = add nsw i32 %.sroa.9.8.extract.trunc92, 1
   br label %_ZN5dracoL13ans_write_endEPNS_8AnsCoderE.exit
 
 bb.j:                                             ; preds = %._crit_edge156
@@ -276,21 +285,25 @@ bb.j:                                             ; preds = %._crit_edge156
   br i1 %i.cn, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
-  %6 = sext i32 %.sroa.9.1 to i64
-  %i.co = getelementptr inbounds i8, ptr %i.o, i64 %6
-  %i.cp = trunc nuw nsw i32 %i.cf to i16
+  %.sroa.9.8.extract.trunc88 = trunc i64 %.sroa.9.1 to i32
+  %sext132 = shl i64 %.sroa.9.1, 32
+  %7 = ashr exact i64 %sext132, 32
+  %i.co = getelementptr inbounds i8, ptr %i.o, i64 %7
+  %i.cp = trunc nuw i32 %i.cf to i16
   %i.cq = add nuw nsw i16 %i.cp, 12288
   store i16 %i.cq, ptr %i.co, align 1
-  %i.cr = add nsw i32 %.sroa.9.1, 2
+  %i.cr = add nsw i32 %.sroa.9.8.extract.trunc88, 2
   br label %_ZN5dracoL13ans_write_endEPNS_8AnsCoderE.exit
 
 bb.l:                                             ; preds = %bb.j
   %i.cs = icmp ult i32 %i.ci, 4194304
+  %.sroa.9.8.extract.trunc84 = trunc i64 %.sroa.9.1 to i32 ; 2 uses
   br i1 %i.cs, label %bb.m, label %_ZN5dracoL13ans_write_endEPNS_8AnsCoderE.exit
 
 bb.m:                                             ; preds = %bb.l
-  %7 = sext i32 %.sroa.9.1 to i64
-  %i.ct = getelementptr inbounds i8, ptr %i.o, i64 %7 ; 2 uses
+  %sext = shl i64 %.sroa.9.1, 32
+  %8 = ashr exact i64 %sext, 32
+  %i.ct = getelementptr inbounds i8, ptr %i.o, i64 %8 ; 2 uses
   %i.cu = add nuw nsw i32 %i.cf, 8384512
   %i.cv = trunc i32 %i.cf to i8
   store i8 %i.cv, ptr %i.ct, align 1, !tbaa !16
@@ -298,11 +311,11 @@ bb.m:                                             ; preds = %bb.l
   %i.cx = lshr i32 %i.cu, 8
   %i.cy = trunc nuw i32 %i.cx to i16
   store i16 %i.cy, ptr %i.cw, align 1
-  %i.cz = add nsw i32 %.sroa.9.1, 3
+  %i.cz = add nsw i32 %.sroa.9.8.extract.trunc84, 3
   br label %_ZN5dracoL13ans_write_endEPNS_8AnsCoderE.exit
 
-_ZN5dracoL13ans_write_endEPNS_8AnsCoderE.exit:    ; preds = %bb.m, %bb.k, %bb.i, %bb.l
-  %.0.i = phi i32 [ %i.cm, %bb.i ], [ %i.cr, %bb.k ], [ %i.cz, %bb.m ], [ %.sroa.9.1, %bb.l ]
+_ZN5dracoL13ans_write_endEPNS_8AnsCoderE.exit:    ; preds = %bb.l, %bb.m, %bb.k, %bb.i
+  %.0.i = phi i32 [ %i.cm, %bb.i ], [ %i.cr, %bb.k ], [ %i.cz, %bb.m ], [ %.sroa.9.8.extract.trunc84, %bb.l ]
   store i32 %.0.i, ptr %i.a, align 4, !tbaa !32
   %i.da = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
   %i.db = load i64, ptr %i.da, align 8, !tbaa !45

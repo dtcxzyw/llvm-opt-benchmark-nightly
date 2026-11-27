@@ -204,13 +204,15 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %2, ptr %i.a, align 8, !tbaa !26
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store <4 x i8> <i8 0, i8 1, i8 0, i8 0>, ptr %i.b, align 8, !tbaa !51
+  store i32 256, ptr %i.b, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 20
-  store i8 0, ptr %i.c, align 4, !tbaa !52
+  store i8 0, ptr %i.c, align 4, !tbaa !51
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 96
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(5) %i.d, i8 0, i64 5, i1 false)
-  store i64 512, ptr %i.e, align 8, !tbaa !31
+  store i32 0, ptr %i.d, align 8
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 36
+  store i8 0, ptr %i.e, align 4, !tbaa !52
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 96
+  store i64 512, ptr %3, align 8, !tbaa !31
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 104
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(144) %i.f, i8 0, i64 144, i1 false)
   ret void
@@ -613,8 +615,8 @@ attributes #10 = { nounwind }
 !48 = !{i64 -7818726943047286710}
 !49 = !{i64 2304025572538093391}
 !50 = !{i64 -7812327080982692693}
-!51 = !{!21, !21, i64 0}
-!52 = !{!25, !21, i64 20}
+!51 = !{!25, !21, i64 20}
+!52 = !{!25, !21, i64 36}
 !53 = distinct !{!53, !28, !56, !57}
 !54 = distinct !{!54, !28, !57, !56}
 !55 = !{i64 -149982646400330737}

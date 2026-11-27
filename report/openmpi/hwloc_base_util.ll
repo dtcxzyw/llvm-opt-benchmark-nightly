@@ -202,7 +202,7 @@ bb.n:                                             ; preds = %.lr.ph, %bb.k, %bb.
   %.1 = phi ptr [ %i.n, %bb.i ], [ %i.n, %opal_obj_new.exit ], [ %i.k, %bb.j ], [ %i.k, %bb.n ] ; 3 uses
   %i.ap = call fastcc ptr @df_search(ptr noundef %0, ptr noundef %i.g, i32 noundef %1, i32 noundef 0, i8 noundef zeroext %3, ptr noundef nonnull %i.a) ; 0 uses
   %i.aq = load i64, ptr getelementptr inbounds nuw (i8, ptr @opal_hwloc_summary_t_class, i64 56), align 8, !tbaa !33
-  %i.ar = call noalias ptr @malloc(i64 noundef %i.aq) #12 ; 12 uses
+  %i.ar = call noalias ptr @malloc(i64 noundef %i.aq) #12 ; 11 uses
   %i.as = load i32, ptr @opal_class_init_epoch, align 4, !tbaa !29
   %i.at = load i32, ptr getelementptr inbounds nuw (i8, ptr @opal_hwloc_summary_t_class, i64 32), align 8, !tbaa !34
   %.not.i40 = icmp eq i32 %i.as, %i.at
@@ -236,9 +236,11 @@ bb.q:                                             ; preds = %bb.p
 
 opal_obj_new.exit46:                              ; preds = %.lr.ph.i.i43, %bb.p, %bb.q
   %i.ba = getelementptr inbounds nuw i8, ptr %i.ar, i64 40
-  store i32 %1, ptr %i.ba, align 8, !tbaa !71
-  %4 = getelementptr inbounds nuw i8, ptr %i.ar, i64 44
-  store i32 %2, ptr %4, align 4, !tbaa !72
+  %4 = zext i32 %1 to i64
+  %5 = zext i32 %2 to i64
+  %6 = shl nuw i64 %5, 32
+  %7 = or disjoint i64 %6, %4
+  store i64 %7, ptr %i.ba, align 8
   %i.bb = load i32, ptr %i.a, align 4, !tbaa !29  ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %i.ar, i64 48
   store i32 %i.bb, ptr %i.bc, align 8, !tbaa !74

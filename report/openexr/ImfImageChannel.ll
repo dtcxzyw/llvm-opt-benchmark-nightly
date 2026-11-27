@@ -51,17 +51,19 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %1, ptr %i.b, align 8, !tbaa !26
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i32 %2, ptr %i.c, align 8, !tbaa !15
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 20
-  store i32 %3, ptr %5, align 4, !tbaa !16
+  %5 = zext i32 %2 to i64
+  %6 = zext i32 %3 to i64
+  %7 = shl nuw i64 %6, 32
+  %8 = or disjoint i64 %7, %5
+  store i64 %8, ptr %i.c, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i8 %i.a, ptr %i.d, align 8, !tbaa !17
+  store i8 %i.a, ptr %i.d, align 8, !tbaa !15
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 28
   store i32 0, ptr %i.e, align 4, !tbaa !27
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i32 0, ptr %i.f, align 8, !tbaa !28
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store i64 0, ptr %i.g, align 8, !tbaa !18
+  store i64 0, ptr %i.g, align 8, !tbaa !16
   ret void
 }
 
@@ -89,11 +91,11 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8
   %i.c = tail call noundef i32 %i.b(ptr noundef nonnull align 8 dereferenceable(48) %0)
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.e = load i32, ptr %i.d, align 8, !tbaa !15
+  %i.e = load i32, ptr %i.d, align 8, !tbaa !17
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 20
-  %i.g = load i32, ptr %i.f, align 4, !tbaa !16
+  %i.g = load i32, ptr %i.f, align 4, !tbaa !18
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.i = load i8, ptr %i.h, align 8, !tbaa !17, !range !29, !noundef !19
+  %i.i = load i8, ptr %i.h, align 8, !tbaa !15, !range !29, !noundef !19
   %i.j = trunc nuw i8 %i.i to i1
   call void @_ZN7Imf_3_47ChannelC1ENS_9PixelTypeEiib(ptr noundef nonnull align 4 dereferenceable(13) %1, i32 noundef %i.c, i32 noundef %i.e, i32 noundef %i.g, i1 noundef zeroext %i.j)
   %.fca.0.load = load i64, ptr %1, align 8
@@ -110,13 +112,13 @@ declare void @_ZN7Imf_3_47ChannelC1ENS_9PixelTypeEiib(ptr noundef nonnull align 
 define void @_ZN7Imf_3_412ImageChannel6resizeEv(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(48) %0) unnamed_addr #4 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !15   ; 3 uses
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !17   ; 3 uses
   %i.c = icmp slt i32 %i.b, 1
   br i1 %i.c, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 20
-  %i.e = load i32, ptr %i.d, align 4, !tbaa !16   ; 3 uses
+  %i.e = load i32, ptr %i.d, align 4, !tbaa !18   ; 3 uses
   %i.f = load <2 x i32>, ptr %i.a, align 8, !tbaa !30
   %i.g = icmp slt i32 %i.e, 1
   br i1 %i.g, label %bb.c, label %bb.f
@@ -229,7 +231,7 @@ bb.t:                                             ; preds = %bb.r
 bb.u:                                             ; preds = %bb.q, %bb.p
   %i.am = mul nsw i64 %i.aj, %i.ah
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store i64 %i.am, ptr %i.an, align 8, !tbaa !18
+  store i64 %i.am, ptr %i.an, align 8, !tbaa !16
   ret void
 
 bb.v:                                             ; preds = %bb.j, %bb.t, %bb.o, %bb.e
@@ -371,14 +373,14 @@ bb.l:                                             ; preds = %bb.k, %bb.j
 
 bb.m:                                             ; preds = %bb.a
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.ak = load i32, ptr %i.aj, align 8, !tbaa !15
+  %i.ak = load i32, ptr %i.aj, align 8, !tbaa !17
   %i.al = srem i32 %1, %i.ak
   %.not = icmp eq i32 %i.al, 0
   br i1 %.not, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %bb.m
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 20
-  %i.an = load i32, ptr %i.am, align 4, !tbaa !16
+  %i.an = load i32, ptr %i.am, align 4, !tbaa !18
   %i.ao = srem i32 %2, %i.an
   %.not25 = icmp eq i32 %i.ao, 0
   br i1 %.not25, label %bb.x, label %bb.o
@@ -408,7 +410,7 @@ bb.q:                                             ; preds = %_ZStlsISt11char_tra
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit46 unwind label %bb.u ; 0 uses
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit46: ; preds = %bb.q
-  %i.av = load i32, ptr %i.aj, align 8, !tbaa !15
+  %i.av = load i32, ptr %i.aj, align 8, !tbaa !17
   %i.aw = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSolsEi(ptr noundef nonnull align 8 dereferenceable(8) %i.at, i32 noundef %i.av)
           to label %bb.r unwind label %bb.u       ; 2 uses
 
@@ -418,7 +420,7 @@ bb.r:                                             ; preds = %_ZStlsISt11char_tra
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit47: ; preds = %bb.r
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 20
-  %i.az = load i32, ptr %i.ay, align 4, !tbaa !16
+  %i.az = load i32, ptr %i.ay, align 4, !tbaa !18
   %i.ba = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSolsEi(ptr noundef nonnull align 8 dereferenceable(8) %i.aw, i32 noundef %i.az)
           to label %bb.s unwind label %bb.u
 
@@ -516,10 +518,10 @@ attributes #13 = { noreturn }
 !12 = !{!"bool", !4, i64 0}
 !13 = !{!"long", !4, i64 0}
 !14 = !{!"_ZTSN7Imf_3_412ImageChannelE", !11, i64 8, !5, i64 16, !5, i64 20, !12, i64 24, !5, i64 28, !5, i64 32, !13, i64 40}
-!15 = !{!14, !5, i64 16}
-!16 = !{!14, !5, i64 20}
-!17 = !{!14, !12, i64 24}
-!18 = !{!14, !13, i64 40}
+!15 = !{!14, !12, i64 24}
+!16 = !{!14, !13, i64 40}
+!17 = !{!14, !5, i64 16}
+!18 = !{!14, !5, i64 20}
 !19 = !{}
 !20 = !{!14, !11, i64 8}
 !21 = !{i64 8}

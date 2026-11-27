@@ -204,11 +204,13 @@ bb.i:                                             ; preds = %.lr.ph.epil.prehead
 ; Function Attrs: mustprogress uwtable
 define hidden noundef nonnull align 8 dereferenceable(32) ptr @_ZN3sat15model_converter2mkENS0_4kindEj(ptr noundef nonnull align 8 dereferenceable(40) %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = alloca %"class.sat::model_converter::entry", align 8 ; 10 uses
+  %3 = alloca %"class.sat::model_converter::entry", align 8 ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #19
-  store i32 %2, ptr %3, align 8, !tbaa !63
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 4
-  store i32 %1, ptr %4, align 4, !tbaa !64
+  %4 = zext i32 %2 to i64
+  %5 = zext i32 %1 to i64
+  %6 = shl nuw i64 %5, 32
+  %7 = or disjoint i64 %6, %4                     ; 2 uses
+  store i64 %7, ptr %3, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.a, i8 0, i64 24, i1 false)
   %i.b = load ptr, ptr %0, align 8, !tbaa !16     ; 4 uses
@@ -231,15 +233,16 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %.pre.i = load ptr, ptr %0, align 8, !tbaa !16  ; 2 uses
   %.phi.trans.insert.i = getelementptr inbounds i8, ptr %.pre.i, i64 -4
   %.pre2.i = load i32, ptr %.phi.trans.insert.i, align 4, !tbaa !17
+  %.pre = load i64, ptr %3, align 8
   br label %bb.d
 
 bb.d:                                             ; preds = %.noexc, %bb.b
+  %8 = phi i64 [ %.pre, %.noexc ], [ %7, %bb.b ]
   %i.i = phi i32 [ %.pre2.i, %.noexc ], [ %i.e, %bb.b ]
   %i.j = phi ptr [ %.pre.i, %.noexc ], [ %i.b, %bb.b ]
   %i.k = zext i32 %i.i to i64
   %i.l = getelementptr inbounds nuw [32 x i8], ptr %i.j, i64 %i.k ; 3 uses
-  %5 = load i64, ptr %3, align 8
-  store i64 %5, ptr %i.l, align 8
+  store i64 %8, ptr %i.l, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   %i.n = load ptr, ptr %i.a, align 8, !tbaa !20
   store ptr %i.n, ptr %i.m, align 8, !tbaa !20

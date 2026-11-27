@@ -205,7 +205,7 @@ declare noalias ptr @png_malloc(ptr noundef, i64 noundef) local_unnamed_addr #3
 ; Function Attrs: nounwind uwtable
 define internal fastcc noundef i32 @png_deflate_claim(ptr noalias noundef %0, i32 noundef range(i32 1229209940, 2052348021) %1, i64 noundef %2) unnamed_addr #1 {
 bb.a:
-  %i.a = alloca [64 x i8], align 16               ; 9 uses
+  %i.a = alloca [64 x i8], align 16               ; 10 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 312 ; 4 uses
   %i.c = load i32, ptr %i.b, align 8, !tbaa !49   ; 2 uses
   %.not = icmp eq i32 %i.c, 0
@@ -213,12 +213,19 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
-  %3 = tail call i32 @llvm.bswap.i32(i32 %1)
-  store i32 %3, ptr %i.a, align 16, !tbaa !10
-  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  store i8 58, ptr %i.d, align 4, !tbaa !10
-  %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 5
-  store i8 32, ptr %i.e, align 1, !tbaa !10
+  %3 = lshr i32 %1, 24
+  %4 = trunc nuw nsw i32 %3 to i8
+  store i8 %4, ptr %i.a, align 16, !tbaa !10
+  %5 = lshr i32 %1, 16
+  %6 = trunc i32 %5 to i8
+  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
+  store i8 %6, ptr %7, align 1, !tbaa !10
+  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 2
+  %trunc = trunc i32 %1 to i16
+  %8 = tail call i16 @llvm.bswap.i16(i16 %trunc)
+  store i16 %8, ptr %i.d, align 2
+  %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 4
+  store i16 8250, ptr %i.e, align 4
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 6
   %i.g = tail call i32 @llvm.bswap.i32(i32 %i.c)
   store i32 %i.g, ptr %i.f, align 2, !tbaa !10
@@ -621,7 +628,7 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define void @png_write_mDCV_fixed(ptr noalias noundef %0, i16 noundef zeroext %1, i16 noundef zeroext %2, i16 noundef zeroext %3, i16 noundef zeroext %4, i16 noundef zeroext %5, i16 noundef zeroext %6, i16 noundef zeroext %7, i16 noundef zeroext %8, i32 noundef %9, i32 noundef %10) local_unnamed_addr #1 {
 bb.a:
-  %i.a = alloca [24 x i8], align 16               ; 24 uses
+  %i.a = alloca [24 x i8], align 16               ; 25 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   %i.b = lshr i16 %1, 8
   %i.c = trunc nuw i16 %i.b to i8
@@ -684,18 +691,24 @@ bb.a:
   store i8 %i.aq, ptr %i.ao, align 16, !tbaa !10
   %i.ar = lshr i32 %9, 16
   %i.as = trunc i32 %i.ar to i8
-  %i.at = getelementptr inbounds nuw i8, ptr %i.a, i64 17
-  store i8 %i.as, ptr %i.at, align 1, !tbaa !10
-  %i.au = lshr i32 %9, 8
-  %i.av = trunc i32 %i.au to i8
-  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 18
-  store i8 %i.av, ptr %11, align 2, !tbaa !10
-  %i.aw = trunc i32 %9 to i8
-  %i.ax = getelementptr inbounds nuw i8, ptr %i.a, i64 19
+  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 17
+  store i8 %i.as, ptr %11, align 1, !tbaa !10
+  %i.at = getelementptr inbounds nuw i8, ptr %i.a, i64 18
+  %trunc = trunc i32 %9 to i16
+  %12 = tail call i16 @llvm.bswap.i16(i16 %trunc)
+  store i16 %12, ptr %i.at, align 2
+  %13 = getelementptr inbounds nuw i8, ptr %i.a, i64 20
+  %i.au = lshr i32 %10, 24
+  %i.av = trunc nuw i32 %i.au to i8
+  store i8 %i.av, ptr %13, align 4, !tbaa !10
+  %14 = lshr i32 %10, 16
+  %i.aw = trunc i32 %14 to i8
+  %i.ax = getelementptr inbounds nuw i8, ptr %i.a, i64 21
   store i8 %i.aw, ptr %i.ax, align 1, !tbaa !10
-  %i.ay = getelementptr inbounds nuw i8, ptr %i.a, i64 20
-  %12 = tail call i32 @llvm.bswap.i32(i32 %10)
-  store i32 %12, ptr %i.ay, align 4, !tbaa !10
+  %i.ay = getelementptr inbounds nuw i8, ptr %i.a, i64 22
+  %trunc10 = trunc i32 %10 to i16
+  %15 = tail call i16 @llvm.bswap.i16(i16 %trunc10)
+  store i16 %15, ptr %i.ay, align 2
   call fastcc void @png_write_complete_chunk(ptr noundef %0, i32 noundef 1833190230, ptr noundef nonnull %i.a, i64 noundef 24)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   ret void
@@ -1096,6 +1109,9 @@ declare i32 @llvm.abs.i32(i32, i1 immarg) #10
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #11
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #9

@@ -202,32 +202,34 @@ _RINvXNtNtNtCs3oUPovFnLWP_4core4iter6traits8iteratorNtNtNtCslLGyqsphxMB_10widest
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
 define hidden void @_RNvMs1_NtCslEmbWASCaJL_8bitflags4iterINtB5_9IterNamesNtCs5UXtnEuoeIl_11fish_common11EscapeFlagsE3newBR_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([32 x i8]) align 8 captures(none) dereferenceable(32) initializes((0, 32)) %0, ptr noalias nofree noundef readonly align 4 captures(none) dereferenceable(4) %1) unnamed_addr #6 personality ptr @rust_eh_personality {
 bb.a:
-  %.val1 = load i32, ptr %1, align 4, !noundef !4 ; 2 uses
+  %.val1 = load i32, ptr %1, align 4, !noundef !4
   store ptr @12, ptr %0, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 5, ptr %i.a, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 0, ptr %i.b, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i32 %.val1, ptr %i.c, align 8
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 28
-  store i32 %.val1, ptr %2, align 4
+  %2 = zext i32 %.val1 to i64                     ; 2 uses
+  %3 = shl nuw i64 %2, 32
+  %4 = or disjoint i64 %3, %2
+  store i64 %4, ptr %i.c, align 8
   ret void
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
 define hidden void @_RNvMs1_NtCslEmbWASCaJL_8bitflags4iterINtB5_9IterNamesNtCs5UXtnEuoeIl_11fish_common13UnescapeFlagsE3newBR_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([32 x i8]) align 8 captures(none) dereferenceable(32) initializes((0, 32)) %0, ptr noalias nofree noundef readonly align 4 captures(none) dereferenceable(4) %1) unnamed_addr #6 personality ptr @rust_eh_personality {
 bb.a:
-  %.val1 = load i32, ptr %1, align 4, !noundef !4 ; 2 uses
+  %.val1 = load i32, ptr %1, align 4, !noundef !4
   store ptr @16, ptr %0, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 3, ptr %i.a, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 0, ptr %i.b, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i32 %.val1, ptr %i.c, align 8
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 28
-  store i32 %.val1, ptr %2, align 4
+  %2 = zext i32 %.val1 to i64                     ; 2 uses
+  %3 = shl nuw i64 %2, 32
+  %4 = or disjoint i64 %3, %2
+  store i64 %4, ptr %i.c, align 8
   ret void
 }
 

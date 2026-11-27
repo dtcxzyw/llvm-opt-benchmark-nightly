@@ -202,7 +202,7 @@ _RNvMNtCs4wP2HXfJTCR_5alloc5boxedINtB2_3BoxINtNtB4_4sync8ArcInnerINtNtNtCs9GYDdp
 define internal fastcc { ptr, ptr } @_RNvMNtNtCs9GYDdpCSJ4S_14regex_automata4meta8strategyINtB2_3PreNtNtNtNtB6_4util9prefilter6memchr7Memchr2E3newB6_(i8 noundef %0, i8 noundef %1) unnamed_addr #1 personality ptr @rust_eh_personality !dbg !12929 {
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 4 uses
-  %i.b = alloca [32 x i8], align 8                ; 8 uses
+  %i.b = alloca [32 x i8], align 8                ; 7 uses
   %i.c = alloca [16 x i8], align 8                ; 4 uses
   %i.d = alloca [32 x i8], align 8                ; 6 uses
     #dbg_value(i8 %0, !12990, !DIExpression(DW_OP_LLVM_fragment, 0, 8), !12993)
@@ -259,9 +259,11 @@ _RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultNtNtNtCs9GYDdpCSJ4S_14regex_automa
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 16, !dbg !13045 ; 2 uses
   store ptr %i.i, ptr %i.k, align 8, !dbg !13045
   %.sroa.42.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 24, !dbg !13045
-  store i8 %0, ptr %.sroa.42.0..sroa_idx, align 8, !dbg !13045
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 25, !dbg !13045
-  store i8 %1, ptr %.sroa.5.0..sroa_idx, align 1, !dbg !13045
+  %2 = zext i8 %0 to i16, !dbg !13045
+  %3 = zext i8 %1 to i16, !dbg !13045
+  %4 = shl nuw i16 %3, 8, !dbg !13045
+  %5 = or disjoint i16 %4, %2, !dbg !13045
+  store i16 %5, ptr %.sroa.42.0..sroa_idx, align 8, !dbg !13045
     #dbg_declare(ptr %i.b, !13020, !DIExpression(), !12944)
     #dbg_value(i64 8, !5500, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !12946)
     #dbg_value(i64 8, !5506, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !12948)
@@ -664,7 +666,7 @@ select.unfold23:                                  ; preds = %_RNvMs0_NtNtNtCs9GY
 ; Function Attrs: inlinehint nonlazybind uwtable
 define internal fastcc void @_RNvMs2_NtNtCs9GYDdpCSJ4S_14regex_automata3dfa7onepassNtB5_3DFA16try_search_slots(ptr dead_on_unwind noalias nofree noundef nonnull writable align 8 captures(none) dereferenceable(16) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(376) %1, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %2, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %3, ptr noalias nofree noundef nonnull align 8 %4, i64 noundef range(i64 0, 1152921504606846976) %5) unnamed_addr #0 personality ptr @rust_eh_personality !dbg !15245 {
 bb.a:
-  %i.a = alloca [16 x i8], align 8                ; 7 uses
+  %i.a = alloca [16 x i8], align 8                ; 8 uses
   %i.b = alloca [24 x i8], align 8                ; 13 uses
   %i.c = alloca [16 x i8], align 8                ; 7 uses
   %i.d = alloca [16 x i8], align 8                ; 5 uses
@@ -877,10 +879,12 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecINtNtB4
 
 bb.s:                                             ; preds = %bb.o
   %i.ar = getelementptr inbounds nuw i8, ptr %i.a, i64 4, !dbg !15554
-  %6 = load <2 x i32>, ptr %i.ar, align 4, !dbg !15554
+  %6 = load i32, ptr %i.ar, align 4, !dbg !15554, !range !5919, !noundef !1995
+  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !15554
+  %8 = load i32, ptr %7, align 8, !dbg !15554
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !15549
-    #dbg_value(i32 poison, !15315, !DIExpression(DW_OP_LLVM_fragment, 0, 32), !15504)
-    #dbg_value(i32 poison, !15315, !DIExpression(DW_OP_LLVM_fragment, 32, 32), !15504)
+    #dbg_value(i32 %6, !15315, !DIExpression(DW_OP_LLVM_fragment, 0, 32), !15504)
+    #dbg_value(i32 %8, !15315, !DIExpression(DW_OP_LLVM_fragment, 32, 32), !15504)
     #dbg_value(ptr %i.b, !15387, !DIExpression(), !15505)
     #dbg_value(ptr poison, !15364, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !15457)
     #dbg_value(ptr poison, !15368, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !15458)
@@ -905,9 +909,11 @@ bb.u:                                             ; preds = %bb.s
           to label %bb.z unwind label %bb.n, !dbg !15557
 
 bb.v:                                             ; preds = %bb.t
-  %i.as = getelementptr inbounds nuw i8, ptr %0, i64 4, !dbg !15558
-  store <2 x i32> %6, ptr %i.as, align 4, !dbg !15558
-  store i32 0, ptr %0, align 8, !dbg !15558
+  %i.as = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !15558
+  store i32 %8, ptr %i.as, align 8, !dbg !15558
+  %9 = zext nneg i32 %6 to i64, !dbg !15558
+  %10 = shl nuw nsw i64 %9, 32, !dbg !15558
+  store i64 %10, ptr %0, align 8, !dbg !15558
     #dbg_value(ptr %i.b, !4166, !DIExpression(), !15294)
   invoke void @_RNvXsp_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecINtNtCsj6eKBz9Db1c_4core6option6OptionNtNtNtCs9GYDdpCSJ4S_14regex_automata4util10primitives11NonMaxUsizeEENtNtNtBK_3ops4drop4Drop4dropB1n_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.b)
           to label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecINtNtB4_6option6OptionNtNtNtCs9GYDdpCSJ4S_14regex_automata4util10primitives11NonMaxUsizeEEEB1A_.exit47 unwind label %bb.w, !dbg !15559
@@ -1310,7 +1316,7 @@ bb.a:
   %i.c = alloca [8 x i8], align 8                 ; 6 uses
   %i.d = alloca [448 x i8], align 8               ; 6 uses
   %i.e = alloca [128 x i8], align 8               ; 11 uses
-  %i.f = alloca [24 x i8], align 8                ; 12 uses
+  %i.f = alloca [24 x i8], align 8                ; 10 uses
   %i.g = alloca [104 x i8], align 8               ; 6 uses
   %i.h = alloca [104 x i8], align 8               ; 20 uses
   %i.i = alloca [16 x i8], align 8                ; 6 uses
@@ -1322,7 +1328,7 @@ bb.a:
   %i.m = alloca [32 x i8], align 16               ; 6 uses
   %i.n = alloca [1440 x i8], align 16             ; 11 uses
     #dbg_declare(ptr poison, !18716, !DIExpression(DW_OP_LLVM_fragment, 128, 960), !16747)
-  %i.o = alloca [24 x i8], align 8                ; 10 uses
+  %i.o = alloca [24 x i8], align 8                ; 9 uses
   %i.p = alloca [448 x i8], align 8               ; 8 uses
   %i.q = alloca [128 x i8], align 8               ; 7 uses
   %i.r = alloca [8 x i8], align 8                 ; 8 uses
@@ -1340,7 +1346,7 @@ bb.a:
   %.sroa.615.i.sroa.7 = alloca [40 x i8], align 8 ; 6 uses
   %i.y = alloca [48 x i8], align 8                ; 12 uses
     #dbg_declare(ptr poison, !18716, !DIExpression(DW_OP_LLVM_fragment, 128, 960), !16753)
-  %i.z = alloca [24 x i8], align 8                ; 11 uses
+  %i.z = alloca [24 x i8], align 8                ; 9 uses
   %i.aa = alloca [448 x i8], align 8              ; 8 uses
   %i.ab = alloca [128 x i8], align 8              ; 6 uses
   %i.ac = alloca [8 x i8], align 8                ; 13 uses
@@ -1743,7 +1749,7 @@ bb.ba:                                            ; preds = %_RNvXsm_NtNtCs9GYDd
   %i.ff = load i8, ptr %i.fe, align 1, !dbg !20723, !range !4000, !alias.scope !19699, !noalias !19556, !noundef !1995 ; 2 uses
     #dbg_value(i8 %i.ff, !19682, !DIExpression(), !17311)
   %.not.i.i = icmp eq i8 %i.ff, 2, !dbg !20724
-  %.sroa.02.0.i.i = select i1 %.not.i.i, i8 1, i8 %i.ff, !dbg !20725 ; 3 uses
+  %.sroa.02.0.i.i = select i1 %.not.i.i, i8 1, i8 %i.ff, !dbg !20725 ; 2 uses
     #dbg_value(i8 %.sroa.02.0.i.i, !19700, !DIExpression(), !17325)
   %i.fg = icmp samesign ult i8 %.sroa.02.0.i.i, 2, !dbg !20726
   call void @llvm.assume(i1 %i.fg), !dbg !20726
@@ -1858,16 +1864,15 @@ bb.bf:                                            ; preds = %bb.ba
   %i.fx = icmp eq i64 %.sroa.03.0.i.i, 0, !dbg !20748
   %.sroa.5.0.i129.i = select i1 %i.fx, i64 undef, i64 %.sroa.5.0.i.i, !dbg !20748
   %i.fy = getelementptr inbounds nuw i8, ptr %i.z, i64 18, !dbg !20749
-  store i8 %.sroa.02.0.i.i, ptr %i.fy, align 2, !dbg !20749, !alias.scope !19733, !noalias !19556
-  %4 = getelementptr inbounds nuw i8, ptr %i.z, i64 19, !dbg !20749
-  store i8 0, ptr %4, align 1, !dbg !20749, !alias.scope !19733, !noalias !19556
+  %4 = zext nneg i8 %.sroa.02.0.i.i to i16, !dbg !20749 ; 2 uses
+  store i16 %4, ptr %i.fy, align 2, !dbg !20749, !alias.scope !19733, !noalias !19556
   store i64 %.sroa.03.0.i.i, ptr %i.z, align 8, !dbg !20749, !alias.scope !19733, !noalias !19556
   %i.fz = getelementptr inbounds nuw i8, ptr %i.z, i64 8, !dbg !20749
   store i64 %.sroa.5.0.i129.i, ptr %i.fz, align 8, !dbg !20749, !alias.scope !19733, !noalias !19556
   %i.ga = getelementptr inbounds nuw i8, ptr %i.z, i64 20, !dbg !20749
-  store i8 0, ptr %i.ga, align 4, !dbg !20749, !alias.scope !19733, !noalias !19556
-  %5 = getelementptr inbounds nuw i8, ptr %i.z, i64 21, !dbg !20749
-  store i8 %.sroa.04.0.i.i, ptr %5, align 1, !dbg !20749, !alias.scope !19733, !noalias !19556
+  %5 = zext nneg i8 %.sroa.04.0.i.i to i16, !dbg !20749
+  %6 = shl nuw nsw i16 %5, 8, !dbg !20749
+  store i16 %6, ptr %i.ga, align 4, !dbg !20749, !alias.scope !19733, !noalias !19556
   %i.gb = getelementptr inbounds nuw i8, ptr %i.z, i64 16, !dbg !20749
   store i8 1, ptr %i.gb, align 8, !dbg !20749, !alias.scope !19733, !noalias !19556
   %i.gc = getelementptr inbounds nuw i8, ptr %i.z, i64 17, !dbg !20749
@@ -2163,9 +2168,8 @@ bb.cj:                                            ; preds = %bb.ch
   %.sroa.0152.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.o, i64 17, !dbg !20828
   store i8 %.sroa.01.0.i.i, ptr %.sroa.0152.sroa.6.0..sroa_idx.i, align 1, !dbg !20828, !alias.scope !19769, !noalias !19556
   %.sroa.0152.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.o, i64 18, !dbg !20828
-  store i8 %.sroa.02.0.i.i, ptr %.sroa.0152.sroa.7.0..sroa_idx.i, align 2, !dbg !20828, !alias.scope !19769, !noalias !19556
-  %.sroa.4.0..sroa_idx153.i = getelementptr inbounds nuw i8, ptr %i.o, i64 19, !dbg !20828
-  store i8 1, ptr %.sroa.4.0..sroa_idx153.i, align 1, !dbg !20828, !alias.scope !19769, !noalias !19556
+  %7 = or disjoint i16 %4, 256, !dbg !20828
+  store i16 %7, ptr %.sroa.0152.sroa.7.0..sroa_idx.i, align 2, !dbg !20828, !alias.scope !19769, !noalias !19556
   %.sroa.5155.0..sroa_idx156.i = getelementptr inbounds nuw i8, ptr %i.o, i64 20, !dbg !20828
   store i32 512, ptr %.sroa.5155.0..sroa_idx156.i, align 4, !dbg !20828, !alias.scope !19769, !noalias !19556
   %i.hh = invoke noundef nonnull align 8 ptr @_RNvMs1_NtNtNtCs9GYDdpCSJ4S_14regex_automata3nfa8thompson8compilerNtB5_8Compiler9configure(ptr noalias nofree noundef nonnull align 8 dereferenceable(448) %i.p, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.o)
@@ -2568,13 +2572,11 @@ bb.hg:                                            ; preds = %bb.gs
   %.sroa.034.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.f, i64 17, !dbg !21192
   store i8 %.sroa.01.0.i.i136, ptr %.sroa.034.sroa.6.0..sroa_idx.i, align 1, !dbg !21192, !alias.scope !20516, !noalias !20461
   %.sroa.034.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.f, i64 18, !dbg !21192
-  store i8 %.sroa.02.0.i29.i, ptr %.sroa.034.sroa.7.0..sroa_idx.i, align 2, !dbg !21192, !alias.scope !20516, !noalias !20461
-  %.sroa.034.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.f, i64 19, !dbg !21192
-  store i8 1, ptr %.sroa.034.sroa.8.0..sroa_idx.i, align 1, !dbg !21192, !alias.scope !20516, !noalias !20461
+  %8 = zext nneg i8 %.sroa.02.0.i29.i to i16, !dbg !21192
+  %9 = or disjoint i16 %8, 256, !dbg !21192
+  store i16 %9, ptr %.sroa.034.sroa.7.0..sroa_idx.i, align 2, !dbg !21192, !alias.scope !20516, !noalias !20461
   %.sroa.034.sroa.9.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.f, i64 20, !dbg !21192
-  store i8 0, ptr %.sroa.034.sroa.9.0..sroa_idx.i, align 4, !dbg !21192, !alias.scope !20516, !noalias !20461
-  %.sroa.4.0..sroa_idx35.i = getelementptr inbounds nuw i8, ptr %i.f, i64 21, !dbg !21192
-  store i8 2, ptr %.sroa.4.0..sroa_idx35.i, align 1, !dbg !21192, !alias.scope !20516, !noalias !20461
+  store i16 512, ptr %.sroa.034.sroa.9.0..sroa_idx.i, align 4, !dbg !21192, !alias.scope !20516, !noalias !20461
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !dbg !21193, !noalias !20461
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !dbg !21194, !noalias !20461
   invoke void @_RNvMs1_NtNtNtCs9GYDdpCSJ4S_14regex_automata3nfa8thompson8compilerNtB5_8Compiler3new(ptr noalias nofree noundef nonnull sret([448 x i8]) align 8 captures(none) dereferenceable(448) %i.d)

@@ -204,7 +204,11 @@ bb.ag:                                            ; preds = %bb.ae, %bb.ad, %bb.
   %i.ep = getelementptr inbounds nuw i8, ptr %0, i64 384
   store i32 %spec.select225, ptr %i.ep, align 8, !tbaa !38
   %i.eq = getelementptr inbounds nuw i8, ptr %0, i64 364
-  store <4 x i32> splat (i32 1), ptr %i.eq, align 4, !tbaa !40
+  store i32 1, ptr %i.eq, align 4, !tbaa !57
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 368
+  store i64 4294967297, ptr %1, align 8
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 376
+  store i32 1, ptr %2, align 8, !tbaa !58
   br label %.thread
 
 .thread:                                          ; preds = %bb.h, %bb.g, %bb.ag, %bb.af, %bb.m, %bb.l, %bb.d, %bb.b
@@ -319,7 +323,7 @@ bb.a:
   %i.ad = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.ac
   %i.ae = extractelement <2 x double> %i.y, i64 1
   store double %i.ae, ptr %i.ad, align 8, !tbaa !41
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %2, i64 32, i1 false), !tbaa.struct !57
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %2, i64 32, i1 false), !tbaa.struct !59
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #13
   ret void
 }
@@ -335,7 +339,7 @@ bb.a:
   %i.c = load <2 x double>, ptr %1, align 8, !tbaa !42
   store <2 x double> %i.c, ptr %3, align 16, !tbaa !41
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.e = load double, ptr %i.d, align 8, !tbaa !59
+  %i.e = load double, ptr %i.d, align 8, !tbaa !61
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 16
   store double %i.e, ptr %i.f, align 16, !tbaa !41
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #13
@@ -380,11 +384,11 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !39   ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #13
   call void @_Z16proj_coord_errorv(ptr dead_on_unwind nonnull writable sret(%union.PJ_COORD) align 8 %3)
-  %i.c = load double, ptr %1, align 8, !tbaa !61
+  %i.c = load double, ptr %1, align 8, !tbaa !63
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.e = load double, ptr %i.d, align 8, !tbaa !62
+  %i.e = load double, ptr %i.d, align 8, !tbaa !64
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.g = load double, ptr %i.f, align 8, !tbaa !63
+  %i.g = load double, ptr %i.f, align 8, !tbaa !65
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.i = load i32, ptr %i.h, align 4, !tbaa !40
   %i.j = sitofp i32 %i.i to double
@@ -411,7 +415,7 @@ bb.a:
   %i.ac = zext i32 %i.ab to i64
   %i.ad = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.ac
   store double %i.z, ptr %i.ad, align 8, !tbaa !41
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 24, i1 false), !tbaa.struct !64
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 24, i1 false), !tbaa.struct !66
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #13
   ret void
 }
@@ -579,12 +583,14 @@ attributes #13 = { nounwind }
 !54 = !{!36, !8, i64 136}
 !55 = !{!36, !8, i64 120}
 !56 = !{!36, !8, i64 104}
-!57 = !{i64 0, i64 32, !41}
-!58 = !{!"_ZTS6PJ_LPZ", !14, i64 0, !14, i64 8, !14, i64 16}
-!59 = !{!58, !14, i64 16}
-!60 = !{!"_ZTS6PJ_XYZ", !14, i64 0, !14, i64 8, !14, i64 16}
-!61 = !{!60, !14, i64 0}
-!62 = !{!60, !14, i64 8}
-!63 = !{!60, !14, i64 16}
-!64 = !{i64 0, i64 8, !42, i64 8, i64 8, !42, i64 16, i64 8, !42}
+!57 = !{!36, !5, i64 364}
+!58 = !{!36, !5, i64 376}
+!59 = !{i64 0, i64 32, !41}
+!60 = !{!"_ZTS6PJ_LPZ", !14, i64 0, !14, i64 8, !14, i64 16}
+!61 = !{!60, !14, i64 16}
+!62 = !{!"_ZTS6PJ_XYZ", !14, i64 0, !14, i64 8, !14, i64 16}
+!63 = !{!62, !14, i64 0}
+!64 = !{!62, !14, i64 8}
+!65 = !{!62, !14, i64 16}
+!66 = !{i64 0, i64 8, !42, i64 8, i64 8, !42, i64 16, i64 8, !42}
 end_hunk_0

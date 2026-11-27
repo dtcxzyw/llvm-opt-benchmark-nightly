@@ -206,7 +206,7 @@ bb.a:
   %i.dj = alloca [24 x i8], align 8               ; 5 uses
   %i.dk = alloca [24 x i8], align 8               ; 4 uses
   %i.dl = alloca [24 x i8], align 8               ; 5 uses
-  %i.dm = alloca [136 x i8], align 8              ; 30 uses
+  %i.dm = alloca [136 x i8], align 8              ; 29 uses
   %i.dn = alloca [24 x i8], align 8               ; 11 uses
   %i.do = alloca [1 x i8], align 1                ; 3 uses
   %i.dp = alloca [1 x i8], align 1                ; 3 uses
@@ -393,10 +393,11 @@ bb.g:                                             ; preds = %bb.a, %_RINvNtCs3oU
   %i.hu = getelementptr inbounds nuw i8, ptr %i.gz, i64 145 ; 4 uses
   %i.hv = getelementptr inbounds nuw i8, ptr %i.gz, i64 146 ; 8 uses
   %i.hw = getelementptr inbounds nuw i8, ptr %i.gz, i64 147 ; 4 uses
-  %i.hx = getelementptr inbounds nuw i8, ptr %i.gz, i64 148 ; 3 uses
+  store i32 0, ptr %i.ht, align 8
+  %i.hx = getelementptr inbounds nuw i8, ptr %i.gz, i64 148 ; 4 uses
   %i.hy = getelementptr inbounds nuw i8, ptr %i.gz, i64 149 ; 3 uses
+  store i16 0, ptr %i.hx, align 4
   %0 = getelementptr inbounds nuw i8, ptr %i.hb, i64 8 ; 5 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(6) %i.ht, i8 0, i64 6, i1 false)
   %i.hz = load ptr, ptr %0, align 8, !nonnull !8, !noundef !8 ; 6 uses
   %i.ia = getelementptr inbounds nuw i8, ptr %i.hb, i64 16 ; 5 uses
   %i.ib = load i64, ptr %i.ia, align 8, !noundef !8 ; 9 uses
@@ -443,9 +444,7 @@ bb.g:                                             ; preds = %bb.a, %_RINvNtCs3oU
   store i8 1, ptr %i.it, align 2, !noalias !824
   %i.iu = getelementptr inbounds nuw i8, ptr %i.dm, i64 112
   %i.iv = getelementptr inbounds nuw i8, ptr %i.dm, i64 132
-  store i8 0, ptr %i.iv, align 4, !noalias !824
-  %1 = getelementptr inbounds nuw i8, ptr %i.dm, i64 133
-  store i8 0, ptr %1, align 1, !noalias !824
+  store i16 0, ptr %i.iv, align 4, !noalias !824
   store i64 0, ptr %i.dm, align 8, !noalias !824
   %.sroa.475.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.dm, i64 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.iu, i8 0, i64 16, i1 false), !noalias !824
@@ -848,7 +847,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecRNtNtNt
   br label %bb.cs
 
 bb.cs:                                            ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtNtCs8frGy5WneL6_4fish8builtins6shared5error5ErrorECs4RW8js5ES7g_4fish.exit277.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtNtCs8frGy5WneL6_4fish8builtins6shared5error5ErrorECs4RW8js5ES7g_4fish.exit260.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtNtCs8frGy5WneL6_4fish8builtins6shared5error5ErrorECs4RW8js5ES7g_4fish.exit.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringECs4RW8js5ES7g_4fish.exit231.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecRNtNtNtCs8frGy5WneL6_4fish4flog10categories8CategoryEECs4RW8js5ES7g_4fish.exit.i
-  %.sroa.10.0 = phi i32 [ 0, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecRNtNtNtCs8frGy5WneL6_4fish4flog10categories8CategoryEECs4RW8js5ES7g_4fish.exit.i ], [ 0, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringECs4RW8js5ES7g_4fish.exit231.i ], [ 1, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtNtCs8frGy5WneL6_4fish8builtins6shared5error5ErrorECs4RW8js5ES7g_4fish.exit.i ], [ 1, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtNtCs8frGy5WneL6_4fish8builtins6shared5error5ErrorECs4RW8js5ES7g_4fish.exit260.i ], [ 1, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtNtCs8frGy5WneL6_4fish8builtins6shared5error5ErrorECs4RW8js5ES7g_4fish.exit277.i ]
+  %.sroa.0.0544 = phi i64 [ 1, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecRNtNtNtCs8frGy5WneL6_4fish4flog10categories8CategoryEECs4RW8js5ES7g_4fish.exit.i ], [ 1, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringECs4RW8js5ES7g_4fish.exit231.i ], [ 4294967297, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtNtCs8frGy5WneL6_4fish8builtins6shared5error5ErrorECs4RW8js5ES7g_4fish.exit.i ], [ 4294967297, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtNtCs8frGy5WneL6_4fish8builtins6shared5error5ErrorECs4RW8js5ES7g_4fish.exit260.i ], [ 4294967297, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtNtCs8frGy5WneL6_4fish8builtins6shared5error5ErrorECs4RW8js5ES7g_4fish.exit277.i ]
   invoke void @_RNvXsp_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecINtNtB7_6borrow3CowNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrEENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCs4RW8js5ES7g_4fish(ptr noalias nofree noundef nonnull align 8 dereferenceable(136) %i.dm)
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecINtNtBG_6borrow3CowNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrEEECs4RW8js5ES7g_4fish.exit.i.i unwind label %bb.ct, !noalias !826
 
@@ -1251,8 +1250,7 @@ bb.go:                                            ; preds = %bb.gn
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrEECs4RW8js5ES7g_4fish.exit285.i: ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtCshMbxjpSxucW_12fish_wgetopt9WGetopterECs4RW8js5ES7g_4fish.exit283.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtCshMbxjpSxucW_12fish_wgetopt9WGetopterECs4RW8js5ES7g_4fish.exit.i
   %.sroa.16.0 = phi i64 [ %i.jd, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtCshMbxjpSxucW_12fish_wgetopt9WGetopterECs4RW8js5ES7g_4fish.exit283.i ], [ undef, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtCshMbxjpSxucW_12fish_wgetopt9WGetopterECs4RW8js5ES7g_4fish.exit.i ] ; 13 uses
-  %.sroa.10.1 = phi i32 [ undef, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtCshMbxjpSxucW_12fish_wgetopt9WGetopterECs4RW8js5ES7g_4fish.exit283.i ], [ %.sroa.10.0, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtCshMbxjpSxucW_12fish_wgetopt9WGetopterECs4RW8js5ES7g_4fish.exit.i ] ; 2 uses
-  %.sroa.0.1544 = phi i1 [ false, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtCshMbxjpSxucW_12fish_wgetopt9WGetopterECs4RW8js5ES7g_4fish.exit283.i ], [ true, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtCshMbxjpSxucW_12fish_wgetopt9WGetopterECs4RW8js5ES7g_4fish.exit.i ]
+  %.sroa.0.1545 = phi i64 [ 0, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtCshMbxjpSxucW_12fish_wgetopt9WGetopterECs4RW8js5ES7g_4fish.exit283.i ], [ %.sroa.0.0544, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtCshMbxjpSxucW_12fish_wgetopt9WGetopterECs4RW8js5ES7g_4fish.exit.i ] ; 2 uses
   invoke void @_RNvXs1_NtCs1xwejQucwHj_5alloc7raw_vecINtB5_6RawVecRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCs4RW8js5ES7g_4fish(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.dn)
           to label %bb.hc unwind label %bb.hb, !noalias !826
 
@@ -1351,9 +1349,12 @@ bb.hc:                                            ; preds = %_RINvNtCs3oUPovFnLW
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bx)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cd)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cj)
-  br i1 %.sroa.0.1544, label %bb.hd, label %bb.hg
+  %1 = trunc i64 %.sroa.0.1545 to i1
+  br i1 %1, label %bb.hd, label %bb.hg
 
 bb.hd:                                            ; preds = %bb.hc
+  %.sroa.0.4.extract.shift = lshr i64 %.sroa.0.1545, 32
+  %.sroa.0.4.extract.trunc = trunc nuw nsw i64 %.sroa.0.4.extract.shift to i32 ; 2 uses
   invoke void @_RNvXsp_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecmENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCs4RW8js5ES7g_4fish(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.gz)
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecmEECs4RW8js5ES7g_4fish.exit.i unwind label %bb.he
 
@@ -1756,7 +1757,7 @@ bb.ja:                                            ; preds = %_RINvNtCs3oUPovFnLW
   br i1 %or.cond15, label %bb.abn, label %.body513
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringECs4RW8js5ES7g_4fish.exit321: ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtNtCsaL1QbXo9JQH_3std3sys6os_str5bytes3BufECs4RW8js5ES7g_4fish.exit.i512, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecmEECs4RW8js5ES7g_4fish.exit.i316, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringECs4RW8js5ES7g_4fish.exit274, %bb.aau
-  %.sroa.0.0 = phi i32 [ 1, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecmEECs4RW8js5ES7g_4fish.exit.i316 ], [ %.sroa.10.1, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringECs4RW8js5ES7g_4fish.exit274 ], [ 1, %bb.aau ], [ %.sroa.0.2, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtNtCsaL1QbXo9JQH_3std3sys6os_str5bytes3BufECs4RW8js5ES7g_4fish.exit.i512 ]
+  %.sroa.0.0 = phi i32 [ 1, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecmEECs4RW8js5ES7g_4fish.exit.i316 ], [ %.sroa.0.4.extract.trunc, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringECs4RW8js5ES7g_4fish.exit274 ], [ 1, %bb.aau ], [ %.sroa.0.2, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtNtCsaL1QbXo9JQH_3std3sys6os_str5bytes3BufECs4RW8js5ES7g_4fish.exit.i512 ]
   %i.ys = load i64, ptr %i.hp, align 8, !range !9, !alias.scope !893, !noundef !8
   %i.yt = icmp eq i64 %i.ys, -1
   br i1 %i.yt, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsaL1QbXo9JQH_3std3ffi6os_str8OsStringEECs4RW8js5ES7g_4fish.exit327, label %bb.jb
@@ -2159,7 +2160,7 @@ bb.aau:                                           ; preds = %_RINvNtCs3oUPovFnLW
   br i1 %or.cond13, label %bb.aav, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringECs4RW8js5ES7g_4fish.exit321
 
 bb.aav:                                           ; preds = %bb.aau, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringECs4RW8js5ES7g_4fish.exit274
-  %.sroa.0.2 = phi i32 [ %.sroa.10.1, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringECs4RW8js5ES7g_4fish.exit274 ], [ 1, %bb.aau ]
+  %.sroa.0.2 = phi i32 [ %.sroa.0.4.extract.trunc, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringECs4RW8js5ES7g_4fish.exit274 ], [ 1, %bb.aau ]
   invoke void @_RNvXsp_NtCs1xwejQucwHj_5alloc3vecINtB5_3VechENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCs4RW8js5ES7g_4fish(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.ho)
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtNtCsaL1QbXo9JQH_3std3sys6os_str5bytes3BufECs4RW8js5ES7g_4fish.exit.i512 unwind label %bb.aaw
 

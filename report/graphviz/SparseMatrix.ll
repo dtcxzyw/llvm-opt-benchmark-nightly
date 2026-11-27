@@ -204,9 +204,11 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 gv_alloc.exit.i:                                  ; preds = %bb.a
-  store i32 %0, ptr %i.a, align 8, !tbaa !16
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  store i32 %1, ptr %6, align 4, !tbaa !17
+  %6 = zext i32 %0 to i64
+  %7 = zext i32 %1 to i64
+  %8 = shl nuw i64 %7, 32
+  %9 = or disjoint i64 %8, %6
+  store i64 %9, ptr %i.a, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   store i32 %3, ptr %i.e, align 8, !tbaa !18
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 64
@@ -262,6 +264,7 @@ SparseMatrix_init.exit.thread:                    ; preds = %.thread.i, %bb.f
   br i1 %.not11, label %bb.y, label %bb.q
 
 bb.h:                                             ; preds = %SparseMatrix_init.exit
+  %10 = getelementptr inbounds nuw i8, ptr %i.a, i64 48
   %mul.ov.i.i9 = icmp ugt i64 %2, 4611686018427387903
   br i1 %mul.ov.i.i9, label %bb.i, label %bb.j
 
@@ -325,6 +328,8 @@ bb.p:                                             ; preds = %bb.o
   unreachable
 
 bb.q:                                             ; preds = %SparseMatrix_init.exit.thread
+  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 48 ; 2 uses
+  store ptr null, ptr %11, align 8, !tbaa !15
   %mul.ov.i.i912 = icmp ugt i64 %2, 4611686018427387903
   br i1 %mul.ov.i.i912, label %bb.r, label %bb.s
 
@@ -376,9 +381,9 @@ bb.x:                                             ; preds = %bb.w
   unreachable
 
 .sink.split.i:                                    ; preds = %bb.w, %bb.o
-  %.sink.i.a = phi ptr [ %i.ak, %bb.o ], [ %i.bb, %bb.w ]
-  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 48
-  store ptr %.sink.i.a, ptr %7, align 8, !tbaa !15
+  %.sink.i.a = phi ptr [ %10, %bb.o ], [ %11, %bb.w ]
+  %.sink.i = phi ptr [ %i.ak, %bb.o ], [ %i.bb, %bb.w ]
+  store ptr %.sink.i, ptr %.sink.i.a, align 8, !tbaa !15
   br label %SparseMatrix_alloc.exit
 
 SparseMatrix_alloc.exit:                          ; preds = %gv_calloc.exit28.i, %.sink.split.i

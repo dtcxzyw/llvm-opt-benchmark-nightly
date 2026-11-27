@@ -149,7 +149,7 @@ bb.a:
   br i1 %or.cond, label %AdjustAndCheckRectangle.exit.thread, label %SnapTopLeftPosition.exit.i
 
 SnapTopLeftPosition.exit.i:                       ; preds = %bb.a
-  %.val.i = load i32, ptr %0, align 8, !tbaa !21  ; 2 uses
+  %.val.i = load i32, ptr %0, align 8, !tbaa !21
   %.not.i.i = icmp eq i32 %.val.i, 0              ; 2 uses
   %i.c = and i32 %1, -2
   %i.d = and i32 %2, -2
@@ -190,16 +190,17 @@ bb.d:                                             ; preds = %AdjustAndCheckRecta
 bb.e:                                             ; preds = %bb.d
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(256) %5, ptr noundef nonnull readonly align 8 dereferenceable(256) %0, i64 256, i1 false), !tbaa.struct !19
   tail call void @WebPPictureResetBuffers(ptr noundef nonnull %5) #4
-  %.pre = load i32, ptr %0, align 8, !tbaa !21
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
-  %6 = phi i32 [ %.pre, %bb.e ], [ %.val.i, %bb.d ]
-  %7 = getelementptr inbounds nuw i8, ptr %5, i64 8
-  store i32 %3, ptr %7, align 8, !tbaa !24
-  %8 = getelementptr inbounds nuw i8, ptr %5, i64 12
-  store i32 %4, ptr %8, align 4, !tbaa !25
-  %.not43 = icmp eq i32 %6, 0
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %7 = zext nneg i32 %3 to i64
+  %8 = zext nneg i32 %4 to i64
+  %9 = shl nuw nsw i64 %8, 32
+  %10 = or disjoint i64 %9, %7
+  store i64 %10, ptr %6, align 8
+  %11 = load i32, ptr %0, align 8, !tbaa !21
+  %.not43 = icmp eq i32 %11, 0
   %i.r = zext nneg i32 %.059 to i64               ; 3 uses
   br i1 %.not43, label %bb.g, label %bb.i
 
@@ -281,7 +282,7 @@ AdjustAndCheckRectangle.exit.thread:              ; preds = %AdjustAndCheckRecta
 ; Function Attrs: nounwind uwtable
 define i32 @WebPPictureCrop(ptr noundef %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4) local_unnamed_addr #0 {
 bb.a:
-  %5 = alloca %struct.WebPPicture, align 8        ; 18 uses
+  %5 = alloca %struct.WebPPicture, align 8        ; 17 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #4
   %i.a = icmp eq ptr %0, null
   br i1 %i.a, label %AdjustAndCheckRectangle.exit.thread, label %SnapTopLeftPosition.exit.i
@@ -325,9 +326,11 @@ bb.d:                                             ; preds = %AdjustAndCheckRecta
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(256) %5, ptr noundef nonnull readonly align 8 dereferenceable(256) %0, i64 256, i1 false), !tbaa.struct !19
   call void @WebPPictureResetBuffers(ptr noundef nonnull %5) #4
   %i.q = getelementptr inbounds nuw i8, ptr %5, i64 8
-  store i32 %3, ptr %i.q, align 8, !tbaa !24
-  %6 = getelementptr inbounds nuw i8, ptr %5, i64 12
-  store i32 %4, ptr %6, align 4, !tbaa !25
+  %6 = zext nneg i32 %3 to i64
+  %7 = zext nneg i32 %4 to i64
+  %8 = shl nuw nsw i64 %7, 32
+  %9 = or disjoint i64 %8, %6
+  store i64 %9, ptr %i.q, align 8
   %i.r = call i32 @WebPPictureAlloc(ptr noundef nonnull %5) #4
   %.not42 = icmp eq i32 %i.r, 0
   br i1 %.not42, label %bb.e, label %bb.f

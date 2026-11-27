@@ -64,9 +64,11 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 612
-  %i.i = load i32, ptr %i.h, align 4, !tbaa !96, !noalias !19 ; 4 uses
-  %i.j = icmp sgt i32 %i.i, 0
+  %i.i = load i32, ptr %i.h, align 4, !tbaa !96, !noalias !19 ; 5 uses
+  %i.j = icmp sgt i32 %i.i, -1
   tail call void @llvm.assume(i1 %i.j)
+  %2 = icmp ne i32 %i.i, 0
+  tail call void @llvm.assume(i1 %2)
   switch i32 %1, label %default.unreachable19 [
     i32 0, label %.preheader
     i32 1, label %.preheader22
@@ -469,6 +471,7 @@ define linkonce_odr hidden void @_ZN8rawspeed19Cr2sRawInterpolator19interpolate_
   %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 48
   %i.m = load i32, ptr %i.l, align 8, !tbaa !101, !noalias !160
   %i.n = ashr i32 %i.m, 1                         ; 3 uses
+  %2 = zext nneg i32 %i.i to i64                  ; 2 uses
   %i.o = icmp ne i32 %i.n, 0
   tail call void @llvm.assume(i1 %i.o)
   %i.p = icmp sge i32 %i.n, %i.i
@@ -509,7 +512,6 @@ define linkonce_odr hidden void @_ZN8rawspeed19Cr2sRawInterpolator19interpolate_
   %i.ar = load <3 x i32>, ptr %i.ap, align 8, !tbaa !107 ; 5 uses
   %i.as = shufflevector <3 x i32> %i.ar, <3 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 0>
   %i.at = load i32, ptr %i.aq, align 4, !tbaa !107
-  %2 = zext nneg i32 %i.i to i64                  ; 2 uses
   %wide.trip.count = zext i32 %i.ac to i64        ; 5 uses
   %invariant.op = add nsw i64 %i.ah, -1
   %min.iters.check = icmp ult i32 %i.s, 40
@@ -806,6 +808,7 @@ define linkonce_odr hidden void @_ZN8rawspeed19Cr2sRawInterpolator19interpolate_
   %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 48
   %i.m = load i32, ptr %i.l, align 8, !tbaa !101, !noalias !176
   %i.n = ashr i32 %i.m, 1                         ; 3 uses
+  %2 = zext nneg i32 %i.i to i64                  ; 2 uses
   %i.o = icmp ne i32 %i.n, 0
   tail call void @llvm.assume(i1 %i.o)
   %i.p = icmp sge i32 %i.n, %i.i
@@ -846,7 +849,6 @@ define linkonce_odr hidden void @_ZN8rawspeed19Cr2sRawInterpolator19interpolate_
   %i.ar = load <3 x i32>, ptr %i.ap, align 8, !tbaa !107 ; 5 uses
   %i.as = shufflevector <3 x i32> %i.ar, <3 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 0>
   %i.at = load i32, ptr %i.aq, align 4, !tbaa !107
-  %2 = zext nneg i32 %i.i to i64                  ; 2 uses
   %wide.trip.count = zext i32 %i.ac to i64        ; 5 uses
   %invariant.op = add nsw i64 %i.ah, -1
   %min.iters.check = icmp ult i32 %i.s, 40
@@ -1128,6 +1130,7 @@ define linkonce_odr hidden void @_ZN8rawspeed19Cr2sRawInterpolator19interpolate_
   %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 48
   %i.m = load i32, ptr %i.l, align 8, !tbaa !101, !noalias !192
   %i.n = ashr i32 %i.m, 1                         ; 3 uses
+  %2 = zext nneg i32 %i.i to i64                  ; 2 uses
   %i.o = icmp ne i32 %i.n, 0
   tail call void @llvm.assume(i1 %i.o)
   %i.p = icmp sge i32 %i.n, %i.i
@@ -1168,7 +1171,6 @@ define linkonce_odr hidden void @_ZN8rawspeed19Cr2sRawInterpolator19interpolate_
   %i.ar = load <3 x i32>, ptr %i.ap, align 8, !tbaa !107 ; 5 uses
   %i.as = shufflevector <3 x i32> %i.ar, <3 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 0>
   %i.at = load i32, ptr %i.aq, align 4, !tbaa !107
-  %2 = zext nneg i32 %i.i to i64                  ; 2 uses
   %wide.trip.count = zext i32 %i.ac to i64        ; 5 uses
   %invariant.op = add nsw i64 %i.ah, -1
   %min.iters.check = icmp ult i32 %i.s, 40

@@ -202,9 +202,10 @@ bb.o:                                             ; preds = %bb.a
 bb.p:                                             ; preds = %bb.a
   %i.av = getelementptr inbounds nuw i8, ptr %1, i64 1
   %i.aw = load i8, ptr %i.av, align 1, !range !43, !noundef !10
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  store i8 %i.aw, ptr %2, align 1
-  store i8 10, ptr %0, align 8
+  %2 = zext nneg i8 %i.aw to i16
+  %3 = shl nuw nsw i16 %2, 8
+  %4 = or disjoint i16 %3, 10
+  store i16 %4, ptr %0, align 8
   br label %bb.ah
 
 bb.q:                                             ; preds = %bb.a

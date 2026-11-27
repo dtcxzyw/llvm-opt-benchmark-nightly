@@ -40,14 +40,16 @@ bb.a:
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 472 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 6 uses
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
+  %2 = zext i32 %i.c to i64
   br label %bb.b
 
 ._crit_edge73:                                    ; preds = %.loopexit58, %bb.a
   ret void
 
 bb.b:                                             ; preds = %.lr.ph72, %.loopexit58
-  %.sroa.052.070 = phi i32 [ 1, %.lr.ph72 ], [ %4, %.loopexit58 ] ; 10 uses
-  %i.o = tail call i32 @llvm.abs.i32(i32 %.sroa.052.070, i1 true) ; 3 uses
+  %indvars.iv = phi i64 [ 1, %.lr.ph72 ], [ %indvars.iv.next, %.loopexit58 ] ; 5 uses
+  %3 = trunc nuw i64 %indvars.iv to i32           ; 6 uses
+  %i.o = tail call i32 @llvm.abs.i32(i32 %3, i1 true) ; 3 uses
   %i.p = zext nneg i32 %i.o to i64                ; 3 uses
   %i.q = load ptr, ptr %i.e, align 8, !tbaa !196
   %i.r = load ptr, ptr %i.d, align 8, !tbaa !197  ; 2 uses
@@ -73,8 +75,8 @@ _ZN7CaDiCaL8Internal6frozenEi.exit.thread:        ; preds = %bb.b, %_ZN7CaDiCaL8
   br i1 %or.cond55, label %.preheader.preheader, label %.loopexit58
 
 .preheader.preheader:                             ; preds = %_ZN7CaDiCaL8Internal6frozenEi.exit.thread
-  %i.ad = sub nsw i32 0, %.sroa.052.070           ; 3 uses
-  %i.ae = tail call i32 @llvm.abs.i32(i32 %.sroa.052.070, i1 true) ; 2 uses
+  %i.ad = sub nsw i32 0, %3
+  %i.ae = tail call i32 @llvm.abs.i32(i32 %3, i1 true) ; 2 uses
   %i.af = tail call noundef i32 @llvm.fshl.i32(i32 %i.ae, i32 %i.ad, i32 1)
   %i.ag = zext i32 %i.af to i64                   ; 2 uses
   %i.ah = load ptr, ptr %i.g, align 8, !tbaa !198 ; 3 uses
@@ -95,8 +97,10 @@ bb.c:                                             ; preds = %.preheader.preheade
   br i1 %.not64, label %.loopexit, label %.lr.ph67
 
 .lr.ph67:                                         ; preds = %bb.c
-  %i.as = tail call i32 @llvm.fshl.i32(i32 %i.ae, i32 %.sroa.052.070, i32 1)
+  %i.as = tail call i32 @llvm.fshl.i32(i32 %i.ae, i32 %3, i32 1)
   %i.at = zext i32 %i.as to i64
+  %4 = sub nsw i64 0, %indvars.iv
+  %5 = and i64 %4, 4294967295
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph67, %_ZN7CaDiCaL12Instantiator9candidateEiPNS_6ClauseEim.exit
@@ -118,7 +122,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.ba = getelementptr inbounds nuw i8, ptr %i.au, i64 16
-  %i.bb = load i32, ptr %i.ba, align 8, !tbaa !13 ; 5 uses
+  %i.bb = load i32, ptr %i.ba, align 8, !tbaa !13 ; 4 uses
   %i.bc = load i32, ptr %i.k, align 4, !tbaa !202
   %i.bd = icmp slt i32 %i.bb, %i.bc
   br i1 %i.bd, label %_ZN7CaDiCaL12Instantiator9candidateEiPNS_6ClauseEim.exit, label %bb.g
@@ -209,15 +213,16 @@ bb.i:                                             ; preds = %._crit_edge
   %i.cm = ptrtoint ptr %i.ck to i64
   %i.cn = sub i64 %i.cl, %i.cm
   %i.co = ashr exact i64 %i.cn, 3                 ; 2 uses
-  %i.cp = load ptr, ptr %i.m, align 8, !tbaa !168 ; 9 uses
+  %6 = zext i32 %i.bb to i64
+  %7 = shl nuw i64 %6, 32
+  %8 = or disjoint i64 %7, %5                     ; 2 uses
+  %i.cp = load ptr, ptr %i.m, align 8, !tbaa !168 ; 8 uses
   %i.cq = load ptr, ptr %i.n, align 8, !tbaa !203
   %.not.i.i.i = icmp eq ptr %i.cp, %i.cq
   br i1 %.not.i.i.i, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  store i32 %i.ad, ptr %i.cp, align 8, !tbaa !13
-  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.cp, i64 4
-  store i32 %i.bb, ptr %.sroa.5.0..sroa_idx.i, align 4, !tbaa !13
+  store i64 %8, ptr %i.cp, align 8, !tbaa !13
   %.sroa.6.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.cp, i64 8
   store i64 %i.co, ptr %.sroa.6.0..sroa_idx.i.a, align 8, !tbaa !21
   %.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.cp, i64 16
@@ -249,13 +254,11 @@ _ZNKSt6vectorIN7CaDiCaL12Instantiator9CandidateESaIS2_EE12_M_check_lenEmPKc.exit
   tail call void @llvm.assume(i1 %.not.i.i.i.i.i)
   %i.dc = mul nuw nsw i64 %i.db, 24
   %i.dd = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.dc) #11 ; 5 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.dd, i64 %i.cv ; 4 uses
-  store i32 %i.ad, ptr %2, align 8, !tbaa !13
-  %.sroa.5.0..sroa_idx5.i.a = getelementptr inbounds nuw i8, ptr %2, i64 4
-  store i32 %i.bb, ptr %.sroa.5.0..sroa_idx5.i.a, align 4, !tbaa !13
-  %.sroa.6.0..sroa_idx7.i.a = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %.sroa.5.0..sroa_idx5.i.a = getelementptr inbounds nuw i8, ptr %i.dd, i64 %i.cv ; 3 uses
+  store i64 %8, ptr %.sroa.5.0..sroa_idx5.i.a, align 8, !tbaa !13
+  %.sroa.6.0..sroa_idx7.i.a = getelementptr inbounds nuw i8, ptr %.sroa.5.0..sroa_idx5.i.a, i64 8
   store i64 %i.co, ptr %.sroa.6.0..sroa_idx7.i.a, align 8, !tbaa !21
-  %.sroa.7.0..sroa_idx9.i = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %.sroa.7.0..sroa_idx9.i = getelementptr inbounds nuw i8, ptr %.sroa.5.0..sroa_idx5.i.a, i64 16
   store ptr %i.au, ptr %.sroa.7.0..sroa_idx9.i, align 8, !tbaa !161
   %.not10.i.i.i.i.i.i.i.i = icmp eq ptr %i.cs, %i.cp
   br i1 %.not10.i.i.i.i.i.i.i.i, label %_ZNSt6vectorIN7CaDiCaL12Instantiator9CandidateESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i
@@ -300,7 +303,7 @@ _ZN7CaDiCaL12Instantiator9candidateEiPNS_6ClauseEim.exit: ; preds = %bb.g, %_ZNS
 .loopexit:                                        ; preds = %.loopexit.loopexit, %bb.c, %.preheader.preheader
   %.pre-phi = phi i64 [ %.pre77, %.loopexit.loopexit ], [ %i.al, %bb.c ], [ %i.al, %.preheader.preheader ]
   %i.dj = phi ptr [ %.pre, %.loopexit.loopexit ], [ %i.ah, %bb.c ], [ %i.ah, %.preheader.preheader ]
-  %i.dk = tail call noundef i32 @llvm.fshl.i32(i32 %i.o, i32 %.sroa.052.070, i32 1)
+  %i.dk = tail call noundef i32 @llvm.fshl.i32(i32 %i.o, i32 %3, i32 1)
   %i.dl = zext i32 %i.dk to i64                   ; 2 uses
   %i.dm = getelementptr inbounds nuw [8 x i8], ptr %i.dj, i64 %i.dl
   %i.dn = load i64, ptr %i.dm, align 8, !tbaa !21
@@ -317,7 +320,7 @@ bb.m:                                             ; preds = %.loopexit
   br i1 %.not64.1, label %.loopexit58, label %.lr.ph67.1
 
 .lr.ph67.1:                                       ; preds = %bb.m
-  %i.du = sub nsw i32 0, %.sroa.052.070
+  %i.du = sub nsw i32 0, %3
   %i.dv = tail call i32 @llvm.fshl.i32(i32 %i.o, i32 %i.du, i32 1)
   %i.dw = zext i32 %i.dv to i64
   br label %bb.n
@@ -341,7 +344,7 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o
   %i.ed = getelementptr inbounds nuw i8, ptr %i.dx, i64 16
-  %i.ee = load i32, ptr %i.ed, align 8, !tbaa !13 ; 5 uses
+  %i.ee = load i32, ptr %i.ed, align 8, !tbaa !13 ; 4 uses
   %i.ef = load i32, ptr %i.k, align 4, !tbaa !202
   %i.eg = icmp slt i32 %i.ee, %i.ef
   br i1 %i.eg, label %_ZN7CaDiCaL12Instantiator9candidateEiPNS_6ClauseEim.exit.1, label %bb.q
@@ -432,15 +435,16 @@ bb.s:                                             ; preds = %._crit_edge.1
   %i.fp = ptrtoint ptr %i.fn to i64
   %i.fq = sub i64 %i.fo, %i.fp
   %i.fr = ashr exact i64 %i.fq, 3                 ; 2 uses
-  %i.fs = load ptr, ptr %i.m, align 8, !tbaa !168 ; 9 uses
+  %9 = zext i32 %i.ee to i64
+  %10 = shl nuw i64 %9, 32
+  %11 = or disjoint i64 %10, %indvars.iv          ; 2 uses
+  %i.fs = load ptr, ptr %i.m, align 8, !tbaa !168 ; 8 uses
   %i.ft = load ptr, ptr %i.n, align 8, !tbaa !203
   %.not.i.i.i.1 = icmp eq ptr %i.fs, %i.ft
   br i1 %.not.i.i.i.1, label %bb.u, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  store i32 %.sroa.052.070, ptr %i.fs, align 8, !tbaa !13
-  %.sroa.5.0..sroa_idx.i.1 = getelementptr inbounds nuw i8, ptr %i.fs, i64 4
-  store i32 %i.ee, ptr %.sroa.5.0..sroa_idx.i.1, align 4, !tbaa !13
+  store i64 %11, ptr %i.fs, align 8, !tbaa !13
   %.sroa.6.0..sroa_idx.i.1.a = getelementptr inbounds nuw i8, ptr %i.fs, i64 8
   store i64 %i.fr, ptr %.sroa.6.0..sroa_idx.i.1.a, align 8, !tbaa !21
   %.sroa.7.0..sroa_idx.i.1 = getelementptr inbounds nuw i8, ptr %i.fs, i64 16
@@ -468,13 +472,11 @@ _ZNKSt6vectorIN7CaDiCaL12Instantiator9CandidateESaIS2_EE12_M_check_lenEmPKc.exit
   tail call void @llvm.assume(i1 %.not.i.i.i.i.i.1)
   %i.gf = mul nuw nsw i64 %i.ge, 24
   %i.gg = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.gf) #11 ; 5 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.gg, i64 %i.fy ; 4 uses
-  store i32 %.sroa.052.070, ptr %3, align 8, !tbaa !13
-  %.sroa.5.0..sroa_idx5.i.1.a = getelementptr inbounds nuw i8, ptr %3, i64 4
-  store i32 %i.ee, ptr %.sroa.5.0..sroa_idx5.i.1.a, align 4, !tbaa !13
-  %.sroa.6.0..sroa_idx7.i.1.a = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %.sroa.5.0..sroa_idx5.i.1.a = getelementptr inbounds nuw i8, ptr %i.gg, i64 %i.fy ; 3 uses
+  store i64 %11, ptr %.sroa.5.0..sroa_idx5.i.1.a, align 8, !tbaa !13
+  %.sroa.6.0..sroa_idx7.i.1.a = getelementptr inbounds nuw i8, ptr %.sroa.5.0..sroa_idx5.i.1.a, i64 8
   store i64 %i.fr, ptr %.sroa.6.0..sroa_idx7.i.1.a, align 8, !tbaa !21
-  %.sroa.7.0..sroa_idx9.i.1 = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %.sroa.7.0..sroa_idx9.i.1 = getelementptr inbounds nuw i8, ptr %.sroa.5.0..sroa_idx5.i.1.a, i64 16
   store ptr %i.dx, ptr %.sroa.7.0..sroa_idx9.i.1, align 8, !tbaa !161
   %.not10.i.i.i.i.i.i.i.i.1 = icmp eq ptr %i.fv, %i.fs
   br i1 %.not10.i.i.i.i.i.i.i.i.1, label %_ZNSt6vectorIN7CaDiCaL12Instantiator9CandidateESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i.i.i.1, label %.lr.ph.i.i.i.i.i.i.i.i.1
@@ -511,8 +513,8 @@ _ZN7CaDiCaL12Instantiator9candidateEiPNS_6ClauseEim.exit.1: ; preds = %bb.q, %_Z
   br i1 %.not.1, label %.loopexit58, label %bb.n
 
 .loopexit58:                                      ; preds = %_ZN7CaDiCaL12Instantiator9candidateEiPNS_6ClauseEim.exit.1, %.loopexit, %bb.m, %_ZN7CaDiCaL8Internal6frozenEi.exit.thread, %_ZN7CaDiCaL8Internal6frozenEi.exit
-  %4 = add i32 %.sroa.052.070, 1
-  %.not56 = icmp eq i32 %.sroa.052.070, %i.c
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %.not56 = icmp eq i64 %indvars.iv, %2
   br i1 %.not56, label %._crit_edge73, label %bb.b
 }
 

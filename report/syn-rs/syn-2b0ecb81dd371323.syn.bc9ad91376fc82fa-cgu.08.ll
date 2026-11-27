@@ -202,9 +202,10 @@ bb.ff:                                            ; preds = %bb.fe
   %.sroa.7415.sroa.0.sroa.9.sroa.7.0..sroa.7415.sroa.0.sroa.9.0..sroa.7415.0..sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.7415.sroa.0.sroa.9.sroa.7.0..sroa.7415.sroa.0.sroa.9.0..sroa.7415.0..sroa_idx.sroa_idx.sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.4412.0..sroa_idx, i64 24, i1 false)
   %.sroa.7415.sroa.7.0..sroa.7415.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 64
-  store i32 1, ptr %.sroa.7415.sroa.7.0..sroa.7415.0..sroa_idx.sroa_idx, align 8
-  %.sroa.7415.sroa.8.0..sroa.7415.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 68
-  store i32 %i.he, ptr %.sroa.7415.sroa.8.0..sroa.7415.0..sroa_idx.sroa_idx, align 4
+  %4 = zext i32 %i.he to i64
+  %5 = shl nuw i64 %4, 32
+  %6 = or disjoint i64 %5, 1
+  store i64 %6, ptr %.sroa.7415.sroa.7.0..sroa.7415.0..sroa_idx.sroa_idx, align 8
   br label %bb.fg
 
 bb.fg:                                            ; preds = %bb.fj, %bb.ff
@@ -607,9 +608,11 @@ bb.rj:                                            ; preds = %bb.rh
   %.sroa.511.sroa.8.sroa.7.0..sroa.511.sroa.8.0..sroa.511.0..sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 96
   store i64 0, ptr %.sroa.511.sroa.8.sroa.7.0..sroa.511.sroa.8.0..sroa.511.0..sroa_idx.sroa_idx.sroa_idx, align 8
   %.sroa.511.sroa.8.sroa.8.0..sroa.511.sroa.8.0..sroa.511.0..sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 104
-  store i32 %i.rv, ptr %.sroa.511.sroa.8.sroa.8.0..sroa.511.sroa.8.0..sroa.511.0..sroa_idx.sroa_idx.sroa_idx, align 8
-  %.sroa.511.sroa.8.sroa.9.0..sroa.511.sroa.8.0..sroa.511.0..sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 108
-  store i32 %i.sh, ptr %.sroa.511.sroa.8.sroa.9.0..sroa.511.sroa.8.0..sroa.511.0..sroa_idx.sroa_idx.sroa_idx, align 4
+  %7 = zext i32 %i.rv to i64
+  %8 = zext i32 %i.sh to i64
+  %9 = shl nuw i64 %8, 32
+  %10 = or disjoint i64 %9, %7
+  store i64 %10, ptr %.sroa.511.sroa.8.sroa.8.0..sroa.511.sroa.8.0..sroa.511.0..sroa_idx.sroa_idx.sroa_idx, align 8
   br label %bb.rk
 
 bb.rk:                                            ; preds = %bb.rr, %bb.rj

@@ -204,7 +204,7 @@ bb.ac:                                            ; preds = %_RNvMss_NtCsldpiDta
 bb.ad:                                            ; preds = %.thread.i, %bb.ac
   %i.cw = and i64 %.pre-phi, 1
   %i.cx = icmp eq i64 %i.cw, 0
-  %i.cy = getelementptr inbounds nuw i8, ptr %i.m, i64 12 ; 2 uses
+  %i.cy = getelementptr inbounds nuw i8, ptr %i.m, i64 12
   %i.cz = load i32, ptr %i.cy, align 4, !alias.scope !127 ; 2 uses
   br i1 %i.cx, label %bb.ae, label %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E15make_buf_sharedCsa2F6HLACPlS_11markup5ever.exit.i40
 
@@ -221,10 +221,13 @@ _RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E15make_bu
   %i.dd = phi i32 [ 0, %bb.ae ], [ %i.cz, %bb.ad ]
   %i.de = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 2 uses
   %i.df = add i32 %i.dd, %.sroa.0.0.lcssa.i
-  store i32 %i.df, ptr %i.cy, align 4, !alias.scope !127
   %3 = load i32, ptr %i.de, align 8, !alias.scope !127, !noundef !4
   %4 = sub i32 %3, %.sroa.0.0.lcssa.i             ; 2 uses
-  store i32 %4, ptr %i.de, align 8, !alias.scope !127
+  %5 = zext i32 %4 to i64
+  %6 = zext i32 %i.df to i64
+  %7 = shl nuw i64 %6, 32
+  %8 = or disjoint i64 %7, %5
+  store i64 %8, ptr %i.de, align 8, !alias.scope !127
   br label %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E16unsafe_pop_frontCsa2F6HLACPlS_11markup5ever.exit
 
 bb.af:                                            ; preds = %bb.ac
@@ -311,8 +314,8 @@ bb.ai:                                            ; preds = %_RNvMss_NtCsldpiDta
   br label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai, %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E16unsafe_pop_frontCsa2F6HLACPlS_11markup5ever.exit, %bb.w, %bb.y, %bb.x
-  %.sroa.5.sroa.4.0 = phi ptr [ undef, %bb.w ], [ undef, %bb.x ], [ undef, %bb.y ], [ %.sroa.062.0, %bb.ai ], [ %.sroa.062.0, %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E16unsafe_pop_frontCsa2F6HLACPlS_11markup5ever.exit ]
   %.sroa.5.sroa.0.0 = phi i32 [ %i.as, %bb.w ], [ %i.as, %bb.x ], [ %i.as, %bb.y ], [ undef, %bb.ai ], [ undef, %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E16unsafe_pop_frontCsa2F6HLACPlS_11markup5ever.exit ]
+  %.sroa.5.sroa.4.0 = phi ptr [ undef, %bb.w ], [ undef, %bb.x ], [ undef, %bb.y ], [ %.sroa.062.0, %bb.ai ], [ %.sroa.062.0, %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E16unsafe_pop_frontCsa2F6HLACPlS_11markup5ever.exit ]
   %.sroa.5.sroa.5.0 = phi i64 [ undef, %bb.w ], [ undef, %bb.x ], [ undef, %bb.y ], [ %.sroa.563.0, %bb.ai ], [ %.sroa.563.0, %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E16unsafe_pop_frontCsa2F6HLACPlS_11markup5ever.exit ]
   %.sroa.4.0.i45.pn = phi i64 [ 0, %bb.w ], [ 1, %bb.x ], [ %i.ci, %bb.y ], [ %spec.select, %bb.ai ], [ 0, %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E16unsafe_pop_frontCsa2F6HLACPlS_11markup5ever.exit ]
   %.sroa.01.0 = phi i32 [ 0, %bb.w ], [ 0, %bb.x ], [ 0, %bb.y ], [ 1, %bb.ai ], [ 1, %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E16unsafe_pop_frontCsa2F6HLACPlS_11markup5ever.exit ]
@@ -715,7 +718,7 @@ bb.j:                                             ; preds = %bb.g
 
 bb.k:                                             ; preds = %bb.j
   %i.ch = icmp eq i64 %i.cg, 0
-  %i.ci = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
+  %i.ci = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.cj = load i32, ptr %i.ci, align 4, !alias.scope !222 ; 2 uses
   br i1 %i.ch, label %bb.l, label %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E15make_buf_sharedCsa2F6HLACPlS_11markup5ever.exit.i
 
@@ -731,10 +734,13 @@ _RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E15make_bu
   %i.cm = phi i32 [ 0, %bb.l ], [ %i.cj, %bb.k ]
   %i.cn = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.co = add i32 %i.cm, %i.bp
-  store i32 %i.co, ptr %i.ci, align 4, !alias.scope !222
   %1 = load i32, ptr %i.cn, align 8, !alias.scope !222, !noundef !4
   %2 = sub i32 %1, %i.bp
-  store i32 %2, ptr %i.cn, align 8, !alias.scope !222
+  %3 = zext i32 %2 to i64
+  %4 = zext i32 %i.co to i64
+  %5 = shl nuw i64 %4, 32
+  %6 = or disjoint i64 %5, %3
+  store i64 %6, ptr %i.cn, align 8, !alias.scope !222
   br label %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E5clearCsa2F6HLACPlS_11markup5ever.exit
 
 _RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E13as_byte_sliceCsa2F6HLACPlS_11markup5ever.exit.i: ; preds = %bb.j

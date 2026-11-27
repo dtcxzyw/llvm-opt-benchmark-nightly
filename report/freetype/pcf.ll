@@ -204,7 +204,7 @@ bb.br:                                            ; preds = %bb.bq, %bb.bp
 pcf_get_metric.exit.us.i:                         ; preds = %.lr.ph.i216, %bb.bv
   %.04170.us.i = phi ptr [ %.041.us.i, %bb.bv ], [ %.04166.i, %.lr.ph.i216 ] ; 5 uses
   %.069.us.i = phi i64 [ %i.hu, %bb.bv ], [ 1, %.lr.ph.i216 ]
-  %.pn67.us.i = phi ptr [ %.04170.us.i, %bb.bv ], [ %i.gy, %.lr.ph.i216 ] ; 4 uses
+  %.pn67.us.i = phi ptr [ %.04170.us.i, %bb.bv ], [ %i.gy, %.lr.ph.i216 ] ; 5 uses
   %i.hg = call i32 @FT_Stream_ReadFields(ptr noundef nonnull %0, ptr noundef nonnull %i.hf, ptr noundef nonnull %.04170.us.i) #12 ; 2 uses
   store i32 %i.hg, ptr %i.b, align 4, !tbaa !76
   %i.hh = getelementptr inbounds nuw i8, ptr %.pn67.us.i, i64 40
@@ -213,7 +213,7 @@ pcf_get_metric.exit.us.i:                         ; preds = %.lr.ph.i216, %bb.bv
   br i1 %.not52.us.i, label %bb.bs, label %pcf_get_metrics.exit
 
 bb.bs:                                            ; preds = %pcf_get_metric.exit.us.i
-  %i.hi = getelementptr inbounds nuw i8, ptr %.pn67.us.i, i64 26 ; 2 uses
+  %i.hi = getelementptr inbounds nuw i8, ptr %.pn67.us.i, i64 26
   %i.hj = load i16, ptr %i.hi, align 2, !tbaa !65
   %i.hk = load i16, ptr %.04170.us.i, align 8, !tbaa !66
   %i.hl = icmp slt i16 %i.hj, %i.hk
@@ -231,8 +231,9 @@ bb.bt:                                            ; preds = %bb.bs
   br i1 %i.ht, label %bb.bu, label %bb.bv
 
 bb.bu:                                            ; preds = %bb.bt, %bb.bs
-  store i16 0, ptr %.04170.us.i, align 8, !tbaa !66
-  store <4 x i16> zeroinitializer, ptr %i.hi, align 2, !tbaa !75
+  store i64 0, ptr %.04170.us.i, align 8
+  %4 = getelementptr inbounds nuw i8, ptr %.pn67.us.i, i64 32
+  store i16 0, ptr %4, align 8, !tbaa !64
   br label %bb.bv
 
 bb.bv:                                            ; preds = %bb.bu, %bb.bt
@@ -245,7 +246,7 @@ bb.bv:                                            ; preds = %bb.bu, %bb.bt
 .lr.ph.split.i217:                                ; preds = %.lr.ph.i216, %bb.by
   %.04170.i = phi ptr [ %.041.i, %bb.by ], [ %.04166.i, %.lr.ph.i216 ] ; 5 uses
   %.069.i = phi i64 [ %i.io, %bb.by ], [ 1, %.lr.ph.i216 ]
-  %.pn67.i = phi ptr [ %.04170.i, %bb.by ], [ %i.gy, %.lr.ph.i216 ] ; 4 uses
+  %.pn67.i = phi ptr [ %.04170.i, %bb.by ], [ %i.gy, %.lr.ph.i216 ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #12
   %i.hx = call i32 @FT_Stream_ReadFields(ptr noundef nonnull %0, ptr noundef nonnull @pcf_compressed_metric_header, ptr noundef nonnull %3) #12 ; 2 uses
   %.not.i55.i = icmp eq i32 %i.hx, 0
@@ -256,7 +257,7 @@ bb.bw:                                            ; preds = %.lr.ph.split.i217
   %i.hz = zext i8 %i.hy to i16
   %i.ia = add nsw i16 %i.hz, -128
   store i16 %i.ia, ptr %.04170.i, align 8, !tbaa !66
-  %i.ib = getelementptr inbounds nuw i8, ptr %.pn67.i, i64 26 ; 2 uses
+  %i.ib = getelementptr inbounds nuw i8, ptr %.pn67.i, i64 26
   %i.ic = load i8, ptr %i.he, align 1, !tbaa !92
   %i.id = load <4 x i8>, ptr %i.hd, align 1, !tbaa !43
   %i.ie = zext i8 %i.ic to i16
@@ -279,8 +280,9 @@ bb.bw:                                            ; preds = %.lr.ph.split.i217
   br i1 %or.cond269, label %bb.bx, label %bb.by
 
 bb.bx:                                            ; preds = %bb.bw
-  store i16 0, ptr %.04170.i, align 8, !tbaa !66
-  store <4 x i16> zeroinitializer, ptr %i.ib, align 2, !tbaa !75
+  %5 = getelementptr inbounds nuw i8, ptr %.pn67.i, i64 32
+  store i64 0, ptr %.04170.i, align 8
+  store i16 0, ptr %5, align 8, !tbaa !64
   br label %bb.by
 
 bb.by:                                            ; preds = %bb.bw, %bb.bx

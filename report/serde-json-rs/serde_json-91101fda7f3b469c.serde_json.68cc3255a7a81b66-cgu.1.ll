@@ -202,7 +202,7 @@ bb.a:
   %i.b = alloca [24 x i8], align 8                ; 4 uses
   %i.c = alloca [32 x i8], align 8                ; 6 uses
   %i.d = alloca [4 x i8], align 4                 ; 4 uses
-  %i.e = alloca [80 x i8], align 8                ; 14 uses
+  %i.e = alloca [80 x i8], align 8                ; 13 uses
   %i.f = icmp eq i64 %2, 0
   br i1 %i.f, label %bb.c, label %bb.b
 
@@ -468,15 +468,12 @@ bb.y:                                             ; preds = %bb.b
   %.sroa.4.sroa.5.sroa.6.0..sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 48 ; 2 uses
   store i64 %2, ptr %.sroa.4.sroa.5.sroa.6.0..sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.sroa_idx, align 8
   %.sroa.4.sroa.5.sroa.7.0..sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 56 ; 3 uses
-  store i32 47, ptr %.sroa.4.sroa.5.sroa.7.0..sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.sroa_idx, align 8
-  %.sroa.4.sroa.5.sroa.8.0..sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 60
-  store i32 47, ptr %.sroa.4.sroa.5.sroa.8.0..sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.sroa_idx, align 4
+  store i64 201863462959, ptr %.sroa.4.sroa.5.sroa.7.0..sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.sroa_idx, align 8
   %.sroa.4.sroa.5.sroa.9.0..sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 64 ; 2 uses
   store i8 1, ptr %.sroa.4.sroa.5.sroa.9.0..sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.sroa_idx, align 8
   %.sroa.4.sroa.6.0..sroa.4.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 72 ; 2 uses
-  store i8 1, ptr %.sroa.4.sroa.6.0..sroa.4.0..sroa_idx.sroa_idx, align 8
-  %.sroa.4.sroa.7.0..sroa.4.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 73 ; 3 uses
-  store i8 0, ptr %.sroa.4.sroa.7.0..sroa.4.0..sroa_idx.sroa_idx, align 1
+  %.sroa.4.sroa.7.0..sroa.4.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 73 ; 2 uses
+  store i16 1, ptr %.sroa.4.sroa.6.0..sroa.4.0..sroa_idx.sroa_idx, align 8
   call void @llvm.experimental.noalias.scope.decl(metadata !93)
   store i64 0, ptr %i.e, align 8, !alias.scope !93
   %i.bu = call fastcc ptr @_RNvYINtNtNtCs8Chj7Szqq0n_4core3str4iter5SplitcENtNtNtNtB9_4iter6traits8iterator8Iterator3nthCs8ZPNfZ0ciAA_10serde_json(ptr noalias nofree noundef align 8 dereferenceable(72) %.sroa.4.0..sroa_idx, i64 noundef 0) #21
@@ -496,7 +493,7 @@ bb.a:
   %i.b = alloca [24 x i8], align 8                ; 4 uses
   %i.c = alloca [32 x i8], align 8                ; 6 uses
   %i.d = alloca [4 x i8], align 4                 ; 4 uses
-  %i.e = alloca [80 x i8], align 8                ; 14 uses
+  %i.e = alloca [80 x i8], align 8                ; 13 uses
   %i.f = icmp eq i64 %2, 0
   br i1 %i.f, label %bb.c, label %bb.b
 
@@ -764,15 +761,12 @@ bb.y:                                             ; preds = %bb.b
   %.sroa.4.sroa.5.sroa.6.0..sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 48 ; 2 uses
   store i64 %2, ptr %.sroa.4.sroa.5.sroa.6.0..sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.sroa_idx, align 8
   %.sroa.4.sroa.5.sroa.7.0..sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 56 ; 3 uses
-  store i32 47, ptr %.sroa.4.sroa.5.sroa.7.0..sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.sroa_idx, align 8
-  %.sroa.4.sroa.5.sroa.8.0..sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 60
-  store i32 47, ptr %.sroa.4.sroa.5.sroa.8.0..sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.sroa_idx, align 4
+  store i64 201863462959, ptr %.sroa.4.sroa.5.sroa.7.0..sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.sroa_idx, align 8
   %.sroa.4.sroa.5.sroa.9.0..sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 64 ; 2 uses
   store i8 1, ptr %.sroa.4.sroa.5.sroa.9.0..sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.sroa_idx, align 8
   %.sroa.4.sroa.6.0..sroa.4.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 72 ; 2 uses
-  store i8 1, ptr %.sroa.4.sroa.6.0..sroa.4.0..sroa_idx.sroa_idx, align 8
-  %.sroa.4.sroa.7.0..sroa.4.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 73 ; 3 uses
-  store i8 0, ptr %.sroa.4.sroa.7.0..sroa.4.0..sroa_idx.sroa_idx, align 1
+  %.sroa.4.sroa.7.0..sroa.4.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 73 ; 2 uses
+  store i16 1, ptr %.sroa.4.sroa.6.0..sroa.4.0..sroa_idx.sroa_idx, align 8
   call void @llvm.experimental.noalias.scope.decl(metadata !156)
   store i64 0, ptr %i.e, align 8, !alias.scope !156
   %i.bu = call fastcc ptr @_RNvYINtNtNtCs8Chj7Szqq0n_4core3str4iter5SplitcENtNtNtNtB9_4iter6traits8iterator8Iterator3nthCs8ZPNfZ0ciAA_10serde_json(ptr noalias nofree noundef align 8 dereferenceable(72) %.sroa.4.0..sroa_idx, i64 noundef 0) #21
@@ -790,7 +784,7 @@ define void @_RNvMsm_NtNtCs8ZPNfZ0ciAA_10serde_json5value2deNtB7_5Value10unexpec
 bb.a:
   %i.a = load i8, ptr %1, align 8, !range !9, !noundef !5
   switch i8 %i.a, label %default.unreachable1 [
-    i8 0, label %_RNvMs9_NtCs8ZPNfZ0ciAA_10serde_json6numberNtB5_6Number10unexpected.exit.a
+    i8 0, label %2
     i8 1, label %bb.b
     i8 2, label %bb.c
     i8 3, label %bb.g
@@ -801,11 +795,16 @@ bb.a:
 default.unreachable1:                             ; preds = %bb.c, %bb.a
   unreachable
 
+2:                                                ; preds = %bb.a
+  store i8 7, ptr %0, align 8
+  br label %_RNvMs9_NtCs8ZPNfZ0ciAA_10serde_json6numberNtB5_6Number10unexpected.exit.a
+
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 1
   %i.c = load i8, ptr %i.b, align 1, !range !11, !noundef !5
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  store i8 %i.c, ptr %2, align 1
+  %3 = zext nneg i8 %i.c to i16
+  %4 = shl nuw nsw i16 %3, 8
+  store i16 %4, ptr %0, align 8
   br label %_RNvMs9_NtCs8ZPNfZ0ciAA_10serde_json6numberNtB5_6Number10unexpected.exit.a
 
 bb.c:                                             ; preds = %bb.a
@@ -824,16 +823,21 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.h = load i64, ptr %i.f, align 8, !alias.scope !162, !noundef !5
   store i64 %i.h, ptr %i.g, align 8, !alias.scope !161
-  br label %_RNvMs9_NtCs8ZPNfZ0ciAA_10serde_json6numberNtB5_6Number10unexpected.exit.a
+  br label %_RNvMs9_NtCs8ZPNfZ0ciAA_10serde_json6numberNtB5_6Number10unexpected.exit
 
 bb.e:                                             ; preds = %bb.c
   %i.i = load i64, ptr %i.f, align 8, !alias.scope !162, !noundef !5
   store i64 %i.i, ptr %i.g, align 8, !alias.scope !161
-  br label %_RNvMs9_NtCs8ZPNfZ0ciAA_10serde_json6numberNtB5_6Number10unexpected.exit.a
+  br label %_RNvMs9_NtCs8ZPNfZ0ciAA_10serde_json6numberNtB5_6Number10unexpected.exit
 
 bb.f:                                             ; preds = %bb.c
   %i.j = load double, ptr %i.f, align 8, !alias.scope !162, !noundef !5
   store double %i.j, ptr %i.g, align 8, !alias.scope !161
+  br label %_RNvMs9_NtCs8ZPNfZ0ciAA_10serde_json6numberNtB5_6Number10unexpected.exit
+
+_RNvMs9_NtCs8ZPNfZ0ciAA_10serde_json6numberNtB5_6Number10unexpected.exit: ; preds = %bb.d, %bb.e, %bb.f
+  %.sink.i = phi i8 [ 3, %bb.f ], [ 2, %bb.e ], [ 1, %bb.d ]
+  store i8 %.sink.i, ptr %0, align 8, !alias.scope !161
   br label %_RNvMs9_NtCs8ZPNfZ0ciAA_10serde_json6numberNtB5_6Number10unexpected.exit.a
 
 bb.g:                                             ; preds = %bb.a
@@ -845,17 +849,18 @@ bb.g:                                             ; preds = %bb.a
   store ptr %i.l, ptr %i.o, align 8
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %i.n, ptr %i.p, align 8
+  store i8 5, ptr %0, align 8
   br label %_RNvMs9_NtCs8ZPNfZ0ciAA_10serde_json6numberNtB5_6Number10unexpected.exit.a
 
 bb.h:                                             ; preds = %bb.a
+  store i8 10, ptr %0, align 8
   br label %_RNvMs9_NtCs8ZPNfZ0ciAA_10serde_json6numberNtB5_6Number10unexpected.exit.a
 
 bb.i:                                             ; preds = %bb.a
+  store i8 11, ptr %0, align 8
   br label %_RNvMs9_NtCs8ZPNfZ0ciAA_10serde_json6numberNtB5_6Number10unexpected.exit.a
 
-_RNvMs9_NtCs8ZPNfZ0ciAA_10serde_json6numberNtB5_6Number10unexpected.exit.a: ; preds = %bb.f, %bb.e, %bb.d, %bb.a, %bb.i, %bb.h, %bb.g, %bb.b
-  %.sink = phi i8 [ 11, %bb.i ], [ 10, %bb.h ], [ 5, %bb.g ], [ 7, %bb.a ], [ 0, %bb.b ], [ 3, %bb.f ], [ 2, %bb.e ], [ 1, %bb.d ]
-  store i8 %.sink, ptr %0, align 8
+_RNvMs9_NtCs8ZPNfZ0ciAA_10serde_json6numberNtB5_6Number10unexpected.exit.a: ; preds = %bb.i, %bb.h, %bb.g, %_RNvMs9_NtCs8ZPNfZ0ciAA_10serde_json6numberNtB5_6Number10unexpected.exit, %bb.b, %2
   ret void
 }
 
@@ -1258,8 +1263,8 @@ bb.a:
   switch i64 %i.h, label %default.unreachable [
     i64 2, label %bb.b
     i64 3, label %.split38
-    i64 0, label %.split39
-    i64 1, label %.split
+    i64 0, label %.split
+    i64 1, label %_RINvNtNtNtCs8Chj7Szqq0n_4core2io5error4repr11decode_reprRNtB4_6CustomNCNvMs0_B2_NtB2_4Repr4data0ECs8ZPNfZ0ciAA_10serde_json.exit.thread20.i
   ], !prof !8
 
 default.unreachable:                              ; preds = %.lr.ph56
@@ -1277,6 +1282,12 @@ bb.b:                                             ; preds = %.lr.ph56
   %i.n = invoke noundef zeroext i1 %i.m(i32 noundef %i.k)
           to label %_RNvMs1_NtNtCs8Chj7Szqq0n_4core2io5errorNtB5_5Error14is_interrupted.exit unwind label %bb.f, !inline_history !291
 
+_RINvNtNtNtCs8Chj7Szqq0n_4core2io5error4repr11decode_reprRNtB4_6CustomNCNvMs0_B2_NtB2_4Repr4data0ECs8ZPNfZ0ciAA_10serde_json.exit.thread20.i: ; preds = %.lr.ph56
+  %3 = getelementptr i8, ptr %i.f, i64 31
+  %4 = load i8, ptr %3, align 8, !range !298, !noundef !5
+  %5 = icmp eq i8 %4, 35
+  br i1 %5, label %bb.d, label %.split39._crit_edge
+
 .split38:                                         ; preds = %.lr.ph56
   %i.o = lshr i64 %i.g, 32
   %i.p = icmp ult ptr %i.f, inttoptr (i64 188978561024 to ptr)
@@ -1287,26 +1298,20 @@ bb.b:                                             ; preds = %.lr.ph56
   %i.r = icmp eq i8 %spec.select.i.i.i, 35
   br i1 %i.r, label %bb.c, label %.split39._crit_edge
 
-.split39:                                         ; preds = %.lr.ph56
-  %3 = getelementptr inbounds nuw i8, ptr %i.f, i64 16
-  %4 = load i8, ptr %3, align 8, !range !298, !noundef !5
-  %5 = icmp eq i8 %4, 35
-  br i1 %5, label %.thread.thread, label %.split39._crit_edge
-
 .split:                                           ; preds = %.lr.ph56
-  %i.s = getelementptr i8, ptr %i.f, i64 31
+  %i.s = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   %i.t = load i8, ptr %i.s, align 8, !range !298, !noundef !5
   %i.u = icmp eq i8 %i.t, 35
-  br i1 %i.u, label %bb.d, label %.split39._crit_edge
+  br i1 %i.u, label %.thread.thread, label %.split39._crit_edge
 
 _RNvMs1_NtNtCs8Chj7Szqq0n_4core2io5errorNtB5_5Error14is_interrupted.exit: ; preds = %.noexc
   br i1 %i.n, label %.thread.thread, label %.split39._crit_edge
 
-.split39._crit_edge:                              ; preds = %.split39, %.split38, %.split, %_RNvMs1_NtNtCs8Chj7Szqq0n_4core2io5errorNtB5_5Error14is_interrupted.exit, %bb.e, %.lr.ph, %bb.a
-  %.sroa.07.1 = phi ptr [ null, %bb.a ], [ null, %.lr.ph ], [ null, %bb.e ], [ %i.f, %_RNvMs1_NtNtCs8Chj7Szqq0n_4core2io5errorNtB5_5Error14is_interrupted.exit ], [ %i.f, %.split38 ], [ %i.f, %.split39 ], [ %i.f, %.split ]
+.split39._crit_edge:                              ; preds = %.split, %.split38, %_RINvNtNtNtCs8Chj7Szqq0n_4core2io5error4repr11decode_reprRNtB4_6CustomNCNvMs0_B2_NtB2_4Repr4data0ECs8ZPNfZ0ciAA_10serde_json.exit.thread20.i, %_RNvMs1_NtNtCs8Chj7Szqq0n_4core2io5errorNtB5_5Error14is_interrupted.exit, %bb.e, %.lr.ph, %bb.a
+  %.sroa.07.1 = phi ptr [ null, %bb.a ], [ null, %.lr.ph ], [ null, %bb.e ], [ %i.f, %_RNvMs1_NtNtCs8Chj7Szqq0n_4core2io5errorNtB5_5Error14is_interrupted.exit ], [ %i.f, %.split38 ], [ %i.f, %.split ], [ %i.f, %_RINvNtNtNtCs8Chj7Szqq0n_4core2io5error4repr11decode_reprRNtB4_6CustomNCNvMs0_B2_NtB2_4Repr4data0ECs8ZPNfZ0ciAA_10serde_json.exit.thread20.i ]
   ret ptr %.sroa.07.1
 
-.thread.thread:                                   ; preds = %_RNvMs1_NtNtCs8Chj7Szqq0n_4core2io5errorNtB5_5Error14is_interrupted.exit, %.split39
+.thread.thread:                                   ; preds = %_RNvMs1_NtNtCs8Chj7Szqq0n_4core2io5errorNtB5_5Error14is_interrupted.exit, %.split
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   br label %bb.e
 
@@ -1319,7 +1324,7 @@ bb.c:                                             ; preds = %.split38
   call void @llvm.assume(i1 %i.x)
   br label %bb.e
 
-bb.d:                                             ; preds = %.split
+bb.d:                                             ; preds = %_RINvNtNtNtCs8Chj7Szqq0n_4core2io5error4repr11decode_reprRNtB4_6CustomNCNvMs0_B2_NtB2_4Repr4data0ECs8ZPNfZ0ciAA_10serde_json.exit.thread20.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.y = getelementptr i8, ptr %i.f, i64 -1       ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]

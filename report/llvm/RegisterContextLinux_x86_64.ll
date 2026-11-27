@@ -202,7 +202,9 @@ _ZN12lldb_private24RegisterContextLinux_x86C2ERKNS_8ArchSpecENS_12RegisterInfoE.
   %.sroa.48.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 112
   store ptr null, ptr %.sroa.48.0..sroa_idx, align 8, !tbaa !20
   %.sroa.59.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 120
-  store <4 x i32> <i32 8, i32 120, i32 1, i32 11>, ptr %.sroa.59.0..sroa_idx, align 8, !tbaa !19
+  store i64 515396075528, ptr %.sroa.59.0..sroa_idx, align 8
+  %.sroa.711.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 128
+  store i64 47244640257, ptr %.sroa.711.0..sroa_idx, align 8
   %.sroa.913.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 136
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %.sroa.913.0..sroa_idx, i8 -1, i64 20, i1 false)
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 160

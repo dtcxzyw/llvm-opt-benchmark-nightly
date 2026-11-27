@@ -137,7 +137,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 2080
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !65   ; 2 uses
   %i.f = sext i32 %1 to i64
-  %i.g = getelementptr inbounds [64 x i8], ptr %i.e, i64 %i.f ; 9 uses
+  %i.g = getelementptr inbounds [64 x i8], ptr %i.e, i64 %i.f ; 10 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 1960
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !66
   %i.j = load i32, ptr %i.g, align 8, !tbaa !72
@@ -186,8 +186,10 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.at = sext i32 %i.as to i64
   %i.au = mul nsw i64 %i.at, 12
   tail call void @b2Free(ptr noundef %i.aq, i64 noundef %i.au) #6
+  %2 = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ap, i8 0, i64 16, i1 false)
-  store <4 x i32> <i32 -1, i32 -1, i32 -1, i32 0>, ptr %i.g, align 8, !tbaa !87
+  store i64 4294967295, ptr %2, align 8
+  store i64 -1, ptr %i.g, align 8
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 2056
   tail call void @b2FreeId(ptr noundef nonnull %i.av, i32 noundef %1) #6
   ret void
@@ -590,7 +592,7 @@ bb.b:                                             ; preds = %bb.a
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !65
   %i.f = sext i32 %i.b to i64
   %i.g = getelementptr inbounds [64 x i8], ptr %i.e, i64 %i.f ; 3 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 52 ; 2 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 52
   %i.i = load i32, ptr %i.h, align 4, !tbaa !118  ; 4 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.g, i64 48 ; 2 uses
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !95   ; 2 uses
@@ -627,8 +629,7 @@ bb.c:                                             ; preds = %b2RemoveHelper.exit
   br label %b2RemoveHelper.exit.thread
 
 b2RemoveHelper.exit.thread:                       ; preds = %bb.b, %bb.c, %b2RemoveHelper.exit
-  store i32 -1, ptr %i.a, align 8, !tbaa !117
-  store i32 -1, ptr %i.h, align 4, !tbaa !118
+  store i64 -1, ptr %i.a, align 8
   %i.ae = getelementptr inbounds nuw i8, ptr %i.g, i64 12 ; 2 uses
   %i.af = load i32, ptr %i.ae, align 4, !tbaa !119
   %i.ag = add nsw i32 %i.af, 1

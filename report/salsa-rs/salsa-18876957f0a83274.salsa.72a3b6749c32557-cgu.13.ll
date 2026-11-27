@@ -202,11 +202,13 @@ bb.i:                                             ; preds = %bb.g, %bb.h
   %i.bm = sub <2 x i64> %i.bk, %i.bl
   store <2 x i64> %i.bm, ptr %i.b, align 8, !alias.scope !189
   %i.bn = sub nsw i64 0, %.sroa.3.0.i.ph.i
-  %i.bo = getelementptr inbounds [32 x i8], ptr %.val.i, i64 %i.bn ; 4 uses
+  %i.bo = getelementptr inbounds [32 x i8], ptr %.val.i, i64 %i.bn ; 3 uses
   %i.bp = getelementptr inbounds i8, ptr %i.bo, i64 -32
-  store i32 %2, ptr %i.bp, align 8, !noalias !189
-  %.sroa.4.0..sroa_idx = getelementptr inbounds i8, ptr %i.bo, i64 -28
-  store i32 %3, ptr %.sroa.4.0..sroa_idx, align 4, !noalias !189
+  %5 = zext i32 %2 to i64
+  %6 = zext i32 %3 to i64
+  %7 = shl nuw i64 %6, 32
+  %8 = or disjoint i64 %7, %5
+  store i64 %8, ptr %i.bp, align 8, !noalias !189
   %.sroa.5.0..sroa_idx = getelementptr inbounds i8, ptr %i.bo, i64 -24
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %1, i64 16, i1 false), !noalias !189
   %.sroa.6.0..sroa_idx = getelementptr inbounds i8, ptr %i.bo, i64 -8
@@ -219,10 +221,13 @@ bb.j:                                             ; preds = %_RNCINvMs6_NtCsgMW4
   %i.bs = zext i1 %4 to i8
   store i8 %i.bs, ptr %i.br, align 8
   %i.bt = load i32, ptr %i.bq, align 8, !range !31, !noundef !21
-  %i.bu = getelementptr inbounds i8, ptr %i.x, i64 -28 ; 2 uses
+  %i.bu = getelementptr inbounds i8, ptr %i.x, i64 -28
   %i.bv = load i32, ptr %i.bu, align 4, !noundef !21
-  store i32 %2, ptr %i.bq, align 8
-  store i32 %3, ptr %i.bu, align 4
+  %9 = zext i32 %2 to i64
+  %10 = zext i32 %3 to i64
+  %11 = shl nuw i64 %10, 32
+  %12 = or disjoint i64 %11, %9
+  store i64 %12, ptr %i.bq, align 8
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i
@@ -332,7 +337,7 @@ bb.a:
   %i.a = alloca [0 x i8], align 1
   %i.b = alloca [8 x i8], align 8                 ; 5 uses
   %i.c = alloca [32 x i8], align 8                ; 5 uses
-  %i.d = alloca [24 x i8], align 8                ; 6 uses
+  %i.d = alloca [24 x i8], align 8                ; 5 uses
   %i.e = alloca [80 x i8], align 8                ; 15 uses
   %i.f = alloca [8 x i8], align 8                 ; 7 uses
   %i.g = alloca [24 x i8], align 8                ; 9 uses
@@ -421,7 +426,6 @@ bb.i:                                             ; preds = %bb.c
   %i.ab = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.c, i64 4
   %i.ad = getelementptr inbounds nuw i8, ptr %i.d, i64 16
-  %2 = getelementptr inbounds nuw i8, ptr %i.d, i64 20
   br label %bb.j
 
 bb.j:                                             ; preds = %.backedge, %bb.i
@@ -519,19 +523,24 @@ bb.v:                                             ; preds = %bb.u
 bb.w:                                             ; preds = %bb.m
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.d, ptr noundef nonnull align 8 dereferenceable(16) %i.ab, i64 16, i1 false)
-  store i32 %i.ag, ptr %i.ad, align 8
-  store i32 %i.ah, ptr %2, align 4
+  %2 = zext i32 %i.ag to i64
+  %3 = zext i32 %i.ah to i64
+  %4 = shl nuw i64 %3, 32
+  %5 = or disjoint i64 %4, %2
+  store i64 %5, ptr %i.ad, align 8
   invoke void @_RNvMs3_Csa3bo7ChGFM8_8thin_vecINtB5_7ThinVecTNtNtCsC8CapfvpQ1_5salsa14tracked_struct8IdentityNtNtBL_2id2IdEE4pushBL_(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.f, ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.d)
           to label %bb.y unwind label %bb.k
 
 bb.x:                                             ; preds = %bb.u, %bb.v
   %i.be = load ptr, ptr %i.m, align 8, !alias.scope !220, !nonnull !21, !noundef !21
-  %i.bf = getelementptr inbounds nuw [24 x i8], ptr %i.be, i64 %i.bb ; 3 uses
+  %i.bf = getelementptr inbounds nuw [24 x i8], ptr %i.be, i64 %i.bb ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bf, ptr noundef nonnull align 8 dereferenceable(16) %i.ab, i64 16, i1 false)
   %.sroa.4.0..sroa_idx17 = getelementptr inbounds nuw i8, ptr %i.bf, i64 16
-  store i32 %i.ag, ptr %.sroa.4.0..sroa_idx17, align 8
-  %.sroa.5.0..sroa_idx18 = getelementptr inbounds nuw i8, ptr %i.bf, i64 20
-  store i32 %i.ah, ptr %.sroa.5.0..sroa_idx18, align 4
+  %6 = zext i32 %i.ag to i64
+  %7 = zext i32 %i.ah to i64
+  %8 = shl nuw i64 %7, 32
+  %9 = or disjoint i64 %8, %6
+  store i64 %9, ptr %.sroa.4.0..sroa_idx17, align 8
   %i.bg = add i64 %i.bb, 1
   store i64 %i.bg, ptr %i.n, align 8, !alias.scope !220
   br label %.backedge

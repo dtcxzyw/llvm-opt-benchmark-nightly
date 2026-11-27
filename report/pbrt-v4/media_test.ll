@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.c
   %.01763 = phi i32 [ 0, %bb.a ], [ %.118, %bb.c ]
-  %.sroa.047.062 = phi i32 [ 0, %bb.a ], [ %4, %bb.c ]
+  %.sroa.046.060 = phi i64 [ 429496729600, %bb.a ], [ %.sroa.046.0.insert.ext, %bb.c ]
   %.sroa.850.061 = phi i64 [ 6364136223846793006, %bb.a ], [ %i.k, %bb.c ] ; 2 uses
   %i.g = phi i32 [ 0, %bb.a ], [ %i.ab, %bb.c ]
   %i.h = mul i64 %.sroa.850.061, 6364136223846793005
@@ -233,8 +233,9 @@ bb.c:                                             ; preds = %bb.a, %bb.c
   %not. = xor i1 %i.z, true
   %i.ac = zext i1 %not. to i32
   %.118 = add nuw nsw i32 %.01763, %i.ac          ; 2 uses
-  %4 = add nuw nsw i32 %.sroa.047.062, 1          ; 2 uses
-  %.not = icmp eq i32 %4, 100
+  %4 = add nuw nsw i64 %.sroa.046.060, 1
+  %.sroa.046.0.insert.ext = and i64 %4, 4294967295 ; 2 uses
+  %.not = icmp eq i64 %.sroa.046.0.insert.ext, 100
   br i1 %.not, label %bb.b, label %bb.c
 
 bb.d:                                             ; preds = %bb.b
@@ -607,7 +608,7 @@ bb.b:                                             ; preds = %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.c
   %.01763 = phi i32 [ 0, %bb.a ], [ %.118, %bb.c ]
-  %.sroa.047.062 = phi i32 [ 0, %bb.a ], [ %4, %bb.c ]
+  %.sroa.046.060 = phi i64 [ 429496729600, %bb.a ], [ %.sroa.046.0.insert.ext, %bb.c ]
   %.sroa.850.061 = phi i64 [ 6364136223846793006, %bb.a ], [ %i.k, %bb.c ] ; 2 uses
   %i.g = phi i32 [ 0, %bb.a ], [ %i.ab, %bb.c ]
   %i.h = mul i64 %.sroa.850.061, 6364136223846793005
@@ -638,8 +639,9 @@ bb.c:                                             ; preds = %bb.a, %bb.c
   %not. = xor i1 %i.z, true
   %i.ac = zext i1 %not. to i32
   %.118 = add nuw nsw i32 %.01763, %i.ac          ; 2 uses
-  %4 = add nuw nsw i32 %.sroa.047.062, 1          ; 2 uses
-  %.not = icmp eq i32 %4, 100
+  %4 = add nuw nsw i64 %.sroa.046.060, 1
+  %.sroa.046.0.insert.ext = and i64 %4, 4294967295 ; 2 uses
+  %.not = icmp eq i64 %.sroa.046.0.insert.ext, 100
   br i1 %.not, label %bb.b, label %bb.c
 
 bb.d:                                             ; preds = %bb.b

@@ -202,7 +202,7 @@ define hidden noalias noundef ptr @_Py_LibHacl_Hacl_Hash_Blake2b_malloc_with_key
 bb.a:
   %i.a = alloca [16 x i8], align 16               ; 4 uses
   %i.b = alloca [16 x i8], align 16               ; 4 uses
-  %2 = alloca %struct.Hacl_Hash_Blake2b_blake2_params_s, align 8 ; 11 uses
+  %2 = alloca %struct.Hacl_Hash_Blake2b_blake2_params_s, align 8 ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #16
@@ -210,15 +210,14 @@ bb.a:
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 18
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(6) %.sroa.11.0..sroa_idx, i8 0, i64 6, i1 false)
-  store i8 64, ptr %2, align 8, !tbaa !14
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 1
-  store i8 %1, ptr %.sroa.4.0..sroa_idx, align 1, !tbaa !14
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 2
-  store i8 1, ptr %.sroa.5.0..sroa_idx, align 2, !tbaa !14
-  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 3
-  store i8 1, ptr %.sroa.6.0..sroa_idx, align 1, !tbaa !14
-  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 4
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(14) %.sroa.7.0..sroa_idx, i8 0, i64 14, i1 false)
+  %3 = zext i8 %1 to i64
+  %4 = shl nuw nsw i64 %3, 8
+  %5 = or disjoint i64 %4, 16842816
+  store i64 %5, ptr %2, align 8
+  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
+  store i64 0, ptr %.sroa.6.0..sroa_idx, align 8, !tbaa !12
+  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 16
+  store i16 0, ptr %.sroa.7.0..sroa_idx, align 8
   %.sroa.12.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 24
   store ptr %i.a, ptr %.sroa.12.0..sroa_idx, align 8, !tbaa !21
   %.sroa.13.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 32
@@ -235,7 +234,7 @@ define hidden noalias noundef ptr @_Py_LibHacl_Hacl_Hash_Blake2b_malloc() local_
 bb.a:
   %i.a = alloca [16 x i8], align 16               ; 4 uses
   %i.b = alloca [16 x i8], align 16               ; 4 uses
-  %0 = alloca %struct.Hacl_Hash_Blake2b_blake2_params_s, align 8 ; 8 uses
+  %0 = alloca %struct.Hacl_Hash_Blake2b_blake2_params_s, align 8 ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #16
@@ -243,9 +242,11 @@ bb.a:
   %.sroa.11.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 18
   call void @llvm.lifetime.start.p0(ptr nonnull %0) #16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(6) %.sroa.11.0..sroa_idx.i, i8 0, i64 6, i1 false)
-  store <4 x i8> <i8 64, i8 0, i8 1, i8 1>, ptr %0, align 8, !tbaa !14
-  %.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 4
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(14) %.sroa.7.0..sroa_idx.i, i8 0, i64 14, i1 false)
+  store i64 16842816, ptr %0, align 8
+  %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i64 0, ptr %.sroa.8.0..sroa_idx.i, align 8, !tbaa !12
+  %.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store i16 0, ptr %.sroa.7.0..sroa_idx.i, align 8
   %.sroa.12.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 24
   store ptr %i.a, ptr %.sroa.12.0..sroa_idx.i, align 8, !tbaa !21
   %.sroa.13.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 32

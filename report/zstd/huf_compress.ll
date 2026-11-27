@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.k = icmp ne i32 %i.j, 0
   %i.l = zext i1 %i.k to i32
   store i32 %i.l, ptr %4, align 4, !tbaa !17
-  %i.m = load i32, ptr %i.c, align 4, !tbaa !17   ; 11 uses
+  %i.m = load i32, ptr %i.c, align 4, !tbaa !17   ; 12 uses
   %i.n = icmp ugt i32 %i.m, 12
   br i1 %i.n, label %bb.f, label %bb.c
 
@@ -221,11 +221,11 @@ bb.d:                                             ; preds = %bb.c
   store i32 %i.s, ptr %1, align 4, !tbaa !17
   %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 2
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %.sroa.6.0..sroa_idx.i, i8 0, i64 6, i1 false)
-  %5 = trunc nuw nsw i32 %i.m to i8               ; 2 uses
-  %6 = trunc i32 %i.s to i8
-  store i8 %5, ptr %0, align 8
-  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 1
-  store i8 %6, ptr %.sroa.5.0..sroa_idx.i, align 1
+  %5 = trunc nuw nsw i32 %i.m to i16
+  %6 = trunc i32 %i.s to i16
+  %7 = shl i16 %6, 8
+  %8 = or disjoint i16 %7, %5
+  store i16 %8, ptr %0, align 8
   %.not5155 = icmp eq i32 %i.m, 0                 ; 2 uses
   br i1 %.not5155, label %.preheader54, label %.lr.ph.preheader
 
@@ -264,7 +264,8 @@ bb.d:                                             ; preds = %bb.c
   br label %._crit_edge63
 
 .lr.ph59:                                         ; preds = %.preheader54
-  %i.w = add nuw nsw i8 %5, 1                     ; 2 uses
+  %9 = trunc nuw nsw i32 %i.m to i8
+  %i.w = add nuw nsw i8 %9, 1                     ; 2 uses
   %wide.trip.count78 = zext i32 %i.o to i64       ; 5 uses
   %min.iters.check = icmp ult i32 %i.o, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
@@ -667,11 +668,11 @@ HUF_setValue.exit.i:                              ; preds = %bb.y, %.preheader.i
 HUF_buildCTableFromTree.exit:                     ; preds = %HUF_setValue.exit.i
   %.sroa.6.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %0, i64 2
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %.sroa.6.0..sroa_idx.i.i, i8 0, i64 6, i1 false)
-  %6 = trunc nuw nsw i32 %.095.i to i8
-  %7 = trunc nuw i32 %2 to i8
-  store i8 %6, ptr %0, align 8
-  %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %0, i64 1
-  store i8 %7, ptr %.sroa.5.0..sroa_idx.i.i, align 1
+  %6 = trunc nuw nsw i32 %.095.i to i16
+  %7 = trunc nuw nsw i32 %2 to i16
+  %8 = shl nuw i16 %7, 8
+  %9 = or disjoint i16 %8, %6
+  store i16 %9, ptr %0, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
   %i.sh = zext nneg i32 %.095.i to i64

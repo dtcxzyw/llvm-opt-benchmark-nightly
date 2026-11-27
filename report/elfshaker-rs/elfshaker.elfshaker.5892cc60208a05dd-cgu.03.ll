@@ -204,7 +204,7 @@ begin_hunk_0_@_RNvCs7BtpbLEd5q3_9elfshaker4main:bb.a
   %i.ii = alloca [16 x i8], align 8               ; 5 uses
   %i.ij = alloca [56 x i8], align 8               ; 8 uses
   %i.ik = alloca [56 x i8], align 8               ; 6 uses
-  %i.il = alloca [712 x i8], align 8              ; 53 uses
+  %i.il = alloca [712 x i8], align 8              ; 54 uses
   tail call void @_RNvNtCs7BtpbLEd5q3_9elfshaker5utils19silence_broken_pipe()
   call void @llvm.lifetime.start.p0(ptr nonnull %i.il)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.gy)
@@ -607,7 +607,9 @@ bb.jp:                                            ; preds = %bb.jk
 
 bb.jq:                                            ; preds = %bb.jv, %bb.jp
   %i.uh = getelementptr inbounds nuw i8, ptr %i.il, i64 700
-  %0 = load <2 x i32>, ptr %i.uh, align 4, !alias.scope !785
+  %0 = load i32, ptr %i.uh, align 4, !alias.scope !785, !noundef !6
+  %1 = getelementptr inbounds nuw i8, ptr %i.il, i64 704
+  %2 = load i32, ptr %1, align 8, !alias.scope !785, !noundef !6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cw), !noalias !787
   %i.ui = getelementptr inbounds nuw i8, ptr %i.il, i64 128
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cf), !noalias !790
@@ -845,6 +847,10 @@ bb.ko:                                            ; preds = %.noexc59.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.25.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %i.cy, i64 24, i1 false), !noalias !6
   %.sroa.26.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cb, i64 536
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.26.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %i.cx, i64 24, i1 false), !noalias !6
+  %3 = zext i32 %i.sd to i64
+  %4 = zext i32 %0 to i64
+  %5 = shl nuw i64 %4, 32
+  %6 = or disjoint i64 %5, %3
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cb, i64 128
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.11.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(48) %i.cw, i64 48, i1 false), !noalias !6
   %.sroa.12.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cb, i64 176
@@ -917,9 +923,9 @@ bb.ko:                                            ; preds = %.noexc59.i
   %.sroa.43.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cb, i64 688
   store ptr %i.vo, ptr %.sroa.43.0..sroa_idx, align 8, !noalias !796
   %.sroa.44.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cb, i64 696
-  store i32 %i.sd, ptr %.sroa.44.0..sroa_idx, align 8, !noalias !796
-  %.sroa.45.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cb, i64 700
-  store <2 x i32> %0, ptr %.sroa.45.0..sroa_idx, align 4, !noalias !796
+  store i64 %6, ptr %.sroa.44.0..sroa_idx, align 8, !noalias !796
+  %.sroa.45.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cb, i64 704
+  store i32 %2, ptr %.sroa.45.0..sroa_idx, align 8, !noalias !796
   %.sroa.47.0..sroa_idx38 = getelementptr inbounds nuw i8, ptr %i.cb, i64 708
   store i8 %i.vm, ptr %.sroa.47.0..sroa_idx38, align 4, !noalias !796
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ca), !noalias !795

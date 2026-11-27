@@ -202,16 +202,17 @@ bb.af:                                            ; preds = %.body.i.i
   unreachable
 
 bb.ag:                                            ; preds = %bb.ac, %_RNvXsd_NtCsgCecv3eZDcN_5alloc5boxedINtB5_3BoxNtNtNtNtCsgCLBQfCopcP_18tracing_subscriber6filter3env5field12MatchPatternENtNtCsf3Ta7LF998c_4core5clone5Clone5cloneCsglDVE6xSTcO_5fontc.exit.i.i.i, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %.noexc.i
-  %.sroa.5.sroa.6.0.i.i = phi i64 [ undef, %.noexc.i ], [ undef, %bb.f ], [ undef, %bb.g ], [ undef, %bb.h ], [ undef, %bb.i ], [ undef, %bb.e ], [ %i.fl, %bb.ac ], [ undef, %_RNvXsd_NtCsgCecv3eZDcN_5alloc5boxedINtB5_3BoxNtNtNtNtCsgCLBQfCopcP_18tracing_subscriber6filter3env5field12MatchPatternENtNtCsf3Ta7LF998c_4core5clone5Clone5cloneCsglDVE6xSTcO_5fontc.exit.i.i.i ]
-  %.sroa.5.sroa.5.0.i.i = phi i64 [ undef, %.noexc.i ], [ undef, %bb.f ], [ %i.bk, %bb.g ], [ %i.bm, %bb.h ], [ %i.bo, %bb.i ], [ undef, %bb.e ], [ %i.fm, %bb.ac ], [ %i.fj, %_RNvXsd_NtCsgCecv3eZDcN_5alloc5boxedINtB5_3BoxNtNtNtNtCsgCLBQfCopcP_18tracing_subscriber6filter3env5field12MatchPatternENtNtCsf3Ta7LF998c_4core5clone5Clone5cloneCsglDVE6xSTcO_5fontc.exit.i.i.i ]
-  %.sroa.5.sroa.0.0.i.i = phi i8 [ undef, %.noexc.i ], [ %i.bi, %bb.f ], [ undef, %bb.g ], [ undef, %bb.h ], [ undef, %bb.i ], [ undef, %bb.e ], [ undef, %bb.ac ], [ undef, %_RNvXsd_NtCsgCecv3eZDcN_5alloc5boxedINtB5_3BoxNtNtNtNtCsgCLBQfCopcP_18tracing_subscriber6filter3env5field12MatchPatternENtNtCsf3Ta7LF998c_4core5clone5Clone5cloneCsglDVE6xSTcO_5fontc.exit.i.i.i ]
+  %.sroa.5.sroa.6.0.i.i = phi i64 [ undef, %.noexc.i ], [ undef, %bb.f ], [ undef, %bb.g ], [ undef, %bb.h ], [ undef, %bb.i ], [ undef, %_RNvXsd_NtCsgCecv3eZDcN_5alloc5boxedINtB5_3BoxNtNtNtNtCsgCLBQfCopcP_18tracing_subscriber6filter3env5field12MatchPatternENtNtCsf3Ta7LF998c_4core5clone5Clone5cloneCsglDVE6xSTcO_5fontc.exit.i.i.i ], [ %i.fl, %bb.ac ], [ undef, %bb.e ]
+  %.sroa.5.sroa.5.0.i.i = phi i64 [ undef, %.noexc.i ], [ undef, %bb.f ], [ %i.bk, %bb.g ], [ %i.bm, %bb.h ], [ %i.bo, %bb.i ], [ %i.fj, %_RNvXsd_NtCsgCecv3eZDcN_5alloc5boxedINtB5_3BoxNtNtNtNtCsgCLBQfCopcP_18tracing_subscriber6filter3env5field12MatchPatternENtNtCsf3Ta7LF998c_4core5clone5Clone5cloneCsglDVE6xSTcO_5fontc.exit.i.i.i ], [ %i.fm, %bb.ac ], [ undef, %bb.e ]
+  %.sroa.5.sroa.0.0.i.i = phi i8 [ undef, %.noexc.i ], [ %i.bi, %bb.f ], [ undef, %bb.g ], [ undef, %bb.h ], [ undef, %bb.i ], [ undef, %_RNvXsd_NtCsgCecv3eZDcN_5alloc5boxedINtB5_3BoxNtNtNtNtCsgCLBQfCopcP_18tracing_subscriber6filter3env5field12MatchPatternENtNtCsf3Ta7LF998c_4core5clone5Clone5cloneCsglDVE6xSTcO_5fontc.exit.i.i.i ], [ undef, %bb.ac ], [ undef, %bb.e ]
+  %.sroa.0.0.i12.i = phi i8 [ -1, %.noexc.i ], [ 0, %bb.f ], [ 1, %bb.g ], [ 2, %bb.h ], [ 3, %bb.i ], [ 6, %_RNvXsd_NtCsgCecv3eZDcN_5alloc5boxedINtB5_3BoxNtNtNtNtCsgCLBQfCopcP_18tracing_subscriber6filter3env5field12MatchPatternENtNtCsf3Ta7LF998c_4core5clone5Clone5cloneCsglDVE6xSTcO_5fontc.exit.i.i.i ], [ 5, %bb.ac ], [ %i.bg, %bb.e ]
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.023.i)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.023.i, ptr noundef nonnull align 8 dereferenceable(24) %i.j, i64 24, i1 false), !noalias !2152
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !2155
   %i.fp = getelementptr inbounds nuw [48 x i8], ptr %i.w, i64 %.sroa.7.0177.i ; 5 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.fp, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.023.i, i64 24, i1 false), !noalias !2153
   %.sroa.424.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.fp, i64 24
-  store i8 %i.bg, ptr %.sroa.424.0..sroa_idx.i, align 8, !noalias !2153
+  store i8 %.sroa.0.0.i12.i, ptr %.sroa.424.0..sroa_idx.i, align 8, !noalias !2153
   %.sroa.525.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.fp, i64 25
   store i8 %.sroa.5.sroa.0.0.i.i, ptr %.sroa.525.0..sroa_idx.i, align 1, !noalias !2153
   %.sroa.727.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.fp, i64 32

@@ -202,7 +202,7 @@ bb.a:
   %i.s = alloca [160 x i8], align 16              ; 9 uses
   %i.t = alloca [48 x i8], align 16               ; 4 uses
   %i.u = alloca [96 x i8], align 16               ; 6 uses
-  %i.v = alloca [48 x i8], align 16               ; 44 uses
+  %i.v = alloca [48 x i8], align 16               ; 43 uses
   %i.w = alloca [48 x i8], align 16               ; 37 uses
   %i.x = alloca [8 x i8], align 8                 ; 4 uses
   %i.y = alloca [16 x i8], align 8                ; 5 uses
@@ -269,7 +269,6 @@ bb.c:                                             ; preds = %bb.a
   %i.bm = getelementptr inbounds nuw i8, ptr %i.w, i64 1
   %i.bn = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.bo = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.v, i64 1
   %i.bp = getelementptr inbounds nuw i8, ptr %i.u, i64 48
   %i.bq = getelementptr inbounds nuw i8, ptr %i.s, i64 96
   %i.br = getelementptr inbounds nuw i8, ptr %i.s, i64 120
@@ -672,9 +671,11 @@ _RNCNvMs8_NtNtCs1LHh8CLbVkQ_11polars_core9datatypes9any_valueNtB7_8AnyValue11int
 .noexc19.i.i:                                     ; preds = %_RNCNvMs8_NtNtCs1LHh8CLbVkQ_11polars_core9datatypes9any_valueNtB7_8AnyValue11into_static0CslIvKsLJE9Zc_10polars_ffi.exit, %bb.al
   %.sroa.02.0.i.i.i = phi ptr [ null, %bb.al ], [ %i.fi, %_RNCNvMs8_NtNtCs1LHh8CLbVkQ_11polars_core9datatypes9any_valueNtB7_8AnyValue11into_static0CslIvKsLJE9Zc_10polars_ffi.exit ], !dbg !2610
   store i64 %i.de, ptr %i.bb, align 8, !dbg !2611, !alias.scope !2277, !noalias !2268
-  store i8 %i.df, ptr %3, align 1, !dbg !2611, !alias.scope !2277, !noalias !2268
   store ptr %.sroa.02.0.i.i.i, ptr %.sroa.4.0..sroa_idx.i.i.i, align 16, !dbg !2611, !alias.scope !2277, !noalias !2268
-  store i8 18, ptr %i.v, align 16, !dbg !2611, !alias.scope !2277, !noalias !2268
+  %3 = zext nneg i8 %i.df to i16, !dbg !2611
+  %4 = shl nuw nsw i16 %3, 8, !dbg !2611
+  %5 = or disjoint i16 %4, 18, !dbg !2611
+  store i16 %5, ptr %i.v, align 16, !dbg !2611, !alias.scope !2277, !noalias !2268
   br label %bb.ch, !dbg !2612
 
 bb.bv:                                            ; preds = %bb.ap
@@ -1077,13 +1078,14 @@ bb.aj:                                            ; preds = %bb.ax, %bb.au, %bb.
 
 bb.ak:                                            ; preds = %bb.u, %bb.an
   %.sroa.4.0 = phi i8 [ %.sroa.48.0.copyload, %bb.an ], [ %i.j, %bb.u ], !dbg !2939
-  %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 1, !dbg !2940
-  store i8 %i.g, ptr %i.ap, align 1, !dbg !2940
-  %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !2940
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(23) %i.aq, ptr noundef nonnull align 8 dereferenceable(23) %i.d, i64 23, i1 false), !dbg !2940
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 31, !dbg !2940
-  store i8 %.sroa.4.0, ptr %.sroa.4.0..sroa_idx, align 1, !dbg !2940
-  store i8 19, ptr %0, align 16, !dbg !2940
+  %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !2940
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(23) %i.ap, ptr noundef nonnull align 8 dereferenceable(23) %i.d, i64 23, i1 false), !dbg !2940
+  %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 31, !dbg !2940
+  store i8 %.sroa.4.0, ptr %i.aq, align 1, !dbg !2940
+  %2 = zext nneg i8 %i.g to i16, !dbg !2940
+  %3 = shl nuw nsw i16 %2, 8, !dbg !2940
+  %4 = or disjoint i16 %3, 19, !dbg !2940
+  store i16 %4, ptr %0, align 16, !dbg !2940
   br label %bb.aj, !dbg !2890
 
 bb.al:                                            ; preds = %bb.u

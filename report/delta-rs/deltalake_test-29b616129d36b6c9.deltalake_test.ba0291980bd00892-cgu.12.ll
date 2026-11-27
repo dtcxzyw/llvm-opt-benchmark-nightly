@@ -202,21 +202,22 @@ bb.a:
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 224
   call void @_RNvXs4_NtCs6Po7BT7Nknu_5alloc6stringNtB5_6StringNtNtCsbvkFyIu7lgC_4core5clone5Clone5clone(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.e, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.i)
   %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 268
-  %3 = getelementptr inbounds nuw i8, ptr %i.h, i64 288
-  %i.k = getelementptr inbounds nuw i8, ptr %i.e, i64 64
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(17) %i.k, ptr noundef nonnull align 8 dereferenceable(17) %3, i64 17, i1 false)
-  %i.l = getelementptr inbounds nuw i8, ptr %i.h, i64 264
-  %4 = getelementptr inbounds nuw i8, ptr %i.h, i64 284
-  %5 = load i32, ptr %4, align 4, !noundef !4
+  %3 = load i32, ptr %i.j, align 4, !noundef !4
+  %i.k = getelementptr inbounds nuw i8, ptr %i.h, i64 272
+  %4 = getelementptr inbounds nuw i8, ptr %i.h, i64 288
+  %i.l = getelementptr inbounds nuw i8, ptr %i.e, i64 64
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(17) %i.l, ptr noundef nonnull align 8 dereferenceable(17) %4, i64 17, i1 false)
+  %5 = getelementptr inbounds nuw i8, ptr %i.h, i64 264
   %i.m = getelementptr inbounds nuw i8, ptr %i.h, i64 248
   %i.n = getelementptr inbounds nuw i8, ptr %i.e, i64 44
-  %6 = load <4 x i32>, ptr %i.j, align 4
-  store <4 x i32> %6, ptr %i.n, align 4
+  store i32 %3, ptr %i.n, align 4
+  %6 = getelementptr inbounds nuw i8, ptr %i.e, i64 48
   %i.o = getelementptr inbounds nuw i8, ptr %i.e, i64 40
-  %i.p = load <2 x i16>, ptr %i.l, align 8
+  %i.p = load <2 x i16>, ptr %5, align 8
   store <2 x i16> %i.p, ptr %i.o, align 8
-  %7 = getelementptr inbounds nuw i8, ptr %i.e, i64 60
-  store i32 %5, ptr %7, align 4
+  %7 = load <4 x i32>, ptr %i.k, align 8
+  %8 = freeze <4 x i32> %7
+  store <4 x i32> %8, ptr %6, align 8
   %i.q = getelementptr inbounds nuw i8, ptr %i.e, i64 24
   %i.r = load <4 x i32>, ptr %i.m, align 8
   store <4 x i32> %i.r, ptr %i.q, align 8

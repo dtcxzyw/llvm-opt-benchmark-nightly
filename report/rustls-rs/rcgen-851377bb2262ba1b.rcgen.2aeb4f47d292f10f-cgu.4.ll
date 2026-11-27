@@ -202,7 +202,7 @@ define hidden range(i64 0, 4785070309113859) i64 @_RNvXNtNtCsj6eKBz9Db1c_4core4c
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
   %i.b = load i16, ptr %i.a, align 8, !range !132, !noundef !4
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 42 ; 2 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 42
   %i.d = load i16, ptr %i.c, align 2
   store i16 0, ptr %i.a, align 8
   %i.e = trunc nuw i16 %i.b to i1
@@ -302,8 +302,10 @@ bb.p:                                             ; preds = %bb.j
   br label %_RNvXs0_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter11ChunksExacthENCNvMss_NtCs3GsnHLZgB3f_5rcgen6stringNtB1E_9BmpString12from_utf16be0ENtNtNtB9_6traits8iterator8Iterator4nextB1G_.exit
 
 bb.q:                                             ; preds = %bb.o
-  store i16 1, ptr %i.a, align 8
-  store i16 %i.y, ptr %i.c, align 2
+  %1 = zext i16 %i.y to i32
+  %2 = shl nuw i32 %1, 16
+  %3 = or disjoint i32 %2, 1
+  store i32 %3, ptr %i.a, align 8
   %.sroa.438.2.insert.ext = zext i16 %.sroa.020.0 to i64
   br label %_RNvXs0_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter11ChunksExacthENCNvMss_NtCs3GsnHLZgB3f_5rcgen6stringNtB1E_9BmpString12from_utf16be0ENtNtNtB9_6traits8iterator8Iterator4nextB1G_.exit
 

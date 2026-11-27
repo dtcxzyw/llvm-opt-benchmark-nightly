@@ -67,7 +67,8 @@ bb.a:
   store <4 x i16> %i.k, ptr @InitialStyle, align 8
   store i8 0, ptr getelementptr inbounds nuw (i8, ptr @InitialStyle, i64 4), align 4
   store i8 0, ptr @InitialStyle, align 8
-  store i64 0, ptr getelementptr inbounds nuw (i8, ptr @InitialStyle, i64 8), align 8
+  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @InitialStyle, i64 8), align 8
+  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @InitialStyle, i64 12), align 4
   %i.l = load i8, ptr getelementptr inbounds nuw (i8, ptr @zz_lengths, i64 8), align 1, !tbaa !35 ; 2 uses
   %i.m = zext i8 %i.l to i32                      ; 2 uses
   store i32 %i.m, ptr @zz_size, align 4, !tbaa !7

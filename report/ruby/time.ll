@@ -204,7 +204,7 @@ rb_long2num_inline.exit36:                        ; preds = %wv2timet.exit
   %i.el = zext nneg i32 %i.ek to i64
   %i.em = shl nuw nsw i64 %i.el, 41
   %.masked.masked = or disjoint i64 %.masked48, %i.du
-  %.masked50 = or i64 %i.eb, %.masked.masked
+  %.masked50 = or i64 %.masked.masked, %i.eb
   %i.en = or i64 %.masked50, %i.eg
   %i.eo = or disjoint i64 %i.en, %i.em
   store i64 %i.eo, ptr %i.cu, align 8
@@ -607,7 +607,7 @@ rb_long2num_inline.exit:                          ; preds = %wv2timet.exit
   %i.cl = zext nneg i32 %i.ck to i64
   %i.cm = shl nuw nsw i64 %i.cl, 41
   %.masked.masked = or disjoint i64 %.masked50, %i.bv
-  %.masked52 = or i64 %i.cb, %.masked.masked
+  %.masked52 = or i64 %.masked.masked, %i.cb
   %i.cn = or i64 %.masked52, %i.cg
   %i.co = or disjoint i64 %i.cn, %i.cm
   store i64 %i.co, ptr %i.av, align 8
@@ -1010,7 +1010,7 @@ bb.a:
   %i.a = alloca i64, align 8                      ; 25 uses
   %i.b = alloca i64, align 8                      ; 12 uses
   %i.c = alloca i64, align 8                      ; 17 uses
-  %3 = alloca %struct.tm, align 8                 ; 19 uses
+  %3 = alloca %struct.tm, align 8                 ; 24 uses
   %4 = alloca %struct.tm, align 8                 ; 10 uses
   %5 = alloca %struct.tm, align 8                 ; 5 uses
   %6 = alloca %struct.tm, align 8                 ; 16 uses
@@ -1038,38 +1038,40 @@ bb.b:                                             ; preds = %bb.a
 
 update_tz.exit:                                   ; preds = %bb.a, %bb.b
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %3, ptr noundef nonnull align 8 dereferenceable(56) %0, i64 56, i1 false), !tbaa.struct !296
-  %i.j = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %i.j = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
   %i.k = load i32, ptr %i.j, align 8, !tbaa !281  ; 3 uses
   %i.l = icmp slt i32 %i.k, 0
   br i1 %i.l, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %update_tz.exit
-  %i.m = getelementptr inbounds nuw i8, ptr %3, i64 4
-  store <4 x i32> <i32 0, i32 0, i32 1, i32 0>, ptr %i.m, align 4, !tbaa !13
-  br label %.sink.split.a
+  store i32 0, ptr %i.j, align 8, !tbaa !281
+  %i.m = getelementptr inbounds nuw i8, ptr %3, i64 8
+  store i64 4294967296, ptr %i.m, align 8
+  store i64 0, ptr %3, align 8
+  br label %bb.w
 
 bb.d:                                             ; preds = %update_tz.exit
   %i.n = icmp samesign ugt i32 %i.k, 11
   br i1 %i.n, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %i.o = getelementptr inbounds nuw i8, ptr %3, i64 4
-  store <4 x i32> <i32 59, i32 23, i32 31, i32 11>, ptr %i.o, align 4, !tbaa !13
-  br label %.sink.split.a
+  store i32 11, ptr %i.j, align 8, !tbaa !281
+  %i.o = getelementptr inbounds nuw i8, ptr %3, i64 8
+  store i64 133143986199, ptr %i.o, align 8
+  store i64 253403070524, ptr %3, align 8
+  br label %bb.w
 
 bb.f:                                             ; preds = %bb.d
-  %i.p = getelementptr inbounds nuw i8, ptr %3, i64 12 ; 3 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %3, i64 12 ; 2 uses
   %i.q = load i32, ptr %i.p, align 4, !tbaa !282  ; 2 uses
   %i.r = icmp slt i32 %i.q, 1
   br i1 %i.r, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  store i32 1, ptr %i.p, align 4, !tbaa !282
   %i.s = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store i32 0, ptr %i.s, align 8, !tbaa !283
-  %7 = getelementptr inbounds nuw i8, ptr %3, i64 4
-  store i32 0, ptr %7, align 4, !tbaa !284
-  br label %.sink.split.a
+  store i64 4294967296, ptr %i.s, align 8
+  store i64 0, ptr %3, align 8
+  br label %bb.w
 
 bb.h:                                             ; preds = %bb.f
   %i.t = getelementptr inbounds nuw i8, ptr %3, i64 20
@@ -1119,9 +1121,8 @@ bb.l:                                             ; preds = %leap_year_p.exit.th
   store i32 %i.ai, ptr %i.p, align 4, !tbaa !282
   %i.ak = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i32 23, ptr %i.ak, align 8, !tbaa !283
-  %8 = getelementptr inbounds nuw i8, ptr %3, i64 4
-  store i32 59, ptr %8, align 4, !tbaa !284
-  br label %.sink.split.a
+  store i64 253403070524, ptr %3, align 8
+  br label %bb.w
 
 bb.m:                                             ; preds = %leap_year_p.exit.thread233
   %i.al = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
@@ -1131,9 +1132,8 @@ bb.m:                                             ; preds = %leap_year_p.exit.th
 
 bb.n:                                             ; preds = %bb.m
   store i32 0, ptr %i.al, align 8, !tbaa !283
-  %9 = getelementptr inbounds nuw i8, ptr %3, i64 4
-  store i32 0, ptr %9, align 4, !tbaa !284
-  br label %.sink.split.a
+  store i64 0, ptr %3, align 8
+  br label %bb.w
 
 bb.o:                                             ; preds = %bb.m
   %i.ao = icmp samesign ugt i32 %i.am, 23
@@ -1141,43 +1141,45 @@ bb.o:                                             ; preds = %bb.m
 
 bb.p:                                             ; preds = %bb.o
   store i32 23, ptr %i.al, align 8, !tbaa !283
-  %10 = getelementptr inbounds nuw i8, ptr %3, i64 4
-  store i32 59, ptr %10, align 4, !tbaa !284
-  br label %.sink.split.a
+  store i64 253403070524, ptr %3, align 8
+  br label %bb.w
 
 bb.q:                                             ; preds = %bb.o
-  %i.ap = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 3 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %3, i64 4
   %i.aq = load i32, ptr %i.ap, align 4, !tbaa !284 ; 2 uses
   %i.ar = icmp slt i32 %i.aq, 0
   br i1 %i.ar, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %bb.q
-  store i32 0, ptr %i.ap, align 4, !tbaa !284
-  br label %.sink.split.a
+  store i64 0, ptr %3, align 8
+  br label %bb.w
 
 bb.s:                                             ; preds = %bb.q
   %i.as = icmp samesign ugt i32 %i.aq, 59
   br i1 %i.as, label %bb.t, label %bb.u
 
 bb.t:                                             ; preds = %bb.s
-  store i32 59, ptr %i.ap, align 4, !tbaa !284
-  br label %.sink.split.a
+  store i64 253403070524, ptr %3, align 8
+  br label %bb.w
 
 bb.u:                                             ; preds = %bb.s
   %i.at = load i32, ptr %3, align 8, !tbaa !285   ; 2 uses
   %i.au = icmp slt i32 %i.at, 0
-  br i1 %i.au, label %.sink.split.a, label %bb.v
+  br i1 %i.au, label %7, label %bb.v
+
+7:                                                ; preds = %bb.u
+  store i32 0, ptr %3, align 8, !tbaa !285
+  br label %bb.w
 
 bb.v:                                             ; preds = %bb.u
   %i.av = icmp samesign ugt i32 %i.at, 60
   br i1 %i.av, label %.sink.split.a, label %bb.w
 
-.sink.split.a:                                    ; preds = %bb.v, %bb.u, %bb.c, %bb.g, %bb.n, %bb.r, %bb.t, %bb.p, %bb.l, %bb.e
-  %.sink = phi i32 [ 60, %bb.e ], [ 60, %bb.l ], [ 60, %bb.p ], [ 60, %bb.t ], [ 0, %bb.u ], [ 0, %bb.c ], [ 0, %bb.r ], [ 0, %bb.n ], [ 0, %bb.g ], [ 60, %bb.v ]
-  store i32 %.sink, ptr %3, align 8, !tbaa !285
+.sink.split.a:                                    ; preds = %bb.v
+  store i32 60, ptr %3, align 8, !tbaa !285
   br label %bb.w
 
-bb.w:                                             ; preds = %.sink.split.a, %bb.v
+bb.w:                                             ; preds = %bb.e, %bb.l, %bb.p, %bb.t, %bb.v, %.sink.split.a, %7, %bb.r, %bb.n, %bb.g, %bb.c
   %i.aw = call fastcc i64 @timegm_noleapsecond(ptr noundef %3) ; 5 uses
   store i64 %i.aw, ptr %i.a, align 8, !tbaa !234
   %.not148 = icmp eq i32 %1, 0                    ; 6 uses

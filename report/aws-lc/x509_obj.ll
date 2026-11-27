@@ -55,7 +55,7 @@ bb.e:                                             ; preds = %bb.c
   br i1 %.not161, label %._crit_edge159, label %.lr.ph158
 
 .lr.ph158:                                        ; preds = %.preheader
-  %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 4 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   %.not115 = icmp eq ptr %.0132.ph, null
   %i.p = getelementptr inbounds nuw i8, ptr %.0132.ph, i64 8
@@ -164,15 +164,18 @@ bb.o:                                             ; preds = %bb.n, %.lr.ph.1
   br i1 %i.ba, label %._crit_edge.thread, label %bb.p
 
 bb.p:                                             ; preds = %._crit_edge
-  store <4 x i32> splat (i32 1), ptr %i.a, align 16, !tbaa !31
+  store i64 4294967297, ptr %i.n, align 8
+  store i64 4294967297, ptr %i.a, align 16
   br label %bb.r
 
 ._crit_edge.thread:                               ; preds = %bb.l, %._crit_edge
-  store <4 x i32> <i32 0, i32 0, i32 0, i32 1>, ptr %i.a, align 16, !tbaa !31
+  store i64 0, ptr %i.a, align 16
+  store i64 4294967296, ptr %i.n, align 8
   br label %bb.r
 
 bb.q:                                             ; preds = %bb.k
-  store <4 x i32> splat (i32 1), ptr %i.a, align 16, !tbaa !31
+  store i64 4294967297, ptr %i.n, align 8
+  store i64 4294967297, ptr %i.a, align 16
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.p, %._crit_edge.thread, %bb.q

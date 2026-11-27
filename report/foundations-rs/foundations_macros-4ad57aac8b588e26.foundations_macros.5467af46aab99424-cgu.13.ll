@@ -202,9 +202,10 @@ bb.e:                                             ; preds = %bb.f, %bb.c
 
 bb.f:                                             ; preds = %bb.d
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 72, !dbg !576
-  store i32 1, ptr %i.d, align 8, !dbg !576
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 76, !dbg !576
-  store i32 %i.c, ptr %3, align 4, !dbg !576
+  %3 = zext i32 %i.c to i64, !dbg !576
+  %4 = shl nuw i64 %3, 32, !dbg !576
+  %5 = or disjoint i64 %4, 1, !dbg !576
+  store i64 %5, ptr %i.d, align 8, !dbg !576
   br label %bb.e, !dbg !577
 
 bb.g:                                             ; preds = %bb.b
@@ -242,9 +243,10 @@ bb.e:                                             ; preds = %bb.f, %bb.c
 
 bb.f:                                             ; preds = %bb.d
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 72, !dbg !585
-  store i32 1, ptr %i.d, align 8, !dbg !585
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 76, !dbg !585
-  store i32 %i.c, ptr %3, align 4, !dbg !585
+  %3 = zext i32 %i.c to i64, !dbg !585
+  %4 = shl nuw i64 %3, 32, !dbg !585
+  %5 = or disjoint i64 %4, 1, !dbg !585
+  store i64 %5, ptr %i.d, align 8, !dbg !585
   br label %bb.e, !dbg !586
 
 bb.g:                                             ; preds = %bb.b
@@ -282,9 +284,10 @@ bb.e:                                             ; preds = %bb.f, %bb.c
 
 bb.f:                                             ; preds = %bb.d
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 72, !dbg !594
-  store i32 1, ptr %i.d, align 8, !dbg !594
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 76, !dbg !594
-  store i32 %i.c, ptr %3, align 4, !dbg !594
+  %3 = zext i32 %i.c to i64, !dbg !594
+  %4 = shl nuw i64 %3, 32, !dbg !594
+  %5 = or disjoint i64 %4, 1, !dbg !594
+  store i64 %5, ptr %i.d, align 8, !dbg !594
   br label %bb.e, !dbg !595
 
 bb.g:                                             ; preds = %bb.b
@@ -322,9 +325,10 @@ bb.e:                                             ; preds = %bb.f, %bb.c
 
 bb.f:                                             ; preds = %bb.d
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 72, !dbg !604
-  store i32 1, ptr %i.d, align 8, !dbg !604
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 76, !dbg !604
-  store i32 %i.c, ptr %3, align 4, !dbg !604
+  %3 = zext i32 %i.c to i64, !dbg !604
+  %4 = shl nuw i64 %3, 32, !dbg !604
+  %5 = or disjoint i64 %4, 1, !dbg !604
+  store i64 %5, ptr %i.d, align 8, !dbg !604
   br label %bb.e, !dbg !605
 
 bb.g:                                             ; preds = %bb.b
@@ -727,8 +731,8 @@ _RNvXs_NvNtNtCs3oUPovFnLWP_4core3fmt5Write9write_fmtQNtNtCs1xwejQucwHj_5alloc6st
 ; Function Attrs: nonlazybind uwtable
 define internal fastcc void @_RNvYNtNtCs1xwejQucwHj_5alloc6string6StringNtNtCsje5z0uo7eGy_12darling_core9from_meta8FromMeta9from_exprCs7fhJ7v7hOxk_18foundations_macros(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(80) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(176) %1) unnamed_addr #0 personality ptr @rust_eh_personality !dbg !2545 {
 bb.a:
-  %i.a = alloca [80 x i8], align 8                ; 8 uses
-  %i.b = alloca [80 x i8], align 8                ; 8 uses
+  %i.a = alloca [80 x i8], align 8                ; 7 uses
+  %i.b = alloca [80 x i8], align 8                ; 7 uses
   %i.c = alloca [80 x i8], align 8                ; 4 uses
   %i.d = alloca [24 x i8], align 8                ; 9 uses
   %i.e = alloca [80 x i8], align 8                ; 9 uses
@@ -846,9 +850,10 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.q
   %i.z = getelementptr inbounds nuw i8, ptr %i.b, i64 72, !dbg !2653
-  store i32 1, ptr %i.z, align 8, !dbg !2653, !alias.scope !2610, !noalias !2606
-  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 76, !dbg !2653
-  store i32 %i.y, ptr %2, align 4, !dbg !2653, !alias.scope !2610, !noalias !2606
+  %2 = zext i32 %i.y to i64, !dbg !2653
+  %3 = shl nuw i64 %2, 32, !dbg !2653
+  %4 = or disjoint i64 %3, 1, !dbg !2653
+  store i64 %4, ptr %i.z, align 8, !dbg !2653, !alias.scope !2610, !noalias !2606
   br label %_RNCNvYNtNtCs1xwejQucwHj_5alloc6string6StringNtNtCsje5z0uo7eGy_12darling_core9from_meta8FromMeta10from_value0Cs7fhJ7v7hOxk_18foundations_macros.exit.i.i, !dbg !2654
 
 bb.s:                                             ; preds = %bb.o
@@ -908,9 +913,10 @@ bb.z:                                             ; preds = %bb.y
 
 bb.aa:                                            ; preds = %bb.z
   %i.ai = getelementptr inbounds nuw i8, ptr %i.a, i64 72, !dbg !2672
-  store i32 1, ptr %i.ai, align 8, !dbg !2672, !alias.scope !2615, !noalias !2612
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 76, !dbg !2672
-  store i32 %i.ah, ptr %3, align 4, !dbg !2672, !alias.scope !2615, !noalias !2612
+  %5 = zext i32 %i.ah to i64, !dbg !2672
+  %6 = shl nuw i64 %5, 32, !dbg !2672
+  %7 = or disjoint i64 %6, 1, !dbg !2672
+  store i64 %7, ptr %i.ai, align 8, !dbg !2672, !alias.scope !2615, !noalias !2612
   br label %_RNCNvYNtNtCs1xwejQucwHj_5alloc6string6StringNtNtCsje5z0uo7eGy_12darling_core9from_meta8FromMeta9from_expr0Cs7fhJ7v7hOxk_18foundations_macros.exit.i, !dbg !2673
 
 bb.ab:                                            ; preds = %bb.x
@@ -939,7 +945,7 @@ _RINvMNtCs3oUPovFnLWP_4core6resultINtB3_6ResultNtNtCs1xwejQucwHj_5alloc6string6S
 define hidden void @_RNvYNtNtCs1xwejQucwHj_5alloc6string6StringNtNtCsje5z0uo7eGy_12darling_core9from_meta8FromMeta9from_metaCs7fhJ7v7hOxk_18foundations_macros(ptr dead_on_unwind noalias nofree noundef writable sret([80 x i8]) align 8 captures(address) dereferenceable(80) %0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(232) %1) unnamed_addr #0 personality ptr @rust_eh_personality !dbg !2682 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 4 uses
-  %i.b = alloca [80 x i8], align 8                ; 8 uses
+  %i.b = alloca [80 x i8], align 8                ; 7 uses
   %i.c = alloca [24 x i8], align 8                ; 6 uses
   %i.d = alloca [4 x i8], align 4                 ; 4 uses
   %i.e = alloca [32 x i8], align 8                ; 5 uses
@@ -1076,9 +1082,10 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.p
   %i.af = getelementptr inbounds nuw i8, ptr %i.b, i64 72, !dbg !2806
-  store i32 1, ptr %i.af, align 8, !dbg !2806, !alias.scope !2761, !noalias !2757
-  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 76, !dbg !2806
-  store i32 %i.ae, ptr %2, align 4, !dbg !2806, !alias.scope !2761, !noalias !2757
+  %2 = zext i32 %i.ae to i64, !dbg !2806
+  %3 = shl nuw i64 %2, 32, !dbg !2806
+  %4 = or disjoint i64 %3, 1, !dbg !2806
+  store i64 %4, ptr %i.af, align 8, !dbg !2806, !alias.scope !2761, !noalias !2757
   br label %_RNCNvYNtNtCs1xwejQucwHj_5alloc6string6StringNtNtCsje5z0uo7eGy_12darling_core9from_meta8FromMeta9from_meta0Cs7fhJ7v7hOxk_18foundations_macros.exit.i, !dbg !2807
 
 bb.r:                                             ; preds = %bb.n
@@ -1150,8 +1157,8 @@ _RINvMNtCs3oUPovFnLWP_4core6resultINtB3_6ResultNtNtCs1xwejQucwHj_5alloc6string6S
 ; Function Attrs: nonlazybind uwtable
 define internal fastcc void @_RNvYbNtNtCsje5z0uo7eGy_12darling_core9from_meta8FromMeta9from_exprCs7fhJ7v7hOxk_18foundations_macros(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(80) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(176) %1) unnamed_addr #0 personality ptr @rust_eh_personality !dbg !2827 {
 bb.a:
-  %i.a = alloca [80 x i8], align 8                ; 8 uses
-  %i.b = alloca [80 x i8], align 8                ; 8 uses
+  %i.a = alloca [80 x i8], align 8                ; 7 uses
+  %i.b = alloca [80 x i8], align 8                ; 7 uses
   %i.c = alloca [80 x i8], align 8                ; 4 uses
   %i.d = alloca [24 x i8], align 8                ; 9 uses
   %i.e = alloca [80 x i8], align 8                ; 9 uses
@@ -1272,9 +1279,10 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.q
   %i.ac = getelementptr inbounds nuw i8, ptr %i.b, i64 72, !dbg !2933
-  store i32 1, ptr %i.ac, align 8, !dbg !2933, !alias.scope !2890, !noalias !2886
-  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 76, !dbg !2933
-  store i32 %i.ab, ptr %2, align 4, !dbg !2933, !alias.scope !2890, !noalias !2886
+  %2 = zext i32 %i.ab to i64, !dbg !2933
+  %3 = shl nuw i64 %2, 32, !dbg !2933
+  %4 = or disjoint i64 %3, 1, !dbg !2933
+  store i64 %4, ptr %i.ac, align 8, !dbg !2933, !alias.scope !2890, !noalias !2886
   br label %_RNCNvYbNtNtCsje5z0uo7eGy_12darling_core9from_meta8FromMeta10from_value0Cs7fhJ7v7hOxk_18foundations_macros.exit.i.i, !dbg !2934
 
 bb.s:                                             ; preds = %bb.o
@@ -1335,9 +1343,10 @@ bb.z:                                             ; preds = %bb.y
 
 bb.aa:                                            ; preds = %bb.z
   %i.am = getelementptr inbounds nuw i8, ptr %i.a, i64 72, !dbg !2952
-  store i32 1, ptr %i.am, align 8, !dbg !2952, !alias.scope !2895, !noalias !2892
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 76, !dbg !2952
-  store i32 %i.al, ptr %3, align 4, !dbg !2952, !alias.scope !2895, !noalias !2892
+  %5 = zext i32 %i.al to i64, !dbg !2952
+  %6 = shl nuw i64 %5, 32, !dbg !2952
+  %7 = or disjoint i64 %6, 1, !dbg !2952
+  store i64 %7, ptr %i.am, align 8, !dbg !2952, !alias.scope !2895, !noalias !2892
   br label %_RNCNvYbNtNtCsje5z0uo7eGy_12darling_core9from_meta8FromMeta9from_expr0Cs7fhJ7v7hOxk_18foundations_macros.exit.i, !dbg !2953
 
 bb.ab:                                            ; preds = %bb.x
@@ -1367,7 +1376,7 @@ _RINvMNtCs3oUPovFnLWP_4core6resultINtB3_6ResultbNtNtCsje5z0uo7eGy_12darling_core
 define hidden void @_RNvYbNtNtCsje5z0uo7eGy_12darling_core9from_meta8FromMeta9from_metaCs7fhJ7v7hOxk_18foundations_macros(ptr dead_on_unwind noalias nofree noundef writable sret([80 x i8]) align 8 captures(address) dereferenceable(80) %0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(232) %1) unnamed_addr #0 personality ptr @rust_eh_personality !dbg !2962 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 4 uses
-  %i.b = alloca [80 x i8], align 8                ; 8 uses
+  %i.b = alloca [80 x i8], align 8                ; 7 uses
   %i.c = alloca [24 x i8], align 8                ; 6 uses
   %i.d = alloca [4 x i8], align 4                 ; 4 uses
   %i.e = alloca [32 x i8], align 8                ; 5 uses
@@ -1504,9 +1513,10 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.p
   %i.af = getelementptr inbounds nuw i8, ptr %i.b, i64 72, !dbg !3082
-  store i32 1, ptr %i.af, align 8, !dbg !3082, !alias.scope !3039, !noalias !3035
-  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 76, !dbg !3082
-  store i32 %i.ae, ptr %2, align 4, !dbg !3082, !alias.scope !3039, !noalias !3035
+  %2 = zext i32 %i.ae to i64, !dbg !3082
+  %3 = shl nuw i64 %2, 32, !dbg !3082
+  %4 = or disjoint i64 %3, 1, !dbg !3082
+  store i64 %4, ptr %i.af, align 8, !dbg !3082, !alias.scope !3039, !noalias !3035
   br label %_RNCNvYbNtNtCsje5z0uo7eGy_12darling_core9from_meta8FromMeta9from_meta0Cs7fhJ7v7hOxk_18foundations_macros.exit.i, !dbg !3083
 
 bb.r:                                             ; preds = %bb.n

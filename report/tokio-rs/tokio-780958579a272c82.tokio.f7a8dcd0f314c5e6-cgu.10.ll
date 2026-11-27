@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 define void @_RNvMNtNtNtCslghKHtsL3a4_5tokio3net4unix6streamNtB2_10UnixStream9peer_cred(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([16 x i8]) align 8 captures(none) dereferenceable(16) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %1) unnamed_addr #1 {
 bb.a:
   %i.a = alloca [4 x i8], align 4                 ; 5 uses
-  %i.b = alloca [12 x i8], align 8                ; 7 uses
+  %i.b = alloca [12 x i8], align 4                ; 7 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 24
   %.val = load i32, ptr %i.c, align 8, !alias.scope !229, !noundef !4 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !230)
@@ -215,11 +215,11 @@ bb.b:                                             ; preds = %bb.a
 
 _RNvXs5_NtNtNtCslghKHtsL3a4_5tokio3net4unix6streamNtB5_10UnixStreamNtNtNtNtCsaL1QbXo9JQH_3std2os2fd3raw7AsRawFd9as_raw_fd.exit.i: ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !230
-  store i32 0, ptr %i.b, align 8, !noalias !230
-  %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 4
+  store i32 0, ptr %i.b, align 4, !noalias !230
+  %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 4 ; 2 uses
   store i32 0, ptr %i.d, align 4, !noalias !230
-  %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
-  store i32 0, ptr %i.e, align 8, !noalias !230
+  %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  store i32 0, ptr %i.e, align 4, !noalias !230
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !230
   store i32 12, ptr %i.a, align 4, !noalias !230
   %i.f = call noundef i32 @getsockopt(i32 noundef %.val, i32 noundef 1, i32 noundef 17, ptr noundef nonnull %i.b, ptr noundef nonnull %i.a) #24, !noalias !230
@@ -251,13 +251,14 @@ _RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error32from_raw_os_error_with_func
   br label %_RNvNtNtNtNtCslghKHtsL3a4_5tokio3net4unix5ucred10impl_linux13get_peer_cred.exit
 
 bb.e:                                             ; preds = %_RNvXs5_NtNtNtCslghKHtsL3a4_5tokio3net4unix6streamNtB5_10UnixStreamNtNtNtNtCsaL1QbXo9JQH_3std2os2fd3raw7AsRawFd9as_raw_fd.exit.i
-  %i.r = load i32, ptr %i.e, align 8, !noalias !230, !noundef !4
-  store i32 1, ptr %0, align 8, !alias.scope !230
-  %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %2 = load <2 x i32>, ptr %i.b, align 8, !noalias !230
-  store <2 x i32> %2, ptr %.sroa.4.0..sroa_idx.i, align 4, !alias.scope !230
-  %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store i32 %i.r, ptr %.sroa.6.0..sroa_idx.i, align 4, !alias.scope !230
+  %2 = load i64, ptr %i.d, align 4, !noalias !230
+  %i.r = load i32, ptr %i.b, align 4, !noalias !230, !noundef !4
+  %3 = zext i32 %i.r to i64
+  %4 = shl nuw i64 %3, 32
+  %5 = or disjoint i64 %4, 1
+  store i64 %5, ptr %0, align 8, !alias.scope !230
+  %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i64 %2, ptr %.sroa.6.0..sroa_idx.i, align 8, !alias.scope !230
   br label %_RNvNtNtNtNtCslghKHtsL3a4_5tokio3net4unix5ucred10impl_linux13get_peer_cred.exit
 
 _RNvNtNtNtNtCslghKHtsL3a4_5tokio3net4unix5ucred10impl_linux13get_peer_cred.exit: ; preds = %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error32from_raw_os_error_with_functions.exit.i, %bb.e
@@ -660,9 +661,9 @@ _RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error32from_raw_os_error_with_func
   br label %bb.i
 
 _RINvNtNtCslghKHtsL3a4_5tokio7process3imp15set_nonblockingNtNtCsaL1QbXo9JQH_3std2fs4FileEB6_.exit: ; preds = %bb.f
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i32 %i.i, ptr %2, align 4
-  store i32 0, ptr %0, align 8
+  %2 = zext i32 %i.i to i64
+  %3 = shl nuw i64 %2, 32
+  store i64 %3, ptr %0, align 8
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.b, %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error32from_raw_os_error_with_functions.exit.i, %_RINvNtNtCslghKHtsL3a4_5tokio7process3imp15set_nonblockingNtNtCsaL1QbXo9JQH_3std2fs4FileEB6_.exit

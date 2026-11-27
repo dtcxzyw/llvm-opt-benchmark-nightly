@@ -205,7 +205,7 @@ bb.a:
 define hidden noundef zeroext i1 @_RINvXs1_NtNtNtCs8C3ZpOVqhBL_18tracing_subscriber3fmt6format6prettyNtB6_6PrettyNtB8_12FormatFields13format_fieldsRNtNtCs94TQx44N27d_12tracing_core4span10AttributesECsarFSTFZzLuM_11xet_runtime(ptr noalias nofree noundef readonly captures(none) dereferenceable(1) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(24) %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [48 x i8], align 8                ; 4 uses
-  %i.b = alloca [48 x i8], align 8                ; 10 uses
+  %i.b = alloca [48 x i8], align 8                ; 11 uses
   %i.c = alloca [8 x i8], align 8                 ; 2 uses
   store ptr %2, ptr %i.c, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
@@ -213,9 +213,11 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 41
   store i8 1, ptr %i.d, align 1
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 24
-  %.sroa.12.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.b, i64 33
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %i.e, i8 0, i64 9, i1 false)
-  store i32 255, ptr %.sroa.12.0..sroa_idx.a, align 1
+  store i64 0, ptr %i.e, align 8
+  %.sroa.12.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.b, i64 32
+  store i8 0, ptr %.sroa.12.0..sroa_idx.a, align 8
+  %.sroa.12.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 33
+  store i32 255, ptr %.sroa.12.0..sroa_idx, align 1
   %.sroa.13.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 37
   store i32 255, ptr %.sroa.13.0..sroa_idx, align 1
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 42
@@ -233,7 +235,7 @@ bb.a:
 define hidden noundef zeroext i1 @_RINvXs1_NtNtNtCs8C3ZpOVqhBL_18tracing_subscriber3fmt6format6prettyNtB6_6PrettyNtB8_12FormatFields13format_fieldsRNtNtCs94TQx44N27d_12tracing_core4span6RecordECsarFSTFZzLuM_11xet_runtime(ptr noalias nofree noundef readonly captures(none) dereferenceable(1) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(24) %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(8) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [48 x i8], align 8                ; 4 uses
-  %i.b = alloca [48 x i8], align 8                ; 10 uses
+  %i.b = alloca [48 x i8], align 8                ; 11 uses
   %i.c = alloca [8 x i8], align 8                 ; 2 uses
   store ptr %2, ptr %i.c, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
@@ -241,9 +243,11 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 41
   store i8 1, ptr %i.d, align 1
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 24
-  %.sroa.12.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.b, i64 33
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %i.e, i8 0, i64 9, i1 false)
-  store i32 255, ptr %.sroa.12.0..sroa_idx.a, align 1
+  store i64 0, ptr %i.e, align 8
+  %.sroa.12.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.b, i64 32
+  store i8 0, ptr %.sroa.12.0..sroa_idx.a, align 8
+  %.sroa.12.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 33
+  store i32 255, ptr %.sroa.12.0..sroa_idx, align 1
   %.sroa.13.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 37
   store i32 255, ptr %.sroa.13.0..sroa_idx, align 1
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 42

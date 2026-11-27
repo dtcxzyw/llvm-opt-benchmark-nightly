@@ -202,10 +202,13 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 184
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !75   ; 3 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 340 ; 3 uses
-  store i32 %1, ptr %i.d, align 4, !tbaa !81
-  %4 = getelementptr inbounds nuw i8, ptr %i.c, i64 336 ; 3 uses
-  store i32 %2, ptr %4, align 8, !tbaa !86
+  %4 = getelementptr inbounds nuw i8, ptr %i.c, i64 340 ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 336 ; 3 uses
+  %5 = zext i32 %2 to i64
+  %6 = zext i32 %1 to i64
+  %7 = shl nuw i64 %6, 32
+  %8 = or disjoint i64 %7, %5
+  store i64 %8, ptr %i.d, align 8
   store i64 %3, ptr %i.a, align 8, !tbaa !95
   %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 728 ; 2 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !88
@@ -244,7 +247,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not33, label %bb.e, label %bb.i
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %i.y = load i32, ptr %4, align 8, !tbaa !86
+  %i.y = load i32, ptr %i.d, align 8, !tbaa !86
   %.not34 = icmp eq i32 %i.y, -1
   br i1 %.not34, label %bb.g, label %bb.f
 
@@ -256,7 +259,7 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
-  %i.ac = load i32, ptr %i.d, align 4, !tbaa !81
+  %i.ac = load i32, ptr %4, align 4, !tbaa !81
   %.not35 = icmp eq i32 %i.ac, -1
   br i1 %.not35, label %bb.i, label %bb.h
 
@@ -295,8 +298,8 @@ bb.l:                                             ; preds = %bb.j
   br i1 %.old2, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.k, %bb.l
-  %i.aq = load i32, ptr %4, align 8, !tbaa !86
-  %i.ar = load i32, ptr %i.d, align 4, !tbaa !81
+  %i.aq = load i32, ptr %i.d, align 8, !tbaa !86
+  %i.ar = load i32, ptr %4, align 4, !tbaa !81
   tail call void (ptr, ptr, ...) @Curl_trc_multi(ptr noundef nonnull %0, ptr noundef nonnull @.str.14, i32 noundef %i.aq, i32 noundef %i.ar) #7
   br label %bb.n
 

@@ -204,7 +204,7 @@ bb.az:                                            ; preds = %bb.b, %_ZNSt7__cxx1
   %i.fo = load i8, ptr %i.fn, align 8, !tbaa !81, !range !70, !noundef !71 ; 2 uses
   %i.fp = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 4 uses
   %i.fq = load ptr, ptr %i.fp, align 8, !tbaa !103 ; 2 uses
-  %i.fr = getelementptr inbounds nuw i8, ptr %0, i64 65 ; 3 uses
+  %i.fr = getelementptr inbounds nuw i8, ptr %0, i64 65
   %i.fs = load i8, ptr %i.fr, align 1, !tbaa !81, !range !70, !noundef !71 ; 2 uses
   store i8 0, ptr %i.fn, align 8, !tbaa !104
   store ptr %1, ptr %i.fp, align 8, !tbaa !93
@@ -217,9 +217,12 @@ bb.ba:                                            ; preds = %bb.az
 bb.bb:                                            ; preds = %bb.bc, %bb.az
   %i.fu = landingpad { ptr, i32 }
           cleanup
-  store i8 %i.fs, ptr %i.fr, align 1, !tbaa !81
   store ptr %i.fq, ptr %i.fp, align 8, !tbaa !103
-  store i8 %i.fo, ptr %i.fn, align 8, !tbaa !81
+  %17 = zext nneg i8 %i.fo to i16
+  %18 = zext nneg i8 %i.fs to i16
+  %19 = shl nuw nsw i16 %18, 8
+  %20 = or disjoint i16 %19, %17
+  store i16 %20, ptr %i.fn, align 8
   br label %bb.bd
 
 bb.bc:                                            ; preds = %bb.ba
@@ -227,9 +230,12 @@ bb.bc:                                            ; preds = %bb.ba
           to label %_ZN9VNVisitor15iterateChildrenEP7AstNode.exit unwind label %bb.bb
 
 _ZN9VNVisitor15iterateChildrenEP7AstNode.exit:    ; preds = %bb.bc, %bb.ba
-  store i8 %i.fs, ptr %i.fr, align 1, !tbaa !81
   store ptr %i.fq, ptr %i.fp, align 8, !tbaa !103
-  store i8 %i.fo, ptr %i.fn, align 8, !tbaa !81
+  %21 = zext nneg i8 %i.fo to i16
+  %22 = zext nneg i8 %i.fs to i16
+  %23 = shl nuw nsw i16 %22, 8
+  %24 = or disjoint i16 %23, %21
+  store i16 %24, ptr %i.fn, align 8
   br label %_ZN7AstNode12user1SetOnceEv.exit
 
 _ZN7AstNode12user1SetOnceEv.exit:                 ; preds = %bb.a, %_ZN9VNVisitor15iterateChildrenEP7AstNode.exit
@@ -632,16 +638,14 @@ declare noundef ptr @_ZN7AstNode7addNextIS_S_EEPT_S2_PT0_(ptr noundef, ptr nound
 define linkonce_odr dso_local void @_ZN7V3Stats7addStatERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEdj(ptr noundef nonnull align 8 dereferenceable(32) %0, double noundef %1, i32 noundef %2) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %class.V3Statistic, align 8         ; 10 uses
-  %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
+  %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
   %i.a = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 6 uses
   store ptr %i.a, ptr %4, align 8, !tbaa !23
-  store i8 42, ptr %i.a, align 8, !tbaa !20
   %i.b = getelementptr inbounds nuw i8, ptr %4, i64 8
   store i64 1, ptr %i.b, align 8, !tbaa !19
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 17
-  store i8 0, ptr %5, align 1, !tbaa !20
+  store i16 42, ptr %i.a, align 8
   invoke void @_ZN11V3StatisticC2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_djbb(ptr noundef nonnull align 8 dereferenceable(96) %3, ptr noundef nonnull align 8 dereferenceable(32) %4, ptr noundef nonnull align 8 dereferenceable(32) %0, double noundef %1, i32 noundef %2, i1 noundef zeroext false, i1 noundef zeroext false)
           to label %bb.b unwind label %bb.d
 
@@ -819,14 +823,13 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %._cri
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 %i.ac
   store i8 0, ptr %i.af, align 1, !tbaa !20
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #22
-  %7 = zext i1 %6 to i8
-  %8 = zext i1 %5 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 88
-  store i8 %8, ptr %9, align 8, !tbaa !278
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 89
-  store i8 %7, ptr %10, align 1, !tbaa !279
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 88
+  %8 = zext i1 %5 to i16
+  %9 = select i1 %6, i16 256, i16 0
+  %10 = or disjoint i16 %9, %8
+  store i16 %10, ptr %7, align 8
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 90
-  store i8 1, ptr %i.ag, align 2, !tbaa !280
+  store i8 1, ptr %i.ag, align 2, !tbaa !278
   ret void
 
 bb.g:                                             ; preds = %.noexc.i9
@@ -1229,7 +1232,5 @@ begin_hunk_2_@llvm.abs.i32
 !275 = !{!"_ZTS11V3Statistic", !17, i64 8, !73, i64 40, !9, i64 48, !17, i64 56, !61, i64 88, !61, i64 89, !61, i64 90}
 !276 = !{!275, !73, i64 40}
 !277 = !{!275, !9, i64 48}
-!278 = !{!275, !61, i64 88}
-!279 = !{!275, !61, i64 89}
-!280 = !{!275, !61, i64 90}
+!278 = !{!275, !61, i64 90}
 end_hunk_2

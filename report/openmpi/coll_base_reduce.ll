@@ -204,7 +204,7 @@ declare ptr @ompi_coll_base_comm_get_reqs(ptr noundef, i32 noundef) local_unname
 define i32 @ompi_coll_base_reduce_intra_chain(ptr noundef %0, ptr noundef %1, i32 noundef %2, ptr noundef %3, ptr nofree noundef readonly captures(none) %4, i32 noundef %5, ptr noundef %6, ptr nofree noundef readonly captures(none) %7, i32 noundef %8, i32 noundef %9, i32 noundef %10) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %7, i64 592
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !59   ; 5 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !59   ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 112 ; 3 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !105  ; 2 uses
   %.not = icmp eq ptr %i.d, null
@@ -230,9 +230,11 @@ bb.e:                                             ; preds = %bb.a, %bb.d
   %i.l = tail call ptr @ompi_coll_base_topo_build_chain(i32 noundef %9, ptr noundef %6, i32 noundef %5) #9 ; 2 uses
   store ptr %i.l, ptr %i.c, align 8, !tbaa !105
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 120
-  store i32 %5, ptr %i.m, align 8, !tbaa !106
-  %11 = getelementptr inbounds nuw i8, ptr %i.b, i64 124
-  store i32 %9, ptr %11, align 4, !tbaa !107
+  %11 = zext i32 %5 to i64
+  %12 = zext i32 %9 to i64
+  %13 = shl nuw i64 %12, 32
+  %14 = or disjoint i64 %13, %11
+  store i64 %14, ptr %i.m, align 8
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.c

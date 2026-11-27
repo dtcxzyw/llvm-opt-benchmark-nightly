@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %._crit_edge, %bb.h
   %i.m = phi i64 [ %i.k, %bb.h ], [ %.pre, %._crit_edge ] ; 2 uses
-  %.sroa.03.0 = phi i32 [ %i.t, %bb.h ], [ 0, %._crit_edge ]
+  %.sroa.03.0 = phi i64 [ %4, %bb.h ], [ 0, %._crit_edge ]
   %i.n = zext i32 %3 to i64
   %i.o = add nsw i64 %i.n, -1                     ; 3 uses
   %i.p = icmp ult i64 %i.o, %i.m
@@ -213,6 +213,7 @@ bb.h:                                             ; preds = %bb.f
   %i.r = load ptr, ptr %i.q, align 8, !nonnull !4, !noundef !4
   %i.s = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %i.i
   %i.t = load i32, ptr %i.s, align 4, !noundef !4
+  %4 = zext i32 %i.t to i64
   br label %bb.g
 
 bb.i:                                             ; preds = %bb.f
@@ -225,9 +226,10 @@ bb.j:                                             ; preds = %bb.g
   %i.w = getelementptr inbounds nuw [4 x i8], ptr %i.v, i64 %i.o
   %i.x = load i32, ptr %i.w, align 4, !noundef !4
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 %.sroa.03.0, ptr %i.y, align 8
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store i32 %i.x, ptr %4, align 4
+  %5 = zext i32 %i.x to i64
+  %6 = shl nuw i64 %5, 32
+  %7 = or disjoint i64 %6, %.sroa.03.0
+  store i64 %7, ptr %i.y, align 8
   store i64 -1, ptr %0, align 8
   br label %bb.l
 
@@ -242,7 +244,7 @@ bb.l:                                             ; preds = %bb.j, %bb.d, %bb.b
 ; Function Attrs: nonlazybind uwtable
 define void @_RNvMs3_NtNtCs31YAwBA1AlL_19xet_core_structures11xorb_object18xorb_object_formatNtB5_10XorbObject16chunk_hash_sizes(ptr dead_on_unwind noalias nofree noundef writable sret([40 x i8]) align 8 captures(address) dereferenceable(40) %0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(168) %1, i32 noundef %2, i32 noundef %3) unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [16 x i8], align 8                ; 6 uses
+  %i.a = alloca [16 x i8], align 8                ; 5 uses
   %i.b = alloca [40 x i8], align 8                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @_RNvMs3_NtNtCs31YAwBA1AlL_19xet_core_structures11xorb_object18xorb_object_formatNtB5_10XorbObject25validate_xorb_object_info(ptr noalias nofree noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.b, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(168) %1)
@@ -267,9 +269,11 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store i32 %2, ptr %i.h, align 8
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 12
-  store i32 %3, ptr %4, align 4
+  %4 = zext i32 %2 to i64
+  %5 = zext i32 %3 to i64
+  %6 = shl nuw i64 %5, 32
+  %7 = or disjoint i64 %6, %4
+  store i64 %7, ptr %i.h, align 8
   store ptr %1, ptr %i.a, align 8
   call void @_RINvNtNtCskKLDkoKarTP_4core4iter8adapters11try_processINtNtB2_3map3MapINtNtNtB6_3ops5range5RangemENCNvMs3_NtNtCs31YAwBA1AlL_19xet_core_structures11xorb_object18xorb_object_formatNtB1G_10XorbObject16chunk_hash_sizes0ETNtNtNtB1K_10merklehash9data_hash8DataHashyEINtNtB6_6result6ResultzNtNtB1K_5error9CoreErrorENCINvXso_B4d_IB4b_INtNtCsexYYUdYSQU6_5alloc3vec3VecB3s_EB4x_EINtNtNtB4_6traits7collect12FromIteratorIB4b_B3s_B4x_EE9from_iterBQ_E0B5e_EB1K_(ptr noalias nofree noundef nonnull sret([40 x i8]) align 8 captures(address) dereferenceable(40) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)

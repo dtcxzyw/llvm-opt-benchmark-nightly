@@ -204,7 +204,7 @@ bb.a:
 define range(i32 0, 2) i32 @stbhw_build_tileset_from_image(ptr noundef %0, ptr noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4) local_unnamed_addr #2 {
 bb.a:
   %5 = alloca %struct.stbhw_config, align 4       ; 23 uses
-  %6 = alloca %struct.stbhw__process, align 8     ; 12 uses
+  %6 = alloca %struct.stbhw__process, align 8     ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(104) %5, i8 0, i64 104, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #16
@@ -402,14 +402,16 @@ stbhw__get_template_info.exit:                    ; preds = %bb.g, %bb.h
   store ptr %0, ptr %6, align 8, !tbaa !69
   %i.ea = getelementptr inbounds nuw i8, ptr %6, i64 32
   store ptr %1, ptr %i.ea, align 8, !tbaa !67
-  %i.eb = getelementptr inbounds nuw i8, ptr %6, i64 40
-  store i32 %2, ptr %i.eb, align 8, !tbaa !68
-  %i.ec = getelementptr inbounds nuw i8, ptr %6, i64 16
-  store ptr @stbhw__parse_h_rect, ptr %i.ec, align 8, !tbaa !33
-  %7 = getelementptr inbounds nuw i8, ptr %6, i64 24
-  store ptr @stbhw__parse_v_rect, ptr %7, align 8, !tbaa !38
-  %8 = getelementptr inbounds nuw i8, ptr %6, i64 44
-  store i32 %3, ptr %8, align 4, !tbaa !43
+  %7 = getelementptr inbounds nuw i8, ptr %6, i64 40
+  %i.eb = getelementptr inbounds nuw i8, ptr %6, i64 16
+  store ptr @stbhw__parse_h_rect, ptr %i.eb, align 8, !tbaa !33
+  %i.ec = getelementptr inbounds nuw i8, ptr %6, i64 24
+  store ptr @stbhw__parse_v_rect, ptr %i.ec, align 8, !tbaa !38
+  %8 = zext i32 %2 to i64
+  %9 = zext i32 %3 to i64
+  %10 = shl nuw i64 %9, 32
+  %11 = or disjoint i64 %10, %8
+  store i64 %11, ptr %7, align 8
   %i.ed = getelementptr inbounds nuw i8, ptr %6, i64 48
   store i32 %4, ptr %i.ed, align 8, !tbaa !44
   %i.ee = getelementptr inbounds nuw i8, ptr %6, i64 8
@@ -812,12 +814,15 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #16
   %i.a = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 9 uses
   store ptr %1, ptr %i.a, align 8, !tbaa !67
-  %i.b = getelementptr inbounds nuw i8, ptr %5, i64 44 ; 9 uses
-  store i32 %2, ptr %i.b, align 4, !tbaa !43
-  %i.c = getelementptr inbounds nuw i8, ptr %5, i64 48
-  store i32 %3, ptr %i.c, align 8, !tbaa !44
-  %6 = getelementptr inbounds nuw i8, ptr %5, i64 40
-  store i32 %4, ptr %6, align 8, !tbaa !68
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 44 ; 8 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %5, i64 48
+  store i32 %3, ptr %i.b, align 8, !tbaa !44
+  %i.c = getelementptr inbounds nuw i8, ptr %5, i64 40
+  %7 = zext i32 %4 to i64
+  %8 = zext i32 %2 to i64
+  %9 = shl nuw i64 %8, 32
+  %10 = or disjoint i64 %9, %7
+  store i64 %10, ptr %i.c, align 8
   store ptr null, ptr %5, align 8, !tbaa !69
   %i.d = getelementptr inbounds nuw i8, ptr %5, i64 8
   store ptr %0, ptr %i.d, align 8, !tbaa !34
@@ -1001,7 +1006,7 @@ bb.d:                                             ; preds = %._crit_edge
   %i.cr = getelementptr inbounds i8, ptr %1, i64 %i.cq
   store i8 %.sink, ptr %i.cr, align 1, !tbaa !45
   %i.cs = load ptr, ptr %i.a, align 8, !tbaa !67
-  %i.ct = load i32, ptr %i.b, align 4, !tbaa !43
+  %i.ct = load i32, ptr %6, align 4, !tbaa !43
   %i.cu = mul nsw i32 %i.ct, 3
   %i.cv = add i32 %i.cu, -2
   %i.cw = sext i32 %i.cv to i64
@@ -1010,7 +1015,7 @@ bb.d:                                             ; preds = %._crit_edge
   %i.cz = xor i8 %i.cy, 55
   store i8 %i.cz, ptr %i.cx, align 1, !tbaa !45
   %i.da = load ptr, ptr %i.a, align 8, !tbaa !67
-  %i.db = load i32, ptr %i.b, align 4, !tbaa !43
+  %i.db = load i32, ptr %6, align 4, !tbaa !43
   %i.dc = mul nsw i32 %i.db, 3
   %i.dd = add i32 %i.dc, -3
   %i.de = sext i32 %i.dd to i64
@@ -1019,7 +1024,7 @@ bb.d:                                             ; preds = %._crit_edge
   %i.dh = xor i8 %i.dg, 110
   store i8 %i.dh, ptr %i.df, align 1, !tbaa !45
   %i.di = load ptr, ptr %i.a, align 8, !tbaa !67
-  %i.dj = load i32, ptr %i.b, align 4, !tbaa !43
+  %i.dj = load i32, ptr %6, align 4, !tbaa !43
   %i.dk = mul nsw i32 %i.dj, 3
   %i.dl = add i32 %i.dk, -4
   %i.dm = sext i32 %i.dl to i64
@@ -1028,7 +1033,7 @@ bb.d:                                             ; preds = %._crit_edge
   %i.dp = xor i8 %i.do, -91
   store i8 %i.dp, ptr %i.dn, align 1, !tbaa !45
   %i.dq = load ptr, ptr %i.a, align 8, !tbaa !67
-  %i.dr = load i32, ptr %i.b, align 4, !tbaa !43
+  %i.dr = load i32, ptr %6, align 4, !tbaa !43
   %i.ds = mul nsw i32 %i.dr, 3
   %i.dt = add i32 %i.ds, -5
   %i.du = sext i32 %i.dt to i64
@@ -1037,7 +1042,7 @@ bb.d:                                             ; preds = %._crit_edge
   %i.dx = xor i8 %i.dw, -36
   store i8 %i.dx, ptr %i.dv, align 1, !tbaa !45
   %i.dy = load ptr, ptr %i.a, align 8, !tbaa !67
-  %i.dz = load i32, ptr %i.b, align 4, !tbaa !43
+  %i.dz = load i32, ptr %6, align 4, !tbaa !43
   %i.ea = mul nsw i32 %i.dz, 3
   %i.eb = add i32 %i.ea, -6
   %i.ec = sext i32 %i.eb to i64
@@ -1046,7 +1051,7 @@ bb.d:                                             ; preds = %._crit_edge
   %i.ef = xor i8 %i.ee, 19
   store i8 %i.ef, ptr %i.ed, align 1, !tbaa !45
   %i.eg = load ptr, ptr %i.a, align 8, !tbaa !67
-  %i.eh = load i32, ptr %i.b, align 4, !tbaa !43
+  %i.eh = load i32, ptr %6, align 4, !tbaa !43
   %i.ei = mul nsw i32 %i.eh, 3
   %i.ej = add i32 %i.ei, -7
   %i.ek = sext i32 %i.ej to i64
@@ -1055,7 +1060,7 @@ bb.d:                                             ; preds = %._crit_edge
   %i.en = xor i8 %i.em, 74
   store i8 %i.en, ptr %i.el, align 1, !tbaa !45
   %i.eo = load ptr, ptr %i.a, align 8, !tbaa !67
-  %i.ep = load i32, ptr %i.b, align 4, !tbaa !43
+  %i.ep = load i32, ptr %6, align 4, !tbaa !43
   %i.eq = mul nsw i32 %i.ep, 3
   %i.er = add i32 %i.eq, -8
   %i.es = sext i32 %i.er to i64
@@ -1064,7 +1069,7 @@ bb.d:                                             ; preds = %._crit_edge
   %i.ev = xor i8 %i.eu, -127
   store i8 %i.ev, ptr %i.et, align 1, !tbaa !45
   %i.ew = load ptr, ptr %i.a, align 8, !tbaa !67
-  %i.ex = load i32, ptr %i.b, align 4, !tbaa !43
+  %i.ex = load i32, ptr %6, align 4, !tbaa !43
   %i.ey = mul nsw i32 %i.ex, 3
   %i.ez = add i32 %i.ey, -9
   %i.fa = sext i32 %i.ez to i64

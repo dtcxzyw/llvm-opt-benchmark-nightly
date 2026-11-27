@@ -204,9 +204,7 @@ switch.lookup:                                    ; preds = %bb.a
 ; Function Attrs: nounwind uwtable
 define dso_local void @bioCreateCloseJob(i32 noundef %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #0 !guid !101 {
 bb.a:
-  %i.a = tail call noalias dereferenceable_or_null(32) ptr @zmalloc(i64 noundef 32) #16 ; 4 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  store i32 %0, ptr %3, align 4, !tbaa !85
+  %i.a = tail call noalias dereferenceable_or_null(32) ptr @zmalloc(i64 noundef 32) #16 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
   %i.c = trunc i32 %1 to i8
   %i.d = load i8, ptr %i.b, align 8
@@ -218,7 +216,9 @@ bb.a:
   %i.j = or disjoint i8 %i.i, %i.e
   %i.k = or disjoint i8 %i.j, %i.f
   store i8 %i.k, ptr %i.b, align 8
-  store i32 0, ptr %i.a, align 8, !tbaa !85
+  %3 = zext i32 %0 to i64
+  %4 = shl nuw i64 %3, 32
+  store i64 %4, ptr %i.a, align 8
   %i.l = tail call i32 @pthread_mutex_lock(ptr noundef nonnull @bio_mutex) #12 ; 0 uses
   %i.m = load ptr, ptr @bio_jobs, align 16, !tbaa !40
   %i.n = tail call ptr @listAddNodeTail(ptr noundef %i.m, ptr noundef nonnull %i.a) #12 ; 0 uses
@@ -233,9 +233,7 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define dso_local void @bioCreateCloseAofJob(i32 noundef %0, i64 noundef %1, i32 noundef %2) local_unnamed_addr #0 !guid !102 {
 bb.a:
-  %i.a = tail call noalias dereferenceable_or_null(32) ptr @zmalloc(i64 noundef 32) #16 ; 5 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  store i32 %0, ptr %3, align 4, !tbaa !85
+  %i.a = tail call noalias dereferenceable_or_null(32) ptr @zmalloc(i64 noundef 32) #16 ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i64 %1, ptr %i.b, align 8, !tbaa !85
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
@@ -247,7 +245,10 @@ bb.a:
   %i.i = or disjoint i8 %i.g, %i.h
   %i.j = or disjoint i8 %i.i, 1
   store i8 %i.j, ptr %i.c, align 8
-  store i32 3, ptr %i.a, align 8, !tbaa !85
+  %3 = zext i32 %0 to i64
+  %4 = shl nuw i64 %3, 32
+  %5 = or disjoint i64 %4, 3
+  store i64 %5, ptr %i.a, align 8
   %i.k = tail call i32 @pthread_mutex_lock(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @bio_mutex, i64 40)) #12 ; 0 uses
   %i.l = load ptr, ptr getelementptr inbounds nuw (i8, ptr @bio_jobs, i64 8), align 8, !tbaa !40
   %i.m = tail call ptr @listAddNodeTail(ptr noundef %i.l, ptr noundef nonnull %i.a) #12 ; 0 uses
@@ -262,9 +263,7 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define dso_local void @bioCreateFsyncJob(i32 noundef %0, i64 noundef %1, i32 noundef %2) local_unnamed_addr #0 !guid !103 {
 bb.a:
-  %i.a = tail call noalias dereferenceable_or_null(32) ptr @zmalloc(i64 noundef 32) #16 ; 5 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  store i32 %0, ptr %3, align 4, !tbaa !85
+  %i.a = tail call noalias dereferenceable_or_null(32) ptr @zmalloc(i64 noundef 32) #16 ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i64 %1, ptr %i.b, align 8, !tbaa !85
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
@@ -275,7 +274,10 @@ bb.a:
   %i.h = and i8 %i.e, -3
   %i.i = or disjoint i8 %i.h, %i.g
   store i8 %i.i, ptr %i.c, align 8
-  store i32 1, ptr %i.a, align 8, !tbaa !85
+  %3 = zext i32 %0 to i64
+  %4 = shl nuw i64 %3, 32
+  %5 = or disjoint i64 %4, 1
+  store i64 %5, ptr %i.a, align 8
   %i.j = tail call i32 @pthread_mutex_lock(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @bio_mutex, i64 40)) #12 ; 0 uses
   %i.k = load ptr, ptr getelementptr inbounds nuw (i8, ptr @bio_jobs, i64 8), align 8, !tbaa !40
   %i.l = tail call ptr @listAddNodeTail(ptr noundef %i.k, ptr noundef nonnull %i.a) #12 ; 0 uses

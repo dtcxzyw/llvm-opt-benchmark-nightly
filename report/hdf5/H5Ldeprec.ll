@@ -200,7 +200,7 @@ define range(i32 -1, 1) i32 @H5Lget_info_by_idx1(i64 noundef %0, ptr noundef %1,
 bb.a:
   %i.a = alloca i64, align 8                      ; 3 uses
   %7 = alloca %struct.H5VL_link_get_args_t, align 8 ; 5 uses
-  %8 = alloca %struct.H5VL_loc_params_t, align 8  ; 11 uses
+  %8 = alloca %struct.H5VL_loc_params_t, align 8  ; 10 uses
   %9 = alloca %struct.H5L_info2_t, align 8        ; 10 uses
   %i.b = alloca i8, align 1                       ; 4 uses
   %10 = alloca %struct.H5CX_node_t, align 8       ; 4 uses
@@ -318,9 +318,11 @@ bb.r:                                             ; preds = %bb.p
   %i.as = getelementptr inbounds nuw i8, ptr %8, i64 8
   store ptr %1, ptr %i.as, align 8, !tbaa !28
   %i.at = getelementptr inbounds nuw i8, ptr %8, i64 16
-  store i32 %2, ptr %i.at, align 8, !tbaa !28
-  %11 = getelementptr inbounds nuw i8, ptr %8, i64 20
-  store i32 %3, ptr %11, align 4, !tbaa !28
+  %11 = zext nneg i32 %2 to i64
+  %12 = zext nneg i32 %3 to i64
+  %13 = shl nuw nsw i64 %12, 32
+  %14 = or disjoint i64 %13, %11
+  store i64 %14, ptr %i.at, align 8
   %i.au = getelementptr inbounds nuw i8, ptr %8, i64 24
   store i64 %4, ptr %i.au, align 8, !tbaa !28
   %i.av = load i64, ptr %i.a, align 8, !tbaa !15

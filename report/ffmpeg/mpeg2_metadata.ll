@@ -101,7 +101,7 @@ bb.a:
   %i.d = alloca i32, align 4                      ; 4 uses
   %i.e = alloca i32, align 4                      ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !15   ; 17 uses
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !15   ; 19 uses
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.i = load i32, ptr %i.h, align 8, !tbaa !30   ; 4 uses
   %i.j = icmp sgt i32 %i.i, 0
@@ -398,22 +398,27 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ai, %bb.
 
 bb.al:                                            ; preds = %bb.ak
   %i.cr = getelementptr inbounds nuw i8, ptr %i.g, i64 80 ; 2 uses
+  store i16 693, ptr %i.cr, align 8
+  %3 = getelementptr inbounds nuw i8, ptr %i.g, i64 82 ; 2 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %.2.lcssa, i64 3
   %i.ct = getelementptr inbounds nuw i8, ptr %.181.lcssa, i64 2
+  %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.g, i64 84
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.g, i64 86
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.g, i64 88
   %i.cu = load <2 x i8>, ptr %i.cs, align 1, !tbaa !51
   %i.cv = zext <2 x i8> %i.cu to <2 x i16>
   %i.cw = shl <2 x i16> %i.cv, splat (i16 12)
   %i.cx = load <2 x i16>, ptr %i.ct, align 2, !tbaa !52
   %i.cy = or <2 x i16> %i.cw, %i.cx
-  store <8 x i8> <i8 -75, i8 2, i8 5, i8 0, i8 2, i8 2, i8 2, i8 0>, ptr %i.cr, align 8
+  store i16 5, ptr %3, align 2
+  store i16 514, ptr %.sroa.3.0..sroa_idx, align 4
+  store i16 2, ptr %.sroa.5.0..sroa_idx, align 2
   store <2 x i16> %i.cy, ptr %.sroa.7.0..sroa_idx, align 8, !tbaa !52
   %i.cz = call i32 @ff_cbs_insert_unit_content(ptr noundef nonnull %2, i32 noundef %i.au, i32 noundef 181, ptr noundef nonnull %i.cr, ptr noundef null) #4 ; 2 uses
   %i.da = icmp sgt i32 %i.cz, -1
   br i1 %i.da, label %..critedge_crit_edge, label %bb.am
 
 ..critedge_crit_edge:                             ; preds = %bb.al
-  %3 = getelementptr inbounds nuw i8, ptr %i.g, i64 82
   %.pre = load i32, ptr %i.cf, align 8, !tbaa !50
   br label %.critedge
 

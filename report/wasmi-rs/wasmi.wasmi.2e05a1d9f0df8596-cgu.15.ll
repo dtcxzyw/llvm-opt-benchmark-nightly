@@ -204,6 +204,7 @@ _RNCNvXso_NtNtCs2C93r1qUspC_12clap_builder7builder12value_parserINtB7_15EnumValu
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q), !noalias !157
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.be, ptr %i.bi, align 8
+  store i8 1, ptr %0, align 8
   br label %bb.ay
 
 _RNvXsf_NtNtCs3WYoaQ2jqaU_5wasmi8commands3runNtB5_15CompilationModeNtNtCs2C93r1qUspC_12clap_builder6derive9ValueEnum17to_possible_value.exit.i.i: ; preds = %bb.c
@@ -283,8 +284,9 @@ _RNCNvXso_NtNtCs2C93r1qUspC_12clap_builder7builder12value_parserINtB7_15EnumValu
 _RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterNtNtNtCs3WYoaQ2jqaU_5wasmi8commands3run15CompilationModeENtNtNtNtBb_4iter6traits8iterator8Iterator4findNCNvXso_NtNtCs2C93r1qUspC_12clap_builder7builder12value_parserINtB2D_15EnumValueParserBQ_ENtB2D_16TypedValueParser9parse_refs1_0EBW_.exit: ; preds = %_RNCNvXso_NtNtCs2C93r1qUspC_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtNtCs3WYoaQ2jqaU_5wasmi8commands3run15CompilationModeENtB7_16TypedValueParser9parse_refs1_0B1s_.exit.i.2, %_RNCNvXso_NtNtCs2C93r1qUspC_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtNtCs3WYoaQ2jqaU_5wasmi8commands3run15CompilationModeENtB7_16TypedValueParser9parse_refs1_0B1s_.exit.i.1, %_RNCNvXso_NtNtCs2C93r1qUspC_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtNtCs3WYoaQ2jqaU_5wasmi8commands3run15CompilationModeENtB7_16TypedValueParser9parse_refs1_0B1s_.exit.i
   %.ptr.lcssa18 = phi ptr [ @31, %_RNCNvXso_NtNtCs2C93r1qUspC_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtNtCs3WYoaQ2jqaU_5wasmi8commands3run15CompilationModeENtB7_16TypedValueParser9parse_refs1_0B1s_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @31, i64 1), %_RNCNvXso_NtNtCs2C93r1qUspC_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtNtCs3WYoaQ2jqaU_5wasmi8commands3run15CompilationModeENtB7_16TypedValueParser9parse_refs1_0B1s_.exit.i.1 ], [ getelementptr inbounds nuw (i8, ptr @31, i64 2), %_RNCNvXso_NtNtCs2C93r1qUspC_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtNtCs3WYoaQ2jqaU_5wasmi8commands3run15CompilationModeENtB7_16TypedValueParser9parse_refs1_0B1s_.exit.i.2 ]
   %.val = load i8, ptr %.ptr.lcssa18, align 1, !range !5, !noundef !6
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  store i8 %.val, ptr %5, align 1
+  %5 = zext nneg i8 %.val to i16
+  %6 = shl nuw nsw i16 %5, 8
+  store i16 %6, ptr %0, align 8
   br label %bb.ay
 
 bb.ad:                                            ; preds = %_RNCNvXso_NtNtCs2C93r1qUspC_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtNtCs3WYoaQ2jqaU_5wasmi8commands3run15CompilationModeENtB7_16TypedValueParser9parse_refs1_0B1s_.exit.i.2
@@ -470,11 +472,10 @@ _RNCNvXso_NtNtCs2C93r1qUspC_12clap_builder7builder12value_parserINtB7_15EnumValu
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !163
   %i.cx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.ct, ptr %i.cx, align 8
+  store i8 1, ptr %0, align 8
   br label %bb.ay
 
 bb.ay:                                            ; preds = %_RNCNvXso_NtNtCs2C93r1qUspC_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtNtCs3WYoaQ2jqaU_5wasmi8commands3run15CompilationModeENtB7_16TypedValueParser9parse_refs0_0B1s_.exit, %_RNCNvXso_NtNtCs2C93r1qUspC_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtNtCs3WYoaQ2jqaU_5wasmi8commands3run15CompilationModeENtB7_16TypedValueParser9parse_refs2_0B1s_.exit, %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterNtNtNtCs3WYoaQ2jqaU_5wasmi8commands3run15CompilationModeENtNtNtNtBb_4iter6traits8iterator8Iterator4findNCNvXso_NtNtCs2C93r1qUspC_12clap_builder7builder12value_parserINtB2D_15EnumValueParserBQ_ENtB2D_16TypedValueParser9parse_refs1_0EBW_.exit
-  %.sink = phi i8 [ 1, %_RNCNvXso_NtNtCs2C93r1qUspC_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtNtCs3WYoaQ2jqaU_5wasmi8commands3run15CompilationModeENtB7_16TypedValueParser9parse_refs0_0B1s_.exit ], [ 1, %_RNCNvXso_NtNtCs2C93r1qUspC_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtNtCs3WYoaQ2jqaU_5wasmi8commands3run15CompilationModeENtB7_16TypedValueParser9parse_refs2_0B1s_.exit ], [ 0, %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterNtNtNtCs3WYoaQ2jqaU_5wasmi8commands3run15CompilationModeENtNtNtNtBb_4iter6traits8iterator8Iterator4findNCNvXso_NtNtCs2C93r1qUspC_12clap_builder7builder12value_parserINtB2D_15EnumValueParserBQ_ENtB2D_16TypedValueParser9parse_refs1_0EBW_.exit ]
-  store i8 %.sink, ptr %0, align 8
   ret void
 }
 
@@ -638,7 +639,7 @@ bb.i:                                             ; preds = %.lr.ph.i
   %.not53.i = icmp eq i64 %i.br, 0
   br i1 %.not53.i, label %_RNvMsD_NtCskKLDkoKarTP_4core3numy27from_ascii_bytes_radix_impl.exit, label %.lr.ph.i
 
-.loopexit:                                        ; preds = %bb.f, %bb.h, %.lr.ph.i, %bb.g, %bb.c, %bb.d, %bb.d
+.loopexit:                                        ; preds = %bb.h, %bb.f, %.lr.ph.i, %bb.g, %bb.d, %bb.d, %bb.c
   %.sroa.5.0.ph = phi i8 [ 1, %bb.d ], [ %spec.select, %bb.g ], [ 1, %bb.d ], [ 0, %bb.c ], [ 1, %.lr.ph.i ], [ 1, %bb.f ], [ 2, %bb.h ]
   %.not.i = icmp eq ptr %2, null
   br i1 %.not.i, label %bb.o, label %bb.j

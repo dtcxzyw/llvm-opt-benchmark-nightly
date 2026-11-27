@@ -205,8 +205,9 @@ bb.i:                                             ; preds = %_ZNSt6vectorI6aiFac
           to label %bb.j unwind label %.loopexit.split-lp337.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 62 uses
 
 bb.j:                                             ; preds = %bb.i
-  %7 = getelementptr inbounds nuw i8, ptr %i.cu, i64 4 ; 27 uses
-  %i.cv = getelementptr inbounds nuw i8, ptr %i.cu, i64 8 ; 2 uses
+  store i64 0, ptr %i.cu, align 8
+  %i.cv = getelementptr inbounds nuw i8, ptr %i.cu, i64 8 ; 3 uses
+  store i32 0, ptr %i.cv, align 8
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cu, i64 16 ; 3 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cu, i64 224 ; 6 uses
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cu, i64 1272
@@ -215,7 +216,7 @@ bb.j:                                             ; preds = %bb.i
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(204) %i.cw, i8 0, i64 204, i1 false)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1044) %i.cx, i8 0, i64 1044, i1 false)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(36) %i.cy, i8 0, i64 36, i1 false)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.cu, i8 0, i64 12, i1 false)
+  %7 = getelementptr inbounds nuw i8, ptr %i.cu, i64 4 ; 27 uses
   %i.da = load i32, ptr %i.ar, align 8
   %i.db = getelementptr inbounds nuw i8, ptr %i.cu, i64 232
   store i32 %i.da, ptr %i.db, align 8

@@ -204,25 +204,24 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.dm)
-  %not. = xor i1 %2, true
-  %. = zext i1 %not. to i8
   %i.do = getelementptr inbounds nuw i8, ptr %i.dm, i64 24 ; 5 uses
   store i64 -1, ptr %i.do, align 8
   %i.dp = getelementptr inbounds nuw i8, ptr %i.dm, i64 112 ; 3 uses
-  %4 = zext i1 %3 to i8
-  store i8 %4, ptr %i.dp, align 8
-  %i.dq = getelementptr inbounds nuw i8, ptr %i.dm, i64 114 ; 2 uses
-  store i8 %., ptr %i.dq, align 2
-  %i.dr = getelementptr inbounds nuw i8, ptr %i.dm, i64 115 ; 4 uses
-  store i8 -1, ptr %i.dr, align 1
+  %i.dq = getelementptr inbounds nuw i8, ptr %i.dm, i64 114
+  %i.dr = getelementptr inbounds nuw i8, ptr %i.dm, i64 115 ; 3 uses
   store i64 0, ptr %i.dm, align 8
   %i.ds = getelementptr inbounds nuw i8, ptr %i.dm, i64 96 ; 4 uses
   store i8 2, ptr %i.ds, align 8
   %i.dt = getelementptr inbounds nuw i8, ptr %i.dm, i64 100 ; 3 uses
   store i32 0, ptr %i.dt, align 4
-  %i.du = getelementptr inbounds nuw i8, ptr %i.dm, i64 113 ; 4 uses
-  %5 = zext i1 %2 to i8
-  store i8 %5, ptr %i.du, align 1
+  %i.du = getelementptr inbounds nuw i8, ptr %i.dm, i64 113 ; 3 uses
+  %4 = zext i1 %3 to i32
+  %5 = select i1 %2, i32 256, i32 0
+  %6 = or disjoint i32 %5, %4
+  %7 = select i1 %2, i32 0, i32 65536
+  %8 = or disjoint i32 %6, %7
+  %9 = or disjoint i32 %8, -16777216
+  store i32 %9, ptr %i.dp, align 8
   %i.dv = getelementptr inbounds nuw i8, ptr %i.dm, i64 48 ; 5 uses
   store i64 -1, ptr %i.dv, align 8
   %i.dw = getelementptr inbounds nuw i8, ptr %i.dm, i64 104 ; 4 uses
@@ -571,9 +570,11 @@ bb.q:                                             ; preds = %bb.s, %.noexc161
   %.sroa.647.sroa.4.0..sroa.647.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 48
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.647.sroa.4.0..sroa.647.0..sroa_idx.sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.552.i, i64 40, i1 false), !noalias !1504
   %.sroa.748.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 88
-  store i8 %spec.select.i, ptr %.sroa.748.0..sroa_idx.i, align 8, !alias.scope !1503
-  %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 89
-  store i8 %i.fx, ptr %.sroa.8.0..sroa_idx.i, align 1, !alias.scope !1503
+  %10 = zext nneg i8 %spec.select.i to i16
+  %11 = zext nneg i8 %i.fx to i16
+  %12 = shl nuw nsw i16 %11, 8
+  %13 = or disjoint i16 %12, %10
+  store i16 %13, ptr %.sroa.748.0..sroa_idx.i, align 8, !alias.scope !1503
   %.sroa.949.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 90
   store i8 %i.gh, ptr %.sroa.949.0..sroa_idx.i, align 2, !alias.scope !1503
   br label %bb.u

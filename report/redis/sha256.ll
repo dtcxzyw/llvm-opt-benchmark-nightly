@@ -174,9 +174,13 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 72
   store i64 0, ptr %i.b, align 8, !tbaa !19
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 80
-  store <4 x i32> <i32 1779033703, i32 -1150833019, i32 1013904242, i32 -1521486534>, ptr %i.c, align 8, !tbaa !12
+  store i64 -4942790177982912921, ptr %i.c, align 8
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 88
+  store i64 -6534734903820487822, ptr %1, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 96
-  store <4 x i32> <i32 1359893119, i32 -1694144372, i32 528734635, i32 1541459225>, ptr %i.d, align 8, !tbaa !12
+  store i64 -7276294671082564993, ptr %i.d, align 8
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 104
+  store i64 6620516960021240235, ptr %2, align 8
   ret void
 }
 

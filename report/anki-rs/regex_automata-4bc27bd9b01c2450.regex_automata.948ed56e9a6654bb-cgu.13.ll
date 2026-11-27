@@ -204,9 +204,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %2, ptr %i.c, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store i8 0, ptr %i.d, align 8
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 33
-  store i8 0, ptr %3, align 1
+  store i16 0, ptr %i.d, align 8
   ret void
 }
 
@@ -609,9 +607,13 @@ bb.o:                                             ; preds = %bb.n
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.t, ptr noundef nonnull align 16 dereferenceable(32) %i.b, i64 32, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %0, ptr noundef nonnull align 1 dereferenceable(256) %i.a, i64 256, i1 false)
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 369
-  %i.v = getelementptr inbounds nuw i8, ptr %0, i64 368
-  store i32 0, ptr %i.u, align 1
-  store i8 %i.l, ptr %i.v, align 16
+  store i8 0, ptr %i.u, align 1
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 370
+  store i16 0, ptr %1, align 2
+  %i.v = getelementptr inbounds nuw i8, ptr %0, i64 372
+  store i8 0, ptr %i.v, align 4
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 368
+  store i8 %i.l, ptr %2, align 16
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 360
   store i32 %i.m, ptr %i.w, align 8
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 364

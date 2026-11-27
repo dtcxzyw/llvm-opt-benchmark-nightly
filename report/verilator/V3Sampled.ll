@@ -202,12 +202,14 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %._cri
   store i64 0, ptr %i.af, align 8, !tbaa !18
   store i8 0, ptr %i.ae, align 8, !tbaa !19
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 248
+  store i32 0, ptr %i.ag, align 8
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 252
+  store i8 0, ptr %5, align 4, !tbaa !235
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 256
-  store i32 0, ptr %i.ah, align 8, !tbaa !241
+  store i32 0, ptr %i.ah, align 8, !tbaa !242
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 272
-  store ptr null, ptr %i.ai, align 8, !tbaa !242
+  store ptr null, ptr %i.ai, align 8, !tbaa !243
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 260 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(5) %i.ag, i8 0, i64 5, i1 false)
   %i.ak = load i64, ptr %i.aj, align 4
   %i.al = and i64 %i.ak, -9223372036854775808
   store i64 %i.al, ptr %i.aj, align 4
@@ -305,7 +307,7 @@ bb.a:
   switch i64 %magicptr, label %bb.d [
     i64 0, label %bb.b
     i64 1, label %bb.c
-  ], !prof !243
+  ], !prof !244
 
 bb.b:                                             ; preds = %bb.a
   %i.a = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull @.str.514, i64 noundef 7) ; 0 uses
@@ -708,15 +710,16 @@ begin_hunk_1_@llvm.umax.i64
 !230 = distinct !{!230, !154}
 !231 = !{!47, !46, i64 24}
 !232 = !{!47, !46, i64 16}
-!233 = !{!"_ZTSN10VDirection2enE", !7, i64 0}
-!234 = !{!"_ZTS10VDirection", !233, i64 0}
-!235 = !{!"_ZTSN9VLifetime2enE", !7, i64 0}
-!236 = !{!"_ZTS9VLifetime", !235, i64 0}
-!237 = !{!"_ZTSN9VRandAttr2enE", !7, i64 0}
-!238 = !{!"_ZTS9VRandAttr", !237, i64 0}
-!239 = !{!"p1 _ZTS8AstIface", !12, i64 0}
-!240 = !{!"_ZTS6AstVar", !97, i64 0, !16, i64 152, !16, i64 184, !16, i64 216, !158, i64 248, !234, i64 249, !234, i64 250, !236, i64 251, !238, i64 252, !8, i64 256, !33, i64 260, !33, i64 260, !33, i64 260, !33, i64 260, !33, i64 260, !33, i64 260, !33, i64 260, !33, i64 260, !33, i64 261, !33, i64 261, !33, i64 261, !33, i64 261, !33, i64 261, !33, i64 261, !33, i64 261, !33, i64 261, !33, i64 262, !33, i64 262, !33, i64 262, !33, i64 262, !33, i64 262, !33, i64 262, !33, i64 262, !33, i64 262, !33, i64 263, !33, i64 263, !33, i64 263, !33, i64 263, !33, i64 263, !33, i64 263, !33, i64 263, !33, i64 263, !33, i64 264, !33, i64 264, !33, i64 264, !33, i64 264, !33, i64 264, !33, i64 264, !33, i64 264, !33, i64 264, !33, i64 265, !33, i64 265, !33, i64 265, !33, i64 265, !33, i64 265, !33, i64 265, !33, i64 265, !33, i64 265, !33, i64 266, !33, i64 266, !33, i64 266, !33, i64 266, !33, i64 266, !33, i64 266, !33, i64 266, !33, i64 266, !33, i64 267, !33, i64 267, !33, i64 267, !33, i64 267, !33, i64 267, !33, i64 267, !33, i64 267, !239, i64 272}
-!241 = !{!240, !8, i64 256}
-!242 = !{!240, !239, i64 272}
-!243 = !{!"branch_weights", i32 2000, i32 2001, i32 1}
+!233 = !{!"_ZTSN9VRandAttr2enE", !7, i64 0}
+!234 = !{!"_ZTS9VRandAttr", !233, i64 0}
+!235 = !{!234, !233, i64 0}
+!236 = !{!"_ZTSN10VDirection2enE", !7, i64 0}
+!237 = !{!"_ZTS10VDirection", !236, i64 0}
+!238 = !{!"_ZTSN9VLifetime2enE", !7, i64 0}
+!239 = !{!"_ZTS9VLifetime", !238, i64 0}
+!240 = !{!"p1 _ZTS8AstIface", !12, i64 0}
+!241 = !{!"_ZTS6AstVar", !97, i64 0, !16, i64 152, !16, i64 184, !16, i64 216, !158, i64 248, !237, i64 249, !237, i64 250, !239, i64 251, !234, i64 252, !8, i64 256, !33, i64 260, !33, i64 260, !33, i64 260, !33, i64 260, !33, i64 260, !33, i64 260, !33, i64 260, !33, i64 260, !33, i64 261, !33, i64 261, !33, i64 261, !33, i64 261, !33, i64 261, !33, i64 261, !33, i64 261, !33, i64 261, !33, i64 262, !33, i64 262, !33, i64 262, !33, i64 262, !33, i64 262, !33, i64 262, !33, i64 262, !33, i64 262, !33, i64 263, !33, i64 263, !33, i64 263, !33, i64 263, !33, i64 263, !33, i64 263, !33, i64 263, !33, i64 263, !33, i64 264, !33, i64 264, !33, i64 264, !33, i64 264, !33, i64 264, !33, i64 264, !33, i64 264, !33, i64 264, !33, i64 265, !33, i64 265, !33, i64 265, !33, i64 265, !33, i64 265, !33, i64 265, !33, i64 265, !33, i64 265, !33, i64 266, !33, i64 266, !33, i64 266, !33, i64 266, !33, i64 266, !33, i64 266, !33, i64 266, !33, i64 266, !33, i64 267, !33, i64 267, !33, i64 267, !33, i64 267, !33, i64 267, !33, i64 267, !33, i64 267, !240, i64 272}
+!242 = !{!241, !8, i64 256}
+!243 = !{!241, !240, i64 272}
+!244 = !{!"branch_weights", i32 2000, i32 2001, i32 1}
 end_hunk_1

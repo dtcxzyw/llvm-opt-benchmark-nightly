@@ -202,7 +202,7 @@ bb.a:
     #dbg_declare(ptr poison, !4126, !DIExpression(DW_OP_LLVM_fragment, 192, 384), !4133)
   %i.c = alloca [32 x i8], align 8                ; 4 uses
   %i.d = alloca [80 x i8], align 8                ; 9 uses
-  %i.e = alloca [40 x i8], align 8                ; 9 uses
+  %i.e = alloca [40 x i8], align 8                ; 10 uses
     #dbg_value(ptr poison, !4134, !DIExpression(DW_OP_LLVM_fragment, 0, 32), !4137)
     #dbg_value(ptr poison, !4134, !DIExpression(DW_OP_LLVM_fragment, 32, 8), !4137)
     #dbg_value(ptr poison, !4134, !DIExpression(DW_OP_LLVM_fragment, 40, 8), !4137)
@@ -336,8 +336,9 @@ bb.i:                                             ; preds = %bb.b
   %i.v = getelementptr inbounds nuw i8, ptr %2, i64 8, !dbg !4260
   %i.w = load i32, ptr %i.v, align 8, !dbg !4260, !range !2080, !noundef !780
     #dbg_value(i32 %i.w, !4096, !DIExpression(), !4169)
-  %3 = getelementptr inbounds nuw i8, ptr %i.e, i64 4, !dbg !4261
-  store i32 %i.w, ptr %3, align 4, !dbg !4261
+  %3 = zext nneg i32 %i.w to i64, !dbg !4261
+  %4 = shl nuw nsw i64 %3, 32, !dbg !4261
+  store i64 %4, ptr %i.e, align 8, !dbg !4261
   br label %bb.l, !dbg !4262
 
 bb.j:                                             ; preds = %bb.b
@@ -352,6 +353,7 @@ bb.j:                                             ; preds = %bb.b
   store ptr %i.y, ptr %i.ab, align 8, !dbg !4265
   %i.ac = getelementptr inbounds nuw i8, ptr %i.e, i64 16, !dbg !4265
   store i64 %i.aa, ptr %i.ac, align 8, !dbg !4265
+  store i32 1, ptr %i.e, align 8, !dbg !4265
   br label %bb.l, !dbg !4266
 
 bb.k:                                             ; preds = %bb.b
@@ -377,11 +379,10 @@ bb.k:                                             ; preds = %bb.b
   store ptr %i.ai, ptr %i.an, align 8, !dbg !4271
   %i.ao = getelementptr inbounds nuw i8, ptr %i.e, i64 32, !dbg !4271
   store i64 %i.ak, ptr %i.ao, align 8, !dbg !4271
+  store i32 2, ptr %i.e, align 8, !dbg !4271
   br label %bb.l, !dbg !4272
 
 bb.l:                                             ; preds = %bb.k, %bb.j, %bb.i
-  %.sink = phi i32 [ 2, %bb.k ], [ 1, %bb.j ], [ 0, %bb.i ]
-  store i32 %.sink, ptr %i.e, align 8, !dbg !4138
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !dbg !4273
   %i.ap = getelementptr inbounds nuw i8, ptr %2, i64 56, !dbg !4274 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !4275

@@ -205,15 +205,13 @@ declare hidden void @_ZN8nanobind6detail24nb_trampoline_invalidateEP7_object(ptr
 define hidden noundef ptr @_ZN8nanobind6detail24nb_type_create_metaclassEPNS0_12nb_internalsEP11_typeobject(ptr nofree noundef readonly captures(none) %0, ptr noundef %1) local_unnamed_addr #5 personality ptr @__gxx_personality_v0 {
 bb.a:
   %2 = alloca [7 x %struct.PyType_Slot], align 16 ; 4 uses
-  %3 = alloca %struct.PyType_Spec, align 8        ; 8 uses
+  %3 = alloca %struct.PyType_Spec, align 8        ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #30
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(112) %2, ptr noundef nonnull align 16 dereferenceable(112) @__const._ZN8nanobind6detail24nb_type_create_metaclassEPNS0_12nb_internalsEP11_typeobject.slots, i64 112, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #30
   store ptr @.str.1, ptr %3, align 8
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store i32 -168, ptr %4, align 8
-  %i.a = getelementptr inbounds nuw i8, ptr %3, i64 12
-  store i32 0, ptr %i.a, align 4
+  %i.a = getelementptr inbounds nuw i8, ptr %3, i64 8
+  store i64 4294967128, ptr %i.a, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 16
   store i32 256, ptr %i.b, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 24
@@ -616,14 +614,20 @@ bb.f:                                             ; preds = %_ZN3tsl17detail_rob
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   %i.bm = load i8, ptr %i.bk, align 8, !range !12, !noundef !13
   %i.bn = load i8, ptr %i.bl, align 8, !range !12, !noundef !13
-  store i8 %i.bn, ptr %i.bk, align 8
-  store i8 %i.bm, ptr %i.bl, align 8
-  %i.bo = getelementptr inbounds nuw i8, ptr %2, i64 73 ; 2 uses
-  %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 73 ; 2 uses
+  %i.bo = getelementptr inbounds nuw i8, ptr %2, i64 73
+  %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 73
   %i.bq = load i8, ptr %i.bo, align 1, !range !12, !noundef !13
   %i.br = load i8, ptr %i.bp, align 1, !range !12, !noundef !13
-  store i8 %i.br, ptr %i.bo, align 1
-  store i8 %i.bq, ptr %i.bp, align 1
+  %4 = zext nneg i8 %i.bn to i16
+  %5 = zext nneg i8 %i.br to i16
+  %6 = shl nuw nsw i16 %5, 8
+  %7 = or disjoint i16 %6, %4
+  store i16 %7, ptr %i.bk, align 8
+  %8 = zext nneg i8 %i.bm to i16
+  %9 = zext nneg i8 %i.bq to i16
+  %10 = shl nuw nsw i16 %9, 8
+  %11 = or disjoint i16 %10, %8
+  store i16 %11, ptr %i.bl, align 8
   %.not.i.i.i.i = icmp eq ptr %i.au, null
   br i1 %.not.i.i.i.i, label %_ZN3tsl17detail_robin_hash10robin_hashISt4pairIPKSt9type_infoPN8nanobind6detail9type_dataEENS_9robin_mapIS5_S9_NS7_17std_typeinfo_hashENS7_15std_typeinfo_eqESaISA_ELb0ENS_2rh26power_of_two_growth_policyILm2EEEE9KeySelectENSI_11ValueSelectESC_SD_SE_Lb0ESH_ED2Ev.exit, label %bb.g
 
@@ -877,9 +881,7 @@ bb.h:                                             ; preds = %bb.g
   store ptr @_ZZN3tsl17detail_robin_hash10robin_hashISt4pairIPKSt9type_infoPN8nanobind6detail9type_dataEENS_9robin_mapIS5_S9_NS7_17std_typeinfo_hashENS7_15std_typeinfo_eqESaISA_ELb0ENS_2rh26power_of_two_growth_policyILm2EEEE9KeySelectENSI_11ValueSelectESC_SD_SE_Lb0ESH_E23static_empty_bucket_ptrEvE12empty_bucket, ptr %i.as, align 8
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 72
-  store i8 0, ptr %i.ax, align 8
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 73
-  store i8 0, ptr %7, align 1
+  store i16 0, ptr %i.ax, align 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.aw, i8 0, i64 16, i1 false)
   br label %bb.i
 
@@ -894,9 +896,7 @@ bb.h:                                             ; preds = %bb.g
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 48
   store i64 0, ptr %i.bb, align 8
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 72
-  store i8 0, ptr %i.bc, align 8
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 73
-  store i8 0, ptr %8, align 1
+  store i16 0, ptr %i.bc, align 8
   %i.bd = load ptr, ptr %i.ay, align 8
   %i.be = getelementptr inbounds i8, ptr %i.bd, i64 -18
   store i8 1, ptr %i.be, align 2
@@ -1299,14 +1299,20 @@ bb.g:                                             ; preds = %_ZN3tsl17detail_rob
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   %i.bm = load i8, ptr %i.bk, align 8, !range !12, !noundef !13
   %i.bn = load i8, ptr %i.bl, align 8, !range !12, !noundef !13
-  store i8 %i.bn, ptr %i.bk, align 8
-  store i8 %i.bm, ptr %i.bl, align 8
-  %i.bo = getelementptr inbounds nuw i8, ptr %2, i64 73 ; 2 uses
-  %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 73 ; 2 uses
+  %i.bo = getelementptr inbounds nuw i8, ptr %2, i64 73
+  %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 73
   %i.bq = load i8, ptr %i.bo, align 1, !range !12, !noundef !13
   %i.br = load i8, ptr %i.bp, align 1, !range !12, !noundef !13
-  store i8 %i.br, ptr %i.bo, align 1
-  store i8 %i.bq, ptr %i.bp, align 1
+  %4 = zext nneg i8 %i.bn to i16
+  %5 = zext nneg i8 %i.br to i16
+  %6 = shl nuw nsw i16 %5, 8
+  %7 = or disjoint i16 %6, %4
+  store i16 %7, ptr %i.bk, align 8
+  %8 = zext nneg i8 %i.bm to i16
+  %9 = zext nneg i8 %i.bq to i16
+  %10 = shl nuw nsw i16 %9, 8
+  %11 = or disjoint i16 %10, %8
+  store i16 %11, ptr %i.bl, align 8
   %.not.i.i.i.i = icmp eq ptr %i.au, null
   br i1 %.not.i.i.i.i, label %_ZN3tsl17detail_robin_hash10robin_hashISt4pairIPvS3_ENS_9robin_mapIS3_S3_N8nanobind6detail8ptr_hashESt8equal_toIS3_ESaIS4_ELb0ENS_2rh26power_of_two_growth_policyILm2EEEE9KeySelectENSF_11ValueSelectES8_SA_SB_Lb0ESE_ED2Ev.exit, label %bb.h
 
@@ -1551,9 +1557,7 @@ bb.h:                                             ; preds = %bb.g
   store ptr @_ZZN3tsl17detail_robin_hash10robin_hashISt4pairIPvS3_ENS_9robin_mapIS3_S3_N8nanobind6detail8ptr_hashESt8equal_toIS3_ESaIS4_ELb0ENS_2rh26power_of_two_growth_policyILm2EEEE9KeySelectENSF_11ValueSelectES8_SA_SB_Lb0ESE_E23static_empty_bucket_ptrEvE12empty_bucket, ptr %i.as, align 8
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 72
-  store i8 0, ptr %i.ax, align 8
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 73
-  store i8 0, ptr %7, align 1
+  store i16 0, ptr %i.ax, align 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.aw, i8 0, i64 16, i1 false)
   br label %bb.i
 
@@ -1568,9 +1572,7 @@ bb.h:                                             ; preds = %bb.g
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 48
   store i64 0, ptr %i.bb, align 8
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 72
-  store i8 0, ptr %i.bc, align 8
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 73
-  store i8 0, ptr %8, align 1
+  store i16 0, ptr %i.bc, align 8
   %i.bd = load ptr, ptr %i.ay, align 8
   %i.be = getelementptr inbounds i8, ptr %i.bd, i64 -18
   store i8 1, ptr %i.be, align 2

@@ -204,18 +204,20 @@ bb.a:
   store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN22btGImpactMeshShapePart23TrimeshPrimitiveManagerE, i64 16), ptr %i.l, align 8, !tbaa !30
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 208
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 200
-  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 224
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 192
-  store float f0x3C23D70A, ptr %3, align 8, !tbaa !36
-  store <4 x float> <float 1.000000e+00, float 1.000000e+00, float 1.000000e+00, float 0.000000e+00>, ptr %i.m, align 8, !tbaa !37
-  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 228
+  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 192
+  store float f0x3C23D70A, ptr %i.o, align 8, !tbaa !36
+  store <2 x float> splat (float 1.000000e+00), ptr %i.m, align 8, !tbaa !37
+  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 216
+  store float 1.000000e+00, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !37
+  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 220
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 248
   store i32 0, ptr %i.q, align 8, !tbaa !38
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 256
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.p, i8 0, i64 16, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %i.p, i8 0, i64 24, i1 false)
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.r, i8 0, i64 16, i1 false)
   store ptr %1, ptr %i.n, align 8, !tbaa !95
-  store i32 %2, ptr %i.o, align 8, !tbaa !40
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 224
+  store i32 %2, ptr %3, align 8, !tbaa !40
   store ptr %i.l, ptr %i.h, align 8, !tbaa !41
   ret void
 }

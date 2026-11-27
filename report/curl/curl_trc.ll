@@ -104,7 +104,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define void @Curl_debug(ptr noundef %0, i32 noundef %1, ptr noundef %2, i64 noundef %3) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [2048 x i8], align 16             ; 12 uses
+  %i.a = alloca [2048 x i8], align 16             ; 14 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 424 ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 2187 ; 2 uses
   %i.d = load i64, ptr %i.c, align 1
@@ -200,7 +200,11 @@ trc_print_ids.exit:                               ; preds = %bb.i, %bb.j, %bb.l,
 
 bb.n:                                             ; preds = %trc_print_ids.exit
   %i.al = getelementptr inbounds nuw i8, ptr %i.a, i64 2043
-  store <4 x i8> <i8 46, i8 46, i8 46, i8 10>, ptr %i.al, align 1, !tbaa !78
+  store i8 46, ptr %i.al, align 1, !tbaa !78
+  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 2044
+  store i16 11822, ptr %4, align 4
+  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 2046
+  store i8 10, ptr %5, align 2, !tbaa !78
   br label %trc_end_buf.exit
 
 trc_end_buf.exit:                                 ; preds = %trc_print_ids.exit, %bb.n
@@ -497,7 +501,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %bb.b,
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @trc_infof(ptr noundef nonnull %0, ptr nofree noundef readonly captures(address_is_null) %1, ptr noundef %2, i32 noundef %3, ptr noundef %4, ptr noundef nonnull %5) unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [2048 x i8], align 16             ; 15 uses
+  %i.a = alloca [2048 x i8], align 16             ; 14 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 2187
   %i.c = load i64, ptr %i.b, align 1
@@ -617,9 +621,7 @@ bb.s:                                             ; preds = %bb.r
   %i.as = getelementptr inbounds nuw i8, ptr %i.a, i64 2043
   store i8 46, ptr %i.as, align 1, !tbaa !78
   %i.at = getelementptr inbounds nuw i8, ptr %i.a, i64 2044
-  store i8 46, ptr %i.at, align 4, !tbaa !78
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 2045
-  store i8 46, ptr %6, align 1, !tbaa !78
+  store i16 11822, ptr %i.at, align 4
   br label %trc_end_buf.exit
 
 bb.t:                                             ; preds = %bb.r

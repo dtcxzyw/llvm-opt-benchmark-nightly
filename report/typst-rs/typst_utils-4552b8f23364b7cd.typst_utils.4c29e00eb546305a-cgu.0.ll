@@ -206,34 +206,44 @@ _RNvNtNtCs6xpQEr8gLsQ_11typst_utils4pico7bitcode6decode.exit: ; preds = %bb.c, %
   %.sroa.11.0.i = phi i8 [ 0, %bb.c ], [ %i.bc, %.lr.ph.11.i ], [ %i.bc, %.lr.ph.10.i ], [ %i.bc, %.lr.ph.9.i ], [ 0, %.lr.ph.8.i ], [ 0, %.lr.ph.7.i ], [ 0, %.lr.ph.6.i ], [ 0, %.lr.ph.5.i ], [ 0, %.lr.ph.4.i ], [ 0, %.lr.ph.3.i ], [ 0, %.lr.ph.2.i ], [ 0, %.lr.ph.1.i ], [ 0, %.lr.ph.preheader.i ]
   %.sroa.12.0.i = phi i8 [ 0, %bb.c ], [ %i.bh, %.lr.ph.11.i ], [ %i.bh, %.lr.ph.10.i ], [ 0, %.lr.ph.9.i ], [ 0, %.lr.ph.8.i ], [ 0, %.lr.ph.7.i ], [ 0, %.lr.ph.6.i ], [ 0, %.lr.ph.5.i ], [ 0, %.lr.ph.4.i ], [ 0, %.lr.ph.3.i ], [ 0, %.lr.ph.2.i ], [ 0, %.lr.ph.1.i ], [ 0, %.lr.ph.preheader.i ]
   %.sroa.13.0.i = phi i8 [ 0, %bb.c ], [ %i.bm, %.lr.ph.11.i ], [ 0, %.lr.ph.10.i ], [ 0, %.lr.ph.9.i ], [ 0, %.lr.ph.8.i ], [ 0, %.lr.ph.7.i ], [ 0, %.lr.ph.6.i ], [ 0, %.lr.ph.5.i ], [ 0, %.lr.ph.4.i ], [ 0, %.lr.ph.3.i ], [ 0, %.lr.ph.2.i ], [ 0, %.lr.ph.1.i ], [ 0, %.lr.ph.preheader.i ]
-  %.sroa.03.0.lcssa.i = phi i8 [ 0, %bb.c ], [ 12, %.lr.ph.11.i ], [ 11, %.lr.ph.10.i ], [ 10, %.lr.ph.9.i ], [ 9, %.lr.ph.8.i ], [ 8, %.lr.ph.7.i ], [ 7, %.lr.ph.6.i ], [ 6, %.lr.ph.5.i ], [ 5, %.lr.ph.4.i ], [ 4, %.lr.ph.3.i ], [ 3, %.lr.ph.2.i ], [ 2, %.lr.ph.1.i ], [ 1, %.lr.ph.preheader.i ]
-  store i8 0, ptr %0, align 8, !alias.scope !313
-  %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 1
-  store i8 %.sroa.03.0.lcssa.i, ptr %.sroa.4.0..sroa_idx.i, align 1, !alias.scope !313
-  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 2
-  store i8 %.sroa.0.0.i, ptr %.sroa.5.0..sroa_idx.i, align 2, !alias.scope !313
-  %.sroa.5.sroa.4.0..sroa.5.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 3
-  store i8 %.sroa.3.0.i, ptr %.sroa.5.sroa.4.0..sroa.5.0..sroa_idx.sroa_idx.i, align 1, !alias.scope !313
-  %.sroa.5.sroa.5.0..sroa.5.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i8 %.sroa.4.0.i, ptr %.sroa.5.sroa.5.0..sroa.5.0..sroa_idx.sroa_idx.i, align 4, !alias.scope !313
-  %.sroa.5.sroa.6.0..sroa.5.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 5
-  store i8 %.sroa.513.0.i, ptr %.sroa.5.sroa.6.0..sroa.5.0..sroa_idx.sroa_idx.i, align 1, !alias.scope !313
-  %.sroa.5.sroa.7.0..sroa.5.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 6
-  store i8 %.sroa.6.0.i, ptr %.sroa.5.sroa.7.0..sroa.5.0..sroa_idx.sroa_idx.i, align 2, !alias.scope !313
-  %.sroa.5.sroa.8.0..sroa.5.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 7
-  store i8 %.sroa.7.0.i, ptr %.sroa.5.sroa.8.0..sroa.5.0..sroa_idx.sroa_idx.i, align 1, !alias.scope !313
+  %.sroa.03.0.lcssa.i = phi i64 [ 0, %bb.c ], [ 3072, %.lr.ph.11.i ], [ 2816, %.lr.ph.10.i ], [ 2560, %.lr.ph.9.i ], [ 2304, %.lr.ph.8.i ], [ 2048, %.lr.ph.7.i ], [ 1792, %.lr.ph.6.i ], [ 1536, %.lr.ph.5.i ], [ 1280, %.lr.ph.4.i ], [ 1024, %.lr.ph.3.i ], [ 768, %.lr.ph.2.i ], [ 512, %.lr.ph.1.i ], [ 256, %.lr.ph.preheader.i ]
+  %2 = zext i8 %.sroa.0.0.i to i64
+  %3 = shl nuw nsw i64 %2, 16
+  %4 = or disjoint i64 %.sroa.03.0.lcssa.i, %3
+  %5 = zext i8 %.sroa.3.0.i to i64
+  %6 = shl nuw nsw i64 %5, 24
+  %7 = or disjoint i64 %4, %6
+  %8 = zext i8 %.sroa.4.0.i to i64
+  %9 = shl nuw nsw i64 %8, 32
+  %10 = or disjoint i64 %7, %9
+  %11 = zext i8 %.sroa.513.0.i to i64
+  %12 = shl nuw nsw i64 %11, 40
+  %13 = or disjoint i64 %10, %12
+  %14 = zext i8 %.sroa.6.0.i to i64
+  %15 = shl nuw nsw i64 %14, 48
+  %16 = or disjoint i64 %13, %15
+  %17 = zext i8 %.sroa.7.0.i to i64
+  %18 = shl nuw i64 %17, 56
+  %19 = add nuw nsw i64 %16, %18
+  store i64 %19, ptr %0, align 8, !alias.scope !313
   %.sroa.5.sroa.9.0..sroa.5.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i8 %.sroa.8.0.i, ptr %.sroa.5.sroa.9.0..sroa.5.0..sroa_idx.sroa_idx.i, align 8, !alias.scope !313
-  %.sroa.5.sroa.10.0..sroa.5.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 9
-  store i8 %.sroa.9.0.i, ptr %.sroa.5.sroa.10.0..sroa.5.0..sroa_idx.sroa_idx.i, align 1, !alias.scope !313
-  %.sroa.5.sroa.11.0..sroa.5.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 10
-  store i8 %.sroa.10.0.i, ptr %.sroa.5.sroa.11.0..sroa.5.0..sroa_idx.sroa_idx.i, align 2, !alias.scope !313
-  %.sroa.5.sroa.12.0..sroa.5.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 11
-  store i8 %.sroa.11.0.i, ptr %.sroa.5.sroa.12.0..sroa.5.0..sroa_idx.sroa_idx.i, align 1, !alias.scope !313
+  %20 = zext i8 %.sroa.8.0.i to i32
+  %21 = zext i8 %.sroa.9.0.i to i32
+  %22 = shl nuw nsw i32 %21, 8
+  %23 = or disjoint i32 %22, %20
+  %24 = zext i8 %.sroa.10.0.i to i32
+  %25 = shl nuw nsw i32 %24, 16
+  %26 = or disjoint i32 %23, %25
+  %27 = zext i8 %.sroa.11.0.i to i32
+  %28 = shl nuw i32 %27, 24
+  %29 = or disjoint i32 %26, %28
+  store i32 %29, ptr %.sroa.5.sroa.9.0..sroa.5.0..sroa_idx.sroa_idx.i, align 8, !alias.scope !313
   %.sroa.5.sroa.13.0..sroa.5.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store i8 %.sroa.12.0.i, ptr %.sroa.5.sroa.13.0..sroa.5.0..sroa_idx.sroa_idx.i, align 4, !alias.scope !313
-  %.sroa.5.sroa.14.0..sroa.5.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 13
-  store i8 %.sroa.13.0.i, ptr %.sroa.5.sroa.14.0..sroa.5.0..sroa_idx.sroa_idx.i, align 1, !alias.scope !313
+  %30 = zext i8 %.sroa.12.0.i to i16
+  %31 = zext i8 %.sroa.13.0.i to i16
+  %32 = shl nuw i16 %31, 8
+  %33 = or disjoint i16 %32, %30
+  store i16 %33, ptr %.sroa.5.sroa.13.0..sroa.5.0..sroa_idx.sroa_idx.i, align 4, !alias.scope !313
   br label %bb.u
 
 bb.d:                                             ; preds = %bb.b

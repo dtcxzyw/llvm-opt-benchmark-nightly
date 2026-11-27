@@ -202,7 +202,7 @@ DecodeIntoRGBABuffer.exit:                        ; preds = %bb.a, %bb.b, %bb.c
 define ptr @WebPDecodeYUVInto(ptr noundef %0, i64 noundef %1, ptr noundef %2, i64 noundef %3, i32 noundef %4, ptr noundef %5, i64 noundef %6, i32 noundef %7, ptr noundef %8, i64 noundef %9, i32 noundef %10) local_unnamed_addr #0 {
 bb.a:
   %11 = alloca %struct.WebPDecParams, align 8     ; 5 uses
-  %12 = alloca %struct.WebPDecBuffer, align 8     ; 15 uses
+  %12 = alloca %struct.WebPDecBuffer, align 8     ; 14 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #8
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #8
   %i.a = icmp eq ptr %2, null
@@ -220,14 +220,16 @@ bb.c:                                             ; preds = %bb.b
   store i32 11, ptr %12, align 8, !tbaa !29
   %i.d = getelementptr inbounds nuw i8, ptr %12, i64 16
   store ptr %2, ptr %i.d, align 8, !tbaa !18
-  %i.e = getelementptr inbounds nuw i8, ptr %12, i64 48
-  store i32 %4, ptr %i.e, align 8, !tbaa !18
-  %i.f = getelementptr inbounds nuw i8, ptr %12, i64 64
-  store i64 %3, ptr %i.f, align 8, !tbaa !18
-  %13 = getelementptr inbounds nuw i8, ptr %12, i64 24
-  store ptr %5, ptr %13, align 8, !tbaa !18
-  %14 = getelementptr inbounds nuw i8, ptr %12, i64 52
-  store i32 %7, ptr %14, align 4, !tbaa !18
+  %13 = getelementptr inbounds nuw i8, ptr %12, i64 48
+  %i.e = getelementptr inbounds nuw i8, ptr %12, i64 64
+  store i64 %3, ptr %i.e, align 8, !tbaa !18
+  %i.f = getelementptr inbounds nuw i8, ptr %12, i64 24
+  store ptr %5, ptr %i.f, align 8, !tbaa !18
+  %14 = zext i32 %4 to i64
+  %15 = zext i32 %7 to i64
+  %16 = shl nuw i64 %15, 32
+  %17 = or disjoint i64 %16, %14
+  store i64 %17, ptr %13, align 8
   %i.g = getelementptr inbounds nuw i8, ptr %12, i64 72
   store i64 %6, ptr %i.g, align 8, !tbaa !18
   %i.h = getelementptr inbounds nuw i8, ptr %12, i64 32

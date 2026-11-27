@@ -204,19 +204,20 @@ bb.a:
   %i.b = tail call ptr @sat_solver_new() #21      ; 7 uses
   %i.c = getelementptr i8, ptr %0, i64 24
   %.val24 = load i32, ptr %i.c, align 8, !tbaa !42 ; 5 uses
-  %i.d = tail call noalias dereferenceable_or_null(16) ptr @malloc(i64 noundef 16) #22 ; 8 uses
+  %i.d = tail call noalias dereferenceable_or_null(16) ptr @malloc(i64 noundef 16) #22 ; 9 uses
   %i.e = add i32 %.val24, -1
   %or.cond.i.i = icmp ult i32 %i.e, 15
   %spec.store.select.i.i = select i1 %or.cond.i.i, i32 16, i32 %.val24 ; 3 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.d, i64 4 ; 2 uses
-  store i32 %spec.store.select.i.i, ptr %i.d, align 8, !tbaa !44
+  %4 = zext i32 %spec.store.select.i.i to i64
+  store i64 %4, ptr %i.d, align 8
   %.not.i.i = icmp eq i32 %spec.store.select.i.i, 0
   br i1 %.not.i.i, label %Vec_IntAlloc.exit.thread.i, label %Vec_IntAlloc.exit.i
 
 Vec_IntAlloc.exit.thread.i:                       ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   store ptr null, ptr %i.f, align 8, !tbaa !18
-  store i32 %.val24, ptr %4, align 4, !tbaa !17
+  %5 = getelementptr inbounds nuw i8, ptr %i.d, i64 4
+  store i32 %.val24, ptr %5, align 4, !tbaa !17
   br label %Vec_IntStartFull.exit
 
 Vec_IntAlloc.exit.i:                              ; preds = %bb.a
@@ -225,7 +226,8 @@ Vec_IntAlloc.exit.i:                              ; preds = %bb.a
   %i.i = tail call noalias ptr @malloc(i64 noundef %i.h) #22 ; 4 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   store ptr %i.i, ptr %i.j, align 8, !tbaa !18
-  store i32 %.val24, ptr %4, align 4, !tbaa !17
+  %6 = getelementptr inbounds nuw i8, ptr %i.d, i64 4
+  store i32 %.val24, ptr %6, align 4, !tbaa !17
   %.not.i = icmp eq ptr %i.i, null
   br i1 %.not.i, label %Vec_IntStartFull.exit, label %bb.b
 

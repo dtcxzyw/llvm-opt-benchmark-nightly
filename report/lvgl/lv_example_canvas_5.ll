@@ -20,7 +20,7 @@ target triple = "x86_64-pc-linux-gnu"
 define void @lv_example_canvas_5() local_unnamed_addr #0 {
 bb.a:
   %0 = alloca %struct._lv_layer_t, align 8        ; 5 uses
-  %1 = alloca %struct.lv_draw_arc_dsc_t, align 8  ; 8 uses
+  %1 = alloca %struct.lv_draw_arc_dsc_t, align 8  ; 9 uses
   %i.a = load i64, ptr @lv_example_canvas_5.draw_buf, align 8 ; 3 uses
   %i.b = lshr i64 %i.a, 32
   %i.c = trunc nuw i64 %i.b to i32
@@ -49,12 +49,14 @@ bb.a:
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.s = call i24 @lv_palette_main(i32 noundef 0) #3
   store i24 %i.s, ptr %i.r, align 8, !tbaa !8
-  %i.t = getelementptr inbounds nuw i8, ptr %1, i64 84
-  store i32 25, ptr %i.t, align 4, !tbaa !18
+  %i.t = getelementptr inbounds nuw i8, ptr %1, i64 80
+  store i64 107374182425, ptr %i.t, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 68
+  store i32 10, ptr %i.u, align 4, !tbaa !18
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 96
   store i16 15, ptr %i.v, align 8, !tbaa !19
-  store <4 x i32> <i32 10, i32 0, i32 220, i32 25>, ptr %i.u, align 4, !tbaa !20
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 72
+  store i64 944892805120, ptr %2, align 8
   call void @lv_draw_arc(ptr noundef nonnull %0, ptr noundef nonnull %1) #3
   call void @lv_canvas_finish_layer(ptr noundef %i.p, ptr noundef nonnull %0) #3
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #3
@@ -119,7 +121,6 @@ attributes #3 = { nounwind }
 !15 = !{!"", !10, i64 0, !5, i64 8, !5, i64 12, !5, i64 16, !11, i64 24, !12, i64 32, !12, i64 34, !13, i64 36, !4, i64 39, !5, i64 40, !5, i64 42, !14, i64 48, !9, i64 56}
 !16 = !{!"", !5, i64 0, !5, i64 4}
 !17 = !{!"", !15, i64 0, !13, i64 64, !5, i64 68, !5, i64 72, !5, i64 76, !16, i64 80, !9, i64 88, !12, i64 96, !4, i64 98, !4, i64 99}
-!18 = !{!17, !5, i64 84}
+!18 = !{!17, !5, i64 68}
 !19 = !{!17, !12, i64 96}
-!20 = !{!5, !5, i64 0}
 end_hunk_0

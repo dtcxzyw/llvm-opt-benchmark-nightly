@@ -204,9 +204,10 @@ bb.q:                                             ; preds = %bb.o
   %i.as = load i8, ptr %i.ar, align 1, !range !11, !noalias !176, !noundef !6
   %i.at = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.au = load i64, ptr %i.at, align 8, !noalias !176, !noundef !6
-  store i8 1, ptr %0, align 8, !alias.scope !174, !noalias !172
-  %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 1
-  store i8 %i.as, ptr %.sroa.4.0..sroa_idx.i, align 1, !alias.scope !174, !noalias !172
+  %3 = zext nneg i8 %i.as to i16
+  %4 = shl nuw nsw i16 %3, 8
+  %5 = or disjoint i16 %4, 1
+  store i16 %5, ptr %0, align 8, !alias.scope !174, !noalias !172
   %.sroa.52.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %i.au, ptr %.sroa.52.0..sroa_idx.i, align 8, !alias.scope !174, !noalias !172
   br label %_RNCNvMs0_NtNtCsi68uqYEhoRA_5gimli4read5dwarfINtB7_5DwarfINtNtB9_8relocate14RelocateReaderINtNtB9_12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianERNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEE16lookup_offset_idsa_0B2y_.exit
@@ -609,16 +610,16 @@ bb.j:                                             ; preds = %.noexc19.i
   br i1 %switch.i.i.i, label %_RINvMs5_NtNtCsi68uqYEhoRA_5gimli4read6abbrevNtB6_12Abbreviation18parse_has_childrenINtNtB8_8relocate14RelocateReaderINtNtB8_12endian_slice11EndianSliceNtNtBa_9endianity13RunTimeEndianERNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEB2Z_.exit.i.i, label %.loopexit40.i
 
 .loopexit40.i:                                    ; preds = %.noexc20.i, %bb.i
-  %.sroa.15.0.ph.i.i = phi i64 [ %i.au, %bb.i ], [ undef, %.noexc20.i ]
   %.sroa.880.0.ph.i.i = phi i8 [ 0, %bb.i ], [ %.sroa.0.0.copyload.i.i.i.i.i, %.noexc20.i ]
   %.sroa.078.0.ph.i.i = phi i8 [ 17, %bb.i ], [ 11, %.noexc20.i ]
+  %.sroa.13.0.ph.i.i = phi i64 [ %i.au, %bb.i ], [ undef, %.noexc20.i ]
   store i8 %.sroa.078.0.ph.i.i, ptr %.sroa.414.0..sroa_idx.i, align 8, !alias.scope !345, !noalias !344
   %.sroa.468.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.k, i64 9
   store i8 %.sroa.880.0.ph.i.i, ptr %.sroa.468.0..sroa_idx.i.i, align 1, !alias.scope !345, !noalias !344
   %.sroa.569.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.k, i64 10
   store i48 0, ptr %.sroa.569.0..sroa_idx.i.i, align 2, !alias.scope !345, !noalias !344
   %.sroa.569.sroa.4.0..sroa.569.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.k, i64 16
-  store i64 %.sroa.15.0.ph.i.i, ptr %.sroa.569.sroa.4.0..sroa.569.0..sroa_idx.sroa_idx.i.i, align 8, !alias.scope !345, !noalias !344
+  store i64 %.sroa.13.0.ph.i.i, ptr %.sroa.569.sroa.4.0..sroa.569.0..sroa_idx.sroa_idx.i.i, align 8, !alias.scope !345, !noalias !344
   br label %.thread.i
 
 _RINvMs5_NtNtCsi68uqYEhoRA_5gimli4read6abbrevNtB6_12Abbreviation18parse_has_childrenINtNtB8_8relocate14RelocateReaderINtNtB8_12endian_slice11EndianSliceNtNtBa_9endianity13RunTimeEndianERNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEB2Z_.exit.i.i: ; preds = %.noexc20.i

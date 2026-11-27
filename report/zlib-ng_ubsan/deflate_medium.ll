@@ -202,23 +202,24 @@ bb.an:                                            ; preds = %bb.am
   br label %bb.ao
 
 bb.ao:                                            ; preds = %bb.ae, %bb.o, %bb.an, %bb.am
-  %.sroa.28.0 = phi i16 [ %i.au, %bb.am ], [ %i.au, %bb.an ], [ %.sroa.25.0, %bb.o ], [ %i.au, %bb.ae ] ; 4 uses
-  %.sroa.23.0 = phi i16 [ %i.au, %bb.am ], [ %i.au, %bb.an ], [ %.sroa.19.0, %bb.o ], [ %i.au, %bb.ae ] ; 4 uses
-  %.sroa.10137.1 = phi i16 [ %.sroa.10137.0, %bb.am ], [ 1, %bb.an ], [ %.sroa.10.0, %bb.o ], [ 1, %bb.ae ] ; 13 uses
-  %.sroa.0127.0 = phi i16 [ %i.bt, %bb.am ], [ %i.bt, %bb.an ], [ %.sroa.0.0, %bb.o ], [ 0, %bb.ae ] ; 2 uses
-  %.sroa.28.0.insert.ext = zext i16 %.sroa.28.0 to i64
-  %.sroa.28.0.insert.shift = shl nuw i64 %.sroa.28.0.insert.ext, 48
-  %.sroa.23.0.insert.ext = zext i16 %.sroa.23.0 to i64
-  %.sroa.23.0.insert.shift = shl nuw nsw i64 %.sroa.23.0.insert.ext, 32
-  %.sroa.23.0.insert.insert = or disjoint i64 %.sroa.28.0.insert.shift, %.sroa.23.0.insert.shift ; 2 uses
-  %.sroa.10137.0.insert.ext = zext i16 %.sroa.10137.1 to i64 ; 9 uses
-  %.sroa.10137.0.insert.shift = shl nuw nsw i64 %.sroa.10137.0.insert.ext, 16
-  %.sroa.10137.0.insert.insert = or disjoint i64 %.sroa.23.0.insert.insert, %.sroa.10137.0.insert.shift ; 2 uses
-  %.sroa.0127.0.insert.ext = zext i16 %.sroa.0127.0 to i64
-  %.sroa.0127.0.insert.insert = or disjoint i64 %.sroa.10137.0.insert.insert, %.sroa.0127.0.insert.ext ; 3 uses
-  %.sroa.1.0.extract.shift.i = lshr exact i64 %.sroa.10137.0.insert.insert, 16 ; 5 uses
+  %.sroa.28.0 = phi i16 [ %.sroa.10137.0, %bb.am ], [ 1, %bb.an ], [ %.sroa.10.0, %bb.o ], [ 1, %bb.ae ] ; 13 uses
+  %.sroa.23.0 = phi i16 [ %i.bt, %bb.am ], [ %i.bt, %bb.an ], [ %.sroa.0.0, %bb.o ], [ 0, %bb.ae ] ; 2 uses
+  %.sroa.10137.1 = phi i16 [ %i.au, %bb.am ], [ %i.au, %bb.an ], [ %.sroa.25.0, %bb.o ], [ %i.au, %bb.ae ] ; 4 uses
+  %.sroa.0127.0 = phi i16 [ %i.au, %bb.am ], [ %i.au, %bb.an ], [ %.sroa.19.0, %bb.o ], [ %i.au, %bb.ae ] ; 4 uses
+  %.sroa.0127.sroa.10.0.insert.ext = zext i16 %.sroa.28.0 to i32 ; 7 uses
+  %.sroa.0127.sroa.10.0.insert.shift = shl nuw i32 %.sroa.0127.sroa.10.0.insert.ext, 16
+  %.sroa.0127.sroa.0.0.insert.ext = zext i16 %.sroa.23.0 to i32
+  %.sroa.0127.sroa.0.0.insert.insert = or disjoint i32 %.sroa.0127.sroa.10.0.insert.shift, %.sroa.0127.sroa.0.0.insert.ext
+  %.sroa.27.0.insert.ext = zext i16 %.sroa.10137.1 to i64
+  %.sroa.27.0.insert.shift = shl nuw i64 %.sroa.27.0.insert.ext, 48
+  %.sroa.10137.0.insert.ext = zext i16 %.sroa.0127.0 to i64
+  %.sroa.10137.0.insert.shift = shl nuw nsw i64 %.sroa.10137.0.insert.ext, 32
+  %.sroa.10137.0.insert.insert = or disjoint i64 %.sroa.27.0.insert.shift, %.sroa.10137.0.insert.shift ; 2 uses
+  %.sroa.0127.0.insert.ext = zext i32 %.sroa.0127.sroa.0.0.insert.insert to i64
+  %.sroa.0127.0.insert.insert = or disjoint i64 %.sroa.10137.0.insert.insert, %.sroa.0127.0.insert.ext ; 4 uses
+  %.sroa.1.0.extract.shift.i = lshr i64 %.sroa.0127.0.insert.insert, 16 ; 5 uses
   %.sroa.1.0.extract.trunc.i = trunc i64 %.sroa.1.0.extract.shift.i to i16 ; 8 uses
-  %.sroa.21.0.extract.shift.i = lshr exact i64 %.sroa.23.0.insert.insert, 32 ; 4 uses
+  %.sroa.21.0.extract.shift.i = lshr exact i64 %.sroa.10137.0.insert.insert, 32 ; 4 uses
   %.sroa.21.0.extract.trunc.i = trunc i64 %.sroa.21.0.extract.shift.i to i16 ; 3 uses
   br i1 %i.e, label %bb.aq, label %bb.ap, !prof !16, !nosanitize !15
 
@@ -245,7 +246,7 @@ bb.as:                                            ; preds = %bb.ar
   br i1 %.not13.i, label %insert_match.exit, label %bb.at, !prof !39
 
 bb.at:                                            ; preds = %bb.as
-  %.not14.i = icmp ult i16 %i.ca, %.sroa.28.0
+  %.not14.i = icmp ult i16 %i.ca, %.sroa.10137.1
   br i1 %.not14.i, label %insert_match.exit, label %bb.au
 
 bb.au:                                            ; preds = %bb.at
@@ -291,7 +292,7 @@ bb.bc:                                            ; preds = %bb.ba, %bb.bb
 bb.bd:                                            ; preds = %bb.bc
   %i.ck = add i16 %.sroa.1.0.extract.trunc.i, -1  ; 2 uses
   %i.cl = add i16 %.sroa.21.0.extract.trunc.i, 1  ; 3 uses
-  %.not11.i = icmp ult i16 %i.cl, %.sroa.28.0
+  %.not11.i = icmp ult i16 %i.cl, %.sroa.10137.1
   br i1 %.not11.i, label %bb.bf, label %bb.be, !prof !32
 
 bb.be:                                            ; preds = %bb.bd
@@ -301,7 +302,7 @@ bb.be:                                            ; preds = %bb.bd
   br label %insert_match.exit
 
 bb.bf:                                            ; preds = %bb.bd
-  %i.co = zext i16 %.sroa.28.0 to i32             ; 3 uses
+  %i.co = zext i16 %.sroa.10137.1 to i32          ; 3 uses
   %i.cp = zext i16 %i.cl to i32
   %i.cq = zext i16 %i.ck to i32
   %i.cr = add nuw nsw i32 %i.cp, %i.cq            ; 2 uses
@@ -340,9 +341,8 @@ bb.bl:                                            ; preds = %bb.bj, %bb.bk
   br i1 %i.cz, label %bb.bm, label %.critedge, !prof !39
 
 bb.bm:                                            ; preds = %bb.bl
-  %2 = zext i16 %.sroa.23.0 to i32                ; 8 uses
-  %i.da = zext i16 %.sroa.10137.1 to i32          ; 3 uses
-  %i.db = add nuw nsw i32 %i.da, %2               ; 3 uses
+  %i.da = zext i16 %.sroa.0127.0 to i32           ; 8 uses
+  %i.db = add nuw nsw i32 %.sroa.0127.sroa.10.0.insert.ext, %i.da ; 3 uses
   br i1 %i.e, label %bb.bo, label %bb.bn, !prof !16, !nosanitize !15
 
 bb.bn:                                            ; preds = %bb.bm
@@ -471,19 +471,19 @@ bb.cj:                                            ; preds = %bb.ch, %bb.ci
   br i1 %or.cond237, label %fizzle_matches.exit, label %bb.ck, !prof !42
 
 bb.ck:                                            ; preds = %bb.cj
-  %i.em = icmp ult i16 %.sroa.10137.1, 2
+  %i.em = icmp ult i16 %.sroa.28.0, 2
   br i1 %i.em, label %fizzle_matches.exit, label %bb.cl
 
 bb.cl:                                            ; preds = %bb.ck
   %i.en = and i32 %i.ej, 65535
   %i.eo = add nuw nsw i32 %i.en, 1
-  %i.ep = icmp samesign ult i32 %i.eo, %i.da
+  %i.ep = icmp samesign ult i32 %i.eo, %.sroa.0127.sroa.10.0.insert.ext
   br i1 %i.ep, label %fizzle_matches.exit, label %bb.cm, !prof !32
 
 bb.cm:                                            ; preds = %bb.cl
   %i.eq = and i32 %i.dk, 65535                    ; 2 uses
   %i.er = add nuw nsw i32 %i.eq, 1
-  %i.es = icmp samesign ult i32 %i.er, %i.da
+  %i.es = icmp samesign ult i32 %i.er, %.sroa.0127.sroa.10.0.insert.ext
   br i1 %i.es, label %fizzle_matches.exit, label %bb.cn, !prof !32
 
 bb.cn:                                            ; preds = %bb.cm
@@ -495,15 +495,16 @@ bb.co:                                            ; preds = %bb.cn
 
 bb.cp:                                            ; preds = %bb.cn, %bb.co
   %i.et = load ptr, ptr %i.v, align 8, !tbaa !43  ; 3 uses
-  %i.eu = sub nsw i64 0, %.sroa.10137.0.insert.ext ; 2 uses
+  %2 = zext i16 %.sroa.28.0 to i64                ; 5 uses
+  %i.eu = sub nsw i64 0, %2                       ; 2 uses
   %i.ev = getelementptr inbounds i8, ptr %i.et, i64 %i.eu ; 3 uses
   %i.ew = ptrtoint ptr %i.et to i64, !nosanitize !15 ; 3 uses
   %i.ex = icmp ne ptr %i.et, null, !nosanitize !15
-  %i.ey = icmp ugt i64 %i.ew, %.sroa.10137.0.insert.ext
+  %i.ey = icmp ugt i64 %i.ew, %2
   br i1 %i.ey, label %bb.cr, label %bb.cq, !prof !16, !nosanitize !15
 
 bb.cq:                                            ; preds = %bb.cp
-  %i.ez = sub nsw i64 %i.ew, %.sroa.10137.0.insert.ext
+  %i.ez = sub nsw i64 %i.ew, %2
   call void @__ubsan_handle_pointer_overflow(ptr nonnull @92, i64 %i.ew, i64 %i.ez) #4, !nosanitize !15
   br label %bb.cr, !nosanitize !15
 
@@ -546,11 +547,11 @@ bb.cx:                                            ; preds = %bb.cv, %bb.cw
   %i.fm = getelementptr inbounds i8, ptr %i.fl, i64 %i.eu ; 3 uses
   %i.fn = ptrtoint ptr %i.fl to i64, !nosanitize !15 ; 3 uses
   %i.fo = icmp ne ptr %i.fl, null, !nosanitize !15
-  %i.fp = icmp ugt i64 %i.fn, %.sroa.10137.0.insert.ext
+  %i.fp = icmp ugt i64 %i.fn, %2
   br i1 %i.fp, label %bb.cz, label %bb.cy, !prof !16, !nosanitize !15
 
 bb.cy:                                            ; preds = %bb.cx
-  %i.fq = sub nsw i64 %i.fn, %.sroa.10137.0.insert.ext
+  %i.fq = sub nsw i64 %i.fn, %2
   call void @__ubsan_handle_pointer_overflow(ptr nonnull @96, i64 %i.fn, i64 %i.fq) #4, !nosanitize !15
   br label %bb.cz, !nosanitize !15
 
@@ -786,12 +787,12 @@ bb.el:                                            ; preds = %bb.ef, %bb.ee, %bb.
 bb.em:                                            ; preds = %bb.el
   %i.ie = trunc i32 %i.dk to i16
   %.sroa.25.0.extract.trunc = add i16 %i.ie, 1
-  %.pre197 = zext i16 %.sroa.23.0 to i32
+  %.pre197 = zext i16 %.sroa.0127.0 to i32
   br label %fizzle_matches.exit
 
 fizzle_matches.exit:                              ; preds = %bb.cd, %bb.cj, %bb.em, %bb.el, %bb.dd, %bb.cm, %bb.cl, %bb.ck
-  %.pre-phi = phi i32 [ %.pre197, %bb.em ], [ %2, %bb.el ], [ %2, %bb.dd ], [ %2, %bb.cm ], [ %2, %bb.cl ], [ %2, %bb.ck ], [ %2, %bb.cd ], [ %2, %bb.cj ]
-  %.sroa.10137.2 = phi i16 [ %.sroa.4.0.i, %bb.em ], [ %.sroa.10137.1, %bb.el ], [ %.sroa.10137.1, %bb.dd ], [ %.sroa.10137.1, %bb.cm ], [ %.sroa.10137.1, %bb.cl ], [ %.sroa.10137.1, %bb.ck ], [ %.sroa.10137.1, %bb.cd ], [ %.sroa.10137.1, %bb.cj ] ; 2 uses
+  %.pre-phi = phi i32 [ %.pre197, %bb.em ], [ %i.da, %bb.el ], [ %i.da, %bb.dd ], [ %i.da, %bb.cm ], [ %i.da, %bb.cl ], [ %i.da, %bb.ck ], [ %i.da, %bb.cd ], [ %i.da, %bb.cj ]
+  %.sroa.10137.2 = phi i16 [ %.sroa.4.0.i, %bb.em ], [ %.sroa.28.0, %bb.el ], [ %.sroa.28.0, %bb.dd ], [ %.sroa.28.0, %bb.cm ], [ %.sroa.28.0, %bb.cl ], [ %.sroa.28.0, %bb.ck ], [ %.sroa.28.0, %bb.cd ], [ %.sroa.28.0, %bb.cj ] ; 2 uses
   %.sroa.25.1 = phi i16 [ %.sroa.25.0.extract.trunc, %bb.em ], [ %i.dl, %bb.el ], [ %i.dl, %bb.dd ], [ %i.dl, %bb.cm ], [ %i.dl, %bb.cl ], [ %i.dl, %bb.ck ], [ %i.dl, %bb.cd ], [ %i.dl, %bb.cj ]
   %.sroa.19.1 = phi i16 [ %.sroa.13.1.i, %bb.em ], [ %i.dl, %bb.el ], [ %i.dl, %bb.dd ], [ %i.dl, %bb.cm ], [ %i.dl, %bb.cl ], [ %i.dl, %bb.ck ], [ %i.dl, %bb.cd ], [ %i.dl, %bb.cj ]
   %.sroa.10.2 = phi i16 [ %.sroa.9.1.i, %bb.em ], [ %i.ei, %bb.el ], [ %i.ei, %bb.dd ], [ %i.ei, %bb.cm ], [ %i.ei, %bb.cl ], [ %i.ei, %bb.ck ], [ 1, %bb.cd ], [ 1, %bb.cj ]
@@ -804,24 +805,25 @@ bb.en:                                            ; preds = %fizzle_matches.exit
 
 bb.eo:                                            ; preds = %fizzle_matches.exit, %bb.en
   store i32 %.pre-phi, ptr %i.n, align 4, !tbaa !33
-  %.pre186 = zext i16 %.sroa.23.0 to i64          ; 2 uses
-  %.pre187 = shl nuw nsw i64 %.pre186, 32
-  %.pre189 = zext i16 %.sroa.10137.2 to i64       ; 2 uses
-  %.pre190 = shl nuw nsw i64 %.pre189, 16
-  %.pre191 = or disjoint i64 %.pre187, %.pre190   ; 2 uses
-  %.pre192 = zext i16 %.sroa.0127.0 to i64
-  %.pre193 = or disjoint i64 %.pre191, %.pre192
-  %.pre194 = lshr exact i64 %.pre191, 16          ; 2 uses
+  %.pre = zext i16 %.sroa.10137.2 to i32          ; 2 uses
+  %.pre200 = shl nuw i32 %.pre, 16
+  %.pre201 = zext i16 %.sroa.23.0 to i32
+  %.pre202 = or disjoint i32 %.pre200, %.pre201
+  %.pre205 = zext i16 %.sroa.0127.0 to i64        ; 2 uses
+  %.pre206 = shl nuw nsw i64 %.pre205, 32
+  %.pre192 = zext i32 %.pre202 to i64
+  %.pre193 = or disjoint i64 %.pre206, %.pre192   ; 2 uses
+  %.pre194 = lshr i64 %.pre193, 16                ; 2 uses
   %.pre195 = trunc i64 %.pre194 to i16
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.bq, %insert_match.exit, %bb.bl, %bb.eo
-  %.sroa.8.0.extract.shift.i.pre-phi = phi i64 [ %.pre186, %bb.eo ], [ %.sroa.21.0.extract.shift.i, %bb.bl ], [ %.sroa.21.0.extract.shift.i, %insert_match.exit ], [ %.sroa.21.0.extract.shift.i, %bb.bq ] ; 2 uses
+  %.sroa.8.0.extract.shift.i.pre-phi = phi i64 [ %.pre205, %bb.eo ], [ %.sroa.21.0.extract.shift.i, %bb.bl ], [ %.sroa.21.0.extract.shift.i, %insert_match.exit ], [ %.sroa.21.0.extract.shift.i, %bb.bq ] ; 2 uses
   %.sroa.2.0.extract.trunc.i.pre-phi = phi i16 [ %.pre195, %bb.eo ], [ %.sroa.1.0.extract.trunc.i, %bb.bl ], [ %.sroa.1.0.extract.trunc.i, %insert_match.exit ], [ %.sroa.1.0.extract.trunc.i, %bb.bq ] ; 3 uses
   %.sroa.2.0.extract.shift.i.pre-phi = phi i64 [ %.pre194, %bb.eo ], [ %.sroa.1.0.extract.shift.i, %bb.bl ], [ %.sroa.1.0.extract.shift.i, %insert_match.exit ], [ %.sroa.1.0.extract.shift.i, %bb.bq ] ; 2 uses
   %.sroa.0127.0.insert.insert131.pre-phi = phi i64 [ %.pre193, %bb.eo ], [ %.sroa.0127.0.insert.insert, %bb.bl ], [ %.sroa.0127.0.insert.insert, %insert_match.exit ], [ %.sroa.0127.0.insert.insert, %bb.bq ]
-  %.sroa.10137.0.insert.ext139.pre-phi = phi i64 [ %.pre189, %bb.eo ], [ %.sroa.10137.0.insert.ext, %bb.bl ], [ %.sroa.10137.0.insert.ext, %insert_match.exit ], [ %.sroa.10137.0.insert.ext, %bb.bq ]
-  %.sroa.10137.3 = phi i16 [ %.sroa.10137.2, %bb.eo ], [ %.sroa.10137.1, %bb.bl ], [ %.sroa.10137.1, %insert_match.exit ], [ %.sroa.10137.1, %bb.bq ]
+  %.sroa.0127.sroa.10.0.insert.ext190.pre-phi = phi i32 [ %.pre, %bb.eo ], [ %.sroa.0127.sroa.10.0.insert.ext, %bb.bl ], [ %.sroa.0127.sroa.10.0.insert.ext, %insert_match.exit ], [ %.sroa.0127.sroa.10.0.insert.ext, %bb.bq ]
+  %.sroa.10137.3 = phi i16 [ %.sroa.10137.2, %bb.eo ], [ %.sroa.28.0, %bb.bl ], [ %.sroa.28.0, %insert_match.exit ], [ %.sroa.28.0, %bb.bq ]
   %.sroa.25.2 = phi i16 [ %.sroa.25.1, %bb.eo ], [ %.sroa.25.0, %bb.bl ], [ %.sroa.25.0, %insert_match.exit ], [ %.sroa.25.0, %bb.bq ]
   %.sroa.19.2 = phi i16 [ %.sroa.19.1, %bb.eo ], [ %.sroa.19.0, %bb.bl ], [ %.sroa.19.0, %insert_match.exit ], [ %.sroa.19.0, %bb.bq ]
   %.sroa.10.3 = phi i16 [ %.sroa.10.2, %bb.eo ], [ 0, %bb.bl ], [ 0, %insert_match.exit ], [ 0, %bb.bq ]
@@ -1224,7 +1226,6 @@ emit_match.exit.loopexit:                         ; preds = %bb.gd
 
 emit_match.exit:                                  ; preds = %emit_match.exit.loopexit, %.preheader.i, %bb.if
   %.09.i = phi i1 [ %i.oa, %bb.if ], [ true, %.preheader.i ], [ %i.oh, %emit_match.exit.loopexit ]
-  %3 = zext i16 %.sroa.10137.3 to i32
   br i1 %i.e, label %bb.ih, label %bb.ig, !prof !16, !nosanitize !15
 
 bb.ig:                                            ; preds = %emit_match.exit
@@ -1233,14 +1234,15 @@ bb.ig:                                            ; preds = %emit_match.exit
 
 bb.ih:                                            ; preds = %emit_match.exit, %bb.ig
   %i.oi = load i32, ptr %i.n, align 4, !tbaa !33  ; 2 uses
-  %i.oj = call { i32, i1 } @llvm.uadd.with.overflow.i32(i32 %i.oi, i32 %3), !nosanitize !15 ; 2 uses
+  %i.oj = call { i32, i1 } @llvm.uadd.with.overflow.i32(i32 %i.oi, i32 %.sroa.0127.sroa.10.0.insert.ext190.pre-phi), !nosanitize !15 ; 2 uses
   %i.ok = extractvalue { i32, i1 } %i.oj, 0, !nosanitize !15
   %i.ol = extractvalue { i32, i1 } %i.oj, 1, !nosanitize !15
   br i1 %i.ol, label %bb.ii, label %bb.ij, !prof !35, !nosanitize !15
 
 bb.ii:                                            ; preds = %bb.ih
   %i.om = zext i32 %i.oi to i64, !nosanitize !15
-  call void @__ubsan_handle_add_overflow(ptr nonnull @33, i64 %i.om, i64 %.sroa.10137.0.insert.ext139.pre-phi) #5, !nosanitize !15
+  %3 = zext i16 %.sroa.10137.3 to i64
+  call void @__ubsan_handle_add_overflow(ptr nonnull @33, i64 %i.om, i64 %3) #5, !nosanitize !15
   br label %bb.ij, !nosanitize !15
 
 bb.ij:                                            ; preds = %bb.ii, %bb.ih

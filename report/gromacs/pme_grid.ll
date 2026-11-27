@@ -205,15 +205,19 @@ _Z18set_grid_alignmentPii.exit:
   %13 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %14 = alloca %"class.std::allocator.93", align 1 ; 3 uses
   %15 = alloca %"class.std::filesystem::__cxx11::path", align 8 ; 5 uses
-  store i32 %1, ptr %0, align 8, !tbaa !10
-  %16 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i32 %2, ptr %16, align 4, !tbaa !10
+  %16 = zext i32 %1 to i64
+  %17 = zext i32 %2 to i64
+  %18 = shl nuw i64 %17, 32
+  %19 = or disjoint i64 %18, %16
+  store i64 %19, ptr %0, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i32 %3, ptr %i.a, align 8, !tbaa !10
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i32 %4, ptr %i.b, align 8, !tbaa !10
-  %17 = getelementptr inbounds nuw i8, ptr %0, i64 28
-  store i32 %5, ptr %17, align 4, !tbaa !10
+  %20 = zext i32 %4 to i64
+  %21 = zext i32 %5 to i64
+  %22 = shl nuw i64 %21, 32
+  %23 = or disjoint i64 %22, %20
+  store i64 %23, ptr %i.b, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i32 %6, ptr %i.c, align 8, !tbaa !10
   %i.d = xor i32 %4, -1

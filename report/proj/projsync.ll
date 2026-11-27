@@ -204,7 +204,7 @@ bb.a:
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %10 = alloca %"class.proj_nlohmann::basic_json", align 8 ; 2 uses
   %11 = alloca %"class.proj_nlohmann::basic_json", align 8 ; 2 uses
-  %12 = alloca %"class.proj_nlohmann::detail::json_sax_dom_parser", align 8 ; 11 uses
+  %12 = alloca %"class.proj_nlohmann::detail::json_sax_dom_parser", align 8 ; 10 uses
   %13 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %14 = alloca %"class.proj_nlohmann::detail::parse_error", align 8 ; 12 uses
   %15 = alloca %"struct.proj_nlohmann::detail::position_t", align 8 ; 5 uses
@@ -537,9 +537,11 @@ bb.af:                                            ; preds = %bb.a
   %i.ck = load i8, ptr %i.cj, align 8, !tbaa !121, !range !43, !noundef !44
   store ptr %2, ptr %12, align 8, !tbaa !68
   %i.cl = getelementptr inbounds nuw i8, ptr %12, i64 8 ; 3 uses
-  %i.cm = getelementptr inbounds nuw i8, ptr %12, i64 41 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(33) %i.cl, i8 0, i64 33, i1 false)
-  store i8 %i.ck, ptr %i.cm, align 1, !tbaa !143
+  %i.cm = getelementptr inbounds nuw i8, ptr %12, i64 40 ; 3 uses
+  %19 = zext nneg i8 %i.ck to i16
+  %20 = shl nuw nsw i16 %19, 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.cl, i8 0, i64 32, i1 false)
+  store i16 %20, ptr %i.cm, align 8
   %i.cn = invoke noundef zeroext i1 @_ZN13proj_nlohmann6detail6parserINS_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS_14adl_serializerES4_IhSaIhEEEENS0_22iterator_input_adapterIN9__gnu_cxx17__normal_iteratorIPKcSA_EEEEE18sax_parse_internalINS0_19json_sax_dom_parserISE_EEEEbPT_(ptr noundef nonnull align 8 dereferenceable(193) %0, ptr noundef %12)
           to label %bb.ag unwind label %bb.ao     ; 0 uses
 
@@ -584,9 +586,9 @@ bb.al:                                            ; preds = %bb.ak
           to label %bb.am unwind label %bb.ar
 
 bb.am:                                            ; preds = %bb.al
-  %19 = getelementptr inbounds nuw i8, ptr %12, i64 40
-  store i8 1, ptr %19, align 8, !tbaa !144
-  %i.cv = load i8, ptr %i.cm, align 1, !tbaa !143, !range !43, !noundef !44
+  store i8 1, ptr %i.cm, align 8, !tbaa !143
+  %21 = getelementptr inbounds nuw i8, ptr %12, i64 41
+  %i.cv = load i8, ptr %21, align 1, !tbaa !144, !range !43, !noundef !44
   %i.cw = trunc nuw i8 %i.cv to i1
   br i1 %i.cw, label %bb.an, label %_ZN13proj_nlohmann6detail19json_sax_dom_parserINS_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS_14adl_serializerES4_IhSaIhEEEEE11parse_errorINS0_11parse_errorEEEbmRKSA_RKT_.exit
 
@@ -733,8 +735,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit85: ; preds = %_ZN
   br label %bb.ay
 
 bb.au:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit76, %bb.ai, %bb.ag
-  %20 = getelementptr inbounds nuw i8, ptr %12, i64 40
-  %i.eo = load i8, ptr %20, align 8, !tbaa !144, !range !43, !noundef !44
+  %i.eo = load i8, ptr %i.cm, align 8, !tbaa !143, !range !43, !noundef !44
   %i.ep = trunc nuw i8 %i.eo to i1
   br i1 %i.ep, label %bb.av, label %bb.aw
 
@@ -1137,9 +1138,9 @@ bb.bw:                                            ; preds = %bb.bv
 
 bb.bx:                                            ; preds = %bb.bw
   %i.gt = getelementptr inbounds nuw i8, ptr %1, i64 40
-  store i8 1, ptr %i.gt, align 8, !tbaa !144
+  store i8 1, ptr %i.gt, align 8, !tbaa !143
   %i.gu = getelementptr inbounds nuw i8, ptr %1, i64 41
-  %i.gv = load i8, ptr %i.gu, align 1, !tbaa !143, !range !43, !noundef !44
+  %i.gv = load i8, ptr %i.gu, align 1, !tbaa !144, !range !43, !noundef !44
   %i.gw = trunc nuw i8 %i.gv to i1
   br i1 %i.gw, label %bb.by, label %_ZN13proj_nlohmann6detail19json_sax_dom_parserINS_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS_14adl_serializerES4_IhSaIhEEEEE11parse_errorINS0_11parse_errorEEEbmRKSA_RKT_.exit
 
@@ -1308,9 +1309,9 @@ bb.cg:                                            ; preds = %bb.cf
 
 bb.ch:                                            ; preds = %bb.cg
   %i.ir = getelementptr inbounds nuw i8, ptr %1, i64 40
-  store i8 1, ptr %i.ir, align 8, !tbaa !144
+  store i8 1, ptr %i.ir, align 8, !tbaa !143
   %i.is = getelementptr inbounds nuw i8, ptr %1, i64 41
-  %i.it = load i8, ptr %i.is, align 1, !tbaa !143, !range !43, !noundef !44
+  %i.it = load i8, ptr %i.is, align 1, !tbaa !144, !range !43, !noundef !44
   %i.iu = trunc nuw i8 %i.it to i1
   br i1 %i.iu, label %bb.ci, label %_ZN13proj_nlohmann6detail19json_sax_dom_parserINS_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS_14adl_serializerES4_IhSaIhEEEEE11parse_errorINS0_11parse_errorEEEbmRKSA_RKT_.exit229
 
@@ -1713,9 +1714,9 @@ _ZNSt13_Bvector_baseISaIbEED2Ev.exit337:          ; preds = %bb.ez, %bb.fa
 define linkonce_odr hidden noundef zeroext i1 @_ZN13proj_nlohmann6detail19json_sax_dom_parserINS_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS_14adl_serializerES4_IhSaIhEEEEE11parse_errorINS0_11parse_errorEEEbmRKSA_RKT_(ptr noundef nonnull align 8 dereferenceable(42) %0, i64 noundef %1, ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(40) %3) local_unnamed_addr #3 comdat align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store i8 1, ptr %i.a, align 8, !tbaa !144
+  store i8 1, ptr %i.a, align 8, !tbaa !143
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 41
-  %i.c = load i8, ptr %i.b, align 1, !tbaa !143, !range !43, !noundef !44
+  %i.c = load i8, ptr %i.b, align 1, !tbaa !144, !range !43, !noundef !44
   %i.d = trunc nuw i8 %i.c to i1
   br i1 %i.d, label %bb.b, label %bb.c
 
@@ -2118,9 +2119,9 @@ bb.o:                                             ; preds = %bb.k
 define linkonce_odr hidden noundef zeroext i1 @_ZN13proj_nlohmann6detail19json_sax_dom_parserINS_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS_14adl_serializerES4_IhSaIhEEEEE11parse_errorINS0_12out_of_rangeEEEbmRKSA_RKT_(ptr noundef nonnull align 8 dereferenceable(42) %0, i64 noundef %1, ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(32) %3) local_unnamed_addr #3 comdat align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store i8 1, ptr %i.a, align 8, !tbaa !144
+  store i8 1, ptr %i.a, align 8, !tbaa !143
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 41
-  %i.c = load i8, ptr %i.b, align 1, !tbaa !143, !range !43, !noundef !44
+  %i.c = load i8, ptr %i.b, align 1, !tbaa !144, !range !43, !noundef !44
   %i.d = trunc nuw i8 %i.c to i1
   br i1 %i.d, label %bb.b, label %bb.c
 
@@ -2523,8 +2524,8 @@ attributes #36 = { nounwind willreturn memory(none) }
 !140 = !{!"_ZTSN13proj_nlohmann6detail11parse_errorE", !107, i64 0, !26, i64 32}
 !141 = !{!140, !26, i64 32}
 !142 = !{!"_ZTSN13proj_nlohmann6detail19json_sax_dom_parserINS_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS_14adl_serializerES4_IhSaIhEEEEEE", !59, i64 0, !129, i64 8, !59, i64 32, !41, i64 40, !41, i64 41}
-!143 = !{!142, !41, i64 41}
-!144 = !{!142, !41, i64 40}
+!143 = !{!142, !41, i64 40}
+!144 = !{!142, !41, i64 41}
 !145 = !{!126, !125, i64 0}
 !146 = !{!126, !125, i64 16}
 !147 = !{!119, !41, i64 16}

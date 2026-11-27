@@ -52,9 +52,11 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 define hidden void @mbedtls_timing_set_delay(ptr nofree noundef captures(none) initializes((32, 40)) %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store i32 %1, ptr %i.a, align 8, !tbaa !17
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 36
-  store i32 %2, ptr %3, align 4, !tbaa !18
+  %3 = zext i32 %1 to i64
+  %4 = zext i32 %2 to i64
+  %5 = shl nuw i64 %4, 32
+  %6 = or disjoint i64 %5, %3
+  store i64 %6, ptr %i.a, align 8
   %.not = icmp eq i32 %2, 0
   br i1 %.not, label %bb.c, label %bb.b
 
@@ -71,7 +73,7 @@ define hidden range(i32 -1, 3) i32 @mbedtls_timing_get_delay(ptr nofree noundef 
 bb.a:
   %1 = alloca %struct.timeval, align 8            ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 2 uses
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !18
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !17
   %i.c = icmp eq i32 %i.b, 0
   br i1 %i.c, label %bb.d, label %bb.b
 
@@ -90,14 +92,14 @@ bb.b:                                             ; preds = %bb.a
   %i.n = sdiv i64 %i.m, 1000
   %i.o = add i64 %i.n, %i.h                       ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #4
-  %i.p = load i32, ptr %i.a, align 4, !tbaa !18
+  %i.p = load i32, ptr %i.a, align 4, !tbaa !17
   %i.q = zext i32 %i.p to i64
   %.not = icmp ult i64 %i.o, %i.q
   br i1 %.not, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.s = load i32, ptr %i.r, align 8, !tbaa !17
+  %i.s = load i32, ptr %i.r, align 8, !tbaa !18
   %i.t = zext i32 %i.s to i64
   %.not8 = icmp samesign uge i64 %i.o, %i.t
   %. = zext i1 %.not8 to i32
@@ -112,7 +114,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
 define hidden i32 @mbedtls_timing_get_final_delay(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #3 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 36
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !18
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !17
   ret i32 %i.b
 }
 
@@ -143,6 +145,6 @@ attributes #4 = { nounwind }
 !14 = !{!11, !8, i64 8}
 !15 = !{!"mbedtls_timing_hr_time", !4, i64 0}
 !16 = !{!"mbedtls_timing_delay_context", !15, i64 0, !5, i64 32, !5, i64 36}
-!17 = !{!16, !5, i64 32}
-!18 = !{!16, !5, i64 36}
+!17 = !{!16, !5, i64 36}
+!18 = !{!16, !5, i64 32}
 end_hunk_0
