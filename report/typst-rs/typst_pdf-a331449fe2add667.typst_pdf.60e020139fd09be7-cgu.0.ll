@@ -205,7 +205,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultuNtNtNtB4_2io5erro
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.631.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6.0..sroa_idx, i64 16, i1 false)
   %.sroa.625.0.copyload = load i64, ptr %i.l, align 8 ; 5 uses
   %i.aj = icmp ugt i64 %.sroa.625.0.copyload, 32  ; 6 uses
-  %.sink10.i.i.i = select i1 %i.aj, i64 %.sroa.4.0.copyload, i64 %.sroa.625.0.copyload ; 3 uses
+  %.sink10.i.i.i = select i1 %i.aj, i64 %.sroa.4.0.copyload, i64 %.sroa.625.0.copyload ; 4 uses
   %spec.select = select i1 %i.aj, i64 0, i64 %.sroa.4.0.copyload
   %spec.select39 = select i1 %i.aj, i64 %.sroa.625.0.copyload, i64 0
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !21665
@@ -227,15 +227,14 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultuNtNtNtB4_2io5erro
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 65
   store i8 85, ptr %.sroa.11.0..sroa_idx, align 1, !noalias !21666
   call void @llvm.experimental.noalias.scope.decl(metadata !21667)
-  %4 = call i64 @llvm.uadd.sat.i64(i64 %.sink10.i.i.i, i64 1) ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 7 uses
-  %.not.i14.i.i = icmp ugt i64 %4, 16
+  %.not.i14.i.i = icmp ugt i64 %.sink10.i.i.i, 15
   %i.am = inttoptr i64 %.sroa.022.0.copyload to ptr ; 3 uses
   br i1 %.not.i14.i.i, label %bb.p, label %.lr.ph.split.us.preheader.i.i
 
 bb.p:                                             ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultuNtNtNtB4_2io5error5ErrorEECs8jFhWeO2DFb_9typst_pdf.exit
-  %5 = add i64 %4, -1
-  %i.an = call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %5, i1 true) ; 2 uses
+  %4 = call i64 @llvm.umin.i64(i64 %.sink10.i.i.i, i64 -2)
+  %i.an = call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %4, i1 true) ; 2 uses
   %i.ao = icmp eq i64 %i.an, 0
   br i1 %i.ao, label %.thread70.i.i, label %bb.q, !prof !13
 
@@ -637,9 +636,6 @@ declare i16 @llvm.cttz.i16(i16, i1 immarg) #33
 
 ; Function Attrs: cold noinline noreturn nonlazybind uwtable
 declare void @_RNvNtCs3oUPovFnLWP_4core9panicking9panic_fmt(ptr noundef nonnull, ptr noundef nonnull, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24)) unnamed_addr #25
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.uadd.sat.i64(i64, i64) #27
 
 ; Function Attrs: nonlazybind uwtable
 declare noundef align 8 ptr @_RNvMsk_NtNtCsdaEETE4DqmE_13typst_library11foundations6stylesNtB5_10StyleChain4find(ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(24), ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(216), i8 noundef) unnamed_addr #0

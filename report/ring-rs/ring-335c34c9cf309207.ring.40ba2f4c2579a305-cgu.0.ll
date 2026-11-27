@@ -205,10 +205,10 @@ bb.s:                                             ; preds = %bb.r, %bb.q
 define void @_RNvMs0_NtNtNtNtCs5yxAJGbRKSL_4ring2ec7suite_b5ecdsa7signingNtB5_12EcdsaKeyPair4sign(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([128 x i8]) align 8 captures(none) dereferenceable(128) %0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(240) %1, ptr noundef nonnull %2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %3, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %4, i64 noundef range(i64 0, -9223372036854775808) %5) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [0 x i8], align 1
-  %i.b = alloca [8 x i8], align 8                 ; 31 uses
+  %i.b = alloca [8 x i8], align 8                 ; 29 uses
   %i.c = alloca [8 x i8], align 8                 ; 5 uses
   %i.d = alloca [8 x i8], align 8                 ; 5 uses
-  %i.e = alloca [48 x i8], align 16               ; 18 uses
+  %i.e = alloca [48 x i8], align 16               ; 16 uses
   %i.f = alloca [8 x i8], align 8                 ; 5 uses
   %i.g = alloca [8 x i8], align 8                 ; 5 uses
   %i.h = alloca [48 x i8], align 8                ; 5 uses
@@ -248,9 +248,7 @@ bb.a:
   %i.am = alloca [72 x i8], align 8               ; 6 uses
   %i.an = load atomic i32, ptr @_RNvNtNtNtCs5yxAJGbRKSL_4ring3cpu6x86_6412featureflags8FEATURES acquire, align 4
   %.not.i.i = icmp eq i32 %i.an, 0
-  %.lcssa.sroa.gep91 = getelementptr inbounds nuw i8, ptr %i.e, i64 16
-  %.lcssa.sroa.gep93 = getelementptr inbounds nuw i8, ptr %i.e, i64 32
-  %.lcssa.sroa.gep95 = getelementptr inbounds nuw i8, ptr %i.e, i64 48
+  %.lcssa.sroa.gep95 = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   br i1 %.not.i.i, label %bb.b, label %_RNvNtNtNtCs5yxAJGbRKSL_4ring3cpu6x86_6412featureflags11get_or_init.exit, !prof !16
 
 bb.b:                                             ; preds = %bb.a
@@ -446,7 +444,7 @@ bb.k:                                             ; preds = %bb.w
   %i.dg = add nsw i64 %..i16.i, -16               ; 7 uses
   %i.dh = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.dg
   %.not.i46.i.i.1.not = icmp eq i64 %i.de, 8
-  %i.di = call i64 @llvm.usub.sat.i64(i64 %i.dg, i64 8) ; 4 uses
+  %i.di = call i64 @llvm.usub.sat.i64(i64 %i.dg, i64 8) ; 3 uses
   %.not.i.i.i.i.i.i24.i.2 = icmp eq i64 %i.dg, 0
   %i.dj = sub nuw nsw i64 %i.dg, %i.di            ; 2 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.di
@@ -457,8 +455,7 @@ bb.k:                                             ; preds = %bb.w
   %i.dp = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.dn
   %i.dq = sub nuw nsw i64 8, %i.do
   %i.dr = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.dq
-  %.not.i46.i.i.3 = icmp samesign ugt i64 %i.di, 8
-  %i.ds = call i64 @llvm.usub.sat.i64(i64 %i.dg, i64 24) ; 4 uses
+  %i.ds = call i64 @llvm.usub.sat.i64(i64 %i.dg, i64 24) ; 3 uses
   %i.dt = sub nuw nsw i64 %i.dn, %i.ds            ; 2 uses
   %i.du = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.ds
   %i.dv = sub nuw nsw i64 8, %i.dt
@@ -468,7 +465,6 @@ bb.k:                                             ; preds = %bb.w
   %i.dz = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.dx
   %i.ea = sub nuw nsw i64 8, %i.dy
   %i.eb = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.ea
-  %.not.i46.i.i.5 = icmp samesign ugt i64 %i.ds, 8
   br label %bb.l
 
 bb.l:                                             ; preds = %_RNvNtNtNtCs5yxAJGbRKSL_4ring2ec7suite_b11private_key29check_scalar_big_endian_bytes.exit.backedge.i.i, %.split.i
@@ -480,7 +476,7 @@ bb.m:                                             ; preds = %bb.l
   %i.ed = add nuw nsw i32 %.sroa.01.01.i.i, 1     ; 2 uses
   %i.ee = load i8, ptr %i.cz, align 8, !range !34, !noalias !2687, !noundef !15
   %i.ef = trunc nuw i8 %i.ee to i1                ; 4 uses
-  %..i.i.i.i.i = select i1 %i.ef, i64 6, i64 4    ; 5 uses
+  %..i.i.i.i.i = select i1 %i.ef, i64 6, i64 4    ; 4 uses
   %i.eg = xor i1 %i.db, %i.ef
   br i1 %i.eg, label %_RNvNtNtNtCs5yxAJGbRKSL_4ring2ec7suite_b11private_key29check_scalar_big_endian_bytes.exit.backedge.i.i, label %bb.n
 
@@ -509,22 +505,15 @@ bb.n:                                             ; preds = %bb.m
   store i64 %i.em, ptr %i.ck, align 8, !alias.scope !2694, !noalias !2695
   br i1 %.not.i46.i.i.1.not, label %_RINvYINtNtNtCs3oUPovFnLWP_4core5slice4iter7RChunkshENtNtNtNtBa_4iter6traits8iterator8Iterator4folduNCINvNtNtBU_8adapters3map8map_foldRShyuNCNvNtCs5yxAJGbRKSL_4ring4limb26limbs_from_be_bytes_padded0NCINvNvBO_8for_each4callyNCB2e_s_0E0E0EB2i_.exit.i.i, label %bb.o
 
-_RNvMsb_NtNtCs5yxAJGbRKSL_4ring8polyfill12uninit_sliceINtB5_3BufyE15unfilled_uninitB9_.exit.i.i.i.i.i.i.thread.i: ; preds = %9, %8, %bb.o
-  %.lcssa.sroa.phi = phi ptr [ %.lcssa.sroa.gep95, %9 ], [ %.lcssa.sroa.gep93, %8 ], [ %.lcssa.sroa.gep91, %bb.o ]
-  %.lcssa = phi i64 [ 6, %9 ], [ 4, %8 ], [ 2, %bb.o ] ; 3 uses
+.lr.ph.i.i.i.i.i.i.i.thread.i:                    ; preds = %bb.o
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !2691
-  %6 = icmp eq i64 %..i.i.i.i.i, %.lcssa
-  br i1 %6, label %.loopexit39.i, label %.lr.ph.i.i.i.i.i.i.i.thread.i
-
-.lr.ph.i.i.i.i.i.i.i.thread.i:                    ; preds = %_RNvMsb_NtNtCs5yxAJGbRKSL_4ring8polyfill12uninit_sliceINtB5_3BufyE15unfilled_uninitB9_.exit.i.i.i.i.i.i.thread.i
-  store i64 0, ptr %.lcssa.sroa.phi, align 8, !alias.scope !2694, !noalias !2695
-  %7 = add nuw nsw i64 %.lcssa, 1
+  store i64 0, ptr %.lcssa.sroa.gep95, align 8, !alias.scope !2694, !noalias !2695
   br label %_RINvYINtNtNtCs3oUPovFnLWP_4core5slice4iter7RChunkshENtNtNtNtBa_4iter6traits8iterator8Iterator4folduNCINvNtNtBU_8adapters3map8map_foldRShyuNCNvNtCs5yxAJGbRKSL_4ring4limb26limbs_from_be_bytes_padded0NCINvNvBO_8for_each4callyNCB2e_s_0E0E0EB2i_.exit.i.i
 
 bb.o:                                             ; preds = %.lr.ph.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !2691
   store i64 0, ptr %i.b, align 8, !noalias !2691
-  br i1 %.not.i.i.i.i.i.i24.i.2, label %_RNvMsb_NtNtCs5yxAJGbRKSL_4ring8polyfill12uninit_sliceINtB5_3BufyE15unfilled_uninitB9_.exit.i.i.i.i.i.i.thread.i, label %_RNvMsb_NtNtCs5yxAJGbRKSL_4ring8polyfill12uninit_sliceINtB5_3BufyE15unfilled_uninitB9_.exit.i.i.i.i.i.i.i.2
+  br i1 %.not.i.i.i.i.i.i24.i.2, label %.lr.ph.i.i.i.i.i.i.i.thread.i, label %_RNvMsb_NtNtCs5yxAJGbRKSL_4ring8polyfill12uninit_sliceINtB5_3BufyE15unfilled_uninitB9_.exit.i.i.i.i.i.i.i.2
 
 _RNvMsb_NtNtCs5yxAJGbRKSL_4ring8polyfill12uninit_sliceINtB5_3BufyE15unfilled_uninitB9_.exit.i.i.i.i.i.i.i.2: ; preds = %bb.o
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.dm, ptr nonnull readonly align 1 %i.dk, i64 range(i64 0, 129) %i.dj, i1 false), !alias.scope !2692, !noalias !2693
@@ -539,14 +528,11 @@ _RNvMsb_NtNtCs5yxAJGbRKSL_4ring8polyfill12uninit_sliceINtB5_3BufyE15unfilled_uni
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !2691
   %i.eo = call i64 @llvm.bswap.i64(i64 %.sroa.0.0.copyload.pre.i.i.i.i.i.3)
   store i64 %i.eo, ptr %i.cm, align 8, !alias.scope !2694, !noalias !2695
-  br i1 %.not.i46.i.i.3, label %8, label %_RINvYINtNtNtCs3oUPovFnLWP_4core5slice4iter7RChunkshENtNtNtNtBa_4iter6traits8iterator8Iterator4folduNCINvNtNtBU_8adapters3map8map_foldRShyuNCNvNtCs5yxAJGbRKSL_4ring4limb26limbs_from_be_bytes_padded0NCINvNvBO_8for_each4callyNCB2e_s_0E0E0EB2i_.exit.i.i
+  br i1 %i.db, label %_RNvMsb_NtNtCs5yxAJGbRKSL_4ring8polyfill12uninit_sliceINtB5_3BufyE15unfilled_uninitB9_.exit.i.i.i.i.i.i.i.4, label %_RINvYINtNtNtCs3oUPovFnLWP_4core5slice4iter7RChunkshENtNtNtNtBa_4iter6traits8iterator8Iterator4folduNCINvNtNtBU_8adapters3map8map_foldRShyuNCNvNtCs5yxAJGbRKSL_4ring4limb26limbs_from_be_bytes_padded0NCINvNvBO_8for_each4callyNCB2e_s_0E0E0EB2i_.exit.i.i
 
-8:                                                ; preds = %_RNvMsb_NtNtCs5yxAJGbRKSL_4ring8polyfill12uninit_sliceINtB5_3BufyE15unfilled_uninitB9_.exit.i.i.i.i.i.i.i.2
+_RNvMsb_NtNtCs5yxAJGbRKSL_4ring8polyfill12uninit_sliceINtB5_3BufyE15unfilled_uninitB9_.exit.i.i.i.i.i.i.i.4: ; preds = %_RNvMsb_NtNtCs5yxAJGbRKSL_4ring8polyfill12uninit_sliceINtB5_3BufyE15unfilled_uninitB9_.exit.i.i.i.i.i.i.i.2
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !2691
   store i64 0, ptr %i.b, align 8, !noalias !2691
-  br i1 %i.db, label %_RNvMsb_NtNtCs5yxAJGbRKSL_4ring8polyfill12uninit_sliceINtB5_3BufyE15unfilled_uninitB9_.exit.i.i.i.i.i.i.i.4, label %_RNvMsb_NtNtCs5yxAJGbRKSL_4ring8polyfill12uninit_sliceINtB5_3BufyE15unfilled_uninitB9_.exit.i.i.i.i.i.i.thread.i
-
-_RNvMsb_NtNtCs5yxAJGbRKSL_4ring8polyfill12uninit_sliceINtB5_3BufyE15unfilled_uninitB9_.exit.i.i.i.i.i.i.i.4: ; preds = %8
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.dw, ptr nonnull readonly align 1 %i.du, i64 range(i64 0, 129) %i.dt, i1 false), !alias.scope !2692, !noalias !2693
   %.sroa.0.0.copyload.pre.i.i.i.i.i.4 = load i64, ptr %i.b, align 8, !noalias !2691
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !2691
@@ -562,20 +548,15 @@ _RNvMsb_NtNtCs5yxAJGbRKSL_4ring8polyfill12uninit_sliceINtB5_3BufyE15unfilled_uni
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !2691
   %i.eq = call i64 @llvm.bswap.i64(i64 %.sroa.0.0.copyload.pre.i.i.i.i.i.5)
   store i64 %i.eq, ptr %i.co, align 8, !alias.scope !2694, !noalias !2695
-  br i1 %.not.i46.i.i.5, label %9, label %_RINvYINtNtNtCs3oUPovFnLWP_4core5slice4iter7RChunkshENtNtNtNtBa_4iter6traits8iterator8Iterator4folduNCINvNtNtBU_8adapters3map8map_foldRShyuNCNvNtCs5yxAJGbRKSL_4ring4limb26limbs_from_be_bytes_padded0NCINvNvBO_8for_each4callyNCB2e_s_0E0E0EB2i_.exit.i.i
+  br label %_RINvYINtNtNtCs3oUPovFnLWP_4core5slice4iter7RChunkshENtNtNtNtBa_4iter6traits8iterator8Iterator4folduNCINvNtNtBU_8adapters3map8map_foldRShyuNCNvNtCs5yxAJGbRKSL_4ring4limb26limbs_from_be_bytes_padded0NCINvNvBO_8for_each4callyNCB2e_s_0E0E0EB2i_.exit.i.i
 
-9:                                                ; preds = %.lr.ph.i.i.i.i.i.i.i.i.4
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !2691
-  store i64 0, ptr %i.b, align 8, !noalias !2691
-  br label %_RNvMsb_NtNtCs5yxAJGbRKSL_4ring8polyfill12uninit_sliceINtB5_3BufyE15unfilled_uninitB9_.exit.i.i.i.i.i.i.thread.i
-
-.loopexit39.i:                                    ; preds = %_RNvMsb_NtNtCs5yxAJGbRKSL_4ring8polyfill12uninit_sliceINtB5_3BufyE15unfilled_uninitB9_.exit.i.i.i.i.i.i.thread.i, %_RNvMsb_NtNtCs5yxAJGbRKSL_4ring8polyfill12uninit_sliceINtB5_3BufyE15unfilled_uninitB9_.exit.i.i.i.i.i.i.i.4
+.loopexit39.i:                                    ; preds = %_RNvMsb_NtNtCs5yxAJGbRKSL_4ring8polyfill12uninit_sliceINtB5_3BufyE15unfilled_uninitB9_.exit.i.i.i.i.i.i.i.4
   call void @_RNvNtCs3oUPovFnLWP_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @0, i64 noundef 40, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @65) #41, !noalias !2696
   unreachable
 
 _RINvYINtNtNtCs3oUPovFnLWP_4core5slice4iter7RChunkshENtNtNtNtBa_4iter6traits8iterator8Iterator4folduNCINvNtNtBU_8adapters3map8map_foldRShyuNCNvNtCs5yxAJGbRKSL_4ring4limb26limbs_from_be_bytes_padded0NCINvNvBO_8for_each4callyNCB2e_s_0E0E0EB2i_.exit.i.i: ; preds = %.lr.ph.i.i.i, %_RNvMsb_NtNtCs5yxAJGbRKSL_4ring8polyfill12uninit_sliceINtB5_3BufyE15unfilled_uninitB9_.exit.i.i.i.i.i.i.i.2, %.lr.ph.i.i.i.i.i.i.i.i.4, %.lr.ph.i.i.i.i.i.i.i.thread.i
-  %i.er = phi i64 [ %.lcssa, %.lr.ph.i.i.i.i.i.i.i.thread.i ], [ 3, %_RNvMsb_NtNtCs5yxAJGbRKSL_4ring8polyfill12uninit_sliceINtB5_3BufyE15unfilled_uninitB9_.exit.i.i.i.i.i.i.i.2 ], [ 1, %.lr.ph.i.i.i ], [ 5, %.lr.ph.i.i.i.i.i.i.i.i.4 ] ; 2 uses
-  %i.es = phi i64 [ %7, %.lr.ph.i.i.i.i.i.i.i.thread.i ], [ 4, %_RNvMsb_NtNtCs5yxAJGbRKSL_4ring8polyfill12uninit_sliceINtB5_3BufyE15unfilled_uninitB9_.exit.i.i.i.i.i.i.i.2 ], [ 2, %.lr.ph.i.i.i ], [ 6, %.lr.ph.i.i.i.i.i.i.i.i.4 ] ; 2 uses
+  %i.er = phi i64 [ 2, %.lr.ph.i.i.i.i.i.i.i.thread.i ], [ 3, %_RNvMsb_NtNtCs5yxAJGbRKSL_4ring8polyfill12uninit_sliceINtB5_3BufyE15unfilled_uninitB9_.exit.i.i.i.i.i.i.i.2 ], [ 1, %.lr.ph.i.i.i ], [ 5, %.lr.ph.i.i.i.i.i.i.i.i.4 ] ; 2 uses
+  %i.es = phi i64 [ 3, %.lr.ph.i.i.i.i.i.i.i.thread.i ], [ 4, %_RNvMsb_NtNtCs5yxAJGbRKSL_4ring8polyfill12uninit_sliceINtB5_3BufyE15unfilled_uninitB9_.exit.i.i.i.i.i.i.i.2 ], [ 2, %.lr.ph.i.i.i ], [ 6, %.lr.ph.i.i.i.i.i.i.i.i.4 ] ; 2 uses
   %.not.not.i = icmp samesign ugt i64 %i.dd, %i.er
   br i1 %.not.not.i, label %bb.p, label %_RNvNtNtNtCs5yxAJGbRKSL_4ring2ec7suite_b11private_key28scalar_from_big_endian_bytes.exit.sink.split.i.i.i
 
@@ -978,9 +959,8 @@ bb.f:                                             ; preds = %bb.d
 .lr.ph.preheader:                                 ; preds = %.split
   %i.o = add nsw i64 %3, -4
   %i.p = add i64 %i.c, %i.g
-  %i.q = sub i64 %i.o, %i.p
-  %4 = tail call i64 @llvm.uadd.sat.i64(i64 %i.q, i64 1) ; 3 uses
-  %min.iters.check = icmp ult i64 %4, 33
+  %i.q = sub i64 %i.o, %i.p                       ; 2 uses
+  %min.iters.check = icmp ult i64 %i.q, 32
   br i1 %min.iters.check, label %.lr.ph.preheader23, label %vector.ph
 
 .lr.ph.preheader23:                               ; preds = %vector.body, %.lr.ph.preheader
@@ -988,6 +968,7 @@ bb.f:                                             ; preds = %bb.d
   br label %.lr.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
+  %4 = tail call i64 @llvm.uadd.sat.i64(i64 %i.q, i64 1) ; 2 uses
   %i.r = and i64 %4, 31                           ; 2 uses
   %i.s = icmp eq i64 %i.r, 0
   %i.t = select i1 %i.s, i64 32, i64 %i.r
