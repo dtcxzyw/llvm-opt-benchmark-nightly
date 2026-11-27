@@ -202,7 +202,7 @@ define internal fastcc i32 @lstat_cache_matchlen(ptr noundef %0, ptr nofree noun
 bb.a:
   %6 = alloca %struct.stat, align 8               ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #11
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 28
   %i.b = load i32, ptr %i.a, align 4, !tbaa !34
   %.not = icmp eq i32 %i.b, %4
   br i1 %.not, label %bb.b, label %bb.c
@@ -238,8 +238,9 @@ bb.f:                                             ; preds = %bb.e
 reset_lstat_cache.exit:                           ; preds = %bb.d, %bb.e
   %.pre = phi i64 [ %.pre.pre, %bb.d ], [ 0, %bb.e ]
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i32 0, ptr %i.i, align 8, !tbaa !27
-  store i32 %4, ptr %i.a, align 4, !tbaa !34
+  %7 = zext nneg i32 %4 to i64
+  %8 = shl nuw nsw i64 %7, 32
+  store i64 %8, ptr %i.i, align 8
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i32 %5, ptr %i.j, align 8, !tbaa !35
   br label %bb.o

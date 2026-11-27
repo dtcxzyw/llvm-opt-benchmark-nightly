@@ -202,16 +202,17 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
 define hidden void @_RNvMs1_NtCs94G7V7CXYRk_8bitflags4iterINtB5_9IterNamesNtNtCsfF8zpZz1lvn_13yara_x_parser3ast9RuleFlagsE3newBT_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([32 x i8]) align 8 captures(none) dereferenceable(32) initializes((0, 26)) %0, ptr noalias nofree noundef readonly captures(none) dereferenceable(1) %1) unnamed_addr #4 personality ptr @rust_eh_personality {
 bb.a:
-  %.val1 = load i8, ptr %1, align 1, !noundef !7  ; 2 uses
+  %.val1 = load i8, ptr %1, align 1, !noundef !7
   store ptr @7, ptr %0, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 2, ptr %i.a, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 0, ptr %i.b, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i8 %.val1, ptr %i.c, align 8
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 25
-  store i8 %.val1, ptr %2, align 1
+  %2 = zext i8 %.val1 to i16                      ; 2 uses
+  %3 = shl nuw i16 %2, 8
+  %4 = or disjoint i16 %3, %2
+  store i16 %4, ptr %i.c, align 8
   ret void
 }
 

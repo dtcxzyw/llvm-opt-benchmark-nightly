@@ -202,12 +202,12 @@ _RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E10assume_
   %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 12
   %.sroa.0.0.in.i.i = select i1 %i.i, ptr %i.j, ptr %i.k
-  %.sroa.0.0.i.i = load i32, ptr %.sroa.0.0.in.i.i, align 4, !noalias !56, !noundef !4 ; 2 uses
+  %.sroa.0.0.i.i = load i32, ptr %.sroa.0.0.in.i.i, align 4, !noalias !56, !noundef !4
+  %1 = zext i32 %.sroa.0.0.i.i to i64             ; 2 uses
   br i1 %i.i, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E10assume_bufCs1mImOlsSUsK_17markup5ever_rcdom.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !55
-  %1 = zext i32 %.sroa.0.0.i.i to i64
   %i.l = add nuw nsw i64 %1, 15
   %i.m = lshr i64 %i.l, 4
   %i.n = add nuw nsw i64 %i.m, 1
@@ -250,8 +250,7 @@ bb.e:                                             ; preds = %_RNvMss_NtCsldpiDta
 
 bb.f:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !55
-  %2 = zext i32 %.sroa.0.0.i.i to i64
-  %i.v = add nuw nsw i64 %2, 15
+  %i.v = add nuw nsw i64 %1, 15
   %i.w = lshr i64 %i.v, 4
   %i.x = add nuw nsw i64 %i.w, 1
   store i64 %i.x, ptr %i.b, align 8, !noalias !55
@@ -654,6 +653,7 @@ _RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E10make_ow
   %i.bl = phi ptr [ %i.ax, %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E10make_ownedCs1mImOlsSUsK_17markup5ever_rcdom.exit.i.i ], [ %i.n, %.thread41.i ] ; 2 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %.0.val, i64 44 ; 2 uses
   %.sroa.0.0.i.i.i = load i32, ptr %i.bm, align 4, !noalias !199, !noundef !4 ; 3 uses
+  %2 = zext i32 %.sroa.0.0.i.i.i to i64
   %.not.i.i.i = icmp ugt i32 %i.bk, %.sroa.0.0.i.i.i
   br i1 %.not.i.i.i, label %bb.p, label %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E24make_owned_with_capacityCs1mImOlsSUsK_17markup5ever_rcdom.exit.i
 
@@ -682,7 +682,6 @@ bb.q:                                             ; preds = %bb.u, %bb.r
 bb.r:                                             ; preds = %bb.p
   %i.bu = lshr i32 -1, %i.bo
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !201
-  %2 = zext i32 %.sroa.0.0.i.i.i to i64
   %i.bv = add nuw nsw i64 %2, 15
   %i.bw = lshr i64 %i.bv, 4
   %i.bx = add nuw nsw i64 %i.bw, 1
@@ -741,7 +740,7 @@ _RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E24make_ow
   %.sroa.01.0.i.i = select i1 %i.cn, i32 %.sroa.63.0.i.i, i32 0
   %i.co = icmp eq ptr %.sroa.0.0.i19.i, inttoptr (i64 15 to ptr)
   %i.cp = icmp ult ptr %.sroa.0.0.i19.i, inttoptr (i64 9 to ptr)
-  %i.cq = trunc nuw nsw i64 %i.cj to i32
+  %i.cq = trunc i64 %i.cj to i32
   %spec.select = select i1 %i.cp, i32 %i.cq, i32 %i.bj
   %.sroa.04.0.i.i = select i1 %i.co, i32 0, i32 %spec.select
   %i.cr = add i32 %.sroa.04.0.i.i, %.sroa.01.0.i.i
@@ -995,7 +994,7 @@ bb.a:
   %i.h = alloca [16 x i8], align 8                ; 6 uses
   %i.i = alloca [8 x i8], align 8                 ; 5 uses
   %i.j = alloca [8 x i8], align 8                 ; 4 uses
-  %i.k = alloca [136 x i8], align 8               ; 18 uses
+  %i.k = alloca [136 x i8], align 8               ; 17 uses
   %.sroa.21 = alloca [24 x i8], align 8           ; 2 uses
   %i.l = alloca [8 x i8], align 8                 ; 6 uses
   %i.m = alloca [24 x i8], align 8                ; 5 uses
@@ -1398,6 +1397,8 @@ bb.bl:                                            ; preds = %._RNvXs4_NtCskKLDko
   %.sroa.15.sroa.8.sroa.5.0.copyload = load i64, ptr %.sroa.15.sroa.8.sroa.5.0..sroa.15.sroa.8.0..sroa_idx.sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !266
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !266
+  %1 = zext nneg i8 %i.hw to i16
+  %2 = shl nuw nsw i16 %1, 8
   %.pre = load ptr, ptr %i.l, align 8
   br label %_RNvXs6_Cs1mImOlsSUsK_17markup5ever_rcdomNtB5_8NodeDataNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit
 
@@ -1437,21 +1438,21 @@ _RNvXs6_Cs1mImOlsSUsK_17markup5ever_rcdomNtB5_8NodeDataNtNtCskKLDkoKarTP_4core5c
   %.sroa.15.sroa.8.sroa.0.0 = phi i64 [ undef, %bb.j ], [ %.sroa.15.sroa.8.sroa.0.0.copyload60, %bb.bd ], [ %i.cs, %_RNvXsx_NtCskKLDkoKarTP_4core4cellINtB5_7RefCellINtNtCsldpiDtalS19_7tendril7tendril7TendrilNtNtBO_3fmt4UTF8EENtNtB7_5clone5Clone5cloneCs1mImOlsSUsK_17markup5ever_rcdom.exit.i ], [ undef, %_RNvXs2_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8ENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCs1mImOlsSUsK_17markup5ever_rcdom.exit10.i ], [ %.sroa.15.sroa.8.sroa.0.0.copyload, %bb.bl ], [ %.sroa.15.sroa.8.sroa.0.0.copyload59, %bb.bn ]
   %i.ic = phi ptr [ %i.ac, %bb.j ], [ %i.ac, %bb.bd ], [ %i.ac, %_RNvXsx_NtCskKLDkoKarTP_4core4cellINtB5_7RefCellINtNtCsldpiDtalS19_7tendril7tendril7TendrilNtNtBO_3fmt4UTF8EENtNtB7_5clone5Clone5cloneCs1mImOlsSUsK_17markup5ever_rcdom.exit.i ], [ %i.ac, %_RNvXs2_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8ENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCs1mImOlsSUsK_17markup5ever_rcdom.exit10.i ], [ %.pre, %bb.bl ], [ %i.ac, %bb.bn ]
   %.sroa.15.sroa.0.0 = phi i64 [ undef, %bb.j ], [ %i.he, %bb.bd ], [ %.sroa.15.sroa.0.0.copyload35, %_RNvXsx_NtCskKLDkoKarTP_4core4cellINtB5_7RefCellINtNtCsldpiDtalS19_7tendril7tendril7TendrilNtNtBO_3fmt4UTF8EENtNtB7_5clone5Clone5cloneCs1mImOlsSUsK_17markup5ever_rcdom.exit.i ], [ %i.di, %_RNvXs2_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8ENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCs1mImOlsSUsK_17markup5ever_rcdom.exit10.i ], [ %.sroa.15.sroa.0.0.copyload, %bb.bl ], [ %i.hy, %bb.bn ]
+  %.sroa.019.sroa.9.0 = phi i16 [ 0, %bb.j ], [ 0, %bb.bd ], [ 0, %_RNvXsx_NtCskKLDkoKarTP_4core4cellINtB5_7RefCellINtNtCsldpiDtalS19_7tendril7tendril7TendrilNtNtBO_3fmt4UTF8EENtNtB7_5clone5Clone5cloneCs1mImOlsSUsK_17markup5ever_rcdom.exit.i ], [ 0, %_RNvXs2_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8ENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCs1mImOlsSUsK_17markup5ever_rcdom.exit10.i ], [ %2, %bb.bl ], [ 0, %bb.bn ]
   %.sroa.20.0 = phi ptr [ undef, %bb.j ], [ %.sroa.20.40.copyload, %bb.bd ], [ undef, %_RNvXsx_NtCskKLDkoKarTP_4core4cellINtB5_7RefCellINtNtCsldpiDtalS19_7tendril7tendril7TendrilNtNtBO_3fmt4UTF8EENtNtB7_5clone5Clone5cloneCs1mImOlsSUsK_17markup5ever_rcdom.exit.i ], [ undef, %_RNvXs2_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8ENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCs1mImOlsSUsK_17markup5ever_rcdom.exit10.i ], [ %.val.i.i, %bb.bl ], [ undef, %bb.bn ]
   %.sroa.18.0 = phi i64 [ undef, %bb.j ], [ %.sroa.18.40.copyload, %bb.bd ], [ undef, %_RNvXsx_NtCskKLDkoKarTP_4core4cellINtB5_7RefCellINtNtCsldpiDtalS19_7tendril7tendril7TendrilNtNtBO_3fmt4UTF8EENtNtB7_5clone5Clone5cloneCs1mImOlsSUsK_17markup5ever_rcdom.exit.i ], [ undef, %_RNvXs2_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8ENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCs1mImOlsSUsK_17markup5ever_rcdom.exit10.i ], [ 0, %bb.bl ], [ undef, %bb.bn ]
   %.sroa.1020.0 = phi i64 [ undef, %bb.j ], [ %.sroa.1020.8.copyload23, %bb.bd ], [ 0, %_RNvXsx_NtCskKLDkoKarTP_4core4cellINtB5_7RefCellINtNtCsldpiDtalS19_7tendril7tendril7TendrilNtNtBO_3fmt4UTF8EENtNtB7_5clone5Clone5cloneCs1mImOlsSUsK_17markup5ever_rcdom.exit.i ], [ %.sroa.1020.8.copyload22, %_RNvXs2_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8ENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCs1mImOlsSUsK_17markup5ever_rcdom.exit10.i ], [ 0, %bb.bl ], [ %.sroa.1020.8.copyload21, %bb.bn ]
-  %.sroa.9.0 = phi i8 [ undef, %bb.j ], [ undef, %bb.bd ], [ undef, %_RNvXsx_NtCskKLDkoKarTP_4core4cellINtB5_7RefCellINtNtCsldpiDtalS19_7tendril7tendril7TendrilNtNtBO_3fmt4UTF8EENtNtB7_5clone5Clone5cloneCs1mImOlsSUsK_17markup5ever_rcdom.exit.i ], [ undef, %_RNvXs2_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8ENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCs1mImOlsSUsK_17markup5ever_rcdom.exit10.i ], [ %i.hw, %bb.bl ], [ undef, %bb.bn ]
   %.sroa.5.sroa.4.0..sroa.5.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 112
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5.sroa.4.0..sroa.5.0..sroa_idx.sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %i.m, i64 24, i1 false)
+  %.sroa.019.sroa.0.0.insert.ext = zext nneg i8 %i.al to i16
+  %.sroa.019.sroa.0.0.insert.insert = or disjoint i16 %.sroa.019.sroa.9.0, %.sroa.019.sroa.0.0.insert.ext
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l)
   store i64 1, ptr %i.k, align 8
   %i.id = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   store i64 1, ptr %i.id, align 8
   %i.ie = getelementptr inbounds nuw i8, ptr %i.k, i64 16
-  store i8 %i.al, ptr %i.ie, align 8
-  %.sroa.0.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 17
-  store i8 %.sroa.9.0, ptr %.sroa.0.sroa.4.0..sroa_idx, align 1
+  store i16 %.sroa.019.sroa.0.0.insert.insert, ptr %i.ie, align 8
   %.sroa.0.sroa.6.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.k, i64 24
   store i64 %.sroa.1020.0, ptr %.sroa.0.sroa.6.0..sroa_idx.a, align 8
   %.sroa.0.sroa.7.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.k, i64 32
@@ -1717,11 +1718,12 @@ _RNvMCs1mImOlsSUsK_17markup5ever_rcdomNtB2_4Node3new.exit: ; preds = %bb.a
 ; Function Attrs: nonlazybind uwtable
 define noalias noundef nonnull ptr @_RNvXs1_Cs1mImOlsSUsK_17markup5ever_rcdomNtB5_5RcDomNtNtNtCsa2F6HLACPlS_11markup5ever9interface12tree_builder8TreeSink14create_element(ptr nofree noundef nonnull readnone align 8 captures(none) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(24) %1, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(24) %2, i24 %3) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [136 x i8], align 8               ; 15 uses
+  %i.a = alloca [136 x i8], align 8               ; 14 uses
   %i.b = alloca [136 x i8], align 8               ; 10 uses
   %i.c = alloca [32 x i8], align 8                ; 6 uses
   %i.d = alloca [24 x i8], align 8                ; 4 uses
   %.sroa.5 = alloca [38 x i8], align 2            ; 4 uses
+  %.fr = freeze i24 %3                            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.d, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false)
@@ -1729,7 +1731,7 @@ bb.a:
   store i64 0, ptr %i.c, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.e, ptr noundef nonnull align 8 dereferenceable(24) %2, i64 24, i1 false)
-  %i.f = trunc i24 %3 to i1
+  %i.f = trunc i24 %.fr to i1
   br i1 %i.f, label %bb.b, label %bb.f
 
 bb.b:                                             ; preds = %bb.a
@@ -1771,8 +1773,8 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.a, %bb.j
   %.sroa.02.0 = phi ptr [ %i.i, %bb.j ], [ null, %bb.a ]
-  %.sroa.01.1.extract.shift = lshr i24 %3, 8
-  %.sroa.01.1.extract.trunc = trunc i24 %.sroa.01.1.extract.shift to i8
+  %4 = trunc i24 %.fr to i16
+  %5 = and i16 %4, -256
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 72
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !312
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.8.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false)
@@ -1784,9 +1786,8 @@ bb.f:                                             ; preds = %bb.a, %bb.j
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i64 1, ptr %i.m, align 8, !noalias !312
   %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  store i8 4, ptr %i.n, align 8
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 17
-  store i8 %.sroa.01.1.extract.trunc, ptr %.sroa.4.0..sroa_idx, align 1
+  %6 = or disjoint i16 %5, 4
+  store i16 %6, ptr %i.n, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 18
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(38) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 2 dereferenceable(38) %.sroa.5, i64 38, i1 false)
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 56

@@ -204,9 +204,10 @@ bb.am:                                            ; preds = %bb.al
 
 bb.an:                                            ; preds = %bb.am, %bb.al
   %i.fe = getelementptr inbounds nuw i8, ptr %6, i64 80 ; 5 uses
-  store i32 -1, ptr %i.fe, align 8, !tbaa !75
-  %13 = getelementptr inbounds nuw i8, ptr %6, i64 84 ; 2 uses
-  store i32 %.054, ptr %13, align 4, !tbaa !147
+  %13 = zext i32 %.054 to i64
+  %14 = shl nuw i64 %13, 32
+  %15 = or disjoint i64 %14, 4294967295
+  store i64 %15, ptr %i.fe, align 8
   %i.ff = getelementptr inbounds nuw i8, ptr %6, i64 104 ; 2 uses
   %i.fg = load i8, ptr %i.ff, align 8
   %i.fh = or i8 %i.fg, 8
@@ -215,8 +216,9 @@ bb.an:                                            ; preds = %bb.am, %bb.al
   br i1 %i.fi, label %bb.ao, label %bb.ar
 
 bb.ao:                                            ; preds = %bb.an
+  %16 = getelementptr inbounds nuw i8, ptr %6, i64 84
   %i.fj = call i32 @dup(i32 noundef %.054) #15    ; 2 uses
-  store i32 %i.fj, ptr %13, align 4, !tbaa !147
+  store i32 %i.fj, ptr %16, align 4, !tbaa !147
   %i.fk = icmp slt i32 %i.fj, 0
   br i1 %i.fk, label %bb.ap, label %bb.ar
 

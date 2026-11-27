@@ -59,10 +59,12 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define dso_local void @bipbuf_init(ptr nofree noundef writeonly captures(none) initializes((0, 24)) %0, i32 noundef %1) local_unnamed_addr #1 {
 bb.a:
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i64 0, ptr %i.a, align 8
   %i.b = zext i32 %1 to i64
   store i64 %i.b, ptr %0, align 8, !tbaa !14
-  store <4 x i32> zeroinitializer, ptr %i.a, align 8, !tbaa !12
+  store i64 0, ptr %2, align 8
   ret void
 }
 
@@ -71,14 +73,16 @@ define dso_local noalias noundef ptr @bipbuf_new(i32 noundef %0) local_unnamed_a
 bb.a:
   %i.a = zext i32 %0 to i64                       ; 2 uses
   %i.b = add nuw nsw i64 %i.a, 24
-  %i.c = tail call noalias ptr @malloc(i64 noundef %i.b) #8 ; 4 uses
+  %i.c = tail call noalias ptr @malloc(i64 noundef %i.b) #8 ; 5 uses
   %.not = icmp eq ptr %i.c, null
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
+  %1 = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  store i64 0, ptr %i.d, align 8
   store i64 %i.a, ptr %i.c, align 8, !tbaa !14
-  store <4 x i32> zeroinitializer, ptr %i.d, align 8, !tbaa !12
+  store i64 0, ptr %1, align 8
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -351,7 +355,7 @@ define dso_local ptr @bipbuf_poll(ptr nofree noundef captures(ret: address, prov
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.b = load i32, ptr %i.a, align 8, !tbaa !12   ; 3 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 3 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.d = load i32, ptr %i.c, align 4, !tbaa !12   ; 3 uses
   %.not = icmp eq i32 %i.b, %i.d
   br i1 %.not, label %__check_for_switch_to_b.exit, label %bb.b
@@ -372,28 +376,28 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.l, label %bb.d, label %bb.g
 
 bb.d:                                             ; preds = %bb.c
-  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 2 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 20
   %i.n = load i32, ptr %i.m, align 4, !tbaa !12
   %i.o = icmp eq i32 %i.n, 1
   br i1 %i.o, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  store i32 0, ptr %i.a, align 8, !tbaa !12
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.q = load i32, ptr %i.p, align 8, !tbaa !12   ; 2 uses
-  store i32 %i.q, ptr %i.c, align 4, !tbaa !12
-  store i32 0, ptr %i.m, align 4, !tbaa !12
-  store i32 0, ptr %i.p, align 8, !tbaa !12
+  %i.q = load i32, ptr %i.p, align 8, !tbaa !12
+  %2 = freeze i32 %i.q                            ; 2 uses
+  %3 = zext i32 %2 to i64
+  %4 = shl nuw i64 %3, 32
+  store i64 %4, ptr %i.a, align 8
+  store i64 0, ptr %i.p, align 8
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.d
-  store i32 0, ptr %i.c, align 4, !tbaa !12
-  store i32 0, ptr %i.a, align 8, !tbaa !12
+  store i64 0, ptr %i.a, align 8
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.e, %bb.f, %bb.c
   %i.r = phi i32 [ 0, %bb.e ], [ 0, %bb.f ], [ %i.f, %bb.c ]
-  %i.s = phi i32 [ %i.q, %bb.e ], [ 0, %bb.f ], [ %i.d, %bb.c ]
+  %i.s = phi i32 [ %2, %bb.e ], [ 0, %bb.f ], [ %i.d, %bb.c ]
   %i.t = zext i32 %i.s to i64
   %i.u = sub i64 %i.e, %i.t
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 16

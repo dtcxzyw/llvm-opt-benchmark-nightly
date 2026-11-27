@@ -204,9 +204,10 @@ bb.w:                                             ; preds = %bb.u
 bb.x:                                             ; preds = %bb.u
   %i.ax = getelementptr inbounds nuw i8, ptr %i.g, i64 12
   %i.ay = load atomic i16, ptr %i.ax monotonic, align 4
-  store i16 0, ptr %0, align 8
-  %.sroa.419.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 2
-  store i16 %i.ay, ptr %.sroa.419.0..sroa_idx, align 2
+  %2 = freeze i16 %i.ay
+  %3 = zext i16 %2 to i32
+  %4 = shl nuw i32 %3, 16
+  store i32 %4, ptr %0, align 8
   %.sroa.520.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i16 %.sroa.59.0.copyload, ptr %.sroa.520.0..sroa_idx, align 4
   %.sroa.622.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8

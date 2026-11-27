@@ -202,7 +202,8 @@ _RNvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterTINtNtNtCshzWfHUSfY
   store ptr %i.az, ptr %i.aw, align 8, !alias.scope !216
   %.sroa.5.0..sroa_idx7.i.i.i = getelementptr inbounds nuw i8, ptr %i.ax, i64 16
   %.sroa.5.0.copyload8.i.i.i = load i32, ptr %.sroa.5.0..sroa_idx7.i.i.i, align 8, !noalias !217
-  %.not6.i.i.i = icmp eq i32 %.sroa.5.0.copyload8.i.i.i, -1
+  %2 = freeze i32 %.sroa.5.0.copyload8.i.i.i
+  %.not6.i.i.i = icmp eq i32 %2, -1
   br i1 %.not6.i.i.i, label %bb.e, label %bb.g
 
 bb.e:                                             ; preds = %bb.a, %_RNvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterTINtNtNtCshzWfHUSfYae_4core3ops5range5RangejEcEENtNtNtNtB14_4iter6traits8iterator8Iterator4nextCshUkdWg1oz5w_24ra_ap_rustc_parse_format.exit.i.i.i, %bb.d
@@ -375,7 +376,8 @@ _RNvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterTINtNtNtCshzWfHUSfY
   %i.dy = getelementptr inbounds nuw i8, ptr %i.ch, i64 24 ; 2 uses
   %.sroa.5.0..sroa_idx7.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.ch, i64 16
   %.sroa.5.0.copyload8.i.i.i.i.i = load i32, ptr %.sroa.5.0..sroa_idx7.i.i.i.i.i, align 8, !noalias !226
-  %.not6.i.i.i.i.i = icmp eq i32 %.sroa.5.0.copyload8.i.i.i.i.i, -1
+  %3 = freeze i32 %.sroa.5.0.copyload8.i.i.i.i.i
+  %.not6.i.i.i.i.i = icmp eq i32 %3, -1
   br i1 %.not6.i.i.i.i.i, label %._crit_edge.i.i, label %bb.o
 
 bb.o:                                             ; preds = %_RNvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterTINtNtNtCshzWfHUSfYae_4core3ops5range5RangejEcEENtNtNtNtB14_4iter6traits8iterator8Iterator4nextCshUkdWg1oz5w_24ra_ap_rustc_parse_format.exit.i.i.i.i.i

@@ -33,12 +33,13 @@ declare i32 @socket(i32 noundef, i32 noundef, i32 noundef) local_unnamed_addr #1
 ; Function Attrs: nounwind uwtable
 define range(i32 -1, 1) i32 @c11_socket_bind(ptr noundef %0, ptr noundef %1, i16 noundef zeroext %2) local_unnamed_addr #0 {
 bb.a:
-  %3 = alloca %struct.sockaddr_in, align 4        ; 6 uses
+  %3 = alloca %struct.sockaddr_in, align 4        ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #8
-  store i16 2, ptr %3, align 4, !tbaa !11
   %rev.i = tail call noundef i16 @llvm.bswap.i16(i16 %2)
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 2
-  store i16 %rev.i, ptr %4, align 2, !tbaa !12
+  %4 = zext i16 %rev.i to i32
+  %5 = shl nuw i32 %4, 16
+  %6 = or disjoint i32 %5, 2
+  store i32 %6, ptr %3, align 4
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 4
   %i.b = call i32 @inet_pton(i32 noundef 2, ptr noundef %1, ptr noundef nonnull %i.a) #8 ; 0 uses
   %i.c = ptrtoint ptr %0 to i64
@@ -81,7 +82,7 @@ bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
-  store i32 16, ptr %i.a, align 4, !tbaa !13
+  store i32 16, ptr %i.a, align 4, !tbaa !8
   %i.b = ptrtoint ptr %0 to i64
   %i.c = trunc i64 %i.b to i32
   %i.d = call i32 @accept(i32 noundef %i.c, ptr noundef nonnull %3, ptr noundef nonnull %i.a) #8
@@ -101,7 +102,7 @@ bb.d:                                             ; preds = %bb.c
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 2
   %i.h = load i16, ptr %i.g, align 2, !tbaa !12
   %rev.i = call noundef i16 @llvm.bswap.i16(i16 %i.h)
-  store i16 %rev.i, ptr %2, align 2, !tbaa !14
+  store i16 %rev.i, ptr %2, align 2, !tbaa !13
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
@@ -120,12 +121,13 @@ declare ptr @inet_ntop(i32 noundef, ptr noundef, ptr noundef, i32 noundef) local
 ; Function Attrs: nounwind uwtable
 define range(i32 -1, 1) i32 @c11_socket_connect(ptr noundef %0, ptr noundef %1, i16 noundef zeroext %2) local_unnamed_addr #0 {
 bb.a:
-  %3 = alloca %struct.sockaddr_in, align 4        ; 6 uses
+  %3 = alloca %struct.sockaddr_in, align 4        ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #8
-  store i16 2, ptr %3, align 4, !tbaa !11
   %rev.i = tail call noundef i16 @llvm.bswap.i16(i16 %2)
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 2
-  store i16 %rev.i, ptr %4, align 2, !tbaa !12
+  %4 = zext i16 %rev.i to i32
+  %5 = shl nuw i32 %4, 16
+  %6 = or disjoint i32 %5, 2
+  store i32 %6, ptr %3, align 4
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 4
   %i.b = call i32 @inet_pton(i32 noundef 2, ptr noundef %1, ptr noundef nonnull %i.a) #8 ; 0 uses
   %i.c = ptrtoint ptr %0 to i64
@@ -199,7 +201,7 @@ bb.a:
 define i32 @c11_socket_get_last_error() local_unnamed_addr #5 {
 bb.a:
   %i.a = tail call ptr @__errno_location() #9
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !13
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !8
   ret i32 %i.b
 }
 
@@ -232,11 +234,10 @@ attributes #9 = { nounwind willreturn memory(none) }
 !5 = !{!"int", !4, i64 0}
 !6 = !{!"__libc_errno", !5, i64 0}
 !7 = !{!6, !5, i64 0}
-!8 = !{!"short", !4, i64 0}
-!9 = !{!"in_addr", !5, i64 0}
-!10 = !{!"sockaddr_in", !8, i64 0, !8, i64 2, !9, i64 4, !4, i64 8}
-!11 = !{!10, !8, i64 0}
-!12 = !{!10, !8, i64 2}
-!13 = !{!5, !5, i64 0}
-!14 = !{!8, !8, i64 0}
+!8 = !{!5, !5, i64 0}
+!9 = !{!"short", !4, i64 0}
+!10 = !{!"in_addr", !5, i64 0}
+!11 = !{!"sockaddr_in", !9, i64 0, !9, i64 2, !10, i64 4, !4, i64 8}
+!12 = !{!11, !9, i64 2}
+!13 = !{!9, !9, i64 0}
 end_hunk_0

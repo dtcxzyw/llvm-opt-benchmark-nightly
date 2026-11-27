@@ -204,14 +204,16 @@ bb.b:                                             ; preds = %bb.a
   tail call void @ERR_clear_error() #16
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.f = load i32, ptr %i.e, align 8, !tbaa !493
-  %i.g = tail call i32 @anetGetError(i32 noundef %i.f) #16 ; 2 uses
-  %.not80 = icmp eq i32 %i.g, 0
+  %i.g = tail call i32 @anetGetError(i32 noundef %i.f) #16
+  %2 = freeze i32 %i.g                            ; 2 uses
+  %.not80 = icmp eq i32 %2, 0
   br i1 %.not80, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store i32 %i.g, ptr %2, align 4, !tbaa !497
-  store i32 5, ptr %i.c, align 8, !tbaa !496
+  %3 = zext i32 %2 to i64
+  %4 = shl nuw i64 %3, 32
+  %5 = or disjoint i64 %4, 5
+  store i64 %5, ptr %i.c, align 8
   br label %bb.j
 
 bb.d:                                             ; preds = %bb.b

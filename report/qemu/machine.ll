@@ -204,8 +204,10 @@ bb.a:
   %i.l = and i16 %i.k, 14336
   %i.m = or disjoint i16 %i.l, %i.h
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 31952
-  store i16 %i.m, ptr %i.n, align 16
   %1 = getelementptr inbounds nuw i8, ptr %0, i64 31954
+  %2 = freeze i16 %i.m
+  %3 = zext i16 %2 to i32
+  store i32 %3, ptr %i.n, align 16
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 17240
   %i.p = load <8 x i8>, ptr %i.o, align 8
   %i.q = icmp eq <8 x i8> %i.p, zeroinitializer   ; 8 uses

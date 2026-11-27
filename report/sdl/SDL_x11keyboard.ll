@@ -204,7 +204,7 @@ define hidden void @X11_UpdateKeymap(ptr nofree noundef readonly captures(none) 
 bb.a:
   %2 = alloca %struct._XkbStateRec, align 2       ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 1664 ; 12 uses
-  %i.b = load ptr, ptr %i.a, align 8              ; 30 uses
+  %i.b = load ptr, ptr %i.a, align 8              ; 31 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 688
   %i.d = load i8, ptr %i.c, align 8, !range !5, !noundef !6
   %i.e = trunc nuw i8 %i.d to i1
@@ -607,7 +607,9 @@ bb.ag:                                            ; preds = %bb.af, %bb.ac
 
 ._crit_edge:                                      ; preds = %X11_KeyCodeToSym.exit252.thread, %bb.ag
   %i.gr = getelementptr inbounds nuw i8, ptr %i.b, i64 1792
-  store <4 x i32> <i32 8, i32 64, i32 128, i32 32>, ptr %i.gr, align 8
+  store i64 274877906952, ptr %i.gr, align 8
+  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 1800
+  store i64 137438953600, ptr %3, align 8
   %.val209 = load ptr, ptr %i.a, align 8          ; 2 uses
   %i.gs = load ptr, ptr %.val209, align 8
   %i.gt = load ptr, ptr @X11_XGetModifierMapping, align 8

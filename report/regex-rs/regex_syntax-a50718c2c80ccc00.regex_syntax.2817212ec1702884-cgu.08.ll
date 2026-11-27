@@ -202,15 +202,23 @@ bb.g:                                             ; preds = %bb.a
   store i64 0, ptr %i.a, align 8, !dbg !4237
     #dbg_value(i1 true, !4209, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !4212)
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 8, !dbg !4238
-  %i.j = load ptr, ptr %i.i, align 8, !dbg !4238, !nonnull !464, !noundef !464 ; 2 uses
+  %i.j = load ptr, ptr %i.i, align 8, !dbg !4238, !nonnull !464, !noundef !464 ; 3 uses
     #dbg_value(ptr %i.j, !4216, !DIExpression(), !4221)
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(152) %0, ptr noundef nonnull align 8 dereferenceable(152) %i.j, i64 152, i1 false), !dbg !4239
-  %.sroa.46.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.j, i64 152, !dbg !4239
-    #dbg_value(i32 poison, !4160, !DIExpression(DW_OP_LLVM_fragment, 1216, 32), !4222)
-    #dbg_value(i32 poison, !4160, !DIExpression(DW_OP_LLVM_fragment, 1248, 32), !4222)
+  %.sroa.46.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.j, i64 152, !dbg !4239
+  %.sroa.46.0.copyload = load i32, ptr %.sroa.46.0..sroa_idx, align 8, !dbg !4239
+  %.sroa.46.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.j, i64 156, !dbg !4239
+  %.sroa.57.0.copyload = load i32, ptr %.sroa.46.0..sroa_idx.a, align 4, !dbg !4239
+    #dbg_value(i32 %.sroa.46.0.copyload, !4160, !DIExpression(DW_OP_LLVM_fragment, 1216, 32), !4222)
+    #dbg_value(i32 %.sroa.57.0.copyload, !4160, !DIExpression(DW_OP_LLVM_fragment, 1248, 32), !4222)
   %.sroa.4.0..sroa_idx1 = getelementptr inbounds nuw i8, ptr %0, i64 152, !dbg !4240
-  %2 = load <2 x i32>, ptr %.sroa.46.0..sroa_idx.a, align 8, !dbg !4239
-  store <2 x i32> %2, ptr %.sroa.4.0..sroa_idx1, align 8, !dbg !4240
+  %2 = freeze i32 %.sroa.46.0.copyload, !dbg !4240
+  %3 = zext i32 %2 to i64, !dbg !4240
+  %4 = freeze i32 %.sroa.57.0.copyload, !dbg !4240
+  %5 = zext i32 %4 to i64, !dbg !4240
+  %6 = shl nuw i64 %5, 32, !dbg !4240
+  %7 = or disjoint i64 %6, %3, !dbg !4240
+  store i64 %7, ptr %.sroa.4.0..sroa_idx1, align 8, !dbg !4240
   br label %bb.d, !dbg !4241
 
 bb.h:                                             ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs3roNzt6HBWW_12regex_syntax3ast13ClassSetUnionEBF_.exit, %bb.b

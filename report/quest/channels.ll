@@ -202,11 +202,12 @@ bb.a:
   %3 = alloca %struct.QuESTEnv, align 4           ; 4 uses
   tail call void @_Z18validate_envIsInitPKc(ptr noundef nonnull @__func__.createKrausMap)
   tail call void @_Z26validate_newKrausMapParamsiiPKc(i32 noundef %1, i32 noundef %2, ptr noundef nonnull @__func__.createKrausMap)
-  %i.a = zext nneg i32 %1 to i64
+  %i.a = zext i32 %1 to i64                       ; 2 uses
   %i.b = shl nuw i64 1, %i.a                      ; 2 uses
-  store i32 %1, ptr %0, align 8, !tbaa !39
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i32 %2, ptr %4, align 4, !tbaa !27
+  %4 = zext i32 %2 to i64
+  %5 = shl nuw i64 %4, 32
+  %6 = or disjoint i64 %5, %i.a
+  store i64 %6, ptr %0, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %i.b, ptr %i.c, align 8, !tbaa !26
   %i.d = tail call noundef ptr @_Z19cpu_allocMatrixListxi(i64 noundef %i.b, i32 noundef %2)
@@ -444,12 +445,12 @@ bb.a:
   tail call void @_Z23validate_krausMapFields8KrausMapPKc(ptr noundef nonnull byval(%struct.KrausMap) align 8 %0, ptr noundef nonnull @__func__.syncKrausMap)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !40
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !39
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !25
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.g = load i32, ptr %i.f, align 4, !tbaa !27
-  %i.h = load i32, ptr %0, align 8, !tbaa !39
+  %i.h = load i32, ptr %0, align 8, !tbaa !40
   tail call void @_Z21util_setSuperoperatorPPSt7complexIdEPS2_ii(ptr noundef %i.c, ptr noundef %i.e, i32 noundef %i.g, i32 noundef %i.h)
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 56
   %.sroa.3.0.copyload = load ptr, ptr %.sroa.3.0..sroa_idx, align 8
@@ -852,12 +853,12 @@ bb.a:
   tail call void @_Z23validate_krausMapFields8KrausMapPKc(ptr noundef nonnull byval(%struct.KrausMap) align 8 %0, ptr noundef nonnull @__func__.syncKrausMap)
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 40
-  %i.j = load ptr, ptr %i.i, align 8, !tbaa !40
+  %i.j = load ptr, ptr %i.i, align 8, !tbaa !39
   %i.k = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !25
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.n = load i32, ptr %i.m, align 4, !tbaa !27
-  %i.o = load i32, ptr %2, align 8, !tbaa !39
+  %i.o = load i32, ptr %2, align 8, !tbaa !40
   tail call void @_Z21util_setSuperoperatorPPSt7complexIdEPS2_ii(ptr noundef %i.j, ptr noundef %i.l, i32 noundef %i.n, i32 noundef %i.o)
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 56
   %.sroa.3.0.copyload = load ptr, ptr %.sroa.3.0..sroa_idx, align 8
@@ -1260,12 +1261,12 @@ bb.a:
   call void @_Z23validate_krausMapFields8KrausMapPKc(ptr noundef nonnull byval(%struct.KrausMap) align 8 %0, ptr noundef nonnull @__func__.syncKrausMap)
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %2, i64 40
-  %i.l = load ptr, ptr %i.k, align 8, !tbaa !40
+  %i.l = load ptr, ptr %i.k, align 8, !tbaa !39
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !25
   %i.o = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.p = load i32, ptr %i.o, align 4, !tbaa !27
-  %i.q = load i32, ptr %2, align 8, !tbaa !39
+  %i.q = load i32, ptr %2, align 8, !tbaa !40
   call void @_Z21util_setSuperoperatorPPSt7complexIdEPS2_ii(ptr noundef %i.l, ptr noundef %i.n, i32 noundef %i.p, i32 noundef %i.q)
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 56
   %.sroa.3.0.copyload = load ptr, ptr %.sroa.3.0..sroa_idx, align 8
@@ -1668,7 +1669,7 @@ bb.a:
   tail call void @_Z23validate_krausMapFields8KrausMapPKc(ptr noundef nonnull byval(%struct.KrausMap) align 8 %0, ptr noundef nonnull @__func__.reportKrausMap)
   tail call void @_Z37validate_numReportedNewlinesAboveZeroPKc(ptr noundef nonnull @__func__.reportKrausMap)
   tail call void @_Z25validate_krausMapIsSynced8KrausMapPKc(ptr noundef nonnull byval(%struct.KrausMap) align 8 %0, ptr noundef nonnull @__func__.reportKrausMap)
-  %i.b = load i32, ptr %0, align 8, !tbaa !39
+  %i.b = load i32, ptr %0, align 8, !tbaa !40
   %i.c = tail call noundef i64 @_Z32mem_getLocalMatrixMemoryRequiredibi(i32 noundef %i.b, i1 noundef zeroext true, i32 noundef 1)
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.e = load i32, ptr %i.d, align 4, !tbaa !27
@@ -1858,8 +1859,8 @@ attributes #18 = { builtin nounwind }
 !36 = !{!17, !15, i64 32}
 !37 = !{!17, !8, i64 0}
 !38 = !{!17, !11, i64 8}
-!39 = !{!24, !8, i64 0}
-!40 = !{!24, !14, i64 40}
+!39 = !{!24, !14, i64 40}
+!40 = !{!24, !8, i64 0}
 !41 = !{!"p1 _ZTSSt6vectorISt7complexIdESaIS1_EE", !12, i64 0}
 !42 = !{!"_ZTSNSt12_Vector_baseISt6vectorISt7complexIdESaIS2_EESaIS4_EE17_Vector_impl_dataE", !41, i64 0, !41, i64 8, !41, i64 16}
 !43 = !{!42, !41, i64 8}

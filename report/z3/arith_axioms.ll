@@ -204,9 +204,12 @@ bb.a:
   %i.a = zext i1 %4 to i8
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN6lp_api5boundIN3sat7literalEEE, i64 16), ptr %0, align 8, !tbaa !102
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 %1, ptr %i.b, align 8, !tbaa !81
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store i32 %2, ptr %10, align 4, !tbaa !212
+  %10 = freeze i32 %1
+  %11 = zext i32 %10 to i64
+  %12 = zext i32 %2 to i64
+  %13 = shl nuw i64 %12, 32
+  %14 = or disjoint i64 %13, %11
+  store i64 %14, ptr %i.b, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i32 %3, ptr %i.c, align 8, !tbaa !360
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 20

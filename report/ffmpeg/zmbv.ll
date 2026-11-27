@@ -205,7 +205,8 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   %i.cs = add <2 x i32> %i.cq, splat (i32 -1)
   %i.ct = add <2 x i32> %i.cs, %i.cr
   %i.cu = sdiv <2 x i32> %i.ct, %i.cr
-  store <2 x i32> %i.cu, ptr %i.cp, align 8, !tbaa !48
+  %.fr = freeze <2 x i32> %i.cu
+  store <2 x i32> %.fr, ptr %i.cp, align 8
   %i.cv = getelementptr inbounds nuw i8, ptr %i.d, i64 808
   %i.cw = load ptr, ptr %i.cv, align 8, !tbaa !46 ; 2 uses
   %.not222 = icmp eq ptr %i.cw, null

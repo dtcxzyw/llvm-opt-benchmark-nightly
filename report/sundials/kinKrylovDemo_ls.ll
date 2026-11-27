@@ -74,7 +74,7 @@ bb.a:
   store ptr null, ptr %i.b, align 8, !tbaa !37
   %i.c = call i32 @SUNContext_Create(i32 noundef 0, ptr noundef nonnull %i.b) #10 ; 0 uses
   store ptr null, ptr %i.a, align 8, !tbaa !38
-  %i.d = call noalias dereferenceable_or_null(504) ptr @malloc(i64 noundef 504) #11 ; 61 uses
+  %i.d = call noalias dereferenceable_or_null(504) ptr @malloc(i64 noundef 504) #11 ; 62 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 200
   %i.f = call ptr @SUNDlsMat_newDenseMat(i64 noundef 6, i64 noundef 6) #10
   store ptr %i.f, ptr %i.d, align 8, !tbaa !13
@@ -234,10 +234,12 @@ bb.a:
   %i.de = getelementptr inbounds nuw i8, ptr %i.d, i64 424
   store ptr %i.dd, ptr %i.de, align 8, !tbaa !22
   %i.df = call noalias dereferenceable_or_null(48) ptr @malloc(i64 noundef 48) #11 ; 7 uses
-  %i.dg = getelementptr inbounds nuw i8, ptr %i.d, i64 432
-  store ptr %i.df, ptr %i.dg, align 8, !tbaa !23
-  %i.dh = getelementptr inbounds nuw i8, ptr %i.d, i64 488
-  store <4 x i32> <i32 5, i32 5, i32 6, i32 3>, ptr %i.dh, align 8, !tbaa !39
+  %0 = getelementptr inbounds nuw i8, ptr %i.d, i64 432
+  store ptr %i.df, ptr %0, align 8, !tbaa !23
+  %i.dg = getelementptr inbounds nuw i8, ptr %i.d, i64 488
+  store i64 21474836485, ptr %i.dg, align 8
+  %i.dh = getelementptr inbounds nuw i8, ptr %i.d, i64 496
+  store i64 12884901894, ptr %i.dh, align 8
   %i.di = getelementptr inbounds nuw i8, ptr %i.d, i64 440
   store <2 x double> splat (double 1.000000e+00), ptr %i.di, align 8, !tbaa !24
   %i.dj = getelementptr inbounds nuw i8, ptr %i.d, i64 456
@@ -640,9 +642,9 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %4, i64 464
   %i.d = load double, ptr %i.c, align 8, !tbaa !36
   %i.e = getelementptr inbounds nuw i8, ptr %4, i64 472
-  %i.f = load double, ptr %i.e, align 8, !tbaa !40
+  %i.f = load double, ptr %i.e, align 8, !tbaa !39
   %i.g = getelementptr inbounds nuw i8, ptr %4, i64 480
-  %i.h = load double, ptr %i.g, align 8, !tbaa !41
+  %i.h = load double, ptr %i.g, align 8, !tbaa !40
   %i.i = tail call double @N_VWL2Norm(ptr noundef %2, ptr noundef %3) #10
   %i.j = fmul double %i.f, 1.000000e+03
   %i.k = fmul double %i.j, %i.i
@@ -1045,15 +1047,15 @@ bb.h:                                             ; preds = %check_flag.exit17
 
 check_flag.exit19:                                ; preds = %check_flag.exit17, %bb.h
   %puts = call i32 @puts(ptr nonnull dereferenceable(1) @str.14) ; 0 uses
-  %i.aj = load i64, ptr %i.a, align 8, !tbaa !42
-  %i.ak = load i64, ptr %i.c, align 8, !tbaa !42
+  %i.aj = load i64, ptr %i.a, align 8, !tbaa !41
+  %i.ak = load i64, ptr %i.c, align 8, !tbaa !41
   %i.al = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.54, i64 noundef %i.aj, i64 noundef %i.ak) ; 0 uses
-  %i.am = load i64, ptr %i.b, align 8, !tbaa !42
-  %i.an = load i64, ptr %i.g, align 8, !tbaa !42
+  %i.am = load i64, ptr %i.b, align 8, !tbaa !41
+  %i.an = load i64, ptr %i.g, align 8, !tbaa !41
   %i.ao = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.55, i64 noundef %i.am, i64 noundef %i.an) ; 0 uses
-  %i.ap = load i64, ptr %i.e, align 8, !tbaa !42
-  %i.aq = load i64, ptr %i.d, align 8, !tbaa !42
-  %i.ar = load i64, ptr %i.f, align 8, !tbaa !42
+  %i.ap = load i64, ptr %i.e, align 8, !tbaa !41
+  %i.aq = load i64, ptr %i.d, align 8, !tbaa !41
+  %i.ar = load i64, ptr %i.f, align 8, !tbaa !41
   %i.as = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.56, i64 noundef %i.ap, i64 noundef %i.aq, i64 noundef %i.ar) ; 0 uses
   %i.at = icmp slt i32 %1, 3
   br i1 %i.at, label %bb.i, label %bb.j
@@ -1364,8 +1366,7 @@ attributes #12 = { cold nounwind }
 !36 = !{!19, !18, i64 464}
 !37 = !{!10, !10, i64 0}
 !38 = !{!9, !9, i64 0}
-!39 = !{!6, !6, i64 0}
-!40 = !{!19, !18, i64 472}
-!41 = !{!19, !18, i64 480}
-!42 = !{!32, !32, i64 0}
+!39 = !{!19, !18, i64 472}
+!40 = !{!19, !18, i64 480}
+!41 = !{!32, !32, i64 0}
 end_hunk_2

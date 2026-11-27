@@ -204,14 +204,17 @@ bb.a:
   %i.c = and i8 %1, 15
   %i.d = zext nneg i8 %i.c to i32
   %i.e = tail call ptr @luaM_malloc_(ptr noundef %0, i64 noundef %2, i32 noundef %i.d) #8
-  %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 %3 ; 5 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 %3 ; 4 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 106
   %i.h = load i8, ptr %i.g, align 2, !tbaa !34
-  %i.i = and i8 %i.h, 24
-  %i.j = getelementptr inbounds nuw i8, ptr %i.f, i64 9
-  store i8 %i.i, ptr %i.j, align 1, !tbaa !32
-  %4 = getelementptr inbounds nuw i8, ptr %i.f, i64 8
-  store i8 %1, ptr %4, align 8, !tbaa !36
+  %.fr = freeze i8 %i.h
+  %i.i = and i8 %.fr, 24
+  %i.j = getelementptr inbounds nuw i8, ptr %i.f, i64 8
+  %4 = zext i8 %1 to i16
+  %5 = zext nneg i8 %i.i to i16
+  %6 = shl nuw nsw i16 %5, 8
+  %7 = or disjoint i16 %6, %4
+  store i16 %7, ptr %i.j, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 112 ; 2 uses
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !52
   store ptr %i.l, ptr %i.f, align 8, !tbaa !51
@@ -228,14 +231,17 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !21   ; 2 uses
   %i.c = and i8 %1, 15
   %i.d = zext nneg i8 %i.c to i32
-  %i.e = tail call ptr @luaM_malloc_(ptr noundef %0, i64 noundef %2, i32 noundef %i.d) #8 ; 5 uses
+  %i.e = tail call ptr @luaM_malloc_(ptr noundef %0, i64 noundef %2, i32 noundef %i.d) #8 ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 106
   %i.g = load i8, ptr %i.f, align 2, !tbaa !34
-  %i.h = and i8 %i.g, 24
-  %i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 9
-  store i8 %i.h, ptr %i.i, align 1, !tbaa !32
-  %3 = getelementptr inbounds nuw i8, ptr %i.e, i64 8
-  store i8 %1, ptr %3, align 8, !tbaa !36
+  %.fr.i = freeze i8 %i.g
+  %i.h = and i8 %.fr.i, 24
+  %i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 8
+  %3 = zext i8 %1 to i16
+  %4 = zext nneg i8 %i.h to i16
+  %5 = shl nuw nsw i16 %4, 8
+  %6 = or disjoint i16 %5, %3
+  store i16 %6, ptr %i.i, align 8
   %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 112 ; 2 uses
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !52
   store ptr %i.k, ptr %i.e, align 8, !tbaa !51

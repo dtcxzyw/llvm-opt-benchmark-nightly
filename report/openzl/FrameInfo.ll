@@ -202,7 +202,7 @@ declare { i32, i64 } @ZL_FrameInfo_getDecompressedSize(ptr noundef, i32 noundef)
 ; Function Attrs: mustprogress uwtable
 define { i64, ptr } @_ZNK6openzl9FrameInfo7commentEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %1 = alloca %"class.openzl::ExceptionBuilder", align 8 ; 8 uses
+  %1 = alloca %"class.openzl::ExceptionBuilder", align 8 ; 7 uses
   %2 = alloca %union.ZL_Result_ZL_Comment_u, align 8 ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !18   ; 2 uses
@@ -226,10 +226,11 @@ bb.d:                                             ; preds = %bb.b
 
 _ZNK6openzl9FrameInfo3getEv.exit:                 ; preds = %bb.a
   call void @ZL_FrameInfo_getComment(ptr dead_on_unwind nonnull writable sret(%union.ZL_Result_ZL_Comment_u) align 8 %2, ptr noundef nonnull %i.b)
-  %.sroa.01.0.copyload = load i32, ptr %2, align 8 ; 2 uses
+  %.sroa.01.0.copyload = load i32, ptr %2, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
   %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8 ; 2 uses
-  %.not.i.i = icmp eq i32 %.sroa.01.0.copyload, 0
+  %3 = freeze i32 %.sroa.01.0.copyload            ; 2 uses
+  %.not.i.i = icmp eq i32 %3, 0
   br i1 %.not.i.i, label %_ZNK6openzl9FrameInfo6unwrapI22ZL_Result_ZL_Comment_uEENT_9ValueTypeES3_St17basic_string_viewIcSt11char_traitsIcEENS_4poly4impl15source_locationE.exit, label %_ZNO6openzl16ExceptionBuilder10withResultI22ZL_Result_ZL_Comment_uEEOS0_T_.exit.i.i
 
 _ZNO6openzl16ExceptionBuilder10withResultI22ZL_Result_ZL_Comment_uEEOS0_T_.exit.i.i: ; preds = %_ZNK6openzl9FrameInfo3getEv.exit
@@ -241,10 +242,13 @@ _ZNO6openzl16ExceptionBuilder10withResultI22ZL_Result_ZL_Comment_uEEOS0_T_.exit.
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 48
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.g, i8 0, i64 16, i1 false)
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %4 = zext i32 %3 to i64
+  %5 = freeze i32 %.sroa.4.0.copyload
+  %6 = zext i32 %5 to i64
+  %7 = shl nuw i64 %6, 32
+  %8 = or disjoint i64 %7, %4
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %1, i8 0, i64 16, i1 false)
-  store i32 %.sroa.01.0.copyload, ptr %i.h, align 8
-  %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %1, i64 28
-  store i32 %.sroa.4.0.copyload, ptr %.sroa.5.0..sroa_idx.i.i, align 4
+  store i64 %8, ptr %i.h, align 8
   %.sroa.5.4..sroa.5.0..sroa_idx.i.sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 32
   store ptr %.sroa.5.0.copyload, ptr %.sroa.5.4..sroa.5.0..sroa_idx.i.sroa_idx.i, align 8
   store i8 1, ptr %i.f, align 8, !tbaa !16

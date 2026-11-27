@@ -203,7 +203,7 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: mustprogress uwtable
 define void @_ZN6LibRaw16smal_v6_load_rawEv(ptr noundef nonnull align 8 dereferenceable(768512) %0) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = alloca [2 x [2 x i32]], align 16         ; 7 uses
+  %i.a = alloca [2 x [2 x i32]], align 16         ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 381592
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !74   ; 2 uses
@@ -224,9 +224,10 @@ bb.a:
   %i.p = zext i16 %i.o to i32
   %i.q = mul nuw nsw i32 %i.p, %i.n
   %i.r = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store i32 %i.q, ptr %i.r, align 8, !tbaa !75
-  %1 = getelementptr inbounds nuw i8, ptr %i.a, i64 12
-  store i32 2147483647, ptr %1, align 4, !tbaa !75
+  %1 = freeze i32 %i.q
+  %2 = zext i32 %1 to i64
+  %3 = or disjoint i64 %2, 9223372032559808512
+  store i64 %3, ptr %i.r, align 8
   call void @_ZN6LibRaw19smal_decode_segmentEPA2_ji(ptr noundef nonnull align 8 dereferenceable(768512) %0, ptr noundef nonnull %i.a, i32 noundef 0)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
   ret void

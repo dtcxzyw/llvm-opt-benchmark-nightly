@@ -203,9 +203,12 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.g = load i32, ptr %i.f, align 4, !tbaa !12
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 528 ; 6 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 532 ; 2 uses
-  store i32 %i.g, ptr %i.i, align 4, !tbaa !56
-  store i32 196609, ptr %i.h, align 8, !tbaa !55
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 532
+  %2 = freeze i32 %i.g
+  %3 = zext i32 %2 to i64
+  %4 = shl nuw i64 %3, 32
+  %5 = or disjoint i64 %4, 196609
+  store i64 %5, ptr %i.h, align 8
   %i.j = tail call ptr @_glfwPlatformGetTls(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_glfw, i64 133412)) #7 ; 26 uses
   %i.k = load i32, ptr @_glfw, align 8, !tbaa !134
   %.not.i = icmp eq i32 %i.k, 0

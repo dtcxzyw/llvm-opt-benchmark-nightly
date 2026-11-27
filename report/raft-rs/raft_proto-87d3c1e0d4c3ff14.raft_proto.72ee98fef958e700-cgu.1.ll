@@ -202,9 +202,10 @@ _RNvXs2_NtNtNtCslpwiOMB70Kp_8protobuf7reflect3acc2v1INtB5_22FieldAccessorFunctio
 define internal void @_RNvXs4_NtNtCslpwiOMB70Kp_8protobuf7reflect5valuebNtB5_13ProtobufValue6as_ref(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) initializes((0, 2)) %0, ptr noalias nofree noundef readonly captures(none) dereferenceable(1) %1) unnamed_addr #1 {
 bb.a:
   %i.a = load i8, ptr %1, align 1, !range !20, !noundef !14
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  store i8 %i.a, ptr %2, align 1
-  store i8 6, ptr %0, align 8
+  %2 = zext nneg i8 %i.a to i16
+  %3 = shl nuw nsw i16 %2, 8
+  %4 = or disjoint i16 %3, 6
+  store i16 %4, ptr %0, align 8
   ret void
 }
 

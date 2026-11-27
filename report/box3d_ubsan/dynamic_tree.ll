@@ -203,7 +203,7 @@ bb.av:                                            ; preds = %bb.c, %.thread
 ; Function Attrs: nounwind uwtable
 define i32 @b3DynamicTree_Rebuild(ptr noundef %0, i1 noundef zeroext %1) local_unnamed_addr #6 !func_sanitize !88 {
 bb.a:
-  %2 = alloca [1024 x %struct.b3RebuildItem], align 16 ; 13 uses
+  %2 = alloca [1024 x %struct.b3RebuildItem], align 16 ; 12 uses
   %i.a = alloca [1024 x i32], align 16            ; 5 uses
   %i.b = icmp ne ptr %0, null, !nosanitize !9
   %i.c = ptrtoint ptr %0 to i64, !nosanitize !9   ; 2 uses
@@ -585,16 +585,17 @@ bb.au:                                            ; preds = %bb.as
   %i.fk = load ptr, ptr %i.ay, align 8, !tbaa !30 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #12
   %i.fl = call fastcc i32 @b3AllocateNode(ptr noundef nonnull %0)
-  store i32 %i.fl, ptr %2, align 16, !tbaa !92
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 4
-  store i32 -1, ptr %3, align 4, !tbaa !93
+  %3 = freeze i32 %i.fl
+  %4 = zext i32 %3 to i64
+  %5 = or disjoint i64 %4, -4294967296
+  store i64 %5, ptr %2, align 16
   %i.fm = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store i32 0, ptr %i.fm, align 8, !tbaa !94
+  store i32 0, ptr %i.fm, align 8, !tbaa !92
   %i.fn = getelementptr inbounds nuw i8, ptr %2, i64 16
-  store i32 %indvars.le, ptr %i.fn, align 16, !tbaa !95
+  store i32 %indvars.le, ptr %i.fn, align 16, !tbaa !93
   %i.fo = call fastcc i32 @b3PartitionMid(ptr noundef %i.ek, ptr noundef %i.fk, i32 noundef %indvars.le)
   %i.fp = getelementptr inbounds nuw i8, ptr %2, i64 12
-  store i32 %i.fo, ptr %i.fp, align 4, !tbaa !96
+  store i32 %i.fo, ptr %i.fp, align 4, !tbaa !94
   %i.fq = ptrtoint ptr %2 to i64, !nosanitize !9  ; 9 uses
   %i.fr = ptrtoint ptr %i.ej to i64               ; 27 uses
   %i.fs = icmp ne ptr %i.ej, null                 ; 10 uses
@@ -612,7 +613,7 @@ bb.aw:                                            ; preds = %.split.i, %bb.dd
   %i.fx = phi ptr [ %2, %.split.i ], [ %i.ng, %bb.dd ] ; 7 uses
   %.096874.i = phi i32 [ 0, %.split.i ], [ %.3.i, %bb.dd ] ; 5 uses
   %i.fy = getelementptr inbounds nuw i8, ptr %i.fx, i64 4 ; 2 uses
-  %i.fz = load i32, ptr %i.fy, align 4, !tbaa !93 ; 2 uses
+  %i.fz = load i32, ptr %i.fy, align 4, !tbaa !95 ; 2 uses
   %i.ga = call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %i.fz, i32 1), !nosanitize !9 ; 2 uses
   %i.gb = extractvalue { i32, i1 } %i.ga, 0, !nosanitize !9 ; 3 uses
   %i.gc = extractvalue { i32, i1 } %i.ga, 1, !nosanitize !9
@@ -624,7 +625,7 @@ bb.ax:                                            ; preds = %bb.aw
   unreachable, !nosanitize !9
 
 bb.ay:                                            ; preds = %bb.aw
-  store i32 %i.gb, ptr %i.fy, align 4, !tbaa !93
+  store i32 %i.gb, ptr %i.fy, align 4, !tbaa !95
   switch i32 %i.gb, label %bb.by [
     i32 2, label %bb.az
     i32 0, label %bb.bz
@@ -648,7 +649,7 @@ bb.bb:                                            ; preds = %bb.ba
   unreachable, !nosanitize !9
 
 bb.bc:                                            ; preds = %bb.ba
-  %i.gk = load i32, ptr %i.gh, align 4, !tbaa !92 ; 2 uses
+  %i.gk = load i32, ptr %i.gh, align 4, !tbaa !96 ; 2 uses
   %i.gl = sext i32 %i.gk to i64                   ; 2 uses
   %i.gm = getelementptr inbounds [48 x i8], ptr %i.ej, i64 %i.gl ; 3 uses
   %i.gn = mul nsw i64 %i.gl, 48
@@ -667,9 +668,9 @@ bb.bd:                                            ; preds = %bb.bc
 
 bb.be:                                            ; preds = %bb.bc
   %i.gv = getelementptr inbounds nuw i8, ptr %i.gh, i64 4
-  %i.gw = load i32, ptr %i.gv, align 4, !tbaa !93
+  %i.gw = load i32, ptr %i.gv, align 4, !tbaa !95
   %i.gx = icmp eq i32 %i.gw, 0
-  %i.gy = load i32, ptr %i.fx, align 4, !tbaa !92 ; 2 uses
+  %i.gy = load i32, ptr %i.fx, align 4, !tbaa !96 ; 2 uses
   %i.gz = ptrtoint ptr %i.gm to i64, !nosanitize !9 ; 3 uses
   %i.ha = and i64 %i.gz, 7, !nosanitize !9
   %i.hb = icmp eq i64 %i.ha, 0, !nosanitize !9
@@ -701,7 +702,7 @@ bb.bk:                                            ; preds = %bb.bi
   br label %bb.bl
 
 bb.bl:                                            ; preds = %bb.bk, %bb.bh
-  %i.hf = load i32, ptr %i.fx, align 4, !tbaa !92 ; 2 uses
+  %i.hf = load i32, ptr %i.fx, align 4, !tbaa !96 ; 2 uses
   %i.hg = sext i32 %i.hf to i64                   ; 2 uses
   %i.hh = getelementptr inbounds [48 x i8], ptr %i.ej, i64 %i.hg ; 10 uses
   %i.hi = mul nsw i64 %i.hg, 48
@@ -730,7 +731,7 @@ bb.bo:                                            ; preds = %bb.bn
   unreachable, !nosanitize !9
 
 bb.bp:                                            ; preds = %bb.bn
-  %i.hu = load i32, ptr %i.gh, align 4, !tbaa !92
+  %i.hu = load i32, ptr %i.gh, align 4, !tbaa !96
   %i.hv = getelementptr inbounds nuw i8, ptr %i.hh, i64 40
   store i32 %i.hu, ptr %i.hv, align 8, !tbaa !24
   %i.hw = getelementptr inbounds nuw i8, ptr %i.hh, i64 32
@@ -890,7 +891,7 @@ bb.cf:                                            ; preds = %bb.ce
 
 bb.cg:                                            ; preds = %bb.ce
   %i.kp = load i32, ptr %i.kc, align 4, !tbaa !47 ; 4 uses
-  %i.kq = load i32, ptr %i.fx, align 4, !tbaa !92 ; 2 uses
+  %i.kq = load i32, ptr %i.fx, align 4, !tbaa !96 ; 2 uses
   %i.kr = sext i32 %i.kq to i64                   ; 2 uses
   %i.ks = getelementptr inbounds [48 x i8], ptr %i.ej, i64 %i.kr ; 3 uses
   %i.kt = mul nsw i64 %i.kr, 48
@@ -968,7 +969,7 @@ bb.cs:                                            ; preds = %bb.cr
   unreachable, !nosanitize !9
 
 bb.ct:                                            ; preds = %bb.cr
-  %i.lw = load i32, ptr %i.fx, align 4, !tbaa !92
+  %i.lw = load i32, ptr %i.fx, align 4, !tbaa !96
   %i.lx = getelementptr inbounds nuw i8, ptr %i.lj, i64 40
   store i32 %i.lw, ptr %i.lx, align 8, !tbaa !24
   %.pre.i = zext nneg i32 %.096874.i to i64       ; 2 uses
@@ -991,13 +992,13 @@ bb.cv:                                            ; preds = %bb.cu
 
 bb.cw:                                            ; preds = %bb.cu
   %i.md = call fastcc i32 @b3AllocateNode(ptr noundef nonnull %0)
-  store i32 %i.md, ptr %i.ma, align 4, !tbaa !92
+  store i32 %i.md, ptr %i.ma, align 4, !tbaa !96
   %i.me = getelementptr inbounds nuw i8, ptr %i.ma, i64 4
-  store i32 -1, ptr %i.me, align 4, !tbaa !93
+  store i32 -1, ptr %i.me, align 4, !tbaa !95
   %i.mf = getelementptr inbounds nuw i8, ptr %i.ma, i64 8
-  store i32 %.095.i, ptr %i.mf, align 4, !tbaa !94
+  store i32 %.095.i, ptr %i.mf, align 4, !tbaa !92
   %i.mg = getelementptr inbounds nuw i8, ptr %i.ma, i64 16
-  store i32 %.0.i, ptr %i.mg, align 4, !tbaa !95
+  store i32 %.0.i, ptr %i.mg, align 4, !tbaa !93
   %i.mh = sext i32 %.095.i to i64                 ; 4 uses
   %i.mi = getelementptr inbounds [4 x i8], ptr %i.ek, i64 %i.mh
   %i.mj = shl nsw i64 %i.mh, 2
@@ -1032,7 +1033,7 @@ bb.da:                                            ; preds = %bb.cy
   %i.my = getelementptr inbounds [12 x i8], ptr %i.fk, i64 %i.mh
   %i.mz = call fastcc i32 @b3PartitionMid(ptr noundef %i.mi, ptr noundef %i.my, i32 noundef %i.jw) ; 3 uses
   %i.na = getelementptr inbounds nuw i8, ptr %i.ma, i64 12 ; 2 uses
-  store i32 %i.mz, ptr %i.na, align 4, !tbaa !96
+  store i32 %i.mz, ptr %i.na, align 4, !tbaa !94
   %i.nb = call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %i.mz, i32 %.095.i), !nosanitize !9 ; 2 uses
   %i.nc = extractvalue { i32, i1 } %i.nb, 1, !nosanitize !9
   br i1 %i.nc, label %bb.db, label %bb.dc, !prof !10, !nosanitize !9
@@ -1045,7 +1046,7 @@ bb.db:                                            ; preds = %bb.da
 
 bb.dc:                                            ; preds = %bb.da
   %i.nf = extractvalue { i32, i1 } %i.nb, 0, !nosanitize !9
-  store i32 %i.nf, ptr %i.na, align 4, !tbaa !96
+  store i32 %i.nf, ptr %i.na, align 4, !tbaa !94
   br label %bb.dd
 
 bb.dd:                                            ; preds = %bb.dc, %bb.ct, %bb.bx
@@ -1057,7 +1058,7 @@ bb.dd:                                            ; preds = %bb.dc, %bb.ct, %bb.
   br i1 %.not.i, label %bb.av, label %bb.aw, !prof !97, !nosanitize !9
 
 bb.de:                                            ; preds = %bb.az
-  %i.nh = load i32, ptr %2, align 16, !tbaa !92   ; 3 uses
+  %i.nh = load i32, ptr %2, align 16, !tbaa !96   ; 3 uses
   %i.ni = sext i32 %i.nh to i64                   ; 2 uses
   %i.nj = getelementptr inbounds [48 x i8], ptr %i.ej, i64 %i.ni ; 9 uses
   %i.nk = mul nsw i64 %i.ni, 48
@@ -1460,11 +1461,11 @@ attributes #12 = { nounwind }
 !89 = !{!"branch_weights", i32 127, i32 1}
 !90 = !{!"branch_weights", i32 16129, i32 127}
 !91 = !{!"b3RebuildItem", !6, i64 0, !6, i64 4, !6, i64 8, !6, i64 12, !6, i64 16}
-!92 = !{!91, !6, i64 0}
-!93 = !{!91, !6, i64 4}
-!94 = !{!91, !6, i64 8}
-!95 = !{!91, !6, i64 16}
-!96 = !{!91, !6, i64 12}
+!92 = !{!91, !6, i64 8}
+!93 = !{!91, !6, i64 16}
+!94 = !{!91, !6, i64 12}
+!95 = !{!91, !6, i64 4}
+!96 = !{!91, !6, i64 0}
 !97 = !{!"branch_weights", i32 1, i32 1048574}
 !98 = !{i32 -1056584962, i32 10718739}
 !99 = !{!13, !13, i64 0}

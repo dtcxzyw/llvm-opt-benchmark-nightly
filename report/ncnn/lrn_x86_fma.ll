@@ -205,8 +205,16 @@ bb.u:                                             ; preds = %bb.d
   store ptr %i.cp, ptr %i.co, align 16, !tbaa !61
   %i.cq = getelementptr inbounds nuw i8, ptr %5, i64 40
   %i.cr = getelementptr inbounds nuw i8, ptr %5, i64 44
-  %i.cs = load <4 x i32>, ptr %i.w, align 8, !tbaa !15
-  store <4 x i32> %i.cs, ptr %i.cq, align 8, !tbaa !15
+  %i.cs = load <4 x i32>, ptr %i.w, align 8, !tbaa !15 ; 2 uses
+  %7 = shufflevector <4 x i32> %i.cs, <4 x i32> poison, <2 x i32> <i32 0, i32 2>
+  %8 = freeze <2 x i32> %7
+  %9 = zext <2 x i32> %8 to <2 x i64>
+  %10 = shufflevector <4 x i32> %i.cs, <4 x i32> poison, <2 x i32> <i32 1, i32 3>
+  %11 = freeze <2 x i32> %10
+  %12 = zext <2 x i32> %11 to <2 x i64>
+  %13 = shl nuw <2 x i64> %12, splat (i64 32)
+  %14 = or disjoint <2 x i64> %13, %9
+  store <2 x i64> %14, ptr %i.cq, align 8
   %i.ct = getelementptr inbounds nuw i8, ptr %5, i64 56 ; 2 uses
   %i.cu = load i32, ptr %i.x, align 8, !tbaa !55
   store i32 %i.cu, ptr %i.ct, align 8, !tbaa !55

@@ -28,7 +28,7 @@ bb.a:
 define hidden void @_RINvNtCsixltGIj4kJ4_3log13___private_api3loguNtB2_12GlobalLoggerECs1dm7fboTpfS_11qlog_dancer(ptr noundef nonnull %0, ptr noundef nonnull %1, i64 noundef range(i64 1, 6) %2, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(40) %3) unnamed_addr #0 personality ptr @rust_eh_personality !dbg !8324 {
 bb.a:
   %i.a = alloca [0 x i8], align 1
-  %i.b = alloca [96 x i8], align 8                ; 16 uses
+  %i.b = alloca [96 x i8], align 8                ; 15 uses
     #dbg_value(ptr %0, !8406, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !8414)
     #dbg_value(ptr %1, !8406, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !8414)
     #dbg_value(i64 %2, !8407, !DIExpression(), !8414)
@@ -122,9 +122,10 @@ bb.a:
   %.sroa.542.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 40, !dbg !8517
   store i64 %i.n, ptr %.sroa.542.0..sroa_idx.i, align 8, !dbg !8517, !noalias !8415
   %i.u = getelementptr inbounds nuw i8, ptr %i.b, i64 72, !dbg !8517
-  store i32 1, ptr %i.u, align 8, !dbg !8517, !noalias !8415
-  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 76, !dbg !8517
-  store i32 %i.p, ptr %4, align 4, !dbg !8517, !noalias !8415
+  %4 = zext i32 %i.p to i64, !dbg !8517
+  %5 = shl nuw i64 %4, 32, !dbg !8517
+  %6 = or disjoint i64 %5, 1, !dbg !8517
+  store i64 %6, ptr %i.u, align 8, !dbg !8517, !noalias !8415
   call void @_RNvXs0_NtCsixltGIj4kJ4_3log13___private_apiNtB5_12GlobalLoggerNtB7_3Log3log(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.a, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(96) %i.b), !dbg !8518, !noalias !8415
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !8519, !noalias !8415
   ret void, !dbg !8520

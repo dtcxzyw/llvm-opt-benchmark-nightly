@@ -205,7 +205,7 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 define internal fastcc noundef zeroext i1 @build_decode_table(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2, ptr nofree noundef readonly captures(none) %3, i32 noundef range(i32 7, 12) %4, i32 noundef range(i32 7, 16) %5, ptr nofree noundef captures(none) %6, ptr nofree noundef writeonly captures(address_is_null) %7) unnamed_addr #6 {
 .preheader222:
   %i.a = alloca [16 x i32], align 16              ; 19 uses
-  %i.b = alloca [16 x i32], align 16              ; 11 uses
+  %i.b = alloca [16 x i32], align 16              ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
   %i.c = shl nuw nsw i32 %5, 2
@@ -317,10 +317,11 @@ bb.b:                                             ; preds = %.critedge
 
 bb.c:                                             ; preds = %bb.b, %.critedge
   %.0186 = phi i32 [ %i.as, %bb.b ], [ %4, %.critedge ] ; 12 uses
-  store i32 0, ptr %i.b, align 16, !tbaa !14
-  %8 = load i32, ptr %i.a, align 16, !tbaa !14    ; 3 uses
-  %9 = getelementptr inbounds nuw i8, ptr %i.b, i64 4
-  store i32 %8, ptr %9, align 4, !tbaa !14
+  %8 = load i32, ptr %i.a, align 16, !tbaa !14
+  %9 = freeze i32 %8                              ; 3 uses
+  %10 = zext i32 %9 to i64
+  %11 = shl nuw i64 %10, 32
+  store i64 %11, ptr %i.b, align 16
   %i.at = icmp ugt i32 %.0185.lcssa, 1
   br i1 %i.at, label %.lr.ph239.preheader, label %._crit_edge
 
@@ -336,7 +337,7 @@ bb.c:                                             ; preds = %bb.b, %.critedge
   br label %.lr.ph239
 
 .lr.ph239:                                        ; preds = %.lr.ph239, %.lr.ph239.preheader.new
-  %i.aw = phi i32 [ %8, %.lr.ph239.preheader.new ], [ %i.bd, %.lr.ph239 ]
+  %i.aw = phi i32 [ %9, %.lr.ph239.preheader.new ], [ %i.bd, %.lr.ph239 ]
   %indvars.iv290 = phi i64 [ 1, %.lr.ph239.preheader.new ], [ %indvars.iv.next291.1, %.lr.ph239 ] ; 3 uses
   %.0152238 = phi i32 [ 0, %.lr.ph239.preheader.new ], [ %i.bi, %.lr.ph239 ]
   %niter382 = phi i64 [ 0, %.lr.ph239.preheader.new ], [ %niter382.next.1, %.lr.ph239 ]
@@ -365,7 +366,7 @@ bb.c:                                             ; preds = %bb.b, %.critedge
   br i1 %lcmp.mod378.not, label %._crit_edge.loopexit, label %.lr.ph239.epil.preheader
 
 .lr.ph239.epil.preheader:                         ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph239.preheader
-  %.epil.init = phi i32 [ %8, %.lr.ph239.preheader ], [ %i.bd, %._crit_edge.loopexit.unr-lcssa ]
+  %.epil.init = phi i32 [ %9, %.lr.ph239.preheader ], [ %i.bd, %._crit_edge.loopexit.unr-lcssa ]
   %indvars.iv290.epil.init = phi i64 [ 1, %.lr.ph239.preheader ], [ %indvars.iv.next291.1, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses
   %.0152238.epil.init = phi i32 [ 0, %.lr.ph239.preheader ], [ %i.bi, %._crit_edge.loopexit.unr-lcssa ]
   %lcmp.mod380 = trunc i64 %i.au to i1

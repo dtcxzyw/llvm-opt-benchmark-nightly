@@ -204,7 +204,9 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc3vec9into_ite
   store i8 0, ptr %.sroa.35.0..sroa_idx, align 8
   %.sroa.37.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 394
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.24.sroa.5.0..sroa.24.0..sroa_idx.sroa_idx, i8 0, i64 16, i1 false)
-  store <4 x i8> <i8 1, i8 1, i8 0, i8 1>, ptr %.sroa.37.0..sroa_idx, align 2
+  store i16 257, ptr %.sroa.37.0..sroa_idx, align 2
+  %.sroa.39.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 396
+  store i16 256, ptr %.sroa.39.0..sroa_idx, align 4
   %.sroa.41.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 398
   store i8 0, ptr %.sroa.41.0..sroa_idx, align 2
   call void @_RNvXse_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCskKLDkoKarTP_4core3net11socket_addr10SocketAddrENtNtNtB12_3ops4drop4Drop4dropCs2TJrahNLnPN_22pingora_load_balancing(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.c)
@@ -607,8 +609,8 @@ bb.c:                                             ; preds = %bb.b
   switch i64 %i.k, label %default.unreachable [
     i64 2, label %bb.d
     i64 3, label %.split23
-    i64 0, label %.split24
-    i64 1, label %.split
+    i64 0, label %.split
+    i64 1, label %_RINvNtNtNtCskKLDkoKarTP_4core2io5error4repr11decode_reprRNtB4_6CustomNCNvMs0_B2_NtB2_4Repr4data0ECs2TJrahNLnPN_22pingora_load_balancing.exit.thread20.i
   ], !prof !12
 
 default.unreachable:                              ; preds = %bb.c
@@ -626,6 +628,12 @@ bb.d:                                             ; preds = %bb.c
   %i.q = invoke noundef zeroext i1 %i.p(i32 noundef %i.n)
           to label %_RNvMs1_NtNtCskKLDkoKarTP_4core2io5errorNtB5_5Error14is_interrupted.exit unwind label %bb.m, !inline_history !192
 
+_RINvNtNtNtCskKLDkoKarTP_4core2io5error4repr11decode_reprRNtB4_6CustomNCNvMs0_B2_NtB2_4Repr4data0ECs2TJrahNLnPN_22pingora_load_balancing.exit.thread20.i: ; preds = %bb.c
+  %3 = getelementptr i8, ptr %i.h, i64 31
+  %4 = load i8, ptr %3, align 8, !range !197, !noundef !4
+  %5 = icmp eq i8 %4, 35
+  br i1 %5, label %bb.k, label %bb.g
+
 .split23:                                         ; preds = %bb.c
   %i.r = lshr i64 %i.j, 32
   %i.s = icmp ult ptr %i.h, inttoptr (i64 188978561024 to ptr)
@@ -636,17 +644,11 @@ bb.d:                                             ; preds = %bb.c
   %i.u = icmp eq i8 %spec.select.i.i.i, 35
   br i1 %i.u, label %bb.j, label %bb.g
 
-.split24:                                         ; preds = %bb.c
-  %3 = getelementptr inbounds nuw i8, ptr %i.h, i64 16
-  %4 = load i8, ptr %3, align 8, !range !197, !noundef !4
-  %5 = icmp eq i8 %4, 35
-  br i1 %5, label %.thread.thread, label %bb.g
-
 .split:                                           ; preds = %bb.c
-  %i.v = getelementptr i8, ptr %i.h, i64 31
+  %i.v = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   %i.w = load i8, ptr %i.v, align 8, !range !197, !noundef !4
   %i.x = icmp eq i8 %i.w, 35
-  br i1 %i.x, label %bb.k, label %bb.g
+  br i1 %i.x, label %.thread.thread, label %bb.g
 
 bb.e:                                             ; preds = %bb.b
   %i.y = icmp eq ptr %i.h, null
@@ -656,8 +658,8 @@ bb.f:                                             ; preds = %bb.e
   %i.z = icmp ult i64 %.sroa.6.035, %i.j
   br i1 %i.z, label %bb.h, label %bb.i, !prof !5
 
-bb.g:                                             ; preds = %_RNvMs1_NtNtCskKLDkoKarTP_4core2io5errorNtB5_5Error14is_interrupted.exit, %.split, %.split23, %.split24, %bb.e
-  %.sroa.07.0 = phi ptr [ @151, %bb.e ], [ %i.h, %.split24 ], [ %i.h, %.split23 ], [ %i.h, %.split ], [ %i.h, %_RNvMs1_NtNtCskKLDkoKarTP_4core2io5errorNtB5_5Error14is_interrupted.exit ]
+bb.g:                                             ; preds = %_RNvMs1_NtNtCskKLDkoKarTP_4core2io5errorNtB5_5Error14is_interrupted.exit, %_RINvNtNtNtCskKLDkoKarTP_4core2io5error4repr11decode_reprRNtB4_6CustomNCNvMs0_B2_NtB2_4Repr4data0ECs2TJrahNLnPN_22pingora_load_balancing.exit.thread20.i, %.split23, %.split, %bb.e
+  %.sroa.07.0 = phi ptr [ @151, %bb.e ], [ %i.h, %.split ], [ %i.h, %.split23 ], [ %i.h, %_RINvNtNtNtCskKLDkoKarTP_4core2io5error4repr11decode_reprRNtB4_6CustomNCNvMs0_B2_NtB2_4Repr4data0ECs2TJrahNLnPN_22pingora_load_balancing.exit.thread20.i ], [ %i.h, %_RNvMs1_NtNtCskKLDkoKarTP_4core2io5errorNtB5_5Error14is_interrupted.exit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br label %.loopexit
 
@@ -677,7 +679,7 @@ _RNvMs1_NtNtCskKLDkoKarTP_4core2io5errorNtB5_5Error14is_interrupted.exit: ; pred
   %.sroa.07.1 = phi ptr [ %.sroa.07.0, %bb.g ], [ null, %bb.a ], [ null, %bb.l ]
   ret ptr %.sroa.07.1
 
-.thread.thread:                                   ; preds = %_RNvMs1_NtNtCskKLDkoKarTP_4core2io5errorNtB5_5Error14is_interrupted.exit, %.split24
+.thread.thread:                                   ; preds = %_RNvMs1_NtNtCskKLDkoKarTP_4core2io5errorNtB5_5Error14is_interrupted.exit, %.split
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !198
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECs2TJrahNLnPN_22pingora_load_balancing.exit
 
@@ -690,7 +692,7 @@ bb.j:                                             ; preds = %.split23
   call void @llvm.assume(i1 %i.ae)
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECs2TJrahNLnPN_22pingora_load_balancing.exit
 
-bb.k:                                             ; preds = %.split
+bb.k:                                             ; preds = %_RINvNtNtNtCskKLDkoKarTP_4core2io5error4repr11decode_reprRNtB4_6CustomNCNvMs0_B2_NtB2_4Repr4data0ECs2TJrahNLnPN_22pingora_load_balancing.exit.thread20.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !198
   %i.af = getelementptr i8, ptr %i.h, i64 -1      ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.af) ]

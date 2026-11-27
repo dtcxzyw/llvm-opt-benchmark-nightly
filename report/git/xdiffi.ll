@@ -35,7 +35,7 @@ tailrecurse:                                      ; preds = %.loopexit, %bb.a
   %.tr342 = phi i64 [ %2, %bb.a ], [ %.066.lcssa, %.loopexit ] ; 5 uses
   %.tr344 = phi i64 [ %4, %bb.a ], [ %.sroa.11.8, %.loopexit ] ; 3 uses
   %.tr345 = phi i64 [ %5, %bb.a ], [ %.069.lcssa, %.loopexit ] ; 5 uses
-  %.tr348 = phi i32 [ %8, %bb.a ], [ %.sroa.27.0, %.loopexit ]
+  %.tr348 = phi i32 [ %8, %bb.a ], [ %.sroa.20.20.extract.trunc, %.loopexit ]
   %ret.tr = phi i32 [ poison, %bb.a ], [ %current.ret.tr, %.loopexit ] ; 2 uses
   %ret.known.tr = phi i1 [ false, %bb.a ], [ true, %.loopexit ] ; 2 uses
   %i.a = icmp slt i64 %.tr341, %.tr342
@@ -438,11 +438,13 @@ bb.aj:                                            ; preds = %._crit_edge510.thre
   br label %bb.g
 
 .loopexit:                                        ; preds = %._crit_edge510.i, %._crit_edge502.i, %bb.p, %bb.y, %bb.ah, %bb.ai
-  %.sroa.27.0 = phi i32 [ 0, %bb.ah ], [ 1, %bb.ai ], [ 1, %bb.p ], [ 1, %bb.y ], [ 1, %._crit_edge510.i ], [ 0, %._crit_edge502.i ]
-  %.sroa.20.0 = phi i32 [ 1, %bb.ah ], [ 0, %bb.ai ], [ 1, %bb.p ], [ 1, %bb.y ], [ 0, %._crit_edge510.i ], [ 1, %._crit_edge502.i ]
+  %.sroa.20.0 = phi i64 [ 1, %bb.ah ], [ 4294967296, %bb.ai ], [ 4294967297, %bb.p ], [ 4294967297, %bb.y ], [ 4294967296, %._crit_edge510.i ], [ 1, %._crit_edge502.i ] ; 2 uses
   %.sroa.11.8 = phi i64 [ %i.kl, %bb.ah ], [ %i.km, %bb.ai ], [ %.0326.lcssa.i, %bb.p ], [ %.1327.i.lcssa, %bb.y ], [ %.sroa.11.7, %._crit_edge510.i ], [ %.sroa.11.4, %._crit_edge502.i ] ; 2 uses
   %.sroa.0.8 = phi i64 [ %.0313.lcssa.i, %bb.ah ], [ %.0.lcssa.i, %bb.ai ], [ %.1331.lcssa.i, %bb.p ], [ %.3333.i.lcssa, %bb.y ], [ %.sroa.0.7, %._crit_edge510.i ], [ %.sroa.0.4, %._crit_edge502.i ] ; 2 uses
-  %i.ko = tail call i32 @xdl_recs_cmp(ptr noundef %0, i64 noundef %.064.lcssa, i64 noundef %.sroa.0.8, ptr noundef %3, i64 noundef %.067.lcssa, i64 noundef %.sroa.11.8, ptr noundef %6, ptr noundef %7, i32 noundef %.sroa.20.0, ptr noundef %9) ; 0 uses
+  %.sroa.20.16.extract.trunc = trunc i64 %.sroa.20.0 to i32
+  %i.ko = tail call i32 @xdl_recs_cmp(ptr noundef %0, i64 noundef %.064.lcssa, i64 noundef %.sroa.0.8, ptr noundef %3, i64 noundef %.067.lcssa, i64 noundef %.sroa.11.8, ptr noundef %6, ptr noundef %7, i32 noundef %.sroa.20.16.extract.trunc, ptr noundef %9) ; 0 uses
+  %.sroa.20.20.extract.shift = lshr i64 %.sroa.20.0, 32
+  %.sroa.20.20.extract.trunc = trunc nuw nsw i64 %.sroa.20.20.extract.shift to i32
   %current.ret.tr = select i1 %ret.known.tr, i32 %ret.tr, i32 0
   br label %tailrecurse
 

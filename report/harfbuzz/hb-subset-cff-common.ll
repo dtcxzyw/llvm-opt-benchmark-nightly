@@ -95,11 +95,12 @@ bb.b:                                             ; preds = %bb.a
   store atomic i32 0, ptr %i.k monotonic, align 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(33) %i.l, i8 0, i64 33, i1 false)
   %i.m = getelementptr i8, ptr %0, i64 196
-  %.val = load i32, ptr %i.m, align 4, !tbaa !134 ; 2 uses
+  %.val = load i32, ptr %i.m, align 4, !tbaa !134
+  %.val.fr = freeze i32 %.val                     ; 2 uses
   %i.n = getelementptr i8, ptr %0, i64 200
   %.val70 = load ptr, ptr %i.n, align 8, !tbaa !135 ; 2 uses
-  %.sroa.2.8.insert.ext.i.i.i.i = zext i32 %.val to i64
-  %.not.i.i = icmp eq i32 %.val, 0
+  %.sroa.2.8.insert.ext.i.i.i.i = zext i32 %.val.fr to i64
+  %.not.i.i = icmp eq i32 %.val.fr, 0
   %spec.select.i.i = select i1 %.not.i.i, ptr @_hb_NullPool, ptr %.val70, !prof !35 ; 2 uses
   %.sroa.018.0.copyload = load i32, ptr %spec.select.i.i, align 4, !tbaa !11
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %spec.select.i.i, i64 4
@@ -502,7 +503,7 @@ bb.g:                                             ; preds = %bb.f
   br label %_ZL9hb_memsetPvij.exit
 
 _ZL9hb_memsetPvij.exit:                           ; preds = %bb.f, %bb.g
-  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 2 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 28
   %i.r = load i32, ptr %i.q, align 4, !tbaa !47   ; 2 uses
   %.not.i32 = icmp eq i32 %i.r, 0
   %i.s = add i32 %i.r, 1
@@ -510,11 +511,13 @@ _ZL9hb_memsetPvij.exit:                           ; preds = %bb.f, %bb.g
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !48   ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i32 0, ptr %i.v, align 8, !tbaa !49
   store i32 0, ptr %i.i, align 4, !tbaa !46
   %notmask = shl nsw i32 -1, %narrow.i
-  %i.w = xor i32 %notmask, -1
-  store i32 %i.w, ptr %i.q, align 4, !tbaa !47
+  %notmask.fr = freeze i32 %notmask
+  %i.w = xor i32 %notmask.fr, -1
+  %2 = zext i32 %i.w to i64
+  %3 = shl nuw i64 %2, 32
+  store i64 %3, ptr %i.v, align 8
   %i.x = icmp eq i32 %i.l, 0
   br i1 %i.x, label %_ZN12hb_hashmap_tIjjLb1EE9prime_forEj.exit, label %bb.h, !prof !35
 

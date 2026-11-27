@@ -21,16 +21,18 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 36
-  %i.g = load i32, ptr %i.f, align 4, !tbaa !34   ; 2 uses
-  %i.h = icmp slt i32 %i.g, 101
+  %i.g = load i32, ptr %i.f, align 4, !tbaa !34
+  %3 = freeze i32 %i.g                            ; 2 uses
+  %i.h = icmp slt i32 %3, 101
   br i1 %i.h, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.i = load ptr, ptr %0, align 8, !tbaa !27     ; 2 uses
+  %i.i = load ptr, ptr %0, align 8, !tbaa !27
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 40
-  store i32 20, ptr %i.j, align 8, !tbaa !32
-  %3 = getelementptr inbounds nuw i8, ptr %i.i, i64 44
-  store i32 %i.g, ptr %3, align 4, !tbaa !35
+  %4 = zext i32 %3 to i64
+  %5 = shl nuw i64 %4, 32
+  %6 = or disjoint i64 %5, 20
+  store i64 %6, ptr %i.j, align 8
   %i.k = load ptr, ptr %0, align 8, !tbaa !27
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !33
   tail call void %i.l(ptr noundef nonnull %0) #3

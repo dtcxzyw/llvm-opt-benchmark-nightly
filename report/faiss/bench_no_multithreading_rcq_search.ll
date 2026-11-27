@@ -147,7 +147,7 @@ bb.a:
   store i8 0, ptr %i.k, align 2, !tbaa !34
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
   %i.l = invoke noalias noundef nonnull dereferenceable(328) ptr @_Znwm(i64 noundef 328) #13
-          to label %.noexc6 unwind label %bb.g, !noalias !35 ; 8 uses
+          to label %.noexc6 unwind label %bb.g, !noalias !35 ; 7 uses
 
 .noexc6:                                          ; preds = %bb.a
   invoke void @_ZN9benchmark9BenchmarkC2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(328) %i.l, ptr noundef nonnull align 8 dereferenceable(32) %3)
@@ -164,9 +164,13 @@ _ZSt11make_uniqueIN9benchmark8internal15LambdaBenchmarkIZNS0_17RegisterBenchmark
   %i.n = getelementptr inbounds nuw i8, ptr %i.l, i64 304
   store ptr @_ZL12bench_searchRN9benchmark5StateEiif, ptr %i.n, align 8, !tbaa !36, !noalias !35
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.l, i64 312
-  store i32 %i.h, ptr %.sroa.4.0..sroa_idx.i, align 8, !tbaa !26, !noalias !35
-  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.l, i64 316
-  store i32 %i.e, ptr %.sroa.5.0..sroa_idx.i, align 4, !tbaa !26, !noalias !35
+  %4 = freeze i32 %i.h
+  %5 = zext i32 %4 to i64
+  %6 = freeze i32 %i.e
+  %7 = zext i32 %6 to i64
+  %8 = shl nuw i64 %7, 32
+  %9 = or disjoint i64 %8, %5
+  store i64 %9, ptr %.sroa.4.0..sroa_idx.i, align 8, !noalias !35
   %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.l, i64 320
   store float %i.g, ptr %.sroa.6.0..sroa_idx.i, align 8, !tbaa !18, !noalias !35
   store ptr %i.l, ptr %2, align 8, !tbaa !39

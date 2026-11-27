@@ -204,22 +204,27 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZN5draco16DirectBitEncoder28EncodeLeastSignificantBits32Eij(ptr noundef nonnull align 8 dereferenceable(32) %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 5 uses
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !50   ; 3 uses
-  %i.c = sub i32 32, %i.b                         ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 2 uses
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !50
+  %.fr = freeze i32 %i.b                          ; 3 uses
+  %i.c = sub i32 32, %.fr                         ; 2 uses
   %i.d = sub nsw i32 32, %1                       ; 2 uses
   %i.e = shl i32 %2, %i.d                         ; 2 uses
   %.not = icmp sgt i32 %1, %i.c
   br i1 %.not, label %bb.i, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = lshr i32 %i.e, %i.b
+  %i.f = lshr i32 %i.e, %.fr
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
   %i.h = load i32, ptr %i.g, align 8, !tbaa !51
-  %i.i = or i32 %i.h, %i.f                        ; 2 uses
-  store i32 %i.i, ptr %i.g, align 8, !tbaa !51
-  %i.j = add i32 %i.b, %1                         ; 2 uses
-  store i32 %i.j, ptr %i.a, align 4, !tbaa !50
+  %i.i = or i32 %i.h, %i.f
+  %3 = freeze i32 %i.i                            ; 2 uses
+  %i.j = add i32 %.fr, %1                         ; 2 uses
+  %4 = zext i32 %3 to i64
+  %5 = zext i32 %i.j to i64
+  %6 = shl nuw i64 %5, 32
+  %7 = or disjoint i64 %6, %4
+  store i64 %7, ptr %i.g, align 8
   %i.k = icmp eq i32 %i.j, 32
   br i1 %i.k, label %bb.c, label %bb.o
 
@@ -232,7 +237,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  store i32 %i.i, ptr %i.m, align 4, !tbaa !26
+  store i32 %3, ptr %i.m, align 4, !tbaa !26
   %i.p = getelementptr inbounds nuw i8, ptr %i.m, i64 4
   store ptr %i.p, ptr %i.l, align 8, !tbaa !27
   br label %_ZNSt6vectorIjSaIjEE9push_backERKj.exit
@@ -287,19 +292,22 @@ _ZNSt6vectorIjSaIjEE17_M_realloc_insertIJRKjEEEvN9__gnu_cxx17__normal_iteratorIP
   br label %_ZNSt6vectorIjSaIjEE9push_backERKj.exit
 
 _ZNSt6vectorIjSaIjEE9push_backERKj.exit:          ; preds = %bb.d, %_ZNSt6vectorIjSaIjEE17_M_realloc_insertIJRKjEEEvN9__gnu_cxx17__normal_iteratorIPjS1_EEDpOT_.exit.i
-  store i32 0, ptr %i.g, align 8, !tbaa !51
-  store i32 0, ptr %i.a, align 4, !tbaa !50
+  store i64 0, ptr %i.g, align 8
   br label %bb.o
 
 bb.i:                                             ; preds = %bb.a
   %i.ah = lshr exact i32 %i.e, %i.d               ; 2 uses
-  %i.ai = sub nsw i32 %1, %i.c                    ; 2 uses
-  store i32 %i.ai, ptr %i.a, align 4, !tbaa !50
+  %i.ai = sub i32 %1, %i.c                        ; 2 uses
   %i.aj = lshr i32 %i.ah, %i.ai
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
   %i.al = load i32, ptr %i.ak, align 8, !tbaa !51
-  %i.am = or i32 %i.al, %i.aj                     ; 2 uses
-  store i32 %i.am, ptr %i.ak, align 8, !tbaa !51
+  %i.am = or i32 %i.al, %i.aj
+  %8 = freeze i32 %i.am                           ; 2 uses
+  %9 = zext i32 %8 to i64
+  %10 = zext i32 %i.ai to i64
+  %11 = shl nuw i64 %10, 32
+  %12 = or disjoint i64 %11, %9
+  store i64 %12, ptr %i.ak, align 8
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !27 ; 4 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -308,7 +316,7 @@ bb.i:                                             ; preds = %bb.a
   br i1 %.not.i15, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  store i32 %i.am, ptr %i.ao, align 4, !tbaa !26
+  store i32 %8, ptr %i.ao, align 4, !tbaa !26
   %i.ar = getelementptr inbounds nuw i8, ptr %i.ao, i64 4
   store ptr %i.ar, ptr %i.an, align 8, !tbaa !27
   br label %_ZNSt6vectorIjSaIjEE9push_backERKj.exit22

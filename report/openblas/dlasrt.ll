@@ -13,7 +13,7 @@ target triple = "x86_64-pc-linux-gnu"
 define void @dlasrt_(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef captures(none) %2, ptr nofree noundef captures(none) initializes((0, 4)) %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
-  %i.b = alloca [64 x i32], align 16              ; 7 uses
+  %i.b = alloca [64 x i32], align 16              ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #3
   %i.c = getelementptr inbounds i8, ptr %2, i64 -8 ; 13 uses
@@ -28,8 +28,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not211, label %.thread.sink.split, label %.critedge
 
 .critedge:                                        ; preds = %bb.a, %bb.b
-  %i.f = load i32, ptr %1, align 4, !tbaa !12     ; 3 uses
-  %i.g = icmp slt i32 %i.f, 0
+  %i.f = load i32, ptr %1, align 4, !tbaa !12
+  %4 = freeze i32 %i.f                            ; 3 uses
+  %i.g = icmp slt i32 %4, 0
   br i1 %i.g, label %.thread.sink.split, label %bb.c
 
 bb.c:                                             ; preds = %.critedge
@@ -50,13 +51,14 @@ bb.c:                                             ; preds = %.critedge
   br label %.loopexit222
 
 bb.d:                                             ; preds = %bb.c
-  %i.k = icmp samesign ult i32 %i.f, 2
+  %i.k = icmp samesign ult i32 %4, 2
   br i1 %i.k, label %.loopexit222, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  store i32 1, ptr %i.b, align 16, !tbaa !12
-  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 4
-  store i32 %i.f, ptr %4, align 4, !tbaa !12
+  %5 = zext nneg i32 %4 to i64
+  %6 = shl nuw nsw i64 %5, 32
+  %7 = or disjoint i64 %6, 1
+  store i64 %7, ptr %i.b, align 16
   br label %bb.f
 
 bb.f:                                             ; preds = %.loopexit, %bb.e

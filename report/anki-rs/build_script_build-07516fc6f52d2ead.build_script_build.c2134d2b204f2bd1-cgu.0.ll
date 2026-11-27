@@ -202,7 +202,7 @@ bb.a:
   %i.ba = alloca [24 x i8], align 8               ; 6 uses
   %i.bb = alloca [24 x i8], align 8               ; 7 uses
   %i.bc = alloca [16 x i8], align 8               ; 5 uses
-  %i.bd = alloca [80 x i8], align 8               ; 13 uses
+  %i.bd = alloca [80 x i8], align 8               ; 12 uses
   %i.be = alloca [24 x i8], align 8               ; 5 uses
   %i.bf = alloca [24 x i8], align 8               ; 6 uses
   %i.bg = alloca [24 x i8], align 8               ; 4 uses
@@ -605,7 +605,7 @@ bb.cf:                                            ; preds = %bb.ce
 
 bb.cg:                                            ; preds = %bb.cf
   %i.fg = invoke zeroext i1 @"_ZN4core6result19Result$LT$T$C$E$GT$5is_ok17h3a87d96f146a3fdaE"(ptr nonnull align 8 %i.bh)
-          to label %bb.ci unwind label %bb.ch     ; 3 uses
+          to label %bb.ci unwind label %bb.ch     ; 2 uses
 
 bb.ch:                                            ; preds = %bb.cg
   %i.fh = landingpad { ptr, i32 }
@@ -625,6 +625,7 @@ bb.ck:                                            ; preds = %bb.cj
           to label %bb.cm unwind label %bb.cd
 
 bb.cl:                                            ; preds = %bb.cq, %bb.cj
+  %0 = phi i16 [ 256, %bb.cq ], [ 0, %bb.cj ]
   %.sroa.0.0.i = phi i8 [ %i.fo, %bb.cq ], [ 0, %bb.cj ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bd, ptr noundef nonnull align 8 dereferenceable(24) %i.bp, i64 24, i1 false)
   %i.fi = getelementptr inbounds nuw i8, ptr %i.bd, i64 24 ; 2 uses
@@ -632,10 +633,10 @@ bb.cl:                                            ; preds = %bb.cq, %bb.cj
   %i.fj = getelementptr inbounds nuw i8, ptr %i.bd, i64 48
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.fj, ptr noundef nonnull align 8 dereferenceable(24) %i.bl, i64 24, i1 false)
   %i.fk = getelementptr inbounds nuw i8, ptr %i.bd, i64 72
-  store i8 %.sroa.0.0.i, ptr %i.fk, align 8
-  %0 = getelementptr inbounds nuw i8, ptr %i.bd, i64 73
-  %1 = zext i1 %i.fg to i8
-  store i8 %1, ptr %0, align 1
+  %1 = freeze i8 %.sroa.0.0.i
+  %2 = zext i8 %1 to i16
+  %3 = or disjoint i16 %0, %2
+  store i16 %3, ptr %i.fk, align 8
   br i1 %i.fe, label %bb.cr, label %bb.cs
 
 bb.cm:                                            ; preds = %bb.ck

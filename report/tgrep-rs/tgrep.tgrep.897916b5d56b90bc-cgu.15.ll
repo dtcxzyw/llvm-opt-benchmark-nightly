@@ -205,7 +205,7 @@ bb.a:
 bb.b:                                             ; preds = %.noexc
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 153
-  %i.i = load i8, ptr %i.h, align 1, !range !21, !noundef !5 ; 2 uses
+  %i.i = load i8, ptr %i.h, align 1, !range !21, !noundef !5
   switch i8 %i.i, label %default.unreachable26 [
     i8 0, label %bb.c
     i8 1, label %bb.e
@@ -216,14 +216,14 @@ default.unreachable26:                            ; preds = %bb.b
   unreachable
 
 bb.c:                                             ; preds = %bb.b
-  %2 = zext i1 %i.g to i8
+  %2 = zext i1 %i.g to i16
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.b
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.b, %bb.d, %bb.c
-  %.sroa.0.0 = phi i8 [ %2, %bb.c ], [ 0, %bb.d ], [ %i.i, %bb.b ]
+  %.sroa.0.0 = phi i16 [ %2, %bb.c ], [ 0, %bb.d ], [ 1, %bb.b ]
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 154
   %i.k = load i8, ptr %i.j, align 2, !range !21, !noundef !5 ; 2 uses
   %.not = icmp eq i8 %i.k, 2                      ; 2 uses
@@ -293,9 +293,10 @@ bb.o:                                             ; preds = %bb.n
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 232
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.z, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false)
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 456
-  store i8 %.sroa.0.0, ptr %i.aa, align 8
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 457
-  store i8 %.sroa.01.0, ptr %3, align 1
+  %3 = zext nneg i8 %.sroa.01.0 to i16
+  %4 = shl nuw nsw i16 %3, 8
+  %5 = or disjoint i16 %4, %.sroa.0.0
+  store i16 %5, ptr %i.aa, align 8
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 256
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.ab, ptr noundef nonnull align 8 dereferenceable(32) %i.b, i64 32, i1 false)
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 288

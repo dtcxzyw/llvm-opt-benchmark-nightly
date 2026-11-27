@@ -205,9 +205,9 @@ bb.b:                                             ; preds = %ZDICT_totalSampleSi
   store <16 x i8> <i8 14, i8 -34, i8 95, i8 14, i8 -114, i8 -50, i8 31, i8 67, i8 -40, i8 -37, i8 31, i8 -102, i8 88, i8 -72, i8 -78, i8 0>, ptr %i.q, align 1, !tbaa !21
   %.sroa.0.0.copyload = load i32, ptr %5, align 8 ; 2 uses
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 4
+  %.sroa.4.0.copyload = load i32, ptr %.sroa.4.0..sroa_idx, align 4
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %.sroa.5.0.copyload = load i32, ptr %.sroa.5.0..sroa_idx, align 8 ; 4 uses
-  %7 = load <2 x i32>, ptr %.sroa.4.0..sroa_idx, align 4
+  %.sroa.5.0.copyload = load i32, ptr %.sroa.5.0..sroa_idx, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 12
   %.sroa.6.0.copyload = load i32, ptr %.sroa.6.0..sroa_idx, align 4
   %i.r = lshr i64 %1, 4
@@ -261,6 +261,7 @@ middle.block141:                                  ; preds = %vector.body134
 
 ZDICT_totalSampleSize.exit.i:                     ; preds = %.lr.ph.i.i, %middle.block141
   %.lcssa126 = phi i64 [ %i.ac, %middle.block141 ], [ %i.af, %.lr.ph.i.i ] ; 10 uses
+  %7 = freeze i32 %.sroa.5.0.copyload             ; 5 uses
   %i.ag = icmp eq i32 %.sroa.0.0.copyload, 0
   %i.ah = select i1 %i.ag, i32 9, i32 %.sroa.0.0.copyload ; 5 uses
   %i.ai = icmp ugt i32 %i.ah, 30
@@ -290,7 +291,7 @@ bb.e:                                             ; preds = %bb.d
   %i.at = tail call noalias ptr @malloc(i64 noundef %i.ap) #17 ; 8 uses
   %i.au = add i64 %.lcssa126, 16                  ; 2 uses
   %i.av = tail call noalias ptr @malloc(i64 noundef %i.au) #17 ; 11 uses
-  %i.aw = icmp ugt i32 %.sroa.5.0.copyload, 1     ; 6 uses
+  %i.aw = icmp ugt i32 %7, 1                      ; 6 uses
   br i1 %i.aw, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
@@ -312,7 +313,7 @@ bb.h:                                             ; preds = %bb.g
   %spec.store.select.i.i = tail call i32 @llvm.umax.i32(i32 %i.ak, i32 4) ; 60 uses
   tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.av, i8 0, i64 %i.au, i1 false)
   %i.be = icmp ugt i64 %.lcssa126, 2097152000     ; 2 uses
-  %i.bf = icmp ugt i32 %.sroa.5.0.copyload, 2     ; 2 uses
+  %i.bf = icmp ugt i32 %7, 2                      ; 2 uses
   %or.cond7.i.i = and i1 %i.bf, %i.be
   br i1 %or.cond7.i.i, label %.thread186.i.i, label %bb.i
 
@@ -456,7 +457,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %.not153.i.i, label %ZDICT_trainBuffer_legacy.exit.i, label %.lr.ph152.i.i
 
 .lr.ph152.i.i:                                    ; preds = %.thread.i.i
-  %i.dl = icmp ugt i32 %.sroa.5.0.copyload, 3     ; 3 uses
+  %i.dl = icmp ugt i32 %7, 3                      ; 3 uses
   %i.dm = getelementptr inbounds nuw i8, ptr %i.a, i64 252
   %i.dn = getelementptr inbounds nuw i8, ptr %i.b, i64 252 ; 2 uses
   %i.do = getelementptr inbounds nuw i8, ptr %i.b, i64 248
@@ -859,7 +860,7 @@ ZDICT_trainBuffer_legacy.exit.i:                  ; preds = %ZDICT_trainBuffer_l
   tail call void @free(ptr noundef %i.ar) #16
   tail call void @free(ptr noundef %i.at) #16
   tail call void @free(ptr noundef %i.av) #16
-  %i.ue = icmp ugt i32 %.sroa.5.0.copyload, 2
+  %i.ue = icmp ugt i32 %7, 2
   br i1 %i.ue, label %bb.ax, label %.critedge181.i
 
 bb.ax:                                            ; preds = %ZDICT_trainBuffer_legacy.exit.i
@@ -1214,7 +1215,12 @@ bb.bg:                                            ; preds = %.lr.ph272.i
 ._crit_edge273.i:                                 ; preds = %bb.bg, %._crit_edge.i
   %i.aai = zext i32 %.0146.lcssa.ph.i to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #16
-  store <2 x i32> %7, ptr %6, align 8, !tbaa !8
+  %8 = freeze i32 %.sroa.4.0.copyload
+  %9 = zext i32 %8 to i64
+  %10 = zext i32 %7 to i64
+  %11 = shl nuw i64 %10, 32
+  %12 = or disjoint i64 %11, %9
+  store i64 %12, ptr %6, align 8
   %.sroa.6.4..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 8
   store i32 %.sroa.6.0.copyload, ptr %.sroa.6.4..sroa_idx, align 8, !tbaa !8
   %i.aaj = tail call fastcc i64 @ZDICT_addEntropyTablesFromBuffer_advanced(ptr noundef %0, i64 noundef %i.aai, i64 noundef %1, ptr noundef nonnull %i.o, ptr noundef readonly %3, i32 noundef %4, ptr noundef nonnull byval(%struct.ZDICT_params_t) align 8 %6)

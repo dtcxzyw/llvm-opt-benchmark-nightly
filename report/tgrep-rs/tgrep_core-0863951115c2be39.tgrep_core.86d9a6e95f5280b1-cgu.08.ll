@@ -204,13 +204,20 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
 define hidden void @_RNvMs_NtCsbzNSmZPCnTx_10tgrep_core6ondiskNtB4_11LookupEntry6decode(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([16 x i8]) align 8 captures(none) dereferenceable(16) initializes((0, 16)) %0, ptr noalias nofree noundef readonly captures(none) dereferenceable(16) %1) unnamed_addr #5 personality ptr @rust_eh_personality {
 _RNvMNtCsf3Ta7LF998c_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCsbzNSmZPCnTx_10tgrep_core.exit:
+  %.sroa.06.0.copyload = load i32, ptr %1, align 1
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 12
+  %.sroa.09.0.copyload = load i32, ptr %2, align 1
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 4
   %.sroa.07.0.copyload = load i64, ptr %i.a, align 1
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.07.0.copyload, ptr %0, align 8
-  %2 = load <4 x i32>, ptr %1, align 1
-  %3 = shufflevector <4 x i32> %2, <4 x i32> poison, <2 x i32> <i32 0, i32 3>
-  store <2 x i32> %3, ptr %i.b, align 8
+  %3 = freeze i32 %.sroa.06.0.copyload
+  %4 = zext i32 %3 to i64
+  %5 = freeze i32 %.sroa.09.0.copyload
+  %6 = zext i32 %5 to i64
+  %7 = shl nuw i64 %6, 32
+  %8 = or disjoint i64 %7, %4
+  store i64 %8, ptr %i.b, align 8
   ret void
 }
 

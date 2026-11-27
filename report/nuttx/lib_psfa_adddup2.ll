@@ -27,15 +27,16 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %i.d = tail call noalias dereferenceable_or_null(24) ptr @zalloc(i64 noundef 24) #7 ; 5 uses
+  %i.d = tail call noalias dereferenceable_or_null(24) ptr @zalloc(i64 noundef 24) #7 ; 4 uses
   %.not = icmp eq ptr %i.d, null
   br i1 %.not, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  store i32 2, ptr %i.e, align 8
-  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 12
-  store i32 %1, ptr %3, align 4
+  %3 = zext i32 %1 to i64
+  %4 = shl nuw i64 %3, 32
+  %5 = or disjoint i64 %4, 2
+  store i64 %5, ptr %i.e, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   store i32 %2, ptr %i.f, align 8
   tail call void @add_file_action(ptr noundef nonnull %0, ptr noundef nonnull %i.d) #8

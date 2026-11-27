@@ -202,19 +202,21 @@ bb.z:                                             ; preds = %_ZNSt6vectorIiSaIiE
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0192.0319, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0189.0320, i64 16, i1 false), !tbaa.struct !13
   %.sroa.0184.0.copyload = load ptr, ptr %.sroa.0192.0319, align 8, !tbaa !12 ; 6 uses
   %.sroa.6.0..sroa.0183.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0192.0319, i64 8
-  %.sroa.6.0.copyload = load i32, ptr %.sroa.6.0..sroa.0183.0..sroa_idx, align 8, !tbaa !10 ; 7 uses
+  %.sroa.6.0.copyload = load i32, ptr %.sroa.6.0..sroa.0183.0..sroa_idx, align 8, !tbaa !10
+  %1 = freeze i32 %.sroa.6.0.copyload             ; 8 uses
   %.sroa.7.0..sroa.0183.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0192.0319, i64 12
   %.sroa.7.0.copyload = load i32, ptr %.sroa.7.0..sroa.0183.0..sroa_idx, align 4, !tbaa !10
-  %i.cw = icmp eq i32 %.sroa.7.0.copyload, 2
+  %2 = freeze i32 %.sroa.7.0.copyload
+  %i.cw = icmp eq i32 %2, 2
   br i1 %i.cw, label %bb.aa, label %_ZNSt6vectorIiSaIiEE9push_backERKi.exit
 
 bb.aa:                                            ; preds = %.lr.ph
-  %i.cx = tail call noundef i32 @llvm.abs.i32(i32 %.sroa.6.0.copyload, i1 true)
+  %i.cx = tail call noundef i32 @llvm.abs.i32(i32 %1, i1 true)
   %i.cy = zext nneg i32 %i.cx to i64
   %i.cz = load ptr, ptr %i.bw, align 8, !tbaa !215
   %i.da = getelementptr inbounds nuw i8, ptr %i.cz, i64 %i.cy ; 2 uses
   %i.db = load i8, ptr %i.da, align 1, !tbaa !216 ; 2 uses
-  %i.dc = icmp slt i32 %.sroa.6.0.copyload, 0
+  %i.dc = icmp slt i32 %1, 0
   %i.dd = sub i8 0, %i.db
   %spec.select.i = select i1 %i.dc, i8 %i.dd, i8 %i.db ; 2 uses
   %i.de = icmp sgt i8 %spec.select.i, 0
@@ -237,7 +239,7 @@ bb.ad:                                            ; preds = %bb.ac
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ah, %bb.ad
-  %.sroa.0174.0 = phi ptr [ %i.dj, %bb.ad ], [ %i.dt, %bb.ah ] ; 5 uses
+  %.sroa.0174.0 = phi ptr [ %i.dj, %bb.ad ], [ %i.dt, %bb.ah ] ; 6 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %.sroa.0174.0, i64 12
   %i.dl = load i32, ptr %i.dk, align 4, !tbaa !218
   %i.dm = icmp eq i32 %i.dl, 2
@@ -246,7 +248,7 @@ bb.ae:                                            ; preds = %bb.ah, %bb.ad
 bb.af:                                            ; preds = %bb.ae
   %i.dn = getelementptr inbounds nuw i8, ptr %.sroa.0174.0, i64 8
   %i.do = load i32, ptr %i.dn, align 8, !tbaa !219
-  %.not117 = icmp eq i32 %i.do, %.sroa.6.0.copyload
+  %.not117 = icmp eq i32 %i.do, %1
   br i1 %.not117, label %bb.ag, label %bb.ah
 
 bb.ag:                                            ; preds = %bb.af
@@ -262,7 +264,11 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af, %bb.
   br label %bb.ae, !llvm.loop !18
 
 bb.ai:                                            ; preds = %bb.ag
+  %3 = getelementptr inbounds nuw i8, ptr %.sroa.0174.0, i64 8
   store ptr %.sroa.0184.0.copyload, ptr %.sroa.0174.0, align 8, !tbaa !12
+  %4 = zext i32 %1 to i64
+  %5 = or disjoint i64 %4, 8589934592
+  store i64 %5, ptr %3, align 8
   br label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ac, %bb.ai
@@ -351,7 +357,7 @@ _ZNSt6vectorImSaImEE9push_backERKm.exit:          ; preds = %_ZNSt6vectorImSaImE
   %i.ev = phi ptr [ %i.eu, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJRKmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i ], [ %i.eb, %bb.ao ] ; 2 uses
   %i.ew = phi ptr [ %i.et, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJRKmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i ], [ %i.ed, %bb.ao ] ; 3 uses
   %i.ex = load ptr, ptr %i.cr, align 8, !tbaa !214
-  %i.ey = sub nsw i32 0, %.sroa.6.0.copyload
+  %i.ey = sub nsw i32 0, %1
   br label %bb.as
 
 bb.as:                                            ; preds = %bb.az, %_ZNSt6vectorImSaImEE9push_backERKm.exit
@@ -451,13 +457,13 @@ bb.ba:                                            ; preds = %bb.al
   br i1 %.not113, label %bb.bb, label %_ZNSt6vectorIiSaIiEE9push_backERKi.exit
 
 bb.bb:                                            ; preds = %bb.ba
-  %i.ge = tail call i8 @llvm.scmp.i8.i32(i32 %.sroa.6.0.copyload, i32 0)
+  %i.ge = tail call i8 @llvm.scmp.i8.i32(i32 %1, i32 0)
   store i8 %i.ge, ptr %i.da, align 1, !tbaa !216
   %.not.i151 = icmp eq ptr %.sroa.10.2322, %.sroa.16.2321
   br i1 %.not.i151, label %bb.bd, label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bb
-  store i32 %.sroa.6.0.copyload, ptr %.sroa.10.2322, align 4, !tbaa !10
+  store i32 %1, ptr %.sroa.10.2322, align 4, !tbaa !10
   %i.gf = getelementptr inbounds nuw i8, ptr %.sroa.10.2322, i64 4
   br label %_ZNSt6vectorIiSaIiEE9push_backERKi.exit
 
@@ -483,7 +489,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.bd
 
 .noexc156:                                        ; preds = %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i
   %i.gr = getelementptr inbounds i8, ptr %i.gq, i64 %i.gi ; 2 uses
-  store i32 %.sroa.6.0.copyload, ptr %i.gr, align 4, !tbaa !10
+  store i32 %1, ptr %i.gr, align 4, !tbaa !10
   %i.gs = icmp sgt i64 %i.gi, 0
   br i1 %i.gs, label %bb.be, label %_ZNSt6vectorIiSaIiEE11_S_relocateEPiS2_S2_RS0_.exit16.i.i
 

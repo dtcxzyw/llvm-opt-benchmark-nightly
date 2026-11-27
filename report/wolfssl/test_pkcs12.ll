@@ -202,9 +202,9 @@ bb.a:
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.c, i8 0, i64 32, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %0) #8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #8
-  store <16 x i8> <i8 0, i8 119, i8 0, i8 111, i8 0, i8 108, i8 0, i8 102, i8 0, i8 83, i8 0, i8 83, i8 0, i8 76, i8 0, i8 32>, ptr %i.a, align 16, !tbaa !20
+  store <8 x i16> <i16 30464, i16 28416, i16 27648, i16 26112, i16 21248, i16 21248, i16 19456, i16 8192>, ptr %i.a, align 16
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  store <8 x i8> <i8 0, i8 116, i8 0, i8 101, i8 0, i8 115, i8 0, i8 116>, ptr %i.i, align 16, !tbaa !20
+  store <4 x i16> <i16 29696, i16 25856, i16 29440, i16 29696>, ptr %i.i, align 16
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   store i8 0, ptr %i.j, align 8, !tbaa !20
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 25
@@ -282,26 +282,30 @@ bb.e:                                             ; preds = %.sink.split, %.crit
   %.9344.ph = phi i1 [ true, %.critedge385 ], [ false, %.sink.split ]
   call void @wc_HmacFree(ptr noundef nonnull %0) #8
   %.pre = load i8, ptr %i.c, align 16, !tbaa !20
+  %1 = freeze i8 %.pre
+  %2 = zext i8 %1 to i64
+  %3 = shl nuw nsw i64 %2, 40
+  %4 = or disjoint i64 %3, 577586656572343553
   br label %.critedge384
 
 .critedge384:                                     ; preds = %bb.c, %bb.b, %bb.e
-  %1 = phi i8 [ %.pre, %bb.e ], [ 0, %bb.b ], [ 0, %bb.c ]
+  %5 = phi i64 [ %4, %bb.e ], [ 577586656572343553, %bb.b ], [ 577586656572343553, %bb.c ]
   %.9344390 = phi i1 [ %.9344.ph, %bb.e ], [ false, %bb.b ], [ false, %bb.c ]
-  store <16 x i8> <i8 48, i8 57, i8 2, i8 1, i8 3, i8 48, i8 17, i8 6, i8 9, i8 42, i8 -122, i8 72, i8 -122, i8 -9, i8 13, i8 1>, ptr %i.d, align 16, !tbaa !20
-  %i.at = getelementptr inbounds nuw i8, ptr %i.d, i64 16
-  store <16 x i8> <i8 7, i8 1, i8 -96, i8 4, i8 4, i8 2, i8 48, i8 0, i8 48, i8 33, i8 48, i8 18, i8 48, i8 13, i8 6, i8 9>, ptr %i.at, align 16, !tbaa !20
-  %i.au = getelementptr inbounds nuw i8, ptr %i.d, i64 32
-  store <8 x i8> <i8 96, i8 -122, i8 72, i8 1, i8 101, i8 3, i8 4, i8 2>, ptr %i.au, align 16, !tbaa !20
-  %i.av = getelementptr inbounds nuw i8, ptr %i.d, i64 40
-  store <4 x i8> <i8 1, i8 5, i8 0, i8 4>, ptr %i.av, align 8, !tbaa !20
-  %i.aw = getelementptr inbounds nuw i8, ptr %i.d, i64 44
-  store i8 1, ptr %i.aw, align 4, !tbaa !20
-  %i.ax = getelementptr inbounds nuw i8, ptr %i.d, i64 45
-  store i8 %1, ptr %i.ax, align 1, !tbaa !20
-  %i.ay = getelementptr inbounds nuw i8, ptr %i.d, i64 46
-  store <8 x i8> <i8 4, i8 8, i8 1, i8 2, i8 3, i8 4, i8 5, i8 6>, ptr %i.ay, align 2, !tbaa !20
-  %i.az = getelementptr inbounds nuw i8, ptr %i.d, i64 54
-  store <4 x i8> <i8 7, i8 8, i8 2, i8 1>, ptr %i.az, align 2, !tbaa !20
+  store i64 437183428291606832, ptr %i.d, align 16
+  %i.at = getelementptr inbounds nuw i8, ptr %i.d, i64 8
+  store i64 75988924849596937, ptr %i.at, align 8
+  %i.au = getelementptr inbounds nuw i8, ptr %i.d, i64 16
+  store i64 13513015162831111, ptr %i.au, align 16
+  %i.av = getelementptr inbounds nuw i8, ptr %i.d, i64 24
+  store i64 650221696316350768, ptr %i.av, align 8
+  %i.aw = getelementptr inbounds nuw i8, ptr %i.d, i64 32
+  store i64 145244820330808928, ptr %i.aw, align 16
+  %i.ax = getelementptr inbounds nuw i8, ptr %i.d, i64 40
+  store i64 %5, ptr %i.ax, align 8
+  %i.ay = getelementptr inbounds nuw i8, ptr %i.d, i64 48
+  store i64 578437695752307201, ptr %i.ay, align 16
+  %i.az = getelementptr inbounds nuw i8, ptr %i.d, i64 56
+  store i16 258, ptr %i.az, align 8
   %i.ba = getelementptr inbounds nuw i8, ptr %i.d, i64 58
   store i8 1, ptr %i.ba, align 2, !tbaa !20
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #8

@@ -204,7 +204,7 @@ bb.ag:                                            ; preds = %bb.af
 .loopexit:                                        ; preds = %bb.am, %bb.ak, %bb.ah, %bb.af, %bb.ag
   %.sroa.07.1 = phi i8 [ %.sroa.07.0101, %bb.af ], [ %i.dm, %bb.ag ], [ %i.dm, %bb.ah ], [ %i.dm, %bb.ak ], [ %i.dm, %bb.am ] ; 2 uses
   %i.dp = icmp eq ptr %i.di, %i.as
-  br i1 %i.dp, label %._crit_edge, label %bb.ae
+  br i1 %i.dp, label %._crit_edge.loopexit, label %bb.ae
 
 bb.ah:                                            ; preds = %bb.ag
   %i.dq = getelementptr inbounds nuw i8, ptr %.sroa.04.0102, i64 8
@@ -270,8 +270,12 @@ bb.an:                                            ; preds = %bb.al
   invoke void @_RNvNtCsj6eKBz9Db1c_4core9panicking18panic_bounds_check(i64 noundef %i.dr, i64 noundef 3, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @10) #18
           to label %bb.u unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
-._crit_edge:                                      ; preds = %.loopexit, %_RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterTNtNtCs4wP2HXfJTCR_5alloc6string6StringAINtNtBb_6option6OptionjEj3_EENtNtNtNtBb_4iter6traits8iterator8Iterator3anyNCNvNtNtCsdsTQD3x2eOp_3exr11compression3dwa17classify_channels0EB2O_.exit
-  %.sroa.07.0.lcssa = phi i8 [ 0, %_RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterTNtNtCs4wP2HXfJTCR_5alloc6string6StringAINtNtBb_6option6OptionjEj3_EENtNtNtNtBb_4iter6traits8iterator8Iterator3anyNCNvNtNtCsdsTQD3x2eOp_3exr11compression3dwa17classify_channels0EB2O_.exit ], [ %.sroa.07.1, %.loopexit ]
+._crit_edge.loopexit:                             ; preds = %.loopexit
+  %4 = zext nneg i8 %.sroa.07.1 to i16
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %_RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterTNtNtCs4wP2HXfJTCR_5alloc6string6StringAINtNtBb_6option6OptionjEj3_EENtNtNtNtBb_4iter6traits8iterator8Iterator3anyNCNvNtNtCsdsTQD3x2eOp_3exr11compression3dwa17classify_channels0EB2O_.exit
+  %.sroa.07.0.lcssa = phi i16 [ 0, %_RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterTNtNtCs4wP2HXfJTCR_5alloc6string6StringAINtNtBb_6option6OptionjEj3_EENtNtNtNtBb_4iter6traits8iterator8Iterator3anyNCNvNtNtCsdsTQD3x2eOp_3exr11compression3dwa17classify_channels0EB2O_.exit ], [ %4, %._crit_edge.loopexit ]
   %i.eq = getelementptr inbounds nuw i8, ptr %.sroa.0.0105, i64 40
   %i.er = load i64, ptr %i.eq, align 8, !noundef !4
   %..i = call noundef range(i64 1, 0) i64 @llvm.umax.i64(i64 %i.er, i64 1) ; 2 uses
@@ -299,16 +303,17 @@ bb.ao:                                            ; preds = %._crit_edge
 
 bb.ap:                                            ; preds = %._crit_edge, %bb.ao
   %i.fg = load ptr, ptr %i.z, align 8, !alias.scope !119, !nonnull !4, !noundef !4
-  %i.fh = getelementptr inbounds nuw [32 x i8], ptr %i.fg, i64 %i.fd ; 6 uses
+  %i.fh = getelementptr inbounds nuw [32 x i8], ptr %i.fg, i64 %i.fd ; 5 uses
   store i64 %i.ev, ptr %i.fh, align 8
   %.sroa.44.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fh, i64 8
   store i64 %i.ex, ptr %.sroa.44.0..sroa_idx, align 8
   %.sroa.55.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fh, i64 16
   store i64 %., ptr %.sroa.55.0..sroa_idx, align 8
   %.sroa.66.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fh, i64 24
-  store i8 %.sroa.07.0.lcssa, ptr %.sroa.66.0..sroa_idx, align 8
-  %.sroa.77.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fh, i64 25
-  store i8 %i.ez, ptr %.sroa.77.0..sroa_idx, align 1
+  %5 = zext nneg i8 %i.ez to i16
+  %6 = shl nuw nsw i16 %5, 8
+  %7 = or disjoint i16 %6, %.sroa.07.0.lcssa
+  store i16 %7, ptr %.sroa.66.0..sroa_idx, align 8
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fh, i64 26
   store i8 %i.fc, ptr %.sroa.8.0..sroa_idx, align 2
   %i.fi = add i64 %i.fd, 1

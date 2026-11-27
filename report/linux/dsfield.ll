@@ -202,9 +202,11 @@ bb.d:                                             ; preds = %._crit_edge, %bb.a
   %i.n = load ptr, ptr %i.m, align 8              ; 2 uses
   %i.o = getelementptr i8, ptr %i.n, i64 40
   %i.p = load i64, ptr %i.o, align 8
-  %4 = trunc i64 %i.p to i8
+  %.fr = freeze i64 %i.p
+  %4 = trunc i64 %.fr to i16
   %i.q = getelementptr inbounds nuw i8, ptr %3, i64 64
-  store i8 %4, ptr %i.q, align 8
+  %5 = and i16 %4, 255
+  store i16 %5, ptr %i.q, align 8
   %i.r = getelementptr inbounds nuw i8, ptr %3, i64 66
   store i8 17, ptr %i.r, align 2
   store ptr %i.k, ptr %3, align 8

@@ -32,10 +32,11 @@ bb.a:
   %i.b = extractvalue { i32, i32, i32, i32 } %i.a, 0
   %i.c = icmp eq i32 %i.b, 1752462657
   %i.d = select i1 %i.c, i32 -2147483619, i32 4
-  %i.e = tail call { i32, i32, i32, i32 } asm "cpuid", "={bx},={ax},={cx},={dx},0,1,2,~{dirflag},~{fpsr},~{flags}"(i32 0, i32 %i.d, i32 %0) #3, !srcloc !8 ; 3 uses
-  %i.f = extractvalue { i32, i32, i32, i32 } %i.e, 0 ; 3 uses
-  %i.g = extractvalue { i32, i32, i32, i32 } %i.e, 1 ; 2 uses
-  %i.h = extractvalue { i32, i32, i32, i32 } %i.e, 2
+  %i.e = tail call { i32, i32, i32, i32 } asm "cpuid", "={bx},={ax},={cx},={dx},0,1,2,~{dirflag},~{fpsr},~{flags}"(i32 0, i32 %i.d, i32 %0) #3, !srcloc !8
+  %.fr = freeze { i32, i32, i32, i32 } %i.e       ; 3 uses
+  %i.f = extractvalue { i32, i32, i32, i32 } %.fr, 0 ; 3 uses
+  %i.g = extractvalue { i32, i32, i32, i32 } %.fr, 1 ; 2 uses
+  %i.h = extractvalue { i32, i32, i32, i32 } %.fr, 2
   %i.i = and i32 %i.g, 31
   store i32 %i.i, ptr %1, align 4, !tbaa !9
   %i.j = lshr i32 %i.g, 5
@@ -71,8 +72,9 @@ bb.b:                                             ; preds = %bb.d, %bb.a
   %.0515.i = phi i32 [ 0, %bb.a ], [ %.1.i, %bb.d ] ; 3 uses
   %.0614.i = phi i32 [ 0, %bb.a ], [ %i.e, %bb.d ] ; 2 uses
   %i.e = add nuw nsw i32 %.0614.i, 1
-  %i.f = tail call { i32, i32, i32, i32 } asm "cpuid", "={bx},={ax},={cx},={dx},0,1,2,~{dirflag},~{fpsr},~{flags}"(i32 0, i32 %i.d, i32 %.0614.i) #3, !srcloc !8 ; 3 uses
-  %i.g = extractvalue { i32, i32, i32, i32 } %i.f, 1
+  %i.f = tail call { i32, i32, i32, i32 } asm "cpuid", "={bx},={ax},={cx},={dx},0,1,2,~{dirflag},~{fpsr},~{flags}"(i32 0, i32 %i.d, i32 %.0614.i) #3, !srcloc !8
+  %.fr.i.i = freeze { i32, i32, i32, i32 } %i.f   ; 3 uses
+  %i.g = extractvalue { i32, i32, i32, i32 } %.fr.i.i, 1
   %i.h = and i32 %i.g, 31
   switch i32 %i.h, label %bb.c [
     i32 0, label %_Z16DetectDataCachesILi4EEvPl.exit
@@ -80,8 +82,8 @@ bb.b:                                             ; preds = %bb.d, %bb.a
   ], !llvm.loop !12
 
 bb.c:                                             ; preds = %bb.b
-  %i.i = extractvalue { i32, i32, i32, i32 } %i.f, 2
-  %i.j = extractvalue { i32, i32, i32, i32 } %i.f, 0 ; 3 uses
+  %i.i = extractvalue { i32, i32, i32, i32 } %.fr.i.i, 2
+  %i.j = extractvalue { i32, i32, i32, i32 } %.fr.i.i, 0 ; 3 uses
   %i.k = lshr i32 %i.j, 22
   %i.l = add nuw nsw i32 %i.k, 1
   %i.m = lshr i32 %i.j, 11

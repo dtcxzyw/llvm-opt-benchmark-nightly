@@ -202,7 +202,7 @@ declare void @_ZNSt11logic_errorD1Ev(ptr noundef nonnull align 8 dead_on_return(
 ; Function Attrs: mustprogress nounwind uwtable
 define void @_ZN6marisa5Agent5clearEv(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(48) %0) local_unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %1 = alloca %"class.marisa::Agent", align 8     ; 10 uses
+  %1 = alloca %"class.marisa::Agent", align 8     ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #19
   invoke void @_ZN6marisa5AgentC1Ev(ptr noundef nonnull align 8 dereferenceable(48) %1)
           to label %bb.b unwind label %bb.c
@@ -226,10 +226,26 @@ bb.b:                                             ; preds = %bb.a
   store ptr %i.i, ptr %i.h, align 8, !tbaa !19
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  %2 = load <2 x i32>, ptr %i.l, align 8, !tbaa !23
-  %3 = load <2 x i32>, ptr %i.k, align 8, !tbaa !23
-  store <2 x i32> %2, ptr %i.k, align 8, !tbaa !23
-  store <2 x i32> %3, ptr %i.l, align 8, !tbaa !23
+  %2 = load i32, ptr %i.k, align 8, !tbaa !23
+  %3 = load i32, ptr %i.l, align 8, !tbaa !23
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 36
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 36
+  %6 = load i32, ptr %4, align 4, !tbaa !23
+  %7 = load i32, ptr %5, align 4, !tbaa !23
+  %8 = freeze i32 %3
+  %9 = zext i32 %8 to i64
+  %10 = freeze i32 %7
+  %11 = zext i32 %10 to i64
+  %12 = shl nuw i64 %11, 32
+  %13 = or disjoint i64 %12, %9
+  store i64 %13, ptr %i.k, align 8
+  %14 = freeze i32 %2
+  %15 = zext i32 %14 to i64
+  %16 = freeze i32 %6
+  %17 = zext i32 %16 to i64
+  %18 = shl nuw i64 %17, 32
+  %19 = or disjoint i64 %18, %15
+  store i64 %19, ptr %i.l, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.o = load ptr, ptr %i.m, align 8, !tbaa !10

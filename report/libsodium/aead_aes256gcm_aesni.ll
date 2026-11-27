@@ -204,9 +204,9 @@ bb.d:                                             ; preds = %bb.c
 
 required_blocks.exit:                             ; preds = %bb.d
   store <2 x i64> zeroinitializer, ptr %10, align 16
-  %.sroa.0.0.copyload = load <12 x i8>, ptr %8, align 1
-  %.sroa.0.0.vec.expand = shufflevector <12 x i8> %.sroa.0.0.copyload, <12 x i8> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 poison, i32 poison, i32 poison, i32 poison> ; 2 uses
-  %.sroa.0.12.vec.insert = shufflevector <16 x i8> %.sroa.0.0.vec.expand, <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 2>, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 28, i32 29, i32 30, i32 31> ; 2 uses
+  %.sroa.0.0.copyload = load <3 x i32>, ptr %8, align 1
+  %.sroa.0.0.vec.expand = shufflevector <3 x i32> %.sroa.0.0.copyload, <3 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 poison>
+  %.sroa.0.12.vec.insert = insertelement <4 x i32> %.sroa.0.0.vec.expand, i32 33554432, i64 3 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
   %i.l = icmp ne ptr %5, null
   %i.m = icmp ne i64 %6, 0
@@ -237,13 +237,14 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e, %required_blocks.exit
-  %i.t = shufflevector <16 x i8> %.sroa.0.12.vec.insert, <16 x i8> poison, <16 x i32> <i32 15, i32 14, i32 13, i32 12, i32 11, i32 10, i32 9, i32 8, i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  %11 = bitcast <4 x i32> %.sroa.0.12.vec.insert to <16 x i8>
+  %i.t = shufflevector <16 x i8> %11, <16 x i8> poison, <16 x i32> <i32 15, i32 14, i32 13, i32 12, i32 11, i32 10, i32 9, i32 8, i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
   %i.u = bitcast <16 x i8> %i.t to <2 x i64>      ; 8 uses
   %i.v = icmp samesign ugt i64 %4, 223
   br i1 %i.v, label %.preheader454.preheader.i, label %bb.h
 
 .preheader454.preheader.i:                        ; preds = %bb.g
-  %i.w = bitcast <16 x i8> %.sroa.0.12.vec.insert to <2 x i64>
+  %i.w = bitcast <4 x i32> %.sroa.0.12.vec.insert to <2 x i64>
   %i.x = add <2 x i64> %i.u, <i64 1, i64 0>
   %i.y = bitcast <2 x i64> %i.x to <16 x i8>
   %i.z = shufflevector <16 x i8> %i.y, <16 x i8> poison, <16 x i32> <i32 15, i32 14, i32 13, i32 12, i32 11, i32 10, i32 9, i32 8, i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
@@ -646,8 +647,8 @@ bb.j:                                             ; preds = %bb.j, %.lr.ph.i
   %i.brd = shl <2 x i64> %i.brc, splat (i64 3)
   %i.bre = bitcast <2 x i64> %i.brd to <16 x i8>
   %i.brf = shufflevector <16 x i8> %i.bre, <16 x i8> poison, <16 x i32> <i32 15, i32 14, i32 13, i32 12, i32 11, i32 10, i32 9, i32 8, i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0> ; 2 uses
-  %.sroa.0.12.vec.insert63 = shufflevector <16 x i8> %.sroa.0.0.vec.expand, <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 1>, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 28, i32 29, i32 30, i32 31>
-  %i.brg = bitcast <16 x i8> %.sroa.0.12.vec.insert63 to <2 x i64>
+  %.sroa.0.12.vec.insert63 = insertelement <4 x i32> %.sroa.0.12.vec.insert, i32 16777216, i64 3
+  %i.brg = bitcast <4 x i32> %.sroa.0.12.vec.insert63 to <2 x i64>
   %i.brh = load <2 x i64>, ptr %9, align 16
   %i.bri = xor <2 x i64> %i.brh, %i.brg
   %i.brj = getelementptr i8, ptr %9, i64 16       ; 2 uses
@@ -883,8 +884,8 @@ bb.c:                                             ; preds = %bb.b
 
 required_blocks.exit.i:                           ; preds = %bb.c
   store <2 x i64> zeroinitializer, ptr %9, align 16
-  %.sroa.0.0.copyload.i = load <12 x i8>, ptr %7, align 1
-  %.sroa.0.0.vec.expand.i = shufflevector <12 x i8> %.sroa.0.0.copyload.i, <12 x i8> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 poison, i32 poison, i32 poison, i32 poison>
+  %.sroa.0.0.copyload.i = load <3 x i32>, ptr %7, align 1
+  %.sroa.0.0.vec.expand.i = shufflevector <3 x i32> %.sroa.0.0.copyload.i, <3 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 poison>
   %i.r = and i64 %6, -16
   call fastcc void @gh_ad_blocks(ptr noundef nonnull readonly %8, ptr noundef %9, ptr noundef readonly %5, i64 noundef %i.r)
   %i.s = and i64 %6, 15                           ; 3 uses
@@ -926,8 +927,8 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.af = shl <2 x i64> %i.ae, splat (i64 3)
   %i.ag = bitcast <2 x i64> %i.af to <16 x i8>
   %i.ah = shufflevector <16 x i8> %i.ag, <16 x i8> poison, <16 x i32> <i32 15, i32 14, i32 13, i32 12, i32 11, i32 10, i32 9, i32 8, i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  %.sroa.0.12.vec.insert3.i = shufflevector <16 x i8> %.sroa.0.0.vec.expand.i, <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 1>, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 28, i32 29, i32 30, i32 31>
-  %i.ai = bitcast <16 x i8> %.sroa.0.12.vec.insert3.i to <2 x i64>
+  %.sroa.0.12.vec.insert3.i = insertelement <4 x i32> %.sroa.0.0.vec.expand.i, i32 16777216, i64 3
+  %i.ai = bitcast <4 x i32> %.sroa.0.12.vec.insert3.i to <2 x i64>
   %i.aj = load <2 x i64>, ptr %8, align 16
   %i.ak = xor <2 x i64> %i.aj, %i.ai
   %i.al = getelementptr i8, ptr %8, i64 16
@@ -1010,9 +1011,9 @@ bb.i:                                             ; preds = %bb.h
 
 required_blocks.exit:                             ; preds = %bb.i
   store <2 x i64> zeroinitializer, ptr %10, align 16
-  %.sroa.0.0.copyload = load <12 x i8>, ptr %7, align 1
-  %.sroa.0.0.vec.expand = shufflevector <12 x i8> %.sroa.0.0.copyload, <12 x i8> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 poison, i32 poison, i32 poison, i32 poison> ; 2 uses
-  %.sroa.0.12.vec.insert = shufflevector <16 x i8> %.sroa.0.0.vec.expand, <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 2>, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 28, i32 29, i32 30, i32 31>
+  %.sroa.0.0.copyload = load <3 x i32>, ptr %7, align 1
+  %.sroa.0.0.vec.expand = shufflevector <3 x i32> %.sroa.0.0.copyload, <3 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 poison>
+  %.sroa.0.12.vec.insert = insertelement <4 x i32> %.sroa.0.0.vec.expand, i32 33554432, i64 3 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
   %i.cp = icmp ne ptr %5, null
   %i.cq = icmp ne i64 %6, 0
@@ -1038,7 +1039,8 @@ bb.k:                                             ; preds = %bb.j
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j, %required_blocks.exit
-  %i.cx = shufflevector <16 x i8> %.sroa.0.12.vec.insert, <16 x i8> poison, <16 x i32> <i32 15, i32 14, i32 13, i32 12, i32 11, i32 10, i32 9, i32 8, i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  %11 = bitcast <4 x i32> %.sroa.0.12.vec.insert to <16 x i8>
+  %i.cx = shufflevector <16 x i8> %11, <16 x i8> poison, <16 x i32> <i32 15, i32 14, i32 13, i32 12, i32 11, i32 10, i32 9, i32 8, i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
   %i.cy = bitcast <16 x i8> %i.cx to <2 x i64>    ; 2 uses
   %.not195358.i = icmp samesign ult i64 %3, 224
   br i1 %.not195358.i, label %.preheader323.i, label %.preheader324.lr.ph.i
@@ -1441,8 +1443,8 @@ bb.m:                                             ; preds = %bb.m, %.lr.ph.i
   %i.azc = shl <2 x i64> %i.azb, splat (i64 3)
   %i.azd = bitcast <2 x i64> %i.azc to <16 x i8>
   %i.aze = shufflevector <16 x i8> %i.azd, <16 x i8> poison, <16 x i32> <i32 15, i32 14, i32 13, i32 12, i32 11, i32 10, i32 9, i32 8, i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0> ; 2 uses
-  %.sroa.0.12.vec.insert68 = shufflevector <16 x i8> %.sroa.0.0.vec.expand, <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 1>, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 28, i32 29, i32 30, i32 31>
-  %i.azf = bitcast <16 x i8> %.sroa.0.12.vec.insert68 to <2 x i64>
+  %.sroa.0.12.vec.insert68 = insertelement <4 x i32> %.sroa.0.12.vec.insert, i32 16777216, i64 3
+  %i.azf = bitcast <4 x i32> %.sroa.0.12.vec.insert68 to <2 x i64>
   %i.azg = load <2 x i64>, ptr %8, align 16       ; 2 uses
   %i.azh = xor <2 x i64> %i.azg, %i.azf
   %i.azi = getelementptr i8, ptr %8, i64 16

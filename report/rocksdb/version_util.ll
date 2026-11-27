@@ -204,9 +204,11 @@ bb.a:
   store i64 0, ptr %12, align 8, !tbaa !69
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #19
   store i8 0, ptr %13, align 1, !tbaa !71
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  store ptr null, ptr %i.g, align 8, !tbaa !72
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 6, i1 false)
+  store i32 0, ptr %0, align 8
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 4
+  store i16 0, ptr %i.g, align 4
+  %16 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  store ptr null, ptr %16, align 8, !tbaa !72
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #19
   %i.h = getelementptr inbounds nuw i8, ptr %14, i64 16 ; 5 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %14, i8 0, i64 32, i1 false)
@@ -412,7 +414,7 @@ bb.q:                                             ; preds = %bb.p
 .body:                                            ; preds = %bb.p, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.c, %bb.b
   %.pn.pn = phi { ptr, i32 } [ %i.j, %bb.b ], [ %lpad.loopexit.split-lp62, %bb.p ], [ %i.j, %bb.c ], [ %lpad.loopexit.split-lp62, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #19
-  %i.au = load ptr, ptr %i.g, align 8, !tbaa !64  ; 2 uses
+  %i.au = load ptr, ptr %16, align 8, !tbaa !64   ; 2 uses
   %.not.i.i25 = icmp eq ptr %i.au, null
   br i1 %.not.i.i25, label %_ZN7rocksdb6StatusD2Ev.exit, label %_ZNKSt14default_deleteIA_KcEclIS0_EENSt9enable_ifIXsr14is_convertibleIPA_T_PS1_EE5valueEvE4typeEPS5_.exit.i.i
 

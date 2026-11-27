@@ -112,20 +112,27 @@ bb.f:                                             ; preds = %bb.d
 bb.g:                                             ; preds = %bb.f
   %i.z = getelementptr inbounds i8, ptr %i.m, i64 -16 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %17)
-  %i.aa = getelementptr inbounds i8, ptr %i.m, i64 -12
+  %25 = load i32, ptr %i.z, align 4, !tbaa !16
+  %i.aa = getelementptr inbounds i8, ptr %i.m, i64 -12 ; 2 uses
+  %26 = load i32, ptr %i.aa, align 4, !tbaa !16
   %i.ab = getelementptr inbounds i8, ptr %i.m, i64 -8 ; 2 uses
   %i.ac = load i64, ptr %i.ab, align 8, !tbaa !18
   %i.ad = load double, ptr %i.p, align 8, !tbaa !18
   store double %i.ad, ptr %i.ab, align 8, !tbaa !18
   %i.ae = load i32, ptr %i.r, align 4, !tbaa !16
+  store i32 %i.ae, ptr %i.aa, align 4, !tbaa !16
+  %27 = load i32, ptr %i.n, align 8, !tbaa !16
+  store i32 %27, ptr %i.z, align 8, !tbaa !16
   %i.af = ptrtoint ptr %i.z to i64
   %i.ag = sub i64 %i.af, %i.w
   %i.ah = ashr exact i64 %i.ag, 4
-  %25 = load <2 x i32>, ptr %i.z, align 8, !tbaa !16
-  store i32 %i.ae, ptr %i.aa, align 4, !tbaa !16
-  %26 = load i32, ptr %i.n, align 8, !tbaa !16
-  store i32 %26, ptr %i.z, align 8, !tbaa !16
-  store <2 x i32> %25, ptr %17, align 8, !tbaa !16
+  %28 = freeze i32 %25
+  %29 = zext i32 %28 to i64
+  %30 = freeze i32 %26
+  %31 = zext i32 %30 to i64
+  %32 = shl nuw i64 %31, 32
+  %33 = or disjoint i64 %32, %29
+  store i64 %33, ptr %17, align 8
   store i64 %i.ac, ptr %i.l, align 8, !tbaa !18
   call void @_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPSt5tupleIJdiiEESt6vectorIS3_SaIS3_EEEElS3_NS0_5__ops15_Iter_comp_iterISt7greaterIS3_EEEEvT_T0_SF_T1_T2_(ptr nonnull %i.n, i64 noundef 0, i64 noundef %i.ah, ptr noundef nonnull align 8 dead_on_return %17)
   call void @llvm.lifetime.end.p0(ptr nonnull %17)

@@ -204,7 +204,7 @@ fixjump.exit.i:                                   ; preds = %bb.f
 luaK_concat.exit:                                 ; preds = %fixjump.exit.i, %bb.d, %bb.b, %bb.a
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
   %i.ab = load i32, ptr %i.aa, align 8, !tbaa !22 ; 3 uses
-  %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 3 uses
+  %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 2 uses
   %i.ad = load i32, ptr %i.ac, align 4, !tbaa !23 ; 4 uses
   %.not = icmp eq i32 %i.ab, %i.ad
   br i1 %.not, label %bb.q, label %bb.h
@@ -349,8 +349,7 @@ need_value.exit54.thread:                         ; preds = %select.unfold.i50, 
   br label %bb.q
 
 bb.q:                                             ; preds = %need_value.exit54.thread, %luaK_concat.exit
-  store i32 -1, ptr %i.aa, align 8, !tbaa !22
-  store i32 -1, ptr %i.ac, align 4, !tbaa !23
+  store i64 -1, ptr %i.aa, align 8
   %i.cj = getelementptr inbounds nuw i8, ptr %1, i64 8
   store i32 %2, ptr %i.cj, align 8, !tbaa !25
   store i32 8, ptr %1, align 8, !tbaa !24
@@ -753,13 +752,18 @@ freeexp.exit.i:                                   ; preds = %bb.n, %discharge2an
   br label %bb.o
 
 bb.o:                                             ; preds = %freeexp.exit.i, %negatecondition.exit.i, %bb.h, %bb.g, %bb.f
-  %i.bh = getelementptr inbounds nuw i8, ptr %2, i64 20 ; 2 uses
-  %i.bi = load i32, ptr %i.bh, align 4, !tbaa !23 ; 2 uses
+  %i.bh = getelementptr inbounds nuw i8, ptr %2, i64 20
+  %i.bi = load i32, ptr %i.bh, align 4, !tbaa !23
+  %4 = freeze i32 %i.bi                           ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 3 uses
-  %i.bk = load i32, ptr %i.bj, align 8, !tbaa !22 ; 3 uses
-  store i32 %i.bk, ptr %i.bh, align 4, !tbaa !23
-  store i32 %i.bi, ptr %i.bj, align 8, !tbaa !22
-  %.not6.i.i = icmp eq i32 %i.bk, -1
+  %i.bk = load i32, ptr %i.bj, align 8, !tbaa !22
+  %5 = freeze i32 %i.bk                           ; 3 uses
+  %6 = zext i32 %4 to i64
+  %7 = zext i32 %5 to i64
+  %8 = shl nuw i64 %7, 32
+  %9 = or disjoint i64 %8, %6
+  store i64 %9, ptr %i.bj, align 8
+  %.not6.i.i = icmp eq i32 %5, -1
   br i1 %.not6.i.i, label %removevalues.exit.i, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.o
@@ -769,7 +773,7 @@ bb.o:                                             ; preds = %freeexp.exit.i, %ne
   br label %bb.p
 
 bb.p:                                             ; preds = %patchtestreg.exit.i.i, %.lr.ph.i.i
-  %.07.i.i = phi i32 [ %i.bk, %.lr.ph.i.i ], [ %i.ch, %patchtestreg.exit.i.i ] ; 3 uses
+  %.07.i.i = phi i32 [ %5, %.lr.ph.i.i ], [ %i.ch, %patchtestreg.exit.i.i ] ; 3 uses
   %i.bm = sext i32 %.07.i.i to i64
   %i.bn = getelementptr inbounds [4 x i8], ptr %.val4.val.i.i, i64 %i.bm ; 4 uses
   %i.bo = icmp sgt i32 %.07.i.i, 0
@@ -821,7 +825,7 @@ removevalues.exitthread-pre-split.i:              ; preds = %patchtestreg.exit.i
   br label %removevalues.exit.i
 
 removevalues.exit.i:                              ; preds = %removevalues.exitthread-pre-split.i, %bb.o
-  %i.ci = phi i32 [ %.pr.i, %removevalues.exitthread-pre-split.i ], [ %i.bi, %bb.o ] ; 2 uses
+  %i.ci = phi i32 [ %.pr.i, %removevalues.exitthread-pre-split.i ], [ %4, %bb.o ] ; 2 uses
   %.not6.i26.i = icmp eq i32 %i.ci, -1
   br i1 %.not6.i26.i, label %codenot.exit, label %.lr.ph.i27.i
 

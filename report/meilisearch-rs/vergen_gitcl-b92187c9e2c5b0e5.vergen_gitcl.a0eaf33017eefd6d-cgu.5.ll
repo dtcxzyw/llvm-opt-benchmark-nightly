@@ -204,9 +204,13 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %4, ptr %i.a, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i32 %1, ptr %i.b, align 8
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 20
-  store i32 %2, ptr %5, align 4
+  %5 = freeze i32 %1
+  %6 = zext i32 %5 to i64
+  %7 = freeze i32 %2
+  %8 = zext i32 %7 to i64
+  %9 = shl nuw i64 %8, 32
+  %10 = or disjoint i64 %9, %6
+  store i64 %10, ptr %i.b, align 8
   ret void
 }
 
@@ -246,13 +250,15 @@ bb.a:
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: write) uwtable
 define hidden void @_ZN4time18format_description5parse8Location5error17h90555a54a2ef1507E(ptr nofree writeonly sret([24 x i8]) align 8 captures(none) initializes((0, 24)) %0, i32 %1, ptr align 1 %2, i64 %3) unnamed_addr #5 !guid !97 {
 bb.a:
+  %4 = freeze i32 %1
   store ptr %2, ptr %0, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %3, ptr %i.a, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i32 %1, ptr %i.b, align 8
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 20
-  store i32 %1, ptr %4, align 4
+  %5 = zext i32 %4 to i64                         ; 2 uses
+  %6 = shl nuw i64 %5, 32
+  %7 = or disjoint i64 %6, %5
+  store i64 %7, ptr %i.b, align 8
   ret void
 }
 
@@ -655,9 +661,13 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %2, ptr %i.a, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i32 %3, ptr %i.b, align 8
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 20
-  store i32 %4, ptr %5, align 4
+  %5 = freeze i32 %3
+  %6 = zext i32 %5 to i64
+  %7 = freeze i32 %4
+  %8 = zext i32 %7 to i64
+  %9 = shl nuw i64 %8, 32
+  %10 = or disjoint i64 %9, %6
+  store i64 %10, ptr %i.b, align 8
   ret void
 }
 

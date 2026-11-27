@@ -202,7 +202,7 @@ bb.a:
 define hidden void @_RINvNtCsbBx43SIjCL2_3log13___private_api3loguNtB2_12GlobalLoggerECs5XgW7KoffLW_12opendal_core(ptr noundef nonnull %0, ptr noundef nonnull %1, i64 noundef range(i64 1, 6) %2, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(40) %3) unnamed_addr #1 personality ptr @rust_eh_personality !guid !47 {
 bb.a:
   %i.a = alloca [0 x i8], align 1
-  %i.b = alloca [96 x i8], align 8                ; 16 uses
+  %i.b = alloca [96 x i8], align 8                ; 15 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !48)
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.d = load ptr, ptr %i.c, align 8, !alias.scope !48, !nonnull !12, !align !14, !noundef !12 ; 3 uses
@@ -241,9 +241,10 @@ bb.a:
   %.sroa.535.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 40
   store i64 %i.n, ptr %.sroa.535.0..sroa_idx.i, align 8, !noalias !48
   %i.u = getelementptr inbounds nuw i8, ptr %i.b, i64 72
-  store i32 1, ptr %i.u, align 8, !noalias !48
-  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 76
-  store i32 %i.p, ptr %4, align 4, !noalias !48
+  %4 = zext i32 %i.p to i64
+  %5 = shl nuw i64 %4, 32
+  %6 = or disjoint i64 %5, 1
+  store i64 %6, ptr %i.u, align 8, !noalias !48
   call void @_RNvXs0_NtCsbBx43SIjCL2_3log13___private_apiNtB5_12GlobalLoggerNtB7_3Log3log(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.a, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(96) %i.b), !noalias !48
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !48
   ret void
@@ -646,11 +647,11 @@ bb.a:
   %i.j = alloca [32 x i8], align 8                ; 5 uses
   %i.k = alloca [24 x i8], align 8                ; 5 uses
   %i.l = alloca [24 x i8], align 8                ; 6 uses
-  %i.m = alloca [32 x i8], align 8                ; 12 uses
+  %i.m = alloca [32 x i8], align 8                ; 11 uses
   %i.n = alloca [24 x i8], align 8                ; 5 uses
   %i.o = alloca [16 x i8], align 8                ; 5 uses
   %i.p = alloca [24 x i8], align 8                ; 9 uses
-  %i.q = alloca [32 x i8], align 8                ; 11 uses
+  %i.q = alloca [32 x i8], align 8                ; 10 uses
   %i.r = alloca [24 x i8], align 8                ; 5 uses
   %i.s = alloca [16 x i8], align 8                ; 5 uses
   %i.t = alloca [24 x i8], align 8                ; 7 uses
@@ -705,7 +706,6 @@ bb.e:                                             ; preds = %bb.b
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   %i.aj = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.ak = getelementptr inbounds nuw i8, ptr %i.q, i64 8 ; 4 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.q, i64 1
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.b
@@ -766,8 +766,10 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.j
   %i.ar = getelementptr inbounds nuw i8, ptr %i.ap, i64 1
   %i.as = load i8, ptr %i.ar, align 1, !range !23, !alias.scope !613, !noundef !12
-  store i8 %i.as, ptr %3, align 1, !alias.scope !612
-  store i8 1, ptr %i.q, align 8, !alias.scope !612
+  %3 = zext nneg i8 %i.as to i16
+  %4 = shl nuw nsw i16 %3, 8
+  %5 = or disjoint i16 %4, 1
+  store i16 %5, ptr %i.q, align 8, !alias.scope !612
   br label %_RNvXs3_NtCsdMEyVxnODSb_10serde_json5valueNtB5_5ValueNtNtCsgxBkk5gSRhY_4core5clone5Clone5clone.exit
 
 bb.m:                                             ; preds = %bb.j
@@ -937,7 +939,6 @@ bb.ab:                                            ; preds = %bb.z
   %.sroa.622.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.g, i64 16
   %i.bu = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.bv = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 4 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.m, i64 1
   %.sroa.452.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   %.sroa.553.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 16
   %i.bw = getelementptr inbounds nuw i8, ptr %i.p, i64 16 ; 7 uses
@@ -994,8 +995,10 @@ bb.ag:                                            ; preds = %bb.af
 bb.ah:                                            ; preds = %bb.af
   %i.cd = getelementptr inbounds nuw i8, ptr %i.cb, i64 1
   %i.ce = load i8, ptr %i.cd, align 1, !range !23, !alias.scope !626, !noundef !12
-  store i8 %i.ce, ptr %4, align 1, !alias.scope !625
-  store i8 1, ptr %i.m, align 8, !alias.scope !625
+  %6 = zext nneg i8 %i.ce to i16
+  %7 = shl nuw nsw i16 %6, 8
+  %8 = or disjoint i16 %7, 1
+  store i16 %8, ptr %i.m, align 8, !alias.scope !625
   br label %bb.aq
 
 bb.ai:                                            ; preds = %bb.af
@@ -1325,12 +1328,15 @@ bb.m:                                             ; preds = %bb.k
 
 _RNvXs3_NtCsdMEyVxnODSb_10serde_json5valueNtB5_5ValueNtNtCsgxBkk5gSRhY_4core5clone5Clone5clone.exit: ; preds = %.noexc13, %.noexc12, %.noexc, %bb.f, %bb.e, %bb.d
   %.sroa.9.0 = phi i8 [ undef, %.noexc13 ], [ %i.z, %bb.e ], [ undef, %bb.f ], [ undef, %.noexc ], [ undef, %.noexc12 ], [ undef, %bb.d ]
-  %i.an = getelementptr inbounds nuw [32 x i8], ptr %i.m, i64 %.sroa.7.044 ; 3 uses
+  %i.an = getelementptr inbounds nuw [32 x i8], ptr %i.m, i64 %.sroa.7.044 ; 2 uses
   %.sroa.530.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.an, i64 2
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(30) %.sroa.530.0..sroa_idx, ptr noundef nonnull align 2 dereferenceable(30) %.sroa.1018, i64 30, i1 false)
-  store i8 %i.x, ptr %i.an, align 8
-  %.sroa.429.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.an, i64 1
-  store i8 %.sroa.9.0, ptr %.sroa.429.0..sroa_idx, align 1
+  %3 = zext nneg i8 %i.x to i16
+  %4 = freeze i8 %.sroa.9.0
+  %5 = zext i8 %4 to i16
+  %6 = shl nuw i16 %5, 8
+  %7 = or disjoint i16 %6, %3
+  store i16 %7, ptr %i.an, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.1018)
   %i.ao = icmp eq i64 %i.t, 0
   br i1 %i.ao, label %.thread, label %bb.c

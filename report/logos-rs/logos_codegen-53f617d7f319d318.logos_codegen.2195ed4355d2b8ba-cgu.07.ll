@@ -202,14 +202,17 @@ define void @_RINvYINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapINtNtNtBc_3
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false)
-  %i.b = tail call { i32, i32 } @_RNvXNtNtNtCskKLDkoKarTP_4core4iter6traits7collectINtNtNtB6_7sources4once4OnceNtNtNtCsaKDqXqZWSq0_14regex_automata4util10primitives7StateIDENtB2_12IntoIterator9into_iterCs2SM5xCHwwDm_13logos_codegen(i32 %2, i32 %3) #14 ; 2 uses
-  %i.c = extractvalue { i32, i32 } %i.b, 0
-  %i.d = extractvalue { i32, i32 } %i.b, 1
+  %i.b = tail call { i32, i32 } @_RNvXNtNtNtCskKLDkoKarTP_4core4iter6traits7collectINtNtNtB6_7sources4once4OnceNtNtNtCsaKDqXqZWSq0_14regex_automata4util10primitives7StateIDENtB2_12IntoIterator9into_iterCs2SM5xCHwwDm_13logos_codegen(i32 %2, i32 %3) #14
+  %.fr = freeze { i32, i32 } %i.b                 ; 2 uses
+  %i.c = extractvalue { i32, i32 } %.fr, 0
+  %i.d = extractvalue { i32, i32 } %.fr, 1
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.e, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false)
-  store i32 %i.c, ptr %0, align 8
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i32 %i.d, ptr %4, align 4
+  %4 = zext i32 %i.c to i64
+  %5 = zext i32 %i.d to i64
+  %6 = shl nuw i64 %5, 32
+  %7 = or disjoint i64 %6, %4
+  store i64 %7, ptr %0, align 8
   ret void
 }
 

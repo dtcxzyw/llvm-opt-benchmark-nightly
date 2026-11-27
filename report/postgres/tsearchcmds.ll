@@ -202,10 +202,12 @@ bb.k:                                             ; preds = %bb.j, %makeTSTempla
 ; Function Attrs: nounwind uwtable
 define internal fastcc noundef range(i64 0, 4294967296) i64 @get_ts_template_func(ptr noundef %0, i32 noundef range(i32 4, 6) %1) unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [4 x i32], align 16               ; 5 uses
+  %i.a = alloca [4 x i32], align 16               ; 6 uses
   %i.b = tail call ptr @defGetQualifiedName(ptr noundef %0) #9 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
-  store <4 x i32> splat (i32 2281), ptr %i.a, align 16
+  store i64 9796820404457, ptr %i.a, align 16
+  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  store i64 9796820404457, ptr %2, align 8
   %i.c = icmp eq i32 %1, 4
   %. = select i1 %i.c, i32 1, i32 4               ; 2 uses
   %i.d = call i32 @LookupFuncName(ptr noundef %i.b, i32 noundef %., ptr noundef nonnull %i.a, i1 noundef zeroext false) #9 ; 2 uses

@@ -204,15 +204,18 @@ _RNvMNtCs6i54tJFfzR_5alloc5boxedINtB2_3BoxINtNtCselJpgKOOZlr_6anyhow5error9Error
 ; Function Attrs: cold nonlazybind uwtable
 define internal fastcc noalias noundef nonnull ptr @_RINvMNtCselJpgKOOZlr_6anyhow5errorNtB5_5Error9constructNtNtCs76KlaVGnJsc_4http5error5ErrorECs5XgW7KoffLW_12opendal_core(i8 noundef range(i8 0, 7) %0, i8 %1, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %2) unnamed_addr #0 personality ptr @rust_eh_personality !guid !57 {
 bb.a:
-  %i.a = alloca [64 x i8], align 8                ; 8 uses
+  %i.a = alloca [64 x i8], align 8                ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr @2, ptr %i.a, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.b, ptr noundef nonnull align 8 dereferenceable(48) %2, i64 48, i1 false)
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 56
-  store i8 %0, ptr %i.c, align 8
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 57
-  store i8 %1, ptr %3, align 1
+  %3 = zext nneg i8 %0 to i16
+  %4 = freeze i8 %1
+  %5 = zext i8 %4 to i16
+  %6 = shl nuw i16 %5, 8
+  %7 = or disjoint i16 %6, %3
+  store i16 %7, ptr %i.c, align 8
   tail call void @_RNvCs1njKG4L9aB3_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #27, !noalias !58
   %i.d = tail call noundef align 8 dereferenceable_or_null(64) ptr @_RNvCs1njKG4L9aB3_7___rustc12___rust_alloc(i64 noundef range(i64 0, 105) 64, i64 noundef range(i64 1, 9) 8) #27, !noalias !58 ; 3 uses
   %i.e = icmp eq ptr %i.d, null
@@ -615,7 +618,7 @@ bb.a:
   %i.b = alloca [8 x i8], align 8                 ; 5 uses
   %i.c = alloca [40 x i8], align 8                ; 10 uses
   %i.d = alloca [40 x i8], align 8                ; 9 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %1, i64 49 ; 3 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %1, i64 49
   %i.f = load i8, ptr %i.e, align 1, !range !25, !noundef !12
   switch i8 %i.f, label %default.unreachable77 [
     i8 0, label %bb.b
@@ -628,8 +631,7 @@ default.unreachable77:                            ; preds = %bb.e, %bb.a
   unreachable
 
 .body:                                            ; preds = %bb.v, %.thread
-  store i8 0, ptr %i.as, align 8
-  store i8 2, ptr %i.e, align 1
+  store i16 512, ptr %i.as, align 8
   resume { ptr, i32 } %.pn15.pn
 
 bb.b:                                             ; preds = %bb.a
@@ -682,7 +684,6 @@ common.ret:                                       ; preds = %bb.s
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.3.sroa.5.0..sroa.3.0..sroa_idx4.sroa_idx, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !1048
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !1048
-  store i8 0, ptr %i.al, align 8
   store i64 -1, ptr %0, align 8
   %.sroa.3.0..sroa_idx4 = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.k, ptr %.sroa.3.0..sroa_idx4, align 8
@@ -690,7 +691,7 @@ common.ret:                                       ; preds = %bb.s
   store i64 %i.l, ptr %.sroa.3.sroa.3.0..sroa.3.0..sroa_idx4.sroa_idx, align 8
   %.sroa.3.sroa.4.0..sroa.3.0..sroa_idx4.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 %i.m, ptr %.sroa.3.sroa.4.0..sroa.3.0..sroa_idx4.sroa_idx, align 8
-  store i8 1, ptr %i.e, align 1
+  store i16 256, ptr %i.al, align 8
   ret void
 
 bb.h:                                             ; preds = %.thread78, %bb.e

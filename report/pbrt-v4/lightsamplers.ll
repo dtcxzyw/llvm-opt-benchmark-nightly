@@ -205,10 +205,15 @@ _ZN4pbrt16OctahedralVectorC2ENS_7Vector3IfEE.exit: ; preds = %bb.b, %bb.c
   %i.as = fmul float %..i.i3.i, 6.553500e+04
   %i.at = tail call float @llvm.round.f32(float %i.as)
   %i.au = select i1 %i.aq, float 0.000000e+00, float %i.at
-  %3 = insertelement <2 x float> poison, float %.sink24.in.i, i64 0
-  %4 = insertelement <2 x float> %3, float %i.au, i64 1
-  %5 = fptoui <2 x float> %4 to <2 x i16>
-  store <2 x i16> %5, ptr %0, align 4, !tbaa !35
+  %.sink.i = fptoui float %i.au to i16
+  %.sink24.i = fptoui float %.sink24.in.i to i16
+  %3 = freeze i16 %.sink24.i
+  %4 = zext i16 %3 to i32
+  %5 = freeze i16 %.sink.i
+  %6 = zext i16 %5 to i32
+  %7 = shl nuw i32 %6, 16
+  %8 = or disjoint i32 %7, %4
+  store i32 %8, ptr %0, align 4
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.aw = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.ax = load float, ptr %i.aw, align 4, !tbaa !109

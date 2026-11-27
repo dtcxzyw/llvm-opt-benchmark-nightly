@@ -204,14 +204,19 @@ bb.a:
   %i.i = xor i32 %i.g, %i.h
   %i.j = load i64, ptr %0, align 8, !tbaa !160    ; 2 uses
   %i.k = trunc i64 %i.j to i32
-  %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 4 ; 2 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 4
   %i.m = load i32, ptr %i.l, align 4, !tbaa !19
   %i.n = xor i32 %i.m, %i.k
-  store i32 %i.n, ptr %i.l, align 4, !tbaa !19
   %i.o = lshr i64 %i.j, 32
   %i.p = trunc nuw i64 %i.o to i32
   %i.q = xor i32 %i.i, %i.p
-  store i32 %i.q, ptr %i.b, align 16, !tbaa !19
+  %2 = freeze i32 %i.q
+  %3 = zext i32 %2 to i64
+  %4 = freeze i32 %i.n
+  %5 = zext i32 %4 to i64
+  %6 = shl nuw i64 %5, 32
+  %7 = or disjoint i64 %6, %3
+  store i64 %7, ptr %i.b, align 16
   %i.r = call i32 @getpid() #23
   %i.s = atomicrmw volatile add ptr @fill_random_seed.n, i32 1 seq_cst, align 4
   %i.t = shl i32 %i.s, 16

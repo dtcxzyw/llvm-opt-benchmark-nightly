@@ -202,7 +202,7 @@ define hidden range(i64 0, 4785070309113859) i64 @_RNvXNtNtCskKLDkoKarTP_4core4c
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.b = load i16, ptr %i.a, align 8, !range !251, !noundef !4
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 18 ; 2 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 18
   %i.d = load i16, ptr %i.c, align 2
   store i16 0, ptr %i.a, align 8
   %i.e = trunc nuw i16 %i.b to i1
@@ -234,9 +234,10 @@ bb.f:                                             ; preds = %bb.d
   br i1 %i.k, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.l = tail call { i16, i16 } @_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters6clonedINtB4_6ClonedINtNtNtBa_5slice4iter4ItertEENtNtNtB8_6traits8iterator8Iterator4nextCsdc6yCHiM2ZJ_4pyo3(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %0) ; 2 uses
-  %i.m = extractvalue { i16, i16 } %i.l, 0        ; 2 uses
-  %i.n = extractvalue { i16, i16 } %i.l, 1        ; 3 uses
+  %i.l = tail call { i16, i16 } @_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters6clonedINtB4_6ClonedINtNtNtBa_5slice4iter4ItertEENtNtNtB8_6traits8iterator8Iterator4nextCsdc6yCHiM2ZJ_4pyo3(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %0)
+  %.fr = freeze { i16, i16 } %i.l                 ; 2 uses
+  %i.m = extractvalue { i16, i16 } %.fr, 0        ; 2 uses
+  %i.n = extractvalue { i16, i16 } %.fr, 1        ; 3 uses
   %i.o = trunc i16 %i.m to i1
   br i1 %i.o, label %bb.i, label %bb.j
 
@@ -254,8 +255,11 @@ bb.j:                                             ; preds = %bb.g
   br label %bb.m
 
 bb.k:                                             ; preds = %bb.i
-  store i16 %i.m, ptr %i.a, align 8
-  store i16 %i.n, ptr %i.c, align 2
+  %1 = zext i16 %i.m to i32
+  %2 = zext i16 %i.n to i32
+  %3 = shl nuw i32 %2, 16
+  %4 = or disjoint i32 %3, %1
+  store i32 %4, ptr %i.a, align 8
   %.sroa.438.2.insert.ext = zext i16 %.sroa.020.0 to i64
   br label %bb.m
 

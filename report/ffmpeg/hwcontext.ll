@@ -204,14 +204,16 @@ bb.a:
   br i1 %.not, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.h = tail call noalias ptr @av_mallocz(i64 noundef 32) #9 ; 7 uses
+  %i.h = tail call noalias ptr @av_mallocz(i64 noundef 32) #9 ; 8 uses
   store ptr %i.h, ptr %i.a, align 8, !tbaa !58
   %.not8 = icmp eq ptr %i.h, null
   br i1 %.not8, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 16
-  store <4 x i32> <i32 0, i32 0, i32 2147483647, i32 2147483647>, ptr %i.i, align 8, !tbaa !37
+  store i64 0, ptr %i.i, align 8
+  %2 = getelementptr inbounds nuw i8, ptr %i.h, i64 24
+  store i64 9223372034707292159, ptr %2, align 8
   %i.j = load ptr, ptr %i.f, align 8, !tbaa !97
   %i.k = tail call i32 %i.j(ptr noundef nonnull %i.c, ptr noundef %1, ptr noundef nonnull %i.h) #9
   %i.l = icmp sgt i32 %i.k, -1

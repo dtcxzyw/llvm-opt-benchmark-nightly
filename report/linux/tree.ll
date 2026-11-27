@@ -205,8 +205,9 @@ bb.ab:                                            ; preds = %rcu_jiffies_till_st
 bb.ac:                                            ; preds = %bb.ab, %bb.y
   %rcu_watching_snap_save.rcu_watching_snap_recheck.i = select i1 %.0, ptr @rcu_watching_snap_save, ptr @rcu_watching_snap_recheck
   %i.cf = load i8, ptr getelementptr inbounds nuw (i8, ptr @rcu_state, i64 3533), align 1
-  store i8 %i.cf, ptr getelementptr inbounds nuw (i8, ptr @rcu_state, i64 3532), align 4
-  store i8 0, ptr getelementptr inbounds nuw (i8, ptr @rcu_state, i64 3533), align 1
+  %1 = freeze i8 %i.cf
+  %2 = zext i8 %1 to i16
+  store i16 %2, ptr getelementptr inbounds nuw (i8, ptr @rcu_state, i64 3532), align 4
   %i.cg = load i32, ptr @rcu_num_lvls, align 4
   %i.ch = add i32 %i.cg, -1
   %i.ci = sext i32 %i.ch to i64

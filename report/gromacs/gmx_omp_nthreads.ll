@@ -202,10 +202,14 @@ bb.o:                                             ; preds = %_ZL31manage_number_
 bb.p:                                             ; preds = %bb.o
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #13
-  %i.am = load <2 x i32>, ptr @_ZL5modth, align 8, !tbaa !10 ; 2 uses
-  %i.an = sub nsw <2 x i32> zeroinitializer, %i.am
-  %14 = shufflevector <2 x i32> %i.an, <2 x i32> %i.am, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
-  store <4 x i32> %14, ptr %i.a, align 16, !tbaa !10
+  %i.am = load <2 x i32>, ptr @_ZL5modth, align 8, !tbaa !10
+  %14 = freeze <2 x i32> %i.am                    ; 2 uses
+  %i.an = sub <2 x i32> zeroinitializer, %14
+  %15 = zext <2 x i32> %i.an to <2 x i64>
+  %16 = zext <2 x i32> %14 to <2 x i64>
+  %17 = shl nuw <2 x i64> %16, splat (i64 32)
+  %18 = or disjoint <2 x i64> %17, %15
+  store <2 x i64> %18, ptr %i.a, align 16
   %i.ao = load ptr, ptr @TMPI_INT, align 8, !tbaa !50
   %i.ap = load ptr, ptr %1, align 8, !tbaa !48
   %i.aq = call noundef i32 @_Z14tMPI_AllreducePKvPviP14tmpi_datatype_7tMPI_OpP10tmpi_comm_(ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, i32 noundef 4, ptr noundef %i.ao, i32 noundef 0, ptr noundef %i.ap) ; 0 uses

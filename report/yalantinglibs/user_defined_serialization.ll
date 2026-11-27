@@ -106,7 +106,7 @@ bb.a:
   store i32 11, ptr %i.a, align 4, !tbaa !16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #16
   store i32 22, ptr %i.b, align 4, !tbaa !16
-  %i.e = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 5 uses
   %i.f = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
   invoke void @_ZNSt6vectorIN13my_name_space7array2DESaIS1_EE17_M_realloc_insertIJiiEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %5, ptr null, ptr noundef nonnull align 4 dereferenceable(4) %i.a, ptr noundef nonnull align 4 dereferenceable(4) %i.b)
           to label %_ZNSt6vectorIN13my_name_space7array2DESaIS1_EE12emplace_backIJiiEEERS1_DpOT_.exit unwind label %bb.w
@@ -118,19 +118,18 @@ _ZNSt6vectorIN13my_name_space7array2DESaIS1_EE12emplace_backIJiiEEERS1_DpOT_.exi
   store i32 114, ptr %i.c, align 4, !tbaa !16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #16
   store i32 514, ptr %i.d, align 4, !tbaa !16
-  %i.g = load ptr, ptr %i.e, align 8, !tbaa !19   ; 6 uses
+  %i.g = load ptr, ptr %i.e, align 8, !tbaa !19   ; 4 uses
   %i.h = load ptr, ptr %i.f, align 8, !tbaa !20
   %.not.i11 = icmp eq ptr %i.g, %i.h
   br i1 %.not.i11, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %_ZNSt6vectorIN13my_name_space7array2DESaIS1_EE12emplace_backIJiiEEERS1_DpOT_.exit
-  store i32 114, ptr %i.g, align 8, !tbaa !14
-  %10 = getelementptr inbounds nuw i8, ptr %i.g, i64 4
-  store i32 514, ptr %10, align 4, !tbaa !15
+  store i64 2207613190258, ptr %i.g, align 8
   %i.i = call noalias dereferenceable_or_null(234384) ptr @calloc(i64 noundef 58596, i64 noundef 4) #17
   %i.j = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   store ptr %i.i, ptr %i.j, align 8, !tbaa !21
-  %i.k = getelementptr inbounds nuw i8, ptr %i.g, i64 16
+  %10 = load ptr, ptr %i.e, align 8, !tbaa !19
+  %i.k = getelementptr inbounds nuw i8, ptr %10, i64 16
   store ptr %i.k, ptr %i.e, align 8, !tbaa !19
   br label %_ZNSt6vectorIN13my_name_space7array2DESaIS1_EE12emplace_backIJiiEEERS1_DpOT_.exit14
 
@@ -533,15 +532,15 @@ _ZNKSt6vectorIN13my_name_space7array2DESaIS1_EE12_M_check_lenEmPKc.exit: ; preds
   tail call void @llvm.assume(i1 %.not.i)
   %i.o = shl nuw nsw i64 %i.l, 4
   %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #20 ; 5 uses
-  %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.n ; 3 uses
-  %i.r = load i32, ptr %2, align 4, !tbaa !16     ; 2 uses
-  %i.s = load i32, ptr %3, align 4, !tbaa !16     ; 2 uses
-  store i32 %i.r, ptr %i.q, align 8, !tbaa !14
-  %4 = getelementptr inbounds nuw i8, ptr %i.q, i64 4
-  store i32 %i.s, ptr %4, align 4, !tbaa !15
-  %5 = zext i32 %i.r to i64
-  %6 = zext i32 %i.s to i64
-  %i.t = mul nuw i64 %6, %5
+  %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.n ; 2 uses
+  %i.r = load i32, ptr %2, align 4, !tbaa !16
+  %i.s = load i32, ptr %3, align 4, !tbaa !16
+  %4 = zext i32 %i.r to i64                       ; 2 uses
+  %5 = zext i32 %i.s to i64                       ; 2 uses
+  %6 = shl nuw i64 %5, 32
+  %7 = or disjoint i64 %6, %4
+  store i64 %7, ptr %i.q, align 8
+  %i.t = mul nuw i64 %5, %4
   %i.u = tail call noalias ptr @calloc(i64 noundef %i.t, i64 noundef 4) #17
   %i.v = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   store ptr %i.u, ptr %i.v, align 8, !tbaa !21
@@ -571,9 +570,17 @@ _ZSt34__uninitialized_move_if_noexcept_aIPN13my_name_space7array2DES2_SaIS1_EET0
 
 .lr.ph.i.i.i.i.i29:                               ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPN13my_name_space7array2DES2_SaIS1_EET0_T_S5_S4_RT1_.exit, %.lr.ph.i.i.i.i.i29
   %.012.i.i.i.i.i30 = phi ptr [ %i.ak, %.lr.ph.i.i.i.i.i29 ], [ %i.ae, %_ZSt34__uninitialized_move_if_noexcept_aIPN13my_name_space7array2DES2_SaIS1_EET0_T_S5_S4_RT1_.exit ] ; 3 uses
-  %.sroa.08.011.i.i.i.i.i31 = phi ptr [ %i.aj, %.lr.ph.i.i.i.i.i29 ], [ %1, %_ZSt34__uninitialized_move_if_noexcept_aIPN13my_name_space7array2DES2_SaIS1_EET0_T_S5_S4_RT1_.exit ] ; 3 uses
-  %7 = load <2 x i32>, ptr %.sroa.08.011.i.i.i.i.i31, align 8, !tbaa !16
-  store <2 x i32> %7, ptr %.012.i.i.i.i.i30, align 8, !tbaa !16
+  %.sroa.08.011.i.i.i.i.i31 = phi ptr [ %i.aj, %.lr.ph.i.i.i.i.i29 ], [ %1, %_ZSt34__uninitialized_move_if_noexcept_aIPN13my_name_space7array2DES2_SaIS1_EET0_T_S5_S4_RT1_.exit ] ; 4 uses
+  %8 = load i32, ptr %.sroa.08.011.i.i.i.i.i31, align 8, !tbaa !14
+  %9 = getelementptr inbounds nuw i8, ptr %.sroa.08.011.i.i.i.i.i31, i64 4
+  %10 = load i32, ptr %9, align 4, !tbaa !15
+  %11 = freeze i32 %8
+  %12 = zext i32 %11 to i64
+  %13 = freeze i32 %10
+  %14 = zext i32 %13 to i64
+  %15 = shl nuw i64 %14, 32
+  %16 = or disjoint i64 %15, %12
+  store i64 %16, ptr %.012.i.i.i.i.i30, align 8
   %i.ag = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i30, i64 8
   %i.ah = getelementptr inbounds nuw i8, ptr %.sroa.08.011.i.i.i.i.i31, i64 8 ; 2 uses
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !21
@@ -968,9 +975,17 @@ _ZNSt12_Vector_baseIN13my_name_space7array2DESaIS1_EE11_M_allocateEm.exit.i: ; p
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %_ZNSt12_Vector_baseIN13my_name_space7array2DESaIS1_EE11_M_allocateEm.exit.i, %.lr.ph.i.i.i.i.i
   %.012.i.i.i.i.i = phi ptr [ %i.u, %.lr.ph.i.i.i.i.i ], [ %i.o, %_ZNSt12_Vector_baseIN13my_name_space7array2DESaIS1_EE11_M_allocateEm.exit.i ] ; 3 uses
-  %.sroa.08.011.i.i.i.i.i = phi ptr [ %i.t, %.lr.ph.i.i.i.i.i ], [ %i.d, %_ZNSt12_Vector_baseIN13my_name_space7array2DESaIS1_EE11_M_allocateEm.exit.i ] ; 3 uses
-  %2 = load <2 x i32>, ptr %.sroa.08.011.i.i.i.i.i, align 8, !tbaa !16
-  store <2 x i32> %2, ptr %.012.i.i.i.i.i, align 8, !tbaa !16
+  %.sroa.08.011.i.i.i.i.i = phi ptr [ %i.t, %.lr.ph.i.i.i.i.i ], [ %i.d, %_ZNSt12_Vector_baseIN13my_name_space7array2DESaIS1_EE11_M_allocateEm.exit.i ] ; 4 uses
+  %2 = load i32, ptr %.sroa.08.011.i.i.i.i.i, align 8, !tbaa !14
+  %3 = getelementptr inbounds nuw i8, ptr %.sroa.08.011.i.i.i.i.i, i64 4
+  %4 = load i32, ptr %3, align 4, !tbaa !15
+  %5 = freeze i32 %2
+  %6 = zext i32 %5 to i64
+  %7 = freeze i32 %4
+  %8 = zext i32 %7 to i64
+  %9 = shl nuw i64 %8, 32
+  %10 = or disjoint i64 %9, %6
+  store i64 %10, ptr %.012.i.i.i.i.i, align 8
   %i.q = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i, i64 8
   %i.r = getelementptr inbounds nuw i8, ptr %.sroa.08.011.i.i.i.i.i, i64 8 ; 2 uses
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !21
@@ -1076,9 +1091,17 @@ _ZSt34__uninitialized_move_if_noexcept_aIPN13my_name_space7array2DES2_SaIS1_EET0
 
 .lr.ph.i.i.i.i.i27:                               ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPN13my_name_space7array2DES2_SaIS1_EET0_T_S5_S4_RT1_.exit, %.lr.ph.i.i.i.i.i27
   %.012.i.i.i.i.i28 = phi ptr [ %i.af, %.lr.ph.i.i.i.i.i27 ], [ %i.z, %_ZSt34__uninitialized_move_if_noexcept_aIPN13my_name_space7array2DES2_SaIS1_EET0_T_S5_S4_RT1_.exit ] ; 3 uses
-  %.sroa.08.011.i.i.i.i.i29 = phi ptr [ %i.ae, %.lr.ph.i.i.i.i.i27 ], [ %1, %_ZSt34__uninitialized_move_if_noexcept_aIPN13my_name_space7array2DES2_SaIS1_EET0_T_S5_S4_RT1_.exit ] ; 3 uses
-  %2 = load <2 x i32>, ptr %.sroa.08.011.i.i.i.i.i29, align 8, !tbaa !16
-  store <2 x i32> %2, ptr %.012.i.i.i.i.i28, align 8, !tbaa !16
+  %.sroa.08.011.i.i.i.i.i29 = phi ptr [ %i.ae, %.lr.ph.i.i.i.i.i27 ], [ %1, %_ZSt34__uninitialized_move_if_noexcept_aIPN13my_name_space7array2DES2_SaIS1_EET0_T_S5_S4_RT1_.exit ] ; 4 uses
+  %2 = load i32, ptr %.sroa.08.011.i.i.i.i.i29, align 8, !tbaa !14
+  %3 = getelementptr inbounds nuw i8, ptr %.sroa.08.011.i.i.i.i.i29, i64 4
+  %4 = load i32, ptr %3, align 4, !tbaa !15
+  %5 = freeze i32 %2
+  %6 = zext i32 %5 to i64
+  %7 = freeze i32 %4
+  %8 = zext i32 %7 to i64
+  %9 = shl nuw i64 %8, 32
+  %10 = or disjoint i64 %9, %6
+  store i64 %10, ptr %.012.i.i.i.i.i28, align 8
   %i.ab = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i28, i64 8
   %i.ac = getelementptr inbounds nuw i8, ptr %.sroa.08.011.i.i.i.i.i29, i64 8 ; 2 uses
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !21

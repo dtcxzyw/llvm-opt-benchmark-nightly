@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.a
 ; Function Attrs: nonlazybind uwtable
 define void @_RNvMsa_NtCs3NyA1pFSltE_9candle_nn11var_builderINtB5_14VarBuilderArgsINtNtCsgCecv3eZDcN_5alloc5boxed3BoxDNtB5_13SimpleBackendEL_EE12from_backend(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([40 x i8]) align 8 captures(none) dereferenceable(40) %0, ptr noundef nonnull %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %2, i8 noundef range(i8 0, 14) %3, i8 noundef range(i8 0, 3) %4) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [32 x i8], align 8                ; 8 uses
+  %i.a = alloca [32 x i8], align 8                ; 7 uses
   tail call void @_RNvCsh0WfaQiVYm0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #22, !noalias !658
   %i.b = tail call noundef align 8 dereferenceable_or_null(32) ptr @_RNvCsh0WfaQiVYm0_7___rustc12___rust_alloc(i64 noundef range(i64 0, 161) 32, i64 noundef range(i64 1, 9) 8) #22, !noalias !658 ; 7 uses
   %i.c = icmp eq ptr %i.b, null
@@ -248,9 +248,11 @@ _RNvMNtCsgCecv3eZDcN_5alloc5boxedINtB2_3BoxINtNtB4_4sync8ArcInnerIBv_DNtNtCs3NyA
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
   store ptr %i.b, ptr %i.g, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  store i8 %3, ptr %.sroa.4.0..sroa_idx, align 8
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 25
-  store i8 %4, ptr %.sroa.5.0..sroa_idx, align 1
+  %5 = zext nneg i8 %3 to i16
+  %6 = zext nneg i8 %4 to i16
+  %7 = shl nuw nsw i16 %6, 8
+  %8 = or disjoint i16 %7, %5
+  store i16 %8, ptr %.sroa.4.0..sroa_idx, align 8
   tail call void @_RNvCsh0WfaQiVYm0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #22, !noalias !659
   %i.h = tail call noundef align 8 dereferenceable_or_null(32) ptr @_RNvCsh0WfaQiVYm0_7___rustc12___rust_alloc(i64 noundef range(i64 0, 161) 32, i64 noundef range(i64 1, 9) 8) #22, !noalias !659 ; 3 uses
   %i.i = icmp eq ptr %i.h, null

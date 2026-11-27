@@ -95,6 +95,7 @@ bb.a:
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !231  ; 3 uses
   %i.l = load ptr, ptr %i.i, align 8, !tbaa !231  ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 472 ; 2 uses
+  %4 = zext i32 %1 to i64                         ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %3, i64 96 ; 2 uses
@@ -306,9 +307,10 @@ bb.t:                                             ; preds = %.critedge5
   %i.cq = zext i32 %i.cp to i64
   %i.cr = load ptr, ptr %i.d, align 8, !tbaa !230
   %i.cs = getelementptr inbounds nuw [24 x i8], ptr %i.cr, i64 %i.cq ; 4 uses
-  %i.ct = load i32, ptr %i.bo, align 8, !tbaa !168 ; 2 uses
+  %i.ct = load i32, ptr %i.bo, align 8, !tbaa !168
+  %5 = freeze i32 %i.ct                           ; 2 uses
   %i.cu = getelementptr inbounds nuw i8, ptr %i.cs, i64 8 ; 3 uses
-  %i.cv = load ptr, ptr %i.cu, align 8, !tbaa !181 ; 8 uses
+  %i.cv = load ptr, ptr %i.cu, align 8, !tbaa !181 ; 7 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cs, i64 16 ; 2 uses
   %i.cx = load ptr, ptr %i.cw, align 8, !tbaa !182
   %.not.i.i.i = icmp eq ptr %i.cv, %i.cx
@@ -317,9 +319,10 @@ bb.t:                                             ; preds = %.critedge5
 bb.u:                                             ; preds = %bb.t
   store ptr %.sroa.083.0.copyload, ptr %i.cv, align 8, !tbaa !167
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.cv, i64 8
-  store i32 %1, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !168
-  %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.cv, i64 12
-  store i32 %i.ct, ptr %.sroa.6.0..sroa_idx.i, align 4, !tbaa !168
+  %6 = zext i32 %5 to i64
+  %7 = shl nuw i64 %6, 32
+  %8 = or disjoint i64 %7, %4
+  store i64 %8, ptr %.sroa.5.0..sroa_idx.i, align 8
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cv, i64 16
   store ptr %i.cy, ptr %i.cu, align 8, !tbaa !181
   br label %_ZN7CaDiCaL8Internal13watch_literalEiiPNS_6ClauseE.exit
@@ -347,12 +350,13 @@ _ZNKSt6vectorIN7CaDiCaL5WatchESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i.i: ; preds 
   tail call void @llvm.assume(i1 %.not.i.i.i.i.i)
   %i.dj = shl nuw nsw i64 %i.di, 4
   %i.dk = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.dj) #14 ; 5 uses
-  %i.dl = getelementptr inbounds nuw i8, ptr %i.dk, i64 %i.dc ; 3 uses
+  %i.dl = getelementptr inbounds nuw i8, ptr %i.dk, i64 %i.dc ; 2 uses
   store ptr %.sroa.083.0.copyload, ptr %i.dl, align 8, !tbaa !167
   %.sroa.5.0..sroa_idx5.i = getelementptr inbounds nuw i8, ptr %i.dl, i64 8
-  store i32 %1, ptr %.sroa.5.0..sroa_idx5.i, align 8, !tbaa !168
-  %.sroa.6.0..sroa_idx7.i = getelementptr inbounds nuw i8, ptr %i.dl, i64 12
-  store i32 %i.ct, ptr %.sroa.6.0..sroa_idx7.i, align 4, !tbaa !168
+  %9 = zext i32 %5 to i64
+  %10 = shl nuw i64 %9, 32
+  %11 = or disjoint i64 %10, %4
+  store i64 %11, ptr %.sroa.5.0..sroa_idx5.i, align 8
   %.not10.i.i.i.i.i.i.i.i = icmp eq ptr %i.cz, %i.cv
   br i1 %.not10.i.i.i.i.i.i.i.i, label %_ZNSt6vectorIN7CaDiCaL5WatchESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i
 

@@ -205,11 +205,15 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   tail call fastcc void @libdef_endmodule(ptr noundef nonnull %0)
   %i.d = load i32, ptr @ffid, align 4, !tbaa !21
-  %3 = trunc i32 %i.d to i8
-  store i8 %3, ptr @obuf, align 16, !tbaa !23
+  %.fr = freeze i32 %i.d
+  %3 = trunc i32 %.fr to i16
   %i.e = load i32, ptr @ffasmfunc, align 4, !tbaa !21
-  %4 = trunc i32 %i.e to i8
-  store i8 %4, ptr getelementptr inbounds nuw (i8, ptr @obuf, i64 1), align 1, !tbaa !23
+  %.fr11 = freeze i32 %i.e
+  %4 = trunc i32 %.fr11 to i16
+  %5 = and i16 %3, 255
+  %6 = shl i16 %4, 8
+  %7 = or disjoint i16 %6, %5
+  store i16 %7, ptr @obuf, align 16
   store ptr getelementptr inbounds nuw (i8, ptr @obuf, i64 3), ptr @optr, align 8, !tbaa !22
   store i8 0, ptr getelementptr inbounds nuw (i8, ptr @obuf, i64 2), align 2, !tbaa !23
   store i32 1, ptr @modstate, align 4, !tbaa !21

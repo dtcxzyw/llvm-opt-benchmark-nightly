@@ -205,13 +205,14 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.r = getelementptr inbounds i8, ptr %i.q, i64 -24 ; 4 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !1272)
   call void @llvm.experimental.noalias.scope.decl(metadata !1273)
-  %.sroa.0.0.copyload.i.i32.1.i = load i32, ptr %i.q, align 8, !alias.scope !1274 ; 6 uses
+  %.sroa.0.0.copyload.i.i32.1.i = load i32, ptr %i.q, align 8, !alias.scope !1274
+  %7 = freeze i32 %.sroa.0.0.copyload.i.i32.1.i   ; 6 uses
   %.sroa.02.0.copyload.i.i33.1.i = load i32, ptr %i.r, align 8, !alias.scope !1275 ; 2 uses
-  %i.s = icmp eq i32 %.sroa.02.0.copyload.i.i33.1.i, %.sroa.0.0.copyload.i.i32.1.i
+  %i.s = icmp eq i32 %.sroa.02.0.copyload.i.i33.1.i, %7
   br i1 %i.s, label %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTmRScE11sort_by_keyINtNtCs4NRVxsYgnAr_4core3cmp7ReverseBx_ENCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB1B_14UnigramTrainer25make_seed_sentence_piecess2_0E0B1H_.exit.i35.1.i, label %.split.i.1.i
 
 .split.i.1.i:                                     ; preds = %.lr.ph.1.i
-  %i.t = icmp ult i32 %.sroa.02.0.copyload.i.i33.1.i, %.sroa.0.0.copyload.i.i32.1.i
+  %i.t = icmp ult i32 %.sroa.02.0.copyload.i.i33.1.i, %7
   br i1 %i.t, label %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTmRScE11sort_by_keyINtNtCs4NRVxsYgnAr_4core3cmp7ReverseBx_ENCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB1B_14UnigramTrainer25make_seed_sentence_piecess2_0E0B1H_.exit._crit_edge.i.1.i, label %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailTmRScENCINvMNtCscdodAO9FK5_5alloc5sliceSB18_11sort_by_keyINtNtBa_3cmp7ReverseB18_ENCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB2z_14UnigramTrainer25make_seed_sentence_piecess2_0E0EB2F_.exit.1.i
 
 _RNCINvMNtCscdodAO9FK5_5alloc5sliceSTmRScE11sort_by_keyINtNtCs4NRVxsYgnAr_4core3cmp7ReverseBx_ENCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB1B_14UnigramTrainer25make_seed_sentence_piecess2_0E0B1H_.exit.i35.1.i: ; preds = %.lr.ph.1.i
@@ -229,7 +230,8 @@ _RNCINvMNtCscdodAO9FK5_5alloc5sliceSTmRScE11sort_by_keyINtNtCs4NRVxsYgnAr_4core3
 
 _RNCINvMNtCscdodAO9FK5_5alloc5sliceSTmRScE11sort_by_keyINtNtCs4NRVxsYgnAr_4core3cmp7ReverseBx_ENCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB1B_14UnigramTrainer25make_seed_sentence_piecess2_0E0B1H_.exit._crit_edge.i.1.i: ; preds = %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTmRScE11sort_by_keyINtNtCs4NRVxsYgnAr_4core3cmp7ReverseBx_ENCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB1B_14UnigramTrainer25make_seed_sentence_piecess2_0E0B1H_.exit.i35.1.i, %.split.i.1.i
   %.sroa.423.0..sroa_idx.i.1.i = getelementptr inbounds nuw i8, ptr %i.q, i64 4
-  %.sroa.423.0.copyload.i.1.i = load i32, ptr %.sroa.423.0..sroa_idx.i.1.i, align 4, !alias.scope !1277 ; 2 uses
+  %.sroa.423.0.copyload.i.1.i = load i32, ptr %.sroa.423.0..sroa_idx.i.1.i, align 4, !alias.scope !1277
+  %8 = freeze i32 %.sroa.423.0.copyload.i.1.i     ; 2 uses
   %.sroa.524.0..sroa_idx.i.1.i = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   %.sroa.524.0.copyload.i.1.i = load ptr, ptr %.sroa.524.0..sroa_idx.i.1.i, align 8, !alias.scope !1277 ; 3 uses
   %.sroa.625.0..sroa_idx.i.1.i = getelementptr inbounds nuw i8, ptr %i.q, i64 16
@@ -243,11 +245,11 @@ _RNCINvMNtCscdodAO9FK5_5alloc5sliceSTmRScE11sort_by_keyINtNtCs4NRVxsYgnAr_4core3
   %i.x = getelementptr inbounds i8, ptr %.sroa.0.07.i.1.i, i64 -24 ; 4 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !1278)
   %.sroa.02.0.copyload.i9.i.1.i = load i32, ptr %i.x, align 8, !alias.scope !1279 ; 2 uses
-  %i.y = icmp eq i32 %.sroa.02.0.copyload.i9.i.1.i, %.sroa.0.0.copyload.i.i32.1.i
+  %i.y = icmp eq i32 %.sroa.02.0.copyload.i9.i.1.i, %7
   br i1 %i.y, label %bb.i, label %.split5.i.1.i
 
 .split5.i.1.i:                                    ; preds = %.lr.ph.i34.1.i
-  %i.z = icmp ult i32 %.sroa.02.0.copyload.i9.i.1.i, %.sroa.0.0.copyload.i.i32.1.i
+  %i.z = icmp ult i32 %.sroa.02.0.copyload.i9.i.1.i, %7
   br i1 %i.z, label %.backedge.i.1.i, label %.split5._crit_edge.i.1.i
 
 bb.i:                                             ; preds = %.lr.ph.i34.1.i
@@ -268,10 +270,12 @@ _RNCINvMNtCscdodAO9FK5_5alloc5sliceSTmRScE11sort_by_keyINtNtCs4NRVxsYgnAr_4core3
   br i1 %i.ac, label %.split5._crit_edge.i.1.i, label %.lr.ph.i34.1.i
 
 .split5._crit_edge.i.1.i:                         ; preds = %.backedge.i.1.i, %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTmRScE11sort_by_keyINtNtCs4NRVxsYgnAr_4core3cmp7ReverseBx_ENCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB1B_14UnigramTrainer25make_seed_sentence_piecess2_0E0B1H_.exit19.i.1.i, %.split5.i.1.i, %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTmRScE11sort_by_keyINtNtCs4NRVxsYgnAr_4core3cmp7ReverseBx_ENCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB1B_14UnigramTrainer25make_seed_sentence_piecess2_0E0B1H_.exit._crit_edge.i.1.i
-  %.sroa.0.0.lcssa.i.1.i = phi ptr [ %i.r, %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTmRScE11sort_by_keyINtNtCs4NRVxsYgnAr_4core3cmp7ReverseBx_ENCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB1B_14UnigramTrainer25make_seed_sentence_piecess2_0E0B1H_.exit._crit_edge.i.1.i ], [ %.sroa.0.07.i.1.i, %.split5.i.1.i ], [ %.sroa.0.07.i.1.i, %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTmRScE11sort_by_keyINtNtCs4NRVxsYgnAr_4core3cmp7ReverseBx_ENCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB1B_14UnigramTrainer25make_seed_sentence_piecess2_0E0B1H_.exit19.i.1.i ], [ %i.l, %.backedge.i.1.i ] ; 4 uses
-  store i32 %.sroa.0.0.copyload.i.i32.1.i, ptr %.sroa.0.0.lcssa.i.1.i, align 8, !alias.scope !1277, !noalias !1281
-  %.sroa.6.0..sroa.0.0.lcssa.sroa_idx.i.1.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.lcssa.i.1.i, i64 4
-  store i32 %.sroa.423.0.copyload.i.1.i, ptr %.sroa.6.0..sroa.0.0.lcssa.sroa_idx.i.1.i, align 4, !alias.scope !1277, !noalias !1281
+  %.sroa.0.0.lcssa.i.1.i = phi ptr [ %i.r, %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTmRScE11sort_by_keyINtNtCs4NRVxsYgnAr_4core3cmp7ReverseBx_ENCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB1B_14UnigramTrainer25make_seed_sentence_piecess2_0E0B1H_.exit._crit_edge.i.1.i ], [ %.sroa.0.07.i.1.i, %.split5.i.1.i ], [ %.sroa.0.07.i.1.i, %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTmRScE11sort_by_keyINtNtCs4NRVxsYgnAr_4core3cmp7ReverseBx_ENCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB1B_14UnigramTrainer25make_seed_sentence_piecess2_0E0B1H_.exit19.i.1.i ], [ %i.l, %.backedge.i.1.i ] ; 3 uses
+  %9 = zext i32 %7 to i64
+  %10 = zext i32 %8 to i64
+  %11 = shl nuw i64 %10, 32
+  %12 = or disjoint i64 %11, %9
+  store i64 %12, ptr %.sroa.0.0.lcssa.i.1.i, align 8, !alias.scope !1277, !noalias !1281
   %.sroa.615.0..sroa.0.0.lcssa.sroa_idx.i.1.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.lcssa.i.1.i, i64 8
   store ptr %.sroa.524.0.copyload.i.1.i, ptr %.sroa.615.0..sroa.0.0.lcssa.sroa_idx.i.1.i, align 8, !alias.scope !1277, !noalias !1281
   %.sroa.7.0..sroa.0.0.lcssa.sroa_idx.i.1.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.lcssa.i.1.i, i64 16
@@ -430,13 +434,14 @@ bb.p:                                             ; preds = %bb.o
   %i.bq = getelementptr inbounds i8, ptr %i.bp, i64 -24 ; 4 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !1297)
   call void @llvm.experimental.noalias.scope.decl(metadata !1298)
-  %.sroa.0.0.copyload.i.i32.i = load i32, ptr %i.bp, align 8, !alias.scope !1299 ; 6 uses
+  %.sroa.0.0.copyload.i.i32.i = load i32, ptr %i.bp, align 8, !alias.scope !1299
+  %13 = freeze i32 %.sroa.0.0.copyload.i.i32.i    ; 6 uses
   %.sroa.02.0.copyload.i.i33.i = load i32, ptr %i.bq, align 8, !alias.scope !1300 ; 2 uses
-  %i.br = icmp eq i32 %.sroa.02.0.copyload.i.i33.i, %.sroa.0.0.copyload.i.i32.i
+  %i.br = icmp eq i32 %.sroa.02.0.copyload.i.i33.i, %13
   br i1 %i.br, label %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTmRScE11sort_by_keyINtNtCs4NRVxsYgnAr_4core3cmp7ReverseBx_ENCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB1B_14UnigramTrainer25make_seed_sentence_piecess2_0E0B1H_.exit.i35.i, label %.split.i.i
 
 .split.i.i:                                       ; preds = %.lr.ph.i
-  %i.bs = icmp ult i32 %.sroa.02.0.copyload.i.i33.i, %.sroa.0.0.copyload.i.i32.i
+  %i.bs = icmp ult i32 %.sroa.02.0.copyload.i.i33.i, %13
   br i1 %i.bs, label %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTmRScE11sort_by_keyINtNtCs4NRVxsYgnAr_4core3cmp7ReverseBx_ENCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB1B_14UnigramTrainer25make_seed_sentence_piecess2_0E0B1H_.exit._crit_edge.i.i, label %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailTmRScENCINvMNtCscdodAO9FK5_5alloc5sliceSB18_11sort_by_keyINtNtBa_3cmp7ReverseB18_ENCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB2z_14UnigramTrainer25make_seed_sentence_piecess2_0E0EB2F_.exit.i
 
 _RNCINvMNtCscdodAO9FK5_5alloc5sliceSTmRScE11sort_by_keyINtNtCs4NRVxsYgnAr_4core3cmp7ReverseBx_ENCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB1B_14UnigramTrainer25make_seed_sentence_piecess2_0E0B1H_.exit.i35.i: ; preds = %.lr.ph.i
@@ -454,7 +459,8 @@ _RNCINvMNtCscdodAO9FK5_5alloc5sliceSTmRScE11sort_by_keyINtNtCs4NRVxsYgnAr_4core3
 
 _RNCINvMNtCscdodAO9FK5_5alloc5sliceSTmRScE11sort_by_keyINtNtCs4NRVxsYgnAr_4core3cmp7ReverseBx_ENCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB1B_14UnigramTrainer25make_seed_sentence_piecess2_0E0B1H_.exit._crit_edge.i.i: ; preds = %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTmRScE11sort_by_keyINtNtCs4NRVxsYgnAr_4core3cmp7ReverseBx_ENCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB1B_14UnigramTrainer25make_seed_sentence_piecess2_0E0B1H_.exit.i35.i, %.split.i.i
   %.sroa.423.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.bp, i64 4
-  %.sroa.423.0.copyload.i.i = load i32, ptr %.sroa.423.0..sroa_idx.i.i, align 4, !alias.scope !1277 ; 2 uses
+  %.sroa.423.0.copyload.i.i = load i32, ptr %.sroa.423.0..sroa_idx.i.i, align 4, !alias.scope !1277
+  %14 = freeze i32 %.sroa.423.0.copyload.i.i      ; 2 uses
   %.sroa.524.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.bp, i64 8
   %.sroa.524.0.copyload.i.i = load ptr, ptr %.sroa.524.0..sroa_idx.i.i, align 8, !alias.scope !1277 ; 3 uses
   %.sroa.625.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.bp, i64 16
@@ -468,11 +474,11 @@ _RNCINvMNtCscdodAO9FK5_5alloc5sliceSTmRScE11sort_by_keyINtNtCs4NRVxsYgnAr_4core3
   %i.bw = getelementptr inbounds i8, ptr %.sroa.0.07.i.i, i64 -24 ; 4 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !1302)
   %.sroa.02.0.copyload.i9.i.i = load i32, ptr %i.bw, align 8, !alias.scope !1303 ; 2 uses
-  %i.bx = icmp eq i32 %.sroa.02.0.copyload.i9.i.i, %.sroa.0.0.copyload.i.i32.i
+  %i.bx = icmp eq i32 %.sroa.02.0.copyload.i9.i.i, %13
   br i1 %i.bx, label %bb.q, label %.split5.i.i
 
 .split5.i.i:                                      ; preds = %.lr.ph.i34.i
-  %i.by = icmp ult i32 %.sroa.02.0.copyload.i9.i.i, %.sroa.0.0.copyload.i.i32.i
+  %i.by = icmp ult i32 %.sroa.02.0.copyload.i9.i.i, %13
   br i1 %i.by, label %.backedge.i.i, label %.split5._crit_edge.i.i
 
 bb.q:                                             ; preds = %.lr.ph.i34.i
@@ -493,10 +499,12 @@ _RNCINvMNtCscdodAO9FK5_5alloc5sliceSTmRScE11sort_by_keyINtNtCs4NRVxsYgnAr_4core3
   br i1 %i.cb, label %.split5._crit_edge.i.i, label %.lr.ph.i34.i
 
 .split5._crit_edge.i.i:                           ; preds = %.backedge.i.i, %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTmRScE11sort_by_keyINtNtCs4NRVxsYgnAr_4core3cmp7ReverseBx_ENCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB1B_14UnigramTrainer25make_seed_sentence_piecess2_0E0B1H_.exit19.i.i, %.split5.i.i, %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTmRScE11sort_by_keyINtNtCs4NRVxsYgnAr_4core3cmp7ReverseBx_ENCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB1B_14UnigramTrainer25make_seed_sentence_piecess2_0E0B1H_.exit._crit_edge.i.i
-  %.sroa.0.0.lcssa.i.i = phi ptr [ %i.bq, %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTmRScE11sort_by_keyINtNtCs4NRVxsYgnAr_4core3cmp7ReverseBx_ENCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB1B_14UnigramTrainer25make_seed_sentence_piecess2_0E0B1H_.exit._crit_edge.i.i ], [ %.sroa.0.07.i.i, %.split5.i.i ], [ %.sroa.0.07.i.i, %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTmRScE11sort_by_keyINtNtCs4NRVxsYgnAr_4core3cmp7ReverseBx_ENCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB1B_14UnigramTrainer25make_seed_sentence_piecess2_0E0B1H_.exit19.i.i ], [ %2, %.backedge.i.i ] ; 4 uses
-  store i32 %.sroa.0.0.copyload.i.i32.i, ptr %.sroa.0.0.lcssa.i.i, align 8, !alias.scope !1277, !noalias !1281
-  %.sroa.6.0..sroa.0.0.lcssa.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.lcssa.i.i, i64 4
-  store i32 %.sroa.423.0.copyload.i.i, ptr %.sroa.6.0..sroa.0.0.lcssa.sroa_idx.i.i, align 4, !alias.scope !1277, !noalias !1281
+  %.sroa.0.0.lcssa.i.i = phi ptr [ %i.bq, %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTmRScE11sort_by_keyINtNtCs4NRVxsYgnAr_4core3cmp7ReverseBx_ENCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB1B_14UnigramTrainer25make_seed_sentence_piecess2_0E0B1H_.exit._crit_edge.i.i ], [ %.sroa.0.07.i.i, %.split5.i.i ], [ %.sroa.0.07.i.i, %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTmRScE11sort_by_keyINtNtCs4NRVxsYgnAr_4core3cmp7ReverseBx_ENCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB1B_14UnigramTrainer25make_seed_sentence_piecess2_0E0B1H_.exit19.i.i ], [ %2, %.backedge.i.i ] ; 3 uses
+  %15 = zext i32 %13 to i64
+  %16 = zext i32 %14 to i64
+  %17 = shl nuw i64 %16, 32
+  %18 = or disjoint i64 %17, %15
+  store i64 %18, ptr %.sroa.0.0.lcssa.i.i, align 8, !alias.scope !1277, !noalias !1281
   %.sroa.615.0..sroa.0.0.lcssa.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.lcssa.i.i, i64 8
   store ptr %.sroa.524.0.copyload.i.i, ptr %.sroa.615.0..sroa.0.0.lcssa.sroa_idx.i.i, align 8, !alias.scope !1277, !noalias !1281
   %.sroa.7.0..sroa.0.0.lcssa.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.lcssa.i.i, i64 16
@@ -514,15 +522,17 @@ _RNCINvMNtCscdodAO9FK5_5alloc5sliceSTmRScE11sort_by_keyINtNtCs4NRVxsYgnAr_4core3
   br label %bb.r
 
 bb.r:                                             ; preds = %.loopexit.split-lp18.i, %.loopexit.i
-  %.sroa.0.0.copyload.i.i32.lcssa.i = phi i32 [ %.sroa.0.0.copyload.i.i32.i, %.loopexit.i ], [ %.sroa.0.0.copyload.i.i32.1.i, %.loopexit.split-lp18.i ]
-  %.sroa.423.0.copyload.i.lcssa.i = phi i32 [ %.sroa.423.0.copyload.i.i, %.loopexit.i ], [ %.sroa.423.0.copyload.i.1.i, %.loopexit.split-lp18.i ]
+  %.sroa.0.0.copyload.i.i32.lcssa.i = phi i32 [ %13, %.loopexit.i ], [ %7, %.loopexit.split-lp18.i ]
+  %.sroa.423.0.copyload.i.lcssa.i = phi i32 [ %14, %.loopexit.i ], [ %8, %.loopexit.split-lp18.i ]
   %.sroa.524.0.copyload.i.lcssa.i = phi ptr [ %.sroa.524.0.copyload.i.i, %.loopexit.i ], [ %.sroa.524.0.copyload.i.1.i, %.loopexit.split-lp18.i ]
   %.sroa.625.0.copyload.i.lcssa.i = phi i64 [ %.sroa.625.0.copyload.i.i, %.loopexit.i ], [ %.sroa.625.0.copyload.i.1.i, %.loopexit.split-lp18.i ]
-  %.sroa.0.07.i.lcssa16.i = phi ptr [ %.sroa.0.07.i.i, %.loopexit.i ], [ %.sroa.0.07.i.1.i, %.loopexit.split-lp18.i ] ; 4 uses
+  %.sroa.0.07.i.lcssa16.i = phi ptr [ %.sroa.0.07.i.i, %.loopexit.i ], [ %.sroa.0.07.i.1.i, %.loopexit.split-lp18.i ] ; 3 uses
   %lpad.phi25.i = phi { ptr, i32 } [ %lpad.loopexit24.i, %.loopexit.i ], [ %lpad.loopexit.split-lp.i, %.loopexit.split-lp18.i ]
-  store i32 %.sroa.0.0.copyload.i.i32.lcssa.i, ptr %.sroa.0.07.i.lcssa16.i, align 8, !alias.scope !1277, !noalias !1305
-  %.sroa.6.0..sroa.0.07.lcssa10.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.07.i.lcssa16.i, i64 4
-  store i32 %.sroa.423.0.copyload.i.lcssa.i, ptr %.sroa.6.0..sroa.0.07.lcssa10.sroa_idx.i.i, align 4, !alias.scope !1277, !noalias !1305
+  %19 = zext i32 %.sroa.0.0.copyload.i.i32.lcssa.i to i64
+  %20 = zext i32 %.sroa.423.0.copyload.i.lcssa.i to i64
+  %21 = shl nuw i64 %20, 32
+  %22 = or disjoint i64 %21, %19
+  store i64 %22, ptr %.sroa.0.07.i.lcssa16.i, align 8, !alias.scope !1277, !noalias !1305
   %.sroa.615.0..sroa.0.07.lcssa10.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.07.i.lcssa16.i, i64 8
   store ptr %.sroa.524.0.copyload.i.lcssa.i, ptr %.sroa.615.0..sroa.0.07.lcssa10.sroa_idx.i.i, align 8, !alias.scope !1277, !noalias !1305
   %.sroa.7.0..sroa.0.07.lcssa10.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.07.i.lcssa16.i, i64 16

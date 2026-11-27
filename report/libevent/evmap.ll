@@ -200,12 +200,16 @@ bb.g:                                             ; preds = %evmap_make_space.ex
   store ptr %i.ab, ptr %i.ad, align 8
   %i.ae = load ptr, ptr %i.b, align 8
   %i.af = getelementptr inbounds nuw [8 x i8], ptr %i.ae, i64 %i.u
-  %i.ag = load ptr, ptr %i.af, align 8            ; 2 uses
+  %i.ag = load ptr, ptr %i.af, align 8            ; 4 uses
   %i.ah = icmp eq ptr %i.ag, null
   br i1 %i.ah, label %evmap_make_space.exit.thread, label %bb.h, !prof !8
 
 bb.h:                                             ; preds = %bb.g
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(14) %i.ag, i8 0, i64 14, i1 false)
+  store ptr null, ptr %i.ag, align 8
+  %3 = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
+  store i32 0, ptr %3, align 8
+  %4 = getelementptr inbounds nuw i8, ptr %i.ag, i64 12
+  store i16 0, ptr %4, align 4
   %.pre = load ptr, ptr %i.b, align 8
   %.phi.trans.insert = getelementptr inbounds nuw [8 x i8], ptr %.pre, i64 %i.u
   %.pre115 = load ptr, ptr %.phi.trans.insert, align 8
@@ -215,7 +219,7 @@ bb.i:                                             ; preds = %bb.h, %evmap_make_s
   %i.ai = phi ptr [ %.pre115, %bb.h ], [ %i.w, %evmap_make_space.exit ] ; 8 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 8 ; 2 uses
   %i.ak = load i16, ptr %i.aj, align 8            ; 3 uses
-  %i.al = getelementptr inbounds nuw i8, ptr %i.ai, i64 10 ; 2 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %i.ai, i64 10
   %i.am = load i16, ptr %i.al, align 2            ; 3 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.ai, i64 12 ; 2 uses
   %i.ao = load i16, ptr %i.an, align 4            ; 3 uses
@@ -232,16 +236,18 @@ bb.i:                                             ; preds = %bb.h, %evmap_make_s
   %i.at = and i16 %i.as, 2                        ; 2 uses
   %.not93.not = icmp eq i16 %i.at, 0
   %.lobit = lshr exact i16 %i.at, 1
-  %add = add i16 %.lobit, %i.ak                   ; 2 uses
-  %add.overflow = icmp ult i16 %add, %i.ak
+  %add = add i16 %.lobit, %i.ak
+  %5 = freeze i16 %add                            ; 2 uses
+  %add.overflow = icmp ult i16 %5, %i.ak
   %i.au = select i1 %.not93.not, i1 true, i1 %.not90
   %.071 = select i1 %i.au, i16 0, i16 2           ; 2 uses
   %i.av = and i16 %i.as, 4                        ; 2 uses
   %.not94.not = icmp eq i16 %i.av, 0
   %i.aw = or disjoint i16 %.071, 4
   %.lobit109 = lshr exact i16 %i.av, 2
-  %add111 = add i16 %.lobit109, %i.am             ; 2 uses
-  %add.overflow112 = icmp ult i16 %add111, %i.am
+  %add111 = add i16 %.lobit109, %i.am
+  %6 = freeze i16 %add111                         ; 2 uses
+  %add.overflow112 = icmp ult i16 %6, %i.am
   %i.ax = select i1 %.not94.not, i1 true, i1 %.not91
   %.172 = select i1 %i.ax, i16 %.071, i16 %i.aw   ; 2 uses
   %i.ay = and i16 %i.as, 128                      ; 2 uses
@@ -300,8 +306,11 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.p, %bb.o
   %.175 = phi i32 [ 1, %bb.p ], [ 0, %bb.o ]
-  store i16 %add, ptr %i.aj, align 8
-  store i16 %add111, ptr %i.al, align 2
+  %7 = zext i16 %5 to i32
+  %8 = zext i16 %6 to i32
+  %9 = shl nuw i32 %8, 16
+  %10 = or disjoint i32 %9, %7
+  store i32 %10, ptr %i.aj, align 8
   store i16 %add113, ptr %i.an, align 4
   %i.bq = load ptr, ptr %i.ai, align 8            ; 3 uses
   %i.br = getelementptr inbounds nuw i8, ptr %2, i64 72 ; 2 uses
@@ -351,7 +360,7 @@ bb.c:                                             ; preds = %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 8 ; 2 uses
   %i.k = load i16, ptr %i.j, align 8              ; 3 uses
   %i.l = zext i16 %i.k to i32
-  %i.m = getelementptr inbounds nuw i8, ptr %i.i, i64 10 ; 2 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %i.i, i64 10
   %i.n = load i16, ptr %i.m, align 2              ; 3 uses
   %i.o = zext i16 %i.n to i32
   %i.p = getelementptr inbounds nuw i8, ptr %i.i, i64 12 ; 2 uses
@@ -415,10 +424,15 @@ bb.f:                                             ; preds = %.thread, %bb.e
   %.150 = phi i32 [ %., %.thread ], [ 0, %bb.e ]
   %i.as = trunc i32 %i.x to i16
   %i.at = select i1 %.not66, i16 %i.k, i16 %i.as
-  store i16 %i.at, ptr %i.j, align 8
   %i.au = trunc i32 %i.ab to i16
   %i.av = select i1 %.not67, i16 %i.n, i16 %i.au
-  store i16 %i.av, ptr %i.m, align 2
+  %3 = freeze i16 %i.at
+  %4 = zext i16 %3 to i32
+  %5 = freeze i16 %i.av
+  %6 = zext i16 %5 to i32
+  %7 = shl nuw i32 %6, 16
+  %8 = or disjoint i32 %7, %4
+  store i32 %8, ptr %i.j, align 8
   %i.aw = trunc i32 %.05181 to i16
   store i16 %i.aw, ptr %i.p, align 4
   %i.ax = getelementptr inbounds nuw i8, ptr %2, i64 72 ; 2 uses

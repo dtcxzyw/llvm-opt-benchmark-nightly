@@ -202,10 +202,10 @@ bb.r:                                             ; preds = %ZL_varintDecode.exi
   %i.cx = ptrtoint ptr %i.cw to i64
   br label %bb.z
 
-bb.s:                                             ; preds = %ZL_varintDecode.exit, %ZL_varintDecode.exit.thread
-  %.0.i.ph = phi i64 [ %.sroa.7.2.i.ph, %ZL_varintDecode.exit.thread ], [ %.sroa.7.2.i, %ZL_varintDecode.exit ] ; 7 uses
+bb.s:                                             ; preds = %ZL_varintDecode.exit.thread, %ZL_varintDecode.exit
+  %.0.i.ph = phi i64 [ %.sroa.7.2.i, %ZL_varintDecode.exit ], [ %.sroa.7.2.i.ph, %ZL_varintDecode.exit.thread ] ; 7 uses
   %i.cy = icmp ult i64 %.0.i.ph, 2147483648
-  br i1 %i.cy, label %bb.u, label %bb.t, !prof !21
+  br i1 %i.cy, label %bb.u, label %bb.t, !prof !25
 
 bb.t:                                             ; preds = %bb.s
   %i.cz = call { i32, ptr } (ptr, ptr, ptr, ptr, i32, i32, ptr, ...) @ZL_E_create(ptr noundef nonnull @DI_lz4.__zl_static_error_info.16, ptr noundef nonnull %3, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.2, i32 noundef 28, i32 noundef 55, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.18, ptr noundef nonnull @.str.5, ptr noundef nonnull @.str.6, i64 noundef %.0.i.ph, i64 noundef 2147483647) #5 ; 2 uses
@@ -339,4 +339,5 @@ attributes #6 = { nounwind willreturn memory(none) }
 !22 = !{!"branch_weights", !"expected", i32 1, i32 2000}
 !23 = !{!7, !7, i64 0}
 !24 = !{!"llvm.loop.mustprogress"}
+!25 = !{!"branch_weights", !"expected", i32 2146410344, i32 1073304}
 end_hunk_0

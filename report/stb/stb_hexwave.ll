@@ -204,8 +204,11 @@ scalar.ph275:                                     ; preds = %scalar.ph275.prol.l
 ._crit_edge164:                                   ; preds = %._crit_edge161.us.us, %.preheader137.lr.ph, %.preheader138
   store ptr %.0125, ptr getelementptr inbounds nuw (i8, ptr @hexblep, i64 8), align 8, !tbaa !28
   store ptr %.0124, ptr getelementptr inbounds nuw (i8, ptr @hexblep, i64 16), align 8, !tbaa !29
-  store i32 %spec.store.select135, ptr @hexblep, align 8, !tbaa !23
-  store i32 %1, ptr getelementptr inbounds nuw (i8, ptr @hexblep, i64 4), align 4, !tbaa !24
+  %3 = zext i32 %spec.store.select135 to i64
+  %4 = zext i32 %1 to i64
+  %5 = shl nuw i64 %4, 32
+  %6 = or disjoint i64 %5, %3
+  store i64 %6, ptr @hexblep, align 8
   br i1 %.not, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %._crit_edge164

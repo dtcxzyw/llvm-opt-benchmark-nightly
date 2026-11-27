@@ -205,9 +205,10 @@ bb.k:                                             ; preds = %bb.c
   br i1 %i.as, label %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterNtNtCs2G6gJ0Mq9lu_12regex_syntax3hir15ClassBytesRangeENtNtNtNtBb_4iter6traits8iterator8Iterator4foldjNCINvNtNtB1O_8adapters3map8map_foldRBQ_jjNCNvNtCsdq8xsXUia3c_10grep_regex3ban5checks2_0NCINvXsK_NtB1M_5accumjNtB41_3Sum3sumINtB2y_3MapBF_B38_EE0E0EB3e_.exit.thread, label %.lr.ph, !dbg !1501
 
 _RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator4findNCNvNtCsdq8xsXUia3c_10grep_regex3ban5checks_0EB1I_.exit: ; preds = %.lr.ph92
-  store i8 3, ptr %0, align 8, !dbg !1502
-  %.sroa.47.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 1, !dbg !1502
-  store i8 %2, ptr %.sroa.47.0..sroa_idx, align 1, !dbg !1502
+  %3 = zext nneg i8 %2 to i16, !dbg !1502
+  %4 = shl nuw nsw i16 %3, 8, !dbg !1502
+  %5 = or disjoint i16 %4, 3, !dbg !1502
+  store i16 %5, ptr %0, align 8, !dbg !1502
   br label %bb.v, !dbg !1503
 
 bb.l:                                             ; preds = %bb.g
@@ -266,9 +267,10 @@ _RNCNvNtCsdq8xsXUia3c_10grep_regex3ban5checks1_0B5_.exit.thread.i: ; preds = %_R
   br i1 %i.bm, label %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterNtNtCs2G6gJ0Mq9lu_12regex_syntax3hir15ClassBytesRangeENtNtNtNtBb_4iter6traits8iterator8Iterator4foldjNCINvNtNtB1O_8adapters3map8map_foldRBQ_jjNCNvNtCsdq8xsXUia3c_10grep_regex3ban5checks2_0NCINvXsK_NtB1M_5accumjNtB41_3Sum3sumINtB2y_3MapBF_B38_EE0E0EB3e_.exit.thread, label %.lr.ph.i, !dbg !1531
 
 _RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterNtNtCs2G6gJ0Mq9lu_12regex_syntax3hir17ClassUnicodeRangeENtNtNtNtBb_4iter6traits8iterator8Iterator4findNCNvNtCsdq8xsXUia3c_10grep_regex3ban5checks1_0EB2A_.exit: ; preds = %_RNCNvNtCsdq8xsXUia3c_10grep_regex3ban5checks1_0B5_.exit.i
-  store i8 3, ptr %0, align 8, !dbg !1532
-  %.sroa.413.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 1, !dbg !1532
-  store i8 %2, ptr %.sroa.413.0..sroa_idx, align 1, !dbg !1532
+  %6 = zext nneg i8 %2 to i16, !dbg !1532
+  %7 = shl nuw nsw i16 %6, 8, !dbg !1532
+  %8 = or disjoint i16 %7, 3, !dbg !1532
+  store i16 %8, ptr %0, align 8, !dbg !1532
   br label %bb.v, !dbg !1503
 
 .lr.ph.i34:                                       ; preds = %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterNtNtCs2G6gJ0Mq9lu_12regex_syntax3hir15ClassBytesRangeENtNtNtNtBb_4iter6traits8iterator8Iterator4foldjNCINvNtNtB1O_8adapters3map8map_foldRBQ_jjNCNvNtCsdq8xsXUia3c_10grep_regex3ban5checks2_0NCINvXsK_NtB1M_5accumjNtB41_3Sum3sumINtB2y_3MapBF_B38_EE0E0EB3e_.exit, %_RNCNvNtCsdq8xsXUia3c_10grep_regex3ban5checks3_0B5_.exit.thread.i
@@ -289,9 +291,10 @@ _RNCNvNtCsdq8xsXUia3c_10grep_regex3ban5checks3_0B5_.exit.thread.i: ; preds = %_R
   br i1 %i.bs, label %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterNtNtCs2G6gJ0Mq9lu_12regex_syntax3hir15ClassBytesRangeENtNtNtNtBb_4iter6traits8iterator8Iterator4foldjNCINvNtNtB1O_8adapters3map8map_foldRBQ_jjNCNvNtCsdq8xsXUia3c_10grep_regex3ban5checks2_0NCINvXsK_NtB1M_5accumjNtB41_3Sum3sumINtB2y_3MapBF_B38_EE0E0EB3e_.exit.thread, label %.lr.ph.i34, !dbg !1540
 
 _RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterNtNtCs2G6gJ0Mq9lu_12regex_syntax3hir15ClassBytesRangeENtNtNtNtBb_4iter6traits8iterator8Iterator4findNCNvNtCsdq8xsXUia3c_10grep_regex3ban5checks3_0EB2y_.exit: ; preds = %_RNCNvNtCsdq8xsXUia3c_10grep_regex3ban5checks3_0B5_.exit.i
-  store i8 3, ptr %0, align 8, !dbg !1541
-  %.sroa.419.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 1, !dbg !1541
-  store i8 %2, ptr %.sroa.419.0..sroa_idx, align 1, !dbg !1541
+  %9 = zext nneg i8 %2 to i16, !dbg !1541
+  %10 = shl nuw nsw i16 %9, 8, !dbg !1541
+  %11 = or disjoint i16 %10, 3, !dbg !1541
+  store i16 %11, ptr %0, align 8, !dbg !1541
   br label %bb.v, !dbg !1503
 
 bb.n:                                             ; preds = %bb.h

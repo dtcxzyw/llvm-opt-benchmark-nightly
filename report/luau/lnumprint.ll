@@ -202,7 +202,7 @@ _ZL9schubfachim.exit:                             ; preds = %bb.i, %bb.k, %bb.l
   br i1 %i.eu, label %.lr.ph.i, label %._crit_edge.i78
 
 .lr.ph.i:                                         ; preds = %_ZL9schubfachim.exit, %.lr.ph.i
-  %.01823.i = phi ptr [ %i.ew, %.lr.ph.i ], [ %i.et, %_ZL9schubfachim.exit ] ; 2 uses
+  %.01823.i = phi ptr [ %i.ew, %.lr.ph.i ], [ %i.et, %_ZL9schubfachim.exit ]
   %.01922.i = phi i64 [ %i.fd, %.lr.ph.i ], [ %.sroa.0.2.i, %_ZL9schubfachim.exit ] ; 3 uses
   %i.ev = urem i64 %.01922.i, 10000
   %i.ew = getelementptr inbounds i8, ptr %.01823.i, i64 -4 ; 3 uses
@@ -212,14 +212,18 @@ _ZL9schubfachim.exit:                             ; preds = %bb.i, %bb.k, %bb.l
   %i.ez = zext nneg i16 %i.ey to i64
   %i.fa = getelementptr inbounds nuw i8, ptr @_ZL11kDigitTable, i64 %i.ez
   %i.fb = load i16, ptr %i.fa, align 2
-  store i16 %i.fb, ptr %i.ew, align 4
-  %i.fc = getelementptr inbounds i8, ptr %.01823.i, i64 -2
   %2 = urem i16 %.lhs.trunc.i, 100
   %3 = shl nuw nsw i16 %2, 1
   %4 = zext nneg i16 %3 to i64
-  %5 = getelementptr inbounds nuw i8, ptr @_ZL11kDigitTable, i64 %4
-  %6 = load i16, ptr %5, align 2
-  store i16 %6, ptr %i.fc, align 2
+  %i.fc = getelementptr inbounds nuw i8, ptr @_ZL11kDigitTable, i64 %4
+  %5 = load i16, ptr %i.fc, align 2
+  %6 = freeze i16 %i.fb
+  %7 = zext i16 %6 to i32
+  %8 = freeze i16 %5
+  %9 = zext i16 %8 to i32
+  %10 = shl nuw i32 %9, 16
+  %11 = or disjoint i32 %10, %7
+  store i32 %11, ptr %i.ew, align 4
   %i.fd = udiv i64 %.01922.i, 10000               ; 2 uses
   %i.fe = icmp samesign ugt i64 %.01922.i, 99999999
   br i1 %i.fe, label %.lr.ph.i, label %._crit_edge.i78, !llvm.loop !11

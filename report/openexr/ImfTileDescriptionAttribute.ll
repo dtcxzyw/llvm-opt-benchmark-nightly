@@ -119,7 +119,7 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define weak_odr noundef ptr @_ZN7Imf_3_414TypedAttributeINS_15TileDescriptionEE16makeNewAttributeEv() #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #16 ; 6 uses
+  %i.a = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #16 ; 7 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.a, i8 0, i64 24, i1 false)
   invoke void @_ZN7Imf_3_49AttributeC2Ev(ptr noundef nonnull align 8 dereferenceable(24) %i.a)
           to label %bb.b unwind label %bb.c, !inline_history !0
@@ -127,7 +127,9 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN7Imf_3_414TypedAttributeINS_15TileDescriptionEEE, i64 16), ptr %i.a, align 16, !tbaa !10
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store <4 x i32> <i32 32, i32 32, i32 0, i32 0>, ptr %i.b, align 8, !tbaa !17
+  store i64 137438953504, ptr %i.b, align 8
+  %0 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  store i64 0, ptr %0, align 16
   ret ptr %i.a
 
 bb.c:                                             ; preds = %bb.a
@@ -148,7 +150,7 @@ declare i32 @__gxx_personality_v0(...)
 ; Function Attrs: mustprogress uwtable
 define weak_odr noundef ptr @_ZNK7Imf_3_414TypedAttributeINS_15TileDescriptionEE4copyEv(ptr noundef nonnull align 8 dereferenceable(24) %0) unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #16 ; 6 uses
+  %i.a = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #16 ; 7 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.a, i8 0, i64 24, i1 false)
   invoke void @_ZN7Imf_3_49AttributeC2Ev(ptr noundef nonnull align 8 dereferenceable(24) %i.a)
           to label %bb.b unwind label %bb.e, !inline_history !0
@@ -156,7 +158,9 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN7Imf_3_414TypedAttributeINS_15TileDescriptionEEE, i64 16), ptr %i.a, align 16, !tbaa !10
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
-  store <4 x i32> <i32 32, i32 32, i32 0, i32 0>, ptr %i.b, align 8, !tbaa !17
+  store i64 137438953504, ptr %i.b, align 8
+  %1 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  store i64 0, ptr %1, align 16
   %i.c = tail call ptr @__dynamic_cast(ptr nonnull align 8 dereferenceable(8) %0, ptr nonnull @_ZTIN7Imf_3_49AttributeE, ptr nonnull @_ZTIN7Imf_3_414TypedAttributeINS_15TileDescriptionEEE, i64 0) #14 ; 2 uses
   %i.d = icmp eq ptr %i.c, null
   br i1 %i.d, label %.thread.i.i.i, label %_ZN7Imf_3_414TypedAttributeINS_15TileDescriptionEE13copyValueFromERKNS_9AttributeE.exit
@@ -442,21 +446,24 @@ bb.a:
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 24
   %i.r = load ptr, ptr %i.q, align 8
   %i.s = call noundef zeroext i1 %i.r(ptr noundef nonnull align 8 dereferenceable(40) %1, ptr noundef nonnull align 1 dereferenceable(1) %i.c, i32 noundef 1), !inline_history !28 ; 0 uses
-  %i.t = load i8, ptr %i.c, align 1, !tbaa !17    ; 2 uses
+  %i.t = load i8, ptr %i.c, align 1, !tbaa !17
+  %.fr8 = freeze i8 %i.t                          ; 2 uses
+  %4 = and i8 %.fr8, 15
+  %spec.store.select = call i8 @llvm.umin.i8(i8 %4, i8 3)
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %4 = and i8 %i.t, 15
-  %5 = lshr i8 %i.t, 4
-  %6 = insertelement <2 x i8> poison, i8 %4, i64 0
-  %7 = insertelement <2 x i8> %6, i8 %5, i64 1
-  %8 = call <2 x i8> @llvm.umin.v2i8(<2 x i8> %7, <2 x i8> <i8 3, i8 2>)
-  %9 = zext nneg <2 x i8> %8 to <2 x i32>
-  store <2 x i32> %9, ptr %i.u, align 8, !tbaa !17
+  %5 = lshr i8 %.fr8, 4
+  %spec.store.select1 = call i8 @llvm.umin.i8(i8 %5, i8 2)
+  %6 = zext nneg i8 %spec.store.select to i64
+  %7 = zext nneg i8 %spec.store.select1 to i64
+  %8 = shl nuw nsw i64 %7, 32
+  %9 = or disjoint i64 %8, %6
+  store i64 %9, ptr %i.u, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #14
   ret void
 }
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x i8> @llvm.umin.v2i8(<2 x i8>, <2 x i8>) #13
+declare i8 @llvm.umin.i8(i8, i8) #13
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

@@ -202,9 +202,11 @@ bb.j:                                             ; preds = %bb.h, %bb.l
   %i.de = load <2 x i64>, ptr %i.bo, align 16
   store <2 x i64> %i.de, ptr %i.dd, align 16
   %i.df = getelementptr inbounds nuw i8, ptr %0, i64 436
-  store i8 %i.bq, ptr %i.df, align 4
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 437
-  store i8 %i.bs, ptr %2, align 1
+  %2 = zext nneg i8 %i.bq to i16
+  %3 = zext nneg i8 %i.bs to i16
+  %4 = shl nuw nsw i16 %3, 8
+  %5 = or disjoint i16 %4, %2
+  store i16 %5, ptr %i.df, align 4
   %i.dg = getelementptr inbounds nuw i8, ptr %0, i64 438
   store i8 %i.bu, ptr %i.dg, align 2
   %i.dh = getelementptr inbounds nuw i8, ptr %0, i64 64

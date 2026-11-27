@@ -204,10 +204,9 @@ check_retval.exit163:                             ; preds = %bb.m
   br label %bb.af
 
 bb.n:                                             ; preds = %bb.m
-  %2 = getelementptr inbounds nuw i8, ptr %i.g, i64 12 ; 3 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.g, i64 4 ; 2 uses
-  %i.br = getelementptr inbounds nuw i8, ptr %i.g, i64 8
-  store <4 x i32> <i32 1, i32 1, i32 0, i32 1>, ptr %i.g, align 8, !tbaa !29
+  store i64 4294967297, ptr %i.g, align 8
+  %i.br = getelementptr inbounds nuw i8, ptr %i.g, i64 8 ; 3 uses
+  store i64 4294967296, ptr %i.br, align 8
   %i.bs = call noalias dereferenceable_or_null(24) ptr @malloc(i64 noundef 24) #12 ; 4 uses
   %i.bt = load <2 x double>, ptr %i.h, align 8, !tbaa !12
   store <2 x double> %i.bt, ptr %i.bs, align 8, !tbaa !12
@@ -229,6 +228,8 @@ bb.n:                                             ; preds = %bb.m
   %i.cd = getelementptr inbounds nuw i8, ptr %i.bz, i64 16
   %i.ce = load ptr, ptr %i.cd, align 8, !tbaa !31
   call void @N_VConst(double noundef 0.000000e+00, ptr noundef %i.ce) #10
+  %2 = getelementptr inbounds nuw i8, ptr %i.g, i64 12 ; 3 uses
+  %3 = getelementptr inbounds nuw i8, ptr %i.g, i64 4 ; 2 uses
   %i.cf = call ptr @N_VCloneVectorArray(i32 noundef 3, ptr noundef nonnull %i.o) #10
   %i.cg = load i32, ptr %2, align 4, !tbaa !21
   %i.ch = call i32 @CVodeSensInit1(ptr noundef nonnull %i.af, i32 noundef 3, i32 noundef %i.cg, ptr noundef nonnull @fS, ptr noundef nonnull %i.bz) #10 ; 2 uses
@@ -351,7 +352,8 @@ check_retval.exit185:                             ; preds = %bb.x
   br label %bb.af
 
 bb.y:                                             ; preds = %bb.x
-  store <4 x i32> <i32 1, i32 0, i32 0, i32 2>, ptr %i.g, align 8, !tbaa !29
+  store i64 1, ptr %i.g, align 8
+  store i64 8589934592, ptr %i.br, align 8
   %i.eb = call i32 @CVodeReInit(ptr noundef nonnull %i.af, double noundef 0.000000e+00, ptr noundef nonnull %i.k) #10 ; 2 uses
   %i.ec = icmp slt i32 %i.eb, 0
   br i1 %i.ec, label %check_retval.exit187, label %bb.z

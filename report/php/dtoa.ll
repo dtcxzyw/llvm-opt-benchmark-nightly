@@ -70,10 +70,11 @@ bb.g:                                             ; preds = %bb.f, %bb.d
   br i1 %i.x, label %.lr.ph.i.i.i, label %lexbor_diyfp_normalize_boundaries.exit.i, !llvm.loop !12
 
 lexbor_diyfp_normalize_boundaries.exit.i:         ; preds = %.lr.ph.i.i.i, %bb.g
-  %.sroa.5.0.lcssa.i.i.i = phi i32 [ %i.t, %bb.g ], [ %i.v, %.lr.ph.i.i.i ] ; 2 uses
+  %.sroa.5.0.lcssa.i.i.i = phi i32 [ %i.t, %bb.g ], [ %i.v, %.lr.ph.i.i.i ]
   %.sroa.0.0.lcssa.i.i.i = phi i64 [ %i.s, %bb.g ], [ %i.u, %.lr.ph.i.i.i ]
   %i.y = shl i64 %.sroa.0.0.lcssa.i.i.i, 10       ; 2 uses
-  %i.z = add i32 %.sroa.5.0.lcssa.i.i.i, -10      ; 2 uses
+  %.sroa.5.0.lcssa.i.fr.i.i = freeze i32 %.sroa.5.0.lcssa.i.i.i ; 2 uses
+  %i.z = add i32 %.sroa.5.0.lcssa.i.fr.i.i, -10   ; 2 uses
   %i.aa = icmp eq i64 %.sroa.05.0.i.i, 4503599627370496 ; 2 uses
   %i.ab = add nsw i32 %.sroa.3.0.i.i, -2
   %i.ac = add nsw i64 %i.r, -1
@@ -135,7 +136,7 @@ lexbor_diyfp_normalize.exit.i:                    ; preds = %lexbor_diyfp_normal
   %i.bs = lshr i64 %i.bk, 32
   %i.bt = lshr i64 %i.bj, 32
   %i.bu = lshr i64 %i.br, 32
-  %i.bv = add i32 %.sroa.5.0.lcssa.i.i.i, %i.ai
+  %i.bv = add i32 %.sroa.5.0.lcssa.i.fr.i.i, %i.ai
   %.neg49.i = sub i32 -54, %i.bv
   %i.bw = lshr i64 %i.af, 32                      ; 2 uses
   %i.bx = and i64 %i.af, 4294967295               ; 2 uses

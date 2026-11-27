@@ -202,13 +202,14 @@ bb.aj:                                            ; preds = %bb.ax, %bb.au, %bb.
 
 bb.ak:                                            ; preds = %bb.u, %bb.an
   %.sroa.4.0 = phi i8 [ %.sroa.48.0.copyload, %bb.an ], [ %i.j, %bb.u ], !dbg !1976
-  %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 1, !dbg !1977
-  store i8 %i.g, ptr %i.ap, align 1, !dbg !1977
-  %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !1977
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(23) %i.aq, ptr noundef nonnull align 8 dereferenceable(23) %i.d, i64 23, i1 false), !dbg !1977
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 31, !dbg !1977
-  store i8 %.sroa.4.0, ptr %.sroa.4.0..sroa_idx, align 1, !dbg !1977
-  store i8 19, ptr %0, align 16, !dbg !1977
+  %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !1977
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(23) %i.ap, ptr noundef nonnull align 8 dereferenceable(23) %i.d, i64 23, i1 false), !dbg !1977
+  %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 31, !dbg !1977
+  store i8 %.sroa.4.0, ptr %i.aq, align 1, !dbg !1977
+  %2 = zext nneg i8 %i.g to i16, !dbg !1977
+  %3 = shl nuw nsw i16 %2, 8, !dbg !1977
+  %4 = or disjoint i16 %3, 19, !dbg !1977
+  store i16 %4, ptr %0, align 16, !dbg !1977
   br label %bb.aj, !dbg !1927
 
 bb.al:                                            ; preds = %bb.u

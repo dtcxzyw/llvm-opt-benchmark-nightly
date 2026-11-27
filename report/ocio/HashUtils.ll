@@ -204,7 +204,7 @@ bb.r:                                             ; preds = %bb.c, %bb.e, %bb.f,
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #12
   call void @_ZNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEC1Ev(ptr noundef nonnull align 8 dereferenceable(128) %3)
   %i.ic = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 10 uses
-  %i.id = load ptr, ptr %i.ic, align 8, !tbaa !15 ; 3 uses
+  %i.id = load ptr, ptr %i.ic, align 8, !tbaa !15 ; 2 uses
   %i.ie = getelementptr i8, ptr %i.id, i64 -24    ; 2 uses
   %i.if = load i64, ptr %i.ie, align 8
   %i.ig = getelementptr inbounds i8, ptr %i.ic, i64 %i.if
@@ -214,15 +214,15 @@ bb.r:                                             ; preds = %bb.c, %bb.e, %bb.f,
   %i.ik = or disjoint i32 %i.ij, 8
   store i32 %i.ik, ptr %i.ih, align 8, !tbaa !27
   %i.il = load i64, ptr %i.ie, align 8
-  %i.im = getelementptr inbounds i8, ptr %i.ic, i64 %i.il ; 3 uses
-  %i.in = getelementptr inbounds nuw i8, ptr %i.im, i64 225 ; 2 uses
+  %i.im = getelementptr inbounds i8, ptr %i.ic, i64 %i.il ; 4 uses
+  %i.in = getelementptr inbounds nuw i8, ptr %i.im, i64 225
   %i.io = load i8, ptr %i.in, align 1, !tbaa !35, !range !36, !noundef !37
   %i.ip = trunc nuw i8 %i.io to i1
   br i1 %i.ip, label %bb.v, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
   %i.iq = getelementptr inbounds nuw i8, ptr %i.im, i64 240
-  %i.ir = load ptr, ptr %i.iq, align 8, !tbaa !38 ; 5 uses
+  %i.ir = load ptr, ptr %i.iq, align 8, !tbaa !38 ; 6 uses
   %.not.i.i.i.i.i = icmp eq ptr %i.ir, null
   br i1 %.not.i.i.i.i.i, label %bb.t, label %_ZSt13__check_facetISt5ctypeIcEERKT_PS3_.exit.i.i.i.i
 
@@ -237,7 +237,13 @@ _ZSt13__check_facetISt5ctypeIcEERKT_PS3_.exit.i.i.i.i: ; preds = %bb.s
   %i.is = getelementptr inbounds nuw i8, ptr %i.ir, i64 56
   %i.it = load i8, ptr %i.is, align 8, !tbaa !44
   %.not.i1.i.i.i.i = icmp eq i8 %i.it, 0
-  br i1 %.not.i1.i.i.i.i, label %bb.u, label %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i.i.i
+  br i1 %.not.i1.i.i.i.i, label %bb.u, label %4
+
+4:                                                ; preds = %_ZSt13__check_facetISt5ctypeIcEERKT_PS3_.exit.i.i.i.i
+  %5 = getelementptr inbounds nuw i8, ptr %i.ir, i64 89
+  %6 = load i8, ptr %5, align 1, !tbaa !8
+  %7 = freeze i8 %6
+  br label %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i.i.i
 
 bb.u:                                             ; preds = %_ZSt13__check_facetISt5ctypeIcEERKT_PS3_.exit.i.i.i.i
   invoke void @_ZNKSt5ctypeIcE13_M_widen_initEv(ptr noundef nonnull align 8 dereferenceable(570) %i.ir)
@@ -248,15 +254,15 @@ bb.u:                                             ; preds = %_ZSt13__check_facet
   %i.iv = getelementptr inbounds nuw i8, ptr %i.iu, i64 48
   %i.iw = load ptr, ptr %i.iv, align 8
   %i.ix = invoke noundef signext i8 %i.iw(ptr noundef nonnull align 8 dereferenceable(570) %i.ir, i8 noundef signext 32)
-          to label %.noexc6._ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i.i.i_crit_edge unwind label %bb.aa, !inline_history !9 ; 0 uses
+          to label %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i.i.i unwind label %bb.aa, !inline_history !9
 
-.noexc6._ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i.i.i_crit_edge: ; preds = %.noexc6
-  %.pre.pre = load ptr, ptr %i.ic, align 8, !tbaa !15
-  br label %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i.i.i
-
-_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i.i.i: ; preds = %.noexc6._ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i.i.i_crit_edge, %_ZSt13__check_facetISt5ctypeIcEERKT_PS3_.exit.i.i.i.i
-  %.pre = phi ptr [ %.pre.pre, %.noexc6._ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i.i.i_crit_edge ], [ %i.id, %_ZSt13__check_facetISt5ctypeIcEERKT_PS3_.exit.i.i.i.i ]
-  store i8 1, ptr %i.in, align 1, !tbaa !35
+_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i.i.i: ; preds = %.noexc6, %4
+  %.0.i.i.i.i.i = phi i8 [ %7, %4 ], [ %i.ix, %.noexc6 ]
+  %8 = getelementptr inbounds nuw i8, ptr %i.im, i64 224
+  %9 = zext i8 %.0.i.i.i.i.i to i16
+  %10 = or disjoint i16 %9, 256
+  store i16 %10, ptr %8, align 8
+  %.pre = load ptr, ptr %i.ic, align 8, !tbaa !15
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.r, %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i.i.i

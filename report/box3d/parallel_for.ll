@@ -30,24 +30,28 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.h = add i32 %i.g, %i.e
   %i.i = sdiv i32 %i.h, %i.e
+  %8 = freeze i32 %i.i
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.b, %bb.c
-  %.sink68 = phi i32 [ %i.i, %bb.c ], [ %3, %bb.b ] ; 3 uses
+  %.sink68 = phi i32 [ %8, %bb.c ], [ %3, %bb.b ] ; 3 uses
   %i.j = add i32 %i.g, %.sink68
   %i.k = sdiv i32 %i.j, %.sink68                  ; 2 uses
   %i.l = tail call i32 @llvm.smin.i32(i32 %i.d, i32 %i.k) ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #3
   %i.m = getelementptr inbounds nuw i8, ptr %6, i64 4 ; 2 uses
   store i32 %i.k, ptr %i.m, align 4, !tbaa !11
-  %i.n = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
-  store i32 %.sink68, ptr %i.n, align 8, !tbaa !12
-  %8 = getelementptr inbounds nuw i8, ptr %6, i64 12 ; 2 uses
-  store i32 %2, ptr %8, align 4, !tbaa !13
+  %9 = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %6, i64 12
+  %10 = zext i32 %.sink68 to i64
+  %11 = zext nneg i32 %2 to i64
+  %12 = shl nuw nsw i64 %11, 32
+  %13 = or disjoint i64 %12, %10
+  store i64 %13, ptr %9, align 8
   %i.o = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 2 uses
-  store ptr %1, ptr %i.o, align 8, !tbaa !14
+  store ptr %1, ptr %i.o, align 8, !tbaa !12
   %i.p = getelementptr inbounds nuw i8, ptr %6, i64 24 ; 2 uses
-  store ptr %4, ptr %i.p, align 8, !tbaa !15
+  store ptr %4, ptr %i.p, align 8, !tbaa !13
   store atomic i32 0, ptr %6 seq_cst, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #3
@@ -70,10 +74,10 @@ bb.d:                                             ; preds = %bb.b, %bb.c
 bb.e:                                             ; preds = %.lr.ph, %b3ParallelForTrampoline.exit
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %b3ParallelForTrampoline.exit ] ; 5 uses
   %i.w = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %indvars.iv ; 3 uses
-  store ptr %6, ptr %i.w, align 16, !tbaa !18
+  store ptr %6, ptr %i.w, align 16, !tbaa !16
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 8
   %i.y = trunc nuw nsw i64 %indvars.iv to i32     ; 2 uses
-  store i32 %i.y, ptr %i.x, align 8, !tbaa !19
+  store i32 %i.y, ptr %i.x, align 8, !tbaa !17
   %i.z = load i32, ptr %i.r, align 4, !tbaa !80
   %i.aa = icmp slt i32 %i.z, 256
   br i1 %i.aa, label %bb.f, label %bb.g
@@ -92,11 +96,11 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.e
   %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv
   store ptr null, ptr %i.ah, align 8, !tbaa !83
-  %i.ai = load ptr, ptr %i.p, align 8, !tbaa !15
-  %i.aj = load ptr, ptr %i.o, align 8, !tbaa !14
+  %i.ai = load ptr, ptr %i.p, align 8, !tbaa !13
+  %i.aj = load ptr, ptr %i.o, align 8, !tbaa !12
   %i.ak = load i32, ptr %i.m, align 4, !tbaa !11  ; 2 uses
-  %i.al = load i32, ptr %i.n, align 8, !tbaa !12  ; 2 uses
-  %i.am = load i32, ptr %8, align 4, !tbaa !13
+  %i.al = load i32, ptr %9, align 8, !tbaa !18    ; 2 uses
+  %i.am = load i32, ptr %i.n, align 4, !tbaa !19
   %i.an = atomicrmw add ptr %6, i32 1 seq_cst, align 4 ; 2 uses
   %.not28.i = icmp slt i32 %i.an, %i.ak
   br i1 %.not28.i, label %.lr.ph.i, label %b3ParallelForTrampoline.exit
@@ -150,19 +154,19 @@ declare void @llvm.lifetime.start.p0(ptr captures(none)) #1
 ; Function Attrs: nounwind uwtable
 define internal void @b3ParallelForTrampoline(ptr nofree noundef readonly captures(none) %0) #0 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !18     ; 7 uses
+  %i.a = load ptr, ptr %0, align 8, !tbaa !16     ; 7 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.c = load i32, ptr %i.b, align 8, !tbaa !19
+  %i.c = load i32, ptr %i.b, align 8, !tbaa !17
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !15
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !13
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !14
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !12
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   %i.i = load i32, ptr %i.h, align 4, !tbaa !11   ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %i.k = load i32, ptr %i.j, align 8, !tbaa !12   ; 2 uses
+  %i.k = load i32, ptr %i.j, align 8, !tbaa !18   ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 12
-  %i.m = load i32, ptr %i.l, align 4, !tbaa !13
+  %i.m = load i32, ptr %i.l, align 4, !tbaa !19
   %i.n = atomicrmw add ptr %i.a, i32 1 seq_cst, align 4 ; 2 uses
   %.not28 = icmp slt i32 %i.n, %i.i
   br i1 %.not28, label %.lr.ph, label %._crit_edge
@@ -208,14 +212,14 @@ attributes #3 = { nounwind }
 !9 = !{!"b3AtomicInt", !5, i64 0}
 !10 = !{!"b3ParallelForShared", !9, i64 0, !5, i64 4, !5, i64 8, !5, i64 12, !8, i64 16, !8, i64 24}
 !11 = !{!10, !5, i64 4}
-!12 = !{!10, !5, i64 8}
-!13 = !{!10, !5, i64 12}
-!14 = !{!10, !8, i64 16}
-!15 = !{!10, !8, i64 24}
-!16 = !{!"p1 _ZTS19b3ParallelForShared", !8, i64 0}
-!17 = !{!"b3ParallelForTask", !16, i64 0, !5, i64 8}
-!18 = !{!17, !16, i64 0}
-!19 = !{!17, !5, i64 8}
+!12 = !{!10, !8, i64 16}
+!13 = !{!10, !8, i64 24}
+!14 = !{!"p1 _ZTS19b3ParallelForShared", !8, i64 0}
+!15 = !{!"b3ParallelForTask", !14, i64 0, !5, i64 8}
+!16 = !{!15, !14, i64 0}
+!17 = !{!15, !5, i64 8}
+!18 = !{!10, !5, i64 8}
+!19 = !{!10, !5, i64 12}
 !20 = distinct !{!20, !85}
 !21 = distinct !{!21, !85}
 !22 = !{!"p1 omnipotent char", !8, i64 0}

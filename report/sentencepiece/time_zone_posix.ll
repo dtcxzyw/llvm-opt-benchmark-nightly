@@ -202,12 +202,13 @@ bb.g:                                             ; preds = %bb.f
 
 ._crit_edge.i:                                    ; preds = %bb.g, %.lr.ph.i
   %.028.lcssa.i.idx = phi i64 [ %.02864.i.add, %bb.g ], [ %.02864.i.idx, %.lr.ph.i ] ; 2 uses
-  %.023.lcssa.i = phi i32 [ %i.o, %bb.g ], [ %.02365.i, %.lr.ph.i ] ; 2 uses
+  %.023.lcssa.i = phi i32 [ %i.o, %bb.g ], [ %.02365.i, %.lr.ph.i ]
+  %.023.lcssa.i.fr = freeze i32 %.023.lcssa.i     ; 2 uses
   %.028.lcssa.i.ptr = getelementptr inbounds nuw i8, ptr %0, i64 %.028.lcssa.i.idx ; 5 uses
   %i.r = icmp eq i64 %.028.lcssa.i.idx, 2
-  %i.s = add i32 %.023.lcssa.i, -13
+  %i.s = add i32 %.023.lcssa.i.fr, -13
   %i.t = icmp ult i32 %i.s, -12
-  %or.cond35.i = select i1 %i.r, i1 true, i1 %i.t
+  %or.cond35.i = or i1 %i.r, %i.t
   br i1 %or.cond35.i, label %.thread, label %_ZN4absl12lts_2026052613time_internal4cctz12_GLOBAL__N_18ParseIntEPKciiPi.exit
 
 _ZN4absl12lts_2026052613time_internal4cctz12_GLOBAL__N_18ParseIntEPKciiPi.exit: ; preds = %._crit_edge.i
@@ -255,12 +256,13 @@ bb.k:                                             ; preds = %bb.j
 
 ._crit_edge.i46:                                  ; preds = %bb.k, %.lr.ph.i40
   %.028.lcssa.i47.idx = phi i64 [ %.02864.i43.add, %bb.k ], [ %.02864.i43.idx, %.lr.ph.i40 ] ; 2 uses
-  %.023.lcssa.i48 = phi i32 [ %i.ag, %bb.k ], [ %.02365.i42, %.lr.ph.i40 ] ; 2 uses
+  %.023.lcssa.i48 = phi i32 [ %i.ag, %bb.k ], [ %.02365.i42, %.lr.ph.i40 ]
+  %.023.lcssa.i48.fr = freeze i32 %.023.lcssa.i48 ; 2 uses
   %.028.lcssa.i47.ptr = getelementptr inbounds nuw i8, ptr %.028.lcssa.i.ptr, i64 %.028.lcssa.i47.idx ; 3 uses
   %i.aj = icmp eq i64 %.028.lcssa.i47.idx, 1
-  %i.ak = add i32 %.023.lcssa.i48, -6
+  %i.ak = add i32 %.023.lcssa.i48.fr, -6
   %i.al = icmp ult i32 %i.ak, -5
-  %or.cond35.i49 = select i1 %i.aj, i1 true, i1 %i.al
+  %or.cond35.i49 = or i1 %i.aj, %i.al
   br i1 %or.cond35.i49, label %.thread, label %_ZN4absl12lts_2026052613time_internal4cctz12_GLOBAL__N_18ParseIntEPKciiPi.exit51
 
 _ZN4absl12lts_2026052613time_internal4cctz12_GLOBAL__N_18ParseIntEPKciiPi.exit51: ; preds = %._crit_edge.i46
@@ -389,12 +391,12 @@ _ZN4absl12lts_2026052613time_internal4cctz12_GLOBAL__N_18ParseIntEPKciiPi.exit79
 
 bb.u:                                             ; preds = %bb.l
   store i32 2, ptr %1, align 8, !tbaa !28
-  %2 = trunc nuw i32 %.023.lcssa.i to i8
+  %2 = trunc nuw i32 %.023.lcssa.i.fr to i16
   %i.by = getelementptr inbounds nuw i8, ptr %1, i64 8
-  store i8 %2, ptr %i.by, align 8, !tbaa !10
-  %3 = trunc nuw nsw i32 %.023.lcssa.i48 to i8
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 9
-  store i8 %3, ptr %4, align 1, !tbaa !10
+  %3 = trunc nuw nsw i32 %.023.lcssa.i48.fr to i16
+  %4 = shl nuw nsw i16 %3, 8
+  %5 = or disjoint i16 %4, %2
+  store i16 %5, ptr %i.by, align 8
   %i.bz = load i32, ptr %i.a, align 4, !tbaa !15
   %i.ca = trunc i32 %i.bz to i8
   %i.cb = getelementptr inbounds nuw i8, ptr %1, i64 10

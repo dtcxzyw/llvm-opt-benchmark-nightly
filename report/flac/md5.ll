@@ -11,7 +11,9 @@ target triple = "x86_64-pc-linux-gnu"
 define hidden void @FLAC__MD5Init(ptr nofree noundef writeonly captures(none) initializes((64, 104)) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 64
-  store <4 x i32> <i32 1732584193, i32 -271733879, i32 -1732584194, i32 271733878>, ptr %i.a, align 8, !tbaa !8
+  store i64 -1167088121787636991, ptr %i.a, align 8
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 72
+  store i64 1167088121787636990, ptr %1, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 80
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.b, i8 0, i64 24, i1 false)
   ret void
@@ -44,15 +46,19 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %.0 = phi ptr [ %1, %bb.b ], [ %i.f, %bb.a ]
   %i.l = zext nneg i32 %.026 to i64
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 %.0, i8 noundef 0, i64 noundef range(i64 0, 105) %i.l, i1 noundef false) #10
-  %i.m = load i32, ptr %i.a, align 8, !tbaa !8    ; 2 uses
-  %i.n = shl i32 %i.m, 3
+  %i.m = load i32, ptr %i.a, align 8, !tbaa !8
+  %.fr = freeze i32 %i.m                          ; 2 uses
+  %i.n = shl i32 %.fr, 3
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 56
-  store i32 %i.n, ptr %i.o, align 8, !tbaa !8
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 84
   %i.q = load i32, ptr %i.p, align 4, !tbaa !8
-  %i.r = tail call i32 @llvm.fshl.i32(i32 %i.q, i32 %i.m, i32 3)
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 60
-  store i32 %i.r, ptr %2, align 4, !tbaa !8
+  %.fr29 = freeze i32 %i.q
+  %i.r = tail call i32 @llvm.fshl.i32(i32 %.fr29, i32 %.fr, i32 3)
+  %2 = zext i32 %i.n to i64
+  %3 = zext i32 %i.r to i64
+  %4 = shl nuw i64 %3, 32
+  %5 = or disjoint i64 %4, %2
+  store i64 %5, ptr %i.o, align 8
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 2 uses
   tail call fastcc void @FLAC__MD5Transform(ptr noundef nonnull %i.s, ptr noundef nonnull %1)
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) %i.s, i64 noundef 16, i1 noundef false) #10

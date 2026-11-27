@@ -62,19 +62,20 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !12   ; 2 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 16
+  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !15
-  %i.f = load ptr, ptr %i.c, align 8, !tbaa !16   ; 4 uses
+  %i.f = load ptr, ptr %i.c, align 8, !tbaa !16   ; 2 uses
   %i.g = ptrtoint ptr %i.e to i64
   %i.h = ptrtoint ptr %i.f to i64
   %i.i = sub i64 %i.g, %i.h
   %i.j = trunc i64 %i.i to i32
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
-  %i.l = load i32, ptr %i.k, align 8, !tbaa !18   ; 5 uses
-  %i.m = sub nsw i32 %i.j, %i.l
+  %i.l = load i32, ptr %i.k, align 8, !tbaa !18
+  %.fr = freeze i32 %i.l                          ; 5 uses
+  %i.m = sub nsw i32 %i.j, %.fr
   %i.n = shl nsw i32 %i.m, 3
-  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 4 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 3 uses
   %i.p = load i32, ptr %i.o, align 4, !tbaa !19   ; 5 uses
   %i.q = sub nsw i32 %i.n, %i.p
   %i.r = icmp sgt i32 %1, %i.q
@@ -261,7 +262,7 @@ bb.o:                                             ; preds = %bb.n
   %i.cc = sub nsw i32 8, %i.ca
   %i.cd = lshr i32 255, %i.cc
   %i.ce = shl i32 %i.cd, %i.cb
-  %i.cf = sext i32 %i.l to i64
+  %i.cf = sext i32 %.fr to i64
   %i.cg = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.cf
   %i.ch = load i8, ptr %i.cg, align 1, !tbaa !23
   %i.ci = sext i8 %i.ch to i32
@@ -274,14 +275,14 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.cn, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
-  store i32 0, ptr %i.o, align 4, !tbaa !19
-  %6 = add nsw i32 %i.l, 1                        ; 2 uses
-  store i32 %6, ptr %i.k, align 8, !tbaa !18
+  %6 = add i32 %.fr, 1                            ; 2 uses
+  %7 = zext i32 %6 to i64
+  store i64 %7, ptr %i.k, align 8
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.o, %bb.p, %bb.n
   %i.co = phi i32 [ %i.p, %bb.n ], [ 0, %bb.p ], [ %i.cm, %bb.o ]
-  %.promoted = phi i32 [ %i.l, %bb.n ], [ %6, %bb.p ], [ %i.l, %bb.o ] ; 2 uses
+  %.promoted = phi i32 [ %.fr, %bb.n ], [ %6, %bb.p ], [ %.fr, %bb.o ] ; 2 uses
   %.037 = phi i32 [ 0, %bb.n ], [ %i.ck, %bb.p ], [ %i.ck, %bb.o ] ; 3 uses
   %.036 = phi i32 [ %1, %bb.n ], [ %i.cl, %bb.p ], [ %i.cl, %bb.o ] ; 4 uses
   %i.cp = icmp sgt i32 %.036, 0
@@ -292,6 +293,7 @@ bb.q:                                             ; preds = %bb.o, %bb.p, %bb.n
   br i1 %i.cq, label %.lr.ph, label %._crit_edge.thread
 
 .lr.ph:                                           ; preds = %.preheader
+  %8 = load ptr, ptr %i.c, align 8, !tbaa !16
   %i.cr = sext i32 %.promoted to i64
   br label %bb.r
 
@@ -300,7 +302,7 @@ bb.r:                                             ; preds = %.lr.ph, %bb.r
   %.157 = phi i32 [ %.036, %.lr.ph ], [ %i.cy, %bb.r ] ; 2 uses
   %.13856 = phi i32 [ %.037, %.lr.ph ], [ %i.cw, %bb.r ]
   %i.cs = shl i32 %.13856, 8
-  %i.ct = getelementptr inbounds nuw i8, ptr %i.f, i64 %indvars.iv
+  %i.ct = getelementptr inbounds nuw i8, ptr %8, i64 %indvars.iv
   %i.cu = load i8, ptr %i.ct, align 1, !tbaa !23
   %i.cv = zext i8 %i.cu to i32
   %i.cw = or disjoint i32 %i.cs, %i.cv            ; 3 uses
@@ -324,7 +326,8 @@ bb.r:                                             ; preds = %.lr.ph, %bb.r
   %i.dd = and i32 %i.dc, 254
   %i.de = shl i32 %.138.lcssa79, %.1.lcssa80
   %i.df = sext i32 %i.da to i64
-  %i.dg = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.df
+  %9 = load ptr, ptr %i.c, align 8, !tbaa !16
+  %i.dg = getelementptr inbounds nuw i8, ptr %9, i64 %i.df
   %i.dh = load i8, ptr %i.dg, align 1, !tbaa !23
   %i.di = zext i8 %i.dh to i32
   %i.dj = and i32 %i.dd, %i.di

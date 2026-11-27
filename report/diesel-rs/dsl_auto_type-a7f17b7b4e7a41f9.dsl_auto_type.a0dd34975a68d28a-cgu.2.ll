@@ -204,9 +204,11 @@ bb.a:
   store ptr %1, ptr %i.a, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %2, ptr %i.b, align 8
-  store i32 1, ptr %0, align 8
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i32 %3, ptr %4, align 4
+  %4 = freeze i32 %3
+  %5 = zext i32 %4 to i64
+  %6 = shl nuw i64 %5, 32
+  %7 = or disjoint i64 %6, 1
+  store i64 %7, ptr %0, align 8
   ret void
 }
 

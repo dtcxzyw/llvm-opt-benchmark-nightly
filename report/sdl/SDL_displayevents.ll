@@ -9,7 +9,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define hidden void @SDL_SendDisplayEvent(ptr noundef %0, i32 noundef %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #0 {
 bb.a:
-  %4 = alloca %union.SDL_Event, align 8           ; 8 uses
+  %4 = alloca %union.SDL_Event, align 8           ; 7 uses
   %.not = icmp eq ptr %0, null
   br i1 %.not, label %bb.m, label %bb.b
 
@@ -58,9 +58,12 @@ bb.j:                                             ; preds = %bb.i
   store i64 0, ptr %i.m, align 8
   %i.n = load i32, ptr %0, align 8
   %i.o = getelementptr inbounds nuw i8, ptr %4, i64 16
-  store i32 %i.n, ptr %i.o, align 8
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 20
-  store i32 %2, ptr %5, align 4
+  %5 = freeze i32 %i.n
+  %6 = zext i32 %5 to i64
+  %7 = zext i32 %2 to i64
+  %8 = shl nuw i64 %7, 32
+  %9 = or disjoint i64 %8, %6
+  store i64 %9, ptr %i.o, align 8
   %i.p = getelementptr inbounds nuw i8, ptr %4, i64 24
   store i32 %3, ptr %i.p, align 8
   %i.q = call zeroext i1 @SDL_PushEvent_REAL(ptr noundef nonnull %4) #3 ; 0 uses
