@@ -204,7 +204,7 @@ bb.s:                                             ; preds = %bb.q
   %i.ar = extractvalue { i32, i1 } %i.an, 0, !nosanitize !10
   store i32 %i.ar, ptr %i.y, align 8, !tbaa !27
   %i.as = sext i32 %i.am to i64                   ; 2 uses
-  %i.at = getelementptr inbounds [16 x i8], ptr %i.aq, i64 %i.as ; 4 uses
+  %i.at = getelementptr inbounds [16 x i8], ptr %i.aq, i64 %i.as ; 3 uses
   %i.au = shl nsw i64 %i.as, 4
   %i.av = ptrtoint ptr %i.aq to i64, !nosanitize !10 ; 3 uses
   %i.aw = add i64 %i.au, %i.av, !nosanitize !10   ; 3 uses
@@ -233,9 +233,11 @@ bb.v:                                             ; preds = %bb.u
   unreachable, !nosanitize !10
 
 bb.w:                                             ; preds = %bb.u
-  store i32 %1, ptr %i.at, align 8, !tbaa !39
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.at, i64 4
-  store i32 %3, ptr %.sroa.4.0..sroa_idx, align 4, !tbaa !39
+  %6 = zext i32 %1 to i64
+  %7 = zext i32 %3 to i64
+  %8 = shl nuw i64 %7, 32
+  %9 = or disjoint i64 %8, %6
+  store i64 %9, ptr %i.at, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.at, i64 8
   store ptr %2, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !40
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #11

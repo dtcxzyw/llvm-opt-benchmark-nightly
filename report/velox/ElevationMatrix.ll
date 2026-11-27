@@ -202,9 +202,12 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.a, ptr noundef nonnull align 8 dereferenceable(32) %1, i64 32, i1 false), !tbaa.struct !89
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 3 uses
-  store i32 %3, ptr %i.b, align 8, !tbaa !57
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 60 ; 2 uses
-  store i32 %2, ptr %5, align 4, !tbaa !56
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 60
+  %6 = zext i32 %3 to i64
+  %7 = zext i32 %2 to i64
+  %8 = shl nuw i64 %7, 32
+  %9 = or disjoint i64 %8, %6
+  store i64 %9, ptr %i.b, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 80
   store i8 0, ptr %i.c, align 8, !tbaa !53
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 88

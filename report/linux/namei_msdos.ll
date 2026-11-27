@@ -202,7 +202,7 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define internal fastcc i32 @msdos_add_entry(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, i32 noundef range(i32 0, 2) %2, i32 noundef range(i32 0, 2) %3, i32 noundef range(i32 0, -2147483648) %4, ptr noundef %5, ptr noundef %6) unnamed_addr #2 align 16 prefalign(16) {
 bb.a:
-  %7 = alloca %struct.msdos_dir_entry, align 4    ; 13 uses
+  %7 = alloca %struct.msdos_dir_entry, align 4    ; 15 uses
   %i.a = alloca i16, align 2                      ; 5 uses
   %i.b = alloca i16, align 2                      ; 5 uses
   %i.c = getelementptr i8, ptr %0, i64 40         ; 2 uses
@@ -227,8 +227,12 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %7, i64 12
   store i8 0, ptr %i.j, align 4
   call void @fat_time_unix2fat(ptr noundef %.val, ptr noundef %5, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, ptr noundef null) #11
+  %8 = getelementptr inbounds nuw i8, ptr %7, i64 16
+  store i32 0, ptr %8, align 4
+  %9 = getelementptr inbounds nuw i8, ptr %7, i64 14
+  store i16 0, ptr %9, align 2
   %i.k = getelementptr inbounds nuw i8, ptr %7, i64 13
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %i.k, i8 0, i64 7, i1 false)
+  store i8 0, ptr %i.k, align 1
   %i.l = load i16, ptr %i.a, align 2
   %i.m = getelementptr inbounds nuw i8, ptr %7, i64 22
   store i16 %i.l, ptr %i.m, align 2

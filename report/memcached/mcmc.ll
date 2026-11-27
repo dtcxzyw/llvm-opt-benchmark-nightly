@@ -202,12 +202,17 @@ bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %2, i8 0, i64 72, i1 false)
   %i.b = tail call ptr @memchr(ptr noundef %0, i32 noundef 10, i64 noundef %1) #19 ; 2 uses
   %i.c = icmp eq ptr %i.b, null
-  br i1 %i.c, label %_mcmc_parse_response.exit, label %bb.b
+  br i1 %i.c, label %3, label %bb.b
+
+3:                                                ; preds = %bb.a
+  %4 = getelementptr inbounds nuw i8, ptr %2, i64 2
+  store i16 5, ptr %4, align 2, !tbaa !47
+  br label %_mcmc_parse_response.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 1 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store ptr %i.d, ptr %i.e, align 8, !tbaa !47
+  store ptr %i.d, ptr %i.e, align 8, !tbaa !48
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = ptrtoint ptr %0 to i64                   ; 3 uses
   %i.h = sub i64 %i.f, %i.g
@@ -244,12 +249,17 @@ bb.d:                                             ; preds = %bb.c
   br i1 %or.cond132.i, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %.critedge.i
-  store i16 107, ptr %2, align 8, !tbaa !34
+  store i32 983147, ptr %2, align 8
   br label %_mcmc_parse_response.exit
 
 bb.f:                                             ; preds = %.critedge.i
   %i.q = icmp slt i32 %i.n, 2
-  br i1 %i.q, label %_mcmc_parse_response.exit, label %bb.g
+  br i1 %i.q, label %5, label %bb.g
+
+5:                                                ; preds = %bb.f
+  %6 = getelementptr inbounds nuw i8, ptr %2, i64 2
+  store i16 18, ptr %6, align 2, !tbaa !47
+  br label %_mcmc_parse_response.exit
 
 bb.g:                                             ; preds = %bb.f
   switch i32 %i.n, label %bb.ar [
@@ -618,6 +628,8 @@ bb.at:                                            ; preds = %bb.ai, %bb.af, %bb.
   %.2143.i = phi i32 [ %.2.i, %bb.at ], [ -19, %bb.ah ], [ -1, %bb.ap ], [ -1, %bb.ao ], [ -1, %bb.al ], [ -1, %bb.aj ], [ -1, %bb.as ], [ -1, %bb.aq ], [ -1, %bb.ae ], [ -1, %bb.ad ], [ %.2143.ph.i, %.thread141.sink.split.i ]
   %i.gh = trunc nsw i32 %.2143.i to i16
   %i.gi = sub nsw i16 0, %i.gh
+  %7 = getelementptr inbounds nuw i8, ptr %2, i64 2
+  store i16 %i.gi, ptr %7, align 2, !tbaa !47
   br label %_mcmc_parse_response.exit
 
 .thread146.sink.split.i:                          ; preds = %bb.aq, %bb.ap, %bb.ao, %bb.an, %bb.am, %bb.al, %bb.ak, %bb.ad
@@ -629,13 +641,12 @@ bb.at:                                            ; preds = %bb.ai, %bb.af, %bb.
 .thread146.i:                                     ; preds = %.thread146.sink.split.i, %bb.at
   %.2148.i = phi i32 [ %.2.i, %bb.at ], [ %.2148.ph.i, %.thread146.sink.split.i ]
   %i.gj = trunc nuw nsw i32 %.2148.i to i16
+  %8 = getelementptr inbounds nuw i8, ptr %2, i64 2
+  store i16 %i.gj, ptr %8, align 2, !tbaa !47
   br label %_mcmc_parse_response.exit
 
-_mcmc_parse_response.exit:                        ; preds = %.thread146.i, %.thread141.i, %bb.f, %bb.e, %bb.a
-  %.sink161.i.sink = phi i16 [ 5, %bb.a ], [ %i.gi, %.thread141.i ], [ %i.gj, %.thread146.i ], [ 15, %bb.e ], [ 18, %bb.f ]
-  %.0 = phi i32 [ -1, %bb.a ], [ -1, %.thread141.i ], [ 0, %.thread146.i ], [ 0, %bb.e ], [ -1, %bb.f ]
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 2
-  store i16 %.sink161.i.sink, ptr %3, align 2, !tbaa !48
+_mcmc_parse_response.exit:                        ; preds = %.thread146.i, %.thread141.i, %5, %bb.e, %3
+  %.0 = phi i32 [ -1, %3 ], [ 0, %bb.e ], [ -1, %5 ], [ -1, %.thread141.i ], [ 0, %.thread146.i ]
   ret i32 %.0
 }
 
@@ -1038,8 +1049,8 @@ attributes #20 = { nounwind }
 !44 = distinct !{!44, !27}
 !45 = distinct !{!45, !27}
 !46 = distinct !{!46, !27}
-!47 = !{!32, !31, i64 8}
-!48 = !{!32, !24, i64 2}
+!47 = !{!32, !24, i64 2}
+!48 = !{!32, !31, i64 8}
 !49 = distinct !{!49, !27}
 !50 = !{!"p1 _ZTS8addrinfo", !26, i64 0}
 !51 = !{!50, !50, i64 0}

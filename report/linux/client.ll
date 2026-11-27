@@ -204,9 +204,10 @@ bb.x:                                             ; preds = %bb.w
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #20
   store i64 47244640256, ptr %1, align 8
   %i.cd = getelementptr inbounds nuw i8, ptr %1, i64 8
-  store i32 %i.cc, ptr %i.cd, align 8
-  %i.ce = getelementptr inbounds nuw i8, ptr %1, i64 12
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %i.ce, i8 0, i64 28, i1 false)
+  %2 = zext i32 %i.cc to i64
+  store i64 %2, ptr %i.cd, align 8
+  %i.ce = getelementptr inbounds nuw i8, ptr %1, i64 16
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ce, i8 0, i64 24, i1 false)
   %i.cf = call ptr @__kmem_cache_create_args(ptr noundef nonnull %i.ca, i32 noundef %i.cb, ptr noundef nonnull %1, i32 noundef 0) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #20
   store ptr %i.cf, ptr %i.g, align 8

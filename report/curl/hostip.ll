@@ -202,12 +202,14 @@ bb.z:                                             ; preds = %bb.y
   %.sroa.6.4.copyload.i.i = load i32, ptr %i.b, align 4
   %i.av = load ptr, ptr @Curl_ccalloc, align 8, !tbaa !94
   %i.aw = add i64 %i.as, 65
-  %i.ax = call ptr %i.av(i64 noundef 1, i64 noundef %i.aw) #10, !inline_history !102 ; 12 uses
+  %i.ax = call ptr %i.av(i64 noundef 1, i64 noundef %i.aw) #10, !inline_history !102 ; 13 uses
   %.not.i.i = icmp eq ptr %i.ax, null
   br i1 %.not.i.i, label %select.unfold.i, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
-  store <4 x i32> <i32 0, i32 2, i32 1, i32 6>, ptr %i.ax, align 8, !tbaa !78
+  store i64 8589934592, ptr %i.ax, align 8
+  %10 = getelementptr inbounds nuw i8, ptr %i.ax, i64 8
+  store i64 25769803777, ptr %10, align 8
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 16
   store i32 16, ptr %i.ay, align 8, !tbaa !105
   %i.az = getelementptr inbounds nuw i8, ptr %i.ax, i64 48 ; 2 uses
@@ -229,7 +231,7 @@ bb.aa:                                            ; preds = %bb.z
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   %i.bf = load ptr, ptr @Curl_ccalloc, align 8, !tbaa !94
   %i.bg = add i64 %i.be, 77
-  %i.bh = call ptr %i.bf(i64 noundef 1, i64 noundef %i.bg) #10, !inline_history !103 ; 13 uses
+  %i.bh = call ptr %i.bf(i64 noundef 1, i64 noundef %i.bg) #10, !inline_history !103 ; 14 uses
   %.not.i.i.i = icmp eq ptr %i.bh, null
   br i1 %.not.i.i.i, label %get_localhost6.exit.thread.i.i, label %bb.ab
 
@@ -243,7 +245,9 @@ bb.ab:                                            ; preds = %bb.aa
   %.sroa.6.i.sroa.0.4.insert.ext.i.i = zext i32 %.sroa.6.i.sroa.0.4.copyload.i.i to i64
   %.sroa.6.i.sroa.0.4.insert.shift.i.i = shl nuw i64 %.sroa.6.i.sroa.0.4.insert.ext.i.i, 32
   %.sroa.6.i.sroa.5.4..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  store <4 x i32> <i32 0, i32 10, i32 1, i32 6>, ptr %i.bh, align 8, !tbaa !78
+  store i64 42949672960, ptr %i.bh, align 8
+  %11 = getelementptr inbounds nuw i8, ptr %i.bh, i64 8
+  store i64 25769803777, ptr %11, align 8
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bh, i64 16
   store i32 28, ptr %i.bj, align 8, !tbaa !105
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bh, i64 40 ; 2 uses

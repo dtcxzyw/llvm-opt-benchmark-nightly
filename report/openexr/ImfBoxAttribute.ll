@@ -161,7 +161,7 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define weak_odr noundef ptr @_ZN7Imf_3_414TypedAttributeIN9Imath_3_23BoxINS1_4Vec2IiEEEEE16makeNewAttributeEv() #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #15 ; 6 uses
+  %i.a = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #15 ; 7 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.a, i8 0, i64 24, i1 false)
   invoke void @_ZN7Imf_3_49AttributeC2Ev(ptr noundef nonnull align 8 dereferenceable(24) %i.a)
           to label %bb.b unwind label %bb.c, !inline_history !0
@@ -169,7 +169,9 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN7Imf_3_414TypedAttributeIN9Imath_3_23BoxINS1_4Vec2IiEEEEEE, i64 16), ptr %i.a, align 16, !tbaa !11
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store <4 x i32> <i32 2147483647, i32 2147483647, i32 -2147483648, i32 -2147483648>, ptr %i.b, align 8, !tbaa !12
+  store i64 9223372034707292159, ptr %i.b, align 8
+  %0 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  store i64 -9223372034707292160, ptr %0, align 16
   ret ptr %i.a
 
 bb.c:                                             ; preds = %bb.a
@@ -198,7 +200,9 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN7Imf_3_414TypedAttributeIN9Imath_3_23BoxINS1_4Vec2IiEEEEEE, i64 16), ptr %i.a, align 16, !tbaa !11
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
-  store <4 x i32> <i32 2147483647, i32 2147483647, i32 -2147483648, i32 -2147483648>, ptr %i.b, align 8, !tbaa !12
+  store i64 9223372034707292159, ptr %i.b, align 8
+  %1 = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
+  store i64 -9223372034707292160, ptr %1, align 16
   %i.c = tail call ptr @__dynamic_cast(ptr nonnull align 8 dereferenceable(8) %0, ptr nonnull @_ZTIN7Imf_3_49AttributeE, ptr nonnull @_ZTIN7Imf_3_414TypedAttributeIN9Imath_3_23BoxINS1_4Vec2IiEEEEEE, i64 0) #13 ; 3 uses
   %i.d = icmp eq ptr %i.c, null
   br i1 %i.d, label %.thread.i.i.i, label %_ZN7Imf_3_414TypedAttributeIN9Imath_3_23BoxINS1_4Vec2IiEEEEE13copyValueFromERKNS_9AttributeE.exit
@@ -223,7 +227,6 @@ bb.d:                                             ; preds = %.thread.i.i.i
   br label %common.resume
 
 _ZN7Imf_3_414TypedAttributeIN9Imath_3_23BoxINS1_4Vec2IiEEEEE13copyValueFromERKNS_9AttributeE.exit: ; preds = %bb.b
-  %1 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.h = load <2 x i32>, ptr %i.g, align 4, !tbaa !12
   store <2 x i32> %i.h, ptr %i.b, align 8, !tbaa !12

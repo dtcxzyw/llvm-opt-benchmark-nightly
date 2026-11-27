@@ -205,9 +205,11 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f
   %i.l = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 2 uses
-  store i32 %1, ptr %i.l, align 8, !tbaa !37
-  %12 = getelementptr inbounds nuw i8, ptr %10, i64 12 ; 2 uses
-  store i32 %2, ptr %12, align 4, !tbaa !38
+  %12 = zext i32 %1 to i64
+  %13 = zext i32 %2 to i64
+  %14 = shl nuw i64 %13, 32
+  %15 = or disjoint i64 %14, %12
+  store i64 %15, ptr %i.l, align 8
   store i32 1, ptr %10, align 8, !tbaa !75
   %i.m = getelementptr inbounds nuw i8, ptr %10, i64 128
   store ptr %i.i, ptr %i.m, align 8, !tbaa !39
@@ -216,9 +218,10 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not16.i, label %EncodeLossless.exit.thread, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
+  %16 = getelementptr inbounds nuw i8, ptr %10, i64 12
   %i.o = load ptr, ptr @WebPDispatchAlphaToGreen, align 8, !tbaa !74
   %i.p = load i32, ptr %i.l, align 8, !tbaa !37
-  %i.q = load i32, ptr %12, align 4, !tbaa !38
+  %i.q = load i32, ptr %16, align 4, !tbaa !38
   %i.r = getelementptr inbounds nuw i8, ptr %10, i64 72
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !76
   %i.t = getelementptr inbounds nuw i8, ptr %10, i64 80

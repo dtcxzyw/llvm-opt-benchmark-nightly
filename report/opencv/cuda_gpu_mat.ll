@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %bb.d
   %i.w = ptrtoint ptr %i.v to i64
   %i.x = ptrtoint ptr %i.g to i64
   %i.y = sub i64 %i.w, %i.x                       ; 2 uses
-  %i.z = getelementptr inbounds nuw i8, ptr %i.b, i64 12 ; 2 uses
+  %i.z = getelementptr inbounds nuw i8, ptr %i.b, i64 12
   %i.aa = load i32, ptr %i.z, align 4, !tbaa !61  ; 2 uses
   %i.ab = sext i32 %i.aa to i64
   %i.ac = mul nsw i64 %i.ab, %i.t
@@ -232,8 +232,11 @@ bb.g:                                             ; preds = %bb.f
   br label %_ZN12_GLOBAL__N_122ensureSizeIsEnoughImplIN2cv3MatEEEviiiRT_.exit
 
 bb.h:                                             ; preds = %bb.f
-  store i32 %1, ptr %i.z, align 4, !tbaa !61
-  store i32 %0, ptr %i.aj, align 8, !tbaa !62
+  %4 = zext i32 %0 to i64
+  %5 = zext i32 %1 to i64
+  %6 = shl nuw i64 %5, 32
+  %7 = or disjoint i64 %6, %4
+  store i64 %7, ptr %i.aj, align 8
   br label %_ZN12_GLOBAL__N_122ensureSizeIsEnoughImplIN2cv3MatEEEviiiRT_.exit
 
 bb.i:                                             ; preds = %bb.a
@@ -342,7 +345,7 @@ bb.q:                                             ; preds = %bb.o
   %i.dc = mul nuw nsw i32 %i.db, %i.cv
   %i.dd = zext nneg i32 %i.dc to i64              ; 2 uses
   %i.de = getelementptr inbounds nuw i8, ptr %i.cl, i64 48
-  %i.df = load ptr, ptr %i.de, align 8, !tbaa !63
+  %i.df = load ptr, ptr %i.de, align 8, !tbaa !62
   %i.dg = ptrtoint ptr %i.df to i64
   %i.dh = ptrtoint ptr %i.cn to i64
   %i.di = sub i64 %i.dg, %i.dh                    ; 2 uses
@@ -745,6 +748,5 @@ attributes #19 = { noreturn nounwind }
 !59 = !{!38, !11, i64 32}
 !60 = !{!38, !11, i64 40}
 !61 = !{!38, !5, i64 12}
-!62 = !{!38, !5, i64 8}
-!63 = !{!41, !11, i64 48}
+!62 = !{!41, !11, i64 48}
 end_hunk_1

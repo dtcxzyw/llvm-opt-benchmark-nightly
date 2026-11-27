@@ -204,12 +204,14 @@ bb.j:                                             ; preds = %_ZN20btAlignedObjec
   br label %bb.k
 
 bb.k:                                             ; preds = %_ZN20btAlignedObjectArrayI12btSimplePairE21expandNonInitializingEv.exit.thread, %bb.j, %_ZN20btAlignedObjectArrayI12btSimplePairE21expandNonInitializingEv.exit
-  %i.ca = phi ptr [ %i.bw, %bb.j ], [ %i.bw, %_ZN20btAlignedObjectArrayI12btSimplePairE21expandNonInitializingEv.exit ], [ %i.bp, %_ZN20btAlignedObjectArrayI12btSimplePairE21expandNonInitializingEv.exit.thread ] ; 4 uses
+  %i.ca = phi ptr [ %i.bw, %bb.j ], [ %i.bw, %_ZN20btAlignedObjectArrayI12btSimplePairE21expandNonInitializingEv.exit ], [ %i.bp, %_ZN20btAlignedObjectArrayI12btSimplePairE21expandNonInitializingEv.exit.thread ] ; 3 uses
   %i.cb = phi i64 [ %i.bv, %bb.j ], [ %i.bv, %_ZN20btAlignedObjectArrayI12btSimplePairE21expandNonInitializingEv.exit ], [ %i.bo, %_ZN20btAlignedObjectArrayI12btSimplePairE21expandNonInitializingEv.exit.thread ]
   %.pre-phi = phi i64 [ %.pre, %bb.j ], [ %i.v, %_ZN20btAlignedObjectArrayI12btSimplePairE21expandNonInitializingEv.exit ], [ %i.v, %_ZN20btAlignedObjectArrayI12btSimplePairE21expandNonInitializingEv.exit.thread ]
-  store i32 %1, ptr %i.ca, align 8, !tbaa !36
-  %3 = getelementptr inbounds nuw i8, ptr %i.ca, i64 4
-  store i32 %2, ptr %3, align 4, !tbaa !37
+  %3 = zext i32 %1 to i64
+  %4 = zext i32 %2 to i64
+  %5 = shl nuw i64 %4, 32
+  %6 = or disjoint i64 %5, %3
+  store i64 %6, ptr %i.ca, align 8
   %i.cc = getelementptr inbounds nuw i8, ptr %i.ca, i64 8
   store ptr null, ptr %i.cc, align 8, !tbaa !30
   %i.cd = load ptr, ptr %i.t, align 8, !tbaa !26

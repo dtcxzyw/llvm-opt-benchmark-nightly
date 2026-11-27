@@ -204,13 +204,13 @@ bb.bl:                                            ; preds = %bb.ad
   br label %bb.bm
 
 bb.bm:                                            ; preds = %bb.bl, %bb.ad
-  %.sroa.020.0.i = phi i8 [ 0, %bb.bl ], [ 1, %bb.ad ] ; 3 uses
+  %.sroa.020.0.i = phi i8 [ 0, %bb.bl ], [ 1, %bb.ad ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l), !noalias !203
   %i.ge = getelementptr inbounds nuw i8, ptr %i.l, i64 24
   store ptr %i.ca, ptr %i.ge, align 8, !noalias !203
   %i.gf = getelementptr inbounds nuw i8, ptr %i.l, i64 32
   store i64 %i.cf, ptr %i.gf, align 8, !noalias !203
-  %i.gg = getelementptr inbounds nuw i8, ptr %i.l, i64 73 ; 4 uses
+  %i.gg = getelementptr inbounds nuw i8, ptr %i.l, i64 73 ; 6 uses
   %i.gh = getelementptr inbounds nuw i8, ptr %i.l, i64 56 ; 4 uses
   %i.gi = getelementptr inbounds nuw i8, ptr %i.l, i64 64 ; 3 uses
   %i.gj = getelementptr inbounds nuw i8, ptr %i.l, i64 40 ; 2 uses
@@ -219,8 +219,9 @@ bb.bm:                                            ; preds = %bb.bl, %bb.ad
   store ptr inttoptr (i64 1 to ptr), ptr %i.gj, align 8, !noalias !203
   %i.gk = getelementptr inbounds nuw i8, ptr %i.l, i64 48 ; 2 uses
   store i64 0, ptr %i.gk, align 8, !noalias !203
-  %i.gl = getelementptr inbounds nuw i8, ptr %i.l, i64 72
-  store i8 %.sroa.020.0.i, ptr %i.gl, align 8, !noalias !203
+  %i.gl = getelementptr inbounds nuw i8, ptr %i.l, i64 72 ; 2 uses
+  %0 = zext nneg i8 %.sroa.020.0.i to i16
+  store i16 %0, ptr %i.gl, align 8, !noalias !203
   %.not.i = icmp eq i64 %i.cf, 8
   br i1 %.not.i, label %.thread.i, label %bb.bn
 
@@ -557,6 +558,7 @@ bb.cy:                                            ; preds = %bb.bp
   br i1 %i.jv, label %bb.cz, label %.thread.i
 
 bb.cz:                                            ; preds = %bb.da, %bb.cy
+  store i8 3, ptr %i.gg, align 1, !noalias !203
   %i.jw = load i64, ptr %i.m, align 8, !noalias !203, !noundef !6
   br label %.thread.i
 
@@ -571,6 +573,7 @@ bb.db:                                            ; preds = %bb.bp
   br i1 %i.ka, label %bb.dc, label %.thread.i
 
 bb.dc:                                            ; preds = %bb.dd, %bb.db
+  store i8 4, ptr %i.gg, align 1, !noalias !203
   %i.kb = load i64, ptr %i.m, align 8, !noalias !203, !noundef !6
   br label %.thread.i
 
@@ -590,6 +593,8 @@ bb.dd:                                            ; preds = %bb.bp
   %i.kl = phi i64 [ 0, %bb.db ], [ 0, %bb.bp ], [ 0, %bb.bt ], [ 0, %bb.bq ], [ 0, %bb.da ], [ 0, %bb.cp ], [ 0, %bb.cq ], [ 0, %bb.bm ], [ %.sroa.11140.0.i, %bb.cx ], [ 0, %bb.cm ], [ 0, %bb.cz ], [ 0, %bb.cu ], [ 0, %bb.cy ], [ 0, %bb.dc ], [ 0, %bb.dd ], [ 0, %bb.bu ], [ %.sroa.11.0.i, %bb.by ], [ 0, %bb.bz ], [ %i.hw, %bb.cl ], [ 0, %bb.bv ], [ %i.hw, %bb.ce ], [ %.sroa.11130.0.i, %bb.ct ], [ 0, %bb.cc ], [ 0, %bb.cf ]
   %i.km = phi ptr [ inttoptr (i64 1 to ptr), %bb.db ], [ inttoptr (i64 1 to ptr), %bb.bp ], [ inttoptr (i64 1 to ptr), %bb.bt ], [ inttoptr (i64 1 to ptr), %bb.bq ], [ inttoptr (i64 1 to ptr), %bb.da ], [ inttoptr (i64 1 to ptr), %bb.cp ], [ inttoptr (i64 1 to ptr), %bb.cq ], [ inttoptr (i64 1 to ptr), %bb.bm ], [ %.sroa.6138.0.i, %bb.cx ], [ inttoptr (i64 1 to ptr), %bb.cm ], [ inttoptr (i64 1 to ptr), %bb.cz ], [ inttoptr (i64 1 to ptr), %bb.cu ], [ inttoptr (i64 1 to ptr), %bb.cy ], [ inttoptr (i64 1 to ptr), %bb.dc ], [ inttoptr (i64 1 to ptr), %bb.dd ], [ inttoptr (i64 1 to ptr), %bb.bu ], [ %.sroa.662.0.i, %bb.by ], [ inttoptr (i64 1 to ptr), %bb.bz ], [ %i.hx, %bb.cl ], [ inttoptr (i64 1 to ptr), %bb.bv ], [ %i.hx, %bb.ce ], [ %.sroa.6128.0.i, %bb.ct ], [ inttoptr (i64 1 to ptr), %bb.cc ], [ inttoptr (i64 1 to ptr), %bb.cf ]
   %.sroa.0142.4.i = phi i64 [ 8, %bb.db ], [ 8, %bb.bp ], [ %i.gw, %bb.bt ], [ 8, %bb.bq ], [ 8, %bb.da ], [ %i.iv, %bb.cp ], [ %i.iv, %bb.cq ], [ 8, %bb.bm ], [ %i.jt, %bb.cx ], [ 8, %bb.cm ], [ %i.jw, %bb.cz ], [ 8, %bb.cu ], [ 8, %bb.cy ], [ %i.kb, %bb.dc ], [ 8, %bb.dd ], [ %i.gw, %bb.bu ], [ %i.hl, %bb.by ], [ %i.gw, %bb.bz ], [ %spec.select.i, %bb.cl ], [ %i.gw, %bb.bv ], [ %.sroa.0142.1.i, %bb.ce ], [ %i.jl, %bb.ct ], [ %i.ho, %bb.cc ], [ %i.ho, %bb.cf ]
+  %.sroa.84.0.copyload = load i16, ptr %i.gl, align 8, !noalias !202
+  %.sroa.84.sroa.0.0.extract.trunc = trunc i16 %.sroa.84.0.copyload to i8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l), !noalias !203
   br label %.thread251
 
@@ -643,7 +648,7 @@ bb.de:                                            ; preds = %.noexc122
   %.sroa.43.1265 = phi i64 [ %i.cf, %.thread269 ], [ %i.cf, %.thread.i ], [ 0, %bb.av ], [ %i.fr, %_RINvNtCseHTIzroA4w0_6object3pod16slice_from_bytesNtNtB4_7archive15AixMemberOffsetECs54MM5Fk6r0b_2ar.exit.i.i ]
   %.sroa.70.1263 = phi ptr [ inttoptr (i64 1 to ptr), %.thread269 ], [ %i.km, %.thread.i ], [ inttoptr (i64 1 to ptr), %bb.av ], [ inttoptr (i64 1 to ptr), %_RINvNtCseHTIzroA4w0_6object3pod16slice_from_bytesNtNtB4_7archive15AixMemberOffsetECs54MM5Fk6r0b_2ar.exit.i.i ] ; 2 uses
   %.sroa.74.1262 = phi i64 [ 0, %.thread269 ], [ %i.kl, %.thread.i ], [ 0, %bb.av ], [ 0, %_RINvNtCseHTIzroA4w0_6object3pod16slice_from_bytesNtNtB4_7archive15AixMemberOffsetECs54MM5Fk6r0b_2ar.exit.i.i ]
-  %.sroa.84.1261 = phi i8 [ 0, %.thread269 ], [ %.sroa.020.0.i, %.thread.i ], [ 0, %bb.av ], [ 0, %_RINvNtCseHTIzroA4w0_6object3pod16slice_from_bytesNtNtB4_7archive15AixMemberOffsetECs54MM5Fk6r0b_2ar.exit.i.i ]
+  %.sroa.84.1261 = phi i8 [ 0, %.thread269 ], [ %.sroa.84.sroa.0.0.extract.trunc, %.thread.i ], [ 0, %bb.av ], [ 0, %_RINvNtCseHTIzroA4w0_6object3pod16slice_from_bytesNtNtB4_7archive15AixMemberOffsetECs54MM5Fk6r0b_2ar.exit.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !noalias !203
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n), !noalias !203
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.70.1263), "nonnull"(ptr %.sroa.7.0.copyload) ]

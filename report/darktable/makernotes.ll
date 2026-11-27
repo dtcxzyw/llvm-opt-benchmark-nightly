@@ -204,6 +204,8 @@ bb.bv:                                            ; preds = %bb.bu
   %i.lp = getelementptr inbounds nuw i8, ptr %0, i64 768304
   %i.lq = getelementptr inbounds nuw i8, ptr %0, i64 4018
   %i.lr = getelementptr inbounds nuw i8, ptr %0, i64 153100
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 153112
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 153104
   %i.ls = getelementptr inbounds nuw i8, ptr %0, i64 3794
   %i.lt = getelementptr inbounds nuw i8, ptr %0, i64 3792
   %i.lu = getelementptr inbounds nuw i8, ptr %0, i64 268 ; 5 uses
@@ -343,11 +345,14 @@ bb.cf:                                            ; preds = %bb.ce
   br label %bb.do
 
 bb.cg:                                            ; preds = %bb.ce
-  %i.pb = call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0) ; 2 uses
-  %3 = insertelement <4 x i16> poison, i16 %i.pb, i64 0
-  %4 = shufflevector <4 x i16> %3, <4 x i16> poison, <4 x i32> zeroinitializer
-  %5 = zext <4 x i16> %4 to <4 x i32>
-  store <4 x i32> %5, ptr %i.lr, align 4, !tbaa !87
+  %i.pb = call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0) ; 3 uses
+  %5 = zext i16 %i.pb to i32                      ; 2 uses
+  store i32 %5, ptr %3, align 8, !tbaa !87
+  %6 = zext i16 %i.pb to i64                      ; 2 uses
+  %7 = shl nuw nsw i64 %6, 32
+  %8 = or disjoint i64 %7, %6
+  store i64 %8, ptr %4, align 8
+  store i32 %5, ptr %i.lr, align 4, !tbaa !87
   store i16 %i.pb, ptr %i.ls, align 2, !tbaa !136
   br label %bb.do
 

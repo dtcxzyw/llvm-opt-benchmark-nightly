@@ -174,7 +174,7 @@ bb.a:
 ; Function Attrs: mustprogress nofree nounwind willreturn uwtable
 define void @_ZN7RarTime6SetDosEj(ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(8) initializes((0, 8)) %0, i32 noundef %1) local_unnamed_addr #4 align 2 {
 bb.a:
-  %2 = alloca %struct.tm, align 8                 ; 10 uses
+  %2 = alloca %struct.tm, align 8                 ; 8 uses
   %i.a = shl i32 %1, 1
   %i.b = and i32 %i.a, 62
   %i.c = lshr i32 %1, 5
@@ -187,13 +187,17 @@ bb.a:
   %i.j = and i32 %i.i, 15
   %i.k = lshr i32 %1, 25
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #13
-  store i32 %i.b, ptr %2, align 8, !tbaa !24
-  %i.l = getelementptr inbounds nuw i8, ptr %2, i64 4
-  store i32 %i.d, ptr %i.l, align 4, !tbaa !23
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store i32 %i.f, ptr %3, align 8, !tbaa !22
-  %4 = getelementptr inbounds nuw i8, ptr %2, i64 12
-  store i32 %i.h, ptr %4, align 4, !tbaa !21
+  %3 = zext nneg i32 %i.b to i64
+  %4 = zext nneg i32 %i.d to i64
+  %5 = shl nuw nsw i64 %4, 32
+  %6 = or disjoint i64 %5, %3
+  store i64 %6, ptr %2, align 8
+  %i.l = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %7 = zext nneg i32 %i.f to i64
+  %8 = zext nneg i32 %i.h to i64
+  %9 = shl nuw nsw i64 %8, 32
+  %10 = or disjoint i64 %9, %7
+  store i64 %10, ptr %i.l, align 8
   %i.m = add nsw i32 %i.j, -1
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 16
   store i32 %i.m, ptr %i.n, align 8, !tbaa !20

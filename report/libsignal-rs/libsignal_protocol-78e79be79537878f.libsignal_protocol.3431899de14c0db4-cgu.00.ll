@@ -204,7 +204,7 @@ bb.a:
   %i.a = alloca [24 x i8], align 8                ; 4 uses
   %i.b = alloca [24 x i8], align 8                ; 4 uses
   %i.c = alloca [24 x i8], align 8                ; 5 uses
-  %i.d = alloca [56 x i8], align 8                ; 9 uses
+  %i.d = alloca [56 x i8], align 8                ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.f = load i32, ptr %i.e, align 8, !noundef !7
@@ -226,9 +226,10 @@ bb.c:                                             ; preds = %bb.a
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.i, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.j = getelementptr inbounds nuw i8, ptr %i.d, i64 48
-  store i32 1, ptr %i.j, align 8
-  %2 = getelementptr inbounds nuw i8, ptr %i.d, i64 52
-  store i32 %i.f, ptr %2, align 4
+  %2 = zext i32 %i.f to i64
+  %3 = shl nuw i64 %2, 32
+  %4 = or disjoint i64 %3, 1
+  store i64 %4, ptr %i.j, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.d, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -378,9 +379,10 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 2, ptr %i.o, align 8
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store i32 %1, ptr %.sroa.4.0..sroa_idx, align 4
+  %5 = zext i32 %1 to i64
+  %6 = shl nuw i64 %5, 32
+  %7 = or disjoint i64 %6, 2
+  store i64 %7, ptr %i.o, align 8
   store i64 1, ptr %0, align 8
   br label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc5boxed3BoxShEECs4tP8yUXWbFU_18libsignal_protocol.exit52
 

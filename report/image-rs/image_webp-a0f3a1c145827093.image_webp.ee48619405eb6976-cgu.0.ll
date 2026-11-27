@@ -205,7 +205,7 @@ bb.a:
   %i.a = alloca [24 x i8], align 8                ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   tail call void @_RNvCshxk5dXoXnx9_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #22
-  %i.b = tail call noundef align 8 dereferenceable_or_null(48) ptr @_RNvCshxk5dXoXnx9_7___rustc12___rust_alloc(i64 noundef 48, i64 noundef range(i64 1, -9223372036854775807) 8) #22 ; 7 uses
+  %i.b = tail call noundef align 8 dereferenceable_or_null(48) ptr @_RNvCshxk5dXoXnx9_7___rustc12___rust_alloc(i64 noundef 48, i64 noundef range(i64 1, -9223372036854775807) 8) #22 ; 5 uses
   %i.c = icmp eq ptr %i.b, null
   br i1 %i.c, label %bb.b, label %_RNvNtCs4wP2HXfJTCR_5alloc5boxed14box_new_uninit.exit, !prof !10
 
@@ -214,13 +214,15 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _RNvNtCs4wP2HXfJTCR_5alloc5boxed14box_new_uninit.exit: ; preds = %bb.a
-  store i16 1, ptr %i.b, align 8
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 2
-  store i16 %1, ptr %.sroa.4.0..sroa_idx, align 2
+  %3 = zext i16 %1 to i32                         ; 2 uses
+  %4 = shl nuw i32 %3, 16
+  %5 = or disjoint i32 %4, 1
+  store i32 %5, ptr %i.b, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  store i16 1, ptr %i.d, align 8
-  %.sroa.44.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 18
-  store i16 %2, ptr %.sroa.44.0..sroa_idx, align 2
+  %6 = zext i16 %2 to i32                         ; 2 uses
+  %7 = shl nuw i32 %6, 16
+  %8 = or disjoint i32 %7, 1
+  store i32 %8, ptr %i.d, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 32
   store i16 2, ptr %i.e, align 8
   store i64 3, ptr %i.a, align 8
@@ -229,7 +231,7 @@ _RNvNtCs4wP2HXfJTCR_5alloc5boxed14box_new_uninit.exit: ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   store i64 3, ptr %i.g, align 8
   tail call void @_RNvCshxk5dXoXnx9_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #22
-  %i.h = tail call noundef align 4 dereferenceable_or_null(8) ptr @_RNvCshxk5dXoXnx9_7___rustc12___rust_alloc(i64 noundef 8, i64 noundef range(i64 1, -9223372036854775807) 4) #22 ; 3 uses
+  %i.h = tail call noundef align 4 dereferenceable_or_null(8) ptr @_RNvCshxk5dXoXnx9_7___rustc12___rust_alloc(i64 noundef 8, i64 noundef range(i64 1, -9223372036854775807) 4) #22 ; 4 uses
   %i.i = icmp eq ptr %i.h, null
   br i1 %i.i, label %bb.c, label %_RNvNtCs4wP2HXfJTCR_5alloc5boxed14box_new_uninit.exit13, !prof !10
 
@@ -247,11 +249,11 @@ bb.d:                                             ; preds = %bb.c
           to label %bb.f unwind label %bb.e
 
 _RNvNtCs4wP2HXfJTCR_5alloc5boxed14box_new_uninit.exit13: ; preds = %_RNvNtCs4wP2HXfJTCR_5alloc5boxed14box_new_uninit.exit
-  %3 = insertelement <2 x i16> poison, i16 %1, i64 0
-  %4 = insertelement <2 x i16> %3, i16 %2, i64 1
-  %5 = zext <2 x i16> %4 to <2 x i32>
-  %6 = or disjoint <2 x i32> %5, splat (i32 65536)
-  store <2 x i32> %6, ptr %i.h, align 4
+  %9 = or disjoint i32 %3, 65536
+  %10 = or disjoint i32 %6, 65536
+  store i32 %9, ptr %i.h, align 4
+  %11 = getelementptr inbounds nuw i8, ptr %i.h, i64 4
+  store i32 %10, ptr %11, align 4
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %.sroa.0.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24

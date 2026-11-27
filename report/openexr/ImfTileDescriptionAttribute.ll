@@ -119,7 +119,7 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define weak_odr noundef ptr @_ZN7Imf_3_414TypedAttributeINS_15TileDescriptionEE16makeNewAttributeEv() #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #16 ; 6 uses
+  %i.a = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #16 ; 7 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.a, i8 0, i64 24, i1 false)
   invoke void @_ZN7Imf_3_49AttributeC2Ev(ptr noundef nonnull align 8 dereferenceable(24) %i.a)
           to label %bb.b unwind label %bb.c, !inline_history !0
@@ -127,7 +127,9 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN7Imf_3_414TypedAttributeINS_15TileDescriptionEEE, i64 16), ptr %i.a, align 16, !tbaa !10
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store <4 x i32> <i32 32, i32 32, i32 0, i32 0>, ptr %i.b, align 8, !tbaa !17
+  store i64 137438953504, ptr %i.b, align 8
+  %0 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  store i64 0, ptr %0, align 16
   ret ptr %i.a
 
 bb.c:                                             ; preds = %bb.a
@@ -148,7 +150,7 @@ declare i32 @__gxx_personality_v0(...)
 ; Function Attrs: mustprogress uwtable
 define weak_odr noundef ptr @_ZNK7Imf_3_414TypedAttributeINS_15TileDescriptionEE4copyEv(ptr noundef nonnull align 8 dereferenceable(24) %0) unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #16 ; 6 uses
+  %i.a = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #16 ; 7 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.a, i8 0, i64 24, i1 false)
   invoke void @_ZN7Imf_3_49AttributeC2Ev(ptr noundef nonnull align 8 dereferenceable(24) %i.a)
           to label %bb.b unwind label %bb.e, !inline_history !0
@@ -156,7 +158,9 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN7Imf_3_414TypedAttributeINS_15TileDescriptionEEE, i64 16), ptr %i.a, align 16, !tbaa !10
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
-  store <4 x i32> <i32 32, i32 32, i32 0, i32 0>, ptr %i.b, align 8, !tbaa !17
+  store i64 137438953504, ptr %i.b, align 8
+  %1 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  store i64 0, ptr %1, align 16
   %i.c = tail call ptr @__dynamic_cast(ptr nonnull align 8 dereferenceable(8) %0, ptr nonnull @_ZTIN7Imf_3_49AttributeE, ptr nonnull @_ZTIN7Imf_3_414TypedAttributeINS_15TileDescriptionEEE, i64 0) #14 ; 2 uses
   %i.d = icmp eq ptr %i.c, null
   br i1 %i.d, label %.thread.i.i.i, label %_ZN7Imf_3_414TypedAttributeINS_15TileDescriptionEE13copyValueFromERKNS_9AttributeE.exit

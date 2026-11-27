@@ -204,9 +204,10 @@ bb.f:                                             ; preds = %bb.e
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   store ptr %4, ptr %i.m, align 8
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
-  store i32 %3, ptr %i.n, align 8
-  %28 = getelementptr inbounds nuw i8, ptr %0, i64 68 ; 3 uses
-  store i32 -1, ptr %28, align 4
+  %28 = getelementptr inbounds nuw i8, ptr %0, i64 68 ; 2 uses
+  %29 = zext i32 %3 to i64
+  %30 = or disjoint i64 %29, -4294967296
+  store i64 %30, ptr %i.n, align 8
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 13 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 2 uses
   %i.q = getelementptr i8, ptr %0, i64 160

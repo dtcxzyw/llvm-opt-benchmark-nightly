@@ -32,20 +32,21 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
   store ptr null, ptr %i.d, align 8, !tbaa !14
   %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 32 ; 4 uses
-  store i32 -1, ptr %i.e, align 8, !tbaa !30
-  %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 56
-  %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 48
-  %2 = getelementptr inbounds nuw i8, ptr %i.c, i64 36 ; 5 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 40
+  %2 = getelementptr inbounds nuw i8, ptr %i.c, i64 56
+  %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 48 ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 36 ; 4 uses
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.f, i8 0, i64 40, i1 false)
+  store i64 4294967295, ptr %i.e, align 8
+  %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 40 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 44
-  %3 = getelementptr inbounds nuw i8, ptr %i.c, i64 96
-  %i.j = getelementptr inbounds nuw i8, ptr %i.c, i64 108
-  %i.k = getelementptr inbounds nuw i8, ptr %i.c, i64 104
-  %i.l = getelementptr inbounds nuw i8, ptr %i.c, i64 24 ; 3 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 6 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.m, i8 0, i64 16, i1 false)
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(52) %2, i8 0, i64 52, i1 false)
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %3, i8 0, i64 32, i1 false)
+  store i64 0, ptr %i.h, align 8
+  %i.j = getelementptr inbounds nuw i8, ptr %i.c, i64 96
+  %i.k = getelementptr inbounds nuw i8, ptr %i.c, i64 108
+  %i.l = getelementptr inbounds nuw i8, ptr %i.c, i64 104
+  %i.m = getelementptr inbounds nuw i8, ptr %i.c, i64 24 ; 3 uses
+  %3 = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 6 uses
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, i8 0, i64 16, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.j, i8 0, i64 32, i1 false)
   %i.n = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #8
   %i.o = add i64 %i.n, 1
   %i.p = tail call ptr @bench_malloc(i64 noundef %i.o) #7 ; 2 uses
@@ -53,7 +54,7 @@ bb.a:
   store ptr %i.p, ptr %i.q, align 8, !tbaa !15
   %i.r = tail call ptr @strcpy(ptr noundef nonnull dereferenceable(1) %i.p, ptr noundef nonnull dereferenceable(1) %0) #7 ; 0 uses
   %i.s = tail call ptr @__ctype_tolower_loc() #9
-  %i.t = load ptr, ptr %i.s, align 8, !tbaa !32
+  %i.t = load ptr, ptr %i.s, align 8, !tbaa !31
   br label %bb.b
 
 bb.b:                                             ; preds = %.backedge, %bb.a
@@ -81,7 +82,7 @@ bb.b:                                             ; preds = %.backedge, %bb.a
   ]
 
 bb.c:                                             ; preds = %bb.b
-  store i32 1, ptr %2, align 4, !tbaa !33
+  store i32 1, ptr %i.g, align 4, !tbaa !32
   br label %.backedge
 
 .backedge:                                        ; preds = %bb.b, %bb.c, %bb.d, %bb.e, %bb.f, %bb.g, %bb.h, %bb.i, %bb.j, %bb.k, %bb.l, %bb.m
@@ -90,23 +91,23 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.b
 
 bb.d:                                             ; preds = %bb.b
-  store i32 0, ptr %2, align 4, !tbaa !33
+  store i32 0, ptr %i.g, align 4, !tbaa !32
   br label %.backedge
 
 bb.e:                                             ; preds = %bb.b
-  store i32 1, ptr %i.h, align 8, !tbaa !34
+  store i32 1, ptr %i.h, align 8, !tbaa !33
   br label %.backedge
 
 bb.f:                                             ; preds = %bb.b
-  store i32 1, ptr %i.i, align 4, !tbaa !35
+  store i32 1, ptr %i.i, align 4, !tbaa !34
   br label %.backedge
 
 bb.g:                                             ; preds = %bb.b, %bb.b
-  store i32 -1, ptr %i.e, align 8, !tbaa !30
+  store i32 -1, ptr %i.e, align 8, !tbaa !35
   br label %.backedge
 
 bb.h:                                             ; preds = %bb.b, %bb.b
-  store i32 1, ptr %i.e, align 8, !tbaa !30
+  store i32 1, ptr %i.e, align 8, !tbaa !35
   br label %.backedge
 
 bb.i:                                             ; preds = %bb.b
@@ -122,11 +123,11 @@ bb.k:                                             ; preds = %bb.b
   br label %.backedge
 
 bb.l:                                             ; preds = %bb.b
-  store i32 1, ptr %i.k, align 8, !tbaa !36
+  store i32 1, ptr %i.l, align 8, !tbaa !36
   br label %.backedge
 
 bb.m:                                             ; preds = %bb.b
-  store i32 1, ptr %i.j, align 4, !tbaa !37
+  store i32 1, ptr %i.k, align 4, !tbaa !37
   br label %.backedge
 
 bb.n:                                             ; preds = %bb.b
@@ -139,9 +140,9 @@ bb.n:                                             ; preds = %bb.b
   br i1 %i.ad, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
-  %i.ae = load i32, ptr %i.e, align 8, !tbaa !30
+  %i.ae = load i32, ptr %i.e, align 8, !tbaa !35
   %i.af = icmp slt i32 %i.ae, 0                   ; 2 uses
-  %i.ag = load i32, ptr %2, align 4, !tbaa !33
+  %i.ag = load i32, ptr %i.g, align 4, !tbaa !32
   %i.ah = icmp ne i32 %i.ag, 0
   %i.ai = load i32, ptr @always_pad_real, align 4
   %i.aj = icmp ne i32 %i.ai, 0
@@ -261,7 +262,7 @@ bb.z:                                             ; preds = %transform_n.exit34.
 
 dwim.exit:                                        ; preds = %bb.z, %bb.q
   %.0164 = phi ptr [ %1, %bb.q ], [ %i.ao, %bb.z ]
-  store ptr %i.am, ptr %i.m, align 8, !tbaa !41
+  store ptr %i.am, ptr %3, align 8, !tbaa !41
   %i.bz = call fastcc ptr @parsetensor(ptr noundef nonnull %i.au, ptr noundef %i.a, ptr noundef null)
   %i.ca = load ptr, ptr %i.a, align 8, !tbaa !18  ; 4 uses
   %i.cb = load i32, ptr %i.ca, align 8, !tbaa !38 ; 2 uses
@@ -354,7 +355,7 @@ bb.ai:                                            ; preds = %transform_n.exit34.
   br i1 %i.dh, label %bb.aa, label %dwim.exit114, !llvm.loop !28
 
 dwim.exit114:                                     ; preds = %bb.ai, %dwim.exit
-  store ptr %i.ca, ptr %i.l, align 8, !tbaa !42
+  store ptr %i.ca, ptr %i.m, align 8, !tbaa !42
   br label %bb.bm
 
 bb.aj:                                            ; preds = %bb.p, %bb.p
@@ -453,7 +454,7 @@ bb.as:                                            ; preds = %transform_n.exit34.
 
 dwim.exit128:                                     ; preds = %bb.as, %bb.aj
   %.1165 = phi ptr [ %1, %bb.aj ], [ %i.do, %bb.as ]
-  store ptr %i.dk, ptr %i.l, align 8, !tbaa !42
+  store ptr %i.dk, ptr %i.m, align 8, !tbaa !42
   %i.es = load i32, ptr %i.am, align 8, !tbaa !38 ; 2 uses
   %i.et = add i32 %i.es, -2147483647
   %or.cond.i129 = icmp ult i32 %i.et, -2147483646
@@ -543,7 +544,7 @@ bb.bb:                                            ; preds = %transform_n.exit34.
   br i1 %i.fx, label %bb.at, label %dwim.exit142, !llvm.loop !28
 
 dwim.exit142:                                     ; preds = %bb.bb, %dwim.exit128
-  store ptr %i.am, ptr %i.m, align 8, !tbaa !41
+  store ptr %i.am, ptr %3, align 8, !tbaa !41
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #7
   br label %bb.bm
 
@@ -635,9 +636,9 @@ bb.bl:                                            ; preds = %transform_n.exit34.
   br i1 %i.hb, label %bb.bd, label %dwim.exit156, !llvm.loop !28
 
 dwim.exit156:                                     ; preds = %bb.bl, %bb.bc
-  store ptr %i.am, ptr %i.m, align 8, !tbaa !41
+  store ptr %i.am, ptr %3, align 8, !tbaa !41
   %i.hc = call ptr @mktensor(i32 noundef 0) #7    ; 2 uses
-  store ptr %i.hc, ptr %i.l, align 8, !tbaa !42
+  store ptr %i.hc, ptr %i.m, align 8, !tbaa !42
   br label %bb.bm
 
 bb.bm:                                            ; preds = %dwim.exit142, %dwim.exit156, %dwim.exit114
@@ -647,7 +648,7 @@ bb.bm:                                            ; preds = %dwim.exit142, %dwim
   br i1 %.not, label %transpose_tensor.exit159, label %bb.bn
 
 bb.bn:                                            ; preds = %bb.bm
-  %i.he = load ptr, ptr %i.m, align 8, !tbaa !41  ; 2 uses
+  %i.he = load ptr, ptr %3, align 8, !tbaa !41    ; 2 uses
   %i.hf = load i32, ptr %i.he, align 8, !tbaa !38
   %i.hg = add i32 %i.hf, -2147483647
   %or.cond.i157 = icmp ult i32 %i.hg, -2147483645
@@ -684,18 +685,18 @@ bb.bp:                                            ; preds = %transpose_tensor.ex
   br label %transpose_tensor.exit159
 
 transpose_tensor.exit159:                         ; preds = %bb.bp, %transpose_tensor.exit, %bb.bm
-  %i.hx = load i32, ptr %2, align 4, !tbaa !33
+  %i.hx = load i32, ptr %i.g, align 4, !tbaa !32
   %.not97 = icmp eq i32 %i.hx, 0
   br i1 %.not97, label %bb.bq, label %bb.br
 
 bb.bq:                                            ; preds = %transpose_tensor.exit159
-  %i.hy = load ptr, ptr %i.g, align 8, !tbaa !43
+  %i.hy = load ptr, ptr %i.f, align 8, !tbaa !43
   %i.hz = getelementptr inbounds nuw i8, ptr %i.hy, i64 8388608
-  store ptr %i.hz, ptr %i.f, align 8, !tbaa !44
+  store ptr %i.hz, ptr %2, align 8, !tbaa !44
   br label %bb.br
 
 bb.br:                                            ; preds = %bb.bq, %transpose_tensor.exit159
-  %i.ia = load ptr, ptr %i.m, align 8, !tbaa !41
+  %i.ia = load ptr, ptr %3, align 8, !tbaa !41
   %.not98 = icmp eq ptr %i.ia, null
   %.not99 = icmp eq ptr %i.hd, null
   %or.cond = select i1 %.not98, i1 true, i1 %.not99
@@ -1098,12 +1099,12 @@ attributes #9 = { nounwind willreturn memory(none) }
 !27 = !{!26, !26, i64 0}
 !28 = distinct !{!28, !23}
 !29 = !{!13, !7, i64 0}
-!30 = !{!13, !7, i64 32}
-!31 = !{!"p1 int", !10, i64 0}
-!32 = !{!31, !31, i64 0}
-!33 = !{!13, !7, i64 36}
-!34 = !{!13, !7, i64 40}
-!35 = !{!13, !7, i64 44}
+!30 = !{!"p1 int", !10, i64 0}
+!31 = !{!30, !30, i64 0}
+!32 = !{!13, !7, i64 36}
+!33 = !{!13, !7, i64 40}
+!34 = !{!13, !7, i64 44}
+!35 = !{!13, !7, i64 32}
 !36 = !{!13, !7, i64 104}
 !37 = !{!13, !7, i64 108}
 !38 = !{!19, !7, i64 0}

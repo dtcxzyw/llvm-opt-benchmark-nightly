@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %.0.i403 = select i1 %i.ai, ptr null, ptr %i.al ; 3 uses
   %i.am = getelementptr inbounds nuw i8, ptr %5, i64 7 ; 7 uses
   store i8 0, ptr %i.am, align 1, !tbaa !92
-  %i.an = getelementptr inbounds nuw i8, ptr %5, i64 4 ; 2 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %5, i64 4 ; 3 uses
   %i.ao = load i8, ptr %i.an, align 4, !tbaa !67
   switch i8 %i.ao, label %.critedge376 [
     i8 8, label %bb.t
@@ -607,9 +607,10 @@ bb.u:                                             ; preds = %bb.t
 
 .critedge376:                                     ; preds = %bb.l, %bb.q, %bb.j, %bb.f, %bb.k, %bb.b
   store i32 0, ptr %i.b, align 8, !tbaa !16
+  store float 0.000000e+00, ptr %5, align 4, !tbaa !9
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 5 ; 3 uses
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 6 ; 3 uses
-  store i64 0, ptr %5, align 4
+  store i32 0, ptr %i.an, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #11
   call void @b3ComputeSeparatingAxis(ptr dead_on_unwind nonnull writable sret(%struct.b3AxisQuery) align 4 %15, ptr noundef nonnull %2, ptr noundef nonnull %3, ptr noundef nonnull byval(%struct.b3Transform) align 8 %4, i1 noundef zeroext true)
   %i.qq = getelementptr inbounds nuw i8, ptr %15, i64 84
@@ -1012,7 +1013,9 @@ b3Normalize.exit:                                 ; preds = %bb.c, %bb.d
   br i1 %i.gg, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %b3Normalize.exit
-  store i64 0, ptr %4, align 4
+  store float 0.000000e+00, ptr %4, align 4, !tbaa !9
+  %.sroa.225.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 4
+  store i32 0, ptr %.sroa.225.0..sroa_idx, align 4
   br label %bb.ab
 
 bb.f:                                             ; preds = %b3Normalize.exit
@@ -1072,7 +1075,9 @@ bb.i:                                             ; preds = %bb.g, %bb.i
   br i1 %exitcond.not, label %bb.h, label %bb.i, !llvm.loop !107
 
 bb.j:                                             ; preds = %bb.h
-  store i64 0, ptr %4, align 4
+  store float 0.000000e+00, ptr %4, align 4, !tbaa !9
+  %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 4
+  store i32 0, ptr %.sroa.2.0..sroa_idx, align 4
   br label %bb.aa
 
 bb.k:                                             ; preds = %bb.h
@@ -1475,7 +1480,9 @@ bb.a:
   br i1 %i.ah, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  store i64 0, ptr %5, align 4
+  store float 0.000000e+00, ptr %5, align 4, !tbaa !9
+  %.sroa.237.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 4
+  store i32 0, ptr %.sroa.237.0..sroa_idx, align 4
   br label %bb.e
 
 bb.c:                                             ; preds = %bb.a
@@ -1766,8 +1773,8 @@ bb.a:
   br i1 %i.dz, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 7
-  store i8 0, ptr %.sroa.5.0..sroa_idx, align 1, !tbaa !21
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 4
+  store i32 0, ptr %.sroa.5.0..sroa_idx, align 4
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
@@ -1805,22 +1812,19 @@ bb.c:                                             ; preds = %bb.a
   %i.ep = getelementptr inbounds nuw i8, ptr %i.en, i64 16
   %i.eq = call i32 @b3MakeFeaturePair(i32 noundef 0, i32 noundef %i.ab, i32 noundef 1, i32 noundef %i.at) #11
   store i32 %i.eq, ptr %i.ep, align 4, !tbaa !21
+  %7 = getelementptr inbounds nuw i8, ptr %5, i64 4
+  store i8 4, ptr %7, align 4, !tbaa !67
   %i.er = trunc i32 %i.ab to i8
+  %8 = getelementptr inbounds nuw i8, ptr %5, i64 5
+  store i8 %i.er, ptr %8, align 1, !tbaa !68
   %i.es = trunc i32 %i.at to i8
+  %9 = getelementptr inbounds nuw i8, ptr %5, i64 6
+  store i8 %i.es, ptr %9, align 2, !tbaa !70
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
   %.sink187 = phi float [ %i.eg, %bb.c ], [ 0.000000e+00, %bb.b ]
-  %.sink186 = phi i8 [ 4, %bb.c ], [ 0, %bb.b ]
-  %.sink185 = phi i8 [ %i.er, %bb.c ], [ 0, %bb.b ]
-  %.sink = phi i8 [ %i.es, %bb.c ], [ 0, %bb.b ]
   store float %.sink187, ptr %5, align 4, !tbaa !9
-  %7 = getelementptr inbounds nuw i8, ptr %5, i64 4
-  store i8 %.sink186, ptr %7, align 4, !tbaa !21
-  %8 = getelementptr inbounds nuw i8, ptr %5, i64 5
-  store i8 %.sink185, ptr %8, align 1, !tbaa !21
-  %9 = getelementptr inbounds nuw i8, ptr %5, i64 6
-  store i8 %.sink, ptr %9, align 2, !tbaa !21
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #11
   ret i1 %i.dz
 }

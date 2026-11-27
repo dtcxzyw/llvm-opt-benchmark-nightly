@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 ; Function Attrs: nonlazybind uwtable
 define void @_RNvMNtNtCsdc6yCHiM2ZJ_4pyo35types9tracebackNtB2_11PyTraceback3new(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([56 x i8]) align 8 captures(none) dereferenceable(56) %0, ptr noundef %1, ptr noundef nonnull %2, i32 noundef %3, i32 noundef %4) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [24 x i8], align 8                ; 7 uses
+  %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [56 x i8], align 8                ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.c = load i32, ptr @PyTraceBack_Type, align 8, !noundef !4
@@ -223,9 +223,11 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   store ptr %1, ptr %i.f, align 8
   store ptr %2, ptr %i.a, align 8
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  store i32 %3, ptr %i.g, align 8
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 20
-  store i32 %4, ptr %5, align 4
+  %5 = zext i32 %3 to i64
+  %6 = zext i32 %4 to i64
+  %7 = shl nuw i64 %6, 32
+  %8 = or disjoint i64 %7, %5
+  store i64 %8, ptr %i.g, align 8
   invoke void @_RNvXsE_NtNtCsdc6yCHiM2ZJ_4pyo35types5tupleTINtNtCskKLDkoKarTP_4core6option6OptionINtNtB9_8instance5BoundNtNtB7_9traceback11PyTracebackEEIB1i_NtNtB7_5frame7PyFrameEllENtNtB9_4call10PyCallArgs15call_positionalB9_(ptr noalias nofree noundef nonnull sret([56 x i8]) align 8 captures(none) dereferenceable(56) %i.b, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.a, ptr noundef nonnull @PyTraceBack_Type)
           to label %bb.g unwind label %bb.d
 
@@ -628,15 +630,11 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.f, label %bb.f, label %bb.g, !prof !8
 
 bb.c:                                             ; preds = %bb.a
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  store i8 1, ptr %3, align 1
-  store i8 0, ptr %0, align 8
+  store i16 256, ptr %0, align 8
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.a
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  store i8 0, ptr %4, align 1
-  store i8 0, ptr %0, align 8
+  store i16 0, ptr %0, align 8
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.h, %bb.d, %bb.c
@@ -915,15 +913,17 @@ bb.s:                                             ; preds = %bb.r
 
 bb.t:                                             ; preds = %bb.p
   %i.ar = load i8, ptr %i.a, align 8, !range !12, !noalias !93, !noundef !4
-  %i.as = trunc nuw i8 %i.ar to i1                ; 2 uses
+  %i.as = trunc nuw i8 %i.ar to i1
   br i1 %i.as, label %bb.y, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
   %i.at = load i8, ptr %i.af, align 1, !noalias !93, !noundef !4
+  %2 = zext i8 %i.at to i16
+  %3 = shl nuw i16 %2, 8
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.y, %bb.u
-  %.sroa.6.0.i.i = phi i8 [ undef, %bb.y ], [ %i.at, %bb.u ]
+  %.sroa.010.0.i.i = phi i16 [ 1, %bb.y ], [ %3, %bb.u ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !93
   %i.au = load i64, ptr %i.al, align 8, !noalias !94, !noundef !4 ; 2 uses
   %i.av = and i64 %i.au, 2147483648
@@ -946,7 +946,8 @@ bb.y:                                             ; preds = %bb.t
 
 bb.z:                                             ; preds = %bb.x, %bb.w, %bb.v
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !91
-  br i1 %i.as, label %.loopexit.i.i, label %bb.aa
+  %4 = trunc i16 %.sroa.010.0.i.i to i1
+  br i1 %4, label %.loopexit.i.i, label %bb.aa
 
 .loopexit.i.i:                                    ; preds = %bb.z, %.thread.i.i
   %.sroa.7.8..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.7.i.i, i64 6 ; 2 uses
@@ -959,8 +960,10 @@ bb.z:                                             ; preds = %bb.x, %bb.w, %bb.v
   br label %_RINvNtNtNtCsdc6yCHiM2ZJ_4pyo311conversions3std5array17array_try_from_fnNtNtB8_3err5PyErrNCINvB2_21create_array_from_objhKj10_E0hKB1V_EB8_.exit.i
 
 bb.aa:                                            ; preds = %bb.z
+  %.sroa.010.1.extract.shift.i.i = lshr exact i16 %.sroa.010.0.i.i, 8
+  %.sroa.010.1.extract.trunc.i.i = trunc nuw i16 %.sroa.010.1.extract.shift.i.i to i8
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8.i.i)
-  store i8 %.sroa.6.0.i.i, ptr %.sroa.0.017.i.i, align 1, !noalias !88
+  store i8 %.sroa.010.1.extract.trunc.i.i, ptr %.sroa.0.017.i.i, align 1, !noalias !88
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.i.i)
   %i.az = getelementptr inbounds nuw i8, ptr %.sroa.0.017.i.i, i64 1
   %exitcond.not.i.i = icmp eq i64 %i.ai, 16
@@ -1143,16 +1146,17 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.o
   %i.ao = load i8, ptr %i.a, align 8, !range !12, !noalias !113, !noundef !4
-  %i.ap = trunc nuw i8 %i.ao to i1                ; 2 uses
+  %i.ap = trunc nuw i8 %i.ao to i1
   br i1 %i.ap, label %bb.x, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
   %i.aq = load i8, ptr %i.ae, align 1, !noalias !113, !noundef !4
-  %2 = zext i8 %i.aq to i32
+  %2 = zext i8 %i.aq to i16
+  %3 = shl nuw i16 %2, 8
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.x, %bb.t
-  %.sroa.6.0.i.i = phi i32 [ 0, %bb.x ], [ %2, %bb.t ] ; 2 uses
+  %.sroa.013.0.i.i = phi i16 [ 1, %bb.x ], [ %3, %bb.t ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !113
   %i.ar = load i64, ptr %i.ai, align 8, !noalias !114, !noundef !4 ; 2 uses
   %i.as = and i64 %i.ar, 2147483648
@@ -1175,7 +1179,8 @@ bb.x:                                             ; preds = %bb.s
 
 bb.y:                                             ; preds = %bb.w, %bb.v, %bb.u
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !110
-  br i1 %i.ap, label %.loopexit.i.i, label %.noexc.1.i.i
+  %4 = trunc i16 %.sroa.013.0.i.i to i1
+  br i1 %4, label %.loopexit.i.i, label %.noexc.1.i.i
 
 .loopexit.i.i:                                    ; preds = %bb.aw, %bb.ao, %bb.ag, %bb.y, %.thread.i.i
   %.sroa.7.8..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.7.i.i, i64 6 ; 2 uses
@@ -1188,6 +1193,8 @@ bb.y:                                             ; preds = %bb.w, %bb.v, %bb.u
   br label %_RINvNtNtNtCsdc6yCHiM2ZJ_4pyo311conversions3std5array21create_array_from_objhKj4_EB8_.exit
 
 .noexc.1.i.i:                                     ; preds = %bb.y
+  %.sroa.013.1.extract.shift.i.i = lshr exact i16 %.sroa.013.0.i.i, 8
+  %.sroa.013.1.extract.trunc.i.i = zext nneg i16 %.sroa.013.1.extract.shift.i.i to i32
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8.i.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.i.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.7.i.i)
@@ -1206,14 +1213,13 @@ bb.z:                                             ; preds = %.noexc.1.i.i
 
 bb.aa:                                            ; preds = %bb.z
   %i.az = load i8, ptr %i.a, align 8, !range !12, !noalias !113, !noundef !4
-  %i.ba = trunc nuw i8 %i.az to i1                ; 2 uses
+  %i.ba = trunc nuw i8 %i.az to i1
   br i1 %i.ba, label %bb.ac, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
   %i.bb = load i8, ptr %i.ae, align 1, !noalias !113, !noundef !4
-  %3 = zext i8 %i.bb to i32
-  %4 = shl nuw nsw i32 %3, 8
-  %5 = or disjoint i32 %4, %.sroa.6.0.i.i
+  %5 = zext i8 %i.bb to i16
+  %6 = shl nuw i16 %5, 8
   br label %bb.ad
 
 bb.ac:                                            ; preds = %bb.aa
@@ -1221,7 +1227,7 @@ bb.ac:                                            ; preds = %bb.aa
   br label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac, %bb.ab
-  %.sroa.6.0.1.i.i = phi i32 [ %.sroa.6.0.i.i, %bb.ac ], [ %5, %bb.ab ]
+  %.sroa.013.0.1.i.i = phi i16 [ 1, %bb.ac ], [ %6, %bb.ab ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !113
   %i.bc = load i64, ptr %i.ay, align 8, !noalias !114, !noundef !4 ; 2 uses
   %i.bd = and i64 %i.bc, 2147483648
@@ -1240,7 +1246,8 @@ bb.af:                                            ; preds = %bb.ae
 
 bb.ag:                                            ; preds = %bb.af, %bb.ae, %bb.ad
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !110
-  br i1 %i.ba, label %.loopexit.i.i, label %.noexc.2.i.i
+  %7 = trunc i16 %.sroa.013.0.1.i.i to i1
+  br i1 %7, label %.loopexit.i.i, label %.noexc.2.i.i
 
 .noexc.2.i.i:                                     ; preds = %bb.ag
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8.i.i)
@@ -1261,13 +1268,13 @@ bb.ah:                                            ; preds = %.noexc.2.i.i
 
 bb.ai:                                            ; preds = %bb.ah
   %i.bj = load i8, ptr %i.a, align 8, !range !12, !noalias !113, !noundef !4
-  %i.bk = trunc nuw i8 %i.bj to i1                ; 2 uses
+  %i.bk = trunc nuw i8 %i.bj to i1
   br i1 %i.bk, label %bb.ak, label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai
   %i.bl = load i8, ptr %i.ae, align 1, !noalias !113, !noundef !4
-  %6 = zext i8 %i.bl to i32
-  %7 = shl nuw nsw i32 %6, 16
+  %8 = zext i8 %i.bl to i16
+  %9 = shl nuw i16 %8, 8
   br label %bb.al
 
 bb.ak:                                            ; preds = %bb.ai
@@ -1275,7 +1282,7 @@ bb.ak:                                            ; preds = %bb.ai
   br label %bb.al
 
 bb.al:                                            ; preds = %bb.ak, %bb.aj
-  %.sroa.6.0.2.i.i = phi i32 [ 0, %bb.ak ], [ %7, %bb.aj ] ; 2 uses
+  %.sroa.013.0.2.i.i = phi i16 [ 1, %bb.ak ], [ %9, %bb.aj ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !113
   %i.bm = load i64, ptr %i.bi, align 8, !noalias !114, !noundef !4 ; 2 uses
   %i.bn = and i64 %i.bm, 2147483648
@@ -1294,9 +1301,12 @@ bb.an:                                            ; preds = %bb.am
 
 bb.ao:                                            ; preds = %bb.an, %bb.am, %bb.al
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !110
-  br i1 %i.bk, label %.loopexit.i.i, label %.noexc.3.i.i
+  %10 = trunc i16 %.sroa.013.0.2.i.i to i1
+  br i1 %10, label %.loopexit.i.i, label %.noexc.3.i.i
 
 .noexc.3.i.i:                                     ; preds = %bb.ao
+  %.sroa.013.1.extract.shift.2.i.i = lshr exact i16 %.sroa.013.0.2.i.i, 8
+  %.sroa.013.1.extract.trunc.2.i.i = zext nneg i16 %.sroa.013.1.extract.shift.2.i.i to i32
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8.i.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.i.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.7.i.i)
@@ -1315,14 +1325,13 @@ bb.ap:                                            ; preds = %.noexc.3.i.i
 
 bb.aq:                                            ; preds = %bb.ap
   %i.bt = load i8, ptr %i.a, align 8, !range !12, !noalias !113, !noundef !4
-  %i.bu = trunc nuw i8 %i.bt to i1                ; 2 uses
+  %i.bu = trunc nuw i8 %i.bt to i1
   br i1 %i.bu, label %bb.as, label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq
   %i.bv = load i8, ptr %i.ae, align 1, !noalias !113, !noundef !4
-  %8 = zext i8 %i.bv to i32
-  %9 = shl nuw i32 %8, 24
-  %10 = or i32 %9, %.sroa.6.0.2.i.i
+  %11 = zext i8 %i.bv to i16
+  %12 = shl nuw i16 %11, 8
   br label %bb.at
 
 bb.as:                                            ; preds = %bb.aq
@@ -1330,7 +1339,7 @@ bb.as:                                            ; preds = %bb.aq
   br label %bb.at
 
 bb.at:                                            ; preds = %bb.as, %bb.ar
-  %.sroa.6.0.3.i.i = phi i32 [ %.sroa.6.0.2.i.i, %bb.as ], [ %10, %bb.ar ]
+  %.sroa.013.0.3.i.i = phi i16 [ 1, %bb.as ], [ %12, %bb.ar ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !113
   %i.bw = load i64, ptr %i.bs, align 8, !noalias !114, !noundef !4 ; 2 uses
   %i.bx = and i64 %i.bw, 2147483648
@@ -1349,12 +1358,20 @@ bb.av:                                            ; preds = %bb.au
 
 bb.aw:                                            ; preds = %bb.av, %bb.au, %bb.at
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !110
-  br i1 %i.bu, label %.loopexit.i.i, label %bb.ax
+  %13 = trunc i16 %.sroa.013.0.3.i.i to i1
+  br i1 %13, label %.loopexit.i.i, label %bb.ax
 
 bb.ax:                                            ; preds = %bb.aw
+  %.sroa.013.1.extract.shift.3.i.i = lshr exact i16 %.sroa.013.0.3.i.i, 8
+  %.sroa.013.1.extract.trunc.3.i.i = zext nneg i16 %.sroa.013.1.extract.shift.3.i.i to i32
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8.i.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.i.i)
-  %.sroa.0.0.insert.insert.i.i = or i32 %.sroa.6.0.3.i.i, %.sroa.6.0.1.i.i
+  %.sroa.726.0.insert.shift.i.i = shl nuw i32 %.sroa.013.1.extract.trunc.3.i.i, 24
+  %.sroa.6.0.insert.shift.i.i = shl nuw nsw i32 %.sroa.013.1.extract.trunc.2.i.i, 16
+  %.sroa.6.0.insert.insert.i.i = or disjoint i32 %.sroa.726.0.insert.shift.i.i, %.sroa.6.0.insert.shift.i.i
+  %.sroa.5.0.insert.shift.i.i = zext i16 %.sroa.013.0.1.i.i to i32
+  %.sroa.5.0.insert.insert.i.i = or disjoint i32 %.sroa.6.0.insert.insert.i.i, %.sroa.5.0.insert.shift.i.i
+  %.sroa.0.0.insert.insert.i.i = or disjoint i32 %.sroa.5.0.insert.insert.i.i, %.sroa.013.1.extract.trunc.i.i
   %i.ca = getelementptr inbounds nuw i8, ptr %0, i64 1
   store i32 %.sroa.0.0.insert.insert.i.i, ptr %i.ca, align 1, !alias.scope !116
   store i8 0, ptr %0, align 8, !alias.scope !116

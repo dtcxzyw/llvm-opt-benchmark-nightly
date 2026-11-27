@@ -202,11 +202,12 @@ bb.n:                                             ; preds = %bb.m, %bb.l
 
 bb.o:                                             ; preds = %bb.n
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bg, i64 24
-  %i.bi = getelementptr inbounds nuw i8, ptr %i.bg, i64 32
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1028) %i.bi, i8 0, i64 1028, i1 false)
-  %7 = trunc i64 %i.ab to i32
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(17) %i.bg, i8 0, i64 17, i1 false)
-  store i32 %7, ptr %i.bg, align 8
+  %i.bi = getelementptr inbounds nuw i8, ptr %i.bg, i64 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %i.bi, i8 0, i64 9, i1 false)
+  %7 = getelementptr inbounds nuw i8, ptr %i.bg, i64 32
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1028) %7, i8 0, i64 1028, i1 false)
+  %8 = and i64 %i.ab, 4294967295
+  store i64 %8, ptr %i.bg, align 8
   store ptr %i.ag, ptr %i.bh, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #19
   %i.bj = call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5rfindEcm(ptr noundef nonnull align 8 dereferenceable(32) %2, i8 noundef signext 46, i64 noundef -1) #19

@@ -61,7 +61,7 @@ bb.c:                                             ; preds = %_ZN7meshoptL12hashB
   %i.r = mul nuw i64 %i.a, 28
   %i.s = select i1 %i.q, i64 -1, i64 %i.r
   %i.t = invoke noundef ptr %i.p(i64 noundef %i.s)
-          to label %bb.d unwind label %bb.f, !inline_history !34 ; 4 uses
+          to label %bb.d unwind label %bb.f, !inline_history !32 ; 4 uses
 
 bb.d:                                             ; preds = %bb.c
   %i.u = getelementptr inbounds nuw i8, ptr %12, i64 8
@@ -184,7 +184,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.ck = and i64 %.098116, 4294967295
   %i.cl = getelementptr inbounds nuw [28 x i8], ptr %i.t, i64 %i.ck ; 9 uses
   %i.cm = getelementptr inbounds nuw i8, ptr %i.cl, i64 24
-  %i.cn = load i32, ptr %i.cm, align 4, !tbaa !37 ; 2 uses
+  %i.cn = load i32, ptr %i.cm, align 4, !tbaa !35 ; 2 uses
   %.0.copyload.i.i.i = load i32, ptr %i.cl, align 4
   %i.co = mul i32 %.0.copyload.i.i.i, 1540483477  ; 2 uses
   %i.cp = lshr i32 %i.co, 24
@@ -246,7 +246,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.ei = zext i32 %.pr to i64
   %i.ej = getelementptr inbounds nuw [28 x i8], ptr %i.t, i64 %i.ei ; 3 uses
   %i.ek = getelementptr inbounds nuw i8, ptr %i.ej, i64 24
-  %i.el = load i32, ptr %i.ek, align 4, !tbaa !37
+  %i.el = load i32, ptr %i.ek, align 4, !tbaa !35
   %i.em = icmp eq i32 %i.el, %i.cn
   br i1 %i.em, label %_ZNK7meshopt17TriangleOMMHasher5equalEjj.exit.i, label %_ZNK7meshopt17TriangleOMMHasher5equalEjj.exit.thread.i
 
@@ -305,7 +305,7 @@ bb.j:                                             ; preds = %_ZN7meshoptL11hashL
   store i32 %i.fo, ptr %i.fp, align 4, !tbaa !21
   %i.fq = add i64 %.097117, 3                     ; 2 uses
   %i.fr = icmp ult i64 %i.fq, %4
-  br i1 %i.fr, label %bb.g, label %.lr.ph.i, !llvm.loop !35
+  br i1 %i.fr, label %bb.g, label %.lr.ph.i, !llvm.loop !33
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
@@ -357,7 +357,7 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph
   %i.g = add i64 %.04, -1                         ; 2 uses
   %.not = icmp eq i64 %i.g, 0
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !38
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !36
 
 bb.c:                                             ; preds = %.lr.ph
   %i.h = landingpad { ptr, i32 }
@@ -382,7 +382,7 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define dso_local void @meshopt_opacityMapRasterize(ptr noundef %0, i32 noundef %1, i32 noundef %2, ptr nofree noundef readonly captures(none) %3, ptr nofree noundef readonly captures(none) %4, ptr nofree noundef readonly captures(none) %5, ptr noundef %6, i64 noundef %7, i64 noundef %8, i32 noundef %9, i32 noundef %10) local_unnamed_addr #0 {
 bb.a:
-  %11 = alloca %"struct.meshopt::Texture", align 8 ; 9 uses
+  %11 = alloca %"struct.meshopt::Texture", align 8 ; 8 uses
   %i.a = alloca [3 x float], align 8              ; 5 uses
   %i.b = alloca [3 x float], align 8              ; 5 uses
   %i.c = alloca [3 x float], align 8              ; 5 uses
@@ -400,9 +400,11 @@ bb.a:
   %i.k = getelementptr inbounds nuw i8, ptr %11, i64 16
   store i64 %8, ptr %i.k, align 8, !tbaa !29
   %i.l = getelementptr inbounds nuw i8, ptr %11, i64 24
-  store i32 %9, ptr %i.l, align 8, !tbaa !30
-  %12 = getelementptr inbounds nuw i8, ptr %11, i64 28
-  store i32 %10, ptr %12, align 4, !tbaa !31
+  %12 = zext i32 %9 to i64
+  %13 = zext i32 %10 to i64
+  %14 = shl nuw i64 %13, 32
+  %15 = or disjoint i64 %14, %12
+  store i64 %15, ptr %i.l, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %11, i64 32
   %i.n = insertelement <2 x i32> poison, i32 %9, i64 0
   %i.o = insertelement <2 x i32> %i.n, i32 %10, i64 1 ; 2 uses
@@ -707,7 +709,7 @@ _ZN7meshoptL13sampleTextureERKNS_7TextureEff.exit54: ; preds = %bb.o, %bb.p
   store float %.0.i50, ptr %i.ho, align 8, !tbaa !23
   %i.hw = icmp eq i32 %2, 2
   %i.hx = select i1 %i.hw, ptr @_ZN7meshoptL19rasterizeOpacityRecILi2EEEvPhmiiPKfS3_S3_RKNS_7TextureE, ptr @_ZN7meshoptL19rasterizeOpacityRecILi4EEEvPhmiiPKfS3_S3_RKNS_7TextureE
-  call void %i.hx(ptr noundef %0, i64 noundef 0, i32 noundef %1, i32 noundef %i.hv, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c, ptr noundef nonnull align 8 dereferenceable(40) %11), !callees !39
+  call void %i.hx(ptr noundef %0, i64 noundef 0, i32 noundef %1, i32 noundef %i.hv, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c, ptr noundef nonnull align 8 dereferenceable(40) %11), !callees !37
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #15
@@ -755,14 +757,14 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   %i.w = extractelement <2 x i32> %i.s, i64 1
   %i.x = and i32 %i.w, 255
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %i.z = load i32, ptr %i.y, align 8, !tbaa !30
+  %i.z = load i32, ptr %i.y, align 8, !tbaa !38
   %i.aa = extractelement <2 x i32> %i.t, i64 0    ; 2 uses
   %.not = icmp ult i32 %i.aa, %i.z
   br i1 %.not, label %bb.f, label %bb.h
 
 bb.f:                                             ; preds = %bb.e
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 28
-  %i.ac = load i32, ptr %i.ab, align 4, !tbaa !31
+  %i.ac = load i32, ptr %i.ab, align 4, !tbaa !39
   %i.ad = extractelement <2 x i32> %i.t, i64 1    ; 2 uses
   %.not62 = icmp ult i32 %i.ad, %i.ac
   br i1 %.not62, label %bb.g, label %bb.h
@@ -1040,17 +1042,17 @@ bb.j:                                             ; preds = %bb.i
   %i.el = tail call fastcc noundef float @_ZN7meshoptL13sampleTextureERKNS_7TextureEff(ptr noundef nonnull readonly align 8 dereferenceable(40) %7, float noundef %i.eg, float noundef %i.eh) ; 3 uses
   store float %i.el, ptr %i.ei, align 4, !tbaa !23
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #15
-  store ptr %4, ptr %i.d, align 16, !tbaa !33
+  store ptr %4, ptr %i.d, align 16, !tbaa !31
   %i.em = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  store ptr %i.a, ptr %i.em, align 8, !tbaa !33
+  store ptr %i.a, ptr %i.em, align 8, !tbaa !31
   %i.en = getelementptr inbounds nuw i8, ptr %i.d, i64 16
-  store ptr %5, ptr %i.en, align 16, !tbaa !33
+  store ptr %5, ptr %i.en, align 16, !tbaa !31
   %i.eo = getelementptr inbounds nuw i8, ptr %i.d, i64 24
-  store ptr %i.b, ptr %i.eo, align 8, !tbaa !33
+  store ptr %i.b, ptr %i.eo, align 8, !tbaa !31
   %i.ep = getelementptr inbounds nuw i8, ptr %i.d, i64 32
-  store ptr %6, ptr %i.ep, align 16, !tbaa !33
+  store ptr %6, ptr %i.ep, align 16, !tbaa !31
   %i.eq = getelementptr inbounds nuw i8, ptr %i.d, i64 40
-  store ptr %i.c, ptr %i.eq, align 8, !tbaa !33
+  store ptr %i.c, ptr %i.eq, align 8, !tbaa !31
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #15
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(36) %i.e, i8 0, i64 36, i1 false)
   %i.er = add nuw nsw i32 %3, 1
@@ -1075,12 +1077,12 @@ bb.k:                                             ; preds = %_ZN7meshoptL13raste
   %i.fg = load i8, ptr %i.ff, align 2, !tbaa !24
   %i.fh = zext i8 %i.fg to i64
   %i.fi = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.fh
-  %i.fj = load ptr, ptr %i.fi, align 8, !tbaa !33
+  %i.fj = load ptr, ptr %i.fi, align 8, !tbaa !31
   %i.fk = getelementptr inbounds nuw i8, ptr %i.ff, i64 1
   %i.fl = load i8, ptr %i.fk, align 1, !tbaa !24
   %i.fm = zext i8 %i.fl to i64
   %i.fn = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.fm
-  %i.fo = load ptr, ptr %i.fn, align 8, !tbaa !33
+  %i.fo = load ptr, ptr %i.fn, align 8, !tbaa !31
   %i.fp = load <2 x float>, ptr %i.fj, align 4, !tbaa !23 ; 2 uses
   %i.fq = load <2 x float>, ptr %i.fo, align 4, !tbaa !23
   %i.fr = fsub <2 x float> %i.fq, %i.fp
@@ -1483,17 +1485,17 @@ bb.l:                                             ; preds = %bb.k
   %i.fi = tail call fastcc noundef float @_ZN7meshoptL13sampleTextureERKNS_7TextureEff(ptr noundef nonnull readonly align 8 dereferenceable(40) %7, float noundef %i.fb, float noundef %i.fe)
   store float %i.fi, ptr %i.ff, align 4, !tbaa !23
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #15
-  store ptr %4, ptr %i.d, align 16, !tbaa !33
+  store ptr %4, ptr %i.d, align 16, !tbaa !31
   %i.fj = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  store ptr %i.a, ptr %i.fj, align 8, !tbaa !33
+  store ptr %i.a, ptr %i.fj, align 8, !tbaa !31
   %i.fk = getelementptr inbounds nuw i8, ptr %i.d, i64 16
-  store ptr %5, ptr %i.fk, align 16, !tbaa !33
+  store ptr %5, ptr %i.fk, align 16, !tbaa !31
   %i.fl = getelementptr inbounds nuw i8, ptr %i.d, i64 24
-  store ptr %i.b, ptr %i.fl, align 8, !tbaa !33
+  store ptr %i.b, ptr %i.fl, align 8, !tbaa !31
   %i.fm = getelementptr inbounds nuw i8, ptr %i.d, i64 32
-  store ptr %6, ptr %i.fm, align 16, !tbaa !33
+  store ptr %6, ptr %i.fm, align 16, !tbaa !31
   %i.fn = getelementptr inbounds nuw i8, ptr %i.d, i64 40
-  store ptr %i.c, ptr %i.fn, align 8, !tbaa !33
+  store ptr %i.c, ptr %i.fn, align 8, !tbaa !31
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #15
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(36) %i.e, i8 0, i64 36, i1 false)
   %i.fo = add nuw nsw i32 %3, 1
@@ -1528,12 +1530,12 @@ bb.m:                                             ; preds = %_ZN7meshoptL13raste
   %i.gi = load i8, ptr %i.gh, align 2, !tbaa !24
   %i.gj = zext i8 %i.gi to i64
   %i.gk = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.gj
-  %i.gl = load ptr, ptr %i.gk, align 8, !tbaa !33
+  %i.gl = load ptr, ptr %i.gk, align 8, !tbaa !31
   %i.gm = getelementptr inbounds nuw i8, ptr %i.gh, i64 1
   %i.gn = load i8, ptr %i.gm, align 1, !tbaa !24
   %i.go = zext i8 %i.gn to i64
   %i.gp = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.go
-  %i.gq = load ptr, ptr %i.gp, align 8, !tbaa !33
+  %i.gq = load ptr, ptr %i.gp, align 8, !tbaa !31
   %i.gr = load <2 x float>, ptr %i.gl, align 4, !tbaa !23 ; 2 uses
   %i.gs = load <2 x float>, ptr %i.gq, align 4, !tbaa !23
   %i.gt = fsub <2 x float> %i.gs, %i.gr
@@ -1657,17 +1659,17 @@ bb.t:                                             ; preds = %_ZN7meshoptL17raste
   %i.jv = load i8, ptr %i.ju, align 2, !tbaa !24
   %i.jw = zext i8 %i.jv to i64
   %i.jx = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.jw
-  %i.jy = load ptr, ptr %i.jx, align 8, !tbaa !33 ; 3 uses
+  %i.jy = load ptr, ptr %i.jx, align 8, !tbaa !31 ; 3 uses
   %i.jz = getelementptr inbounds nuw i8, ptr %i.ju, i64 1
   %i.ka = load i8, ptr %i.jz, align 1, !tbaa !24
   %i.kb = zext i8 %i.ka to i64
   %i.kc = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.kb
-  %i.kd = load ptr, ptr %i.kc, align 8, !tbaa !33 ; 3 uses
+  %i.kd = load ptr, ptr %i.kc, align 8, !tbaa !31 ; 3 uses
   %i.ke = getelementptr inbounds nuw i8, ptr %i.ju, i64 2
   %i.kf = load i8, ptr %i.ke, align 2, !tbaa !24
   %i.kg = zext i8 %i.kf to i64
   %i.kh = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.kg
-  %i.ki = load ptr, ptr %i.kh, align 8, !tbaa !33 ; 3 uses
+  %i.ki = load ptr, ptr %i.kh, align 8, !tbaa !31 ; 3 uses
   %i.kj = load float, ptr %i.jy, align 4, !tbaa !23
   %i.kk = load float, ptr %i.kd, align 4, !tbaa !23
   %i.kl = fadd float %i.kj, %i.kk
@@ -2070,16 +2072,16 @@ attributes #16 = { noreturn nounwind }
 !27 = !{!26, !25, i64 0}
 !28 = !{!26, !16, i64 8}
 !29 = !{!26, !16, i64 16}
-!30 = !{!26, !9, i64 24}
-!31 = !{!26, !9, i64 28}
-!32 = !{!"p1 float", !13, i64 0}
-!33 = !{!32, !32, i64 0}
-!34 = distinct !{null}
-!35 = distinct !{!35, !12}
-!36 = !{!"_ZTSN7meshopt11TriangleOMME", !8, i64 0, !9, i64 24}
-!37 = !{!36, !9, i64 24}
-!38 = distinct !{!38, !12}
-!39 = !{ptr @_ZN7meshoptL19rasterizeOpacityRecILi2EEEvPhmiiPKfS3_S3_RKNS_7TextureE, ptr @_ZN7meshoptL19rasterizeOpacityRecILi4EEEvPhmiiPKfS3_S3_RKNS_7TextureE}
+!30 = !{!"p1 float", !13, i64 0}
+!31 = !{!30, !30, i64 0}
+!32 = distinct !{null}
+!33 = distinct !{!33, !12}
+!34 = !{!"_ZTSN7meshopt11TriangleOMME", !8, i64 0, !9, i64 24}
+!35 = !{!34, !9, i64 24}
+!36 = distinct !{!36, !12}
+!37 = !{ptr @_ZN7meshoptL19rasterizeOpacityRecILi2EEEvPhmiiPKfS3_S3_RKNS_7TextureE, ptr @_ZN7meshoptL19rasterizeOpacityRecILi4EEEvPhmiiPKfS3_S3_RKNS_7TextureE}
+!38 = !{!26, !9, i64 24}
+!39 = !{!26, !9, i64 28}
 !40 = distinct !{!40, !12}
 !41 = distinct !{!41, !12}
 !42 = distinct !{!42, !12}

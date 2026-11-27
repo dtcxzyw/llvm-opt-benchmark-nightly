@@ -204,7 +204,7 @@ declare { i64, ptr } @jv_dump_string(i64, ptr, i32 noundef) local_unnamed_addr #
 ; Function Attrs: nounwind uwtable
 define dso_local ptr @jq_init() local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call ptr @jv_mem_alloc_unguarded(i64 noundef 240) #15 ; 24 uses
+  %i.a = tail call ptr @jv_mem_alloc_unguarded(i64 noundef 240) #15 ; 25 uses
   %i.b = icmp eq ptr %i.a, null
   br i1 %i.b, label %bb.c, label %bb.b
 
@@ -216,14 +216,16 @@ bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 56
   store ptr null, ptr %i.e, align 8, !tbaa !23
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 64
-  store i32 8, ptr %i.f, align 8, !tbaa !22
-  %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 68
-  %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 40
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.g, i8 0, i64 16, i1 false)
+  store i64 8, ptr %i.f, align 8
+  %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 80
+  store i32 0, ptr %i.g, align 8, !tbaa !29
+  %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 72
+  store i64 0, ptr %i.h, align 8
+  %0 = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   %i.i = tail call { i64, ptr } @jv_null() #15    ; 2 uses
   %i.j = extractvalue { i64, ptr } %i.i, 0
   %i.k = extractvalue { i64, ptr } %i.i, 1
-  store i64 %i.j, ptr %i.h, align 8
+  store i64 %i.j, ptr %0, align 8
   %.sroa.410.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 48
   store ptr %i.k, ptr %.sroa.410.0..sroa_idx, align 8, !tbaa !27
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 136
@@ -404,7 +406,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.g
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
-  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 68 ; 2 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 68
   %i.m = load i32, ptr %i.l, align 4, !tbaa !21
   %i.n = icmp eq i32 %i.m, 0
   br i1 %i.n, label %bb.k, label %bb.j
@@ -431,8 +433,7 @@ bb.l:                                             ; preds = %bb.k
 stack_reset.exit:                                 ; preds = %bb.k, %bb.l
   store ptr null, ptr %i.k, align 8, !tbaa !23
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 64
-  store i32 8, ptr %i.v, align 8, !tbaa !22
-  store i32 0, ptr %i.l, align 4, !tbaa !21
+  store i64 8, ptr %i.v, align 8
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.x = load i64, ptr %i.w, align 8
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses

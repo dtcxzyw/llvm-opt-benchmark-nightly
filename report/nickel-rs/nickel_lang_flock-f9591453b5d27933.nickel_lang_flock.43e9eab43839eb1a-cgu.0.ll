@@ -109,7 +109,7 @@ define void @_ZN17nickel_lang_flock4open17h47f8b0687a083114E(ptr dead_on_unwind 
 bb.a:
   %i.a = alloca [8 x i8], align 4                 ; 5 uses
   %i.b = alloca [16 x i8], align 8                ; 7 uses
-  %i.c = alloca [16 x i8], align 8                ; 4 uses
+  %i.c = alloca [16 x i8], align 8                ; 5 uses
   call void @_ZN3std2fs11OpenOptions5_open17h005de3b10d8796e4E(ptr noalias noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.c, ptr noalias noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(16) %3, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %1, i64 noundef %2)
   %i.d = load i32, ptr %i.c, align 8, !range !18, !noundef !5
   %i.e = trunc nuw i32 %i.d to i1
@@ -235,18 +235,23 @@ bb.s:                                             ; preds = %bb.g
   resume { ptr, i32 } %i.q
 
 bb.t:                                             ; preds = %bb.a
-  %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 4
-  %.sroa.8.0.copyload = load i32, ptr %.sroa.8.0..sroa_idx, align 4
-  br label %"_ZN17nickel_lang_flock4open28_$u7b$$u7b$closure$u7d$$u7d$17h524cef15955060efE.exit"
+  %.sroa.0.0.copyload = load i64, ptr %i.c, align 8 ; 2 uses
+  %.sroa.0.sroa.8.0.extract.shift2 = lshr i64 %.sroa.0.0.copyload, 32
+  %.sroa.0.sroa.8.0.extract.trunc3 = trunc nuw i64 %.sroa.0.sroa.8.0.extract.shift2 to i32
+  %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  %.sroa.9.0.copyload = load ptr, ptr %.sroa.8.0..sroa_idx, align 8
+  %5 = trunc i64 %.sroa.0.0.copyload to i1
+  br i1 %5, label %bb.u, label %"_ZN17nickel_lang_flock4open28_$u7b$$u7b$closure$u7d$$u7d$17h524cef15955060efE.exit"
 
-bb.u:                                             ; preds = %bb.c, %_ZN3std2io5error5Error4kind17hcef9c5606d2f7459E.exit.i, %bb.q
-  %.sroa.10.0.ph = phi ptr [ %i.g, %bb.c ], [ %i.g, %_ZN3std2io5error5Error4kind17hcef9c5606d2f7459E.exit.i ], [ %.sink.i, %bb.q ]
+bb.u:                                             ; preds = %bb.c, %_ZN3std2io5error5Error4kind17hcef9c5606d2f7459E.exit.i, %bb.q, %bb.t
+  %.sroa.9.010 = phi ptr [ %.sroa.9.0.copyload, %bb.t ], [ %i.g, %bb.c ], [ %i.g, %_ZN3std2io5error5Error4kind17hcef9c5606d2f7459E.exit.i ], [ %.sink.i, %bb.q ] ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.9.010) ]
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %.sroa.10.0.ph, ptr %i.ae, align 8
+  store ptr %.sroa.9.010, ptr %i.ae, align 8
   br label %bb.v
 
-"_ZN17nickel_lang_flock4open28_$u7b$$u7b$closure$u7d$$u7d$17h524cef15955060efE.exit": ; preds = %bb.t, %bb.p
-  %.sroa.8.0 = phi i32 [ %.sroa.8.0.copyload, %bb.t ], [ %i.ac, %bb.p ]
+"_ZN17nickel_lang_flock4open28_$u7b$$u7b$closure$u7d$$u7d$17h524cef15955060efE.exit": ; preds = %bb.p, %bb.t
+  %.sroa.8.0 = phi i32 [ %i.ac, %bb.p ], [ %.sroa.0.sroa.8.0.extract.trunc3, %bb.t ]
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 %.sroa.8.0, ptr %i.af, align 4
   br label %bb.v

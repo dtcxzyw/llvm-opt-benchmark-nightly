@@ -204,11 +204,12 @@ bb.j:                                             ; preds = %bb.c
   br label %bb.l
 
 bb.k:                                             ; preds = %bb.c
-  %i.bw = load ptr, ptr %0, align 8, !tbaa !26    ; 2 uses
+  %i.bw = load ptr, ptr %0, align 8, !tbaa !26
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 40
-  store i32 16, ptr %i.bx, align 8, !tbaa !31
-  %6 = getelementptr inbounds nuw i8, ptr %i.bw, i64 44
-  store i32 %i.ba, ptr %6, align 4, !tbaa !32
+  %6 = zext i32 %i.ba to i64
+  %7 = shl nuw i64 %6, 32
+  %8 = or disjoint i64 %7, 16
+  store i64 %8, ptr %i.bx, align 8
   %i.by = getelementptr inbounds nuw i8, ptr %0, i64 416
   %i.bz = load i32, ptr %i.by, align 8, !tbaa !62
   %i.ca = load ptr, ptr %0, align 8, !tbaa !26

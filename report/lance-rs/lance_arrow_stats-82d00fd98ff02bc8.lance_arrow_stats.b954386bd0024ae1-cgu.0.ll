@@ -202,13 +202,14 @@ bb.av:                                            ; preds = %bb.o
 
 bb.aw:                                            ; preds = %bb.av, %bb.o
   %.sroa.5.0 = phi i64 [ undef, %bb.o ], [ %i.bh, %bb.av ]
-  %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 1
-  store i8 %i.f, ptr %i.bk, align 1
-  %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %i.h, ptr %i.bl, align 8
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %.sroa.5.0, ptr %2, align 8
-  store i8 13, ptr %0, align 8
+  %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store ptr %i.h, ptr %i.bk, align 8
+  %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store i64 %.sroa.5.0, ptr %i.bl, align 8
+  %2 = zext nneg i8 %i.f to i16
+  %3 = shl nuw nsw i16 %2, 8
+  %4 = or disjoint i16 %3, 13
+  store i16 %4, ptr %0, align 8
   br label %bb.au
 
 bb.ax:                                            ; preds = %bb.av
@@ -288,9 +289,10 @@ bb.bk:                                            ; preds = %bb.ai
   store ptr %i.aj, ptr %i.by, align 8
   %i.bz = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %i.al, ptr %i.bz, align 8
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  store i8 %i.bx, ptr %3, align 1
-  store i8 33, ptr %0, align 8
+  %5 = zext nneg i8 %i.bx to i16
+  %6 = shl nuw nsw i16 %5, 8
+  %7 = or disjoint i16 %6, 33
+  store i16 %7, ptr %0, align 8
   br label %bb.au
 
 bb.bl:                                            ; preds = %bb.ai
@@ -329,9 +331,10 @@ bb.bp:                                            ; preds = %bb.as
   %i.cf = load i8, ptr %i.ce, align 1, !range !17, !noundef !7
   %i.cg = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.az, ptr %i.cg, align 8
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  store i8 %i.cf, ptr %4, align 1
-  store i8 39, ptr %0, align 8
+  %8 = zext nneg i8 %i.cf to i16
+  %9 = shl nuw nsw i16 %8, 8
+  %10 = or disjoint i16 %9, 39
+  store i16 %10, ptr %0, align 8
   br label %bb.au
 
 bb.bq:                                            ; preds = %bb.as

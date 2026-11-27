@@ -205,9 +205,8 @@ bb.a:
   %4 = alloca %"struct.fmt::v12::pipe", align 4   ; 10 uses
   store ptr %1, ptr %0, align 8, !tbaa !51
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
-  store i32 -1, ptr %i.a, align 8, !tbaa !52
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 4 uses
-  store i32 -1, ptr %i.b, align 4, !tbaa !52
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 3 uses
+  store i64 -1, ptr %i.a, align 8
   br i1 %2, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a

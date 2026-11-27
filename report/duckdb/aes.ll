@@ -112,10 +112,11 @@ bb.f:                                             ; preds = %bb.f, %bb.e
   br i1 %exitcond.not.i.1, label %.preheader95.preheader.i, label %bb.f, !llvm.loop !29
 
 .preheader95.preheader.i:                         ; preds = %bb.f
-  store <4 x i32> <i32 1, i32 2, i32 4, i32 8>, ptr @_ZL15round_constants, align 16, !tbaa !6
-  store <4 x i32> <i32 16, i32 32, i32 64, i32 128>, ptr getelementptr inbounds nuw (i8, ptr @_ZL15round_constants, i64 16), align 16, !tbaa !6
-  store i32 27, ptr getelementptr inbounds nuw (i8, ptr @_ZL15round_constants, i64 32), align 16, !tbaa !6
-  store i32 54, ptr getelementptr inbounds nuw (i8, ptr @_ZL15round_constants, i64 36), align 4, !tbaa !6
+  store i64 8589934593, ptr @_ZL15round_constants, align 16
+  store i64 34359738372, ptr getelementptr inbounds nuw (i8, ptr @_ZL15round_constants, i64 8), align 8
+  store i64 137438953488, ptr getelementptr inbounds nuw (i8, ptr @_ZL15round_constants, i64 16), align 16
+  store i64 549755813952, ptr getelementptr inbounds nuw (i8, ptr @_ZL15round_constants, i64 24), align 8
+  store i64 231928234011, ptr getelementptr inbounds nuw (i8, ptr @_ZL15round_constants, i64 32), align 16
   store i8 99, ptr @_ZL3FSb, align 16, !tbaa !21
   store i8 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL3RSb, i64 99), align 1, !tbaa !21
   br label %bb.g

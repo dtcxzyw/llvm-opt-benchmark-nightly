@@ -205,9 +205,11 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define noundef zeroext i1 @_Z19rcCreateHeightfieldP9rcContextR13rcHeightfieldiiPKfS4_ff(ptr nofree noundef readnone captures(none) %0, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(64) initializes((0, 48)) %1, i32 noundef %2, i32 noundef %3, ptr nofree noundef readonly captures(none) %4, ptr nofree noundef readonly captures(none) %5, float noundef %6, float noundef %7) local_unnamed_addr #2 {
 bb.a:
-  store i32 %2, ptr %1, align 8, !tbaa !128
-  %8 = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
-  store i32 %3, ptr %8, align 4, !tbaa !129
+  %8 = zext i32 %2 to i64
+  %9 = zext i32 %3 to i64
+  %10 = shl nuw i64 %9, 32
+  %11 = or disjoint i64 %10, %8
+  store i64 %11, ptr %1, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.b = load float, ptr %4, align 4, !tbaa !126
   store float %i.b, ptr %i.a, align 8, !tbaa !126
@@ -233,7 +235,7 @@ bb.a:
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 32
   store float %6, ptr %i.q, align 8, !tbaa !159
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 36
-  store float %7, ptr %i.r, align 4, !tbaa !130
+  store float %7, ptr %i.r, align 4, !tbaa !128
   %i.s = sext i32 %2 to i64
   %i.t = shl nsw i64 %i.s, 3
   %i.u = sext i32 %3 to i64
@@ -245,10 +247,11 @@ bb.a:
   br i1 %.not, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.y = load i32, ptr %1, align 8, !tbaa !128
+  %12 = getelementptr inbounds nuw i8, ptr %1, i64 4
+  %i.y = load i32, ptr %1, align 8, !tbaa !129
   %i.z = sext i32 %i.y to i64
   %i.aa = shl nsw i64 %i.z, 3
-  %i.ab = load i32, ptr %8, align 4, !tbaa !129
+  %i.ab = load i32, ptr %12, align 4, !tbaa !130
   %i.ac = sext i32 %i.ab to i64
   %i.ad = mul i64 %i.aa, %i.ac
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.w, i8 0, i64 %i.ad, i1 false)
@@ -426,9 +429,9 @@ bb.c:                                             ; preds = %bb.b, %.lr.ph
 ; Function Attrs: nofree norecurse nosync nounwind memory(read, inaccessiblemem: none, target_mem: none) uwtable
 define noundef i32 @_Z25rcGetHeightFieldSpanCountP9rcContextRK13rcHeightfield(ptr nofree noundef readnone captures(none) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(64) %1) local_unnamed_addr #13 {
 bb.a:
-  %i.a = load i32, ptr %1, align 8, !tbaa !128
+  %i.a = load i32, ptr %1, align 8, !tbaa !129
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %i.c = load i32, ptr %i.b, align 4, !tbaa !129
+  %i.c = load i32, ptr %i.b, align 4, !tbaa !130
   %i.d = mul nsw i32 %i.c, %i.a                   ; 4 uses
   %i.e = icmp sgt i32 %i.d, 0
   br i1 %i.e, label %.lr.ph21, label %._crit_edge22
@@ -540,9 +543,9 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZN13rcScopedTimerC2EP9rcContext12rcTimerLabel.exit
 
 _ZN13rcScopedTimerC2EP9rcContext12rcTimerLabel.exit: ; preds = %bb.a, %bb.b
-  %i.g = load i32, ptr %3, align 8, !tbaa !128    ; 8 uses
+  %i.g = load i32, ptr %3, align 8, !tbaa !129    ; 8 uses
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 4
-  %i.i = load i32, ptr %i.h, align 4, !tbaa !129  ; 6 uses
+  %i.i = load i32, ptr %i.h, align 4, !tbaa !130  ; 6 uses
   %i.j = mul nsw i32 %i.i, %i.g                   ; 6 uses
   %i.k = icmp sgt i32 %i.j, 0                     ; 2 uses
   br i1 %i.k, label %.lr.ph21.i, label %_Z25rcGetHeightFieldSpanCountP9rcContextRK13rcHeightfield.exit
@@ -672,7 +675,7 @@ _Z25rcGetHeightFieldSpanCountP9rcContextRK13rcHeightfield.exit: ; preds = %_Z25r
   store float %i.aw, ptr %i.ax, align 8, !tbaa !126
   %i.ay = sitofp i32 %1 to float
   %i.az = getelementptr inbounds nuw i8, ptr %3, i64 36
-  %i.ba = load float, ptr %i.az, align 4, !tbaa !130
+  %i.ba = load float, ptr %i.az, align 4, !tbaa !128
   %i.bb = tail call float @llvm.fmuladd.f32(float %i.ay, float %i.ba, float %i.at)
   store float %i.bb, ptr %i.au, align 4, !tbaa !126
   %i.bc = getelementptr inbounds nuw i8, ptr %3, i64 32
@@ -1075,9 +1078,9 @@ attributes #19 = { builtin nounwind }
 !125 = !{!"p1 int", !105, i64 0}
 !126 = !{!104, !104, i64 0}
 !127 = !{!11, !11, i64 0}
-!128 = !{!110, !11, i64 0}
-!129 = !{!110, !11, i64 4}
-!130 = !{!110, !104, i64 36}
+!128 = !{!110, !104, i64 36}
+!129 = !{!110, !11, i64 0}
+!130 = !{!110, !11, i64 4}
 !131 = !{!109, !109, i64 0}
 !132 = !{!15, !14, i64 8}
 !133 = !{!110, !108, i64 48}

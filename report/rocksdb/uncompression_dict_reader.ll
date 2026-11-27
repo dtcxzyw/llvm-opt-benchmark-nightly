@@ -183,9 +183,11 @@ _ZNKSt14default_deleteIN7rocksdb23UncompressionDictReaderEEclEPS1_.exit.i.i: ; p
   br label %_ZNSt10unique_ptrIN7rocksdb23UncompressionDictReaderESt14default_deleteIS1_EE5resetEPS1_.exit
 
 _ZNSt10unique_ptrIN7rocksdb23UncompressionDictReaderESt14default_deleteIS1_EE5resetEPS1_.exit: ; preds = %bb.l, %_ZNKSt14default_deleteIN7rocksdb23UncompressionDictReaderEEclEPS1_.exit.i.i
-  %i.au = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr null, ptr %i.au, align 8, !tbaa !41, !alias.scope !174
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 6, i1 false), !alias.scope !174
+  store i32 0, ptr %0, align 8, !alias.scope !174
+  %i.au = getelementptr inbounds nuw i8, ptr %0, i64 4
+  store i16 0, ptr %i.au, align 4, !alias.scope !174
+  %10 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store ptr null, ptr %10, align 8, !tbaa !41, !alias.scope !174
   br label %.critedge22
 
 .critedge22:                                      ; preds = %_ZNSt10unique_ptrIN7rocksdb23UncompressionDictReaderESt14default_deleteIS1_EE5resetEPS1_.exit, %bb.c
@@ -438,9 +440,11 @@ _ZN7rocksdb13CachableEntryINS_16DecompressorDictEE5ResetEv.exit.i: ; preds = %bb
   br label %_ZN7rocksdb13CachableEntryINS_16DecompressorDictEE15SetUnownedValueEPS1_.exit
 
 _ZN7rocksdb13CachableEntryINS_16DecompressorDictEE15SetUnownedValueEPS1_.exit: ; preds = %_ZNK7rocksdb13CachableEntryINS_16DecompressorDictEE7IsEmptyEv.exit.thread, %_ZN7rocksdb13CachableEntryINS_16DecompressorDictEE5ResetEv.exit.i
-  %i.af = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr null, ptr %i.af, align 8, !tbaa !41, !alias.scope !227
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 6, i1 false), !alias.scope !227
+  store i32 0, ptr %0, align 8, !alias.scope !227
+  %i.af = getelementptr inbounds nuw i8, ptr %0, i64 4
+  store i16 0, ptr %i.af, align 4, !alias.scope !227
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store ptr null, ptr %7, align 8, !tbaa !41, !alias.scope !227
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.a

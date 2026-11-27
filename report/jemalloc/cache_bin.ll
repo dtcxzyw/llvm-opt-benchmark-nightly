@@ -55,7 +55,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.h = add <2 x i64> %i.f, %vec.phi10           ; 2 uses
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.i = icmp eq i64 %index.next, %n.vec
-  br i1 %i.i, label %middle.block, label %vector.body, !llvm.loop !26
+  br i1 %i.i, label %middle.block, label %vector.body, !llvm.loop !23
 
 middle.block:                                     ; preds = %vector.body
   %bin.rdx = add <2 x i64> %i.h, %i.g
@@ -90,7 +90,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.r = add i64 %i.q, %i.m                       ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %scalar.ph, !llvm.loop !27
+  br i1 %exitcond.not, label %._crit_edge, label %scalar.ph, !llvm.loop !24
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
@@ -132,13 +132,13 @@ bb.a:
   %i.h = ptrtoint ptr %i.g to i64
   %i.i = trunc i64 %i.h to i16                    ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i16 %i.i, ptr %i.j, align 8, !tbaa !23
+  store i16 %i.i, ptr %i.j, align 8, !tbaa !28
   %i.k = ptrtoint ptr %i.b to i64
   %i.l = trunc i64 %i.k to i16
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 18
-  store i16 %i.l, ptr %i.m, align 2, !tbaa !24
+  store i16 %i.l, ptr %i.m, align 2, !tbaa !29
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 20
-  store i16 %i.i, ptr %i.n, align 4, !tbaa !25
+  store i16 %i.i, ptr %i.n, align 4, !tbaa !30
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 22
   store i16 %i.c, ptr %i.o, align 2, !tbaa !14
   ret void
@@ -149,13 +149,15 @@ define hidden void @je_cache_bin_init_disabled(ptr nofree noundef writeonly capt
 bb.a:
   store ptr @je_disabled_bin, ptr %0, align 8, !tbaa !22
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i16 ptrtoint (ptr @je_disabled_bin to i16), ptr %i.a, align 8, !tbaa !23
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 18
-  store i16 ptrtoint (ptr @je_disabled_bin to i16), ptr %2, align 2, !tbaa !24
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 20
-  store i16 ptrtoint (ptr @je_disabled_bin to i16), ptr %3, align 4, !tbaa !25
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 22
-  store i16 %1, ptr %4, align 2, !tbaa !14
+  %2 = zext i16 ptrtoint (ptr @je_disabled_bin to i16) to i64 ; 3 uses
+  %3 = shl nuw nsw i64 %2, 16
+  %4 = shl nuw nsw i64 %2, 32
+  %5 = or disjoint i64 %3, %4
+  %6 = zext i16 %1 to i64
+  %7 = shl nuw i64 %6, 48
+  %8 = or disjoint i64 %5, %7
+  %9 = or disjoint i64 %8, %2
+  store i64 %9, ptr %i.a, align 8
   ret void
 }
 
@@ -195,12 +197,12 @@ attributes #4 = { nocallback nocreateundeforpoison nofree nosync nounwind specul
 !20 = !{!"cache_bin_stats_s", !16, i64 0}
 !21 = !{!"cache_bin_s", !19, i64 0, !20, i64 8, !12, i64 16, !12, i64 18, !12, i64 20, !13, i64 22}
 !22 = !{!21, !19, i64 0}
-!23 = !{!21, !12, i64 16}
-!24 = !{!21, !12, i64 18}
-!25 = !{!21, !12, i64 20}
-!26 = distinct !{!26, !28, !29, !30}
-!27 = distinct !{!27, !28, !30, !29}
-!28 = !{!"llvm.loop.mustprogress"}
-!29 = !{!"llvm.loop.isvectorized", i32 1}
-!30 = !{!"llvm.loop.unroll.runtime.disable"}
+!23 = distinct !{!23, !25, !26, !27}
+!24 = distinct !{!24, !25, !27, !26}
+!25 = !{!"llvm.loop.mustprogress"}
+!26 = !{!"llvm.loop.isvectorized", i32 1}
+!27 = !{!"llvm.loop.unroll.runtime.disable"}
+!28 = !{!21, !12, i64 16}
+!29 = !{!21, !12, i64 18}
+!30 = !{!21, !12, i64 20}
 end_hunk_0

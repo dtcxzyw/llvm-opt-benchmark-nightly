@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.b
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !20   ; 5 uses
-  %i.j = zext i32 %1 to i64                       ; 2 uses
+  %i.j = zext i32 %1 to i64                       ; 3 uses
   %i.k = lshr i64 %i.j, 23
   %i.l = xor i64 %i.k, %i.j
   %i.m = mul i64 %i.l, 2388976653695081527        ; 3 uses
@@ -295,10 +295,11 @@ bb.l:                                             ; preds = %bb.k, %b3NameMap_ge
   %i.bd = add nsw i32 %i.bb, 1
   store i32 %i.bd, ptr %i.as, align 8, !tbaa !21
   %i.be = sext i32 %i.bb to i64
-  %i.bf = getelementptr inbounds [16 x i8], ptr %i.bc, i64 %i.be ; 3 uses
-  store i32 %1, ptr %i.bf, align 8, !tbaa !35
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bf, i64 4
-  store i32 %3, ptr %.sroa.4.0..sroa_idx, align 4, !tbaa !35
+  %i.bf = getelementptr inbounds [16 x i8], ptr %i.bc, i64 %i.be ; 2 uses
+  %5 = zext i32 %3 to i64
+  %6 = shl nuw i64 %5, 32
+  %7 = or disjoint i64 %6, %i.j
+  store i64 %7, ptr %i.bf, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bf, i64 8
   store ptr %2, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !36
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #12

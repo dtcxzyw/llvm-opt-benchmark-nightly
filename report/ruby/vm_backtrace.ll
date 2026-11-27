@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %oldbt_bugreport.exit
-  %.sroa.5.0 = phi i32 [ 0, %.lr.ph.i.preheader ], [ %.sroa.5.1, %oldbt_bugreport.exit ] ; 3 uses
+  %.sroa.5.0 = phi i64 [ 0, %.lr.ph.i.preheader ], [ %.sroa.5.1, %oldbt_bugreport.exit ] ; 5 uses
   %.sroa.6.0 = phi i32 [ 0, %.lr.ph.i.preheader ], [ %.sroa.6.1, %oldbt_bugreport.exit ] ; 5 uses
   %.sroa.0.0 = phi i64 [ %i.r, %.lr.ph.i.preheader ], [ %.sroa.0.1, %oldbt_bugreport.exit ] ; 5 uses
   %.036.i = phi i64 [ 0, %.lr.ph.i.preheader ], [ %i.bx, %oldbt_bugreport.exit ] ; 2 uses
@@ -255,7 +255,7 @@ bb.f:                                             ; preds = %bb.e
 
 RSTRING_PTR.exit.i:                               ; preds = %bb.f, %bb.e, %oldbt_iter_iseq.exit
   %i.ap = phi ptr [ @.str.30, %oldbt_iter_iseq.exit ], [ %i.ao, %bb.f ], [ %i.an, %bb.e ] ; 2 uses
-  %.not.i9 = icmp eq i32 %.sroa.5.0, 0
+  %.not.i9 = icmp eq i64 %.sroa.5.0, 0
   br i1 %.not.i9, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %RSTRING_PTR.exit.i
@@ -263,6 +263,7 @@ bb.g:                                             ; preds = %RSTRING_PTR.exit.i
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %RSTRING_PTR.exit.i
+  %.sroa.5.2 = phi i64 [ 1, %bb.g ], [ %.sroa.5.0, %RSTRING_PTR.exit.i ] ; 2 uses
   %i.ar = icmp eq i64 %i.z, 4
   br i1 %i.ar, label %bb.i, label %bb.j
 
@@ -313,7 +314,7 @@ bb.n:                                             ; preds = %bb.m
 
 RSTRING_PTR.exit.i11:                             ; preds = %bb.n, %bb.m, %bb.l
   %i.bm = phi ptr [ @.str.30, %bb.l ], [ %i.bl, %bb.n ], [ %i.bk, %bb.m ] ; 2 uses
-  %.not.i12 = icmp eq i32 %.sroa.5.0, 0
+  %.not.i12 = icmp eq i64 %.sroa.5.0, 0
   br i1 %.not.i12, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %RSTRING_PTR.exit.i11
@@ -321,6 +322,7 @@ bb.o:                                             ; preds = %RSTRING_PTR.exit.i1
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %RSTRING_PTR.exit.i11
+  %.sroa.5.3 = phi i64 [ 1, %bb.o ], [ %.sroa.5.0, %RSTRING_PTR.exit.i11 ] ; 2 uses
   %i.bo = icmp eq i64 %..i.i, 4
   br i1 %i.bo, label %bb.q, label %bb.r
 
@@ -346,7 +348,7 @@ RSTRING_PTR.exit15.i14:                           ; preds = %bb.s, %bb.r
   br label %oldbt_bugreport.exit
 
 oldbt_bugreport.exit:                             ; preds = %RSTRING_PTR.exit15.i14, %bb.q, %RSTRING_PTR.exit15.i, %bb.i, %bb.d
-  %.sroa.5.1 = phi i32 [ 1, %RSTRING_PTR.exit15.i ], [ %.sroa.5.0, %bb.d ], [ 1, %bb.i ], [ 1, %bb.q ], [ 1, %RSTRING_PTR.exit15.i14 ]
+  %.sroa.5.1 = phi i64 [ %.sroa.5.2, %RSTRING_PTR.exit15.i ], [ %.sroa.5.0, %bb.d ], [ %.sroa.5.2, %bb.i ], [ %.sroa.5.3, %bb.q ], [ %.sroa.5.3, %RSTRING_PTR.exit15.i14 ]
   %.sroa.6.1 = phi i32 [ %i.ai, %RSTRING_PTR.exit15.i ], [ %.sroa.6.0, %bb.d ], [ %i.ai, %bb.i ], [ %.sroa.6.0, %bb.q ], [ %.sroa.6.0, %RSTRING_PTR.exit15.i14 ]
   %.sroa.0.1 = phi i64 [ %i.v, %RSTRING_PTR.exit15.i ], [ %.sroa.0.0, %bb.d ], [ %i.v, %bb.i ], [ %.sroa.0.0, %bb.q ], [ %.sroa.0.0, %RSTRING_PTR.exit15.i14 ]
   %i.bx = add nuw nsw i64 %.036.i, 1

@@ -204,7 +204,7 @@ bb.a:
   %i.b = add i32 %i.a, 4
   %i.c = zext i32 %i.b to i64
   %i.d = add nuw nsw i64 %i.c, 24
-  %i.e = tail call ptr @lj_mem_realloc(ptr noundef %0, ptr noundef null, i64 noundef 0, i64 noundef %i.d) #14 ; 11 uses
+  %i.e = tail call ptr @lj_mem_realloc(ptr noundef %0, ptr noundef null, i64 noundef 0, i64 noundef %i.d) #14 ; 10 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.g = load i64, ptr %i.f, align 8, !tbaa !21
   %i.h = inttoptr i64 %i.g to ptr                 ; 8 uses
@@ -215,10 +215,12 @@ bb.a:
   store i8 %i.k, ptr %i.l, align 8, !tbaa !16
   %i.m = getelementptr inbounds nuw i8, ptr %i.e, i64 9
   store i8 4, ptr %i.m, align 1, !tbaa !57
-  %i.n = getelementptr inbounds nuw i8, ptr %i.e, i64 20
-  store i32 %2, ptr %i.n, align 4, !tbaa !13
-  %5 = getelementptr inbounds nuw i8, ptr %i.e, i64 16
-  store i32 %3, ptr %5, align 8, !tbaa !38
+  %i.n = getelementptr inbounds nuw i8, ptr %i.e, i64 16
+  %5 = zext i32 %3 to i64
+  %6 = zext i32 %2 to i64                         ; 2 uses
+  %7 = shl nuw i64 %6, 32
+  %8 = or disjoint i64 %7, %5
+  store i64 %8, ptr %i.n, align 8
   %i.o = getelementptr inbounds nuw i8, ptr %i.h, i64 152
   %i.p = getelementptr inbounds nuw i8, ptr %i.h, i64 172 ; 3 uses
   %i.q = load i8, ptr %i.p, align 4, !tbaa !58    ; 2 uses
@@ -257,7 +259,6 @@ bb.c:                                             ; preds = %._crit_edge, %bb.b
   %i.af = zext i32 %i.a to i64
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ae, i64 %i.af
   store i32 0, ptr %i.ag, align 4, !tbaa !14
-  %6 = zext i32 %2 to i64
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ae, ptr align 1 %1, i64 %6, i1 false)
   %i.ah = getelementptr inbounds nuw i8, ptr %i.h, i64 160
   %i.ai = load i32, ptr %i.ah, align 8, !tbaa !34 ; 3 uses

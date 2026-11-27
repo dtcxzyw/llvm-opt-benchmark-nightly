@@ -150,32 +150,38 @@ bb.m:                                             ; preds = %_ZNSt10lock_guardIN
   br label %_ZN4absl12lts_2026052624synchronization_internalL17NewThreadIdentityEv.exit
 
 _ZN4absl12lts_2026052624synchronization_internalL17NewThreadIdentityEv.exit: ; preds = %_ZNSt10lock_guardIN4absl12lts_2026052613base_internal8SpinLockEED2Ev.exit.i, %bb.m
-  %.1.i = phi ptr [ %i.ap, %bb.m ], [ %i.y, %_ZNSt10lock_guardIN4absl12lts_2026052613base_internal8SpinLockEED2Ev.exit.i ] ; 19 uses
-  %i.au = getelementptr inbounds nuw i8, ptr %.1.i, i64 32
+  %.1.i = phi ptr [ %i.ap, %bb.m ], [ %i.y, %_ZNSt10lock_guardIN4absl12lts_2026052613base_internal8SpinLockEED2Ev.exit.i ] ; 22 uses
+  %0 = getelementptr inbounds nuw i8, ptr %.1.i, i64 32
+  %i.au = getelementptr inbounds nuw i8, ptr %.1.i, i64 20
+  store i8 0, ptr %i.au, align 4, !tbaa !35
   %i.av = getelementptr inbounds nuw i8, ptr %.1.i, i64 24
-  store i32 0, ptr %i.av, align 8, !tbaa !35
+  store i32 0, ptr %i.av, align 8, !tbaa !36
   %i.aw = getelementptr inbounds nuw i8, ptr %.1.i, i64 28
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(17) %.1.i, i8 0, i64 17, i1 false)
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.au, i8 0, i64 24, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
   store atomic i32 0, ptr %i.aw monotonic, align 4
-  %i.ax = getelementptr inbounds nuw i8, ptr %.1.i, i64 17
-  store <4 x i8> zeroinitializer, ptr %i.ax, align 1, !tbaa !36
+  %1 = getelementptr inbounds nuw i8, ptr %.1.i, i64 17
+  store i8 0, ptr %1, align 1, !tbaa !37
+  %i.ax = getelementptr inbounds nuw i8, ptr %.1.i, i64 18
+  store i16 0, ptr %i.ax, align 2
   %i.ay = getelementptr inbounds nuw i8, ptr %.1.i, i64 56
-  store ptr null, ptr %i.ay, align 8, !tbaa !37
+  store ptr null, ptr %i.ay, align 8, !tbaa !38
   %i.az = getelementptr inbounds nuw i8, ptr %.1.i, i64 64
   store atomic ptr null, ptr %i.az monotonic, align 8
   %i.ba = getelementptr inbounds nuw i8, ptr %.1.i, i64 72
-  store i32 0, ptr %i.ba, align 8, !tbaa !38
+  store i32 0, ptr %i.ba, align 8, !tbaa !39
   %i.bb = getelementptr inbounds nuw i8, ptr %.1.i, i64 76
   store atomic i32 0, ptr %i.bb monotonic, align 4
   %i.bc = getelementptr inbounds nuw i8, ptr %.1.i, i64 80
-  %i.bd = getelementptr inbounds nuw i8, ptr %.1.i, i64 404
-  store i32 0, ptr %i.bd, align 4, !tbaa !39
-  %i.be = getelementptr inbounds nuw i8, ptr %.1.i, i64 96
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %i.bc, i8 0, i64 9, i1 false)
-  store atomic i8 0, ptr %i.be monotonic, align 8
+  store i64 0, ptr %i.bc, align 8
+  %i.bd = getelementptr inbounds nuw i8, ptr %.1.i, i64 88
+  store i8 0, ptr %i.bd, align 8, !tbaa !40
+  %i.be = getelementptr inbounds nuw i8, ptr %.1.i, i64 404
+  store i32 0, ptr %i.be, align 4, !tbaa !41
+  %2 = getelementptr inbounds nuw i8, ptr %.1.i, i64 96
+  store atomic i8 0, ptr %2 monotonic, align 8
   %i.bf = getelementptr inbounds nuw i8, ptr %.1.i, i64 384
-  store ptr null, ptr %i.bf, align 8, !tbaa !40
+  store ptr null, ptr %i.bf, align 8, !tbaa !42
   %i.bg = getelementptr inbounds nuw i8, ptr %.1.i, i64 392
   store atomic i32 0, ptr %i.bg monotonic, align 8
   %i.bh = getelementptr inbounds nuw i8, ptr %.1.i, i64 396
@@ -194,7 +200,7 @@ declare void @_ZN4absl12lts_2026052613base_internal24SetCurrentThreadIdentityEPN
 define internal void @_ZN4absl12lts_2026052624synchronization_internalL21ReclaimThreadIdentityEPv(ptr noundef initializes((408, 416)) %0) #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !41   ; 2 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !43   ; 2 uses
   %.not = icmp eq ptr %i.b, null
   br i1 %.not, label %bb.c, label %bb.b
 
@@ -385,11 +391,13 @@ attributes #8 = { nounwind }
 !32 = !{!"_ZTSSt6atomicIbE", !31, i64 0}
 !33 = !{!"_ZTSN4absl12lts_2026052613base_internal14ThreadIdentityE", !21, i64 0, !26, i64 64, !28, i64 96, !5, i64 97, !29, i64 128, !30, i64 384, !25, i64 392, !25, i64 396, !32, i64 400, !6, i64 404, !12, i64 408}
 !34 = !{!33, !12, i64 408}
-!35 = !{!21, !6, i64 24}
-!36 = !{!15, !15, i64 0}
-!37 = !{!21, !20, i64 56}
-!38 = !{!26, !6, i64 8}
-!39 = !{!33, !6, i64 404}
-!40 = !{!33, !30, i64 384}
-!41 = !{!33, !20, i64 56}
+!35 = !{!21, !15, i64 20}
+!36 = !{!21, !6, i64 24}
+!37 = !{!21, !15, i64 17}
+!38 = !{!21, !20, i64 56}
+!39 = !{!26, !6, i64 8}
+!40 = !{!26, !15, i64 24}
+!41 = !{!33, !6, i64 404}
+!42 = !{!33, !30, i64 384}
+!43 = !{!33, !20, i64 56}
 end_hunk_0

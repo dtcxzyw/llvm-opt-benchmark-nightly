@@ -205,8 +205,7 @@ bb.a:
   br i1 %i.a, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  store i8 0, ptr %3, align 1
+  store i16 1, ptr %0, align 8
   br label %bb.e
 
 bb.c:                                             ; preds = %bb.a
@@ -220,13 +219,10 @@ bb.c:                                             ; preds = %bb.a
   br label %.preheader
 
 bb.d:                                             ; preds = %bb.c
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  store i8 1, ptr %4, align 1
+  store i16 257, ptr %0, align 8
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.b, %bb.f
-  %.sink = phi i8 [ 1, %bb.d ], [ 1, %bb.b ], [ 0, %bb.f ]
-  store i8 %.sink, ptr %0, align 8
   ret void
 
 .preheader:                                       ; preds = %.preheader.preheader, %.preheader
@@ -243,6 +239,7 @@ bb.f:                                             ; preds = %.preheader
   store double %1, ptr %i.k, align 8
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %.sroa.0.0, ptr %i.l, align 8
+  store i8 0, ptr %0, align 8
   br label %bb.e
 }
 
@@ -645,15 +642,13 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 5
   %i.u = load i8, ptr %i.t, align 1, !alias.scope !1181, !noundef !7
-  %2 = icmp ne i8 %i.u, 104
-  %spec.select.i = zext i1 %2 to i8
+  %.not = icmp eq i8 %i.u, 104
+  %2 = select i1 %.not, i16 0, i16 256
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
-  %.sink.i = phi i8 [ 1, %bb.a ], [ %spec.select.i, %bb.g ], [ 1, %bb.f ], [ 1, %bb.e ], [ 1, %bb.d ], [ 1, %bb.c ], [ 1, %bb.b ]
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  store i8 %.sink.i, ptr %3, align 1, !alias.scope !1180
-  store i8 0, ptr %0, align 8, !alias.scope !1180
+  %.sink.i = phi i16 [ 256, %bb.a ], [ %2, %bb.g ], [ 256, %bb.f ], [ 256, %bb.e ], [ 256, %bb.d ], [ 256, %bb.c ], [ 256, %bb.b ]
+  store i16 %.sink.i, ptr %0, align 8, !alias.scope !1180
   invoke void @_RNvXso_NtCscdodAO9FK5_5alloc3vecINtB5_3VechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull align 8 dereferenceable(24) %1)
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VechEECs2JiOgHzbbc7_10tokenizers.exit unwind label %bb.i
 
@@ -680,22 +675,18 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VechEECs2Ji
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: write) uwtable
 define hidden void @_RINvYNtNvMNvNtNtCs2JiOgHzbbc7_10tokenizers14pre_tokenizers12fixed_lengths0_1__NtBa_14FixedLengthDef11deserialize14___FieldVisitorNtNtCsboAIIHEtPkY_10serde_core2de7Visitor8visit_u8NtNtCs5PtHgSLqj5O_10serde_json5error5ErrorEBe_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([16 x i8]) align 8 captures(none) dereferenceable(16) initializes((0, 2)) %0, i8 noundef %1) unnamed_addr #0 !guid !1184 {
 bb.a:
-  %2 = icmp ne i8 %1, 0
-  %spec.select.i = zext i1 %2 to i8
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  store i8 %spec.select.i, ptr %3, align 1, !alias.scope !1185
-  store i8 0, ptr %0, align 8, !alias.scope !1185
+  %.not = icmp eq i8 %1, 0
+  %2 = select i1 %.not, i16 0, i16 256
+  store i16 %2, ptr %0, align 8, !alias.scope !1185
   ret void
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: write) uwtable
 define hidden void @_RINvYNtNvXNvNtNtCs2JiOgHzbbc7_10tokenizers11normalizers10byte_levels1_1__NtBa_15ByteLevelHelperNtNtCsboAIIHEtPkY_10serde_core2de11Deserialize11deserialize14___FieldVisitorNtB1x_7Visitor8visit_u8NtNtCs5PtHgSLqj5O_10serde_json5error5ErrorEBe_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([16 x i8]) align 8 captures(none) dereferenceable(16) initializes((0, 2)) %0, i8 noundef %1) unnamed_addr #0 !guid !1188 {
 bb.a:
-  %2 = icmp ne i8 %1, 0
-  %spec.select.i = zext i1 %2 to i8
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  store i8 %spec.select.i, ptr %3, align 1, !alias.scope !1189
-  store i8 0, ptr %0, align 8, !alias.scope !1189
+  %.not = icmp eq i8 %1, 0
+  %2 = select i1 %.not, i16 0, i16 256
+  store i16 %2, ptr %0, align 8, !alias.scope !1189
   ret void
 }
 
@@ -724,10 +715,11 @@ _RINvXNvXNvNtNtCs2JiOgHzbbc7_10tokenizers11normalizers10byte_levels_1__NtB8_13By
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: write) uwtable
 define hidden void @_RINvYNtNvXNvNtNtCs2JiOgHzbbc7_10tokenizers11normalizers4bert1__NtBa_14BertNormalizerNtNtCsboAIIHEtPkY_10serde_core2de11Deserialize11deserialize14___FieldVisitorNtB1m_7Visitor8visit_u8NtNtCs5PtHgSLqj5O_10serde_json5error5ErrorEBe_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([16 x i8]) align 8 captures(none) dereferenceable(16) initializes((0, 2)) %0, i8 noundef %1) unnamed_addr #0 !guid !1193 {
 bb.a:
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %trunc..i = tail call i8 @llvm.umin.i8(i8 %1, i8 4)
-  store i8 %trunc..i, ptr %2, align 1, !alias.scope !1194
-  store i8 0, ptr %0, align 8, !alias.scope !1194
+  %trunc.i = zext nneg i8 %1 to i16
+  %2 = icmp ult i8 %1, 4
+  %switch.idx.mult.i = shl nuw nsw i16 %trunc.i, 8
+  %.sink.i = select i1 %2, i16 %switch.idx.mult.i, i16 1024
+  store i16 %.sink.i, ptr %0, align 8, !alias.scope !1194
   ret void
 }
 
@@ -756,10 +748,11 @@ _RINvXNvXNvNtNtCs2JiOgHzbbc7_10tokenizers14pre_tokenizers12fixed_lengths1_1__NtB
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: write) uwtable
 define hidden void @_RINvYNtNvXNvNtNtCs2JiOgHzbbc7_10tokenizers8decoders5strip1__NtBa_5StripNtNtCsboAIIHEtPkY_10serde_core2de11Deserialize11deserialize14___FieldVisitorNtB19_7Visitor8visit_u8NtNtCs5PtHgSLqj5O_10serde_json5error5ErrorEBe_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([16 x i8]) align 8 captures(none) dereferenceable(16) initializes((0, 2)) %0, i8 noundef %1) unnamed_addr #0 !guid !1198 {
 bb.a:
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %trunc..i = tail call i8 @llvm.umin.i8(i8 %1, i8 3)
-  store i8 %trunc..i, ptr %2, align 1, !alias.scope !1199
-  store i8 0, ptr %0, align 8, !alias.scope !1199
+  %trunc.i = zext nneg i8 %1 to i16
+  %2 = icmp ult i8 %1, 3
+  %switch.idx.mult.i = shl nuw nsw i16 %trunc.i, 8
+  %.sink.i = select i1 %2, i16 %switch.idx.mult.i, i16 768
+  store i16 %.sink.i, ptr %0, align 8, !alias.scope !1199
   ret void
 }
 
@@ -1162,7 +1155,7 @@ bb.aw:                                            ; preds = %bb.ay, %.noexc51
   %i.jb = add i64 %.sroa.01.0.i.i.i40, %i.ja
   %i.jc = and i64 %i.jb, %i.is
   %i.jd = sub nsw i64 0, %i.jc
-  %i.je = getelementptr inbounds [16 x i8], ptr %i.it, i64 %i.jd ; 2 uses
+  %i.je = getelementptr inbounds [16 x i8], ptr %i.it, i64 %i.jd ; 3 uses
   %i.jf = getelementptr inbounds i8, ptr %i.je, i64 -16
   %i.jg = invoke noundef zeroext i1 @_RNvXCsgQfI1edjipl_9hashbrownTmmEINtB2_10EquivalentBq_E10equivalentCs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(8) %i.h, ptr noalias noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(16) %i.jf)
           to label %.noexc52 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !1801
@@ -1199,7 +1192,9 @@ bb.ay:                                            ; preds = %._crit_edge.i.i46
 
 _RINvMs1_NtCsgQfI1edjipl_9hashbrown3mapINtB6_7HashMapTmmEBO_NtNtCsiTTz6JxaXqu_5ahash12random_state11RandomStateE3getBO_ECs2JiOgHzbbc7_10tokenizers.exit53: ; preds = %.noexc52
   %i.jr = getelementptr inbounds i8, ptr %i.je, i64 -8
-  %4 = load <2 x i32>, ptr %i.jr, align 4
+  %4 = load i32, ptr %i.jr, align 4, !noundef !7
+  %5 = getelementptr inbounds i8, ptr %i.je, i64 -4
+  %6 = load i32, ptr %5, align 4, !noundef !7
   %i.js = load i64, ptr %.sroa.5.0..sroa_idx.i, align 8, !alias.scope !1802, !noundef !7 ; 8 uses
   %i.jt = icmp ult i64 %i.js, 576460752303423488
   call void @llvm.assume(i1 %i.jt)
@@ -1216,7 +1211,11 @@ _RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtNtCs2JiOgHzbbc7_10tokenizers6mo
   %i.jx = getelementptr inbounds nuw [16 x i8], ptr %i.jw, i64 %i.js ; 2 uses
   store i64 %i.hx, ptr %i.jx, align 8
   %.sroa.4106.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.jx, i64 8
-  store <2 x i32> %4, ptr %.sroa.4106.0..sroa_idx, align 8
+  %7 = zext i32 %4 to i64
+  %8 = zext i32 %6 to i64
+  %9 = shl nuw i64 %8, 32
+  %10 = or disjoint i64 %9, %7
+  store i64 %10, ptr %.sroa.4106.0..sroa_idx, align 8
   %i.jy = add nuw nsw i64 %i.js, 1
   store i64 %i.jy, ptr %.sroa.5.0..sroa_idx.i, align 8, !alias.scope !1803
   %.val.i = load ptr, ptr %.sroa.4.0..sroa_idx.i, align 8, !alias.scope !1802, !nonnull !7, !noundef !7 ; 4 uses
@@ -1316,7 +1315,7 @@ bb.be:                                            ; preds = %bb.bg, %.noexc70
   %i.lh = add i64 %.sroa.01.0.i.i.i59, %i.lg
   %i.li = and i64 %i.lh, %i.ky
   %i.lj = sub nsw i64 0, %i.li
-  %i.lk = getelementptr inbounds [16 x i8], ptr %i.kz, i64 %i.lj ; 2 uses
+  %i.lk = getelementptr inbounds [16 x i8], ptr %i.kz, i64 %i.lj ; 3 uses
   %i.ll = getelementptr inbounds i8, ptr %i.lk, i64 -16
   %i.lm = invoke noundef zeroext i1 @_RNvXCsgQfI1edjipl_9hashbrownTmmEINtB2_10EquivalentBq_E10equivalentCs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(8) %i.g, ptr noalias noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(16) %i.ll)
           to label %.noexc71 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !1811
@@ -1343,7 +1342,9 @@ bb.bg:                                            ; preds = %._crit_edge.i.i65
 
 _RINvMs1_NtCsgQfI1edjipl_9hashbrown3mapINtB6_7HashMapTmmEBO_NtNtCsiTTz6JxaXqu_5ahash12random_state11RandomStateE3getBO_ECs2JiOgHzbbc7_10tokenizers.exit72: ; preds = %.noexc71
   %i.lu = getelementptr inbounds i8, ptr %i.lk, i64 -8
-  %5 = load <2 x i32>, ptr %i.lu, align 4
+  %11 = load i32, ptr %i.lu, align 4, !noundef !7
+  %12 = getelementptr inbounds i8, ptr %i.lk, i64 -4
+  %13 = load i32, ptr %12, align 4, !noundef !7
   %i.lv = load i64, ptr %.sroa.5.0..sroa_idx.i, align 8, !alias.scope !1812, !noundef !7 ; 8 uses
   %i.lw = icmp ult i64 %i.lv, 576460752303423488
   call void @llvm.assume(i1 %i.lw)
@@ -1360,7 +1361,11 @@ _RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtNtCs2JiOgHzbbc7_10tokenizers6mo
   %i.ma = getelementptr inbounds nuw [16 x i8], ptr %i.lz, i64 %i.lv ; 2 uses
   store i64 %.sroa.698.sroa.0.0.copyload, ptr %i.ma, align 8
   %.sroa.4109.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ma, i64 8
-  store <2 x i32> %5, ptr %.sroa.4109.0..sroa_idx, align 8
+  %14 = zext i32 %11 to i64
+  %15 = zext i32 %13 to i64
+  %16 = shl nuw i64 %15, 32
+  %17 = or disjoint i64 %16, %14
+  store i64 %17, ptr %.sroa.4109.0..sroa_idx, align 8
   %i.mb = add nuw nsw i64 %i.lv, 1
   store i64 %i.mb, ptr %.sroa.5.0..sroa_idx.i, align 8, !alias.scope !1813
   %.val.i74 = load ptr, ptr %.sroa.4.0..sroa_idx.i, align 8, !alias.scope !1812, !nonnull !7, !noundef !7 ; 4 uses
@@ -1763,11 +1768,11 @@ bb.h:                                             ; preds = %bb.a
 
 _RINvMs1_NtCsgQfI1edjipl_9hashbrown3mapINtB6_7HashMapTmmEBO_NtNtCsiTTz6JxaXqu_5ahash12random_state11RandomStateE3getBO_ECs2JiOgHzbbc7_10tokenizers.exit.i: ; preds = %.lr.ph.i.i.i
   %i.am = getelementptr inbounds i8, ptr %i.ac, i64 -8
+  %3 = load i64, ptr %i.am, align 4, !noalias !2615
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.0.0.copyload, ptr %i.an, align 8, !alias.scope !2614
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %3 = load <2 x i32>, ptr %i.am, align 4, !noalias !2615
-  store <2 x i32> %3, ptr %.sroa.4.0..sroa_idx.i, align 8, !alias.scope !2614
+  store i64 %3, ptr %.sroa.4.0..sroa_idx.i, align 8, !alias.scope !2614
   br label %_RNCNvMs3_NtNtNtCs2JiOgHzbbc7_10tokenizers6models3bpe4wordNtB7_4Word9merge_all0Bd_.exit
 
 _RNCNvMs3_NtNtNtCs2JiOgHzbbc7_10tokenizers6models3bpe4wordNtB7_4Word9merge_all0Bd_.exit: ; preds = %._crit_edge.i.i.i, %bb.c, %_RINvMs1_NtCsgQfI1edjipl_9hashbrown3mapINtB6_7HashMapTmmEBO_NtNtCsiTTz6JxaXqu_5ahash12random_state11RandomStateE3getBO_ECs2JiOgHzbbc7_10tokenizers.exit.i
@@ -2168,9 +2173,6 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #29
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #21
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i8 @llvm.umin.i8(i8, i8) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #21

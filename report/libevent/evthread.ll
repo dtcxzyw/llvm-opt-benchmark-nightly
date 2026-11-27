@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 ; Function Attrs: nounwind uwtable
 define internal ptr @debug_lock_alloc(i32 noundef %0) #2 {
 bb.a:
-  %i.a = tail call ptr @event_mm_malloc_(i64 noundef 32) #10 ; 9 uses
+  %i.a = tail call ptr @event_mm_malloc_(i64 noundef 32) #10 ; 8 uses
   %.not = icmp eq ptr %i.a, null
   br i1 %.not, label %bb.g, label %bb.b
 
@@ -229,9 +229,10 @@ bb.e:                                             ; preds = %bb.b
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.c, %bb.e
-  store i32 -558845684, ptr %i.a, align 8
-  %1 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  store i32 %0, ptr %1, align 4
+  %1 = zext i32 %0 to i64
+  %2 = shl nuw i64 %1, 32
+  %3 = or disjoint i64 %2, 3736121612
+  store i64 %3, ptr %i.a, align 8
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   store i32 0, ptr %i.g, align 8
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -443,7 +444,7 @@ bb.a:
   br i1 %or.cond, label %bb.b, label %bb.h
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = tail call ptr @event_mm_malloc_(i64 noundef 32) #10 ; 9 uses
+  %i.d = tail call ptr @event_mm_malloc_(i64 noundef 32) #10 ; 8 uses
   %.not.i = icmp eq ptr %i.d, null
   br i1 %.not.i, label %debug_lock_alloc.exit, label %bb.c
 
@@ -470,9 +471,10 @@ bb.f:                                             ; preds = %bb.c
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.d
-  store i32 -558845684, ptr %i.d, align 8
-  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 4
-  store i32 %1, ptr %3, align 4
+  %3 = zext i32 %1 to i64
+  %4 = shl nuw i64 %3, 32
+  %5 = or disjoint i64 %4, 3736121612
+  store i64 %5, ptr %i.d, align 8
   %i.j = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   store i32 0, ptr %i.j, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %i.d, i64 8
@@ -492,7 +494,7 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.i
   %i.n = load ptr, ptr getelementptr inbounds nuw (i8, ptr @original_lock_fns_, i64 16), align 8
   tail call void %i.n(ptr noundef %0, i32 noundef %1) #10
-  %i.o = tail call ptr @event_mm_malloc_(i64 noundef 32) #10 ; 9 uses
+  %i.o = tail call ptr @event_mm_malloc_(i64 noundef 32) #10 ; 8 uses
   %.not.i40 = icmp eq ptr %i.o, null
   br i1 %.not.i40, label %debug_lock_alloc.exit, label %bb.k
 
@@ -519,9 +521,10 @@ bb.n:                                             ; preds = %bb.k
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.l
-  store i32 -558845684, ptr %i.o, align 8
-  %4 = getelementptr inbounds nuw i8, ptr %i.o, i64 4
-  store i32 %1, ptr %4, align 4
+  %6 = zext i32 %1 to i64
+  %7 = shl nuw i64 %6, 32
+  %8 = or disjoint i64 %7, 3736121612
+  store i64 %8, ptr %i.o, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %i.o, i64 16
   store i32 0, ptr %i.u, align 8
   %i.v = getelementptr inbounds nuw i8, ptr %i.o, i64 8
@@ -565,7 +568,7 @@ bb.u:                                             ; preds = %bb.s
   br i1 %.not, label %bb.v, label %debug_lock_alloc.exit49
 
 bb.v:                                             ; preds = %bb.u
-  %i.ag = tail call ptr @event_mm_malloc_(i64 noundef 32) #10 ; 9 uses
+  %i.ag = tail call ptr @event_mm_malloc_(i64 noundef 32) #10 ; 8 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ag) ]
   %i.ah = load ptr, ptr getelementptr inbounds nuw (i8, ptr @original_lock_fns_, i64 8), align 8 ; 2 uses
   %.not13.i46 = icmp eq ptr %i.ah, null
@@ -589,9 +592,10 @@ bb.y:                                             ; preds = %bb.v
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.y, %bb.w
-  store i32 -558845684, ptr %i.ag, align 8
-  %5 = getelementptr inbounds nuw i8, ptr %i.ag, i64 4
-  store i32 %1, ptr %5, align 4
+  %9 = zext i32 %1 to i64
+  %10 = shl nuw i64 %9, 32
+  %11 = or disjoint i64 %10, 3736121612
+  store i64 %11, ptr %i.ag, align 8
   %i.am = getelementptr inbounds nuw i8, ptr %i.ag, i64 16
   store i32 0, ptr %i.am, align 8
   %i.an = getelementptr inbounds nuw i8, ptr %i.ag, i64 8

@@ -204,6 +204,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.b, ptr %i.c, align 8
+  store i8 1, ptr %0, align 8
   br label %bb.f
 
 bb.c:                                             ; preds = %bb.a
@@ -221,6 +222,7 @@ bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.h, ptr %i.i, align 8
+  store i8 1, ptr %0, align 8
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.c
@@ -229,13 +231,12 @@ bb.e:                                             ; preds = %bb.c
   %i.l = load i8, ptr %i.k, align 1, !noundef !9
   %i.m = add i64 %i.e, 1
   store i64 %i.m, ptr %i.d, align 8
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  store i8 %i.l, ptr %2, align 1
+  %2 = zext i8 %i.l to i16
+  %3 = shl nuw i16 %2, 8
+  store i16 %3, ptr %0, align 8
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d, %bb.b
-  %.sink = phi i8 [ 0, %bb.e ], [ 1, %bb.d ], [ 1, %bb.b ]
-  store i8 %.sink, ptr %0, align 8
   ret void
 }
 

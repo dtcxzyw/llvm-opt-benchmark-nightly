@@ -202,7 +202,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1xwejQucwHj_5alloc6string6StringEC
 define hidden void @_RINvNtCs609xDM2Krl3_3log13___private_api3loguNtB2_12GlobalLoggerECsa9sSWSfjDbm_4jiff(ptr noundef nonnull %0, ptr noundef nonnull %1, i64 noundef range(i64 1, 6) %2, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(40) %3) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [0 x i8], align 1
-  %i.b = alloca [96 x i8], align 8                ; 16 uses
+  %i.b = alloca [96 x i8], align 8                ; 15 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !95)
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.d = load ptr, ptr %i.c, align 8, !alias.scope !95, !nonnull !4, !align !5, !noundef !4 ; 3 uses
@@ -241,9 +241,10 @@ bb.a:
   %.sroa.535.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 40
   store i64 %i.n, ptr %.sroa.535.0..sroa_idx.i, align 8, !noalias !95
   %i.u = getelementptr inbounds nuw i8, ptr %i.b, i64 72
-  store i32 1, ptr %i.u, align 8, !noalias !95
-  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 76
-  store i32 %i.p, ptr %4, align 4, !noalias !95
+  %4 = zext i32 %i.p to i64
+  %5 = shl nuw i64 %4, 32
+  %6 = or disjoint i64 %5, 1
+  store i64 %6, ptr %i.u, align 8, !noalias !95
   call void @_RNvXs0_NtCs609xDM2Krl3_3log13___private_apiNtB5_12GlobalLoggerNtB7_3Log3log(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.a, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(96) %i.b), !noalias !95
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !95
   ret void
@@ -646,9 +647,10 @@ bb.c:                                             ; preds = %bb.a
   ]
 
 bb.d:                                             ; preds = %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c
-  store i32 1, ptr %0, align 8
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i32 %1, ptr %2, align 4
+  %2 = zext nneg i32 %1 to i64
+  %3 = shl nuw nsw i64 %2, 32
+  %4 = or disjoint i64 %3, 1
+  store i64 %4, ptr %0, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
   %i.e = load i8, ptr %i.d, align 8, !range !12, !noundef !4
   %i.f = icmp ne i32 %1, 0
@@ -1051,9 +1053,10 @@ bb.i:                                             ; preds = %bb.h
   unreachable
 
 bb.j:                                             ; preds = %bb.h
-  store i32 1, ptr %0, align 8, !alias.scope !367
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i32 %5, ptr %6, align 4, !alias.scope !367
+  %6 = zext nneg i32 %5 to i64
+  %7 = shl nuw nsw i64 %6, 32
+  %8 = or disjoint i64 %7, 1
+  store i64 %8, ptr %0, align 8, !alias.scope !367
   %i.w = icmp ne i32 %5, 0
   %i.x = zext i1 %i.w to i8
   %.sroa.02.0.i48 = or i8 %.sroa.02.0.i, %i.x

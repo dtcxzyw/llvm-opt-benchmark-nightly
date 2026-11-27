@@ -202,7 +202,7 @@ bb.l:                                             ; preds = %_RNvMs0_NtNtNtNtCsl
 define hidden void @_RNvMs0_NtNtNtNtCsl6EuCK7xub1_5insta7content4yaml8vendored6parserINtB5_6ParserNtNtNtCs4NRVxsYgnAr_4core3str4iter5CharsE3newBd_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([520 x i8]) align 8 captures(none) dereferenceable(520) %0, ptr noundef nonnull %1, ptr noundef %2) unnamed_addr #0 personality ptr @rust_eh_personality !guid !578 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 7 uses
-  %i.b = alloca [232 x i8], align 8               ; 26 uses
+  %i.b = alloca [232 x i8], align 8               ; 27 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 160
   store ptr %1, ptr %i.c, align 8
@@ -226,8 +226,10 @@ bb.a:
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5.0..sroa_idx, i8 0, i64 16, i1 false)
   store i64 -1, ptr %i.f, align 8
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 224
+  store i16 0, ptr %i.g, align 8
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 200
   store i64 0, ptr %i.h, align 8
+  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 226
   %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 64
   store i64 0, ptr %i.i, align 8
   %.sroa.411.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 72
@@ -246,7 +248,7 @@ bb.a:
   store i8 0, ptr %i.l, align 4
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 216
   store i64 0, ptr %i.m, align 8
-  store <4 x i8> <i8 0, i8 0, i8 1, i8 0>, ptr %i.g, align 8
+  store i16 1, ptr %3, align 2
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i64 0, ptr %i.a, align 8
   %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 8

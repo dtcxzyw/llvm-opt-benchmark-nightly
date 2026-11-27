@@ -204,12 +204,14 @@ bb.a:
   br label %.preheader.i.i
 
 .preheader.i.i:                                   ; preds = %.preheader.i.i.backedge, %.preheader.lr.ph.i.i
-  %.sroa.4.1.i.i = phi i32 [ 0, %.preheader.lr.ph.i.i ], [ %.sroa.4.2.i.i, %.preheader.i.i.backedge ] ; 3 uses
-  %6 = icmp ult i32 %.sroa.4.1.i.i, 4096
-  br i1 %6, label %bb.b, label %bb.c
+  %.sroa.4.1.i.i = phi i64 [ 4294967296, %.preheader.lr.ph.i.i ], [ %.sroa.4.2.i.i, %.preheader.i.i.backedge ] ; 3 uses
+  %6 = and i64 %.sroa.4.1.i.i, 4096
+  %7 = icmp eq i64 %6, 0
+  br i1 %7, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %.preheader.i.i
-  %7 = add nuw nsw i32 %.sroa.4.1.i.i, 1
+  %8 = add nuw nsw i64 %.sroa.4.1.i.i, 1
+  %.sroa.4.8.insert.ext.i.i = and i64 %8, 8191
   call void asm sideeffect "pause", "~{dirflag},~{fpsr},~{flags}"() #20, !srcloc !160
   br label %_ZN5folly6detail7Sleeper4waitEv.exit.i.i
 
@@ -245,7 +247,7 @@ bb.f:                                             ; preds = %bb.d
   unreachable
 
 _ZN5folly6detail7Sleeper4waitEv.exit.i.i:         ; preds = %.critedge.i.i.i.i, %bb.b
-  %.sroa.4.2.i.i = phi i32 [ %7, %bb.b ], [ %.sroa.4.1.i.i, %.critedge.i.i.i.i ]
+  %.sroa.4.2.i.i = phi i64 [ %.sroa.4.8.insert.ext.i.i, %bb.b ], [ %.sroa.4.1.i.i, %.critedge.i.i.i.i ]
   %i.j = load atomic i8, ptr %0 monotonic, align 8
   %i.k = icmp eq i8 %i.j, 1
   br i1 %i.k, label %.preheader.i.i.backedge, label %bb.g

@@ -201,8 +201,9 @@ bb.a:
   store i32 -1, ptr %i.f, align 8, !tbaa !49
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 180
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 184 ; 2 uses
-  store <4 x i32> <i32 -1, i32 -1, i32 -1, i32 1>, ptr %i.g, align 8, !tbaa !49
+  store i64 -1, ptr %i.g, align 8
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 184 ; 3 uses
+  store i64 8589934591, ptr %i.i, align 8
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 196 ; 2 uses
   store i16 2, ptr %i.j, align 4, !tbaa !49
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 200 ; 3 uses

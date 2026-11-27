@@ -202,7 +202,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q
 bb.t:                                             ; preds = %bb.p, %bb.s
   %i.fk = load ptr, ptr %i.eu, align 8, !tbaa !68
   %i.fl = sext i32 %i.ao to i64
-  %i.fm = getelementptr inbounds [128 x i8], ptr %i.fk, i64 %i.fl ; 15 uses
+  %i.fm = getelementptr inbounds [128 x i8], ptr %i.fk, i64 %i.fl ; 17 uses
   %i.fn = getelementptr inbounds nuw i8, ptr %1, i64 80
   %i.fo = load ptr, ptr %i.fn, align 8, !tbaa !212
   store ptr %i.fo, ptr %i.fm, align 8, !tbaa !106
@@ -216,11 +216,15 @@ bb.t:                                             ; preds = %bb.p, %bb.s
   %i.fu = load i16, ptr %i.ft, align 4, !tbaa !87
   %i.fv = add i16 %i.fu, 1
   store i16 %i.fv, ptr %i.ft, align 4, !tbaa !87
+  %3 = getelementptr inbounds nuw i8, ptr %i.fm, i64 24
+  store i64 4294967295, ptr %3, align 8
   %i.fw = getelementptr inbounds nuw i8, ptr %i.fm, i64 32
   %i.fx = getelementptr inbounds nuw i8, ptr %i.fm, i64 16
-  store <4 x i32> <i32 -1, i32 0, i32 -1, i32 0>, ptr %i.fx, align 8, !tbaa !100
+  store i64 4294967295, ptr %i.fx, align 8
+  store i64 -1, ptr %i.fw, align 8
+  %4 = getelementptr inbounds nuw i8, ptr %i.fm, i64 40
   %i.fy = getelementptr inbounds nuw i8, ptr %i.fm, i64 44
-  store <4 x i32> <i32 -1, i32 -1, i32 0, i32 -1>, ptr %i.fw, align 8, !tbaa !100
+  store i64 -4294967296, ptr %4, align 8
   %i.fz = getelementptr inbounds nuw i8, ptr %i.fm, i64 48 ; 2 uses
   store i32 -1, ptr %i.fz, align 8, !tbaa !108
   %i.ga = getelementptr inbounds nuw i8, ptr %i.fm, i64 104
@@ -575,7 +579,7 @@ b3RemoveBodyFromIsland.exit:                      ; preds = %._crit_edge82, %bb.
   %i.ca = getelementptr inbounds [88 x i8], ptr %i.bw, i64 %i.bz ; 6 uses
   %i.cb = load ptr, ptr %i.ca, align 8, !tbaa !82 ; 2 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %i.ca, i64 8 ; 4 uses
-  %i.cd = getelementptr inbounds nuw i8, ptr %i.l, i64 12 ; 4 uses
+  %i.cd = getelementptr inbounds nuw i8, ptr %i.l, i64 12 ; 3 uses
   %i.ce = load i32, ptr %i.cd, align 4, !tbaa !83 ; 2 uses
   %i.cf = load i32, ptr %i.cc, align 8, !tbaa !100
   %i.cg = add nsw i32 %i.cf, -1                   ; 3 uses
@@ -655,8 +659,7 @@ b3RemoveHelper.exit73:                            ; preds = %bb.p, %bb.o, %bb.q,
   %i.ds = getelementptr inbounds nuw i8, ptr %i.l, i64 108 ; 2 uses
   %i.dt = load i32, ptr %i.ds, align 4, !tbaa !109
   call void @b3FreeId(ptr noundef nonnull %i.dr, i32 noundef %i.dt) #10
-  store i32 -1, ptr %i.bx, align 8, !tbaa !72
-  store i32 -1, ptr %i.cd, align 4, !tbaa !83
+  store i64 -1, ptr %i.bx, align 8
   store i32 -1, ptr %i.ds, align 4, !tbaa !109
   call void @b3ValidateSolverSets(ptr noundef nonnull %i.c) #10
   store i8 0, ptr %i.g, align 1, !tbaa !96

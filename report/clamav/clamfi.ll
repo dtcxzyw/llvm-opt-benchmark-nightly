@@ -202,7 +202,7 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.m
 
 bb.f:                                             ; preds = %bb.d
-  %i.h = tail call noalias dereferenceable_or_null(1512) ptr @malloc(i64 noundef 1512) #22 ; 10 uses
+  %i.h = tail call noalias dereferenceable_or_null(1512) ptr @malloc(i64 noundef 1512) #22 ; 11 uses
   %.not25 = icmp eq ptr %i.h, null
   br i1 %.not25, label %bb.g, label %bb.h
 
@@ -212,10 +212,12 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.m
 
 bb.h:                                             ; preds = %bb.f
-  %i.k = getelementptr inbounds nuw i8, ptr %i.h, i64 44
-  store <4 x i32> <i32 -1, i32 -1, i32 0, i32 0>, ptr %i.k, align 4, !tbaa !16
-  %i.l = getelementptr inbounds nuw i8, ptr %i.h, i64 60
-  store i32 1, ptr %i.l, align 4, !tbaa !15
+  %2 = getelementptr inbounds nuw i8, ptr %i.h, i64 56
+  %i.k = getelementptr inbounds nuw i8, ptr %i.h, i64 48
+  store i64 4294967295, ptr %i.k, align 8
+  %i.l = getelementptr inbounds nuw i8, ptr %i.h, i64 44
+  store i32 -1, ptr %i.l, align 4, !tbaa !22
+  store i64 4294967296, ptr %2, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %i.h, i64 64
   store i32 0, ptr %i.m, align 8, !tbaa !30
   %i.n = getelementptr inbounds nuw i8, ptr %i.h, i64 8

@@ -203,7 +203,7 @@ define hidden noundef ptr @_Z13luaR_newclassP9lua_StateP7TStringP8LuaTablePS2_jj
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
   %i.b = load i8, ptr %i.a, align 4, !tbaa !20
-  %i.c = tail call noundef ptr @_Z12luaM_newgco_P9lua_Statemh(ptr noundef %0, i64 noundef 72, i8 noundef zeroext %i.b) ; 12 uses
+  %i.c = tail call noundef ptr @_Z12luaM_newgco_P9lua_Statemh(ptr noundef %0, i64 noundef 72, i8 noundef zeroext %i.b) ; 11 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !21
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 32
@@ -262,10 +262,12 @@ bb.a:
   %i.u = getelementptr inbounds nuw i8, ptr %i.c, i64 40
   store ptr %3, ptr %i.u, align 8, !tbaa !64
   %i.v = getelementptr inbounds nuw i8, ptr %i.c, i64 64
-  store i32 %4, ptr %i.v, align 8, !tbaa !59
   %6 = add i32 %5, %4
-  %7 = getelementptr inbounds nuw i8, ptr %i.c, i64 68
-  store i32 %6, ptr %7, align 4, !tbaa !69
+  %7 = zext i32 %4 to i64
+  %8 = zext i32 %6 to i64
+  %9 = shl nuw i64 %8, 32
+  %10 = or disjoint i64 %9, %7
+  store i64 %10, ptr %i.v, align 8
   %i.w = tail call noundef ptr @_Z8luaH_newP9lua_Stateii(ptr noundef nonnull %0, i32 noundef 0, i32 noundef 1)
   %i.x = getelementptr inbounds nuw i8, ptr %i.c, i64 48 ; 3 uses
   store ptr %i.w, ptr %i.x, align 8, !tbaa !42
@@ -301,7 +303,7 @@ _Z22luaR_addclassmetatableP9lua_StateP9LuauClass.exit: ; preds = %._crit_edge, %
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 4
   store i8 1, ptr %i.ao, align 4, !tbaa !55
   %i.ap = getelementptr inbounds nuw i8, ptr %i.c, i64 56
-  store ptr null, ptr %i.ap, align 8, !tbaa !70
+  store ptr null, ptr %i.ap, align 8, !tbaa !69
   ret ptr %i.c
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
@@ -460,7 +462,7 @@ bb.d:                                             ; preds = %bb.c
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.ak, i8 0, i64 48, i1 false)
   %i.al = load i32, ptr %i.a, align 8, !tbaa !59  ; 3 uses
   %i.am = getelementptr inbounds nuw i8, ptr %2, i64 68 ; 4 uses
-  %i.an = load i32, ptr %i.am, align 4, !tbaa !69
+  %i.an = load i32, ptr %i.am, align 4, !tbaa !70
   %i.ao = icmp ult i32 %i.al, %i.an
   br i1 %i.ao, label %.lr.ph177, label %._crit_edge
 
@@ -480,7 +482,7 @@ bb.d:                                             ; preds = %bb.c
   %i.at = phi i32 [ %i.al, %.loopexit172 ], [ %.pre, %._crit_edge.loopexit ]
   %.0152.lcssa = phi i32 [ 0, %.loopexit172 ], [ %spec.select, %._crit_edge.loopexit ]
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 68 ; 3 uses
-  %i.av = load i32, ptr %i.au, align 4, !tbaa !69
+  %i.av = load i32, ptr %i.au, align 4, !tbaa !70
   %i.aw = add i32 %i.av, %.0152.lcssa
   %i.ax = add i32 %i.aw, %i.at                    ; 4 uses
   %i.ay = zext i32 %i.ax to i64
@@ -489,7 +491,7 @@ bb.d:                                             ; preds = %bb.c
   %i.bb = getelementptr inbounds nuw i8, ptr %i.aa, i64 40 ; 5 uses
   store ptr %i.ba, ptr %i.bb, align 8, !tbaa !64
   %i.bc = getelementptr inbounds nuw i8, ptr %i.aa, i64 68
-  store i32 %i.ax, ptr %i.bc, align 4, !tbaa !69
+  store i32 %i.ax, ptr %i.bc, align 4, !tbaa !70
   %i.bd = tail call noundef ptr @_Z8luaH_newP9lua_Stateii(ptr noundef nonnull %0, i32 noundef 0, i32 noundef %i.ax) ; 3 uses
   %i.be = getelementptr inbounds nuw i8, ptr %i.aa, i64 32 ; 5 uses
   store ptr %i.bd, ptr %i.be, align 8, !tbaa !68
@@ -512,7 +514,7 @@ bb.e:                                             ; preds = %.lr.ph177, %bb.e
   %i.bp = zext i1 %i.bo to i32
   %spec.select = add i32 %.0152176, %i.bp         ; 2 uses
   %indvars.iv.next207 = add nuw nsw i64 %indvars.iv206, 1 ; 2 uses
-  %i.bq = load i32, ptr %i.am, align 4, !tbaa !69
+  %i.bq = load i32, ptr %i.am, align 4, !tbaa !70
   %i.br = zext i32 %i.bq to i64
   %i.bs = icmp samesign ult i64 %indvars.iv.next207, %i.br
   br i1 %i.bs, label %bb.e, label %._crit_edge.loopexit, !llvm.loop !82
@@ -607,7 +609,7 @@ bb.j:                                             ; preds = %.lr.ph183, %bb.j
   %i.di = getelementptr inbounds nuw i8, ptr %i.aa, i64 64
   store i32 %.3, ptr %i.di, align 8, !tbaa !59
   %i.dj = load i32, ptr %i.a, align 8, !tbaa !59  ; 2 uses
-  %i.dk = load i32, ptr %i.am, align 4, !tbaa !69
+  %i.dk = load i32, ptr %i.am, align 4, !tbaa !70
   %i.dl = icmp ult i32 %i.dj, %i.dk
   br i1 %i.dl, label %.lr.ph189, label %._crit_edge190
 
@@ -622,7 +624,7 @@ bb.j:                                             ; preds = %.lr.ph183, %bb.j
   %.4.lcssa = phi i32 [ %.3, %.loopexit ], [ %.5, %bb.p ]
   %.0150.lcssa = phi i32 [ 0, %.loopexit ], [ %.1, %bb.p ]
   %i.dq = load i32, ptr %i.cm, align 8, !tbaa !59 ; 2 uses
-  %i.dr = load i32, ptr %i.au, align 4, !tbaa !69
+  %i.dr = load i32, ptr %i.au, align 4, !tbaa !70
   %i.ds = icmp ult i32 %i.dq, %i.dr
   br i1 %i.ds, label %.lr.ph197, label %._crit_edge198
 
@@ -701,7 +703,7 @@ bb.p:                                             ; preds = %_Z25luaR_registerst
   %.5 = phi i32 [ %i.ff, %_Z25luaR_registerstaticmemberP9lua_StateP9LuauClassP7TStringPK10lua_TValuejj.exit ], [ %.4185, %bb.k ] ; 2 uses
   %.1 = phi i32 [ %i.fg, %_Z25luaR_registerstaticmemberP9lua_StateP9LuauClassP7TStringPK10lua_TValuejj.exit ], [ %.0150186, %bb.k ] ; 2 uses
   %indvars.iv.next216 = add nuw nsw i64 %indvars.iv215, 1 ; 2 uses
-  %i.fh = load i32, ptr %i.am, align 4, !tbaa !69
+  %i.fh = load i32, ptr %i.am, align 4, !tbaa !70
   %i.fi = zext i32 %i.fh to i64
   %i.fj = icmp samesign ult i64 %indvars.iv.next216, %i.fi
   br i1 %i.fj, label %bb.k, label %._crit_edge190, !llvm.loop !85
@@ -742,7 +744,7 @@ _Z22luaR_addclassmetatableP9lua_StateP9LuauClass.exit: ; preds = %._crit_edge198
   %i.gc = getelementptr inbounds nuw i8, ptr %i.gb, i64 4
   store i8 1, ptr %i.gc, align 4, !tbaa !55
   %i.gd = getelementptr inbounds nuw i8, ptr %2, i64 56
-  %i.ge = load ptr, ptr %i.gd, align 8, !tbaa !70 ; 2 uses
+  %i.ge = load ptr, ptr %i.gd, align 8, !tbaa !69 ; 2 uses
   %.not163 = icmp eq ptr %i.ge, null
   br i1 %.not163, label %bb.y, label %bb.v
 
@@ -802,7 +804,7 @@ _Z25luaR_registerstaticmemberP9lua_StateP9LuauClassP7TStringPK10lua_TValuejj.exi
   %i.hj = add i32 %.6193, 1
   %i.hk = add i32 %.2194, 1
   %indvars.iv.next219 = add nuw nsw i64 %indvars.iv218, 1 ; 2 uses
-  %i.hl = load i32, ptr %i.au, align 4, !tbaa !69
+  %i.hl = load i32, ptr %i.au, align 4, !tbaa !70
   %i.hm = zext i32 %i.hl to i64
   %i.hn = icmp samesign ult i64 %indvars.iv.next219, %i.hm
   br i1 %i.hn, label %bb.r, label %._crit_edge198, !llvm.loop !86
@@ -810,7 +812,7 @@ _Z25luaR_registerstaticmemberP9lua_StateP9LuauClassP7TStringPK10lua_TValuejj.exi
 bb.v:                                             ; preds = %_Z22luaR_addclassmetatableP9lua_StateP9LuauClass.exit
   %i.ho = tail call noundef ptr @_Z10luaH_cloneP9lua_StateP8LuaTable(ptr noundef nonnull %0, ptr noundef nonnull %i.ge) ; 3 uses
   %i.hp = getelementptr inbounds nuw i8, ptr %i.aa, i64 56
-  store ptr %i.ho, ptr %i.hp, align 8, !tbaa !70
+  store ptr %i.ho, ptr %i.hp, align 8, !tbaa !69
   %i.hq = load i8, ptr %i.ag, align 1, !tbaa !44
   %i.hr = and i8 %i.hq, 4
   %.not164 = icmp eq i8 %i.hr, 0
@@ -829,7 +831,7 @@ bb.x:                                             ; preds = %bb.w
 
 bb.y:                                             ; preds = %_Z22luaR_addclassmetatableP9lua_StateP9LuauClass.exit
   %i.hv = getelementptr inbounds nuw i8, ptr %i.aa, i64 56
-  store ptr null, ptr %i.hv, align 8, !tbaa !70
+  store ptr null, ptr %i.hv, align 8, !tbaa !69
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.v, %bb.w, %bb.x, %bb.y
@@ -909,13 +911,13 @@ bb.f:                                             ; preds = %.lr.ph, %bb.f
 
 ._crit_edge.thread:                               ; preds = %bb.e, %._crit_edge
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 4 uses
-  %i.af = load ptr, ptr %i.ae, align 8, !tbaa !70 ; 2 uses
+  %i.af = load ptr, ptr %i.ae, align 8, !tbaa !69 ; 2 uses
   %.not46 = icmp eq ptr %i.af, null
   br i1 %.not46, label %bb.g, label %bb.j
 
 bb.g:                                             ; preds = %._crit_edge.thread
   %i.ag = tail call noundef ptr @_Z8luaH_newP9lua_Stateii(ptr noundef %0, i32 noundef 0, i32 noundef 1) ; 5 uses
-  store ptr %i.ag, ptr %i.ae, align 8, !tbaa !70
+  store ptr %i.ag, ptr %i.ae, align 8, !tbaa !69
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 1
   %i.ai = load i8, ptr %i.ah, align 1, !tbaa !44
   %i.aj = and i8 %i.ai, 4
@@ -931,7 +933,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   tail call void @_Z13luaC_barrierfP9lua_StateP8GCObjectS2_(ptr noundef %0, ptr noundef nonnull %1, ptr noundef nonnull %i.ag)
-  %.pre = load ptr, ptr %i.ae, align 8, !tbaa !70
+  %.pre = load ptr, ptr %i.ae, align 8, !tbaa !69
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.g, %bb.h, %bb.i, %._crit_edge.thread
@@ -943,7 +945,7 @@ bb.j:                                             ; preds = %bb.g, %bb.h, %bb.i,
   br i1 %i.aq, label %bb.k, label %bb.n
 
 bb.k:                                             ; preds = %bb.j
-  %i.ar = load ptr, ptr %i.ae, align 8, !tbaa !70 ; 2 uses
+  %i.ar = load ptr, ptr %i.ae, align 8, !tbaa !69 ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 1
   %i.at = load i8, ptr %i.as, align 1, !tbaa !44
   %i.au = and i8 %i.at, 4
@@ -987,7 +989,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 68
-  %i.d = load i32, ptr %i.c, align 4, !tbaa !69
+  %i.d = load i32, ptr %i.c, align 4, !tbaa !70
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.f = load i32, ptr %i.e, align 8, !tbaa !59
   %i.g = sub i32 %i.d, %i.f
@@ -1006,7 +1008,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 68
-  %i.o = load i32, ptr %i.n, align 4, !tbaa !69
+  %i.o = load i32, ptr %i.n, align 4, !tbaa !70
   %i.p = zext i32 %i.o to i64
   %i.q = shl nuw nsw i64 %i.p, 3
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 2
@@ -1130,8 +1132,8 @@ attributes #7 = { noreturn }
 !66 = !{i64 0, i64 8, !44, i64 8, i64 4, !44, i64 12, i64 4, !65}
 !67 = !{!37, !11, i64 24}
 !68 = !{!37, !15, i64 32}
-!69 = !{!37, !6, i64 68}
-!70 = !{!37, !15, i64 56}
+!69 = !{!37, !15, i64 56}
+!70 = !{!37, !6, i64 68}
 !71 = distinct !{!71, !62}
 !72 = distinct !{!72, !63}
 !73 = distinct !{!73, !63}

@@ -158,7 +158,7 @@ bb.f:                                             ; preds = %.loopexit
   %.sroa.10.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 24
   %.sroa.838.0..sroa_idx39.i.i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 24
   %.sroa.636.0..sroa_idx37.i.i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 8
-  %.sroa.414.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 2 uses
+  %.sroa.414.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 3 uses
   %.sroa.515.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.j, i64 24
   %.sroa.3.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.i, i64 24
@@ -171,7 +171,7 @@ bb.f:                                             ; preds = %.loopexit
   br i1 %i.az, label %.thread.i, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %bb.f
-  %.sroa.7.i.i.sroa.6.0..sroa.414.0..sroa_idx.i.i.sroa_idx25 = getelementptr inbounds nuw i8, ptr %i.j, i64 9 ; 5 uses
+  %.sroa.7.i.i.sroa.6.0..sroa.414.0..sroa_idx.i.i.sroa_idx25 = getelementptr inbounds nuw i8, ptr %i.j, i64 9 ; 4 uses
   %.sroa.7.i.i.sroa.7.0..sroa.414.0..sroa_idx.i.i.sroa_idx26 = getelementptr inbounds nuw i8, ptr %i.j, i64 16 ; 5 uses
   %.sroa.7.i.i.sroa.6.0..sroa.3.0..sroa_idx.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.i, i64 9
   %.sroa.7.i.i.sroa.7.0..sroa.3.0..sroa_idx.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.i, i64 16
@@ -258,14 +258,20 @@ bb.m:                                             ; preds = %_RINvMs5_NtNtCsi68u
   store ptr %i.bj, ptr %i.l, align 8, !alias.scope !80, !noalias !63, !captures !68
   store i64 %i.bk, ptr %i.al, align 8, !alias.scope !80, !noalias !63
   %switch.i.i.i.i = icmp ult i8 %i.bl, 2
-  br i1 %switch.i.i.i.i, label %_RINvMs5_NtNtCsi68uqYEhoRA_5gimli4read6abbrevNtB6_12Abbreviation18parse_has_childrenINtNtB8_12endian_slice11EndianSliceNtNtBa_9endianity13RunTimeEndianEECsjQ7aQP35kzr_11simple_line.exit.i.i.i, label %.loopexit36.i.i
+  br i1 %switch.i.i.i.i, label %_RINvMs5_NtNtCsi68uqYEhoRA_5gimli4read6abbrevNtB6_12Abbreviation18parse_has_childrenINtNtB8_12endian_slice11EndianSliceNtNtBa_9endianity13RunTimeEndianEECsjQ7aQP35kzr_11simple_line.exit.i.i.i, label %.loopexit36.loopexit.i.i
 
-.loopexit36.i.i:                                  ; preds = %bb.m, %bb.l
-  %.sroa.13.0.ph.i.i.i = phi i64 [ %i.bi, %bb.l ], [ undef, %bb.m ]
-  %.sroa.880.0.ph.i.i.i = phi i8 [ undef, %bb.l ], [ %i.bl, %bb.m ]
-  %.sroa.078.0.ph.i.i.i = phi i8 [ 17, %bb.l ], [ 11, %bb.m ]
-  store i8 %.sroa.880.0.ph.i.i.i, ptr %.sroa.7.i.i.sroa.6.0..sroa.414.0..sroa_idx.i.i.sroa_idx25, align 1, !alias.scope !71, !noalias !70
+.loopexit36.loopexit.i.i:                         ; preds = %bb.m
+  %4 = zext i8 %i.bl to i16
+  %5 = shl nuw i16 %4, 8
+  %6 = or disjoint i16 %5, 11
+  br label %.loopexit36.i.i
+
+.loopexit36.i.i:                                  ; preds = %.loopexit36.loopexit.i.i, %bb.l
+  %.sroa.13.0.ph.i.i.i = phi i64 [ %i.bi, %bb.l ], [ undef, %.loopexit36.loopexit.i.i ]
+  %7 = phi i16 [ 17, %bb.l ], [ %6, %.loopexit36.loopexit.i.i ] ; 2 uses
+  store i16 %7, ptr %.sroa.414.0..sroa_idx.i.i, align 8, !alias.scope !71, !noalias !70
   store i64 %.sroa.13.0.ph.i.i.i, ptr %.sroa.7.i.i.sroa.7.0..sroa.414.0..sroa_idx.i.i.sroa_idx26, align 8, !alias.scope !71, !noalias !70
+  %8 = trunc i16 %7 to i8
   br label %.thread.i.i
 
 _RINvMs5_NtNtCsi68uqYEhoRA_5gimli4read6abbrevNtB6_12Abbreviation18parse_has_childrenINtNtB8_12endian_slice11EndianSliceNtNtBa_9endianity13RunTimeEndianEECsjQ7aQP35kzr_11simple_line.exit.i.i.i: ; preds = %bb.m
@@ -481,7 +487,7 @@ bb.ah:                                            ; preds = %bb.ak, %bb.ag, %bb.
           to label %common.resume unwind label %bb.an, !noalias !93
 
 .thread.i.i:                                      ; preds = %.loopexit38.i.i, %.loopexit36.i.i, %.loopexit.i.i, %bb.g
-  %.sroa.7.i.i.sroa.0.0.copyload195 = phi i8 [ %i.cg, %.loopexit38.i.i ], [ %.sroa.078.0.ph.i.i.i, %.loopexit36.i.i ], [ %.sroa.0.0.ph.i.i.i, %.loopexit.i.i ], [ %i.ba, %bb.g ]
+  %.sroa.7.i.i.sroa.0.0.copyload195 = phi i8 [ %i.cg, %.loopexit38.i.i ], [ %8, %.loopexit36.i.i ], [ %.sroa.0.0.ph.i.i.i, %.loopexit.i.i ], [ %i.ba, %bb.g ]
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.14.i.i.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !70
   br label %.loopexit39.i.i

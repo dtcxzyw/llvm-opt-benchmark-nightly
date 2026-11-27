@@ -204,12 +204,14 @@ bb.p:                                             ; preds = %bb.k
 
 bb.q:                                             ; preds = %_ZN7nanogui6Widget10set_layoutEPNS_6LayoutE.exit, %bb.g, %._crit_edge
   %i.ca = phi ptr [ %.pre, %_ZN7nanogui6Widget10set_layoutEPNS_6LayoutE.exit ], [ %i.az, %bb.g ], [ %i.az, %._crit_edge ]
-  %i.cb = tail call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #22 ; 5 uses
+  %i.cb = tail call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #22 ; 6 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %i.cb, i64 8
   store i64 1, ptr %i.cc, align 8, !tbaa !97
   store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN7nanogui11GroupLayoutE, i64 16), ptr %i.cb, align 8, !tbaa !12
-  %i.cd = getelementptr inbounds nuw i8, ptr %i.cb, i64 16
-  store <4 x i32> <i32 10, i32 6, i32 14, i32 20>, ptr %i.cd, align 8, !tbaa !82
+  %5 = getelementptr inbounds nuw i8, ptr %i.cb, i64 16
+  store i64 25769803786, ptr %5, align 8
+  %i.cd = getelementptr inbounds nuw i8, ptr %i.cb, i64 24
+  store i64 85899345934, ptr %i.cd, align 8
   %i.ce = getelementptr inbounds nuw i8, ptr %i.ca, i64 32 ; 2 uses
   tail call void @_ZNK7nanogui6Object7inc_refEv(ptr noundef nonnull align 8 dereferenceable(16) %i.cb) #21
   %i.cf = load ptr, ptr %i.ce, align 8, !tbaa !96 ; 2 uses

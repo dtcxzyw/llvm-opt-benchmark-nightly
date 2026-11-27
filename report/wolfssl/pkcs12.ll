@@ -204,7 +204,7 @@ bb.aa:                                            ; preds = %PKCS12_create_safe.
 
 bb.ab:                                            ; preds = %bb.aa
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l) #9
-  %i.hz = call ptr @wolfSSL_Malloc(i64 noundef 32) #9 ; 9 uses
+  %i.hz = call ptr @wolfSSL_Malloc(i64 noundef 32) #9 ; 8 uses
   %i.ia = icmp eq ptr %i.hz, null
   br i1 %i.ia, label %.critedge, label %bb.ac
 
@@ -214,10 +214,11 @@ bb.ac:                                            ; preds = %bb.ab
   store ptr %i.hz, ptr %i.ib, align 8, !tbaa !26
   %i.ic = getelementptr inbounds nuw i8, ptr %i.hz, i64 16
   store i32 2092137211, ptr %i.ic, align 8, !tbaa !41
-  %i.id = getelementptr inbounds nuw i8, ptr %i.hz, i64 28
-  store i32 %11, ptr %i.id, align 4, !tbaa !43
-  %15 = getelementptr inbounds nuw i8, ptr %i.hz, i64 24 ; 2 uses
-  store i32 8, ptr %15, align 8, !tbaa !42
+  %i.id = getelementptr inbounds nuw i8, ptr %i.hz, i64 24 ; 2 uses
+  %15 = zext nneg i32 %11 to i64
+  %16 = shl nuw nsw i64 %15, 32
+  %17 = or disjoint i64 %16, 8
+  store i64 %17, ptr %i.id, align 8
   %i.ie = call ptr @wolfSSL_Malloc(i64 noundef 8) #9 ; 3 uses
   %i.if = getelementptr inbounds nuw i8, ptr %i.hz, i64 8
   store ptr %i.ie, ptr %i.if, align 8, !tbaa !29
@@ -225,7 +226,7 @@ bb.ac:                                            ; preds = %bb.ab
   br i1 %i.ig, label %.critedge, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
-  %i.ih = load i32, ptr %15, align 8, !tbaa !42
+  %i.ih = load i32, ptr %i.id, align 8, !tbaa !42
   %i.ii = call i32 @wc_RNG_GenerateBlock(ptr noundef nonnull %14, ptr noundef nonnull %i.ie, i32 noundef %i.ih) #9
   %.not83 = icmp eq i32 %i.ii, 0
   br i1 %.not83, label %bb.ae, label %.critedge

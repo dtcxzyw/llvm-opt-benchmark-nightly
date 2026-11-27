@@ -204,7 +204,7 @@ _RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VecNtNtNtNtCsdsTQD3x2eOp_3exr11compressi
   br i1 %.not, label %bb.k, label %._crit_edge.thread
 
 bb.d:                                             ; preds = %.lr.ph, %_RNvXs_NtNtNtCsdsTQD3x2eOp_3exr11compression3piz7huffmanNtB4_4CodeNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit
-  %.sroa.0.029 = phi ptr [ %i.l, %.lr.ph ], [ %i.aj, %_RNvXs_NtNtNtCsdsTQD3x2eOp_3exr11compression3piz7huffmanNtB4_4CodeNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit ] ; 5 uses
+  %.sroa.0.029 = phi ptr [ %i.l, %.lr.ph ], [ %i.aj, %_RNvXs_NtNtNtCsdsTQD3x2eOp_3exr11compression3piz7huffmanNtB4_4CodeNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit ] ; 4 uses
   %.sroa.03.028 = phi i64 [ 1, %.lr.ph ], [ %i.ai, %_RNvXs_NtNtNtCsdsTQD3x2eOp_3exr11compression3piz7huffmanNtB4_4CodeNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit ]
   %storemerge27 = phi i64 [ %i.h, %.lr.ph ], [ %i.ak, %_RNvXs_NtNtNtCsdsTQD3x2eOp_3exr11compression3piz7huffmanNtB4_4CodeNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.9)
@@ -222,6 +222,8 @@ default.unreachable:                              ; preds = %bb.d
 bb.e:                                             ; preds = %bb.d
   %i.v = load i32, ptr %i.r, align 4, !alias.scope !156, !noundef !4
   %i.w = load i8, ptr %i.n, align 8, !alias.scope !156, !noundef !4
+  %3 = zext i32 %i.v to i64
+  %4 = shl nuw i64 %3, 32
   br label %_RNvXs_NtNtNtCsdsTQD3x2eOp_3exr11compression3piz7huffmanNtB4_4CodeNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit
 
 bb.f:                                             ; preds = %bb.d
@@ -296,14 +298,14 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtNtCsdsTQD3x2eOp_3exr11compression3
   br label %bb.n
 
 _RNvXs_NtNtNtCsdsTQD3x2eOp_3exr11compression3piz7huffmanNtB4_4CodeNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit: ; preds = %_RNvXsw_Cs8zlGlznUR0G_8smallvecINtB5_8SmallVecAmj2_ENtNtCsj6eKBz9Db1c_4core5clone5Clone5cloneCsdsTQD3x2eOp_3exr.exit.i, %bb.e, %bb.d
-  %.sroa.722.0 = phi i8 [ %.sroa.722.8.copyload, %_RNvXsw_Cs8zlGlznUR0G_8smallvecINtB5_8SmallVecAmj2_ENtNtCsj6eKBz9Db1c_4core5clone5Clone5cloneCsdsTQD3x2eOp_3exr.exit.i ], [ %i.w, %bb.e ], [ undef, %bb.d ]
-  %.sroa.6.0 = phi i32 [ undef, %_RNvXsw_Cs8zlGlznUR0G_8smallvecINtB5_8SmallVecAmj2_ENtNtCsj6eKBz9Db1c_4core5clone5Clone5cloneCsdsTQD3x2eOp_3exr.exit.i ], [ %i.v, %bb.e ], [ undef, %bb.d ]
+  %.sroa.021.sroa.6.0 = phi i64 [ 0, %_RNvXsw_Cs8zlGlznUR0G_8smallvecINtB5_8SmallVecAmj2_ENtNtCsj6eKBz9Db1c_4core5clone5Clone5cloneCsdsTQD3x2eOp_3exr.exit.i ], [ %4, %bb.e ], [ 0, %bb.d ]
+  %.sroa.6.0 = phi i8 [ %.sroa.722.8.copyload, %_RNvXsw_Cs8zlGlznUR0G_8smallvecINtB5_8SmallVecAmj2_ENtNtCsj6eKBz9Db1c_4core5clone5Clone5cloneCsdsTQD3x2eOp_3exr.exit.i ], [ %i.w, %bb.e ], [ undef, %bb.d ]
   %i.ai = add nuw i64 %.sroa.03.028, 1            ; 2 uses
-  store i32 %i.u, ptr %.sroa.0.029, align 8
-  %.sroa.6.0..sroa.0.0.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0.029, i64 4
-  store i32 %.sroa.6.0, ptr %.sroa.6.0..sroa.0.0.sroa_idx, align 4
+  %.sroa.021.sroa.0.0.insert.ext = zext nneg i32 %i.u to i64
+  %.sroa.021.sroa.0.0.insert.insert = or disjoint i64 %.sroa.021.sroa.6.0, %.sroa.021.sroa.0.0.insert.ext
+  store i64 %.sroa.021.sroa.0.0.insert.insert, ptr %.sroa.0.029, align 8
   %.sroa.722.0..sroa.0.0.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0.029, i64 8
-  store i8 %.sroa.722.0, ptr %.sroa.722.0..sroa.0.0.sroa_idx, align 8
+  store i8 %.sroa.6.0, ptr %.sroa.722.0..sroa.0.0.sroa_idx, align 8
   %.sroa.9.0..sroa.0.0.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0.029, i64 9
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(23) %.sroa.9.0..sroa.0.0.sroa_idx, ptr noundef nonnull align 1 dereferenceable(23) %.sroa.9, i64 23, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.9)

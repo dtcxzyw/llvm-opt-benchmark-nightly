@@ -204,7 +204,7 @@ bb.a:
   %i.a = alloca [1 x i8], align 1                 ; 3 uses
   %i.b = alloca [1 x i8], align 1                 ; 3 uses
   %i.c = alloca [1 x i8], align 1                 ; 3 uses
-  %i.d = alloca [32 x i8], align 8                ; 6 uses
+  %i.d = alloca [32 x i8], align 8                ; 7 uses
   %i.e = alloca [8 x i8], align 8                 ; 4 uses
   %i.f = alloca [8 x i8], align 8                 ; 4 uses
   %i.g = alloca [8 x i8], align 8                 ; 4 uses
@@ -239,10 +239,16 @@ bb.b:                                             ; preds = %.lr.ph, %_RINvNtCsk
   br i1 %.not24, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge
+  %2 = load i32, ptr %i.d, align 8, !noundef !5
+  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 4
+  %4 = load i32, ptr %3, align 4, !noundef !5
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.n, i64 24, i1 false)
   %.sroa.421.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %2 = load <2 x i32>, ptr %i.d, align 8
-  store <2 x i32> %2, ptr %.sroa.421.0..sroa_idx, align 8
+  %5 = zext i32 %2 to i64
+  %6 = zext i32 %4 to i64
+  %7 = shl nuw i64 %6, 32
+  %8 = or disjoint i64 %7, %5
+  store i64 %8, ptr %.sroa.421.0..sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   br label %bb.e
 
@@ -645,7 +651,7 @@ bb.a:
   %i.k = alloca [488 x i8], align 8               ; 12 uses
   %i.l = alloca [24 x i8], align 8                ; 13 uses
   %i.m = alloca [112 x i8], align 8               ; 16 uses
-  %i.n = alloca [488 x i8], align 8               ; 16 uses
+  %i.n = alloca [488 x i8], align 8               ; 15 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n)
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 40
   %.val = load ptr, ptr %i.o, align 8, !nonnull !5, !noundef !5 ; 2 uses
@@ -669,9 +675,7 @@ bb.a:
   %.sroa.7.sroa.5.0..sroa.7.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.n, i64 448
   %i.s = getelementptr inbounds nuw i8, ptr %i.n, i64 480
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.7.sroa.5.0..sroa.7.0..sroa_idx.sroa_idx.i, i8 0, i64 16, i1 false), !alias.scope !148
-  store i8 1, ptr %i.s, align 8, !alias.scope !148
-  %2 = getelementptr inbounds nuw i8, ptr %i.n, i64 481
-  store i8 1, ptr %2, align 1, !alias.scope !148
+  store i16 257, ptr %i.s, align 8, !alias.scope !148
   %i.t = getelementptr inbounds nuw i8, ptr %i.n, i64 482
   store i8 1, ptr %i.t, align 2, !alias.scope !148
   tail call void @llvm.experimental.noalias.scope.decl(metadata !149)

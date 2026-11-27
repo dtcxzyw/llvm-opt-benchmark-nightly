@@ -205,9 +205,7 @@ bb.e:                                             ; preds = %bb.b
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.ay, i8 0, i64 32, i1 false), !dbg !15549
   store i64 %i.aw, ptr %i.az, align 8, !dbg !15549
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 80, !dbg !15549
-  store i8 1, ptr %i.ba, align 8, !dbg !15549
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 81, !dbg !15549
-  store i8 0, ptr %4, align 1, !dbg !15549
+  store i16 1, ptr %i.ba, align 8, !dbg !15549
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !15549
   store i64 %2, ptr %i.bb, align 8, !dbg !15549
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 24, !dbg !15549

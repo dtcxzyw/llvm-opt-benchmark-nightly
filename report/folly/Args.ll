@@ -202,7 +202,7 @@ declare void @_ZNSt10filesystem9canonicalERKNS_7__cxx114pathERSt10error_code(ptr
 define internal fastcc void @_ZN5folly12_GLOBAL__N_121cli_process_file_argsERNS_29cli_apply_args_files_receiverERKNSt10filesystem7__cxx114pathERKSt6vectorINS0_14cli_parsed_argESaIS9_EERSt3setIS5_St4lessIS5_ESaIS5_EEmm(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(40) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(48) %3, i64 noundef %4, i64 noundef %5) unnamed_addr #0 {
 bb.a:
   %6 = alloca %"struct.folly::cli_apply_args_files_receiver::location", align 8 ; 7 uses
-  %7 = alloca %"struct.folly::(anonymous namespace)::cli_arg_item", align 8 ; 7 uses
+  %7 = alloca %"struct.folly::(anonymous namespace)::cli_arg_item", align 8 ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %.val24 = load ptr, ptr %2, align 8, !tbaa !996 ; 2 uses
   %.val2225 = load ptr, ptr %i.a, align 8, !tbaa !997
@@ -210,12 +210,11 @@ bb.a:
   br i1 %.not29, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %8 = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %i.b = getelementptr inbounds nuw i8, ptr %6, i64 24
-  %i.c = getelementptr inbounds nuw i8, ptr %6, i64 40
-  %i.d = getelementptr inbounds nuw i8, ptr %7, i64 8
-  %i.e = getelementptr inbounds nuw i8, ptr %7, i64 16
-  %i.f = getelementptr inbounds nuw i8, ptr %7, i64 17
+  %i.b = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %i.c = getelementptr inbounds nuw i8, ptr %6, i64 24
+  %i.d = getelementptr inbounds nuw i8, ptr %6, i64 40
+  %i.e = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %i.f = getelementptr inbounds nuw i8, ptr %7, i64 16
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.c
@@ -237,25 +236,28 @@ bb.c:                                             ; preds = %.lr.ph, %bb.b
   store i64 %.02126, ptr %6, align 8, !tbaa !57
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 32
   %i.o = load <2 x i64>, ptr %i.n, align 8, !tbaa !58
-  store <2 x i64> %i.o, ptr %8, align 8, !tbaa !58
+  store <2 x i64> %i.o, ptr %i.b, align 8, !tbaa !58
   %i.p = getelementptr inbounds nuw i8, ptr %i.m, i64 48
   %i.q = load <2 x i64>, ptr %i.p, align 8, !tbaa !58
-  store <2 x i64> %i.q, ptr %i.b, align 8, !tbaa !58
+  store <2 x i64> %i.q, ptr %i.c, align 8, !tbaa !58
   %i.r = getelementptr inbounds nuw i8, ptr %i.m, i64 64
   %i.s = load <2 x i64>, ptr %i.r, align 8, !tbaa !58
-  store <2 x i64> %i.s, ptr %i.c, align 8, !tbaa !58
+  store <2 x i64> %i.s, ptr %i.d, align 8, !tbaa !58
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #27
   %i.t = load ptr, ptr %i.m, align 8, !tbaa !41
   %i.u = getelementptr inbounds nuw i8, ptr %i.m, i64 8
   %i.v = load i64, ptr %i.u, align 8, !tbaa !46
   store i64 %i.v, ptr %7, align 8
-  store ptr %i.t, ptr %i.d, align 8
-  %i.w = getelementptr inbounds nuw i8, ptr %i.m, i64 80
-  %i.x = load i8, ptr %i.w, align 8, !tbaa !992, !range !67, !noundef !68
-  store i8 %i.x, ptr %i.e, align 8, !tbaa !62
-  %9 = getelementptr inbounds nuw i8, ptr %i.m, i64 81
-  %10 = load i8, ptr %9, align 1, !tbaa !993, !range !67, !noundef !68
-  store i8 %10, ptr %i.f, align 1, !tbaa !63
+  store ptr %i.t, ptr %i.e, align 8
+  %8 = getelementptr inbounds nuw i8, ptr %i.m, i64 80
+  %9 = load i8, ptr %8, align 8, !tbaa !992, !range !67, !noundef !68
+  %i.w = getelementptr inbounds nuw i8, ptr %i.m, i64 81
+  %i.x = load i8, ptr %i.w, align 1, !tbaa !993, !range !67, !noundef !68
+  %10 = zext nneg i8 %9 to i16
+  %11 = zext nneg i8 %i.x to i16
+  %12 = shl nuw nsw i16 %11, 8
+  %13 = or disjoint i16 %12, %10
+  store i16 %13, ptr %i.f, align 8
   %i.y = call fastcc noundef i32 @_ZN5folly12_GLOBAL__N_122cli_process_single_argERNS_29cli_apply_args_files_receiverERKNSt10filesystem7__cxx114pathERKNS0_12cli_arg_itemERKNS1_8locationERSt3setIS5_St4lessIS5_ESaIS5_EEmm(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(40) %1, ptr noundef nonnull align 8 dereferenceable(18) %7, ptr noundef nonnull align 8 dereferenceable(56) %6, ptr noundef nonnull align 8 dereferenceable(48) %3, i64 noundef %4, i64 noundef %5)
   %.not = icmp eq i32 %i.y, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #27

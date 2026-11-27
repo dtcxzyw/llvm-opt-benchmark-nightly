@@ -204,13 +204,14 @@ bb.a:
   store i8 -1, ptr %i.m, align 1, !tbaa !60
   %i.n = getelementptr inbounds nuw i8, ptr %i.c, i64 24 ; 2 uses
   store ptr null, ptr %i.n, align 8, !tbaa !25
-  %i.o = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.c, i64 12
+  store i64 0, ptr %i.o, align 8
   %i.q = getelementptr inbounds nuw i8, ptr %i.c, i64 6
   %i.r = getelementptr inbounds nuw i8, ptr %i.c, i64 4
   %i.s = getelementptr inbounds nuw i8, ptr %i.c, i64 7
+  store i32 0, ptr %i.r, align 4
   %3 = getelementptr inbounds nuw i8, ptr %i.c, i64 32 ; 7 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.r, i8 0, i64 12, i1 false)
   store ptr @luaH_dummynode, ptr %3, align 8, !tbaa !23
   %i.t = icmp sgt i32 %1, 0
   br i1 %i.t, label %bb.b, label %bb.e
@@ -613,7 +614,7 @@ bb.g:                                             ; preds = %_Z11luaH_getstrP8Lu
 ; Function Attrs: mustprogress uwtable
 define hidden noundef ptr @_Z9luaH_setpP9lua_StateP8LuaTablePvi(ptr noundef %0, ptr noundef %1, ptr noundef %2, i32 noundef %3) local_unnamed_addr #0 {
 bb.a:
-  %4 = alloca %struct.lua_TValue, align 8         ; 6 uses
+  %4 = alloca %struct.lua_TValue, align 8         ; 5 uses
   %i.a = getelementptr i8, ptr %1, i64 6
   %.val.i = load i8, ptr %i.a, align 2, !tbaa !26
   %i.b = getelementptr i8, ptr %1, i64 32
@@ -674,9 +675,9 @@ _Z9luaH_getpP8LuaTablePvi.exit.thread:            ; preds = %bb.e, %_Z9luaH_getp
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #11
   store ptr %2, ptr %4, align 8, !tbaa !22
   %i.af = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store i32 %3, ptr %i.af, align 8, !tbaa !33
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 12
-  store i32 2, ptr %5, align 4, !tbaa !14
+  %5 = zext i32 %3 to i64
+  %6 = or disjoint i64 %5, 8589934592
+  store i64 %6, ptr %i.af, align 8
   %i.ag = call fastcc noundef ptr @_ZL6newkeyP9lua_StateP8LuaTablePK10lua_TValue(ptr noundef %0, ptr noundef %1, ptr noundef nonnull %4)
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #11
   br label %bb.g
@@ -889,15 +890,15 @@ bb.a:
   store i8 %i.p, ptr %i.q, align 1, !tbaa !60
   %i.r = getelementptr inbounds nuw i8, ptr %i.c, i64 24 ; 2 uses
   store ptr null, ptr %i.r, align 8, !tbaa !25
-  %i.s = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  %i.s = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.c, i64 6
   %i.u = getelementptr inbounds nuw i8, ptr %i.c, i64 7
   %i.v = getelementptr inbounds nuw i8, ptr %i.c, i64 4
+  store i32 0, ptr %i.v, align 4
   %2 = getelementptr inbounds nuw i8, ptr %i.c, i64 32 ; 2 uses
-  store i64 0, ptr %i.v, align 4
   store ptr @luaH_dummynode, ptr %2, align 8, !tbaa !23
-  %i.w = getelementptr inbounds nuw i8, ptr %i.c, i64 12 ; 4 uses
-  store i32 0, ptr %i.w, align 4, !tbaa !22
+  %i.w = getelementptr inbounds nuw i8, ptr %i.c, i64 12 ; 3 uses
+  store i64 0, ptr %i.s, align 8
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
   %i.y = load i32, ptr %i.x, align 8, !tbaa !21   ; 3 uses
   %.not = icmp eq i32 %i.y, 0

@@ -202,10 +202,11 @@ trace_tpm_util_get_buffer_size.exit:              ; preds = %bb.w, %bb.v, %bb.u,
 ; Function Attrs: nounwind sspstrong uwtable
 define internal fastcc i32 @tpm_util_request(i32 noundef %0, ptr nofree noundef nonnull readonly captures(none) %1, i64 noundef range(i64 10, 23) %2, ptr nofree noundef nonnull captures(none) %3, i64 noundef range(i64 18, 1025) %4) unnamed_addr #0 {
 bb.a:
-  %5 = alloca [1 x %struct._GPollFD], align 8     ; 5 uses
+  %5 = alloca [1 x %struct._GPollFD], align 4     ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #10
-  store i64 4294967296, ptr %5, align 8, !annotation !7
-  store i32 %0, ptr %5, align 8
+  store i32 %0, ptr %5, align 4
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 4
+  store i32 1, ptr %6, align 4
   %i.a = tail call i64 @write(i32 noundef %0, ptr noundef nonnull %1, i64 noundef %2) #10 ; 2 uses
   %i.b = and i64 %i.a, 2147483648
   %.not = icmp eq i64 %i.b, 0

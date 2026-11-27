@@ -202,10 +202,12 @@ bb.g:                                             ; preds = %._crit_edge, %zend_
   br i1 %i.r, label %bb.h, label %bb.k
 
 bb.h:                                             ; preds = %bb.g
-  %i.s = tail call noalias ptr @_emalloc_24() #31 ; 5 uses
-  store i32 %i.a, ptr %i.s, align 8, !tbaa !118
-  %7 = getelementptr inbounds nuw i8, ptr %i.s, i64 4
-  store i32 %2, ptr %7, align 4, !tbaa !120
+  %i.s = tail call noalias ptr @_emalloc_24() #31 ; 4 uses
+  %7 = zext nneg i32 %i.a to i64
+  %8 = zext i32 %2 to i64
+  %9 = shl nuw i64 %8, 32
+  %10 = or disjoint i64 %9, %7
+  store i64 %10, ptr %i.s, align 8
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.u = load i32, ptr %i.t, align 4, !tbaa !21
   %i.v = and i32 %i.u, 64

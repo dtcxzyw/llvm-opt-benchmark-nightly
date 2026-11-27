@@ -200,7 +200,7 @@ bb.s:                                             ; preds = %bb.r, %.thread36, %
 ; Function Attrs: nounwind uwtable
 define range(i32 -1, 1) i32 @H5Pset_link_creation_order(i64 noundef %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %2 = alloca %struct.H5O_linfo_t, align 8        ; 6 uses
+  %2 = alloca %struct.H5O_linfo_t, align 8        ; 5 uses
   %3 = alloca %struct.H5CX_node_t, align 8        ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #6
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #6
@@ -296,12 +296,14 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.m
   %i.ap = trunc i32 %1 to i8                      ; 2 uses
-  %i.aq = and i8 %i.ap, 1
-  store i8 %i.aq, ptr %2, align 8, !tbaa !29
-  %4 = getelementptr inbounds nuw i8, ptr %2, i64 1
+  %4 = and i8 %i.ap, 1
   %5 = lshr i8 %i.ap, 1
-  %6 = and i8 %5, 1
-  store i8 %6, ptr %4, align 1, !tbaa !30
+  %i.aq = and i8 %5, 1
+  %6 = zext nneg i8 %4 to i16
+  %7 = zext nneg i8 %i.aq to i16
+  %8 = shl nuw nsw i16 %7, 8
+  %9 = or disjoint i16 %8, %6
+  store i16 %9, ptr %2, align 8
   %i.ar = call i32 @H5P_set(ptr noundef nonnull %i.af, ptr noundef nonnull @.str.15, ptr noundef nonnull %2) #6
   %i.as = icmp slt i32 %i.ar, 0
   br i1 %i.as, label %bb.p, label %bb.q, !prof !17

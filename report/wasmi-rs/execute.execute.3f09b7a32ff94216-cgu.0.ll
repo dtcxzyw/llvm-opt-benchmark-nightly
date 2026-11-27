@@ -202,7 +202,7 @@ bb.a:
 ; Function Attrs: nonlazybind uwtable
 define hidden { i32, i32 } @_RINvMNtCsefoF4u9kbII_5wasmi6globalNtB3_6Global3newINtNtNtB5_5store7context15StoreContextMutNtNtB5_7limiter11StoreLimitsEECs5py4yDLWIja_7execute(ptr noalias nofree noundef align 8 dereferenceable(1688) %0, ptr noalias nofree noundef readonly align 8 captures(address) dead_on_return dereferenceable(24) %1, i1 noundef zeroext %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [24 x i8], align 16               ; 6 uses
+  %i.a = alloca [24 x i8], align 16               ; 5 uses
   %i.b = alloca [24 x i8], align 8                ; 6 uses
   %i.c = alloca [16 x i8], align 8                ; 4 uses
   %i.d = load i8, ptr %1, align 8, !range !9, !noundef !5
@@ -219,10 +219,11 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store <2 x i64> %i.h, ptr %i.a, align 16
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %3 = zext i1 %2 to i8
-  store i8 %3, ptr %i.i, align 16
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 17
-  store i8 %i.d, ptr %4, align 1
+  %3 = zext i1 %2 to i16
+  %4 = zext nneg i8 %i.d to i16
+  %5 = shl nuw nsw i16 %4, 8
+  %6 = or disjoint i16 %5, %3
+  store i16 %6, ptr %i.i, align 16
   %i.j = call { i32, i32 } @_RNvMs4_NtNtCsefoF4u9kbII_5wasmi5store5innerNtB5_10StoreInner12alloc_global(ptr noalias nofree noundef nonnull align 8 dereferenceable(1584) %0, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret { i32, i32 } %i.j

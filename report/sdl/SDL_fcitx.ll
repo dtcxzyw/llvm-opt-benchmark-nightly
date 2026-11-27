@@ -48,7 +48,9 @@ bb.a:
   %i.c = alloca ptr, align 8                      ; 6 uses
   %i.d = tail call ptr @SDL_DBus_GetContext() #3
   store ptr %i.d, ptr @fcitx_client, align 8
-  store <4 x i32> <i32 -1, i32 -1, i32 0, i32 0>, ptr getelementptr inbounds nuw (i8, ptr @fcitx_client, i64 20), align 4
+  store i32 -1, ptr getelementptr inbounds nuw (i8, ptr @fcitx_client, i64 20), align 4
+  store i64 4294967295, ptr getelementptr inbounds nuw (i8, ptr @fcitx_client, i64 24), align 8
+  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @fcitx_client, i64 32), align 8
   %i.e = tail call ptr @SDL_GetExeName() #3       ; 2 uses
   %.not.i.i = icmp eq ptr %i.e, null
   %.str.13..i.i = select i1 %.not.i.i, ptr @.str.13, ptr %i.e

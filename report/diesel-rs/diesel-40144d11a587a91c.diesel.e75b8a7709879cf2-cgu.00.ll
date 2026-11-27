@@ -204,7 +204,7 @@ bb.k:                                             ; preds = %bb.d
   store i64 -1, ptr %0, align 8
   br label %bb.m
 
-.loopexit:                                        ; preds = %bb.g, %bb.i, %.lr.ph.i, %bb.h, %bb.e, %bb.e
+.loopexit:                                        ; preds = %bb.i, %bb.g, %.lr.ph.i, %bb.h, %bb.e, %bb.e
   %.sroa.4.0.ph = phi i8 [ 1, %.lr.ph.i ], [ %spec.select, %bb.h ], [ 1, %bb.e ], [ 1, %bb.e ], [ 1, %bb.g ], [ 2, %bb.i ]
   call void @_RNvCs9hJ03s5DiqP_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #23
   %i.ao = call noundef dereferenceable_or_null(1) ptr @_RNvCs9hJ03s5DiqP_7___rustc12___rust_alloc(i64 noundef range(i64 1, 33) 1, i64 noundef range(i64 1, 9) 1) #23 ; 3 uses
@@ -414,9 +414,11 @@ bb.p:                                             ; preds = %bb.o
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 -1, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store i32 %i.i, ptr %.sroa.5.0..sroa_idx, align 8
-  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 36
-  store i32 %i.w, ptr %.sroa.6.0..sroa_idx, align 4
+  %3 = zext i32 %i.i to i64
+  %4 = zext i32 %i.w to i64
+  %5 = shl nuw i64 %4, 32
+  %6 = or disjoint i64 %5, %3
+  store i64 %6, ptr %.sroa.5.0..sroa_idx, align 8
   br label %bb.m
 
 bb.q:                                             ; preds = %bb.c

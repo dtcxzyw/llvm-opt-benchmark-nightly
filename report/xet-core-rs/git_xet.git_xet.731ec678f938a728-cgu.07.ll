@@ -204,7 +204,7 @@ define internal fastcc noundef ptr @_RNvMNtCsf1bHqHEg0eP_12clap_builder5errorNtB
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 4 uses
   %i.b = alloca [24 x i8], align 8                ; 5 uses
-  %i.c = alloca [32 x i8], align 8                ; 9 uses
+  %i.c = alloca [32 x i8], align 8                ; 8 uses
   %i.d = alloca [32 x i8], align 8                ; 6 uses
   %i.e = alloca [24 x i8], align 8                ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
@@ -235,11 +235,12 @@ _RNvMNtCsf1bHqHEg0eP_12clap_builder5errorNtB2_5Error9formattedCs9SMuO7kbZ2K_7git
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   %i.l = and i8 %i.j, 29
   %switch.selectcmp = icmp ne i8 %i.l, 12
-  %1 = zext i1 %switch.selectcmp to i8
-  %2 = getelementptr inbounds nuw i8, ptr %i.c, i64 24
-  store i8 %1, ptr %2, align 8
-  %3 = getelementptr inbounds nuw i8, ptr %i.c, i64 25
-  store i8 %.sroa.0.0, ptr %3, align 1
+  %1 = getelementptr inbounds nuw i8, ptr %i.c, i64 24
+  %2 = zext i1 %switch.selectcmp to i16
+  %3 = zext nneg i8 %.sroa.0.0 to i16
+  %4 = shl nuw nsw i16 %3, 8
+  %5 = or disjoint i16 %4, %2
+  store i16 %5, ptr %1, align 8
   store i64 0, ptr %i.c, align 8
   %.sroa.48.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store ptr inttoptr (i64 1 to ptr), ptr %.sroa.48.0..sroa_idx, align 8
