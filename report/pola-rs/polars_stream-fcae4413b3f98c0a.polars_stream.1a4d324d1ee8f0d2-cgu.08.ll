@@ -205,7 +205,7 @@ _RNvXs0_NtNtCs8774dFTUdNv_12polars_arrow5array8iteratorINtB5_15ArrayValuesIterIN
   br i1 %.not3.i.us.peel, label %_RNvXs5_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB5_11ZipValidityRShINtNtNtBb_5array8iterator15ArrayValuesIterINtNtB1v_6binary11BinaryArrayxEENtNtB7_8iterator10BitmapIterENtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4nextCs2g09Ig8GZd6_13polars_stream.exit.thread, label %.thread166.us, !dbg !47472
 
 _RNvXs0_NtNtCs8774dFTUdNv_12polars_arrow5array8iteratorINtB5_15ArrayValuesIterINtNtB7_6binary11BinaryArrayxEENtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4nextCs2g09Ig8GZd6_13polars_stream.exit.i.us: ; preds = %_RNvXs7_NtNtCscgRAwXFJnXP_4core3cmp5implsRShNtB7_9PartialEq2eqCs2g09Ig8GZd6_13polars_stream.exit.us.thread
-  %i.fi = add i64 %i.fn, 1, !dbg !47466           ; 2 uses
+  %i.fi = add nuw i64 %i.fn, 1, !dbg !47466       ; 2 uses
   %i.fj = load i64, ptr %i.eh, align 8, !dbg !47467, !noalias !47324, !noundef !3603
   %i.fk = icmp ult i64 %i.fi, %i.fj, !dbg !47468
   call void @llvm.assume(i1 %i.fk), !dbg !47469
