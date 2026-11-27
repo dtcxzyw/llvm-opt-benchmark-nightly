@@ -1,0 +1,2979 @@
+diff --git a/llvm/lib/Transforms/AggressiveInstCombine/AggressiveInstCombine.cpp b/llvm/lib/Transforms/AggressiveInstCombine/AggressiveInstCombine.cpp
+index c21bcae79b7f9a..fc8d3352c1a3a5 100644
+--- a/llvm/lib/Transforms/AggressiveInstCombine/AggressiveInstCombine.cpp
++++ b/llvm/lib/Transforms/AggressiveInstCombine/AggressiveInstCombine.cpp
+@@ -14,16 +14,23 @@
+ 
+ #include "llvm/Transforms/AggressiveInstCombine/AggressiveInstCombine.h"
+ #include "AggressiveInstCombineInternal.h"
++#include "llvm/ADT/MapVector.h"
++#include "llvm/ADT/STLFunctionalExtras.h"
++#include "llvm/ADT/SmallBitVector.h"
+ #include "llvm/ADT/Statistic.h"
+ #include "llvm/Analysis/AliasAnalysis.h"
+ #include "llvm/Analysis/AssumptionCache.h"
+ #include "llvm/Analysis/BasicAliasAnalysis.h"
++#include "llvm/Analysis/CaptureTracking.h"
+ #include "llvm/Analysis/ConstantFolding.h"
+ #include "llvm/Analysis/DomTreeUpdater.h"
+ #include "llvm/Analysis/GlobalsModRef.h"
++#include "llvm/Analysis/Loads.h"
++#include "llvm/Analysis/MemorySSA.h"
+ #include "llvm/Analysis/TargetLibraryInfo.h"
+ #include "llvm/Analysis/TargetTransformInfo.h"
+ #include "llvm/Analysis/ValueTracking.h"
++#include "llvm/IR/ConstantRange.h"
+ #include "llvm/IR/DataLayout.h"
+ #include "llvm/IR/Dominators.h"
+ #include "llvm/IR/Function.h"
+@@ -33,9 +40,11 @@
+ #include "llvm/IR/MDBuilder.h"
+ #include "llvm/IR/PatternMatch.h"
+ #include "llvm/IR/ProfDataUtils.h"
++#include "llvm/IR/ValueHandle.h"
+ #include "llvm/ProfileData/InstrProf.h"
+ #include "llvm/Support/Casting.h"
+ #include "llvm/Support/CommandLine.h"
++#include "llvm/Support/MathExtras.h"
+ #include "llvm/Transforms/Utils/BasicBlockUtils.h"
+ #include "llvm/Transforms/Utils/BuildLibCalls.h"
+ #include "llvm/Transforms/Utils/Local.h"
+@@ -1795,6 +1804,892 @@ static bool foldConsecutiveStores(BasicBlock &BB, const DataLayout &DL,
+   return MadeChange;
+ }
+ 
++struct BitRange {
++  int64_t Begin;
++  int64_t End;
++
++  bool overlaps(BitRange Other) const {
++    return Begin < Other.End && Other.Begin < End;
++  }
++
++  bool operator==(BitRange Other) const {
++    return Begin == Other.Begin && End == Other.End;
++  }
++};
++
++struct AccessRange {
++  Value *Base;
++  BitRange Bits;
++
++  bool operator==(const AccessRange &Other) const {
++    return Base == Other.Base && Bits == Other.Bits;
++  }
++};
++
++struct StoreWriteRange {
++  StoreInst *Store;
++  BitRange Access;
++  BitRange Update;
++};
++
++// Store candidates share a base and overlapping accesses. Their update ranges
++// are in execution order and may overlap or have gaps.
++struct StoreChain {
++  Value *Base;
++  BitRange Access;
++  SmallVector<StoreWriteRange, 4> Ranges;
++};
++
++static std::optional<AccessRange> getAccessRange(Instruction &I,
++                                                 const DataLayout &DL,
++                                                 bool AllowNonInbounds = true) {
++  Value *Ptr = getLoadStorePointerOperand(&I);
++  if (!Ptr)
++    return std::nullopt;
++  auto *Ty = dyn_cast<IntegerType>(getLoadStoreType(&I));
++  if (!Ty || Ty->getBitWidth() % 8)
++    return std::nullopt;
++
++  unsigned AS = getLoadStoreAddressSpace(&I);
++  unsigned IndexBits = DL.getIndexSizeInBits(AS);
++  // A wrapping GEP can preserve the high bits of a wider pointer.
++  AllowNonInbounds &= DL.getPointerSizeInBits(AS) == IndexBits;
++  int64_t Offset;
++  Value *Base =
++      GetPointerBaseWithConstantOffset(Ptr, Offset, DL, AllowNonInbounds);
++  int64_t Begin, End;
++  if (Base->getType() != Ptr->getType() ||
++      MulOverflow(Offset, int64_t(8), Begin) ||
++      AddOverflow(Begin, int64_t(Ty->getBitWidth()), End) ||
++      !isIntN(IndexBits, End / 8 - 1))
++    return std::nullopt;
++  return AccessRange{Base, {Begin, End}};
++}
++
++/// Match a contiguous masked update. Before adding the write to a chain, the
++/// caller must establish that the value matched by MatchOld is available.
++template <typename OldMatcher>
++static std::optional<StoreWriteRange>
++getStoreWriteRange(StoreInst &Store, const OldMatcher &MatchOld,
++                   BitRange Access, const DataLayout &DL) {
++  const APInt *KeepMask;
++  Value *Insert;
++  if (!match(Store.getValueOperand(),
++             m_c_DisjointOr(m_c_And(MatchOld, m_APInt(KeepMask)),
++                            m_Value(Insert))))
++    return std::nullopt;
++  const APInt UpdateMask = ~*KeepMask;
++  unsigned Shift, Width;
++  if (!UpdateMask.isShiftedMask(Shift, Width) ||
++      !MaskedValueIsZero(Insert, *KeepMask, SimplifyQuery(DL, &Store)))
++    return std::nullopt;
++
++  if (DL.isBigEndian())
++    Shift = KeepMask->getBitWidth() - Shift - Width;
++  const BitRange Update{Access.Begin + Shift, Access.Begin + Shift + Width};
++  return StoreWriteRange{&Store, Access, Update};
++}
++
++static std::optional<StoreChain>
++createStoreChain(StoreInst &Store, Value *ValueBeforeStore,
++                 const AccessRange &Access, const DataLayout &DL,
++                 function_ref<bool(LoadInst &, StoreInst &)> IsLoadAvailable) {
++  if (ValueBeforeStore)
++    if (auto Write = getStoreWriteRange(Store, m_Specific(ValueBeforeStore),
++                                        Access.Bits, DL))
++      return StoreChain{Access.Base, Access.Bits, {*Write}};
++
++  // The keep mask identifies the load. Query its availability only after
++  // matching the masked update.
++  Value *Old;
++  auto Write = getStoreWriteRange(
++      Store, m_Value(Old, m_LoadSimple(m_Specific(Store.getPointerOperand()))),
++      Access.Bits, DL);
++  if (!Write)
++    return std::nullopt;
++  auto *Load = cast<LoadInst>(Old);
++  if (Load->getParent() == Store.getParent() || !IsLoadAvailable(*Load, Store))
++    return std::nullopt;
++  return StoreChain{Access.Base, Access.Bits, {*Write}};
++}
++
++static void finalizeStoreChain(StoreChain &Chain,
++                               SmallVectorImpl<StoreChain> &Chains) {
++  auto &Ranges = Chain.Ranges;
++  if (Ranges.size() < 2)
++    return;
++
++  llvm::sort(Ranges, [](const StoreWriteRange &A, const StoreWriteRange &B) {
++    return A.Store->comesBefore(B.Store);
++  });
++  Chains.push_back(std::move(Chain));
++}
++
++// In program order, start a new group when an update overlaps one already in
++// the group. Split each group at gaps in address order, then restore program
++// order within each chain (in finalizeStoreChain).
++static SmallVector<StoreChain, 4>
++splitStoreChainsByContiguity(ArrayRef<StoreChain> Candidates) {
++  SmallVector<StoreChain, 4> ContiguousChains;
++  auto AppendChain = [&](Value *Base, ArrayRef<StoreWriteRange> Ranges) {
++    if (Ranges.size() < 2)
++      return;
++
++    auto Sorted = llvm::to_vector<4>(Ranges);
++    llvm::sort(Sorted, [](const StoreWriteRange &A, const StoreWriteRange &B) {
++      return A.Update.Begin < B.Update.Begin;
++    });
++
++    StoreChain Chain{Base, Sorted.front().Access, {Sorted.front()}};
++    for (const StoreWriteRange &Range : llvm::drop_begin(Sorted)) {
++      if (Chain.Ranges.back().Update.End == Range.Update.Begin) {
++        Chain.Ranges.push_back(Range);
++        Chain.Access.Begin = std::min(Chain.Access.Begin, Range.Access.Begin);
++        Chain.Access.End = std::max(Chain.Access.End, Range.Access.End);
++        continue;
++      }
++
++      // No update in this group covers the gap, so Range starts a new chain.
++      finalizeStoreChain(Chain, ContiguousChains);
++      Chain = {Base, Range.Access, {Range}};
++    }
++    finalizeStoreChain(Chain, ContiguousChains);
++  };
++
++  for (const StoreChain &Candidate : Candidates) {
++    ArrayRef<StoreWriteRange> Ranges = Candidate.Ranges;
++    unsigned Begin = 0;
++    for (unsigned Index = 0; Index < Ranges.size(); ++Index) {
++      const StoreWriteRange &Write = Ranges[Index];
++      auto EarlierRanges = Ranges.slice(Begin, Index - Begin);
++      if (llvm::any_of(EarlierRanges, [&](const StoreWriteRange &Earlier) {
++            return Write.Update.overlaps(Earlier.Update);
++          })) {
++        // A -> F -> B -> C  =>  [A] | [F] | [B, C]
++        // Split before F (overlaps A) and before B (overlaps F).
++        // C's update starts where B's ends. Dropping singletons leaves [B, C].
++        AppendChain(Candidate.Base, EarlierRanges);
++        Begin = Index;
++      }
++    }
++    AppendChain(Candidate.Base, Ranges.drop_front(Begin));
++  }
++  return ContiguousChains;
++}
++
++struct PreservationCheckValue {
++  AccessRange Access;
++  MemoryLocation Location;
++  Value *StoredValue;
++};
++
++static bool finalizeInterferingStoreChain(Instruction &I, StoreChain &Chain,
++                                          BatchAAResults &BatchAA,
++                                          SmallVectorImpl<StoreChain> &Chains) {
++  // An access outside the chain can read or modify any part of an
++  // earlier store's memory location.
++  if (!llvm::any_of(Chain.Ranges, [&](const StoreWriteRange &Earlier) {
++        return isModOrRefSet(BatchAA.getModRefInfo(
++            &I, MemoryLocation::get(Earlier.Store).getWithoutAATags()));
++      }))
++    return false;
++  finalizeStoreChain(Chain, Chains);
++  return true;
++}
++
++static void updateCurrentStoreChains(StoreChain &CurrentChain,
++                                     SmallVectorImpl<StoreChain> &CurrentChains,
++                                     BatchAAResults &BatchAA,
++                                     SmallVectorImpl<StoreChain> &Chains) {
++  llvm::erase_if(CurrentChains, [&](StoreChain &Chain) {
++    // The current store stays first as earlier ranges are appended.
++    const StoreWriteRange &Write = CurrentChain.Ranges.front();
++    if (CurrentChain.Base != Chain.Base)
++      return finalizeInterferingStoreChain(*Write.Store, Chain, BatchAA,
++                                           Chains);
++    if (!Write.Access.overlaps(Chain.Access))
++      return false;
++
++    CurrentChain.Access.Begin =
++        std::min(CurrentChain.Access.Begin, Chain.Access.Begin);
++    CurrentChain.Access.End =
++        std::max(CurrentChain.Access.End, Chain.Access.End);
++    CurrentChain.Ranges.append(Chain.Ranges.begin(), Chain.Ranges.end());
++    return true;
++  });
++}
++
++// Validate the store and join compatible candidates. A store with a known
++// access also supplies a value for later preservation checks, even if it does
++// not form a candidate.
++static void collectStoreChain(
++    StoreInst &Store, const DataLayout &DL,
++    function_ref<bool(LoadInst &, StoreInst &)> IsLoadAvailable,
++    SmallVectorImpl<StoreChain> &CurrentChains,
++    SmallVectorImpl<PreservationCheckValue> &PreservationCheckValues,
++    BatchAAResults &BatchAA, SmallVectorImpl<StoreChain> &Chains) {
++  auto CurrentAccess = getAccessRange(Store, DL);
++  if (!CurrentAccess) {
++    llvm::erase_if(CurrentChains, [&](StoreChain &Chain) {
++      return finalizeInterferingStoreChain(Store, Chain, BatchAA, Chains);
++    });
++    llvm::erase_if(
++        PreservationCheckValues, [&](const PreservationCheckValue &Previous) {
++          return isModSet(BatchAA.getModRefInfo(&Store, Previous.Location));
++        });
++    return;
++  }
++
++  Value *ValueBeforeStore = nullptr;
++  for (const PreservationCheckValue &Known : PreservationCheckValues) {
++    if (Known.Access == *CurrentAccess) {
++      ValueBeforeStore = Known.StoredValue;
++      break;
++    }
++  }
++  auto CurrentChain = createStoreChain(Store, ValueBeforeStore, *CurrentAccess,
++                                       DL, IsLoadAvailable);
++  if (!CurrentChain) {
++    llvm::erase_if(CurrentChains, [&](StoreChain &Chain) {
++      return finalizeInterferingStoreChain(Store, Chain, BatchAA, Chains);
++    });
++    llvm::erase_if(
++        PreservationCheckValues, [&](const PreservationCheckValue &Previous) {
++          return Previous.Access == *CurrentAccess ||
++                 isModSet(BatchAA.getModRefInfo(&Store, Previous.Location));
++        });
++    PreservationCheckValues.push_back(
++        {*CurrentAccess, MemoryLocation::get(&Store).getWithoutAATags(),
++         Store.getValueOperand()});
++    return;
++  }
++
++  updateCurrentStoreChains(*CurrentChain, CurrentChains, BatchAA, Chains);
++  const BitRange &Update = CurrentChain->Ranges.front().Update;
++  llvm::erase_if(
++      PreservationCheckValues, [&](const PreservationCheckValue &Previous) {
++        if (Previous.Access == *CurrentAccess)
++          return true;
++        if (CurrentAccess->Base == Previous.Access.Base)
++          return Update.overlaps(Previous.Access.Bits);
++        return isModSet(BatchAA.getModRefInfo(&Store, Previous.Location));
++      });
++  PreservationCheckValues.push_back(
++      {*CurrentAccess, MemoryLocation::get(&Store).getWithoutAATags(),
++       Store.getValueOperand()});
++  CurrentChains.push_back(std::move(*CurrentChain));
++}
++
++// End chains observed or modified by a non-store access and invalidate the
++// affected preservation values. Loads also establish values for later stores.
++static void processNonStoreAccess(
++    Instruction &I, const DataLayout &DL,
++    SmallVectorImpl<StoreChain> &CurrentChains,
++    SmallVectorImpl<PreservationCheckValue> &PreservationCheckValues,
++    BatchAAResults &BatchAA, SmallVectorImpl<StoreChain> &Chains) {
++  auto CurrentAccess = getAccessRange(I, DL);
++  llvm::erase_if(CurrentChains, [&](StoreChain &Chain) {
++    return finalizeInterferingStoreChain(I, Chain, BatchAA, Chains);
++  });
++  if (!CurrentAccess) {
++    if (I.mayWriteToMemory())
++      llvm::erase_if(
++          PreservationCheckValues, [&](const PreservationCheckValue &Previous) {
++            return isModSet(BatchAA.getModRefInfo(&I, Previous.Location));
++          });
++    return;
++  }
++
++  // The caller excludes atomic and volatile accesses, so a known access here
++  // is a simple load with no Mod effects in AA.
++  llvm::erase_if(PreservationCheckValues,
++                 [&](const PreservationCheckValue &Previous) {
++                   return Previous.Access == *CurrentAccess;
++                 });
++  PreservationCheckValues.push_back(
++      {*CurrentAccess, MemoryLocation::get(&I).getWithoutAATags(), &I});
++}
++
++// Another subchain can be interleaved with these stores in program order.
++static bool hasInterveningAccess(ArrayRef<StoreWriteRange> Writes,
++                                 AliasAnalysis &AA) {
++  MemoryLocation Loc =
++      MemoryLocation::get(Writes.front().Store).getWithoutAATags();
++  for (auto [Prev, Next] :
++       llvm::zip_equal(Writes.drop_back(), Writes.drop_front()))
++    for (Instruction &I : make_range(std::next(Prev.Store->getIterator()),
++                                     Next.Store->getIterator()))
++      if (I.mayReadOrWriteMemory() && isModOrRefSet(AA.getModRefInfo(&I, Loc)))
++        return true;
++  return false;
++}
++
++/// Pack later writes into the value of the last store covering the whole
++/// access. Skip chains that would require a wider store.
++static StoreInst *packStoreChain(const StoreChain &Chain, AliasAnalysis &AA,
++                                 const DataLayout &DL) {
++  ArrayRef<StoreWriteRange> Writes;
++  for (const StoreWriteRange &W : llvm::reverse(Chain.Ranges))
++    if (W.Access == Chain.Access) {
++      Writes = ArrayRef(&W, Chain.Ranges.end());
++      break;
++    }
++  if (Writes.empty())
++    return nullptr;
++
++  if (hasInterveningAccess(Writes, AA))
++    return nullptr;
++
++  StoreInst *First = Writes.front().Store;
++  StoreInst *Last = Writes.back().Store;
++  IRBuilder<> B(Last);
++  auto GetStoreValue = [&](StoreInst *Store) {
++    Value *V = Store->getValueOperand();
++    // Poison from one store must not propagate to bytes supplied by another.
++    if (!isGuaranteedNotToBeUndefOrPoison(V, nullptr, Last))
++      V = B.CreateFreeze(V);
++    return V;
++  };
++
++  Value *Packed = GetStoreValue(First);
++  auto *Ty = cast<IntegerType>(Packed->getType());
++  for (const StoreWriteRange &W : Writes.drop_front()) {
++    Value *V = GetStoreValue(W.Store);
++    // W supplies every byte in its access, including bits its mask preserves.
++    unsigned Shift = DL.isLittleEndian() ? W.Access.Begin - Chain.Access.Begin
++                                         : Chain.Access.End - W.Access.End;
++    unsigned Size = W.Access.End - W.Access.Begin;
++    Packed = B.CreateAnd(
++        Packed, ~APInt::getBitsSet(Ty->getBitWidth(), Shift, Shift + Size));
++    V = B.CreateZExt(V, Ty);
++    if (Shift)
++      V = B.CreateShl(V, Shift);
++    Packed = B.CreateOr(Packed, V, "", /*IsDisjoint=*/true);
++  }
++  return B.CreateAlignedStore(Packed, First->getPointerOperand(),
++                              First->getAlign());
++}
++
++static bool endsStoreChain(const Instruction &I) {
++  return I.isAtomic() || I.isVolatile() || I.maySynchronize() ||
++         !isGuaranteedToTransferExecutionToSuccessor(&I);
++}
++
++struct AdjacentIntegerStore {
++  StoreInst *Store;
++  BitRange Access;
++};
++
++struct AdjacentStoreMerge {
++  ArrayRef<AdjacentIntegerStore> Stores;
++  StoreInst *Last;
++};
++
++static bool canMergeAdjacentStores(ArrayRef<AdjacentIntegerStore> Stores,
++                                   StoreInst &Last, BatchAAResults &AA,
++                                   AssumptionCache &AC, DominatorTree &DT) {
++  unsigned Remaining = MaxInstrsToScan;
++  for (const AdjacentIntegerStore &Part : Stores) {
++    StoreInst *Store = Part.Store;
++    // A poison input could turn the entire packed value into poison.
++    if (!isGuaranteedNotToBeUndefOrPoison(Store->getValueOperand(), &AC, Store,
++                                          &DT))
++      return false;
++    if (Store == &Last)
++      continue;
++
++    MemoryLocation Loc = MemoryLocation::get(Store).getWithoutAATags();
++    for (Instruction &I :
++         make_range(std::next(Store->getIterator()), Last.getIterator())) {
++      if (isa<DbgInfoIntrinsic>(I))
++        continue;
++      if (!Remaining-- || endsStoreChain(I) || I.isLifetimeStartOrEnd() ||
++          (I.mayReadOrWriteMemory() &&
++           isModOrRefSet(AA.getModRefInfo(&I, Loc))))
++        return false;
++    }
++  }
++  return true;
++}
++
++static void selectAdjacentStoreMerges(
++    SmallVectorImpl<AdjacentIntegerStore> &Stores, const DataLayout &DL,
++    TargetTransformInfo &TTI, BatchAAResults &AA, AssumptionCache &AC,
++    DominatorTree &DT, SmallVectorImpl<AdjacentStoreMerge> &Merges) {
++  if (Stores.size() < 2)
++    return;
++  llvm::sort(Stores, [](const auto &A, const auto &B) {
++    return A.Access.Begin < B.Access.Begin;
++  });
++
++  // Keep each overlapping write by itself. The greatest preceding end also
++  // detects stores contained in an earlier, wider access.
++  SmallBitVector Overlaps(Stores.size());
++  int64_t MaxEnd = Stores.front().Access.Begin;
++  for (size_t I = 0, E = Stores.size(); I != E; ++I) {
++    BitRange Access = Stores[I].Access;
++    if (Access.Begin < MaxEnd ||
++        (I + 1 != E && Access.End > Stores[I + 1].Access.Begin))
++      Overlaps.set(I);
++    MaxEnd = std::max(MaxEnd, Access.End);
++  }
++
++  struct Split {
++    size_t NumStores;
++    unsigned Length;
++    StoreInst *Last;
++  };
++  SmallVector<Split, 8> Best(Stores.size() + 1, {0, 0, nullptr});
++  ArrayRef<AdjacentIntegerStore> Ranges(Stores);
++  for (size_t I = Stores.size(); I-- > 0;) {
++    const AdjacentIntegerStore &First = Ranges[I];
++    Best[I] = {1 + Best[I + 1].NumStores, 1, nullptr};
++    if (Overlaps.test(I))
++      continue;
++
++    StoreInst *Last = First.Store;
++    for (size_t J = I + 1; J != Ranges.size(); ++J) {
++      const AdjacentIntegerStore &Part = Ranges[J];
++      if (Overlaps.test(J) || Ranges[J - 1].Access.End != Part.Access.Begin)
++        break;
++      int64_t Width = Part.Access.End - First.Access.Begin;
++      if (Width > 64)
++        break;
++      if (Last->comesBefore(Part.Store))
++        Last = Part.Store;
++
++      // Minimize the number of stores in the remaining suffix. On a tie,
++      // prefer the wider store at this address.
++      size_t NumStores = 1 + Best[J + 1].NumStores;
++      if (NumStores > Best[I].NumStores || !isPowerOf2_64(Width) ||
++          !DL.fitsInLegalInteger(Width))
++        continue;
++
++      IntegerType *Ty = IntegerType::get(Last->getContext(), Width);
++      Align MinAlign(Width / 8);
++      if (First.Store->getAlign() < MinAlign &&
++          getKnownAlignment(First.Store->getPointerOperand(), DL, First.Store,
++                            &AC, &DT) < MinAlign)
++        continue;
++      // A target can support a narrow store even if that integer type is
++      // promoted in registers.
++      if (TTI.getMemoryOpCost(Instruction::Store, Ty, MinAlign,
++                              First.Store->getPointerAddressSpace(),
++                              TTI::TCK_CodeSize) > TTI::TCC_Basic)
++        continue;
++
++      unsigned Length = J - I + 1;
++      if (canMergeAdjacentStores(Ranges.slice(I, Length), *Last, AA, AC, DT))
++        Best[I] = {NumStores, Length, Last};
++    }
++  }
++
++  for (size_t I = 0; I < Ranges.size(); I += Best[I].Length)
++    if (Best[I].Last)
++      Merges.push_back({Ranges.slice(I, Best[I].Length), Best[I].Last});
++}
++
++static void mergeAdjacentIntegerStores(const AdjacentStoreMerge &Merge,
++                                       const DataLayout &DL) {
++  ArrayRef<AdjacentIntegerStore> Stores = Merge.Stores;
++  const AdjacentIntegerStore &First = Stores.front();
++  int64_t Begin = First.Access.Begin;
++  int64_t End = Stores.back().Access.End;
++  unsigned Width = End - Begin;
++  IRBuilder<> B(Merge.Last);
++  IntegerType *Ty = B.getIntNTy(Width);
++  Value *Packed = ConstantInt::get(Ty, 0);
++  AAMDNodes AATags = First.Store->getAAMetadata();
++  SmallVector<DebugLoc, 8> Locs;
++  SmallVector<Instruction *, 8> OldStores;
++  for (const AdjacentIntegerStore &Part : Stores) {
++    unsigned Shift =
++        DL.isLittleEndian() ? Part.Access.Begin - Begin : End - Part.Access.End;
++    Value *V = B.CreateZExt(Part.Store->getValueOperand(), Ty);
++    if (Shift)
++      V = B.CreateShl(V, Shift);
++    Packed = B.CreateOr(Packed, V, "", /*IsDisjoint=*/true);
++    if (Part.Store != First.Store)
++      AATags = AATags.concat(Part.Store->getAAMetadata());
++    Locs.push_back(Part.Store->getDebugLoc());
++    OldStores.push_back(Part.Store);
++  }
++
++  Align Alignment = std::max(First.Store->getAlign(), Align(Width / 8));
++  StoreInst *Store =
++      B.CreateAlignedStore(Packed, First.Store->getPointerOperand(), Alignment);
++  Store->setAAMetadata(AATags);
++  Store->mergeDIAssignID(OldStores);
++  Store->setDebugLoc(DebugLoc::getMergedLocations(Locs));
++  for (Instruction *OldStore : OldStores)
++    OldStore->eraseFromParent();
++}
++
++/// Collect whole-byte integer stores by base and partition disjoint adjacent
++/// accesses into legal 2-, 4-, or 8-byte writes at the original store
++/// boundaries.
++static bool foldAdjacentIntegerStores(BasicBlock &BB, const DataLayout &DL,
++                                      TargetTransformInfo &TTI,
++                                      AliasAnalysis &AA, AssumptionCache &AC,
++                                      DominatorTree &DT) {
++  SmallMapVector<Value *, SmallVector<AdjacentIntegerStore, 8>, 4> StoresByBase;
++  for (Instruction &I : BB) {
++    auto *Store = dyn_cast<StoreInst>(&I);
++    if (!Store || !Store->isSimple())
++      continue;
++
++    // Inbounds offsets keep all parts of a merged access in one object.
++    if (auto Access = getAccessRange(*Store, DL, /*AllowNonInbounds=*/false);
++        Access && Access->Bits.End - Access->Bits.Begin < 64 &&
++        !Access->Base->isSwiftError())
++      StoresByBase[Access->Base].push_back({Store, Access->Bits});
++  }
++
++  SmallVector<AdjacentStoreMerge, 4> Merges;
++  BatchAAResults BatchAA(AA);
++  for (auto &Entry : StoresByBase)
++    selectAdjacentStoreMerges(Entry.second, DL, TTI, BatchAA, AC, DT, Merges);
++
++  // Check interference against all the original stores before modifying IR.
++  for (const AdjacentStoreMerge &Merge : Merges)
++    mergeAdjacentIntegerStores(Merge, DL);
++  return !Merges.empty();
++}
++
++// Insert both stored values in address order. Byte values keep poison in
++// each field independent.
++static void replaceAdjacentStores(StoreInst &Word, StoreInst &Tag,
++                                  IRBuilder<> &B, Value *Packed,
++                                  Align Alignment) {
++  Value *WordValue = Word.getValueOperand();
++  Value *TagValue = Tag.getValueOperand();
++  unsigned WordWidth = WordValue->getType()->getIntegerBitWidth();
++  unsigned WordShift = 0;
++  unsigned TagShift = WordWidth;
++  if (Word.getDataLayout().isBigEndian()) {
++    WordShift = Packed->getType()->getScalarSizeInBits() - WordWidth;
++    TagShift = WordShift - TagValue->getType()->getIntegerBitWidth();
++  }
++  Packed = B.CreateBitInsert(Packed, WordValue, B.getInt32(WordShift));
++  Packed = B.CreateBitInsert(Packed, TagValue, B.getInt32(TagShift));
++  auto *Merged =
++      B.CreateAlignedStore(Packed, Word.getPointerOperand(), Alignment);
++  Merged->setDebugLoc(
++      DebugLoc::getMergedLocation(Word.getDebugLoc(), Tag.getDebugLoc()));
++  Merged->mergeDIAssignID({&Word, &Tag});
++  Word.eraseFromParent();
++  Tag.eraseFromParent();
++}
++
++/// Pack an adjacent word and tag into a native-width store to return storage.
++/// Read back the trailing bytes to preserve their contents.
++static bool packAdjacentStores(StoreInst &Last, AliasAnalysis &AA,
++                               DominatorTree &DT, TargetTransformInfo &TTI) {
++  const DataLayout &DL = Last.getDataLayout();
++  auto Tag = getAccessRange(Last, DL);
++  auto *Base = Tag ? dyn_cast<Argument>(Tag->Base) : nullptr;
++  if (!Base || !Base->hasStructRetAttr() || !Base->hasNoAliasAttr() ||
++      !Base->hasAttribute(Attribute::Writable) ||
++      Base->hasAttribute(Attribute::WriteOnly) || Base->isSwiftError() ||
++      !isRefSet(Last.getFunction()->getMemoryEffects().getModRef(
++          IRMemLocation::ArgMem)))
++    return false;
++
++  StoreInst *First = nullptr;
++  BitRange Word;
++  unsigned Budget = MaxInstrsToScan;
++  for (Instruction &I : llvm::reverse(
++           make_range(Last.getParent()->begin(), Last.getIterator()))) {
++    if (!Budget-- || endsStoreChain(I))
++      return false;
++    auto *Store = dyn_cast<StoreInst>(&I);
++    if (!Store)
++      continue;
++    auto Access = getAccessRange(I, DL);
++    if (Access && Access->Base == Base && Access->Bits.End == Tag->Bits.Begin) {
++      First = Store;
++      Word = Access->Bits;
++      break;
++    }
++  }
++  if (!First || Word.Begin < 0)
++    return false;
++
++  unsigned AccessWidth = Tag->Bits.End - Word.Begin;
++  Type *NativeTy = DL.getSmallestLegalIntType(Last.getContext(), AccessWidth);
++  if (!NativeTy || !TTI.isTypeLegal(NativeTy))
++    return false;
++  unsigned Width = NativeTy->getIntegerBitWidth();
++  if (Width <= AccessWidth || Width % 8)
++    return false;
++  Value *Ptr = First->getPointerOperand();
++  Align Alignment = std::max(First->getAlign(),
++                             getKnownAlignment(Ptr, DL, &Last, nullptr, &DT));
++  if (Alignment < DL.getABITypeAlign(NativeTy))
++    return false;
++
++  // The tag write establishes that the object is still live here. Writable
++  // noalias storage can be written back over the dereferenceable range as long
++  // as the pointer has not been published.
++  if (!isDereferenceablePointer(Ptr, NativeTy, SimplifyQuery(DL, &Last),
++                                /*IgnoreFree=*/true) ||
++      PointerMayBeCapturedBefore(Base, /*ReturnCaptures=*/false, &Last, &DT))
++    return false;
++
++  if (Attribute Init = Base->getAttribute(Attribute::Initializes);
++      Init.isValid()) {
++    ConstantRange Preserved(APInt(64, Tag->Bits.End / 8),
++                            APInt(64, Word.Begin / 8 + Width / 8));
++    if (llvm::any_of(Init.getInitializes(), [&](const ConstantRange &Range) {
++          return !Range.intersectWith(Preserved).isEmptySet();
++        }))
++      return false;
++  }
++
++  MemoryLocation WordLoc = MemoryLocation::get(First).getWithoutAATags();
++  MemoryLocation WideLoc =
++      WordLoc.getWithNewSize(LocationSize::precise(Width / 8));
++  BatchAAResults BatchAA(AA);
++  for (Instruction &I :
++       make_range(std::next(First->getIterator()), Last.getIterator())) {
++    if (!I.mayReadOrWriteMemory())
++      continue;
++    ModRefInfo MR = BatchAA.getModRefInfo(&I, WideLoc);
++    // Reject writes anywhere in the wider access and reads of the word.
++    // Reads of the tag are safe because only the word write moves.
++    if (isModSet(MR) ||
++        (isRefSet(MR) && isRefSet(BatchAA.getModRefInfo(&I, WordLoc))))
++      return false;
++  }
++
++  IRBuilder B(&Last);
++  replaceAdjacentStores(
++      *First, Last, B, B.CreateAlignedLoad(B.getByteNTy(Width), Ptr, Alignment),
++      Alignment);
++  return true;
++}
++
++/// Pack an adjacent word and byte before a zero fill to private stack storage.
++/// The fill overwrites the extra bytes before any intervening memory access.
++static bool packStoresBeforeZeroFill(MemSetInst &Fill, DominatorTree &DT,
++                                     TargetTransformInfo &TTI) {
++  const DataLayout &DL = Fill.getDataLayout();
++  auto *Length = dyn_cast<ConstantInt>(Fill.getLength());
++  if (Fill.isVolatile() || !match(Fill.getValue(), m_Zero()) || !Length ||
++      Length->getValue().ult(3))
++    return false;
++
++  unsigned Budget = MaxInstrsToScan;
++  auto PreviousStore = [&](Instruction &From) -> StoreInst * {
++    for (Instruction *I = From.getPrevNode(); I; I = I->getPrevNode()) {
++      if (!Budget-- || endsStoreChain(*I))
++        return nullptr;
++      if (I->mayReadOrWriteMemory())
++        return dyn_cast<StoreInst>(I);
++    }
++    return nullptr;
++  };
++  StoreInst *Tag = PreviousStore(Fill);
++  if (!Tag || !Tag->getValueOperand()->getType()->isIntegerTy(8))
++    return false;
++  StoreInst *Word = PreviousStore(*Tag);
++  if (!Word || !Word->getValueOperand()->getType()->isIntegerTy(32))
++    return false;
++
++  auto Low = getAccessRange(*Word, DL);
++  auto High = getAccessRange(*Tag, DL);
++  auto *Storage = Low ? dyn_cast<AllocaInst>(Low->Base) : nullptr;
++  if (!Storage || !High || High->Base != Storage ||
++      Low->Bits.End != High->Bits.Begin || Low->Bits.Begin < 0)
++    return false;
++
++  // The zero fill must start at the first byte beyond the original stores.
++  int64_t FillOffset;
++  Value *FillPtr = Fill.getRawDest();
++  if (FillPtr->getType() != Storage->getType() ||
++      GetPointerBaseWithConstantOffset(FillPtr, FillOffset, DL,
++                                       /*AllowNonInbounds=*/false) != Storage ||
++      FillOffset != High->Bits.End / 8)
++    return false;
++
++  Type *NativeTy = DL.getSmallestLegalIntType(Fill.getContext(), 40);
++  if (!NativeTy || !NativeTy->isIntegerTy(64) || !TTI.isTypeLegal(NativeTy))
++    return false;
++  Value *Ptr = Word->getPointerOperand();
++  Align Alignment =
++      std::max(Word->getAlign(), getKnownAlignment(Ptr, DL, Tag, nullptr, &DT));
++  if (Alignment < Align(8) ||
++      !isDereferenceablePointer(Ptr, NativeTy, SimplifyQuery(DL, Tag)) ||
++      PointerMayBeCaptured(Storage, /*ReturnCaptures=*/true))
++    return false;
++
++  IRBuilder B(Tag);
++  replaceAdjacentStores(*Word, *Tag, B,
++                        Constant::getNullValue(B.getByteNTy(64)), Alignment);
++  return true;
++}
++
++#ifndef NDEBUG
++static void verifyStoreChain(const StoreChain &Chain, const DataLayout &DL) {
++  assert(Chain.Ranges.size() >= 2 && "expected at least two stores");
++  const StoreInst *Previous = nullptr;
++  BitRange Bounds = Chain.Ranges.front().Access;
++  SmallVector<BitRange, 4> Updates;
++  for (const StoreWriteRange &W : Chain.Ranges) {
++    assert(W.Store && W.Store->isSimple() && "expected a simple store");
++    assert((!Previous || Previous->comesBefore(W.Store)) &&
++           "stores must be in program order within one block");
++    Previous = W.Store;
++
++    auto Access = getAccessRange(*W.Store, DL);
++    assert(Access && Access->Base == Chain.Base && Access->Bits == W.Access &&
++           "store access must match the recorded base and bit range");
++    assert(W.Access.Begin <= W.Update.Begin && W.Update.Begin < W.Update.End &&
++           W.Update.End <= W.Access.End &&
++           "expected a nonempty update within the store access");
++    Bounds.Begin = std::min(Bounds.Begin, W.Access.Begin);
++    Bounds.End = std::max(Bounds.End, W.Access.End);
++    Updates.push_back(W.Update);
++  }
++  assert(Bounds == Chain.Access && "incorrect chain access bounds");
++
++  llvm::sort(Updates, [](BitRange A, BitRange B) { return A.Begin < B.Begin; });
++  for (size_t I = 1; I < Updates.size(); ++I)
++    assert(Updates[I - 1].End == Updates[I].Begin &&
++           "store updates must be disjoint and contiguous in address order");
++}
++#endif
++
++/// Merge at the last store, reusing it when it covers the whole chain.
++/// Otherwise, pack the writes into the width of an earlier covering store.
++///
++/// Chain.Ranges contains at least two simple integer stores of whole bytes
++/// with a common base, in program order within one basic block. Chain.Access
++/// spans the minimum begin and maximum end of their base-relative bit ranges.
++/// Each update is a nonempty subrange of its store's access. In address order,
++/// the updates are disjoint and contiguous.
++static bool mergeStoreChain(const StoreChain &Chain, AliasAnalysis &AA,
++                            const DataLayout &DL) {
++#ifndef NDEBUG
++  verifyStoreChain(Chain, DL);
++#endif
++  // The final store already has the right SSA value for every byte it writes,
++  // including updates from any interleaved subchains.
++  const StoreWriteRange &Last = Chain.Ranges.back();
++  StoreInst *Merged = Last.Store;
++  if (!(Last.Access == Chain.Access)) {
++    Merged = packStoreChain(Chain, AA, DL);
++    if (!Merged)
++      return false;
++  }
++
++  SmallVector<Instruction *> RemovedStores;
++  SmallVector<DebugLoc> Locs;
++  for (const StoreWriteRange &W : Chain.Ranges) {
++    if (W.Store != Merged)
++      RemovedStores.push_back(W.Store);
++    Locs.push_back(W.Store->getDebugLoc());
++  }
++  Merged->mergeDIAssignID(RemovedStores);
++  Merged->setDebugLoc(DebugLoc::getMergedLocations(Locs));
++  for (Instruction *Store : RemovedStores)
++    Store->eraseFromParent();
++  return true;
++}
++
++/// Merge a chain of masked stores when their disjoint updates cover a
++/// contiguous bit range and one store covers the full access.
++/// An adjacent word and tag can be packed into a wider store to return storage.
++///
++/// Within each basic block, collect stores with a common base and overlapping
++/// accesses. Identify the updated bits using local memory values or a load in
++/// a predecessor proved available by MemorySSA. End chains at interfering
++/// accesses. Split candidates at overlapping updates in program order and at
++/// gaps in address order.
++static bool foldStoreChains(Function &F, AliasAnalysis &AA, DominatorTree &DT,
++                            TargetTransformInfo &TTI) {
++  const DataLayout &DL = F.getDataLayout();
++  BatchAAResults BatchAA(AA);
++  SmallVector<StoreChain, 4> Chains;
++  SmallVector<WeakTrackingVH, 4> TagStores;
++  const bool HasSRet = F.hasStructRetAttr();
++  const unsigned MinMaskedStores = HasSRet ? 1 : 2;
++  std::unique_ptr<MemorySSA> MSSA;
++  auto IsLoadAvailable = [&](LoadInst &Load, StoreInst &Store) {
++    MemoryLocation Loc = MemoryLocation::get(&Load).getWithoutAATags();
++    // Start before Store's own definition. A clobber that dominates the load
++    // proves that the loaded word is still available at the store.
++    if (!MSSA)
++      MSSA = std::make_unique<MemorySSA>(F, &AA, &DT);
++    MemoryUseOrDef *LoadAccess = MSSA->getMemoryAccess(&Load);
++    auto *StoreAccess =
++        dyn_cast_or_null<MemoryDef>(MSSA->getMemoryAccess(&Store));
++    if (!LoadAccess || !StoreAccess)
++      return false;
++    MemoryAccess *Clobber = MSSA->getWalker()->getClobberingMemoryAccess(
++        StoreAccess->getDefiningAccess(), Loc);
++    return MSSA->dominates(Clobber, LoadAccess);
++  };
++
++  for (BasicBlock &BB : F) {
++    if (!DT.isReachableFromEntry(&BB))
++      continue;
++
++    // A masked tag can pair with a plain store to return storage.
++    if (!hasNItemsOrMore(
++            BB.begin(), BB.end(), MinMaskedStores, [](Instruction &I) {
++              auto *SI = dyn_cast<StoreInst>(&I);
++              return SI && match(SI->getValueOperand(),
++                                 m_DisjointOr(m_Value(), m_Value()));
++            }))
++      continue;
++
++    SmallVector<StoreChain, 4> CurrentChains;
++    // Track values by access even for loads and stores outside a chain.
++    // Use them to verify the source of preserved bits in later masked stores.
++    SmallVector<PreservationCheckValue, 4> PreservationCheckValues;
++    auto FinishChains = [&] {
++      for (StoreChain &Chain : CurrentChains)
++        finalizeStoreChain(Chain, Chains);
++      CurrentChains.clear();
++    };
++    for (Instruction &I : BB) {
++      if (endsStoreChain(I)) {
++        FinishChains();
++        PreservationCheckValues.clear();
++        continue;
++      }
++      if (!I.mayReadOrWriteMemory())
++        continue;
++
++      if (auto *Store = dyn_cast<StoreInst>(&I)) {
++        Value *Stored = Store->getValueOperand();
++        if (HasSRet && Stored->getType()->isIntegerTy(8) &&
++            match(Stored, m_DisjointOr(m_Value(), m_Value())))
++          TagStores.emplace_back(Store);
++        collectStoreChain(*Store, DL, IsLoadAvailable, CurrentChains,
++                          PreservationCheckValues, BatchAA, Chains);
++      } else {
++        processNonStoreAccess(I, DL, CurrentChains, PreservationCheckValues,
++                              BatchAA, Chains);
++      }
++    }
++    FinishChains();
++  }
++
++  // Finish clobber queries before applying the store folds.
++  MSSA.reset();
++
++  bool Changed = false;
++  for (const StoreChain &Chain : splitStoreChainsByContiguity(Chains))
++    Changed |= mergeStoreChain(Chain, AA, DL);
++  // Earlier folds can remove a tag write before it is considered for packing.
++  for (Value *Tag : TagStores)
++    if (auto *Store = dyn_cast_or_null<StoreInst>(Tag))
++      Changed |= packAdjacentStores(*Store, AA, DT, TTI);
++  return Changed;
++}
++
+ /// Combine away instructions providing they are still equivalent when compared
+ /// against 0. i.e do they have any bits set.
+ static Value *optimizeShiftInOrChain(Value *V, IRBuilder<> &Builder) {
+@@ -2588,14 +3483,10 @@ static bool foldMulHigh(Instruction &I) {
+ /// Guard a memset whose nonconstant length is known to be in [0, 1].
+ /// Inserts a conditional branch around the memset and specialises the
+ /// executed path to a one-byte store.
+-static bool foldMemSetZeroOrOneLength(Instruction &I, const DataLayout &DL,
++static bool foldMemSetZeroOrOneLength(MemSetInst *MI, const DataLayout &DL,
+                                       TargetLibraryInfo &TLI,
+                                       AssumptionCache &AC, DominatorTree &DT,
+                                       bool &MadeCFGChange) {
+-  auto *MI = dyn_cast<MemSetInst>(&I);
+-  if (!MI || isa<ConstantInt>(MI->getLength()))
+-    return false;
+-
+   SimplifyQuery SQ(DL, &TLI, &DT, &AC, MI);
+   KnownBits KnownLen = computeKnownBits(MI->getLength(), SQ);
+   if (!KnownLen.getMaxValue().isOne())
+@@ -2603,7 +3494,7 @@ static bool foldMemSetZeroOrOneLength(Instruction &I, const DataLayout &DL,
+ 
+   uint64_t TotalCount;
+   SmallVector<InstrProfValueData> MemsetVPMetadata = getValueProfDataFromInst(
+-      I, InstrProfValueKind::IPVK_MemOPSize, 2, TotalCount);
++      *MI, InstrProfValueKind::IPVK_MemOPSize, 2, TotalCount);
+   std::optional<uint64_t> ZeroCount = std::nullopt;
+   std::optional<uint64_t> OneCount = std::nullopt;
+   for (const auto [MemOpSize, SizeFrequency] : MemsetVPMetadata) {
+@@ -2659,6 +3550,7 @@ static bool foldUnusualPatterns(Function &F, DominatorTree &DT,
+       continue;
+ 
+     const DataLayout &DL = F.getDataLayout();
++    SmallVector<MemSetInst *, 2> Fills;
+ 
+     // Walk the block backwards for efficiency. We're matching a chain of
+     // use->defs, so we're more likely to succeed by starting from the bottom.
+@@ -2705,8 +3597,13 @@ static bool foldUnusualPatterns(Function &F, DominatorTree &DT,
+           MadeChange = true;
+           break;
+         }
+-        if (foldMemSetZeroOrOneLength(I, DL, TLI, AC, DT, MadeCFGChange))
+-          MadeChange = true;
++        if (auto *Fill = dyn_cast<MemSetInst>(&I)) {
++          if (isa<ConstantInt>(Fill->getLength()))
++            Fills.push_back(Fill);
++          else
++            MadeChange |=
++                foldMemSetZeroOrOneLength(Fill, DL, TLI, AC, DT, MadeCFGChange);
++        }
+         break;
+       default:;
+       }
+@@ -2714,8 +3611,17 @@ static bool foldUnusualPatterns(Function &F, DominatorTree &DT,
+ 
+     // Do this separately to avoid redundantly scanning stores multiple times.
+     MadeChange |= foldConsecutiveStores(BB, DL, TTI, AA);
++    for (MemSetInst *Fill : Fills)
++      MadeChange |= packStoresBeforeZeroFill(*Fill, DT, TTI);
+   }
+ 
++  MadeChange |= foldStoreChains(F, AA, DT, TTI);
++  // Give the specialized store folds first use of their original stores.
++  for (BasicBlock &BB : F)
++    if (DT.isReachableFromEntry(&BB))
++      MadeChange |=
++          foldAdjacentIntegerStores(BB, F.getDataLayout(), TTI, AA, AC, DT);
++
+   // We're done with transforms, so remove dead instructions.
+   if (MadeChange)
+     for (BasicBlock &BB : F)
+diff --git a/llvm/test/Transforms/AggressiveInstCombine/X86/consecutive-integer-stores.ll b/llvm/test/Transforms/AggressiveInstCombine/X86/consecutive-integer-stores.ll
+new file mode 100644
+index 00000000000000..e0be533af74324
+--- /dev/null
++++ b/llvm/test/Transforms/AggressiveInstCombine/X86/consecutive-integer-stores.ll
+@@ -0,0 +1,396 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 5
++; RUN: opt -S -passes=aggressive-instcombine < %s | FileCheck %s --check-prefixes=CHECK,LE
++; RUN: opt -S -passes=aggressive-instcombine -data-layout=E-i64:64-n8:16:32:64 < %s | FileCheck %s --check-prefixes=CHECK,BE
++; REQUIRES: x86-registered-target
++
++target datalayout = "e-i64:64-n8:16:32:64"
++target triple = "x86_64-unknown-linux-gnu"
++
++; Positive cases.
++
++define void @stores_12_bytes(ptr align 8 %p, i32 noundef %a, i32 noundef %b, i32 noundef %c) {
++; LE-LABEL: define void @stores_12_bytes(
++; LE-SAME: ptr align 8 [[P:%.*]], i32 noundef [[A:%.*]], i32 noundef [[B:%.*]], i32 noundef [[C:%.*]]) {
++; LE-NEXT:    [[P8:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 8
++; LE-NEXT:    [[TMP1:%.*]] = zext i32 [[A]] to i64
++; LE-NEXT:    [[TMP2:%.*]] = zext i32 [[B]] to i64
++; LE-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP2]], 32
++; LE-NEXT:    [[TMP4:%.*]] = or disjoint i64 [[TMP1]], [[TMP3]]
++; LE-NEXT:    store i64 [[TMP4]], ptr [[P]], align 8
++; LE-NEXT:    store i32 [[C]], ptr [[P8]], align 8
++; LE-NEXT:    ret void
++;
++; BE-LABEL: define void @stores_12_bytes(
++; BE-SAME: ptr align 8 [[P:%.*]], i32 noundef [[A:%.*]], i32 noundef [[B:%.*]], i32 noundef [[C:%.*]]) {
++; BE-NEXT:    [[P8:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 8
++; BE-NEXT:    [[TMP1:%.*]] = zext i32 [[A]] to i64
++; BE-NEXT:    [[TMP2:%.*]] = shl i64 [[TMP1]], 32
++; BE-NEXT:    [[TMP3:%.*]] = zext i32 [[B]] to i64
++; BE-NEXT:    [[TMP4:%.*]] = or disjoint i64 [[TMP2]], [[TMP3]]
++; BE-NEXT:    store i64 [[TMP4]], ptr [[P]], align 8
++; BE-NEXT:    store i32 [[C]], ptr [[P8]], align 8
++; BE-NEXT:    ret void
++;
++  %p4 = getelementptr inbounds i8, ptr %p, i64 4
++  %p8 = getelementptr inbounds i8, ptr %p, i64 8
++  store i32 %a, ptr %p, align 8
++  store i32 %b, ptr %p4, align 4
++  store i32 %c, ptr %p8, align 8
++  ret void
++}
++
++define void @stores_16_bytes(ptr align 8 %p, i32 noundef %a, i32 noundef %b, i32 noundef %c, i32 noundef %d) {
++; LE-LABEL: define void @stores_16_bytes(
++; LE-SAME: ptr align 8 [[P:%.*]], i32 noundef [[A:%.*]], i32 noundef [[B:%.*]], i32 noundef [[C:%.*]], i32 noundef [[D:%.*]]) {
++; LE-NEXT:    [[P8:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 8
++; LE-NEXT:    [[TMP1:%.*]] = zext i32 [[A]] to i64
++; LE-NEXT:    [[TMP2:%.*]] = zext i32 [[B]] to i64
++; LE-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP2]], 32
++; LE-NEXT:    [[TMP4:%.*]] = or disjoint i64 [[TMP1]], [[TMP3]]
++; LE-NEXT:    store i64 [[TMP4]], ptr [[P]], align 8
++; LE-NEXT:    [[TMP5:%.*]] = zext i32 [[C]] to i64
++; LE-NEXT:    [[TMP6:%.*]] = zext i32 [[D]] to i64
++; LE-NEXT:    [[TMP7:%.*]] = shl i64 [[TMP6]], 32
++; LE-NEXT:    [[TMP8:%.*]] = or disjoint i64 [[TMP5]], [[TMP7]]
++; LE-NEXT:    store i64 [[TMP8]], ptr [[P8]], align 8
++; LE-NEXT:    ret void
++;
++; BE-LABEL: define void @stores_16_bytes(
++; BE-SAME: ptr align 8 [[P:%.*]], i32 noundef [[A:%.*]], i32 noundef [[B:%.*]], i32 noundef [[C:%.*]], i32 noundef [[D:%.*]]) {
++; BE-NEXT:    [[P8:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 8
++; BE-NEXT:    [[TMP1:%.*]] = zext i32 [[A]] to i64
++; BE-NEXT:    [[TMP2:%.*]] = shl i64 [[TMP1]], 32
++; BE-NEXT:    [[TMP3:%.*]] = zext i32 [[B]] to i64
++; BE-NEXT:    [[TMP4:%.*]] = or disjoint i64 [[TMP2]], [[TMP3]]
++; BE-NEXT:    store i64 [[TMP4]], ptr [[P]], align 8
++; BE-NEXT:    [[TMP5:%.*]] = zext i32 [[C]] to i64
++; BE-NEXT:    [[TMP6:%.*]] = shl i64 [[TMP5]], 32
++; BE-NEXT:    [[TMP7:%.*]] = zext i32 [[D]] to i64
++; BE-NEXT:    [[TMP8:%.*]] = or disjoint i64 [[TMP6]], [[TMP7]]
++; BE-NEXT:    store i64 [[TMP8]], ptr [[P8]], align 8
++; BE-NEXT:    ret void
++;
++  %p4 = getelementptr inbounds i8, ptr %p, i64 4
++  %p8 = getelementptr inbounds i8, ptr %p, i64 8
++  %p12 = getelementptr inbounds i8, ptr %p, i64 12
++  store i32 %a, ptr %p, align 8
++  store i32 %b, ptr %p4, align 4
++  store i32 %c, ptr %p8, align 8
++  store i32 %d, ptr %p12, align 4
++  ret void
++}
++
++define void @reverse_mixed_width(ptr align 4 %p, i32 noundef %word, i8 noundef %a, i16 noundef %b) {
++; LE-LABEL: define void @reverse_mixed_width(
++; LE-SAME: ptr align 4 [[P:%.*]], i32 noundef [[WORD:%.*]], i8 noundef [[A:%.*]], i16 noundef [[B:%.*]]) {
++; LE-NEXT:    [[C:%.*]] = trunc i32 [[WORD]] to i8
++; LE-NEXT:    [[TMP1:%.*]] = zext i8 [[C]] to i32
++; LE-NEXT:    [[TMP2:%.*]] = zext i8 [[A]] to i32
++; LE-NEXT:    [[TMP3:%.*]] = shl i32 [[TMP2]], 8
++; LE-NEXT:    [[TMP4:%.*]] = or disjoint i32 [[TMP1]], [[TMP3]]
++; LE-NEXT:    [[TMP5:%.*]] = zext i16 [[B]] to i32
++; LE-NEXT:    [[TMP6:%.*]] = shl i32 [[TMP5]], 16
++; LE-NEXT:    [[TMP7:%.*]] = or disjoint i32 [[TMP4]], [[TMP6]]
++; LE-NEXT:    store i32 [[TMP7]], ptr [[P]], align 4
++; LE-NEXT:    ret void
++;
++; BE-LABEL: define void @reverse_mixed_width(
++; BE-SAME: ptr align 4 [[P:%.*]], i32 noundef [[WORD:%.*]], i8 noundef [[A:%.*]], i16 noundef [[B:%.*]]) {
++; BE-NEXT:    [[C:%.*]] = trunc i32 [[WORD]] to i8
++; BE-NEXT:    [[TMP1:%.*]] = zext i8 [[C]] to i32
++; BE-NEXT:    [[TMP2:%.*]] = shl i32 [[TMP1]], 24
++; BE-NEXT:    [[TMP3:%.*]] = zext i8 [[A]] to i32
++; BE-NEXT:    [[TMP4:%.*]] = shl i32 [[TMP3]], 16
++; BE-NEXT:    [[TMP5:%.*]] = or disjoint i32 [[TMP2]], [[TMP4]]
++; BE-NEXT:    [[TMP6:%.*]] = zext i16 [[B]] to i32
++; BE-NEXT:    [[TMP7:%.*]] = or disjoint i32 [[TMP5]], [[TMP6]]
++; BE-NEXT:    store i32 [[TMP7]], ptr [[P]], align 4
++; BE-NEXT:    ret void
++;
++  %p1 = getelementptr inbounds i8, ptr %p, i64 1
++  %p2 = getelementptr inbounds i8, ptr %p, i64 2
++  %c = trunc i32 %word to i8
++  store i16 %b, ptr %p2, align 2
++  store i8 %a, ptr %p1, align 1
++  store i8 %c, ptr %p, align 4
++  ret void
++}
++
++define void @two_bytes(ptr align 2 %p, i8 noundef %a, i8 noundef %b) {
++; LE-LABEL: define void @two_bytes(
++; LE-SAME: ptr align 2 [[P:%.*]], i8 noundef [[A:%.*]], i8 noundef [[B:%.*]]) {
++; LE-NEXT:    [[TMP1:%.*]] = zext i8 [[A]] to i16
++; LE-NEXT:    [[TMP2:%.*]] = zext i8 [[B]] to i16
++; LE-NEXT:    [[TMP3:%.*]] = shl i16 [[TMP2]], 8
++; LE-NEXT:    [[TMP4:%.*]] = or disjoint i16 [[TMP1]], [[TMP3]]
++; LE-NEXT:    store i16 [[TMP4]], ptr [[P]], align 2
++; LE-NEXT:    ret void
++;
++; BE-LABEL: define void @two_bytes(
++; BE-SAME: ptr align 2 [[P:%.*]], i8 noundef [[A:%.*]], i8 noundef [[B:%.*]]) {
++; BE-NEXT:    [[TMP1:%.*]] = zext i8 [[A]] to i16
++; BE-NEXT:    [[TMP2:%.*]] = shl i16 [[TMP1]], 8
++; BE-NEXT:    [[TMP3:%.*]] = zext i8 [[B]] to i16
++; BE-NEXT:    [[TMP4:%.*]] = or disjoint i16 [[TMP2]], [[TMP3]]
++; BE-NEXT:    store i16 [[TMP4]], ptr [[P]], align 2
++; BE-NEXT:    ret void
++;
++  %p1 = getelementptr inbounds i8, ptr %p, i64 1
++  store i8 %a, ptr %p, align 1
++  store i8 %b, ptr %p1, align 1
++  ret void
++}
++
++define i32 @read_between_pairs(ptr align 8 %p, i32 noundef %a, i32 noundef %b, i32 noundef %c, i32 noundef %d) {
++; LE-LABEL: define i32 @read_between_pairs(
++; LE-SAME: ptr align 8 [[P:%.*]], i32 noundef [[A:%.*]], i32 noundef [[B:%.*]], i32 noundef [[C:%.*]], i32 noundef [[D:%.*]]) {
++; LE-NEXT:    [[P8:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 8
++; LE-NEXT:    [[TMP1:%.*]] = zext i32 [[A]] to i64
++; LE-NEXT:    [[TMP2:%.*]] = zext i32 [[B]] to i64
++; LE-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP2]], 32
++; LE-NEXT:    [[TMP4:%.*]] = or disjoint i64 [[TMP1]], [[TMP3]]
++; LE-NEXT:    store i64 [[TMP4]], ptr [[P]], align 8
++; LE-NEXT:    [[VALUE:%.*]] = load i32, ptr [[P]], align 8
++; LE-NEXT:    [[TMP5:%.*]] = zext i32 [[C]] to i64
++; LE-NEXT:    [[TMP6:%.*]] = zext i32 [[D]] to i64
++; LE-NEXT:    [[TMP7:%.*]] = shl i64 [[TMP6]], 32
++; LE-NEXT:    [[TMP8:%.*]] = or disjoint i64 [[TMP5]], [[TMP7]]
++; LE-NEXT:    store i64 [[TMP8]], ptr [[P8]], align 8
++; LE-NEXT:    ret i32 [[VALUE]]
++;
++; BE-LABEL: define i32 @read_between_pairs(
++; BE-SAME: ptr align 8 [[P:%.*]], i32 noundef [[A:%.*]], i32 noundef [[B:%.*]], i32 noundef [[C:%.*]], i32 noundef [[D:%.*]]) {
++; BE-NEXT:    [[P8:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 8
++; BE-NEXT:    [[TMP1:%.*]] = zext i32 [[A]] to i64
++; BE-NEXT:    [[TMP2:%.*]] = shl i64 [[TMP1]], 32
++; BE-NEXT:    [[TMP3:%.*]] = zext i32 [[B]] to i64
++; BE-NEXT:    [[TMP4:%.*]] = or disjoint i64 [[TMP2]], [[TMP3]]
++; BE-NEXT:    store i64 [[TMP4]], ptr [[P]], align 8
++; BE-NEXT:    [[VALUE:%.*]] = load i32, ptr [[P]], align 8
++; BE-NEXT:    [[TMP5:%.*]] = zext i32 [[C]] to i64
++; BE-NEXT:    [[TMP6:%.*]] = shl i64 [[TMP5]], 32
++; BE-NEXT:    [[TMP7:%.*]] = zext i32 [[D]] to i64
++; BE-NEXT:    [[TMP8:%.*]] = or disjoint i64 [[TMP6]], [[TMP7]]
++; BE-NEXT:    store i64 [[TMP8]], ptr [[P8]], align 8
++; BE-NEXT:    ret i32 [[VALUE]]
++;
++  %p4 = getelementptr inbounds i8, ptr %p, i64 4
++  %p8 = getelementptr inbounds i8, ptr %p, i64 8
++  %p12 = getelementptr inbounds i8, ptr %p, i64 12
++  store i32 %a, ptr %p, align 8
++  store i32 %b, ptr %p4, align 4
++  %value = load i32, ptr %p, align 8
++  store i32 %c, ptr %p8, align 8
++  store i32 %d, ptr %p12, align 4
++  ret i32 %value
++}
++
++; The read stops the first pair from merging. The second pair can still merge.
++define i32 @read_inside_first_pair(ptr align 8 %p, i32 noundef %a, i32 noundef %b, i32 noundef %c, i32 noundef %d) {
++; LE-LABEL: define i32 @read_inside_first_pair(
++; LE-SAME: ptr align 8 [[P:%.*]], i32 noundef [[A:%.*]], i32 noundef [[B:%.*]], i32 noundef [[C:%.*]], i32 noundef [[D:%.*]]) {
++; LE-NEXT:    [[P4:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 4
++; LE-NEXT:    [[P8:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 8
++; LE-NEXT:    store i32 [[A]], ptr [[P]], align 8
++; LE-NEXT:    [[VALUE:%.*]] = load i32, ptr [[P]], align 8
++; LE-NEXT:    store i32 [[B]], ptr [[P4]], align 4
++; LE-NEXT:    [[TMP1:%.*]] = zext i32 [[C]] to i64
++; LE-NEXT:    [[TMP2:%.*]] = zext i32 [[D]] to i64
++; LE-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP2]], 32
++; LE-NEXT:    [[TMP4:%.*]] = or disjoint i64 [[TMP1]], [[TMP3]]
++; LE-NEXT:    store i64 [[TMP4]], ptr [[P8]], align 8
++; LE-NEXT:    ret i32 [[VALUE]]
++;
++; BE-LABEL: define i32 @read_inside_first_pair(
++; BE-SAME: ptr align 8 [[P:%.*]], i32 noundef [[A:%.*]], i32 noundef [[B:%.*]], i32 noundef [[C:%.*]], i32 noundef [[D:%.*]]) {
++; BE-NEXT:    [[P4:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 4
++; BE-NEXT:    [[P8:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 8
++; BE-NEXT:    store i32 [[A]], ptr [[P]], align 8
++; BE-NEXT:    [[VALUE:%.*]] = load i32, ptr [[P]], align 8
++; BE-NEXT:    store i32 [[B]], ptr [[P4]], align 4
++; BE-NEXT:    [[TMP1:%.*]] = zext i32 [[C]] to i64
++; BE-NEXT:    [[TMP2:%.*]] = shl i64 [[TMP1]], 32
++; BE-NEXT:    [[TMP3:%.*]] = zext i32 [[D]] to i64
++; BE-NEXT:    [[TMP4:%.*]] = or disjoint i64 [[TMP2]], [[TMP3]]
++; BE-NEXT:    store i64 [[TMP4]], ptr [[P8]], align 8
++; BE-NEXT:    ret i32 [[VALUE]]
++;
++  %p4 = getelementptr inbounds i8, ptr %p, i64 4
++  %p8 = getelementptr inbounds i8, ptr %p, i64 8
++  %p12 = getelementptr inbounds i8, ptr %p, i64 12
++  store i32 %a, ptr %p, align 8
++  %value = load i32, ptr %p, align 8
++  store i32 %b, ptr %p4, align 4
++  store i32 %c, ptr %p8, align 8
++  store i32 %d, ptr %p12, align 4
++  ret i32 %value
++}
++
++define void @noalias_store(ptr align 8 %p, ptr noalias %q, i32 noundef %a, i32 noundef %b, i32 noundef %c) {
++; LE-LABEL: define void @noalias_store(
++; LE-SAME: ptr align 8 [[P:%.*]], ptr noalias [[Q:%.*]], i32 noundef [[A:%.*]], i32 noundef [[B:%.*]], i32 noundef [[C:%.*]]) {
++; LE-NEXT:    store i32 [[C]], ptr [[Q]], align 4
++; LE-NEXT:    [[TMP1:%.*]] = zext i32 [[A]] to i64
++; LE-NEXT:    [[TMP2:%.*]] = zext i32 [[B]] to i64
++; LE-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP2]], 32
++; LE-NEXT:    [[TMP4:%.*]] = or disjoint i64 [[TMP1]], [[TMP3]]
++; LE-NEXT:    store i64 [[TMP4]], ptr [[P]], align 8
++; LE-NEXT:    ret void
++;
++; BE-LABEL: define void @noalias_store(
++; BE-SAME: ptr align 8 [[P:%.*]], ptr noalias [[Q:%.*]], i32 noundef [[A:%.*]], i32 noundef [[B:%.*]], i32 noundef [[C:%.*]]) {
++; BE-NEXT:    store i32 [[C]], ptr [[Q]], align 4
++; BE-NEXT:    [[TMP1:%.*]] = zext i32 [[A]] to i64
++; BE-NEXT:    [[TMP2:%.*]] = shl i64 [[TMP1]], 32
++; BE-NEXT:    [[TMP3:%.*]] = zext i32 [[B]] to i64
++; BE-NEXT:    [[TMP4:%.*]] = or disjoint i64 [[TMP2]], [[TMP3]]
++; BE-NEXT:    store i64 [[TMP4]], ptr [[P]], align 8
++; BE-NEXT:    ret void
++;
++  %p4 = getelementptr inbounds i8, ptr %p, i64 4
++  store i32 %a, ptr %p, align 8
++  store i32 %c, ptr %q, align 4
++  store i32 %b, ptr %p4, align 4
++  ret void
++}
++
++; Negative cases.
++
++define void @mayalias_store(ptr align 8 %p, ptr %q, i32 noundef %a, i32 noundef %b, i32 noundef %c) {
++; CHECK-LABEL: define void @mayalias_store(
++; CHECK-SAME: ptr align 8 [[P:%.*]], ptr [[Q:%.*]], i32 noundef [[A:%.*]], i32 noundef [[B:%.*]], i32 noundef [[C:%.*]]) {
++; CHECK-NEXT:    [[P4:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 4
++; CHECK-NEXT:    store i32 [[A]], ptr [[P]], align 8
++; CHECK-NEXT:    store i32 [[C]], ptr [[Q]], align 4
++; CHECK-NEXT:    store i32 [[B]], ptr [[P4]], align 4
++; CHECK-NEXT:    ret void
++;
++  %p4 = getelementptr inbounds i8, ptr %p, i64 4
++  store i32 %a, ptr %p, align 8
++  store i32 %c, ptr %q, align 4
++  store i32 %b, ptr %p4, align 4
++  ret void
++}
++
++define void @overlapping_stores(ptr align 8 %p, i32 noundef %a, i16 noundef %b, i16 noundef %c) {
++; CHECK-LABEL: define void @overlapping_stores(
++; CHECK-SAME: ptr align 8 [[P:%.*]], i32 noundef [[A:%.*]], i16 noundef [[B:%.*]], i16 noundef [[C:%.*]]) {
++; CHECK-NEXT:    [[P2:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 2
++; CHECK-NEXT:    [[P4:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 4
++; CHECK-NEXT:    [[P6:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 6
++; CHECK-NEXT:    store i32 [[A]], ptr [[P2]], align 2
++; CHECK-NEXT:    store i16 [[B]], ptr [[P4]], align 4
++; CHECK-NEXT:    store i16 [[C]], ptr [[P6]], align 2
++; CHECK-NEXT:    ret void
++;
++  %p2 = getelementptr inbounds i8, ptr %p, i64 2
++  %p4 = getelementptr inbounds i8, ptr %p, i64 4
++  %p6 = getelementptr inbounds i8, ptr %p, i64 6
++  store i32 %a, ptr %p2, align 2
++  store i16 %b, ptr %p4, align 4
++  store i16 %c, ptr %p6, align 2
++  ret void
++}
++
++define void @gap(ptr align 8 %p, i16 noundef %a, i16 noundef %b) {
++; CHECK-LABEL: define void @gap(
++; CHECK-SAME: ptr align 8 [[P:%.*]], i16 noundef [[A:%.*]], i16 noundef [[B:%.*]]) {
++; CHECK-NEXT:    [[P6:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 6
++; CHECK-NEXT:    store i16 [[A]], ptr [[P]], align 8
++; CHECK-NEXT:    store i16 [[B]], ptr [[P6]], align 2
++; CHECK-NEXT:    ret void
++;
++  %p6 = getelementptr inbounds i8, ptr %p, i64 6
++  store i16 %a, ptr %p, align 8
++  store i16 %b, ptr %p6, align 2
++  ret void
++}
++
++define void @insufficient_alignment(ptr align 4 %p, i32 noundef %a, i32 noundef %b) {
++; CHECK-LABEL: define void @insufficient_alignment(
++; CHECK-SAME: ptr align 4 [[P:%.*]], i32 noundef [[A:%.*]], i32 noundef [[B:%.*]]) {
++; CHECK-NEXT:    [[P4:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 4
++; CHECK-NEXT:    store i32 [[A]], ptr [[P]], align 4
++; CHECK-NEXT:    store i32 [[B]], ptr [[P4]], align 4
++; CHECK-NEXT:    ret void
++;
++  %p4 = getelementptr inbounds i8, ptr %p, i64 4
++  store i32 %a, ptr %p, align 4
++  store i32 %b, ptr %p4, align 4
++  ret void
++}
++
++define void @possibly_poison(ptr align 8 %p, i32 noundef %a, i32 %b) {
++; CHECK-LABEL: define void @possibly_poison(
++; CHECK-SAME: ptr align 8 [[P:%.*]], i32 noundef [[A:%.*]], i32 [[B:%.*]]) {
++; CHECK-NEXT:    [[P4:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 4
++; CHECK-NEXT:    store i32 [[A]], ptr [[P]], align 8
++; CHECK-NEXT:    store i32 [[B]], ptr [[P4]], align 4
++; CHECK-NEXT:    ret void
++;
++  %p4 = getelementptr inbounds i8, ptr %p, i64 4
++  store i32 %a, ptr %p, align 8
++  store i32 %b, ptr %p4, align 4
++  ret void
++}
++
++define void @volatile_between(ptr align 8 %p, ptr noalias %q, i32 noundef %a, i32 noundef %b) {
++; CHECK-LABEL: define void @volatile_between(
++; CHECK-SAME: ptr align 8 [[P:%.*]], ptr noalias [[Q:%.*]], i32 noundef [[A:%.*]], i32 noundef [[B:%.*]]) {
++; CHECK-NEXT:    [[P4:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 4
++; CHECK-NEXT:    store i32 [[A]], ptr [[P]], align 8
++; CHECK-NEXT:    [[V:%.*]] = load volatile i32, ptr [[Q]], align 4
++; CHECK-NEXT:    store i32 [[B]], ptr [[P4]], align 4
++; CHECK-NEXT:    ret void
++;
++  %p4 = getelementptr inbounds i8, ptr %p, i64 4
++  store i32 %a, ptr %p, align 8
++  %v = load volatile i32, ptr %q, align 4
++  store i32 %b, ptr %p4, align 4
++  ret void
++}
++
++define void @atomic_between(ptr align 8 %p, ptr noalias %q, i32 noundef %a, i32 noundef %b) {
++; CHECK-LABEL: define void @atomic_between(
++; CHECK-SAME: ptr align 8 [[P:%.*]], ptr noalias [[Q:%.*]], i32 noundef [[A:%.*]], i32 noundef [[B:%.*]]) {
++; CHECK-NEXT:    [[P4:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 4
++; CHECK-NEXT:    store i32 [[A]], ptr [[P]], align 8
++; CHECK-NEXT:    [[V:%.*]] = load atomic i32, ptr [[Q]] monotonic, align 4
++; CHECK-NEXT:    store i32 [[B]], ptr [[P4]], align 4
++; CHECK-NEXT:    ret void
++;
++  %p4 = getelementptr inbounds i8, ptr %p, i64 4
++  store i32 %a, ptr %p, align 8
++  %v = load atomic i32, ptr %q monotonic, align 4
++  store i32 %b, ptr %p4, align 4
++  ret void
++}
++
++define i32 @lifetime_boundary(i32 noundef %a, i32 noundef %b) {
++; CHECK-LABEL: define i32 @lifetime_boundary(
++; CHECK-SAME: i32 noundef [[A:%.*]], i32 noundef [[B:%.*]]) {
++; CHECK-NEXT:    [[P:%.*]] = alloca i64, align 8
++; CHECK-NEXT:    [[P4:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 4
++; CHECK-NEXT:    call void @llvm.lifetime.start.p0(ptr [[P]])
++; CHECK-NEXT:    store i32 [[A]], ptr [[P]], align 8
++; CHECK-NEXT:    call void @llvm.lifetime.end.p0(ptr [[P]])
++; CHECK-NEXT:    call void @llvm.lifetime.start.p0(ptr [[P]])
++; CHECK-NEXT:    store i32 [[B]], ptr [[P4]], align 4
++; CHECK-NEXT:    [[VALUE:%.*]] = load i32, ptr [[P4]], align 4
++; CHECK-NEXT:    call void @llvm.lifetime.end.p0(ptr [[P]])
++; CHECK-NEXT:    ret i32 [[VALUE]]
++;
++  %p = alloca i64, align 8
++  %p4 = getelementptr inbounds i8, ptr %p, i64 4
++  call void @llvm.lifetime.start.p0(ptr %p)
++  store i32 %a, ptr %p, align 8
++  call void @llvm.lifetime.end.p0(ptr %p)
++  call void @llvm.lifetime.start.p0(ptr %p)
++  store i32 %b, ptr %p4, align 4
++  %value = load i32, ptr %p4, align 4
++  call void @llvm.lifetime.end.p0(ptr %p)
++  ret i32 %value
++}
++
++declare void @llvm.lifetime.start.p0(ptr)
++declare void @llvm.lifetime.end.p0(ptr)
+diff --git a/llvm/test/Transforms/AggressiveInstCombine/X86/store-chain-widening.ll b/llvm/test/Transforms/AggressiveInstCombine/X86/store-chain-widening.ll
+new file mode 100644
+index 00000000000000..dfb268d249ee7e
+--- /dev/null
++++ b/llvm/test/Transforms/AggressiveInstCombine/X86/store-chain-widening.ll
+@@ -0,0 +1,419 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 5
++; REQUIRES: x86-registered-target
++; RUN: opt -S -passes=aggressive-instcombine < %s | FileCheck %s --check-prefixes=CHECK,LE
++; RUN: opt -S -passes=aggressive-instcombine -data-layout=E-i64:64-n8:16:32:64 < %s | FileCheck %s --check-prefixes=CHECK,BE
++
++target datalayout = "e-i64:64-n8:16:32:64"
++target triple = "x86_64-unknown-linux-gnu"
++
++%cell = type { i32, i8, ptr }
++%short = type <{ i32, i8 }>
++
++; The tag reload and the store at offset 8 can stay between the original
++; stores. The second tag update supplies the final tag for the widened store.
++define void @pack_word_and_tag(ptr noalias writable sret(%cell) align 8 initializes((0, 4), (8, 16)) %p, i32 %word, i8 %bits, ptr %payload) {
++; LE-LABEL: define void @pack_word_and_tag(
++; LE-SAME: ptr noalias writable sret([[CELL:%.*]]) align 8 initializes((0, 4), (8, 16)) [[P:%.*]], i32 [[WORD:%.*]], i8 [[BITS:%.*]], ptr [[PAYLOAD:%.*]]) {
++; LE-NEXT:    [[TAG_PTR:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 4
++; LE-NEXT:    [[PAYLOAD_PTR:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 8
++; LE-NEXT:    store ptr [[PAYLOAD]], ptr [[PAYLOAD_PTR]], align 8
++; LE-NEXT:    [[OLD:%.*]] = load i8, ptr [[TAG_PTR]], align 4
++; LE-NEXT:    [[KEEP_FIRST:%.*]] = and i8 [[OLD]], -2
++; LE-NEXT:    [[INSERT_FIRST:%.*]] = and i8 [[BITS]], 1
++; LE-NEXT:    [[FIRST:%.*]] = or disjoint i8 [[KEEP_FIRST]], [[INSERT_FIRST]]
++; LE-NEXT:    [[KEEP_SECOND:%.*]] = and i8 [[FIRST]], -3
++; LE-NEXT:    [[INSERT_SECOND:%.*]] = and i8 [[BITS]], 2
++; LE-NEXT:    [[SECOND:%.*]] = or disjoint i8 [[KEEP_SECOND]], [[INSERT_SECOND]]
++; LE-NEXT:    [[TMP1:%.*]] = load b64, ptr [[P]], align 8
++; LE-NEXT:    [[TMP2:%.*]] = bitinsert b64 [[TMP1]], i32 [[WORD]], i32 0
++; LE-NEXT:    [[TMP3:%.*]] = bitinsert b64 [[TMP2]], i8 [[SECOND]], i32 32
++; LE-NEXT:    store b64 [[TMP3]], ptr [[P]], align 8
++; LE-NEXT:    ret void
++;
++; BE-LABEL: define void @pack_word_and_tag(
++; BE-SAME: ptr noalias writable sret([[CELL:%.*]]) align 8 initializes((0, 4), (8, 16)) [[P:%.*]], i32 [[WORD:%.*]], i8 [[BITS:%.*]], ptr [[PAYLOAD:%.*]]) {
++; BE-NEXT:    [[TAG_PTR:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 4
++; BE-NEXT:    [[PAYLOAD_PTR:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 8
++; BE-NEXT:    store ptr [[PAYLOAD]], ptr [[PAYLOAD_PTR]], align 8
++; BE-NEXT:    [[OLD:%.*]] = load i8, ptr [[TAG_PTR]], align 4
++; BE-NEXT:    [[KEEP_FIRST:%.*]] = and i8 [[OLD]], -2
++; BE-NEXT:    [[INSERT_FIRST:%.*]] = and i8 [[BITS]], 1
++; BE-NEXT:    [[FIRST:%.*]] = or disjoint i8 [[KEEP_FIRST]], [[INSERT_FIRST]]
++; BE-NEXT:    [[KEEP_SECOND:%.*]] = and i8 [[FIRST]], -3
++; BE-NEXT:    [[INSERT_SECOND:%.*]] = and i8 [[BITS]], 2
++; BE-NEXT:    [[SECOND:%.*]] = or disjoint i8 [[KEEP_SECOND]], [[INSERT_SECOND]]
++; BE-NEXT:    [[TMP1:%.*]] = load b64, ptr [[P]], align 8
++; BE-NEXT:    [[TMP2:%.*]] = bitinsert b64 [[TMP1]], i32 [[WORD]], i32 32
++; BE-NEXT:    [[TMP3:%.*]] = bitinsert b64 [[TMP2]], i8 [[SECOND]], i32 24
++; BE-NEXT:    store b64 [[TMP3]], ptr [[P]], align 8
++; BE-NEXT:    ret void
++;
++  %tag.ptr = getelementptr inbounds i8, ptr %p, i64 4
++  %payload.ptr = getelementptr inbounds i8, ptr %p, i64 8
++  store i32 %word, ptr %p, align 4
++  store ptr %payload, ptr %payload.ptr, align 8
++  %old = load i8, ptr %tag.ptr, align 4
++  %keep.first = and i8 %old, -2
++  %insert.first = and i8 %bits, 1
++  %first = or disjoint i8 %keep.first, %insert.first
++  store i8 %first, ptr %tag.ptr, align 4
++  %keep.second = and i8 %first, -3
++  %insert.second = and i8 %bits, 2
++  %second = or disjoint i8 %keep.second, %insert.second
++  store i8 %second, ptr %tag.ptr, align 4
++  ret void
++}
++
++define void @pack_one_masked_tag(ptr noalias writable sret(%cell) align 8 %p, i32 %word, i8 %bits) {
++; LE-LABEL: define void @pack_one_masked_tag(
++; LE-SAME: ptr noalias writable sret([[CELL:%.*]]) align 8 [[P:%.*]], i32 [[WORD:%.*]], i8 [[BITS:%.*]]) {
++; LE-NEXT:    [[KEEP:%.*]] = and i8 [[BITS]], -4
++; LE-NEXT:    [[TAG:%.*]] = or disjoint i8 [[KEEP]], 1
++; LE-NEXT:    [[TMP1:%.*]] = load b64, ptr [[P]], align 8
++; LE-NEXT:    [[TMP2:%.*]] = bitinsert b64 [[TMP1]], i32 [[WORD]], i32 0
++; LE-NEXT:    [[TMP3:%.*]] = bitinsert b64 [[TMP2]], i8 [[TAG]], i32 32
++; LE-NEXT:    store b64 [[TMP3]], ptr [[P]], align 8
++; LE-NEXT:    ret void
++;
++; BE-LABEL: define void @pack_one_masked_tag(
++; BE-SAME: ptr noalias writable sret([[CELL:%.*]]) align 8 [[P:%.*]], i32 [[WORD:%.*]], i8 [[BITS:%.*]]) {
++; BE-NEXT:    [[KEEP:%.*]] = and i8 [[BITS]], -4
++; BE-NEXT:    [[TAG:%.*]] = or disjoint i8 [[KEEP]], 1
++; BE-NEXT:    [[TMP1:%.*]] = load b64, ptr [[P]], align 8
++; BE-NEXT:    [[TMP2:%.*]] = bitinsert b64 [[TMP1]], i32 [[WORD]], i32 32
++; BE-NEXT:    [[TMP3:%.*]] = bitinsert b64 [[TMP2]], i8 [[TAG]], i32 24
++; BE-NEXT:    store b64 [[TMP3]], ptr [[P]], align 8
++; BE-NEXT:    ret void
++;
++  store i32 %word, ptr %p, align 8
++  %tag.ptr = getelementptr inbounds i8, ptr %p, i64 4
++  %keep = and i8 %bits, -4
++  %tag = or disjoint i8 %keep, 1
++  store i8 %tag, ptr %tag.ptr, align 4
++  ret void
++}
++
++define void @read_word(ptr noalias writable sret(%cell) align 8 %p, ptr noalias %q, i32 %word, i8 %bits) {
++; CHECK-LABEL: define void @read_word(
++; CHECK-SAME: ptr noalias writable sret([[CELL:%.*]]) align 8 [[P:%.*]], ptr noalias [[Q:%.*]], i32 [[WORD:%.*]], i8 [[BITS:%.*]]) {
++; CHECK-NEXT:    [[TAG_PTR:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 4
++; CHECK-NEXT:    store i32 [[WORD]], ptr [[P]], align 4
++; CHECK-NEXT:    [[READ:%.*]] = load i32, ptr [[P]], align 4
++; CHECK-NEXT:    store i32 [[READ]], ptr [[Q]], align 4
++; CHECK-NEXT:    [[OLD:%.*]] = load i8, ptr [[TAG_PTR]], align 4
++; CHECK-NEXT:    [[KEEP:%.*]] = and i8 [[OLD]], -4
++; CHECK-NEXT:    [[INSERT:%.*]] = and i8 [[BITS]], 3
++; CHECK-NEXT:    [[TAG:%.*]] = or disjoint i8 [[KEEP]], [[INSERT]]
++; CHECK-NEXT:    store i8 [[TAG]], ptr [[TAG_PTR]], align 4
++; CHECK-NEXT:    ret void
++;
++  %tag.ptr = getelementptr inbounds i8, ptr %p, i64 4
++  store i32 %word, ptr %p, align 4
++  %read = load i32, ptr %p, align 4
++  store i32 %read, ptr %q, align 4
++  %old = load i8, ptr %tag.ptr, align 4
++  %keep = and i8 %old, -4
++  %insert = and i8 %bits, 3
++  %tag = or disjoint i8 %keep, %insert
++  store i8 %tag, ptr %tag.ptr, align 4
++  ret void
++}
++
++define void @write_padding(ptr noalias writable sret(%cell) align 8 %p, i32 %word, i8 %bits) {
++; CHECK-LABEL: define void @write_padding(
++; CHECK-SAME: ptr noalias writable sret([[CELL:%.*]]) align 8 [[P:%.*]], i32 [[WORD:%.*]], i8 [[BITS:%.*]]) {
++; CHECK-NEXT:    [[TAG_PTR:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 4
++; CHECK-NEXT:    [[PAD_PTR:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 5
++; CHECK-NEXT:    store i32 [[WORD]], ptr [[P]], align 4
++; CHECK-NEXT:    store i8 42, ptr [[PAD_PTR]], align 1
++; CHECK-NEXT:    [[OLD:%.*]] = load i8, ptr [[TAG_PTR]], align 4
++; CHECK-NEXT:    [[KEEP:%.*]] = and i8 [[OLD]], -4
++; CHECK-NEXT:    [[INSERT:%.*]] = and i8 [[BITS]], 3
++; CHECK-NEXT:    [[TAG:%.*]] = or disjoint i8 [[KEEP]], [[INSERT]]
++; CHECK-NEXT:    store i8 [[TAG]], ptr [[TAG_PTR]], align 4
++; CHECK-NEXT:    ret void
++;
++  %tag.ptr = getelementptr inbounds i8, ptr %p, i64 4
++  %pad.ptr = getelementptr inbounds i8, ptr %p, i64 5
++  store i32 %word, ptr %p, align 4
++  store i8 42, ptr %pad.ptr, align 1
++  %old = load i8, ptr %tag.ptr, align 4
++  %keep = and i8 %old, -4
++  %insert = and i8 %bits, 3
++  %tag = or disjoint i8 %keep, %insert
++  store i8 %tag, ptr %tag.ptr, align 4
++  ret void
++}
++
++define void @short_result(ptr noalias writable sret(%short) align 8 %p, i32 %word, i8 %bits) {
++; CHECK-LABEL: define void @short_result(
++; CHECK-SAME: ptr noalias writable sret([[SHORT:%.*]]) align 8 [[P:%.*]], i32 [[WORD:%.*]], i8 [[BITS:%.*]]) {
++; CHECK-NEXT:    [[TAG_PTR:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 4
++; CHECK-NEXT:    store i32 [[WORD]], ptr [[P]], align 4
++; CHECK-NEXT:    [[OLD:%.*]] = load i8, ptr [[TAG_PTR]], align 4
++; CHECK-NEXT:    [[KEEP:%.*]] = and i8 [[OLD]], -4
++; CHECK-NEXT:    [[INSERT:%.*]] = and i8 [[BITS]], 3
++; CHECK-NEXT:    [[TAG:%.*]] = or disjoint i8 [[KEEP]], [[INSERT]]
++; CHECK-NEXT:    store i8 [[TAG]], ptr [[TAG_PTR]], align 4
++; CHECK-NEXT:    ret void
++;
++  %tag.ptr = getelementptr inbounds i8, ptr %p, i64 4
++  store i32 %word, ptr %p, align 4
++  %old = load i8, ptr %tag.ptr, align 4
++  %keep = and i8 %old, -4
++  %insert = and i8 %bits, 3
++  %tag = or disjoint i8 %keep, %insert
++  store i8 %tag, ptr %tag.ptr, align 4
++  ret void
++}
++
++define void @not_writable(ptr noalias sret(%cell) align 8 %p, i32 %word, i8 %bits) {
++; CHECK-LABEL: define void @not_writable(
++; CHECK-SAME: ptr noalias sret([[CELL:%.*]]) align 8 [[P:%.*]], i32 [[WORD:%.*]], i8 [[BITS:%.*]]) {
++; CHECK-NEXT:    [[TAG_PTR:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 4
++; CHECK-NEXT:    store i32 [[WORD]], ptr [[P]], align 4
++; CHECK-NEXT:    [[OLD:%.*]] = load i8, ptr [[TAG_PTR]], align 4
++; CHECK-NEXT:    [[KEEP:%.*]] = and i8 [[OLD]], -4
++; CHECK-NEXT:    [[INSERT:%.*]] = and i8 [[BITS]], 3
++; CHECK-NEXT:    [[TAG:%.*]] = or disjoint i8 [[KEEP]], [[INSERT]]
++; CHECK-NEXT:    store i8 [[TAG]], ptr [[TAG_PTR]], align 4
++; CHECK-NEXT:    ret void
++;
++  %tag.ptr = getelementptr inbounds i8, ptr %p, i64 4
++  store i32 %word, ptr %p, align 4
++  %old = load i8, ptr %tag.ptr, align 4
++  %keep = and i8 %old, -4
++  %insert = and i8 %bits, 3
++  %tag = or disjoint i8 %keep, %insert
++  store i8 %tag, ptr %tag.ptr, align 4
++  ret void
++}
++
++define void @captured_result(ptr noalias writable sret(%cell) align 8 %p, ptr noalias %save, i32 %word, i8 %bits) {
++; CHECK-LABEL: define void @captured_result(
++; CHECK-SAME: ptr noalias writable sret([[CELL:%.*]]) align 8 [[P:%.*]], ptr noalias [[SAVE:%.*]], i32 [[WORD:%.*]], i8 [[BITS:%.*]]) {
++; CHECK-NEXT:    store ptr [[P]], ptr [[SAVE]], align 8
++; CHECK-NEXT:    [[TAG_PTR:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 4
++; CHECK-NEXT:    store i32 [[WORD]], ptr [[P]], align 4
++; CHECK-NEXT:    [[OLD:%.*]] = load i8, ptr [[TAG_PTR]], align 4
++; CHECK-NEXT:    [[KEEP:%.*]] = and i8 [[OLD]], -4
++; CHECK-NEXT:    [[INSERT:%.*]] = and i8 [[BITS]], 3
++; CHECK-NEXT:    [[TAG:%.*]] = or disjoint i8 [[KEEP]], [[INSERT]]
++; CHECK-NEXT:    store i8 [[TAG]], ptr [[TAG_PTR]], align 4
++; CHECK-NEXT:    ret void
++;
++  store ptr %p, ptr %save, align 8
++  %tag.ptr = getelementptr inbounds i8, ptr %p, i64 4
++  store i32 %word, ptr %p, align 4
++  %old = load i8, ptr %tag.ptr, align 4
++  %keep = and i8 %old, -4
++  %insert = and i8 %bits, 3
++  %tag = or disjoint i8 %keep, %insert
++  store i8 %tag, ptr %tag.ptr, align 4
++  ret void
++}
++
++; Reading back bytes in this range could read their uninitialized state.
++define void @initializes_padding(ptr noalias writable sret(%cell) align 8 initializes((5, 8)) %p, i32 %word, i8 %bits) {
++; CHECK-LABEL: define void @initializes_padding(
++; CHECK-SAME: ptr noalias writable sret([[CELL:%.*]]) align 8 initializes((5, 8)) [[P:%.*]], i32 [[WORD:%.*]], i8 [[BITS:%.*]]) {
++; CHECK-NEXT:    [[TAG_PTR:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 4
++; CHECK-NEXT:    store i32 [[WORD]], ptr [[P]], align 4
++; CHECK-NEXT:    [[OLD:%.*]] = load i8, ptr [[TAG_PTR]], align 4
++; CHECK-NEXT:    [[KEEP:%.*]] = and i8 [[OLD]], -4
++; CHECK-NEXT:    [[INSERT:%.*]] = and i8 [[BITS]], 3
++; CHECK-NEXT:    [[TAG:%.*]] = or disjoint i8 [[KEEP]], [[INSERT]]
++; CHECK-NEXT:    store i8 [[TAG]], ptr [[TAG_PTR]], align 4
++; CHECK-NEXT:    ret void
++;
++  %tag.ptr = getelementptr inbounds i8, ptr %p, i64 4
++  store i32 %word, ptr %p, align 4
++  %old = load i8, ptr %tag.ptr, align 4
++  %keep = and i8 %old, -4
++  %insert = and i8 %bits, 3
++  %tag = or disjoint i8 %keep, %insert
++  store i8 %tag, ptr %tag.ptr, align 4
++  ret void
++}
++
++define void @writeonly_result(ptr noalias writable sret(%cell) align 8 %p, i32 %word, i8 %bits) memory(argmem: write) {
++; CHECK-LABEL: define void @writeonly_result(
++; CHECK-SAME: ptr noalias writable sret([[CELL:%.*]]) align 8 [[P:%.*]], i32 [[WORD:%.*]], i8 [[BITS:%.*]]) #[[ATTR0:[0-9]+]] {
++; CHECK-NEXT:    [[TAG_PTR:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 4
++; CHECK-NEXT:    store i32 [[WORD]], ptr [[P]], align 4
++; CHECK-NEXT:    [[KEEP:%.*]] = and i8 [[BITS]], -4
++; CHECK-NEXT:    [[TAG:%.*]] = or disjoint i8 [[KEEP]], 1
++; CHECK-NEXT:    store i8 [[TAG]], ptr [[TAG_PTR]], align 4
++; CHECK-NEXT:    ret void
++;
++  %tag.ptr = getelementptr inbounds i8, ptr %p, i64 4
++  store i32 %word, ptr %p, align 4
++  %keep = and i8 %bits, -4
++  %tag = or disjoint i8 %keep, 1
++  store i8 %tag, ptr %tag.ptr, align 4
++  ret void
++}
++
++declare void @llvm.memset.p0.i64(ptr, i8, i64, i1 immarg)
++
++define i64 @pack_before_zero_fill(i8 %bits) {
++; LE-LABEL: define i64 @pack_before_zero_fill(
++; LE-SAME: i8 [[BITS:%.*]]) {
++; LE-NEXT:    [[P:%.*]] = alloca [8 x i8], align 8
++; LE-NEXT:    [[TMP1:%.*]] = bitinsert b64 0, i8 [[BITS]], i32 32
++; LE-NEXT:    store b64 [[TMP1]], ptr [[P]], align 8
++; LE-NEXT:    [[FILL_PTR:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 5
++; LE-NEXT:    call void @llvm.memset.p0.i64(ptr align 1 [[FILL_PTR]], i8 0, i64 3, i1 false)
++; LE-NEXT:    [[OUT:%.*]] = load i64, ptr [[P]], align 8
++; LE-NEXT:    ret i64 [[OUT]]
++;
++; BE-LABEL: define i64 @pack_before_zero_fill(
++; BE-SAME: i8 [[BITS:%.*]]) {
++; BE-NEXT:    [[P:%.*]] = alloca [8 x i8], align 8
++; BE-NEXT:    [[TMP1:%.*]] = bitinsert b64 0, i8 [[BITS]], i32 24
++; BE-NEXT:    store b64 [[TMP1]], ptr [[P]], align 8
++; BE-NEXT:    [[FILL_PTR:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 5
++; BE-NEXT:    call void @llvm.memset.p0.i64(ptr align 1 [[FILL_PTR]], i8 0, i64 3, i1 false)
++; BE-NEXT:    [[OUT:%.*]] = load i64, ptr [[P]], align 8
++; BE-NEXT:    ret i64 [[OUT]]
++;
++  %p = alloca [8 x i8], align 8
++  store i32 0, ptr %p, align 8
++  %tag.ptr = getelementptr inbounds i8, ptr %p, i64 4
++  store i8 %bits, ptr %tag.ptr, align 4
++  %fill.ptr = getelementptr inbounds i8, ptr %p, i64 5
++  call void @llvm.memset.p0.i64(ptr align 1 %fill.ptr, i8 0, i64 3, i1 false)
++  %out = load i64, ptr %p, align 8
++  ret i64 %out
++}
++
++define i64 @pack_before_long_zero_fill(i32 %word, i8 %bits) {
++; LE-LABEL: define i64 @pack_before_long_zero_fill(
++; LE-SAME: i32 [[WORD:%.*]], i8 [[BITS:%.*]]) {
++; LE-NEXT:    [[P:%.*]] = alloca [16 x i8], align 8
++; LE-NEXT:    [[TMP1:%.*]] = bitinsert b64 0, i32 [[WORD]], i32 0
++; LE-NEXT:    [[TMP2:%.*]] = bitinsert b64 [[TMP1]], i8 [[BITS]], i32 32
++; LE-NEXT:    store b64 [[TMP2]], ptr [[P]], align 8
++; LE-NEXT:    [[FILL_PTR:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 5
++; LE-NEXT:    call void @llvm.memset.p0.i64(ptr align 1 [[FILL_PTR]], i8 0, i64 11, i1 false)
++; LE-NEXT:    [[OUT:%.*]] = load i64, ptr [[P]], align 8
++; LE-NEXT:    ret i64 [[OUT]]
++;
++; BE-LABEL: define i64 @pack_before_long_zero_fill(
++; BE-SAME: i32 [[WORD:%.*]], i8 [[BITS:%.*]]) {
++; BE-NEXT:    [[P:%.*]] = alloca [16 x i8], align 8
++; BE-NEXT:    [[TMP1:%.*]] = bitinsert b64 0, i32 [[WORD]], i32 32
++; BE-NEXT:    [[TMP2:%.*]] = bitinsert b64 [[TMP1]], i8 [[BITS]], i32 24
++; BE-NEXT:    store b64 [[TMP2]], ptr [[P]], align 8
++; BE-NEXT:    [[FILL_PTR:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 5
++; BE-NEXT:    call void @llvm.memset.p0.i64(ptr align 1 [[FILL_PTR]], i8 0, i64 11, i1 false)
++; BE-NEXT:    [[OUT:%.*]] = load i64, ptr [[P]], align 8
++; BE-NEXT:    ret i64 [[OUT]]
++;
++  %p = alloca [16 x i8], align 8
++  store i32 %word, ptr %p, align 8
++  %tag.ptr = getelementptr inbounds i8, ptr %p, i64 4
++  store i8 %bits, ptr %tag.ptr, align 4
++  %fill.ptr = getelementptr inbounds i8, ptr %p, i64 5
++  call void @llvm.memset.p0.i64(ptr align 1 %fill.ptr, i8 0, i64 11, i1 false)
++  %out = load i64, ptr %p, align 8
++  ret i64 %out
++}
++
++define i8 @observe_tail_before_zero_fill(i32 %word, i8 %bits) {
++; CHECK-LABEL: define i8 @observe_tail_before_zero_fill(
++; CHECK-SAME: i32 [[WORD:%.*]], i8 [[BITS:%.*]]) {
++; CHECK-NEXT:    [[P:%.*]] = alloca [8 x i8], align 8
++; CHECK-NEXT:    [[FILL_PTR:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 5
++; CHECK-NEXT:    store i8 42, ptr [[FILL_PTR]], align 1
++; CHECK-NEXT:    store i32 [[WORD]], ptr [[P]], align 8
++; CHECK-NEXT:    [[TAG_PTR:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 4
++; CHECK-NEXT:    store i8 [[BITS]], ptr [[TAG_PTR]], align 4
++; CHECK-NEXT:    [[OLD:%.*]] = load i8, ptr [[FILL_PTR]], align 1
++; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr align 1 [[FILL_PTR]], i8 0, i64 3, i1 false)
++; CHECK-NEXT:    ret i8 [[OLD]]
++;
++  %p = alloca [8 x i8], align 8
++  %fill.ptr = getelementptr inbounds i8, ptr %p, i64 5
++  store i8 42, ptr %fill.ptr, align 1
++  store i32 %word, ptr %p, align 8
++  %tag.ptr = getelementptr inbounds i8, ptr %p, i64 4
++  store i8 %bits, ptr %tag.ptr, align 4
++  %old = load i8, ptr %fill.ptr, align 1
++  call void @llvm.memset.p0.i64(ptr align 1 %fill.ptr, i8 0, i64 3, i1 false)
++  ret i8 %old
++}
++
++define i64 @short_zero_fill(i32 %word, i8 %bits) {
++; CHECK-LABEL: define i64 @short_zero_fill(
++; CHECK-SAME: i32 [[WORD:%.*]], i8 [[BITS:%.*]]) {
++; CHECK-NEXT:    [[P:%.*]] = alloca [8 x i8], align 8
++; CHECK-NEXT:    [[LAST_BYTE:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 7
++; CHECK-NEXT:    store i8 42, ptr [[LAST_BYTE]], align 1
++; CHECK-NEXT:    store i32 [[WORD]], ptr [[P]], align 8
++; CHECK-NEXT:    [[TAG_PTR:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 4
++; CHECK-NEXT:    store i8 [[BITS]], ptr [[TAG_PTR]], align 4
++; CHECK-NEXT:    [[FILL_PTR:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 5
++; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr align 1 [[FILL_PTR]], i8 0, i64 2, i1 false)
++; CHECK-NEXT:    [[OUT:%.*]] = load i64, ptr [[P]], align 8
++; CHECK-NEXT:    ret i64 [[OUT]]
++;
++  %p = alloca [8 x i8], align 8
++  %last.byte = getelementptr inbounds i8, ptr %p, i64 7
++  store i8 42, ptr %last.byte, align 1
++  store i32 %word, ptr %p, align 8
++  %tag.ptr = getelementptr inbounds i8, ptr %p, i64 4
++  store i8 %bits, ptr %tag.ptr, align 4
++  %fill.ptr = getelementptr inbounds i8, ptr %p, i64 5
++  call void @llvm.memset.p0.i64(ptr align 1 %fill.ptr, i8 0, i64 2, i1 false)
++  %out = load i64, ptr %p, align 8
++  ret i64 %out
++}
++
++define i64 @gap_before_zero_fill(i32 %word, i8 %bits) {
++; CHECK-LABEL: define i64 @gap_before_zero_fill(
++; CHECK-SAME: i32 [[WORD:%.*]], i8 [[BITS:%.*]]) {
++; CHECK-NEXT:    [[P:%.*]] = alloca [9 x i8], align 8
++; CHECK-NEXT:    [[GAP:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 5
++; CHECK-NEXT:    store i8 42, ptr [[GAP]], align 1
++; CHECK-NEXT:    store i32 [[WORD]], ptr [[P]], align 8
++; CHECK-NEXT:    [[TAG_PTR:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 4
++; CHECK-NEXT:    store i8 [[BITS]], ptr [[TAG_PTR]], align 4
++; CHECK-NEXT:    [[FILL_PTR:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 6
++; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr align 1 [[FILL_PTR]], i8 0, i64 3, i1 false)
++; CHECK-NEXT:    [[OUT:%.*]] = load i64, ptr [[P]], align 8
++; CHECK-NEXT:    ret i64 [[OUT]]
++;
++  %p = alloca [9 x i8], align 8
++  %gap = getelementptr inbounds i8, ptr %p, i64 5
++  store i8 42, ptr %gap, align 1
++  store i32 %word, ptr %p, align 8
++  %tag.ptr = getelementptr inbounds i8, ptr %p, i64 4
++  store i8 %bits, ptr %tag.ptr, align 4
++  %fill.ptr = getelementptr inbounds i8, ptr %p, i64 6
++  call void @llvm.memset.p0.i64(ptr align 1 %fill.ptr, i8 0, i64 3, i1 false)
++  %out = load i64, ptr %p, align 8
++  ret i64 %out
++}
++
++define void @captured_alloca_before_zero_fill(ptr %save, i32 %word, i8 %bits) {
++; CHECK-LABEL: define void @captured_alloca_before_zero_fill(
++; CHECK-SAME: ptr [[SAVE:%.*]], i32 [[WORD:%.*]], i8 [[BITS:%.*]]) {
++; CHECK-NEXT:    [[P:%.*]] = alloca [8 x i8], align 8
++; CHECK-NEXT:    store ptr [[P]], ptr [[SAVE]], align 8
++; CHECK-NEXT:    store i32 [[WORD]], ptr [[P]], align 8
++; CHECK-NEXT:    [[TAG_PTR:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 4
++; CHECK-NEXT:    store i8 [[BITS]], ptr [[TAG_PTR]], align 4
++; CHECK-NEXT:    [[FILL_PTR:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 5
++; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr align 1 [[FILL_PTR]], i8 0, i64 3, i1 false)
++; CHECK-NEXT:    ret void
++;
++  %p = alloca [8 x i8], align 8
++  store ptr %p, ptr %save, align 8
++  store i32 %word, ptr %p, align 8
++  %tag.ptr = getelementptr inbounds i8, ptr %p, i64 4
++  store i8 %bits, ptr %tag.ptr, align 4
++  %fill.ptr = getelementptr inbounds i8, ptr %p, i64 5
++  call void @llvm.memset.p0.i64(ptr align 1 %fill.ptr, i8 0, i64 3, i1 false)
++  ret void
++}
+diff --git a/llvm/test/Transforms/AggressiveInstCombine/store-chain-ranges-be.ll b/llvm/test/Transforms/AggressiveInstCombine/store-chain-ranges-be.ll
+new file mode 100644
+index 00000000000000..47d38ec1702905
+--- /dev/null
++++ b/llvm/test/Transforms/AggressiveInstCombine/store-chain-ranges-be.ll
+@@ -0,0 +1,573 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -passes=aggressive-instcombine -S %s | FileCheck %s
++; RUN: opt -passes=aggressive-instcombine -S -data-layout=E-p:64:64-n8:16:32:64 %s | FileCheck %s
++
++target datalayout = "E-p:64:64"
++
++; Positive tests
++
++; The first byte and the next bit are replaced. The second update takes
++; its preserved bits from the first one.
++define void @contiguous(ptr %p, i16 %x, i16 %y) {
++; CHECK-LABEL: define void @contiguous(
++; CHECK-SAME: ptr [[P:%.*]], i16 [[X:%.*]], i16 [[Y:%.*]]) {
++; CHECK-NEXT:    [[OLD:%.*]] = load i16, ptr [[P]], align 1
++; CHECK-NEXT:    [[KEEP_FIRST:%.*]] = and i16 [[OLD]], 255
++; CHECK-NEXT:    [[INSERT_FIRST:%.*]] = and i16 [[X]], -256
++; CHECK-NEXT:    [[FIRST:%.*]] = or disjoint i16 [[KEEP_FIRST]], [[INSERT_FIRST]]
++; CHECK-NEXT:    [[KEEP_SECOND:%.*]] = and i16 [[FIRST]], -129
++; CHECK-NEXT:    [[INSERT_SECOND:%.*]] = and i16 [[Y]], 128
++; CHECK-NEXT:    [[SECOND:%.*]] = or disjoint i16 [[KEEP_SECOND]], [[INSERT_SECOND]]
++; CHECK-NEXT:    store i16 [[SECOND]], ptr [[P]], align 1
++; CHECK-NEXT:    ret void
++;
++  %old = load i16, ptr %p, align 1
++  %keep.first = and i16 %old, -65281
++  %insert.first = and i16 %x, 65280
++  %first = or disjoint i16 %keep.first, %insert.first
++  store i16 %first, ptr %p, align 1
++
++  %keep.second = and i16 %first, -129
++  %insert.second = and i16 %y, 128
++  %second = or disjoint i16 %keep.second, %insert.second
++  store i16 %second, ptr %p, align 1
++  ret void
++}
++
++; The first nine bits in address order come from the high nine bits of %x.
++define void @low_nine_bits(ptr %p, ptr noalias %q, i16 %x) {
++; CHECK-LABEL: define void @low_nine_bits(
++; CHECK-SAME: ptr [[P:%.*]], ptr noalias [[Q:%.*]], i16 [[X:%.*]]) {
++; CHECK-NEXT:    [[OLD:%.*]] = load i16, ptr [[P]], align 2
++; CHECK-NEXT:    [[BYTE_KEEP:%.*]] = and i16 [[OLD]], 255
++; CHECK-NEXT:    [[BYTE_INSERT:%.*]] = and i16 [[X]], -256
++; CHECK-NEXT:    [[FIRST:%.*]] = or disjoint i16 [[BYTE_KEEP]], [[BYTE_INSERT]]
++; CHECK-NEXT:    store i16 [[X]], ptr [[Q]], align 2
++; CHECK-NEXT:    [[BIT_KEEP:%.*]] = and i16 [[FIRST]], -129
++; CHECK-NEXT:    [[BIT_INSERT:%.*]] = and i16 [[X]], 128
++; CHECK-NEXT:    [[SECOND:%.*]] = or disjoint i16 [[BIT_KEEP]], [[BIT_INSERT]]
++; CHECK-NEXT:    store i16 [[SECOND]], ptr [[P]], align 2
++; CHECK-NEXT:    ret void
++;
++  %old = load i16, ptr %p, align 2
++  %byte.keep = and i16 %old, 255
++  %byte.insert = and i16 %x, -256
++  %first = or disjoint i16 %byte.keep, %byte.insert
++  store i16 %first, ptr %p, align 2
++  store i16 %x, ptr %q, align 2
++  %bit.keep = and i16 %first, -129
++  %bit.insert = and i16 %x, 128
++  %second = or disjoint i16 %bit.keep, %bit.insert
++  store i16 %second, ptr %p, align 2
++  ret void
++}
++
++; The whole-word update separates %low from the following two bit updates.
++define void @whole_access_update(ptr %p, i16 %x, i16 %seed) {
++; CHECK-LABEL: define void @whole_access_update(
++; CHECK-SAME: ptr [[P:%.*]], i16 [[X:%.*]], i16 [[SEED:%.*]]) {
++; CHECK-NEXT:    [[OLD:%.*]] = load i16, ptr [[P]], align 1
++; CHECK-NEXT:    [[LOW_KEEP:%.*]] = and i16 [[OLD]], 255
++; CHECK-NEXT:    [[LOW_INSERT:%.*]] = and i16 [[X]], -256
++; CHECK-NEXT:    [[LOW:%.*]] = or disjoint i16 [[LOW_KEEP]], [[LOW_INSERT]]
++; CHECK-NEXT:    store i16 [[LOW]], ptr [[P]], align 1
++; CHECK-NEXT:    store i16 [[SEED]], ptr [[P]], align 1
++; CHECK-NEXT:    [[BIT_KEEP:%.*]] = and i16 [[SEED]], -129
++; CHECK-NEXT:    [[BIT_INSERT:%.*]] = and i16 [[X]], 128
++; CHECK-NEXT:    [[BIT:%.*]] = or disjoint i16 [[BIT_KEEP]], [[BIT_INSERT]]
++; CHECK-NEXT:    [[HIGH_KEEP:%.*]] = and i16 [[BIT]], -65
++; CHECK-NEXT:    [[HIGH_INSERT:%.*]] = and i16 [[X]], 64
++; CHECK-NEXT:    [[HIGH:%.*]] = or disjoint i16 [[HIGH_KEEP]], [[HIGH_INSERT]]
++; CHECK-NEXT:    store i16 [[HIGH]], ptr [[P]], align 1
++; CHECK-NEXT:    ret void
++;
++  %old = load i16, ptr %p, align 1
++  %low.keep = and i16 %old, 255
++  %low.insert = and i16 %x, 65280
++  %low = or disjoint i16 %low.keep, %low.insert
++  store i16 %low, ptr %p, align 1
++
++  %full.keep = and i16 %low, 0
++  %full = or disjoint i16 %full.keep, %seed
++  store i16 %full, ptr %p, align 1
++
++  %bit.keep = and i16 %full, -129
++  %bit.insert = and i16 %x, 128
++  %bit = or disjoint i16 %bit.keep, %bit.insert
++  store i16 %bit, ptr %p, align 1
++
++  %high.keep = and i16 %bit, -65
++  %high.insert = and i16 %x, 64
++  %high = or disjoint i16 %high.keep, %high.insert
++  store i16 %high, ptr %p, align 1
++  ret void
++}
++
++; The second write to bit 8 starts the next pair.
++define void @overlapping_updates(ptr %p, i16 %x, i16 %y) {
++; CHECK-LABEL: define void @overlapping_updates(
++; CHECK-SAME: ptr [[P:%.*]], i16 [[X:%.*]], i16 [[Y:%.*]]) {
++; CHECK-NEXT:    [[OLD:%.*]] = load i16, ptr [[P]], align 1
++; CHECK-NEXT:    [[FIRST_KEEP:%.*]] = and i16 [[OLD]], -129
++; CHECK-NEXT:    [[FIRST_INSERT:%.*]] = and i16 [[X]], 128
++; CHECK-NEXT:    [[FIRST:%.*]] = or disjoint i16 [[FIRST_KEEP]], [[FIRST_INSERT]]
++; CHECK-NEXT:    [[LOW_KEEP:%.*]] = and i16 [[FIRST]], 255
++; CHECK-NEXT:    [[LOW_INSERT:%.*]] = and i16 [[X]], -256
++; CHECK-NEXT:    [[LOW:%.*]] = or disjoint i16 [[LOW_KEEP]], [[LOW_INSERT]]
++; CHECK-NEXT:    store i16 [[LOW]], ptr [[P]], align 1
++; CHECK-NEXT:    [[NEXT_KEEP:%.*]] = and i16 [[LOW]], -129
++; CHECK-NEXT:    [[NEXT_INSERT:%.*]] = and i16 [[Y]], 128
++; CHECK-NEXT:    [[NEXT:%.*]] = or disjoint i16 [[NEXT_KEEP]], [[NEXT_INSERT]]
++; CHECK-NEXT:    [[NEXT_LOW_KEEP:%.*]] = and i16 [[NEXT]], 255
++; CHECK-NEXT:    [[NEXT_LOW_INSERT:%.*]] = and i16 [[Y]], -256
++; CHECK-NEXT:    [[NEXT_LOW:%.*]] = or disjoint i16 [[NEXT_LOW_KEEP]], [[NEXT_LOW_INSERT]]
++; CHECK-NEXT:    store i16 [[NEXT_LOW]], ptr [[P]], align 1
++; CHECK-NEXT:    ret void
++;
++  %old = load i16, ptr %p, align 1
++  %first.keep = and i16 %old, -129
++  %first.insert = and i16 %x, 128
++  %first = or disjoint i16 %first.keep, %first.insert
++  store i16 %first, ptr %p, align 1
++
++  %low.keep = and i16 %first, 255
++  %low.insert = and i16 %x, 65280
++  %low = or disjoint i16 %low.keep, %low.insert
++  store i16 %low, ptr %p, align 1
++
++  %next.keep = and i16 %low, -129
++  %next.insert = and i16 %y, 128
++  %next = or disjoint i16 %next.keep, %next.insert
++  store i16 %next, ptr %p, align 1
++
++  %next.low.keep = and i16 %next, 255
++  %next.low.insert = and i16 %y, 65280
++  %next.low = or disjoint i16 %next.low.keep, %next.low.insert
++  store i16 %next.low, ptr %p, align 1
++  ret void
++}
++
++; Only the [0, 9) run ends with a store covering its full access.
++define void @subchain_access_range(ptr %p, i32 %x, i16 %y, i16 %seed) {
++; CHECK-LABEL: define void @subchain_access_range(
++; CHECK-SAME: ptr [[P:%.*]], i32 [[X:%.*]], i16 [[Y:%.*]], i16 [[SEED:%.*]]) {
++; CHECK-NEXT:    [[OLD_WIDE:%.*]] = load i32, ptr [[P]], align 1
++; CHECK-NEXT:    [[OLD:%.*]] = load i16, ptr [[P]], align 1
++; CHECK-NEXT:    [[UPPER_KEEP:%.*]] = and i32 [[OLD_WIDE]], -65281
++; CHECK-NEXT:    [[UPPER_INSERT:%.*]] = and i32 [[X]], 65280
++; CHECK-NEXT:    [[TMP6:%.*]] = or disjoint i32 [[UPPER_KEEP]], [[UPPER_INSERT]]
++; CHECK-NEXT:    [[TMP1:%.*]] = freeze i32 [[TMP6]]
++; CHECK-NEXT:    [[TMP2:%.*]] = freeze i16 [[SEED]]
++; CHECK-NEXT:    [[TMP3:%.*]] = and i32 [[TMP1]], 65535
++; CHECK-NEXT:    [[TMP4:%.*]] = zext i16 [[TMP2]] to i32
++; CHECK-NEXT:    [[TMP5:%.*]] = shl i32 [[TMP4]], 16
++; CHECK-NEXT:    [[TMP7:%.*]] = or disjoint i32 [[TMP3]], [[TMP5]]
++; CHECK-NEXT:    store i32 [[TMP7]], ptr [[P]], align 1
++; CHECK-NEXT:    [[LOW_KEEP:%.*]] = and i16 [[SEED]], 255
++; CHECK-NEXT:    [[LOW_INSERT:%.*]] = and i16 [[Y]], -256
++; CHECK-NEXT:    [[LOW:%.*]] = or disjoint i16 [[LOW_KEEP]], [[LOW_INSERT]]
++; CHECK-NEXT:    [[BIT_KEEP:%.*]] = and i16 [[LOW]], -129
++; CHECK-NEXT:    [[BIT_INSERT:%.*]] = and i16 [[Y]], 128
++; CHECK-NEXT:    [[BIT:%.*]] = or disjoint i16 [[BIT_KEEP]], [[BIT_INSERT]]
++; CHECK-NEXT:    store i16 [[BIT]], ptr [[P]], align 1
++; CHECK-NEXT:    ret void
++;
++  %old.wide = load i32, ptr %p, align 1
++  %old = load i16, ptr %p, align 1
++  %upper.keep = and i32 %old.wide, -65281
++  %upper.insert = and i32 %x, 65280
++  %upper = or disjoint i32 %upper.keep, %upper.insert
++  store i32 %upper, ptr %p, align 1
++
++  %full.keep = and i16 %old, 0
++  %full = or disjoint i16 %full.keep, %seed
++  store i16 %full, ptr %p, align 1
++
++  %low.keep = and i16 %full, 255
++  %low.insert = and i16 %y, 65280
++  %low = or disjoint i16 %low.keep, %low.insert
++  store i16 %low, ptr %p, align 1
++
++  %bit.keep = and i16 %low, -129
++  %bit.insert = and i16 %y, 128
++  %bit = or disjoint i16 %bit.keep, %bit.insert
++  store i16 %bit, ptr %p, align 1
++  ret void
++}
++
++; One byte separates %last from the first two adjacent byte updates.
++define void @gap_after_two_bytes(ptr %p, i32 %x) {
++; CHECK-LABEL: define void @gap_after_two_bytes(
++; CHECK-SAME: ptr [[P:%.*]], i32 [[X:%.*]]) {
++; CHECK-NEXT:    [[OLD:%.*]] = load i32, ptr [[P]], align 4
++; CHECK-NEXT:    [[FIRST_KEEP:%.*]] = and i32 [[OLD]], 16777215
++; CHECK-NEXT:    [[FIRST_INSERT:%.*]] = and i32 [[X]], -16777216
++; CHECK-NEXT:    [[FIRST:%.*]] = or disjoint i32 [[FIRST_KEEP]], [[FIRST_INSERT]]
++; CHECK-NEXT:    [[SECOND_KEEP:%.*]] = and i32 [[FIRST]], -16711681
++; CHECK-NEXT:    [[SECOND_INSERT:%.*]] = and i32 [[X]], 16711680
++; CHECK-NEXT:    [[SECOND:%.*]] = or disjoint i32 [[SECOND_KEEP]], [[SECOND_INSERT]]
++; CHECK-NEXT:    store i32 [[SECOND]], ptr [[P]], align 4
++; CHECK-NEXT:    [[LAST_KEEP:%.*]] = and i32 [[SECOND]], -256
++; CHECK-NEXT:    [[LAST_INSERT:%.*]] = and i32 [[X]], 255
++; CHECK-NEXT:    [[LAST:%.*]] = or disjoint i32 [[LAST_KEEP]], [[LAST_INSERT]]
++; CHECK-NEXT:    store i32 [[LAST]], ptr [[P]], align 4
++; CHECK-NEXT:    ret void
++;
++  %old = load i32, ptr %p, align 4
++  %first.keep = and i32 %old, 16777215
++  %first.insert = and i32 %x, -16777216
++  %first = or disjoint i32 %first.keep, %first.insert
++  store i32 %first, ptr %p, align 4
++  %second.keep = and i32 %first, -16711681
++  %second.insert = and i32 %x, 16711680
++  %second = or disjoint i32 %second.keep, %second.insert
++  store i32 %second, ptr %p, align 4
++  %last.keep = and i32 %second, -256
++  %last.insert = and i32 %x, 255
++  %last = or disjoint i32 %last.keep, %last.insert
++  store i32 %last, ptr %p, align 4
++  ret void
++}
++
++; Updates to bits [0, 2) and [8, 10) are interleaved in program order.
++define void @interleaved_updates(ptr %p) {
++; CHECK-LABEL: define void @interleaved_updates(
++; CHECK-SAME: ptr [[P:%.*]]) {
++; CHECK-NEXT:    [[OLD:%.*]] = load i16, ptr [[P]], align 2
++; CHECK-NEXT:    [[HIGH1_KEEP:%.*]] = and i16 [[OLD]], -65
++; CHECK-NEXT:    [[HIGH1:%.*]] = or disjoint i16 [[HIGH1_KEEP]], 64
++; CHECK-NEXT:    [[LOW1_KEEP:%.*]] = and i16 [[HIGH1]], -16385
++; CHECK-NEXT:    [[LOW1:%.*]] = or disjoint i16 [[LOW1_KEEP]], 16384
++; CHECK-NEXT:    [[HIGH0_KEEP:%.*]] = and i16 [[LOW1]], -129
++; CHECK-NEXT:    [[HIGH0:%.*]] = or disjoint i16 [[HIGH0_KEEP]], 128
++; CHECK-NEXT:    store i16 [[HIGH0]], ptr [[P]], align 2
++; CHECK-NEXT:    [[LOW0_KEEP:%.*]] = and i16 [[HIGH0]], 32767
++; CHECK-NEXT:    [[LOW0:%.*]] = or disjoint i16 [[LOW0_KEEP]], -32768
++; CHECK-NEXT:    store i16 [[LOW0]], ptr [[P]], align 2
++; CHECK-NEXT:    ret void
++;
++  %old = load i16, ptr %p, align 2
++  %high1.keep = and i16 %old, -65
++  %high1 = or disjoint i16 %high1.keep, 64
++  store i16 %high1, ptr %p, align 2
++  %low1.keep = and i16 %high1, -16385
++  %low1 = or disjoint i16 %low1.keep, 16384
++  store i16 %low1, ptr %p, align 2
++  %high0.keep = and i16 %low1, -129
++  %high0 = or disjoint i16 %high0.keep, 128
++  store i16 %high0, ptr %p, align 2
++  %low0.keep = and i16 %high0, 32767
++  %low0 = or disjoint i16 %low0.keep, -32768
++  store i16 %low0, ptr %p, align 2
++  ret void
++}
++
++; The whole-word write and the later bit overwrite each start a new group.
++define void @overlap_after_gap(ptr %p, i32 %x, i32 %y) {
++; CHECK-LABEL: define void @overlap_after_gap(
++; CHECK-SAME: ptr [[P:%.*]], i32 [[X:%.*]], i32 [[Y:%.*]]) {
++; CHECK-NEXT:    [[OLD:%.*]] = load i32, ptr [[P]], align 4
++; CHECK-NEXT:    [[LO_KEEP:%.*]] = and i32 [[OLD]], 268435455
++; CHECK-NEXT:    [[LO_INSERT:%.*]] = and i32 [[X]], -268435456
++; CHECK-NEXT:    [[LO:%.*]] = or disjoint i32 [[LO_KEEP]], [[LO_INSERT]]
++; CHECK-NEXT:    [[HI_KEEP:%.*]] = and i32 [[LO]], -251658241
++; CHECK-NEXT:    [[HI_INSERT:%.*]] = and i32 [[X]], 251658240
++; CHECK-NEXT:    [[HI:%.*]] = or disjoint i32 [[HI_KEEP]], [[HI_INSERT]]
++; CHECK-NEXT:    store i32 [[HI]], ptr [[P]], align 4
++; CHECK-NEXT:    store i32 [[Y]], ptr [[P]], align 4
++; CHECK-NEXT:    [[FIRST_KEEP:%.*]] = and i32 [[Y]], 16777215
++; CHECK-NEXT:    [[FIRST_INSERT:%.*]] = and i32 [[X]], -16777216
++; CHECK-NEXT:    [[FIRST:%.*]] = or disjoint i32 [[FIRST_KEEP]], [[FIRST_INSERT]]
++; CHECK-NEXT:    [[SECOND_KEEP:%.*]] = and i32 [[FIRST]], -16711681
++; CHECK-NEXT:    [[SECOND_INSERT:%.*]] = and i32 [[X]], 16711680
++; CHECK-NEXT:    [[SECOND:%.*]] = or disjoint i32 [[SECOND_KEEP]], [[SECOND_INSERT]]
++; CHECK-NEXT:    store i32 [[SECOND]], ptr [[P]], align 4
++; CHECK-NEXT:    [[LAST_KEEP:%.*]] = and i32 [[SECOND]], -256
++; CHECK-NEXT:    [[LAST_INSERT:%.*]] = and i32 [[X]], 255
++; CHECK-NEXT:    [[LAST:%.*]] = or disjoint i32 [[LAST_KEEP]], [[LAST_INSERT]]
++; CHECK-NEXT:    store i32 [[LAST]], ptr [[P]], align 4
++; CHECK-NEXT:    [[BIT_KEEP:%.*]] = and i32 [[LAST]], -129
++; CHECK-NEXT:    [[BIT_INSERT:%.*]] = and i32 [[Y]], 128
++; CHECK-NEXT:    [[BIT:%.*]] = or disjoint i32 [[BIT_KEEP]], [[BIT_INSERT]]
++; CHECK-NEXT:    store i32 [[BIT]], ptr [[P]], align 4
++; CHECK-NEXT:    ret void
++;
++  %old = load i32, ptr %p, align 4
++  %lo.keep = and i32 %old, 268435455
++  %lo.insert = and i32 %x, -268435456
++  %lo = or disjoint i32 %lo.keep, %lo.insert
++  store i32 %lo, ptr %p, align 4
++  %hi.keep = and i32 %lo, -251658241
++  %hi.insert = and i32 %x, 251658240
++  %hi = or disjoint i32 %hi.keep, %hi.insert
++  store i32 %hi, ptr %p, align 4
++
++  %full.keep = and i32 %hi, 0
++  %full = or disjoint i32 %full.keep, %y
++  store i32 %full, ptr %p, align 4
++
++  %first.keep = and i32 %full, 16777215
++  %first.insert = and i32 %x, -16777216
++  %first = or disjoint i32 %first.keep, %first.insert
++  store i32 %first, ptr %p, align 4
++  %second.keep = and i32 %first, -16711681
++  %second.insert = and i32 %x, 16711680
++  %second = or disjoint i32 %second.keep, %second.insert
++  store i32 %second, ptr %p, align 4
++  %last.keep = and i32 %second, -256
++  %last.insert = and i32 %x, 255
++  %last = or disjoint i32 %last.keep, %last.insert
++  store i32 %last, ptr %p, align 4
++  %bit.keep = and i32 %last, -129
++  %bit.insert = and i32 %y, 128
++  %bit = or disjoint i32 %bit.keep, %bit.insert
++  store i32 %bit, ptr %p, align 4
++  ret void
++}
++
++; %d overlaps %a and %b, but misses the immediately preceding %c.
++define void @crossing_updates(ptr %p, i16 %x, i16 %y) {
++; CHECK-LABEL: define void @crossing_updates(
++; CHECK-SAME: ptr [[P:%.*]], i16 [[X:%.*]], i16 [[Y:%.*]]) {
++; CHECK-NEXT:    [[OLD:%.*]] = load i16, ptr [[P]], align 2
++; CHECK-NEXT:    [[A_KEEP:%.*]] = and i16 [[OLD]], -3841
++; CHECK-NEXT:    [[A_INSERT:%.*]] = and i16 [[X]], 3840
++; CHECK-NEXT:    [[A:%.*]] = or disjoint i16 [[A_KEEP]], [[A_INSERT]]
++; CHECK-NEXT:    [[B_KEEP:%.*]] = and i16 [[A]], -241
++; CHECK-NEXT:    [[B_INSERT:%.*]] = and i16 [[X]], 240
++; CHECK-NEXT:    [[B:%.*]] = or disjoint i16 [[B_KEEP]], [[B_INSERT]]
++; CHECK-NEXT:    [[C_KEEP:%.*]] = and i16 [[B]], 4095
++; CHECK-NEXT:    [[C_INSERT:%.*]] = and i16 [[X]], -4096
++; CHECK-NEXT:    [[C:%.*]] = or disjoint i16 [[C_KEEP]], [[C_INSERT]]
++; CHECK-NEXT:    store i16 [[C]], ptr [[P]], align 2
++; CHECK-NEXT:    [[D_KEEP:%.*]] = and i16 [[C]], -961
++; CHECK-NEXT:    [[D_INSERT:%.*]] = and i16 [[Y]], 960
++; CHECK-NEXT:    [[D:%.*]] = or disjoint i16 [[D_KEEP]], [[D_INSERT]]
++; CHECK-NEXT:    [[E_KEEP:%.*]] = and i16 [[D]], -61
++; CHECK-NEXT:    [[E_INSERT:%.*]] = and i16 [[Y]], 60
++; CHECK-NEXT:    [[E:%.*]] = or disjoint i16 [[E_KEEP]], [[E_INSERT]]
++; CHECK-NEXT:    store i16 [[E]], ptr [[P]], align 2
++; CHECK-NEXT:    ret void
++;
++  %old = load i16, ptr %p, align 2
++  %a.keep = and i16 %old, -3841
++  %a.insert = and i16 %x, 3840
++  %a = or disjoint i16 %a.keep, %a.insert
++  store i16 %a, ptr %p, align 2
++  %b.keep = and i16 %a, -241
++  %b.insert = and i16 %x, 240
++  %b = or disjoint i16 %b.keep, %b.insert
++  store i16 %b, ptr %p, align 2
++  %c.keep = and i16 %b, 4095
++  %c.insert = and i16 %x, -4096
++  %c = or disjoint i16 %c.keep, %c.insert
++  store i16 %c, ptr %p, align 2
++  %d.keep = and i16 %c, -961
++  %d.insert = and i16 %y, 960
++  %d = or disjoint i16 %d.keep, %d.insert
++  store i16 %d, ptr %p, align 2
++  %e.keep = and i16 %d, -61
++  %e.insert = and i16 %y, 60
++  %e = or disjoint i16 %e.keep, %e.insert
++  store i16 %e, ptr %p, align 2
++  ret void
++}
++
++; The final i8 store covers only one byte of the earlier i16 store.
++; FIXME: Reduce the cost of packing the two bytes.
++define void @mixed_width_disjoint_or(ptr %p, i16 %x, i8 %y) {
++; CHECK-LABEL: define void @mixed_width_disjoint_or(
++; CHECK-SAME: ptr [[P:%.*]], i16 [[X:%.*]], i8 [[Y:%.*]]) {
++; CHECK-NEXT:    [[OLD_WORD:%.*]] = load i16, ptr [[P]], align 1
++; CHECK-NEXT:    [[OLD_BYTE:%.*]] = load i8, ptr [[P]], align 1
++; CHECK-NEXT:    [[WIDE_KEEP:%.*]] = and i16 [[OLD_WORD]], -129
++; CHECK-NEXT:    [[WIDE_INSERT:%.*]] = and i16 [[X]], 128
++; CHECK-NEXT:    [[WIDE:%.*]] = or disjoint i16 [[WIDE_KEEP]], [[WIDE_INSERT]]
++; CHECK-NEXT:    [[NARROW_KEEP:%.*]] = and i8 [[OLD_BYTE]], -16
++; CHECK-NEXT:    [[NARROW_INSERT:%.*]] = and i8 [[Y]], 15
++; CHECK-NEXT:    [[NARROW:%.*]] = or disjoint i8 [[NARROW_KEEP]], [[NARROW_INSERT]]
++; CHECK-NEXT:    [[TMP1:%.*]] = freeze i16 [[WIDE]]
++; CHECK-NEXT:    [[TMP2:%.*]] = freeze i8 [[NARROW]]
++; CHECK-NEXT:    [[TMP3:%.*]] = and i16 [[TMP1]], 255
++; CHECK-NEXT:    [[TMP4:%.*]] = zext i8 [[TMP2]] to i16
++; CHECK-NEXT:    [[TMP5:%.*]] = shl i16 [[TMP4]], 8
++; CHECK-NEXT:    [[TMP6:%.*]] = or disjoint i16 [[TMP3]], [[TMP5]]
++; CHECK-NEXT:    store i16 [[TMP6]], ptr [[P]], align 1
++; CHECK-NEXT:    ret void
++;
++  %old.word = load i16, ptr %p, align 1
++  %old.byte = load i8, ptr %p, align 1
++  %wide.keep = and i16 %old.word, -129
++  %wide.insert = and i16 %x, 128
++  %wide = or disjoint i16 %wide.keep, %wide.insert
++  store i16 %wide, ptr %p, align 1
++
++  %narrow.keep = and i8 %old.byte, -16
++  %narrow.insert = and i8 %y, 15
++  %narrow = or disjoint i8 %narrow.keep, %narrow.insert
++  store i8 %narrow, ptr %p, align 1
++  ret void
++}
++
++; Negative tests
++
++; The i8 store gets its kept bits from the high byte of the i16 load.
++; The disjoint OR still needs an available i8 value for this access.
++define void @mixed_width_gap_without_old(ptr %p, i16 %x) {
++; CHECK-LABEL: define void @mixed_width_gap_without_old(
++; CHECK-SAME: ptr [[P:%.*]], i16 [[X:%.*]]) {
++; CHECK-NEXT:    [[OLD_WORD:%.*]] = load i16, ptr [[P]], align 1
++; CHECK-NEXT:    [[OLD_HIGH:%.*]] = lshr i16 [[OLD_WORD]], 8
++; CHECK-NEXT:    [[OLD_BYTE:%.*]] = trunc i16 [[OLD_HIGH]] to i8
++; CHECK-NEXT:    [[WIDE_KEEP:%.*]] = and i16 [[OLD_WORD]], -129
++; CHECK-NEXT:    [[WIDE_INSERT:%.*]] = and i16 [[X]], 128
++; CHECK-NEXT:    [[WIDE:%.*]] = or disjoint i16 [[WIDE_KEEP]], [[WIDE_INSERT]]
++; CHECK-NEXT:    store i16 [[WIDE]], ptr [[P]], align 1
++; CHECK-NEXT:    [[X_HIGH:%.*]] = lshr i16 [[X]], 8
++; CHECK-NEXT:    [[X8:%.*]] = trunc i16 [[X_HIGH]] to i8
++; CHECK-NEXT:    [[NARROW_KEEP:%.*]] = and i8 [[OLD_BYTE]], 15
++; CHECK-NEXT:    [[NARROW_INSERT:%.*]] = and i8 [[X8]], -16
++; CHECK-NEXT:    [[NARROW:%.*]] = or disjoint i8 [[NARROW_KEEP]], [[NARROW_INSERT]]
++; CHECK-NEXT:    store i8 [[NARROW]], ptr [[P]], align 1
++; CHECK-NEXT:    ret void
++;
++  %old.word = load i16, ptr %p, align 1
++  %old.high = lshr i16 %old.word, 8
++  %old.byte = trunc i16 %old.high to i8
++
++  %wide.keep = and i16 %old.word, -129
++  %wide.insert = and i16 %x, 128
++  %wide = or disjoint i16 %wide.keep, %wide.insert
++  store i16 %wide, ptr %p, align 1
++
++  %x.high = lshr i16 %x, 8
++  %x8 = trunc i16 %x.high to i8
++  %narrow.keep = and i8 %old.byte, 15
++  %narrow.insert = and i8 %x8, -16
++  %narrow = or disjoint i8 %narrow.keep, %narrow.insert
++  store i8 %narrow, ptr %p, align 1
++  ret void
++}
++
++; The i8 store updates two separate bits selected by the mask 0x90.
++define void @mixed_width_gap_with_noncontiguous_mask(ptr %p, i8 noundef %x, i16 %y) {
++; CHECK-LABEL: define void @mixed_width_gap_with_noncontiguous_mask(
++; CHECK-SAME: ptr [[P:%.*]], i8 noundef [[X:%.*]], i16 [[Y:%.*]]) {
++; CHECK-NEXT:    [[OLD_WORD:%.*]] = load i16, ptr [[P]], align 1
++; CHECK-NEXT:    [[OLD_BYTE:%.*]] = load i8, ptr [[P]], align 1
++; CHECK-NEXT:    [[WIDE_KEEP:%.*]] = and i16 [[OLD_WORD]], -129
++; CHECK-NEXT:    [[WIDE_INSERT:%.*]] = and i16 [[Y]], 128
++; CHECK-NEXT:    [[WIDE:%.*]] = or disjoint i16 [[WIDE_KEEP]], [[WIDE_INSERT]]
++; CHECK-NEXT:    store i16 [[WIDE]], ptr [[P]], align 1
++; CHECK-NEXT:    [[NARROW_INSERT:%.*]] = and i8 [[X]], -112
++; CHECK-NEXT:    [[NARROW_KEEP:%.*]] = and i8 [[OLD_BYTE]], 111
++; CHECK-NEXT:    [[NARROW:%.*]] = or disjoint i8 [[NARROW_KEEP]], [[NARROW_INSERT]]
++; CHECK-NEXT:    store i8 [[NARROW]], ptr [[P]], align 1
++; CHECK-NEXT:    ret void
++;
++  %old.word = load i16, ptr %p, align 1
++  %old.byte = load i8, ptr %p, align 1
++
++  %wide.keep = and i16 %old.word, -129
++  %wide.insert = and i16 %y, 128
++  %wide = or disjoint i16 %wide.keep, %wide.insert
++  store i16 %wide, ptr %p, align 1
++
++  %narrow.insert = and i8 %x, -112
++  %narrow.keep = and i8 %old.byte, 111
++  %narrow = or disjoint i8 %narrow.keep, %narrow.insert
++  store i8 %narrow, ptr %p, align 1
++  ret void
++}
++
++; A load in a predecessor supplies the two halfword updates.
++; The intervening store writes a disjoint location.
++define void @merge_chain_with_noalias_store(ptr %p, ptr noalias %q, i64 %x, i64 %y, i1 %go) {
++; CHECK-LABEL: define void @merge_chain_with_noalias_store(
++; CHECK-SAME: ptr [[P:%.*]], ptr noalias [[Q:%.*]], i64 [[X:%.*]], i64 [[Y:%.*]], i1 [[GO:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[OLD:%.*]] = load i64, ptr [[P]], align 8
++; CHECK-NEXT:    br i1 [[GO]], label %[[PREPARE:.*]], label %[[EXIT:.*]]
++; CHECK:       [[PREPARE]]:
++; CHECK-NEXT:    store i64 [[X]], ptr [[Q]], align 8
++; CHECK-NEXT:    br label %[[WRITE:.*]]
++; CHECK:       [[WRITE]]:
++; CHECK-NEXT:    [[KEEP_FIRST:%.*]] = and i64 [[OLD]], -281470681743361
++; CHECK-NEXT:    [[INSERT_FIRST:%.*]] = and i64 [[X]], 281470681743360
++; CHECK-NEXT:    [[FIRST:%.*]] = or disjoint i64 [[KEEP_FIRST]], [[INSERT_FIRST]]
++; CHECK-NEXT:    [[KEEP_LAST:%.*]] = and i64 [[FIRST]], 281474976710655
++; CHECK-NEXT:    [[INSERT_LAST:%.*]] = and i64 [[Y]], -281474976710656
++; CHECK-NEXT:    [[LAST:%.*]] = or disjoint i64 [[KEEP_LAST]], [[INSERT_LAST]]
++; CHECK-NEXT:    store i64 [[LAST]], ptr [[P]], align 8
++; CHECK-NEXT:    br label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %old = load i64, ptr %p, align 8
++  br i1 %go, label %prepare, label %exit
++
++prepare:
++  store i64 %x, ptr %q, align 8
++  br label %write
++
++write:
++  %keep.first = and i64 %old, -281470681743361
++  %insert.first = and i64 %x, 281470681743360
++  %first = or disjoint i64 %keep.first, %insert.first
++  store i64 %first, ptr %p, align 8
++  %keep.last = and i64 %first, 281474976710655
++  %insert.last = and i64 %y, -281474976710656
++  %last = or disjoint i64 %keep.last, %insert.last
++  store i64 %last, ptr %p, align 8
++  br label %exit
++
++exit:
++  ret void
++}
++
++; An intervening write may clobber the word read in the predecessor.
++define void @chain_with_mayalias_store(ptr %p, ptr %q, i64 %x, i64 %y, i1 %go) {
++; CHECK-LABEL: define void @chain_with_mayalias_store(
++; CHECK-SAME: ptr [[P:%.*]], ptr [[Q:%.*]], i64 [[X:%.*]], i64 [[Y:%.*]], i1 [[GO:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[OLD:%.*]] = load i64, ptr [[P]], align 8
++; CHECK-NEXT:    br i1 [[GO]], label %[[PREPARE:.*]], label %[[EXIT:.*]]
++; CHECK:       [[PREPARE]]:
++; CHECK-NEXT:    store i64 [[X]], ptr [[Q]], align 8
++; CHECK-NEXT:    br label %[[WRITE:.*]]
++; CHECK:       [[WRITE]]:
++; CHECK-NEXT:    [[KEEP_FIRST:%.*]] = and i64 [[OLD]], -281470681743361
++; CHECK-NEXT:    [[INSERT_FIRST:%.*]] = and i64 [[X]], 281470681743360
++; CHECK-NEXT:    [[FIRST:%.*]] = or disjoint i64 [[KEEP_FIRST]], [[INSERT_FIRST]]
++; CHECK-NEXT:    store i64 [[FIRST]], ptr [[P]], align 8
++; CHECK-NEXT:    [[KEEP_LAST:%.*]] = and i64 [[FIRST]], 281474976710655
++; CHECK-NEXT:    [[INSERT_LAST:%.*]] = and i64 [[Y]], -281474976710656
++; CHECK-NEXT:    [[LAST:%.*]] = or disjoint i64 [[KEEP_LAST]], [[INSERT_LAST]]
++; CHECK-NEXT:    store i64 [[LAST]], ptr [[P]], align 8
++; CHECK-NEXT:    br label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %old = load i64, ptr %p, align 8
++  br i1 %go, label %prepare, label %exit
++
++prepare:
++  store i64 %x, ptr %q, align 8
++  br label %write
++
++write:
++  %keep.first = and i64 %old, -281470681743361
++  %insert.first = and i64 %x, 281470681743360
++  %first = or disjoint i64 %keep.first, %insert.first
++  store i64 %first, ptr %p, align 8
++  %keep.last = and i64 %first, 281474976710655
++  %insert.last = and i64 %y, -281474976710656
++  %last = or disjoint i64 %keep.last, %insert.last
++  store i64 %last, ptr %p, align 8
++  br label %exit
++
++exit:
++  ret void
++}
+diff --git a/llvm/test/Transforms/AggressiveInstCombine/store-chain-ranges.ll b/llvm/test/Transforms/AggressiveInstCombine/store-chain-ranges.ll
+new file mode 100644
+index 00000000000000..155dcedbad4443
+--- /dev/null
++++ b/llvm/test/Transforms/AggressiveInstCombine/store-chain-ranges.ll
+@@ -0,0 +1,567 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -passes=aggressive-instcombine -S %s | FileCheck %s
++; RUN: opt -passes=aggressive-instcombine -S -data-layout=e-p:64:64-n8:16:32:64 %s | FileCheck %s
++
++target datalayout = "e-p:64:64"
++
++; Positive tests
++
++; The first byte and the next bit are replaced. The second update takes
++; its preserved bits from the first one.
++define void @contiguous(ptr %p, i16 %x, i16 %y) {
++; CHECK-LABEL: define void @contiguous(
++; CHECK-SAME: ptr [[P:%.*]], i16 [[X:%.*]], i16 [[Y:%.*]]) {
++; CHECK-NEXT:    [[OLD:%.*]] = load i16, ptr [[P]], align 1
++; CHECK-NEXT:    [[KEEP_FIRST:%.*]] = and i16 [[OLD]], -256
++; CHECK-NEXT:    [[INSERT_FIRST:%.*]] = and i16 [[X]], 255
++; CHECK-NEXT:    [[FIRST:%.*]] = or disjoint i16 [[KEEP_FIRST]], [[INSERT_FIRST]]
++; CHECK-NEXT:    [[KEEP_SECOND:%.*]] = and i16 [[FIRST]], -257
++; CHECK-NEXT:    [[INSERT_SECOND:%.*]] = and i16 [[Y]], 256
++; CHECK-NEXT:    [[SECOND:%.*]] = or disjoint i16 [[KEEP_SECOND]], [[INSERT_SECOND]]
++; CHECK-NEXT:    store i16 [[SECOND]], ptr [[P]], align 1
++; CHECK-NEXT:    ret void
++;
++  %old = load i16, ptr %p, align 1
++  %keep.first = and i16 %old, -256
++  %insert.first = and i16 %x, 255
++  %first = or disjoint i16 %keep.first, %insert.first
++  store i16 %first, ptr %p, align 1
++
++  %keep.second = and i16 %first, -257
++  %insert.second = and i16 %y, 256
++  %second = or disjoint i16 %keep.second, %insert.second
++  store i16 %second, ptr %p, align 1
++  ret void
++}
++
++; The updates to bits [0, 8) and [8, 9) of %p use the same input %x.
++define void @low_nine_bits(ptr %p, ptr noalias %q, i16 %x) {
++; CHECK-LABEL: define void @low_nine_bits(
++; CHECK-SAME: ptr [[P:%.*]], ptr noalias [[Q:%.*]], i16 [[X:%.*]]) {
++; CHECK-NEXT:    [[OLD:%.*]] = load i16, ptr [[P]], align 2
++; CHECK-NEXT:    [[KEEP:%.*]] = and i16 [[OLD]], -256
++; CHECK-NEXT:    [[LO:%.*]] = and i16 [[X]], 255
++; CHECK-NEXT:    [[FIRST:%.*]] = or disjoint i16 [[KEEP]], [[LO]]
++; CHECK-NEXT:    store i16 [[X]], ptr [[Q]], align 2
++; CHECK-NEXT:    [[KEEP_HIGH:%.*]] = and i16 [[FIRST]], -257
++; CHECK-NEXT:    [[HI:%.*]] = and i16 [[X]], 256
++; CHECK-NEXT:    [[SECOND:%.*]] = or disjoint i16 [[KEEP_HIGH]], [[HI]]
++; CHECK-NEXT:    store i16 [[SECOND]], ptr [[P]], align 2
++; CHECK-NEXT:    ret void
++;
++  %old = load i16, ptr %p, align 2
++  %keep = and i16 %old, -256
++  %lo = and i16 %x, 255
++  %first = or disjoint i16 %keep, %lo
++  store i16 %first, ptr %p, align 2
++  store i16 %x, ptr %q, align 2
++  %keep.high = and i16 %first, -257
++  %hi = and i16 %x, 256
++  %second = or disjoint i16 %keep.high, %hi
++  store i16 %second, ptr %p, align 2
++  ret void
++}
++
++; The whole-word update separates %low from the following two bit updates.
++define void @whole_access_update(ptr %p, i16 %x, i16 %seed) {
++; CHECK-LABEL: define void @whole_access_update(
++; CHECK-SAME: ptr [[P:%.*]], i16 [[X:%.*]], i16 [[SEED:%.*]]) {
++; CHECK-NEXT:    [[OLD:%.*]] = load i16, ptr [[P]], align 1
++; CHECK-NEXT:    [[LOW_KEEP:%.*]] = and i16 [[OLD]], -256
++; CHECK-NEXT:    [[LOW_INSERT:%.*]] = and i16 [[X]], 255
++; CHECK-NEXT:    [[LOW:%.*]] = or disjoint i16 [[LOW_KEEP]], [[LOW_INSERT]]
++; CHECK-NEXT:    store i16 [[LOW]], ptr [[P]], align 1
++; CHECK-NEXT:    store i16 [[SEED]], ptr [[P]], align 1
++; CHECK-NEXT:    [[BIT_KEEP:%.*]] = and i16 [[SEED]], -257
++; CHECK-NEXT:    [[BIT_INSERT:%.*]] = and i16 [[X]], 256
++; CHECK-NEXT:    [[BIT:%.*]] = or disjoint i16 [[BIT_KEEP]], [[BIT_INSERT]]
++; CHECK-NEXT:    [[HIGH_KEEP:%.*]] = and i16 [[BIT]], -513
++; CHECK-NEXT:    [[HIGH_INSERT:%.*]] = and i16 [[X]], 512
++; CHECK-NEXT:    [[HIGH:%.*]] = or disjoint i16 [[HIGH_KEEP]], [[HIGH_INSERT]]
++; CHECK-NEXT:    store i16 [[HIGH]], ptr [[P]], align 1
++; CHECK-NEXT:    ret void
++;
++  %old = load i16, ptr %p, align 1
++  %low.keep = and i16 %old, -256
++  %low.insert = and i16 %x, 255
++  %low = or disjoint i16 %low.keep, %low.insert
++  store i16 %low, ptr %p, align 1
++
++  %full.keep = and i16 %low, 0
++  %full = or disjoint i16 %full.keep, %seed
++  store i16 %full, ptr %p, align 1
++
++  %bit.keep = and i16 %full, -257
++  %bit.insert = and i16 %x, 256
++  %bit = or disjoint i16 %bit.keep, %bit.insert
++  store i16 %bit, ptr %p, align 1
++
++  %high.keep = and i16 %bit, -513
++  %high.insert = and i16 %x, 512
++  %high = or disjoint i16 %high.keep, %high.insert
++  store i16 %high, ptr %p, align 1
++  ret void
++}
++
++; The second write to bit 8 starts the next pair.
++define void @overlapping_updates(ptr %p, i16 %x, i16 %y) {
++; CHECK-LABEL: define void @overlapping_updates(
++; CHECK-SAME: ptr [[P:%.*]], i16 [[X:%.*]], i16 [[Y:%.*]]) {
++; CHECK-NEXT:    [[OLD:%.*]] = load i16, ptr [[P]], align 1
++; CHECK-NEXT:    [[FIRST_KEEP:%.*]] = and i16 [[OLD]], -257
++; CHECK-NEXT:    [[FIRST_INSERT:%.*]] = and i16 [[X]], 256
++; CHECK-NEXT:    [[FIRST:%.*]] = or disjoint i16 [[FIRST_KEEP]], [[FIRST_INSERT]]
++; CHECK-NEXT:    [[LOW_KEEP:%.*]] = and i16 [[FIRST]], -256
++; CHECK-NEXT:    [[LOW_INSERT:%.*]] = and i16 [[X]], 255
++; CHECK-NEXT:    [[LOW:%.*]] = or disjoint i16 [[LOW_KEEP]], [[LOW_INSERT]]
++; CHECK-NEXT:    store i16 [[LOW]], ptr [[P]], align 1
++; CHECK-NEXT:    [[NEXT_KEEP:%.*]] = and i16 [[LOW]], -257
++; CHECK-NEXT:    [[NEXT_INSERT:%.*]] = and i16 [[Y]], 256
++; CHECK-NEXT:    [[NEXT:%.*]] = or disjoint i16 [[NEXT_KEEP]], [[NEXT_INSERT]]
++; CHECK-NEXT:    [[NEXT_LOW_KEEP:%.*]] = and i16 [[NEXT]], -256
++; CHECK-NEXT:    [[NEXT_LOW_INSERT:%.*]] = and i16 [[Y]], 255
++; CHECK-NEXT:    [[NEXT_LOW:%.*]] = or disjoint i16 [[NEXT_LOW_KEEP]], [[NEXT_LOW_INSERT]]
++; CHECK-NEXT:    store i16 [[NEXT_LOW]], ptr [[P]], align 1
++; CHECK-NEXT:    ret void
++;
++  %old = load i16, ptr %p, align 1
++  %first.keep = and i16 %old, -257
++  %first.insert = and i16 %x, 256
++  %first = or disjoint i16 %first.keep, %first.insert
++  store i16 %first, ptr %p, align 1
++
++  %low.keep = and i16 %first, -256
++  %low.insert = and i16 %x, 255
++  %low = or disjoint i16 %low.keep, %low.insert
++  store i16 %low, ptr %p, align 1
++
++  %next.keep = and i16 %low, -257
++  %next.insert = and i16 %y, 256
++  %next = or disjoint i16 %next.keep, %next.insert
++  store i16 %next, ptr %p, align 1
++
++  %next.low.keep = and i16 %next, -256
++  %next.low.insert = and i16 %y, 255
++  %next.low = or disjoint i16 %next.low.keep, %next.low.insert
++  store i16 %next.low, ptr %p, align 1
++  ret void
++}
++
++; Only the [0, 9) run ends with a store covering its full access.
++define void @subchain_access_range(ptr %p, i32 %x, i16 %y, i16 %seed) {
++; CHECK-LABEL: define void @subchain_access_range(
++; CHECK-SAME: ptr [[P:%.*]], i32 [[X:%.*]], i16 [[Y:%.*]], i16 [[SEED:%.*]]) {
++; CHECK-NEXT:    [[OLD_WIDE:%.*]] = load i32, ptr [[P]], align 1
++; CHECK-NEXT:    [[OLD:%.*]] = load i16, ptr [[P]], align 1
++; CHECK-NEXT:    [[UPPER_KEEP:%.*]] = and i32 [[OLD_WIDE]], -16711681
++; CHECK-NEXT:    [[UPPER_INSERT:%.*]] = and i32 [[X]], 16711680
++; CHECK-NEXT:    [[TMP5:%.*]] = or disjoint i32 [[UPPER_KEEP]], [[UPPER_INSERT]]
++; CHECK-NEXT:    [[TMP1:%.*]] = freeze i32 [[TMP5]]
++; CHECK-NEXT:    [[TMP2:%.*]] = freeze i16 [[SEED]]
++; CHECK-NEXT:    [[TMP3:%.*]] = and i32 [[TMP1]], -65536
++; CHECK-NEXT:    [[TMP4:%.*]] = zext i16 [[TMP2]] to i32
++; CHECK-NEXT:    [[TMP6:%.*]] = or disjoint i32 [[TMP3]], [[TMP4]]
++; CHECK-NEXT:    store i32 [[TMP6]], ptr [[P]], align 1
++; CHECK-NEXT:    [[LOW_KEEP:%.*]] = and i16 [[SEED]], -256
++; CHECK-NEXT:    [[LOW_INSERT:%.*]] = and i16 [[Y]], 255
++; CHECK-NEXT:    [[LOW:%.*]] = or disjoint i16 [[LOW_KEEP]], [[LOW_INSERT]]
++; CHECK-NEXT:    [[BIT_KEEP:%.*]] = and i16 [[LOW]], -257
++; CHECK-NEXT:    [[BIT_INSERT:%.*]] = and i16 [[Y]], 256
++; CHECK-NEXT:    [[BIT:%.*]] = or disjoint i16 [[BIT_KEEP]], [[BIT_INSERT]]
++; CHECK-NEXT:    store i16 [[BIT]], ptr [[P]], align 1
++; CHECK-NEXT:    ret void
++;
++  %old.wide = load i32, ptr %p, align 1
++  %old = load i16, ptr %p, align 1
++  %upper.keep = and i32 %old.wide, -16711681
++  %upper.insert = and i32 %x, 16711680
++  %upper = or disjoint i32 %upper.keep, %upper.insert
++  store i32 %upper, ptr %p, align 1
++
++  %full.keep = and i16 %old, 0
++  %full = or disjoint i16 %full.keep, %seed
++  store i16 %full, ptr %p, align 1
++
++  %low.keep = and i16 %full, -256
++  %low.insert = and i16 %y, 255
++  %low = or disjoint i16 %low.keep, %low.insert
++  store i16 %low, ptr %p, align 1
++
++  %bit.keep = and i16 %low, -257
++  %bit.insert = and i16 %y, 256
++  %bit = or disjoint i16 %bit.keep, %bit.insert
++  store i16 %bit, ptr %p, align 1
++  ret void
++}
++
++; One byte separates %last from the first two adjacent byte updates.
++define void @gap_after_two_bytes(ptr %p, i32 %x) {
++; CHECK-LABEL: define void @gap_after_two_bytes(
++; CHECK-SAME: ptr [[P:%.*]], i32 [[X:%.*]]) {
++; CHECK-NEXT:    [[OLD:%.*]] = load i32, ptr [[P]], align 4
++; CHECK-NEXT:    [[FIRST_KEEP:%.*]] = and i32 [[OLD]], -256
++; CHECK-NEXT:    [[FIRST_INSERT:%.*]] = and i32 [[X]], 255
++; CHECK-NEXT:    [[FIRST:%.*]] = or disjoint i32 [[FIRST_KEEP]], [[FIRST_INSERT]]
++; CHECK-NEXT:    [[SECOND_KEEP:%.*]] = and i32 [[FIRST]], -65281
++; CHECK-NEXT:    [[SECOND_INSERT:%.*]] = and i32 [[X]], 65280
++; CHECK-NEXT:    [[SECOND:%.*]] = or disjoint i32 [[SECOND_KEEP]], [[SECOND_INSERT]]
++; CHECK-NEXT:    store i32 [[SECOND]], ptr [[P]], align 4
++; CHECK-NEXT:    [[LAST_KEEP:%.*]] = and i32 [[SECOND]], 16777215
++; CHECK-NEXT:    [[LAST_INSERT:%.*]] = and i32 [[X]], -16777216
++; CHECK-NEXT:    [[LAST:%.*]] = or disjoint i32 [[LAST_KEEP]], [[LAST_INSERT]]
++; CHECK-NEXT:    store i32 [[LAST]], ptr [[P]], align 4
++; CHECK-NEXT:    ret void
++;
++  %old = load i32, ptr %p, align 4
++  %first.keep = and i32 %old, -256
++  %first.insert = and i32 %x, 255
++  %first = or disjoint i32 %first.keep, %first.insert
++  store i32 %first, ptr %p, align 4
++  %second.keep = and i32 %first, -65281
++  %second.insert = and i32 %x, 65280
++  %second = or disjoint i32 %second.keep, %second.insert
++  store i32 %second, ptr %p, align 4
++  %last.keep = and i32 %second, 16777215
++  %last.insert = and i32 %x, -16777216
++  %last = or disjoint i32 %last.keep, %last.insert
++  store i32 %last, ptr %p, align 4
++  ret void
++}
++
++; Updates to bits [0, 2) and [8, 10) are interleaved in program order.
++define void @interleaved_updates(ptr %p) {
++; CHECK-LABEL: define void @interleaved_updates(
++; CHECK-SAME: ptr [[P:%.*]]) {
++; CHECK-NEXT:    [[OLD:%.*]] = load i16, ptr [[P]], align 2
++; CHECK-NEXT:    [[HIGH1_KEEP:%.*]] = and i16 [[OLD]], -513
++; CHECK-NEXT:    [[HIGH1:%.*]] = or disjoint i16 [[HIGH1_KEEP]], 512
++; CHECK-NEXT:    [[LOW1_KEEP:%.*]] = and i16 [[HIGH1]], -3
++; CHECK-NEXT:    [[LOW1:%.*]] = or disjoint i16 [[LOW1_KEEP]], 2
++; CHECK-NEXT:    [[HIGH0_KEEP:%.*]] = and i16 [[LOW1]], -257
++; CHECK-NEXT:    [[HIGH0:%.*]] = or disjoint i16 [[HIGH0_KEEP]], 256
++; CHECK-NEXT:    store i16 [[HIGH0]], ptr [[P]], align 2
++; CHECK-NEXT:    [[LOW0_KEEP:%.*]] = and i16 [[HIGH0]], -2
++; CHECK-NEXT:    [[LOW0:%.*]] = or disjoint i16 [[LOW0_KEEP]], 1
++; CHECK-NEXT:    store i16 [[LOW0]], ptr [[P]], align 2
++; CHECK-NEXT:    ret void
++;
++  %old = load i16, ptr %p, align 2
++  %high1.keep = and i16 %old, -513
++  %high1 = or disjoint i16 %high1.keep, 512
++  store i16 %high1, ptr %p, align 2
++  %low1.keep = and i16 %high1, -3
++  %low1 = or disjoint i16 %low1.keep, 2
++  store i16 %low1, ptr %p, align 2
++  %high0.keep = and i16 %low1, -257
++  %high0 = or disjoint i16 %high0.keep, 256
++  store i16 %high0, ptr %p, align 2
++  %low0.keep = and i16 %high0, -2
++  %low0 = or disjoint i16 %low0.keep, 1
++  store i16 %low0, ptr %p, align 2
++  ret void
++}
++
++; The whole-word write and the later bit overwrite each start a new group.
++define void @overlap_after_gap(ptr %p, i32 %x, i32 %y) {
++; CHECK-LABEL: define void @overlap_after_gap(
++; CHECK-SAME: ptr [[P:%.*]], i32 [[X:%.*]], i32 [[Y:%.*]]) {
++; CHECK-NEXT:    [[OLD:%.*]] = load i32, ptr [[P]], align 4
++; CHECK-NEXT:    [[LO_KEEP:%.*]] = and i32 [[OLD]], -16
++; CHECK-NEXT:    [[LO_INSERT:%.*]] = and i32 [[X]], 15
++; CHECK-NEXT:    [[LO:%.*]] = or disjoint i32 [[LO_KEEP]], [[LO_INSERT]]
++; CHECK-NEXT:    [[HI_KEEP:%.*]] = and i32 [[LO]], -241
++; CHECK-NEXT:    [[HI_INSERT:%.*]] = and i32 [[X]], 240
++; CHECK-NEXT:    [[HI:%.*]] = or disjoint i32 [[HI_KEEP]], [[HI_INSERT]]
++; CHECK-NEXT:    store i32 [[HI]], ptr [[P]], align 4
++; CHECK-NEXT:    store i32 [[Y]], ptr [[P]], align 4
++; CHECK-NEXT:    [[FIRST_KEEP:%.*]] = and i32 [[Y]], -256
++; CHECK-NEXT:    [[FIRST_INSERT:%.*]] = and i32 [[X]], 255
++; CHECK-NEXT:    [[FIRST:%.*]] = or disjoint i32 [[FIRST_KEEP]], [[FIRST_INSERT]]
++; CHECK-NEXT:    [[SECOND_KEEP:%.*]] = and i32 [[FIRST]], -65281
++; CHECK-NEXT:    [[SECOND_INSERT:%.*]] = and i32 [[X]], 65280
++; CHECK-NEXT:    [[SECOND:%.*]] = or disjoint i32 [[SECOND_KEEP]], [[SECOND_INSERT]]
++; CHECK-NEXT:    store i32 [[SECOND]], ptr [[P]], align 4
++; CHECK-NEXT:    [[LAST_KEEP:%.*]] = and i32 [[SECOND]], 16777215
++; CHECK-NEXT:    [[LAST_INSERT:%.*]] = and i32 [[X]], -16777216
++; CHECK-NEXT:    [[LAST:%.*]] = or disjoint i32 [[LAST_KEEP]], [[LAST_INSERT]]
++; CHECK-NEXT:    store i32 [[LAST]], ptr [[P]], align 4
++; CHECK-NEXT:    [[BIT_KEEP:%.*]] = and i32 [[LAST]], -16777217
++; CHECK-NEXT:    [[BIT_INSERT:%.*]] = and i32 [[Y]], 16777216
++; CHECK-NEXT:    [[BIT:%.*]] = or disjoint i32 [[BIT_KEEP]], [[BIT_INSERT]]
++; CHECK-NEXT:    store i32 [[BIT]], ptr [[P]], align 4
++; CHECK-NEXT:    ret void
++;
++  %old = load i32, ptr %p, align 4
++  %lo.keep = and i32 %old, -16
++  %lo.insert = and i32 %x, 15
++  %lo = or disjoint i32 %lo.keep, %lo.insert
++  store i32 %lo, ptr %p, align 4
++  %hi.keep = and i32 %lo, -241
++  %hi.insert = and i32 %x, 240
++  %hi = or disjoint i32 %hi.keep, %hi.insert
++  store i32 %hi, ptr %p, align 4
++
++  %full.keep = and i32 %hi, 0
++  %full = or disjoint i32 %full.keep, %y
++  store i32 %full, ptr %p, align 4
++
++  %first.keep = and i32 %full, -256
++  %first.insert = and i32 %x, 255
++  %first = or disjoint i32 %first.keep, %first.insert
++  store i32 %first, ptr %p, align 4
++  %second.keep = and i32 %first, -65281
++  %second.insert = and i32 %x, 65280
++  %second = or disjoint i32 %second.keep, %second.insert
++  store i32 %second, ptr %p, align 4
++  %last.keep = and i32 %second, 16777215
++  %last.insert = and i32 %x, -16777216
++  %last = or disjoint i32 %last.keep, %last.insert
++  store i32 %last, ptr %p, align 4
++  %bit.keep = and i32 %last, -16777217
++  %bit.insert = and i32 %y, 16777216
++  %bit = or disjoint i32 %bit.keep, %bit.insert
++  store i32 %bit, ptr %p, align 4
++  ret void
++}
++
++; %d overlaps %a and %b, but misses the immediately preceding %c.
++define void @crossing_updates(ptr %p, i16 %x, i16 %y) {
++; CHECK-LABEL: define void @crossing_updates(
++; CHECK-SAME: ptr [[P:%.*]], i16 [[X:%.*]], i16 [[Y:%.*]]) {
++; CHECK-NEXT:    [[OLD:%.*]] = load i16, ptr [[P]], align 2
++; CHECK-NEXT:    [[A_KEEP:%.*]] = and i16 [[OLD]], -241
++; CHECK-NEXT:    [[A_INSERT:%.*]] = and i16 [[X]], 240
++; CHECK-NEXT:    [[A:%.*]] = or disjoint i16 [[A_KEEP]], [[A_INSERT]]
++; CHECK-NEXT:    [[B_KEEP:%.*]] = and i16 [[A]], -3841
++; CHECK-NEXT:    [[B_INSERT:%.*]] = and i16 [[X]], 3840
++; CHECK-NEXT:    [[B:%.*]] = or disjoint i16 [[B_KEEP]], [[B_INSERT]]
++; CHECK-NEXT:    [[C_KEEP:%.*]] = and i16 [[B]], -16
++; CHECK-NEXT:    [[C_INSERT:%.*]] = and i16 [[X]], 15
++; CHECK-NEXT:    [[C:%.*]] = or disjoint i16 [[C_KEEP]], [[C_INSERT]]
++; CHECK-NEXT:    store i16 [[C]], ptr [[P]], align 2
++; CHECK-NEXT:    [[D_KEEP:%.*]] = and i16 [[C]], -961
++; CHECK-NEXT:    [[D_INSERT:%.*]] = and i16 [[Y]], 960
++; CHECK-NEXT:    [[D:%.*]] = or disjoint i16 [[D_KEEP]], [[D_INSERT]]
++; CHECK-NEXT:    [[E_KEEP:%.*]] = and i16 [[D]], -15361
++; CHECK-NEXT:    [[E_INSERT:%.*]] = and i16 [[Y]], 15360
++; CHECK-NEXT:    [[E:%.*]] = or disjoint i16 [[E_KEEP]], [[E_INSERT]]
++; CHECK-NEXT:    store i16 [[E]], ptr [[P]], align 2
++; CHECK-NEXT:    ret void
++;
++  %old = load i16, ptr %p, align 2
++  %a.keep = and i16 %old, -241
++  %a.insert = and i16 %x, 240
++  %a = or disjoint i16 %a.keep, %a.insert
++  store i16 %a, ptr %p, align 2
++  %b.keep = and i16 %a, -3841
++  %b.insert = and i16 %x, 3840
++  %b = or disjoint i16 %b.keep, %b.insert
++  store i16 %b, ptr %p, align 2
++  %c.keep = and i16 %b, -16
++  %c.insert = and i16 %x, 15
++  %c = or disjoint i16 %c.keep, %c.insert
++  store i16 %c, ptr %p, align 2
++  %d.keep = and i16 %c, -961
++  %d.insert = and i16 %y, 960
++  %d = or disjoint i16 %d.keep, %d.insert
++  store i16 %d, ptr %p, align 2
++  %e.keep = and i16 %d, -15361
++  %e.insert = and i16 %y, 15360
++  %e = or disjoint i16 %e.keep, %e.insert
++  store i16 %e, ptr %p, align 2
++  ret void
++}
++
++; The final i8 store covers only one byte of the earlier i16 store.
++; FIXME: Reduce the cost of packing the two bytes.
++define void @mixed_width_disjoint_or(ptr %p, i16 %x, i8 %y) {
++; CHECK-LABEL: define void @mixed_width_disjoint_or(
++; CHECK-SAME: ptr [[P:%.*]], i16 [[X:%.*]], i8 [[Y:%.*]]) {
++; CHECK-NEXT:    [[OLD_WORD:%.*]] = load i16, ptr [[P]], align 1
++; CHECK-NEXT:    [[OLD_BYTE:%.*]] = load i8, ptr [[P]], align 1
++; CHECK-NEXT:    [[WIDE_KEEP:%.*]] = and i16 [[OLD_WORD]], -257
++; CHECK-NEXT:    [[WIDE_INSERT:%.*]] = and i16 [[X]], 256
++; CHECK-NEXT:    [[WIDE:%.*]] = or disjoint i16 [[WIDE_KEEP]], [[WIDE_INSERT]]
++; CHECK-NEXT:    [[NARROW_KEEP:%.*]] = and i8 [[OLD_BYTE]], 15
++; CHECK-NEXT:    [[NARROW_INSERT:%.*]] = and i8 [[Y]], -16
++; CHECK-NEXT:    [[NARROW:%.*]] = or disjoint i8 [[NARROW_KEEP]], [[NARROW_INSERT]]
++; CHECK-NEXT:    [[TMP1:%.*]] = freeze i16 [[WIDE]]
++; CHECK-NEXT:    [[TMP2:%.*]] = freeze i8 [[NARROW]]
++; CHECK-NEXT:    [[TMP3:%.*]] = and i16 [[TMP1]], -256
++; CHECK-NEXT:    [[TMP4:%.*]] = zext i8 [[TMP2]] to i16
++; CHECK-NEXT:    [[TMP5:%.*]] = or disjoint i16 [[TMP3]], [[TMP4]]
++; CHECK-NEXT:    store i16 [[TMP5]], ptr [[P]], align 1
++; CHECK-NEXT:    ret void
++;
++  %old.word = load i16, ptr %p, align 1
++  %old.byte = load i8, ptr %p, align 1
++  %wide.keep = and i16 %old.word, -257
++  %wide.insert = and i16 %x, 256
++  %wide = or disjoint i16 %wide.keep, %wide.insert
++  store i16 %wide, ptr %p, align 1
++
++  %narrow.keep = and i8 %old.byte, 15
++  %narrow.insert = and i8 %y, -16
++  %narrow = or disjoint i8 %narrow.keep, %narrow.insert
++  store i8 %narrow, ptr %p, align 1
++  ret void
++}
++
++; Negative tests
++
++; The i8 store gets its kept bits from the i16 load. The disjoint OR still
++; needs an available i8 value for this access.
++define void @mixed_width_gap_without_old(ptr %p, i16 %x) {
++; CHECK-LABEL: define void @mixed_width_gap_without_old(
++; CHECK-SAME: ptr [[P:%.*]], i16 [[X:%.*]]) {
++; CHECK-NEXT:    [[OLD_WORD:%.*]] = load i16, ptr [[P]], align 1
++; CHECK-NEXT:    [[OLD_BYTE:%.*]] = trunc i16 [[OLD_WORD]] to i8
++; CHECK-NEXT:    [[WIDE_KEEP:%.*]] = and i16 [[OLD_WORD]], -257
++; CHECK-NEXT:    [[WIDE_INSERT:%.*]] = and i16 [[X]], 256
++; CHECK-NEXT:    [[WIDE:%.*]] = or disjoint i16 [[WIDE_KEEP]], [[WIDE_INSERT]]
++; CHECK-NEXT:    store i16 [[WIDE]], ptr [[P]], align 1
++; CHECK-NEXT:    [[X8:%.*]] = trunc i16 [[X]] to i8
++; CHECK-NEXT:    [[NARROW_KEEP:%.*]] = and i8 [[OLD_BYTE]], -16
++; CHECK-NEXT:    [[NARROW_INSERT:%.*]] = and i8 [[X8]], 15
++; CHECK-NEXT:    [[NARROW:%.*]] = or disjoint i8 [[NARROW_KEEP]], [[NARROW_INSERT]]
++; CHECK-NEXT:    store i8 [[NARROW]], ptr [[P]], align 1
++; CHECK-NEXT:    ret void
++;
++  %old.word = load i16, ptr %p, align 1
++  %old.byte = trunc i16 %old.word to i8
++
++  %wide.keep = and i16 %old.word, -257
++  %wide.insert = and i16 %x, 256
++  %wide = or disjoint i16 %wide.keep, %wide.insert
++  store i16 %wide, ptr %p, align 1
++
++  %x8 = trunc i16 %x to i8
++  %narrow.keep = and i8 %old.byte, -16
++  %narrow.insert = and i8 %x8, 15
++  %narrow = or disjoint i8 %narrow.keep, %narrow.insert
++  store i8 %narrow, ptr %p, align 1
++  ret void
++}
++
++; The i8 store updates two separate bits selected by the mask 0x09.
++define void @mixed_width_gap_with_noncontiguous_mask(ptr %p, i8 noundef %x, i16 %y) {
++; CHECK-LABEL: define void @mixed_width_gap_with_noncontiguous_mask(
++; CHECK-SAME: ptr [[P:%.*]], i8 noundef [[X:%.*]], i16 [[Y:%.*]]) {
++; CHECK-NEXT:    [[OLD_WORD:%.*]] = load i16, ptr [[P]], align 1
++; CHECK-NEXT:    [[OLD_BYTE:%.*]] = load i8, ptr [[P]], align 1
++; CHECK-NEXT:    [[WIDE_KEEP:%.*]] = and i16 [[OLD_WORD]], -257
++; CHECK-NEXT:    [[WIDE_INSERT:%.*]] = and i16 [[Y]], 256
++; CHECK-NEXT:    [[WIDE:%.*]] = or disjoint i16 [[WIDE_KEEP]], [[WIDE_INSERT]]
++; CHECK-NEXT:    store i16 [[WIDE]], ptr [[P]], align 1
++; CHECK-NEXT:    [[NARROW_INSERT:%.*]] = and i8 [[X]], 9
++; CHECK-NEXT:    [[NARROW_KEEP:%.*]] = and i8 [[OLD_BYTE]], -10
++; CHECK-NEXT:    [[NARROW:%.*]] = or disjoint i8 [[NARROW_KEEP]], [[NARROW_INSERT]]
++; CHECK-NEXT:    store i8 [[NARROW]], ptr [[P]], align 1
++; CHECK-NEXT:    ret void
++;
++  %old.word = load i16, ptr %p, align 1
++  %old.byte = load i8, ptr %p, align 1
++
++  %wide.keep = and i16 %old.word, -257
++  %wide.insert = and i16 %y, 256
++  %wide = or disjoint i16 %wide.keep, %wide.insert
++  store i16 %wide, ptr %p, align 1
++
++  %narrow.insert = and i8 %x, 9
++  %narrow.keep = and i8 %old.byte, -10
++  %narrow = or disjoint i8 %narrow.keep, %narrow.insert
++  store i8 %narrow, ptr %p, align 1
++  ret void
++}
++
++; A load in a predecessor supplies the two halfword updates.
++; The intervening store writes a disjoint location.
++define void @merge_chain_with_noalias_store(ptr %p, ptr noalias %q, i64 %x, i64 %y, i1 %go) {
++; CHECK-LABEL: define void @merge_chain_with_noalias_store(
++; CHECK-SAME: ptr [[P:%.*]], ptr noalias [[Q:%.*]], i64 [[X:%.*]], i64 [[Y:%.*]], i1 [[GO:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[OLD:%.*]] = load i64, ptr [[P]], align 8
++; CHECK-NEXT:    br i1 [[GO]], label %[[PREPARE:.*]], label %[[EXIT:.*]]
++; CHECK:       [[PREPARE]]:
++; CHECK-NEXT:    store i64 [[X]], ptr [[Q]], align 8
++; CHECK-NEXT:    br label %[[WRITE:.*]]
++; CHECK:       [[WRITE]]:
++; CHECK-NEXT:    [[KEEP_FIRST:%.*]] = and i64 [[OLD]], -281470681743361
++; CHECK-NEXT:    [[INSERT_FIRST:%.*]] = and i64 [[X]], 281470681743360
++; CHECK-NEXT:    [[FIRST:%.*]] = or disjoint i64 [[KEEP_FIRST]], [[INSERT_FIRST]]
++; CHECK-NEXT:    [[KEEP_LAST:%.*]] = and i64 [[FIRST]], 281474976710655
++; CHECK-NEXT:    [[INSERT_LAST:%.*]] = and i64 [[Y]], -281474976710656
++; CHECK-NEXT:    [[LAST:%.*]] = or disjoint i64 [[KEEP_LAST]], [[INSERT_LAST]]
++; CHECK-NEXT:    store i64 [[LAST]], ptr [[P]], align 8
++; CHECK-NEXT:    br label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %old = load i64, ptr %p, align 8
++  br i1 %go, label %prepare, label %exit
++
++prepare:
++  store i64 %x, ptr %q, align 8
++  br label %write
++
++write:
++  %keep.first = and i64 %old, -281470681743361
++  %insert.first = and i64 %x, 281470681743360
++  %first = or disjoint i64 %keep.first, %insert.first
++  store i64 %first, ptr %p, align 8
++  %keep.last = and i64 %first, 281474976710655
++  %insert.last = and i64 %y, -281474976710656
++  %last = or disjoint i64 %keep.last, %insert.last
++  store i64 %last, ptr %p, align 8
++  br label %exit
++
++exit:
++  ret void
++}
++
++; An intervening write may clobber the word read in the predecessor.
++define void @chain_with_mayalias_store(ptr %p, ptr %q, i64 %x, i64 %y, i1 %go) {
++; CHECK-LABEL: define void @chain_with_mayalias_store(
++; CHECK-SAME: ptr [[P:%.*]], ptr [[Q:%.*]], i64 [[X:%.*]], i64 [[Y:%.*]], i1 [[GO:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[OLD:%.*]] = load i64, ptr [[P]], align 8
++; CHECK-NEXT:    br i1 [[GO]], label %[[PREPARE:.*]], label %[[EXIT:.*]]
++; CHECK:       [[PREPARE]]:
++; CHECK-NEXT:    store i64 [[X]], ptr [[Q]], align 8
++; CHECK-NEXT:    br label %[[WRITE:.*]]
++; CHECK:       [[WRITE]]:
++; CHECK-NEXT:    [[KEEP_FIRST:%.*]] = and i64 [[OLD]], -281470681743361
++; CHECK-NEXT:    [[INSERT_FIRST:%.*]] = and i64 [[X]], 281470681743360
++; CHECK-NEXT:    [[FIRST:%.*]] = or disjoint i64 [[KEEP_FIRST]], [[INSERT_FIRST]]
++; CHECK-NEXT:    store i64 [[FIRST]], ptr [[P]], align 8
++; CHECK-NEXT:    [[KEEP_LAST:%.*]] = and i64 [[FIRST]], 281474976710655
++; CHECK-NEXT:    [[INSERT_LAST:%.*]] = and i64 [[Y]], -281474976710656
++; CHECK-NEXT:    [[LAST:%.*]] = or disjoint i64 [[KEEP_LAST]], [[INSERT_LAST]]
++; CHECK-NEXT:    store i64 [[LAST]], ptr [[P]], align 8
++; CHECK-NEXT:    br label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %old = load i64, ptr %p, align 8
++  br i1 %go, label %prepare, label %exit
++
++prepare:
++  store i64 %x, ptr %q, align 8
++  br label %write
++
++write:
++  %keep.first = and i64 %old, -281470681743361
++  %insert.first = and i64 %x, 281470681743360
++  %first = or disjoint i64 %keep.first, %insert.first
++  store i64 %first, ptr %p, align 8
++  %keep.last = and i64 %first, 281474976710655
++  %insert.last = and i64 %y, -281474976710656
++  %last = or disjoint i64 %keep.last, %insert.last
++  store i64 %last, ptr %p, align 8
++  br label %exit
++
++exit:
++  ret void
++}
