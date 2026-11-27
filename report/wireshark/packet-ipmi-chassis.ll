@@ -1,4 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/wireshark/original/packet-ipmi-chassis?download=true
+inline.NumInlined: 16
 begin_hunk_0
 @rq02.byte1 = internal constant [2 x ptr] [ptr @hf_ipmi_chs_02_cctrl, ptr null], align 16
 @rq04.byte2 = internal constant [2 x ptr] [ptr @hf_ipmi_chs_04_perm_on, ptr null], align 16
@@ -200,12 +201,12 @@ bb.a:
 define internal void @rq08(ptr noundef %0, ptr noundef %1, ptr noundef %2) #0 {
 bb.a:
   %i.a = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef 0)
-  %i.b = and i8 %i.a, 127                         ; 4 uses
-  %3 = zext nneg i8 %i.b to i64                   ; 2 uses
+  %i.b = and i8 %i.a, 127                         ; 5 uses
   %i.c = icmp samesign ult i8 %i.b, 8             ; 2 uses
   br i1 %i.c, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
+  %3 = zext nneg i8 %i.b to i64
   %i.d = getelementptr [16 x i8], ptr @boot_options, i64 %3
   %i.e = getelementptr i8, ptr %i.d, i64 8
   %i.f = load ptr, ptr %i.e, align 8
@@ -230,13 +231,78 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %i.p, label %bb.e, label %bb.h
 
 bb.e:                                             ; preds = %bb.d
-  br i1 %i.c, label %bb.f, label %bb.g
+  br i1 %i.c, label %4, label %bb.g
 
-bb.f:                                             ; preds = %bb.e
-  %4 = tail call ptr @tvb_new_subset_remaining(ptr noundef %0, i32 noundef 1)
-  %5 = getelementptr [16 x i8], ptr @boot_options, i64 %3
-  %6 = load ptr, ptr %5, align 16
-  tail call void %6(ptr noundef %1, ptr noundef %4, ptr noundef %2)
+4:                                                ; preds = %bb.e
+  %5 = tail call ptr @tvb_new_subset_remaining(ptr noundef %0, i32 noundef 1) ; 16 uses
+  switch i8 %i.b, label %default.unreachable30 [
+    i8 0, label %call.0
+    i8 1, label %call.1
+    i8 2, label %call.2
+    i8 3, label %call.3
+    i8 4, label %call.4
+    i8 5, label %call.5
+    i8 6, label %call.6
+    i8 7, label %bb.f
+  ], !prof !6
+
+default.unreachable30:                            ; preds = %4
+  unreachable
+
+call.0:                                           ; preds = %4
+  %6 = load i32, ptr @ett_ipmi_chs_bo00_byte1, align 4
+  %7 = tail call ptr @proto_tree_add_bitmask_text(ptr noundef %2, ptr noundef %5, i32 noundef 0, i32 noundef 1, ptr noundef null, ptr noundef null, i32 noundef %6, ptr noundef @bootopt_00.byte1, i32 noundef -2147483648, i32 noundef 0) ; 0 uses
+  br label %bb.h
+
+call.1:                                           ; preds = %4
+  %8 = load i32, ptr @hf_ipmi_chs_bo01_spsel, align 4
+  %9 = tail call ptr @proto_tree_add_item(ptr noundef %2, i32 noundef %8, ptr noundef %5, i32 noundef 0, i32 noundef 1, i32 noundef -2147483648) ; 0 uses
+  br label %bb.h
+
+call.2:                                           ; preds = %4
+  %10 = load i32, ptr @ett_ipmi_chs_bo02_byte1, align 4
+  %11 = tail call ptr @proto_tree_add_bitmask_text(ptr noundef %2, ptr noundef %5, i32 noundef 0, i32 noundef 1, ptr noundef @.str.297, ptr noundef @.str.298, i32 noundef %10, ptr noundef @bootopt_02.byte1, i32 noundef -2147483648, i32 noundef 0) ; 0 uses
+  br label %bb.h
+
+call.3:                                           ; preds = %4
+  %12 = load i32, ptr @ett_ipmi_chs_bo03_byte1, align 4
+  %13 = tail call ptr @proto_tree_add_bitmask_text(ptr noundef %2, ptr noundef %5, i32 noundef 0, i32 noundef 1, ptr noundef @.str.299, ptr noundef @.str.282, i32 noundef %12, ptr noundef @bootopt_03.byte1, i32 noundef -2147483648, i32 noundef 8) ; 0 uses
+  br label %bb.h
+
+call.4:                                           ; preds = %4
+  %14 = load i32, ptr @hf_ipmi_chs_bo04_write_mask, align 4
+  %15 = tail call ptr @proto_tree_add_item(ptr noundef %2, i32 noundef %14, ptr noundef %5, i32 noundef 0, i32 noundef 1, i32 noundef -2147483648) ; 0 uses
+  %16 = load i32, ptr @ett_ipmi_chs_bo04_byte2, align 4
+  %17 = tail call ptr @proto_tree_add_bitmask_text(ptr noundef %2, ptr noundef %5, i32 noundef 1, i32 noundef 1, ptr noundef @.str.300, ptr noundef @.str.282, i32 noundef %16, ptr noundef @bootopt_04.byte2, i32 noundef -2147483648, i32 noundef 8) ; 0 uses
+  br label %bb.h
+
+call.5:                                           ; preds = %4
+  %18 = load i32, ptr @ett_ipmi_chs_bo05_byte1, align 4
+  %19 = tail call ptr @proto_tree_add_bitmask_text(ptr noundef %2, ptr noundef %5, i32 noundef 0, i32 noundef 1, ptr noundef null, ptr noundef null, i32 noundef %18, ptr noundef @bootopt_05.byte1, i32 noundef -2147483648, i32 noundef 0) ; 0 uses
+  %20 = load i32, ptr @ett_ipmi_chs_bo05_byte2, align 4
+  %21 = tail call ptr @proto_tree_add_bitmask_text(ptr noundef %2, ptr noundef %5, i32 noundef 1, i32 noundef 1, ptr noundef null, ptr noundef null, i32 noundef %20, ptr noundef @bootopt_05.byte2, i32 noundef -2147483648, i32 noundef 0) ; 0 uses
+  %22 = load i32, ptr @ett_ipmi_chs_bo05_byte3, align 4
+  %23 = tail call ptr @proto_tree_add_bitmask_text(ptr noundef %2, ptr noundef %5, i32 noundef 2, i32 noundef 1, ptr noundef null, ptr noundef null, i32 noundef %22, ptr noundef @bootopt_05.byte3, i32 noundef -2147483648, i32 noundef 0) ; 0 uses
+  %24 = load i32, ptr @ett_ipmi_chs_bo05_byte4, align 4
+  %25 = tail call ptr @proto_tree_add_bitmask_text(ptr noundef %2, ptr noundef %5, i32 noundef 3, i32 noundef 1, ptr noundef null, ptr noundef null, i32 noundef %24, ptr noundef @bootopt_05.byte4, i32 noundef -2147483648, i32 noundef 0) ; 0 uses
+  %26 = load i32, ptr @hf_ipmi_chs_bo05_byte5, align 4
+  %27 = tail call ptr @proto_tree_add_item(ptr noundef %2, i32 noundef %26, ptr noundef %5, i32 noundef 4, i32 noundef 1, i32 noundef -2147483648) ; 0 uses
+  br label %bb.h
+
+call.6:                                           ; preds = %4
+  %28 = load i32, ptr @ett_ipmi_chs_bo06_byte1, align 4
+  %29 = tail call ptr @proto_tree_add_bitmask_text(ptr noundef %2, ptr noundef %5, i32 noundef 0, i32 noundef 1, ptr noundef null, ptr noundef null, i32 noundef %28, ptr noundef @bootopt_06.byte1, i32 noundef -2147483648, i32 noundef 0) ; 0 uses
+  %30 = load i32, ptr @hf_ipmi_chs_bo06_session_id, align 4
+  %31 = tail call ptr @proto_tree_add_item(ptr noundef %2, i32 noundef %30, ptr noundef %5, i32 noundef 1, i32 noundef 4, i32 noundef -2147483648) ; 0 uses
+  %32 = load i32, ptr @hf_ipmi_chs_bo06_bootinfo_timestamp, align 4
+  tail call void @ipmi_add_timestamp(ptr noundef %1, ptr noundef %2, i32 noundef %32, ptr noundef %5, i32 noundef 5)
+  br label %bb.h
+
+bb.f:                                             ; preds = %4
+  %33 = load i32, ptr @hf_ipmi_chs_bo07_block_selector, align 4
+  %34 = tail call ptr @proto_tree_add_item(ptr noundef %2, i32 noundef %33, ptr noundef %5, i32 noundef 0, i32 noundef 1, i32 noundef -2147483648) ; 0 uses
+  %35 = load i32, ptr @hf_ipmi_chs_bo07_block_data, align 4
+  %36 = tail call ptr @proto_tree_add_item(ptr noundef %2, i32 noundef %35, ptr noundef %5, i32 noundef 1, i32 noundef -1, i32 noundef 0) ; 0 uses
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.e
@@ -244,7 +310,7 @@ bb.g:                                             ; preds = %bb.e
   %i.r = tail call ptr (ptr, i32, ptr, i32, i32, ptr, ...) @proto_tree_add_none_format(ptr noundef %2, i32 noundef %i.q, ptr noundef %0, i32 noundef 1, i32 noundef -1, ptr noundef @.str.290, ptr noundef %.0) ; 0 uses
   br label %bb.h
 
-bb.h:                                             ; preds = %bb.f, %bb.g, %bb.d
+bb.h:                                             ; preds = %call.0, %call.1, %call.2, %call.3, %call.4, %call.5, %call.6, %bb.f, %bb.g, %bb.d
   ret void
 }
 
@@ -286,12 +352,12 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 define internal void @rs09(ptr noundef %0, ptr noundef %1, ptr noundef %2) #0 {
 bb.a:
   %i.a = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef 1)
-  %i.b = and i8 %i.a, 127                         ; 4 uses
-  %3 = zext nneg i8 %i.b to i64                   ; 2 uses
+  %i.b = and i8 %i.a, 127                         ; 5 uses
   %i.c = icmp samesign ult i8 %i.b, 8             ; 2 uses
   br i1 %i.c, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
+  %3 = zext nneg i8 %i.b to i64
   %i.d = getelementptr [16 x i8], ptr @boot_options, i64 %3
   %i.e = getelementptr i8, ptr %i.d, i64 8
   %i.f = load ptr, ptr %i.e, align 8
@@ -313,13 +379,78 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.n = tail call ptr @proto_tree_add_item(ptr noundef %i.l, i32 noundef %i.m, ptr noundef %0, i32 noundef 1, i32 noundef 1, i32 noundef -2147483648) ; 0 uses
   %i.o = load i32, ptr @hf_ipmi_chs_09_rs_param_select, align 4
   %i.p = tail call ptr (ptr, i32, ptr, i32, i32, i32, ptr, ...) @proto_tree_add_uint_format_value(ptr noundef %i.l, i32 noundef %i.o, ptr noundef %0, i32 noundef 1, i32 noundef 1, i32 noundef %i.k, ptr noundef @.str.289, ptr noundef %.0, i32 noundef %i.k) ; 0 uses
-  br i1 %i.c, label %bb.e, label %bb.f
+  br i1 %i.c, label %4, label %bb.f
 
-bb.e:                                             ; preds = %bb.d
-  %4 = tail call ptr @tvb_new_subset_remaining(ptr noundef %0, i32 noundef 2)
-  %5 = getelementptr [16 x i8], ptr @boot_options, i64 %3
-  %6 = load ptr, ptr %5, align 16
-  tail call void %6(ptr noundef %1, ptr noundef %4, ptr noundef %2)
+4:                                                ; preds = %bb.d
+  %5 = tail call ptr @tvb_new_subset_remaining(ptr noundef %0, i32 noundef 2) ; 16 uses
+  switch i8 %i.b, label %default.unreachable30 [
+    i8 0, label %call.0
+    i8 1, label %call.1
+    i8 2, label %call.2
+    i8 3, label %call.3
+    i8 4, label %call.4
+    i8 5, label %call.5
+    i8 6, label %call.6
+    i8 7, label %bb.e
+  ], !prof !6
+
+default.unreachable30:                            ; preds = %4
+  unreachable
+
+call.0:                                           ; preds = %4
+  %6 = load i32, ptr @ett_ipmi_chs_bo00_byte1, align 4
+  %7 = tail call ptr @proto_tree_add_bitmask_text(ptr noundef %2, ptr noundef %5, i32 noundef 0, i32 noundef 1, ptr noundef null, ptr noundef null, i32 noundef %6, ptr noundef @bootopt_00.byte1, i32 noundef -2147483648, i32 noundef 0) ; 0 uses
+  br label %bb.g
+
+call.1:                                           ; preds = %4
+  %8 = load i32, ptr @hf_ipmi_chs_bo01_spsel, align 4
+  %9 = tail call ptr @proto_tree_add_item(ptr noundef %2, i32 noundef %8, ptr noundef %5, i32 noundef 0, i32 noundef 1, i32 noundef -2147483648) ; 0 uses
+  br label %bb.g
+
+call.2:                                           ; preds = %4
+  %10 = load i32, ptr @ett_ipmi_chs_bo02_byte1, align 4
+  %11 = tail call ptr @proto_tree_add_bitmask_text(ptr noundef %2, ptr noundef %5, i32 noundef 0, i32 noundef 1, ptr noundef @.str.297, ptr noundef @.str.298, i32 noundef %10, ptr noundef @bootopt_02.byte1, i32 noundef -2147483648, i32 noundef 0) ; 0 uses
+  br label %bb.g
+
+call.3:                                           ; preds = %4
+  %12 = load i32, ptr @ett_ipmi_chs_bo03_byte1, align 4
+  %13 = tail call ptr @proto_tree_add_bitmask_text(ptr noundef %2, ptr noundef %5, i32 noundef 0, i32 noundef 1, ptr noundef @.str.299, ptr noundef @.str.282, i32 noundef %12, ptr noundef @bootopt_03.byte1, i32 noundef -2147483648, i32 noundef 8) ; 0 uses
+  br label %bb.g
+
+call.4:                                           ; preds = %4
+  %14 = load i32, ptr @hf_ipmi_chs_bo04_write_mask, align 4
+  %15 = tail call ptr @proto_tree_add_item(ptr noundef %2, i32 noundef %14, ptr noundef %5, i32 noundef 0, i32 noundef 1, i32 noundef -2147483648) ; 0 uses
+  %16 = load i32, ptr @ett_ipmi_chs_bo04_byte2, align 4
+  %17 = tail call ptr @proto_tree_add_bitmask_text(ptr noundef %2, ptr noundef %5, i32 noundef 1, i32 noundef 1, ptr noundef @.str.300, ptr noundef @.str.282, i32 noundef %16, ptr noundef @bootopt_04.byte2, i32 noundef -2147483648, i32 noundef 8) ; 0 uses
+  br label %bb.g
+
+call.5:                                           ; preds = %4
+  %18 = load i32, ptr @ett_ipmi_chs_bo05_byte1, align 4
+  %19 = tail call ptr @proto_tree_add_bitmask_text(ptr noundef %2, ptr noundef %5, i32 noundef 0, i32 noundef 1, ptr noundef null, ptr noundef null, i32 noundef %18, ptr noundef @bootopt_05.byte1, i32 noundef -2147483648, i32 noundef 0) ; 0 uses
+  %20 = load i32, ptr @ett_ipmi_chs_bo05_byte2, align 4
+  %21 = tail call ptr @proto_tree_add_bitmask_text(ptr noundef %2, ptr noundef %5, i32 noundef 1, i32 noundef 1, ptr noundef null, ptr noundef null, i32 noundef %20, ptr noundef @bootopt_05.byte2, i32 noundef -2147483648, i32 noundef 0) ; 0 uses
+  %22 = load i32, ptr @ett_ipmi_chs_bo05_byte3, align 4
+  %23 = tail call ptr @proto_tree_add_bitmask_text(ptr noundef %2, ptr noundef %5, i32 noundef 2, i32 noundef 1, ptr noundef null, ptr noundef null, i32 noundef %22, ptr noundef @bootopt_05.byte3, i32 noundef -2147483648, i32 noundef 0) ; 0 uses
+  %24 = load i32, ptr @ett_ipmi_chs_bo05_byte4, align 4
+  %25 = tail call ptr @proto_tree_add_bitmask_text(ptr noundef %2, ptr noundef %5, i32 noundef 3, i32 noundef 1, ptr noundef null, ptr noundef null, i32 noundef %24, ptr noundef @bootopt_05.byte4, i32 noundef -2147483648, i32 noundef 0) ; 0 uses
+  %26 = load i32, ptr @hf_ipmi_chs_bo05_byte5, align 4
+  %27 = tail call ptr @proto_tree_add_item(ptr noundef %2, i32 noundef %26, ptr noundef %5, i32 noundef 4, i32 noundef 1, i32 noundef -2147483648) ; 0 uses
+  br label %bb.g
+
+call.6:                                           ; preds = %4
+  %28 = load i32, ptr @ett_ipmi_chs_bo06_byte1, align 4
+  %29 = tail call ptr @proto_tree_add_bitmask_text(ptr noundef %2, ptr noundef %5, i32 noundef 0, i32 noundef 1, ptr noundef null, ptr noundef null, i32 noundef %28, ptr noundef @bootopt_06.byte1, i32 noundef -2147483648, i32 noundef 0) ; 0 uses
+  %30 = load i32, ptr @hf_ipmi_chs_bo06_session_id, align 4
+  %31 = tail call ptr @proto_tree_add_item(ptr noundef %2, i32 noundef %30, ptr noundef %5, i32 noundef 1, i32 noundef 4, i32 noundef -2147483648) ; 0 uses
+  %32 = load i32, ptr @hf_ipmi_chs_bo06_bootinfo_timestamp, align 4
+  tail call void @ipmi_add_timestamp(ptr noundef %1, ptr noundef %2, i32 noundef %32, ptr noundef %5, i32 noundef 5)
+  br label %bb.g
+
+bb.e:                                             ; preds = %4
+  %33 = load i32, ptr @hf_ipmi_chs_bo07_block_selector, align 4
+  %34 = tail call ptr @proto_tree_add_item(ptr noundef %2, i32 noundef %33, ptr noundef %5, i32 noundef 0, i32 noundef 1, i32 noundef -2147483648) ; 0 uses
+  %35 = load i32, ptr @hf_ipmi_chs_bo07_block_data, align 4
+  %36 = tail call ptr @proto_tree_add_item(ptr noundef %2, i32 noundef %35, ptr noundef %5, i32 noundef 1, i32 noundef -1, i32 noundef 0) ; 0 uses
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.d
@@ -327,7 +458,7 @@ bb.f:                                             ; preds = %bb.d
   %i.r = tail call ptr @proto_tree_add_item(ptr noundef %2, i32 noundef %i.q, ptr noundef %0, i32 noundef 2, i32 noundef -1, i32 noundef 0) ; 0 uses
   br label %bb.g
 
-bb.g:                                             ; preds = %bb.f, %bb.e
+bb.g:                                             ; preds = %call.0, %call.1, %call.2, %call.3, %call.4, %call.5, %call.6, %bb.e, %bb.f
   ret void
 }
 
@@ -463,4 +594,5 @@ attributes #1 = { null_pointer_is_valid "no-trapping-math"="true" "stack-protect
 !3 = !{i32 8, !"PIC Level", i32 2}
 !4 = !{i32 7, !"uwtable", i32 2}
 !5 = !{!"Ubuntu clang version 24.0.0 (++20260805082234+d31b11c260ae-1~exp1~20260805082243.1767)"}
+!6 = !{!"unknown", !"jump-table-to-switch"}
 end_hunk_0
