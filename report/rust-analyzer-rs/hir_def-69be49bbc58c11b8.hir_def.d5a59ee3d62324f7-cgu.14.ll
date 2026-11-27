@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %_RNvYNtNtCsileJQcQO
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6327)
   %i.l = load i64, ptr %i.j, align 8, !range !129, !alias.scope !6328, !noundef !99 ; 3 uses
   %i.m = tail call i64 @llvm.usub.sat.i64(i64 %i.l, i64 4) ; 2 uses
-  %i.n = load i64, ptr %i.k, align 8, !range !129, !alias.scope !6329, !noundef !99 ; 3 uses
+  %i.n = load i64, ptr %i.k, align 8, !range !129, !alias.scope !6329, !noundef !99 ; 9 uses
   %i.o = tail call i64 @llvm.usub.sat.i64(i64 %i.n, i64 4)
   %i.p = icmp eq i64 %i.m, %i.o
   br i1 %i.p, label %bb.d, label %_RNvXs2_NtNtCshzWfHUSfYae_4core5slice3cmpNtNtCsileJQcQObtj_7hir_def10expr_store26ExpressionStoreDiagnosticsINtB5_14SlicePartialEqBC_E17equal_same_lengthBG_.exit
@@ -267,6 +267,8 @@ _RNvXs1S_Cs33K2ylI4knu_10hir_expandNtB6_9HirFileIdNtNtCshzWfHUSfYae_4core3cmp9Pa
   br i1 %i.al, label %bb.ag, label %_RNvXs2_NtNtCshzWfHUSfYae_4core5slice3cmpNtNtCsileJQcQObtj_7hir_def10expr_store26ExpressionStoreDiagnosticsINtB5_14SlicePartialEqBC_E17equal_same_lengthBG_.exit
 
 bb.i:                                             ; preds = %bb.d
+  %2 = icmp eq i64 %i.n, 5
+  tail call void @llvm.assume(i1 %2)
   %i.am = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %i.an = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6334)
@@ -308,6 +310,8 @@ _RNvXs1S_Cs33K2ylI4knu_10hir_expandNtB6_9HirFileIdNtNtCshzWfHUSfYae_4core3cmp9Pa
   br i1 %i.bg, label %bb.an, label %_RNvXs2_NtNtCshzWfHUSfYae_4core5slice3cmpNtNtCsileJQcQObtj_7hir_def10expr_store26ExpressionStoreDiagnosticsINtB5_14SlicePartialEqBC_E17equal_same_lengthBG_.exit
 
 bb.m:                                             ; preds = %bb.d
+  %3 = icmp eq i64 %i.n, 6
+  tail call void @llvm.assume(i1 %3)
   %i.bh = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %i.bi = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6338)
@@ -349,6 +353,8 @@ _RNvXs1S_Cs33K2ylI4knu_10hir_expandNtB6_9HirFileIdNtNtCshzWfHUSfYae_4core3cmp9Pa
   br i1 %i.cb, label %bb.at, label %_RNvXs2_NtNtCshzWfHUSfYae_4core5slice3cmpNtNtCsileJQcQObtj_7hir_def10expr_store26ExpressionStoreDiagnosticsINtB5_14SlicePartialEqBC_E17equal_same_lengthBG_.exit
 
 bb.q:                                             ; preds = %bb.d
+  %4 = icmp eq i64 %i.n, 7
+  tail call void @llvm.assume(i1 %4)
   %i.cc = getelementptr inbounds nuw i8, ptr %i.j, i64 32
   %i.cd = getelementptr inbounds nuw i8, ptr %i.k, i64 32
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6342)
@@ -390,6 +396,8 @@ _RNvXs1S_Cs33K2ylI4knu_10hir_expandNtB6_9HirFileIdNtNtCshzWfHUSfYae_4core3cmp9Pa
   br i1 %i.cw, label %bb.aw, label %_RNvXs2_NtNtCshzWfHUSfYae_4core5slice3cmpNtNtCsileJQcQObtj_7hir_def10expr_store26ExpressionStoreDiagnosticsINtB5_14SlicePartialEqBC_E17equal_same_lengthBG_.exit
 
 bb.u:                                             ; preds = %bb.d
+  %5 = icmp eq i64 %i.n, 8
+  tail call void @llvm.assume(i1 %5)
   %i.cx = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %i.cy = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6346)
@@ -431,6 +439,8 @@ _RNvXs1S_Cs33K2ylI4knu_10hir_expandNtB6_9HirFileIdNtNtCshzWfHUSfYae_4core3cmp9Pa
   br i1 %i.dr, label %bb.ba, label %_RNvXs2_NtNtCshzWfHUSfYae_4core5slice3cmpNtNtCsileJQcQObtj_7hir_def10expr_store26ExpressionStoreDiagnosticsINtB5_14SlicePartialEqBC_E17equal_same_lengthBG_.exit
 
 bb.y:                                             ; preds = %bb.d
+  %6 = icmp eq i64 %i.n, 9
+  tail call void @llvm.assume(i1 %6)
   %i.ds = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %i.dt = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6350)
@@ -472,6 +482,8 @@ _RNvXs1S_Cs33K2ylI4knu_10hir_expandNtB6_9HirFileIdNtNtCshzWfHUSfYae_4core3cmp9Pa
   br i1 %i.em, label %bb.bd, label %_RNvXs2_NtNtCshzWfHUSfYae_4core5slice3cmpNtNtCsileJQcQObtj_7hir_def10expr_store26ExpressionStoreDiagnosticsINtB5_14SlicePartialEqBC_E17equal_same_lengthBG_.exit
 
 bb.ac:                                            ; preds = %bb.d
+  %7 = icmp eq i64 %i.n, 10
+  tail call void @llvm.assume(i1 %7)
   %i.en = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %i.eo = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6354)

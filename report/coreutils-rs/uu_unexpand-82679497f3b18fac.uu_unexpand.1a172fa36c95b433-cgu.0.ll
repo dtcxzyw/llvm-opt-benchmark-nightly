@@ -205,22 +205,26 @@ bb.g:                                             ; preds = %.loopexit.i48
   unreachable
 
 _RNSINvNtNtNtCsgNwXemyrBWj_12clap_builder6parser7matches11arg_matches19unwrap_downcast_refNtNtCs7tKScEop1B6_5alloc6string6StringE5reifyCs2eSwMnb0Awh_11uu_unexpand.exit: ; preds = %.loopexit.i48
-  %i.bv = add i64 %i.ay, -1                       ; 2 uses
+  %i.bv = add i64 %i.ay, -1                       ; 3 uses
   %i.bw = getelementptr i8, ptr %i.bq, i64 24
   %.val.i.i = load ptr, ptr %i.bw, align 8, !noalias !871, !nonnull !4, !noundef !4
   %i.bx = getelementptr i8, ptr %i.bq, i64 32
   %.val3.i.i = load i64, ptr %i.bx, align 8, !noalias !871, !noundef !4
-  %i.by = call i64 @llvm.uadd.sat.i64(i64 %i.bv, i64 1) ; 2 uses
-  %..i.i = call noundef i64 @llvm.umax.i64(i64 %i.by, i64 4) ; 2 uses
-  %i.bz = shl i64 %..i.i, 4                       ; 3 uses
-  %i.ca = icmp ugt i64 %i.by, 1152921504606846975
+  %i.by = call i64 @llvm.uadd.sat.i64(i64 %i.bv, i64 1)
+  %..i.i = call noundef i64 @llvm.umax.i64(i64 %i.by, i64 4) ; 3 uses
+  %i.bz = shl i64 %..i.i, 4                       ; 4 uses
+  %i.ca = icmp ugt i64 %i.bv, 1152921504606846974
   %.not.i.i.i = icmp ugt i64 %i.bz, 9223372036854775800
   %or.cond.i.i.i = or i1 %i.ca, %.not.i.i.i
-  br i1 %or.cond.i.i.i, label %bb.h, label %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i, !prof !15
+  br i1 %or.cond.i.i.i, label %bb.h, label %2, !prof !15
 
-_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i: ; preds = %_RNSINvNtNtNtCsgNwXemyrBWj_12clap_builder6parser7matches11arg_matches19unwrap_downcast_refNtNtCs7tKScEop1B6_5alloc6string6StringE5reifyCs2eSwMnb0Awh_11uu_unexpand.exit
+2:                                                ; preds = %_RNSINvNtNtNtCsgNwXemyrBWj_12clap_builder6parser7matches11arg_matches19unwrap_downcast_refNtNtCs7tKScEop1B6_5alloc6string6StringE5reifyCs2eSwMnb0Awh_11uu_unexpand.exit
+  %3 = icmp eq i64 %i.bz, 0
+  br i1 %3, label %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs2eSwMnb0Awh_11uu_unexpand.exit.i, label %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i
+
+_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i: ; preds = %2
   call void @_RNvCsjSVV5GABoor_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #21, !noalias !872
-  %i.cb = call noundef align 8 ptr @_RNvCsjSVV5GABoor_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.bz, i64 noundef range(i64 1, 9) 8) #21, !noalias !872 ; 5 uses
+  %i.cb = call noundef align 8 ptr @_RNvCsjSVV5GABoor_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.bz, i64 noundef range(i64 1, 9) 8) #21, !noalias !872 ; 2 uses
   %i.cc = icmp eq ptr %i.cb, null
   br i1 %i.cc, label %bb.h, label %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs2eSwMnb0Awh_11uu_unexpand.exit.i
 
@@ -229,13 +233,17 @@ bb.h:                                             ; preds = %_RNvXs_NtCs7tKScEop
   call void @_RNvNtCs7tKScEop1B6_5alloc7raw_vec12handle_error(i64 noundef %.sroa.4.0.ph.i.i, i64 %i.bz) #24, !noalias !866
   unreachable
 
-_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs2eSwMnb0Awh_11uu_unexpand.exit.i: ; preds = %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i
-  store ptr %.val.i.i, ptr %i.cb, align 8, !noalias !866, !captures !873
-  %i.cd = getelementptr inbounds nuw i8, ptr %i.cb, i64 8
+_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs2eSwMnb0Awh_11uu_unexpand.exit.i: ; preds = %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i, %2
+  %.sroa.10.0.i.i = phi ptr [ inttoptr (i64 8 to ptr), %2 ], [ %i.cb, %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i ] ; 4 uses
+  %.sroa.4.0.i.i = phi i64 [ 0, %2 ], [ %..i.i, %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i ] ; 2 uses
+  %4 = icmp ule i64 %..i.i, %.sroa.4.0.i.i
+  call void @llvm.assume(i1 %4)
+  store ptr %.val.i.i, ptr %.sroa.10.0.i.i, align 8, !noalias !866, !captures !873
+  %i.cd = getelementptr inbounds nuw i8, ptr %.sroa.10.0.i.i, i64 8
   store i64 %.val3.i.i, ptr %i.cd, align 8, !noalias !866
-  store i64 %..i.i, ptr %i.q, align 8, !noalias !866
+  store i64 %.sroa.4.0.i.i, ptr %i.q, align 8, !noalias !866
   %.sroa.4.0..sroa_idx.i49 = getelementptr inbounds nuw i8, ptr %i.q, i64 8 ; 3 uses
-  store ptr %i.cb, ptr %.sroa.4.0..sroa_idx.i49, align 8, !noalias !866
+  store ptr %.sroa.10.0.i.i, ptr %.sroa.4.0..sroa_idx.i49, align 8, !noalias !866
   %.sroa.64.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.q, i64 16 ; 2 uses
   store i64 1, ptr %.sroa.64.0..sroa_idx.i, align 8, !noalias !866
   call void @llvm.experimental.noalias.scope.decl(metadata !874)
@@ -243,7 +251,7 @@ _RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs2eSw
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.k, %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs2eSwMnb0Awh_11uu_unexpand.exit.i
-  %i.ce = phi ptr [ %i.di, %bb.k ], [ %i.cb, %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs2eSwMnb0Awh_11uu_unexpand.exit.i ]
+  %i.ce = phi ptr [ %i.di, %bb.k ], [ %.sroa.10.0.i.i, %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs2eSwMnb0Awh_11uu_unexpand.exit.i ]
   %.sroa.11.0.copyload = phi i64 [ %i.dl, %bb.k ], [ 1, %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs2eSwMnb0Awh_11uu_unexpand.exit.i ] ; 8 uses
   %i.cf = phi i64 [ %i.db, %bb.k ], [ %i.bv, %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs2eSwMnb0Awh_11uu_unexpand.exit.i ]
   %i.cg = phi ptr [ %.lcssa3.i.i, %bb.k ], [ %i.bk, %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs2eSwMnb0Awh_11uu_unexpand.exit.i ] ; 2 uses
@@ -646,7 +654,7 @@ bb.bz:                                            ; preds = %.loopexit.i109
   unreachable
 
 _RNSINvNtNtNtCsgNwXemyrBWj_12clap_builder6parser7matches11arg_matches19unwrap_downcast_refNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str8OsStringE5reifyCs2eSwMnb0Awh_11uu_unexpand.exit: ; preds = %.loopexit.i109
-  %i.lj = add i64 %i.kk, -1                       ; 2 uses
+  %i.lj = add i64 %i.kk, -1                       ; 3 uses
   %i.lk = getelementptr i8, ptr %i.le, i64 24
   %.val.i110 = load ptr, ptr %i.lk, align 8, !noalias !926, !nonnull !4, !noundef !4
   %i.ll = getelementptr i8, ptr %i.le, i64 32
@@ -671,10 +679,10 @@ _RNvXs_NtNtNtCs6JMX4GRUq9U_4core4iter8adapters6clonedINtB4_6ClonedINtNtNtNtCsgNw
 
 _RNvXs_NtNtNtCs6JMX4GRUq9U_4core4iter8adapters6clonedINtB4_6ClonedINtNtNtNtCsgNwXemyrBWj_12clap_builder6parser7matches11arg_matches9ValuesRefNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str8OsStringEENtNtNtB8_6traits8iterator8Iterator4nextCs2eSwMnb0Awh_11uu_unexpand.exit.thread256: ; preds = %_RNSINvNtNtNtCsgNwXemyrBWj_12clap_builder6parser7matches11arg_matches19unwrap_downcast_refNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str8OsStringE5reifyCs2eSwMnb0Awh_11uu_unexpand.exit, %_RNvXs_NtNtNtCs6JMX4GRUq9U_4core4iter8adapters6clonedINtB4_6ClonedINtNtNtNtCsgNwXemyrBWj_12clap_builder6parser7matches11arg_matches9ValuesRefNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str8OsStringEENtNtNtB8_6traits8iterator8Iterator4nextCs2eSwMnb0Awh_11uu_unexpand.exit
   %.sroa.6189.0265 = phi ptr [ %i.ln, %_RNvXs_NtNtNtCs6JMX4GRUq9U_4core4iter8adapters6clonedINtB4_6ClonedINtNtNtNtCsgNwXemyrBWj_12clap_builder6parser7matches11arg_matches9ValuesRefNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str8OsStringEENtNtNtB8_6traits8iterator8Iterator4nextCs2eSwMnb0Awh_11uu_unexpand.exit ], [ inttoptr (i64 1 to ptr), %_RNSINvNtNtNtCsgNwXemyrBWj_12clap_builder6parser7matches11arg_matches19unwrap_downcast_refNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str8OsStringE5reifyCs2eSwMnb0Awh_11uu_unexpand.exit ]
-  %i.lp = call i64 @llvm.uadd.sat.i64(i64 %i.lj, i64 1) ; 2 uses
+  %i.lp = call i64 @llvm.uadd.sat.i64(i64 %i.lj, i64 1)
   %..i.i86 = call noundef i64 @llvm.umax.i64(i64 %i.lp, i64 4) ; 3 uses
   %i.lq = mul i64 %..i.i86, 24                    ; 3 uses
-  %or.cond.i.i.i87 = icmp ugt i64 %i.lp, 384307168202282325
+  %or.cond.i.i.i87 = icmp ugt i64 %i.lj, 384307168202282324
   br i1 %or.cond.i.i.i87, label %bb.cc, label %bb.cb, !prof !15
 
 bb.cb:                                            ; preds = %_RNvXs_NtNtNtCs6JMX4GRUq9U_4core4iter8adapters6clonedINtB4_6ClonedINtNtNtNtCsgNwXemyrBWj_12clap_builder6parser7matches11arg_matches9ValuesRefNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str8OsStringEENtNtNtB8_6traits8iterator8Iterator4nextCs2eSwMnb0Awh_11uu_unexpand.exit.thread256

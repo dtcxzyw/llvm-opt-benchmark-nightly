@@ -204,7 +204,7 @@ bb.bv:                                            ; preds = %bb.bu
   %i.rq = fcmp oge double %.0.copyload.i3508, 0.000000e+00
   %i.rr = and i1 %i.rp, %i.rq
   %i.rs = fptoui double %.0.copyload.i3508 to i64
-  %spec.select3610 = select i1 %i.rr, i64 %i.rs, i64 0 ; 2 uses
+  %spec.select3610 = select i1 %i.rr, i64 %i.rs, i64 0 ; 3 uses
   %i.rt = and i64 %.0.copyload.i3510, 4294967295
   %.not3037 = icmp eq i64 %i.rt, 0
   br i1 %.not3037, label %bb.fj, label %bb.bw
@@ -378,8 +378,8 @@ bb.ch:                                            ; preds = %bb.cg, %bb.cf
   br i1 %.not3039, label %bb.fj, label %bb.ci
 
 bb.ci:                                            ; preds = %bb.ch
-  %i.ty = tail call i64 @llvm.usub.sat.i64(i64 %spec.select3610, i64 1) ; 4 uses
-  %i.tz = icmp ugt i64 %i.ty, 1027070
+  %i.ty = tail call i64 @llvm.usub.sat.i64(i64 %spec.select3610, i64 1) ; 3 uses
+  %i.tz = icmp ugt i64 %spec.select3610, 1027071
   %.val3416 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.ua = getelementptr inbounds nuw i8, ptr %.val3416, i64 %i.e
   %i.ub = getelementptr inbounds nuw i8, ptr %i.ua, i64 128
@@ -480,7 +480,7 @@ bb.cv:                                            ; preds = %bb.cu
   br label %bb.fk
 
 bb.cw:                                            ; preds = %bb.cu
-  %i.vq = trunc nuw nsw i64 %i.ty to i32
+  %i.vq = trunc nuw i64 %i.ty to i32
   %i.vr = shl nuw nsw i32 %i.vq, 2
   %i.vs = add nuw nsw i32 %i.vr, 12
   %i.vt = and i32 %i.vs, 8388600                  ; 4 uses
@@ -603,7 +603,7 @@ bb.df:                                            ; preds = %bb.de, %bb.dd
   %i.xk = getelementptr inbounds nuw i8, ptr %i.xj, i64 164
   %.0.copyload.i3537 = load i32, ptr %i.xk, align 1 ; 3 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i3537) #8, !srcloc !19
-  %i.xl = icmp ugt i64 %spec.select3610, 1
+  %i.xl = icmp samesign ugt i64 %spec.select3610, 1
   br i1 %i.xl, label %.preheader3611, label %.loopexit3612
 
 .preheader3611:                                   ; preds = %bb.df
@@ -907,7 +907,7 @@ bb.eb:                                            ; preds = %bb.ea
   %i.abi = zext i1 %.not3050 to i64
   %i.abj = add nuw nsw i64 %i.ty, %i.abi          ; 2 uses
   %i.abk = add nuw nsw i64 %i.abj, 3              ; 2 uses
-  %i.abl = trunc nuw nsw i64 %i.abk to i32
+  %i.abl = trunc nuw i64 %i.abk to i32
   %.val3198 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.abm = getelementptr inbounds nuw i8, ptr %.val3198, i64 %i.h
   %i.abn = getelementptr inbounds nuw i8, ptr %i.abm, i64 5592
@@ -919,9 +919,13 @@ bb.eb:                                            ; preds = %bb.ea
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i3562) #8, !srcloc !19
   %i.abp = sub i32 %.0.copyload.i3561, %.0.copyload.i3562
   %i.abq = ashr i32 %i.abp, 3
-  %i.abr = zext i32 %i.abq to i64
-  %i.abs = add nuw nsw i64 %i.abj, 42
-  %i.abt = icmp samesign ugt i64 %i.abs, %i.abr
+  %5 = zext i32 %i.abq to i64
+  %6 = add nuw nsw i32 %i.abl, 7
+  %7 = icmp ugt i64 %i.abj, 4294967285
+  %8 = select i1 %7, i32 -1, i32 %6               ; 2 uses
+  %i.abr = zext i32 %8 to i64
+  %i.abs = add nuw nsw i64 %i.abr, 32
+  %i.abt = icmp samesign ugt i64 %i.abs, %5
   br i1 %i.abt, label %bb.fh, label %bb.ec
 
 bb.ec:                                            ; preds = %bb.eb
@@ -971,10 +975,9 @@ bb.ee:                                            ; preds = %bb.ed
   br label %bb.ef
 
 bb.ef:                                            ; preds = %bb.ec, %bb.ee
-  %.12907 = phi i32 [ %.0.copyload.i3568, %bb.ee ], [ %.0.copyload.i3562, %bb.ec ] ; 2 uses
-  %i.aci = shl nuw nsw i32 %i.abl, 3              ; 2 uses
-  %5 = add nuw nsw i32 %i.aci, 56
-  %i.acj = add i32 %.12907, %5                    ; 7 uses
+  %.12907 = phi i32 [ %.0.copyload.i3568, %bb.ee ], [ %.0.copyload.i3562, %bb.ec ]
+  %i.aci = shl i32 %8, 3
+  %i.acj = add i32 %.12907, %i.aci                ; 8 uses
   %.val3079 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.ack = getelementptr inbounds nuw i8, ptr %.val3079, i64 %i.ps
   store i32 %i.acj, ptr %i.ack, align 1
@@ -1011,7 +1014,7 @@ bb.ef:                                            ; preds = %bb.ec, %bb.ee
   %.val3321 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.ade = getelementptr inbounds nuw i8, ptr %.val3321, i64 %i.add
   store i64 %i.adc, ptr %i.ade, align 1
-  %i.adf = add i32 %.12907, %i.aci                ; 2 uses
+  %i.adf = add i32 %i.acj, -56                    ; 2 uses
   %i.adg = zext i32 %i.adf to i64
   %.val3320 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.adh = getelementptr inbounds nuw i8, ptr %.val3320, i64 %i.adg
@@ -1414,7 +1417,7 @@ bb.e:                                             ; preds = %.thread
   %.val500 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.ab = getelementptr inbounds nuw i8, ptr %.val500, i64 %i.e
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 4
-  %.0.copyload.i530 = load i32, ptr %i.ac, align 1 ; 6 uses
+  %.0.copyload.i530 = load i32, ptr %i.ac, align 1 ; 7 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i530) #8, !srcloc !19
   %i.ad = add i32 %.0.copyload.i530, -1           ; 2 uses
   %i.ae = tail call i32 @llvm.usub.sat.i32(i32 %.0.copyload.i530, i32 1) ; 2 uses
@@ -1446,8 +1449,10 @@ bb.g:                                             ; preds = %bb.e, %bb.f
   %i.an = sub i32 %.0.copyload.i532, %.0.copyload.i533
   %i.ao = ashr i32 %i.an, 3
   %i.ap = zext i32 %i.ao to i64
-  %5 = tail call i32 @llvm.uadd.sat.i32(i32 %i.ae, i32 7) ; 2 uses
-  %i.aq = zext i32 %5 to i64
+  %5 = add i32 %i.ae, 7
+  %6 = icmp ugt i32 %.0.copyload.i530, -7
+  %7 = select i1 %6, i32 -1, i32 %5               ; 2 uses
+  %i.aq = zext i32 %7 to i64
   %i.ar = add nuw nsw i64 %i.aq, 32
   %i.as = icmp samesign ugt i64 %i.ar, %i.ap
   br i1 %i.as, label %bb.s, label %bb.h
@@ -1508,7 +1513,7 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.h, %bb.j
   %.0459 = phi i32 [ %.0.copyload.i539, %bb.j ], [ %.0.copyload.i533, %bb.h ]
-  %i.bp = shl i32 %5, 3
+  %i.bp = shl i32 %7, 3
   %i.bq = add i32 %.0459, %i.bp                   ; 8 uses
   %.val479 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.br = getelementptr inbounds nuw i8, ptr %.val479, i64 %i.al

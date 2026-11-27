@@ -204,11 +204,11 @@ _ZNK2cm8enum_setIN12_GLOBAL__N_15Test2ELm5ELi0EE4testEh.exit.i.peel.i.i: ; preds
 
 .preheader.i.i.i.preheader:                       ; preds = %_ZNK2cm8enum_setIN12_GLOBAL__N_15Test2ELm5ELi0EE4testEh.exit.i.peel.i.i
   %i.do = trunc i64 %.sroa.081.0.i91 to i8
-  %i.dp = add i8 %i.do, -2                        ; 2 uses
+  %i.dp = add i8 %i.do, -2                        ; 3 uses
   %i.dq = zext i8 %i.dp to i64
-  %i.dr = call i64 @llvm.usub.sat.i64(i64 %i.dq, i64 2) ; 2 uses
+  %i.dr = call i64 @llvm.usub.sat.i64(i64 %i.dq, i64 2)
   %i.ds = add nuw nsw i64 %i.dr, 1                ; 2 uses
-  %min.iters.check322 = icmp samesign ult i64 %i.dr, 31
+  %min.iters.check322 = icmp ult i8 %i.dp, 33
   br i1 %min.iters.check322, label %.preheader.i.i.i.preheader403, label %vector.scevcheck319
 
 vector.scevcheck319:                              ; preds = %.preheader.i.i.i.preheader
@@ -324,7 +324,7 @@ bb.t:                                             ; preds = %bb.s, %._crit_edge.
   %i.fa = phi i8 [ %.pre.i.i65.i, %bb.s ], [ %i.ev, %._crit_edge.i.i.i52.i ]
   %.019.lcssa28.i.i.i53.i = phi ptr [ %.019.lcssa29.i.i.i63.i, %bb.s ], [ %.02024.i.i.i47.i, %._crit_edge.i.i.i52.i ]
   %i.fb = icmp ult i8 %i.fa, %.pre-phi.i
-  br i1 %i.fb, label %select.unfold.i.i59.i, label %.preheader.i.i69.preheader.i.a
+  br i1 %i.fb, label %select.unfold.i.i59.i, label %.preheader.i.i69.preheader.i
 
 select.unfold.i.i59.i:                            ; preds = %bb.t, %._crit_edge.thread.i.i.i62.i
   %.sroa.4.0.i.ph.i.i60.i = phi ptr [ %.019.lcssa29.i.i.i63.i, %._crit_edge.thread.i.i.i62.i ], [ %.019.lcssa28.i.i.i53.i, %bb.t ] ; 3 uses
@@ -349,16 +349,23 @@ _ZNSt8_Rb_treeIhhSt9_IdentityIhESt4lessIhESaIhEE10_M_insert_IhNS5_11_Alloc_nodeE
   %i.fj = load i64, ptr %i.ax, align 8, !tbaa !21
   %i.fk = add i64 %i.fj, 1                        ; 2 uses
   store i64 %i.fk, ptr %i.ax, align 8, !tbaa !21
-  br label %.preheader.i.i69.preheader.i.a
+  br label %.preheader.i.i69.preheader.i
 
-.preheader.i.i69.preheader.i.a:                   ; preds = %.noexc67.i, %bb.t
+.preheader.i.i69.preheader.i:                     ; preds = %.noexc67.i, %bb.t
   %18 = phi i64 [ %i.fk, %.noexc67.i ], [ %i.di, %bb.t ] ; 2 uses
   %min.iters.check299 = icmp samesign ult i64 %i.dl, 33
-  %19 = call i64 @llvm.usub.sat.i64(i64 %i.dl, i64 2)
-  %20 = trunc nuw i64 %19 to i8
-  %i.fl = icmp ugt i8 %20, %i.dk
-  %or.cond = select i1 %min.iters.check299, i1 true, i1 %i.fl
-  br i1 %or.cond, label %.preheader.i.i69.i, label %vector.ph300
+  br i1 %min.iters.check299, label %.preheader.i.i69.i.preheader, label %.preheader.i.i69.preheader.i.a
+
+.preheader.i.i69.i.preheader:                     ; preds = %.preheader.i.i69.preheader.i.a, %.preheader.i.i69.preheader.i
+  br label %.preheader.i.i69.i
+
+.preheader.i.i69.preheader.i.a:                   ; preds = %.preheader.i.i69.preheader.i
+  %19 = add nsw i64 %i.dl, -2                     ; 2 uses
+  %20 = trunc i64 %19 to i8
+  %21 = icmp ugt i8 %20, %i.dk
+  %i.fl = icmp ugt i64 %19, 255
+  %22 = or i1 %21, %i.fl
+  br i1 %22, label %.preheader.i.i69.i.preheader, label %vector.ph300
 
 vector.ph300:                                     ; preds = %.preheader.i.i69.preheader.i.a
   %broadcast.splatinsert302 = insertelement <16 x i64> poison, i64 %.sroa.081.0.i91, i64 0
@@ -392,8 +399,8 @@ vector.early.exit316:                             ; preds = %vector.body306
   %i.fu = and i64 %i.ft, 255
   br label %.loopexit.i.invoke.i
 
-.preheader.i.i69.i:                               ; preds = %.preheader.i.i69.preheader.i.a, %_ZNK2cm8enum_setIN12_GLOBAL__N_15Test2ELm5ELi0EE4testEh.exit.i.i70.i
-  %i.fv = phi i64 [ %i.fw, %_ZNK2cm8enum_setIN12_GLOBAL__N_15Test2ELm5ELi0EE4testEh.exit.i.i70.i ], [ %.sroa.081.0.i91, %.preheader.i.i69.preheader.i.a ]
+.preheader.i.i69.i:                               ; preds = %.preheader.i.i69.i.preheader, %_ZNK2cm8enum_setIN12_GLOBAL__N_15Test2ELm5ELi0EE4testEh.exit.i.i70.i
+  %i.fv = phi i64 [ %i.fw, %_ZNK2cm8enum_setIN12_GLOBAL__N_15Test2ELm5ELi0EE4testEh.exit.i.i70.i ], [ %.sroa.081.0.i91, %.preheader.i.i69.i.preheader ]
   %i.fw = add i64 %i.fv, -1                       ; 5 uses
   %i.fx = trunc i64 %i.fw to i8
   %i.fy = and i64 %i.fw, 255                      ; 2 uses

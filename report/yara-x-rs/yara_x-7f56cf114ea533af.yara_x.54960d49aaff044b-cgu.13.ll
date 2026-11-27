@@ -205,7 +205,7 @@ define internal fastcc noundef zeroext i1 @_RNvXsu_NtNtCs7gfv9tzbXmh_6yara_x8com
 bb.a:
   %i.a = load i64, ptr %0, align 8, !range !26, !noundef !10 ; 2 uses
   %i.b = tail call i64 @llvm.usub.sat.i64(i64 %i.a, i64 1) ; 2 uses
-  %i.c = load i64, ptr %1, align 8, !range !26, !noundef !10 ; 3 uses
+  %i.c = load i64, ptr %1, align 8, !range !26, !noundef !10 ; 5 uses
   %i.d = tail call i64 @llvm.usub.sat.i64(i64 %i.c, i64 1)
   %i.e = icmp eq i64 %i.b, %i.d
   br i1 %i.e, label %bb.b, label %_RNvXsz_NtNtCs7gfv9tzbXmh_6yara_x8compiler2irNtB5_14LiteralPatternNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit
@@ -458,12 +458,16 @@ bb.z:                                             ; preds = %bb.y
   br label %_RNvXsz_NtNtCs7gfv9tzbXmh_6yara_x8compiler2irNtB5_14LiteralPatternNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit
 
 bb.aa:                                            ; preds = %bb.b
+  %2 = icmp eq i64 %i.c, 2
+  tail call void @llvm.assume(i1 %2)
   %i.dg = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.dh = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.di = tail call fastcc noundef zeroext i1 @_RNvXsE_NtNtCs7gfv9tzbXmh_6yara_x8compiler2irNtB5_13RegexpPatternNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(136) %i.dg, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(136) %i.dh) #41
   br label %_RNvXsz_NtNtCs7gfv9tzbXmh_6yara_x8compiler2irNtB5_14LiteralPatternNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit
 
 bb.ab:                                            ; preds = %bb.b
+  %3 = icmp eq i64 %i.c, 3
+  tail call void @llvm.assume(i1 %3)
   %i.dj = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.dk = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.dl = tail call fastcc noundef zeroext i1 @_RNvXsE_NtNtCs7gfv9tzbXmh_6yara_x8compiler2irNtB5_13RegexpPatternNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(136) %i.dj, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(136) %i.dk) #41

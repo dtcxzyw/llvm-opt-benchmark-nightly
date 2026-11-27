@@ -205,14 +205,14 @@ _RNvXs0_NtNtNtCs3oUPovFnLWP_4core4iter8adapters3mapINtB5_3MapINtNtB7_7flatten7Fl
   %i.gq = sub i64 %.val3.i62.i.i.i.i, %.val.i61.i.i.i.i
   %.sroa.8.0.i.i.i.i = select i1 %.not53.i.i.i.i, i64 0, i64 %i.gq ; 2 uses
   %i.gr = call i64 @llvm.uadd.sat.i64(i64 %i.gm, i64 %.sroa.8.0.i.i.i.i)
-  %i.gs = select i1 %.not.i.i.i.i410, i64 %.sroa.8.0.i.i.i.i, i64 %i.gr
-  %i.gt = call i64 @llvm.uadd.sat.i64(i64 %i.gs, i64 1) ; 2 uses
-  %..i.i = call noundef i64 @llvm.umax.i64(i64 %i.gt, i64 4) ; 2 uses
-  %i.gu = shl i64 %..i.i, 3                       ; 3 uses
-  %i.gv = icmp ugt i64 %i.gt, 2305843009213693951
+  %i.gs = select i1 %.not.i.i.i.i410, i64 %.sroa.8.0.i.i.i.i, i64 %i.gr ; 2 uses
+  %i.gt = call i64 @llvm.uadd.sat.i64(i64 %i.gs, i64 1)
+  %..i.i = call noundef i64 @llvm.umax.i64(i64 %i.gt, i64 4) ; 3 uses
+  %i.gu = shl i64 %..i.i, 3                       ; 4 uses
+  %i.gv = icmp ugt i64 %i.gs, 2305843009213693950
   %.not.i.i.i411 = icmp ugt i64 %i.gu, 9223372036854775800
   %or.cond.i.i.i412 = or i1 %i.gv, %.not.i.i.i411
-  br i1 %or.cond.i.i.i412, label %bb.ap, label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i413, !prof !70
+  br i1 %or.cond.i.i.i412, label %bb.ap, label %2, !prof !70
 
 bb.aj:                                            ; preds = %bb.ai
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !13743
@@ -255,9 +255,13 @@ bb.ao:                                            ; preds = %bb.am
   call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #50, !noalias !13754, !inline_history !13309
   unreachable
 
-_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i413: ; preds = %_RNvXs0_NtNtNtCs3oUPovFnLWP_4core4iter8adapters3mapINtB5_3MapINtNtB7_7flatten7FlatMapINtNtNtBb_5slice4iter4IterNtNtNtCsdaEETE4DqmE_13typst_library11foundations8selector8SelectorEINtNtCsakL8LGkl72C_4ecow3vec6EcoVecNtNtB1O_7content7ContentENCNvMs0_NtNtB1Q_13introspection12introspectorINtB3V_19ElementIntrospectorNtNtB3X_8position12HtmlPositionE5querys0_0ENCB3P_s1_0ENtNtNtB9_6traits8iterator8Iterator9size_hintCs9gmjTwvRRSu_10typst_html.exit.i
+2:                                                ; preds = %_RNvXs0_NtNtNtCs3oUPovFnLWP_4core4iter8adapters3mapINtB5_3MapINtNtB7_7flatten7FlatMapINtNtNtBb_5slice4iter4IterNtNtNtCsdaEETE4DqmE_13typst_library11foundations8selector8SelectorEINtNtCsakL8LGkl72C_4ecow3vec6EcoVecNtNtB1O_7content7ContentENCNvMs0_NtNtB1Q_13introspection12introspectorINtB3V_19ElementIntrospectorNtNtB3X_8position12HtmlPositionE5querys0_0ENCB3P_s1_0ENtNtNtB9_6traits8iterator8Iterator9size_hintCs9gmjTwvRRSu_10typst_html.exit.i
+  %3 = icmp eq i64 %i.gu, 0
+  br i1 %3, label %_RNvMs5_NtCs1xwejQucwHj_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs9gmjTwvRRSu_10typst_html.exit.i414, label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i413
+
+_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i413: ; preds = %2
   call void @_RNvCsjHpjAFo4bi0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #53, !noalias !13755, !inline_history !13309
-  %i.hg = call noundef align 8 ptr @_RNvCsjHpjAFo4bi0_7___rustc12___rust_alloc(i64 noundef %i.gu, i64 noundef range(i64 1, 9) 8) #53, !noalias !13755, !inline_history !13309 ; 4 uses
+  %i.hg = call noundef align 8 ptr @_RNvCsjHpjAFo4bi0_7___rustc12___rust_alloc(i64 noundef %i.gu, i64 noundef range(i64 1, 9) 8) #53, !noalias !13755, !inline_history !13309 ; 2 uses
   %i.hh = icmp eq ptr %i.hg, null
   br i1 %i.hh, label %bb.ap, label %_RNvMs5_NtCs1xwejQucwHj_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs9gmjTwvRRSu_10typst_html.exit.i414
 
@@ -269,11 +273,15 @@ bb.ap:                                            ; preds = %_RNvXs1_NtCs1xwejQu
 .noexc.i423:                                      ; preds = %bb.ap
   unreachable
 
-_RNvMs5_NtCs1xwejQucwHj_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs9gmjTwvRRSu_10typst_html.exit.i414: ; preds = %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i413
-  store i64 %i.gh, ptr %i.hg, align 8, !noalias !13744
-  store i64 %..i.i, ptr %i.c, align 8, !noalias !13743
+_RNvMs5_NtCs1xwejQucwHj_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs9gmjTwvRRSu_10typst_html.exit.i414: ; preds = %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i413, %2
+  %.sroa.10.0.i.i415 = phi ptr [ inttoptr (i64 8 to ptr), %2 ], [ %i.hg, %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i413 ] ; 3 uses
+  %.sroa.4.0.i.i416 = phi i64 [ 0, %2 ], [ %..i.i, %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i413 ] ; 2 uses
+  %4 = icmp ule i64 %..i.i, %.sroa.4.0.i.i416
+  call void @llvm.assume(i1 %4), !noalias !13746
+  store i64 %i.gh, ptr %.sroa.10.0.i.i415, align 8, !noalias !13744
+  store i64 %.sroa.4.0.i.i416, ptr %i.c, align 8, !noalias !13743
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 3 uses
-  store ptr %i.hg, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !noalias !13743
+  store ptr %.sroa.10.0.i.i415, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !noalias !13743
   %.sroa.6.0..sroa_idx.i.i417 = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 2 uses
   store i64 1, ptr %.sroa.6.0..sroa_idx.i.i417, align 8, !noalias !13743
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !13743
@@ -289,7 +297,7 @@ _RNvMs5_NtCs1xwejQucwHj_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs9gmj
   br label %bb.aq
 
 bb.aq:                                            ; preds = %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecjE7reserveCs9gmjTwvRRSu_10typst_html.exit, %_RNvMs5_NtCs1xwejQucwHj_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs9gmjTwvRRSu_10typst_html.exit.i414
-  %i.ho = phi ptr [ %i.ie, %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecjE7reserveCs9gmjTwvRRSu_10typst_html.exit ], [ %i.hg, %_RNvMs5_NtCs1xwejQucwHj_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs9gmjTwvRRSu_10typst_html.exit.i414 ] ; 16 uses
+  %i.ho = phi ptr [ %i.ie, %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecjE7reserveCs9gmjTwvRRSu_10typst_html.exit ], [ %.sroa.10.0.i.i415, %_RNvMs5_NtCs1xwejQucwHj_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs9gmjTwvRRSu_10typst_html.exit.i414 ] ; 16 uses
   %i.hp = phi i64 [ %i.ig, %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecjE7reserveCs9gmjTwvRRSu_10typst_html.exit ], [ 1, %_RNvMs5_NtCs1xwejQucwHj_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs9gmjTwvRRSu_10typst_html.exit.i414 ] ; 11 uses
   %i.hq = invoke fastcc { i64, i64 } @_RNvXs0_NtNtNtCs3oUPovFnLWP_4core4iter8adapters3mapINtB5_3MapINtNtB7_7flatten7FlatMapINtNtNtBb_5slice4iter4IterNtNtNtCsdaEETE4DqmE_13typst_library11foundations8selector8SelectorEINtNtCsakL8LGkl72C_4ecow3vec6EcoVecNtNtB1O_7content7ContentENCNvMs0_NtNtB1Q_13introspection12introspectorINtB3V_19ElementIntrospectorNtNtB3X_8position12HtmlPositionE5querys0_0ENCB3P_s1_0ENtNtNtB9_6traits8iterator8Iterator4nextCs9gmjTwvRRSu_10typst_html(ptr noalias nofree noundef nonnull align 8 dereferenceable(112) %i.b)
           to label %bb.ar unwind label %bb.au, !noalias !13758, !inline_history !13320 ; 2 uses
@@ -692,12 +700,12 @@ bb.a:
   br i1 %i.e, label %.lr.ph, label %_RNvXsm_NtNtCsdaEETE4DqmE_13typst_library11foundations3strNtB5_5RegexNtNtCs3oUPovFnLWP_4core3cmp9PartialEq2eq.exit
 
 .lr.ph:                                           ; preds = %bb.a, %tailrecurse.backedge
-  %i.f = phi i64 [ %i.co, %tailrecurse.backedge ], [ %i.b, %bb.a ]
-  %i.g = phi i64 [ %i.cp, %tailrecurse.backedge ], [ %i.c, %bb.a ] ; 2 uses
+  %i.f = phi i64 [ %i.cp, %tailrecurse.backedge ], [ %i.c, %bb.a ] ; 5 uses
+  %i.g = phi i64 [ %i.co, %tailrecurse.backedge ], [ %i.b, %bb.a ]
   %i.h = phi i64 [ %i.cn, %tailrecurse.backedge ], [ %i.a, %bb.a ]
   %.tr1865 = phi ptr [ %i.cm, %tailrecurse.backedge ], [ %1, %bb.a ] ; 17 uses
   %.tr64 = phi ptr [ %i.cj, %tailrecurse.backedge ], [ %0, %bb.a ] ; 17 uses
-  switch i64 %i.f, label %default.unreachable [
+  switch i64 %i.g, label %default.unreachable [
     i64 0, label %bb.b
     i64 1, label %bb.c
     i64 2, label %bb.d
@@ -718,7 +726,7 @@ default.unreachable:                              ; preds = %.lr.ph
   unreachable
 
 bb.b:                                             ; preds = %.lr.ph
-  %i.i = icmp samesign ult i64 %i.g, 2
+  %i.i = icmp samesign ult i64 %i.f, 2
   tail call void @llvm.assume(i1 %i.i)
   %i.j = getelementptr inbounds nuw i8, ptr %.tr64, i64 56
   %i.k = getelementptr inbounds nuw i8, ptr %.tr1865, i64 56
@@ -787,6 +795,8 @@ bb.i:                                             ; preds = %.lr.ph
   br i1 %i.am, label %bb.r, label %_RNvXsm_NtNtCsdaEETE4DqmE_13typst_library11foundations3strNtB5_5RegexNtNtCs3oUPovFnLWP_4core3cmp9PartialEq2eq.exit
 
 bb.j:                                             ; preds = %.lr.ph
+  %2 = icmp eq i64 %i.f, 8
+  tail call void @llvm.assume(i1 %2)
   %i.an = getelementptr inbounds nuw i8, ptr %.tr64, i64 24
   %i.ao = load i8, ptr %i.an, align 8, !range !64, !noundef !52
   %i.ap = getelementptr inbounds nuw i8, ptr %.tr1865, i64 24
@@ -795,6 +805,8 @@ bb.j:                                             ; preds = %.lr.ph
   br i1 %i.ar, label %bb.s, label %_RNvXsm_NtNtCsdaEETE4DqmE_13typst_library11foundations3strNtB5_5RegexNtNtCs3oUPovFnLWP_4core3cmp9PartialEq2eq.exit
 
 bb.k:                                             ; preds = %.lr.ph
+  %3 = icmp eq i64 %i.f, 9
+  tail call void @llvm.assume(i1 %3)
   %i.as = getelementptr inbounds nuw i8, ptr %.tr64, i64 24
   %i.at = load i8, ptr %i.as, align 8, !range !64, !noundef !52
   %i.au = getelementptr inbounds nuw i8, ptr %.tr1865, i64 24
@@ -803,6 +815,8 @@ bb.k:                                             ; preds = %.lr.ph
   br i1 %i.aw, label %bb.t, label %_RNvXsm_NtNtCsdaEETE4DqmE_13typst_library11foundations3strNtB5_5RegexNtNtCs3oUPovFnLWP_4core3cmp9PartialEq2eq.exit
 
 bb.l:                                             ; preds = %.lr.ph
+  %4 = icmp eq i64 %i.f, 10
+  tail call void @llvm.assume(i1 %4)
   %i.ax = getelementptr inbounds nuw i8, ptr %.tr64, i64 8
   %i.ay = load ptr, ptr %i.ax, align 8, !nonnull !52, !noundef !52
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 16
@@ -814,7 +828,7 @@ bb.l:                                             ; preds = %.lr.ph
 
 bb.m:                                             ; preds = %bb.b
   %i.be = trunc nuw i64 %i.h to i1
-  %i.bf = trunc nuw i64 %i.g to i1                ; 2 uses
+  %i.bf = trunc nuw i64 %i.f to i1                ; 2 uses
   br i1 %i.be, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %bb.m

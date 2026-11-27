@@ -202,7 +202,7 @@ define internal fastcc noundef zeroext i1 @_RNvXs73_NtNtCs4lawaffTVVK_9sqlparser
 bb.a:
   %i.a = load i64, ptr %0, align 8, !range !75, !noundef !21 ; 3 uses
   %i.b = tail call i64 @llvm.usub.sat.i64(i64 %i.a, i64 2) ; 2 uses
-  %i.c = load i64, ptr %1, align 8, !range !75, !noundef !21 ; 4 uses
+  %i.c = load i64, ptr %1, align 8, !range !75, !noundef !21 ; 16 uses
   %i.d = tail call i64 @llvm.usub.sat.i64(i64 %i.c, i64 2)
   %i.e = icmp eq i64 %i.b, %i.d
   br i1 %i.e, label %bb.b, label %_RNvXs2_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtNtCs4lawaffTVVK_9sqlparser3ast5query7MeasureINtB5_14SlicePartialEqBC_E17equal_same_lengthCs7p2uQeJxui2_9deltalake.exit
@@ -242,6 +242,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.k, label %bb.t, label %_RNvXs2_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtNtCs4lawaffTVVK_9sqlparser3ast5query7MeasureINtB5_14SlicePartialEqBC_E17equal_same_lengthCs7p2uQeJxui2_9deltalake.exit
 
 bb.d:                                             ; preds = %bb.b
+  %2 = icmp eq i64 %i.c, 3
+  tail call void @llvm.assume(i1 %2)
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.m = load i8, ptr %i.l, align 8, !range !85, !noundef !21
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 104
@@ -250,12 +252,16 @@ bb.d:                                             ; preds = %bb.b
   br i1 %i.p, label %bb.aq, label %_RNvXs2_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtNtCs4lawaffTVVK_9sqlparser3ast5query7MeasureINtB5_14SlicePartialEqBC_E17equal_same_lengthCs7p2uQeJxui2_9deltalake.exit
 
 bb.e:                                             ; preds = %bb.b
+  %3 = icmp eq i64 %i.c, 4
+  tail call void @llvm.assume(i1 %3)
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.s = tail call fastcc noundef zeroext i1 @_RNvXs6J_NtCs4lawaffTVVK_9sqlparser3astNtB6_4ExprNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(328) %i.q, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(328) %i.r) #42
   br i1 %i.s, label %bb.at, label %_RNvXs2_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtNtCs4lawaffTVVK_9sqlparser3ast5query7MeasureINtB5_14SlicePartialEqBC_E17equal_same_lengthCs7p2uQeJxui2_9deltalake.exit
 
 bb.f:                                             ; preds = %bb.b
+  %4 = icmp eq i64 %i.c, 5
+  tail call void @llvm.assume(i1 %4)
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 144
   %i.u = load i8, ptr %i.t, align 8, !range !85, !noundef !21
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 144
@@ -264,6 +270,8 @@ bb.f:                                             ; preds = %bb.b
   br i1 %i.x, label %bb.av, label %_RNvXs2_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtNtCs4lawaffTVVK_9sqlparser3ast5query7MeasureINtB5_14SlicePartialEqBC_E17equal_same_lengthCs7p2uQeJxui2_9deltalake.exit
 
 bb.g:                                             ; preds = %bb.b
+  %5 = icmp eq i64 %i.c, 6
+  tail call void @llvm.assume(i1 %5)
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 184
   %i.z = load i8, ptr %i.y, align 8, !range !85, !noundef !21
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 184
@@ -272,18 +280,24 @@ bb.g:                                             ; preds = %bb.b
   br i1 %i.ac, label %bb.ba, label %_RNvXs2_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtNtCs4lawaffTVVK_9sqlparser3ast5query7MeasureINtB5_14SlicePartialEqBC_E17equal_same_lengthCs7p2uQeJxui2_9deltalake.exit
 
 bb.h:                                             ; preds = %bb.b
+  %6 = icmp eq i64 %i.c, 7
+  tail call void @llvm.assume(i1 %6)
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.af = tail call fastcc noundef zeroext i1 @_RNvXs6J_NtCs4lawaffTVVK_9sqlparser3astNtB6_4ExprNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(328) %i.ad, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(328) %i.ae) #42
   br i1 %i.af, label %bb.bi, label %_RNvXs2_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtNtCs4lawaffTVVK_9sqlparser3ast5query7MeasureINtB5_14SlicePartialEqBC_E17equal_same_lengthCs7p2uQeJxui2_9deltalake.exit
 
 bb.i:                                             ; preds = %bb.b
+  %7 = icmp eq i64 %i.c, 8
+  tail call void @llvm.assume(i1 %7)
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.ai = tail call fastcc noundef zeroext i1 @_RNvXs6J_NtCs4lawaffTVVK_9sqlparser3astNtB6_4ExprNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(328) %i.ag, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(328) %i.ah) #42
   br i1 %i.ai, label %bb.bn, label %_RNvXs2_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtNtCs4lawaffTVVK_9sqlparser3ast5query7MeasureINtB5_14SlicePartialEqBC_E17equal_same_lengthCs7p2uQeJxui2_9deltalake.exit
 
 bb.j:                                             ; preds = %bb.b
+  %8 = icmp eq i64 %i.c, 9
+  tail call void @llvm.assume(i1 %8)
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.ak = load ptr, ptr %i.aj, align 8, !nonnull !21, !noundef !21 ; 3 uses
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 96
@@ -340,6 +354,8 @@ _RNvYNtNtNtCs4lawaffTVVK_9sqlparser3ast5query4JoinNtNtCsbvkFyIu7lgC_4core3cmp9Pa
   br i1 %i.bi, label %bb.m, label %_RNvXs2_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtNtCs4lawaffTVVK_9sqlparser3ast5query7MeasureINtB5_14SlicePartialEqBC_E17equal_same_lengthCs7p2uQeJxui2_9deltalake.exit
 
 bb.o:                                             ; preds = %bb.b
+  %9 = icmp eq i64 %i.c, 10
+  tail call void @llvm.assume(i1 %9)
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.bk = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 504
@@ -350,6 +366,8 @@ bb.o:                                             ; preds = %bb.b
   br i1 %i.bp, label %bb.bv, label %_RNvXs2_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtNtCs4lawaffTVVK_9sqlparser3ast5query7MeasureINtB5_14SlicePartialEqBC_E17equal_same_lengthCs7p2uQeJxui2_9deltalake.exit
 
 bb.p:                                             ; preds = %bb.b
+  %10 = icmp eq i64 %i.c, 11
+  tail call void @llvm.assume(i1 %10)
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 336
   %i.br = getelementptr inbounds nuw i8, ptr %1, i64 336
   %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 512
@@ -360,6 +378,8 @@ bb.p:                                             ; preds = %bb.b
   br i1 %i.bw, label %bb.cj, label %_RNvXs2_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtNtCs4lawaffTVVK_9sqlparser3ast5query7MeasureINtB5_14SlicePartialEqBC_E17equal_same_lengthCs7p2uQeJxui2_9deltalake.exit
 
 bb.q:                                             ; preds = %bb.b
+  %11 = icmp eq i64 %i.c, 12
+  tail call void @llvm.assume(i1 %11)
   %i.bx = getelementptr inbounds nuw i8, ptr %0, i64 264
   %i.by = getelementptr inbounds nuw i8, ptr %1, i64 264
   %i.bz = getelementptr inbounds nuw i8, ptr %0, i64 336
@@ -370,6 +390,8 @@ bb.q:                                             ; preds = %bb.b
   br i1 %i.cd, label %bb.cu, label %_RNvXs2_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtNtCs4lawaffTVVK_9sqlparser3ast5query7MeasureINtB5_14SlicePartialEqBC_E17equal_same_lengthCs7p2uQeJxui2_9deltalake.exit
 
 bb.r:                                             ; preds = %bb.b
+  %12 = icmp eq i64 %i.c, 13
+  tail call void @llvm.assume(i1 %12)
   %i.ce = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.cf = getelementptr inbounds nuw i8, ptr %0, i64 360
   %i.cg = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -382,6 +404,8 @@ bb.r:                                             ; preds = %bb.b
   br i1 %i.cm, label %bb.dt, label %_RNvXs2_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtNtCs4lawaffTVVK_9sqlparser3ast5query7MeasureINtB5_14SlicePartialEqBC_E17equal_same_lengthCs7p2uQeJxui2_9deltalake.exit
 
 bb.s:                                             ; preds = %bb.b
+  %13 = icmp eq i64 %i.c, 14
+  tail call void @llvm.assume(i1 %13)
   %i.cn = getelementptr inbounds nuw i8, ptr %0, i64 352
   %.val88 = load i64, ptr %i.cn, align 8, !noundef !21 ; 2 uses
   %i.co = getelementptr inbounds nuw i8, ptr %1, i64 352

@@ -205,8 +205,8 @@ opj_dwt_max_resolution.exit.i12:                  ; preds = %opj_dwt_max_resolut
   %i.hp = getelementptr inbounds nuw i8, ptr %i.hg, i64 17179869168 ; 2 uses
   %i.hq = getelementptr inbounds nuw i8, ptr %i.hg, i64 17179869172 ; 2 uses
   %i.hr = getelementptr inbounds nuw i8, ptr %i.hg, i64 17179869180 ; 2 uses
-  %i.hs = getelementptr inbounds nuw i8, ptr %i.hg, i64 16 ; 11 uses
-  %i.ht = getelementptr inbounds nuw i8, ptr %i.hg, i64 20
+  %i.hs = getelementptr inbounds nuw i8, ptr %i.hg, i64 16 ; 10 uses
+  %i.ht = getelementptr inbounds nuw i8, ptr %i.hg, i64 20 ; 2 uses
   %i.hu = getelementptr inbounds nuw i8, ptr %i.hg, i64 24 ; 5 uses
   %i.hv = getelementptr inbounds nuw i8, ptr %i.hg, i64 28 ; 5 uses
   %scevgep = getelementptr i8, ptr %i.hg, i64 8
@@ -315,21 +315,21 @@ opj_dwt_get_band_coordinates.exit206.i:           ; preds = %bb.z, %bb.y, %bb.x
   %i.kk = load i32, ptr %i.kf, align 8, !tbaa !75 ; 2 uses
   %i.kl = getelementptr inbounds nuw i8, ptr %.0183297.i, i64 276
   %i.km = load i32, ptr %i.kl, align 4, !tbaa !76 ; 2 uses
-  %i.kn = tail call noundef i32 @llvm.usub.sat.i32(i32 %i.ka, i32 %i.kh) ; 4 uses
-  %i.ko = tail call noundef i32 @llvm.usub.sat.i32(i32 %i.kb, i32 %i.kj)
+  %i.kn = tail call noundef i32 @llvm.usub.sat.i32(i32 %i.ka, i32 %i.kh) ; 5 uses
+  %i.ko = tail call noundef i32 @llvm.usub.sat.i32(i32 %i.kb, i32 %i.kj) ; 2 uses
   %i.kp = tail call noundef i32 @llvm.usub.sat.i32(i32 %i.jz, i32 %i.kh)
   %i.kq = tail call noundef i32 @llvm.usub.sat.i32(i32 %i.kc, i32 %i.kj)
   %i.kr = tail call noundef i32 @llvm.usub.sat.i32(i32 %i.jy, i32 %i.kk)
   %i.ks = tail call noundef i32 @llvm.usub.sat.i32(i32 %i.kd, i32 %i.kk)
   %i.kt = tail call noundef i32 @llvm.usub.sat.i32(i32 %i.jx, i32 %i.km)
   %i.ku = tail call noundef i32 @llvm.usub.sat.i32(i32 %i.ke, i32 %i.km)
-  %i.kv = tail call noundef i32 @llvm.usub.sat.i32(i32 %i.kn, i32 2) ; 17 uses
+  %i.kv = tail call noundef i32 @llvm.usub.sat.i32(i32 %i.kn, i32 2) ; 16 uses
   %i.kw = tail call range(i32 2, 0) i32 @llvm.uadd.sat.i32(i32 %i.kp, i32 range(i32 2, 5) 2)
   %i.kx = tail call noundef i32 @llvm.umin.i32(i32 %i.kw, i32 %.0182298.i) ; 8 uses
   %i.ky = tail call noundef i32 @llvm.usub.sat.i32(i32 %i.kr, i32 2) ; 8 uses
   %i.kz = tail call range(i32 2, 0) i32 @llvm.uadd.sat.i32(i32 %i.ks, i32 range(i32 2, 5) 2)
   %i.la = tail call noundef i32 @llvm.umin.i32(i32 %i.kz, i32 %i.ig) ; 8 uses
-  %i.lb = tail call noundef i32 @llvm.usub.sat.i32(i32 %i.ko, i32 2) ; 13 uses
+  %i.lb = tail call noundef i32 @llvm.usub.sat.i32(i32 %i.ko, i32 2) ; 12 uses
   %i.lc = tail call range(i32 2, 0) i32 @llvm.uadd.sat.i32(i32 %i.kq, i32 range(i32 2, 5) 2)
   %i.ld = tail call noundef i32 @llvm.umin.i32(i32 %i.lc, i32 %.0181299.i) ; 9 uses
   %i.le = tail call noundef i32 @llvm.usub.sat.i32(i32 %i.kt, i32 2) ; 9 uses
@@ -420,7 +420,7 @@ bb.ab:                                            ; preds = %bb.aa, %opj_dwt_get
   %i.nn = sext i32 %i.nm to i64                   ; 3 uses
   %.pn.i.i = select i1 %.not171.not.i.i, i64 %i.nn, i64 %i.nl
   %.in.ph.i.i = getelementptr inbounds [4 x i8], ptr %i.hg, i64 %.pn.i.i
-  %5 = icmp slt i32 %i.kv, 0
+  %5 = icmp ugt i32 %i.kn, -2147483647
   %.not172.i.i = icmp slt i32 %i.kv, %i.ig
   %i.no = getelementptr inbounds [4 x i8], ptr %i.hg, i64 %i.nn ; 2 uses
   %i.np = getelementptr inbounds nuw [4 x i8], ptr %i.hg, i64 %i.mk
@@ -558,11 +558,11 @@ bb.ab:                                            ; preds = %bb.aa, %opj_dwt_get
   %i.rf = getelementptr inbounds nuw i8, ptr %.in315.us370.i.i, i64 12
   %i.rg = icmp sgt i32 %.0181299.i, 1
   %or.cond.i213.i = or i1 %i.rg, %.not320.us.i.i
-  %i.rh = icmp slt i32 %i.lb, 1
+  %i.rh = icmp slt i32 %i.lb, 1                   ; 4 uses
   %..i.i = tail call i32 @llvm.smin.i32(i32 %i.lb, i32 %i.ii)
   %.pn341.in.i.i = shl i32 %..i.i, 3
   %.pn341.i.i = add i32 %.pn341.in.i.i, -4
-  %6 = icmp slt i32 %i.lb, 0
+  %6 = icmp ugt i32 %i.ko, -2147483647            ; 4 uses
   %.not312.i.i = icmp slt i32 %i.lb, %i.ii
   %i.ri = add i32 %i.qj, -4                       ; 2 uses
   %invariant.op.i.i = or disjoint i32 %i.px, 4
@@ -572,7 +572,7 @@ bb.ab:                                            ; preds = %bb.aa, %opj_dwt_get
   %.in311.ph.i.i = getelementptr inbounds nuw [4 x i8], ptr %i.hg, i64 %i.rk ; 4 uses
   %i.rm = getelementptr inbounds nuw [4 x i8], ptr %i.hg, i64 %i.py ; 7 uses
   %.in311.ph.1.i.i = getelementptr inbounds nuw i8, ptr %.in311.ph.i.i, i64 4
-  %i.rn = getelementptr inbounds nuw i8, ptr %i.rm, i64 4 ; 2 uses
+  %i.rn = getelementptr inbounds nuw i8, ptr %i.rm, i64 4 ; 4 uses
   %.in311.ph.2.i.i = getelementptr inbounds nuw i8, ptr %.in311.ph.i.i, i64 8
   %i.ro = getelementptr inbounds nuw i8, ptr %i.rm, i64 8 ; 4 uses
   %.in311.ph.3.i.i = getelementptr inbounds nuw i8, ptr %.in311.ph.i.i, i64 12
@@ -975,83 +975,131 @@ bb.bj:                                            ; preds = %bb.bi
   %i.aar = add i32 %i.aaq, %.0177.i               ; 4 uses
   %i.aas = tail call i32 @opj_sparse_array_int32_read(ptr noundef nonnull %i.fe, i32 noundef %.0177.i, i32 noundef %i.lb, i32 noundef %i.aar, i32 noundef %i.ld, ptr noundef nonnull %i.pz, i32 noundef 1, i32 noundef 8, i32 noundef 1) #15 ; 0 uses
   %i.aat = tail call i32 @opj_sparse_array_int32_read(ptr noundef nonnull %i.fe, i32 noundef %.0177.i, i32 noundef %.pre315.i, i32 noundef %i.aar, i32 noundef %.pre316.i, ptr noundef nonnull %i.qf, i32 noundef 1, i32 noundef 8, i32 noundef 1) #15 ; 0 uses
-  br i1 %i.lr, label %bb.bk, label %bb.br
+  br i1 %i.lr, label %7, label %bb.br
 
-bb.bk:                                            ; preds = %bb.bj
-  br i1 %or.cond.i213.i, label %bb.bl, label %opj_dwt_decode_partial_1_parallel.exit.i
+7:                                                ; preds = %bb.bj
+  br i1 %or.cond.i213.i, label %8, label %opj_dwt_decode_partial_1_parallel.exit.i
+
+8:                                                ; preds = %7
+  br i1 %i.qi, label %bb.bk, label %.loopexit347.i.i
+
+bb.bk:                                            ; preds = %8
+  br i1 %i.rh, label %bb.bl, label %.thread.i217.i
+
+.thread.i217.i:                                   ; preds = %bb.bk
+  %9 = load i32, ptr %.in311.ph.i.i, align 4, !tbaa !46
+  br label %.preheader350.i.i
 
 bb.bl:                                            ; preds = %bb.bk
-  br i1 %i.qi, label %.preheader350.i.i, label %.loopexit347.i.i
+  %10 = load i32, ptr %i.hs, align 4, !tbaa !46   ; 2 uses
+  br i1 %6, label %.thread356.i, label %.preheader350.i.i
 
-.preheader350.i.i:                                ; preds = %bb.bl
-  br i1 %i.rh, label %bb.bm, label %.thread.1.i.i.a
+.thread356.i:                                     ; preds = %bb.bl
+  %reass.add.i = shl i32 %10, 1
+  %11 = add i32 %reass.add.i, 2
+  %12 = ashr i32 %11, 2
+  %13 = load i32, ptr %i.rm, align 4, !tbaa !46
+  %14 = sub nsw i32 %13, %12
+  store i32 %14, ptr %i.rm, align 4, !tbaa !46
+  %15 = load i32, ptr %i.ht, align 4, !tbaa !46
+  br label %.thread360.i
+
+.preheader350.i.i:                                ; preds = %bb.bl, %.thread.i217.i
+  %16 = phi i32 [ %9, %.thread.i217.i ], [ %10, %bb.bl ]
+  %.pre310.i = load i32, ptr %.301.i, align 4, !tbaa !46
+  %17 = add i32 %16, 2
+  %18 = add i32 %17, %.pre310.i
+  %19 = ashr i32 %18, 2
+  %20 = load i32, ptr %i.rm, align 4, !tbaa !46
+  %21 = sub nsw i32 %20, %19
+  store i32 %21, ptr %i.rm, align 4, !tbaa !46
+  br i1 %i.rh, label %bb.bm, label %.thread.1.i.i
+
+.thread.1.i.i:                                    ; preds = %.preheader350.i.i
+  %22 = load i32, ptr %.in311.ph.1.i.i, align 4, !tbaa !46
+  br label %24
 
 bb.bm:                                            ; preds = %.preheader350.i.i
-  br i1 %6, label %.thread360.i, label %.thread.1.i.i.a
+  %23 = load i32, ptr %i.ht, align 4, !tbaa !46   ; 2 uses
+  br i1 %6, label %.thread360.i, label %24
 
-.thread360.i:                                     ; preds = %bb.bm
-  %7 = load <2 x i32>, ptr %i.hs, align 4, !tbaa !46
-  %8 = shl <2 x i32> %7, splat (i32 1)
-  %9 = add <2 x i32> %8, splat (i32 2)
-  %10 = ashr <2 x i32> %9, splat (i32 2)
-  %11 = load <2 x i32>, ptr %i.rm, align 4, !tbaa !46
-  %12 = sub nsw <2 x i32> %11, %10
-  store <2 x i32> %12, ptr %i.rm, align 4, !tbaa !46
-  %13 = load i32, ptr %i.hu, align 4, !tbaa !46
-  %reass.add389.i = shl i32 %13, 1
+.thread360.i:                                     ; preds = %bb.bm, %.thread356.i
+  %.ph357.i = phi i32 [ %15, %.thread356.i ], [ %23, %bb.bm ]
+  %reass.add389.i = shl i32 %.ph357.i, 1
   %i.aau = add i32 %reass.add389.i, 2
   %i.aav = ashr i32 %i.aau, 2
-  %i.aaw = load i32, ptr %i.ro, align 4, !tbaa !46
+  %i.aaw = load i32, ptr %i.rn, align 4, !tbaa !46
   %i.aax = sub nsw i32 %i.aaw, %i.aav
-  store i32 %i.aax, ptr %i.ro, align 4, !tbaa !46
-  %i.aay = load i32, ptr %i.hv, align 4, !tbaa !46 ; 2 uses
+  store i32 %i.aax, ptr %i.rn, align 4, !tbaa !46
+  %i.aay = load i32, ptr %i.hu, align 4, !tbaa !46
+  br label %.thread.1.i.i.a
+
+24:                                               ; preds = %bb.bm, %.thread.1.i.i
+  %25 = phi i32 [ %22, %.thread.1.i.i ], [ %23, %bb.bm ]
+  %.pre311.i = load i32, ptr %.302.i, align 4, !tbaa !46
+  %26 = add i32 %25, 2
+  %27 = add i32 %26, %.pre311.i
+  %28 = ashr i32 %27, 2
+  %29 = load i32, ptr %i.rn, align 4, !tbaa !46
+  %30 = sub nsw i32 %29, %28
+  store i32 %30, ptr %i.rn, align 4, !tbaa !46
+  br i1 %i.rh, label %32, label %.thread.2.i.i
+
+.thread.2.i.i:                                    ; preds = %24
+  %31 = load i32, ptr %.in311.ph.2.i.i, align 4, !tbaa !46
   br label %bb.bn
 
-.thread.1.i.i.a:                                  ; preds = %.preheader350.i.i, %bb.bm
-  %.in387.i = phi ptr [ %i.hv, %bb.bm ], [ %.in311.ph.3.i.i, %.preheader350.i.i ]
-  %.in386.i = phi ptr [ %i.hu, %bb.bm ], [ %.in311.ph.2.i.i, %.preheader350.i.i ]
-  %spec.select = phi ptr [ %i.ht, %bb.bm ], [ %.in311.ph.1.i.i, %.preheader350.i.i ]
-  %.in = phi ptr [ %i.hs, %bb.bm ], [ %.in311.ph.i.i, %.preheader350.i.i ]
-  %14 = load i32, ptr %.in, align 4, !tbaa !46
-  %.pre310.i = load i32, ptr %.301.i, align 4, !tbaa !46
-  %15 = add i32 %14, 2
-  %16 = add i32 %15, %.pre310.i
-  %17 = ashr i32 %16, 2
-  %18 = load i32, ptr %i.rm, align 4, !tbaa !46
-  %19 = sub nsw i32 %18, %17
-  store i32 %19, ptr %i.rm, align 4, !tbaa !46
-  %20 = load i32, ptr %spec.select, align 4, !tbaa !46
-  %.pre311.i = load i32, ptr %.302.i, align 4, !tbaa !46
-  %21 = add i32 %20, 2
-  %22 = add i32 %21, %.pre311.i
-  %23 = ashr i32 %22, 2
-  %24 = load i32, ptr %i.rn, align 4, !tbaa !46
-  %25 = sub nsw i32 %24, %23
-  store i32 %25, ptr %i.rn, align 4, !tbaa !46
-  %26 = load i32, ptr %.in386.i, align 4, !tbaa !46
-  %.pre312.i = load i32, ptr %.303.i, align 4, !tbaa !46
-  %27 = add i32 %26, 2
-  %i.aaz = add i32 %27, %.pre312.i
+32:                                               ; preds = %24
+  %33 = load i32, ptr %i.hu, align 4, !tbaa !46   ; 2 uses
+  br i1 %6, label %.thread.1.i.i.a, label %bb.bn
+
+.thread.1.i.i.a:                                  ; preds = %32, %.thread360.i
+  %.ph362.i = phi i32 [ %i.aay, %.thread360.i ], [ %33, %32 ]
+  %reass.add392.i = shl i32 %.ph362.i, 1
+  %i.aaz = add i32 %reass.add392.i, 2
   %i.aba = ashr i32 %i.aaz, 2
   %i.abb = load i32, ptr %i.ro, align 4, !tbaa !46
   %i.abc = sub nsw i32 %i.abb, %i.aba
   store i32 %i.abc, ptr %i.ro, align 4, !tbaa !46
-  %28 = load i32, ptr %.in387.i, align 4, !tbaa !46
-  %.pre313.i.a = load i32, ptr %.304.i, align 4, !tbaa !46
-  br label %bb.bn
+  %.pre313.i.a = load i32, ptr %i.hv, align 4, !tbaa !46 ; 2 uses
+  br label %39
 
-bb.bn:                                            ; preds = %.thread.1.i.i.a, %.thread360.i
-  %i.abd = phi i32 [ %i.aay, %.thread360.i ], [ %.pre313.i.a, %.thread.1.i.i.a ]
-  %29 = phi i32 [ %i.aay, %.thread360.i ], [ %28, %.thread.1.i.i.a ]
+bb.bn:                                            ; preds = %32, %.thread.2.i.i
+  %i.abd = phi i32 [ %31, %.thread.2.i.i ], [ %33, %32 ]
+  %.pre312.i = load i32, ptr %.303.i, align 4, !tbaa !46
   %i.abe = add i32 %i.abd, 2
-  %i.abf = add i32 %i.abe, %29
+  %i.abf = add i32 %i.abe, %.pre312.i
   %i.abg = ashr i32 %i.abf, 2
-  %i.abh = load i32, ptr %i.rp, align 4, !tbaa !46
+  %i.abh = load i32, ptr %i.ro, align 4, !tbaa !46
   %i.abi = sub nsw i32 %i.abh, %i.abg
-  store i32 %i.abi, ptr %i.rp, align 4, !tbaa !46
+  store i32 %i.abi, ptr %i.ro, align 4, !tbaa !46
+  br i1 %i.rh, label %35, label %.thread.3.i.i
+
+.thread.3.i.i:                                    ; preds = %bb.bn
+  %34 = load i32, ptr %.in311.ph.3.i.i, align 4, !tbaa !46
+  br label %37
+
+35:                                               ; preds = %bb.bn
+  %36 = load i32, ptr %i.hv, align 4, !tbaa !46   ; 3 uses
+  br i1 %6, label %39, label %37
+
+37:                                               ; preds = %35, %.thread.3.i.i
+  %38 = phi i32 [ %34, %.thread.3.i.i ], [ %36, %35 ]
+  %.pre313.i = load i32, ptr %.304.i, align 4, !tbaa !46
+  br label %39
+
+39:                                               ; preds = %37, %35, %.thread.1.i.i.a
+  %40 = phi i32 [ %36, %35 ], [ %.pre313.i, %37 ], [ %.pre313.i.a, %.thread.1.i.i.a ]
+  %41 = phi i32 [ %36, %35 ], [ %38, %37 ], [ %.pre313.i.a, %.thread.1.i.i.a ]
+  %42 = add i32 %40, 2
+  %43 = add i32 %42, %41
+  %44 = ashr i32 %43, 2
+  %45 = load i32, ptr %i.rp, align 4, !tbaa !46
+  %46 = sub nsw i32 %45, %44
+  store i32 %46, ptr %i.rp, align 4, !tbaa !46
   br i1 %i.rs, label %.lr.ph.preheader.i.i, label %.loopexit349.i.i
 
-.lr.ph.preheader.i.i:                             ; preds = %bb.bn
+.lr.ph.preheader.i.i:                             ; preds = %39
   %i.abj = load <2 x i64>, ptr %i.ru, align 16, !tbaa !50
   br label %.lr.ph.i220.i
 
@@ -1091,8 +1139,8 @@ bb.bn:                                            ; preds = %.thread.1.i.i.a, %.
   %i.aci = trunc nsw i64 %indvars.iv.next.i222.i to i32
   br label %.loopexit349.i.i
 
-.loopexit349.i.i:                                 ; preds = %.loopexit349.loopexit.i.i, %bb.bn
-  %.1.i.i = phi i32 [ %i.rq, %bb.bn ], [ %i.aci, %.loopexit349.loopexit.i.i ] ; 7 uses
+.loopexit349.i.i:                                 ; preds = %.loopexit349.loopexit.i.i, %39
+  %.1.i.i = phi i32 [ %i.rq, %39 ], [ %i.aci, %.loopexit349.loopexit.i.i ] ; 7 uses
   %i.acj = icmp slt i32 %.1.i.i, %spec.select.i218.i
   br i1 %i.acj, label %.preheader348.i.i.preheader, label %.preheader346.i.i
 
@@ -1317,7 +1365,7 @@ bb.bn:                                            ; preds = %.thread.1.i.i.a, %.
   %exitcond466.not.i.i = icmp eq i32 %i.ahv, %i.ld
   br i1 %exitcond466.not.i.i, label %.loopexit347.i.i, label %.preheader345.i.i, !llvm.loop !184
 
-.loopexit347.i.i:                                 ; preds = %.split384.us.i.i, %.preheader346.i.i, %bb.bl
+.loopexit347.i.i:                                 ; preds = %.split384.us.i.i, %.preheader346.i.i, %8
   br i1 %i.qv, label %bb.bo, label %opj_dwt_decode_partial_1_parallel.exit.i
 
 bb.bo:                                            ; preds = %.loopexit347.i.i
@@ -1720,7 +1768,7 @@ begin_hunk_2_@opj_dwt_decode:bb.a
   %exitcond433.not.i.i = icmp eq i32 %i.asg, %i.lg
   br i1 %exitcond433.not.i.i, label %opj_dwt_decode_partial_1_parallel.exit.i, label %.preheader353.i.i, !llvm.loop !189
 
-opj_dwt_decode_partial_1_parallel.exit.i:         ; preds = %.split364.us.i.i, %.split398.us.i.i, %.preheader354.i.i, %.preheader351.preheader.i.i, %.preheader342.i.i, %.loopexit347.i.i, %bb.bk
+opj_dwt_decode_partial_1_parallel.exit.i:         ; preds = %.split364.us.i.i, %.split398.us.i.i, %.preheader354.i.i, %.preheader351.preheader.i.i, %.preheader342.i.i, %.loopexit347.i.i, %7
   %i.ash = tail call i32 @opj_sparse_array_int32_write(ptr noundef nonnull %i.fe, i32 noundef %.0177.i, i32 noundef %i.lv, i32 noundef %i.aar, i32 noundef %i.ma, ptr noundef nonnull %i.so, i32 noundef 1, i32 noundef 4, i32 noundef 1) #15
   %.not188.not.i = icmp eq i32 %i.ash, 0
   br i1 %.not188.not.i, label %.thread288.i, label %bb.bi, !llvm.loop !190

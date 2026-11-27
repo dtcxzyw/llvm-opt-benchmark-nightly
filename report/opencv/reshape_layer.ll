@@ -204,7 +204,7 @@ bb.p:                                             ; preds = %bb.o
 _ZN2cv3dnn14dnn5_v20260605L20normalize_axis_rangeERKNS_5RangeEi.exit.i: ; preds = %_ZNSt6vectorIN2cv8MatShapeESaIS1_EE9push_backEOS1_.exit, %bb.o
   %.sroa.028.0.i.i = phi i64 [ %.sroa.0.0.copyload, %bb.o ], [ 0, %_ZNSt6vectorIN2cv8MatShapeESaIS1_EE9push_backEOS1_.exit ]
   %.sroa.430.0.i.i = phi i32 [ %i.at, %bb.o ], [ %narrow.i.i, %_ZNSt6vectorIN2cv8MatShapeESaIS1_EE9push_backEOS1_.exit ]
-  %.sroa.430.0.i.i.fr = freeze i32 %.sroa.430.0.i.i ; 24 uses
+  %.sroa.430.0.i.i.fr = freeze i32 %.sroa.430.0.i.i ; 25 uses
   %.sroa.0.0.extract.trunc258.i = trunc i64 %.sroa.028.0.i.i to i32 ; 5 uses
   %i.av = call noundef i64 @_ZNK2cv8MatShape5totalEv(ptr noundef nonnull align 4 dereferenceable(52) %i.q)
   %i.aw = icmp ne i64 %i.av, 0                    ; 2 uses
@@ -333,7 +333,7 @@ _ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit.i: ; preds = %_ZN2cv3dn
   %.not.not292.i = icmp sgt i32 %.sroa.430.0.i.i.fr, %.sroa.0.0.extract.trunc258.i
   %.pre379 = load i32, ptr %i.ai, align 4, !tbaa !75
   %.pre380 = freeze i32 %.pre379                  ; 3 uses
-  %narrow.i.i75 = call i32 @llvm.smax.i32(i32 %.pre380, i32 0) ; 4 uses
+  %narrow.i.i75 = call i32 @llvm.smax.i32(i32 %.pre380, i32 0) ; 5 uses
   br i1 %.not.not292.i, label %.lr.ph.i.preheader, label %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit.i.._crit_edge296.i_crit_edge
 
 _ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit.i.._crit_edge296.i_crit_edge: ; preds = %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit.i
@@ -350,11 +350,11 @@ _ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit.i.._crit_edge296.i_crit
 
 .lr.ph.i.us:                                      ; preds = %.lr.ph.i.preheader
   %spec.store.select.i76.us = add nsw i32 %.sroa.430.0.i.i.fr, -1
-  %41 = icmp sgt i32 %.sroa.430.0.i.i.fr, 0
+  %41 = icmp ult i32 %.sroa.430.0.i.i.fr, -2147483647
   br i1 %41, label %.split202.us, label %.split.us
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %bb.x
-  %.092.in294.i = phi i32 [ %.092295.i, %bb.x ], [ %.sroa.430.0.i.i.fr, %.lr.ph.i.preheader ] ; 5 uses
+  %.092.in294.i = phi i32 [ %.092295.i, %bb.x ], [ %.sroa.430.0.i.i.fr, %.lr.ph.i.preheader ] ; 6 uses
   %.093293.i = phi i1 [ %.194.i, %bb.x ], [ false, %.lr.ph.i.preheader ]
   %i.dd = icmp ne i32 %.092.in294.i, 0
   %umin.neg = sext i1 %i.dd to i32
@@ -362,8 +362,8 @@ _ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit.i.._crit_edge296.i_crit
   %i.df = zext i32 %i.de to i64                   ; 2 uses
   %i.dg = sub nsw i64 %i.dc, %i.df                ; 2 uses
   %.092295.i = add nsw i32 %.092.in294.i, -1      ; 3 uses
-  %spec.store.select.i76 = call i32 @llvm.usub.sat.i32(i32 %.092.in294.i, i32 1) ; 8 uses
-  %42 = icmp sgt i32 %spec.store.select.i76, -1
+  %spec.store.select.i76 = call i32 @llvm.usub.sat.i32(i32 %.092.in294.i, i32 1) ; 7 uses
+  %42 = icmp ult i32 %.092.in294.i, -2147483647
   br i1 %42, label %bb.r, label %.split.us
 
 .split.us:                                        ; preds = %.lr.ph.i, %.lr.ph.i.us
@@ -516,40 +516,48 @@ bb.v:                                             ; preds = %_ZN2cv3dnn14dnn5_v2
 
 bb.w:                                             ; preds = %bb.v
   %i.fl = icmp eq i32 %.092295.i, 0
-  br i1 %i.fl, label %._crit_edge296.i, label %bb.x
+  br i1 %i.fl, label %._crit_edge296.i.thread, label %bb.x
 
 bb.x:                                             ; preds = %bb.w, %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit93
   %.194.i = phi i1 [ true, %bb.w ], [ %.not.i29, %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit93 ]
   %.not.not.i = icmp sgt i32 %.092295.i, %.sroa.0.0.extract.trunc258.i
   br i1 %.not.not.i, label %.lr.ph.i, label %._crit_edge296.i, !llvm.loop !139
 
-._crit_edge296.i:                                 ; preds = %bb.x, %bb.w, %bb.v, %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit.i.._crit_edge296.i_crit_edge
-  %.pre-phi = phi i64 [ %.pre383, %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit.i.._crit_edge296.i_crit_edge ], [ %i.dc, %bb.v ], [ %i.dc, %bb.w ], [ %i.dc, %bb.x ] ; 2 uses
-  %narrow.i26.i63.pre-phi = phi i32 [ %.pre382, %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit.i.._crit_edge296.i_crit_edge ], [ %narrow.i26.i83, %bb.v ], [ %narrow.i26.i83, %bb.w ], [ %narrow.i26.i83, %bb.x ]
-  %.sroa.0.0.i = phi i32 [ %.sroa.0.0.extract.trunc258.i, %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit.i.._crit_edge296.i_crit_edge ], [ %.sroa.0.0.extract.trunc258.i, %bb.x ], [ 0, %bb.w ], [ %.092.in294.i, %bb.v ] ; 5 uses
+._crit_edge296.i:                                 ; preds = %bb.x, %bb.v, %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit.i.._crit_edge296.i_crit_edge
+  %.pre-phi = phi i64 [ %.pre383, %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit.i.._crit_edge296.i_crit_edge ], [ %i.dc, %bb.v ], [ %i.dc, %bb.x ]
+  %narrow.i26.i63.pre-phi = phi i32 [ %.pre382, %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit.i.._crit_edge296.i_crit_edge ], [ %narrow.i26.i83, %bb.v ], [ %narrow.i26.i83, %bb.x ]
+  %.sroa.0.0.i = phi i32 [ %.sroa.0.0.extract.trunc258.i, %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit.i.._crit_edge296.i_crit_edge ], [ %.sroa.0.0.extract.trunc258.i, %bb.x ], [ %.092.in294.i, %bb.v ] ; 5 uses
   %.not25.i = icmp ugt i32 %.sroa.430.0.i.i.fr, %narrow.i.i75
+  br i1 %.not25.i, label %._crit_edge296.i.split.us, label %._crit_edge296.i.split.us.a
+
+._crit_edge296.i.thread:                          ; preds = %bb.w
+  %.not25.i442 = icmp ugt i32 %.sroa.430.0.i.i.fr, %narrow.i.i75
+  br i1 %.not25.i442, label %.split237.us, label %._crit_edge296.i.split.us.a
+
+._crit_edge296.i.split.us.a:                      ; preds = %._crit_edge296.i.thread, %._crit_edge296.i
+  %.sroa.0.0.i446 = phi i32 [ 0, %._crit_edge296.i.thread ], [ %.sroa.0.0.i, %._crit_edge296.i ]
+  %narrow.i26.i63.pre-phi444 = phi i32 [ %narrow.i26.i83, %._crit_edge296.i.thread ], [ %narrow.i26.i63.pre-phi, %._crit_edge296.i ]
+  %.pre-phi443 = phi i64 [ %i.dc, %._crit_edge296.i.thread ], [ %.pre-phi, %._crit_edge296.i ] ; 2 uses
   %43 = getelementptr inbounds nuw i8, ptr %i.ai, i64 12 ; 9 uses
-  br i1 %.not25.i, label %._crit_edge296.i.split.us.a, label %._crit_edge296.i.split
+  br label %._crit_edge296.i.split
 
-._crit_edge296.i.split.us.a:                      ; preds = %._crit_edge296.i
-  %44 = icmp eq i32 %.sroa.0.0.i, -1
-  %spec.store.select.i.us = select i1 %44, i32 0, i32 %.sroa.0.0.i ; 2 uses
-  %45 = icmp sgt i32 %spec.store.select.i.us, -1
-  br i1 %45, label %bb.y, label %.split230.us
+._crit_edge296.i.split.us:                        ; preds = %._crit_edge296.i
+  %44 = icmp sgt i32 %.sroa.0.0.i, -1
+  br i1 %44, label %bb.y, label %.split230.us
 
-bb.y:                                             ; preds = %._crit_edge296.i.split.us.a
-  %.not.i59.us = icmp samesign ugt i32 %spec.store.select.i.us, %.sroa.430.0.i.i.fr
+bb.y:                                             ; preds = %._crit_edge296.i.split.us
+  %.not.i59.us = icmp samesign ugt i32 %.sroa.0.0.i, %.sroa.430.0.i.i.fr
   br i1 %.not.i59.us, label %.split233.us, label %.split237.us
 
-._crit_edge296.i.split:                           ; preds = %._crit_edge296.i, %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit73
-  %.sroa.0.1.i = phi i32 [ %i.hw, %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit73 ], [ %.sroa.0.0.i, %._crit_edge296.i ] ; 9 uses
+._crit_edge296.i.split:                           ; preds = %._crit_edge296.i.split.us.a, %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit73
+  %.sroa.0.1.i = phi i32 [ %i.hw, %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit73 ], [ %.sroa.0.0.i446, %._crit_edge296.i.split.us.a ] ; 9 uses
   %i.fm = icmp eq i32 %.sroa.0.1.i, -1
   %spec.store.select.i = select i1 %i.fm, i32 0, i32 %.sroa.0.1.i ; 6 uses
   %i.fn = icmp sgt i32 %spec.store.select.i, -1
   br i1 %i.fn, label %bb.z, label %.split230.us
 
-.split230.us:                                     ; preds = %._crit_edge296.i.split, %._crit_edge296.i.split.us.a
-  %.us-phi231 = phi i32 [ %.sroa.0.0.i, %._crit_edge296.i.split.us.a ], [ %.sroa.0.1.i, %._crit_edge296.i.split ]
+.split230.us:                                     ; preds = %._crit_edge296.i.split, %._crit_edge296.i.split.us
+  %.us-phi231 = phi i32 [ %.sroa.0.0.i, %._crit_edge296.i.split.us ], [ %.sroa.0.1.i, %._crit_edge296.i.split ]
   call void @_ZN2cv6detail17check_failed_autoEiiRKNS0_12CheckContextE(i32 noundef 0, i32 noundef %.us-phi231, ptr noundef nonnull align 8 dereferenceable(48) @_ZZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEiiE15__cv_check__165) #22
   unreachable
 
@@ -567,7 +575,7 @@ bb.z:                                             ; preds = %._crit_edge296.i.sp
   br i1 %i.fo, label %.lr.ph.i62, label %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit73
 
 .lr.ph.i62:                                       ; preds = %.preheader.i
-  %i.fp = call i32 @llvm.usub.sat.i32(i32 %narrow.i26.i63.pre-phi, i32 %spec.store.select.i)
+  %i.fp = call i32 @llvm.usub.sat.i32(i32 %narrow.i26.i63.pre-phi444, i32 %spec.store.select.i)
   %i.fq = xor i32 %spec.store.select.i, -1
   %i.fr = add nsw i32 %.sroa.430.0.i.i.fr, %i.fq
   %.not33.not.i64 = icmp ugt i32 %i.fp, %i.fr
@@ -575,9 +583,9 @@ bb.z:                                             ; preds = %._crit_edge296.i.sp
 
 .lr.ph.split.i68:                                 ; preds = %.lr.ph.i62
   %i.fs = zext nneg i32 %spec.store.select.i to i64 ; 4 uses
-  %i.ft = sub nsw i64 %.pre-phi, %i.fs            ; 2 uses
+  %i.ft = sub nsw i64 %.pre-phi443, %i.fs         ; 2 uses
   %xtraiter762 = and i64 %i.ft, 7                 ; 3 uses
-  %i.fu = sub nsw i64 %i.fs, %.pre-phi
+  %i.fu = sub nsw i64 %i.fs, %.pre-phi443
   %i.fv = icmp ugt i64 %i.fu, -8
   br i1 %i.fv, label %_ZNK2cv8MatShapeixEm.exit.i69.epil.preheader, label %.lr.ph.split.i68.new
 
@@ -585,7 +593,7 @@ bb.z:                                             ; preds = %._crit_edge296.i.sp
   %unroll_iter767 = and i64 %i.ft, -8
   br label %_ZNK2cv8MatShapeixEm.exit.i69
 
-.split237.us:                                     ; preds = %bb.y
+.split237.us:                                     ; preds = %._crit_edge296.i.thread, %bb.y
   call void @_ZN2cv6detail17check_failed_autoEiiRKNS0_12CheckContextE(i32 noundef %.sroa.430.0.i.i.fr, i32 noundef %narrow.i.i75, ptr noundef nonnull align 8 dereferenceable(48) @_ZZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEiiE15__cv_check__167) #22
   unreachable
 
