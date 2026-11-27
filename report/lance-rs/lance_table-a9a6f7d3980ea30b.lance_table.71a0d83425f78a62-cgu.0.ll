@@ -205,7 +205,7 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.r, %bb.q, %bb.p
   %.sroa.01.0.i.i.peel.i.i.peel = phi i64 [ 2, %bb.q ], [ %..i.i.peel.i.i.peel, %bb.r ], [ 1, %bb.p ]
-  %i.ci = add i64 %.sroa.01.0.i.i.peel.i.i.peel, %.sroa.038.sroa.4.0.copyload.i ; 14 uses
+  %i.ci = add i64 %.sroa.01.0.i.i.peel.i.i.peel, %.sroa.038.sroa.4.0.copyload.i ; 23 uses
   %i.cj = icmp eq i64 %i.ci, 0
   br i1 %i.cj, label %bb.v, label %bb.t
 
@@ -224,68 +224,33 @@ bb.u:                                             ; preds = %bb.t
   br i1 %i.cn, label %bb.v, label %.loopexit.i.i
 
 bb.v:                                             ; preds = %bb.u, %.split.i.i.i.i.i.peel, %bb.s
-  %2 = getelementptr inbounds nuw i8, ptr %.sroa.038.sroa.12.0.copyload.i, i64 %i.ci ; 4 uses
   %i.co = icmp samesign eq i64 %i.ci, %.sroa.038.sroa.13.0.copyload.i
   br i1 %i.co, label %.loopexit19.thread.i.i.peel, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  %i.cp = load i8, ptr %2, align 1, !noalias !64110, !noundef !99 ; 5 uses
+  %2 = getelementptr inbounds nuw i8, ptr %.sroa.038.sroa.12.0.copyload.i, i64 %i.ci
+  %i.cp = load i8, ptr %2, align 1, !noalias !64110, !noundef !99 ; 3 uses
   %i.cq = icmp sgt i8 %i.cp, -1
-  br i1 %i.cq, label %28, label %_RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs9KQ7US1M400_11lance_table.exit12.i.i.i.i.i.peel
+  br i1 %i.cq, label %.loopexit19.thread.i.i.peel, label %_RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs9KQ7US1M400_11lance_table.exit12.i.i.i.i.i.peel
 
 _RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs9KQ7US1M400_11lance_table.exit12.i.i.i.i.i.peel: ; preds = %bb.w
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 1
-  %4 = and i8 %i.cp, 31
-  %5 = zext nneg i8 %4 to i32                     ; 3 uses
   %i.cr = add nuw nsw i64 %i.ci, 1
   %i.cs = icmp samesign ne i64 %i.cr, %.sroa.038.sroa.13.0.copyload.i
   call void @llvm.assume(i1 %i.cs)
-  %6 = load i8, ptr %3, align 1, !noalias !64110, !noundef !99
-  %7 = shl nuw nsw i32 %5, 6
-  %8 = and i8 %6, 63
-  %9 = zext nneg i8 %8 to i32                     ; 2 uses
-  %10 = or disjoint i32 %7, %9
   %i.ct = icmp samesign ugt i8 %i.cp, -33
-  br i1 %i.ct, label %_RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs9KQ7US1M400_11lance_table.exit14.i.i.i.i.i.peel, label %.loopexit.i.loopexit.i.i.peel
+  br i1 %i.ct, label %_RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs9KQ7US1M400_11lance_table.exit14.i.i.i.i.i.peel, label %.loopexit19.thread.i.i.peel
 
 _RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs9KQ7US1M400_11lance_table.exit14.i.i.i.i.i.peel: ; preds = %_RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs9KQ7US1M400_11lance_table.exit12.i.i.i.i.i.peel
-  %11 = getelementptr inbounds nuw i8, ptr %2, i64 2
   %i.cu = add nuw nsw i64 %i.ci, 2
   %i.cv = icmp samesign ne i64 %i.cu, %.sroa.038.sroa.13.0.copyload.i
   call void @llvm.assume(i1 %i.cv)
-  %12 = load i8, ptr %11, align 1, !noalias !64110, !noundef !99
-  %13 = shl nuw nsw i32 %9, 6
-  %14 = and i8 %12, 63
-  %15 = zext nneg i8 %14 to i32
-  %16 = or disjoint i32 %13, %15                  ; 2 uses
-  %17 = shl nuw nsw i32 %5, 12
-  %18 = or disjoint i32 %16, %17
   %i.cw = icmp samesign ugt i8 %i.cp, -17
-  br i1 %i.cw, label %_RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs9KQ7US1M400_11lance_table.exit16.i.i.i.i.i.peel, label %.loopexit.i.loopexit.i.i.peel
+  br i1 %i.cw, label %_RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs9KQ7US1M400_11lance_table.exit16.i.i.i.i.i.peel, label %.loopexit19.thread.i.i.peel
 
 _RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs9KQ7US1M400_11lance_table.exit16.i.i.i.i.i.peel: ; preds = %_RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs9KQ7US1M400_11lance_table.exit14.i.i.i.i.i.peel
-  %19 = getelementptr inbounds nuw i8, ptr %2, i64 3
   %i.cx = add nuw nsw i64 %i.ci, 3
   %i.cy = icmp samesign ne i64 %i.cx, %.sroa.038.sroa.13.0.copyload.i
   call void @llvm.assume(i1 %i.cy)
-  %20 = load i8, ptr %19, align 1, !noalias !64110, !noundef !99
-  %21 = shl nuw nsw i32 %5, 18
-  %22 = and i32 %21, 1835008
-  %23 = shl nuw nsw i32 %16, 6
-  %24 = and i8 %20, 63
-  %25 = zext nneg i8 %24 to i32
-  %26 = or disjoint i32 %23, %25
-  %27 = or disjoint i32 %26, %22
-  br label %.loopexit.i.loopexit.i.i.peel
-
-28:                                               ; preds = %bb.w
-  %29 = zext nneg i8 %i.cp to i32
-  br label %.loopexit.i.loopexit.i.i.peel
-
-.loopexit.i.loopexit.i.i.peel:                    ; preds = %28, %_RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs9KQ7US1M400_11lance_table.exit16.i.i.i.i.i.peel, %_RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs9KQ7US1M400_11lance_table.exit14.i.i.i.i.i.peel, %_RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs9KQ7US1M400_11lance_table.exit12.i.i.i.i.i.peel
-  %.sroa.4.0.i.ph.i.i.i.i.peel = phi i32 [ %18, %_RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs9KQ7US1M400_11lance_table.exit14.i.i.i.i.i.peel ], [ %27, %_RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs9KQ7US1M400_11lance_table.exit16.i.i.i.i.i.peel ], [ %10, %_RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs9KQ7US1M400_11lance_table.exit12.i.i.i.i.i.peel ], [ %29, %28 ]
-  %30 = icmp samesign ult i32 %.sroa.4.0.i.ph.i.i.i.i.peel, 1114112
-  call void @llvm.assume(i1 %30)
   br label %.loopexit19.thread.i.i.peel
 
 .loopexit19.i.i.peel:                             ; preds = %bb.l
@@ -294,12 +259,12 @@ _RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
 bb.x:                                             ; preds = %.loopexit19.i.i.peel
   br label %.loopexit19.thread.i.i.peel
 
-.loopexit19.thread.i.i.peel:                      ; preds = %bb.x, %.loopexit19.i.i.peel, %.loopexit.i.loopexit.i.i.peel, %bb.v, %bb.o, %.preheader.i.i.preheader.i
-  %.sroa.9124.sroa.0.4.i.peel = phi i1 [ true, %bb.x ], [ false, %.loopexit19.i.i.peel ], [ false, %bb.o ], [ false, %.loopexit.i.loopexit.i.i.peel ], [ false, %bb.v ], [ %.sroa.9124.sroa.0.0.extract.trunc.i, %.preheader.i.i.preheader.i ] ; 2 uses
-  %.sroa.51.2.i.peel = phi i1 [ true, %bb.x ], [ false, %.loopexit19.i.i.peel ], [ false, %bb.o ], [ false, %.loopexit.i.loopexit.i.i.peel ], [ false, %bb.v ], [ true, %.preheader.i.i.preheader.i ]
-  %.sroa.41.2.i.peel = phi i64 [ 0, %bb.x ], [ %.sroa.038.sroa.4.0.copyload.i, %.loopexit19.i.i.peel ], [ %.sroa.038.sroa.4.0.copyload.i, %bb.o ], [ %i.ci, %.loopexit.i.loopexit.i.i.peel ], [ %.sroa.038.sroa.13.0.copyload.i, %bb.v ], [ 0, %.preheader.i.i.preheader.i ] ; 4 uses
-  %.sroa.5.5.i.peel = phi i64 [ %.sroa.038.sroa.4.0.copyload.i, %bb.x ], [ %.sroa.038.sroa.4.0.copyload.i, %.loopexit19.i.i.peel ], [ %.sroa.038.sroa.4.0.copyload.i, %bb.o ], [ %i.ci, %.loopexit.i.loopexit.i.i.peel ], [ %.sroa.038.sroa.13.0.copyload.i, %bb.v ], [ %.sroa.038.sroa.4.0.copyload.i, %.preheader.i.i.preheader.i ] ; 15 uses
-  %spec.select.pn.i.peel = phi i64 [ %spec.select.i, %bb.x ], [ %.sroa.038.sroa.4.0.copyload.i, %.loopexit19.i.i.peel ], [ %.sroa.038.sroa.4.0.copyload.i, %bb.o ], [ %i.ci, %.loopexit.i.loopexit.i.i.peel ], [ %.sroa.038.sroa.13.0.copyload.i, %bb.v ], [ %spec.select.i, %.preheader.i.i.preheader.i ] ; 2 uses
+.loopexit19.thread.i.i.peel:                      ; preds = %_RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs9KQ7US1M400_11lance_table.exit12.i.i.i.i.i.peel, %_RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs9KQ7US1M400_11lance_table.exit14.i.i.i.i.i.peel, %_RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs9KQ7US1M400_11lance_table.exit16.i.i.i.i.i.peel, %bb.w, %bb.x, %.loopexit19.i.i.peel, %bb.v, %bb.o, %.preheader.i.i.preheader.i
+  %.sroa.9124.sroa.0.4.i.peel = phi i1 [ true, %bb.x ], [ false, %.loopexit19.i.i.peel ], [ false, %bb.o ], [ %.sroa.9124.sroa.0.0.extract.trunc.i, %.preheader.i.i.preheader.i ], [ false, %bb.v ], [ false, %bb.w ], [ false, %_RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs9KQ7US1M400_11lance_table.exit16.i.i.i.i.i.peel ], [ false, %_RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs9KQ7US1M400_11lance_table.exit14.i.i.i.i.i.peel ], [ false, %_RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs9KQ7US1M400_11lance_table.exit12.i.i.i.i.i.peel ] ; 2 uses
+  %.sroa.51.2.i.peel = phi i1 [ true, %bb.x ], [ false, %.loopexit19.i.i.peel ], [ false, %bb.o ], [ true, %.preheader.i.i.preheader.i ], [ false, %bb.v ], [ false, %bb.w ], [ false, %_RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs9KQ7US1M400_11lance_table.exit16.i.i.i.i.i.peel ], [ false, %_RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs9KQ7US1M400_11lance_table.exit14.i.i.i.i.i.peel ], [ false, %_RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs9KQ7US1M400_11lance_table.exit12.i.i.i.i.i.peel ]
+  %.sroa.41.2.i.peel = phi i64 [ 0, %bb.x ], [ %.sroa.038.sroa.4.0.copyload.i, %.loopexit19.i.i.peel ], [ %.sroa.038.sroa.4.0.copyload.i, %bb.o ], [ 0, %.preheader.i.i.preheader.i ], [ %.sroa.038.sroa.13.0.copyload.i, %bb.v ], [ %i.ci, %bb.w ], [ %i.ci, %_RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs9KQ7US1M400_11lance_table.exit16.i.i.i.i.i.peel ], [ %i.ci, %_RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs9KQ7US1M400_11lance_table.exit14.i.i.i.i.i.peel ], [ %i.ci, %_RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs9KQ7US1M400_11lance_table.exit12.i.i.i.i.i.peel ] ; 4 uses
+  %.sroa.5.5.i.peel = phi i64 [ %.sroa.038.sroa.4.0.copyload.i, %bb.x ], [ %.sroa.038.sroa.4.0.copyload.i, %.loopexit19.i.i.peel ], [ %.sroa.038.sroa.4.0.copyload.i, %bb.o ], [ %.sroa.038.sroa.4.0.copyload.i, %.preheader.i.i.preheader.i ], [ %.sroa.038.sroa.13.0.copyload.i, %bb.v ], [ %i.ci, %bb.w ], [ %i.ci, %_RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs9KQ7US1M400_11lance_table.exit16.i.i.i.i.i.peel ], [ %i.ci, %_RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs9KQ7US1M400_11lance_table.exit14.i.i.i.i.i.peel ], [ %i.ci, %_RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs9KQ7US1M400_11lance_table.exit12.i.i.i.i.i.peel ] ; 15 uses
+  %spec.select.pn.i.peel = phi i64 [ %spec.select.i, %bb.x ], [ %.sroa.038.sroa.4.0.copyload.i, %.loopexit19.i.i.peel ], [ %.sroa.038.sroa.4.0.copyload.i, %bb.o ], [ %spec.select.i, %.preheader.i.i.preheader.i ], [ %.sroa.038.sroa.13.0.copyload.i, %bb.v ], [ %i.ci, %bb.w ], [ %i.ci, %_RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs9KQ7US1M400_11lance_table.exit16.i.i.i.i.i.peel ], [ %i.ci, %_RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs9KQ7US1M400_11lance_table.exit14.i.i.i.i.i.peel ], [ %i.ci, %_RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs9KQ7US1M400_11lance_table.exit12.i.i.i.i.i.peel ] ; 2 uses
   %i.cz = icmp eq i64 %spec.select.pn.i.peel, 0
   br i1 %i.cz, label %.split332.us.i, label %bb.y
 

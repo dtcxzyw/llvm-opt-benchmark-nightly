@@ -206,8 +206,7 @@ bb.m:                                             ; preds = %_RNvYINtNtNtCs2N41n
   br i1 %i.bh, label %bb.n, label %.loopexit184
 
 bb.n:                                             ; preds = %.split.peel
-  %i.bi = getelementptr i8, ptr %i.bb, i64 -1     ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bi) ]
+  %i.bi = getelementptr i8, ptr %i.bb, i64 -1     ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !2799
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bi) ]
   store ptr %i.bi, ptr %i.t, align 8, !alias.scope !2800, !noalias !2799

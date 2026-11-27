@@ -204,14 +204,11 @@ bb.a:
   %.not.i.i.us.i = icmp ult i64 %.promoted99.i, %i.e ; 3 uses
   %i.v = icmp eq i64 %.promoted99.i, %i.e
   %.fr.i = freeze i1 %i.v
-  %i.w = getelementptr inbounds nuw i8, ptr %i.h, i64 %.promoted99.i ; 6 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.w, i64 1
+  %i.w = getelementptr inbounds nuw i8, ptr %i.h, i64 %.promoted99.i ; 3 uses
   %i.x = add i64 %.promoted99.i, 1
   %i.y = icmp samesign ne i64 %i.x, %i.e          ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.w, i64 2
   %i.z = add i64 %.promoted99.i, 2
   %i.aa = icmp samesign ne i64 %i.z, %i.e         ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %i.w, i64 3
   %i.ab = add nuw nsw i64 %.promoted99.i, 3
   %i.ac = icmp samesign ne i64 %i.ab, %i.e        ; 2 uses
   br i1 %.fr.i, label %.lr.ph.split.us.split.i, label %.lr.ph.split.split.i.preheader
@@ -233,54 +230,25 @@ thread-pre-split.i.peel:                          ; preds = %.lr.ph.split.split.
   br label %bb.d
 
 bb.d:                                             ; preds = %thread-pre-split.i.peel, %bb.c
-  %.pr.i = phi i8 [ %.pr.i.peel, %thread-pre-split.i.peel ], [ %i.ae, %bb.c ] ; 8 uses
+  %.pr.i = phi i8 [ %.pr.i.peel, %thread-pre-split.i.peel ], [ %i.ae, %bb.c ] ; 6 uses
   %i.ag = icmp sgt i8 %.pr.i, -1                  ; 2 uses
-  br i1 %i.ag, label %29, label %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsbzNSmZPCnTx_10tgrep_core.exit12.i.i.us.i.peel
+  br i1 %i.ag, label %bb.e, label %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsbzNSmZPCnTx_10tgrep_core.exit12.i.i.us.i.peel
 
 _RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsbzNSmZPCnTx_10tgrep_core.exit12.i.i.us.i.peel: ; preds = %bb.d
-  %7 = and i8 %.pr.i, 31
-  %8 = zext nneg i8 %7 to i32                     ; 3 uses
   tail call void @llvm.assume(i1 %i.y)
-  %9 = load i8, ptr %4, align 1, !noalias !112, !noundef !4
-  %10 = shl nuw nsw i32 %8, 6
-  %11 = and i8 %9, 63
-  %12 = zext nneg i8 %11 to i32                   ; 2 uses
-  %13 = or disjoint i32 %10, %12
   %i.ah = icmp samesign ugt i8 %.pr.i, -33
   br i1 %i.ah, label %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsbzNSmZPCnTx_10tgrep_core.exit14.i.i.us.i.peel, label %bb.e
 
 _RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsbzNSmZPCnTx_10tgrep_core.exit14.i.i.us.i.peel: ; preds = %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsbzNSmZPCnTx_10tgrep_core.exit12.i.i.us.i.peel
   tail call void @llvm.assume(i1 %i.aa)
-  %14 = load i8, ptr %5, align 1, !noalias !112, !noundef !4
-  %15 = shl nuw nsw i32 %12, 6
-  %16 = and i8 %14, 63
-  %17 = zext nneg i8 %16 to i32
-  %18 = or disjoint i32 %15, %17                  ; 2 uses
-  %19 = shl nuw nsw i32 %8, 12
-  %20 = or disjoint i32 %18, %19
   %i.ai = icmp samesign ugt i8 %.pr.i, -17
   br i1 %i.ai, label %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsbzNSmZPCnTx_10tgrep_core.exit16.i.i.us.i.peel, label %bb.e
 
 _RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsbzNSmZPCnTx_10tgrep_core.exit16.i.i.us.i.peel: ; preds = %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsbzNSmZPCnTx_10tgrep_core.exit14.i.i.us.i.peel
   tail call void @llvm.assume(i1 %i.ac)
-  %21 = load i8, ptr %6, align 1, !noalias !112, !noundef !4
-  %22 = shl nuw nsw i32 %8, 18
-  %23 = and i32 %22, 1835008
-  %24 = shl nuw nsw i32 %18, 6
-  %25 = and i8 %21, 63
-  %26 = zext nneg i8 %25 to i32
-  %27 = or disjoint i32 %24, %26
-  %28 = or disjoint i32 %27, %23
   br label %bb.e
 
-29:                                               ; preds = %bb.d
-  %30 = zext nneg i8 %.pr.i to i32
-  br label %bb.e
-
-bb.e:                                             ; preds = %29, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsbzNSmZPCnTx_10tgrep_core.exit16.i.i.us.i.peel, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsbzNSmZPCnTx_10tgrep_core.exit14.i.i.us.i.peel, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsbzNSmZPCnTx_10tgrep_core.exit12.i.i.us.i.peel
-  %.sroa.4.0.i.ph.i.us.i.peel = phi i32 [ %20, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsbzNSmZPCnTx_10tgrep_core.exit14.i.i.us.i.peel ], [ %28, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsbzNSmZPCnTx_10tgrep_core.exit16.i.i.us.i.peel ], [ %13, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsbzNSmZPCnTx_10tgrep_core.exit12.i.i.us.i.peel ], [ %30, %29 ]
-  %31 = icmp samesign ult i32 %.sroa.4.0.i.ph.i.us.i.peel, 1114112
-  tail call void @llvm.assume(i1 %31)
+bb.e:                                             ; preds = %bb.d, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsbzNSmZPCnTx_10tgrep_core.exit16.i.i.us.i.peel, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsbzNSmZPCnTx_10tgrep_core.exit14.i.i.us.i.peel, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsbzNSmZPCnTx_10tgrep_core.exit12.i.i.us.i.peel
   br i1 %i.ad, label %.lr.ph.split.split.i, label %_RNvYNtNtNtCsf3Ta7LF998c_4core3str7pattern11StrSearcherNtB4_8Searcher11next_rejectCsbzNSmZPCnTx_10tgrep_core.exit
 
 .lr.ph.split.us.split.i:                          ; preds = %.lr.ph.i

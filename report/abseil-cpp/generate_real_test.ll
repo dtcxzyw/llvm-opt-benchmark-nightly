@@ -204,7 +204,7 @@ _ZN7testing7MessageD2Ev.exit383.peel:             ; preds = %_ZNKSt14default_del
   br label %bb.fz
 
 bb.fz:                                            ; preds = %_ZN7testing7MessageD2Ev.exit383.peel, %_ZN7testing8internal8EqHelper7CompareIffTnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSC_RKS4_RKS5_.exit378.peel
-  %i.om = load ptr, ptr %i.od, align 8, !tbaa !48 ; 5 uses
+  %i.om = load ptr, ptr %i.od, align 8, !tbaa !48 ; 4 uses
   %.not.i.i387.peel = icmp eq ptr %i.om, null
   br i1 %.not.i.i387.peel, label %.peel.next, label %bb.ga
 
@@ -212,7 +212,7 @@ bb.ga:                                            ; preds = %bb.fz
   %i.on = load ptr, ptr %i.om, align 8, !tbaa !21 ; 2 uses
   %i.oo = getelementptr inbounds nuw i8, ptr %i.om, i64 16 ; 2 uses
   %i.op = icmp eq ptr %i.on, %i.oo
-  br i1 %i.op, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.i.i390.peel, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i388.peel
+  br i1 %i.op, label %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i389.peel, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i388.peel
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i388.peel: ; preds = %bb.ga
   %i.oq = load i64, ptr %i.oo, align 8, !tbaa !24
@@ -220,14 +220,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   call void @_ZdlPvm(ptr noundef %i.on, i64 noundef %i.or) #16
   br label %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i389.peel
 
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.i.i390.peel: ; preds = %bb.ga
-  %73 = getelementptr inbounds nuw i8, ptr %i.om, i64 8
-  %74 = load i64, ptr %73, align 8, !tbaa !22
-  %75 = icmp ult i64 %74, 16
-  call void @llvm.assume(i1 %75)
-  br label %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i389.peel
-
-_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i389.peel: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.i.i390.peel, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i388.peel
+_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i389.peel: ; preds = %bb.ga, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i388.peel
   call void @_ZdlPvm(ptr noundef nonnull %i.om, i64 noundef 32) #16
   br label %.peel.next
 
@@ -630,7 +623,7 @@ _ZN7testing7MessageD2Ev.exit707.peel:             ; preds = %_ZNKSt14default_del
   br label %bb.ne
 
 bb.ne:                                            ; preds = %_ZN7testing7MessageD2Ev.exit707.peel, %_ZN7testing8internal8EqHelper7CompareIddTnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSC_RKS4_RKS5_.exit702.peel
-  %i.aee = load ptr, ptr %i.adv, align 8, !tbaa !48 ; 5 uses
+  %i.aee = load ptr, ptr %i.adv, align 8, !tbaa !48 ; 4 uses
   %.not.i.i711.peel = icmp eq ptr %i.aee, null
   br i1 %.not.i.i711.peel, label %.peel.next, label %bb.nf
 
@@ -638,7 +631,7 @@ bb.nf:                                            ; preds = %bb.ne
   %i.aef = load ptr, ptr %i.aee, align 8, !tbaa !21 ; 2 uses
   %i.aeg = getelementptr inbounds nuw i8, ptr %i.aee, i64 16 ; 2 uses
   %i.aeh = icmp eq ptr %i.aef, %i.aeg
-  br i1 %i.aeh, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.i.i714.peel, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i712.peel
+  br i1 %i.aeh, label %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i713.peel, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i712.peel
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i712.peel: ; preds = %bb.nf
   %i.aei = load i64, ptr %i.aeg, align 8, !tbaa !24
@@ -646,14 +639,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   call void @_ZdlPvm(ptr noundef %i.aef, i64 noundef %i.aej) #16
   br label %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i713.peel
 
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.i.i714.peel: ; preds = %bb.nf
-  %124 = getelementptr inbounds nuw i8, ptr %i.aee, i64 8
-  %125 = load i64, ptr %124, align 8, !tbaa !22
-  %126 = icmp ult i64 %125, 16
-  call void @llvm.assume(i1 %126)
-  br label %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i713.peel
-
-_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i713.peel: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.i.i714.peel, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i712.peel
+_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i713.peel: ; preds = %bb.nf, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i712.peel
   call void @_ZdlPvm(ptr noundef nonnull %i.aee, i64 noundef 32) #16
   br label %.peel.next
 

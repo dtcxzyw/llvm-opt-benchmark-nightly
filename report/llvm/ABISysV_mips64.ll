@@ -202,7 +202,7 @@ bb.a:
   %4 = alloca %"class.llvm::Error", align 8       ; 3 uses
   %5 = alloca %"class.llvm::Error", align 8       ; 5 uses
   %6 = alloca %class.anon, align 1                ; 3 uses
-  %7 = alloca %"class.llvm::Error", align 8       ; 7 uses
+  %7 = alloca %"class.llvm::Error", align 8       ; 6 uses
   %8 = alloca %"class.llvm::Error", align 8       ; 10 uses
   %9 = alloca %class.anon, align 1                ; 6 uses
   %10 = alloca %"class.llvm::Error", align 8      ; 3 uses
@@ -605,9 +605,6 @@ _ZNSt10unique_ptrIN4llvm13ErrorInfoBaseESt14default_deleteIS1_EED2Ev.exit.i.i277
   call void @llvm.lifetime.start.p0(ptr nonnull %8)
   store ptr %i.ks, ptr %8, align 8, !tbaa !71
   call void @_ZN4llvm12handleErrorsIJZNS_12consumeErrorENS_5ErrorEEUlRKNS_13ErrorInfoBaseEE_EEES1_S1_DpOT_(ptr dead_on_unwind nonnull writable sret(%"class.llvm::Error") align 8 %7, ptr nofree noundef nonnull align 8 dereferenceable(8) %8, ptr noundef nonnull align 1 dereferenceable(1) %9)
-  %69 = load ptr, ptr %7, align 8, !tbaa !71
-  %.not.i.i.i.i278.peel = icmp eq ptr %69, null
-  call void @llvm.assume(i1 %.not.i.i.i.i278.peel)
   %i.kt = load ptr, ptr %8, align 8, !tbaa !71    ; 3 uses
   %i.ku = icmp eq ptr %i.kt, null
   br i1 %i.ku, label %_ZN4llvm5ErrorD2Ev.exit.i279.peel, label %bb.cl

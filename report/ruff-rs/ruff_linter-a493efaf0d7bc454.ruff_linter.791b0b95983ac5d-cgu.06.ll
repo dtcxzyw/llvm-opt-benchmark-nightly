@@ -204,11 +204,11 @@ _RNvMs2_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7Checker14target_version
   call void @_RNvXs1U_NtCskLngH8kgpZI_15ruff_python_ast5nodesRINtNtCscdodAO9FK5_5alloc5boxed3BoxNtB6_10ParametersENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits7collect12IntoIterator9into_iter(ptr noalias noundef nonnull sret([64 x i8]) align 8 captures(address) dereferenceable(64) %i.v, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.ui)
   %.sroa.0.0.copyload = load ptr, ptr %i.v, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.v, i64 8
-  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8 ; 4 uses
+  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8 ; 3 uses
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.v, i64 16
   %.sroa.6.0.copyload = load ptr, ptr %.sroa.6.0..sroa_idx, align 8
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.v, i64 24
-  %.sroa.8.0.copyload = load ptr, ptr %.sroa.8.0..sroa_idx, align 8 ; 4 uses
+  %.sroa.8.0.copyload = load ptr, ptr %.sroa.8.0..sroa_idx, align 8 ; 3 uses
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.v, i64 32
   %.sroa.9.0.copyload = load ptr, ptr %.sroa.9.0..sroa_idx, align 8
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.v, i64 40
@@ -244,7 +244,6 @@ bb.en:                                            ; preds = %.lr.ph520, %bb.em
   br label %bb.ga
 
 bb.eo:                                            ; preds = %_RNvXs1P_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_18ParametersIteratorNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.thread400.outer708.peel.newph
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.ph711), "nonnull"(ptr %.sroa.8.0.copyload) ]
   br i1 %i.add, label %.loopexit731, label %.loopexit730
 
 .loopexit730:                                     ; preds = %bb.eo, %bb.gb
@@ -640,8 +639,8 @@ _RNvXs1P_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_18ParametersIteratorNtNtNtN
 _RNvXs1P_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_18ParametersIteratorNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.thread400.outer708: ; preds = %_RNvXs1P_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_18ParametersIteratorNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.thread400.outer708.backedge, %_RNvXs1P_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_18ParametersIteratorNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.thread400.outer
   %.sroa.12.0.ph709 = phi ptr [ %.sroa.12.0.ph, %_RNvXs1P_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_18ParametersIteratorNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.thread400.outer ], [ %.sroa.12.1.ph, %_RNvXs1P_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_18ParametersIteratorNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.thread400.outer708.backedge ] ; 3 uses
   %.sroa.9.0353.ph710 = phi ptr [ %.sroa.9.0353.ph, %_RNvXs1P_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_18ParametersIteratorNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.thread400.outer ], [ %.sroa.9.1.ph, %_RNvXs1P_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_18ParametersIteratorNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.thread400.outer708.backedge ] ; 7 uses
-  %.sroa.6.0.ph711 = phi ptr [ %.sroa.6.0.ph, %_RNvXs1P_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_18ParametersIteratorNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.thread400.outer ], [ %.sroa.6.1.ph, %_RNvXs1P_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_18ParametersIteratorNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.thread400.outer708.backedge ] ; 9 uses
-  %.sroa.0.0.ph712 = phi ptr [ %.sroa.0.0.ph, %_RNvXs1P_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_18ParametersIteratorNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.thread400.outer ], [ %.sroa.0.1.ph, %_RNvXs1P_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_18ParametersIteratorNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.thread400.outer708.backedge ] ; 9 uses
+  %.sroa.6.0.ph711 = phi ptr [ %.sroa.6.0.ph, %_RNvXs1P_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_18ParametersIteratorNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.thread400.outer ], [ %.sroa.6.1.ph, %_RNvXs1P_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_18ParametersIteratorNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.thread400.outer708.backedge ] ; 8 uses
+  %.sroa.0.0.ph712 = phi ptr [ %.sroa.0.0.ph, %_RNvXs1P_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_18ParametersIteratorNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.thread400.outer ], [ %.sroa.0.1.ph, %_RNvXs1P_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_18ParametersIteratorNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.thread400.outer708.backedge ] ; 8 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.ph712), "nonnull"(ptr %.sroa.5.0.copyload) ]
   %i.ada = icmp eq ptr %.sroa.0.0.ph712, %.sroa.5.0.copyload
   br i1 %i.ada, label %bb.gb, label %.loopexit729
@@ -656,7 +655,6 @@ bb.gc:                                            ; preds = %bb.gb
   br i1 %.not.i284.peel, label %.loopexit731, label %_RNvXs1P_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_18ParametersIteratorNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.thread400.outer708.peel.newph
 
 _RNvXs1P_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_18ParametersIteratorNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.thread400.outer708.peel.newph: ; preds = %bb.gc
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.ph712), "nonnull"(ptr %.sroa.5.0.copyload) ]
   %i.adc = icmp eq ptr %.sroa.0.0.ph712, %.sroa.5.0.copyload
   %i.add = icmp eq ptr %.sroa.6.0.ph711, %.sroa.8.0.copyload
   br i1 %i.adc, label %bb.eo, label %.loopexit729

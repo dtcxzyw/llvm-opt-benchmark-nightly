@@ -206,7 +206,7 @@ bb.ah:                                            ; preds = %bb.ag
   %.sroa.6.sroa.4.0.ph.i.i.i173.sink227.i.i.i.i.i.i.i.i.i.i.i.i.i.ph11 = phi i64 [ %.sroa.6.sroa.4.0.ph.i.i.i173.sink227.i.i.i.i.i.i.i.i.i.i.i.i.i.ph, %.peel.next.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.preheader ], [ %i.is, %.peel.next.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.outer.backedge ] ; 3 uses
   %.sroa.44.0.i.i.i.i.i.i.i.i.i.i.i.i.i.ph = phi i64 [ %i.ey, %.peel.next.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.preheader ], [ %.lcssa, %.peel.next.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.outer.backedge ] ; 2 uses
   %.sroa.30.1.i.i.i.i.i.i.i.i.i.i.i.i.i.ph12 = phi i64 [ %.sroa.30.1.i.i.i.i.i.i.i.i.i.i.i.i.i.ph, %.peel.next.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.preheader ], [ %.sroa.30.1.i.i.i.i.i.i.i.i.i.i.i.i.i.ph12.be, %.peel.next.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.outer.backedge ] ; 2 uses
-  %.sroa.7.1.i.i.i.i.i.i.i.i.i.i.i.i.i.ph13 = phi ptr [ %.sroa.7.1.i.i.i.i.i.i.i.i.i.i.i.i.i.ph, %.peel.next.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.preheader ], [ %.sroa.7.1.i.i.i.i.i.i.i.i.i.i.i.i.i.ph13.be, %.peel.next.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.outer.backedge ] ; 7 uses
+  %.sroa.7.1.i.i.i.i.i.i.i.i.i.i.i.i.i.ph13 = phi ptr [ %.sroa.7.1.i.i.i.i.i.i.i.i.i.i.i.i.i.ph, %.peel.next.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.preheader ], [ %.sroa.7.1.i.i.i.i.i.i.i.i.i.i.i.i.i.ph13.be, %.peel.next.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.outer.backedge ] ; 6 uses
   %i.gd = getelementptr inbounds nuw i8, ptr %.sroa.0.0.ph.i.i.i174.sink228.i.i.i.i.i.i.i.i.i.i.i.i.i.ph10, i64 8
   %i.ge = icmp samesign ult i64 %.sroa.6.sroa.4.0.ph.i.i.i173.sink227.i.i.i.i.i.i.i.i.i.i.i.i.i.ph11, 11
   tail call void @llvm.assume(i1 %i.ge), !noalias !22148
@@ -356,7 +356,6 @@ bb.an:                                            ; preds = %bb.am
 
 "_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h2a0b1a8660408647E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i": ; preds = %"_ZN4core4iter6traits8iterator8Iterator12try_for_each4call28_$u7b$$u7b$closure$u7d$$u7d$17hccd536293713d7e0E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i"
   %i.ih = add i64 %.sroa.44.0.i.i.i.i.i.i.i.i.i.i.i.i.i, -1 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7.1.i.i.i.i.i.i.i.i.i.i.i.i.i.ph13) ]
   %i.ii = load i16, ptr %i.hj, align 2, !noalias !22184, !noundef !175
   %i.ij = zext i16 %i.ii to i64
   %i.ik = icmp samesign ult i64 %.sroa.30.1.i.i.i.i.i.i.i.i.i.i.i.i.i, %i.ij
@@ -759,7 +758,7 @@ bb.n:                                             ; preds = %bb.m
   %.sroa.6.sroa.4.0.ph.i.i.i.i178.sink225.i.ph55 = phi i64 [ %.sroa.6.sroa.4.0.ph.i.i.i.i178.sink225.i.ph, %.peel.next.i.i.i.preheader ], [ %i.ep, %.peel.next.i.i.i.outer.backedge ] ; 2 uses
   %.sroa.38.0.i.ph = phi i64 [ %i.br, %.peel.next.i.i.i.preheader ], [ %.lcssa, %.peel.next.i.i.i.outer.backedge ] ; 2 uses
   %.sroa.24.0.i.ph56 = phi i64 [ %.sroa.24.0.i.ph, %.peel.next.i.i.i.preheader ], [ %.sroa.24.0.i.ph56.be, %.peel.next.i.i.i.outer.backedge ] ; 2 uses
-  %.sroa.7.0.i.ph57 = phi ptr [ %.sroa.7.0.i.ph, %.peel.next.i.i.i.preheader ], [ %.sroa.7.0.i.ph57.be, %.peel.next.i.i.i.outer.backedge ] ; 6 uses
+  %.sroa.7.0.i.ph57 = phi ptr [ %.sroa.7.0.i.ph, %.peel.next.i.i.i.preheader ], [ %.sroa.7.0.i.ph57.be, %.peel.next.i.i.i.outer.backedge ] ; 5 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %.sroa.0.0.ph.i.i.i.i179.sink.i.ph54, i64 8
   %i.cx = icmp samesign ult i64 %.sroa.6.sroa.4.0.ph.i.i.i.i178.sink225.i.ph55, 11
   tail call void @llvm.assume(i1 %i.cx), !noalias !23018
@@ -851,7 +850,6 @@ bb.p:                                             ; preds = %.peel.next.i.i.i
 
 "_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17ha00e3001793f49caE.exit.i.i.i": ; preds = %"_ZN4core4iter6traits8iterator8Iterator12try_for_each4call28_$u7b$$u7b$closure$u7d$$u7d$17h19e3e5b17e23e4fcE.exit.i.i.i"
   %i.ee = add i64 %.sroa.38.0.i, -1               ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7.0.i.ph57) ]
   %i.ef = load i16, ptr %i.dq, align 2, !noalias !23036, !noundef !175
   %i.eg = zext i16 %i.ef to i64
   %i.eh = icmp samesign ult i64 %.sroa.24.0.i, %i.eg
@@ -1254,7 +1252,7 @@ bb.o:                                             ; preds = %bb.n
   %.sroa.6.sroa.4.0.ph.i.i.i173.sink227.i.ph59 = phi i64 [ %.sroa.6.sroa.4.0.ph.i.i.i173.sink227.i.ph, %.peel.next.i.i.i.preheader ], [ %i.fv, %.peel.next.i.i.i.outer.backedge ] ; 3 uses
   %.sroa.44.0.i.ph = phi i64 [ %i.bz, %.peel.next.i.i.i.preheader ], [ %.lcssa, %.peel.next.i.i.i.outer.backedge ] ; 2 uses
   %.sroa.30.1.i.ph60 = phi i64 [ %.sroa.30.1.i.ph, %.peel.next.i.i.i.preheader ], [ %.sroa.30.1.i.ph60.be, %.peel.next.i.i.i.outer.backedge ] ; 2 uses
-  %.sroa.7.1.i.ph61 = phi ptr [ %.sroa.7.1.i.ph, %.peel.next.i.i.i.preheader ], [ %.sroa.7.1.i.ph61.be, %.peel.next.i.i.i.outer.backedge ] ; 7 uses
+  %.sroa.7.1.i.ph61 = phi ptr [ %.sroa.7.1.i.ph, %.peel.next.i.i.i.preheader ], [ %.sroa.7.1.i.ph61.be, %.peel.next.i.i.i.outer.backedge ] ; 6 uses
   %i.de = getelementptr inbounds nuw i8, ptr %.sroa.0.0.ph.i.i.i174.sink228.i.ph58, i64 8
   %i.df = icmp samesign ult i64 %.sroa.6.sroa.4.0.ph.i.i.i173.sink227.i.ph59, 11
   tail call void @llvm.assume(i1 %i.df), !noalias !23242
@@ -1408,7 +1406,6 @@ bb.u:                                             ; preds = %bb.t
 
 "_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h14e9cdf366361fe1E.exit.i.i": ; preds = %"_ZN4core4iter6traits8iterator8Iterator12try_for_each4call28_$u7b$$u7b$closure$u7d$$u7d$17h854f788ba7215cd4E.exit.i.i.i"
   %i.fk = add i64 %.sroa.44.0.i, -1               ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7.1.i.ph61) ]
   %i.fl = load i16, ptr %i.el, align 2, !noalias !23278, !noundef !175
   %i.fm = zext i16 %i.fl to i64
   %i.fn = icmp samesign ult i64 %.sroa.30.1.i, %i.fm
@@ -1811,7 +1808,7 @@ bb.ia:                                            ; preds = %bb.hz
   %.sroa.6.sroa.4.0.ph.i.i.i177.sink243.i.i.i.i.i.i.i.i.i.i.i.ph1761 = phi i64 [ %.sroa.6.sroa.4.0.ph.i.i.i177.sink243.i.i.i.i.i.i.i.i.i.i.i.ph, %.peel.next.i.i.i.i.i.i.i.i.i.i.i.i.i.preheader ], [ %i.alw, %.peel.next.i.i.i.i.i.i.i.i.i.i.i.i.i.outer.backedge ] ; 3 uses
   %.sroa.44.0.i.i.i.i.i.i.i.i.i.i.i.ph = phi i64 [ %i.aey, %.peel.next.i.i.i.i.i.i.i.i.i.i.i.i.i.preheader ], [ %.lcssa, %.peel.next.i.i.i.i.i.i.i.i.i.i.i.i.i.outer.backedge ] ; 2 uses
   %.sroa.30.1.i.i.i.i.i.i.i.i.i.i.i.ph1762 = phi i64 [ %.sroa.30.1.i.i.i.i.i.i.i.i.i.i.i.ph, %.peel.next.i.i.i.i.i.i.i.i.i.i.i.i.i.preheader ], [ %.sroa.30.1.i.i.i.i.i.i.i.i.i.i.i.ph1762.be, %.peel.next.i.i.i.i.i.i.i.i.i.i.i.i.i.outer.backedge ] ; 2 uses
-  %.sroa.7.1.i.i.i.i.i.i.i.i.i.i.i.ph1763 = phi ptr [ %.sroa.7.1.i.i.i.i.i.i.i.i.i.i.i.ph, %.peel.next.i.i.i.i.i.i.i.i.i.i.i.i.i.preheader ], [ %.sroa.7.1.i.i.i.i.i.i.i.i.i.i.i.ph1763.be, %.peel.next.i.i.i.i.i.i.i.i.i.i.i.i.i.outer.backedge ] ; 7 uses
+  %.sroa.7.1.i.i.i.i.i.i.i.i.i.i.i.ph1763 = phi ptr [ %.sroa.7.1.i.i.i.i.i.i.i.i.i.i.i.ph, %.peel.next.i.i.i.i.i.i.i.i.i.i.i.i.i.preheader ], [ %.sroa.7.1.i.i.i.i.i.i.i.i.i.i.i.ph1763.be, %.peel.next.i.i.i.i.i.i.i.i.i.i.i.i.i.outer.backedge ] ; 6 uses
   %i.agd = getelementptr inbounds nuw i8, ptr %.sroa.0.0.ph.i.i.i178.sink244.i.i.i.i.i.i.i.i.i.i.i.ph1760, i64 8
   %i.age = icmp samesign ult i64 %.sroa.6.sroa.4.0.ph.i.i.i177.sink243.i.i.i.i.i.i.i.i.i.i.i.ph1761, 11
   call void @llvm.assume(i1 %i.age), !noalias !32833
@@ -2214,7 +2211,6 @@ _ZN10serde_json3ser9Formatter10end_object17h161c5d0dfb894745E.exit.i.i.i.i.i.i.i
 
 "_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h6fd3e48e5b992117E.exit.i.i.i.i.i.i.i.i.i.i.i.i": ; preds = %"_ZN4core4iter6traits8iterator8Iterator12try_for_each4call28_$u7b$$u7b$closure$u7d$$u7d$17h76ead8b5d3b1ff75E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i"
   %i.all = add i64 %.sroa.44.0.i.i.i.i.i.i.i.i.i.i.i, -1 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7.1.i.i.i.i.i.i.i.i.i.i.i.ph1763) ]
   %i.alm = load i16, ptr %i.aiy, align 2, !noalias !32964, !noundef !175
   %i.aln = zext i16 %i.alm to i64
   %i.alo = icmp samesign ult i64 %.sroa.30.1.i.i.i.i.i.i.i.i.i.i.i, %i.aln
@@ -2617,7 +2613,7 @@ bb.gn:                                            ; preds = %bb.gm
   %.sroa.12176.0.i.i.i.i.ph3127 = phi i64 [ %.sroa.12176.0.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i81.preheader ], [ %i.vm, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i81.outer.backedge ]
   %.sroa.38.0.in.i.i.i.i.ph = phi i64 [ %.sroa.8.i.sroa.8.0.copyload.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i81.preheader ], [ %.sroa.38.0.i.i.i.i.lcssa3137, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i81.outer.backedge ]
   %.sroa.25.1.i.i.i.i.ph3128 = phi i64 [ %.sroa.25.1.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i81.preheader ], [ %.sroa.25.1.i.i.i.i.ph3128.be, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i81.outer.backedge ] ; 2 uses
-  %.sroa.9.1.i.i.i.i.ph3129 = phi ptr [ %.sroa.9.1.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i81.preheader ], [ %.sroa.9.1.i.i.i.i.ph3129.be, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i81.outer.backedge ] ; 9 uses
+  %.sroa.9.1.i.i.i.i.ph3129 = phi ptr [ %.sroa.9.1.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i81.preheader ], [ %.sroa.9.1.i.i.i.i.ph3129.be, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i81.outer.backedge ] ; 8 uses
   %.ph3130 = phi ptr [ %.ph, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i81.preheader ], [ %i.vl, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i81.outer.backedge ]
   %.sroa.38.0.i.i.i.i.peel = add i64 %.sroa.38.0.in.i.i.i.i.ph, -1 ; 3 uses
   %i.un = getelementptr inbounds nuw i8, ptr %.ph3130, i64 8
@@ -2705,7 +2701,6 @@ bb.gp:                                            ; preds = %.lr.ph.i.i.i.i.i.i.
   br label %.noexc.i.i.i.i
 
 "_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h0f552350328e4a6bE.exit.i.i.i.i.i.i": ; preds = %"_ZN5alloc11collections5btree4node173Handle$LT$alloc..collections..btree..node..NodeRef$LT$alloc..collections..btree..node..marker..Dying$C$K$C$V$C$NodeType$GT$$C$alloc..collections..btree..node..marker..KV$GT$12drop_key_val17hf338c883a536e9afE.exit.i.i.i.i.i.i.i.i.i.i.i"
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.9.1.i.i.i.i.ph3129) ]
   %i.vi = load i16, ptr %i.ux, align 2, !noalias !34561, !noundef !175
   %i.vj = zext i16 %i.vi to i64
   %i.vk = icmp ult i64 %.sroa.25.1.i.i.i.i, %i.vj
@@ -3108,7 +3103,7 @@ bb.el:                                            ; preds = %bb.ek
   %.sroa.0.0.ph.i.i.i37.sink77.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.ph1913 = phi ptr [ %.sroa.0.0.ph.i.i.i37.sink77.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.preheader ], [ %i.qz, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.outer.backedge ]
   %.sroa.6.sroa.4.0.ph.i.i.i35.sink76.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.ph1914 = phi i64 [ %.sroa.6.sroa.4.0.ph.i.i.i35.sink76.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.preheader ], [ %i.rg, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.outer.backedge ] ; 2 uses
   %.ph = phi ptr [ %i.ol, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.preheader ], [ %.lcssa1941, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.outer.backedge ]
-  %.sroa.53.1.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.ph1915 = phi ptr [ %.sroa.53.1.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.preheader ], [ %.sroa.53.1.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.ph1915.be, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.outer.backedge ] ; 6 uses
+  %.sroa.53.1.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.ph1915 = phi ptr [ %.sroa.53.1.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.preheader ], [ %.sroa.53.1.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.ph1915.be, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.outer.backedge ] ; 5 uses
   %.sroa.256.1.in.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.ph = phi i64 [ %i.mo, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.preheader ], [ %.sroa.256.1.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.lcssa1936, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.outer.backedge ]
   %.sroa.19.1.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.ph1916 = phi i64 [ %.sroa.19.1.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.preheader ], [ %.sroa.19.1.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.ph1916.be, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.outer.backedge ] ; 2 uses
   %.ph1917 = phi i64 [ %.sroa.0.0.i9.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.preheader ], [ %.lcssa1939, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.outer.backedge ] ; 3 uses
@@ -3195,7 +3190,6 @@ bb.en:                                            ; preds = %.noexc11.i.i.i.i.i.
   br i1 %i.qv, label %"_ZN97_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$alloc..vec..spec_extend..SpecExtend$LT$T$C$I$GT$$GT$11spec_extend17h9b03eb564258e41aE.exit.i.i.i.i.loopexit.i.i.i.i.i.i.i.i.i.i.i.i", label %"_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h8548ff98cc88e788E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i"
 
 "_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h8548ff98cc88e788E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i": ; preds = %bb.en
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.53.1.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.ph1915) ], !noalias !43067
   %i.qw = load i16, ptr %i.qi, align 2, !noalias !43078, !noundef !175
   %i.qx = zext i16 %i.qw to i64
   %i.qy = icmp samesign ult i64 %.sroa.19.1.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %i.qx
@@ -3598,7 +3592,7 @@ bb.bo:                                            ; preds = %bb.bn
   %.ph = phi i64 [ %i.mw, %.peel.next.i.i.i.i.i.i.i.preheader ], [ %.lcssa261, %.peel.next.i.i.i.i.i.i.i.outer.backedge ] ; 3 uses
   %.sroa.44.0.i.i.i.i.i.ph = phi i64 [ %i.my, %.peel.next.i.i.i.i.i.i.i.preheader ], [ %.lcssa262, %.peel.next.i.i.i.i.i.i.i.outer.backedge ] ; 2 uses
   %.sroa.30.1.i.i.i.i.i.ph256 = phi i64 [ %.sroa.30.1.i.i.i.i.i.ph, %.peel.next.i.i.i.i.i.i.i.preheader ], [ %.sroa.30.1.i.i.i.i.i.ph256.be, %.peel.next.i.i.i.i.i.i.i.outer.backedge ] ; 2 uses
-  %.sroa.7.1.i.i.i.i.i.ph257 = phi ptr [ %.sroa.7.1.i.i.i.i.i.ph, %.peel.next.i.i.i.i.i.i.i.preheader ], [ %.sroa.7.1.i.i.i.i.i.ph257.be, %.peel.next.i.i.i.i.i.i.i.outer.backedge ] ; 7 uses
+  %.sroa.7.1.i.i.i.i.i.ph257 = phi ptr [ %.sroa.7.1.i.i.i.i.i.ph, %.peel.next.i.i.i.i.i.i.i.preheader ], [ %.sroa.7.1.i.i.i.i.i.ph257.be, %.peel.next.i.i.i.i.i.i.i.outer.backedge ] ; 6 uses
   %i.od = getelementptr inbounds nuw i8, ptr %.sroa.0.0.ph.i.i.i178.sink260.i.i.i.i.i.ph254, i64 8
   %i.oe = icmp samesign ult i64 %.sroa.6.sroa.4.0.ph.i.i.i177.sink259.i.i.i.i.i.ph255, 11
   tail call void @llvm.assume(i1 %i.oe), !noalias !82359
@@ -3887,7 +3881,6 @@ bb.ce:                                            ; preds = %bb.cd
 
 "_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17hb6c96857c40106bfE.exit.i.i.i.i.i.i": ; preds = %"_ZN4core4iter6traits8iterator8Iterator12try_for_each4call28_$u7b$$u7b$closure$u7d$$u7d$17h1210313cd92a8a97E.exit.i.i.i.i.i.i.i"
   %i.sa = add i64 %.sroa.44.0.i.i.i.i.i, -1       ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7.1.i.i.i.i.i.ph257) ]
   %i.sb = load i16, ptr %i.qf, align 2, !noalias !82451, !noundef !175
   %i.sc = zext i16 %i.sb to i64
   %i.sd = icmp samesign ult i64 %.sroa.30.1.i.i.i.i.i, %i.sc
@@ -4290,7 +4283,7 @@ bb.o:                                             ; preds = %bb.n
   %.sroa.0.0.ph.i.i.i.i28.sink.i.i.i.ph49 = phi ptr [ %.sroa.0.0.ph.i.i.i.i28.sink.i.i.i.ph, %.lr.ph.i.i.i.i.i.preheader ], [ %i.ea, %.lr.ph.i.i.i.i.i.outer.backedge ]
   %.sroa.6.sroa.4.0.ph.i.i.i.i27.sink63.i.i.i.ph50 = phi i64 [ %.sroa.6.sroa.4.0.ph.i.i.i.i27.sink63.i.i.i.ph, %.lr.ph.i.i.i.i.i.preheader ], [ %i.eh, %.lr.ph.i.i.i.i.i.outer.backedge ] ; 2 uses
   %.ph = phi ptr [ %i.bf, %.lr.ph.i.i.i.i.i.preheader ], [ %.lcssa61, %.lr.ph.i.i.i.i.i.outer.backedge ]
-  %.sroa.53.1.i.i.i.ph51 = phi ptr [ %.sroa.53.1.i.i.i.ph, %.lr.ph.i.i.i.i.i.preheader ], [ %.sroa.53.1.i.i.i.ph51.be, %.lr.ph.i.i.i.i.i.outer.backedge ] ; 6 uses
+  %.sroa.53.1.i.i.i.ph51 = phi ptr [ %.sroa.53.1.i.i.i.ph, %.lr.ph.i.i.i.i.i.preheader ], [ %.sroa.53.1.i.i.i.ph51.be, %.lr.ph.i.i.i.i.i.outer.backedge ] ; 5 uses
   %.sroa.15.1.i.i.i.ph52 = phi i64 [ %.sroa.15.1.i.i.i.ph, %.lr.ph.i.i.i.i.i.preheader ], [ %.sroa.15.1.i.i.i.ph52.be, %.lr.ph.i.i.i.i.i.outer.backedge ] ; 2 uses
   %.sroa.216.1.in.i.i.i.ph = phi i64 [ %i.c, %.lr.ph.i.i.i.i.i.preheader ], [ %.sroa.216.1.i.i.i.lcssa56, %.lr.ph.i.i.i.i.i.outer.backedge ]
   %.ph53 = phi i64 [ %.sroa.0.0.i11.i.i.i, %.lr.ph.i.i.i.i.i.preheader ], [ %.lcssa59, %.lr.ph.i.i.i.i.i.outer.backedge ] ; 3 uses
@@ -4387,7 +4380,6 @@ bb.q:                                             ; preds = %.noexc12.i.i.i, %.l
   br i1 %i.dw, label %"_ZN97_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$alloc..vec..spec_extend..SpecExtend$LT$T$C$I$GT$$GT$11spec_extend17hdb01ba87ae324f5fE.exit.i.i.i", label %"_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17ha00e3001793f49caE.exit.i.i.i.i.i"
 
 "_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17ha00e3001793f49caE.exit.i.i.i.i.i": ; preds = %bb.q
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.53.1.i.i.i.ph51) ]
   %i.dx = load i16, ptr %i.dg, align 2, !noalias !134422, !noundef !175
   %i.dy = zext i16 %i.dx to i64
   %i.dz = icmp samesign ult i64 %.sroa.15.1.i.i.i, %i.dy
@@ -4790,7 +4782,7 @@ bb.an:                                            ; preds = %bb.am
   %.ph358 = phi i64 [ %i.hw, %.peel.next.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.preheader ], [ %.lcssa362, %.peel.next.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.outer.backedge ] ; 3 uses
   %.sroa.44.0.i.i.i.i.i.i.i.i.i.i.i.i.i.ph = phi i64 [ %i.hy, %.peel.next.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.preheader ], [ %.lcssa363, %.peel.next.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.outer.backedge ] ; 2 uses
   %.sroa.30.1.i.i.i.i.i.i.i.i.i.i.i.i.i.ph359 = phi i64 [ %.sroa.30.1.i.i.i.i.i.i.i.i.i.i.i.i.i.ph, %.peel.next.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.preheader ], [ %.sroa.30.1.i.i.i.i.i.i.i.i.i.i.i.i.i.ph359.be, %.peel.next.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.outer.backedge ] ; 2 uses
-  %.sroa.7.1.i.i.i.i.i.i.i.i.i.i.i.i.i.ph360 = phi ptr [ %.sroa.7.1.i.i.i.i.i.i.i.i.i.i.i.i.i.ph, %.peel.next.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.preheader ], [ %.sroa.7.1.i.i.i.i.i.i.i.i.i.i.i.i.i.ph360.be, %.peel.next.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.outer.backedge ] ; 7 uses
+  %.sroa.7.1.i.i.i.i.i.i.i.i.i.i.i.i.i.ph360 = phi ptr [ %.sroa.7.1.i.i.i.i.i.i.i.i.i.i.i.i.i.ph, %.peel.next.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.preheader ], [ %.sroa.7.1.i.i.i.i.i.i.i.i.i.i.i.i.i.ph360.be, %.peel.next.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.outer.backedge ] ; 6 uses
   %i.jd = getelementptr inbounds nuw i8, ptr %.sroa.0.0.ph.i.i.i184.sink243.i.i.i.i.i.i.i.i.i.i.i.i.i.ph356, i64 56
   %i.je = icmp samesign ult i64 %.sroa.6.sroa.4.0.ph.i.i.i183.sink242.i.i.i.i.i.i.i.i.i.i.i.i.i.ph357, 11
   call void @llvm.assume(i1 %i.je), !noalias !141599
@@ -5031,7 +5023,6 @@ bb.at:                                            ; preds = %.noexc35.i.i
 
 "_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h5ac67a6f7fba25a0E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i": ; preds = %"_ZN4core4iter6traits8iterator8Iterator12try_for_each4call28_$u7b$$u7b$closure$u7d$$u7d$17he81f6060e5f38d8bE.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i"
   %i.me = add i64 %.sroa.44.0.i.i.i.i.i.i.i.i.i.i.i.i.i, -1 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7.1.i.i.i.i.i.i.i.i.i.i.i.i.i.ph360) ]
   %i.mf = load i16, ptr %i.ku, align 2, !noalias !141656, !noundef !175
   %i.mg = zext i16 %i.mf to i64
   %i.mh = icmp samesign ult i64 %.sroa.30.1.i.i.i.i.i.i.i.i.i.i.i.i.i, %i.mg
@@ -5430,7 +5421,7 @@ bb.bm:                                            ; preds = %bb.bl
   %.ph337 = phi i64 [ %i.ox, %.lr.ph.split.i.i.i.i.i.i.i75.i.i.i.i.i.i.i.i.preheader ], [ %.lcssa344, %.lr.ph.split.i.i.i.i.i.i.i75.i.i.i.i.i.i.i.i.outer.backedge ] ; 3 uses
   %.sroa.33.0.in.i.i.i.i.i.i.i.i.i.i.i.i.i.ph = phi i64 [ %.sink.i.i.i.i.i.i71.i.i.i.i.i.i.i.i, %.lr.ph.split.i.i.i.i.i.i.i75.i.i.i.i.i.i.i.i.preheader ], [ %.sroa.33.0.i.i.i.i.i.i.i.i.i.i.i.i.i.lcssa342, %.lr.ph.split.i.i.i.i.i.i.i75.i.i.i.i.i.i.i.i.outer.backedge ]
   %.sroa.22.1.i.i.i.i.i.i.i.i.i.i.i.i.i.ph338 = phi i64 [ %.sroa.22.1.i.i.i.i.i.i.i.i.i.i.i.i.i.ph, %.lr.ph.split.i.i.i.i.i.i.i75.i.i.i.i.i.i.i.i.preheader ], [ %.sroa.22.1.i.i.i.i.i.i.i.i.i.i.i.i.i.ph338.be, %.lr.ph.split.i.i.i.i.i.i.i75.i.i.i.i.i.i.i.i.outer.backedge ] ; 2 uses
-  %.sroa.6.1.i.i.i.i.i.i.i.i.i.i.i.i.i.ph339 = phi ptr [ %.sroa.6.1.i.i.i.i.i.i.i.i.i.i.i.i.i.ph, %.lr.ph.split.i.i.i.i.i.i.i75.i.i.i.i.i.i.i.i.preheader ], [ %.sroa.6.1.i.i.i.i.i.i.i.i.i.i.i.i.i.ph339.be, %.lr.ph.split.i.i.i.i.i.i.i75.i.i.i.i.i.i.i.i.outer.backedge ] ; 7 uses
+  %.sroa.6.1.i.i.i.i.i.i.i.i.i.i.i.i.i.ph339 = phi ptr [ %.sroa.6.1.i.i.i.i.i.i.i.i.i.i.i.i.i.ph, %.lr.ph.split.i.i.i.i.i.i.i75.i.i.i.i.i.i.i.i.preheader ], [ %.sroa.6.1.i.i.i.i.i.i.i.i.i.i.i.i.i.ph339.be, %.lr.ph.split.i.i.i.i.i.i.i75.i.i.i.i.i.i.i.i.outer.backedge ] ; 6 uses
   %.ph340 = phi i1 [ true, %.lr.ph.split.i.i.i.i.i.i.i75.i.i.i.i.i.i.i.i.preheader ], [ false, %.lr.ph.split.i.i.i.i.i.i.i75.i.i.i.i.i.i.i.i.outer.backedge ]
   %i.qq = getelementptr inbounds nuw i8, ptr %.sroa.0.0.ph.i.i.i117.i.i.i.i.i.sink.i.i.i.i.i.i.i.i.ph335, i64 56
   %i.qr = icmp samesign ult i64 %.sroa.6.sroa.4.0.ph.i.i.i116.i.i.i.i.i.sink391.i.i.i.i.i.i.i.i.ph336, 11
@@ -5680,7 +5671,6 @@ bb.bt:                                            ; preds = %.noexc63.i.i
   br i1 %i.tp, label %.thread110.i.i.i.i.i.sink.split.i.i.i.i.i.i.i.i, label %.thread110.i.i.i.i.i.i.i.i.i.i.i.i.i, !prof !178
 
 "_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17hf6e259aa8814af25E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i": ; preds = %"_ZN4core4iter6traits8iterator8Iterator12try_for_each4call28_$u7b$$u7b$closure$u7d$$u7d$17h5244cb386e3ed4f7E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i"
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.1.i.i.i.i.i.i.i.i.i.i.i.i.i.ph339) ]
   %i.tq = load i16, ptr %i.sf, align 2, !noalias !141763, !noundef !175
   %i.tr = zext i16 %i.tq to i64
   %i.ts = icmp samesign ult i64 %.sroa.22.1.i.i.i.i.i.i.i.i.i.i.i.i.i, %i.tr
@@ -6083,7 +6073,7 @@ bb.cq:                                            ; preds = %bb.cp
   %.ph = phi i64 [ %i.yx, %.peel.next.i.i.i.i.i.i.i145.i.i.i.i.i.i.i.i.preheader ], [ %.lcssa319, %.peel.next.i.i.i.i.i.i.i145.i.i.i.i.i.i.i.i.outer.backedge ] ; 3 uses
   %.sroa.44.0.i.i.i.i.i146.i.i.i.i.i.i.i.i.ph = phi i64 [ %i.yz, %.peel.next.i.i.i.i.i.i.i145.i.i.i.i.i.i.i.i.preheader ], [ %.lcssa320, %.peel.next.i.i.i.i.i.i.i145.i.i.i.i.i.i.i.i.outer.backedge ] ; 2 uses
   %.sroa.30.1.i.i.i.i.i147.i.i.i.i.i.i.i.i.ph317 = phi i64 [ %.sroa.30.1.i.i.i.i.i147.i.i.i.i.i.i.i.i.ph, %.peel.next.i.i.i.i.i.i.i145.i.i.i.i.i.i.i.i.preheader ], [ %.sroa.30.1.i.i.i.i.i147.i.i.i.i.i.i.i.i.ph317.be, %.peel.next.i.i.i.i.i.i.i145.i.i.i.i.i.i.i.i.outer.backedge ] ; 2 uses
-  %.sroa.7.1.i.i.i.i.i148.i.i.i.i.i.i.i.i.ph318 = phi ptr [ %.sroa.7.1.i.i.i.i.i148.i.i.i.i.i.i.i.i.ph, %.peel.next.i.i.i.i.i.i.i145.i.i.i.i.i.i.i.i.preheader ], [ %.sroa.7.1.i.i.i.i.i148.i.i.i.i.i.i.i.i.ph318.be, %.peel.next.i.i.i.i.i.i.i145.i.i.i.i.i.i.i.i.outer.backedge ] ; 7 uses
+  %.sroa.7.1.i.i.i.i.i148.i.i.i.i.i.i.i.i.ph318 = phi ptr [ %.sroa.7.1.i.i.i.i.i148.i.i.i.i.i.i.i.i.ph, %.peel.next.i.i.i.i.i.i.i145.i.i.i.i.i.i.i.i.preheader ], [ %.sroa.7.1.i.i.i.i.i148.i.i.i.i.i.i.i.i.ph318.be, %.peel.next.i.i.i.i.i.i.i145.i.i.i.i.i.i.i.i.outer.backedge ] ; 6 uses
   %i.aae = getelementptr inbounds nuw i8, ptr %.sroa.0.0.ph.i.i.i174.sink233.i.i.i.i.i.i.i.i.i.i.i.i.i.ph315, i64 8
   %i.aaf = icmp samesign ult i64 %.sroa.6.sroa.4.0.ph.i.i.i173.sink232.i.i.i.i.i.i.i.i.i.i.i.i.i.ph316, 11
   call void @llvm.assume(i1 %i.aaf), !noalias !141836
@@ -6314,7 +6304,6 @@ bb.cy:                                            ; preds = %.noexc78.i.i
 
 "_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17hffdbb7c7a5acdc18E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i": ; preds = %"_ZN4core4iter6traits8iterator8Iterator12try_for_each4call28_$u7b$$u7b$closure$u7d$$u7d$17h54115392baaa8e1bE.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i"
   %i.add = add i64 %.sroa.44.0.i.i.i.i.i146.i.i.i.i.i.i.i.i, -1 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7.1.i.i.i.i.i148.i.i.i.i.i.i.i.i.ph318) ]
   %i.ade = load i16, ptr %i.abu, align 2, !noalias !141894, !noundef !175
   %i.adf = zext i16 %i.ade to i64
   %i.adg = icmp samesign ult i64 %.sroa.30.1.i.i.i.i.i147.i.i.i.i.i.i.i.i, %i.adf
@@ -6717,7 +6706,7 @@ bb.p:                                             ; preds = %bb.o
   %.sroa.12.0.i.ph282 = phi i64 [ %.sroa.12.0.i.ph, %.lr.ph.i.i.i.i.i.preheader ], [ %i.dt, %.lr.ph.i.i.i.i.i.outer.backedge ] ; 2 uses
   %.sroa.38.0.in.i.ph = phi i64 [ %.sroa.9.i.sroa.8.0.copyload.i, %.lr.ph.i.i.i.i.i.preheader ], [ %.sroa.38.0.i.lcssa291, %.lr.ph.i.i.i.i.i.outer.backedge ]
   %.sroa.25.1.i.ph283 = phi i64 [ %.sroa.25.1.i.ph, %.lr.ph.i.i.i.i.i.preheader ], [ %.sroa.25.1.i.ph283.be, %.lr.ph.i.i.i.i.i.outer.backedge ] ; 2 uses
-  %.sroa.9.1.i.ph284 = phi ptr [ %.sroa.9.1.i.ph, %.lr.ph.i.i.i.i.i.preheader ], [ %.sroa.9.1.i.ph284.be, %.lr.ph.i.i.i.i.i.outer.backedge ] ; 10 uses
+  %.sroa.9.1.i.ph284 = phi ptr [ %.sroa.9.1.i.ph, %.lr.ph.i.i.i.i.i.preheader ], [ %.sroa.9.1.i.ph284.be, %.lr.ph.i.i.i.i.i.outer.backedge ] ; 9 uses
   %.ph285 = phi ptr [ %.ph, %.lr.ph.i.i.i.i.i.preheader ], [ %i.ds, %.lr.ph.i.i.i.i.i.outer.backedge ] ; 2 uses
   %.sroa.38.0.i.peel = add i64 %.sroa.38.0.in.i.ph, -1 ; 3 uses
   %i.cm = getelementptr inbounds nuw i8, ptr %.ph285, i64 8
@@ -6835,7 +6824,6 @@ bb.t:                                             ; preds = %"_ZN4core3ptr42drop
   br label %.noexc.i
 
 "_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h6ad722cd10f18b4fE.exit.i.i.i": ; preds = %"_ZN5alloc11collections5btree4node173Handle$LT$alloc..collections..btree..node..NodeRef$LT$alloc..collections..btree..node..marker..Dying$C$K$C$V$C$NodeType$GT$$C$alloc..collections..btree..node..marker..KV$GT$12drop_key_val17h9a98de0620dd1e9fE.exit.i.i.i.i.i"
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.9.1.i.ph284) ]
   %i.dp = load i16, ptr %i.db, align 2, !noalias !147081, !noundef !175
   %i.dq = zext i16 %i.dp to i64
   %i.dr = icmp ult i64 %.sroa.25.1.i, %i.dq
@@ -7238,7 +7226,7 @@ bb.ad:                                            ; preds = %bb.ac
   %.sroa.6.sroa.4.0.ph.i.i.i177.sink251.i.i.i.i.i.i.i.ph87 = phi i64 [ %.sroa.6.sroa.4.0.ph.i.i.i177.sink251.i.i.i.i.i.i.i.ph, %.peel.next.i.i.i.i.i.i.i.i.i.preheader ], [ %i.ma, %.peel.next.i.i.i.i.i.i.i.i.i.outer.backedge ] ; 3 uses
   %.sroa.44.0.i.i.i.i.i.i.i.ph = phi i64 [ %i.ew, %.peel.next.i.i.i.i.i.i.i.i.i.preheader ], [ %.lcssa90, %.peel.next.i.i.i.i.i.i.i.i.i.outer.backedge ] ; 2 uses
   %.sroa.30.1.i.i.i.i.i.i.i.ph88 = phi i64 [ %.sroa.30.1.i.i.i.i.i.i.i.ph, %.peel.next.i.i.i.i.i.i.i.i.i.preheader ], [ %.sroa.30.1.i.i.i.i.i.i.i.ph88.be, %.peel.next.i.i.i.i.i.i.i.i.i.outer.backedge ] ; 2 uses
-  %.sroa.7.1.i.i.i.i.i.i.i.ph89 = phi ptr [ %.sroa.7.1.i.i.i.i.i.i.i.ph, %.peel.next.i.i.i.i.i.i.i.i.i.preheader ], [ %.sroa.7.1.i.i.i.i.i.i.i.ph89.be, %.peel.next.i.i.i.i.i.i.i.i.i.outer.backedge ] ; 7 uses
+  %.sroa.7.1.i.i.i.i.i.i.i.ph89 = phi ptr [ %.sroa.7.1.i.i.i.i.i.i.i.ph, %.peel.next.i.i.i.i.i.i.i.i.i.preheader ], [ %.sroa.7.1.i.i.i.i.i.i.i.ph89.be, %.peel.next.i.i.i.i.i.i.i.i.i.outer.backedge ] ; 6 uses
   %i.gb = getelementptr inbounds nuw i8, ptr %.sroa.0.0.ph.i.i.i178.sink252.i.i.i.i.i.i.i.ph86, i64 8
   %i.gc = icmp samesign ult i64 %.sroa.6.sroa.4.0.ph.i.i.i177.sink251.i.i.i.i.i.i.i.ph87, 11
   tail call void @llvm.assume(i1 %i.gc), !noalias !242517
@@ -7641,7 +7629,6 @@ bb.az:                                            ; preds = %bb.ay
 
 "_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h6010091241847f7eE.exit.i.i.i.i.i.i.i.i": ; preds = %"_ZN4core4iter6traits8iterator8Iterator12try_for_each4call28_$u7b$$u7b$closure$u7d$$u7d$17he88f470267086a0aE.exit.i.i.i.i.i.i.i.i.i"
   %i.lp = add i64 %.sroa.44.0.i.i.i.i.i.i.i, -1   ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7.1.i.i.i.i.i.i.i.ph89) ]
   %i.lq = load i16, ptr %i.iz, align 2, !noalias !242662, !noundef !175
   %i.lr = zext i16 %i.lq to i64
   %i.ls = icmp samesign ult i64 %.sroa.30.1.i.i.i.i.i.i.i, %i.lr

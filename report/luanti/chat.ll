@@ -204,9 +204,9 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZNK11ChatBackend13getRecentChatEv(ptr dead_on_unwind noalias nonnull writable sret(%class.EnrichedString) align 8 %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(360) %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca %class.EnrichedString, align 8      ; 16 uses
+  %2 = alloca %class.EnrichedString, align 8      ; 15 uses
   %3 = alloca %"class.video::SColor", align 4     ; 9 uses
-  %4 = alloca %class.EnrichedString, align 8      ; 16 uses
+  %4 = alloca %class.EnrichedString, align 8      ; 15 uses
   %5 = alloca %"class.video::SColor", align 4     ; 9 uses
   %6 = alloca %class.EnrichedString, align 8      ; 10 uses
   %7 = alloca %"class.video::SColor", align 4     ; 5 uses
@@ -224,17 +224,15 @@ bb.a:
   br i1 %.not31, label %._crit_edge, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %8 = getelementptr inbounds nuw i8, ptr %6, i64 32
-  %9 = getelementptr inbounds nuw i8, ptr %6, i64 48
-  %i.j = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 2 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
-  %i.l = getelementptr inbounds nuw i8, ptr %4, i64 48 ; 2 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 4 uses
-  %i.n = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %i.o = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
-  %i.p = getelementptr inbounds nuw i8, ptr %2, i64 48 ; 2 uses
-  %i.q = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 4 uses
-  %i.r = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %i.j = getelementptr inbounds nuw i8, ptr %6, i64 32
+  %i.k = getelementptr inbounds nuw i8, ptr %6, i64 48
+  %i.l = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 2 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %4, i64 48 ; 2 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 4 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %2, i64 48 ; 2 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 4 uses
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %.pre = load i64, ptr %.phi.trans.insert, align 8, !tbaa !75
   %i.s = getelementptr inbounds nuw i8, ptr %i.d, i64 8
@@ -253,12 +251,12 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %.loopexit.split-lp40.loopexit.split-lp.loopexit.split-lp
 
 bb.d:                                             ; preds = %.noexc14.peel
-  %i.u = load ptr, ptr %i.k, align 8, !tbaa !72   ; 3 uses
+  %i.u = load ptr, ptr %i.m, align 8, !tbaa !72   ; 3 uses
   %.not.i.i.i.i.i10.peel = icmp eq ptr %i.u, null
   br i1 %.not.i.i.i.i.i10.peel, label %_ZNSt6vectorIN5video6SColorESaIS1_EED2Ev.exit.i.i11.peel, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.v = load ptr, ptr %i.l, align 8, !tbaa !73
+  %i.v = load ptr, ptr %i.n, align 8, !tbaa !73
   %i.w = ptrtoint ptr %i.v to i64
   %i.x = ptrtoint ptr %i.u to i64
   %i.y = sub i64 %i.w, %i.x
@@ -267,23 +265,17 @@ bb.e:                                             ; preds = %bb.d
 
 _ZNSt6vectorIN5video6SColorESaIS1_EED2Ev.exit.i.i11.peel: ; preds = %bb.e, %bb.d
   %i.z = load ptr, ptr %4, align 8, !tbaa !74     ; 2 uses
-  %i.aa = icmp eq ptr %i.z, %i.m
-  br i1 %i.aa, label %_ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.thread.i.i.i.i13.peel, label %_ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.i.i.i.i12.peel
+  %i.aa = icmp eq ptr %i.z, %i.o
+  br i1 %i.aa, label %bb.f, label %_ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.i.i.i.i12.peel
 
 _ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.i.i.i.i12.peel: ; preds = %_ZNSt6vectorIN5video6SColorESaIS1_EED2Ev.exit.i.i11.peel
-  %i.ab = load i64, ptr %i.m, align 8, !tbaa !47
+  %i.ab = load i64, ptr %i.o, align 8, !tbaa !47
   %i.ac = shl i64 %i.ab, 2
   %i.ad = add i64 %i.ac, 4
   call void @_ZdlPvm(ptr noundef %i.z, i64 noundef %i.ad) #27
   br label %bb.f
 
-_ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.thread.i.i.i.i13.peel: ; preds = %_ZNSt6vectorIN5video6SColorESaIS1_EED2Ev.exit.i.i11.peel
-  %10 = load i64, ptr %i.n, align 8, !tbaa !75
-  %11 = icmp ult i64 %10, 4
-  call void @llvm.assume(i1 %11)
-  br label %bb.f
-
-bb.f:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.thread.i.i.i.i13.peel, %_ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.i.i.i.i12.peel
+bb.f:                                             ; preds = %_ZNSt6vectorIN5video6SColorESaIS1_EED2Ev.exit.i.i11.peel, %_ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.i.i.i.i12.peel
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #26
   invoke void @_ZN14EnrichedStringpLERKS_(ptr noundef nonnull align 8 dereferenceable(80) %0, ptr noundef nonnull align 8 dereferenceable(80) %i.s)
@@ -301,12 +293,12 @@ bb.g:                                             ; preds = %bb.f
           to label %bb.h unwind label %.loopexit.split-lp45.loopexit.split-lp.loopexit.split-lp
 
 bb.h:                                             ; preds = %.noexc22.peel
-  %i.ae = load ptr, ptr %i.o, align 8, !tbaa !72  ; 3 uses
+  %i.ae = load ptr, ptr %i.p, align 8, !tbaa !72  ; 3 uses
   %.not.i.i.i.i.i18.peel = icmp eq ptr %i.ae, null
   br i1 %.not.i.i.i.i.i18.peel, label %_ZNSt6vectorIN5video6SColorESaIS1_EED2Ev.exit.i.i19.peel, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.af = load ptr, ptr %i.p, align 8, !tbaa !73
+  %i.af = load ptr, ptr %i.q, align 8, !tbaa !73
   %i.ag = ptrtoint ptr %i.af to i64
   %i.ah = ptrtoint ptr %i.ae to i64
   %i.ai = sub i64 %i.ag, %i.ah
@@ -315,23 +307,17 @@ bb.i:                                             ; preds = %bb.h
 
 _ZNSt6vectorIN5video6SColorESaIS1_EED2Ev.exit.i.i19.peel: ; preds = %bb.i, %bb.h
   %i.aj = load ptr, ptr %2, align 8, !tbaa !74    ; 2 uses
-  %i.ak = icmp eq ptr %i.aj, %i.q
-  br i1 %i.ak, label %_ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.thread.i.i.i.i21.peel, label %_ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.i.i.i.i20.peel
+  %i.ak = icmp eq ptr %i.aj, %i.r
+  br i1 %i.ak, label %_ZN14EnrichedStringpLESt17basic_string_viewIwSt11char_traitsIwEE.exit25.peel, label %_ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.i.i.i.i20.peel
 
 _ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.i.i.i.i20.peel: ; preds = %_ZNSt6vectorIN5video6SColorESaIS1_EED2Ev.exit.i.i19.peel
-  %i.al = load i64, ptr %i.q, align 8, !tbaa !47
+  %i.al = load i64, ptr %i.r, align 8, !tbaa !47
   %i.am = shl i64 %i.al, 2
   %i.an = add i64 %i.am, 4
   call void @_ZdlPvm(ptr noundef %i.aj, i64 noundef %i.an) #27
   br label %_ZN14EnrichedStringpLESt17basic_string_viewIwSt11char_traitsIwEE.exit25.peel
 
-_ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.thread.i.i.i.i21.peel: ; preds = %_ZNSt6vectorIN5video6SColorESaIS1_EED2Ev.exit.i.i19.peel
-  %12 = load i64, ptr %i.r, align 8, !tbaa !75
-  %13 = icmp ult i64 %12, 4
-  call void @llvm.assume(i1 %13)
-  br label %_ZN14EnrichedStringpLESt17basic_string_viewIwSt11char_traitsIwEE.exit25.peel
-
-_ZN14EnrichedStringpLESt17basic_string_viewIwSt11char_traitsIwEE.exit25.peel: ; preds = %_ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.thread.i.i.i.i21.peel, %_ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.i.i.i.i20.peel
+_ZN14EnrichedStringpLESt17basic_string_viewIwSt11char_traitsIwEE.exit25.peel: ; preds = %_ZNSt6vectorIN5video6SColorESaIS1_EED2Ev.exit.i.i19.peel, %_ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.i.i.i.i20.peel
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #26
   br label %bb.j
@@ -367,12 +353,12 @@ bb.k:                                             ; preds = %bb.j
           to label %bb.l unwind label %bb.n
 
 bb.l:                                             ; preds = %.noexc
-  %i.ay = load ptr, ptr %8, align 8, !tbaa !72    ; 3 uses
+  %i.ay = load ptr, ptr %i.j, align 8, !tbaa !72  ; 3 uses
   %.not.i.i.i.i.i = icmp eq ptr %i.ay, null
   br i1 %.not.i.i.i.i.i, label %_ZNSt6vectorIN5video6SColorESaIS1_EED2Ev.exit.i.i, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.az = load ptr, ptr %9, align 8, !tbaa !73
+  %i.az = load ptr, ptr %i.k, align 8, !tbaa !73
   %i.ba = ptrtoint ptr %i.az to i64
   %i.bb = ptrtoint ptr %i.ay to i64
   %i.bc = sub i64 %i.ba, %i.bb
@@ -381,11 +367,11 @@ bb.m:                                             ; preds = %bb.l
 
 _ZNSt6vectorIN5video6SColorESaIS1_EED2Ev.exit.i.i: ; preds = %bb.m, %bb.l
   %i.bd = load ptr, ptr %6, align 8, !tbaa !74    ; 2 uses
-  %i.be = icmp eq ptr %i.bd, %i.j
+  %i.be = icmp eq ptr %i.bd, %i.l
   br i1 %i.be, label %_ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.thread.i.i.i.i, label %_ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.i.i.i.i
 
 _ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.i.i.i.i: ; preds = %_ZNSt6vectorIN5video6SColorESaIS1_EED2Ev.exit.i.i
-  %i.bf = load i64, ptr %i.j, align 8, !tbaa !47
+  %i.bf = load i64, ptr %i.l, align 8, !tbaa !47
   %i.bg = shl i64 %i.bf, 2
   %i.bh = add i64 %i.bg, 4
   call void @_ZdlPvm(ptr noundef %i.bd, i64 noundef %i.bh) #27
@@ -430,12 +416,12 @@ bb.o:                                             ; preds = %_ZNKSt7__cxx1112bas
           to label %bb.p unwind label %.loopexit.split-lp40.loopexit.split-lp.loopexit.split-lp
 
 bb.p:                                             ; preds = %.noexc14
-  %i.bm = load ptr, ptr %i.k, align 8, !tbaa !72  ; 3 uses
+  %i.bm = load ptr, ptr %i.m, align 8, !tbaa !72  ; 3 uses
   %.not.i.i.i.i.i10 = icmp eq ptr %i.bm, null
   br i1 %.not.i.i.i.i.i10, label %_ZNSt6vectorIN5video6SColorESaIS1_EED2Ev.exit.i.i11, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.bn = load ptr, ptr %i.l, align 8, !tbaa !73
+  %i.bn = load ptr, ptr %i.n, align 8, !tbaa !73
   %i.bo = ptrtoint ptr %i.bn to i64
   %i.bp = ptrtoint ptr %i.bm to i64
   %i.bq = sub i64 %i.bo, %i.bp
@@ -444,11 +430,11 @@ bb.q:                                             ; preds = %bb.p
 
 _ZNSt6vectorIN5video6SColorESaIS1_EED2Ev.exit.i.i11: ; preds = %bb.q, %bb.p
   %i.br = load ptr, ptr %4, align 8, !tbaa !74    ; 2 uses
-  %i.bs = icmp eq ptr %i.br, %i.m
+  %i.bs = icmp eq ptr %i.br, %i.o
   br i1 %i.bs, label %_ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.thread.i.i.i.i13, label %_ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.i.i.i.i12
 
 _ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.i.i.i.i12: ; preds = %_ZNSt6vectorIN5video6SColorESaIS1_EED2Ev.exit.i.i11
-  %i.bt = load i64, ptr %i.m, align 8, !tbaa !47
+  %i.bt = load i64, ptr %i.o, align 8, !tbaa !47
   %i.bu = shl i64 %i.bt, 2
   %i.bv = add i64 %i.bu, 4
   call void @_ZdlPvm(ptr noundef %i.br, i64 noundef %i.bv) #27
@@ -480,12 +466,12 @@ bb.r:                                             ; preds = %_ZNKSt7__cxx1112bas
           to label %bb.s unwind label %.loopexit.split-lp45.loopexit.split-lp.loopexit.split-lp
 
 bb.s:                                             ; preds = %.noexc22
-  %i.bw = load ptr, ptr %i.o, align 8, !tbaa !72  ; 3 uses
+  %i.bw = load ptr, ptr %i.p, align 8, !tbaa !72  ; 3 uses
   %.not.i.i.i.i.i18 = icmp eq ptr %i.bw, null
   br i1 %.not.i.i.i.i.i18, label %_ZNSt6vectorIN5video6SColorESaIS1_EED2Ev.exit.i.i19, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  %i.bx = load ptr, ptr %i.p, align 8, !tbaa !73
+  %i.bx = load ptr, ptr %i.q, align 8, !tbaa !73
   %i.by = ptrtoint ptr %i.bx to i64
   %i.bz = ptrtoint ptr %i.bw to i64
   %i.ca = sub i64 %i.by, %i.bz
@@ -494,11 +480,11 @@ bb.t:                                             ; preds = %bb.s
 
 _ZNSt6vectorIN5video6SColorESaIS1_EED2Ev.exit.i.i19: ; preds = %bb.t, %bb.s
   %i.cb = load ptr, ptr %2, align 8, !tbaa !74    ; 2 uses
-  %i.cc = icmp eq ptr %i.cb, %i.q
+  %i.cc = icmp eq ptr %i.cb, %i.r
   br i1 %i.cc, label %_ZN14EnrichedStringpLESt17basic_string_viewIwSt11char_traitsIwEE.exit25, label %_ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.i.i.i.i20
 
 _ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.i.i.i.i20: ; preds = %_ZNSt6vectorIN5video6SColorESaIS1_EED2Ev.exit.i.i19
-  %i.cd = load i64, ptr %i.q, align 8, !tbaa !47
+  %i.cd = load i64, ptr %i.r, align 8, !tbaa !47
   %i.ce = shl i64 %i.cd, 2
   %i.cf = add i64 %i.ce, 4
   call void @_ZdlPvm(ptr noundef %i.cb, i64 noundef %i.cf) #27

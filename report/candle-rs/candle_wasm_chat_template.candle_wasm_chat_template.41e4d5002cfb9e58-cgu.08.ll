@@ -202,15 +202,15 @@ _RNvYNtNtNtCs1fJj97VvEPD_9minijinja5value9serialize12StaticKeyMapNtNtB6_6object9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k), !noalias !379
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n)
   store i64 1, ptr %i.n, align 8
-  %.sroa.06.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.n, i64 8 ; 5 uses
+  %.sroa.06.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.n, i64 8 ; 7 uses
   store ptr %.sroa.0.1.i, ptr %.sroa.06.sroa.2.0..sroa_idx, align 8
-  %.sroa.06.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.n, i64 16 ; 3 uses
+  %.sroa.06.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.n, i64 16
   store ptr %.sroa.7.1.i, ptr %.sroa.06.sroa.3.0..sroa_idx, align 8
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.n, i64 24 ; 10 uses
   store ptr null, ptr %.sroa.2.0..sroa_idx, align 8
   %.sroa.47.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.n, i64 40 ; 6 uses
   store ptr null, ptr %.sroa.47.0..sroa_idx, align 8
-  %i.eb = getelementptr inbounds nuw i8, ptr %i.n, i64 32 ; 3 uses
+  %i.eb = getelementptr inbounds nuw i8, ptr %i.n, i64 32 ; 2 uses
   %.sroa.7.0..sroa_idx28.i = getelementptr inbounds nuw i8, ptr %i.b, i64 1
   %.sroa.8.0..sroa_idx59 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
   %i.ec = getelementptr inbounds nuw i8, ptr %i.n, i64 48
@@ -275,18 +275,17 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionTNtNtCs1fJj97VvEPD
   br i1 %i.en, label %_RNvXs9_NtNtNtCsf3Ta7LF998c_4core4iter8adapters4fuseINtB5_4FuseINtNtBb_6option8IntoIterINtNtCsgCecv3eZDcN_5alloc5boxed3BoxDNtNtNtB9_6traits8iterator8Iteratorp4ItemTNtNtCs1fJj97VvEPD_9minijinja5value5ValueB2B_ENtNtBb_6marker4SendNtB3m_4SyncEL_EEEINtB5_8FuseImplBY_E4nextCs5EKAXG1naGG_25candle_wasm_chat_template.exit.i.peel, label %_RNvXs9_NtNtNtCsf3Ta7LF998c_4core4iter8adapters4fuseINtB5_4FuseINtNtBb_6option8IntoIterINtNtCsgCecv3eZDcN_5alloc5boxed3BoxDNtNtNtB9_6traits8iterator8Iteratorp4ItemTNtNtCs1fJj97VvEPD_9minijinja5value5ValueB2B_ENtNtBb_6marker4SendNtB3m_4SyncEL_EEEINtB5_8FuseImplBY_E4nextCs5EKAXG1naGG_25candle_wasm_chat_template.exit.thread.i
 
 _RNvXs9_NtNtNtCsf3Ta7LF998c_4core4iter8adapters4fuseINtB5_4FuseINtNtBb_6option8IntoIterINtNtCsgCecv3eZDcN_5alloc5boxed3BoxDNtNtNtB9_6traits8iterator8Iteratorp4ItemTNtNtCs1fJj97VvEPD_9minijinja5value5ValueB2B_ENtNtBb_6marker4SendNtB3m_4SyncEL_EEEINtB5_8FuseImplBY_E4nextCs5EKAXG1naGG_25candle_wasm_chat_template.exit.i.peel: ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionTNtNtCs1fJj97VvEPD_9minijinja5value5ValueBY_EEECs5EKAXG1naGG_25candle_wasm_chat_template.exit.i.peel
-  %2 = load ptr, ptr %.sroa.06.sroa.2.0..sroa_idx, align 8, !alias.scope !397, !noundef !4 ; 2 uses
-  %i.eo = load ptr, ptr %.sroa.06.sroa.3.0..sroa_idx, align 8, !alias.scope !397
+  %2 = load <2 x ptr>, ptr %.sroa.06.sroa.2.0..sroa_idx, align 8, !alias.scope !397
+  %i.eo = load ptr, ptr %.sroa.06.sroa.2.0..sroa_idx, align 8, !alias.scope !397, !noundef !4
   store ptr null, ptr %.sroa.06.sroa.2.0..sroa_idx, align 8, !alias.scope !397
-  %.not5.i.peel = icmp eq ptr %2, null
+  %.not5.i.peel = icmp eq ptr %i.eo, null
   br i1 %.not5.i.peel, label %_RNvXs9_NtNtNtCsf3Ta7LF998c_4core4iter8adapters4fuseINtB5_4FuseINtNtBb_6option8IntoIterINtNtCsgCecv3eZDcN_5alloc5boxed3BoxDNtNtNtB9_6traits8iterator8Iteratorp4ItemTNtNtCs1fJj97VvEPD_9minijinja5value5ValueB2B_ENtNtBb_6marker4SendNtB3m_4SyncEL_EEEINtB5_8FuseImplBY_E4nextCs5EKAXG1naGG_25candle_wasm_chat_template.exit.thread.i, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsgCecv3eZDcN_5alloc5boxed3BoxDNtNtNtNtB4_4iter6traits8iterator8Iteratorp4ItemTNtNtCs1fJj97VvEPD_9minijinja5value5ValueB2j_ENtNtB4_6marker4SendNtB34_4SyncEL_EEECs5EKAXG1naGG_25candle_wasm_chat_template.exit.i
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsgCecv3eZDcN_5alloc5boxed3BoxDNtNtNtNtB4_4iter6traits8iterator8Iteratorp4ItemTNtNtCs1fJj97VvEPD_9minijinja5value5ValueB2j_ENtNtB4_6marker4SendNtB34_4SyncEL_EEECs5EKAXG1naGG_25candle_wasm_chat_template.exit.i: ; preds = %_RNvXs9_NtNtNtCsf3Ta7LF998c_4core4iter8adapters4fuseINtB5_4FuseINtNtBb_6option8IntoIterINtNtCsgCecv3eZDcN_5alloc5boxed3BoxDNtNtNtB9_6traits8iterator8Iteratorp4ItemTNtNtCs1fJj97VvEPD_9minijinja5value5ValueB2B_ENtNtBb_6marker4SendNtB3m_4SyncEL_EEEINtB5_8FuseImplBY_E4nextCs5EKAXG1naGG_25candle_wasm_chat_template.exit.i.peel, %_RNvXs9_NtNtNtCsf3Ta7LF998c_4core4iter8adapters4fuseINtB5_4FuseINtNtBb_6option8IntoIterINtNtCsgCecv3eZDcN_5alloc5boxed3BoxDNtNtNtB9_6traits8iterator8Iteratorp4ItemTNtNtCs1fJj97VvEPD_9minijinja5value5ValueB2B_ENtNtBb_6marker4SendNtB3m_4SyncEL_EEEINtB5_8FuseImplBY_E4nextCs5EKAXG1naGG_25candle_wasm_chat_template.exit.i
-  %.sink = phi ptr [ %i.ff, %_RNvXs9_NtNtNtCsf3Ta7LF998c_4core4iter8adapters4fuseINtB5_4FuseINtNtBb_6option8IntoIterINtNtCsgCecv3eZDcN_5alloc5boxed3BoxDNtNtNtB9_6traits8iterator8Iteratorp4ItemTNtNtCs1fJj97VvEPD_9minijinja5value5ValueB2B_ENtNtBb_6marker4SendNtB3m_4SyncEL_EEEINtB5_8FuseImplBY_E4nextCs5EKAXG1naGG_25candle_wasm_chat_template.exit.i ], [ %i.eo, %_RNvXs9_NtNtNtCsf3Ta7LF998c_4core4iter8adapters4fuseINtB5_4FuseINtNtBb_6option8IntoIterINtNtCsgCecv3eZDcN_5alloc5boxed3BoxDNtNtNtB9_6traits8iterator8Iteratorp4ItemTNtNtCs1fJj97VvEPD_9minijinja5value5ValueB2B_ENtNtBb_6marker4SendNtB3m_4SyncEL_EEEINtB5_8FuseImplBY_E4nextCs5EKAXG1naGG_25candle_wasm_chat_template.exit.i.peel ] ; 2 uses
-  %storemerge129 = phi ptr [ %3, %_RNvXs9_NtNtNtCsf3Ta7LF998c_4core4iter8adapters4fuseINtB5_4FuseINtNtBb_6option8IntoIterINtNtCsgCecv3eZDcN_5alloc5boxed3BoxDNtNtNtB9_6traits8iterator8Iteratorp4ItemTNtNtCs1fJj97VvEPD_9minijinja5value5ValueB2B_ENtNtBb_6marker4SendNtB3m_4SyncEL_EEEINtB5_8FuseImplBY_E4nextCs5EKAXG1naGG_25candle_wasm_chat_template.exit.i ], [ %2, %_RNvXs9_NtNtNtCsf3Ta7LF998c_4core4iter8adapters4fuseINtB5_4FuseINtNtBb_6option8IntoIterINtNtCsgCecv3eZDcN_5alloc5boxed3BoxDNtNtNtB9_6traits8iterator8Iteratorp4ItemTNtNtCs1fJj97VvEPD_9minijinja5value5ValueB2B_ENtNtBb_6marker4SendNtB3m_4SyncEL_EEEINtB5_8FuseImplBY_E4nextCs5EKAXG1naGG_25candle_wasm_chat_template.exit.i.peel ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sink) ]
-  store ptr %storemerge129, ptr %.sroa.2.0..sroa_idx, align 8, !alias.scope !391
-  store ptr %.sink, ptr %i.eb, align 8, !alias.scope !391
+  %3 = phi <2 x ptr> [ %5, %_RNvXs9_NtNtNtCsf3Ta7LF998c_4core4iter8adapters4fuseINtB5_4FuseINtNtBb_6option8IntoIterINtNtCsgCecv3eZDcN_5alloc5boxed3BoxDNtNtNtB9_6traits8iterator8Iteratorp4ItemTNtNtCs1fJj97VvEPD_9minijinja5value5ValueB2B_ENtNtBb_6marker4SendNtB3m_4SyncEL_EEEINtB5_8FuseImplBY_E4nextCs5EKAXG1naGG_25candle_wasm_chat_template.exit.i ], [ %2, %_RNvXs9_NtNtNtCsf3Ta7LF998c_4core4iter8adapters4fuseINtB5_4FuseINtNtBb_6option8IntoIterINtNtCsgCecv3eZDcN_5alloc5boxed3BoxDNtNtNtB9_6traits8iterator8Iteratorp4ItemTNtNtCs1fJj97VvEPD_9minijinja5value5ValueB2B_ENtNtBb_6marker4SendNtB3m_4SyncEL_EEEINtB5_8FuseImplBY_E4nextCs5EKAXG1naGG_25candle_wasm_chat_template.exit.i.peel ] ; 2 uses
+  %4 = extractelement <2 x ptr> %3, i64 1
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %4) ]
+  store <2 x ptr> %3, ptr %.sroa.2.0..sroa_idx, align 8, !alias.scope !391
   call void @llvm.experimental.noalias.scope.decl(metadata !398)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !399
   invoke void @_RNvXNtNtCsgCecv3eZDcN_5alloc5boxed4iterINtB4_3BoxDNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iteratorp4ItemTNtNtCs1fJj97VvEPD_9minijinja5value5ValueB1O_ENtNtBU_6marker4SendNtB2z_4SyncEL_EBM_4nextCs5EKAXG1naGG_25candle_wasm_chat_template(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(address) dereferenceable(48) %i.b, ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %.sroa.2.0..sroa_idx)
@@ -375,10 +374,10 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionTNtNtCs1fJj97VvEPD
   br i1 %i.fe, label %_RNvXs9_NtNtNtCsf3Ta7LF998c_4core4iter8adapters4fuseINtB5_4FuseINtNtBb_6option8IntoIterINtNtCsgCecv3eZDcN_5alloc5boxed3BoxDNtNtNtB9_6traits8iterator8Iteratorp4ItemTNtNtCs1fJj97VvEPD_9minijinja5value5ValueB2B_ENtNtBb_6marker4SendNtB3m_4SyncEL_EEEINtB5_8FuseImplBY_E4nextCs5EKAXG1naGG_25candle_wasm_chat_template.exit.i, label %_RNvXs9_NtNtNtCsf3Ta7LF998c_4core4iter8adapters4fuseINtB5_4FuseINtNtBb_6option8IntoIterINtNtCsgCecv3eZDcN_5alloc5boxed3BoxDNtNtNtB9_6traits8iterator8Iteratorp4ItemTNtNtCs1fJj97VvEPD_9minijinja5value5ValueB2B_ENtNtBb_6marker4SendNtB3m_4SyncEL_EEEINtB5_8FuseImplBY_E4nextCs5EKAXG1naGG_25candle_wasm_chat_template.exit.thread.i
 
 _RNvXs9_NtNtNtCsf3Ta7LF998c_4core4iter8adapters4fuseINtB5_4FuseINtNtBb_6option8IntoIterINtNtCsgCecv3eZDcN_5alloc5boxed3BoxDNtNtNtB9_6traits8iterator8Iteratorp4ItemTNtNtCs1fJj97VvEPD_9minijinja5value5ValueB2B_ENtNtBb_6marker4SendNtB3m_4SyncEL_EEEINtB5_8FuseImplBY_E4nextCs5EKAXG1naGG_25candle_wasm_chat_template.exit.i: ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionTNtNtCs1fJj97VvEPD_9minijinja5value5ValueBY_EEECs5EKAXG1naGG_25candle_wasm_chat_template.exit.i
-  %3 = load ptr, ptr %.sroa.06.sroa.2.0..sroa_idx, align 8, !alias.scope !397, !noundef !4 ; 2 uses
-  %i.ff = load ptr, ptr %.sroa.06.sroa.3.0..sroa_idx, align 8, !alias.scope !397
+  %5 = load <2 x ptr>, ptr %.sroa.06.sroa.2.0..sroa_idx, align 8, !alias.scope !397
+  %i.ff = load ptr, ptr %.sroa.06.sroa.2.0..sroa_idx, align 8, !alias.scope !397, !noundef !4
   store ptr null, ptr %.sroa.06.sroa.2.0..sroa_idx, align 8, !alias.scope !397
-  %.not5.i = icmp eq ptr %3, null
+  %.not5.i = icmp eq ptr %i.ff, null
   br i1 %.not5.i, label %_RNvXs9_NtNtNtCsf3Ta7LF998c_4core4iter8adapters4fuseINtB5_4FuseINtNtBb_6option8IntoIterINtNtCsgCecv3eZDcN_5alloc5boxed3BoxDNtNtNtB9_6traits8iterator8Iteratorp4ItemTNtNtCs1fJj97VvEPD_9minijinja5value5ValueB2B_ENtNtBb_6marker4SendNtB3m_4SyncEL_EEEINtB5_8FuseImplBY_E4nextCs5EKAXG1naGG_25candle_wasm_chat_template.exit.thread.i, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsgCecv3eZDcN_5alloc5boxed3BoxDNtNtNtNtB4_4iter6traits8iterator8Iteratorp4ItemTNtNtCs1fJj97VvEPD_9minijinja5value5ValueB2j_ENtNtB4_6marker4SendNtB34_4SyncEL_EEECs5EKAXG1naGG_25candle_wasm_chat_template.exit.i, !llvm.loop !375
 
 _RNvXs9_NtNtNtCsf3Ta7LF998c_4core4iter8adapters4fuseINtB5_4FuseINtNtBb_6option8IntoIterINtNtCsgCecv3eZDcN_5alloc5boxed3BoxDNtNtNtB9_6traits8iterator8Iteratorp4ItemTNtNtCs1fJj97VvEPD_9minijinja5value5ValueB2B_ENtNtBb_6marker4SendNtB3m_4SyncEL_EEEINtB5_8FuseImplBY_E4nextCs5EKAXG1naGG_25candle_wasm_chat_template.exit.thread.i: ; preds = %_RNvXs9_NtNtNtCsf3Ta7LF998c_4core4iter8adapters4fuseINtB5_4FuseINtNtBb_6option8IntoIterINtNtCsgCecv3eZDcN_5alloc5boxed3BoxDNtNtNtB9_6traits8iterator8Iteratorp4ItemTNtNtCs1fJj97VvEPD_9minijinja5value5ValueB2B_ENtNtBb_6marker4SendNtB3m_4SyncEL_EEEINtB5_8FuseImplBY_E4nextCs5EKAXG1naGG_25candle_wasm_chat_template.exit.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionTNtNtCs1fJj97VvEPD_9minijinja5value5ValueBY_EEECs5EKAXG1naGG_25candle_wasm_chat_template.exit.i, %_RNvXs9_NtNtNtCsf3Ta7LF998c_4core4iter8adapters4fuseINtB5_4FuseINtNtBb_6option8IntoIterINtNtCsgCecv3eZDcN_5alloc5boxed3BoxDNtNtNtB9_6traits8iterator8Iteratorp4ItemTNtNtCs1fJj97VvEPD_9minijinja5value5ValueB2B_ENtNtBb_6marker4SendNtB3m_4SyncEL_EEEINtB5_8FuseImplBY_E4nextCs5EKAXG1naGG_25candle_wasm_chat_template.exit.i.peel, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionTNtNtCs1fJj97VvEPD_9minijinja5value5ValueBY_EEECs5EKAXG1naGG_25candle_wasm_chat_template.exit.i.peel

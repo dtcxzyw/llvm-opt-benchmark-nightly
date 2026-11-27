@@ -202,7 +202,7 @@ _ZN4llvm11raw_ostreamlsEPKc.exit:                 ; preds = %bb.b, %bb.c
   br i1 %.not31, label %._crit_edge, label %_ZN4llvm11raw_ostreamlsEPKc.exit11.peel
 
 _ZN4llvm11raw_ostreamlsEPKc.exit11.peel:          ; preds = %_ZN4llvm11raw_ostreamlsEPKc.exit
-  %i.w = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 4 uses
   %.pre = load ptr, ptr %i.h, align 8, !tbaa !68
   %.pre42 = ptrtoint ptr %.pre to i64
@@ -263,7 +263,7 @@ _ZN4llvm11raw_ostreamlsEPKc.exit17.peel:          ; preds = %bb.g, %bb.f
   %i.ay = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(48) %.0.i.i16.peel, ptr noundef %i.aw, i64 noundef %i.ax) #19 ; 0 uses
   %i.az = load ptr, ptr %3, align 8, !tbaa !21    ; 2 uses
   %i.ba = icmp eq ptr %i.az, %i.x
-  br i1 %i.ba, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.peel, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.peel
+  br i1 %i.ba, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.peel, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.peel
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.peel: ; preds = %_ZN4llvm11raw_ostreamlsEPKc.exit17.peel
   %i.bb = load i64, ptr %i.x, align 8, !tbaa !22
@@ -271,13 +271,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.p
   call void @_ZdlPvm(ptr noundef %i.az, i64 noundef %i.bc) #22
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.peel
 
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.peel: ; preds = %_ZN4llvm11raw_ostreamlsEPKc.exit17.peel
-  %5 = load i64, ptr %i.w, align 8, !tbaa !23
-  %6 = icmp ult i64 %5, 16
-  call void @llvm.assume(i1 %6)
-  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.peel
-
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.peel: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.peel, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.peel
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.peel: ; preds = %_ZN4llvm11raw_ostreamlsEPKc.exit17.peel, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.peel
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #19
   %i.bd = getelementptr inbounds nuw i8, ptr %i.t, i64 48 ; 2 uses
   %.not.peel = icmp eq ptr %i.bd, %i.v
